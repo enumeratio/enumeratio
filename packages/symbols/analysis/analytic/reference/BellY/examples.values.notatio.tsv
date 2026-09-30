@@ -1,0 +1,7 @@
+id	in	out
+belly-4-2-list-x1-x2-x3	<BellY>4 2 <List>x1 x2 x3</List></BellY>	<Add><Multiply>3 <Power>x2 2</Power></Multiply> <Multiply>4 x1 x3</Multiply></Add>
+belly-5-3-list-1-2-3	<BellY>5 3 <List>1 2 3</List></BellY>	<ToExpression>90</ToExpression>
+belly-6-2-list-2-3-5-7-11	<BellY>6 2 <List>2 3 5 7 11</List></BellY>	<ToExpression>697</ToExpression>
+belly-7-4-list-1-1-2-5	<BellY>7 4 <List>1 1 2 5</List></BellY>	<ToExpression>700</ToExpression>
+all-ones-arguments-give-stirling-6-2	<BellY>6 2 <List>1 1 1 1 1</List></BellY>	<ToExpression>31</ToExpression>
+x-j-j-gives-the-lah-number-l-4-2	<BellY>4 2 <List>1 2 6</List></BellY>	<ToExpression>36</ToExpression>

@@ -1,0 +1,17 @@
+id	in	out
+flatten-list-list-1-2-list-3-4	<Flatten><List><List>1 2</List> <List>3 4</List></List></Flatten>	<List>1 2 3 4</List>
+flatten-list-list-1-list-2-3-list-4	<Flatten><List><List>1 <List>2 3</List></List> <List>4</List></List></Flatten>	<List>1 2 3 4</List>
+flatten-list-list-a-b-list-c-list-d-f-list-g	<Flatten><List><List>a b</List> <List>c <List>d</List> f</List> <List>g <List>h k</List></List></List></Flatten>	<List>a b c d f g h k</List>
+flatten-single-level-non-list-unaffected	<Flatten><f>a b</f></Flatten>	<f>a b</f>
+a-depth-argument-limits-flattening-to-just-that	<Flatten><List><List>1 2</List> <List>3 <List>4</List></List></List> 1</Flatten>	<List>1 2 3 <List>4</List></List>
+flatten-only-the-first-level	<Flatten><List><List>a b</List> <List>c <List>d</List> f</List> <List>g <List>h k</List></List></List> 1</Flatten>	<List>a b c <List>d</List> f g <List>h k</List></List>
+depth-0-leaves-the-list-unchanged	<Flatten><List>0 <List>1</List> <List><List>2 -2</List></List> <List><List><List>3</List> <List>-3</List></List></List> <List><List><List><List>4</List></List></List></List></List> 0</Flatten>	<List>0 <List>1</List> <List><List>2 -2</List></List> <List><List><List>3</List> <List>-3</List></List></List> <List><List><List><List>4</List></List></List></List></List>
+depth-2-removes-two-levels-of-nesting	<Flatten><List>0 <List>1</List> <List><List>2 -2</List></List> <List><List><List>3</List> <List>-3</List></List></List> <List><List><List><List>4</List></List></List></List></List> 2</Flatten>	<List>0 1 2 -2 <List>3</List> <List>-3</List> <List><List>4</List></List></List>
+depth-3	<Flatten><List>0 <List>1</List> <List><List>2 -2</List></List> <List><List><List>3</List> <List>-3</List></List></List> <List><List><List><List>4</List></List></List></List></List> 3</Flatten>	<List>0 1 2 -2 3 -3 <List>4</List></List>
+depth-4-reaches-the-deepest-level	<Flatten><List>0 <List>1</List> <List><List>2 -2</List></List> <List><List><List>3</List> <List>-3</List></List></List> <List><List><List><List>4</List></List></List></List></List> 4</Flatten>	<List>0 1 2 -2 3 -3 4</List>
+an-explicit-infinite-depth-flattens-every-level	<Flatten><List>0 <List>1</List> <List><List>2 -2</List></List> <List><List><List>3</List> <List>-3</List></List></List> <List><List><List><List>4</List></List></List></List></List> PositiveInfinity</Flatten>	<List>0 1 2 -2 3 -3 4</List>
+a-list-of-levels-regroups-the-dimensions-here	<Flatten><List><List>1 2</List> <List>3 4</List></List> <List><List>2</List> <List>1</List></List></Flatten>	<List><List>1 3</List> <List>2 4</List></List>
+nested-calls-of-any-one-head-flatten-not-just	<Flatten><f>a <f>b <f>c</f></f></f></Flatten>	<f>a b c</f>
+flatten-undoes-partition-chunking-and-re	<Equal><Flatten><Partition><List>1 2 3 4 5 6</List> 2</Partition></Flatten> <List>1 2 3 4 5 6</List></Equal>	<True />
+a-list-with-no-nesting-is-unchanged	<Flatten><List>1 2 3</List></Flatten>	<List>1 2 3</List>
+flattening-an-m-times-n-matrix-gives-mn-elements	<Length><Flatten><List><List>1 2 3</List> <List>4 5 6</List></List></Flatten></Length>	<ToExpression>6</ToExpression>

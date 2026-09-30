@@ -1,0 +1,5 @@
+id	in	out
+petersen-is-3-regular	<VertexDegree><Apply>PetersenGraph</Apply></VertexDegree>	<List>3 3 3 3 3 3 3 3 3 3</List>
+petersen-is-not-bipartite	<IsBipartiteGraph><Apply>PetersenGraph</Apply></IsBipartiteGraph>	<False />
+petersen-has-10-vertices	<VertexCount><Apply>PetersenGraph</Apply></VertexCount>	<ToExpression>10</ToExpression>
+petersen-has-15-edges	<EdgeCount><Apply>PetersenGraph</Apply></EdgeCount>	<ToExpression>15</ToExpression>

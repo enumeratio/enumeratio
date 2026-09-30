@@ -1,0 +1,5 @@
+id	in	out
+laplace-pdf-exact	<PDF><LaplaceDistribution>0 <Rational>1 2</Rational></LaplaceDistribution> 0</PDF>	<ToExpression>1</ToExpression>
+laplace-cdf-exact	<CDF><LaplaceDistribution>0 <Rational>1 2</Rational></LaplaceDistribution> 0</CDF>	<Rational>1 2</Rational>
+laplace-mean-exact	<Mean><LaplaceDistribution>0 <Rational>1 2</Rational></LaplaceDistribution></Mean>	<ToExpression>0</ToExpression>
+laplace-variance-exact	<Variance><LaplaceDistribution>0 <Rational>1 2</Rational></LaplaceDistribution></Variance>	<Rational>1 2</Rational>

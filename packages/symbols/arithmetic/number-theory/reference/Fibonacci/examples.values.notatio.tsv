@@ -1,0 +1,23 @@
+id	in	out
+fibonacci-0	<Fibonacci>0</Fibonacci>	<ToExpression>0</ToExpression>
+fibonacci-1	<Fibonacci>1</Fibonacci>	<ToExpression>1</ToExpression>
+fibonacci-10	<Fibonacci>10</Fibonacci>	<ToExpression>55</ToExpression>
+fibonacci-20	<Fibonacci>20</Fibonacci>	<ToExpression>6765</ToExpression>
+fibonacci-8	<Fibonacci>8</Fibonacci>	<ToExpression>21</ToExpression>
+exact-at-any-size-f-100-has-21-digits	<Fibonacci>100</Fibonacci>	<ToExpression>354224848179261915075</ToExpression>
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	<Fibonacci>1.5</Fibonacci>	<ToExpression>0.920442065259926</ToExpression>
+the-two-argument-fibonacci-polynomial-f-7-x-from	<Fibonacci>7 x</Fibonacci>	<Add><Power>x 6</Power> <Multiply>5 <Power>x 4</Power></Multiply> <Multiply>6 <Power>x 2</Power></Multiply> 1</Add>
+the-fibonacci-polynomial-at-a-real-order-and	<Fibonacci>5.8 3</Fibonacci>	<ToExpression>283.4827308329499</ToExpression>
+special-value-of-the-fibonacci-polynomial-f-1-0	<Fibonacci>1 0</Fibonacci>	<ToExpression>1</ToExpression>
+special-value-of-the-fibonacci-polynomial-f-0-0	<Fibonacci>0 0</Fibonacci>	<ToExpression>0</ToExpression>
+f-3-x-x-2-1-threads-element-wise-over-a-matrix	<Fibonacci>3 <List><List>-1 0</List> <List>0 5</List></List></Fibonacci>	<List><List>2 1</List> <List>1 26</List></List>
+threads-element-wise-over-a-list-as-wolfram-s	<Fibonacci><List>1 2 3 4</List></Fibonacci>	<List>1 1 2 3</List>
+consecutive-ratios-f-n-1-f-n-converge-to-the	<Divide><Fibonacci>20</Fibonacci> <Fibonacci>19</Fibonacci></Divide>	<Rational>6765 4181</Rational>
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	<Sum><Fibonacci>k</Fibonacci> <Tuple>k 1 10</Tuple></Sum>	<ToExpression>143</ToExpression>
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	<Equal><Fibonacci>20</Fibonacci> <Multiply><Fibonacci>10</Fibonacci> <LucasL>10</LucasL></Multiply></Equal>	<True />
+the-defining-recurrence-f-10-f-9-f-8	<Equal><Fibonacci>10</Fibonacci> <Add><Fibonacci>9</Fibonacci> <Fibonacci>8</Fibonacci></Add></Equal>	<True />
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	<Subtract><Multiply><Fibonacci>5</Fibonacci> <Fibonacci>7</Fibonacci></Multiply> <Power><Fibonacci>6</Fibonacci> 2</Power></Subtract>	<ToExpression>1</ToExpression>
+gcd-f-12-f-18-f-gcd-12-18	<Equal><GCD><Fibonacci>12</Fibonacci> <Fibonacci>18</Fibonacci></GCD> <Fibonacci><GCD>12 18</GCD></Fibonacci></Equal>	<True />
+negative-indices-are-supported-via-f-n-1-n-1-f-n	<Fibonacci>-5</Fibonacci>	<ToExpression>5</ToExpression>
+f-1000-has-209-digits-see-integerdigits	<Length><IntegerDigits><Fibonacci>1000</Fibonacci></IntegerDigits></Length>	<ToExpression>209</ToExpression>
+they-grow-fast-f-50-already-exceeds-twelve	<Fibonacci>50</Fibonacci>	<ToExpression>12586269025</ToExpression>

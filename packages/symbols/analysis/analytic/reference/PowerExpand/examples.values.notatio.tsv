@@ -1,0 +1,6 @@
+id	in	out
+sqrt-x-2-x-for-positive-x	<PowerExpand><Sqrt><Power>x 2</Power></Sqrt></PowerExpand>	<x />
+splits-a-logarithm-of-a-product	<PowerExpand><Ln><Multiply>x y</Multiply></Ln></PowerExpand>	<Add><Ln>x</Ln> <Ln>y</Ln></Add>
+pulls-out-an-exponent	<PowerExpand><Ln><Power>x n</Power></Ln></PowerExpand>	<Multiply>n <Ln>x</Ln></Multiply>
+distributes-a-power-over-a-product	<PowerExpand><Power><Multiply>a b</Multiply> c</Power></PowerExpand>	<Multiply><Power>a c</Power> <Power>b c</Power></Multiply>
+powerexpand-sqrt-a-times-b	<PowerExpand><Sqrt><Multiply>a b</Multiply></Sqrt></PowerExpand>	<Multiply><Sqrt>a</Sqrt> <Sqrt>b</Sqrt></Multiply>

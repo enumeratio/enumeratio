@@ -1,0 +1,11 @@
+id	in	out
+moebiusmu-1	<MoebiusMu>1</MoebiusMu>	<ToExpression>1</ToExpression>
+moebiusmu-11	<MoebiusMu>11</MoebiusMu>	<ToExpression>-1</ToExpression>
+12-22-3-is-not-squarefree	<MoebiusMu>12</MoebiusMu>	<ToExpression>0</ToExpression>
+10-2-5-a-product-of-an-even-number-of-distinct	<MoebiusMu>10</MoebiusMu>	<ToExpression>1</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<MoebiusMu><List>1 2 3 4</List></MoebiusMu>	<List>1 -1 -1 0</List>
+gaussian-integers-5-6i-is-a-gaussian-prime-norm	<MoebiusMu><Complex>5 6</Complex></MoebiusMu>	<ToExpression>-1</ToExpression>
+listable-threads-over-a-list	<MoebiusMu><List>4 10 17 20</List></MoebiusMu>	<List>0 1 -1 0</List>
+listable-over-a-range	<MoebiusMu><Range>20</Range></MoebiusMu>	<List>1 -1 -1 0 -1 1 -1 0 0 1 -1 0 -1 1 1 0 -1 0 -1 0</List>
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	<Add><MoebiusMu>1</MoebiusMu> <MoebiusMu>2</MoebiusMu> <MoebiusMu>3</MoebiusMu> <MoebiusMu>4</MoebiusMu> <MoebiusMu>6</MoebiusMu> <MoebiusMu>12</MoebiusMu></Add>	<ToExpression>0</ToExpression>
+mu-is-only-defined-for-positive-integers-compute	<MoebiusMu>0</MoebiusMu>	<MoebiusMu>0</MoebiusMu>

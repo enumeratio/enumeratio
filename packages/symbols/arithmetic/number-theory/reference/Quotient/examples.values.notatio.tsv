@@ -1,0 +1,36 @@
+id	in	out
+quotient-17-5	<Quotient>17 5</Quotient>	<ToExpression>3</ToExpression>
+the-floor-not-truncation	<Quotient>-7 2</Quotient>	<ToExpression>-4</ToExpression>
+the-remainder-takes-the-sign-of-n	<Quotient>17 -5</Quotient>	<ToExpression>-4</ToExpression>
+7-5i-2-i-3-8-0-6i-rounded	<Quotient><Complex>7 5</Complex> <Complex>2 1</Complex></Quotient>	<Complex>4 1</Complex>
+real-arguments-lfloor-7-5-2-rfloor	<Quotient>7.5 2</Quotient>	<ToExpression>3</ToExpression>
+rational-arguments-lfloor-21-2-rfloor	<Quotient><Rational>7 2</Rational> <Rational>1 3</Rational></Quotient>	<ToExpression>10</ToExpression>
+quotient-m-n-d-is-lfloor-m-d-n-rfloor-so-m-n-q	<Quotient>17 5 3</Quotient>	<ToExpression>2</ToExpression>
+listable-threads-over-a-list	<Quotient><List>10 20 30</List> 7</Quotient>	<List>1 2 4</List>
+quotient-by-a-unit-is-the-dividend-itself-up-to	<Quotient><Complex>3 4</Complex> <Complex>0 1</Complex></Quotient>	<Complex>4 -3</Complex>
+a-zero-dividend-quotients-to-0	<Quotient>0 <Complex>2 1</Complex></Quotient>	<ToExpression>0</ToExpression>
+quotient-by-a-gaussian-prime-norm-5	<Quotient><Complex>3 4</Complex> <Complex>2 1</Complex></Quotient>	<Complex>2 1</Complex>
+quotient-by-the-other-prime-above-5	<Quotient><Complex>3 4</Complex> <Complex>2 -1</Complex></Quotient>	<Complex>0 2</Complex>
+quotient-by-a-real-prime-3-mod-4	<Quotient><Complex>3 4</Complex> 3</Quotient>	<Complex>1 1</Complex>
+a-real-dividend-by-a-gaussian-divisor	<Quotient>5 <Complex>2 1</Complex></Quotient>	<Complex>2 -1</Complex>
+quotient-by-an-associate	<Quotient><Complex>8 2</Complex> <Complex>-4 3</Complex></Quotient>	<Complex>-1 -1</Complex>
+quotient-by-a-negative-real-divisor	<Quotient><Complex>3 4</Complex> -7</Quotient>	<Complex>0 -1</Complex>
+quotient-by-a-composite-gaussian-divisor-norm-25	<Quotient><Complex>123 456</Complex> <Complex>3 4</Complex></Quotient>	<Complex>88 35</Complex>
+a-gaussian-divisor-past-2-53-in-both-parts	<Quotient><Complex>100000000000000000001 9007199254740993</Complex> <Complex>4 1</Complex></Quotient>	<Complex>23529941599956161235 -5880233600175355061</Complex>
+quotient-by-1-4i-the-other-prime-above-17	<Quotient><Complex>8 2</Complex> <Complex>1 4</Complex></Quotient>	<Complex>1 -2</Complex>
+a-large-norm-gaussian-divided-by-a-small-unit	<Quotient><Complex>1000 1</Complex> <Complex>1 1</Complex></Quotient>	<Complex>500 -500</Complex>
+quotient-by-1-negates-each-part	<Quotient><Complex>2 1</Complex> -1</Quotient>	<Complex>-2 -1</Complex>
+quotient-by-i-rotates-by-that-unit	<Quotient><Complex>5 5</Complex> <Complex>0 -1</Complex></Quotient>	<Complex>-5 5</Complex>
+a-negative-real-dividend-gaussian-divisor	<Quotient><Complex>-5 -5</Complex> <Complex>2 1</Complex></Quotient>	<Complex>-3 -1</Complex>
+quotient-by-an-associate-times-1	<Quotient><Complex>8 2</Complex> <Complex>-3 -4</Complex></Quotient>	<Complex>-1 1</Complex>
+quotient-by-an-associate-times-i	<Quotient><Complex>8 2</Complex> <Complex>4 -3</Complex></Quotient>	<Complex>1 1</Complex>
+quotient-by-the-other-prime-above-13	<Quotient><Complex>6 8</Complex> <Complex>2 3</Complex></Quotient>	<ToExpression>3</ToExpression>
+quotient-by-a-prime-above-13	<Quotient><Complex>6 8</Complex> <Complex>3 2</Complex></Quotient>	<Complex>3 1</Complex>
+quotient-by-a-real-prime-s-associate-by-the-unit	<Quotient><Complex>3 4</Complex> <Complex>0 7</Complex></Quotient>	<ToExpression>1</ToExpression>
+quotient-by-a-real-composite-5-squared	<Quotient><Complex>3 4</Complex> 25</Quotient>	<ToExpression>0</ToExpression>
+a-negative-associate-as-the-divisor	<Quotient><Complex>6 8</Complex> <Complex>-2 -3</Complex></Quotient>	<ToExpression>-3</ToExpression>
+dividing-a-large-norm-gaussian-by-a-real-prime	<Quotient><Complex>123 456</Complex> 19</Quotient>	<Complex>6 24</Complex>
+dividing-by-zero-is-undefined	<Quotient><Complex>3 4</Complex> 0</Quotient>	<Quotient><Complex>3 4</Complex> 0</Quotient>
+dividing-zero-by-zero-is-undefined	<Quotient>0 0</Quotient>	<Quotient>0 0</Quotient>
+m-n-quotient-m-n-mod-m-n-see-mod	<Add><Multiply>5 <Quotient>17 5</Quotient></Multiply> <Mod>17 5</Mod></Add>	<ToExpression>17</ToExpression>
+2-5-2-5i-rounds-to-even-in-each-part	<Quotient><Complex>5 5</Complex> 2</Quotient>	<Complex>2 2</Complex>

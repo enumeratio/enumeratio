@@ -1,0 +1,2 @@
+id	in	out
+the-first-ten-7-smooth-numbers	<Take><SmoothNumbers>7</SmoothNumbers> 10</Take>	<List>1 2 3 4 5 6 7 8 9 10</List>

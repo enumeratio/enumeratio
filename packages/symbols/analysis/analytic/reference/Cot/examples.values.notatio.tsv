@@ -1,0 +1,27 @@
+id	in	out
+cot-pi-over-6	<Cot><Divide>Pi 6</Divide></Cot>	<Sqrt>3</Sqrt>
+cot-pi-over-4	<Cot><Divide>Pi 4</Divide></Cot>	<ToExpression>1</ToExpression>
+cot-pi-over-3	<Cot><Divide>Pi 3</Divide></Cot>	<Divide><Sqrt>3</Sqrt> 3</Divide>
+cot-60-circ-frac-sqrt-3-3-exactly	<Cot><Degrees>60</Degrees></Cot>	<Divide><Sqrt>3</Sqrt> 3</Divide>
+a-machine-precision-argument-evaluates	<Cot>1.2</Cot>	<ToExpression>0.388779569368204911634</ToExpression>
+a-huge-24-40-argument	<N><Cot><Power>24 40</Power></Cot></N>	<ToExpression>2.290720910010880678424893</ToExpression>
+a-huge-10-100-argument	<N><Cot><Power>10 100</Power></Cot></N>	<ToExpression>2.492323879279820694866405</ToExpression>
+a-huge-3-200-argument	<N><Cot><Power>3 200</Power></Cot></N>	<ToExpression>0.36714300103369787917328</ToExpression>
+a-huge-neg-7-60-argument	<N><Cot><Negate><Power>7 60</Power></Negate></Cot></N>	<ToExpression>-2.549725448552896594744082</ToExpression>
+a-huge-10-80-plus-1-over-3-argument	<N><Cot><Divide><Add><Power>10 80</Power> 1</Add> 3</Divide></Cot></N>	<ToExpression>0.17309023544614244604558</ToExpression>
+cot-7-under-n	<N><Cot>7</Cot></N>	<ToExpression>1.1475154224051356</ToExpression>
+n-of-an-exact-argument-gives-an-arbitrary	<N><Cot><Rational>6 5</Rational></Cot></N>	<ToExpression>0.388779569368204911634</ToExpression>
+evaluates-at-a-complex-argument	<Cot><Complex>2.5 1</Complex></Cot>	<Complex>-0.27566912122989945 -1.0426406420944216</Complex>
+threads-element-wise-over-a-matrix	<Cot><List><List><Multiply>5 <Divide>Pi 6</Divide></Multiply> <Divide>Pi 2</Divide></List> <List><Multiply>3 <Divide>Pi 2</Divide></Multiply> <Negate><Divide>Pi 6</Divide></Negate></List></List></Cot>	<List><List><Negate><Sqrt>3</Sqrt></Negate> 0</List> <List>0 <Negate><Sqrt>3</Sqrt></Negate></List></List>
+cot-pi-8-1-sqrt-2	<Cot><Divide>Pi 8</Divide></Cot>	<Add>1 <Sqrt>2</Sqrt></Add>
+cot-pi-12-2-sqrt-3	<Cot><Divide>Pi 12</Divide></Cot>	<Add>2 <Sqrt>3</Sqrt></Add>
+cot-pi-over-5	<Cot><Divide>Pi 5</Divide></Cot>	<Multiply><Divide><Sqrt>5</Sqrt> 5</Divide> <Sqrt><Add>5 <Multiply>2 <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Multiply>
+an-interval-straddling-the-pole-at-0-maps-to-two	<Cot><Interval><Negate><Divide>Pi 4</Divide></Negate> <Divide>Pi 4</Divide></Interval></Cot>	<Union><Interval>NegativeInfinity -1</Interval> <Interval>1 PositiveInfinity</Interval></Union>
+uncertainty-propagation-near-a-pole-grows-fast	<Cot><Around>3 0.01</Around></Cot>	<Around>-7.015252551434534 0.5021376836040873</Around>
+oddness-pulls-the-sign-out-of-a-symbolic	<Cot><Negate>x</Negate></Cot>	<Negate><Cot>x</Cot></Negate>
+derivative-csc-2-x	<D><Cot>x</Cot> x</D>	<Negate><Power><Csc>x</Csc> 2</Power></Negate>
+antiderivative-ln-sin-x	<Integrate><Cot>x</Cot> x</Integrate>	<Ln><Abs><Sin>x</Sin></Abs></Ln>
+reciprocal-of-tan-cot-x-frac-1-tan-x	<Equal><Cot><Divide>Pi 4</Divide></Cot> <Divide>1 <Tan><Divide>Pi 4</Divide></Tan></Divide></Equal>	<True />
+pythagorean-identity-1-cot-2-x-csc-2-x	<Equal><Add>1 <Power><Cot><Divide>Pi 6</Divide></Cot> 2</Power></Add> <Power><Csc><Divide>Pi 6</Divide></Csc> 2</Power></Equal>	<True />
+a-pole-sin-0-0	<Cot>0</Cot>	<ComplexInfinity />
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	<Cot><Divide>Pi 2</Divide></Cot>	<ToExpression>0</ToExpression>

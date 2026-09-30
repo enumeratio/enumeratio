@@ -1,0 +1,23 @@
+id	in	out
+n-forces-the-numeric-result-that-plain	<N><Cosh>0</Cosh></N>	<ToExpression>1</ToExpression>
+n-cosh-1	<N><Cosh>1</Cosh></N>	<ToExpression>1.54308063481524377848</ToExpression>
+stays-symbolic-even-at-0-same-as-sinh-wrap-in-n	<Cosh>0</Cosh>	<ToExpression>1</ToExpression>
+a-float-argument-evaluates-directly-no-n-needed	<Cosh>1.2</Cosh>	<ToExpression>1.81065556732437479309</ToExpression>
+arbitrary-precision-via-n	<N><Cosh><Rational>6 5</Rational></Cosh></N>	<ToExpression>1.81065556732437479309</ToExpression>
+evaluates-at-a-complex-argument	<Cosh><Complex>2.5 1</Complex></Cosh>	<Complex>3.3132901461132245 5.091071522949698</Complex>
+cosh-i-pi-cos-pi-1	<Cosh><Multiply>ImaginaryUnit Pi</Multiply></Cosh>	<ToExpression>-1</ToExpression>
+element-wise-over-a-matrix-of-imaginary	<Cosh><List><List><Multiply>ImaginaryUnit <Divide><Multiply>1 Pi</Multiply> 3</Divide></Multiply> <Negate><Multiply>ImaginaryUnit <Divide><Multiply>1 Pi</Multiply> 3</Divide></Multiply></Negate></List> <List>0 <Negate><Multiply>ImaginaryUnit <Divide><Multiply>1 Pi</Multiply> 6</Divide></Multiply></Negate></List></List></Cosh>	<List><List><Rational>1 2</Rational> <Rational>1 2</Rational></List> <List>1 <Divide><Sqrt>3</Sqrt> 2</Divide></List></List>
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not	<Cosh><Interval>0 <Ln>3</Ln></Interval></Cosh>	<Interval>1 <Rational>5 3</Rational></Interval>
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1	<Cosh><Around><Divide>2 <Sqrt>3</Sqrt></Divide> 0.1</Around></Cosh>	<Around>1.744112480153778 0.14289605814815756</Around>
+cosh-positiveinfinity	<Cosh>PositiveInfinity</Cosh>	<PositiveInfinity />
+evenness-drops-the-sign-of-a-symbolic-argument	<Cosh><Negate>x</Negate></Cosh>	<Cosh>x</Cosh>
+cosh-arcosh-x-x-for-every-x	<Cosh><Arcosh>x</Arcosh></Cosh>	<x />
+cosh-arcosh-2-2	<Cosh><Arcosh>2</Arcosh></Cosh>	<ToExpression>2</ToExpression>
+cosh-arcosh-of-a-complex-argument	<Cosh><Arcosh><Complex>0 3</Complex></Arcosh></Cosh>	<Complex>0 3</Complex>
+derivative-sinh-x	<D><Cosh>x</Cosh> x</D>	<Sinh>x</Sinh>
+antiderivative	<Integrate><Cosh>x</Cosh> x</Integrate>	<Sinh>x</Sinh>
+to-30-significant-digits-every-one-correctly	<N><Cosh>1</Cosh> 30</N>	<ToExpression>1.54308063481524377847790562076</ToExpression>
+even-function-cosh-x-cosh-x	<Equal><Cosh><Negate>1</Negate></Cosh> <Cosh>1</Cosh></Equal>	<True />
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	<Equal><Subtract><Power><Cosh>1</Cosh> 2</Power> <Power><Sinh>1</Sinh> 2</Power></Subtract> 1</Equal>	<True />
+the-definition-cosh-x-frac-e-x-e-x-2	<TrigToExp><Cosh>x</Cosh></TrigToExp>	<Multiply><Rational>1 2</Rational> <Add><Power>ExponentialE x</Power> <Power>ExponentialE <Negate>x</Negate></Power></Add></Multiply>
+cosh-2-x-sinh-2-x-should-simplify-to-1	<Simplify><Subtract><Power><Cosh>x</Cosh> 2</Power> <Power><Sinh>x</Sinh> 2</Power></Subtract></Simplify>	<ToExpression>1</ToExpression>

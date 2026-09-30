@@ -1,0 +1,2 @@
+id	in	out
+length-of-window	<MovingMap>Length <List>1 2 3 4</List> 1</MovingMap>	<List>2 2 2</List>

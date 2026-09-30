@@ -1,0 +1,13 @@
+id	in	out
+6667-3-1-1-3-is-a-10-adic-integer	<Multiply><AdicNumeral>10 <Rational>1 3</Rational></AdicNumeral> 3</Multiply>	<AdicNumeral>10 1</AdicNumeral>
+999-1-0-carrying-forever	<Add><AdicNumeral>10 -1</AdicNumeral> 1</Add>	<AdicNumeral>10 0</AdicNumeral>
+capped-the-representative-modulo-10-8	<AdicNumeral>10 <Rational>1 3</Rational> 8</AdicNumeral>	<AdicNumeral>10 66666667 8</AdicNumeral>
+prime-base-q-5-is-a-field-so-the-point-moves	<Divide><AdicNumeral>5 3</AdicNumeral> 5</Divide>	<AdicNumeral>5 <Rational>3 5</Rational></AdicNumeral>
+a-negative-power-inverts-exactly-3-1-1-3-in-z-10	<Power><AdicNumeral>10 3</AdicNumeral> -1</Power>	<AdicNumeral>10 <Rational>1 3</Rational></AdicNumeral>
+adding-two-capped-numerals-keeps-only-the-weaker	<Add><AdicNumeral>10 <Rational>1 3</Rational> 8</AdicNumeral> <AdicNumeral>10 <Rational>1 3</Rational> 5</AdicNumeral></Add>	<AdicNumeral>10 33334 5</AdicNumeral>
+multiplying-by-p-2-raises-the-absolute-precision	<Multiply><AdicNumeral>5 3 6</AdicNumeral> 25</Multiply>	<AdicNumeral>5 75 8</AdicNumeral>
+dividing-by-zero-stays-complexinfinity	<Divide><AdicNumeral>5 -1</AdicNumeral> 0</Divide>	<ComplexInfinity />
+composite-base-2-is-not-a-unit-of-z-10-so-this	<Divide><AdicNumeral>10 3</AdicNumeral> 2</Divide>	<Multiply><Rational>1 2</Rational> <AdicNumeral>10 3</AdicNumeral></Multiply>
+numerals-over-different-bases-never-combine-and	<Add><AdicNumeral>7 2</AdicNumeral> <AdicNumeral>5 2</AdicNumeral></Add>	<Add><AdicNumeral>7 2</AdicNumeral> <AdicNumeral>5 2</AdicNumeral></Add>
+the-exact-zero-has-infinite-valuation	<AdicValuation><AdicNumeral>10 0</AdicNumeral></AdicValuation>	<PositiveInfinity />
+a-capped-zero-is-only-o-b-prec-so-its-valuation	<AdicValuation><AdicNumeral>10 0 8</AdicNumeral></AdicValuation>	<ToExpression>8</ToExpression>

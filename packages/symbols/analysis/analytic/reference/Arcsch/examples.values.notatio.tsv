@@ -1,0 +1,8 @@
+id	in	out
+n-arcsch-2	<N><Arcsch>2</Arcsch></N>	<ToExpression>0.481211825059603447495</ToExpression>
+a-pole-at-0	<Arcsch>0</Arcsch>	<ComplexInfinity />
+arcsch-positiveinfinity	<Arcsch>PositiveInfinity</Arcsch>	<ToExpression>0</ToExpression>
+a-float-argument-evaluates-directly	<Arcsch>1.5</Arcsch>	<ToExpression>0.625145117250416687636</ToExpression>
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	<TrigToExp><Arcsch>1</Arcsch></TrigToExp>	<Ln><Add>1 <Sqrt>2</Sqrt></Add></Ln>
+oddness-pulls-the-sign-out-of-a-symbolic	<Arcsch><Negate>x</Negate></Arcsch>	<Negate><Arcsch>x</Arcsch></Negate>
+derivative-for-real-x-ne-0	<D><Arcsch>x</Arcsch> x</D>	<Divide>-1 <Multiply><Abs>x</Abs> <Sqrt><Add><Power>x 2</Power> 1</Add></Sqrt></Multiply></Divide>

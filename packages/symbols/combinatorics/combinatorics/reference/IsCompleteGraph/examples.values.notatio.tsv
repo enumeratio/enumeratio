@@ -1,0 +1,4 @@
+id	in	out
+completegraph-n-is-complete	<IsCompleteGraph><CompleteGraph>5</CompleteGraph></IsCompleteGraph>	<True />
+a-path-is-not-complete	<IsCompleteGraph><Graph><List>1 2 3</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List></Graph></IsCompleteGraph>	<False />
+a-directed-2-cycle-is-complete	<IsCompleteGraph><Graph><List>1 2</List> <List><DirectedEdge>1 2</DirectedEdge> <DirectedEdge>2 1</DirectedEdge></List></Graph></IsCompleteGraph>	<True />

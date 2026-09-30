@@ -1,0 +1,3 @@
+id	in	out
+3-4-5	<Normalize><List>3 4</List></Normalize>	<List><Rational>3 5</Rational> <Rational>4 5</Rational></List>
+zero-vector	<Normalize><List>0 0</List></Normalize>	<List>0 0</List>

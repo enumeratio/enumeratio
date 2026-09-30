@@ -1,0 +1,3 @@
+id	in	out
+factorial-ratio	<DiscreteRatio><Factorial>n</Factorial> n</DiscreteRatio>	<Add>n 1</Add>
+geometric-ratio	<DiscreteRatio><Power>2 n</Power> n</DiscreteRatio>	<ToExpression>2</ToExpression>

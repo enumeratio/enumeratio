@@ -1,0 +1,43 @@
+id	in	out
+tan-0	<Tan>0</Tan>	<ToExpression>0</ToExpression>
+tan-pi-over-6	<Tan><Divide>Pi 6</Divide></Tan>	<Divide><Sqrt>3</Sqrt> 3</Divide>
+tan-pi-over-4	<Tan><Divide>Pi 4</Divide></Tan>	<ToExpression>1</ToExpression>
+tan-pi-over-3	<Tan><Divide>Pi 3</Divide></Tan>	<Sqrt>3</Sqrt>
+tan-30-circ-frac-sqrt-3-3-exactly	<Tan><Degrees>30</Degrees></Tan>	<Divide><Sqrt>3</Sqrt> 3</Divide>
+a-machine-precision-argument-evaluates	<Tan>1.2</Tan>	<ToExpression>2.57215162212631893541</ToExpression>
+a-huge-24-40-argument	<N><Tan><Power>24 40</Power></Tan></N>	<ToExpression>0.43654379528724435808511</ToExpression>
+a-huge-10-100-argument	<N><Tan><Power>10 100</Power></Tan></N>	<ToExpression>0.40123196199081435418575</ToExpression>
+a-huge-3-200-argument	<N><Tan><Power>3 200</Power></Tan></N>	<ToExpression>2.723734341072774336434671</ToExpression>
+a-huge-neg-7-60-argument	<N><Tan><Negate><Power>7 60</Power></Negate></Tan></N>	<ToExpression>-0.39219908973632931274844</ToExpression>
+a-huge-10-80-plus-1-over-3-argument	<N><Tan><Divide><Add><Power>10 80</Power> 1</Add> 3</Divide></Tan></N>	<ToExpression>5.777333408915218939564447</ToExpression>
+tan-100-under-n	<N><Tan>100</Tan></N>	<ToExpression>-0.5872139151569207</ToExpression>
+n-of-an-exact-argument-gives-an-arbitrary	<N><Tan><Rational>6 5</Rational></Tan></N>	<ToExpression>2.57215162212631893541</ToExpression>
+evaluates-at-a-complex-argument	<Tan><Complex>2.5 1</Complex></Tan>	<Complex>-0.23701383091627057 0.8964379171278617</Complex>
+threads-element-wise-over-a-matrix	<Tan><List><List><Multiply>5 <Divide>Pi 6</Divide></Multiply> Pi</List> <List><Divide>Pi 3</Divide> <Negate>Pi</Negate></List></List></Tan>	<List><List><Negate><Divide><Sqrt>3</Sqrt> 3</Divide></Negate> 0</List> <List><Sqrt>3</Sqrt> 0</List></List>
+tan-pi-8-sqrt-2-1	<Tan><Divide>Pi 8</Divide></Tan>	<Add>-1 <Sqrt>2</Sqrt></Add>
+tan-pi-12-2-sqrt-3	<Tan><Divide>Pi 12</Divide></Tan>	<Add>2 <Negate><Sqrt>3</Sqrt></Negate></Add>
+tan-pi-5-sqrt-5-2-sqrt-5	<Tan><Divide>Pi 5</Divide></Tan>	<Sqrt><Add>5 <Multiply>-2 <Sqrt>5</Sqrt></Multiply></Add></Sqrt>
+tan-pi-10-sqrt-1-2-sqrt-5	<Tan><Divide>Pi 10</Divide></Tan>	<Multiply><Divide><Sqrt>5</Sqrt> 5</Divide> <Sqrt><Add>5 <Multiply>-2 <Sqrt>5</Sqrt></Multiply></Add></Sqrt></Multiply>
+tan-5-pi-12-2-sqrt-3	<Tan><Multiply><Rational>5 12</Rational> Pi</Multiply></Tan>	<Add>2 <Sqrt>3</Sqrt></Add>
+tan-3-over-4-times-pi	<Tan><Multiply><Rational>3 4</Rational> Pi</Multiply></Tan>	<ToExpression>-1</ToExpression>
+interval-arithmetic-the-image-of-0-pi-3-is-0	<Tan><Interval>0 <Divide>Pi 3</Divide></Interval></Tan>	<Interval>0 <Sqrt>3</Sqrt></Interval>
+uncertainty-propagation-tan-2-pm-0-02-approx-2	<Tan><Around>2 0.02</Around></Tan>	<Around>-2.185039863261519 0.11548798408083835</Around>
+tan-ix-i-tanh-x	<Tan><Multiply>ImaginaryUnit x</Multiply></Tan>	<Multiply><Complex>0 1</Complex> <Tanh>x</Tanh></Multiply>
+oddness-pulls-the-sign-out-of-a-symbolic	<Tan><Negate>x</Negate></Tan>	<Negate><Tan>x</Tan></Negate>
+tan-arctan-x-x-for-every-x	<Tan><Arctan>x</Arctan></Tan>	<x />
+tan-arctan-2-2-for-every-x	<Tan><Arctan>2</Arctan></Tan>	<ToExpression>2</ToExpression>
+tan-arcsin-x-frac-x-sqrt-1-x-2	<Tan><Arcsin>x</Arcsin></Tan>	<Divide>x <Sqrt><Add><Negate><Power>x 2</Power></Negate> 1</Add></Sqrt></Divide>
+derivative-sec-2-x	<D><Tan>x</Tan> x</D>	<Power><Sec>x</Sec> 2</Power>
+antiderivative-ln-sec-x	<Integrate><Tan>x</Tan> x</Integrate>	<Ln><Abs><Sec>x</Sec></Abs></Ln>
+taylor-series-about-0	<Series><Tan>x</Tan> x 0 7</Series>	<Add><Multiply><Rational>17 315</Rational> <Power>x 7</Power></Multiply> <Multiply><Rational>2 15</Rational> <Power>x 5</Power></Multiply> <Multiply><Rational>1 3</Rational> <Power>x 3</Power></Multiply> x <BigO><Power>x 9</Power></BigO></Add>
+to-30-significant-digits-every-one-correctly	<N><Tan>1</Tan> 30</N>	<ToExpression>1.55740772465490223050697480746</ToExpression>
+threads-element-wise-over-a-list	<Tan><List>0 <Divide>Pi 4</Divide></List></Tan>	<List>0 1</List>
+tan-x-frac-sin-x-cos-x	<Equal><Tan><Divide>Pi 4</Divide></Tan> <Divide><Sin><Divide>Pi 4</Divide></Sin> <Cos><Divide>Pi 4</Divide></Cos></Divide></Equal>	<True />
+odd-function-tan-x-tan-x	<Tan><Negate><Divide>Pi 4</Divide></Negate></Tan>	<ToExpression>-1</ToExpression>
+period-pi-not-2-pi-adding-a-half-turn-doesn-t	<Tan><Add><Divide>Pi 4</Divide> Pi</Add></Tan>	<ToExpression>1</ToExpression>
+sin-x-cos-x-should-simplify-to-tan-x-simplify	<Simplify><Divide><Sin>x</Sin> <Cos>x</Cos></Divide></Simplify>	<Tan>x</Tan>
+rewritten-in-exponentials	<TrigToExp><Tan>x</Tan></TrigToExp>	<Multiply><Complex>0 -1</Complex> <Divide><Add><Negate><Power>ExponentialE <Multiply><Complex>0 -1</Complex> x</Multiply></Power></Negate> <Power>ExponentialE <Multiply><Complex>0 1</Complex> x</Multiply></Power></Add> <Add><Power>ExponentialE <Multiply><Complex>0 1</Complex> x</Multiply></Power> <Power>ExponentialE <Multiply><Complex>0 -1</Complex> x</Multiply></Power></Add></Divide></Multiply>
+a-pole-cos-pi-2-0-so-the-ratio-blows-up	<Tan><Divide>Pi 2</Divide></Tan>	<ComplexInfinity />
+same-rule-as-sin-and-cos-a-non-special-numeric	<Tan>1</Tan>	<Tan>1</Tan>
+a-pole-at-negative-pi-over-2-too	<Tan><Divide>Pi -2</Divide></Tan>	<ComplexInfinity />
+a-pole-reached-through-periodicity-unreduced	<Tan><Add><Divide>Pi -2</Divide> Pi</Add></Tan>	<ComplexInfinity />

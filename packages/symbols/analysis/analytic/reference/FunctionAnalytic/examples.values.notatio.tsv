@@ -1,0 +1,5 @@
+id	in	out
+polynomials-are-entire	<FunctionAnalytic><Power>x 2</Power> x</FunctionAnalytic>	<True />
+a-pole-anywhere-in-the-plane-disqualifies-it	<FunctionAnalytic><Divide>1 x</Divide> x</FunctionAnalytic>	<False />
+sqrt-has-a-branch-point	<FunctionAnalytic><Sqrt>x</Sqrt> x</FunctionAnalytic>	<False />
+sine-is-entire	<FunctionAnalytic><Sin>x</Sin> x</FunctionAnalytic>	<True />

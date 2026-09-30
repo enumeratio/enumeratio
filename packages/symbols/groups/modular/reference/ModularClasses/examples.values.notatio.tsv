@@ -1,0 +1,7 @@
+id	in	out
+four-closed-geodesics-of-symbolic-length-4	<ModularClasses>4</ModularClasses>	<List>"LLLR" "LLRR" "LRLR" "LRRR"</List>
+same-word-length-as-lllr-different-geodesic	<ModularTrace>"LRLR"</ModularTrace>	<ToExpression>7</ToExpression>
+the-same-geodesic-entered-elsewhere	<ModularClass>"LRL"</ModularClass>	<ToExpression>"LLR"</ToExpression>
+lrlr-is-lr-traversed-twice	<IsPrimitiveClass>"LRLR"</IsPrimitiveClass>	<False />
+the-same-geodesic-yet-again	<ModularClass>"RLL"</ModularClass>	<ToExpression>"LLR"</ToExpression>
+lrr-is-primitive	<IsPrimitiveClass>"LRR"</IsPrimitiveClass>	<True />

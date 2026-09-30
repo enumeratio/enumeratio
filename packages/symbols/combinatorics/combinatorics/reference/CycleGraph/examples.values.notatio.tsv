@@ -1,0 +1,3 @@
+id	in	out
+c5-is-not-bipartite	<IsBipartiteGraph><CycleGraph>5</CycleGraph></IsBipartiteGraph>	<False />
+c6-is-bipartite	<IsBipartiteGraph><CycleGraph>6</CycleGraph></IsBipartiteGraph>	<True />

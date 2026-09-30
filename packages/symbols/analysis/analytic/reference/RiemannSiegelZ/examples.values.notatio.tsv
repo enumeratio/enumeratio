@@ -1,0 +1,5 @@
+id	in	out
+riemannsiegelz-1p5	<RiemannSiegelZ>1.5</RiemannSiegelZ>	<ToExpression>-0.595568336782887</ToExpression>
+riemannsiegelz-20p5	<RiemannSiegelZ>20.5</RiemannSiegelZ>	<ToExpression>0.5993287025147513</ToExpression>
+riemannsiegelz-100	<N><RiemannSiegelZ>100</RiemannSiegelZ></N>	<ToExpression>2.6926970566644637</ToExpression>
+z-0-zeta-1-2	<N><RiemannSiegelZ>0</RiemannSiegelZ></N>	<ToExpression>-1.4603545088095868</ToExpression>

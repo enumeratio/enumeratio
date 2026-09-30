@@ -1,0 +1,5 @@
+id	in	out
+randominteger-default-seed-is-reproducible	<Last><List><SeedRandom>42</SeedRandom> <RandomInteger>100</RandomInteger></List></Last>	<ToExpression>60</ToExpression>
+randominteger-range-scope	<Last><List><SeedRandom>1</SeedRandom> <RandomInteger><List>10 20</List></RandomInteger></List></Last>	<ToExpression>16</ToExpression>
+randominteger-list-of-draws	<Length><Last><List><SeedRandom>2</SeedRandom> <RandomInteger>6 10</RandomInteger></List></Last></Length>	<ToExpression>10</ToExpression>
+randominteger-array-shape	<Shape><Last><List><SeedRandom>3</SeedRandom> <RandomInteger>1 <List>2 3</List></RandomInteger></List></Last></Shape>	<Tuple>2 3</Tuple>

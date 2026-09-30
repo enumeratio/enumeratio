@@ -1,0 +1,2 @@
+id	in	out
+q3-has-8-vertices-12-edges	<List><VertexCount><HypercubeGraph>3</HypercubeGraph></VertexCount> <EdgeCount><HypercubeGraph>3</HypercubeGraph></EdgeCount></List>	<List>8 12</List>

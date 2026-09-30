@@ -1,0 +1,6 @@
+id	in	out
+degrees-around-a-path	<VertexDegree><PathGraph>5</PathGraph></VertexDegree>	<List>1 2 2 2 1</List>
+the-degree-of-one-vertex	<VertexDegree><StarGraph>6</StarGraph> 1</VertexDegree>	<ToExpression>5</ToExpression>
+a-self-loop-counts-twice-at-its-own-vertex	<VertexDegree><Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 1</UndirectedEdge> <UndirectedEdge>1 1</UndirectedEdge></List></Graph></VertexDegree>	<List>4 2 2</List>
+the-degree-of-vertex-2-in-a-mixed-graph	<VertexDegree><Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <DirectedEdge>3 1</DirectedEdge></List></Graph> 2</VertexDegree>	<ToExpression>2</ToExpression>
+the-degree-of-vertex-3-in-a-mixed-graph	<VertexDegree><Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <DirectedEdge>3 1</DirectedEdge></List></Graph> 3</VertexDegree>	<ToExpression>2</ToExpression>

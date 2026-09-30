@@ -1,0 +1,4 @@
+id	in	out
+dirac-delta-at-origin	<FourierTransform><DiracDelta>t</DiracDelta> t w</FourierTransform>	<Sqrt><Divide>1 <Multiply>2 Pi</Multiply></Divide></Sqrt>
+gaussian	<FourierTransform><Power>ExponentialE <Negate><Power>t 2</Power></Negate></Power> t w</FourierTransform>	<Multiply><Divide><Sqrt>2</Sqrt> 2</Divide> <Power>ExponentialE <Multiply><Rational>-1 4</Rational> <Power>w 2</Power></Multiply></Power></Multiply>
+cosine	<FourierTransform><Cos><Multiply>a t</Multiply></Cos> t w</FourierTransform>	<Multiply><Divide><Sqrt>2</Sqrt> 2</Divide> <Add><DiracDelta><Add>a w</Add></DiracDelta> <DiracDelta><Add><Negate>a</Negate> w</Add></DiracDelta></Add> <Sqrt>Pi</Sqrt></Multiply>

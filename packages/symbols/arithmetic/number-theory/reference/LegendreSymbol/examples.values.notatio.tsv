@@ -1,0 +1,8 @@
+id	in	out
+2-is-a-quadratic-residue-mod-7-32-2-mod-7	<LegendreSymbol>2 7</LegendreSymbol>	<ToExpression>1</ToExpression>
+3-is-not-a-quadratic-residue-mod-7	<LegendreSymbol>3 7</LegendreSymbol>	<ToExpression>-1</ToExpression>
+0-when-p-divides-n	<LegendreSymbol>14 7</LegendreSymbol>	<ToExpression>0</ToExpression>
+listable-in-n-the-residues-mod-7-are-1-2-4	<LegendreSymbol><List>1 2 3 4 5 6</List> 7</LegendreSymbol>	<List>1 1 -1 1 -1 -1</List>
+1-is-a-residue-mod-p-exactly-when-p-equiv-1-pmod	<LegendreSymbol>-1 13</LegendreSymbol>	<ToExpression>1</ToExpression>
+euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here	<Equal><LegendreSymbol>3 7</LegendreSymbol> <Subtract><PowerMod>3 3 7</PowerMod> 7</Subtract></Equal>	<True />
+9-is-not-prime-so-the-call-stays-symbolic-see	<LegendreSymbol>2 9</LegendreSymbol>	<LegendreSymbol>2 9</LegendreSymbol>

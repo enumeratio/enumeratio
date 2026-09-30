@@ -1,0 +1,5 @@
+id	in	out
+b-4	<Count><SetPartitions>4</SetPartitions></Count>	<ToExpression>15</ToExpression>
+blocks-are-stirling-numbers-of-the-second-kind	<Tally><CombinatorialStat><SetPartitions>5</SetPartitions> "Blocks"</CombinatorialStat></Tally>	<Tuple><List>1 2 3 4 5</List> <List>1 15 25 10 1</List></Tuple>
+by-singleton-blocks	<Tally><CombinatorialStat><SetPartitions>5</SetPartitions> "SingletonBlocks"</CombinatorialStat></Tally>	<Tuple><List>0 1 2 3 5</List> <List>11 20 10 10 1</List></Tuple>
+one-crossing-at-4	<Tally><CombinatorialStat><SetPartitions>4</SetPartitions> "Crossings"</CombinatorialStat></Tally>	<Tuple><List>0 1</List> <List>14 1</List></Tuple>

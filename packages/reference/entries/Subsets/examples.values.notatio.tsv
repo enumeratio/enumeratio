@@ -1,0 +1,7 @@
+id	in	out
+the-documented-subsets-collection-form-listed-in	<Subsets><List>a b c</List></Subsets>	<List><Apply>List</Apply> <List>a</List> <List>b</List> <List>a b</List> <List>c</List> <List>a c</List> <List>b c</List> <List>a b c</List></List>
+a-size-bound-the-subsets-with-at-most-2-elements	<Count><Subsets>4 2</Subsets></Count>	<ToExpression>11</ToExpression>
+an-exact-size-2-binom-4-2-subsets	<Count><Subsets>4 <List>2</List></Subsets></Count>	<ToExpression>6</ToExpression>
+a-size-range-0-5-2-the-even-size-subsets-2-4-of	<Count><Subsets>5 <List>0 5 2</List></Subsets></Count>	<ToExpression>16</ToExpression>
+a-set-of-n-elements-has-2-n-subsets-count	<Length><Subsets><Range>1 10</Range></Subsets></Length>	<ToExpression>1024</ToExpression>
+counting-by-size-sum-k-binom-n-k-2-n-subsets-of	<Sum><Binomial>5 k</Binomial> <Tuple>k 0 5</Tuple></Sum>	<ToExpression>32</ToExpression>

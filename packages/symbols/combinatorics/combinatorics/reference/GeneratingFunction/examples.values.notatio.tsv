@@ -1,0 +1,7 @@
+id	in	out
+fibonacci	<GeneratingFunction><Fibonacci>n</Fibonacci> n x</GeneratingFunction>	<Divide>x <Add><Negate><Power>x 2</Power></Negate> <Negate>x</Negate> 1</Add></Divide>
+catalan-numbers	<GeneratingFunction><CatalanNumber>n</CatalanNumber> n x</GeneratingFunction>	<Divide><Add><Negate><Sqrt><Add><Multiply>-4 x</Multiply> 1</Add></Sqrt></Negate> 1</Add> <Multiply>2 x</Multiply></Divide>
+dyck-paths-via-count	<GeneratingFunction><Count><DyckPaths>n</DyckPaths></Count> n x</GeneratingFunction>	<Divide><Add><Negate><Sqrt><Add><Multiply>-4 x</Multiply> 1</Add></Sqrt></Negate> 1</Add> <Multiply>2 x</Multiply></Divide>
+fixed-k-binomial	<GeneratingFunction><Binomial>n 3</Binomial> n x</GeneratingFunction>	<Divide><Power>x 3</Power> <Add><Power>x 4</Power> <Multiply>-4 <Power>x 3</Power></Multiply> <Multiply>6 <Power>x 2</Power></Multiply> <Multiply>-4 x</Multiply> 1</Add></Divide>
+geometric	<GeneratingFunction><Power>2 n</Power> n x</GeneratingFunction>	<Divide>1 <Add><Multiply>-2 x</Multiply> 1</Add></Divide>
+no-closed-form	<GeneratingFunction><Factorial>n</Factorial> n x</GeneratingFunction>	<GeneratingFunction><Factorial>n</Factorial> n x</GeneratingFunction>

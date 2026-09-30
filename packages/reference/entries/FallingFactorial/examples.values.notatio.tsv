@@ -1,0 +1,4 @@
+id	in	out
+falling-factorial-5-3-60	<FallingFactorial>5 3</FallingFactorial>	<ToExpression>60</ToExpression>
+falling-factorial-3-5-0	<FallingFactorial>3 5</FallingFactorial>	<ToExpression>0</ToExpression>
+falling-factorial-half-2-neg-1-4	<FallingFactorial><Rational>1 2</Rational> 2</FallingFactorial>	<Rational>-1 4</Rational>

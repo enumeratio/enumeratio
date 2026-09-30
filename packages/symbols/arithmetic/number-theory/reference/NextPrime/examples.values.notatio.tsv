@@ -1,0 +1,15 @@
+id	in	out
+nextprime-10	<NextPrime>10</NextPrime>	<ToExpression>11</ToExpression>
+nextprime-100	<NextPrime>100</NextPrime>	<ToExpression>101</ToExpression>
+the-second-prime-after-10	<NextPrime>10 2</NextPrime>	<ToExpression>13</ToExpression>
+nextprime-6	<NextPrime>6</NextPrime>	<ToExpression>7</ToExpression>
+the-second-prime-after-50	<NextPrime>50 2</NextPrime>	<ToExpression>59</ToExpression>
+the-largest-prime-below-50	<NextPrime>50 -1</NextPrime>	<ToExpression>47</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<NextPrime><List>1 5 10 15</List></NextPrime>	<List>2 7 11 17</List>
+large-integers-the-first-prime-past-a-googol-is	<NextPrime><Power>10 100</Power></NextPrime>	<ToExpression>10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267</ToExpression>
+rational-n-the-next-prime-above-7-2	<NextPrime><Rational>7 2</Rational></NextPrime>	<ToExpression>5</ToExpression>
+real-n-the-next-prime-above-100-5	<NextPrime>100.5</NextPrime>	<ToExpression>101</ToExpression>
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime	<Equal><NextPrime><NthPrime>20</NthPrime></NextPrime> <NthPrime>21</NthPrime></Equal>	<True />
+a-negative-k-walks-backward-giving-the-prime	<NextPrime>10 -1</NextPrime>	<ToExpression>7</ToExpression>
+negative-n-wolfram-counts-7-as-prime-and-returns	<NextPrime>-10</NextPrime>	<ToExpression>-7</ToExpression>
+nextprime-neg-2	<NextPrime>-2</NextPrime>	<ToExpression>2</ToExpression>

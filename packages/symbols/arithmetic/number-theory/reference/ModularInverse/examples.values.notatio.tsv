@@ -1,0 +1,32 @@
+id	in	out
+3-cdot-5-15-equiv-1	<ModularInverse>3 7</ModularInverse>	<ToExpression>5</ToExpression>
+modularinverse-2-11	<ModularInverse>2 11</ModularInverse>	<ToExpression>6</ToExpression>
+a-negative-argument-3-cdot-2-6-equiv-1	<ModularInverse>-3 7</ModularInverse>	<ToExpression>2</ToExpression>
+a-21-digit-modulus	<ModularInverse>3 <Add><Power>10 20</Power> 1</Add></ModularInverse>	<ToExpression>33333333333333333334</ToExpression>
+listable-threads-over-a-list	<ModularInverse><List>2 3 4</List> 11</ModularInverse>	<List>6 4 3</List>
+2-i-6-4i-8-14i-equiv-1-pmod-7	<ModularInverse><Complex>2 1</Complex> 7</ModularInverse>	<Complex>6 4</Complex>
+modularinverse-11-plus-neg-7-times-i-7-plus-4i	<ModularInverse><Complex>11 -7</Complex> <Complex>7 4</Complex></ModularInverse>	<Complex>-1 2</Complex>
+a-gaussian-base-and-a-gaussian-modulus	<ModularInverse><Complex>3 -1</Complex> <Complex>5 2</Complex></ModularInverse>	<Complex>-1 -1</Complex>
+inverse-mod-a-unit-is-always-0	<ModularInverse><Complex>3 4</Complex> 1</ModularInverse>	<ToExpression>0</ToExpression>
+inverse-mod-i-is-always-0	<ModularInverse><Complex>3 4</Complex> <Complex>0 1</Complex></ModularInverse>	<ToExpression>0</ToExpression>
+a-unit-is-its-own-inverse-mod-anything-it-s-a	<ModularInverse><Complex>0 1</Complex> <Complex>2 1</Complex></ModularInverse>	<Complex>0 -1</Complex>
+inverse-of-a-gaussian-prime-mod-a-coprime	<ModularInverse><Complex>2 1</Complex> <Complex>2 -1</Complex></ModularInverse>	<ToExpression>-1</ToExpression>
+inverse-mod-a-real-prime-3-mod-4	<ModularInverse><Complex>2 1</Complex> 3</ModularInverse>	<Complex>1 1</Complex>
+no-inverse-when-the-gcd-isn-t-a-unit-shared	<ModularInverse><Complex>3 4</Complex> <Complex>2 1</Complex></ModularInverse>	<ModularInverse><Complex>3 4</Complex> <Complex>2 1</Complex></ModularInverse>
+inverse-mod-a-negative-real-prime	<ModularInverse><Complex>2 1</Complex> -7</ModularInverse>	<Complex>-1 -3</Complex>
+inverse-mod-a-composite-gaussian-modulus-norm-25	<ModularInverse><Complex>1 1</Complex> <Complex>3 4</Complex></ModularInverse>	<Complex>0 3</Complex>
+inverse-mod-a-modulus-past-2-53	<ModularInverse><Complex>4 1</Complex> <Complex>100000000000000000001 9007199254740993</Complex></ModularInverse>	<Complex>-47059883199912322470 11760467200350710121</Complex>
+inverse-mod-1-4i-the-other-prime-above-17	<ModularInverse><Complex>8 2</Complex> <Complex>1 4</Complex></ModularInverse>	<ToExpression>-1</ToExpression>
+a-real-base-inverted-mod-a-gaussian-modulus	<ModularInverse>5 <Complex>2 1</Complex></ModularInverse>	<ModularInverse>5 <Complex>2 1</Complex></ModularInverse>
+inverse-mod-a-large-norm-gaussian	<ModularInverse><Complex>1 1</Complex> <Complex>123 456</Complex></ModularInverse>	<Complex>-166 289</Complex>
+inverse-mod-a-negative-real-composite-has-none	<ModularInverse><Complex>5 5</Complex> -15</ModularInverse>	<ModularInverse><Complex>5 5</Complex> -15</ModularInverse>
+inverse-of-a-prime-above-13-mod-the-other-prime	<ModularInverse><Complex>3 2</Complex> <Complex>2 3</Complex></ModularInverse>	<ToExpression>-2</ToExpression>
+inverse-mod-a-negative-associate	<ModularInverse><Complex>2 1</Complex> <Complex>-2 -3</Complex></ModularInverse>	<Complex>-1 -1</Complex>
+inverse-mod-a-real-composite-5-squared-has-none	<ModularInverse><Complex>5 5</Complex> 25</ModularInverse>	<ModularInverse><Complex>5 5</Complex> 25</ModularInverse>
+inverse-of-a-real-prime-s-associate-by-i-mod-a	<ModularInverse><Complex>0 7</Complex> <Complex>3 2</Complex></ModularInverse>	<Complex>0 -2</Complex>
+inverse-mod-a-real-prime-19	<ModularInverse><Complex>2 1</Complex> 19</ModularInverse>	<Complex>8 15</Complex>
+no-inverse-mod-0	<ModularInverse><Complex>2 1</Complex> 0</ModularInverse>	<ModularInverse><Complex>2 1</Complex> 0</ModularInverse>
+a-real-base-with-no-inverse-mod-a-shared-factor	<ModularInverse>5 <Complex>5 5</Complex></ModularInverse>	<ModularInverse>5 <Complex>5 5</Complex></ModularInverse>
+the-same-as-powermod-with-exponent-1	<Equal><ModularInverse>3 7</ModularInverse> <PowerMod>3 -1 7</PowerMod></Equal>	<True />
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	<Mod><Multiply>12345 <ModularInverse>12345 <Subtract><Power>2 61</Power> 1</Subtract></ModularInverse></Multiply> <Subtract><Power>2 61</Power> 1</Subtract></Mod>	<ToExpression>1</ToExpression>
+gcd-2-4-2-no-inverse	<ModularInverse>2 4</ModularInverse>	<ModularInverse>2 4</ModularInverse>

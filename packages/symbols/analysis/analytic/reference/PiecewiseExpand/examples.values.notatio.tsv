@@ -1,0 +1,6 @@
+id	in	out
+abs-of-a-real-variable	<PiecewiseExpand><Abs>x</Abs> <Element>x RealNumbers</Element></PiecewiseExpand>	<Piecewise><List><List><Negate>x</Negate> <Less>x 0</Less></List></List> x</Piecewise>
+sign-of-a-real-variable	<PiecewiseExpand><Sign>x</Sign> <Element>x RealNumbers</Element></PiecewiseExpand>	<Piecewise><List><List>-1 <Less>x 0</Less></List> <List>1 <Less>0 x</Less></List></List> 0</Piecewise>
+clip-of-a-real-variable	<PiecewiseExpand><Clip>x <List>-1 1</List></Clip> <Element>x RealNumbers</Element></PiecewiseExpand>	<Piecewise><List><List>-1 <Less>x -1</Less></List> <List>1 <Less>1 x</Less></List></List> x</Piecewise>
+max-of-two-real-variables	<PiecewiseExpand><Max>x y</Max> <And><Element>x RealNumbers</Element> <Element>y RealNumbers</Element></And></PiecewiseExpand>	<Piecewise><List><List>x <LessEqual>y x</LessEqual></List></List> y</Piecewise>
+without-a-realness-assumption-it-declines	<PiecewiseExpand><Abs>x</Abs></PiecewiseExpand>	<Abs>x</Abs>

@@ -1,0 +1,4 @@
+id	in	out
+momentgeneratingfunction-gamma	<MomentGeneratingFunction><GammaDistribution>2 1</GammaDistribution> t</MomentGeneratingFunction>	<Power><Add><Negate>t</Negate> 1</Add> -2</Power>
+momentgeneratingfunction-poisson-at-zero	<MomentGeneratingFunction><PoissonDistribution>2</PoissonDistribution> 0</MomentGeneratingFunction>	<ToExpression>1</ToExpression>
+momentgeneratingfunction-cauchy-undeclared	<MomentGeneratingFunction><CauchyDistribution>0 1</CauchyDistribution> 1</MomentGeneratingFunction>	<MomentGeneratingFunction><CauchyDistribution>0 1</CauchyDistribution> 1</MomentGeneratingFunction>

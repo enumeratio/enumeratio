@@ -1,0 +1,5 @@
+id	in	out
+nexpectation-sin-of-normal	<NExpectation><Sin>x</Sin> <Distributed>x <NormalDistribution>2 3</NormalDistribution></Distributed></NExpectation>	<ToExpression>0.010101381966839188</ToExpression>
+nexpectation-cube-of-exponential	<NExpectation><Power>x 3</Power> <Distributed>x <ExponentialDistribution>2</ExponentialDistribution></Distributed></NExpectation>	<ToExpression>0.7500000000000001</ToExpression>
+nexpectation-poisson-reciprocal	<NExpectation><Power><Add>x 1</Add> -1</Power> <Distributed>x <PoissonDistribution>3</PoissonDistribution></Distributed></NExpectation>	<ToExpression>0.3167376438773777</ToExpression>
+nexpectation-binomial-cube-finite-sum	<NExpectation><Power>x 3</Power> <Distributed>x <BinomialDistribution>5 <Rational>2 5</Rational></BinomialDistribution></Distributed></NExpectation>	<ToExpression>15.44</ToExpression>

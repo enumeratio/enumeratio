@@ -1,0 +1,28 @@
+id	in	out
+pi-s-famous-convergent	<ContinuedFraction><Rational>355 113</Rational></ContinuedFraction>	<List>3 7 16</List>
+5-3-1-1-2	<SternBrocotPath>5 3</SternBrocotPath>	<ToExpression>"RLR"</ToExpression>
+47-17-2-1-1-1-3-1-4	<ContinuedFraction><Rational>47 17</Rational></ContinuedFraction>	<List>2 1 3 4</List>
+the-first-20-terms-of-a-quadratic-irrational	<ContinuedFraction><Sqrt>13</Sqrt> 20</ContinuedFraction>	<List>3 1 1 1 1 6 1 1 1 1 6 1 1 1 1 6 1 1 1 1</List>
+20-terms-of-pi-past-the-13-term-double-precision	<ContinuedFraction>Pi 20</ContinuedFraction>	<List>3 7 15 1 292 1 1 1 2 1 3 1 14 2 1 1 2 2 2 2</List>
+a-quadratic-irrational-s-exact-expansion-is	<ContinuedFraction><Sqrt>13</Sqrt></ContinuedFraction>	<List>3 <List>1 1 1 1 6</List></List>
+sqrt-2-is-1-overline-2	<ContinuedFraction><Sqrt>2</Sqrt></ContinuedFraction>	<List>1 <List>2</List></List>
+e-s-pattern-1-2k-1	<ContinuedFraction>ExponentialE 10</ContinuedFraction>	<List>2 1 2 1 1 4 1 1 6 1</List>
+any-constant-compute-engine-can-evaluate	<ContinuedFraction>EulerGamma 10</ContinuedFraction>	<List>0 1 1 2 1 2 1 4 3 13</List>
+a-floating-point-number-read-as-the-rational-it	<ContinuedFraction>3.245</ContinuedFraction>	<List>3 4 12 4</List>
+varphi-1-overline-1-purely-periodic-so-the	<ContinuedFraction><Divide><Add>1 <Sqrt>5</Sqrt></Add> 2</Divide></ContinuedFraction>	<List>1 <List>1</List></List>
+the-named-constant-unfolded-to-1-sqrt-5-2-first	<ContinuedFraction>GoldenRatio 10</ContinuedFraction>	<List>1 1 1 1 1 1 1 1 1 1</List>
+a-sum-of-surds-still-a-quadratic-irrational	<ContinuedFraction><Add>1 <Sqrt>2</Sqrt></Add> 5</ContinuedFraction>	<List>2 2 2 2 2</List>
+a-cube-root-algebraic-degree-3-not-periodic-so-a	<ContinuedFraction><Power>2 <Rational>1 3</Rational></Power> 10</ContinuedFraction>	<List>1 3 1 5 1 1 4 1 1 8</List>
+symbolic-terms-build-the-nested-fraction-left	<FromContinuedFraction><List>a b c</List></FromContinuedFraction>	<Add>a <Divide>1 <Add>b <Divide>1 c</Divide></Add></Divide></Add>
+25-terms-past-the-double-precision-wall	<ContinuedFraction>GoldenRatio 25</ContinuedFraction>	<List>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</List>
+and-back-again	<FromSternBrocotPath>"RLR"</FromSternBrocotPath>	<Rational>5 3</Rational>
+1-cdot-2-3-cdot-1-1	<FareyNeighbours>1 3 1 2</FareyNeighbours>	<True />
+fromcontinuedfraction-inverts-it	<FromContinuedFraction><ContinuedFraction><Rational>47 17</Rational></ContinuedFraction></FromContinuedFraction>	<Rational>47 17</Rational>
+a-periodic-tail-rebuilds-the-quadratic	<FromContinuedFraction><List>3 <List>1 1 1 1 6</List></List></FromContinuedFraction>	<Sqrt>13</Sqrt>
+1-overline-2-sqrt-2	<FromContinuedFraction><List>1 <List>2</List></List></FromContinuedFraction>	<Sqrt>2</Sqrt>
+a-plain-finite-list-inverts-continuedfraction	<FromContinuedFraction><List>3 7 16</List></FromContinuedFraction>	<Rational>355 113</Rational>
+the-golden-ratio-s-convergents-alternate	<SternBrocotPath>13 8</SternBrocotPath>	<ToExpression>"RLRLR"</ToExpression>
+not-farey-neighbours	<FareyNeighbours>1 3 2 3</FareyNeighbours>	<False />
+a-multi-term-pre-period-folds-too	<FromContinuedFraction><ContinuedFraction><Subtract>2 <Sqrt>3</Sqrt></Subtract></ContinuedFraction></FromContinuedFraction>	<Add>2 <Negate><Sqrt>3</Sqrt></Negate></Add>
+negative-a-floor-for-a-0-then-positive-terms-3-1	<ContinuedFraction><Rational>-47 17</Rational></ContinuedFraction>	<List>-3 4 4</List>
+the-two-arg-native-form-means-n-terms	<ContinuedFraction>355 113</ContinuedFraction>	<List>355</List>

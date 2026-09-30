@@ -1,0 +1,23 @@
+id	in	out
+5-6-7	<Pochhammer>5 3</Pochhammer>	<ToExpression>210</ToExpression>
+an-empty-product-is-1	<Pochhammer>2 0</Pochhammer>	<ToExpression>1</ToExpression>
+1-5-equals-5	<Pochhammer>1 5</Pochhammer>	<ToExpression>120</ToExpression>
+pochhammer-3-4	<Pochhammer>3 4</Pochhammer>	<ToExpression>360</ToExpression>
+10-11-12-13-14-15	<Pochhammer>10 6</Pochhammer>	<ToExpression>3603600</ToExpression>
+at-pochhammer-3-2	<N><Pochhammer>3 2</Pochhammer></N>	<ToExpression>12</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<Pochhammer><List>2 3 4</List> 2</Pochhammer>	<List>6 12 20</List>
+a-symbolic-base-with-integer-order-expands-to	<Pochhammer>n 5</Pochhammer>	<Multiply>n <Add>n 1</Add> <Add>n 2</Add> <Add>n 3</Add> <Add>n 4</Add></Multiply>
+a-negative-order-expands-to-the-reciprocal	<Pochhammer>n -5</Pochhammer>	<Divide>1 <Multiply><Add>n -1</Add> <Add>n -2</Add> <Add>n -3</Add> <Add>n -4</Add> <Add>n -5</Add></Multiply></Divide>
+real-base-and-order-evaluate-as-frac-gamma-a-n	<Pochhammer>2.4 8.5</Pochhammer>	<ToExpression>2310224.67324070778057</ToExpression>
+a-zero-base-gives-0-for-any-positive-order	<Pochhammer>0 1285</Pochhammer>	<ToExpression>0</ToExpression>
+a-rational-base-frac-12-cdot-frac-32-cdot-frac	<Pochhammer><Rational>1 2</Rational> 3</Pochhammer>	<Rational>15 8</Rational>
+a-rational-order-evaluates-through-gamma-exactly	<Pochhammer><Rational>3 2</Rational> <Rational>1 2</Rational></Pochhammer>	<Divide>2 <Sqrt>Pi</Sqrt></Divide>
+complex-base-and-order-evaluate-through-gamma	<Pochhammer><Complex>2 5</Complex> <Complex>0 8</Complex></Pochhammer>	<Complex>0.0000021386822918680963 -0.000014218737711709974</Complex>
+dividing-by-k-counts-multisets-binom-n-k-1-k	<Divide><Pochhammer>5 3</Pochhammer> <Factorial>3</Factorial></Divide>	<ToExpression>35</ToExpression>
+1-n-n-since-the-rising-factorial-from-1-just	<Equal><Pochhammer>1 5</Pochhammer> <Factorial>5</Factorial></Equal>	<True />
+negative-order-gives-the-reciprocal-a-n-frac-1-a	<Pochhammer>5 -2</Pochhammer>	<Rational>1 12</Rational>
+order-0-is-the-empty-product-a-0-1	<Pochhammer>a 0</Pochhammer>	<ToExpression>1</ToExpression>
+a-1-a	<Pochhammer>a 1</Pochhammer>	<a />
+the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	<Equal><Pochhammer>4 3</Pochhammer> <Divide><Gamma>7</Gamma> <Gamma>4</Gamma></Divide></Equal>	<True />
+rising-and-falling-factorials-x-underline-n-1-n	<Equal><FallingFactorial>5 3</FallingFactorial> <Multiply>-1 <Pochhammer>-5 3</Pochhammer></Multiply></Equal>	<True />
+if-a-is-a-non-positive-integer-with-a-n-the	<Pochhammer>-3 4</Pochhammer>	<ToExpression>0</ToExpression>

@@ -1,0 +1,7 @@
+id	in	out
+sqrt-2-cdot-8-4	<GeometricMean><List>2 8</List></GeometricMean>	<ToExpression>4</ToExpression>
+sqrt-3-1-cdot-2-cdot-4-2	<GeometricMean><List>1 2 4</List></GeometricMean>	<ToExpression>2</ToExpression>
+geometricmean-of-equal-values	<GeometricMean><List>7 7 7</List></GeometricMean>	<ToExpression>7</ToExpression>
+an-exact-irrational-result	<GeometricMean><List>2 3</List></GeometricMean>	<Sqrt>6</Sqrt>
+sqrt-3-6	<GeometricMean><List>1 2 3</List></GeometricMean>	<Root>6 3</Root>
+symbolic-data	<GeometricMean><List>a b</List></GeometricMean>	<Sqrt><Multiply>a b</Multiply></Sqrt>

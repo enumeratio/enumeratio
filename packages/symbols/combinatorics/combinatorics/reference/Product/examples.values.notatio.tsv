@@ -1,0 +1,24 @@
+id	in	out
+product-list-1-2-3-4	<Product><List>1 2 3 4</List></Product>	<ToExpression>24</ToExpression>
+the-empty-product-is-1-by-convention-matching	<Product><Apply>List</Apply></Product>	<ToExpression>1</ToExpression>
+prod-i-1-6-i-2-6-2	<Product><Power>i 2</Power> <Tuple>i 1 6</Tuple></Product>	<ToExpression>518400</ToExpression>
+a-symbolic-upper-limit-prod-i-1-n-i-2-n-2	<Product><Power>i 2</Power> <Tuple>i 1 n</Tuple></Product>	<Power><Factorial>n</Factorial> 2</Power>
+a-symbolic-upper-limit-prod-k-1-n-k-n-see	<Product>k <Tuple>k 1 n</Tuple></Product>	<Factorial>n</Factorial>
+exponents-add-prod-k-1-n-x-k-x-n-n-1-2	<Product><Power>x k</Power> <Tuple>k 1 n</Tuple></Product>	<Power>x <Multiply><Rational>1 2</Rational> n <Add>n 1</Add></Multiply></Power>
+a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1	<Product><Divide><Add>k 1</Add> k</Divide> <Tuple>k 1 n</Tuple></Product>	<Add>n 1</Add>
+an-undefined-function-expanded-term-by-term	<Product><f>i</f> <Tuple>i 1 4</Tuple></Product>	<Multiply><f>1</f> <f>2</f> <f>3</f> <f>4</f></Multiply>
+a-step-of-2-takes-every-other-index	<Product><f>i</f> <Tuple>i 1 4 2</Tuple></Product>	<Multiply><f>1</f> <f>3</f></Multiply>
+over-an-explicit-list-of-values	<Product><f>i</f> <Element>i <List>a b c</List></Element></Product>	<Multiply><f>a</f> <f>b</f> <f>c</f></Multiply>
+a-polynomial-with-roots-1-2-and-3	<Product><Subtract>x k</Subtract> <Tuple>k 1 3</Tuple></Product>	<Multiply><Add>x -3</Add> <Add>x -2</Add> <Add>x -1</Add></Multiply>
+a-double-product-over-a-3-times-3-grid	<Product><Add>i j</Add> <Tuple>i 1 3</Tuple> <Tuple>j 1 3</Tuple></Product>	<ToExpression>172800</ToExpression>
+an-inner-limit-that-depends-on-the-outer-index-a	<Product><Add>i j</Add> <Tuple>i 1 3</Tuple> <Tuple>j 1 i</Tuple></Product>	<ToExpression>2880</ToExpression>
+a-symbolic-triangular-product-prod-i-1-p-prod-j	<Product><Power>2 <Add>i j</Add></Power> <Tuple>i 1 p</Tuple> <Tuple>j 1 i</Tuple></Product>	<Power>2 <Multiply><Rational>1 2</Rational> p <Power><Add>p 1</Add> 2</Power></Multiply></Power>
+an-infinite-product-with-a-closed-form-prod-k-1	<Product><Add>1 <Divide>1 <Power>k 2</Power></Divide></Add> <Tuple>k 1 PositiveInfinity</Tuple></Product>	<Divide><Sinh>Pi</Sinh> Pi</Divide>
+an-infinite-telescoping-product-prod-k-2-infty-1	<Product><Subtract>1 <Divide>1 <Power>k 2</Power></Divide></Subtract> <Tuple>k 2 PositiveInfinity</Tuple></Product>	<Rational>1 2</Rational>
+prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet	<Product><Subtract>1 <Divide>1 <Power>i 4</Power></Divide></Subtract> <Tuple>i 2 PositiveInfinity</Tuple></Product>	<Divide><Sinh>Pi</Sinh> <Multiply>4 Pi</Multiply></Divide>
+exact-rationals-in-a-collection	<Product><List><Rational>1 2</Rational> <Rational>2 3</Rational> <Rational>3 4</Rational></List></Product>	<Rational>1 4</Rational>
+symbolic-elements	<Product><List>a b c</List></Product>	<Multiply>a b c</Multiply>
+range-stays-lazy-on-its-own-but-product-forces	<Product><Range>1 6</Range></Product>	<ToExpression>720</ToExpression>
+the-product-of-1-through-n-is-n-see-factorial	<Equal><Product><List>1 2 3 4</List></Product> <Factorial>4</Factorial></Equal>	<True />
+the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	<Product><Divide><Multiply>4 <Power>k 2</Power></Multiply> <Subtract><Multiply>4 <Power>k 2</Power></Multiply> 1</Subtract></Divide> <Tuple>k 1 PositiveInfinity</Tuple></Product>	<Multiply><Rational>1 2</Rational> Pi</Multiply>
+an-asymmetric-infinite-product-n-n-3-n-1-n-2	<Product><Divide><Multiply>n <Add>n 3</Add></Multiply> <Multiply><Add>n 1</Add> <Add>n 2</Add></Multiply></Divide> <Tuple>n 1 PositiveInfinity</Tuple></Product>	<Rational>1 3</Rational>

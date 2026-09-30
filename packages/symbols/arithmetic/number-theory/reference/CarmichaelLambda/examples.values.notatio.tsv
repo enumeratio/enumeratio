@@ -1,0 +1,4 @@
+id	in	out
+listable	<CarmichaelLambda><List>8 15</List></CarmichaelLambda>	<List>2 4</List>
+negative-n-lambda-n-lambda-n	<CarmichaelLambda>-100</CarmichaelLambda>	<ToExpression>20</ToExpression>
+listable-over-a-range	<CarmichaelLambda><Range>10</Range></CarmichaelLambda>	<List>1 1 2 2 4 2 6 2 6 4</List>

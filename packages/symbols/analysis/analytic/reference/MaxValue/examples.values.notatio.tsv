@@ -1,0 +1,4 @@
+id	in	out
+a-downward-parabola-s-maximum-value	<MaxValue><Add><Negate><Power>x 2</Power></Negate> <Multiply>4 x</Multiply> -1</Add> x</MaxValue>	<ToExpression>3</ToExpression>
+the-amplitude-of-sine-alone-is-exact	<MaxValue><Sin>x</Sin> x</MaxValue>	<ToExpression>1</ToExpression>
+an-unbounded-cubic	<MaxValue><Power>x 3</Power> x</MaxValue>	<PositiveInfinity />

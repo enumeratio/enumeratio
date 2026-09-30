@@ -1,0 +1,3 @@
+id	in	out
+count-unlabeledfreetrees-7-11-a000055	<Count><UnlabeledFreeTrees>7</UnlabeledFreeTrees></Count>	<ToExpression>11</ToExpression>
+every-element-of-unlabeledfreetrees-6	<Take><UnlabeledFreeTrees>6</UnlabeledFreeTrees> 6</Take>	<List><UnlabeledFreeTree><List>0 1 1 1 1 1</List></UnlabeledFreeTree> <UnlabeledFreeTree><List>0 1 2 1 1 1</List></UnlabeledFreeTree> <UnlabeledFreeTree><List>0 1 2 1 2 1</List></UnlabeledFreeTree> <UnlabeledFreeTree><List>0 1 2 2 1 1</List></UnlabeledFreeTree> <UnlabeledFreeTree><List>0 1 2 2 1 2</List></UnlabeledFreeTree> <UnlabeledFreeTree><List>0 1 2 3 1 2</List></UnlabeledFreeTree></List>

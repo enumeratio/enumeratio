@@ -1,0 +1,13 @@
+id	in	out
+intersection-list-1-2-3-list-2-3-4	<Intersection><List>1 2 3</List> <List>2 3 4</List></Intersection>	<Set>2 3</Set>
+intersection-list-1-2-3-4-list-2-3-4-5	<Intersection><List>1 2 3 4</List> <List>2 3 4 5</List></Intersection>	<Set>2 3 4</Set>
+with-three-or-more-collections-only-elements	<Intersection><List>1 2 3</List> <List>2 3 4</List> <List>2 3 5</List></Intersection>	<Set>2 3</Set>
+duplicates-are-dropped-as-well	<Intersection><List>1 1 2 3</List> <List>3 1 4</List> <List>4 1 3 3</List></Intersection>	<Set>1 3</Set>
+symbolic-elements	<Intersection><List>a b c</List> <List>b c d</List></Intersection>	<Set>b c</Set>
+a-single-collection-comes-back-as-a-set	<Intersection><List>1 2 3</List></Intersection>	<Set>1 2 3</Set>
+the-divisors-common-to-45-and-78	<Intersection><Divisors>45</Divisors> <Divisors>78</Divisors></Intersection>	<Set>1 3</Set>
+intersection-is-idempotent-a-cap-a-a	<Equal><Intersection><Set>1 2 3</Set> <Set>1 2 3</Set></Intersection> <Set>1 2 3</Set></Equal>	<True />
+the-same-inclusion-exclusion-count-rearranged-a	<Equal><Add><Length><List>1 2 3</List></Length> <Length><List>2 3 4</List></Length></Add> <Add><Length><Union><List>1 2 3</List> <List>2 3 4</List></Union></Length> <Length><Intersection><List>1 2 3</List> <List>2 3 4</List></Intersection></Length></Add></Equal>	<True />
+intersecting-with-the-empty-set-gives-the-empty	<Intersection><List>1 2 3</List> EmptySet</Intersection>	<EmptySet />
+disjoint-collections-intersect-to-the-special	<Intersection><List>1 2</List> <List>3 4</List></Intersection>	<EmptySet />
+the-result-keeps-the-order-elements-were-met-in	<Intersection><List>c b a</List> <List>a b</List></Intersection>	<Set>b a</Set>

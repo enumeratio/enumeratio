@@ -1,0 +1,15 @@
+id	in	out
+reciprocal-not-continuous	<FunctionContinuous><Power>x -1</Power> x</FunctionContinuous>	<False />
+polynomial-continuous	<FunctionContinuous><Power>x 2</Power> x</FunctionContinuous>	<True />
+sqrt-not-continuous-everywhere	<FunctionContinuous><Sqrt>x</Sqrt> x</FunctionContinuous>	<False />
+log-not-continuous-everywhere	<FunctionContinuous><Ln>x</Ln> x</FunctionContinuous>	<False />
+tangent-has-poles	<FunctionContinuous><Tan>x</Tan> x</FunctionContinuous>	<False />
+a-rational-function-with-no-real-poles	<FunctionContinuous><Power><Add><Power>x 2</Power> 1</Add> -1</Power> x</FunctionContinuous>	<True />
+sqrt-of-an-always-positive-quantity	<FunctionContinuous><Sqrt><Add><Power>x 2</Power> 1</Add></Sqrt> x</FunctionContinuous>	<True />
+reciprocal-restricted-past-its-pole	<FunctionContinuous><Power>x -1</Power> x <Greater>x -1</Greater></FunctionContinuous>	<False />
+sqrt-restricted-past-its-own-domain	<FunctionContinuous><Sqrt>x</Sqrt> x <Greater>x -5</Greater></FunctionContinuous>	<False />
+log-restricted-to-its-own-domain	<FunctionContinuous><Ln>x</Ln> x <Greater>x 0</Greater></FunctionContinuous>	<True />
+log-restricted-includes-its-singular-boundary	<FunctionContinuous><Ln>x</Ln> x <GreaterEqual>x 0</GreaterEqual></FunctionContinuous>	<False />
+reciprocal-restricted-below-its-pole	<FunctionContinuous><Power>x -1</Power> x <Less>x 0</Less></FunctionContinuous>	<True />
+reciprocal-restricted-domain	<FunctionContinuous><Power>x -1</Power> x <Greater>x 0</Greater></FunctionContinuous>	<True />
+sqrt-closed-boundary	<FunctionContinuous><Sqrt>x</Sqrt> x <GreaterEqual>x 0</GreaterEqual></FunctionContinuous>	<True />

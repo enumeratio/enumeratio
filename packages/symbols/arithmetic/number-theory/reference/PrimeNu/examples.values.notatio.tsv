@@ -1,0 +1,12 @@
+id	in	out
+primenu-24	<PrimeNu>24</PrimeNu>	<ToExpression>2</ToExpression>
+primenu-360	<PrimeNu>360</PrimeNu>	<ToExpression>3</ToExpression>
+primenu-105	<PrimeNu>105</PrimeNu>	<ToExpression>3</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<PrimeNu><List>4 28 180</List></PrimeNu>	<List>1 2 3</List>
+large-integers-the-15-primes-up-to-50-divide-50	<PrimeNu><Factorial>50</Factorial></PrimeNu>	<ToExpression>15</ToExpression>
+gaussian-integers-3-i-1-i-2-i	<PrimeNu><Complex>3 1</Complex></PrimeNu>	<ToExpression>2</ToExpression>
+gaussianintegers-true-5-splits-so-105-has-4	<PrimeNu Over="GaussianIntegers">105</PrimeNu>	<ToExpression>4</ToExpression>
+listable-over-a-range	<PrimeNu><Range>20</Range></PrimeNu>	<List>0 1 1 1 1 2 1 1 1 2 1 2 1 2 2 1 1 2 1 2</List>
+primenu-n-is-the-length-of-factorinteger-n	<Equal><PrimeNu>50</PrimeNu> <Length><FactorInteger>50</FactorInteger></Length></Equal>	<True />
+32-2-5-has-just-one-distinct-prime-factor	<PrimeNu>32</PrimeNu>	<ToExpression>1</ToExpression>
+1-has-no-prime-factors	<PrimeNu>1</PrimeNu>	<ToExpression>0</ToExpression>

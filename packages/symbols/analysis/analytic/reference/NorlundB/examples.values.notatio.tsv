@@ -1,0 +1,9 @@
+id	in	out
+at-a-1-it-is-the-bernoulli-number-b-2	<NorlundB>2 1</NorlundB>	<Rational>1 6</Rational>
+norlundb-4-1	<NorlundB>4 1</NorlundB>	<Rational>-1 30</Rational>
+norlundb-2-2	<NorlundB>2 2</NorlundB>	<Rational>5 6</Rational>
+norlundb-3-2	<NorlundB>3 2</NorlundB>	<Rational>-1 2</Rational>
+norlundb-6-4	<NorlundB>6 4</NorlundB>	<Rational>221 42</Rational>
+norlundb-5-3	<NorlundB>5 3</NorlundB>	<Rational>-3 4</Rational>
+norlundb-7-2	<NorlundB>7 2</NorlundB>	<Rational>-1 6</Rational>
+a-polynomial-in-a	<NorlundB>1 a</NorlundB>	<Multiply><Rational>-1 2</Rational> a</Multiply>

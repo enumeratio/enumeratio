@@ -1,0 +1,4 @@
+id	in	out
+chi-pdf-exact	<PDF><ChiDistribution>3</ChiDistribution> 1</PDF>	<Divide><Sqrt>2</Sqrt> <Multiply>2 <Gamma><Rational>3 2</Rational></Gamma> <Sqrt>ExponentialE</Sqrt></Multiply></Divide>
+chi-cdf-exact	<CDF><ChiDistribution>3</ChiDistribution> 1</CDF>	<Add>1 <Negate><GammaRegularized><Rational>3 2</Rational> <Rational>1 2</Rational></GammaRegularized></Negate></Add>
+chi-mean-exact	<Mean><ChiDistribution>3</ChiDistribution></Mean>	<Divide><Multiply><Sqrt>2</Sqrt> <Gamma>2</Gamma></Multiply> <Gamma><Rational>3 2</Rational></Gamma></Divide>

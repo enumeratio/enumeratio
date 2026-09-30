@@ -1,0 +1,23 @@
+id	in	out
+a-pole-of-gamma-shared-by-its-log-derivative	<Digamma>0</Digamma>	<ComplexInfinity />
+digamma-neg-1	<Digamma>-1</Digamma>	<ComplexInfinity />
+a-floating-point-argument-evaluates-directly-to	<Digamma>0.5</Digamma>	<ToExpression>-1.96351002602142347944</ToExpression>
+a-machine-precision-argument	<Digamma>100.5</Digamma>	<ToExpression>4.60517435258184521187</ToExpression>
+psi-5-h-4-gamma-frac-25-12-gamma	<Digamma>5</Digamma>	<Add><Rational>25 12</Rational> <Negate>EulerGamma</Negate></Add>
+threads-over-a-list-reducing-each-positive	<Digamma><List>1 2 3</List></Digamma>	<List><Negate>EulerGamma</Negate> <Add>1 <Negate>EulerGamma</Negate></Add> <Add><Rational>3 2</Rational> <Negate>EulerGamma</Negate></Add></List>
+complex-arguments-should-evaluate-as-psi-m-does	<Digamma><Complex>2.5 3</Complex></Digamma>	<Complex>1.2812739190662314 0.9798053153445596</Complex>
+psi-infty-infty-growing-like-ln-z	<Digamma>PositiveInfinity</Digamma>	<PositiveInfinity />
+gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln	<Digamma><Rational>1 4</Rational></Digamma>	<Add><Multiply>-3 <Ln>2</Ln></Multiply> <Multiply><Rational>-1 2</Rational> Pi</Multiply> <Negate>EulerGamma</Negate></Add>
+psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3	<Digamma><Rational>1 3</Rational></Digamma>	<Add><Multiply><Rational>-3 2</Rational> <Ln>3</Ln></Multiply> <Multiply><Negate><Divide><Sqrt>3</Sqrt> 6</Divide></Negate> Pi</Multiply> <Negate>EulerGamma</Negate></Add>
+interval-arithmetic-psi-is-increasing-on-0-infty	<Digamma><Interval>1.23 1.24</Interval></Digamma>	<Interval>-0.2516694306961001 -0.2394936791259368</Interval>
+to-30-significant-digits-every-one-correctly	<N><Digamma><Rational>1 3</Rational></Digamma> 30</N>	<ToExpression>-3.13203378002080632299641907429</ToExpression>
+harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	<Equal><Add><Digamma>6</Digamma> EulerGamma</Add> <Add>1 <Rational>1 2</Rational> <Rational>1 3</Rational> <Rational>1 4</Rational> <Rational>1 5</Rational></Add></Equal>	<True />
+psi-1-gamma	<Equal><Add><Digamma>1</Digamma> EulerGamma</Add> 0</Equal>	<True />
+recurrence-psi-z-1-psi-z-1-z-here-at-z-1	<Equal><Digamma>2</Digamma> <Add><Digamma>1</Digamma> 1</Add></Equal>	<True />
+psi-1-2-gamma-2-ln-2	<Equal><Add><Digamma><Rational>1 2</Rational></Digamma> EulerGamma <Multiply>2 <Ln>2</Ln></Multiply></Add> 0</Equal>	<True />
+psi-x-is-the-trigamma-psi-1-x	<D><Digamma>x</Digamma> x</D>	<Trigamma>x</Trigamma>
+reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	<Subtract><Digamma>0.7</Digamma> <Digamma>0.3</Digamma></Subtract>	<ToExpression>2.28250066850219837421</ToExpression>
+psi-1-gamma-2	<Digamma>1</Digamma>	<Negate>EulerGamma</Negate>
+psi-2-1-gamma-from-psi-n-1-psi-n-1-n	<Digamma>2</Digamma>	<Add>1 <Negate>EulerGamma</Negate></Add>
+psi-3-frac-3-2-gamma	<Digamma>3</Digamma>	<Add><Rational>3 2</Rational> <Negate>EulerGamma</Negate></Add>
+between-the-poles-at-0-and-1-psi-is-still-finite	<Digamma>-0.5</Digamma>	<ToExpression>0.036489973978576520559</ToExpression>

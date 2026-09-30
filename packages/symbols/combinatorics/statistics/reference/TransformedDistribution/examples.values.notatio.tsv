@@ -1,0 +1,5 @@
+id	in	out
+transformed-affine-mean	<Mean><TransformedDistribution><Add><Multiply>2 x</Multiply> 3</Add> <Distributed>x <NormalDistribution>0 1</NormalDistribution></Distributed></TransformedDistribution></Mean>	<ToExpression>3</ToExpression>
+transformed-affine-variance	<Variance><TransformedDistribution><Add><Multiply>2 x</Multiply> 3</Add> <Distributed>x <NormalDistribution>0 1</NormalDistribution></Distributed></TransformedDistribution></Variance>	<ToExpression>4</ToExpression>
+transformed-negative-affine-cdf	<CDF><TransformedDistribution><Negate>x</Negate> <Distributed>x <NormalDistribution>0 1</NormalDistribution></Distributed></TransformedDistribution> 0</CDF>	<Rational>1 2</Rational>
+transformed-chisquare-mean	<Mean><TransformedDistribution><Power>x 2</Power> <Distributed>x <NormalDistribution>0 1</NormalDistribution></Distributed></TransformedDistribution></Mean>	<ToExpression>1</ToExpression>

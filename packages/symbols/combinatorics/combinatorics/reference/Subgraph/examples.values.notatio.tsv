@@ -1,0 +1,2 @@
+id	in	out
+three-of-k4s-vertices	<Subgraph><CompleteGraph>4</CompleteGraph> <List>1 2 3</List></Subgraph>	<Graph><List>1 2 3</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>1 3</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List></Graph>

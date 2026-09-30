@@ -1,0 +1,3 @@
+id	in	out
+4	<Count><Derangements>4</Derangements></Count>	<ToExpression>9</ToExpression>
+two-cycle-types	<Tally><CombinatorialStat><Derangements>5</Derangements> "CycleCount"</CombinatorialStat></Tally>	<Tuple><List>2 1</List> <List>20 24</List></Tuple>

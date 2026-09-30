@@ -1,0 +1,3 @@
+id	in	out
+prints-a-list-as-notatio-source	<ToString><List>1 2 3</List></ToString>	<ToExpression>"[1, 2, 3]"</ToExpression>
+prints-an-arithmetic-expression	<ToString><Add>x 1</Add></ToString>	<ToExpression>"x + 1"</ToExpression>

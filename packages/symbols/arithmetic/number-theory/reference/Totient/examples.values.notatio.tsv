@@ -1,0 +1,15 @@
+id	in	out
+totient-12	<Totient>12</Totient>	<ToExpression>4</ToExpression>
+totient-36	<Totient>36</Totient>	<ToExpression>12</ToExpression>
+totient-1	<Totient>1</Totient>	<ToExpression>1</ToExpression>
+totient-10	<Totient>10</Totient>	<ToExpression>4</ToExpression>
+varphi-0-0-as-in-wolfram	<Totient>0</Totient>	<ToExpression>0</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<Totient><List>2 4 6</List></Totient>	<List>1 2 2</List>
+large-integers-varphi-50	<Totient><Factorial>50</Factorial></Totient>	<ToExpression>42185592008858390426793121078167038417888549535744e+14</ToExpression>
+negative-n-varphi-n-varphi-n	<Totient>-10</Totient>	<ToExpression>4</ToExpression>
+rsa-key-setup-varphi-17-times-23-16-times-22-352	<Totient>391</Totient>	<ToExpression>352</ToExpression>
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	<PowerMod>7 <Totient>10</Totient> 10</PowerMod>	<ToExpression>1</ToExpression>
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	<Add><Totient>1</Totient> <Totient>2</Totient> <Totient>3</Totient> <Totient>4</Totient> <Totient>6</Totient> <Totient>12</Totient></Add>	<ToExpression>12</ToExpression>
+multiplicative-varphi-mn-varphi-m-varphi-n-when	<Equal><Totient>12</Totient> <Multiply><Totient>4</Totient> <Totient>3</Totient></Multiply></Equal>	<True />
+varphi-p-p-1-for-a-prime-p	<Totient>17</Totient>	<ToExpression>16</ToExpression>
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	<Totient>81</Totient>	<ToExpression>54</ToExpression>

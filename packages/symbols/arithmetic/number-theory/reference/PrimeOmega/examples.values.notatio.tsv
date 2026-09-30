@@ -1,0 +1,12 @@
+id	in	out
+primeomega-30	<PrimeOmega>30</PrimeOmega>	<ToExpression>3</ToExpression>
+primeomega-360	<PrimeOmega>360</PrimeOmega>	<ToExpression>6</ToExpression>
+primeomega-12	<PrimeOmega>12</PrimeOmega>	<ToExpression>3</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<PrimeOmega><List>4 12 24</List></PrimeOmega>	<List>2 3 4</List>
+large-integers	<PrimeOmega><Factorial>30</Factorial></PrimeOmega>	<ToExpression>59</ToExpression>
+gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	<PrimeOmega><Complex>5 9</Complex></PrimeOmega>	<ToExpression>2</ToExpression>
+gaussianintegers-true-12-1-i-4-cdot-3	<PrimeOmega Over="GaussianIntegers">12</PrimeOmega>	<ToExpression>5</ToExpression>
+listable-over-a-range	<PrimeOmega><Range>20</Range></PrimeOmega>	<List>0 1 1 2 1 2 1 3 2 2 1 3 1 2 2 4 1 3 1 3</List>
+completely-additive-omega-mn-omega-m-omega-n-for	<Equal><PrimeOmega><Multiply>24 40</Multiply></PrimeOmega> <Add><PrimeOmega>24</PrimeOmega> <PrimeOmega>40</PrimeOmega></Add></Equal>	<True />
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	<GreaterEqual><PrimeOmega>8</PrimeOmega> <PrimeNu>8</PrimeNu></GreaterEqual>	<True />
+1-has-no-prime-factors	<PrimeOmega>1</PrimeOmega>	<ToExpression>0</ToExpression>

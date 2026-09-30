@@ -1,0 +1,5 @@
+id	in	out
+the-shortest-knotted-geodesic-draws-a-trefoil	<AlexanderPolynomial>"LLRLR"</AlexanderPolynomial>	<Add><Power>t 2</Power> <Negate>t</Negate> 1</Add>
+a-rotation-by-2-on-5-points-hence-t-2-3	<LorenzPermutation>"LLRLR"</LorenzPermutation>	<List>3 4 5 1 2</List>
+braid-index-2	<TripNumber>"LLRLR"</TripNumber>	<ToExpression>2</ToExpression>
+one-hump-each-way-is-unknotted-however-long	<AlexanderPolynomial>"LLLRRRR"</AlexanderPolynomial>	<ToExpression>1</ToExpression>

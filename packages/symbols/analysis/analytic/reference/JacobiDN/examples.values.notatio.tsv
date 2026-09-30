@@ -1,0 +1,32 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	<N><JacobiDN>0.3 0.5</JacobiDN></N>	<ToExpression>0.9782405041743613</ToExpression>
+dn-1-1-0-9	<N><JacobiDN>1.1 0.9</JacobiDN></N>	<ToExpression>0.6393157784536921</ToExpression>
+dn-0-7-0-2	<N><JacobiDN>-0.7 0.2</JacobiDN></N>	<ToExpression>0.9586602073143238</ToExpression>
+dn-0-3-0	<N><JacobiDN>0.3 0</JacobiDN></N>	<ToExpression>1</ToExpression>
+dn-0-3-1	<N><JacobiDN>0.3 1</JacobiDN></N>	<ToExpression>0.9566279119002482896021808621942427125498</ToExpression>
+dn-1-2-3	<N><JacobiDN>1.2 3</JacobiDN></N>	<ToExpression>-0.2793802577348939</ToExpression>
+dn-0-9-0-5	<N><JacobiDN>0.9 -0.5</JacobiDN></N>	<ToExpression>1.154025878160351</ToExpression>
+dn-0-4-0-5i-0-3	<N><JacobiDN><Complex>0.4 0.5</Complex> 0.3</JacobiDN></N>	<Complex>1.00487337640867 -0.063150694652866</Complex>
+dn-0-4-0-5i-0-3-2	<N><JacobiDN><Complex>0.4 -0.5</Complex> 0.3</JacobiDN></N>	<Complex>1.00487337640867 0.063150694652866</Complex>
+dn-0-4-0-5i-0-3-3	<N><JacobiDN><Complex>-0.4 0.5</Complex> 0.3</JacobiDN></N>	<Complex>1.00487337640867 0.063150694652866</Complex>
+dn-0-4-0-5i-0-3-4	<N><JacobiDN><Complex>-0.4 -0.5</Complex> 0.3</JacobiDN></N>	<Complex>1.00487337640867 -0.063150694652866</Complex>
+dn-1-1-0-7i-0-3	<N><JacobiDN><Complex>1.1 -0.7</Complex> 0.3</JacobiDN></N>	<Complex>0.8415968676751103 0.11336608344803284</Complex>
+dn-1-1i-0-3	<N><JacobiDN><Complex>1 1</Complex> 0.3</JacobiDN></N>	<Complex>0.8216157247168824 -0.21948951456834082</Complex>
+dn-0-2-8i-0-4	<N><JacobiDN><Complex>0.2 8</Complex> 0.4</JacobiDN></N>	<Complex>0.9996614235141448 -0.016136685778036387</Complex>
+dn-0-2-8i-0-4-2	<N><JacobiDN><Complex>0.2 -8</Complex> 0.4</JacobiDN></N>	<Complex>0.9996614235141448 0.016136685778036387</Complex>
+dn-5-4i-0-6	<N><JacobiDN><Complex>5 4</Complex> 0.6</JacobiDN></N>	<Complex>-0.7391671703494241 0.12990760968776022</Complex>
+dn-0-05-1-9753631352924692i-0-3	<N><JacobiDN><Complex>0.05 1.9753631352924692</Complex> 0.3</JacobiDN></N>	<Complex>8.028329863282739 -3.9858522958170473</Complex>
+dn-0-05-2-0653631352924693i-0-3	<N><JacobiDN><Complex>0.05 2.0653631352924693</Complex> 0.3</JacobiDN></N>	<Complex>3.8489882015505392 -19.21660104519266</Complex>
+dn-0-05-2-074363135292469i-0-3	<N><JacobiDN><Complex>0.05 2.074363135292469</Complex> 0.3</JacobiDN></N>	<Complex>0.4001235008846053 -19.977834807940596</Complex>
+dn-0-05-2-075263135292469i-0-3	<N><JacobiDN><Complex>0.05 2.075263135292469</Complex> 0.3</JacobiDN></N>	<Complex>0.04002818369324099 -19.985751607488</Complex>
+dn-0-3-0-2i-1-5	<N><JacobiDN><Complex>0.3 0.2</Complex> 1.5</JacobiDN></N>	<Complex>0.9587649365733537 -0.0857539700934879</Complex>
+dn-0-5-0-3i-3	<N><JacobiDN><Complex>0.5 -0.3</Complex> 3</JacobiDN></N>	<Complex>0.7261100881973707 0.3681584401857733</Complex>
+dn-0-3-0-2i-0-7	<N><JacobiDN><Complex>0.3 0.2</Complex> -0.7</JacobiDN></N>	<Complex>1.0186736897365125 0.040854651214155616</Complex>
+dn-0-5-0-3i-3-2	<N><JacobiDN><Complex>0.5 -0.3</Complex> -3</JacobiDN></N>	<Complex>1.2662359548295512 -0.44028731801389803</Complex>
+m-greater-than-1-via-the-reciprocal-modulus	<N><JacobiDN>0.3 1.5</JacobiDN></N>	<ToExpression>0.9351619177552998</ToExpression>
+m-less-than-0-via-the-imaginary-modulus	<N><JacobiDN>0.3 -2</JacobiDN></N>	<ToExpression>1.0885129466062724</ToExpression>
+a-complex-argument-u	<N><JacobiDN><Complex>0.3 0.4</Complex> 0.5</JacobiDN></N>	<Complex>1.012262082212854 -0.0628496850247877</Complex>
+u-0-is-1-for-any-m	<JacobiDN>0 m</JacobiDN>	<ToExpression>1</ToExpression>
+m-0-is-1-for-any-u	<JacobiDN>u 0</JacobiDN>	<ToExpression>1</ToExpression>
+the-quarter-period-u-elliptick-m-is-sqrt	<JacobiDN><EllipticK>m</EllipticK> m</JacobiDN>	<Sqrt><Add><Negate>m</Negate> 1</Add></Sqrt>
+symbolic-arguments-are-left-unevaluated-rather	<JacobiDN>u m</JacobiDN>	<JacobiDN>u m</JacobiDN>

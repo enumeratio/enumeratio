@@ -1,0 +1,4 @@
+id	in	out
+abs-resolves-once-the-sign-is-known	<Assuming><Greater>x 0</Greater> <Abs>x</Abs></Assuming>	<x />
+sign-of-x-plus-sign-of-y-under-opposite-signs	<Assuming><List><Greater>x 0</Greater> <Less>y 0</Less></List> <Add><Sign>x</Sign> <Sign>y</Sign></Add></Assuming>	<ToExpression>0</ToExpression>
+the-assumption-does-not-leak	<List><Assuming><Greater>z 0</Greater> <Sign>z</Sign></Assuming> <Sign>z</Sign></List>	<List>1 <Sign>z</Sign></List>

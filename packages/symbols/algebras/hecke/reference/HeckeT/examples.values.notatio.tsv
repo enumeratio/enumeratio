@@ -1,0 +1,6 @@
+id	in	out
+length-goes-up-so-no-q-appears	<NonCommutativeMultiply><HeckeT><List>2 1 3</List></HeckeT> <HeckeT><List>1 3 2</List></HeckeT></NonCommutativeMultiply>	<HeckeT><List>2 3 1</List></HeckeT>
+n-the-same-basis-as-z-s-n	<AlgebraDimension><HeckeAlgebra>4</HeckeAlgebra></AlgebraDimension>	<ToExpression>24</ToExpression>
+the-quadratic-relation-t-s-2-q-q-1-t-s	<NonCommutativeMultiply><HeckeT><List>2 1 3</List></HeckeT> <HeckeT><List>2 1 3</List></HeckeT></NonCommutativeMultiply>	<Add><Multiply>q <HeckeT><List>1 2 3</List></HeckeT></Multiply> <Multiply><Add>q -1</Add> <HeckeT><List>2 1 3</List></HeckeT></Multiply></Add>
+t-st-tt-s-the-longest-element-of-s-3	<NonCommutativeMultiply><HeckeT><List>2 1 3</List></HeckeT> <HeckeT><List>1 3 2</List></HeckeT> <HeckeT><List>2 1 3</List></HeckeT></NonCommutativeMultiply>	<HeckeT><List>3 2 1</List></HeckeT>
+and-t-tt-st-t-gives-the-same-which-is-the-braid	<NonCommutativeMultiply><HeckeT><List>1 3 2</List></HeckeT> <HeckeT><List>2 1 3</List></HeckeT> <HeckeT><List>1 3 2</List></HeckeT></NonCommutativeMultiply>	<HeckeT><List>3 2 1</List></HeckeT>

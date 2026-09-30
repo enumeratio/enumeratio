@@ -1,0 +1,6 @@
+id	in	out
+an-odd-degree-polynomial-is-onto	<FunctionSurjective><Power>x 3</Power> x Reals</FunctionSurjective>	<True />
+exp-misses-the-non-positive-reals	<FunctionSurjective><Exp>x</Exp> x Reals</FunctionSurjective>	<False />
+log-is-onto-the-reals	<FunctionSurjective><Ln>x</Ln> x Reals</FunctionSurjective>	<True />
+a-reciprocal-never-hits-zero	<FunctionSurjective><Divide>1 x</Divide> x Reals</FunctionSurjective>	<False />
+an-unsupported-codomain-declines	<FunctionSurjective><Power>x 3</Power> x Integers</FunctionSurjective>	<FunctionSurjective><Power>x 3</Power> x Integers</FunctionSurjective>

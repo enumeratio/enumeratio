@@ -1,0 +1,5 @@
+id	in	out
+expectation-of-the-bound-variable-is-the-mean	<Expectation>x <Distributed>x <NormalDistribution>2 3</NormalDistribution></Distributed></Expectation>	<ToExpression>2</ToExpression>
+expectation-of-x-squared	<Expectation><Power>x 2</Power> <Distributed>x <NormalDistribution>2 3</NormalDistribution></Distributed></Expectation>	<ToExpression>13</ToExpression>
+expectation-is-linear	<Expectation><Add><Multiply>2 x</Multiply> 1</Add> <Distributed>x <NormalDistribution>2 3</NormalDistribution></Distributed></Expectation>	<ToExpression>5</ToExpression>
+a-shape-with-no-closed-form-stays-unevaluated	<Expectation><Sin>x</Sin> <Distributed>x <NormalDistribution>2 3</NormalDistribution></Distributed></Expectation>	<Expectation><Sin>x</Sin> <Distributed>x <NormalDistribution>2 3</NormalDistribution></Distributed></Expectation>

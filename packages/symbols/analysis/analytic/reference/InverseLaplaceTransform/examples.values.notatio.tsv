@@ -1,0 +1,4 @@
+id	in	out
+one-over-s-squared	<InverseLaplaceTransform><Power>s -2</Power> s t</InverseLaplaceTransform>	<t />
+one-over-s-minus-a	<InverseLaplaceTransform><Power><Add>s <Negate>a</Negate></Add> -1</Power> s t</InverseLaplaceTransform>	<Power>ExponentialE <Multiply>a t</Multiply></Power>
+s-over-s-squared-plus-a-squared	<InverseLaplaceTransform><Divide>s <Add><Power>s 2</Power> <Power>a 2</Power></Add></Divide> s t</InverseLaplaceTransform>	<Cos><Multiply>a t</Multiply></Cos>

@@ -1,0 +1,24 @@
+id	in	out
+round-7-over-2	<Round><Rational>7 2</Rational></Round>	<ToExpression>4</ToExpression>
+round-3p5	<Round>3.5</Round>	<ToExpression>4</ToExpression>
+round-3p7	<Round>3.7</Round>	<ToExpression>4</ToExpression>
+integers-pass-through-unchanged	<Round>5</Round>	<ToExpression>5</ToExpression>
+a-second-argument-rounds-to-that-many-decimal	<Round>3.14159 2</Round>	<Rational>157 50</Rational>
+threads-element-wise-over-a-list	<Round><List>1.5 -1.5 2.4</List></Round>	<List>2 -2 2</List>
+round-2p4	<Round>2.4</Round>	<ToExpression>2</ToExpression>
+round-2p6	<Round>2.6</Round>	<ToExpression>3</ToExpression>
+round-5p37	<Round>5.37</Round>	<ToExpression>5</ToExpression>
+round-neg-3p7	<Round>-3.7</Round>	<ToExpression>-4</ToExpression>
+idempotent-round-round-x-round-x	<Round><Round>x</Round></Round>	<Round>x</Round>
+stays-symbolic	<Round>x</Round>	<Round>x</Round>
+to-the-nearest-ten	<Round>226 -1</Round>	<ToExpression>230</ToExpression>
+an-exact-argument-rounds-to-an-exact-rational	<Round><Sqrt>2</Sqrt> 4</Round>	<Rational>7071 5000</Rational>
+evaluates-at-an-exact-constant-round-pi-3	<Round>Pi</Round>	<ToExpression>3</ToExpression>
+100e-approx-271-83-rounds-to-272	<Round><Multiply>100 ExponentialE</Multiply></Round>	<ToExpression>272</ToExpression>
+rounds-the-real-and-imaginary-parts-separately	<Round><Complex>5.37 -1.3</Complex></Round>	<Complex>5 -1</Complex>
+rounding-a-price-to-the-nearest-cent-19-995	<Round>19.995 2</Round>	<ToExpression>20</ToExpression>
+a-negative-second-argument-rounds-to-the-nearest	<Equal><Round>1234 -2</Round> 1200</Equal>	<True />
+rounding-to-0-decimal-places-matches-the-1	<Equal><Round>3.14159 0</Round> <Round>3.14159</Round></Equal>	<True />
+rounds-half-away-from-zero-not-banker-s-rounding	<Round>2.5</Round>	<ToExpression>3</ToExpression>
+and-by-the-same-convention-2-5-rounds-to-3-not-2	<Round>-2.5</Round>	<ToExpression>-3</ToExpression>
+an-exact-half-rounds-away-from-zero-as-well	<Round><Rational>1 2</Rational></Round>	<ToExpression>1</ToExpression>

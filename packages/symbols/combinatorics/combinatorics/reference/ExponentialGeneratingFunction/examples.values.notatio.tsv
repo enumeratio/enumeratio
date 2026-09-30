@@ -1,0 +1,5 @@
+id	in	out
+factorial	<ExponentialGeneratingFunction><Factorial>n</Factorial> n x</ExponentialGeneratingFunction>	<Divide>1 <Add><Negate>x</Negate> 1</Add></Divide>
+derangements	<ExponentialGeneratingFunction><Subfactorial>n</Subfactorial> n x</ExponentialGeneratingFunction>	<Divide><Power>ExponentialE <Negate>x</Negate></Power> <Add><Negate>x</Negate> 1</Add></Divide>
+bell-numbers	<ExponentialGeneratingFunction><BellNumber>n</BellNumber> n x</ExponentialGeneratingFunction>	<Power>ExponentialE <Add><Power>ExponentialE x</Power> -1</Add></Power>
+fibonacci	<ExponentialGeneratingFunction><Fibonacci>n</Fibonacci> n x</ExponentialGeneratingFunction>	<Add><Multiply><Negate><Divide><Sqrt>5</Sqrt> 5</Divide></Negate> <Power>ExponentialE <Multiply><Rational>1 2</Rational> x <Add>1 <Negate><Sqrt>5</Sqrt></Negate></Add></Multiply></Power></Multiply> <Multiply><Divide><Sqrt>5</Sqrt> 5</Divide> <Power>ExponentialE <Multiply><Rational>1 2</Rational> x <Add>1 <Sqrt>5</Sqrt></Add></Multiply></Power></Multiply></Add>

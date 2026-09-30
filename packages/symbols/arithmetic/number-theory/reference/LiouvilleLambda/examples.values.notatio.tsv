@@ -1,0 +1,6 @@
+id	in	out
+omega-12-3	<LiouvilleLambda>12</LiouvilleLambda>	<ToExpression>-1</ToExpression>
+liouvillelambda-10	<LiouvilleLambda>10</LiouvilleLambda>	<ToExpression>1</ToExpression>
+liouvillelambda-1	<LiouvilleLambda>1</LiouvilleLambda>	<ToExpression>1</ToExpression>
+listable	<LiouvilleLambda><Range>10</Range></LiouvilleLambda>	<List>1 -1 -1 1 -1 1 -1 -1 1 1</List>
+lambda-n-1-omega-n-see-primeomega	<Equal><LiouvilleLambda>360</LiouvilleLambda> <Power>-1 <PrimeOmega>360</PrimeOmega></Power></Equal>	<True />

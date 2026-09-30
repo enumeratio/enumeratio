@@ -1,0 +1,5 @@
+id	in	out
+triangular-pdf-exact	<PDF><TriangularDistribution><List>0 1</List></TriangularDistribution> <Rational>1 4</Rational></PDF>	<ToExpression>1</ToExpression>
+triangular-cdf-exact	<CDF><TriangularDistribution><List>0 1</List></TriangularDistribution> <Rational>1 4</Rational></CDF>	<Rational>1 8</Rational>
+triangular-mean-exact	<Mean><TriangularDistribution><List>0 1</List></TriangularDistribution></Mean>	<Rational>1 2</Rational>
+triangular-variance-exact	<Variance><TriangularDistribution><List>0 1</List></TriangularDistribution></Variance>	<Rational>1 24</Rational>

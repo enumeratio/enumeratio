@@ -1,0 +1,5 @@
+id	in	out
+a-reciprocal-is-injective-on-its-own-domain	<FunctionInjective><Divide>1 x</Divide> x</FunctionInjective>	<True />
+a-cubic-is-injective	<FunctionInjective><Power>x 3</Power> x</FunctionInjective>	<True />
+a-parabola-is-not-injective	<FunctionInjective><Power>x 2</Power> x</FunctionInjective>	<False />
+an-affine-function-is-injective	<FunctionInjective><Add><Multiply>2 x</Multiply> 1</Add> x</FunctionInjective>	<True />

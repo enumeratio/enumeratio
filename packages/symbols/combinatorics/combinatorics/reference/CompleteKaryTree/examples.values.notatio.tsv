@@ -1,0 +1,8 @@
+id	in	out
+a-3-level-binary-tree-has-7-vertices	<VertexCount><CompleteKaryTree>3 2</CompleteKaryTree></VertexCount>	<ToExpression>7</ToExpression>
+a-single-level-tree-is-one-vertex	<VertexCount><CompleteKaryTree>1 2</CompleteKaryTree></VertexCount>	<ToExpression>1</ToExpression>
+a-3-level-binary-tree-is-a-tree	<IsTreeGraph><CompleteKaryTree>3 2</CompleteKaryTree></IsTreeGraph>	<True />
+root-degree-of-a-ternary-tree	<VertexDegree><CompleteKaryTree>3 3</CompleteKaryTree> 1</VertexDegree>	<ToExpression>3</ToExpression>
+a-3-level-ternary-tree-has-13-vertices	<VertexCount><CompleteKaryTree>3 3</CompleteKaryTree></VertexCount>	<ToExpression>13</ToExpression>
+the-1-arg-form-defaults-to-binary	<VertexCount><CompleteKaryTree>4</CompleteKaryTree></VertexCount>	<ToExpression>15</ToExpression>
+edge-list-of-a-3-level-binary-tree	<EdgeList><CompleteKaryTree>3 2</CompleteKaryTree></EdgeList>	<List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>1 3</UndirectedEdge> <UndirectedEdge>2 4</UndirectedEdge> <UndirectedEdge>2 5</UndirectedEdge> <UndirectedEdge>3 6</UndirectedEdge> <UndirectedEdge>3 7</UndirectedEdge></List>

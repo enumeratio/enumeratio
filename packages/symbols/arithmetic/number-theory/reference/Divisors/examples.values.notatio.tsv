@@ -1,0 +1,33 @@
+id	in	out
+divisors-1-729	<Divisors>1729</Divisors>	<List>1 7 13 19 91 133 247 1729</List>
+divisors-20	<Divisors>20</Divisors>	<List>1 2 4 5 10 20</List>
+a-prime-s-only-divisors-are-1-and-itself	<Divisors>13</Divisors>	<List>1 13</List>
+divisors-6	<Divisors>6</Divisors>	<List>1 2 3 6</List>
+threads-element-wise-over-a-list-as-wolfram-s	<Divisors><List>4 6</List></Divisors>	<List><List>1 2 4</List> <List>1 2 3 6</List></List>
+divisors-3-plus-4i	<Divisors><Complex>3 4</Complex></Divisors>	<List>1 <Complex>2 1</Complex> <Complex>3 4</Complex></List>
+13-2-3i-3-2i-splits-so-it-gains-two-divisors	<Divisors Over="GaussianIntegers">13</Divisors>	<List>1 <Complex>2 3</Complex> <Complex>3 2</Complex> 13</List>
+6-4i-i-1-i-2-3-2i	<Divisors><Complex>6 4</Complex></Divisors>	<List>1 <Complex>1 1</Complex> <Complex>1 5</Complex> 2 <Complex>3 2</Complex> <Complex>6 4</Complex></List>
+listable-threads-over-a-list	<Divisors><List>605 871 824</List></Divisors>	<List><List>1 5 11 55 121 605</List> <List>1 13 67 871</List> <List>1 2 4 8 103 206 412 824</List></List>
+5-in-the-gaussian-integers	<Divisors Over="GaussianIntegers">5</Divisors>	<List>1 <Complex>1 2</Complex> <Complex>2 1</Complex> 5</List>
+a-unit-s-only-divisor-is-1-its-own-normalisation	<Divisors><Complex>0 1</Complex></Divisors>	<List>1</List>
+a-gaussian-prime-s-only-divisors-are-1-and	<Divisors><Complex>1 1</Complex></Divisors>	<List>1 <Complex>1 1</Complex></List>
+a-prime-above-5	<Divisors><Complex>2 1</Complex></Divisors>	<List>1 <Complex>2 1</Complex></List>
+a-composite-of-norm-25-2-i-2	<Divisors><Complex>3 4</Complex></Divisors>	<List>1 <Complex>2 1</Complex> <Complex>3 4</Complex></List>
+a-composite-with-a-real-and-a-gaussian-factor	<Divisors><Complex>6 8</Complex></Divisors>	<List>1 <Complex>1 1</Complex> <Complex>1 3</Complex> 2 <Complex>2 1</Complex> <Complex>3 4</Complex> <Complex>4 2</Complex> <Complex>6 8</Complex> <Complex>7 1</Complex></List>
+a-prime-above-13	<Divisors><Complex>3 2</Complex></Divisors>	<List>1 <Complex>3 2</Complex></List>
+an-associate-has-the-same-divisors-up-to-that	<Divisors><Complex>-3 -4</Complex></Divisors>	<List>1 <Complex>2 1</Complex> <Complex>3 4</Complex></List>
+a-real-prime-s-associate-by-the-unit-i	<Divisors><Complex>0 7</Complex></Divisors>	<List>1 7</List>
+a-negative-real-prime-complex-argument-form	<Divisors>-7</Divisors>	<List>1 7</List>
+7-3-mod-4-has-the-same-divisors-as-in-z	<Divisors Over="GaussianIntegers">7</Divisors>	<List>1 7</List>
+13-1-mod-4-gains-gaussian-divisors	<Divisors Over="GaussianIntegers">13</Divisors>	<List>1 <Complex>2 3</Complex> <Complex>3 2</Complex> 13</List>
+a-real-composite-5-squared	<Divisors Over="GaussianIntegers">25</Divisors>	<List>1 <Complex>1 2</Complex> <Complex>2 1</Complex> <Complex>3 4</Complex> <Complex>4 3</Complex> 5 <Complex>5 10</Complex> <Complex>10 5</Complex> 25</List>
+2-ramifies-divisors-run-through-1-i	<Divisors Over="GaussianIntegers">2</Divisors>	<List>1 <Complex>1 1</Complex> 2</List>
+19-3-mod-4-has-the-same-divisors-as-in-z	<Divisors Over="GaussianIntegers">19</Divisors>	<List>1 19</List>
+a-negative-real-composite	<Divisors Over="GaussianIntegers">-15</Divisors>	<List>1 <Complex>1 2</Complex> <Complex>2 1</Complex> 3 <Complex>3 6</Complex> 5 <Complex>6 3</Complex> 15</List>
+the-divisor-count-d-n-equals-sigma-0-n-see	<Equal><Length><Divisors>20</Divisors></Length> <DivisorSigma>0 20</DivisorSigma></Equal>	<True />
+1-has-exactly-one-divisor-itself	<Divisors>1</Divisors>	<List>1</List>
+only-positive-divisors-even-for-negative-n	<Divisors>-6</Divisors>	<List>1 2 3 6</List>
+divisors-neg-12	<Divisors>-12</Divisors>	<List>1 2 3 4 6 12</List>
+divisors-0-stays-unevaluated	<Divisors>0</Divisors>	<Divisors>0</Divisors>
+a-non-integer-stays-unevaluated	<Divisors><Rational>5 2</Rational></Divisors>	<Divisors><Rational>5 2</Rational></Divisors>
+720-is-highly-composite-30-divisors-more-than	<Divisors>720</Divisors>	<List>1 2 3 4 5 6 8 9 10 12 15 16 18 20 24 30 36 40 45 48 60 72 80 90 120 144 180 240 360 720</List>

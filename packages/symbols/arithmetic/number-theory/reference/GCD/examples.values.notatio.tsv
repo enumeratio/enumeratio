@@ -1,0 +1,47 @@
+id	in	out
+gcd-12-18	<GCD>12 18</GCD>	<ToExpression>6</ToExpression>
+gcd-24-36	<GCD>24 36</GCD>	<ToExpression>12</ToExpression>
+gcd-is-variadic-it-accepts-any-number-of	<GCD>20 30 45</GCD>	<ToExpression>5</ToExpression>
+gcd-2-6-10	<GCD>2 6 10</GCD>	<ToExpression>2</ToExpression>
+over-the-rationals-the-gcd-of-the-numerators	<GCD><Rational>1 3</Rational> <Rational>2 5</Rational> <Rational>3 7</Rational></GCD>	<Rational>1 105</Rational>
+gaussian-integers-the-associate-in-the-first	<GCD><Complex>3 1</Complex> <Complex>1 3</Complex></GCD>	<Complex>1 1</Complex>
+gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i	<GCD><Complex>-3 2</Complex> <Complex>10 15</Complex></GCD>	<Complex>2 3</Complex>
+gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2	<GCD><Complex>5 <Rational>10 3</Rational></Complex> <Complex><Rational>3 2</Rational> 1</Complex></GCD>	<Complex><Rational>1 2</Rational> <Rational>1 3</Rational></Complex>
+big-integers-gcd-20-10-100-3-7-exact-past-where	<GCD><Factorial>20</Factorial> <Add><Power>10 100</Power> 3</Add></GCD>	<ToExpression>7</ToExpression>
+listable-a-single-list-argument-threads-element	<GCD>12 <List>3 7 40</List></GCD>	<List>3 1 4</List>
+gcd-with-a-unit-is-always-1	<GCD><Complex>3 4</Complex> 1</GCD>	<ToExpression>1</ToExpression>
+gcd-with-i-a-unit-is-1	<GCD><Complex>3 4</Complex> <Complex>0 1</Complex></GCD>	<ToExpression>1</ToExpression>
+gcd-with-0-is-the-other-argument-normalised	<GCD>0 <Complex>-4 3</Complex></GCD>	<Complex>3 4</Complex>
+gcd-of-0-and-0-is-0	<GCD>0 0</GCD>	<ToExpression>0</ToExpression>
+two-gaussian-primes-above-5-are-coprime	<GCD><Complex>2 1</Complex> <Complex>2 -1</Complex></GCD>	<ToExpression>1</ToExpression>
+a-gaussian-prime-and-a-real-prime-3-mod-4-are	<GCD><Complex>2 1</Complex> 3</GCD>	<ToExpression>1</ToExpression>
+gcd-recovers-a-shared-prime-norm-5	<GCD><Complex>4 2</Complex> <Complex>3 4</Complex></GCD>	<Complex>2 1</Complex>
+an-associate-pair-has-gcd-equal-to-their-common	<GCD><Complex>3 4</Complex> <Complex>-4 3</Complex></GCD>	<Complex>3 4</Complex>
+another-associate-pair-by-1	<GCD><Complex>3 4</Complex> <Complex>-3 -4</Complex></GCD>	<Complex>3 4</Complex>
+two-unrelated-composites-of-norm-25-share-no	<GCD><Complex>3 4</Complex> <Complex>4 3</Complex></GCD>	<ToExpression>1</ToExpression>
+gcd-with-a-negative-real-prime	<GCD><Complex>3 4</Complex> -7</GCD>	<ToExpression>1</ToExpression>
+gcd-of-two-large-norm-gaussians	<GCD><Complex>123 456</Complex> <Complex>1000 1</Complex></GCD>	<ToExpression>1</ToExpression>
+gcd-past-2-53-in-both-parts	<GCD><Complex>100000000000000000001 9007199254740993</Complex> <Complex>4 1</Complex></GCD>	<ToExpression>1</ToExpression>
+a-real-split-prime-and-its-gaussian-factor	<GCD>5 <Complex>2 1</Complex></GCD>	<Complex>2 1</Complex>
+gcd-of-two-real-composites-plain-integer-case	<GCD>4 9</GCD>	<ToExpression>1</ToExpression>
+gcd-with-a-negative-real-composite	<GCD>-15 <Complex>5 5</Complex></GCD>	<ToExpression>5</ToExpression>
+gcd-with-an-associate-times-1	<GCD><Complex>8 2</Complex> <Complex>-3 -4</Complex></GCD>	<ToExpression>1</ToExpression>
+gcd-with-an-associate-times-i	<GCD><Complex>8 2</Complex> <Complex>4 -3</Complex></GCD>	<ToExpression>1</ToExpression>
+two-primes-above-13-are-coprime	<GCD><Complex>3 2</Complex> <Complex>2 3</Complex></GCD>	<ToExpression>1</ToExpression>
+gcd-recovers-a-shared-prime-above-13	<GCD><Complex>6 8</Complex> <Complex>3 2</Complex></GCD>	<ToExpression>1</ToExpression>
+gcd-with-a-real-prime-s-associate-by-the-unit-i	<GCD><Complex>3 4</Complex> <Complex>0 7</Complex></GCD>	<ToExpression>1</ToExpression>
+gcd-with-a-real-composite-5-squared	<GCD><Complex>3 4</Complex> 25</GCD>	<Complex>3 4</Complex>
+gcd-with-a-negative-associate	<GCD><Complex>6 8</Complex> <Complex>-2 -3</Complex></GCD>	<ToExpression>1</ToExpression>
+gcd-of-a-large-norm-gaussian-and-a-real-prime-19	<GCD><Complex>123 456</Complex> 19</GCD>	<ToExpression>1</ToExpression>
+gcd-of-two-composites-sharing-the-prime-above-13	<GCD><Complex>6 8</Complex> <Complex>9 6</Complex></GCD>	<ToExpression>1</ToExpression>
+reduce-12-18-to-lowest-terms-by-dividing-out-the	<Divide>12 <GCD>12 18</GCD></Divide>	<ToExpression>2</ToExpression>
+commutative-gcd-a-b-gcd-b-a	<Equal><GCD>12 18</GCD> <GCD>18 12</GCD></Equal>	<True />
+gcd-a-b-cdot-lcm-a-b-ab-see-lcm	<Equal><Multiply><GCD>12 18</GCD> <LCM>12 18</LCM></Multiply> <Multiply>12 18</Multiply></Equal>	<True />
+gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	<GCD><Fibonacci>12</Fibonacci> <Fibonacci>18</Fibonacci></GCD>	<ToExpression>8</ToExpression>
+a-single-argument-is-returned-unchanged	<GCD>4</GCD>	<ToExpression>4</ToExpression>
+with-no-arguments-compute-engine-returns-0-the	<Apply>GCD</Apply>	<ToExpression>0</ToExpression>
+0-is-absorbed-every-integer-divides-it-so-gcd-0	<GCD>0 5</GCD>	<ToExpression>5</ToExpression>
+signs-are-discarded-before-computing-the-gcd	<GCD>-12 9 57</GCD>	<ToExpression>3</ToExpression>
+lists-aren-t-threaded-element-wise-they-re	<GCD><List>2 4</List> <List>6 8</List></GCD>	<ToExpression>2</ToExpression>
+gcd-0-0-0-by-convention	<GCD>0 0</GCD>	<ToExpression>0</ToExpression>
+symbolic-arguments-stay-unevaluated	<GCD>x y</GCD>	<GCD>x y</GCD>

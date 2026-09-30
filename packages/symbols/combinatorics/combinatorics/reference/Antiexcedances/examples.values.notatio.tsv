@@ -1,0 +1,4 @@
+id	in	out
+positions-2-and-3-1-2-and-2-3	<Antiexcedances><Permutation><List>3 1 2</List></Permutation></Antiexcedances>	<ToExpression>2</ToExpression>
+the-identity-has-none	<Antiexcedances><Permutation><List>1 2 3</List></Permutation></Antiexcedances>	<ToExpression>0</ToExpression>
+positions-3-and-4-2-3-and-1-4	<Antiexcedances><Permutation><List>4 3 2 1</List></Permutation></Antiexcedances>	<ToExpression>2</ToExpression>

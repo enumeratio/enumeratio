@@ -1,0 +1,5 @@
+id	in	out
+studentt-pdf-exact	<PDF><StudentTDistribution>5</StudentTDistribution> 0</PDF>	<Divide><Multiply><Sqrt>5</Sqrt> <Gamma>3</Gamma></Multiply> <Multiply>5 <Gamma><Rational>5 2</Rational></Gamma> <Sqrt>Pi</Sqrt></Multiply></Divide>
+studentt-cdf-symmetric	<CDF><StudentTDistribution>5</StudentTDistribution> 0</CDF>	<Rational>1 2</Rational>
+studentt-mean-exact	<Mean><StudentTDistribution>5</StudentTDistribution></Mean>	<ToExpression>0</ToExpression>
+studentt-variance-exact	<Variance><StudentTDistribution>5</StudentTDistribution></Variance>	<Rational>5 3</Rational>

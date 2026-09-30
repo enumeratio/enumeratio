@@ -1,0 +1,6 @@
+id	in	out
+default-form-is-dnf	<BooleanConvert><And>p <Or>b r</Or></And></BooleanConvert>	<Or><And>b p</And> <And>p r</And></Or>
+cnf-distributes-or-over-and	<BooleanConvert><Or>p <And>b r</And></Or> "CNF"</BooleanConvert>	<And><Or>b p</Or> <Or>p r</Or></And>
+nnf-pushes-not-to-the-leaves-not-distributed	<BooleanConvert><Implies>p b</Implies> "NNF"</BooleanConvert>	<Or>b <Not>p</Not></Or>
+a-tautological-clause-drops-out-of-cnf	<BooleanConvert><Or>p <Not>p</Not></Or> "CNF"</BooleanConvert>	<True />
+an-unimplemented-form-stays-unevaluated	<BooleanConvert>p "ESOP"</BooleanConvert>	<BooleanConvert>p "ESOP"</BooleanConvert>

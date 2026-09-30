@@ -1,0 +1,8 @@
+id	in	out
+unitstep-neg-1	<UnitStep>-1</UnitStep>	<ToExpression>0</ToExpression>
+1-at-0-unlike-heaviside-s-1-2	<UnitStep>0</UnitStep>	<ToExpression>1</ToExpression>
+unitstep-2p5	<UnitStep>2.5</UnitStep>	<ToExpression>1</ToExpression>
+threads-element-wise-over-a-list	<UnitStep><List>-1 0 1</List></UnitStep>	<List>0 1 1</List>
+several-arguments-the-product-of-their-unit	<UnitStep>1 2</UnitStep>	<ToExpression>1</ToExpression>
+zero-as-soon-as-any-argument-is-negative	<UnitStep>1 -1</UnitStep>	<ToExpression>0</ToExpression>
+exact-numeric-arguments	<UnitStep><Subtract>Pi 3</Subtract></UnitStep>	<ToExpression>1</ToExpression>

@@ -1,0 +1,4 @@
+id	in	out
+the-order-of-s-5-is-5	<GroupOrder><SymmetricGroup>5</SymmetricGroup></GroupOrder>	<ToExpression>120</ToExpression>
+s-10-10	<GroupOrder><SymmetricGroup>10</SymmetricGroup></GroupOrder>	<ToExpression>3628800</ToExpression>
+the-one-line-words-are-compute-engine-s	<Length><Permutations><List>1 2 3</List></Permutations></Length>	<ToExpression>6</ToExpression>

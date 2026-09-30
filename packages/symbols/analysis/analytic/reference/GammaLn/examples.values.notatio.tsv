@@ -1,0 +1,19 @@
+id	in	out
+a-pole-of-gamma-in-log-form	<GammaLn>0</GammaLn>	<PositiveInfinity />
+a-floating-point-argument-evaluates-directly-to	<GammaLn>2.5</GammaLn>	<ToExpression>0.284682870472919159632</ToExpression>
+ln-gamma-100-5-where-gamma-100-5-itself-is-about	<GammaLn>100.5</GammaLn>	<ToExpression>361.435540467777621555</ToExpression>
+at-a-pole-of-gamma-compute-engine-gives-the-real	<GammaLn>-1</GammaLn>	<PositiveInfinity />
+complex-arguments-here-the-principal-ln-gamma-z	<GammaLn><Complex>2.5 3</Complex></GammaLn>	<Complex>-1.4709546103488425 2.8226156382608</Complex>
+a-huge-inexact-argument-should-still-evaluate	<GammaLn>1.0e1000</GammaLn>	<ToExpression>2301585092994045684017991454684364207601e+964</ToExpression>
+threads-over-a-list-and-the-integer-points	<GammaLn><List>1 2 3</List></GammaLn>	<List>0 0 <Ln>2</Ln></List>
+uncertainty-propagation-through-ln-gamma-with	<GammaLn><Around>1.2 0.01</Around></GammaLn>	<Around>-0.08537409000331583 0.002890398965921884</Around>
+to-30-significant-digits-not-yet-the-last-digit	<N><GammaLn><Rational>1 3</Rational></GammaLn> 30</N>	<ToExpression>0.985420646927767069187174036978</ToExpression>
+used-to-get-ln-n-for-large-n-without-overflowing	<Equal><GammaLn>11</GammaLn> <Ln><Factorial>10</Factorial></Ln></Equal>	<True />
+defined-as-ln-gamma-z-here-at-z-5	<Equal><GammaLn>5</GammaLn> <Ln><Gamma>5</Gamma></Ln></Equal>	<True />
+gammaln-1-ln-gamma-1-ln-1-0	<Equal><GammaLn>1</GammaLn> 0</Equal>	<True />
+inherits-gamma-s-recurrence-gammaln-z-1-gammaln	<Equal><GammaLn>6</GammaLn> <Add><GammaLn>5</GammaLn> <Ln>5</Ln></Add></Equal>	<True />
+gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	<Equal><GammaLn><Rational>1 2</Rational></GammaLn> <Multiply><Rational>1 2</Rational> <Ln>Pi</Ln></Multiply></Equal>	<True />
+an-exact-positive-integer-now-reduces-too	<GammaLn>5</GammaLn>	<Add><Multiply>3 <Ln>2</Ln></Multiply> <Ln>3</Ln></Add>
+the-derivative-of-ln-gamma-is-the-digamma	<D><GammaLn>x</GammaLn> x</D>	<Digamma>x</Digamma>
+off-the-positive-axis-gammaln-is-the-principal	<GammaLn>-1.5</GammaLn>	<ToExpression>0.860047015376481014511</ToExpression>
+gammaln-101-is-exactly-ln-100-letting-us-reason	<Equal><GammaLn>101</GammaLn> <Ln><Factorial>100</Factorial></Ln></Equal>	<True />

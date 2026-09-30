@@ -1,0 +1,4 @@
+id	in	out
+algebrasignature-quaternions	<AlgebraSignature>Quaternions</AlgebraSignature>	<List>-1 -1</List>
+cl-2-1	<AlgebraSignature><CliffordAlgebra>2 1</CliffordAlgebra></AlgebraSignature>	<List>1 1 -1</List>
+nilpotent	<AlgebraSignature>DualNumbers</AlgebraSignature>	<List>0</List>

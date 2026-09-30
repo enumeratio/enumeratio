@@ -1,0 +1,5 @@
+id	in	out
+a-triangle-vertices-inferred	<Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 1</UndirectedEdge></List></Graph>	<Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 1</UndirectedEdge></List></Graph>
+an-isolated-vertex-needs-the-explicit-form	<VertexList><Graph><List>1 2 3</List> <List><UndirectedEdge>1 2</UndirectedEdge></List></Graph></VertexList>	<List>1 2 3</List>
+the-1-arg-form-is-not-normalized-to-2-arg	<Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List></Graph>	<Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List></Graph>
+edgeweight-option-is-held-exactly	<Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List> <KeyValuePair>EdgeWeight <List>5 7</List></KeyValuePair></Graph>	<Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List> <Tuple>EdgeWeight <List>5 7</List></Tuple></Graph>

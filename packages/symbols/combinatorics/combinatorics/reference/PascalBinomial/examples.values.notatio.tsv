@@ -1,0 +1,4 @@
+id	in	out
+standard-range	<PascalBinomial>5 2</PascalBinomial>	<ToExpression>10</ToExpression>
+pascalbinomial-negative-n-case-2	<PascalBinomial>-1 4</PascalBinomial>	<ToExpression>1</ToExpression>
+negative-n	<PascalBinomial>-1 3</PascalBinomial>	<ToExpression>-1</ToExpression>
