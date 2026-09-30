@@ -1,11 +1,10 @@
-import { registerCollectionCarrier } from "@enumeratio/structures";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareArithHeads } from "./arith-heads.ts";
 import { declareControl } from "./control.ts";
 import { declareExpressionOps } from "./expression-ops.ts";
 import { declareCallForms } from "./families/call-forms.ts";
 import { declareFamilies } from "./families/declare.ts";
-import { allEntries } from "./families/index.ts";
+import { collectionsEntries } from "./families/index.ts";
 import { declareGeneratingFunctions } from "./generating-functions.ts";
 import { declareGraphs } from "./graphs.ts";
 import { declareGraphs2 } from "./graphs-2.ts";
@@ -33,15 +32,15 @@ import { declareStats, type StatsOptions } from "./stats.ts";
  *
  * Pass `permutationType` to declare the statistics over the minted carrier rather than over
  * a bare list — see `StatsOptions`. The carrier types have to exist on `ce` already.
+ *
+ * Declares only the families with NO carrier (`Subsets`, `Tuples`, `Multisets`, the numeric
+ * families, …) — every carrier-bearing family lives in, and is declared by, its own
+ * `@enumeratio/combinatorics` area (`declare<Area>`); `declareCombinatorics` calls both. A test
+ * that only needs the carrier-less heads may still call this alone.
  */
 export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}): void {
-  const { permutationType, permutationCarrier = "Permutation" } = options;
-  const carrierTypes = {
-    ...options.carrierTypes,
-    ...(permutationType === undefined ? {} : { [permutationCarrier]: permutationType }),
-  };
-  declareFamilies(ce, carrierTypes);
-  declareCallForms(ce, carrierTypes);
+  declareFamilies(ce, collectionsEntries);
+  declareCallForms(ce);
   declareListOps(ce);
   declareListHeads(ce);
   declareListLevelHeads(ce);
@@ -57,9 +56,6 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareArithHeads(ce);
   declareExpressionOps(ce);
   declareStats(ce, options);
-  // Which carrier each family's elements inhabit, for `CombinatorialStat(family, name)`.
-  for (const family of allEntries)
-    if (family.carrier !== undefined) registerCollectionCarrier(ce, family.head, family.carrier);
   declareGeneratingFunctions(ce);
   declareGraphs(ce);
   declareGraphs2(ce);

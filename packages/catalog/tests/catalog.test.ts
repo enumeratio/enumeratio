@@ -1,14 +1,16 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareCollections } from "@enumeratio/combinatorics/collections/src";
+import { declareCombinatorics } from "@enumeratio/combinatorics/src";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, COLLECTIONS, MAPS, STATS } from "../src/catalog-records-data.ts";
 import { declareCatalog } from "../src/declare.ts";
 import { catalogRegistry, ENUMERATIO } from "../src/resources.ts";
 import { pascal } from "../src/spelling.ts";
 
+// declareCombinatorics, not the bare collections declare: SetPartitions (below) carries its
+// own carrier now (A-94) and lives in the set-partitions area.
 const engine = () => {
   const ce = new ComputeEngine();
-  declareCollections(ce);
+  declareCombinatorics(ce);
   declareCatalog(ce, { bless: [ENUMERATIO] });
   return ce;
 };

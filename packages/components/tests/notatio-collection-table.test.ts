@@ -1,15 +1,16 @@
 // Integration test for the collection-table's per-column carrier wrap (BL-1): a REAL engine,
 // declared in the same order and with the same options as the production page
-// (web/.vitepress/theme/engine-libraries.ts's carriers -> collections -> carrier plurals ->
+// (web/.vitepress/theme/engine-libraries.ts's declareCombinatorics -> carrier plurals ->
 // statistics -> structures slice), driving the exact mechanism the component uses
 // (`collectionCarrierOf`, `wantsCarrier`, `substituteRowPerHead`, and the bare/wrapped
 // representations `#representations` computes) rather than re-deriving it.
 //
-// Two element shapes are covered, since #385 made them coexist: a permutation family
-// (SymmetricGroup) now yields elements ALREADY typed `Permutation(...)`, while the other
-// carrier families here (IntegerPartitions, DyckPaths) still yield bare lists. Both must
-// reach the same answer through the same deterministic per-argument choice -- wrap a bare
-// list, or use the carrier value as-is, never double-wrap, and unwrap for a bare-list head.
+// Since https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5 (A-94), every carrier-bearing family
+// comes out typed uniformly -- `declareCombinatorics` mints each area's carriers alongside its
+// families, unconditionally, so there is no more "still bare" carrier family the way #385 left
+// IntegerPartitions/DyckPaths for a while. `representationsOf`/`evalStat` below are still
+// written generically (bare vs wrapped, read off whatever `elt.operator` actually is), so they
+// cover an untyped element too, if a future family is ever declared without its carrier.
 //
 // Each statistic's expected value comes from an independent reference computed here from the
 // row's own bare list -- never from the production kernel -- so this catches a wrong wrap
@@ -19,16 +20,10 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { declareCollections } from "@enumeratio/combinatorics/collections";
-import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics";
+import { CARRIERS, declareCombinatorics } from "@enumeratio/combinatorics";
 import { substituteRowPerHead, wantsCarrier } from "@enumeratio/frontend";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
-import {
-  collectionCarrierOf,
-  declareCarrierElement,
-  declareCarrierPlurals,
-  declareStructures,
-} from "@enumeratio/structures";
+import { collectionCarrierOf, declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 
 function productionEngine(): ComputeEngine {
@@ -36,8 +31,7 @@ function productionEngine(): ComputeEngine {
   const domainTypes = Object.fromEntries(
     CARRIERS.filter((c) => c.name !== "SetPartition").map((c) => [c.name, c.type]),
   );
-  declareCombinatoricsCarriers(ce);
-  declareCollections(ce, { permutationType: "permutation" });
+  declareCombinatorics(ce);
   declareCarrierPlurals(ce, CARRIERS);
   declareCarrierElement(ce, CARRIERS);
   declareStatistics(ce, ALL_STATISTICS, { domainTypes });
@@ -164,14 +158,15 @@ test("Length (bare-list, generic `any`) over an already-typed permutation gives 
   }
 });
 
-test("DurfeeSquare (carrier-only) dispatches correctly over every still-bare partition of IntegerPartitions(8)", () => {
+test("DurfeeSquare (carrier-only) dispatches correctly over every already-typed partition of IntegerPartitions(8)", () => {
   const ce = productionEngine();
   const carrier = collectionCarrierOf(ce, "IntegerPartitions");
   expect(carrier).toBe("IntegerPartition");
   const rows = rowsOf(ce, ["IntegerPartitions", 8]);
   expect(rows.length).toBeGreaterThan(0);
-  // Unlike the permutation families, #385 left this carrier's elements bare lists.
-  expect(rows[0]!.operator).not.toBe(carrier);
+  // A-94: partitions' own declare mints IntegerPartition alongside IntegerPartitions, so this
+  // carrier's elements are typed too now, same as the permutation families.
+  expect(rows[0]!.operator).toBe(carrier);
 
   // Parts are weakly decreasing (statistics/src/partition.ts): the largest d with at least
   // d parts of size >= d.
@@ -183,7 +178,7 @@ test("DurfeeSquare (carrier-only) dispatches correctly over every still-bare par
   for (const row of rows) expect(evalStat(ce, "DurfeeSquare", row, carrier)).toBe(reference(intsOf(row, carrier)));
 });
 
-test("Height (carrier-only) dispatches correctly over every still-bare path of DyckPaths(4)", () => {
+test("Height (carrier-only) dispatches correctly over every already-typed path of DyckPaths(4)", () => {
   const ce = productionEngine();
   const carrier = collectionCarrierOf(ce, "DyckPaths");
   expect(carrier).toBe("DyckPath");
@@ -200,7 +195,7 @@ test("Height (carrier-only) dispatches correctly over every still-bare path of D
   for (const row of rows) expect(evalStat(ce, "Height", row, carrier)).toBe(reference(intsOf(row, carrier)));
 });
 
-test("Area and Returns (carrier-only) dispatch correctly over every still-bare path of DyckPaths(4)", () => {
+test("Area and Returns (carrier-only) dispatch correctly over every already-typed path of DyckPaths(4)", () => {
   const ce = productionEngine();
   const carrier = collectionCarrierOf(ce, "DyckPaths");
   const rows = rowsOf(ce, ["DyckPaths", 4]);

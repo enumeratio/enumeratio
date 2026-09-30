@@ -1,23 +1,33 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareCollections } from "../src/library.ts";
+import { declareCombinatorics } from "../../src/index.ts";
 
 // Brute-force cross-checks for the call forms in ./families/call-forms.ts, against
 // independent generators (no shared code with the kernels those call forms route to) --
 // for every count AND every enumeration, at small n so an O(2^n) / O(n!) generator stays
 // cheap. See ../src/families/call-forms.ts for what's being tested and why.
+//
+// IntegerPartitions and SetPartitions live in their own areas now (A-94) and come out typed
+// (`IntegerPartition(...)`, `SetPartition(...)`) once declareCombinatorics mints their
+// carriers -- stripLists unwraps that one-arg carrier wrapper too, not just `List`.
 
 const ce = new ComputeEngine();
-declareCollections(ce);
+declareCombinatorics(ce);
 
 function countOf(expr: unknown): unknown {
   return ce.box(["Count", expr] as never).evaluate().json;
 }
 
 /** `["List", …]` (at every depth) -> a plain nested array, to compare against a
- *  brute-force generator's plain JS output without either side reformatting for the other. */
+ *  brute-force generator's plain JS output without either side reformatting for the other.
+ *  Also unwraps a one-arg carrier constructor (`IntegerPartition(x)`, `SetPartition(x)`) around
+ *  the same shape, typed now that its area's carrier is declared alongside it. */
 function stripLists(x: unknown): unknown {
-  return Array.isArray(x) && x[0] === "List" ? x.slice(1).map(stripLists) : x;
+  if (!Array.isArray(x)) return x;
+  const [head, ...rest] = x;
+  if (head === "List") return rest.map(stripLists);
+  if (typeof head === "string" && rest.length === 1) return stripLists(rest[0]);
+  return x;
 }
 
 /** Every element of a lazy collection, read through `At` one at a time -- materializing

@@ -71,7 +71,11 @@ const CORE_OWNED = new Set(
 
 const ce = new ComputeEngine();
 declareCarriers(ce);
-declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation, carrierTypes: CARRIER_TYPES });
+// A-94: declareCollections no longer takes carrierTypes (or declares carrier-bearing
+// families at all -- those moved to their own combinatorics areas). Neither is used below:
+// every example here wraps a bare list in the LOCAL fake carrier constructor directly
+// (`declareCarriers`, above), never through a family head like SymmetricGroup.
+declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: CARRIER_TYPES });
 
 // `declareStatistics` declares the FIRST definition of each head and skips the rest, so a

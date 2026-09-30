@@ -1,6 +1,6 @@
 import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
 import { defineMessages, emit, wrapOperator } from "@enumeratio/engine";
-import { allEntries } from "./index.ts";
+import { carrierTypeForName, registerCollectionCarrier } from "@enumeratio/structures";
 import {
   asBlockList,
   asIntList,
@@ -174,15 +174,21 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
   };
 }
 
-/** Declare every family on `ce`: an indexed-collection operator, or for paramCount 0 an
- *  indexed-collection value (`Primes`), which shadows CE's own `set` of that name on this engine.
- *  `carrierTypes` names the minted type of each carrier whose values a family's elements are. */
-export function declareFamilies(ce: ComputeEngine, carrierTypes: Readonly<Record<string, string>> = {}): void {
+/** Declare every family in `entries` on `ce`: an indexed-collection operator, or for paramCount 0
+ *  an indexed-collection value (`Primes`), which shadows CE's own `set` of that name on this
+ *  engine. A family's carrier, when it names one, has to already be declared on `ce` (its OWN
+ *  area's declare runs its `declareCarriers` first) -- its minted type is read back through
+ *  `@enumeratio/structures`' registry (`carrierTypeForName`), not passed in. Also registers
+ *  which carrier each family's elements inhabit (`registerCollectionCarrier`), for
+ *  `CombinatorialStat(family, name)` -- self-contained per call, so a single area's declare
+ *  needs nothing extra for its own families to answer it. */
+export function declareFamilies(ce: ComputeEngine, entries: readonly FamilyKernel[]): void {
   const byHead = new Map<string, FamilyKernel>();
-  for (const family of allEntries) {
+  for (const family of entries) {
     byHead.set(family.head, family);
     const carrier = carrierOf(family);
-    const elementType = carrier === undefined ? undefined : carrierTypes[carrier];
+    if (carrier !== undefined) registerCollectionCarrier(ce, family.head, carrier);
+    const elementType = carrier === undefined ? undefined : carrierTypeForName(ce, carrier);
     const collection = handlersOf(ce, family, elementType === undefined ? undefined : carrier);
     if (family.declared?.work !== undefined) {
       defineMessages(ce, family.head, { toobig: "`1` would enumerate about `2` elements; the limit is `3`." });
@@ -196,6 +202,9 @@ export function declareFamilies(ce: ComputeEngine, carrierTypes: Readonly<Record
 
   // The `count` handler can't carry an exact count past 2^53, but `Count` can: an exact
   // integer, never a rounded one. Counts that cost enumeration stay with the handler.
+  // Guarded on SymmetricGroup being among THESE entries, so this only ever wraps once --
+  // permutations' own declare is the only caller whose entries include it.
+  if (!byHead.has("SymmetricGroup")) return;
   const exactCount = (op: BoxedExpression): bigint | undefined => {
     const family = byHead.get(op.operator);
     if (family === undefined || family.declared?.cost.count === "enumerative") return undefined;

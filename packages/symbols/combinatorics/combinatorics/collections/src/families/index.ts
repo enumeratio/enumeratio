@@ -115,5 +115,27 @@ const numberEntries = [
 ].map(numberKernel);
 
 // Every family, in the bigint contract. declare.ts declares them all; the Plausible and OEIS
-// scripts read them too.
+// scripts read them too. Order here is data-list order only -- since https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
+// §4 step 5's `carrierTypes` removal (A-94), nothing declares this list as one call any more;
+// see `collectionsEntries` below and each area's own `declare<Area>` for what does.
 export const allEntries: readonly FamilyKernel[] = [...permutationsBigintEntries, ...numberEntries];
+
+// The families with NO carrier -- native to collections, not to any combinatorics area. Every
+// other entry above physically lives in, and is now declared by, its own area package; this is
+// what `declareCollections` itself still declares directly.
+export const collectionsEntries: readonly FamilyKernel[] = [
+  ...coreBeforeSurjections,
+  ...coreBeforeDyckPaths,
+  ...coreBeforeSetPartitions,
+  ...coreBeforeTrees,
+  ...core,
+  ...subsets,
+  ...pathsPartitionsBeforeDyckPathsByHeight,
+  ...tableauxTreesAfterNonDecreasingParkingFunctions,
+  ...binaryWordFamilies,
+  ...numericSets,
+  ...numericClosedForm,
+  ...numericRecurrence,
+  ...numericDivisor,
+  ...numericDigitsPrimes,
+].map(numberKernel);

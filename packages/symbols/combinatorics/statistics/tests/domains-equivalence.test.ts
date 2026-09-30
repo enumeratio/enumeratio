@@ -1,17 +1,15 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareCollections } from "@enumeratio/combinatorics/collections/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareStructures } from "@enumeratio/structures/src";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, declareCombinatoricsCarriers, declareMaps, MAPS } from "@enumeratio/combinatorics/src";
+import { CARRIERS, declareCombinatorics, declareMaps, MAPS } from "@enumeratio/combinatorics/src";
 
 // Set partitions and restricted growth strings: one structure, two carriers, joined by an order
 // isomorphism, so what one defines the other reaches.
 const ce = new ComputeEngine();
 declareStructures(ce);
-declareCombinatoricsCarriers(ce);
+declareCombinatorics(ce);
 const carrierTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
-declareCollections(ce, { permutationType: "permutation", carrierTypes });
 declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes });
 declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 
