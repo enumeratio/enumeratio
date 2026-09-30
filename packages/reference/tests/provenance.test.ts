@@ -309,11 +309,6 @@ const OVERRIDDEN = [
   "Simplify",
   "Sin",
   "Sinh",
-  // Not itself overridden -- an assumption an earlier corpus example leaves on `x`
-  // (added for A-109's new Solve record) carries into Solve's own examples and the two
-  // engines' accumulated state no longer agrees bit-for-bit by the time Solve's turn
-  // comes up in the shared-engine sweep, same as Add/Sum/Take above.
-  "Solve",
   "Sort",
   "Sqrt",
   "Stirling",
