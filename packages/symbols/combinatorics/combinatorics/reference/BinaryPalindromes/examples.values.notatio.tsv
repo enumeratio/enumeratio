@@ -1,0 +1,4 @@
+id	in	out
+count-binarypalindromes-4	<Count><BinaryPalindromes>4</BinaryPalindromes></Count>	<ToExpression>4</ToExpression>
+first-element-of-binarypalindromes-4	<At><BinaryPalindromes>4</BinaryPalindromes> 1</At>	<List>0 0 0 0</List>
+every-element-of-binarypalindromes-4	<Take><BinaryPalindromes>4</BinaryPalindromes> 4</Take>	<List><List>0 0 0 0</List> <List>0 1 1 0</List> <List>1 0 0 1</List> <List>1 1 1 1</List></List>

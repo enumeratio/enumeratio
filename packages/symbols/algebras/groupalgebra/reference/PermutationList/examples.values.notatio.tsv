@@ -1,0 +1,4 @@
+id	in	out
+cycle-to-image-list	<PermutationList><Cycles><List><List>1 3 2</List></List></Cycles></PermutationList>	<List>3 1 2</List>
+padded-to-length	<PermutationList><Cycles><List><List>2 3</List></List></Cycles> 5</PermutationList>	<List>1 3 2 4 5</List>
+round-trips-with-permutation-cycles	<PermutationCycles><PermutationList><Cycles><List><List>1 2 5</List> <List>4 6 8 9</List></List></Cycles></PermutationList></PermutationCycles>	<Cycles><List><List>1 2 5</List> <List>4 6 8 9</List></List></Cycles>

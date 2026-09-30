@@ -1,0 +1,6 @@
+id	in	out
+selects-the-second-branch	<Piecewise><List><List>1 <Less>x 0</Less></List> <List>2 <GreaterEqual>x 0</GreaterEqual></List></List></Piecewise>	<Piecewise><List><List>1 <Less>x 0</Less></List> <List>2 <LessEqual>0 x</LessEqual></List></List></Piecewise>
+evaluated-at-a-concrete-point-below-zero	<ReplaceAll><Piecewise><List><List>1 <Less>x 0</Less></List> <List>2 <GreaterEqual>x 0</GreaterEqual></List></List></Piecewise> <Rule>x -5</Rule></ReplaceAll>	<ToExpression>1</ToExpression>
+evaluated-at-a-concrete-point-at-or-above-zero	<ReplaceAll><Piecewise><List><List>1 <Less>x 0</Less></List> <List>2 <GreaterEqual>x 0</GreaterEqual></List></List></Piecewise> <Rule>x 5</Rule></ReplaceAll>	<ToExpression>2</ToExpression>
+falls-through-to-the-explicit-default	<Piecewise><List><List><Power>x 2</Power> <Less>x 0</Less></List></List> 99</Piecewise>	<Piecewise><List><List><Power>x 2</Power> <Less>x 0</Less></List></List> 99</Piecewise>
+every-clause-eliminated-falls-through-to-default	<Piecewise><List><List>1 <Greater>2 3</Greater></List></List> 99</Piecewise>	<ToExpression>99</ToExpression>

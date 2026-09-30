@@ -1,0 +1,16 @@
+id	in	out
+rank-5	<Rank>5</Rank>	<ToExpression>0</ToExpression>
+rank-list-1-2-3	<Rank><List>1 2 3</List></Rank>	<ToExpression>1</ToExpression>
+rank-list-list-1-0-list-0-1	<Rank><List><List>1 0</List> <List>0 1</List></List></Rank>	<ToExpression>2</ToExpression>
+rank-list-list-list-1-2-list-3-4-list-list-5-6	<Rank><List><List><List>1 2</List> <List>3 4</List></List> <List><List>5 6</List> <List>7 8</List></List></List></Rank>	<ToExpression>3</ToExpression>
+symbolic-entries	<Rank><List><List>a b</List> <List>c d</List></List></Rank>	<ToExpression>2</ToExpression>
+a-symbol-is-a-scalar	<Rank>x</Rank>	<ToExpression>0</ToExpression>
+rectangular-arrays	<Rank><List><List>1 2 3</List> <List>4 5 6</List></List></Rank>	<ToExpression>2</ToExpression>
+rank-identitymatrix-3	<Rank><IdentityMatrix>3</IdentityMatrix></Rank>	<ToExpression>2</ToExpression>
+a-ragged-list-has-depth-1-only-its-outer-level	<Rank><List><List>1 2</List> <List>3</List></List></Rank>	<ToExpression>1</ToExpression>
+likewise-a-list-mixing-scalars-and-lists	<Rank><List>1 <List>2 3</List></List></Rank>	<ToExpression>1</ToExpression>
+the-empty-list-is-still-a-vector-of-length-0	<Rank><Apply>List</Apply></Rank>	<ToExpression>1</ToExpression>
+and-a-1-0-matrix	<Rank><List><Apply>List</Apply></List></Rank>	<ToExpression>2</ToExpression>
+a-2-3-grid-of-unevaluated-calls-still-reads-as-a	<Rank><Tabulate>f 2 3</Tabulate></Rank>	<ToExpression>2</ToExpression>
+the-length-of-the-array-s-shape	<Equal><Rank><List><List><List>1 2</List> <List>3 4</List></List> <List><List>5 6</List> <List>7 8</List></List></List></Rank> <Length><Shape><List><List><List>1 2</List> <List>3 4</List></List> <List><List>5 6</List> <List>7 8</List></List></List></Shape></Length></Equal>	<True />
+a-singular-2-2-matrix-still-has-rank-2-its	<Rank><List><List>1 2</List> <List>2 4</List></List></Rank>	<ToExpression>2</ToExpression>

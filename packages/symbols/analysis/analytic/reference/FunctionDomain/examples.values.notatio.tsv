@@ -1,0 +1,10 @@
+id	in	out
+a-polynomial-is-defined-everywhere	<FunctionDomain><Power>x 2</Power> x</FunctionDomain>	<True />
+division-by-zero-excludes-the-origin	<FunctionDomain><Divide>1 x</Divide> x</FunctionDomain>	<Or><Less>x 0</Less> <Less>0 x</Less></Or>
+sqrt-of-a-bounded-quadratic	<FunctionDomain><Sqrt><Add><Negate><Power>x 2</Power></Negate> 4</Add></Sqrt> x</FunctionDomain>	<LessEqual>-2 x 2</LessEqual>
+a-monomial-with-negative-integer-exponent	<FunctionDomain><Power>x -3</Power> x</FunctionDomain>	<Or><Less>x 0</Less> <Less>0 x</Less></Or>
+a-multivariate-expression-declines	<FunctionDomain><Multiply>x y</Multiply> x</FunctionDomain>	<FunctionDomain><Multiply>x y</Multiply> x</FunctionDomain>
+a-rational-function-with-two-real-poles	<FunctionDomain><Divide>1 <Add><Power>x 2</Power> -1</Add></Divide> x</FunctionDomain>	<Or><Less>x -1</Less> <Less>-1 x 1</Less> <Less>1 x</Less></Or>
+an-even-root-needs-a-nonnegative-radicand	<FunctionDomain><Sqrt><Add><Power>x 2</Power> -1</Add></Sqrt> x</FunctionDomain>	<Or><LessEqual>x -1</LessEqual> <LessEqual>1 x</LessEqual></Or>
+a-natural-log-needs-a-positive-argument	<FunctionDomain><Ln><Subtract>2 x</Subtract></Ln> x</FunctionDomain>	<Less>x 2</Less>
+tangent-s-domain-is-declined	<FunctionDomain><Tan>x</Tan> x</FunctionDomain>	<FunctionDomain><Tan>x</Tan> x</FunctionDomain>

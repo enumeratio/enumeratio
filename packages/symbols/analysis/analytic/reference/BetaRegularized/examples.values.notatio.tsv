@@ -1,0 +1,22 @@
+id	in	out
+betaregularized-0-2-3	<BetaRegularized>0 2 3</BetaRegularized>	<ToExpression>0</ToExpression>
+betaregularized-1-2-3	<BetaRegularized>1 2 3</BetaRegularized>	<ToExpression>1</ToExpression>
+a-floating-point-x-evaluates-directly-to-a	<BetaRegularized>0.5 2 3</BetaRegularized>	<ToExpression>0.6875</ToExpression>
+i-x-1-1-x-the-uniform-distribution-s-own-cdf	<BetaRegularized>0.5 1 1</BetaRegularized>	<ToExpression>0.5</ToExpression>
+non-integer-parameters	<BetaRegularized>0.4 2.5 3.5</BetaRegularized>	<ToExpression>0.486904191526117355254</ToExpression>
+i-1-2-2-3-11-16-exactly	<BetaRegularized><Rational>1 2</Rational> 2 3</BetaRegularized>	<Rational>11 16</Rational>
+threads-element-wise-over-a-list-as-wolfram-s	<BetaRegularized>0.5 <List>1 2</List> 1</BetaRegularized>	<List>0.5 0.25</List>
+x-outside-0-1-by-continuation-real-here-as-b-5	<BetaRegularized>2 0.5 5</BetaRegularized>	<ToExpression>1.1821941497962591</ToExpression>
+four-arguments-the-generalized-i-z-1-a-b-i-z-0-a	<BetaRegularized>0.2 0.5 2 3</BetaRegularized>	<ToExpression>0.5067</ToExpression>
+interval-arithmetic-i-x-2-1-x-2	<BetaRegularized><Interval>0.2 0.3</Interval> 2 1</BetaRegularized>	<Interval>0.04 0.09</Interval>
+uncertainty-propagation	<BetaRegularized><Around>0.3 0.01</Around> 1 2</BetaRegularized>	<Around>0.51 0.014</Around>
+to-30-significant-digits-every-one-correctly	<N><BetaRegularized><Rational>1 3</Rational> 2 3</BetaRegularized> 30</N>	<ToExpression>0.407407407407407407407407407407</ToExpression>
+binomial-cdf-via-the-regularized-beta-for-x-sim	<Equal><BetaRegularized>0.7 3 2</BetaRegularized> <Add><Power>0.7 4</Power> <Multiply>4 0.3 <Power>0.7 3</Power></Multiply></Add></Equal>	<True />
+symmetry-i-x-a-b-i-1-x-b-a-1	<Equal><Add><BetaRegularized>0.3 2 3</BetaRegularized> <BetaRegularized>0.7 3 2</BetaRegularized></Add> 1</Equal>	<True />
+i-1-2-a-a-1-2-for-any-a-here-at-a-10	<BetaRegularized>0.5 10 10</BetaRegularized>	<ToExpression>0.5</ToExpression>
+i-x-a-1-x-a-here-0-2111-5	<BetaRegularized>0.2111111111111111 5 1</BetaRegularized>	<ToExpression>0.000419329539873664134599</ToExpression>
+the-arcsine-distribution-s-median-i-1-2-1-2-1-2	<BetaRegularized>0.5 <Rational>1 2</Rational> <Rational>1 2</Rational></BetaRegularized>	<ToExpression>0.5</ToExpression>
+i-x-1-1-x-symbolically	<BetaRegularized>x 1 1</BetaRegularized>	<x />
+i-x-a-1-x-a-symbolically	<BetaRegularized>x a 1</BetaRegularized>	<Power>x a</Power>
+i-x-1-b-1-1-x-b	<BetaRegularized>x 1 b</BetaRegularized>	<Add><Negate><Power><Add><Negate>x</Negate> 1</Add> b</Power></Negate> 1</Add>
+an-x-outside-0-1-is-left-unevaluated-rather-than	<BetaRegularized>2 2 3</BetaRegularized>	<BetaRegularized>2 2 3</BetaRegularized>

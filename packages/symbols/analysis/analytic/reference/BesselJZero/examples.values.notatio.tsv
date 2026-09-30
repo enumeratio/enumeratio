@@ -1,0 +1,8 @@
+id	in	out
+j-3-2-1-4-4934-also-the-first-positive-root-of	<N><BesselJZero><Rational>3 2</Rational> 1</BesselJZero></N>	<ToExpression>4.493409457909064</ToExpression>
+j-0-1-2-4048	<N><BesselJZero>0 1</BesselJZero></N>	<ToExpression>2.404825557695773</ToExpression>
+the-third-zero-of-j-0	<N><BesselJZero>0 3</BesselJZero></N>	<ToExpression>8.653727912911013</ToExpression>
+j-3-2-2	<N><BesselJZero><Rational>3 2</Rational> 2</BesselJZero></N>	<ToExpression>7.725251836937707</ToExpression>
+j-1-2	<N><BesselJZero>1 2</BesselJZero></N>	<ToExpression>7.015586669815619</ToExpression>
+j-5-2-1	<N><BesselJZero><Rational>5 2</Rational> 1</BesselJZero></N>	<ToExpression>5.76345919689455</ToExpression>
+tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	<Chop><Subtract><Tan><N><BesselJZero><Rational>3 2</Rational> 1</BesselJZero></N></Tan> <N><BesselJZero><Rational>3 2</Rational> 1</BesselJZero></N></Subtract></Chop>	<ToExpression>0</ToExpression>

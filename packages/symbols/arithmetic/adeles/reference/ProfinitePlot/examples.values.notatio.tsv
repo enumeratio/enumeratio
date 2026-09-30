@@ -1,0 +1,3 @@
+id	in	out
+the-identity-function-an-anti-diagonal-of-filled	<ProfinitePlot>x x 3</ProfinitePlot>	<ArrayPlot><List><List>0 0 0 0 0 1</List> <List>0 0 0 0 1 0</List> <List>0 0 0 1 0 0</List> <List>0 0 1 0 0 0</List> <List>0 1 0 0 0 0</List> <List>1 0 0 0 0 0</List></List></ArrayPlot>
+k-capped-at-6-a-larger-precision-refuses	<ProfinitePlot>x x 9</ProfinitePlot>	<ProfinitePlot>x x 9</ProfinitePlot>

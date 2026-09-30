@@ -1,0 +1,4 @@
+id	in	out
+add-of-two-wildcards-matches-an-add	<MatchQ><Add>x 1</Add> <Add>_a _b</Add></MatchQ>	<True />
+a-product-does-not-match-an-add-pattern	<MatchQ><Multiply>x y</Multiply> <Add>_a _b</Add></MatchQ>	<False />
+a-sequence-wildcard-matches-the-rest-of-a-list	<MatchQ><List>1 2 3</List> <List>_a __rest</List></MatchQ>	<True />

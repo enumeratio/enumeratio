@@ -1,0 +1,3 @@
+id	in	out
+an-actual-path-is-a-path	<IsPathGraph><Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph></IsPathGraph>	<True />
+a-cycle-is-not-a-path	<IsPathGraph><CycleGraph>4</CycleGraph></IsPathGraph>	<False />

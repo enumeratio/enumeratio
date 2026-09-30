@@ -1,0 +1,6 @@
+id	in	out
+moment-order-0	<Moment><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution> 0</Moment>	<ToExpression>1</ToExpression>
+moment-order-1-is-mean	<Moment><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution> 1</Moment>	<ToExpression>3</ToExpression>
+moment-order-2	<Moment><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution> 2</Moment>	<ToExpression>21</ToExpression>
+moment-bernoulli-order-5	<Moment><BernoulliDistribution><Rational>2 5</Rational></BernoulliDistribution> 5</Moment>	<Rational>2 5</Rational>
+moment-order-3-unevaluated	<Moment><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution> 3</Moment>	<Moment><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution> 3</Moment>

@@ -1,0 +1,6 @@
+id	in	out
+exp-neg-x-gamma	<MellinTransform><Exp><Negate>x</Negate></Exp> x s</MellinTransform>	<Gamma>s</Gamma>
+one-over-one-plus-x	<MellinTransform><Divide>1 <Add>1 x</Add></Divide> x s</MellinTransform>	<Multiply>Pi <Csc><Multiply>Pi s</Multiply></Csc></Multiply>
+gaussian	<MellinTransform><Exp><Negate><Power>x 2</Power></Negate></Exp> x s</MellinTransform>	<Multiply><Rational>1 2</Rational> <Gamma><Multiply><Rational>1 2</Rational> s</Multiply></Gamma></Multiply>
+log-one-plus-x	<MellinTransform><Ln><Add>1 x</Add></Ln> x s</MellinTransform>	<Divide><Multiply>Pi <Csc><Multiply>Pi s</Multiply></Csc></Multiply> s</Divide>
+power-shift-x-c-exp	<MellinTransform><Multiply><Power>x a</Power> <Exp><Negate>x</Negate></Exp></Multiply> x s</MellinTransform>	<Gamma><Add>a s</Add></Gamma>

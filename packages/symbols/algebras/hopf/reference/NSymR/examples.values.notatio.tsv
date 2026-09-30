@@ -1,0 +1,5 @@
+id	in	out
+r-1-1-h-1-1-h-2	<InCompleteBasis><NSymR><List>1 1</List></NSymR></InCompleteBasis>	<Add><Negate><NSymH><List>2</List></NSymH></Negate> <NSymH><List>1 1</List></NSymH></Add>
+the-fundamental-basis-sums-over-refinements	<InMonomialBasis><QSymF><List>2</List></QSymF></InMonomialBasis>	<Add><QSymM><List>2</List></QSymM> <QSymM><List>1 1</List></QSymM></Add>
+one-signed-term	<Antipode><NSymR><List>3</List></NSymR></Antipode>	<Negate><NSymR><List>1 1 1</List></NSymR></Negate>
+self-conjugate-the-convention-is-settled-by-the	<ConjugateComposition><List>2 1</List></ConjugateComposition>	<List>2 1</List>

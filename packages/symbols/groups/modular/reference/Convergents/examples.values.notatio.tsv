@@ -1,0 +1,5 @@
+id	in	out
+from-a-list-of-terms	<Convergents><List>3 7 15 1</List></Convergents>	<List>3 <Rational>22 7</Rational> <Rational>333 106</Rational> <Rational>355 113</Rational></List>
+the-first-five-convergents-of-pi	<Convergents>Pi 5</Convergents>	<List>3 <Rational>22 7</Rational> <Rational>333 106</Rational> <Rational>355 113</Rational> <Rational>103993 33102</Rational></List>
+a-rational-the-last-convergent-is-the-number	<Convergents><Rational>47 17</Rational></Convergents>	<List>2 3 <Rational>11 4</Rational> <Rational>47 17</Rational></List>
+convergents-of-sqrt-2-solve-pell-s-equations-p-2	<Convergents><Sqrt>2</Sqrt> 5</Convergents>	<List>1 <Rational>3 2</Rational> <Rational>7 5</Rational> <Rational>17 12</Rational> <Rational>41 29</Rational></List>

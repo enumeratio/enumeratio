@@ -1,0 +1,7 @@
+id	in	out
+n-pi-30	<N>Pi 30</N>	<ToExpression>3.14159265358979323846264338328</ToExpression>
+the-last-digit-correctly-rounded-computing-at-30	<N><Sinh>1</Sinh> 30</N>	<ToExpression>1.17520119364380145688238185060</ToExpression>
+a-list-number-by-number	<N><List>Pi ExponentialE <Sqrt>2</Sqrt></List> 5</N>	<List>3.1416 2.7183 1.4142</List>
+an-exact-tie-rounds-to-the-even-digit-0-125	<N><Rational>1 8</Rational> 2</N>	<ToExpression>0.12</ToExpression>
+and-0-375-to-0-38	<N><Rational>3 8</Rational> 2</N>	<ToExpression>0.38</ToExpression>
+n-pi-1-digit	<N>Pi 1</N>	<ToExpression>3</ToExpression>

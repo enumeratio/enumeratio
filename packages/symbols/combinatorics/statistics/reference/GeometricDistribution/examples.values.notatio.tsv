@@ -1,0 +1,5 @@
+id	in	out
+geometric-pdf-exact	<PDF><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution> 2</PDF>	<Rational>9 64</Rational>
+geometric-cdf-exact	<CDF><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution> 2</CDF>	<Rational>37 64</Rational>
+geometric-mean-exact	<Mean><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution></Mean>	<ToExpression>3</ToExpression>
+geometric-variance-exact	<Variance><GeometricDistribution><Rational>1 4</Rational></GeometricDistribution></Variance>	<ToExpression>12</ToExpression>

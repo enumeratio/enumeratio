@@ -1,0 +1,17 @@
+id	in	out
+erfinv-0	<ErfInv>0</ErfInv>	<ToExpression>0</ToExpression>
+erfinv-1	<ErfInv>1</ErfInv>	<PositiveInfinity />
+erfinv-neg-1	<ErfInv>-1</ErfInv>	<NegativeInfinity />
+a-floating-point-argument-evaluates-directly-to	<ErfInv>0.5</ErfInv>	<ToExpression>0.476936276204469873381</ToExpression>
+a-machine-precision-argument	<ErfInv>0.6</ErfInv>	<ToExpression>0.595116081449994850019</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<ErfInv><List>0 1</List></ErfInv>	<List>0 PositiveInfinity</List>
+two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x	<ErfInv>0.4 0.2</ErfInv>	<ToExpression>0.6317759030550063</ToExpression>
+interval-arithmetic-the-inverse-is-increasing-so	<ErfInv><Interval>0.5 0.6</Interval></ErfInv>	<Interval>0.4769362762044699 0.5951160814499948</Interval>
+uncertainty-propagation	<ErfInv><Around>0.5 0.01</Around></ErfInv>	<Around>0.4769362762044699 0.011125848189719498</Around>
+to-30-significant-digits-every-one-correctly	<N><ErfInv><Rational>1 2</Rational></ErfInv> 30</N>	<ToExpression>0.476936276204469873381418353643</ToExpression>
+the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	<Multiply><Sqrt>2</Sqrt> <ErfInv>0.95</ErfInv></Multiply>	<ToExpression>1.95996398454005423552746040017785193571357792</ToExpression>
+inverse-of-erf-erf-erfinv-x-x-see-erf	<Equal><Erf><ErfInv>0.5</ErfInv></Erf> 0.5</Equal>	<True />
+odd-erfinv-x-erfinv-x-applied-symbolically	<ErfInv><Negate>x</Negate></ErfInv>	<Negate><ErfInv>x</ErfInv></Negate>
+frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	<D><ErfInv>x</ErfInv> x</D>	<Multiply><Rational>1 2</Rational> <Power>ExponentialE <Power><ErfInv>x</ErfInv> 2</Power></Power> <Sqrt>Pi</Sqrt></Multiply>
+outside-its-real-domain-1-1-compute-engine	<ErfInv>2</ErfInv>	<ErfInv>2</ErfInv>
+blows-up-near-the-boundary-erfinv-0-9999-is	<ErfInv>0.9999</ErfInv>	<ToExpression>2.75106390571206079615</ToExpression>

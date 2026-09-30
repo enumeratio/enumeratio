@@ -1,0 +1,4 @@
+id	in	out
+weibull-pdf-exact	<PDF><WeibullDistribution>2 5</WeibullDistribution> 4</PDF>	<Divide>8 <Multiply>25 <Power>ExponentialE <Rational>16 25</Rational></Power></Multiply></Divide>
+weibull-cdf-exact	<CDF><WeibullDistribution>2 5</WeibullDistribution> 4</CDF>	<Add>1 <Negate><Power>ExponentialE <Rational>-16 25</Rational></Power></Negate></Add>
+weibull-mean-exact	<Mean><WeibullDistribution>2 5</WeibullDistribution></Mean>	<Multiply>5 <Gamma><Rational>3 2</Rational></Gamma></Multiply>

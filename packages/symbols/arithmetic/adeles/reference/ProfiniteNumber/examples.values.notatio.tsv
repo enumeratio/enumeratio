@@ -1,0 +1,51 @@
+id	in	out
+12-hat-z-8-hat-z-4-hat-z	<Add><ProfiniteNumber>3 12</ProfiniteNumber> <ProfiniteNumber>5 8</ProfiniteNumber></Add>	<ProfiniteNumber>0 4</ProfiniteNumber>
+profinitenumber-3-12-times-profinitenumber-5-8	<Multiply><ProfiniteNumber>3 12</ProfiniteNumber> <ProfiniteNumber>5 8</ProfiniteNumber></Multiply>	<ProfiniteNumber>3 12</ProfiniteNumber>
+equal-cosets-need-not-share-a-modulus	<Equal><ProfiniteNumber>6 20</ProfiniteNumber> <ProfiniteNumber>6 40</ProfiniteNumber></Equal>	<True />
+numerator-profinitenumber-2-over-3-5	<Numerator><ProfiniteNumber><Rational>2 3</Rational> 5</ProfiniteNumber></Numerator>	<ProfiniteNumber>2 15</ProfiniteNumber>
+denominator-profinitenumber-2-over-3-5	<Denominator><ProfiniteNumber><Rational>2 3</Rational> 5</ProfiniteNumber></Denominator>	<ToExpression>3</ToExpression>
+projecting-to-q-2	<AdicNumeral>2 <ProfiniteNumber>100 24</ProfiniteNumber></AdicNumeral>	<AdicNumeral>2 4 3</AdicNumeral>
+projecting-to-q-3	<AdicNumeral>3 <ProfiniteNumber>100 24</ProfiniteNumber></AdicNumeral>	<AdicNumeral>3 1 1</AdicNumeral>
+profinitenumber-26-20-normalises-to-6-20	<ProfiniteNumber>26 20</ProfiniteNumber>	<ProfiniteNumber>6 20</ProfiniteNumber>
+a-negative-value-normalises-into-the-coset	<ProfiniteNumber>-1 12</ProfiniteNumber>	<ProfiniteNumber>11 12</ProfiniteNumber>
+a-negative-modulus-normalises-to-positive	<ProfiniteNumber>5 -12</ProfiniteNumber>	<ProfiniteNumber>5 12</ProfiniteNumber>
+a-rational-value-reduces-mod-a-rational-modulus	<ProfiniteNumber><Rational>7 2</Rational> <Rational>3 2</Rational></ProfiniteNumber>	<ProfiniteNumber><Rational>1 2</Rational> <Rational>3 2</Rational></ProfiniteNumber>
+modulus-zero-collapses-to-the-rational-itself	<ProfiniteNumber><Rational>1 3</Rational> 0</ProfiniteNumber>	<Rational>1 3</Rational>
+subtracting-an-integer-from-a-profinite-number	<Subtract><ProfiniteNumber>7 30</ProfiniteNumber> 2</Subtract>	<ProfiniteNumber>5 30</ProfiniteNumber>
+squaring-a-profinite-number	<Power><ProfiniteNumber>3 12</ProfiniteNumber> 2</Power>	<ProfiniteNumber>9 36</ProfiniteNumber>
+dividing-by-an-exact-integer-divisor	<Divide><ProfiniteNumber>4 12</ProfiniteNumber> 2</Divide>	<ProfiniteNumber>2 6</ProfiniteNumber>
+crt-glued-from-its-2-adic-and-3-adic-images	<ProfiniteNumber><List><AdicNumeral>2 20 5</AdicNumeral> <AdicNumeral>3 7 2</AdicNumeral></List></ProfiniteNumber>	<ProfiniteNumber>52 288</ProfiniteNumber>
+a-rational-value-and-a-rational-modulus	<Add><ProfiniteNumber><Rational>1 2</Rational> <Rational>97 5</Rational></ProfiniteNumber> <ProfiniteNumber><Rational>1 3</Rational> 10</ProfiniteNumber></Add>	<ProfiniteNumber><Rational>1 30</Rational> <Rational>1 5</Rational></ProfiniteNumber>
+lenstra-s-profinite-fibonacci-numbers	<Fibonacci><ProfiniteNumber>3 10</ProfiniteNumber></Fibonacci>	<ProfiniteNumber>2 11</ProfiniteNumber>
+lenstra-s-profinite-lucas-numbers	<LucasL><ProfiniteNumber>3 10</ProfiniteNumber></LucasL>	<ProfiniteNumber>4 11</ProfiniteNumber>
+gluing-projections-back-by-crt-is-the-identity	<ProfiniteNumber><List><AdicNumeral>2 <ProfiniteNumber>100 24</ProfiniteNumber></AdicNumeral> <AdicNumeral>3 <ProfiniteNumber>100 24</ProfiniteNumber></AdicNumeral></List></ProfiniteNumber>	<ProfiniteNumber>4 24</ProfiniteNumber>
+golden-add-2-4-3-mod-37-6	<Add>-2 <ProfiniteNumber><Rational>4 3</Rational> <Rational>37 6</Rational></ProfiniteNumber></Add>	<ProfiniteNumber><Rational>11 2</Rational> <Rational>37 6</Rational></ProfiniteNumber>
+golden-add-11-mod-18-2-mod-35	<Add><ProfiniteNumber>11 18</ProfiniteNumber> <ProfiniteNumber>2 35</ProfiniteNumber></Add>	<ProfiniteNumber>0 1</ProfiniteNumber>
+golden-add-187-4-mod-47-1-mod-3	<Add><ProfiniteNumber><Rational>187 4</Rational> 47</ProfiniteNumber> <ProfiniteNumber>1 3</ProfiniteNumber></Add>	<ProfiniteNumber><Rational>3 4</Rational> 1</ProfiniteNumber>
+golden-add-7-4-mod-57-2-1-4	<Add><ProfiniteNumber><Rational>7 4</Rational> <Rational>57 2</Rational></ProfiniteNumber> <Rational>1 4</Rational></Add>	<ProfiniteNumber>2 <Rational>57 2</Rational></ProfiniteNumber>
+golden-add-2-mod-48-12	<Add><ProfiniteNumber>2 48</ProfiniteNumber> 12</Add>	<ProfiniteNumber>14 48</ProfiniteNumber>
+golden-add-2-27-mod-31	<Add>2 <ProfiniteNumber>27 31</ProfiniteNumber></Add>	<ProfiniteNumber>29 31</ProfiniteNumber>
+golden-multiply-2-4-3-mod-37-6	<Multiply>-2 <ProfiniteNumber><Rational>4 3</Rational> <Rational>37 6</Rational></ProfiniteNumber></Multiply>	<ProfiniteNumber><Rational>29 3</Rational> <Rational>37 3</Rational></ProfiniteNumber>
+golden-multiply-11-mod-18-2-mod-35	<Multiply><ProfiniteNumber>11 18</ProfiniteNumber> <ProfiniteNumber>2 35</ProfiniteNumber></Multiply>	<ProfiniteNumber>0 1</ProfiniteNumber>
+golden-multiply-187-4-mod-47-1-mod-3	<Multiply><ProfiniteNumber><Rational>187 4</Rational> 47</ProfiniteNumber> <ProfiniteNumber>1 3</ProfiniteNumber></Multiply>	<ProfiniteNumber>0 <Rational>1 4</Rational></ProfiniteNumber>
+golden-multiply-7-4-mod-57-2-1-4	<Multiply><ProfiniteNumber><Rational>7 4</Rational> <Rational>57 2</Rational></ProfiniteNumber> <Rational>1 4</Rational></Multiply>	<ProfiniteNumber><Rational>7 16</Rational> <Rational>57 8</Rational></ProfiniteNumber>
+golden-multiply-2-mod-48-12	<Multiply><ProfiniteNumber>2 48</ProfiniteNumber> 12</Multiply>	<ProfiniteNumber>24 576</ProfiniteNumber>
+golden-multiply-2-27-mod-31	<Multiply>2 <ProfiniteNumber>27 31</ProfiniteNumber></Multiply>	<ProfiniteNumber>54 62</ProfiniteNumber>
+golden-equal-2-4-3-mod-37-6	<Equal>-2 <ProfiniteNumber><Rational>4 3</Rational> <Rational>37 6</Rational></ProfiniteNumber></Equal>	<False />
+golden-equal-11-mod-18-2-mod-35	<Equal><ProfiniteNumber>11 18</ProfiniteNumber> <ProfiniteNumber>2 35</ProfiniteNumber></Equal>	<True />
+golden-equal-2-mod-29-3-3-mod-5	<Equal><ProfiniteNumber>2 <Rational>29 3</Rational></ProfiniteNumber> <ProfiniteNumber>3 5</ProfiniteNumber></Equal>	<True />
+golden-equal-2-mod-48-12	<Equal><ProfiniteNumber>2 48</ProfiniteNumber> 12</Equal>	<False />
+golden-numerator-2	<Numerator>-2</Numerator>	<ToExpression>-2</ToExpression>
+golden-numerator-11-mod-18	<Numerator><ProfiniteNumber>11 18</ProfiniteNumber></Numerator>	<ProfiniteNumber>11 18</ProfiniteNumber>
+golden-numerator-187-4-mod-47	<Numerator><ProfiniteNumber><Rational>187 4</Rational> 47</ProfiniteNumber></Numerator>	<ProfiniteNumber>187 188</ProfiniteNumber>
+golden-numerator-4-3	<Numerator><Rational>-4 3</Rational></Numerator>	<ToExpression>-4</ToExpression>
+golden-denominator-2	<Denominator>-2</Denominator>	<ToExpression>1</ToExpression>
+golden-denominator-11-mod-18	<Denominator><ProfiniteNumber>11 18</ProfiniteNumber></Denominator>	<ToExpression>1</ToExpression>
+golden-denominator-187-4-mod-47	<Denominator><ProfiniteNumber><Rational>187 4</Rational> 47</ProfiniteNumber></Denominator>	<ToExpression>4</ToExpression>
+golden-denominator-4-3	<Denominator><Rational>-4 3</Rational></Denominator>	<ToExpression>3</ToExpression>
+5-doesn-t-divide-the-modulus-so-nothing-is-known	<AdicNumeral>5 <ProfiniteNumber>100 24</ProfiniteNumber></AdicNumeral>	<AdicNumeral>5 <ProfiniteNumber>4 24</ProfiniteNumber></AdicNumeral>
+dividing-by-a-profinite-number-stays-unevaluated	<Divide>1 <ProfiniteNumber>5 12</ProfiniteNumber></Divide>	<Divide>1 <ProfiniteNumber>5 12</ProfiniteNumber></Divide>
+a-non-integer-numerator-refuses-fibonacci	<Fibonacci><ProfiniteNumber><Rational>1 2</Rational> 3</ProfiniteNumber></Fibonacci>	<Fibonacci><ProfiniteNumber><Rational>1 2</Rational> 3</ProfiniteNumber></Fibonacci>
+numerator-of-a-plain-rational-is-untouched	<Numerator><Rational>3 4</Rational></Numerator>	<ToExpression>3</ToExpression>
+denominator-of-a-plain-rational-is-untouched	<Denominator><Rational>3 4</Rational></Denominator>	<ToExpression>4</ToExpression>
+only-profinitenumber-gets-numerator-not-adele	<Numerator><Adele>5</Adele></Numerator>	<Numerator><Adele>5</Adele></Numerator>

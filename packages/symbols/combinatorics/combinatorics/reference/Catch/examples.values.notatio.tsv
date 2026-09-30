@@ -1,0 +1,3 @@
+id	in	out
+no-throw-evaluates-normally	<Catch><Add>1 2</Add></Catch>	<ToExpression>3</ToExpression>
+tag-matched-catch-recovers-the-value	<Catch><Throw>ok done</Throw> done</Catch>	<ok />

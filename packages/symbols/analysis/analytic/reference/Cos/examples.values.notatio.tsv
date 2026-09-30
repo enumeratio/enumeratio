@@ -1,0 +1,48 @@
+id	in	out
+cos-0	<Cos>0</Cos>	<ToExpression>1</ToExpression>
+cos-pi-over-6	<Cos><Divide>Pi 6</Divide></Cos>	<Divide><Sqrt>3</Sqrt> 2</Divide>
+cos-pi-over-4	<Cos><Divide>Pi 4</Divide></Cos>	<Divide><Sqrt>2</Sqrt> 2</Divide>
+cos-pi-over-3	<Cos><Divide>Pi 3</Divide></Cos>	<Rational>1 2</Rational>
+cos-pi-over-2	<Cos><Divide>Pi 2</Divide></Cos>	<ToExpression>0</ToExpression>
+cos-pi	<Cos>Pi</Cos>	<ToExpression>-1</ToExpression>
+cos-30-circ-exactly	<Cos><Degrees>30</Degrees></Cos>	<Divide><Sqrt>3</Sqrt> 2</Divide>
+a-machine-precision-argument-evaluates	<Cos>1.2</Cos>	<ToExpression>0.362357754476673577638</ToExpression>
+a-huge-24-40-argument	<N><Cos><Power>24 40</Power></Cos></N>	<ToExpression>0.91647884367824463046141</ToExpression>
+a-huge-3-200-argument	<N><Cos><Power>3 200</Power></Cos></N>	<ToExpression>-0.34464877666349228352018</ToExpression>
+a-huge-neg-7-60-argument	<N><Cos><Negate><Power>7 60</Power></Negate></Cos></N>	<ToExpression>-0.93095983636224747470287</ToExpression>
+a-huge-10-80-plus-1-over-3-argument	<N><Cos><Divide><Add><Power>10 80</Power> 1</Add> 3</Divide></Cos></N>	<ToExpression>0.17055416950276543839113</ToExpression>
+cos-2-5	<Cos>2.5</Cos>	<ToExpression>-0.8011436155469337</ToExpression>
+n-of-an-exact-argument-gives-an-arbitrary	<N><Cos><Rational>6 5</Rational></Cos></N>	<ToExpression>0.362357754476673577638</ToExpression>
+evaluates-at-a-complex-argument	<Cos><Complex>2.5 1</Complex></Cos>	<Complex>-1.236229198856342 -0.7033251781135347</Complex>
+threads-element-wise-over-a-matrix	<Cos><List><List><Multiply>5 <Divide>Pi 6</Divide></Multiply> 0</List> <List><Multiply>3 <Divide>Pi 2</Divide></Multiply> <Negate><Divide>Pi 2</Divide></Negate></List></List></Cos>	<List><List><Negate><Divide><Sqrt>3</Sqrt> 2</Divide></Negate> 1</List> <List>0 0</List></List>
+cos-pi-12-frac-sqrt-6-sqrt-2-4	<Cos><Divide>Pi 12</Divide></Cos>	<Add><Divide><Sqrt>2</Sqrt> 4</Divide> <Divide><Sqrt>6</Sqrt> 4</Divide></Add>
+cos-pi-8-frac-sqrt-2-sqrt-2-2	<Cos><Divide>Pi 8</Divide></Cos>	<Multiply><Rational>1 2</Rational> <Sqrt><Add>2 <Sqrt>2</Sqrt></Add></Sqrt></Multiply>
+cos-pi-10-frac-sqrt-10-2-sqrt-5-4	<Cos><Divide>Pi 10</Divide></Cos>	<Multiply><Divide><Sqrt>2</Sqrt> 4</Divide> <Sqrt><Add>5 <Sqrt>5</Sqrt></Add></Sqrt></Multiply>
+cos-2-pi-5-frac-sqrt-5-1-4	<Cos><Multiply><Rational>2 5</Rational> Pi</Multiply></Cos>	<Add><Rational>-1 4</Rational> <Divide><Sqrt>5</Sqrt> 4</Divide></Add>
+cos-3-pi-5-frac-1-sqrt-5-4	<Cos><Multiply><Rational>3 5</Rational> Pi</Multiply></Cos>	<Add><Rational>1 4</Rational> <Negate><Divide><Sqrt>5</Sqrt> 4</Divide></Negate></Add>
+reduced-into-the-first-quadrant-by-symmetry	<Cos><Multiply><Rational>11 6</Rational> Pi</Multiply></Cos>	<Divide><Sqrt>3</Sqrt> 2</Divide>
+interval-arithmetic-the-image-of-pi-3-pi-2-is-0	<Cos><Interval><Divide>Pi 3</Divide> <Divide>Pi 2</Divide></Interval></Cos>	<Interval>0 <Rational>1 2</Rational></Interval>
+uncertainty-propagation-cos-2-pm-0-01-approx-0	<Cos><Around>2 0.01</Around></Cos>	<Around>-0.4161468365471424 0.009092974268256816</Around>
+cos-infty-should-be-the-oscillation-range-1-1	<Cos>PositiveInfinity</Cos>	<Interval>-1 1</Interval>
+an-imaginary-argument-rewrites-to-cosh-cos-ix	<Cos><Multiply>ImaginaryUnit x</Multiply></Cos>	<Cosh>x</Cosh>
+evenness-drops-the-sign-of-a-symbolic-argument	<Cos><Negate>x</Negate></Cos>	<Cos>x</Cos>
+cos-arccos-x-x-for-every-x	<Cos><Arccos>x</Arccos></Cos>	<x />
+cos-arccos-2-2-past-the-real-domain	<Cos><Arccos>2</Arccos></Cos>	<ToExpression>2</ToExpression>
+cos-arcsin-x-sqrt-1-x-2	<Cos><Arcsin>x</Arcsin></Cos>	<Sqrt><Add><Negate><Power>x 2</Power></Negate> 1</Add></Sqrt>
+cos-arctan-x-frac-1-sqrt-1-x-2	<Cos><Arctan>x</Arctan></Cos>	<Divide>1 <Sqrt><Add><Power>x 2</Power> 1</Add></Sqrt></Divide>
+derivative-sin-x	<D><Cos>x</Cos> x</D>	<Negate><Sin>x</Sin></Negate>
+antiderivative	<Integrate><Cos>x</Cos> x</Integrate>	<Sin>x</Sin>
+taylor-series-about-0-only-even-powers-appear	<Series><Cos>x</Cos> x 0 6</Series>	<Add><Multiply><Rational>-1 720</Rational> <Power>x 6</Power></Multiply> <Multiply><Rational>1 24</Rational> <Power>x 4</Power></Multiply> <Multiply><Rational>-1 2</Rational> <Power>x 2</Power></Multiply> <BigO><Power>x 8</Power></BigO> 1</Add>
+to-30-significant-digits-every-one-correctly	<N><Cos>1</Cos> 30</N>	<ToExpression>0.540302305868139717400936607443</ToExpression>
+to-1-significant-digit	<N><Cos>1</Cos> 1</N>	<ToExpression>0.5</ToExpression>
+a-huge-10-100-argument-reduces-exactly-mod-2-pi	<N><Cos><Power>10 100</Power></Cos></N>	<ToExpression>-0.928081905074655343456</ToExpression>
+threads-element-wise-over-a-list	<Cos><List>0 <Divide>Pi 2</Divide> Pi</List></Cos>	<List>1 0 -1</List>
+even-function-cos-x-cos-x	<Equal><Cos><Negate><Divide>Pi 3</Divide></Negate></Cos> <Cos><Divide>Pi 3</Divide></Cos></Equal>	<True />
+co-function-identity-cos-x-sin-pi-2-x	<Equal><Cos><Divide>Pi 6</Divide></Cos> <Sin><Subtract><Divide>Pi 2</Divide> <Divide>Pi 6</Divide></Subtract></Sin></Equal>	<True />
+double-angle-formula-cos-2x-cos-2-x-sin-2-x	<TrigExpand><Cos><Multiply>2 x</Multiply></Cos></TrigExpand>	<Add><Negate><Power><Sin>x</Sin> 2</Power></Negate> <Power><Cos>x</Cos> 2</Power></Add>
+angle-addition-formula	<TrigExpand><Cos><Add>x y</Add></Cos></TrigExpand>	<Add><Multiply><Cos>x</Cos> <Cos>y</Cos></Multiply> <Negate><Multiply><Sin>x</Sin> <Sin>y</Sin></Multiply></Negate></Add>
+power-reduction-cos-2-x-frac-1-cos-2x-2	<TrigReduce><Power><Cos>x</Cos> 2</Power></TrigReduce>	<Add><Multiply><Rational>1 2</Rational> <Cos><Multiply>2 x</Multiply></Cos></Multiply> <Rational>1 2</Rational></Add>
+euler-s-formula-cos-x-frac-e-ix-e-ix-2	<TrigToExp><Cos>x</Cos></TrigToExp>	<Multiply><Rational>1 2</Rational> <Add><Power>ExponentialE <Multiply><Complex>0 1</Complex> x</Multiply></Power> <Power>ExponentialE <Multiply><Complex>0 -1</Complex> x</Multiply></Power></Add></Multiply>
+as-with-sin-a-non-special-numeric-argument-stays	<Cos>2</Cos>	<Cos>2</Cos>
+pi-24-is-past-the-automatic-special-angle-table	<Cos><Multiply><Rational>1 24</Rational> Pi</Multiply></Cos>	<Cos><Multiply><Rational>1 24</Rational> Pi</Multiply></Cos>
+cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	<Cos><Divide>Pi 5</Divide></Cos>	<Add><Rational>1 4</Rational> <Divide><Sqrt>5</Sqrt> 4</Divide></Add>

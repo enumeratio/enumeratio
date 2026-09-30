@@ -1,0 +1,4 @@
+id	in	out
+the-first-occurrence-of-b-nested-inside-the	<FirstPosition><List><List>a a b</List> <List>b a a</List> <List>a b a</List></List> b</FirstPosition>	<List>1 3</List>
+the-empty-list-when-the-value-isn-t-found	<FirstPosition><List>a <List>a c</List></List> b</FirstPosition>	<Apply>List</Apply>
+a-match-nested-inside-an-earlier-sublist-beats-a	<FirstPosition><List>a <List>a b</List> b</List> b</FirstPosition>	<List>2 2</List>

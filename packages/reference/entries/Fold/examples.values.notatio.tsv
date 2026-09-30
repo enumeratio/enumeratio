@@ -1,0 +1,14 @@
+id	in	out
+fold-add-0-list-1-2-3-4	<Fold>Add 0 <List>1 2 3 4</List></Fold>	<ToExpression>10</ToExpression>
+fold-multiply-1-list-1-2-3-4	<Fold>Multiply 1 <List>1 2 3 4</List></Fold>	<ToExpression>24</ToExpression>
+the-shape-of-a-left-fold	<Fold>f x <List>a b c</List></Fold>	<f><f><f>x a</f> b</f> c</f>
+fold-max-0-list-3-1-4-1-5	<Fold>Max 0 <List>3 1 4 1 5</List></Fold>	<ToExpression>5</ToExpression>
+symbolic-elements	<Fold>Add 0 <List>a b c</List></Fold>	<Add>a b c</Add>
+any-two-argument-function-here-one-that-nests	<Fold><Function><List>_1 _2</List></Function> x <List>a b</List></Fold>	<List><List>x a</List> b</List>
+without-a-seed-folding-starts-from-the-first	<Fold>f <List>a b c</List></Fold>	<f><f>a b</f> c</f>
+assemble-a-number-from-its-decimal-digits	<Fold><Function><Add><Multiply>10 _1</Multiply> _2</Add></Function> 0 <List>1 2 3 4</List></Fold>	<ToExpression>1234</ToExpression>
+or-from-its-binary-digits-1011-2-11	<Fold><Function><Add><Multiply>2 _1</Multiply> _2</Add></Function> 0 <List>1 0 1 1</List></Fold>	<ToExpression>11</ToExpression>
+horner-s-rule-for-ax-2-bx-c	<Fold><Function><Add><Multiply>x _1</Multiply> _2</Add></Function> 0 <List>a b c</List></Fold>	<Add><Multiply>x <Add><Multiply>a x</Multiply> b</Add></Multiply> c</Add>
+evaluate-the-continued-fraction-1-2-2-2-from-the	<Fold><Function><Add>_2 <Divide>1 _1</Divide></Add></Function> 2 <List>2 2 1</List></Fold>	<Rational>17 12</Rational>
+folding-an-empty-list-returns-the-seed	<Fold>f x <Apply>List</Apply></Fold>	<x />
+folding-with-add-is-a-sum-1-2-100	<Fold>Add 0 <Range>100</Range></Fold>	<ToExpression>5050</ToExpression>

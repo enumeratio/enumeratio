@@ -1,0 +1,4 @@
+id	in	out
+accumulate-1-2-3-4	<Accumulate><List>1 2 3 4</List></Accumulate>	<List>1 3 6 10</List>
+accumulate-empty	<Accumulate><Apply>List</Apply></Accumulate>	<Apply>List</Apply>
+accumulate-last-is-total	<Equal><Last><Accumulate><List>1 2 3 4 5</List></Accumulate></Last> <Add>1 2 3 4 5</Add></Equal>	<True />

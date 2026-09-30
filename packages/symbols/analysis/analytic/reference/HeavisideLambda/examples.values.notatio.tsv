@@ -1,0 +1,7 @@
+id	in	out
+heavisidelambda-peak	<HeavisideLambda>0</HeavisideLambda>	<ToExpression>1</ToExpression>
+heavisidelambda-endpoint	<HeavisideLambda>1</HeavisideLambda>	<ToExpression>0</ToExpression>
+heavisidelambda-neg-endpoint	<HeavisideLambda>-1</HeavisideLambda>	<ToExpression>0</ToExpression>
+heavisidelambda-outside	<HeavisideLambda>2</HeavisideLambda>	<ToExpression>0</ToExpression>
+heavisidelambda-1-4	<HeavisideLambda><Rational>1 4</Rational></HeavisideLambda>	<Rational>3 4</Rational>
+heavisidelambda-1-2	<HeavisideLambda><Rational>1 2</Rational></HeavisideLambda>	<Rational>1 2</Rational>

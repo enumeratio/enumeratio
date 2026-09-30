@@ -1,0 +1,9 @@
+id	in	out
+all-list-2-4-6-function-1-mod-2-eq-0	<All><List>2 4 6</List> <Function><Equal><Mod>_1 2</Mod> 0</Equal></Function></All>	<True />
+all-list-2-4-5-function-1-mod-2-eq-0	<All><List>2 4 5</List> <Function><Equal><Mod>_1 2</Mod> 0</Equal></Function></All>	<False />
+a-named-predicate	<All><List>2 3 5 7</List> IsPrime</All>	<True />
+all-list-1-2-3-function-1-gt-0	<All><List>1 2 3</List> <Function><Greater>_1 0</Greater></Function></All>	<True />
+one-definite-failure-decides-the-answer-even	<All><List>1 x</List> IsEven</All>	<False />
+without-a-predicate-tests-the-elements	<All><List>True True</List></All>	<True />
+a-level-argument-tests-the-elements-at-depth-2	<All><List><List>1 2</List> <List>3 4</List></List> <Function><Greater>_1 0</Greater></Function> 2</All>	<True />
+vacuously-true-on-an-empty-list	<All><Apply>List</Apply> IsEven</All>	<True />

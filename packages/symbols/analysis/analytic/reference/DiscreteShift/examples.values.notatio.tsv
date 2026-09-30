@@ -1,0 +1,3 @@
+id	in	out
+discreteshift-one-step	<DiscreteShift><a>n</a> n</DiscreteShift>	<a><Add>n 1</Add></a>
+discreteshift-h-step	<DiscreteShift><a>n</a> <List>n 2</List></DiscreteShift>	<a><Add>n 2</Add></a>

@@ -1,0 +1,5 @@
+id	in	out
+discreteuniform-pdf-exact	<PDF><DiscreteUniformDistribution><List>1 6</List></DiscreteUniformDistribution> 3</PDF>	<Rational>1 6</Rational>
+discreteuniform-cdf-exact	<CDF><DiscreteUniformDistribution><List>1 6</List></DiscreteUniformDistribution> 3</CDF>	<Rational>1 2</Rational>
+discreteuniform-mean-exact	<Mean><DiscreteUniformDistribution><List>1 6</List></DiscreteUniformDistribution></Mean>	<Rational>7 2</Rational>
+discreteuniform-variance-exact	<Variance><DiscreteUniformDistribution><List>1 6</List></DiscreteUniformDistribution></Variance>	<Rational>35 12</Rational>

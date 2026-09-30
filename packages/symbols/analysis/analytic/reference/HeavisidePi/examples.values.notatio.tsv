@@ -1,0 +1,5 @@
+id	in	out
+heavisidepi-inside	<HeavisidePi>0</HeavisidePi>	<ToExpression>1</ToExpression>
+heavisidepi-boundary-unevaluated	<HeavisidePi><Rational>1 2</Rational></HeavisidePi>	<HeavisidePi><Rational>1 2</Rational></HeavisidePi>
+heavisidepi-neg-boundary-unevaluated	<HeavisidePi><Rational>-1 2</Rational></HeavisidePi>	<HeavisidePi><Rational>-1 2</Rational></HeavisidePi>
+heavisidepi-outside	<HeavisidePi>1</HeavisidePi>	<ToExpression>0</ToExpression>

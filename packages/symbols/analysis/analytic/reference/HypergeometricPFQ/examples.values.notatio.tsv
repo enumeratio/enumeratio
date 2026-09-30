@@ -1,0 +1,7 @@
+id	in	out
+2f-1-1-1-2-z-ln-1-z-z-here-2-ln-2	<HypergeometricPFQ><List>1 1</List> <List>2</List> 0.5</HypergeometricPFQ>	<ToExpression>1.3862943611198906</ToExpression>
+1f-1-1-2-z-e-z-1-z	<HypergeometricPFQ><List>1</List> <List>2</List> 0.5</HypergeometricPFQ>	<ToExpression>1.2974425414002564</ToExpression>
+2f-1-2-3-5-z-0-3	<HypergeometricPFQ><List>2 3</List> <List>5</List> 0.3</HypergeometricPFQ>	<ToExpression>1.5109117821595697</ToExpression>
+3f-2	<HypergeometricPFQ><List>1 2 3</List> <List>4 5</List> 0.5</HypergeometricPFQ>	<ToExpression>1.189874754256423</ToExpression>
+0f-0-z-e-z	<HypergeometricPFQ><Apply>List</Apply> <Apply>List</Apply> z</HypergeometricPFQ>	<Power>ExponentialE z</Power>
+1f-0-a-z-1-z-a	<HypergeometricPFQ><List>a</List> <Apply>List</Apply> z</HypergeometricPFQ>	<Power><Add><Negate>z</Negate> 1</Add> <Negate>a</Negate></Power>

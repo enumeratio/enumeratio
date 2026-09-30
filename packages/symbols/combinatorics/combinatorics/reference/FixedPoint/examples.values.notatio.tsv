@@ -1,0 +1,4 @@
+id	in	out
+halving-and-flooring-until-nothing-changes	<FixedPoint><Function><Floor><Divide>_1 2</Divide></Floor></Function> 100</FixedPoint>	<ToExpression>0</ToExpression>
+the-dottie-number-the-fixed-point-of-cos	<FixedPoint>Cos 0.5</FixedPoint>	<ToExpression>0.739085133215160641658</ToExpression>
+newton-s-method-for-sqrt-2-run-to-this-engine-s	<FixedPoint><Function><Divide><Add>_1 <Divide>2 _1</Divide></Add> 2</Divide></Function> 1.5</FixedPoint>	<ToExpression>1.4142135623730950488016875</ToExpression>

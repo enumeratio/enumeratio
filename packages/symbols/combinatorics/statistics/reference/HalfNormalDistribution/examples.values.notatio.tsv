@@ -1,0 +1,5 @@
+id	in	out
+halfnormal-pdf-exact	<PDF><HalfNormalDistribution>1</HalfNormalDistribution> 1</PDF>	<Divide><Sqrt>2</Sqrt> <Sqrt><Multiply>ExponentialE Pi</Multiply></Sqrt></Divide>
+halfnormal-cdf-exact	<CDF><HalfNormalDistribution>1</HalfNormalDistribution> 1</CDF>	<Erf><Divide><Sqrt>2</Sqrt> 2</Divide></Erf>
+halfnormal-mean-exact	<Mean><HalfNormalDistribution>1</HalfNormalDistribution></Mean>	<Sqrt><Divide>2 Pi</Divide></Sqrt>
+halfnormal-variance-exact	<Variance><HalfNormalDistribution>1</HalfNormalDistribution></Variance>	<Divide><Add>-2 Pi</Add> Pi</Divide>

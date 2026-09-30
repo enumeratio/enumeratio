@@ -1,0 +1,5 @@
+id	in	out
+power	<ToBoxes><Power>x 2</Power></ToBoxes>	<SuperscriptBox>"x" "2"</SuperscriptBox>
+evaluates-first	<ToBoxes><Add>2 3</Add></ToBoxes>	<ToExpression>"5"</ToExpression>
+binomial	<ToBoxes><Binomial>n k</Binomial></ToBoxes>	<RowBox><List>"(" <FractionBox>"n" "k" <Tuple>FractionLine False</Tuple></FractionBox> ")"</List></RowBox>
+square-root-over-y	<ToBoxes><Divide><Sqrt>x</Sqrt> y</Divide></ToBoxes>	<FractionBox><SqrtBox>"x"</SqrtBox> "y"</FractionBox>

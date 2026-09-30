@@ -1,0 +1,6 @@
+id	in	out
+multinormal-mean	<Mean><MultinormalDistribution><List>1 2</List> <List><List>4 0</List> <List>0 9</List></List></MultinormalDistribution></Mean>	<List>1 2</List>
+multinormal-mean-one-arg	<Mean><MultinormalDistribution><List><List>1 0</List> <List>0 1</List></List></MultinormalDistribution></Mean>	<List>0 0</List>
+multinormal-variance	<Variance><MultinormalDistribution><List>1 2</List> <List><List>4 0</List> <List>0 9</List></List></MultinormalDistribution></Variance>	<List>4 9</List>
+multinormal-covariance	<Covariance><MultinormalDistribution><List>1 2</List> <List><List>4 1</List> <List>1 9</List></List></MultinormalDistribution></Covariance>	<List><List>4 1</List> <List>1 9</List></List>
+multinormal-pdf-standard-origin	<PDF><MultinormalDistribution><List>0 0</List> <List><List>1 0</List> <List>0 1</List></List></MultinormalDistribution> <List>0 0</List></PDF>	<Divide>1 <Multiply>2 Pi</Multiply></Divide>

@@ -1,0 +1,22 @@
+id	in	out
+min-3-1-4-1-5	<Min>3 1 4 1 5</Min>	<ToExpression>1</ToExpression>
+also-accepts-a-single-list-argument	<Min><List>3 1 4</List></Min>	<ToExpression>1</ToExpression>
+min-neg-1-neg-5	<Min>-1 -5</Min>	<ToExpression>-5</ToExpression>
+a-single-argument-is-returned-unchanged	<Min>3</Min>	<ToExpression>3</ToExpression>
+min-9-2	<Min>9 2</Min>	<ToExpression>2</ToExpression>
+min-list-4-1-7-2	<Min><List>4 1 7 2</List></Min>	<ToExpression>1</ToExpression>
+min-5p56-neg-4p8-7p3	<Min>5.56 -4.8 7.3</Min>	<ToExpression>-4.8</ToExpression>
+min-min-folds-into-a-normal-call	<Min><Apply>Min</Apply> 5</Min>	<ToExpression>5</ToExpression>
+nested-lists-are-flattened-into-the-pool	<Min>2 3 <List><List><Rational>1 2</Rational> -1</List> <List><Rational>-5 3</Rational> <Rational>1 2</Rational></List></List></Min>	<Rational>-5 3</Rational>
+exact-numbers-are-compared-numerically	<Min><Sqrt>2</Sqrt> <Rational>3 2</Rational></Min>	<Sqrt>2</Sqrt>
+the-numeric-arguments-collapse-to-their-minimum	<Min>3 x 5</Min>	<Min>3 x</Min>
+compares-exact-constants-numerically-min-e-pi-5	<Min><List>ExponentialE Pi 5</List></Min>	<ExponentialE />
+the-min-of-two-intervals-is-the-interval-of	<Min><Interval>1 3</Interval> <Interval>-3 5</Interval></Min>	<Interval>-3 3</Interval>
+the-day-s-low-from-the-same-hourly-readings-see	<Min>68 72 65 80 74</Min>	<ToExpression>65</ToExpression>
+commutative-order-doesn-t-matter	<Equal><Min>3 7</Min> <Min>7 3</Min></Equal>	<True />
+min-a-b-max-a-b-a-b-see-max	<Equal><Add><Min>4 9</Min> <Max>4 9</Max></Add> <Add>4 9</Add></Equal>	<True />
+idempotent-min-x-x-x	<Min>x x</Min>	<x />
+infinities-participate-directly-in-the	<Min>NegativeInfinity 3</Min>	<NegativeInfinity />
+multiple-arguments-lists-included-are-flattened	<Min><List>3 1</List> 0</Min>	<ToExpression>0</ToExpression>
+with-no-arguments-it-returns-the-identity	<Apply>Min</Apply>	<PositiveInfinity />
+the-min-of-an-empty-list-is-nan	<Min><Apply>List</Apply></Min>	<NaN />

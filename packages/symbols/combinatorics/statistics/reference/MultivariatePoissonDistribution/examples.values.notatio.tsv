@@ -1,0 +1,5 @@
+id	in	out
+multivariate-poisson-mean	<Mean><MultivariatePoissonDistribution>1 <List>2 3</List></MultivariatePoissonDistribution></Mean>	<List>3 4</List>
+multivariate-poisson-variance	<Variance><MultivariatePoissonDistribution>1 <List>2 3</List></MultivariatePoissonDistribution></Variance>	<List>3 4</List>
+multivariate-poisson-covariance	<Covariance><MultivariatePoissonDistribution>1 <List>2 3</List></MultivariatePoissonDistribution></Covariance>	<List><List>3 1</List> <List>1 4</List></List>
+multivariate-poisson-pdf	<PDF><MultivariatePoissonDistribution>1 <List>2 3</List></MultivariatePoissonDistribution> <List>1 1</List></PDF>	<Divide>7 <Power>ExponentialE 6</Power></Divide>

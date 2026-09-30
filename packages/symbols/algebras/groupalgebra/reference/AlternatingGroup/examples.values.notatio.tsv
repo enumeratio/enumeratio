@@ -1,0 +1,8 @@
+id	in	out
+order-is-n-factorial-over-two	<GroupOrder><AlternatingGroup>5</AlternatingGroup></GroupOrder>	<ToExpression>60</ToExpression>
+generators-odd-n	<GroupGenerators><AlternatingGroup>5</AlternatingGroup></GroupGenerators>	<List><Cycles><List><List>1 2 3</List></List></Cycles> <Cycles><List><List>1 2 3 4 5</List></List></Cycles></List>
+generators-even-n	<GroupGenerators><AlternatingGroup>4</AlternatingGroup></GroupGenerators>	<List><Cycles><List><List>1 2 3</List></List></Cycles> <Cycles><List><List>2 3 4</List></List></Cycles></List>
+generators-collapse-at-three	<GroupGenerators><AlternatingGroup>3</AlternatingGroup></GroupGenerators>	<List><Cycles><List><List>1 2 3</List></List></Cycles></List>
+elements-of-a3	<GroupElements><AlternatingGroup>3</AlternatingGroup></GroupElements>	<List><Cycles><Apply>List</Apply></Cycles> <Cycles><List><List>1 2 3</List></List></Cycles> <Cycles><List><List>1 3 2</List></List></Cycles></List>
+trivial-for-n-equals-one	<GroupOrder><AlternatingGroup>1</AlternatingGroup></GroupOrder>	<ToExpression>1</ToExpression>
+trivial-for-n-equals-two	<GroupOrder><AlternatingGroup>2</AlternatingGroup></GroupOrder>	<ToExpression>1</ToExpression>

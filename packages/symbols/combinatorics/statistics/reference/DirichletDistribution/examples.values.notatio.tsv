@@ -1,0 +1,4 @@
+id	in	out
+dirichlet-mean	<Mean><DirichletDistribution><List>1 4 5</List></DirichletDistribution></Mean>	<List><Rational>1 10</Rational> <Rational>2 5</Rational></List>
+dirichlet-variance	<Variance><DirichletDistribution><List>1 4 5</List></DirichletDistribution></Variance>	<List><Rational>9 1100</Rational> <Rational>6 275</Rational></List>
+dirichlet-pdf	<PDF><DirichletDistribution><List>1 4 5</List></DirichletDistribution> <List><Rational>1 10</Rational> <Rational>2 5</Rational></List></PDF>	<Divide><Gamma>10</Gamma> <Multiply>250 <Gamma>1</Gamma> <Gamma>4</Gamma> <Gamma>5</Gamma></Multiply></Divide>

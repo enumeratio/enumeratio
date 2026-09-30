@@ -1,0 +1,6 @@
+id	in	out
+foldlist-add-0-1-2-3	<FoldList>Add 0 <List>1 2 3</List></FoldList>	<List>0 1 3 6</List>
+foldlist-add-1-2-3	<FoldList>Add <List>1 2 3</List></FoldList>	<List>1 3 6</List>
+foldlist-multiply-1-1-2-3-4	<FoldList>Multiply 1 <List>1 2 3 4</List></FoldList>	<List>1 1 2 6 24</List>
+foldlist-length-is-one-more	<Equal><Length><FoldList>Add 0 <List>1 2 3 4 5</List></FoldList></Length> <Add><Length><List>1 2 3 4 5</List></Length> 1</Add></Equal>	<True />
+foldlist-last-is-fold	<Equal><Last><FoldList>Add 0 <List>1 2 3</List></FoldList></Last> <Fold>Add 0 <List>1 2 3</List></Fold></Equal>	<True />

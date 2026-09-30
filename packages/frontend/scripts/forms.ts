@@ -2,15 +2,17 @@
 // its implementations record that no kernel is needed for. Our own forms -- `epsil`, the
 // InputForm you can retype; `tex`, our TeX serialisation; `traditional`, the TraditionalForm
 // TeX where it differs; `fullform`, the Wolfram FullForm @enumeratio/wolfram writes, with
-// `back` wherever it doesn't read back as the example -- and, for every other system, the `in`
-// the oracle scan sends it.
+// `back` wherever it doesn't read back as the example; `notatio`, the vdom as markup, with
+// `back` likewise -- and, for every other system, the `in` the oracle scan sends it.
 //
 // scripts/collect-forms.ts writes these into the records (`UPDATE_FORMS=1`), and
 // tests/forms.test.ts fails when a printer or transpiler no longer produces what's pinned.
 
+import { isDeepStrictEqual } from "node:util";
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import type { ExampleImplementations, HeadImplementations, MathJSON, SystemImplementation } from "@enumeratio/entry";
 import { toInputForm } from "@enumeratio/formats/inputform";
+import { markupOf, readMarkupText, stripMetadata } from "@enumeratio/formats/markup";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
@@ -106,6 +108,21 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
     const back = read === JSON.stringify(expr) ? undefined : read === undefined ? "Unreadable" : JSON.parse(read);
     out.fullform = { in: full, ...(back === undefined ? {} : { back: back as MathJSON }) };
   }
+  // The vdom as markup, FullForm written as JSX, and what it reads back as where the trip
+  // loses something: none should.
+  const notatio = [
+    attempt(() => markupOf(expr, { width: Infinity })),
+    attempt(() => markupOf(expected, { width: Infinity })),
+  ];
+  if (notatio[0] !== undefined) {
+    const { json, errors } = readMarkupText(notatio[0]);
+    const exact = errors.length === 0 && isDeepStrictEqual(json, stripMetadata(expr));
+    out.notatio = {
+      in: notatio[0],
+      ...(notatio[1] === undefined ? {} : { out: notatio[1] }),
+      ...(exact ? {} : { back: errors.length > 0 ? "Unreadable" : (json as MathJSON) }),
+    };
+  }
   // What the oracle scan sends each system: `emit` adds the mappings and the comparison
   // shapes (an equality as `a == b`) the scan compares by.
   for (const { name } of SYSTEMS) {
@@ -116,7 +133,7 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
 }
 
 /** The fields of a row `formsOf` owns: an own form's whole row, and a system's `in`. */
-export const OWN_FORMS = ["epsil", "tex", "traditional", "fullform"] as const;
+export const OWN_FORMS = ["epsil", "tex", "traditional", "fullform", "notatio"] as const;
 
 /** `record`'s rows for one example with the forms replaced and a kernel's answers kept. */
 export function withForms(

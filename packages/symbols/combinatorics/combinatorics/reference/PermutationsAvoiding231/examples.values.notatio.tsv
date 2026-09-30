@@ -1,0 +1,4 @@
+id	in	out
+count-permutationsavoiding231-4	<Count><PermutationsAvoiding231>4</PermutationsAvoiding231></Count>	<ToExpression>14</ToExpression>
+first-element-of-permutationsavoiding231-4	<At><PermutationsAvoiding231>4</PermutationsAvoiding231> 1</At>	<List>4 3 2 1</List>
+every-element-of-permutationsavoiding231-4	<Take><PermutationsAvoiding231>4</PermutationsAvoiding231> 14</Take>	<List><List>4 3 2 1</List> <List>4 3 1 2</List> <List>4 1 3 2</List> <List>4 2 1 3</List> <List>4 1 2 3</List> <List>1 4 3 2</List> <List>1 4 2 3</List> <List>2 1 4 3</List> <List>1 2 4 3</List> <List>3 2 1 4</List> <List>3 1 2 4</List> <List>1 3 2 4</List> <List>2 1 3 4</List> <List>1 2 3 4</List></List>

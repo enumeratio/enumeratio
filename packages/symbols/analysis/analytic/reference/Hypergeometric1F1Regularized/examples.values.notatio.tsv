@@ -1,0 +1,9 @@
+id	in	out
+matches-hypergeometric1f1-1-2-0-5-gamma-2	<Hypergeometric1F1Regularized>1 2 0.5</Hypergeometric1F1Regularized>	<ToExpression>1.2974425414002555</ToExpression>
+b-1-is-a-pole-of-gamma-but-the-regularized-form	<Hypergeometric1F1Regularized>1 -1 0.7</Hypergeometric1F1Regularized>	<ToExpression>0.9867388266605329</ToExpression>
+a-0-5-b-1-5-at-neg-1	<Hypergeometric1F1Regularized>0.5 1.5 -1</Hypergeometric1F1Regularized>	<ToExpression>0.8427007929497149</ToExpression>
+complex-a-at-0-5	<N><Hypergeometric1F1Regularized><Complex>1 0.5</Complex> 2 0.5</Hypergeometric1F1Regularized></N>	<Complex>1.2907217573451255 0.1614805635582521</Complex>
+b-0-at-0-5	<Hypergeometric1F1Regularized>1 0 0.5</Hypergeometric1F1Regularized>	<ToExpression>0.8243606353500641</ToExpression>
+a-2-b-neg-2-at-0-4	<Hypergeometric1F1Regularized>2 -2 0.4</Hypergeometric1F1Regularized>	<ToExpression>0.4200978348557817</ToExpression>
+a-complex-argument-at-b-2	<N><Hypergeometric1F1Regularized>1 2 <Complex>0.5 0.5</Complex></Hypergeometric1F1Regularized></N>	<Complex>1.2373281197977841 0.34355004662944577</Complex>
+a-complex-argument-at-a-nonpositive-integer-b	<N><Hypergeometric1F1Regularized>1 -1 <Complex>0.3 -0.4</Complex></Hypergeometric1F1Regularized></N>	<Complex>-0.2131895076621401 -0.2615963662728921</Complex>

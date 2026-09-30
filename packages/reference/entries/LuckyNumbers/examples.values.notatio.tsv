@@ -1,0 +1,2 @@
+id	in	out
+the-first-25-terms	<Take>LuckyNumbers 25</Take>	<List>1 3 7 9 13 15 21 25 31 33 37 43 49 51 63 67 69 73 75 79 87 93 99 105 111</List>

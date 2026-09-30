@@ -1,0 +1,3 @@
+id	in	out
+a-5-vertex-path	<VertexDegree><PathGraph>5</PathGraph></VertexDegree>	<List>1 2 2 2 1</List>
+a-path-along-named-vertices	<PathGraph><List>a b c</List></PathGraph>	<Graph><List>a b c</List> <List><UndirectedEdge>a b</UndirectedEdge> <UndirectedEdge>b c</UndirectedEdge></List></Graph>

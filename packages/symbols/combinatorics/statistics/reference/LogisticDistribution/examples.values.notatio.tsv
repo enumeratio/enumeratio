@@ -1,0 +1,5 @@
+id	in	out
+logistic-pdf-exact	<PDF><LogisticDistribution>0 1</LogisticDistribution> 0</PDF>	<Rational>1 4</Rational>
+logistic-cdf-exact	<CDF><LogisticDistribution>0 1</LogisticDistribution> 0</CDF>	<Rational>1 2</Rational>
+logistic-mean-exact	<Mean><LogisticDistribution>0 1</LogisticDistribution></Mean>	<ToExpression>0</ToExpression>
+logistic-variance-exact	<Variance><LogisticDistribution>0 1</LogisticDistribution></Variance>	<Multiply><Rational>1 3</Rational> <Power>Pi 2</Power></Multiply>

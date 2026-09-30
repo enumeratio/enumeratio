@@ -1,0 +1,5 @@
+id	in	out
+hypergeometric-pdf-exact	<PDF><HypergeometricDistribution>20 50 100</HypergeometricDistribution> 10</PDF>	<Rational>10272278170 52177653441</Rational>
+hypergeometric-cdf-exact-sum	<CDF><HypergeometricDistribution>3 5 10</HypergeometricDistribution> 2</CDF>	<Rational>11 12</Rational>
+hypergeometric-mean-exact	<Mean><HypergeometricDistribution>20 50 100</HypergeometricDistribution></Mean>	<ToExpression>10</ToExpression>
+hypergeometric-variance-exact	<Variance><HypergeometricDistribution>20 50 100</HypergeometricDistribution></Variance>	<Rational>400 99</Rational>

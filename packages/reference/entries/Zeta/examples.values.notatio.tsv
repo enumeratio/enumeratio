@@ -1,0 +1,44 @@
+id	in	out
+zeta-2	<Zeta>2</Zeta>	<Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply>
+zeta-4	<Zeta>4</Zeta>	<Multiply><Rational>1 90</Rational> <Power>Pi 4</Power></Multiply>
+zeta-6	<Zeta>6</Zeta>	<Multiply><Rational>1 945</Rational> <Power>Pi 6</Power></Multiply>
+threads-over-a-list-reducing-every-element-to	<Zeta><List>-1 -2 -3</List></Zeta>	<List><Rational>-1 12</Rational> 0 <Rational>1 120</Rational></List>
+apery-s-constant-zeta-3-numerically	<N><Zeta>3</Zeta></N>	<ToExpression>1.2020569031595942854</ToExpression>
+a-machine-precision-argument	<Zeta>1.5</Zeta>	<ToExpression>2.61237534868548834335</ToExpression>
+zeta-8-pi-8-9450	<Zeta>8</Zeta>	<Multiply><Rational>1 9450</Rational> <Power>Pi 8</Power></Multiply>
+zeta-5-b-6-6-1-252	<Zeta>-5</Zeta>	<Rational>-1 252</Rational>
+zeta-symbolic-s-under-n-stays-symbolic	<N><Zeta>s</Zeta></N>	<Zeta>s</Zeta>
+zeta-half-stays-symbolic-until-n	<Zeta><Rational>1 2</Rational></Zeta>	<Zeta><Rational>1 2</Rational></Zeta>
+zeta-complex-argument-stays-symbolic-until-n	<Zeta><Complex>2 1</Complex></Zeta>	<Zeta><Complex>2 1</Complex></Zeta>
+n-zeta-complex-2-plus-i	<N><Zeta><Complex>2 1</Complex></Zeta></N>	<Complex>1.1503557032549028 -0.4375308659196079</Complex>
+zeta-threads-over-mixed-exact-and-inexact-list	<Zeta><List>2 <Complex>0.5 14</Complex></List></Zeta>	<List><Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply> <Complex>0.02224114260999359 -0.10325812326645006</Complex></List>
+zeta-3-0-drops-pole-term-like-s-2	<Zeta>3 0</Zeta>	<Zeta>3</Zeta>
+zeta-2-neg-2-stays-finite-unlike-hurwitzzeta	<N><Zeta>2 -2</Zeta></N>	<ToExpression>2.89493406684822643647</ToExpression>
+on-the-critical-line-zeta-1-2-14i-0-02224-0	<N><Zeta><Complex>0.5 14</Complex></Zeta></N>	<Complex>0.02224114260999359 -0.10325812326645006</Complex>
+two-argument-zeta-s-a-via-enumeratio-analytic	<Zeta>2 1</Zeta>	<Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply>
+zeta-2-2-zeta-2-1-pi-2-6-1	<Zeta>2 2</Zeta>	<Add>-1 <Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply></Add>
+zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so	<Zeta>2 0</Zeta>	<Multiply><Rational>1 6</Rational> <Power>Pi 2</Power></Multiply>
+arbitrary-real-arguments	<Zeta>5.211111111111111</Zeta>	<ToExpression>1.03139179693438499839</ToExpression>
+left-of-the-critical-strip-via-the-functional	<Zeta>-4.5</Zeta>	<ToExpression>-0.00309166924721583384482</ToExpression>
+complex-s-under-n	<N><Zeta><Complex>2 -5</Complex></Zeta></N>	<Complex>0.8509629436242628 -0.09899694613483125</Complex>
+zeta-infty-1-only-the-n-1-term-survives	<Zeta>PositiveInfinity</Zeta>	<ToExpression>1</ToExpression>
+two-arguments-at-a-nonpositive-integer-s-zeta-1	<Zeta>-1 5</Zeta>	<Rational>-121 12</Rational>
+two-arguments-inexact	<Zeta>-1.5 5</Zeta>	<ToExpression>-17.0500647493426550141295</ToExpression>
+two-complex-arguments-under-n-to-ten-digits	<N><Zeta><Complex>-1.5 1</Complex> <Complex>2.5 -1</Complex></Zeta> 10</N>	<Complex>0.01848680919 1.675533784</Complex>
+which-with-inexact-complex-arguments-should	<Zeta><Complex>-1.5 1</Complex> <Complex>2.5 -1</Complex></Zeta>	<Complex>0.01848680919381065 1.675533784301766</Complex>
+zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of	<Zeta>20 <Rational>1 2</Rational></Zeta>	<Multiply><Rational>221930581 1856156927625</Rational> <Power>Pi 20</Power></Multiply>
+zeta-2-1-2-3-zeta-2-pi-2-2	<Zeta>2 <Rational>1 2</Rational></Zeta>	<Multiply><Rational>1 2</Rational> <Power>Pi 2</Power></Multiply>
+interval-arithmetic-zeta-is-decreasing-on-1	<Zeta><Interval>1.1 1.2</Interval></Zeta>	<Interval>5.59158244117775 10.584448464950812</Interval>
+uncertainty-in-a-propagated-with-partial-a-zeta	<Zeta><Rational>1 2</Rational> <Around>0.5 0.01</Around></Zeta>	<Around>-0.6048986434216304 0.023882689737774167</Around>
+to-40-significant-digits-every-one-correctly	<N><Zeta>3</Zeta> 40</N>	<ToExpression>1.202056903159594285399738161511449990765</ToExpression>
+the-probability-that-two-random-positive	<Equal><Divide>1 <Zeta>2</Zeta></Divide> <Divide>6 <Power>Pi 2</Power></Divide></Equal>	<True />
+certified-digits-zeta-3	<N><Zeta>3</Zeta> 40</N>	<ToExpression>1.202056903159594285399738161511449990765</ToExpression>
+zeta-0-1-2	<Zeta>0</Zeta>	<Rational>-1 2</Rational>
+trivial-zero-zeta-2n-0-for-positive-integer-n	<Zeta>-2</Zeta>	<ToExpression>0</ToExpression>
+zeta-3-b-4-4-1-120-via-the-bernoulli-number	<Zeta>-3</Zeta>	<Rational>1 120</Rational>
+pole-at-s-1-the-harmonic-series-sum-1-n-diverges	<Zeta>1</Zeta>	<ComplexInfinity />
+zeta-s-1-zeta-s-for-symbolic-s	<Zeta>s 1</Zeta>	<Zeta>s</Zeta>
+odd-integers-geq-3-have-no-known-closed-form	<Zeta>3</Zeta>	<Zeta>3</Zeta>
+zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	<N><Zeta>3 <Rational>-1 2</Rational></Zeta></N>	<ToExpression>16.4143983221171599978</ToExpression>
+zeta-1-2-35-12-exactly-but-at-a-negative-a-this	<N><Zeta>-1 -2</Zeta></N>	<ToExpression>2.91666666666666666667</ToExpression>
+the-notorious-sum-of-all-positive-integers	<Zeta>-1</Zeta>	<Rational>-1 12</Rational>

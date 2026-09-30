@@ -1,0 +1,4 @@
+id	in	out
+a-3-cycle	<GraphDistanceMatrix><CycleGraph>3</CycleGraph></GraphDistanceMatrix>	<List><List>0 1 1</List> <List>1 0 1</List> <List>1 1 0</List></List>
+unreachable-pair-is-infinite	<GraphDistanceMatrix><Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph></GraphDistanceMatrix>	<List><List>0 1 PositiveInfinity PositiveInfinity</List> <List>1 0 PositiveInfinity PositiveInfinity</List> <List>PositiveInfinity PositiveInfinity 0 1</List> <List>PositiveInfinity PositiveInfinity 1 0</List></List>
+weighted-matrix-summed-weight	<GraphDistanceMatrix><Graph><List>1 2 3</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List> <KeyValuePair>EdgeWeight <List>5 7</List></KeyValuePair></Graph></GraphDistanceMatrix>	<List><List>0 5 12</List> <List>5 0 7</List> <List>12 7 0</List></List>

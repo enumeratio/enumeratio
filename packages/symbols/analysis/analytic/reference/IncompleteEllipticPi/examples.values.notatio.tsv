@@ -1,0 +1,19 @@
+id	in	out
+pi-n-0-m-0	<IncompleteEllipticPi>0.5 0 0.3</IncompleteEllipticPi>	<ToExpression>0</ToExpression>
+a-floating-point-argument-evaluates-directly-to	<N><IncompleteEllipticPi>0.5 0.4 0.3</IncompleteEllipticPi></N>	<ToExpression>0.41415173682447676</ToExpression>
+pi-0-5-0-4-0-3	<N><IncompleteEllipticPi>0.5 -0.4 0.3</IncompleteEllipticPi></N>	<ToExpression>-0.41415173682447676</ToExpression>
+pi-0-5-1-9-0-3	<N><IncompleteEllipticPi>0.5 1.9 0.3</IncompleteEllipticPi></N>	<ToExpression>3.216516537015119</ToExpression>
+pi-2-0-4-0-3	<N><IncompleteEllipticPi>2 0.4 0.3</IncompleteEllipticPi></N>	<ToExpression>0.45500474909280814</ToExpression>
+pi-0-5-3-5-0-3	<N><IncompleteEllipticPi>0.5 3.5 0.3</IncompleteEllipticPi></N>	<ToExpression>5.291058653963574</ToExpression>
+pi-0-2-2-0-5	<N><IncompleteEllipticPi>0.2 2 0.5</IncompleteEllipticPi></N>	<ToExpression>2.8204255409214856</ToExpression>
+pi-0-5-0-4-0-7-0-2i	<N><IncompleteEllipticPi>0.5 0.4 <Complex>0.7 0.2</Complex></IncompleteEllipticPi></N>	<Complex>0.41877247265903567 0.0023988666579402825</Complex>
+pi-0-5-0-2i-0-4-0-3	<N><IncompleteEllipticPi><Complex>0.5 0.2</Complex> 0.4 0.3</IncompleteEllipticPi></N>	<Complex>0.414060319808096 0.004608575942138294</Complex>
+pi-0-5-0-4-0-3i-0-6-0-1i	<N><IncompleteEllipticPi>0.5 <Complex>0.4 0.3</Complex> <Complex>0.6 0.1</Complex></IncompleteEllipticPi></N>	<Complex>0.38471135810732565 0.329996740971807</Complex>
+pi-0-2-2-0-5i-0-3	<N><IncompleteEllipticPi>0.2 <Complex>2 0.5</Complex> 0.3</IncompleteEllipticPi></N>	<Complex>2.6159283014884926 0.7015631769930666</Complex>
+pi-1-17-0-45i-10-59477796076938-0-45i-1-17-0-45i	<N><IncompleteEllipticPi><Complex>1.17 0.45</Complex> <Complex>10.59477796076938 0.45</Complex> <Complex>1.17 0.45</Complex></IncompleteEllipticPi></N>	<Complex>-0.10348082334068165 15.113381465309939</Complex>
+pi-1-17-0-45i-5-113185307179586-0-45i-1-17-0-45i	<N><IncompleteEllipticPi><Complex>1.17 0.45</Complex> <Complex>-5.113185307179586 0.45</Complex> <Complex>1.17 0.45</Complex></IncompleteEllipticPi></N>	<Complex>0.6406773186066825 -8.277778194614966</Complex>
+a-complex-amplitude-phi-where-native-ellipticpi	<N><IncompleteEllipticPi>0.2 <Complex>1.2 0.5</Complex> 0.3</IncompleteEllipticPi></N>	<Complex>1.321415376117118 0.7186657188751806</Complex>
+all-three-arguments-complex-matches-mpmath-s	<N><IncompleteEllipticPi><Complex>1.17 0.45</Complex> <Complex>1.17 0.45</Complex> <Complex>1.17 0.45</Complex></IncompleteEllipticPi></N>	<Complex>0.34301406182773686 1.0786856693549958</Complex>
+characteristic-n-1	<N><IncompleteEllipticPi>0.3 1.1 0.4</IncompleteEllipticPi></N>	<ToExpression>1.3238008150474936</ToExpression>
+n-0-reduces-to-the-incomplete-elliptic-integral	<N><IncompleteEllipticPi>0 0.4 0.3</IncompleteEllipticPi></N>	<ToExpression>0.40316499194713934</ToExpression>
+symbolic-arguments-are-left-unevaluated-rather	<IncompleteEllipticPi>n phi m</IncompleteEllipticPi>	<IncompleteEllipticPi>n phi m</IncompleteEllipticPi>

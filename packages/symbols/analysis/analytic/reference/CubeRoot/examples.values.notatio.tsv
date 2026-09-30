@@ -1,0 +1,6 @@
+id	in	out
+the-cube-root-of-a-perfect-cube	<CubeRoot>8</CubeRoot>	<ToExpression>2</ToExpression>
+the-real-root-of-a-negative-number-not-a-complex	<CubeRoot>-27</CubeRoot>	<ToExpression>-3</ToExpression>
+at-a-non-perfect-cube-n-forces-the-numeric	<N><CubeRoot>2</CubeRoot></N>	<ToExpression>1.2599210498948732</ToExpression>
+threads-element-wise-over-a-list	<CubeRoot><List>-8 27</List></CubeRoot>	<List>-2 3</List>
+the-same-as-root-with-index-3	<Equal><CubeRoot>-64</CubeRoot> <Root>-64 3</Root></Equal>	<True />

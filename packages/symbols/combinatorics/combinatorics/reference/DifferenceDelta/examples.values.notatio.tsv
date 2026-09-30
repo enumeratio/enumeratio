@@ -1,0 +1,3 @@
+id	in	out
+quadratic	<DifferenceDelta><Power>n 2</Power> n</DifferenceDelta>	<Add><Multiply>2 n</Multiply> 1</Add>
+linear	<DifferenceDelta><Add><Multiply>3 n</Multiply> 5</Add> n</DifferenceDelta>	<ToExpression>3</ToExpression>

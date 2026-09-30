@@ -1,0 +1,6 @@
+id	in	out
+realsign-neg-3	<RealSign>-3</RealSign>	<ToExpression>-1</ToExpression>
+realsign-0	<RealSign>0</RealSign>	<ToExpression>0</ToExpression>
+realsign-2p5	<RealSign>2.5</RealSign>	<ToExpression>1</ToExpression>
+threads-element-wise-over-a-list	<RealSign><List>-2 0 5</List></RealSign>	<List>-1 0 1</List>
+decides-the-sign-of-an-exact-numeric-expression	<RealSign><Subtract><Sqrt>2</Sqrt> 2</Subtract></RealSign>	<ToExpression>-1</ToExpression>

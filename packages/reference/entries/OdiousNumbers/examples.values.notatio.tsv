@@ -1,0 +1,2 @@
+id	in	out
+the-first-20-terms	<Take>OdiousNumbers 20</Take>	<List>1 2 4 7 8 11 13 14 16 19 21 22 25 26 28 31 32 35 37 38</List>

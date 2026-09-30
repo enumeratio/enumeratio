@@ -1,0 +1,5 @@
+id	in	out
+3-alone-nothing-after-tops-it	<Records><List>3 1 2</List></Records>	<ToExpression>1</ToExpression>
+the-identity-sets-a-new-record-everywhere	<Records><List>1 2 3</List></Records>	<ToExpression>3</ToExpression>
+2-then-3	<Records><List>2 3 1</List></Records>	<ToExpression>2</ToExpression>
+the-reversal-attains-the-minimum-1	<Records><List>4 3 2 1</List></Records>	<ToExpression>1</ToExpression>

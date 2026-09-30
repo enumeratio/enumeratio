@@ -1,0 +1,3 @@
+id	in	out
+three-by-three	<HilbertMatrix>3</HilbertMatrix>	<List><List>1 <Rational>1 2</Rational> <Rational>1 3</Rational></List> <List><Rational>1 2</Rational> <Rational>1 3</Rational> <Rational>1 4</Rational></List> <List><Rational>1 3</Rational> <Rational>1 4</Rational> <Rational>1 5</Rational></List></List>
+rectangular	<HilbertMatrix><List>2 3</List></HilbertMatrix>	<List><List>1 <Rational>1 2</Rational> <Rational>1 3</Rational></List> <List><Rational>1 2</Rational> <Rational>1 3</Rational> <Rational>1 4</Rational></List></List>

@@ -1,0 +1,7 @@
+id	in	out
+8-2-3	<IsPrimePower>8</IsPrimePower>	<True />
+12-2-2-cdot-3-has-two-distinct-primes	<IsPrimePower>12</IsPrimePower>	<False />
+a-prime-is-its-own-first-power	<IsPrimePower>7</IsPrimePower>	<True />
+listable	<IsPrimePower><List>2 4 6 9 10 16</List></IsPrimePower>	<List>True True False True False True</List>
+large-integers	<IsPrimePower><Power>3 40</Power></IsPrimePower>	<True />
+1-is-p-0-which-does-not-count	<IsPrimePower>1</IsPrimePower>	<False />

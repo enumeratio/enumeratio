@@ -1,0 +1,6 @@
+id	in	out
+j-i-1	<N><KleinInvariantJ><Complex>0 1</Complex></KleinInvariantJ></N>	<ToExpression>1</ToExpression>
+j-2i-66-3-1728-1331-8	<N><KleinInvariantJ><Complex>0 2</Complex></KleinInvariantJ></N>	<ToExpression>166.375</ToExpression>
+j-1-2i-modular-invariance-with-2i	<N><KleinInvariantJ><Complex>1 2</Complex></KleinInvariantJ></N>	<ToExpression>166.375</ToExpression>
+exact-at-the-elliptic-point-i	<KleinInvariantJ><Complex>0 1</Complex></KleinInvariantJ>	<ToExpression>1</ToExpression>
+heegner-number-163-j-bigl-frac-1-i-sqrt-163-2	<N><KleinInvariantJ><Multiply><Rational>1 2</Rational> <Add>1 <Complex>0 <Sqrt>163</Sqrt></Complex></Add></Multiply></KleinInvariantJ></N>	<ToExpression>-151931373055998.97</ToExpression>

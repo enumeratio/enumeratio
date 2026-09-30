@@ -1,0 +1,10 @@
+id	in	out
+arccsc-1	<Arccsc>1</Arccsc>	<Multiply><Rational>1 2</Rational> Pi</Multiply>
+arccsc-2	<Arccsc>2</Arccsc>	<Multiply><Rational>1 6</Rational> Pi</Multiply>
+arccsc-sqrt-2-pi-4	<Arccsc><Sqrt>2</Sqrt></Arccsc>	<Multiply><Rational>1 4</Rational> Pi</Multiply>
+an-odd-function	<Arccsc>-2</Arccsc>	<Multiply><Rational>-1 6</Rational> Pi</Multiply>
+inside-1-1-the-value-is-complex	<Arccsc>0.5</Arccsc>	<Complex>1.5707963267948966 -1.3169578969248166</Complex>
+arccsc-positiveinfinity	<Arccsc>PositiveInfinity</Arccsc>	<ToExpression>0</ToExpression>
+a-pole-arccsc-0-is-complex-infinity	<Arccsc>0</Arccsc>	<ComplexInfinity />
+derivative-for-real-x-1	<D><Arccsc>x</Arccsc> x</D>	<Divide>-1 <Multiply><Abs>x</Abs> <Sqrt><Add><Power>x 2</Power> -1</Add></Sqrt></Multiply></Divide>
+undoes-csc-csc-arccsc-x-x	<Equal><Csc><Arccsc>2</Arccsc></Csc> 2</Equal>	<True />

@@ -1,0 +1,9 @@
+id	in	out
+e-1-3-2-gamma-0-3-2	<ExpIntegralE>1 1.5</ExpIntegralE>	<ToExpression>0.10001958240663265</ToExpression>
+expintegrale-2-1p5	<ExpIntegralE>2 1.5</ExpIntegralE>	<ToExpression>0.07310078653848084</ToExpression>
+e-3-2	<N><ExpIntegralE>3 2</ExpIntegralE></N>	<ToExpression>0.03013337979781589</ToExpression>
+order-1-5-at-3-2	<ExpIntegralE>1.5 3.2</ExpIntegralE>	<ToExpression>0.009156991428870985</ToExpression>
+non-integer-order	<ExpIntegralE>0.5 2.5</ExpIntegralE>	<ToExpression>0.028414299709289756</ToExpression>
+exact-arguments-under-n	<N><ExpIntegralE>1 1</ExpIntegralE></N>	<ToExpression>0.21938393439552029</ToExpression>
+e-n-0-1-n-1-for-n-1	<ExpIntegralE>2 0</ExpIntegralE>	<ToExpression>1</ToExpression>
+e-0-x-e-x-x	<ExpIntegralE>0 x</ExpIntegralE>	<Divide><Power>ExponentialE <Negate>x</Negate></Power> x</Divide>

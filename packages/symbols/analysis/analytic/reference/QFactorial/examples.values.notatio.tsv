@@ -1,0 +1,10 @@
+id	in	out
+1-2-2-2-3-2-1-cdot-3-cdot-7	<QFactorial>3 2</QFactorial>	<ToExpression>21</ToExpression>
+qfactorial-4-2	<QFactorial>4 2</QFactorial>	<ToExpression>315</ToExpression>
+qfactorial-3-2	<N><QFactorial>3 2</QFactorial></N>	<ToExpression>21</ToExpression>
+qfactorial-4-2-2	<N><QFactorial>4 2</QFactorial></N>	<ToExpression>315</ToExpression>
+qfactorial-3-1-2	<N><QFactorial>3 <Rational>1 2</Rational></QFactorial></N>	<ToExpression>2.625</ToExpression>
+qfactorial-6-3	<N><QFactorial>6 3</QFactorial></N>	<ToExpression>91611520</ToExpression>
+qfactorial-3-1-over-2	<QFactorial>3 <Rational>1 2</Rational></QFactorial>	<Rational>21 8</Rational>
+the-inversion-generating-function-of	<Expand><QFactorial>3 q</QFactorial></Expand>	<Add><Power>q 3</Power> <Multiply>2 <Power>q 2</Power></Multiply> <Multiply>2 q</Multiply> 1</Add>
+at-q-1-it-is-the-ordinary-factorial	<QFactorial>5 1</QFactorial>	<ToExpression>120</ToExpression>

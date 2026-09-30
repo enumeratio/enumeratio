@@ -1,0 +1,3 @@
+id	in	out
+adjacency-matrix-of-k4	<AdjacencyMatrix><CompleteGraph>4</CompleteGraph></AdjacencyMatrix>	<List><List>0 1 1 1</List> <List>1 0 1 1</List> <List>1 1 0 1</List> <List>1 1 1 0</List></List>
+a-directed-edge-is-asymmetric	<AdjacencyMatrix><Graph><List>1 2</List> <List><DirectedEdge>1 2</DirectedEdge></List></Graph></AdjacencyMatrix>	<List><List>0 1</List> <List>0 0</List></List>

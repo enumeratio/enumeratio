@@ -1,0 +1,5 @@
+id	in	out
+euler-s-formula	<ExpToTrig><Exp><Multiply>ImaginaryUnit x</Multiply></Exp></ExpToTrig>	<Add><Multiply><Complex>0 1</Complex> <Sin>x</Sin></Multiply> <Cos>x</Cos></Add>
+a-real-exponential-splits-into-hyperbolic-parts	<ExpToTrig><Exp>x</Exp></ExpToTrig>	<Add><Sinh>x</Sinh> <Cosh>x</Cosh></Add>
+recognizes-cosh	<ExpToTrig><Divide><Add><Exp>x</Exp> <Exp><Negate>x</Negate></Exp></Add> 2</Divide></ExpToTrig>	<Cosh>x</Cosh>
+recognizes-sin	<ExpToTrig><Divide><Subtract><Exp><Multiply>ImaginaryUnit x</Multiply></Exp> <Exp><Negate><Multiply>ImaginaryUnit x</Multiply></Negate></Exp></Subtract> <Multiply>2 ImaginaryUnit</Multiply></Divide></ExpToTrig>	<Sin>x</Sin>

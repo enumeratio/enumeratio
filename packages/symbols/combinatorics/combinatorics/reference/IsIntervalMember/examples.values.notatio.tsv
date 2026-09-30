@@ -1,0 +1,5 @@
+id	in	out
+an-interior-point	<IsIntervalMember><Interval>1 5</Interval> 3</IsIntervalMember>	<True />
+a-closed-endpoint-is-a-member	<IsIntervalMember><Interval>1 5</Interval> 5</IsIntervalMember>	<True />
+an-open-endpoint-is-not-a-member	<IsIntervalMember><Interval><Open>1</Open> 5</Interval> 1</IsIntervalMember>	<False />
+outside-the-interval	<IsIntervalMember><Interval>1 5</Interval> 6</IsIntervalMember>	<False />

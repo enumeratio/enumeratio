@@ -1,0 +1,27 @@
+id	in	out
+abs-neg-5	<Abs>-5</Abs>	<ToExpression>5</ToExpression>
+abs-5	<Abs>5</Abs>	<ToExpression>5</ToExpression>
+0-is-the-only-value-with-x-0	<Abs>0</Abs>	<ToExpression>0</ToExpression>
+abs-neg-7-over-2	<Abs><Rational>-7 2</Rational></Abs>	<Rational>7 2</Rational>
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	<Abs><Complex>3 4</Complex></Abs>	<ToExpression>5</ToExpression>
+threads-element-wise-over-a-list	<Abs><List>-1 2 -3</List></Abs>	<List>1 2 3</List>
+abs-neg-2p5	<Abs>-2.5</Abs>	<ToExpression>2.5</ToExpression>
+the-modulus-of-a-complex-number-with-approximate	<Abs><Complex>1.4 2.3</Complex></Abs>	<ToExpression>2.69258240356725201563</ToExpression>
+threads-over-a-matrix-entry-by-entry	<Abs><List><List><Rational>1 2</Rational> -1</List> <List><Rational>-5 3</Rational> <Rational>1 2</Rational></List></List></Abs>	<List><List><Rational>1 2</Rational> 1</List> <List><Rational>5 3</Rational> <Rational>1 2</Rational></List></List>
+exact-numeric-constants	<Abs><Negate>Pi</Negate></Abs>	<Pi />
+an-exact-complex-number-gives-an-exact-radical	<Abs><Complex>1 1</Complex></Abs>	<Sqrt>2</Sqrt>
+abs-imaginaryunit	<Abs>ImaginaryUnit</Abs>	<ToExpression>1</ToExpression>
+e-i-pi-3-lies-on-the-unit-circle	<Abs><Exp><Multiply>ImaginaryUnit <Divide>Pi 3</Divide></Multiply></Exp></Abs>	<ToExpression>1</ToExpression>
+abs-negativeinfinity	<Abs>NegativeInfinity</Abs>	<PositiveInfinity />
+complex-infinity-has-infinite-magnitude-in-every	<Abs>ComplexInfinity</Abs>	<PositiveInfinity />
+an-interval-maps-to-the-interval-of-absolute	<Abs><Interval>-3 5</Interval></Abs>	<Interval>0 5</Interval>
+an-interval-straddling-0-maps-to-0-the-larger	<Abs><Interval>-3 2</Interval></Abs>	<Interval>0 3</Interval>
+decides-the-sign-of-an-exact-numeric-expression	<Abs><Subtract><Sqrt>2</Sqrt> 2</Subtract></Abs>	<Add>2 <Negate><Sqrt>2</Sqrt></Negate></Add>
+a-complex-radicand-inside-the-subtraction	<Abs><Subtract><Sqrt>-10</Sqrt> 2</Subtract></Abs>	<Sqrt>14</Sqrt>
+the-gap-between-two-temperatures-70-and-95	<Abs><Subtract>70 95</Subtract></Abs>	<ToExpression>25</ToExpression>
+the-distance-between-the-points-1-i-and-4-5i-of	<Abs><Subtract><Complex>1 1</Complex> <Complex>4 5</Complex></Subtract></Abs>	<ToExpression>5</ToExpression>
+even-function-x-x	<Equal><Abs>-8</Abs> <Abs>8</Abs></Equal>	<True />
+triangle-inequality-a-b-le-a-b	<LessEqual><Abs><Add>3 -8</Add></Abs> <Add><Abs>3</Abs> <Abs>-8</Abs></Add></LessEqual>	<True />
+z-2-z-bar-z	<Equal><Power><Abs><Complex>3 4</Complex></Abs> 2</Power> <Multiply><Complex>3 4</Complex> <Conjugate><Complex>3 4</Complex></Conjugate></Multiply></Equal>	<True />
+multiplicative-ab-a-b	<Equal><Abs><Multiply><Complex>1 2</Complex> <Complex>3 -1</Complex></Multiply></Abs> <Multiply><Abs><Complex>1 2</Complex></Abs> <Abs><Complex>3 -1</Complex></Abs></Multiply></Equal>	<True />
+doesn-t-factor-constants-out-of-a-symbolic	<Abs><Multiply>-3 x</Multiply></Abs>	<Abs><Multiply>-3 x</Multiply></Abs>

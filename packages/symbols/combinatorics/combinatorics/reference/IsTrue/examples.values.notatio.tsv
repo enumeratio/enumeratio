@@ -1,0 +1,5 @@
+id	in	out
+true-is-true	<IsTrue>True</IsTrue>	<True />
+false-is-not-true	<IsTrue>False</IsTrue>	<False />
+an-evaluating-comparison	<IsTrue><Equal>1 1</Equal></IsTrue>	<True />
+an-unevaluated-symbol-is-false	<IsTrue>x</IsTrue>	<False />

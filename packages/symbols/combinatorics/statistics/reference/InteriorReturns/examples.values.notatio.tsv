@@ -1,0 +1,3 @@
+id	in	out
+the-step-word-uuddud	<InteriorReturns><DyckPath><List>1 1 0 0 1 0</List></DyckPath></InteriorReturns>	<ToExpression>1</ToExpression>
+the-step-word-uduudd	<InteriorReturns><DyckPath><List>1 0 1 1 0 0</List></DyckPath></InteriorReturns>	<ToExpression>1</ToExpression>

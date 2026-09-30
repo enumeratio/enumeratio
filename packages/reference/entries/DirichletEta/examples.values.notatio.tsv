@@ -1,0 +1,16 @@
+id	in	out
+eta-1-ln-2-the-alternating-harmonic-series	<DirichletEta>1</DirichletEta>	<Ln>2</Ln>
+eta-2-pi-2-12	<DirichletEta>2</DirichletEta>	<Multiply><Rational>1 12</Rational> <Power>Pi 2</Power></Multiply>
+eta-3-frac-34-zeta-3-no-closed-form-beyond-apery	<DirichletEta>3</DirichletEta>	<Multiply><Rational>3 4</Rational> <Zeta>3</Zeta></Multiply>
+on-the-critical-line-through-1-2-1-s-zeta-s-so	<DirichletEta>0.5</DirichletEta>	<ToExpression>0.604898643421630370245</ToExpression>
+numeric-for-a-floating-point-argument	<DirichletEta>1.5</DirichletEta>	<ToExpression>0.765147024625407945367</ToExpression>
+complex-arguments	<DirichletEta><Complex>3.5 2.5</Complex></DirichletEta>	<Complex>1.0001097278046978 0.07812891204148316</Complex>
+threads-elementwise-over-an-array	<DirichletEta><List><List><Rational>1 2</Rational> -1</List> <List>0 <Rational>1 2</Rational></List></List></DirichletEta>	<List><List><DirichletEta><Rational>1 2</Rational></DirichletEta> <Rational>1 4</Rational></List> <List><Rational>1 2</Rational> <DirichletEta><Rational>1 2</Rational></DirichletEta></List></List>
+eta-s-to-1-as-s-to-infty	<DirichletEta>PositiveInfinity</DirichletEta>	<ToExpression>1</ToExpression>
+interval-arithmetic-over-an-increasing-stretch	<DirichletEta><Interval>1.5 1.6</Interval></DirichletEta>	<Interval>0.7651470246254078 0.7777227266611288</Interval>
+uncertainty-propagation-eta-2-pm-0-01-0-82247-pm	<DirichletEta><Around>2 0.01</Around></DirichletEta>	<Around>0.8224670334241132 0.001013165781635045</Around>
+to-30-significant-digits-not-yet-the-last-digit	<N><DirichletEta><Rational>1 2</Rational></DirichletEta> 30</N>	<ToExpression>0.604898643421630370247265914236</ToExpression>
+nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1	<DirichletEta><List>0 -1 -2 -3</List></DirichletEta>	<List><Rational>1 2</Rational> <Rational>1 4</Rational> 0 <Rational>-1 8</Rational></List>
+eta-4-frac-78-zeta-4-7-pi-4-720	<DirichletEta>4</DirichletEta>	<Multiply><Rational>7 720</Rational> <Power>Pi 4</Power></Multiply>
+rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s	<FunctionExpand><DirichletEta>s</DirichletEta></FunctionExpand>	<Multiply><Add><Negate><Power>2 <Add><Negate>s</Negate> 1</Add></Power></Negate> 1</Add> <Zeta>s</Zeta></Multiply>
+an-exact-non-integer-argument-stays-symbolic	<DirichletEta><Rational>1 2</Rational></DirichletEta>	<DirichletEta><Rational>1 2</Rational></DirichletEta>

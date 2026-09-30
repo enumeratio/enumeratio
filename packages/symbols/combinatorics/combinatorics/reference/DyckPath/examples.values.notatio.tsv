@@ -1,0 +1,4 @@
+id	in	out
+from-a-binary-tree	<DyckPath><BinaryTree><List><List>0 0</List> <List>0 <List>0 0</List></List></List></BinaryTree></DyckPath>	<DyckPath><List>1 1 0 0 1 0 1 0</List></DyckPath>
+by-target-collection	<CombinatorialMap><BinaryTree><List><List>0 0</List> <List>0 <List>0 0</List></List></List></BinaryTree> DyckPaths</CombinatorialMap>	<DyckPath><List>1 1 0 0 1 0 1 0</List></DyckPath>
+by-findstat-id	<CombinatorialMap><BinaryTree><List><List>0 0</List> <List>0 <List>0 0</List></List></List></BinaryTree> "Mp00012"</CombinatorialMap>	<DyckPath><List>1 1 0 0 1 0 1 0</List></DyckPath>

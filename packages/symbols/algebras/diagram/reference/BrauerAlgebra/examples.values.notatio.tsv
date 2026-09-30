@@ -1,0 +1,5 @@
+id	in	out
+5	<AlgebraDimension><BrauerAlgebra>3</BrauerAlgebra></AlgebraDimension>	<ToExpression>15</ToExpression>
+algebradimension-braueralgebra-4	<AlgebraDimension><BrauerAlgebra>4</BrauerAlgebra></AlgebraDimension>	<ToExpression>105</ToExpression>
+a-crossing-is-a-brauer-diagram	<Element><Diagram><List><List>1 -2</List> <List>2 -1</List> <List>3 -3</List></List></Diagram> <BrauerAlgebra>3</BrauerAlgebra></Element>	<True />
+but-not-a-planar-one	<Element><Diagram><List><List>1 -2</List> <List>2 -1</List> <List>3 -3</List></List></Diagram> <TemperleyLiebAlgebra>3</TemperleyLiebAlgebra></Element>	<False />

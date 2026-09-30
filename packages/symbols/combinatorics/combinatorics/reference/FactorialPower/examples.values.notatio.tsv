@@ -1,0 +1,5 @@
+id	in	out
+symbolic-falling	<FactorialPower>x 3</FactorialPower>	<FactorialPower>x 3</FactorialPower>
+numeric	<FactorialPower>5 3</FactorialPower>	<ToExpression>60</ToExpression>
+step	<FactorialPower>x 2 h</FactorialPower>	<FactorialPower>x 2 h</FactorialPower>
+zero	<FactorialPower>x 0</FactorialPower>	<ToExpression>1</ToExpression>

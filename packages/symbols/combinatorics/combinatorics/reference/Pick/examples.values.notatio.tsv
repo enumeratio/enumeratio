@@ -1,0 +1,3 @@
+id	in	out
+keeps-elements-where-sel-is-true	<Pick><List>a b c</List> <List>True False True</List></Pick>	<List>a c</List>
+an-explicit-pattern-keeps-elements-matching	<Pick><List>a b c d</List> <List>1 0 1 0</List> 1</Pick>	<List>a c</List>

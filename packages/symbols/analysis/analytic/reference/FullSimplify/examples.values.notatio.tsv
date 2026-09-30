@@ -1,0 +1,7 @@
+id	in	out
+the-pythagorean-identity	<FullSimplify><Add><Power><Sin>x</Sin> 2</Power> <Power><Cos>x</Cos> 2</Power></Add></FullSimplify>	<ToExpression>1</ToExpression>
+recognizes-the-definition-of-sinh	<FullSimplify><Divide><Subtract><Exp>x</Exp> <Exp><Negate>x</Negate></Exp></Subtract> 2</Divide></FullSimplify>	<Sinh>x</Sinh>
+folds-the-double-angle-product	<FullSimplify><Multiply>2 <Sin>x</Sin> <Cos>x</Cos></Multiply></FullSimplify>	<Sin><Multiply>2 x</Multiply></Sin>
+the-functional-equation-of-gamma	<FullSimplify><Divide><Gamma><Add>x 1</Add></Gamma> <Gamma>x</Gamma></Divide></FullSimplify>	<x />
+denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	<FullSimplify><Subtract><Add><Sqrt>2</Sqrt> <Sqrt>3</Sqrt></Add> <Sqrt><Add>5 <Multiply>2 <Sqrt>6</Sqrt></Multiply></Add></Sqrt></Subtract></FullSimplify>	<ToExpression>0</ToExpression>
+the-hyperbolic-pythagorean-identity	<FullSimplify><Subtract><Power><Cosh>x</Cosh> 2</Power> <Power><Sinh>x</Sinh> 2</Power></Subtract></FullSimplify>	<ToExpression>1</ToExpression>

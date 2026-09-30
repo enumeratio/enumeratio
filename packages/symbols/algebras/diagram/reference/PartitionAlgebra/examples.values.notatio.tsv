@@ -1,0 +1,5 @@
+id	in	out
+b-6	<AlgebraDimension><PartitionAlgebra>3</PartitionAlgebra></AlgebraDimension>	<ToExpression>203</ToExpression>
+b-8-the-closed-form-answers-past-any-useful	<AlgebraDimension><PartitionAlgebra>4</PartitionAlgebra></AlgebraDimension>	<ToExpression>4140</ToExpression>
+c-6-planarity-cuts-203-down-to-132	<AlgebraDimension><PlanarPartitionAlgebra>3</PlanarPartitionAlgebra></AlgebraDimension>	<ToExpression>132</ToExpression>
+a-block-of-three-is-a-partition-diagram-and	<Element><Diagram><List><List>1 2 -1</List> <List>3 -3</List> <List>-2</List></List></Diagram> <PartitionAlgebra>3</PartitionAlgebra></Element>	<True />

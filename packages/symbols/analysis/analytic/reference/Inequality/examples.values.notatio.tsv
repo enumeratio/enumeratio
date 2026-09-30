@@ -1,0 +1,8 @@
+id	in	out
+a-numeric-chain-that-holds	<Inequality>0 LessEqual 2 Less 5</Inequality>	<True />
+a-numeric-chain-that-fails	<Inequality>0 LessEqual 5 Less 5</Inequality>	<False />
+a-symbolic-mixed-chain-partially-simplifies	<Inequality>0 LessEqual x Less 5</Inequality>	<And><LessEqual>0 x</LessEqual> <Less>x 5</Less></And>
+a-three-link-chain	<Inequality>1 Less 2 LessEqual 2 Less 10</Inequality>	<True />
+equal-and-notequal-are-valid-links-too	<Inequality>0 Less x NotEqual 3</Inequality>	<And><Less>0 x</Less> <NotEqual>x 3</NotEqual></And>
+a-homogeneous-chain-still-goes-through-and	<Inequality>0 Less x Less 5</Inequality>	<And><Less>0 x</Less> <Less>x 5</Less></And>
+declines-on-a-non-relation-link	<Inequality>0 Add 5</Inequality>	<Inequality>0 Add 5</Inequality>

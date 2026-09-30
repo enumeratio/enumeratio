@@ -1,0 +1,13 @@
+id	in	out
+mean-list-1-2-3-4	<Mean><List>1 2 3 4</List></Mean>	<Rational>5 2</Rational>
+mean-list-2-4-4-4-5-5-7-9	<Mean><List>2 4 4 4 5 5 7 9</List></Mean>	<ToExpression>5</ToExpression>
+mean-list-1p21-3p4-2p15-4-1p55	<Mean><List>1.21 3.4 2.15 4 1.55</List></Mean>	<ToExpression>2.462</ToExpression>
+given-a-matrix-mean-is-column-wise	<Mean><List><List>1 10</List> <List>2 20</List> <List>3 30</List></List></Mean>	<List>2 20</List>
+exact-rationals-give-an-exact-mean	<Mean><List><Rational>1 2</Rational> <Rational>1 3</Rational> <Rational>1 6</Rational></List></Mean>	<Rational>1 3</Rational>
+symbolic-data-gives-an-exact-symbolic-mean-frac	<Mean><List>a b c d</List></Mean>	<Multiply><Rational>1 4</Rational> <Add>a b c d</Add></Multiply>
+exact-constants-give-an-exact-mean-frac-2-e-pi-3	<Mean><List>Pi ExponentialE 2</List></Mean>	<Multiply><Rational>1 3</Rational> <Add>2 ExponentialE Pi</Add></Multiply>
+of-a-matrix-of-symbols-the-exact-mean-of-each	<Mean><List><List>a u</List> <List>b v</List> <List>c w</List></List></Mean>	<List><Multiply><Rational>1 3</Rational> <Add>a b c</Add></Multiply> <Multiply><Rational>1 3</Rational> <Add>u v w</Add></Multiply></List>
+the-mean-of-a-lazy-range-exactly	<Mean><Range>1 100</Range></Mean>	<Rational>101 2</Rational>
+mean-is-total-divided-by-count-mean-c-frac-sum-c	<Equal><Mean><List>1 2 3 4</List></Mean> <Divide><Add>1 2 3 4</Add> <Length><List>1 2 3 4</List></Length></Divide></Equal>	<True />
+a-single-outlier-drags-the-mean-far-from-the	<Mean><List>-100 1 1 1 1 20</List></Mean>	<Rational>-38 3</Rational>
+the-mean-of-no-data-is-nan	<Mean><Apply>List</Apply></Mean>	<NaN />

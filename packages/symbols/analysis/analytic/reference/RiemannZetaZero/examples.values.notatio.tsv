@@ -1,0 +1,5 @@
+id	in	out
+the-first-nontrivial-zero-frac-12-14-1347-i	<N><RiemannZetaZero>1</RiemannZetaZero></N>	<Complex>0.5 14.134725141734693</Complex>
+n-riemannzetazero-2	<N><RiemannZetaZero>2</RiemannZetaZero></N>	<Complex>0.5 21.022039638771556</Complex>
+n-riemannzetazero-50	<N><RiemannZetaZero>50</RiemannZetaZero></N>	<Complex>0.5 143.11184580762063</Complex>
+n-riemannzetazero-10	<N><RiemannZetaZero>10</RiemannZetaZero></N>	<Complex>0.5 49.7738324776723</Complex>

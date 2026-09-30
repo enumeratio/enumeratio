@@ -1,0 +1,5 @@
+id	in	out
+distance-along-a-path-graph	<GraphDistance><PathGraph>5</PathGraph> 1 5</GraphDistance>	<ToExpression>4</ToExpression>
+unreachable-is-infinite	<GraphDistance><Graph><List>1 2 3 4</List> <List><DirectedEdge>1 2</DirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph> 4 1</GraphDistance>	<PositiveInfinity />
+unreachable-against-a-longer-directed-chain	<GraphDistance><Graph><List>1 2 3 4</List> <List><DirectedEdge>1 2</DirectedEdge> <DirectedEdge>2 3</DirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph> 4 1</GraphDistance>	<PositiveInfinity />
+weighted-distance-is-summed-weight-not-hop-count	<GraphDistance><Graph><List>1 2 3</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge></List> <KeyValuePair>EdgeWeight <List>5 7</List></KeyValuePair></Graph> 1 3</GraphDistance>	<ToExpression>12</ToExpression>

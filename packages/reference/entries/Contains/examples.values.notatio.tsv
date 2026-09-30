@@ -1,0 +1,11 @@
+id	in	out
+contains-list-1-2-3-2	<Contains><List>1 2 3</List> 2</Contains>	<True />
+contains-list-1-2-3-5	<Contains><List>1 2 3</List> 5</Contains>	<False />
+contains-list-1-3-4-1-2-2	<Contains><List>1 3 4 1 2</List> 2</Contains>	<True />
+nothing-is-in-the-empty-list	<Contains><Apply>List</Apply> x</Contains>	<False />
+symbolic-elements	<Contains><List><Power>x 2</Power> <Power>y 2</Power></List> <Power>x 2</Power></Contains>	<True />
+elements-can-themselves-be-lists	<Contains><List><List>1 2</List> <List>3 4</List></List> <List>1 2</List></Contains>	<True />
+only-the-top-level-elements-are-searched	<Contains><List><List>1 2</List> <List>3 4</List></List> 1</Contains>	<False />
+a-lazy-range-is-searched-without-being	<Contains><Range>100</Range> 50</Contains>	<True />
+compared-after-canonical-ordering-so-b-a-matches	<Contains><List><Add>a b</Add></List> <Add>b a</Add></Contains>	<True />
+an-exact-and-an-approximate-number-with-the-same	<Contains><List><Rational>1 2</Rational></List> 0.5</Contains>	<True />
