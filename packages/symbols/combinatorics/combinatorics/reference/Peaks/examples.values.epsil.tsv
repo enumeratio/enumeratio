@@ -2,3 +2,6 @@ id	in	out
 3-at-position-2-tops-both-neighbors	Peaks([2, 3, 1])	1
 monotone-increasing-has-no-interior-peak	Peaks([1, 2, 3])	0
 the-lone-peak-at-position-2	Peaks([1, 3, 2, 4])	1
+the-one-line-word-312	Peaks(Permutation([3, 1, 2]))	0
+the-one-line-word-312-as-a-plain-list	Peaks([3, 1, 2])	0
+the-one-line-word-2413	Peaks(Permutation([2, 4, 1, 3]))	1

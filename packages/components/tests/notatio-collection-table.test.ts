@@ -22,7 +22,6 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CARRIERS, declareCombinatorics } from "@enumeratio/combinatorics";
 import { substituteRowPerHead, wantsCarrier } from "@enumeratio/frontend";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
 import {
   collectionCarrierOf,
   declareCarrierElement,
@@ -33,13 +32,12 @@ import { expect, test } from "vite-plus/test";
 
 function productionEngine(): ComputeEngine {
   const ce = new ComputeEngine();
-  const domainTypes = Object.fromEntries(
-    CARRIERS.filter((c) => c.name !== "SetPartition").map((c) => [c.name, c.type]),
-  );
+  // The combinatorial statistics are declared inside `declareCombinatorics` itself now (step
+  // 6b), typed uniformly across every area including SetPartition — matching
+  // web/.vitepress/theme/engine-libraries.ts, which never excluded it either.
   declareCombinatorics(ce);
   declareCarrierPlurals(ce, CARRIERS);
   declareCarrierElement(ce, CARRIERS);
-  declareStatistics(ce, ALL_STATISTICS, { domainTypes });
   declareStructures(ce);
   return ce;
 }

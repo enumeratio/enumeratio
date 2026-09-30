@@ -2,3 +2,6 @@ id	in	out
 1-dips-below-both-neighbors	Valleys([3, 1, 2])	1
 monotone-increasing-has-no-interior-valley	Valleys([1, 2, 3])	0
 the-lone-valley-at-position-3	Valleys([1, 3, 2, 4])	1
+the-one-line-word-312	Valleys(Permutation([3, 1, 2]))	1
+the-one-line-word-312-as-a-plain-list	Valleys([3, 1, 2])	1
+the-one-line-word-2413	Valleys(Permutation([2, 4, 1, 3]))	1

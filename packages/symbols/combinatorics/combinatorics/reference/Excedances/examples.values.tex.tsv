@@ -1,4 +1,6 @@
 id	in	out
 only-position-1-3-1	\mathrm{Excedances}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))	1
 the-identity-has-none	\mathrm{Excedances}(\mathrm{Permutation}(\bigl\lbrack1, 2, 3\bigr\rbrack))	0
+the-one-line-word-312	\mathrm{Excedances}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))	1
+the-one-line-word-2413	\mathrm{Excedances}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))	2
 excedances-antiexcedances-and-fixed-points	\mathrm{Excedances}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))+\mathrm{Antiexcedances}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))+\mathrm{FixedPoints}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))=3	\top

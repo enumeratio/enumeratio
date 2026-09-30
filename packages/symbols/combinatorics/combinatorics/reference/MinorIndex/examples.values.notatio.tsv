@@ -2,4 +2,7 @@ id	in	out
 the-lone-ascent-at-position-2	<MinorIndex><List>3 1 2</List></MinorIndex>	<ToExpression>2</ToExpression>
 ascents-at-both-positions-1-2	<MinorIndex><List>1 2 3</List></MinorIndex>	<ToExpression>3</ToExpression>
 no-ascents	<MinorIndex><List>3 2 1</List></MinorIndex>	<ToExpression>0</ToExpression>
+the-one-line-word-312	<MinorIndex><Permutation><List>3 1 2</List></Permutation></MinorIndex>	<ToExpression>2</ToExpression>
+the-one-line-word-312-as-a-plain-list	<MinorIndex><List>3 1 2</List></MinorIndex>	<ToExpression>2</ToExpression>
+the-one-line-word-2413	<MinorIndex><Permutation><List>2 4 1 3</List></Permutation></MinorIndex>	<ToExpression>4</ToExpression>
 major-and-minor-index-split-binom-n-2	<Equal><Add><MajorIndex><List>3 1 2</List></MajorIndex> <MinorIndex><List>3 1 2</List></MinorIndex></Add> <Binomial>3 2</Binomial></Equal>	<True />

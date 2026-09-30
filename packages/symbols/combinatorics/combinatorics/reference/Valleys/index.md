@@ -28,3 +28,6 @@ statOn:
 
 - Only interior positions count ($1 < i < n$), so $\mathrm{Valleys}(p) = 0$ whenever $n \leq 2$
 - The local minima, complementary in shape to the local maxima counted by [[Peaks]]
+- Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence.
+- A separate definition exists for `DyckPath` (Occurrences of a down step immediately followed by an up step.) but is not the one declared: one head, one owner.

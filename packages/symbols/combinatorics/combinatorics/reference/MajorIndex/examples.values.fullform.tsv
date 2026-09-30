@@ -2,3 +2,6 @@ id	in
 one-descent-at-position-1	MajorIndex[List[3, 1, 2]]
 descents-at-positions-1-and-2	MajorIndex[List[3, 2, 1]]
 no-descents	MajorIndex[List[1, 2, 3]]
+the-one-line-word-312	MajorIndex[Permutation[List[3, 1, 2]]]
+the-one-line-word-312-as-a-plain-list	MajorIndex[List[3, 1, 2]]
+the-one-line-word-2413	MajorIndex[Permutation[List[2, 4, 1, 3]]]

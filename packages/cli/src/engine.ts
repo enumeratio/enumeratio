@@ -10,7 +10,6 @@ import { declareCarrierElement, declareCarrierPlurals } from "@enumeratio/struct
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
 import {
-  ALL_STATISTICS,
   declareDistributions,
   declareDistributions2,
   declareDistributions3,
@@ -18,7 +17,6 @@ import {
   declareDistributions5,
   declareDistributions6,
   declareProcesses,
-  declareStatistics,
 } from "@enumeratio/statistics";
 
 export type Syntax = "latex" | "mathjson" | "wolfram" | "epsil" | "asciimath" | "mathml";
@@ -197,10 +195,6 @@ export interface Parsed {
   raw: BoxedExpression;
 }
 
-/** Carrier name to minted type, for the statistics package (still outside `declareCombinatorics`
- *  -- combinatorics has no dependency on statistics). */
-const DOMAIN_TYPES: Readonly<Record<string, string>> = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
-
 /** Each carrier type mapped to the head that constructs it -- what `declareMaps` wraps with. */
 const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 
@@ -224,10 +218,9 @@ export class Session {
     // ...) is still free when this checks, not raced by minting a bare symbol first.
     declareCarrierPlurals(this.ce, CARRIERS);
     declareCarrierElement(this.ce, CARRIERS);
-    // A combinatorial statistic is a function of a carrier, so that is what these heads take.
-    // Collections owns the fast permutation heads under the same names, so those are skipped
-    // here -- one head, one owner.
-    declareStatistics(this.ce, ALL_STATISTICS, { domainTypes: DOMAIN_TYPES });
+    // The combinatorial statistics are declared inside `declareCombinatorics` itself now (each
+    // area declares its own, after its own carriers and families -- step 6b). What's left of
+    // `@enumeratio/statistics` is its own: the distributions and processes.
     declareDistributions(this.ce);
     declareDistributions2(this.ce);
     declareDistributions3(this.ce);

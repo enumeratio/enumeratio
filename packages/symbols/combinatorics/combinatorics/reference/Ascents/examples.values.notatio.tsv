@@ -1,3 +1,6 @@
 id	in	out
 only-1-2	<Ascents><List>3 1 2</List></Ascents>	<ToExpression>1</ToExpression>
 the-identity-ascends-throughout	<Ascents><List>1 2 3</List></Ascents>	<ToExpression>2</ToExpression>
+the-one-line-word-312	<Ascents><Permutation><List>3 1 2</List></Permutation></Ascents>	<ToExpression>1</ToExpression>
+the-one-line-word-312-as-a-plain-list	<Ascents><List>3 1 2</List></Ascents>	<ToExpression>1</ToExpression>
+the-one-line-word-2413	<Ascents><Permutation><List>2 4 1 3</List></Permutation></Ascents>	<ToExpression>2</ToExpression>

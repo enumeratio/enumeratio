@@ -20,8 +20,6 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 // `(ce: ComputeEngine) => void` would.
 export interface EngineLibraries {
   readonly declareCombinatorics: typeof import("@enumeratio/combinatorics").declareCombinatorics;
-  readonly declareStatistics: typeof import("@enumeratio/statistics").declareStatistics;
-  readonly ALL_STATISTICS: typeof import("@enumeratio/statistics").ALL_STATISTICS;
   readonly declareCarrierPlurals: typeof import("@enumeratio/structures").declareCarrierPlurals;
   readonly declareCarrierElement: typeof import("@enumeratio/structures").declareCarrierElement;
   readonly declareMaps: typeof import("@enumeratio/combinatorics").declareMaps;
@@ -69,13 +67,9 @@ export function applyEngineLibraries(apply: (fn: (ce: ComputeEngine) => void) =>
   // GlyphKind: type, constructor, plural type-space name and `Element` membership, all in
   // one call (`declareCarriers`' default plural folding).
   apply(libs.declareFrontendCarriers);
-  // A combinatorial statistic is a function of a carrier, so that is what these heads
-  // take. The ones that are ALSO plain list functions accept a bare list too. Collections
-  // already declares the fast permutation heads under the same names, so those are skipped
-  // here — one head, one owner. Statistics has no dependency from combinatorics, so its
-  // `domainTypes` is still built and passed by the host.
-  const domainTypes = Object.fromEntries(libs.CARRIERS.map((c) => [c.name, c.type]));
-  apply((ce) => libs.declareStatistics(ce, libs.ALL_STATISTICS, { domainTypes }));
+  // The combinatorial statistics are declared inside `declareCombinatorics` itself now (step
+  // 6b): each area declares its own, after its own carriers and families, typed uniformly —
+  // no `domainTypes` map for the host to build any more.
   const constructorFor = Object.fromEntries(libs.CARRIERS.map((c) => [c.type, c.name]));
   apply((ce) => libs.declareMaps(ce, constructorFor));
   apply(libs.declareAnalytic);

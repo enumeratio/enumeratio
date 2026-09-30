@@ -48,7 +48,6 @@ import {
   RESTRICTIONS,
 } from "@enumeratio/structures/src";
 import {
-  ALL_STATISTICS,
   declareDistributions,
   declareDistributions2,
   declareDistributions3,
@@ -56,14 +55,9 @@ import {
   declareDistributions5,
   declareDistributions6,
   declareProcesses,
-  declareStatistics,
 } from "@enumeratio/statistics/src";
 
 type Declare = (ce: ComputeEngine) => void;
-
-// Statistics takes each carrier's type by its name, as the site's engine gives it.
-const carrierTypes = (): Record<string, string> =>
-  Object.fromEntries(CARRIERS.map((carrier) => [carrier.name, carrier.type]));
 
 // `declareMaps` takes the constructor by its type, the other way around.
 const constructorTypes = (): Record<string, string> =>
@@ -124,13 +118,12 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
   // (`declareCarriers`' default folding) — residues/numerals/number-theory/hypercomplex,
   // listed above at their own declare call, already fold theirs the same way.
   ["frontend", declareFrontendCarriers],
-  // Statistics keys off the carrier types too, so it has to follow `declareCombinatorics`.
-  // combinatorics has no dependency on statistics, so this package still builds and passes
-  // its own `domainTypes`.
+  // The combinatorial statistics moved into `declareCombinatorics` itself (step 6b: each
+  // area declares its own statistics after its own carriers and families). What's left here
+  // is genuinely `@enumeratio/statistics`'s own: the distributions and processes.
   [
     "statistics",
     (ce) => {
-      declareStatistics(ce, ALL_STATISTICS, { domainTypes: carrierTypes() });
       declareDistributions(ce);
       declareDistributions2(ce);
       declareDistributions3(ce);

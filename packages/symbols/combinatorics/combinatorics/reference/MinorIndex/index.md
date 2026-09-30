@@ -15,3 +15,5 @@ seeAlso:
 ---
 
 - Complementary to [[MajorIndex]]: every position is a descent or an ascent, so $\mathrm{MajorIndex}(p) + \mathrm{MinorIndex}(p) = \binom{n}{2}$
+- Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Takes a `Permutation`, and also a bare list of integers: this reading compares entries with each other rather than with their positions, so it stands on any sequence.
