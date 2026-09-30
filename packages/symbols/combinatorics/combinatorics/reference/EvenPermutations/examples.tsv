@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 count-evenpermutations-4	Basic		[Count, [EvenPermutations, 4]]	12	$Count(EvenPermutations(4)) = 12$
-first-element-of-evenpermutations-4	Basic		[At, [EvenPermutations, 4], 1]	[List, 1, 2, 3, 4]	The first element in enumeration order
-every-element-of-evenpermutations-4		test	[Take, [EvenPermutations, 4], 12]	[List, [List, 1, 2, 3, 4], [List, 1, 3, 4, 2], [List, 1, 4, 2, 3], [List, 2, 1, 4, 3], [List, 2, 3, 1, 4], [List, 2, 4, 3, 1], [List, 3, 1, 2, 4], [List, 3, 2, 4, 1], [List, 3, 4, 1, 2], [List, 4, 1, 3, 2], [List, 4, 2, 1, 3], [List, 4, 3, 2, 1]]	
+first-element-of-evenpermutations-4	Basic		[At, [EvenPermutations, 4], 1]	[Permutation, [List, 1, 2, 3, 4]]	The first element in enumeration order
+every-element-of-evenpermutations-4		test	[Take, [EvenPermutations, 4], 12]	[List, [Permutation, [List, 1, 2, 3, 4]], [Permutation, [List, 1, 3, 4, 2]], [Permutation, [List, 1, 4, 2, 3]], [Permutation, [List, 2, 1, 4, 3]], [Permutation, [List, 2, 3, 1, 4]], [Permutation, [List, 2, 4, 3, 1]], [Permutation, [List, 3, 1, 2, 4]], [Permutation, [List, 3, 2, 4, 1]], [Permutation, [List, 3, 4, 1, 2]], [Permutation, [List, 4, 1, 3, 2]], [Permutation, [List, 4, 2, 1, 3]], [Permutation, [List, 4, 3, 2, 1]]]	

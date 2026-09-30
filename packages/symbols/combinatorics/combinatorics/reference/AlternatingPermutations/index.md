@@ -7,7 +7,7 @@ signatures:
   - call: AlternatingPermutations(n)
     description: 'Alternating (zigzag) permutations of $\{1, …, n\}$: $a_1 < a_2 > a_3 < …$'
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 seeAlso:
   - SymmetricGroup
   - ZigzagCompositions

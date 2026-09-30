@@ -51,14 +51,17 @@ export const entries: NumberKernel[] = [
     ),
     carrier: "Composition",
   },
-  ints(
-    "CompositionsIntoKParts",
-    2,
-    ([n, k]) => CompositionsIntoKPartsCount(n, k),
-    ([n, k], r) => CompositionsIntoKPartsUnrank(n, k, r),
-    (a, [n, k]) => IsCompositionIntoKParts(a, n, k),
-    (a) => CompositionsIntoKPartsRank(a),
-  ),
+  {
+    ...ints(
+      "CompositionsIntoKParts",
+      2,
+      ([n, k]) => CompositionsIntoKPartsCount(n, k),
+      ([n, k], r) => CompositionsIntoKPartsUnrank(n, k, r),
+      (a, [n, k]) => IsCompositionIntoKParts(a, n, k),
+      (a) => CompositionsIntoKPartsRank(a),
+    ),
+    carrier: "Composition",
+  },
   ints(
     "WeakCompositions",
     2,

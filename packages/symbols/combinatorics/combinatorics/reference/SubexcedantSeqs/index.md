@@ -7,7 +7,7 @@ signatures:
   - call: SubexcedantSeqs(n)
     description: 'Subexcedant sequences of length $n$: words $(a_0, …, a_{n-1})$ with $0 \le a_i \le i$ — another factorial-base encoding of permutations'
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<subexcedant_seq>
 seeAlso:
   - SymmetricGroup
   - LehmerCodes

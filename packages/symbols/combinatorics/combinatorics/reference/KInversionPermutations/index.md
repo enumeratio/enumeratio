@@ -7,7 +7,7 @@ signatures:
   - call: KInversionPermutations(n, k)
     description: Permutations of $\{1, …, n\}$ with exactly $k$ inversions — row $n$ of the Mahonian triangle
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<permutation>
 seeAlso:
   - SymmetricGroup
   - Inversions

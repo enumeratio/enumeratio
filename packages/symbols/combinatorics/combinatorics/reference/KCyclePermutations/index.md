@@ -7,7 +7,7 @@ signatures:
   - call: KCyclePermutations(n, k)
     description: Permutations of $\{1, …, n\}$ with exactly $k$ cycles — row $n$ of the unsigned Stirling first-kind triangle
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<permutation>
 seeAlso:
   - SymmetricGroup
   - KDescentPermutations

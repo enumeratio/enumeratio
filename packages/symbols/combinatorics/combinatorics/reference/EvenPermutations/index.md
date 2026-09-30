@@ -7,7 +7,7 @@ signatures:
   - call: EvenPermutations(n)
     description: the even permutations of $\{1, …, n\}$ — the alternating group $A_n$
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<permutation>
 seeAlso:
   - SymmetricGroup
   - Inversions
