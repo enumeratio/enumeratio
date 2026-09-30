@@ -1394,6 +1394,9 @@ importers:
       '@enumeratio/incidence':
         specifier: workspace:*
         version: link:../packages/symbols/algebras/incidence
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../packages/manifest
       '@enumeratio/modular':
         specifier: workspace:*
         version: link:../packages/symbols/groups/modular
