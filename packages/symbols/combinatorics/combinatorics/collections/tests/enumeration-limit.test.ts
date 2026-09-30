@@ -6,15 +6,18 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { collectMessages } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
-import { bigintEntries } from "../../permutations/src/families/core.ts";
+import { epsilEntries } from "../../permutations/src/families/core.ts";
+import { kernelOn } from "../src/families/epsil.ts";
 import { declareCombinatorics } from "../../src/index.ts";
-
-const [symmetricGroup] = bigintEntries;
 
 // A-94: SymmetricGroup and BoxedPlanePartitions carry their own carriers now, so a bare
 // declareCollections(ce) no longer declares them at all -- declareCombinatorics does, typed.
 const ce = new ComputeEngine();
 declareCombinatorics(ce);
+const symmetricGroup = kernelOn(
+  ce,
+  epsilEntries.find((family) => family.head === "SymmetricGroup")!,
+);
 
 const run = (expr: unknown) => {
   const { value, messages } = collectMessages(ce, () => ce.box(expr as never).evaluate());

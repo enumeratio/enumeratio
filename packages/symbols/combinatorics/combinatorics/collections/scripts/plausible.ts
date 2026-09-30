@@ -12,7 +12,7 @@
 //   PLAUSIBLE_POINTS=20 PLAUSIBLE_MAX_SIZE=9 node …/plausible.ts                     # deeper
 
 import { Worker } from "node:worker_threads";
-import { allEntries } from "../src/families/index.ts";
+import { allFamilies as allEntries } from "../src/families/index.ts";
 import type { Failure } from "./properties.ts";
 import type { FamilyReport, RunOptions } from "./run-family.ts";
 

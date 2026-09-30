@@ -4,7 +4,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { allEntries, type FamilyKernel } from "../collections/src/index.ts";
+import { allKernels, type FamilyKernel } from "../collections/src/index.ts";
 import { CARRIERS } from "../src/carriers.ts";
 import { compiledMaps } from "../scripts/compile-maps.ts";
 import { COMPILED_MAPS } from "../src/compiled-maps.generated.js";
@@ -24,7 +24,7 @@ const carrierByType = new Map(CARRIERS.map((carrier) => [carrier.type, carrier])
 /** Small elements of every family whose elements are values of `carrier`: one-parameter
  *  families at sizes up to MAX_SIZE, two-parameter ones (n, k) at k ≤ n. */
 function subjectsOf(carrier: string): unknown[] {
-  const families = allEntries.filter((f: FamilyKernel) => f.carrier === carrier && f.paramCount <= 2);
+  const families = allKernels(ce).filter((f: FamilyKernel) => f.carrier === carrier && f.paramCount <= 2);
   const out: unknown[] = [];
   for (const family of families)
     for (let n = 0; n <= MAX_SIZE; n++)

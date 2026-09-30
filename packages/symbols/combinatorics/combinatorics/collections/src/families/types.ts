@@ -62,7 +62,8 @@ export interface Declared {
   readonly known?: (p: number[]) => bigint;
 }
 
-interface Family {
+/** What a family is, apart from how it computes: its head, carrier, parameters and element shape. */
+export interface FamilyShape {
   readonly head: string;
   /** The domain its elements inhabit when that is a carrier with a constructor (`Permutation`).
    *  Given the carrier's type, the elements are built as carrier values and the collection is
@@ -85,8 +86,11 @@ interface Family {
   readonly carrierElements?: readonly string[];
   readonly paramCount: 0 | 1 | 2 | 3;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";
-  readonly valid: (element: unknown, p: number[]) => boolean;
   readonly declared?: Declared;
+}
+
+interface Family extends FamilyShape {
+  readonly valid: (element: unknown, p: number[]) => boolean;
 }
 
 /** A pure combinatorial family: count + rank/unrank/valid kernels, positions in bigint.

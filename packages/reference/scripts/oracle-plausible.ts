@@ -20,7 +20,7 @@
 
 import { appendFileSync, writeFileSync } from "node:fs";
 import { runCases } from "@enumeratio/evaluation/src/node";
-import { allEntries, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
+import { allFamilies, type AnyFamily } from "@enumeratio/combinatorics/collections/src";
 import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle/src";
 import { between as edgeBiased } from "@enumeratio/plausible";
 import { referenceEntries } from "../src/node.ts";
@@ -100,12 +100,12 @@ const STRUCTURAL = new Set([
 // A collection family's integer arguments are sizes, not values: resampling them near the
 // template's (up to ±1e6) builds enormous families. They're drawn from the family's own
 // declared params instead (https://github.com/enumeratio/enumeratio/wiki/Plausible §7), within a small work budget.
-const FAMILIES = new Map<string, FamilyKernel>(allEntries.map((f) => [f.head, f]));
+const FAMILIES = new Map<string, AnyFamily>(allFamilies.map((f) => [f.head, f]));
 const FAMILY_SIZE = 6;
 const FAMILY_BUDGET = 20_000n;
 
 /** A family call's params drawn from what it declares; the template's when none fit the budget. */
-function familyParams(family: FamilyKernel, ops: readonly MathJSON[], random: Random): MathJSON[] {
+function familyParams(family: AnyFamily, ops: readonly MathJSON[], random: Random): MathJSON[] {
   const declared = family.declared;
   for (let attempt = 0; attempt < 10; attempt++) {
     const params =

@@ -14,6 +14,7 @@ import {
   needsBigint,
   nestMJ,
 } from "./types.ts";
+import { type AnyFamily, kernelOn } from "./epsil.ts";
 
 type BoxInput = Parameters<ComputeEngine["box"]>[0];
 
@@ -174,7 +175,7 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
   };
 }
 
-/** Declare every family in `entries` on `ce`: an indexed-collection operator, or for paramCount 0
+/** Declare every family in `families` on `ce` (an Epsil family through its kernel on `ce`): an indexed-collection operator, or for paramCount 0
  *  an indexed-collection value (`Primes`), which shadows CE's own `set` of that name on this
  *  engine. A family's carrier, when it names one, has to already be declared on `ce` (its OWN
  *  area's declare runs its `declareCarriers` first) -- its minted type is read back through
@@ -182,9 +183,9 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
  *  which carrier each family's elements inhabit (`registerCollectionCarrier`), for
  *  `CombinatorialStat(family, name)` -- self-contained per call, so a single area's declare
  *  needs nothing extra for its own families to answer it. */
-export function declareFamilies(ce: ComputeEngine, entries: readonly FamilyKernel[]): void {
+export function declareFamilies(ce: ComputeEngine, families: readonly AnyFamily[]): void {
   const byHead = new Map<string, FamilyKernel>();
-  for (const family of entries) {
+  for (const family of families.map((f) => kernelOn(ce, f))) {
     byHead.set(family.head, family);
     const carrier = carrierOf(family);
     if (carrier !== undefined) registerCollectionCarrier(ce, family.head, carrier);

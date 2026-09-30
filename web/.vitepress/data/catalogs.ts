@@ -1,6 +1,6 @@
 // Row data for the four reference catalogue pages, read straight from the packages
 // that own each class. Kept in one module so the shared row shape stays in sync.
-import { allEntries } from "@enumeratio/combinatorics/collections";
+import { allFamilies } from "@enumeratio/combinatorics/collections";
 import { CARRIERS, MAPS, UNDEFINED_MAPS } from "@enumeratio/combinatorics";
 import {
   crosswalkFor,
@@ -81,7 +81,7 @@ export const domainsRows: readonly CatalogRow[] = [...CARRIERS]
 
 // The enumerable collection families — each a head whose elements are one kind of
 // combinatorial object, taking one or two size parameters.
-export const collectionsRows: readonly CatalogRow[] = [...allEntries]
+export const collectionsRows: readonly CatalogRow[] = [...allFamilies]
   .map((e) => ({
     name: e.head,
     href: symbol(e.head),

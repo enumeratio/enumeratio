@@ -9,15 +9,12 @@ import { numberKernel } from "../../collections/src/families/types.ts";
 import { declareStats } from "../../collections/src/stats.ts";
 import { declareStatistics } from "../../src/statistics/declare.ts";
 import { PERMUTATIONS_CARRIERS } from "./carrier-data.ts";
-import { bigintEntries, coreEntries, permutationClassesEntries, permutationsEntries } from "./families/index.ts";
+import { coreFamilies, permutationClassesEntries, permutationsEntries } from "./families/index.ts";
 import { PERMUTATION_STATISTICS } from "./statistics.ts";
 
 export function declarePermutations(ce: ComputeEngine): void {
   declareCarriers(ce, PERMUTATIONS_CARRIERS, { plurals: false });
-  declareFamilies(ce, [
-    ...bigintEntries,
-    ...[...coreEntries, ...permutationsEntries, ...permutationClassesEntries].map(numberKernel),
-  ]);
+  declareFamilies(ce, [...coreFamilies, ...[...permutationsEntries, ...permutationClassesEntries].map(numberKernel)]);
   // Collections' fast permutation-statistic kernels (Inversions, Descents, …), BEFORE the
   // expr-based ones below: `declareStatistics`'s own "a kernel already claims this head" skip
   // only works if the kernel got there first (step 6b moved `declareStats`'s call site here,

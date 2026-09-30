@@ -21,7 +21,8 @@
 
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
-import { allEntries, countNumber, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { allKernels, countNumber, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
 
 /** A count as a plain number, or undefined past 2^53 (or where the kernel isn't bigint yet). */
 const countAt = (entry: FamilyKernel, p: number[]): number | undefined => {
@@ -32,6 +33,8 @@ const countAt = (entry: FamilyKernel, p: number[]): number | undefined => {
   }
 };
 import type { OeisMatch } from "../src/oeis-data.ts";
+
+const allEntries = allKernels(new ComputeEngine());
 
 const only = process.argv.includes("--only") ? process.argv[process.argv.indexOf("--only") + 1] : undefined;
 

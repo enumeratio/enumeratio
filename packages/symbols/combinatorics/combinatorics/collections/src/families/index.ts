@@ -9,8 +9,7 @@ import { entries as subsets } from "./subsets.ts";
 import { entriesBeforeDyckPathsByHeight as pathsPartitionsBeforeDyckPathsByHeight } from "./paths-partitions.ts";
 import { entriesAfterNonDecreasingParkingFunctions as tableauxTreesAfterNonDecreasingParkingFunctions } from "./tableaux-trees.ts";
 import {
-  bigintEntries as permutationsBigintEntries,
-  coreEntries as permutationsCoreEntries,
+  coreFamilies as permutationsCoreFamilies,
   permutationsEntries,
   permutationClassesEntries,
 } from "../../../permutations/src/families/index.ts";
@@ -61,14 +60,16 @@ import { entries as numericClosedForm } from "./numeric-closed-form.ts";
 import { entries as numericRecurrence } from "./numeric-recurrence.ts";
 import { entries as numericDivisor } from "./numeric-divisor.ts";
 import { entries as numericDigitsPrimes } from "./numeric-digits-primes.ts";
+import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { type AnyFamily, kernelsOn } from "./epsil.ts";
 import { type FamilyKernel, numberKernel } from "./types.ts";
 
 export * from "./types.ts";
+export * from "./epsil.ts";
 
 // Every `<area>...Entries` group below keeps the exact interior position its source file held
 // before that area's move -- https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5.
 const numberEntries = [
-  ...permutationsCoreEntries,
   ...compositionsCoreEntries,
   ...partitionsCoreEntries,
   ...coreBeforeSurjections,
@@ -114,11 +115,15 @@ const numberEntries = [
   ...treesUnlabeledTreesEntries,
 ].map(numberKernel);
 
-// Every family, in the bigint contract. declare.ts declares them all; the Plausible and OEIS
-// scripts read them too. Order here is data-list order only -- since https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
+// Every family: a TS kernel in the bigint contract, or an Epsil definition whose kernel belongs
+// to an engine (`allKernels`). The Plausible and OEIS scripts read them. Order here is data-list
+// order only -- since https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
 // §4 step 5's `carrierTypes` removal (A-94), nothing declares this list as one call any more;
 // see `collectionsEntries` below and each area's own `declare<Area>` for what does.
-export const allEntries: readonly FamilyKernel[] = [...permutationsBigintEntries, ...numberEntries];
+export const allFamilies: readonly AnyFamily[] = [...permutationsCoreFamilies, ...numberEntries];
+
+/** Every family's kernel on `ce`. */
+export const allKernels = (ce: ComputeEngine): FamilyKernel[] => kernelsOn(ce, allFamilies);
 
 // The families with NO carrier -- native to collections, not to any combinatorics area. Every
 // other entry above physically lives in, and is now declared by, its own area package; this is

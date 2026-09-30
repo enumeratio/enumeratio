@@ -1,5 +1,5 @@
 export { declareCollections } from "./library.ts";
-export { allEntries } from "./families/index.ts";
+export { allFamilies, allKernels, type AnyFamily, type EpsilFamily, kernelOn, kernelsOn } from "./families/index.ts";
 export {
   type Cost,
   type Count,
