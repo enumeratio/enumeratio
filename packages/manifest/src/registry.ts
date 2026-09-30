@@ -343,14 +343,14 @@ export interface InstallCheck<Engine extends DeclaringEngine> {
   readonly mode?: "enforce" | "flag";
 }
 
-interface CheckedValue {
+export interface CheckedValue {
   readonly json: unknown;
   isSame(other: CheckedValue): boolean;
   N(): { readonly re: number; readonly im: number };
 }
 
 /** Whether `got` is `expected`: the same expression, or within `tolerance` where both are numbers. */
-function agrees(got: CheckedValue, expected: CheckedValue, tolerance = 0): boolean {
+export function agrees(got: CheckedValue, expected: CheckedValue, tolerance = 0): boolean {
   if (got.isSame(expected)) return true;
   if (tolerance === 0) return false;
   const [a, b] = [got.N(), expected.N()];

@@ -1,6 +1,9 @@
 // Write a library's index from its definitions, before publishing it:
 //
-//   node packages/manifest/scripts/pack-library.ts <package-dir>
+//   node packages/manifest/scripts/pack-library.ts <package-dir> [--since <previous-dir>]
+//
+// With `--since`, the previous version (packed, as its host serves it) is diffed against this
+// one, and a version number that says less than what changed is refused (check-version.ts).
 //
 // Reads `package.json`'s `enumeratio` field and every `symbols/<Name>/definition.json` beside
 // the index it names, writes each symbol's examples (from its record, `index.md` and
@@ -63,7 +66,17 @@ export async function packLibrary(dir: string): Promise<string> {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  const dir = process.argv[2];
-  if (dir === undefined) throw new Error("usage: pack-library.ts <package-dir>");
+  const [dir, flag, previous] = process.argv.slice(2);
+  if (dir === undefined || (flag !== undefined && (flag !== "--since" || previous === undefined)))
+    throw new Error("usage: pack-library.ts <package-dir> [--since <previous-dir>]");
   console.log(`wrote ${await packLibrary(dir)}`);
+  if (previous !== undefined) {
+    const { checkVersion } = await import("./check-version.ts");
+    const { level, changes, says } = await checkVersion(dir, previous);
+    for (const { symbol, level: needs, what } of changes) console.log(`  ${needs}: ${symbol ?? "(library)"} ${what}`);
+    if (!says) {
+      console.error(`the changes need a ${level} version, and the version number doesn't say so`);
+      process.exitCode = 1;
+    } else console.log(`${level === "none" ? "no change" : `a ${level} change`}, and the version says so`);
+  }
 }
