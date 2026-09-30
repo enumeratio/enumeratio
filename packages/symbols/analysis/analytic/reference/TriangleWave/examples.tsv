@@ -1,7 +1,8 @@
-id	section	role	expr	expected	caption
-trianglewave-zero			[TriangleWave, 0]	0	Zero-crossing at x = 0, unlike [[UnitTriangle]]'s peak there
-trianglewave-quarter-peak			[TriangleWave, [Rational, 1, 4]]	1	The peak, at the quarter period
-trianglewave-half			[TriangleWave, [Rational, 1, 2]]	0	Zero-crossing again at the half period
-trianglewave-three-quarters-trough			[TriangleWave, [Rational, 3, 4]]	-1	The trough, at the three-quarter period
-trianglewave-ranged	Scope		[TriangleWave, [List, 0, 10], [Rational, 1, 2]]	5	Rescaled to a {min, max} range -- the range's midpoint at the half period
-trianglewave-periodic	Properties		[Equal, [TriangleWave, [Rational, 1, 4]], [TriangleWave, [Add, [Rational, 1, 4], 3]]]	True	Period 1
+id	section	role	expr	expected	known	source	caption
+trianglewave-zero			[TriangleWave, 0]	0			Zero-crossing at x = 0, unlike [[UnitTriangle]]'s peak there
+trianglewave-quarter-peak			[TriangleWave, [Rational, 1, 4]]	1			The peak, at the quarter period
+trianglewave-half			[TriangleWave, [Rational, 1, 2]]	0			Zero-crossing again at the half period
+trianglewave-three-quarters-trough			[TriangleWave, [Rational, 3, 4]]	-1			The trough, at the three-quarter period
+trianglewave-ranged	Scope		[TriangleWave, [List, 0, 10], [Rational, 1, 2]]	5			Rescaled to a {min, max} range -- the range's midpoint at the half period
+trianglewave-negative-pi-exact	Scope		[TriangleWave, [Negate, Pi]]	[Add, 12, [Multiply, -4, Pi]]	[Subtract, 12, [Multiply, 4, Pi]]	f = Frac(-π) = 4 - π ∈ (3/4, 1), so TriangleWave = 4f - 4	An exact irrational input stays exact through the affine branch
+trianglewave-periodic	Properties		[Equal, [TriangleWave, [Rational, 1, 4]], [TriangleWave, [Add, [Rational, 1, 4], 3]]]	True			Period 1

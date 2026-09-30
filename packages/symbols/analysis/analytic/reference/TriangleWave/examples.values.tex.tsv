@@ -4,4 +4,5 @@ trianglewave-quarter-peak	\mathrm{TriangleWave}(\frac{1}{4})	1
 trianglewave-half	\mathrm{TriangleWave}(\frac{1}{2})	0
 trianglewave-three-quarters-trough	\mathrm{TriangleWave}(\frac{3}{4})	-1
 trianglewave-ranged	\mathrm{TriangleWave}(\bigl\lbrack0, 10\bigr\rbrack, \frac{1}{2})	5
+trianglewave-negative-pi-exact	\mathrm{TriangleWave}(-\pi)	12-4\pi
 trianglewave-periodic	\mathrm{TriangleWave}(\frac{1}{4})=\mathrm{TriangleWave}(3\frac{1}{4})	\top

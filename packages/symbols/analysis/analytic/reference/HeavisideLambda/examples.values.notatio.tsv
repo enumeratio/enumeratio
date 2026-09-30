@@ -5,3 +5,4 @@ heavisidelambda-neg-endpoint	<HeavisideLambda>-1</HeavisideLambda>	<ToExpression
 heavisidelambda-outside	<HeavisideLambda>2</HeavisideLambda>	<ToExpression>0</ToExpression>
 heavisidelambda-1-4	<HeavisideLambda><Rational>1 4</Rational></HeavisideLambda>	<Rational>3 4</Rational>
 heavisidelambda-1-2	<HeavisideLambda><Rational>1 2</Rational></HeavisideLambda>	<Rational>1 2</Rational>
+heavisidelambda-pi-over-4-exact	<HeavisideLambda><Divide>Pi 4</Divide></HeavisideLambda>	<Add>1 <Multiply><Rational>-1 4</Rational> Pi</Multiply></Add>

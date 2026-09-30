@@ -5,4 +5,6 @@ unitbox-boundary-neg-1-2	UnitBox(-1 / 2)	1
 unitbox-outside-the-box	UnitBox(1)	0
 unitbox-product-of-two-boxes	UnitBox(0, 0)	1
 unitbox-product-second-at-its-boundary	UnitBox(0, 1 / 2)	1
+unitbox-pi-over-4-outside-exact	UnitBox(pi / 4)	0
+unitbox-sqrt2-over-4-inside-exact	UnitBox(sqrt(2) / 4)	1
 unitbox-derivative-away-from-the-jump	D(UnitBox(x), x)	Piecewise([[Indeterminate, x == 1 / 2 || x == -1 / 2]], 0)

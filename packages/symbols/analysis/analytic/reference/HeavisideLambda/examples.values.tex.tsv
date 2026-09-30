@@ -5,3 +5,4 @@ heavisidelambda-neg-endpoint	\mathrm{HeavisideLambda}(-1)	0
 heavisidelambda-outside	\mathrm{HeavisideLambda}(2)	0
 heavisidelambda-1-4	\mathrm{HeavisideLambda}(\frac{1}{4})	\frac{3}{4}
 heavisidelambda-1-2	\mathrm{HeavisideLambda}(\frac{1}{2})	\frac{1}{2}
+heavisidelambda-pi-over-4-exact	\mathrm{HeavisideLambda}(\frac{\pi}{4})	1-\frac{\pi}{4}

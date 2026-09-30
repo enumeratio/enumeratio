@@ -1,7 +1,8 @@
-id	section	role	expr	expected	caption	wolfram.note
-squarewave-zero			[SquareWave, 0]	1	SquareWave(0) = 1	
-squarewave-half			[SquareWave, [Rational, 1, 2]]	-1	The high half is half-open, and the default range is {-1, 1}	
-squarewave-neg-quarter			[SquareWave, [Rational, -1, 4]]	-1		
-squarewave-ranged	Scope		[SquareWave, [List, 0, 10], 0]	10	Rescaled to a {min, max} range	
-squarewave-periodic	Properties		[Equal, [SquareWave, [Rational, 1, 4]], [SquareWave, [Add, [Rational, 1, 4], 2]]]	True	Period 1	
-squarewave-one	Possible issues		[SquareWave, 1]	1	SquareWave(1) = SquareWave(0) = 1, by our own period-1 convention	Wolframs SquareWave has period 2 and range {0,1}; ours (documented in index.md) has period 1 and range {-1,1}, so SquareWave[1] there is 0.
+id	section	role	expr	expected	known	source	caption	wolfram.note
+squarewave-zero			[SquareWave, 0]	1			SquareWave(0) = 1	
+squarewave-half			[SquareWave, [Rational, 1, 2]]	-1			The high half is half-open, and the default range is {-1, 1}	
+squarewave-neg-quarter			[SquareWave, [Rational, -1, 4]]	-1				
+squarewave-ranged	Scope		[SquareWave, [List, 0, 10], 0]	10			Rescaled to a {min, max} range	
+squarewave-negative-pi-exact	Scope		[SquareWave, [Negate, Pi]]	-1	-1	f = Frac(-π) = 4 - π > 1/2, so the second half	The branch decision is certified numerically even though the output is a plain constant	
+squarewave-periodic	Properties		[Equal, [SquareWave, [Rational, 1, 4]], [SquareWave, [Add, [Rational, 1, 4], 2]]]	True			Period 1	
+squarewave-one	Possible issues		[SquareWave, 1]	1			SquareWave(1) = SquareWave(0) = 1, by our own period-1 convention	Wolframs SquareWave has period 2 and range {0,1}; ours (documented in index.md) has period 1 and range {-1,1}, so SquareWave[1] there is 0.

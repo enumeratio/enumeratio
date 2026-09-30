@@ -3,4 +3,6 @@ sawtoothwave-zero	SawtoothWave(0)	0
 sawtoothwave-1-3	SawtoothWave(1 / 3)	1 / 3
 sawtoothwave-negative	SawtoothWave(-1 / 4)	3 / 4
 sawtoothwave-ranged	SawtoothWave([0, 10], 1 / 2)	5
+sawtoothwave-negative-pi-exact	SawtoothWave(-pi)	4 - pi
+sawtoothwave-huge-argument-declines	SawtoothWave(10 ^ 20 * pi)	SawtoothWave(100_000_000_000_000_000_000Pi)
 sawtoothwave-periodic	SawtoothWave(1 / 3) == SawtoothWave(1 / 3 + 5)	True

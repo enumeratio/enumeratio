@@ -6,5 +6,7 @@ gudermannian-3	N(Gudermannian(3))	1.471_304_341_117_192_7
 gudermannian-neg-2-25	Gudermannian(-2.25)	-1.360_773_302_097_611_8
 horizontal-asymptote-pi-2	Gudermannian(positiveInfinity)	1 / 2 * pi
 gd-x-sech-x	D(Gudermannian(x), x)	sech(x)
+gudermannian-ln-i-a-complex-pole	Gudermannian(ln(imaginaryUnit))	DirectedInfinity(i)
+gudermannian-negative-i-pi-over-2-pole	Gudermannian(-(imaginaryUnit * pi / 2))	DirectedInfinity(-i)
+gudermannian-complex-argument	Gudermannian(1.5 + 2.5i)	1.930_663_350_404_305_4 + 0.260_120_391_571_059_88i
 an-odd-function	Gudermannian(-x)	-Gudermannian(x)
-gudermannian-ln-i-a-complex-pole	Gudermannian(ln(imaginaryUnit))	Gudermannian(1 / 2 * i * pi)
