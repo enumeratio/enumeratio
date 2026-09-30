@@ -1,14 +1,10 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { zetaHurwitz } from "./patches/zeta-hurwitz.ts";
 import { lerchPhiPatch } from "./patches/lerch-phi.ts";
-import { polylogOrder } from "./patches/polylog-order.ts";
-import { polygammaComplex } from "./patches/polygamma-complex.ts";
 import { dirichlet } from "./patches/dirichlet.ts";
 import { barnesGPatch } from "./patches/barnes-g.ts";
 import { logGammaPatch } from "./patches/log-gamma.ts";
 import { clausenPatch } from "./patches/clausen.ts";
 import { stieltjes } from "./patches/stieltjes.ts";
-import { roundPlaces } from "./patches/round-places.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -16,17 +12,26 @@ export { applyPatch, applyPatches, declareLibrary, patchSymbols } from "./patch.
 
 // #340 special-function family (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10; @enumeratio/analytic's
 // declareAnalytic calls applyPatch for each of these at the point their declares used to run).
-// The API landed in compute-engine 0.139; the arbitrary-precision N(x, d) path (this
-// patch's remaining job) has not -- see zeta-hurwitz.ts.
-export { roundPlaces } from "./patches/round-places.ts";
-export { zetaHurwitz, evaluateHurwitz, evaluateZeta } from "./patches/zeta-hurwitz.ts";
+// round-places, zeta-hurwitz (HurwitzZeta/Zeta's N(x, d) precision), polylog-order and
+// polygamma-complex all landed in compute-engine 0.141 and were retired; the functions
+// still used directly by @enumeratio/analytic (evaluateHurwitz/evaluateZeta/
+// evaluatePolygamma) and the arbitrary-precision kernels are re-exported straight from
+// their library file below.
 export {
+  evaluateHurwitz,
+  evaluateZeta,
+  evaluatePolygamma,
   hurwitzZeta,
   hurwitzZetaReal,
   setZetaKernel,
   zetaGeneralized,
   zetaGeneralizedReal,
   type ZetaKernel,
+  digamma,
+  polygamma,
+  polygammaReal,
+  polyLog,
+  polyLogReal,
 } from "./compute-engine/library/special-functions.ts";
 export {
   type BigCx,
@@ -51,8 +56,6 @@ export {
   lerchPhiBig,
   lerchPhiBall,
 } from "./patches/lerch-phi.ts";
-export { polylogOrder, polyLog, polyLogReal, evaluatePolyLog } from "./patches/polylog-order.ts";
-export { polygammaComplex, digamma, polygamma, polygammaReal, evaluatePolygamma } from "./patches/polygamma-complex.ts";
 export {
   dirichlet,
   dirichletEta,
@@ -159,16 +162,12 @@ export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/c
 
 /** Every patch offered upstream. `tests/landed.test.ts` holds each one to being unfixed. */
 export const PATCHES: readonly Patch[] = [
-  zetaHurwitz,
   lerchPhiPatch,
-  polylogOrder,
-  polygammaComplex,
   dirichlet,
   barnesGPatch,
   logGammaPatch,
   clausenPatch,
   stieltjes,
-  roundPlaces,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

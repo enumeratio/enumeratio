@@ -113,10 +113,11 @@ regularized `1F1`/`2F1`/`3F2` forms,
 function-analysis predicates (`FunctionContinuous`, `FunctionMonotonicity`,
 `FunctionSingularities`, …).
 
-The patches these heads land through (`zeta-hurwitz`, `lerch-phi`, `polylog-order`,
-`polygamma-complex`, `dirichlet`, `barnes-g`, `log-gamma`, `clausen`, `stieltjes`) live in
+The patches these heads land through (`lerch-phi`, `dirichlet`, `barnes-g`, `log-gamma`,
+`clausen`, `stieltjes`) live in
 [`@enumeratio/for-compute-engine`](../../../../upstream/compute-engine) — see its README for
-the upstreaming model.
+the upstreaming model. (`round-places`, `zeta-hurwitz`, `polylog-order` and
+`polygamma-complex` landed in compute-engine 0.141 and were retired.)
 
 ## Explore
 
