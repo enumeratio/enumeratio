@@ -6,4 +6,4 @@ isnumeric-plain-symbol	\mathrm{IsNumeric}(x)	\bot
 isnumeric-sqrt-2	\mathrm{IsNumeric}(\sqrt{2})	\top
 isnumeric-expr	\mathrm{IsNumeric}(\mathrm{expr})	\bot
 isnumeric-exponentiale	\mathrm{IsNumeric}(e)	\top
-ismatrix-m-isnumeric	\mathrm{IsMatrix}(m, \mathrm{IsNumeric})	\bot
+ismatrix-m-isnumeric		

@@ -21,7 +21,7 @@ matrixfunction-floor-list-list-1-over-2-neg-1
 floor-0	floor(0)		
 floor-positiveinfinity	floor(oo)		
 piecewiseexpand-floor-x-2-0-lt-x-lt-4			
-d-floor-x-x	diff(floor(Symbol("x")), Symbol("x"))		
+d-floor-x-x			
 how-many-full-5-item-packs-fit-in-17-items	floor((S(17) / 5))	3	
 legendre-s-formula-100-ends-in-lfloor-100-5	(floor((S(100) / 5)) + floor((S(100) / 25)))	24	
 the-number-of-decimal-digits-of-n-is-lfloor-log			

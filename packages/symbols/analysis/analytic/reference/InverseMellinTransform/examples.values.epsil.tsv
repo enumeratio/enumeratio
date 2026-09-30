@@ -2,11 +2,11 @@ id	in	out
 gamma-to-exp	InverseMellinTransform(gamma(s), s, x)	exponentialE ^ (-x)
 pi-csc-to-one-over-one-plus-x	InverseMellinTransform(pi * csc(pi * s), s, x)	1 / (x + 1)
 pi-csc-over-s-to-log-reciprocal	InverseMellinTransform(pi * csc(pi * s) / s, s, x)	ln(1 / x + 1)
-inversemellintransform-1-over-gamma-neg-1-over-2	"InverseMellinTransform(1 / gamma(-1 / 2 * s + 3 / 2) *\n                       gamma(1 / 2 * s + 1 / 2) * 2 ^ (s - 1) * a ^ (-s), s, x)"	"InverseMellinTransform(gamma(1 / 2 * s + 1 / 2) * 2 ^ (s - 1) * a ^ (-s) /\n                       gamma(-1 / 2 * s + 3 / 2), s, x)"
+inversemellintransform-1-over-gamma-neg-1-over-2		
 shift-gamma-a-plus-s	InverseMellinTransform(gamma(a + s), s, x)	exponentialE ^ (-x) * x ^ a
-inversemellintransform-gamma-s-s-neg-2	InverseMellinTransform(gamma(s), s, -2)	exponentialE ^ 2
-inversemellintransform-1-over-b-plus-s-times-a	InverseMellinTransform(1 / (b + s) * a ^ s, s, x)	InverseMellinTransform(a ^ s / (b + s), s, x)
-inversemellintransform-1-over-gamma-neg-1-over-3	"InverseMellinTransform(1 / gamma(-1 / 2 * s + 1) * gamma(1 / 2 * s) * 2 ^\n                                                                      (s - 1), s, x)"	"InverseMellinTransform(\n                        gamma(1 / 2 * s) * 2 ^ (s - 1) / gamma(-1 / 2 * s + 1),\n                        s,\n                        x,\n                      )"
-inversemellintransform-gamma-s-times-1-over-a	InverseMellinTransform(gamma(s * (1 / a)) ^ 2, s, x)	InverseMellinTransform(gamma(s / a) ^ 2, s, x)
-inversemellintransform-1-over-gamma-neg-1-over-4	"InverseMellinTransform(\n                        1 / gamma(-1 / 2 * s + 1) * gamma(1 / 2 * s) * gamma(-s +\n                                                                             1),\n                        s,\n                        x,\n                      )"	"InverseMellinTransform(\n                        gamma(1 / 2 * s) * gamma(-s + 1) / gamma(-1 / 2 * s + 1),\n                        s,\n                        x,\n                      )"
-inversemellintransform-1-over-neg-s-plus-1-times	InverseMellinTransform(1 / (-s + 1) * gamma(1 / 2 * s), s, x)	InverseMellinTransform(gamma(1 / 2 * s) / (-s + 1), s, x)
+inversemellintransform-gamma-s-s-neg-2		
+inversemellintransform-1-over-b-plus-s-times-a		
+inversemellintransform-1-over-gamma-neg-1-over-3		
+inversemellintransform-gamma-s-times-1-over-a		
+inversemellintransform-1-over-gamma-neg-1-over-4		
+inversemellintransform-1-over-neg-s-plus-1-times		

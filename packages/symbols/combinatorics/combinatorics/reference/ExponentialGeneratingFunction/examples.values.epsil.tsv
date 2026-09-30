@@ -4,6 +4,9 @@ derangements	ExponentialGeneratingFunction(subfactorial(n), n, x)	exponentialE ^
 bell-numbers	ExponentialGeneratingFunction(bellNumber(n), n, x)	exponentialE ^ (exponentialE ^ x - 1)
 fibonacci	ExponentialGeneratingFunction(fibonacci(n), n, x)	"-(sqrt(5) / 5) * exponentialE ^ (1 / 2 * x * (1 - sqrt(5))) + sqrt(5) / 5 * exponentialE ^\n                                                                            (1 /\n                                                                             2 *\n                                                                             x *\n                                                                             (1 +\n                                                                              sqrt(5)))"
 exponentialgeneratingfunction-1-n-x	ExponentialGeneratingFunction(1, n, x)	exponentialE ^ x
-list-exponentialgeneratingfunction-unitstep-n-n	"[\n  ExponentialGeneratingFunction(UnitStep(n), n, z),\n  ExponentialGeneratingFunction(UnitStep(n - 3), n, z),\n]"	[exponentialE ^ z, ExponentialGeneratingFunction(UnitStep(n - 3), n, z)]
-list-exponentialgeneratingfunction-n-times	"[\n  ExponentialGeneratingFunction(n * UnitStep(n), n, z),\n  ExponentialGeneratingFunction((n - 3) * UnitStep(n - 3), n, z),\n]"	"[\n  z * exponentialE ^ z,\n  ExponentialGeneratingFunction((n - 3) * UnitStep(n - 3), n, z),\n]"
-list-exponentialgeneratingfunction-n-n-z	"[\n  ExponentialGeneratingFunction(n, n, z),\n  ExponentialGeneratingFunction(n ^ 2, n, z),\n]"	[z * exponentialE ^ z, ExponentialGeneratingFunction(n ^ 2, n, z)]
+list-exponentialgeneratingfunction-unitstep-n-n		
+list-exponentialgeneratingfunction-n-times		
+list-exponentialgeneratingfunction-n-n-z		
+exponentialgeneratingfunction-1-n-1-times-z-pow	ExponentialGeneratingFunction(1, n, 1 * z ^ -1)	exponentialE ^ (1 / z)
+exponentialgeneratingfunction-fibonacci-n-n-z	ExponentialGeneratingFunction(fibonacci(n), n, z)	"-(sqrt(5) / 5) * exponentialE ^ (1 / 2 * z * (1 - sqrt(5))) + sqrt(5) / 5 * exponentialE ^\n                                                                            (1 /\n                                                                             2 *\n                                                                             z *\n                                                                             (1 +\n                                                                              sqrt(5)))"
+list-exponentialgeneratingfunction-n-n-z-2		

@@ -6,7 +6,7 @@ divisorsum-20-f	\mathrm{DivisorSum}(20, f)	f(1)+f(2)+f(4)+f(5)+f(10)+f(20)
 divisorsum-20-f-isprime	\mathrm{DivisorSum}(20, f, \mathrm{IsPrime})	f(2)+f(5)
 divisorsum-20-function-1-1	\mathrm{DivisorSum}(20, ()\mapsto\operatorname{\_1})	42
 divisorsum-20-function-1-1-function-1-lt-5-1	\mathrm{DivisorSum}(20, ()\mapsto\operatorname{\_1}, ()\mapsto\operatorname{\_1}\lt5)	7
-divisorsum-1-plus-10-pow-50-function-1-1	\mathrm{DivisorSum}(1+10^{50}, ()\mapsto\operatorname{\_1})	\mathrm{DivisorSum}(100\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,000\,001, ()\mapsto\operatorname{\_1})
+divisorsum-1-plus-10-pow-50-function-1-1		
 sum-d-mid-n-mu-d-0-for-n-1	\mathrm{DivisorSum}(12, d\mapsto\mathrm{MoebiusMu}(d))	0
 sum-d-mid-n-varphi-d-n	\mathrm{DivisorSum}(36, d\mapsto\mathrm{Totient}(d))	36
 divisorsum-1-000-function-1-pow-2-1	\mathrm{DivisorSum}(1\,000, ()\mapsto\operatorname{\_1}^2)	1\,383\,460
@@ -15,4 +15,4 @@ divisorsum-11-function-1-1-isprime	\mathrm{DivisorSum}(11, ()\mapsto\operatornam
 1-has-one-divisor	\mathrm{DivisorSum}(1, d\mapsto d)	1
 n-divisorsum-n-function-1-over-1-plus-1-1	N(\mathrm{DivisorSum}(n, ()\mapsto\frac{1}{\operatorname{\_1}+1}))	\mathrm{DivisorSum}(n, ()\mapsto\frac{1}{\operatorname{\_1}+1})
 n-divisorsum-9-function-1-over-1-plus-1-1	N(\mathrm{DivisorSum}(9, ()\mapsto\frac{1}{\operatorname{\_1}+1}))	\frac{17}{20}
-divisorsum-10-f-g	\mathrm{DivisorSum}(10, f, g)	0
+divisorsum-10-f-g		

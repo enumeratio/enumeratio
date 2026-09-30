@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>/examples.values.*.tsv`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 6947, disagree 468, inconclusive 63, error 4
+## wolfram — agree 6960, disagree 468, inconclusive 63, error 4
 
 | example                                                                       | kind           | ours                                                                                         | theirs                                                                                       |
 | ----------------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |

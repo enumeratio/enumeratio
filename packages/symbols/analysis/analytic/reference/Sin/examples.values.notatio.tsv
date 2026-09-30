@@ -58,8 +58,8 @@ functionsurjective-sin-x-x	<FunctionSurjective><Sin>x</Sin> x</FunctionSurjectiv
 functionsingularities-sin-x-x	<FunctionSingularities><Sin>x</Sin> x</FunctionSingularities>	<False />
 functiondiscontinuities-sin-x-x	<FunctionDiscontinuities><Sin>x</Sin> x</FunctionDiscontinuities>	<False />
 matrixfunction-function-sin-1-1-list-list-5-over	<MatrixFunction><Function><Block><Sin>_1</Sin></Block> _1</Function> <List><List><Multiply><Rational>5 6</Rational> Pi</Multiply> 0</List> <List><Multiply><Rational>3 2</Rational> Pi</Multiply> <Multiply><Rational>-1 2</Rational> Pi</Multiply></List></List></MatrixFunction>	<List><List><Rational>1 2</Rational> 0</List> <List><Rational>27 16</Rational> -1</List></List>
-assuming-m-in-integers-refine-sin-pi-times-m	<Assuming><Element>m Integers</Element> <Refine><Sin><Multiply>Pi m</Multiply></Sin></Refine></Assuming>	<ToExpression>0</ToExpression>
-assuming-m-in-integers-fullsimplify-sin-pi-times	<Assuming><Element>m Integers</Element> <FullSimplify><Sin><Multiply>Pi <Add><Multiply>1 <Power>2 -1</Power></Multiply> m</Add></Multiply></Sin></FullSimplify></Assuming>	<Sin><Multiply>Pi <Add>m <Rational>1 2</Rational></Add></Multiply></Sin>
+assuming-m-in-integers-refine-sin-pi-times-m		
+assuming-m-in-integers-fullsimplify-sin-pi-times		
 threads-element-wise-over-a-list	<Sin><List>0 <Divide>Pi 2</Divide> Pi</List></Sin>	<List>0 1 0</List>
 degrees-d-converts-a-degree-measure-to-radians	<Sin><Degrees>30</Degrees></Sin>	<Rational>1 2</Rational>
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	<Add><Power><Sin><Divide>Pi 6</Divide></Sin> 2</Power> <Power><Cos><Divide>Pi 6</Divide></Cos> 2</Power></Add>	<ToExpression>1</ToExpression>

@@ -6,4 +6,4 @@ isnumeric-plain-symbol	<IsNumeric>x</IsNumeric>	<False />
 isnumeric-sqrt-2	<IsNumeric><Sqrt>2</Sqrt></IsNumeric>	<True />
 isnumeric-expr	<IsNumeric>expr</IsNumeric>	<False />
 isnumeric-exponentiale	<IsNumeric>ExponentialE</IsNumeric>	<True />
-ismatrix-m-isnumeric	<IsMatrix>m IsNumeric</IsMatrix>	<False />
+ismatrix-m-isnumeric		

@@ -55,3 +55,11 @@ export {
   symbolIndexOf,
   type SymbolPackageField,
 } from "./npm-registry.ts";
+export {
+  jsdelivrVersions,
+  type ListVersions,
+  type LockOptions,
+  lockPackages,
+  type PackageLock,
+  specsOf,
+} from "./npm-lock.ts";

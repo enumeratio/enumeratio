@@ -8,6 +8,6 @@ a-rising-factorial-with-an-integer-length	\mathrm{FunctionExpand}(\mathrm{Pochha
 binom-n2-frac-n-n-1-2	\mathrm{FunctionExpand}(\binom{n}{2})	\frac{n\times(n-1)}{2}
 functionexpand-1-over-sqrt-x-pow-2-times-sin	\mathrm{FunctionExpand}(\frac{\sin(\sqrt{x^2})}{\sqrt{x^2}})	\frac{\sin(\sqrt{x^2})}{\sqrt{x^2}}
 functionexpand-1-over-zeta-z-times-zeta-neg-z	\mathrm{FunctionExpand}(\frac{\zeta(1-z)}{\zeta(z)})	\frac{\zeta(1-z)}{\zeta(z)}
-functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg	\mathrm{FunctionExpand}(\bigl\lbrack\sqrt{-x^2}, \ln(\sqrt{1-x^2})\bigr\rbrack)	\bigl\lbrack\sqrt{-x^2}, \frac{1}{2}(\ln(1-x^2))\bigr\rbrack
+functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg		
 functionexpand-polylog-2-z-plus-polylog-2-neg-z	\mathrm{FunctionExpand}(\operatorname{Li}_{2}(z)+\operatorname{Li}_{2}(1-z)-\zeta(2))	\operatorname{Li}_{2}(z)+\operatorname{Li}_{2}(1-z)-\frac{\pi^2}{6}
 a-generic-cos-argument-passes-through-unchanged	\mathrm{FunctionExpand}(\cos(\theta))	\cos(\theta)

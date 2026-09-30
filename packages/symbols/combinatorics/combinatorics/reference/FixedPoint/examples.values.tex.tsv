@@ -2,8 +2,8 @@ id	in	out
 halving-and-flooring-until-nothing-changes	\mathrm{FixedPoint}(()\mapsto\lfloor\frac{\operatorname{\_1}}{2}\rfloor, 100)	0
 the-dottie-number-the-fixed-point-of-cos	\mathrm{FixedPoint}(\cos, 0.5)	0.739\,085\,133\,215\,160\,641\,658
 fixedpoint-function-1-plus-floor-1-times-2-pow	\mathrm{FixedPoint}(()\mapsto1+\lfloor\frac{\operatorname{\_1}}{2}\rfloor, 1\,000)	2
-fixedpoint-function-1-plus-2-times-1-pow-neg-1	\mathrm{FixedPoint}(()\mapsto\frac{\operatorname{\_1}+\frac{2}{\operatorname{\_1}}}{2}, 1)	\frac{1\,572\,584\,048\,032\,918\,633\,353\,217}{1\,111\,984\,844\,349\,868\,137\,938\,112}
+fixedpoint-function-1-plus-2-times-1-pow-neg-1		
 fixedpoint-function-1-plus-floor-1-times-2-pow-2	\mathrm{FixedPoint}(()\mapsto1+\lfloor\frac{\operatorname{\_1}}{2}\rfloor, 10^6)	2
 newton-s-method-for-sqrt-2-run-to-this-engine-s	\mathrm{FixedPoint}(()\mapsto\frac{\operatorname{\_1}+\frac{2}{\operatorname{\_1}}}{2}, 1.5)	1.414\,213\,562\,373\,095\,048\,8
 fixedpoint-function-d-1-x-x-pow-10	\mathrm{FixedPoint}(()\mapsto\frac{\mathrm{d}\operatorname{\_1}}{\mathrm{d}x}, x^{10})	0
-fixedpoint-function-x-plus-2-times-x-pow-neg-1	\mathrm{FixedPoint}(x\mapsto\frac{x+\frac{2}{x}}{2}, 1)	\frac{1\,572\,584\,048\,032\,918\,633\,353\,217}{1\,111\,984\,844\,349\,868\,137\,938\,112}
+fixedpoint-function-x-plus-2-times-x-pow-neg-1		

@@ -1,2 +1,0 @@
-id	in	out
-apply-compose-f-g-h-list-x-y-z	apply(Compose(f, g, h), [x, y, z])	Function(apply(Function(Compose(f, g, h), f, g, h), [x, y, z], _1, _2), _1, _2)

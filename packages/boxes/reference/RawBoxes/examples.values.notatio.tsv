@@ -1,3 +1,3 @@
 id	in	out
 makeboxes-rawboxes-rowbox-list-1-plus-2	<MakeBoxes><RawBoxes><RowBox><List>"1" "+" "2"</List></RowBox></RawBoxes></MakeBoxes>	<RowBox><List>"1" "+" "2"</List></RowBox>
-makeboxes-rawboxes-fractionbox-1-2-3	<MakeBoxes><RawBoxes><FractionBox>"1" "2" "3"</FractionBox></RawBoxes></MakeBoxes>	<RowBox><List>"RawBoxes" "⁡" <RowBox><List>"(" <RowBox><List>"FractionBox" "⁡" <RowBox><List>"(" <TextBox>"1" <Tuple>ShowStringCharacters True</Tuple></TextBox> "," <TextBox>"2" <Tuple>ShowStringCharacters True</Tuple></TextBox> "," <TextBox>"3" <Tuple>ShowStringCharacters True</Tuple></TextBox> ")"</List></RowBox></List></RowBox> ")"</List></RowBox></List></RowBox>
+makeboxes-rawboxes-fractionbox-1-2-3		

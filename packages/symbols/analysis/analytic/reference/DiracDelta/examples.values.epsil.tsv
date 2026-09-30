@@ -8,8 +8,8 @@ diracdelta-neg-1	DiracDelta(-1)	0
 diracdelta-pi-8-1-over-3	DiracDelta(pi, 8, 1 / 3)	0
 fouriertransform-diracdelta-x-x-t	FourierTransform(DiracDelta(x), x, t)	sqrt(1 / (2Pi))
 fouriertransform-diracdelta-neg-a-plus-x-x-t	FourierTransform(DiracDelta(-a + x), x, t)	sqrt(2) * exponentialE ^ (i * a * t) / (2 * sqrt(pi))
-integrate-diracdelta-p-pow-2-plus-q-pow-2-minus	"integrate(\n           DiracDelta(p ^ 2 + q ^ 2 - 1),\n           (q, NegativeInfinity, PositiveInfinity),\n           (p, NegativeInfinity, PositiveInfinity),\n         )"	"integrate(integrate(\n                     DiracDelta(p ^ 2 + q ^ 2 - 1),\n                     (p, NegativeInfinity, PositiveInfinity),\n                   ), (q, NegativeInfinity, PositiveInfinity))"
+integrate-diracdelta-p-pow-2-plus-q-pow-2-minus		
 fouriertransform-diracdelta-y-y-x	FourierTransform(DiracDelta(y), y, x)	sqrt(1 / (2Pi))
 diracdelta-1	DiracDelta(1)	0
-laplacetransform-diracdelta-x-x-s	LaplaceTransform(DiracDelta(x), x, s)	1
+laplacetransform-diracdelta-x-x-s		
 diracdelta-neg-1-minus-2-times-exponentiale	"DiracDelta(-1 - 2 * exponentialE - exponentialE ^ 2 + exponentialE ^ (-exponentialE ^\n                                                                       (2 *\n                                                                        exponentialE)) + (1 +\n                                                                            exponentialE) ^\n                                                                           2)"	0

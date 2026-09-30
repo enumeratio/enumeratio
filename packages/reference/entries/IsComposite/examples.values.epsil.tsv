@@ -4,7 +4,7 @@ iscomposite-13	isComposite(13)	False
 iscomposite-1-plus-10-pow-3-000	isComposite(1 + 10 ^ 3_000)	True
 iscomposite-list-1-2-3-4-5-6	isComposite([1, 2, 3, 4, 5, 6])	[False, False, False, True, False, True]
 iscomposite-5	isComposite(5)	False
-iscomposite-3-plus-i	isComposite(3 + i)	False
+iscomposite-3-plus-i		
 iscomposite-8	isComposite(8)	True
 iscomposite-12	isComposite(12)	True
 iscomposite-67	isComposite(67)	False

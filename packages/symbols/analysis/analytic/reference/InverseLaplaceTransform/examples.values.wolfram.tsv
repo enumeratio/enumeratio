@@ -2,13 +2,22 @@ id	in
 one-over-s-squared	InverseLaplaceTransform[Power[s, -2], s, t]
 one-over-s-minus-a	InverseLaplaceTransform[Power[Plus[s, Minus[a]], -1], s, t]
 s-over-s-squared-plus-a-squared	InverseLaplaceTransform[Divide[s, Plus[Power[s, 2], Power[a, 2]]], s, t]
-inverselaplacetransform-1-over-s-plus-1-s-t	InverseLaplaceTransform[Divide[1, Plus[s, 1]], s, t]
-inverselaplacetransform-ln-1-over-b-plus-s-times	InverseLaplaceTransform[Log[Times[Divide[1, Plus[b, s]], Plus[a, s]]], s, t]
-inverselaplacetransform-a-times-1-over-a-pow-2	InverseLaplaceTransform[Times[a, Divide[1, Plus[Power[a, 2], Power[s, 2]]]], s, t]
-inverselaplacetransform-s-times-1-over-a-pow-2	InverseLaplaceTransform[Times[s, Divide[1, Plus[Power[a, 2], Power[s, 2]]]], s, t]
-fullsimplify-inverselaplacetransform-a-times-1	FullSimplify[InverseLaplaceTransform[Times[a, Divide[1, Plus[Minus[Power[a, 2]], Power[s, 2]]]], s, t]]
-fullsimplify-inverselaplacetransform-s-times-1	FullSimplify[InverseLaplaceTransform[Times[s, Divide[1, Plus[Minus[Power[a, 2]], Power[s, 2]]]], s, t]]
-inverselaplacetransform-s-times-a-pow-2-plus-s	InverseLaplaceTransform[Times[s, Power[Plus[Power[a, 2], Power[s, 2]], -2]], s, t]
-inverselaplacetransform-s-times-1-over-a-pow-2-2	InverseLaplaceTransform[Times[s, Divide[1, Times[Plus[Power[a, 2], Power[s, 2]], Plus[Power[b, 2], Power[s, 2]]]]], s, t]
-fullsimplify-inverselaplacetransform-1-over-neg	FullSimplify[InverseLaplaceTransform[Times[Divide[1, Times[Plus[Minus[Power[a, 2]], Power[s, 2]], Plus[Minus[Power[b, 2]], Power[s, 2]]]], Power[s, 2]], s, t]]
-inverselaplacetransform-1-over-s-minus-2-times	InverseLaplaceTransform[Times[Divide[1, Times[Plus[s, -2], Sqrt[s]]], Power[E, Times[-5, s]]], s, t]
+inverselaplacetransform-1-over-s-plus-1-s-t	
+inverselaplacetransform-ln-1-over-b-plus-s-times	
+inverselaplacetransform-a-times-1-over-a-pow-2	
+inverselaplacetransform-s-times-1-over-a-pow-2	
+fullsimplify-inverselaplacetransform-a-times-1	
+fullsimplify-inverselaplacetransform-s-times-1	
+inverselaplacetransform-s-times-a-pow-2-plus-s	
+inverselaplacetransform-s-times-1-over-a-pow-2-2	
+fullsimplify-inverselaplacetransform-1-over-neg	
+inverselaplacetransform-1-over-s-minus-2-times	
+inverselaplacetransform-1-over-a-plus-s-times	
+inverselaplacetransform-1-over-s-minus-1-times	
+inverselaplacetransform-ln-1-over-s-pow-2-plus-2	
+inverselaplacetransform-1-over-root-s-3-times-ln	
+inverselaplacetransform-1-over-s-times-ln-s-pow	
+inverselaplacetransform-1-over-root-s-3-times	
+inverselaplacetransform-1-over-sqrt-s-times-erf	
+inverselaplacetransform-elliptick-a-pow-2-times	
+inverselaplacetransform-s-times-neg-elliptice-a	

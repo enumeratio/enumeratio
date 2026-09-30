@@ -7,6 +7,6 @@ falling-factorial-half-2-neg-1-4	(\frac{1}{2})^{\underline{2}}	-\frac{1}{4}
 fallingfactorial-4-2	4^{\underline{2}}	12
 functionexpand-fallingfactorial-x-4	\mathrm{FunctionExpand}(x^{\underline{4}})	-x\times(1-x)(2-x)(3-x)
 fallingfactorial-n-0	n^{\underline{0}}	1
-fallingfactorial-x-plus-bigo-x-pow-5-10	(x+O\left(x\right)^5)^{\underline{10}}	(-x-O\left(x\right)^5)(-x-O\left(x\right)^5+1)(-x-O\left(x\right)^5+2)(-x-O\left(x\right)^5+3)(-x-O\left(x\right)^5+4)(-x-O\left(x\right)^5+5)(-x-O\left(x\right)^5+6)(-x-O\left(x\right)^5+7)(-x-O\left(x\right)^5+8)(-x-O\left(x\right)^5+9)
+fallingfactorial-x-plus-bigo-x-pow-5-10		
 fallingfactorial-10-3	10^{\underline{3}}	720
 differencedelta-fallingfactorial-x-n-x	\mathrm{DifferenceDelta}(x^{\underline{n}}, x)	(x+1)^{\underline{n}}-x^{\underline{n}}

@@ -49,4 +49,6 @@ list-a-b-c-d-exponentiale-list-3	<At><List>a b c d ExponentialE</List> 3</At>	<c
 list-a-b-c-d-exponentiale-list-span-2-4	<At><List>a b c d ExponentialE</List> <Span>2 4</Span></At>	<List>b c d</List>
 chaining-at-reaches-into-nested-collections-like	<At><At><List><List>1 2</List> <List>3 4</List></List> 2</At> 1</At>	<ToExpression>3</ToExpression>
 list-a-b-c-d-exponentiale-list-list-4-5-1-2-3	<At><List>a b c d ExponentialE</List> <List>4 5 1 2 3</List></At>	<List>d ExponentialE a b c</List>
+list-a-b-c-list-0	<At><List>a b c</List> 0</At>	<List />
+list-1-2-3-list-list	<At><List>1 2 3</List> <Apply>List</Apply></At>	<Apply>List</Apply>
 an-out-of-range-index-evaluates-to-nan-rather	<At><List>1 2 3</List> 10</At>	<NaN />

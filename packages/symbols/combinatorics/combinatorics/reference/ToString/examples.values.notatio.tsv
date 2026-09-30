@@ -1,7 +1,7 @@
 id	in	out
 prints-a-list-as-notatio-source	<ToString><List>1 2 3</List></ToString>	<ToExpression>"[1, 2, 3]"</ToExpression>
-tostring-x-pow-2	<ToString><Power>x 2</Power></ToString>	<ToExpression>"x ^ 2"</ToExpression>
+tostring-x-pow-2		
 prints-an-arithmetic-expression	<ToString><Add>x 1</Add></ToString>	<ToExpression>"x + 1"</ToExpression>
-tostring-exponentiale-pow-x	<ToString><Power>ExponentialE x</Power></ToString>	<ToExpression>"exponentialE ^ x"</ToExpression>
-tostring-cos-x-plus-cos-y	<ToString><Add><Cos>x</Cos> <Cos>y</Cos></Add></ToString>	<ToExpression>"cos(x) + cos(y)"</ToExpression>
+tostring-exponentiale-pow-x		
+tostring-cos-x-plus-cos-y		
 tostring-kappa	<ToString>kappa</ToString>	<ToExpression>"kappa"</ToExpression>

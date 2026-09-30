@@ -1,4 +1,4 @@
 id	in	out
 2-3	\mathrm{Count}(\mathrm{Tuples}(2, 3))	8
 tuples-2-3-list-1	\mathrm{Tuples}(2, 3)[1]	\bigl\lbrack1, 1, 1\bigr\rbrack
-thread-tuples-list-1-0-3-neg-gt-integerdigits-30	\mathrm{Thread}(\mathrm{KeyValuePair}(\mathrm{Tuples}(\bigl\lbrack1, 0\bigr\rbrack, 3), \mathrm{IntegerDigits}(30, 2, 8)))	\mathrm{KeyValuePair}(\mathrm{Tuples}(\bigl\lbrack1, 0\bigr\rbrack, 3), \mathrm{IntegerDigits}(30, 2, 8))
+thread-tuples-list-1-0-3-neg-gt-integerdigits-30		

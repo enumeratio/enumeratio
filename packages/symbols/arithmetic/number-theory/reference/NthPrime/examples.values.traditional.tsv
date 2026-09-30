@@ -10,7 +10,7 @@ array-nthprime-100-mod-10
 n-100-times-last-foldlist-multiply-1-1-plus-neg	N(100\mathrm{Last}(\mathrm{FoldList}(\mathrm{Multiply}, 1, 1-\frac{1}{p_{1..25}})))	12.031\,729\,047\,493\,518\,845
 ismersenneprimeexponent-nthprime-4	\mathrm{IsMersennePrimeExponent}(p_{4})	\mathrm{True}
 isprime-neg-1-plus-2-pow-nthprime-4	\mathrm{IsPrime}(2^{p_{4}}-1)	\mathrm{True}
-1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n	(\prod_{n}^6(1-p_{n}^{-s}))^{-1}	((1-2^{-s})(1-3^{-s})(1-5^{-s})(1-7^{-s})(1-11^{-s})(1-13^{-s}))^{-1}
+1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n		
 primepi-and-nthprime-are-inverses-pi-p-n-n	\pi(p_{100})=100	\mathrm{True}
 primepi-nthprime-100	\pi(p_{100})	100
 nthprime-1-plus-primepi-30	p_{1+\pi(30)}	31

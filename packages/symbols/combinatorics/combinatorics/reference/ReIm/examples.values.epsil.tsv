@@ -18,5 +18,5 @@ rank-reim-mat	rank(ReIm(mat))	1
 reim-i	ReIm(i)	[0, 1]
 reim-5-times-exponentiale-pow-3-over-4-times-i	ReIm(5 * exponentialE ^ (3 / 4 * i * pi))	[-5 / 2 * sqrt(2), 5 / 2 * sqrt(2)]
 reim-2x-plus-i	ReIm(2x + i)	[real(2x + i), imaginary(2x + i)]
-shape-reim-mat	shape(ReIm(mat))	Tuple()
+shape-reim-mat		
 reim-list-i-neg-i-0	ReIm([i, -i, 0])	[[0, 1], [0, -1], [0, 0]]

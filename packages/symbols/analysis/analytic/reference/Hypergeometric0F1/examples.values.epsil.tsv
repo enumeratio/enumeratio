@@ -1,11 +1,11 @@
-id	in	out	back
-a-generic-point-checked-against-mpmath-s-hyp0f1	Hypergeometric0F1(2, 0.5)	1.271_723_456_312_137	
-b-1-5-at-neg-0-7	Hypergeometric0F1(1.5, -0.7)	0.594_476_258_632_799_7	
-rational-order-7-3-at-2-5	Hypergeometric0F1(7 / 3, 2.5)	2.560_292_693_919_974_4	
-complex-order-1-plus-i-at-0-5	N(Hypergeometric0F1(1 + i, 0.5))	1.262_484_141_307_633 - 0.289_645_741_340_911_87i	
-order-2-at-a-complex-argument	N(Hypergeometric0F1(2, 0.5 + 0.5i))	1.248_175_636_885_929 + 0.293_401_296_264_334_1i	
-negative-order-neg-0-5-at-0-3	Hypergeometric0F1(-0.5, 0.3)	0.207_633_759_462_580_8	
-complex-order-and-argument	N(Hypergeometric0F1(-2.5 + 1.5i, 1.2 - 0.8i))	0.632_186_477_801_754_6 + 0.022_553_192_547_214_93i	
-n-hypergeometric0f1-1-neg-2-50	N(Hypergeometric0F1(1, -2), 50)	-0.196_548_095_270_468_18	
-matrixfunction-function-hypergeometric0f1-1-over	MatrixFunction(Function(Hypergeometric0F1(1 / 2, _1), _1), [[1, 0], [0, 1]])	[[Hypergeometric0F1(1 / 2, 1), 0], [0, Hypergeometric0F1(1 / 2, 1)]]	Unreadable
-b-0-is-a-pole-stays-symbolic	Hypergeometric0F1(0, 0.5)	Hypergeometric0F1(0, 0.5)	
+id	in	out
+a-generic-point-checked-against-mpmath-s-hyp0f1	Hypergeometric0F1(2, 0.5)	1.271_723_456_312_137
+b-1-5-at-neg-0-7	Hypergeometric0F1(1.5, -0.7)	0.594_476_258_632_799_7
+rational-order-7-3-at-2-5	Hypergeometric0F1(7 / 3, 2.5)	2.560_292_693_919_974_4
+complex-order-1-plus-i-at-0-5	N(Hypergeometric0F1(1 + i, 0.5))	1.262_484_141_307_633 - 0.289_645_741_340_911_87i
+order-2-at-a-complex-argument	N(Hypergeometric0F1(2, 0.5 + 0.5i))	1.248_175_636_885_929 + 0.293_401_296_264_334_1i
+negative-order-neg-0-5-at-0-3	Hypergeometric0F1(-0.5, 0.3)	0.207_633_759_462_580_8
+complex-order-and-argument	N(Hypergeometric0F1(-2.5 + 1.5i, 1.2 - 0.8i))	0.632_186_477_801_754_6 + 0.022_553_192_547_214_93i
+n-hypergeometric0f1-1-neg-2-50		
+matrixfunction-function-hypergeometric0f1-1-over		
+b-0-is-a-pole-stays-symbolic	Hypergeometric0F1(0, 0.5)	Hypergeometric0F1(0, 0.5)

@@ -24,10 +24,14 @@
     "test": "vp test",
     "check": "vp check"
   },
+  "dependencies": {
+    "semver": "catalog:"
+  },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.141.0",
     "@enumeratio/entry": "workspace:*",
     "@types/node": "^24",
+    "@types/semver": "catalog:",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

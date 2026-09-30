@@ -5,5 +5,5 @@ nestwhile-ln-100-function-1-gt-0	\mathrm{NestWhile}(\ln, 100, ()\mapsto\operator
 nestwhile-function-1-times-2-pow-neg-1-123-456-2	\mathrm{NestWhile}(()\mapsto\frac{\operatorname{\_1}}{2}, 123\,456, \mathrm{IsEven}, 1, 4)	7\,716
 nestwhile-function-1-plus-1-888-function	\mathrm{NestWhile}(()\mapsto\operatorname{\_1}+1, 888, ()\mapsto\lnot\mathrm{IsPrime}(\operatorname{\_1}))	907
 nestwhile-function-1-plus-1-1-function-fibonacci	\mathrm{NestWhile}(()\mapsto\operatorname{\_1}+1, 1, ()\mapsto\mathrm{Fibonacci}(\operatorname{\_1})\le10^6)	31
-nestwhile-function-1-plus-1-888-function-2	\mathrm{NestWhile}(()\mapsto\operatorname{\_1}+1, 888, ()\mapsto\lnot\mathrm{IsPrime}(\operatorname{\_1})\lor\lnot\mathrm{IsPrime}(\operatorname{\_3}), 3)	888
+nestwhile-function-1-plus-1-888-function-2		
 nestwhile-function-floor-1-times-2-pow-neg-1-10	\mathrm{NestWhile}(()\mapsto\lfloor\frac{\operatorname{\_1}}{2}\rfloor, 10, ()\mapsto\operatorname{\_1}\gt0)	0

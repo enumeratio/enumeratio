@@ -1,14 +1,17 @@
 id	in	out
 quadratic	<DifferenceDelta><Power>n 2</Power> n</DifferenceDelta>	<Add><Multiply>2 n</Multiply> 1</Add>
 linear	<DifferenceDelta><Add><Multiply>3 n</Multiply> 5</Add> n</DifferenceDelta>	<ToExpression>3</ToExpression>
-differencedelta-fallingfactorial-i-n-i	<DifferenceDelta><FallingFactorial>i n</FallingFactorial> i</DifferenceDelta>	<Add><Negate><FallingFactorial><Complex>0 1</Complex> n</FallingFactorial></Negate> <FallingFactorial><Complex>1 1</Complex> n</FallingFactorial></Add>
+differencedelta-fallingfactorial-i-n-i		
 shift-var-named-i	<DifferenceDelta><a>i</a> i</DifferenceDelta>	<Add><Negate><a><Complex>0 1</Complex></a></Negate> <a><Complex>1 1</Complex></a></Add>
-differencedelta-i-pow-3-i	<DifferenceDelta><Power>i 3</Power> i</DifferenceDelta>	<Complex>-2 3</Complex>
-differencedelta-i-plus-1-times-i-plus-3-pow-neg	<DifferenceDelta><Multiply><Add>i 1</Add> <Power><Add>i 3</Add> -1</Power></Multiply> i</DifferenceDelta>	<Complex><Rational>11 85</Rational> <Rational>-7 85</Rational></Complex>
-differencedelta-zeta-2-i-i	<DifferenceDelta><Zeta>2 i</Zeta> i</DifferenceDelta>	<Add><Negate><Zeta>2 <Complex>0 1</Complex></Zeta></Negate> <Zeta>2 <Complex>1 1</Complex></Zeta></Add>
-differencedelta-a-pow-i-i	<DifferenceDelta><Power>a i</Power> i</DifferenceDelta>	<Add><Negate><Power>a <Complex>0 1</Complex></Power></Negate> <Power>a <Complex>1 1</Complex></Power></Add>
-differencedelta-2-pow-i-i	<DifferenceDelta><Power>2 i</Power> i</DifferenceDelta>	<Add><Negate><Power>2 <Complex>0 1</Complex></Power></Negate> <Power>2 <Complex>1 1</Complex></Power></Add>
-differencedelta-i-pow-2-plus-i-plus-1-times-2	<DifferenceDelta><Multiply><Add><Power>i 2</Power> i 1</Add> <Power>2 i</Power></Multiply> i</DifferenceDelta>	<Add><Multiply><Complex>0 -1</Complex> <Power>2 <Complex>0 1</Complex></Power></Multiply> <Multiply><Complex>2 3</Complex> <Power>2 <Complex>1 1</Complex></Power></Multiply></Add>
-differencedelta-i-plus-1-times-i-plus-3-pow-ne-2	<DifferenceDelta><Multiply><Multiply><Add>i 1</Add> <Power><Add>i 3</Add> -1</Power></Multiply> <Power>2 i</Power></Multiply> i</DifferenceDelta>	<Add><Multiply><Complex><Rational>-2 5</Rational> <Rational>-1 5</Rational></Complex> <Power>2 <Complex>0 1</Complex></Power></Multiply> <Multiply><Complex><Rational>9 17</Rational> <Rational>2 17</Rational></Complex> <Power>2 <Complex>1 1</Complex></Power></Multiply></Add>
-differencedelta-sin-a-times-i-plus-b-i	<DifferenceDelta><Sin><Add><Multiply>a i</Multiply> b</Add></Sin> i</DifferenceDelta>	<Add><Negate><Sin><Add><Multiply><Complex>0 1</Complex> a</Multiply> b</Add></Sin></Negate> <Sin><Add><Multiply><Complex>1 1</Complex> a</Multiply> b</Add></Sin></Add>
-differencedelta-sinh-a-times-i-plus-b-i	<DifferenceDelta><Sinh><Add><Multiply>a i</Multiply> b</Add></Sinh> i</DifferenceDelta>	<Add><Negate><Sinh><Add><Multiply><Complex>0 1</Complex> a</Multiply> b</Add></Sinh></Negate> <Sinh><Add><Multiply><Complex>1 1</Complex> a</Multiply> b</Add></Sinh></Add>
+differencedelta-i-pow-3-i		
+differencedelta-i-plus-1-times-i-plus-3-pow-neg		
+differencedelta-zeta-2-i-i		
+differencedelta-a-pow-i-i		
+differencedelta-2-pow-i-i		
+differencedelta-i-pow-2-plus-i-plus-1-times-2		
+differencedelta-i-plus-1-times-i-plus-3-pow-ne-2		
+differencedelta-sin-a-times-i-plus-b-i		
+differencedelta-sinh-a-times-i-plus-b-i		
+differencedelta-binomial-i-plus-n-n-i		
+differencedelta-gamma-i-i		
+differencedelta-beta-i-n-i		

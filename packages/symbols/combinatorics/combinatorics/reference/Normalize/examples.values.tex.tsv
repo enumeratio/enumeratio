@@ -2,7 +2,7 @@ id	in	out
 3-4-5	\mathrm{Normalize}(\bigl\lbrack3, 4\bigr\rbrack)	\bigl\lbrack\frac{3}{5}, \frac{4}{5}\bigr\rbrack
 normalize-list-1-5-1	\mathrm{Normalize}(\bigl\lbrack1, 5, 1\bigr\rbrack)	\bigl\lbrack\frac{\sqrt{3}}{9}, \frac{5\sqrt{3}}{9}, \frac{\sqrt{3}}{9}\bigr\rbrack
 zero-vector	\mathrm{Normalize}(\bigl\lbrack0, 0\bigr\rbrack)	\bigl\lbrack0, 0\bigr\rbrack
-normalize-list-x-y-f	\mathrm{Normalize}(\bigl\lbrack x, y\bigr\rbrack, f)	\bigl\lbrack\frac{x}{f(\bigl\lbrack x, y\bigr\rbrack)}, \frac{y}{f(\bigl\lbrack x, y\bigr\rbrack)}\bigr\rbrack
-normalize-s	\mathrm{Normalize}(s)	s
-normalize-list-x-y	\mathrm{Normalize}(\bigl\lbrack x, y\bigr\rbrack)	\bigl\lbrack\frac{x}{\sqrt{\vert x\vert^2+\vert y\vert^2}}, \frac{y}{\sqrt{\vert x\vert^2+\vert y\vert^2}}\bigr\rbrack
-normalize-1-plus-x-plus-x-pow-2-function	\mathrm{Normalize}(1+x+x^2, ()\mapsto\int_{-1}^{1}\!\operatorname{\_1}^2\, \mathrm{d}x)	(2(x^2+x+1))^{-1}
+normalize-list-x-y-f		
+normalize-s		
+normalize-list-x-y		
+normalize-1-plus-x-plus-x-pow-2-function		

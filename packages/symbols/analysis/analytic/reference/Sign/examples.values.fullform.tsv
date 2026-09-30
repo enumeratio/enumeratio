@@ -23,7 +23,8 @@ sign-123-minus-456i	Sign[Complex[123, -456]]
 fullsimplify-matrixfunction-sign-list-list-1	FullSimplify[MatrixFunction[Sign, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]]	
 piecewiseexpand-sign-x-neg-2-lt-x-lt-2	PiecewiseExpand[Sign[x], Less[-2, x, 2]]	
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1	Equal[Sign[Conjugate[Complex[1, 2]]], Conjugate[Sign[Complex[1, 2]]]]	
-d-sign-x-x	D[Sign[x], x]	
+d-sign-x-x		
+sign-positiveinfinity-times-i		
 tells-you-the-temperature-dropped-but-not-by-how	Sign[Subtract[70, 95]]	
 sign-z-z-z-see-abs	Equal[Sign[Complex[3, 4]], Divide[Complex[3, 4], Abs[Complex[3, 4]]]]	
 x-cdot-sign-x-x-here-at-x-5	Equal[Times[-5, Sign[-5]], Abs[-5]]	

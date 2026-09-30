@@ -46,8 +46,8 @@ functionsurjective-cos-x-x	\mathrm{FunctionSurjective}(\cos(x), x)	\bot
 functionsingularities-cos-x-x	\mathrm{FunctionSingularities}(\cos(x), x)	\bot
 functiondiscontinuities-cos-x-x	\mathrm{FunctionDiscontinuities}(\cos(x), x)	\bot
 matrixfunction-function-cos-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\mapsto\cos(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\frac{\pi}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack-\frac{3^{1/2}}{2}, 0\bigr\rbrack, \bigl\lbrack-\frac{9\sqrt{3}}{16}, 0\bigr\rbrack\bigr\rbrack
-assuming-m-in-integers-refine-cos-pi-times-1	\mathrm{Assuming}(m\in\mathbb{Z}, \mathrm{Refine}(\cos(\pi(\frac{1}{2}+m))))	\cos(\pi(m+\frac{1}{2}))
-assuming-m-in-integers-fullsimplify-refine-cos	\mathrm{Assuming}(m\in\mathbb{Z}, \mathrm{FullSimplify}(\mathrm{Refine}(\cos(\pi m))))	(-1)^{m}
+assuming-m-in-integers-refine-cos-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-cos		
 threads-element-wise-over-a-list	\cos(\bigl\lbrack0, \frac{\pi}{2}, \pi\bigr\rbrack)	\bigl\lbrack1, 0, -1\bigr\rbrack
 even-function-cos-x-cos-x	\cos(-\frac{\pi}{3})=\cos(\frac{\pi}{3})	\top
 co-function-identity-cos-x-sin-pi-2-x	\cos(\frac{\pi}{6})=\sin(\frac{\pi}{2}-\frac{\pi}{6})	\top

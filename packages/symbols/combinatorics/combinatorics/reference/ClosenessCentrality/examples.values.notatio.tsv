@@ -1,3 +1,3 @@
 id	in	out
 star-hub-is-maximally-close	<ClosenessCentrality><StarGraph>5</StarGraph> 1</ClosenessCentrality>	<ToExpression>1</ToExpression>
-reverse-sortby-transpose-list-vertexlist-g	<Reverse><SortBy><Transpose><List><VertexList>g</VertexList> <ClosenessCentrality>g</ClosenessCentrality></List></Transpose> Last</SortBy></Reverse>	<List><ClosenessCentrality>g</ClosenessCentrality> <VertexList>g</VertexList></List>
+reverse-sortby-transpose-list-vertexlist-g		

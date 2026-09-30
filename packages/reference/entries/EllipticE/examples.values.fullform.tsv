@@ -4,7 +4,7 @@ elliptice-list-list-1-0-list-0-1	EllipticE[List[List[1, 0], List[0, 1]]]
 matrixfunction-elliptice-list-list-1-0-list-0-1	MatrixFunction[EllipticE, List[List[1, 0], List[0, 1]]]
 list-elliptice-0-elliptice-1	List[EllipticE[0], EllipticE[1]]
 list-elliptice-positiveinfinity-elliptice	List[EllipticE[Infinity], EllipticE[ComplexInfinity]]
-n-elliptice-2-over-3-2-50	N[EllipticE[Rational[2, 3], 2], 50]
+n-elliptice-2-over-3-2-50	
 elliptice-0-1	EllipticE[0, 1]
 elliptice-0-0	EllipticE[0, 0]
 elliptice-1	EllipticE[1]

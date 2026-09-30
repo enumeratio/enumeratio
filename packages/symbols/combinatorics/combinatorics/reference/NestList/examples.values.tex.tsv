@@ -3,7 +3,7 @@ nestlist-f-x-3	\mathrm{NestList}(f, x, 3)	\bigl\lbrack x, f(x), f(f(x)), f(f(f(x
 powers-of-2	\mathrm{NestList}(()\mapsto2\operatorname{\_1}, 1, 5)	\bigl\lbrack1, 2, 4, 8, 16, 32\bigr\rbrack
 nestlist-f-x-4	\mathrm{NestList}(f, x, 4)	\bigl\lbrack x, f(x), f(f(x)), f(f(f(x))), f(f(f(f(x))))\bigr\rbrack
 nestlist-cos-1-10	\mathrm{NestList}(\cos, 1, 10)	\bigl\lbrack1, \cos(1), \cos(\cos(1)), \cos(\cos(\cos(1))), \cos(\cos(\cos(\cos(1)))), \cos(\cos(\cos(\cos(\cos(1))))), \cos(\cos(\cos(\cos(\cos(\cos(1)))))), \cos(\cos(\cos(\cos(\cos(\cos(\cos(1))))))), \cos(\cos(\cos(\cos(\cos(\cos(\cos(\cos(1)))))))), \cos(\cos(\cos(\cos(\cos(\cos(\cos(\cos(\cos(1))))))))), \cos(\cos(\cos(\cos(\cos(\cos(\cos(\cos(\cos(\cos(1))))))))))\bigr\rbrack
-nestlist-function-1-plus-1-pow-2-1-x-3	\mathrm{NestList}(()\mapsto(\operatorname{\_1}+1)^2, x, 3)	\bigl\lbrack x, (x+1)^2, ((x+1)^2+1)^2, (((x+1)^2+1)^2+1)^2\bigr\rbrack
+nestlist-function-1-plus-1-pow-2-1-x-3		
 zero-steps-just-the-seed	\mathrm{NestList}(f, x, 0)	\bigl\lbrack x\bigr\rbrack
 nestlist-sqrt-100-4	\mathrm{NestList}(\mathrm{Sqrt}, 100, 4)	\bigl\lbrack100, 10, \sqrt{10}, \sqrt{\sqrt{10}}, \sqrt{\sqrt{\sqrt{10}}}\bigr\rbrack
 3-is-a-primitive-root-mod-7-its-powers-visit	\mathrm{NestList}(()\mapsto3\operatorname{\_1}\bmod7, 1, 6)	\bigl\lbrack1, 3, 2, 6, 4, 5, 1\bigr\rbrack
@@ -14,9 +14,9 @@ nestlist-function-1-pow-2-1-2-6	\mathrm{NestList}(()\mapsto\operatorname{\_1}^2,
 nestlist-function-1-over-2-times-1-plus-2-times	\mathrm{NestList}(()\mapsto\frac{\operatorname{\_1}+\frac{2}{\operatorname{\_1}}}{2}, 1, 5)	\bigl\lbrack1, \frac{3}{2}, \frac{17}{12}, \frac{577}{408}, \frac{665\,857}{470\,832}, \frac{886\,731\,088\,897}{627\,013\,566\,048}\bigr\rbrack
 nestlist-function-4-times-1-times-neg-1-plus-1-1	\mathrm{NestList}(()\mapsto4\operatorname{\_1}\times(1-\operatorname{\_1}), \frac{1}{3}, 5)	\bigl\lbrack\frac{1}{3}, \frac{8}{9}, \frac{32}{81}, \frac{6\,272}{6\,561}, \frac{7\,250\,432}{43\,046\,721}, \frac{1\,038\,154\,236\,987\,392}{1\,853\,020\,188\,851\,841}\bigr\rbrack
 nestlist-function-59-times-1-mod-101-1-1-15	\mathrm{NestList}(()\mapsto59\operatorname{\_1}\bmod101, 1, 15)	\bigl\lbrack1, 59, 47, 46, 88, 41, 96, 8, 68, 73, 65, 98, 25, 61, 64, 39\bigr\rbrack
-nestlist-function-d-function-1-x-x-1-x-pow-n-3	\mathrm{NestList}(()\mapsto\frac{\mathrm{d}\operatorname{\_1}}{\mathrm{d}x}, x^{n}, 3)	\bigl\lbrack x^{n}, 0, 0, 0\bigr\rbrack
-nestlist-function-symbol-x-1-list-a-5	\mathrm{NestList}(\operatorname{\_1}\mapsto\mathrm{Symbol}(x), \bigl\lbrack a\bigr\rbrack, 5)	\bigl\lbrack\bigl\lbrack a\bigr\rbrack, \bigl\lbrack x\bigr\rbrack, \bigl\lbrack x\bigr\rbrack, \bigl\lbrack x\bigr\rbrack, \bigl\lbrack x\bigr\rbrack, \bigl\lbrack x\bigr\rbrack\bigr\rbrack
-nestlist-function-1-over-1-plus-1-1-x-5	\mathrm{NestList}(()\mapsto\frac{1}{\operatorname{\_1}+1}, x, 5)	\bigl\lbrack x, \frac{1}{x+1}, (\frac{1}{x+1}+1)^{-1}, ((\frac{1}{x+1}+1)^{-1}+1)^{-1}, (((1/(x+1)+1)^{-1}+1)^{-1}+1)^{-1}, (((1/(1/(x+1)+1)+1)^{-1}+1)^{-1}+1)^{-1}\bigr\rbrack
+nestlist-function-d-function-1-x-x-1-x-pow-n-3		
+nestlist-function-symbol-x-1-list-a-5		
+nestlist-function-1-over-1-plus-1-1-x-5		
 nestlist-function-floor-1-over-2-times-1-plus-1	\mathrm{NestList}(()\mapsto\lfloor\frac{\operatorname{\_1}}{2}\rfloor+1, 1\,000, 15)	\bigl\lbrack1\,000, 501, 251, 126, 64, 33, 17, 9, 5, 3, 2, 2, 2, 2, 2, 2\bigr\rbrack
 nestlist-function-x-pow-1-1-x-6	\mathrm{NestList}(()\mapsto x^{\operatorname{\_1}}, x, 6)	\bigl\lbrack x, x^{x}, x^{x^{x}}, x^{x^{x^{x}}}, x^{x^{x^{x^{x}}}}, x^{x^{x^{x^{x^{x}}}}}, x^{x^{x^{x^{x^{x^{x}}}}}}\bigr\rbrack
 nestlist-function-1-pow-1-1-x-4	\mathrm{NestList}(()\mapsto\operatorname{\_1}^{\operatorname{\_1}}, x, 4)	\bigl\lbrack x, x^{x}, (x^{x})^{x^{x}}, ((x^{x})^{x^{x}})^{(x^{x})^{x^{x}}}, (((x^{x})^{x^{x}})^{(x^{x})^{x^{x}}})^{((x^{x})^{x^{x}})^{(x^{x})^{x^{x}}}}\bigr\rbrack
