@@ -6,3 +6,4 @@ export { entries as coreEntries } from "./core.ts";
 export { entries as labeledEntries } from "./labeled.ts";
 export { entries as rootedForestsEntries } from "./rooted-forests.ts";
 export { entries as unlabeledTreesEntries } from "./unlabeled-trees.ts";
+export { entries as pruferSequencesEntries } from "./prufer-sequences.ts";

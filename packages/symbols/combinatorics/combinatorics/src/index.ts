@@ -26,6 +26,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCollections } from "../collections/src/index.ts";
 import { CARRIERS, declareCombinatoricsCarriers } from "./carriers.ts";
+import { declareLabeledTreeFromPruferSequence } from "../trees/src/prufer-conversion.ts";
 
 export { CARRIERS, declareCombinatoricsCarriers, LEFTOVER_CARRIERS } from "./carriers.ts";
 export { UNDEFINED_MAPS, type UndefinedMap } from "./frontier-maps.ts";
@@ -48,6 +49,9 @@ export function declareCombinatorics(ce: ComputeEngine): void {
   // Carriers first: everything below declares heads OVER these minted types, so they have to
   // exist before a signature can name one.
   declareCombinatoricsCarriers(ce);
+  // LabeledTree(PruferSequence(...)): a constructor overload, not a family -- needs both
+  // carriers' constructors to already exist, and nothing below depends on it.
+  declareLabeledTreeFromPruferSequence(ce);
   // A combinatorial statistic is a function of a carrier, so that is what these heads take.
   declareCollections(ce, { permutationType: "permutation", carrierTypes });
 }

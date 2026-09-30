@@ -5,8 +5,8 @@
 // (list<integer>). NonDecreasingParkingFunctions' elements are a RESTRICTION of ParkingFunction's
 // shape (weakly increasing, not just any sequence in {1..n}) rather than a distinct carrier of
 // their own — same shape, so it carries "ParkingFunction" too, same reasoning PerfectMatchings
-// used for "SetPartition". PruferSequences/Tournaments/LabeledGraphs/... declare no carrier at
-// all and stay in collections per step 5 rule 4.
+// used for "SetPartition". PruferSequences/Tournaments/LabeledGraphs/... have since moved to
+// their own areas, each now carrying its own carrier (§4 step 5).
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);

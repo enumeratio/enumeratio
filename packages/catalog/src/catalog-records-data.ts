@@ -189,6 +189,9 @@ export const CARRIERS: readonly CatalogCarrier[] = [
     name: "PlaneTree",
   },
   {
+    name: "PruferSequence",
+  },
+  {
     name: "PythagoreanTriple",
   },
   {
@@ -2410,7 +2413,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
   },
   {
     name: "PruferSequences",
-    carrier: "LabeledTree",
+    carrier: "PruferSequence",
     grades: [
       {
         name: "n",

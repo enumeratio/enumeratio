@@ -50,6 +50,22 @@ test("Contains sees a StandardTableauPair it was just handed back", () => {
   expect(contained.json).toEqual("True");
 });
 
+test("a PruferSequence comes out typed", () => {
+  const ce = engine();
+  const seq = ce.box(["At", ["PruferSequences", 5], 1]).evaluate();
+  expect(seq.operator).toEqual("PruferSequence");
+});
+
+test("LabeledTree(PruferSequence(...)) converts via the Prüfer bijection", () => {
+  const ce = engine();
+  const seq = ce.box(["At", ["PruferSequences", 5], 7]).evaluate();
+  const tree = ce.box(["LabeledTree", seq] as never).evaluate();
+  expect(tree.operator).toEqual("LabeledTree");
+  const [, edges] = tree.json as unknown as [string, unknown[]];
+  // n = 5: the tree has n - 1 = 4 edges, plus the "List" head.
+  expect((edges as unknown[]).length - 1).toBe(4);
+});
+
 test("declareCombinatorics is not idempotent -- a second call on the same engine throws", () => {
   const ce = engine();
   expect(() => declareCombinatorics(ce)).toThrow();

@@ -7,43 +7,14 @@
 // ParkingFunctions/NonDecreasingParkingFunctions moved to words/src/families/tableaux-trees.ts
 // (wire-carriers lane A-91): both now carry "ParkingFunction". Tournaments/LabeledGraphs/
 // LabeledGraphsByEdges moved to graphs/src/families/core.ts (wire-carriers lane A-92): all
-// three now carry "Tournament"/"LabeledGraph". PruferSequences below declares no carrier at
-// all and stays here per step 5 rule 4.
+// three now carry "Tournament"/"LabeledGraph". PruferSequences moved to
+// trees/src/families/prufer-sequences.ts (§4 step 5): it now carries "PruferSequence".
 import type { NumberKernel } from "./types.ts";
 import { Factorial, PermutationUnrank, PermutationRank } from "./kernels.ts";
 import { PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank } from "./kernels-combinatorics.ts";
-import {
-  SubsetCount,
-  SubsetUnrank,
-  SubsetRank,
-  TupleCount,
-  TupleUnrank,
-  TupleRank,
-  IsTupleOf,
-} from "./kernels-extra.ts";
+import { SubsetCount, SubsetUnrank, SubsetRank } from "./kernels-extra.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
-
-// ─── PruferSequences(n): codes ⟨a,…⟩ of length n-2 over {1..n} for labeled trees on [n]. Count
-// n^(n-2) (n<=2: the empty code, 1 of it) — the raw code itself, no decode to an edge list; that's
-// LabeledTrees' job (kernels-extra.ts), which already goes through this same Prüfer bijection. ───
-export function PruferSequenceCount(n: number): number {
-  if (n <= 0) return 0;
-  if (n <= 2) return 1;
-  return TupleCount(n, n - 2);
-}
-export function PruferSequenceUnrank(n: number, rank: number): number[] {
-  if (n <= 2) return [];
-  return TupleUnrank(n, n - 2, rank);
-}
-export function PruferSequenceRank(seq: number[], n: number): number {
-  if (n <= 2) return 0;
-  return TupleRank(seq, n);
-}
-export function IsPruferSequenceOf(seq: unknown, n: number): boolean {
-  if (n <= 2) return Array.isArray(seq) && seq.length === 0;
-  return Array.isArray(seq) && IsTupleOf(seq as number[], n, n - 2);
-}
 
 // ─── RecursiveTrees(n): increasing trees on [n] — rooted at 1, every root-to-leaf path increasing
 // (parent[i] < i for i>=2). Count (n-1)!. Element = parent array (parent[0]=0 sentinel for the
@@ -350,18 +321,6 @@ export function IsSytTwoRowOf(e: unknown, n: number): boolean {
 // collections/src/families/index.ts can splice `wordsTableauxTreesEntries` (ParkingFunctions,
 // NonDecreasingParkingFunctions) back in at the exact interior position it held before the words-
 // area move — §4 step 5.
-export const entriesBeforeParkingFunctions: NumberKernel[] = [
-  {
-    head: "PruferSequences",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => PruferSequenceCount(n),
-    unrank: ([n], r) => PruferSequenceUnrank(n, r),
-    valid: (e, [n]) => IsPruferSequenceOf(e, n),
-    rank: (e, [n]) => PruferSequenceRank(e as number[], n),
-  },
-];
-
 export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
   {
     head: "RecursiveTrees",

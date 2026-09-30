@@ -395,8 +395,9 @@ export function LabeledTreeCount(n: number): number {
   if (n <= 2) return 1;
   return n ** (n - 2);
 }
-/** Prüfer sequence (length n-2 over [n]) → the tree's edge list, edges as [min,max], caller order. */
-function pruferDecode(seq: number[], n: number): number[][] {
+/** Prüfer sequence (length n-2 over [n]) → the tree's edge list, edges as [min,max], caller order.
+ *  Exported for LabeledTree's PruferSequence conversion (trees/src/prufer-conversion.ts). */
+export function pruferDecode(seq: number[], n: number): number[][] {
   if (n === 1) return [];
   const deg = Array.from({ length: n + 1 }, () => 1);
   for (const x of seq) deg[x]++;

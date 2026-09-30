@@ -15,7 +15,7 @@ test("every carrier the catalog knows becomes a nominal type", () => {
   // arithmetic and GlyphKind carriers that used to live in LEFTOVER_CARRIERS moved to their
   // owning packages (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 steps
   // 4-5); each package's own tests pin its own carrier count now.
-  expect(CARRIERS.length).toBe(74);
+  expect(CARRIERS.length).toBe(75);
   for (const carrier of CARRIERS) expect(String(ce.type(carrier.type)), carrier.name).toBe(carrier.type);
 });
 
