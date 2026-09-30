@@ -10,4 +10,4 @@ list-a-b-c-plus-list-1-2-3	[a,b,c]+[1,2,3]	[a+1,b+2,c+3]
 subsets-list-1-2-3	\operatorname{Subsets}([1,2,3])	[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
 solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y	\operatorname{Solve}([x-y=1,x+y=0],x,y)	[(\frac{1}{2},\frac{-1}{2})]
 map-f-list-list-1-2-list-3-4-list-5-6-list-2		
-solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y		
+solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y	\operatorname{Solve}([x+y+z=0,x+y=1,y+z=2],x,y,z)	[(-2,3,-1)]

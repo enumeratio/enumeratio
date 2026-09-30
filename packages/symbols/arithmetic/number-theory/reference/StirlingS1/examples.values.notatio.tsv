@@ -8,7 +8,7 @@ threads-element-wise-over-a-list-as-wolfram-s	<StirlingS1><List>2 4 6</List> 2</
 exact-for-large-n	<StirlingS1>50 2</StirlingS1>	<ToExpression>27246193725912647616517114941876245307260051542398468096e+8</ToExpression>
 a-mid-sized-n-and-k-past-the-fast-paths	<StirlingS1>40 14</StirlingS1>	<ToExpression>1640591781294212129275881145293779479141760</ToExpression>
 the-number-of-permutations-of-5-elements-with	<StirlingS1>5 3</StirlingS1>	<ToExpression>35</ToExpression>
-abs-stirlings1-n-range-1-n		
+abs-stirlings1-n-range-1-n	<Abs><StirlingS1>n <Range>1 n</Range></StirlingS1></Abs>	<Map><Function><Block><Abs>_1</Abs></Block> _1</Function> <Map><Function><Block><StirlingS1>n _1</StirlingS1></Block> _1</Function> <Range>1 n</Range></Map></Map>
 the-unsigned-values-in-a-row-sum-to-n	<Equal><Sum><Abs><StirlingS1>4 k</StirlingS1></Abs> <Tuple>k 0 4</Tuple></Sum> <Factorial>4</Factorial></Equal>	<True />
 the-signed-row-sum-vanishes-for-n-ge-2	<Sum><StirlingS1>6 k</StirlingS1> <Tuple>k 0 6</Tuple></Sum>	<ToExpression>0</ToExpression>
 s-n-n-1-binom-n-2	<Equal><StirlingS1>6 5</StirlingS1> <Negate><Binomial>6 2</Binomial></Negate></Equal>	<True />

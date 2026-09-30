@@ -8,4 +8,4 @@ rc-1-1-2	N(CarlsonRC(1, -1))	0.623_225_240_140_230_7
 rc-4-3	N(CarlsonRC(4, -3))	0.372_917_498_677_466_4
 rc-2-0-5	N(CarlsonRC(2, -0.5))	0.913_035_242_516_903
 n-carlsonrc-sqrt-3-neg-2-50		
-carlsonrc-exponentiale-pow-1-over-7-times-i		
+carlsonrc-exponentiale-pow-1-over-7-times-i	CarlsonRC(exponentialE ^ (1 / 7 * i * pi), exponentialE ^ (1 / 3 * i * pi))	CarlsonRC(i * sin(1 / 7 * pi) + cos(1 / 7 * pi), 1 / 2 + sqrt(3) / 2 * i)

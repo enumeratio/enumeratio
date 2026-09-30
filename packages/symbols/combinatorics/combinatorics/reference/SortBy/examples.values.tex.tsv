@@ -12,5 +12,5 @@ sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	\mathrm{SortBy}(\bigl\lbrack1, \s
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	\mathrm{SortBy}(\bigl\lbrack\sqrt{1+\exp(-10i)}, \exp(2+i), \exp(-1+2i), \exp(i)\bigr\rbrack, \mathrm{Abs})	\bigl\lbrack\exp(-1+2i), \sqrt{1+i\sin(-10)+\cos(-10)}, i\sin(1)+\cos(1), \exp(2+i)\bigr\rbrack
 sortby-tab-function-slot-age		
 sortby-exprs-err		
-sortby-list-first		
 sortby-list-abs		
+sortby-list-first		

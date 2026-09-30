@@ -15,5 +15,5 @@ through-an-elementary-function-delta-cdot-e-2	exp(Around(2, 0.01))	Around(7.389_
 through-a-special-function-with-its-derivative	erf(Around(2, 0.01))	Around(0.995_322_265_018_952_7, 0.000_206_669_853_540_920_54)
 first-order-propagation-the-uncertainty-scales	N(sin(Around(1, 0.1)))	Around(0.841_470_984_807_896_5, 0.054_030_230_586_813_98)
 ln-around-2-0p01	ln(Around(2, 0.01))	Around(0.693_147_180_559_945_3, 0.005)
-around-21-pow-21-19-pow-19		
+around-21-pow-21-19-pow-19	Around(21 ^ 21, 19 ^ 19)	Around(5_842_587_018_385_982_521_381_124_421, 1_978_419_655_660_313_589_123_979)
 around-10-1-pow-2	Around(10, 1) ^ 2	Around(100, 20)

@@ -1,15 +1,15 @@
-id	section	role	expr	expected	caption	triage
-isquadraticirrational-sqrt-2			[IsQuadraticIrrational, [Sqrt, 2]]	True		
-the-golden-ratio			[IsQuadraticIrrational, [Divide, [Add, 1, [Sqrt, 5]], 2]]	True	the golden ratio	
-a-cube-root-is-algebraic-of-degree-3			[IsQuadraticIrrational, [Power, 2, [Rational, 1, 3]]]	False	a cube root is algebraic of degree 3	
-isquadraticirrational-1-plus-sqrt-2			[IsQuadraticIrrational, [Add, 1, [Sqrt, 2]]]	True		
-isquadraticirrational-sqrt-2-plus-sqrt-3			[IsQuadraticIrrational, [Add, [Sqrt, 2], [Sqrt, 3]]]	False		
-transcendental	Scope		[IsQuadraticIrrational, Pi]	False	transcendental	
-sqrt-4-is-rational-once-simplified	Scope		[IsQuadraticIrrational, [Sqrt, 4]]	False	rational once simplified	
-a-plain-integer	Scope		[IsQuadraticIrrational, 5]	False	a plain integer	
-a-rational-multiple-of-a-surd	Scope		[IsQuadraticIrrational, [Multiply, 3, [Sqrt, 2]]]	True	a rational multiple of a surd	
-a-surd-subtracted-from-a-rational	Scope		[IsQuadraticIrrational, [Subtract, 1, [Sqrt, 3]]]	True	a surd subtracted from a rational	
-isquadraticirrational-3-over-2	Scope		[IsQuadraticIrrational, [Rational, 3, 2]]	False		
-isquadraticirrational-list-sqrt-2-sqrt-3-2	Scope		[IsQuadraticIrrational, [List, [Sqrt, 2], [Sqrt, 3], 2]]	[List, True, True, False]		
-isquadraticirrational-s	Scope	triage	[IsQuadraticIrrational, s]	False		unscanned
-a-rational-is-not-irrational	Possible issues		[IsQuadraticIrrational, [Rational, 3, 4]]	False	a rational is not irrational	
+id	section	role	expr	expected	caption	triage	wolfram.note
+isquadraticirrational-sqrt-2			[IsQuadraticIrrational, [Sqrt, 2]]	True			
+the-golden-ratio			[IsQuadraticIrrational, [Divide, [Add, 1, [Sqrt, 5]], 2]]	True	the golden ratio		
+a-cube-root-is-algebraic-of-degree-3			[IsQuadraticIrrational, [Power, 2, [Rational, 1, 3]]]	False	a cube root is algebraic of degree 3		
+isquadraticirrational-1-plus-sqrt-2			[IsQuadraticIrrational, [Add, 1, [Sqrt, 2]]]	True			
+isquadraticirrational-sqrt-2-plus-sqrt-3			[IsQuadraticIrrational, [Add, [Sqrt, 2], [Sqrt, 3]]]	False			
+transcendental	Scope		[IsQuadraticIrrational, Pi]	False	transcendental		
+sqrt-4-is-rational-once-simplified	Scope		[IsQuadraticIrrational, [Sqrt, 4]]	False	rational once simplified		
+a-plain-integer	Scope		[IsQuadraticIrrational, 5]	False	a plain integer		
+a-rational-multiple-of-a-surd	Scope		[IsQuadraticIrrational, [Multiply, 3, [Sqrt, 2]]]	True	a rational multiple of a surd		
+a-surd-subtracted-from-a-rational	Scope		[IsQuadraticIrrational, [Subtract, 1, [Sqrt, 3]]]	True	a surd subtracted from a rational		
+isquadraticirrational-3-over-2	Scope		[IsQuadraticIrrational, [Rational, 3, 2]]	False			
+isquadraticirrational-list-sqrt-2-sqrt-3-2	Scope		[IsQuadraticIrrational, [List, [Sqrt, 2], [Sqrt, 3], 2]]	[List, True, True, False]			
+isquadraticirrational-s	Scope	triage	[IsQuadraticIrrational, s]	False		emit	our bug (emit): DEFINED_NAMES wrongly excluded m/s/q/A/C (and Integers had no CONSTANTS pass-through row) from free-variable treatment, so this row was reported un-emittable and skipped as unscanned. Fixed in reference/scripts/defined-names.ts's isDefinedName (a scalar-typed, non-constant lookupDefinition() hit is a free variable, same as no hit at all) and emit.ts's CONSTANTS (added Integers); now emits — leave for the next oracle scan to produce a real verdict.
+a-rational-is-not-irrational	Possible issues		[IsQuadraticIrrational, [Rational, 3, 4]]	False	a rational is not irrational		

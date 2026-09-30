@@ -12,5 +12,5 @@ sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	\operatorname{SortBy}([1,\sqrt{1+
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	\operatorname{SortBy}([\sqrt{1+e^{-10i}},e^{2+i},e^{-1+2i},e^i],\operatorname{Abs})	[e^{-1+2i},\sqrt{1+i\sin(-10)+\cos(-10)},i\sin(1)+\cos(1),e^{2+i}]
 sortby-tab-function-slot-age		
 sortby-exprs-err		
-sortby-list-first		
 sortby-list-abs		
+sortby-list-first		

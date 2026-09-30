@@ -2,11 +2,11 @@ id	in
 gamma-to-exp	InverseMellinTransform[Gamma[s], s, x]
 pi-csc-to-one-over-one-plus-x	InverseMellinTransform[Times[Pi, Csc[Times[Pi, s]]], s, x]
 pi-csc-over-s-to-log-reciprocal	InverseMellinTransform[Divide[Times[Pi, Csc[Times[Pi, s]]], s], s, x]
-inversemellintransform-1-over-gamma-neg-1-over-2	
+inversemellintransform-1-over-gamma-neg-1-over-2	InverseMellinTransform[Times[Divide[1, Gamma[Plus[Times[Rational[-1, 2], s], Rational[3, 2]]]], Gamma[Plus[Times[Rational[1, 2], s], Rational[1, 2]]], Power[2, Plus[s, -1]], Power[a, Minus[s]]], s, x]
 shift-gamma-a-plus-s	InverseMellinTransform[Gamma[Plus[a, s]], s, x]
-inversemellintransform-gamma-s-s-neg-2	
-inversemellintransform-1-over-b-plus-s-times-a	
-inversemellintransform-1-over-gamma-neg-1-over-3	
-inversemellintransform-gamma-s-times-1-over-a	
-inversemellintransform-1-over-gamma-neg-1-over-4	
-inversemellintransform-1-over-neg-s-plus-1-times	
+inversemellintransform-gamma-s-s-neg-2	InverseMellinTransform[Gamma[s], s, -2]
+inversemellintransform-1-over-b-plus-s-times-a	InverseMellinTransform[Times[Divide[1, Plus[b, s]], Power[a, s]], s, x]
+inversemellintransform-1-over-gamma-neg-1-over-3	InverseMellinTransform[Times[Divide[1, Gamma[Plus[Times[Rational[-1, 2], s], 1]]], Gamma[Times[Rational[1, 2], s]], Power[2, Plus[s, -1]]], s, x]
+inversemellintransform-gamma-s-times-1-over-a	InverseMellinTransform[Power[Gamma[Times[s, Divide[1, a]]], 2], s, x]
+inversemellintransform-1-over-gamma-neg-1-over-4	InverseMellinTransform[Times[Divide[1, Gamma[Plus[Times[Rational[-1, 2], s], 1]]], Gamma[Times[Rational[1, 2], s]], Gamma[Plus[Minus[s], 1]]], s, x]
+inversemellintransform-1-over-neg-s-plus-1-times	InverseMellinTransform[Times[Divide[1, Plus[Minus[s], 1]], Gamma[Times[Rational[1, 2], s]]], s, x]

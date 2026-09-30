@@ -15,6 +15,7 @@
 
 import { readFileSync } from "node:fs";
 import type { TriageBucket } from "@enumeratio/entry";
+import { emit } from "@enumeratio/oracle/src";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 import { rewriteExamples, settle } from "./triage-records.ts";
 
@@ -28,6 +29,11 @@ const decisions: Record<string, Decision> = Object.assign(
   {},
   ...process.argv.slice(2).map((file) => JSON.parse(readFileSync(file, "utf8")) as Record<string, Decision>),
 );
+/** The Wolfram source a row carries its reason beside: what we emit, or nothing if we can't. */
+const wolframIn = (expr: unknown): string => {
+  const out = emit(expr as never, "wolfram");
+  return out.ok ? out.source : "";
+};
 const released = new Set<string>();
 const counts: Record<string, number> = {};
 
@@ -46,7 +52,7 @@ for (const loaded of loadReferenceData(PACKAGES).heads) {
       default:
         return {
           example: { ...example, triage: decision.action as TriageBucket },
-          wolfram: { ...wolfram, note: decision.note },
+          wolfram: { in: wolframIn(example.expr), ...wolfram, note: decision.note },
         };
     }
   });

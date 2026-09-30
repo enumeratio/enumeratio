@@ -318,6 +318,9 @@ const OVERRIDDEN = [
   "Rationalize",
   // Not itself overridden -- the Khinchin example takes the 1000th root of a product of
   // our ContinuedFraction's terms.
+  // Not itself overridden -- compute-engine's fold over our Permute and Partition, which a bare
+  // engine leaves unevaluated.
+  "Reduce",
   "Root",
   "Round",
   "Sec",

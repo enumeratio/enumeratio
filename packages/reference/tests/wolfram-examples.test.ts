@@ -30,6 +30,17 @@ test("a capitalised name that isn't a built-in is a free symbol, like a lowercas
   expect(adaptInput("HoldComplete[Binomial[B, 2]]")).toEqual({ ok: true, expr: ["Binomial", "B", 2] });
 });
 
+test("Wolfram's variables i and e stay variables, not the imaginary unit and Euler's number", () => {
+  expect(adaptInput("HoldComplete[Sum[Power[i, 2], List[i, 1, 10]]]")).toEqual({
+    ok: true,
+    expr: ["Sum", ["Power", "k", 2], ["Tuple", "k", 1, 10]],
+  });
+  expect(adaptInput("HoldComplete[List[d, e, Power[E, k]]]")).toEqual({
+    ok: true,
+    expr: ["List", "d", "m", ["Power", "ExponentialE", "k"]],
+  });
+});
+
 test("mentions finds a head applied anywhere, or a constant on its own", () => {
   expect(mentions(["N", ["Zeta", 3]], "Zeta")).toBe(true);
   expect(mentions(["Add", "Pi", 1], "Pi")).toBe(true);

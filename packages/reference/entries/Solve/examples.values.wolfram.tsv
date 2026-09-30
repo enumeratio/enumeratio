@@ -8,7 +8,6 @@ solve-a-times-x-plus-y-eq-7-b-times-x-minus-y-eq	Solve[And[(Plus[Times[a, x], y]
 solve-x-2-1-0-yields-complex-roots	Solve[(Plus[Power[x, 2], 1] == 0), x]	{{x -> -I}, {x -> I}}	\text{Solve}\left[x^2+1=0,x\right]	\{\{x\to -i\},\{x\to i\}\}	disagree
 solve-x-eq-1-x-eq-2-x	Solve[And[(x == 1), (x == 2)], x]	{}	\text{Solve}[x=1\land x=2,x]	\{\}	
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	Solve[(Plus[Times[a, Power[x, 2]], Times[b, x], c] == 0), x]	{{x -> (-b - Sqrt[b^2 - 4*a*c])/(2*a)}, {x -> (-b + Sqrt[b^2 - 4*a*c])/(2*a)}}			disagree
-solve-x-eq-x-x	Solve[(x == x), x]	{{}}			disagree
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-0	Solve[(Times[Plus[Power[x, 4], -1], Plus[Power[x, 4], -4]] == 0), Element[x, Complexes]]	{{x -> -1}, {x -> -I}, {x -> I}, {x -> 1}, {x -> -Sqrt[2]}, {x -> (-I)*Sqrt[2]}, {x -> I*Sqrt[2]}, {x -> Sqrt[2]}}			disagree
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-2	Solve[(Times[Plus[Power[x, 4], -1], Plus[Power[x, 4], -4]] == 0), Element[x, Reals]]	{{x -> -1}, {x -> 1}, {x -> -Sqrt[2]}, {x -> Sqrt[2]}}			disagree
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-3	Solve[(Times[Plus[Power[x, 4], -1], Plus[Power[x, 4], -4]] == 0), Element[x, Integers]]	{{x -> -1}, {x -> 1}}			disagree

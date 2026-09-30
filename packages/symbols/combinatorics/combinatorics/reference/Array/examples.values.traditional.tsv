@@ -16,6 +16,6 @@ array-f-list-4-3-2-list-0-neg-1-neg-2	\operatorname{Array}(f,[4,3,2],[0,-1,-2])	
 array-f-list-3-3-1-g	\operatorname{Array}(f,[3,3],1,g)	g(g(f(1,1),f(1,2),f(1,3)),g(f(2,1),f(2,2),f(2,3)),g(f(3,1),f(3,2),f(3,3)))
 array-function-1-over-1-plus-2-minus-1-1-2-list	\operatorname{Array}(\operatorname{Function}(\operatorname{Block}(\frac{1}{\_1+\_2-1}),\_1,\_2),[3,3])	[[1,\frac{1}{2},\frac{1}{3}],[\frac{1}{2},\frac{1}{3},\frac{1}{4}],[\frac{1}{3},\frac{1}{4},\frac{1}{5}]]
 array-function-x-list-5-5	\operatorname{Array}(\operatorname{Function}(\operatorname{Block}(x)),[5,5])	[[x,x,x,x,x],[x,x,x,x,x],[x,x,x,x,x],[x,x,x,x,x],[x,x,x,x,x]]
-array-function-1-over-i-plus-j-minus-1-i-j-list		
+array-function-1-over-j-plus-k-minus-1-k-j-list	\operatorname{Array}(\operatorname{Function}(\operatorname{Block}(\frac{1}{j+k-1}),k,j),[3,3])	[[1,\frac{1}{2},\frac{1}{3}],[\frac{1}{2},\frac{1}{3},\frac{1}{4}],[\frac{1}{3},\frac{1}{4},\frac{1}{5}]]
 array-power-list-5-5	\operatorname{Array}(\operatorname{Power},[5,5])	[[1,1,1,1,1],[2,4,8,16,32],[3,9,27,81,243],[4,16,64,256,1024],[5,25,125,625,3125]]
 array-function-array-function-x-1-1-list-6	\operatorname{Array}(\operatorname{Function}(\operatorname{Block}(\operatorname{Array}(\operatorname{Function}(\operatorname{Block}(x)),\_1)),\_1),[6])	[[x],[x,x],[x,x,x],[x,x,x,x],[x,x,x,x,x],[x,x,x,x,x,x]]

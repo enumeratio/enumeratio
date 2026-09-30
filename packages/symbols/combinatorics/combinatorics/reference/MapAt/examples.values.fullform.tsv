@@ -5,7 +5,7 @@ mapat-f-list-a-b-c-d-list-list-1-list-4	MapAt[f, List[a, b, c, d], List[List[1],
 negative-position	MapAt[f, List[a, b, c], -1]
 several-positions	MapAt[f, List[a, b, c], List[List[1], List[3]]]
 mapat-f-a-plus-b-plus-c-plus-d-2	MapAt[f, Plus[a, b, c, d], 2]
-mapat-h-list-list-a-b-c-list-d-e-f-g-2	
-mapat-h-list-list-a-b-c-list-d-e-f-g-neg-3	
-mapat-h-list-list-a-b-c-list-d-e-f-g-list-list-2	
+mapat-h-list-list-a-b-c-list-d-k-f-g-2	MapAt[h, List[List[a, b, c], List[d, k], f, g], 2]
+mapat-h-list-list-a-b-c-list-d-k-f-g-neg-3	MapAt[h, List[List[a, b, c], List[d, k], f, g], -3]
+mapat-h-list-list-a-b-c-list-d-k-f-g-list-list-2	MapAt[h, List[List[a, b, c], List[d, k], f, g], List[List[2], List[1]]]
 mapat-f-list-a-b-c-d-list-list-1-list-3-list-1	

@@ -8,7 +8,7 @@ threads-element-wise-over-a-list-as-wolfram-s	\mathrm{StirlingS1}(\bigl\lbrack2,
 exact-for-large-n	\mathrm{StirlingS1}(50, 2)	2\,724\,619\,372\,591\,264\,761\,651\,711\,494\,187\,624\,530\,726\,005\,154\,239\,846\,809\,600\,000\,000
 a-mid-sized-n-and-k-past-the-fast-paths	\mathrm{StirlingS1}(40, 14)	1\,640\,591\,781\,294\,212\,129\,275\,881\,145\,293\,779\,479\,141\,760
 the-number-of-permutations-of-5-elements-with	\mathrm{StirlingS1}(5, 3)	35
-abs-stirlings1-n-range-1-n		
+abs-stirlings1-n-range-1-n	\vert\mathrm{StirlingS1}(n, 1..n)\vert	\mathrm{Map}(()\mapsto\vert\operatorname{\_1}\vert, \mathrm{Map}(()\mapsto\mathrm{StirlingS1}(n, \operatorname{\_1}), 1..n))
 the-unsigned-values-in-a-row-sum-to-n	\sum_{k=0}^4\vert\mathrm{StirlingS1}(4, k)\vert=4!	\top
 the-signed-row-sum-vanishes-for-n-ge-2	\sum_{k=0}^6\mathrm{StirlingS1}(6, k)	0
 s-n-n-1-binom-n-2	\mathrm{StirlingS1}(6, 5)=-\binom{6}{2}	\top

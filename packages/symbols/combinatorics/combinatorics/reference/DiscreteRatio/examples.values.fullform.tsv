@@ -1,7 +1,8 @@
 id	in
 factorial-ratio	DiscreteRatio[Factorial[n], n]
 geometric-ratio	DiscreteRatio[Power[2, n], n]
-discreteratio-r-pow-i-i	
+discreteratio-r-pow-k-k	DiscreteRatio[Power[r, k], k]
+discreteratio-pochhammer-x-k-k	DiscreteRatio[Pochhammer[x, k], k]
 discreteratio-x-pow-2-x	DiscreteRatio[Power[x, 2], x]
 discreteratio-x-minus-r-1-times-x-minus-r-2-x	DiscreteRatio[Times[Plus[x, Times[-1, Subscript[r, 1]]], Plus[x, Times[-1, Subscript[r, 2]]]], x]
 discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	DiscreteRatio[Times[Plus[1, x], Power[Plus[1, Power[x, 2]], -1]], x]

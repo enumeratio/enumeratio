@@ -209,7 +209,7 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 18,
+      "agree": 19,
       "disagree": 0
     }
   ],
@@ -473,7 +473,7 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 5,
+      "agree": 6,
       "disagree": 0
     }
   ],
@@ -503,8 +503,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 7,
-      "disagree": 2
+      "agree": 8,
+      "disagree": 1
     }
   ],
   "CenteredInterval": [
@@ -835,7 +835,7 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 2,
+      "agree": 12,
       "disagree": 0
     }
   ],
@@ -947,7 +947,7 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 18,
+      "agree": 20,
       "disagree": 1
     }
   ],
@@ -1397,8 +1397,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 13,
-      "disagree": 8
+      "agree": 25,
+      "disagree": 1
     }
   ],
   "FoldList": [
@@ -2797,7 +2797,7 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 6,
+      "agree": 9,
       "disagree": 1
     }
   ],
@@ -3105,7 +3105,7 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 2,
+      "agree": 3,
       "disagree": 2
     }
   ],
@@ -3647,8 +3647,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 22,
-      "disagree": 0
+      "agree": 28,
+      "disagree": 1
     }
   ],
   "ProfiniteDecomposition": [
@@ -4106,7 +4106,7 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 1,
-      "disagree": 25
+      "disagree": 24
     }
   ],
   "Sort": [
@@ -4130,7 +4130,7 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 3,
-      "disagree": 1
+      "disagree": 2
     }
   ],
   "Span": [
@@ -4301,6 +4301,14 @@
       "disagree": 11
     }
   ],
+  "Sum": [
+    {
+      "system": "wolfram",
+      "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+      "agree": 2,
+      "disagree": 0
+    }
+  ],
   "Surd": [
     {
       "system": "wolfram",
@@ -4391,7 +4399,7 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 5,
+      "agree": 6,
       "disagree": 0
     }
   ],

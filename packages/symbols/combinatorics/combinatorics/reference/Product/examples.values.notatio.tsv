@@ -3,6 +3,10 @@ product-list-1-2-3-4	<Product><List>1 2 3 4</List></Product>	<ToExpression>24</T
 the-empty-product-is-1-by-convention-matching	<Product><Apply>List</Apply></Product>	<ToExpression>1</ToExpression>
 prod-i-1-6-i-2-6-2	<Product><Power>i 2</Power> <Tuple>i 1 6</Tuple></Product>	<ToExpression>518400</ToExpression>
 a-symbolic-upper-limit-prod-i-1-n-i-2-n-2	<Product><Power>i 2</Power> <Tuple>i 1 n</Tuple></Product>	<Power><Factorial>n</Factorial> 2</Power>
+product-k-pow-2-k-1-6	<Product><Power>k 2</Power> <Limits>k 1 6</Limits></Product>	<ToExpression>518400</ToExpression>
+product-k-pow-2-k-1-n	<Product><Power>k 2</Power> <Limits>k 1 n</Limits></Product>	<Power><Factorial>n</Factorial> 2</Power>
+product-neg-k-pow-neg-4-plus-1-k-2	<Product><Add><Negate><Power>k -4</Power></Negate> 1</Add> <Limits>k 2 PositiveInfinity</Limits></Product>	<Divide><Sinh>Pi</Sinh> <Multiply>4 Pi</Multiply></Divide>
+product-2-pow-j-plus-k-k-1-p-j-1-k	<Product><Power>2 <Add>j k</Add></Power> <Limits>k 1 p</Limits> <Limits>j 1 k</Limits></Product>	<Power>2 <Multiply><Rational>1 2</Rational> p <Power><Add>p 1</Add> 2</Power></Multiply></Power>
 a-symbolic-upper-limit-prod-k-1-n-k-n-see	<Product>k <Tuple>k 1 n</Tuple></Product>	<Factorial>n</Factorial>
 exponents-add-prod-k-1-n-x-k-x-n-n-1-2	<Product><Power>x k</Power> <Tuple>k 1 n</Tuple></Product>	<Power>x <Multiply><Rational>1 2</Rational> n <Add>n 1</Add></Multiply></Power>
 a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1	<Product><Divide><Add>k 1</Add> k</Divide> <Tuple>k 1 n</Tuple></Product>	<Add>n 1</Add>
@@ -18,12 +22,12 @@ an-infinite-telescoping-product-prod-k-2-infty-1	<Product><Subtract>1 <Divide>1 
 prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet	<Product><Subtract>1 <Divide>1 <Power>i 4</Power></Divide></Subtract> <Tuple>i 2 PositiveInfinity</Tuple></Product>	<Divide><Sinh>Pi</Sinh> <Multiply>4 Pi</Multiply></Divide>
 exact-rationals-in-a-collection	<Product><List><Rational>1 2</Rational> <Rational>2 3</Rational> <Rational>3 4</Rational></List></Product>	<Rational>1 4</Rational>
 symbolic-elements	<Product><List>a b c</List></Product>	<Multiply>a b c</Multiply>
-product-a-pow-i-i-nothing-n		
-product-a-pow-i-j-nothing-m-i-nothing-j		
-product-i-times-j-i-nothing-nothing-j-nothing		
-product-i-times-j-i-1-n-j-nothing-nothing		
-product-3-times-q-pow-2i-plus-5-i-nothing		
-product-1-over-q-pow-8i-plus-11-times-q-pow-8		
+product-a-pow-k-k-nothing-n		
+product-a-pow-k-j-nothing-m-k-nothing-j		
+product-j-times-k-k-nothing-nothing-j-nothing	<Product><Multiply>j k</Multiply> <Limits>k Nothing Nothing</Limits> <Limits>j Nothing Nothing</Limits></Product>	<Product><Product><Multiply>j k</Multiply> <Limits>j Nothing Nothing</Limits></Product> <Limits>k Nothing Nothing</Limits></Product>
+product-j-times-k-k-1-n-j-nothing-nothing	<Product><Multiply>j k</Multiply> <Limits>k 1 n</Limits> <Limits>j Nothing Nothing</Limits></Product>	<Product><Product><Multiply>j k</Multiply> <Limits>j Nothing Nothing</Limits></Product> <Limits>k 1 n</Limits></Product>
+product-3-times-q-pow-2k-plus-5-k-nothing		
+product-1-over-q-pow-8k-plus-11-times-q-pow-8		
 range-stays-lazy-on-its-own-but-product-forces	<Product><Range>1 6</Range></Product>	<ToExpression>720</ToExpression>
 the-product-of-1-through-n-is-n-see-factorial	<Equal><Product><List>1 2 3 4</List></Product> <Factorial>4</Factorial></Equal>	<True />
 the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	<Product><Divide><Multiply>4 <Power>k 2</Power></Multiply> <Subtract><Multiply>4 <Power>k 2</Power></Multiply> 1</Subtract></Divide> <Tuple>k 1 PositiveInfinity</Tuple></Product>	<Multiply><Rational>1 2</Rational> Pi</Multiply>

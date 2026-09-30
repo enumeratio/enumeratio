@@ -6,4 +6,4 @@ isnumeric-plain-symbol	NumericQ[x]	False	\text{NumericQ}[x]	\text{False}
 isnumeric-sqrt-2	NumericQ[Sqrt[2]]	True	\text{NumericQ}\left[\sqrt{2}\right]	\text{True}
 isnumeric-expr	NumericQ[expr]	False	\text{NumericQ}[\text{expr}]	\text{False}
 isnumeric-exponentiale	NumericQ[E]	True	\text{NumericQ}[e]	\text{True}
-ismatrix-m-isnumeric				
+ismatrix-m-isnumeric	MatrixQ[m, NumericQ]			

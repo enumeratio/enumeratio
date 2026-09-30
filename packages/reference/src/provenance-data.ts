@@ -6900,7 +6900,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Sum",
-    provenance: "unknown",
+    provenance: "compute-engine",
     declared: null,
     wolframAlias: "Sum",
     elsewhere: ["wolfram", "sympy"],

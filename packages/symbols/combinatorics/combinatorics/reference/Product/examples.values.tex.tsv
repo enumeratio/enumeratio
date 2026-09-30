@@ -3,6 +3,10 @@ product-list-1-2-3-4	\prod\bigl\lbrack1, 2, 3, 4\bigr\rbrack	24
 the-empty-product-is-1-by-convention-matching	\prod\bigl\lbrack\bigr\rbrack	1
 prod-i-1-6-i-2-6-2	\prod_{i=1}^6i^2	518\,400
 a-symbolic-upper-limit-prod-i-1-n-i-2-n-2	\prod_{i=1}^{n}i^2	(n!)^2
+product-k-pow-2-k-1-6	\prod_{k=1}^6k^2	518\,400
+product-k-pow-2-k-1-n	\prod_{k=1}^{n}k^2	(n!)^2
+product-neg-k-pow-neg-4-plus-1-k-2	\prod_{k=2}^{\infty}(1-\frac{1}{k^4})	\frac{\sinh(\pi)}{4\pi}
+product-2-pow-j-plus-k-k-1-p-j-1-k	\prod_{k=1, j=1}^{p, k}2^{j+k}	\sqrt{2}^{p\times(p+1)^2}
 a-symbolic-upper-limit-prod-k-1-n-k-n-see	\prod_{k=1}^{n}k	n!
 exponents-add-prod-k-1-n-x-k-x-n-n-1-2	\prod_{k=1}^{n}x^{k}	\sqrt{x}^{n\times(n+1)}
 a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1	\prod_{k=1}^{n}\frac{k+1}{k}	n+1
@@ -18,12 +22,12 @@ an-infinite-telescoping-product-prod-k-2-infty-1	\prod_{k=2}^{\infty}(1-\frac{1}
 prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet	\prod_{i=2}^{\infty}(1-\frac{1}{i^4})	\frac{\sinh(\pi)}{4\pi}
 exact-rationals-in-a-collection	\prod\bigl\lbrack\frac{1}{2}, \frac{2}{3}, \frac{3}{4}\bigr\rbrack	\frac{1}{4}
 symbolic-elements	\prod\bigl\lbrack a, b, c\bigr\rbrack	abc
-product-a-pow-i-i-nothing-n		
-product-a-pow-i-j-nothing-m-i-nothing-j		
-product-i-times-j-i-nothing-nothing-j-nothing		
-product-i-times-j-i-1-n-j-nothing-nothing		
-product-3-times-q-pow-2i-plus-5-i-nothing		
-product-1-over-q-pow-8i-plus-11-times-q-pow-8		
+product-a-pow-k-k-nothing-n		
+product-a-pow-k-j-nothing-m-k-nothing-j		
+product-j-times-k-k-nothing-nothing-j-nothing	\prod_{k, j}jk	\prod_{k}\prod_{j}jk
+product-j-times-k-k-1-n-j-nothing-nothing	\prod_{k=1, j}^{n}jk	\prod_{k=1}^{n}\prod_{j}jk
+product-3-times-q-pow-2k-plus-5-k-nothing		
+product-1-over-q-pow-8k-plus-11-times-q-pow-8		
 range-stays-lazy-on-its-own-but-product-forces	\prod(1..6)	720
 the-product-of-1-through-n-is-n-see-factorial	\prod\bigl\lbrack1, 2, 3, 4\bigr\rbrack=4!	\top
 the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	\prod_{k=1}^{\infty}\frac{4k^2}{4k^2-1}	\frac{\pi}{2}

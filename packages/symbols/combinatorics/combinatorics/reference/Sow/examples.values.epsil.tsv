@@ -1,6 +1,6 @@
 id	in	out
 sow-feeds-the-nearest-reap	Reap(Sow(5))	[5, [[5]]]
 sow-outside-any-reap-is-a-no-op	Sow(7)	7
-reap-sum-sow-i-pow-2-plus-1-i-10		
-reap-do-sow-i-i-pow-2-mod-10-list-i-20		
+reap-sum-sow-k-pow-2-plus-1-k-10		
+reap-do-sow-k-k-pow-2-mod-10-list-k-20		
 sow-x	Sow(x)	x

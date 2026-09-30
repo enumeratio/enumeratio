@@ -1,7 +1,8 @@
 id	in	out
 factorial-ratio	\operatorname{DiscreteRatio}(n!,n)	n+1
 geometric-ratio	\operatorname{DiscreteRatio}(2^n,n)	2
-discreteratio-r-pow-i-i		
+discreteratio-r-pow-k-k	\operatorname{DiscreteRatio}(r^k,k)	r
+discreteratio-pochhammer-x-k-k	\operatorname{DiscreteRatio}((x)_k,k)	\frac{(x)_{k+1}}{(x)_k}
 discreteratio-x-pow-2-x	\operatorname{DiscreteRatio}(x^2,x)	\frac{(x+1)^2}{x^2}
 discreteratio-x-minus-r-1-times-x-minus-r-2-x	\operatorname{DiscreteRatio}((x-r_1)(x-r_2),x)	\frac{(-r_1+x+1)(-r_2+x+1)}{(-r_1+x)(-r_2+x)}
 discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	\operatorname{DiscreteRatio}((1+x)(1+x^2)^{-1},x)	\frac{x^3+2x^2+x+2}{(x+1)((x+1)^2+1)}

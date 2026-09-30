@@ -1,7 +1,8 @@
 id	in	out
 factorial-ratio	<DiscreteRatio><Factorial>n</Factorial> n</DiscreteRatio>	<Add>n 1</Add>
 geometric-ratio	<DiscreteRatio><Power>2 n</Power> n</DiscreteRatio>	<ToExpression>2</ToExpression>
-discreteratio-r-pow-i-i		
+discreteratio-r-pow-k-k	<DiscreteRatio><Power>r k</Power> k</DiscreteRatio>	<r />
+discreteratio-pochhammer-x-k-k	<DiscreteRatio><Pochhammer>x k</Pochhammer> k</DiscreteRatio>	<Divide><Pochhammer>x <Add>k 1</Add></Pochhammer> <Pochhammer>x k</Pochhammer></Divide>
 discreteratio-x-pow-2-x	<DiscreteRatio><Power>x 2</Power> x</DiscreteRatio>	<Divide><Power><Add>x 1</Add> 2</Power> <Power>x 2</Power></Divide>
 discreteratio-x-minus-r-1-times-x-minus-r-2-x	<DiscreteRatio><Multiply><Add>x <Multiply>-1 r_1</Multiply></Add> <Add>x <Multiply>-1 r_2</Multiply></Add></Multiply> x</DiscreteRatio>	<Divide><Multiply><Add><Negate>r_1</Negate> x 1</Add> <Add><Negate>r_2</Negate> x 1</Add></Multiply> <Multiply><Add><Negate>r_1</Negate> x</Add> <Add><Negate>r_2</Negate> x</Add></Multiply></Divide>
 discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	<DiscreteRatio><Multiply><Add>1 x</Add> <Power><Add>1 <Power>x 2</Power></Add> -1</Power></Multiply> x</DiscreteRatio>	<Divide><Add><Power>x 3</Power> <Multiply>2 <Power>x 2</Power></Multiply> x 2</Add> <Multiply><Add>x 1</Add> <Add><Power><Add>x 1</Add> 2</Power> 1</Add></Multiply></Divide>

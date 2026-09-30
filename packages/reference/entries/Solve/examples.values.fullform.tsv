@@ -8,7 +8,6 @@ solve-a-times-x-plus-y-eq-7-b-times-x-minus-y-eq
 solve-x-2-1-0-yields-complex-roots	Solve[Equal[Plus[Power[x, 2], 1], 0], x]
 solve-x-eq-1-x-eq-2-x	Solve[And[Equal[x, 1], Equal[x, 2]], x]
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	Solve[Equal[Plus[Times[a, Power[x, 2]], Times[b, x], c], 0], x]
-solve-x-eq-x-x	
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-0	
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-2	
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-3	

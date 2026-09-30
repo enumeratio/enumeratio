@@ -96,10 +96,36 @@ export function adaptInput(held: string): Adapted {
   if (userFunctions.size > 0) return fail(`user function ${[...userFunctions].toSorted().join(" ")}`);
   if (unmapped.size > 0) return fail(`unmapped ${[...unmapped].toSorted().join(" ")}`);
   try {
-    return { ok: true, expr: fromWolfram(text) };
+    return { ok: true, expr: renameConstants(fromWolfram(text)) };
   } catch (error) {
     return fail(`parse: ${(error as Error).message}`);
   }
+}
+
+// A bare `i` or `e` is the imaginary unit or Euler's number to our engine, but Wolfram's `I`
+// and `E` are those, and its documentation uses `i` and `e` as plain variables: a loop index, a
+// list element. Each becomes a letter the example doesn't use, so it stays a variable.
+const CONSTANT_LETTERS = ["i", "e"];
+const SPARE_LETTERS = "kmnpqrstuvwxyzjabcdgh".split("");
+
+const symbolsOf = (expr: unknown, out = new Set<string>()): Set<string> => {
+  if (typeof expr === "string") out.add(expr);
+  else if (Array.isArray(expr)) for (const child of expr) symbolsOf(child, out);
+  return out;
+};
+
+function renameConstants(expr: unknown): unknown {
+  const used = symbolsOf(expr);
+  const renames = new Map<string, string>();
+  for (const letter of CONSTANT_LETTERS) {
+    if (!used.has(letter)) continue;
+    const spare = SPARE_LETTERS.find((l) => !used.has(l) && ![...renames.values()].includes(l));
+    if (spare !== undefined) renames.set(letter, spare);
+  }
+  if (renames.size === 0) return expr;
+  const walk = (node: unknown): unknown =>
+    typeof node === "string" ? (renames.get(node) ?? node) : Array.isArray(node) ? node.map(walk) : node;
+  return walk(expr);
 }
 
 /** Whether `head` appears in `expr`, applied or (a constant) on its own. */

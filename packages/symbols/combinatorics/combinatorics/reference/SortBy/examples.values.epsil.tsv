@@ -12,5 +12,5 @@ sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	"SortBy([\n         1,\n         
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	"SortBy([\n         sqrt(1 + exponentialE ^ (-10 * i)),\n         exponentialE ^ (2 + i),\n         exponentialE ^ (-1 + 2i),\n         exponentialE ^ i,\n       ], abs)"	"[\n  exponentialE ^ (-1 + 2i),\n  sqrt(1 + i * sin(-10) + cos(-10)),\n  i * sin(1) + cos(1),\n  exponentialE ^ (2 + i),\n]"	
 sortby-tab-function-slot-age			
 sortby-exprs-err			
-sortby-list-first			
 sortby-list-abs			
+sortby-list-first			

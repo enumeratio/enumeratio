@@ -8,7 +8,6 @@ solve-a-times-x-plus-y-eq-7-b-times-x-minus-y-eq
 solve-x-2-1-0-yields-complex-roots	<Solve><Equal><Add><Power>x 2</Power> 1</Add> 0</Equal> x</Solve>	<List><Complex>0 1</Complex> <Complex>0 -1</Complex></List>
 solve-x-eq-1-x-eq-2-x	<Solve><And><Equal>x 1</Equal> <Equal>x 2</Equal></And> x</Solve>	<Apply>List</Apply>
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	<Solve><Equal><Add><Multiply>a <Power>x 2</Power></Multiply> <Multiply>b x</Multiply> c</Add> 0</Equal> x</Solve>	<List><Divide><Add><Negate>b</Negate> <Sqrt><Add><Power>b 2</Power> <Multiply>-4 a c</Multiply></Add></Sqrt></Add> <Multiply>2 a</Multiply></Divide> <Divide><Add><Negate>b</Negate> <Negate><Sqrt><Add><Power>b 2</Power> <Multiply>-4 a c</Multiply></Add></Sqrt></Negate></Add> <Multiply>2 a</Multiply></Divide></List>
-solve-x-eq-x-x		
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-0		
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-2		
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-3		
