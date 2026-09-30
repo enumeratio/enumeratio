@@ -30,6 +30,7 @@ export {
   type Ensured,
   manifestRegistry,
   namespaceOf,
+  pinOf,
   qualifiedNamesOf,
   type Registry,
   type RegistryResolver,

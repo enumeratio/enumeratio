@@ -2,10 +2,12 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import {
   createRegistryResolver,
+  type Definition,
   definitionRegistry,
   type Library,
   manifestRegistry,
   namespaceOf,
+  pinOf,
   qualifiedNamesOf,
   searchPath,
 } from "../src/index.ts";
@@ -13,6 +15,11 @@ import {
 type Engine = InstanceType<typeof ComputeEngine>;
 
 const evaluate = (ce: Engine, json: unknown): unknown => ce.box(json as never).evaluate().json;
+const unary = (body: unknown, requires?: Record<string, string>): Definition => ({
+  signature: "(number) -> number",
+  body: ["Function", body, "x"],
+  ...(requires === undefined ? {} : { requires }),
+});
 
 test("qualified names: member calls and fields over a chain of names", () => {
   expect([
@@ -22,55 +29,95 @@ test("qualified names: member calls and fields over a chain of names", () => {
   expect(namespaceOf("number-theory")).toBe("NumberTheory");
 });
 
-// A curator's namespace: `Sq` uses `Twice` through the same namespace, so resolving one closes
-// over the other.
-const ada = definitionRegistry<Engine>("ada", {
-  Twice: { signature: "(number) -> number", body: ["Function", ["Multiply", 2, "x"], "x"] },
-  Sq: { signature: "(number) -> number", body: ["Function", ["MemberCall", "ada", "'Twice'", ["Power", "x", 2]], "x"] },
-  Sin: { signature: "(number) -> number", body: ["Function", 0, "x"] },
+test("a pin is the content: equal definitions share one, any change makes another", async () => {
+  const pin = await pinOf(unary(["Multiply", 2, "x"]));
+  expect(pin).toMatch(/^sha256-[0-9a-f]{64}$/);
+  expect(await pinOf({ body: ["Function", ["Multiply", 2, "x"], "x"], signature: "(number) -> number" })).toBe(pin);
+  expect(await pinOf(unary(["Multiply", 3, "x"]))).not.toBe(pin);
 });
 
-test("a namespace is a record of functions: its members evaluate as field calls", async () => {
-  const ce = new ComputeEngine();
-  const resolver = createRegistryResolver(ada);
-  const json = ["MemberCall", "ada", "'Sq'", 3];
-  expect(await resolver.ensure(ce, json)).toEqual({ declared: ["ada_Sq", "ada_Twice"], unresolved: [] });
-  expect(evaluate(ce, json)).toBe(18);
-  // A later expression adds to the namespace rather than redeclaring it.
-  expect(await resolver.ensure(ce, ["MemberCall", "ada", "'Sin'", 1])).toEqual({
-    declared: ["ada_Sin"],
-    unresolved: [],
+// A curator's namespace. `Twice` has two versions; `Sq` pins the first, so the second
+// changing `Twice` doesn't change `Sq`.
+const twice1 = unary(["Multiply", 2, "x"]);
+const twice2 = unary(["Multiply", 20, "x"]);
+const ada = async () => {
+  const pin = await pinOf(twice1);
+  return definitionRegistry<Engine>("ada", {
+    Twice: [twice1, twice2],
+    Sq: unary(["MemberCall", "ada", "'Twice'", ["Power", "x", 2]], { "ada.Twice": pin }),
+    Loose: unary(["MemberCall", "ada", "'Twice'", "x"]),
+    Sin: unary(0),
   });
-  expect(evaluate(ce, ["MemberCall", "ada", "'Sin'", 1])).toBe(0);
-  expect(evaluate(ce, json)).toBe(18);
+};
+
+test("a definition's dependencies are declared at their pins, whatever is latest", async () => {
+  const ce = new ComputeEngine();
+  const resolver = createRegistryResolver(await ada());
+  const sq = ["MemberCall", "ada", "'Sq'", 3];
+  const ensured = await resolver.ensure(ce, sq);
+  expect(ensured.errors).toEqual([]);
+  expect(ensured.declared).toHaveLength(2);
+  expect(evaluate(ce, sq)).toBe(18);
+  // The expression's own unpinned name takes the latest: both versions live side by side.
+  const twice = ["MemberCall", "ada", "'Twice'", 3];
+  await resolver.ensure(ce, twice);
+  expect(evaluate(ce, twice)).toBe(60);
+  expect(evaluate(ce, sq)).toBe(18);
+});
+
+test("a lock pins the expression's own names; what resolved is reported for the lock", async () => {
+  const registry = await ada();
+  const twice = ["MemberCall", "ada", "'Twice'", 3];
+  const latest = await createRegistryResolver(registry).ensure(new ComputeEngine(), twice);
+  expect(latest.pins).toEqual({ "ada.Twice": await pinOf(twice2) });
+  const ce = new ComputeEngine();
+  await createRegistryResolver(registry).ensure(ce, twice, { "ada.Twice": await pinOf(twice1) });
+  expect(evaluate(ce, twice)).toBe(6);
+});
+
+test("a dependency beyond the system must be pinned; a pin that isn't there fails", async () => {
+  const resolver = createRegistryResolver(await ada());
+  const loose = await resolver.ensure(new ComputeEngine(), ["MemberCall", "ada", "'Loose'", 1]);
+  expect(loose.errors).toEqual(["ada.Loose: ada.Twice isn't a system name, and has no pin in requires"]);
+  const missing = await resolver.ensure(new ComputeEngine(), ["MemberCall", "ada", "'Twice'", 1], {
+    "ada.Twice": "sha256-00",
+  });
+  expect(missing.unresolved).toEqual(["ada.Twice"]);
+});
+
+test("a definition may use system names unpinned: they move with the system", async () => {
+  const log: string[] = [];
+  const library = (name: string): Library<Engine> => ({ name, declare: () => void log.push(name) });
+  const registry = searchPath(
+    manifestRegistry([library("analytic")]),
+    definitionRegistry<Engine>("ada", { Zh: unary(["MemberCall", "Analytic", "'HurwitzZeta'", "x", 1]) }),
+  );
+  const ensured = await createRegistryResolver(registry).ensure(new ComputeEngine(), ["MemberCall", "ada", "'Zh'", 2]);
+  expect(ensured.errors).toEqual([]);
+  expect(log).toEqual(["analytic"]);
 });
 
 test("what nothing resolves is held and reported, and a taken name is never a namespace", async () => {
-  const ce = new ComputeEngine();
-  const resolver = createRegistryResolver(ada);
-  expect(await resolver.ensure(ce, ["MemberCall", "ada", "'Nope'", 1])).toEqual({
-    declared: [],
-    unresolved: ["ada.Nope"],
-  });
+  const resolver = createRegistryResolver(await ada());
+  expect((await resolver.ensure(new ComputeEngine(), ["MemberCall", "ada", "'Nope'", 1])).unresolved).toEqual([
+    "ada.Nope",
+  ]);
   const taken = new ComputeEngine();
   taken.declare("ada", "integer");
-  expect((await resolver.ensure(taken, ["MemberCall", "ada", "'Twice'", 1])).unresolved).toEqual(["ada.Twice"]);
+  expect((await resolver.ensure(taken, ["MemberCall", "ada", "'Sin'", 1])).unresolved).toEqual(["ada.Sin"]);
 });
 
 test("libraries: only what an expression names, each once per engine", async () => {
   const log: string[] = [];
   const library = (name: string): Library<Engine> => ({ name, declare: () => void log.push(name) });
   const libraries = [library("analytic"), library("hypercomplex"), library("structures")];
-  const resolver = createRegistryResolver(searchPath(ada, manifestRegistry(libraries)));
+  const resolver = createRegistryResolver(searchPath(await ada(), manifestRegistry(libraries)));
   const ce = new ComputeEngine();
-  const { declared } = await resolver.ensure(ce, ["HurwitzZeta", 2, 1]);
-  expect(declared).toEqual(["analytic"]);
+  expect((await resolver.ensure(ce, ["HurwitzZeta", 2, 1])).declared).toEqual(["analytic"]);
   expect((await resolver.ensure(ce, ["HurwitzZeta", 3, 1])).declared).toEqual([]);
   // Qualified by its package's namespace, the same head; by another's, nothing.
-  expect(
-    (await resolver.ensure(new ComputeEngine(), ["MemberCall", "Analytic", "'HurwitzZeta'", 2, 1])).declared,
-  ).toEqual(["analytic"]);
-  expect(
-    (await resolver.ensure(new ComputeEngine(), ["MemberCall", "Hypercomplex", "'HurwitzZeta'", 2, 1])).unresolved,
-  ).toEqual(["Hypercomplex.HurwitzZeta"]);
+  const qualified = ["MemberCall", "Analytic", "'HurwitzZeta'", 2, 1];
+  expect((await resolver.ensure(new ComputeEngine(), qualified)).declared).toEqual(["analytic"]);
+  const wrong = ["MemberCall", "Hypercomplex", "'HurwitzZeta'", 2, 1];
+  expect((await resolver.ensure(new ComputeEngine(), wrong)).unresolved).toEqual(["Hypercomplex.HurwitzZeta"]);
 });
