@@ -2,4 +2,4 @@ id	section	role	expr	expected
 cauchy-pdf-exact			[PDF, [CauchyDistribution, 0, 1], 0]	[Divide, 1, Pi]
 cauchy-cdf-exact			[CDF, [CauchyDistribution, 0, 1], 1]	[Rational, 3, 4]
 cauchy-default-is-standard			[CauchyDistribution]	[CauchyDistribution, 0, 1]
-cauchy-mean-indeterminate	Possible issues		[Mean, [CauchyDistribution, 0, 1]]	Indeterminate
+cauchy-mean-indeterminate	Possible issues		[Mean, [CauchyDistribution, 0, 1]]	NaN

@@ -880,7 +880,7 @@ function continuousOf(
 // ---- declaration ----------------------------------------------------------------------
 
 const trendToExpr = (ce: ComputeEngine, t: Trend | undefined): BoxedExpression | undefined =>
-  t === undefined ? undefined : t === "indeterminate" ? ce.symbol("Indeterminate") : ce.number(t);
+  t === undefined ? undefined : t === "indeterminate" ? ce.symbol("NaN") : ce.number(t);
 
 /** A `(any, symbol) -> any` head over `recognize` + `f`, declining (returning
  * `undefined`, which leaves the call unevaluated) whenever `recognize` or `f` do. */

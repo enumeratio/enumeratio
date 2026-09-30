@@ -3,4 +3,4 @@ ramp-negative	<Ramp>-2</Ramp>	<ToExpression>0</ToExpression>
 ramp-positive	<Ramp>3</Ramp>	<ToExpression>3</ToExpression>
 ramp-zero	<Ramp>0</Ramp>	<ToExpression>0</ToExpression>
 ramp-equals-x-times-unitstep	<Equal><Ramp>5</Ramp> <Multiply>5 <UnitStep>5</UnitStep></Multiply></Equal>	<True />
-ramp-derivative	<D><Ramp>x</Ramp> x</D>	<Piecewise><List><List>0 <Less>x 0</Less></List> <List>1 <Less>0 x</Less></List></List> Indeterminate</Piecewise>
+ramp-derivative	<D><Ramp>x</Ramp> x</D>	<Piecewise><List><List>0 <Less>x 0</Less></List> <List>1 <Less>0 x</Less></List></List> NaN</Piecewise>

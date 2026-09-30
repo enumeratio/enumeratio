@@ -1,5 +1,5 @@
 id	in	out
 a-cubic-is-increasing-everywhere	<FunctionMonotonicity><Power>x 3</Power> x</FunctionMonotonicity>	<ToExpression>1</ToExpression>
-a-parabola-is-not-globally-monotonic	<FunctionMonotonicity><Power>x 2</Power> x</FunctionMonotonicity>	<Indeterminate />
+a-parabola-is-not-globally-monotonic	<FunctionMonotonicity><Power>x 2</Power> x</FunctionMonotonicity>	<NaN />
 exp-of-an-affine-argument-is-always-monotonic	<FunctionMonotonicity><Exp>x</Exp> x</FunctionMonotonicity>	<ToExpression>1</ToExpression>
-a-restricted-domain-answers-indeterminate	<FunctionMonotonicity><Sqrt>x</Sqrt> x</FunctionMonotonicity>	<Indeterminate />
+a-restricted-domain-answers-indeterminate	<FunctionMonotonicity><Sqrt>x</Sqrt> x</FunctionMonotonicity>	<NaN />

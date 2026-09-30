@@ -2,4 +2,4 @@ id	in	out
 a-perfect-square-is-never-negative	<FunctionSign><Power>x 2</Power> x</FunctionSign>	<ToExpression>1</ToExpression>
 a-sum-of-a-square-and-a-positive-constant	<FunctionSign><Divide>1 <Add><Power>x 2</Power> 1</Add></Divide> x</FunctionSign>	<ToExpression>1</ToExpression>
 exp-is-always-positive	<FunctionSign><Exp>x</Exp> x</FunctionSign>	<ToExpression>1</ToExpression>
-a-cubic-changes-sign	<FunctionSign><Power>x 3</Power> x</FunctionSign>	<Indeterminate />
+a-cubic-changes-sign	<FunctionSign><Power>x 3</Power> x</FunctionSign>	<NaN />

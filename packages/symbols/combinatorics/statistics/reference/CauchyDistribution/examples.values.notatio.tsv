@@ -2,4 +2,4 @@ id	in	out
 cauchy-pdf-exact	<PDF><CauchyDistribution>0 1</CauchyDistribution> 0</PDF>	<Divide>1 Pi</Divide>
 cauchy-cdf-exact	<CDF><CauchyDistribution>0 1</CauchyDistribution> 1</CDF>	<Rational>3 4</Rational>
 cauchy-default-is-standard	<Apply>CauchyDistribution</Apply>	<CauchyDistribution>0 1</CauchyDistribution>
-cauchy-mean-indeterminate	<Mean><CauchyDistribution>0 1</CauchyDistribution></Mean>	<Indeterminate />
+cauchy-mean-indeterminate	<Mean><CauchyDistribution>0 1</CauchyDistribution></Mean>	<NaN />

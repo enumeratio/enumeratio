@@ -5,4 +5,4 @@ unitbox-boundary-neg-1-2	\mathrm{UnitBox}(-\frac{1}{2})	1
 unitbox-outside-the-box	\mathrm{UnitBox}(1)	0
 unitbox-product-of-two-boxes	\mathrm{UnitBox}(0, 0)	1
 unitbox-product-second-at-its-boundary	\mathrm{UnitBox}(0, \frac{1}{2})	1
-unitbox-derivative-away-from-the-jump	\frac{\mathrm{d}\mathrm{UnitBox}(x)}{\mathrm{d}x}	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\operatorname{Indeterminate}, x=1/2\lor x=-1/2\bigr\rbrack\bigr\rbrack, 0)
+unitbox-derivative-away-from-the-jump	\frac{\mathrm{d}\mathrm{UnitBox}(x)}{\mathrm{d}x}	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack\operatorname{NaN}, x=1/2\lor x=-1/2\bigr\rbrack\bigr\rbrack, 0)

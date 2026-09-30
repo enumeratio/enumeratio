@@ -401,27 +401,27 @@ const HALF_JSON: Json = ["Rational", 1, 2];
 const SIGNAL_DERIVATIVES: Readonly<Record<string, Readonly<Record<string, SignalPartial>>>> = {
   // D(HeavisideTheta(x)) = DiracDelta(x).
   HeavisideTheta: { "1": { params: ["x"], body: ["DiracDelta", "x"] } },
-  // D(Ramp(x)) = Piecewise({{0, x < 0}, {1, x > 0}}, Indeterminate) -- Wolfram's own answer;
-  // NOT UnitStep(x), which would be a different (defined-at-0) function. The bound parameter
-  // is named "u", not "x" -- applying a `Function(body, "x")` to the literal symbol `x` (the
-  // common case, `D(Ramp(x), x)`) hits a compute-engine substitution quirk where an Equal/
-  // Less/Greater condition on the same-named bound variable spuriously resolves to a
+  // D(Ramp(x)) = Piecewise({{0, x < 0}, {1, x > 0}}, NaN) -- Wolfram answers Indeterminate here,
+  // which we map to NaN; NOT UnitStep(x), which would be a different (defined-at-0) function.
+  // The bound parameter is named "u", not "x" -- applying a `Function(body, "x")` to the literal
+  // symbol `x` (the common case, `D(Ramp(x), x)`) hits a compute-engine substitution quirk where
+  // an Equal/Less/Greater condition on the same-named bound variable spuriously resolves to a
   // definite boolean instead of staying undecided; a distinct bound name sidesteps it.
   Ramp: {
     "1": {
       params: ["u"],
-      body: ["Piecewise", ["List", ["List", 0, ["Less", "u", 0]], ["List", 1, ["Greater", "u", 0]]], "Indeterminate"],
+      body: ["Piecewise", ["List", ["List", 0, ["Less", "u", 0]], ["List", 1, ["Greater", "u", 0]]], "NaN"],
     },
   },
-  // D(UnitBox(x)) = Piecewise({{Indeterminate, x == 1/2 || x == -1/2}}, 0) -- 0 on the open
-  // interior and exterior alike (UnitBox is locally constant away from the boundary),
-  // undefined exactly at the two points where it jumps. Bound parameter "u", see Ramp above.
+  // D(UnitBox(x)) = Piecewise({{NaN, x == 1/2 || x == -1/2}}, 0) -- 0 on the open interior and
+  // exterior alike (UnitBox is locally constant away from the boundary), undefined exactly at
+  // the two points where it jumps. Bound parameter "u", see Ramp above.
   UnitBox: {
     "1": {
       params: ["u"],
       body: [
         "Piecewise",
-        ["List", ["List", "Indeterminate", ["Or", ["Equal", "u", HALF_JSON], ["Equal", "u", ["Negate", HALF_JSON]]]]],
+        ["List", ["List", "NaN", ["Or", ["Equal", "u", HALF_JSON], ["Equal", "u", ["Negate", HALF_JSON]]]]],
         0,
       ],
     },
