@@ -286,7 +286,10 @@ const declareNumericPredicates = (ce: ComputeEngine): void => {
  *  Precision trio. */
 export function declareListFrontier(ce: ComputeEngine): void {
   ce.declare("Array", {
-    signature: "((integer) any -> any, any, any?, symbol?) -> collection",
+    // The callback's arity tracks the rank of `dims` (the second argument), which a static
+    // signature can't see — `integer*` (any count) keeps the generic checker from rejecting
+    // a callback declared for more than one index, e.g. `Function((i, j) -> …)` over a 2-D array.
+    signature: "((integer*) any -> any, any, any?, symbol?) -> collection",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const f = ops[0];
       if (f === undefined || ops[1] === undefined) return undefined;
