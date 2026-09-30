@@ -1,0 +1,2 @@
+id	in	out	tex.in	tex.out
+arsinh-complexinfinity-is-complexinfinity	ArcSinh[ComplexInfinity]	ComplexInfinity	\sinh ^{-1}(\text{ComplexInfinity})	\text{ComplexInfinity}

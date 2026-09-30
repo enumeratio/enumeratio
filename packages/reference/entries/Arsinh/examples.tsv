@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	source	caption
+arsinh-complexinfinity-is-complexinfinity	Possible issues		[Arsinh, ComplexInfinity]	ComplexInfinity	ComplexInfinity	DLMF 4.37.16	Arsinh(ComplexInfinity) is ComplexInfinity: $|\operatorname{arsinh} z| \sim \ln|2z|$ in every direction

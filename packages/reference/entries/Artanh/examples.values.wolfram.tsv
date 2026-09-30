@@ -1,0 +1,2 @@
+id	in	out	tex.in	tex.out
+artanh-complexinfinity-is-indeterminate-the-sign	ArcTanh[ComplexInfinity]	Indeterminate	\tanh ^{-1}(\text{ComplexInfinity})	\text{Indeterminate}

@@ -23,6 +23,7 @@ to-30-significant-digits-every-one-correctly	N(arctan(1 / 2), 30)	0.463_647_609_
 tan-arctan-x-x	tan(arctan(1)) == 1	True
 as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	trigToExp(arctan(x))	-1 / 2 * i * ln(i * x + 1) + 1 / 2 * i * ln(-i * x + 1)
 compute-engine-s-arctan-takes-only-one-argument	arctan(1, 1)	error("unexpected-argument", "1", ErrorTrace(ErrorFrame("Arctan", 2)))
+arctan-complexinfinity-is-indeterminate-z-re-i	arctan(complexInfinity)	Indeterminate
 the-horizontal-asymptote-as-x-to-infty	arctan(positiveInfinity)	1 / 2 * pi
 and-as-x-to-infty	arctan(negativeInfinity)	-1 / 2 * pi
 euler-s-machin-like-identity-arctan-frac-12	FullSimplify(arctan(1 / 2) + arctan(1 / 3))	1 / 4 * pi

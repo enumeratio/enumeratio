@@ -13,7 +13,7 @@ the review:
 Classifications live in each head's `<Head>/examples.values.*.tsv`, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 4734, disagree 388, inconclusive 42, error 4
+## wolfram — agree 4753, disagree 389, inconclusive 42, error 4
 
 | example                                                                       | kind           | ours                                                                                         | theirs                                                                                       |
 | ----------------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -101,6 +101,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `EllipticThetaPrime/u-1e30-declines-rather-than-answering-wrong`              | domain         | `["EllipticThetaPrime",1,1e+30,{"num":"0.318309886183790671538"}]`                           | `-1.053528091933033`                                                                         |
 | `Erf/erf-complexinfinity`                                                     | undefined-form | `Indeterminate`                                                                              | `Erf[ComplexInfinity]`                                                                       |
 | `Erf/interval-arithmetic-erf-is-increasing-so-the`                            | convention     | `["Interval",-0.997020533343667,-0.9927904292352575]`                                        | `Interval[{-0.9983761649605186, -0.9922683650770522}]`                                       |
+| `Erfc/erfc-complexinfinity-is-indeterminate-inheriting`                       | domain         | `Indeterminate`                                                                              | `Erfc[ComplexInfinity]`                                                                      |
 | `Erfc/interval-arithmetic-erfc-is-decreasing-so-the`                          | precision      | `["Interval",0.6713732405408726,0.7772974107895215]`                                         | `Interval[{0.6694415493984706, 0.7779056702856907}]`                                         |
 | `Erfc/uncertainty-propagation`                                                | precision      | `["Around",0.004677734981047266,0.00020666985354092054]`                                     | `Around[0.0046777349810472645, 0.00020666985354092054]`                                      |
 | `ErfInv/interval-arithmetic-the-inverse-is-increasing-so`                     | precision      | `["Interval",0.4769362762044699,0.5951160814499948]`                                         | `Interval[{0.4233192432438954, 0.6449989321408794}]`                                         |

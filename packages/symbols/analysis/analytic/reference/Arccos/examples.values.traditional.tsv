@@ -16,6 +16,9 @@ uncertainty-propagation-arccos-0-9-pm-0-1-approx
 derivative-frac-1-sqrt-1-x-2		
 antiderivative		
 not-simply-4-4-is-outside-the-principal-range-0		
+arccos-infinity-is-a-directed-infinity-along-the		
+arccos-infinity-is-the-opposite-directed		
 cos-arccos-x-x-on-the-principal-branch	\cos(\arccos(\frac{1}{2}))=\frac{1}{2}	\mathrm{True}
 reflection-arccos-x-pi-arccos-x		
 outside-1-1-this-stays-symbolic-same-as-arcsin-n		
+arccos-complexinfinity-is-complexinfinity		

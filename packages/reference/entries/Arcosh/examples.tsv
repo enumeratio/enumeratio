@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	source	caption
+arcosh-infinity-is-infinity-not-infinity-the	Scope		[Arcosh, NegativeInfinity]	PositiveInfinity	PositiveInfinity	DLMF 4.37.19	Arcosh(-Infinity) is +Infinity, not -Infinity -- the principal branch keeps $\Re(\operatorname{arcosh} z) \ge 0$ everywhere

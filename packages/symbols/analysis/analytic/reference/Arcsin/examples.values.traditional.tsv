@@ -22,8 +22,11 @@ taylor-series-about-0
 arcsin-sin-1-2-is-already-principal		
 to-30-significant-digits-not-yet-the-last-digit		
 arcsin-2-past-1-1-the-odd-function-mirror-of		
+arcsin-infinity-is-a-directed-infinity-along-the		
+arcsin-infinity-is-the-opposite-directed		
 sin-arcsin-x-x-on-the-principal-branch	\sin(\arcsin(\frac{1}{2}))=\frac{1}{2}	\mathrm{True}
 co-function-identity-arcsin-x-arccos-x-pi-2	\arcsin(\frac{1}{2})+\arccos(\frac{1}{2})=\frac{\pi}{2}	\mathrm{True}
 as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2		
 not-simply-2-2-is-outside-the-principal-range-pi		
 arcsin-sin-neg-2-mirrors-through-0		
+arcsin-complexinfinity-is-complexinfinity		

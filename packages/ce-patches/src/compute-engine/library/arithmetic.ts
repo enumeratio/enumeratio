@@ -81,3 +81,31 @@ export function evaluateMultiplyDirectedInfinity(ce: ComputeEngine): void {
     },
   );
 }
+
+// --- Ln at the infinities --------------------------------------------------------------
+
+// Exp(ComplexInfinity) is left OUT of this patch, deliberately: `Exp(z)` canonicalizes to
+// `Power(ExponentialE, z)` at BOXING time, before any `Exp`-headed wrapper ever runs (see
+// complex-expand.ts's own comment on the same quirk), so the fix would really have to widen
+// `Power`'s own exponent signature. `Power` is a shared, heavily-overloaded head -- five
+// packages besides compute-engine itself already carry their own manifest row for it
+// (hypercomplex, residues, numerals, adeles, this package's own tagged-arithmetic gate),
+// each keyed to the exact signature string in place when their row was written -- widening
+// it here risks a manifest another lane owns going stale in a way this lane can't fully
+// verify. Left for the coordinator: see the report.
+
+// ln(-x) = ln(x) + i*Pi (principal branch, approached from above the (-Infinity, 0] cut):
+// the magnitude diverges as x -> +Infinity while the imaginary part stays at the bounded
+// Pi, so Ln(NegativeInfinity) is +Infinity, the same "magnitude alone diverges" convention
+// Ln(PositiveInfinity) and Ln(ComplexInfinity) already carry (the latter fixed separately,
+// in @enumeratio/analytic's elementary-remaining.ts). Boxing already accepts
+// NegativeInfinity here -- native evaluate just declines it, leaving it unevaluated.
+export function evaluateLnAtNegativeInfinity(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["Ln"],
+    (ops: readonly BoxedExpression[]) => ops[0]?.json === "NegativeInfinity",
+    () => () => ce.symbol("PositiveInfinity"),
+    1,
+  );
+}

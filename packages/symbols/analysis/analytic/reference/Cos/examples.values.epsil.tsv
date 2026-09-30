@@ -45,4 +45,5 @@ power-reduction-cos-2-x-frac-1-cos-2x-2	trigReduce(cos(x) ^ 2)	1 / 2 * cos(2x) +
 euler-s-formula-cos-x-frac-e-ix-e-ix-2	trigToExp(cos(x))	1 / 2 * (exponentialE ^ (i * x) + exponentialE ^ (-i * x))
 as-with-sin-a-non-special-numeric-argument-stays	cos(2)	cos(2)
 pi-24-is-past-the-automatic-special-angle-table	cos(1 / 24 * pi)	cos(1 / 24 * pi)
+cos-complexinfinity-is-indeterminate-for-the	cos(complexInfinity)	Indeterminate
 cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	cos(pi / 5)	1 / 4 + sqrt(5) / 4

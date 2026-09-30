@@ -6179,7 +6179,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Arcosh",
-    provenance: "unknown",
+    provenance: "override",
     declared: null,
     wolframAlias: "ArcCosh",
     elsewhere: [],
@@ -6200,14 +6200,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Arsinh",
-    provenance: "unknown",
+    provenance: "override",
     declared: null,
     wolframAlias: "ArcSinh",
     elsewhere: [],
   },
   {
     name: "Artanh",
-    provenance: "unknown",
+    provenance: "override",
     declared: null,
     wolframAlias: "ArcTanh",
     elsewhere: [],
@@ -7145,7 +7145,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Arccot",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: null,
     elsewhere: [],

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	source	caption
+artanh-complexinfinity-is-indeterminate-the-sign	Possible issues		[Artanh, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.37.24	Artanh(ComplexInfinity) is Indeterminate -- the sign of the boundary value $\pm i\pi/2$ depends on which side of the branch cut z approaches from

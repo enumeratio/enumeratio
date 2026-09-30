@@ -29,6 +29,7 @@ an-integer-power-negative-argument	log(-2)	log(2) + I*pi
 n-of-a-negative-integer-argument	N(log(-2), 30)	0.693147180559945309417232121458 + 3.14159265358979323846264338328*I	
 ln-neg-6	log(-6)	log(6) + I*pi	
 n-of-a-negative-rational-argument	N(log(Rational(-1, 2)), 30)	-0.693147180559945309417232121458 + 3.14159265358979323846264338328*I	
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)		
 inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
 product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	
 powerexpand-splits-a-logarithm-of-a-product			

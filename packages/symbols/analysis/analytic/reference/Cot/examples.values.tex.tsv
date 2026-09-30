@@ -25,3 +25,4 @@ reciprocal-of-tan-cot-x-frac-1-tan-x	\cot(\frac{\pi}{4})=\frac{1}{\tan(\frac{\pi
 pythagorean-identity-1-cot-2-x-csc-2-x	1+\cot(\pi/6)^2=\csc(\pi/6)^2	\top
 a-pole-sin-0-0	\cot(0)	\tilde\infty
 not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	\cot(\frac{\pi}{2})	0
+cot-complexinfinity-is-indeterminate-for-the	\cot(\tilde\infty)	\operatorname{Indeterminate}

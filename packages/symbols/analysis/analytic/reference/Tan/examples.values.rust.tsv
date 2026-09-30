@@ -41,3 +41,4 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan((x(std::f64::consts::PI) / n(2)))	1.
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(n(1))	1.5574077246549023	
 a-pole-at-negative-pi-over-2-too	tan((x(std::f64::consts::PI) / n(-2)))	-1.633123935319537e16	inconclusive
 a-pole-reached-through-periodicity-unreduced	tan(((x(std::f64::consts::PI) / n(-2)) + x(std::f64::consts::PI)))	1.633123935319537e16	inconclusive
+tan-complexinfinity-is-indeterminate-poles-recur			

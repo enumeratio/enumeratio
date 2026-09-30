@@ -25,3 +25,4 @@ antiderivative-ln-sec-x-tan-x	Integrate[Sec[x], x]	Indeterminate	\text{Module}\l
 reciprocal-of-cos-sec-x-frac-1-cos-x	(Sec[Divide[Pi, 3]] == Divide[1, Cos[Divide[Pi, 3]]])	True	\sec \left(\frac{\pi }{3}\right)=\frac{1}{\cos \left(\frac{\pi }{3}\right)}	\text{True}	
 pythagorean-identity-1-tan-2-x-sec-2-x	(Plus[1, Power[Tan[Divide[Pi, 6]], 2]] == Power[Sec[Divide[Pi, 6]], 2])	True	1+\tan ^2\left(\frac{\pi }{6}\right)=\sec ^2\left(\frac{\pi }{6}\right)	\text{True}	
 a-pole-cos-pi-2-0	Sec[Divide[Pi, 2]]	ComplexInfinity	\sec \left(\frac{\pi }{2}\right)	\text{ComplexInfinity}	
+sec-complexinfinity-is-indeterminate-for-the	Sec[ComplexInfinity]	Indeterminate	\sec (\text{ComplexInfinity})	\text{Indeterminate}	

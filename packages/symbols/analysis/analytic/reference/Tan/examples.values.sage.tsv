@@ -41,3 +41,4 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan((pi / 2))	Infinity	disagree
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(1)	tan(1)	
 a-pole-at-negative-pi-over-2-too	tan((pi / -2))	Infinity	disagree
 a-pole-reached-through-periodicity-unreduced	tan(((pi / -2) + pi))	Infinity	disagree
+tan-complexinfinity-is-indeterminate-poles-recur	tan(unsigned_infinity)		

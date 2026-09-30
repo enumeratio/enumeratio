@@ -10,3 +10,4 @@ derivative-frac-1-1-x-2	\frac{\mathrm{d}\mathrm{arcctg}(x)}{\mathrm{d}x}	-\frac{
 arccot-sqrt-3-frac-5-pi-6-past-pi-2-not-mirrored	\mathrm{arcctg}(-\sqrt{3})	\frac{5\pi}{6}
 undoes-cot-cot-arccot-x-x	\cot(\mathrm{arcctg}(1))=1	\top
 a-generic-rational-with-no-exact-fold-stays	\mathrm{arcctg}(2)	\mathrm{arcctg}(2)
+arccot-complexinfinity-is-indeterminate-by	\mathrm{arcctg}(\tilde\infty)	\operatorname{Indeterminate}

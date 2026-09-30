@@ -1,29 +1,30 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-arctan-0			[Arctan, 0]	0			
-arctan-1			[Arctan, 1]	[Multiply, [Rational, 1, 4], Pi]			
-arctan-sqrt-3			[Arctan, [Sqrt, 3]]	[Multiply, [Rational, 1, 3], Pi]			
-a-machine-precision-argument-evaluates			[Arctan, 0.5]	{num: "0.463647609000806116214"}	A machine-precision argument evaluates numerically		
-arbitrary-precision-via-n	Scope		[N, [Arctan, [Rational, 1, 2]]]	{num: "0.463647609000806116214"}	Arbitrary precision via N(...)		
-evaluates-at-a-complex-argument	Scope		[Arctan, [Complex, 2.5, 1]]	[Complex, 1.2334258556831204, 0.12367406045902679]	Evaluates at a complex argument		
-wolfram-s-two-argument-arctan-x-y-is-compute	Scope		[Arctan2, -1, -1]	[Multiply, [Rational, -3, 4], Pi]	Wolfram's two-argument ArcTan[x, y] is compute-engine's $\mathrm{Arctan2}(y, x)$: the angle of the point $(-1, -1)$ is $-3\pi/4$		
-arctan2-takes-y-first-the-angle-of-the-point-0-5	Scope		[Arctan2, 2, 0.5]	{num: "1.32581766366803246506"}	Arctan2 takes $y$ first: the angle of the point $(0.5, 2)$ is $\arctan 4 \approx 1.3258$, evaluated numerically for the float input		
-arctan-2-sqrt-3-5-pi-12	Scope		[Arctan, [Add, 2, [Sqrt, 3]]]	[Multiply, [Rational, 5, 12], Pi]	$\arctan(2 + \sqrt3) = 5\pi/12$		
-arctan-2-sqrt-3-pi-12	Scope		[Arctan, [Subtract, 2, [Sqrt, 3]]]	[Multiply, [Rational, 1, 12], Pi]	$\arctan(2 - \sqrt3) = \pi/12$		
-arctan-sqrt-2-1-pi-8	Scope		[Arctan, [Subtract, [Sqrt, 2], 1]]	[Multiply, [Rational, 1, 8], Pi]	$\arctan(\sqrt2 - 1) = \pi/8$		
-arctan-1-over-sqrt-3	Scope		[Arctan, [Divide, 1, [Sqrt, 3]]]	[Multiply, [Rational, 1, 6], Pi]			
-arctan-neg-1	Scope		[Arctan, -1]	[Multiply, [Rational, -1, 4], Pi]			
-threads-element-wise-over-a-matrix	Scope		[Arctan, [List, [List, 0, 1], [List, -1, [Sqrt, 3]]]]	[List, [List, 0, [Multiply, [Rational, 1, 4], Pi]], [List, [Multiply, [Rational, -1, 4], Pi], [Multiply, [Rational, 1, 3], Pi]]]	Threads element-wise over a matrix		
-interval-arithmetic-arctan-1-3-frac-pi-4-arctan	Scope		[Arctan, [Interval, -1, 3]]	[Interval, [Multiply, [Rational, -1, 4], Pi], [Arctan, 3]]	Interval arithmetic: $\arctan[-1, 3] = [-\tfrac{\pi}{4}, \arctan 3]$		
-oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arctan, [Negate, x]]	[Negate, [Arctan, x]]	Oddness pulls the sign out of a symbolic argument: $\arctan(-x) = -\arctan x$		
-derivative-frac-1-1-x-2	Scope		[D, [Arctan, x], x]	[Divide, 1, [Add, [Power, x, 2], 1]]	Derivative: $\frac{1}{1 + x^2}$		
-antiderivative	Scope		[Integrate, [Arctan, x], x]	[Add, [Multiply, x, [Arctan, x]], [Multiply, [Rational, -1, 2], [Ln, [Add, [Power, x, 2], 1]]]]	Antiderivative		
-gregory-s-series-about-0	Scope		[Series, [Arctan, x], x, 0, 7]	[Add, [Multiply, [Rational, -1, 7], [Power, x, 7]], [Multiply, [Rational, 1, 5], [Power, x, 5]], [Multiply, [Rational, -1, 3], [Power, x, 3]], x, [BigO, [Power, x, 9]]]	Gregory's series about 0		Wolfram's Series[ArcTan[x], {x, 0, 7}] ends with O[x]^8; compute-engine skips the vanishing even term and reports O(x^9).
-the-limit-at-infty	Scope		[Limit, [Function, [Arctan, x], x], PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]	The limit at $+\infty$		
-to-30-significant-digits-every-one-correctly	Scope		[N, [Arctan, [Rational, 1, 2]], 30]	{num: "0.463647609000806116214256231461"}	To 30 significant digits, every one correctly rounded		
-tan-arctan-x-x	Properties		[Equal, [Tan, [Arctan, 1]], 1]	True	$\tan(\arctan(x)) = x$		
-as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	Properties		[TrigToExp, [Arctan, x]]	[Add, [Multiply, [Complex, 0, [Rational, -1, 2]], [Ln, [Add, [Multiply, [Complex, 0, 1], x], 1]]], [Multiply, [Complex, 0, [Rational, 1, 2]], [Ln, [Add, [Multiply, [Complex, 0, -1], x], 1]]]]	As logarithms: $\arctan x = \tfrac{i}{2}\ln(1 - ix) - \tfrac{i}{2}\ln(1 + ix)$		
-compute-engine-s-arctan-takes-only-one-argument	Possible issues		[Arctan, 1, 1]	[Error, "'unexpected-argument'", "'1'", [ErrorTrace, [ErrorFrame, "'Arctan'", 2]]]	compute-engine's Arctan takes only one argument and errors on a second; the two-argument atan2 form is the separate $\mathrm{Arctan2}(x, y)$ function	domain	compute-engine's Arctan takes one argument and rejects a second; Wolfram's ArcTan[x, y] is the two-argument arctangent (atan2), here π/4.
-the-horizontal-asymptote-as-x-to-infty	Neat examples		[Arctan, PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]	The horizontal asymptote as $x \to +\infty$		
-and-as-x-to-infty	Neat examples		[Arctan, NegativeInfinity]	[Multiply, [Rational, -1, 2], Pi]	And as $x \to -\infty$		
-euler-s-machin-like-identity-arctan-frac-12	Neat examples		[FullSimplify, [Add, [Arctan, [Rational, 1, 2]], [Arctan, [Rational, 1, 3]]]]	[Multiply, [Rational, 1, 4], Pi]	Euler's Machin-like identity $\arctan\tfrac12 + \arctan\tfrac13 = \tfrac{\pi}{4}$, by [[FullSimplify]]; the bare sum stays as written, as in Wolfram		
-machin-s-formula-4-arctan-frac-15-arctan-frac-1	Neat examples		[FullSimplify, [Subtract, [Multiply, 4, [Arctan, [Rational, 1, 5]]], [Arctan, [Rational, 1, 239]]]]	[Multiply, [Rational, 1, 4], Pi]	Machin's formula $4\arctan\tfrac15 - \arctan\tfrac1{239} = \tfrac{\pi}{4}$, by [[FullSimplify]]		
+id	section	role	expr	expected	known	source	caption	wolfram.kind	wolfram.note
+arctan-0			[Arctan, 0]	0					
+arctan-1			[Arctan, 1]	[Multiply, [Rational, 1, 4], Pi]					
+arctan-sqrt-3			[Arctan, [Sqrt, 3]]	[Multiply, [Rational, 1, 3], Pi]					
+a-machine-precision-argument-evaluates			[Arctan, 0.5]	{num: "0.463647609000806116214"}			A machine-precision argument evaluates numerically		
+arbitrary-precision-via-n	Scope		[N, [Arctan, [Rational, 1, 2]]]	{num: "0.463647609000806116214"}			Arbitrary precision via N(...)		
+evaluates-at-a-complex-argument	Scope		[Arctan, [Complex, 2.5, 1]]	[Complex, 1.2334258556831204, 0.12367406045902679]			Evaluates at a complex argument		
+wolfram-s-two-argument-arctan-x-y-is-compute	Scope		[Arctan2, -1, -1]	[Multiply, [Rational, -3, 4], Pi]			Wolfram's two-argument ArcTan[x, y] is compute-engine's $\mathrm{Arctan2}(y, x)$: the angle of the point $(-1, -1)$ is $-3\pi/4$		
+arctan2-takes-y-first-the-angle-of-the-point-0-5	Scope		[Arctan2, 2, 0.5]	{num: "1.32581766366803246506"}			Arctan2 takes $y$ first: the angle of the point $(0.5, 2)$ is $\arctan 4 \approx 1.3258$, evaluated numerically for the float input		
+arctan-2-sqrt-3-5-pi-12	Scope		[Arctan, [Add, 2, [Sqrt, 3]]]	[Multiply, [Rational, 5, 12], Pi]			$\arctan(2 + \sqrt3) = 5\pi/12$		
+arctan-2-sqrt-3-pi-12	Scope		[Arctan, [Subtract, 2, [Sqrt, 3]]]	[Multiply, [Rational, 1, 12], Pi]			$\arctan(2 - \sqrt3) = \pi/12$		
+arctan-sqrt-2-1-pi-8	Scope		[Arctan, [Subtract, [Sqrt, 2], 1]]	[Multiply, [Rational, 1, 8], Pi]			$\arctan(\sqrt2 - 1) = \pi/8$		
+arctan-1-over-sqrt-3	Scope		[Arctan, [Divide, 1, [Sqrt, 3]]]	[Multiply, [Rational, 1, 6], Pi]					
+arctan-neg-1	Scope		[Arctan, -1]	[Multiply, [Rational, -1, 4], Pi]					
+threads-element-wise-over-a-matrix	Scope		[Arctan, [List, [List, 0, 1], [List, -1, [Sqrt, 3]]]]	[List, [List, 0, [Multiply, [Rational, 1, 4], Pi]], [List, [Multiply, [Rational, -1, 4], Pi], [Multiply, [Rational, 1, 3], Pi]]]			Threads element-wise over a matrix		
+interval-arithmetic-arctan-1-3-frac-pi-4-arctan	Scope		[Arctan, [Interval, -1, 3]]	[Interval, [Multiply, [Rational, -1, 4], Pi], [Arctan, 3]]			Interval arithmetic: $\arctan[-1, 3] = [-\tfrac{\pi}{4}, \arctan 3]$		
+oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arctan, [Negate, x]]	[Negate, [Arctan, x]]			Oddness pulls the sign out of a symbolic argument: $\arctan(-x) = -\arctan x$		
+derivative-frac-1-1-x-2	Scope		[D, [Arctan, x], x]	[Divide, 1, [Add, [Power, x, 2], 1]]			Derivative: $\frac{1}{1 + x^2}$		
+antiderivative	Scope		[Integrate, [Arctan, x], x]	[Add, [Multiply, x, [Arctan, x]], [Multiply, [Rational, -1, 2], [Ln, [Add, [Power, x, 2], 1]]]]			Antiderivative		
+gregory-s-series-about-0	Scope		[Series, [Arctan, x], x, 0, 7]	[Add, [Multiply, [Rational, -1, 7], [Power, x, 7]], [Multiply, [Rational, 1, 5], [Power, x, 5]], [Multiply, [Rational, -1, 3], [Power, x, 3]], x, [BigO, [Power, x, 9]]]			Gregory's series about 0		Wolfram's Series[ArcTan[x], {x, 0, 7}] ends with O[x]^8; compute-engine skips the vanishing even term and reports O(x^9).
+the-limit-at-infty	Scope		[Limit, [Function, [Arctan, x], x], PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]			The limit at $+\infty$		
+to-30-significant-digits-every-one-correctly	Scope		[N, [Arctan, [Rational, 1, 2]], 30]	{num: "0.463647609000806116214256231461"}			To 30 significant digits, every one correctly rounded		
+tan-arctan-x-x	Properties		[Equal, [Tan, [Arctan, 1]], 1]	True			$\tan(\arctan(x)) = x$		
+as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	Properties		[TrigToExp, [Arctan, x]]	[Add, [Multiply, [Complex, 0, [Rational, -1, 2]], [Ln, [Add, [Multiply, [Complex, 0, 1], x], 1]]], [Multiply, [Complex, 0, [Rational, 1, 2]], [Ln, [Add, [Multiply, [Complex, 0, -1], x], 1]]]]			As logarithms: $\arctan x = \tfrac{i}{2}\ln(1 - ix) - \tfrac{i}{2}\ln(1 + ix)$		
+compute-engine-s-arctan-takes-only-one-argument	Possible issues		[Arctan, 1, 1]	[Error, "'unexpected-argument'", "'1'", [ErrorTrace, [ErrorFrame, "'Arctan'", 2]]]			compute-engine's Arctan takes only one argument and errors on a second; the two-argument atan2 form is the separate $\mathrm{Arctan2}(x, y)$ function	domain	compute-engine's Arctan takes one argument and rejects a second; Wolfram's ArcTan[x, y] is the two-argument arctangent (atan2), here π/4.
+arctan-complexinfinity-is-indeterminate-z-re-i	Possible issues		[Arctan, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.23.26	Arctan(ComplexInfinity) is Indeterminate -- $z = Re^{i\pi/4}$ and $z = -Re^{i\pi/4}$ converge to $+\pi/2$ and $-\pi/2$ as $R \to \infty$		
+the-horizontal-asymptote-as-x-to-infty	Neat examples		[Arctan, PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]			The horizontal asymptote as $x \to +\infty$		
+and-as-x-to-infty	Neat examples		[Arctan, NegativeInfinity]	[Multiply, [Rational, -1, 2], Pi]			And as $x \to -\infty$		
+euler-s-machin-like-identity-arctan-frac-12	Neat examples		[FullSimplify, [Add, [Arctan, [Rational, 1, 2]], [Arctan, [Rational, 1, 3]]]]	[Multiply, [Rational, 1, 4], Pi]			Euler's Machin-like identity $\arctan\tfrac12 + \arctan\tfrac13 = \tfrac{\pi}{4}$, by [[FullSimplify]]; the bare sum stays as written, as in Wolfram		
+machin-s-formula-4-arctan-frac-15-arctan-frac-1	Neat examples		[FullSimplify, [Subtract, [Multiply, 4, [Arctan, [Rational, 1, 5]]], [Arctan, [Rational, 1, 239]]]]	[Multiply, [Rational, 1, 4], Pi]			Machin's formula $4\arctan\tfrac15 - \arctan\tfrac1{239} = \tfrac{\pi}{4}$, by [[FullSimplify]]		

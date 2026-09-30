@@ -25,3 +25,4 @@ antiderivative-ln-sec-x-tan-x	\int\!\sec(x)\, \mathrm{d}x	\ln(\vert\tan(x)+\sec(
 reciprocal-of-cos-sec-x-frac-1-cos-x	\sec(\frac{\pi}{3})=\frac{1}{\cos(\frac{\pi}{3})}	\top
 pythagorean-identity-1-tan-2-x-sec-2-x	1+\tan(\pi/6)^2=\sec(\pi/6)^2	\top
 a-pole-cos-pi-2-0	\sec(\frac{\pi}{2})	\tilde\infty
+sec-complexinfinity-is-indeterminate-for-the	\sec(\tilde\infty)	\operatorname{Indeterminate}

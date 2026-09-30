@@ -25,3 +25,4 @@ reciprocal-of-tan-cot-x-frac-1-tan-x	(Cot[Divide[Pi, 4]] == Divide[1, Tan[Divide
 pythagorean-identity-1-cot-2-x-csc-2-x	(Plus[1, Power[Cot[Divide[Pi, 6]], 2]] == Power[Csc[Divide[Pi, 6]], 2])	True	1+\cot ^2\left(\frac{\pi }{6}\right)=\csc ^2\left(\frac{\pi }{6}\right)	\text{True}	
 a-pole-sin-0-0	Cot[0]	ComplexInfinity	\cot (0)	\text{ComplexInfinity}	
 not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	Cot[Divide[Pi, 2]]	0	\cot \left(\frac{\pi }{2}\right)	0	
+cot-complexinfinity-is-indeterminate-for-the	Cot[ComplexInfinity]	Indeterminate	\cot (\text{ComplexInfinity})	\text{Indeterminate}	

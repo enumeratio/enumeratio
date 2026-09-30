@@ -9,7 +9,7 @@ signatures:
   - call: Erfc(z)
     description: The complementary error function $\operatorname{erfc}(z) = 1 - \operatorname{erf}(z)$, the Gaussian's tail-probability integral.
     library: enumeratio-analytic
-    type: (complex | signed_infinity) -> complex
+    type: (complex | signed_infinity | ~oo) -> Indeterminate | complex
     overrides: compute-engine
 seeAlso:
   - Erf

@@ -23,3 +23,4 @@ derivative-csc-x-cot-x	Scope		[D, [Csc, x], x]	[Negate, [Multiply, [Csc, x], [Co
 antiderivative-ln-csc-x-cot-x	Scope		[Integrate, [Csc, x], x]	[Negate, [Ln, [Abs, [Add, [Csc, x], [Cot, x]]]]]			Antiderivative: $-\ln|\csc x + \cot x|$	unevaluated	Same as Cot — an antiderivative identity FullSimplify doesn't confirm automatically, and the substitution fallback doesn't settle it either.
 reciprocal-of-sin-csc-x-frac-1-sin-x	Properties		[Equal, [Csc, [Divide, Pi, 6]], [Divide, 1, [Sin, [Divide, Pi, 6]]]]	True			Reciprocal of [[Sin]]: $\csc(x) = \frac{1}{\sin(x)}$		
 a-pole-sin-0-0	Possible issues		[Csc, 0]	ComplexInfinity			A pole: $\sin(0) = 0$		
+csc-complexinfinity-is-indeterminate-for-the	Possible issues		[Csc, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.14.10	Csc(ComplexInfinity) is Indeterminate, for the same recurring poles as Tan		

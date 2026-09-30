@@ -10,3 +10,4 @@ derivative-frac-1-1-x-2	D[Subtract[Divide[Pi, 2], ArcTan[x]], x]	True	\text{Modu
 arccot-sqrt-3-frac-5-pi-6-past-pi-2-not-mirrored	Subtract[Divide[Pi, 2], ArcTan[Minus[Sqrt[3]]]]	(5*Pi)/6	\frac{\pi }{2}-\tan ^{-1}\left(-\sqrt{3}\right)	\frac{5 \pi }{6}
 undoes-cot-cot-arccot-x-x	(Cot[Subtract[Divide[Pi, 2], ArcTan[1]]] == 1)	True	\cot \left(\frac{\pi }{2}-\tan ^{-1}(1)\right)=1	\text{True}
 a-generic-rational-with-no-exact-fold-stays	Subtract[Divide[Pi, 2], ArcTan[2]]	Pi/2 - ArcTan[2]	\frac{\pi }{2}-\tan ^{-1}(2)	\frac{\pi }{2}-\tan ^{-1}(2)
+arccot-complexinfinity-is-indeterminate-by	Subtract[Divide[Pi, 2], ArcTan[ComplexInfinity]]	Indeterminate	\frac{\pi }{2}-\tan ^{-1}(\text{ComplexInfinity})	\text{Indeterminate}

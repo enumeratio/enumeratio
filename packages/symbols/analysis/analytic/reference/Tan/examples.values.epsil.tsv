@@ -41,3 +41,4 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan(pi / 2)	complexInfinity
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(1)	tan(1)
 a-pole-at-negative-pi-over-2-too	tan(pi / -2)	complexInfinity
 a-pole-reached-through-periodicity-unreduced	tan(pi / -2 + pi)	complexInfinity
+tan-complexinfinity-is-indeterminate-poles-recur	tan(complexInfinity)	Indeterminate

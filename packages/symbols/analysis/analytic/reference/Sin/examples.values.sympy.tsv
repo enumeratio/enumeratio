@@ -66,5 +66,6 @@ sin-x-plus-y-stays-symbolic	sin((Symbol("x") + Symbol("y")))	True
 pi-15-has-a-radical-form-but-like-wolfram-s	sin((S(pi) / 15))	sqrt(3)*(1/4 - sqrt(5)/4)/2 + sqrt(sqrt(5)/8 + 5/8)/2	
 a-huge-exact-argument-is-reduced-modulo-2-pi	N(sin((S(10)**20)), 30)	-0.645251285265780844205811711313	
 an-even-huger-argument-11-38	N(sin((S(11)**38)), 30)	0.867534193184863032081750429728	
+sin-complexinfinity-is-indeterminate-off-the	sin(zoo)		
 the-special-angle-table-reaches-past-30-45-60	sin((S(pi) / 5))	sqrt(5/8 - sqrt(5)/8)	
 functionexpand-gives-the-nested-radical-form			

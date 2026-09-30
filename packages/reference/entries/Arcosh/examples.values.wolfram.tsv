@@ -1,0 +1,2 @@
+id	in	out	tex.in	tex.out
+arcosh-infinity-is-infinity-not-infinity-the	ArcCosh[-Infinity]	Infinity	\cosh ^{-1}(-\infty )	\infty

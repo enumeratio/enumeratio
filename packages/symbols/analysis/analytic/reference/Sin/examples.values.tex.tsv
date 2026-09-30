@@ -66,5 +66,6 @@ sin-x-plus-y-stays-symbolic	\sin(x+y)	\sin(x+y)
 pi-15-has-a-radical-form-but-like-wolfram-s	\sin(\frac{\pi}{15})	\sin(\frac{\pi}{15})
 a-huge-exact-argument-is-reduced-modulo-2-pi	N(\sin(10^{20}))	-0.645\,251\,285\,265\,780\,844\,206
 an-even-huger-argument-11-38	N(\sin(11^{38}))	0.867\,534\,193\,184\,863\,032\,082
+sin-complexinfinity-is-indeterminate-off-the	\sin(\tilde\infty)	\operatorname{Indeterminate}
 the-special-angle-table-reaches-past-30-45-60	\sin(\frac{\pi}{5})	\frac{1}{4}(\sqrt{2}\sqrt{5-\sqrt{5}})
 functionexpand-gives-the-nested-radical-form	\mathrm{FunctionExpand}(\sin(\frac{\pi}{15}))	\frac{1}{8}(-\sqrt{15}+\sqrt{3}+\sqrt{10+2\sqrt{5}})

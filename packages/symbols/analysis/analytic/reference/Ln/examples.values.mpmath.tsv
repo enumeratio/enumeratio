@@ -29,6 +29,7 @@ an-integer-power-negative-argument	log(-2)	(0.693147180559945309417232121458 + 3
 n-of-a-negative-integer-argument	(log(-2))	(0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
 ln-neg-6	log(-6)	(1.79175946922805500081247735838 + 3.14159265358979323846264338328j)
 n-of-a-negative-rational-argument	(log((mpf(-1)/2)))	(-0.693147180559945309417232121458 + 3.14159265358979323846264338328j)
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-inf)	
 inverse-of-exp-ln-e-x-x	almosteq(log(exp(5)), 5, 1e-20)	True
 product-rule-ln-ab-ln-a-ln-b	almosteq((log(2) + log(3)), log(6), 1e-20)	True
 powerexpand-splits-a-logarithm-of-a-product		

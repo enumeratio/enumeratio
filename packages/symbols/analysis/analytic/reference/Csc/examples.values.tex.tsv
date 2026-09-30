@@ -23,3 +23,4 @@ derivative-csc-x-cot-x	\frac{\mathrm{d}\csc(x)}{\mathrm{d}x}	-(\csc(x)\cot(x))
 antiderivative-ln-csc-x-cot-x	\int\!\csc(x)\, \mathrm{d}x	-\ln(\vert\csc(x)+\cot(x)\vert)
 reciprocal-of-sin-csc-x-frac-1-sin-x	\csc(\frac{\pi}{6})=\frac{1}{\sin(\frac{\pi}{6})}	\top
 a-pole-sin-0-0	\csc(0)	\tilde\infty
+csc-complexinfinity-is-indeterminate-for-the	\csc(\tilde\infty)	\operatorname{Indeterminate}
