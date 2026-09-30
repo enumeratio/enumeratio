@@ -73,10 +73,10 @@ test("a kernel parses text with the host's reader, and says why when it can't", 
 test("a session keeps its history, and a call outside it doesn't touch it", async () => {
   const lines: unknown[] = [];
   const kernel = createKernel(new ComputeEngine(), [], {
-    session: () => ({
-      run: (fn) => fn(),
-      record: (_source, _input, value) => lines.push(value),
-    }),
+    session: (_ce, id) =>
+      id === undefined
+        ? { run: (fn) => fn() }
+        : { run: (fn) => fn(), record: (_source, _input, value) => lines.push(value) },
   });
   expect(await kernel.evaluate({ json: ["Add", 1, 1], session: "a" })).toMatchObject({ json: 2, line: 1 });
   expect(await kernel.evaluate({ json: ["Add", 2, 2], session: "a" })).toMatchObject({ json: 4, line: 2 });
@@ -97,4 +97,32 @@ test("a translation reads and writes without evaluating", async () => {
     json: ["Add", 3, 4],
     written: 'x:["Add",3,4]',
   });
+});
+
+test("a call without a session binds nothing another call sees, and a closed session starts over", async () => {
+  const ce = new ComputeEngine();
+  const scopes: string[] = [];
+  const kernel = createKernel(ce, [], {
+    session: (_ce, id) => {
+      const scope = ce.createScope({});
+      scopes.push(id ?? "(own)");
+      return {
+        run: (fn) => {
+          ce.pushScope(scope);
+          try {
+            return fn();
+          } finally {
+            ce.popScope();
+          }
+        },
+      };
+    },
+  });
+  await kernel.evaluate({ json: ["Assign", "a", 5] });
+  expect((await kernel.evaluate({ json: "a" })).json).toBe("a");
+  await kernel.evaluate({ json: ["Assign", "b", 7], session: "s" });
+  expect((await kernel.evaluate({ json: "b", session: "s" })).json).toBe(7);
+  expect(await kernel.evaluate({ session: "s", close: true })).toMatchObject({ ok: true });
+  expect((await kernel.evaluate({ json: "b", session: "s" })).json).toBe("b");
+  expect(scopes).toEqual(["(own)", "(own)", "s", "s"]);
 });

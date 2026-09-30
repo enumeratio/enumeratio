@@ -46,9 +46,10 @@ export function writeSource(ce: ComputeEngine, json: unknown, syntax: string): s
   throw new Error(`no ${syntax} spelling`);
 }
 
-/** A notebook's session: a transcript's scope and, unless it's the page's, its history. */
-function transcriptSession(ce: ComputeEngine, id: string): KernelSession {
-  const transcript = new Transcript(ce, { history: id !== PAGE_SESSION });
+/** A notebook's session: a transcript's scope and, unless it's the page's or a call's own, its
+ *  history. Forgetting it is dropping it: the scope goes with it. */
+function transcriptSession(ce: ComputeEngine, id: string | undefined): KernelSession {
+  const transcript = new Transcript(ce, { history: id !== undefined && id !== PAGE_SESSION });
   return {
     run: (fn, input) =>
       transcript.run(() => {
