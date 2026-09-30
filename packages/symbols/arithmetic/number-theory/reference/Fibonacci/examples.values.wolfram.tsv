@@ -3,21 +3,23 @@ fibonacci-0	Fibonacci[0]	0	F_0	0
 fibonacci-1	Fibonacci[1]	1	F_1	1
 fibonacci-10	Fibonacci[10]	55	F_{10}	55
 fibonacci-20	Fibonacci[20]	6765	F_{20}	6765
-fibonacci-8	Fibonacci[8]			
-exact-at-any-size-f-100-has-21-digits	Fibonacci[100]			
-a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	Fibonacci[1.5]			
+fibonacci-8	Fibonacci[8]	21	F_8	21
+exact-at-any-size-f-100-has-21-digits	Fibonacci[100]	354224848179261915075	F_{100}	354224848179261915075
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	Fibonacci[1.5]	0.920442065259926	F_{1.5}	0.920442
 the-two-argument-fibonacci-polynomial-f-7-x-from	Fibonacci[7, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[F_7(x)-\left(x^6+5 x^4+6 x^2+1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[F_7\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^6+5 \left(\frac{7}{3}\right)^4+6 \left(\frac{7}{3}\right)^2+1\right)\right]\right],\text{Chop}\left[N\left[F_7\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^6+5 \left(-\frac{11}{5}\right)^4+6 \left(-\frac{11}{5}\right)^2+1\right)\right]\right],\text{Chop}\left[N\left[F_7\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^6+5 \left(\frac{13}{4}\right)^4+6 \left(\frac{13}{4}\right)^2+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-the-fibonacci-polynomial-at-a-real-order-and	Fibonacci[5.8, 3]			
-special-value-of-the-fibonacci-polynomial-f-1-0	Fibonacci[1, 0]			
-special-value-of-the-fibonacci-polynomial-f-0-0	Fibonacci[0, 0]			
-f-3-x-x-2-1-threads-element-wise-over-a-matrix	Fibonacci[3, List[List[-1, 0], List[0, 5]]]			
+the-fibonacci-polynomial-at-a-real-order-and	Fibonacci[5.8, 3]	283.4827308329499	F_{5.8}(3)	283.483
+special-value-of-the-fibonacci-polynomial-f-1-0	Fibonacci[1, 0]	1	F_1(0)	1
+special-value-of-the-fibonacci-polynomial-f-0-0	Fibonacci[0, 0]	0	F_0(0)	0
+f-3-x-x-2-1-threads-element-wise-over-a-matrix	Fibonacci[3, List[List[-1, 0], List[0, 5]]]	{{2, 1}, {1, 26}}	F_3\left(\left( \begin{array}{cc}  -1 & 0 \\  0 & 5 \\ \end{array} \right)\right)	\left( \begin{array}{cc}  2 & 1 \\  1 & 26 \\ \end{array} \right)
 threads-element-wise-over-a-list-as-wolfram-s	Fibonacci[List[1, 2, 3, 4]]	{1, 1, 2, 3}	F_{\{1,2,3,4\}}	\{1,1,2,3\}
+fibonacci-n-x-symbolic-order-stays-exact	Fibonacci[n, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[F_n(x)-\frac{\left(\frac{1}{2} \left(x+\sqrt{x^2+4}\right)\right)^n-\cos (\pi  n) \left(\frac{1}{2} \left(x+\sqrt{x^2+4}\right)\right)^{-n}}{\sqrt{x^2+4}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[F_{\frac{7}{3}}\left(-\frac{11}{5}\right)-\frac{\left(\frac{1}{2} \left(-\frac{11}{5}+\sqrt{\left(-\frac{11}{5}\right)^2+4}\right)\right)^{\frac{7}{3}}-\cos \left(\pi  \frac{7}{3}\right) \left(\frac{1}{2} \left(-\frac{11}{5}+\sqrt{\left(-\frac{11}{5}\right)^2+4}\right)\right)^{-\frac{7}{3}}}{\sqrt{\left(-\frac{11}{5}\right)^2+4}}\right]\right],\text{Chop}\left[N\left[F_{\frac{13}{4}}\left(-\frac{17}{6}\right)-\frac{\left(\frac{1}{2} \left(-\frac{17}{6}+\sqrt{\left(-\frac{17}{6}\right)^2+4}\right)\right)^{\frac{13}{4}}-\cos \left(\pi  \frac{13}{4}\right) \left(\frac{1}{2} \left(-\frac{17}{6}+\sqrt{\left(-\frac{17}{6}\right)^2+4}\right)\right)^{-\frac{13}{4}}}{\sqrt{\left(-\frac{17}{6}\right)^2+4}}\right]\right],\text{Chop}\left[N\left[F_{\frac{19}{8}}\left(-\frac{23}{9}\right)-\frac{\left(\frac{1}{2} \left(-\frac{23}{9}+\sqrt{\left(-\frac{23}{9}\right)^2+4}\right)\right)^{\frac{19}{8}}-\cos \left(\pi  \frac{19}{8}\right) \left(\frac{1}{2} \left(-\frac{23}{9}+\sqrt{\left(-\frac{23}{9}\right)^2+4}\right)\right)^{-\frac{19}{8}}}{\sqrt{\left(-\frac{23}{9}\right)^2+4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+fibonacci-half-x-exact-closed-form	Fibonacci[Rational[1, 2], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[F_{\frac{1}{2}}(x)-\frac{\sqrt{2} \sqrt{x+\sqrt{x^2+4}}}{2 \sqrt{x^2+4}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[F_{\frac{1}{2}}\left(\frac{7}{3}\right)-\frac{\sqrt{2} \sqrt{\frac{7}{3}+\sqrt{\left(\frac{7}{3}\right)^2+4}}}{2 \sqrt{\left(\frac{7}{3}\right)^2+4}}\right]\right],\text{Chop}\left[N\left[F_{\frac{1}{2}}\left(-\frac{11}{5}\right)-\frac{\sqrt{2} \sqrt{-\frac{11}{5}+\sqrt{\left(-\frac{11}{5}\right)^2+4}}}{2 \sqrt{\left(-\frac{11}{5}\right)^2+4}}\right]\right],\text{Chop}\left[N\left[F_{\frac{1}{2}}\left(\frac{13}{4}\right)-\frac{\sqrt{2} \sqrt{\frac{13}{4}+\sqrt{\left(\frac{13}{4}\right)^2+4}}}{2 \sqrt{\left(\frac{13}{4}\right)^2+4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
 consecutive-ratios-f-n-1-f-n-converge-to-the	Divide[Fibonacci[20], Fibonacci[19]]	6765/4181	\frac{F_{20}}{F_{19}}	\frac{6765}{4181}
-sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	Sum[Fibonacci[k], List[k, 1, 10]]			
-the-doubling-identity-f-2n-f-n-l-n-see-lucasl	(Fibonacci[20] == Times[Fibonacci[10], LucasL[10]])			
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	Sum[Fibonacci[k], List[k, 1, 10]]	143	\sum _{k=1}^{10} F_k	143
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	(Fibonacci[20] == Times[Fibonacci[10], LucasL[10]])	True	F_{20}=F_{10} L_{10}	\text{True}
 the-defining-recurrence-f-10-f-9-f-8	(Fibonacci[10] == Plus[Fibonacci[9], Fibonacci[8]])	True	F_{10}=F_9+F_8	\text{True}
 cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]	1	F_5 F_7-\left(F_6\right){}^2	1
 gcd-f-12-f-18-f-gcd-12-18	(GCD[Fibonacci[12], Fibonacci[18]] == Fibonacci[GCD[12, 18]])	True	\gcd \left(F_{12},F_{18}\right)=F_{\gcd (12,18)}	\text{True}
 negative-indices-are-supported-via-f-n-1-n-1-f-n	Fibonacci[-5]	5	F_{-5}	5
-f-1000-has-209-digits-see-integerdigits	Length[IntegerDigits[Fibonacci[1000]]]			
+f-1000-has-209-digits-see-integerdigits	Length[IntegerDigits[Fibonacci[1000]]]	209	\text{Length}\left[\text{IntegerDigits}\left[F_{1000}\right]\right]	209
 they-grow-fast-f-50-already-exceeds-twelve	Fibonacci[50]	12586269025	F_{50}	12586269025
