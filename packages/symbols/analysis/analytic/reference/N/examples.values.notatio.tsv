@@ -30,6 +30,8 @@ n-exponentiale-pow-sin-1-000	<N><Power>ExponentialE <Sin>1000</Sin></Power></N>	
 n-exponentiale-pow-sin-1-000-47	<N><Power>ExponentialE <Sin>1000</Sin></Power> 47</N>	<ToExpression>2.286173685812171102225890854533061221871278512</ToExpression>
 n-1-minus-goldenratio-plus-1-over-goldenratio-20	<N><Add>1 <Negate>GoldenRatio</Negate> <Divide>1 GoldenRatio</Divide></Add> 20</N>	<ToExpression>-2.0e-340</ToExpression>
 n-1-minus-goldenratio-plus-1-over-goldenratio	<N><Add>1 <Negate>GoldenRatio</Negate> <Divide>1 GoldenRatio</Divide></Add> <List>PositiveInfinity 20</List></N>	<ToExpression>4.13e-22</ToExpression>
+n-exponentiale-pow-100-list-positiveinfinity-neg	<N><Power>ExponentialE 100</Power> <List>PositiveInfinity -10</List></N>	<ToExpression>2.68811714181613544841e+43</ToExpression>
+n-10-000-000-000-times-neg-exponentiale-pow-999	<N><Multiply>10000000000 <Add><Negate><Power>ExponentialE <Rational>999999999999 10000000000</Rational></Power></Negate> <Power>ExponentialE 100</Power></Add></Multiply> <List>PositiveInfinity 20</List></N>	<ToExpression>2.6881171417e+43</ToExpression>
 an-exact-tie-rounds-to-the-even-digit-0-125	<N><Rational>1 8</Rational> 2</N>	<ToExpression>0.12</ToExpression>
 and-0-375-to-0-38	<N><Rational>3 8</Rational> 2</N>	<ToExpression>0.38</ToExpression>
 n-pi-1-digit	<N>Pi 1</N>	<ToExpression>3</ToExpression>

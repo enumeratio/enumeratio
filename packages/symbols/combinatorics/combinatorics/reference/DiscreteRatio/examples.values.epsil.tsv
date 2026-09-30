@@ -26,3 +26,5 @@ discreteratio-qpochhammer-a-q-x-x	DiscreteRatio(QPochhammer(a, q, x), x)	QPochha
 discreteratio-qbinomial-a-x-q-times-qfactorial-x	"DiscreteRatio(\n               QBinomial(a, x, q) * QFactorial(x, q) * QPochhammer(b, q, x) ^ -1,\n               x,\n             )"	"QPochhammer(b, q, x) * QFactorial(x + 1, q) * QBinomial(a, x + 1, q) / (QPochhammer(b, q, x + 1) *\n                                                                        QFactorial(x, q) *\n                                                                        QBinomial(a, x, q))"
 discreteratio-barnesg-x-x	DiscreteRatio(BarnesG(x), x)	BarnesG(x + 1) / BarnesG(x)
 discreteratio-hyperfactorial-x-x	DiscreteRatio(Hyperfactorial(x), x)	Hyperfactorial(x + 1) / Hyperfactorial(x)
+discreteratio-betaregularized-z-n-m-m	DiscreteRatio(betaRegularized(z, n, m), m)	betaRegularized(z, n, m + 1) / betaRegularized(z, n, m)
+discreteratio-c-pow-a-times-k-plus-b-k	DiscreteRatio(c ^ (a * k + b), k)	c ^ a

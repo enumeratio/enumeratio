@@ -12,6 +12,8 @@ real-0	<Real>0</Real>	<ToExpression>0</ToExpression>
 real-positiveinfinity	<Real>PositiveInfinity</Real>	<PositiveInfinity />
 real-positiveinfinity-times-i	<Real><Multiply>PositiveInfinity <Complex>0 1</Complex></Multiply></Real>	<Indeterminate />
 real-complexinfinity	<Real>ComplexInfinity</Real>	<Indeterminate />
+piecewiseexpand-re-imaginaryunit-times-x-neg-2	<PiecewiseExpand><Re><Multiply>ImaginaryUnit x</Multiply></Re> <Less>-2 x 2</Less></PiecewiseExpand>	<Real><Multiply><Complex>0 1</Complex> x</Multiply></Real>
+simplify-re-x-x-gt-0	<Simplify><Re>x</Re> <Greater>x 0</Greater></Simplify>	<Real>x</Real>
 re-of-a-symbolic-value-stays-unevaluated	<Re>x</Re>	<Real>x</Real>
 real-1	<Real>1</Real>	<ToExpression>1</ToExpression>
 real-neg-1	<Real>-1</Real>	<ToExpression>-1</ToExpression>
@@ -25,3 +27,9 @@ real-sqrt-3-plus-i	<Real><Add><Sqrt>3</Sqrt> <Complex>0 1</Complex></Add></Real>
 real-1-plus-sqrt-3-times-i	<Real><Add>1 <Complex>0 <Sqrt>3</Sqrt></Complex></Add></Real>	<ToExpression>1</ToExpression>
 real-neg-1-plus-sqrt-3-times-i	<Real><Add>-1 <Complex>0 <Sqrt>3</Sqrt></Complex></Add></Real>	<ToExpression>-1</ToExpression>
 real-neg-sqrt-3-plus-i	<Real><Add><Negate><Sqrt>3</Sqrt></Negate> <Complex>0 1</Complex></Add></Real>	<Negate><Sqrt>3</Sqrt></Negate>
+list-real-x-times-exponentiale-pow-1-over-5	<List><Real><Multiply>x <Power>ExponentialE <Multiply><Complex>0 <Rational>1 5</Rational></Complex> Pi</Multiply></Power></Multiply></Real> <Real><Add><Multiply>2 x</Multiply> <Complex>0 1</Complex></Add></Real></List>	<List><Real><Multiply>x <Add><Rational>1 4</Rational> <Divide><Sqrt>5</Sqrt> 4</Divide> <Multiply><Complex>0 <Divide><Sqrt>2</Sqrt> 4</Divide></Complex> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply></Add></Multiply></Real> <Real><Add><Multiply>2 x</Multiply> <Complex>0 1</Complex></Add></Real></List>
+real-neg-sqrt-3-minus-i	<Real><Add><Negate><Sqrt>3</Sqrt></Negate> <Complex>0 -1</Complex></Add></Real>	<Negate><Sqrt>3</Sqrt></Negate>
+real-neg-1-plus-neg-sqrt-3-times-i	<Real><Add>-1 <Complex>0 <Negate><Sqrt>3</Sqrt></Negate></Complex></Add></Real>	<ToExpression>-1</ToExpression>
+real-1-plus-neg-sqrt-3-times-i	<Real><Add>1 <Complex>0 <Negate><Sqrt>3</Sqrt></Negate></Complex></Add></Real>	<ToExpression>1</ToExpression>
+real-sqrt-3-minus-i	<Real><Add><Sqrt>3</Sqrt> <Complex>0 -1</Complex></Add></Real>	<Sqrt>3</Sqrt>
+real-2	<Real>2</Real>	<ToExpression>2</ToExpression>

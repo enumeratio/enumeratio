@@ -26,4 +26,5 @@ a-symbolic-matrix-stays-unevaluated-wolfram	matrixRank([[x, 1], [1, x]])	matrixR
 a-vector-is-treated-as-a-1-n-matrix-wolfram	matrixRank([1, 2, 3])	1	
 a-non-square-matrix-of-distinct-symbols-stays	matrixRank([[a, b, c], [d, g, h]])	matrixRank([[a, b, c], [d, g, h]])	
 repeating-a-symbol-across-rows-doesn-t-qualify	matrixRank([[a, b], [a, b]])	1	
+matrixrank-list-list-1-0-list-0-0	matrixRank([[1, 0], [0, 0]])	1	
 every-matrix-with-entries-i-j-has-rank-2	matrixRank(tabulate(Add, 4, 4))	2	

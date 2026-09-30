@@ -12,3 +12,6 @@ differencedelta-i-pow-2-plus-i-plus-1-times-2	DifferenceDelta((i ^ 2 + i + 1) * 
 differencedelta-i-plus-1-times-i-plus-3-pow-ne-2	DifferenceDelta((i + 1) * (i + 3) ^ -1 * 2 ^ i, i)	(-2 / 5 + -1 / 5 * i) * 2 ^ i + (9 / 17 + 2 / 17 * i) * 2 ^ (1 + i)
 differencedelta-sin-a-times-i-plus-b-i	DifferenceDelta(sin(a * i + b), i)	-sin(i * a + b) + sin((1 + i) * a + b)
 differencedelta-sinh-a-times-i-plus-b-i	DifferenceDelta(sinh(a * i + b), i)	-sinh(i * a + b) + sinh((1 + i) * a + b)
+differencedelta-binomial-i-plus-n-n-i	DifferenceDelta(binomial(i + n, n), i)	-binomial(n + i, n) + binomial(n + 1 + i, n)
+differencedelta-gamma-i-i	DifferenceDelta(gamma(i), i)	-gamma(i) + gamma(1 + i)
+differencedelta-beta-i-n-i	DifferenceDelta(beta(i, n), i)	-beta(i, n) + beta(1 + i, n)

@@ -14,3 +14,5 @@ laplacetransform-gamma-nu-a-times-1-over-t-t-s	LaplaceTransform(gamma(nu, a * (1
 laplacetransform-diracdelta-t-minus-1-t-s	LaplaceTransform(DiracDelta(t - 1), t, s)	exponentialE ^ (-s)	
 laplacetransform-1-over-gamma-m-plus-1-times	"LaplaceTransform(\n                  1 / (gamma(m + 1) * gamma(n + 1)) * x ^ m * y ^ n,\n                  [x, y],\n                  [p, q],\n                )"	LaplaceTransform(x ^ m * y ^ n / (gamma(m + 1) * gamma(n + 1)), [x, y], [p, q])	
 laplacetransform-1-over-sqrt-x-times-y-times-cos	LaplaceTransform(1 / sqrt(x * y) * cos(sqrt(x * y)), [x, y], [p, q])	LaplaceTransform(cos(sqrt(x * y)) / (sqrt(x) * sqrt(y)), [x, y], [p, q])	
+laplacetransform-1-over-t-times-sin-3t-t-s	LaplaceTransform(1 / t * sin(3t), t, s)	LaplaceTransform(sin(3t) / t, t, s)	
+fullsimplify-laplacetransform-realabs-sin-t-t-s	FullSimplify(LaplaceTransform(RealAbs(sin(t)), t, s))	LaplaceTransform(abs(sin(t)), t, s)	

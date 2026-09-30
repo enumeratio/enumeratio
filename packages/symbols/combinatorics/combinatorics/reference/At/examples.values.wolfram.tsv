@@ -49,4 +49,6 @@ list-a-b-c-d-exponentiale-list-3	Part[List[a, b, c, d, E], 3]	True	\text{Module}
 list-a-b-c-d-exponentiale-list-span-2-4	Part[List[a, b, c, d, E], Span[2, 4]]	{b, c, d}	\{a,b,c,d,e\}[[2\text{;;}4]]	\{b,c,d\}	
 chaining-at-reaches-into-nested-collections-like	Part[Part[List[List[1, 2], List[3, 4]], 2], 1]	3	\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)[[2]][[1]]	3	
 list-a-b-c-d-exponentiale-list-list-4-5-1-2-3	Part[List[a, b, c, d, E], List[4, 5, 1, 2, 3]]	{d, E, a, b, c}	\{a,b,c,d,e\}[[\{4,5,1,2,3\}]]	\{d,e,a,b,c\}	
+list-a-b-c-list-0	Part[List[a, b, c], 0]	List	\{a,b,c\}[[0]]	\text{List}	
+list-1-2-3-list-list	Part[List[1, 2, 3], List[]]	{}	\{1,2,3\}[[\{\}]]	\{\}	
 an-out-of-range-index-evaluates-to-nan-rather	Part[List[1, 2, 3], 10]	{1, 2, 3}[[10]]	\{1,2,3\}[[10]]	\{1,2,3\}[[10]]	disagree

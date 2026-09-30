@@ -11,3 +11,6 @@ hankeltransform-1-over-r-times-exponentiale-pow	HankelTransform[Times[Divide[1, 
 hankeltransform-neg-exponentiale-pow-neg-m-times	HankelTransform[Times[Plus[Minus[Power[E, Minus[Times[m, r]]]], 1], Power[r, -2]], r, s]
 hankeltransform-1-over-r-times-exponentiale-po-2	HankelTransform[Times[Divide[1, r], Power[E, Minus[Times[Power[a, 2], Power[r, 2]]]]], r, s]
 hankeltransform-ln-a-pow-2-times-r-pow-neg-2	HankelTransform[Log[Plus[Times[Power[a, 2], Power[r, -2]], 1]], r, s]
+hankeltransform-1-over-b-pow-2-plus-r-pow-2	HankelTransform[Times[Divide[1, Plus[Power[b, 2], Power[r, 2]]], Sin[r]], r, s]
+hankeltransform-1-over-r-times-erfc-r-r-s	HankelTransform[Times[Divide[1, r], Erfc[r]], r, s]
+hankeltransform-1-over-r-times-expintegrale-1-r	HankelTransform[Times[Divide[1, r], ExpIntegralE[1, r]], r, s]

@@ -26,4 +26,5 @@ a-symbolic-matrix-stays-unevaluated-wolfram	Possible issues		[MatrixRank, [List,
 a-vector-is-treated-as-a-1-n-matrix-wolfram	Possible issues		[MatrixRank, [List, 1, 2, 3]]	1	A vector is treated as a 1×n matrix (Wolfram rejects it)		domain	Wolfram leaves `MatrixRank[{1, 2, 3}]` unevaluated: a vector is not a matrix.
 a-non-square-matrix-of-distinct-symbols-stays	Possible issues		[MatrixRank, [List, [List, a, b, c], [List, d, g, h]]]	[MatrixRank, [List, [List, a, b, c], [List, d, g, h]]]	A non-square matrix of distinct symbols doesn't qualify for the full-rank rule -- it stays unevaluated			
 repeating-a-symbol-across-rows-doesn-t-qualify	Possible issues		[MatrixRank, [List, [List, a, b], [List, a, b]]]	1	Repeating a symbol across rows doesn't qualify either -- native compute-engine still answers this one directly (rank 1, equal rows)			
+matrixrank-list-list-1-0-list-0-0	Possible issues		[MatrixRank, [List, [List, 1, 0], [List, 0, 0]]]	1				
 every-matrix-with-entries-i-j-has-rank-2	Neat examples		[MatrixRank, [Tabulate, Add, 4, 4]]	2	Every matrix with entries $i + j$ has rank 2, whatever its size			

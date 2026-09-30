@@ -11,3 +11,6 @@ hankeltransform-1-over-r-times-exponentiale-pow	HankelTransform(1 / r * exponent
 hankeltransform-neg-exponentiale-pow-neg-m-times	HankelTransform((-exponentialE ^ (-(m * r)) + 1) * r ^ -2, r, s)	HankelTransform((-exponentialE ^ (-(m * r)) + 1) / r ^ 2, r, s)
 hankeltransform-1-over-r-times-exponentiale-po-2	HankelTransform(1 / r * exponentialE ^ (-(a ^ 2 * r ^ 2)), r, s)	HankelTransform(exponentialE ^ (-(a ^ 2 * r ^ 2)) / r, r, s)
 hankeltransform-ln-a-pow-2-times-r-pow-neg-2	HankelTransform(ln(a ^ 2 * r ^ -2 + 1), r, s)	HankelTransform(ln(a ^ 2 / r ^ 2 + 1), r, s)
+hankeltransform-1-over-b-pow-2-plus-r-pow-2	HankelTransform(1 / (b ^ 2 + r ^ 2) * sin(r), r, s)	HankelTransform(sin(r) / (b ^ 2 + r ^ 2), r, s)
+hankeltransform-1-over-r-times-erfc-r-r-s	HankelTransform(1 / r * erfc(r), r, s)	HankelTransform(erfc(r) / r, r, s)
+hankeltransform-1-over-r-times-expintegrale-1-r	HankelTransform(1 / r * ExpIntegralE(1, r), r, s)	HankelTransform(ExpIntegralE(1, r) / r, r, s)

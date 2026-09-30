@@ -30,6 +30,8 @@ n-exponentiale-pow-sin-1-000	N(exponentialE ^ sin(1_000))	2.286_173_685_812_171_
 n-exponentiale-pow-sin-1-000-47	N(exponentialE ^ sin(1_000), 47)	2.286_173_685_812_171_102_225_890_854_533_061_221_871_278_512
 n-1-minus-goldenratio-plus-1-over-goldenratio-20	N(1 - goldenRatio + 1 / goldenRatio, 20)	-2.0e-340
 n-1-minus-goldenratio-plus-1-over-goldenratio	N(1 - goldenRatio + 1 / goldenRatio, [positiveInfinity, 20])	4.13e-22
+n-exponentiale-pow-100-list-positiveinfinity-neg	N(exponentialE ^ 100, [positiveInfinity, -10])	2.688_117_141_816_135_448_41e43
+n-10-000-000-000-times-neg-exponentiale-pow-999	"N(\n   10_000_000_000 * (-exponentialE ^ (999_999_999_999 / 10_000_000_000) + exponentialE ^\n                                                                          100),\n   [positiveInfinity, 20],\n )"	2.688_117_141_7e43
 an-exact-tie-rounds-to-the-even-digit-0-125	N(1 / 8, 2)	0.12
 and-0-375-to-0-38	N(3 / 8, 2)	0.38
 n-pi-1-digit	N(pi, 1)	3

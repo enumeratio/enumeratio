@@ -9,3 +9,7 @@ no-closed-form	\mathrm{GeneratingFunction}(n!, n, x)	\mathrm{GeneratingFunction}
 list-generatingfunction-n-n-z-generatingfunction	\bigl\lbrack\mathrm{GeneratingFunction}(n, n, z), \mathrm{GeneratingFunction}(n^2, n, z)\bigr\rbrack	\bigl\lbrack(z)(z^2-2z+1)^{-1}, \frac{z^2+z}{-z^3+3z^2-3z+1}\bigr\rbrack
 list-generatingfunction-unitstep-n-n-z	\bigl\lbrack\mathrm{GeneratingFunction}(\mathrm{UnitStep}(n), n, z), \mathrm{GeneratingFunction}(\mathrm{UnitStep}(n-3), n, z)\bigr\rbrack	\bigl\lbrack\frac{1}{1-z}, \mathrm{GeneratingFunction}(\mathrm{UnitStep}(n-3), n, z)\bigr\rbrack
 list-generatingfunction-n-times-unitstep-n-n-z	\bigl\lbrack\mathrm{GeneratingFunction}(n\mathrm{UnitStep}(n), n, z), \mathrm{GeneratingFunction}((n-3)\mathrm{UnitStep}(n-3), n, z)\bigr\rbrack	\bigl\lbrack(z)(z^2-2z+1)^{-1}, \mathrm{GeneratingFunction}((n-3)\mathrm{UnitStep}(n-3), n, z)\bigr\rbrack
+generatingfunction-n-n-z	\mathrm{GeneratingFunction}(n, n, z)	(z)(z^2-2z+1)^{-1}
+generatingfunction-n-pow-2-n-z	\mathrm{GeneratingFunction}(n^2, n, z)	\frac{z^2+z}{-z^3+3z^2-3z+1}
+list-generatingfunction-n-times-n-factorial-pow	\bigl\lbrack\mathrm{GeneratingFunction}(\frac{n}{n!}, n, z), \mathrm{ExponentialGeneratingFunction}(n, n, z)\bigr\rbrack	\bigl\lbrack\mathrm{GeneratingFunction}(\frac{n}{n!}, n, z), ze^{z}\bigr\rbrack
+list-sum-2-pow-n-n-0-positiveinfinity	\bigl\lbrack\sum_{n=0}^{\infty}2^{n}, \mathrm{GeneratingFunction}(2^{n}, n, 1)\bigr\rbrack	\bigl\lbrack\sum_{n=0}^{\infty}2^{n}, -1\bigr\rbrack

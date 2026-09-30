@@ -1,0 +1,16 @@
+id	in	out
+exp-neg-ar-order0		
+one-over-r		
+one-over-sqrt-r2-a2		
+hankeltransform-exponentiale-pow-neg-r-r-s		
+hankeltransform-1-over-r-pow-2-plus-1-times-cos		
+exp-neg-ar-order1		
+hankeltransform-1-over-r-times-sin-r-r-1-over-3		
+hankeltransform-1-over-r-times-sin-r-r-s		
+hankeltransform-1-over-r-times-exponentiale-pow		
+hankeltransform-neg-exponentiale-pow-neg-m-times		
+hankeltransform-1-over-r-times-exponentiale-po-2		
+hankeltransform-ln-a-pow-2-times-r-pow-neg-2		
+hankeltransform-1-over-b-pow-2-plus-r-pow-2		
+hankeltransform-1-over-r-times-erfc-r-r-s	\mathrm{HankelTransform}(\frac{\operatorname{erfc}(r)}{r}, r, s)	\mathrm{HankelTransform}(\frac{\operatorname{erfc}(r)}{r}, r, s)
+hankeltransform-1-over-r-times-expintegrale-1-r		

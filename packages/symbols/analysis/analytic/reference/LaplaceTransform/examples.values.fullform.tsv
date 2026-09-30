@@ -14,3 +14,5 @@ laplacetransform-gamma-nu-a-times-1-over-t-t-s	LaplaceTransform[Gamma[nu, Times[
 laplacetransform-diracdelta-t-minus-1-t-s	LaplaceTransform[DiracDelta[Plus[t, -1]], t, s]
 laplacetransform-1-over-gamma-m-plus-1-times	LaplaceTransform[Times[Divide[1, Times[Gamma[Plus[m, 1]], Gamma[Plus[n, 1]]]], Power[x, m], Power[y, n]], List[x, y], List[p, q]]
 laplacetransform-1-over-sqrt-x-times-y-times-cos	LaplaceTransform[Times[Divide[1, Sqrt[Times[x, y]]], Cos[Sqrt[Times[x, y]]]], List[x, y], List[p, q]]
+laplacetransform-1-over-t-times-sin-3t-t-s	LaplaceTransform[Times[Divide[1, t], Sin[Times[3, t]]], t, s]
+fullsimplify-laplacetransform-realabs-sin-t-t-s	FullSimplify[LaplaceTransform[RealAbs[Sin[t]], t, s]]

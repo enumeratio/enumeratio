@@ -14,3 +14,5 @@ laplacetransform-gamma-nu-a-times-1-over-t-t-s	\mathrm{LaplaceTransform}(\Gamma(
 laplacetransform-diracdelta-t-minus-1-t-s	\mathrm{LaplaceTransform}(\mathrm{DiracDelta}(t-1), t, s)	e^{-s}
 laplacetransform-1-over-gamma-m-plus-1-times	\mathrm{LaplaceTransform}(\frac{x^{m}y^{n}}{\Gamma(m+1)\Gamma(n+1)}, \bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack p, q\bigr\rbrack)	\mathrm{LaplaceTransform}(\frac{x^{m}y^{n}}{\Gamma(m+1)\Gamma(n+1)}, \bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack p, q\bigr\rbrack)
 laplacetransform-1-over-sqrt-x-times-y-times-cos	\mathrm{LaplaceTransform}(\frac{\cos(\sqrt{xy})}{\sqrt{xy}}, \bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack p, q\bigr\rbrack)	\mathrm{LaplaceTransform}(\frac{\cos(\sqrt{xy})}{\sqrt{x}\sqrt{y}}, \bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack p, q\bigr\rbrack)
+laplacetransform-1-over-t-times-sin-3t-t-s	\mathrm{LaplaceTransform}(\frac{\sin(3t)}{t}, t, s)	\mathrm{LaplaceTransform}(\frac{\sin(3t)}{t}, t, s)
+fullsimplify-laplacetransform-realabs-sin-t-t-s	\mathrm{FullSimplify}(\mathrm{LaplaceTransform}(\mathrm{RealAbs}(\sin(t)), t, s))	\mathrm{LaplaceTransform}(\vert\sin(t)\vert, t, s)

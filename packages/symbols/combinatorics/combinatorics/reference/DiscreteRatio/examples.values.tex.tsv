@@ -26,3 +26,5 @@ discreteratio-qpochhammer-a-q-x-x	\mathrm{DiscreteRatio}(\mathrm{QPochhammer}(a,
 discreteratio-qbinomial-a-x-q-times-qfactorial-x	\mathrm{DiscreteRatio}(\frac{\mathrm{QBinomial}(a, x, q)\mathrm{QFactorial}(x, q)}{\mathrm{QPochhammer}(b, q, x)}, x)	\frac{\mathrm{QPochhammer}(b, q, x)\mathrm{QFactorial}(x+1, q)\mathrm{QBinomial}(a, x+1, q)}{\mathrm{QPochhammer}(b, q, x+1)\mathrm{QFactorial}(x, q)\mathrm{QBinomial}(a, x, q)}
 discreteratio-barnesg-x-x	\mathrm{DiscreteRatio}(\mathrm{BarnesG}(x), x)	\frac{\mathrm{BarnesG}(x+1)}{\mathrm{BarnesG}(x)}
 discreteratio-hyperfactorial-x-x	\mathrm{DiscreteRatio}(\mathrm{Hyperfactorial}(x), x)	\frac{\mathrm{Hyperfactorial}(x+1)}{\mathrm{Hyperfactorial}(x)}
+discreteratio-betaregularized-z-n-m-m	\mathrm{DiscreteRatio}(\operatorname{BetaRegularized}(z, n, m), m)	\frac{\operatorname{BetaRegularized}(z, n, m+1)}{\operatorname{BetaRegularized}(z, n, m)}
+discreteratio-c-pow-a-times-k-plus-b-k	\mathrm{DiscreteRatio}(c^{ak+b}, k)	c^{a}

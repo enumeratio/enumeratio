@@ -12,3 +12,6 @@ differencedelta-i-pow-2-plus-i-plus-1-times-2	\mathrm{DifferenceDelta}((i^2+i+1)
 differencedelta-i-plus-1-times-i-plus-3-pow-ne-2	\mathrm{DifferenceDelta}(\frac{(i+1)\times2^{i}}{i+3}, i)	(-\frac{2}{5}-\frac{1}{5}i)\times2^{i}+(\frac{9}{17}+\frac{2}{17}i)\times2^{1+i}
 differencedelta-sin-a-times-i-plus-b-i	\mathrm{DifferenceDelta}(\sin(ai+b), i)	\sin((1+i)a+b)-\sin(i a+b)
 differencedelta-sinh-a-times-i-plus-b-i	\mathrm{DifferenceDelta}(\sinh(ai+b), i)	\sinh((1+i)a+b)-\sinh(i a+b)
+differencedelta-binomial-i-plus-n-n-i	\mathrm{DifferenceDelta}(\binom{i+n}{n}, i)	\binom{n+(1+i)}{n}-\binom{n+i}{n}
+differencedelta-gamma-i-i	\mathrm{DifferenceDelta}(\Gamma(i), i)	\Gamma(1+i)-\Gamma(i)
+differencedelta-beta-i-n-i	\mathrm{DifferenceDelta}(\mathrm{B}(i, n), i)	\mathrm{B}(1+i, n)-\mathrm{B}(i, n)

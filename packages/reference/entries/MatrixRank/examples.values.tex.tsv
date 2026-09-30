@@ -26,4 +26,5 @@ a-symbolic-matrix-stays-unevaluated-wolfram	\operatorname{rank}(\bigl\lbrack\big
 a-vector-is-treated-as-a-1-n-matrix-wolfram	\operatorname{rank}(\bigl\lbrack1, 2, 3\bigr\rbrack)	1
 a-non-square-matrix-of-distinct-symbols-stays	\operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, g, h\bigr\rbrack\bigr\rbrack)	\operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, g, h\bigr\rbrack\bigr\rbrack)
 repeating-a-symbol-across-rows-doesn-t-qualify	\operatorname{rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack a, b\bigr\rbrack\bigr\rbrack)	1
+matrixrank-list-list-1-0-list-0-0	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)	1
 every-matrix-with-entries-i-j-has-rank-2	\operatorname{rank}(\mathrm{Tabulate}(\mathrm{Add}, 4, 4))	2
