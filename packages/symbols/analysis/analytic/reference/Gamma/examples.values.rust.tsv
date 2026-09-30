@@ -32,6 +32,10 @@ listable-threads-elementwise-over-a-matrix-and
 interval-arithmetic-the-image-of-1-4-1-5-whose			
 uncertainty-propagation-gamma-2-5-pm-0-01-1-3293			
 to-40-significant-digits-every-one-correctly	nf(gamma(rational(n(1), n(3))))	2.6789385347077475	
+gamma-neg-infty-indeterminate			
+gamma-complex-infinity-indeterminate			
+gamma-i-infty-0			
+gamma-threads-over-the-infinities			
 the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2	equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))	true	
 extends-the-factorial-gamma-n-1-n-so-gamma-6-5	equal(gamma(n(6)), factorial(n(5)))	true	
 functional-equation-gamma-z-1-z-gamma-z-here-at	equal(gamma(n(6)), (n(5) * gamma(n(5))))	true	

@@ -8,6 +8,7 @@ import { barnesGPatch } from "./patches/barnes-g.ts";
 import { logGammaPatch } from "./patches/log-gamma.ts";
 import { clausenPatch } from "./patches/clausen.ts";
 import { stieltjes } from "./patches/stieltjes.ts";
+import { gammaInfinity } from "./patches/gamma-infinity.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -86,6 +87,7 @@ export {
   barnesGPi,
 } from "./patches/barnes-g.ts";
 export { logGammaPatch, evaluateLogGamma, logGamma, logGammaReal, logGammaBig } from "./patches/log-gamma.ts";
+export { gammaInfinity, evaluateGammaAtInfinity } from "./patches/gamma-infinity.ts";
 export { clausenPatch, evaluateClausen, clausen } from "./patches/clausen.ts";
 export {
   stieltjes,
@@ -177,6 +179,7 @@ export const PATCHES: readonly Patch[] = [
   logGammaPatch,
   clausenPatch,
   stieltjes,
+  gammaInfinity,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */
