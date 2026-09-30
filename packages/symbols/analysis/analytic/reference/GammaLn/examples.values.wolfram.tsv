@@ -1,19 +1,19 @@
-id	in	out	tex.in	tex.out
-a-pole-of-gamma-in-log-form	LogGamma[0]	Infinity	\text{log$\Gamma $}(0)	\infty
-a-floating-point-argument-evaluates-directly-to	LogGamma[2.5]	0.2846828704729192	\text{log$\Gamma $}(2.5)	0.284683
-ln-gamma-100-5-where-gamma-100-5-itself-is-about	LogGamma[100.5]			
-at-a-pole-of-gamma-compute-engine-gives-the-real	LogGamma[-1]			
-complex-arguments-here-the-principal-ln-gamma-z	LogGamma[Complex[2.5, 3]]			
-a-huge-inexact-argument-should-still-evaluate	LogGamma[1.0*^1000]			
-threads-over-a-list-and-the-integer-points	LogGamma[List[1, 2, 3]]			
-uncertainty-propagation-through-ln-gamma-with	LogGamma[Around[1.2, 0.01]]			
-to-30-significant-digits-not-yet-the-last-digit	N[LogGamma[Rational[1, 3]], 30]			
-used-to-get-ln-n-for-large-n-without-overflowing	(LogGamma[11] == Log[Factorial[10]])	True	\text{log$\Gamma $}(11)=\log (10!)	\text{True}
-defined-as-ln-gamma-z-here-at-z-5	(LogGamma[5] == Log[Gamma[5]])	True	\text{log$\Gamma $}(5)=\log (\Gamma (5))	\text{True}
-gammaln-1-ln-gamma-1-ln-1-0	(LogGamma[1] == 0)	True	\text{log$\Gamma $}(1)=0	\text{True}
-inherits-gamma-s-recurrence-gammaln-z-1-gammaln	(LogGamma[6] == Plus[LogGamma[5], Log[5]])	True	\text{log$\Gamma $}(6)=\text{log$\Gamma $}(5)+\log (5)	\text{True}
-gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	(LogGamma[Rational[1, 2]] == Times[Rational[1, 2], Log[Pi]])	True	\text{log$\Gamma $}\left(\frac{1}{2}\right)=\frac{1}{2} \log (\pi )	\text{True}
-an-exact-positive-integer-now-reduces-too	LogGamma[5]	Log[24]	\text{log$\Gamma $}(5)	\log (24)
-the-derivative-of-ln-gamma-is-the-digamma	D[LogGamma[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{log$\Gamma $}(x)}{\partial x}-\psi (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{log$\Gamma $}\left(\frac{7}{3}\right)-\psi \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{log$\Gamma $}\left(-\frac{11}{5}\right)-\psi \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{log$\Gamma $}\left(\frac{13}{4}\right)-\psi \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-off-the-positive-axis-gammaln-is-the-principal	LogGamma[-1.5]			
-gammaln-101-is-exactly-ln-100-letting-us-reason	(LogGamma[101] == Log[Factorial[100]])	True	\text{log$\Gamma $}(101)=\log (100!)	\text{True}
+id	in	out	shown	tex.in	tex.out	verdict
+a-pole-of-gamma-in-log-form	LogGamma[0]	Infinity		\text{log$\Gamma $}(0)	\infty	
+a-floating-point-argument-evaluates-directly-to	LogGamma[2.5]	0.2846828704729192		\text{log$\Gamma $}(2.5)	0.284683	
+ln-gamma-100-5-where-gamma-100-5-itself-is-about	LogGamma[100.5]	361.4355404677776		\text{log$\Gamma $}(100.5)	361.436	
+at-a-pole-of-gamma-compute-engine-gives-the-real	LogGamma[-1]	Infinity		\text{log$\Gamma $}(-1)	\infty	
+complex-arguments-here-the-principal-ln-gamma-z	LogGamma[Complex[2.5, 3]]	-1.4709546103488407 + 2.8226156382607996*I		\text{log$\Gamma $}(2.5\, +3 i)	-1.47095+2.82262 i	
+a-huge-inexact-argument-should-still-evaluate	LogGamma[1.0*^1000]	2.3015850929940456840179914546843642074681`15.95402405786296*^1003	23015850929940460000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000.	\text{log$\Gamma $}(1.00000000000000\times 10^{1000})	2.301585092994046\times 10^{1003}	disagree
+threads-over-a-list-and-the-integer-points	LogGamma[List[1, 2, 3]]	{0, 0, Log[2]}		\text{log$\Gamma $}(\{1,2,3\})	\{0,0,\log (2)\}	
+uncertainty-propagation-through-ln-gamma-with	LogGamma[Around[1.2, 0.01]]	Around[-0.08537409000331585, 0.002890398965921883]		\text{log$\Gamma $}(1.200\pm 0.010)	-0.0854\pm 0.0029	disagree
+to-30-significant-digits-not-yet-the-last-digit	N[LogGamma[Rational[1, 3]], 30]	0.9854206469277670691871740369779613917359212255016524526685`30.	0.985420646927767069187174036978	N\left[\text{log$\Gamma $}\left(\frac{1}{3}\right),30\right]	0.985420646927767069187174036978	
+used-to-get-ln-n-for-large-n-without-overflowing	(LogGamma[11] == Log[Factorial[10]])	True		\text{log$\Gamma $}(11)=\log (10!)	\text{True}	
+defined-as-ln-gamma-z-here-at-z-5	(LogGamma[5] == Log[Gamma[5]])	True		\text{log$\Gamma $}(5)=\log (\Gamma (5))	\text{True}	
+gammaln-1-ln-gamma-1-ln-1-0	(LogGamma[1] == 0)	True		\text{log$\Gamma $}(1)=0	\text{True}	
+inherits-gamma-s-recurrence-gammaln-z-1-gammaln	(LogGamma[6] == Plus[LogGamma[5], Log[5]])	True		\text{log$\Gamma $}(6)=\text{log$\Gamma $}(5)+\log (5)	\text{True}	
+gammaln-1-2-frac-12-ln-pi-from-gamma-1-2-sqrt-pi	(LogGamma[Rational[1, 2]] == Times[Rational[1, 2], Log[Pi]])	True		\text{log$\Gamma $}\left(\frac{1}{2}\right)=\frac{1}{2} \log (\pi )	\text{True}	
+an-exact-positive-integer-now-reduces-too	LogGamma[5]	Log[24]		\text{log$\Gamma $}(5)	\log (24)	
+the-derivative-of-ln-gamma-is-the-digamma	D[LogGamma[x], x]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{log$\Gamma $}(x)}{\partial x}-\psi (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\text{log$\Gamma $}\left(\frac{7}{3}\right)-\psi \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{log$\Gamma $}\left(-\frac{11}{5}\right)-\psi \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\text{log$\Gamma $}\left(\frac{13}{4}\right)-\psi \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+off-the-positive-axis-gammaln-is-the-principal	LogGamma[-1.5]	0.860047015376481 - 6.283185307179586*I		\text{log$\Gamma $}(-1.5)	0.860047\, -6.28319 i	disagree
+gammaln-101-is-exactly-ln-100-letting-us-reason	(LogGamma[101] == Log[Factorial[100]])	True		\text{log$\Gamma $}(101)=\log (100!)	\text{True}	

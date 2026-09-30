@@ -1,2 +1,2 @@
-id	in
-adds-attributes	Attributes[Plus]
+id	in	out	tex.in	tex.out	verdict
+adds-attributes	Attributes[Plus]	{Flat, Listable, NumericFunction, OneIdentity, Orderless, Protected}	\text{Attributes}[\text{Plus}]	\{\text{Flat},\text{Listable},\text{NumericFunction},\text{OneIdentity},\text{Orderless},\text{Protected}\}	disagree

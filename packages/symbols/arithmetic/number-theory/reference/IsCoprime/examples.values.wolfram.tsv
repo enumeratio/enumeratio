@@ -1,7 +1,7 @@
-id	in
-iscoprime-4-9	CoprimeQ[4, 9]
-both-are-divisible-by-3	CoprimeQ[6, 9]
-several-arguments-every-pair-must-be-coprime	CoprimeQ[2, 3, 5]
-gaussian-integers-2-i-and-2-i-are-non-associate	CoprimeQ[Complex[2, 1], Complex[2, -1]]
-listable	CoprimeQ[3, List[4, 6]]
-pairwise-not-collectively-gcd-6-10-15-1-yet-no	CoprimeQ[6, 10, 15]
+id	in	out	tex.in	tex.out
+iscoprime-4-9	CoprimeQ[4, 9]	True	\text{CoprimeQ}[4,9]	\text{True}
+both-are-divisible-by-3	CoprimeQ[6, 9]	False	\text{CoprimeQ}[6,9]	\text{False}
+several-arguments-every-pair-must-be-coprime	CoprimeQ[2, 3, 5]	True	\text{CoprimeQ}[2,3,5]	\text{True}
+gaussian-integers-2-i-and-2-i-are-non-associate	CoprimeQ[Complex[2, 1], Complex[2, -1]]	True	\text{CoprimeQ}[2+i,2-i]	\text{True}
+listable	CoprimeQ[3, List[4, 6]]	{True, False}	\text{CoprimeQ}[3,\{4,6\}]	\{\text{True},\text{False}\}
+pairwise-not-collectively-gcd-6-10-15-1-yet-no	CoprimeQ[6, 10, 15]	False	\text{CoprimeQ}[6,10,15]	\text{False}

@@ -1,6 +1,6 @@
-id	in
-mersenneprimeexponent-1	MersennePrimeExponent[1]
-mersenneprimeexponent-5	MersennePrimeExponent[5]
-mersenneprimeexponent-10	MersennePrimeExponent[10]
-listable	MersennePrimeExponent[List[1, 2, 3, 4, 5, 6]]
-past-the-known-table-of-mersenne-prime-exponents	MersennePrimeExponent[1000]
+id	in	out	tex.in	tex.out	verdict
+mersenneprimeexponent-1	MersennePrimeExponent[1]	2	\text{MersennePrimeExponent}[1]	2	
+mersenneprimeexponent-5	MersennePrimeExponent[5]	13	\text{MersennePrimeExponent}[5]	13	
+mersenneprimeexponent-10	MersennePrimeExponent[10]	89	\text{MersennePrimeExponent}[10]	89	
+listable	MersennePrimeExponent[List[1, 2, 3, 4, 5, 6]]	{2, 3, 5, 7, 13, 17}	\text{MersennePrimeExponent}[\{1,2,3,4,5,6\}]	\{2,3,5,7,13,17\}	
+past-the-known-table-of-mersenne-prime-exponents	MersennePrimeExponent[1000]	$Aborted			error

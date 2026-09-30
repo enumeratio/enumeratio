@@ -1,4 +1,4 @@
-id	in
-unit-square-default-seed	Last[List[SeedRandom[42], RandomComplex[]]]
-rectangle-from-0-to-zmax	Last[List[SeedRandom[7], RandomComplex[Complex[2, 3]]]]
-rectangle-from-zmin-to-zmax	Last[List[SeedRandom[9], RandomComplex[List[Complex[-1, -1], Complex[1, 1]]]]]
+id	in	out	tex.in	tex.out	verdict
+unit-square-default-seed	Last[List[SeedRandom[42], RandomComplex[]]]	0.4259052837159625 + 0.39102315987416847*I	\text{Last}[\{\text{SeedRandom}[42],\text{RandomComplex}[]\}]	0.425905\, +0.391023 i	disagree
+rectangle-from-0-to-zmax	Last[List[SeedRandom[7], RandomComplex[Complex[2, 3]]]]	1.6598105246918942 + 2.1008599356006776*I	\text{Last}[\{\text{SeedRandom}[7],\text{RandomComplex}[2+3 i]\}]	1.65981\, +2.10086 i	disagree
+rectangle-from-zmin-to-zmax	Last[List[SeedRandom[9], RandomComplex[List[Complex[-1, -1], Complex[1, 1]]]]]	-0.09805090991380361 + 0.8111104194670826*I	\text{Last}[\{\text{SeedRandom}[9],\text{RandomComplex}[\{-1-i,1+i\}]\}]	-0.0980509+0.81111 i	disagree

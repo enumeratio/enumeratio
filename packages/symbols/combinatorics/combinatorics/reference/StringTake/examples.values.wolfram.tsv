@@ -1,6 +1,6 @@
-id	in
-string-take-s-n-takes-the-first-n-characters	StringTake["hello world", 5]
-string-take-s-negative-n-takes-last-n-chars	StringTake["hello world", -5]
-string-take-s-n-takes-the-nth-character-alone	StringTake["hello", List[2]]
-string-take-s-m-n-takes-an-inclusive-range	StringTake["hello world", List[1, 5]]
-string-take-s-m-negative-n-counts-from-end	StringTake["hello world", List[1, -7]]
+id	in	out	tex.in	tex.out
+string-take-s-n-takes-the-first-n-characters	StringTake["hello world", 5]	"\"hello\""	\text{StringTake}[\text{hello world},5]	\text{hello}
+string-take-s-negative-n-takes-last-n-chars	StringTake["hello world", -5]	"\"world\""	\text{StringTake}[\text{hello world},-5]	\text{world}
+string-take-s-n-takes-the-nth-character-alone	StringTake["hello", List[2]]	"\"e\""	\text{StringTake}[\text{hello},\{2\}]	\text{e}
+string-take-s-m-n-takes-an-inclusive-range	StringTake["hello world", List[1, 5]]	"\"hello\""	\text{StringTake}[\text{hello world},\{1,5\}]	\text{hello}
+string-take-s-m-negative-n-counts-from-end	StringTake["hello world", List[1, -7]]	"\"hello\""	\text{StringTake}[\text{hello world},\{1,-7\}]	\text{hello}

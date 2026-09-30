@@ -1,2 +1,2 @@
-id	in
-held	InterpretationBox["F", Plus[2, 3]]
+id	in	out	tex.in	tex.out
+held	InterpretationBox["F", Plus[2, 3]]	InterpretationBox["F", 2 + 3]	\text{InterpretationBox}[\text{F},2+3]	\text{InterpretationBox}[\text{F},2+3]

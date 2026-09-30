@@ -1,4 +1,4 @@
-id	in
-ismachinenumber-ordinary-float	MachineNumberQ[2.5]
-ismachinenumber-exact-integer	MachineNumberQ[2]
-ismachinenumber-extended-precision	MachineNumberQ[3.141592653589793]
+id	in	out	tex.in	tex.out	verdict
+ismachinenumber-ordinary-float	MachineNumberQ[2.5]	True	\text{MachineNumberQ}[2.5]	\text{True}	
+ismachinenumber-exact-integer	MachineNumberQ[2]	False	\text{MachineNumberQ}[2]	\text{False}	
+ismachinenumber-extended-precision	MachineNumberQ[3.141592653589793]	True	\text{MachineNumberQ}[3.14159]	\text{True}	disagree

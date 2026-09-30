@@ -1,2 +1,2 @@
-id	in
-superscript	DisplayForm[SuperscriptBox["x", "2"]]
+id	in	out	tex.in	tex.out
+superscript	DisplayForm[SuperscriptBox["x", "2"]]	DisplayForm[SuperscriptBox["x", "2"]]	x^2	x^2

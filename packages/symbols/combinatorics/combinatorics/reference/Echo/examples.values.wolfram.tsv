@@ -1,2 +1,2 @@
-id	in
-echo-returns-its-argument	Echo[42]
+id	in	out	tex.in	tex.out
+echo-returns-its-argument	Echo[42]	42	\text{Echo}[42]	42

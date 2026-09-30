@@ -1,2 +1,2 @@
-id	in
-an-edge-between-1-and-2	UndirectedEdge[1, 2]
+id	in	out	tex.in	tex.out
+an-edge-between-1-and-2	UndirectedEdge[1, 2]	UndirectedEdge[1, 2]	1\unicode{f3d4}2	1\unicode{f3d4}2

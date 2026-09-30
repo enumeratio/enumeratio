@@ -1,9 +1,9 @@
-id	section	role	expr	expected	caption
-eta-s-1-2-1-s-zeta-s			[FunctionExpand, [DirichletEta, s]]	[Multiply, [Add, [Negate, [Power, 2, [Add, [Negate, s], 1]]], 1], [Zeta, s]]	$\eta(s) = (1 - 2^{1-s})\zeta(s)$
-beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34			[FunctionExpand, [DirichletBeta, s]]	[Multiply, [Add, [Negate, [Zeta, s, [Rational, 3, 4]]], [Zeta, s, [Rational, 1, 4]]], [Power, 4, [Negate, s]]]	$\beta(s) = 4^{-s}(\zeta(s, \tfrac14) - \zeta(s, \tfrac34))$
-g-frac-12-in-glaisher-s-constant			[FunctionExpand, [BarnesG, [Rational, 1, 2]]]	[Multiply, [Divide, 1, [Root, Pi, 4]], [Root, 2, 24], [Power, ConstGlaisher, [Rational, -3, 2]], [Root, ExponentialE, 8]]	$G(\tfrac12)$ in Glaisher's constant
-radicals-past-the-automatic-special-angle-table			[FunctionExpand, [Sin, [Divide, Pi, 15]]]	[Multiply, [Rational, 1, 8], [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]]]	Radicals past the automatic special-angle table
-half-angle-radicals-cos-frac-pi-24-frac-12-sqrt			[FunctionExpand, [Cos, [Divide, Pi, 24]]]	[Multiply, [Divide, [Sqrt, 2], 4], [Sqrt, [Add, 4, [Sqrt, 2], [Sqrt, 6]]]]	Half-angle radicals: $\cos\frac{\pi}{24} = \tfrac12\sqrt{2 + \tfrac{\sqrt2 + \sqrt6}{2}}$
-a-rising-factorial-with-an-integer-length	Scope		[FunctionExpand, [Pochhammer, x, 3]]	[Multiply, x, [Add, x, 1], [Add, x, 2]]	A rising factorial with an integer length becomes a polynomial
-binom-n2-frac-n-n-1-2	Scope		[FunctionExpand, [Binomial, n, 2]]	[Divide, [Multiply, n, [Subtract, n, 1]], 2]	$\binom n2 = \frac{n(n-1)}{2}$
-a-generic-cos-argument-passes-through-unchanged	Possible issues	test	[FunctionExpand, [Cos, theta]]	[Cos, theta]	A generic [[Cos]] argument outside the special-angle table passes through unchanged
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+eta-s-1-2-1-s-zeta-s			[FunctionExpand, [DirichletEta, s]]	[Multiply, [Add, [Negate, [Power, 2, [Add, [Negate, s], 1]]], 1], [Zeta, s]]	$\eta(s) = (1 - 2^{1-s})\zeta(s)$		
+beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34			[FunctionExpand, [DirichletBeta, s]]	[Multiply, [Add, [Negate, [Zeta, s, [Rational, 3, 4]]], [Zeta, s, [Rational, 1, 4]]], [Power, 4, [Negate, s]]]	$\beta(s) = 4^{-s}(\zeta(s, \tfrac14) - \zeta(s, \tfrac34))$		
+g-frac-12-in-glaisher-s-constant			[FunctionExpand, [BarnesG, [Rational, 1, 2]]]	[Multiply, [Divide, 1, [Root, Pi, 4]], [Root, 2, 24], [Power, ConstGlaisher, [Rational, -3, 2]], [Root, ExponentialE, 8]]	$G(\tfrac12)$ in Glaisher's constant	unclassified	""
+radicals-past-the-automatic-special-angle-table			[FunctionExpand, [Sin, [Divide, Pi, 15]]]	[Multiply, [Rational, 1, 8], [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]]]	Radicals past the automatic special-angle table		
+half-angle-radicals-cos-frac-pi-24-frac-12-sqrt			[FunctionExpand, [Cos, [Divide, Pi, 24]]]	[Multiply, [Divide, [Sqrt, 2], 4], [Sqrt, [Add, 4, [Sqrt, 2], [Sqrt, 6]]]]	Half-angle radicals: $\cos\frac{\pi}{24} = \tfrac12\sqrt{2 + \tfrac{\sqrt2 + \sqrt6}{2}}$		
+a-rising-factorial-with-an-integer-length	Scope		[FunctionExpand, [Pochhammer, x, 3]]	[Multiply, x, [Add, x, 1], [Add, x, 2]]	A rising factorial with an integer length becomes a polynomial		
+binom-n2-frac-n-n-1-2	Scope		[FunctionExpand, [Binomial, n, 2]]	[Divide, [Multiply, n, [Subtract, n, 1]], 2]	$\binom n2 = \frac{n(n-1)}{2}$		
+a-generic-cos-argument-passes-through-unchanged	Possible issues	test	[FunctionExpand, [Cos, theta]]	[Cos, theta]	A generic [[Cos]] argument outside the special-angle table passes through unchanged		

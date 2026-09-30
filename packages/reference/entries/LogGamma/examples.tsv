@@ -1,22 +1,22 @@
-id	section	role	expr	expected	caption	wolfram.note
-ln-gamma-3-ln-2-ln-2			[LogGamma, 3]	[Ln, 2]	$\ln\Gamma(3) = \ln 2! = \ln 2$	
-ln-gamma-1-0			[LogGamma, 1]	0	$\ln\Gamma(1) = 0$	
-ln-gamma-2-5-ln-1-3293-to-the-engine-s-working			[LogGamma, 2.5]	{num: "0.284682870472919159632"}	$\ln\Gamma(2.5) = \ln 1.3293\ldots$ — to the engine's working precision, not a double: right of the imaginary axis this goes through compute-engine's own [[GammaLn]]	
-ln-gamma-5-ln-4-ln-24-split-into-prime			[LogGamma, 5]	[Add, [Multiply, 3, [Ln, 2]], [Ln, 3]]	$\ln\Gamma(5) = \ln 4! = \ln 24$, split into prime logarithms	Wolfram keeps a single logarithm, Log[24].
-log-gamma-neg-2-is-a-pole		test	[LogGamma, -2]	PositiveInfinity		
-log-gamma-neg-3-is-a-pole		test	[LogGamma, -3]	PositiveInfinity		
-n-log-gamma-5-over-2-to-40-digits		test	[N, [LogGamma, [Rational, 5, 2]], 40]	{num: "0.2846828704729191596324946696827019243201"}		
-to-the-engine-s-working-precision	Scope		[LogGamma, 2.2]	{num: "0.096947466790638776492"}	To the engine's working precision	
-complex-arguments	Scope		[LogGamma, [Complex, 2.5, 3]]	[Complex, -1.4709546103488407, 2.8226156382607988]	Complex arguments	
-threads-elementwise-over-an-array	Scope		[LogGamma, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]	[List, [List, [Multiply, [Rational, 1, 2], [Ln, Pi]], PositiveInfinity], [List, PositiveInfinity, [Multiply, [Rational, 1, 2], [Ln, Pi]]]]	Threads elementwise over an array	
-exact-negative-half-integers-ln-gamma-frac-32-ln	Scope		[LogGamma, [Rational, -3, 2]]	[Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]	Exact negative half-integers: $\ln\Gamma(-\tfrac32) = \ln\tfrac{4\sqrt\pi}{3} - 2\pi i$	
-ln-gamma-infty-infty	Scope		[LogGamma, PositiveInfinity]	PositiveInfinity	$\ln\Gamma(\infty) = \infty$	
-huge-arguments-ln-gamma-10-300-approx-6-898	Scope		[N, [LogGamma, [Power, 10, 300]]]	6.897755278982137e+302	Huge arguments: $\ln\Gamma(10^{300}) \approx 6.898\times10^{302}$, from Stirling's series directly rather than through $\Gamma(10^{300})$ itself, which overflows a double long before its log would -- a magnitude that fits a double, so it comes back as one rather than the engine's bignum (this is the fallback kernel, not compute-engine's own arithmetic)	
-interval-arithmetic-decreasing-here-so-the	Scope		[LogGamma, [Interval, 0.41, 0.42]]	[Interval, 0.7468637271280142, 0.7714224633947468]	Interval arithmetic: decreasing here, so the endpoints swap	
-uncertainty-propagation-with-psi-1-2-as-the	Scope		[LogGamma, [Around, 1.2, 0.01]]	[Around, -0.08537409000331585, 0.002890398965921883]	Uncertainty propagation, with $\psi(1.2)$ as the slope	
-to-30-significant-digits-not-yet-the-last-digit	Scope		[N, [LogGamma, [Rational, 1, 3]], 30]	{num: "0.985420646927767069187174036978"}	To 30 significant digits, the last one correctly rounded	
-ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac	Properties		[LogGamma, [Rational, 1, 2]]	[Multiply, [Rational, 1, 2], [Ln, Pi]]	$\ln\Gamma(\tfrac12) = \tfrac12 \ln\pi$, from $\Gamma(\tfrac12) = \sqrt\pi$	
-a-pole-of-gamma	Properties		[LogGamma, 0]	PositiveInfinity	A pole of $\Gamma$	
-on-the-negative-axis-gamma-frac-32-frac-43-sqrt	Properties		[LogGamma, -1.5]	[Complex, 0.8600470153764797, -6.283185307179586]	On the negative axis: $\Gamma(-\tfrac32) = \tfrac43\sqrt\pi > 0$, but the continuation carries $-2\pi i$	
-half-integers-past-frac-12-ln-gamma-frac-32-ln	Properties		[LogGamma, [Rational, 3, 2]]	[Ln, [Multiply, [Rational, 1, 2], [Sqrt, Pi]]]	Half-integers past $\tfrac12$: $\ln\Gamma(\tfrac32) = \ln\tfrac{\sqrt\pi}{2}$	
-off-the-positive-axis-this-is-the-continuation	Possible issues		[LogGamma, [Complex, -2.5, 1.5]]	[Complex, -3.717513451191792, -7.7130655258341925]	Off the positive axis this is the continuation: $\ln(\Gamma(-2.5+1.5i))$ with a principal log has imaginary part $-1.4299$, a full $2\pi$ away	
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+ln-gamma-3-ln-2-ln-2			[LogGamma, 3]	[Ln, 2]	$\ln\Gamma(3) = \ln 2! = \ln 2$		
+ln-gamma-1-0			[LogGamma, 1]	0	$\ln\Gamma(1) = 0$		
+ln-gamma-2-5-ln-1-3293-to-the-engine-s-working			[LogGamma, 2.5]	{num: "0.284682870472919159632"}	$\ln\Gamma(2.5) = \ln 1.3293\ldots$ — to the engine's working precision, not a double: right of the imaginary axis this goes through compute-engine's own [[GammaLn]]		
+ln-gamma-5-ln-4-ln-24-split-into-prime			[LogGamma, 5]	[Add, [Multiply, 3, [Ln, 2]], [Ln, 3]]	$\ln\Gamma(5) = \ln 4! = \ln 24$, split into prime logarithms		Wolfram keeps a single logarithm, Log[24].
+log-gamma-neg-2-is-a-pole		test	[LogGamma, -2]	PositiveInfinity			
+log-gamma-neg-3-is-a-pole		test	[LogGamma, -3]	PositiveInfinity			
+n-log-gamma-5-over-2-to-40-digits		test	[N, [LogGamma, [Rational, 5, 2]], 40]	{num: "0.2846828704729191596324946696827019243201"}			
+to-the-engine-s-working-precision	Scope		[LogGamma, 2.2]	{num: "0.096947466790638776492"}	To the engine's working precision		
+complex-arguments	Scope		[LogGamma, [Complex, 2.5, 3]]	[Complex, -1.4709546103488407, 2.8226156382607988]	Complex arguments		
+threads-elementwise-over-an-array	Scope		[LogGamma, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]	[List, [List, [Multiply, [Rational, 1, 2], [Ln, Pi]], PositiveInfinity], [List, PositiveInfinity, [Multiply, [Rational, 1, 2], [Ln, Pi]]]]	Threads elementwise over an array		
+exact-negative-half-integers-ln-gamma-frac-32-ln	Scope		[LogGamma, [Rational, -3, 2]]	[Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]	Exact negative half-integers: $\ln\Gamma(-\tfrac32) = \ln\tfrac{4\sqrt\pi}{3} - 2\pi i$		
+ln-gamma-infty-infty	Scope		[LogGamma, PositiveInfinity]	PositiveInfinity	$\ln\Gamma(\infty) = \infty$		
+huge-arguments-ln-gamma-10-300-approx-6-898	Scope		[N, [LogGamma, [Power, 10, 300]]]	6.897755278982137e+302	Huge arguments: $\ln\Gamma(10^{300}) \approx 6.898\times10^{302}$, from Stirling's series directly rather than through $\Gamma(10^{300})$ itself, which overflows a double long before its log would -- a magnitude that fits a double, so it comes back as one rather than the engine's bignum (this is the fallback kernel, not compute-engine's own arithmetic)		
+interval-arithmetic-decreasing-here-so-the	Scope		[LogGamma, [Interval, 0.41, 0.42]]	[Interval, 0.7468637271280142, 0.7714224633947468]	Interval arithmetic: decreasing here, so the endpoints swap	unclassified	""
+uncertainty-propagation-with-psi-1-2-as-the	Scope		[LogGamma, [Around, 1.2, 0.01]]	[Around, -0.08537409000331585, 0.002890398965921883]	Uncertainty propagation, with $\psi(1.2)$ as the slope		
+to-30-significant-digits-not-yet-the-last-digit	Scope		[N, [LogGamma, [Rational, 1, 3]], 30]	{num: "0.985420646927767069187174036978"}	To 30 significant digits, the last one correctly rounded		
+ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac	Properties		[LogGamma, [Rational, 1, 2]]	[Multiply, [Rational, 1, 2], [Ln, Pi]]	$\ln\Gamma(\tfrac12) = \tfrac12 \ln\pi$, from $\Gamma(\tfrac12) = \sqrt\pi$		
+a-pole-of-gamma	Properties		[LogGamma, 0]	PositiveInfinity	A pole of $\Gamma$		
+on-the-negative-axis-gamma-frac-32-frac-43-sqrt	Properties		[LogGamma, -1.5]	[Complex, 0.8600470153764797, -6.283185307179586]	On the negative axis: $\Gamma(-\tfrac32) = \tfrac43\sqrt\pi > 0$, but the continuation carries $-2\pi i$		
+half-integers-past-frac-12-ln-gamma-frac-32-ln	Properties		[LogGamma, [Rational, 3, 2]]	[Ln, [Multiply, [Rational, 1, 2], [Sqrt, Pi]]]	Half-integers past $\tfrac12$: $\ln\Gamma(\tfrac32) = \ln\tfrac{\sqrt\pi}{2}$		
+off-the-positive-axis-this-is-the-continuation	Possible issues		[LogGamma, [Complex, -2.5, 1.5]]	[Complex, -3.717513451191792, -7.7130655258341925]	Off the positive axis this is the continuation: $\ln(\Gamma(-2.5+1.5i))$ with a principal log has imaginary part $-1.4299$, a full $2\pi$ away		

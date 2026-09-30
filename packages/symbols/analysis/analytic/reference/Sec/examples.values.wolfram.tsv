@@ -3,22 +3,22 @@ sec-0	Sec[0]	1	\sec (0)	1
 sec-pi-over-4	Sec[Divide[Pi, 4]]	Sqrt[2]	\sec \left(\frac{\pi }{4}\right)	\sqrt{2}	
 sec-pi-over-3	Sec[Divide[Pi, 3]]	2	\sec \left(\frac{\pi }{3}\right)	2	
 sec-pi	Sec[Pi]	-1	\sec (\pi )	-1	
-sec-30-circ-frac-2-sqrt-3-3-exactly	Sec[Times[30, Degree]]				
-a-machine-precision-argument-evaluates	Sec[1.2]				
-a-huge-24-40-argument	N[Sec[Power[24, 40]]]				
-a-huge-10-100-argument	N[Sec[Power[10, 100]]]				
-a-huge-3-200-argument	N[Sec[Power[3, 200]]]				
-a-huge-neg-7-60-argument	N[Sec[Minus[Power[7, 60]]]]				
-a-huge-10-80-plus-1-over-3-argument	N[Sec[Divide[Plus[Power[10, 80], 1], 3]]]				
-sec-3-under-n	N[Sec[3]]				
-n-of-an-exact-argument-gives-an-arbitrary	N[Sec[Rational[6, 5]]]				
-evaluates-at-a-complex-argument	Sec[Complex[2.5, 1]]				
-threads-element-wise-over-a-matrix	Sec[List[List[Times[5, Divide[Pi, 6]], 0], List[Divide[Pi, 6], Minus[Divide[Pi, 4]]]]]				
-sec-pi-12-sqrt-6-sqrt-2	Sec[Divide[Pi, 12]]				
-sec-pi-5-sqrt-5-1	Sec[Divide[Pi, 5]]				
-sec-pi-8-sqrt-4-2-sqrt-2	Sec[Divide[Pi, 8]]				
-interval-arithmetic-the-image-of-pi-6-pi-3-is	Sec[Interval[List[Divide[Pi, 6], Divide[Pi, 3]]]]				
-uncertainty-propagation-sec-2-pm-0-01-approx-2	Sec[Around[2, 0.01]]				
+sec-30-circ-frac-2-sqrt-3-3-exactly	Sec[Times[30, Degree]]	2/Sqrt[3]	\sec (30 {}^{\circ})	\frac{2}{\sqrt{3}}	
+a-machine-precision-argument-evaluates	Sec[1.2]	2.759703601332406	\sec (1.2)	2.7597	
+a-huge-24-40-argument	N[Sec[Power[24, 40]]]	-1.238288107574019	N\left[\sec \left(24^{40}\right)\right]	-1.23829	disagree
+a-huge-10-100-argument	N[Sec[Power[10, 100]]]	1.0814034693733812	N\left[\sec \left(10^{100}\right)\right]	1.0814	disagree
+a-huge-3-200-argument	N[Sec[Power[3, 200]]]	-4.379814332824611	N\left[\sec \left(3^{200}\right)\right]	-4.37981	disagree
+a-huge-neg-7-60-argument	N[Sec[Minus[Power[7, 60]]]]	-1.0006960035500068	N\left[\sec \left(-7^{60}\right)\right]	-1.0007	disagree
+a-huge-10-80-plus-1-over-3-argument	N[Sec[Divide[Plus[Power[10, 80], 1], 3]]]	1.1537100890123533	N\left[\sec \left(\frac{10^{80}+1}{3}\right)\right]	1.15371	disagree
+sec-3-under-n	N[Sec[3]]	-1.0101086659079939	N[\sec (3)]	-1.01011	
+n-of-an-exact-argument-gives-an-arbitrary	N[Sec[Rational[6, 5]]]	2.759703601332406	N\left[\sec \left(\frac{6}{5}\right)\right]	2.7597	
+evaluates-at-a-complex-argument	Sec[Complex[2.5, 1]]	-0.6111085641552316 + 0.34767666071049597*I	\sec (2.5\, +i)	-0.611109+0.347677 i	
+threads-element-wise-over-a-matrix	Sec[List[List[Times[5, Divide[Pi, 6]], 0], List[Divide[Pi, 6], Minus[Divide[Pi, 4]]]]]	{{-2/Sqrt[3], 1}, {2/Sqrt[3], Sqrt[2]}}	\sec \left(\left( \begin{array}{cc}  5 \frac{\pi }{6} & 0 \\  \frac{\pi }{6} & -\frac{\pi }{4} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  -\frac{2}{\sqrt{3}} & 1 \\  \frac{2}{\sqrt{3}} & \sqrt{2} \\ \end{array} \right)	
+sec-pi-12-sqrt-6-sqrt-2	Sec[Divide[Pi, 12]]	Sqrt[2]*(-1 + Sqrt[3])	\sec \left(\frac{\pi }{12}\right)	\sqrt{2} \left(\sqrt{3}-1\right)	
+sec-pi-5-sqrt-5-1	Sec[Divide[Pi, 5]]	-1 + Sqrt[5]	\sec \left(\frac{\pi }{5}\right)	\sqrt{5}-1	
+sec-pi-8-sqrt-4-2-sqrt-2	Sec[Divide[Pi, 8]]	Sec[Pi/8]	\sec \left(\frac{\pi }{8}\right)	\sec \left(\frac{\pi }{8}\right)	
+interval-arithmetic-the-image-of-pi-6-pi-3-is	Sec[Interval[List[Divide[Pi, 6], Divide[Pi, 3]]]]	Interval[{2/Sqrt[3], 2}]	\sec \left(\text{Interval}\left[\left\{\frac{\pi }{6},\frac{\pi }{3}\right\}\right]\right)	\text{Interval}\left[\left\{\frac{2}{\sqrt{3}},2\right\}\right]	disagree
+uncertainty-propagation-sec-2-pm-0-01-approx-2	Sec[Around[2, 0.01]]	Around[-2.402997961722381, 0.0525064633769958]	\sec (2\pm 0.010)	-2.40\pm 0.05	disagree
 evenness-drops-the-sign-of-a-symbolic-argument	Sec[Minus[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sec (-x)-\sec (x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sec \left(-\frac{7}{3}\right)-\sec \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\sec \left(-\left(-\frac{11}{5}\right)\right)-\sec \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sec \left(-\frac{13}{4}\right)-\sec \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 derivative-sec-x-tan-x	D[Sec[x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \sec (x)}{\partial x}-\tan (x) \sec (x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{7}{3}}\sec \left(\frac{7}{3}\right)-\tan \left(\frac{7}{3}\right) \sec \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\sec \left(-\frac{11}{5}\right)-\tan \left(-\frac{11}{5}\right) \sec \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial \frac{13}{4}}\sec \left(\frac{13}{4}\right)-\tan \left(\frac{13}{4}\right) \sec \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 antiderivative-ln-sec-x-tan-x	Integrate[Sec[x], x]	Indeterminate	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\int \sec (x) \, dx-\log (| \tan (x)+\sec (x)| )],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\int \sec \left(\frac{7}{3}\right) \, d\frac{7}{3}-\log \left(\left| \tan \left(\frac{7}{3}\right)+\sec \left(\frac{7}{3}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \sec \left(-\frac{11}{5}\right) \, d\left(-\frac{11}{5}\right)-\log \left(\left| \tan \left(-\frac{11}{5}\right)+\sec \left(-\frac{11}{5}\right)\right| \right)\right]\right],\text{Chop}\left[N\left[\int \sec \left(\frac{13}{4}\right) \, d\frac{13}{4}-\log \left(\left| \tan \left(\frac{13}{4}\right)+\sec \left(\frac{13}{4}\right)\right| \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive

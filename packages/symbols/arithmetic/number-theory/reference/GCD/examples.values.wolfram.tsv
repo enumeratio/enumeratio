@@ -2,13 +2,13 @@ id	in	out	tex.in	tex.out	verdict
 gcd-12-18	GCD[12, 18]	6	\gcd (12,18)	6	
 gcd-24-36	GCD[24, 36]	12	\gcd (24,36)	12	
 gcd-is-variadic-it-accepts-any-number-of	GCD[20, 30, 45]	5	\gcd (20,30,45)	5	
-gcd-2-6-10	GCD[2, 6, 10]				
+gcd-2-6-10	GCD[2, 6, 10]	2	\gcd (2,6,10)	2	
 over-the-rationals-the-gcd-of-the-numerators	GCD[Rational[1, 3], Rational[2, 5], Rational[3, 7]]	1/105	\gcd \left(\frac{1}{3},\frac{2}{5},\frac{3}{7}\right)	\frac{1}{105}	
 gaussian-integers-the-associate-in-the-first	GCD[Complex[3, 1], Complex[1, 3]]	1 + I	\gcd (3+i,1+3 i)	1+i	
-gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i	GCD[Complex[-3, 2], Complex[10, 15]]				
-gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2	GCD[Complex[5, Rational[10, 3]], Complex[Rational[3, 2], 1]]				
-big-integers-gcd-20-10-100-3-7-exact-past-where	GCD[Factorial[20], Plus[Power[10, 100], 3]]				
-listable-a-single-list-argument-threads-element	GCD[12, List[3, 7, 40]]				
+gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i	GCD[Complex[-3, 2], Complex[10, 15]]	2 + 3*I	\gcd (-3+2 i,10+15 i)	2+3 i	
+gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2	GCD[Complex[5, Rational[10, 3]], Complex[Rational[3, 2], 1]]	1/2 + I/3	\gcd (5+\text{Rational}[10,3] i,\text{Rational}[3,2]+i)	\frac{1}{2}+\frac{i}{3}	
+big-integers-gcd-20-10-100-3-7-exact-past-where	GCD[Factorial[20], Plus[Power[10, 100], 3]]	7	\gcd \left(20!,10^{100}+3\right)	7	
+listable-a-single-list-argument-threads-element	GCD[12, List[3, 7, 40]]	{3, 1, 4}	\gcd (12,\{3,7,40\})	\{3,1,4\}	
 gcd-with-a-unit-is-always-1	GCD[Complex[3, 4], 1]	1	\gcd (3+4 i,1)	1	
 gcd-with-i-a-unit-is-1	GCD[Complex[3, 4], Complex[0, 1]]	1	\gcd (3+4 i,i)	1	
 gcd-with-0-is-the-other-argument-normalised	GCD[0, Complex[-4, 3]]	3 + 4*I	\gcd (0,-4+3 i)	3+4 i	
@@ -34,14 +34,14 @@ gcd-with-a-real-composite-5-squared	GCD[Complex[3, 4], 25]	3 + 4*I	\gcd (3+4 i,2
 gcd-with-a-negative-associate	GCD[Complex[6, 8], Complex[-2, -3]]	1	\gcd (6+8 i,-2-3 i)	1	
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19	GCD[Complex[123, 456], 19]	1	\gcd (123+456 i,19)	1	
 gcd-of-two-composites-sharing-the-prime-above-13	GCD[Complex[6, 8], Complex[9, 6]]	1	\gcd (6+8 i,9+6 i)	1	
-reduce-12-18-to-lowest-terms-by-dividing-out-the	Divide[12, GCD[12, 18]]				
+reduce-12-18-to-lowest-terms-by-dividing-out-the	Divide[12, GCD[12, 18]]	2	\frac{12}{\gcd (12,18)}	2	
 commutative-gcd-a-b-gcd-b-a	(GCD[12, 18] == GCD[18, 12])	True	\gcd (12,18)=\gcd (18,12)	\text{True}	
 gcd-a-b-cdot-lcm-a-b-ab-see-lcm	(Times[GCD[12, 18], LCM[12, 18]] == Times[12, 18])	True	\gcd (12,18) \text{lcm}(12,18)=12\ 18	\text{True}	
-gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	GCD[Fibonacci[12], Fibonacci[18]]				
+gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	GCD[Fibonacci[12], Fibonacci[18]]	8	\gcd \left(F_{12},F_{18}\right)	8	
 a-single-argument-is-returned-unchanged	GCD[4]	4	\gcd (4)	4	
 with-no-arguments-compute-engine-returns-0-the	GCD[]	0	\gcd ()	0	
 0-is-absorbed-every-integer-divides-it-so-gcd-0	GCD[0, 5]	5	\gcd (0,5)	5	
 signs-are-discarded-before-computing-the-gcd	GCD[-12, 9, 57]	3	\gcd (-12,9,57)	3	
 lists-aren-t-threaded-element-wise-they-re	GCD[List[2, 4], List[6, 8]]	{2, 4}	\gcd (\{2,4\},\{6,8\})	\{2,4\}	disagree
-gcd-0-0-0-by-convention	GCD[0, 0]				
+gcd-0-0-0-by-convention	GCD[0, 0]	0	\gcd (0,0)	0	
 symbolic-arguments-stay-unevaluated	GCD[x, y]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\gcd (x,y)-\gcd (x,y)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\gcd \left(\frac{7}{3},-\frac{11}{5}\right)-\gcd \left(\frac{7}{3},-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\gcd \left(\frac{13}{4},-\frac{17}{6}\right)-\gcd \left(\frac{13}{4},-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\gcd \left(\frac{19}{8},-\frac{23}{9}\right)-\gcd \left(\frac{19}{8},-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	

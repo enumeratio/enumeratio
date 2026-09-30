@@ -1,30 +1,30 @@
-id	in	out	tex.in	tex.out	verdict
-g-5-0-1-2-3-12	BarnesG[5]	12	G(5)	12	
-g-7-34560	BarnesG[7]	34560	G(7)	34560	
-the-superfactorials-threaded-over-a-list	BarnesG[List[1, 2, 3, 4, 5, 6]]	{1, 1, 1, 2, 12, 288}	G(\{1,2,3,4,5,6\})	\{1,1,1,2,12,288\}	
-a-floating-point-argument-evaluates-numerically	BarnesG[2.5]	0.947573901083827	G(2.5)	0.947574	
-g-10-prod-k-0-8-k-exact	BarnesG[10]				
-g-3-0-1-1	BarnesG[3]				
-g-frac-12-to-machine-precision	BarnesG[0.5]				
-g-1-1	BarnesG[1]				
-g-2-1	BarnesG[2]				
-g-4-2	BarnesG[4]				
-g-6-288	BarnesG[6]				
-barnesg-of-a-symbol-stays-symbolic	BarnesG[z]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[G(z)-G(z)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[G\left(\frac{7}{3}\right)-G\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[G\left(-\frac{11}{5}\right)-G\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[G\left(\frac{13}{4}\right)-G\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-n-barnesg-5-over-2	N[BarnesG[Rational[5, 2]]]				
-complex-arguments	BarnesG[Complex[1.3, 1]]				
-negative-non-integer-arguments-between-the-zeros	BarnesG[-2.5]				
-threads-elementwise-over-an-array	BarnesG[List[List[Rational[1, 2], 1], List[1, Rational[1, 2]]]]				
-g-infty-infty	BarnesG[Infinity]				
-interval-arithmetic-g-is-increasing-on-1-17-1-18	BarnesG[Interval[List[1.17, 1.18]]]				
-uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm	BarnesG[Around[2.1, 0.01]]				
-to-30-significant-digits-not-yet-the-requested	N[BarnesG[Rational[1, 2]], 30]				
-image-over-1p17-to-1p18	BarnesG[Interval[List[1.17, 1.18]]]				
-image-over-1-to-3	BarnesG[Interval[List[1, 3]]]				
-image-over-0p5-to-1p5	BarnesG[Interval[List[0.5, 1.5]]]				
-image-over-2p2-to-2p9	BarnesG[Interval[List[2.2, 2.9]]]				
-image-over-neg-1p9-to-neg-1p1	BarnesG[Interval[List[-1.9, -1.1]]]				
-g-vanishes-at-the-nonpositive-integers	BarnesG[0]	0	G(0)	0	
-all-of-them	BarnesG[-3]	0	G(-3)	0	
-the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	Divide[Power[Gamma[6], 5], BarnesG[6]]				
-an-exact-non-integer-argument-stays-symbolic	BarnesG[Rational[5, 2]]	(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))	G\left(\frac{5}{2}\right)	\frac{\sqrt[8]{e} \pi ^{3/4}}{2^{23/24} A^{3/2}}	disagree
+id	in	out	shown	tex.in	tex.out	verdict
+g-5-0-1-2-3-12	BarnesG[5]	12		G(5)	12	
+g-7-34560	BarnesG[7]	34560		G(7)	34560	
+the-superfactorials-threaded-over-a-list	BarnesG[List[1, 2, 3, 4, 5, 6]]	{1, 1, 1, 2, 12, 288}		G(\{1,2,3,4,5,6\})	\{1,1,1,2,12,288\}	
+a-floating-point-argument-evaluates-numerically	BarnesG[2.5]	0.947573901083827		G(2.5)	0.947574	
+g-10-prod-k-0-8-k-exact	BarnesG[10]	5056584744960000		G(10)	5056584744960000	
+g-3-0-1-1	BarnesG[3]	1		G(3)	1	
+g-frac-12-to-machine-precision	BarnesG[0.5]	0.6032442812094465		G(0.5)	0.603244	
+g-1-1	BarnesG[1]	1		G(1)	1	
+g-2-1	BarnesG[2]	1		G(2)	1	
+g-4-2	BarnesG[4]	2		G(4)	2	
+g-6-288	BarnesG[6]	288		G(6)	288	
+barnesg-of-a-symbol-stays-symbolic	BarnesG[z]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[G(z)-G(z)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[G\left(\frac{7}{3}\right)-G\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[G\left(-\frac{11}{5}\right)-G\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[G\left(\frac{13}{4}\right)-G\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+n-barnesg-5-over-2	N[BarnesG[Rational[5, 2]]]	0.9475739010838258		N\left[G\left(\frac{5}{2}\right)\right]	0.947574	
+complex-arguments	BarnesG[Complex[1.3, 1]]	1.444613935050247 - 0.2985488252115478*I		G(1.3\, +i)	1.44461\, -0.298549 i	
+negative-non-integer-arguments-between-the-zeros	BarnesG[-2.5]	0.07617297965686119		G(-2.5)	0.076173	
+threads-elementwise-over-an-array	BarnesG[List[List[Rational[1, 2], 1], List[1, Rational[1, 2]]]]	{{(2^(1/24)*E^(1/8))/(Glaisher^(3/2)*Pi^(1/4)), 1}, {1, (2^(1/24)*E^(1/8))/(Glaisher^(3/2)*Pi^(1/4))}}		G\left(\left( \begin{array}{cc}  \frac{1}{2} & 1 \\  1 & \frac{1}{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  \frac{\sqrt[24]{2} \sqrt[8]{e}}{\sqrt[4]{\pi } A^{3/2}} & 1 \\  1 & \frac{\sqrt[24]{2} \sqrt[8]{e}}{\sqrt[4]{\pi } A^{3/2}} \\ \end{array} \right)	disagree
+g-infty-infty	BarnesG[Infinity]	Infinity		G(\infty )	\infty	
+interval-arithmetic-g-is-increasing-on-1-17-1-18	BarnesG[Interval[List[1.17, 1.18]]]	Interval[{0.4950321037322282, 2.2405308913439517}]		G(\text{Interval}[\{1.17,1.18\}])	\text{Interval}[\{0.495032,2.24053\}]	disagree
+uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm	BarnesG[Around[2.1, 0.01]]	Around[0.9847727243540441, 0.001449505695943636]		G(2.100\pm 0.010)	0.9848\pm 0.0014	disagree
+to-30-significant-digits-not-yet-the-requested	N[BarnesG[Rational[1, 2]], 30]	0.6032442812094462061914292245347020803125090053706000036776`30.	0.603244281209446206191429224535	N\left[G\left(\frac{1}{2}\right),30\right]	0.603244281209446206191429224535	
+image-over-1p17-to-1p18	BarnesG[Interval[List[1.17, 1.18]]]	Interval[{0.4950321037322282, 2.2405308913439517}]		G(\text{Interval}[\{1.17,1.18\}])	\text{Interval}[\{0.495032,2.24053\}]	disagree
+image-over-1-to-3	BarnesG[Interval[List[1, 3]]]	Interval[{-1606938044258990275541962092341162602522202993782792835301376, 3258533014074415121747525425791718854673367992883628029639654216040448}]		G(\text{Interval}[\{1,3\}])	\text{Interval}[\{-1606938044258990275541962092341162602522202993782792835301376,3258533014074415121747525425791718854673367992883628029639654216040448\}]	disagree
+image-over-0p5-to-1p5	BarnesG[Interval[List[0.5, 1.5]]]	Interval[{-3.0223145490365736*^23, 6.242242104252642*^32}]		G(\text{Interval}[\{0.5,1.5\}])	\text{Interval}[\{-3.02231\times 10^{23},6.24224\times 10^{32}\}]	disagree
+image-over-2p2-to-2p9	BarnesG[Interval[List[2.2, 2.9]]]	Interval[{-4.503599627370497*^15, 7.753310825008587*^24}]		G(\text{Interval}[\{2.2,2.9\}])	\text{Interval}[\{-4.5036\times 10^{15},7.75331\times 10^{24}\}]	disagree
+image-over-neg-1p9-to-neg-1p1	BarnesG[Interval[List[-1.9, -1.1]]]	BarnesG[Interval[{-1.9000000000000001, -1.0999999999999999}]]		G(\text{Interval}[\{-1.9,-1.1\}])	G(\text{Interval}[\{-1.9,-1.1\}])	disagree
+g-vanishes-at-the-nonpositive-integers	BarnesG[0]	0		G(0)	0	
+all-of-them	BarnesG[-3]	0		G(-3)	0	
+the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	Divide[Power[Gamma[6], 5], BarnesG[6]]	86400000		\frac{\Gamma (6)^5}{G(6)}	86400000	
+an-exact-non-integer-argument-stays-symbolic	BarnesG[Rational[5, 2]]	(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))		G\left(\frac{5}{2}\right)	\frac{\sqrt[8]{e} \pi ^{3/4}}{2^{23/24} A^{3/2}}	disagree

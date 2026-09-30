@@ -1,17 +1,17 @@
-id	in	out	tex.in	tex.out
-bellnumber-0	BellB[0]	1	B_0	1
-bellnumber-1	BellB[1]	1	B_1	1
-bellnumber-3	BellB[3]	5	B_3	5
-bellnumber-5	BellB[5]	52	B_5	52
-bellnumber-10	BellB[10]	115975	B_{10}	115975
-threads-element-wise-over-a-list-as-wolfram-s	BellB[List[1, 2, 3, 4]]	{1, 2, 5, 15}	B_{\{1,2,3,4\}}	\{1,2,5,15\}
-exact-for-large-n	BellB[30]			
-the-two-argument-form-gives-the-bell-touchard	BellB[5, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_5(x)-\left(x^5+10 x^4+25 x^3+15 x^2+x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_5\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^5+10 \left(\frac{7}{3}\right)^4+25 \left(\frac{7}{3}\right)^3+15 \left(\frac{7}{3}\right)^2+\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[B_5\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^5+10 \left(-\frac{11}{5}\right)^4+25 \left(-\frac{11}{5}\right)^3+15 \left(-\frac{11}{5}\right)^2-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[B_5\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^5+10 \left(\frac{13}{4}\right)^4+25 \left(\frac{13}{4}\right)^3+15 \left(\frac{13}{4}\right)^2+\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-the-bell-polynomial-at-a-real-point-b-20-0-5	BellB[20, 0.5]			
-the-number-of-ways-to-partition-a-4-element-set	BellB[4]	15	B_4	15
-recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	(BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])	True	B_5=\binom{4}{0} B_0+\binom{4}{1} B_1+\binom{4}{2} B_2+\binom{4}{3} B_3+\binom{4}{4} B_4	\text{True}
-the-bell-polynomial-at-1-is-the-bell-number-b-n	BellB[5, 1]			
-dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	Divide[Sum[Divide[Power[k, 5], Factorial[k]], List[k, 0, Infinity]], E]			
-touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	(Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])			
-a-negative-argument-is-left-unevaluated	BellB[-1]	BellB[-1]	B_{-1}	B_{-1}
-a-zero-modulus-inside-a-congruence-check-is-nan	(Mod[BellB[9], 23] == Mod[Plus[BellB[4], BellB[5]], 0])			
+id	in	out	tex.in	tex.out	verdict
+bellnumber-0	BellB[0]	1	B_0	1	
+bellnumber-1	BellB[1]	1	B_1	1	
+bellnumber-3	BellB[3]	5	B_3	5	
+bellnumber-5	BellB[5]	52	B_5	52	
+bellnumber-10	BellB[10]	115975	B_{10}	115975	
+threads-element-wise-over-a-list-as-wolfram-s	BellB[List[1, 2, 3, 4]]	{1, 2, 5, 15}	B_{\{1,2,3,4\}}	\{1,2,5,15\}	
+exact-for-large-n	BellB[30]	846749014511809332450147	B_{30}	846749014511809332450147	
+the-two-argument-form-gives-the-bell-touchard	BellB[5, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[B_5(x)-\left(x^5+10 x^4+25 x^3+15 x^2+x\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[B_5\left(\frac{7}{3}\right)-\left(\left(\frac{7}{3}\right)^5+10 \left(\frac{7}{3}\right)^4+25 \left(\frac{7}{3}\right)^3+15 \left(\frac{7}{3}\right)^2+\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[B_5\left(-\frac{11}{5}\right)-\left(\left(-\frac{11}{5}\right)^5+10 \left(-\frac{11}{5}\right)^4+25 \left(-\frac{11}{5}\right)^3+15 \left(-\frac{11}{5}\right)^2-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[B_5\left(\frac{13}{4}\right)-\left(\left(\frac{13}{4}\right)^5+10 \left(\frac{13}{4}\right)^4+25 \left(\frac{13}{4}\right)^3+15 \left(\frac{13}{4}\right)^2+\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+the-bell-polynomial-at-a-real-point-b-20-0-5	BellB[20, 0.5]	2.701901319401519*^11	B_{20}(0.5)	2.7019\times 10^{11}	
+the-number-of-ways-to-partition-a-4-element-set	BellB[4]	15	B_4	15	
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	(BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])	True	B_5=\binom{4}{0} B_0+\binom{4}{1} B_1+\binom{4}{2} B_2+\binom{4}{3} B_3+\binom{4}{4} B_4	\text{True}	
+the-bell-polynomial-at-1-is-the-bell-number-b-n	BellB[5, 1]	52	B_5(1)	52	
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	Divide[Sum[Divide[Power[k, 5], Factorial[k]], List[k, 0, Infinity]], E]	52	\frac{\sum _{k=0}^{\infty } \frac{k^5}{k!}}{e}	52	
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	(Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])	True	(B_9 \bmod 7)=(\left(B_2+B_3\right) \bmod 7)	\text{True}	
+a-negative-argument-is-left-unevaluated	BellB[-1]	BellB[-1]	B_{-1}	B_{-1}	
+a-zero-modulus-inside-a-congruence-check-is-nan	(Mod[BellB[9], 23] == Mod[Plus[BellB[4], BellB[5]], 0])	10 == Indeterminate	(B_9 \bmod 23)=(\left(B_4+B_5\right) \bmod 0)	10=\text{Indeterminate}	disagree

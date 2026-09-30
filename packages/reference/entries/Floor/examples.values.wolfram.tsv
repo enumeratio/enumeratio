@@ -1,28 +1,28 @@
-id	in	out	tex.in	tex.out
-floor-7-over-2	Floor[Rational[7, 2]]	3	\left\lfloor \frac{7}{2}\right\rfloor	3
-floor-3p7	Floor[3.7]	3	\lfloor 3.7\rfloor	3
-integers-pass-through-unchanged	Floor[5]	5	\lfloor 5\rfloor	5
-threads-element-wise-over-a-list	Floor[List[1.2, -1.2, 3.7]]	{1, -2, 3}	\lfloor \{1.2,-1.2,3.7\}\rfloor	\{1,-2,3\}
-floor-2p4	Floor[2.4]			
-floor-2p6	Floor[2.6]			
-floor-2p7	Floor[2.7]			
-floor-add-x-1-a-free-variable-is-untouched	Floor[Plus[x, 1]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor x+1\rfloor -\lfloor x+1\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \frac{7}{3}+1\right\rfloor -\left\lfloor \frac{7}{3}+1\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor -\frac{11}{5}+1\right\rfloor -\left\lfloor -\frac{11}{5}+1\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \frac{13}{4}+1\right\rfloor -\left\lfloor \frac{13}{4}+1\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-stays-symbolic	Floor[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor x\rfloor -\lfloor x\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \frac{7}{3}\right\rfloor -\left\lfloor \frac{7}{3}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor -\frac{11}{5}\right\rfloor -\left\lfloor -\frac{11}{5}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \frac{13}{4}\right\rfloor -\left\lfloor \frac{13}{4}\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-exact-radicals-are-decided-numerically	Floor[Sqrt[50]]			
-a-negative-radicand-inside-floor	Floor[Sqrt[-1]]			
-evaluates-at-an-exact-constant-lfloor-pi-rfloor	Floor[Pi]			
-and-at-its-negative-lfloor-pi-rfloor-4	Floor[Minus[Pi]]			
-a-second-argument-floors-to-a-multiple-of-it-the	Floor[226, 10]			
-the-step-needn-t-be-an-integer-3-5-cdot-lfloor	Floor[-10.3, 3.5]			
-nor-rational-2-pi-e-approx-3-57-floors-to-the	Floor[Subtract[Times[2, Pi], E], Rational[5, 4]]			
-floors-the-real-and-imaginary-parts-separately	Floor[Complex[5.37, -1.3]]			
-how-many-full-5-item-packs-fit-in-17-items	Floor[Divide[17, 5]]	3	\left\lfloor \frac{17}{5}\right\rfloor	3
-legendre-s-formula-100-ends-in-lfloor-100-5	Plus[Floor[Divide[100, 5]], Floor[Divide[100, 25]]]			
-the-number-of-decimal-digits-of-n-is-lfloor-log	Plus[Floor[Log[10, 12345]], 1]			
-the-first-four-digits-of-e	Floor[Times[1000, E]]			
-for-a-non-integer-x-lceil-x-rceil-lfloor-x	(Plus[Floor[Rational[7, 2]], 1] == Ceiling[Rational[7, 2]])	True	\left\lfloor \frac{7}{2}\right\rfloor +1=\left\lceil \frac{7}{2}\right\rceil	\text{True}
-lfloor-x-rfloor-lceil-x-rceil	(Floor[Rational[-7, 2]] == Minus[Ceiling[Rational[7, 2]]])	True	\left\lfloor -\frac{7}{2}\right\rfloor =-\left\lceil \frac{7}{2}\right\rceil	\text{True}
-idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	Floor[Floor[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor \lfloor x\rfloor \rfloor -\lfloor x\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \left\lfloor \frac{7}{3}\right\rfloor \right\rfloor -\left\lfloor \frac{7}{3}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \left\lfloor -\frac{11}{5}\right\rfloor \right\rfloor -\left\lfloor -\frac{11}{5}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \left\lfloor \frac{13}{4}\right\rfloor \right\rfloor -\left\lfloor \frac{13}{4}\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-a-zero-divisor-inside-floor	Floor[Divide[17, 0]]			
-rounds-toward-infty-not-toward-0-floor-3-2-is-4	Floor[-3.2]	-4	\lfloor -3.2\rfloor	-4
-infinities-pass-through-unchanged	Floor[-Infinity]	-Infinity	\lfloor -\infty \rfloor	-\infty
+id	in	out	tex.in	tex.out	verdict
+floor-7-over-2	Floor[Rational[7, 2]]	3	\left\lfloor \frac{7}{2}\right\rfloor	3	
+floor-3p7	Floor[3.7]	3	\lfloor 3.7\rfloor	3	
+integers-pass-through-unchanged	Floor[5]	5	\lfloor 5\rfloor	5	
+threads-element-wise-over-a-list	Floor[List[1.2, -1.2, 3.7]]	{1, -2, 3}	\lfloor \{1.2,-1.2,3.7\}\rfloor	\{1,-2,3\}	
+floor-2p4	Floor[2.4]	2	\lfloor 2.4\rfloor	2	
+floor-2p6	Floor[2.6]	2	\lfloor 2.6\rfloor	2	
+floor-2p7	Floor[2.7]	2	\lfloor 2.7\rfloor	2	
+floor-add-x-1-a-free-variable-is-untouched	Floor[Plus[x, 1]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor x+1\rfloor -\lfloor x+1\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \frac{7}{3}+1\right\rfloor -\left\lfloor \frac{7}{3}+1\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor -\frac{11}{5}+1\right\rfloor -\left\lfloor -\frac{11}{5}+1\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \frac{13}{4}+1\right\rfloor -\left\lfloor \frac{13}{4}+1\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+stays-symbolic	Floor[x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor x\rfloor -\lfloor x\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \frac{7}{3}\right\rfloor -\left\lfloor \frac{7}{3}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor -\frac{11}{5}\right\rfloor -\left\lfloor -\frac{11}{5}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \frac{13}{4}\right\rfloor -\left\lfloor \frac{13}{4}\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+exact-radicals-are-decided-numerically	Floor[Sqrt[50]]	7	\left\lfloor \sqrt{50}\right\rfloor	7	
+a-negative-radicand-inside-floor	Floor[Sqrt[-1]]	I	\left\lfloor \sqrt{-1}\right\rfloor	i	
+evaluates-at-an-exact-constant-lfloor-pi-rfloor	Floor[Pi]	3	\lfloor \pi \rfloor	3	
+and-at-its-negative-lfloor-pi-rfloor-4	Floor[Minus[Pi]]	-4	\lfloor -\pi \rfloor	-4	
+a-second-argument-floors-to-a-multiple-of-it-the	Floor[226, 10]	220	\text{Floor}[226,10]	220	
+the-step-needn-t-be-an-integer-3-5-cdot-lfloor	Floor[-10.3, 3.5]	-10.5	\text{Floor}[-10.3,3.5]	-10.5	
+nor-rational-2-pi-e-approx-3-57-floors-to-the	Floor[Subtract[Times[2, Pi], E], Rational[5, 4]]	5/2	\text{Floor}\left[2 \pi -e,\frac{5}{4}\right]	\frac{5}{2}	
+floors-the-real-and-imaginary-parts-separately	Floor[Complex[5.37, -1.3]]	5 - 2*I	\lfloor 5.37\, -1.3 i\rfloor	5-2 i	
+how-many-full-5-item-packs-fit-in-17-items	Floor[Divide[17, 5]]	3	\left\lfloor \frac{17}{5}\right\rfloor	3	
+legendre-s-formula-100-ends-in-lfloor-100-5	Plus[Floor[Divide[100, 5]], Floor[Divide[100, 25]]]	24	\left\lfloor \frac{100}{5}\right\rfloor +\left\lfloor \frac{100}{25}\right\rfloor	24	
+the-number-of-decimal-digits-of-n-is-lfloor-log	Plus[Floor[Log[10, 12345]], 1]	5	\left\lfloor \log _{10}(12345)\right\rfloor +1	5	
+the-first-four-digits-of-e	Floor[Times[1000, E]]	2718	\lfloor 1000 e\rfloor	2718	
+for-a-non-integer-x-lceil-x-rceil-lfloor-x	(Plus[Floor[Rational[7, 2]], 1] == Ceiling[Rational[7, 2]])	True	\left\lfloor \frac{7}{2}\right\rfloor +1=\left\lceil \frac{7}{2}\right\rceil	\text{True}	
+lfloor-x-rfloor-lceil-x-rceil	(Floor[Rational[-7, 2]] == Minus[Ceiling[Rational[7, 2]]])	True	\left\lfloor -\frac{7}{2}\right\rfloor =-\left\lceil \frac{7}{2}\right\rceil	\text{True}	
+idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	Floor[Floor[x]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\lfloor \lfloor x\rfloor \rfloor -\lfloor x\rfloor ],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\lfloor \left\lfloor \frac{7}{3}\right\rfloor \right\rfloor -\left\lfloor \frac{7}{3}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \left\lfloor -\frac{11}{5}\right\rfloor \right\rfloor -\left\lfloor -\frac{11}{5}\right\rfloor \right]\right],\text{Chop}\left[N\left[\left\lfloor \left\lfloor \frac{13}{4}\right\rfloor \right\rfloor -\left\lfloor \frac{13}{4}\right\rfloor \right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+a-zero-divisor-inside-floor	Floor[Divide[17, 0]]	ComplexInfinity	\left\lfloor \frac{17}{0}\right\rfloor	\text{ComplexInfinity}	disagree
+rounds-toward-infty-not-toward-0-floor-3-2-is-4	Floor[-3.2]	-4	\lfloor -3.2\rfloor	-4	
+infinities-pass-through-unchanged	Floor[-Infinity]	-Infinity	\lfloor -\infty \rfloor	-\infty	

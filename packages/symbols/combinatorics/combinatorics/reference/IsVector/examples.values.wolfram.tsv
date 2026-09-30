@@ -1,6 +1,6 @@
-id	in
-a-flat-list-is-a-vector	VectorQ[List[1, 2, 3]]
-a-list-of-lists-is-not-a-vector	VectorQ[List[List[1, 2], List[3, 4]]]
-a-non-list-is-not-a-vector	VectorQ[3]
-a-test-function-must-hold-of-every-element	VectorQ[List[2, 4, 6], EvenQ]
-a-test-function-failing-on-one-element	VectorQ[List[2, 3, 6], EvenQ]
+id	in	out	tex.in	tex.out
+a-flat-list-is-a-vector	VectorQ[List[1, 2, 3]]	True	\text{VectorQ}[\{1,2,3\}]	\text{True}
+a-list-of-lists-is-not-a-vector	VectorQ[List[List[1, 2], List[3, 4]]]	False	\text{VectorQ}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)\right]	\text{False}
+a-non-list-is-not-a-vector	VectorQ[3]	False	\text{VectorQ}[3]	\text{False}
+a-test-function-must-hold-of-every-element	VectorQ[List[2, 4, 6], EvenQ]	True	\text{VectorQ}[\{2,4,6\},\text{EvenQ}]	\text{True}
+a-test-function-failing-on-one-element	VectorQ[List[2, 3, 6], EvenQ]	False	\text{VectorQ}[\{2,3,6\},\text{EvenQ}]	\text{False}

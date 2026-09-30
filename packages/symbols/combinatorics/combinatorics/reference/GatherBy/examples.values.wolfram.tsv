@@ -1,4 +1,4 @@
 id	in	out	tex.in	tex.out
-grouped-by-residue-mod-3	GatherBy[List[1, 2, 3, 4, 5, 6, 7], Function[Mod[Slot[1], 3]]]			
-grouped-by-absolute-value	GatherBy[List[-2, 1, 2, -1, 3], Abs]			
+grouped-by-residue-mod-3	GatherBy[List[1, 2, 3, 4, 5, 6, 7], Function[Mod[Slot[1], 3]]]	{{1, 4, 7}, {2, 5}, {3, 6}}	\text{GatherBy}[\{1,2,3,4,5,6,7\},(\text{$\#$1} \bmod 3)\&]	\{\{1,4,7\},\{2,5\},\{3,6\}\}
+grouped-by-absolute-value	GatherBy[List[-2, 1, 2, -1, 3], Abs]	{{-2, 2}, {1, -1}, {3}}	\text{GatherBy}[\{-2,1,2,-1,3\},\text{Abs}]	\{\{-2,2\},\{1,-1\},\{3\}\}
 pairs-grouped-by-their-last-element	GatherBy[List[List[a, 1], List[b, 2], List[c, 1]], Last]	{{{a, 1}, {c, 1}}, {{b, 2}}}	\text{GatherBy}\left[\left( \begin{array}{cc}  a & 1 \\  b & 2 \\  c & 1 \\ \end{array} \right),\text{Last}\right]	\left\{\left( \begin{array}{cc}  a & 1 \\  c & 1 \\ \end{array} \right),\left( \begin{array}{cc}  b & 2 \\ \end{array} \right)\right\}

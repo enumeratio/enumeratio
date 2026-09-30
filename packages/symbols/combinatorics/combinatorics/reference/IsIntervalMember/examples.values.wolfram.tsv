@@ -1,5 +1,5 @@
-id	in
-an-interior-point	IntervalMemberQ[Interval[List[1, 5]], 3]
-a-closed-endpoint-is-a-member	IntervalMemberQ[Interval[List[1, 5]], 5]
-an-open-endpoint-is-not-a-member	
-outside-the-interval	IntervalMemberQ[Interval[List[1, 5]], 6]
+id	in	out	tex.in	tex.out
+an-interior-point	IntervalMemberQ[Interval[List[1, 5]], 3]	True	\text{IntervalMemberQ}[\text{Interval}[\{1,5\}],3]	\text{True}
+a-closed-endpoint-is-a-member	IntervalMemberQ[Interval[List[1, 5]], 5]	True	\text{IntervalMemberQ}[\text{Interval}[\{1,5\}],5]	\text{True}
+an-open-endpoint-is-not-a-member				
+outside-the-interval	IntervalMemberQ[Interval[List[1, 5]], 6]	False	\text{IntervalMemberQ}[\text{Interval}[\{1,5\}],6]	\text{False}

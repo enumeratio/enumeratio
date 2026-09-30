@@ -1,2 +1,2 @@
-id	in
-turan-6-3-is-k222	EdgeCount[TuranGraph[6, 3]]
+id	in	out	tex.in	tex.out
+turan-6-3-is-k222	EdgeCount[TuranGraph[6, 3]]	12	\text{EdgeCount}[\text{TuranGraph}[6,3]]	12

@@ -1,8 +1,8 @@
-id	section	role	expr	expected	caption	wolfram.note
-mode-list-1-2-2-3			[Mode, [List, 1, 2, 2, 3]]	2		
-mode-list-1-2-3-3-2-3			[Mode, [List, 1, 2, 3, 3, 2, 3]]	3		
-exact-rationals	Scope		[Mode, [List, [Rational, 1, 2], 1, [Rational, 1, 2]]]	[Rational, 1, 2]	Exact rationals	
-symbols-and-numbers-mixed-three-way-tie-wolfram	Scope		[Mode, [List, b, a, c, 2, a, b, 1, 2]]	b	Symbols and numbers mixed, three-way tie: the first to appear wins; [[Commonest]] lists all three, $b$, $a$, $2$, as Wolfram's does	
-the-mode-occurs-exactly-as-many-times-as-the	Properties		[Equal, [Count, [List, 1, 2, 2, 3], [Mode, [List, 1, 2, 2, 3]]], 2]	True	The mode occurs exactly as many times as the highest frequency in the collection. See [[Count]]	
-with-a-tie-for-most-frequent-mode-returns-just	Possible issues		[Mode, [List, 1, 1, 2, 2, 3]]	1	With a tie for most frequent, Mode returns just one; see [[Commonest]] for every tied value	Wolfram's Commonest returns every tied mode, [1, 2], here.
-empty-data-has-no-mode-compute-engine-returns	Possible issues		[Mode, [List]]	NaN	Empty data has no mode; compute-engine returns $NaN$	Wolfram's Commonest[{}] is the empty list {}.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+mode-list-1-2-2-3			[Mode, [List, 1, 2, 2, 3]]	2			
+mode-list-1-2-3-3-2-3			[Mode, [List, 1, 2, 3, 3, 2, 3]]	3			
+exact-rationals	Scope		[Mode, [List, [Rational, 1, 2], 1, [Rational, 1, 2]]]	[Rational, 1, 2]	Exact rationals		
+symbols-and-numbers-mixed-three-way-tie-wolfram	Scope		[Mode, [List, b, a, c, 2, a, b, 1, 2]]	b	Symbols and numbers mixed, three-way tie: the first to appear wins; [[Commonest]] lists all three, $b$, $a$, $2$, as Wolfram's does		
+the-mode-occurs-exactly-as-many-times-as-the	Properties		[Equal, [Count, [List, 1, 2, 2, 3], [Mode, [List, 1, 2, 2, 3]]], 2]	True	The mode occurs exactly as many times as the highest frequency in the collection. See [[Count]]		
+with-a-tie-for-most-frequent-mode-returns-just	Possible issues		[Mode, [List, 1, 1, 2, 2, 3]]	1	With a tie for most frequent, Mode returns just one; see [[Commonest]] for every tied value		Wolfram's Commonest returns every tied mode, [1, 2], here.
+empty-data-has-no-mode-compute-engine-returns	Possible issues		[Mode, [List]]	NaN	Empty data has no mode; compute-engine returns $NaN$	unclassified	Wolfram's Commonest[{}] is the empty list {}.

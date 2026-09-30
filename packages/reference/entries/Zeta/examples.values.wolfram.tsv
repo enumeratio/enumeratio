@@ -1,44 +1,44 @@
-id	in	out	tex.in	tex.out
-zeta-2	Zeta[2]	Pi^2/6	\zeta (2)	\frac{\pi ^2}{6}
-zeta-4	Zeta[4]	Pi^4/90	\zeta (4)	\frac{\pi ^4}{90}
-zeta-6	Zeta[6]	Pi^6/945	\zeta (6)	\frac{\pi ^6}{945}
-threads-over-a-list-reducing-every-element-to	Zeta[List[-1, -2, -3]]	{-1/12, 0, 1/120}	\zeta (\{-1,-2,-3\})	\left\{-\frac{1}{12},0,\frac{1}{120}\right\}
-apery-s-constant-zeta-3-numerically	N[Zeta[3]]			
-a-machine-precision-argument	Zeta[1.5]			
-zeta-8-pi-8-9450	Zeta[8]			
-zeta-5-b-6-6-1-252	Zeta[-5]			
-zeta-symbolic-s-under-n-stays-symbolic	N[Zeta[s]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[N[\zeta (s)]-\zeta (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[N\left[\zeta \left(\frac{7}{3}\right)\right]-\zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[N\left[\zeta \left(-\frac{11}{5}\right)\right]-\zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[N\left[\zeta \left(\frac{13}{4}\right)\right]-\zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-zeta-half-stays-symbolic-until-n	Zeta[Rational[1, 2]]			
-zeta-complex-argument-stays-symbolic-until-n	Zeta[Complex[2, 1]]			
-n-zeta-complex-2-plus-i	N[Zeta[Complex[2, 1]]]			
-zeta-threads-over-mixed-exact-and-inexact-list	Zeta[List[2, Complex[0.5, 14]]]			
-zeta-3-0-drops-pole-term-like-s-2	Zeta[3, 0]			
-zeta-2-neg-2-stays-finite-unlike-hurwitzzeta	N[Zeta[2, -2]]			
-on-the-critical-line-zeta-1-2-14i-0-02224-0	N[Zeta[Complex[0.5, 14]]]	0.022241142609994033 - 0.10325812326645277*I	N[\zeta (0.5\, +14 i)]	0.0222411\, -0.103258 i
-two-argument-zeta-s-a-via-enumeratio-analytic	Zeta[2, 1]	Pi^2/6	\zeta (2,1)	\frac{\pi ^2}{6}
-zeta-2-2-zeta-2-1-pi-2-6-1	Zeta[2, 2]	-1 + Pi^2/6	\zeta (2,2)	\frac{\pi ^2}{6}-1
-zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so	Zeta[2, 0]	Pi^2/6	\zeta (2,0)	\frac{\pi ^2}{6}
-arbitrary-real-arguments	Zeta[5.211111111111111]			
-left-of-the-critical-strip-via-the-functional	Zeta[-4.5]			
-complex-s-under-n	N[Zeta[Complex[2, -5]]]			
-zeta-infty-1-only-the-n-1-term-survives	Zeta[Infinity]			
-two-arguments-at-a-nonpositive-integer-s-zeta-1	Zeta[-1, 5]			
-two-arguments-inexact	Zeta[-1.5, 5]			
-two-complex-arguments-under-n-to-ten-digits	N[Zeta[Complex[-1.5, 1], Complex[2.5, -1]], 10]			
-which-with-inexact-complex-arguments-should	Zeta[Complex[-1.5, 1], Complex[2.5, -1]]			
-zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of	Zeta[20, Rational[1, 2]]			
-zeta-2-1-2-3-zeta-2-pi-2-2	Zeta[2, Rational[1, 2]]			
-interval-arithmetic-zeta-is-decreasing-on-1	Zeta[Interval[List[1.1, 1.2]]]			
-uncertainty-in-a-propagated-with-partial-a-zeta	Zeta[Rational[1, 2], Around[0.5, 0.01]]			
-to-40-significant-digits-every-one-correctly	N[Zeta[3], 40]			
-the-probability-that-two-random-positive	(Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])	True	\frac{1}{\zeta (2)}=\frac{6}{\pi ^2}	\text{True}
-certified-digits-zeta-3	N[Zeta[3], 40]			
-zeta-0-1-2	Zeta[0]	-1/2	\zeta (0)	-\frac{1}{2}
-trivial-zero-zeta-2n-0-for-positive-integer-n	Zeta[-2]	0	\zeta (-2)	0
-zeta-3-b-4-4-1-120-via-the-bernoulli-number	Zeta[-3]	1/120	\zeta (-3)	\frac{1}{120}
-pole-at-s-1-the-harmonic-series-sum-1-n-diverges	Zeta[1]	ComplexInfinity	\zeta (1)	\text{ComplexInfinity}
-zeta-s-1-zeta-s-for-symbolic-s	Zeta[s, 1]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\zeta (s,1)-\zeta (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\zeta \left(\frac{7}{3},1\right)-\zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(-\frac{11}{5},1\right)-\zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\zeta \left(\frac{13}{4},1\right)-\zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-odd-integers-geq-3-have-no-known-closed-form	Zeta[3]	Zeta[3]	\zeta (3)	\zeta (3)
-zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	N[Zeta[3, Rational[-1, 2]]]			
-zeta-1-2-35-12-exactly-but-at-a-negative-a-this	N[Zeta[-1, -2]]			
-the-notorious-sum-of-all-positive-integers	Zeta[-1]	-1/12	\zeta (-1)	-\frac{1}{12}
+id	in	out	shown	tex.in	tex.out	verdict
+zeta-2	Zeta[2]	Pi^2/6		\zeta (2)	\frac{\pi ^2}{6}	
+zeta-4	Zeta[4]	Pi^4/90		\zeta (4)	\frac{\pi ^4}{90}	
+zeta-6	Zeta[6]	Pi^6/945		\zeta (6)	\frac{\pi ^6}{945}	
+threads-over-a-list-reducing-every-element-to	Zeta[List[-1, -2, -3]]	{-1/12, 0, 1/120}		\zeta (\{-1,-2,-3\})	\left\{-\frac{1}{12},0,\frac{1}{120}\right\}	
+apery-s-constant-zeta-3-numerically	N[Zeta[3]]	1.2020569031595942		N[\zeta (3)]	1.20206	
+a-machine-precision-argument	Zeta[1.5]	2.612375348685488		\zeta (1.5)	2.61238	
+zeta-8-pi-8-9450	Zeta[8]	Pi^8/9450		\zeta (8)	\frac{\pi ^8}{9450}	
+zeta-5-b-6-6-1-252	Zeta[-5]	-1/252		\zeta (-5)	-\frac{1}{252}	
+zeta-symbolic-s-under-n-stays-symbolic						
+zeta-half-stays-symbolic-until-n	Zeta[Rational[1, 2]]	Zeta[1/2]		\zeta \left(\frac{1}{2}\right)	\zeta \left(\frac{1}{2}\right)	
+zeta-complex-argument-stays-symbolic-until-n	Zeta[Complex[2, 1]]	Zeta[2 + I]		\zeta (2+i)	\zeta (2+i)	
+n-zeta-complex-2-plus-i	N[Zeta[Complex[2, 1]]]	1.1503557032549028 - 0.4375308659196078*I		N[\zeta (2+i)]	1.15036\, -0.437531 i	
+zeta-threads-over-mixed-exact-and-inexact-list	Zeta[List[2, Complex[0.5, 14]]]	{Pi^2/6, 0.022241142609994033 - 0.10325812326645277*I}		\zeta (\{2,0.5\, +14 i\})	\left\{\frac{\pi ^2}{6},0.0222411\, -0.103258 i\right\}	
+zeta-3-0-drops-pole-term-like-s-2	Zeta[3, 0]	Zeta[3]		\zeta (3,0)	\zeta (3)	
+zeta-2-neg-2-stays-finite-unlike-hurwitzzeta	N[Zeta[2, -2]]	2.894934066848226		N[\zeta (2,-2)]	2.89493	
+on-the-critical-line-zeta-1-2-14i-0-02224-0	N[Zeta[Complex[0.5, 14]]]	0.022241142609994033 - 0.10325812326645277*I		N[\zeta (0.5\, +14 i)]	0.0222411\, -0.103258 i	
+two-argument-zeta-s-a-via-enumeratio-analytic	Zeta[2, 1]	Pi^2/6		\zeta (2,1)	\frac{\pi ^2}{6}	
+zeta-2-2-zeta-2-1-pi-2-6-1	Zeta[2, 2]	-1 + Pi^2/6		\zeta (2,2)	\frac{\pi ^2}{6}-1	
+zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so	Zeta[2, 0]	Pi^2/6		\zeta (2,0)	\frac{\pi ^2}{6}	
+arbitrary-real-arguments	Zeta[5.211111111111111]	1.0313917969343853		\zeta (5.21111)	1.03139	
+left-of-the-critical-strip-via-the-functional	Zeta[-4.5]	-0.0030916692472158338 + 1.1358608542875534*^-18*I		\zeta (-4.5)	-0.00309167+\text{1.1358608542875534$\grave{ }$*${}^{\wedge}$-18} i	
+complex-s-under-n	N[Zeta[Complex[2, -5]]]	0.8509629436242631 - 0.0989969461348312*I		N[\zeta (2-5 i)]	0.850963\, -0.0989969 i	
+zeta-infty-1-only-the-n-1-term-survives	Zeta[Infinity]	1		\zeta (\infty )	1	
+two-arguments-at-a-nonpositive-integer-s-zeta-1	Zeta[-1, 5]	-121/12		\zeta (-1,5)	-\frac{121}{12}	
+two-arguments-inexact	Zeta[-1.5, 5]	-17.050064749342074		\zeta (-1.5,5)	-17.0501	
+two-complex-arguments-under-n-to-ten-digits	N[Zeta[Complex[-1.5, 1], Complex[2.5, -1]], 10]	0.018486809194382968 + 1.6755337843019655*I		N[\zeta (-1.5+i,2.5\, -i),10]	0.0184868\, +1.67553 i	
+which-with-inexact-complex-arguments-should	Zeta[Complex[-1.5, 1], Complex[2.5, -1]]	0.018486809194382968 + 1.6755337843019655*I		\zeta (-1.5+i,2.5\, -i)	0.0184868\, +1.67553 i	
+zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of	Zeta[20, Rational[1, 2]]	(221930581*Pi^20)/1856156927625		\zeta \left(20,\frac{1}{2}\right)	\frac{221930581 \pi ^{20}}{1856156927625}	
+zeta-2-1-2-3-zeta-2-pi-2-2	Zeta[2, Rational[1, 2]]	Pi^2/2		\zeta \left(2,\frac{1}{2}\right)	\frac{\pi ^2}{2}	
+interval-arithmetic-zeta-is-decreasing-on-1	Zeta[Interval[List[1.1, 1.2]]]	Interval[{5.587162344294683, 10.584470307963986}]		\zeta (\text{Interval}[\{1.1,1.2\}])	\text{Interval}[\{5.58716,10.5845\}]	disagree
+uncertainty-in-a-propagated-with-partial-a-zeta	Zeta[Rational[1, 2], Around[0.5, 0.01]]	Around[-0.6048986434216284, 0.023882689737774163]		\zeta \left(\frac{1}{2},0.500\pm 0.010\right)	-0.605\pm 0.024	disagree
+to-40-significant-digits-every-one-correctly	N[Zeta[3], 40]	1.202056903159594285399738161511449990764986292340211366009`40.	1.202056903159594285399738161511449990765	N[\zeta (3),40]	1.202056903159594285399738161511449990765	
+the-probability-that-two-random-positive	(Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])	True		\frac{1}{\zeta (2)}=\frac{6}{\pi ^2}	\text{True}	
+certified-digits-zeta-3	N[Zeta[3], 40]	1.202056903159594285399738161511449990764986292340211366009`40.	1.202056903159594285399738161511449990765	N[\zeta (3),40]	1.202056903159594285399738161511449990765	
+zeta-0-1-2	Zeta[0]	-1/2		\zeta (0)	-\frac{1}{2}	
+trivial-zero-zeta-2n-0-for-positive-integer-n	Zeta[-2]	0		\zeta (-2)	0	
+zeta-3-b-4-4-1-120-via-the-bernoulli-number	Zeta[-3]	1/120		\zeta (-3)	\frac{1}{120}	
+pole-at-s-1-the-harmonic-series-sum-1-n-diverges	Zeta[1]	ComplexInfinity		\zeta (1)	\text{ComplexInfinity}	
+zeta-s-1-zeta-s-for-symbolic-s						
+odd-integers-geq-3-have-no-known-closed-form	Zeta[3]	Zeta[3]		\zeta (3)	\zeta (3)	
+zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	N[Zeta[3, Rational[-1, 2]]]	16.414398322117158		N\left[\zeta \left(3,-\frac{1}{2}\right)\right]	16.4144	
+zeta-1-2-35-12-exactly-but-at-a-negative-a-this	N[Zeta[-1, -2]]	2.9166666666666665		N[\zeta (-1,-2)]	2.91667	
+the-notorious-sum-of-all-positive-integers	Zeta[-1]	-1/12		\zeta (-1)	-\frac{1}{12}	

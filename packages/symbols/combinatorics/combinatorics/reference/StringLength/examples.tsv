@@ -1,2 +1,2 @@
-id	section	role	expr	expected
-counts-code-points-not-utf-16-units			[StringLength, [String, a😀b]]	3
+id	section	role	expr	expected	wolfram.kind	wolfram.note
+counts-code-points-not-utf-16-units			[StringLength, [String, a😀b]]	3	unclassified	""

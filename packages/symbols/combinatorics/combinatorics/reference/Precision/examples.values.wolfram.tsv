@@ -1,5 +1,5 @@
-id	in
-precision-exact-integer	Precision[2]
-precision-rational	Precision[Rational[1, 3]]
-precision-inexact-literal	Precision[2.5]
-precision-extended	Precision[3.141592653589793]
+id	in	out	tex.in	tex.out	verdict
+precision-exact-integer	Precision[2]	Infinity	\text{Precision}[2]	\infty	
+precision-rational	Precision[Rational[1, 3]]	Infinity	\text{Precision}\left[\frac{1}{3}\right]	\infty	
+precision-inexact-literal	Precision[2.5]	MachinePrecision	\text{Precision}[2.5]	\text{MachinePrecision}	disagree
+precision-extended	Precision[3.141592653589793]	MachinePrecision	\text{Precision}[3.14159]	\text{MachinePrecision}	disagree

@@ -1,6 +1,6 @@
-id	in
-realsign-neg-3	RealSign[-3]
-realsign-0	RealSign[0]
-realsign-2p5	RealSign[2.5]
-threads-element-wise-over-a-list	RealSign[List[-2, 0, 5]]
-decides-the-sign-of-an-exact-numeric-expression	RealSign[Subtract[Sqrt[2], 2]]
+id	in	out	tex.in	tex.out
+realsign-neg-3	RealSign[-3]	-1	\text{sgn}(-3)	-1
+realsign-0	RealSign[0]	0	\text{sgn}(0)	0
+realsign-2p5	RealSign[2.5]	1	\text{sgn}(2.5)	1
+threads-element-wise-over-a-list	RealSign[List[-2, 0, 5]]	{-1, 0, 1}	\text{sgn}(\{-2,0,5\})	\{-1,0,1\}
+decides-the-sign-of-an-exact-numeric-expression	RealSign[Subtract[Sqrt[2], 2]]	-1	\text{sgn}\left(\sqrt{2}-2\right)	-1

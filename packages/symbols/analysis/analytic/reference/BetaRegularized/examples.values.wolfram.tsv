@@ -1,22 +1,22 @@
-id	in	out	tex.in	tex.out	verdict
-betaregularized-0-2-3	BetaRegularized[0, 2, 3]	0	I_0(2,3)	0	
-betaregularized-1-2-3	BetaRegularized[1, 2, 3]	1	I_1(2,3)	1	
-a-floating-point-x-evaluates-directly-to-a	BetaRegularized[0.5, 2, 3]	0.6875000000000003	I_{0.5}(2,3)	0.6875	
-i-x-1-1-x-the-uniform-distribution-s-own-cdf	BetaRegularized[0.5, 1, 1]	0.5	I_{0.5}(1,1)	0.5	
-non-integer-parameters	BetaRegularized[0.4, 2.5, 3.5]				
-i-1-2-2-3-11-16-exactly	BetaRegularized[Rational[1, 2], 2, 3]				
-threads-element-wise-over-a-list-as-wolfram-s	BetaRegularized[0.5, List[1, 2], 1]	{0.5, 0.25}	I_{0.5}(\{1,2\},1)	\{0.5,0.25\}	
-x-outside-0-1-by-continuation-real-here-as-b-5	BetaRegularized[2, 0.5, 5]				
-four-arguments-the-generalized-i-z-1-a-b-i-z-0-a	BetaRegularized[0.2, 0.5, 2, 3]				
-interval-arithmetic-i-x-2-1-x-2	BetaRegularized[Interval[List[0.2, 0.3]], 2, 1]				
-uncertainty-propagation	BetaRegularized[Around[0.3, 0.01], 1, 2]				
-to-30-significant-digits-every-one-correctly	N[BetaRegularized[Rational[1, 3], 2, 3], 30]				
-binomial-cdf-via-the-regularized-beta-for-x-sim	(BetaRegularized[0.7, 3, 2] == Plus[Power[0.7, 4], Times[4, 0.3, Power[0.7, 3]]])	True	I_{0.7}(3,2)=0.7^4+4 0.3 0.7^3	\text{True}	
-symmetry-i-x-a-b-i-1-x-b-a-1	(Plus[BetaRegularized[0.3, 2, 3], BetaRegularized[0.7, 3, 2]] == 1)	True	I_{0.3}(2,3)+I_{0.7}(3,2)=1	\text{True}	
-i-1-2-a-a-1-2-for-any-a-here-at-a-10	BetaRegularized[0.5, 10, 10]	0.49999999999999906	I_{0.5}(10,10)	0.5	
-i-x-a-1-x-a-here-0-2111-5	BetaRegularized[0.2111111111111111, 5, 1]				
-the-arcsine-distribution-s-median-i-1-2-1-2-1-2	BetaRegularized[0.5, Rational[1, 2], Rational[1, 2]]				
-i-x-1-1-x-symbolically	BetaRegularized[x, 1, 1]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[I_x(1,1)-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[I_{\frac{7}{3}}(1,1)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[I_{-\frac{11}{5}}(1,1)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[I_{\frac{13}{4}}(1,1)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-i-x-a-1-x-a-symbolically	BetaRegularized[x, a, 1]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[I_x(a,1)-x^a\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[I_{-\frac{11}{5}}\left(\frac{7}{3},1\right)-\left(-\frac{11}{5}\right)^{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[I_{-\frac{17}{6}}\left(\frac{13}{4},1\right)-\left(-\frac{17}{6}\right)^{\frac{13}{4}}\right]\right],\text{Chop}\left[N\left[I_{-\frac{23}{9}}\left(\frac{19}{8},1\right)-\left(-\frac{23}{9}\right)^{\frac{19}{8}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-i-x-1-b-1-1-x-b	BetaRegularized[x, 1, b]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[I_x(1,b)-\left(-(-x+1)^b+1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[I_{-\frac{11}{5}}\left(1,\frac{7}{3}\right)-\left(-\left(-\left(-\frac{11}{5}\right)+1\right)^{\frac{7}{3}}+1\right)\right]\right],\text{Chop}\left[N\left[I_{-\frac{17}{6}}\left(1,\frac{13}{4}\right)-\left(-\left(-\left(-\frac{17}{6}\right)+1\right)^{\frac{13}{4}}+1\right)\right]\right],\text{Chop}\left[N\left[I_{-\frac{23}{9}}\left(1,\frac{19}{8}\right)-\left(-\left(-\left(-\frac{23}{9}\right)+1\right)^{\frac{19}{8}}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-an-x-outside-0-1-is-left-unevaluated-rather-than	BetaRegularized[2, 2, 3]	8	I_2(2,3)	8	disagree
+id	in	out	shown	tex.in	tex.out	verdict
+betaregularized-0-2-3	BetaRegularized[0, 2, 3]	0		I_0(2,3)	0	
+betaregularized-1-2-3	BetaRegularized[1, 2, 3]	1		I_1(2,3)	1	
+a-floating-point-x-evaluates-directly-to-a	BetaRegularized[0.5, 2, 3]	0.6875000000000003		I_{0.5}(2,3)	0.6875	
+i-x-1-1-x-the-uniform-distribution-s-own-cdf	BetaRegularized[0.5, 1, 1]	0.5		I_{0.5}(1,1)	0.5	
+non-integer-parameters	BetaRegularized[0.4, 2.5, 3.5]	0.48690419152611747		I_{0.4}(2.5,3.5)	0.486904	
+i-1-2-2-3-11-16-exactly	BetaRegularized[Rational[1, 2], 2, 3]	11/16		I_{\frac{1}{2}}(2,3)	\frac{11}{16}	
+threads-element-wise-over-a-list-as-wolfram-s	BetaRegularized[0.5, List[1, 2], 1]	{0.5, 0.25}		I_{0.5}(\{1,2\},1)	\{0.5,0.25\}	
+x-outside-0-1-by-continuation-real-here-as-b-5	BetaRegularized[2, 0.5, 5]	1.1821941497962591		I_2(0.5,5)	1.18219	
+four-arguments-the-generalized-i-z-1-a-b-i-z-0-a	BetaRegularized[0.2, 0.5, 2, 3]	0.5067000000000004		I_{(0.2,0.5)}(2,3)	0.5067	
+interval-arithmetic-i-x-2-1-x-2	BetaRegularized[Interval[List[0.2, 0.3]], 2, 1]	Interval[{0.03499999979976564, 0.09000000020023437}]		I_{\text{Interval}[\{0.2,0.3\}]}(2,1)	\text{Interval}[\{0.035,0.09\}]	disagree
+uncertainty-propagation	BetaRegularized[Around[0.3, 0.01], 1, 2]	Around[0.51, 0.013999999999999999]		I_{0.300\pm 0.010}(1,2)	0.510\pm 0.014	disagree
+to-30-significant-digits-every-one-correctly	N[BetaRegularized[Rational[1, 3], 2, 3], 30]	0.4074074074074074074074074074074074074074074074074074074074`30.	0.407407407407407407407407407407	N\left[I_{\frac{1}{3}}(2,3),30\right]	0.407407407407407407407407407407	
+binomial-cdf-via-the-regularized-beta-for-x-sim	(BetaRegularized[0.7, 3, 2] == Plus[Power[0.7, 4], Times[4, 0.3, Power[0.7, 3]]])	True		I_{0.7}(3,2)=0.7^4+4 0.3 0.7^3	\text{True}	
+symmetry-i-x-a-b-i-1-x-b-a-1	(Plus[BetaRegularized[0.3, 2, 3], BetaRegularized[0.7, 3, 2]] == 1)	True		I_{0.3}(2,3)+I_{0.7}(3,2)=1	\text{True}	
+i-1-2-a-a-1-2-for-any-a-here-at-a-10	BetaRegularized[0.5, 10, 10]	0.49999999999999906		I_{0.5}(10,10)	0.5	
+i-x-a-1-x-a-here-0-2111-5	BetaRegularized[0.2111111111111111, 5, 1]	0.00041932953987366424		I_{0.211111}(5,1)	0.00041933	
+the-arcsine-distribution-s-median-i-1-2-1-2-1-2	BetaRegularized[0.5, Rational[1, 2], Rational[1, 2]]	0.49999999999999983		I_{0.5}\left(\frac{1}{2},\frac{1}{2}\right)	0.5	
+i-x-1-1-x-symbolically	BetaRegularized[x, 1, 1]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[I_x(1,1)-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[I_{\frac{7}{3}}(1,1)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[I_{-\frac{11}{5}}(1,1)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[I_{\frac{13}{4}}(1,1)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+i-x-a-1-x-a-symbolically	BetaRegularized[x, a, 1]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[I_x(a,1)-x^a\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[I_{-\frac{11}{5}}\left(\frac{7}{3},1\right)-\left(-\frac{11}{5}\right)^{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[I_{-\frac{17}{6}}\left(\frac{13}{4},1\right)-\left(-\frac{17}{6}\right)^{\frac{13}{4}}\right]\right],\text{Chop}\left[N\left[I_{-\frac{23}{9}}\left(\frac{19}{8},1\right)-\left(-\frac{23}{9}\right)^{\frac{19}{8}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+i-x-1-b-1-1-x-b	BetaRegularized[x, 1, b]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[I_x(1,b)-\left(-(-x+1)^b+1\right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[I_{-\frac{11}{5}}\left(1,\frac{7}{3}\right)-\left(-\left(-\left(-\frac{11}{5}\right)+1\right)^{\frac{7}{3}}+1\right)\right]\right],\text{Chop}\left[N\left[I_{-\frac{17}{6}}\left(1,\frac{13}{4}\right)-\left(-\left(-\left(-\frac{17}{6}\right)+1\right)^{\frac{13}{4}}+1\right)\right]\right],\text{Chop}\left[N\left[I_{-\frac{23}{9}}\left(1,\frac{19}{8}\right)-\left(-\left(-\left(-\frac{23}{9}\right)+1\right)^{\frac{19}{8}}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+an-x-outside-0-1-is-left-unevaluated-rather-than	BetaRegularized[2, 2, 3]	8		I_2(2,3)	8	disagree

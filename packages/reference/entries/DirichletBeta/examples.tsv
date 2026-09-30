@@ -9,7 +9,7 @@ n-dirichletbeta-4		test	[N, [DirichletBeta, 4]]	{num: "0.988944551741105336109"}
 complex-arguments-here-on-the-critical-line	Scope		[DirichletBeta, [Complex, 0.5, 14]]	[Complex, 1.537115438440316, 1.3434514268677573]	Complex arguments, here on the critical line		
 threads-elementwise-over-an-array	Scope		[DirichletBeta, [List, [List, 1, -1], [List, -1, 1]]]	[List, [List, [Multiply, [Rational, 1, 4], Pi], 0], [List, 0, [Multiply, [Rational, 1, 4], Pi]]]	Threads elementwise over an array		
 beta-s-to-1-as-s-to-infty	Scope		[DirichletBeta, PositiveInfinity]	1	$\beta(s) \to 1$ as $s \to \infty$		
-uncertainty-propagation-beta-2-pm-0-01-g-pm-0	Scope		[DirichletBeta, [Around, 2, 0.01]]	[Around, 0.915965594177219, 0.000815807361165928]	Uncertainty propagation: $\beta(2 \pm 0.01) = G \pm 0.00082$		
+uncertainty-propagation-beta-2-pm-0-01-g-pm-0	Scope		[DirichletBeta, [Around, 2, 0.01]]	[Around, 0.915965594177219, 0.000815807361165928]	Uncertainty propagation: $\beta(2 \pm 0.01) = G \pm 0.00082$	unclassified	""
 to-exactly-40-significant-digits-not-yet-85-come	Scope		[N, [DirichletBeta, 2], 40]	{num: "0.9159655941772190150546035149323841107741"}	To exactly 40 significant digits, as many as asked for		
 beta-7-61-pi-7-184320-the-61-is-the-euler-number	Properties		[DirichletBeta, 7]	[Multiply, [Rational, 61, 184320], [Power, Pi, 7]]	$\beta(7) = 61\pi^7/184320$ — the $61$ is the Euler number $|E_6|$		
 beta-2k-e-2k-2-and-beta-2k-1-0	Properties		[DirichletBeta, [List, 0, -1, -2, -3, -4]]	[List, [Rational, 1, 2], 0, [Rational, -1, 2], 0, [Rational, 5, 2]]	$\beta(-2k) = E_{2k}/2$ and $\beta(-(2k+1)) = 0$		

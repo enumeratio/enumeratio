@@ -1,5 +1,5 @@
-id	in
-randominteger-default-seed-is-reproducible	Last[List[SeedRandom[42], RandomInteger[100]]]
-randominteger-range-scope	Last[List[SeedRandom[1], RandomInteger[List[10, 20]]]]
-randominteger-list-of-draws	Length[Last[List[SeedRandom[2], RandomInteger[6, 10]]]]
-randominteger-array-shape	Dimensions[Last[List[SeedRandom[3], RandomInteger[1, List[2, 3]]]]]
+id	in	out	tex.in	tex.out	verdict
+randominteger-default-seed-is-reproducible	Last[List[SeedRandom[42], RandomInteger[100]]]	54	\text{Last}[\{\text{SeedRandom}[42],\text{RandomInteger}[100]\}]	54	disagree
+randominteger-range-scope	Last[List[SeedRandom[1], RandomInteger[List[10, 20]]]]	11	\text{Last}[\{\text{SeedRandom}[1],\text{RandomInteger}[\{10,20\}]\}]	11	disagree
+randominteger-list-of-draws	Length[Last[List[SeedRandom[2], RandomInteger[6, 10]]]]	10	\text{Length}[\text{Last}[\{\text{SeedRandom}[2],\text{RandomInteger}[6,10]\}]]	10	
+randominteger-array-shape	Dimensions[Last[List[SeedRandom[3], RandomInteger[1, List[2, 3]]]]]	{2, 3}	\text{Dimensions}[\text{Last}[\{\text{SeedRandom}[3],\text{RandomInteger}[1,\{2,3\}]\}]]	\{2,3\}	

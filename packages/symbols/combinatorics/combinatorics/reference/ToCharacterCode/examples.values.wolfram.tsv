@@ -1,2 +1,2 @@
-id	in
-reads-ascii-code-points	ToCharacterCode["ABC"]
+id	in	out	tex.in	tex.out
+reads-ascii-code-points	ToCharacterCode["ABC"]	{65, 66, 67}	\text{ToCharacterCode}[\text{ABC}]	\{65,66,67\}

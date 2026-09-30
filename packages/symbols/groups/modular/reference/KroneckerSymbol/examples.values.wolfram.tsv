@@ -42,8 +42,8 @@ mixed-sign-edge	KroneckerSymbol[10, -10]	0	\left(\frac{10}{-10}\right)	0
 composite-a-prime-n	KroneckerSymbol[10, 7]	-1	\left(\frac{10}{7}\right)	-1
 negative-a-odd-square-n-9	KroneckerSymbol[-10, 9]	1	\left(\frac{-10}{9}\right)	1
 threads-element-wise-over-a-list-as-wolfram-s	KroneckerSymbol[List[2, 3, 5, 7, 11], 6]	{0, 0, 1, 1, 1}	\left(\frac{\{2,3,5,7,11\}}{6}\right)	\{0,0,1,1,1\}
-larger-arguments-10-11-1-against-the-2000th	KroneckerSymbol[Plus[Power[10, 11], 1], Prime[2000]]			
-even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	KroneckerSymbol[7, 6]			
-the-character-mod-4-4-p-1-for-primes-p-equiv-3	KroneckerSymbol[-4, 7]			
+larger-arguments-10-11-1-against-the-2000th	KroneckerSymbol[Plus[Power[10, 11], 1], Prime[2000]]	-1	\left(\frac{10^{11}+1}{p_{2000}}\right)	-1
+even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	KroneckerSymbol[7, 6]	1	\left(\frac{7}{6}\right)	1
+the-character-mod-4-4-p-1-for-primes-p-equiv-3	KroneckerSymbol[-4, 7]	-1	\left(\frac{-4}{7}\right)	-1
 completely-multiplicative-in-n	(KroneckerSymbol[7, Times[3, 5]] == Times[KroneckerSymbol[7, 3], KroneckerSymbol[7, 5]])	True	\left(\frac{7}{3\ 5}\right)=\left(\frac{7}{3}\right) \left(\frac{7}{5}\right)	\text{True}
-a-0-1-for-a-pm-1	KroneckerSymbol[-1, 0]			
+a-0-1-for-a-pm-1	KroneckerSymbol[-1, 0]	1	\left(\frac{-1}{0}\right)	1

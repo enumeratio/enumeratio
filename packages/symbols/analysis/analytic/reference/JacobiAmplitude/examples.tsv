@@ -1,11 +1,11 @@
-id	section	role	expr	expected	known	tolerance	source	caption
-a-floating-point-argument-evaluates-directly-to			[N, [JacobiAmplitude, 0.3, 0.5]]	0.2977947491298303	{num: "0.2977947491298303"}	1e-12	Wolfram 15.0.0 JacobiAmplitude	A floating-point argument evaluates directly to a decimal
-am-1-1-0-9		test	[N, [JacobiAmplitude, 1.1, 0.9]]	0.9450708981878118	{num: "0.9450708981878118"}	1e-12	Wolfram 15.0.0 JacobiAmplitude	
-am-0-7-0-2		test	[N, [JacobiAmplitude, -0.7, 0.2]]	-0.6896673935732983	{num: "-0.6896673935732983"}	1e-12	Wolfram 15.0.0 JacobiAmplitude	
-am-1-1i-0-3		test	[N, [JacobiAmplitude, [Complex, 1, 1], 0.3]]	[Complex, 1.049001435160329, 0.87362414304091]	[Complex, 1.049001435160329, 0.8736241430409095]	1e-12	Wolfram 15.0.0 JacobiAmplitude	
-am-0-1-5i-0-4		test	[N, [JacobiAmplitude, [Complex, 0.1, 5], 0.4]]	[Complex, 3.002226882438044, -1.2148782180960305]	[Complex, 3.0022268824380447, -1.2148782180960316]	1e-12	Wolfram 15.0.0 JacobiAmplitude	
-a-wider-argument-u-past-the-first-quarter	Scope		[N, [JacobiAmplitude, 2.5, 0.3]]	2.2472505509540945	{num: "2.2472505509540945"}	1e-12	Wolfram 15.0.0 JacobiAmplitude	A wider argument u, past the first quarter period — not just arcsin(sn(u,m))
-u-0-is-0-for-any-m	Properties		[JacobiAmplitude, 0, m]	0				u = 0 is 0, for any m
-m-0-reduces-to-u	Properties		[JacobiAmplitude, u, 0]	u				m = 0 reduces to u
-m-outside-0-1-is-declined	Possible issues		[N, [JacobiAmplitude, 0.3, 1.5]]	[JacobiAmplitude, 0.3, 1.5]				m outside [0, 1] is declined — no verified amplitude transform there
-symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiAmplitude, u, m]	[JacobiAmplitude, u, m]				Symbolic arguments are left unevaluated rather than guessed at
+id	section	role	expr	expected	known	tolerance	source	caption	wolfram.kind	wolfram.note
+a-floating-point-argument-evaluates-directly-to			[N, [JacobiAmplitude, 0.3, 0.5]]	0.2977947491298303	{num: "0.2977947491298303"}	1e-12	Wolfram 15.0.0 JacobiAmplitude	A floating-point argument evaluates directly to a decimal		
+am-1-1-0-9		test	[N, [JacobiAmplitude, 1.1, 0.9]]	0.9450708981878118	{num: "0.9450708981878118"}	1e-12	Wolfram 15.0.0 JacobiAmplitude			
+am-0-7-0-2		test	[N, [JacobiAmplitude, -0.7, 0.2]]	-0.6896673935732983	{num: "-0.6896673935732983"}	1e-12	Wolfram 15.0.0 JacobiAmplitude			
+am-1-1i-0-3		test	[N, [JacobiAmplitude, [Complex, 1, 1], 0.3]]	[Complex, 1.049001435160329, 0.87362414304091]	[Complex, 1.049001435160329, 0.8736241430409095]	1e-12	Wolfram 15.0.0 JacobiAmplitude			
+am-0-1-5i-0-4		test	[N, [JacobiAmplitude, [Complex, 0.1, 5], 0.4]]	[Complex, 3.002226882438044, -1.2148782180960305]	[Complex, 3.0022268824380447, -1.2148782180960316]	1e-12	Wolfram 15.0.0 JacobiAmplitude			
+a-wider-argument-u-past-the-first-quarter	Scope		[N, [JacobiAmplitude, 2.5, 0.3]]	2.2472505509540945	{num: "2.2472505509540945"}	1e-12	Wolfram 15.0.0 JacobiAmplitude	A wider argument u, past the first quarter period — not just arcsin(sn(u,m))		
+u-0-is-0-for-any-m	Properties		[JacobiAmplitude, 0, m]	0				u = 0 is 0, for any m		
+m-0-reduces-to-u	Properties		[JacobiAmplitude, u, 0]	u				m = 0 reduces to u		
+m-outside-0-1-is-declined	Possible issues		[N, [JacobiAmplitude, 0.3, 1.5]]	[JacobiAmplitude, 0.3, 1.5]				m outside [0, 1] is declined — no verified amplitude transform there	unclassified	""
+symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiAmplitude, u, m]	[JacobiAmplitude, u, m]				Symbolic arguments are left unevaluated rather than guessed at		

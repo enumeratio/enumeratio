@@ -1,23 +1,23 @@
-id	section	role	expr	expected	caption
-n-forces-the-numeric-result-that-plain			[N, [Cosh, 0]]	1	N(...) forces the numeric result that plain evaluation withholds
-n-cosh-1			[N, [Cosh, 1]]	{num: "1.54308063481524377848"}	
-stays-symbolic-even-at-0-same-as-sinh-wrap-in-n			[Cosh, 0]	1	Exact at 0, as [[Cos]] is
-a-float-argument-evaluates-directly-no-n-needed			[Cosh, 1.2]	{num: "1.81065556732437479309"}	A float argument evaluates directly, no N(...) needed
-arbitrary-precision-via-n	Scope		[N, [Cosh, [Rational, 6, 5]]]	{num: "1.81065556732437479309"}	Arbitrary precision via N(...)
-evaluates-at-a-complex-argument	Scope		[Cosh, [Complex, 2.5, 1]]	[Complex, 3.3132901461132245, 5.091071522949698]	Evaluates at a complex argument
-cosh-i-pi-cos-pi-1	Scope		[Cosh, [Multiply, ImaginaryUnit, Pi]]	-1	$\cosh(i\pi) = \cos\pi = -1$
-element-wise-over-a-matrix-of-imaginary	Scope		[Cosh, [List, [List, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]], [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]]]], [List, 0, [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 6]]]]]]	[List, [List, [Rational, 1, 2], [Rational, 1, 2]], [List, 1, [Divide, [Sqrt, 3], 2]]]	Element-wise over a matrix of imaginary multiples of $\pi$, folding through $\cosh(ix) = \cos x$
-interval-arithmetic-cosh-0-ln-3-1-frac-53-not	Scope		[Cosh, [Interval, 0, [Ln, 3]]]	[Interval, 1, [Rational, 5, 3]]	Interval arithmetic: $\cosh[0, \ln 3] = [1, \tfrac53]$, the minimum at 0 included
-uncertainty-propagation-cosh-2-sqrt-3-pm-0-1	Scope		[Cosh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]	[Around, 1.744112480153778, 0.14289605814815756]	Uncertainty propagation, to first order: $\cosh(2/\sqrt3 \pm 0.1) \approx 1.744 \pm 0.143$
-cosh-positiveinfinity	Scope		[Cosh, PositiveInfinity]	PositiveInfinity	
-evenness-drops-the-sign-of-a-symbolic-argument	Scope		[Cosh, [Negate, x]]	[Cosh, x]	Evenness drops the sign of a symbolic argument: $\cosh(-x) = \cosh x$
-cosh-arcosh-x-x-for-every-x	Scope		[Cosh, [Arcosh, x]]	x	$\cosh(\operatorname{arcosh} x) = x$ for every $x$
-cosh-arcosh-2-2	Scope		[Cosh, [Arcosh, 2]]	2	$\cosh(\operatorname{arcosh}(2)) = 2$
-cosh-arcosh-of-a-complex-argument	Scope		[Cosh, [Arcosh, [Complex, 0, 3]]]	[Complex, 0, 3]	$\cosh(\operatorname{arcosh}(3i)) = 3i$
-derivative-sinh-x	Scope		[D, [Cosh, x], x]	[Sinh, x]	Derivative: $\sinh x$
-antiderivative	Scope		[Integrate, [Cosh, x], x]	[Sinh, x]	Antiderivative
-to-30-significant-digits-every-one-correctly	Scope		[N, [Cosh, 1], 30]	{num: "1.54308063481524377847790562076"}	To 30 significant digits, every one correctly rounded
-even-function-cosh-x-cosh-x	Properties		[Equal, [Cosh, [Negate, 1]], [Cosh, 1]]	True	Even function: $\cosh(-x) = \cosh(x)$
-hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	Properties		[Equal, [Subtract, [Power, [Cosh, 1], 2], [Power, [Sinh, 1], 2]], 1]	True	Hyperbolic Pythagorean identity: $\cosh^2 x - \sinh^2 x = 1$
-the-definition-cosh-x-frac-e-x-e-x-2	Properties		[TrigToExp, [Cosh, x]]	[Multiply, [Rational, 1, 2], [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]]]	The definition $\cosh x = \frac{e^x + e^{-x}}{2}$
-cosh-2-x-sinh-2-x-should-simplify-to-1	Properties		[Simplify, [Subtract, [Power, [Cosh, x], 2], [Power, [Sinh, x], 2]]]	1	$\cosh^2 x - \sinh^2 x$ simplifies to 1, as the circular identity does
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+n-forces-the-numeric-result-that-plain			[N, [Cosh, 0]]	1	N(...) forces the numeric result that plain evaluation withholds		
+n-cosh-1			[N, [Cosh, 1]]	{num: "1.54308063481524377848"}			
+stays-symbolic-even-at-0-same-as-sinh-wrap-in-n			[Cosh, 0]	1	Exact at 0, as [[Cos]] is		
+a-float-argument-evaluates-directly-no-n-needed			[Cosh, 1.2]	{num: "1.81065556732437479309"}	A float argument evaluates directly, no N(...) needed		
+arbitrary-precision-via-n	Scope		[N, [Cosh, [Rational, 6, 5]]]	{num: "1.81065556732437479309"}	Arbitrary precision via N(...)		
+evaluates-at-a-complex-argument	Scope		[Cosh, [Complex, 2.5, 1]]	[Complex, 3.3132901461132245, 5.091071522949698]	Evaluates at a complex argument		
+cosh-i-pi-cos-pi-1	Scope		[Cosh, [Multiply, ImaginaryUnit, Pi]]	-1	$\cosh(i\pi) = \cos\pi = -1$		
+element-wise-over-a-matrix-of-imaginary	Scope		[Cosh, [List, [List, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]], [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]]]], [List, 0, [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 6]]]]]]	[List, [List, [Rational, 1, 2], [Rational, 1, 2]], [List, 1, [Divide, [Sqrt, 3], 2]]]	Element-wise over a matrix of imaginary multiples of $\pi$, folding through $\cosh(ix) = \cos x$		
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not	Scope		[Cosh, [Interval, 0, [Ln, 3]]]	[Interval, 1, [Rational, 5, 3]]	Interval arithmetic: $\cosh[0, \ln 3] = [1, \tfrac53]$, the minimum at 0 included		
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1	Scope		[Cosh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]	[Around, 1.744112480153778, 0.14289605814815756]	Uncertainty propagation, to first order: $\cosh(2/\sqrt3 \pm 0.1) \approx 1.744 \pm 0.143$	unclassified	""
+cosh-positiveinfinity	Scope		[Cosh, PositiveInfinity]	PositiveInfinity			
+evenness-drops-the-sign-of-a-symbolic-argument	Scope		[Cosh, [Negate, x]]	[Cosh, x]	Evenness drops the sign of a symbolic argument: $\cosh(-x) = \cosh x$		
+cosh-arcosh-x-x-for-every-x	Scope		[Cosh, [Arcosh, x]]	x	$\cosh(\operatorname{arcosh} x) = x$ for every $x$		
+cosh-arcosh-2-2	Scope		[Cosh, [Arcosh, 2]]	2	$\cosh(\operatorname{arcosh}(2)) = 2$		
+cosh-arcosh-of-a-complex-argument	Scope		[Cosh, [Arcosh, [Complex, 0, 3]]]	[Complex, 0, 3]	$\cosh(\operatorname{arcosh}(3i)) = 3i$		
+derivative-sinh-x	Scope		[D, [Cosh, x], x]	[Sinh, x]	Derivative: $\sinh x$		
+antiderivative	Scope		[Integrate, [Cosh, x], x]	[Sinh, x]	Antiderivative		
+to-30-significant-digits-every-one-correctly	Scope		[N, [Cosh, 1], 30]	{num: "1.54308063481524377847790562076"}	To 30 significant digits, every one correctly rounded		
+even-function-cosh-x-cosh-x	Properties		[Equal, [Cosh, [Negate, 1]], [Cosh, 1]]	True	Even function: $\cosh(-x) = \cosh(x)$		
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	Properties		[Equal, [Subtract, [Power, [Cosh, 1], 2], [Power, [Sinh, 1], 2]], 1]	True	Hyperbolic Pythagorean identity: $\cosh^2 x - \sinh^2 x = 1$		
+the-definition-cosh-x-frac-e-x-e-x-2	Properties		[TrigToExp, [Cosh, x]]	[Multiply, [Rational, 1, 2], [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]]]	The definition $\cosh x = \frac{e^x + e^{-x}}{2}$		
+cosh-2-x-sinh-2-x-should-simplify-to-1	Properties		[Simplify, [Subtract, [Power, [Cosh, x], 2], [Power, [Sinh, x], 2]]]	1	$\cosh^2 x - \sinh^2 x$ simplifies to 1, as the circular identity does		

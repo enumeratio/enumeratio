@@ -1,14 +1,14 @@
-id	section	role	expr	expected	caption	wolfram.note
-last-list-1-2-3			[Last, [List, 1, 2, 3]]	3		
-last-list-10-20-30			[Last, [List, 10, 20, 30]]	30		
-last-list-a-b-c			[Last, [List, a, b, c]]	c		
-last-default-ignored-when-nonempty		test	[Last, [List, 1, 2, 3], 99]	3		
-last-of-association-is-last-value		test	[Last, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]	c		
-last-of-empty-association-falls-through		test	[Last, [Association], 99]	99		
-a-second-argument-supplies-a-default-for-an	Scope		[Last, [List], 99]	99	A second argument supplies a default for an empty collection	
-of-a-matrix-the-last-row	Scope		[Last, [List, [List, a, b], [List, c, d], [List, f, g]]]	[List, f, g]	Of a matrix, the last row	
-a-lazy-range-works-too	Scope		[Last, [Range, 5, 10]]	10	A lazy [[Range]] works too	
-any-expression-not-just-a-list-the-last-term-of	Scope		[Last, [Add, [Power, a, 2], [Power, b, 2]]]	[Power, b, 2]	Any expression, not just a list: the last term of a sum	
-a-default-is-ignored-when-the-collection-has-a	Scope		[Last, [List, a, b], x]	b	A default is ignored when the collection has a last element	
-last-c-at-c-1-see-at	Properties		[Equal, [Last, [List, 1, 2, 3]], [At, [List, 1, 2, 3], -1]]	True	$Last(c) = At(c, -1)$. See [[At]]	
-an-empty-collection-has-no-last-element-compute	Possible issues		[Last, [List]]	Missing	An empty collection has no last element; compute-engine returns the symbol $Missing$	Last of an empty list is the symbol Missing here; Wolfram leaves Last[{}] unevaluated (with a Last::nolast message).
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+last-list-1-2-3			[Last, [List, 1, 2, 3]]	3			
+last-list-10-20-30			[Last, [List, 10, 20, 30]]	30			
+last-list-a-b-c			[Last, [List, a, b, c]]	c			
+last-default-ignored-when-nonempty		test	[Last, [List, 1, 2, 3], 99]	3			
+last-of-association-is-last-value		test	[Last, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]	c			
+last-of-empty-association-falls-through		test	[Last, [Association], 99]	99			
+a-second-argument-supplies-a-default-for-an	Scope		[Last, [List], 99]	99	A second argument supplies a default for an empty collection		
+of-a-matrix-the-last-row	Scope		[Last, [List, [List, a, b], [List, c, d], [List, f, g]]]	[List, f, g]	Of a matrix, the last row		
+a-lazy-range-works-too	Scope		[Last, [Range, 5, 10]]	10	A lazy [[Range]] works too		
+any-expression-not-just-a-list-the-last-term-of	Scope		[Last, [Add, [Power, a, 2], [Power, b, 2]]]	[Power, b, 2]	Any expression, not just a list: the last term of a sum		
+a-default-is-ignored-when-the-collection-has-a	Scope		[Last, [List, a, b], x]	b	A default is ignored when the collection has a last element		
+last-c-at-c-1-see-at	Properties		[Equal, [Last, [List, 1, 2, 3]], [At, [List, 1, 2, 3], -1]]	True	$Last(c) = At(c, -1)$. See [[At]]		
+an-empty-collection-has-no-last-element-compute	Possible issues		[Last, [List]]	Missing	An empty collection has no last element; compute-engine returns the symbol $Missing$	unclassified	Last of an empty list is the symbol Missing here; Wolfram leaves Last[{}] unevaluated (with a Last::nolast message).

@@ -1,9 +1,9 @@
-id	in
-8-2-3	MangoldtLambda[8]
-6-is-not-a-prime-power	MangoldtLambda[6]
-mangoldtlambda-7	MangoldtLambda[7]
-mangoldtlambda-9	MangoldtLambda[9]
-numerically-ln-3	N[MangoldtLambda[9]]
-listable	MangoldtLambda[List[2, 4, 6, 25]]
-n-of-a-zero-result-is-still-0	N[MangoldtLambda[6]]
-lambda-1-0	MangoldtLambda[1]
+id	in	out	tex.in	tex.out
+8-2-3	MangoldtLambda[8]	Log[2]	\Lambda (8)	\log (2)
+6-is-not-a-prime-power	MangoldtLambda[6]	0	\Lambda (6)	0
+mangoldtlambda-7	MangoldtLambda[7]	Log[7]	\Lambda (7)	\log (7)
+mangoldtlambda-9	MangoldtLambda[9]	Log[3]	\Lambda (9)	\log (3)
+numerically-ln-3	N[MangoldtLambda[9]]	1.0986122886681098	N[\Lambda (9)]	1.09861
+listable	MangoldtLambda[List[2, 4, 6, 25]]	{Log[2], Log[2], 0, Log[5]}	\Lambda (\{2,4,6,25\})	\{\log (2),\log (2),0,\log (5)\}
+n-of-a-zero-result-is-still-0	N[MangoldtLambda[6]]	0.	N[\Lambda (6)]	0.
+lambda-1-0	MangoldtLambda[1]	0	\Lambda (1)	0

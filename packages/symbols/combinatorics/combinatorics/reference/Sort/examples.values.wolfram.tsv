@@ -1,17 +1,17 @@
-id	in	out	tex.in	tex.out
-sort-list-3-1-2	Sort[List[3, 1, 2]]	{1, 2, 3}	\text{Sort}[\{3,1,2\}]	\{1,2,3\}
-sort-list-4-2-5-1-3	Sort[List[4, 2, 5, 1, 3]]	{1, 2, 3, 4, 5}	\text{Sort}[\{4,2,5,1,3\}]	\{1,2,3,4,5\}
-symbols-sort-alphabetically	Sort[List[d, b, c, a]]	{a, b, c, d}	\text{Sort}[\{d,b,c,a\}]	\{a,b,c,d\}
-sort-association-orders-by-value	Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]	<|b -> 1, c -> 3, a -> 4|>	\text{Sort}[\text{Association}[a\to 4,b\to 1,c\to 3]]	\unicode{f113}b\to 1,c\to 3,a\to 4\unicode{f114}
-a-custom-comparator-sorts-in-a-different-order	Sort[List[3, 1, 2], Function[Greater[Slot[1], Slot[2]]]]	{3, 2, 1}	\text{Sort}[\{3,1,2\},\text{$\#$1}>\text{$\#$2}\&]	\{3,2,1\}
-a-list-of-strings-sorts-lexicographically	Sort[List[banana, apple, cherry]]	{apple, banana, cherry}	\text{Sort}[\{\text{banana},\text{apple},\text{cherry}\}]	\{\text{apple},\text{banana},\text{cherry}\}
-integers-rationals-and-floats-together-sort-by	Sort[List[Rational[3, 2], 1, 0.5, -2]]			
-exact-numeric-constants-sort-by-their-value	Sort[List[Pi, E, 2, 3, 1, Sqrt[2]]]			
-less-as-the-ordering-function-sorts-by-numeric	Sort[List[Pi, E, 2, 3, 1, Sqrt[2]], Less]			
-a-named-ordering-function-greater-sorts-in	Sort[List[4, 1, 3, 2, 2], Greater]			
-sorting-pairs-by-their-second-element-with-a	Sort[List[List[a, 2], List[c, 1], List[d, 3]], Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]]	{{c, 1}, {a, 2}, {d, 3}}	\text{Sort}\left[\left( \begin{array}{cc}  a & 2 \\  c & 1 \\  d & 3 \\ \end{array} \right),\text{$\#$1}[[2]]<\text{$\#$2}[[2]]\&\right]	\left( \begin{array}{cc}  c & 1 \\  a & 2 \\  d & 3 \\ \end{array} \right)
-sorts-the-arguments-of-any-head-not-just-a-list	Sort[f[b, a, c]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Sort}[f(b,a,c)]-f(a,b,c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{11}{5},\frac{7}{3},\frac{13}{4}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{23}{9},\frac{19}{8},\frac{7}{3}\right)\right]-f\left(\frac{19}{8},-\frac{23}{9},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{17}{6},\frac{13}{4},\frac{19}{8}\right)\right]-f\left(\frac{13}{4},-\frac{17}{6},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-sort-is-idempotent-sorting-an-already-sorted	(Sort[Sort[List[3, 1, 2]]] == Sort[List[3, 1, 2]])	True	\text{Sort}[\text{Sort}[\{3,1,2\}]]=\text{Sort}[\{3,1,2\}]	\text{True}
-sort-c-at-c-ordering-c-see-ordering-and-at	(Sort[List[3, 1, 2]] == Part[List[3, 1, 2], Ordering[List[3, 1, 2]]])	True	\text{Sort}[\{3,1,2\}]=\{3,1,2\}[[\text{Ordering}[\{3,1,2\}]]]	\text{True}
-the-result-doesn-t-depend-on-the-input-order	(Sort[Reverse[List[3, 1, 2]]] == Sort[List[3, 1, 2]])			
-the-empty-list-sorts-to-itself	Sort[List[]]			
+id	in	out	tex.in	tex.out	verdict
+sort-list-3-1-2	Sort[List[3, 1, 2]]	{1, 2, 3}	\text{Sort}[\{3,1,2\}]	\{1,2,3\}	
+sort-list-4-2-5-1-3	Sort[List[4, 2, 5, 1, 3]]	{1, 2, 3, 4, 5}	\text{Sort}[\{4,2,5,1,3\}]	\{1,2,3,4,5\}	
+symbols-sort-alphabetically	Sort[List[d, b, c, a]]	{a, b, c, d}	\text{Sort}[\{d,b,c,a\}]	\{a,b,c,d\}	
+sort-association-orders-by-value	Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]	<|b -> 1, c -> 3, a -> 4|>	\text{Sort}[\text{Association}[a\to 4,b\to 1,c\to 3]]	\unicode{f113}b\to 1,c\to 3,a\to 4\unicode{f114}	disagree
+a-custom-comparator-sorts-in-a-different-order	Sort[List[3, 1, 2], Function[Greater[Slot[1], Slot[2]]]]	{3, 2, 1}	\text{Sort}[\{3,1,2\},\text{$\#$1}>\text{$\#$2}\&]	\{3,2,1\}	
+a-list-of-strings-sorts-lexicographically	Sort[List[banana, apple, cherry]]	{apple, banana, cherry}	\text{Sort}[\{\text{banana},\text{apple},\text{cherry}\}]	\{\text{apple},\text{banana},\text{cherry}\}	
+integers-rationals-and-floats-together-sort-by	Sort[List[Rational[3, 2], 1, 0.5, -2]]	{-2, 0.5, 1, 3/2}	\text{Sort}\left[\left\{\frac{3}{2},1,0.5,-2\right\}\right]	\left\{-2,0.5,1,\frac{3}{2}\right\}	
+exact-numeric-constants-sort-by-their-value	Sort[List[Pi, E, 2, 3, 1, Sqrt[2]]]	{1, 2, 3, Sqrt[2], E, Pi}	\text{Sort}\left[\left\{\pi ,e,2,3,1,\sqrt{2}\right\}\right]	\left\{1,2,3,\sqrt{2},e,\pi \right\}	disagree
+less-as-the-ordering-function-sorts-by-numeric	Sort[List[Pi, E, 2, 3, 1, Sqrt[2]], Less]	{1, Sqrt[2], 2, E, 3, Pi}	\text{Sort}\left[\left\{\pi ,e,2,3,1,\sqrt{2}\right\},\text{Less}\right]	\left\{1,\sqrt{2},2,e,3,\pi \right\}	
+a-named-ordering-function-greater-sorts-in	Sort[List[4, 1, 3, 2, 2], Greater]	{4, 3, 2, 2, 1}	\text{Sort}[\{4,1,3,2,2\},\text{Greater}]	\{4,3,2,2,1\}	
+sorting-pairs-by-their-second-element-with-a	Sort[List[List[a, 2], List[c, 1], List[d, 3]], Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]]	{{c, 1}, {a, 2}, {d, 3}}	\text{Sort}\left[\left( \begin{array}{cc}  a & 2 \\  c & 1 \\  d & 3 \\ \end{array} \right),\text{$\#$1}[[2]]<\text{$\#$2}[[2]]\&\right]	\left( \begin{array}{cc}  c & 1 \\  a & 2 \\  d & 3 \\ \end{array} \right)	
+sorts-the-arguments-of-any-head-not-just-a-list	Sort[f[b, a, c]]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Sort}[f(b,a,c)]-f(a,b,c)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{11}{5},\frac{7}{3},\frac{13}{4}\right)\right]-f\left(\frac{7}{3},-\frac{11}{5},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{23}{9},\frac{19}{8},\frac{7}{3}\right)\right]-f\left(\frac{19}{8},-\frac{23}{9},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Sort}\left[f\left(-\frac{17}{6},\frac{13}{4},\frac{19}{8}\right)\right]-f\left(\frac{13}{4},-\frac{17}{6},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+sort-is-idempotent-sorting-an-already-sorted	(Sort[Sort[List[3, 1, 2]]] == Sort[List[3, 1, 2]])	True	\text{Sort}[\text{Sort}[\{3,1,2\}]]=\text{Sort}[\{3,1,2\}]	\text{True}	
+sort-c-at-c-ordering-c-see-ordering-and-at	(Sort[List[3, 1, 2]] == Part[List[3, 1, 2], Ordering[List[3, 1, 2]]])	True	\text{Sort}[\{3,1,2\}]=\{3,1,2\}[[\text{Ordering}[\{3,1,2\}]]]	\text{True}	
+the-result-doesn-t-depend-on-the-input-order	(Sort[Reverse[List[3, 1, 2]]] == Sort[List[3, 1, 2]])	True	\text{Sort}[\text{Reverse}[\{3,1,2\}]]=\text{Sort}[\{3,1,2\}]	\text{True}	
+the-empty-list-sorts-to-itself	Sort[List[]]	{}	\text{Sort}[\{\}]	\{\}	

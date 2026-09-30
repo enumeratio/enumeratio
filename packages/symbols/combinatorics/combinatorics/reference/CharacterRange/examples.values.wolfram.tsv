@@ -1,3 +1,3 @@
-id	in
-letters-a-through-e	CharacterRange["a", "e"]
-by-code-point	CharacterRange[97, 101]
+id	in	out	tex.in	tex.out
+letters-a-through-e	CharacterRange["a", "e"]	{"a", "b", "c", "d", "e"}	\text{CharacterRange}[\text{a},\text{e}]	\{\text{a},\text{b},\text{c},\text{d},\text{e}\}
+by-code-point	CharacterRange[97, 101]	{"a", "b", "c", "d", "e"}	\text{CharacterRange}[97,101]	\{\text{a},\text{b},\text{c},\text{d},\text{e}\}

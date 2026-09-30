@@ -1,18 +1,18 @@
-id	in	out	tex.in	tex.out
-multinomial-1-2-1	Multinomial[1, 2, 1]	12	(4;1,2,1)	12
-multinomial-2-3-4	Multinomial[2, 3, 4]	1260	(9;2,3,4)	1260
-threads-element-wise-over-a-list-as-wolfram-s	Multinomial[List[2, 3, 5], 3]	{10, 20, 56}	(\{2,3,5\}+3;\{2,3,5\},3)	\{10,20,56\}
-zero-parts-contribute-0-1	Multinomial[0, 0, 1]			
-real-arguments-evaluate-via-the-gamma-function	Multinomial[2, 0.2, 5]			
-complex-arguments-evaluate-via-the-gamma	Multinomial[Complex[1, 1], 0.2, 4]			
-an-around-argument-should-propagate-its	Multinomial[Around[2, 0.01], 2]			
-the-number-of-distinct-letter-arrangements-of	Multinomial[1, 4, 4, 2]	34650	(11;1,4,4,2)	34650
-the-coefficient-of-a-2-b-3-c-in-a-b-c-6	Multinomial[2, 3, 1]			
-with-two-arguments-it-reduces-to-binomial-binom	(Multinomial[7, 3] == Binomial[10, 3])	True	(10;7,3)=\binom{10}{3}	\text{True}
-orderless-permuting-the-arguments-doesn-t-change	(Multinomial[1, 2, 3] == Multinomial[3, 1, 2])	True	(6;1,2,3)=(6;3,1,2)	\text{True}
-the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	(Multinomial[3, 4, 5] == Divide[Factorial[12], Times[Factorial[3], Factorial[4], Factorial[5]]])			
-all-ones-parts-give-n-every-part-is-a-single	Multinomial[1, 1, 1, 1]			
-all-zero-arguments-still-give-the-empty-product	Multinomial[0, 0, 0]	1	(0;0,0,0)	1
-a-single-argument-is-always-1-there-s-only-one	Multinomial[5]	1	(5;5)	1
-a-single-symbolic-argument-is-also-1	Multinomial[n]	1	(+n;n)	1
-with-no-arguments-it-is-the-empty-product-1	Multinomial[]			
+id	in	out	tex.in	tex.out	verdict
+multinomial-1-2-1	Multinomial[1, 2, 1]	12	(4;1,2,1)	12	
+multinomial-2-3-4	Multinomial[2, 3, 4]	1260	(9;2,3,4)	1260	
+threads-element-wise-over-a-list-as-wolfram-s	Multinomial[List[2, 3, 5], 3]	{10, 20, 56}	(\{2,3,5\}+3;\{2,3,5\},3)	\{10,20,56\}	
+zero-parts-contribute-0-1	Multinomial[0, 0, 1]	1	(1;0,0,1)	1	
+real-arguments-evaluate-via-the-gamma-function	Multinomial[2, 0.2, 5]	34.31780351999997	(7.2;2,0.2,5)	34.3178	
+complex-arguments-evaluate-via-the-gamma	Multinomial[Complex[1, 1], 0.2, 4]	2.8940603024496343 + 9.104625875691287*I	(5.2\, +1. i;1+i,0.2,4)	2.89406\, +9.10463 i	
+an-around-argument-should-propagate-its	Multinomial[Around[2, 0.01], 2]	Around[6., 0.034999999999999996]	((2\pm 0.010)+2;2\pm 0.010,2)	6.000\pm 0.035	disagree
+the-number-of-distinct-letter-arrangements-of	Multinomial[1, 4, 4, 2]	34650	(11;1,4,4,2)	34650	
+the-coefficient-of-a-2-b-3-c-in-a-b-c-6	Multinomial[2, 3, 1]	60	(6;2,3,1)	60	
+with-two-arguments-it-reduces-to-binomial-binom	(Multinomial[7, 3] == Binomial[10, 3])	True	(10;7,3)=\binom{10}{3}	\text{True}	
+orderless-permuting-the-arguments-doesn-t-change	(Multinomial[1, 2, 3] == Multinomial[3, 1, 2])	True	(6;1,2,3)=(6;3,1,2)	\text{True}	
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	(Multinomial[3, 4, 5] == Divide[Factorial[12], Times[Factorial[3], Factorial[4], Factorial[5]]])	True	(12;3,4,5)=\frac{12!}{3! 4! 5!}	\text{True}	
+all-ones-parts-give-n-every-part-is-a-single	Multinomial[1, 1, 1, 1]	24	(4;1,1,1,1)	24	
+all-zero-arguments-still-give-the-empty-product	Multinomial[0, 0, 0]	1	(0;0,0,0)	1	
+a-single-argument-is-always-1-there-s-only-one	Multinomial[5]	1	(5;5)	1	
+a-single-symbolic-argument-is-also-1	Multinomial[n]	1	(+n;n)	1	
+with-no-arguments-it-is-the-empty-product-1	Multinomial[]	1	\text{Multinomial}[]	1	

@@ -1,2 +1,2 @@
-id	in
-k4	EdgeCount[CompleteGraph[4]]
+id	in	out	tex.in	tex.out
+k4	EdgeCount[CompleteGraph[4]]	6	\text{EdgeCount}[\text{CompleteGraph}[4]]	6

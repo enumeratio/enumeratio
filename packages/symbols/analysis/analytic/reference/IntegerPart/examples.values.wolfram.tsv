@@ -1,9 +1,9 @@
-id	in
-integerpart-2p4	IntegerPart[2.4]
-truncates-toward-0-unlike-floor	IntegerPart[-2.4]
-integerpart-7-over-2	IntegerPart[Rational[7, 2]]
-integerpart-neg-7-over-2	IntegerPart[Rational[-7, 2]]
-exact-numeric-arguments-stay-exact	IntegerPart[Pi]
-threads-element-wise-over-a-list	IntegerPart[List[2.5, -2.5]]
-complex-numbers-real-and-imaginary-parts	IntegerPart[Complex[2.5, 3.7]]
-x-integerpart-x-fractionalpart-x	(Plus[IntegerPart[Rational[-7, 2]], FractionalPart[Rational[-7, 2]]] == Rational[-7, 2])
+id	in	out	tex.in	tex.out
+integerpart-2p4	IntegerPart[2.4]	2	\text{IntegerPart}[2.4]	2
+truncates-toward-0-unlike-floor	IntegerPart[-2.4]	-2	\text{IntegerPart}[-2.4]	-2
+integerpart-7-over-2	IntegerPart[Rational[7, 2]]	3	\text{IntegerPart}\left[\frac{7}{2}\right]	3
+integerpart-neg-7-over-2	IntegerPart[Rational[-7, 2]]	-3	\text{IntegerPart}\left[-\frac{7}{2}\right]	-3
+exact-numeric-arguments-stay-exact	IntegerPart[Pi]	3	\text{IntegerPart}[\pi ]	3
+threads-element-wise-over-a-list	IntegerPart[List[2.5, -2.5]]	{2, -2}	\text{IntegerPart}[\{2.5,-2.5\}]	\{2,-2\}
+complex-numbers-real-and-imaginary-parts	IntegerPart[Complex[2.5, 3.7]]	2 + 3*I	\text{IntegerPart}[2.5\, +3.7 i]	2+3 i
+x-integerpart-x-fractionalpart-x	(Plus[IntegerPart[Rational[-7, 2]], FractionalPart[Rational[-7, 2]]] == Rational[-7, 2])	True	\text{IntegerPart}\left[-\frac{7}{2}\right]+\text{frac}\left(-\frac{7}{2}\right)=-\frac{7}{2}	\text{True}

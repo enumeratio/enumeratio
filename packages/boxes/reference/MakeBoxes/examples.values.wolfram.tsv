@@ -1,2 +1,2 @@
-id	in
-held	MakeBoxes[Plus[2, 3]]
+id	in	out	tex.in	tex.out
+held	MakeBoxes[Plus[2, 3]]	RowBox[{"2", "+", "3"}]	\text{MakeBoxes}[2+3]	\text{RowBox}[\{2,+,3\}]

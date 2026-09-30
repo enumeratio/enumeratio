@@ -1,4 +1,4 @@
-id	in
-cycle-to-image-list	PermutationList[Cycles[List[List[1, 3, 2]]]]
-padded-to-length	PermutationList[Cycles[List[List[2, 3]]], 5]
-round-trips-with-permutation-cycles	PermutationCycles[PermutationList[Cycles[List[List[1, 2, 5], List[4, 6, 8, 9]]]]]
+id	in	out	tex.in	tex.out
+cycle-to-image-list	PermutationList[Cycles[List[List[1, 3, 2]]]]	{3, 1, 2}	\text{PermutationList}\left[\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 3 & 2 \\ \end{array} \right)\right]\right]	\{3,1,2\}
+padded-to-length	PermutationList[Cycles[List[List[2, 3]]], 5]	{1, 3, 2, 4, 5}	\text{PermutationList}\left[\text{Cycles}\left[\left( \begin{array}{cc}  2 & 3 \\ \end{array} \right)\right],5\right]	\{1,3,2,4,5\}
+round-trips-with-permutation-cycles	PermutationCycles[PermutationList[Cycles[List[List[1, 2, 5], List[4, 6, 8, 9]]]]]	Cycles[{{1, 2, 5}, {4, 6, 8, 9}}]	\text{PermutationCycles}[\text{PermutationList}[\text{Cycles}[\{\{1,2,5\},\{4,6,8,9\}\}]]]	\text{Cycles}[\{\{1,2,5\},\{4,6,8,9\}\}]

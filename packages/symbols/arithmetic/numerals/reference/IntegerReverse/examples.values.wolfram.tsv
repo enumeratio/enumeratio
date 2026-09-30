@@ -1,7 +1,7 @@
-id	in
-the-base-10-digits-reversed	IntegerReverse[1234]
-1234-10011010010-2-reversed-is-1001011001-2-601	IntegerReverse[1234, 2]
-padded-to-5-digits-first-00123-reversed	IntegerReverse[123, 10, 5]
-listable	IntegerReverse[List[12, 345]]
-a-palindrome-is-its-own-reversal	IntegerReverse[12321]
-trailing-zeros-become-leading-zeros-and-vanish	IntegerReverse[1200]
+id	in	out	tex.in	tex.out
+the-base-10-digits-reversed	IntegerReverse[1234]	4321	\text{IntegerReverse}[1234]	4321
+1234-10011010010-2-reversed-is-1001011001-2-601	IntegerReverse[1234, 2]	601	\text{IntegerReverse}[1234,2]	601
+padded-to-5-digits-first-00123-reversed	IntegerReverse[123, 10, 5]	32100	\text{IntegerReverse}[123,10,5]	32100
+listable	IntegerReverse[List[12, 345]]	{21, 543}	\text{IntegerReverse}[\{12,345\}]	\{21,543\}
+a-palindrome-is-its-own-reversal	IntegerReverse[12321]	12321	\text{IntegerReverse}[12321]	12321
+trailing-zeros-become-leading-zeros-and-vanish	IntegerReverse[1200]	21	\text{IntegerReverse}[1200]	21

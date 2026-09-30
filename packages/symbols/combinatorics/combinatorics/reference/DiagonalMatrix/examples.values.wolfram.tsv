@@ -1,4 +1,4 @@
-id	in
-main-diagonal	DiagonalMatrix[List[1, 2, 3]]
-super-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], 1]
-sub-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], -1]
+id	in	out	tex.in	tex.out
+main-diagonal	DiagonalMatrix[List[1, 2, 3]]	{{1, 0, 0}, {0, 2, 0}, {0, 0, 3}}	\text{DiagonalMatrix}[\{1,2,3\}]	\left( \begin{array}{ccc}  1 & 0 & 0 \\  0 & 2 & 0 \\  0 & 0 & 3 \\ \end{array} \right)
+super-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], 1]	{{0, 1, 0}, {0, 0, 2}, {0, 0, 0}}	\text{DiagonalMatrix}[\{1,2\},1]	\left( \begin{array}{ccc}  0 & 1 & 0 \\  0 & 0 & 2 \\  0 & 0 & 0 \\ \end{array} \right)
+sub-diagonal-grows-the-matrix	DiagonalMatrix[List[1, 2], -1]	{{0, 0, 0}, {1, 0, 0}, {0, 2, 0}}	\text{DiagonalMatrix}[\{1,2\},-1]	\left( \begin{array}{ccc}  0 & 0 & 0 \\  1 & 0 & 0 \\  0 & 2 & 0 \\ \end{array} \right)

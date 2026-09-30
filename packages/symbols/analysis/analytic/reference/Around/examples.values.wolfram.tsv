@@ -1,17 +1,17 @@
-id	in
-independent-uncertainties-add-in-quadrature	Plus[Around[1, 0.1], Around[2, 0.2]]
-scaling-scales-the-uncertainty	Times[3, Around[2, 0.1]]
-independent-uncertainties-add-in-quadrature-2	Plus[Around[2, 0.01], Around[3, 0.02]]
-3-times-around-2-0p01	Times[3, Around[2, 0.01]]
-independent-uncertainties-add-in-quadrature-sqrt	Plus[Around[5, 0.1], Around[3, 0.2]]
-relative-uncertainties-combine-6-sqrt-0-1-2-2-0	Times[Around[2, 0.1], Around[3, 0.2]]
-through-a-function-f-x-delta-x	Power[Around[2, 0.1], 2]
-sqrt-around-4-0p4	Sqrt[Around[4, 0.4]]
-through-a-function-f-2-3-5-not-yet-multinomial	Multinomial[Around[2, 0.01], 2]
-a-power-scales-the-uncertainty-by-the-derivative	Power[Around[3, 0.1], 2]
-frac-0-2-2-sqrt-4	Sqrt[Around[4, 0.2]]
-an-exact-factor-scales-the-uncertainty	Times[10, Around[1.5, 0.02]]
-through-an-elementary-function-delta-cdot-e-2	Exp[Around[2, 0.01]]
-through-a-special-function-with-its-derivative	Erf[Around[2, 0.01]]
-first-order-propagation-the-uncertainty-scales	N[Sin[Around[1, 0.1]]]
-ln-around-2-0p01	Log[Around[2, 0.01]]
+id	in	out	tex.in	tex.out	verdict
+independent-uncertainties-add-in-quadrature	Plus[Around[1, 0.1], Around[2, 0.2]]	Around[3., 0.223606797749979]	(1\pm 0.10)+(2\pm 0.20)	3.00\pm 0.22	
+scaling-scales-the-uncertainty	Times[3, Around[2, 0.1]]	Around[6., 0.30000000000000004]	3 (2\pm 0.10)	6.00\pm 0.30	disagree
+independent-uncertainties-add-in-quadrature-2	Plus[Around[2, 0.01], Around[3, 0.02]]	Around[5., 0.022360679774997897]	(2\pm 0.010)+(3\pm 0.020)	5.000\pm 0.022	
+3-times-around-2-0p01	Times[3, Around[2, 0.01]]	Around[6., 0.03]	3 (2\pm 0.010)	6.000\pm 0.030	
+independent-uncertainties-add-in-quadrature-sqrt	Plus[Around[5, 0.1], Around[3, 0.2]]	Around[8., 0.223606797749979]	(5\pm 0.10)+(3\pm 0.20)	8.00\pm 0.22	
+relative-uncertainties-combine-6-sqrt-0-1-2-2-0	Times[Around[2, 0.1], Around[3, 0.2]]	Around[6., 0.5]	(2\pm 0.10) (3\pm 0.20)	6.0\pm 0.5	
+through-a-function-f-x-delta-x	Power[Around[2, 0.1], 2]	Around[4., 0.4]	(2\pm 0.10)^2	4.0\pm 0.4	
+sqrt-around-4-0p4	Sqrt[Around[4, 0.4]]	Around[2., 0.1]	\sqrt{4\pm 0.4}	2.00\pm 0.10	
+through-a-function-f-2-3-5-not-yet-multinomial	Multinomial[Around[2, 0.01], 2]	Around[6., 0.034999999999999996]	((2\pm 0.010)+2;2\pm 0.010,2)	6.000\pm 0.035	disagree
+a-power-scales-the-uncertainty-by-the-derivative	Power[Around[3, 0.1], 2]	Around[9., 0.6000000000000001]	(3\pm 0.10)^2	9.0\pm 0.6	
+frac-0-2-2-sqrt-4	Sqrt[Around[4, 0.2]]	Around[2., 0.05]	\sqrt{4\pm 0.20}	2.00\pm 0.05	
+an-exact-factor-scales-the-uncertainty	Times[10, Around[1.5, 0.02]]	Around[15., 0.2]	10 (1.500\pm 0.020)	15.00\pm 0.20	
+through-an-elementary-function-delta-cdot-e-2	Exp[Around[2, 0.01]]	Around[7.38905609893065, 0.0738905609893065]	\exp (2\pm 0.010)	7.39\pm 0.07	
+through-a-special-function-with-its-derivative	Erf[Around[2, 0.01]]	Around[0.9953222650189527, 0.00020666985354092054]	\text{erf}(2\pm 0.010)	0.99532\pm 0.00021	
+first-order-propagation-the-uncertainty-scales	N[Sin[Around[1, 0.1]]]	Around[0.8414709848078965, 0.05403023058681398]	N[\sin (1\pm 0.10)]	0.84\pm 0.05	
+ln-around-2-0p01	Log[Around[2, 0.01]]	Around[0.6931471805599453, 0.005]	\log (2\pm 0.010)	0.693\pm 0.005	

@@ -1,12 +1,12 @@
-id	in
-rd-1-2-3	N[CarlsonRD[1, 2, 3]]
-rd-1-1-1	N[CarlsonRD[1, 1, 1]]
-rd-2-2-2	N[CarlsonRD[2, 2, 2]]
-rd-0-1-2	N[CarlsonRD[0, 1, 2]]
-rd-0-2-3	N[CarlsonRD[0, 2, 3]]
-rd-0-5-1-1-5	N[CarlsonRD[0.5, 1, 1.5]]
-rd-1-4-4	N[CarlsonRD[1, 4, 4]]
-rd-1-1i-2-3	N[CarlsonRD[Complex[1, 1], 2, 3]]
-rd-3-2i-1-1i-5	N[CarlsonRD[Complex[3, -2], Complex[1, 1], 5]]
-rd-0-5-0-5i-0-5-0-5i-2	N[CarlsonRD[Complex[0.5, 0.5], Complex[0.5, -0.5], 2]]
-rd-1-3-2-5-2	N[CarlsonRD[Rational[1, 3], 2, Rational[5, 2]]]
+id	in	out	tex.in	tex.out
+rd-1-2-3	N[CarlsonRD[1, 2, 3]]	0.29046028102899024	N[R_D(1,2,3)]	0.29046
+rd-1-1-1	N[CarlsonRD[1, 1, 1]]	1.	N[R_D(1,1,1)]	1.
+rd-2-2-2	N[CarlsonRD[2, 2, 2]]	0.35355339059327373	N[R_D(2,2,2)]	0.353553
+rd-0-1-2	N[CarlsonRD[0, 1, 2]]	1.067937989667395	N[R_D(0,1,2)]	1.06794
+rd-0-2-3	N[CarlsonRD[0, 2, 3]]	0.5258534451050895	N[R_D(0,2,3)]	0.525853
+rd-0-5-1-1-5	N[CarlsonRD[0.5, 1, 1.5]]	0.8215457375237989	N[R_D(0.5,1,1.5)]	0.821546
+rd-1-4-4	N[CarlsonRD[1, 4, 4]]	0.17729989403903634	N[R_D(1,4,4)]	0.1773
+rd-1-1i-2-3	N[CarlsonRD[Complex[1, 1], 2, 3]]	0.2673542611806967 - 0.054237519918671755*I	N[R_D(1+i,2,3)]	0.267354\, -0.0542375 i
+rd-3-2i-1-1i-5	N[CarlsonRD[Complex[3, -2], Complex[1, 1], 5]]	0.14256827575652478 + 0.0008428574064519435*I	N[R_D(3-2 i,1+i,5)]	0.142568\, +0.000842857 i
+rd-0-5-0-5i-0-5-0-5i-2	N[CarlsonRD[Complex[0.5, 0.5], Complex[0.5, -0.5], 2]]	0.6592440083528995 - 6.243737901639731*^-19*I	N[R_D(0.5\, +0.5 i,0.5\, -0.5 i,2)]	0.659244\, -\text{6.243737901639731$\grave{ }$*${}^{\wedge}$-19} i
+rd-1-3-2-5-2	N[CarlsonRD[Rational[1, 3], 2, Rational[5, 2]]]	0.43356672914039324	N\left[R_D\left(\frac{1}{3},2,\frac{5}{2}\right)\right]	0.433567

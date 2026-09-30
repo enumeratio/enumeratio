@@ -1,2 +1,2 @@
-id	in
-a-2-cycle-and-a-downstream-only-vertex	ConnectedComponents[Graph[List[1, 2, 3], List[DirectedEdge[1, 2], DirectedEdge[2, 1], DirectedEdge[2, 3]]]]
+id	in	out	tex.in	tex.out	verdict
+a-2-cycle-and-a-downstream-only-vertex	ConnectedComponents[Graph[List[1, 2, 3], List[DirectedEdge[1, 2], DirectedEdge[2, 1], DirectedEdge[2, 3]]]]	{{3}, {1, 2}}	\text{ConnectedComponents}[]	\{\{3\},\{1,2\}\}	disagree

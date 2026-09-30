@@ -1,7 +1,7 @@
-id	in
-heavisidelambda-peak	HeavisideLambda[0]
-heavisidelambda-endpoint	HeavisideLambda[1]
-heavisidelambda-neg-endpoint	HeavisideLambda[-1]
-heavisidelambda-outside	HeavisideLambda[2]
-heavisidelambda-1-4	HeavisideLambda[Rational[1, 4]]
-heavisidelambda-1-2	HeavisideLambda[Rational[1, 2]]
+id	in	out	tex.in	tex.out
+heavisidelambda-peak	HeavisideLambda[0]	1	\Lambda (0)	1
+heavisidelambda-endpoint	HeavisideLambda[1]	0	\Lambda (1)	0
+heavisidelambda-neg-endpoint	HeavisideLambda[-1]	0	\Lambda (-1)	0
+heavisidelambda-outside	HeavisideLambda[2]	0	\Lambda (2)	0
+heavisidelambda-1-4	HeavisideLambda[Rational[1, 4]]	3/4	\Lambda \left(\frac{1}{4}\right)	\frac{3}{4}
+heavisidelambda-1-2	HeavisideLambda[Rational[1, 2]]	1/2	\Lambda \left(\frac{1}{2}\right)	\frac{1}{2}

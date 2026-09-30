@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-incidence-matrix-of-a-mixed-graph			[IncidenceMatrix, [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [DirectedEdge, 2, 3]]]]	[List, [List, 1, 0], [List, 1, -1], [List, 0, 1]]	One undirected edge, one directed edge
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+incidence-matrix-of-a-mixed-graph			[IncidenceMatrix, [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [DirectedEdge, 2, 3]]]]	[List, [List, 1, 0], [List, 1, -1], [List, 0, 1]]	One undirected edge, one directed edge	unclassified	""

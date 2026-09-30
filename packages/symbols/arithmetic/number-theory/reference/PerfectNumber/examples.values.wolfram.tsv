@@ -1,5 +1,5 @@
-id	in
-perfectnumber-1	PerfectNumber[1]
-perfectnumber-3	PerfectNumber[3]
-perfectnumber-5	PerfectNumber[5]
-listable	PerfectNumber[List[1, 2, 3, 4]]
+id	in	out	tex.in	tex.out
+perfectnumber-1	PerfectNumber[1]	6	\text{PerfectNumber}[1]	6
+perfectnumber-3	PerfectNumber[3]	496	\text{PerfectNumber}[3]	496
+perfectnumber-5	PerfectNumber[5]	33550336	\text{PerfectNumber}[5]	33550336
+listable	PerfectNumber[List[1, 2, 3, 4]]	{6, 28, 496, 8128}	\text{PerfectNumber}[\{1,2,3,4\}]	\{6,28,496,8128\}

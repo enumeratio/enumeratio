@@ -1,6 +1,6 @@
-id	in
-the-set-partitions-of-an-explicit-list-in-the	
-exactly-2-blocks	
-the-partitions-of-a-4-set-into-2-blocks-number-s	
-the-family-has-b-4-15-members-see-bellnumber	BellB[4]
-those-with-exactly-2-blocks-number-s-4-2-7-see	StirlingS2[4, 2]
+id	in	out	tex.in	tex.out
+the-set-partitions-of-an-explicit-list-in-the				
+exactly-2-blocks				
+the-partitions-of-a-4-set-into-2-blocks-number-s				
+the-family-has-b-4-15-members-see-bellnumber	BellB[4]	15	B_4	15
+those-with-exactly-2-blocks-number-s-4-2-7-see	StirlingS2[4, 2]	7	\mathcal{S}_4^{(2)}	7

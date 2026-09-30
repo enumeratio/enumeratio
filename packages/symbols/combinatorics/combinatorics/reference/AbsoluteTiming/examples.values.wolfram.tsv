@@ -1,2 +1,2 @@
-id	in
-the-value-half-is-deterministic	Part[AbsoluteTiming[Plus[1, 2]], 2]
+id	in	out	tex.in	tex.out
+the-value-half-is-deterministic	Part[AbsoluteTiming[Plus[1, 2]], 2]	3	\text{AbsoluteTiming}[1+2][[2]]	3

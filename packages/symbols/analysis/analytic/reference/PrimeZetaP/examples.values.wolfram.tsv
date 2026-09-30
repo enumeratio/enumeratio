@@ -1,5 +1,5 @@
-id	in
-sum-p-1-p-2	N[PrimeZetaP[2]]
-n-primezetap-3	N[PrimeZetaP[3]]
-n-primezetap-4	N[PrimeZetaP[4]]
-primezetap-2p5	PrimeZetaP[2.5]
+id	in	out	tex.in	tex.out
+sum-p-1-p-2	N[PrimeZetaP[2]]	0.4522474200410655	N[P(2)]	0.452247
+n-primezetap-3	N[PrimeZetaP[3]]	0.17476263929944352	N[P(3)]	0.174763
+n-primezetap-4	N[PrimeZetaP[4]]	0.07699313976424685	N[P(4)]	0.0769931
+primezetap-2p5	PrimeZetaP[2.5]	0.2736807379932342	P(2.5)	0.273681

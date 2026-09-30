@@ -1,2 +1,2 @@
-id	in
-q3-has-8-vertices-12-edges	List[VertexCount[HypercubeGraph[3]], EdgeCount[HypercubeGraph[3]]]
+id	in	out	tex.in	tex.out
+q3-has-8-vertices-12-edges	List[VertexCount[HypercubeGraph[3]], EdgeCount[HypercubeGraph[3]]]	{8, 12}	\{\text{VertexCount}[\text{HypercubeGraph}[3]],\text{EdgeCount}[\text{HypercubeGraph}[3]]\}	\{8,12\}

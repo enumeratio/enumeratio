@@ -1,104 +1,104 @@
-id	in	out	tex.in	tex.out	verdict
-li-2-1-zeta-2-pi-2-6	PolyLog[2, 1]	Pi^2/6	\text{Li}_2(1)	\frac{\pi ^2}{6}	
-li-2-1-eta-2-pi-2-12	PolyLog[2, -1]	-1/12*Pi^2	\text{Li}_2(-1)	-\frac{\pi ^2}{12}	
-li-4-1-zeta-4-pi-4-90	PolyLog[4, 1]	Pi^4/90	\text{Li}_4(1)	\frac{\pi ^4}{90}	
-a-machine-precision-argument	PolyLog[2, 0.9]				
-li-0-z-z-1-z-past-the-unit-disk	PolyLog[0, 5.5]				
-li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac	PolyLog[3, Rational[1, 2]]				
-n-polylog-2-0p5	N[PolyLog[2, 0.5]]	0.5822405264650127	N[\text{Li}_2(0.5)]	0.582241	
-n-polylog-2-neg-0p5	N[PolyLog[2, -0.5]]	-0.4484142069236462	N[\text{Li}_2(-0.5)]	-0.448414	
-n-polylog-2-0p25	N[PolyLog[2, 0.25]]	0.2676526390827326	N[\text{Li}_2(0.25)]	0.267653	
-n-polylog-2-0p9	N[PolyLog[2, 0.9]]	1.2997147230049588	N[\text{Li}_2(0.9)]	1.29971	
-n-polylog-2-1-over-3	N[PolyLog[2, Rational[1, 3]]]	0.36621322997706346	N\left[\text{Li}_2\left(\frac{1}{3}\right)\right]	0.366213	
-n-polylog-2-0p4-plus-0p3i	N[PolyLog[2, Complex[0.4, 0.3]]]	0.40777049929509657 + 0.3745031582239049*I	N[\text{Li}_2(0.4\, +0.3 i)]	0.40777\, +0.374503 i	
-n-polylog-3-0p5	N[PolyLog[3, 0.5]]	0.5372131936080403	N[\text{Li}_3(0.5)]	0.537213	
-n-polylog-3-neg-0p5	N[PolyLog[3, -0.5]]	-0.47259784465889687	N[\text{Li}_3(-0.5)]	-0.472598	
-n-polylog-3-0p25	N[PolyLog[3, 0.25]]	0.2584613957965733	N[\text{Li}_3(0.25)]	0.258461	
-n-polylog-3-0p9	N[PolyLog[3, 0.9]]	1.04965895018644	N[\text{Li}_3(0.9)]	1.04966	
-n-polylog-3-1-over-3	N[PolyLog[3, Rational[1, 3]]]	0.34882786115484005	N\left[\text{Li}_3\left(\frac{1}{3}\right)\right]	0.348828	
-n-polylog-3-0p4-plus-0p3i	N[PolyLog[3, Complex[0.4, 0.3]]]	0.4059953038198777 + 0.3347618385338803*I	N[\text{Li}_3(0.4\, +0.3 i)]	0.405995\, +0.334762 i	
-n-polylog-0p5-0p5	N[PolyLog[0.5, 0.5]]	0.8061267230428522	N[\text{Li}_{0.5}(0.5)]	0.806127	
-n-polylog-0p5-neg-0p5	N[PolyLog[0.5, -0.5]]	-0.37375223798097307	N[\text{Li}_{0.5}(-0.5)]	-0.373752	
-n-polylog-0p5-0p25	N[PolyLog[0.5, 0.25]]	0.3057349303992964	N[\text{Li}_{0.5}(0.25)]	0.305735	
-n-polylog-0p5-0p9	N[PolyLog[0.5, 0.9]]	4.021950427473362 - 4.440892098500626*^-16*I	N[\text{Li}_{0.5}(0.9)]	4.02195\, -\text{4.440892098500626$\grave{ }$*${}^{\wedge}$-16} i	
-n-polylog-0p5-1-over-3	N[PolyLog[0.5, Rational[1, 3]]]	0.4421088352806754	N\left[\text{Li}_{0.5}\left(\frac{1}{3}\right)\right]	0.442109	
-n-polylog-0p5-0p4-plus-0p3i	N[PolyLog[0.5, Complex[0.4, 0.3]]]	0.3799350192027696 + 0.544594255219853*I	N[\text{Li}_{0.5}(0.4\, +0.3 i)]	0.379935\, +0.544594 i	
-n-polylog-1p5-0p5	N[PolyLog[1.5, 0.5]]	0.6248370208199139	N[\text{Li}_{1.5}(0.5)]	0.624837	
-n-polylog-1p5-neg-0p5	N[PolyLog[1.5, -0.5]]	-0.4298873215805793	N[\text{Li}_{1.5}(-0.5)]	-0.429887	
-n-polylog-1p5-0p25	N[PolyLog[1.5, 0.25]]	0.2757005086448228	N[\text{Li}_{1.5}(0.25)]	0.275701	
-n-polylog-1p5-0p9	N[PolyLog[1.5, 0.9]]	1.614438528566554	N[\text{Li}_{1.5}(0.9)]	1.61444	
-n-polylog-1p5-1-over-3	N[PolyLog[1.5, Rational[1, 3]]]	0.38178350786901616	N\left[\text{Li}_{1.5}\left(\frac{1}{3}\right)\right]	0.381784	
-n-polylog-1p5-0p4-plus-0p3i	N[PolyLog[1.5, Complex[0.4, 0.3]]]	0.4061939795940264 + 0.410075868348375*I	N[\text{Li}_{1.5}(0.4\, +0.3 i)]	0.406194\, +0.410076 i	
-n-polylog-2p5-0p5	N[PolyLog[2.5, 0.5]]	0.5549972787175124	N[\text{Li}_{2.5}(0.5)]	0.554997	
-n-polylog-2p5-neg-0p5	N[PolyLog[2.5, -0.5]]	-0.4622977821900634	N[\text{Li}_{2.5}(-0.5)]	-0.462298	
-n-polylog-2p5-0p25	N[PolyLog[2.5, 0.25]]	0.2621937704285515	N[\text{Li}_{2.5}(0.25)]	0.262194	
-n-polylog-2p5-0p9	N[PolyLog[2.5, 0.9]]	1.1390030252388494	N[\text{Li}_{2.5}(0.9)]	1.139	
-n-polylog-2p5-1-over-3	N[PolyLog[2.5, Rational[1, 3]]]	0.3558307400323208	N\left[\text{Li}_{2.5}\left(\frac{1}{3}\right)\right]	0.355831	
-n-polylog-2p5-0p4-plus-0p3i	N[PolyLog[2.5, Complex[0.4, 0.3]]]	0.40722171132462165 + 0.3507424837631957*I	N[\text{Li}_{2.5}(0.4\, +0.3 i)]	0.407222\, +0.350742 i	
-n-polylog-neg-1-0p5	N[PolyLog[-1, 0.5]]	2.	N[\text{Li}_{-1}(0.5)]	2.	
-n-polylog-neg-1-neg-0p5	N[PolyLog[-1, -0.5]]	-0.2222222222222222	N[\text{Li}_{-1}(-0.5)]	-0.222222	
-n-polylog-neg-1-0p25	N[PolyLog[-1, 0.25]]	0.4444444444444444	N[\text{Li}_{-1}(0.25)]	0.444444	
-n-polylog-neg-1-0p9	N[PolyLog[-1, 0.9]]	90.00000000000004	N[\text{Li}_{-1}(0.9)]	90.	
-n-polylog-neg-1-1-over-3	N[PolyLog[-1, Rational[1, 3]]]	0.75	N\left[\text{Li}_{-1}\left(\frac{1}{3}\right)\right]	0.75	
-n-polylog-neg-1-0p4-plus-0p3i	N[PolyLog[-1, Complex[0.4, 0.3]]]	7.07253186057507*^-17 + 1.111111111111111*I	N[\text{Li}_{-1}(0.4\, +0.3 i)]	\text{7.07253186057507$\grave{ }$*${}^{\wedge}$-17}+1.11111 i	
-n-polylog-2-plus-i-0p5	N[PolyLog[Complex[2, 1], 0.5]]	0.5548535453533203 - 0.05804956179169715*I	N[\text{Li}_{2+i}(0.5)]	0.554854\, -0.0580496 i	
-n-polylog-2-plus-i-neg-0p5	N[PolyLog[Complex[2, 1], -0.5]]	-0.45753154607558516 - 0.03047101966980711*I	N[\text{Li}_{2+i}(-0.5)]	-0.457532-0.030471 i	
-n-polylog-2-plus-i-0p25	N[PolyLog[Complex[2, 1], 0.25]]	0.2628501830272362 - 0.01181697191930256*I	N[\text{Li}_{2+i}(0.25)]	0.26285\, -0.011817 i	
-n-polylog-2-plus-i-0p9	N[PolyLog[Complex[2, 1], 0.9]]	1.073635898279267 - 0.30650062170701076*I	N[\text{Li}_{2+i}(0.9)]	1.07364\, -0.306501 i	
-n-polylog-2-plus-i-1-over-3	N[PolyLog[Complex[2, 1], Rational[1, 3]]]	0.3566945562007135 - 0.022385462317962058*I	N\left[\text{Li}_{2+i}\left(\frac{1}{3}\right)\right]	0.356695\, -0.0223855 i	
-n-polylog-2-plus-i-0p4-plus-0p3i	N[PolyLog[Complex[2, 1], Complex[0.4, 0.3]]]	0.4621400230577697 + 0.35056059710105814*I	N[\text{Li}_{2+i}(0.4\, +0.3 i)]	0.46214\, +0.350561 i	
-n-polylog-0p5-plus-neg-1-times-i-0p5	N[PolyLog[Complex[0.5, -1], 0.5]]	0.6700397970761985 + 0.2330192697577132*I	N[\text{Li}_{0.5\, -i}(0.5)]	0.67004\, +0.233019 i	
-n-polylog-0p5-plus-neg-1-times-i-neg-0p5	N[PolyLog[Complex[0.5, -1], -0.5]]	-0.39131031611174283 + 0.06975146663327912*I	N[\text{Li}_{0.5\, -i}(-0.5)]	-0.39131+0.0697515 i	
-n-polylog-0p5-plus-neg-1-times-i-0p25	N[PolyLog[Complex[0.5, -1], 0.25]]	0.28840646612470583 + 0.03875347060829805*I	N[\text{Li}_{0.5\, -i}(0.25)]	0.288406\, +0.0387535 i	
-n-polylog-0p5-plus-neg-1-times-i-0p9	N[PolyLog[Complex[0.5, -1], 0.9]]	0.5803610765269382 + 2.2422637480008047*I	N[\text{Li}_{0.5\, -i}(0.9)]	0.580361\, +2.24226 i	
-n-polylog-0p5-plus-neg-1-times-i-1-over-3	N[PolyLog[Complex[0.5, -1], Rational[1, 3]]]	0.40432993223794483 + 0.07792572456064258*I	N\left[\text{Li}_{0.5\, -i}\left(\frac{1}{3}\right)\right]	0.40433\, +0.0779257 i	
-n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i	N[PolyLog[Complex[0.5, -1], Complex[0.4, 0.3]]]	0.2465452347928887 + 0.4321567364244431*I	N[\text{Li}_{0.5\, -i}(0.4\, +0.3 i)]	0.246545\, +0.432157 i	
-li-0-1-a-pole-of-the-rational-form	PolyLog[0, 1]				
-li-neg-1-1-a-pole-of-the-rational-form	PolyLog[-1, 1]				
-li-neg-2-1-a-pole-of-the-rational-form	PolyLog[-2, 1]				
-li-3-over-2-1-zeta-3-2-non-integer-order	N[PolyLog[Rational[3, 2], 1]]				
-li-1-1-2-ln-2	N[PolyLog[1, Rational[1, 2]]]				
-n-polylog-rim-theta-0p5-s-neg-0p5-z	N[PolyLog[-0.5, Complex[0.8775825618903728, 0.479425538604203]]]				
-polylog-rim-theta-0p5-s-0-z	N[PolyLog[0, Complex[0.8775825618903728, 0.479425538604203]]]				
-polylog-rim-theta-0p5-s-0p5-z	N[PolyLog[0.5, Complex[0.8775825618903728, 0.479425538604203]]]				
-polylog-rim-theta-0p5-s-1-z	N[PolyLog[1, Complex[0.8775825618903728, 0.479425538604203]]]				
-polylog-rim-theta-0p5-s-1p5-z	N[PolyLog[1.5, Complex[0.8775825618903728, 0.479425538604203]]]				
-polylog-rim-theta-1p7-s-0-z	N[PolyLog[0, Complex[-0.12884449429552464, 0.9916648104524686]]]				
-polylog-rim-theta-1p7-s-0p5-z	N[PolyLog[0.5, Complex[-0.12884449429552464, 0.9916648104524686]]]				
-polylog-rim-theta-1p7-s-1-z	N[PolyLog[1, Complex[-0.12884449429552464, 0.9916648104524686]]]				
-polylog-rim-theta-1p7-s-1p5-z	N[PolyLog[1.5, Complex[-0.12884449429552464, 0.9916648104524686]]]				
-polylog-rim-theta-2p4-s-0-z	N[PolyLog[0, Complex[-0.7373937155412454, 0.675463180551151]]]				
-polylog-rim-theta-2p4-s-0p5-z	N[PolyLog[0.5, Complex[-0.7373937155412454, 0.675463180551151]]]				
-polylog-rim-theta-2p4-s-1-z	N[PolyLog[1, Complex[-0.7373937155412454, 0.675463180551151]]]				
-polylog-rim-theta-2p4-s-1p5-z	N[PolyLog[1.5, Complex[-0.7373937155412454, 0.675463180551151]]]				
-order-one-half-at-1-is-zeta-one-half	N[PolyLog[Rational[1, 2], 1]]				
-threads-over-a-list-of-arguments	PolyLog[2, List[0.5, 0.25]]	{0.5822405264650127, 0.2676526390827326}	\text{Li}_2(\{0.5,0.25\})	\{0.582241,0.267653\}	
-a-non-integer-order-past-z-1-is-left-unevaluated	PolyLog[2.5, 2]	2.789660332381895 - 1.3638037005377295*I	\text{Li}_{2.5}(2)	2.78966\, -1.3638 i	
-complex-order-and-argument	PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]				
-past-z-1-the-continuation-is-complex	PolyLog[2, 2.5]				
-li-3-1-eta-3-frac-34-zeta-3	PolyLog[3, -1]				
-li-2-2-pi-2-4-i-pi-ln-2-exactly	PolyLog[2, 2]				
-li-n-1-1-2-1-n-zeta-n-for-symbolic-n	PolyLog[n, -1]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_n(-1)-\left(2^{-n+1}-1\right) \zeta (n)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{\frac{7}{3}}(-1)-\left(2^{-\frac{7}{3}+1}-1\right) \zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{-\frac{11}{5}}(-1)-\left(2^{-\left(-\frac{11}{5}\right)+1}-1\right) \zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{\frac{13}{4}}(-1)-\left(2^{-\frac{13}{4}+1}-1\right) \zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-li-2-z-z-1-z-1-z-3	PolyLog[-2, z]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_{-2}(z)-\frac{z (z+1)}{(-z+1)^3}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{-2}\left(\frac{7}{3}\right)-\frac{\frac{7}{3} \left(\frac{7}{3}+1\right)}{\left(-\frac{7}{3}+1\right)^3}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-2}\left(-\frac{11}{5}\right)--\frac{\frac{11}{5} \left(-\frac{11}{5}+1\right)}{\left(-\left(-\frac{11}{5}\right)+1\right)^3}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-2}\left(\frac{13}{4}\right)-\frac{\frac{13}{4} \left(\frac{13}{4}+1\right)}{\left(-\frac{13}{4}+1\right)^3}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-interval-arithmetic	PolyLog[2, Interval[List[0.7, 0.8]]]				
-three-arguments-the-nielsen-generalized	PolyLog[1, 2, 1]				
-s-2-2-1-pi-4-360	PolyLog[2, 2, 1]				
-s-1-2-1-2-zeta-3-8-ln-3-2-6	PolyLog[1, 2, 0.5]				
-to-30-significant-digits-not-yet-the-requested	N[PolyLog[2, Rational[1, 2]], 30]				
-image-order-2-over-0p7-to-0p8	PolyLog[2, Interval[List[0.7, 0.8]]]				
-image-order-2-over-neg-0p9-to-0p9	PolyLog[2, Interval[List[-0.9, 0.9]]]				
-image-order-0p5-over-neg-0p5-to-0p95	PolyLog[0.5, Interval[List[-0.5, 0.95]]]				
-image-order-neg-1p5-over-neg-0p3-to-0p3	PolyLog[-1.5, Interval[List[-0.3, 0.3]]]				
-image-order-neg-3-over-neg-0p5-to-0p2	PolyLog[-3, Interval[List[-0.5, 0.2]]]				
-image-order-5-over-neg-0p99-to-0p99	PolyLog[5, Interval[List[-0.99, 0.99]]]				
-li-1-2-1-zeta-1-2-a-non-integer-order-from	PolyLog[0.5, 1]	ComplexInfinity	\text{Li}_{0.5}(1)	\text{ComplexInfinity}	disagree
-li-1-2-1-2-0-80612672-via-the-lerch-series	PolyLog[0.5, 0.5]	0.8061267230428522	\text{Li}_{0.5}(0.5)	0.806127	
-li-5-2-1-2-0-46229778-the-alternating-side-euler	PolyLog[2.5, -0.5]	-0.4622977821900634	\text{Li}_{2.5}(-0.5)	-0.462298	
-certified-digits-li-2-1-3	N[PolyLog[2, Rational[1, 3]], 40]				
-certified-digits-li-5-2-minus-1-2	N[PolyLog[Rational[5, 2], Rational[-1, 2]], 40]				
-li-1-z-ln-1-z-symbolically	PolyLog[1, z]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Li}_1(z)--\log (-z+1)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_1\left(\frac{7}{3}\right)--\log \left(-\frac{7}{3}+1\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_1\left(-\frac{11}{5}\right)--\log \left(-\left(-\frac{11}{5}\right)+1\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_1\left(\frac{13}{4}\right)--\log \left(-\frac{13}{4}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-li-1-z-z-1-z-2-negative-orders-are-rational	PolyLog[-1, z]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_{-1}(z)-\frac{z}{(-z+1)^2}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{-1}\left(\frac{7}{3}\right)-\frac{\frac{7}{3}}{\left(-\frac{7}{3}+1\right)^2}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-1}\left(-\frac{11}{5}\right)--\frac{\frac{11}{5}}{\left(-\left(-\frac{11}{5}\right)+1\right)^2}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-1}\left(\frac{13}{4}\right)-\frac{\frac{13}{4}}{\left(-\frac{13}{4}+1\right)^2}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-li-2-1-2-pi-2-12-ln-2-2-2	(Plus[PolyLog[2, 0.5], Times[0.5, Power[Log[2], 2]]] == Divide[Power[Pi, 2], 12])	True	\text{Li}_2(0.5)+0.5 \log ^2(2)=\frac{\pi ^2}{12}	\text{True}	
-li-s-1-zeta-s-for-symbolic-s	PolyLog[s, 1]	Indeterminate	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Li}_s(1)-\zeta (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{\frac{7}{3}}(1)-\zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{-\frac{11}{5}}(1)-\zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{\frac{13}{4}}(1)-\zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive
-frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	D[PolyLog[n, x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{Li}_n(x)}{\partial x}-\frac{\text{Li}_{n-1}(x)}{x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{Li}_{\frac{7}{3}}\left(-\frac{11}{5}\right)--\frac{\text{Li}_{\frac{7}{3}-1}\left(-\frac{11}{5}\right)}{\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{17}{6}}\text{Li}_{\frac{13}{4}}\left(-\frac{17}{6}\right)--\frac{\text{Li}_{\frac{13}{4}-1}\left(-\frac{17}{6}\right)}{\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{23}{9}}\text{Li}_{\frac{19}{8}}\left(-\frac{23}{9}\right)--\frac{\text{Li}_{\frac{19}{8}-1}\left(-\frac{23}{9}\right)}{\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-an-exact-argument-stays-symbolic-under-plain	PolyLog[2, Rational[1, 2]]	Pi^2/12 - Log[2]^2/2	\text{Li}_2\left(\frac{1}{2}\right)	\frac{\pi ^2}{12}-\frac{\log ^2(2)}{2}	
+id	in	out	shown	tex.in	tex.out	verdict
+li-2-1-zeta-2-pi-2-6	PolyLog[2, 1]	Pi^2/6		\text{Li}_2(1)	\frac{\pi ^2}{6}	
+li-2-1-eta-2-pi-2-12	PolyLog[2, -1]	-1/12*Pi^2		\text{Li}_2(-1)	-\frac{\pi ^2}{12}	
+li-4-1-zeta-4-pi-4-90	PolyLog[4, 1]	Pi^4/90		\text{Li}_4(1)	\frac{\pi ^4}{90}	
+a-machine-precision-argument	PolyLog[2, 0.9]	1.2997147230049588		\text{Li}_2(0.9)	1.29971	
+li-0-z-z-1-z-past-the-unit-disk	PolyLog[0, 5.5]	-1.2222222222222223		\text{Li}_0(5.5)	-1.22222	
+li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac	PolyLog[3, Rational[1, 2]]	(-2*Pi^2*Log[2] + 4*Log[2]^3 + 21*Zeta[3])/24		\text{Li}_3\left(\frac{1}{2}\right)	\frac{1}{24} \left(21 \zeta (3)+4 \log ^3(2)-2 \pi ^2 \log (2)\right)	
+n-polylog-2-0p5	N[PolyLog[2, 0.5]]	0.5822405264650127		N[\text{Li}_2(0.5)]	0.582241	
+n-polylog-2-neg-0p5	N[PolyLog[2, -0.5]]	-0.4484142069236462		N[\text{Li}_2(-0.5)]	-0.448414	
+n-polylog-2-0p25	N[PolyLog[2, 0.25]]	0.2676526390827326		N[\text{Li}_2(0.25)]	0.267653	
+n-polylog-2-0p9	N[PolyLog[2, 0.9]]	1.2997147230049588		N[\text{Li}_2(0.9)]	1.29971	
+n-polylog-2-1-over-3	N[PolyLog[2, Rational[1, 3]]]	0.36621322997706346		N\left[\text{Li}_2\left(\frac{1}{3}\right)\right]	0.366213	
+n-polylog-2-0p4-plus-0p3i	N[PolyLog[2, Complex[0.4, 0.3]]]	0.40777049929509657 + 0.3745031582239049*I		N[\text{Li}_2(0.4\, +0.3 i)]	0.40777\, +0.374503 i	
+n-polylog-3-0p5	N[PolyLog[3, 0.5]]	0.5372131936080403		N[\text{Li}_3(0.5)]	0.537213	
+n-polylog-3-neg-0p5	N[PolyLog[3, -0.5]]	-0.47259784465889687		N[\text{Li}_3(-0.5)]	-0.472598	
+n-polylog-3-0p25	N[PolyLog[3, 0.25]]	0.2584613957965733		N[\text{Li}_3(0.25)]	0.258461	
+n-polylog-3-0p9	N[PolyLog[3, 0.9]]	1.04965895018644		N[\text{Li}_3(0.9)]	1.04966	
+n-polylog-3-1-over-3	N[PolyLog[3, Rational[1, 3]]]	0.34882786115484005		N\left[\text{Li}_3\left(\frac{1}{3}\right)\right]	0.348828	
+n-polylog-3-0p4-plus-0p3i	N[PolyLog[3, Complex[0.4, 0.3]]]	0.4059953038198777 + 0.3347618385338803*I		N[\text{Li}_3(0.4\, +0.3 i)]	0.405995\, +0.334762 i	
+n-polylog-0p5-0p5	N[PolyLog[0.5, 0.5]]	0.8061267230428522		N[\text{Li}_{0.5}(0.5)]	0.806127	
+n-polylog-0p5-neg-0p5	N[PolyLog[0.5, -0.5]]	-0.37375223798097307		N[\text{Li}_{0.5}(-0.5)]	-0.373752	
+n-polylog-0p5-0p25	N[PolyLog[0.5, 0.25]]	0.3057349303992964		N[\text{Li}_{0.5}(0.25)]	0.305735	
+n-polylog-0p5-0p9	N[PolyLog[0.5, 0.9]]	4.021950427473362 - 4.440892098500626*^-16*I		N[\text{Li}_{0.5}(0.9)]	4.02195\, -\text{4.440892098500626$\grave{ }$*${}^{\wedge}$-16} i	
+n-polylog-0p5-1-over-3	N[PolyLog[0.5, Rational[1, 3]]]	0.4421088352806754		N\left[\text{Li}_{0.5}\left(\frac{1}{3}\right)\right]	0.442109	
+n-polylog-0p5-0p4-plus-0p3i	N[PolyLog[0.5, Complex[0.4, 0.3]]]	0.3799350192027696 + 0.544594255219853*I		N[\text{Li}_{0.5}(0.4\, +0.3 i)]	0.379935\, +0.544594 i	
+n-polylog-1p5-0p5	N[PolyLog[1.5, 0.5]]	0.6248370208199139		N[\text{Li}_{1.5}(0.5)]	0.624837	
+n-polylog-1p5-neg-0p5	N[PolyLog[1.5, -0.5]]	-0.4298873215805793		N[\text{Li}_{1.5}(-0.5)]	-0.429887	
+n-polylog-1p5-0p25	N[PolyLog[1.5, 0.25]]	0.2757005086448228		N[\text{Li}_{1.5}(0.25)]	0.275701	
+n-polylog-1p5-0p9	N[PolyLog[1.5, 0.9]]	1.614438528566554		N[\text{Li}_{1.5}(0.9)]	1.61444	
+n-polylog-1p5-1-over-3	N[PolyLog[1.5, Rational[1, 3]]]	0.38178350786901616		N\left[\text{Li}_{1.5}\left(\frac{1}{3}\right)\right]	0.381784	
+n-polylog-1p5-0p4-plus-0p3i	N[PolyLog[1.5, Complex[0.4, 0.3]]]	0.4061939795940264 + 0.410075868348375*I		N[\text{Li}_{1.5}(0.4\, +0.3 i)]	0.406194\, +0.410076 i	
+n-polylog-2p5-0p5	N[PolyLog[2.5, 0.5]]	0.5549972787175124		N[\text{Li}_{2.5}(0.5)]	0.554997	
+n-polylog-2p5-neg-0p5	N[PolyLog[2.5, -0.5]]	-0.4622977821900634		N[\text{Li}_{2.5}(-0.5)]	-0.462298	
+n-polylog-2p5-0p25	N[PolyLog[2.5, 0.25]]	0.2621937704285515		N[\text{Li}_{2.5}(0.25)]	0.262194	
+n-polylog-2p5-0p9	N[PolyLog[2.5, 0.9]]	1.1390030252388494		N[\text{Li}_{2.5}(0.9)]	1.139	
+n-polylog-2p5-1-over-3	N[PolyLog[2.5, Rational[1, 3]]]	0.3558307400323208		N\left[\text{Li}_{2.5}\left(\frac{1}{3}\right)\right]	0.355831	
+n-polylog-2p5-0p4-plus-0p3i	N[PolyLog[2.5, Complex[0.4, 0.3]]]	0.40722171132462165 + 0.3507424837631957*I		N[\text{Li}_{2.5}(0.4\, +0.3 i)]	0.407222\, +0.350742 i	
+n-polylog-neg-1-0p5	N[PolyLog[-1, 0.5]]	2.		N[\text{Li}_{-1}(0.5)]	2.	
+n-polylog-neg-1-neg-0p5	N[PolyLog[-1, -0.5]]	-0.2222222222222222		N[\text{Li}_{-1}(-0.5)]	-0.222222	
+n-polylog-neg-1-0p25	N[PolyLog[-1, 0.25]]	0.4444444444444444		N[\text{Li}_{-1}(0.25)]	0.444444	
+n-polylog-neg-1-0p9	N[PolyLog[-1, 0.9]]	90.00000000000004		N[\text{Li}_{-1}(0.9)]	90.	
+n-polylog-neg-1-1-over-3	N[PolyLog[-1, Rational[1, 3]]]	0.75		N\left[\text{Li}_{-1}\left(\frac{1}{3}\right)\right]	0.75	
+n-polylog-neg-1-0p4-plus-0p3i	N[PolyLog[-1, Complex[0.4, 0.3]]]	7.07253186057507*^-17 + 1.111111111111111*I		N[\text{Li}_{-1}(0.4\, +0.3 i)]	\text{7.07253186057507$\grave{ }$*${}^{\wedge}$-17}+1.11111 i	
+n-polylog-2-plus-i-0p5	N[PolyLog[Complex[2, 1], 0.5]]	0.5548535453533203 - 0.05804956179169715*I		N[\text{Li}_{2+i}(0.5)]	0.554854\, -0.0580496 i	
+n-polylog-2-plus-i-neg-0p5	N[PolyLog[Complex[2, 1], -0.5]]	-0.45753154607558516 - 0.03047101966980711*I		N[\text{Li}_{2+i}(-0.5)]	-0.457532-0.030471 i	
+n-polylog-2-plus-i-0p25	N[PolyLog[Complex[2, 1], 0.25]]	0.2628501830272362 - 0.01181697191930256*I		N[\text{Li}_{2+i}(0.25)]	0.26285\, -0.011817 i	
+n-polylog-2-plus-i-0p9	N[PolyLog[Complex[2, 1], 0.9]]	1.073635898279267 - 0.30650062170701076*I		N[\text{Li}_{2+i}(0.9)]	1.07364\, -0.306501 i	
+n-polylog-2-plus-i-1-over-3	N[PolyLog[Complex[2, 1], Rational[1, 3]]]	0.3566945562007135 - 0.022385462317962058*I		N\left[\text{Li}_{2+i}\left(\frac{1}{3}\right)\right]	0.356695\, -0.0223855 i	
+n-polylog-2-plus-i-0p4-plus-0p3i	N[PolyLog[Complex[2, 1], Complex[0.4, 0.3]]]	0.4621400230577697 + 0.35056059710105814*I		N[\text{Li}_{2+i}(0.4\, +0.3 i)]	0.46214\, +0.350561 i	
+n-polylog-0p5-plus-neg-1-times-i-0p5	N[PolyLog[Complex[0.5, -1], 0.5]]	0.6700397970761985 + 0.2330192697577132*I		N[\text{Li}_{0.5\, -i}(0.5)]	0.67004\, +0.233019 i	
+n-polylog-0p5-plus-neg-1-times-i-neg-0p5	N[PolyLog[Complex[0.5, -1], -0.5]]	-0.39131031611174283 + 0.06975146663327912*I		N[\text{Li}_{0.5\, -i}(-0.5)]	-0.39131+0.0697515 i	
+n-polylog-0p5-plus-neg-1-times-i-0p25	N[PolyLog[Complex[0.5, -1], 0.25]]	0.28840646612470583 + 0.03875347060829805*I		N[\text{Li}_{0.5\, -i}(0.25)]	0.288406\, +0.0387535 i	
+n-polylog-0p5-plus-neg-1-times-i-0p9	N[PolyLog[Complex[0.5, -1], 0.9]]	0.5803610765269382 + 2.2422637480008047*I		N[\text{Li}_{0.5\, -i}(0.9)]	0.580361\, +2.24226 i	
+n-polylog-0p5-plus-neg-1-times-i-1-over-3	N[PolyLog[Complex[0.5, -1], Rational[1, 3]]]	0.40432993223794483 + 0.07792572456064258*I		N\left[\text{Li}_{0.5\, -i}\left(\frac{1}{3}\right)\right]	0.40433\, +0.0779257 i	
+n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i	N[PolyLog[Complex[0.5, -1], Complex[0.4, 0.3]]]	0.2465452347928887 + 0.4321567364244431*I		N[\text{Li}_{0.5\, -i}(0.4\, +0.3 i)]	0.246545\, +0.432157 i	
+li-0-1-a-pole-of-the-rational-form	PolyLog[0, 1]	ComplexInfinity		\text{Li}_0(1)	\text{ComplexInfinity}	
+li-neg-1-1-a-pole-of-the-rational-form	PolyLog[-1, 1]	ComplexInfinity		\text{Li}_{-1}(1)	\text{ComplexInfinity}	
+li-neg-2-1-a-pole-of-the-rational-form	PolyLog[-2, 1]	ComplexInfinity		\text{Li}_{-2}(1)	\text{ComplexInfinity}	
+li-3-over-2-1-zeta-3-2-non-integer-order	N[PolyLog[Rational[3, 2], 1]]	2.612375348685488		N\left[\text{Li}_{\frac{3}{2}}(1)\right]	2.61238	
+li-1-1-2-ln-2	N[PolyLog[1, Rational[1, 2]]]	0.6931471805599453		N\left[\text{Li}_1\left(\frac{1}{2}\right)\right]	0.693147	
+n-polylog-rim-theta-0p5-s-neg-0p5-z	N[PolyLog[-0.5, Complex[0.8775825618903728, 0.479425538604203]]]	-1.9814128032416296 + 1.7596180280954192*I		N[\text{Li}_{-0.5}(0.877583\, +0.479426 i)]	-1.98141+1.75962 i	
+polylog-rim-theta-0p5-s-0-z	N[PolyLog[0, Complex[0.8775825618903728, 0.479425538604203]]]	-0.5000000000000002 + 1.9581586823229702*I		N[\text{Li}_0(0.877583\, +0.479426 i)]	-0.5+1.95816 i	
+polylog-rim-theta-0p5-s-0p5-z	N[PolyLog[0.5, Complex[0.8775825618903728, 0.479425538604203]]]	0.3152966157587094 + 1.6683324929967664*I		N[\text{Li}_{0.5}(0.877583\, +0.479426 i)]	0.315297\, +1.66833 i	
+polylog-rim-theta-0p5-s-1-z	N[PolyLog[1, Complex[0.8775825618903728, 0.479425538604203]]]	0.7035856351378447 + 1.3207963267948968*I		N[\text{Li}_1(0.877583\, +0.479426 i)]	0.703586\, +1.3208 i	
+polylog-rim-theta-0p5-s-1p5-z	N[PolyLog[1.5, Complex[0.8775825618903728, 0.479425538604203]]]	0.8659295227648812 + 1.0428086988787915*I		N[\text{Li}_{1.5}(0.877583\, +0.479426 i)]	0.86593\, +1.04281 i	
+polylog-rim-theta-1p7-s-0-z	N[PolyLog[0, Complex[-0.12884449429552464, 0.9916648104524686]]]	-0.4999999999999999 + 0.4392388922760059*I		N[\text{Li}_0(-0.128844+0.991665 i)]	-0.5+0.439239 i	
+polylog-rim-theta-1p7-s-0p5-z	N[PolyLog[0.5, Complex[-0.12884449429552464, 0.9916648104524686]]]	-0.4606392261975283 + 0.6004778160550782*I		N[\text{Li}_{0.5}(-0.128844+0.991665 i)]	-0.460639+0.600478 i	
+polylog-rim-theta-1p7-s-1-z	N[PolyLog[1, Complex[-0.12884449429552464, 0.9916648104524686]]]	-0.40717085934072944 + 0.7207963267948966*I		N[\text{Li}_1(-0.128844+0.991665 i)]	-0.407171+0.720796 i	
+polylog-rim-theta-1p7-s-1p5-z	N[PolyLog[1.5, Complex[-0.12884449429552464, 0.9916648104524686]]]	-0.3523998866397166 + 0.807057229069747*I		N[\text{Li}_{1.5}(-0.128844+0.991665 i)]	-0.3524+0.807057 i	
+polylog-rim-theta-2p4-s-0-z	N[PolyLog[0, Complex[-0.7373937155412454, 0.675463180551151]]]	-0.5 + 0.19438978468410245*I		N[\text{Li}_0(-0.737394+0.675463 i)]	-0.5+0.19439 i	
+polylog-rim-theta-2p4-s-0p5-z	N[PolyLog[0.5, Complex[-0.7373937155412454, 0.675463180551151]]]	-0.5709953131001373 + 0.2881223505446895*I		N[\text{Li}_{0.5}(-0.737394+0.675463 i)]	-0.570995+0.288122 i	
+polylog-rim-theta-2p4-s-1-z	N[PolyLog[1, Complex[-0.7373937155412454, 0.675463180551151]]]	-0.6227666531171128 + 0.37079632679489666*I		N[\text{Li}_1(-0.737394+0.675463 i)]	-0.622767+0.370796 i	
+polylog-rim-theta-2p4-s-1p5-z	N[PolyLog[1.5, Complex[-0.7373937155412454, 0.675463180551151]]]	-0.6594860880903795 + 0.4403355254249126*I		N[\text{Li}_{1.5}(-0.737394+0.675463 i)]	-0.659486+0.440336 i	
+order-one-half-at-1-is-zeta-one-half	N[PolyLog[Rational[1, 2], 1]]	ComplexInfinity		N\left[\text{Li}_{\frac{1}{2}}(1)\right]	\text{ComplexInfinity}	disagree
+threads-over-a-list-of-arguments	PolyLog[2, List[0.5, 0.25]]	{0.5822405264650127, 0.2676526390827326}		\text{Li}_2(\{0.5,0.25\})	\{0.582241,0.267653\}	
+a-non-integer-order-past-z-1-is-left-unevaluated	PolyLog[2.5, 2]	2.789660332381895 - 1.3638037005377295*I		\text{Li}_{2.5}(2)	2.78966\, -1.3638 i	
+complex-order-and-argument	PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]	0.07032652055051612 - 0.5632932625398744*I		\text{Li}_{0.2\, +i}(0.5\, -0.5 i)	0.0703265\, -0.563293 i	
+past-z-1-the-continuation-is-complex	PolyLog[2, 2.5]	2.4207908065659334 - 2.8786122318082605*I		\text{Li}_2(2.5)	2.42079\, -2.87861 i	
+li-3-1-eta-3-frac-34-zeta-3	PolyLog[3, -1]	(-3*Zeta[3])/4		\text{Li}_3(-1)	-\frac{3 \zeta (3)}{4}	
+li-2-2-pi-2-4-i-pi-ln-2-exactly	PolyLog[2, 2]	PolyLog[2, 2]		\text{Li}_2(2)	\text{Li}_2(2)	
+li-n-1-1-2-1-n-zeta-n-for-symbolic-n	PolyLog[n, -1]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_n(-1)-\left(2^{-n+1}-1\right) \zeta (n)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{\frac{7}{3}}(-1)-\left(2^{-\frac{7}{3}+1}-1\right) \zeta \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{-\frac{11}{5}}(-1)-\left(2^{-\left(-\frac{11}{5}\right)+1}-1\right) \zeta \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_{\frac{13}{4}}(-1)-\left(2^{-\frac{13}{4}+1}-1\right) \zeta \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+li-2-z-z-1-z-1-z-3	PolyLog[-2, z]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_{-2}(z)-\frac{z (z+1)}{(-z+1)^3}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{-2}\left(\frac{7}{3}\right)-\frac{\frac{7}{3} \left(\frac{7}{3}+1\right)}{\left(-\frac{7}{3}+1\right)^3}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-2}\left(-\frac{11}{5}\right)--\frac{\frac{11}{5} \left(-\frac{11}{5}+1\right)}{\left(-\left(-\frac{11}{5}\right)+1\right)^3}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-2}\left(\frac{13}{4}\right)-\frac{\frac{13}{4} \left(\frac{13}{4}+1\right)}{\left(-\frac{13}{4}+1\right)^3}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+interval-arithmetic	PolyLog[2, Interval[List[0.7, 0.8]]]	Interval[{0.7447583740577101, 1.1941706994548442}]		\text{Li}_2(\text{Interval}[\{0.7,0.8\}])	\text{Interval}[\{0.744758,1.19417\}]	disagree
+three-arguments-the-nielsen-generalized	PolyLog[1, 2, 1]	Zeta[3]		S_{1,2}(1)	\zeta (3)	
+s-2-2-1-pi-4-360	PolyLog[2, 2, 1]	Pi^4/360		S_{2,2}(1)	\frac{\pi ^4}{360}	
+s-1-2-1-2-zeta-3-8-ln-3-2-6	PolyLog[1, 2, 0.5]	0.09475300423012745		S_{1,2}(0.5)	0.094753	
+to-30-significant-digits-not-yet-the-requested	N[PolyLog[2, Rational[1, 2]], 30]	0.5822405264650125059026563201596801087441984748061264223685`30.	0.582240526465012505902656320160	N\left[\text{Li}_2\left(\frac{1}{2}\right),30\right]	0.582240526465012505902656320160	
+image-order-2-over-0p7-to-0p8	PolyLog[2, Interval[List[0.7, 0.8]]]	Interval[{0.7447583740577101, 1.1941706994548442}]		\text{Li}_2(\text{Interval}[\{0.7,0.8\}])	\text{Interval}[\{0.744758,1.19417\}]	disagree
+image-order-2-over-neg-0p9-to-0p9	PolyLog[2, Interval[List[-0.9, 0.9]]]	Interval[{-1.299714729189873, 1.299714729189873}]		\text{Li}_2(\text{Interval}[\{-0.9,0.9\}])	\text{Interval}[\{-1.29971,1.29971\}]	disagree
+image-order-0p5-over-neg-0p5-to-0p95	PolyLog[0.5, Interval[List[-0.5, 0.95]]]	PolyLog[0.5, Interval[{-0.5000000000000001, 0.9500000000000001}]]		\text{Li}_{0.5}(\text{Interval}[\{-0.5,0.95\}])	\text{Li}_{0.5}(\text{Interval}[\{-0.5,0.95\}])	disagree
+image-order-neg-1p5-over-neg-0p3-to-0p3	PolyLog[-1.5, Interval[List[-0.3, 0.3]]]	Interval[{-0.8038879670202733, 0.8038879670202733}]		\text{Li}_{-1.5}(\text{Interval}[\{-0.3,0.3\}])	\text{Interval}[\{-0.803888,0.803888\}]	disagree
+image-order-neg-3-over-neg-0p5-to-0p2	PolyLog[-3, Interval[List[-0.5, 0.2]]]	Interval[{-1.5258789062500033, 2.9492187500000075}]		\text{Li}_{-3}(\text{Interval}[\{-0.5,0.2\}])	\text{Interval}[\{-1.52588,2.94922\}]	disagree
+image-order-5-over-neg-0p99-to-0p99	PolyLog[5, Interval[List[-0.99, 0.99]]]	PolyLog[5, Interval[{-0.9900000000000001, 0.9900000000000001}]]		\text{Li}_5(\text{Interval}[\{-0.99,0.99\}])	\text{Li}_5(\text{Interval}[\{-0.99,0.99\}])	disagree
+li-1-2-1-zeta-1-2-a-non-integer-order-from	PolyLog[0.5, 1]	ComplexInfinity		\text{Li}_{0.5}(1)	\text{ComplexInfinity}	disagree
+li-1-2-1-2-0-80612672-via-the-lerch-series	PolyLog[0.5, 0.5]	0.8061267230428522		\text{Li}_{0.5}(0.5)	0.806127	
+li-5-2-1-2-0-46229778-the-alternating-side-euler	PolyLog[2.5, -0.5]	-0.4622977821900634		\text{Li}_{2.5}(-0.5)	-0.462298	
+certified-digits-li-2-1-3	N[PolyLog[2, Rational[1, 3]], 40]	0.366213229977063487616746297664262763802063415589678220511`40.	0.3662132299770634876167462976642627638021	N\left[\text{Li}_2\left(\frac{1}{3}\right),40\right]	0.3662132299770634876167462976642627638021	
+certified-digits-li-5-2-minus-1-2	N[PolyLog[Rational[5, 2], Rational[-1, 2]], 40]	-0.4622977821900634381891643232745464898869395902698162924524`40.	-0.4622977821900634381891643232745464898869	N\left[\text{Li}_{\frac{5}{2}}\left(-\frac{1}{2}\right),40\right]	-0.4622977821900634381891643232745464898869	
+li-1-z-ln-1-z-symbolically	PolyLog[1, z]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Li}_1(z)--\log (-z+1)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_1\left(\frac{7}{3}\right)--\log \left(-\frac{7}{3}+1\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_1\left(-\frac{11}{5}\right)--\log \left(-\left(-\frac{11}{5}\right)+1\right)\right]\right],\text{Chop}\left[N\left[\text{Li}_1\left(\frac{13}{4}\right)--\log \left(-\frac{13}{4}+1\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+li-1-z-z-1-z-2-negative-orders-are-rational	PolyLog[-1, z]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Li}_{-1}(z)-\frac{z}{(-z+1)^2}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Li}_{-1}\left(\frac{7}{3}\right)-\frac{\frac{7}{3}}{\left(-\frac{7}{3}+1\right)^2}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-1}\left(-\frac{11}{5}\right)--\frac{\frac{11}{5}}{\left(-\left(-\frac{11}{5}\right)+1\right)^2}\right]\right],\text{Chop}\left[N\left[\text{Li}_{-1}\left(\frac{13}{4}\right)-\frac{\frac{13}{4}}{\left(-\frac{13}{4}+1\right)^2}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+li-2-1-2-pi-2-12-ln-2-2-2	(Plus[PolyLog[2, 0.5], Times[0.5, Power[Log[2], 2]]] == Divide[Power[Pi, 2], 12])	True		\text{Li}_2(0.5)+0.5 \log ^2(2)=\frac{\pi ^2}{12}	\text{True}	
+li-s-1-zeta-s-for-symbolic-s	PolyLog[s, 1]					
+frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	D[PolyLog[n, x], x]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \text{Li}_n(x)}{\partial x}-\frac{\text{Li}_{n-1}(x)}{x}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\text{Li}_{\frac{7}{3}}\left(-\frac{11}{5}\right)--\frac{\text{Li}_{\frac{7}{3}-1}\left(-\frac{11}{5}\right)}{\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{17}{6}}\text{Li}_{\frac{13}{4}}\left(-\frac{17}{6}\right)--\frac{\text{Li}_{\frac{13}{4}-1}\left(-\frac{17}{6}\right)}{\frac{17}{6}}\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{23}{9}}\text{Li}_{\frac{19}{8}}\left(-\frac{23}{9}\right)--\frac{\text{Li}_{\frac{19}{8}-1}\left(-\frac{23}{9}\right)}{\frac{23}{9}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+an-exact-argument-stays-symbolic-under-plain	PolyLog[2, Rational[1, 2]]	Pi^2/12 - Log[2]^2/2		\text{Li}_2\left(\frac{1}{2}\right)	\frac{\pi ^2}{12}-\frac{\log ^2(2)}{2}	

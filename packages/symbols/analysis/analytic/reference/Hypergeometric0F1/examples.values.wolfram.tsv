@@ -1,9 +1,9 @@
-id	in
-a-generic-point-checked-against-mpmath-s-hyp0f1	Hypergeometric0F1[2, 0.5]
-b-1-5-at-neg-0-7	Hypergeometric0F1[1.5, -0.7]
-rational-order-7-3-at-2-5	Hypergeometric0F1[Rational[7, 3], 2.5]
-complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1[Complex[1, 1], 0.5]]
-order-2-at-a-complex-argument	N[Hypergeometric0F1[2, Complex[0.5, 0.5]]]
-negative-order-neg-0-5-at-0-3	Hypergeometric0F1[-0.5, 0.3]
-complex-order-and-argument	N[Hypergeometric0F1[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]
-b-0-is-a-pole-stays-symbolic	Hypergeometric0F1[0, 0.5]
+id	in	out	tex.in	tex.out	verdict
+a-generic-point-checked-against-mpmath-s-hyp0f1	Hypergeometric0F1[2, 0.5]	1.271723456312137	\, _0F_1(;2;0.5)	1.27172	
+b-1-5-at-neg-0-7	Hypergeometric0F1[1.5, -0.7]	0.5944762586327997	\, _0F_1(;1.5;-0.7)	0.594476	
+rational-order-7-3-at-2-5	Hypergeometric0F1[Rational[7, 3], 2.5]	2.560292693919974	\, _0F_1\left(;\frac{7}{3};2.5\right)	2.56029	
+complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1[Complex[1, 1], 0.5]]	1.2624841413076329 - 0.2896457413409118*I	N[\, _0F_1(;1+i;0.5)]	1.26248\, -0.289646 i	
+order-2-at-a-complex-argument	N[Hypergeometric0F1[2, Complex[0.5, 0.5]]]	1.2481756368859287 + 0.2934012962643341*I	N[\, _0F_1(;2;0.5\, +0.5 i)]	1.24818\, +0.293401 i	
+negative-order-neg-0-5-at-0-3	Hypergeometric0F1[-0.5, 0.3]	0.20763375946258103	\, _0F_1(;-0.5;0.3)	0.207634	
+complex-order-and-argument	N[Hypergeometric0F1[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]	0.6321864778017544 + 0.022553192547214943*I	N[\, _0F_1(;-2.5+1.5 i;1.2\, -0.8 i)]	0.632186\, +0.0225532 i	
+b-0-is-a-pole-stays-symbolic	Hypergeometric0F1[0, 0.5]	ComplexInfinity	\, _0F_1(;0;0.5)	\text{ComplexInfinity}	disagree

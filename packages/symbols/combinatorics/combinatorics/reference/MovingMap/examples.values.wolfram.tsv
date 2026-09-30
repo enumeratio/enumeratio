@@ -1,2 +1,2 @@
-id	in
-length-of-window	MovingMap[Length, List[1, 2, 3, 4], 1]
+id	in	out	tex.in	tex.out
+length-of-window	MovingMap[Length, List[1, 2, 3, 4], 1]	{2, 2, 2}	\text{MovingMap}[\text{Length},\{1,2,3,4\},1]	\{2,2,2\}

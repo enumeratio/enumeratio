@@ -1,3 +1,3 @@
-id	section	role	expr	expected	caption
-seedrandom-returns-nothing			[SeedRandom, 7]	Nothing	
-seedrandom-pins-the-next-draw	Scope		[Last, [List, [SeedRandom, 7], [RandomInteger, 100]]]	1	Seeding pins the next RandomInteger draw
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+seedrandom-returns-nothing			[SeedRandom, 7]	Nothing		unclassified	""
+seedrandom-pins-the-next-draw	Scope		[Last, [List, [SeedRandom, 7], [RandomInteger, 100]]]	1	Seeding pins the next RandomInteger draw	unclassified	""

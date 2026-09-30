@@ -1,47 +1,47 @@
-id	section	role	expr	expected	caption
-integerdigits-1-234			[IntegerDigits, 1234]	[List, 1, 2, 3, 4]	
-integerdigits-2-147-2			[IntegerDigits, 2147, 2]	[List, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]	
-integerdigits-58-127			[IntegerDigits, 58127]	[List, 5, 8, 1, 2, 7]	
-integerdigits-58-127-2			[IntegerDigits, 58127, 2]	[List, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1]	
-93-784-seconds-as-days-hours-minutes-seconds			[IntegerDigits, 93784, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 1, 2, 3, 4]	93 784 seconds as days, hours, minutes, seconds
-100-89-8-3-with-no-two-adjacent-ones			[IntegerDigits, 100, ZeckendorfNumerals]	[List, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0]	$100 = 89 + 8 + 3$, with no two adjacent ones
-digits-past-9-are-plain-integers-58127-e30f-16	Scope		[IntegerDigits, 58127, 16]	[List, 14, 3, 0, 15]	Digits past 9 are plain integers: $58127 = \mathrm{e30f}_{16}$
-a-mixed-radix-spelled-mixedradix-102-341-seconds	Scope		[IntegerDigits, 102341, [MixedRadix, [List, 24, 60, 60]]]	[List, 1, 4, 25, 41]	a mixed radix, spelled `MixedRadix`: 102 341 seconds is 1d 4h 25m 41s
-the-leading-digit-is-unbounded-137-3-cdot-3-2	Scope		[IntegerDigits, 137, [MixedRadix, [List, 3, 12]]]	[List, 3, 2, 5]	the leading digit is unbounded: $137 = (3 \cdot 3 + 2) \cdot 12 + 5$
-a-width-longer-than-the-numeral-pads-with	Scope		[IntegerDigits, 5, 2, 8]	[List, 0, 0, 0, 0, 0, 1, 0, 1]	a width longer than the numeral pads with leading zeros
-listable-in-the-base-one-digit-list-per-base	Scope		[IntegerDigits, 7, [List, 2, 3, 4]]	[List, [List, 1, 1, 1], [List, 2, 1], [List, 1, 3]]	Listable in the base: one digit list per base
-listable-threads-over-a-range-of-integers	Scope		[IntegerDigits, [Range, 0, 7], 2]	[List, [List, 0], [List, 1], [List, 1, 0], [List, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]	Listable: threads over a range of integers
-threads-element-wise-over-a-list-as-wolfram-s	Scope		[IntegerDigits, [List, 6, 7, 2], 2]	[List, [List, 1, 1, 0], [List, 1, 1, 1], [List, 1, 0]]	Threads element-wise over a list, as Wolfram's Listable heads do
-ordinary-base-2-as-a-system-value-same-digits-as	Scope		[IntegerDigits, 2147, [PositionalNumerals, 2]]	[List, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]	ordinary base 2, as a system value — same digits as the native 2-argument form
-the-same-20-13-5-2-over-a-continued-fraction-s	Scope		[IntegerDigits, 20, [OstrowskiNumerals, [List, 1, 1, 1, 1, 1, 1, 1, 1]]]	[List, 0, 1, 0, 1, 0, 1, 0, 0]	the same $20 = 13 + 5 + 2$, over a continued fraction's convergents
-a-negative-integer-with-no-sign	Scope		[IntegerDigits, -5, [BalancedNumerals, 3]]	[List, -1, 1, 1]	a negative integer, with no sign
-spreadsheet-column-aaa	Scope		[IntegerDigits, 703, [BijectiveNumerals, 26]]	[List, 1, 1, 1]	spreadsheet column AAA
-independent-residues-no-place-values	Scope		[IntegerDigits, 23, [ResidueNumerals, [List, 3, 5, 7]]]	[List, 2, 3, 2]	independent residues — no place values
-the-10-adic-truncation-a-negative-is-spelled-by	Scope		[IntegerDigits, -3, [AdicNumerals, 10, 6]]	[List, 9, 9, 9, 9, 9, 7]	the 10-adic truncation: a negative is spelled by its digits, and the width is part of the numeral
-factoradic-5-is-the-lehmer-code-2-1-0	Scope	test	[IntegerDigits, 5, FactorialNumerals]	[List, 2, 1, 0]	
-factoradic-463-a-longer-lehmer-code	Scope	test	[IntegerDigits, 463, FactorialNumerals]	[List, 3, 4, 1, 0, 1, 0]	
-balanced-ternary-5-is-1-1-1	Scope	test	[IntegerDigits, 5, [BalancedNumerals, 3]]	[List, 1, -1, -1]	
-negativenumerals-2-3-is-1-1-1	Scope	test	[IntegerDigits, 3, [NegativeNumerals, 2]]	[List, 1, 1, 1]	in base $-2$: $4-2+1=3$
-negativenumerals-2-minus-2-is-1-0	Scope	test	[IntegerDigits, -2, [NegativeNumerals, 2]]	[List, 1, 0]	
-combinatorial-base-3-zero-is-2-1-0	Scope	test	[IntegerDigits, 0, [CombinatorialNumerals, 3]]	[List, 2, 1, 0]	
-primorial-base-30-is-1-0-0-0	Scope	test	[IntegerDigits, 30, PrimorialNumerals]	[List, 1, 0, 0, 0]	
-ostrowski-12-over-all-ones-convergents	Scope	test	[IntegerDigits, 12, [OstrowskiNumerals, [List, 1, 1, 1, 1, 1, 1, 1, 1]]]	[List, 0, 0, 1, 0, 1, 0, 1, 0]	$12 = 8 + 3 + 1$, over the all-ones convergents
-zeckendorf-12-is-8-3-1	Scope	test	[IntegerDigits, 12, ZeckendorfNumerals]	[List, 1, 0, 1, 0, 1]	$12 = 8 + 3 + 1$
-ostrowski-9-over-2-2-2-is-1-2-0	Scope	test	[IntegerDigits, 9, [OstrowskiNumerals, [List, 2, 2, 2]]]	[List, 1, 2, 0]	
-bijective-base-26-27-is-aa	Scope	test	[IntegerDigits, 27, [BijectiveNumerals, 26]]	[List, 1, 1]	spreadsheet column AA
-bijective-base-26-702-is-zz	Scope	test	[IntegerDigits, 702, [BijectiveNumerals, 26]]	[List, 26, 26]	spreadsheet column ZZ
-the-3-argument-form-keeps-only-the-4-least	Applications		[IntegerDigits, 6345354, 10, 4]	[List, 5, 3, 5, 4]	The 3-argument form keeps only the 4 least-significant digits
-all-3-bit-words-by-threading-a-padded-form-over	Applications		[IntegerDigits, [Range, 0, 7], 2, 3]	[List, [List, 0, 0, 0], [List, 0, 0, 1], [List, 0, 1, 0], [List, 0, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]	all 3-bit words, by threading a padded form over a range
-the-lehmer-code-of-the-6th-permutation-of-four	Applications		[IntegerDigits, 5, FactorialNumerals, 4]	[List, 0, 2, 1, 0]	the Lehmer code of the 6th permutation of four things
-an-integer-base-is-still-the-native-handler	Properties		[IntegerDigits, 255, 16]	[List, 15, 15]	an integer base is still the native handler
-unlike-integerstring-there-s-always-at-least-one	Possible issues		[IntegerDigits, 0]	[List, 0]	Unlike [[IntegerString]] there's always at least one digit, even for 0
-the-sign-is-discarded	Possible issues		[IntegerDigits, -3134]	[List, 3, 1, 3, 4]	The sign is discarded
-no-numeral-for-a-negative-in-a-system-that	Possible issues		[IntegerDigits, -3, FactorialNumerals]	[IntegerDigits, -3, FactorialNumerals]	no numeral for a negative in a system that spells only $n \ge 0$; the message says which integers it does spell
-fixed-base-2-drops-the-sign-of-minus-5	Possible issues	test	[IntegerDigits, -5, 2]	[List, 1, 0, 1]	fixed radix drops the sign, unlike the signless systems above
-positionalnumerals-declines-a-negative	Possible issues	test	[IntegerDigits, -5, [PositionalNumerals, 2]]	[IntegerDigits, -5, [PositionalNumerals, 2]]	as a system value it declines instead of dropping the sign, unlike the native handler above
-an-even-balanced-base-declines	Possible issues	test	[IntegerDigits, 10, [BalancedNumerals, 4]]	[IntegerDigits, 10, [BalancedNumerals, 4]]	BalancedNumerals needs an odd base
-an-unrecognized-system-symbol-leaves-the-call	Possible issues	test	[IntegerDigits, 10, NotASystem]	[IntegerDigits, 10, NotASystem]	an unrecognized system symbol leaves the call standing
-ostrowski-declines-past-its-ceiling	Possible issues	test	[IntegerDigits, 12, [OstrowskiNumerals, [List, 2, 2, 2]]]	[IntegerDigits, 12, [OstrowskiNumerals, [List, 2, 2, 2]]]	out of range: the third convergent denominator is 12
-past-the-product-there-is-no-residue-numeral	Possible issues	test	[IntegerDigits, 105, [ResidueNumerals, [List, 3, 5, 7]]]	[IntegerDigits, 105, [ResidueNumerals, [List, 3, 5, 7]]]	past $3\cdot5\cdot7=105$ there is no numeral
-bijective-base-26-zero-is-the-empty-numeral	Possible issues	test	[IntegerDigits, 0, [BijectiveNumerals, 26]]	[List]	zero is the empty numeral, over the alphabet 1..26
-100-has-158-digits	Neat examples		[Length, [IntegerDigits, [Factorial, 100]]]	158	$100!$ has 158 digits
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+integerdigits-1-234			[IntegerDigits, 1234]	[List, 1, 2, 3, 4]			
+integerdigits-2-147-2			[IntegerDigits, 2147, 2]	[List, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]			
+integerdigits-58-127			[IntegerDigits, 58127]	[List, 5, 8, 1, 2, 7]			
+integerdigits-58-127-2			[IntegerDigits, 58127, 2]	[List, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1]			
+93-784-seconds-as-days-hours-minutes-seconds			[IntegerDigits, 93784, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 1, 2, 3, 4]	93 784 seconds as days, hours, minutes, seconds		
+100-89-8-3-with-no-two-adjacent-ones			[IntegerDigits, 100, ZeckendorfNumerals]	[List, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0]	$100 = 89 + 8 + 3$, with no two adjacent ones		
+digits-past-9-are-plain-integers-58127-e30f-16	Scope		[IntegerDigits, 58127, 16]	[List, 14, 3, 0, 15]	Digits past 9 are plain integers: $58127 = \mathrm{e30f}_{16}$		
+a-mixed-radix-spelled-mixedradix-102-341-seconds	Scope		[IntegerDigits, 102341, [MixedRadix, [List, 24, 60, 60]]]	[List, 1, 4, 25, 41]	a mixed radix, spelled `MixedRadix`: 102 341 seconds is 1d 4h 25m 41s		
+the-leading-digit-is-unbounded-137-3-cdot-3-2	Scope		[IntegerDigits, 137, [MixedRadix, [List, 3, 12]]]	[List, 3, 2, 5]	the leading digit is unbounded: $137 = (3 \cdot 3 + 2) \cdot 12 + 5$		
+a-width-longer-than-the-numeral-pads-with	Scope		[IntegerDigits, 5, 2, 8]	[List, 0, 0, 0, 0, 0, 1, 0, 1]	a width longer than the numeral pads with leading zeros		
+listable-in-the-base-one-digit-list-per-base	Scope		[IntegerDigits, 7, [List, 2, 3, 4]]	[List, [List, 1, 1, 1], [List, 2, 1], [List, 1, 3]]	Listable in the base: one digit list per base		
+listable-threads-over-a-range-of-integers	Scope		[IntegerDigits, [Range, 0, 7], 2]	[List, [List, 0], [List, 1], [List, 1, 0], [List, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]	Listable: threads over a range of integers		
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[IntegerDigits, [List, 6, 7, 2], 2]	[List, [List, 1, 1, 0], [List, 1, 1, 1], [List, 1, 0]]	Threads element-wise over a list, as Wolfram's Listable heads do		
+ordinary-base-2-as-a-system-value-same-digits-as	Scope		[IntegerDigits, 2147, [PositionalNumerals, 2]]	[List, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]	ordinary base 2, as a system value — same digits as the native 2-argument form		
+the-same-20-13-5-2-over-a-continued-fraction-s	Scope		[IntegerDigits, 20, [OstrowskiNumerals, [List, 1, 1, 1, 1, 1, 1, 1, 1]]]	[List, 0, 1, 0, 1, 0, 1, 0, 0]	the same $20 = 13 + 5 + 2$, over a continued fraction's convergents		
+a-negative-integer-with-no-sign	Scope		[IntegerDigits, -5, [BalancedNumerals, 3]]	[List, -1, 1, 1]	a negative integer, with no sign		
+spreadsheet-column-aaa	Scope		[IntegerDigits, 703, [BijectiveNumerals, 26]]	[List, 1, 1, 1]	spreadsheet column AAA		
+independent-residues-no-place-values	Scope		[IntegerDigits, 23, [ResidueNumerals, [List, 3, 5, 7]]]	[List, 2, 3, 2]	independent residues — no place values		
+the-10-adic-truncation-a-negative-is-spelled-by	Scope		[IntegerDigits, -3, [AdicNumerals, 10, 6]]	[List, 9, 9, 9, 9, 9, 7]	the 10-adic truncation: a negative is spelled by its digits, and the width is part of the numeral		
+factoradic-5-is-the-lehmer-code-2-1-0	Scope	test	[IntegerDigits, 5, FactorialNumerals]	[List, 2, 1, 0]			
+factoradic-463-a-longer-lehmer-code	Scope	test	[IntegerDigits, 463, FactorialNumerals]	[List, 3, 4, 1, 0, 1, 0]			
+balanced-ternary-5-is-1-1-1	Scope	test	[IntegerDigits, 5, [BalancedNumerals, 3]]	[List, 1, -1, -1]			
+negativenumerals-2-3-is-1-1-1	Scope	test	[IntegerDigits, 3, [NegativeNumerals, 2]]	[List, 1, 1, 1]	in base $-2$: $4-2+1=3$		
+negativenumerals-2-minus-2-is-1-0	Scope	test	[IntegerDigits, -2, [NegativeNumerals, 2]]	[List, 1, 0]			
+combinatorial-base-3-zero-is-2-1-0	Scope	test	[IntegerDigits, 0, [CombinatorialNumerals, 3]]	[List, 2, 1, 0]			
+primorial-base-30-is-1-0-0-0	Scope	test	[IntegerDigits, 30, PrimorialNumerals]	[List, 1, 0, 0, 0]			
+ostrowski-12-over-all-ones-convergents	Scope	test	[IntegerDigits, 12, [OstrowskiNumerals, [List, 1, 1, 1, 1, 1, 1, 1, 1]]]	[List, 0, 0, 1, 0, 1, 0, 1, 0]	$12 = 8 + 3 + 1$, over the all-ones convergents		
+zeckendorf-12-is-8-3-1	Scope	test	[IntegerDigits, 12, ZeckendorfNumerals]	[List, 1, 0, 1, 0, 1]	$12 = 8 + 3 + 1$		
+ostrowski-9-over-2-2-2-is-1-2-0	Scope	test	[IntegerDigits, 9, [OstrowskiNumerals, [List, 2, 2, 2]]]	[List, 1, 2, 0]			
+bijective-base-26-27-is-aa	Scope	test	[IntegerDigits, 27, [BijectiveNumerals, 26]]	[List, 1, 1]	spreadsheet column AA		
+bijective-base-26-702-is-zz	Scope	test	[IntegerDigits, 702, [BijectiveNumerals, 26]]	[List, 26, 26]	spreadsheet column ZZ		
+the-3-argument-form-keeps-only-the-4-least	Applications		[IntegerDigits, 6345354, 10, 4]	[List, 5, 3, 5, 4]	The 3-argument form keeps only the 4 least-significant digits		
+all-3-bit-words-by-threading-a-padded-form-over	Applications		[IntegerDigits, [Range, 0, 7], 2, 3]	[List, [List, 0, 0, 0], [List, 0, 0, 1], [List, 0, 1, 0], [List, 0, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]	all 3-bit words, by threading a padded form over a range		
+the-lehmer-code-of-the-6th-permutation-of-four	Applications		[IntegerDigits, 5, FactorialNumerals, 4]	[List, 0, 2, 1, 0]	the Lehmer code of the 6th permutation of four things		
+an-integer-base-is-still-the-native-handler	Properties		[IntegerDigits, 255, 16]	[List, 15, 15]	an integer base is still the native handler		
+unlike-integerstring-there-s-always-at-least-one	Possible issues		[IntegerDigits, 0]	[List, 0]	Unlike [[IntegerString]] there's always at least one digit, even for 0		
+the-sign-is-discarded	Possible issues		[IntegerDigits, -3134]	[List, 3, 1, 3, 4]	The sign is discarded		
+no-numeral-for-a-negative-in-a-system-that	Possible issues		[IntegerDigits, -3, FactorialNumerals]	[IntegerDigits, -3, FactorialNumerals]	no numeral for a negative in a system that spells only $n \ge 0$; the message says which integers it does spell		
+fixed-base-2-drops-the-sign-of-minus-5	Possible issues	test	[IntegerDigits, -5, 2]	[List, 1, 0, 1]	fixed radix drops the sign, unlike the signless systems above		
+positionalnumerals-declines-a-negative	Possible issues	test	[IntegerDigits, -5, [PositionalNumerals, 2]]	[IntegerDigits, -5, [PositionalNumerals, 2]]	as a system value it declines instead of dropping the sign, unlike the native handler above	unclassified	""
+an-even-balanced-base-declines	Possible issues	test	[IntegerDigits, 10, [BalancedNumerals, 4]]	[IntegerDigits, 10, [BalancedNumerals, 4]]	BalancedNumerals needs an odd base		
+an-unrecognized-system-symbol-leaves-the-call	Possible issues	test	[IntegerDigits, 10, NotASystem]	[IntegerDigits, 10, NotASystem]	an unrecognized system symbol leaves the call standing		
+ostrowski-declines-past-its-ceiling	Possible issues	test	[IntegerDigits, 12, [OstrowskiNumerals, [List, 2, 2, 2]]]	[IntegerDigits, 12, [OstrowskiNumerals, [List, 2, 2, 2]]]	out of range: the third convergent denominator is 12		
+past-the-product-there-is-no-residue-numeral	Possible issues	test	[IntegerDigits, 105, [ResidueNumerals, [List, 3, 5, 7]]]	[IntegerDigits, 105, [ResidueNumerals, [List, 3, 5, 7]]]	past $3\cdot5\cdot7=105$ there is no numeral		
+bijective-base-26-zero-is-the-empty-numeral	Possible issues	test	[IntegerDigits, 0, [BijectiveNumerals, 26]]	[List]	zero is the empty numeral, over the alphabet 1..26		
+100-has-158-digits	Neat examples		[Length, [IntegerDigits, [Factorial, 100]]]	158	$100!$ has 158 digits		

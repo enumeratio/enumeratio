@@ -1,5 +1,5 @@
 id	in	out	tex.in	tex.out
-true-is-true	TrueQ[True]			
-false-is-not-true	TrueQ[False]			
-an-evaluating-comparison	TrueQ[(1 == 1)]			
+true-is-true	TrueQ[True]	True	\text{TrueQ}[\text{True}]	\text{True}
+false-is-not-true	TrueQ[False]	False	\text{TrueQ}[\text{False}]	\text{False}
+an-evaluating-comparison	TrueQ[(1 == 1)]	True	\text{TrueQ}[1=1]	\text{True}
 an-unevaluated-symbol-is-false	TrueQ[x]	False	\text{TrueQ}[x]	\text{False}

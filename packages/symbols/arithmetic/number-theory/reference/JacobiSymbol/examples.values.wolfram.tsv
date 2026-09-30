@@ -3,9 +3,9 @@ id	in	out	tex.in	tex.out
 3-is-not-a-quadratic-residue-mod-5-the-residues	JacobiSymbol[3, 5]	-1	\left(\frac{3}{5}\right)	-1
 jacobisymbol-1-001-9-907	JacobiSymbol[1001, 9907]	-1	\left(\frac{1001}{9907}\right)	-1
 threads-element-wise-over-a-list-as-wolfram-s	JacobiSymbol[List[2, 3, 5, 7, 11], 3]	{-1, 0, -1, 1, -1}	\left(\frac{\{2,3,5,7,11\}}{3}\right)	\{-1,0,-1,1,-1\}
-larger-arguments-10-10-1-against-the-1000th	JacobiSymbol[Plus[Power[10, 10], 1], Prime[1000]]			
+larger-arguments-10-10-1-against-the-1000th	JacobiSymbol[Plus[Power[10, 10], 1], Prime[1000]]	1	\left(\frac{10^{10}+1}{p_{1000}}\right)	1
 completely-multiplicative-in-the-top-argument-a	(Times[JacobiSymbol[3, 7], JacobiSymbol[5, 7]] == JacobiSymbol[Times[3, 5], 7])	True	\left(\frac{3}{7}\right) \left(\frac{5}{7}\right)=\left(\frac{3\ 5}{7}\right)	\text{True}
-quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac	Times[JacobiSymbol[3, 7], JacobiSymbol[7, 3]]			
-1-m-1-m-1-2	JacobiSymbol[-1, 7]			
+quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac	Times[JacobiSymbol[3, 7], JacobiSymbol[7, 3]]	-1	\left(\frac{3}{7}\right) \left(\frac{7}{3}\right)	-1
+1-m-1-m-1-2	JacobiSymbol[-1, 7]	-1	\left(\frac{-1}{7}\right)	-1
 by-convention-the-symbol-is-1-whenever-m-1	JacobiSymbol[0, 1]	1	\left(\frac{0}{1}\right)	1
-2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15	JacobiSymbol[2, 15]			
+2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15	JacobiSymbol[2, 15]	1	\left(\frac{2}{15}\right)	1

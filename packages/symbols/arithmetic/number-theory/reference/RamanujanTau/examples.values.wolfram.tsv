@@ -1,6 +1,6 @@
-id	in
-ramanujantau-2	RamanujanTau[2]
-ramanujantau-5	RamanujanTau[5]
-listable	RamanujanTau[List[1, 2, 3, 4, 5, 6]]
-ramanujantau-12	RamanujanTau[12]
-multiplicative-tau-6-tau-2-tau-3	Times[RamanujanTau[2], RamanujanTau[3]]
+id	in	out	tex.in	tex.out
+ramanujantau-2	RamanujanTau[2]	-24	\tau (2)	-24
+ramanujantau-5	RamanujanTau[5]	4830	\tau (5)	4830
+listable	RamanujanTau[List[1, 2, 3, 4, 5, 6]]	{1, -24, 252, -1472, 4830, -6048}	\tau (\{1,2,3,4,5,6\})	\{1,-24,252,-1472,4830,-6048\}
+ramanujantau-12	RamanujanTau[12]	-370944	\tau (12)	-370944
+multiplicative-tau-6-tau-2-tau-3	Times[RamanujanTau[2], RamanujanTau[3]]	-6048	\tau (2) \tau (3)	-6048

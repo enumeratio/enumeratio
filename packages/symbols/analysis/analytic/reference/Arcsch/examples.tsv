@@ -1,8 +1,8 @@
-id	section	role	expr	expected	caption	wolfram.note
-n-arcsch-2			[N, [Arcsch, 2]]	{num: "0.481211825059603447495"}		
-a-pole-at-0	Scope		[Arcsch, 0]	ComplexInfinity	A pole at 0	
-arcsch-positiveinfinity	Scope		[Arcsch, PositiveInfinity]	0		
-a-float-argument-evaluates-directly	Scope		[Arcsch, 1.5]	{num: "0.625145117250416687636"}	A float argument evaluates directly	
-as-a-logarithm-arcsch-1-ln-1-sqrt-2	Scope		[TrigToExp, [Arcsch, 1]]	[Ln, [Add, 1, [Sqrt, 2]]]	As a logarithm, $\operatorname{arcsch} 1 = \ln(1 + \sqrt2)$	
-oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arcsch, [Negate, x]]	[Negate, [Arcsch, x]]	Oddness pulls the sign out of a symbolic argument: $\operatorname{arcsch}(-x) = -\operatorname{arcsch} x$	
-derivative-for-real-x-ne-0	Scope		[D, [Arcsch, x], x]	[Divide, -1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], 1]]]]	Derivative, for real $x \ne 0$	Wolfram writes it as -1/(x^2 Sqrt[1 + 1/x^2]).
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+n-arcsch-2			[N, [Arcsch, 2]]	{num: "0.481211825059603447495"}			
+a-pole-at-0	Scope		[Arcsch, 0]	ComplexInfinity	A pole at 0		
+arcsch-positiveinfinity	Scope		[Arcsch, PositiveInfinity]	0			
+a-float-argument-evaluates-directly	Scope		[Arcsch, 1.5]	{num: "0.625145117250416687636"}	A float argument evaluates directly		
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	Scope		[TrigToExp, [Arcsch, 1]]	[Ln, [Add, 1, [Sqrt, 2]]]	As a logarithm, $\operatorname{arcsch} 1 = \ln(1 + \sqrt2)$		
+oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arcsch, [Negate, x]]	[Negate, [Arcsch, x]]	Oddness pulls the sign out of a symbolic argument: $\operatorname{arcsch}(-x) = -\operatorname{arcsch} x$		
+derivative-for-real-x-ne-0	Scope		[D, [Arcsch, x], x]	[Divide, -1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], 1]]]]	Derivative, for real $x \ne 0$	unclassified	Wolfram writes it as -1/(x^2 Sqrt[1 + 1/x^2]).

@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-adds-attributes			[Attributes, Add]	[List, Flat, HoldAll, Listable, Orderless]	Add is Flat, HoldAll, Listable and Orderless on this engine
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+adds-attributes			[Attributes, Add]	[List, Flat, HoldAll, Listable, Orderless]	Add is Flat, HoldAll, Listable and Orderless on this engine	unclassified	""

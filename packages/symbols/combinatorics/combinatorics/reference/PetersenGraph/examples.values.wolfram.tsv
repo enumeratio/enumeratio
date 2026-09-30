@@ -1,5 +1,5 @@
-id	in
-petersen-is-3-regular	VertexDegree[PetersenGraph[]]
-petersen-is-not-bipartite	BipartiteGraphQ[PetersenGraph[]]
-petersen-has-10-vertices	VertexCount[PetersenGraph[]]
-petersen-has-15-edges	EdgeCount[PetersenGraph[]]
+id	in	out	tex.in	tex.out
+petersen-is-3-regular	VertexDegree[PetersenGraph[]]	{3, 3, 3, 3, 3, 3, 3, 3, 3, 3}	\text{VertexDegree}[\text{PetersenGraph}[]]	\{3,3,3,3,3,3,3,3,3,3\}
+petersen-is-not-bipartite	BipartiteGraphQ[PetersenGraph[]]	False	\text{BipartiteGraphQ}[\text{PetersenGraph}[]]	\text{False}
+petersen-has-10-vertices	VertexCount[PetersenGraph[]]	10	\text{VertexCount}[\text{PetersenGraph}[]]	10
+petersen-has-15-edges	EdgeCount[PetersenGraph[]]	15	\text{EdgeCount}[\text{PetersenGraph}[]]	15

@@ -1,5 +1,5 @@
-id	in
-riemannsiegelz-1p5	RiemannSiegelZ[1.5]
-riemannsiegelz-20p5	RiemannSiegelZ[20.5]
-riemannsiegelz-100	N[RiemannSiegelZ[100]]
-z-0-zeta-1-2	N[RiemannSiegelZ[0]]
+id	in	out	tex.in	tex.out
+riemannsiegelz-1p5	RiemannSiegelZ[1.5]	-0.5955683367828881	Z(1.5)	-0.595568
+riemannsiegelz-20p5	RiemannSiegelZ[20.5]	0.599328702514749	Z(20.5)	0.599329
+riemannsiegelz-100	N[RiemannSiegelZ[100]]	2.6926970566644393	N[Z(100)]	2.6927
+z-0-zeta-1-2	N[RiemannSiegelZ[0]]	-1.460354508809588	N[Z(0)]	-1.46035

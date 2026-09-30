@@ -1,16 +1,16 @@
-id	section	role	expr	expected	caption	sympy.kind	sympy.note
-2000-5-3-cdot-16			[IntegerExponent, 2000, 5]	3	$2000 = 5^3 \cdot 16$		
-base-10-by-default			[IntegerExponent, 2000]	3	base 10 by default		
-trailing-zeros-in-base-10			[IntegerExponent, 1230000]	4	trailing zeros in base 10		
-integerexponent-2-pow-10-times-3-pow-4-2			[IntegerExponent, [Multiply, [Power, 2, 10], [Power, 3, 4]], 2]	10			
-integerexponent-1000-base-10		test	[IntegerExponent, 1000]	3			
-integerexponent-1024-base-4		test	[IntegerExponent, 1024, 4]	5			
-composite-base-1728-2-6-3-3-so-6-3-divides-it	Scope		[IntegerExponent, 1728, 6]	3	Composite base: $1728=2^6 3^3$, so $6^3$ divides it but $6^4$ does not		
-negative-integers	Scope		[IntegerExponent, -1000]	3	Negative integers		
-threads-over-a-list	Scope		[IntegerExponent, [List, 10, 100, 1000]]	[List, 1, 2, 3]	Threads over a list		
-gaussian-integers-8i-i-cdot-i-3-1-i-6	Scope		[IntegerExponent, [Complex, 0, 8], [Complex, 1, 1]]	6	Gaussian integers: $8i=i\cdot(-i)^3(1+i)^6$	domain	compute-engine's IntegerExponent takes Gaussian integers; SymPy's multiplicity takes integers and fractions only.
-negative-integers-base-2	Scope	test	[IntegerExponent, -24, 2]	3	Negative integers, base 2		
-the-trailing-zeros-of-100	Applications		[IntegerExponent, [Factorial, 100]]	24	The trailing zeros of $100!$		
-legendre-s-formula-lfloor-100-7-rfloor-lfloor	Properties		[IntegerExponent, [Factorial, 100], 7]	16	Legendre's formula: $\lfloor100/7\rfloor+\lfloor100/49\rfloor=16$		
-integerexponent-0-5	Possible issues		[IntegerExponent, 0, 5]	PositiveInfinity		domain	compute-engine answers ∞ for the multiplicity of p in 0; SymPy's multiplicity declines.
-base-1-has-no-well-defined-p-adic-valuation-so	Possible issues		[IntegerExponent, 10, 1]	[IntegerExponent, 10, 1]	Base 1 has no well-defined $p$-adic valuation, so the call stays unevaluated	undefined-form	Both decline: compute-engine leaves IntegerExponent(10, 1) unevaluated, SymPy raises.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sympy.kind	sympy.note
+2000-5-3-cdot-16			[IntegerExponent, 2000, 5]	3	$2000 = 5^3 \cdot 16$				
+base-10-by-default			[IntegerExponent, 2000]	3	base 10 by default				
+trailing-zeros-in-base-10			[IntegerExponent, 1230000]	4	trailing zeros in base 10				
+integerexponent-2-pow-10-times-3-pow-4-2			[IntegerExponent, [Multiply, [Power, 2, 10], [Power, 3, 4]], 2]	10					
+integerexponent-1000-base-10		test	[IntegerExponent, 1000]	3					
+integerexponent-1024-base-4		test	[IntegerExponent, 1024, 4]	5					
+composite-base-1728-2-6-3-3-so-6-3-divides-it	Scope		[IntegerExponent, 1728, 6]	3	Composite base: $1728=2^6 3^3$, so $6^3$ divides it but $6^4$ does not				
+negative-integers	Scope		[IntegerExponent, -1000]	3	Negative integers				
+threads-over-a-list	Scope		[IntegerExponent, [List, 10, 100, 1000]]	[List, 1, 2, 3]	Threads over a list				
+gaussian-integers-8i-i-cdot-i-3-1-i-6	Scope		[IntegerExponent, [Complex, 0, 8], [Complex, 1, 1]]	6	Gaussian integers: $8i=i\cdot(-i)^3(1+i)^6$	unclassified	""	domain	compute-engine's IntegerExponent takes Gaussian integers; SymPy's multiplicity takes integers and fractions only.
+negative-integers-base-2	Scope	test	[IntegerExponent, -24, 2]	3	Negative integers, base 2				
+the-trailing-zeros-of-100	Applications		[IntegerExponent, [Factorial, 100]]	24	The trailing zeros of $100!$				
+legendre-s-formula-lfloor-100-7-rfloor-lfloor	Properties		[IntegerExponent, [Factorial, 100], 7]	16	Legendre's formula: $\lfloor100/7\rfloor+\lfloor100/49\rfloor=16$				
+integerexponent-0-5	Possible issues		[IntegerExponent, 0, 5]	PositiveInfinity				domain	compute-engine answers ∞ for the multiplicity of p in 0; SymPy's multiplicity declines.
+base-1-has-no-well-defined-p-adic-valuation-so	Possible issues		[IntegerExponent, 10, 1]	[IntegerExponent, 10, 1]	Base 1 has no well-defined $p$-adic valuation, so the call stays unevaluated			undefined-form	Both decline: compute-engine leaves IntegerExponent(10, 1) unevaluated, SymPy raises.

@@ -1,71 +1,71 @@
-id	in	out	tex.in	tex.out
-psi-1-zeta-2-pi-2-6	(PolyGamma[1, 1] == Zeta[2])	True	\psi ^{(1)}(1)=\zeta (2)	\text{True}
-psi-1-2-zeta-3-apery-s-constant-doubled-and	(PolyGamma[2, 1] == Times[-2, Zeta[3]])	PolyGamma[2, 1] == -2*Zeta[3]	\psi ^{(2)}(1)=-2 \zeta (3)	\psi ^{(2)}(1)=-2 \zeta (3)
-an-inexact-argument-evaluates-to-a-decimal-psi-1	PolyGamma[1, 0.5]	4.934802200544679	\psi ^{(1)}(0.5)	4.9348
-a-pole-of-gamma-still-a-pole-after	PolyGamma[1, 0]	ComplexInfinity	\psi ^{(1)}(0)	\text{ComplexInfinity}
-one-argument-is-the-digamma-psi-5-h-4-gamma-frac	PolyGamma[5]			
-psi-3-5-pi-4-15-22369-3456	PolyGamma[3, 5]			
-numerically	N[PolyGamma[3, 5]]			
-psi-1-2-14-zeta-3	PolyGamma[2, 0.5]			
-n-polygamma-1-1	N[PolyGamma[1, 1]]	1.6449340668482262	N[\psi ^{(1)}(1)]	1.64493
-n-polygamma-1-2	N[PolyGamma[1, 2]]	0.6449340668482262	N[\psi ^{(1)}(2)]	0.644934
-n-polygamma-1-0p5	N[PolyGamma[1, 0.5]]	4.934802200544679	N[\psi ^{(1)}(0.5)]	4.9348
-n-polygamma-1-1p3	N[PolyGamma[1, 1.3]]	1.1342534349966191	N[\psi ^{(1)}(1.3)]	1.13425
-n-polygamma-1-7-over-3	N[PolyGamma[1, Rational[7, 3]]]	0.5330971254270943	N\left[\psi ^{(1)}\left(\frac{7}{3}\right)\right]	0.533097
-n-polygamma-1-1-plus-i	N[PolyGamma[1, Complex[1, 1]]]	0.46300009662276376 - 0.7942335427593189*I	N[\psi ^{(1)}(1+i)]	0.463\, -0.794234 i
-n-polygamma-1-0p5-plus-0p3i	N[PolyGamma[1, Complex[0.5, 0.3]]]	2.259034075905334 - 2.8289967861156957*I	N[\psi ^{(1)}(0.5\, +0.3 i)]	2.25903\, -2.829 i
-n-polygamma-1-2-plus-neg-0p5-times-i	N[PolyGamma[1, Complex[2, -0.5]]]	0.5881978909500614 + 0.18504197243379084*I	N[\psi ^{(1)}(2-0.5 i)]	0.588198\, +0.185042 i
-n-polygamma-2-1	N[PolyGamma[2, 1]]	-2.4041138063191885	N[\psi ^{(2)}(1)]	-2.40411
-n-polygamma-2-2	N[PolyGamma[2, 2]]	-0.4041138063191886	N[\psi ^{(2)}(2)]	-0.404114
-n-polygamma-2-0p5	N[PolyGamma[2, 0.5]]	-16.82879664423432	N[\psi ^{(2)}(0.5)]	-16.8288
-n-polygamma-2-1p3	N[PolyGamma[2, 1.3]]	-1.198462514651957	N[\psi ^{(2)}(1.3)]	-1.19846
-n-polygamma-2-7-over-3	N[PolyGamma[2, Rational[7, 3]]]	-0.2783723994016073	N\left[\psi ^{(2)}\left(\frac{7}{3}\right)\right]	-0.278372
-n-polygamma-2-1-plus-i	N[PolyGamma[2, Complex[1, 1]]]	0.3685529315879352 + 0.7666528503450661*I	N[\psi ^{(2)}(1+i)]	0.368553\, +0.766653 i
-n-polygamma-2-0p5-plus-0p3i	N[PolyGamma[2, Complex[0.5, 0.3]]]	-0.17725989989006735 + 10.45182220594345*I	N[\psi ^{(2)}(0.5\, +0.3 i)]	-0.17726+10.4518 i
-n-polygamma-2-2-plus-neg-0p5-times-i	N[PolyGamma[2, Complex[2, -0.5]]]	-0.30738726746061645 - 0.20845269482746526*I	N[\psi ^{(2)}(2-0.5 i)]	-0.307387-0.208453 i
-n-polygamma-3-1	N[PolyGamma[3, 1]]	6.493939402266829	N[\psi ^{(3)}(1)]	6.49394
-n-polygamma-3-2	N[PolyGamma[3, 2]]	0.49393940226682886	N[\psi ^{(3)}(2)]	0.493939
-n-polygamma-3-0p5	N[PolyGamma[3, 0.5]]	97.40909103400247	N[\psi ^{(3)}(0.5)]	97.4091
-n-polygamma-3-1p3	N[PolyGamma[3, 1.3]]	2.401023914308922	N[\psi ^{(3)}(1.3)]	2.40102
-n-polygamma-3-7-over-3	N[PolyGamma[3, Rational[7, 3]]]	0.2853790438142423	N\left[\psi ^{(3)}\left(\frac{7}{3}\right)\right]	0.285379
-n-polygamma-3-1-plus-i	N[PolyGamma[3, Complex[1, 1]]]	-1.522874448953496 - 0.31728657866196064*I	N[\psi ^{(3)}(1+i)]	-1.52287-0.317287 i
-n-polygamma-3-0p5-plus-0p3i	N[PolyGamma[3, Complex[0.5, 0.3]]]	-27.944271157846867 - 43.96940883981448*I	N[\psi ^{(3)}(0.5\, +0.3 i)]	-27.9443-43.9694 i
-n-polygamma-3-2-plus-neg-0p5-times-i	N[PolyGamma[3, Complex[2, -0.5]]]	0.28033483085344774 + 0.3364888359080649*I	N[\psi ^{(3)}(2-0.5 i)]	0.280335\, +0.336489 i
-n-polygamma-5-1	N[PolyGamma[5, 1]]	122.08116743813385	N[\psi ^{(5)}(1)]	122.081
-n-polygamma-5-2	N[PolyGamma[5, 2]]	2.081167438133855	N[\psi ^{(5)}(2)]	2.08117
-n-polygamma-5-0p5	N[PolyGamma[5, 0.5]]	7691.113548602435	N[\psi ^{(5)}(0.5)]	7691.11
-n-polygamma-5-1p3	N[PolyGamma[5, 1.3]]	25.792601280612967	N[\psi ^{(5)}(1.3)]	25.7926
-n-polygamma-5-7-over-3	N[PolyGamma[5, Rational[7, 3]]]	0.857814321602382	N\left[\psi ^{(5)}\left(\frac{7}{3}\right)\right]	0.857814
-n-polygamma-5-1-plus-i	N[PolyGamma[5, Complex[1, 1]]]	-0.9330848362848687 + 14.515852291904064*I	N[\psi ^{(5)}(1+i)]	-0.933085+14.5159 i
-n-polygamma-5-0p5-plus-0p3i	N[PolyGamma[5, Complex[0.5, 0.3]]]	-3033.6279502987354 + 298.58851363667134*I	N[\psi ^{(5)}(0.5\, +0.3 i)]	-3033.63+298.589 i
-n-polygamma-5-2-plus-neg-0p5-times-i	N[PolyGamma[5, Complex[2, -0.5]]]	0.27132469953315896 + 1.7071964092847038*I	N[\psi ^{(5)}(2-0.5 i)]	0.271325\, +1.7072 i
-n-polygamma-1-1-over-2	N[PolyGamma[1, Rational[1, 2]]]			
-n-polygamma-0-1	N[PolyGamma[0, 1]]			
-n-polygamma-0-1-plus-i	N[PolyGamma[0, Complex[1, 1]]]			
-n-polygamma-0-0p5-plus-0p3i	N[PolyGamma[0, Complex[0.5, 0.3]]]			
-n-polygamma-neg1-2-is-loggamma-2-is-0	N[PolyGamma[-1, 2]]			
-n-polygamma-neg1-1-over-2	N[PolyGamma[-1, Rational[1, 2]]]			
-n-polygamma-neg1-1-plus-i	N[PolyGamma[-1, Complex[1, 1]]]			
-n-polygamma-neg1-neg0p5	N[PolyGamma[-1, -0.5]]			
-n-polygamma-neg2-stays-unevaluated	N[PolyGamma[-2, 2]]			
-n-polygamma-8-cancellation-region	N[PolyGamma[8, Complex[-48.445348956457586, 7.047151294800014]]]			
-n-polygamma-8-cancellation-region-nearby-im	N[PolyGamma[8, Complex[-48.445348956457586, 10]]]			
-n-polygamma-5-cancellation-region	N[PolyGamma[5, Complex[-48.987654321098766, 9.5]]]			
-threads-over-a-list-each-element-exact-so-each	PolyGamma[1, List[1, 2]]	{Pi^2/6, -1 + Pi^2/6}	\psi ^{(1)}(\{1,2\})	\left\{\frac{\pi ^2}{6},\frac{\pi ^2}{6}-1\right\}
-one-argument-digamma-at-a-machine-precision	PolyGamma[100.5]			
-one-argument-digamma-at-a-complex-point	PolyGamma[Complex[2.5, 3]]			
-complex-argument-integer-order	PolyGamma[1, Complex[2.5, 3]]			
-between-poles-psi-1-2-pi-2-2-4	PolyGamma[1, -0.5]			
-psi-infty-0	PolyGamma[1, Infinity]			
-interval-arithmetic-the-trigamma-is-decreasing	PolyGamma[1, Interval[List[3.45, 3.46]]]			
-to-30-significant-digits-every-one-correctly	N[PolyGamma[1, Rational[1, 3]], 30]			
-to-25-significant-digits-not-yet-only-the-first	N[PolyGamma[3, 5], 25]			
-psi-1-i-0-46300-0-79423-i-complex-argument-from	N[PolyGamma[1, Complex[1, 1]]]	0.46300009662276376 - 0.7942335427593189*I	N[\psi ^{(1)}(1+i)]	0.463\, -0.794234 i
-psi-1-2-pi-2-2	(PolyGamma[1, Rational[1, 2]] == Divide[Power[Pi, 2], 2])	True	\psi ^{(1)}\left(\frac{1}{2}\right)=\frac{\pi ^2}{2}	\text{True}
-recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2	(Subtract[PolyGamma[1, 1], PolyGamma[1, 2]] == 1)	True	\psi ^{(1)}(1)-\psi ^{(1)}(2)=1	\text{True}
-psi-0-1-gamma-polygamma-0-z-routes-through	PolyGamma[0, 1]			
-psi-1-2-gamma-2-ln-2	PolyGamma[0, Rational[1, 2]]			
-psi-1-2-pi-2-2-in-closed-form	PolyGamma[1, Rational[1, 2]]			
-psi-1-4-pi-2-8g	PolyGamma[1, Rational[1, 4]]			
-frac-d-dx-psi-n-x-psi-n-1-x	D[PolyGamma[n, x], x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \psi ^{(n)}(x)}{\partial x}-\psi ^{(n+1)}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\psi ^{\left(\frac{7}{3}\right)}\left(-\frac{11}{5}\right)-\psi ^{\left(\frac{7}{3}+1\right)}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{17}{6}}\psi ^{\left(\frac{13}{4}\right)}\left(-\frac{17}{6}\right)-\psi ^{\left(\frac{13}{4}+1\right)}\left(-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{23}{9}}\psi ^{\left(\frac{19}{8}\right)}\left(-\frac{23}{9}\right)-\psi ^{\left(\frac{19}{8}+1\right)}\left(-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-an-exact-integer-argument-is-left-unevaluated	PolyGamma[1, 1]	Pi^2/6	\psi ^{(1)}(1)	\frac{\pi ^2}{6}
+id	in	out	shown	tex.in	tex.out	verdict
+psi-1-zeta-2-pi-2-6	(PolyGamma[1, 1] == Zeta[2])	True		\psi ^{(1)}(1)=\zeta (2)	\text{True}	
+psi-1-2-zeta-3-apery-s-constant-doubled-and	(PolyGamma[2, 1] == Times[-2, Zeta[3]])	PolyGamma[2, 1] == -2*Zeta[3]		\psi ^{(2)}(1)=-2 \zeta (3)	\psi ^{(2)}(1)=-2 \zeta (3)	
+an-inexact-argument-evaluates-to-a-decimal-psi-1	PolyGamma[1, 0.5]	4.934802200544679		\psi ^{(1)}(0.5)	4.9348	
+a-pole-of-gamma-still-a-pole-after	PolyGamma[1, 0]	ComplexInfinity		\psi ^{(1)}(0)	\text{ComplexInfinity}	
+one-argument-is-the-digamma-psi-5-h-4-gamma-frac	PolyGamma[5]	25/12 - EulerGamma		\psi (5)	\frac{25}{12}-\gamma	
+psi-3-5-pi-4-15-22369-3456	PolyGamma[3, 5]	6*(-22369/20736 + Pi^4/90)		\psi ^{(3)}(5)	6 \left(\frac{\pi ^4}{90}-\frac{22369}{20736}\right)	
+numerically	N[PolyGamma[3, 5]]	0.02142782819275446		N[\psi ^{(3)}(5)]	0.0214278	
+psi-1-2-14-zeta-3	PolyGamma[2, 0.5]	-16.82879664423432		\psi ^{(2)}(0.5)	-16.8288	
+n-polygamma-1-1	N[PolyGamma[1, 1]]	1.6449340668482262		N[\psi ^{(1)}(1)]	1.64493	
+n-polygamma-1-2	N[PolyGamma[1, 2]]	0.6449340668482262		N[\psi ^{(1)}(2)]	0.644934	
+n-polygamma-1-0p5	N[PolyGamma[1, 0.5]]	4.934802200544679		N[\psi ^{(1)}(0.5)]	4.9348	
+n-polygamma-1-1p3	N[PolyGamma[1, 1.3]]	1.1342534349966191		N[\psi ^{(1)}(1.3)]	1.13425	
+n-polygamma-1-7-over-3	N[PolyGamma[1, Rational[7, 3]]]	0.5330971254270943		N\left[\psi ^{(1)}\left(\frac{7}{3}\right)\right]	0.533097	
+n-polygamma-1-1-plus-i	N[PolyGamma[1, Complex[1, 1]]]	0.46300009662276376 - 0.7942335427593189*I		N[\psi ^{(1)}(1+i)]	0.463\, -0.794234 i	
+n-polygamma-1-0p5-plus-0p3i	N[PolyGamma[1, Complex[0.5, 0.3]]]	2.259034075905334 - 2.8289967861156957*I		N[\psi ^{(1)}(0.5\, +0.3 i)]	2.25903\, -2.829 i	
+n-polygamma-1-2-plus-neg-0p5-times-i	N[PolyGamma[1, Complex[2, -0.5]]]	0.5881978909500614 + 0.18504197243379084*I		N[\psi ^{(1)}(2-0.5 i)]	0.588198\, +0.185042 i	
+n-polygamma-2-1	N[PolyGamma[2, 1]]	-2.4041138063191885		N[\psi ^{(2)}(1)]	-2.40411	
+n-polygamma-2-2	N[PolyGamma[2, 2]]	-0.4041138063191886		N[\psi ^{(2)}(2)]	-0.404114	
+n-polygamma-2-0p5	N[PolyGamma[2, 0.5]]	-16.82879664423432		N[\psi ^{(2)}(0.5)]	-16.8288	
+n-polygamma-2-1p3	N[PolyGamma[2, 1.3]]	-1.198462514651957		N[\psi ^{(2)}(1.3)]	-1.19846	
+n-polygamma-2-7-over-3	N[PolyGamma[2, Rational[7, 3]]]	-0.2783723994016073		N\left[\psi ^{(2)}\left(\frac{7}{3}\right)\right]	-0.278372	
+n-polygamma-2-1-plus-i	N[PolyGamma[2, Complex[1, 1]]]	0.3685529315879352 + 0.7666528503450661*I		N[\psi ^{(2)}(1+i)]	0.368553\, +0.766653 i	
+n-polygamma-2-0p5-plus-0p3i	N[PolyGamma[2, Complex[0.5, 0.3]]]	-0.17725989989006735 + 10.45182220594345*I		N[\psi ^{(2)}(0.5\, +0.3 i)]	-0.17726+10.4518 i	
+n-polygamma-2-2-plus-neg-0p5-times-i	N[PolyGamma[2, Complex[2, -0.5]]]	-0.30738726746061645 - 0.20845269482746526*I		N[\psi ^{(2)}(2-0.5 i)]	-0.307387-0.208453 i	
+n-polygamma-3-1	N[PolyGamma[3, 1]]	6.493939402266829		N[\psi ^{(3)}(1)]	6.49394	
+n-polygamma-3-2	N[PolyGamma[3, 2]]	0.49393940226682886		N[\psi ^{(3)}(2)]	0.493939	
+n-polygamma-3-0p5	N[PolyGamma[3, 0.5]]	97.40909103400247		N[\psi ^{(3)}(0.5)]	97.4091	
+n-polygamma-3-1p3	N[PolyGamma[3, 1.3]]	2.401023914308922		N[\psi ^{(3)}(1.3)]	2.40102	
+n-polygamma-3-7-over-3	N[PolyGamma[3, Rational[7, 3]]]	0.2853790438142423		N\left[\psi ^{(3)}\left(\frac{7}{3}\right)\right]	0.285379	
+n-polygamma-3-1-plus-i	N[PolyGamma[3, Complex[1, 1]]]	-1.522874448953496 - 0.31728657866196064*I		N[\psi ^{(3)}(1+i)]	-1.52287-0.317287 i	
+n-polygamma-3-0p5-plus-0p3i	N[PolyGamma[3, Complex[0.5, 0.3]]]	-27.944271157846867 - 43.96940883981448*I		N[\psi ^{(3)}(0.5\, +0.3 i)]	-27.9443-43.9694 i	
+n-polygamma-3-2-plus-neg-0p5-times-i	N[PolyGamma[3, Complex[2, -0.5]]]	0.28033483085344774 + 0.3364888359080649*I		N[\psi ^{(3)}(2-0.5 i)]	0.280335\, +0.336489 i	
+n-polygamma-5-1	N[PolyGamma[5, 1]]	122.08116743813385		N[\psi ^{(5)}(1)]	122.081	
+n-polygamma-5-2	N[PolyGamma[5, 2]]	2.081167438133855		N[\psi ^{(5)}(2)]	2.08117	
+n-polygamma-5-0p5	N[PolyGamma[5, 0.5]]	7691.113548602435		N[\psi ^{(5)}(0.5)]	7691.11	
+n-polygamma-5-1p3	N[PolyGamma[5, 1.3]]	25.792601280612967		N[\psi ^{(5)}(1.3)]	25.7926	
+n-polygamma-5-7-over-3	N[PolyGamma[5, Rational[7, 3]]]	0.857814321602382		N\left[\psi ^{(5)}\left(\frac{7}{3}\right)\right]	0.857814	
+n-polygamma-5-1-plus-i	N[PolyGamma[5, Complex[1, 1]]]	-0.9330848362848687 + 14.515852291904064*I		N[\psi ^{(5)}(1+i)]	-0.933085+14.5159 i	
+n-polygamma-5-0p5-plus-0p3i	N[PolyGamma[5, Complex[0.5, 0.3]]]	-3033.6279502987354 + 298.58851363667134*I		N[\psi ^{(5)}(0.5\, +0.3 i)]	-3033.63+298.589 i	
+n-polygamma-5-2-plus-neg-0p5-times-i	N[PolyGamma[5, Complex[2, -0.5]]]	0.27132469953315896 + 1.7071964092847038*I		N[\psi ^{(5)}(2-0.5 i)]	0.271325\, +1.7072 i	
+n-polygamma-1-1-over-2	N[PolyGamma[1, Rational[1, 2]]]	4.934802200544679		N\left[\psi ^{(1)}\left(\frac{1}{2}\right)\right]	4.9348	
+n-polygamma-0-1	N[PolyGamma[0, 1]]	-0.5772156649015329		N[\psi ^{(0)}(1)]	-0.577216	
+n-polygamma-0-1-plus-i	N[PolyGamma[0, Complex[1, 1]]]	0.09465032062247689 + 1.0766740474685808*I		N[\psi ^{(0)}(1+i)]	0.0946503\, +1.07667 i	
+n-polygamma-0-0p5-plus-0p3i	N[PolyGamma[0, Complex[0.5, 0.3]]]	-1.3979326294058074 + 1.1566693833242379*I		N[\psi ^{(0)}(0.5\, +0.3 i)]	-1.39793+1.15667 i	
+n-polygamma-neg1-2-is-loggamma-2-is-0	N[PolyGamma[-1, 2]]	0.		N[\psi ^{(-1)}(2)]	0.	
+n-polygamma-neg1-1-over-2	N[PolyGamma[-1, Rational[1, 2]]]	0.5723649429247001		N\left[\psi ^{(-1)}\left(\frac{1}{2}\right)\right]	0.572365	
+n-polygamma-neg1-1-plus-i	N[PolyGamma[-1, Complex[1, 1]]]	-0.6509231993018574 - 0.30164032046753286*I		N[\psi ^{(-1)}(1+i)]	-0.650923-0.30164 i	
+n-polygamma-neg1-neg0p5	N[PolyGamma[-1, -0.5]]	1.2655121234846454 - 3.141592653589793*I		N[\psi ^{(-1)}(-0.5)]	1.26551\, -3.14159 i	
+n-polygamma-neg2-stays-unevaluated	N[PolyGamma[-2, 2]]	0.8378770664093467		N[\psi ^{(-2)}(2)]	0.837877	disagree
+n-polygamma-8-cancellation-region	N[PolyGamma[8, Complex[-48.445348956457586, 7.047151294800014]]]	-5.8027099826028917*^-11 - 1.2898930277153822*^-10*I		N[\psi ^{(8)}(-48.4453+7.04715 i)]	-\text{5.8027099826028917$\grave{ }$*${}^{\wedge}$-11}-\text{1.2898930277153822$\grave{ }$*${}^{\wedge}$-10} i	
+n-polygamma-8-cancellation-region-nearby-im	N[PolyGamma[8, Complex[-48.445348956457586, 10]]]	5.3221571369366076*^-12 - 1.2967382759551937*^-10*I		N[\psi ^{(8)}(-48.4453+10 i)]	\text{5.3221571369366076$\grave{ }$*${}^{\wedge}$-12}-\text{1.2967382759551937$\grave{ }$*${}^{\wedge}$-10} i	
+n-polygamma-5-cancellation-region	N[PolyGamma[5, Complex[-48.987654321098766, 9.5]]]	-4.305910102405088*^-8 - 5.997407236454173*^-8*I		N[\psi ^{(5)}(-48.9877+9.5 i)]	-\text{4.305910102405088$\grave{ }$*${}^{\wedge}$-8}-\text{5.997407236454173$\grave{ }$*${}^{\wedge}$-8} i	
+threads-over-a-list-each-element-exact-so-each	PolyGamma[1, List[1, 2]]	{Pi^2/6, -1 + Pi^2/6}		\psi ^{(1)}(\{1,2\})	\left\{\frac{\pi ^2}{6},\frac{\pi ^2}{6}-1\right\}	
+one-argument-digamma-at-a-machine-precision	PolyGamma[100.5]	4.605174352581845		\psi (100.5)	4.60517	
+one-argument-digamma-at-a-complex-point	PolyGamma[Complex[2.5, 3]]	1.2812739190662308 + 0.9798053153445597*I		\psi (2.5\, +3 i)	1.28127\, +0.979805 i	
+complex-argument-integer-order	PolyGamma[1, Complex[2.5, 3]]	0.15559788847194558 - 0.23037955308232355*I		\psi ^{(1)}(2.5\, +3 i)	0.155598\, -0.23038 i	
+between-poles-psi-1-2-pi-2-2-4	PolyGamma[1, -0.5]	8.934802200544679		\psi ^{(1)}(-0.5)	8.9348	
+psi-infty-0	PolyGamma[1, Infinity]	0		\psi ^{(1)}(\infty )	0	
+interval-arithmetic-the-trigamma-is-decreasing	PolyGamma[1, Interval[List[3.45, 3.46]]]	Interval[{0.3347422858723073, 0.33585728325389924}]		\psi ^{(1)}(\text{Interval}[\{3.45,3.46\}])	\text{Interval}[\{0.334742,0.335857\}]	disagree
+to-30-significant-digits-every-one-correctly	N[PolyGamma[1, Rational[1, 3]], 30]	10.0955971254270940817920040998925165534700803004855049705123`30.	10.0955971254270940817920040999	N\left[\psi ^{(1)}\left(\frac{1}{3}\right),30\right]	10.0955971254270940817920040999	
+to-25-significant-digits-not-yet-only-the-first	N[PolyGamma[3, 5], 25]	0.02142782819275507502194810517293334259`25.	0.02142782819275507502194811	N[\psi ^{(3)}(5),25]	0.02142782819275507502194811	
+psi-1-i-0-46300-0-79423-i-complex-argument-from	N[PolyGamma[1, Complex[1, 1]]]	0.46300009662276376 - 0.7942335427593189*I		N[\psi ^{(1)}(1+i)]	0.463\, -0.794234 i	
+psi-1-2-pi-2-2	(PolyGamma[1, Rational[1, 2]] == Divide[Power[Pi, 2], 2])	True		\psi ^{(1)}\left(\frac{1}{2}\right)=\frac{\pi ^2}{2}	\text{True}	
+recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2	(Subtract[PolyGamma[1, 1], PolyGamma[1, 2]] == 1)	True		\psi ^{(1)}(1)-\psi ^{(1)}(2)=1	\text{True}	
+psi-0-1-gamma-polygamma-0-z-routes-through	PolyGamma[0, 1]	-EulerGamma		\psi ^{(0)}(1)	-\gamma	
+psi-1-2-gamma-2-ln-2	PolyGamma[0, Rational[1, 2]]	PolyGamma[0, 1/2]		\psi ^{(0)}\left(\frac{1}{2}\right)	\psi ^{(0)}\left(\frac{1}{2}\right)	
+psi-1-2-pi-2-2-in-closed-form	PolyGamma[1, Rational[1, 2]]	Pi^2/2		\psi ^{(1)}\left(\frac{1}{2}\right)	\frac{\pi ^2}{2}	
+psi-1-4-pi-2-8g	PolyGamma[1, Rational[1, 4]]	PolyGamma[1, 1/4]		\psi ^{(1)}\left(\frac{1}{4}\right)	\psi ^{(1)}\left(\frac{1}{4}\right)	disagree
+frac-d-dx-psi-n-x-psi-n-1-x	D[PolyGamma[n, x], x]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\frac{\partial \psi ^{(n)}(x)}{\partial x}-\psi ^{(n+1)}(x)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{11}{5}}\psi ^{\left(\frac{7}{3}\right)}\left(-\frac{11}{5}\right)-\psi ^{\left(\frac{7}{3}+1\right)}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{17}{6}}\psi ^{\left(\frac{13}{4}\right)}\left(-\frac{17}{6}\right)-\psi ^{\left(\frac{13}{4}+1\right)}\left(-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\frac{\partial }{\partial -\frac{23}{9}}\psi ^{\left(\frac{19}{8}\right)}\left(-\frac{23}{9}\right)-\psi ^{\left(\frac{19}{8}+1\right)}\left(-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+an-exact-integer-argument-is-left-unevaluated	PolyGamma[1, 1]	Pi^2/6		\psi ^{(1)}(1)	\frac{\pi ^2}{6}	

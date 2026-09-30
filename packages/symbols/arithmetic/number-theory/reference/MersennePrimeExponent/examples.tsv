@@ -1,6 +1,6 @@
-id	section	role	expr	expected	caption
-mersenneprimeexponent-1			[MersennePrimeExponent, 1]	2	
-mersenneprimeexponent-5			[MersennePrimeExponent, 5]	13	
-mersenneprimeexponent-10			[MersennePrimeExponent, 10]	89	
-listable	Scope		[MersennePrimeExponent, [List, 1, 2, 3, 4, 5, 6]]	[List, 2, 3, 5, 7, 13, 17]	Listable
-past-the-known-table-of-mersenne-prime-exponents	Possible issues		[MersennePrimeExponent, 1000]	[MersennePrimeExponent, 1000]	Past the known table of Mersenne-prime exponents, the call stays unevaluated rather than guessing
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+mersenneprimeexponent-1			[MersennePrimeExponent, 1]	2			
+mersenneprimeexponent-5			[MersennePrimeExponent, 5]	13			
+mersenneprimeexponent-10			[MersennePrimeExponent, 10]	89			
+listable	Scope		[MersennePrimeExponent, [List, 1, 2, 3, 4, 5, 6]]	[List, 2, 3, 5, 7, 13, 17]	Listable		
+past-the-known-table-of-mersenne-prime-exponents	Possible issues		[MersennePrimeExponent, 1000]	[MersennePrimeExponent, 1000]	Past the known table of Mersenne-prime exponents, the call stays unevaluated rather than guessing	unclassified	""

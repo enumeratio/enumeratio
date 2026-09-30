@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption	wolfram.note
-ismachinenumber-ordinary-float			[IsMachineNumber, 2.5]	True		
-ismachinenumber-exact-integer	Scope		[IsMachineNumber, 2]	False	Exact numbers are never machine numbers	
-ismachinenumber-extended-precision	Possible issues		[IsMachineNumber, 3.141592653589793]	False	A literal with more digits than a double can hold rounds to about 16 — over the machine-precision cutoff	Wolfram's MachineNumberQ agrees here, but tracks precision as a tag rather than counting written digits.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+ismachinenumber-ordinary-float			[IsMachineNumber, 2.5]	True			
+ismachinenumber-exact-integer	Scope		[IsMachineNumber, 2]	False	Exact numbers are never machine numbers		
+ismachinenumber-extended-precision	Possible issues		[IsMachineNumber, 3.141592653589793]	False	A literal with more digits than a double can hold rounds to about 16 — over the machine-precision cutoff	unclassified	Wolfram's MachineNumberQ agrees here, but tracks precision as a tag rather than counting written digits.

@@ -1,4 +1,4 @@
-id	in
-falling-factorial-5-3-60	FactorialPower[5, 3]
-falling-factorial-3-5-0	FactorialPower[3, 5]
-falling-factorial-half-2-neg-1-4	FactorialPower[Rational[1, 2], 2]
+id	in	out	tex.in	tex.out
+falling-factorial-5-3-60	FactorialPower[5, 3]	60	5^{(3)}	60
+falling-factorial-3-5-0	FactorialPower[3, 5]	0	3^{(5)}	0
+falling-factorial-half-2-neg-1-4	FactorialPower[Rational[1, 2], 2]	-1/4	\left(\frac{1}{2}\right)^{(2)}	-\frac{1}{4}

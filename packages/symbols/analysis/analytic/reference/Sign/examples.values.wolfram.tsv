@@ -1,24 +1,24 @@
-id	in	out	tex.in	tex.out
-sign-neg-3	Sign[-3]	-1	\text{sgn}(-3)	-1
-sign-3	Sign[3]	1	\text{sgn}(3)	1
-zero-is-its-own-sign	Sign[0]	0	\text{sgn}(0)	0
-sign-neg-1-over-2	Sign[Rational[-1, 2]]	-1	\text{sgn}\left(-\frac{1}{2}\right)	-1
-the-unit-complex-number-pointing-the-same	Sign[Complex[3, 4]]	3/5 + (4*I)/5	\text{sgn}(3+4 i)	\frac{3}{5}+\frac{4 i}{5}
-threads-element-wise-over-a-list	Sign[List[-3, 0, 7]]	{-1, 0, 1}	\text{sgn}(\{-3,0,7\})	\{-1,0,1\}
-sign-neg-2p5	Sign[-2.5]			
-sign-3p14	Sign[3.14]			
-a-complex-number-with-approximate-parts	Sign[Complex[1.4, 2.3]]			
-an-exact-complex-argument-comes-back-exact-sign	Sign[Complex[1, 1]]			
-threads-over-a-matrix-entry-by-entry	Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]			
-exact-numeric-constants	Sign[Pi]			
-sign-neg-exponentiale	Sign[Minus[E]]			
-sign-imaginaryunit	Sign[I]			
-sign-positiveinfinity	Sign[Infinity]			
-an-interval-entirely-above-0-has-sign-1	Sign[Interval[List[1, 3]]]			
-decides-the-sign-of-the-exact-number-sqrt-2-2-by	Sign[Subtract[Sqrt[2], 2]]			
-2-sqrt-2-is-the-same-certified-decision-the	Sign[Subtract[2, Sqrt[2]]]			
-tells-you-the-temperature-dropped-but-not-by-how	Sign[Subtract[70, 95]]	-1	\text{sgn}(70-95)	-1
-sign-z-z-z-see-abs	(Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])	True	\text{sgn}(3+4 i)=\frac{3+4 i}{| 3+4 i| }	\text{True}
-x-cdot-sign-x-x-here-at-x-5	(Times[-5, Sign[-5]] == Abs[-5])	True	-5 \text{sgn}(-5)=| -5|	\text{True}
-the-sign-of-a-nonzero-complex-number-lies-on-the	(Abs[Sign[Complex[3, 4]]] == 1)			
-nan-propagates-rather-than-being-treated-as-0	Sign[Indeterminate]	Indeterminate	\text{sgn}(\text{Indeterminate})	\text{Indeterminate}
+id	in	out	tex.in	tex.out	verdict
+sign-neg-3	Sign[-3]	-1	\text{sgn}(-3)	-1	
+sign-3	Sign[3]	1	\text{sgn}(3)	1	
+zero-is-its-own-sign	Sign[0]	0	\text{sgn}(0)	0	
+sign-neg-1-over-2	Sign[Rational[-1, 2]]	-1	\text{sgn}\left(-\frac{1}{2}\right)	-1	
+the-unit-complex-number-pointing-the-same	Sign[Complex[3, 4]]	3/5 + (4*I)/5	\text{sgn}(3+4 i)	\frac{3}{5}+\frac{4 i}{5}	
+threads-element-wise-over-a-list	Sign[List[-3, 0, 7]]	{-1, 0, 1}	\text{sgn}(\{-3,0,7\})	\{-1,0,1\}	
+sign-neg-2p5	Sign[-2.5]	-1	\text{sgn}(-2.5)	-1	
+sign-3p14	Sign[3.14]	1	\text{sgn}(3.14)	1	
+a-complex-number-with-approximate-parts	Sign[Complex[1.4, 2.3]]	0.5199469468957453 + 0.8541985556144386*I	\text{sgn}(1.4\, +2.3 i)	0.519947\, +0.854199 i	
+an-exact-complex-argument-comes-back-exact-sign	Sign[Complex[1, 1]]	(1 + I)/Sqrt[2]	\text{sgn}(1+i)	\frac{1+i}{\sqrt{2}}	
+threads-over-a-matrix-entry-by-entry	Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]	{{1, -1}, {-1, 1}}	\text{sgn}\left(\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  -\frac{5}{3} & \frac{1}{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  1 & -1 \\  -1 & 1 \\ \end{array} \right)	
+exact-numeric-constants	Sign[Pi]	1	\text{sgn}(\pi )	1	
+sign-neg-exponentiale	Sign[Minus[E]]	-1	\text{sgn}(-e)	-1	
+sign-imaginaryunit	Sign[I]	I	\text{sgn}(i)	i	
+sign-positiveinfinity	Sign[Infinity]	1	\text{sgn}(\infty )	1	
+an-interval-entirely-above-0-has-sign-1	Sign[Interval[List[1, 3]]]	1	\text{sgn}(\text{Interval}[\{1,3\}])	1	
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	Sign[Subtract[Sqrt[2], 2]]	-1	\text{sgn}\left(\sqrt{2}-2\right)	-1	
+2-sqrt-2-is-the-same-certified-decision-the	Sign[Subtract[2, Sqrt[2]]]	1	\text{sgn}\left(2-\sqrt{2}\right)	1	
+tells-you-the-temperature-dropped-but-not-by-how	Sign[Subtract[70, 95]]	-1	\text{sgn}(70-95)	-1	
+sign-z-z-z-see-abs	(Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])	True	\text{sgn}(3+4 i)=\frac{3+4 i}{| 3+4 i| }	\text{True}	
+x-cdot-sign-x-x-here-at-x-5	(Times[-5, Sign[-5]] == Abs[-5])	True	-5 \text{sgn}(-5)=| -5|	\text{True}	
+the-sign-of-a-nonzero-complex-number-lies-on-the	(Abs[Sign[Complex[3, 4]]] == 1)	True	| \text{sgn}(3+4 i)| =1	\text{True}	
+nan-propagates-rather-than-being-treated-as-0	Sign[Indeterminate]	Indeterminate	\text{sgn}(\text{Indeterminate})	\text{Indeterminate}	disagree

@@ -1,5 +1,5 @@
-id	in
-3-1-frac-12-frac-14-frac-12-7	HarmonicMean[List[1, 2, 4]]
-frac-12-5	HarmonicMean[List[2, 3]]
-driving-equal-distances-at-40-and-60-averages-48	HarmonicMean[List[40, 60]]
-equal-values-are-their-own-harmonic-mean	HarmonicMean[List[5, 5, 5]]
+id	in	out	tex.in	tex.out
+3-1-frac-12-frac-14-frac-12-7	HarmonicMean[List[1, 2, 4]]	12/7	\text{HarmonicMean}[\{1,2,4\}]	\frac{12}{7}
+frac-12-5	HarmonicMean[List[2, 3]]	12/5	\text{HarmonicMean}[\{2,3\}]	\frac{12}{5}
+driving-equal-distances-at-40-and-60-averages-48	HarmonicMean[List[40, 60]]	48	\text{HarmonicMean}[\{40,60\}]	48
+equal-values-are-their-own-harmonic-mean	HarmonicMean[List[5, 5, 5]]	5	\text{HarmonicMean}[\{5,5,5\}]	5

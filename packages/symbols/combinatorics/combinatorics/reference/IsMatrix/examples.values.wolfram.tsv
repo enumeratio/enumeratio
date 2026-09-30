@@ -1,6 +1,6 @@
-id	in
-a-2x2-is-a-matrix	MatrixQ[List[List[1, 2], List[3, 4]]]
-a-flat-list-is-not-a-matrix	MatrixQ[List[1, 2, 3]]
-a-ragged-list-of-lists-is-not-a-matrix	MatrixQ[List[List[1, 2], List[3]]]
-an-empty-list-is-not-a-matrix	MatrixQ[List[]]
-a-test-function-must-hold-of-every-entry	MatrixQ[List[List[2, 4], List[6, 8]], EvenQ]
+id	in	out	tex.in	tex.out
+a-2x2-is-a-matrix	MatrixQ[List[List[1, 2], List[3, 4]]]	True	\text{MatrixQ}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)\right]	\text{True}
+a-flat-list-is-not-a-matrix	MatrixQ[List[1, 2, 3]]	False	\text{MatrixQ}[\{1,2,3\}]	\text{False}
+a-ragged-list-of-lists-is-not-a-matrix	MatrixQ[List[List[1, 2], List[3]]]	False	\text{MatrixQ}[\{\{1,2\},\{3\}\}]	\text{False}
+an-empty-list-is-not-a-matrix	MatrixQ[List[]]	False	\text{MatrixQ}[\{\}]	\text{False}
+a-test-function-must-hold-of-every-entry	MatrixQ[List[List[2, 4], List[6, 8]], EvenQ]	True	\text{MatrixQ}\left[\left( \begin{array}{cc}  2 & 4 \\  6 & 8 \\ \end{array} \right),\text{EvenQ}\right]	\text{True}
