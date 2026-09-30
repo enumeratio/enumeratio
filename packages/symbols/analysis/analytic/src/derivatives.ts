@@ -1,6 +1,6 @@
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
-import type { Json } from "@enumeratio/for-compute-engine";
-import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/for-compute-engine";
+import type { Json } from "@enumeratio/ce-patches";
+import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 
 // Symbolic derivatives for the analytic heads.
 //

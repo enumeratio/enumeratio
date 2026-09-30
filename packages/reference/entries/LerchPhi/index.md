@@ -19,7 +19,7 @@ bindings:
   - origin: native
     form: typescript
     environment: engine
-    source: upstream/compute-engine/src/compute-engine/numerics/lerch-phi.ts
+    source: packages/ce-patches/src/compute-engine/numerics/lerch-phi.ts
     note: The direct series, which covers |z| ≤ 1; z = 1 hands off to HurwitzZeta and inherits its closed forms.
   - origin: compiled
     form: wgsl

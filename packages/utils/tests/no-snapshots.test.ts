@@ -7,8 +7,8 @@ import { expect, test } from "vite-plus/test";
 // file the test can regenerate with an UPDATE_* env flag), never vitest snapshot matchers.
 // Golden JSON is plain data: reviewable in diffs, and reusable (docs, fixtures,
 // cross-checks) in ways an opaque .snap file is not. Snapshots used to fail under
-// `vp run` too; they no longer do, which is why upstream/ (patches tested the way their
-// upstream tests) is outside this guard.
+// `vp run` too; they no longer do, which is why packages/ce-patches/ (patches tested the
+// way their upstream tests) is exempt from this guard.
 // Regenerate a golden with its own flag, e.g. `UPDATE_CLI_DEMOS=1 vp test`.
 
 const SNAPSHOT_CALL = /\btoMatch(?:Inline)?Snapshot\s*\(/;
@@ -30,6 +30,7 @@ function testFiles(dir: string, out: string[] = []): string[] {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.name === "node_modules" || entry.name === "dist" || entry.name.startsWith(".")) continue;
     const path = join(dir, entry.name);
+    if (entry.name === "ce-patches" && entry.isDirectory()) continue;
     if (entry.isDirectory()) testFiles(path, out);
     else if (/\.test\.[cm]?tsx?$/.test(entry.name)) out.push(path);
   }

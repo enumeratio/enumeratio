@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt } from "@enumeratio/engine";
-import { logBarnesG, cx, logGamma } from "@enumeratio/for-compute-engine";
+import { logBarnesG, cx, logGamma } from "@enumeratio/ce-patches";
 
 // Hyperfactorial H(n) = ∏_{k=1}^n k^k, continued off the integers by
 // H(z) = Γ(z+1)^z / G(z+1) (G = Barnes G) — checked at n = 1..4 against the exact

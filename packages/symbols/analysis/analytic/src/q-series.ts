@@ -9,7 +9,7 @@ import {
   isRealInt,
   numberResult,
   wantsNumber,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // The q-series heads: QPochhammer(a, q, n), QFactorial(n, q), QBinomial(n, k, q).
 // Wolfram names all three; compute-engine has none of them (`ce.lookupDefinition`

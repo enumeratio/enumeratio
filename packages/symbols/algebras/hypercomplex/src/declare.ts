@@ -18,6 +18,7 @@ import {
   toMultivector,
 } from "./multivector.ts";
 import { declareAlgebras } from "./algebra.ts";
+import { GENERATOR_SYMBOLS } from "./units.ts";
 
 // How the units reach compute-engine's arithmetic.
 //
@@ -136,6 +137,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
 
   defineOverload(ce, "Add", {
     package: "hypercomplex",
+    symbols: GENERATOR_SYMBOLS,
     when: reachesAnyGenerator,
     evaluate: (ops) => linear(ops, (parts) => toExpression(ce, addMultivectors(ce, parts))),
   });
@@ -146,6 +148,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
   // sign we cannot justify; `NonCommutativeMultiply` is where such a product belongs.
   defineOverload(ce, "Multiply", {
     package: "hypercomplex",
+    symbols: GENERATOR_SYMBOLS,
     when: reachesAnyGenerator,
     evaluate: (ops) =>
       productIsOrderable(ops)
@@ -160,6 +163,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
 
   defineOverload(ce, "Negate", {
     package: "hypercomplex",
+    symbols: GENERATOR_SYMBOLS,
     arity: 1,
     when: hasGenerator,
     evaluate: (ops) =>
@@ -168,6 +172,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
 
   defineOverload(ce, "Power", {
     package: "hypercomplex",
+    symbols: GENERATOR_SYMBOLS,
     arity: 2,
     when: hasGenerator,
     evaluate: (ops) => {
@@ -185,6 +190,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
 
   defineOverload(ce, "Divide", {
     package: "hypercomplex",
+    symbols: GENERATOR_SYMBOLS,
     arity: 2,
     when: hasGenerator,
     evaluate: (ops) =>

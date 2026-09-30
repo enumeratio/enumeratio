@@ -1,15 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
-import {
-  isFiniteNum,
-  numberResult,
-  wantsNumber,
-  add,
-  cexp,
-  sub,
-  logGamma,
-  digamma,
-} from "@enumeratio/for-compute-engine";
+import { isFiniteNum, numberResult, wantsNumber, add, cexp, sub, logGamma, digamma } from "@enumeratio/ce-patches";
 
 // Complex arguments that native Digamma and Beta decline, in double precision on the
 // package's complex kernels: ψ(z) directly, and B(a, b) = exp(lnΓ(a) + lnΓ(b) − lnΓ(a + b)).

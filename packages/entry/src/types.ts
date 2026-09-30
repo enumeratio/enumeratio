@@ -126,6 +126,9 @@ export interface ReferenceSignature {
   /** The carriers this overload applies to (an operand's head is one of them), when it applies
    *  to nothing else: it matters only where one of them exists, so doesn't pull its package. */
   readonly on?: readonly string[];
+  /** The symbol names it applies to, as regular expressions (`^e_[1-9]\d*$`), when it applies
+   *  to nothing else: it matters only where an expression names one. */
+  readonly symbols?: readonly string[];
   /**
    * Where THIS call form lives elsewhere, when the head's references do not apply to it
    * wholesale -- two-argument `Zeta` is Hurwitz's function and links to Hurwitz's pages.

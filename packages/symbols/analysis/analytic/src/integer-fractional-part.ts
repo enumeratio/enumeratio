@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt } from "@enumeratio/engine";
-import { isFiniteNum } from "@enumeratio/for-compute-engine";
+import { isFiniteNum } from "@enumeratio/ce-patches";
 
 // IntegerPart(x) and FractionalPart(x) — truncation toward 0, split into its two halves.
 // Both are new heads: compute-engine's own `Fract` keeps its result in [0, 1) regardless

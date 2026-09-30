@@ -19,7 +19,7 @@ import {
   mul,
   scale,
   sub,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // The twelve Jacobi elliptic functions (Glaisher's `pq(u,m)` notation: `sn`, `cn`, `dn`
 // and their nine quotients/reciprocals), `JacobiAmplitude` and `JacobiZN` (Wolfram's

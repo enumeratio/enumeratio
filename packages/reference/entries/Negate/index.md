@@ -20,6 +20,8 @@ signatures:
     library: enumeratio-hypercomplex
     type: (complex | infinity) -> number
     overrides: enumeratio-analytic
+    symbols:
+      - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
     library: enumeratio-residues

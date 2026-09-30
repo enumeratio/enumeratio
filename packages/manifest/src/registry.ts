@@ -11,6 +11,7 @@
 // Its body is declared against those pins, not against whatever a namespace holds, so two
 // versions of one name can live in one engine.
 
+import { SYMBOLS } from "./generated/symbols.ts";
 import { type Library, type Lookup, packagesFor, packagesNeeded, plan } from "./resolve.ts";
 
 /** What a registry needs of an engine: compute-engine's `declare`, `assign` and `lookupDefinition`. */
@@ -42,6 +43,8 @@ export interface Registry<Engine extends object> {
    * only the definition with that pin; without, the latest. Libraries have no pin.
    */
   resolve(name: string, pin?: string): Resolution<Engine> | undefined | Promise<Resolution<Engine> | undefined>;
+  /** The names a namespace offers, or undefined where this registry doesn't serve it: its index. */
+  names?(namespace: string): readonly string[] | undefined | Promise<readonly string[] | undefined>;
 }
 
 /** A package's namespace: `number-theory` is `NumberTheory`. */
@@ -113,6 +116,7 @@ export function definitionRegistry<Engine extends object>(
     return found;
   };
   return {
+    names: (ns) => (ns === namespace ? Object.keys(definitions) : undefined),
     async resolve(name, pin) {
       const [ns, member, ...rest] = name.split(".");
       if (ns !== namespace || member === undefined || rest.length > 0 || !Object.hasOwn(definitions, member))
@@ -125,8 +129,8 @@ export function definitionRegistry<Engine extends object>(
   };
 }
 
-/** Registries in search-path order: the first that resolves a name has it. */
-export function searchPath<Engine extends object>(...registries: readonly Registry<Engine>[]): Registry<Engine> {
+/** Several registries as one: the first that resolves a name (or serves a namespace) has it. */
+export function combineRegistries<Engine extends object>(...registries: readonly Registry<Engine>[]): Registry<Engine> {
   return {
     async resolve(name, pin) {
       for (const registry of registries) {
@@ -135,7 +139,95 @@ export function searchPath<Engine extends object>(...registries: readonly Regist
       }
       return undefined;
     },
+    async names(namespace) {
+      for (const registry of registries) {
+        const found = await registry.names?.(namespace);
+        if (found !== undefined) return found;
+      }
+      return undefined;
+    },
   };
+}
+
+export interface SearchPathOptions {
+  /** Namespaces whose names may be written bare, in order. */
+  readonly use: readonly string[];
+  /** A bare name two used namespaces share: the namespace it means. */
+  readonly prefer?: Readonly<Record<string, string>>;
+  /** Names left qualified-only: one two namespaces share, or one the system already has. */
+  readonly exclude?: readonly string[];
+  /** Whether the system has a name: the manifest's, which covers compute-engine's heads too. */
+  readonly isSystem?: (name: string) => boolean;
+}
+
+/** A bare name the search path can't settle: two namespaces offer it, or the system has it. */
+export interface SearchPathConflict {
+  readonly name: string;
+  readonly namespaces: readonly string[];
+  readonly system: boolean;
+}
+
+export class SearchPathError extends Error {
+  constructor(readonly conflicts: readonly SearchPathConflict[]) {
+    const lines = conflicts.map(
+      (c) => `${c.name}: ${[...(c.system ? ["the system"] : []), ...c.namespaces].join(", ")}`,
+    );
+    super(`search path: ${conflicts.length} name(s) need prefer or exclude\n  ${lines.join("\n  ")}`);
+  }
+}
+
+/** Which namespace each bare name means. */
+export interface SearchPath {
+  /** `Sq` as `ada.Sq`, or undefined for a name the path doesn't bring in. */
+  qualify(name: string): string | undefined;
+}
+
+/**
+ * The names `use`'s namespaces bring into bare use, settled when the path is set up rather
+ * than when an expression meets them: a name two namespaces share must be preferred or
+ * excluded, and a name the system has can only be excluded (a namespace never shadows the
+ * system). Anything unsettled throws a `SearchPathError` listing every conflict.
+ */
+export async function searchPath<Engine extends object>(
+  registry: Registry<Engine>,
+  options: SearchPathOptions,
+): Promise<SearchPath> {
+  const { use, prefer = {}, exclude = [], isSystem = (name) => Object.hasOwn(SYMBOLS, name) } = options;
+  const offered = new Map<string, string[]>();
+  for (const namespace of use) {
+    const names = await registry.names?.(namespace);
+    if (names === undefined) throw new Error(`search path: no registry serves the namespace ${namespace}`);
+    for (const name of names) offered.set(name, [...(offered.get(name) ?? []), namespace]);
+  }
+  const excluded = new Set(exclude);
+  const bare = new Map<string, string>();
+  const conflicts: SearchPathConflict[] = [];
+  for (const [name, namespaces] of offered) {
+    if (excluded.has(name)) continue;
+    const system = isSystem(name);
+    const chosen = prefer[name];
+    if (!system && namespaces.length === 1 && chosen === undefined) bare.set(name, namespaces[0]!);
+    else if (!system && chosen !== undefined && namespaces.includes(chosen)) bare.set(name, chosen);
+    else conflicts.push({ name, namespaces, system });
+  }
+  if (conflicts.length > 0) throw new SearchPathError(conflicts);
+  return {
+    qualify: (name) => {
+      const namespace = bare.get(name);
+      return namespace === undefined ? undefined : `${namespace}.${name}`;
+    },
+  };
+}
+
+/** `json` with each head the path brings in written qualified: `Sq(3)` as `ada.Sq(3)`. Symbols stay. */
+function qualifyHeads(json: unknown, path: SearchPath): unknown {
+  if (!Array.isArray(json)) return json;
+  const [head, ...args] = json;
+  const qualified = typeof head === "string" ? path.qualify(head) : undefined;
+  const ops = args.map((a) => qualifyHeads(a, path));
+  if (qualified === undefined) return [qualifyHeads(head, path), ...ops];
+  const dot = qualified.lastIndexOf(".");
+  return ["MemberCall", qualified.slice(0, dot), `'${qualified.slice(dot + 1)}'`, ...ops];
 }
 
 const isSymbol = (json: unknown): json is string => typeof json === "string" && !/^'.*'$/s.test(json);
@@ -196,6 +288,8 @@ function withHeads(json: unknown, heads: ReadonlyMap<string, string>): unknown {
 }
 
 export interface Ensured {
+  /** The expression to evaluate: the one given, with the search path's bare heads qualified. */
+  readonly expression: unknown;
   /** Libraries and definitions newly declared, in order. */
   readonly declared: readonly string[];
   /** Qualified names nothing resolved, or whose namespace is taken: held, not thrown. */
@@ -229,11 +323,13 @@ interface EngineState {
  */
 export function createRegistryResolver<Engine extends DeclaringEngine>(
   registry: Registry<Engine>,
+  { path }: { path?: SearchPath } = {},
 ): RegistryResolver<Engine> {
   const states = new WeakMap<Engine, EngineState>();
 
   return {
-    async ensure(ce, json, lock = {}) {
+    async ensure(ce, given, lock = {}) {
+      const json = path === undefined ? given : qualifyHeads(given, path);
       const state = states.get(ce) ?? {
         asked: new Set(),
         libraries: new Set(),
@@ -311,7 +407,7 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         const found = await registry.resolve(name);
         if (found !== undefined && "libraries" in found) await declareLibraries(found.libraries);
       }
-      return { declared, unresolved, pins, errors };
+      return { expression: json, declared, unresolved, pins, errors };
     },
   };
 }

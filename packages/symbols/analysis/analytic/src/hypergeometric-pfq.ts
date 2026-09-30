@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
-import { type EvalOptions, isFiniteNum, numberResult, wantsNumber, cx, type Cx } from "@enumeratio/for-compute-engine";
+import { type EvalOptions, isFiniteNum, numberResult, wantsNumber, cx, type Cx } from "@enumeratio/ce-patches";
 import { pfqSeries } from "./hypergeometric.ts";
 
 // HypergeometricPFQ(upper, lower, z) = pFq(upper; lower; z), the general series — built

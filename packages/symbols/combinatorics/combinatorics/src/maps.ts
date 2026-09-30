@@ -881,7 +881,16 @@ export function declareMaps(
           .filter((ref) => ref.on === undefined || ref.on === from)
           .map((ref) => ref.id),
       ];
-      registerOperation(ce, "CombinatorialMap", from, { name: map.name, type: map.to, findstat, definition: handle });
+      // One closed expression (no guard to decline with, no composition, no extra arguments) is
+      // what a definition calling this map can be compiled through.
+      const closed = map.body !== undefined && map.guard === undefined && map.extra === undefined;
+      registerOperation(ce, "CombinatorialMap", from, {
+        name: map.name,
+        type: map.to,
+        findstat,
+        definition: handle,
+        ...(closed ? { epsil: { expression: map.body, subject: "_raw", wrap } } : {}),
+      });
       // A map with an inverse between two carriers makes them equivalent: what one carrier
       // defines, the other reaches through the map (set partitions and their growth strings).
       const to = constructorFor[map.to];

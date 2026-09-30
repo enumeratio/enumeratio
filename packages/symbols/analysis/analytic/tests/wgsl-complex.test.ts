@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
-import { emitComplexWGSL, type Json, MAX_SLOTS } from "@enumeratio/for-compute-engine";
+import { emitComplexWGSL, type Json, MAX_SLOTS } from "@enumeratio/ce-patches";
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);

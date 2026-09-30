@@ -15,7 +15,7 @@ import {
   lerchPhiBall,
   stieltjesGammaBall,
   STIELTJES_MAX_ORDER,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // Certified values: the heads whose arbitrary-precision kernels bound their own error, and so
 // return an enclosure -- a ball proven to hold the true value -- rather than a point value.

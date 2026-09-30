@@ -9,7 +9,7 @@ import {
   cx,
   type Cx,
   scale,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // PrimeZetaP(s) = Σ_p p^(−s), the sum over primes. Rather than sieving primes and summing
 // directly — which converges far too slowly to be useful past a couple of digits — this uses

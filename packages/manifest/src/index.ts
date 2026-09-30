@@ -24,6 +24,7 @@ export {
   type Resolver,
 } from "./resolve.ts";
 export {
+  combineRegistries,
   createRegistryResolver,
   type DeclaringEngine,
   type Definition,
@@ -36,5 +37,9 @@ export {
   type Registry,
   type RegistryResolver,
   type Resolution,
+  type SearchPath,
+  type SearchPathConflict,
+  SearchPathError,
+  type SearchPathOptions,
   searchPath,
 } from "./registry.ts";

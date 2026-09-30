@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
-import type { EvalOptions } from "@enumeratio/for-compute-engine";
+import type { EvalOptions } from "@enumeratio/ce-patches";
 
 /** A concrete +oo operand -- `PositiveInfinity` boxes as an infinite NUMBER in
  * compute-engine 0.128 (its `.symbol` is undefined), not a symbol; matches q-series.ts's
