@@ -4,4 +4,5 @@ sawtoothwave-1-3			[SawtoothWave, [Rational, 1, 3]]	[Rational, 1, 3]
 sawtoothwave-negative	Scope		[SawtoothWave, [Rational, -1, 4]]	[Rational, 3, 4]			Always nonnegative, unlike [[FractionalPart]]
 sawtoothwave-ranged	Scope		[SawtoothWave, [List, 0, 10], [Rational, 1, 2]]	5			Rescaled to a {min, max} range
 sawtoothwave-negative-pi-exact	Scope		[SawtoothWave, [Negate, Pi]]	[Add, 4, [Negate, Pi]]	[Subtract, 4, Pi]	Frac(x) = x - Floor(x); Floor(-π) = -4, so Frac(-π) = 4 - π	An exact irrational input: the branch is decided numerically, but the result stays exact
+sawtoothwave-huge-argument-declines	Scope		[SawtoothWave, [Multiply, [Power, 10, 20], Pi]]	[SawtoothWave, [Multiply, {num: "1e+20"}, Pi]]			A huge exact argument stays unevaluated: a double can't resolve 10^20·π's fractional part to certify a branch, so this declines rather than risk a wrong one
 sawtoothwave-periodic	Properties		[Equal, [SawtoothWave, [Rational, 1, 3]], [SawtoothWave, [Add, [Rational, 1, 3], 5]]]	True			Period 1

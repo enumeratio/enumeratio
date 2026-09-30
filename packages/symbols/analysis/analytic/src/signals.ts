@@ -137,6 +137,18 @@ type Decided =
 /** How wide a margin a double's branch decision must clear before it's trusted. */
 const BRANCH_MARGIN = 1e-6;
 
+/** The absolute uncertainty a double carries at magnitude `approx`: its own relative epsilon
+ *  (2^-52), scaled by `approx`, with `RESOLUTION_HEADROOM` bits of slack for the handful of
+ *  roundings compute-engine's own evaluation compounds before this ever sees it.
+ *  `BRANCH_MARGIN` is an ABSOLUTE gap, so it silently stops meaning anything once `approx` is
+ *  large enough that a double can't resolve a value that finely any more -- `SawtoothWave(10^20
+ *  * Pi)`'s fractional part, read off a double, is rounding noise, not an answer, even though
+ *  the raw gap from 0/1 can look comfortably wide. Declining here, not computing at higher
+ *  precision, keeps every route through one arithmetic (no `ce.precision` bump to thread
+ *  through `.N()`, compiled JS/WGSL, and back out again consistently). */
+const RESOLUTION_HEADROOM = 2 ** 10;
+const resolutionOf = (approx: number): number => Math.abs(approx) * 2 ** -52 * RESOLUTION_HEADROOM;
+
 const FRAC_ZERO: Frac = [0n, 1n];
 const FRAC_ONE: Frac = [1n, 1n];
 const FRAC_NEG_ONE: Frac = [-1n, 1n];
@@ -165,22 +177,31 @@ const decidedNum = (d: Decided): number =>
   "frac" in d ? Number(d.frac[0]) / Number(d.frac[1]) : "expr" in d ? d.approx : d.num;
 
 /** `d` compared to the rational `target`: exact (bigint, no margin) when `d` is itself
- *  rational, otherwise a margin-gapped comparison of `d`'s double against `target`'s —
- *  `undefined` when the gap can't clear `BRANCH_MARGIN`. */
+ *  rational, otherwise a comparison of `d`'s double against `target`'s, gapped by the WIDER of
+ *  `BRANCH_MARGIN` and `d`'s own resolution at its magnitude — `undefined` when the gap can't
+ *  clear it. The adaptive part matters only when `target` sits near `d`'s own scale (the
+ *  periodic waves compare a certified fractional part, itself in [0, 1), so it never grows);
+ *  called on a raw, possibly huge, operand against a small fixed `target` (Ramp/UnitBox/tent's
+ *  sign checks), `d`'s resolution grows with it but so does the gap, so it stays decidable. */
 function certifiedCmpFrac(d: Decided, target: Frac): -1 | 0 | 1 | undefined {
   if ("frac" in d) {
     const l = d.frac[0] * target[1];
     const r = target[0] * d.frac[1];
     return l === r ? 0 : l < r ? -1 : 1;
   }
-  const gap = decidedNum(d) - Number(target[0]) / Number(target[1]);
-  if (Math.abs(gap) <= BRANCH_MARGIN) return undefined;
+  const v = decidedNum(d);
+  const gap = v - Number(target[0]) / Number(target[1]);
+  const threshold = Math.max(BRANCH_MARGIN, resolutionOf(v));
+  if (Math.abs(gap) <= threshold) return undefined;
   return gap < 0 ? -1 : 1;
 }
 
 /** `Floor(d)`, certified: exact bigint division for a rational `d` (no margin needed), or the
  *  double floor as long as it clears the nearest integer by `BRANCH_MARGIN` — `undefined`
- *  otherwise. */
+ *  otherwise. Unlike `certifiedCmpFrac`, there's no adaptive fallback here: the "gap" is `v`'s
+ *  OWN fractional structure, which a double genuinely loses once `resolutionOf(v)` isn't small
+ *  -- there's no fixed, distant breakpoint for a wide raw gap to fall back on the way
+ *  `certifiedCmpFrac`'s Ramp/UnitBox callers have. */
 function certifiedFloor(d: Decided): bigint | undefined {
   if ("frac" in d) {
     const [n, dd] = d.frac;
@@ -189,7 +210,7 @@ function certifiedFloor(d: Decided): bigint | undefined {
     return r !== 0n && r < 0n ? q - 1n : q;
   }
   const v = decidedNum(d);
-  if (!Number.isFinite(v)) return undefined;
+  if (!Number.isFinite(v) || resolutionOf(v) >= BRANCH_MARGIN) return undefined;
   const k = Math.floor(v);
   const gap = Math.min(v - k, k + 1 - v);
   return gap > BRANCH_MARGIN ? BigInt(k) : undefined;

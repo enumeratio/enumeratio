@@ -4,4 +4,5 @@ sawtoothwave-1-3	\mathrm{SawtoothWave}(\frac{1}{3})	\frac{1}{3}
 sawtoothwave-negative	\mathrm{SawtoothWave}(-\frac{1}{4})	\frac{3}{4}
 sawtoothwave-ranged	\mathrm{SawtoothWave}(\bigl\lbrack0, 10\bigr\rbrack, \frac{1}{2})	5
 sawtoothwave-negative-pi-exact	\mathrm{SawtoothWave}(-\pi)	4-\pi
+sawtoothwave-huge-argument-declines	\mathrm{SawtoothWave}(10^{20}\pi)	\mathrm{SawtoothWave}(100\,000\,000\,000\,000\,000\,000\pi)
 sawtoothwave-periodic	\mathrm{SawtoothWave}(\frac{1}{3})=\mathrm{SawtoothWave}(5\frac{1}{3})	\top
