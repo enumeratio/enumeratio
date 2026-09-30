@@ -851,6 +851,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "MellinTransform",
     "MemoryConstrained",
     "MersennePrimeExponent",
+    "Midpoint",
     "MinValue",
     "Minimize",
     "ModularLambda",

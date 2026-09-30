@@ -1,0 +1,7 @@
+id	in	out
+of-two-numbers	<Midpoint>1 2</Midpoint>	<Rational>3 2</Rational>
+of-two-points-in-the-plane	<Midpoint><List>1 1</List> <List>2 3</List></Midpoint>	<List><Rational>3 2</Rational> 2</List>
+in-three-dimensions	<Midpoint><List>1 2 3</List> <List>4 5 6</List></Midpoint>	<List><Rational>5 2</Rational> <Rational>7 2</Rational> <Rational>9 2</Rational></List>
+of-two-point-primitives	<Midpoint><Point><List>1 1</List></Point> <Point><List>2 3</List></Point></Midpoint>	<Point><List><Rational>3 2</Rational> 2</List></Point>
+of-two-matrices	<Midpoint><List><List>1 1</List> <List>0 2</List></List> <List><List>3 3</List> <List>4 0</List></List></Midpoint>	<List><List>2 2</List> <List>2 1</List></List>
+of-two-complex-numbers	<Midpoint><Complex>1 2</Complex> <Complex>3 0</Complex></Midpoint>	<Complex>2 1</Complex>

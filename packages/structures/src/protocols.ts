@@ -40,8 +40,13 @@ export const PROTOCOLS = [
     // The greatest tick at or below, the least at or above: the two adjoints of the ticks' inclusion.
     members: { LowerTick: "(Self) -> Self", UpperTick: "(Self) -> Self" },
   },
-  // Extensions too: what `Round` needs to break ties without a ring's arithmetic.
-  { name: "MidpointOrder", refines: ["FloorOrder"], members: { Midpoint: "(Self, Self) -> Self" } },
+  // The point halfway between two others: Mathlib's `midpoint`, defined on an affine space over
+  // a ring where 2 is invertible (numbers, vectors componentwise, points). Mathlib has no class
+  // for it; the protocol is ours.
+  { name: "AffineMidpoint", refines: [], members: { Midpoint: "(Self, Self) -> Self" } },
+  // Extensions too: what `Round` needs to break ties without a ring's arithmetic -- ticks, and
+  // the midpoint between two of them.
+  { name: "MidpointOrder", refines: ["FloorOrder", "AffineMidpoint"], members: {} },
   { name: "TickParity", refines: ["FloorOrder"], members: { IsEvenTick: "(Self) -> boolean" } },
   // A marker: the ring operations are compute-engine's own `Add`, `Multiply`, `Negate`, 0 and 1.
   { name: "Ring", refines: [], members: {}, mathlib: "Ring" },

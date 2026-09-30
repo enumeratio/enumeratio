@@ -616,6 +616,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "MemoryConstrained",
   "MersennePrimeExponent",
   "MersennePrimes",
+  "Midpoint",
   "Min",
   "MinValue",
   "Minimize",
