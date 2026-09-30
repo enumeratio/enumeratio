@@ -5,3 +5,7 @@ id	in	out
 3f-2	\mathrm{HypergeometricPFQ}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack, 0.5)	1.189\,874\,754\,256\,423
 0f-0-z-e-z	\mathrm{HypergeometricPFQ}(\bigl\lbrack\bigr\rbrack, \bigl\lbrack\bigr\rbrack, z)	e^{z}
 1f-0-a-z-1-z-a	\mathrm{HypergeometricPFQ}(\bigl\lbrack a\bigr\rbrack, \bigl\lbrack\bigr\rbrack, z)	(1-z)^{-a}
+pfq-2f3-degenerate-1	\mathrm{HypergeometricPFQ}(\bigl\lbrack2, \frac{1}{2}\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, 0)	1
+pfq-2f3-degenerate-2	\mathrm{HypergeometricPFQ}(\bigl\lbrack-1, -\frac{1}{2}\bigr\rbrack, \bigl\lbrack\frac{3}{2}, -2, -\frac{5}{2}\bigr\rbrack, 0)	1
+pfq-2f3-degenerate-3	\mathrm{HypergeometricPFQ}(\bigl\lbrack-1, -\frac{3}{2}\bigr\rbrack, \bigl\lbrack\frac{3}{2}, -\frac{7}{2}, -3\bigr\rbrack, 0)	1
+pfq-2f3-degenerate-4	\mathrm{HypergeometricPFQ}(\bigl\lbrack-\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack\frac{1}{2}, -1, -\frac{1}{2}\bigr\rbrack, 0)	1

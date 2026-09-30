@@ -395,6 +395,7 @@ phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1	lerchPhi(z, 1, 1)	-ln(-z + 1) /
 phi-1-2-1-4-zeta-2-1-4-pi-2-8g-through	lerchPhi(1, 2, 1 / 4)	8Catalan + pi ^ 2
 phi-1-1-1-eta-1-ln-2-the-alternating-harmonic	lerchPhi(-1, 1, 1)	ln(2)
 phi-1-2-1-1-2-ln-2	lerchPhi(1 / 2, 1, 1)	2 * ln(2)
+phi-1-2-1-2i-2-1-via-1	lerchPhi(1 / 2 + -1 / 2 * i, 2, 1)	(1 + i) * polyLog(2, 1 / 2 + -1 / 2 * i)
 phi-1-2-1-2-4g-via-phi-1-s-1-2-2-s-beta-s-and	lerchPhi(-1, 2, 1 / 2)	4Catalan
 though-n-gets-4g-3-66386	N(lerchPhi(-1, 2, 1 / 2))	3.663_862_376_708_875
 phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet	lerchPhi(-1, 3, 1 / 2)	1 / 4 * pi ^ 3
