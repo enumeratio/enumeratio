@@ -14,5 +14,5 @@ interval-arithmetic-log-10-frac-13-2-log-10-3	<Log10><Interval><Rational>1 3</Ra
 uncertainty-propagation-log-10-frac-1-101-pm-0	<Log10><Around><Rational>1 101</Rational> 0.01</Around></Log10>	<Around>-2.0043213737826426 0.43863742672228434</Around>
 derivative-frac-1-x-ln-10	<D><Log10>x</Log10> x</D>	<Divide>1 <Multiply>x <Ln>10</Ln></Multiply></Divide>
 to-30-significant-digits-every-one-correctly	<N><Log10>7</Log10> 30</N>	<ToExpression>0.845098040014256830712216258593</ToExpression>
-a-float-argument-folds-even-for-a-fractional	<Log10>0.001</Log10>	<ToExpression>-3</ToExpression>
+a-float-argument-folds-even-for-a-fractional	<Log10>0.001</Log10>	<ToExpression>-3.0</ToExpression>
 same-as-compute-engine-s-default-base-log	<Equal><Log10>1000</Log10> <Log>1000</Log></Equal>	<True />

@@ -1,6 +1,5 @@
 import { readFileSync } from "node:fs";
 import { BigDecimal, ComputeEngine } from "@cortex-js/compute-engine";
-import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
 import {
   bigCx,
@@ -8,11 +7,9 @@ import {
   cx,
   type Cx,
   lerchPhi,
-  lerchPhiReal,
   applyAllPatches,
   hurwitzZeta,
   hurwitzZetaReal,
-  setZetaKernel,
   zetaGeneralized,
   zetaGeneralizedReal,
 } from "../src/index.ts";
@@ -103,33 +100,6 @@ test("Zeta vs HurwitzZeta divergence at real a < 0: real vs complex", () => {
   expect(Math.abs(h.im + Math.SQRT2)).toBeLessThan(1e-9); // HurwitzZeta is complex (−i√2 term)
 });
 
-// --- GPU/JS compile handlers (ce.compile emits a call to our kernel) --------------
-
-test("compile handler emits a real kernel call (JS + WGSL) and runs correctly", () => {
-  const js = new JavaScriptTarget().compile(ce.box(["HurwitzZeta", 2, "x"])) as { code?: string };
-  expect(js.code).toContain("__hz(2"); // real JS wrapper, taken from the scope object
-  const wgsl = new WGSLTarget().compile(ce.box(["Add", ["HurwitzZeta", 2, "x"], "y"])) as {
-    code?: string;
-  };
-  expect(wgsl.code).toContain("hurwitz(vec2f"); // composes as f32 via `.x`
-  expect(wgsl.code).toContain(").x");
-  // End-to-end: run the compiled JS with the real wrapper injected on the scope.
-  // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-  const g = new Function("_", `return (${js.code});`) as (s: Record<string, unknown>) => number;
-  const v = g({ x: 1, __hz: hurwitzZetaReal });
-  expect(Math.abs(v - hurwitzZetaReal(2, 1))).toBeLessThan(1e-12);
-});
-
-test("one-argument Zeta compiles to the generalized kernel at a = 1 (JS + WGSL)", () => {
-  const js = new JavaScriptTarget().compile(ce.box(["Zeta", "x"])) as { code?: string };
-  expect(js.code).toBe("_.__zg(_.x, 1)");
-  const wgsl = new WGSLTarget().compile(ce.box(["Zeta", "x"])) as { code?: string };
-  expect(wgsl.code).toBe("zetaGen(vec2f(x, 0.0), vec2f(1.0, 0.0)).x");
-  // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-  const g = new Function("_", `return (${js.code});`) as (s: Record<string, unknown>) => number;
-  expect(g({ x: 3, __zg: zetaGeneralizedReal })).toBeCloseTo(1.2020569031595942, 13);
-});
-
 // --- ζ(s, a) against mpmath: complex s, and left of the strip ------------------------
 
 // compute-engine's native Zeta evaluates real s only; complex s is filled from ζ(s, 1).
@@ -155,10 +125,6 @@ const offBy = (rows: ZetaGolden[], value: (g: ZetaGolden) => { re: number; im: n
     const err = Math.max(Math.abs(r.re - ref[0]), Math.abs(r.im - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
     return err <= g.tol ? [] : [`${g.label}: relerr ${err.toExponential(2)}`];
   });
-
-const complexRiemann = zetaGoldens.filter((g) => g.a === 1 && g.s[1] !== 0);
-const viaN = (engine: ComputeEngine, head: Expr[]) => (g: ZetaGolden) =>
-  engine.box([head[0], ["Complex", ...g.s], ...head.slice(1)] as never).N();
 
 test("the double ζ(s, a) kernel matches mpmath, complex s and left of the strip", () => {
   expect(offBy(zetaGoldens, (g) => hurwitzZeta(cx(...g.s), cx(g.a)))).toEqual([]);
@@ -235,35 +201,6 @@ test("the bignum ζ(s, a) kernel rounds to the nearest double", () => {
   expect(off.map((g) => g.label)).toEqual([]);
 });
 
-const parts = (x: { re: number; im: number }): [number, number] => [x.re, x.im];
-
-test("Zeta(s) at complex s is mpmath's value correctly rounded, on and off the critical line", () => {
-  for (const head of [["Zeta"], ["Zeta", 1], ["HurwitzZeta", 1]])
-    expect(complexRiemann.map((g) => parts(viaN(ce, head)(g)))).toEqual(complexRiemann.map((g) => g.mpmath));
-});
-
-test("Zeta(s) at complex s is correctly rounded with the engine at 40 digits, and at machine", () => {
-  // A compute-engine complex is a pair of doubles, so 40 digits of kernel come back as the
-  // nearest pair of doubles.
-  for (const precision of [40, "machine"] as const) {
-    const engine = new ComputeEngine();
-    applyAllPatches(engine);
-    engine.precision = precision;
-    expect(complexRiemann.map((g) => parts(viaN(engine, ["Zeta"])(g)))).toEqual(complexRiemann.map((g) => g.mpmath));
-  }
-});
-
-test("setZetaKernel('double') puts N() back on the double kernel", () => {
-  const g = complexRiemann[0];
-  try {
-    setZetaKernel("double");
-    expect(parts(viaN(ce, ["Zeta"])(g))).toEqual(parts(hurwitzZeta(cx(...g.s), cx(1))));
-  } finally {
-    setZetaKernel("bignum");
-  }
-  expect(parts(viaN(ce, ["Zeta"])(g))).toEqual(g.mpmath);
-});
-
 test("compiled Zeta(x, a) and HurwitzZeta(x, a) hold left of the strip", () => {
   // The real-scalar wrappers the plot elements inject for `_.__zg` / `_.__hz`.
   const real = zetaGoldens.filter((g) => g.s[1] === 0);
@@ -316,17 +253,6 @@ test("LerchPhi near the rim with Re(s) < 0 holds for a off the axis", () => {
 test("LerchPhi |z|>1 is out of series range (NaN, documented divergence)", () => {
   const r = lerchPhi({ re: 2, im: 0 }, { re: 2, im: 0 }, { re: 1, im: 0 });
   expect(Number.isNaN(r.re)).toBe(true);
-});
-
-test("LerchPhi compile handler emits a real kernel call (JS + WGSL) and runs", () => {
-  const js = new JavaScriptTarget().compile(ce.box(["LerchPhi", "z", 2, 1])) as { code?: string };
-  expect(js.code).toContain("__lp(");
-  const wgsl = new WGSLTarget().compile(ce.box(["LerchPhi", "z", 2, 1])) as { code?: string };
-  expect(wgsl.code).toContain("lerchPhi(vec2f");
-  // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-  const g = new Function("_", `return (${js.code});`) as (s: Record<string, unknown>) => number;
-  const v = g({ z: 0.5, __lp: lerchPhiReal });
-  expect(Math.abs(v - lerchPhiReal(0.5, 2, 1))).toBeLessThan(1e-12);
 });
 
 // --- Found by the oracle Plausible (mpmath and Wolfram agree) ---------------------

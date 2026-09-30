@@ -48,9 +48,9 @@ n-polygamma-neg1-1-over-2	N(\psi^{(-1)}(\frac{1}{2}))	0.572\,364\,942\,924\,699\
 n-polygamma-neg1-1-plus-i	N(\psi^{(-1)}(1+i))	-0.650\,923\,199\,301\,855\,6-0.301\,640\,320\,467\,532\,64i
 n-polygamma-neg1-neg0p5	N(\psi^{(-1)}(-0.5))	1.265\,512\,123\,484\,645\,1-3.141\,592\,653\,589\,793i
 n-polygamma-neg2-stays-unevaluated	N(\psi^{(-2)}(2))	\psi^{(-2)}(2)
-n-polygamma-8-cancellation-region	N(\psi^{(8)}(-48.445\,348\,956\,457\,586+7.047\,151\,294\,800\,014i))	-5\,802\,709\,982\,602\,873\cdot10^{-26}-12\,898\,930\,277\,153\,784\cdot10^{-26}i
-n-polygamma-8-cancellation-region-nearby-im	N(\psi^{(8)}(-48.445\,348\,956\,457\,586+10i))	53\,221\,571\,369\,366\,035\cdot10^{-28}-12\,967\,382\,759\,551\,942\cdot10^{-26}i
-n-polygamma-5-cancellation-region	N(\psi^{(5)}(-48.987\,654\,321\,098\,766+9.5i))	-43\,059\,101\,024\,050\,936\cdot10^{-24}-5\,997\,407\,236\,454\,179\cdot10^{-23}i
+n-polygamma-8-cancellation-region	N(\psi^{(8)}(-48.445\,348\,956\,457\,586+7.047\,151\,294\,800\,014i))	-5.802\,709\,982\,602\,873\cdot10^{-11}-1.289\,893\,027\,715\,378\,4\cdot10^{-10}i
+n-polygamma-8-cancellation-region-nearby-im	N(\psi^{(8)}(-48.445\,348\,956\,457\,586+10i))	5.322\,157\,136\,936\,603\,5\cdot10^{-12}-1.296\,738\,275\,955\,194\,2\cdot10^{-10}i
+n-polygamma-5-cancellation-region	N(\psi^{(5)}(-48.987\,654\,321\,098\,766+9.5i))	-4.305\,910\,102\,405\,093\,6\cdot10^{-8}-5.997\,407\,236\,454\,179\cdot10^{-8}i
 threads-over-a-list-each-element-exact-so-each	\mathrm{PolyGamma}(1, \bigl\lbrack1, 2\bigr\rbrack)	\bigl\lbrack\psi^{(1)}(1), \psi^{(1)}(2)\bigr\rbrack
 one-argument-digamma-at-a-machine-precision		
 one-argument-digamma-at-a-complex-point		

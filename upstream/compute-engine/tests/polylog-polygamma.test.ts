@@ -1,12 +1,12 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { describe, expect, test } from "vite-plus/test";
-import { applyAllPatches, polygammaReal, polyLog, polyLogReal, polygamma, setZetaKernel } from "../src/index.ts";
+import { applyAllPatches, polygammaReal, polyLog, polyLogReal, polygamma } from "../src/index.ts";
 
-// PolyLog and PolyGamma are native compute-engine heads. applyAllPatches extends
-// rather than replaces them, so these tests cover both halves: the native cases must
-// keep working untouched, and the cases it declines (non-integer/complex order for
-// PolyLog, complex argument for PolyGamma — digamma (m = 0) included) must now evaluate.
+// PolyLog and PolyGamma are native compute-engine heads. The non-integer/complex-order
+// PolyLog and complex-argument PolyGamma widenings landed in compute-engine 0.141
+// (polylog-order/polygamma-complex retired); these tests now exercise the plain kernels
+// (numerics/polylog.ts, numerics/polygamma.ts) and PolyGamma's bignum-cancellation path
+// (evaluatePolygamma), still called directly by @enumeratio/analytic.
 
 const ce = new ComputeEngine();
 applyAllPatches(ce);
@@ -61,43 +61,5 @@ describe("POLYGAMMA ψ⁽ᵐ⁾(z) = (−1)^(m+1) m! ζ(m+1, z)", () => {
     const v = polygamma(8, CANCELLING_Z);
     expect(Number.isNaN(v.re)).toBe(true);
     expect(Number.isNaN(v.im)).toBe(true);
-  });
-
-  test("cancellation region: PolyGamma stays unevaluated (not ComplexInfinity) with the double kernel forced", () => {
-    try {
-      setZetaKernel("double");
-      const r = ce.box(["PolyGamma", 8, ce.complex(CANCELLING_Z.re, CANCELLING_Z.im)]).N();
-      expect(r.operator).toBe("PolyGamma"); // declined, not ComplexInfinity
-    } finally {
-      setZetaKernel("bignum");
-    }
-  });
-});
-
-describe("COMPILE HANDLERS", () => {
-  test("PolyLog compiles to our kernel on both targets and runs", () => {
-    const js = new JavaScriptTarget().compile(ce.box(["PolyLog", 2, "z"])) as {
-      code?: string;
-      run?: (s: Record<string, unknown>) => unknown;
-    };
-    expect(js.code).toContain("__pl(");
-    const wgsl = new WGSLTarget().compile(ce.box(["PolyLog", 2, "z"])) as { code?: string };
-    expect(wgsl.code).toContain("polyLog(vec2f");
-    expect(wgsl.code).toContain(").x");
-    // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-    const g = new Function("_", `return (${js.code});`) as (s: Record<string, unknown>) => number;
-    expect(Math.abs(g({ z: 0.5, __pl: polyLogReal }) - polyLogReal(2, 0.5))).toBeLessThan(1e-12);
-  });
-
-  test("PolyGamma gets a WGSL kernel; JS keeps compute-engine's own lowering", () => {
-    const js = new JavaScriptTarget().compile(ce.box(["PolyGamma", 1, "x"])) as {
-      code?: string;
-      run?: (s: Record<string, unknown>) => unknown;
-    };
-    expect(js.code).toContain("polygamma(1"); // _SYS.polygamma — native, not ours
-    expect(js.code).not.toContain("_.__"); // no scope wrapper needed on this target
-    expect(Math.abs((js.run?.({ x: 1 }) as number) - polygammaReal(1, 1))).toBeLessThan(1e-12);
-    const wgsl = new WGSLTarget().compile(ce.box(["PolyGamma", 1, "x"])) as { code?: string };
-    expect(wgsl.code).toContain("polygamma(vec2f");
   });
 });

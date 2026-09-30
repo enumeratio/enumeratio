@@ -28,7 +28,7 @@ modulus-a-negative-real-prime	\left((3+4i)^3\bmod -7\right)	\left((3+4i)^3\bmod 
 modulus-a-composite-gaussian-norm-25	\left((1+i)^6\bmod 3+4i\right)	-1-i
 no-inverse-for-a-negative-exponent-when-the-base	\left(\frac{1}{(3+4i)^2}\bmod 2+i\right)	\left(\frac{1}{(3+4i)^2}\bmod 2+i\right)
 a-bignum-exponent-base-and-modulus-small	\left((2+i)^{100\,000\,000\,000\,000\,000\,000}\bmod 7\right)	4
-a-negative-bignum-exponent	\left(\frac{1}{(1+i)^{123\,456\,789\,012\,345\,680\,000}}\bmod 11\right)	5-5i
+a-negative-bignum-exponent	\left(\frac{1}{(1+i)^{123\,456\,789\,012\,345\,680\,000.0}}\bmod 11\right)	5-5i
 modulus-past-2-53	\left((4+i)^{10}\bmod 100\,000\,000\,000\,000\,000\,001+9\,007\,199\,254\,740\,993i\right)	-1\,093\,425+905\,768i
 a-real-base-and-modulus-need-no-gaussian	\left(5^5\bmod 7\right)	3
 result-comes-out-real-reduced-into-0-m-like-an	\left((1+i)^4\bmod 5\right)	1

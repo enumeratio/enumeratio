@@ -11,7 +11,7 @@ q-3-1-7-all-integers	<N><GammaRegularized>3 1 7</GammaRegularized></N>	<ToExpres
 q-2-5-0-complex-1-5-plus-i	<GammaRegularized>2.5 0 <Complex>1.5 1</Complex></GammaRegularized>	<Complex>0.3118269944561238003877678189584777868561907252713691396016969330106525171650356 0.34118877092475924</Complex>
 q-complex-2-plus-i-0-1-5	<N><GammaRegularized><Complex>2 1</Complex> 0 1.5</GammaRegularized></N>	<Complex>0.3823477689549358689747329756884714751299699022893320798 -0.33348154065855223</Complex>
 q-three-complex-arguments	<N><GammaRegularized><Complex>2 1</Complex> <Complex>0.5 -1</Complex> <Complex>1.5 1</Complex></GammaRegularized></N>	<Complex>1.509764918616015852275665995948099244935101301100757506 0.9563829092138736</Complex>
-q-0-1-4-all-integers	<N><GammaRegularized>0 1 4</GammaRegularized></N>	<ToExpression>0</ToExpression>
+q-0-1-4-all-integers	<N><GammaRegularized>0 1 4</GammaRegularized></N>	<ToExpression>0.0</ToExpression>
 threads-element-wise-over-a-list-as-wolfram-s	<GammaRegularized><List>1 2</List> 1</GammaRegularized>	<List><Divide>1 ExponentialE</Divide> <Divide>2 ExponentialE</Divide></List>
 complex-order-under-n	<N><GammaRegularized><Complex>1 1</Complex> 2.5</GammaRegularized></N>	<Complex>0.00794706062011918622237387002562211784 0.15253677854101844</Complex>
 three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2	<GammaRegularized>2.5 0.5 1.5</GammaRegularized>	<ToExpression>0.26257993736866897</ToExpression>

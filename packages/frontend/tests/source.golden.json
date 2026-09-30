@@ -44,11 +44,11 @@
     "errors": []
   },
   "Zeta(3)": {
-    "latex": "\\Zeta(3)",
+    "latex": "\\zeta(3)",
     "errors": []
   },
   "N(Zeta(3))": {
-    "latex": "N(\\Zeta(3))",
+    "latex": "N(\\zeta(3))",
     "errors": []
   },
   "TraditionalForm(Binomial(10, 3))": {

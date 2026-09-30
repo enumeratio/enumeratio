@@ -1342,7 +1342,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Fold",
-    provenance: "override",
+    provenance: "compute-engine",
     declared: null,
     wolframAlias: "Fold",
     elsewhere: ["wolfram"],
@@ -7019,7 +7019,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Arccot",
-    provenance: "override",
+    provenance: "compute-engine",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -9595,7 +9595,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "LerchPhi",
-    provenance: "extension",
+    provenance: "override",
     declared: "enumeratio-analytic",
     wolframAlias: "LerchPhi",
     elsewhere: ["wolfram", "sympy", "mpmath"],

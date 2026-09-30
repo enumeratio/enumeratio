@@ -11,7 +11,7 @@ stays-symbolic	<Ceil>x</Ceil>	<Ceil>x</Ceil>
 exact-radicals-are-decided-numerically	<Ceil><Sqrt>50</Sqrt></Ceil>	<ToExpression>8</ToExpression>
 evaluates-at-an-exact-constant-lceil-pi-rceil-4	<Ceil>Pi</Ceil>	<ToExpression>4</ToExpression>
 a-second-argument-rounds-up-to-a-multiple-of-it	<Ceil>226 10</Ceil>	<ToExpression>230</ToExpression>
-the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	<Ceil>-10.3 3.5</Ceil>	<ToExpression>-7</ToExpression>
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	<Ceil>-10.3 3.5</Ceil>	<ToExpression>-7.0</ToExpression>
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	<Ceil><Subtract><Multiply>2 Pi</Multiply> ExponentialE</Subtract> <Rational>5 4</Rational></Ceil>	<Rational>15 4</Rational>
 rounds-the-real-and-imaginary-parts-up	<Ceil><Complex>5.37 -1.3</Complex></Ceil>	<Complex>6 -1</Complex>
 how-many-5-seat-vans-are-needed-to-carry-17	<Ceil><Divide>17 5</Divide></Ceil>	<ToExpression>4</ToExpression>

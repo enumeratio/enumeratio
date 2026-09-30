@@ -5,4 +5,4 @@ the-third-zero-of-j-0			[N, [BesselJZero, 0, 3]]	8.653727912911013	the third zer
 j-3-2-2		test	[N, [BesselJZero, [Rational, 3, 2], 2]]	7.725251836937707	
 j-1-2		test	[N, [BesselJZero, 1, 2]]	7.015586669815619	
 j-5-2-1		test	[N, [BesselJZero, [Rational, 5, 2], 1]]	5.76345919689455	
-tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	Properties		[Chop, [Subtract, [Tan, [N, [BesselJZero, [Rational, 3, 2], 1]]], [N, [BesselJZero, [Rational, 3, 2], 1]]]]	0	$\tan(j_{3/2,1}) = j_{3/2,1}$ — the sinc function's first turning point
+tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	Properties		[Chop, [Subtract, [Tan, [N, [BesselJZero, [Rational, 3, 2], 1]]], [N, [BesselJZero, [Rational, 3, 2], 1]]]]	{num: "0.0"}	$\tan(j_{3/2,1}) = j_{3/2,1}$ — the sinc function's first turning point

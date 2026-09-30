@@ -1,18 +1,18 @@
 id	in	out
 values-not-near-zero-pass-through-unchanged	chop(1.2)	1.2
-values-smaller-than-about-10-10-collapse-to	chop(10e-12)	0
-negative-values-chop-the-same-way	chop(-10e-12)	0
-chops-the-real-and-imaginary-parts-independently	chop(10e-13 + 3i)	3i
+values-smaller-than-about-10-10-collapse-to	chop(1.0e-11)	0.0
+negative-values-chop-the-same-way	chop(-1.0e-11)	0.0
+chops-the-real-and-imaginary-parts-independently	chop(1.0e-12 + 3i)	3.0i
 chop-0p001-0p0001-keeps-a-value-inside-the	chop(0.001, 0.000_1)	0.001
-chop-1e-15-with-the-default-tolerance	chop(10e-16)	0
+chop-1e-15-with-the-default-tolerance	chop(1.0e-15)	0.0
 chops-parts-independently-with-a-tolerance	chop(0.005 + 3i, 0.01)	3i
-threads-element-wise-over-a-list	chop([1.2, 10e-12, 3.5])	[1.2, 0, 3.5]
-a-negligible-imaginary-part-is-dropped-leaving-a	chop(1 + 10e-15 * i)	1
+threads-element-wise-over-a-list	chop([1.2, 1.0e-11, 3.5])	[1.2, 0.0, 3.5]
+a-negligible-imaginary-part-is-dropped-leaving-a	chop(1 + 1.0e-14 * i)	1.0
 stays-symbolic	chop(x)	chop(x)
 exact-numbers-not-near-zero-pass-through	chop(1 / 3)	1 / 3
 a-second-argument-sets-the-tolerance-here	chop(0.001, 0.01)	0
-and-a-tighter-tolerance-keeps-a-value-the	chop(10e-16, 10e-21)	10e-16
-cleans-up-the-floating-point-residue-from	chop(3 * N(1 / 3) - 1)	0
-only-the-value-s-own-magnitude-matters-this	chop(1 + 10e-13)	1.000_000_000_001
-a-hard-cutoff-at-about-10-10-a-value-just-above	chop(10_000_000_001e-20)	10_000_000_001e-20
+and-a-tighter-tolerance-keeps-a-value-the	chop(1.0e-15, 1.0e-20)	1.0e-15
+cleans-up-the-floating-point-residue-from	chop(3 * N(1 / 3) - 1)	0.0
+only-the-value-s-own-magnitude-matters-this	chop(1 + 1.0e-12)	1.000_000_000_001
+a-hard-cutoff-at-about-10-10-a-value-just-above	chop(1.000_000_000_1e-10)	1.000_000_000_1e-10
 an-exact-small-number-is-chopped-too	chop(10 ^ -20)	0

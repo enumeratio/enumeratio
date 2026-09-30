@@ -9,4 +9,4 @@ arguments-in-1-2-give-negative-values	\mathrm{InverseErfc}(1.5)	-0.476\,936\,276
 listable	\mathrm{InverseErfc}(\bigl\lbrack0, 1\bigr\rbrack)	\bigl\lbrack\infty, 0\bigr\rbrack
 sqrt-2-times-this-2-5758-is-the-two-sided-99	\mathrm{InverseErfc}(0.01)	1.821\,386\,367\,718\,449\,6
 erfc-erfc-1-x-x	\mathrm{Erfc}(\mathrm{InverseErfc}(x))	x
-deep-in-the-tail-it-keeps-full-precision-where	\mathrm{InverseErfc}(10^{-10})	4.572\,824\,967\,389\,485
+deep-in-the-tail-it-keeps-full-precision-where	\mathrm{InverseErfc}(1.0\cdot10^{-10})	4.572\,824\,967\,389\,485

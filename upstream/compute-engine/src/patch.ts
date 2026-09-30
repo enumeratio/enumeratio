@@ -27,11 +27,13 @@ export interface Patch {
    * brand-new head, or a function of the engine when the definition captures a native
    * handler -- upstream that becomes an edit to the native definition, not a new file (see
    * each patch's own comment). `apply` declares every key `library` has, whichever form it
-   * takes.
+   * takes. Absent for a patch that wraps a native head in place (`apply` changes the
+   * native definition's `evaluate`, keeping the rest of it), which states `heads` instead.
    */
-  readonly library: LibraryRecord | ((ce: ComputeEngine) => LibraryRecord);
+  readonly library?: LibraryRecord | ((ce: ComputeEngine) => LibraryRecord);
   /**
-   * Every head `library` declares. Only set where `library` is a function -- its keys
+   * Every head `library` declares, or that `apply` wraps in place. Set where `library` is a
+   * function or absent -- its keys
    * aren't known without an engine, so `patchSymbols` reads this instead of calling it;
    * `tests/symbols.test.ts` checks it against what the function actually returns.
    */

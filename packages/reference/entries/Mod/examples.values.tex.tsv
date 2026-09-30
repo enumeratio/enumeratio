@@ -35,7 +35,7 @@ reducing-a-large-norm-gaussian-by-a-small-unit	(1\,000+i)\bmod(1+i)	i
 reducing-by-1-a-unit-is-always-0	(2+i)\bmod(-1)	0
 reducing-by-i-a-unit-is-always-0	(5+5i)\bmod(-i)	0
 a-negative-real-dividend-gaussian-modulus	(-5-5i)\bmod(2+i)	0
-reducing-0-by-0-is-undefined-like-the-rational	0\bmod0	\operatorname{NaN}
+reducing-0-by-0-is-undefined-like-the-rational	0\bmod0	\operatorname{Indeterminate}
 reducing-by-an-associate-times-1	(8+2i)\bmod(-3-4i)	1+i
 reducing-by-an-associate-times-i	(8+2i)\bmod(4-3i)	1+i
 reducing-by-the-other-prime-above-13	(6+8i)\bmod(2+3i)	-i
@@ -47,7 +47,7 @@ reducing-by-a-real-prime-19	(123+456i)\bmod19	9
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	17\bmod5=(17+3\times5)\bmod5	\top
 a-negative-modulus-gives-a-result-in-n-0	(-5)\bmod(-3)	-2
 the-remainder-of-quotient	(7+5i)\bmod(2+i)=(7+5i)-(2+i)\mathrm{Quotient}(7+5i, 2+i)	\top
-division-by-a-0-modulus-yields-nan-rather-than	5\bmod0	\operatorname{NaN}
+division-by-a-0-modulus-yields-nan-rather-than	5\bmod0	\operatorname{Indeterminate}
 periodicity-with-a-zero-modulus-on-one-side	35\bmod13=(17+3\times5)\bmod0	\bot
 rounding-ties-to-even-means-1-and-1-both-appear	\bigl\lbrack(1+2i)\bmod2, (3+2i)\bmod2\bigr\rbrack	\bigl\lbrack1, -1\bigr\rbrack
 a-free-symbol-is-untouched	x\bmod2	x\bmod2

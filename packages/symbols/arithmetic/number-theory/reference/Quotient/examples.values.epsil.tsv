@@ -16,7 +16,7 @@ a-real-dividend-by-a-gaussian-divisor	Quotient(5, 2 + i)	2 - i
 quotient-by-an-associate	Quotient(8 + 2i, -4 + 3i)	-1 - i
 quotient-by-a-negative-real-divisor	Quotient(3 + 4i, -7)	-i
 quotient-by-a-composite-gaussian-divisor-norm-25	Quotient(123 + 456i, 3 + 4i)	88 + 35i
-a-gaussian-divisor-past-2-53-in-both-parts	Quotient(100_000_000_000_000_000_001 + 9_007_199_254_740_993i, 4 + i)	23_529_941_599_956_161_235 - 5_880_233_600_175_355_000i
+a-gaussian-divisor-past-2-53-in-both-parts	Quotient(100_000_000_000_000_000_001 + 9_007_199_254_740_993i, 4 + i)	23_529_941_599_956_161_235 - 5_880_233_600_175_355_000.0i
 quotient-by-1-4i-the-other-prime-above-17	Quotient(8 + 2i, 1 + 4i)	1 - 2i
 a-large-norm-gaussian-divided-by-a-small-unit	Quotient(1_000 + i, 1 + i)	500 - 500i
 quotient-by-1-negates-each-part	Quotient(2 + i, -1)	-2 - i

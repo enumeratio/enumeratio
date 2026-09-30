@@ -9,7 +9,7 @@ at-t2-0-7	N(\mathrm{ChebyshevT}(2, 0.7))	-0.020\,000\,000\,000\,000\,13
 at-t5-0-7	N(\mathrm{ChebyshevT}(5, 0.7))	-0.670\,879\,999\,999\,999\,8
 at-t5-2	N(\mathrm{ChebyshevT}(5, 2))	362
 at-t-5-0-7	N(\mathrm{ChebyshevT}(-5, 0.7))	-0.670\,879\,999\,999\,999\,8
-at-t4-2-3i	N(\mathrm{ChebyshevT}(4, 2+3i))	-911-1\,056i
+at-t4-2-3i	N(\mathrm{ChebyshevT}(4, 2+3i))	-911.0-1\,056.0i
 at-a-rational	\mathrm{ChebyshevT}(5, \frac{1}{3})	\frac{241}{243}
 at-a-complex-argument	\mathrm{ChebyshevT}(4, 2+3i)	-911-1\,056i
 a-symbolic-order-stays-unevaluated	\mathrm{ChebyshevT}(n, x)	\mathrm{ChebyshevT}(n, x)

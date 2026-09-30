@@ -5,5 +5,5 @@ integerpart-7-over-2	<IntegerPart><Rational>7 2</Rational></IntegerPart>	<ToExpr
 integerpart-neg-7-over-2	<IntegerPart><Rational>-7 2</Rational></IntegerPart>	<ToExpression>-3</ToExpression>
 exact-numeric-arguments-stay-exact	<IntegerPart>Pi</IntegerPart>	<ToExpression>3</ToExpression>
 threads-element-wise-over-a-list	<IntegerPart><List>2.5 -2.5</List></IntegerPart>	<List>2 -2</List>
-complex-numbers-real-and-imaginary-parts	<IntegerPart><Complex>2.5 3.7</Complex></IntegerPart>	<Complex>2 3</Complex>
+complex-numbers-real-and-imaginary-parts	<IntegerPart><Complex>2.5 3.7</Complex></IntegerPart>	<Complex>2.0 3.0</Complex>
 x-integerpart-x-fractionalpart-x	<Equal><Add><IntegerPart><Rational>-7 2</Rational></IntegerPart> <FractionalPart><Rational>-7 2</Rational></FractionalPart></Add> <Rational>-7 2</Rational></Equal>	<True />

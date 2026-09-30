@@ -202,44 +202,44 @@ n-lerchphi-2-2-plus-i-0p5	N(\mathrm{LerchPhi}(2, 2+i, 0.5))	3.266\,346\,588\,775
 n-lerchphi-2-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(2, 2+i, \frac{5}{2}))	-0.156\,856\,484\,489\,973\,86-0.155\,950\,565\,746\,909\,55i
 n-lerchphi-2-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(2, 2+i, -2.5))	332.097\,984\,373\,651\,7+238.176\,549\,803\,584\,46i
 n-lerchphi-neg-2-2-1	N(\mathrm{LerchPhi}(-2, 2, 1))	0.718\,373\,183\,441\,839\,4
-n-lerchphi-neg-2-2-2	N(\mathrm{LerchPhi}(-2, 2, 2))	\mathrm{LerchPhi}(-2, 2, 2)
-n-lerchphi-neg-2-2-0p5	N(\mathrm{LerchPhi}(-2, 2, 0.5))	\mathrm{LerchPhi}(-2, 2, 0.5)
-n-lerchphi-neg-2-2-5-over-2	N(\mathrm{LerchPhi}(-2, 2, \frac{5}{2}))	\mathrm{LerchPhi}(-2, 2, 2.5)
-n-lerchphi-neg-2-2-neg-2p5	N(\mathrm{LerchPhi}(-2, 2, -2.5))	\mathrm{LerchPhi}(-2, 2, -2.5)
+n-lerchphi-neg-2-2-2	N(\mathrm{LerchPhi}(-2, 2, 2))	0.140\,813\,408\,279\,079\,73
+n-lerchphi-neg-2-2-0p5	N(\mathrm{LerchPhi}(-2, 2, 0.5))	3.444\,734\,229\,330\,256\,5
+n-lerchphi-neg-2-2-5-over-2	N(\mathrm{LerchPhi}(-2, 2, \frac{5}{2}))	0.083\,405\,779\,554\,786\,47
+n-lerchphi-neg-2-2-neg-2p5	N(\mathrm{LerchPhi}(-2, 2, -2.5))	-12.286\,762\,723\,530\,941
 n-lerchphi-neg-2-3-1	N(\mathrm{LerchPhi}(-2, 3, 1))	0.834\,141\,681\,983\,285\,5
-n-lerchphi-neg-2-3-2	N(\mathrm{LerchPhi}(-2, 3, 2))	\mathrm{LerchPhi}(-2, 3, 2)
-n-lerchphi-neg-2-3-0p5	N(\mathrm{LerchPhi}(-2, 3, 0.5))	\mathrm{LerchPhi}(-2, 3, 0.5)
-n-lerchphi-neg-2-3-5-over-2	N(\mathrm{LerchPhi}(-2, 3, \frac{5}{2}))	\mathrm{LerchPhi}(-2, 3, 2.5)
-n-lerchphi-neg-2-3-neg-2p5	N(\mathrm{LerchPhi}(-2, 3, -2.5))	\mathrm{LerchPhi}(-2, 3, -2.5)
-n-lerchphi-neg-2-0p5-1	N(\mathrm{LerchPhi}(-2, 0.5, 1))	-0.5\operatorname{Li}_{0.5}(-2)
-n-lerchphi-neg-2-0p5-2	N(\mathrm{LerchPhi}(-2, 0.5, 2))	\mathrm{LerchPhi}(-2, 0.5, 2)
-n-lerchphi-neg-2-0p5-0p5	N(\mathrm{LerchPhi}(-2, 0.5, 0.5))	\mathrm{LerchPhi}(-2, 0.5, 0.5)
-n-lerchphi-neg-2-0p5-5-over-2	N(\mathrm{LerchPhi}(-2, 0.5, \frac{5}{2}))	\mathrm{LerchPhi}(-2, 0.5, 2.5)
-n-lerchphi-neg-2-0p5-neg-2p5	N(\mathrm{LerchPhi}(-2, 0.5, -2.5))	\mathrm{LerchPhi}(-2, 0.5, -2.5)
-n-lerchphi-neg-2-2-plus-i-1	N(\mathrm{LerchPhi}(-2, 2+i, 1))	-0.5\operatorname{Li}_{2+i}(-2)
-n-lerchphi-neg-2-2-plus-i-2	N(\mathrm{LerchPhi}(-2, 2+i, 2))	\mathrm{LerchPhi}(-2, 2+i, 2)
-n-lerchphi-neg-2-2-plus-i-0p5	N(\mathrm{LerchPhi}(-2, 2+i, 0.5))	\mathrm{LerchPhi}(-2, 2+i, 0.5)
-n-lerchphi-neg-2-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(-2, 2+i, \frac{5}{2}))	\mathrm{LerchPhi}(-2, 2+i, 2.5)
-n-lerchphi-neg-2-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(-2, 2+i, -2.5))	\mathrm{LerchPhi}(-2, 2+i, -2.5)
+n-lerchphi-neg-2-3-2	N(\mathrm{LerchPhi}(-2, 3, 2))	0.082\,929\,159\,008\,357\,18
+n-lerchphi-neg-2-3-0p5	N(\mathrm{LerchPhi}(-2, 3, 0.5))	7.563\,284\,617\,347\,453
+n-lerchphi-neg-2-3-5-over-2	N(\mathrm{LerchPhi}(-2, 3, \frac{5}{2}))	0.038\,969\,302\,485\,011\,27
+n-lerchphi-neg-2-3-neg-2p5	N(\mathrm{LerchPhi}(-2, 3, -2.5))	-91.977\,684\,346\,187\,02
+n-lerchphi-neg-2-0p5-1	N(\mathrm{LerchPhi}(-2, 0.5, 1))	0.445\,644\,355\,776\,061\,65
+n-lerchphi-neg-2-0p5-2	N(\mathrm{LerchPhi}(-2, 0.5, 2))	0.277\,177\,822\,111\,968\,84
+n-lerchphi-neg-2-0p5-0p5	N(\mathrm{LerchPhi}(-2, 0.5, 0.5))	0.743\,192\,432\,028\,836\,3
+n-lerchphi-neg-2-0p5-5-over-2	N(\mathrm{LerchPhi}(-2, 0.5, \frac{5}{2}))	0.240\,493\,007\,877\,798\,31
+n-lerchphi-neg-2-0p5-neg-2p5	N(\mathrm{LerchPhi}(-2, 0.5, -2.5))	-5.945\,539\,456\,230\,691-4.656\,316\,619\,670\,599i
+n-lerchphi-neg-2-2-plus-i-1	N(\mathrm{LerchPhi}(-2, 2+i, 1))	0.746\,276\,670\,223\,341\,1+0.140\,408\,686\,389\,413\,03i
+n-lerchphi-neg-2-2-plus-i-2	N(\mathrm{LerchPhi}(-2, 2+i, 2))	0.126\,861\,664\,888\,327\,65-0.070\,204\,343\,194\,708\,36i
+n-lerchphi-neg-2-2-plus-i-0p5	N(\mathrm{LerchPhi}(-2, 2+i, 0.5))	2.511\,183\,002\,874\,03+2.676\,051\,142\,848\,464i
+n-lerchphi-neg-2-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(-2, 2+i, \frac{5}{2}))	0.062\,761\,079\,674\,424\,15-0.057\,603\,201\,649\,154\,52i
+n-lerchphi-neg-2-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(-2, 2+i, -2.5))	248.074\,329\,015\,288\,55+220.343\,874\,485\,533\,2i
 n-lerchphi-3-2-1	N(\mathrm{LerchPhi}(3, 2, 1))	0.773\,393\,474\,437\,699\,1-1.150\,464\,098\,407\,734i
 n-lerchphi-3-2-2	N(\mathrm{LerchPhi}(3, 2, 2))	-0.075\,535\,508\,520\,766\,99-0.383\,488\,032\,802\,578i
 n-lerchphi-3-2-0p5	N(\mathrm{LerchPhi}(3, 2, 0.5))	4.308\,305\,910\,092\,613\,5-1.992\,662\,270\,726\,116\,3i
-n-lerchphi-3-2-5-over-2	N(\mathrm{LerchPhi}(3, 2, \frac{5}{2}))	\mathrm{LerchPhi}(3, 2, 2.5)
+n-lerchphi-3-2-5-over-2	N(\mathrm{LerchPhi}(3, 2, \frac{5}{2}))	-0.113\,891\,935\,915\,635\,51-0.221\,406\,918\,969\,568\,54i
 n-lerchphi-3-2-neg-2p5	N(\mathrm{LerchPhi}(3, 2, -2.5))	153.817\,592\,905\,833\,92-53.801\,881\,309\,605\,13i
 n-lerchphi-3-3-1	N(\mathrm{LerchPhi}(3, 3, 1))	1.247\,374\,198\,080\,243\,7-0.631\,956\,998\,091\,107\,1i
 n-lerchphi-3-3-2	N(\mathrm{LerchPhi}(3, 3, 2))	0.082\,458\,066\,026\,747\,85-0.210\,652\,332\,697\,035\,62i
 n-lerchphi-3-3-0p5	N(\mathrm{LerchPhi}(3, 3, 0.5))	8.962\,435\,484\,818\,293-1.094\,581\,628\,892\,505\,4i
-n-lerchphi-3-3-5-over-2	N(\mathrm{LerchPhi}(3, 3, \frac{5}{2}))	\mathrm{LerchPhi}(3, 3, 2.5)
+n-lerchphi-3-3-5-over-2	N(\mathrm{LerchPhi}(3, 3, \frac{5}{2}))	0.008\,171\,843\,992\,156\,06-0.121\,620\,180\,988\,056\,2i
 n-lerchphi-3-3-neg-2p5	N(\mathrm{LerchPhi}(3, 3, -2.5))	169.032\,869\,201\,205\,05-29.553\,703\,980\,097\,676i
 n-lerchphi-3-0p5-1	N(\mathrm{LerchPhi}(3, 0.5, 1))	-0.567\,338\,449\,754\,659\,9-0.563\,678\,480\,792\,821\,2i
 n-lerchphi-3-0p5-2	N(\mathrm{LerchPhi}(3, 0.5, 2))	-0.522\,446\,149\,918\,219\,7-0.187\,892\,826\,930\,940\,4i
 n-lerchphi-3-0p5-0p5	N(\mathrm{LerchPhi}(3, 0.5, 0.5))	-0.305\,888\,418\,127\,713\,3-0.976\,319\,767\,866\,404i
-n-lerchphi-3-0p5-5-over-2	N(\mathrm{LerchPhi}(3, 0.5, \frac{5}{2}))	\mathrm{LerchPhi}(3, 0.5, 2.5)
+n-lerchphi-3-0p5-5-over-2	N(\mathrm{LerchPhi}(3, 0.5, \frac{5}{2}))	-0.463\,287\,969\,253\,776\,4-0.108\,479\,974\,207\,378\,34i
 n-lerchphi-3-0p5-neg-2p5	N(\mathrm{LerchPhi}(3, 0.5, -2.5))	-8.258\,987\,289\,448\,257-42.170\,501\,068\,567\,62i
 n-lerchphi-3-2-plus-i-1	N(\mathrm{LerchPhi}(3, 2+i, 1))	0.601\,415\,572\,990\,860\,5-0.572\,691\,588\,995\,903\,8i
 n-lerchphi-3-2-plus-i-2	N(\mathrm{LerchPhi}(3, 2+i, 2))	-0.132\,861\,475\,669\,713\,2-0.190\,897\,196\,331\,967\,94i
 n-lerchphi-3-2-plus-i-0p5	N(\mathrm{LerchPhi}(3, 2+i, 0.5))	3.074\,330\,146\,279\,176+1.382\,090\,656\,931\,817\,2i
-n-lerchphi-3-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(3, 2+i, \frac{5}{2}))	\mathrm{LerchPhi}(3, 2+i, 2.5)
+n-lerchphi-3-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(3, 2+i, \frac{5}{2}))	-0.136\,427\,871\,232\,894\,04-0.071\,980\,686\,892\,989\,86i
 n-lerchphi-3-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(3, 2+i, -2.5))	754.439\,399\,822\,086\,3+554.504\,954\,092\,239\,2i
 n-lerchphi-1p5-2-1	N(\mathrm{LerchPhi}(1.5, 2, 1))	1.582\,930\,180\,181\,653-0.849\,204\,136\,613\,066\,8i
 n-lerchphi-1p5-2-2	N(\mathrm{LerchPhi}(1.5, 2, 2))	0.388\,620\,120\,121\,102\,25-0.566\,136\,091\,075\,377\,9i
@@ -262,65 +262,65 @@ n-lerchphi-1p5-2-plus-i-0p5	N(\mathrm{LerchPhi}(1.5, 2+i, 0.5))	3.383\,048\,389\
 n-lerchphi-1p5-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(1.5, 2+i, \frac{5}{2}))	-0.136\,231\,069\,616\,323\,14-0.242\,176\,661\,225\,908\,45i
 n-lerchphi-1p5-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(1.5, 2+i, -2.5))	188.054\,525\,807\,321\,62+129.950\,947\,308\,879\,28i
 n-lerchphi-neg-1p5-2-1	N(\mathrm{LerchPhi}(-1.5, 2, 1))	0.764\,920\,440\,250\,381\,9
-n-lerchphi-neg-1p5-2-2	N(\mathrm{LerchPhi}(-1.5, 2, 2))	\mathrm{LerchPhi}(-1.5, 2, 2)
-n-lerchphi-neg-1p5-2-0p5	N(\mathrm{LerchPhi}(-1.5, 2, 0.5))	\mathrm{LerchPhi}(-1.5, 2, 0.5)
-n-lerchphi-neg-1p5-2-5-over-2	N(\mathrm{LerchPhi}(-1.5, 2, \frac{5}{2}))	\mathrm{LerchPhi}(-1.5, 2, 2.5)
-n-lerchphi-neg-1p5-2-neg-2p5	N(\mathrm{LerchPhi}(-1.5, 2, -2.5))	\mathrm{LerchPhi}(-1.5, 2, -2.5)
+n-lerchphi-neg-1p5-2-2	N(\mathrm{LerchPhi}(-1.5, 2, 2))	0.156\,719\,706\,499\,746\,37
+n-lerchphi-neg-1p5-2-0p5	N(\mathrm{LerchPhi}(-1.5, 2, 0.5))	3.545\,004\,558\,874\,937
+n-lerchphi-neg-1p5-2-5-over-2	N(\mathrm{LerchPhi}(-1.5, 2, \frac{5}{2}))	0.094\,076\,100\,240\,712\,7
+n-lerchphi-neg-1p5-2-neg-2p5	N(\mathrm{LerchPhi}(-1.5, 2, -2.5))	-3.471\,057\,052\,869\,578
 n-lerchphi-neg-1p5-3-1	N(\mathrm{LerchPhi}(-1.5, 3, 1))	0.865\,224\,966\,770\,831\,8
-n-lerchphi-neg-1p5-3-2	N(\mathrm{LerchPhi}(-1.5, 3, 2))	\mathrm{LerchPhi}(-1.5, 3, 2)
-n-lerchphi-neg-1p5-3-0p5	N(\mathrm{LerchPhi}(-1.5, 3, 0.5))	\mathrm{LerchPhi}(-1.5, 3, 0.5)
-n-lerchphi-neg-1p5-3-5-over-2	N(\mathrm{LerchPhi}(-1.5, 3, \frac{5}{2}))	\mathrm{LerchPhi}(-1.5, 3, 2.5)
-n-lerchphi-neg-1p5-3-neg-2p5	N(\mathrm{LerchPhi}(-1.5, 3, -2.5))	\mathrm{LerchPhi}(-1.5, 3, -2.5)
-n-lerchphi-neg-1p5-0p5-1	N(\mathrm{LerchPhi}(-1.5, 0.5, 1))	-0.\overline{6}\operatorname{Li}_{0.5}(-1.5)
-n-lerchphi-neg-1p5-0p5-2	N(\mathrm{LerchPhi}(-1.5, 0.5, 2))	\mathrm{LerchPhi}(-1.5, 0.5, 2)
-n-lerchphi-neg-1p5-0p5-0p5	N(\mathrm{LerchPhi}(-1.5, 0.5, 0.5))	\mathrm{LerchPhi}(-1.5, 0.5, 0.5)
-n-lerchphi-neg-1p5-0p5-5-over-2	N(\mathrm{LerchPhi}(-1.5, 0.5, \frac{5}{2}))	\mathrm{LerchPhi}(-1.5, 0.5, 2.5)
-n-lerchphi-neg-1p5-0p5-neg-2p5	N(\mathrm{LerchPhi}(-1.5, 0.5, -2.5))	\mathrm{LerchPhi}(-1.5, 0.5, -2.5)
-n-lerchphi-neg-1p5-2-plus-i-1	N(\mathrm{LerchPhi}(-1.5, 2+i, 1))	-0.\overline{6}\operatorname{Li}_{2+i}(-1.5)
-n-lerchphi-neg-1p5-2-plus-i-2	N(\mathrm{LerchPhi}(-1.5, 2+i, 2))	\mathrm{LerchPhi}(-1.5, 2+i, 2)
-n-lerchphi-neg-1p5-2-plus-i-0p5	N(\mathrm{LerchPhi}(-1.5, 2+i, 0.5))	\mathrm{LerchPhi}(-1.5, 2+i, 0.5)
-n-lerchphi-neg-1p5-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(-1.5, 2+i, \frac{5}{2}))	\mathrm{LerchPhi}(-1.5, 2+i, 2.5)
-n-lerchphi-neg-1p5-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(-1.5, 2+i, -2.5))	\mathrm{LerchPhi}(-1.5, 2+i, -2.5)
+n-lerchphi-neg-1p5-3-2	N(\mathrm{LerchPhi}(-1.5, 3, 2))	0.089\,850\,022\,152\,777\,71
+n-lerchphi-neg-1p5-3-0p5	N(\mathrm{LerchPhi}(-1.5, 3, 0.5))	7.652\,044\,367\,963\,557
+n-lerchphi-neg-1p5-3-5-over-2	N(\mathrm{LerchPhi}(-1.5, 3, \frac{5}{2}))	0.042\,883\,916\,625\,778\,284
+n-lerchphi-neg-1p5-3-neg-2p5	N(\mathrm{LerchPhi}(-1.5, 3, -2.5))	-43.445\,205\,297\,432\,55
+n-lerchphi-neg-1p5-0p5-1	N(\mathrm{LerchPhi}(-1.5, 0.5, 1))	0.511\,802\,181\,247\,575\,7
+n-lerchphi-neg-1p5-0p5-2	N(\mathrm{LerchPhi}(-1.5, 0.5, 2))	0.325\,465\,212\,501\,615\,9
+n-lerchphi-neg-1p5-0p5-0p5	N(\mathrm{LerchPhi}(-1.5, 0.5, 0.5))	0.827\,894\,231\,949\,180\,3
+n-lerchphi-neg-1p5-0p5-5-over-2	N(\mathrm{LerchPhi}(-1.5, 0.5, \frac{5}{2}))	0.283\,744\,684\,874\,521\,7
+n-lerchphi-neg-1p5-0p5-neg-2p5	N(\mathrm{LerchPhi}(-1.5, 0.5, -2.5))	-2.794\,143\,032\,828\,483\,5-2.589\,691\,175\,981\,550\,4i
+n-lerchphi-neg-1p5-2-plus-i-1	N(\mathrm{LerchPhi}(-1.5, 2+i, 1))	0.792\,548\,965\,722\,147+0.123\,074\,546\,469\,525\,65i
+n-lerchphi-neg-1p5-2-plus-i-2	N(\mathrm{LerchPhi}(-1.5, 2+i, 2))	0.138\,300\,689\,518\,566\,2-0.082\,049\,697\,646\,354\,89i
+n-lerchphi-neg-1p5-2-plus-i-0p5	N(\mathrm{LerchPhi}(-1.5, 2+i, 0.5))	2.619\,306\,075\,593\,196\,5+2.668\,732\,631\,457\,898i
+n-lerchphi-neg-1p5-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(-1.5, 2+i, \frac{5}{2}))	0.068\,872\,516\,043\,099\,82-0.066\,700\,714\,195\,355i
+n-lerchphi-neg-1p5-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(-1.5, 2+i, -2.5))	139.444\,015\,517\,816\,15+127.214\,874\,775\,026\,86i
 n-lerchphi-1-plus-2i-2-1	N(\mathrm{LerchPhi}(1+2i, 2, 1))	0.817\,164\,228\,975\,140\,8+0.438\,319\,513\,824\,475\,2i
-n-lerchphi-1-plus-2i-2-2	N(\mathrm{LerchPhi}(1+2i, 2, 2))	\mathrm{LerchPhi}(1+2i, 2, 2)
+n-lerchphi-1-plus-2i-2-2	N(\mathrm{LerchPhi}(1+2i, 2, 2))	0.138\,760\,651\,324\,818\,3+0.160\,798\,211\,174\,838\,64i
 n-lerchphi-1-plus-2i-2-0p5	N(\mathrm{LerchPhi}(1+2i, 2, 0.5))	3.792\,114\,260\,846\,786\,6+0.856\,074\,806\,978\,553\,3i
-n-lerchphi-1-plus-2i-2-5-over-2	N(\mathrm{LerchPhi}(1+2i, 2, \frac{5}{2}))	\mathrm{LerchPhi}(1+2i, 2, 2.5)
+n-lerchphi-1-plus-2i-2-5-over-2	N(\mathrm{LerchPhi}(1+2i, 2, \frac{5}{2}))	0.073\,029\,368\,926\,065\,2+0.108\,310\,519\,204\,865\,41i
 n-lerchphi-1-plus-2i-2-neg-2p5	N(\mathrm{LerchPhi}(1+2i, 2, -2.5))	-51.396\,662\,810\,913\,11-0.112\,162\,509\,568\,774\,38i
 n-lerchphi-1-plus-2i-3-1	N(\mathrm{LerchPhi}(1+2i, 3, 1))	0.960\,539\,329\,125\,924\,5+0.262\,023\,760\,613\,251\,3i
-n-lerchphi-1-plus-2i-3-2	N(\mathrm{LerchPhi}(1+2i, 3, 2))	\mathrm{LerchPhi}(1+2i, 3, 2)
+n-lerchphi-1-plus-2i-3-2	N(\mathrm{LerchPhi}(1+2i, 3, 2))	0.096\,917\,370\,070\,485\,27+0.068\,189\,020\,472\,280\,37i
 n-lerchphi-1-plus-2i-3-0p5	N(\mathrm{LerchPhi}(1+2i, 3, 0.5))	8.006\,976\,954\,441\,546+0.645\,737\,139\,237\,068\,8i
-n-lerchphi-1-plus-2i-3-5-over-2	N(\mathrm{LerchPhi}(1+2i, 3, \frac{5}{2}))	\mathrm{LerchPhi}(1+2i, 3, 2.5)
+n-lerchphi-1-plus-2i-3-5-over-2	N(\mathrm{LerchPhi}(1+2i, 3, \frac{5}{2}))	0.043\,221\,448\,485\,686\,51+0.039\,913\,749\,099\,423\,02i
 n-lerchphi-1-plus-2i-3-neg-2p5	N(\mathrm{LerchPhi}(1+2i, 3, -2.5))	-63.145\,568\,516\,679\,16-55.709\,655\,033\,083\,43i
 n-lerchphi-1-plus-2i-0p5-1	N(\mathrm{LerchPhi}(1+2i, 0.5, 1))	0.251\,873\,370\,548\,447\,3+0.594\,237\,244\,072\,761\,8i
-n-lerchphi-1-plus-2i-0p5-2	N(\mathrm{LerchPhi}(1+2i, 0.5, 2))	\mathrm{LerchPhi}(1+2i, 0.5, 2)
+n-lerchphi-1-plus-2i-0p5-2	N(\mathrm{LerchPhi}(1+2i, 0.5, 2))	0.088\,069\,571\,738\,793\,93+0.418\,098\,100\,595\,173\,8i
 n-lerchphi-1-plus-2i-0p5-0p5	N(\mathrm{LerchPhi}(1+2i, 0.5, 0.5))	0.577\,382\,043\,614\,928\,2+0.768\,409\,107\,754\,766\,5i
-n-lerchphi-1-plus-2i-0p5-5-over-2	N(\mathrm{LerchPhi}(1+2i, 0.5, \frac{5}{2}))	\mathrm{LerchPhi}(1+2i, 0.5, 2.5)
+n-lerchphi-1-plus-2i-0p5-5-over-2	N(\mathrm{LerchPhi}(1+2i, 0.5, \frac{5}{2}))	0.060\,065\,923\,306\,197\,41+0.368\,282\,582\,441\,825\,16i
 n-lerchphi-1-plus-2i-0p5-neg-2p5	N(\mathrm{LerchPhi}(1+2i, 0.5, -2.5))	2.475\,463\,147\,093\,155-6.813\,575\,698\,374\,405i
 n-lerchphi-1-plus-2i-2-plus-i-1	N(\mathrm{LerchPhi}(1+2i, 2+i, 1))	1.126\,028\,536\,312\,937\,6+0.641\,355\,365\,959\,258\,2i
-n-lerchphi-1-plus-2i-2-plus-i-2	N(\mathrm{LerchPhi}(1+2i, 2+i, 2))	\mathrm{LerchPhi}(1+2i, 2+i, 2)
+n-lerchphi-1-plus-2i-2-plus-i-2	N(\mathrm{LerchPhi}(1+2i, 2+i, 2))	0.281\,747\,853\,646\,290\,7+0.077\,859\,658\,666\,676\,82i
 n-lerchphi-1-plus-2i-2-plus-i-0p5	N(\mathrm{LerchPhi}(1+2i, 2+i, 0.5))	3.192\,905\,834\,798\,345+3.788\,497\,113\,005\,995\,2i
-n-lerchphi-1-plus-2i-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(1+2i, 2+i, \frac{5}{2}))	\mathrm{LerchPhi}(1+2i, 2+i, 2.5)
+n-lerchphi-1-plus-2i-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(1+2i, 2+i, \frac{5}{2}))	0.171\,752\,370\,429\,291\,42+0.031\,954\,991\,049\,997\,65i
 n-lerchphi-1-plus-2i-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(1+2i, 2+i, -2.5))	-457.911\,341\,409\,628\,85+71.227\,722\,329\,657\,85i
 n-lerchphi-neg-1p5-plus-i-2-1	N(\mathrm{LerchPhi}(-1.5+i, 2, 1))	0.744\,689\,766\,677\,463\,1+0.097\,676\,893\,344\,289\,08i
-n-lerchphi-neg-1p5-plus-i-2-2	N(\mathrm{LerchPhi}(-1.5+i, 2, 2))	\mathrm{LerchPhi}(-1.5+i, 2, 2)
-n-lerchphi-neg-1p5-plus-i-2-0p5	N(\mathrm{LerchPhi}(-1.5+i, 2, 0.5))	\mathrm{LerchPhi}(-1.5+i, 2, 0.5)
-n-lerchphi-neg-1p5-plus-i-2-5-over-2	N(\mathrm{LerchPhi}(-1.5+i, 2, \frac{5}{2}))	\mathrm{LerchPhi}(-1.5+i, 2, 2.5)
-n-lerchphi-neg-1p5-plus-i-2-neg-2p5	N(\mathrm{LerchPhi}(-1.5+i, 2, -2.5))	\mathrm{LerchPhi}(-1.5+i, 2, -2.5)
+n-lerchphi-neg-1p5-plus-i-2-2	N(\mathrm{LerchPhi}(-1.5+i, 2, 2))	0.147\,889\,921\,024\,029\,2+0.033\,475\,351\,786\,493\,09i
+n-lerchphi-neg-1p5-plus-i-2-0p5	N(\mathrm{LerchPhi}(-1.5+i, 2, 0.5))	3.510\,343\,411\,490\,999+0.209\,338\,331\,082\,416\,8i
+n-lerchphi-neg-1p5-plus-i-2-5-over-2	N(\mathrm{LerchPhi}(-1.5+i, 2, \frac{5}{2}))	0.087\,723\,639\,080\,063\,06+0.022\,451\,843\,102\,528\,957i
+n-lerchphi-neg-1p5-plus-i-2-neg-2p5	N(\mathrm{LerchPhi}(-1.5+i, 2, -2.5))	7.238\,774\,267\,536\,813+8.864\,424\,682\,985\,408i
 n-lerchphi-neg-1p5-plus-i-3-1	N(\mathrm{LerchPhi}(-1.5+i, 3, 1))	0.855\,338\,745\,722\,699\,1+0.064\,892\,989\,018\,154\,07i
-n-lerchphi-neg-1p5-plus-i-3-2	N(\mathrm{LerchPhi}(-1.5+i, 3, 2))	\mathrm{LerchPhi}(-1.5+i, 3, 2)
-n-lerchphi-neg-1p5-plus-i-3-0p5	N(\mathrm{LerchPhi}(-1.5+i, 3, 0.5))	\mathrm{LerchPhi}(-1.5+i, 3, 0.5)
-n-lerchphi-neg-1p5-plus-i-3-5-over-2	N(\mathrm{LerchPhi}(-1.5+i, 3, \frac{5}{2}))	\mathrm{LerchPhi}(-1.5+i, 3, 2.5)
-n-lerchphi-neg-1p5-plus-i-3-neg-2p5	N(\mathrm{LerchPhi}(-1.5+i, 3, -2.5))	\mathrm{LerchPhi}(-1.5+i, 3, -2.5)
-n-lerchphi-neg-1p5-plus-i-0p5-1	N(\mathrm{LerchPhi}(-1.5+i, 0.5, 1))	(-0.\overline{461538}-0.307\,692\,307\,692\,307\,7i)\operatorname{Li}_{0.5}(-1.5+i)
-n-lerchphi-neg-1p5-plus-i-0p5-2	N(\mathrm{LerchPhi}(-1.5+i, 0.5, 2))	\mathrm{LerchPhi}(-1.5+i, 0.5, 2)
-n-lerchphi-neg-1p5-plus-i-0p5-0p5	N(\mathrm{LerchPhi}(-1.5+i, 0.5, 0.5))	\mathrm{LerchPhi}(-1.5+i, 0.5, 0.5)
-n-lerchphi-neg-1p5-plus-i-0p5-5-over-2	N(\mathrm{LerchPhi}(-1.5+i, 0.5, \frac{5}{2}))	\mathrm{LerchPhi}(-1.5+i, 0.5, 2.5)
-n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5	N(\mathrm{LerchPhi}(-1.5+i, 0.5, -2.5))	\mathrm{LerchPhi}(-1.5+i, 0.5, -2.5)
-n-lerchphi-neg-1p5-plus-i-2-plus-i-1	N(\mathrm{LerchPhi}(-1.5+i, 2+i, 1))	(-0.\overline{461538}-0.307\,692\,307\,692\,307\,7i)\operatorname{Li}_{2+i}(-1.5+i)
-n-lerchphi-neg-1p5-plus-i-2-plus-i-2	N(\mathrm{LerchPhi}(-1.5+i, 2+i, 2))	\mathrm{LerchPhi}(-1.5+i, 2+i, 2)
-n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5	N(\mathrm{LerchPhi}(-1.5+i, 2+i, 0.5))	\mathrm{LerchPhi}(-1.5+i, 2+i, 0.5)
-n-lerchphi-neg-1p5-plus-i-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(-1.5+i, 2+i, \frac{5}{2}))	\mathrm{LerchPhi}(-1.5+i, 2+i, 2.5)
-n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(-1.5+i, 2+i, -2.5))	\mathrm{LerchPhi}(-1.5+i, 2+i, -2.5)
+n-lerchphi-neg-1p5-plus-i-3-2	N(\mathrm{LerchPhi}(-1.5+i, 3, 2))	0.086\,733\,806\,287\,417\,23+0.014\,560\,544\,846\,175\,517i
+n-lerchphi-neg-1p5-plus-i-3-0p5	N(\mathrm{LerchPhi}(-1.5+i, 3, 0.5))	7.631\,459\,552\,290\,882+0.183\,812\,993\,821\,419\,16i
+n-lerchphi-neg-1p5-plus-i-3-5-over-2	N(\mathrm{LerchPhi}(-1.5+i, 3, \frac{5}{2}))	0.040\,930\,641\,736\,689\,914+0.008\,246\,898\,188\,154\,83i
+n-lerchphi-neg-1p5-plus-i-3-neg-2p5	N(\mathrm{LerchPhi}(-1.5+i, 3, -2.5))	-2.091\,088\,273\,701\,480\,6+67.791\,385\,747\,425\,37i
+n-lerchphi-neg-1p5-plus-i-0p5-1	N(\mathrm{LerchPhi}(-1.5+i, 0.5, 1))	0.465\,538\,805\,671\,105\,84+0.138\,214\,644\,414\,363\,57i
+n-lerchphi-neg-1p5-plus-i-0p5-2	N(\mathrm{LerchPhi}(-1.5+i, 0.5, 2))	0.289\,201\,980\,279\,293\,34+0.100\,658\,223\,909\,953\,66i
+n-lerchphi-neg-1p5-plus-i-0p5-0p5	N(\mathrm{LerchPhi}(-1.5+i, 0.5, 0.5))	0.773\,036\,344\,755\,627\,2+0.177\,108\,997\,856\,828\,9i
+n-lerchphi-neg-1p5-plus-i-0p5-5-over-2	N(\mathrm{LerchPhi}(-1.5+i, 0.5, \frac{5}{2}))	0.250\,662\,467\,827\,724\,8+0.090\,079\,856\,329\,821\,32i
+n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5	N(\mathrm{LerchPhi}(-1.5+i, 0.5, -2.5))	-3.574\,854\,956\,018\,244\,3+3.468\,728\,991\,325\,333i
+n-lerchphi-neg-1p5-plus-i-2-plus-i-1	N(\mathrm{LerchPhi}(-1.5+i, 2+i, 1))	0.812\,564\,848\,672\,117\,6+0.233\,563\,704\,705\,403\,39i
+n-lerchphi-neg-1p5-plus-i-2-plus-i-2	N(\mathrm{LerchPhi}(-1.5+i, 2+i, 2))	0.158\,374\,286\,676\,070\,6-0.050\,126\,278\,686\,225\,975i
+n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5	N(\mathrm{LerchPhi}(-1.5+i, 2+i, 0.5))	2.603\,018\,482\,399\,755\,8+2.911\,418\,398\,487\,826i
+n-lerchphi-neg-1p5-plus-i-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(-1.5+i, 2+i, \frac{5}{2}))	0.085\,359\,108\,535\,717\,79-0.047\,777\,579\,953\,794\,93i
+n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(-1.5+i, 2+i, -2.5))	244.757\,889\,059\,178\,92-108.837\,273\,694\,788\,22i
 n-lerchphi-0p8-plus-0p9i-2-1	N(\mathrm{LerchPhi}(0.8+0.9i, 2, 1))	1.051\,275\,353\,558\,639\,2+0.352\,340\,198\,251\,735\,24i
 n-lerchphi-0p8-plus-0p9i-2-2	N(\mathrm{LerchPhi}(0.8+0.9i, 2, 2))	0.246\,983\,766\,395\,498\,66+0.162\,568\,510\,619\,732\,57i
 n-lerchphi-0p8-plus-0p9i-2-0p5	N(\mathrm{LerchPhi}(0.8+0.9i, 2, 0.5))	4.157\,406\,968\,302\,781+0.596\,428\,896\,905\,385\,7i
@@ -343,8 +343,8 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-5-over-2	N(\mathrm{LerchPhi}(0.8+0.9i, 2+i, \f
 n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5	N(\mathrm{LerchPhi}(0.8+0.9i, 2+i, -2.5))	-92.127\,592\,772\,435\,4+93.926\,546\,083\,357\,69i
 phi-0p3-3-2-off-the-grid-sample	\mathrm{LerchPhi}(0.3, 3, 2)	0.137\,779\,754\,365\,473\,563\,97
 n-lerchphi-2p809-2-2-on-the-cut-real-z-1	N(\mathrm{LerchPhi}(2.809, 2, 2))	-0.056\,587\,701\,973\,223\,09-0.411\,220\,377\,971\,662\,5i
-n-lerchphi-neg-2-2-neg-2p5-negative-a-shifted-up	N(\mathrm{LerchPhi}(-2, 2, -2.5))	\mathrm{LerchPhi}(-2, 2, -2.5)
-n-lerchphi-10-10-10-cancels-below-precision	N(\mathrm{LerchPhi}(10, 10, 10))	\mathrm{LerchPhi}(10, 10, 10)
+n-lerchphi-neg-2-2-neg-2p5-negative-a-shifted-up	N(\mathrm{LerchPhi}(-2, 2, -2.5))	-12.286\,762\,723\,530\,941
+n-lerchphi-10-10-10-cancels-below-precision	N(\mathrm{LerchPhi}(10, 10, 10))	-4.462\,130\,727\,102\,148\,4\cdot10^{-11}-1.575\,172\,198\,981\,023\,8\cdot10^{-12}i
 n-lerchphi-rim-theta-0p5-s-neg-0p5-a-2	N(\mathrm{LerchPhi}(0.877\,582\,561\,890\,372\,8+0.479\,425\,538\,604\,203i, -0.5, 2))	-0.467\,476\,953\,371\,298\,3+3.097\,452\,599\,486\,018i
 lerchphi-rim-theta-0p5-s-0-a-1	N(\mathrm{LerchPhi}(0.877\,582\,561\,890\,372\,8+0.479\,425\,538\,604\,203i, 0, 1))	0.499\,999\,999\,999\,999\,681\,56+1.958\,158\,682\,322\,970\,4i
 lerchphi-rim-theta-0p5-s-0p5-a-1	N(\mathrm{LerchPhi}(0.877\,582\,561\,890\,372\,8+0.479\,425\,538\,604\,203i, 0.5, 1))	1.076\,540\,015\,838\,758\,4+1.312\,938\,253\,458\,852i
@@ -360,23 +360,23 @@ lerchphi-rim-theta-2p4-s-1-a-1	N(\mathrm{LerchPhi}(-0.737\,393\,715\,541\,245\,4
 lerchphi-rim-theta-2p4-s-1p5-a-1	N(\mathrm{LerchPhi}(-0.737\,393\,715\,541\,245\,4+0.675\,463\,180\,551\,151i, 1.5, 1))	0.783\,731\,331\,357\,530\,4+0.120\,757\,921\,412\,831\,23i
 lerch-continuation-z3-s2p5-a1p5	N(\mathrm{LerchPhi}(3, 2.5, 1.5))	0.259\,043\,193\,993\,909-0.523\,719\,168\,554\,282\,9i
 lerch-continuation-zneg5-s2-a1	N(\mathrm{LerchPhi}(-5, 2, 1))	0.549\,855\,825\,212\,162
-lerch-continuation-z2p3i-s1neg2i-a3	N(\mathrm{LerchPhi}(2+3i, 1-2i, 3))	\mathrm{LerchPhi}(2+3i, 1-2i, 3)
-lerch-continuation-zneg3p0p5i-s1p5-a2	N(\mathrm{LerchPhi}(-3+0.5i, 1.5, 2))	\mathrm{LerchPhi}(-3+0.5i, 1.5, 2)
-lerch-continuation-z10-s0p5-a3	N(\mathrm{LerchPhi}(10, 0.5, 3))	\mathrm{LerchPhi}(10, 0.5, 3)
+lerch-continuation-z2p3i-s1neg2i-a3	N(\mathrm{LerchPhi}(2+3i, 1-2i, 3))	-0.108\,147\,767\,607\,783\,19-0.013\,143\,410\,626\,897\,218i
+lerch-continuation-zneg3p0p5i-s1p5-a2	N(\mathrm{LerchPhi}(-3+0.5i, 1.5, 2))	0.145\,493\,815\,105\,338+0.013\,071\,247\,988\,385\,479i
+lerch-continuation-z10-s0p5-a3	N(\mathrm{LerchPhi}(10, 0.5, 3))	-0.082\,696\,733\,641\,012\,7-0.001\,168\,065\,218\,145\,762\,3i
 lerch-continuation-z4-s3-a0p3	N(\mathrm{LerchPhi}(4, 3, 0.3))	38.689\,235\,424\,245\,965-1.991\,648\,956\,368\,573\,3i
-lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7	N(\mathrm{LerchPhi}(-1.5+2.5i, 2-i, 0.7))	\mathrm{LerchPhi}(-1.5+2.5i, 2-i, 0.7)
+lerch-continuation-zneg1p5p2p5i-s2neg1i-a0p7	N(\mathrm{LerchPhi}(-1.5+2.5i, 2-i, 0.7))	1.412\,993\,647\,054\,494\,8-0.558\,305\,334\,451\,271\,4i
 lerch-continuation-z100-sneg2-a1	N(\mathrm{LerchPhi}(100, -2, 1))	-0.000\,104\,091\,625\,364\,732\,82
 lerch-continuation-z1p0001-s2-a1	N(\mathrm{LerchPhi}(1.000\,1, 2, 1))	1.645\,790\,473\,289\,574-0.000\,314\,112\,147\,228\,072\,8i
-lerch-continuation-declines-neg2p54-0p1i	N(\mathrm{LerchPhi}(-2.54+0.1i, 4.157, 4.724))	\mathrm{LerchPhi}(-2.54+0.1i, 4.157, 4.724)
-lerch-continuation-declines-neg1p564-neg0p05i	N(\mathrm{LerchPhi}(-1.564-0.05i, 5.785, 4.791))	\mathrm{LerchPhi}(-1.564-0.05i, 5.785, 4.791)
-lerch-continuation-declines-neg1p939-0p5i	N(\mathrm{LerchPhi}(-1.939+0.5i, 2.976, 3.846))	\mathrm{LerchPhi}(-1.939+0.5i, 2.976, 3.846)
-lerch-continuation-declines-z-neg3-s3p118-a2p864	N(\mathrm{LerchPhi}(-3, 3.118, 2.864))	\mathrm{LerchPhi}(-3, 3.118, 2.864)
-lerch-continuation-declines-complex-s-z-neg4-1i	N(\mathrm{LerchPhi}(-4+i, 3+i, 2))	\mathrm{LerchPhi}(-4+i, 3+i, 2)
-lerch-continuation-declines-z-neg6-s2-a0p5	N(\mathrm{LerchPhi}(-6, 2, 0.5))	\mathrm{LerchPhi}(-6, 2, 0.5)
-past-the-unit-disk-by-the-integral	N(\mathrm{LerchPhi}(1+2i, 3-i, 4+2i))	\mathrm{LerchPhi}(1+2i, 3-i, 4+2i)
+lerch-continuation-declines-neg2p54-0p1i	N(\mathrm{LerchPhi}(-2.54+0.1i, 4.157, 4.724))	0.000\,764\,715\,863\,267\,331\,2+0.000\,014\,822\,574\,453\,961\,452i
+lerch-continuation-declines-neg1p564-neg0p05i	N(\mathrm{LerchPhi}(-1.564-0.05i, 5.785, 4.791))	0.000\,077\,758\,671\,217\,520\,350.000\,00-780\,100\,574\,403\,652\,8i
+lerch-continuation-declines-neg1p939-0p5i	N(\mathrm{LerchPhi}(-1.939+0.5i, 2.976, 3.846))	0.009\,394\,281\,835\,190\,442+0.001\,099\,706\,576\,752\,282i
+lerch-continuation-declines-z-neg3-s3p118-a2p864	N(\mathrm{LerchPhi}(-3, 3.118, 2.864))	0.018\,570\,430\,819\,231\,983
+lerch-continuation-declines-complex-s-z-neg4-1i	N(\mathrm{LerchPhi}(-4+i, 3+i, 2))	0.062\,706\,837\,198\,352\,22-0.025\,392\,002\,466\,698\,163i
+lerch-continuation-declines-z-neg6-s2-a0p5	N(\mathrm{LerchPhi}(-6, 2, 0.5))	2.953\,025\,260\,477\,509
+past-the-unit-disk-by-the-integral	N(\mathrm{LerchPhi}(1+2i, 3-i, 4+2i))	0.002\,025\,009\,957\,009\,905\,3+0.003\,327\,897\,536\,813\,557i
 inexact-arguments-should-evaluate-numerically	\mathrm{LerchPhi}(0.5, 2, 3.5)	0.119\,386\,226\,869\,820\,48
 s-0-far-outside-the-unit-disk-1-1-49-5	\mathrm{LerchPhi}(49.5, 0, 2)	-0.020\,618\,556\,701\,030\,927\,835\,1
-z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z	\mathrm{LerchPhi}(7.5, 1, 2)	\mathrm{LerchPhi}(7.5, 1, 2)
+z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z	\mathrm{LerchPhi}(7.5, 1, 2)	-0.166\,609\,816\,478\,250\,43-0.055\,850\,536\,063\,818\,53i
 uncertainty-in-z	\mathrm{LerchPhi}(\mathrm{Around}(0.5, 0.01), 1, 2)	\mathrm{Around}(0.772\,588\,722\,239\,781\,1, 0.009\,096\,451\,110\,408\,75)
 to-30-significant-digits-not-yet-the-requested	N(\mathrm{LerchPhi}(\frac{1}{2}, 2, \frac{1}{3}), 30)	9.343\,474\,659\,375\,939\,518\,56
 past-z-1-it-is-continued-on-the-cut-real-z-1-it	N(\mathrm{LerchPhi}(2.809, 2, 2))	-0.056\,587\,701\,973\,223\,09-0.411\,220\,377\,971\,662\,5i
@@ -399,4 +399,4 @@ phi-1-2-1-2-4g-via-phi-1-s-1-2-2-s-beta-s-and	\mathrm{LerchPhi}(-1, 2, \frac{1}{
 though-n-gets-4g-3-66386	N(\mathrm{LerchPhi}(-1, 2, \frac{1}{2}))	3.663\,862\,376\,708\,875
 phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet	\mathrm{LerchPhi}(-1, 3, \frac{1}{2})	\frac{\pi^3}{4}
 phi-1-3-1-eta-3-frac-34-zeta-3	\mathrm{LerchPhi}(-1, 3, 1)=\frac{3\zeta(3)}{4}	\top
-where-the-continuation-s-terms-cancel-below	N(\mathrm{LerchPhi}(10, 10, 10))	\mathrm{LerchPhi}(10, 10, 10)
+where-the-continuation-s-terms-cancel-below	N(\mathrm{LerchPhi}(10, 10, 10))	-4.462\,130\,727\,102\,148\,4\cdot10^{-11}-1.575\,172\,198\,981\,023\,8\cdot10^{-12}i

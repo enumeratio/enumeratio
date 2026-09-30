@@ -7,7 +7,7 @@ signatures:
   - call: HurwitzZeta(s, a)
     description: the Hurwitz zeta function $\zeta(s, a)$.
     library: enumeratio-analytic
-    type: (number, number) -> number
+    type: (complex | infinity, complex | infinity, integer?) -> number
     overrides: compute-engine
 bindings:
   - origin: reference

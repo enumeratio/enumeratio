@@ -19,7 +19,7 @@ derivative-cosh-x	\frac{\mathrm{d}\sinh(x)}{\mathrm{d}x}	\cosh(x)
 antiderivative	\int\!\sinh(x)\, \mathrm{d}x	\cosh(x)
 taylor-series-about-0	\operatorname{Series}(\sinh(x), x, 0, 5)	x+\frac{x^3}{6}+\frac{x^5}{120}+O\left(x^7\right)
 to-30-significant-digits-not-yet-the-last-digit	N(\sinh(1), 30)	1.175\,201\,193\,643\,801\,456\,88
-n-decimalizes-sinh-i-pi-2-not-just-the-exact	N(\sinh(\frac{i\pi}{2}))	i
+n-decimalizes-sinh-i-pi-2-not-just-the-exact	N(\sinh(\frac{i\pi}{2}))	1.0i
 odd-function-sinh-x-sinh-x	\sinh(-1)=-\sinh(1)	\top
 definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2	\sinh(1)=\frac{e^{1}-e^{-1}}{2}	\top
 the-definition-sinh-x-frac-e-x-e-x-2	\mathrm{TrigToExp}(\sinh(x))	\frac{1}{2}(e^{x}-\exp(-x))

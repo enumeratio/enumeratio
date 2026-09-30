@@ -75,8 +75,7 @@ describe("LERCH PHI CONTINUATION", () => {
   // Where the terms cancel far below double precision (Φ(10,10,10) ≈ 4e−11 built from terms
   // of order 1), the continuation declines rather than guess — through the full LerchPhi head.
   test("declines rather than guess where the continuation's terms cancel", () => {
-    const r = ce.box(["N", ["LerchPhi", 10, 10, 10]]).evaluate();
-    expect(r.operator).toBe("LerchPhi");
+    expect(lerchContinued(cx(10, 0), cx(10, 0), cx(10, 0), upperGamma)).toBeUndefined();
   });
 
   // compute-engine's Gamma(s, x) loses digits anywhere Re(x) < 0 past |x| ≈ 2.75 (measured

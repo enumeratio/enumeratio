@@ -68,7 +68,7 @@ signatures:
   - call: Zeta(s, a)
     description: the two-argument generalized (Hurwitz-type) zeta $\zeta(s, a)$; see [[HurwitzZeta]] for the difference.
     library: enumeratio-analytic
-    type: (number, number?) -> number
+    type: (complex | infinity, (complex | infinity)?) -> number
     overrides: compute-engine
 seeAlso:
   - HurwitzZeta

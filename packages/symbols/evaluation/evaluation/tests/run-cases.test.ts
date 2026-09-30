@@ -66,7 +66,9 @@ test("N(x, d) in one case leaves the working precision alone for the next", asyn
     ],
     { concurrency: 1 },
   );
-  expect(next?.value).toBe(0);
+  // A float operand gives a float result: `0.0`, written `{ num: "0.0" }`.
+  const value = next?.value as { num?: string } | number | undefined;
+  expect(Number(typeof value === "object" ? value?.num : value)).toBe(0);
 });
 
 test("a per-case timeout stops only that case cooperatively, not the others in the batch", async () => {

@@ -180,7 +180,7 @@ export const dirichletLibrary: LibraryRecord = {
   // Catalan's constant G = β(2) = Cl₂(π/2); DirichletBeta's exact value there. Wolfram's
   // `Catalan`. @enumeratio/analytic also declares this (its own special-functions.ts, for
   // heads that stayed there); a caller guards its own declare so whichever declarant runs
-  // first wins, harmlessly -- see zeta-hurwitz's own guard for the same reason.
+  // first wins, harmlessly.
   Catalan: {
     description: "Catalan's constant G = β(2) = Cl₂(π/2).",
     type: "real",

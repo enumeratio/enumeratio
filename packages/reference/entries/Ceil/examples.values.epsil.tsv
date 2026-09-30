@@ -11,7 +11,7 @@ stays-symbolic	ceil(x)	ceil(x)
 exact-radicals-are-decided-numerically	ceil(sqrt(50))	8
 evaluates-at-an-exact-constant-lceil-pi-rceil-4	ceil(pi)	4
 a-second-argument-rounds-up-to-a-multiple-of-it	ceil(226, 10)	230
-the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	ceil(-10.3, 3.5)	-7
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	ceil(-10.3, 3.5)	-7.0
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	ceil(2Pi - exponentialE, 5 / 4)	15 / 4
 rounds-the-real-and-imaginary-parts-up	ceil(5.37 - 1.3i)	6 - i
 how-many-5-seat-vans-are-needed-to-carry-17	ceil(17 / 5)	4

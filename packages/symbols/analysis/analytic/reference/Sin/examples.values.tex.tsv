@@ -40,7 +40,7 @@ sin-arcsin-of-a-complex-argument	\sin(\arcsin(1+2i))	1+2i
 sin-arccos-x-sqrt-1-x-2	\sin(\arccos(x))	\sqrt{1-x^2}
 sin-arctan-x-frac-x-sqrt-1-x-2	\sin(\arctan(x))	\frac{x}{\sqrt{x^2+1}}
 derivative-frac-d-dx-sin-x-cos-x	\frac{\mathrm{d}\sin(x)}{\mathrm{d}x}	\cos(x)
-second-derivative	\frac{\mathrm{d}\sin(x)}{\mathrm{d}x}	-\sin(x)
+second-derivative	\frac{\partial^{2}\sin(x)}{\partial x^{2}}	-\sin(x)
 antiderivative	\int\!\sin(x)\, \mathrm{d}x	-\cos(x)
 area-under-one-arch-int-0-pi-sin-x-dx-2	\int_{0}^{\pi}\!\sin(x)\, \mathrm{d}x	2
 int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	\int\!\sin(x)^3\, \mathrm{d}x	\frac{\cos(x)^3}{3}-\cos(x)

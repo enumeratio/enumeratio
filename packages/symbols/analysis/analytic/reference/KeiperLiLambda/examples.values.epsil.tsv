@@ -21,5 +21,5 @@ n-keiperlilambda-17	N(KeiperLiLambda(17))	6.426_582_872_125_147
 n-keiperlilambda-18	N(KeiperLiLambda(18))	7.172_480_938_298_763
 n-keiperlilambda-19	N(KeiperLiLambda(19))	7.953_743_094_287_197
 n-keiperlilambda-20	N(KeiperLiLambda(20))	8.769_276_872_071_474
-lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	chop(N(KeiperLiLambda(1)) - N(1 + eulerGamma / 2 - 1 / 2 * ln(4Pi)))	0
+lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly	chop(N(KeiperLiLambda(1)) - N(1 + eulerGamma / 2 - 1 / 2 * ln(4Pi)))	0.0
 declines-past-n-20-rather-than-returning-a-value	KeiperLiLambda(21)	KeiperLiLambda(21)

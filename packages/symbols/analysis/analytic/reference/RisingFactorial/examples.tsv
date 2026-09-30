@@ -9,4 +9,4 @@ complex-base-and-order	Scope		[N, [RisingFactorial, [Complex, 2, 5], [Complex, 3
 agrees-with-pochhammer	Properties		[Equal, [RisingFactorial, 4, 3], [Pochhammer, 4, 3]]	True	The same function as [[Pochhammer]]
 negative-order	Properties		[RisingFactorial, 5, -2]	[Rational, 1, 12]	A negative order gives the reciprocal: $(5)_{-2} = \frac{1}{4 \cdot 3}$
 a-zero-factor	Possible issues		[RisingFactorial, -3, 4]	0	A non-positive integer base with $|a| < n$ picks up a zero factor: $(-3)(-2)(-1)(0)$
-a-pole-of-gamma-a	Possible issues		[N, [RisingFactorial, -2, [Complex, 1, 1]]]	0	At a pole of $\Gamma(a)$ with a non-integer order, $1/\Gamma(a) = 0$ makes the value 0
+a-pole-of-gamma-a	Possible issues		[N, [RisingFactorial, -2, [Complex, 1, 1]]]	{num: "0.0"}	At a pole of $\Gamma(a)$ with a non-integer order, $1/\Gamma(a) = 0$ makes the value 0

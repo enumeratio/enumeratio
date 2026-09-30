@@ -33,11 +33,14 @@ made it — the package's own tests are the net that catches anything that quiet
 on the patch rather than on the native head.
 
 **cortex-js/compute-engine#340** (the analytic special-function family) is most of these
-patches: `zeta-hurwitz` (complex `Zeta`, `Zeta(s, a)`, `HurwitzZeta`; offered as PR #350),
-`lerch-phi` (`LerchPhi`), `polylog-order` and `polygamma-complex` (`PolyLog`/`PolyGamma`
-widened to non-integer/complex arguments), `dirichlet` (`DirichletEta`, `DirichletBeta`,
+patches: `lerch-phi` (`LerchPhi`), `dirichlet` (`DirichletEta`, `DirichletBeta`,
 `DirichletCharacter`, `DirichletL`), `barnes-g` (`BarnesG`, `LogBarnesG`), `log-gamma`
-(`LogGamma`), `clausen` (`ClausenCl`), and `stieltjes` (`StieltjesGamma`).
+(`LogGamma`), `clausen` (`ClausenCl`), and `stieltjes` (`StieltjesGamma`). `zeta-hurwitz`
+(complex `Zeta`, `Zeta(s, a)`, `HurwitzZeta`; offered as PR #350), `polylog-order` and
+`polygamma-complex` (`PolyLog`/`PolyGamma` widened to non-integer/complex arguments), and
+`round-places` all landed in compute-engine 0.141 and were retired; the arbitrary-precision
+kernels and `evaluateHurwitz`/`evaluateZeta`/`evaluatePolygamma` they left behind are
+re-exported straight from `src/index.ts` for `@enumeratio/analytic` to call directly.
 `hyperbolic-zero`, `elliptic-e-complex` and `number-theory-large-integers` are each their
 own, smaller issue. `@enumeratio/analytic`'s `declareAnalytic` and
 `@enumeratio/number-theory`'s Gaussian-integer declare apply the ones each needs, at the

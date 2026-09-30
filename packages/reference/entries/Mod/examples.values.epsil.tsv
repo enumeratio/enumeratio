@@ -35,7 +35,7 @@ reducing-a-large-norm-gaussian-by-a-small-unit	(1_000 + i) % (1 + i)	i
 reducing-by-1-a-unit-is-always-0	(2 + i) % -1	0	
 reducing-by-i-a-unit-is-always-0	(5 + 5i) % -i	0	
 a-negative-real-dividend-gaussian-modulus	(-5 - 5i) % (2 + i)	0	
-reducing-0-by-0-is-undefined-like-the-rational	0 % 0	`NaN`	
+reducing-0-by-0-is-undefined-like-the-rational	0 % 0	Indeterminate	
 reducing-by-an-associate-times-1	(8 + 2i) % (-3 - 4i)	1 + i	
 reducing-by-an-associate-times-i	(8 + 2i) % (4 - 3i)	1 + i	
 reducing-by-the-other-prime-above-13	(6 + 8i) % (2 + 3i)	-i	
@@ -47,7 +47,7 @@ reducing-by-a-real-prime-19	(123 + 456i) % 19	9
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	17 % 5 == (17 + 3 * 5) % 5	True	
 a-negative-modulus-gives-a-result-in-n-0	-5 % -3	-2	
 the-remainder-of-quotient	(7 + 5i) % (2 + i) == 7 + 5i - (2 + i) * Quotient(7 + 5i, 2 + i)	True	
-division-by-a-0-modulus-yields-nan-rather-than	5 % 0	`NaN`	
+division-by-a-0-modulus-yields-nan-rather-than	5 % 0	Indeterminate	
 periodicity-with-a-zero-modulus-on-one-side	35 % 13 == (17 + 3 * 5) % 0	False	
 rounding-ties-to-even-means-1-and-1-both-appear	[(1 + 2i) % 2, (3 + 2i) % 2]	[1, -1]	
 a-free-symbol-is-untouched	x % 2	x % 2	

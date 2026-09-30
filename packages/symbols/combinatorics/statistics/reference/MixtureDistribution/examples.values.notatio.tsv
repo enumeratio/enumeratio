@@ -1,4 +1,4 @@
 id	in	out
 mixture-mean	<Mean><MixtureDistribution><List>1 1</List> <List><NormalDistribution>0 1</NormalDistribution> <NormalDistribution>10 1</NormalDistribution></List></MixtureDistribution></Mean>	<ToExpression>5</ToExpression>
 mixture-variance-total-law	<Variance><MixtureDistribution><List>1 1</List> <List><NormalDistribution>0 1</NormalDistribution> <NormalDistribution>10 1</NormalDistribution></List></MixtureDistribution></Variance>	<ToExpression>26</ToExpression>
-mixture-cdf-far-right	<N><CDF><MixtureDistribution><List>1 1</List> <List><NormalDistribution>0 1</NormalDistribution> <NormalDistribution>10 1</NormalDistribution></List></MixtureDistribution> 100</CDF></N>	<ToExpression>1</ToExpression>
+mixture-cdf-far-right	<N><CDF><MixtureDistribution><List>1 1</List> <List><NormalDistribution>0 1</NormalDistribution> <NormalDistribution>10 1</NormalDistribution></List></MixtureDistribution> 100</CDF></N>	<ToExpression>1.0</ToExpression>

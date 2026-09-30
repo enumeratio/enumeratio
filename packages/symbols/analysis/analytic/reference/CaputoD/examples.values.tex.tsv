@@ -8,5 +8,5 @@ exact-order-x-vanishes	\mathrm{CaputoD}(x, \bigl\lbrack x, \frac{3}{2}\bigr\rbra
 exact-order-power-x2-half	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{8\sqrt{x}^{3}}{3\sqrt{\pi}}
 exact-order-power-x2-three-half	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{3}{2}\bigr\rbrack)	\frac{4\sqrt{x}}{\sqrt{\pi}}
 exact-order-power-x2-third	\mathrm{CaputoD}(x^2, \bigl\lbrack x, \frac{1}{3}\bigr\rbrack)	\frac{2x^{\frac{5}{3}}}{\Gamma(\frac{8}{3})}
-polynomial-linearity	\mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, 0.5\bigr\rbrack)	1.504\,505\,556\,127\,350\,098\,53x^{1.5}+3.385\,137\,501\,286\,537\,721\,7\sqrt{x}
+polynomial-linearity	\mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, 0.5\bigr\rbrack)	1.504\,505\,556\,127\,350\,098\,53x^{1.5}+3.385\,137\,501\,286\,537\,721\,7x^{0.5}
 exact-order-polynomial-half	\mathrm{CaputoD}(x^2+3x+1, \bigl\lbrack x, \frac{1}{2}\bigr\rbrack)	\frac{6\sqrt{x}}{\sqrt{\pi}}+\frac{8\sqrt{x}^{3}}{3\sqrt{\pi}}

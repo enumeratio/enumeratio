@@ -2,4 +2,4 @@ id	in	out
 a-perfect-square-is-never-negative	\mathrm{FunctionSign}(x^2, x)	1
 a-sum-of-a-square-and-a-positive-constant	\mathrm{FunctionSign}(\frac{1}{x^2+1}, x)	1
 exp-is-always-positive	\mathrm{FunctionSign}(e^{x}, x)	1
-a-cubic-changes-sign	\mathrm{FunctionSign}(x^3, x)	\mathrm{Indeterminate}
+a-cubic-changes-sign	\mathrm{FunctionSign}(x^3, x)	\operatorname{Indeterminate}

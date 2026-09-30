@@ -6,7 +6,7 @@ ln-g-frac-12	\log G(0.5)	-0.505\,433\,054\,489\,458\,3
 ln-g-0-7-negative-since-g-1-on-0-1	\log G(0.7)	-0.214\,589\,897\,075\,086\,36
 complex-arguments	\log G(1.7+i)	0.121\,378\,662\,628\,899\,29-0.313\,561\,761\,336\,856\,65i
 threads-elementwise-over-an-array-infty-at-the		
-huge-arguments-straight-from-the-asymptotic	N(\log G(10^{1\,000}))	1\,150\,542\,546\,497\,022\,842\,008\,995\,727\,342\,182\,103\,801\cdot10^{1964}
+huge-arguments-straight-from-the-asymptotic	N(\log G(10^{1\,000}))	115\,054\,254\,649\,702\,284\,201\cdot10^{1983}
 interval-arithmetic-over-an-increasing-stretch	\log G(\mathrm{Interval}(0.111, 0.112))	\mathrm{Interval}(-2.106\,284\,277\,112\,4, -2.096\,646\,198\,881\,46)
 uncertainty-propagation-through-ln-g	\log G(\mathrm{Around}(1.2, 0.01))	\mathrm{Around}(0.056\,208\,855\,599\,105\,68, 0.001\,611\,305\,538\,862\,350\,7)
 ln-g-infty-infty	\log G(\infty)	\infty

@@ -15,5 +15,5 @@ interval-arithmetic-log-2-frac-13-2-log-2-3-1	Scope		[Log2, [Interval, [Rational
 uncertainty-propagation-log-2-frac-15-pm-0-01	Scope		[Log2, [Around, [Rational, 1, 5], 0.01]]	[Around, -2.321928094887362, 0.07213475204444818]	Uncertainty propagation, to first order: $\log_2(\tfrac15 \pm 0.01) \approx -2.322 \pm 0.072$	
 derivative-frac-1-x-ln-2	Scope		[D, [Log2, x], x]	[Divide, 1, [Multiply, x, [Ln, 2]]]	Derivative: $\frac{1}{x\ln 2}$	
 to-30-significant-digits-every-one-correctly	Scope		[N, [Log2, 3], 30]	{num: "1.58496250072115618145373894395"}	To 30 significant digits, every one correctly rounded	
-a-float-argument-folds-even-for-a-fractional	Applications		[Log2, 0.5]	-1	A float argument folds even for a fractional power of 2	
+a-float-argument-folds-even-for-a-fractional	Applications		[Log2, 0.5]	{num: "-1.0"}	A float argument folds even for a fractional power of 2	
 same-as-log-z-2	Properties		[Equal, [Log2, 8], [Log, 8, 2]]	True	Same as Log(z, 2)	

@@ -8,7 +8,7 @@ at-u5-0-7	N(\mathrm{ChebyshevU}(5, 0.7))	-1.397\,76
 at-u-1-0-7	N(\mathrm{ChebyshevU}(-1, 0.7))	0
 at-u-2-0-7	N(\mathrm{ChebyshevU}(-2, 0.7))	-1
 at-u-5-0-7	N(\mathrm{ChebyshevU}(-5, 0.7))	0.056\,000\,000\,000\,000\,27
-at-u4-2-3i	N(\mathrm{ChebyshevU}(4, 2+3i))	-1\,843-2\,064i
+at-u4-2-3i	N(\mathrm{ChebyshevU}(4, 2+3i))	-1\,843.0-2\,064.0i
 at-a-rational	\mathrm{ChebyshevU}(3, \frac{1}{2})	-1
 at-a-complex-argument	\mathrm{ChebyshevU}(4, 2+3i)	-1\,843-2\,064i
 a-symbolic-order-stays-unevaluated	\mathrm{ChebyshevU}(n, x)	\mathrm{ChebyshevU}(n, x)

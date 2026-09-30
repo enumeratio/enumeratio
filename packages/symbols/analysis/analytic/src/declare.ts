@@ -1,7 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { threadOverLists } from "@enumeratio/engine";
 import {
-  roundPlaces,
   applyPatch,
   type EvalOptions,
   type NativeEval,
@@ -9,11 +8,11 @@ import {
   clausenPatch,
   dirichlet,
   lerchPhiPatch,
+  polylogPrecision,
+  hurwitzZetaForms,
+  polygammaLogGamma,
   logGammaPatch,
-  polygammaComplex,
-  polylogOrder,
   stieltjes,
-  zetaHurwitz,
 } from "@enumeratio/for-compute-engine";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
@@ -104,13 +103,16 @@ import { declareNSum } from "./nsum.ts";
 /**
  * Declare the analytic special-function heads on `ce`, numerically aligned with Wolfram.
  *
- * The zeta family -- `HurwitzZeta`, the two-argument `Zeta`, `LerchPhi`, and `PolyLog` /
- * `PolyGamma`'s complex-argument extensions -- and `BarnesG`, `LogBarnesG`, `LogGamma`,
- * `ClausenCl`, the Dirichlet family (`DirichletEta`, `DirichletBeta`, `DirichletCharacter`,
- * `DirichletL`) and `StieltjesGamma` are all cortex-js/compute-engine#340 candidates: they
- * live in `@enumeratio/for-compute-engine` as patches (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10) and are
+ * `LerchPhi`, `BarnesG`, `LogBarnesG`, `LogGamma`, `ClausenCl`, the Dirichlet family
+ * (`DirichletEta`, `DirichletBeta`, `DirichletCharacter`, `DirichletL`) and
+ * `StieltjesGamma` are all cortex-js/compute-engine#340 candidates: they live in
+ * `@enumeratio/for-compute-engine` as patches (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10) and are
  * applied here at the point their declarations used to run, so declare order and behaviour
- * are unchanged.
+ * are unchanged. `HurwitzZeta`, the two-argument `Zeta`, and `PolyLog`/`PolyGamma`'s
+ * complex-argument widenings landed natively in compute-engine 0.141 and are no longer
+ * patches; special-functions-remaining.ts and generalized-special.ts still call
+ * `evaluateHurwitz`/`evaluateZeta`/`evaluatePolygamma` directly for certified-precision
+ * evaluation.
  *
  * `Gamma` and `GammaRegularized` gain a third argument (Wolfram's generalized incomplete
  * gamma, and with it the lower incomplete gamma) while keeping the native one- and
@@ -146,14 +148,10 @@ import { declareNSum } from "./nsum.ts";
  * round to a machine double (or to `ce.precision`, under `N()`).
  */
 export function declareAnalytic(ce: ComputeEngine): void {
-  // HurwitzZeta/Zeta's API (cortex-js/compute-engine#340) landed natively in compute-
-  // engine 0.139; the arbitrary-precision N(x, d) path has not, so zeta-hurwitz still
-  // applies -- see its own comment.
-  applyPatch(ce, roundPlaces);
-  applyPatch(ce, zetaHurwitz);
   applyPatch(ce, lerchPhiPatch);
-  applyPatch(ce, polylogOrder);
-  applyPatch(ce, polygammaComplex);
+  applyPatch(ce, polylogPrecision);
+  applyPatch(ce, hurwitzZetaForms);
+  applyPatch(ce, polygammaLogGamma);
 
   // Gamma(s, z₀, z₁) and GammaRegularized(s, z₀, z₁): the generalized incomplete gamma,
   // whose z₀ = 0 case is the lower incomplete gamma. Native for one and two arguments.

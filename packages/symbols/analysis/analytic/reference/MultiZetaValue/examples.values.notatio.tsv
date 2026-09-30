@@ -7,5 +7,5 @@ zeta-4-2	<N><MultiZetaValue>4 2</MultiZetaValue></N>	<ToExpression>0.08848338245
 zeta-2-4	<N><MultiZetaValue>2 4</MultiZetaValue></N>	<ToExpression>0.674523914033936</ToExpression>
 zeta-5-2	<N><MultiZetaValue>5 2</MultiZetaValue></N>	<ToExpression>0.038575124342795405</ToExpression>
 zeta-3-4	<N><MultiZetaValue>3 4</MultiZetaValue></N>	<ToExpression>0.20750501461558057</ToExpression>
-zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	<Chop><Subtract><N><MultiZetaValue>2 2</MultiZetaValue></N> <Multiply>0.75 <N><Zeta>4</Zeta></N></Multiply></Subtract></Chop>	<ToExpression>0</ToExpression>
+zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact	<Chop><Subtract><N><MultiZetaValue>2 2</MultiZetaValue></N> <Multiply>0.75 <N><Zeta>4</Zeta></N></Multiply></Subtract></Chop>	<ToExpression>0.0</ToExpression>
 s-1-2-stays-symbolic-outside-the-depth-2-both	<MultiZetaValue>1 2</MultiZetaValue>	<MultiZetaValue>1 2</MultiZetaValue>

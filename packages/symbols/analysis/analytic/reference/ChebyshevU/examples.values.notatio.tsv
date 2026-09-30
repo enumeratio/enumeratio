@@ -8,7 +8,7 @@ at-u5-0-7	<N><ChebyshevU>5 0.7</ChebyshevU></N>	<ToExpression>-1.39776</ToExpres
 at-u-1-0-7	<N><ChebyshevU>-1 0.7</ChebyshevU></N>	<ToExpression>0</ToExpression>
 at-u-2-0-7	<N><ChebyshevU>-2 0.7</ChebyshevU></N>	<ToExpression>-1</ToExpression>
 at-u-5-0-7	<N><ChebyshevU>-5 0.7</ChebyshevU></N>	<ToExpression>0.05600000000000027</ToExpression>
-at-u4-2-3i	<N><ChebyshevU>4 <Complex>2 3</Complex></ChebyshevU></N>	<Complex>-1843 -2064</Complex>
+at-u4-2-3i	<N><ChebyshevU>4 <Complex>2 3</Complex></ChebyshevU></N>	<Complex>-1843.0 -2064.0</Complex>
 at-a-rational	<ChebyshevU>3 <Rational>1 2</Rational></ChebyshevU>	<ToExpression>-1</ToExpression>
 at-a-complex-argument	<ChebyshevU>4 <Complex>2 3</Complex></ChebyshevU>	<Complex>-1843 -2064</Complex>
 a-symbolic-order-stays-unevaluated	<ChebyshevU>n x</ChebyshevU>	<ChebyshevU>n x</ChebyshevU>
