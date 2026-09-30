@@ -17,3 +17,5 @@ all-three-arguments-complex-matches-mpmath-s	<N><IncompleteEllipticPi><Complex>1
 characteristic-n-1	<N><IncompleteEllipticPi>0.3 1.1 0.4</IncompleteEllipticPi></N>	<ToExpression>1.3238008150474936</ToExpression>
 n-0-reduces-to-the-incomplete-elliptic-integral	<N><IncompleteEllipticPi>0 0.4 0.3</IncompleteEllipticPi></N>	<ToExpression>0.40316499194713934</ToExpression>
 symbolic-arguments-are-left-unevaluated-rather	<IncompleteEllipticPi>n phi m</IncompleteEllipticPi>	<IncompleteEllipticPi>n phi m</IncompleteEllipticPi>
+n-0-phi-arccsc-0-m-0	<IncompleteEllipticPi>0 <Arccsc>0</Arccsc> 0</IncompleteEllipticPi>	<IncompleteEllipticPi>0 ComplexInfinity 0</IncompleteEllipticPi>
+n-0-phi-pi-plus-arccsc-0-m-0	<IncompleteEllipticPi>0 <Add>Pi <Arccsc>0</Arccsc></Add> 0</IncompleteEllipticPi>	<IncompleteEllipticPi>0 ComplexInfinity 0</IncompleteEllipticPi>

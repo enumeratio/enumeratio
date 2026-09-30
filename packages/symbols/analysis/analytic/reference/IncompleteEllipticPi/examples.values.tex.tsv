@@ -17,3 +17,5 @@ all-three-arguments-complex-matches-mpmath-s	N(\mathrm{IncompleteEllipticPi}(1.1
 characteristic-n-1	N(\mathrm{IncompleteEllipticPi}(0.3, 1.1, 0.4))	1.323\,800\,815\,047\,493\,6
 n-0-reduces-to-the-incomplete-elliptic-integral	N(\mathrm{IncompleteEllipticPi}(0, 0.4, 0.3))	0.403\,164\,991\,947\,139\,34
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{IncompleteEllipticPi}(n, \phi, m)	\mathrm{IncompleteEllipticPi}(n, \phi, m)
+n-0-phi-arccsc-0-m-0	\mathrm{IncompleteEllipticPi}(0, \mathrm{arccsc}(0), 0)	\mathrm{IncompleteEllipticPi}(0, \tilde\infty, 0)
+n-0-phi-pi-plus-arccsc-0-m-0	\mathrm{IncompleteEllipticPi}(0, \pi+\mathrm{arccsc}(0), 0)	\mathrm{IncompleteEllipticPi}(0, \tilde\infty, 0)
