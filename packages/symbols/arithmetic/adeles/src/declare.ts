@@ -2,6 +2,7 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
   bigRationalAt,
+  defineOverload,
   integerAt,
   mayBeInteger,
   operandsOf,
@@ -353,18 +354,18 @@ export function declareAdeles(ce: ComputeEngine): void {
   // ── existing heads learn profinite arguments ──────────────────────────────────
 
   const sequence = (head: string, kernel: (x: Profinite) => Profinite | undefined): void => {
-    widenSignature(ce, head, "(integer | value) -> integer | value", mayBeInteger);
-    wrapOperator(
-      ce,
-      [head, "n"],
-      (ops) => ops[0]?.operator === PROFINITE,
-      () => (ops) => {
+    defineOverload(ce, head, {
+      package: "adeles",
+      signature: "(value) -> value",
+      on: [PROFINITE],
+      arity: 1,
+      native: mayBeInteger,
+      evaluate: (ops) => {
         const x = profiniteOf(ops[0]);
         const y = x === undefined ? undefined : kernel(x);
         return y === undefined ? undefined : writeProfinite(y);
       },
-      1,
-    );
+    });
   };
   sequence("Fibonacci", P.fibonacci);
   sequence("LucasL", P.lucas);

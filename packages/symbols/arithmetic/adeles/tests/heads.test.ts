@@ -37,14 +37,10 @@ test("visualPosition lays residues out by factorial digits", () => {
   ]);
 });
 
-test("a real (non-integer) Fibonacci index is refused when adeles loads after number-theory", () => {
-  // This is a declare-order artifact of THIS file, not documented behavior: widenSignature
-  // narrows Fibonacci's native gate to `mayBeInteger`, and whichever of adeles'/number-theory's
-  // calls runs last wins (see packages/reference/scripts/engines.ts's comment on
-  // `LIBRARY_DECLARATIONS`, which declares number-theory last precisely so its own wider
-  // signature — real index via Binet, two-argument polynomial — wins instead). Here
-  // number-theory is declared BEFORE adeles, so adeles' narrower signature wins and a real
-  // index like 2.5 is refused. Kept as a unit test rather than a reference example because
-  // the reference engine's canonical declare order gives a different (evaluated) answer.
-  expect(run(["Fibonacci", 2.5])).toEqual(["Fibonacci", 2.5]);
+test("a real Fibonacci index evaluates whichever of adeles and number-theory declares last", () => {
+  // Both extend Fibonacci as rows in its table (defineOverload), so declare order no longer
+  // decides which package's form survives: this file declares number-theory first, and
+  // number-theory's real index (via Binet) still answers beside adeles' profinite one.
+  const value = run(["Fibonacci", 2.5]);
+  expect(typeof value === "number" || (value as { num?: string }).num !== undefined).toBe(true);
 });
