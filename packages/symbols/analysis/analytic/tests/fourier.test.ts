@@ -13,8 +13,14 @@ declareAnalytic(ce);
 
 const evalOf = (mj: unknown) => ce.box(mj as never).evaluate().json;
 
+// A float result's parts may serialize as `{ num: "-1.0" }`; the transforms are numeric,
+// so compare their values.
+const plain = (j: unknown): unknown =>
+  Array.isArray(j) ? j.map(plain) : typeof j === "object" && j !== null && "num" in j ? Number(j.num) : j;
+const valuesOf = (mj: unknown) => plain(evalOf(mj));
+
 test("Fourier: the DFT of a list, matching Wolfram's default FourierParameters {0,1}", () => {
-  expect(evalOf(["Fourier", ["List", 1, 2, 3, 4]])).toEqual(["List", 5, ["Complex", -1, -1], -1, ["Complex", -1, 1]]);
+  expect(valuesOf(["Fourier", ["List", 1, 2, 3, 4]])).toEqual(["List", 5, ["Complex", -1, -1], -1, ["Complex", -1, 1]]);
   expect(evalOf(["InverseFourier", ["Fourier", ["List", 1, 2, 3, 4]]])).toEqual(["List", 1, 2, 3, 4]);
 });
 
@@ -33,14 +39,14 @@ test("Fourier: a rectangular matrix is the separable 2D transform", () => {
 
 test("Fourier: a custom FourierParameters option, and InverseFourier's sign flip", () => {
   const params = ["KeyValuePair", "FourierParameters", ["List", 1, -1]];
-  expect(evalOf(["Fourier", ["List", 1, 2, 3, 4], params])).toEqual([
+  expect(valuesOf(["Fourier", ["List", 1, 2, 3, 4], params])).toEqual([
     "List",
     10,
     ["Complex", -2, 2],
     -2,
     ["Complex", -2, -2],
   ]);
-  expect(evalOf(["InverseFourier", ["List", 1, 2, 3, 4], params])).toEqual([
+  expect(valuesOf(["InverseFourier", ["List", 1, 2, 3, 4], params])).toEqual([
     "List",
     2.5,
     ["Complex", -0.5, -0.5],
