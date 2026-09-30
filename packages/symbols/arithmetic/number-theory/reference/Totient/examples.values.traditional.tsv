@@ -32,4 +32,4 @@ totient-13	\varphi(13)	12
 totient-14	\varphi(14)	6
 totient-15	\varphi(15)	8
 totient-16	\varphi(16)	8
-assuming-p-in-primes-r-in-integers-r-gt-0	\mathrm{Assuming}(p\in\mathbb{P}\land r\in\mathbb{Z}\land r\gt0, \mathrm{FunctionExpand}(\varphi(p^{r})))	\varphi(p^{r})
+assuming-p-in-primes-r-in-integers-r-gt-0		

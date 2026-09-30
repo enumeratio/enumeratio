@@ -7,4 +7,4 @@ list-numberq-c-numberq-d	\bigl\lbrack\mathrm{NumberQ}(c), \mathrm{NumberQ}(d)\bi
 list-numberq-o-numberq-u	\bigl\lbrack\mathrm{NumberQ}(o), \mathrm{NumberQ}(u)\bigr\rbrack	\bigl\lbrack\bot, \bot\bigr\rbrack
 numberq-sqrt-2	\mathrm{NumberQ}(\sqrt{2})	\top
 numberq-positiveinfinity	\mathrm{NumberQ}(\infty)	\top
-ismatrix-m-numberq	\mathrm{IsMatrix}(m, \mathrm{NumberQ})	\bot
+ismatrix-m-numberq		

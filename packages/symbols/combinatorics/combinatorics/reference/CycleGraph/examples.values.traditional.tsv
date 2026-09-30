@@ -6,4 +6,4 @@ map-function-vertexeccentricity-cyclegraph-5-1-1
 isacyclicgraph-cyclegraph-5	\mathrm{IsAcyclicGraph}(\mathrm{CycleGraph}(5))	\mathrm{False}
 vertexdegree-cyclegraph-7		
 cyclegraph-4		
-ispathgraph-cyclegraph-5	\mathrm{IsPathGraph}(\mathrm{CycleGraph}(5))	\mathrm{False}
+ispathgraph-cyclegraph-5		

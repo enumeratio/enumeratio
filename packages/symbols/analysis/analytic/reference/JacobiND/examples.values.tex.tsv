@@ -3,7 +3,7 @@ a-floating-point-argument-evaluates-directly-to	N(\mathrm{JacobiND}(0.3, -2))	0.
 m-greater-than-1-via-the-reciprocal-modulus	N(\mathrm{JacobiND}(0.3, 1.5))	1.069\,333\,535\,737\,140\,7
 list-jacobind-z-0-jacobind-z-1	\bigl\lbrack\mathrm{JacobiND}(z, 0), \mathrm{JacobiND}(z, 1)\bigr\rbrack	\bigl\lbrack1, \cosh(z)\bigr\rbrack
 matrixfunction-function-jacobind-neg-1-over-3	\mathrm{MatrixFunction}(()\mapsto\mathrm{JacobiND}((-1/3i)\pi, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack
-list-jacobind-0-m-jacobind-1-over-2-times	\bigl\lbrack\mathrm{JacobiND}(0, m), \mathrm{JacobiND}(\frac{\mathrm{EllipticK}(m)}{2}, m), \mathrm{JacobiND}(\mathrm{EllipticK}(m), m)\bigr\rbrack	\bigl\lbrack1, \mathrm{JacobiND}(\frac{\mathrm{EllipticK}(m)}{2}, m), \frac{1}{\sqrt{1-m}}\bigr\rbrack
+list-jacobind-0-m-jacobind-1-over-2-times		
 u-0-is-1-for-any-m	\mathrm{JacobiND}(0, m)	1
 jacobind-0-1	\mathrm{JacobiND}(0, 1)	1
 jacobind-1-over-2-times-i-times-pi-1	\mathrm{JacobiND}((\frac{1}{2}i)\pi, 1)	0

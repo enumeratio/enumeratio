@@ -23,9 +23,9 @@ derivative-csc-2-x	D[Cot[x], x]
 antiderivative-ln-sin-x	Integrate[Cot[x], x]	
 n-cot-6-over-5-50	N[Cot[Rational[6, 5]], 50]	
 matrixfunction-function-cot-1-1-list-list-5-over	MatrixFunction[Function[Cot[Slot[1]]], List[List[Times[Rational[5, 6], Pi], Times[Rational[1, 2], Pi]], List[Times[Rational[3, 2], Pi], Times[Rational[-1, 6], Pi]]]]	[MatrixFunction, [Function, [Cot, _1]], [List, [List, [Multiply, [Rational, 5, 6], Pi], [Multiply, [Rational, 1, 2], Pi]], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 6], Pi]]]]
-assuming-m-in-integers-refine-cot-pi-times-1	Assuming[Element[m, Integers], Refine[Cot[Times[Pi, Plus[Times[1, Power[2, -1]], m]]]]]	
-assuming-m-in-integers-fullsimplify-refine-cot	Assuming[Element[m, Integers], FullSimplify[Refine[Cot[Times[Pi, m]]]]]	
-cot-positiveinfinity	Cot[Infinity]	
+assuming-m-in-integers-refine-cot-pi-times-1		
+assuming-m-in-integers-fullsimplify-refine-cot		
+cot-positiveinfinity		
 reciprocal-of-tan-cot-x-frac-1-tan-x	Equal[Cot[Divide[Pi, 4]], Divide[1, Tan[Divide[Pi, 4]]]]	
 pythagorean-identity-1-cot-2-x-csc-2-x	Equal[Plus[1, Power[Cot[Divide[Pi, 6]], 2]], Power[Csc[Divide[Pi, 6]], 2]]	
 cot-1-over-10-times-pi	Cot[Times[Rational[1, 10], Pi]]	

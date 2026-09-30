@@ -15,6 +15,9 @@ import { exactRounding } from "./patches/exact-rounding.ts";
 import { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 import { infinityArgs } from "./patches/infinity-args.ts";
 import { rangeRationalStep } from "./patches/range-rational-step.ts";
+import { solveIdentity } from "./patches/solve-identity.ts";
+import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
+import { logCombinationSign } from "./patches/log-combination-sign.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -99,6 +102,9 @@ export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches
 export { exactRounding, evaluateRoundingOnExactRationals, roundExactRational } from "./patches/exact-rounding.ts";
 export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 export { rangeRationalStep, evaluateRangeWithRationalStep } from "./patches/range-rational-step.ts";
+export { solveIdentity, evaluateSolveIdentity } from "./patches/solve-identity.ts";
+export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
+export { logCombinationSign, simplifyLogCombinationOnProvablePositivity } from "./patches/log-combination-sign.ts";
 export {
   infinityArgs,
   evaluateArcsinArccosAtInfinity,
@@ -217,6 +223,9 @@ export const PATCHES: readonly Patch[] = [
   multiplyDirectedInfinity,
   infinityArgs,
   rangeRationalStep,
+  solveIdentity,
+  takeDropNegativeCount,
+  logCombinationSign,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

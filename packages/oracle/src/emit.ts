@@ -68,6 +68,11 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
   // `KeyValuePair` special case); no other system's emit ever reaches this bare, since none
   // has a curated `Over`-arity mapping for the heads that take it.
   GaussianIntegers: { wolfram: "GaussianIntegers" },
+  // Same shape as `GaussianIntegers` above — a domain, `DEFINED_NAMES`-defined, whose bare
+  // name Wolfram already spells identically (`Element[m, Integers]`). Without this it fell
+  // into the DEFINED_NAMES branch and reported `symbol:Integers` missing on every `Assuming`/
+  // `Refine` example that names it, even though the fallthrough text was already right.
+  Integers: { wolfram: "Integers" },
 };
 
 /**
@@ -217,6 +222,20 @@ export function emit(expr: MathJSON, system: System): Emitted {
     if (system === "wolfram" && head === "Thread" && operands.length === 1) {
       const inner = operands[0];
       if (isCall(inner) && inner[0] === "Equal" && inner.length === 3) {
+        return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
+      }
+    }
+    // Sign(Permutation(...)): the SAME raw-tree problem (A-126 head survey, #495) -- `Sign`
+    // is overloaded over `complex | permutation`, and `toWolfram`'s own `Sign` SPECIAL case
+    // needs the RAW `Permutation(...)` tree to tell "this is the permutation-parity
+    // statistic, emit Signature[...]" from "this is the numeric Sign[...]" apart. The
+    // generic per-operand `walk()` below would unwrap `Permutation(...)` to its bare list
+    // contents first (the CARRIER_NAMES fallback further down, same mechanism the
+    // CycleDecomposition/Permutation case above dodges), losing that distinction before
+    // `Sign`'s own dispatch ever runs.
+    if (system === "wolfram" && head === "Sign" && operands.length === 1) {
+      const inner = operands[0];
+      if (isCall(inner) && inner[0] === "Permutation") {
         return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
       }
     }

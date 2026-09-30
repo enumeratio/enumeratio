@@ -1,7 +1,9 @@
 id	in	out
 take-list-a-b-c-d-exponentiale-f-4	\mathrm{Take}(\bigl\lbrack a, b, c, d, e, f\bigr\rbrack, 4)	\bigl\lbrack a, b, c, d\bigr\rbrack
-take-list-a-b-c-d-exponentiale-f-neg-3	\mathrm{Take}(\bigl\lbrack a, b, c, d, e, f\bigr\rbrack, -3)	\bigl\lbrack\bigr\rbrack
+take-list-a-b-c-d-exponentiale-f-neg-3		
 take-list-list-11-12-13-list-21-22-23-list-31-32	\mathrm{Take}(\bigl\lbrack\bigl\lbrack11, 12, 13\bigr\rbrack, \bigl\lbrack21, 22, 23\bigr\rbrack, \bigl\lbrack31, 32, 33\bigr\rbrack\bigr\rbrack, 2)	\bigl\lbrack\bigl\lbrack11, 12, 13\bigr\rbrack, \bigl\lbrack21, 22, 23\bigr\rbrack\bigr\rbrack
 take-list-a-b-c-upto-4	\mathrm{Take}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{UpTo}(4))	\bigl\lbrack a, b, c\bigr\rbrack
+take-list-1-2-3-4-5-negative-2	\mathrm{Take}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, -2)	\bigl\lbrack4, 5\bigr\rbrack
 take-list-a-b-c-d-exponentiale-f-g-h-4	\mathrm{Take}(\bigl\lbrack a, b, c, d, e, f, g, h\bigr\rbrack, 4)	\bigl\lbrack a, b, c, d\bigr\rbrack
-take-list-a-b-c-d-exponentiale-neg-1	\mathrm{Take}(\bigl\lbrack a, b, c, d, e\bigr\rbrack, -1)	\bigl\lbrack\bigr\rbrack
+take-list-1-2-negative-5-overflow-declines	\mathrm{Take}(\bigl\lbrack1, 2\bigr\rbrack, -5)	\mathrm{Take}(\bigl\lbrack1, 2\bigr\rbrack, -5)
+take-list-a-b-c-d-exponentiale-neg-1		

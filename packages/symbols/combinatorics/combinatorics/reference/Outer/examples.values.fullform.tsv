@@ -4,12 +4,12 @@ symbolic-entries	Outer[Times, List[1, 2, 3], List[x, y]]
 outer-matrix-of-right-shape	Outer[Plus, List[1, 2], List[10, 20, 30]]
 outer-f-list-a-b-list-x-y-z	Outer[f, List[a, b], List[x, y, z]]
 outer-multiply-list-1-2-3-4-list-a-b-c	Outer[Times, List[1, 2, 3, 4], List[a, b, c]]
-outer-multiply-list-list-1-2-list-3-4-list-list	Outer[Times, List[List[1, 2], List[3, 4]], List[List[a, b], List[c, d]]]
+outer-multiply-list-list-1-2-list-3-4-list-list	
 any-binary-function-an-addition-table	Outer[Plus, List[1, 2], List[10, 20]]
 a-table-of-powers	Outer[Power, List[2, 3], List[1, 2, 3]]
 list-gives-every-pair-like-a-cartesian-product	Outer[List, List[a, b], List[x, y]]
-outer-multiply-s1-s2	Outer[Times, s1, s2]
+outer-multiply-s1-s2	
 outer-f-list-x-x-x-list-x-x-x-x	Outer[f, List[x, x, x], List[x, x, x, x]]
 outer-list-list-a-b-c-list-x-y	Outer[List, List[a, b, c], List[x, y]]
-outer-f-l1-l2	Outer[f, l1, l2]
-outer-f-s1-s2	Outer[f, s1, s2]
+outer-f-l1-l2	
+outer-f-s1-s2	

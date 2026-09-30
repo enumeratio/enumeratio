@@ -1,8 +1,8 @@
 id	in
 letters-a-through-e	CharacterRange[String[a], String[e]]
 characterrange-a-z	CharacterRange["a", "z"]
-characterrange-1-000-1-020	CharacterRange[1000, 1020]
+characterrange-1-000-1-020	
 by-code-point	CharacterRange[97, 101]
 characterrange-a-z-2	CharacterRange["A", "Z"]
 characterrange-0-9	CharacterRange["0", "9"]
-characterrange	CharacterRange[" ", "~"]
+characterrange	

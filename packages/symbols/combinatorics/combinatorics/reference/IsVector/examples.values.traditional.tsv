@@ -8,6 +8,6 @@ a-non-list-is-not-a-vector	\mathrm{IsVector}(3)	\mathrm{False}
 a-test-function-must-hold-of-every-element	\mathrm{IsVector}(\bigl\lbrack2, 4, 6\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}
 a-test-function-failing-on-one-element	\mathrm{IsVector}(\bigl\lbrack2, 3, 6\bigr\rbrack, \mathrm{IsEven})	\mathrm{False}
 isvector-range-1-10-ismachinenumber	\mathrm{IsVector}(1..10, \mathrm{IsMachineNumber})	\mathrm{False}
-isvector-range-1-10-isinteger	\mathrm{IsVector}(1..10, \mathrm{IsInteger})	\mathrm{False}
-isvector-n-range-1-10-ismachinenumber	\mathrm{IsVector}(N(1..10), \mathrm{IsMachineNumber})	\mathrm{False}
+isvector-range-1-10-isinteger		
+isvector-n-range-1-10-ismachinenumber		
 list-isvector-vec-isvector-expr	\bigl\lbrack\mathrm{IsVector}(\mathrm{vec}), \mathrm{IsVector}(\mathrm{expr})\bigr\rbrack	\bigl\lbrack\mathrm{False}, \mathrm{False}\bigr\rbrack

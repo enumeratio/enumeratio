@@ -10,4 +10,4 @@ without-a-predicate-tests-the-elements	any([False, True])	True
 a-level-argument-tests-the-elements-at-depth-2	any([[1, 2], [3, -4]], Function(_1 < 0), 2)	True	Unreadable
 always-false-on-an-empty-list	any([], isEven)	False	
 some-element-passes-exactly-when-not-every	any([1, 3, 5], isEven) == !all([1, 3, 5], isOdd)	True	
-map-logicalexpand-list-any-list-x-y-z-f	map(LogicalExpand, [any([x, y, z], f), !NoneTrue([x, y, z], f)])	[any([x, y, z], f), !NoneTrue([x, y, z], f)]	
+map-logicalexpand-list-any-list-x-y-z-f			

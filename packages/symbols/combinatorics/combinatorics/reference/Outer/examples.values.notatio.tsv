@@ -4,12 +4,12 @@ symbolic-entries	<Outer>Multiply <List>1 2 3</List> <List>x y</List></Outer>	<Li
 outer-matrix-of-right-shape	<Outer>Add <List>1 2</List> <List>10 20 30</List></Outer>	<List><List>11 21 31</List> <List>12 22 32</List></List>
 outer-f-list-a-b-list-x-y-z	<Outer>f <List>a b</List> <List>x y z</List></Outer>	<List><List><f>a x</f> <f>a y</f> <f>a z</f></List> <List><f>b x</f> <f>b y</f> <f>b z</f></List></List>
 outer-multiply-list-1-2-3-4-list-a-b-c	<Outer>Multiply <List>1 2 3 4</List> <List>a b c</List></Outer>	<List><List>a b c</List> <List><Multiply>2 a</Multiply> <Multiply>2 b</Multiply> <Multiply>2 c</Multiply></List> <List><Multiply>3 a</Multiply> <Multiply>3 b</Multiply> <Multiply>3 c</Multiply></List> <List><Multiply>4 a</Multiply> <Multiply>4 b</Multiply> <Multiply>4 c</Multiply></List></List>
-outer-multiply-list-list-1-2-list-3-4-list-list	<Outer>Multiply <List><List>1 2</List> <List>3 4</List></List> <List><List>a b</List> <List>c d</List></List></Outer>	<List><List><List>a <Multiply>2 b</Multiply></List> <List>c <Multiply>2 d</Multiply></List></List> <List><List><Multiply>3 a</Multiply> <Multiply>4 b</Multiply></List> <List><Multiply>3 c</Multiply> <Multiply>4 d</Multiply></List></List></List>
+outer-multiply-list-list-1-2-list-3-4-list-list		
 any-binary-function-an-addition-table	<Outer>Add <List>1 2</List> <List>10 20</List></Outer>	<List><List>11 21</List> <List>12 22</List></List>
 a-table-of-powers	<Outer>Power <List>2 3</List> <List>1 2 3</List></Outer>	<List><List>2 4 8</List> <List>3 9 27</List></List>
 list-gives-every-pair-like-a-cartesian-product	<Outer>List <List>a b</List> <List>x y</List></Outer>	<List><List><List>a x</List> <List>a y</List></List> <List><List>b x</List> <List>b y</List></List></List>
-outer-multiply-s1-s2	<Outer>Multiply s1 s2</Outer>	<Apply>List</Apply>
+outer-multiply-s1-s2		
 outer-f-list-x-x-x-list-x-x-x-x	<Outer>f <List>x x x</List> <List>x x x x</List></Outer>	<List><List><f>x x</f> <f>x x</f> <f>x x</f> <f>x x</f></List> <List><f>x x</f> <f>x x</f> <f>x x</f> <f>x x</f></List> <List><f>x x</f> <f>x x</f> <f>x x</f> <f>x x</f></List></List>
 outer-list-list-a-b-c-list-x-y	<Outer>List <List>a b c</List> <List>x y</List></Outer>	<List><List><List>a x</List> <List>a y</List></List> <List><List>b x</List> <List>b y</List></List> <List><List>c x</List> <List>c y</List></List></List>
-outer-f-l1-l2	<Outer>f l1 l2</Outer>	<Apply>List</Apply>
-outer-f-s1-s2	<Outer>f s1 s2</Outer>	<Apply>List</Apply>
+outer-f-l1-l2		
+outer-f-s1-s2		

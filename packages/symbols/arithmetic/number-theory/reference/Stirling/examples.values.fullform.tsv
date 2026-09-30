@@ -5,7 +5,7 @@ stirling-20-10	StirlingS2[20, 10]
 exact-for-large-n	StirlingS2[50, 2]
 threads-element-wise-over-a-list-as-wolfram-s	StirlingS2[List[2, 4, 6], 2]
 the-ways-to-split-10-distinct-items-among-3	StirlingS2[10, 3]
-stirling-n-range-1-n	StirlingS2[n, Range[1, n]]
+stirling-n-range-1-n	
 one-block-means-one-partition-s-n-1-1	StirlingS2[5, 1]
 singletons-only-s-n-n-1	StirlingS2[5, 5]
 row-sums-give-the-bell-numbers	Equal[Sum[StirlingS2[4, k], List[k, 0, 4]], BellB[4]]

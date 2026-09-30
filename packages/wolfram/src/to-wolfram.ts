@@ -152,6 +152,36 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   Square: (a) => `Power[${toWolfram(a[0])}, 2]`,
   // compute-engine `Mode` returns the value; Wolfram's `Commonest` returns a list.
   Mode: (a) => `First[Commonest[${toWolfram(a[0])}]]`,
+  // Sign(x) is overloaded (A-126 farm survey, #495): a `complex`/`signed_infinity` argument
+  // is Wolfram's own Sign[x] (x/|x|, same meaning, safe to pass through verbatim below) --
+  // but a `Permutation` argument is our permutation-parity statistic ("+1 when the inversion
+  // count is even, -1 when odd"), which Wolfram calls Signature[perm], NOT Sign[perm] (a
+  // name collision `isWolframHead` would otherwise pass straight through as Wolfram's own,
+  // unrelated, numeric-only Sign -- see Order's identical trap, handled via FOREIGN since it
+  // has no single-arity Wolfram equivalent to rename to, unlike this one).
+  Sign: (a) => {
+    if (a.length !== 1 || !Array.isArray(a[0]) || a[0][0] !== "Permutation" || a[0].length !== 2)
+      return call("Sign", a);
+    // Unwrap the carrier the same way the generic CARRIER_NAMES fallback would (oracle's
+    // emit.ts) for the common bare one-line-notation case; the cycle-notation-composed case
+    // (`Permutation(CycleDecomposition(...))`) needs the same `Cycles[...]` conversion the
+    // `Permutation`/`CycleDecomposition` SPECIAL cases above already do -- Wolfram's own
+    // Signature takes either a plain list or a Cycles[...] object.
+    const content = a[0][1];
+    const parts = headArgs(content);
+    if (parts?.head === "CycleDecomposition") return `Signature[Cycles[${toWolfram(parts.args[0])}]]`;
+    return `Signature[${toWolfram(content)}]`;
+  },
+  // compute-engine's `Reduce(collection, f, x0)` is a fold (confirmed: `Reduce([1,2,3,4],
+  // Add, 0)` is 10, same as `Fold(Add, 0, [1,2,3,4])`) -- an unrelated NAME COLLISION with
+  // Wolfram's OWN `Reduce` (equation/inequality solving), which `isWolframHead` otherwise
+  // passes straight through verbatim (A-126 farm scan: `Reduce[{a,b,c,d}, List, x]` is not
+  // even the right SHAPE of call for Wolfram's Reduce, let alone the right answer). Map to
+  // Wolfram's actual fold, `Fold[f, x0, list]`, reordered from ours only when a genuine
+  // 3-ary fold call reaches here — a 2-ary or n-ary `Reduce` (Wolfram's own signature) falls
+  // through to the generic pass-through below unchanged.
+  Reduce: (a) =>
+    a.length === 3 ? `Fold[${toWolfram(a[1])}, ${toWolfram(a[2])}, ${toWolfram(a[0])}]` : call("Reduce", a),
   // Round(x, n) rounds to n decimal places; Wolfram's second argument is a step
   // to round to a multiple of, so n digits is the step 10^-n.
   Round: (a) =>

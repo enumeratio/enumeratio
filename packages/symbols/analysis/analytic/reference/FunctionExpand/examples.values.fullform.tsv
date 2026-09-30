@@ -8,6 +8,6 @@ a-rising-factorial-with-an-integer-length	FunctionExpand[Pochhammer[x, 3]]
 binom-n2-frac-n-n-1-2	FunctionExpand[Binomial[n, 2]]
 functionexpand-1-over-sqrt-x-pow-2-times-sin	FunctionExpand[Times[Divide[1, Sqrt[Power[x, 2]]], Sin[Sqrt[Power[x, 2]]]]]
 functionexpand-1-over-zeta-z-times-zeta-neg-z	FunctionExpand[Times[Divide[1, Zeta[z]], Zeta[Plus[Minus[z], 1]]]]
-functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg	FunctionExpand[List[Sqrt[Minus[Power[x, 2]]], Log[Sqrt[Plus[Minus[Power[x, 2]], 1]]]]]
+functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg	
 functionexpand-polylog-2-z-plus-polylog-2-neg-z	FunctionExpand[Plus[PolyLog[2, z], PolyLog[2, Plus[Minus[z], 1]], Minus[Zeta[2]]]]
 a-generic-cos-argument-passes-through-unchanged	FunctionExpand[Cos[theta]]

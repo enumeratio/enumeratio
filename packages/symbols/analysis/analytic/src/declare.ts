@@ -19,6 +19,9 @@ import {
   exactRounding,
   infinityArgs,
   rangeRationalStep,
+  solveIdentity,
+  takeDropNegativeCount,
+  logCombinationSign,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
@@ -194,6 +197,9 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, ceilFloorInfinity);
   applyPatch(ce, exactRounding);
   applyPatch(ce, rangeRationalStep);
+  applyPatch(ce, solveIdentity);
+  applyPatch(ce, takeDropNegativeCount);
+  applyPatch(ce, logCombinationSign);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);

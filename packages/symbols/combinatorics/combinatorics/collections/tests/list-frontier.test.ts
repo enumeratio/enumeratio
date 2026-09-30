@@ -55,3 +55,15 @@ test("RandomInteger(max, {n1, n2}) builds a nested array of the given shape", ()
   expect(arr.length - 1).toBe(2);
   expect((arr[1] as unknown[]).length - 1).toBe(3);
 });
+
+// A free symbol has no `.ops`, same as a genuinely empty `List` — `Accumulate`/`FoldList`
+// must not read that as "empty collection" and answer `List()` for it (A-126 farm scan).
+test("Accumulate(v) stays unevaluated for a free v, rather than answering List()", () => {
+  expect(run(["Accumulate", "v"])).toEqual(["Accumulate", "v"]);
+});
+test("Accumulate on an actual list still folds", () => {
+  expect(run(["Accumulate", ["List", 1, 2, 3, 4]])).toEqual(["List", 1, 3, 6, 10]);
+});
+test("FoldList(f, x0, list) stays unevaluated for a free list", () => {
+  expect(run(["FoldList", "Add", 0, "v"])).toEqual(["FoldList", "Add", 0, "v"]);
+});

@@ -5,4 +5,4 @@ mapindexed-f-list-list-a-b-list-c-d-exponentiale	MapIndexed[f, List[List[a, b], 
 mapindexed-f-list-list-list-list-list-a	MapIndexed[f, List[List[List[List[List[a]]]]]]	
 mapindexed-labeled-list-x-pow-2-x-plus-y-y-pow-2	MapIndexed[Labeled, List[Power[x, 2], Plus[x, y], Power[y, 2], Power[y, 3]]]	
 sum-mapindexed-function-1-times-x-pow-first-2-1	Total[MapIndexed[Function[Times[Slot[1], Power[x, First[Slot[2]]]]], List[a, b, c, d, E]]]	[Sum, [MapIndexed, [Function, [Multiply, _1, [Power, x, [First, _2]]]], [List, a, b, c, d, ExponentialE]]]
-first-last-reap-mapindexed-function-sow-2-list	First[Last[Reap[MapIndexed[Function[Sow[Slot[2]]], List[List[a, b], List[c], List[List[d]]], List[1, Infinity]]]]]	
+first-last-reap-mapindexed-function-sow-2-list		

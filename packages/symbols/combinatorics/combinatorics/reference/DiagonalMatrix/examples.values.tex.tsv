@@ -3,4 +3,4 @@ main-diagonal	\mathrm{DiagonalMatrix}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbr
 super-diagonal-grows-the-matrix	\mathrm{DiagonalMatrix}(\bigl\lbrack1, 2\bigr\rbrack, 1)	\bigl\lbrack\bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 2\bigr\rbrack, \bigl\lbrack0, 0, 0\bigr\rbrack\bigr\rbrack
 sub-diagonal-grows-the-matrix	\mathrm{DiagonalMatrix}(\bigl\lbrack1, 2\bigr\rbrack, -1)	\bigl\lbrack\bigl\lbrack0, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack0, 2, 0\bigr\rbrack\bigr\rbrack
 diagonalmatrix-list-a-b-c-d	\mathrm{DiagonalMatrix}(\bigl\lbrack a, b, c, d\bigr\rbrack)	\bigl\lbrack\bigl\lbrack a, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, b, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, c, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, d\bigr\rbrack\bigr\rbrack
-thread-shape-diagonalmatrix-list-k-eq-length	\mathrm{Thread}(\mathrm{Shape}(\mathrm{DiagonalMatrix}(\mathrm{list}, k))=\mathrm{Length}(\mathrm{list})+\vert k\vert)	\mathrm{Shape}(\mathrm{DiagonalMatrix}(\mathrm{list}, k))=\mathrm{Length}(\mathrm{list})+\vert k\vert
+thread-shape-diagonalmatrix-list-k-eq-length		

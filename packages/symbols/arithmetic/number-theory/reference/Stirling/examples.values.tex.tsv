@@ -5,7 +5,7 @@ stirling-20-10	\mathrm{Stirling}(20, 10)	5\,917\,584\,964\,655
 exact-for-large-n	\mathrm{Stirling}(50, 2)	562\,949\,953\,421\,311
 threads-element-wise-over-a-list-as-wolfram-s	\mathrm{Stirling}(\bigl\lbrack2, 4, 6\bigr\rbrack, 2)	\bigl\lbrack1, 7, 31\bigr\rbrack
 the-ways-to-split-10-distinct-items-among-3	\mathrm{Stirling}(10, 3)	9\,330
-stirling-n-range-1-n	\mathrm{Stirling}(n, 1..n)	\mathrm{Map}(()\mapsto\mathrm{Stirling}(n, \operatorname{\_1}), 1..n)
+stirling-n-range-1-n		
 one-block-means-one-partition-s-n-1-1	\mathrm{Stirling}(5, 1)	1
 singletons-only-s-n-n-1	\mathrm{Stirling}(5, 5)	1
 row-sums-give-the-bell-numbers	\sum_{k=0}^4\mathrm{Stirling}(4, k)=\mathrm{BellNumber}(4)	\top

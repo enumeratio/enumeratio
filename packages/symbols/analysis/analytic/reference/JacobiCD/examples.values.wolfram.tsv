@@ -2,7 +2,7 @@ id	in	out	tex.in	tex.out	verdict
 a-floating-point-argument-evaluates-directly-to	N[JacobiCD[0.3, 0.5]]	0.97725033644425	N[\text{cd}(0.3|0.5)]	0.97725	
 jacobicd-0-4-0-5i-0-3	N[JacobiCD[Complex[0.4, 0.5], 0.3]]	1.034017190005339 - 0.1393379672126352*I	N[\text{cd}(0.4\, +0.5 i|0.3)]	1.03402\, -0.139338 i	
 m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCD[0.3, 1.5]]	1.023633106578735	N[\text{cd}(0.3|1.5)]	1.02363	
-u-0-is-1-for-any-m					
-symbolic-arguments-are-left-unevaluated-rather					
+u-0-is-1-for-any-m	JacobiCD[0, m]				
+symbolic-arguments-are-left-unevaluated-rather	JacobiCD[u, m]				
 u-1e16-declines-rather-than-answering-wrong	N[JacobiCD[Power[10, 16], Rational[2, 7]]]	0.3472297370627163	N\left[\text{cd}\left(10^{16}|\frac{2}{7}\right)\right]	0.34723	disagree
 u-1e16-mpmath-true-value	N[JacobiCD[Power[10, 16], Rational[2, 7]]]				

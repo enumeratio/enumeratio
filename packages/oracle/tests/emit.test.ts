@@ -325,6 +325,25 @@ test("CycleDecomposition(Permutation(...)) and its reverse emit Wolfram's own co
   });
 });
 
+// A-126 head survey, #495: `Sign` is overloaded over `complex | permutation` — the SAME
+// "outer SPECIAL case never sees the raw carrier" problem as CycleDecomposition/Permutation
+// above, from a third mechanism (the generic CARRIER_NAMES unwrap would strip `Permutation`
+// down to its bare list before `Sign`'s own dispatch could tell "this call means Wolfram's
+// Signature" from "this call means Wolfram's own numeric Sign" apart).
+test("Sign(Permutation(...)) emits Wolfram's Signature, not a wrong-meaning bare Sign", () => {
+  expect(emit(["Sign", ["Permutation", ["List", 2, 3, 1]]], "wolfram")).toEqual({
+    ok: true,
+    source: "Signature[List[2, 3, 1]]",
+  });
+  // The composed cycle-notation form converts the same way CycleDecomposition/Permutation do.
+  expect(emit(["Sign", ["Permutation", ["CycleDecomposition", ["List", ["List", 1, 2, 3]]]]], "wolfram")).toEqual({
+    ok: true,
+    source: "Signature[Cycles[List[List[1, 2, 3]]]]",
+  });
+  // A numeric argument is Wolfram's own Sign, untouched.
+  expect(emit(["Sign", -5], "wolfram")).toEqual({ ok: true, source: "Sign[-5]" });
+});
+
 // #A-121: the SAME "outer SPECIAL case never sees the true inner structure" problem
 // CycleDecomposition/Permutation above hits from the carrier unwrap, but from TWO other
 // generic mechanisms -- `emit()`'s own per-operand `walk()` pre-walk (Count/Random) and

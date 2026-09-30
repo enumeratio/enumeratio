@@ -1,10 +1,10 @@
 id	in	out
 transpose-list-list-a-x-list-b-y-list-c-z	transpose([[a, x], [b, y], [c, z]])	[[a, b, c], [x, y, z]]
-transpose-m	transpose(m)	m
-transpose-s	transpose(s)	s
+transpose-m		
+transpose-s		
 chop-dot-u-transpose-u	chop(dot(u, transpose(u)))	chop(matrixMultiply(u, transpose(u)))
 chop-dot-v-transpose-v	chop(dot(v, transpose(v)))	chop(matrixMultiply(v, transpose(v)))
-s-eq-transpose-s	s == transpose(s)	True
-transpose-s-eq-s	transpose(s) == s	True
-conjugate-transpose-m	conjugate(transpose(m))	conjugate(m)
-shape-transpose-a-perm	shape(transpose(a, perm))	Tuple()
+s-eq-transpose-s		
+transpose-s-eq-s		
+conjugate-transpose-m		
+shape-transpose-a-perm		

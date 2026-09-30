@@ -2,11 +2,11 @@ id	in	out
 numberexpand-1-234	\mathrm{NumberExpand}(1\,234)	\bigl\lbrack1\,000, 200, 30, 4\bigr\rbrack
 numberexpand-157	\mathrm{NumberExpand}(157)	\bigl\lbrack100, 50, 7\bigr\rbrack
 numberexpand-157-2	\mathrm{NumberExpand}(157, 2)	\bigl\lbrack128, 0, 0, 16, 8, 4, 0, 1\bigr\rbrack
-numberexpand-157-2-3	\mathrm{NumberExpand}(157, 2, 3)	\bigl\lbrack128, 0, 0, 16, 8, 4, 0, 1\bigr\rbrack
+numberexpand-157-2-3		
 base-2-zero-terms-kept	\mathrm{NumberExpand}(10, 2)	\bigl\lbrack8, 0, 2, 0\bigr\rbrack
 every-term-carries-the-sign	\mathrm{NumberExpand}(-123)	\bigl\lbrack-100, -20, -3\bigr\rbrack
 numberexpand-1-437	\mathrm{NumberExpand}(1\,437)	\bigl\lbrack1\,000, 400, 30, 7\bigr\rbrack
 numberexpand-neg-14-379	\mathrm{NumberExpand}(-14\,379)	\bigl\lbrack-10\,000, -4\,000, -300, -70, -9\bigr\rbrack
 numberexpand-1-532	\mathrm{NumberExpand}(1\,532)	\bigl\lbrack1\,000, 500, 30, 2\bigr\rbrack
 numberexpand-1-532-10	\mathrm{NumberExpand}(1\,532, 10)	\bigl\lbrack1\,000, 500, 30, 2\bigr\rbrack
-numberexpand-1-437-10-8	\mathrm{NumberExpand}(1\,437, 10, 8)	\bigl\lbrack0, 0, 0, 0, 1\,000, 400, 30, 7\bigr\rbrack
+numberexpand-1-437-10-8		

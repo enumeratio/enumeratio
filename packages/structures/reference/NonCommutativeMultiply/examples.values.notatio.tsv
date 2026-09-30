@@ -1,7 +1,7 @@
 id	in	out
 the-canonical-order	<NonCommutativeMultiply>e_1 e_2</NonCommutativeMultiply>	<Multiply>e_1 e_2</Multiply>
 noncommutativemultiply-a-b-c-eq	<Equal><NonCommutativeMultiply>a b c</NonCommutativeMultiply> <NonCommutativeMultiply>a b c</NonCommutativeMultiply></Equal>	<True />
-list-a-times-b-eq-a-times-b	<List><Equal><Multiply>a b</Multiply> <Multiply>a b</Multiply></Equal> <Equal><NonCommutativeMultiply>a b</NonCommutativeMultiply> <NonCommutativeMultiply>b a</NonCommutativeMultiply></Equal></List>	<List>True True</List>
+list-a-times-b-eq-a-times-b		
 scalars-the-implied-identity-factor	<CircleTimes>2 3</CircleTimes>	<ToExpression>6</ToExpression>
 commuting-units-agrees-with-times	<CircleTimes>i_2 i_1</CircleTimes>	<Multiply>i_1 i_2</Multiply>
 the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	<NonCommutativeMultiply><Add>1 <Multiply>2 f_1</Multiply> <Multiply>3 f_2</Multiply> <Multiply>4 f_1 f_2</Multiply></Add> <Add>2 <Negate>f_1</Negate> f_2 <Multiply>-3 f_1 f_2</Multiply></Add></NonCommutativeMultiply>	<Add><Multiply>10 f_1 f_2</Multiply> <Multiply>-10 f_1</Multiply> <Multiply>9 f_2</Multiply> 13</Add>
@@ -9,7 +9,7 @@ reversing-the-operands-flips-the-sign	<NonCommutativeMultiply>e_2 e_1</NonCommut
 e-1e-2-2-1	<NonCommutativeMultiply>e_1 e_2 e_1 e_2</NonCommutativeMultiply>	<ToExpression>-1</ToExpression>
 associative-nested-products-flatten	<NonCommutativeMultiply>a <NonCommutativeMultiply>b c</NonCommutativeMultiply></NonCommutativeMultiply>	<NonCommutativeMultiply>a b c</NonCommutativeMultiply>
 undeclared-symbols-are-taken-to-commute-so-the	<NonCommutativeMultiply>b a</NonCommutativeMultiply>	<NonCommutativeMultiply>b a</NonCommutativeMultiply>
-list-noncommutativemultiply-0-a	<List><NonCommutativeMultiply>0 a</NonCommutativeMultiply> <NonCommutativeMultiply>1 a</NonCommutativeMultiply></List>	<List>0 a</List>
-neg-a-times-c-plus-noncommutativemultiply-a-plus	<Add><Negate><Multiply>a c</Multiply></Negate> <NonCommutativeMultiply><Add>a b</Add> c</NonCommutativeMultiply></Add>	<Add><Multiply>c <Add>a b</Add></Multiply> <Negate><Multiply>a c</Multiply></Negate></Add>
+list-noncommutativemultiply-0-a		
+neg-a-times-c-plus-noncommutativemultiply-a-plus		
 plain-times-declines-both-orders-arrive	<Multiply>e_2 e_1</Multiply>	<Multiply>e_1 e_2</Multiply>
 noncommutativemultiply-a	<NonCommutativeMultiply>a</NonCommutativeMultiply>	<a />

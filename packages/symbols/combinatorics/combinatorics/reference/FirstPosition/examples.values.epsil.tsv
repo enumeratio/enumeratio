@@ -2,8 +2,8 @@ id	in	out
 the-first-occurrence-of-b-nested-inside-the	FirstPosition([[a, a, b], [b, a, a], [a, b, a]], b)	[1, 3]
 the-empty-list-when-the-value-isn-t-found	FirstPosition([a, [a, c]], b)	[]
 firstposition-list-a-b-a-a-b-c-b-b	FirstPosition([a, b, a, a, b, c, b], b)	[2]
-firstposition-list-x-y-z-b	FirstPosition([x, y, z], b)	[]
+firstposition-list-x-y-z-b		
 firstposition-list-list-1-2-list-2-3-list-3-1-3	FirstPosition([[1, 2], [2, 3], [3, 1]], 3)	[2, 2]
-firstposition-x-pow-2-plus-y-pow-2-power	FirstPosition(x ^ 2 + y ^ 2, Power)	[]
+firstposition-x-pow-2-plus-y-pow-2-power		
 a-match-nested-inside-an-earlier-sublist-beats-a	FirstPosition([a, [a, b], b], b)	[2, 2]
 firstposition-list-a-b-b-a-a-c-a	FirstPosition([a, b, b, a, a, c], a)	[1]

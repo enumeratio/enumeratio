@@ -3,7 +3,7 @@ a-floating-point-argument-evaluates-directly-to	N(JacobiND(0.3, -2))	0.918_684_5
 m-greater-than-1-via-the-reciprocal-modulus	N(JacobiND(0.3, 1.5))	1.069_333_535_737_140_7	
 list-jacobind-z-0-jacobind-z-1	[JacobiND(z, 0), JacobiND(z, 1)]	[1, cosh(z)]	
 matrixfunction-function-jacobind-neg-1-over-3	MatrixFunction(Function(JacobiND(-1 / 3 * i * pi, _1), _1), [[1, 0], [0, 1]])	[[1 / 2, 0], [0, 1 / 2]]	Unreadable
-list-jacobind-0-m-jacobind-1-over-2-times	[JacobiND(0, m), JacobiND(1 / 2 * ellipticK(m), m), JacobiND(ellipticK(m), m)]	[1, JacobiND(1 / 2 * ellipticK(m), m), 1 / sqrt(-m + 1)]	
+list-jacobind-0-m-jacobind-1-over-2-times			
 u-0-is-1-for-any-m	JacobiND(0, m)	1	
 jacobind-0-1	JacobiND(0, 1)	1	
 jacobind-1-over-2-times-i-times-pi-1	JacobiND(1 / 2 * i * pi, 1)	0	

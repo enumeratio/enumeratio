@@ -1,14 +1,17 @@
 id	in	out
 quadratic	DifferenceDelta(n ^ 2, n)	2n + 1
 linear	DifferenceDelta(3n + 5, n)	3
-differencedelta-fallingfactorial-i-n-i	DifferenceDelta(FallingFactorial(i, n), i)	-FallingFactorial(i, n) + FallingFactorial(1 + i, n)
+differencedelta-fallingfactorial-i-n-i		
 shift-var-named-i	DifferenceDelta(a(i), i)	-a(i) + a(1 + i)
-differencedelta-i-pow-3-i	DifferenceDelta(i ^ 3, i)	-2 + 3i
-differencedelta-i-plus-1-times-i-plus-3-pow-neg	DifferenceDelta((i + 1) * (i + 3) ^ -1, i)	11 / 85 + -7 / 85 * i
-differencedelta-zeta-2-i-i	DifferenceDelta(zeta(2, i), i)	-zeta(2, i) + zeta(2, 1 + i)
-differencedelta-a-pow-i-i	DifferenceDelta(a ^ i, i)	-a ^ i + a ^ (1 + i)
-differencedelta-2-pow-i-i	DifferenceDelta(2 ^ i, i)	-2 ^ i + 2 ^ (1 + i)
-differencedelta-i-pow-2-plus-i-plus-1-times-2	DifferenceDelta((i ^ 2 + i + 1) * 2 ^ i, i)	-i * 2 ^ i + (2 + 3i) * 2 ^ (1 + i)
-differencedelta-i-plus-1-times-i-plus-3-pow-ne-2	DifferenceDelta((i + 1) * (i + 3) ^ -1 * 2 ^ i, i)	(-2 / 5 + -1 / 5 * i) * 2 ^ i + (9 / 17 + 2 / 17 * i) * 2 ^ (1 + i)
-differencedelta-sin-a-times-i-plus-b-i	DifferenceDelta(sin(a * i + b), i)	-sin(i * a + b) + sin((1 + i) * a + b)
-differencedelta-sinh-a-times-i-plus-b-i	DifferenceDelta(sinh(a * i + b), i)	-sinh(i * a + b) + sinh((1 + i) * a + b)
+differencedelta-i-pow-3-i		
+differencedelta-i-plus-1-times-i-plus-3-pow-neg		
+differencedelta-zeta-2-i-i		
+differencedelta-a-pow-i-i		
+differencedelta-2-pow-i-i		
+differencedelta-i-pow-2-plus-i-plus-1-times-2		
+differencedelta-i-plus-1-times-i-plus-3-pow-ne-2		
+differencedelta-sin-a-times-i-plus-b-i		
+differencedelta-sinh-a-times-i-plus-b-i		
+differencedelta-binomial-i-plus-n-n-i		
+differencedelta-gamma-i-i		
+differencedelta-beta-i-n-i		

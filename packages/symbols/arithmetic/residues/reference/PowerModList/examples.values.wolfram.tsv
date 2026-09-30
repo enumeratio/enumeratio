@@ -34,5 +34,5 @@ the-2-adic-channel-breaks-the-2-omega-m-law-z-2	PowerModList[1, Rational[1, 2], 
 a-product-of-two-21-digit-primes-cannot-be	PowerModList[4, Rational[1, 2], Times[Plus[Power[10, 20], 39], Plus[Power[10, 20], 129]]]	{2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10000000000000000016800000000000000005029}	\text{PowerModList}\left[4,\frac{1}{2},\left(10^{20}+39\right) \left(10^{20}+129\right)\right]	\{2,4888888888888888897106666666666666669130,5111111111111111119693333333333333335901,10000000000000000016800000000000000005029\}	disagree
 x-2-equiv-0-pmod-3-40-has-3-20-roots-too-many-to	PowerModList[0, Rational[1, 2], Power[3, 40]]	$Aborted			error
 no-cube-root-of-4-modulo-13	PowerModList[2, Rational[2, 3], 13]	{}	\text{PowerModList}\left[2,\frac{2}{3},13\right]	\{\}	
-a-symbolic-modulus-stays-unevaluated					
+a-symbolic-modulus-stays-unevaluated	PowerModList[1, Rational[1, 2], m]				
 the-moduli-with-four-or-more-square-roots-of-1	PowerModList[1, Rational[1, 2], List[8, 15, 21, 24]]	PowerModList[1, 1/2, {8, 15, 21, 24}]	\text{PowerModList}\left[1,\frac{1}{2},\{8,15,21,24\}\right]	\text{PowerModList}\left[1,\frac{1}{2},\{8,15,21,24\}\right]	disagree

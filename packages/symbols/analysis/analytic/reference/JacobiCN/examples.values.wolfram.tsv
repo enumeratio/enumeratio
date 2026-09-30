@@ -30,11 +30,11 @@ matrixfunction-function-jacobicn-neg-1-over-3	MatrixFunction[Function[JacobiCN[T
 list-jacobicn-z-0-jacobicn-z-1	List[JacobiCN[z, 0], JacobiCN[z, 1]]	{Cos[z], Sech[z]}			disagree
 n-jacobicn-2-1-over-3-50	N[JacobiCN[2, Rational[1, 3]], 50]	-0.21637836906745774174825957960916244242271972424401602331660429192438648475652`50.			disagree
 list-jacobicn-0-m-jacobicn-1-over-2-times					
-u-0-is-1-for-any-m					
+u-0-is-1-for-any-m	JacobiCN[0, m]				
 m-0-reduces-to-cos-u	JacobiCN[u, 0]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{cn}(u|0)-\cos (u)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{cn}\left(\left.\frac{7}{3}\right|0\right)-\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(\left.-\frac{11}{5}\right|0\right)-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(\left.\frac{13}{4}\right|0\right)-\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-the-quarter-period-u-elliptick-m-is-0					
+the-quarter-period-u-elliptick-m-is-0	JacobiCN[EllipticK[m], m]				
 jacobicn-0-0	JacobiCN[0, 0]	1	\text{cn}(0|0)	1	
 jacobicn-1-over-2-times-pi-0	JacobiCN[Times[Rational[1, 2], Pi], 0]	0	\text{cn}\left(\left.\frac{1}{2} \pi \right|0\right)	0	
 jacobicn-0-1	JacobiCN[0, 1]	1	\text{cn}(0|1)	1	
 jacobicn-1-over-2-times-i-times-pi-1	JacobiCN[Times[Complex[0, Rational[1, 2]], Pi], 1]	ComplexInfinity	\text{cn}((\text{Rational}[1,2] i) \pi |1)	\text{ComplexInfinity}	
-symbolic-arguments-are-left-unevaluated-rather					
+symbolic-arguments-are-left-unevaluated-rather	JacobiCN[u, m]				

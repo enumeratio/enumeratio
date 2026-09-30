@@ -1,7 +1,7 @@
 id	in	out	tex.in	tex.out	verdict
 a-floating-point-argument-evaluates-directly-to	N[JacobiSD[0.3, -2]]	0.27930157747469464	N[\text{sd}(0.3|-2)]	0.279302	
 m-greater-than-1-via-the-reciprocal-modulus	N[JacobiSD[1.1, 0.9]]	1.2678217669206608	N[\text{sd}(1.1|0.9)]	1.26782	
-u-0-is-0-for-any-m					
-symbolic-arguments-are-left-unevaluated-rather					
+u-0-is-0-for-any-m	JacobiSD[0, m]				
+symbolic-arguments-are-left-unevaluated-rather	JacobiSD[u, m]				
 m-1-at-a-shared-pole-of-sn-and-cn	N[JacobiSD[Times[Rational[1, 2], I, Pi], 1]]	0. + 1.*I	N\left[\text{sd}\left(\left.\frac{1}{2} i \pi \right|1\right)\right]	0.\, +1. i	
 u-1e16-declines-rather-than-answering-wrong	N[JacobiSD[Power[10, 16], Rational[1, 5]]]	-1.1134857544318884	N\left[\text{sd}\left(10^{16}|\frac{1}{5}\right)\right]	-1.11349	disagree

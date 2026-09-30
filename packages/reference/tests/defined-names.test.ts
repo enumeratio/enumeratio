@@ -11,15 +11,8 @@
 import { DEFINED_NAMES, type MathJSON } from "@enumeratio/oracle/src";
 import { expect, test } from "vite-plus/test";
 import { declaredEngine } from "../scripts/engines.ts";
+import { isDefinedName, symbolsIn } from "../scripts/defined-names.ts";
 import { referenceData, referenceEntries } from "../src/node.ts";
-
-function symbolsIn(expr: MathJSON, into: Set<string>): void {
-  if (typeof expr === "string") {
-    if (!/^'.*'$/s.test(expr)) into.add(expr);
-    return;
-  }
-  if (Array.isArray(expr)) for (const item of expr) symbolsIn(item as MathJSON, into);
-}
 
 test("defined-names-data.ts is current", () => {
   const data = referenceData();
@@ -31,7 +24,7 @@ test("defined-names-data.ts is current", () => {
     }
   }
   const ce = declaredEngine();
-  const defined = [...names].filter((name) => ce.lookupDefinition(name) !== undefined).toSorted();
+  const defined = [...names].filter((name) => isDefinedName(ce, name)).toSorted();
   expect(defined, "regenerate: vp node packages/reference/scripts/collect-defined-names.ts").toEqual(
     [...DEFINED_NAMES].toSorted(),
   );

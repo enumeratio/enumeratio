@@ -27,3 +27,16 @@ test("Join still rejects mismatched heads (stays unevaluated)", () => {
   const result = run(["Join", ["f", "a"], ["g", "b"]]) as readonly unknown[];
   expect(result[0]).toEqual("Join");
 });
+
+// A free symbol's `.operator` is the pseudo-head `"Symbol"`, same for every free variable —
+// two of them would otherwise "share a head" and fold to a bogus `Symbol()` (A-126 farm
+// scan; see list-frontier.ts's Accumulate note).
+test("Join(aa, bb) stays unevaluated for two free symbols", () => {
+  expect(run(["Join", "aa", "bb"])).toEqual(["Join", "aa", "bb"]);
+});
+
+// Flatten(array): a free `array` has no `.ops`, same as an empty `List` — must not read as
+// "already flat" (A-126 farm scan; see list-frontier.ts's Accumulate note).
+test("Flatten(array) stays unevaluated for a free array", () => {
+  expect(run(["Flatten", "array"])).toEqual(["Flatten", "array"]);
+});

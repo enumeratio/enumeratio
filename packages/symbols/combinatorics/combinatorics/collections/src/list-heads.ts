@@ -312,7 +312,11 @@ export function declareListHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Sort", 1],
-    (ops) => ops[0].operator !== "List",
+    // A bare symbol's `.operator` is the pseudo-head `"Symbol"`, not `"List"` — excluded here
+    // so `Sort(x)`, for a free `x`, stays unevaluated instead of folding to `Symbol()` (see
+    // `Accumulate`'s note in list-frontier.ts for the same `operandsOf`-on-a-non-collection
+    // trap; `Join` below shares it too).
+    (ops) => ops[0].operator !== "List" && symbolNameOf(ops[0]) === undefined,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
       if (result !== undefined && result.operator !== "Error") return result;
@@ -486,14 +490,17 @@ export function declareListHeads(ce: ComputeEngine): void {
       ? { lists, level }
       : undefined;
   };
-  // Join(a, b, …): any head, as long as every argument shares it — not just List or Set.
+  // Join(a, b, …): any head, as long as every argument shares it — not just List or Set. A
+  // bare symbol's `.operator` is the pseudo-head `"Symbol"`, shared by every free variable,
+  // so two unrelated frees (`Join(aa, bb)`) would otherwise "share a head" and fold to a
+  // bogus `Symbol()` — excluded the same way `Sort`'s equivalent wrapper above is.
   wrapOperator(
     ce,
     ["Join", 1, 1],
     (ops) =>
       joinsAtLevel(ops) !== undefined ||
       ops.length === 0 ||
-      (ops.length >= 1 && ops.every((op) => op.operator === ops[0].operator)),
+      (ops.length >= 1 && symbolNameOf(ops[0]) === undefined && ops.every((op) => op.operator === ops[0].operator)),
     () => (ops) => {
       const join = joinsAtLevel(ops);
       if (join !== undefined) return joinAtLevel(ce, join.lists, join.level);
@@ -537,6 +544,9 @@ export function declareListHeads(ce: ComputeEngine): void {
   ce.declare("Commonest", {
     signature: "(indexed_collection<T>) -> list<T> where T",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+      // A free `c` stays unevaluated rather than answering `List()` — same trap as
+      // `Accumulate` (list-frontier.ts).
+      if (ops[0] === undefined || symbolNameOf(ops[0]) !== undefined) return undefined;
       const items = operandsOf(ops[0]);
       const tally: { value: BoxedExpression; count: number }[] = [];
       for (const item of items) {

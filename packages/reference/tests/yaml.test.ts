@@ -15,10 +15,13 @@ test("every record loads, validates, and has no id collisions", () => {
 });
 
 // Each example pairs with an entry in its head's implementations record: our forms at least,
-// whatever else has run it (frontend/scripts/collect-forms.ts writes them).
+// whatever else has run it (frontend/scripts/collect-forms.ts writes them). A row in triage
+// gets no forms, so it has one only if a kernel ran it.
 test("every example has an implementations entry", () => {
   const missing = loaded.heads.flatMap((h) =>
-    h.entry.examples.filter((e) => h.implementations?.[e.id] === undefined).map((e) => `${h.head}/${e.id}`),
+    h.entry.examples
+      .filter((e) => e.role !== "triage" && h.implementations?.[e.id] === undefined)
+      .map((e) => `${h.head}/${e.id}`),
   );
   expect(missing, "run UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts").toEqual([]);
 });

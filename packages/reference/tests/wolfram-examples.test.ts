@@ -19,9 +19,15 @@ test("an input that wouldn't mean the same here is refused, with why", () => {
   expect(reason("HoldComplete[Timing[Zeta[2]]]")).toBe("effect Timing");
   expect(reason("HoldComplete[Zeta[2`100]]")).toBe("precision mark");
   expect(reason("HoldComplete[Zeta[\\[FormalN]]]")).toBe("named character");
-  expect(reason("HoldComplete[f[Zeta[2]]]")).toBe("unmapped f");
+  expect(reason("HoldComplete[f[Zeta[2]]]")).toBe("user function f");
+  expect(reason("HoldComplete[Plus[F[x], Series[Zeta[x], List[x, 0, 2]]]]")).toBe("user function F");
   expect(reason("HoldComplete[Normal[Series[Zeta[x], List[x, 0, 2]]]]")).toBe("unmapped Normal Series");
   expect(reason("HoldComplete[$Aborted]")).toBe("effect $Aborted");
+});
+
+test("a capitalised name that isn't a built-in is a free symbol, like a lowercase one", () => {
+  expect(adaptInput("HoldComplete[Zeta[A]]")).toEqual({ ok: true, expr: ["Zeta", "A"] });
+  expect(adaptInput("HoldComplete[Binomial[B, 2]]")).toEqual({ ok: true, expr: ["Binomial", "B", 2] });
 });
 
 test("mentions finds a head applied anywhere, or a constant on its own", () => {

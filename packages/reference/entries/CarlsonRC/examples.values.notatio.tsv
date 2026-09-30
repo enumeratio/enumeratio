@@ -7,5 +7,5 @@ rc-0-1i-0-1i	<N><CarlsonRC><Complex>0 1</Complex> <Complex>0 -1</Complex></Carls
 rc-1-1-2	<N><CarlsonRC>1 -1</CarlsonRC></N>	<ToExpression>0.6232252401402307</ToExpression>
 rc-4-3	<N><CarlsonRC>4 -3</CarlsonRC></N>	<ToExpression>0.3729174986774664</ToExpression>
 rc-2-0-5	<N><CarlsonRC>2 -0.5</CarlsonRC></N>	<ToExpression>0.913035242516903</ToExpression>
-n-carlsonrc-sqrt-3-neg-2-50	<N><CarlsonRC><Sqrt>3</Sqrt> -2</CarlsonRC> 50</N>	<ToExpression>0.4303865384382466</ToExpression>
-carlsonrc-exponentiale-pow-1-over-7-times-i	<CarlsonRC><Power>ExponentialE <Multiply><Complex>0 <Rational>1 7</Rational></Complex> Pi</Multiply></Power> <Power>ExponentialE <Multiply><Complex>0 <Rational>1 3</Rational></Complex> Pi</Multiply></Power></CarlsonRC>	<CarlsonRC><Add><Multiply><Complex>0 1</Complex> <Sin><Multiply><Rational>1 7</Rational> Pi</Multiply></Sin></Multiply> <Cos><Multiply><Rational>1 7</Rational> Pi</Multiply></Cos></Add> <Add><Rational>1 2</Rational> <Complex>0 <Divide><Sqrt>3</Sqrt> 2</Divide></Complex></Add></CarlsonRC>
+n-carlsonrc-sqrt-3-neg-2-50		
+carlsonrc-exponentiale-pow-1-over-7-times-i		

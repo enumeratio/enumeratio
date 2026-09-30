@@ -1,10 +1,10 @@
 id	in	out
 ellipticf-list-list-1-0-list-0-1-0	\mathrm{EllipticF}(\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack, 0)	\bigl\lbrack\bigl\lbrack\mathrm{EllipticF}(1, 0), 0\bigr\rbrack, \bigl\lbrack0, \mathrm{EllipticF}(1, 0)\bigr\rbrack\bigr\rbrack
 matrixfunction-function-ellipticf-1-0-1-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{EllipticF}(\operatorname{\_1}, 0), \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\mathrm{EllipticF}(1, 0), 0\bigr\rbrack, \bigl\lbrack0, \mathrm{EllipticF}(1, 0)\bigr\rbrack\bigr\rbrack
-n-ellipticf-12-over-5-3-50	N(\mathrm{EllipticF}(\frac{12}{5}, 3), 50)	1.001\,077\,380\,456\,105\,5-1.923\,166\,189\,504\,625i
-list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m	\bigl\lbrack\mathrm{EllipticF}(0, m), \mathrm{EllipticF}(\frac{\pi}{2}, m)\bigr\rbrack	\bigl\lbrack0, \mathrm{EllipticF}(\frac{\pi}{2}, m)\bigr\rbrack
+n-ellipticf-12-over-5-3-50		
+list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m		
 ellipticf-0-1	\mathrm{EllipticF}(0, 1)	0
 ellipticf-0-0	\mathrm{EllipticF}(0, 0)	0
 ellipticf-jacobiamplitude-0-0-0	\mathrm{EllipticF}(\mathrm{JacobiAmplitude}(0, 0), 0)	0
 ellipticf-jacobiamplitude-0-1-1	\mathrm{EllipticF}(\mathrm{JacobiAmplitude}(0, 1), 1)	0
-solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq	\mathrm{Solve}(\mathrm{EllipticF}(z, m)^3+\mathrm{EllipticF}(z, m)=x, z)	\bigl\lbrack\bigr\rbrack
+solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq		

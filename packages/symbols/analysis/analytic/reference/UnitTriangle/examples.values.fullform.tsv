@@ -8,5 +8,5 @@ unittriangle-1-3	UnitTriangle[Rational[1, 3]]
 unittriangle-1-2	UnitTriangle[Rational[1, 2]]
 unittriangle-1-over-4	UnitTriangle[Rational[1, 4]]
 piecewiseexpand-unittriangle-x-0-lt-x-lt-2	PiecewiseExpand[UnitTriangle[x], Less[0, x, 2]]
-n-unittriangle-neg-1-over-7-50	N[UnitTriangle[Rational[-1, 7]], 50]
+n-unittriangle-neg-1-over-7-50	
 unittriangle-same-as-heavisidelambda	Equal[UnitTriangle[Rational[1, 4]], HeavisideLambda[Rational[1, 4]]]

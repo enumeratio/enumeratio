@@ -5,7 +5,7 @@ stirling-20-10	stirling(20, 10)	5_917_584_964_655
 exact-for-large-n	stirling(50, 2)	562_949_953_421_311
 threads-element-wise-over-a-list-as-wolfram-s	stirling([2, 4, 6], 2)	[1, 7, 31]
 the-ways-to-split-10-distinct-items-among-3	stirling(10, 3)	9_330
-stirling-n-range-1-n	stirling(n, Range(1, n))	map(Function(stirling(n, _1), _1), Range(1, n))
+stirling-n-range-1-n		
 one-block-means-one-partition-s-n-1-1	stirling(5, 1)	1
 singletons-only-s-n-n-1	stirling(5, 5)	1
 row-sums-give-the-bell-numbers	sum(stirling(4, k), (k, 0, 4)) == bellNumber(4)	True

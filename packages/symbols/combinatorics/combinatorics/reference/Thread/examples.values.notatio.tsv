@@ -7,4 +7,4 @@ custom-head	<Thread><f><g>1 2</g> <g>3 4</g></f> g</Thread>	<g><f>1 3</f> <f>2 4
 thread-list-list-a-b-c-0	<Thread><List><List>a b c</List> 0</List></Thread>	<List><List>a 0</List> <List>b 0</List> <List>c 0</List></List>
 thread-list-a-b-c-neg-gt-list-1-2-3	<Thread><KeyValuePair><List>a b c</List> <List>1 2 3</List></KeyValuePair></Thread>	<List><Tuple>a 1</Tuple> <Tuple>b 2</Tuple> <Tuple>c 3</Tuple></List>
 thread-list-list-a-b-c-list-x-y-z	<Thread><List><List>a b c</List> <List>x y z</List></List></Thread>	<List><List>a x</List> <List>b y</List> <List>c z</List></List>
-thread-d-list-x-x-times-y-x-times-z-list-x-y-z	<Thread><D><List>x <Multiply>x y</Multiply> <Multiply>x z</Multiply></List> <List>x y z</List></D></Thread>	<List><D><Function><Block>x</Block> x</Function> x</D> <D><Multiply>x y</Multiply> y</D> <D><Multiply>x z</Multiply> z</D></List>
+thread-d-list-x-x-times-y-x-times-z-list-x-y-z		

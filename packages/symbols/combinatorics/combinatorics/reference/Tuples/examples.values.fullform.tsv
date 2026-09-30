@@ -1,4 +1,4 @@
 id	in	back
 2-3	Length[Tuples[Range[2], 3]]	[Length, [Tuples, [Range, 2], 3]]
 tuples-2-3-list-1	Part[Tuples[Range[2], 3], 1]	[At, [Tuples, [Range, 2], 3], 1]
-thread-tuples-list-1-0-3-neg-gt-integerdigits-30	Thread[Rule[Tuples[List[1, 0], 3], IntegerDigits[30, 2, 8]]]	
+thread-tuples-list-1-0-3-neg-gt-integerdigits-30		

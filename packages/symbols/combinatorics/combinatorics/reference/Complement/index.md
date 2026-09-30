@@ -20,7 +20,7 @@ signatures:
   - call: Complement(Permutation)
     description: Each entry replaced by n + 1 minus itself.
     library: enumeratio-combinatorics
-    type: ((set<any>+) -> set) & ((permutation) -> permutation)
+    type: (permutation) -> permutation
     overrides: compute-engine
 laws:
   - involution

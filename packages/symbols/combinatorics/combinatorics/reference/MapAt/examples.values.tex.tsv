@@ -5,7 +5,7 @@ mapat-f-list-a-b-c-d-list-list-1-list-4	\mathrm{MapAt}(f, \bigl\lbrack a, b, c, 
 negative-position	\mathrm{MapAt}(f, \bigl\lbrack a, b, c\bigr\rbrack, -1)	\bigl\lbrack a, b, f(c)\bigr\rbrack
 several-positions	\mathrm{MapAt}(f, \bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)	\bigl\lbrack f(a), b, f(c)\bigr\rbrack
 mapat-f-a-plus-b-plus-c-plus-d-2	\mathrm{MapAt}(f, a+b+c+d, 2)	a+c+d+f(b)
-mapat-h-list-list-a-b-c-list-d-e-f-g-2	\mathrm{MapAt}(h, \bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e\bigr\rbrack, f, g\bigr\rbrack, 2)	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, h(\bigl\lbrack d, e\bigr\rbrack), f, g\bigr\rbrack
-mapat-h-list-list-a-b-c-list-d-e-f-g-neg-3	\mathrm{MapAt}(h, \bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e\bigr\rbrack, f, g\bigr\rbrack, -3)	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, h(\bigl\lbrack d, e\bigr\rbrack), f, g\bigr\rbrack
-mapat-h-list-list-a-b-c-list-d-e-f-g-list-list-2	\mathrm{MapAt}(h, \bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e\bigr\rbrack, f, g\bigr\rbrack, \bigl\lbrack\bigl\lbrack2\bigr\rbrack, \bigl\lbrack1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack h(\bigl\lbrack a, b, c\bigr\rbrack), h(\bigl\lbrack d, e\bigr\rbrack), f, g\bigr\rbrack
-mapat-f-list-a-b-c-d-list-list-1-list-3-list-1	\mathrm{MapAt}(f, \bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack f(a), b, f(c), d\bigr\rbrack
+mapat-h-list-list-a-b-c-list-d-e-f-g-2		
+mapat-h-list-list-a-b-c-list-d-e-f-g-neg-3		
+mapat-h-list-list-a-b-c-list-d-e-f-g-list-list-2		
+mapat-f-list-a-b-c-d-list-list-1-list-3-list-1		

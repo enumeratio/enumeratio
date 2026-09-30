@@ -40,9 +40,9 @@ functionsurjective-tan-x-x	FunctionSurjective(tan(x), x)	True
 functionsingularities-tan-x-x	FunctionSingularities(tan(x), x)	cos(x) == 0	
 functiondiscontinuities-tan-x-x	FunctionDiscontinuities(tan(x), x)	cos(x) == 0	
 matrixfunction-function-tan-1-1-list-list-5-over	MatrixFunction(Function(tan(_1), _1), [[5 / 6 * pi, pi], [1 / 3 * pi, -pi]])	[[-(sqrt(3) / 39), 2 / 13 * sqrt(3)], [2 / 39 * sqrt(3), -4 / 13 * sqrt(3)]]	Unreadable
-assuming-m-in-integers-refine-tan-pi-times-m	Assuming(m in integers, Refine(tan(pi * m)))	tan(pi * m)	
-assuming-m-in-integers-fullsimplify-refine-tan	Assuming(m in integers, FullSimplify(Refine(tan(pi * (1 * 2 ^ -1 + m)))))	tan(pi * (m + 1 / 2))	
-tan-positiveinfinity	tan(positiveInfinity)	Indeterminate	
+assuming-m-in-integers-refine-tan-pi-times-m			
+assuming-m-in-integers-fullsimplify-refine-tan			
+tan-positiveinfinity			
 threads-element-wise-over-a-list	tan([0, pi / 4])	[0, 1]	
 tan-x-frac-sin-x-cos-x	tan(pi / 4) == sin(pi / 4) / cos(pi / 4)	True	
 odd-function-tan-x-tan-x	tan(-(pi / 4))	-1	

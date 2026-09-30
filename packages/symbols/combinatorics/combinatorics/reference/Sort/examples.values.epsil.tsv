@@ -18,11 +18,11 @@ sort-join-ln-range-1-10-sqrt-range-1-10-less	sort(join(ln(Range(1, 10)), sqrt(Ra
 sort-list-aa-abb-ba-b-aaa	sort(["aa", "abb", "ba", "b", "aaa"])	["aa", "aaa", "abb", "b", "ba"]	
 sort-list-neg-11-10-2-1-neg-4-function-abs-1-lt	sort([-11, 10, 2, 1, -4], Function(abs(_1) < abs(_2), _1, _2))	[1, 2, -4, 10, -11]	Unreadable
 sort-join-ln-range-1-10-sqrt-range-1-10	sort(join(ln(Range(1, 10)), sqrt(Range(1, 10))))	"[\n  0,\n  ln(2),\n  1,\n  ln(3),\n  2 * ln(2),\n  sqrt(2),\n  ln(5),\n  sqrt(3),\n  ln(6),\n  ln(7),\n  2,\n  3 * ln(2),\n  2 * ln(3),\n  sqrt(5),\n  ln(10),\n  sqrt(6),\n  sqrt(7),\n  2 * sqrt(2),\n  3,\n  sqrt(10),\n]"	
-sort-list-i-1-plus-i-1-minus-i-2-plus-3i	sort([i, 1 + i, 1 - i, 2 + 3i], Function(real(_1) < real(_2), _1, _2))	[i, 1 + i, 1 - i, 2 + 3i]	Unreadable
-sort-list-aa-abb-ba-b-aaa-function-stringlength	"sort([\"aa\", \"abb\", \"ba\", \"b\", \"aaa\"], Function(StringLength(_1) <\n                                               StringLength(_2), _1, _2))"	["b", "aa", "ba", "abb", "aaa"]	Unreadable
+sort-list-i-1-plus-i-1-minus-i-2-plus-3i			
+sort-list-aa-abb-ba-b-aaa-function-stringlength			
 sort-is-idempotent-sorting-an-already-sorted	sort(sort([3, 1, 2])) == sort([3, 1, 2])	True	
 sort-c-at-c-ordering-c-see-ordering-and-at	sort([3, 1, 2]) == [3, 1, 2][ordering([3, 1, 2])]	True	
 the-result-doesn-t-depend-on-the-input-order	sort(reverse([3, 1, 2])) == sort([3, 1, 2])	True	
-sort-list	sort(list)	nothing	
+sort-list			
 the-empty-list-sorts-to-itself	sort([])	[]	
 sort-list-positiveinfinity-sqrt-2-1-2	sort([positiveInfinity, sqrt(2), 1, 2, negativeInfinity, sqrt(2) / 2])	[negativeInfinity, sqrt(2) / 2, 1, sqrt(2), 2, positiveInfinity]	

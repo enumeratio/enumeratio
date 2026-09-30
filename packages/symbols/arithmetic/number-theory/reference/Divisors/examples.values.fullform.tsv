@@ -26,7 +26,7 @@ a-real-composite-5-squared	Divisors[25, Rule[GaussianIntegers, True]]	[Divisors,
 a-negative-real-composite	Divisors[-15, Rule[GaussianIntegers, True]]	[Divisors, -15, [KeyValuePair, GaussianIntegers, True]]
 divisors-3	Divisors[3]	
 8-times-sum-filter-divisors-20-function	Times[8, Total[Select[Divisors[20], Function[Not[Divisible[Slot[1], 4]]]]]]	[Multiply, 8, [Sum, [Filter, [Divisors, 20], [Function, [Not, [Divides, 4, _1]]]]]]
-filter-range-1-9-999-function-sum-divisors-1-eq	Select[Range[1, 9999], Function[Equal[Total[Divisors[Slot[1]]], Times[2, Slot[1]]]]]	[Filter, [Range, 1, 9999], [Function, [Equal, [Sum, [Divisors, _1]], [Multiply, 2, _1]]]]
+filter-range-1-9-999-function-sum-divisors-1-eq		
 the-divisor-count-d-n-equals-sigma-0-n-see	Equal[Length[Divisors[20]], DivisorSigma[0, 20]]	
 divisors-2	Divisors[2]	
 divisors-4	Divisors[4]	

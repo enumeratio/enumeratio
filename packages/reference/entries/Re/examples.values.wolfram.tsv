@@ -12,6 +12,8 @@ real-0
 real-positiveinfinity					
 real-positiveinfinity-times-i					
 real-complexinfinity					
+piecewiseexpand-re-imaginaryunit-times-x-neg-2	PiecewiseExpand[Re[Times[I, x]], Less[-2, x, 2]]	-Im[x]	\text{PiecewiseExpand}[\Re(i x),-2<x<2]	-\Im(x)	disagree
+simplify-re-x-x-gt-0	Simplify[Re[x], Greater[x, 0]]	x	\text{Simplify}[\Re(x),x>0]	x	disagree
 re-of-a-symbolic-value-stays-unevaluated	Re[x]	Re[x]	\Re(x)	\Re(x)	disagree
 real-1					
 real-neg-1					
@@ -25,3 +27,9 @@ real-sqrt-3-plus-i
 real-1-plus-sqrt-3-times-i					
 real-neg-1-plus-sqrt-3-times-i					
 real-neg-sqrt-3-plus-i					
+list-real-x-times-exponentiale-pow-1-over-5					
+real-neg-sqrt-3-minus-i					
+real-neg-1-plus-neg-sqrt-3-times-i					
+real-1-plus-neg-sqrt-3-times-i					
+real-sqrt-3-minus-i					
+real-2					

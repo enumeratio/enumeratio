@@ -23,9 +23,9 @@ derivative-csc-x-cot-x	D(csc(x), x)	-(csc(x) * cot(x))
 antiderivative-ln-csc-x-cot-x	integrate(csc(x), x)	-ln(abs(csc(x) + cot(x)))	
 n-csc-6-over-5-50	N(csc(6 / 5), 50)	1.072_916_377_709_897_228_705_116_922_435_239_154_837_639_006_697_8	
 matrixfunction-function-csc-1-1-list-list-1-over	"MatrixFunction(\n                Function(csc(_1), _1),\n                [[1 / 3 * pi, pi], [1 / 6 * pi, -1 / 2 * pi]],\n              )"	"[\n  [6 / 7 + -2 / 21 * sqrt(3), 6 / 7 + 4 / 7 * sqrt(3)],\n  [1 / 7 + 2 / 21 * sqrt(3), 1 / 7 + -4 / 7 * sqrt(3)],\n]"	Unreadable
-assuming-m-in-integers-refine-csc-pi-times-m	Assuming(m in integers, Refine(csc(pi * m)))	csc(pi * m)	
-assuming-m-in-integers-fullsimplify-refine-csc	Assuming(m in integers, FullSimplify(Refine(csc(pi * (1 * 2 ^ -1 + m)))))	csc(pi * (m + 1 / 2))	
-csc-positiveinfinity	csc(positiveInfinity)	Indeterminate	
+assuming-m-in-integers-refine-csc-pi-times-m			
+assuming-m-in-integers-fullsimplify-refine-csc			
+csc-positiveinfinity			
 reciprocal-of-sin-csc-x-frac-1-sin-x	csc(pi / 6) == 1 / sin(pi / 6)	True	
 csc-1-over-8-times-pi	csc(1 / 8 * pi)	sqrt(4 + 2 * sqrt(2))	
 csc-3-over-10-times-pi	csc(3 / 10 * pi)	-1 + sqrt(5)	

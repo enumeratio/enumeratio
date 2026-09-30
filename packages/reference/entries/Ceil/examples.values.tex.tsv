@@ -19,7 +19,7 @@ matrixfunction-ceil-list-list-1-over-2-neg-1	\mathrm{MatrixFunction}(\mathrm{Cei
 ceil-0	\lceil0\rceil	0
 ceil-positiveinfinity	\lceil\infty\rceil	\infty
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4	\mathrm{PiecewiseExpand}(\lceil x\rceil, 0\lt x\lt4)	\lceil x\rceil
-d-ceil-x-x	\frac{\mathrm{d}\lceil x\rceil}{\mathrm{d}x}	0
+d-ceil-x-x		
 how-many-5-seat-vans-are-needed-to-carry-17	\lceil\frac{17}{5}\rceil	4
 ten-bits-are-enough-to-number-1000-items-lceil	\lceil\log_{2}(1\,000)\rceil	10
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	\lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1	\top

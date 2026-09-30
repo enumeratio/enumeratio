@@ -1,11 +1,11 @@
-id	in	back
-a-generic-point-checked-against-mpmath-s-hyp0f1	Hypergeometric0F1[2, 0.5]	
-b-1-5-at-neg-0-7	Hypergeometric0F1[1.5, -0.7]	
-rational-order-7-3-at-2-5	Hypergeometric0F1[Rational[7, 3], 2.5]	
-complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1[Complex[1, 1], 0.5]]	
-order-2-at-a-complex-argument	N[Hypergeometric0F1[2, Complex[0.5, 0.5]]]	
-negative-order-neg-0-5-at-0-3	Hypergeometric0F1[-0.5, 0.3]	
-complex-order-and-argument	N[Hypergeometric0F1[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]	
-n-hypergeometric0f1-1-neg-2-50	N[Hypergeometric0F1[1, -2], 50]	
-matrixfunction-function-hypergeometric0f1-1-over	MatrixFunction[Function[Hypergeometric0F1[Rational[1, 2], Slot[1]]], List[List[1, 0], List[0, 1]]]	[MatrixFunction, [Function, [Hypergeometric0F1, [Rational, 1, 2], _1]], [List, [List, 1, 0], [List, 0, 1]]]
-b-0-is-a-pole-stays-symbolic	Hypergeometric0F1[0, 0.5]	
+id	in
+a-generic-point-checked-against-mpmath-s-hyp0f1	Hypergeometric0F1[2, 0.5]
+b-1-5-at-neg-0-7	Hypergeometric0F1[1.5, -0.7]
+rational-order-7-3-at-2-5	Hypergeometric0F1[Rational[7, 3], 2.5]
+complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1[Complex[1, 1], 0.5]]
+order-2-at-a-complex-argument	N[Hypergeometric0F1[2, Complex[0.5, 0.5]]]
+negative-order-neg-0-5-at-0-3	Hypergeometric0F1[-0.5, 0.3]
+complex-order-and-argument	N[Hypergeometric0F1[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]
+n-hypergeometric0f1-1-neg-2-50	
+matrixfunction-function-hypergeometric0f1-1-over	
+b-0-is-a-pole-stays-symbolic	Hypergeometric0F1[0, 0.5]

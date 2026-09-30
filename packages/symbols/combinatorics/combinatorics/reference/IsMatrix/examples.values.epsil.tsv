@@ -8,4 +8,4 @@ a-ragged-list-of-lists-is-not-a-matrix	IsMatrix([[1, 2], [3]])	False
 an-empty-list-is-not-a-matrix	IsMatrix([])	False
 a-test-function-must-hold-of-every-entry	IsMatrix([[2, 4], [6, 8]], isEven)	True
 list-ismatrix-mat-ismatrix-expr	[IsMatrix(mat), IsMatrix(expr)]	[False, False]
-ismatrix-m	IsMatrix(m)	False
+ismatrix-m		

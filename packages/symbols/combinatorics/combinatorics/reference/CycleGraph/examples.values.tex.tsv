@@ -6,4 +6,4 @@ map-function-vertexeccentricity-cyclegraph-5-1-1	\mathrm{Map}(()\mapsto\mathrm{V
 isacyclicgraph-cyclegraph-5	\mathrm{IsAcyclicGraph}(\mathrm{CycleGraph}(5))	\bot
 vertexdegree-cyclegraph-7	\mathrm{VertexDegree}(\mathrm{CycleGraph}(7))	\bigl\lbrack2, 2, 2, 2, 2, 2, 2\bigr\rbrack
 cyclegraph-4	\mathrm{CycleGraph}(4)	\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4), \mathrm{UndirectedEdge}(4, 1)\bigr\rbrack)
-ispathgraph-cyclegraph-5	\mathrm{IsPathGraph}(\mathrm{CycleGraph}(5))	\bot
+ispathgraph-cyclegraph-5		

@@ -12,6 +12,8 @@ to-30-significant-digits-every-one-correctly	N[InverseErf[Rational[1, 2]], 30]
 n-erfinv-33-over-100-50	N[InverseErf[Rational[33, 100]], 50]
 functionexpand-matrixfunction-erfinv-list-list-0	FunctionExpand[MatrixFunction[InverseErf, List[List[0, Rational[1, 2]], List[1, 0]]]]
 erfinv-a-erf-a-z	InverseErf[a, Erf[a, z]]
+functionexpand-erf-erfinv-s	
+erfinv-s-eq-erfinv-0-s	
 the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	Times[Sqrt[2], InverseErf[0.95]]
 inverse-of-erf-erf-erfinv-x-x-see-erf	Equal[Erf[InverseErf[0.5]], 0.5]
 odd-erfinv-x-erfinv-x-applied-symbolically	InverseErf[Minus[x]]
@@ -20,7 +22,7 @@ isnumeric-erfinv-1-over-pi-1-over-2	NumericQ[InverseErf[Divide[1, Pi], Rational[
 erfinv-0-0	InverseErf[0, 0]
 erfinv-0-1	InverseErf[0, 1]
 erfinv-1-0	InverseErf[1, 0]
-solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1	Solve[Equal[Plus[Power[InverseErf[x], 3], Times[2, InverseErf[x]]], 1], x]
-attributes-erfinv	Attributes[InverseErf]
+solve-erfinv-x-pow-3-plus-2-times-erfinv-x-eq-1	
+attributes-erfinv	
 outside-its-real-domain-1-1-compute-engine	InverseErf[2]
 blows-up-near-the-boundary-erfinv-0-9999-is	InverseErf[0.9999]

@@ -47,6 +47,25 @@ test("Commonest agrees with a brute-force tally, for every subset of 1..5 repeat
   }
 });
 
+// A free symbol has no `.ops` and its `.operator` is the pseudo-head `"Symbol"` — neither
+// reads as "an empty/matching collection" (A-126 farm scan; see list-frontier.ts's
+// Accumulate note for the general shape of the bug).
+test("Commonest(c) stays unevaluated for a free c, rather than answering List()", () => {
+  expect(run(["Commonest", "data"])).toEqual(["Commonest", "data"]);
+});
+test("Sort(x) stays unevaluated for a free x, rather than folding to Symbol()", () => {
+  expect(run(["Sort", "list"])).toEqual(["Sort", "list"]);
+});
+test("Sort(f(a, b, ...)) still sorts any head's own operands", () => {
+  expect(run(["Sort", ["f", 3, 1, 2]])).toEqual(["f", 1, 2, 3]);
+});
+test("Join(aa, bb) stays unevaluated for two free symbols, rather than folding to Symbol()", () => {
+  expect(run(["Join", "aa", "bb"])).toEqual(["Join", "aa", "bb"]);
+});
+test("Join(f(...), f(...)) still joins matching heads' own operands", () => {
+  expect(run(["Join", ["f", 1, 2], ["f", 3, 4]])).toEqual(["f", 1, 2, 3, 4]);
+});
+
 // Position: every matching index, wrapped, unlike IndexOf which reports only the first.
 test("Position's first entry agrees with IndexOf", () => {
   const list = ["List", 1, 2, 3, 2];

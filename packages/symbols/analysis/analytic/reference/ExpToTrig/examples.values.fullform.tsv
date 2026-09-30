@@ -9,6 +9,6 @@ exptotrig-neg-ln-neg-i-times-x-plus-1-plus-ln-i	ExpToTrig[Plus[Minus[Log[Plus[Ti
 exptotrig-exponentiale-pow-x-lt-eq-11-3-pow-i	ExpToTrig[And[LessEqual[Power[E, x], 11], Equal[Power[3, Times[Complex[0, 1], x]], 7]]]	
 exptotrig-neg-1-pow-5-over-7	ExpToTrig[Power[-1, Rational[5, 7]]]	
 exptotrig-list-exponentiale-pow-i-times-x-eq-neg	ExpToTrig[List[Equal[Power[E, Times[Complex[0, 1], x]], -1], Power[-1, Divide[1, 11]]]]	[ExpToTrig, [List, [Equal, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], -1], [Power, -1, [Divide, 1, 11]]]]
-exptotrig-neg-ln-neg-x-plus-2-plus-ln-x-plus-2	ExpToTrig[Plus[Minus[Log[Plus[Minus[x], 2]]], Log[Plus[x, 2]]]]	
+exptotrig-neg-ln-neg-x-plus-2-plus-ln-x-plus-2		
 exptotrig-root-neg-1-16	ExpToTrig[Power[-1, Divide[1, 16]]]	[ExpToTrig, [Power, -1, [Divide, 1, 16]]]
 exptotrig-exponentiale-pow-i-times-x-eq-neg-1	ExpToTrig[Equal[Power[E, Times[Complex[0, 1], x]], -1]]	

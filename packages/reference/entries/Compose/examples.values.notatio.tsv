@@ -1,2 +1,0 @@
-id	in	out
-apply-compose-f-g-h-list-x-y-z	<Apply><Compose>f g h</Compose> <List>x y z</List></Apply>	<Function><Block><Apply><Function><Block><Compose>f g h</Compose></Block> f g h</Function> <List>x y z</List> _1 _2</Apply></Block> _1 _2</Function>

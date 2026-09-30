@@ -206,6 +206,10 @@ export function declareListFunctional(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const [fn, list1, list2] = ops;
       if (fn === undefined || list1 === undefined || list2 === undefined) return undefined;
+      // A bare symbol isn't a list — `operandsOf` returning `[]` for it must not read as an
+      // empty one (see `Accumulate`'s note in list-frontier.ts): `Outer(f, s1, s2)` for free
+      // `s1`/`s2` stays unevaluated instead of answering `List()`.
+      if (symbolNameOf(list1) !== undefined || symbolNameOf(list2) !== undefined) return undefined;
       const rows2 = operandsOf(list2);
       const rows = operandsOf(list1).map((a) => ce.box(["List", ...rows2.map((b) => applyFn(ce, fn, [a, b]))]));
       return ce.box(["List", ...rows]);

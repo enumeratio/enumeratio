@@ -7,4 +7,4 @@ heavisidelambda-1-4	\mathrm{HeavisideLambda}(\frac{1}{4})	\frac{3}{4}
 heavisidelambda-1-2	\mathrm{HeavisideLambda}(\frac{1}{2})	\frac{1}{2}
 heavisidelambda-pi-over-4-exact	\mathrm{HeavisideLambda}(\frac{\pi}{4})	1-\frac{\pi}{4}
 matrixfunction-heavisidelambda-list-list-neg-1-0	\mathrm{MatrixFunction}(\mathrm{HeavisideLambda}, \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack-\frac{1}{2}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack-\frac{1}{6}, \frac{1}{2}\bigr\rbrack\bigr\rbrack
-n-heavisidelambda-5-over-17-50	N(\mathrm{HeavisideLambda}(\frac{5}{17}), 50)	0.705\,882\,352\,941\,176\,4
+n-heavisidelambda-5-over-17-50		

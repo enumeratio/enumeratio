@@ -22,7 +22,7 @@ n-exponentiale
 n-neg-2-times-pit-plus-pi-list-positiveinfinity			
 n-crt			
 n-crt-47			
-n-2-pow-1-000-000	((big(2)^1000000))		
+n-2-pow-1-000-000			
 n-m			
 n-pi-pow-10-list-positiveinfinity-5			
 n-pi-pow-10-list-positiveinfinity-1			
@@ -30,6 +30,8 @@ n-exponentiale-pow-sin-1-000
 n-exponentiale-pow-sin-1-000-47			
 n-1-minus-goldenratio-plus-1-over-goldenratio-20			
 n-1-minus-goldenratio-plus-1-over-goldenratio			
+n-exponentiale-pow-100-list-positiveinfinity-neg			
+n-10-000-000-000-times-neg-exponentiale-pow-999			
 an-exact-tie-rounds-to-the-even-digit-0-125	((1 // 8))	0.125	disagree
 and-0-375-to-0-38	((3 // 8))	0.375	disagree
 n-pi-1-digit			

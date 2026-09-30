@@ -30,10 +30,14 @@ test("most examples make the trip to Wolfram and back exactly", () => {
 });
 
 // The vdom markup is FullForm: read back, every example is the expression it came from.
+// A row in triage gets no forms, so it has no markup to read back.
 test("every example's markup reads back as the example", () => {
   const lossy: string[] = [];
-  for (const { head, implementations } of heads)
+  for (const { head, entry, implementations } of heads) {
+    const triage = new Set(entry.examples.filter((e) => e.role === "triage").map((e) => e.id));
     for (const [id, rows] of Object.entries(implementations ?? {}))
-      if (rows["notatio"]?.in === undefined || rows["notatio"].back !== undefined) lossy.push(`${head}#${id}`);
+      if (!triage.has(id) && (rows["notatio"]?.in === undefined || rows["notatio"].back !== undefined))
+        lossy.push(`${head}#${id}`);
+  }
   expect(lossy).toEqual([]);
 });

@@ -15,4 +15,4 @@ expand-x-plus-imaginaryunit-times-x-minus	Expand[Times[Plus[x, I], Plus[x, Times
 expand-1-minus-x-times-neg-1-minus-x-times-1	Expand[Times[Plus[1, Times[-1, x]], Plus[-1, Times[-1, x]], Plus[1, Times[-1, x]], Plus[-1, Times[-1, x]]]]
 expand-1-plus-x-plus-y-times-2-minus-x-pow-3	Expand[Times[Plus[1, x, y], Power[Plus[2, Times[-1, x]], 3]]]
 expand-1-plus-x-times-2-plus-x-times-3-plus-x	Expand[Times[Plus[1, x], Plus[2, x], Plus[3, x]]]
-expand-product-x-plus-i-i-6	Expand[Product[Plus[x, i], List[i, 6]]]
+expand-product-x-plus-i-i-6	

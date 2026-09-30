@@ -1,3 +1,0 @@
-id	in	out
-sum-i-pow-neg-6-i-1-positiveinfinity	sum(i ^ -6, (i, 1, PositiveInfinity))	pi ^ 6 / 945
-sum-i-pow-2-i-nothing-10	sum(i ^ 2, (i, Nothing, 10))	385
