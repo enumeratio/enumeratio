@@ -1,0 +1,8 @@
+id	in	out
+variance-list-1-2-3-4	\operatorname{Variance}([1,2,3,4])	\frac{5}{3}
+variance-n-list-1-2-3-4-30	\operatorname{Variance}(N([1,2,3,4],30))	\frac{5}{3}
+n-variance-ts	N(\operatorname{Variance}(\operatorname{ts}))	\operatorname{Variance}(\operatorname{ts})
+variance-binomialdistribution-n-p	\operatorname{Variance}(\operatorname{BinomialDistribution}(n,p))	np(-p+1)
+variance-probabilitydistribution-sqrt-2-times-1	\operatorname{Variance}(\operatorname{ProbabilityDistribution}(\sqrt{2}\frac{1}{\pi}\frac{1}{(x-2)^4+1},[x,-\infty,\infty]))	\operatorname{Variance}(\operatorname{ProbabilityDistribution}(\frac{\sqrt{2}}{\pi(x-2)^4+\pi},[x,-\infty,\infty]))
+n-list-mean-data-variance-data	N([\operatorname{Mean}(\operatorname{data}),\operatorname{Variance}(\operatorname{data})])	[\operatorname{Mean}(\operatorname{data}),\operatorname{Variance}(\operatorname{data})]
+n-variance-heights	N(\operatorname{Variance}(\operatorname{heights}))	\operatorname{Variance}(\operatorname{heights})

@@ -1,0 +1,2 @@
+id	in	out
+incidence-matrix-of-a-mixed-graph	\operatorname{IncidenceMatrix}(\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,2),\operatorname{DirectedEdge}(2,3)]))	[[1,0],[1,-1],[0,1]]

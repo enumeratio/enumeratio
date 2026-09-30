@@ -1,0 +1,8 @@
+id	in	out
+standard-range	\operatorname{PascalBinomial}(5,2)	10
+pascalbinomial-negative-n-case-2	\operatorname{PascalBinomial}(-1,4)	1
+pascalbinomial-10-3	\operatorname{PascalBinomial}(10,3)	120
+negative-n	\operatorname{PascalBinomial}(-1,3)	-1
+pascalbinomial-8-4	\operatorname{PascalBinomial}(8,4)	70
+n-pascalbinomial-7-over-3-1-over-5-20		
+matrixfunction-function-pascalbinomial-1-2-1		

@@ -1,0 +1,5 @@
+id	in	out
+adds-attributes	\operatorname{Attributes}(\operatorname{Add})	[\operatorname{Flat},\operatorname{HoldAll},\operatorname{Listable},\operatorname{Orderless}]
+attributes-f	\operatorname{Attributes}(f)	[]
+attributes-syms	\operatorname{Attributes}(\operatorname{syms})	[]
+attributes-attributes		

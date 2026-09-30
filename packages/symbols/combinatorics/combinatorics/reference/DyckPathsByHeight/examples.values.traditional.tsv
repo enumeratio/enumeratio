@@ -1,0 +1,4 @@
+id	in	out
+count-dyckpathsbyheight-4-2	\operatorname{Count}(\operatorname{DyckPathsByHeight}(4,2))	7
+first-element-of-dyckpathsbyheight-4-2	\operatorname{At}(\operatorname{DyckPathsByHeight}(4,2),1)	\operatorname{DyckPath}([1,1,0,1,0,1,0,0])
+every-element-of-dyckpathsbyheight-4-2	\operatorname{Take}(\operatorname{DyckPathsByHeight}(4,2),5)	[\operatorname{DyckPath}([1,1,0,1,0,1,0,0]),\operatorname{DyckPath}([1,1,0,1,0,0,1,0]),\operatorname{DyckPath}([1,1,0,0,1,1,0,0]),\operatorname{DyckPath}([1,1,0,0,1,0,1,0]),\operatorname{DyckPath}([1,0,1,1,0,1,0,0])]

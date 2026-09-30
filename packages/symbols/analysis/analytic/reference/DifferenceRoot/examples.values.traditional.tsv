@@ -1,0 +1,4 @@
+id	in	out
+a-hand-built-first-order-recurrence	\textcolor{red}{\text{[["DifferenceRoot",["Function",["List",["Equal",["Add",["Negate",["y","n"]],["y",["Add","n",1]],-1],0],["Equal",["y",0],0]],"y","n"]],5]}}	5
+a-hand-built-fibonacci-recurrence-at-10	\textcolor{red}{\text{[["DifferenceRoot",["Function",["List",["Equal",["Add",["Negate",["y","n"]],["Negate",["y",["Add","n",1]]],["y",["Add","n",2]]],0],["Equal",["y",0],0],["Equal",["y",1],1]],"y","n"]],10]}}	55
+symbolic-n-stays-inert	\textcolor{red}{\text{[["DifferenceRoot",["Function",["List",["Equal",["Add",["Negate",["y","n"]],["y",["Add","n",1]],-1],0],["Equal",["y",0],0]],"y","n"]],"n"]}}	\operatorname{DifferenceRoot}(\operatorname{Function}(\operatorname{Block}([-y(n)+y(n+1)-1=0,y(0)=0]),y,n))(n)

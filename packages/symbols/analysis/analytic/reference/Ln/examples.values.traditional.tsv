@@ -2,44 +2,44 @@ id	in	out
 ln-1		
 ln-exponentiale		
 ln-0		
-a-machine-precision-argument-evaluates		
-a-machine-precision-negative-argument		
+a-machine-precision-argument-evaluates	\ln(1.5)	0.405465108108164381978
+a-machine-precision-negative-argument	\ln(-4.705)	1.54862577303734295736+3.141592653589793i
 ln-1-i-pi-the-principal-value-past-the-branch		
-n-for-a-decimal-value		
-arbitrary-precision-via-n		
-evaluates-at-a-complex-argument		
-a-negative-float-gives-the-principal-complex		
-threads-element-wise-over-a-list		
-an-integer-power-is-pulled-out-ln-1000-3-ln-10		
-ln-exponentiale-pow-3		
+n-for-a-decimal-value	N(\ln(1000))	6.90775527898213705205
+arbitrary-precision-via-n	N(\ln(\frac{5}{2}))	0.916290731874155065184
+evaluates-at-a-complex-argument	\ln(2.5+i)	0.990500734433291704176+0.3805063771123649i
+a-negative-float-gives-the-principal-complex	\ln(-2.5)	0.916290731874155065184+3.141592653589793i
+threads-element-wise-over-a-list	\ln([1,2.1,3.1,4.1])	[0,0.741937344729377312483,1.13140211149110056191,1.41098697371026211985]
+an-integer-power-is-pulled-out-ln-1000-3-ln-10	\ln(1000)	3\ln(10)
+ln-exponentiale-pow-3	\ln(e^3)	3
 ln-positiveinfinity		
 ln-z-to-infty-and-its-real-part-goes-to-infty-ln		
-ln-i-i-pi-2-exactly		
+ln-i-i-pi-2-exactly	\ln(i)	\frac{1}{2}i\pi
 a-unit-fraction-becomes-a-negated-logarithm-ln		
-interval-arithmetic-ln-is-increasing-so-ln-frac		
-uncertainty-propagation-ln-2-pm-0-01-approx-0		
-ln-exp-x		
-derivative-1-x		
-antiderivative-x-ln-x-x		
-mercator-series-for-ln-1-x		
-to-40-significant-digits-every-one-correctly		
-ln-frac-12-i-pi-ln-2-a-negative-rational-folded		
-n-decimalizes-ln-i-not-just-the-exact-form		
+interval-arithmetic-ln-is-increasing-so-ln-frac	\ln([\frac{1}{3},e])	[-\ln(3),1]
+uncertainty-propagation-ln-2-pm-0-01-approx-0	\ln(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.6931471805599453,0.005)
+ln-exp-x	\ln(e^x)	x
+derivative-1-x	\frac{d}{dx}\ln(x)	\frac{1}{x}
+antiderivative-x-ln-x-x	\int\ln(x)dx	-x+x\ln(x)
+mercator-series-for-ln-1-x	\operatorname{Series}(\ln(1+x),x,0,4)	\frac{-1}{4}x^4+\frac{1}{3}x^3+\frac{-1}{2}x^2+x+\operatorname{BigO}(x^5)
+to-40-significant-digits-every-one-correctly	N(\ln(2),40)	0.6931471805599453094172321214581765680755
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded	\ln(\frac{-1}{2})	i\pi-\ln(2)
+n-decimalizes-ln-i-not-just-the-exact-form	N(\ln(i))	1.5707963267948966i
 an-integer-power-negative-argument		
-n-of-a-negative-integer-argument		
+n-of-a-negative-integer-argument	N(\ln(-2),10)	0.6931471806+3.141592654i
 ln-neg-6		
-n-of-a-negative-rational-argument		
+n-of-a-negative-rational-argument	N(\ln(\frac{-1}{2}))	-0.6931471805599453+3.141592653589793i
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the		
-n-ln-5-over-2-50		
-functiondomain-ln-x-x		
-functionrange-ln-x-x-y	\mathrm{FunctionRange}(\ln(x), x, y)	\mathrm{True}
-functionanalytic-ln-x-x	\mathrm{FunctionAnalytic}(\ln(x), x)	\mathrm{False}
-functionmeromorphic-ln-x-x	\mathrm{FunctionMeromorphic}(\ln(x), x)	\mathrm{False}
-functioninjective-ln-x-x	\mathrm{FunctionInjective}(\ln(x), x)	\mathrm{True}
-functionsurjective-ln-x-x	\mathrm{FunctionSurjective}(\ln(x), x)	\mathrm{True}
-d-ln-z-z		
-d-ln-ln-x-x		
-ln-exponentiale-pow-n		
-inverse-of-exp-ln-e-x-x	\ln(e^{5})=5	\mathrm{True}
-product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\mathrm{True}
-powerexpand-splits-a-logarithm-of-a-product		
+n-ln-5-over-2-50	N(\ln(\frac{5}{2}),50)	0.91629073187415506518352721176801107145010121990826
+functiondomain-ln-x-x	\operatorname{FunctionDomain}(\ln(x),x)	0<x
+functionrange-ln-x-x-y	\operatorname{FunctionRange}(\ln(x),x,y)	\operatorname{True}
+functionanalytic-ln-x-x	\operatorname{FunctionAnalytic}(\ln(x),x)	\operatorname{False}
+functionmeromorphic-ln-x-x	\operatorname{FunctionMeromorphic}(\ln(x),x)	\operatorname{False}
+functioninjective-ln-x-x	\operatorname{FunctionInjective}(\ln(x),x)	\operatorname{True}
+functionsurjective-ln-x-x	\operatorname{FunctionSurjective}(\ln(x),x)	\operatorname{True}
+d-ln-z-z	\frac{d}{dz}\ln(z)	\frac{1}{z}
+d-ln-ln-x-x	\frac{d}{dx}\ln(\ln(x))	\frac{1}{x\ln(x)}
+ln-exponentiale-pow-n	\ln(e^n)	n
+inverse-of-exp-ln-e-x-x	\ln(e^5)=5	\operatorname{True}
+product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\operatorname{True}
+powerexpand-splits-a-logarithm-of-a-product	\operatorname{PowerExpand}(\ln(xy))	\ln(x)+\ln(y)

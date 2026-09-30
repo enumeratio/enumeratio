@@ -1,43 +1,43 @@
 id	in	out
-fibonacci-0	F_{0}	0
-fibonacci-1	F_{1}	1
+fibonacci-0	F_0	0
+fibonacci-1	F_1	1
 fibonacci-10	F_{10}	55
-fibonacci-20	F_{20}	6\,765
-fibonacci-8	F_{8}	21
-exact-at-any-size-f-100-has-21-digits	F_{100}	354\,224\,848\,179\,261\,915\,075
-a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	F_{1.5}	0.920\,442\,065\,259\,926
-the-two-argument-fibonacci-polynomial-f-7-x-from	F_{7}(x)	x^6+5x^4+6x^2+1
-the-fibonacci-polynomial-at-a-real-order-and	F_{5.8}(3)	283.482\,730\,832\,949\,9
-special-value-of-the-fibonacci-polynomial-f-1-0	F_{1}(0)	1
-special-value-of-the-fibonacci-polynomial-f-0-0	F_{0}(0)	0
-f-3-x-x-2-1-threads-element-wise-over-a-matrix		
-threads-element-wise-over-a-list-as-wolfram-s		
-fibonacci-n-x-symbolic-order-stays-exact	F_{n}(x)	\frac{(\frac{1}{2}(x+(x^2+4)^{1/2}))^{n}-\frac{\cos(\pi n)}{((x+(x^2+4)^{1/2})/2)^{n}}}{\sqrt{x^2+4}}
+fibonacci-20	F_{20}	6765
+fibonacci-8	F_8	21
+exact-at-any-size-f-100-has-21-digits	F_{100}	354224848179261915075
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	F_{1.5}	0.920442065259926
+the-two-argument-fibonacci-polynomial-f-7-x-from	F_7(x)	x^6+5x^4+6x^2+1
+the-fibonacci-polynomial-at-a-real-order-and	F_{5.8}(3)	283.4827308329499
+special-value-of-the-fibonacci-polynomial-f-1-0	F_1(0)	1
+special-value-of-the-fibonacci-polynomial-f-0-0	F_0(0)	0
+f-3-x-x-2-1-threads-element-wise-over-a-matrix	\operatorname{Fibonacci}(3,[[-1,0],[0,5]])	[[2,1],[1,26]]
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{Fibonacci}([1,2,3,4])	[1,1,2,3]
+fibonacci-n-x-symbolic-order-stays-exact	F_n(x)	\frac{(\frac{1}{2}(x+\sqrt{x^2+4}))^n-\cos(\pi n)(\frac{1}{2}(x+\sqrt{x^2+4}))^{-n}}{\sqrt{x^2+4}}
 fibonacci-half-x-exact-closed-form	F_{\frac{1}{2}}(x)	\frac{\sqrt{2}\sqrt{x+\sqrt{x^2+4}}}{2\sqrt{x^2+4}}
-n-fibonacci-15-over-17-50	N(F_{\frac{15}{17}}, 50)	0.956\,519\,913\,924\,311\,225\,086
-n-fibonacci-5-8-minus-i	N(F_{5}(8-i))	3\,903-2\,064i
-functionexpand-fibonacci-n-x	\mathrm{FunctionExpand}(F_{n}(x))	\frac{(\frac{1}{2}(x+(x^2+4)^{1/2}))^{n}-\frac{\cos(\pi n)}{((x+(x^2+4)^{1/2})/2)^{n}}}{\sqrt{x^2+4}}
-functionexpand-fibonacci-1-over-2-x	\mathrm{FunctionExpand}(F_{\frac{1}{2}}(x))	\frac{\sqrt{2}\sqrt{x+\sqrt{x^2+4}}}{2\sqrt{x^2+4}}
-fibonacci-2-neg-x-eq-neg-fibonacci-2-x	F_{2}(-x)=-F_{2}(x)	\mathrm{True}
-fibonacci-1-neg-x-eq-fibonacci-1-x	F_{1}(-x)=F_{1}(x)	\mathrm{True}
-fibonacci-list-1-2-3-4-5		
-generatingfunction-fibonacci-n-n-x	\mathrm{GeneratingFunction}(F_{n}, n, x)	(x)(-x^2-x+1)^{-1}
-fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1	F_{1}(\overline{z})=\overline{F_{1}(z)}	\mathrm{True}
-matrixfunction-function-fibonacci-3-1-1-list	\mathrm{MatrixFunction}(()\mapsto F_{3}(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 5\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 26\bigr\rbrack\bigr\rbrack
-consecutive-ratios-f-n-1-f-n-converge-to-the	\frac{F_{20}}{F_{19}}	\frac{6\,765}{4\,181}
-sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	\sum_{k=1}^{10}F_{k}	143
-the-doubling-identity-f-2n-f-n-l-n-see-lucasl	F_{20}=F_{10}L_{10}	\mathrm{True}
-the-defining-recurrence-f-10-f-9-f-8	F_{10}=F_{9}+F_{8}	\mathrm{True}
-cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	F_{5}F_{7}-F_{6}^2	1
-gcd-f-12-f-18-f-gcd-12-18	\gcd(F_{12}, F_{18})=F_{\gcd(12, 18)}	\mathrm{True}
+n-fibonacci-15-over-17-50	N(F_{\frac{15}{17}},50)	0.95651991392431122508582263427692298648606969012061
+n-fibonacci-5-8-minus-i	N(F_5(8-i))	3903-2064i
+functionexpand-fibonacci-n-x	\operatorname{FunctionExpand}(F_n(x))	\frac{(\frac{1}{2}(x+\sqrt{x^2+4}))^n-\cos(\pi n)(\frac{1}{2}(x+\sqrt{x^2+4}))^{-n}}{\sqrt{x^2+4}}
+functionexpand-fibonacci-1-over-2-x	\operatorname{FunctionExpand}(F_{\frac{1}{2}}(x))	\frac{\sqrt{2}\sqrt{x+\sqrt{x^2+4}}}{2\sqrt{x^2+4}}
+fibonacci-2-neg-x-eq-neg-fibonacci-2-x	F_2(-x)=-F_2(x)	\operatorname{True}
+fibonacci-1-neg-x-eq-fibonacci-1-x	F_1(-x)=F_1(x)	\operatorname{True}
+fibonacci-list-1-2-3-4-5	\operatorname{Fibonacci}([1,2,3,4,5])	[1,1,2,3,5]
+generatingfunction-fibonacci-n-n-x	\operatorname{GeneratingFunction}(F_n,n,x)	\frac{x}{-x^2-x+1}
+fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1	F_1(\operatorname{Conjugate}(z))=\operatorname{Conjugate}(F_1(z))	\operatorname{True}
+matrixfunction-function-fibonacci-3-1-1-list	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(F_3(\_1)),\_1),[[-1,0],[0,5]])	[[2,0],[0,26]]
+consecutive-ratios-f-n-1-f-n-converge-to-the	\frac{F_{20}}{F_{19}}	\frac{6765}{4181}
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	\sum_{k=1}^{10}F_k	143
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	F_{20}=F_{10}L_{10}	\operatorname{True}
+the-defining-recurrence-f-10-f-9-f-8	F_{10}=F_9+F_8	\operatorname{True}
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	F_5F_7-{F_6}^2	1
+gcd-f-12-f-18-f-gcd-12-18	\operatorname{GCD}(F_{12},F_{18})=F_{\operatorname{GCD}(12,18)}	\operatorname{True}
 negative-indices-are-supported-via-f-n-1-n-1-f-n	F_{-5}	5
-fibonacci-2	F_{2}	1
-fibonacci-3	F_{3}	2
-fibonacci-4	F_{4}	3
-fibonacci-5	F_{5}	5
-fibonacci-6	F_{6}	8
-fibonacci-7	F_{7}	13
-fibonacci-9	F_{9}	34
+fibonacci-2	F_2	1
+fibonacci-3	F_3	2
+fibonacci-4	F_4	3
+fibonacci-5	F_5	5
+fibonacci-6	F_6	8
+fibonacci-7	F_7	13
+fibonacci-9	F_9	34
 fibonacci-neg-1	F_{-1}	1
-f-1000-has-209-digits-see-integerdigits	\mathrm{Length}(\mathrm{IntegerDigits}(F_{1\,000}))	209
-they-grow-fast-f-50-already-exceeds-twelve	F_{50}	12\,586\,269\,025
+f-1000-has-209-digits-see-integerdigits	\operatorname{Length}(\operatorname{IntegerDigits}(F_{1000}))	209
+they-grow-fast-f-50-already-exceeds-twelve	F_{50}	12586269025

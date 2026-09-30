@@ -1,13 +1,13 @@
 id	in	out
-order-is-n-factorial-over-two	\left|\mathrm{AlternatingGroup}(5)\right|	60
-generators-odd-n		
-generators-even-n		
-generators-collapse-at-three		
-elements-of-a3		
-grouporder-alternatinggroup-10	\left|\mathrm{AlternatingGroup}(10)\right|	1\,814\,400
-groupgenerators-alternatinggroup-10		
-groupelements-alternatinggroup-4		
-trivial-for-n-equals-one	\left|\mathrm{AlternatingGroup}(1)\right|	1
-trivial-for-n-equals-two	\left|\mathrm{AlternatingGroup}(2)\right|	1
-groupelements-alternatinggroup-1		
-groupelements-alternatinggroup-2		
+order-is-n-factorial-over-two	|\operatorname{AlternatingGroup}(5)|	60
+generators-odd-n	\operatorname{GroupGenerators}(\operatorname{AlternatingGroup}(5))	[\operatorname{Cycles}([[1,2,3]]),\operatorname{Cycles}([[1,2,3,4,5]])]
+generators-even-n	\operatorname{GroupGenerators}(\operatorname{AlternatingGroup}(4))	[\operatorname{Cycles}([[1,2,3]]),\operatorname{Cycles}([[2,3,4]])]
+generators-collapse-at-three	\operatorname{GroupGenerators}(\operatorname{AlternatingGroup}(3))	[\operatorname{Cycles}([[1,2,3]])]
+elements-of-a3	\operatorname{GroupElements}(\operatorname{AlternatingGroup}(3))	[\operatorname{Cycles}([]),\operatorname{Cycles}([[1,2,3]]),\operatorname{Cycles}([[1,3,2]])]
+grouporder-alternatinggroup-10	|\operatorname{AlternatingGroup}(10)|	1814400
+groupgenerators-alternatinggroup-10	\operatorname{GroupGenerators}(\operatorname{AlternatingGroup}(10))	[\operatorname{Cycles}([[1,2,3]]),\operatorname{Cycles}([[2,3,4,5,6,7,8,9,10]])]
+groupelements-alternatinggroup-4	\operatorname{GroupElements}(\operatorname{AlternatingGroup}(4))	[\operatorname{Cycles}([]),\operatorname{Cycles}([[2,3,4]]),\operatorname{Cycles}([[2,4,3]]),\operatorname{Cycles}([[1,2],[3,4]]),\operatorname{Cycles}([[1,2,3]]),\operatorname{Cycles}([[1,2,4]]),\operatorname{Cycles}([[1,3,2]]),\operatorname{Cycles}([[1,3,4]]),\operatorname{Cycles}([[1,3],[2,4]]),\operatorname{Cycles}([[1,4,2]]),\operatorname{Cycles}([[1,4,3]]),\operatorname{Cycles}([[1,4],[2,3]])]
+trivial-for-n-equals-one	|\operatorname{AlternatingGroup}(1)|	1
+trivial-for-n-equals-two	|\operatorname{AlternatingGroup}(2)|	1
+groupelements-alternatinggroup-1	\operatorname{GroupElements}(\operatorname{AlternatingGroup}(1))	[\operatorname{Cycles}([])]
+groupelements-alternatinggroup-2	\operatorname{GroupElements}(\operatorname{AlternatingGroup}(2))	[\operatorname{Cycles}([])]

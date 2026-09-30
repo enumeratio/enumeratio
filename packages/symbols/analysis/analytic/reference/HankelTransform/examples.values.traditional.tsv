@@ -1,0 +1,16 @@
+id	in	out
+exp-neg-ar-order0	\operatorname{Assuming}(a>0,\operatorname{HankelTransform}(e^{-ar},r,s))	\frac{a}{(a^2+s^2)^{\frac{3}{2}}}
+one-over-r	\operatorname{HankelTransform}(\frac{1}{r},r,s)	\frac{1}{s}
+one-over-sqrt-r2-a2	\operatorname{Assuming}(a>0,\operatorname{HankelTransform}(\frac{1}{\sqrt{r^2+a^2}},r,s))	\frac{e^{-as}}{s}
+hankeltransform-exponentiale-pow-neg-r-r-s		
+hankeltransform-1-over-r-pow-2-plus-1-times-cos		
+exp-neg-ar-order1	\operatorname{Assuming}(a>0,\operatorname{HankelTransform}(e^{-ar},r,s,1))	\frac{s}{(a^2+s^2)^{\frac{3}{2}}}
+hankeltransform-1-over-r-times-sin-r-r-1-over-3	\operatorname{HankelTransform}(\frac{1}{r}\sin(r),r,\frac{1}{3})	\operatorname{HankelTransform}(\frac{\sin(r)}{r},r,\frac{1}{3})
+hankeltransform-1-over-r-times-sin-r-r-s		
+hankeltransform-1-over-r-times-exponentiale-pow		
+hankeltransform-neg-exponentiale-pow-neg-m-times		
+hankeltransform-1-over-r-times-exponentiale-po-2		
+hankeltransform-ln-a-pow-2-times-r-pow-neg-2		
+hankeltransform-1-over-b-pow-2-plus-r-pow-2		
+hankeltransform-1-over-r-times-erfc-r-r-s		
+hankeltransform-1-over-r-times-expintegrale-1-r		

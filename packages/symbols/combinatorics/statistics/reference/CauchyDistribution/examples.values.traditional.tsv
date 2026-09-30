@@ -1,0 +1,5 @@
+id	in	out
+cauchy-pdf-exact	\operatorname{PDF}(\operatorname{CauchyDistribution}(0,1),0)	\frac{1}{\pi}
+cauchy-cdf-exact	\operatorname{CDF}(\operatorname{CauchyDistribution}(0,1),1)	\frac{3}{4}
+cauchy-default-is-standard	\operatorname{CauchyDistribution}()	\operatorname{CauchyDistribution}(0,1)
+cauchy-mean-indeterminate	\operatorname{Mean}(\operatorname{CauchyDistribution}(0,1))	\operatorname{Indeterminate}

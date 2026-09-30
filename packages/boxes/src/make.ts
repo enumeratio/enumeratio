@@ -24,6 +24,8 @@ import {
   underscript,
 } from "./box.ts";
 import { fromMathJson } from "./json.ts";
+import { ENGINE_NOTATION } from "./notation-engine.ts";
+import type { Notation, Writer } from "./notation.ts";
 
 // Binding strength, loosest to tightest. A node binding at `ATOM` never needs parens.
 const OR = 1;
@@ -66,8 +68,8 @@ const SYMBOLS: Record<string, string> = {
   PositiveInfinity: "∞",
   ComplexInfinity: "∞̃",
   Degrees: "°",
-  True: "true",
-  False: "false",
+  True: "True",
+  False: "False",
   Nothing: "",
   EmptySet: "∅",
   RealNumbers: "ℝ",
@@ -315,7 +317,19 @@ function bigOperator(symbol: string, over: unknown): Box {
   return symbol;
 }
 
+/** The notation `makeBoxes` is writing with: compute-engine's heads, then the caller's. */
+let notation: Notation = ENGINE_NOTATION;
+
+const WRITER: Writer = {
+  box: (json) => make(json).box,
+  tight: (json) => operand(make(json), ATOM),
+  call: (name, args) => row([name, APPLY_FUNCTION, fenced("(", list(args.map(make)), ")")]),
+};
+
 function makeFunction(head: string, ops: unknown[]): Made {
+  const rule = Object.hasOwn(notation, head) ? notation[head] : undefined;
+  const written = rule?.(ops as MathJsonExpression[], WRITER);
+  if (written !== undefined) return atom(written);
   switch (head) {
     case "Add": {
       const items: Box[] = [paren(make(ops[0]), ADD)]; // left-associative: no parens on a leading sum
@@ -361,7 +375,9 @@ function makeFunction(head: string, ops: unknown[]): Made {
 
     case "Power": {
       const [base, exponent] = ops.map(make);
-      return atom(superscript(paren(base, ATOM), exponent.box));
+      // A power as the base is fenced: `(a^b)^c`, which unfenced reads as a tower.
+      const nested = headOf(ops[0]) === "Power" || headOf(ops[0]) === "Square";
+      return atom(superscript(nested ? fenced("(", [base.box], ")") : paren(base, ATOM), exponent.box));
     }
     case "Square":
       return makeFunction("Power", [ops[0], 2]);
@@ -405,6 +421,8 @@ function makeFunction(head: string, ops: unknown[]): Made {
     }
 
     case "Binomial": {
+      // Threaded over a list it stays a call, as a head with a notation does (`scalars`).
+      if (ops.some((op) => headOf(op) === "List")) return makeCall(head, ops);
       const [n, k] = ops.map(make);
       return atom(fenced("(", [fraction(n.box, k.box, { FractionLine: false })], ")"));
     }
@@ -583,5 +601,14 @@ function make(node: unknown): Made {
   return atom(error(text(JSON.stringify(node) ?? String(node))));
 }
 
-/** `json`'s traditional notation, as boxes. */
-export const makeBoxes = (json: MathJsonExpression): Box => make(json).box;
+/** `json`'s traditional notation, as boxes: compute-engine's heads as this package writes them,
+ *  every other head as `notation` (its packages', `notationOf(engine)`) says, or as a call. */
+export function makeBoxes(json: MathJsonExpression, extra: Notation = {}): Box {
+  const outer = notation;
+  notation = { ...ENGINE_NOTATION, ...extra };
+  try {
+    return make(json).box;
+  } finally {
+    notation = outer;
+  }
+}

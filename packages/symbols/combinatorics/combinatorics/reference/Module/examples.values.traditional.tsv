@@ -1,0 +1,3 @@
+id	in	out
+a-local-counter	\operatorname{Module}([i=0],\operatorname{Assign}(i,i+1))	1
+locals-do-not-leak-or-clobber	[\operatorname{Module}([n=10],n+1),\operatorname{Module}([n=20],n+1)]	[11,21]

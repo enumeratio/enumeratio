@@ -1,49 +1,49 @@
 id	in	out
-abs-neg-5		
-abs-5		
-0-is-the-only-value-with-x-0		
-abs-neg-7-over-2		
-the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4		
-threads-element-wise-over-a-list		
-abs-neg-2p5		
-the-modulus-of-a-complex-number-with-approximate		
-threads-over-a-matrix-entry-by-entry		
-exact-numeric-constants		
-an-exact-complex-number-gives-an-exact-radical		
-abs-imaginaryunit		
-e-i-pi-3-lies-on-the-unit-circle		
-abs-negativeinfinity		
-complex-infinity-has-infinite-magnitude-in-every		
-an-interval-maps-to-the-interval-of-absolute		
-an-interval-straddling-0-maps-to-0-the-larger		
-decides-the-sign-of-an-exact-numeric-expression		
-a-complex-radicand-inside-the-subtraction		
-n-abs-pi-plus-i-times-catalan-25		
-fullsimplify-matrixfunction-abs-list-list-1-over		
-abs-positiveinfinity		
-abs-positiveinfinity-times-i		
-piecewiseexpand-abs-imaginaryunit-times-x-neg-2		
-complexexpand-abs-x		
-complexexpand-abs-x-plus-i-times-y		
-the-gap-between-two-temperatures-70-and-95		
-the-distance-between-the-points-1-i-and-4-5i-of		
-even-function-x-x	\vert-8\vert=\vert8\vert	\mathrm{True}
-triangle-inequality-a-b-le-a-b	\vert3-8\vert\le\vert3\vert+\vert-8\vert	\mathrm{True}
-z-2-z-bar-z	\vert3+4i\vert^2=(3+4i)\overline{3+4i}	\mathrm{True}
-multiplicative-ab-a-b	\vert(1+2i)(3-i)\vert=\vert1+2i\vert\vert3-i\vert	\mathrm{True}
-abs-1		
-abs-neg-1		
-abs-neg-i		
-abs-neg-1-plus-i		
-abs-neg-1-minus-i		
-abs-1-minus-i		
-abs-sqrt-3-plus-i		
-abs-1-plus-sqrt-3-times-i		
-abs-neg-1-plus-sqrt-3-times-i		
-abs-neg-sqrt-3-plus-i		
-abs-neg-sqrt-3-minus-i		
-abs-neg-1-plus-neg-sqrt-3-times-i		
-abs-1-plus-neg-sqrt-3-times-i		
-abs-sqrt-3-minus-i		
-abs-2		
-doesn-t-factor-constants-out-of-a-symbolic		
+abs-neg-5	|-5|	5
+abs-5	|5|	5
+0-is-the-only-value-with-x-0	|0|	0
+abs-neg-7-over-2	|\frac{-7}{2}|	\frac{7}{2}
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	|3+4i|	5
+threads-element-wise-over-a-list	|[-1,2,-3]|	[1,2,3]
+abs-neg-2p5	|-2.5|	2.5
+the-modulus-of-a-complex-number-with-approximate	|1.4+2.3i|	2.69258240356725201563
+threads-over-a-matrix-entry-by-entry	|[[\frac{1}{2},-1],[\frac{-5}{3},\frac{1}{2}]]|	[[\frac{1}{2},1],[\frac{5}{3},\frac{1}{2}]]
+exact-numeric-constants	|-\pi|	\pi
+an-exact-complex-number-gives-an-exact-radical	|1+i|	\sqrt{2}
+abs-imaginaryunit	|i|	1
+e-i-pi-3-lies-on-the-unit-circle	|e^{i\frac{\pi}{3}}|	1
+abs-negativeinfinity	|-\infty|	\infty
+complex-infinity-has-infinite-magnitude-in-every	|\tilde\infty|	\infty
+an-interval-maps-to-the-interval-of-absolute	|[-3,5]|	[0,5]
+an-interval-straddling-0-maps-to-0-the-larger	|[-3,2]|	[0,3]
+decides-the-sign-of-an-exact-numeric-expression	|\sqrt{2}-2|	2-\sqrt{2}
+a-complex-radicand-inside-the-subtraction	|\sqrt{-10}-2|	\sqrt{14}
+n-abs-pi-plus-i-times-catalan-25	N(|\pi+i\operatorname{Catalan}|,25)	3.272399329361528960349014
+fullsimplify-matrixfunction-abs-list-list-1-over	\operatorname{FullSimplify}(\operatorname{MatrixFunction}(\operatorname{Abs},[[\frac{1}{2},-1],[\frac{-5}{3},\frac{1}{2}]]))	[[\frac{\sqrt{15}}{3},-\frac{\sqrt{15}}{10}],[-\frac{\sqrt{15}}{6},\frac{\sqrt{15}}{3}]]
+abs-positiveinfinity	|\infty|	\infty
+abs-positiveinfinity-times-i	|\infty i|	\infty
+piecewiseexpand-abs-imaginaryunit-times-x-neg-2	\operatorname{PiecewiseExpand}(|ix|,-2<x<2)	|ix|
+complexexpand-abs-x	\operatorname{ComplexExpand}(|x|)	\sqrt{x^2}
+complexexpand-abs-x-plus-i-times-y	\operatorname{ComplexExpand}(|x+iy|)	\sqrt{x^2+y^2}
+the-gap-between-two-temperatures-70-and-95	|70-95|	25
+the-distance-between-the-points-1-i-and-4-5i-of	|1+i-(4+5i)|	5
+even-function-x-x	|-8|=|8|	\operatorname{True}
+triangle-inequality-a-b-le-a-b	|3-8|\le|3|+|-8|	\operatorname{True}
+z-2-z-bar-z	|3+4i|^2=(3+4i)\operatorname{Conjugate}(3+4i)	\operatorname{True}
+multiplicative-ab-a-b	|(1+2i)(3-i)|=|1+2i||3-i|	\operatorname{True}
+abs-1	|1|	1
+abs-neg-1	|-1|	1
+abs-neg-i	|-i|	1
+abs-neg-1-plus-i	|-1+i|	\sqrt{2}
+abs-neg-1-minus-i	|-1-i|	\sqrt{2}
+abs-1-minus-i	|1-i|	\sqrt{2}
+abs-sqrt-3-plus-i	|\sqrt{3}+i|	2
+abs-1-plus-sqrt-3-times-i	|1+\sqrt{3}i|	2
+abs-neg-1-plus-sqrt-3-times-i	|-1+\sqrt{3}i|	2
+abs-neg-sqrt-3-plus-i	|-\sqrt{3}+i|	2
+abs-neg-sqrt-3-minus-i	|-\sqrt{3}+(-i)|	2
+abs-neg-1-plus-neg-sqrt-3-times-i	|-1+(-\sqrt{3}i)|	2
+abs-1-plus-neg-sqrt-3-times-i	|1+(-\sqrt{3}i)|	2
+abs-sqrt-3-minus-i	|\sqrt{3}+(-i)|	2
+abs-2	|2|	2
+doesn-t-factor-constants-out-of-a-symbolic	|-3x|	|-3x|

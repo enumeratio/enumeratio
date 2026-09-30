@@ -1,0 +1,5 @@
+id	in	out
+b-0-x-1	\operatorname{BernoulliPolynomial}(0,x)	1
+b-1-x-x-1-2	\operatorname{BernoulliPolynomial}(1,x)	x+\frac{-1}{2}
+b-2-0-1-6	N(\operatorname{BernoulliPolynomial}(2,0))	0.16666666666666666
+b-2-1-1-6	N(\operatorname{BernoulliPolynomial}(2,1))	0.16666666666666666

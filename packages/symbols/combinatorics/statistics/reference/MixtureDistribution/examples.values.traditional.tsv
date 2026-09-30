@@ -1,0 +1,4 @@
+id	in	out
+mixture-mean	\operatorname{Mean}(\operatorname{MixtureDistribution}([1,1],[\operatorname{NormalDistribution}(0,1),\operatorname{NormalDistribution}(10,1)]))	5
+mixture-variance-total-law	\operatorname{Variance}(\operatorname{MixtureDistribution}([1,1],[\operatorname{NormalDistribution}(0,1),\operatorname{NormalDistribution}(10,1)]))	26
+mixture-cdf-far-right	N(\operatorname{CDF}(\operatorname{MixtureDistribution}([1,1],[\operatorname{NormalDistribution}(0,1),\operatorname{NormalDistribution}(10,1)]),100))	1.0

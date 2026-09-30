@@ -1,0 +1,3 @@
+id	in	out
+sum-one-to-five	[\operatorname{Assign}(\operatorname{total},0),\operatorname{Do}(\operatorname{Assign}(\operatorname{total},\operatorname{total}+i),[i,1,5]),\operatorname{total}]	[0,15]
+repeat-with-no-loop-variable	[\operatorname{Assign}(\operatorname{count},0),\operatorname{Do}(\operatorname{Assign}(\operatorname{count},\operatorname{count}+1),4),\operatorname{count}]	[0,4]

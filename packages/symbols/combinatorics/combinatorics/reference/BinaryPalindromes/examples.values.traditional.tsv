@@ -1,0 +1,4 @@
+id	in	out
+count-binarypalindromes-4	\operatorname{Count}(\operatorname{BinaryPalindromes}(4))	4
+first-element-of-binarypalindromes-4	\operatorname{At}(\operatorname{BinaryPalindromes}(4),1)	\operatorname{BinaryWord}([0,0,0,0])
+every-element-of-binarypalindromes-4	\operatorname{Take}(\operatorname{BinaryPalindromes}(4),4)	[\operatorname{BinaryWord}([0,0,0,0]),\operatorname{BinaryWord}([0,1,1,0]),\operatorname{BinaryWord}([1,0,0,1]),\operatorname{BinaryWord}([1,1,1,1])]

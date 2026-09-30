@@ -1,24 +1,24 @@
 id	in	out
-erf-0		
-erf-infinity		
-erf-negativeinfinity		
-erf-complexinfinity		
-a-floating-point-argument-evaluates-directly-to		
-a-machine-precision-argument		
-threads-element-wise-over-a-list-as-wolfram-s		
-complex-arguments-evaluate-directly		
-two-arguments-the-generalized-erf-z-0-z-1-erf-z		
-which-with-exact-arguments-is-the-difference-erf		
-interval-arithmetic-erf-is-increasing-so-the		
-uncertainty-propagation-with-slope-frac-2-sqrt		
-to-40-significant-digits-every-one-correctly		
-erf-1-sqrt-2-approx-0-6827-the-68-in-the		
-the-standard-normal-cdf-phi-x-frac-12-1-erf-x		
-odd-function-erf-z-erf-z-here-at-z-2	\operatorname{erf}(2)+\operatorname{erf}(-2)=0	\mathrm{True}
-complementary-with-erfc-erf-z-erfc-z-1-see-erfc	\operatorname{erf}(2)+\operatorname{erfc}(2)=1	\mathrm{True}
-oddness-applied-symbolically-erf-x-erf-x		
-erf-erfinv-x-x-symbolically-see-erfinv	\operatorname{erf}(\operatorname{erf}^{-1}(x))	x
-on-the-imaginary-axis-erf-i-i-erfi-1		
-frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the		
-an-exact-integer-argument-is-left-unevaluated		
-by-z-3-5-erf-is-already-within-10-6-of-its-limit		
+erf-0	\operatorname{Erf}(0)	0
+erf-infinity	\operatorname{Erf}(\infty)	1
+erf-negativeinfinity	\operatorname{Erf}(-\infty)	-1
+erf-complexinfinity	\operatorname{Erf}(\tilde\infty)	\operatorname{Indeterminate}
+a-floating-point-argument-evaluates-directly-to	\operatorname{Erf}(0.5)	0.520499877813046537683
+a-machine-precision-argument	\operatorname{Erf}(0.95)	0.820890807273277941908
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{Erf}([0,1])	[0,\operatorname{Erf}(1)]
+complex-arguments-evaluate-directly	\operatorname{Erf}(1.5-i)	1.0783992074989335+0.027963711238655833i
+two-arguments-the-generalized-erf-z-0-z-1-erf-z	\operatorname{Erf}(0.5,1.5)	0.4456052686622642
+which-with-exact-arguments-is-the-difference-erf	\operatorname{Erf}(1,2)	-\operatorname{Erf}(1)+\operatorname{Erf}(2)
+interval-arithmetic-erf-is-increasing-so-the	\operatorname{Erf}([-2.1,-1.9])	[-0.997020533343667,-0.9927904292352575]
+uncertainty-propagation-with-slope-frac-2-sqrt	\operatorname{Erf}(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.9953222650189527,0.00020666985354092054)
+to-40-significant-digits-every-one-correctly	N(\operatorname{Erf}(1),40)	0.8427007929497148693412206350826092592961
+erf-1-sqrt-2-approx-0-6827-the-68-in-the	\operatorname{Erf}(0.7071067811865476)	0.68268949213708594891
+the-standard-normal-cdf-phi-x-frac-12-1-erf-x	0.5(1+\operatorname{Erf}(\frac{1.96}{\sqrt{2}}))	0.9750021048517795658635
+odd-function-erf-z-erf-z-here-at-z-2	\operatorname{Erf}(2)+\operatorname{Erf}(-2)=0	\operatorname{True}
+complementary-with-erfc-erf-z-erfc-z-1-see-erfc	\operatorname{Erf}(2)+\operatorname{erfc}(2)=1	\operatorname{True}
+oddness-applied-symbolically-erf-x-erf-x	\operatorname{Erf}(-x)	-\operatorname{Erf}(x)
+erf-erfinv-x-x-symbolically-see-erfinv	\operatorname{Erf}(\operatorname{erf}^{-1}(x))	x
+on-the-imaginary-axis-erf-i-i-erfi-1	\operatorname{Erf}(i)	i\operatorname{Erfi}(1)
+frac-d-dx-erf-x-frac-2-sqrt-pi-e-x-2-the	\frac{d}{dx}\operatorname{Erf}(x)	\frac{2e^{-x^2}}{\sqrt{\pi}}
+an-exact-integer-argument-is-left-unevaluated	\operatorname{Erf}(1)	\operatorname{Erf}(1)
+by-z-3-5-erf-is-already-within-10-6-of-its-limit	\operatorname{Erf}(3.5)	0.999999256901627658587

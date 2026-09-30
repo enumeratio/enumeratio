@@ -1,0 +1,15 @@
+id	in	out
+diracdelta-zero-unevaluated	\operatorname{DiracDelta}(0)	\operatorname{DiracDelta}(0)
+diracdelta-nonzero	\operatorname{DiracDelta}(2)	0
+diracdelta-negative	\operatorname{DiracDelta}(-3)	0
+diracdelta-1-over-2	\operatorname{DiracDelta}(\frac{1}{2})	0
+diracdelta-multivariate-one-nonzero	\operatorname{DiracDelta}(0,1)	0
+diracdelta-neg-1	\operatorname{DiracDelta}(-1)	0
+diracdelta-pi-8-1-over-3	\operatorname{DiracDelta}(\pi,8,\frac{1}{3})	0
+fouriertransform-diracdelta-x-x-t	\operatorname{FourierTransform}(\operatorname{DiracDelta}(x),x,t)	\sqrt{\frac{1}{2\pi}}
+fouriertransform-diracdelta-neg-a-plus-x-x-t	\operatorname{FourierTransform}(\operatorname{DiracDelta}(-a+x),x,t)	\frac{\sqrt{2}e^{iat}}{2\sqrt{\pi}}
+integrate-diracdelta-p-pow-2-plus-q-pow-2-minus		
+fouriertransform-diracdelta-y-y-x	\operatorname{FourierTransform}(\operatorname{DiracDelta}(y),y,x)	\sqrt{\frac{1}{2\pi}}
+diracdelta-1	\operatorname{DiracDelta}(1)	0
+laplacetransform-diracdelta-x-x-s		
+diracdelta-neg-1-minus-2-times-exponentiale	\operatorname{DiracDelta}(-1-2e-e^2+e^{-e^{2e}}+(1+e)^2)	0

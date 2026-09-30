@@ -1,0 +1,7 @@
+id	in	out
+a-quadratic-s-minimum-value	\operatorname{MinValue}(x^2-4x+3,x)	-1
+a-simple-interval-constraint	\operatorname{MinValue}([x^2,x\ge1],x)	1
+minvalue-2-times-x-pow-2-minus-3x-plus-5-x	\operatorname{MinValue}(2x^2-3x+5,x)	\frac{31}{8}
+the-amplitude-of-cosine-alone-is-exact	\operatorname{MinValue}(\cos(3x-1),x)	-1
+exp-s-infimum	\operatorname{MinValue}(e^x,x)	0
+timeconstrained-minvalue-list-x-pow-2-plus-y-pow	\operatorname{TimeConstrained}(\operatorname{MinValue}([x^2+y^2+z^2,x^2-3xyz+9z^2+y^2=e\land xyz\le\pi],[x,y,z]),60)	\operatorname{MinValue}([x^2+y^2+z^2,x^2-3xyz+9z^2+y^2=e\land xyz\le\pi],[x,y,z])

@@ -1,21 +1,21 @@
 id	in	out
-max-3-1-4-1-5		
-also-accepts-a-single-list-argument		
-max-neg-1-neg-5		
+max-3-1-4-1-5	\max(3,1,4,1,5)	5
+also-accepts-a-single-list-argument	\max([3,1,4])	4
+max-neg-1-neg-5	\max(-1,-5)	-1
 a-single-argument-is-returned-unchanged		
-max-9-2		
-max-list-4-1-7-2		
-max-5p56-neg-4p8-7p3		
-nested-lists-are-flattened-into-the-pool		
-exact-numbers-are-compared-numerically		
-max-1-positiveinfinity		
-the-numeric-arguments-collapse-to-their-maximum		
-compares-exact-constants-numerically-max-e-pi-2		
-the-max-of-two-intervals-is-the-interval-of		
-the-day-s-high-from-a-handful-of-hourly-readings		
-commutative-order-doesn-t-matter	\max(3, 7)=\max(7, 3)	\mathrm{True}
-multiple-list-arguments-are-flattened-into-one	\max(\bigl\lbrack3, 1, 4\bigr\rbrack, \bigl\lbrack9, 2\bigr\rbrack)=9	\mathrm{True}
-idempotent-max-x-x-x		
+max-9-2	\max(9,2)	9
+max-list-4-1-7-2	\max([4,1,7,2])	7
+max-5p56-neg-4p8-7p3	\max(5.56,-4.8,7.3)	7.3
+nested-lists-are-flattened-into-the-pool	\max(2,3,[[\frac{1}{2},-1],[\frac{-5}{3},\frac{1}{2}]])	3
+exact-numbers-are-compared-numerically	\max(\sqrt{2},\frac{3}{2})	\frac{3}{2}
+max-1-positiveinfinity	\max(1,\infty)	\infty
+the-numeric-arguments-collapse-to-their-maximum	\max(3,x,5)	\max(5,x)
+compares-exact-constants-numerically-max-e-pi-2	\max([e,\pi,2])	\pi
+the-max-of-two-intervals-is-the-interval-of	\max([1,3],[-3,5])	[1,5]
+the-day-s-high-from-a-handful-of-hourly-readings	\max(68,72,65,80,74)	80
+commutative-order-doesn-t-matter	\max(3,7)=\max(7,3)	\operatorname{True}
+multiple-list-arguments-are-flattened-into-one	\max([3,1,4],[9,2])=9	\operatorname{True}
+idempotent-max-x-x-x	\max(x,x)	x
 with-no-arguments-compute-engine-returns-nan		
-nan-poisons-the-result-overriding-every-other		
-the-max-of-an-empty-list-is-nan-too		
+nan-poisons-the-result-overriding-every-other	\max(\operatorname{NaN},3)	\operatorname{NaN}
+the-max-of-an-empty-list-is-nan-too	\max([])	\operatorname{NaN}

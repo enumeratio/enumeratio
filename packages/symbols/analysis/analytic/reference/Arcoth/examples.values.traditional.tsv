@@ -1,0 +1,13 @@
+id	in	out
+n-arcoth-2	N(\operatorname{Arcoth}(2))	0.5493061443340548457
+a-logarithmic-singularity-at-1	\operatorname{Arcoth}(1)	\infty
+arcoth-positiveinfinity	\operatorname{Arcoth}(\infty)	0
+a-float-argument-evaluates-directly	\operatorname{Arcoth}(3.5)	0.293893332451059504095
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	\operatorname{TrigToExp}(\operatorname{Arcoth}(2))	\frac{1}{2}\ln(3)
+oddness-pulls-the-sign-out-of-a-symbolic	\operatorname{Arcoth}(-x)	-\operatorname{Arcoth}(x)
+derivative-frac-1-1-x-2	\frac{d}{dx}\operatorname{Arcoth}(x)	\frac{1}{-x^2+1}
+n-arcoth-2-50	N(\operatorname{Arcoth}(2),50)	0.54930614433405484569762261846126285232374527891137
+arcoth-list-list-i-neg-i-list-0-neg-i	\operatorname{Arcoth}([[i,-i],[0,-i]])	[[\operatorname{Arcoth}(i),\operatorname{Arcoth}(-i)],[\operatorname{Arcoth}(0),\operatorname{Arcoth}(-i)]]
+arcoth-complexinfinity	\operatorname{Arcoth}(\tilde\infty)	0
+arcoth-neg-1	\operatorname{Arcoth}(-1)	-\infty
+matrixfunction-function-arcoth-1-1-list-list-i	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{Arcoth}(\_1)),\_1),[[i,-i],[0,-i]])	[[\operatorname{Arcoth}(i),\frac{-1}{2}\operatorname{Arcoth}(i)+\frac{1}{2}\operatorname{Arcoth}(-i)],[0,\operatorname{Arcoth}(-i)]]

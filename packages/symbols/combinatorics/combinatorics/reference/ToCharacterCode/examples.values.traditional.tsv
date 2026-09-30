@@ -1,0 +1,4 @@
+id	in	out
+reads-ascii-code-points	\operatorname{ToCharacterCode}(\operatorname{String}(\operatorname{ABC}))	[65,66,67]
+tocharactercode-factorial-mod-times-plus-neg		
+tocharactercode-a	\operatorname{ToCharacterCode}(\text{“a”})	[97]

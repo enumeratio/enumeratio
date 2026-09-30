@@ -1,0 +1,7 @@
+id	in	out
+n-coth-6-over-5-50	N(\coth(\frac{6}{5}),50)	1.1995375441923507667499199315680981656280599551886
+coth-list-list-1-over-3-times-i-times-pi-neg-1	\coth([[\frac{1}{3}i\pi,\frac{-1}{3}i\pi],[0,\frac{-1}{6}i\pi]])	[[\coth(\frac{1}{3}i\pi),\coth(\frac{-1}{3}i\pi)],[\tilde\infty,\coth(\frac{-1}{6}i\pi)]]
+coth-positiveinfinity		
+coth-0		
+d-coth-x-x	\frac{d}{dx}\coth(x)	-{\operatorname{csch}(x)}^2
+matrixfunction-function-coth-1-1-list-list-1	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\coth(\_1)),\_1),[[\frac{1}{3}i\pi,\frac{-1}{3}i\pi],[0,\frac{-1}{6}i\pi]])	[[\coth(\frac{1}{3}i\pi),\frac{-2}{3}\coth(\frac{1}{3}i\pi)+\frac{2}{3}\coth(\frac{-1}{6}i\pi)],[0,\coth(\frac{-1}{6}i\pi)]]

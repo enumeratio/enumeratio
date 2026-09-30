@@ -1,23 +1,23 @@
 id	in	out
-rank-5		
-rank-list-1-2-3		
-rank-list-list-1-0-list-0-1		
-rank-list-list-list-1-2-list-3-4-list-list-5-6		
-symbolic-entries		
-a-symbol-is-a-scalar		
-rectangular-arrays		
-rank-identitymatrix-3		
-a-ragged-list-has-depth-1-only-its-outer-level		
-likewise-a-list-mixing-scalars-and-lists		
-the-empty-list-is-still-a-vector-of-length-0		
-and-a-1-0-matrix		
-a-2-3-grid-of-unevaluated-calls-still-reads-as-a		
-rank-list-list-a-b-list-c		
-the-length-of-the-array-s-shape	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack)=\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack))	\mathrm{True}
-rank-list-list-a-b-list-c-d-eq-length-shape-list	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)=\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack))	\mathrm{True}
-rank-1		
-rank-list-1-2		
-rank-list-list-1-2		
-rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	\mathrm{Rank}(\mathrm{Array}(a, \bigl\lbrack2, 1, 4, 3\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack2, 1, 4, 3\bigr\rbrack)	\mathrm{True}
-a-singular-2-2-matrix-still-has-rank-2-its		
-rank-sqrt-2		
+rank-5	\operatorname{Rank}(5)	0
+rank-list-1-2-3	\operatorname{Rank}([1,2,3])	1
+rank-list-list-1-0-list-0-1	\operatorname{Rank}([[1,0],[0,1]])	2
+rank-list-list-list-1-2-list-3-4-list-list-5-6	\operatorname{Rank}([[[1,2],[3,4]],[[5,6],[7,8]]])	3
+symbolic-entries	\operatorname{Rank}([[a,b],[c,d]])	2
+a-symbol-is-a-scalar	\operatorname{Rank}(x)	0
+rectangular-arrays	\operatorname{Rank}([[1,2,3],[4,5,6]])	2
+rank-identitymatrix-3	\operatorname{Rank}(\operatorname{IdentityMatrix}(3))	2
+a-ragged-list-has-depth-1-only-its-outer-level	\operatorname{Rank}([[1,2],[3]])	1
+likewise-a-list-mixing-scalars-and-lists	\operatorname{Rank}([1,[2,3]])	1
+the-empty-list-is-still-a-vector-of-length-0	\operatorname{Rank}([])	1
+and-a-1-0-matrix	\operatorname{Rank}([[]])	2
+a-2-3-grid-of-unevaluated-calls-still-reads-as-a	\operatorname{Rank}(\operatorname{Tabulate}(f,2,3))	2
+rank-list-list-a-b-list-c	\operatorname{Rank}([[a,b],[c]])	1
+the-length-of-the-array-s-shape	\operatorname{Rank}([[[1,2],[3,4]],[[5,6],[7,8]]])=\operatorname{Length}(\operatorname{Shape}([[[1,2],[3,4]],[[5,6],[7,8]]]))	\operatorname{True}
+rank-list-list-a-b-list-c-d-eq-length-shape-list	\operatorname{Rank}([[a,b],[c,d]])=\operatorname{Length}(\operatorname{Shape}([[a,b],[c,d]]))	\operatorname{True}
+rank-1	\operatorname{Rank}(1)	0
+rank-list-1-2	\operatorname{Rank}([1,2])	1
+rank-list-list-1-2	\operatorname{Rank}([[1,2]])	2
+rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	\operatorname{Rank}(\operatorname{Array}(a,[2,1,4,3]))=\operatorname{Length}([2,1,4,3])	\operatorname{True}
+a-singular-2-2-matrix-still-has-rank-2-its	\operatorname{Rank}([[1,2],[2,4]])	2
+rank-sqrt-2	\operatorname{Rank}(\sqrt{2})	0

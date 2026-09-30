@@ -1,0 +1,4 @@
+id	in	out
+centralmoment-order-0	\operatorname{CentralMoment}(\operatorname{ChiSquareDistribution}(3),0)	1
+centralmoment-order-1	\operatorname{CentralMoment}(\operatorname{ChiSquareDistribution}(3),1)	0
+centralmoment-order-2-is-variance	\operatorname{CentralMoment}(\operatorname{ChiSquareDistribution}(3),2)	6

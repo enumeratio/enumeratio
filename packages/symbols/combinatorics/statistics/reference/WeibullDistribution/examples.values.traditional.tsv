@@ -1,0 +1,4 @@
+id	in	out
+weibull-pdf-exact	\operatorname{PDF}(\operatorname{WeibullDistribution}(2,5),4)	\frac{8}{25e^{\frac{16}{25}}}
+weibull-cdf-exact	\operatorname{CDF}(\operatorname{WeibullDistribution}(2,5),4)	1-e^{\frac{-16}{25}}
+weibull-mean-exact	\operatorname{Mean}(\operatorname{WeibullDistribution}(2,5))	5\Gamma(\frac{3}{2})

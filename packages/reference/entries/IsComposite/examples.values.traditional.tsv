@@ -1,13 +1,13 @@
 id	in	out
-iscomposite-4	\mathrm{IsComposite}(4)	\mathrm{True}
-iscomposite-13	\mathrm{IsComposite}(13)	\mathrm{False}
-iscomposite-1-plus-10-pow-3-000	\mathrm{IsComposite}(1+10^{3\,000})	\mathrm{True}
-iscomposite-list-1-2-3-4-5-6	\mathrm{IsComposite}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack\mathrm{False}, \mathrm{False}, \mathrm{False}, \mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
-iscomposite-5	\mathrm{IsComposite}(5)	\mathrm{False}
+iscomposite-4	\operatorname{IsComposite}(4)	\operatorname{True}
+iscomposite-13	\operatorname{IsComposite}(13)	\operatorname{False}
+iscomposite-1-plus-10-pow-3-000	\operatorname{IsComposite}(1+10^{3000})	\operatorname{True}
+iscomposite-list-1-2-3-4-5-6	\operatorname{IsComposite}([1,2,3,4,5,6])	[\operatorname{False},\operatorname{False},\operatorname{False},\operatorname{True},\operatorname{False},\operatorname{True}]
+iscomposite-5	\operatorname{IsComposite}(5)	\operatorname{False}
 iscomposite-3-plus-i		
-iscomposite-8	\mathrm{IsComposite}(8)	\mathrm{True}
-iscomposite-12	\mathrm{IsComposite}(12)	\mathrm{True}
-iscomposite-67	\mathrm{IsComposite}(67)	\mathrm{False}
-iscomposite-28	\mathrm{IsComposite}(28)	\mathrm{True}
-iscomposite-60	\mathrm{IsComposite}(60)	\mathrm{True}
-iscomposite-48-828-125	\mathrm{IsComposite}(48\,828\,125)	\mathrm{True}
+iscomposite-8	\operatorname{IsComposite}(8)	\operatorname{True}
+iscomposite-12	\operatorname{IsComposite}(12)	\operatorname{True}
+iscomposite-67	\operatorname{IsComposite}(67)	\operatorname{False}
+iscomposite-28	\operatorname{IsComposite}(28)	\operatorname{True}
+iscomposite-60	\operatorname{IsComposite}(60)	\operatorname{True}
+iscomposite-48-828-125	\operatorname{IsComposite}(48828125)	\operatorname{True}

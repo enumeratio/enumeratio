@@ -1,0 +1,4 @@
+id	in	out
+count-oddpartitions-10	\operatorname{Count}(\operatorname{OddPartitions}(10))	10
+first-element-of-oddpartitions-10	\operatorname{At}(\operatorname{OddPartitions}(10),1)	\operatorname{IntegerPartition}([9,1])
+every-element-of-oddpartitions-10	\operatorname{Take}(\operatorname{OddPartitions}(10),10)	[\operatorname{IntegerPartition}([9,1]),\operatorname{IntegerPartition}([7,3]),\operatorname{IntegerPartition}([7,1,1,1]),\operatorname{IntegerPartition}([5,5]),\operatorname{IntegerPartition}([5,3,1,1]),\operatorname{IntegerPartition}([5,1,1,1,1,1]),\operatorname{IntegerPartition}([3,3,3,1]),\operatorname{IntegerPartition}([3,3,1,1,1,1]),\operatorname{IntegerPartition}([3,1,1,1,1,1,1,1]),\operatorname{IntegerPartition}([1,1,1,1,1,1,1,1,1,1])]

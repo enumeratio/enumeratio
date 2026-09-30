@@ -1,12 +1,12 @@
 id	in	out
-an-odd-degree-polynomial-is-onto	\mathrm{FunctionSurjective}(x^3, x, \mathrm{Reals})	\mathrm{True}
-exp-misses-the-non-positive-reals	\mathrm{FunctionSurjective}(e^{x}, x, \mathrm{Reals})	\mathrm{False}
-log-is-onto-the-reals	\mathrm{FunctionSurjective}(\ln(x), x, \mathrm{Reals})	\mathrm{True}
-a-reciprocal-never-hits-zero	\mathrm{FunctionSurjective}(\frac{1}{x}, x, \mathrm{Reals})	\mathrm{False}
-an-unsupported-codomain-declines		
-functionsurjective-tan-x-x	\mathrm{FunctionSurjective}(\tan(x), x)	\mathrm{True}
-functionsurjective-x-pow-3-minus-x-x	\mathrm{FunctionSurjective}(x^3-x, x)	\mathrm{True}
-functionsurjective-sqrt-x-x	\mathrm{FunctionSurjective}(\sqrt{x}, x)	\mathrm{False}
-functionsurjective-sin-x-x	\mathrm{FunctionSurjective}(\sin(x), x)	\mathrm{False}
-functionsurjective-x-pow-2-plus-x-plus-1-x	\mathrm{FunctionSurjective}(x^2+x+1, x)	\mathrm{False}
-functionsurjective-x-pow-3-plus-x-plus-1-x	\mathrm{FunctionSurjective}(x^3+x+1, x)	\mathrm{True}
+an-odd-degree-polynomial-is-onto	\operatorname{FunctionSurjective}(x^3,x,\operatorname{Reals})	\operatorname{True}
+exp-misses-the-non-positive-reals	\operatorname{FunctionSurjective}(e^x,x,\operatorname{Reals})	\operatorname{False}
+log-is-onto-the-reals	\operatorname{FunctionSurjective}(\ln(x),x,\operatorname{Reals})	\operatorname{True}
+a-reciprocal-never-hits-zero	\operatorname{FunctionSurjective}(\frac{1}{x},x,\operatorname{Reals})	\operatorname{False}
+an-unsupported-codomain-declines	\operatorname{FunctionSurjective}(x^3,x,\mathbb{Z})	\operatorname{FunctionSurjective}(x^3,x,\mathbb{Z})
+functionsurjective-tan-x-x	\operatorname{FunctionSurjective}(\tan(x),x)	\operatorname{True}
+functionsurjective-x-pow-3-minus-x-x	\operatorname{FunctionSurjective}(x^3-x,x)	\operatorname{True}
+functionsurjective-sqrt-x-x	\operatorname{FunctionSurjective}(\sqrt{x},x)	\operatorname{False}
+functionsurjective-sin-x-x	\operatorname{FunctionSurjective}(\sin(x),x)	\operatorname{False}
+functionsurjective-x-pow-2-plus-x-plus-1-x	\operatorname{FunctionSurjective}(x^2+x+1,x)	\operatorname{False}
+functionsurjective-x-pow-3-plus-x-plus-1-x	\operatorname{FunctionSurjective}(x^3+x+1,x)	\operatorname{True}

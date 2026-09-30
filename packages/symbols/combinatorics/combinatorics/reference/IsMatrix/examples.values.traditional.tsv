@@ -1,11 +1,11 @@
 id	in	out
-a-2x2-is-a-matrix	\mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)	\mathrm{True}
-ismatrix-list-list-a-b-list-3-4	\mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)	\mathrm{True}
-ismatrix-list-list-1-list-2-3	\mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack)	\mathrm{False}
-ismatrix-array-a-list-2-2-2	\mathrm{IsMatrix}(\mathrm{Array}(a, \bigl\lbrack2, 2, 2\bigr\rbrack))	\mathrm{False}
-a-flat-list-is-not-a-matrix	\mathrm{IsMatrix}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\mathrm{False}
-a-ragged-list-of-lists-is-not-a-matrix	\mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)	\mathrm{False}
-an-empty-list-is-not-a-matrix	\mathrm{IsMatrix}(\bigl\lbrack\bigr\rbrack)	\mathrm{False}
-a-test-function-must-hold-of-every-entry	\mathrm{IsMatrix}(\bigl\lbrack\bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack6, 8\bigr\rbrack\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}
-list-ismatrix-mat-ismatrix-expr	\bigl\lbrack\mathrm{IsMatrix}(\mathrm{mat}), \mathrm{IsMatrix}(\mathrm{expr})\bigr\rbrack	\bigl\lbrack\mathrm{False}, \mathrm{False}\bigr\rbrack
+a-2x2-is-a-matrix	\operatorname{IsMatrix}([[1,2],[3,4]])	\operatorname{True}
+ismatrix-list-list-a-b-list-3-4	\operatorname{IsMatrix}([[a,b],[3,4]])	\operatorname{True}
+ismatrix-list-list-1-list-2-3	\operatorname{IsMatrix}([[1],[2,3]])	\operatorname{False}
+ismatrix-array-a-list-2-2-2	\operatorname{IsMatrix}(\operatorname{Array}(a,[2,2,2]))	\operatorname{False}
+a-flat-list-is-not-a-matrix	\operatorname{IsMatrix}([1,2,3])	\operatorname{False}
+a-ragged-list-of-lists-is-not-a-matrix	\operatorname{IsMatrix}([[1,2],[3]])	\operatorname{False}
+an-empty-list-is-not-a-matrix	\operatorname{IsMatrix}([])	\operatorname{False}
+a-test-function-must-hold-of-every-entry	\operatorname{IsMatrix}([[2,4],[6,8]],\operatorname{IsEven})	\operatorname{True}
+list-ismatrix-mat-ismatrix-expr	[\operatorname{IsMatrix}(\operatorname{mat}),\operatorname{IsMatrix}(\operatorname{expr})]	[\operatorname{False},\operatorname{False}]
 ismatrix-m		

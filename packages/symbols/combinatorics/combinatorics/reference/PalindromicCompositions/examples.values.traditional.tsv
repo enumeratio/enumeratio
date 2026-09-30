@@ -1,0 +1,4 @@
+id	in	out
+count-palindromiccompositions-6	\operatorname{Count}(\operatorname{PalindromicCompositions}(6))	8
+first-element-of-palindromiccompositions-6	\operatorname{At}(\operatorname{PalindromicCompositions}(6),1)	\operatorname{Composition}([1,1,2,1,1])
+every-element-of-palindromiccompositions-6	\operatorname{Take}(\operatorname{PalindromicCompositions}(6),8)	[\operatorname{Composition}([1,1,2,1,1]),\operatorname{Composition}([2,2,2]),\operatorname{Composition}([1,4,1]),\operatorname{Composition}([6]),\operatorname{Composition}([1,1,1,1,1,1]),\operatorname{Composition}([1,2,2,1]),\operatorname{Composition}([2,1,1,2]),\operatorname{Composition}([3,3])]

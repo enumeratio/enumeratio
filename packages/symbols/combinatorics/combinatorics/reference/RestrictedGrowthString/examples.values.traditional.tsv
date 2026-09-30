@@ -1,0 +1,2 @@
+id	in	out
+from-a-set-partition	\operatorname{RestrictedGrowthString}(\operatorname{SetPartition}([[1,3],[2],[4]]))	\operatorname{RestrictedGrowthString}([0,1,0,2])

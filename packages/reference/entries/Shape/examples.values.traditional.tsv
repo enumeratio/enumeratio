@@ -1,8 +1,8 @@
 id	in	out
-shape-list-list-list-list-a-b		
-shape-1		
-shape-list-1-2		
-shape-list-list-1-2		
-length-shape-list-list-a-b-list-c-d-eq-rank-list	\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack))=\mathrm{Rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)	\mathrm{True}
+shape-list-list-list-list-a-b	\operatorname{Shape}([[[[a,b]]]])	(1,1,1,2)
+shape-1	\operatorname{Shape}(1)	()
+shape-list-1-2	\operatorname{Shape}([1,2])	(2)
+shape-list-list-1-2	\operatorname{Shape}([[1,2]])	(1,2)
+length-shape-list-list-a-b-list-c-d-eq-rank-list	\operatorname{Length}(\operatorname{Shape}([[a,b],[c,d]]))=\operatorname{Rank}([[a,b],[c,d]])	\operatorname{True}
 shape-array-a-list-2-1-4-3		
 shape-sqrt-2		

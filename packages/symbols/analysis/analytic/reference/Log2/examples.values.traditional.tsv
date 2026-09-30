@@ -1,23 +1,23 @@
 id	in	out
-log2-8		
-log2-1		
-log2-1-024		
-log2-2-pow-10		
-a-machine-precision-argument-evaluates		
-an-exact-negative-power-of-2-folds-too-log-2		
-a-symbolic-argument-becomes-the-two-argument-log		
-an-integer-power-is-pulled-out-2-log-2-3		
-n-log2-9		
-log2-0		
-as-with-ln-the-logarithm-of-complex-infinity-is		
-element-wise-over-a-matrix-including-the-exact		
-interval-arithmetic-log-2-frac-13-2-log-2-3-1		
-uncertainty-propagation-log-2-frac-15-pm-0-01		
-derivative-frac-1-x-ln-2		
-to-30-significant-digits-every-one-correctly		
-n-log-45-2-100		
-n-log-2-plus-i-2		
-fullsimplify-matrixfunction-log2-list-list-2-1		
-log-positiveinfinity-2		
-a-float-argument-folds-even-for-a-fractional		
-same-as-log-z-2	\log_{2}(8)=\log_{2}(8)	\mathrm{True}
+log2-8	\operatorname{Log2}(8)	3
+log2-1	\operatorname{Log2}(1)	0
+log2-1-024	\operatorname{Log2}(1024)	10
+log2-2-pow-10	\operatorname{Log2}(2^{10})	10
+a-machine-precision-argument-evaluates	\operatorname{Log2}(1.4142)	0.499986164421874256467
+an-exact-negative-power-of-2-folds-too-log-2	\operatorname{Log2}(\frac{1}{8})	-3
+a-symbolic-argument-becomes-the-two-argument-log	\operatorname{Log2}(x)	\log_2(x)
+an-integer-power-is-pulled-out-2-log-2-3	\operatorname{Log2}(9)	2\log_2(3)
+n-log2-9	N(\operatorname{Log2}(9))	3.16992500144231236291
+log2-0	\operatorname{Log2}(0)	-\infty
+as-with-ln-the-logarithm-of-complex-infinity-is	\operatorname{Log2}(\tilde\infty)	\infty
+element-wise-over-a-matrix-including-the-exact	\operatorname{Log2}([[2,1],[0,\frac{1}{2}]])	[[1,0],[-\infty,-1]]
+interval-arithmetic-log-2-frac-13-2-log-2-3-1	\operatorname{Log2}([\frac{1}{3},2])	[\log_2(\frac{1}{3}),1]
+uncertainty-propagation-log-2-frac-15-pm-0-01	\operatorname{Log2}(\operatorname{Around}(\frac{1}{5},0.01))	\operatorname{Around}(-2.321928094887362,0.07213475204444818)
+derivative-frac-1-x-ln-2	\frac{d}{dx}\operatorname{Log2}(x)	\frac{1}{x\ln(2)}
+to-30-significant-digits-every-one-correctly	N(\operatorname{Log2}(3),30)	1.58496250072115618145373894395
+n-log-45-2-100	N(\log_2(45),100)	5.491853096329674710777797317385023193384460208409542732966261704898131232197342340894700693195546639
+n-log-2-plus-i-2	N(\log_2(2+i))	1.160964047443681+0.6689021062254881i
+fullsimplify-matrixfunction-log2-list-list-2-1	\operatorname{FullSimplify}(\operatorname{MatrixFunction}(\operatorname{Log2},[[2,1],[0,\frac{1}{2}]]))	[[1,\frac{4}{3}],[0,-1]]
+log-positiveinfinity-2	\log_2(\infty)	\infty
+a-float-argument-folds-even-for-a-fractional	\operatorname{Log2}(0.5)	-1.0
+same-as-log-z-2	\operatorname{Log2}(8)=\log_2(8)	\operatorname{True}

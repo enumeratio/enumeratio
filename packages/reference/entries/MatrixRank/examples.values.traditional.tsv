@@ -1,30 +1,30 @@
 id	in	out
-matrixrank-list-list-1-0-list-0-1		
-matrixrank-list-list-1-2-list-2-4		
-matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9		
-non-square-matrices-too		
-matrixrank-list-list-0-0-list-0-0		
-a-matrix-of-pairwise-distinct-symbols-has-full		
-matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0		
-approximate-entries		
-complex-entries-the-second-row-is-i-times-the		
-exact-numeric-entries		
-the-second-row-is-sqrt-2-times-the-first		
-a-3-4-matrix-with-one-dependent-row		
-matrixrank-identitymatrix-5		
-a-3-times-3-matrix-of-pairwise-distinct-symbols		
-matrixrank-list-list-a-b-list-2a-2b		
-matrixrank-hilbertmatrix-3		
+matrixrank-list-list-1-0-list-0-1	\operatorname{MatrixRank}([[1,0],[0,1]])	2
+matrixrank-list-list-1-2-list-2-4	\operatorname{MatrixRank}([[1,2],[2,4]])	1
+matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9	\operatorname{MatrixRank}([[1,2,3],[4,5,6],[7,8,9]])	2
+non-square-matrices-too	\operatorname{MatrixRank}([[1,2,3],[2,4,6]])	1
+matrixrank-list-list-0-0-list-0-0	\operatorname{MatrixRank}([[0,0],[0,0]])	0
+a-matrix-of-pairwise-distinct-symbols-has-full	\operatorname{MatrixRank}([[a,b],[c,d]])	2
+matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0	\operatorname{MatrixRank}([[0,5,2,4,4],[2,5,0,4,0],[5,1,5,4,5]])	3
+approximate-entries	\operatorname{MatrixRank}([[1,2.5],[3.5,4]])	2
+complex-entries-the-second-row-is-i-times-the	\operatorname{MatrixRank}([[1,i],[i,-1]])	1
+exact-numeric-entries	\operatorname{MatrixRank}([[\pi,e],[2\pi,2e]])	1
+the-second-row-is-sqrt-2-times-the-first	\operatorname{MatrixRank}([[\sqrt{2},1],[2,\sqrt{2}]])	1
+a-3-4-matrix-with-one-dependent-row	\operatorname{MatrixRank}([[1,2,3,4],[2,4,6,8],[1,0,1,0]])	2
+matrixrank-identitymatrix-5	\operatorname{MatrixRank}(\operatorname{IdentityMatrix}(5))	5
+a-3-times-3-matrix-of-pairwise-distinct-symbols	\operatorname{MatrixRank}([[p,q,r],[s,t,u],[v,w,x]])	3
+matrixrank-list-list-a-b-list-2a-2b	\operatorname{MatrixRank}([[a,b],[2a,2b]])	1
+matrixrank-hilbertmatrix-3	\operatorname{MatrixRank}(\operatorname{HilbertMatrix}(3))	3
 matrixrank-m		
 matrixrank-n-m		
-the-4-4-hilbert-matrix-is-badly-conditioned-but		
-row-rank-equals-column-rank	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack)=\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack^T)	\mathrm{True}
-rank-nullity-the-rank-plus-the-dimension-of-the		
-an-outer-product-u-v-top-has-rank-1-a-lazy		
+the-4-4-hilbert-matrix-is-badly-conditioned-but	\operatorname{MatrixRank}(\operatorname{Tabulate}(\operatorname{Function}(\frac{1}{\_1+\_2-1}),4,4))	4
+row-rank-equals-column-rank	\operatorname{MatrixRank}([[1,2,3],[4,5,6],[7,8,9]])=\operatorname{MatrixRank}(\operatorname{Transpose}([[1,2,3],[4,5,6],[7,8,9]]))	\operatorname{True}
+rank-nullity-the-rank-plus-the-dimension-of-the	\operatorname{MatrixRank}([[1,2,3],[4,5,6],[7,8,9]])+\operatorname{Length}(\operatorname{Kernel}([[1,2,3],[4,5,6],[7,8,9]]))	3
+an-outer-product-u-v-top-has-rank-1-a-lazy	\operatorname{MatrixRank}(\operatorname{Tabulate}(\operatorname{Multiply},4,4))	1
 list-matrixrank-m-matrixrank-transpose-m		
-a-symbolic-matrix-stays-unevaluated-wolfram		
-a-vector-is-treated-as-a-1-n-matrix-wolfram		
-a-non-square-matrix-of-distinct-symbols-stays		
-repeating-a-symbol-across-rows-doesn-t-qualify		
-matrixrank-list-list-1-0-list-0-0		
-every-matrix-with-entries-i-j-has-rank-2		
+a-symbolic-matrix-stays-unevaluated-wolfram	\operatorname{MatrixRank}([[x,1],[1,x]])	\operatorname{MatrixRank}([[x,1],[1,x]])
+a-vector-is-treated-as-a-1-n-matrix-wolfram	\operatorname{MatrixRank}([1,2,3])	1
+a-non-square-matrix-of-distinct-symbols-stays	\operatorname{MatrixRank}([[a,b,c],[d,g,h]])	\operatorname{MatrixRank}([[a,b,c],[d,g,h]])
+repeating-a-symbol-across-rows-doesn-t-qualify	\operatorname{MatrixRank}([[a,b],[a,b]])	1
+matrixrank-list-list-1-0-list-0-0	\operatorname{MatrixRank}([[1,0],[0,0]])	1
+every-matrix-with-entries-i-j-has-rank-2	\operatorname{MatrixRank}(\operatorname{Tabulate}(\operatorname{Add},4,4))	2

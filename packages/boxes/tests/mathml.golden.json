@@ -257,7 +257,7 @@
   },
   "power of power": {
     "json": ["Power", ["Power", "x", 2], 3],
-    "mathml": "<msup><msup><mi>x</mi><mn>2</mn></msup><mn>3</mn></msup>"
+    "mathml": "<msup><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>)</mo></mrow><mn>3</mn></msup>"
   },
   "power of negative": {
     "json": ["Power", -2, 2],

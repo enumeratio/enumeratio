@@ -3,7 +3,7 @@ ceil-7-over-2
 ceil-3p2		
 ceil-3p7		
 integers-pass-through-unchanged		
-threads-element-wise-over-a-list		
+threads-element-wise-over-a-list	\lceil[1.2,-1.2,3.7]\rceil	[2,-1,4]
 ceil-2p4		
 ceil-2p6		
 idempotent-lceil-lceil-x-rceil-rceil		
@@ -14,29 +14,29 @@ a-second-argument-rounds-up-to-a-multiple-of-it
 the-step-needn-t-be-an-integer-3-5-cdot-lceil-10		
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the		
 rounds-the-real-and-imaginary-parts-up		
-ceil-list-list-1-over-2-neg-1-list-0-neg-1-over		
-matrixfunction-ceil-list-list-1-over-2-neg-1		
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	\lceil[[\frac{1}{2},-1],[0,\frac{-1}{2}]]\rceil	[[1,-1],[0,0]]
+matrixfunction-ceil-list-list-1-over-2-neg-1	\operatorname{MatrixFunction}(\operatorname{Ceil},[[\frac{1}{2},-1],[0,\frac{-1}{2}]])	[[1,-1],[0,0]]
 ceil-0		
 ceil-positiveinfinity		
-piecewiseexpand-ceil-x-2-0-lt-x-lt-4		
+piecewiseexpand-ceil-x-2-0-lt-x-lt-4	\operatorname{PiecewiseExpand}(\lceil x\rceil,0<x<4)	\lceil x\rceil
 d-ceil-x-x		
 how-many-5-seat-vans-are-needed-to-carry-17		
-ten-bits-are-enough-to-number-1000-items-lceil		
-lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	\lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1	\mathrm{True}
-floor-and-ceil-agree-exactly-on-integers	\lceil5\rceil=\lfloor5\rfloor	\mathrm{True}
+ten-bits-are-enough-to-number-1000-items-lceil	\lceil\log_2(1000)\rceil	10
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	\lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1	\operatorname{True}
+floor-and-ceil-agree-exactly-on-integers	\lceil5\rceil=\lfloor5\rfloor	\operatorname{True}
 ceil-16-3		
-piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2		
-generatingfunction-ceil-n-4-n-x		
+piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2	\operatorname{PiecewiseExpand}(\lceil x^2\rceil,0<x<2)	\lceil x^2\rceil
+generatingfunction-ceil-n-4-n-x	\operatorname{GeneratingFunction}(\lceil n\rceil,n,x)	\frac{4x}{x^5-x^4-x+1}
 ceil-1		
 ceil-neg-1		
 ceil-i		
 ceil-neg-i		
 ceil-23-over-10		
 ceil-neg-3		
-piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1		
+piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1	\operatorname{PiecewiseExpand}(\lceil x+13^{-1}+{\lceil1-x2^{-1}\rceil}^3\rceil,x\in\mathbb{R}\land-1<x<1)	\lceil x+{\lceil\frac{-1}{2}x+1\rceil}^3+\frac{1}{3}\rceil
 ceil-neg-pi		
-ceil-neg-27-over-10		
-ceil-23-over-10-plus-neg-i-times-exponentiale		
+ceil-neg-27-over-10	\lceil\frac{-27}{10}\rceil	-2
+ceil-23-over-10-plus-neg-i-times-exponentiale	\lceil\frac{23}{10}+(-ie)\rceil	3-2i
 ceil-negativeinfinity		
 a-zero-divisor-inside-ceil		
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3		

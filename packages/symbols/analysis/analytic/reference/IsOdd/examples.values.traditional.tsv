@@ -1,18 +1,18 @@
 id	in	out
-isodd-3	\mathrm{IsOdd}(3)	\mathrm{True}
-isodd-4	\mathrm{IsOdd}(4)	\mathrm{False}
-negative-integers-count-too	\mathrm{IsOdd}(-7)	\mathrm{True}
-isodd-0	\mathrm{IsOdd}(0)	\mathrm{False}
-isodd-9	\mathrm{IsOdd}(9)	\mathrm{True}
-a-non-integer-is-not-odd	\mathrm{IsOdd}(3.5)	\mathrm{False}
-isodd-1-over-3	\mathrm{IsOdd}(\frac{1}{3})	\mathrm{False}
-big-integers	\mathrm{IsOdd}(2^{100}+1)	\mathrm{True}
-pi-is-known-not-to-be-an-integer-so-it-is	\mathrm{IsOdd}(\pi)	\mathrm{False}
-threads-element-wise-over-a-list	\mathrm{IsOdd}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
-select-the-odd-numbers-up-to-10		
-isvector-list-1-5-7-11-isodd	\mathrm{IsVector}(\bigl\lbrack1, 5, 7, 11\bigr\rbrack, \mathrm{IsOdd})	\mathrm{True}
-isvector-list-2-5-7-11-isodd	\mathrm{IsVector}(\bigl\lbrack2, 5, 7, 11\bigr\rbrack, \mathrm{IsOdd})	\mathrm{False}
-an-integer-is-odd-exactly-when-it-is-not-even	\mathrm{IsOdd}(7)=\lnot\mathrm{IsEven}(7)	\mathrm{True}
-isodd-2	\mathrm{IsOdd}(2)	\mathrm{False}
-isodd-15	\mathrm{IsOdd}(15)	\mathrm{True}
-a-symbol-stays-undecided-rather-than-false		
+isodd-3	\operatorname{IsOdd}(3)	\operatorname{True}
+isodd-4	\operatorname{IsOdd}(4)	\operatorname{False}
+negative-integers-count-too	\operatorname{IsOdd}(-7)	\operatorname{True}
+isodd-0	\operatorname{IsOdd}(0)	\operatorname{False}
+isodd-9	\operatorname{IsOdd}(9)	\operatorname{True}
+a-non-integer-is-not-odd	\operatorname{IsOdd}(3.5)	\operatorname{False}
+isodd-1-over-3	\operatorname{IsOdd}(\frac{1}{3})	\operatorname{False}
+big-integers	\operatorname{IsOdd}(2^{100}+1)	\operatorname{True}
+pi-is-known-not-to-be-an-integer-so-it-is	\operatorname{IsOdd}(\pi)	\operatorname{False}
+threads-element-wise-over-a-list	\operatorname{IsOdd}([1,2,3])	[\operatorname{True},\operatorname{False},\operatorname{True}]
+select-the-odd-numbers-up-to-10	\operatorname{Filter}(\operatorname{Range}(10),\operatorname{IsOdd})	[1,3,5,7,9]
+isvector-list-1-5-7-11-isodd	\operatorname{IsVector}([1,5,7,11],\operatorname{IsOdd})	\operatorname{True}
+isvector-list-2-5-7-11-isodd	\operatorname{IsVector}([2,5,7,11],\operatorname{IsOdd})	\operatorname{False}
+an-integer-is-odd-exactly-when-it-is-not-even	\operatorname{IsOdd}(7)=(\lnot\operatorname{IsEven}(7))	\operatorname{True}
+isodd-2	\operatorname{IsOdd}(2)	\operatorname{False}
+isodd-15	\operatorname{IsOdd}(15)	\operatorname{True}
+a-symbol-stays-undecided-rather-than-false	\operatorname{IsOdd}(x)	\operatorname{IsOdd}(x)

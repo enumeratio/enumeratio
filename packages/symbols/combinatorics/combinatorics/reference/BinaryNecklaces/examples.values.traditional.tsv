@@ -1,0 +1,4 @@
+id	in	out
+count-binarynecklaces-5	\operatorname{Count}(\operatorname{BinaryNecklaces}(5))	8
+first-element-of-binarynecklaces-5	\operatorname{At}(\operatorname{BinaryNecklaces}(5),1)	[0,0,0,0,0]
+every-element-of-binarynecklaces-5	\operatorname{Take}(\operatorname{BinaryNecklaces}(5),8)	[[0,0,0,0,0],[1,1,1,1,1],[0,0,0,0,1],[0,0,0,1,1],[0,0,1,0,1],[0,0,1,1,1],[0,1,0,1,1],[0,1,1,1,1]]

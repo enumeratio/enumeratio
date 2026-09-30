@@ -12,7 +12,6 @@
 import { LATEX_DICTIONARY, type MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry, Serializer } from "@cortex-js/compute-engine/latex-syntax";
 import { POWER_LATEX } from "@enumeratio/engine";
-import { TRADITIONAL_LATEX } from "./traditional.ts";
 
 type Entry = Partial<LatexDictionaryEntry>;
 
@@ -210,8 +209,7 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
  * the later entry still wins — but the default is removed first to build clean).
  */
 export function conventionalLatexDictionary(): readonly Entry[] {
-  // The traditional entries ride along: inert unless `toLatex({ traditional: true })`.
-  const entries = [...CONVENTIONAL_LATEX, ...TRADITIONAL_LATEX];
+  const entries = CONVENTIONAL_LATEX;
   const names = new Set(entries.map((e) => e.name));
   const base = LATEX_DICTIONARY.filter((entry) => {
     const name = (entry as { name?: string }).name;

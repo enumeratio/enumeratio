@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
+import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf, stringAt } from "@enumeratio/engine";
 import {
   alexanderPolynomial,
@@ -21,6 +22,7 @@ import {
   writhe,
 } from "./braid.ts";
 import { bracketInvariant, jonesPolynomial, kauffmanBracket, torusJones } from "./jones.ts";
+import { BRAID_NOTATION } from "./notation.ts";
 import {
   type Knot,
   pretzelAlexander,
@@ -88,6 +90,7 @@ function knotOf(expr: BoxedExpression | undefined): Knot | undefined {
 }
 
 export function declareBraid(ce: ComputeEngine): void {
+  registerNotation(ce, BRAID_NOTATION);
   const braidExpression = (b: Braid): BoxedExpression =>
     ce.function("Braid", [
       ce.number(b.strands),

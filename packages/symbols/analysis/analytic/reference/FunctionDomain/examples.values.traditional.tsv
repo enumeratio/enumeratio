@@ -1,10 +1,10 @@
 id	in	out
-a-polynomial-is-defined-everywhere	\mathrm{FunctionDomain}(x^2, x)	\mathrm{True}
-division-by-zero-excludes-the-origin		
-sqrt-of-a-bounded-quadratic		
-a-monomial-with-negative-integer-exponent		
-a-multivariate-expression-declines		
-a-rational-function-with-two-real-poles		
-an-even-root-needs-a-nonnegative-radicand		
-a-natural-log-needs-a-positive-argument		
-tangent-s-domain-is-declined		
+a-polynomial-is-defined-everywhere	\operatorname{FunctionDomain}(x^2,x)	\operatorname{True}
+division-by-zero-excludes-the-origin	\operatorname{FunctionDomain}(\frac{1}{x},x)	x<0\lor0<x
+sqrt-of-a-bounded-quadratic	\operatorname{FunctionDomain}(\sqrt{-x^2+4},x)	-2\le x\le2
+a-monomial-with-negative-integer-exponent	\operatorname{FunctionDomain}(x^{-3},x)	x<0\lor0<x
+a-multivariate-expression-declines	\operatorname{FunctionDomain}(xy,x)	\operatorname{FunctionDomain}(xy,x)
+a-rational-function-with-two-real-poles	\operatorname{FunctionDomain}(\frac{1}{x^2-1},x)	x<-1\lor-1<x<1\lor1<x
+an-even-root-needs-a-nonnegative-radicand	\operatorname{FunctionDomain}(\sqrt{x^2-1},x)	x\le-1\lor1\le x
+a-natural-log-needs-a-positive-argument	\operatorname{FunctionDomain}(\ln(2-x),x)	x<2
+tangent-s-domain-is-declined	\operatorname{FunctionDomain}(\tan(x),x)	\operatorname{FunctionDomain}(\tan(x),x)

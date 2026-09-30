@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { defineOverload, wrapOperator } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { HYPERCOMPLEX_CARRIERS } from "./carrier-data.ts";
@@ -18,6 +19,7 @@ import {
   toMultivector,
 } from "./multivector.ts";
 import { declareAlgebras } from "./algebra.ts";
+import { HYPERCOMPLEX_NOTATION } from "./notation.ts";
 import { GENERATOR_SYMBOLS } from "./units.ts";
 
 // How the units reach compute-engine's arithmetic.
@@ -122,6 +124,7 @@ const hasGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(cont
 const reachesAnyGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(reachesGenerator);
 
 export function declareHypercomplex(ce: ComputeEngine): void {
+  registerNotation(ce, HYPERCOMPLEX_NOTATION);
   // This package's own carrier — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
   // constructor, plural type-space name and `Element` membership, all in one call.
   declareCarriers(ce, HYPERCOMPLEX_CARRIERS);

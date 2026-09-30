@@ -1,0 +1,4 @@
+id	in	out
+count-triangularpartitions-12	\operatorname{Count}(\operatorname{TriangularPartitions}(12))	10
+first-element-of-triangularpartitions-12	\operatorname{At}(\operatorname{TriangularPartitions}(12),1)	\operatorname{IntegerPartition}([10,1,1])
+every-element-of-triangularpartitions-12	\operatorname{Take}(\operatorname{TriangularPartitions}(12),10)	[\operatorname{IntegerPartition}([10,1,1]),\operatorname{IntegerPartition}([6,6]),\operatorname{IntegerPartition}([6,3,3]),\operatorname{IntegerPartition}([6,3,1,1,1]),\operatorname{IntegerPartition}([6,1,1,1,1,1,1]),\operatorname{IntegerPartition}([3,3,3,3]),\operatorname{IntegerPartition}([3,3,3,1,1,1]),\operatorname{IntegerPartition}([3,3,1,1,1,1,1,1]),\operatorname{IntegerPartition}([3,1,1,1,1,1,1,1,1,1]),\operatorname{IntegerPartition}([1,1,1,1,1,1,1,1,1,1,1,1])]

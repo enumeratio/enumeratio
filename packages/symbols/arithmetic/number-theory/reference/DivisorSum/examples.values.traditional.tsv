@@ -1,18 +1,18 @@
 id	in	out
-sigma-2-20-see-divisorsigma		
-only-the-odd-divisors-1-3-5-15		
-divisorsum-30-function-1-1		
-divisorsum-20-f		
-divisorsum-20-f-isprime		
-divisorsum-20-function-1-1		
-divisorsum-20-function-1-1-function-1-lt-5-1		
+sigma-2-20-see-divisorsigma	\operatorname{DivisorSum}(20,\operatorname{Function}(d^2,d))	546
+only-the-odd-divisors-1-3-5-15	\operatorname{DivisorSum}(30,\operatorname{Function}(d,d),\operatorname{Function}(\operatorname{IsOdd}(d),d))	24
+divisorsum-30-function-1-1	\operatorname{DivisorSum}(30,\operatorname{Function}(\operatorname{Block}(\_1),\_1))	72
+divisorsum-20-f	\operatorname{DivisorSum}(20,f)	f(1)+f(2)+f(4)+f(5)+f(10)+f(20)
+divisorsum-20-f-isprime	\operatorname{DivisorSum}(20,f,\operatorname{IsPrime})	f(2)+f(5)
+divisorsum-20-function-1-1	\operatorname{DivisorSum}(20,\operatorname{Function}(\operatorname{Block}(\_1),\_1))	42
+divisorsum-20-function-1-1-function-1-lt-5-1	\operatorname{DivisorSum}(20,\operatorname{Function}(\operatorname{Block}(\_1),\_1),\operatorname{Function}(\operatorname{Block}(\_1<5),\_1))	7
 divisorsum-1-plus-10-pow-50-function-1-1		
-sum-d-mid-n-mu-d-0-for-n-1	\mathrm{DivisorSum}(12, d\mapsto\mu(d))	0
-sum-d-mid-n-varphi-d-n	\mathrm{DivisorSum}(36, d\mapsto\varphi(d))	36
-divisorsum-1-000-function-1-pow-2-1		
-divisorsum-15-function-1-pow-4-1		
-divisorsum-11-function-1-1-isprime		
-1-has-one-divisor		
-n-divisorsum-n-function-1-over-1-plus-1-1		
-n-divisorsum-9-function-1-over-1-plus-1-1		
+sum-d-mid-n-mu-d-0-for-n-1	\operatorname{DivisorSum}(12,\operatorname{Function}(\mu(d),d))	0
+sum-d-mid-n-varphi-d-n	\operatorname{DivisorSum}(36,\operatorname{Function}(\varphi(d),d))	36
+divisorsum-1-000-function-1-pow-2-1	\operatorname{DivisorSum}(1000,\operatorname{Function}(\operatorname{Block}(\_1^2),\_1))	1383460
+divisorsum-15-function-1-pow-4-1	\operatorname{DivisorSum}(15,\operatorname{Function}(\operatorname{Block}(\_1^4),\_1))	51332
+divisorsum-11-function-1-1-isprime	\operatorname{DivisorSum}(11,\operatorname{Function}(\operatorname{Block}(\_1),\_1),\operatorname{IsPrime})	11
+1-has-one-divisor	\operatorname{DivisorSum}(1,\operatorname{Function}(d,d))	1
+n-divisorsum-n-function-1-over-1-plus-1-1	N(\operatorname{DivisorSum}(n,\operatorname{Function}(\operatorname{Block}(\frac{1}{\_1+1}),\_1)))	\operatorname{DivisorSum}(n,\operatorname{Function}(\operatorname{Block}(\frac{1}{\_1+1}),\_1))
+n-divisorsum-9-function-1-over-1-plus-1-1	N(\operatorname{DivisorSum}(9,\operatorname{Function}(\operatorname{Block}(\frac{1}{\_1+1}),\_1)))	\frac{17}{20}
 divisorsum-10-f-g		

@@ -18,11 +18,16 @@ import { portableTeX } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
-import { traditionalLatexOf } from "../src/traditional.ts";
+import { makeBoxes, notationOf, toLatex } from "@enumeratio/boxes";
+import { declaredEngine } from "../../reference/scripts/engines.ts";
 
 const ce = new ComputeEngine({
   latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
 });
+
+// TraditionalForm: every package's notation, as the engine that declares them all registers it.
+const NOTATION = notationOf(declaredEngine());
+const traditionalOf = (json: MathJSON): string => portableTeX(toLatex(makeBoxes(json as never, NOTATION)));
 
 const attempt = (f: () => string): string | undefined => {
   try {
@@ -89,10 +94,7 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
   }
   const tex = [attempt(() => portableTeX(box(expr).latex)), attempt(() => portableTeX(box(expected).latex))];
   if (tex[0] !== undefined) out.tex = { in: tex[0], ...(tex[1] === undefined ? {} : { out: tex[1] }) };
-  const traditional = [
-    attempt(() => portableTeX(traditionalLatexOf(ce, box(expr)))),
-    attempt(() => portableTeX(traditionalLatexOf(ce, box(expected)))),
-  ];
+  const traditional = [attempt(() => traditionalOf(expr)), attempt(() => traditionalOf(expected))];
   if (traditional[0] !== undefined && (traditional[0] !== tex[0] || traditional[1] !== tex[1]))
     out.traditional = { in: traditional[0], ...(traditional[1] === undefined ? {} : { out: traditional[1] }) };
   // FullForm, as @enumeratio/wolfram writes it, and what it reads back as where the trip loses

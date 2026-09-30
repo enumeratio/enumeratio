@@ -1,0 +1,12 @@
+id	in	out
+trigtoexp-cos-x	\operatorname{TrigToExp}(\cos(x))	\frac{1}{2}(e^{ix}+e^{-ix})
+trigtoexp-sinh-x	\operatorname{TrigToExp}(\sinh(x))	\frac{1}{2}(-e^{-x}+e^x)
+trigtoexp-cos-x-plus-imaginaryunit-times-sin-x	\operatorname{TrigToExp}(\cos(x)+i\sin(x))	\frac{1}{2}(e^{ix}+e^{-ix})+i(\frac{-1}{2}ie^{ix}+\frac{1}{2}ie^{-ix})
+trigtoexp-tanh-x	\operatorname{TrigToExp}(\tanh(x))	\frac{-e^{-x}+e^x}{e^x+e^{-x}}
+trigtoexp-arcsin-x	\operatorname{TrigToExp}(\arcsin(x))	-i\ln(ix+\sqrt{-x^2+1})
+trigtoexp-arcoth-x	\operatorname{TrigToExp}(\operatorname{Arcoth}(x))	\frac{1}{2}(-\ln(x-1)+\ln(x+1))
+trigtoexp-sinh-x-lt-eq-11-arctan-x-eq-7	\operatorname{TrigToExp}(\sinh(x)\le11\land\arctan(x)=7)	\frac{1}{2}(-e^{-x}+e^x)\le11\land\arctan(x)=7
+trigtoexp-list-sin-x-cos-x-tan-x	\operatorname{TrigToExp}([\sin(x),\cos(x),\tan(x)])	[\frac{-1}{2}ie^{ix}+\frac{1}{2}ie^{-ix},\frac{1}{2}(e^{ix}+e^{-ix}),-i\frac{-e^{-ix}+e^{ix}}{e^{ix}+e^{-ix}}]
+trigtoexp-sin-5-times-arcsin-x	\operatorname{TrigToExp}(\sin(5\arcsin(x)))	\frac{-1}{2}ie^{5i\arcsin(x)}+\frac{1}{2}ie^{-5i\arcsin(x)}
+trigtoexp-sin-x-lt-x-lt-tan-x	\operatorname{TrigToExp}(\sin(x)<x<\tan(x))	\frac{-1}{2}ie^{ix}+\frac{1}{2}ie^{-ix}<x<-i\frac{-e^{-ix}+e^{ix}}{e^{ix}+e^{-ix}}
+trigtoexp-sin-x-eq-pi-times-3-pow-neg-1	\operatorname{TrigToExp}(\sin(x)=\pi3^{-1})	\frac{-1}{2}ie^{ix}+\frac{1}{2}ie^{-ix}=\frac{1}{3}\pi

@@ -1,0 +1,15 @@
+id	in	out
+a-quadratic-s-vertex	\operatorname{Minimize}(x^2,x)	[0,[\operatorname{Rule}(x,0)]]
+unbounded-below-reports-negative-infinity	\operatorname{Minimize}(x^3,x)	[-\infty,[\operatorname{Rule}(x,-\infty)]]
+a-simple-interval-constraint	\operatorname{Minimize}([x^2,x\ge1],x)	[1,[\operatorname{Rule}(x,1)]]
+the-variable-as-a-one-element-list	\operatorname{Minimize}(x^2,[x])	[0,[\operatorname{Rule}(x,0)]]
+minimize-2-times-x-pow-2-minus-3x-plus-5-x	\operatorname{Minimize}(2x^2-3x+5,x)	[\frac{31}{8},[\operatorname{Rule}(x,\frac{3}{4})]]
+a-rational-function-s-irrational-point	\operatorname{Minimize}(\frac{x-1}{x^2+1},x)	[\frac{-\sqrt{2}}{1+(1-\sqrt{2})^2},[\operatorname{Rule}(x,1-\sqrt{2})]]
+log-s-minimum-is-at-its-domain-edge	\operatorname{Minimize}(\ln(x),x)	[-\infty,[\operatorname{Rule}(x,0)]]
+exp-s-infimum-is-not-attained	\operatorname{Minimize}(e^x,x)	[0,[\operatorname{Rule}(x,-\infty)]]
+declines-a-non-exact-critical-point	\operatorname{Minimize}(x^4-4x^2,x)	[-4,[\operatorname{Rule}(x,-\sqrt{2})]]
+a-quartic-with-a-doubled-root	\operatorname{Minimize}(x^4-2x^2+1,x)	[0,[\operatorname{Rule}(x,-1)]]
+a-product-of-two-quadratics	\operatorname{Minimize}((x^2-3)(x^2-5),x)	[-1,[\operatorname{Rule}(x,-2)]]
+declines-an-irreducible-cubic-factor	\operatorname{Minimize}(\frac{1}{4}x^4-\frac{1}{2}x^2-x,x)	\operatorname{Minimize}(\frac{1}{4}x^4-\frac{1}{2}x^2-x,x)
+declines-more-than-one-variable	\operatorname{Minimize}(x^2+y^2,[x,y])	\operatorname{Minimize}(x^2+y^2,[x,y])
+declines-sin-s-point-despite-an-exact-value	\operatorname{Minimize}(\sin(x),x)	\operatorname{Minimize}(\sin(x),x)

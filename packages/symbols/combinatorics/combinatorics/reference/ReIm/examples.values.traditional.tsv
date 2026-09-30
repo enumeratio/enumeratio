@@ -1,0 +1,22 @@
+id	in	out
+real-and-imaginary-parts	\operatorname{ReIm}(3+4i)	[3,4]
+reim-5-plus-12i	\operatorname{ReIm}(5+12i)	[5,12]
+reim-3	\operatorname{ReIm}(3)	[3,0]
+reim-list-i-neg-1-neg-i-1	\operatorname{ReIm}([i,-1,-i,1])	[[0,1],[-1,0],[0,-1],[1,0]]
+threads-over-a-list	\operatorname{ReIm}([1+2i,3+4i])	[[1,2],[3,4]]
+reim-neg-3	\operatorname{ReIm}(-3)	[-3,0]
+reim-3-over-5	\operatorname{ReIm}(\frac{3}{5})	[\frac{3}{5},0]
+reim-root-neg-17-4	\operatorname{ReIm}(\sqrt[4]{-17})	[\operatorname{Real}(\sqrt[4]{-17}),\operatorname{Imaginary}(\sqrt[4]{-17})]
+reim-exponentiale-pow-2-over-3-times-i-times-pi	\operatorname{ReIm}(e^{\frac{2}{3}i\pi})	[\frac{-1}{2},\frac{\sqrt{3}}{2}]
+reim-gamma-neg-1-over-2	\operatorname{ReIm}(\Gamma(\frac{-1}{2}))	[-2\sqrt{\pi},0]
+reim-list-list-1-neg-1-0-list-0-1	\operatorname{ReIm}([[1,-1,0],[0,1]])	[[[1,0],[-1,0],[0,0]],[[0,0],[1,0]]]
+reim-z	\operatorname{ReIm}(z)	[\operatorname{Real}(z),\operatorname{Imaginary}(z)]
+reim-2z	\operatorname{ReIm}(2z)	[\operatorname{Real}(2z),\operatorname{Imaginary}(2z)]
+reim-w-plus-z	\operatorname{ReIm}(w+z)	[\operatorname{Real}(w+z),\operatorname{Imaginary}(w+z)]
+reim-list-a-list-b-c	\operatorname{ReIm}([a,[b,c]])	[[\operatorname{Real}(a),\operatorname{Imaginary}(a)],[[\operatorname{Real}(b),\operatorname{Imaginary}(b)],[\operatorname{Real}(c),\operatorname{Imaginary}(c)]]]
+rank-reim-mat	\operatorname{Rank}(\operatorname{ReIm}(\operatorname{mat}))	1
+reim-i	\operatorname{ReIm}(i)	[0,1]
+reim-5-times-exponentiale-pow-3-over-4-times-i	\operatorname{ReIm}(5e^{\frac{3}{4}i\pi})	[\frac{-5}{2}\sqrt{2},\frac{5}{2}\sqrt{2}]
+reim-2x-plus-i	\operatorname{ReIm}(2x+i)	[\operatorname{Real}(2x+i),\operatorname{Imaginary}(2x+i)]
+shape-reim-mat		
+reim-list-i-neg-i-0	\operatorname{ReIm}([i,-i,0])	[[0,1],[0,-1],[0,0]]

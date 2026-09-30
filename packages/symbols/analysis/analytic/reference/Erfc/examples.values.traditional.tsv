@@ -2,23 +2,23 @@ id	in	out
 erfc-0	\operatorname{erfc}(0)	1
 erfc-infinity	\operatorname{erfc}(\infty)	0
 erfc-negativeinfinity	\operatorname{erfc}(-\infty)	2
-a-floating-point-argument-evaluates-directly-to	\operatorname{erfc}(0.5)	0.479\,500\,122\,186\,953\,462\,317
-a-machine-precision-argument	\operatorname{erfc}(1.5)	0.033\,894\,853\,524\,689\,272\,933
-threads-element-wise-over-a-list-as-wolfram-s	\mathrm{Erfc}(\bigl\lbrack0, 1\bigr\rbrack)	\bigl\lbrack1, \operatorname{erfc}(1)\bigr\rbrack
-complex-arguments-should-evaluate-as-they-do-for	\operatorname{erfc}(1.5-i)	-0.078\,399\,207\,498\,933\,45-0.027\,963\,711\,238\,655\,847i
-listable-threads-over-its-limits-at-pm-infty		
-interval-arithmetic-erfc-is-decreasing-so-the	\operatorname{erfc}(\mathrm{Interval}(0.2, 0.3))	\mathrm{Interval}(0.671\,373\,240\,540\,872\,6, 0.777\,297\,410\,789\,521\,5)
-uncertainty-propagation	\operatorname{erfc}(\mathrm{Around}(2, 0.01))	\mathrm{Around}(0.004\,677\,734\,981\,047\,266, 0.000\,206\,669\,853\,540\,920\,54)
-to-30-significant-digits-every-one-correctly	N(\operatorname{erfc}(2), 30)	0.004\,677\,734\,981\,047\,265\,837\,93
-n-erfc-3-over-2-50	N(\operatorname{erfc}(\frac{3}{2}), 50)	0.033\,894\,853\,524\,689\,272\,933
-functionexpand-matrixfunction-erfc-list-list-0-1	\mathrm{FunctionExpand}(\mathrm{MatrixFunction}(\mathrm{Erfc}, \bigl\lbrack\bigl\lbrack0, (1/2i)\pi\bigr\rbrack, \bigl\lbrack\pi, 0\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\frac{1}{2}(\operatorname{erfc}((-1/2-1/2i)\pi))+\frac{1}{2}(\operatorname{erfc}((1/2+1/2i)\pi)), (-\frac{1}{4}-\frac{1}{4}i)\operatorname{erfc}((-1/2-1/2i)\pi)+(\frac{1}{4}+\frac{1}{4}i)\operatorname{erfc}((1/2+1/2i)\pi)\bigr\rbrack, \bigl\lbrack(\frac{1}{2}-\frac{1}{2}i)\operatorname{erfc}((1/2+1/2i)\pi)+(-\frac{1}{2}+\frac{1}{2}i)\operatorname{erfc}((-1/2-1/2i)\pi), \frac{1}{2}(\operatorname{erfc}((-1/2-1/2i)\pi))+\frac{1}{2}(\operatorname{erfc}((1/2+1/2i)\pi))\bigr\rbrack\bigr\rbrack
-fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	\mathrm{FullSimplify}(\operatorname{erfc}(-z)=2-\operatorname{erfc}(z))	\mathrm{True}
-erfc-z-2-erfc-z-here-at-z-1	\operatorname{erfc}(-1)+\operatorname{erfc}(1)=2	\mathrm{True}
-definition-erf-z-erfc-z-1-see-erf	\operatorname{erf}(2)+\operatorname{erfc}(2)=1	\mathrm{True}
-erfc-x-2-erfc-x-applied-symbolically	\operatorname{erfc}(-x)	2-\operatorname{erfc}(x)
-frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	\frac{\mathrm{d}\operatorname{erfc}(x)}{\mathrm{d}x}	(-\frac{2}{e^{x^2}})/\sqrt{\pi}
+a-floating-point-argument-evaluates-directly-to	\operatorname{erfc}(0.5)	0.479500122186953462317
+a-machine-precision-argument	\operatorname{erfc}(1.5)	0.033894853524689272933
+threads-element-wise-over-a-list-as-wolfram-s	\operatorname{Erfc}([0,1])	[1,\operatorname{erfc}(1)]
+complex-arguments-should-evaluate-as-they-do-for	\operatorname{erfc}(1.5-i)	-0.07839920749893345-0.027963711238655847i
+listable-threads-over-its-limits-at-pm-infty	\operatorname{Erfc}([\infty,-\infty])	[0,2]
+interval-arithmetic-erfc-is-decreasing-so-the	\operatorname{erfc}([0.2,0.3])	[0.6713732405408726,0.7772974107895215]
+uncertainty-propagation	\operatorname{erfc}(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.004677734981047266,0.00020666985354092054)
+to-30-significant-digits-every-one-correctly	N(\operatorname{erfc}(2),30)	0.00467773498104726583793074363275
+n-erfc-3-over-2-50	N(\operatorname{erfc}(\frac{3}{2}),50)	0.033894853524689272933023738354052141318589520742363
+functionexpand-matrixfunction-erfc-list-list-0-1	\operatorname{FunctionExpand}(\operatorname{MatrixFunction}(\operatorname{Erfc},[[0,\frac{1}{2}i\pi],[\pi,0]]))	[[\frac{1}{2}\operatorname{erfc}((\frac{-1}{2}+\frac{-1}{2}i)\pi)+\frac{1}{2}\operatorname{erfc}((\frac{1}{2}+\frac{1}{2}i)\pi),(\frac{-1}{4}+\frac{-1}{4}i)\operatorname{erfc}((\frac{-1}{2}+\frac{-1}{2}i)\pi)+(\frac{1}{4}+\frac{1}{4}i)\operatorname{erfc}((\frac{1}{2}+\frac{1}{2}i)\pi)],[(\frac{1}{2}+\frac{-1}{2}i)\operatorname{erfc}((\frac{1}{2}+\frac{1}{2}i)\pi)+(\frac{-1}{2}+\frac{1}{2}i)\operatorname{erfc}((\frac{-1}{2}+\frac{-1}{2}i)\pi),\frac{1}{2}\operatorname{erfc}((\frac{-1}{2}+\frac{-1}{2}i)\pi)+\frac{1}{2}\operatorname{erfc}((\frac{1}{2}+\frac{1}{2}i)\pi)]]
+fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	\operatorname{FullSimplify}(\operatorname{erfc}(-z)=-\operatorname{erfc}(z)+2)	\operatorname{True}
+erfc-z-2-erfc-z-here-at-z-1	\operatorname{erfc}(-1)+\operatorname{erfc}(1)=2	\operatorname{True}
+definition-erf-z-erfc-z-1-see-erf	\operatorname{Erf}(2)+\operatorname{erfc}(2)=1	\operatorname{True}
+erfc-x-2-erfc-x-applied-symbolically	\operatorname{erfc}(-x)	-\operatorname{erfc}(x)+2
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	\frac{d}{dx}\operatorname{erfc}(x)	\frac{-2e^{-x^2}}{\sqrt{\pi}}
 an-exact-integer-argument-is-left-unevaluated	\operatorname{erfc}(1)	\operatorname{erfc}(1)
-far-in-the-tail-erfc-keeps-full-relative	\operatorname{erfc}(9.5)	3.769\,214\,485\,654\,879\,941\,68\cdot10^{-41}
-whereas-1-erf-9-5-cancels-to-exactly-0-in		
+far-in-the-tail-erfc-keeps-full-relative	\operatorname{erfc}(9.5)	3.76921448565487994168\times10^{-41}
+whereas-1-erf-9-5-cancels-to-exactly-0-in	1-\operatorname{Erf}(9.5)	0.0
 erfc-complexinfinity-is-indeterminate-inheriting	\operatorname{erfc}(\tilde\infty)	\operatorname{Indeterminate}
-the-gaussian-tail-shrinks-fast-only-about-7	\operatorname{erfc}(3.5)	0.000\,000\,743\,098\,372\,341\,412\,745\,524
+the-gaussian-tail-shrinks-fast-only-about-7	\operatorname{erfc}(3.5)	7.43098372341412745524\times10^{-7}

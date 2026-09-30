@@ -1,0 +1,12 @@
+id	in	out
+matches-hypergeometric1f1-1-2-0-5-gamma-2	\operatorname{Hypergeometric1F1Regularized}(1,2,0.5)	1.2974425414002555
+b-1-is-a-pole-of-gamma-but-the-regularized-form	\operatorname{Hypergeometric1F1Regularized}(1,-1,0.7)	0.9867388266605329
+a-0-5-b-1-5-at-neg-1	\operatorname{Hypergeometric1F1Regularized}(0.5,1.5,-1)	0.8427007929497149
+complex-a-at-0-5	N(\operatorname{Hypergeometric1F1Regularized}(1+0.5i,2,0.5))	1.2907217573451255+0.1614805635582521i
+b-0-at-0-5	\operatorname{Hypergeometric1F1Regularized}(1,0,0.5)	0.8243606353500641
+a-2-b-neg-2-at-0-4	\operatorname{Hypergeometric1F1Regularized}(2,-2,0.4)	0.4200978348557817
+a-complex-argument-at-b-2	N(\operatorname{Hypergeometric1F1Regularized}(1,2,0.5+0.5i))	1.2373281197977841+0.34355004662944577i
+a-complex-argument-at-a-nonpositive-integer-b	N(\operatorname{Hypergeometric1F1Regularized}(1,-1,0.3-0.4i))	-0.2131895076621401-0.2615963662728921i
+n-hypergeometric1f1regularized-2-neg-4-2-50		
+n-hypergeometric1f1regularized-1-0-1-30		
+matrixfunction-function		

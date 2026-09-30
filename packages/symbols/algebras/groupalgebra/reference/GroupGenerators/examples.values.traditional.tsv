@@ -1,0 +1,4 @@
+id	in	out
+the-given-generators-come-back	\operatorname{GroupGenerators}(\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,9,6],[3,7]])]))	[\operatorname{Cycles}([[1,9,6],[3,7]])]
+groupgenerators-permutationgroup-list-cycles	\operatorname{GroupGenerators}(\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,2]]),\operatorname{Cycles}([[1,3],[2,4]])]))	[\operatorname{Cycles}([[1,2]]),\operatorname{Cycles}([[1,3],[2,4]])]
+groupgenerators-permutationgroup-list-cycles-2	\operatorname{GroupGenerators}(\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,2],[3,4]]),\operatorname{Cycles}([[1,3],[2,4]])]))	[\operatorname{Cycles}([[1,2],[3,4]]),\operatorname{Cycles}([[1,3],[2,4]])]

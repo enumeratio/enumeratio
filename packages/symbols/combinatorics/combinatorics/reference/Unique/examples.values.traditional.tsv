@@ -1,14 +1,14 @@
 id	in	out
-unique-list-1-2-2-3-1		
-unique-list-a-b-a-c-b		
-keeps-first-occurrence-order-without-sorting		
-unique-list-1-7-8-4-3-4-1-9-9-2		
-elements-can-themselves-be-lists		
-unique-list		
-a-second-argument-says-when-two-elements-count		
-unique-list-1-7-8-4-3-4-1-9-8-9-2-greater		
-count-the-distinct-elements		
-the-residues-mod-3-that-occur-in-order-of-first		
-idempotent		
+unique-list-1-2-2-3-1	\operatorname{Unique}([1,2,2,3,1])	[1,2,3]
+unique-list-a-b-a-c-b	\operatorname{Unique}([a,b,a,c,b])	[a,b,c]
+keeps-first-occurrence-order-without-sorting	\operatorname{Unique}([1,7,8,4,3,4,1,9,9,2,1])	[1,7,8,4,3,9,2]
+unique-list-1-7-8-4-3-4-1-9-9-2	\operatorname{Unique}([1,7,8,4,3,4,1,9,9,2])	[1,7,8,4,3,9,2]
+elements-can-themselves-be-lists	\operatorname{Unique}([[1,2],[1,2],[3]])	[[1,2],[3]]
+unique-list	\operatorname{Unique}([])	[]
+a-second-argument-says-when-two-elements-count	\operatorname{Unique}([1,2,3,4,5,6],\operatorname{Function}(|\_1-\_2|<2))	[1,3,5]
+unique-list-1-7-8-4-3-4-1-9-8-9-2-greater	\operatorname{Unique}([1,7,8,4,3,4,1,9,8,9,2],\operatorname{Greater})	[1,7,8,9,9]
+count-the-distinct-elements	\operatorname{Length}(\operatorname{Unique}([1,2,2,3,3,3]))	3
+the-residues-mod-3-that-occur-in-order-of-first	\operatorname{Unique}(\bmod(\operatorname{Range}(10),3))	[1,2,0]
+idempotent	\operatorname{Unique}(\operatorname{Unique}([1,1,2]))	[1,2]
 unique-list-function-sum-1-eq-sum-2-1-2		
-unique-list-3-3-3-function-false	\mathrm{Unique}(\bigl\lbrack3, 3, 3\bigr\rbrack, ()\mapsto\mathrm{False})	\bigl\lbrack3, 3, 3\bigr\rbrack
+unique-list-3-3-3-function-false	\operatorname{Unique}([3,3,3],\operatorname{Function}(\operatorname{Block}(\operatorname{False})))	[3,3,3]

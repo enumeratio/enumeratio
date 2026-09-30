@@ -1,0 +1,10 @@
+id	in	out
+transpose-list-list-a-x-list-b-y-list-c-z	\operatorname{Transpose}([[a,x],[b,y],[c,z]])	[[a,b,c],[x,y,z]]
+transpose-m		
+transpose-s		
+chop-dot-u-transpose-u	\operatorname{Chop}(\operatorname{Dot}(u,\operatorname{Transpose}(u)))	\operatorname{Chop}(\operatorname{MatrixMultiply}(u,\operatorname{Transpose}(u)))
+chop-dot-v-transpose-v	\operatorname{Chop}(\operatorname{Dot}(v,\operatorname{Transpose}(v)))	\operatorname{Chop}(\operatorname{MatrixMultiply}(v,\operatorname{Transpose}(v)))
+s-eq-transpose-s		
+transpose-s-eq-s		
+conjugate-transpose-m		
+shape-transpose-a-perm		

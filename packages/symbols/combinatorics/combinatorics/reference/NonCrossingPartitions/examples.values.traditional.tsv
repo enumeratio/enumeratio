@@ -1,0 +1,4 @@
+id	in	out
+count-noncrossingpartitions-4	\operatorname{Count}(\operatorname{NonCrossingPartitions}(4))	14
+first-element-of-noncrossingpartitions-4	\operatorname{At}(\operatorname{NonCrossingPartitions}(4),1)	\operatorname{SetPartition}([[1],[2],[3],[4]])
+every-element-of-noncrossingpartitions-4	\operatorname{Take}(\operatorname{NonCrossingPartitions}(4),5)	[\operatorname{SetPartition}([[1],[2],[3],[4]]),\operatorname{SetPartition}([[1,4],[2],[3]]),\operatorname{SetPartition}([[1],[2,4],[3]]),\operatorname{SetPartition}([[1],[2],[3,4]]),\operatorname{SetPartition}([[1,3],[2],[4]])]

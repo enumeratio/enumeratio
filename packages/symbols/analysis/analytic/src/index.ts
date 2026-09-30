@@ -1,4 +1,5 @@
 export { declareAnalytic } from "./declare.ts";
+export { ANALYTIC_NOTATION } from "./notation.ts";
 export {
   hurwitzZeta,
   hurwitzZetaReal,

@@ -27,6 +27,8 @@ const COMMANDS: Record<string, string> = {
   "¬": "\\lnot",
   "⇒": "\\Rightarrow",
   "⇔": "\\Leftrightarrow",
+  "⊗": "\\otimes",
+  mod: "\\bmod",
   "∑": "\\sum",
   "∏": "\\prod",
   "∫": "\\int",
@@ -108,6 +110,8 @@ const escapeText = (s: string): string =>
 function token(s: string): string {
   const command = COMMANDS[s];
   if (command !== undefined) return command;
+  // A pattern name (`_a`, `__rest`, `_1_2`): its underscores are literal.
+  if (s.startsWith("_")) return s.replaceAll("_", "\\_");
   if (tokenClass(s) === "identifier" && !/^.$/u.test(s)) {
     return OPERATOR_NAMES.has(s) ? `\\${s}` : `\\operatorname{${s}}`;
   }
@@ -133,6 +137,7 @@ const FENCES: Record<string, { close: string; matrix: string }> = {
   "[": { close: "]", matrix: "bmatrix" },
   "|": { close: "|", matrix: "vmatrix" },
   "‖": { close: "‖", matrix: "Vmatrix" },
+  "{": { close: "}", matrix: "Bmatrix" },
 };
 
 /** A big operator's limits go under and over it; anything else's go in `\underset`. */
@@ -182,10 +187,13 @@ function writeNode(box: BoxNode): string {
     case "SubsuperscriptBox":
       return `${base(box[1])}_${group(write(box[2]))}^${group(write(box[3]))}`;
     case "OverscriptBox":
-      if (box[2] === "‾") return `\\overline${group(write(box[1]))}`;
+      // A command after a letter needs its group: `\overline n` is not `\overlinen`.
+      if (box[2] === "‾") return `\\overline{${write(box[1])}}`;
+      if (box[2] === "→") return `\\vec{${write(box[1])}}`;
       return `\\overset${group(write(box[2]))}${group(write(box[1]))}`;
     case "UnderscriptBox":
       if (isBigOperator(box[1])) return `${write(box[1])}_${group(write(box[2]))}`;
+      if (box[2] === "_") return `\\underline{${write(box[1])}}`;
       return `\\underset${group(write(box[2]))}${group(write(box[1]))}`;
     case "UnderoverscriptBox":
       if (isBigOperator(box[1])) return `${write(box[1])}_${group(write(box[2]))}^${group(write(box[3]))}`;

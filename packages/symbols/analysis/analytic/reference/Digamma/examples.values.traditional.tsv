@@ -1,23 +1,23 @@
 id	in	out
 a-pole-of-gamma-shared-by-its-log-derivative	\psi(0)	\tilde\infty
 digamma-neg-1	\psi(-1)	\tilde\infty
-a-floating-point-argument-evaluates-directly-to	\psi(0.5)	-1.963\,510\,026\,021\,423\,479\,44
-a-machine-precision-argument	\psi(100.5)	4.605\,174\,352\,581\,845\,211\,87
+a-floating-point-argument-evaluates-directly-to	\psi(0.5)	-1.96351002602142347944
+a-machine-precision-argument	\psi(100.5)	4.60517435258184521187
 psi-5-h-4-gamma-frac-25-12-gamma	\psi(5)	\frac{25}{12}-\gamma
-threads-over-a-list-reducing-each-positive		
-complex-arguments-should-evaluate-as-psi-m-does	\psi(2.5+3i)	1.281\,273\,919\,066\,231\,4+0.979\,805\,315\,344\,559\,6i
+threads-over-a-list-reducing-each-positive	\operatorname{Digamma}([1,2,3])	[-\gamma,1-\gamma,\frac{3}{2}-\gamma]
+complex-arguments-should-evaluate-as-psi-m-does	\psi(2.5+3i)	1.2812739190662314+0.9798053153445596i
 psi-infty-infty-growing-like-ln-z	\psi(\infty)	\infty
-gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln	\psi(\frac{1}{4})	-3\ln(2)-\frac{\pi}{2}-\gamma
-psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3	\psi(\frac{1}{3})	-\frac{3\ln(3)}{2}-\frac{\sqrt{3}\pi}{6}-\gamma
-interval-arithmetic-psi-is-increasing-on-0-infty	\psi(\mathrm{Interval}(1.23, 1.24))	\mathrm{Interval}(-0.251\,669\,430\,696\,100\,1, -0.239\,493\,679\,125\,936\,8)
-to-30-significant-digits-every-one-correctly	N(\psi(\frac{1}{3}), 30)	-3.132\,033\,780\,020\,806\,323
-harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	\psi(6)+\gamma=1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}	\mathrm{True}
-psi-1-gamma	\psi(1)+\gamma=0	\mathrm{True}
-recurrence-psi-z-1-psi-z-1-z-here-at-z-1	\psi(2)=\psi(1)+1	\mathrm{True}
-psi-1-2-gamma-2-ln-2	\psi(\frac{1}{2})+\gamma+2\ln(2)=0	\mathrm{True}
-psi-x-is-the-trigamma-psi-1-x	\frac{\mathrm{d}\psi(x)}{\mathrm{d}x}	\mathrm{Trigamma}(x)
-reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	\psi(0.7)-\psi(0.3)	2.282\,500\,668\,502\,198\,374\,21
+gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln	\psi(\frac{1}{4})	-3\ln(2)+\frac{-1}{2}\pi-\gamma
+psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3	\psi(\frac{1}{3})	\frac{-3}{2}\ln(3)+(-\frac{\sqrt{3}}{6}\pi)-\gamma
+interval-arithmetic-psi-is-increasing-on-0-infty	\psi([1.23,1.24])	[-0.2516694306961001,-0.2394936791259368]
+to-30-significant-digits-every-one-correctly	N(\psi(\frac{1}{3}),30)	-3.13203378002080632299641907429
+harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	\psi(6)+\gamma=1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}	\operatorname{True}
+psi-1-gamma	\psi(1)+\gamma=0	\operatorname{True}
+recurrence-psi-z-1-psi-z-1-z-here-at-z-1	\psi(2)=\psi(1)+1	\operatorname{True}
+psi-1-2-gamma-2-ln-2	\psi(\frac{1}{2})+\gamma+2\ln(2)=0	\operatorname{True}
+psi-x-is-the-trigamma-psi-1-x	\frac{d}{dx}\psi(x)	\operatorname{Trigamma}(x)
+reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	\psi(0.7)-\psi(0.3)	2.28250066850219837421
 psi-1-gamma-2	\psi(1)	-\gamma
 psi-2-1-gamma-from-psi-n-1-psi-n-1-n	\psi(2)	1-\gamma
 psi-3-frac-3-2-gamma	\psi(3)	\frac{3}{2}-\gamma
-between-the-poles-at-0-and-1-psi-is-still-finite	\psi(-0.5)	0.036\,489\,973\,978\,576\,520\,559
+between-the-poles-at-0-and-1-psi-is-still-finite	\psi(-0.5)	0.036489973978576520559

@@ -1,0 +1,6 @@
+id	in	out
+multinormal-mean	\operatorname{Mean}(\operatorname{MultinormalDistribution}([1,2],[[4,0],[0,9]]))	[1,2]
+multinormal-mean-one-arg	\operatorname{Mean}(\operatorname{MultinormalDistribution}([[1,0],[0,1]]))	[0,0]
+multinormal-variance	\operatorname{Variance}(\operatorname{MultinormalDistribution}([1,2],[[4,0],[0,9]]))	[4,9]
+multinormal-covariance	\operatorname{Covariance}(\operatorname{MultinormalDistribution}([1,2],[[4,1],[1,9]]))	[[4,1],[1,9]]
+multinormal-pdf-standard-origin	\operatorname{PDF}(\operatorname{MultinormalDistribution}([0,0],[[1,0],[0,1]]),[0,0])	\frac{1}{2\pi}

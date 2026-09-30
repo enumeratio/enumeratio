@@ -1,32 +1,32 @@
 id	in	out
 n-forces-the-numeric-result-that-plain		
-n-tanh-1		
+n-tanh-1	N(\tanh(1))	0.761594155955764888119
 stays-symbolic-even-at-0-same-as-sinh-and-cosh		
-a-float-argument-evaluates-directly-no-n-needed		
-arbitrary-precision-via-n		
-evaluates-at-a-complex-argument		
-interval-arithmetic-tanh-is-increasing-so-tanh-0		
-uncertainty-propagation-tanh-2-sqrt-3-pm-0-1		
+a-float-argument-evaluates-directly-no-n-needed	\tanh(2.2)	0.975743130031451520414
+arbitrary-precision-via-n	N(\tanh(\frac{11}{5}))	0.975743130031451520414
+evaluates-at-a-complex-argument	\tanh(2.5+i)	1.00554801189506+0.012322138255828353i
+interval-arithmetic-tanh-is-increasing-so-tanh-0	\tanh([0,\ln(2)])	[0,\frac{3}{5}]
+uncertainty-propagation-tanh-2-sqrt-3-pm-0-1	\tanh(\operatorname{Around}(\frac{2}{\sqrt{3}},0.1))	\operatorname{Around}(0.8193052900783008,0.03287388416497115)
 the-horizontal-asymptote-at-infty		
-tanh-i-pi-4-i-tan-pi-4-i		
+tanh-i-pi-4-i-tan-pi-4-i	\tanh(i\frac{\pi}{4})	i
 oddness-pulls-the-sign-out-of-a-symbolic		
-tanh-artanh-x-x-for-every-x		
-tanh-artanh-2-2-past-the-real-domain		
-derivative-sech-2-x		
-antiderivative-ln-cosh-x		
+tanh-artanh-x-x-for-every-x	\tanh(\operatorname{artanh}(x))	x
+tanh-artanh-2-2-past-the-real-domain	\tanh(\operatorname{artanh}(2))	2
+derivative-sech-2-x	\frac{d}{dx}\tanh(x)	{\operatorname{sech}(x)}^2
+antiderivative-ln-cosh-x	\int\tanh(x)dx	\ln(\cosh(x))
 tanh-has-no-limit-at-complex-infinity-undefined		
-to-30-significant-digits-every-one-correctly		
-n-tanh-11-over-5-50		
-tanh-list-list-1-over-3-times-i-times-pi-neg-1		
-tanh-1-over-5-times-i-times-pi		
-tanh-1-over-24-times-i-times-pi		
-matrixfunction-function-tanh-1-1-list-list-1		
-tanh-x-frac-sinh-x-cosh-x	\tanh(1)=\frac{\sinh(1)}{\cosh(1)}	\mathrm{True}
-in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x		
-tanh-1-over-12-times-i-times-pi		
-tanh-1-over-10-times-i-times-pi		
-tanh-1-over-9-times-i-times-pi		
-tanh-1-over-8-times-i-times-pi		
-tanh-1-over-7-times-i-times-pi		
-tanh-1-over-6-times-i-times-pi		
-tanh-2-over-9-times-i-times-pi		
+to-30-significant-digits-every-one-correctly	N(\tanh(1),30)	0.761594155955764888119458282605
+n-tanh-11-over-5-50	N(\tanh(\frac{11}{5}),50)	0.97574313003145152041430666803011465278130503405799
+tanh-list-list-1-over-3-times-i-times-pi-neg-1	\tanh([[\frac{1}{3}i\pi,\frac{-1}{3}i\pi],[0,\frac{-1}{6}i\pi]])	[[\sqrt{3}i,-\sqrt{3}i],[0,-\frac{\sqrt{3}}{3}i]]
+tanh-1-over-5-times-i-times-pi	\tanh(\frac{1}{5}i\pi)	i\sqrt{5-2\sqrt{5}}
+tanh-1-over-24-times-i-times-pi	\tanh(\frac{1}{24}i\pi)	i\tan(\frac{1}{24}\pi)
+matrixfunction-function-tanh-1-1-list-list-1	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\tanh(\_1)),\_1),[[\frac{1}{3}i\pi,\frac{-1}{3}i\pi],[0,\frac{-1}{6}i\pi]])	[[\sqrt{3}i,\frac{-8}{9}\sqrt{3}i],[0,-\frac{\sqrt{3}}{3}i]]
+tanh-x-frac-sinh-x-cosh-x	\tanh(1)=\frac{\sinh(1)}{\cosh(1)}	\operatorname{True}
+in-exponentials-tanh-x-frac-e-x-e-x-e-x-e-x	\operatorname{TrigToExp}(\tanh(x))	\frac{-e^{-x}+e^x}{e^x+e^{-x}}
+tanh-1-over-12-times-i-times-pi	\tanh(\frac{1}{12}i\pi)	i(2-\sqrt{3})
+tanh-1-over-10-times-i-times-pi	\tanh(\frac{1}{10}i\pi)	\frac{\sqrt{5}}{5}i\sqrt{5-2\sqrt{5}}
+tanh-1-over-9-times-i-times-pi	\tanh(\frac{1}{9}i\pi)	i\tan(\frac{1}{9}\pi)
+tanh-1-over-8-times-i-times-pi	\tanh(\frac{1}{8}i\pi)	i(-1+\sqrt{2})
+tanh-1-over-7-times-i-times-pi	\tanh(\frac{1}{7}i\pi)	i\tan(\frac{1}{7}\pi)
+tanh-1-over-6-times-i-times-pi	\tanh(\frac{1}{6}i\pi)	\frac{\sqrt{3}}{3}i
+tanh-2-over-9-times-i-times-pi	\tanh(\frac{2}{9}i\pi)	i\tan(\frac{2}{9}\pi)

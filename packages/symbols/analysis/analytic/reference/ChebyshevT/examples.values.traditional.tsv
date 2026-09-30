@@ -1,35 +1,35 @@
 id	in	out
-the-cubic		
-the-quartic		
-at-an-integer		
-at-a-real		
-at-t0-0-7		
-at-t1-0-7		
-at-t2-0-7		
-at-t5-0-7		
-at-t5-2		
-at-t-5-0-7		
-at-t4-2-3i		
-chebyshevt-2-3		
-chebyshevt-10-x		
-at-a-rational		
-at-a-complex-argument		
-a-symbolic-order-stays-unevaluated		
-chebyshevt-2-5		
-chebyshevt-0-0		
-chebyshevt-0-positiveinfinity		
-chebyshevt-7-x		
-chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	\mathrm{ChebyshevT}(1, -x)=-\mathrm{ChebyshevT}(1, x)	\mathrm{True}
-chebyshevt-2-neg-x-eq-chebyshevt-2-x	\mathrm{ChebyshevT}(2, -x)=\mathrm{ChebyshevT}(2, x)	\mathrm{True}
-matrixfunction-function-chebyshevt-2-1-1-list		
-cos-n-theta	\mathrm{ChebyshevT}(6, \frac{1}{2})=\cos(\frac{6\pi}{3})	\mathrm{True}
-at-1		
-at-minus-1		
-parity	\mathrm{ChebyshevT}(5, -\frac{1}{3})=-\mathrm{ChebyshevT}(5, \frac{1}{3})	\mathrm{True}
-negative-order		
-pell-identity		
-chebyshevt-0-1		
-chebyshevt-1-positiveinfinity		
-chebyshevt-1-negativeinfinity		
-chebyshevt-2-positiveinfinity		
-chebyshevt-2-negativeinfinity		
+the-cubic	\operatorname{ChebyshevT}(3,x)	4x^3-3x
+the-quartic	\operatorname{ChebyshevT}(4,x)	8x^4-8x^2+1
+at-an-integer	\operatorname{ChebyshevT}(5,2)	362
+at-a-real	\operatorname{ChebyshevT}(5,0.7)	-0.6708799999999998
+at-t0-0-7	N(\operatorname{ChebyshevT}(0,0.7))	1
+at-t1-0-7	N(\operatorname{ChebyshevT}(1,0.7))	0.7
+at-t2-0-7	N(\operatorname{ChebyshevT}(2,0.7))	-0.02000000000000013
+at-t5-0-7	N(\operatorname{ChebyshevT}(5,0.7))	-0.6708799999999998
+at-t5-2	N(\operatorname{ChebyshevT}(5,2))	362
+at-t-5-0-7	N(\operatorname{ChebyshevT}(-5,0.7))	-0.6708799999999998
+at-t4-2-3i	N(\operatorname{ChebyshevT}(4,2+3i))	-911.0-1056.0i
+chebyshevt-2-3	\operatorname{ChebyshevT}(2,3)	17
+chebyshevt-10-x	\operatorname{ChebyshevT}(10,x)	512x^{10}-1280x^8+1120x^6-400x^4+50x^2-1
+at-a-rational	\operatorname{ChebyshevT}(5,\frac{1}{3})	\frac{241}{243}
+at-a-complex-argument	\operatorname{ChebyshevT}(4,2+3i)	-911-1056i
+a-symbolic-order-stays-unevaluated	\operatorname{ChebyshevT}(n,x)	\operatorname{ChebyshevT}(n,x)
+chebyshevt-2-5	\operatorname{ChebyshevT}(2,5)	49
+chebyshevt-0-0	\operatorname{ChebyshevT}(0,0)	1
+chebyshevt-0-positiveinfinity	\operatorname{ChebyshevT}(0,\infty)	1
+chebyshevt-7-x	\operatorname{ChebyshevT}(7,x)	64x^7-112x^5+56x^3-7x
+chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	\operatorname{ChebyshevT}(1,-x)=-\operatorname{ChebyshevT}(1,x)	\operatorname{True}
+chebyshevt-2-neg-x-eq-chebyshevt-2-x	\operatorname{ChebyshevT}(2,-x)=\operatorname{ChebyshevT}(2,x)	\operatorname{True}
+matrixfunction-function-chebyshevt-2-1-1-list	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{ChebyshevT}(2,\_1)),\_1),[[1,2],[3,4]])	[[-\frac{\sqrt{33}}{132}(-3-\sqrt{33})(-2+(5-\sqrt{33})^2)+\frac{\sqrt{33}}{132}(-3+\sqrt{33})(-2+(5+\sqrt{33})^2),-\frac{\sqrt{33}}{33}(5-\sqrt{33})^2+\frac{\sqrt{33}}{33}(5+\sqrt{33})^2],[-\frac{\sqrt{33}}{22}(5-\sqrt{33})^2+\frac{\sqrt{33}}{22}(5+\sqrt{33})^2,-\frac{\sqrt{33}}{132}(-2+(5-\sqrt{33})^2)(3-\sqrt{33})+\frac{\sqrt{33}}{132}(-2+(5+\sqrt{33})^2)(3+\sqrt{33})]]
+cos-n-theta	\operatorname{ChebyshevT}(6,\frac{1}{2})=\cos(6\frac{\pi}{3})	\operatorname{True}
+at-1	\operatorname{ChebyshevT}(7,1)	1
+at-minus-1	\operatorname{ChebyshevT}(7,-1)	-1
+parity	\operatorname{ChebyshevT}(5,\frac{-1}{3})=-\operatorname{ChebyshevT}(5,\frac{1}{3})	\operatorname{True}
+negative-order	\operatorname{ChebyshevT}(-3,x)	4x^3-3x
+pell-identity	{\operatorname{ChebyshevT}(4,3)}^2-8{\operatorname{ChebyshevU}(3,3)}^2	1
+chebyshevt-0-1	\operatorname{ChebyshevT}(0,1)	1
+chebyshevt-1-positiveinfinity	\operatorname{ChebyshevT}(1,\infty)	\infty
+chebyshevt-1-negativeinfinity	\operatorname{ChebyshevT}(1,-\infty)	-\infty
+chebyshevt-2-positiveinfinity	\operatorname{ChebyshevT}(2,\infty)	\infty
+chebyshevt-2-negativeinfinity	\operatorname{ChebyshevT}(2,-\infty)	\infty

@@ -1,0 +1,3 @@
+id	in	out
+pdf-normaldistribution-0-1-x	\operatorname{PDF}(\operatorname{NormalDistribution}(0,1),x)	\frac{\sqrt{2}e^{\frac{-1}{2}x^2}}{2\sqrt{\pi}}
+transformeddistribution-u-times-1-over-v	\operatorname{TransformedDistribution}(u\frac{1}{v},\operatorname{Distributed}([u,v],\operatorname{ProductDistribution}([\operatorname{NormalDistribution}(),2])))	\operatorname{TransformedDistribution}(\frac{u}{v},\operatorname{Distributed}([u,v],\operatorname{ProductDistribution}([\operatorname{NormalDistribution}(),2])))

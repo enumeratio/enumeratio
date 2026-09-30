@@ -1,0 +1,5 @@
+id	in	out
+randominteger-default-seed-is-reproducible	\operatorname{Last}([\operatorname{SeedRandom}(42),\operatorname{RandomInteger}(100)])	60
+randominteger-range-scope	\operatorname{Last}([\operatorname{SeedRandom}(1),\operatorname{RandomInteger}([10,20])])	16
+randominteger-list-of-draws	\operatorname{Length}(\operatorname{Last}([\operatorname{SeedRandom}(2),\operatorname{RandomInteger}(6,10)]))	10
+randominteger-array-shape	\operatorname{Shape}(\operatorname{Last}([\operatorname{SeedRandom}(3),\operatorname{RandomInteger}(1,[2,3])]))	(2,3)

@@ -1,0 +1,5 @@
+id	in	out
+symbolic-falling	\operatorname{FactorialPower}(x,3)	\operatorname{FactorialPower}(x,3)
+numeric	\operatorname{FactorialPower}(5,3)	60
+step	\operatorname{FactorialPower}(x,2,h)	\operatorname{FactorialPower}(x,2,h)
+zero	\operatorname{FactorialPower}(x,0)	1

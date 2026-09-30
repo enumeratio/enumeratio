@@ -1,6 +1,8 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { ensureAlgebraHeads } from "./algebra.ts";
 import { declareGenericHeads } from "./generic.ts";
+import { STRUCTURES_NOTATION } from "./notation.ts";
 import { conformNumbers } from "./numbers.ts";
 import { ensureOperationHeads } from "./operations.ts";
 import { ensureProtocols } from "./protocols.ts";
@@ -65,9 +67,11 @@ export {
   type MapDeclaration,
 } from "./maps.ts";
 export { isLeaf, recurse, self } from "./recursion.ts";
+export { STRUCTURES_NOTATION } from "./notation.ts";
 
 /** The protocols, compute-engine's types' conformances, the generic heads over them, and the algebra heads. */
 export function declareStructures(ce: ComputeEngine): void {
+  registerNotation(ce, STRUCTURES_NOTATION);
   ensureProtocols(ce);
   conformNumbers(ce);
   declareGenericHeads(ce);

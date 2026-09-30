@@ -1,0 +1,9 @@
+id	in	out
+functionexpand-ellipticpi-list-list-neg-1-0-list	\operatorname{FunctionExpand}(\operatorname{EllipticPi}([[-1,0],[0,\frac{1}{2}]],0))	[[\operatorname{EllipticPi}(-1,0),\operatorname{EllipticPi}(0,0)],[\operatorname{EllipticPi}(0,0),\operatorname{EllipticPi}(\frac{1}{2},0)]]
+functionexpand-matrixfunction-function	\operatorname{FunctionExpand}(\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{EllipticPi}(\_1,0)),\_1),[[-1,0],[0,\frac{1}{2}]]))	[[\operatorname{EllipticPi}(-1,0),0],[0,\operatorname{EllipticPi}(\frac{1}{2},0)]]
+n-ellipticpi-3-over-10-2-over-5-50		
+n-ellipticpi-3-over-10-2-2-over-5-50		
+simplify-integrate-ellipticpi-n-m-m		
+ellipticpi-0-0-1	\operatorname{EllipticPi}(0,0,1)	0
+ellipticpi-0-0-0	\operatorname{EllipticPi}(0,0,0)	0
+n-ellipticpi-2-i-times-list-neg-1-1-times-10-pow		

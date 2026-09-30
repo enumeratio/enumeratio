@@ -37,7 +37,7 @@
   },
   "repeating decimal": {
     "boxes": ["RowBox", ["1.", ["OverscriptBox", "3", "‾"]]],
-    "latex": "1.\\overline3",
+    "latex": "1.\\overline{3}",
     "text": "1.3̅",
     "ascii": "1.bar(3)"
   },
@@ -375,8 +375,8 @@
     "ascii": "(x + 1)^2"
   },
   "power of power": {
-    "boxes": ["SuperscriptBox", ["SuperscriptBox", "x", "2"], "3"],
-    "latex": "{x^2}^3",
+    "boxes": ["SuperscriptBox", ["RowBox", ["(", ["SuperscriptBox", "x", "2"], ")"]], "3"],
+    "latex": "(x^2)^3",
     "text": "(x²)³",
     "ascii": "(x^2)^3"
   },

@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
-import { type Box, toLatex } from "@enumeratio/boxes";
+import { type Box, makeBoxes, notationOf, toLatex } from "@enumeratio/boxes";
 import { collectMessages, type Message } from "@enumeratio/engine";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
 import { toMathML } from "@enumeratio/formats/mathml";
@@ -26,7 +26,6 @@ import {
   latexOf,
   pageEnvironment,
   substitutedForm,
-  toTraditionalLatex,
   type Transcript,
   watchPageEnvironment,
 } from "@enumeratio/frontend";
@@ -800,7 +799,9 @@ export class NotatioOut extends LitElement {
       } else {
         const engine = await loadEngine();
         if (run !== this.#runs) return;
-        const traditional = texOf(boxes?.TraditionalForm) ?? toTraditionalLatex(json, engine);
+        const traditional = toLatex(
+          boxes?.TraditionalForm ?? makeBoxes(json as MathJsonExpression, notationOf(engine)),
+        );
         this._traditional = convert(traditional);
         // TeXForm is the TeX of TraditionalForm, as in Wolfram.
         this._tex = portableTeX(traditional);

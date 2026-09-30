@@ -1,0 +1,13 @@
+id	in	out
+x-between-consecutive-elements	\operatorname{Riffle}([a,b,c],x)	[a,x,b,x,c]
+interleave-two-lists-of-the-same-length	\operatorname{Riffle}([a,b,c],[x,y,z])	[a,x,b,y,c,z]
+riffle-list-1-2-3-4-5-6-7-8-9-x	\operatorname{Riffle}([1,2,3,4,5,6,7,8,9],x)	[1,x,2,x,3,x,4,x,5,x,6,x,7,x,8,x,9]
+riffle-list-1-2-3-4-5-6-7-8-9-x-3	\operatorname{Riffle}([1,2,3,4,5,6,7,8,9],x,3)	[1,2,x,3,4,x,5,6,x,7,8,x,9]
+riffle-list-1-2-3-4-5-6-7-8-9-list-x-y	\operatorname{Riffle}([1,2,3,4,5,6,7,8,9],[x,y])	[1,x,2,y,3,x,4,y,5,x,6,y,7,x,8,y,9]
+a-list-one-shorter-goes-strictly-between-the	\operatorname{Riffle}([a,b,c],[x,y])	[a,x,b,y,c]
+every-3rd-element-of-the-result-is-x	\operatorname{Riffle}([1,2,3,4,5,6,7],x,3)	[1,2,x,3,4,x,5,6,x,7]
+a-single-element-has-nothing-to-separate	\operatorname{Riffle}([a],x)	[a]
+riffle-list-a-b-c-d-list-x-y-z-w	\operatorname{Riffle}([a,b,c,d],[x,y,z,w])	[a,x,b,y,c,z,d,w]
+riffle-range-1-10-0	\operatorname{Riffle}(\operatorname{Range}(1,10),0)	[1,0,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9,0,10]
+riffle-range-1-10-neg-range-1-10	\operatorname{Riffle}(\operatorname{Range}(1,10),-\operatorname{Range}(1,10))	[1,-1,2,-2,3,-3,4,-4,5,-5,6,-6,7,-7,8,-8,9,-9,10,-10]
+riffle-list-a-b-c-d-x	\operatorname{Riffle}([a,b,c,d],x)	[a,x,b,x,c,x,d]

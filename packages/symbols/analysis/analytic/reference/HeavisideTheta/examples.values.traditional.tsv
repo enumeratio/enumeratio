@@ -1,0 +1,11 @@
+id	in	out
+heavisidetheta-negative	\operatorname{HeavisideTheta}(-1)	0
+heavisidetheta-positive	\operatorname{HeavisideTheta}(1)	1
+heavisidetheta-zero-unevaluated	\operatorname{HeavisideTheta}(0)	\operatorname{HeavisideTheta}(0)
+heavisidetheta-product-both-positive	\operatorname{HeavisideTheta}(1,2)	1
+heavisidetheta-product-one-negative	\operatorname{HeavisideTheta}(1,-1)	0
+matrixfunction-heavisidetheta-list-list-neg-1	\operatorname{MatrixFunction}(\operatorname{HeavisideTheta},[[-1,\frac{-1}{2}],[\frac{-1}{2},\frac{1}{2}]])	[[\frac{\sqrt{13}}{26}(-3+\sqrt{13}),-\frac{\sqrt{13}}{13}],[-\frac{\sqrt{13}}{13},\frac{\sqrt{13}}{26}(3+\sqrt{13})]]
+assuming-a-gt-0-refine-heavisidetheta-a-a-a-a	\operatorname{Assuming}(a>0,\operatorname{Refine}(\operatorname{HeavisideTheta}(a,a,a,a)))	\operatorname{HeavisideTheta}(a,a,a,a)
+assuming-a-lt-0-refine-heavisidetheta-a-a-a-a	\operatorname{Assuming}(a<0,\operatorname{Refine}(\operatorname{HeavisideTheta}(a,a,a,a)))	\operatorname{HeavisideTheta}(a,a,a,a)
+assuming-a-lt-0-b-gt-0-refine-heavisidetheta-b-b	\operatorname{Assuming}(a<0\land b>0,\operatorname{Refine}(\operatorname{HeavisideTheta}(b,b,a)))	\operatorname{HeavisideTheta}(b,b,a)
+heavisidetheta-derivative	\frac{d}{dx}\operatorname{HeavisideTheta}(x)	\operatorname{DiracDelta}(x)

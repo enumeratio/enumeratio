@@ -1,11 +1,11 @@
 id	in	out
-divides-2-10	2\mid10	\mathrm{True}
-divides-2-5	2\mid5	\mathrm{False}
-divides-3-6	3\mid6	\mathrm{True}
-divides-16-001-1-plus-10-pow-3-000	16\,001\mid1+10^{3\,000}	\mathrm{True}
-divides-3-2-895	3\mid2\,895	\mathrm{True}
-divides-11-918-082	11\mid918\,082	\mathrm{True}
-list-isinteger-5-divides-2-10	\bigl\lbrack\mathrm{IsInteger}(5), 2\mid10\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
-divides-8-48	8\mid48	\mathrm{True}
-divides-12-25	12\mid25	\mathrm{False}
+divides-2-10	\operatorname{Divides}(2,10)	\operatorname{True}
+divides-2-5	\operatorname{Divides}(2,5)	\operatorname{False}
+divides-3-6	\operatorname{Divides}(3,6)	\operatorname{True}
+divides-16-001-1-plus-10-pow-3-000	\operatorname{Divides}(16001,1+10^{3000})	\operatorname{True}
+divides-3-2-895	\operatorname{Divides}(3,2895)	\operatorname{True}
+divides-11-918-082	\operatorname{Divides}(11,918082)	\operatorname{True}
+list-isinteger-5-divides-2-10	[\operatorname{IsInteger}(5),\operatorname{Divides}(2,10)]	[\operatorname{True},\operatorname{True}]
+divides-8-48	\operatorname{Divides}(8,48)	\operatorname{True}
+divides-12-25	\operatorname{Divides}(12,25)	\operatorname{False}
 simplify-divides-a-b-times-a-list-a-b-in		

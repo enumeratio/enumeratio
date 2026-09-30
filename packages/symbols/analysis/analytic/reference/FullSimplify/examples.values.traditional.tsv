@@ -1,12 +1,12 @@
 id	in	out
-the-pythagorean-identity		
-recognizes-the-definition-of-sinh		
-folds-the-double-angle-product		
-the-functional-equation-of-gamma		
-denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3		
-the-hyperbolic-pythagorean-identity		
-fullsimplify-x-pow-10-minus-1-times-x-pow-10		
-fullsimplify-1-minus-i-times-exponentiale-pow-i		
-fullsimplify-neg-4-times-arctan-1-over-239-plus		
-fullsimplify-4-times-sin-x-times-cos-x-plus-4		
-assuming-re-x-gt-0-fullsimplify-exponentiale-pow	\mathrm{Assuming}(\mathrm{Re}(x)\gt0, \mathrm{FullSimplify}(\exp(\log\Gamma(x))))	\sinh(\log\Gamma(x))+\cosh(\log\Gamma(x))
+the-pythagorean-identity	\operatorname{FullSimplify}({\sin(x)}^2+{\cos(x)}^2)	1
+recognizes-the-definition-of-sinh	\operatorname{FullSimplify}(\frac{e^x-e^{-x}}{2})	\sinh(x)
+folds-the-double-angle-product	\operatorname{FullSimplify}(2\sin(x)\cos(x))	\sin(2x)
+the-functional-equation-of-gamma	\operatorname{FullSimplify}(\frac{\Gamma(x+1)}{\Gamma(x)})	x
+denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	\operatorname{FullSimplify}(\sqrt{2}+\sqrt{3}-\sqrt{5+2\sqrt{6}})	0
+the-hyperbolic-pythagorean-identity	\operatorname{FullSimplify}({\cosh(x)}^2-{\sinh(x)}^2)	1
+fullsimplify-x-pow-10-minus-1-times-x-pow-10	\operatorname{FullSimplify}((x^{10}-1)(x^{10}+1))	x^{20}-1
+fullsimplify-1-minus-i-times-exponentiale-pow-i	\operatorname{FullSimplify}((1-i)e^{ix}+(1+i)e^{-ix})	2\sin(x)+2\cos(x)
+fullsimplify-neg-4-times-arctan-1-over-239-plus	\operatorname{FullSimplify}(-4\arctan(\frac{1}{239})+16\arctan(\frac{1}{5}))	\pi
+fullsimplify-4-times-sin-x-times-cos-x-plus-4	\operatorname{FullSimplify}(4\sin(x)\cos(x)+4{\sin(x)}^2{\cos(x)}^2+1)	2\sin(2x)+4{\sin(x)}^2{\cos(x)}^2+1
+assuming-re-x-gt-0-fullsimplify-exponentiale-pow	\operatorname{Assuming}(\operatorname{Re}(x)>0,\operatorname{FullSimplify}(e^{\log\Gamma(x)}))	\sinh(\log\Gamma(x))+\cosh(\log\Gamma(x))

@@ -1,13 +1,13 @@
 id	in	out
-a-flat-list-is-a-vector	\mathrm{IsVector}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\mathrm{True}
-isvector-list-a-b-c	\mathrm{IsVector}(\bigl\lbrack a, b, c\bigr\rbrack)	\mathrm{True}
-isvector-list-list-1-list-2	\mathrm{IsVector}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack)	\mathrm{False}
-isvector-vector	\mathrm{IsVector}(\mathrm{vector})	\mathrm{False}
-a-list-of-lists-is-not-a-vector	\mathrm{IsVector}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)	\mathrm{False}
-a-non-list-is-not-a-vector	\mathrm{IsVector}(3)	\mathrm{False}
-a-test-function-must-hold-of-every-element	\mathrm{IsVector}(\bigl\lbrack2, 4, 6\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}
-a-test-function-failing-on-one-element	\mathrm{IsVector}(\bigl\lbrack2, 3, 6\bigr\rbrack, \mathrm{IsEven})	\mathrm{False}
-isvector-range-1-10-ismachinenumber	\mathrm{IsVector}(1..10, \mathrm{IsMachineNumber})	\mathrm{False}
+a-flat-list-is-a-vector	\operatorname{IsVector}([1,2,3])	\operatorname{True}
+isvector-list-a-b-c	\operatorname{IsVector}([a,b,c])	\operatorname{True}
+isvector-list-list-1-list-2	\operatorname{IsVector}([[1],[2]])	\operatorname{False}
+isvector-vector	\operatorname{IsVector}(\operatorname{vector})	\operatorname{False}
+a-list-of-lists-is-not-a-vector	\operatorname{IsVector}([[1,2],[3,4]])	\operatorname{False}
+a-non-list-is-not-a-vector	\operatorname{IsVector}(3)	\operatorname{False}
+a-test-function-must-hold-of-every-element	\operatorname{IsVector}([2,4,6],\operatorname{IsEven})	\operatorname{True}
+a-test-function-failing-on-one-element	\operatorname{IsVector}([2,3,6],\operatorname{IsEven})	\operatorname{False}
+isvector-range-1-10-ismachinenumber	\operatorname{IsVector}(\operatorname{Range}(1,10),\operatorname{IsMachineNumber})	\operatorname{False}
 isvector-range-1-10-isinteger		
 isvector-n-range-1-10-ismachinenumber		
-list-isvector-vec-isvector-expr	\bigl\lbrack\mathrm{IsVector}(\mathrm{vec}), \mathrm{IsVector}(\mathrm{expr})\bigr\rbrack	\bigl\lbrack\mathrm{False}, \mathrm{False}\bigr\rbrack
+list-isvector-vec-isvector-expr	[\operatorname{IsVector}(\operatorname{vec}),\operatorname{IsVector}(\operatorname{expr})]	[\operatorname{False},\operatorname{False}]

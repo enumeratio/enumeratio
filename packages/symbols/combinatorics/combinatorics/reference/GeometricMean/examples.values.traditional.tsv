@@ -1,0 +1,14 @@
+id	in	out
+sqrt-2-cdot-8-4	\operatorname{GeometricMean}([2,8])	4
+sqrt-3-1-cdot-2-cdot-4-2	\operatorname{GeometricMean}([1,2,4])	2
+geometricmean-of-equal-values	\operatorname{GeometricMean}([7,7,7])	7
+geometricmean-list-a-b-c-d	\operatorname{GeometricMean}([a,b,c,d])	\sqrt[4]{abcd}
+geometricmean-list-list-5-10-list-2-1-list-4-3	\operatorname{GeometricMean}([[5,10],[2,1],[4,3],[12,15]])	[\sqrt[4]{480},\sqrt[4]{450}]
+an-exact-irrational-result	\operatorname{GeometricMean}([2,3])	\sqrt{6}
+sqrt-3-6	\operatorname{GeometricMean}([1,2,3])	\sqrt[3]{6}
+symbolic-data	\operatorname{GeometricMean}([a,b])	\sqrt{ab}
+geometricmean-list-1-2-3-4	\operatorname{GeometricMean}([1,2,3,4])	\sqrt[4]{24}
+geometricmean-list-pi-exponentiale-2	\operatorname{GeometricMean}([\pi,e,2])	\sqrt[3]{2e\pi}
+geometricmean-n-list-1-2-3-4-30	\operatorname{GeometricMean}(N([1,2,3,4],30))	\sqrt[4]{24}
+powerexpand-ln-geometricmean-list-a-b-c-d	\operatorname{PowerExpand}(\ln(\operatorname{GeometricMean}([a,b,c,d])))	\frac{1}{4}(\ln(a)+\ln(b)+\ln(c)+\ln(d))
+powerexpand-1-over-ln-geometricmean-list-a-b-c-d	\operatorname{PowerExpand}(\frac{1}{\ln(\operatorname{GeometricMean}([a,b,c,d]))})	\frac{4}{\ln(a)+\ln(b)+\ln(c)+\ln(d)}

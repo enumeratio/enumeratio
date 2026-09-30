@@ -1,10 +1,10 @@
 id	in	out
-gather-list-1-7-3-7-2-3-9		
-symbolic-elements		
-gather-list-a-b-a-d-b		
-gather-list-list-a-1-list-b-1-list-a-2-list-d-1		
-a-test-decides-which-elements-belong-together		
-gather-range-1-10-function-1-mod-3-eq-2-mod-3-1		
+gather-list-1-7-3-7-2-3-9	\operatorname{Gather}([1,7,3,7,2,3,9])	[[1],[7,7],[3,3],[2],[9]]
+symbolic-elements	\operatorname{Gather}([a,b,a,a,c,b])	[[a,a,a],[b,b],[c]]
+gather-list-a-b-a-d-b	\operatorname{Gather}([a,b,a,d,b])	[[a,a],[b,b],[d]]
+gather-list-list-a-1-list-b-1-list-a-2-list-d-1	\operatorname{Gather}([[a,1],[b,1],[a,2],[d,1],[b,3]],\operatorname{Function}(\operatorname{Block}(\operatorname{First}(\_1)=\operatorname{First}(\_2)),\_1,\_2))	[[[a,1],[a,2]],[[b,1],[b,3]],[[d,1]]]
+a-test-decides-which-elements-belong-together	\operatorname{Gather}([1,2,3,4,5,6],\operatorname{Function}(\bmod(\_1,2)=\bmod(\_2,2)))	[[1,3,5],[2,4,6]]
+gather-range-1-10-function-1-mod-3-eq-2-mod-3-1	\operatorname{Gather}(\operatorname{Range}(1,10),\operatorname{Function}(\operatorname{Block}(\bmod(\_1,3)=\bmod(\_2,3)),\_1,\_2))	[[1,4,7,10],[2,5,8],[3,6,9]]
 gather-data-test		
-gather-range-0-3-1-over-3-function-floor-1-eq		
-the-group-sizes-are-the-multiplicities-of-the	\mathrm{Map}(\mathrm{Length}, \mathrm{Gather}(\bigl\lbrack1, 7, 3, 7, 2, 3, 9\bigr\rbrack))=\bigl\lbrack1, 2, 2, 1, 1\bigr\rbrack	\mathrm{True}
+gather-range-0-3-1-over-3-function-floor-1-eq	\operatorname{Gather}(\operatorname{Range}(0,3,\frac{1}{3}),\operatorname{Function}(\operatorname{Block}(\lfloor\_1\rfloor=\lfloor\_2\rfloor),\_1,\_2))	[[0,\frac{1}{3},\frac{2}{3}],[1,\frac{4}{3},\frac{5}{3}],[2,\frac{7}{3},\frac{8}{3}],[3]]
+the-group-sizes-are-the-multiplicities-of-the	\operatorname{Map}(\operatorname{Length},\operatorname{Gather}([1,7,3,7,2,3,9]))=[1,2,2,1,1]	\operatorname{True}

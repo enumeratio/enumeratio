@@ -1,0 +1,9 @@
+id	in	out
+probability-distribution-pdf-in-range	\operatorname{PDF}(\operatorname{ProbabilityDistribution}(2x,[x,0,1]),\frac{1}{2})	1
+probability-distribution-pdf-outside	\operatorname{PDF}(\operatorname{ProbabilityDistribution}(2x,[x,0,1]),2)	0
+probability-distribution-mean	\operatorname{Mean}(\operatorname{ProbabilityDistribution}(2x,[x,0,1]))	\frac{2}{3}
+probability-distribution-variance	\operatorname{Variance}(\operatorname{ProbabilityDistribution}(2x,[x,0,1]))	\frac{1}{18}
+probability-distribution-cdf	\operatorname{CDF}(\operatorname{ProbabilityDistribution}(2x,[x,0,1]),\frac{1}{2})	\frac{1}{4}
+probability-distribution-discrete-pdf	\operatorname{PDF}(\operatorname{ProbabilityDistribution}(\frac{1}{4},[x,1,4,1]),2)	\frac{1}{4}
+probability-distribution-discrete-mean	\operatorname{Mean}(\operatorname{ProbabilityDistribution}(\frac{1}{4},[x,1,4,1]))	\frac{5}{2}
+probability-distribution-stays-unevaluated	\operatorname{Mean}(\operatorname{ProbabilityDistribution}(\sin(x^x),[x,0,1]))	\operatorname{Mean}(\operatorname{ProbabilityDistribution}(\sin(x^x),[x,0,1]))

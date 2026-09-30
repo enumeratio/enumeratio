@@ -1,0 +1,7 @@
+id	in	out
+inversions-of-a-permutation	\operatorname{CombinatorialStat}(\operatorname{Permutation}([3,1,2]),\text{“Inversions”})	2
+by-findstat-id	\operatorname{CombinatorialStat}(\operatorname{Permutation}([3,1,2]),\text{“St000018”})	2
+sign-of-a-three-cycle	\operatorname{CombinatorialStat}(\operatorname{Permutation}([3,1,2]),\text{“Sign”})	1
+distinct-parts-of-a-partition	\operatorname{CombinatorialStat}(\operatorname{IntegerPartition}([3,1,1]),\text{“DistinctParts”})	2
+count-of-a-collection	\operatorname{CombinatorialStat}(\operatorname{SymmetricGroup}(4),\text{“Count”})	24
+the-mahonian-distribution	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{SymmetricGroup}(4),\text{“Inversions”}))	([0,1,2,3,4,5,6],[1,3,5,6,5,3,1])

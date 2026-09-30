@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf } from "@enumeratio/engine";
 import {
   CLASS_ADMITS,
@@ -20,6 +21,7 @@ import {
 } from "./orbit.ts";
 import { declareAlgebra } from "@enumeratio/structures";
 import { dimensionOf } from "./dimensions.ts";
+import { DIAGRAM_NOTATION } from "./notation.ts";
 
 // How diagrams reach compute-engine. Same seam as @enumeratio/hypercomplex: replace an
 // operator's definition, keep a reference to the previous handler, and dispatch only
@@ -81,6 +83,7 @@ function diagramOf(expr: BoxedExpression): Diagram | undefined {
 }
 
 export function declareDiagrams(ce: ComputeEngine): void {
+  registerNotation(ce, DIAGRAM_NOTATION);
   const toExpression = (d: Diagram): BoxedExpression =>
     ce.function("Diagram", [
       ce.function(

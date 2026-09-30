@@ -1,0 +1,6 @@
+id	in	out
+main-diagonal	\operatorname{DiagonalMatrix}([1,2,3])	[[1,0,0],[0,2,0],[0,0,3]]
+super-diagonal-grows-the-matrix	\operatorname{DiagonalMatrix}([1,2],1)	[[0,1,0],[0,0,2],[0,0,0]]
+sub-diagonal-grows-the-matrix	\operatorname{DiagonalMatrix}([1,2],-1)	[[0,0,0],[1,0,0],[0,2,0]]
+diagonalmatrix-list-a-b-c-d	\operatorname{DiagonalMatrix}([a,b,c,d])	[[a,0,0,0],[0,b,0,0],[0,0,c,0],[0,0,0,d]]
+thread-shape-diagonalmatrix-list-k-eq-length		

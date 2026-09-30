@@ -1,5 +1,5 @@
 id	in	out
-a-pole-is-a-discontinuity		
-tangent-s-poles		
-a-polynomial-is-continuous-everywhere	\mathrm{FunctionDiscontinuities}(x^2, x)	\mathrm{False}
-functiondiscontinuities-sqrt-x-x		
+a-pole-is-a-discontinuity	\operatorname{FunctionDiscontinuities}(\frac{1}{x},x)	x=0
+tangent-s-poles	\operatorname{FunctionDiscontinuities}(\tan(x),x)	\cos(x)=0
+a-polynomial-is-continuous-everywhere	\operatorname{FunctionDiscontinuities}(x^2,x)	\operatorname{False}
+functiondiscontinuities-sqrt-x-x	\operatorname{FunctionDiscontinuities}(\sqrt{x},x)	x\le0

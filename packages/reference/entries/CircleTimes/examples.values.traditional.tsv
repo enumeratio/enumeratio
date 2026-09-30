@@ -1,0 +1,3 @@
+id	in	out
+circletimes-x-y-z	\operatorname{CircleTimes}(x,y,z)	xyz
+circletimes-a-b-c-plus-circletimes-x-y-z	\operatorname{CircleTimes}(a,b,c)+\operatorname{CircleTimes}(x,y,z)	abc+xyz

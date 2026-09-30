@@ -1,0 +1,5 @@
+id	in	out
+binormal-pdf-rho-only-form	\operatorname{PDF}(\operatorname{BinormalDistribution}(\frac{1}{2}),[0,0])	\frac{\sqrt{3}}{3\pi}
+binormal-mean-is-the-mean-vector	\operatorname{Mean}(\operatorname{BinormalDistribution}([1,2],[1,1],\frac{1}{2}))	[1,2]
+binormal-variance-is-the-covariance-matrix	\operatorname{Variance}(\operatorname{BinormalDistribution}(\frac{1}{2}))	[[1,\frac{1}{2}],[\frac{1}{2},1]]
+binormal-cdf-has-no-closed-form	\operatorname{CDF}(\operatorname{BinormalDistribution}(\frac{1}{2}),[0,0])	\operatorname{CDF}(\operatorname{BinormalDistribution}(\frac{1}{2}),[0,0])

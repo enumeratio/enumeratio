@@ -1,10 +1,10 @@
 id	in	out
-the-trefoil	\Delta_{\sigma_{1}^{3}}(t)	t^2-t+1
-the-figure-eight-knot	\Delta_{\left(\sigma_{1}\sigma_{2}^{-1}\right)^{2}}(t)	t^2-3t+1
-and-under-its-own-name-twistknot-1	\Delta_{\mathrm{FigureEightKnot}()}(t)	t^2-3t+1
-the-stevedore-knot-61-two-half-twists	\Delta_{\mathrm{TwistKnot}(2)}(t)	2t^2-5t+2
-p-1-1-1-is-the-unknot	\Delta_{P(1, 1, -1)}(t)	1
+the-trefoil	\Delta_{{\sigma_1}^3}(t)	t^2-t+1
+the-figure-eight-knot	\Delta_{(\sigma_1{\sigma_2}^{-1})^2}(t)	t^2-3t+1
+and-under-its-own-name-twistknot-1	\Delta_{\operatorname{FigureEightKnot}()}(t)	t^2-3t+1
+the-stevedore-knot-61-two-half-twists	\Delta_{\operatorname{TwistKnot}(2)}(t)	2t^2-5t+2
+p-1-1-1-is-the-unknot	\Delta_{P(1,1,-1)}(t)	1
 3-1-4-1-2	g(T_{3,4})	3
-a-twist-knot-s-genus-does-not-grow-with-the	g(\mathrm{TwistKnot}(5))	1
-a-mixed-braid-has-no-bennequin-genus-so-the-call	g(\sigma_{1}\sigma_{2}^{-1})	g(\sigma_{1}\sigma_{2}^{-1})
-an-even-band-is-not-this-family-so-the-call-is	g(P(2, 1, 1))	g(P(2, 1, 1))
+a-twist-knot-s-genus-does-not-grow-with-the	g(\operatorname{TwistKnot}(5))	1
+a-mixed-braid-has-no-bennequin-genus-so-the-call	g(\sigma_1{\sigma_2}^{-1})	g(\sigma_1{\sigma_2}^{-1})
+an-even-band-is-not-this-family-so-the-call-is	g(P(2,1,1))	g(P(2,1,1))

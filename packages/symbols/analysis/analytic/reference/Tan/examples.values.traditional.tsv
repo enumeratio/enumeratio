@@ -3,56 +3,56 @@ tan-0
 tan-pi-over-6		
 tan-pi-over-4		
 tan-pi-over-3		
-tan-30-circ-frac-sqrt-3-3-exactly		
-a-machine-precision-argument-evaluates		
-a-huge-24-40-argument		
-a-huge-10-100-argument		
-a-huge-3-200-argument		
-a-huge-neg-7-60-argument		
-a-huge-10-80-plus-1-over-3-argument		
-tan-100-under-n		
-n-of-an-exact-argument-gives-an-arbitrary		
-evaluates-at-a-complex-argument		
-threads-element-wise-over-a-matrix		
-tan-pi-8-sqrt-2-1		
+tan-30-circ-frac-sqrt-3-3-exactly	\tan(\operatorname{Degrees}(30))	\frac{\sqrt{3}}{3}
+a-machine-precision-argument-evaluates	\tan(1.2)	2.57215162212631893541
+a-huge-24-40-argument	N(\tan(24^{40}))	0.43654379528724435808511
+a-huge-10-100-argument	N(\tan(10^{100}))	0.40123196199081435418575
+a-huge-3-200-argument	N(\tan(3^{200}))	2.723734341072774336434671
+a-huge-neg-7-60-argument	N(\tan(-7^{60}))	-0.39219908973632931274844
+a-huge-10-80-plus-1-over-3-argument	N(\tan(\frac{10^{80}+1}{3}))	5.777333408915218939564447
+tan-100-under-n	N(\tan(100))	-0.5872139151569207
+n-of-an-exact-argument-gives-an-arbitrary	N(\tan(\frac{6}{5}))	2.57215162212631893541
+evaluates-at-a-complex-argument	\tan(2.5+i)	-0.23701383091627057+0.8964379171278617i
+threads-element-wise-over-a-matrix	\tan([[5\frac{\pi}{6},\pi],[\frac{\pi}{3},-\pi]])	[[-\frac{\sqrt{3}}{3},0],[\sqrt{3},0]]
+tan-pi-8-sqrt-2-1	\tan(\frac{\pi}{8})	-1+\sqrt{2}
 tan-pi-12-2-sqrt-3		
 tan-pi-5-sqrt-5-2-sqrt-5		
-tan-pi-10-sqrt-1-2-sqrt-5		
-tan-5-pi-12-2-sqrt-3		
-tan-3-over-4-times-pi		
-interval-arithmetic-the-image-of-0-pi-3-is-0		
-uncertainty-propagation-tan-2-pm-0-02-approx-2		
-tan-ix-i-tanh-x		
+tan-pi-10-sqrt-1-2-sqrt-5	\tan(\frac{\pi}{10})	\frac{\sqrt{5}}{5}\sqrt{5-2\sqrt{5}}
+tan-5-pi-12-2-sqrt-3	\tan(\frac{5}{12}\pi)	2+\sqrt{3}
+tan-3-over-4-times-pi	\tan(\frac{3}{4}\pi)	-1
+interval-arithmetic-the-image-of-0-pi-3-is-0	\tan([0,\frac{\pi}{3}])	[0,\sqrt{3}]
+uncertainty-propagation-tan-2-pm-0-02-approx-2	\tan(\operatorname{Around}(2,0.02))	\operatorname{Around}(-2.185039863261519,0.11548798408083835)
+tan-ix-i-tanh-x	\tan(ix)	i\tanh(x)
 oddness-pulls-the-sign-out-of-a-symbolic		
 tan-arctan-x-x-for-every-x		
 tan-arctan-2-2-for-every-x		
-tan-arcsin-x-frac-x-sqrt-1-x-2		
-derivative-sec-2-x		
-antiderivative-ln-sec-x		
-taylor-series-about-0		
-to-30-significant-digits-every-one-correctly		
-n-tan-6-over-5-50		
-functionrange-tan-x-x-y	\mathrm{FunctionRange}(\tan(x), x, y)	\mathrm{True}
-functionperiod-tan-x-x		
-functionanalytic-tan-x-x	\mathrm{FunctionAnalytic}(\tan(x), x)	\mathrm{False}
-functionmeromorphic-tan-x-x	\mathrm{FunctionMeromorphic}(\tan(x), x)	\mathrm{True}
-functionsurjective-tan-x-x	\mathrm{FunctionSurjective}(\tan(x), x)	\mathrm{True}
-functionsingularities-tan-x-x		
-functiondiscontinuities-tan-x-x		
-matrixfunction-function-tan-1-1-list-list-5-over		
+tan-arcsin-x-frac-x-sqrt-1-x-2	\tan(\arcsin(x))	\frac{x}{\sqrt{-x^2+1}}
+derivative-sec-2-x	\frac{d}{dx}\tan(x)	{\sec(x)}^2
+antiderivative-ln-sec-x	\int\tan(x)dx	\ln(|\sec(x)|)
+taylor-series-about-0	\operatorname{Series}(\tan(x),x,0,7)	\frac{17}{315}x^7+\frac{2}{15}x^5+\frac{1}{3}x^3+x+\operatorname{BigO}(x^9)
+to-30-significant-digits-every-one-correctly	N(\tan(1),30)	1.55740772465490223050697480746
+n-tan-6-over-5-50	N(\tan(\frac{6}{5}),50)	2.5721516221263189354099942360333639565294093060434
+functionrange-tan-x-x-y	\operatorname{FunctionRange}(\tan(x),x,y)	\operatorname{True}
+functionperiod-tan-x-x	\operatorname{FunctionPeriod}(\tan(x),x)	\pi
+functionanalytic-tan-x-x	\operatorname{FunctionAnalytic}(\tan(x),x)	\operatorname{False}
+functionmeromorphic-tan-x-x	\operatorname{FunctionMeromorphic}(\tan(x),x)	\operatorname{True}
+functionsurjective-tan-x-x	\operatorname{FunctionSurjective}(\tan(x),x)	\operatorname{True}
+functionsingularities-tan-x-x	\operatorname{FunctionSingularities}(\tan(x),x)	\cos(x)=0
+functiondiscontinuities-tan-x-x	\operatorname{FunctionDiscontinuities}(\tan(x),x)	\cos(x)=0
+matrixfunction-function-tan-1-1-list-list-5-over	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\tan(\_1)),\_1),[[\frac{5}{6}\pi,\pi],[\frac{1}{3}\pi,-\pi]])	[[-\frac{\sqrt{3}}{39},\frac{2}{13}\sqrt{3}],[\frac{2}{39}\sqrt{3},\frac{-4}{13}\sqrt{3}]]
 assuming-m-in-integers-refine-tan-pi-times-m		
 assuming-m-in-integers-fullsimplify-refine-tan		
 tan-positiveinfinity		
-threads-element-wise-over-a-list		
-tan-x-frac-sin-x-cos-x	\tan(\frac{\pi}{4})=\frac{\sin(\frac{\pi}{4})}{\cos(\frac{\pi}{4})}	\mathrm{True}
+threads-element-wise-over-a-list	\tan([0,\frac{\pi}{4}])	[0,1]
+tan-x-frac-sin-x-cos-x	\tan(\frac{\pi}{4})=\frac{\sin(\frac{\pi}{4})}{\cos(\frac{\pi}{4})}	\operatorname{True}
 odd-function-tan-x-tan-x		
 period-pi-not-2-pi-adding-a-half-turn-doesn-t		
-sin-x-cos-x-should-simplify-to-tan-x-simplify		
-rewritten-in-exponentials		
-tan-3-over-10-times-pi		
-tan-3-over-8-times-pi		
+sin-x-cos-x-should-simplify-to-tan-x-simplify	\operatorname{Simplify}(\frac{\sin(x)}{\cos(x)})	\tan(x)
+rewritten-in-exponentials	\operatorname{TrigToExp}(\tan(x))	-i\frac{-e^{-ix}+e^{ix}}{e^{ix}+e^{-ix}}
+tan-3-over-10-times-pi	\tan(\frac{3}{10}\pi)	\frac{\sqrt{5}}{5}\sqrt{5+2\sqrt{5}}
+tan-3-over-8-times-pi	\tan(\frac{3}{8}\pi)	1+\sqrt{2}
 a-pole-cos-pi-2-0-so-the-ratio-blows-up		
 same-rule-as-sin-and-cos-a-non-special-numeric		
-a-pole-at-negative-pi-over-2-too		
-a-pole-reached-through-periodicity-unreduced		
+a-pole-at-negative-pi-over-2-too	\tan(\frac{\pi}{-2})	\tilde\infty
+a-pole-reached-through-periodicity-unreduced	\tan(\frac{\pi}{-2}+\pi)	\tilde\infty
 tan-complexinfinity-is-indeterminate-poles-recur		

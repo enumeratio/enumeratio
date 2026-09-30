@@ -1,64 +1,64 @@
 id	in	out
-zeta-2		
-zeta-4		
-zeta-6		
-threads-over-a-list-reducing-every-element-to		
-apery-s-constant-zeta-3-numerically		
-a-machine-precision-argument		
-zeta-8-pi-8-9450		
-zeta-5-b-6-6-1-252		
-zeta-symbolic-s-under-n-stays-symbolic		
-zeta-half-stays-symbolic-until-n		
-zeta-complex-argument-stays-symbolic-until-n		
-n-zeta-complex-2-plus-i		
-zeta-threads-over-mixed-exact-and-inexact-list		
-zeta-3-0-drops-pole-term-like-s-2		
-zeta-2-neg-2-stays-finite-unlike-hurwitzzeta		
-on-the-critical-line-zeta-1-2-14i-0-02224-0		
-two-argument-zeta-s-a-via-enumeratio-analytic		
-zeta-2-2-zeta-2-1-pi-2-6-1		
-zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so		
-arbitrary-real-arguments		
-left-of-the-critical-strip-via-the-functional		
-complex-s-under-n		
-zeta-infty-1-only-the-n-1-term-survives		
-two-arguments-at-a-nonpositive-integer-s-zeta-1		
-two-arguments-inexact		
-two-complex-arguments-under-n-to-ten-digits		
-which-with-inexact-complex-arguments-should		
-zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of		
-zeta-2-1-2-3-zeta-2-pi-2-2		
-interval-arithmetic-zeta-is-decreasing-on-1		
-uncertainty-in-a-propagated-with-partial-a-zeta		
-to-40-significant-digits-every-one-correctly		
-n-zeta-5-over-4-50		
-n-zeta-3-2-50		
-zeta-2-list-list-1-over-2-0-list-0-3-over-2		
-zeta-4-5		
-zeta-list-1-2-3-4		
-matrixfunction-function-zeta-2-1-1-list-list-1		
-the-probability-that-two-random-positive	\frac{1}{\zeta(2)}=\frac{6}{\pi^2}	\mathrm{True}
-certified-digits-zeta-3		
-zeta-0-1-2		
-trivial-zero-zeta-2n-0-for-positive-integer-n		
-zeta-3-b-4-4-1-120-via-the-bernoulli-number		
-pole-at-s-1-the-harmonic-series-sum-1-n-diverges		
-zeta-s-1-zeta-s-for-symbolic-s		
-zeta-0-1		
-zeta-neg-1-1		
-zeta-0-1-over-4		
-zeta-neg-1-1-over-4		
-zeta-2-3		
-zeta-2-4		
-zeta-2-5		
-zeta-2-6		
-zeta-2-7		
-zeta-2-8		
-zeta-2-9		
-zeta-2-10		
-zeta-4-1		
-zeta-4-2		
-odd-integers-geq-3-have-no-known-closed-form		
-zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s		
-zeta-1-2-35-12-exactly-but-at-a-negative-a-this		
-the-notorious-sum-of-all-positive-integers		
+zeta-2	\operatorname{Zeta}(2)	\frac{1}{6}\pi^2
+zeta-4	\operatorname{Zeta}(4)	\frac{1}{90}\pi^4
+zeta-6	\operatorname{Zeta}(6)	\frac{1}{945}\pi^6
+threads-over-a-list-reducing-every-element-to	\operatorname{Zeta}([-1,-2,-3])	[\frac{-1}{12},0,\frac{1}{120}]
+apery-s-constant-zeta-3-numerically	N(\operatorname{Zeta}(3))	1.2020569031595942854
+a-machine-precision-argument	\operatorname{Zeta}(1.5)	2.61237534868548834335
+zeta-8-pi-8-9450	\operatorname{Zeta}(8)	\frac{1}{9450}\pi^8
+zeta-5-b-6-6-1-252	\operatorname{Zeta}(-5)	\frac{-1}{252}
+zeta-symbolic-s-under-n-stays-symbolic	N(\operatorname{Zeta}(s))	\operatorname{Zeta}(s)
+zeta-half-stays-symbolic-until-n	\operatorname{Zeta}(\frac{1}{2})	\operatorname{Zeta}(\frac{1}{2})
+zeta-complex-argument-stays-symbolic-until-n	\operatorname{Zeta}(2+i)	\operatorname{Zeta}(2+i)
+n-zeta-complex-2-plus-i	N(\operatorname{Zeta}(2+i))	1.1503557032549028-0.4375308659196079i
+zeta-threads-over-mixed-exact-and-inexact-list	\operatorname{Zeta}([2,0.5+14i])	[\frac{1}{6}\pi^2,0.02224114260999359-0.10325812326645006i]
+zeta-3-0-drops-pole-term-like-s-2	\operatorname{Zeta}(3,0)	\operatorname{Zeta}(3)
+zeta-2-neg-2-stays-finite-unlike-hurwitzzeta	N(\operatorname{Zeta}(2,-2))	2.89493406684822643647
+on-the-critical-line-zeta-1-2-14i-0-02224-0	N(\operatorname{Zeta}(0.5+14i))	0.02224114260999359-0.10325812326645006i
+two-argument-zeta-s-a-via-enumeratio-analytic	\operatorname{Zeta}(2,1)	\frac{1}{6}\pi^2
+zeta-2-2-zeta-2-1-pi-2-6-1	\operatorname{Zeta}(2,2)	-1+\frac{1}{6}\pi^2
+zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so	\operatorname{Zeta}(2,0)	\frac{1}{6}\pi^2
+arbitrary-real-arguments	\operatorname{Zeta}(5.211111111111111)	1.03139179693438499839
+left-of-the-critical-strip-via-the-functional	\operatorname{Zeta}(-4.5)	-0.00309166924721583384482
+complex-s-under-n	N(\operatorname{Zeta}(2-5i))	0.8509629436242628-0.09899694613483125i
+zeta-infty-1-only-the-n-1-term-survives	\operatorname{Zeta}(\infty)	1
+two-arguments-at-a-nonpositive-integer-s-zeta-1	\operatorname{Zeta}(-1,5)	\frac{-121}{12}
+two-arguments-inexact	\operatorname{Zeta}(-1.5,5)	-17.0500647493426550141295
+two-complex-arguments-under-n-to-ten-digits	N(\operatorname{Zeta}(-1.5+i,2.5-i),10)	0.01848680919+1.675533784i
+which-with-inexact-complex-arguments-should	\operatorname{Zeta}(-1.5+i,2.5-i)	0.01848680919381065+1.675533784301766i
+zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of	\operatorname{Zeta}(20,\frac{1}{2})	\frac{221930581}{1856156927625}\pi^{20}
+zeta-2-1-2-3-zeta-2-pi-2-2	\operatorname{Zeta}(2,\frac{1}{2})	\frac{1}{2}\pi^2
+interval-arithmetic-zeta-is-decreasing-on-1	\operatorname{Zeta}([1.1,1.2])	[5.59158244117775,10.584448464950812]
+uncertainty-in-a-propagated-with-partial-a-zeta	\operatorname{Zeta}(\frac{1}{2},\operatorname{Around}(0.5,0.01))	\operatorname{Around}(-0.6048986434216304,0.023882689737774167)
+to-40-significant-digits-every-one-correctly	N(\operatorname{Zeta}(3),40)	1.202056903159594285399738161511449990765
+n-zeta-5-over-4-50	N(\operatorname{Zeta}(\frac{5}{4}),50)	4.5951118258429433806853780396946256522810297806048
+n-zeta-3-2-50	N(\operatorname{Zeta}(3,2),50)	0.2020569031595942853997381615114499907649862923405
+zeta-2-list-list-1-over-2-0-list-0-3-over-2	\operatorname{Zeta}(2,[[\frac{1}{2},0],[0,\frac{3}{2}]])	[[\frac{1}{2}\pi^2,\frac{1}{6}\pi^2],[\frac{1}{6}\pi^2,\operatorname{Zeta}(2,\frac{3}{2})]]
+zeta-4-5	\operatorname{Zeta}(4,5)	\frac{-22369}{20736}+\frac{1}{90}\pi^4
+zeta-list-1-2-3-4	\operatorname{Zeta}([1,2,3,4])	[\tilde\infty,\frac{1}{6}\pi^2,\operatorname{Zeta}(3),\frac{1}{90}\pi^4]
+matrixfunction-function-zeta-2-1-1-list-list-1	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{Zeta}(2,\_1)),\_1),[[\frac{1}{2},0],[0,\frac{3}{2}]])	[[\frac{1}{2}\pi^2,0],[0,\operatorname{Zeta}(2,\frac{3}{2})]]
+the-probability-that-two-random-positive	\frac{1}{\operatorname{Zeta}(2)}=\frac{6}{\pi^2}	\operatorname{True}
+certified-digits-zeta-3	N(\operatorname{Zeta}(3),40)	1.202056903159594285399738161511449990765
+zeta-0-1-2	\operatorname{Zeta}(0)	\frac{-1}{2}
+trivial-zero-zeta-2n-0-for-positive-integer-n	\operatorname{Zeta}(-2)	0
+zeta-3-b-4-4-1-120-via-the-bernoulli-number	\operatorname{Zeta}(-3)	\frac{1}{120}
+pole-at-s-1-the-harmonic-series-sum-1-n-diverges	\operatorname{Zeta}(1)	\tilde\infty
+zeta-s-1-zeta-s-for-symbolic-s	\operatorname{Zeta}(s,1)	\operatorname{Zeta}(s)
+zeta-0-1	\operatorname{Zeta}(0,1)	\frac{-1}{2}
+zeta-neg-1-1	\operatorname{Zeta}(-1,1)	\frac{-1}{12}
+zeta-0-1-over-4	\operatorname{Zeta}(0,\frac{1}{4})	\frac{1}{4}
+zeta-neg-1-1-over-4	\operatorname{Zeta}(-1,\frac{1}{4})	\frac{1}{96}
+zeta-2-3	\operatorname{Zeta}(2,3)	\frac{-5}{4}+\frac{1}{6}\pi^2
+zeta-2-4	\operatorname{Zeta}(2,4)	\frac{-49}{36}+\frac{1}{6}\pi^2
+zeta-2-5	\operatorname{Zeta}(2,5)	\frac{-205}{144}+\frac{1}{6}\pi^2
+zeta-2-6	\operatorname{Zeta}(2,6)	\frac{-5269}{3600}+\frac{1}{6}\pi^2
+zeta-2-7	\operatorname{Zeta}(2,7)	\frac{-5369}{3600}+\frac{1}{6}\pi^2
+zeta-2-8	\operatorname{Zeta}(2,8)	\frac{-266681}{176400}+\frac{1}{6}\pi^2
+zeta-2-9	\operatorname{Zeta}(2,9)	\frac{-1077749}{705600}+\frac{1}{6}\pi^2
+zeta-2-10	\operatorname{Zeta}(2,10)	\frac{-9778141}{6350400}+\frac{1}{6}\pi^2
+zeta-4-1	\operatorname{Zeta}(4,1)	\frac{1}{90}\pi^4
+zeta-4-2	\operatorname{Zeta}(4,2)	-1+\frac{1}{90}\pi^4
+odd-integers-geq-3-have-no-known-closed-form	\operatorname{Zeta}(3)	\operatorname{Zeta}(3)
+zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	N(\operatorname{Zeta}(3,\frac{-1}{2}))	16.4143983221171599978
+zeta-1-2-35-12-exactly-but-at-a-negative-a-this	N(\operatorname{Zeta}(-1,-2))	2.91666666666666666667
+the-notorious-sum-of-all-positive-integers	\operatorname{Zeta}(-1)	\frac{-1}{12}

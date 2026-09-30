@@ -1,0 +1,4 @@
+id	in	out
+a-3-cycle	\operatorname{GraphDistanceMatrix}(\operatorname{CycleGraph}(3))	[[0,1,1],[1,0,1],[1,1,0]]
+unreachable-pair-is-infinite	\operatorname{GraphDistanceMatrix}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(3,4)]))	[[0,1,\infty,\infty],[1,0,\infty,\infty],[\infty,\infty,0,1],[\infty,\infty,1,0]]
+weighted-matrix-summed-weight	\operatorname{GraphDistanceMatrix}(\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3)],\operatorname{KeyValuePair}(\operatorname{EdgeWeight},[5,7])))	[[0,5,12],[5,0,7],[12,7,0]]

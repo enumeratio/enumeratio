@@ -1,13 +1,13 @@
 id	in	out
-any-list-1-3-5-function-1-mod-2-eq-0	\mathrm{Any}(\bigl\lbrack1, 3, 5\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)	\mathrm{False}
-any-list-1-3-6-function-1-mod-2-eq-0	\mathrm{Any}(\bigl\lbrack1, 3, 6\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)	\mathrm{True}
-a-named-predicate	\mathrm{Any}(\bigl\lbrack4, 6, 7\bigr\rbrack, \mathrm{IsPrime})	\mathrm{True}
-any-list-1-2-3-function-1-gt-2	\mathrm{Any}(\bigl\lbrack1, 2, 3\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt2)	\mathrm{True}
-any-list-1-2-3-4-5-6-iseven	\mathrm{Any}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}
-any-list-1-3-5-7-9-iseven	\mathrm{Any}(\bigl\lbrack1, 3, 5, 7, 9\bigr\rbrack, \mathrm{IsEven})	\mathrm{False}
-any-list-12-16-x-14-y-function-istrue-1-lt-10-1	\mathrm{Any}(\bigl\lbrack12, 16, x, 14, y\bigr\rbrack, ()\mapsto\mathrm{IsTrue}(\operatorname{\_1}\lt10))	\mathrm{False}
-without-a-predicate-tests-the-elements	\mathrm{Any}(\bigl\lbrack\mathrm{False}, \mathrm{True}\bigr\rbrack)	\mathrm{True}
-a-level-argument-tests-the-elements-at-depth-2	\mathrm{Any}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, -4\bigr\rbrack\bigr\rbrack, ()\mapsto\operatorname{\_1}\lt0, 2)	\mathrm{True}
-always-false-on-an-empty-list	\mathrm{Any}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})	\mathrm{False}
-some-element-passes-exactly-when-not-every	\mathrm{Any}(\bigl\lbrack1, 3, 5\bigr\rbrack, \mathrm{IsEven})=\lnot\mathrm{All}(\bigl\lbrack1, 3, 5\bigr\rbrack, \mathrm{IsOdd})	\mathrm{True}
+any-list-1-3-5-function-1-mod-2-eq-0	\operatorname{Any}([1,3,5],\operatorname{Function}(\bmod(\_1,2)=0))	\operatorname{False}
+any-list-1-3-6-function-1-mod-2-eq-0	\operatorname{Any}([1,3,6],\operatorname{Function}(\bmod(\_1,2)=0))	\operatorname{True}
+a-named-predicate	\operatorname{Any}([4,6,7],\operatorname{IsPrime})	\operatorname{True}
+any-list-1-2-3-function-1-gt-2	\operatorname{Any}([1,2,3],\operatorname{Function}(\_1>2))	\operatorname{True}
+any-list-1-2-3-4-5-6-iseven	\operatorname{Any}([1,2,3,4,5,6],\operatorname{IsEven})	\operatorname{True}
+any-list-1-3-5-7-9-iseven	\operatorname{Any}([1,3,5,7,9],\operatorname{IsEven})	\operatorname{False}
+any-list-12-16-x-14-y-function-istrue-1-lt-10-1	\operatorname{Any}([12,16,x,14,y],\operatorname{Function}(\operatorname{Block}(\operatorname{IsTrue}(\_1<10)),\_1))	\operatorname{False}
+without-a-predicate-tests-the-elements	\operatorname{Any}([\operatorname{False},\operatorname{True}])	\operatorname{True}
+a-level-argument-tests-the-elements-at-depth-2	\operatorname{Any}([[1,2],[3,-4]],\operatorname{Function}(\_1<0),2)	\operatorname{True}
+always-false-on-an-empty-list	\operatorname{Any}([],\operatorname{IsEven})	\operatorname{False}
+some-element-passes-exactly-when-not-every	\operatorname{Any}([1,3,5],\operatorname{IsEven})=(\lnot\operatorname{All}([1,3,5],\operatorname{IsOdd}))	\operatorname{True}
 map-logicalexpand-list-any-list-x-y-z-f		

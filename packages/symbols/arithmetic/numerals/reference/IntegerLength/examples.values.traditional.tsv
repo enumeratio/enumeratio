@@ -1,0 +1,9 @@
+id	in	out
+integerlength-12-345	\operatorname{IntegerLength}(12345)	5
+integerlength-123-456-789	\operatorname{IntegerLength}(123456789)	9
+integerlength-100-factorial-2	\operatorname{IntegerLength}(100!,2)	525
+integerlength-2-pow-100	\operatorname{IntegerLength}(2^{100})	31
+255-ff-16	\operatorname{IntegerLength}(255,16)	2
+listable	\operatorname{IntegerLength}([1,10,100])	[1,2,3]
+the-sign-is-not-counted	\operatorname{IntegerLength}(-123)	3
+0-has-length-0-unlike-its-one-element	\operatorname{IntegerLength}(0)	0

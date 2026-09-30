@@ -5,80 +5,80 @@ sin-pi-over-4
 sin-pi-over-3		
 sin-pi-over-2		
 sin-pi		
-degrees-d-converts-to-radians-so-sin-60-circ-is		
-a-machine-precision-argument-evaluates		
-a-huge-10-100-argument		
-a-huge-3-200-argument		
-a-huge-neg-7-60-argument		
-a-huge-10-80-plus-1-over-3-argument		
-sin-1-under-n		
-n-of-an-exact-argument-gives-an-arbitrary		
-evaluates-at-a-complex-argument		
-threads-element-wise-over-a-matrix		
-exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4		
-sin-pi-8-frac-sqrt-2-sqrt-2-2		
-sin-pi-10-frac-sqrt-5-1-4		
-sin-5-pi-12-frac-sqrt-6-sqrt-2-4		
-sin-3-pi-8-frac-sqrt-2-sqrt-2-2		
-large-rational-multiples-of-pi-are-reduced		
-any-integer-multiple-of-pi-is-a-zero-of-sine		
+degrees-d-converts-to-radians-so-sin-60-circ-is	\sin(\operatorname{Degrees}(60))	\frac{\sqrt{3}}{2}
+a-machine-precision-argument-evaluates	\sin(1.2)	0.93203908596722634967
+a-huge-10-100-argument	N(\sin(10^{100}))	-0.37237612366127668826208
+a-huge-3-200-argument	N(\sin(3^{200}))	-0.93873170860707491963714
+a-huge-neg-7-60-argument	N(\sin(-7^{60}))	0.36512160040235555007603
+a-huge-10-80-plus-1-over-3-argument	N(\sin(\frac{10^{80}+1}{3}))	0.98534830149811592175550
+sin-1-under-n	N(\sin(1))	0.8414709848078965
+n-of-an-exact-argument-gives-an-arbitrary	N(\sin(\frac{6}{5}))	0.93203908596722634967
+evaluates-at-a-complex-argument	\sin(2.5+i)	0.9234907760431731-0.9415049332708672i
+threads-element-wise-over-a-matrix	\sin([[5\frac{\pi}{6},0],[3\frac{\pi}{2},-\frac{\pi}{2}]])	[[\frac{1}{2},0],[-1,-1]]
+exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	\sin(\frac{\pi}{12})	-\frac{\sqrt{2}}{4}+\frac{\sqrt{6}}{4}
+sin-pi-8-frac-sqrt-2-sqrt-2-2	\sin(\frac{\pi}{8})	\frac{1}{2}\sqrt{2-\sqrt{2}}
+sin-pi-10-frac-sqrt-5-1-4	\sin(\frac{\pi}{10})	\frac{-1}{4}+\frac{\sqrt{5}}{4}
+sin-5-pi-12-frac-sqrt-6-sqrt-2-4	\sin(\frac{5}{12}\pi)	\frac{\sqrt{2}}{4}+\frac{\sqrt{6}}{4}
+sin-3-pi-8-frac-sqrt-2-sqrt-2-2	\sin(\frac{3}{8}\pi)	\frac{1}{2}\sqrt{2+\sqrt{2}}
+large-rational-multiples-of-pi-are-reduced	\sin(\frac{100}{3}\pi)	-\frac{\sqrt{3}}{2}
+any-integer-multiple-of-pi-is-a-zero-of-sine	\sin(1000001\pi)	0
 sin-negate-pi-is-also-zero		
 sin-4-pi-is-zero		
 a-full-turn-shift-of-a-symbolic-argument-doesn-t		
-sin-i-pi-2-i-sinh-pi-2-exactly		
-n-decimalizes-sin-i-pi-2-not-just-the-exact-form		
-interval-arithmetic-the-image-of-pi-6-pi-6-is		
-the-image-of-the-whole-real-line-is-1-1		
-wolfram-answers-sin-infty-with-the-range-of-its		
-uncertainty-propagation-sin-2-pm-0-01-approx-0		
-an-imaginary-argument-rewrites-to-sinh-sin-ix-i		
+sin-i-pi-2-i-sinh-pi-2-exactly	\sin(i\frac{\pi}{2})	i\sinh(\frac{1}{2}\pi)
+n-decimalizes-sin-i-pi-2-not-just-the-exact-form	N(\sin(i\frac{\pi}{2}))	2.3012989023072947i
+interval-arithmetic-the-image-of-pi-6-pi-6-is	\sin([-\frac{\pi}{6},\frac{\pi}{6}])	[\frac{-1}{2},\frac{1}{2}]
+the-image-of-the-whole-real-line-is-1-1	\sin([-\infty,\infty])	[-1,1]
+wolfram-answers-sin-infty-with-the-range-of-its	\sin(\infty)	[-1,1]
+uncertainty-propagation-sin-2-pm-0-01-approx-0	\sin(\operatorname{Around}(2,0.01))	\operatorname{Around}(0.9092974268256817,0.004161468365471424)
+an-imaginary-argument-rewrites-to-sinh-sin-ix-i	\sin(ix)	i\sinh(x)
 oddness-pulls-the-sign-out-of-a-symbolic		
 a-half-period-shift-reduces-sin-x-pi-sin-x		
 sin-arcsin-x-x-for-every-x		
 sin-arcsin-2-2-past-the-real-domain		
 sin-arcsin-of-a-complex-argument		
-sin-arccos-x-sqrt-1-x-2		
+sin-arccos-x-sqrt-1-x-2	\sin(\arccos(x))	\sqrt{-x^2+1}
 sin-arctan-x-frac-x-sqrt-1-x-2		
-derivative-frac-d-dx-sin-x-cos-x		
-second-derivative		
-antiderivative		
-area-under-one-arch-int-0-pi-sin-x-dx-2		
-int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers		
-taylor-series-about-0-only-odd-powers-appear		
+derivative-frac-d-dx-sin-x-cos-x	\frac{d}{dx}\sin(x)	\cos(x)
+second-derivative	\frac{d}{dx}\sin(x)	-\sin(x)
+antiderivative	\int\sin(x)dx	-\cos(x)
+area-under-one-arch-int-0-pi-sin-x-dx-2	\int_0^{\pi}\sin(x)dx	2
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	\int{\sin(x)}^3dx	\frac{1}{3}{\cos(x)}^3-\cos(x)
+taylor-series-about-0-only-odd-powers-appear	\operatorname{Series}(\sin(x),x,0,10)	\frac{1}{362880}x^9+\frac{-1}{5040}x^7+\frac{1}{120}x^5+\frac{-1}{6}x^3+x+\operatorname{BigO}(x^{11})
 the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1		
-to-30-significant-digits-every-one-correctly		
-a-huge-24-40-argument-reduces-exactly-mod-2-pi		
-n-sin-6-over-5-50		
-functiondomain-sin-x-x	\mathrm{FunctionDomain}(\sin(x), x)	\mathrm{True}
-functionrange-sin-x-x-y		
-functionperiod-sin-x-x		
-functionanalytic-sin-x-x	\mathrm{FunctionAnalytic}(\sin(x), x)	\mathrm{True}
-functioninjective-sin-x-x	\mathrm{FunctionInjective}(\sin(x), x)	\mathrm{False}
-functionsurjective-sin-x-x	\mathrm{FunctionSurjective}(\sin(x), x)	\mathrm{False}
-functionsingularities-sin-x-x	\mathrm{FunctionSingularities}(\sin(x), x)	\mathrm{False}
-functiondiscontinuities-sin-x-x	\mathrm{FunctionDiscontinuities}(\sin(x), x)	\mathrm{False}
-matrixfunction-function-sin-1-1-list-list-5-over		
+to-30-significant-digits-every-one-correctly	N(\sin(1),30)	0.841470984807896506652502321630
+a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(\sin(24^{40}))	0.400083152719766047071
+n-sin-6-over-5-50	N(\sin(\frac{6}{5}),50)	0.93203908596722634967013443549482599541507058820873
+functiondomain-sin-x-x	\operatorname{FunctionDomain}(\sin(x),x)	\operatorname{True}
+functionrange-sin-x-x-y	\operatorname{FunctionRange}(\sin(x),x,y)	-1\le y\le1
+functionperiod-sin-x-x	\operatorname{FunctionPeriod}(\sin(x),x)	2\pi
+functionanalytic-sin-x-x	\operatorname{FunctionAnalytic}(\sin(x),x)	\operatorname{True}
+functioninjective-sin-x-x	\operatorname{FunctionInjective}(\sin(x),x)	\operatorname{False}
+functionsurjective-sin-x-x	\operatorname{FunctionSurjective}(\sin(x),x)	\operatorname{False}
+functionsingularities-sin-x-x	\operatorname{FunctionSingularities}(\sin(x),x)	\operatorname{False}
+functiondiscontinuities-sin-x-x	\operatorname{FunctionDiscontinuities}(\sin(x),x)	\operatorname{False}
+matrixfunction-function-sin-1-1-list-list-5-over	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\sin(\_1)),\_1),[[\frac{5}{6}\pi,0],[\frac{3}{2}\pi,\frac{-1}{2}\pi]])	[[\frac{1}{2},0],[\frac{27}{16},-1]]
 assuming-m-in-integers-refine-sin-pi-times-m		
 assuming-m-in-integers-fullsimplify-sin-pi-times		
-threads-element-wise-over-a-list		
-degrees-d-converts-a-degree-measure-to-radians		
-pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x		
-odd-function-sin-x-sin-x	\sin(-\frac{\pi}{6})=-\sin(\frac{\pi}{6})	\mathrm{True}
+threads-element-wise-over-a-list	\sin([0,\frac{\pi}{2},\pi])	[0,1,0]
+degrees-d-converts-a-degree-measure-to-radians	\sin(\operatorname{Degrees}(30))	\frac{1}{2}
+pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	{\sin(\frac{\pi}{6})}^2+{\cos(\frac{\pi}{6})}^2	1
+odd-function-sin-x-sin-x	\sin(-\frac{\pi}{6})=-\sin(\frac{\pi}{6})	\operatorname{True}
 period-2-pi-adding-a-full-turn-doesn-t-change		
-double-angle-formula-via-trigexpand		
-angle-addition-formula-via-trigexpand		
-triple-angle-formula		
-power-reduction-sin-2-x-frac-1-cos-2x-2		
-euler-s-formula-sin-x-frac-e-ix-e-ix-2i		
-simplify-knows-the-pythagorean-identity		
-the-same-through-fullsimplify		
-sin-3-over-10-times-pi		
+double-angle-formula-via-trigexpand	\operatorname{TrigExpand}(\sin(2x))	2\sin(x)\cos(x)
+angle-addition-formula-via-trigexpand	\operatorname{TrigExpand}(\sin(x+y))	\sin(y)\cos(x)+\sin(x)\cos(y)
+triple-angle-formula	\operatorname{TrigExpand}(\sin(3x))	-{\sin(x)}^3+3\sin(x){\cos(x)}^2
+power-reduction-sin-2-x-frac-1-cos-2x-2	\operatorname{TrigReduce}({\sin(x)}^2)	\frac{-1}{2}\cos(2x)+\frac{1}{2}
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i	\operatorname{TrigToExp}(\sin(x))	\frac{-1}{2}ie^{ix}+\frac{1}{2}ie^{-ix}
+simplify-knows-the-pythagorean-identity	\operatorname{Simplify}({\sin(x)}^2+{\cos(x)}^2)	1
+the-same-through-fullsimplify	\operatorname{FullSimplify}({\sin(x)}^2+{\cos(x)}^2)	1
+sin-3-over-10-times-pi	\sin(\frac{3}{10}\pi)	\frac{1}{4}+\frac{\sqrt{5}}{4}
 1-radian-isn-t-a-recognized-special-angle-so		
 sin-2-a-generic-argument-stays-symbolic		
 sin-x-plus-y-stays-symbolic		
-pi-15-has-a-radical-form-but-like-wolfram-s		
-a-huge-exact-argument-is-reduced-modulo-2-pi		
-an-even-huger-argument-11-38		
+pi-15-has-a-radical-form-but-like-wolfram-s	\sin(\frac{\pi}{15})	\sin(\frac{1}{15}\pi)
+a-huge-exact-argument-is-reduced-modulo-2-pi	N(\sin(10^{20}))	-0.645251285265780844206
+an-even-huger-argument-11-38	N(\sin(11^{38}))	0.867534193184863032082
 sin-complexinfinity-is-indeterminate-off-the		
-the-special-angle-table-reaches-past-30-45-60		
-functionexpand-gives-the-nested-radical-form		
+the-special-angle-table-reaches-past-30-45-60	\sin(\frac{\pi}{5})	\frac{\sqrt{2}}{4}\sqrt{5-\sqrt{5}}
+functionexpand-gives-the-nested-radical-form	\operatorname{FunctionExpand}(\sin(\frac{\pi}{15}))	\frac{1}{8}(-\sqrt{15}+\sqrt{3}+\sqrt{10+2\sqrt{5}})

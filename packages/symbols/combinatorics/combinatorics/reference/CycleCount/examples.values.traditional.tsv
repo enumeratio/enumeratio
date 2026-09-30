@@ -1,0 +1,6 @@
+id	in	out
+the-3-cycle-1-2-3	\operatorname{CycleCount}(\operatorname{Permutation}([2,3,1]))	1
+three-singleton-cycles	\operatorname{CycleCount}(\operatorname{Permutation}([1,2,3]))	3
+1-2-3	\operatorname{CycleCount}(\operatorname{Permutation}([2,1,3]))	2
+the-one-line-word-312	\operatorname{CycleCount}(\operatorname{Permutation}([3,1,2]))	1
+the-one-line-word-2413	\operatorname{CycleCount}(\operatorname{Permutation}([2,4,1,3]))	1

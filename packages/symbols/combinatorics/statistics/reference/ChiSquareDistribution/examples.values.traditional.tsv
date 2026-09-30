@@ -1,5 +1,5 @@
 id	in	out
-chisquare-pdf-exact		
-chisquare-cdf-exact	\operatorname{CDF}(\mathrm{ChiSquareDistribution}(3), 2)	1-Q(\frac{3}{2}, 1)
-chisquare-mean-exact		
-chisquare-variance-exact		
+chisquare-pdf-exact	\operatorname{PDF}(\operatorname{ChiSquareDistribution}(3),2)	\frac{1}{2e\Gamma(\frac{3}{2})}
+chisquare-cdf-exact	\operatorname{CDF}(\operatorname{ChiSquareDistribution}(3),2)	1-Q(\frac{3}{2},1)
+chisquare-mean-exact	\operatorname{Mean}(\operatorname{ChiSquareDistribution}(3))	3
+chisquare-variance-exact	\operatorname{Variance}(\operatorname{ChiSquareDistribution}(3))	6

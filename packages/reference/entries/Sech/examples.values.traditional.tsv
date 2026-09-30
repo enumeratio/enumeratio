@@ -1,0 +1,7 @@
+id	in	out
+n-sech-9-over-5-50	N(\operatorname{sech}(\frac{9}{5}),50)	0.32180486950658786835022088554160801674409611259873
+sech-list-list-1-over-3-times-i-times-pi-neg-1	\operatorname{sech}([[\frac{1}{3}i\pi,\frac{-1}{3}i\pi],[0,\frac{-1}{6}i\pi]])	[[\operatorname{sech}(\frac{1}{3}i\pi),\operatorname{sech}(\frac{-1}{3}i\pi)],[1,\operatorname{sech}(\frac{-1}{6}i\pi)]]
+sech-positiveinfinity	\operatorname{sech}(\infty)	0
+sech-0	\operatorname{sech}(0)	1
+d-sech-x-x	\frac{d}{dx}\operatorname{sech}(x)	-\tanh(x)\operatorname{sech}(x)
+matrixfunction-function-sech-1-1-list-list-1	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{sech}(\_1)),\_1),[[\frac{1}{3}i\pi,\frac{-1}{3}i\pi],[0,\frac{-1}{6}i\pi]])	[[\operatorname{sech}(\frac{1}{3}i\pi),\frac{-2}{3}\operatorname{sech}(\frac{1}{3}i\pi)+\frac{2}{3}\operatorname{sech}(\frac{-1}{6}i\pi)],[0,\operatorname{sech}(\frac{-1}{6}i\pi)]]

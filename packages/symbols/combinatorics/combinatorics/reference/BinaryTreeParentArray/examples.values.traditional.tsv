@@ -1,0 +1,2 @@
+id	in	out
+from-a-binary-tree	\operatorname{BinaryTreeParentArray}(\operatorname{BinaryTree}([[0,0],[0,[0,0]]]))	\operatorname{BinaryTreeParentArray}([2,0,2,3])

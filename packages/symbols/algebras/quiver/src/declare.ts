@@ -1,6 +1,8 @@
 import { declareAlgebra } from "@enumeratio/structures";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { registerNotation } from "@enumeratio/boxes";
 import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { QUIVER_NOTATION } from "./notation.ts";
 import {
   allPaths,
   concatenate,
@@ -68,6 +70,7 @@ const algebraOf = (expr: BoxedExpression): Quiver | undefined =>
     : undefined;
 
 export function declareQuiver(ce: ComputeEngine): void {
+  registerNotation(ce, QUIVER_NOTATION);
   ce.declare("Quiver", { signature: "(integer, list<list<integer>>) -> expression<Quiver>" });
   ce.declare("LinearQuiver", { signature: "(integer) -> expression<LinearQuiver>" });
   // JordanQuiver and KroneckerQuiver are NAMES, recognised but not declared: declaring

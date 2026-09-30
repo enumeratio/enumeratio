@@ -1,8 +1,8 @@
 id	in	out
-a-reciprocal-is-injective-on-its-own-domain	\mathrm{FunctionInjective}(\frac{1}{x}, x)	\mathrm{True}
-a-cubic-is-injective	\mathrm{FunctionInjective}(x^3, x)	\mathrm{True}
-a-parabola-is-not-injective	\mathrm{FunctionInjective}(x^2, x)	\mathrm{False}
-an-affine-function-is-injective	\mathrm{FunctionInjective}(2x+1, x)	\mathrm{True}
-functioninjective-x-pow-3-minus-x-x	\mathrm{FunctionInjective}(x^3-x, x)	\mathrm{False}
-functioninjective-cos-x-x	\mathrm{FunctionInjective}(\cos(x), x)	\mathrm{False}
-functioninjective-sqrt-x-x	\mathrm{FunctionInjective}(\sqrt{x}, x)	\mathrm{True}
+a-reciprocal-is-injective-on-its-own-domain	\operatorname{FunctionInjective}(\frac{1}{x},x)	\operatorname{True}
+a-cubic-is-injective	\operatorname{FunctionInjective}(x^3,x)	\operatorname{True}
+a-parabola-is-not-injective	\operatorname{FunctionInjective}(x^2,x)	\operatorname{False}
+an-affine-function-is-injective	\operatorname{FunctionInjective}(2x+1,x)	\operatorname{True}
+functioninjective-x-pow-3-minus-x-x	\operatorname{FunctionInjective}(x^3-x,x)	\operatorname{False}
+functioninjective-cos-x-x	\operatorname{FunctionInjective}(\cos(x),x)	\operatorname{False}
+functioninjective-sqrt-x-x	\operatorname{FunctionInjective}(\sqrt{x},x)	\operatorname{True}

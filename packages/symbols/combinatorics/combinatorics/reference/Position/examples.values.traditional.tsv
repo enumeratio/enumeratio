@@ -1,0 +1,6 @@
+id	in	out
+position-list-1-2-3-2-2	\operatorname{Position}([1,2,3,2],2)	[[2],[4]]
+a-value-absent-from-the-collection-has-no	\operatorname{Position}([1,2,3],9)	[]
+position-list-a-b-a-a-b-c-b-b	\operatorname{Position}([a,b,a,a,b,c,b],b)	[[2],[5],[7]]
+position-list-list-a-a-b-list-b-a-a-list-a-b-a-b		
+position-s-first-entry-agrees-with-indexof	\operatorname{At}(\operatorname{Position}([1,2,3,2],2),1)	[2]

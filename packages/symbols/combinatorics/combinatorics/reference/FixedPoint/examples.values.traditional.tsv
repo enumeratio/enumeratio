@@ -1,0 +1,9 @@
+id	in	out
+halving-and-flooring-until-nothing-changes	\operatorname{FixedPoint}(\operatorname{Function}(\lfloor\frac{\_1}{2}\rfloor),100)	0
+the-dottie-number-the-fixed-point-of-cos	\operatorname{FixedPoint}(\operatorname{Cos},0.5)	0.739085133215160641658
+fixedpoint-function-1-plus-floor-1-times-2-pow	\operatorname{FixedPoint}(\operatorname{Function}(1+\lfloor\_12^{-1}\rfloor),1000)	2
+fixedpoint-function-1-plus-2-times-1-pow-neg-1		
+fixedpoint-function-1-plus-floor-1-times-2-pow-2	\operatorname{FixedPoint}(\operatorname{Function}(1+\lfloor\_12^{-1}\rfloor),10^6)	2
+newton-s-method-for-sqrt-2-run-to-this-engine-s	\operatorname{FixedPoint}(\operatorname{Function}(\frac{\_1+\frac{2}{\_1}}{2}),1.5)	1.4142135623730950488016875
+fixedpoint-function-d-1-x-x-pow-10	\operatorname{FixedPoint}(\operatorname{Function}(\frac{d}{dx}\_1),x^{10})	0
+fixedpoint-function-x-plus-2-times-x-pow-neg-1		

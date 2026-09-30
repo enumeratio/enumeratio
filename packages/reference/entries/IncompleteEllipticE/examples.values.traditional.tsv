@@ -1,0 +1,16 @@
+id	in	out
+e-0-5-0-3	N(\operatorname{IncompleteEllipticE}(0.5,0.3))	0.4939911447289685
+e-1-2-0-7	N(\operatorname{IncompleteEllipticE}(1.2,0.7))	1.02845518609496
+e-0-8-0-4	N(\operatorname{IncompleteEllipticE}(-0.8,0.4))	-0.768931915835262
+e-2-5-0-3	N(\operatorname{IncompleteEllipticE}(2.5,0.3))	2.2615025321641604
+e-3-0-6	N(\operatorname{IncompleteEllipticE}(-3,0.6))	-2.455546661697232
+e-0-3-0-4i-0-5	N(\operatorname{IncompleteEllipticE}(0.3+0.4i,0.5))	0.3097274113893291+0.39600917859132767i
+e-1-0-5i-0-2	N(\operatorname{IncompleteEllipticE}(1-0.5i,0.2))	0.9854785558781257-0.46154033858352794i
+e-0-6-0-57-0-23i	N(\operatorname{IncompleteEllipticE}(0.6,0.57+0.23i))	0.5804446088026283-0.00817790391497764i
+e-1-1-0-1-0-9i	N(\operatorname{IncompleteEllipticE}(1.1,0.1+0.9i))	1.1005845083455723-0.15580692573345195i
+e-3-711592653589793-0-57-0-23i	N(\operatorname{IncompleteEllipticE}(3.711592653589793,0.57+0.23i))	3.2027674410692109-0.24648025423098202i
+e-3-711592653589793-0-23i-0-57-0-23i	N(\operatorname{IncompleteEllipticE}(3.711592653589793+0.23i,0.57+0.23i))	3.218263851154937-0.03226628832142239i
+e-3-0-57-0-23i	N(\operatorname{IncompleteEllipticE}(-3,0.57+0.23i))	-2.50829187496877718+0.23935013725739784i
+e-4-5-0-1-0-9i	N(\operatorname{IncompleteEllipticE}(4.5,0.1+0.9i))	4.5422801988564419-0.9475220342366324i
+e-phi-arccsc-0-m-0	\operatorname{IncompleteEllipticE}(\operatorname{arccsc}(0),0)	\operatorname{EllipticE}(\tilde\infty,0)
+e-phi-pi-plus-arccsc-0-m-0	\operatorname{IncompleteEllipticE}(\pi+\operatorname{arccsc}(0),0)	\operatorname{EllipticE}(\tilde\infty,0)
