@@ -1,18 +1,18 @@
-// A symbol package's format (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2): the host's
+// A library's format (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2): the host's
 // package is the transport, the symbol index is ours. A package marks itself in `package.json`:
 //
 //   "enumeratio": { "namespace": "ada", "index": "./symbols/index.json", "system": "0.x" }
 //
 // and ships `symbols/<Name>/definition.json` (signature, body, requires) beside the index,
-// which `symbolIndexOf` builds at pack time, with `examples.json` from the symbol's record
+// which `libraryIndexOf` builds at pack time, with `examples.json` from the symbol's record
 // (`index.md`, `examples.tsv`, as ours are) for the install check.
 
 import { satisfies, validRange } from "semver";
 import { type Definition, pinOf } from "../registry.ts";
 import { SYSTEM_VERSION } from "../system.ts";
 
-/** The `enumeratio` field of a symbol package's `package.json`. */
-export interface SymbolPackageField {
+/** The `enumeratio` field of a library's `package.json`. */
+export interface LibraryField {
   /** Its namespace: a scoped package's must be its scope's name. */
   readonly namespace: string;
   /** Its index, relative to the package root. */
@@ -26,11 +26,11 @@ export interface SymbolPackageField {
  * is taken at its word that it needs nothing in particular; one that states a range that isn't
  * one admits nothing.
  */
-export const admitsSystem = (field: SymbolPackageField, system: string = SYSTEM_VERSION): boolean =>
+export const admitsSystem = (field: LibraryField, system: string = SYSTEM_VERSION): boolean =>
   field.system === undefined || (validRange(field.system) !== null && satisfies(system, field.system));
 
 /** `symbols/index.json`: each name's signature, pin and pinned dependencies. */
-export interface SymbolIndex {
+export interface LibraryIndex {
   readonly namespace: string;
   readonly symbols: Readonly<
     Record<
@@ -47,11 +47,11 @@ export interface SymbolIndex {
 }
 
 /** A package's index, from its definitions: what packing writes to `symbols/index.json`. */
-export async function symbolIndexOf(
+export async function libraryIndexOf(
   namespace: string,
   definitions: Readonly<Record<string, Definition>>,
-): Promise<SymbolIndex> {
-  const symbols: Record<string, SymbolIndex["symbols"][string]> = {};
+): Promise<LibraryIndex> {
+  const symbols: Record<string, LibraryIndex["symbols"][string]> = {};
   for (const name of Object.keys(definitions).toSorted()) {
     const definition = definitions[name]!;
     symbols[name] = {

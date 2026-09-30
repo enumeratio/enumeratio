@@ -1,4 +1,4 @@
-// Where symbol packages come from: anything that serves a package version's files and lists
+// Where libraries come from: anything that serves a package version's files and lists
 // its versions. npm and GitHub both do, through jsDelivr's mirrors, with CORS, so a page reads
 // them the way a build does; a GitLab or private host is another implementation of the same.
 

@@ -26,11 +26,11 @@ the resolver possible (below).
   refuses at setup a name two of them share or the system has, until it is preferred or
   excluded. With `check`, a definition's examples run in a scratch engine before it is
   declared, once per pin.
-- **`./symbol-packages`** (`src/symbol-packages/`) — symbol packages from a package host (npm
-  or GitHub over jsDelivr; `PackageHost` for others) as a registry (`packageRegistry`), their
-  format (`symbolIndexOf`), and ranges locked to versions (`lockPackages`, by `semver`, checking
+- **`./libraries`** (`src/libraries/`) — libraries from a package host (npm
+  or GitHub over jsDelivr; `PackageHost` for others) as a registry (`catalog`), their
+  format (`libraryIndexOf`), and ranges locked to versions (`lockLibraries`, by `semver`, checking
   each package's `system` range against `SYSTEM_VERSION`). A subpath, so the resolver alone
-  doesn't bring `semver`. `scripts/pack-symbols.ts <dir>` writes a package's index, its
+  doesn't bring `semver`. `scripts/pack-library.ts <dir>` writes a package's index, its
   examples and its JavaScript entry.
 
 See [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).

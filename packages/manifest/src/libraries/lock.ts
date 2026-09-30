@@ -1,16 +1,16 @@
 // Version ranges to exact versions (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2):
-// a host asks for symbol packages by range, as npm does, and gets the exact versions
-// `packageRegistry` reads, closed over the symbol packages they depend on. A lock keeps what was
+// a host asks for libraries by range, as npm does, and gets the exact versions
+// `catalog` reads, closed over the libraries they depend on. A lock keeps what was
 // chosen: a locked version stays while every range asking for it still admits it, so a page
 // means at run time what it meant when it was locked.
 
 import { maxSatisfying, rsort, satisfies, validRange } from "semver";
 import { SYSTEM_VERSION } from "../system.ts";
-import { admitsSystem, type SymbolPackageField } from "./format.ts";
+import { admitsSystem, type LibraryField } from "./format.ts";
 import { npmHost, type PackageHost } from "./host.ts";
 
 /** The exact version chosen for each package, by name. */
-export type PackageLock = Readonly<Record<string, string>>;
+export type LibraryLock = Readonly<Record<string, string>>;
 
 export interface LockOptions {
   /** Where the packages come from: npm, over jsDelivr, by default. */
@@ -18,7 +18,7 @@ export interface LockOptions {
   /** The system's version, which a chosen version's `system` range must admit: ours by default. */
   readonly system?: string;
   /** What was chosen before: kept where every range still admits it. */
-  readonly lock?: PackageLock;
+  readonly lock?: LibraryLock;
 }
 
 /** `@ada/primes@^1.0.0` as its name and range. */
@@ -29,13 +29,13 @@ function parseWanted(spec: string): { name: string; range: string } {
 }
 
 /**
- * Exact versions for `wanted` (`name@range`), and for every symbol package they depend on,
- * transitively: a dependency is a symbol package when its `package.json` has an `enumeratio`
+ * Exact versions for `wanted` (`name@range`), and for every library they depend on,
+ * transitively: a dependency is a library when its `package.json` has an `enumeratio`
  * field. One version per package, the highest every range asking for it admits and whose
  * `system` range admits the system's version; a range
  * nothing satisfies, or two ranges no one version meets, throws, naming them.
  */
-export async function lockPackages(wanted: readonly string[], options: LockOptions = {}): Promise<PackageLock> {
+export async function lockLibraries(wanted: readonly string[], options: LockOptions = {}): Promise<LibraryLock> {
   const { lock = {}, host = npmHost(), system = SYSTEM_VERSION } = options;
   const versionLists = new Map<string, Promise<readonly string[]>>();
   const versionsOf = (name: string): Promise<readonly string[]> => {
@@ -49,7 +49,7 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
   const highest = async (name: string, range: string): Promise<string | null> =>
     maxSatisfying([...(await versionsOf(name))], range);
 
-  type PackageJson = { enumeratio?: SymbolPackageField; dependencies?: Record<string, string> };
+  type PackageJson = { enumeratio?: LibraryField; dependencies?: Record<string, string> };
   const manifests = new Map<string, Promise<PackageJson>>();
   const packageJson = (name: string, version: string): Promise<PackageJson> => {
     const key = `${name}@${version}`;
@@ -68,7 +68,7 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
 
   type Ask = { readonly name: string; readonly range: string; readonly by: string };
   const hostAsks: Ask[] = wanted.map((spec) => ({ ...parseWanted(spec), by: "the host" }));
-  // What each package version asks of the symbol packages it depends on, read once.
+  // What each package version asks of the libraries it depends on, read once.
   const asksOf = new Map<string, Promise<Ask[]>>();
   const dependencyAsks = (name: string, version: string): Promise<Ask[]> => {
     const key = `${name}@${version}`;
@@ -76,10 +76,10 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
     if (found === undefined) {
       found = (async () => {
         const pkg = await packageJson(name, version);
-        if (pkg.enumeratio === undefined) throw new Error(`${key} isn't a symbol package`);
+        if (pkg.enumeratio === undefined) throw new Error(`${key} isn't a library`);
         const asks: Ask[] = [];
         for (const [dependency, range] of Object.entries(pkg.dependencies ?? {})) {
-          // Any version in range tells whether it's a symbol package: the locked one if it is.
+          // Any version in range tells whether it's a library: the locked one if it is.
           const locked = lock[dependency];
           const any = locked !== undefined && satisfies(locked, range) ? locked : await highest(dependency, range);
           if (any === null) throw new Error(`no version of ${dependency} satisfies ${range} (${key})`);
@@ -97,7 +97,7 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
   // highest version each package's asks all admit (a locked one while they still do).
   let chosen = new Map<string, string>();
   for (let round = 0; ; round++) {
-    if (round > MAX_ROUNDS) throw new Error("lockPackages: the choice doesn't settle");
+    if (round > MAX_ROUNDS) throw new Error("lockLibraries: the choice doesn't settle");
     const asks = [...hostAsks];
     for (const [name, version] of chosen) asks.push(...(await dependencyAsks(name, version)));
     const byName = new Map<string, Ask[]>();
@@ -138,6 +138,6 @@ export async function lockPackages(wanted: readonly string[], options: LockOptio
 /** A cap on the rounds a choice takes to settle: each round only adds what chosen versions ask. */
 const MAX_ROUNDS = 64;
 
-/** A lock as the specs `packageRegistry` takes: `name@version`. */
-export const specsOf = (lock: PackageLock): string[] =>
+/** A lock as the specs `catalog` takes: `name@version`. */
+export const specsOf = (lock: LibraryLock): string[] =>
   Object.entries(lock).map(([name, version]) => `${name}@${version}`);

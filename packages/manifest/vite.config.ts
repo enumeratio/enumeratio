@@ -9,7 +9,7 @@ export default defineConfig({
   pack: {
     entry: {
       index: "src/index.ts",
-      "symbol-packages": "src/symbol-packages/index.ts",
+      libraries: "src/libraries/index.ts",
       ...Object.fromEntries(packages.map((f) => [`package/${f.slice(0, -3)}`, `${generated}/${f}`])),
     },
     dts: { generator: "tsgo" },

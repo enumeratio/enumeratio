@@ -13,9 +13,9 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./symbol-packages": {
-      "types": "./dist/symbol-packages.d.mts",
-      "import": "./dist/symbol-packages.mjs"
+    "./libraries": {
+      "types": "./dist/libraries.d.mts",
+      "import": "./dist/libraries.mjs"
     },
     "./package/*": {
       "types": "./dist/package/*.d.mts",

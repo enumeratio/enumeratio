@@ -2,7 +2,7 @@
   "name": "@bob/extra",
   "version": "2.0.0",
   "keywords": [
-    "enumeratio-symbols"
+    "enumeratio-library"
   ],
   "type": "module",
   "exports": {
