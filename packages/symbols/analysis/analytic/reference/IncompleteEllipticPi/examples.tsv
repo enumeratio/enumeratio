@@ -17,3 +17,5 @@ all-three-arguments-complex-matches-mpmath-s	Scope		[N, [IncompleteEllipticPi, [
 characteristic-n-1	Scope		[N, [IncompleteEllipticPi, 0.3, 1.1, 0.4]]	1.3238008150474936				Characteristic $n > 1$
 n-0-reduces-to-the-incomplete-elliptic-integral	Properties		[N, [IncompleteEllipticPi, 0, 0.4, 0.3]]	0.40316499194713934				n = 0 reduces to the incomplete elliptic integral of the first kind, IncompleteEllipticF(φ, m)
 symbolic-arguments-are-left-unevaluated-rather	Possible issues		[IncompleteEllipticPi, n, phi, m]	[IncompleteEllipticPi, n, phi, m]				Symbolic arguments are left unevaluated rather than guessed at
+n-0-phi-arccsc-0-m-0	Possible issues		[IncompleteEllipticPi, 0, [Arccsc, 0], 0]	[IncompleteEllipticPi, 0, ComplexInfinity, 0]				arccsc(0) is ComplexInfinity; stays symbolic here — Wolfram's own EllipticPi[0, ArcCsc[0], 0] answers Indeterminate (shown as NaN).
+n-0-phi-pi-plus-arccsc-0-m-0	Possible issues		[IncompleteEllipticPi, 0, [Add, Pi, [Arccsc, 0]], 0]	[IncompleteEllipticPi, 0, ComplexInfinity, 0]				Same as above, shifted by π: arccsc(0) still dominates and the result stays symbolic.

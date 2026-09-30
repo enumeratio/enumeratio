@@ -6,3 +6,4 @@ modularlambda-0-3-0-05i	N(ModularLambda(0.3 + 0.05i))	-3.965_485_727_741_77 - 6.
 modularlambda-1-3-0-05i	N(ModularLambda(1.3 + 0.05i))	0.925_102_574_522_605_4 + 0.097_334_375_646_195_51i
 modularlambda-2-7-1-4i	N(ModularLambda(2.7 + 1.4i))	-0.108_381_931_026_521_3 + 0.177_977_531_732_565_47i
 modularlambda-1-4-0-6i	N(ModularLambda(-1.4 + 0.6i))	2.280_306_310_755_823_7 + 1.533_054_618_426_143i
+tau-1e22-declines-rather-than-answering-wrong	N(ModularLambda(imaginaryUnit + pi * 10 ^ 22))	ModularLambda(3.141_592_653_589_793_238_462_643e22 + i)

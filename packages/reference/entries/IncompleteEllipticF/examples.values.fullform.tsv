@@ -12,3 +12,7 @@ f-3-711592653589793-0-57-0-23i	N[EllipticF[3.711592653589793, Complex[0.57, 0.23
 f-3-711592653589793-0-23i-0-57-0-23i	N[EllipticF[Complex[3.711592653589793, 0.23], Complex[0.57, 0.23]]]
 f-3-0-57-0-23i	N[EllipticF[-3, Complex[0.57, 0.23]]]
 f-4-5-0-1-0-9i	N[EllipticF[4.5, Complex[0.1, 0.9]]]
+f-jacobiamplitude-0-0-m-0	EllipticF[JacobiAmplitude[0, 0], 0]
+f-jacobiamplitude-0-1-m-1	EllipticF[JacobiAmplitude[0, 1], 1]
+f-phi-arccsc-0-m-0	EllipticF[ArcCsc[0], 0]
+f-phi-pi-plus-arccsc-0-m-0	EllipticF[Plus[Pi, ArcCsc[0]], 0]

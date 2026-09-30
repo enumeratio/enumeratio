@@ -3,3 +3,4 @@ a-floating-point-argument-evaluates-directly-to	<N><JacobiND>0.3 -2</JacobiND></
 m-greater-than-1-via-the-reciprocal-modulus	<N><JacobiND>0.3 1.5</JacobiND></N>	<ToExpression>1.0693335357371407</ToExpression>
 u-0-is-1-for-any-m	<JacobiND>0 m</JacobiND>	<ToExpression>1</ToExpression>
 symbolic-arguments-are-left-unevaluated-rather	<JacobiND>u m</JacobiND>	<JacobiND>u m</JacobiND>
+more-digits-than-a-double-holds-declines	<N><JacobiND>3 <Rational>1 3</Rational></JacobiND> 50</N>	<JacobiND>3 0.33333333333333333333333333333333333333333333333333</JacobiND>

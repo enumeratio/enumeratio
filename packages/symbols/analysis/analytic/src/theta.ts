@@ -1,8 +1,10 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
+  exceedsDoublePrecision,
   isFiniteNum,
   numberResult,
+  periodsExceedDouble,
   wantsNumber,
   abs,
   add,
@@ -117,6 +119,15 @@ function declareOne(ce: ComputeEngine, head: string, derivative: boolean): void 
       const [a, u, q] = ops;
       if (a === undefined || u === undefined || q === undefined) return undefined;
       if (!wantsNumber(ops, options) || !isFiniteNum(a) || !isFiniteNum(u) || !isFiniteNum(q)) return undefined;
+      // The q-series below is plain-double: N(…, d) past what a double carries would
+      // otherwise silently hand back ~17 correct digits dressed as d of them.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      // θ(z+π,q) is z's own real quasi-period (DLMF 20.2.1-20.2.4's sin/cos((2n±1)z) terms);
+      // past MAX_PERIODS_FOR_DOUBLE of them, z's double rounding already exceeds π, so the
+      // series' own reduced phase is noise (see periodsExceedDouble's doc for the measured
+      // case, checked here too — EllipticTheta at 10^6 periods still agrees with mpmath to
+      // ~9 digits, at 10^7 only ~8).
+      if (periodsExceedDouble(u.re, Math.PI)) return undefined;
       if (!isValidOrder(a)) return undefined; // a must be a concrete integer 1..4
       const result = theta(a.re as 1 | 2 | 3 | 4, cxOf(u), cxOf(q), derivative);
       return result === undefined ? undefined : numberResult(ce, result);

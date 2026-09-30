@@ -2,8 +2,10 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import {
   type EvalOptions,
+  exceedsDoublePrecision,
   isFiniteNum,
   numberResult,
+  periodsExceedDouble,
   wantsNumber,
   add,
   casin,
@@ -229,8 +231,14 @@ function exactSCDN(ce: ComputeEngine, u: BoxedExpression, m: BoxedExpression): S
   if (isZeroExpr(u)) return { S: ce.Zero, C: ce.One, D: ce.One, N: ce.One };
   if (isZeroExpr(m)) return { S: ce.function("Sin", [u]), C: ce.function("Cos", [u]), D: ce.One, N: ce.One };
   if (isOneExpr(m)) {
-    const sech = ce.function("Divide", [1, ce.function("Cosh", [u])]);
-    return { S: ce.function("Tanh", [u]), C: sech, D: sech, N: ce.One };
+    // sn/cn/dn degenerate to tanh(u)/sech(u)/sech(u) at m=1, but building each ratio as
+    // Divide(Tanh(u), Divide(1,Cosh(u))) lets Cosh(u)=0 (u = iπ/2 + ikπ) collide
+    // Tanh(u) = ComplexInfinity against another ComplexInfinity — an indeterminate CE's
+    // generic Divide can't resolve, even though the pq ratio itself (e.g. sc = sinh(u))
+    // is finite there. Sharing Cosh(u) as the one denominator (S = Sinh(u), C = D = 1,
+    // N = Cosh(u)) keeps every ratio that doesn't touch N a single elementary function
+    // with no ∞/∞ cancellation to resolve: sc = sd = Sinh(u), cs = ds = 1/Sinh(u).
+    return { S: ce.function("Sinh", [u]), C: ce.One, D: ce.One, N: ce.function("Cosh", [u]) };
   }
   const uOps = operandsOf(u);
   if (u.operator === "EllipticK" && uOps.length === 1 && uOps[0]!.isSame(m)) {
@@ -240,6 +248,27 @@ function exactSCDN(ce: ComputeEngine, u: BoxedExpression, m: BoxedExpression): S
 }
 
 const cxOf = (x: BoxedExpression): Cx => cx(x.re, x.im);
+
+/**
+ * `u` is far enough out that its own double rounding already exceeds a period, so the AGM
+ * kernel's reduced position within it is noise (`periodsExceedDouble`, ce-patches — see
+ * MAX_PERIODS_FOR_DOUBLE's doc for the measured case). Checked against BOTH real periods
+ * the kernel actually uses: `4K(m)` for `u`'s real part directly, and `4K(1−m)` for its
+ * imaginary part — DLMF 22.8's real-addition formula (`sncndnComplexU` above) feeds Im(u)
+ * through the same real AGM kernel at the complementary parameter `m₁ = 1 − m`, so that's
+ * the period Im(u) is actually reduced against, not `4K(m)`. `false` (never decline) when
+ * `EllipticK` doesn't return a clean positive real period here — m outside [0, 1] already
+ * declines earlier in `sncndn`/`amplitude`, or leaves this a no-op for the exact table.
+ */
+function argumentTooFarForDouble(ce: ComputeEngine, u: BoxedExpression, m: BoxedExpression): boolean {
+  const K = ce.box(["EllipticK", m]).N();
+  if (Number.isFinite(K.re) && K.im === 0 && K.re > 0 && periodsExceedDouble(u.re, 4 * K.re)) return true;
+  if (u.im !== 0) {
+    const K1 = ce.box(["EllipticK", ["Subtract", 1, m]]).N();
+    if (Number.isFinite(K1.re) && K1.im === 0 && K1.re > 0 && periodsExceedDouble(u.im, 4 * K1.re)) return true;
+  }
+  return false;
+}
 
 /** Declare one Jacobi `pq` head — its exact table (`exactSCDN`, works even without
  * `N()`/a float operand) first, then the numeric AGM kernel (`sncndn`) once a number is
@@ -255,6 +284,10 @@ function declarePQ(ce: ComputeEngine, head: string, p: PQLetter, q: PQLetter): v
       if (exact !== undefined) return finish(ce.function("Divide", [exact[p], exact[q]]), options);
 
       if (!wantsNumber(ops, options) || !isFiniteNum(u) || !isFiniteNum(m)) return undefined;
+      // The AGM kernel below is plain-double: N(…, d) for d past what a double carries
+      // would otherwise silently hand back ~17 correct digits dressed as d of them.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      if (argumentTooFarForDouble(ce, u, m)) return undefined;
       const result = sncndn(cxOf(u), cxOf(m));
       if (result === undefined) return undefined;
       return numberResult(ce, div(result[p], result[q]));
@@ -276,6 +309,8 @@ function declareJacobiAmplitude(ce: ComputeEngine): void {
       if (isZeroExpr(m)) return finish(u, options);
 
       if (!wantsNumber(ops, options) || !isFiniteNum(u) || !isFiniteNum(m)) return undefined;
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      if (argumentTooFarForDouble(ce, u, m)) return undefined;
       const phi = amplitude(cxOf(u), cxOf(m));
       return phi === undefined ? undefined : numberResult(ce, phi);
     },
@@ -302,7 +337,9 @@ function declareJacobiZN(ce: ComputeEngine): void {
       if (isZeroExpr(u) || isZeroExpr(m)) return finish(ce.Zero, options);
 
       if (!wantsNumber(ops, options) || !isFiniteNum(u) || !isFiniteNum(m)) return undefined;
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       if (m.im !== 0 || m.re < 0 || m.re > 1) return undefined; // decline — see file header
+      if (argumentTooFarForDouble(ce, u, m)) return undefined;
 
       // Native EllipticE/EllipticK evaluate at compute-engine's configured (bignum)
       // precision, not a plain double — reading `.re`/`.im` off each composed piece and

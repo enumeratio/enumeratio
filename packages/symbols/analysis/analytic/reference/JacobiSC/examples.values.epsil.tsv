@@ -3,3 +3,5 @@ a-floating-point-argument-evaluates-directly-to	N(JacobiSC(0.6, 0.4))	0.664_744_
 m-greater-than-1-via-the-reciprocal-modulus	N(JacobiSC(1.2, 3))	0.666_077_181_942_274_2
 u-0-is-0-for-any-m	JacobiSC(0, m)	0
 symbolic-arguments-are-left-unevaluated-rather	JacobiSC(u, m)	JacobiSC(u, m)
+m-1-at-a-shared-pole-of-sn-and-cn	N(JacobiSC(1 / 2 * imaginaryUnit * pi, 1))	i
+u-1e16-declines-rather-than-answering-wrong	N(JacobiSC(10 ^ 16, 1 / 4))	JacobiSC(10_000_000_000_000_000.0, 0.25)

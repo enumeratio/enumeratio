@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
+  exceedsDoublePrecision,
   isFiniteNum,
   numberResult,
   wantsNumber,
@@ -42,10 +43,14 @@ function declareIncompleteF(ce: ComputeEngine): void {
     signature: "(number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const [phi, m] = ops;
+      if (phi === undefined || m === undefined) return undefined;
+      // F(0,m) = 0 for any m — the integral's upper limit is its lower limit — exact even
+      // without N(), unlike the general case below (Wolfram's EllipticF[0,m] agrees).
+      if (phi.re === 0 && phi.im === 0) return ce.Zero;
       // Stay symbolic under a plain `evaluate()` at symbolic/exact operands, same as
       // every other head here — only delegate once a numeric answer is actually wanted,
       // so this head's own name survives an unevaluated call.
-      if (phi === undefined || m === undefined || !wantsNumber(ops, options)) return undefined;
+      if (!wantsNumber(ops, options)) return undefined;
       return ce.box(["EllipticF", phi, m]).evaluate(options);
     },
   });
@@ -176,6 +181,9 @@ function declareIncompleteEllipticPi(ce: ComputeEngine): void {
       if (!wantsNumber(ops, options) || !isFiniteNum(n) || !isFiniteNum(phi) || !isFiniteNum(m)) {
         return undefined;
       }
+      // The Carlson kernel below is plain-double: N(…, d) past what a double carries would
+      // otherwise silently hand back ~17 correct digits dressed as d of them.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       const result = incompleteEllipticPi(cx(n.re, n.im), cx(phi.re, phi.im), cx(m.re, m.im));
       return result === undefined ? undefined : numberResult(ce, result);
     },

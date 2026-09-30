@@ -29,3 +29,5 @@ a-complex-nome-q	N(EllipticTheta(2, 0.5 + 0.5i, 0.1 + 0.2i))	1.482_111_803_583_0
 theta1-0-q-is-0-for-any-q-an-odd	N(EllipticTheta(1, 0, 0.5))	0
 q-1-is-declined-the-series-diverges	N(EllipticTheta(3, 0.3, 1))	EllipticTheta(3, 0.3, 1)
 symbolic-arguments-are-left-unevaluated-rather	EllipticTheta(3, u, q)	EllipticTheta(3, u, q)
+u-1e30-declines-rather-than-answering-wrong	N(EllipticTheta(1, 10 ^ 30, 1 / 2))	EllipticTheta(1, 1.0e30, 0.5)
+u-1e30-mpmath-true-value	N(EllipticTheta(1, 10 ^ 30, 1 / 2))	-0.050_337_344_685_938_287_942

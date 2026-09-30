@@ -12,3 +12,5 @@ e-3-711592653589793-0-57-0-23i	<N><IncompleteEllipticE>3.711592653589793 <Comple
 e-3-711592653589793-0-23i-0-57-0-23i	<N><IncompleteEllipticE><Complex>3.711592653589793 0.23</Complex> <Complex>0.57 0.23</Complex></IncompleteEllipticE></N>	<Complex>3.218263851154937 -0.03226628832142239</Complex>
 e-3-0-57-0-23i	<N><IncompleteEllipticE>-3 <Complex>0.57 0.23</Complex></IncompleteEllipticE></N>	<Complex>-2.50829187496877718 0.23935013725739784</Complex>
 e-4-5-0-1-0-9i	<N><IncompleteEllipticE>4.5 <Complex>0.1 0.9</Complex></IncompleteEllipticE></N>	<Complex>4.5422801988564419 -0.9475220342366324</Complex>
+e-phi-arccsc-0-m-0	<IncompleteEllipticE><Arccsc>0</Arccsc> 0</IncompleteEllipticE>	<EllipticE>ComplexInfinity 0</EllipticE>
+e-phi-pi-plus-arccsc-0-m-0	<IncompleteEllipticE><Add>Pi <Arccsc>0</Arccsc></Add> 0</IncompleteEllipticE>	<EllipticE>ComplexInfinity 0</EllipticE>

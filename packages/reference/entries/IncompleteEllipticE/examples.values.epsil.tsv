@@ -12,3 +12,5 @@ e-3-711592653589793-0-57-0-23i	N(IncompleteEllipticE(3.711_592_653_589_793, 0.57
 e-3-711592653589793-0-23i-0-57-0-23i	N(IncompleteEllipticE(3.711_592_653_589_793 + 0.23i, 0.57 + 0.23i))	3.218_263_851_154_937 - 0.032_266_288_321_422_39i
 e-3-0-57-0-23i	N(IncompleteEllipticE(-3, 0.57 + 0.23i))	-2.508_291_874_968_777_18 + 0.239_350_137_257_397_84i
 e-4-5-0-1-0-9i	N(IncompleteEllipticE(4.5, 0.1 + 0.9i))	4.542_280_198_856_441_9 - 0.947_522_034_236_632_4i
+e-phi-arccsc-0-m-0	IncompleteEllipticE(arccsc(0), 0)	ellipticE(complexInfinity, 0)
+e-phi-pi-plus-arccsc-0-m-0	IncompleteEllipticE(pi + arccsc(0), 0)	ellipticE(complexInfinity, 0)

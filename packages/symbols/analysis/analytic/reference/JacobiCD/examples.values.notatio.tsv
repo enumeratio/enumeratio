@@ -4,3 +4,5 @@ jacobicd-0-4-0-5i-0-3	<N><JacobiCD><Complex>0.4 0.5</Complex> 0.3</JacobiCD></N>
 m-greater-than-1-via-the-reciprocal-modulus	<N><JacobiCD>0.3 1.5</JacobiCD></N>	<ToExpression>1.023633106578735</ToExpression>
 u-0-is-1-for-any-m	<JacobiCD>0 m</JacobiCD>	<ToExpression>1</ToExpression>
 symbolic-arguments-are-left-unevaluated-rather	<JacobiCD>u m</JacobiCD>	<JacobiCD>u m</JacobiCD>
+u-1e16-declines-rather-than-answering-wrong	<N><JacobiCD><Power>10 16</Power> <Rational>2 7</Rational></JacobiCD></N>	<JacobiCD>10000000000000000 0.285714285714285714286</JacobiCD>
+u-1e16-mpmath-true-value	<N><JacobiCD><Power>10 16</Power> <Rational>2 7</Rational></JacobiCD></N>	<ToExpression>0.22404752357450412066</ToExpression>

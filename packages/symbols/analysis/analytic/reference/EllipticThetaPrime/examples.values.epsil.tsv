@@ -29,3 +29,4 @@ theta1-prime-0-q-matches-the-classical	N(EllipticThetaPrime(1, 0.3, 0.2))	1.178_
 a-complex-argument-u	N(EllipticThetaPrime(3, 0.3 + 0.1i, 0.2))	-0.473_682_807_676_938_2 - 0.134_840_072_893_700_92i
 q-1-is-declined-the-series-diverges	N(EllipticThetaPrime(3, 0.3, 1))	EllipticThetaPrime(3, 0.3, 1)
 symbolic-arguments-are-left-unevaluated-rather	EllipticThetaPrime(3, u, q)	EllipticThetaPrime(3, u, q)
+u-1e30-declines-rather-than-answering-wrong	N(EllipticThetaPrime(1, 10 ^ 30, 1 / pi))	EllipticThetaPrime(1, 1.0e30, 0.318_309_886_183_790_671_538)

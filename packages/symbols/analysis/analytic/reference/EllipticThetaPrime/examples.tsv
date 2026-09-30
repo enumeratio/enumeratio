@@ -29,3 +29,4 @@ theta1-prime-0-q-matches-the-classical	Scope		[N, [EllipticThetaPrime, 1, 0.3, 0
 a-complex-argument-u	Scope		[N, [EllipticThetaPrime, 3, [Complex, 0.3, 0.1], 0.2]]	[Complex, -0.4736828076769382, -0.13484007289370092]	[Complex, -0.4736828076769382, -0.1348400728937009]	1e-9	mpmath 1.3.0 jtheta(derivative=1)	A complex argument u
 q-1-is-declined-the-series-diverges	Possible issues		[N, [EllipticThetaPrime, 3, 0.3, 1]]	[EllipticThetaPrime, 3, 0.3, 1]				|q| ≥ 1 is declined — the series diverges there
 symbolic-arguments-are-left-unevaluated-rather	Possible issues		[EllipticThetaPrime, 3, u, q]	[EllipticThetaPrime, 3, u, q]				Symbolic arguments are left unevaluated rather than guessed at
+u-1e30-declines-rather-than-answering-wrong	Possible issues		[N, [EllipticThetaPrime, 1, [Power, 10, 30], [Divide, 1, Pi]]]	[EllipticThetaPrime, 1, 1e+30, {num: "0.318309886183790671538"}]				Same gap as EllipticTheta (the true value is tracked there, not repeated per head).

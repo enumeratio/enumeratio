@@ -17,3 +17,5 @@ all-three-arguments-complex-matches-mpmath-s	N(IncompleteEllipticPi(1.17 + 0.45i
 characteristic-n-1	N(IncompleteEllipticPi(0.3, 1.1, 0.4))	1.323_800_815_047_493_6
 n-0-reduces-to-the-incomplete-elliptic-integral	N(IncompleteEllipticPi(0, 0.4, 0.3))	0.403_164_991_947_139_34
 symbolic-arguments-are-left-unevaluated-rather	IncompleteEllipticPi(n, phi, m)	IncompleteEllipticPi(n, phi, m)
+n-0-phi-arccsc-0-m-0	IncompleteEllipticPi(0, arccsc(0), 0)	IncompleteEllipticPi(0, complexInfinity, 0)
+n-0-phi-pi-plus-arccsc-0-m-0	IncompleteEllipticPi(0, pi + arccsc(0), 0)	IncompleteEllipticPi(0, complexInfinity, 0)

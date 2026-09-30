@@ -12,3 +12,7 @@ f-3-711592653589793-0-57-0-23i	N(IncompleteEllipticF(3.711_592_653_589_793, 0.57
 f-3-711592653589793-0-23i-0-57-0-23i	N(IncompleteEllipticF(3.711_592_653_589_793 + 0.23i, 0.57 + 0.23i))	4.289_764_434_700_574 + 0.671_112_429_987_333_7i
 f-3-0-57-0-23i	N(IncompleteEllipticF(-3, 0.57 + 0.23i))	-3.577_957_673_312_077 - 0.417_536_385_803_402_7i
 f-4-5-0-1-0-9i	N(IncompleteEllipticF(4.5, 0.1 + 0.9i))	4.209_502_419_983_872 + 0.827_759_281_089_238_7i
+f-jacobiamplitude-0-0-m-0	IncompleteEllipticF(JacobiAmplitude(0, 0), 0)	0
+f-jacobiamplitude-0-1-m-1	IncompleteEllipticF(JacobiAmplitude(0, 1), 1)	0
+f-phi-arccsc-0-m-0	IncompleteEllipticF(arccsc(0), 0)	ellipticF(complexInfinity, 0)
+f-phi-pi-plus-arccsc-0-m-0	IncompleteEllipticF(pi + arccsc(0), 0)	ellipticF(complexInfinity, 0)

@@ -3,3 +3,4 @@ a-floating-point-argument-evaluates-directly-to	<N><JacobiCS>1.1 0.9</JacobiCS><
 m-greater-than-1-via-the-reciprocal-modulus	<N><JacobiCS>0.3 1.5</JacobiCS></N>	<ToExpression>3.3098097501258734</ToExpression>
 u-0-is-a-pole-for-any-m	<JacobiCS>0 m</JacobiCS>	<ComplexInfinity />
 symbolic-arguments-are-left-unevaluated-rather	<JacobiCS>u m</JacobiCS>	<JacobiCS>u m</JacobiCS>
+m-1-at-a-shared-pole-of-sn-and-cn	<N><JacobiCS><Multiply><Rational>1 2</Rational> ImaginaryUnit Pi</Multiply> 1</JacobiCS></N>	<Complex>0.0 -1.0</Complex>

@@ -4,3 +4,5 @@ jacobicd-0-4-0-5i-0-3	N(JacobiCD(0.4 + 0.5i, 0.3))	1.034_017_190_005_338_8 - 0.1
 m-greater-than-1-via-the-reciprocal-modulus	N(JacobiCD(0.3, 1.5))	1.023_633_106_578_735
 u-0-is-1-for-any-m	JacobiCD(0, m)	1
 symbolic-arguments-are-left-unevaluated-rather	JacobiCD(u, m)	JacobiCD(u, m)
+u-1e16-declines-rather-than-answering-wrong	N(JacobiCD(10 ^ 16, 2 / 7))	JacobiCD(10_000_000_000_000_000.0, 0.285_714_285_714_285_714_286)
+u-1e16-mpmath-true-value	N(JacobiCD(10 ^ 16, 2 / 7))	0.224_047_523_574_504_120_66
