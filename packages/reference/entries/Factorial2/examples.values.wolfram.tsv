@@ -15,3 +15,4 @@ even-double-factorials-2n-2-n-n	(Factorial2[10] == Times[Power[2, 5], Factorial[
 odd-double-factorials-2n-1-frac-2n-2-n-n	(Factorial2[9] == Divide[Factorial[10], Times[Power[2, 5], Factorial[5]]])				
 negative-even-arguments-hit-a-pole-in-the	Factorial2[-2]	ComplexInfinity	(-2)\text{!!}	\text{ComplexInfinity}	disagree
 15-2-027-025-already-past-two-million-despite	Factorial2[15]	2027025	15\text{!!}	2027025	
+factorial2-of-negative-infinity-is-indeterminate	Factorial2[-Infinity]				

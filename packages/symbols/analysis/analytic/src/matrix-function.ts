@@ -27,8 +27,10 @@ function applyF(ce: ComputeEngine, f: BoxedExpression, x: BoxedExpression): Boxe
 
 /** f′(x₀), via `D` on `f` applied to a fresh symbol, evaluated there. `applied` is
  * `.evaluate()`d before differentiating — `D` needs the beta-reduced body (`t^2`), not the
- * unevaluated `Apply(f, t)` a `Function` literal boxes as. */
-function derivativeOfFAt(ce: ComputeEngine, f: BoxedExpression, x0: number): BoxedExpression {
+ * unevaluated `Apply(f, t)` a `Function` literal boxes as. `x0` substitutes as the boxed
+ * expression it is (exact stays exact) — `subs` takes an `Expression` directly, no need to
+ * round-trip it through a JS number. */
+function derivativeOfFAt(ce: ComputeEngine, f: BoxedExpression, x0: BoxedExpression): BoxedExpression {
   const t = "_matrixFunction_t";
   const applied = applyF(ce, f, ce.symbol(t));
   const derivative = ce.function("D", [applied, ce.symbol(t)]).evaluate();
@@ -66,7 +68,7 @@ function twoByTwoViaEigen(
   if (discSq.isSame(0)) {
     const lambda = ce.function("Divide", [trace, 2]).evaluate();
     const fLambda = applyF(ce, f, lambda);
-    const fPrime = derivativeOfFAt(ce, f, lambda.N().re);
+    const fPrime = derivativeOfFAt(ce, f, lambda);
     const entry = (i: number, j: number): BoxedExpression => {
       const iij = i === j ? 1 : 0;
       const mMinusLambdaI = ce.function("Subtract", [rows[i][j], ce.function("Multiply", [iij, lambda])]).evaluate();

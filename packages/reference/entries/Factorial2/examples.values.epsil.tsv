@@ -15,3 +15,4 @@ even-double-factorials-2n-2-n-n	factorial2(10) == 2 ^ 5 * 5!	True
 odd-double-factorials-2n-1-frac-2n-2-n-n	factorial2(9) == 10! / (2 ^ 5 * 5!)	True
 negative-even-arguments-hit-a-pole-in-the	factorial2(-2)	`NaN`
 15-2-027-025-already-past-two-million-despite	factorial2(15)	2_027_025
+factorial2-of-negative-infinity-is-indeterminate	factorial2(negativeInfinity)	Indeterminate
