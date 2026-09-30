@@ -8,7 +8,7 @@ gamma-1-0-0728158-under-n			[N, [StieltjesGamma, 1]]	-0.07281584548367652	$\gamm
 gamma-2-0-00969036-under-n		test	[N, [StieltjesGamma, 2]]	{num: "-0.00969036319287231848453"}	$\gamma_2 = -0.0096903\ldots$ under N()		
 complex-a	Scope		[N, [StieltjesGamma, 2, [Complex, 1, 1]]]	[Complex, 0.1703042014685879, 0.37317719575749525]	Complex $a$		
 listable-in-the-order-n-threads-over-a-list	Scope		[StieltjesGamma, [List, 1, 2, 3], 0.5]	[List, -1.3534596808049415, 0.9688644752202907, -0.6674242737113807]	Listable in the order $n$: threads over a list		
-interval-arithmetic-in-a	Scope		[StieltjesGamma, 2, [Interval, 2.34, 2.35]]	[Interval, -0.06724128035508715, -0.06514040366307242]	Interval arithmetic in $a$	unclassified	""
+interval-arithmetic-in-a	Scope		[StieltjesGamma, 2, [Interval, 2.34, 2.35]]	[Interval, -0.06724128035508715, -0.06514040366307242]	Interval arithmetic in $a$	precision	Wolfram's interval evaluation of StieltjesGamma over-widens the enclosure; ours is tight.
 to-30-significant-digits-not-yet-the-requested	Scope		[N, [StieltjesGamma, 1], 30]	{num: "-0.0728158454836767248605863758749"}	To 30 significant digits, past a double's reach		
 certified-digits-gamma-1	Applications		[N, [StieltjesGamma, 1], 40]	{num: "-0.07281584548367672486058637587490131913774"}	$\gamma_1$ to 40 digits, proven: the Euler–Maclaurin remainder is bounded, and both ends of the enclosure round to these digits		
 certified-digits-gamma-2-1-3	Applications		[N, [StieltjesGamma, 2, [Rational, 1, 3]], 40]	{num: "3.619163909618963629887182216185941703294"}	$\gamma_2(1/3)$ to 40 digits, proven the same way		

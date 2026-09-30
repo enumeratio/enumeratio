@@ -11,4 +11,4 @@ a-lazy-range-works-too	Scope		[Last, [Range, 5, 10]]	10	A lazy [[Range]] works t
 any-expression-not-just-a-list-the-last-term-of	Scope		[Last, [Add, [Power, a, 2], [Power, b, 2]]]	[Power, b, 2]	Any expression, not just a list: the last term of a sum		
 a-default-is-ignored-when-the-collection-has-a	Scope		[Last, [List, a, b], x]	b	A default is ignored when the collection has a last element		
 last-c-at-c-1-see-at	Properties		[Equal, [Last, [List, 1, 2, 3]], [At, [List, 1, 2, 3], -1]]	True	$Last(c) = At(c, -1)$. See [[At]]		
-an-empty-collection-has-no-last-element-compute	Possible issues		[Last, [List]]	Missing	An empty collection has no last element; compute-engine returns the symbol $Missing$	unclassified	Last of an empty list is the symbol Missing here; Wolfram leaves Last[{}] unevaluated (with a Last::nolast message).
+an-empty-collection-has-no-last-element-compute	Possible issues		[Last, [List]]	Missing	An empty collection has no last element; compute-engine returns the symbol $Missing$	undefined-form	Both decline on an empty collection: compute-engine answers Missing, Wolfram's Last[{}] stays unevaluated.
