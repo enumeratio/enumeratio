@@ -6,7 +6,7 @@ import { storiesFor } from "../../data/stories.ts";
 import { inline, paragraphs as split } from "./jsdoc.ts";
 import Stories from "./Stories.vue";
 
-// The page is keyed by the Vue/React name (`BarChart3D`), not the lit tag -- the route
+// The page is keyed by the head (`BarChart3D`), not the lit tag -- the route
 // /reference/component/<Name> matches /reference/symbol/<Head>, and every heading, the props
 // table and the prose below are all in that vdom vocabulary. The tag itself shows up only in
 // the "As a web component" section at the bottom.
@@ -23,10 +23,8 @@ const heads = computed(() => {
   return tag === undefined ? [] : DRAWING_SYMBOLS.filter((s) => s.tag === tag).map((s) => s.head);
 });
 
-// A prop the generated Vue/React component actually declares -- `attribute: false` entries
-// are JS-only properties with no attribute at all, so they don't reach the wrapper's typed
-// props (@enumeratio/frontend/generate's `componentSource` excludes them the same way) and
-// are called out separately below instead of in the props table.
+// An element's attributes -- `attribute: false` entries are JS-only properties with no
+// attribute at all, so they are called out separately below instead of in the props table.
 const props_ = computed(() => component.value?.attributes.filter((a) => !a.propertyOnly) ?? []);
 const propertyOnly = computed(() => component.value?.attributes.filter((a) => a.propertyOnly) ?? []);
 </script>

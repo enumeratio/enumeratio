@@ -2,15 +2,10 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
-import { generate } from "@enumeratio/frontend/generate";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
-
-// The symbols as Vue components are generated here, before the theme is bundled, so
-// `@enumeratio/frontend`'s `src/vue-generated.ts` exists for the theme to register.
-generate("vue");
 
 // Resolve every @enumeratio/* import (bare and subpaths) to its source, so the docs
 // site reads sibling packages directly and never depends on a prior `vp pack` of

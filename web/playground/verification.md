@@ -55,10 +55,3 @@ bundle) is deferred past this PR — see `packages/symbols/evaluation/evaluation
 for `evaluateInWorker`'s host-side logic instead, exercised with a fake `Worker` so it
 runs without a browser at all: a normal resolution, a `timeMs` kill, a `signal` abort,
 and a `memoryBytes` bound tripped by an injected `measureMemory`.
-
-## As a Vue component
-
-<Story
-  title="The Vue wrapper">
-<TestResultObject outcome="Success" input="1 + 1" actual="2" time="0" />
-</Story>

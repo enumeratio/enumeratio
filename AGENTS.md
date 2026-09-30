@@ -54,8 +54,10 @@ too; when the wiki grows a rule an agent must follow, add its one line here.
   statements and effects; a cell may be one `:=` binding (`allow: ["Assign"]`). See
   the wiki's [Syntax-and-Formats](https://github.com/enumeratio/enumeratio/wiki/Syntax-and-Formats).
 - In the reference data, an example's retypeable text form (its InputForm) is keyed `epsil`,
-  and `notatio` keys its component serialisation, the vdom as Vue/React markup (the wiki's
-  [Examples-as-Data](https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data) §2, signed off).
+  and `notatio` keys its component serialisation, the vdom as markup: FullForm written as
+  JSX, framework-free (the wiki's
+  [Speculative-Vdom-Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup)).
+  There are no Vue or React wrappers; the elements are the component form.
 - Package names have not all caught up; do not rename them in passing — see the wiki's
   [Component-Naming](https://github.com/enumeratio/enumeratio/wiki/Component-Naming) for how renames wait.
 

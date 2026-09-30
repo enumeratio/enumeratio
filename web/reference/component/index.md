@@ -1,12 +1,9 @@
 # Components
 
-Every symbol that draws — a plot, a chart, a control, a layout — as a component: the same
-names, the same props, read straight out of one source and generated for Vue, for React, and
-as a plain custom element for any other host, so these tables cannot drift from the code.
-
-`<BarChart3D data="…" />` in a Vue template or JSX, `<notatio-bar-chart-3d data="…">` in plain
-HTML — see each page's "As a web component" section for the latter; import
-`@enumeratio/frontend` for the side effect either way. The [playground](/playground/) shows
+Every symbol that draws — a plot, a chart, a control, a layout — as a custom element, named
+for its symbol (`BarChart3D` is `<notatio-bar-chart-3d>`), its attributes read straight out
+of the element source, so these tables cannot drift from the code. Import
+`@enumeratio/components` for the registration. The [playground](/playground/) shows
 each one working; this reference is for reading the dials.
 
 ## Expressions are written in Epsil
