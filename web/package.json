@@ -42,7 +42,7 @@
     "katex": "catalog:"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.140.0",
+    "@cortex-js/compute-engine": "^0.141.0",
     "@playwright/test": "^1.55.0",
     "vitepress": "^1.6.4",
     "vue": "^3.5.42"
