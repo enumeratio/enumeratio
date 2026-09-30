@@ -7,6 +7,6 @@
 // A family's `carrier` still resolves to its minted element type through `declareFamilies`'
 // `carrierTypes` option, same as before the move -- see the permutations pilot's
 // permutations/src/families/index.ts for the full explanation.
-export { entries as coreEntries } from "./core.ts";
+export { entries as coreEntries, epsilEntries as coreEpsilFamilies } from "./core.ts";
 export { entries as partitionsEntries } from "./partitions.ts";
 export { entries as tableauxPlaneEntries, IsSkewPartitionOf, skewPart } from "./tableaux-plane.ts";

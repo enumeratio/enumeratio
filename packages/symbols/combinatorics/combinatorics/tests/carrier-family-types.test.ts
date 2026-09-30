@@ -18,6 +18,7 @@ import {
 } from "../permutations/src/families/index.ts";
 import {
   coreEntries as partitionsCoreEntries,
+  coreEpsilFamilies as partitionsCoreEpsilFamilies,
   partitionsEntries,
   tableauxPlaneEntries as partitionsTableauxPlaneEntries,
 } from "../partitions/src/families/index.ts";
@@ -63,6 +64,7 @@ import {
 const allFamilies: readonly FamilyKernel[] = [
   ...kernelsOn(new ComputeEngine(), permutationsCoreFamilies),
   ...[...permutationsEntries, ...permutationClassesEntries].map(numberKernel),
+  ...kernelsOn(new ComputeEngine(), partitionsCoreEpsilFamilies),
   ...[...partitionsCoreEntries, ...partitionsEntries, ...partitionsTableauxPlaneEntries].map(numberKernel),
   ...kernelsOn(new ComputeEngine(), compositionsCoreFamilies),
   ...compositionsEntries.map(numberKernel),
