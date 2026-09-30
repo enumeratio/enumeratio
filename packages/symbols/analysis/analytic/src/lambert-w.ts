@@ -12,7 +12,7 @@ import {
   isFiniteNum,
   isRealInt,
   wantsNumber,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // LambertW(z) — compute-engine's native ProductLog — already evaluates the principal (k = 0)
 // and lower-real (k = -1) branches numerically. Missing: exact values at algebraically nice

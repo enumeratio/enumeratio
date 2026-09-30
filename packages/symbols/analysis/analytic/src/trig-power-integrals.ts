@@ -1,7 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
-import type { EvalOptions } from "@enumeratio/for-compute-engine";
-import { atEnginePrecision } from "@enumeratio/for-compute-engine";
+import type { EvalOptions } from "@enumeratio/ce-patches";
+import { atEnginePrecision } from "@enumeratio/ce-patches";
 
 // ∫ sinᵐ(u) cosⁿ(u) dx for a linear u = a·x + b with m or n odd -- compute-engine integrates
 // sin² but not sin³. An odd power gives up one factor as du and the rest rewrites through

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, wantsNumber, logGammaReal } from "@enumeratio/for-compute-engine";
+import { type EvalOptions, isFiniteNum, wantsNumber, logGammaReal } from "@enumeratio/ce-patches";
 
 // InverseGammaRegularized(a, s) and InverseBetaRegularized(s, a, b): neither has a closed
 // form in general, so both are solved numerically — a safeguarded Newton's method (falling

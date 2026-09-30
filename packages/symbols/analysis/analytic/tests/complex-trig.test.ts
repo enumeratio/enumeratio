@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { cosPi, sinPi } from "@enumeratio/for-compute-engine";
+import { cosPi, sinPi } from "@enumeratio/ce-patches";
 
 // sinPi/cosPi reduce x mod 2 before calling Math.sin/cos, so they can lose precision right
 // where they're supposed to be exact: near an integer or half-integer, the reduced argument

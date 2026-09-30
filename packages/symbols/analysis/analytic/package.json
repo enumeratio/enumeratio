@@ -24,13 +24,13 @@
     "check": "vp check"
   },
   "dependencies": {
-    "@enumeratio/engine": "workspace:*",
-    "@enumeratio/for-compute-engine": "workspace:*"
+    "@enumeratio/ce-patches": "workspace:*",
+    "@enumeratio/engine": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.141.0",
+    "@enumeratio/ce-patches": "workspace:*",
     "@enumeratio/engine": "workspace:*",
-    "@enumeratio/for-compute-engine": "workspace:*",
     "@enumeratio/oracle": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",

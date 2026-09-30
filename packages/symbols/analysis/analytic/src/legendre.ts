@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import type { Json } from "@enumeratio/for-compute-engine";
+import type { Json } from "@enumeratio/ce-patches";
 import {
   type BoxInput,
   isFiniteNum,
@@ -10,7 +10,7 @@ import {
   scale,
   sub,
   type Cx,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // LegendrePolynomial(n, x): P_0 = 1, P_1 = x, (k+1) P_{k+1} = (2k+1) x P_k − k P_{k−1}.
 // Fungrim's name; Wolfram's is `LegendreP` (bridged in the wolfram package's HEADS map,

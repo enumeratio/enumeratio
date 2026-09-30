@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, wrapOperator } from "@enumeratio/engine";
-import type { EvalOptions } from "@enumeratio/for-compute-engine";
+import type { EvalOptions } from "@enumeratio/ce-patches";
 
 // A few elementary special values Wolfram folds and compute-engine's native handlers
 // leave symbolic: the hyperbolic functions at a purely imaginary argument (rewritten

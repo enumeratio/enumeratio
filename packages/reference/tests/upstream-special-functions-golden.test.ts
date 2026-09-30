@@ -1,14 +1,14 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { applyAllPatches } from "@enumeratio/for-compute-engine/src";
+import { applyAllPatches } from "@enumeratio/ce-patches/src";
 
 // The full oracle comparison for BarnesG, LogBarnesG, LogGamma, ClausenCl, DirichletEta,
 // DirichletBeta, StieltjesGamma, DirichletCharacter, and DirichletL -- held against
 // golden/upstream/dirichlet-barnes-loggamma-clausen-stieltjes.golden.json, which
 // scripts/collect-special-goldens.ts gathers from mpmath and a Wolfram kernel (neither is
 // needed to run this file). A curated handful of these points also lives beside the code,
-// in upstream/compute-engine/tests/dirichlet-barnes-loggamma-clausen-stieltjes.test.ts.
+// in packages/ce-patches/tests/dirichlet-barnes-loggamma-clausen-stieltjes.test.ts.
 
 const ce = new ComputeEngine();
 applyAllPatches(ce);

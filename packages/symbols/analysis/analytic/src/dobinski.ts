@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
-import type { EvalOptions } from "@enumeratio/for-compute-engine";
+import type { EvalOptions } from "@enumeratio/ce-patches";
 
 // Dobinski's formula: Σ_{k≥0} kⁿ/k! = e·Bₙ, the n-th Bell number times e (Wolfram sums it
 // the same way). The k = 0 term is 0ⁿ/0! -- 1 at n = 0 and 0 otherwise -- so a sum from
