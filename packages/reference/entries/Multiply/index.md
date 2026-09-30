@@ -11,11 +11,19 @@ signatures:
     library: enumeratio-analytic
     type: (number*) -> number
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
+    symbols:
+      - ^ExponentialE$
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-hypercomplex
     type: (number*) -> number
     overrides: enumeratio-analytic
+    symbols:
+      - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Multiply(number*) -> number
     description: Product of two or more values.
     library: enumeratio-residues

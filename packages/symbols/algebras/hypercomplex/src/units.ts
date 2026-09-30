@@ -91,6 +91,9 @@ const FAMILY_BY_PREFIX = new Map<string, Family>([
   ["vartheta", FAMILIES[5]!],
 ]);
 
+/** Every name `generatorOf` reads as a generator (and `e_0`, which it doesn't), as a pattern. */
+export const GENERATOR_SYMBOLS = `^(?:${[...FAMILY_BY_PREFIX.keys()].join("|")})_\\d+$`;
+
 /** A single generator: its family and its subscript. */
 export interface Generator {
   readonly family: Family;

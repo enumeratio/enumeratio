@@ -15,6 +15,10 @@ export interface Overload {
   readonly signature?: string;
   /** Applies when an operand's head is one of these (a carrier: `Adele`, `ProfiniteNumber`). */
   readonly on?: readonly string[];
+  /** Applies only where an operand mentions a symbol whose name this pattern (a regular
+   *  expression's source) matches: hypercomplex's generators, `i_1` or `e_2`. Data for the
+   *  resolver, which loads the package only for an expression naming one; `when` checks it. */
+  readonly symbols?: string;
   /** … and no operand's head is one of these. */
   readonly unless?: readonly string[];
   readonly arity?: Arity;

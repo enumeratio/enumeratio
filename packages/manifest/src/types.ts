@@ -14,6 +14,8 @@ export interface Overload {
   readonly overrides?: string;
   /** The carriers it applies to, when it applies to nothing else. */
   readonly on?: readonly string[];
+  /** The symbol names it applies to, as regular expressions, when it applies to nothing else. */
+  readonly symbols?: readonly string[];
 }
 
 export interface SymbolInfo {

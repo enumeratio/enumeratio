@@ -45,6 +45,7 @@ export function registerTaggedHead(
   head: string,
   resolvers: readonly Resolver[],
   extraGates: readonly Gate[] = [],
+  gateSymbols?: string,
 ): void {
   if (resolvers.length === 0) return;
   const evaluate = (values: readonly BoxedExpression[], options: EvaluateOptions): BoxedExpression | undefined => {
@@ -62,6 +63,7 @@ export function registerTaggedHead(
     defineOverload(ce, head, {
       package: "analytic",
       unless: [...TAGS],
+      ...(gateSymbols !== undefined ? { symbols: gateSymbols } : {}),
       gate: (ops) => extraGates.some((gate) => gate(ops)),
       evaluate,
     });
@@ -70,12 +72,12 @@ export function registerTaggedHead(
 export function registerTaggedHeads(
   ce: ComputeEngine,
   heads: readonly string[],
-  extraGates: Readonly<Record<string, Gate | undefined>>,
+  extraGates: Readonly<Record<string, { readonly gate: Gate; readonly symbols?: string } | undefined>>,
   ...resolverMaps: readonly Readonly<Record<string, Resolver | undefined>>[]
 ): void {
   for (const head of heads) {
     const resolvers = resolverMaps.map((map) => map[head]).filter((r): r is Resolver => r !== undefined);
-    const gate = extraGates[head];
-    registerTaggedHead(ce, head, resolvers, gate ? [gate] : []);
+    const extra = extraGates[head];
+    registerTaggedHead(ce, head, resolvers, extra ? [extra.gate] : [], extra?.symbols);
   }
 }

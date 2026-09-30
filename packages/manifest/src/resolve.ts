@@ -6,7 +6,7 @@
 import { CANONICAL, DECLARERS } from "./declarers-data.ts";
 import { PACKAGES } from "./generated/packages.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
-import type { SymbolInfo } from "./types.ts";
+import type { Overload, SymbolInfo } from "./types.ts";
 
 const ENGINE = "compute-engine";
 
@@ -58,20 +58,32 @@ export function reachedNames(json: unknown, canonical = CANONICAL): Set<string> 
  * records' overloads for a name that isn't there. A package whose only say in a head is rows on
  * carriers it declares (`on`: adeles' `Add` on `Adele`) doesn't count for it: its rows matter
  * only where one of those exists, and whatever makes one brings the package. Any other widening
- * counts: general ones (structures' `Floor(x, m)`, number-theory's `Fibonacci(1.5)`), and rows
- * on a carrier someone else declares (analytic's on compute-engine's `Interval`).
+ * counts: general ones (structures' `Floor(x, m)`, number-theory's `Fibonacci(1.5)`). Rows on a
+ * carrier someone else declares (analytic's on compute-engine's `Interval`) count where the
+ * expression names it, and rows on symbols (hypercomplex's `Add` on `i_1`) where it names one.
  */
 export function packagesFor(json: unknown, lookup: Lookup = manifest, declarers = DECLARERS): Set<string> {
   const packages = new Set<string>();
-  for (const name of reachedNames(json)) {
+  const names = reachedNames(json);
+  const named = (pattern: string): boolean => {
+    const matches = new RegExp(pattern, "u");
+    return [...names].some((name) => matches.test(name));
+  };
+  for (const name of names) {
     const overloads = lookup(name)?.overloads ?? [];
     const declared = Object.hasOwn(declarers, name)
       ? declarers[name]!
       : overloads.map((overload) => overload.package).filter((pkg) => pkg !== ENGINE);
     for (const pkg of declared) {
       const own = overloads.filter((overload) => overload.package === pkg);
-      const carries = (carrier: string): boolean => declarers[carrier]?.includes(pkg) === true;
-      if (own.length > 0 && own.every((overload) => overload.on?.every(carries) === true)) continue;
+      // A carrier of its own brings the package with whatever makes one; someone else's
+      // (compute-engine's `Interval`) has to be named.
+      const triggered = (carrier: string): boolean => declarers[carrier]?.includes(pkg) !== true && names.has(carrier);
+      const applies = (overload: Overload): boolean =>
+        (overload.on === undefined && overload.symbols === undefined) ||
+        overload.on?.some(triggered) === true ||
+        overload.symbols?.some(named) === true;
+      if (own.length > 0 && !own.some(applies)) continue;
       packages.add(pkg);
     }
   }

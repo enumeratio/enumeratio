@@ -20,6 +20,8 @@ signatures:
     library: enumeratio-hypercomplex
     type: (complex | infinity, complex | signed_infinity) -> number
     overrides: enumeratio-analytic
+    symbols:
+      - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-residues
