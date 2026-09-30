@@ -1,6 +1,6 @@
-id	in
-solve-x-2-1-for-x	Solve[(Power[x, 2] == 1), x]
-solve-x-2-4-0-a-bare-expression-reads-as-0	Solve[Subtract[Power[x, 2], 4], x]
-solve-x-1-0-a-single-real-root	Solve[(Plus[x, 1] == 0), x]
-solve-x-2-1-0-yields-complex-roots	Solve[(Plus[Power[x, 2], 1] == 0), x]
-a-2-2-linear-system-each-solution-is-a-tuple	Solve[List[(Plus[x, y] == 3), (Subtract[x, y] == 1)], List[x, y]]
+id	in	out	tex.in	tex.out	verdict
+solve-x-2-1-for-x	Solve[(Power[x, 2] == 1), x]	{{x -> -1}, {x -> 1}}	\text{Solve}\left[x^2=1,x\right]	\{\{x\to -1\},\{x\to 1\}\}	disagree
+solve-x-2-4-0-a-bare-expression-reads-as-0	Solve[Subtract[Power[x, 2], 4], x]	Solve[-4 + x^2, x]	\text{Solve}\left[x^2-4,x\right]	\text{Solve}\left[x^2-4,x\right]	disagree
+solve-x-1-0-a-single-real-root	Solve[(Plus[x, 1] == 0), x]	{{x -> -1}}	\text{Solve}[x+1=0,x]	\{\{x\to -1\}\}	disagree
+solve-x-2-1-0-yields-complex-roots	Solve[(Plus[Power[x, 2], 1] == 0), x]	{{x -> -I}, {x -> I}}	\text{Solve}\left[x^2+1=0,x\right]	\{\{x\to -i\},\{x\to i\}\}	disagree
+a-2-2-linear-system-each-solution-is-a-tuple	Solve[List[(Plus[x, y] == 3), (Subtract[x, y] == 1)], List[x, y]]	{{x -> 2, y -> 1}}	\text{Solve}[\{x+y=3,x-y=1\},\{x,y\}]	\{\{x\to 2,y\to 1\}\}	disagree

@@ -88,9 +88,24 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
         const [a, b] = ops;
         // Native answers an exact pole-cancelling call like Beta(∞, 0) with the float
         // sentinel `NaN` rather than declining it -- an exact operand pair calls that
-        // `Indeterminate` instead (same convention `incomplete-gamma.ts` applies).
+        // `Indeterminate` instead (same convention `incomplete-gamma.ts` applies), EXCEPT
+        // B(a, 0) with a → +∞: Γ(a)Γ(0)/Γ(a+0) has the same Γ(a) in numerator and
+        // denominator, which cancels to 1 for any finite a where Γ(a) is finite and
+        // nonzero -- and stays 1 as a → +∞, since Γ is smooth and nonzero all the way out.
+        // That leaves the lone Γ(0), a genuine simple pole: ComplexInfinity, not
+        // Indeterminate (confirmed against DLMF 5.12.1's B(a,0) reduction). a → −∞ does
+        // NOT get this: Γ oscillates through a pole at every negative integer along the
+        // way, so no single limit exists there -- it falls through to Indeterminate below,
+        // same as every other exact-NaN case (including B(0, 0), a genuine double pole).
         const isExact = (op: BoxedExpression): boolean => (op as Partial<{ isExact: boolean }>).isExact !== false;
-        if (isNaNValue(r) && isExact(a) && isExact(b)) return ce.symbol("Indeterminate");
+        const isZero = (op: BoxedExpression): boolean => op.re === 0 && (op.im === 0 || op.im === undefined);
+        const isPositiveInfinity = (op: BoxedExpression): boolean => op.re === Infinity;
+        if (isNaNValue(r) && isExact(a) && isExact(b)) {
+          if ((isZero(a) && isPositiveInfinity(b)) || (isPositiveInfinity(a) && isZero(b))) {
+            return ce.symbol("ComplexInfinity");
+          }
+          return ce.symbol("Indeterminate");
+        }
         if (!declined(r, "Beta")) return r;
         // B(a, 1) = Γ(a)Γ(1)/Γ(a+1) = 1/a, exact for any a (including symbolic).
         if (isRealInt(b) && b.re === 1) return finish(ce.function("Divide", [ce.One, a]), options);

@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out
-a-floating-point-argument-evaluates-directly-to	N[JacobiCS[1.1, 0.9]]			
-m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCS[0.3, 1.5]]			
-u-0-is-a-pole-for-any-m	JacobiCS[0, m]	ComplexInfinity	\text{cs}(0|m)	\text{ComplexInfinity}
-symbolic-arguments-are-left-unevaluated-rather	JacobiCS[u, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{cs}(u|m)-\text{cs}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{cs}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{cs}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{cs}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{cs}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{cs}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{cs}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-m-1-at-a-shared-pole-of-sn-and-cn	N[JacobiCS[Times[Rational[1, 2], I, Pi], 1]]			
+a-floating-point-argument-evaluates-directly-to	N[JacobiCS[1.1, 0.9]]	0.7225880618717214	N[\text{cs}(1.1|0.9)]	0.722588
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCS[0.3, 1.5]]	3.309809750125872	N[\text{cs}(0.3|1.5)]	3.30981
+u-0-is-a-pole-for-any-m				
+symbolic-arguments-are-left-unevaluated-rather				
+m-1-at-a-shared-pole-of-sn-and-cn	N[JacobiCS[Times[Rational[1, 2], I, Pi], 1]]	0. - 1.*I	N\left[\text{cs}\left(\left.\frac{1}{2} i \pi \right|1\right)\right]	0.\, -1. i

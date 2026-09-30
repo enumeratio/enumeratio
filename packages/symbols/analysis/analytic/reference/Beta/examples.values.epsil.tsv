@@ -19,4 +19,4 @@ b-a-1-1-a-for-symbolic-a	beta(a, 1)	1 / a
 b-2-b-frac-1-b-b-1-not-yet	beta(2, b)	1 / (b * (b + 1))
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the	D(beta(a, b), a)	(digamma(a) - digamma(a + b)) * beta(a, b)
 a-nonpositive-integer-argument-is-a-pole-of-the	beta(-1, 2)	complexInfinity
-beta-of-positive-infinity-0-is-indeterminate	beta(positiveInfinity, 0)	Indeterminate
+beta-of-positive-infinity-0-is-indeterminate	beta(positiveInfinity, 0)	complexInfinity

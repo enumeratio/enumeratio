@@ -1,34 +1,34 @@
-id	section	role	expr	expected	known	tolerance	source	caption
-a-floating-point-argument-evaluates-directly-to			[N, [JacobiSN, 0.3, 0.5]]	0.2934127331684554	{num: "0.2934127331684554"}	1e-13	mpmath 1.3.0 ellipfun	A floating-point argument evaluates directly to a decimal
-sn-1-1-0-9		test	[N, [JacobiSN, 1.1, 0.9]]	0.810538459859418	{num: "0.810538459859418"}	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-7-0-2		test	[N, [JacobiSN, -0.7, 0.2]]	-0.6362806256364313	{num: "-0.6362806256364312"}	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-3-0		test	[N, [JacobiSN, 0.3, 0]]	{num: "0.2955202066613395751053207456850273736778"}	{num: "0.2955202066613396"}	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-3-1		test	[N, [JacobiSN, 0.3, 1]]	{num: "0.2913126124515909058182212728237659281536"}	{num: "0.2913126124515909"}	1e-13	mpmath 1.3.0 ellipfun	
-sn-1-2-3		test	[N, [JacobiSN, 1.2, 3]]	0.5543604938990465	[Complex, 0.5543604938990464, -1.1966544594137449e-35]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-9-0-5		test	[N, [JacobiSN, 0.9, -0.5]]	0.8145866773570134	{num: "0.8145866773570133"}	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-4-0-5i-0-3		test	[N, [JacobiSN, [Complex, 0.4, 0.5], 0.3]]	[Complex, 0.44956659059554843, 0.470515774421122]	[Complex, 0.4495665905955484, 0.47051577442112197]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-4-0-5i-0-3-2		test	[N, [JacobiSN, [Complex, 0.4, -0.5], 0.3]]	[Complex, 0.44956659059554843, -0.470515774421122]	[Complex, 0.4495665905955484, -0.47051577442112197]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-4-0-5i-0-3-3		test	[N, [JacobiSN, [Complex, -0.4, 0.5], 0.3]]	[Complex, -0.44956659059554843, 0.470515774421122]	[Complex, -0.4495665905955484, 0.47051577442112197]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-4-0-5i-0-3-4		test	[N, [JacobiSN, [Complex, -0.4, -0.5], 0.3]]	[Complex, -0.44956659059554843, -0.470515774421122]	[Complex, -0.4495665905955484, -0.47051577442112197]	1e-13	mpmath 1.3.0 ellipfun	
-sn-1-1-0-7i-0-3		test	[N, [JacobiSN, [Complex, 1.1, -0.7], 0.3]]	[Complex, 1.0519597511642005, -0.30231999727135095]	[Complex, 1.0519597511642003, -0.30231999727135117]	1e-13	mpmath 1.3.0 ellipfun	
-sn-1-1i-0-3		test	[N, [JacobiSN, [Complex, 1, 1], 0.3]]	[Complex, 1.2193369691730778, 0.4929893352945827]	[Complex, 1.219336969173078, 0.49298933529458266]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-2-8i-0-4		test	[N, [JacobiSN, [Complex, 0.2, 8], 0.4]]	[Complex, 0.20375687667828227, 0.19792242768255586]	[Complex, 0.20375687667828227, 0.19792242768255594]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-2-8i-0-4-2		test	[N, [JacobiSN, [Complex, 0.2, -8], 0.4]]	[Complex, 0.20375687667828227, -0.19792242768255586]	[Complex, 0.20375687667828227, -0.19792242768255594]	1e-13	mpmath 1.3.0 ellipfun	
-sn-5-4i-0-6		test	[N, [JacobiSN, [Complex, 5, 4], 0.6]]	[Complex, -0.9030967252203012, -0.1772114355309601]	[Complex, -0.9030967252203015, -0.1772114355309598]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-05-1-9753631352924692i-0-3		test	[N, [JacobiSN, [Complex, 0.05, 1.9753631352924692], 0.3]]	[Complex, 7.322739161223441, 14.566378469681709]	[Complex, 7.322739161223446, 14.566378469681709]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-05-2-0653631352924693i-0-3		test	[N, [JacobiSN, [Complex, 0.05, 2.0653631352924693], 0.3]]	[Complex, 35.13019979822533, 7.018127909099528]	[Complex, 35.130199798225206, 7.018127909099794]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-05-2-074363135292469i-0-3		test	[N, [JacobiSN, [Complex, 0.05, 2.074363135292469], 0.3]]	[Complex, 36.520016595463886, 0.7296091247706238]	[Complex, 36.52001659546387, 0.7296091247709535]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-05-2-075263135292469i-0-3		test	[N, [JacobiSN, [Complex, 0.05, 2.075263135292469], 0.3]]	[Complex, 36.534470632307915, 0.07298982054905077]	[Complex, 36.534470632307915, 0.07298982054879383]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-3-0-2i-1-5		test	[N, [JacobiSN, [Complex, 0.3, 0.2], 1.5]]	[Complex, 0.3025911587154087, 0.18114188585160287]	[Complex, 0.30259115871540876, 0.18114188585160285]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-5-0-3i-3		test	[N, [JacobiSN, [Complex, 0.5, -0.3], 3]]	[Complex, 0.48617046829372695, -0.1832852020075058]	[Complex, 0.4861704682937269, -0.1832852020075058]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-3-0-2i-0-7		test	[N, [JacobiSN, [Complex, 0.3, 0.2], -0.7]]	[Complex, 0.30086118981868426, 0.19761157875926225]	[Complex, 0.30086118981868437, 0.19761157875926222]	1e-13	mpmath 1.3.0 ellipfun	
-sn-0-5-0-3i-3-2		test	[N, [JacobiSN, [Complex, 0.5, -0.3], -3]]	[Complex, 0.5159674784493796, -0.36016974958714465]	[Complex, 0.5159674784493796, -0.36016974958714465]	1e-13	mpmath 1.3.0 ellipfun	
-m-greater-than-1-via-the-reciprocal-modulus	Scope		[N, [JacobiSN, 0.3, 1.5]]	0.2892198559115308	[Complex, 0.2892198559115309, -5.9178232399888067e-36]	1e-13	mpmath 1.3.0 ellipfun	m greater than 1, via the reciprocal-modulus transformation
-m-less-than-0-via-the-imaginary-modulus	Scope		[N, [JacobiSN, 0.3, -2]]	0.30402338308875987	{num: "0.30402338308875987"}	1e-13	mpmath 1.3.0 ellipfun	m less than 0, via the imaginary-modulus transformation
-a-complex-argument-u	Scope		[N, [JacobiSN, [Complex, 0.3, 0.4], 0.5]]	[Complex, 0.3289270041825616, 0.3868356943676352]	[Complex, 0.3289270041825039, 0.38683569436766424]	1e-13	mpmath 1.3.0 ellipfun	A complex argument u
-u-0-is-0-for-any-m	Properties		[JacobiSN, 0, m]	0				u = 0 is 0, for any m
-m-0-reduces-to-sin-u	Properties		[JacobiSN, u, 0]	[Sin, u]				m = 0 reduces to Sin(u)
-m-1-reduces-to-tanh-u	Properties		[JacobiSN, u, 1]	[Divide, [Sinh, u], [Cosh, u]]				m = 1 reduces to Tanh(u)
-symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiSN, u, m]	[JacobiSN, u, m]				Symbolic arguments are left unevaluated rather than guessed at
-a-genuinely-complex-m-is-declined	Possible issues		[N, [JacobiSN, 0.3, [Complex, 0.5, 0.2]]]	[JacobiSN, 0.3, [Complex, 0.5, 0.2]]				A genuinely complex m is declined — neither the AGM recursion nor its parameter transforms are verified there
-u-1e16-declines-rather-than-answering-wrong	Possible issues		[N, [JacobiSN, [Power, 10, 16], [Rational, 1, 3]]]	[JacobiSN, 10000000000000000, {num: "0.333333333333333333333"}]				Same gap as JacobiCD (the true value is tracked there, not repeated per head): u this far out has no argument reduction against its real period, so the guard in exceedsDoublePrecision's sibling (periodsExceedDouble, ce-patches/support/precise.ts) declines rather than return a wrong value.
+id	section	role	expr	expected	known	tolerance	source	caption	wolfram.kind	wolfram.note
+a-floating-point-argument-evaluates-directly-to			[N, [JacobiSN, 0.3, 0.5]]	0.2934127331684554	{num: "0.2934127331684554"}	1e-13	mpmath 1.3.0 ellipfun	A floating-point argument evaluates directly to a decimal		
+sn-1-1-0-9		test	[N, [JacobiSN, 1.1, 0.9]]	0.810538459859418	{num: "0.810538459859418"}	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-7-0-2		test	[N, [JacobiSN, -0.7, 0.2]]	-0.6362806256364313	{num: "-0.6362806256364312"}	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-3-0		test	[N, [JacobiSN, 0.3, 0]]	{num: "0.2955202066613395751053207456850273736778"}	{num: "0.2955202066613396"}	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-3-1		test	[N, [JacobiSN, 0.3, 1]]	{num: "0.2913126124515909058182212728237659281536"}	{num: "0.2913126124515909"}	1e-13	mpmath 1.3.0 ellipfun			
+sn-1-2-3		test	[N, [JacobiSN, 1.2, 3]]	0.5543604938990465	[Complex, 0.5543604938990464, -1.1966544594137449e-35]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-9-0-5		test	[N, [JacobiSN, 0.9, -0.5]]	0.8145866773570134	{num: "0.8145866773570133"}	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-4-0-5i-0-3		test	[N, [JacobiSN, [Complex, 0.4, 0.5], 0.3]]	[Complex, 0.44956659059554843, 0.470515774421122]	[Complex, 0.4495665905955484, 0.47051577442112197]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-4-0-5i-0-3-2		test	[N, [JacobiSN, [Complex, 0.4, -0.5], 0.3]]	[Complex, 0.44956659059554843, -0.470515774421122]	[Complex, 0.4495665905955484, -0.47051577442112197]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-4-0-5i-0-3-3		test	[N, [JacobiSN, [Complex, -0.4, 0.5], 0.3]]	[Complex, -0.44956659059554843, 0.470515774421122]	[Complex, -0.4495665905955484, 0.47051577442112197]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-4-0-5i-0-3-4		test	[N, [JacobiSN, [Complex, -0.4, -0.5], 0.3]]	[Complex, -0.44956659059554843, -0.470515774421122]	[Complex, -0.4495665905955484, -0.47051577442112197]	1e-13	mpmath 1.3.0 ellipfun			
+sn-1-1-0-7i-0-3		test	[N, [JacobiSN, [Complex, 1.1, -0.7], 0.3]]	[Complex, 1.0519597511642005, -0.30231999727135095]	[Complex, 1.0519597511642003, -0.30231999727135117]	1e-13	mpmath 1.3.0 ellipfun			
+sn-1-1i-0-3		test	[N, [JacobiSN, [Complex, 1, 1], 0.3]]	[Complex, 1.2193369691730778, 0.4929893352945827]	[Complex, 1.219336969173078, 0.49298933529458266]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-2-8i-0-4		test	[N, [JacobiSN, [Complex, 0.2, 8], 0.4]]	[Complex, 0.20375687667828227, 0.19792242768255586]	[Complex, 0.20375687667828227, 0.19792242768255594]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-2-8i-0-4-2		test	[N, [JacobiSN, [Complex, 0.2, -8], 0.4]]	[Complex, 0.20375687667828227, -0.19792242768255586]	[Complex, 0.20375687667828227, -0.19792242768255594]	1e-13	mpmath 1.3.0 ellipfun			
+sn-5-4i-0-6		test	[N, [JacobiSN, [Complex, 5, 4], 0.6]]	[Complex, -0.9030967252203012, -0.1772114355309601]	[Complex, -0.9030967252203015, -0.1772114355309598]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-05-1-9753631352924692i-0-3		test	[N, [JacobiSN, [Complex, 0.05, 1.9753631352924692], 0.3]]	[Complex, 7.322739161223441, 14.566378469681709]	[Complex, 7.322739161223446, 14.566378469681709]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-05-2-0653631352924693i-0-3		test	[N, [JacobiSN, [Complex, 0.05, 2.0653631352924693], 0.3]]	[Complex, 35.13019979822533, 7.018127909099528]	[Complex, 35.130199798225206, 7.018127909099794]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-05-2-074363135292469i-0-3		test	[N, [JacobiSN, [Complex, 0.05, 2.074363135292469], 0.3]]	[Complex, 36.520016595463886, 0.7296091247706238]	[Complex, 36.52001659546387, 0.7296091247709535]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-05-2-075263135292469i-0-3		test	[N, [JacobiSN, [Complex, 0.05, 2.075263135292469], 0.3]]	[Complex, 36.534470632307915, 0.07298982054905077]	[Complex, 36.534470632307915, 0.07298982054879383]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-3-0-2i-1-5		test	[N, [JacobiSN, [Complex, 0.3, 0.2], 1.5]]	[Complex, 0.3025911587154087, 0.18114188585160287]	[Complex, 0.30259115871540876, 0.18114188585160285]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-5-0-3i-3		test	[N, [JacobiSN, [Complex, 0.5, -0.3], 3]]	[Complex, 0.48617046829372695, -0.1832852020075058]	[Complex, 0.4861704682937269, -0.1832852020075058]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-3-0-2i-0-7		test	[N, [JacobiSN, [Complex, 0.3, 0.2], -0.7]]	[Complex, 0.30086118981868426, 0.19761157875926225]	[Complex, 0.30086118981868437, 0.19761157875926222]	1e-13	mpmath 1.3.0 ellipfun			
+sn-0-5-0-3i-3-2		test	[N, [JacobiSN, [Complex, 0.5, -0.3], -3]]	[Complex, 0.5159674784493796, -0.36016974958714465]	[Complex, 0.5159674784493796, -0.36016974958714465]	1e-13	mpmath 1.3.0 ellipfun			
+m-greater-than-1-via-the-reciprocal-modulus	Scope		[N, [JacobiSN, 0.3, 1.5]]	0.2892198559115308	[Complex, 0.2892198559115309, -5.9178232399888067e-36]	1e-13	mpmath 1.3.0 ellipfun	m greater than 1, via the reciprocal-modulus transformation		
+m-less-than-0-via-the-imaginary-modulus	Scope		[N, [JacobiSN, 0.3, -2]]	0.30402338308875987	{num: "0.30402338308875987"}	1e-13	mpmath 1.3.0 ellipfun	m less than 0, via the imaginary-modulus transformation		
+a-complex-argument-u	Scope		[N, [JacobiSN, [Complex, 0.3, 0.4], 0.5]]	[Complex, 0.3289270041825616, 0.3868356943676352]	[Complex, 0.3289270041825039, 0.38683569436766424]	1e-13	mpmath 1.3.0 ellipfun	A complex argument u		
+u-0-is-0-for-any-m	Properties		[JacobiSN, 0, m]	0				u = 0 is 0, for any m		
+m-0-reduces-to-sin-u	Properties		[JacobiSN, u, 0]	[Sin, u]				m = 0 reduces to Sin(u)		
+m-1-reduces-to-tanh-u	Properties		[JacobiSN, u, 1]	[Divide, [Sinh, u], [Cosh, u]]				m = 1 reduces to Tanh(u)		
+symbolic-arguments-are-left-unevaluated-rather	Possible issues		[JacobiSN, u, m]	[JacobiSN, u, m]				Symbolic arguments are left unevaluated rather than guessed at		
+a-genuinely-complex-m-is-declined	Possible issues		[N, [JacobiSN, 0.3, [Complex, 0.5, 0.2]]]	[JacobiSN, 0.3, [Complex, 0.5, 0.2]]				A genuinely complex m is declined — neither the AGM recursion nor its parameter transforms are verified there	domain	A complex m is unverified territory for our AGM recursion; we decline rather than guess, Wolfram answers.
+u-1e16-declines-rather-than-answering-wrong	Possible issues		[N, [JacobiSN, [Power, 10, 16], [Rational, 1, 3]]]	[JacobiSN, 10000000000000000, {num: "0.333333333333333333333"}]				Same gap as JacobiCD (the true value is tracked there, not repeated per head): u this far out has no argument reduction against its real period, so the guard in exceedsDoublePrecision's sibling (periodsExceedDouble, ce-patches/support/precise.ts) declines rather than return a wrong value.	domain	Past double precision we decline rather than guess; Wolfram continues numerically.

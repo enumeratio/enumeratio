@@ -1,5 +1,5 @@
-id	in
-table-of-i-2-for-i-from-1-to-5	
-odd-numbers-from-1-to-9-stepping-by-2	
-the-same-shape-of-table-with-a-plain-function	Table[Function[Power[Slot[1], 2]], 5]
-a-constant-body-is-still-evaluated-once-per	
+id	in	out	tex.in	tex.out
+table-of-i-2-for-i-from-1-to-5				
+odd-numbers-from-1-to-9-stepping-by-2				
+the-same-shape-of-table-with-a-plain-function	Table[Power[i, 2], List[i, 5]]	{1, 4, 9, 16, 25}	\text{Table}\left[i^2,\{i,5\}\right]	\{1,4,9,16,25\}
+a-constant-body-is-still-evaluated-once-per				

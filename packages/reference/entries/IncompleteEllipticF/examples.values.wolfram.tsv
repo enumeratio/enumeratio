@@ -1,18 +1,18 @@
-id	in
-f-0-5-0-3	N[EllipticF[0.5, 0.3]]
-f-1-2-0-7	N[EllipticF[1.2, 0.7]]
-f-0-8-0-4	N[EllipticF[-0.8, 0.4]]
-f-2-5-0-3	N[EllipticF[2.5, 0.3]]
-f-3-0-6	N[EllipticF[-3, 0.6]]
-f-0-3-0-4i-0-5	N[EllipticF[Complex[0.3, 0.4], 0.5]]
-f-1-0-5i-0-2	N[EllipticF[Complex[1, -0.5], 0.2]]
-f-0-6-0-57-0-23i	N[EllipticF[0.6, Complex[0.57, 0.23]]]
-f-1-1-0-1-0-9i	N[EllipticF[1.1, Complex[0.1, 0.9]]]
-f-3-711592653589793-0-57-0-23i	N[EllipticF[3.711592653589793, Complex[0.57, 0.23]]]
-f-3-711592653589793-0-23i-0-57-0-23i	N[EllipticF[Complex[3.711592653589793, 0.23], Complex[0.57, 0.23]]]
-f-3-0-57-0-23i	N[EllipticF[-3, Complex[0.57, 0.23]]]
-f-4-5-0-1-0-9i	N[EllipticF[4.5, Complex[0.1, 0.9]]]
-f-jacobiamplitude-0-0-m-0	EllipticF[JacobiAmplitude[0, 0], 0]
-f-jacobiamplitude-0-1-m-1	EllipticF[JacobiAmplitude[0, 1], 1]
-f-phi-arccsc-0-m-0	EllipticF[ArcCsc[0], 0]
-f-phi-pi-plus-arccsc-0-m-0	EllipticF[Plus[Pi, ArcCsc[0]], 0]
+id	in	out	tex.in	tex.out	verdict
+f-0-5-0-3	N[EllipticF[0.5, 0.3]]	0.5061402119623551	N[F(0.5|0.3)]	0.50614	
+f-1-2-0-7	N[EllipticF[1.2, 0.7]]	1.4294484330227628	N[F(1.2|0.7)]	1.42945	
+f-0-8-0-4	N[EllipticF[-0.8, 0.4]]	-0.8333430108625967	N[F(-0.8|0.4)]	-0.833343	
+f-2-5-0-3	N[EllipticF[2.5, 0.3]]	2.7733811775576194	N[F(2.5|0.3)]	2.77338	
+f-3-0-6	N[EllipticF[-3, 0.6]]	-3.7572585774059926	N[F(-3|0.6)]	-3.75726	
+f-0-3-0-4i-0-5	N[EllipticF[Complex[0.3, 0.4], 0.5]]	0.2902320216653949 + 0.40359814771759195*I	N[F(0.3\, +0.4 i|0.5)]	0.290232\, +0.403598 i	
+f-1-0-5i-0-2	N[EllipticF[Complex[1, -0.5], 0.2]]	1.0135464730513386 - 0.5410344560844553*I	N[F(1-0.5 i|0.2)]	1.01355\, -0.541034 i	
+f-0-6-0-57-0-23i	N[EllipticF[0.6, Complex[0.57, 0.23]]]	0.6205167553706088 + 0.009225906501081826*I	N[F(0.6|0.57\, +0.23 i)]	0.620517\, +0.00922591 i	
+f-1-1-0-1-0-9i	N[EllipticF[1.1, Complex[0.1, 0.9]]]	1.066632702370715 + 0.14586895972365058*I	N[F(1.1|0.1\, +0.9 i)]	1.06663\, +0.145869 i	
+f-3-711592653589793-0-57-0-23i	N[EllipticF[3.711592653589793, Complex[0.57, 0.23]]]	4.307419948322291 + 0.4254766941314284*I	N[F(3.71159|0.57\, +0.23 i)]	4.30742\, +0.425477 i	
+f-3-711592653589793-0-23i-0-57-0-23i	N[EllipticF[Complex[3.711592653589793, 0.23], Complex[0.57, 0.23]]]	4.289764434700574 + 0.6711124299873338*I	N[F(3.71159\, +0.23 i|0.57\, +0.23 i)]	4.28976\, +0.671112 i	
+f-3-0-57-0-23i	N[EllipticF[-3, Complex[0.57, 0.23]]]	-3.577957673312077 - 0.4175363858034028*I	N[F(-3|0.57\, +0.23 i)]	-3.57796-0.417536 i	
+f-4-5-0-1-0-9i	N[EllipticF[4.5, Complex[0.1, 0.9]]]	4.209502419983872 + 0.8277592810892385*I	N[F(4.5|0.1\, +0.9 i)]	4.2095\, +0.827759 i	
+f-jacobiamplitude-0-0-m-0	EllipticF[JacobiAmplitude[0, 0], 0]	0	F(\text{am}(0|0)|0)	0	
+f-jacobiamplitude-0-1-m-1	EllipticF[JacobiAmplitude[0, 1], 1]	0	F(\text{am}(0|1)|1)	0	
+f-phi-arccsc-0-m-0	EllipticF[ArcCsc[0], 0]	ComplexInfinity	F\left(\left.\csc ^{-1}(0)\right|0\right)	\text{ComplexInfinity}	disagree
+f-phi-pi-plus-arccsc-0-m-0	EllipticF[Plus[Pi, ArcCsc[0]], 0]	ComplexInfinity	F\left(\left.\pi +\csc ^{-1}(0)\right|0\right)	\text{ComplexInfinity}	disagree

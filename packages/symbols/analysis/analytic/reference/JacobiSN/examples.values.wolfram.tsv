@@ -1,34 +1,34 @@
-id	in	out	tex.in	tex.out
-a-floating-point-argument-evaluates-directly-to	N[JacobiSN[0.3, 0.5]]			
-sn-1-1-0-9	N[JacobiSN[1.1, 0.9]]			
-sn-0-7-0-2	N[JacobiSN[-0.7, 0.2]]			
-sn-0-3-0	N[JacobiSN[0.3, 0]]			
-sn-0-3-1	N[JacobiSN[0.3, 1]]			
-sn-1-2-3	N[JacobiSN[1.2, 3]]			
-sn-0-9-0-5	N[JacobiSN[0.9, -0.5]]			
-sn-0-4-0-5i-0-3	N[JacobiSN[Complex[0.4, 0.5], 0.3]]			
-sn-0-4-0-5i-0-3-2	N[JacobiSN[Complex[0.4, -0.5], 0.3]]			
-sn-0-4-0-5i-0-3-3	N[JacobiSN[Complex[-0.4, 0.5], 0.3]]			
-sn-0-4-0-5i-0-3-4	N[JacobiSN[Complex[-0.4, -0.5], 0.3]]			
-sn-1-1-0-7i-0-3	N[JacobiSN[Complex[1.1, -0.7], 0.3]]			
-sn-1-1i-0-3	N[JacobiSN[Complex[1, 1], 0.3]]			
-sn-0-2-8i-0-4	N[JacobiSN[Complex[0.2, 8], 0.4]]			
-sn-0-2-8i-0-4-2	N[JacobiSN[Complex[0.2, -8], 0.4]]			
-sn-5-4i-0-6	N[JacobiSN[Complex[5, 4], 0.6]]			
-sn-0-05-1-9753631352924692i-0-3	N[JacobiSN[Complex[0.05, 1.9753631352924692], 0.3]]			
-sn-0-05-2-0653631352924693i-0-3	N[JacobiSN[Complex[0.05, 2.0653631352924693], 0.3]]			
-sn-0-05-2-074363135292469i-0-3	N[JacobiSN[Complex[0.05, 2.074363135292469], 0.3]]			
-sn-0-05-2-075263135292469i-0-3	N[JacobiSN[Complex[0.05, 2.075263135292469], 0.3]]			
-sn-0-3-0-2i-1-5	N[JacobiSN[Complex[0.3, 0.2], 1.5]]			
-sn-0-5-0-3i-3	N[JacobiSN[Complex[0.5, -0.3], 3]]			
-sn-0-3-0-2i-0-7	N[JacobiSN[Complex[0.3, 0.2], -0.7]]			
-sn-0-5-0-3i-3-2	N[JacobiSN[Complex[0.5, -0.3], -3]]			
-m-greater-than-1-via-the-reciprocal-modulus	N[JacobiSN[0.3, 1.5]]			
-m-less-than-0-via-the-imaginary-modulus	N[JacobiSN[0.3, -2]]			
-a-complex-argument-u	N[JacobiSN[Complex[0.3, 0.4], 0.5]]			
-u-0-is-0-for-any-m	JacobiSN[0, m]	0	\text{sn}(0|m)	0
-m-0-reduces-to-sin-u	JacobiSN[u, 0]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{sn}(u|0)-\sin (u)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{sn}\left(\left.\frac{7}{3}\right|0\right)-\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{sn}\left(\left.-\frac{11}{5}\right|0\right)-\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{sn}\left(\left.\frac{13}{4}\right|0\right)-\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-m-1-reduces-to-tanh-u	JacobiSN[u, 1]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{sn}(u|1)-\tanh (u)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{sn}\left(\left.\frac{7}{3}\right|1\right)-\tanh \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{sn}\left(\left.-\frac{11}{5}\right|1\right)-\tanh \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{sn}\left(\left.\frac{13}{4}\right|1\right)-\tanh \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-symbolic-arguments-are-left-unevaluated-rather	JacobiSN[u, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{sn}(u|m)-\text{sn}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{sn}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{sn}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{sn}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{sn}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{sn}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{sn}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-a-genuinely-complex-m-is-declined	N[JacobiSN[0.3, Complex[0.5, 0.2]]]			
-u-1e16-declines-rather-than-answering-wrong	N[JacobiSN[Power[10, 16], Rational[1, 3]]]			
+id	in	out	tex.in	tex.out	verdict
+a-floating-point-argument-evaluates-directly-to	N[JacobiSN[0.3, 0.5]]	0.29341273316845534	N[\text{sn}(0.3|0.5)]	0.293413	
+sn-1-1-0-9	N[JacobiSN[1.1, 0.9]]	0.8105384598594179	N[\text{sn}(1.1|0.9)]	0.810538	
+sn-0-7-0-2	N[JacobiSN[-0.7, 0.2]]	-0.6362806256364312	N[\text{sn}(-0.7|0.2)]	-0.636281	
+sn-0-3-0	N[JacobiSN[0.3, 0]]	0.29552020666133955	N[\text{sn}(0.3|0)]	0.29552	
+sn-0-3-1	N[JacobiSN[0.3, 1]]	0.2913126124515909	N[\text{sn}(0.3|1)]	0.291313	
+sn-1-2-3	N[JacobiSN[1.2, 3]]	0.5543604938990463	N[\text{sn}(1.2|3)]	0.55436	
+sn-0-9-0-5	N[JacobiSN[0.9, -0.5]]	0.8145866773570134	N[\text{sn}(0.9|-0.5)]	0.814587	
+sn-0-4-0-5i-0-3	N[JacobiSN[Complex[0.4, 0.5], 0.3]]	0.44956659059554843 + 0.4705157744211221*I	N[\text{sn}(0.4\, +0.5 i|0.3)]	0.449567\, +0.470516 i	
+sn-0-4-0-5i-0-3-2	N[JacobiSN[Complex[0.4, -0.5], 0.3]]	0.44956659059554843 - 0.4705157744211221*I	N[\text{sn}(0.4\, -0.5 i|0.3)]	0.449567\, -0.470516 i	
+sn-0-4-0-5i-0-3-3	N[JacobiSN[Complex[-0.4, 0.5], 0.3]]	-0.44956659059554843 + 0.4705157744211221*I	N[\text{sn}(-0.4+0.5 i|0.3)]	-0.449567+0.470516 i	
+sn-0-4-0-5i-0-3-4	N[JacobiSN[Complex[-0.4, -0.5], 0.3]]	-0.44956659059554843 - 0.4705157744211221*I	N[\text{sn}(-0.4-0.5 i|0.3)]	-0.449567-0.470516 i	
+sn-1-1-0-7i-0-3	N[JacobiSN[Complex[1.1, -0.7], 0.3]]	1.0519597511642005 - 0.3023199972713511*I	N[\text{sn}(1.1\, -0.7 i|0.3)]	1.05196\, -0.30232 i	
+sn-1-1i-0-3	N[JacobiSN[Complex[1, 1], 0.3]]	1.2193369691730775 + 0.49298933529458244*I	N[\text{sn}(1+i|0.3)]	1.21934\, +0.492989 i	
+sn-0-2-8i-0-4	N[JacobiSN[Complex[0.2, 8], 0.4]]	0.20375687667828232 + 0.19792242768255586*I	N[\text{sn}(0.2\, +8 i|0.4)]	0.203757\, +0.197922 i	
+sn-0-2-8i-0-4-2	N[JacobiSN[Complex[0.2, -8], 0.4]]	0.20375687667828232 - 0.19792242768255586*I	N[\text{sn}(0.2\, -8 i|0.4)]	0.203757\, -0.197922 i	
+sn-5-4i-0-6	N[JacobiSN[Complex[5, 4], 0.6]]	-0.9030967252203012 - 0.17721143553095983*I	N[\text{sn}(5+4 i|0.6)]	-0.903097-0.177211 i	
+sn-0-05-1-9753631352924692i-0-3	N[JacobiSN[Complex[0.05, 1.9753631352924692], 0.3]]	7.32273916122342 + 14.56637846968169*I	N[\text{sn}(0.05\, +1.97536 i|0.3)]	7.32274\, +14.5664 i	
+sn-0-05-2-0653631352924693i-0-3	N[JacobiSN[Complex[0.05, 2.0653631352924693], 0.3]]	35.13019979822516 + 7.0181279090998565*I	N[\text{sn}(0.05\, +2.06536 i|0.3)]	35.1302\, +7.01813 i	
+sn-0-05-2-074363135292469i-0-3	N[JacobiSN[Complex[0.05, 2.074363135292469], 0.3]]	36.520016595463865 + 0.7296091247709828*I	N[\text{sn}(0.05\, +2.07436 i|0.3)]	36.52\, +0.729609 i	
+sn-0-05-2-075263135292469i-0-3	N[JacobiSN[Complex[0.05, 2.075263135292469], 0.3]]	36.53447063230791 + 0.07298982054914087*I	N[\text{sn}(0.05\, +2.07526 i|0.3)]	36.5345\, +0.0729898 i	
+sn-0-3-0-2i-1-5	N[JacobiSN[Complex[0.3, 0.2], 1.5]]	0.30259115871540887 + 0.18114188585160287*I	N[\text{sn}(0.3\, +0.2 i|1.5)]	0.302591\, +0.181142 i	
+sn-0-5-0-3i-3	N[JacobiSN[Complex[0.5, -0.3], 3]]	0.4861704682937268 - 0.18328520200750584*I	N[\text{sn}(0.5\, -0.3 i|3)]	0.48617\, -0.183285 i	
+sn-0-3-0-2i-0-7	N[JacobiSN[Complex[0.3, 0.2], -0.7]]	0.30086118981868426 + 0.19761157875926222*I	N[\text{sn}(0.3\, +0.2 i|-0.7)]	0.300861\, +0.197612 i	
+sn-0-5-0-3i-3-2	N[JacobiSN[Complex[0.5, -0.3], -3]]	0.5159674784493796 - 0.3601697495871447*I	N[\text{sn}(0.5\, -0.3 i|-3)]	0.515967\, -0.36017 i	
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiSN[0.3, 1.5]]	0.28921985591153093	N[\text{sn}(0.3|1.5)]	0.28922	
+m-less-than-0-via-the-imaginary-modulus	N[JacobiSN[0.3, -2]]	0.30402338308876	N[\text{sn}(0.3|-2)]	0.304023	
+a-complex-argument-u	N[JacobiSN[Complex[0.3, 0.4], 0.5]]	0.32892700418250387 + 0.38683569436766424*I	N[\text{sn}(0.3\, +0.4 i|0.5)]	0.328927\, +0.386836 i	
+u-0-is-0-for-any-m					
+m-0-reduces-to-sin-u	JacobiSN[u, 0]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{sn}(u|0)-\sin (u)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{sn}\left(\left.\frac{7}{3}\right|0\right)-\sin \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{sn}\left(\left.-\frac{11}{5}\right|0\right)-\sin \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{sn}\left(\left.\frac{13}{4}\right|0\right)-\sin \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+m-1-reduces-to-tanh-u	JacobiSN[u, 1]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{sn}(u|1)-\frac{\sinh (u)}{\cosh (u)}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{sn}\left(\left.\frac{7}{3}\right|1\right)-\frac{\sinh \left(\frac{7}{3}\right)}{\cosh \left(\frac{7}{3}\right)}\right]\right],\text{Chop}\left[N\left[\text{sn}\left(\left.-\frac{11}{5}\right|1\right)-\frac{\sinh \left(-\frac{11}{5}\right)}{\cosh \left(-\frac{11}{5}\right)}\right]\right],\text{Chop}\left[N\left[\text{sn}\left(\left.\frac{13}{4}\right|1\right)-\frac{\sinh \left(\frac{13}{4}\right)}{\cosh \left(\frac{13}{4}\right)}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+symbolic-arguments-are-left-unevaluated-rather					
+a-genuinely-complex-m-is-declined	N[JacobiSN[0.3, Complex[0.5, 0.2]]]	0.2934121449425789 - 0.0008415197425054566*I	N[\text{sn}(0.3|0.5\, +0.2 i)]	0.293412\, -0.00084152 i	disagree
+u-1e16-declines-rather-than-answering-wrong	N[JacobiSN[Power[10, 16], Rational[1, 3]]]	0.999920059883	N\left[\text{sn}\left(10^{16}|\frac{1}{3}\right)\right]	0.99992	disagree

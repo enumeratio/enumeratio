@@ -1,38 +1,38 @@
-id	in	out	tex.in	tex.out
-sqrt-16	Sqrt[16]	4	\sqrt{16}	4
-stays-symbolic-when-the-radicand-isn-t-a-perfect	Sqrt[2]	Sqrt[2]	\sqrt{2}	\sqrt{2}
-sqrt-4-over-9	Sqrt[Rational[4, 9]]	2/3	\sqrt{\frac{4}{9}}	\frac{2}{3}
-sqrt-0	Sqrt[0]	0	\sqrt{0}	0
-a-perfect-square-radicand-evaluates-exactly-even	Sqrt[-4]	2*I	\sqrt{-4}	2 i
-an-approximate-number-gives-an-approximate-root	Sqrt[3.5]			
-pulls-perfect-square-factors-out-of-the-radical	Sqrt[200]			
-sqrt-neg-25	Sqrt[-25]			
-sqrt-8	Sqrt[8]			
-rationalizes-the-denominator	Sqrt[Rational[1, 2]]			
-sqrt-12-over-5	Sqrt[Rational[12, 5]]			
-sqrt-neg-2p5	Sqrt[-2.5]			
-an-exact-complex-square-2-i-2-3-4i	Sqrt[Complex[3, 4]]			
-sqrt-positiveinfinity	Sqrt[Infinity]			
-sqrt-negativeinfinity	Sqrt[-Infinity]			
-threads-element-wise-over-a-list	Sqrt[List[1, 4, 9]]			
-threads-over-a-matrix-entry-by-entry-this-is-not	Sqrt[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]			
-interval-arithmetic-sqrt-is-increasing-so-sqrt-1	Sqrt[Interval[List[1, 8]]]			
-uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1	Sqrt[Around[4, 0.4]]			
-to-45-significant-digits-every-one-correctly	N[Sqrt[2], 45]			
-an-approximate-negative-radicand-stays-complex	Sqrt[-2.875]			
-sqrt-neg-4-over-9	Sqrt[Rational[-4, 9]]			
-sqrt-neg-1-half	Sqrt[Rational[-1, 2]]			
-sqrt-neg-1	Sqrt[-1]			
-sqrt-neg-12-over-5	Sqrt[Rational[-12, 5]]			
-the-pythagorean-hypotenuse-of-a-3-4-5-triangle	Sqrt[Plus[(3)^2, (4)^2]]	5	\sqrt{3^2+4^2}	5
-sqrt-x-2-x-for-a-perfect-square-see-square	((Sqrt[16])^2 == 16)	True	\sqrt{16}^2=16	\text{True}
-sqrt-x-x-1-2	(Sqrt[16] == Power[16, Rational[1, 2]])	True	\sqrt{16}=16^{\frac{1}{2}}	\text{True}
-sqrt-x-2-x-for-every-x	Power[Sqrt[x], 2]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sqrt{x}^2-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sqrt{\frac{7}{3}}^2-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\sqrt{-\frac{11}{5}}^2--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\sqrt{\frac{13}{4}}^2-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-negative-but-not-a-perfect-square-stays-symbolic	Sqrt[-2]	I*Sqrt[2]	\sqrt{-2}	i \sqrt{2}
-a-negative-rational-still-evaluates-exactly-when	Sqrt[Rational[-4, 9]]	(2*I)/3	\sqrt{-\frac{4}{9}}	\frac{2 i}{3}
-sqrt-x-2-is-not-simplified-to-x-which-would-be	Sqrt[Power[x, 2]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sqrt{x^2}-\sqrt{x^2}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sqrt{\left(\frac{7}{3}\right)^2}-\sqrt{\left(\frac{7}{3}\right)^2}\right]\right],\text{Chop}\left[N\left[\sqrt{\left(-\frac{11}{5}\right)^2}-\sqrt{\left(-\frac{11}{5}\right)^2}\right]\right],\text{Chop}\left[N\left[\sqrt{\left(\frac{13}{4}\right)^2}-\sqrt{\left(\frac{13}{4}\right)^2}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-at-x-1-sqrt-x-2-1-not-1	Sqrt[Power[-1, 2]]			
-sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	Times[Sqrt[-1], Sqrt[-1]]			
-while-sqrt-1-1-1	Sqrt[Times[-1, -1]]			
-sqrt-36-negative	Sqrt[-36]			
-sqrt-2-times-sqrt-neg-1	Times[Sqrt[1], Sqrt[-1]]			
+id	in	out	shown	tex.in	tex.out	verdict
+sqrt-16	Sqrt[16]	4		\sqrt{16}	4	
+stays-symbolic-when-the-radicand-isn-t-a-perfect	Sqrt[2]	Sqrt[2]		\sqrt{2}	\sqrt{2}	
+sqrt-4-over-9	Sqrt[Rational[4, 9]]	2/3		\sqrt{\frac{4}{9}}	\frac{2}{3}	
+sqrt-0	Sqrt[0]	0		\sqrt{0}	0	
+a-perfect-square-radicand-evaluates-exactly-even	Sqrt[-4]	2*I		\sqrt{-4}	2 i	
+an-approximate-number-gives-an-approximate-root	Sqrt[3.5]	1.8708286933869707		\sqrt{3.5}	1.87083	
+pulls-perfect-square-factors-out-of-the-radical	Sqrt[200]	10*Sqrt[2]		\sqrt{200}	10 \sqrt{2}	
+sqrt-neg-25	Sqrt[-25]	5*I		\sqrt{-25}	5 i	
+sqrt-8	Sqrt[8]	2*Sqrt[2]		\sqrt{8}	2 \sqrt{2}	
+rationalizes-the-denominator	Sqrt[Rational[1, 2]]	1/Sqrt[2]		\sqrt{\frac{1}{2}}	\frac{1}{\sqrt{2}}	
+sqrt-12-over-5	Sqrt[Rational[12, 5]]	2*Sqrt[3/5]		\sqrt{\frac{12}{5}}	2 \sqrt{\frac{3}{5}}	
+sqrt-neg-2p5	Sqrt[-2.5]	0. + 1.5811388300841898*I		\sqrt{-2.5}	0.\, +1.58114 i	
+an-exact-complex-square-2-i-2-3-4i	Sqrt[Complex[3, 4]]	2 + I		\sqrt{3+4 i}	2+i	
+sqrt-positiveinfinity	Sqrt[Infinity]	Infinity		\sqrt{\infty }	\infty	
+sqrt-negativeinfinity	Sqrt[-Infinity]	DirectedInfinity[I]		\sqrt{-\infty }	i \infty	
+threads-element-wise-over-a-list	Sqrt[List[1, 4, 9]]	{1, 2, 3}		\sqrt{\{1,4,9\}}	\{1,2,3\}	
+threads-over-a-matrix-entry-by-entry-this-is-not	Sqrt[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]	{{1/Sqrt[2], I}, {0, 1/Sqrt[2]}}		\sqrt{\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  0 & \frac{1}{2} \\ \end{array} \right)}	\left( \begin{array}{cc}  \frac{1}{\sqrt{2}} & i \\  0 & \frac{1}{\sqrt{2}} \\ \end{array} \right)	
+interval-arithmetic-sqrt-is-increasing-so-sqrt-1	Sqrt[Interval[List[1, 8]]]	Interval[{1, 2*Sqrt[2]}]		\sqrt{\text{Interval}[\{1,8\}]}	\text{Interval}\left[\left\{1,2 \sqrt{2}\right\}\right]	disagree
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1	Sqrt[Around[4, 0.4]]	Around[2., 0.1]		\sqrt{4\pm 0.4}	2.00\pm 0.10	
+to-45-significant-digits-every-one-correctly	N[Sqrt[2], 45]	1.4142135623730950488016887242096980785696718753769480731767`45.	1.41421356237309504880168872420969807856967188	N\left[\sqrt{2},45\right]	1.41421356237309504880168872420969807856967188	
+an-approximate-negative-radicand-stays-complex	Sqrt[-2.875]	0. + 1.695582495781317*I		\sqrt{-2.875}	0.\, +1.69558 i	
+sqrt-neg-4-over-9	Sqrt[Rational[-4, 9]]	(2*I)/3		\sqrt{-\frac{4}{9}}	\frac{2 i}{3}	
+sqrt-neg-1-half	Sqrt[Rational[-1, 2]]	I/Sqrt[2]		\sqrt{-\frac{1}{2}}	\frac{i}{\sqrt{2}}	
+sqrt-neg-1	Sqrt[-1]	I		\sqrt{-1}	i	
+sqrt-neg-12-over-5	Sqrt[Rational[-12, 5]]	(2*I)*Sqrt[3/5]		\sqrt{-\frac{12}{5}}	2 i \sqrt{\frac{3}{5}}	
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle	Sqrt[Plus[(3)^2, (4)^2]]	5		\sqrt{3^2+4^2}	5	
+sqrt-x-2-x-for-a-perfect-square-see-square	((Sqrt[16])^2 == 16)	True		\sqrt{16}^2=16	\text{True}	
+sqrt-x-x-1-2	(Sqrt[16] == Power[16, Rational[1, 2]])	True		\sqrt{16}=16^{\frac{1}{2}}	\text{True}	
+sqrt-x-2-x-for-every-x	Power[Sqrt[x], 2]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sqrt{x}^2-x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sqrt{\frac{7}{3}}^2-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\sqrt{-\frac{11}{5}}^2--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\sqrt{\frac{13}{4}}^2-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+negative-but-not-a-perfect-square-stays-symbolic	Sqrt[-2]	I*Sqrt[2]		\sqrt{-2}	i \sqrt{2}	
+a-negative-rational-still-evaluates-exactly-when	Sqrt[Rational[-4, 9]]	(2*I)/3		\sqrt{-\frac{4}{9}}	\frac{2 i}{3}	
+sqrt-x-2-is-not-simplified-to-x-which-would-be	Sqrt[Power[x, 2]]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\sqrt{x^2}-\sqrt{x^2}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sqrt{\left(\frac{7}{3}\right)^2}-\sqrt{\left(\frac{7}{3}\right)^2}\right]\right],\text{Chop}\left[N\left[\sqrt{\left(-\frac{11}{5}\right)^2}-\sqrt{\left(-\frac{11}{5}\right)^2}\right]\right],\text{Chop}\left[N\left[\sqrt{\left(\frac{13}{4}\right)^2}-\sqrt{\left(\frac{13}{4}\right)^2}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+at-x-1-sqrt-x-2-1-not-1	Sqrt[Power[-1, 2]]	1		\sqrt{(-1)^2}	1	
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	Times[Sqrt[-1], Sqrt[-1]]	-1		\sqrt{-1} \sqrt{-1}	-1	
+while-sqrt-1-1-1	Sqrt[Times[-1, -1]]	1		\sqrt{-(-1)}	1	
+sqrt-36-negative	Sqrt[-36]	6*I		\sqrt{-36}	6 i	
+sqrt-2-times-sqrt-neg-1	Times[Sqrt[1], Sqrt[-1]]	I		\sqrt{1} \sqrt{-1}	i	

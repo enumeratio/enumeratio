@@ -1,32 +1,32 @@
-id	in	out	tex.in	tex.out
-a-floating-point-argument-evaluates-directly-to	N[EllipticThetaPrime[3, 0.3, 0.2]]			
-theta2-0-3-0-2	N[EllipticThetaPrime[2, 0.3, 0.2]]			
-theta4-0-3-0-2	N[EllipticThetaPrime[4, 0.3, 0.2]]			
-theta1-0-0-5	N[EllipticThetaPrime[1, 0, 0.5]]			
-theta2-0-0-5	N[EllipticThetaPrime[2, 0, 0.5]]			
-theta3-0-0-5	N[EllipticThetaPrime[3, 0, 0.5]]			
-theta4-0-0-5	N[EllipticThetaPrime[4, 0, 0.5]]			
-theta1-1-0-3	N[EllipticThetaPrime[1, 1, -0.3]]			
-theta2-1-0-3	N[EllipticThetaPrime[2, 1, -0.3]]			
-theta3-1-0-3	N[EllipticThetaPrime[3, 1, -0.3]]			
-theta4-1-0-3	N[EllipticThetaPrime[4, 1, -0.3]]			
-theta1-0-3-0-1i-0-2	N[EllipticThetaPrime[1, Complex[0.3, 0.1], 0.2]]			
-theta2-0-3-0-1i-0-2	N[EllipticThetaPrime[2, Complex[0.3, 0.1], 0.2]]			
-theta4-0-3-0-1i-0-2	N[EllipticThetaPrime[4, Complex[0.3, 0.1], 0.2]]			
-theta1-0-5-0-5i-0-1-0-2i	N[EllipticThetaPrime[1, Complex[0.5, 0.5], Complex[0.1, 0.2]]]			
-theta2-0-5-0-5i-0-1-0-2i	N[EllipticThetaPrime[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]			
-theta3-0-5-0-5i-0-1-0-2i	N[EllipticThetaPrime[3, Complex[0.5, 0.5], Complex[0.1, 0.2]]]			
-theta4-0-5-0-5i-0-1-0-2i	N[EllipticThetaPrime[4, Complex[0.5, 0.5], Complex[0.1, 0.2]]]			
-theta1-2-0-6	N[EllipticThetaPrime[1, 2, 0.6]]			
-theta2-2-0-6	N[EllipticThetaPrime[2, 2, 0.6]]			
-theta3-2-0-6	N[EllipticThetaPrime[3, 2, 0.6]]			
-theta4-2-0-6	N[EllipticThetaPrime[4, 2, 0.6]]			
-theta1-0-4-0-85	N[EllipticThetaPrime[1, 0.4, 0.85]]			
-theta2-0-4-0-85	N[EllipticThetaPrime[2, 0.4, 0.85]]			
-theta3-0-4-0-85	N[EllipticThetaPrime[3, 0.4, 0.85]]			
-theta4-0-4-0-85	N[EllipticThetaPrime[4, 0.4, 0.85]]			
-theta1-prime-0-q-matches-the-classical	N[EllipticThetaPrime[1, 0.3, 0.2]]			
-a-complex-argument-u	N[EllipticThetaPrime[3, Complex[0.3, 0.1], 0.2]]			
-q-1-is-declined-the-series-diverges	N[EllipticThetaPrime[3, 0.3, 1]]			
-symbolic-arguments-are-left-unevaluated-rather	EllipticThetaPrime[3, u, q]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\vartheta _3^{\prime }(u,q)-\vartheta _3^{\prime }(u,q)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\vartheta _3^{\prime }\left(-\frac{11}{5},\frac{7}{3}\right)-\vartheta _3^{\prime }\left(-\frac{11}{5},\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\vartheta _3^{\prime }\left(-\frac{17}{6},\frac{13}{4}\right)-\vartheta _3^{\prime }\left(-\frac{17}{6},\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\vartheta _3^{\prime }\left(-\frac{23}{9},\frac{19}{8}\right)-\vartheta _3^{\prime }\left(-\frac{23}{9},\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-u-1e30-declines-rather-than-answering-wrong	N[EllipticThetaPrime[1, Power[10, 30], Divide[1, Pi]]]			
+id	in	out	tex.in	tex.out	verdict
+a-floating-point-argument-evaluates-directly-to	N[EllipticThetaPrime[3, 0.3, 0.2]]	-0.4636500624070804	N[\vartheta _3^{\prime }(0.3,0.2)]	-0.46365	
+theta2-0-3-0-2	N[EllipticThetaPrime[2, 0.3, 0.2]]	-0.5214016473721361	N[\vartheta _2^{\prime }(0.3,0.2)]	-0.521402	
+theta4-0-3-0-2	N[EllipticThetaPrime[4, 0.3, 0.2]]	0.4397898616646645	N[\vartheta _4^{\prime }(0.3,0.2)]	0.43979	
+theta1-0-0-5	N[EllipticThetaPrime[1, 0, 0.5]]	0.5489785325603406	N[\vartheta _1^{\prime }(0,0.5)]	0.548979	
+theta2-0-0-5	N[EllipticThetaPrime[2, 0, 0.5]]	0.	N[\vartheta _2^{\prime }(0,0.5)]	0.	
+theta3-0-0-5	N[EllipticThetaPrime[3, 0, 0.5]]	0.	N[\vartheta _3^{\prime }(0,0.5)]	0.	
+theta4-0-0-5	N[EllipticThetaPrime[4, 0, 0.5]]	0.	N[\vartheta _4^{\prime }(0,0.5)]	0.	
+theta1-1-0-3	N[EllipticThetaPrime[1, 1, -0.3]]	0.8463420629117178 + 0.8463420629117178*I	N[\vartheta _1^{\prime }(1,-0.3)]	0.846342\, +0.846342 i	
+theta2-1-0-3	N[EllipticThetaPrime[2, 1, -0.3]]	-0.9169366908491494 - 0.9169366908491494*I	N[\vartheta _2^{\prime }(1,-0.3)]	-0.916937-0.916937 i	
+theta3-1-0-3	N[EllipticThetaPrime[3, 1, -0.3]]	1.1401316489210318	N[\vartheta _3^{\prime }(1,-0.3)]	1.14013	
+theta4-1-0-3	N[EllipticThetaPrime[4, 1, -0.3]]	-1.0420501818127352	N[\vartheta _4^{\prime }(1,-0.3)]	-1.04205	
+theta1-0-3-0-1i-0-2	N[EllipticThetaPrime[1, Complex[0.3, 0.1], 0.2]]	1.1798820003406774 - 0.001528659862239628*I	N[\vartheta _1^{\prime }(0.3\, +0.1 i,0.2)]	1.17988\, -0.00152866 i	
+theta2-0-3-0-1i-0-2	N[EllipticThetaPrime[2, Complex[0.3, 0.1], 0.2]]	-0.5291341075828397 - 0.1583842903474391*I	N[\vartheta _2^{\prime }(0.3\, +0.1 i,0.2)]	-0.529134-0.158384 i	
+theta4-0-3-0-1i-0-2	N[EllipticThetaPrime[4, Complex[0.3, 0.1], 0.2]]	0.4478882038314779 + 0.13102978719618613*I	N[\vartheta _4^{\prime }(0.3\, +0.1 i,0.2)]	0.447888\, +0.13103 i	
+theta1-0-5-0-5i-0-1-0-2i	N[EllipticThetaPrime[1, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	1.1635040697104988 - 0.33307950379447193*I	N[\vartheta _1^{\prime }(0.5\, +0.5 i,0.1\, +0.2 i)]	1.1635\, -0.33308 i	
+theta2-0-5-0-5i-0-1-0-2i	N[EllipticThetaPrime[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	-0.14432397404614122 - 1.0751239180764989*I	N[\vartheta _2^{\prime }(0.5\, +0.5 i,0.1\, +0.2 i)]	-0.144324-1.07512 i	
+theta3-0-5-0-5i-0-1-0-2i	N[EllipticThetaPrime[3, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	0.036830038512494605 - 1.2356518745987155*I	N[\vartheta _3^{\prime }(0.5\, +0.5 i,0.1\, +0.2 i)]	0.03683\, -1.23565 i	
+theta4-0-5-0-5i-0-1-0-2i	N[EllipticThetaPrime[4, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	0.05944205608451255 + 1.350112294617821*I	N[\vartheta _4^{\prime }(0.5\, +0.5 i,0.1\, +0.2 i)]	0.0594421\, +1.35011 i	
+theta1-2-0-6	N[EllipticThetaPrime[1, 2, 0.6]]	-2.9056592687798646	N[\vartheta _1^{\prime }(2,0.6)]	-2.90566	
+theta2-2-0-6	N[EllipticThetaPrime[2, 2, 0.6]]	-0.872132059159085	N[\vartheta _2^{\prime }(2,0.6)]	-0.872132	
+theta3-2-0-6	N[EllipticThetaPrime[3, 2, 0.6]]	0.8566962281489681	N[\vartheta _3^{\prime }(2,0.6)]	0.856696	
+theta4-2-0-6	N[EllipticThetaPrime[4, 2, 0.6]]	-2.905629977925575	N[\vartheta _4^{\prime }(2,0.6)]	-2.90563	
+theta1-0-4-0-85	N[EllipticThetaPrime[1, 0.4, 0.85]]	0.013761909235492132	N[\vartheta _1^{\prime }(0.4,0.85)]	0.0137619	
+theta2-0-4-0-85	N[EllipticThetaPrime[2, 0.4, 0.85]]	-8.086224079602115	N[\vartheta _2^{\prime }(0.4,0.85)]	-8.08622	
+theta3-0-4-0-85	N[EllipticThetaPrime[3, 0.4, 0.85]]	-8.086224079602118	N[\vartheta _3^{\prime }(0.4,0.85)]	-8.08622	
+theta4-0-4-0-85	N[EllipticThetaPrime[4, 0.4, 0.85]]	0.013761900328695018	N[\vartheta _4^{\prime }(0.4,0.85)]	0.0137619	
+theta1-prime-0-q-matches-the-classical	N[EllipticThetaPrime[1, 0.3, 0.2]]	1.178007371087324	N[\vartheta _1^{\prime }(0.3,0.2)]	1.17801	
+a-complex-argument-u	N[EllipticThetaPrime[3, Complex[0.3, 0.1], 0.2]]	-0.4736828076769382 - 0.13484007289370092*I	N[\vartheta _3^{\prime }(0.3\, +0.1 i,0.2)]	-0.473683-0.13484 i	
+q-1-is-declined-the-series-diverges	N[EllipticThetaPrime[3, 0.3, 1]]	EllipticThetaPrime[3, 0.3, 1.]	N[\vartheta _3^{\prime }(0.3,1)]	\vartheta _3^{\prime }(0.3,1.)	
+symbolic-arguments-are-left-unevaluated-rather					
+u-1e30-declines-rather-than-answering-wrong	N[EllipticThetaPrime[1, Power[10, 30], Divide[1, Pi]]]	-1.053528091933033	N\left[\vartheta _1^{\prime }\left(10^{30},\frac{1}{\pi }\right)\right]	-1.05353	disagree

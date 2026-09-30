@@ -221,3 +221,43 @@ test("PositionalNumerals(b) unwraps to the bare base Wolfram's IntegerDigits/Fro
   expect(toWolfram(["IntegerDigits", 2147, ["PositionalNumerals", 2]])).toBe("IntegerDigits[2147, 2]");
   expect(toWolfram(["FromDigits", ["List", 1, 0, 1], ["PositionalNumerals", 2]])).toBe("FromDigits[List[1, 0, 1], 2]");
 });
+
+test("Limit unwraps its Function argument to Wolfram's body + Rule binding", () => {
+  // Anonymous (Slot-based) function: no named parameter, so a fresh `x` is minted and
+  // substituted for `_1` throughout the body.
+  expect(toWolfram(["Limit", ["Function", ["Divide", ["Sin", "_1"], "_1"]], 0])).toBe(
+    "Limit[Divide[Sin[x], x], Rule[x, 0]]",
+  );
+  // Named-parameter function: the parameter's own name is the bound variable.
+  expect(toWolfram(["Limit", ["Function", ["Arctan", "x"], "x"], "PositiveInfinity"])).toBe(
+    "Limit[ArcTan[x], Rule[x, Infinity]]",
+  );
+});
+
+test('Limit\'s direction (our +1/-1) becomes Wolfram\'s Direction -> "FromAbove"/"FromBelow"', () => {
+  // dir = 1: x approaches 0 from values ABOVE it -- the right-hand limit (confirmed
+  // directly: Limit(1/x, 0, 1) evaluates to PositiveInfinity).
+  expect(toWolfram(["Limit", ["Function", ["Divide", 1, "_1"]], 0, 1])).toBe(
+    'Limit[Divide[1, x], Rule[x, 0], Rule[Direction, "FromAbove"]]',
+  );
+  expect(toWolfram(["Limit", ["Function", ["Divide", 1, "_1"]], 0, -1])).toBe(
+    'Limit[Divide[1, x], Rule[x, 0], Rule[Direction, "FromBelow"]]',
+  );
+});
+
+test("Map(f, xs, ys, …) with more than one collection zips them via Wolfram's MapThread", () => {
+  expect(toWolfram(["Map", "Add", ["List", 1, 2, 3], ["List", 10, 20, 30]])).toBe(
+    "MapThread[Plus, List[List[1, 2, 3], List[10, 20, 30]]]",
+  );
+  // A single collection stays the plain Map.
+  expect(toWolfram(["Map", "Square", ["List", 1, 2, 3, 4]])).toBe("Map[Square, List[1, 2, 3, 4]]");
+});
+
+test("Table(Function(body), n) unwraps to Wolfram's body + {i, n} iterator", () => {
+  expect(toWolfram(["Table", ["Function", ["Power", "_1", 2]], 5])).toBe("Table[Power[i, 2], List[i, 5]]");
+  // A real iterator spec (Set/Limits/Tuple) is left as a plain rename -- Table already
+  // agrees with Wolfram's own shape there. (Set's own head is separately overloaded as our
+  // set-literal constructor -- see the "special forms" test above -- so this pre-existing
+  // quirk is unaffected by the Function-unwrapping added here.)
+  expect(toWolfram(["Table", "i", ["Limits", "i", 1, 10]])).toBe("Table[i, Limits[i, 1, 10]]");
+});

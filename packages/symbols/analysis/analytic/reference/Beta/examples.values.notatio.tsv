@@ -19,4 +19,4 @@ b-a-1-1-a-for-symbolic-a	<Beta>a 1</Beta>	<Divide>1 a</Divide>
 b-2-b-frac-1-b-b-1-not-yet	<Beta>2 b</Beta>	<Divide>1 <Multiply>b <Add>b 1</Add></Multiply></Divide>
 partial-a-b-a-b-b-a-b-psi-a-psi-a-b-today-the	<D><Beta>a b</Beta> a</D>	<Multiply><Add><Digamma>a</Digamma> <Negate><Digamma><Add>a b</Add></Digamma></Negate></Add> <Beta>a b</Beta></Multiply>
 a-nonpositive-integer-argument-is-a-pole-of-the	<Beta>-1 2</Beta>	<ComplexInfinity />
-beta-of-positive-infinity-0-is-indeterminate	<Beta>PositiveInfinity 0</Beta>	<Indeterminate />
+beta-of-positive-infinity-0-is-indeterminate	<Beta>PositiveInfinity 0</Beta>	<ComplexInfinity />

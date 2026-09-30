@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out
-a-floating-point-argument-evaluates-directly-to	N[JacobiDS[1.1, 0.9]]			
-m-less-than-0-via-the-imaginary-modulus	N[JacobiDS[0.3, -0.7]]			
-u-0-is-a-pole-for-any-m	JacobiDS[0, m]	ComplexInfinity	\text{ds}(0|m)	\text{ComplexInfinity}
-symbolic-arguments-are-left-unevaluated-rather	JacobiDS[u, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{ds}(u|m)-\text{ds}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ds}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{ds}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{ds}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{ds}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{ds}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{ds}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-m-1-at-a-shared-pole-of-sn-and-cn	N[JacobiDS[Times[Rational[1, 2], I, Pi], 1]]			
+a-floating-point-argument-evaluates-directly-to	N[JacobiDS[1.1, 0.9]]	0.7887544023075438	N[\text{ds}(1.1|0.9)]	0.788754
+m-less-than-0-via-the-imaginary-modulus	N[JacobiDS[0.3, -0.7]]	3.4531637136188116	N[\text{ds}(0.3|-0.7)]	3.45316
+u-0-is-a-pole-for-any-m				
+symbolic-arguments-are-left-unevaluated-rather				
+m-1-at-a-shared-pole-of-sn-and-cn	N[JacobiDS[Times[Rational[1, 2], I, Pi], 1]]	0. - 1.*I	N\left[\text{ds}\left(\left.\frac{1}{2} i \pi \right|1\right)\right]	0.\, -1. i

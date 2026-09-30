@@ -1,8 +1,8 @@
-id	in	out	tex.in	tex.out
-a-floating-point-argument-evaluates-directly-to	N[JacobiCD[0.3, 0.5]]			
-jacobicd-0-4-0-5i-0-3	N[JacobiCD[Complex[0.4, 0.5], 0.3]]			
-m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCD[0.3, 1.5]]			
-u-0-is-1-for-any-m	JacobiCD[0, m]	1	\text{cd}(0|m)	1
-symbolic-arguments-are-left-unevaluated-rather	JacobiCD[u, m]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{cd}(u|m)-\text{cd}(u|m)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{cd}\left(-\frac{11}{5}|\frac{7}{3}\right)-\text{cd}\left(-\frac{11}{5}|\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{cd}\left(-\frac{17}{6}|\frac{13}{4}\right)-\text{cd}\left(-\frac{17}{6}|\frac{13}{4}\right)\right]\right],\text{Chop}\left[N\left[\text{cd}\left(-\frac{23}{9}|\frac{19}{8}\right)-\text{cd}\left(-\frac{23}{9}|\frac{19}{8}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
-u-1e16-declines-rather-than-answering-wrong	N[JacobiCD[Power[10, 16], Rational[2, 7]]]			
-u-1e16-mpmath-true-value	N[JacobiCD[Power[10, 16], Rational[2, 7]]]			
+id	in	out	tex.in	tex.out	verdict
+a-floating-point-argument-evaluates-directly-to	N[JacobiCD[0.3, 0.5]]	0.97725033644425	N[\text{cd}(0.3|0.5)]	0.97725	
+jacobicd-0-4-0-5i-0-3	N[JacobiCD[Complex[0.4, 0.5], 0.3]]	1.034017190005339 - 0.1393379672126352*I	N[\text{cd}(0.4\, +0.5 i|0.3)]	1.03402\, -0.139338 i	
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCD[0.3, 1.5]]	1.023633106578735	N[\text{cd}(0.3|1.5)]	1.02363	
+u-0-is-1-for-any-m					
+symbolic-arguments-are-left-unevaluated-rather					
+u-1e16-declines-rather-than-answering-wrong	N[JacobiCD[Power[10, 16], Rational[2, 7]]]	0.3472297370627163	N\left[\text{cd}\left(10^{16}|\frac{2}{7}\right)\right]	0.34723	disagree
+u-1e16-mpmath-true-value	N[JacobiCD[Power[10, 16], Rational[2, 7]]]				

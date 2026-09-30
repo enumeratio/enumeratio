@@ -1,5 +1,5 @@
-id	in
-re-of-3-plus-4i-is-3	Re[Complex[3, 4]]
-re-of-a-real-number-is-itself	Re[5]
-re-of-pi-is-pi-a-real-symbolic-constant	Re[Pi]
-re-of-a-symbolic-value-stays-unevaluated	Re[x]
+id	in	out	tex.in	tex.out	verdict
+re-of-3-plus-4i-is-3	Re[Complex[3, 4]]	3	\Re(3+4 i)	3	
+re-of-a-real-number-is-itself	Re[5]	5	\Re(5)	5	
+re-of-pi-is-pi-a-real-symbolic-constant	Re[Pi]	Pi	\Re(\pi )	\pi	
+re-of-a-symbolic-value-stays-unevaluated	Re[x]	Re[x]	\Re(x)	\Re(x)	disagree

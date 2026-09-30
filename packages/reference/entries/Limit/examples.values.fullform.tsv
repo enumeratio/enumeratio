@@ -1,4 +1,4 @@
-id	in
-lim-x-to-0-sin-x-x-1	Limit[Function[Divide[Sin[Slot[1]], Slot[1]]], 0]
-right-hand-limit-of-1-x-at-0-is-infinity	Limit[Function[Divide[1, Slot[1]]], 0, 1]
-limit-of-1-x-as-x-to-infinity-is-0	Limit[Function[Divide[1, Slot[1]]], Infinity]
+id	in	back
+lim-x-to-0-sin-x-x-1	Limit[Divide[Sin[x], x], Rule[x, 0]]	[Limit, [Divide, [Sin, x], x], [KeyValuePair, x, 0]]
+right-hand-limit-of-1-x-at-0-is-infinity	Limit[Divide[1, x], Rule[x, 0], Rule[Direction, "FromAbove"]]	[Limit, [Divide, 1, x], [KeyValuePair, x, 0], [KeyValuePair, Direction, "'FromAbove'"]]
+limit-of-1-x-as-x-to-infinity-is-0	Limit[Divide[1, x], Rule[x, Infinity]]	[Limit, [Divide, 1, x], [KeyValuePair, x, PositiveInfinity]]
