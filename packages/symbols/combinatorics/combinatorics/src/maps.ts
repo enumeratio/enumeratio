@@ -10,15 +10,13 @@
 // re-wrapped in the target domain's constructor. So a map is data, like a statistic — and the
 // same reduction analysis applies to it.
 
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { symbolInfo } from "@enumeratio/manifest";
 import {
-  applyComposition,
-  attachConversion,
-  extendBuiltin,
-  registerEquivalence,
-  registerOperation,
+  declareMaps as declareMapsGeneric,
+  evaluateDefinition,
+  type Law,
+  type MapDeclaration,
 } from "@enumeratio/structures";
 import { CARRIERS } from "./carriers.ts";
 import { COMPILED_MAPS } from "./compiled-maps.generated.js";
@@ -50,53 +48,15 @@ import {
   rskRows,
 } from "../tableaux/src/tableau.ts";
 
-export interface CombinatorialMap {
-  readonly name: string;
-  /** The carrier type this map takes. */
-  readonly from: string;
-  /** The carrier type it produces. */
-  readonly to: string;
-  /** The body, over `_raw` — the CONTENTS of the argument, since generic heads cannot see
-   *  through a domain constructor (https://github.com/enumeratio/enumeratio/wiki/Domains §1.5). */
-  readonly body?: unknown;
-  /** A conversion between sibling carriers: no head of its own, but an overload of the target's
-   *  constructor, so `SetPartition(RestrictedGrowthString([0, 1, 0]))` converts. Its `name` is
-   *  that constructor, which is also its key for `CombinatorialMap` and for laws. */
-  readonly convert?: boolean;
+/** A combinatorics map: `MapDeclaration` (@enumeratio/structures) plus FindStat ids, the one
+ *  field a generic map has no business knowing about. */
+export interface CombinatorialMap extends MapDeclaration {
   /** FindStat map ids, for a map whose record doesn't state them (a conversion has none). */
   readonly findstat?: readonly string[];
-  /** A predicate over `_raw`, checked before `body`. When it evaluates to anything but
-   *  `"True"` the map DECLINES — the call stays unevaluated, the way a restriction's `Filter`
-   *  never materialises what it excludes, rather than answering wrong for a subject outside
-   *  the map's actual domain (KrewerasComplement, defined only on the non-crossing
-   *  permutations). Absent, every subject of the right carrier is in domain. A guard may
-   *  name `_image` for the MATERIALISED body: embedding the body expression itself hands a
-   *  lazy `Map` to whatever reads it, and a kernel-backed statistic never finishes. */
-  readonly guard?: unknown;
-  /** Defined as a COMPOSITION of other maps, applied right to left — `["Complement",
-   *  "Reverse"]` is complement-after-reverse. A composed map has no body of its own; it is
-   *  the case that makes typed maps worth having, since each step's output type has to match
-   *  the next step's input. */
-  readonly composedOf?: readonly string[];
-  /** Extra constructor arguments, for a carrier whose shape is a tuple. `finset` is
-   *  `(members, n)`, so a map into it has to supply the ground size as well as the members. */
-  readonly extra?: readonly unknown[];
-  readonly summary: string;
-  readonly note?: string;
-  /** What Plausible checks on every element of every family over `from` (laws.ts). Beyond
-   *  these, every map is checked to be TYPED: its result is a `to`. */
-  readonly laws?: readonly Law[];
-  /**
-   * Whether the map preserves rank between two collections: the k-th element of `from` at
-   * size n goes to the k-th of `to` at size n + `sizeOffset`. The strongest claim a bijection
-   * can make; it lets either collection borrow the other's ranking. Checked by
-   * tests/equivalence.test.ts.
-   */
-  readonly orderIsomorphism?: { readonly from: string; readonly to: string; readonly sizeOffset?: number };
 }
 
-/** A map's law: f∘f = id, f∘f = f, or g∘f = id for the named map g. */
-export type Law = "involution" | "idempotent" | { readonly inverse: string };
+export type { Law };
+export { evaluateDefinition };
 
 // Every Range here states its step: compute-engine counts DOWN when the end is below the start,
 // so `Range(1, 0)` is [1, 0] where Wolfram's is empty, and an empty permutation would get two
@@ -830,19 +790,19 @@ function iterate(start: MathJSON, times: MathJSON): MathJSON {
   return ["Fold", ["Function", at("a"), "a", "b"], start, ["Range", 1, times, 1]];
 }
 
-/** Declare each map, typed by carrier: it takes a constructed value of `from` and returns a
- *  constructed value of `to`, so a composition that does not typecheck is caught. */
+/** Declare every combinatorics map, typed by carrier, via @enumeratio/structures' generic
+ *  `declareMaps`: combinatorics supplies the fast (compiled) definition and the FindStat ids,
+ *  which are the two things a generic map declaration knows nothing about. */
 export function declareMaps(
   ce: ComputeEngine,
   constructorFor: Readonly<Record<string, string>>,
   maps: readonly CombinatorialMap[] = MAPS,
 ): void {
   const shapeOf = new Map(CARRIERS.map((carrier) => [carrier.type, carrier.shape]));
-  for (const map of maps) {
-    const wrap = constructorFor[map.to];
-    if (wrap === undefined) throw new Error(`no constructor for ${map.to}`);
-    // The definition as it runs: compiled where compute-engine's compiler takes it, memoized.
-    const definition =
+  declareMapsGeneric(ce, constructorFor, maps, {
+    package: "combinatorics",
+    // Compiled where compute-engine's compiler takes it, memoized; the interpreter otherwise.
+    definitionFor: (map) =>
       map.body === undefined
         ? undefined
         : fastDefinition({
@@ -853,117 +813,13 @@ export function declareMaps(
             to: shapeOf.get(map.to),
             interpret: (contents) => evaluateDefinition(ce, map, contents),
             generated: COMPILED_MAPS[`${map.name}@${map.from}`],
-          });
-
-    const handle = (subject: BoxedExpression): BoxedExpression | undefined => {
-      // A composed map applies its steps right to left, each through its own declared head —
-      // so every intermediate value is a properly constructed carrier and the composition is
-      // type-checked at each step rather than only at the ends.
-      if (map.composedOf !== undefined) return applyComposition(ce, map.composedOf, subject);
-      const contents = operandsOf(subject)[0];
-      if (contents === undefined) return undefined;
-      const image = definition?.(contents.json);
-      if (image === undefined) return undefined;
-      const main = ce.box(image as never);
-      const extra = (map.extra ?? []).map((argument) => ce.box(fill(argument, contents.json) as never).evaluate());
-      // A tuple-shaped carrier takes ONE argument that is a Tuple, not several arguments —
-      // `finset` is `(members, n)`, so a map into it hands over a single Tuple.
-      const argument = extra.length === 0 ? main : ce.function("Tuple", [main, ...extra]).evaluate();
-      return ce.function(wrap, [argument]).evaluate();
-    };
-
-    const from = constructorFor[map.from];
-    if (from !== undefined) {
-      // FindStat's map ids (`Mp00066`), as the map's record states them.
-      const findstat = [
-        ...(map.findstat ?? []),
-        ...(map.convert === true ? [] : (symbolInfo(map.name)?.findstat ?? []))
-          .filter((ref) => ref.on === undefined || ref.on === from)
-          .map((ref) => ref.id),
-      ];
-      // One closed expression (no guard to decline with, no composition, no extra arguments) is
-      // what a definition calling this map can be compiled through.
-      const closed = map.body !== undefined && map.guard === undefined && map.extra === undefined;
-      registerOperation(ce, "CombinatorialMap", from, {
-        name: map.name,
-        type: map.to,
-        findstat,
-        definition: handle,
-        ...(closed ? { epsil: { expression: map.body, subject: "_raw", wrap } } : {}),
-      });
-      // A map with an inverse between two carriers makes them equivalent: what one carrier
-      // defines, the other reaches through the map (set partitions and their growth strings).
-      const to = constructorFor[map.to];
-      if (to !== undefined && to !== from && map.laws?.some((law) => typeof law === "object"))
-        registerEquivalence(ce, from, to, handle);
-    }
-
-    if (map.convert === true) {
-      if (from === undefined || map.name !== wrap) throw new Error(`${map.name}: a conversion is named for its target`);
-      attachConversion(ce, wrap, from, map.from, map.to, handle);
-      continue;
-    }
-
-    // `Reverse`, `Complement` and `Inverse` are already compute-engine heads. Extending
-    // rather than replacing keeps every overload they had — see extend.ts for why that is
-    // possible even for the collection-backed ones.
-    const extended = extendBuiltin(ce, {
-      package: "combinatorics",
-      head: map.name,
-      on: map.from,
-      returns: map.to,
-      handle,
-    });
-    if (extended) continue;
-
-    ce.declare(map.name, {
-      signature: `(${map.from}) -> ${map.to}`,
-      evaluate: (ops) => {
-        const subject = ops[0];
-        return subject === undefined ? undefined : handle(subject);
-      },
-    });
-  }
-}
-
-/** What a map's definition gives for `contents` (MathJSON): the body, materialised, or
- *  undefined when its guard declines. */
-export function evaluateDefinition(ce: ComputeEngine, map: CombinatorialMap, contents: unknown): unknown {
-  const main = materialise(ce, ce.box(fill(map.body, contents) as never).evaluate());
-  if (map.guard !== undefined) {
-    const guard = fill(fill(map.guard, contents), main.json, "_image");
-    if (ce.box(guard as never).evaluate().json !== "True") return undefined;
-  }
-  return main.json;
-}
-
-/** Force a lazy result into a concrete List.
- *
- *  `Map` and `Filter` over a `Range` stay lazy — `Range(1, 3)` does not even evaluate to a
- *  list on its own — which is right for a collection and wrong for a carrier VALUE. A
- *  permutation is a list of numbers, not a promise of one, so a map materialises before
- *  wrapping. */
-function materialise(ce: ComputeEngine, value: BoxedExpression): BoxedExpression {
-  // A Tuple is already a concrete value — and materialising one would flatten it into a
-  // List, which is exactly wrong for a composite carrier like `standard_tableau_pair`.
-  const concrete = value.operator === "List" || value.operator === "Tuple";
-  let items: readonly BoxedExpression[];
-  if (concrete) items = operandsOf(value);
-  else {
-    const size = ce.function("Count", [value]).evaluate().re;
-    if (!Number.isFinite(size)) return value;
-    items = Array.from({ length: size }, (_, index) => ce.function("At", [value, ce.number(index + 1)]).evaluate());
-  }
-  // An item may itself be lazy (a `Map` of `Filter`s), so each is forced too.
-  const forced = items.map((item) =>
-    item.operator !== "List" && item.isCollection === true ? materialise(ce, item) : item,
-  );
-  if (concrete && forced.every((item, index) => item === items[index])) return value;
-  return ce.function(concrete ? value.operator : "List", forced).evaluate();
-}
-
-/** Replace `_raw` (or another placeholder) with the argument's contents, before boxing. */
-function fill(node: unknown, contents: unknown, placeholder = "_raw"): unknown {
-  if (node === placeholder) return contents;
-  return Array.isArray(node) ? node.map((operand) => fill(operand, contents, placeholder)) : node;
+          }),
+    // FindStat's map ids (`Mp00066`), as the map's record states them.
+    findstatFor: (map, from) => [
+      ...(map.findstat ?? []),
+      ...(map.convert === true ? [] : (symbolInfo(map.name)?.findstat ?? []))
+        .filter((ref) => ref.on === undefined || ref.on === from)
+        .map((ref) => ref.id),
+    ],
+  });
 }

@@ -56,6 +56,9 @@ export {
   RestrictionCollisionError,
   type Restriction,
 } from "./restriction.ts";
+export { checkLaws, type LawFailure } from "./laws.ts";
+export { declareMaps, type DeclareMapsOptions, evaluateDefinition, type Law, type MapDeclaration } from "./maps.ts";
+export { isLeaf, recurse, self } from "./recursion.ts";
 
 /** The protocols, compute-engine's types' conformances, the generic heads over them, and the algebra heads. */
 export function declareStructures(ce: ComputeEngine): void {
