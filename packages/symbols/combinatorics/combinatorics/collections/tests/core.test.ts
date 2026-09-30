@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "./number-kernels.ts";
 import {
   entriesBeforeSurjections,
   entriesBeforeDyckPaths,
@@ -30,7 +31,7 @@ const byHead = new Map(
     ...entriesBeforeSetPartitions,
     ...entriesBeforeTrees,
     ...entries,
-  ].map((e) => [e.head, e]),
+  ].map((e) => [e.head, asNumbers(e)]),
 );
 
 for (const [head, p] of Object.entries(PARAMS)) {

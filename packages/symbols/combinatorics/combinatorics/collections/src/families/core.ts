@@ -1,23 +1,9 @@
 // The originally hand-authored collections, expressed as NumberKernel[] over the certified kernel library
 // (./kernels*.ts). Same registration mechanism as the other families — no special-casing in library.ts.
+import { binaryStrings, grayCodeSubsets, kSubsets, multisets, subsets, tuples } from "./closed-forms.ts";
+import type { EpsilFamily } from "./epsil.ts";
 import type { NumberKernel } from "./types.ts";
 import {
-  SubsetCount,
-  SubsetUnrank,
-  SubsetRank,
-  IsSubsetOf,
-  KSubsetCount,
-  KSubsetUnrank,
-  KSubsetRank,
-  IsKSubsetOf,
-  TupleCount,
-  TupleUnrank,
-  TupleRank,
-  IsTupleOf,
-  MultisetCount,
-  MultisetUnrank,
-  MultisetRank,
-  IsMultisetOf,
   LatticePathCount,
   LatticePathUnrank,
   LatticePathRank,
@@ -26,12 +12,6 @@ import {
   FibonacciWordUnrank,
   FibonacciWordRank,
   IsFibonacciWord,
-  GrayCodeSubsetUnrank,
-  GrayCodeSubsetRank,
-  BinaryStringCount,
-  BinaryStringUnrank,
-  BinaryStringRank,
-  IsBinaryString,
 } from "./kernels-extra.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; casts the unknown element once here,
@@ -43,9 +23,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-  // Carrier options, when this family's elements are typed -- e.g. Finset/Multiset's
-  // `carrierParams: 1` prefixes `n` onto the carrier's Tuple argument (declare.ts), same as
-  // graphs' Tournament/LabeledGraph.
+  // Carrier options, when this family's elements are typed.
   carrierOptions?: { carrier: string; carrierParams?: number },
 ): NumberKernel => ({
   head,
@@ -58,6 +36,16 @@ const ints = (
   ...carrierOptions,
 });
 
+// Closed-form families, defined in Epsil (./closed-forms.ts).
+const subsetsFamily = subsets({ head: "Subsets", params: ["_n"], carrier: "Finset", carrierParams: 1 });
+// Not carrier-typed here: out of scope for A-116 (only Subsets/KSubsets/Multisets asked for), though
+// its elements are the same Finset shape as Subsets'.
+const grayCodeSubsetsFamily = grayCodeSubsets({ head: "GrayCodeSubsets", params: ["_n"] });
+const kSubsetsFamily = kSubsets({ head: "KSubsets", params: ["_n", "_k"], carrier: "Finset", carrierParams: 1 });
+const multisetsFamily = multisets({ head: "Multisets", params: ["_n", "_k"], carrier: "Multiset", carrierParams: 1 });
+const tuplesFamily = tuples({ head: "Tuples", params: ["_n", "_k"] });
+const binaryStringsFamily = binaryStrings({ head: "BinaryStrings", params: ["_n"] });
+
 // Kept separate from `entries` below only so collections/src/families/index.ts can splice
 // `latticePathsDyckPathsEntries` (DyckPaths) back in at the exact interior position it held
 // before the lattice-paths-area move — §4 step 5,
@@ -66,68 +54,21 @@ const ints = (
 // can splice `setPartitionsSurjectionsEntries` (Surjections) back in at the exact interior
 // position it held before the set-partitions-area move — §4 step 5,
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible.
-export const entriesBeforeSurjections: NumberKernel[] = [
+export const entriesBeforeSurjections: (NumberKernel | EpsilFamily)[] = [
   // ── subsets / multisets / tuples / functions / binary words ──
-  ints(
-    "Subsets",
-    1,
-    ([n]) => SubsetCount(n),
-    ([n], r) => SubsetUnrank(n, r),
-    (a, [n]) => IsSubsetOf(a, n),
-    (a) => SubsetRank(a),
-    { carrier: "Finset", carrierParams: 1 },
-  ),
-  ints(
-    "KSubsets",
-    2,
-    ([n, k]) => KSubsetCount(n, k),
-    ([n, k], r) => KSubsetUnrank(n, k, r),
-    (a, [n, k]) => IsKSubsetOf(a, n, k),
-    (a) => KSubsetRank(a),
-    { carrier: "Finset", carrierParams: 1 },
-  ),
-  ints(
-    "GrayCodeSubsets",
-    1,
-    ([n]) => SubsetCount(n),
-    ([n], r) => GrayCodeSubsetUnrank(n, r),
-    (a, [n]) => IsSubsetOf(a, n),
-    (a) => GrayCodeSubsetRank(a),
-    // Not carrier-typed here: out of scope for A-116 (only Subsets/KSubsets/Multisets asked
-    // for), though its elements are the same Finset shape as Subsets'.
-  ),
-  ints(
-    "Multisets",
-    2,
-    ([n, k]) => MultisetCount(n, k),
-    ([n, k], r) => MultisetUnrank(n, k, r),
-    (a, [n, k]) => IsMultisetOf(a, n, k),
-    (a) => MultisetRank(a),
-    { carrier: "Multiset", carrierParams: 1 },
-  ),
-  ints(
-    "Tuples",
-    2,
-    ([n, k]) => TupleCount(n, k),
-    ([n, k], r) => TupleUnrank(n, k, r),
-    (a, [n, k]) => IsTupleOf(a, n, k),
-    (a, [n]) => TupleRank(a, n),
-  ),
+  subsetsFamily,
+  kSubsetsFamily,
+  grayCodeSubsetsFamily,
+  multisetsFamily,
+  tuplesFamily,
 ];
 
 // Surjections moved to set-partitions/src/families/core.ts -- §4 step 5, the only family in this
 // section carrying a `carrier` ("Surjection"). Endofunctions moved to words/src/families/core.ts
 // (wire-carriers lane A-91): it now carries "Endofunction". BinaryStrings/LatticePaths below
 // declare no carrier and stay here per step 5 rule 4.
-export const entriesBeforeDyckPaths: NumberKernel[] = [
-  ints(
-    "BinaryStrings",
-    1,
-    ([n]) => BinaryStringCount(n),
-    ([n], r) => BinaryStringUnrank(n, r),
-    (a, [n]) => IsBinaryString(a, n),
-    (a) => BinaryStringRank(a),
-  ),
+export const entriesBeforeDyckPaths: (NumberKernel | EpsilFamily)[] = [
+  binaryStringsFamily,
 
   // ── lattice-path words ──
   ints(

@@ -46,7 +46,11 @@ function sampleParams(count: number): number[][] {
 
 /** A member one entry away from itself, which the family may or may not contain. */
 const nearMiss = (element: unknown): unknown =>
-  Array.isArray(element) && element.length > 0 ? [nearMiss(element[0]), ...element.slice(1)] : Number(element) + 1;
+  Array.isArray(element)
+    ? element.length > 0
+      ? [nearMiss(element[0]), ...element.slice(1)]
+      : [1] // the empty element's neighbour: one entry
+    : Number(element) + 1;
 
 /**
  * Whether each operation's compiled code gives the interpreter's answers over the sample: the

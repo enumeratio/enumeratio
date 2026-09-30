@@ -8,19 +8,13 @@
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Binomial } from "../../../collections/src/families/kernels-combinatorics.ts";
 import {
-  BinaryStringCount,
-  BinaryStringUnrank,
-  BinaryStringRank,
-  IsBinaryString,
-  TupleCount,
-  TupleUnrank,
-  TupleRank,
-  IsTupleOf,
   FibonacciWordCount,
   FibonacciWordUnrank,
   FibonacciWordRank,
   IsFibonacciWord,
 } from "../../../collections/src/families/kernels-extra.ts";
+import { binaryPalindromes, binaryStrings, grayCodes, words } from "../../../collections/src/families/closed-forms.ts";
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
@@ -129,10 +123,10 @@ function lucasStringsValid(bits: unknown, n: number): boolean {
 // ─── GrayCodes(n): binary words of length n in binary-reflected Gray-code order (A003188);
 // consecutive words differ in exactly one bit. g(r) = r XOR (r >> 1), rendered MSB-first; rank is
 // the standard inverse-Gray unshuffle. ──────────────────────────────────────────────────────────────
-function grayCodeCount(n: number): number {
+export function grayCodeCount(n: number): number {
   return 2 ** n;
 }
-function grayCodeUnrank(n: number, r: number): number[] {
+export function grayCodeUnrank(n: number, r: number): number[] {
   const total = grayCodeCount(n);
   const rem = normRank(r, total);
   const g = rem ^ (rem >> 1);
@@ -140,7 +134,7 @@ function grayCodeUnrank(n: number, r: number): number[] {
   for (let i = 0; i < n; i++) bits.push((g >> (n - 1 - i)) & 1);
   return bits;
 }
-function grayCodeRank(bits: number[]): number {
+export function grayCodeRank(bits: number[]): number {
   let g = 0;
   for (const b of bits) g = (g << 1) | b;
   let r = g;
@@ -150,10 +144,10 @@ function grayCodeRank(bits: number[]): number {
 
 // ─── BinaryPalindromes(n): binary words that read the same reversed. Count = 2^ceil(n/2). The free
 // first half determines the rest by mirroring; unrank/rank read/pack it MSB-first. ──────────────────
-function palindromeCount(n: number): number {
+export function palindromeCount(n: number): number {
   return 2 ** Math.ceil(n / 2);
 }
-function palindromeUnrank(n: number, r: number): number[] {
+export function palindromeUnrank(n: number, r: number): number[] {
   const half = Math.ceil(n / 2);
   const total = palindromeCount(n);
   const rem = normRank(r, total);
@@ -161,13 +155,13 @@ function palindromeUnrank(n: number, r: number): number[] {
   for (let i = 0; i < half; i++) free.push((rem >> (half - 1 - i)) & 1);
   return Array.from({ length: n }, (_, i) => (i < half ? free[i] : free[n - 1 - i]));
 }
-function palindromeRank(bits: number[], n: number): number {
+export function palindromeRank(bits: number[], n: number): number {
   const half = Math.ceil(n / 2);
   let r = 0;
   for (let i = 0; i < half; i++) r = (r << 1) | (bits[i] & 1);
   return r >>> 0;
 }
-function palindromeValid(bits: unknown, n: number): boolean {
+export function palindromeValid(bits: unknown, n: number): boolean {
   if (!Array.isArray(bits) || bits.length !== n) return false;
   for (const b of bits) if (b !== 0 && b !== 1) return false;
   for (let i = 0; i < Math.floor(n / 2); i++) if (bits[i] !== bits[n - 1 - i]) return false;
@@ -373,20 +367,16 @@ const wordClass = (carrier: string, base?: number): Declared => ({
   work: ([n, k]) => BigInt(base ?? (k as number)) ** BigInt(n as number),
 });
 
-export const entries: NumberKernel[] = [
-  // BinaryWords(n): strings over {0,1}. Reuses the BinaryStrings kernel (same family, catalogued
-  // under this name).
-  {
-    ...ints(
-      "BinaryWords",
-      1,
-      ([n]) => BinaryStringCount(n),
-      ([n], r) => BinaryStringUnrank(n, r),
-      (a, [n]) => IsBinaryString(a, n),
-      (a) => BinaryStringRank(a),
-    ),
-    carrier: "BinaryWord",
-  },
+// Closed-form families, defined in Epsil (collections/src/families/closed-forms.ts). The TS
+// kernels above (byWeight*, grayCode*, palindrome*) are the independent reading their agreement
+// test checks them against.
+const binaryWords = binaryStrings({ head: "BinaryWords", params: ["_n"], carrier: "BinaryWord" });
+const wordsFamily = words({ head: "Words", params: ["_size", "_base"], carrier: "Word" });
+const grayCodesFamily = grayCodes({ head: "GrayCodes", params: ["_n"], carrier: "BinaryWord" });
+const binaryPalindromesFamily = binaryPalindromes({ head: "BinaryPalindromes", params: ["_n"], carrier: "BinaryWord" });
+
+export const entries: (NumberKernel | EpsilFamily)[] = [
+  binaryWords,
   // BinaryWordsByWeight(n, k): length-n binary words of Hamming weight k.
   {
     ...ints(
@@ -399,19 +389,7 @@ export const entries: NumberKernel[] = [
     ),
     carrier: "BinaryWord",
   },
-  // Words(size, base): strings over a size-b alphabet — Tuples(base, size) with the two grades
-  // (size axis, base param) reordered to match the catalog's declared grade order.
-  {
-    ...ints(
-      "Words",
-      2,
-      ([size, base]) => TupleCount(base, size),
-      ([size, base], r) => TupleUnrank(base, size, r),
-      (a, [size, base]) => IsTupleOf(a, base, size),
-      (a, [, base]) => TupleRank(a, base),
-    ),
-    carrier: "Word",
-  },
+  wordsFamily,
   // FibStrings(n): binary words with no two consecutive 1s — F(n+2). Same family as the already
   // declared FibonacciWords head; reuses its kernels under the catalogued name.
   {
@@ -437,30 +415,8 @@ export const entries: NumberKernel[] = [
     ),
     carrier: "BinaryWord",
   },
-  // GrayCodes(n): binary words in reflected Gray-code order.
-  {
-    ...ints(
-      "GrayCodes",
-      1,
-      ([n]) => grayCodeCount(n),
-      ([n], r) => grayCodeUnrank(n, r),
-      (a, [n]) => a.length === n && a.every((b) => b === 0 || b === 1),
-      (a) => grayCodeRank(a),
-    ),
-    carrier: "BinaryWord",
-  },
-  // BinaryPalindromes(n): binary words that read the same reversed.
-  {
-    ...ints(
-      "BinaryPalindromes",
-      1,
-      ([n]) => palindromeCount(n),
-      ([n], r) => palindromeUnrank(n, r),
-      (a, [n]) => palindromeValid(a, n),
-      (a, [n]) => palindromeRank(a, n),
-    ),
-    carrier: "BinaryWord",
-  },
+  grayCodesFamily,
+  binaryPalindromesFamily,
   // BinaryNecklaces(n): binary words up to rotation (lex-least reps) — KNecklaces(n, 2), remapped
   // from 1-indexed {1,2} letters to {0,1}.
   {

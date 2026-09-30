@@ -9,7 +9,14 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { compileTyped, definitionHash, type GeneratedRun, runtimeHelpers } from "@enumeratio/engine/compiled";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { COMPILED_FAMILIES } from "./compiled-families.generated.js";
-import type { Count, Element, FamilyKernel, FamilyShape } from "./types.ts";
+import {
+  type Count,
+  type Element,
+  type FamilyKernel,
+  type FamilyShape,
+  type NumberKernel,
+  numberKernel,
+} from "./types.ts";
 
 /** A family's definitions. Each is over the family's `params`; `unrank` also over `_r` (a
  *  0-based rank in the fiber), `rank` and `valid` over `_x` (an element). */
@@ -45,6 +52,10 @@ export interface GeneratedFamily {
 export type AnyFamily = FamilyKernel | EpsilFamily;
 
 export const isEpsilFamily = (family: AnyFamily): family is EpsilFamily => "epsil" in family;
+
+/** A family as an area lists it: an Epsil definition as it is, a NumberKernel lifted into the bigint contract. */
+export const liftFamily = (family: NumberKernel | EpsilFamily): AnyFamily =>
+  "epsil" in family ? family : numberKernel(family);
 
 export const OPERATIONS = ["count", "unrank", "rank", "valid"] as const;
 export type Operation = (typeof OPERATIONS)[number];

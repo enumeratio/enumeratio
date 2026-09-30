@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/core.ts";
 
 // Endofunctions split out of collections/src/families/core.ts (which mixed every area) --
@@ -9,7 +10,7 @@ const PARAMS: Record<string, number[]> = {
   Endofunctions: [3],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, p] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

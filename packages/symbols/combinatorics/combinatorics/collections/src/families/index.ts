@@ -62,8 +62,8 @@ import { entries as numericRecurrence } from "./numeric-recurrence.ts";
 import { entries as numericDivisor } from "./numeric-divisor.ts";
 import { entries as numericDigitsPrimes } from "./numeric-digits-primes.ts";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { type AnyFamily, kernelsOn } from "./epsil.ts";
-import { type FamilyKernel, numberKernel } from "./types.ts";
+import { type AnyFamily, kernelsOn, liftFamily } from "./epsil.ts";
+import type { FamilyKernel } from "./types.ts";
 
 export * from "./types.ts";
 export * from "./epsil.ts";
@@ -113,7 +113,7 @@ const numberEntries = [
   ...numericDivisor,
   ...numericDigitsPrimes,
   ...treesUnlabeledTreesEntries,
-].map(numberKernel);
+].map(liftFamily);
 
 // Every family: a TS kernel in the bigint contract, or an Epsil definition whose kernel belongs
 // to an engine (`allKernels`). The Plausible and OEIS scripts read them. Order here is data-list
@@ -133,7 +133,7 @@ export const allKernels = (ce: ComputeEngine): FamilyKernel[] => kernelsOn(ce, a
 // The families with NO carrier -- native to collections, not to any combinatorics area. Every
 // other entry above physically lives in, and is now declared by, its own area package; this is
 // what `declareCollections` itself still declares directly.
-export const collectionsEntries: readonly FamilyKernel[] = [
+export const collectionsEntries: readonly AnyFamily[] = [
   ...coreBeforeSurjections,
   ...coreBeforeDyckPaths,
   ...coreBeforeSetPartitions,
@@ -148,4 +148,4 @@ export const collectionsEntries: readonly FamilyKernel[] = [
   ...numericRecurrence,
   ...numericDivisor,
   ...numericDigitsPrimes,
-].map(numberKernel);
+].map(liftFamily);

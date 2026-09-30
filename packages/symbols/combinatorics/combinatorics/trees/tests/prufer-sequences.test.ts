@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/prufer-sequences.ts";
 import { LabeledTreeCount } from "../../collections/src/families/kernels-extra.ts";
 
@@ -7,7 +8,7 @@ import { LabeledTreeCount } from "../../collections/src/families/kernels-extra.t
 // PruferSequences now carries "PruferSequence". These tests exercise the pure kernel; the
 // carrier wiring and the LabeledTree conversion are tested at the CE level in
 // tests/declare-combinatorics.test.ts and tests/prufer-conversion.test.ts.
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 const PARAMS: Record<string, number[][]> = {
   PruferSequences: [[1], [2], [3], [5]],
