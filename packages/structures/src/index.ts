@@ -16,6 +16,8 @@ export {
   type Operation,
   OperationCollisionError,
   type OperationHead,
+  operationEpsil,
+  type OperationEpsil,
   operationOf,
   registerCarrier,
   registerCollectionCarrier,
