@@ -2,7 +2,9 @@
 // compute-engine's JavaScript compiler. Do not edit: rerun the script. Each entry is used only
 // while `hash` matches its definitions; see ./epsil.ts.
 // A definition that ignores one of its inputs compiles to code that never reads it.
-/* eslint-disable no-unused-vars */
+// A `Join` of single-element `List`s (a fixed head or tail spliced onto a filtered range, e.g.
+// IntegerCompositions' boundaries) compiles to a single-element array spread.
+/* eslint-disable no-unused-vars, unicorn/no-useless-spread */
 
 export const COMPILED_FAMILIES = {
   ColoredPermutations: {
@@ -347,6 +349,48 @@ export const COMPILED_FAMILIES = {
             : false
           : undefined)(_._x.length),
   },
+  CompositionsIntoKParts: {
+    hash: "b670e49b",
+    valid: (_SYS, _) =>
+      _._x.length === _._k &&
+      typeof Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).reduce(
+        (
+          (_f) => (_a, _b) =>
+            _f(_a, _b)
+        )(
+          (
+            (_tv1) => (_tv2, _tv3) =>
+              Array.isArray(_tv2) || Array.isArray(_tv3) ? _SYS.bcastFn(_tv1, _tv2, _tv3) : _tv1(_tv2, _tv3)
+          )((_v1, _v2) => _v1 + _SYS.atNumeric(_._x, _v2, "integer")),
+        ),
+        0,
+      ) === "number" &&
+      Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).reduce(
+        (
+          (_f) => (_a, _b) =>
+            _f(_a, _b)
+        )(
+          (
+            (_tv1) => (_tv2, _tv3) =>
+              Array.isArray(_tv2) || Array.isArray(_tv3) ? _SYS.bcastFn(_tv1, _tv2, _tv3) : _tv1(_tv2, _tv3)
+          )((_v1, _v2) => _v1 + _SYS.atNumeric(_._x, _v2, "integer")),
+        ),
+        0,
+      ) === _._n &&
+      Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).reduce(
+        (
+          (_f) => (_a, _b) =>
+            _f(_a, _b)
+        )(
+          (
+            (_tv4) => (_tv5, _tv6) =>
+              Array.isArray(_tv5) || Array.isArray(_tv6) ? _SYS.bcastFn(_tv4, _tv5, _tv6) : _tv4(_tv5, _tv6)
+          )((_v3, _v4) => _v3 && 1 <= _SYS.atNumeric(_._x, _v4, "integer")),
+        ),
+        true,
+      ),
+    interpreted: ["count", "unrank", "rank"],
+  },
   CyclicPermutations: {
     hash: "efdd0000",
     count: (_SYS, _) => (_._n === _._n && _._n !== undefined ? (_._n < 1 ? 0 : _SYS.factorial(_._n + -1)) : NaN),
@@ -648,6 +692,165 @@ export const COMPILED_FAMILIES = {
               )
             : false
           : undefined)(_._x.length),
+  },
+  IntegerCompositions: {
+    hash: "467e32a6",
+    count: (_SYS, _) => (_._n === _._n && _._n !== undefined ? (_._n === 0 ? 1 : _SYS.pow(2, _._n + -1)) : NaN),
+    unrank: (_SYS, _) =>
+      _._n === _._n && _._n !== undefined
+        ? _._n === 0
+          ? []
+          : ((_f) =>
+              Array.from(
+                {
+                  length: _SYS.rangeCount(
+                    1,
+                    [
+                      ...[0],
+                      ...((_f) =>
+                        Array.from({ length: _SYS.rangeCount(1, _._n + -1, 1) }, (_e, i) => 1 + i * 1).filter((_x) =>
+                          _f(_x),
+                        ))(
+                        (
+                          (_tv1) => (_tv2) =>
+                            Array.isArray(_tv2) ? _SYS.bcastFn(_tv1, _tv2) : _tv1(_tv2)
+                        )(
+                          (_v4) =>
+                            _SYS.floorMod(
+                              (_._r + -_SYS.floorMod(_._r, _SYS.pow(2, _v4 + -1))) / _SYS.pow(2, _v4 + -1),
+                              2,
+                            ) === 1,
+                        ),
+                      ),
+                      ...[_._n],
+                    ].length + -1,
+                    1,
+                  ),
+                },
+                (_e, i) => 1 + i * 1,
+              ).map((_x) => _f(_x)))(
+              (() => {
+                let _tv16 = false;
+                let _tv3, _tv4, _tv5;
+                let _tv17;
+                _js1: {
+                  const _js2 = (_v1) =>
+                    _SYS.atNumeric(
+                      [
+                        ..._tv3,
+                        ...((_f) => _tv4.filter((_x) => _f(_x)))(
+                          (
+                            (_tv8) => (_tv9) =>
+                              Array.isArray(_tv9) ? _SYS.bcastFn(_tv8, _tv9) : _tv8(_tv9)
+                          )(
+                            (_v2) =>
+                              _SYS.floorMod(
+                                (_._r + -_SYS.floorMod(_._r, _SYS.pow(2, _v2 + -1))) / _SYS.pow(2, _v2 + -1),
+                                2,
+                              ) === 1,
+                          ),
+                        ),
+                        ..._tv5,
+                      ],
+                      _v1 + 1,
+                      "integer",
+                    ) +
+                    -_SYS.atNumeric(
+                      [
+                        ..._tv3,
+                        ...((_f) => _tv4.filter((_x) => _f(_x)))(
+                          (
+                            (_tv12) => (_tv13) =>
+                              Array.isArray(_tv13) ? _SYS.bcastFn(_tv12, _tv13) : _tv12(_tv13)
+                          )(
+                            (_v3) =>
+                              _SYS.floorMod(
+                                (_._r + -_SYS.floorMod(_._r, _SYS.pow(2, _v3 + -1))) / _SYS.pow(2, _v3 + -1),
+                                2,
+                              ) === 1,
+                          ),
+                        ),
+                        ..._tv5,
+                      ],
+                      _v1,
+                      "integer",
+                    );
+                  {
+                    const _tv14 = _js2;
+                    {
+                      _tv17 = (_tv15) => (Array.isArray(_tv15) ? _SYS.bcastFn(_tv14, _tv15) : _tv14(_tv15));
+                      break _js1;
+                    }
+                  }
+                }
+                return (_tv18) => {
+                  if (!_tv16) {
+                    _tv16 = true;
+                    _tv3 = [0];
+                    _tv4 = Array.from({ length: _SYS.rangeCount(1, _._n + -1, 1) }, (_e, i) => 1 + i * 1);
+                    _tv5 = [_._n];
+                  }
+                  return _tv17(_tv18);
+                };
+              })(),
+            )
+        : undefined,
+    rank: (_SYS, _) =>
+      Array.from({ length: _SYS.rangeCount(1, _._x.length + -1, 1) }, (_e, i) => 1 + i * 1).reduce(
+        (
+          (_f) => (_a, _b) =>
+            _f(_a, _b)
+        )(
+          (() => {
+            let _tv9 = false;
+            let _tv1;
+            let _tv10;
+            _js1: {
+              const _js2 = (_v1, _v2) =>
+                _v1 +
+                ((_tv2) =>
+                  _v2 === _v2 && _tv2 === _tv2
+                    ? _v2 <= _tv2
+                      ? _SYS.pow(
+                          2,
+                          Array.from({ length: _SYS.rangeCount(1, _v2, 1) }, (_e, i) => 1 + i * 1).reduce(
+                            (
+                              (_f) => (_a, _b) =>
+                                _f(_a, _b)
+                            )(
+                              (
+                                (_tv3) => (_tv4, _tv5) =>
+                                  Array.isArray(_tv4) || Array.isArray(_tv5)
+                                    ? _SYS.bcastFn(_tv3, _tv4, _tv5)
+                                    : _tv3(_tv4, _tv5)
+                              )((_v3, _v4) => _v3 + _SYS.atNumeric(_._x, _v4, "integer")),
+                            ),
+                            0,
+                          ) + -1,
+                        )
+                      : 0
+                    : NaN)(_tv1 + -1);
+              {
+                const _tv6 = _js2;
+                {
+                  _tv10 = (_tv7, _tv8) =>
+                    Array.isArray(_tv7) || Array.isArray(_tv8) ? _SYS.bcastFn(_tv6, _tv7, _tv8) : _tv6(_tv7, _tv8);
+                  break _js1;
+                }
+              }
+            }
+            return (_tv11, _tv12) => {
+              if (!_tv9) {
+                _tv9 = true;
+                _tv1 = _._x.length;
+              }
+              return _tv10(_tv11, _tv12);
+            };
+          })(),
+        ),
+        0,
+      ),
+    interpreted: ["valid"],
   },
   KPermutations: {
     hash: "698abf4f",
@@ -1235,5 +1438,36 @@ export const COMPILED_FAMILIES = {
               )
             : false
           : undefined)(_._x.length),
+  },
+  WeakCompositions: {
+    hash: "3ea2140b",
+    valid: (_SYS, _) =>
+      _._x.length === _._k &&
+      Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).reduce(
+        (
+          (_f) => (_a, _b) =>
+            _f(_a, _b)
+        )(
+          (
+            (_tv1) => (_tv2, _tv3) =>
+              Array.isArray(_tv2) || Array.isArray(_tv3) ? _SYS.bcastFn(_tv1, _tv2, _tv3) : _tv1(_tv2, _tv3)
+          )((_v1, _v2) => _v1 + _SYS.atNumeric(_._x, _v2, "integer") + 1),
+        ),
+        0,
+      ) ===
+        _._k + _._n &&
+      Array.from({ length: _SYS.rangeCount(1, _._x.length, 1) }, (_e, i) => 1 + i * 1).reduce(
+        (
+          (_f) => (_a, _b) =>
+            _f(_a, _b)
+        )(
+          (
+            (_tv4) => (_tv5, _tv6) =>
+              Array.isArray(_tv5) || Array.isArray(_tv6) ? _SYS.bcastFn(_tv4, _tv5, _tv6) : _tv4(_tv5, _tv6)
+          )((_v3, _v4) => _v3 && 0 <= _SYS.atNumeric(_._x, _v4, "integer")),
+        ),
+        true,
+      ),
+    interpreted: ["count", "unrank", "rank"],
   },
 };

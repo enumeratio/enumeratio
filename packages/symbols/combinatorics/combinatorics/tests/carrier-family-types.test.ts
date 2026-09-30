@@ -21,7 +21,7 @@ import {
   partitionsEntries,
   tableauxPlaneEntries as partitionsTableauxPlaneEntries,
 } from "../partitions/src/families/index.ts";
-import { compositionsEntries, coreEntries as compositionsCoreEntries } from "../compositions/src/families/index.ts";
+import { compositionsEntries, coreFamilies as compositionsCoreFamilies } from "../compositions/src/families/index.ts";
 import {
   binaryWordFamiliesEntries as wordsBinaryWordFamiliesEntries,
   coreEntries as wordsCoreEntries,
@@ -64,7 +64,8 @@ const allFamilies: readonly FamilyKernel[] = [
   ...kernelsOn(new ComputeEngine(), permutationsCoreFamilies),
   ...[...permutationsEntries, ...permutationClassesEntries].map(numberKernel),
   ...[...partitionsCoreEntries, ...partitionsEntries, ...partitionsTableauxPlaneEntries].map(numberKernel),
-  ...[...compositionsCoreEntries, ...compositionsEntries].map(numberKernel),
+  ...kernelsOn(new ComputeEngine(), compositionsCoreFamilies),
+  ...compositionsEntries.map(numberKernel),
   ...[...wordsCoreEntries, ...wordsEntries, ...wordsBinaryWordFamiliesEntries, ...wordsTableauxTreesEntries].map(
     numberKernel,
   ),
