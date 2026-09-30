@@ -2,9 +2,9 @@ id	in	out	tex.in	tex.out	verdict
 ellipticf-list-list-1-0-list-0-1-0	EllipticF[List[List[1, 0], List[0, 1]], 0]	{{1, 0}, {0, 1}}	F\left(\left.\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right|0\right)	\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)	
 matrixfunction-function-ellipticf-1-0-1-list	MatrixFunction[Function[EllipticF[Slot[1], 0]], List[List[1, 0], List[0, 1]]]	{{1, 0}, {0, 1}}	\text{MatrixFunction}\left[F(\text{$\#$1}|0)\&,\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)	
 n-ellipticf-12-over-5-3-50	N[EllipticF[Rational[12, 5], 3], 50]	1.00107738045610623607965958638383589314971359045852999453144654186283042232509`49.81490026476788 - 1.9231661895046253531841444093352781715706878703093774491875072560861571279077`50.09844943146751*I			disagree
-list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m					
+list-ellipticf-0-m-ellipticf-1-over-2-times-pi-m	List[EllipticF[0, m], EllipticF[Times[Rational[1, 2], Pi], m]]				
 ellipticf-0-1	EllipticF[0, 1]	0	F(0|1)	0	
 ellipticf-0-0	EllipticF[0, 0]	0	F(0|0)	0	
 ellipticf-jacobiamplitude-0-0-0	EllipticF[JacobiAmplitude[0, 0], 0]	0	F(\text{am}(0|0)|0)	0	
 ellipticf-jacobiamplitude-0-1-1	EllipticF[JacobiAmplitude[0, 1], 1]	0	F(\text{am}(0|1)|1)	0	
-solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq					
+solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq	Solve[(Plus[Power[EllipticF[z, m], 3], EllipticF[z, m]] == x), z]				

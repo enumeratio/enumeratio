@@ -46,8 +46,8 @@ functionsurjective-cos-x-x	FunctionSurjective[Cos[x], x]	False		\text{FunctionSu
 functionsingularities-cos-x-x	FunctionSingularities[Cos[x], x]	False		\text{FunctionSingularities}[\cos (x),x]	\text{False}	
 functiondiscontinuities-cos-x-x	FunctionDiscontinuities[Cos[x], x]	False		\text{FunctionDiscontinuities}[\cos (x),x]	\text{False}	
 matrixfunction-function-cos-1-1-list-list-5-over	MatrixFunction[Function[Cos[Slot[1]]], List[List[Times[Rational[5, 6], Pi], 0], List[Times[Rational[3, 2], Pi], Times[Rational[-1, 2], Pi]]]]	{{-1/2*Sqrt[3], 0}, {(-9*Sqrt[3])/16, 0}}		\text{MatrixFunction}\left[\cos (\text{$\#$1})\&,\left( \begin{array}{cc}  \frac{5}{6} \pi  & 0 \\  \frac{3}{2} \pi  & -\frac{1}{2} \pi  \\ \end{array} \right)\right]	\left( \begin{array}{cc}  -\frac{\sqrt{3}}{2} & 0 \\  -\frac{9 \sqrt{3}}{16} & 0 \\ \end{array} \right)	
-assuming-m-in-integers-refine-cos-pi-times-1						
-assuming-m-in-integers-fullsimplify-refine-cos						
+assuming-m-in-integers-refine-cos-pi-times-1	Assuming[Element[m, Integers], FullSimplify[Refine[Cos[Times[Pi, Plus[Times[1, Power[2, -1]], m]]]]]]					
+assuming-m-in-integers-fullsimplify-refine-cos	Assuming[Element[m, Integers], FullSimplify[FullSimplify[Refine[Cos[Times[Pi, m]]]]]]					
 threads-element-wise-over-a-list	Cos[List[0, Divide[Pi, 2], Pi]]	{1, 0, -1}		\cos \left(\left\{0,\frac{\pi }{2},\pi \right\}\right)	\{1,0,-1\}	
 even-function-cos-x-cos-x	(Cos[Minus[Divide[Pi, 3]]] == Cos[Divide[Pi, 3]])	True		\cos \left(-\frac{\pi }{3}\right)=\cos \left(\frac{\pi }{3}\right)	\text{True}	
 co-function-identity-cos-x-sin-pi-2-x	(Cos[Divide[Pi, 6]] == Sin[Subtract[Divide[Pi, 2], Divide[Pi, 6]]])	True		\cos \left(\frac{\pi }{6}\right)=\sin \left(\frac{\pi }{2}-\frac{\pi }{6}\right)	\text{True}	

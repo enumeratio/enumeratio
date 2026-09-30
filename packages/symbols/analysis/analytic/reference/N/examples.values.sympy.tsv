@@ -23,7 +23,7 @@ n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(((-2 * Symbol("pit")) + pi), 3
 n-crt	N(Symbol("crt"), 30)		
 n-crt-47	N(Symbol("crt"), 30)		
 n-2-pow-1-000-000	N((S(2)**1000000), 30)		
-n-m			
+n-m	N(Symbol("m"), 30)		
 n-pi-pow-10-list-positiveinfinity-5	N((S(pi)**10), 30)		
 n-pi-pow-10-list-positiveinfinity-1	N((S(pi)**10), 30)		
 n-exponentiale-pow-sin-1-000	N((S(E)**sin(1000)), 30)		

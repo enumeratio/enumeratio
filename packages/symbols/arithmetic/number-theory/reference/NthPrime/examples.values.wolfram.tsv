@@ -10,7 +10,7 @@ array-nthprime-100-mod-10	Mod[Array[Prime, 100], 10]	{2, 3, 5, 7, 1, 3, 7, 9, 3,
 n-100-times-last-foldlist-multiply-1-1-plus-neg	N[Times[100, Last[FoldList[Times, 1, Plus[1, Divide[-1, Prime[Range[1, 25]]]]]]]]	12.031729047493519	N\left[100 \text{Last}\left[\text{FoldList}\left[\text{Times},1,1-\frac{1}{p_{\text{Range}[1,25]}}\right]\right]\right]	12.0317
 ismersenneprimeexponent-nthprime-4	MersennePrimeExponentQ[Prime[4]]	True	\text{MersennePrimeExponentQ}\left[p_4\right]	\text{True}
 isprime-neg-1-plus-2-pow-nthprime-4	PrimeQ[Plus[-1, Power[2, Prime[4]]]]	True	\text{PrimeQ}\left[-1+2^{p_4}\right]	\text{True}
-1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n				
+1-over-product-neg-nthprime-n-pow-neg-s-plus-1-n	Divide[1, Product[Plus[Minus[Power[Prime[n], Minus[s]]], 1], List[n, 6]]]			
 primepi-and-nthprime-are-inverses-pi-p-n-n	(PrimePi[Prime[100]] == 100)	True	\pi \left(p_{100}\right)=100	\text{True}
 primepi-nthprime-100	PrimePi[Prime[100]]	100	\pi \left(p_{100}\right)	100
 nthprime-1-plus-primepi-30	Prime[Plus[1, PrimePi[30]]]	31	p_{1+\pi (30)}	31
