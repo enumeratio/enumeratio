@@ -1,3 +1,3 @@
-id	in	out	tex.in	tex.out	verdict
-2-3	Length[Tuples[Range[2], 3]]	Count[{{1, 1, 1}, {1, 1, 2}, {1, 2, 1}, {1, 2, 2}, {2, 1, 1}, {2, 1, 2}, {2, 2, 1}, {2, 2, 2}}]	\text{Count}[\text{Tuples}[\text{Range}[2],3]]	\text{Count}\left[\left( \begin{array}{ccc}  1 & 1 & 1 \\  1 & 1 & 2 \\  1 & 2 & 1 \\  1 & 2 & 2 \\  2 & 1 & 1 \\  2 & 1 & 2 \\  2 & 2 & 1 \\  2 & 2 & 2 \\ \end{array} \right)\right]	disagree
-tuples-2-3-list-1	Part[Tuples[Range[2], 3], 1]	{1, 1, 1}	\text{Tuples}[\text{Range}[2],3][[1]]	\{1,1,1\}	
+id	in	out	tex.in	tex.out
+2-3	Length[Tuples[Range[2], 3]]	8	\text{Length}[\text{Tuples}[\text{Range}[2],3]]	8
+tuples-2-3-list-1	Part[Tuples[Range[2], 3], 1]	{1, 1, 1}	\text{Tuples}[\text{Range}[2],3][[1]]	\{1,1,1\}

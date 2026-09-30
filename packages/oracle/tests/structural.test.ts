@@ -75,6 +75,20 @@ test("a Graph answer compares by vertices + edges, not by Wolfram's cached Spars
   expect(compareTrees(reduce(fewerEdges, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("disagree");
 });
 
+// Subgraph(CompleteGraph(4), [1, 2, 3]): Wolfram's answer also carries a layout option list.
+test("a Graph answer's trailing options don't change the graph", () => {
+  const evaluateNumbers: (expr: MathJSON) => Leaf = (expr) => (typeof expr === "number" ? expr : symbolic(expr));
+  const ours = [
+    "Graph",
+    ["List", 1, 2, 3],
+    ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3], ["UndirectedEdge", 2, 3]],
+  ] as MathJSON;
+  const theirs = fromWolfram(
+    'Graph[{1, 2, 3}, {Null, SparseArray[Automatic, {3, 3}, 0, {1, {{0, 2, 4, 6}, {{2}, {3}, {1}, {3}, {1}, {2}}}, Pattern}]}, {GraphLayout -> "StarEmbedding"}]',
+  ) as MathJSON;
+  expect(compareTrees(reduce(ours, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("agree");
+});
+
 // CycleDecomposition/from-a-permutation: `Permutation([2, 3, 1, 4])` decomposes into cycles
 // (1 2 3), a 3-cycle, and 4, a FIXED point -- ours keeps the fixed point as its own singleton
 // cycle (`[[1,2,3],[4]]`); Wolfram's `Cycles[{{1,2,3}}]` (its own answer, unwrapped by name

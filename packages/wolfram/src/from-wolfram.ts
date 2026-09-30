@@ -57,7 +57,25 @@ export function fromWolfram(input: string): MathJson {
   return result;
 }
 
+/** An expression, with the one infix form a kernel's answer can still carry inside `FullForm`
+ * output: a rule, `lhs -> rhs` / `lhs :> rhs` (right-associative), as in a Graph's trailing
+ * `{GraphLayout -> "StarEmbedding"}` options. */
 function parseExpr(): MathJson {
+  const lhs = parsePrimary();
+  skipWs();
+  for (const [op, head] of [
+    ["->", "Rule"],
+    [":>", "RuleDelayed"],
+  ] as const) {
+    if (src.startsWith(op, pos)) {
+      pos += op.length;
+      return applyHead(head, [lhs, parseExpr()]);
+    }
+  }
+  return lhs;
+}
+
+function parsePrimary(): MathJson {
   skipWs();
   const ch = peek();
 

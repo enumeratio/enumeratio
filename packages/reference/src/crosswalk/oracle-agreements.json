@@ -651,8 +651,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 9,
-      "disagree": 1
+      "agree": 10,
+      "disagree": 0
     }
   ],
   "Csc": [
@@ -675,8 +675,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 1,
-      "disagree": 1
+      "agree": 2,
+      "disagree": 0
     }
   ],
   "CycleGraph": [
@@ -1815,8 +1815,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 3,
-      "disagree": 2
+      "agree": 5,
+      "disagree": 0
     }
   ],
   "IntegerReverse": [
@@ -2253,8 +2253,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 0,
-      "disagree": 2
+      "agree": 2,
+      "disagree": 0
     }
   ],
   "Key": [
@@ -3003,8 +3003,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 4,
-      "disagree": 1
+      "agree": 5,
+      "disagree": 0
     }
   ],
   "PascalBinomial": [
@@ -3335,8 +3335,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 0,
-      "disagree": 2
+      "agree": 2,
+      "disagree": 0
     }
   ],
   "RandomComplex": [
@@ -3841,16 +3841,16 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 0,
-      "disagree": 1
+      "agree": 1,
+      "disagree": 0
     }
   ],
   "Subsets": [
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 2,
-      "disagree": 4
+      "agree": 5,
+      "disagree": 1
     }
   ],
   "Surd": [
@@ -3927,8 +3927,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 2,
-      "disagree": 1
+      "agree": 3,
+      "disagree": 0
     }
   ],
   "Throw": [
@@ -4005,8 +4005,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 1,
-      "disagree": 1
+      "agree": 2,
+      "disagree": 0
     }
   ],
   "TuranGraph": [

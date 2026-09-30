@@ -23,6 +23,6 @@ the-first-four-digits-of-e	floor((1000 * E))	2718
 for-a-non-integer-x-lceil-x-rceil-lfloor-x	enumeratio_equal((floor(Rational(7, 2)) + 1), ceiling(Rational(7, 2)))	True	
 lfloor-x-rfloor-lceil-x-rceil	enumeratio_equal(floor(Rational(-7, 2)), (-ceiling(Rational(7, 2))))	True	
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	floor(floor(Symbol("x")))	True	
-a-zero-divisor-inside-floor	floor((S(17) / 0))	zoo	disagree
+a-zero-divisor-inside-floor	floor((S(17) / 0))	zoo	
 rounds-toward-infty-not-toward-0-floor-3-2-is-4	floor(-3.2)	-4	
-infinities-pass-through-unchanged	floor(-oo)		
+infinities-pass-through-unchanged	floor(-oo)	-oo	

@@ -6,5 +6,5 @@ an-odd-function	Scope		[Arccsc, -2]	[Multiply, [Rational, -1, 6], Pi]	An odd fun
 inside-1-1-the-value-is-complex	Scope		[Arccsc, 0.5]	[Complex, 1.5707963267948966, -1.3169578969248166]	Inside $(-1, 1)$ the value is complex		
 arccsc-positiveinfinity	Scope		[Arccsc, PositiveInfinity]	0			
 a-pole-arccsc-0-is-complex-infinity	Scope		[Arccsc, 0]	ComplexInfinity	A pole: $\operatorname{arccsc} 0$ is complex infinity		
-derivative-for-real-x-1	Scope		[D, [Arccsc, x], x]	[Divide, -1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]	Derivative, for real $|x| > 1$	unclassified	Wolfram writes it as -1/(x^2 Sqrt[1 - 1/x^2]), valid for complex x too.
+derivative-for-real-x-1	Scope		[D, [Arccsc, x], x]	[Divide, -1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]	Derivative, for real $|x| > 1$	shape	Wolfram's symbolic check of the two derivative forms comes back Indeterminate; the forms differ by a Sqrt/Abs rearrangement valid for real x
 undoes-csc-csc-arccsc-x-x	Properties		[Equal, [Csc, [Arccsc, 2]], 2]	True	Undoes [[Csc]]: $\csc(\text{arccsc}(x)) = x$		

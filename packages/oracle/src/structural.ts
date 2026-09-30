@@ -131,8 +131,9 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
   // carries a cached `SparseArray` adjacency matrix as its edge argument (`Graph[vertices,
   // {Null, SparseArray[...]}]`), not our `List[UndirectedEdge[...], ...]` -- structurally
   // nothing alike even for the identical graph. `reduceGraph` reduces either encoding to the
-  // same canonical `[vertices, edgeKeys]` shape.
-  if (Array.isArray(expr) && expr[0] === "Graph" && expr.length === 3) {
+  // same canonical `[vertices, edgeKeys]` shape. Trailing options (`{GraphLayout -> ...}`)
+  // don't change the graph.
+  if (Array.isArray(expr) && expr[0] === "Graph" && expr.length >= 3) {
     return reduceGraph(expr[1] as MathJSON, expr[2] as MathJSON, evaluate);
   }
   if (typeof expr === "boolean") return expr;

@@ -18,6 +18,6 @@ how-many-5-seat-vans-are-needed-to-carry-17	ceiling((S(17) / 5))	4
 ten-bits-are-enough-to-number-1000-items-lceil			
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))	True	
 floor-and-ceil-agree-exactly-on-integers	enumeratio_equal(ceiling(5), floor(5))	True	
-a-zero-divisor-inside-ceil	ceiling((S(16) / 0))	zoo	disagree
+a-zero-divisor-inside-ceil	ceiling((S(16) / 0))	zoo	
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceiling(-3.7)	-3	
-nan-propagates-rather-than-erroring	ceiling(nan)		
+nan-propagates-rather-than-erroring	ceiling(nan)	nan	

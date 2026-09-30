@@ -1,3 +1,3 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-binary-tree-on-seven-vertices			[KaryTree, 7, 2]	[Graph, [List, 1, 2, 3, 4, 5, 6, 7], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 1, 3], [UndirectedEdge, 2, 4], [UndirectedEdge, 2, 5], [UndirectedEdge, 3, 6], [UndirectedEdge, 3, 7]]]		unclassified	""
-default-k-is-2	Scope		[KaryTree, 5]	[Graph, [List, 1, 2, 3, 4, 5], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 1, 3], [UndirectedEdge, 2, 4], [UndirectedEdge, 2, 5]]]	The default k = 2, the same binary tree KaryTree(5, 2) builds	unclassified	""
+id	section	role	expr	expected	caption
+binary-tree-on-seven-vertices			[KaryTree, 7, 2]	[Graph, [List, 1, 2, 3, 4, 5, 6, 7], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 1, 3], [UndirectedEdge, 2, 4], [UndirectedEdge, 2, 5], [UndirectedEdge, 3, 6], [UndirectedEdge, 3, 7]]]	
+default-k-is-2	Scope		[KaryTree, 5]	[Graph, [List, 1, 2, 3, 4, 5], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 1, 3], [UndirectedEdge, 2, 4], [UndirectedEdge, 2, 5]]]	The default k = 2, the same binary tree KaryTree(5, 2) builds

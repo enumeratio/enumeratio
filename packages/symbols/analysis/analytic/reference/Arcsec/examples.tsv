@@ -7,5 +7,5 @@ arcsec-2-2-pi-3	Scope		[Arcsec, -2]	[Multiply, [Rational, 2, 3], Pi]	$\operatorn
 inside-1-1-the-value-is-purely-imaginary	Scope		[Arcsec, 0.5]	[Complex, 0, 1.3169578969248166]	Inside $(-1, 1)$ the value is purely imaginary		
 arcsec-positiveinfinity	Scope		[Arcsec, PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]			
 a-pole-arcsec-0-is-complex-infinity	Scope		[Arcsec, 0]	ComplexInfinity	A pole: $\operatorname{arcsec} 0$ is complex infinity		
-derivative-for-real-x-1	Scope		[D, [Arcsec, x], x]	[Divide, 1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]	Derivative, for real $|x| > 1$	unclassified	Wolfram writes it as 1/(x^2 Sqrt[1 - 1/x^2]), valid for complex x too.
+derivative-for-real-x-1	Scope		[D, [Arcsec, x], x]	[Divide, 1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]	Derivative, for real $|x| > 1$	shape	Wolfram's symbolic check of the two derivative forms comes back Indeterminate; the forms differ by a Sqrt/Abs rearrangement valid for real x
 undoes-sec-sec-arcsec-x-x	Properties		[Equal, [Sec, [Arcsec, 2]], 2]	True	Undoes [[Sec]]: $\sec(\text{arcsec}(x)) = x$		
