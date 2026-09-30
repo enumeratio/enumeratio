@@ -56,18 +56,23 @@ for (const latex of CORPUS) {
 // separates bounded from exponential without timing the runner.
 const HANG_BUDGET_MS = 10_000;
 
-test("InputForm: a deeply nested closed form prints instead of hanging", () => {
-  const json = JSON.parse(
-    readFileSync(fileURLToPath(new URL("./inputform-hang-repro.json", import.meta.url)), "utf8"),
-  ) as MathJsonExpression;
+test(
+  "InputForm: a deeply nested closed form prints instead of hanging",
+  () => {
+    const json = JSON.parse(
+      readFileSync(fileURLToPath(new URL("./inputform-hang-repro.json", import.meta.url)), "utf8"),
+    ) as MathJsonExpression;
 
-  const start = performance.now();
-  const printed = toInputForm(json);
-  const elapsedMs = performance.now() - start;
+    const start = performance.now();
+    const printed = toInputForm(json);
+    const elapsedMs = performance.now() - start;
 
-  expect(elapsedMs, `printed in ${elapsedMs.toFixed(1)}ms`).toBeLessThan(HANG_BUDGET_MS);
-  expect(reparse(printed)).toEqual(ce.box(json as Parameters<ComputeEngine["box"]>[0]).json);
-});
+    expect(elapsedMs, `printed in ${elapsedMs.toFixed(1)}ms`).toBeLessThan(HANG_BUDGET_MS);
+    expect(reparse(printed)).toEqual(ce.box(json as Parameters<ComputeEngine["box"]>[0]).json);
+    // vitest's 5 s default would kill a slow runner before the budget assertion can report.
+  },
+  2 * HANG_BUDGET_MS,
+);
 
 test("InputForm never emits a LaTeX island", () => {
   for (const latex of CORPUS) {

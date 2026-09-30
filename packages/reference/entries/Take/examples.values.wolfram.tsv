@@ -7,3 +7,4 @@ take-list-1-2-3-4-5-negative-2	Take[List[1, 2, 3, 4, 5], -2]
 take-list-a-b-c-d-exponentiale-f-g-h-4	Take[List[a, b, c, d, E, f, g, h], 4]	{a, b, c, d}	\text{Take}[\{a,b,c,d,e,f,g,h\},4]	\{a,b,c,d\}	
 take-list-1-2-negative-5-overflow-declines	Take[List[1, 2], -5]				
 take-list-a-b-c-d-exponentiale-neg-1	Take[List[a, b, c, d, E], -1]	{E}			disagree
+take-list-1-2-5-overflow-declines	Take[List[1, 2], 5]				

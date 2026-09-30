@@ -7,3 +7,4 @@ drop-list-a-b-c-d-exponentiale-1	<Drop><List>a b c d ExponentialE</List> 1</Drop
 drop-list-a-b-c-d-exponentiale-neg-1		
 drop-list-a-b-c-d-exponentiale-4	<Drop><List>a b c d ExponentialE</List> 4</Drop>	<List>ExponentialE</List>
 drop-list-1-2-negative-5-overflow-declines	<Drop><List>1 2</List> -5</Drop>	<Drop><List>1 2</List> -5</Drop>
+drop-list-1-2-5-overflow-declines	<Drop><List>1 2</List> 5</Drop>	<Drop><List>1 2</List> 5</Drop>

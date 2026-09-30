@@ -174,10 +174,10 @@ export function evaluateRangeWithRationalStep(ce: ComputeEngine): void {
 // `Drop(xs, -n)` becomes "take the first `length(xs) - n`" -- and only when that length is
 // known and finite; an unbounded or otherwise indeterminate source falls back to the native
 // (clamped) handlers exactly as before, since there is no length to count back from. A
-// magnitude past the source's length (`Take([1, 2], -5)`) is a DIFFERENT case from native's
-// existing (unfixed, out of scope here) positive-overflow clamp: Wolfram's `Take[l, -n]`/
-// `Drop[l, -n]` raise `Take::take`/`Drop::drop` and leave the call unevaluated rather than
-// answer with a clamped list, so this declines too (`.count`/`.at` answer `undefined`, the
+// magnitude past the source's length, of either sign (`Take([1, 2], -5)`, `Take([1, 2], 5)`;
+// native clamps the positive one to the whole/empty list): Wolfram's `Take[l, n]`/`Drop[l, n]`
+// raise `Take::take`/`Drop::drop` and leave the call unevaluated rather than
+// answer with a clamped list, so this declines (`.count`/`.at` answer `undefined`, the
 // iterator yields nothing, `.isEmpty` answers `undefined`) -- the same shape a `count`/`at`/
 // `iterator` that were simply never patched for this case would leave behind.
 // `operator.compile`'s JavaScript target has the identical clamp for a non-constant (runtime)
@@ -204,22 +204,23 @@ function literalCount(expr: BoxedExpression): number | undefined {
   return count !== undefined && Number.isInteger(count.re) ? count.re : undefined;
 }
 
-/** What a negative-count `Take`/`Drop` denotes: `"native"` when the count isn't negative, or
- * the source's length isn't known and finite, so the untouched native handler already answers
- * (correctly, or via its own out-of-scope positive-overflow clamp); `"overflow"` when the
- * magnitude exceeds the source's length -- no positions to take/drop, so this DECLINES, as
+/** What a `Take`/`Drop` count denotes: `"native"` when the count isn't negative (and within the
+ * source's length), or the source's length isn't known and finite, so the untouched native
+ * handler already answers; `"overflow"` when the magnitude of either sign exceeds the
+ * source's length -- no positions to take/drop, so this DECLINES, as
  * Wolfram's `Take::take`/`Drop::drop` do; otherwise the `[start, end)` 0-based, half-open span
  * of the source the call keeps. */
 type NegativeCount = "native" | "overflow" | { readonly start: number; readonly end: number };
 
 function negativeCountSpan(expr: BoxedExpression, keepsTail: boolean): NegativeCount {
   const count = literalCount(expr);
-  if (count === undefined || count >= 0) return "native";
+  if (count === undefined) return "native";
   const xs = sourceOf(expr);
   const length = xs === undefined ? undefined : finiteSourceCount(xs);
   if (length === undefined) return "native";
-  const magnitude = -count;
+  const magnitude = Math.abs(count);
   if (magnitude > length) return "overflow";
+  if (count >= 0) return "native";
   return keepsTail ? { start: length - magnitude, end: length } : { start: 0, end: length - magnitude };
 }
 
@@ -297,14 +298,15 @@ function patchNegativeCount(ce: ComputeEngine, name: "Take" | "Drop", keepsTail:
     const countCode = compile(count);
     const message = JSON.stringify(`${name}: count exceeds the source's length`);
     const takeSlice = keepsTail
-      ? `n >= 0 ? xs.slice(0, Math.max(0, n)) : (-n > xs.length ? (() => { throw new Error(${message}); })() : xs.slice(xs.length + n))`
-      : `n >= 0 ? xs.slice(Math.max(0, n)) : (-n > xs.length ? (() => { throw new Error(${message}); })() : xs.slice(0, xs.length + n))`;
-    return `((xs, n) => { n = Math.round(n); return ${takeSlice}; })(${xsCode}, ${countCode})`;
+      ? `n >= 0 ? (n > xs.length ? over() : xs.slice(0, n)) : (-n > xs.length ? over() : xs.slice(xs.length + n))`
+      : `n >= 0 ? (n > xs.length ? over() : xs.slice(n)) : (-n > xs.length ? over() : xs.slice(0, xs.length + n))`;
+    return `((xs, n) => { const over = () => { throw new Error(${message}); }; n = Math.round(n); return ${takeSlice}; })(${xsCode}, ${countCode})`;
   }) as typeof operator.compile;
 }
 
 /** Patch `Take` and `Drop`'s collection handlers and JavaScript compilation so a negative
- * count reads from the end of the source, as Wolfram's `Take`/`Drop` do. */
+ * count reads from the end of the source, and a count past the length declines, as Wolfram's
+ * `Take`/`Drop` do. */
 export function evaluateTakeDropNegativeCount(ce: ComputeEngine): void {
   patchNegativeCount(ce, "Take", true);
   patchNegativeCount(ce, "Drop", false);
