@@ -2,5 +2,7 @@ id	in	out
 ramp-negative	\mathrm{Ramp}(-2)	0
 ramp-positive	\mathrm{Ramp}(3)	3
 ramp-zero	\mathrm{Ramp}(0)	0
+ramp-pi-exact	\mathrm{Ramp}(\pi)	\pi
+ramp-negative-pi-exact	\mathrm{Ramp}(-\pi)	0
 ramp-equals-x-times-unitstep	\mathrm{Ramp}(5)=5\mathrm{UnitStep}(5)	\top
 ramp-derivative	\frac{\mathrm{d}\mathrm{Ramp}(x)}{\mathrm{d}x}	\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack0, x\lt0\bigr\rbrack, \bigl\lbrack1, 0\lt x\bigr\rbrack\bigr\rbrack, \operatorname{Indeterminate})

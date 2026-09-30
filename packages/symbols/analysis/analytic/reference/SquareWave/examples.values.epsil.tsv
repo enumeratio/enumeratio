@@ -3,5 +3,6 @@ squarewave-zero	SquareWave(0)	1
 squarewave-half	SquareWave(1 / 2)	-1
 squarewave-neg-quarter	SquareWave(-1 / 4)	-1
 squarewave-ranged	SquareWave([0, 10], 0)	10
+squarewave-negative-pi-exact	SquareWave(-pi)	-1
 squarewave-periodic	SquareWave(1 / 4) == SquareWave(1 / 4 + 2)	True
 squarewave-one	SquareWave(1)	1

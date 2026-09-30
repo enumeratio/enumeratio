@@ -1,7 +1,8 @@
-id	section	role	expr	expected	caption
-heavisidelambda-peak			[HeavisideLambda, 0]	1	
-heavisidelambda-endpoint			[HeavisideLambda, 1]	0	Zero at the endpoint
-heavisidelambda-neg-endpoint			[HeavisideLambda, -1]	0	
-heavisidelambda-outside	Scope		[HeavisideLambda, 2]	0	
-heavisidelambda-1-4	Scope		[HeavisideLambda, [Rational, 1, 4]]	[Rational, 3, 4]	Exact rational input, exact rational output
-heavisidelambda-1-2	Scope	test	[HeavisideLambda, [Rational, 1, 2]]	[Rational, 1, 2]	
+id	section	role	expr	expected	known	source	caption
+heavisidelambda-peak			[HeavisideLambda, 0]	1			
+heavisidelambda-endpoint			[HeavisideLambda, 1]	0			Zero at the endpoint
+heavisidelambda-neg-endpoint			[HeavisideLambda, -1]	0			
+heavisidelambda-outside	Scope		[HeavisideLambda, 2]	0			
+heavisidelambda-1-4	Scope		[HeavisideLambda, [Rational, 1, 4]]	[Rational, 3, 4]			Exact rational input, exact rational output
+heavisidelambda-1-2	Scope	test	[HeavisideLambda, [Rational, 1, 2]]	[Rational, 1, 2]			
+heavisidelambda-pi-over-4-exact	Scope		[HeavisideLambda, [Divide, Pi, 4]]	[Add, 1, [Multiply, [Rational, -1, 4], Pi]]	[Subtract, 1, [Divide, Pi, 4]]	1 - |v| for |v| = π/4 < 1	An exact irrational input: 1 - |v| stays exact

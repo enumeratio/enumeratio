@@ -5,3 +5,4 @@ heavisidelambda-neg-endpoint	HeavisideLambda(-1)	0
 heavisidelambda-outside	HeavisideLambda(2)	0
 heavisidelambda-1-4	HeavisideLambda(1 / 4)	3 / 4
 heavisidelambda-1-2	HeavisideLambda(1 / 2)	1 / 2
+heavisidelambda-pi-over-4-exact	HeavisideLambda(pi / 4)	1 + -1 / 4 * pi

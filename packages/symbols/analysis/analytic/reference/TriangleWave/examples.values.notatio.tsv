@@ -4,4 +4,5 @@ trianglewave-quarter-peak	<TriangleWave><Rational>1 4</Rational></TriangleWave>	
 trianglewave-half	<TriangleWave><Rational>1 2</Rational></TriangleWave>	<ToExpression>0</ToExpression>
 trianglewave-three-quarters-trough	<TriangleWave><Rational>3 4</Rational></TriangleWave>	<ToExpression>-1</ToExpression>
 trianglewave-ranged	<TriangleWave><List>0 10</List> <Rational>1 2</Rational></TriangleWave>	<ToExpression>5</ToExpression>
+trianglewave-negative-pi-exact	<TriangleWave><Negate>Pi</Negate></TriangleWave>	<Add>12 <Multiply>-4 Pi</Multiply></Add>
 trianglewave-periodic	<Equal><TriangleWave><Rational>1 4</Rational></TriangleWave> <TriangleWave><Add><Rational>1 4</Rational> 3</Add></TriangleWave></Equal>	<True />
