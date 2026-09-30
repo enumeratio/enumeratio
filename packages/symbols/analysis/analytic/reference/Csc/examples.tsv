@@ -4,11 +4,11 @@ csc-pi-over-4			[Csc, [Divide, Pi, 4]]	[Sqrt, 2]
 csc-pi-over-2			[Csc, [Divide, Pi, 2]]	1					
 csc-60-circ-frac-2-sqrt-3-3-exactly			[Csc, [Degrees, 60]]	[Multiply, [Rational, 2, 3], [Sqrt, 3]]			$\csc 60^\circ = \frac{2\sqrt3}{3}$, exactly		
 a-machine-precision-argument-evaluates			[Csc, 1.2]	{num: "1.07291637770989722871"}			A machine-precision argument evaluates numerically		
-a-huge-24-40-argument		test	[N, [Csc, [Power, 24, 40]]]	{num: "2.499480403516114245745403"}	{num: "2.4994804035161142457454034957433486122775959220299113153457"}	Wolfram 15.0.0 Csc		unclassified	""
-a-huge-10-100-argument		test	[N, [Csc, [Power, 10, 100]]]	{num: "-2.685456817606348002023834"}	{num: "-2.6854568176063480020238343855067665346107437040904843082678"}	Wolfram 15.0.0 Csc		unclassified	""
-a-huge-3-200-argument		test	[N, [Csc, [Power, 3, 200]]]	{num: "-1.065267094773902176582317"}	{num: "-1.0652670947739021765823172051343347134376042633734945205334"}	Wolfram 15.0.0 Csc		unclassified	""
-a-huge-neg-7-60-argument		test	[N, [Csc, [Negate, [Power, 7, 60]]]]	{num: "2.738813586755818206167883"}	{num: "2.7388135867558182061678833651451539093783308131560190731386"}	Wolfram 15.0.0 Csc		unclassified	""
-a-huge-10-80-plus-1-over-3-argument		test	[N, [Csc, [Divide, [Add, [Power, 10, 80], 1], 3]]]	{num: "1.014869562853670879001739"}	{num: "1.0148695628536708790017395765417316218250895098708041625228"}	Wolfram 15.0.0 Csc		unclassified	""
+a-huge-24-40-argument		test	[N, [Csc, [Power, 24, 40]]]	{num: "2.499480403516114245745403"}	{num: "2.4994804035161142457454034957433486122775959220299113153457"}	Wolfram 15.0.0 Csc		precision	Same double-precision argument-reduction quirk on Wolfram's side.
+a-huge-10-100-argument		test	[N, [Csc, [Power, 10, 100]]]	{num: "-2.685456817606348002023834"}	{num: "-2.6854568176063480020238343855067665346107437040904843082678"}	Wolfram 15.0.0 Csc		precision	Wolfram's N[Csc[...]] reduces the huge exact argument in double precision before evaluating (verified against 1/math.sin(float(arg))); compute-engine reduces it exactly mod 2*pi first.
+a-huge-3-200-argument		test	[N, [Csc, [Power, 3, 200]]]	{num: "-1.065267094773902176582317"}	{num: "-1.0652670947739021765823172051343347134376042633734945205334"}	Wolfram 15.0.0 Csc		precision	Same double-precision argument-reduction quirk on Wolfram's side.
+a-huge-neg-7-60-argument		test	[N, [Csc, [Negate, [Power, 7, 60]]]]	{num: "2.738813586755818206167883"}	{num: "2.7388135867558182061678833651451539093783308131560190731386"}	Wolfram 15.0.0 Csc		precision	Same double-precision argument-reduction quirk on Wolfram's side.
+a-huge-10-80-plus-1-over-3-argument		test	[N, [Csc, [Divide, [Add, [Power, 10, 80], 1], 3]]]	{num: "1.014869562853670879001739"}	{num: "1.0148695628536708790017395765417316218250895098708041625228"}	Wolfram 15.0.0 Csc		precision	Same double-precision argument-reduction quirk on Wolfram's side.
 csc-5-under-n		test	[N, [Csc, 5]]	-1.0428352127714058					
 n-of-an-exact-argument-gives-an-arbitrary	Scope		[N, [Csc, [Rational, 6, 5]]]	{num: "1.07291637770989722871"}			N(...) of an exact argument gives an arbitrary-precision value		
 evaluates-at-a-complex-argument	Scope		[Csc, [Complex, 2.5, 1]]	[Complex, 0.5309655776211742, 0.5413229061900025]			Evaluates at a complex argument		
@@ -16,7 +16,7 @@ threads-element-wise-over-a-matrix-with	Scope		[Csc, [List, [List, [Divide, Pi, 
 csc-pi-12-sqrt-6-sqrt-2	Scope		[Csc, [Divide, Pi, 12]]	[Add, [Sqrt, 2], [Sqrt, 6]]			$\csc(\pi/12) = \sqrt6 + \sqrt2$		
 csc-pi-10-1-sqrt-5	Scope		[Csc, [Divide, Pi, 10]]	[Add, 1, [Sqrt, 5]]			$\csc(\pi/10) = 1 + \sqrt5$		
 csc-pi-over-5	Scope		[Csc, [Divide, Pi, 5]]	[Multiply, [Divide, [Sqrt, 10], 5], [Sqrt, [Add, 5, [Sqrt, 5]]]]					
-interval-arithmetic-the-image-of-pi-6-pi-3-is	Scope		[Csc, [Interval, [Divide, Pi, 6], [Divide, Pi, 3]]]	[Interval, [Multiply, [Rational, 2, 3], [Sqrt, 3]], 2]			Interval arithmetic: the image of $[\pi/6, \pi/3]$ is $[\tfrac{2}{\sqrt3}, 2]$	unclassified	""
+interval-arithmetic-the-image-of-pi-6-pi-3-is	Scope		[Csc, [Interval, [Divide, Pi, 6], [Divide, Pi, 3]]]	[Interval, [Multiply, [Rational, 2, 3], [Sqrt, 3]], 2]			Interval arithmetic: the image of $[\pi/6, \pi/3]$ is $[\tfrac{2}{\sqrt3}, 2]$	shape	Same value (2/sqrt(3) = (2/3)*sqrt(3)); Wolfram's Interval[{...}] list form plus a differently rationalized radical.
 uncertainty-propagation-csc-2-pm-0-01-approx-1	Scope		[Csc, [Around, 2, 0.01]]	[Around, 1.0997501702946164, 0.00503308973344342]			Uncertainty propagation: $\csc(2 \pm 0.01) \approx 1.0998 \pm 0.0050$		
 oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Csc, [Negate, x]]	[Negate, [Csc, x]]			Oddness pulls the sign out of a symbolic argument: $\csc(-x) = -\csc x$		
 derivative-csc-x-cot-x	Scope		[D, [Csc, x], x]	[Negate, [Multiply, [Csc, x], [Cot, x]]]			Derivative: $-\csc x \cot x$		

@@ -8,7 +8,7 @@ evaluates-at-a-complex-argument	Scope		[Cosh, [Complex, 2.5, 1]]	[Complex, 3.313
 cosh-i-pi-cos-pi-1	Scope		[Cosh, [Multiply, ImaginaryUnit, Pi]]	-1	$\cosh(i\pi) = \cos\pi = -1$		
 element-wise-over-a-matrix-of-imaginary	Scope		[Cosh, [List, [List, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]], [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 3]]]], [List, 0, [Negate, [Multiply, ImaginaryUnit, [Divide, [Multiply, 1, Pi], 6]]]]]]	[List, [List, [Rational, 1, 2], [Rational, 1, 2]], [List, 1, [Divide, [Sqrt, 3], 2]]]	Element-wise over a matrix of imaginary multiples of $\pi$, folding through $\cosh(ix) = \cos x$		
 interval-arithmetic-cosh-0-ln-3-1-frac-53-not	Scope		[Cosh, [Interval, 0, [Ln, 3]]]	[Interval, 1, [Rational, 5, 3]]	Interval arithmetic: $\cosh[0, \ln 3] = [1, \tfrac53]$, the minimum at 0 included		
-uncertainty-propagation-cosh-2-sqrt-3-pm-0-1	Scope		[Cosh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]	[Around, 1.744112480153778, 0.14289605814815756]	Uncertainty propagation, to first order: $\cosh(2/\sqrt3 \pm 0.1) \approx 1.744 \pm 0.143$	unclassified	""
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1	Scope		[Cosh, [Around, [Divide, 2, [Sqrt, 3]], 0.1]]	[Around, 1.744112480153778, 0.14289605814815756]	Uncertainty propagation, to first order: $\cosh(2/\sqrt3 \pm 0.1) \approx 1.744 \pm 0.143$	precision	Last-bit float64 rounding difference in the propagated uncertainty.
 cosh-positiveinfinity	Scope		[Cosh, PositiveInfinity]	PositiveInfinity			
 evenness-drops-the-sign-of-a-symbolic-argument	Scope		[Cosh, [Negate, x]]	[Cosh, x]	Evenness drops the sign of a symbolic argument: $\cosh(-x) = \cosh x$		
 cosh-arcosh-x-x-for-every-x	Scope		[Cosh, [Arcosh, x]]	x	$\cosh(\operatorname{arcosh} x) = x$ for every $x$		
