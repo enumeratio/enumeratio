@@ -1,0 +1,4 @@
+id	in	out
+count-delannoypaths-3	<Count><DelannoyPaths>3</DelannoyPaths></Count>	<ToExpression>63</ToExpression>
+first-element-of-delannoypaths-3	<At><DelannoyPaths>3</DelannoyPaths> 1</At>	<DelannoyPath><List>0 0 0 1 1 1</List></DelannoyPath>
+every-element-of-delannoypaths-3	<Take><DelannoyPaths>3</DelannoyPaths> 5</Take>	<List><DelannoyPath><List>0 0 0 1 1 1</List></DelannoyPath> <DelannoyPath><List>0 0 1 0 1 1</List></DelannoyPath> <DelannoyPath><List>0 0 1 1 0 1</List></DelannoyPath> <DelannoyPath><List>0 0 1 1 1 0</List></DelannoyPath> <DelannoyPath><List>0 0 1 1 2</List></DelannoyPath></List>

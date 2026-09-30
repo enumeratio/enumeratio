@@ -1,0 +1,5 @@
+id	in	out
+implies-becomes-or-not	<LogicalExpand><Implies>p b</Implies></LogicalExpand>	<Or>b <Not>p</Not></Or>
+distributes-and-over-or	<LogicalExpand><And>p <Or>b r</Or></And></LogicalExpand>	<Or><And>b p</And> <And>p r</And></Or>
+xor-eliminated-into-dnf	<LogicalExpand><Xor>p b</Xor></LogicalExpand>	<Or><And>b <Not>p</Not></And> <And>p <Not>b</Not></And></Or>
+a-contradictory-term-drops-out	<LogicalExpand><And>p <Not>p</Not></And></LogicalExpand>	<False />

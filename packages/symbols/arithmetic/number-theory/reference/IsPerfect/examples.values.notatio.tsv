@@ -1,0 +1,3 @@
+id	in	out
+listable	<IsPerfect><List>6 28 12</List></IsPerfect>	<List>True True False</List>
+negative-numbers-are-not-perfect	<IsPerfect>-6</IsPerfect>	<False />

@@ -1,0 +1,6 @@
+id	in	out
+histogram-distribution-pdf	<PDF><HistogramDistribution><List>1 1 2 2 2 3 3 4</List> <List>0 5 1</List></HistogramDistribution> <Rational>3 2</Rational></PDF>	<Rational>1 4</Rational>
+histogram-distribution-pdf-outside	<PDF><HistogramDistribution><List>1 1 2 2 2 3 3 4</List> <List>0 5 1</List></HistogramDistribution> 10</PDF>	<ToExpression>0</ToExpression>
+histogram-distribution-cdf	<CDF><HistogramDistribution><List>1 1 2 2 2 3 3 4</List> <List>0 5 1</List></HistogramDistribution> 2</CDF>	<Rational>1 4</Rational>
+histogram-distribution-mean	<Mean><HistogramDistribution><List>1 1 2 2 2 3 3 4</List> <List>0 5 1</List></HistogramDistribution></Mean>	<Rational>11 4</Rational>
+histogram-distribution-dx-only-form	<PDF><HistogramDistribution><List>1 2 2 3</List> <List>1</List></HistogramDistribution> <Rational>3 2</Rational></PDF>	<Rational>1 4</Rational>

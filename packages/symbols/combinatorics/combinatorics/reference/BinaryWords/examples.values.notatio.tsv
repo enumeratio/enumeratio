@@ -1,0 +1,4 @@
+id	in	out
+count-binarywords-3	<Count><BinaryWords>3</BinaryWords></Count>	<ToExpression>8</ToExpression>
+first-element-of-binarywords-3	<At><BinaryWords>3</BinaryWords> 1</At>	<BinaryWord><List>0 0 0</List></BinaryWord>
+every-element-of-binarywords-3	<Take><BinaryWords>3</BinaryWords> 8</Take>	<List><BinaryWord><List>0 0 0</List></BinaryWord> <BinaryWord><List>0 0 1</List></BinaryWord> <BinaryWord><List>0 1 0</List></BinaryWord> <BinaryWord><List>0 1 1</List></BinaryWord> <BinaryWord><List>1 0 0</List></BinaryWord> <BinaryWord><List>1 0 1</List></BinaryWord> <BinaryWord><List>1 1 0</List></BinaryWord> <BinaryWord><List>1 1 1</List></BinaryWord></List>

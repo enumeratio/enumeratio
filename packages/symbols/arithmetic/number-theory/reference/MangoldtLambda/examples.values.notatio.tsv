@@ -1,0 +1,9 @@
+id	in	out
+8-2-3	<MangoldtLambda>8</MangoldtLambda>	<Ln>2</Ln>
+6-is-not-a-prime-power	<MangoldtLambda>6</MangoldtLambda>	<ToExpression>0</ToExpression>
+mangoldtlambda-7	<MangoldtLambda>7</MangoldtLambda>	<Ln>7</Ln>
+mangoldtlambda-9	<MangoldtLambda>9</MangoldtLambda>	<Ln>3</Ln>
+numerically-ln-3	<N><MangoldtLambda>9</MangoldtLambda></N>	<ToExpression>1.0986122886681098</ToExpression>
+listable	<MangoldtLambda><List>2 4 6 25</List></MangoldtLambda>	<List><Ln>2</Ln> <Ln>2</Ln> 0 <Ln>5</Ln></List>
+n-of-a-zero-result-is-still-0	<N><MangoldtLambda>6</MangoldtLambda></N>	<ToExpression>0</ToExpression>
+lambda-1-0	<MangoldtLambda>1</MangoldtLambda>	<ToExpression>0</ToExpression>

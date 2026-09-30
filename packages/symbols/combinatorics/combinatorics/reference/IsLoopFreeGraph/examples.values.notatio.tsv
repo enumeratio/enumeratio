@@ -1,0 +1,3 @@
+id	in	out
+no-self-loop	<IsLoopFreeGraph><Graph><List><UndirectedEdge>1 2</UndirectedEdge></List></Graph></IsLoopFreeGraph>	<True />
+a-self-loop	<IsLoopFreeGraph><Graph><List><UndirectedEdge>1 1</UndirectedEdge></List></Graph></IsLoopFreeGraph>	<False />

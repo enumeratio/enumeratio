@@ -1,0 +1,4 @@
+id	in	out
+count-kinversionpermutations-4-3	<Count><KInversionPermutations>4 3</KInversionPermutations></Count>	<ToExpression>6</ToExpression>
+first-element-of-kinversionpermutations-4-3	<At><KInversionPermutations>4 3</KInversionPermutations> 1</At>	<List>1 4 3 2</List>
+every-element-of-kinversionpermutations-4-3	<Take><KInversionPermutations>4 3</KInversionPermutations> 6</Take>	<List><List>1 4 3 2</List> <List>2 3 4 1</List> <List>2 4 1 3</List> <List>3 1 4 2</List> <List>3 2 1 4</List> <List>4 1 2 3</List></List>

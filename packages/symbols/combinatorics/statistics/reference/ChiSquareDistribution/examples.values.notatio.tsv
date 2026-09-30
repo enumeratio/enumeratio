@@ -1,0 +1,5 @@
+id	in	out
+chisquare-pdf-exact	<PDF><ChiSquareDistribution>3</ChiSquareDistribution> 2</PDF>	<Divide>1 <Multiply>2 ExponentialE <Gamma><Rational>3 2</Rational></Gamma></Multiply></Divide>
+chisquare-cdf-exact	<CDF><ChiSquareDistribution>3</ChiSquareDistribution> 2</CDF>	<Add>1 <Negate><GammaRegularized><Rational>3 2</Rational> 1</GammaRegularized></Negate></Add>
+chisquare-mean-exact	<Mean><ChiSquareDistribution>3</ChiSquareDistribution></Mean>	<ToExpression>3</ToExpression>
+chisquare-variance-exact	<Variance><ChiSquareDistribution>3</ChiSquareDistribution></Variance>	<ToExpression>6</ToExpression>

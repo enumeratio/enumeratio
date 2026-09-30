@@ -1,0 +1,35 @@
+id	in	out
+fromdigits-list-5-1-2-8	<FromDigits><List>5 1 2 8</List></FromDigits>	<ToExpression>5128</ToExpression>
+fromdigits-list-1-0-1-1-0-1-1-2	<FromDigits><List>1 0 1 1 0 1 1</List> 2</FromDigits>	<ToExpression>91</ToExpression>
+1d-2h-3m-4s-back-to-seconds	<FromDigits><List>1 2 3 4</List> <MixedRadixNumerals><List>24 60 60</List></MixedRadixNumerals></FromDigits>	<ToExpression>93784</ToExpression>
+crt-reconstruction	<FromDigits><List>2 3 2</List> <ResidueNumerals><List>3 5 7</List></ResidueNumerals></FromDigits>	<ToExpression>23</ToExpression>
+the-digits-can-be-given-as-a-string-0-9-then-a-z	<FromDigits>"1923"</FromDigits>	<ToExpression>1923</ToExpression>
+a-digit-string-in-a-given-base	<FromDigits>"1011011" 2</FromDigits>	<ToExpression>91</ToExpression>
+roman-numerals-with-the-base-roman	<FromDigits>"XVII" "Roman"</FromDigits>	<ToExpression>17</ToExpression>
+a-mixed-radix-spelled-mixedradix-1d-4h-25m-41s	<FromDigits><List>1 4 25 41</List> <MixedRadix><List>24 60 60</List></MixedRadix></FromDigits>	<ToExpression>102341</ToExpression>
+the-inverse-of-integerdigits-137-mixedradix-3-12	<FromDigits><List>3 2 5</List> <MixedRadix><List>3 12</List></MixedRadix></FromDigits>	<ToExpression>137</ToExpression>
+digits-past-9-are-plain-integers-1-cdot-16-15	<FromDigits><List>1 15</List> 16</FromDigits>	<ToExpression>31</ToExpression>
+a-symbolic-base-gives-the-polynomial-x-2-2x-3	<FromDigits><List>1 2 3</List> x</FromDigits>	<Add><Power>x 2</Power> <Multiply>2 x</Multiply> 3</Add>
+a-negative-base-1-cdot-4-1-cdot-2-0-2	<FromDigits><List>1 1 0</List> -2</FromDigits>	<ToExpression>2</ToExpression>
+a-digits-exponent-pair-the-shape-realdigits	<FromDigits><List><List>1 4 1 5</List> 1</List></FromDigits>	<Rational>283 200</Rational>
+ordinary-base-2-as-a-system-value	<FromDigits><List>1 0 0 0 0 1 1 0 0 0 1 1</List> <PositionalNumerals>2</PositionalNumerals></FromDigits>	<ToExpression>2147</ToExpression>
+zeckendorf-100-89-8-3-back-through-fromdigits	<FromDigits><List>1 0 0 0 0 1 0 1 0 0</List> ZeckendorfNumerals</FromDigits>	<ToExpression>100</ToExpression>
+a-factoradic-lehmer-code-back-to-463	<FromDigits><List>3 4 1 0 1 0</List> FactorialNumerals</FromDigits>	<ToExpression>463</ToExpression>
+balanced-ternary-1-1-1-back-to-5	<FromDigits><List>1 -1 -1</List> <BalancedNumerals>3</BalancedNumerals></FromDigits>	<ToExpression>5</ToExpression>
+combinatorial-base-3-3-2-1-back-to-3	<FromDigits><List>3 2 1</List> <CombinatorialNumerals>3</CombinatorialNumerals></FromDigits>	<ToExpression>3</ToExpression>
+ostrowski-golden-digits-back-to-12	<FromDigits><List>0 0 1 0 1 0 1 0</List> <OstrowskiNumerals><List>1 1 1 1 1 1 1 1</List></OstrowskiNumerals></FromDigits>	<ToExpression>12</ToExpression>
+bijective-base-26-the-empty-numeral-is-zero	<FromDigits><Apply>List</Apply> <BijectiveNumerals>26</BijectiveNumerals></FromDigits>	<ToExpression>0</ToExpression>
+the-horner-reduction-in-base-5	<FromDigits><List>1 2 3</List> 5</FromDigits>	<ToExpression>38</ToExpression>
+a-negative-base-minus-3-1-0-1	<FromDigits><List>1 0 1</List> -3</FromDigits>	<ToExpression>10</ToExpression>
+a-negative-base-minus-4-3-2-1	<FromDigits><List>3 2 1</List> -4</FromDigits>	<ToExpression>41</ToExpression>
+a-digits-exponent-pair-exponent-3-is-an-exact	<FromDigits><List><List>1 2 3</List> 3</List></FromDigits>	<ToExpression>123</ToExpression>
+a-digits-exponent-pair-exponent-5-is-12-300	<FromDigits><List><List>1 2 3</List> 5</List></FromDigits>	<ToExpression>12300</ToExpression>
+a-lehmer-code-back-to-its-rank	<FromDigits><List>0 2 1 0</List> FactorialNumerals</FromDigits>	<ToExpression>5</ToExpression>
+fromdigits-inverts-integerdigits	<Equal><FromDigits><IntegerDigits>58127</IntegerDigits></FromDigits> 58127</Equal>	<True />
+the-round-trip-holds-in-any-base	<FromDigits><IntegerDigits>58127 2</IntegerDigits> 2</FromDigits>	<ToExpression>58127</ToExpression>
+an-empty-digit-list-is-left-unevaluated-rather	<FromDigits><Apply>List</Apply></FromDigits>	<FromDigits><Apply>List</Apply></FromDigits>
+two-adjacent-ones-is-not-a-numeral-so-it-denotes	<FromDigits><List>1 1</List> ZeckendorfNumerals</FromDigits>	<FromDigits><List>1 1</List> ZeckendorfNumerals</FromDigits>
+ostrowski-declines-a-string-past-its-ceiling	<FromDigits><List>1 2 1</List> <OstrowskiNumerals><List>2 2 2</List></OstrowskiNumerals></FromDigits>	<FromDigits><List>1 2 1</List> <OstrowskiNumerals><List>2 2 2</List></OstrowskiNumerals></FromDigits>
+non-coprime-residues-an-inconsistent-string	<FromDigits><List>1 2</List> <ResidueNumerals><List>4 6</List></ResidueNumerals></FromDigits>	<FromDigits><List>1 2</List> <ResidueNumerals><List>4 6</List></ResidueNumerals></FromDigits>
+a-malformed-roman-numeral-declines	<FromDigits>"IIII" "Roman"</FromDigits>	<FromDigits>"IIII" "Roman"</FromDigits>
+digits-the-base-carry-into-higher-place-values-7	<FromDigits><List>7 11 0 0 0 122</List></FromDigits>	<ToExpression>810122</ToExpression>

@@ -1,0 +1,5 @@
+id	in	out
+geometric	<FindSequenceFunction><List>1 2 4 8 16</List> n</FindSequenceFunction>	<Power>2 n</Power>
+polynomial	<FindSequenceFunction><List>1 4 9 16 25</List> n</FindSequenceFunction>	<Add><Power>n 2</Power> <Multiply>2 n</Multiply> 1</Add>
+catalan-numbers	<FindSequenceFunction><List>1 1 2 5 14 42 132</List> n</FindSequenceFunction>	<CatalanNumber>n</CatalanNumber>
+factorial	<FindSequenceFunction><List>1 1 2 6 24 120</List> n</FindSequenceFunction>	<Factorial>n</Factorial>

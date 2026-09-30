@@ -1,0 +1,6 @@
+id	in	out
+randomvariate-default-seed-is-reproducible	<RandomVariate><NormalDistribution>0 1</NormalDistribution></RandomVariate>	<ToExpression>-0.956162229384149</ToExpression>
+randomvariate-n-draws	<Last><List><SeedRandom>1</SeedRandom> <RandomVariate><UniformDistribution><List>0 1</List></UniformDistribution> 3</RandomVariate></List></Last>	<List>0.6270739405881613 0.002735721180215478 0.5274470399599522</List>
+randomvariate-discrete-draw	<Last><List><SeedRandom>1</SeedRandom> <RandomVariate><PoissonDistribution>4</PoissonDistribution></RandomVariate></List></Last>	<ToExpression>1</ToExpression>
+randomvariate-empirical-resamples-the-data	<Last><List><SeedRandom>2</SeedRandom> <RandomVariate><EmpiricalDistribution><List>a b c</List></EmpiricalDistribution></RandomVariate></List></Last>	<c />
+randomvariate-is-random-over-a-distribution	<Equal><Last><List><SeedRandom>5</SeedRandom> <RandomVariate><NormalDistribution>0 1</NormalDistribution></RandomVariate></List></Last> <Last><List><SeedRandom>5</SeedRandom> <Random><NormalDistribution>0 1</NormalDistribution></Random></List></Last></Equal>	<True />

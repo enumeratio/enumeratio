@@ -1,0 +1,2 @@
+id	in	out
+inversecdf-normal-median	<InverseCDF><NormalDistribution>0 1</NormalDistribution> <Rational>1 2</Rational></InverseCDF>	<ToExpression>-6.957290979756837e-17</ToExpression>

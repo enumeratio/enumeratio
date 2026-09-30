@@ -1,0 +1,9 @@
+id	in	out
+frac-2-4-1-2-3-1-2-2-1-2-1-35	<QBinomial>4 2 2</QBinomial>	<ToExpression>35</ToExpression>
+qbinomial-4-2-2	<N><QBinomial>4 2 2</QBinomial></N>	<ToExpression>35</ToExpression>
+qbinomial-6-3-1	<N><QBinomial>6 3 1</QBinomial></N>	<ToExpression>20</ToExpression>
+qbinomial-5-2-3	<N><QBinomial>5 2 3</QBinomial></N>	<ToExpression>1210</ToExpression>
+qbinomial-8-3-2	<N><QBinomial>8 3 2</QBinomial></N>	<ToExpression>97155</ToExpression>
+a-polynomial-in-q-whose-coefficients-count	<Expand><QBinomial>4 2 q</QBinomial></Expand>	<Add><Power>q 4</Power> <Power>q 3</Power> <Multiply>2 <Power>q 2</Power></Multiply> q 1</Add>
+the-number-of-2-dimensional-subspaces-of-f-3-5	<QBinomial>5 2 3</QBinomial>	<ToExpression>1210</ToExpression>
+at-q-1-it-is-binomial-6-3	<QBinomial>6 3 1</QBinomial>	<ToExpression>20</ToExpression>

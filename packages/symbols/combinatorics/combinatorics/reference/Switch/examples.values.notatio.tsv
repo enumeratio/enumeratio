@@ -1,0 +1,3 @@
+id	in	out
+match-a-literal-form	<Switch>2 1 one 2 two 3 three</Switch>	<two />
+fall-through-to-a-blank-default	<Switch>99 1 one _ other</Switch>	<other />

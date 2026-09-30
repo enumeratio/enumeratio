@@ -1,0 +1,9 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	<N><JacobiZN>0.3 0.5</JacobiZN></N>	<ToExpression>0.07707646847765576</ToExpression>
+zn-0-7-0-2	<N><JacobiZN>-0.7 0.2</JacobiZN></N>	<ToExpression>-0.051550286367310294</ToExpression>
+zn-2-5-0-3	<N><JacobiZN>2.5 0.3</JacobiZN></N>	<ToExpression>-0.08051850367193758</ToExpression>
+a-parameter-close-to-its-m-1-boundary	<N><JacobiZN>1.1 0.9</JacobiZN></N>	<ToExpression>0.35471220019987126</ToExpression>
+u-0-is-0-for-any-m	<JacobiZN>0 m</JacobiZN>	<ToExpression>0</ToExpression>
+m-0-is-0-for-any-u	<JacobiZN>u 0</JacobiZN>	<ToExpression>0</ToExpression>
+m-outside-0-1-is-declined	<N><JacobiZN>0.3 -0.5</JacobiZN></N>	<JacobiZN>0.3 -0.5</JacobiZN>
+symbolic-arguments-are-left-unevaluated-rather	<JacobiZN>u m</JacobiZN>	<JacobiZN>u m</JacobiZN>

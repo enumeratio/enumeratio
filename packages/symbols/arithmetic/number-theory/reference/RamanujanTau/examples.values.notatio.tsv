@@ -1,0 +1,6 @@
+id	in	out
+ramanujantau-2	<RamanujanTau>2</RamanujanTau>	<ToExpression>-24</ToExpression>
+ramanujantau-5	<RamanujanTau>5</RamanujanTau>	<ToExpression>4830</ToExpression>
+listable	<RamanujanTau><List>1 2 3 4 5 6</List></RamanujanTau>	<List>1 -24 252 -1472 4830 -6048</List>
+ramanujantau-12	<RamanujanTau>12</RamanujanTau>	<ToExpression>-370944</ToExpression>
+multiplicative-tau-6-tau-2-tau-3	<Multiply><RamanujanTau>2</RamanujanTau> <RamanujanTau>3</RamanujanTau></Multiply>	<ToExpression>-6048</ToExpression>

@@ -1,0 +1,7 @@
+id	in	out
+a-downward-parabola-s-vertex	<Maximize><Add><Negate><Power>x 2</Power></Negate> <Multiply>4 x</Multiply> -1</Add> x</Maximize>	<List>3 <List><Rule>x 2</Rule></List></List>
+unbounded-above-reports-positive-infinity	<Maximize><Power>x 3</Power> x</Maximize>	<List>PositiveInfinity <List><Rule>x PositiveInfinity</Rule></List></List>
+a-bounded-interval-constraint	<Maximize><List><Add><Negate><Power>x 2</Power></Negate> <Multiply>4 x</Multiply> -1</Add> <And><GreaterEqual>x 0</GreaterEqual> <LessEqual>x 1</LessEqual></And></List> x</Maximize>	<List>2 <List><Rule>x 1</Rule></List></List>
+exp-of-a-negated-argument-is-unbounded-above	<Maximize><Exp><Negate>x</Negate></Exp> x</Maximize>	<List>PositiveInfinity <List><Rule>x NegativeInfinity</Rule></List></List>
+a-downward-quadratic-radicand	<Maximize><Sqrt><Subtract>4 <Power>x 2</Power></Subtract></Sqrt> x</Maximize>	<List>2 <List><Rule>x 0</Rule></List></List>
+declines-more-than-one-variable	<Maximize><Negate><Add><Power>x 2</Power> <Power>y 2</Power></Add></Negate> <List>x y</List></Maximize>	<Maximize><Negate><Add><Power>x 2</Power> <Power>y 2</Power></Add></Negate> <List>x y</List></Maximize>

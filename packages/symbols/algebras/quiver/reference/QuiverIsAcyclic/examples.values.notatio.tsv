@@ -1,0 +1,4 @@
+id	in	out
+quiverisacyclic-linearquiver-4	<QuiverIsAcyclic><LinearQuiver>4</LinearQuiver></QuiverIsAcyclic>	<True />
+a-loop-is-a-cycle	<QuiverIsAcyclic>JordanQuiver</QuiverIsAcyclic>	<False />
+binom-7-2-the-same-as-incidencealgebra-chain-6	<AlgebraDimension><PathAlgebra><LinearQuiver>6</LinearQuiver></PathAlgebra></AlgebraDimension>	<ToExpression>21</ToExpression>

@@ -1,0 +1,3 @@
+id	in	out
+two-trig-terms-on-a-bounded-interval	<NMaximize><List><Add><Sin>x</Sin> <Cos><Multiply>2 x</Multiply></Cos></Add> <And><GreaterEqual>x 0</GreaterEqual> <LessEqual>x 6</LessEqual></And></List> x</NMaximize>	<List>1.125 <List><Rule>x 2.8889124061210176</Rule></List></List>
+declines-without-a-bounded-constraint	<NMaximize><Negate><Power>x 2</Power></Negate> x</NMaximize>	<NMaximize><Negate><Power>x 2</Power></Negate> x</NMaximize>

@@ -1,0 +1,19 @@
+id	in	out
+stirling-5-2	<Stirling>5 2</Stirling>	<ToExpression>15</ToExpression>
+stirling-6-3	<Stirling>6 3</Stirling>	<ToExpression>90</ToExpression>
+stirling-20-10	<Stirling>20 10</Stirling>	<ToExpression>5917584964655</ToExpression>
+exact-for-large-n	<Stirling>50 2</Stirling>	<ToExpression>562949953421311</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<Stirling><List>2 4 6</List> 2</Stirling>	<List>1 7 31</List>
+the-ways-to-split-10-distinct-items-among-3	<Stirling>10 3</Stirling>	<ToExpression>9330</ToExpression>
+one-block-means-one-partition-s-n-1-1	<Stirling>5 1</Stirling>	<ToExpression>1</ToExpression>
+singletons-only-s-n-n-1	<Stirling>5 5</Stirling>	<ToExpression>1</ToExpression>
+row-sums-give-the-bell-numbers	<Equal><Sum><Stirling>4 k</Stirling> <Tuple>k 0 4</Tuple></Sum> <BellNumber>4</BellNumber></Equal>	<True />
+two-blocks-s-n-2-2-n-1-1	<Equal><Stirling>10 2</Stirling> <Subtract><Power>2 9</Power> 1</Subtract></Equal>	<True />
+s-n-n-1-binom-n-2-one-block-is-a-pair	<Equal><Stirling>6 5</Stirling> <Binomial>6 2</Binomial></Equal>	<True />
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	<Equal><Stirling>6 3</Stirling> <Divide><Sum><Multiply><Power>-1 <Subtract>3 j</Subtract></Power> <Binomial>3 j</Binomial> <Power>j 6</Power></Multiply> <Tuple>j 0 3</Tuple></Sum> <Factorial>3</Factorial></Divide></Equal>	<True />
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	<Sum><Multiply><StirlingS1>4 k</StirlingS1> <Stirling>k 2</Stirling></Multiply> <Tuple>k 0 4</Tuple></Sum>	<ToExpression>0</ToExpression>
+the-empty-set-has-one-partition-into-no-blocks	<Stirling>0 0</Stirling>	<ToExpression>1</ToExpression>
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	<Stirling>5 0</Stirling>	<ToExpression>0</ToExpression>
+k-n-is-0	<Stirling>3 5</Stirling>	<ToExpression>0</ToExpression>
+stirling-0-1-is-also-0	<Stirling>0 1</Stirling>	<ToExpression>0</ToExpression>
+a-negative-k-stays-symbolic	<Stirling>10 -5</Stirling>	<Stirling>10 -5</Stirling>

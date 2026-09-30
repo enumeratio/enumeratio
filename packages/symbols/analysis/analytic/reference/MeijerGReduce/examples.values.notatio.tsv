@@ -1,0 +1,5 @@
+id	in	out
+exp	<MeijerGReduce><Power>ExponentialE x</Power> x</MeijerGReduce>	<MeijerG><List><Apply>List</Apply> <Apply>List</Apply></List> <List><List>0</List> <Apply>List</Apply></List> <Negate>x</Negate></MeijerG>
+sin	<MeijerGReduce><Sin>x</Sin> x</MeijerGReduce>	<Multiply><MeijerG><List><Apply>List</Apply> <Apply>List</Apply></List> <List><List><Rational>1 2</Rational></List> <List>0</List></List> <Multiply><Rational>1 4</Rational> <Power>x 2</Power></Multiply></MeijerG> <Sqrt>Pi</Sqrt></Multiply>
+log1p	<MeijerGReduce><Ln><Add>1 x</Add></Ln> x</MeijerGReduce>	<MeijerG><List><List>1 1</List> <Apply>List</Apply></List> <List><List>1</List> <List>0</List></List> x</MeijerG>
+bessel-j	<MeijerGReduce><BesselJ>n x</BesselJ> x</MeijerGReduce>	<MeijerG><List><Apply>List</Apply> <Apply>List</Apply></List> <List><List><Multiply><Rational>1 2</Rational> n</Multiply></List> <List><Multiply><Rational>-1 2</Rational> n</Multiply></List></List> <Multiply><Rational>1 4</Rational> <Power>x 2</Power></Multiply></MeijerG>

@@ -1,0 +1,5 @@
+id	in	out
+a-quadratic-s-minimum-value	<MinValue><Add><Power>x 2</Power> <Multiply>-4 x</Multiply> 3</Add> x</MinValue>	<ToExpression>-1</ToExpression>
+a-simple-interval-constraint	<MinValue><List><Power>x 2</Power> <GreaterEqual>x 1</GreaterEqual></List> x</MinValue>	<ToExpression>1</ToExpression>
+the-amplitude-of-cosine-alone-is-exact	<MinValue><Cos><Subtract><Multiply>3 x</Multiply> 1</Subtract></Cos> x</MinValue>	<ToExpression>-1</ToExpression>
+exp-s-infimum	<MinValue><Exp>x</Exp> x</MinValue>	<ToExpression>0</ToExpression>

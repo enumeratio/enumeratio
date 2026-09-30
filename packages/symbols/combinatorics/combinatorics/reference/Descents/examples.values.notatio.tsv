@@ -1,0 +1,4 @@
+id	in	out
+only-3-1	<Descents><List>3 1 2</List></Descents>	<ToExpression>1</ToExpression>
+every-step-falls	<Descents><List>3 2 1</List></Descents>	<ToExpression>2</ToExpression>
+descents-and-ascents-partition-the-n-1-steps	<Equal><Add><Descents><List>3 1 2</List></Descents> <Ascents><List>3 1 2</List></Ascents></Add> 2</Equal>	<True />

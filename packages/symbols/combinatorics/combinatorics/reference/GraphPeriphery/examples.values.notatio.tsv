@@ -1,0 +1,2 @@
+id	in	out
+path-5-periphery-is-both-ends	<GraphPeriphery><Graph><List>1 2 3 4 5</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge> <UndirectedEdge>4 5</UndirectedEdge></List></Graph></GraphPeriphery>	<List>1 5</List>

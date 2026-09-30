@@ -1,0 +1,4 @@
+id	in	out
+the-first-25-terms	<Take>AllOnes 25</Take>	<List>1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</List>
+1-is-in-allones	<Element>1 AllOnes</Element>	<True />
+2-is-not-in-allones	<Element>2 AllOnes</Element>	<False />

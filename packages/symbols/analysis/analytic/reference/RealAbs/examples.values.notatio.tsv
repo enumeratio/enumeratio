@@ -1,0 +1,6 @@
+id	in	out
+the-absolute-value-of-a-real-number	<RealAbs>-2.5</RealAbs>	<ToExpression>2.5</ToExpression>
+realabs-neg-7-over-2	<RealAbs><Rational>-7 2</Rational></RealAbs>	<Rational>7 2</Rational>
+threads-element-wise-over-a-list	<RealAbs><List>-1 2 -3</List></RealAbs>	<List>1 2 3</List>
+exact-numeric-arguments	<RealAbs><Negate>Pi</Negate></RealAbs>	<Pi />
+agrees-with-abs-on-the-reals	<Equal><RealAbs>-5</RealAbs> <Abs>-5</Abs></Equal>	<True />

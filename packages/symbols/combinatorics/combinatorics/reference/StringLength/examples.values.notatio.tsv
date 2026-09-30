@@ -1,0 +1,2 @@
+id	in	out
+counts-code-points-not-utf-16-units	<StringLength><String>`a😀b`</String></StringLength>	<ToExpression>3</ToExpression>

@@ -1,0 +1,10 @@
+id	in	out
+4	<Count><SymmetricGroup>4</SymmetricGroup></Count>	<ToExpression>24</ToExpression>
+the-identity	<At><SymmetricGroup>3</SymmetricGroup> 1</At>	<Permutation><List>1 2 3</List></Permutation>
+inversions-are-mahonian	<Tally><CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "Inversions"</CombinatorialStat></Tally>	<Tuple><List>0 1 2 3 4 5 6</List> <List>1 3 5 6 5 3 1</List></Tuple>
+major-index-is-equidistributed	<Tally><CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "MajorIndex"</CombinatorialStat></Tally>	<Tuple><List>0 3 2 5 1 4 6</List> <List>1 6 5 3 3 5 1</List></Tuple>
+descents-are-eulerian	<Tally><CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "Descents"</CombinatorialStat></Tally>	<Tuple><List>0 1 2 3</List> <List>1 11 11 1</List></Tuple>
+excedances-are-eulerian-too	<Tally><CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "Excedances"</CombinatorialStat></Tally>	<Tuple><List>0 1 2 3</List> <List>1 11 11 1</List></Tuple>
+cycles-are-stirling-numbers-of-the-first-kind	<Tally><CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "CycleCount"</CombinatorialStat></Tally>	<Tuple><List>4 3 2 1</List> <List>1 6 11 6</List></Tuple>
+fixed-points-are-the-rencontres-numbers	<Tally><CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "FixedPoints"</CombinatorialStat></Tally>	<Tuple><List>4 2 1 0</List> <List>1 6 8 9</List></Tuple>
+half-are-even	<Tally><CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "Sign"</CombinatorialStat></Tally>	<Tuple><List>1 -1</List> <List>12 12</List></Tuple>

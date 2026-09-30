@@ -1,0 +1,4 @@
+id	in	out
+a-permutation-of-4-seeded	<Last><List><SeedRandom>7</SeedRandom> <Random><Permutations>4</Permutations></Random></List></Last>	<Permutation><List>1 2 3 4</List></Permutation>
+a-count-draws-that-many	<Length><Last><List><SeedRandom>1</SeedRandom> <Random><IntegerPartitions>10</IntegerPartitions> 3</Random></List></Last></Length>	<ToExpression>3</ToExpression>
+randominteger-is-random-over-a-range	<Equal><Last><List><SeedRandom>5</SeedRandom> <RandomInteger><List>10 20</List></RandomInteger></List></Last> <Last><List><SeedRandom>5</SeedRandom> <Random><Range>10 20</Range></Random></List></Last></Equal>	<True />

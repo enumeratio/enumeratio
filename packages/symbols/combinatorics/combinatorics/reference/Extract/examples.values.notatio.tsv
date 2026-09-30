@@ -1,0 +1,4 @@
+id	in	out
+nested-path-drills-in	<Extract><List><List>a b</List> <List>c d</List></List> <List>2 1</List></Extract>	<c />
+negative-position-counts-from-the-end	<Extract><List>a b c</List> -1</Extract>	<c />
+list-of-paths-extracts-several-parts	<Extract><List><List>a b</List> <List>c d</List></List> <List><List>1 1</List> <List>2 2</List></List></Extract>	<List>a d</List>

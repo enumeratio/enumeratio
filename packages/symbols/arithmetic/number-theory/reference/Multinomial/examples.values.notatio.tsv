@@ -1,0 +1,18 @@
+id	in	out
+multinomial-1-2-1	<Multinomial>1 2 1</Multinomial>	<ToExpression>12</ToExpression>
+multinomial-2-3-4	<Multinomial>2 3 4</Multinomial>	<ToExpression>1260</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<Multinomial><List>2 3 5</List> 3</Multinomial>	<List>10 20 56</List>
+zero-parts-contribute-0-1	<Multinomial>0 0 1</Multinomial>	<ToExpression>1</ToExpression>
+real-arguments-evaluate-via-the-gamma-function	<Multinomial>2 0.2 5</Multinomial>	<ToExpression>34.31780351999995</ToExpression>
+complex-arguments-evaluate-via-the-gamma	<Multinomial><Complex>1 1</Complex> 0.2 4</Multinomial>	<Complex>2.894060302449624 9.104625875691285</Complex>
+an-around-argument-should-propagate-its	<Multinomial><Around>2 0.01</Around> 2</Multinomial>	<Around>6 0.035</Around>
+the-number-of-distinct-letter-arrangements-of	<Multinomial>1 4 4 2</Multinomial>	<ToExpression>34650</ToExpression>
+the-coefficient-of-a-2-b-3-c-in-a-b-c-6	<Multinomial>2 3 1</Multinomial>	<ToExpression>60</ToExpression>
+with-two-arguments-it-reduces-to-binomial-binom	<Equal><Multinomial>7 3</Multinomial> <Binomial>10 3</Binomial></Equal>	<True />
+orderless-permuting-the-arguments-doesn-t-change	<Equal><Multinomial>1 2 3</Multinomial> <Multinomial>3 1 2</Multinomial></Equal>	<True />
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3	<Equal><Multinomial>3 4 5</Multinomial> <Divide><Factorial>12</Factorial> <Multiply><Factorial>3</Factorial> <Factorial>4</Factorial> <Factorial>5</Factorial></Multiply></Divide></Equal>	<True />
+all-ones-parts-give-n-every-part-is-a-single	<Multinomial>1 1 1 1</Multinomial>	<ToExpression>24</ToExpression>
+all-zero-arguments-still-give-the-empty-product	<Multinomial>0 0 0</Multinomial>	<ToExpression>1</ToExpression>
+a-single-argument-is-always-1-there-s-only-one	<Multinomial>5</Multinomial>	<ToExpression>1</ToExpression>
+a-single-symbolic-argument-is-also-1	<Multinomial>n</Multinomial>	<ToExpression>1</ToExpression>
+with-no-arguments-it-is-the-empty-product-1	<Apply>Multinomial</Apply>	<ToExpression>1</ToExpression>

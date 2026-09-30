@@ -1,0 +1,47 @@
+id	in	out
+binomial-5-2	<Binomial>5 2</Binomial>	<ToExpression>10</ToExpression>
+binomial-10-3	<Binomial>10 3</Binomial>	<ToExpression>120</ToExpression>
+binomial-4-2	<Binomial>4 2</Binomial>	<ToExpression>6</ToExpression>
+choosing-none-of-n-is-always-1-way	<Binomial>5 0</Binomial>	<ToExpression>1</ToExpression>
+choosing-all-of-n-is-always-1-way	<Binomial>5 5</Binomial>	<ToExpression>1</ToExpression>
+binomial-8-4	<Binomial>8 4</Binomial>	<ToExpression>70</ToExpression>
+symbolic-n-binom-n-0-1-for-any-n	<Binomial>n 0</Binomial>	<ToExpression>1</ToExpression>
+symbolic-n-binom-n-1-n	<Binomial>n 1</Binomial>	<n />
+binom-n-n-1-n-for-symbolic-n	<Binomial>n <Subtract>n 1</Subtract></Binomial>	<n />
+binom-m-m-1-m-for-symbolic-m	<Binomial>m <Add>m -1</Add></Binomial>	<m />
+threads-element-wise-over-a-list-as-wolfram-s	<Binomial><List>2 3 5 7 11</List> 3</Binomial>	<List>0 1 10 35 165</List>
+half-integer-arguments-evaluate-exactly-through	<Binomial><Rational>9 2</Rational> <Rational>7 2</Rational></Binomial>	<Rational>9 2</Rational>
+real-arguments-evaluate-through-the-gamma	<Binomial>8.5 -4.2</Binomial>	<ToExpression>0.0000604992484022834800676</ToExpression>
+a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0	<Binomial>0.5 3</Binomial>	<ToExpression>0.0625000000000000000001</ToExpression>
+a-rational-n-with-integer-k-gives-the-exact	<Binomial><Rational>1 2</Rational> 2</Binomial>	<Rational>-1 8</Rational>
+binom-1-2-3-frac-5-16-the-central-binomial	<Binomial><Rational>-1 2</Rational> 3</Binomial>	<Rational>-5 16</Rational>
+binom-n-n-1-for-symbolic-n	<Binomial>n n</Binomial>	<ToExpression>1</ToExpression>
+binom-m-m-1-for-symbolic-m	<Binomial>m m</Binomial>	<ToExpression>1</ToExpression>
+a-gaussian-integer-n-binom-1-i-5-frac-1-i-12	<Binomial><Complex>1 1</Complex> 5</Binomial>	<Complex><Rational>-1 12</Rational> <Rational>-1 12</Rational></Complex>
+complex-n-and-k-evaluate-through-the-gamma	<Binomial><Complex>2 1</Complex> <Complex>7 -3</Complex></Binomial>	<Complex>-75.46834738222304 106.81526597079055</Complex>
+interval-arithmetic-in-k-binom-1-2-k-is	<Binomial><Rational>1 2</Rational> <Interval>0.5 0.6</Interval></Binomial>	<Interval>0.9281455538507054 1</Interval>
+the-number-of-distinct-5-card-hands-dealt-from-a	<Binomial>52 5</Binomial>	<ToExpression>2598960</ToExpression>
+the-probability-of-exactly-3-heads-in-10-fair	<Divide><Binomial>10 3</Binomial> <Power>2 10</Power></Divide>	<Rational>15 128</Rational>
+symmetry-binom-n-k-binom-n-n-k	<Equal><Binomial>10 3</Binomial> <Binomial>10 7</Binomial></Equal>	<True />
+pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	<Equal><Add><Binomial>9 2</Binomial> <Binomial>9 3</Binomial></Add> <Binomial>10 3</Binomial></Equal>	<True />
+row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	<Equal><Add><Binomial>4 0</Binomial> <Binomial>4 1</Binomial> <Binomial>4 2</Binomial> <Binomial>4 3</Binomial> <Binomial>4 4</Binomial></Add> <Power>2 4</Power></Equal>	<True />
+sum-of-squares-along-a-row-sum-k-binom-n-k-2	<Equal><Sum><Power><Binomial>6 k</Binomial> 2</Power> <Tuple>k 0 6</Tuple></Sum> <Binomial>12 6</Binomial></Equal>	<True />
+vandermonde-s-identity-sum-k-binom-m-k-binom-n-r	<Equal><Sum><Multiply><Binomial>5 k</Binomial> <Binomial>4 <Subtract>3 k</Subtract></Binomial></Multiply> <Tuple>k 0 3</Tuple></Sum> <Binomial>9 3</Binomial></Equal>	<True />
+the-alternating-row-sum-vanishes-sum-k-1-k-binom	<Sum><Multiply><Power>-1 k</Power> <Binomial>6 k</Binomial></Multiply> <Tuple>k 0 6</Tuple></Sum>	<ToExpression>0</ToExpression>
+the-factorial-form-binom-n-k-frac-n-k-n-k-see	<Equal><Binomial>7 3</Binomial> <Divide><Factorial>7</Factorial> <Multiply><Factorial>3</Factorial> <Factorial>4</Factorial></Multiply></Divide></Equal>	<True />
+choosing-more-elements-than-available-k-n-gives	<Binomial>5 7</Binomial>	<ToExpression>0</ToExpression>
+a-negative-k-also-gives-0	<Binomial>5 -1</Binomial>	<ToExpression>0</ToExpression>
+a-negative-n-uses-the-generalized-formula-binom	<Binomial>-5 2</Binomial>	<ToExpression>15</ToExpression>
+both-arguments-negative-integers-the-limiting	<Binomial>-3 -5</Binomial>	<ToExpression>6</ToExpression>
+equal-negative-arguments-binom-2-2-1	<Binomial>-2 -2</Binomial>	<ToExpression>1</ToExpression>
+a-negative-n-with-a-positive-k-binom-9-1	<Binomial>-9 1</Binomial>	<ToExpression>-9</ToExpression>
+a-negative-n-with-k-0-binom-1-4	<Binomial>-1 4</Binomial>	<ToExpression>1</ToExpression>
+a-negative-k-with-n-10-binom-10-neg-10	<Binomial>10 -10</Binomial>	<ToExpression>0</ToExpression>
+a-negative-k-past-n-binom-4-neg-13	<Binomial>4 -13</Binomial>	<ToExpression>0</ToExpression>
+a-negative-n-again-binom-neg-4-1	<Binomial>-4 1</Binomial>	<ToExpression>-4</ToExpression>
+a-negative-k-with-n-2-binom-2-neg-2	<Binomial>-2 2</Binomial>	<ToExpression>3</ToExpression>
+a-negative-n-zero-k-binom-neg-1-0	<Binomial>-1 0</Binomial>	<ToExpression>1</ToExpression>
+a-negative-k-past-n-binom-100-neg-50	<Binomial>100 -50</Binomial>	<ToExpression>0</ToExpression>
+symmetry-doesn-t-hold-across-mismatched-n	<Equal><Binomial>2 6</Binomial> <Binomial>-18 2</Binomial></Equal>	<False />
+not-pascal-s-rule-across-mismatched-n	<Equal><Add><Binomial>-23 2</Binomial> <Binomial>-2 3</Binomial></Add> <Binomial>-20 6</Binomial></Equal>	<False />
+the-central-binomial-coefficient-binom-100-50	<Binomial>100 50</Binomial>	<ToExpression>100891344545564193334812497256</ToExpression>

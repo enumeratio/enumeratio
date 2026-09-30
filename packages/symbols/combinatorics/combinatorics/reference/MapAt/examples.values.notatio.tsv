@@ -1,0 +1,4 @@
+id	in	out
+single-position	<MapAt>f <List>a b c</List> 2</MapAt>	<List>a <f>b</f> c</List>
+negative-position	<MapAt>f <List>a b c</List> -1</MapAt>	<List>a b <f>c</f></List>
+several-positions	<MapAt>f <List>a b c</List> <List><List>1</List> <List>3</List></List></MapAt>	<List><f>a</f> b <f>c</f></List>

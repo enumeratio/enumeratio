@@ -1,0 +1,5 @@
+id	in	out
+exp-neg-ar-order0	<Assuming><Greater>a 0</Greater> <HankelTransform><Exp><Negate><Multiply>a r</Multiply></Negate></Exp> r s</HankelTransform></Assuming>	<Divide>a <Power><Add><Power>a 2</Power> <Power>s 2</Power></Add> <Rational>3 2</Rational></Power></Divide>
+one-over-r	<HankelTransform><Divide>1 r</Divide> r s</HankelTransform>	<Divide>1 s</Divide>
+one-over-sqrt-r2-a2	<Assuming><Greater>a 0</Greater> <HankelTransform><Divide>1 <Sqrt><Add><Power>r 2</Power> <Power>a 2</Power></Add></Sqrt></Divide> r s</HankelTransform></Assuming>	<Divide><Power>ExponentialE <Negate><Multiply>a s</Multiply></Negate></Power> s</Divide>
+exp-neg-ar-order1	<Assuming><Greater>a 0</Greater> <HankelTransform><Exp><Negate><Multiply>a r</Multiply></Negate></Exp> r s 1</HankelTransform></Assuming>	<Divide>s <Power><Add><Power>a 2</Power> <Power>s 2</Power></Add> <Rational>3 2</Rational></Power></Divide>

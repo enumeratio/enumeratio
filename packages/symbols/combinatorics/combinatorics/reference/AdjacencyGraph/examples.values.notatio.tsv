@@ -1,0 +1,3 @@
+id	in	out
+symmetric-matrix-is-undirected	<EdgeList><AdjacencyGraph><List><List>0 1 1</List> <List>1 0 0</List> <List>1 0 0</List></List></AdjacencyGraph></EdgeList>	<List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>1 3</UndirectedEdge></List>
+asymmetric-matrix-is-directed	<EdgeList><AdjacencyGraph><List><List>0 1</List> <List>0 0</List></List></AdjacencyGraph></EdgeList>	<List><DirectedEdge>1 2</DirectedEdge></List>

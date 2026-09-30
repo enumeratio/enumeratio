@@ -1,0 +1,11 @@
+id	in	out
+append-list-1-2-3-4	<Append><List>1 2 3</List> 4</Append>	<List>1 2 3 4</List>
+append-list-a-b-c-d-x	<Append><List>a b c d</List> x</Append>	<List>a b c d x</List>
+a-set-as-well-as-a-list	<Append><Set>1 2 3</Set> 4</Append>	<Set>1 2 3 4</Set>
+onto-the-empty-list	<Append><Apply>List</Apply> x</Append>	<List>x</List>
+a-lazy-range-is-materialised-first	<Append><Range>1 3</Range> 4</Append>	<List>1 2 3 4</List>
+any-head-not-just-a-list	<Append><f>a b</f> c</Append>	<f>a b c</f>
+adding-a-row-to-a-matrix	<Append><List><List>1 2</List> <List>3 4</List></List> <List>5 6</List></Append>	<List><List>1 2</List> <List>3 4</List> <List>5 6</List></List>
+append-c-x-join-c-x-see-join	<Equal><Append><List>1 2 3</List> 4</Append> <Join><List>1 2 3</List> <List>4</List></Join></Equal>	<True />
+appending-adds-exactly-one-element-see-length	<Equal><Length><Append><List>1 2 3</List> 4</Append></Length> <Add><Length><List>1 2 3</List></Length> 1</Add></Equal>	<True />
+appending-a-list-nests-it-as-a-single-element	<Append><List>1 2 3</List> <List>9</List></Append>	<List>1 2 3 <List>9</List></List>

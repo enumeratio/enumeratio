@@ -1,0 +1,4 @@
+id	in	out
+ismachinenumber-ordinary-float	<IsMachineNumber>2.5</IsMachineNumber>	<True />
+ismachinenumber-exact-integer	<IsMachineNumber>2</IsMachineNumber>	<False />
+ismachinenumber-extended-precision	<IsMachineNumber>3.141592653589793</IsMachineNumber>	<False />

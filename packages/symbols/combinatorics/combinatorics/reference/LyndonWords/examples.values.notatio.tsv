@@ -1,0 +1,4 @@
+id	in	out
+count-lyndonwords-5	<Count><LyndonWords>5</LyndonWords></Count>	<ToExpression>6</ToExpression>
+first-element-of-lyndonwords-5	<At><LyndonWords>5</LyndonWords> 1</At>	<List>0 0 0 0 1</List>
+every-element-of-lyndonwords-5	<Take><LyndonWords>5</LyndonWords> 6</Take>	<List><List>0 0 0 0 1</List> <List>0 0 0 1 1</List> <List>0 0 1 0 1</List> <List>0 0 1 1 1</List> <List>0 1 0 1 1</List> <List>0 1 1 1 1</List></List>

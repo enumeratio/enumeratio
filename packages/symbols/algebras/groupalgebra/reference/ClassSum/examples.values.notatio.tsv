@@ -1,0 +1,5 @@
+id	in	out
+the-identity-s-class-is-a-singleton	<ClassSum><DihedralGroup>3</DihedralGroup> 1</ClassSum>	<GroupBasis>"0"</GroupBasis>
+in-an-abelian-group-everything-is-central	<IsCentral><CyclicGroup>6</CyclicGroup> <GroupBasis><String>`3`</String></GroupBasis></IsCentral>	<True />
+class-sums-are-central	<IsCentral><DihedralGroup>3</DihedralGroup> <ClassSum><DihedralGroup>3</DihedralGroup> 2</ClassSum></IsCentral>	<True />
+a-lone-reflection-is-not	<IsCentral><DihedralGroup>3</DihedralGroup> <GroupBasis><String>s0</String></GroupBasis></IsCentral>	<False />

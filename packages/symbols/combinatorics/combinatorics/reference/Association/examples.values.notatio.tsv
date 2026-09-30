@@ -1,0 +1,6 @@
+id	in	out
+length-counts-the-key-value-pairs	<Length><Association><Rule>1 2</Rule> <Rule>3 4</Rule></Association></Length>	<ToExpression>2</ToExpression>
+first-is-the-first-value-not-the-first-rule	<First><Association><Rule>1 a</Rule> <Rule>2 b</Rule></Association></First>	<a />
+last-is-the-last-value	<Last><Association><Rule>1 a</Rule> <Rule>2 b</Rule></Association></Last>	<b />
+join-merges-keys-a-later-value-for-a-repeated	<Join><Association><Rule>a b</Rule></Association> <Association><Rule>c d</Rule> <Rule>a f</Rule></Association></Join>	<Association><Rule>a f</Rule> <Rule>c d</Rule></Association>
+sort-orders-the-entries-by-value	<Sort><Association><Rule>a 4</Rule> <Rule>b 1</Rule> <Rule>c 3</Rule></Association></Sort>	<Association><Rule>b 1</Rule> <Rule>c 3</Rule> <Rule>a 4</Rule></Association>

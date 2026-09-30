@@ -1,0 +1,5 @@
+id	in	out
+count-largestpartpartitions-10-4	<Count><LargestPartPartitions>10 4</LargestPartPartitions></Count>	<ToExpression>9</ToExpression>
+first-element-of-largestpartpartitions-10-4	<At><LargestPartPartitions>10 4</LargestPartPartitions> 1</At>	<IntegerPartition><List>4 4 2</List></IntegerPartition>
+every-element-of-largestpartpartitions-10-4	<Take><LargestPartPartitions>10 4</LargestPartPartitions> 9</Take>	<List><IntegerPartition><List>4 4 2</List></IntegerPartition> <IntegerPartition><List>4 4 1 1</List></IntegerPartition> <IntegerPartition><List>4 3 3</List></IntegerPartition> <IntegerPartition><List>4 3 2 1</List></IntegerPartition> <IntegerPartition><List>4 3 1 1 1</List></IntegerPartition> <IntegerPartition><List>4 2 2 2</List></IntegerPartition> <IntegerPartition><List>4 2 2 1 1</List></IntegerPartition> <IntegerPartition><List>4 2 1 1 1 1</List></IntegerPartition> <IntegerPartition><List>4 1 1 1 1 1 1</List></IntegerPartition></List>
+every-element-of-largestpartpartitions-10-1	<Take><LargestPartPartitions>10 1</LargestPartPartitions> 1</Take>	<List><IntegerPartition><List>1 1 1 1 1 1 1 1 1 1</List></IntegerPartition></List>

@@ -1,0 +1,4 @@
+id	in	out
+a-tree-is-acyclic	<IsAcyclicGraph><Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph></IsAcyclicGraph>	<True />
+a-cycle-is-not-acyclic	<IsAcyclicGraph><CycleGraph>4</CycleGraph></IsAcyclicGraph>	<False />
+a-directed-2-cycle-is-a-cycle	<IsAcyclicGraph><Graph><List>1 2</List> <List><DirectedEdge>1 2</DirectedEdge> <DirectedEdge>2 1</DirectedEdge></List></Graph></IsAcyclicGraph>	<False />

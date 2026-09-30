@@ -1,0 +1,11 @@
+id	in	out
+lb-8	<Lb>8</Lb>	<ToExpression>3</ToExpression>
+lb-1	<Lb>1</Lb>	<ToExpression>0</ToExpression>
+lb-1-024	<Lb>1024</Lb>	<ToExpression>10</ToExpression>
+a-machine-precision-argument-evaluates	<Lb>1.4142</Lb>	<ToExpression>0.499986164421874256467</ToExpression>
+lb-2-pow-10	<Lb><Power>2 10</Power></Lb>	<ToExpression>10</ToExpression>
+same-exact-negative-power-fold-as-log2-lb-frac	<Lb><Rational>1 8</Rational></Lb>	<ToExpression>-3</ToExpression>
+lb-0	<Lb>0</Lb>	<NegativeInfinity />
+threads-element-wise-over-a-list	<Lb><List>1 2 4 8</List></Lb>	<List>0 1 2 3</List>
+same-as-log2-the-logarithm-of-complex-infinity	<Lb>ComplexInfinity</Lb>	<PositiveInfinity />
+identical-to-log2	<Equal><Lb>64</Lb> <Log2>64</Log2></Equal>	<True />

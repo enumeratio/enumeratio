@@ -1,0 +1,4 @@
+id	in	out
+1-i-j-k	<Basis>Quaternions</Basis>	<List>1 f_1 f_2 <Multiply>f_1 f_2</Multiply></List>
+the-bicomplex-basis	<Basis><MulticomplexAlgebra>2</MulticomplexAlgebra></Basis>	<List>1 i_1 i_2 <Multiply>i_1 i_2</Multiply></List>
+an-element-from-a-coefficient-tuple	<Dot><List>1 2 3 4</List> <Basis>Quaternions</Basis></Dot>	<Add><Multiply>4 f_1 f_2</Multiply> <Multiply>2 f_1</Multiply> <Multiply>3 f_2</Multiply> 1</Add>

@@ -1,0 +1,7 @@
+id	in	out
+iscoprime-4-9	<IsCoprime>4 9</IsCoprime>	<True />
+both-are-divisible-by-3	<IsCoprime>6 9</IsCoprime>	<False />
+several-arguments-every-pair-must-be-coprime	<IsCoprime>2 3 5</IsCoprime>	<True />
+gaussian-integers-2-i-and-2-i-are-non-associate	<IsCoprime><Complex>2 1</Complex> <Complex>2 -1</Complex></IsCoprime>	<True />
+listable	<IsCoprime>3 <List>4 6</List></IsCoprime>	<List>True False</List>
+pairwise-not-collectively-gcd-6-10-15-1-yet-no	<IsCoprime>6 10 15</IsCoprime>	<False />

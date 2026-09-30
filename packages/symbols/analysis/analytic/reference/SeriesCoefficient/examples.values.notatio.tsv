@@ -1,0 +1,8 @@
+id	in	out
+exp-about-a-nonzero-point	<SeriesCoefficient><Exp>x</Exp> <List>x 1 2</List></SeriesCoefficient>	<Multiply><Rational>1 2</Rational> ExponentialE</Multiply>
+sin-about-zero	<SeriesCoefficient><Sin>x</Sin> <List>x 0 5</List></SeriesCoefficient>	<Rational>1 120</Rational>
+geometric-series	<SeriesCoefficient><Divide>1 <Subtract>1 x</Subtract></Divide> <List>x 0 10</List></SeriesCoefficient>	<ToExpression>1</ToExpression>
+log-series	<SeriesCoefficient><Ln><Add>1 x</Add></Ln> <List>x 0 4</List></SeriesCoefficient>	<Rational>-1 4</Rational>
+a-puiseux-half-integer-order-declines	<SeriesCoefficient><Sqrt>x</Sqrt> <List>x 0 <Rational>1 2</Rational></List></SeriesCoefficient>	<SeriesCoefficient><Sqrt>x</Sqrt> <List>x 0 <Rational>1 2</Rational></List></SeriesCoefficient>
+a-negative-order-laurent-coefficient-declines	<SeriesCoefficient><Divide>1 x</Divide> <List>x 0 -1</List></SeriesCoefficient>	<SeriesCoefficient><Divide>1 x</Divide> <List>x 0 -1</List></SeriesCoefficient>
+a-removable-singularity-declines	<SeriesCoefficient><Divide><Sin>x</Sin> x</Divide> <List>x 0 0</List></SeriesCoefficient>	<SeriesCoefficient><Divide><Sin>x</Sin> x</Divide> <List>x 0 0</List></SeriesCoefficient>

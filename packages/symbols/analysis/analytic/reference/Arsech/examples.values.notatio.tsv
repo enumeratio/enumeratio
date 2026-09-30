@@ -1,0 +1,7 @@
+id	in	out
+n-arsech-1-over-2	<N><Arsech><Rational>1 2</Rational></Arsech></N>	<ToExpression>1.31695789692481670863</ToExpression>
+arsech-1-0-exactly	<Arsech>1</Arsech>	<ToExpression>0</ToExpression>
+a-logarithmic-singularity-at-0	<Arsech>0</Arsech>	<PositiveInfinity />
+a-float-argument-evaluates-directly	<Arsech>0.25</Arsech>	<ToExpression>2.06343706889556054673</ToExpression>
+past-1-the-value-is-imaginary-arsech-2-arcosh	<Arsech>2</Arsech>	<Multiply><Complex>0 <Rational>1 3</Rational></Complex> Pi</Multiply>
+derivative-frac-1-x-sqrt-1-x-2	<D><Arsech>x</Arsech> x</D>	<Divide>-1 <Multiply>x <Sqrt><Add><Negate><Power>x 2</Power></Negate> 1</Add></Sqrt></Multiply></Divide>

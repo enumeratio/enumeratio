@@ -1,0 +1,3 @@
+id	in	out
+distributes-a-list-of-functions-over-argument	<Through><Apply><List>f g</List> x</Apply></Through>	<List><f>x</f> <g>x</g></List>
+distributes-an-add-of-functions-evaluates-sum	<Through><Apply><Add>f g</Add> x</Apply></Through>	<Add><g>x</g> <f>x</f></Add>

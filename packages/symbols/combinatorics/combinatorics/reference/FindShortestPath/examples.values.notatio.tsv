@@ -1,0 +1,5 @@
+id	in	out
+shortest-path-along-a-path-graph	<FindShortestPath><PathGraph>5</PathGraph> 1 5</FindShortestPath>	<List>1 2 3 4 5</List>
+no-path-back-against-directed-edges	<FindShortestPath><Graph><List>1 2 3 4</List> <List><DirectedEdge>1 2</DirectedEdge> <DirectedEdge>2 3</DirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph> 4 1</FindShortestPath>	<Apply>List</Apply>
+a-path-crossing-both-directed-and-undirected	<FindShortestPath><Graph><List>1 2 3 4</List> <List><DirectedEdge>1 2</DirectedEdge> <DirectedEdge>2 3</DirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph> 1 4</FindShortestPath>	<List>1 2 3 4</List>
+a-weighted-shortcut-loses-to-three-cheaper-hops	<FindShortestPath><Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge> <UndirectedEdge>1 4</UndirectedEdge></List> <KeyValuePair>EdgeWeight <List>1 1 1 10</List></KeyValuePair></Graph> 1 4</FindShortestPath>	<List>1 2 3 4</List>

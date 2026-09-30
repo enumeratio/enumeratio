@@ -1,0 +1,7 @@
+id	in	out
+eulere-10	<EulerE>10</EulerE>	<ToExpression>-50521</ToExpression>
+eulere-8	<EulerE>8</EulerE>	<ToExpression>1385</ToExpression>
+listable-odd-indices-vanish	<EulerE><List>0 1 2 3 4</List></EulerE>	<List>1 0 -1 0 5</List>
+the-euler-polynomial-e-2-x-x-2-x	<EulerE>2 x</EulerE>	<Add><Power>x 2</Power> <Negate>x</Negate></Add>
+e-4-x-x-4-2x-3-x	<EulerE>4 x</EulerE>	<Add><Power>x 4</Power> <Multiply>-2 <Power>x 3</Power></Multiply> x</Add>
+e-n-2-n-e-n-frac-12-and-e-3-0	<EulerE>3 <Rational>1 2</Rational></EulerE>	<ToExpression>0</ToExpression>

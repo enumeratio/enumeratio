@@ -1,0 +1,5 @@
+id	in	out
+discretedelta-zero	<DiscreteDelta>0</DiscreteDelta>	<ToExpression>1</ToExpression>
+discretedelta-nonzero	<DiscreteDelta>1</DiscreteDelta>	<ToExpression>0</ToExpression>
+discretedelta-multi-all-zero	<DiscreteDelta>0 0</DiscreteDelta>	<ToExpression>1</ToExpression>
+discretedelta-multi-one-nonzero	<DiscreteDelta>1 0</DiscreteDelta>	<ToExpression>0</ToExpression>

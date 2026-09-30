@@ -1,0 +1,3 @@
+id	in	out
+single-offset-is-2-regular	<VertexDegree><CirculantGraph>8 2</CirculantGraph> 1</VertexDegree>	<ToExpression>2</ToExpression>
+two-offsets-union	<EdgeCount><CirculantGraph>10 <List>1 3</List></CirculantGraph></EdgeCount>	<ToExpression>20</ToExpression>

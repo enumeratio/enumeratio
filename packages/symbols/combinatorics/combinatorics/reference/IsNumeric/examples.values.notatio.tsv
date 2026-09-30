@@ -1,0 +1,5 @@
+id	in	out
+isnumeric-pi	<IsNumeric>Pi</IsNumeric>	<True />
+isnumeric-literal	<IsNumeric>5</IsNumeric>	<True />
+isnumeric-plain-symbol	<IsNumeric>x</IsNumeric>	<False />
+isnumeric-sqrt-2	<IsNumeric><Sqrt>2</Sqrt></IsNumeric>	<True />

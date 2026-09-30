@@ -1,0 +1,2 @@
+id	in	out
+count-up-to-a-limit	<List><Assign>n 0</Assign> <While><Less>n 5</Less> <Assign>n <Add>n 1</Add></Assign></While> n</List>	<List>0 5</List>

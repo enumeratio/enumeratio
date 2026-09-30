@@ -1,0 +1,4 @@
+id	in	out
+count-binarywordsbyweight-4-2	<Count><BinaryWordsByWeight>4 2</BinaryWordsByWeight></Count>	<ToExpression>6</ToExpression>
+first-element-of-binarywordsbyweight-4-2	<At><BinaryWordsByWeight>4 2</BinaryWordsByWeight> 1</At>	<List>0 0 1 1</List>
+every-element-of-binarywordsbyweight-4-2	<Take><BinaryWordsByWeight>4 2</BinaryWordsByWeight> 6</Take>	<List><List>0 0 1 1</List> <List>0 1 0 1</List> <List>0 1 1 0</List> <List>1 0 0 1</List> <List>1 0 1 0</List> <List>1 1 0 0</List></List>

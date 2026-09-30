@@ -1,0 +1,7 @@
+id	in	out
+gamma-pdf-exact	<PDF><GammaDistribution>2 2</GammaDistribution> 3</PDF>	<Divide>3 <Multiply>4 <Gamma>2</Gamma> <Power>ExponentialE <Rational>3 2</Rational></Power></Multiply></Divide>
+gamma-cdf-exact	<CDF><GammaDistribution>2 2</GammaDistribution> 3</CDF>	<Add>1 <Divide>-5 <Multiply>2 <Power>ExponentialE <Rational>3 2</Rational></Power></Multiply></Divide></Add>
+gamma-mean-exact	<Mean><GammaDistribution>2 2</GammaDistribution></Mean>	<ToExpression>4</ToExpression>
+gamma-variance-exact	<Variance><GammaDistribution>2 2</GammaDistribution></Variance>	<ToExpression>8</ToExpression>
+gamma-distribution-one-argument-defaults-scale	<GammaDistribution>2</GammaDistribution>	<GammaDistribution>2 1</GammaDistribution>
+gamma-cdf-clamps-below-support	<N><CDF><GammaDistribution>2 2</GammaDistribution> -1</CDF></N>	<ToExpression>0</ToExpression>

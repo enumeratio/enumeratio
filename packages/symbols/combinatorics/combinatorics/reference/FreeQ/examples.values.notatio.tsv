@@ -1,0 +1,4 @@
+id	in	out
+x-occurs-in-x-2-plus-1	<FreeQ><Add><Power>x 2</Power> 1</Add> x</FreeQ>	<False />
+y-never-occurs	<FreeQ><Add><Power>x 2</Power> 1</Add> y</FreeQ>	<True />
+looks-inside-subexpressions-not-just-top-level	<FreeQ><List><List>a b</List></List> b</FreeQ>	<False />

@@ -1,0 +1,12 @@
+id	in	out
+power-x2-alpha-half	<CaputoD><Power>x 2</Power> <List>x 0.5</List></CaputoD>	<Multiply>1.504505556127350098532 <Power>x 1.5</Power></Multiply>
+constant-vanishes	<CaputoD>5 <List>x 0.5</List></CaputoD>	<ToExpression>0</ToExpression>
+integer-edge-case-vanishes	<CaputoD>x <List>x 1.5</List></CaputoD>	<ToExpression>0</ToExpression>
+exact-order-constant-half	<CaputoD>5 <List>x <Rational>1 2</Rational></List></CaputoD>	<ToExpression>0</ToExpression>
+exact-order-x-half	<CaputoD>x <List>x <Rational>1 2</Rational></List></CaputoD>	<Divide><Multiply>2 <Sqrt>x</Sqrt></Multiply> <Sqrt>Pi</Sqrt></Divide>
+exact-order-x-vanishes	<CaputoD>x <List>x <Rational>3 2</Rational></List></CaputoD>	<ToExpression>0</ToExpression>
+exact-order-power-x2-half	<CaputoD><Power>x 2</Power> <List>x <Rational>1 2</Rational></List></CaputoD>	<Divide><Multiply>8 <Power>x <Rational>3 2</Rational></Power></Multiply> <Multiply>3 <Sqrt>Pi</Sqrt></Multiply></Divide>
+exact-order-power-x2-three-half	<CaputoD><Power>x 2</Power> <List>x <Rational>3 2</Rational></List></CaputoD>	<Divide><Multiply>4 <Sqrt>x</Sqrt></Multiply> <Sqrt>Pi</Sqrt></Divide>
+exact-order-power-x2-third	<CaputoD><Power>x 2</Power> <List>x <Rational>1 3</Rational></List></CaputoD>	<Divide><Multiply>2 <Power>x <Rational>5 3</Rational></Power></Multiply> <Gamma><Rational>8 3</Rational></Gamma></Divide>
+polynomial-linearity	<CaputoD><Add><Power>x 2</Power> <Multiply>3 x</Multiply> 1</Add> <List>x 0.5</List></CaputoD>	<Add><Multiply>1.504505556127350098532 <Power>x 1.5</Power></Multiply> <Multiply>3.3851375012865377217 <Power>x 0.5</Power></Multiply></Add>
+exact-order-polynomial-half	<CaputoD><Add><Power>x 2</Power> <Multiply>3 x</Multiply> 1</Add> <List>x <Rational>1 2</Rational></List></CaputoD>	<Add><Divide><Multiply>6 <Sqrt>x</Sqrt></Multiply> <Sqrt>Pi</Sqrt></Divide> <Divide><Multiply>8 <Power>x <Rational>3 2</Rational></Power></Multiply> <Multiply>3 <Sqrt>Pi</Sqrt></Multiply></Divide></Add>

@@ -1,0 +1,19 @@
+id	in	out
+issquarefree-10	<IsSquareFree>10</IsSquareFree>	<True />
+issquarefree-4	<IsSquareFree>4</IsSquareFree>	<False />
+issquarefree-12	<IsSquareFree>12</IsSquareFree>	<False />
+every-prime-is-squarefree	<IsSquareFree>17</IsSquareFree>	<True />
+issquarefree-20	<IsSquareFree>20</IsSquareFree>	<False />
+threads-element-wise-over-a-list	<IsSquareFree><List>10 4 12</List></IsSquareFree>	<List>True False False</List>
+gaussian-integers-3-2i-is-a-gaussian-prime	<IsSquareFree><Complex>3 2</Complex></IsSquareFree>	<True />
+gaussianintegers-true-2-i-1-i-2	<IsSquareFree Over="GaussianIntegers">2</IsSquareFree>	<False />
+rationals-numerator-and-denominator-are-both	<IsSquareFree><Rational>2 3</Rational></IsSquareFree>	<True />
+polynomials-x-2-6x-6-has-no-repeated-factor	<IsSquareFree><Add><Power>x 2</Power> <Multiply>6 x</Multiply> 6</Add></IsSquareFree>	<True />
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	<IsSquareFree><Subtract><Power>x 3</Power> <Multiply><Power>x 2</Power> y</Multiply></Subtract></IsSquareFree>	<False />
+squarefree-as-a-polynomial-in-x-alone-y-is-just	<IsSquareFree><Multiply>x <Power>y 2</Power></Multiply> x</IsSquareFree>	<True />
+but-not-in-y-alone-y-appears-squared	<IsSquareFree><Multiply>x <Power>y 2</Power></Multiply> y</IsSquareFree>	<False />
+a-non-squarefree-rational	<IsSquareFree><Rational>4 3</Rational></IsSquareFree>	<False />
+x-1-2-has-a-repeated-root	<IsSquareFree><Add><Power>x 2</Power> <Multiply>-2 x</Multiply> 1</Add></IsSquareFree>	<False />
+x-3-y-3-has-no-repeated-factor	<IsSquareFree><Subtract><Power>x 3</Power> <Power>y 3</Power></Subtract></IsSquareFree>	<True />
+n-is-squarefree-exactly-when-mu-n-neq-0-see	<Equal><IsSquareFree>10</IsSquareFree> <Not><Equal><MoebiusMu>10</MoebiusMu> 0</Equal></Not></Equal>	<True />
+1-is-vacuously-squarefree-it-has-no-repeated	<IsSquareFree>1</IsSquareFree>	<True />

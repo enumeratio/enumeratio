@@ -1,0 +1,4 @@
+id	in	out
+numberexpand-1-234	<NumberExpand>1234</NumberExpand>	<List>1000 200 30 4</List>
+base-2-zero-terms-kept	<NumberExpand>10 2</NumberExpand>	<List>8 0 2 0</List>
+every-term-carries-the-sign	<NumberExpand>-123</NumberExpand>	<List>-100 -20 -3</List>

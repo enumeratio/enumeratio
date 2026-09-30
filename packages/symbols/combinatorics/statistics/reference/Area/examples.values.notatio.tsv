@@ -1,0 +1,3 @@
+id	in	out
+the-step-word-uuddud	<Area><DyckPath><List>1 1 0 0 1 0</List></DyckPath></Area>	<ToExpression>5</ToExpression>
+the-step-word-uduudd	<Area><DyckPath><List>1 0 1 1 0 0</List></DyckPath></Area>	<ToExpression>5</ToExpression>

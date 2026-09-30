@@ -1,0 +1,21 @@
+id	in	out
+lucasl-0	<LucasL>0</LucasL>	<ToExpression>2</ToExpression>
+lucasl-1	<LucasL>1</LucasL>	<ToExpression>1</ToExpression>
+lucasl-5	<LucasL>5</LucasL>	<ToExpression>11</ToExpression>
+lucasl-10	<LucasL>10</LucasL>	<ToExpression>123</ToExpression>
+exact-at-any-size	<LucasL>100</LucasL>	<ToExpression>792070839848372253127</ToExpression>
+an-odd-negative-index-flips-the-sign-l-11-l-11	<LucasL>-11</LucasL>	<ToExpression>-199</ToExpression>
+a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	<LucasL>2.3333333333333335</LucasL>	<ToExpression>3.2362118794916213</ToExpression>
+the-two-argument-lucas-polynomial-l-7-x-from-l-n	<LucasL>7 x</LucasL>	<Add><Power>x 7</Power> <Multiply>7 <Power>x 5</Power></Multiply> <Multiply>14 <Power>x 3</Power></Multiply> <Multiply>7 x</Multiply></Add>
+the-lucas-polynomial-at-x-1-is-the-lucas-number	<LucasL>143 1</LucasL>	<ToExpression>767772505664398093937756525279</ToExpression>
+special-value-of-the-lucas-polynomial-l-1-0-0	<LucasL>1 0</LucasL>	<ToExpression>0</ToExpression>
+special-value-of-the-lucas-polynomial-l-0-0-2	<LucasL>0 0</LucasL>	<ToExpression>2</ToExpression>
+l-2-x-x-2-2-threads-element-wise-over-a-matrix	<LucasL>2 <List><List><Rational>1 2</Rational> -1</List> <List>0 <Rational>1 2</Rational></List></List></LucasL>	<List><List><Rational>9 4</Rational> 3</List> <List>2 <Rational>9 4</Rational></List></List>
+threads-element-wise-over-a-list-as-wolfram-s	<LucasL><List>1 2 3 4</List></LucasL>	<List>1 3 4 7</List>
+consecutive-ratios-l-n-1-l-n-converge-to-the	<Divide><LucasL>15</LucasL> <LucasL>14</LucasL></Divide>	<Rational>1364 843</Rational>
+l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	<Subtract><Power><LucasL>10</LucasL> 2</Power> <Multiply>5 <Power><Fibonacci>10</Fibonacci> 2</Power></Multiply></Subtract>	<ToExpression>4</ToExpression>
+l-n-f-n-1-f-n-1-here-at-n-6	<Equal><LucasL>6</LucasL> <Add><Fibonacci>5</Fibonacci> <Fibonacci>7</Fibonacci></Add></Equal>	<True />
+conversely-f-n-frac-l-n-1-l-n-1-5	<Equal><Fibonacci>6</Fibonacci> <Divide><Add><LucasL>5</LucasL> <LucasL>7</LucasL></Add> 5</Divide></Equal>	<True />
+a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	<Subtract><Multiply><LucasL>4</LucasL> <LucasL>6</LucasL></Multiply> <Power><LucasL>5</LucasL> 2</Power></Subtract>	<ToExpression>5</ToExpression>
+negative-indices-are-supported-via-l-n-1-n-l-n	<LucasL>-1</LucasL>	<ToExpression>-1</ToExpression>
+l-30-already-tops-1-8-million-growing-at-the	<LucasL>30</LucasL>	<ToExpression>1860498</ToExpression>

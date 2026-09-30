@@ -1,0 +1,7 @@
+id	in	out
+heavisidetheta-negative	<HeavisideTheta>-1</HeavisideTheta>	<ToExpression>0</ToExpression>
+heavisidetheta-positive	<HeavisideTheta>1</HeavisideTheta>	<ToExpression>1</ToExpression>
+heavisidetheta-zero-unevaluated	<HeavisideTheta>0</HeavisideTheta>	<HeavisideTheta>0</HeavisideTheta>
+heavisidetheta-product-both-positive	<HeavisideTheta>1 2</HeavisideTheta>	<ToExpression>1</ToExpression>
+heavisidetheta-product-one-negative	<HeavisideTheta>1 -1</HeavisideTheta>	<ToExpression>0</ToExpression>
+heavisidetheta-derivative	<D><HeavisideTheta>x</HeavisideTheta> x</D>	<DiracDelta>x</DiracDelta>

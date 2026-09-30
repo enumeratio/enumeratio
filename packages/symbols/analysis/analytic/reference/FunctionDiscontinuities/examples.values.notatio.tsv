@@ -1,0 +1,4 @@
+id	in	out
+a-pole-is-a-discontinuity	<FunctionDiscontinuities><Divide>1 x</Divide> x</FunctionDiscontinuities>	<Equal>x 0</Equal>
+tangent-s-poles	<FunctionDiscontinuities><Tan>x</Tan> x</FunctionDiscontinuities>	<Equal><Cos>x</Cos> 0</Equal>
+a-polynomial-is-continuous-everywhere	<FunctionDiscontinuities><Power>x 2</Power> x</FunctionDiscontinuities>	<False />

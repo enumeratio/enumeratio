@@ -1,0 +1,18 @@
+id	in	out
+log10-1-000	<Log10>1000</Log10>	<ToExpression>3</ToExpression>
+log10-1	<Log10>1</Log10>	<ToExpression>0</ToExpression>
+log10-100-000	<Log10>100000</Log10>	<ToExpression>5</ToExpression>
+log10-1-000-000	<Log10>1000000</Log10>	<ToExpression>6</ToExpression>
+n-for-a-decimal-value	<N><Log10>2</Log10></N>	<ToExpression>0.301029995663981195214</ToExpression>
+an-exact-negative-power-of-10-folds-too-log-10	<Log10><Rational>1 100</Rational></Log10>	<ToExpression>-2</ToExpression>
+a-symbolic-argument-becomes-compute-engine-s	<Log10>x</Log10>	<Log>x</Log>
+log10-5p5	<Log10>5.5</Log10>	<ToExpression>0.740362689494243845536</ToExpression>
+threads-element-wise-over-a-list	<Log10><List>1 10 100 1000</List></Log10>	<List>0 1 2 3</List>
+element-wise-over-a-matrix-including-the-exact	<Log10><List><List>1 100</List> <List>0 <Rational>1 100</Rational></List></List></Log10>	<List><List>0 2</List> <List>NegativeInfinity -2</List></List>
+as-with-ln-the-logarithm-of-complex-infinity-is	<Log10>ComplexInfinity</Log10>	<PositiveInfinity />
+interval-arithmetic-log-10-frac-13-2-log-10-3	<Log10><Interval><Rational>1 3</Rational> 2</Interval></Log10>	<Interval><Log><Rational>1 3</Rational> 10</Log> <Log>2 10</Log></Interval>
+uncertainty-propagation-log-10-frac-1-101-pm-0	<Log10><Around><Rational>1 101</Rational> 0.01</Around></Log10>	<Around>-2.0043213737826426 0.43863742672228434</Around>
+derivative-frac-1-x-ln-10	<D><Log10>x</Log10> x</D>	<Divide>1 <Multiply>x <Ln>10</Ln></Multiply></Divide>
+to-30-significant-digits-every-one-correctly	<N><Log10>7</Log10> 30</N>	<ToExpression>0.845098040014256830712216258593</ToExpression>
+a-float-argument-folds-even-for-a-fractional	<Log10>0.001</Log10>	<ToExpression>-3</ToExpression>
+same-as-compute-engine-s-default-base-log	<Equal><Log10>1000</Log10> <Log>1000</Log></Equal>	<True />

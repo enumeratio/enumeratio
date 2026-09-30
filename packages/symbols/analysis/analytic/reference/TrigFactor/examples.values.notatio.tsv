@@ -1,0 +1,5 @@
+id	in	out
+sin-a-plus-sin-b	<TrigFactor><Add><Sin>a</Sin> <Sin>b</Sin></Add></TrigFactor>	<Multiply>2 <Sin><Multiply><Rational>1 2</Rational> <Add>a b</Add></Multiply></Sin> <Cos><Multiply><Rational>1 2</Rational> <Add>a <Negate>b</Negate></Add></Multiply></Cos></Multiply>
+cos-a-minus-cos-b	<TrigFactor><Subtract><Cos>a</Cos> <Cos>b</Cos></Subtract></TrigFactor>	<Multiply>-2 <Sin><Multiply><Rational>1 2</Rational> <Add>a b</Add></Multiply></Sin> <Sin><Multiply><Rational>1 2</Rational> <Add>a <Negate>b</Negate></Add></Multiply></Sin></Multiply>
+one-minus-cos-x	<TrigFactor><Subtract>1 <Cos>x</Cos></Subtract></TrigFactor>	<Multiply>2 <Power><Sin><Multiply><Rational>1 2</Rational> x</Multiply></Sin> 2</Power></Multiply>
+poly-in-sin-cos	<TrigFactor><Add><Power><Sin>x</Sin> 2</Power> <Multiply>2 <Sin>x</Sin> <Cos>x</Cos></Multiply> <Power><Cos>x</Cos> 2</Power></Add></TrigFactor>	<Power><Add><Sin>x</Sin> <Cos>x</Cos></Add> 2</Power>

@@ -1,0 +1,5 @@
+id	in	out
+the-first-20-lesser-twin-primes-oeis-a001359	<Take>TwinPrimes 20</Take>	<List>3 5 11 17 29 41 59 71 101 107 137 149 179 191 197 227 239 269 281 311</List>
+count-twinprimes-is-unknown-but-the-first-20	<Count><Take>TwinPrimes 20</Take></Count>	<ToExpression>20</ToExpression>
+11-is-a-lesser-twin-prime	<Element>11 TwinPrimes</Element>	<True />
+13-is-not-13-2-15-not-prime	<Element>13 TwinPrimes</Element>	<False />

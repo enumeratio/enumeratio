@@ -1,0 +1,12 @@
+id	in	out
+setminus-1-2-3-2	<SetMinus><Set>1 2 3</Set> <Set>2</Set></SetMinus>	<Set>1 3</Set>
+setminus-1-2-3-4-2-4	<SetMinus><Set>1 2 3 4</Set> <Set>2 4</Set></SetMinus>	<Set>1 3</Set>
+removing-elements-that-aren-t-present-leaves-the	<SetMinus><Set>1 2 3</Set> <Set>9</Set></SetMinus>	<Set>1 2 3</Set>
+several-sets-can-be-removed-at-once	<SetMinus><Set>a b c d f</Set> <Set>a c</Set> <Set>d</Set></SetMinus>	<Set>b f</Set>
+lists-as-well-as-sets-as-wolfram-s-complement	<SetMinus><List>a b c d f</List> <List>a c</List> <List>d</List></SetMinus>	<Set>b f</Set>
+a-range-as-the-universe-to-remove-from-compute	<SetMinus><Range>1 10</Range> <Set>2 3</Set></SetMinus>	<Set>1 4 5 6 7 8 9 10</Set>
+a-setminus-a-setminus-b-a-cap-b-see-intersection	<Equal><SetMinus><Set>1 2 3 4</Set> <SetMinus><Set>1 2 3 4</Set> <Set>2 4</Set></SetMinus></SetMinus> <Intersection><Set>1 2 3 4</Set> <Set>2 4</Set></Intersection></Equal>	<True />
+removing-the-empty-set-changes-nothing-a	<SetMinus><Set>1 2 3</Set> EmptySet</SetMinus>	<Set>1 2 3</Set>
+a-setminus-a-varnothing	<SetMinus><Set>1 2 3</Set> <Set>1 2 3</Set></SetMinus>	<EmptySet />
+setminus-is-not-commutative-b-setminus-a-can	<SetMinus><Set>2 4</Set> <Set>1 2 3 4</Set></SetMinus>	<EmptySet />
+the-result-keeps-the-first-set-s-order-rather	<SetMinus><Set>5 4 3 2 1</Set> <Set>2</Set></SetMinus>	<Set>5 4 3 1</Set>

@@ -1,0 +1,5 @@
+id	in	out
+powersrepresentations-25-2-2	<PowersRepresentations>25 2 2</PowersRepresentations>	<List><List>0 5</List> <List>3 4</List></List>
+the-smallest-number-that-is-a-sum-of-two	<PowersRepresentations>50 2 2</PowersRepresentations>	<List><List>1 7</List> <List>5 5</List></List>
+powersrepresentations-100-3-2	<PowersRepresentations>100 3 2</PowersRepresentations>	<List><List>0 0 10</List> <List>0 6 8</List></List>
+the-taxicab-number-1729-1-3-12-3-9-3-10-3	<PowersRepresentations>1729 2 3</PowersRepresentations>	<List><List>1 12</List> <List>9 10</List></List>

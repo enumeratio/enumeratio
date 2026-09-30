@@ -1,0 +1,17 @@
+id	in	out
+bellnumber-0	<BellNumber>0</BellNumber>	<ToExpression>1</ToExpression>
+bellnumber-1	<BellNumber>1</BellNumber>	<ToExpression>1</ToExpression>
+bellnumber-3	<BellNumber>3</BellNumber>	<ToExpression>5</ToExpression>
+bellnumber-5	<BellNumber>5</BellNumber>	<ToExpression>52</ToExpression>
+bellnumber-10	<BellNumber>10</BellNumber>	<ToExpression>115975</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<BellNumber><List>1 2 3 4</List></BellNumber>	<List>1 2 5 15</List>
+exact-for-large-n	<BellNumber>30</BellNumber>	<ToExpression>846749014511809332450147</ToExpression>
+the-two-argument-form-gives-the-bell-touchard	<BellNumber>5 x</BellNumber>	<Add><Power>x 5</Power> <Multiply>10 <Power>x 4</Power></Multiply> <Multiply>25 <Power>x 3</Power></Multiply> <Multiply>15 <Power>x 2</Power></Multiply> x</Add>
+the-bell-polynomial-at-a-real-point-b-20-0-5	<BellNumber>20 0.5</BellNumber>	<ToExpression>270190131940.15192</ToExpression>
+the-number-of-ways-to-partition-a-4-element-set	<BellNumber>4</BellNumber>	<ToExpression>15</ToExpression>
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	<Equal><BellNumber>5</BellNumber> <Add><Multiply><Binomial>4 0</Binomial> <BellNumber>0</BellNumber></Multiply> <Multiply><Binomial>4 1</Binomial> <BellNumber>1</BellNumber></Multiply> <Multiply><Binomial>4 2</Binomial> <BellNumber>2</BellNumber></Multiply> <Multiply><Binomial>4 3</Binomial> <BellNumber>3</BellNumber></Multiply> <Multiply><Binomial>4 4</Binomial> <BellNumber>4</BellNumber></Multiply></Add></Equal>	<True />
+the-bell-polynomial-at-1-is-the-bell-number-b-n	<BellNumber>5 1</BellNumber>	<ToExpression>52</ToExpression>
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	<Divide><Sum><Divide><Power>k 5</Power> <Factorial>k</Factorial></Divide> <Tuple>k 0 PositiveInfinity</Tuple></Sum> ExponentialE</Divide>	<ToExpression>52</ToExpression>
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	<Equal><Mod><BellNumber>9</BellNumber> 7</Mod> <Mod><Add><BellNumber>2</BellNumber> <BellNumber>3</BellNumber></Add> 7</Mod></Equal>	<True />
+a-negative-argument-is-left-unevaluated	<BellNumber>-1</BellNumber>	<BellNumber>-1</BellNumber>
+a-zero-modulus-inside-a-congruence-check-is-nan	<Equal><Mod><BellNumber>9</BellNumber> 23</Mod> <Mod><Add><BellNumber>4</BellNumber> <BellNumber>5</BellNumber></Add> 0</Mod></Equal>	<False />

@@ -1,0 +1,37 @@
+id	in	out
+sqrt-16	<Sqrt>16</Sqrt>	<ToExpression>4</ToExpression>
+stays-symbolic-when-the-radicand-isn-t-a-perfect	<Sqrt>2</Sqrt>	<Sqrt>2</Sqrt>
+sqrt-4-over-9	<Sqrt><Rational>4 9</Rational></Sqrt>	<Rational>2 3</Rational>
+sqrt-0	<Sqrt>0</Sqrt>	<ToExpression>0</ToExpression>
+a-perfect-square-radicand-evaluates-exactly-even	<Sqrt>-4</Sqrt>	<Complex>0 2</Complex>
+an-approximate-number-gives-an-approximate-root	<Sqrt>3.5</Sqrt>	<ToExpression>1.87082869338697069279</ToExpression>
+pulls-perfect-square-factors-out-of-the-radical	<Sqrt>200</Sqrt>	<Multiply>10 <Sqrt>2</Sqrt></Multiply>
+sqrt-neg-25	<Sqrt>-25</Sqrt>	<Complex>0 5</Complex>
+sqrt-8	<Sqrt>8</Sqrt>	<Multiply>2 <Sqrt>2</Sqrt></Multiply>
+rationalizes-the-denominator	<Sqrt><Rational>1 2</Rational></Sqrt>	<Divide><Sqrt>2</Sqrt> 2</Divide>
+sqrt-12-over-5	<Sqrt><Rational>12 5</Rational></Sqrt>	<Multiply><Rational>2 5</Rational> <Sqrt>15</Sqrt></Multiply>
+sqrt-neg-2p5	<Sqrt>-2.5</Sqrt>	<Complex>0 1.5811388300841898</Complex>
+an-exact-complex-square-2-i-2-3-4i	<Sqrt><Complex>3 4</Complex></Sqrt>	<Complex>2 1</Complex>
+sqrt-positiveinfinity	<Sqrt>PositiveInfinity</Sqrt>	<PositiveInfinity />
+threads-element-wise-over-a-list	<Sqrt><List>1 4 9</List></Sqrt>	<List>1 2 3</List>
+threads-over-a-matrix-entry-by-entry-this-is-not	<Sqrt><List><List><Rational>1 2</Rational> -1</List> <List>0 <Rational>1 2</Rational></List></List></Sqrt>	<List><List><Divide><Sqrt>2</Sqrt> 2</Divide> <Complex>0 1</Complex></List> <List>0 <Divide><Sqrt>2</Sqrt> 2</Divide></List></List>
+interval-arithmetic-sqrt-is-increasing-so-sqrt-1	<Sqrt><Interval>1 8</Interval></Sqrt>	<Interval>1 <Multiply>2 <Sqrt>2</Sqrt></Multiply></Interval>
+uncertainty-propagation-sqrt-4-pm-0-4-2-pm-0-1	<Sqrt><Around>4 0.4</Around></Sqrt>	<Around>2 0.1</Around>
+to-45-significant-digits-every-one-correctly	<N><Sqrt>2</Sqrt> 45</N>	<ToExpression>1.41421356237309504880168872420969807856967188</ToExpression>
+an-approximate-negative-radicand-stays-complex	<Sqrt>-2.875</Sqrt>	<Complex>0 1.695582495781317</Complex>
+sqrt-neg-4-over-9	<Sqrt><Rational>-4 9</Rational></Sqrt>	<Complex>0 <Rational>2 3</Rational></Complex>
+sqrt-neg-1-half	<Sqrt><Rational>-1 2</Rational></Sqrt>	<Complex>0 <Divide><Sqrt>2</Sqrt> 2</Divide></Complex>
+sqrt-neg-1	<Sqrt>-1</Sqrt>	<Complex>0 1</Complex>
+sqrt-neg-12-over-5	<Sqrt><Rational>-12 5</Rational></Sqrt>	<Complex>0 <Multiply><Rational>2 5</Rational> <Sqrt>15</Sqrt></Multiply></Complex>
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle	<Sqrt><Add><Square>3</Square> <Square>4</Square></Add></Sqrt>	<ToExpression>5</ToExpression>
+sqrt-x-2-x-for-a-perfect-square-see-square	<Equal><Square><Sqrt>16</Sqrt></Square> 16</Equal>	<True />
+sqrt-x-x-1-2	<Equal><Sqrt>16</Sqrt> <Power>16 <Rational>1 2</Rational></Power></Equal>	<True />
+sqrt-x-2-x-for-every-x	<Power><Sqrt>x</Sqrt> 2</Power>	<x />
+negative-but-not-a-perfect-square-stays-symbolic	<Sqrt>-2</Sqrt>	<Sqrt>-2</Sqrt>
+a-negative-rational-still-evaluates-exactly-when	<Sqrt><Rational>-4 9</Rational></Sqrt>	<Complex>0 <Rational>2 3</Rational></Complex>
+sqrt-x-2-is-not-simplified-to-x-which-would-be	<Sqrt><Power>x 2</Power></Sqrt>	<Sqrt><Power>x 2</Power></Sqrt>
+at-x-1-sqrt-x-2-1-not-1	<Sqrt><Power>-1 2</Power></Sqrt>	<ToExpression>1</ToExpression>
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b	<Multiply><Sqrt>-1</Sqrt> <Sqrt>-1</Sqrt></Multiply>	<ToExpression>-1</ToExpression>
+while-sqrt-1-1-1	<Sqrt><Multiply>-1 -1</Multiply></Sqrt>	<ToExpression>1</ToExpression>
+sqrt-36-negative	<Sqrt>-36</Sqrt>	<Complex>0 6</Complex>
+sqrt-2-times-sqrt-neg-1	<Multiply><Sqrt>1</Sqrt> <Sqrt>-1</Sqrt></Multiply>	<Complex>0 1</Complex>

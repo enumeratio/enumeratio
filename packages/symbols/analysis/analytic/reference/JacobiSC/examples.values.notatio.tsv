@@ -1,0 +1,5 @@
+id	in	out
+a-floating-point-argument-evaluates-directly-to	<N><JacobiSC>0.6 0.4</JacobiSC></N>	<ToExpression>0.6647443227328587</ToExpression>
+m-greater-than-1-via-the-reciprocal-modulus	<N><JacobiSC>1.2 3</JacobiSC></N>	<ToExpression>0.6660771819422742</ToExpression>
+u-0-is-0-for-any-m	<JacobiSC>0 m</JacobiSC>	<ToExpression>0</ToExpression>
+symbolic-arguments-are-left-unevaluated-rather	<JacobiSC>u m</JacobiSC>	<JacobiSC>u m</JacobiSC>

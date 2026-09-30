@@ -1,0 +1,9 @@
+id	in	out
+gudermannian-0	<Gudermannian>0</Gudermannian>	<ToExpression>0</ToExpression>
+at-a-machine-precision-argument	<Gudermannian>1.5</Gudermannian>	<ToExpression>1.1317283452505091</ToExpression>
+gudermannian-0-5	<Gudermannian>0.5</Gudermannian>	<ToExpression>0.48038107913372946</ToExpression>
+gudermannian-3	<N><Gudermannian>3</Gudermannian></N>	<ToExpression>1.4713043411171927</ToExpression>
+gudermannian-neg-2-25	<Gudermannian>-2.25</Gudermannian>	<ToExpression>-1.3607733020976118</ToExpression>
+horizontal-asymptote-pi-2	<Gudermannian>PositiveInfinity</Gudermannian>	<Multiply><Rational>1 2</Rational> Pi</Multiply>
+gd-x-sech-x	<D><Gudermannian>x</Gudermannian> x</D>	<Sech>x</Sech>
+an-odd-function	<Gudermannian><Negate>x</Negate></Gudermannian>	<Negate><Gudermannian>x</Gudermannian></Negate>

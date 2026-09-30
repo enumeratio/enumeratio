@@ -1,0 +1,12 @@
+id	in	out
+no-primes-are-1	<PrimePi>1</PrimePi>	<ToExpression>0</ToExpression>
+primepi-2	<PrimePi>2</PrimePi>	<ToExpression>1</ToExpression>
+primepi-15	<PrimePi>15</PrimePi>	<ToExpression>6</ToExpression>
+primepi-100	<PrimePi>100</PrimePi>	<ToExpression>25</ToExpression>
+threads-element-wise-over-a-list-as-wolfram-s	<PrimePi><List>10 100</List></PrimePi>	<List>4 25</List>
+rational-arguments-the-primes-up-to-7-2-are-2	<PrimePi><Rational>7 2</Rational></PrimePi>	<ToExpression>2</ToExpression>
+real-arguments	<PrimePi>15.25</PrimePi>	<ToExpression>6</ToExpression>
+the-primes-below-a-million	<PrimePi>1000000</PrimePi>	<ToExpression>78498</ToExpression>
+listable-threads-over-a-list	<PrimePi><List>3 5 17 25</List></PrimePi>	<List>2 3 7 9</List>
+same-inverse-relation-viewed-from-primepi-s-side	<Equal><PrimePi><NthPrime>50</NthPrime></PrimePi> 50</Equal>	<True />
+no-primes-are-a-negative-number	<PrimePi>-1</PrimePi>	<ToExpression>0</ToExpression>

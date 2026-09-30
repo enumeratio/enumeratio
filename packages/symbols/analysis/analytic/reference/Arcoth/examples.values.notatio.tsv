@@ -1,0 +1,8 @@
+id	in	out
+n-arcoth-2	<N><Arcoth>2</Arcoth></N>	<ToExpression>0.5493061443340548457</ToExpression>
+a-logarithmic-singularity-at-1	<Arcoth>1</Arcoth>	<PositiveInfinity />
+arcoth-positiveinfinity	<Arcoth>PositiveInfinity</Arcoth>	<ToExpression>0</ToExpression>
+a-float-argument-evaluates-directly	<Arcoth>3.5</Arcoth>	<ToExpression>0.293893332451059504095</ToExpression>
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	<TrigToExp><Arcoth>2</Arcoth></TrigToExp>	<Multiply><Rational>1 2</Rational> <Ln>3</Ln></Multiply>
+oddness-pulls-the-sign-out-of-a-symbolic	<Arcoth><Negate>x</Negate></Arcoth>	<Negate><Arcoth>x</Arcoth></Negate>
+derivative-frac-1-1-x-2	<D><Arcoth>x</Arcoth> x</D>	<Divide>1 <Add><Negate><Power>x 2</Power></Negate> 1</Add></Divide>

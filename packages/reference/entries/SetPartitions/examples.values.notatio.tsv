@@ -1,0 +1,6 @@
+id	in	out
+the-set-partitions-of-an-explicit-list-in-the	<SetPartitions><List>a b c</List></SetPartitions>	<List><List><List>a b c</List></List> <List><List>a b</List> <List>c</List></List> <List><List>a c</List> <List>b</List></List> <List><List>a</List> <List>b c</List></List> <List><List>a</List> <List>b</List> <List>c</List></List></List>
+exactly-2-blocks	<SetPartitions>3 2</SetPartitions>	<List><SetPartition><List><List>1 2</List> <List>3</List></List></SetPartition> <SetPartition><List><List>1 3</List> <List>2</List></List></SetPartition> <SetPartition><List><List>1</List> <List>2 3</List></List></SetPartition></List>
+the-partitions-of-a-4-set-into-2-blocks-number-s	<Count><SetPartitions>4 2</SetPartitions></Count>	<ToExpression>7</ToExpression>
+the-family-has-b-4-15-members-see-bellnumber	<BellNumber>4</BellNumber>	<ToExpression>15</ToExpression>
+those-with-exactly-2-blocks-number-s-4-2-7-see	<Stirling>4 2</Stirling>	<ToExpression>7</ToExpression>

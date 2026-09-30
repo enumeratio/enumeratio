@@ -1,0 +1,5 @@
+id	in	out
+2-5-7-equiv-1	<GroupProduct><CyclicGroup>6</CyclicGroup> <GroupBasis><String>`2`</String></GroupBasis> <GroupBasis><String>`5`</String></GroupBasis></GroupProduct>	<GroupBasis>"1"</GroupBasis>
+d-4-8	<AlgebraDimension><GroupAlgebra><DihedralGroup>4</DihedralGroup></GroupAlgebra></AlgebraDimension>	<ToExpression>8</ToExpression>
+s-2-1	<GroupProduct><DihedralGroup>4</DihedralGroup> <GroupBasis><String>s0</String></GroupBasis> <GroupBasis><String>s0</String></GroupBasis></GroupProduct>	<GroupBasis>"0"</GroupBasis>
+so-k-d-4-is-not-commutative-either	<GroupIsAbelian><DihedralGroup>4</DihedralGroup></GroupIsAbelian>	<False />

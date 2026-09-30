@@ -1,0 +1,6 @@
+id	in	out
+t-cubed	<LaplaceTransform><Power>t 3</Power> t s</LaplaceTransform>	<Divide>6 <Power>s 4</Power></Divide>
+exp-at	<LaplaceTransform><Power>ExponentialE <Multiply>2 t</Multiply></Power> t s</LaplaceTransform>	<Divide>1 <Add>s -2</Add></Divide>
+sin-at	<LaplaceTransform><Sin><Multiply>3 t</Multiply></Sin> t s</LaplaceTransform>	<Divide>3 <Add><Power>s 2</Power> 9</Add></Divide>
+t-cubed-exp-shift	<LaplaceTransform><Multiply><Power>ExponentialE <Multiply>2 t</Multiply></Power> <Power>t 3</Power></Multiply> t s</LaplaceTransform>	<Divide>6 <Power><Add>s -2</Add> 4</Power></Divide>
+exp-sin-shift	<LaplaceTransform><Multiply><Power>ExponentialE <Multiply>2 t</Multiply></Power> <Sin><Multiply>3 t</Multiply></Sin></Multiply> t s</LaplaceTransform>	<Divide>3 <Add><Power><Add>s -2</Add> 2</Power> 9</Add></Divide>
