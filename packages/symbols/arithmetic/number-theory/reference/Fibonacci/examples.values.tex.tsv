@@ -12,6 +12,8 @@ special-value-of-the-fibonacci-polynomial-f-1-0	\mathrm{Fibonacci}(1, 0)	1
 special-value-of-the-fibonacci-polynomial-f-0-0	\mathrm{Fibonacci}(0, 0)	0
 f-3-x-x-2-1-threads-element-wise-over-a-matrix	\mathrm{Fibonacci}(3, \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 5\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack1, 26\bigr\rbrack\bigr\rbrack
 threads-element-wise-over-a-list-as-wolfram-s	\mathrm{Fibonacci}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 1, 2, 3\bigr\rbrack
+fibonacci-n-x-symbolic-order-stays-exact	\mathrm{Fibonacci}(n, x)	\frac{(\frac{1}{2}(x+(x^2+4)^{1/2}))^{n}-\frac{\cos(\pi n)}{((x+(x^2+4)^{1/2})/2)^{n}}}{\sqrt{x^2+4}}
+fibonacci-half-x-exact-closed-form	\mathrm{Fibonacci}(\frac{1}{2}, x)	\frac{\sqrt{2}\sqrt{x+\sqrt{x^2+4}}}{2\sqrt{x^2+4}}
 consecutive-ratios-f-n-1-f-n-converge-to-the	\frac{\mathrm{Fibonacci}(20)}{\mathrm{Fibonacci}(19)}	\frac{6\,765}{4\,181}
 sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	\sum_{k=1}^{10}\mathrm{Fibonacci}(k)	143
 the-doubling-identity-f-2n-f-n-l-n-see-lucasl	\mathrm{Fibonacci}(20)=\mathrm{Fibonacci}(10)\mathrm{LucasL}(10)	\top

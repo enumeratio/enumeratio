@@ -12,6 +12,8 @@ special-value-of-the-fibonacci-polynomial-f-1-0
 special-value-of-the-fibonacci-polynomial-f-0-0			
 f-3-x-x-2-1-threads-element-wise-over-a-matrix			
 threads-element-wise-over-a-list-as-wolfram-s	[fibonacci(1), fibonacci(2), fibonacci(3), fibonacci(4)]	[1, 1, 2, 3]	
+fibonacci-n-x-symbolic-order-stays-exact			
+fibonacci-half-x-exact-closed-form			
 consecutive-ratios-f-n-1-f-n-converge-to-the	(fibonacci(20) / fibonacci(19))	6765/4181	
 sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143			
 the-doubling-identity-f-2n-f-n-l-n-see-lucasl	bool(fibonacci(20) == (fibonacci(10) * lucas_number2(10, 1, -1)))	True	

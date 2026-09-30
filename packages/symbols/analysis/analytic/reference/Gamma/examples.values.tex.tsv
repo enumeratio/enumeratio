@@ -32,6 +32,10 @@ listable-threads-elementwise-over-a-matrix-and	\Gamma(2, \bigl\lbrack\bigl\lbrac
 interval-arithmetic-the-image-of-1-4-1-5-whose	\Gamma(\mathrm{Interval}(1.4, 1.5))	\mathrm{Interval}(0.885\,603\,194\,410\,888\,7, 0.887\,263\,817\,503\,075\,3)
 uncertainty-propagation-gamma-2-5-pm-0-01-1-3293	\Gamma(\mathrm{Around}(2.5, 0.01))	\mathrm{Around}(1.329\,340\,388\,179\,137, 0.009\,347\,345\,216\,260\,856)
 to-40-significant-digits-every-one-correctly	N(\Gamma(\frac{1}{3}), 40)	2.678\,938\,534\,707\,747\,633\,66
+gamma-neg-infty-indeterminate	\Gamma(-\infty)	\operatorname{Indeterminate}
+gamma-complex-infinity-indeterminate	\Gamma(\tilde\infty)	\operatorname{Indeterminate}
+gamma-i-infty-0	\Gamma(\mathrm{DirectedInfinity}(i))	0
+gamma-threads-over-the-infinities	\mathrm{Map}(\Gamma, \bigl\lbrack\infty, -\infty, \mathrm{DirectedInfinity}(i)\bigr\rbrack)	\bigl\lbrack\infty, \operatorname{Indeterminate}, 0\bigr\rbrack
 the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2	\frac{\pi^2}{\Gamma(3)}=\frac{\pi^2}{2}	\top
 extends-the-factorial-gamma-n-1-n-so-gamma-6-5	\Gamma(6)=5!	\top
 functional-equation-gamma-z-1-z-gamma-z-here-at	\Gamma(6)=5\Gamma(5)	\top

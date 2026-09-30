@@ -12,6 +12,8 @@ special-value-of-the-fibonacci-polynomial-f-1-0	F_{1}(0)	1
 special-value-of-the-fibonacci-polynomial-f-0-0	F_{0}(0)	0
 f-3-x-x-2-1-threads-element-wise-over-a-matrix		
 threads-element-wise-over-a-list-as-wolfram-s		
+fibonacci-n-x-symbolic-order-stays-exact	F_{n}(x)	\frac{(\frac{1}{2}(x+(x^2+4)^{1/2}))^{n}-\frac{\cos(\pi n)}{((x+(x^2+4)^{1/2})/2)^{n}}}{\sqrt{x^2+4}}
+fibonacci-half-x-exact-closed-form	F_{\frac{1}{2}}(x)	\frac{\sqrt{2}\sqrt{x+\sqrt{x^2+4}}}{2\sqrt{x^2+4}}
 consecutive-ratios-f-n-1-f-n-converge-to-the	\frac{F_{20}}{F_{19}}	\frac{6\,765}{4\,181}
 sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	\sum_{k=1}^{10}F_{k}	143
 the-doubling-identity-f-2n-f-n-l-n-see-lucasl	F_{20}=F_{10}L_{10}	\mathrm{True}

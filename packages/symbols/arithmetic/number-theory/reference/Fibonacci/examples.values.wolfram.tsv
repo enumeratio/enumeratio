@@ -12,6 +12,8 @@ special-value-of-the-fibonacci-polynomial-f-1-0	Fibonacci[1, 0]
 special-value-of-the-fibonacci-polynomial-f-0-0	Fibonacci[0, 0]			
 f-3-x-x-2-1-threads-element-wise-over-a-matrix	Fibonacci[3, List[List[-1, 0], List[0, 5]]]			
 threads-element-wise-over-a-list-as-wolfram-s	Fibonacci[List[1, 2, 3, 4]]	{1, 1, 2, 3}	F_{\{1,2,3,4\}}	\{1,1,2,3\}
+fibonacci-n-x-symbolic-order-stays-exact	Fibonacci[n, x]			
+fibonacci-half-x-exact-closed-form	Fibonacci[Rational[1, 2], x]			
 consecutive-ratios-f-n-1-f-n-converge-to-the	Divide[Fibonacci[20], Fibonacci[19]]	6765/4181	\frac{F_{20}}{F_{19}}	\frac{6765}{4181}
 sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	Sum[Fibonacci[k], List[k, 1, 10]]			
 the-doubling-identity-f-2n-f-n-l-n-see-lucasl	(Fibonacci[20] == Times[Fibonacci[10], LucasL[10]])			

@@ -483,6 +483,11 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // branch choice the single-argument Fibonacci(nu) rule above makes),
   // F_nu(x) = (r^nu - cos(pi*nu) * r^-nu) / sqrt(x^2+4). At x = 1 this is exactly the
   // single-argument formula above (r = phi, sqrt(x^2+4) = sqrt(5)).
+  // Exact nu and x (integers, rationals, or free symbols) stay exact -- Pi, Cos and Sqrt
+  // left symbolic, only reduced where the engine can do that exactly on its own (e.g.
+  // Cos(Pi/2) = 0 at nu = 1/2). N() only when an operand is actually a float: forcing it
+  // unconditionally turned exact input like Fibonacci(1/2, x) or the fully symbolic
+  // Fibonacci(n, x) into a decimal approximation of Pi and stray ~1e-43 rounding terms.
   sequence("Fibonacci", {
     arity: 2,
     when: (ops) => {
@@ -498,7 +503,8 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
         ce.function("Cos", [mul(ce.symbol("Pi"), nu)]),
         ce.function("Power", [root, ce.function("Negate", [nu])]),
       );
-      return div(sub(ce.function("Power", [root, nu]), otherTerm), discriminant).N();
+      const result = div(sub(ce.function("Power", [root, nu]), otherTerm), discriminant);
+      return inexactNumber(nu) || inexactNumber(x) ? result.N() : result.evaluate();
     },
   });
 
