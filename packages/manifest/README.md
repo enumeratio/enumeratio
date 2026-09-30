@@ -18,9 +18,11 @@ the resolver possible (below).
   the packages that declare them, widens to those packages' own dependencies, and declares
   them into an engine in dependency order. See [Speculative Lazy Engine](https://github.com/enumeratio/enumeratio/wiki/Speculative-Lazy-Engine).
 - **`createRegistryResolver` / `Registry` / `manifestRegistry` / `definitionRegistry` /
-  `searchPath`** (`src/registry.ts`) — the same, one name at a time through registries, so
-  nothing lists every name: our packages are one registry, Epsil definitions under a
-  namespace another. A qualified name (`Statistics.Mean`) declares its namespace as a record
+  `combineRegistries` / `searchPath` / `pinOf`** (`src/registry.ts`) — the same, one name at
+  a time through registries, so nothing lists every name: our packages are one registry,
+  Epsil definitions under a namespace (pinned by content) another. `searchPath` brings
+  chosen namespaces' names into bare use, and refuses at setup a name two of them share or
+  the system has, until it is preferred or excluded. A qualified name (`Statistics.Mean`) declares its namespace as a record
   of functions, which is how Epsil's `.` already evaluates. See
   [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
 
