@@ -1,6 +1,6 @@
-id	in
-power-2-complexinfinity-is-indeterminate-same	Power[2, ComplexInfinity]
-power-half-complexinfinity-is-indeterminate	Power[Rational[1, 2], ComplexInfinity]
-power-x-complexinfinity-is-left-unevaluated	Power[x, ComplexInfinity]
-power-1-complexinfinity-is-1-1-to-any	Power[1, ComplexInfinity]
-power-e-complexinfinity-is-indeterminate-exp	Power[E, ComplexInfinity]
+id	in	out	tex.in	tex.out	verdict
+power-2-complexinfinity-is-indeterminate-same	Power[2, ComplexInfinity]	Indeterminate	2^{\text{ComplexInfinity}}	\text{Indeterminate}	
+power-half-complexinfinity-is-indeterminate	Power[Rational[1, 2], ComplexInfinity]	Indeterminate	\left(\frac{1}{2}\right)^{\text{ComplexInfinity}}	\text{Indeterminate}	
+power-x-complexinfinity-is-left-unevaluated	Power[x, ComplexInfinity]	Indeterminate	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[x^{\text{ComplexInfinity}}-x^{\text{ComplexInfinity}}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left(\frac{7}{3}\right)^{\text{ComplexInfinity}}-\left(\frac{7}{3}\right)^{\text{ComplexInfinity}}\right]\right],\text{Chop}\left[N\left[\left(-\frac{11}{5}\right)^{\text{ComplexInfinity}}-\left(-\frac{11}{5}\right)^{\text{ComplexInfinity}}\right]\right],\text{Chop}\left[N\left[\left(\frac{13}{4}\right)^{\text{ComplexInfinity}}-\left(\frac{13}{4}\right)^{\text{ComplexInfinity}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive
+power-1-complexinfinity-is-indeterminate	Power[1, ComplexInfinity]	Indeterminate	1^{\text{ComplexInfinity}}	\text{Indeterminate}	
+power-e-complexinfinity-is-indeterminate-exp	Power[E, ComplexInfinity]	Indeterminate	e^{\text{ComplexInfinity}}	\text{Indeterminate}	

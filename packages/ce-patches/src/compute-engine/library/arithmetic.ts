@@ -130,8 +130,8 @@ export function evaluateMultiplyDirectedInfinity(ce: ComputeEngine): void {
 //
 // a^z = e^(z ln a) for a real and positive: bounded and equal to a itself along Re(z) = 0,
 // but unbounded as Re(z) -> +-Infinity in whichever direction ln(a) has the same sign as --
-// direction-dependent, so no limit, at the one exception of a = 1 (1^z is identically the
-// constant 1 for every z, decidable without any limit at all). Negative, complex or
+// direction-dependent, so no limit. a = 1 is Indeterminate too: 1^Infinity is an
+// indeterminate form, as compute-engine itself answers for 1^(+-Infinity). Negative, complex or
 // unit-modulus bases besides 1 are left alone: (-1)^z or i^z oscillate around the unit
 // circle without a bounded direction-free magnitude either way, a different (and murkier)
 // case this patch doesn't attempt.
@@ -148,7 +148,7 @@ export function evaluatePowerAtComplexInfinity(ce: ComputeEngine): void {
     // it has no case for `~oo` and would otherwise answer its own incompatible-type Error,
     // now that boxing itself accepts the call. Leaves it correctly unevaluated instead.
     native: (op) => op.json !== "ComplexInfinity",
-    evaluate: (ops) => (ops[0]!.re === 1 ? ce.number(1) : ce.symbol("Indeterminate")),
+    evaluate: () => ce.symbol("Indeterminate"),
   });
 }
 
