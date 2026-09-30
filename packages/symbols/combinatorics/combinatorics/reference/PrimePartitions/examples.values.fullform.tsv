@@ -1,4 +1,4 @@
-id	in
-count-primepartition-12	Count[PrimePartitions[12]]
-first-element-of-primepartition-12	Part[PrimePartitions[12], 1]
-every-element-of-primepartition-12	Take[PrimePartitions[12], 7]
+id	in	back
+count-primepartition-12	Length[PrimePartitions[12]]	[Length, [PrimePartitions, 12]]
+first-element-of-primepartition-12	Part[PrimePartitions[12], 1]	
+every-element-of-primepartition-12	Take[PrimePartitions[12], 7]	

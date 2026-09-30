@@ -90,6 +90,16 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
   if (Array.isArray(expr) && typeof expr[0] === "string" && PAIR_HEADS.has(expr[0]) && expr.length === 3) {
     return expr.slice(1).map((item) => reduce(item, evaluate));
   }
+  // CycleDecomposition/Wolfram's own `Cycles` (unmapped -- `Cycles` is never one of OUR
+  // heads, so `fromWolfram` reads it through by name): Wolfram's `Cycles` omits a FIXED
+  // POINT (a length-1 cycle) entirely, while ours always keeps one for every element -- so
+  // `CycleDecomposition([[1,2,3],[4]])` and `Cycles[{{1,2,3}}]` are the SAME permutation,
+  // not a shape mismatch. `reduceCycles` drops singleton cycles before comparing (a cycle's
+  // own element order still matters -- (1 2 3) and (1 3 2) are different permutations -- so
+  // only the top-level SET of cycles is order-free, not what is inside one).
+  if (Array.isArray(expr) && (expr[0] === "CycleDecomposition" || expr[0] === "Cycles") && expr.length === 2) {
+    return reduceCycles(expr[1] as MathJSON, evaluate);
+  }
   // A carrier CONSTRUCTOR call (`Permutation([2, 1, 3])`) reduces to its contents, exactly
   // like `emit.ts` unwraps it for an external system — we decide what counts as equivalent,
   // and an external system's raw structure IS our carrier value, with no head wrapper needed
@@ -170,6 +180,19 @@ function decodeSparseAdjacency(sparse: MathJSON): readonly (readonly [number, nu
   return edges;
 }
 
+/** `cyclesArg`'s cycles, dropping any length-1 (fixed-point) cycle and sorting the rest by
+ *  their own (order-preserved) contents — the canonical form both `CycleDecomposition([...])`
+ *  and Wolfram's own `Cycles[{...}]` reduce to. */
+function reduceCycles(cyclesArg: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree {
+  const list = Array.isArray(cyclesArg) && cyclesArg[0] === "List" ? cyclesArg.slice(1) : [];
+  const cycles = list
+    .map((c) => (Array.isArray(c) && c[0] === "List" ? c.slice(1) : [c]))
+    .filter((c) => c.length > 1)
+    .map((c) => c.map((el) => reduce(el as MathJSON, evaluate)))
+    .toSorted((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+  return cycles;
+}
+
 /** `Graph(vertices, edgeSpec)` reduced to `["Graph", sortedVertices, sortedEdgeKeys]`: our
  *  own `List[UndirectedEdge[a, b], ...]` / `List[DirectedEdge[a, b], ...]` edge spec, or
  *  Wolfram's cached `List[Null, SparseArray[...]]` one, read down to the same comparable
@@ -182,7 +205,9 @@ function reduceGraph(vertices: MathJSON, edgeSpec: MathJSON, evaluate: (expr: Ma
 
   const items = Array.isArray(edgeSpec) && edgeSpec[0] === "List" ? edgeSpec.slice(1) : [];
   let edgeKeys: string[];
-  if (items.length === 2 && items[0] === "Null" && Array.isArray(items[1]) && items[1][0] === "SparseArray") {
+  // `fromWolfram` reads Wolfram's `Null` back as OUR `Nothing` (its own reverse spelling,
+  // `to-wolfram.ts`'s `SYMBOLS` table: `Nothing: "Null"`) -- never the string `"Null"`.
+  if (items.length === 2 && items[0] === "Nothing" && Array.isArray(items[1]) && items[1][0] === "SparseArray") {
     const decoded = decodeSparseAdjacency(items[1] as MathJSON) ?? [];
     edgeKeys = decoded.map(([a, b]) => edgeKey(a, b, false));
   } else {

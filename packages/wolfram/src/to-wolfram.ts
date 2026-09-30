@@ -325,6 +325,10 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
     }
     return `Rule[${toWolfram(key)}, ${toWolfram(value)}]`;
   },
+  // Count(collection) -- no value/predicate, our own collection's cardinality -- is Wolfram's
+  // Length, not a bare Count[collection]: Wolfram's Count always needs a pattern argument, so
+  // the 1-arg call has no counterpart there and stays unevaluated as written.
+  //
   // Count(list, predicate) is a PREDICATE test; Wolfram's Count[list, pattern] takes a
   // pattern instead, so a bare rename (`Count[list, pred]`) asks Wolfram to match `pred`
   // LITERALLY rather than call it -- the pattern that DOES call it is `_?pred`
@@ -332,6 +336,7 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // `Function` -- is already exact-equality, which is what a bare rename gives correctly, so
   // only the `Function`-literal predicate form is rewritten.
   Count: (a) => {
+    if (a.length === 1) return `Length[${toWolfram(a[0])}]`;
     if (a.length === 2) {
       const parts = headArgs(a[1]);
       if (parts?.head === "Function") {
@@ -464,11 +469,23 @@ function unwrapFunctionArg(fn: MathJson, fallback: string): { variable: string; 
   return { variable: fallback, body: [fn, fallback] };
 }
 
-/** `node`'s head and arguments, whichever of the two call shapes it's written in (a bare
- * array, or the `{fn:[...]}` object form) -- `undefined` for anything else (an atom). */
+/** `node`'s head and arguments, whichever of the THREE shapes it may arrive in (see
+ * `unwrapFunctionArg`'s doc comment, the same distinction): a bare array, the `{fn:[...]}`
+ * object form, or an ALREADY-RENDERED Wolfram source string (`@enumeratio/oracle`'s `emit`
+ * pre-walks every operand before a `SPECIAL` case ever sees it, so a nested call reaches
+ * here as `"Head[a, b]"` text, not a tree) -- `undefined` for anything else (an atom, or a
+ * string that doesn't parse as one call). The args of the string form are themselves
+ * Wolfram source text, not raw MathJson, but every caller only ever re-`toWolfram`s them
+ * (identity on already-rendered text) or checks their own head recursively, so that's fine. */
 function headArgs(node: MathJson): { head: MathJson; args: MathJson[] } | undefined {
   if (Array.isArray(node)) return { head: node[0], args: node.slice(1) };
   if (node && typeof node === "object" && "fn" in node) return { head: node.fn[0], args: node.fn.slice(1) };
+  if (typeof node === "string") {
+    const m = /^([A-Za-z][A-Za-z0-9]*)\[([\s\S]*)\]$/.exec(node);
+    if (m === null) return undefined;
+    const inside = m[2].trim();
+    return { head: m[1], args: inside === "" ? [] : splitTopLevel(inside) };
+  }
   return undefined;
 }
 

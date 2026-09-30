@@ -1,4 +1,4 @@
-id	in
-count-grassmannianpermutations-5-2-5-5-27	Count[GrassmannianPermutations[5]]
-every-element-of-grassmannianpermutations-4	Take[GrassmannianPermutations[4], 12]
-grassmannian-and-cograssmannian-permutations	Equal[Count[GrassmannianPermutations[5]], Count[CograssmannianPermutations[5]]]
+id	in	back
+count-grassmannianpermutations-5-2-5-5-27	Length[GrassmannianPermutations[5]]	[Length, [GrassmannianPermutations, 5]]
+every-element-of-grassmannianpermutations-4	Take[GrassmannianPermutations[4], 12]	
+grassmannian-and-cograssmannian-permutations	Equal[Length[GrassmannianPermutations[5]], Length[CograssmannianPermutations[5]]]	[Equal, [Length, [GrassmannianPermutations, 5]], [Length, [CograssmannianPermutations, 5]]]

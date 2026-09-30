@@ -1,7 +1,7 @@
-id	in
-c-3	Count[DyckPaths[3]]
-three-ups-then-three-downs	Part[DyckPaths[3], 1]
-by-height	Tally[CombinatorialStat[DyckPaths[4], "Height"]]
-returns-are-the-catalan-triangle	Tally[CombinatorialStat[DyckPaths[4], "Returns"]]
-peaks-are-narayana	Tally[CombinatorialStat[DyckPaths[4], "Peaks"]]
-area-is-carlitz-q-catalan	Tally[CombinatorialStat[DyckPaths[4], "Area"]]
+id	in	back
+c-3	Length[DyckPaths[3]]	[Length, [DyckPaths, 3]]
+three-ups-then-three-downs	Part[DyckPaths[3], 1]	
+by-height	Tally[CombinatorialStat[DyckPaths[4], "Height"]]	
+returns-are-the-catalan-triangle	Tally[CombinatorialStat[DyckPaths[4], "Returns"]]	
+peaks-are-narayana	Tally[CombinatorialStat[DyckPaths[4], "Peaks"]]	
+area-is-carlitz-q-catalan	Tally[CombinatorialStat[DyckPaths[4], "Area"]]	

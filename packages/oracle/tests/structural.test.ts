@@ -1,3 +1,4 @@
+import { fromWolfram } from "@enumeratio/wolfram/src";
 import { describe, expect, test } from "vite-plus/test";
 import { compare, parsePython } from "../src/compare.ts";
 import type { MathJSON } from "../src/emit.ts";
@@ -43,6 +44,9 @@ test("numeric values still reduce, inside lists too", () => {
 // packs them into a cached `{Null, SparseArray[...]}` adjacency matrix instead. Structurally
 // nothing alike for the SAME graph, so a plain `compareTrees` on the raw reduce would always
 // disagree; `reduce`'s `Graph` case has to read both down to the same vertices+edges shape.
+// `theirs` is run through `fromWolfram` on Wolfram's OWN literal answer text (not hand-typed
+// MathJSON) -- its `Null` reads back as our `Nothing`, not the string `"Null"`, which a
+// hand-typed tree would get wrong without ever failing to typecheck.
 test("a Graph answer compares by vertices + edges, not by Wolfram's cached SparseArray shape", () => {
   // A real evaluator, not `evaluateAll`'s "everything reduces to 1" stand-in — vertex/edge
   // labels have to keep their own identity for a structural graph comparison to mean
@@ -53,44 +57,14 @@ test("a Graph answer compares by vertices + edges, not by Wolfram's cached Spars
     ["List", 1, 2, 3, 4, 5],
     ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3], ["UndirectedEdge", 2, 4], ["UndirectedEdge", 2, 5]],
   ] as MathJSON;
-  // Wolfram's own answer to `KaryTree[5]`, its edges as a compressed-row-storage adjacency
-  // matrix (row i's nonzero columns are `colIndices[rowPtr[i-1] .. rowPtr[i]-1]`): row 1 ->
-  // {2, 3}, row 2 -> {1, 4, 5}, row 3 -> {1}, row 4 -> {2}, row 5 -> {2} (the matrix is
-  // symmetric — each edge appears from both endpoints).
-  const theirs = [
-    "Graph",
-    ["List", 1, 2, 3, 4, 5],
-    [
-      "List",
-      "Null",
-      [
-        "SparseArray",
-        "Automatic",
-        ["List", 5, 5],
-        0,
-        [
-          "List",
-          1,
-          [
-            "List",
-            ["List", 0, 2, 5, 6, 7, 8],
-            [
-              "List",
-              ["List", 2],
-              ["List", 3],
-              ["List", 1],
-              ["List", 4],
-              ["List", 5],
-              ["List", 1],
-              ["List", 2],
-              ["List", 2],
-            ],
-          ],
-          "Pattern",
-        ],
-      ],
-    ],
-  ] as MathJSON;
+  // Wolfram's actual `KaryTree[5]` answer text, as scanned (examples.values.wolfram.tsv):
+  // edges as a compressed-row-storage adjacency matrix (row i's nonzero columns are
+  // `colIndices[rowPtr[i-1] .. rowPtr[i]-1]`): row 1 -> {2, 3}, row 2 -> {1, 4, 5}, row 3 ->
+  // {1}, row 4 -> {2}, row 5 -> {2} (the matrix is symmetric — each edge appears from both
+  // endpoints).
+  const theirs = fromWolfram(
+    "Graph[{1, 2, 3, 4, 5}, {Null, SparseArray[Automatic, {5, 5}, 0, {1, {{0, 2, 5, 6, 7, 8}, {{2}, {3}, {1}, {4}, {5}, {1}, {2}, {2}}}, Pattern}]}]",
+  ) as MathJSON;
   expect(compareTrees(reduce(ours, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("agree");
   // A genuinely different graph (a missing edge) still disagrees.
   const fewerEdges = [
@@ -99,6 +73,20 @@ test("a Graph answer compares by vertices + edges, not by Wolfram's cached Spars
     ["List", ["UndirectedEdge", 1, 2], ["UndirectedEdge", 1, 3], ["UndirectedEdge", 2, 4]],
   ] as MathJSON;
   expect(compareTrees(reduce(fewerEdges, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("disagree");
+});
+
+// CycleDecomposition/from-a-permutation: `Permutation([2, 3, 1, 4])` decomposes into cycles
+// (1 2 3), a 3-cycle, and 4, a FIXED point -- ours keeps the fixed point as its own singleton
+// cycle (`[[1,2,3],[4]]`); Wolfram's `Cycles[{{1,2,3}}]` (its own answer, unwrapped by name
+// since `Cycles` is never one of our heads) omits it. Same permutation, not a shape mismatch.
+test("CycleDecomposition and Wolfram's own Cycles compare equal once a fixed point is dropped", () => {
+  const evaluateNumbers: (expr: MathJSON) => Leaf = (expr) => (typeof expr === "number" ? expr : symbolic(expr));
+  const ours = ["CycleDecomposition", ["List", ["List", 1, 2, 3], ["List", 4]]] as MathJSON;
+  const theirs = fromWolfram("Cycles[{{1, 2, 3}}]") as MathJSON;
+  expect(compareTrees(reduce(ours, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("agree");
+  // A genuinely different cycle structure still disagrees.
+  const differentCycles = ["CycleDecomposition", ["List", ["List", 1, 3], ["List", 2]]] as MathJSON;
+  expect(compareTrees(reduce(differentCycles, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("disagree");
 });
 
 test("a carrier constructor reduces to its contents, same as List vs. Tuple leniency", () => {

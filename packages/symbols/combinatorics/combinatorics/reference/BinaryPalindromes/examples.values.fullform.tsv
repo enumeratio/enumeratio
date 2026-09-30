@@ -1,4 +1,4 @@
-id	in
-count-binarypalindromes-4	Count[BinaryPalindromes[4]]
-first-element-of-binarypalindromes-4	Part[BinaryPalindromes[4], 1]
-every-element-of-binarypalindromes-4	Take[BinaryPalindromes[4], 4]
+id	in	back
+count-binarypalindromes-4	Length[BinaryPalindromes[4]]	[Length, [BinaryPalindromes, 4]]
+first-element-of-binarypalindromes-4	Part[BinaryPalindromes[4], 1]	
+every-element-of-binarypalindromes-4	Take[BinaryPalindromes[4], 4]	

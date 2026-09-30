@@ -1,4 +1,4 @@
-id	in
-count-palindromiccompositions-6	Count[PalindromicCompositions[6]]
-first-element-of-palindromiccompositions-6	Part[PalindromicCompositions[6], 1]
-every-element-of-palindromiccompositions-6	Take[PalindromicCompositions[6], 8]
+id	in	back
+count-palindromiccompositions-6	Length[PalindromicCompositions[6]]	[Length, [PalindromicCompositions, 6]]
+first-element-of-palindromiccompositions-6	Part[PalindromicCompositions[6], 1]	
+every-element-of-palindromiccompositions-6	Take[PalindromicCompositions[6], 8]	

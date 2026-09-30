@@ -1,5 +1,5 @@
-id	in
-b-4	Count[SetPartitions[4]]
-blocks-are-stirling-numbers-of-the-second-kind	Tally[CombinatorialStat[SetPartitions[5], "Blocks"]]
-by-singleton-blocks	Tally[CombinatorialStat[SetPartitions[5], "SingletonBlocks"]]
-one-crossing-at-4	Tally[CombinatorialStat[SetPartitions[4], "Crossings"]]
+id	in	back
+b-4	Length[SetPartitions[4]]	[Length, [SetPartitions, 4]]
+blocks-are-stirling-numbers-of-the-second-kind	Tally[CombinatorialStat[SetPartitions[5], "Blocks"]]	
+by-singleton-blocks	Tally[CombinatorialStat[SetPartitions[5], "SingletonBlocks"]]	
+one-crossing-at-4	Tally[CombinatorialStat[SetPartitions[4], "Crossings"]]	

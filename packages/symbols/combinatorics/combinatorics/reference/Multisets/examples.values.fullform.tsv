@@ -1,2 +1,2 @@
-id	in
-binom-4-2	Count[Multisets[3, 2]]
+id	in	back
+binom-4-2	Length[Multisets[3, 2]]	[Length, [Multisets, 3, 2]]

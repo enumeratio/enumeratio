@@ -285,6 +285,11 @@ test("Count(list, predicate) is Wolfram's Count[list, _?pred]; a plain value sta
   expect(toWolfram(["Count", ["List", 1, 2, 2, 3], 2])).toBe("Count[List[1, 2, 2, 3], 2]");
 });
 
+test("Count(collection) with no value/predicate is Wolfram's Length -- Count always needs a pattern there", () => {
+  expect(toWolfram(["Count", ["List", 1, 2, 3]])).toBe("Length[List[1, 2, 3]]");
+  expect(toWolfram(["Count", "FactorialNumbers"])).toBe("Length[FactorialNumbers]");
+});
+
 test("IsArray(a, test) inserts ArrayQ's level pattern between the array and the test", () => {
   expect(toWolfram(["IsArray", ["List", ["List", 2, 4], ["List", 6, 8]], "IsEven"])).toBe(
     "ArrayQ[List[List[2, 4], List[6, 8]], Blank[], EvenQ]",

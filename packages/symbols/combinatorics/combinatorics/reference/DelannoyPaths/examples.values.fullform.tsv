@@ -1,4 +1,4 @@
-id	in
-count-delannoypaths-3	Count[DelannoyPaths[3]]
-first-element-of-delannoypaths-3	Part[DelannoyPaths[3], 1]
-every-element-of-delannoypaths-3	Take[DelannoyPaths[3], 5]
+id	in	back
+count-delannoypaths-3	Length[DelannoyPaths[3]]	[Length, [DelannoyPaths, 3]]
+first-element-of-delannoypaths-3	Part[DelannoyPaths[3], 1]	
+every-element-of-delannoypaths-3	Take[DelannoyPaths[3], 5]	

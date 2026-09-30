@@ -1,4 +1,4 @@
-id	in
-the-first-20-terms	Take[NarcissisticNumbers, 20]
-the-88th-and-largest-term-is-exact	Part[NarcissisticNumbers, 88]
-narcissistic-armstrong-numbers-are-proven-finite	Count[NarcissisticNumbers]
+id	in	back
+the-first-20-terms	Take[NarcissisticNumbers, 20]	
+the-88th-and-largest-term-is-exact	Part[NarcissisticNumbers, 88]	
+narcissistic-armstrong-numbers-are-proven-finite	Length[NarcissisticNumbers]	[Length, NarcissisticNumbers]

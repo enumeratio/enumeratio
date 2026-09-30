@@ -1,3 +1,3 @@
-id	in
-count-unlabeledfreetrees-7-11-a000055	Count[UnlabeledFreeTrees[7]]
-every-element-of-unlabeledfreetrees-6	Take[UnlabeledFreeTrees[6], 6]
+id	in	back
+count-unlabeledfreetrees-7-11-a000055	Length[UnlabeledFreeTrees[7]]	[Length, [UnlabeledFreeTrees, 7]]
+every-element-of-unlabeledfreetrees-6	Take[UnlabeledFreeTrees[6], 6]	

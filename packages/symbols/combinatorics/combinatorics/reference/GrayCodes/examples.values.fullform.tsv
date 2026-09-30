@@ -1,4 +1,4 @@
-id	in
-count-graycodes-3	Count[GrayCodes[3]]
-first-element-of-graycodes-3	Part[GrayCodes[3], 1]
-every-element-of-graycodes-3	Take[GrayCodes[3], 8]
+id	in	back
+count-graycodes-3	Length[GrayCodes[3]]	[Length, [GrayCodes, 3]]
+first-element-of-graycodes-3	Part[GrayCodes[3], 1]	
+every-element-of-graycodes-3	Take[GrayCodes[3], 8]	

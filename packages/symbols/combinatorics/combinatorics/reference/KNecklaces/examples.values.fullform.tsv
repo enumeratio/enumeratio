@@ -1,4 +1,4 @@
-id	in
-count-knecklaces-4-3	Count[KNecklaces[4, 3]]
-first-element-of-knecklaces-4-3	Part[KNecklaces[4, 3], 1]
-every-element-of-knecklaces-4-3	Take[KNecklaces[4, 3], 6]
+id	in	back
+count-knecklaces-4-3	Length[KNecklaces[4, 3]]	[Length, [KNecklaces, 4, 3]]
+first-element-of-knecklaces-4-3	Part[KNecklaces[4, 3], 1]	
+every-element-of-knecklaces-4-3	Take[KNecklaces[4, 3], 6]	

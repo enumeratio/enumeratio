@@ -1,3 +1,3 @@
-id	in
-count-gelfandtsetlin-3-2-35-gelfand-tsetlin	Count[GelfandTsetlin[3, 2]]
-every-element-of-gelfandtsetlin-3-2	Take[GelfandTsetlin[3, 2], 35]
+id	in	back
+count-gelfandtsetlin-3-2-35-gelfand-tsetlin	Length[GelfandTsetlin[3, 2]]	[Length, [GelfandTsetlin, 3, 2]]
+every-element-of-gelfandtsetlin-3-2	Take[GelfandTsetlin[3, 2], 35]	

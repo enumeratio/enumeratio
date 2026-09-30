@@ -205,6 +205,21 @@ export function emit(expr: MathJSON, system: System): Emitted {
         return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
       }
     }
+    // Thread(Equal(...)): the SAME raw-tree problem, from a different generic mechanism --
+    // `Equal` has its own per-system MAPPINGS_DATA template (`"($1 == $2)"`, infix, for the
+    // symbolic systems' own comparison operator), which the generic dispatch below applies
+    // to the inner operand BEFORE `toWolfram`'s `Thread` SPECIAL case ever runs, turning it
+    // into a parenthesized infix STRING no longer shaped like `Equal[...]` -- exactly the
+    // shape that case's own `headArgs` needs to recognize to know Thread needs Unevaluated.
+    // Bypassing straight to `toWolfram` on the untouched node, as CycleDecomposition/
+    // Permutation above, sidesteps the mapping template the same way it sidesteps the
+    // carrier unwrap.
+    if (system === "wolfram" && head === "Thread" && operands.length === 1) {
+      const inner = operands[0];
+      if (isCall(inner) && inner[0] === "Equal" && inner.length === 3) {
+        return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
+      }
+    }
     const mapping = mappingFor(head, operands.length);
     const template = mapping?.emit[system];
     if (template !== undefined) {

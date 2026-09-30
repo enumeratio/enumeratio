@@ -1,4 +1,4 @@
-id	in
-count-lehmercodes-4	Count[LehmerCodes[4]]
-first-element-of-lehmercodes-4	Part[LehmerCodes[4], 1]
-every-element-of-lehmercodes-4	Take[LehmerCodes[4], 24]
+id	in	back
+count-lehmercodes-4	Length[LehmerCodes[4]]	[Length, [LehmerCodes, 4]]
+first-element-of-lehmercodes-4	Part[LehmerCodes[4], 1]	
+every-element-of-lehmercodes-4	Take[LehmerCodes[4], 24]	

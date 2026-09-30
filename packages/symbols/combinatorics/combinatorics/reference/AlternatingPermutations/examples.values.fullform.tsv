@@ -1,5 +1,5 @@
-id	in
-count-alternatingpermutations-4	Count[AlternatingPermutations[4]]
-first-element-of-alternatingpermutations-4	Part[AlternatingPermutations[4], 1]
-every-element-of-alternatingpermutations-4	Take[AlternatingPermutations[4], 5]
-every-element-of-alternatingpermutations-5	Take[AlternatingPermutations[5], 16]
+id	in	back
+count-alternatingpermutations-4	Length[AlternatingPermutations[4]]	[Length, [AlternatingPermutations, 4]]
+first-element-of-alternatingpermutations-4	Part[AlternatingPermutations[4], 1]	
+every-element-of-alternatingpermutations-4	Take[AlternatingPermutations[4], 5]	
+every-element-of-alternatingpermutations-5	Take[AlternatingPermutations[5], 16]	

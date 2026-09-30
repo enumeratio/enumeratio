@@ -1,4 +1,4 @@
-id	in
-count-skewpartitions-4-28-pairs-lambda-mu-with	Count[SkewPartitions[4]]
-every-element-of-skewpartitions-3	Take[SkewPartitions[3], 9]
-the-first-skew-shape-of-size-3-as-an-outer-inner	Part[SkewPartitions[3], 1]
+id	in	back
+count-skewpartitions-4-28-pairs-lambda-mu-with	Length[SkewPartitions[4]]	[Length, [SkewPartitions, 4]]
+every-element-of-skewpartitions-3	Take[SkewPartitions[3], 9]	
+the-first-skew-shape-of-size-3-as-an-outer-inner	Part[SkewPartitions[3], 1]	

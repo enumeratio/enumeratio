@@ -1,3 +1,3 @@
-id	in
-count-smoothpermutations-5-88-a032351	Count[SmoothPermutations[5]]
-every-element-of-smoothpermutations-4	Take[SmoothPermutations[4], 22]
+id	in	back
+count-smoothpermutations-5-88-a032351	Length[SmoothPermutations[5]]	[Length, [SmoothPermutations, 5]]
+every-element-of-smoothpermutations-4	Take[SmoothPermutations[4], 22]	

@@ -1,5 +1,5 @@
-id	in
-count-4	Count[PermutationsAsCycles[4]]
-first-is-an-n-cycle	Part[PermutationsAsCycles[4], 1]
-every-element-of-permutationsascycles-3	Take[PermutationsAsCycles[3], 6]
-cycle-counts-are-stirling-first-kind	Tally[CombinatorialStat[PermutationsAsCycles[4], "CycleCount"]]
+id	in	back
+count-4	Length[PermutationsAsCycles[4]]	[Length, [PermutationsAsCycles, 4]]
+first-is-an-n-cycle	Part[PermutationsAsCycles[4], 1]	
+every-element-of-permutationsascycles-3	Take[PermutationsAsCycles[3], 6]	
+cycle-counts-are-stirling-first-kind	Tally[CombinatorialStat[PermutationsAsCycles[4], "CycleCount"]]	

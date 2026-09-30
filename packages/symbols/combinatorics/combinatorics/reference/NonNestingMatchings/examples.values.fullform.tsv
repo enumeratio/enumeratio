@@ -1,4 +1,4 @@
-id	in
-count-nonnestingmatchings-4	Count[NonNestingMatchings[4]]
-first-element-of-nonnestingmatchings-4	Part[NonNestingMatchings[4], 1]
-every-element-of-nonnestingmatchings-4	Take[NonNestingMatchings[4], 5]
+id	in	back
+count-nonnestingmatchings-4	Length[NonNestingMatchings[4]]	[Length, [NonNestingMatchings, 4]]
+first-element-of-nonnestingmatchings-4	Part[NonNestingMatchings[4], 1]	
+every-element-of-nonnestingmatchings-4	Take[NonNestingMatchings[4], 5]	

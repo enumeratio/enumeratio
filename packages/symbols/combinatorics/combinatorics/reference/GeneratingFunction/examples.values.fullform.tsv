@@ -1,7 +1,7 @@
-id	in
-fibonacci	GeneratingFunction[Fibonacci[n], n, x]
-catalan-numbers	GeneratingFunction[CatalanNumber[n], n, x]
-dyck-paths-via-count	GeneratingFunction[Count[DyckPaths[n]], n, x]
-fixed-k-binomial	GeneratingFunction[Binomial[n, 3], n, x]
-geometric	GeneratingFunction[Power[2, n], n, x]
-no-closed-form	GeneratingFunction[Factorial[n], n, x]
+id	in	back
+fibonacci	GeneratingFunction[Fibonacci[n], n, x]	
+catalan-numbers	GeneratingFunction[CatalanNumber[n], n, x]	
+dyck-paths-via-count	GeneratingFunction[Length[DyckPaths[n]], n, x]	[GeneratingFunction, [Length, [DyckPaths, n]], n, x]
+fixed-k-binomial	GeneratingFunction[Binomial[n, 3], n, x]	
+geometric	GeneratingFunction[Power[2, n], n, x]	
+no-closed-form	GeneratingFunction[Factorial[n], n, x]	

@@ -1,4 +1,4 @@
-id	in
-count-zigzagcomposition-6	Count[ZigzagCompositions[6]]
-first-element-of-zigzagcomposition-6	Part[ZigzagCompositions[6], 1]
-every-element-of-zigzagcomposition-6	Take[ZigzagCompositions[6], 12]
+id	in	back
+count-zigzagcomposition-6	Length[ZigzagCompositions[6]]	[Length, [ZigzagCompositions, 6]]
+first-element-of-zigzagcomposition-6	Part[ZigzagCompositions[6], 1]	
+every-element-of-zigzagcomposition-6	Take[ZigzagCompositions[6], 12]	

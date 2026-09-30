@@ -1,5 +1,5 @@
 id	in
-p-6	Count[IntegerPartitions[6]]
+p-6	Length[IntegerPartitions[6]]
 the-single-part-6	Part[IntegerPartitions[6], 1]
 by-largest-part	
 by-distinct-part-sizes	

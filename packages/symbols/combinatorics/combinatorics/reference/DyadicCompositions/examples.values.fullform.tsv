@@ -1,4 +1,4 @@
-id	in
-count-dyadiccompositions-6	Count[DyadicCompositions[6]]
-first-element-of-dyadiccompositions-6	Part[DyadicCompositions[6], 1]
-every-element-of-dyadiccompositions-6	Take[DyadicCompositions[6], 18]
+id	in	back
+count-dyadiccompositions-6	Length[DyadicCompositions[6]]	[Length, [DyadicCompositions, 6]]
+first-element-of-dyadiccompositions-6	Part[DyadicCompositions[6], 1]	
+every-element-of-dyadiccompositions-6	Take[DyadicCompositions[6], 18]	
