@@ -43,7 +43,7 @@ export const TREES_CARRIERS: readonly Carrier[] = [
   {
     name: "LabeledTree",
     type: "labeled_tree",
-    shape: "list<integer>",
+    shape: "list<list<integer>>",
     id: "labeled_tree",
     plural: "LabeledTrees",
   },

@@ -38,7 +38,10 @@ import {
   pathsPartitionsBeforeDyckPathsByHeightEntries as latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
   pathsPartitionsEntries as latticePathsPathsPartitionsEntries,
 } from "../../../lattice-paths/src/families/index.ts";
-import { coreEntries as treesCoreEntries } from "../../../trees/src/families/index.ts";
+import {
+  coreEntries as treesCoreEntries,
+  labeledEntries as treesLabeledEntries,
+} from "../../../trees/src/families/index.ts";
 import { coreEntries as graphsCoreEntries } from "../../../graphs/src/families/index.ts";
 import {
   coreSurjectionsEntries as setPartitionsSurjectionsEntries,
@@ -75,6 +78,7 @@ const numberEntries = [
   ...latticePathsCoreEntries,
   ...coreBeforeSetPartitions,
   ...setPartitionsCoreEntries,
+  ...treesLabeledEntries,
   ...coreBeforeTrees,
   ...treesCoreEntries,
   ...core,

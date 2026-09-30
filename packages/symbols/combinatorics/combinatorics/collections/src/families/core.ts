@@ -22,10 +22,6 @@ import {
   LatticePathUnrank,
   LatticePathRank,
   IsLatticePathOf,
-  LabeledTreeCount,
-  LabeledTreeUnrank,
-  LabeledTreeRank,
-  IsLabeledTreeOf,
   FibonacciWordCount,
   FibonacciWordUnrank,
   FibonacciWordRank,
@@ -163,18 +159,10 @@ export const entriesBeforeSetPartitions: NumberKernel[] = [
 // set-partitions/src/families/core.ts -- §4 step 5. PerfectMatchings' "blocks" shape
 // (list<list<integer>>) matches "SetPartition"'s exactly (the wiki's open question 1
 // resolved: pairs are its blocks, a restriction rather than the "PerfectMatching" carrier,
-// whose shape is list<integer> and does not match). LabeledTrees/RootedForests below declare
-// no carrier and stay here per step 5 rule 4.
+// whose shape is list<integer> and does not match). LabeledTrees moved to
+// trees/src/families/labeled.ts (wire-carriers lane A-92): it now carries "LabeledTree" (the
+// edge set). RootedForests below still declares no carrier and stays here per step 5 rule 4.
 export const entriesBeforeTrees: NumberKernel[] = [
-  {
-    head: "LabeledTrees",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => LabeledTreeCount(n),
-    unrank: ([n], r) => LabeledTreeUnrank(n, r),
-    valid: (e, [n]) => IsLabeledTreeOf(e as number[][], n),
-    rank: (e, [n]) => LabeledTreeRank(e as number[][], n),
-  },
   {
     head: "RootedForests",
     paramCount: 1,
