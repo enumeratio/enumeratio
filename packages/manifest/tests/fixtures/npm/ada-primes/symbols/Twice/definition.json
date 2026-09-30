@@ -1,0 +1,1 @@
+{ "signature": "(number) -> number", "body": ["Function", ["Multiply", 2, "x"], "x"] }

@@ -1,0 +1,8 @@
+{
+  "signature": "(number) -> number",
+  "body": ["Function", ["MemberCall", "ada", "'Quad'", ["MemberCall", "ada", "'Twice'", "x"]], "x"],
+  "requires": {
+    "ada.Quad": "sha256-244facbb10e78c5d1afe0fa151e80c0c67104542e21bcf1b4ba9ca08a33ab920",
+    "ada.Twice": "sha256-a6ca5cce8d3e17fc60c7e9298332578c8a551ba47d71bbb8c10ec667a46acc45"
+  }
+}

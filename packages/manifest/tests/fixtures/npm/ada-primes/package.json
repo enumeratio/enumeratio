@@ -1,0 +1,12 @@
+{
+  "name": "@ada/primes",
+  "version": "1.0.0",
+  "keywords": [
+    "enumeratio-symbols"
+  ],
+  "enumeratio": {
+    "namespace": "ada",
+    "index": "./symbols/index.json",
+    "system": ">=0.1"
+  }
+}

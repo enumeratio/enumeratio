@@ -22,7 +22,12 @@ the resolver possible (below).
   a time through registries, so nothing lists every name: our packages are one registry,
   Epsil definitions under a namespace (pinned by content) another. `searchPath` brings
   chosen namespaces' names into bare use, and refuses at setup a name two of them share or
-  the system has, until it is preferred or excluded. A qualified name (`Statistics.Mean`) declares its namespace as a record
+  the system has, until it is preferred or excluded.
+- **`npmRegistry` / `symbolIndexOf`** (`src/npm-registry.ts`) — symbol packages on npm, read
+  over jsDelivr: a package marks itself with an `enumeratio` field (`namespace`, its scope;
+  `index`), ships `symbols/<Name>/definition.json`, and `scripts/pack-symbols.ts <dir>` writes
+  its `symbols/index.json`. Only the index and the definitions an expression uses are
+  fetched, and each is checked against its pin. A qualified name (`Statistics.Mean`) declares its namespace as a record
   of functions, which is how Epsil's `.` already evaluates. See
   [Speculative Vdom Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup).
 
