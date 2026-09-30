@@ -7,5 +7,9 @@ signatures:
   - call: RootedForests(n)
     description: the rooted forests on $\{1, \dots, n\}$, as parent arrays
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<rooted_forest>
+grades:
+  - name: n
+    role: axis
+carrier: RootedForest
 ---

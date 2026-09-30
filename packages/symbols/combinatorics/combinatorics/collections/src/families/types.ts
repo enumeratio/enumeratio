@@ -68,6 +68,13 @@ interface Family {
    *  Given the carrier's type, the elements are built as carrier values and the collection is
    *  typed by it; otherwise they stay bare lists. */
   readonly carrier?: string;
+  /** How many of the family's own leading params (from `p[0]`) the carrier's constructor
+   *  takes alongside the element -- e.g. `Tournament(n, edges)` needs `n` but
+   *  `LabeledGraphsByEdges`' `m` stays out (`carrierParams: 1`, not 2). Default 0: the
+   *  carrier wraps the element alone, `Carrier(element)`. The params and the element are
+   *  packed as one `Tuple` argument -- the constructor's declared shape (a Carrier's own
+   *  `tuple<...>`) still takes exactly one operand (`declareConstructor`'s `(shape) -> type`). */
+  readonly carrierParams?: number;
   readonly paramCount: 0 | 1 | 2 | 3;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";
   readonly valid: (element: unknown, p: number[]) => boolean;
@@ -111,6 +118,7 @@ export function numberKernel(k: NumberKernel): FamilyKernel {
     kind: k.kind,
     valid: k.valid,
     ...(k.carrier === undefined ? {} : { carrier: k.carrier }),
+    ...(k.carrierParams === undefined ? {} : { carrierParams: k.carrierParams }),
     ...(k.declared === undefined ? {} : { declared: k.declared }),
     count: (p) => {
       const c = k.count(p);

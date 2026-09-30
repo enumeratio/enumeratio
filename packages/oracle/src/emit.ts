@@ -209,7 +209,19 @@ export function emit(expr: MathJSON, system: System): Emitted {
     // single operand) so the emitted source is the system's own plain list/tuple, not a
     // missing head. A future per-system mapping (added to mappings-data.ts) still wins, since
     // `mappingFor` above is tried first.
-    if (CARRIER_NAMES.has(head) && operands.length === 1) return walk(operands[0] as MathJSON);
+    //
+    // A family with `carrierParams` (e.g. `Tournament(n, edges)`) packs its leading params and
+    // its element into that one operand as a `Tuple` — `n` has no counterpart in the systems
+    // we oracle against (there's no bare `Tuple/2` mapping, and never will be: a fixed arity
+    // depends on which family built it), so unwrap ONE level further, to the Tuple's LAST
+    // element -- the element itself (`edges`), which every system already has a plain
+    // list/tuple encoding for. A single-param carrier's operand is never itself a multi-arg
+    // Tuple built this way, so this never fires for one.
+    if (CARRIER_NAMES.has(head) && operands.length === 1) {
+      const contents = operands[0] as MathJSON;
+      const packed = isCall(contents) && contents[0] === "Tuple" && contents.length > 2 ? contents : undefined;
+      return walk(packed === undefined ? contents : (packed[packed.length - 1] as MathJSON));
+    }
     // Module(vars, body)/With(vars, body): a local's initial value is `Equal(n, 10)`
     // (compute-engine's own equality head, `n == 10`), but Wolfram's Module/With need an
     // ASSIGNMENT there (`Set[n, 10]`) — left as `Equal`, the vars list isn't a valid

@@ -7,7 +7,7 @@ signatures:
   - call: NonCrossingTrees(n)
     library: enumeratio-combinatorics
     description: every spanning tree on $n+1$ points around a circle with no two edges crossing.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<non_crossing_tree>
 enumerate:
   expr: NonCrossingTrees(3)
   glyph: tree

@@ -307,6 +307,20 @@ test("a carrier constructor with no mapping unwraps to its contents, for every s
   expect(emit(["NotACarrier", 1], "sympy")).toEqual({ ok: false, missing: ["NotACarrier/1"] });
 });
 
+// A-92: Tournament/LabeledGraph pack a `carrierParams` prefix (n) onto the element (edges) as a
+// Tuple -- `Tournament(n, edges)`. No system has a bare `Tuple/2` mapping (nor should it: the
+// arity depends on which family packed it), so this unwraps ONE level further than a plain
+// single-arg carrier, straight to the edge list every system already understands.
+test("a two-argument graph carrier (carrierParams) unwraps to the edge list, not the packed Tuple", () => {
+  const edges = ["List", ["List", 1, 2], ["List", 2, 1]];
+  expect(emit(["Tournament", ["Tuple", 3, edges]], "wolfram")).toEqual({
+    ok: true,
+    source: "List[List[1, 2], List[2, 1]]",
+  });
+  expect(emit(["Tournament", ["Tuple", 3, edges]], "sympy")).toEqual({ ok: true, source: "[[1, 2], [2, 1]]" });
+  expect(emit(["LabeledGraph", ["Tuple", 4, edges]], "sage")).toEqual({ ok: true, source: "[[1, 2], [2, 1]]" });
+});
+
 test("an algebra element compares as a combination, whatever order its terms are in", () => {
   const ours = ["Add", ["GroupBasis", "'1'"], ["Multiply", 2, ["GroupBasis", `'"s0"'`]]];
   expect(linearCombination(ours)).toEqual(

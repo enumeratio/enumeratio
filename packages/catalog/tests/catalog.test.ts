@@ -16,8 +16,8 @@ const engine = () => {
 test("the catalog is the measured shape, folded to names", () => {
   // Stats and maps are folded from (collection, stat) rows to NAMES with overload sets.
   // If these move, https://github.com/enumeratio/enumeratio/wiki/Namespaces §1 is stale — that is the point of pinning them.
-  expect(COLLECTIONS.length).toBe(284);
-  expect(CARRIERS.length).toBe(88);
+  expect(COLLECTIONS.length).toBe(285);
+  expect(CARRIERS.length).toBe(91);
   expect(STATS.length).toBe(242);
   expect(MAPS.length).toBe(85);
 });

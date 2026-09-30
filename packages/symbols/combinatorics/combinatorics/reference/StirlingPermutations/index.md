@@ -7,7 +7,7 @@ signatures:
   - call: StirlingPermutations(n)
     library: enumeratio-combinatorics
     description: the $(2n-1)!!$ permutations of $\{1,1,…,n,n\}$ with that betweenness property.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<stirling_permutation>
 enumerate:
   expr: StirlingPermutations(4)
   columns: Descents, Ascents, MajorIndex, Inversions
@@ -18,7 +18,7 @@ seeAlso:
 grades:
   - name: n
     role: axis
-carrier: Word
+carrier: StirlingPermutation
 ---
 
 - A lazy indexed collection; the count is the double factorial $(2n-1)!!$. See [[Factorial2]].

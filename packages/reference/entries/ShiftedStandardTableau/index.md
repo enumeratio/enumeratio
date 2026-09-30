@@ -1,13 +1,13 @@
 ---
-name: KAryTree
+name: ShiftedStandardTableau
 domain: Combinatorics
-signature: KAryTree(...)
+signature: ShiftedStandardTableau(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
 stub: carrier
 signatures:
-  - call: KAryTree(...)
+  - call: ShiftedStandardTableau(...)
     description: Catalogued in the enumeratio database; not yet written up here.
     library: enumeratio-combinatorics
-    type: (integer | list<any>) -> k_ary_tree
+    type: (list<list<integer>>) -> shifted_standard_tableau
 ---

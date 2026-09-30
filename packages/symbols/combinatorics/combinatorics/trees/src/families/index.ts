@@ -3,3 +3,6 @@
 // https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
 // -- `referenceData()`'s family order is unchanged.
 export { entries as coreEntries } from "./core.ts";
+export { entries as labeledEntries } from "./labeled.ts";
+export { entries as rootedForestsEntries } from "./rooted-forests.ts";
+export { entries as unlabeledTreesEntries } from "./unlabeled-trees.ts";

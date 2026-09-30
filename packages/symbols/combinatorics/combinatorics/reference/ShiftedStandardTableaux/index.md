@@ -7,7 +7,7 @@ signatures:
   - call: ShiftedStandardTableaux(size)
     library: enumeratio-combinatorics
     description: the standard fillings of every shifted diagram of a strict partition of `size`, entries $1..n$ increasing along rows and down columns.
-    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+    type: (integer<0..>) -> indexed_collection<shifted_standard_tableau>
 enumerate:
   expr: ShiftedStandardTableaux(6)
   columns: Length
@@ -17,7 +17,7 @@ seeAlso:
 grades:
   - name: size
     role: axis
-carrier: StandardTableau
+carrier: ShiftedStandardTableau
 ---
 
 - A lazy indexed collection; the count is exact but not a simple closed form — computed by recursive corner removal, the same identity the shifted hook-length formula gives; $1, 1, 1, 2, 3, 6, 12, …$ for $n = 0, 1, 2, …$.

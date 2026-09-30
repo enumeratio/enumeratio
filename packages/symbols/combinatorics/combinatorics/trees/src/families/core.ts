@@ -1,9 +1,11 @@
 // BinaryTrees/BinaryTreeParentArrays split out of collections/src/families/core.ts (which mixed
 // every area) per https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
 // §4 step 5 -- the only two families in core.ts's "trees with nested elements" section carrying a
-// carrier ("BinaryTree" / "BinaryTreeParentArray"). KAryTrees/OrderedTrees declare none and stay
-// in collections per step 5 rule 4. The generic kernel math stays in
-// collections/src/families/kernels*.ts.
+// carrier ("BinaryTree" / "BinaryTreeParentArray"). KAryTrees/OrderedTrees moved in alongside
+// them (wire-carriers lane A-92): their carriers -- KAryTree, OrderedTree -- go NESTED, matching
+// BinaryTree's own shape (`integer | list<any>`, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible,
+// #401), since both families' elements already are (kind "nested": KTree = 0 | KTree[], OrdTree
+// = OrdTree[]). The generic kernel math stays in collections/src/families/kernels*.ts.
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import {
   BinaryTreeCount,
@@ -14,6 +16,16 @@ import {
   BinaryTreeOfParentArray,
   IsBinaryTreeParentArray,
   type BinTree,
+  KAryTreeCount,
+  KAryTreeUnrank,
+  KAryTreeRank,
+  IsKAryTree,
+  type KTree,
+  OrderedTreeCount,
+  OrderedTreeUnrank,
+  OrderedTreeRank,
+  IsOrderedTree,
+  type OrdTree,
 } from "../../../collections/src/families/kernels-extra.ts";
 
 export const entries: NumberKernel[] = [
@@ -41,5 +53,25 @@ export const entries: NumberKernel[] = [
     unrank: ([n], r) => BinaryTreeParentArray(BinaryTreeUnrank(n, r)),
     valid: (e, [n]) => IsBinaryTreeParentArray(e, n),
     rank: (e) => BinaryTreeRank(BinaryTreeOfParentArray(e as number[]) ?? 0),
+  },
+  {
+    head: "KAryTrees",
+    paramCount: 2,
+    kind: "nested",
+    carrier: "KAryTree",
+    count: ([n, k]) => KAryTreeCount(n, k),
+    unrank: ([n, k], r) => KAryTreeUnrank(n, k, r),
+    valid: (e, [n, k]) => IsKAryTree(e, n, k),
+    rank: (e, [, k]) => KAryTreeRank(e as KTree, k),
+  },
+  {
+    head: "OrderedTrees",
+    paramCount: 1,
+    kind: "nested",
+    carrier: "OrderedTree",
+    count: ([n]) => OrderedTreeCount(n),
+    unrank: ([n], r) => OrderedTreeUnrank(n, r),
+    valid: (e, [n]) => IsOrderedTree(e, n),
+    rank: (e) => OrderedTreeRank(e as OrdTree),
   },
 ];

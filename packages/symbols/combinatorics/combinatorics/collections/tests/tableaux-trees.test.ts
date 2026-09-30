@@ -8,16 +8,11 @@ import { InvolutionCount, LabeledTreeCount } from "../src/families/kernels-extra
 // Self-cert every tableaux-trees.ts family: for every rank r in [0, count), unrank produces a
 // valid element and rank(unrank(r)) === r. Sizes kept small so counts stay well under ~5000.
 // ParkingFunctions/NonDecreasingParkingFunctions moved to words/tests/tableaux-trees.test.ts
-// (wire-carriers lane A-91), now carrying "ParkingFunction".
+// (wire-carriers lane A-91), now carrying "ParkingFunction". Tournaments/LabeledGraphs/
+// LabeledGraphsByEdges moved to graphs/tests/core.test.ts (wire-carriers lane A-92), now
+// carrying "Tournament"/"LabeledGraph".
 const PARAMS: Record<string, number[][]> = {
   PruferSequences: [[1], [2], [3], [5]],
-  Tournaments: [[1], [2], [3], [4]],
-  LabeledGraphs: [[1], [2], [3], [4]],
-  LabeledGraphsByEdges: [
-    [4, 0],
-    [4, 3],
-    [4, 6],
-  ],
   RecursiveTrees: [[1], [2], [5]],
   IncreasingBinaryTrees: [[0], [1], [4]],
   StandardTableaux: [[0], [1], [4], [5]],
@@ -52,13 +47,6 @@ test("PruferSequences(n) counts match LabeledTrees(n) (n^(n-2))", () => {
   for (const n of [1, 2, 3, 4, 5, 6]) expect(e.count([n])).toBe(LabeledTreeCount(n));
 });
 
-test("Tournaments(n) = LabeledGraphs(n) = 2^C(n,2)", () => {
-  const t = byHead.get("Tournaments")!;
-  const g = byHead.get("LabeledGraphs")!;
-  expect([1, 2, 3, 4].map((n) => t.count([n]))).toEqual([1, 2, 8, 64]);
-  expect([1, 2, 3, 4].map((n) => g.count([n]))).toEqual([1, 2, 8, 64]);
-});
-
 test("RecursiveTrees(n) = (n-1)!", () => {
   const e = byHead.get("RecursiveTrees")!;
   expect([1, 2, 3, 4, 5].map((n) => e.count([n]))).toEqual([1, 1, 2, 6, 24]);
@@ -90,8 +78,6 @@ test("SytTwoRow(n) = SytTwoColumn(n) = C(n, floor(n/2))", () => {
 test("golden: rank-0 elements of each family at a fixed size", () => {
   const golden: Record<string, unknown> = {
     PruferSequences: byHead.get("PruferSequences")!.unrank([5], 0),
-    Tournaments: byHead.get("Tournaments")!.unrank([3], 0),
-    LabeledGraphs: byHead.get("LabeledGraphs")!.unrank([3], 0),
     RecursiveTrees: byHead.get("RecursiveTrees")!.unrank([5], 0),
     IncreasingBinaryTrees: byHead.get("IncreasingBinaryTrees")!.unrank([4], 0),
     StandardTableaux: byHead.get("StandardTableaux")!.unrank([5], 0),
@@ -100,12 +86,6 @@ test("golden: rank-0 elements of each family at a fixed size", () => {
   };
   expect(golden).toEqual({
     PruferSequences: [1, 1, 1],
-    Tournaments: [
-      [1, 2],
-      [1, 3],
-      [2, 3],
-    ],
-    LabeledGraphs: [],
     RecursiveTrees: [0, 1, 1, 1, 1],
     IncreasingBinaryTrees: [1, 0, [2, 0, [3, 0, [4, 0, 0]]]],
     StandardTableaux: [[1, 2, 3, 4, 5]],

@@ -5,6 +5,7 @@ import { entries } from "../src/families/binary-word-families.ts";
 // family (§4 step 5, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
 // -- same recipe: rank(unrank(p, r), p) === r, unranked elements are valid and distinct.
 // TernaryGrayCodes joined them here (wire-carriers lane A-91), now carrying "TernaryGrayCode".
+// StirlingPermutations joined too (wire-carriers lane A-92), now carrying "StirlingPermutation".
 const PARAMS: Record<string, number[][]> = {
   BinaryBracelets: [[0], [1], [2], [3], [4], [5], [6], [7]],
   KBracelets: [
@@ -16,6 +17,7 @@ const PARAMS: Record<string, number[][]> = {
     [3, 4],
   ],
   TernaryGrayCodes: [[0], [1], [2], [3], [4]],
+  StirlingPermutations: [[1], [2], [3], [4], [5]],
 };
 
 const byHead = new Map(entries.map((e) => [e.head, e]));
@@ -124,9 +126,64 @@ for (let n = 0; n <= 4; n++) {
   });
 }
 
+function isStirlingPermutation(word: number[], n: number): boolean {
+  if (word.length !== 2 * n) return false;
+  const counts = Array.from<number>({ length: n + 1 }).fill(0);
+  for (const v of word) {
+    if (v < 1 || v > n) return false;
+    counts[v]++;
+  }
+  for (let i = 1; i <= n; i++) if (counts[i] !== 2) return false;
+  for (let i = 1; i <= n; i++) {
+    const first = word.indexOf(i);
+    const last = word.lastIndexOf(i);
+    for (let j = first + 1; j < last; j++) if (word[j] <= i) return false;
+  }
+  return true;
+}
+function permutationsOfMultiset(n: number): number[][] {
+  // small n only (n <= 4): generate all (2n)!/(2^n) distinct arrangements of {1,1,...,n,n} via
+  // standard next-permutation over the sorted multiset.
+  const base = Array.from({ length: 2 * n }, (_, i) => Math.floor(i / 2) + 1);
+  const results: number[][] = [];
+  const seen = new Set<string>();
+  const perm = (arr: number[], k: number) => {
+    if (k === arr.length) {
+      const key = arr.join(",");
+      if (!seen.has(key)) {
+        seen.add(key);
+        results.push(arr.slice());
+      }
+      return;
+    }
+    for (let i = k; i < arr.length; i++) {
+      [arr[k], arr[i]] = [arr[i], arr[k]];
+      perm(arr, k + 1);
+      [arr[k], arr[i]] = [arr[i], arr[k]];
+    }
+  };
+  perm(base, 0);
+  return results;
+}
+
+for (let n = 1; n <= 4; n++) {
+  test(`StirlingPermutations(${n}) matches an independent brute-force predicate`, () => {
+    const entry = byHead.get("StirlingPermutations")!;
+    const total = entry.count([n]);
+    const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
+    const all = permutationsOfMultiset(n);
+    expect(asSet(kernelElements)).toEqual(asSet(all.filter((w) => isStirlingPermutation(w, n))));
+    expect(kernelElements.length).toBe(total);
+  });
+}
+
 // ─── OEIS counts, independent of the round-trip above ───────────────────────────────────────────
 const countsOf = (head: string, ps: number[][]) => ps.map((p) => byHead.get(head)!.count(p));
 const range = (n: number) => Array.from({ length: n }, (_, i) => [i]);
+
+test("StirlingPermutations count = (2n-1)!! (A001147), n=1..7", () => {
+  expect(countsOf("StirlingPermutations", range(8).slice(1))).toEqual([1, 3, 15, 105, 945, 10395, 135135]);
+});
 
 test("TernaryGrayCodes count = 3^n, n=0..6", () => {
   expect(countsOf("TernaryGrayCodes", range(7))).toEqual([1, 3, 9, 27, 81, 243, 729]);

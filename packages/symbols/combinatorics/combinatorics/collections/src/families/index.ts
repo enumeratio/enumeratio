@@ -38,7 +38,13 @@ import {
   pathsPartitionsBeforeDyckPathsByHeightEntries as latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
   pathsPartitionsEntries as latticePathsPathsPartitionsEntries,
 } from "../../../lattice-paths/src/families/index.ts";
-import { coreEntries as treesCoreEntries } from "../../../trees/src/families/index.ts";
+import {
+  coreEntries as treesCoreEntries,
+  labeledEntries as treesLabeledEntries,
+  rootedForestsEntries as treesRootedForestsEntries,
+  unlabeledTreesEntries as treesUnlabeledTreesEntries,
+} from "../../../trees/src/families/index.ts";
+import { coreEntries as graphsCoreEntries } from "../../../graphs/src/families/index.ts";
 import {
   coreSurjectionsEntries as setPartitionsSurjectionsEntries,
   coreEntries as setPartitionsCoreEntries,
@@ -48,6 +54,7 @@ import {
 import {
   tableauxPlaneBeforeSkewStandardTableauxEntries,
   tableauxPlaneSkewStandardTableauxEntries,
+  tableauxPlaneShiftedStandardTableauxEntries,
   tableauxPlanePlanePartitionsEntries,
 } from "../../../tableaux/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
@@ -56,7 +63,6 @@ import { entries as numericClosedForm } from "./numeric-closed-form.ts";
 import { entries as numericRecurrence } from "./numeric-recurrence.ts";
 import { entries as numericDivisor } from "./numeric-divisor.ts";
 import { entries as numericDigitsPrimes } from "./numeric-digits-primes.ts";
-import { entries as unlabeledTrees } from "./unlabeled-trees.ts";
 import { type FamilyKernel, numberKernel } from "./types.ts";
 
 export * from "./types.ts";
@@ -74,6 +80,8 @@ const numberEntries = [
   ...latticePathsCoreEntries,
   ...coreBeforeSetPartitions,
   ...setPartitionsCoreEntries,
+  ...treesLabeledEntries,
+  ...treesRootedForestsEntries,
   ...coreBeforeTrees,
   ...treesCoreEntries,
   ...core,
@@ -86,10 +94,12 @@ const numberEntries = [
   ...latticePathsPathsPartitionsEntries,
   ...tableauxTreesBeforeParkingFunctions,
   ...wordsTableauxTreesEntries,
+  ...graphsCoreEntries,
   ...tableauxTreesAfterNonDecreasingParkingFunctions,
   ...tableauxPlaneBeforeSkewStandardTableauxEntries,
   ...partitionsTableauxPlaneEntries,
   ...tableauxPlaneSkewStandardTableauxEntries,
+  ...tableauxPlaneShiftedStandardTableauxEntries,
   ...tableauxPlane,
   ...tableauxPlanePlanePartitionsEntries,
   ...permutationsEntries,
@@ -103,7 +113,7 @@ const numberEntries = [
   ...numericRecurrence,
   ...numericDivisor,
   ...numericDigitsPrimes,
-  ...unlabeledTrees,
+  ...treesUnlabeledTreesEntries,
 ].map(numberKernel);
 
 // Every family, in the bigint contract. declare.ts declares them all; the Plausible and OEIS

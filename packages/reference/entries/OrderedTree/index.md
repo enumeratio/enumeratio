@@ -9,5 +9,5 @@ signatures:
   - call: OrderedTree(...)
     description: Catalogued in the enumeratio database; not yet written up here.
     library: enumeratio-combinatorics
-    type: (list<integer>) -> ordered_tree
+    type: (integer | list<any>) -> ordered_tree
 ---

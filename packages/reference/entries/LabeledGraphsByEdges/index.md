@@ -14,5 +14,5 @@ signatures:
   - call: LabeledGraphsByEdges(...)
     description: Graphs on [n] with exactly m edges — the (n,m) refinement of labeled_graphs.
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<list<integer>>>
+    type: (integer<0..>, integer<0..>) -> indexed_collection<labeled_graph>
 ---

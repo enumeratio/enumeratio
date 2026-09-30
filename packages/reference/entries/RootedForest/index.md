@@ -1,13 +1,13 @@
 ---
-name: KAryTree
+name: RootedForest
 domain: Combinatorics
-signature: KAryTree(...)
+signature: RootedForest(...)
 summary: Catalogued in the enumeratio database; not yet written up here.
 catalogCarrier: true
 stub: carrier
 signatures:
-  - call: KAryTree(...)
+  - call: RootedForest(...)
     description: Catalogued in the enumeratio database; not yet written up here.
     library: enumeratio-combinatorics
-    type: (integer | list<any>) -> k_ary_tree
+    type: (list<integer>) -> rooted_forest
 ---

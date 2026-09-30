@@ -3,11 +3,21 @@
 // once; rank = index in that order. Element = level sequence (depths in canonical DFS order, root
 // first at depth 0) for the two unlabelled families, and an insertion-choice / arity digit sequence
 // for phylogenetic / non-crossing trees — all "ints" kind, matching the catalogued carriers'
-// list<integer> shape (see packages/symbols/combinatorics/combinatorics/trees/src/carrier-data.ts).
-import type { NumberKernel } from "./types.ts";
-import { Binomial } from "./kernels-combinatorics.ts";
-import { KSubsetUnrank, KSubsetRank } from "./kernels-extra.ts";
-import { KAryTreeCount, KAryTreeUnrank, KAryTreeRank, type KTree } from "./kernels-extra.ts";
+// list<integer> shape (see ../carrier-data.ts). Moved out of collections/src/families/
+// unlabeled-trees.ts (wire-carriers lane A-92, decision 6): all four families' shapes matched
+// their carrier's exactly, so all four wire directly (`carrier: "X"`, no `carrierParams`
+// needed -- each is a single flat list<integer>, no axis param packed alongside it).
+// PlaneTree/Dissection, the other two carriers this decision checked against, have no family
+// declared anywhere yet, so there's nothing to wire for them.
+import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import { Binomial } from "../../../collections/src/families/kernels-combinatorics.ts";
+import { KSubsetUnrank, KSubsetRank } from "../../../collections/src/families/kernels-extra.ts";
+import {
+  KAryTreeCount,
+  KAryTreeUnrank,
+  KAryTreeRank,
+  type KTree,
+} from "../../../collections/src/families/kernels-extra.ts";
 
 // ─── shared: multisets drawn from a countable, weighted alphabet ("children of a node, unordered,
 // each child itself a smaller rooted tree") — the combinatorial core of both unlabelled families
@@ -407,6 +417,7 @@ export const entries: NumberKernel[] = [
     head: "RootedUnlabeledTrees",
     paramCount: 1,
     kind: "ints",
+    carrier: "RootedUnlabeledTree",
     count: ([n]) => RootedTreeCount(n),
     unrank: ([n], r) => RootedTreeUnrank(n, r),
     valid: (e, [n]) => IsRootedTreeOf(e, n),
@@ -416,6 +427,7 @@ export const entries: NumberKernel[] = [
     head: "UnlabeledFreeTrees",
     paramCount: 1,
     kind: "ints",
+    carrier: "UnlabeledFreeTree",
     count: ([n]) => FreeTreeCount(n),
     unrank: ([n], r) => FreeTreeUnrank(n, r),
     valid: (e, [n]) => IsFreeTreeOf(e, n),
@@ -425,6 +437,7 @@ export const entries: NumberKernel[] = [
     head: "PhylogeneticTrees",
     paramCount: 1,
     kind: "ints",
+    carrier: "PhylogeneticTree",
     count: ([n]) => PhylogeneticTreeCount(n),
     unrank: ([n], r) => PhylogeneticTreeUnrank(n, r),
     valid: (e, [n]) => IsPhylogeneticTreeOf(e, n),
@@ -434,6 +447,7 @@ export const entries: NumberKernel[] = [
     head: "NonCrossingTrees",
     paramCount: 1,
     kind: "ints",
+    carrier: "NonCrossingTree",
     count: ([n]) => NonCrossingTreeCount(n),
     unrank: ([n], r) => NonCrossingTreeUnrank(n, r),
     valid: (e, [n]) => IsNonCrossingTreeOf(e, n),

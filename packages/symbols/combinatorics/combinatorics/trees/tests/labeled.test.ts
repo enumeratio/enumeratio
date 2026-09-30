@@ -1,15 +1,11 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/core.ts";
+import { entries } from "../src/families/labeled.ts";
 
-// Self-cert the trees-area families split out of collections/src/families/core.ts --
-// https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
-// §4 step 5 -- split from collections/tests/core.test.ts, same recipe: for every rank r in
-// [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r.
+// Self-cert LabeledTrees split out of collections/src/families/core.ts (wire-carriers lane
+// A-92): for every rank r in [0, count), unrank produces a valid element and
+// rank(unrank(r)) === r.
 const PARAMS: Record<string, number[]> = {
-  BinaryTrees: [4],
-  BinaryTreeParentArrays: [4],
-  KAryTrees: [4, 2],
-  OrderedTrees: [4],
+  LabeledTrees: [4],
 };
 
 const byHead = new Map(entries.map((e) => [e.head, e]));

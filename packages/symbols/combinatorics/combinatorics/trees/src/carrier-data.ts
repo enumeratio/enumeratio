@@ -36,14 +36,14 @@ export const TREES_CARRIERS: readonly Carrier[] = [
   {
     name: "KAryTree",
     type: "k_ary_tree",
-    shape: "list<integer>",
+    shape: "integer | list<any>",
     id: "k_ary_tree",
     plural: "KAryTrees",
   },
   {
     name: "LabeledTree",
     type: "labeled_tree",
-    shape: "list<integer>",
+    shape: "list<list<integer>>",
     id: "labeled_tree",
     plural: "LabeledTrees",
   },
@@ -57,7 +57,7 @@ export const TREES_CARRIERS: readonly Carrier[] = [
   {
     name: "OrderedTree",
     type: "ordered_tree",
-    shape: "list<integer>",
+    shape: "integer | list<any>",
     id: "ordered_tree",
     plural: "OrderedTrees",
   },
@@ -74,6 +74,13 @@ export const TREES_CARRIERS: readonly Carrier[] = [
     shape: "list<integer>",
     id: "plane_tree",
     plural: "PlaneTrees",
+  },
+  {
+    name: "RootedForest",
+    type: "rooted_forest",
+    shape: "list<integer>",
+    id: "rooted_forest",
+    plural: "RootedForests",
   },
   {
     name: "RootedLabeledTree",

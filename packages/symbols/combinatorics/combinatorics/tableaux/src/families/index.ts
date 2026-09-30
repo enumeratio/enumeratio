@@ -5,5 +5,6 @@
 export {
   entriesBeforeSkewStandardTableaux as tableauxPlaneBeforeSkewStandardTableauxEntries,
   skewStandardTableauxEntries as tableauxPlaneSkewStandardTableauxEntries,
+  shiftedStandardTableauxEntries as tableauxPlaneShiftedStandardTableauxEntries,
   planePartitionsEntries as tableauxPlanePlanePartitionsEntries,
 } from "./tableaux-plane.ts";

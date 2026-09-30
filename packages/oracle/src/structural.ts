@@ -86,8 +86,17 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
   // declared over exactly one operand (`declareConstructor`'s `(shape) -> type` signature,
   // same as `contentsOf`), so this is a plain, order-preserving unwrap, not a new comparison
   // rule — the same structural leniency `SEQUENCE_HEADS` already gives List vs. Tuple.
+  //
+  // A family with `carrierParams` (`Tournament(n, edges)`) packs its leading params and its
+  // element into that one operand as a `Tuple`; `emit.ts` never hands the other system `n`
+  // (unwrapping to the Tuple's LAST element instead, since no system has a bare `Tuple/2`
+  // mapping), so this comparison has to reduce to that same last element or a genuine
+  // agreement would register as a shape mismatch (`[n, edges]` vs. the other system's bare
+  // `edges`).
   if (Array.isArray(expr) && typeof expr[0] === "string" && CARRIER_NAMES.has(expr[0]) && expr.length === 2) {
-    return reduce(expr[1] as MathJSON, evaluate);
+    const contents = expr[1] as MathJSON;
+    const packed = Array.isArray(contents) && contents[0] === "Tuple" && contents.length > 2 ? contents : undefined;
+    return reduce(packed === undefined ? contents : (packed[packed.length - 1] as MathJSON), evaluate);
   }
   if (typeof expr === "boolean") return expr;
   // Truth values are the symbols on both sides (fromWolfram reads `True` as "True"); an

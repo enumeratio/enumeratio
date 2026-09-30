@@ -5359,6 +5359,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "RootedForest",
+    provenance: "unknown",
+    declared: "enumeratio-combinatorics",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "RootedLabeledTree",
     provenance: "unknown",
     declared: "enumeratio-combinatorics",
@@ -5418,6 +5425,13 @@ export const provenance: readonly HeadRecord[] = [
     name: "ShapeLength",
     provenance: "unknown",
     declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "ShiftedStandardTableau",
+    provenance: "unknown",
+    declared: "enumeratio-combinatorics",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -5622,6 +5636,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "override",
     declared: null,
     wolframAlias: "StirlingS2",
+    elsewhere: [],
+  },
+  {
+    name: "StirlingPermutation",
+    provenance: "unknown",
+    declared: "enumeratio-combinatorics",
+    wolframAlias: null,
     elsewhere: [],
   },
   {

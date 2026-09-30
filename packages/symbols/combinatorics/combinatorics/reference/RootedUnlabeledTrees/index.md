@@ -7,7 +7,7 @@ signatures:
   - call: RootedUnlabeledTrees(n)
     library: enumeratio-combinatorics
     description: every rooted tree on $n$ nodes with unordered children, one per isomorphism class.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<rooted_unlabeled_tree>
 enumerate:
   expr: RootedUnlabeledTrees(6)
   columns: Max

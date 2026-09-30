@@ -12,5 +12,5 @@ signatures:
   - call: Tournaments(...)
     description: Orientations of the complete graph on [n].
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<list<integer>>>
+    type: (integer<0..>) -> indexed_collection<tournament>
 ---
