@@ -23,8 +23,8 @@
     "check": "vp check"
   },
   "dependencies": {
+    "@enumeratio/ce-patches": "workspace:*",
     "@enumeratio/engine": "workspace:*",
-    "@enumeratio/for-compute-engine": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
     "@enumeratio/residues": "workspace:*",
@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.141.0",
+    "@enumeratio/ce-patches": "workspace:*",
     "@enumeratio/engine": "workspace:*",
-    "@enumeratio/for-compute-engine": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
     "@enumeratio/oracle": "workspace:*",
     "@enumeratio/residues": "workspace:*",

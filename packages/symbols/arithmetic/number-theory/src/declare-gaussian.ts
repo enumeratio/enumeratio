@@ -175,7 +175,7 @@ export function declareGaussian(ce: ComputeEngine): void {
   );
 
   // The negative-modulus sign convention (ModularInverse(3, -7) = -2, cortex-js/compute-
-  // engine#339/#347) landed natively in compute-engine 0.139 -- the for-compute-engine
+  // engine#339/#347) landed natively in compute-engine 0.139 -- the ce-patches
   // patch that used to apply it here was retired. Only the genuinely Gaussian case (a or m
   // off the real line) is still ours: ℤ[i] is beyond Wolfram, not part of that issue.
   widenSignature(ce, "ModularInverse", "(number, number) -> number", mayBeInteger);

@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt, wrapOperator } from "@enumeratio/engine";
-import { declined, type EvalOptions, isRealInt } from "@enumeratio/for-compute-engine";
+import { declined, type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 
 // A handful of exact symbolic reductions the Wolfram page documents for the incomplete
 // gamma, the Hurwitz zeta and the Lerch transcendent, added as `wrapOperator` layers on

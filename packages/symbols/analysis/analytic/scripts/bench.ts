@@ -7,7 +7,7 @@
 // later) has a baseline to beat. The complex-a path is transcendental-bound
 // (~1 log + 1 exp + trig per term), so it sets the realistic ceiling.
 
-import { hurwitzZeta } from "@enumeratio/for-compute-engine";
+import { hurwitzZeta } from "@enumeratio/ce-patches";
 
 const s = { re: 2, im: 0 };
 

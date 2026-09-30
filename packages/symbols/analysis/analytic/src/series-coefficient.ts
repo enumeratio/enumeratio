@@ -1,6 +1,6 @@
 import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
-import { isRealInt } from "@enumeratio/for-compute-engine";
+import { isRealInt } from "@enumeratio/ce-patches";
 
 // SeriesCoefficient(f, {x, x0, n}) — the coefficient of (x − x0)^n in the Taylor series of
 // f about x0, via the classical formula coeff = D^n(f)(x0) / n!. This is exact and correct

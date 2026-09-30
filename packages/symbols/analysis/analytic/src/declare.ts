@@ -13,7 +13,7 @@ import {
   polygammaLogGamma,
   logGammaPatch,
   stieltjes,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
 import { declareBetaContinuation } from "./beta-continuation.ts";
@@ -106,7 +106,7 @@ import { declareNSum } from "./nsum.ts";
  * `LerchPhi`, `BarnesG`, `LogBarnesG`, `LogGamma`, `ClausenCl`, the Dirichlet family
  * (`DirichletEta`, `DirichletBeta`, `DirichletCharacter`, `DirichletL`) and
  * `StieltjesGamma` are all cortex-js/compute-engine#340 candidates: they live in
- * `@enumeratio/for-compute-engine` as patches (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10) and are
+ * `@enumeratio/ce-patches` as patches (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10) and are
  * applied here at the point their declarations used to run, so declare order and behaviour
  * are unchanged. `HurwitzZeta`, the two-argument `Zeta`, and `PolyLog`/`PolyGamma`'s
  * complex-argument widenings landed natively in compute-engine 0.141 and are no longer

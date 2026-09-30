@@ -241,7 +241,7 @@ const OVERRIDDEN = [
   "GammaRegularized",
   // #340: HurwitzZeta/Zeta's own declarations landed in compute-engine 0.139, but only in
   // double precision -- the zeta-hurwitz patch still overrides both for the arbitrary-
-  // precision N(x, d) path (see for-compute-engine/src/patches/zeta-hurwitz.ts), so
+  // precision N(x, d) path (see ce-patches/src/patches/zeta-hurwitz.ts), so
   // HurwitzZeta now genuinely diverges bare compute-engine (it didn't exist there before).
   "HurwitzZeta",
   "IntegerDigits",

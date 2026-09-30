@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
-import type { EvalOptions } from "@enumeratio/for-compute-engine";
+import type { EvalOptions } from "@enumeratio/ce-patches";
 
 // FunctionExpand(expr) — rewrite special functions in terms of more elementary or
 // better-known ones. Most of the work here is a handful of named identities the backlog's

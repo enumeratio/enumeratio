@@ -1,4 +1,4 @@
-# @enumeratio/for-compute-engine
+# @enumeratio/ce-patches
 
 What we have offered `@cortex-js/compute-engine` upstream, kept apart from what is ours —
 the model is Mathlib's `ForMathlib/`: code written in our repo, shaped for theirs. See

@@ -12,7 +12,7 @@ import {
   mul,
   scale,
   logGamma,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 
 // The generalized hypergeometric series pFq(a1,…,ap; b1,…,bq; z) = Σ_{k≥0} ∏(ai)_k / ∏(bj)_k
 // · zᵏ/k!, and its regularized cousin pFq(…)/∏Γ(bj) — Fungrim's frontier heads

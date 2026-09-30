@@ -1,5 +1,5 @@
 {
-  "name": "@enumeratio/for-compute-engine",
+  "name": "@enumeratio/ce-patches",
   "version": "0.0.0",
   "private": true,
   "description": "Patches for @cortex-js/compute-engine that have been offered upstream: kept apart from what is ours, so landing upstream is a deletion, not an excavation (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10).",

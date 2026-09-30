@@ -24,13 +24,13 @@ a claim can be computed ([Examples as Data](https://github.com/enumeratio/enumer
 
 ## Layout
 
-| path                       | what's there                                                                                                                                                                                                                                                                                       |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `packages/symbols/*/`      | the symbol libraries, grouped by area: `combinatorics`, `arithmetic`, `analysis`, `algebras`, `groups`, `evaluation`                                                                                                                                                                               |
-| `packages/`                | shared machinery: reference data (`entry`, `reference`, `catalog`, `manifest`), cross-checking (`oracle`, `census`, `plausible`, `bench`), structure (`structures`), output (`formats`, `boxes`, `wolfram`, `raster`), interface (`frontend`, `components`, `cli`) and helpers (`engine`, `utils`) |
-| `upstream/compute-engine/` | fixes and heads offered to compute-engine, applied as patches until they land ([Upstreaming](https://github.com/enumeratio/enumeratio/wiki/Upstreaming))                                                                                                                                           |
-| `web/`                     | the [enumeratio.dev](https://enumeratio.dev) site: guides, reference pages, component stories, worksheet and notebook                                                                                                                                                                              |
-| `tools/`                   | CI tooling (`perf`)                                                                                                                                                                                                                                                                                |
+| path                   | what's there                                                                                                                                                                                                                                                                                       |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `packages/symbols/*/`  | the symbol libraries, grouped by area: `combinatorics`, `arithmetic`, `analysis`, `algebras`, `groups`, `evaluation`                                                                                                                                                                               |
+| `packages/`            | shared machinery: reference data (`entry`, `reference`, `catalog`, `manifest`), cross-checking (`oracle`, `census`, `plausible`, `bench`), structure (`structures`), output (`formats`, `boxes`, `wolfram`, `raster`), interface (`frontend`, `components`, `cli`) and helpers (`engine`, `utils`) |
+| `packages/ce-patches/` | fixes and heads offered to compute-engine, applied as patches until they land ([Upstreaming](https://github.com/enumeratio/enumeratio/wiki/Upstreaming))                                                                                                                                           |
+| `web/`                 | the [enumeratio.dev](https://enumeratio.dev) site: guides, reference pages, component stories, worksheet and notebook                                                                                                                                                                              |
+| `tools/`               | CI tooling (`perf`)                                                                                                                                                                                                                                                                                |
 
 Each package's `package.json` `description` says what it holds;
 [Packages](https://github.com/enumeratio/enumeratio/wiki/Packages) and
@@ -53,7 +53,7 @@ Build the library packages before `vp check` or the tests, since both resolve si
 packages through their `dist/`:
 
 ```sh
-pnpm -r --filter "./packages/**" --filter "./upstream/**" run build
+pnpm -r --filter "./packages/**" run build
 ```
 
 ## More on the wiki

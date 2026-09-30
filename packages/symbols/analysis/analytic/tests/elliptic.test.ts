@@ -10,7 +10,7 @@ import { declareAnalytic } from "../src/declare.ts";
 // reference examples (packages/reference/tests/known.test.ts), not here.
 //
 // EllipticE(m)'s own complex-modulus precision fix (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8) moved to
-// @enumeratio/for-compute-engine's elliptic-e-complex patch, offered upstream as
+// @enumeratio/ce-patches's elliptic-e-complex patch, offered upstream as
 // cortex-js/compute-engine#346/#348 — declareElliptic below applies it in the same spot
 // it used to run in.
 

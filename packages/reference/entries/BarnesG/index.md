@@ -36,7 +36,7 @@ bindings:
   - origin: native
     form: typescript
     environment: engine
-    source: upstream/compute-engine/src/compute-engine/numerics/barnes-g.ts
+    source: packages/ce-patches/src/compute-engine/numerics/barnes-g.ts
     note: exp of the LogBarnesG kernel; exact superfactorials at the integers come from the head.
   - origin: mapped
     form: wolfram / mpmath

@@ -42,7 +42,7 @@ export {
   type ComplexWGSL,
   emitComplexWGSL,
   MAX_SLOTS,
-} from "@enumeratio/for-compute-engine";
+} from "@enumeratio/ce-patches";
 export { declareThreading113 } from "./threading-113.ts";
 export { declareClosedForms113 } from "./closed-forms-113.ts";
 export { declareInverseCompositions } from "./inverse-compositions.ts";
