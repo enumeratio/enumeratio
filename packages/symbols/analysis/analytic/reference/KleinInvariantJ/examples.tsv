@@ -1,6 +1,7 @@
-id	section	role	expr	expected	known	tolerance	source	caption
-j-i-1			[N, [KleinInvariantJ, [Complex, 0, 1]]]	1	{num: "1"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	$J(i) = 1$
-j-2i-66-3-1728-1331-8			[N, [KleinInvariantJ, [Complex, 0, 2]]]	166.375	{num: "166.375"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	$J(2i) = 66^3/1728 = 1331/8$
-j-1-2i-modular-invariance-with-2i		test	[N, [KleinInvariantJ, [Complex, 1, 2]]]	166.375	{num: "166.375"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	Modular invariance — the same value as $J(2i)$
-exact-at-the-elliptic-point-i	Scope		[KleinInvariantJ, [Complex, 0, 1]]	1				Exact at the elliptic point $i$
-heegner-number-163-j-bigl-frac-1-i-sqrt-163-2	Neat examples		[N, [KleinInvariantJ, [Multiply, [Rational, 1, 2], [Add, 1, [Complex, 0, [Sqrt, 163]]]]]]	-151931373055998.97				Heegner number 163: $J\bigl(\tfrac{1+i\sqrt{163}}2\bigr) = -640320^3/1728$, to double precision
+id	section	role	expr	expected	known	tolerance	source	caption	aspirational
+j-i-1			[N, [KleinInvariantJ, [Complex, 0, 1]]]	1	{num: "1"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	$J(i) = 1$	
+j-2i-66-3-1728-1331-8			[N, [KleinInvariantJ, [Complex, 0, 2]]]	166.375	{num: "166.375"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	$J(2i) = 66^3/1728 = 1331/8$	
+j-1-2i-modular-invariance-with-2i		test	[N, [KleinInvariantJ, [Complex, 1, 2]]]	166.375	{num: "166.375"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	Modular invariance — the same value as $J(2i)$	
+exact-at-the-elliptic-point-i	Scope		[KleinInvariantJ, [Complex, 0, 1]]	1				Exact at the elliptic point $i$	
+tau-1e22-argument-reduction-not-implemented	Possible issues		[N, [KleinInvariantJ, [Add, ImaginaryUnit, [Multiply, Pi, [Power, 10, 22]]]]]	[Complex, {num: "-0.000011229920025421934504"}, {num: "-0.000039540519390658590150"}]	[Complex, {num: "-0.000011229920025421934504"}, {num: "-0.000039540519390658590150"}]	1e-12	mpmath 1.3.0 kleinj	Re(τ) = π·10^22 as a double has already lost its fractional part — reduceToFundamentalDomain's Math.round(tau.re) has nothing left to reduce against, so the SL2(Z) reduction (and everything downstream) runs on a meaningless residue (mpmath kleinj, dps=30; not yet implemented here — needs the reduction done at bignum precision before collapsing to a double).	true
+heegner-number-163-j-bigl-frac-1-i-sqrt-163-2	Neat examples		[N, [KleinInvariantJ, [Multiply, [Rational, 1, 2], [Add, 1, [Complex, 0, [Sqrt, 163]]]]]]	-151931373055998.97				Heegner number 163: $J\bigl(\tfrac{1+i\sqrt{163}}2\bigr) = -640320^3/1728$, to double precision	

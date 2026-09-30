@@ -1,8 +1,9 @@
-id	section	role	expr	expected	known	tolerance	source
-modularlambda-0-1i		test	[N, [ModularLambda, [Complex, 0, 1]]]	0.5	{num: "0.5"}	1e-9	mpmath 1.3.0 modlambda
-modularlambda-0-5-0-8660254037844386i		test	[N, [ModularLambda, [Complex, -0.5, 0.8660254037844386]]]	[Complex, 0.5000000000000004, -0.8660254037844387]	[Complex, 0.5000000000000001, -0.8660254037844387]	1e-9	mpmath 1.3.0 modlambda
-modularlambda-0-3-1-1i		test	[N, [ModularLambda, [Complex, 0.3, 1.1]]]	[Complex, 0.31763300075820117, 0.2955839285573865]	[Complex, 0.31763300075820133, 0.2955839285573866]	1e-9	mpmath 1.3.0 modlambda
-modularlambda-0-3-0-05i		test	[N, [ModularLambda, [Complex, 0.3, 0.05]]]	[Complex, -3.96548572774177, -6.452991541554556]	[Complex, -3.965485727741773, -6.4529915415545425]	1e-9	mpmath 1.3.0 modlambda
-modularlambda-1-3-0-05i		test	[N, [ModularLambda, [Complex, 1.3, 0.05]]]	[Complex, 0.9251025745226054, 0.09733437564619551]	[Complex, 0.9251025745226051, 0.09733437564619561]	1e-9	mpmath 1.3.0 modlambda
-modularlambda-2-7-1-4i		test	[N, [ModularLambda, [Complex, 2.7, 1.4]]]	[Complex, -0.1083819310265213, 0.17797753173256547]	[Complex, -0.10838193102652109, 0.17797753173256545]	1e-9	mpmath 1.3.0 modlambda
-modularlambda-1-4-0-6i		test	[N, [ModularLambda, [Complex, -1.4, 0.6]]]	[Complex, 2.2803063107558237, 1.533054618426143]	[Complex, 2.280306310755823, 1.5330546184261415]	1e-9	mpmath 1.3.0 modlambda
+id	section	role	expr	expected	known	tolerance	source	caption	aspirational
+modularlambda-0-1i		test	[N, [ModularLambda, [Complex, 0, 1]]]	0.5	{num: "0.5"}	1e-9	mpmath 1.3.0 modlambda		
+modularlambda-0-5-0-8660254037844386i		test	[N, [ModularLambda, [Complex, -0.5, 0.8660254037844386]]]	[Complex, 0.5000000000000004, -0.8660254037844387]	[Complex, 0.5000000000000001, -0.8660254037844387]	1e-9	mpmath 1.3.0 modlambda		
+modularlambda-0-3-1-1i		test	[N, [ModularLambda, [Complex, 0.3, 1.1]]]	[Complex, 0.31763300075820117, 0.2955839285573865]	[Complex, 0.31763300075820133, 0.2955839285573866]	1e-9	mpmath 1.3.0 modlambda		
+modularlambda-0-3-0-05i		test	[N, [ModularLambda, [Complex, 0.3, 0.05]]]	[Complex, -3.96548572774177, -6.452991541554556]	[Complex, -3.965485727741773, -6.4529915415545425]	1e-9	mpmath 1.3.0 modlambda		
+modularlambda-1-3-0-05i		test	[N, [ModularLambda, [Complex, 1.3, 0.05]]]	[Complex, 0.9251025745226054, 0.09733437564619551]	[Complex, 0.9251025745226051, 0.09733437564619561]	1e-9	mpmath 1.3.0 modlambda		
+modularlambda-2-7-1-4i		test	[N, [ModularLambda, [Complex, 2.7, 1.4]]]	[Complex, -0.1083819310265213, 0.17797753173256547]	[Complex, -0.10838193102652109, 0.17797753173256545]	1e-9	mpmath 1.3.0 modlambda		
+modularlambda-1-4-0-6i		test	[N, [ModularLambda, [Complex, -1.4, 0.6]]]	[Complex, 2.2803063107558237, 1.533054618426143]	[Complex, 2.280306310755823, 1.5330546184261415]	1e-9	mpmath 1.3.0 modlambda		
+tau-1e22-argument-reduction-not-implemented	Possible issues		[N, [ModularLambda, [Add, ImaginaryUnit, [Multiply, Pi, [Power, 10, 22]]]]]	[Complex, {num: "0.3225095298209943776"}, {num: "0.54243824326032804815"}]	[Complex, {num: "0.3225095298209943776"}, {num: "0.54243824326032804815"}]	1e-12	mpmath 1.3.0 jtheta	Same gap as KleinInvariantJ — Re(τ) = π·10^22 has already lost its fractional part as a double, so the SL2(Z) reduction runs on a meaningless residue (mpmath, dps=30; not yet implemented here).	true

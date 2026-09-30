@@ -3,4 +3,5 @@ j-i-1	N(KleinInvariantJ(i))	1
 j-2i-66-3-1728-1331-8	N(KleinInvariantJ(2i))	166.375
 j-1-2i-modular-invariance-with-2i	N(KleinInvariantJ(1 + 2i))	166.375
 exact-at-the-elliptic-point-i	KleinInvariantJ(i)	1
+tau-1e22-argument-reduction-not-implemented	N(KleinInvariantJ(imaginaryUnit + pi * 10 ^ 22))	-0.000_011_229_920_025_421_934_504 - 0.000_039_540_519_390_658_590_150i
 heegner-number-163-j-bigl-frac-1-i-sqrt-163-2	N(KleinInvariantJ(1 / 2 * (1 + sqrt(163) * i)))	-151_931_373_055_998.97

@@ -3,3 +3,4 @@ a-floating-point-argument-evaluates-directly-to	<N><JacobiDC>0.6 0.4</JacobiDC><
 m-less-than-0-via-the-imaginary-modulus	<N><JacobiDC>0.3 -0.7</JacobiDC></N>	<ToExpression>1.0799397700832252</ToExpression>
 u-0-is-1-for-any-m	<JacobiDC>0 m</JacobiDC>	<ToExpression>1</ToExpression>
 symbolic-arguments-are-left-unevaluated-rather	<JacobiDC>u m</JacobiDC>	<JacobiDC>u m</JacobiDC>
+u-1e16-argument-reduction-not-implemented	<N><JacobiDC><Power>10 16</Power> <Rational>5 7</Rational></JacobiDC></N>	<ToExpression>-1.0264435640053616005</ToExpression>

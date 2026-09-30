@@ -4,3 +4,4 @@ jacobicd-0-4-0-5i-0-3	N(\mathrm{JacobiCD}(0.4+0.5i, 0.3))	1.034\,017\,190\,005\,
 m-greater-than-1-via-the-reciprocal-modulus	N(\mathrm{JacobiCD}(0.3, 1.5))	1.023\,633\,106\,578\,735
 u-0-is-1-for-any-m	\mathrm{JacobiCD}(0, m)	1
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiCD}(u, m)	\mathrm{JacobiCD}(u, m)
+u-1e16-argument-reduction-not-implemented	N(\mathrm{JacobiCD}(10^{16}, \frac{2}{7}))	0.224\,047\,523\,574\,504\,120\,66

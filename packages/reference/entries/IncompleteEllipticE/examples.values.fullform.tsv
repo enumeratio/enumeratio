@@ -12,3 +12,5 @@ e-3-711592653589793-0-57-0-23i	N[EllipticE[3.711592653589793, Complex[0.57, 0.23
 e-3-711592653589793-0-23i-0-57-0-23i	N[EllipticE[Complex[3.711592653589793, 0.23], Complex[0.57, 0.23]]]
 e-3-0-57-0-23i	N[EllipticE[-3, Complex[0.57, 0.23]]]
 e-4-5-0-1-0-9i	N[EllipticE[4.5, Complex[0.1, 0.9]]]
+e-phi-arccsc-0-m-0	EllipticE[ArcCsc[0], 0]
+e-phi-pi-plus-arccsc-0-m-0	EllipticE[Plus[Pi, ArcCsc[0]], 0]

@@ -4,3 +4,4 @@ jacobins-0-4-0-5i-0-3	N(\mathrm{JacobiNS}(0.4-0.5i, 0.3))	1.061\,562\,389\,406\,
 m-less-than-0-via-the-imaginary-modulus	N(\mathrm{JacobiNS}(0.3, -2))	3.289\,220\,683\,752\,634\,8
 u-0-is-a-pole-for-any-m	\mathrm{JacobiNS}(0, m)	\tilde\infty
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiNS}(u, m)	\mathrm{JacobiNS}(u, m)
+u-1e16-argument-reduction-not-implemented	N(\mathrm{JacobiNS}(10^{16}, \frac{2}{3}))	1.310\,629\,161\,424\,929\,177\,1

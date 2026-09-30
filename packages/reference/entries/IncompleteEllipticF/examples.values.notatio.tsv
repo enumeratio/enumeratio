@@ -12,3 +12,7 @@ f-3-711592653589793-0-57-0-23i	<N><IncompleteEllipticF>3.711592653589793 <Comple
 f-3-711592653589793-0-23i-0-57-0-23i	<N><IncompleteEllipticF><Complex>3.711592653589793 0.23</Complex> <Complex>0.57 0.23</Complex></IncompleteEllipticF></N>	<Complex>4.289764434700574 0.6711124299873337</Complex>
 f-3-0-57-0-23i	<N><IncompleteEllipticF>-3 <Complex>0.57 0.23</Complex></IncompleteEllipticF></N>	<Complex>-3.577957673312077 -0.4175363858034027</Complex>
 f-4-5-0-1-0-9i	<N><IncompleteEllipticF>4.5 <Complex>0.1 0.9</Complex></IncompleteEllipticF></N>	<Complex>4.209502419983872 0.8277592810892387</Complex>
+f-jacobiamplitude-0-0-m-0	<IncompleteEllipticF><JacobiAmplitude>0 0</JacobiAmplitude> 0</IncompleteEllipticF>	<ToExpression>0</ToExpression>
+f-jacobiamplitude-0-1-m-1	<IncompleteEllipticF><JacobiAmplitude>0 1</JacobiAmplitude> 1</IncompleteEllipticF>	<ToExpression>0</ToExpression>
+f-phi-arccsc-0-m-0	<IncompleteEllipticF><Arccsc>0</Arccsc> 0</IncompleteEllipticF>	<EllipticF>ComplexInfinity 0</EllipticF>
+f-phi-pi-plus-arccsc-0-m-0	<IncompleteEllipticF><Add>Pi <Arccsc>0</Arccsc></Add> 0</IncompleteEllipticF>	<EllipticF>ComplexInfinity 0</EllipticF>

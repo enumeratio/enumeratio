@@ -3,3 +3,5 @@ a-floating-point-argument-evaluates-directly-to	<N><JacobiSC>0.6 0.4</JacobiSC><
 m-greater-than-1-via-the-reciprocal-modulus	<N><JacobiSC>1.2 3</JacobiSC></N>	<ToExpression>0.6660771819422742</ToExpression>
 u-0-is-0-for-any-m	<JacobiSC>0 m</JacobiSC>	<ToExpression>0</ToExpression>
 symbolic-arguments-are-left-unevaluated-rather	<JacobiSC>u m</JacobiSC>	<JacobiSC>u m</JacobiSC>
+m-1-at-a-shared-pole-of-sn-and-cn	<N><JacobiSC><Multiply><Rational>1 2</Rational> ImaginaryUnit Pi</Multiply> 1</JacobiSC></N>	<Complex>0.0 1.0</Complex>
+u-1e16-argument-reduction-not-implemented	<N><JacobiSC><Power>10 16</Power> <Rational>1 4</Rational></JacobiSC></N>	<ToExpression>-7.9527902046049310775</ToExpression>

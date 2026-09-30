@@ -29,3 +29,4 @@ a-complex-nome-q	<N><EllipticTheta>2 <Complex>0.5 0.5</Complex> <Complex>0.1 0.2
 theta1-0-q-is-0-for-any-q-an-odd	<N><EllipticTheta>1 0 0.5</EllipticTheta></N>	<ToExpression>0</ToExpression>
 q-1-is-declined-the-series-diverges	<N><EllipticTheta>3 0.3 1</EllipticTheta></N>	<EllipticTheta>3 0.3 1</EllipticTheta>
 symbolic-arguments-are-left-unevaluated-rather	<EllipticTheta>3 u q</EllipticTheta>	<EllipticTheta>3 u q</EllipticTheta>
+u-1e16-argument-reduction-not-implemented	<N><EllipticTheta>1 <Power>10 30</Power> <Rational>1 2</Rational></EllipticTheta></N>	<ToExpression>-0.050337344685938287942</ToExpression>

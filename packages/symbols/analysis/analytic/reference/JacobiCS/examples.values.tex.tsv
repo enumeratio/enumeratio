@@ -3,3 +3,4 @@ a-floating-point-argument-evaluates-directly-to	N(\mathrm{JacobiCS}(1.1, 0.9))	0
 m-greater-than-1-via-the-reciprocal-modulus	N(\mathrm{JacobiCS}(0.3, 1.5))	3.309\,809\,750\,125\,873\,4
 u-0-is-a-pole-for-any-m	\mathrm{JacobiCS}(0, m)	\tilde\infty
 symbolic-arguments-are-left-unevaluated-rather	\mathrm{JacobiCS}(u, m)	\mathrm{JacobiCS}(u, m)
+m-1-at-a-shared-pole-of-sn-and-cn	N(\mathrm{JacobiCS}(\frac{i\pi}{2}, 1))	-1.0i

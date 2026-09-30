@@ -12,3 +12,7 @@ f-3-711592653589793-0-57-0-23i	N(\mathrm{IncompleteEllipticF}(3.711\,592\,653\,5
 f-3-711592653589793-0-23i-0-57-0-23i	N(\mathrm{IncompleteEllipticF}(3.711\,592\,653\,589\,793+0.23i, 0.57+0.23i))	4.289\,764\,434\,700\,574+0.671\,112\,429\,987\,333\,7i
 f-3-0-57-0-23i	N(\mathrm{IncompleteEllipticF}(-3, 0.57+0.23i))	-3.577\,957\,673\,312\,077-0.417\,536\,385\,803\,402\,7i
 f-4-5-0-1-0-9i	N(\mathrm{IncompleteEllipticF}(4.5, 0.1+0.9i))	4.209\,502\,419\,983\,872+0.827\,759\,281\,089\,238\,7i
+f-jacobiamplitude-0-0-m-0	\mathrm{IncompleteEllipticF}(\mathrm{JacobiAmplitude}(0, 0), 0)	0
+f-jacobiamplitude-0-1-m-1	\mathrm{IncompleteEllipticF}(\mathrm{JacobiAmplitude}(0, 1), 1)	0
+f-phi-arccsc-0-m-0	\mathrm{IncompleteEllipticF}(\mathrm{arccsc}(0), 0)	\mathrm{EllipticF}(\tilde\infty, 0)
+f-phi-pi-plus-arccsc-0-m-0	\mathrm{IncompleteEllipticF}(\pi+\mathrm{arccsc}(0), 0)	\mathrm{EllipticF}(\tilde\infty, 0)
