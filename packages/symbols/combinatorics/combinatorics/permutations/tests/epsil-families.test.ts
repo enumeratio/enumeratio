@@ -12,17 +12,8 @@ import {
   ColoredPermutationCount,
   ColoredPermutationRank,
   ColoredPermutationUnrank,
-  CyclicPermutationCount,
-  CyclicPermutationRank,
-  CyclicPermutationUnrank,
   IsColoredPermutationOf,
   IsCyclicPermutationOf,
-  DerangementCount,
-  DerangementRank,
-  DerangementUnrank,
-  InvolutionCount,
-  InvolutionRank,
-  InvolutionUnrank,
   IsDerangementOf,
   IsInvolutionOf,
   IsKPermutationOf,
@@ -34,7 +25,7 @@ import {
   SignedPermutationRank,
   SignedPermutationUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
-import { epsilEntries } from "../src/families/core.ts";
+import { epsilEntries, kCyclePermutations } from "../src/families/core.ts";
 
 const ce = new ComputeEngine();
 
@@ -56,6 +47,32 @@ function words(length: number, alphabet: readonly number[]): number[][] {
   return words(length - 1, alphabet).flatMap((w) => alphabet.map((a) => [...w, a]));
 }
 const span = (from: number, to: number): number[] => Array.from({ length: to - from + 1 }, (_, i) => from + i);
+
+/** The number of cycles of a permutation word. */
+function cycles(x: readonly number[]): number {
+  const seen = new Set<number>();
+  let count = 0;
+  for (let i = 1; i <= x.length; i++) {
+    if (seen.has(i)) continue;
+    count++;
+    for (let j = i; !seen.has(j); j = x[j - 1]) seen.add(j);
+  }
+  return count;
+}
+
+/** A restriction of the symmetric group read by filtering it: its members of n, in lex order. */
+function lexRestriction(params: number[][], member: (x: number[], p: number[]) => boolean): Reading {
+  const members = (p: number[]): number[][] =>
+    Array.from({ length: factorial(p[0]) }, (_, r) => PermutationUnrank(p[0], r)).filter((x) => member(x, p));
+  return {
+    params,
+    count: (p) => members(p).length,
+    unrank: (p, r) => members(p)[r],
+    rank: (x: number[], p) => members(p).findIndex((m) => m.join() === x.join()),
+    valid: (x: number[], p) => Array.isArray(x) && x.length === p[0] && IsPermutationOf(x, p[0]) && member(x, p),
+    near: ([n]) => words(n, span(0, n + 1)),
+  };
+}
 
 const READINGS: Record<string, Reading> = {
   SymmetricGroup: {
@@ -90,31 +107,24 @@ const READINGS: Record<string, Reading> = {
     valid: (x: number[], [n]) => IsSignedPermutationOf(x, n),
     near: ([n]) => words(n, span(-n - 1, n + 1)),
   },
-  CyclicPermutations: {
-    params: [[0], [1], [2], [3], [4], [5]],
-    count: ([n]) => CyclicPermutationCount(n),
-    unrank: ([n], r) => CyclicPermutationUnrank(n, r),
-    rank: (x: number[]) => CyclicPermutationRank(x),
-    // A cyclic permutation of 0 has no members: the count says so, and so does membership.
-    valid: (x: number[], [n]) => n >= 1 && IsCyclicPermutationOf(x, n),
-    near: ([n]) => words(n, span(0, n + 1)),
-  },
-  Involutions: {
-    params: [[0], [1], [2], [3], [4], [5], [6]],
-    count: ([n]) => InvolutionCount(n),
-    unrank: ([n], r) => InvolutionUnrank(n, r),
-    rank: (x: number[]) => InvolutionRank(x),
-    valid: (x: number[], [n]) => IsInvolutionOf(x, n),
-    near: ([n]) => words(n, span(0, n + 1)),
-  },
-  Derangements: {
-    params: [[0], [1], [2], [3], [4], [5], [6]],
-    count: ([n]) => DerangementCount(n),
-    unrank: ([n], r) => DerangementUnrank(n, r),
-    rank: (x: number[]) => DerangementRank(x),
-    valid: (x: number[], [n]) => IsDerangementOf(x, n),
-    near: ([n]) => words(n, span(0, n + 1)),
-  },
+  // Restrictions of the symmetric group, in its lex order: read by filtering it.
+  CyclicPermutations: lexRestriction([[0], [1], [2], [3], [4], [5]], (x, [n]) => n >= 1 && IsCyclicPermutationOf(x, n)),
+  Involutions: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x, [n]) => IsInvolutionOf(x, n)),
+  Derangements: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x, [n]) => IsDerangementOf(x, n)),
+  KCyclePermutations: lexRestriction(
+    [
+      [0, 0],
+      [3, 0],
+      [3, 1],
+      [4, 2],
+      [5, 2],
+      [5, 3],
+      [6, 1],
+      [6, 4],
+      [2, 3],
+    ],
+    (x, [n, k]) => IsPermutationOf(x, n) && cycles(x) === k,
+  ),
   ColoredPermutations: {
     params: [
       [0, 0],
@@ -134,7 +144,7 @@ const READINGS: Record<string, Reading> = {
   },
 };
 
-const byHead = new Map(epsilEntries.map((family) => [family.head, family]));
+const byHead = new Map([...epsilEntries, kCyclePermutations].map((family) => [family.head, family]));
 
 for (const [head, reading] of Object.entries(READINGS)) {
   const family = byHead.get(head)!;

@@ -17,11 +17,12 @@ import {
   KPermutationCount,
   KPermutationRank,
   KPermutationUnrank,
-  KSubsetRank,
-  KSubsetUnrank,
 } from "../../../collections/src/families/kernels-extra.ts";
 import { IntegerPartitionRank } from "../../../collections/src/families/kernels-combinatorics.ts";
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { inducedOrder } from "../../../collections/src/families/induced-order.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import { kCyclePermutations } from "./core.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
 const ints = (
@@ -139,55 +140,6 @@ function isAlternating(perm: readonly number[], n: number): boolean {
   }
   return true;
 }
-function alternatingUnrank(n: number, r: number): number[] {
-  if (n <= 1) return n === 1 ? [1] : [];
-  let rr = r;
-  for (let i = 1; i < n; i += 2) {
-    const leftCount = alternatingCount(i);
-    const rightCount = alternatingCount(n - 1 - i);
-    const subsetCount = binomial(n - 1, i);
-    const block = subsetCount * leftCount * rightCount;
-    if (rr < block) {
-      const perBlock = leftCount * rightCount;
-      const subsetIndex = Math.floor(rr / perBlock);
-      const within = rr % perBlock;
-      const li = Math.floor(within / rightCount);
-      const ri = within % rightCount;
-      // KSubsetUnrank(n-1, i, subsetIndex): the left block's VALUES (a subset of {1,…,n−1}); its
-      // complement (ascending) is the right block's values. Each block's own alternating arrangement
-      // is computed on RELATIVE ranks 1..size, then relabeled onto its chosen actual values.
-      const leftValues = KSubsetUnrank(n - 1, i, subsetIndex);
-      const leftValueSet = new Set(leftValues);
-      const rightValues = Array.from({ length: n - 1 }, (_, k) => k + 1).filter((v) => !leftValueSet.has(v));
-      const leftArrangement = alternatingUnrank(i, li).map((v) => leftValues[v - 1]);
-      const rightArrangement = alternatingUnrank(n - 1 - i, ri).map((v) => rightValues[v - 1]);
-      return [...leftArrangement, n, ...rightArrangement];
-    }
-    rr -= block;
-  }
-  throw new Error(`alternatingUnrank: rank out of range for n=${n}`);
-}
-function alternatingRank(perm: readonly number[]): number {
-  const n = perm.length;
-  if (n <= 1) return 0;
-  const i = perm.indexOf(n);
-  const leftValues = perm.slice(0, i);
-  const rightValues = perm.slice(i + 1);
-  const rightCount = alternatingCount(n - 1 - i);
-  const perBlock = alternatingCount(i) * rightCount;
-  let rank = 0;
-  for (let ii = 1; ii < i; ii += 2) rank += binomial(n - 1, ii) * alternatingCount(ii) * alternatingCount(n - 1 - ii);
-  const leftSorted = leftValues.slice();
-  leftSorted.sort((a, b) => a - b);
-  const subsetIndex = KSubsetRank(leftSorted);
-  const leftRankOf = new Map(leftSorted.map((v, idx) => [v, idx + 1]));
-  const rightSorted = rightValues.slice();
-  rightSorted.sort((a, b) => a - b);
-  const rightRankOf = new Map(rightSorted.map((v, idx) => [v, idx + 1]));
-  const li = alternatingRank(leftValues.map((v) => leftRankOf.get(v) as number));
-  const ri = alternatingRank(rightValues.map((v) => rightRankOf.get(v) as number));
-  return rank + subsetIndex * perBlock + li * rightCount + ri;
-}
 
 // ─── ConnectedPermutations(n): indecomposable — no proper prefix's values are exactly {1,…,j} (A003319) ─
 // Insert values 1,2,…,n in increasing order (each newly-inserted value is the current max, so it either
@@ -228,80 +180,6 @@ function isConnected(perm: readonly number[], n: number): boolean {
   }
   return true;
 }
-function connectedUnrank(n: number, r: number): number[] {
-  if (n === 0) return [];
-  let j = 0;
-  let e = 0;
-  let m = n;
-  let rr = r;
-  let smallPool: number[] = [];
-  const result: number[] = [];
-  while (m > 0) {
-    let placed = false;
-    const maxT = m - e;
-    for (let t = 1; t <= maxT && !placed; t++) {
-      if (e === 0 && m > 1 && t === 1) continue;
-      const newE = e + (t - 1);
-      const c = connectedFCompletions(m - 1, newE);
-      if (rr < c) {
-        const v = j + e + t;
-        result.push(v);
-        for (let s = j + e + 1; s <= j + e + t - 1; s++) smallPool.push(s);
-        smallPool.sort((a, b) => a - b);
-        e = newE;
-        j++;
-        m--;
-        placed = true;
-        break;
-      }
-      rr -= c;
-    }
-    if (placed) continue;
-    const c1 = connectedFCompletions(m - 1, e - 1);
-    const idx = Math.floor(rr / c1);
-    rr %= c1;
-    result.push(smallPool[idx]);
-    smallPool.splice(idx, 1);
-    e--;
-    j++;
-    m--;
-  }
-  return result;
-}
-function connectedRank(perm: readonly number[]): number {
-  const n = perm.length;
-  if (n <= 1) return 0;
-  let e = 0;
-  let m = n;
-  let runningMax = 0;
-  let smallPool: number[] = [];
-  let rank = 0;
-  for (const v of perm) {
-    if (v > runningMax) {
-      const t = v - runningMax;
-      for (let tp = 1; tp < t; tp++) {
-        if (e === 0 && m > 1 && tp === 1) continue;
-        rank += connectedFCompletions(m - 1, e + (tp - 1));
-      }
-      for (let s = runningMax + 1; s < v; s++) smallPool.push(s);
-      smallPool.sort((a, b) => a - b);
-      e = e + (t - 1);
-      runningMax = v;
-    } else {
-      const maxT = m - e;
-      for (let tp = 1; tp <= maxT; tp++) {
-        if (e === 0 && m > 1 && tp === 1) continue;
-        rank += connectedFCompletions(m - 1, e + (tp - 1));
-      }
-      const idx = smallPool.indexOf(v);
-      rank += idx * connectedFCompletions(m - 1, e - 1);
-      smallPool.splice(idx, 1);
-      e--;
-    }
-    m--;
-  }
-  return rank;
-}
 
 // ─── PermutationsAvoiding{123,132,213,231,312,321}(n): classical length-3 pattern classes, all ────────
 // Catalan-counted (Knuth). `containsPattern` (an O(n³) triple check, parameterized by the pattern) is
@@ -340,197 +218,23 @@ function containsPattern(perm: readonly number[], pattern: readonly [number, num
   return false;
 }
 
-function permutationInverse(perm: readonly number[]): number[] {
-  const n = perm.length;
-  const inv: number[] = Array.from({ length: n });
-  for (let i = 0; i < n; i++) inv[perm[i] - 1] = i + 1;
-  return inv;
-}
-function permutationComplement(perm: readonly number[]): number[] {
-  const n = perm.length;
-  return perm.map((v) => n + 1 - v);
-}
-
 // Av(231): position m of n splits into a {1,…,m} block (231-avoiding) then n then a {m+1,…,n−1} block
 // (231-avoiding) — any before/after pair with before > after would itself be a 231 with n as the "3", so
 // avoidance forces the blocks apart like this. Count is the Catalan convolution by construction.
-function av231Unrank(n: number, r: number): number[] {
-  if (n === 0) return [];
-  let rr = r;
-  for (let m = 0; m < n; m++) {
-    const rightCount = catalanNumber(n - 1 - m);
-    const block = catalanNumber(m) * rightCount;
-    if (rr < block) {
-      const left = av231Unrank(m, Math.floor(rr / rightCount));
-      const right = av231Unrank(n - 1 - m, rr % rightCount).map((v) => v + m);
-      return [...left, n, ...right];
-    }
-    rr -= block;
-  }
-  throw new Error(`av231Unrank: rank out of range for n=${n}`);
-}
-function av231Rank(perm: readonly number[]): number {
-  const n = perm.length;
-  if (n === 0) return 0;
-  const m = perm.indexOf(n);
-  let rank = 0;
-  for (let mm = 0; mm < m; mm++) rank += catalanNumber(mm) * catalanNumber(n - 1 - mm);
-  const rightCount = catalanNumber(n - 1 - m);
-  const left = perm.slice(0, m);
-  const right = perm.slice(m + 1).map((v) => v - m);
-  return rank + av231Rank(left) * rightCount + av231Rank(right);
-}
 
 // Av(321): insert values 1,2,…,n in increasing order. Each new value is the current max, so it can only
 // violate 321 by sitting before a still-later descent; valid gaps are exactly "within the current
 // trailing increasing run", (s+1) of them where s is that run's length — and the run's length after
 // inserting is all the DP needs to remember (not the whole arrangement). f(remaining, s) = completions
 // from state s with `remaining` insertions left to place.
-const f321Cache = new Map<string, number>();
-function f321(remaining: number, s: number): number {
-  if (remaining === 0) return 1;
-  const key = `${remaining},${s}`;
-  const cached = f321Cache.get(key);
-  if (cached !== undefined) return cached;
-  let total = 0;
-  for (let g = 0; g <= s; g++) total += f321(remaining - 1, g === s ? s + 1 : s - g);
-  f321Cache.set(key, total);
-  return total;
-}
-function trailingIncreasingLength(arr: readonly number[]): number {
-  const m = arr.length;
-  if (m === 0) return 0;
-  let len = 1;
-  for (let i = m - 1; i > 0 && arr[i - 1] < arr[i]; i--) len++;
-  return len;
-}
-function av321Unrank(n: number, r: number): number[] {
-  if (n === 0) return [];
-  const arrangement = [1];
-  let s = 1;
-  let rr = r;
-  for (let v = 2; v <= n; v++) {
-    const remainingAfter = n - v;
-    let g = 0;
-    for (; g <= s; g++) {
-      const sp = g === s ? s + 1 : s - g;
-      const c = f321(remainingAfter, sp);
-      if (rr < c) break;
-      rr -= c;
-    }
-    arrangement.splice(v - 1 - s + g, 0, v);
-    s = g === s ? s + 1 : s - g;
-  }
-  return arrangement;
-}
-function av321Rank(perm: readonly number[]): number {
-  const n = perm.length;
-  if (n <= 1) return 0;
-  let arr = perm.slice();
-  let rank = 0;
-  for (let v = n; v >= 2; v--) {
-    const p = arr.indexOf(v);
-    const rest = [...arr.slice(0, p), ...arr.slice(p + 1)];
-    const s = trailingIncreasingLength(rest);
-    const k = arr.length - 1 - p; // elements after v's position
-    const g = s - k;
-    const remainingAfter = n - v;
-    for (let gp = 0; gp < g; gp++) rank += f321(remainingAfter, gp === s ? s + 1 : s - gp);
-    arr = rest;
-  }
-  return rank;
-}
 
 // The remaining four are these two under the classical symmetries of pattern classes: reverse maps
 // Av(231)→Av(132), complement maps Av(231)→Av(213) and Av(321)→Av(123), inverse maps Av(231)→Av(312).
-const AVOIDERS: Record<
-  string,
-  {
-    readonly unrank: (n: number, r: number) => number[];
-    readonly rank: (perm: readonly number[]) => number;
-  }
-> = {
-  PermutationsAvoiding231: { unrank: av231Unrank, rank: av231Rank },
-  PermutationsAvoiding132: {
-    unrank: (n, r) => {
-      const p = av231Unrank(n, r);
-      p.reverse();
-      return p;
-    },
-    rank: (perm) => {
-      const p = perm.slice();
-      p.reverse();
-      return av231Rank(p);
-    },
-  },
-  PermutationsAvoiding213: {
-    unrank: (n, r) => permutationComplement(av231Unrank(n, r)),
-    rank: (perm) => av231Rank(permutationComplement(perm)),
-  },
-  PermutationsAvoiding312: {
-    unrank: (n, r) => permutationInverse(av231Unrank(n, r)),
-    rank: (perm) => av231Rank(permutationInverse(perm)),
-  },
-  PermutationsAvoiding321: { unrank: av321Unrank, rank: av321Rank },
-  PermutationsAvoiding123: {
-    unrank: (n, r) => permutationComplement(av321Unrank(n, r)),
-    rank: (perm) => av321Rank(permutationComplement(perm)),
-  },
-};
 
 // ─── KCyclePermutations(n,k): exactly k cycles — the unsigned Stirling-1 triangle. ─────────────────
 // Built by the standard insertion bijection: c(n,k) = c(n−1,k−1) + (n−1)·c(n−1,k) — element n either
 // starts a new (singleton) cycle, or is spliced in right after one of the n−1 existing elements, in
 // "successor function" terms (which is exactly one-line notation: image[i] = successor of i).
-const stirling1Cache = new Map<string, number>();
-function stirling1(n: number, k: number): number {
-  if (n < 0 || k < 0 || k > n) return 0;
-  if (n === 0) return k === 0 ? 1 : 0;
-  const key = `${n},${k}`;
-  const cached = stirling1Cache.get(key);
-  if (cached !== undefined) return cached;
-  const v = stirling1(n - 1, k - 1) + (n - 1) * stirling1(n - 1, k);
-  stirling1Cache.set(key, v);
-  return v;
-}
-function kCycleUnrank(n: number, k: number, r: number): number[] {
-  if (n === 0) return [];
-  const base = stirling1(n - 1, k - 1);
-  if (r < base) return [...kCycleUnrank(n - 1, k - 1, r), n];
-  const r2 = r - base;
-  const subIndex = Math.floor(r2 / (n - 1));
-  const x = (r2 % (n - 1)) + 1; // splice n in right after element x
-  const sub = kCycleUnrank(n - 1, k, subIndex);
-  const next = sub.slice();
-  next.push(sub[x - 1]);
-  next[x - 1] = n;
-  return next;
-}
-function kCycleRank(perm: number[], k: number): number {
-  const n = perm.length;
-  if (n === 0) return 0;
-  const x = perm.indexOf(n) + 1;
-  if (x === n) return kCycleRank(perm.slice(0, n - 1), k - 1);
-  const sub = perm.slice(0, n - 1);
-  sub[x - 1] = perm[n - 1];
-  const subIndex = kCycleRank(sub, k);
-  return stirling1(n - 1, k - 1) + subIndex * (n - 1) + (x - 1);
-}
-function cycleCount(perm: number[]): number {
-  const n = perm.length;
-  const seen: boolean[] = Array.from({ length: n + 1 }, () => false);
-  let count = 0;
-  for (let start = 1; start <= n; start++) {
-    if (seen[start]) continue;
-    count++;
-    let cur = start;
-    while (!seen[cur]) {
-      seen[cur] = true;
-      cur = perm[cur - 1];
-    }
-  }
-  return count;
-}
 
 // ─── KDescentPermutations(n,k): exactly k descents — the Eulerian triangle. ────────────────────────
 // Insertion bijection: A(n,k) = (k+1)·A(n−1,k) + (n−k)·A(n−1,k−1). Inserting the max value n into a
@@ -552,54 +256,6 @@ function descentPositions(perm: readonly number[]): number[] {
   const res: number[] = [];
   for (let i = 0; i + 1 < perm.length; i++) if (perm[i] > perm[i + 1]) res.push(i);
   return res;
-}
-function ascentPositions(perm: readonly number[]): number[] {
-  const res: number[] = [];
-  for (let i = 0; i + 1 < perm.length; i++) if (perm[i] < perm[i + 1]) res.push(i);
-  return res;
-}
-function insertAt(sub: number[], pos: number, value: number): number[] {
-  return [...sub.slice(0, pos + 1), value, ...sub.slice(pos + 1)];
-}
-function kDescentUnrank(n: number, k: number, r: number): number[] {
-  if (n === 0) return [];
-  if (n === 1) return [1];
-  const same = (k + 1) * eulerianA(n - 1, k);
-  if (r < same) {
-    const subIndex = Math.floor(r / (k + 1));
-    const gap = r % (k + 1);
-    const sub = kDescentUnrank(n - 1, k, subIndex);
-    if (gap === 0) return [...sub, n];
-    return insertAt(sub, descentPositions(sub)[gap - 1], n);
-  }
-  const r2 = r - same;
-  const denom = n - k;
-  const subIndex = Math.floor(r2 / denom);
-  const gap = r2 % denom;
-  const sub = kDescentUnrank(n - 1, k - 1, subIndex);
-  if (gap === 0) return [n, ...sub];
-  return insertAt(sub, ascentPositions(sub)[gap - 1], n);
-}
-function kDescentRank(perm: number[], k: number): number {
-  const n = perm.length;
-  if (n <= 1) return 0;
-  const idx = perm.indexOf(n);
-  if (idx === n - 1) return kDescentRank(perm.slice(0, n - 1), k) * (k + 1);
-  if (idx === 0) {
-    const subIndex = kDescentRank(perm.slice(1), k - 1);
-    return (k + 1) * eulerianA(n - 1, k) + subIndex * (n - k);
-  }
-  const L = perm[idx - 1];
-  const R = perm[idx + 1];
-  const sub = [...perm.slice(0, idx), ...perm.slice(idx + 1)];
-  if (L > R) {
-    const subIndex = kDescentRank(sub, k);
-    const gap = descentPositions(sub).indexOf(idx - 1) + 1;
-    return subIndex * (k + 1) + gap;
-  }
-  const subIndex = kDescentRank(sub, k - 1);
-  const gap = ascentPositions(sub).indexOf(idx - 1) + 1;
-  return (k + 1) * eulerianA(n - 1, k) + subIndex * (n - k) + gap;
 }
 
 // ─── KInversionPermutations(n,k): exactly k inversions — the Mahonian triangle. ────────────────────
@@ -734,7 +390,7 @@ export const PermutationsAsCyclesFamily: NumberKernel = {
   rank: (e, [n]) => cyclesListed(n!).rank.get(JSON.stringify(e)) ?? -1,
 };
 
-export const entries: NumberKernel[] = [
+export const entries: (NumberKernel | EpsilFamily)[] = [
   {
     ...ints(
       "EvenPermutations",
@@ -780,50 +436,25 @@ export const entries: NumberKernel[] = [
     ),
     carrier: "SubexcedantSeq",
   },
-  {
-    ...ints(
-      "AlternatingPermutations",
-      1,
-      ([n]) => alternatingCount(n),
-      ([n], r) => alternatingUnrank(n, r),
-      (a, [n]) => isAlternating(a, n),
-      (a) => alternatingRank(a),
-    ),
-    carrier: "Permutation",
-  },
-  {
-    ...ints(
-      "ConnectedPermutations",
-      1,
-      ([n]) => connectedCount(n),
-      ([n], r) => connectedUnrank(n, r),
-      (a, [n]) => isConnected(a, n),
-      (a) => connectedRank(a),
-    ),
-    carrier: "Permutation",
-  },
-  {
-    ...ints(
-      "KCyclePermutations",
-      2,
-      ([n, k]) => stirling1(n, k),
-      ([n, k], r) => kCycleUnrank(n, k, r),
-      (a, [n, k]) => IsPermutationOf(a, n) && cycleCount(a) === k,
-      (a, [, k]) => kCycleRank(a, k),
-    ),
-    carrier: "Permutation",
-  },
-  {
-    ...ints(
-      "KDescentPermutations",
-      2,
-      ([n, k]) => eulerianA(n, k),
-      ([n, k], r) => kDescentUnrank(n, k, r),
-      (a, [n, k]) => IsPermutationOf(a, n) && descentPositions(a).length === k,
-      (a, [, k]) => kDescentRank(a, k),
-    ),
-    carrier: "Permutation",
-  },
+  inducedOrder({
+    head: "AlternatingPermutations",
+    paramCount: 1,
+    count: ([n]) => alternatingCount(n),
+    member: (a, [n]) => isAlternating(a as number[], n),
+  }),
+  inducedOrder({
+    head: "ConnectedPermutations",
+    paramCount: 1,
+    count: ([n]) => connectedCount(n),
+    member: (a, [n]) => isConnected(a as number[], n),
+  }),
+  kCyclePermutations,
+  inducedOrder({
+    head: "KDescentPermutations",
+    paramCount: 2,
+    count: ([n, k]) => eulerianA(n, k),
+    member: (a, [, k]) => descentPositions(a as number[]).length === k,
+  }),
   {
     ...ints(
       "KInversionPermutations",
@@ -835,15 +466,12 @@ export const entries: NumberKernel[] = [
     ),
     carrier: "Permutation",
   },
-  ...Object.entries(PATTERNS).map(([head, pattern]) => ({
-    ...ints(
+  ...Object.entries(PATTERNS).map(([head, pattern]) =>
+    inducedOrder({
       head,
-      1,
-      ([n]) => catalanNumber(n),
-      ([n], r) => AVOIDERS[head].unrank(n, r),
-      (a, [n]) => IsPermutationOf(a, n) && !containsPattern(a, pattern),
-      (a) => AVOIDERS[head].rank(a),
-    ),
-    carrier: "Permutation",
-  })),
+      paramCount: 1,
+      count: ([n]) => catalanNumber(n),
+      member: (a) => !containsPattern(a as number[], pattern),
+    }),
+  ),
 ];

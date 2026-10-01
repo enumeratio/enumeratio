@@ -5,7 +5,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
-import { numberKernel } from "../../collections/src/families/types.ts";
+import { liftFamily } from "../../collections/src/families/epsil.ts";
 import { declareStats } from "../../collections/src/stats.ts";
 import { declareStatistics } from "../../src/statistics/declare.ts";
 import { PERMUTATIONS_CARRIERS } from "./carrier-data.ts";
@@ -14,7 +14,7 @@ import { PERMUTATION_STATISTICS } from "./statistics.ts";
 
 export function declarePermutations(ce: ComputeEngine): void {
   declareCarriers(ce, PERMUTATIONS_CARRIERS, { plurals: false });
-  declareFamilies(ce, [...coreFamilies, ...[...permutationsEntries, ...permutationClassesEntries].map(numberKernel)]);
+  declareFamilies(ce, [...coreFamilies, ...[...permutationsEntries, ...permutationClassesEntries].map(liftFamily)]);
   // Collections' fast permutation-statistic kernels (Inversions, Descents, …), BEFORE the
   // expr-based ones below: `declareStatistics`'s own "a kernel already claims this head" skip
   // only works if the kernel got there first (step 6b moved `declareStats`'s call site here,
