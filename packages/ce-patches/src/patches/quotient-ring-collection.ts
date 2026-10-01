@@ -5,6 +5,7 @@ import { quotientRingOverIntegers } from "../compute-engine/library/sets.ts";
 // and is typed `set<integer>`, though its elements are residue classes.
 export const quotientRingCollection: Patch = {
   id: "quotient-ring-collection",
+  issue: "https://github.com/cortex-js/compute-engine/issues/399",
   lands:
     "QuotientRing(Integers, m) is the finite collection of its m residue classes, typed without claiming they are integers",
   files: ["src/compute-engine/library/sets.ts"],
