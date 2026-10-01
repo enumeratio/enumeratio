@@ -66,7 +66,7 @@ export function evaluateSignAtComplexInfinity(ce: ComputeEngine): void {
 }
 
 // --- Multiply at the infinities ----------------------------------------------------------
-// cortex-js/compute-engine#341: Multiply(c, ±Infinity) collapses straight to the undirected
+// Multiply(c, ±Infinity) collapses straight to the undirected
 // ComplexInfinity once c is complex, throwing away the direction a real infinity times a
 // finite nonzero complex number still has (Wolfram: DirectedInfinity[c/Abs[c]]). A real c
 // already gets the correct ±Infinity natively -- this only steps in off the real axis.
