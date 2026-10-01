@@ -3,7 +3,15 @@
 // alone doesn't bring `semver`.
 
 export { admitsSystem, type LibraryIndex, libraryIndexOf, type LibraryField } from "./format.ts";
-export { type FetchJson, fetchJson, githubHost, type JsdelivrOptions, npmHost, type PackageHost } from "./host.ts";
+export {
+  type FetchJson,
+  fetchJson,
+  githubHost,
+  type GithubOptions,
+  type JsdelivrOptions,
+  npmHost,
+  type PackageHost,
+} from "./host.ts";
 export { type LockOptions, lockLibraries, type LibraryLock, specsOf } from "./lock.ts";
 export { catalog, type CatalogOptions } from "./catalog.ts";
 export {

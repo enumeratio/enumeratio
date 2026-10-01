@@ -2,6 +2,8 @@
 // its versions. npm and GitHub both do, through jsDelivr's mirrors, with CORS, so a page reads
 // them the way a build does; a GitLab or private host is another implementation of the same.
 
+import { valid } from "semver";
+
 /** Reads a URL as JSON; `fetch` by default, anything else in a test or a build cache. */
 export type FetchJson = (url: string) => Promise<unknown>;
 
@@ -52,6 +54,28 @@ function jsdelivr(
 export const npmHost = (options: JsdelivrOptions = {}): PackageHost =>
   jsdelivr("npm", (name) => (name.startsWith("@") ? name.slice(1, name.indexOf("/")) : undefined), options);
 
-/** GitHub repositories, over jsDelivr, versioned by their tags: the owner is the namespace. */
-export const githubHost = (options: JsdelivrOptions = {}): PackageHost =>
-  jsdelivr("gh", (name) => name.slice(0, name.indexOf("/")), options);
+export interface GithubOptions extends JsdelivrOptions {
+  /** GitHub's API, whose tag list stands in when jsDelivr can't list a repository's versions. */
+  readonly api?: string;
+}
+
+/**
+ * GitHub repositories, over jsDelivr, versioned by their tags: the owner is the namespace. jsDelivr
+ * can't list a new repository's versions for a while (its data API answers 502), so the tags
+ * come from GitHub's API then: each tag that is a version, a leading `v` dropped.
+ */
+export function githubHost(options: GithubOptions = {}): PackageHost {
+  const { fetch = fetchJson, api = "https://api.github.com" } = options;
+  const host = jsdelivr("gh", (name) => name.slice(0, name.indexOf("/")), options);
+  return {
+    ...host,
+    versions: async (name) => {
+      try {
+        return await host.versions(name);
+      } catch {
+        const tags = (await fetch(`${api}/repos/${name}/tags?per_page=100`)) as readonly { name: string }[];
+        return tags.map((t) => t.name.replace(/^v/, "")).filter((v) => valid(v) !== null);
+      }
+    },
+  };
+}

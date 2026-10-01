@@ -1,0 +1,50 @@
+name: Pack an enumeratio library
+description: >-
+  Pack a library with the system at this action's ref: write its index, each symbol's
+  definition, examples and mappings, and its JavaScript entry, and check every pin resolves.
+  A library pins the system it's written against by the ref it uses this action at.
+
+inputs:
+  directory:
+    description: The library's root, relative to the workspace.
+    default: .
+  since:
+    description: The previous version's checkout, to check the version number says at least what changed.
+    default: ""
+  check:
+    description: Fail when packing changes a committed file (the packed files are out of date).
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    # The action's own checkout is the system's repository at the ref the library asked for.
+    - uses: pnpm/action-setup@v4
+      with:
+        version: 12.3.4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+    - name: the system's tooling
+      shell: bash
+      working-directory: ${{ github.action_path }}/../../..
+      run: |
+        pnpm install --frozen-lockfile --filter '@enumeratio/manifest...'
+        pnpm --filter '@enumeratio/manifest...' run build
+    - name: pack
+      shell: bash
+      env:
+        LIBRARY: ${{ github.workspace }}/${{ inputs.directory }}
+        SINCE: ${{ inputs.since }}
+        SYSTEM: ${{ github.action_path }}/../../..
+      run: |
+        if [ -n "$SINCE" ]; then
+          node "$SYSTEM/packages/manifest/scripts/pack-library.ts" "$LIBRARY" --since "$SINCE"
+        else
+          node "$SYSTEM/packages/manifest/scripts/pack-library.ts" "$LIBRARY"
+        fi
+    - name: what's committed is what packing writes
+      if: inputs.check == 'true'
+      shell: bash
+      working-directory: ${{ github.workspace }}/${{ inputs.directory }}
+      run: git diff --exit-code -- . ':!node_modules'

@@ -231,6 +231,16 @@ test("a symbol is described from the index alone: no definition fetched, no inst
   expect(log.filter((path) => !path.endsWith("package.json") && !path.endsWith("index.json"))).toEqual([]);
 });
 
+test("GitHub's own tags stand in when jsDelivr can't list a repository's versions", async () => {
+  const fetch: FetchJson = async (url) => {
+    if (url.startsWith("https://data.jsdelivr.com/")) throw new Error(`${url}: 502`);
+    if (url === "https://api.github.com/repos/ada/primes/tags?per_page=100")
+      return [{ name: "v1.1.0" }, { name: "1.0.0" }, { name: "latest" }];
+    throw new Error(`${url}: 404`);
+  };
+  expect(await githubHost({ fetch }).versions("ada/primes")).toEqual(["1.1.0", "1.0.0"]);
+});
+
 test("from ranges: lock the versions, then read them", async () => {
   const { fetch } = cdn();
   const listVersions = async (name: string) =>
