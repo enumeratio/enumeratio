@@ -1,7 +1,7 @@
 // The shared compute-engine instance: created lazily on first use (its own chunk in a
 // browser, deduped by the module registry so every element shares one), configured by
-// whoever registered a library first. Base-level so the framework glue (`vue.ts`,
-// `react.ts`) and the elements parse through the same engine.
+// whoever registered a library first, or the libraries resolved per expression through a
+// host resolver (`loadEngineFor`). Base-level, so every element parses through one engine.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
@@ -54,16 +54,39 @@ export function configureEngine(fn: (ce: ComputeEngine) => void): void {
  * async import can lose the race and render before they land. Absent (tests, CLI,
  * plain hosts), engine creation proceeds immediately.
  */
-type EngineGate = { __notatioEngineReady?: Promise<unknown> | (() => Promise<unknown>) };
+type EngineGate = {
+  __notatioEngineReady?: Promise<unknown> | (() => Promise<unknown>);
+  /** What every engine needs before it's built, whatever it declares: the notation. */
+  __notatioEngineSetup?: () => Promise<unknown>;
+  /** The host's resolver, set before any element mounts (as the gates are). */
+  __notatioEngineResolver?: EngineResolver;
+};
 
-/** The shared compute-engine instance, created and configured on first use. */
-export function loadEngine(): Promise<ComputeEngine> {
-  enginePromise ??= (async () => {
-    // A function gate is called only now: a page that never needs this engine never loads
-    // the libraries it would declare.
-    const ready = (globalThis as EngineGate).__notatioEngineReady;
-    const gate = typeof ready === "function" ? ready() : ready;
-    if (gate) await gate.catch(() => {});
+/**
+ * What declares libraries into the engine, once each: those an expression names
+ * (`@enumeratio/manifest`'s `createResolver`), or all of them.
+ */
+export interface EngineResolver {
+  ensure(ce: ComputeEngine, json: unknown): Promise<unknown>;
+  ensureAll(ce: ComputeEngine): Promise<unknown>;
+}
+
+let configured: EngineResolver | undefined;
+let bare: Promise<ComputeEngine> | undefined;
+const resolverOf = (): EngineResolver | undefined => configured ?? (globalThis as EngineGate).__notatioEngineResolver;
+
+/**
+ * Register the host's resolver: `loadEngineFor` then declares only the libraries each
+ * expression names, instead of the host declaring every library before the first use.
+ */
+export function configureResolver(r: EngineResolver): void {
+  configured = r;
+}
+
+/** The shared engine with the notation and configurators in, but not the host's gate. */
+function createEngine(): Promise<ComputeEngine> {
+  return (bare ??= (async () => {
+    await (globalThis as EngineGate).__notatioEngineSetup?.().catch(() => {});
     const [{ ComputeEngine, LatexSyntax, LATEX_DICTIONARY }, { displayDictionary }] = await Promise.all([
       import("@cortex-js/compute-engine"),
       import("./display.ts"),
@@ -74,6 +97,68 @@ export function loadEngine(): Promise<ComputeEngine> {
     });
     for (const fn of configurators) fn(engine);
     return engine;
+  })());
+}
+
+/**
+ * The shared engine, with the libraries `json` names declared: through the host's resolver
+ * where there is one, else everything, as `loadEngine`.
+ */
+export async function loadEngineFor(json: unknown): Promise<ComputeEngine> {
+  const resolver = resolverOf();
+  if (resolver === undefined) return loadEngine();
+  const ce = await createEngine();
+  await resolver.ensure(ce, json);
+  return ce;
+}
+
+/**
+ * Declare what `json` names into `ce` (the shared engine), through the host's resolver;
+ * whether anything new was declared. Without a resolver, `ce` already has everything.
+ */
+export async function ensureFor(ce: ComputeEngine, json: unknown): Promise<boolean> {
+  const ensured = (await resolverOf()?.ensure(ce, json)) as { declared?: readonly unknown[] } | undefined;
+  return (ensured?.declared?.length ?? 0) > 0;
+}
+
+/**
+ * Parse with the shared engine, declare what the result names, and parse again where that
+ * declared something (a head's own parse can depend on it being known). `parse` gets the
+ * engine; what it returns carries the `json`.
+ */
+export async function parseFor<T extends { readonly json?: unknown }>(
+  parse: (ce: ComputeEngine) => T,
+): Promise<{ engine: ComputeEngine; parsed: T }> {
+  if (resolverOf() === undefined) {
+    const engine = await loadEngine();
+    return { engine, parsed: parse(engine) };
+  }
+  const engine = await createEngine();
+  const parsed = parse(engine);
+  return { engine, parsed: (await ensureFor(engine, parsed.json)) ? parse(engine) : parsed };
+}
+
+/** The shared engine before anything is resolved into it, for a caller that resolves itself. */
+export function loadBareEngine(): Promise<ComputeEngine> {
+  return resolverOf() === undefined ? loadEngine() : createEngine();
+}
+
+/** The shared compute-engine instance, created and configured on first use. */
+export function loadEngine(): Promise<ComputeEngine> {
+  enginePromise ??= (async () => {
+    // With a resolver, everything goes through it, so a library is declared once either way.
+    const resolver = resolverOf();
+    if (resolver !== undefined) {
+      const ce = await createEngine();
+      await resolver.ensureAll(ce);
+      return ce;
+    }
+    // A function gate is called only now: a page that never needs this engine never loads
+    // the libraries it would declare.
+    const ready = (globalThis as EngineGate).__notatioEngineReady;
+    const gate = typeof ready === "function" ? ready() : ready;
+    if (gate) await gate.catch(() => {});
+    return createEngine();
   })();
   return enginePromise;
 }

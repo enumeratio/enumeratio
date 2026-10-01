@@ -9,7 +9,7 @@ import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CONTROL_EVENT, type ControlChange, debug } from "@enumeratio/frontend/core";
 import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
 import { CONTROL_TAGS, type ControlElement, controlSelector } from "./define.ts";
-import { loadEngine } from "./mathlive.ts";
+import { ensureFor, loadBareEngine } from "./mathlive.ts";
 
 const log = debug("scope");
 
@@ -74,7 +74,7 @@ export class Scope {
     await Promise.all([...new Set(controls.map((el) => el.localName))].map((tag) => customElements.whenDefined(tag)));
     // No control, no template to fill: a page without one never loads the engine for it.
     if (controls.length === 0 && this.#templates.length === 0) return;
-    const engine = (this.#engine ??= await loadEngine());
+    const engine = (this.#engine ??= await loadBareEngine());
     for (const el of controls) this.#read(el);
     // A re-read MERGES: a template already applied has its result where the wildcard
     // was, so it would not be found again -- keep what was captured, forget only what
@@ -92,6 +92,8 @@ export class Scope {
       }
     }
     this.#templates = kept;
+    // The libraries the templates name, before any is filled and evaluated.
+    await ensureFor(engine, ["List", ...kept.map((t) => t.json)]);
     log("%s: %o over %d templates", this.owner?.localName ?? "page", [...this.#values.keys()], this.#templates.length);
     this.#apply();
   }

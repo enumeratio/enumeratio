@@ -2,7 +2,7 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { loadEngine, loadMarkup } from "./mathlive.ts";
+import { loadMarkup, parseFor } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 
 /**
@@ -56,10 +56,12 @@ export class NotatioDynamic extends LitElement {
       this._markup = "";
       return;
     }
-    const [engine, convert] = await Promise.all([loadEngine(), loadMarkup()]);
-    const { json, errors } = parseExpression(this.value, {
-      parseLatex: (tex: string) => engine.parse(tex).json,
-    });
+    // The engine with only the libraries the readout names.
+    const [{ engine, parsed }, convert] = await Promise.all([
+      parseFor((ce) => parseExpression(this.value, { parseLatex: (tex: string) => ce.parse(tex).json })),
+      loadMarkup(),
+    ]);
+    const { json, errors } = parsed;
     // Unparseable input renders nothing rather than an error, as everywhere else here;
     // turn on the `scope` debug namespace to see why.
     if (errors.length) {

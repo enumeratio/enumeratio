@@ -166,22 +166,35 @@ export function createResolver<Engine extends object>(
   lookup: Lookup = manifest,
 ): Resolver<Engine> {
   const declared = new WeakMap<Engine, Set<string>>();
+  // One call at a time per engine: a call that finds a library already marked must not go on
+  // until it's declared. Two elements resolving at once would otherwise declare combinatorics
+  // while the other is still importing the structures it builds on.
+  const queues = new WeakMap<Engine, Promise<unknown>>();
   return {
-    async ensure(ce, json) {
-      const done = declared.get(ce) ?? new Set<string>();
-      declared.set(ce, done);
-      const { libraries: needed, missing } = plan(packagesNeeded(json, libraries, lookup), libraries);
-      const fresh: string[] = [];
-      // In order, one at a time: a library's declarations may read an earlier one's. Across
-      // calls, a library a later expression needs lands after those already declared, even if
-      // the host lists it earlier; a host whose order matters beyond `requires` ensures up front.
-      for (const library of needed) {
-        if (done.has(library.name)) continue;
-        done.add(library.name);
-        await library.declare(ce);
-        fresh.push(library.name);
-      }
-      return { declared: fresh, missing };
+    ensure(ce, json) {
+      const run = (queues.get(ce) ?? Promise.resolve()).then(() => ensureNow(ce, json));
+      queues.set(
+        ce,
+        run.catch(() => {}),
+      );
+      return run;
     },
   };
+
+  async function ensureNow(ce: Engine, json: unknown): Promise<{ declared: string[]; missing: string[] }> {
+    const done = declared.get(ce) ?? new Set<string>();
+    declared.set(ce, done);
+    const { libraries: needed, missing } = plan(packagesNeeded(json, libraries, lookup), libraries);
+    const fresh: string[] = [];
+    // In order, one at a time: a library's declarations may read an earlier one's. Across
+    // calls, a library a later expression needs lands after those already declared, even if
+    // the host lists it earlier; a host whose order matters beyond `requires` ensures up front.
+    for (const library of needed) {
+      if (done.has(library.name)) continue;
+      done.add(library.name);
+      await library.declare(ce);
+      fresh.push(library.name);
+    }
+    return { declared: fresh, missing };
+  }
 }

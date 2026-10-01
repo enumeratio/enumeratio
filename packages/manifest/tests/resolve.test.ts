@@ -71,3 +71,20 @@ test("ensure: each library once per engine", async () => {
   expect(await resolver.ensure({}, ["BarnesG", "y"])).toEqual({ declared: ["analytic"], missing: [] });
   expect(log).toEqual(["analytic", "analytic"]);
 });
+
+test("ensure: calls at once declare in order, each waiting for what another is declaring", async () => {
+  const log: string[] = [];
+  // A slow import, as a browser's dynamic import is: structures takes a while to declare.
+  const slow = (name: string, ms: number): Library<object> => ({
+    name,
+    declare: async () => {
+      log.push(`start ${name}`);
+      await new Promise((resolve) => setTimeout(resolve, ms));
+      log.push(`end ${name}`);
+    },
+  });
+  const resolver = createResolver([slow("structures", 20), slow("combinatorics", 1)]);
+  const ce = {};
+  await Promise.all([resolver.ensure(ce, ["Floor", 1]), resolver.ensure(ce, ["Permutations", 3])]);
+  expect(log).toEqual(["start structures", "end structures", "start combinatorics", "end combinatorics"]);
+});
