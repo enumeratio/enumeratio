@@ -9,7 +9,7 @@ signatures:
   - call: Arsech(x)
     description: Inverse hyperbolic secant, the inverse of Sech.
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> Indeterminate | number | signed_infinity
+    type: (complex | signed_infinity | ~oo) -> number
     overrides: compute-engine
 seeAlso:
   - Arcosh

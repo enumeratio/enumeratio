@@ -7,7 +7,7 @@ signatures:
   - call: IntegerPartitions(n)
     description: every way to write $n$ as a sum of positive parts, order-insensitive.
     library: enumeratio-combinatorics
-    type: (integer, any?, any?) -> list<integer_partition>
+    type: (integer, any?, any?) -> indexed_collection<integer_partition>
   - call: IntegerPartitions(n, k)
     description: the partitions of $n$ into at most $k$ parts.
     library: enumeratio-combinatorics

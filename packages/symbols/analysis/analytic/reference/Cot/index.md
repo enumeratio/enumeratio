@@ -9,7 +9,7 @@ signatures:
   - call: Cot(x)
     description: Cotangent, the reciprocal of [[Tan]].
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> Indeterminate | number
+    type: (complex | signed_infinity | ~oo) -> number
     overrides: compute-engine
 seeAlso:
   - Tan

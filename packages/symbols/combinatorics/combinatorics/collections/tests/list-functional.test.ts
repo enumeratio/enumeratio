@@ -47,9 +47,9 @@ test("FixedPoint is idempotent once reached: one more f does nothing", () => {
   const fixed = run(["FixedPoint", fn, 100]);
   expect(run(["Apply", fn, fixed])).toEqual(fixed);
 });
-test("FixedPoint(f) alone (no x) still declines — the widened signature requires both", () => {
+test("FixedPoint(f) alone (no x) stays unevaluated — only the 2-ary form has a handler", () => {
   const result = run(["FixedPoint", "f"]) as readonly unknown[];
-  expect(result[0]).toEqual("Error");
+  expect(result[0]).toEqual("FixedPoint");
 });
 
 // The termination rule (SameQ first, then agreement to working precision for an inexact

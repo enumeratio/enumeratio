@@ -9,7 +9,7 @@ signatures:
   - call: Arsinh(complex | signed_infinity | ~oo) -> number | signed_infinity | ~oo
     description: Inverse hyperbolic sine (area hyperbolic sine).
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number | signed_infinity | ~oo
+    type: (complex | signed_infinity | ~oo) -> number
     overrides: compute-engine
 names:
   fungrim: Asinh
