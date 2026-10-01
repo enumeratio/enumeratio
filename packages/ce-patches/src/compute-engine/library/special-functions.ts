@@ -9,7 +9,7 @@
 // kernels below stay: @enumeratio/analytic still calls them directly for certified-
 // precision evaluation, and DirichletBeta/DirichletL still need HurwitzZeta/Zeta correct
 // beyond a double's digits.
-import { BigDecimal, type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
+import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
 import { operandsOf, wrapOperator } from "@enumeratio/engine";
 import type { LibraryRecord } from "../../patch.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "../../support/precise.ts";
@@ -298,21 +298,6 @@ export const lerchPhiLibrary: LibraryRecord = {
     compile: realCompile(3, { js: "__lp", wgsl: "lerchPhi" }),
   },
 };
-
-// --- PolyLog past a double's digits ------------------------------------
-// compute-engine evaluates PolyLog natively, in doubles only. At real arguments inside the
-// Lerch series' disk of convergence this answers to the engine's precision on the
-// arbitrary-precision series (lerch-phi-big.ts); everything else is the native handler's.
-// Upstream this is a branch at the top of the native `evaluate`.
-
-/** Liₛ(z) = z·Φ(z, s, 1) to `ce.precision` digits for real s and z where the series
- * converges; `undefined` anywhere else. */
-export function polyLogPrecise(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
-  if (ops.length !== 2) return undefined;
-  const [sb, zb] = ops.map((x) => bigRealOperand(ce, x));
-  const phi = sb && zb ? lerchPhiBig(zb, sb, BigDecimal.ONE, ce.precision) : undefined;
-  return phi === undefined ? undefined : bigResult(ce, zb!.mul(phi));
-}
 
 // --- HurwitzZeta, and Zeta widened to complex s / two-argument form -------------------
 // cortex-js/compute-engine#340, offered as PR #350: the complex Riemann zeta ζ(s), the
