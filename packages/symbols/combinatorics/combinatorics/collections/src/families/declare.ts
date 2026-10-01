@@ -99,7 +99,15 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
     const ops = asBoxed(c).ops ?? [];
     return Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
   };
-  const element = (p: number[], rank: bigint): BoxedExpression => ce.box(encode(p, family.unrank(p, rank)) as BoxInput);
+  // Undefined where the kernel declines past 2^53 (`needsBigint`): unknown, not an error.
+  const element = (p: number[], rank: bigint): BoxedExpression | undefined => {
+    try {
+      return ce.box(encode(p, family.unrank(p, rank)) as BoxInput);
+    } catch (error) {
+      if (needsBigint(error)) return undefined;
+      throw error;
+    }
+  };
   // Whether reaching an element (or, for `count`, the count) would enumerate past the limit.
   const cost = family.declared?.cost;
   const tooBig = (p: number[], ops: readonly ("count" | "unrank")[]): boolean => {
@@ -150,11 +158,12 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
       if (total === undefined) return undefined;
       let i = 0n;
       // Only a finite count ends the iteration; ∞ and unknown (NaN) run on.
+      // A kernel declining an element (past 2^53) ends the iteration there.
       return {
-        next: () =>
-          typeof total !== "bigint" || i < total
-            ? { value: element(p, i++), done: false }
-            : { value: undefined, done: true },
+        next: () => {
+          const value = typeof total !== "bigint" || i < total ? element(p, i++) : undefined;
+          return value === undefined ? { value: undefined, done: true } : { value, done: false };
+        },
       };
     },
     // `index` is an ordinality (1-based, negative from the end); the rank is index − 1.
