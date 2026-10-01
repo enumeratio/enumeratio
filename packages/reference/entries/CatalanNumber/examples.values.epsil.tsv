@@ -29,5 +29,5 @@ catalannumber-neg-7	catalanNumber(-7)	0
 catalannumber-neg-6	catalanNumber(-6)	0	
 catalannumber-neg-4	catalanNumber(-4)	0	
 catalannumber-neg-3	catalanNumber(-3)	0	
-differencerootreduce-catalannumber-k-k	DifferenceRootReduce(catalanNumber(k), k)	"apply(DifferenceRoot(Function([\n                          -2 * (2n + 1) * y(n) + (n + 2) * y(n + 1) == 0,\n                          y(0) == 1,\n                        ], y, n)), k)"	
+differencerootreduce-catalannumber-k-k	DifferenceRootReduce(catalanNumber(k), k)	"apply(DifferenceRoot(Function([\n                                -2 * (2n + 1) * y(n) + (n + 2) * y(n + 1) == 0,\n                                y(0) == 1,\n                              ], y, n)), k)"	
 they-grow-fast-c-15-already-passes-nine-million	catalanNumber(15)	9_694_845	

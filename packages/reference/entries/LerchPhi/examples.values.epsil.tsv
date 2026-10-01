@@ -13,10 +13,10 @@ n-lerchphi-0p5-0p5-1	N(lerchPhi(0.5, 0.5, 1))	1.612_253_446_085_704_3
 n-lerchphi-0p5-0p5-2	N(lerchPhi(0.5, 0.5, 2))	1.224_506_892_171_409
 n-lerchphi-0p5-0p5-0p5	N(lerchPhi(0.5, 0.5, 0.5))	2.101_712_462_489_351_3
 n-lerchphi-0p5-0p5-5-over-2	N(lerchPhi(0.5, 0.5, 5 / 2))	1.117_002_438_609_575_2
-n-lerchphi-0p5-neg-1-1	N(lerchPhi(0.5, -1, 1))	4
-n-lerchphi-0p5-neg-1-2	N(lerchPhi(0.5, -1, 2))	6
-n-lerchphi-0p5-neg-1-0p5	N(lerchPhi(0.5, -1, 0.5))	3
-n-lerchphi-0p5-neg-1-5-over-2	N(lerchPhi(0.5, -1, 5 / 2))	7
+n-lerchphi-0p5-neg-1-1	N(lerchPhi(0.5, -1, 1))	4.0
+n-lerchphi-0p5-neg-1-2	N(lerchPhi(0.5, -1, 2))	6.0
+n-lerchphi-0p5-neg-1-0p5	N(lerchPhi(0.5, -1, 0.5))	3.0
+n-lerchphi-0p5-neg-1-5-over-2	N(lerchPhi(0.5, -1, 5 / 2))	7.0
 n-lerchphi-0p5-2-plus-i-1	N(lerchPhi(0.5, 2 + i, 1))	1.109_707_090_706_641 - 0.116_099_123_583_394_3i
 n-lerchphi-0p5-2-plus-i-2	N(lerchPhi(0.5, 2 + i, 2))	0.219_414_181_413_281_26 - 0.232_198_247_166_788_55i
 n-lerchphi-0p5-2-plus-i-0p5	N(lerchPhi(0.5, 2 + i, 0.5))	3.308_545_670_420_987 + 2.422_109_611_421_262i
@@ -76,7 +76,7 @@ n-lerchphi-neg-1-0p5-5-over-2	N(lerchPhi(-1, 0.5, 5 / 2))	0.346_541_332_792_831_
 n-lerchphi-neg-1-neg-1-1	N(lerchPhi(-1, -1, 1))	0.25
 n-lerchphi-neg-1-neg-1-2	N(lerchPhi(-1, -1, 2))	0.75
 n-lerchphi-neg-1-neg-1-0p5	N(lerchPhi(-1, -1, 0.5))	0
-n-lerchphi-neg-1-neg-1-5-over-2	N(lerchPhi(-1, -1, 5 / 2))	1
+n-lerchphi-neg-1-neg-1-5-over-2	N(lerchPhi(-1, -1, 5 / 2))	1.0
 n-lerchphi-neg-1-2-plus-i-1	N(lerchPhi(-1, 2 + i, 1))	0.847_689_164_837_414 + 0.098_268_389_570_016_2i
 n-lerchphi-neg-1-2-plus-i-2	N(lerchPhi(-1, 2 + i, 2))	0.152_310_835_162_586_56 - 0.098_268_389_570_016_2i
 n-lerchphi-neg-1-2-plus-i-0p5	N(lerchPhi(-1, 2 + i, 0.5))	2.744_919_723_014_342_5 + 2.651_972_944_738_276_3i
@@ -113,10 +113,10 @@ n-lerchphi-0p9-0p5-1	N(lerchPhi(0.9, 0.5, 1))	4.468_833_808_303_737
 n-lerchphi-0p9-0p5-2	N(lerchPhi(0.9, 0.5, 2))	3.854_259_787_004_146_6
 n-lerchphi-0p9-0p5-0p5	N(lerchPhi(0.9, 0.5, 0.5))	5.111_636_244_963_35
 n-lerchphi-0p9-0p5-5-over-2	N(lerchPhi(0.9, 0.5, 5 / 2))	3.657_500_937_969_502_7
-n-lerchphi-0p9-neg-1-1	N(lerchPhi(0.9, -1, 1))	100
-n-lerchphi-0p9-neg-1-2	N(lerchPhi(0.9, -1, 2))	110
-n-lerchphi-0p9-neg-1-0p5	N(lerchPhi(0.9, -1, 0.5))	95
-n-lerchphi-0p9-neg-1-5-over-2	N(lerchPhi(0.9, -1, 5 / 2))	115
+n-lerchphi-0p9-neg-1-1	N(lerchPhi(0.9, -1, 1))	100.0
+n-lerchphi-0p9-neg-1-2	N(lerchPhi(0.9, -1, 2))	110.0
+n-lerchphi-0p9-neg-1-0p5	N(lerchPhi(0.9, -1, 0.5))	95.0
+n-lerchphi-0p9-neg-1-5-over-2	N(lerchPhi(0.9, -1, 5 / 2))	115.0
 n-lerchphi-0p9-2-plus-i-1	N(lerchPhi(0.9, 2 + i, 1))	1.192_928_775_865_743_2 - 0.340_556_246_338_811i
 n-lerchphi-0p9-2-plus-i-2	N(lerchPhi(0.9, 2 + i, 2))	0.214_365_306_517_492_17 - 0.378_395_829_265_345_93i
 n-lerchphi-0p9-2-plus-i-0p5	N(lerchPhi(0.9, 2 + i, 0.5))	3.516_191_661_909_127 + 2.152_254_681_274_930_4i

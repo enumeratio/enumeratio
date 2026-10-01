@@ -7,12 +7,12 @@
 // code) stay as the independent reading the agreement tests check against.
 
 import type { EpsilFamily } from "./epsil.ts";
-import { guardedBinomial } from "./shared.ts";
 
 type MathJSON = unknown;
 
 // Every Range states its step: compute-engine counts down when the end is below the start.
 const upTo = (from: MathJSON, to: MathJSON): MathJSON => ["Range", from, to, 1];
+const binomial = (n: MathJSON, k: MathJSON): MathJSON => ["Binomial", n, k];
 const sub = (a: MathJSON, b: MathJSON): MathJSON => ["Subtract", a, b];
 const add = (...xs: MathJSON[]): MathJSON => ["Add", ...xs];
 const mul = (...xs: MathJSON[]): MathJSON => ["Multiply", ...xs];
@@ -262,7 +262,7 @@ const digitAt = (i: MathJSON, left: MathJSON, universe: MathJSON, tag: string): 
   const c = `c_${tag}`;
   const best = `best_${tag}`;
   return fold(
-    ["If", ["LessEqual", guardedBinomial(c, i), left], c, best],
+    ["If", ["LessEqual", binomial(c, i), left], c, best],
     best,
     c,
     sub(i, 1),
@@ -272,13 +272,7 @@ const digitAt = (i: MathJSON, left: MathJSON, universe: MathJSON, tag: string): 
 const leftover = (i: MathJSON, size: MathJSON, universe: MathJSON, tag: string): MathJSON => {
   const hi = `hi_${tag}`;
   const acc = `racc_${tag}`;
-  return fold(
-    sub(acc, guardedBinomial(digitAt(hi, acc, universe, `${tag}i`), hi)),
-    acc,
-    hi,
-    "_r",
-    downTo(size, add(i, 1)),
-  );
+  return fold(sub(acc, binomial(digitAt(hi, acc, universe, `${tag}i`), hi)), acc, hi, "_r", downTo(size, add(i, 1)));
 };
 /** The m-th smallest member, 0-based, of the `size`-subset of 0..universe − 1 with rank `_r`. */
 const colexMember = (m: MathJSON, size: MathJSON, universe: MathJSON): MathJSON =>
@@ -293,9 +287,9 @@ export function kSubsets(shape: Shape): EpsilFamily {
   return {
     ...shapeOf(shape),
     epsil: {
-      count: guardedBinomial("_n", "_k"),
+      count: binomial("_n", "_k"),
       unrank: map(add(colexMember("m", "_k", "_n"), 1), "m", upTo(1, "_k")),
-      rank: fold(add("acc", guardedBinomial(sub(element("j"), 1), place("j"))), "acc", "j", 0, upTo(1, len)),
+      rank: fold(add("acc", binomial(sub(element("j"), 1), place("j"))), "acc", "j", 0, upTo(1, len)),
       valid: ["And", equal(len, "_k"), distinctMembers("_n")],
     },
   };
@@ -308,9 +302,9 @@ export function multisets(shape: Shape): EpsilFamily {
   return {
     ...shapeOf(shape),
     epsil: {
-      count: guardedBinomial(universe, "_k"),
+      count: binomial(universe, "_k"),
       unrank: map(sub(add(colexMember("m", "_k", universe), 2), "m"), "m", upTo(1, "_k")),
-      rank: fold(add("acc", guardedBinomial(sub(add(element("j"), "j"), 2), "j")), "acc", "j", 0, upTo(1, len)),
+      rank: fold(add("acc", binomial(sub(add(element("j"), "j"), 2), "j")), "acc", "j", 0, upTo(1, len)),
       valid: [
         "And",
         equal(len, "_k"),

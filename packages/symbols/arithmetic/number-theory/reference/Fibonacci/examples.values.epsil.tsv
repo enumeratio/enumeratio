@@ -12,11 +12,11 @@ special-value-of-the-fibonacci-polynomial-f-1-0	fibonacci(1, 0)	1
 special-value-of-the-fibonacci-polynomial-f-0-0	fibonacci(0, 0)	0	
 f-3-x-x-2-1-threads-element-wise-over-a-matrix	fibonacci(3, [[-1, 0], [0, 5]])	[[2, 1], [1, 26]]	
 threads-element-wise-over-a-list-as-wolfram-s	fibonacci([1, 2, 3, 4])	[1, 1, 2, 3]	
-fibonacci-n-x-symbolic-order-stays-exact	fibonacci(n, x)	"((1 / 2 * (x + sqrt(x ^ 2 + 4))) ^ n - cos(pi * n) * (1 / 2 * (x +\n                                                              sqrt(x ^ 2 + 4))) ^ (-n)) / sqrt(x ^ 2 + 4)"	
+fibonacci-n-x-symbolic-order-stays-exact	fibonacci(n, x)	"((1 / 2 * (x + sqrt(x ^ 2 + 4))) ^ n - cos(pi * n) * (1 / 2 * (x + sqrt(x ^ 2 +\n                                                                        4))) ^\n                                                     (-n)) / sqrt(x ^ 2 + 4)"	
 fibonacci-half-x-exact-closed-form	fibonacci(1 / 2, x)	sqrt(2) * sqrt(x + sqrt(x ^ 2 + 4)) / (2 * sqrt(x ^ 2 + 4))	
 n-fibonacci-15-over-17-50	N(fibonacci(15 / 17), 50)	0.956_519_913_924_311_225_085_822_634_276_922_986_486_069_690_120_61	
 n-fibonacci-5-8-minus-i	N(fibonacci(5, 8 - i))	3_903 - 2_064i	
-functionexpand-fibonacci-n-x	FunctionExpand(fibonacci(n, x))	"((1 / 2 * (x + sqrt(x ^ 2 + 4))) ^ n - cos(pi * n) * (1 / 2 * (x +\n                                                              sqrt(x ^ 2 + 4))) ^ (-n)) / sqrt(x ^ 2 + 4)"	
+functionexpand-fibonacci-n-x	FunctionExpand(fibonacci(n, x))	"((1 / 2 * (x + sqrt(x ^ 2 + 4))) ^ n - cos(pi * n) * (1 / 2 * (x + sqrt(x ^ 2 +\n                                                                        4))) ^\n                                                     (-n)) / sqrt(x ^ 2 + 4)"	
 functionexpand-fibonacci-1-over-2-x	FunctionExpand(fibonacci(1 / 2, x))	sqrt(2) * sqrt(x + sqrt(x ^ 2 + 4)) / (2 * sqrt(x ^ 2 + 4))	
 fibonacci-2-neg-x-eq-neg-fibonacci-2-x	fibonacci(2, -x) == -fibonacci(2, x)	True	
 fibonacci-1-neg-x-eq-fibonacci-1-x	fibonacci(1, -x) == fibonacci(1, x)	True	

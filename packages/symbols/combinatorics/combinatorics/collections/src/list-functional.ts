@@ -17,16 +17,9 @@ import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } fro
  *  Reusing such a result as an operand of a NEW `ce.function`/`ce.box` call (exactly what
  *  `nestValue`/`nestListValues` below do, feeding one step's answer into the next, or into
  *  the accumulated `List`) rebuilds from that stale `.json` and reverts it right back to the
- *  unevaluated call. Forcing materialization here is the fix — bounded by the collection's
- *  own count so a small, known-size intermediate (an `n`-step Nest never produces more than
- *  a handful) never falls back to the elided ten-then-placeholder display form. */
-const MATERIALIZE_LIMIT = 10_000;
+ *  unevaluated call. Forcing materialization here is the fix. */
 function materialize(result: BoxedExpression): BoxedExpression {
-  if (!result.isLazyCollection) return result;
-  const count = result.count;
-  const budget =
-    count !== undefined && Number.isFinite(count) && count <= MATERIALIZE_LIMIT ? Math.max(count, 1) : true;
-  return result.evaluate({ materialization: budget } as never);
+  return result.isLazyCollection ? result.evaluate({ materialization: true }) : result;
 }
 
 /** `f(args...)`, via compute-engine's own `Apply` head — which, unlike Wolfram's `Apply`,

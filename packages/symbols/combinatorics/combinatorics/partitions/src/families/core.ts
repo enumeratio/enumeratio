@@ -115,12 +115,7 @@ export const entries: NumberKernel[] = [
 // Trailing zero parts (an unused N-slot) are dropped, which a Filter reproduces since part_m is
 // weakly decreasing in m. Rank runs the bijection backwards — P_m from a (possibly padded-with-
 // zero) part — directly, no digit search needed, since `_x` already gives every part_m.
-//
-// `binom` guards Binomial for k outside 0..n: compute-engine's compiled Binomial returns
-// undefined there (the interpreter gives 0) — cortex-js/compute-engine#384. Guarding here (not
-// just leaving the operation interpreted) is what lets compile-families.ts's agreement check
-// pass compiled code for `count` and `rank`, which call it directly with `_a`/`m` that can be
-// 0 or _a. A-135 is adding a shared helper for this on #507; inline until the rebase.
+
 type MathJSON = unknown;
 const add = (...xs: MathJSON[]): MathJSON => ["Add", ...xs];
 const sub = (a: MathJSON, b: MathJSON): MathJSON => ["Subtract", a, b];
@@ -134,12 +129,7 @@ const fold = (body: MathJSON, accumulator: string, variable: string, init: MathJ
 ];
 const element = (j: MathJSON): MathJSON => at("_x", j);
 const lengthOf = (x: MathJSON): MathJSON => ["Length", x];
-const binom = (n: MathJSON, k: MathJSON): MathJSON => [
-  "If",
-  ["And", ["LessEqual", 0, k], ["LessEqual", k, n]],
-  ["Binomial", n, k],
-  0,
-];
+const binom = (n: MathJSON, k: MathJSON): MathJSON => ["Binomial", n, k];
 
 const universe = add("_a", "_b"); // a + b: the lattice path's total step count
 /** part_m for m = 1.._a, before dropping trailing zeros: b − P_m + m, P_m the m-th colex position. */

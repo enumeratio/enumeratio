@@ -13,10 +13,10 @@ n-lerchphi-0p5-0p5-1		test	[N, [LerchPhi, 0.5, 0.5, 1]]	1.6122534460857043
 n-lerchphi-0p5-0p5-2		test	[N, [LerchPhi, 0.5, 0.5, 2]]	1.224506892171409							
 n-lerchphi-0p5-0p5-0p5		test	[N, [LerchPhi, 0.5, 0.5, 0.5]]	2.1017124624893513							
 n-lerchphi-0p5-0p5-5-over-2		test	[N, [LerchPhi, 0.5, 0.5, [Rational, 5, 2]]]	1.1170024386095752							
-n-lerchphi-0p5-neg-1-1		test	[N, [LerchPhi, 0.5, -1, 1]]	4							
-n-lerchphi-0p5-neg-1-2		test	[N, [LerchPhi, 0.5, -1, 2]]	6							
-n-lerchphi-0p5-neg-1-0p5		test	[N, [LerchPhi, 0.5, -1, 0.5]]	3							
-n-lerchphi-0p5-neg-1-5-over-2		test	[N, [LerchPhi, 0.5, -1, [Rational, 5, 2]]]	7							
+n-lerchphi-0p5-neg-1-1		test	[N, [LerchPhi, 0.5, -1, 1]]	{num: "4.0"}							
+n-lerchphi-0p5-neg-1-2		test	[N, [LerchPhi, 0.5, -1, 2]]	{num: "6.0"}							
+n-lerchphi-0p5-neg-1-0p5		test	[N, [LerchPhi, 0.5, -1, 0.5]]	{num: "3.0"}							
+n-lerchphi-0p5-neg-1-5-over-2		test	[N, [LerchPhi, 0.5, -1, [Rational, 5, 2]]]	{num: "7.0"}							
 n-lerchphi-0p5-2-plus-i-1		test	[N, [LerchPhi, 0.5, [Complex, 2, 1], 1]]	[Complex, 1.109707090706641, -0.1160991235833943]							
 n-lerchphi-0p5-2-plus-i-2		test	[N, [LerchPhi, 0.5, [Complex, 2, 1], 2]]	[Complex, 0.21941418141328126, -0.23219824716678855]							
 n-lerchphi-0p5-2-plus-i-0p5		test	[N, [LerchPhi, 0.5, [Complex, 2, 1], 0.5]]	[Complex, 3.308545670420987, 2.422109611421262]							
@@ -76,7 +76,7 @@ n-lerchphi-neg-1-0p5-5-over-2		test	[N, [LerchPhi, -1, 0.5, [Rational, 5, 2]]]	0
 n-lerchphi-neg-1-neg-1-1		test	[N, [LerchPhi, -1, -1, 1]]	0.25							
 n-lerchphi-neg-1-neg-1-2		test	[N, [LerchPhi, -1, -1, 2]]	0.75							
 n-lerchphi-neg-1-neg-1-0p5		test	[N, [LerchPhi, -1, -1, 0.5]]	0							
-n-lerchphi-neg-1-neg-1-5-over-2		test	[N, [LerchPhi, -1, -1, [Rational, 5, 2]]]	1							
+n-lerchphi-neg-1-neg-1-5-over-2		test	[N, [LerchPhi, -1, -1, [Rational, 5, 2]]]	{num: "1.0"}							
 n-lerchphi-neg-1-2-plus-i-1		test	[N, [LerchPhi, -1, [Complex, 2, 1], 1]]	[Complex, 0.847689164837414, 0.0982683895700162]							
 n-lerchphi-neg-1-2-plus-i-2		test	[N, [LerchPhi, -1, [Complex, 2, 1], 2]]	[Complex, 0.15231083516258656, -0.0982683895700162]							
 n-lerchphi-neg-1-2-plus-i-0p5		test	[N, [LerchPhi, -1, [Complex, 2, 1], 0.5]]	[Complex, 2.7449197230143425, 2.6519729447382763]							
@@ -113,10 +113,10 @@ n-lerchphi-0p9-0p5-1		test	[N, [LerchPhi, 0.9, 0.5, 1]]	4.468833808303737
 n-lerchphi-0p9-0p5-2		test	[N, [LerchPhi, 0.9, 0.5, 2]]	3.8542597870041466							
 n-lerchphi-0p9-0p5-0p5		test	[N, [LerchPhi, 0.9, 0.5, 0.5]]	5.11163624496335							
 n-lerchphi-0p9-0p5-5-over-2		test	[N, [LerchPhi, 0.9, 0.5, [Rational, 5, 2]]]	3.6575009379695027							
-n-lerchphi-0p9-neg-1-1		test	[N, [LerchPhi, 0.9, -1, 1]]	100							
-n-lerchphi-0p9-neg-1-2		test	[N, [LerchPhi, 0.9, -1, 2]]	110							
-n-lerchphi-0p9-neg-1-0p5		test	[N, [LerchPhi, 0.9, -1, 0.5]]	95							
-n-lerchphi-0p9-neg-1-5-over-2		test	[N, [LerchPhi, 0.9, -1, [Rational, 5, 2]]]	115							
+n-lerchphi-0p9-neg-1-1		test	[N, [LerchPhi, 0.9, -1, 1]]	{num: "100.0"}							
+n-lerchphi-0p9-neg-1-2		test	[N, [LerchPhi, 0.9, -1, 2]]	{num: "110.0"}							
+n-lerchphi-0p9-neg-1-0p5		test	[N, [LerchPhi, 0.9, -1, 0.5]]	{num: "95.0"}							
+n-lerchphi-0p9-neg-1-5-over-2		test	[N, [LerchPhi, 0.9, -1, [Rational, 5, 2]]]	{num: "115.0"}							
 n-lerchphi-0p9-2-plus-i-1		test	[N, [LerchPhi, 0.9, [Complex, 2, 1], 1]]	[Complex, 1.1929287758657432, -0.340556246338811]							
 n-lerchphi-0p9-2-plus-i-2		test	[N, [LerchPhi, 0.9, [Complex, 2, 1], 2]]	[Complex, 0.21436530651749217, -0.37839582926534593]							
 n-lerchphi-0p9-2-plus-i-0p5		test	[N, [LerchPhi, 0.9, [Complex, 2, 1], 0.5]]	[Complex, 3.516191661909127, 2.1522546812749304]							
