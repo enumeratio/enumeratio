@@ -11,7 +11,9 @@ import { loaderWatchPlugin } from "./loader-watch.ts";
 import { fillPrerendered } from "./data/prerender.ts";
 import { fillMarkup } from "./data/prerender-markup.ts";
 import { chunksIn, pageTags, preloads, prerenderMarkup } from "./prerender-markup.ts";
+import { writeServiceWorker } from "./host/service-worker.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
+import { CATALOGUE } from "./theme/worker-catalogue.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
 // Resolve every @enumeratio/* import (bare and subpaths) to its source, so the docs
@@ -134,7 +136,11 @@ const config = defineConfig({
   srcExclude: dev ? [] : ["review/**"],
   // Dynamic reference routes carry their name in params; use it as the page title
   // (the raw markdown H1 is `{{ $params.name }}`, which VitePress can't read).
-  buildEnd: (site: { outDir: string }) => writeRedirects(site.outDir),
+  buildEnd: (site: { outDir: string }) => {
+    writeRedirects(site.outDir);
+    // The host: a service worker that caches the kernel's libraries on install (host/).
+    writeServiceWorker(site.outDir, { libraries: CATALOGUE.map((library) => library.name) });
+  },
   transformPageData(pageData: { params?: { name?: string }; title?: string }) {
     if (pageData.params?.name) pageData.title = pageData.params.name;
   },
