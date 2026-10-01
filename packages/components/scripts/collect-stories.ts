@@ -9,8 +9,9 @@
 //     CLI actually takes, and the default tab;
 //   - `html`, the lit-tag markup a plain-HTML host would write (`renderingOf`/`vdomOf` -- the
 //     same lowering that draws the live render -- plus `markupOf`);
-//   - `vdom`, the expression's own tree verbatim (`structuralOf`/`structuralMarkupOf`): every
-//     head a tag, every argument a child. It shows the AST shape
+//   - `vdom`, the expression's own tree verbatim, as the vdom markup writes it
+//     (`@enumeratio/formats/markup`'s `markupOf`): every head a tag, every argument a child.
+//     It shows the AST shape
 //     https://github.com/enumeratio/enumeratio/wiki/Vdom is about, which `html` obscures the
 //     moment a component maps an argument to an attribute (a chart's `data`, say).
 //
@@ -26,8 +27,8 @@ import { COMPONENT_STORIES_SCHEMA, validateSchema } from "@enumeratio/entry/sche
 import { readStories, STORIES_SUFFIX, writeFormatted } from "@enumeratio/entry/node";
 import { toInputForm } from "@enumeratio/formats";
 import { markupOf, renderingOf } from "@enumeratio/frontend/symbols";
-import { structuralMarkupOf } from "@enumeratio/frontend/reflect";
-import { structuralOf, vdomOf } from "@enumeratio/frontend/vdom";
+import { markupOf as vdomMarkupOf } from "@enumeratio/formats/markup";
+import { vdomOf } from "@enumeratio/frontend/vdom";
 import type { ComponentStory } from "@enumeratio/entry";
 
 const referenceDir = new URL("../reference/", import.meta.url);
@@ -77,7 +78,7 @@ function formsOf(expr: ComponentStory["expr"]): StoryForm[] {
       id: "vdom",
       label: "vdom",
       caption: "the expression's own tree -- every head a tag, every argument a child",
-      text: structuralMarkupOf(structuralOf(json)),
+      text: vdomMarkupOf(json),
     },
   ];
 }

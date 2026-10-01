@@ -1,10 +1,8 @@
 import { mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { parseExpression } from "@enumeratio/formats/expression";
 import { describe, expect, it, test } from "vite-plus/test";
-import { collectComponents, structuralMarkupOf, headOfTag } from "../src/reflect.ts";
-import { structuralOf } from "../src/vdom.ts";
+import { collectComponents, headOfTag } from "../src/reflect.ts";
 
 const summaryOf = (source: string): string | undefined => {
   const dir = mkdtempSync(join(tmpdir(), "reflect-"));
@@ -77,41 +75,4 @@ test("headOfTag is tagOf run backwards", () => {
   expect(headOfTag("notatio-bar-chart-3d")).toBe("BarChart3D");
   expect(headOfTag("notatio-plot-3d")).toBe("Plot3D");
   expect(headOfTag("notatio-collection-table")).toBe("CollectionTable");
-});
-
-describe("structuralMarkupOf", () => {
-  const markupOf = (source: string): string => structuralMarkupOf(structuralOf(parseExpression(source).json as never));
-
-  it("collapses a run of leaves to comma-joined values", () => {
-    expect(markupOf("Binomial(n, 2)")).toBe("<Binomial>n, 2</Binomial>");
-  });
-
-  it("nests a compound child instead of collapsing it", () => {
-    expect(markupOf("Plot(Sin(x), (x, 0, 10))")).toBe(
-      ["<Plot>", "  <Sin>x</Sin>", "  <Tuple>x, 0, 10</Tuple>", "</Plot>"].join("\n"),
-    );
-  });
-
-  it("prints options as attributes on the tag they belong to", () => {
-    expect(markupOf('BarChart3D([3,1,4], Label -> "digits of π")')).toBe(
-      ['<BarChart3D label="digits of π">', "  <List>3, 1, 4</List>", "</BarChart3D>"].join("\n"),
-    );
-  });
-
-  it("prints a matrix of rows as nested collapsed lists", () => {
-    expect(markupOf("BarChart3D([[1,2,3],[2,4,3]])")).toBe(
-      [
-        "<BarChart3D>",
-        "  <List>",
-        "    <List>1, 2, 3</List>",
-        "    <List>2, 4, 3</List>",
-        "  </List>",
-        "</BarChart3D>",
-      ].join("\n"),
-    );
-  });
-
-  it("prints a bare atom self-closed", () => {
-    expect(markupOf("2.5")).toBe('<Real value="2.5" />');
-  });
 });

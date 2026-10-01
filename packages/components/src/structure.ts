@@ -1,5 +1,5 @@
 // The structural spelling of a built component, lowered in place: a `<notatio-plot>`
-// whose children are `<notatio-sin>…</notatio-sin><notatio-tuple>x, 0, 10</notatio-tuple>`
+// whose children are `<notatio-sin>…</notatio-sin><notatio-tuple>x 0 10</notatio-tuple>`
 // is `Plot(Sin(x), (x, 0, 10))`, and the same table `renderingOf` uses to turn that
 // expression into attributes (`symbols.ts`, in the base) turns these children into
 // them here. A framework that emits the structural tree -- `<Notatio>` in Vue or React,
