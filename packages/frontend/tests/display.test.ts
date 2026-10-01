@@ -23,6 +23,11 @@ test("only a list has a matrix form", () => {
   expect(toLatex(displayBoxes(ce, ["List", ["List", 1, 2], ["List", 3, 4]]).MatrixForm!)).toContain("pmatrix");
 });
 
+test("DisplayForm typesets as its boxes", () => {
+  const ce = engine();
+  expect(latexOf(ce, ce.box(["DisplayForm", ["SuperscriptBox", { str: "x" }, { str: "2" }]] as never))).toBe("x^2");
+});
+
 test("TraditionalForm is makeBoxes with the notation the engine's packages registered", () => {
   const ce = engine();
   registerNotation(ce, { Widget: indexed("W") });

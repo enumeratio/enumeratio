@@ -1,7 +1,16 @@
 // @enumeratio/diagram's heads in traditional notation: the diagram-algebra family, each
 // `symbol_{n}`, or `symbol_{n}(δ)` with the loop parameter.
 
-import { type Box, fence, type Notation, type NotationRule, row, scalars, subscript } from "@enumeratio/boxes";
+import {
+  type Box,
+  fence,
+  type Notation,
+  type NotationRule,
+  row,
+  scalars,
+  subscript,
+  type PackageNotation,
+} from "@enumeratio/boxes";
 
 /** A family of algebras on `n` strands, `symbol_{n}`, or `symbol_{n}(parameter)`. */
 const algebra =
@@ -23,3 +32,6 @@ export const DIAGRAM_NOTATION: Notation = {
     n === undefined || rest.length > 0 ? undefined : row(["k", fence("[", [subscript("S", write.box(n))], "]")]),
   ),
 };
+
+/** This package's notation, which a host loads before it builds an engine. */
+export const notation: PackageNotation = { traditional: DIAGRAM_NOTATION };

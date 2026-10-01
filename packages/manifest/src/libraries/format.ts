@@ -3,16 +3,19 @@
 //
 //   "enumeratio": { "namespace": "ada", "index": "./symbols/index.json", "system": "0.x" }
 //
+// (any package, library or not, may also name its notation entry: `"notation": "./notation"`)
+//
 // and ships `symbols/<Name>/definition.json` (signature, body, requires) beside the index,
 // which `libraryIndexOf` builds at pack time, with `examples.json` from the symbol's record
 // (`index.md`, `examples.tsv`, as ours are) for the install check.
 
 import { satisfies, validRange } from "semver";
 import { type Definition, pinOf } from "../registry.ts";
+import type { PackageField } from "../package-field.ts";
 import { SYSTEM_VERSION } from "../system.ts";
 
 /** The `enumeratio` field of a library's `package.json`. */
-export interface LibraryField {
+export interface LibraryField extends PackageField {
   /** Its namespace: a scoped package's must be its scope's name. */
   readonly namespace: string;
   /** Its index, relative to the package root. */

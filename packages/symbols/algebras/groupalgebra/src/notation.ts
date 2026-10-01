@@ -1,7 +1,7 @@
 // @enumeratio/groupalgebra's heads in traditional notation: the cyclic and dihedral
 // families by order, the group algebra k[G], the direct product, and |G|.
 
-import { fence, indexed, type Notation, row, scalars } from "@enumeratio/boxes";
+import { fence, indexed, type Notation, row, scalars, type PackageNotation } from "@enumeratio/boxes";
 
 export const GROUPALGEBRA_NOTATION: Notation = {
   CyclicGroup: scalars(indexed("C")),
@@ -17,3 +17,6 @@ export const GROUPALGEBRA_NOTATION: Notation = {
     g === undefined || rest.length > 0 ? undefined : fence("|", [write.box(g)], "|"),
   ),
 };
+
+/** This package's notation, which a host loads before it builds an engine. */
+export const notation: PackageNotation = { traditional: GROUPALGEBRA_NOTATION };

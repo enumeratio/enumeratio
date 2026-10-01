@@ -2,7 +2,7 @@
 // indexed by a permutation's one-line word.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { type Box, type Notation, scalars, subscript } from "@enumeratio/boxes";
+import { type Box, type Notation, scalars, subscript, type PackageNotation } from "@enumeratio/boxes";
 
 /** A literal list of numbers, or `undefined`. */
 const numbers = (x: MathJsonExpression | undefined): number[] | undefined => {
@@ -28,3 +28,6 @@ export const HECKE_NOTATION: Notation = {
     return index === undefined ? undefined : subscript("T", index);
   },
 };
+
+/** This package's notation, which a host loads before it builds an engine. */
+export const notation: PackageNotation = { traditional: HECKE_NOTATION };

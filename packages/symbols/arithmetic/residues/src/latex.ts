@@ -1,10 +1,10 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry, Parser } from "@cortex-js/compute-engine/latex-syntax";
-import { INTEGER_MOD, INTEGER_MOD_RING } from "./integer-mod-declare.ts";
+import { INTEGER_MOD, INTEGER_MOD_RING } from "./names.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
-// dictionary only at construction (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.7), so a host appends these to
-// the default one -- notatio's `configureLatex(RESIDUES_LATEX)`.
+// dictionary only at construction (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.7), so a host loads
+// these from the package's notation entry (`./notation`) before it builds an engine.
 //
 //   a \pmod{n}             IntegerMod(a, n)
 //   a = b \pmod{n}         Congruent(a, b, n), as `a \equiv b \pmod{n}` already is

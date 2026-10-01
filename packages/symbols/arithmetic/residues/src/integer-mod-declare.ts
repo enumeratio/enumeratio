@@ -10,6 +10,7 @@ import {
   wrapOperator,
 } from "@enumeratio/engine";
 import { gcd, mod } from "./arith.ts";
+import { INTEGER_MOD, INTEGER_MOD_RING } from "./names.ts";
 import * as Z from "./integer-mod.ts";
 import type { IntegerMod } from "./integer-mod.ts";
 import { SUMMARIES } from "@enumeratio/manifest/package/residues";
@@ -22,8 +23,7 @@ import { SUMMARIES } from "@enumeratio/manifest/package/residues";
 // As with AdicNumeral there is no number-type extension point, so `Add`, `Multiply`,
 // `Negate`, `Divide` and `Power` get rows to answer when an IntegerMod shows up.
 
-export const INTEGER_MOD = "IntegerMod";
-export const INTEGER_MOD_RING = "IntegerModRing";
+export { INTEGER_MOD, INTEGER_MOD_RING };
 
 const isIntegerMod = (expr: BoxedExpression | undefined): boolean => expr?.operator === INTEGER_MOD;
 

@@ -1163,6 +1163,9 @@ importers:
 
   packages/symbols/arithmetic/residues:
     dependencies:
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../../../boxes
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../../../engine

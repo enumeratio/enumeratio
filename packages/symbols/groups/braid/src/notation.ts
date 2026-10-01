@@ -12,6 +12,7 @@ import {
   scalars,
   subscript,
   superscript,
+  type PackageNotation,
 } from "@enumeratio/boxes";
 
 /** A literal list of numbers, or `undefined`. */
@@ -70,3 +71,6 @@ export const BRAID_NOTATION: Notation = {
   SeifertGenus: scalars(named("g", 1)),
   BraidWrithe: scalars(named("w", 1)),
 };
+
+/** This package's notation, which a host loads before it builds an engine. */
+export const notation: PackageNotation = { traditional: BRAID_NOTATION };

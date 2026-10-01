@@ -2,7 +2,7 @@
 // off a literal `AdicNumeral(p, x, …)`, naming the prime once as a subscript.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { fence, type Notation, scalars, subscript } from "@enumeratio/boxes";
+import { fence, type Notation, scalars, subscript, type PackageNotation } from "@enumeratio/boxes";
 
 /** A literal `AdicNumeral(p, x, …)` as its prime and value: `v_p(x)` names the prime once. */
 const adic = (x: MathJsonExpression | undefined): { p: number; value: MathJsonExpression } | undefined =>
@@ -22,3 +22,6 @@ export const NUMERALS_NOTATION: Notation = {
       : subscript(fence("|", [write.box(a.value)], "|"), String(a.p));
   }),
 };
+
+/** This package's notation, which a host loads before it builds an engine. */
+export const notation: PackageNotation = { traditional: NUMERALS_NOTATION };

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
+import { notationEntriesPlugin } from "./notation-entries.ts";
 import { docRoute, docsSidebar, workspacePackages } from "./data/repo-docs.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
@@ -106,7 +107,8 @@ const config = defineConfig({
     resolve: { alias: srcAliases },
     // Module workers: a session kernel imports each library as its own chunk, which the
     // default (IIFE) worker bundle can't split.
-    worker: { format: "es" },
+    // The worker reads every package's notation through `virtual:notation-entries`.
+    worker: { format: "es", plugins: () => [notationEntriesPlugin()] as never },
     // Review mode: a dev-server-only REST API over a markdown backlog file, for
     // working through shipped features. `apply: "serve"` on the plugin itself
     // keeps it out of `vitepress build`/`preview`; gating it here too means the
@@ -114,7 +116,9 @@ const config = defineConfig({
     // The repo's `vite` specifier resolves to vite-plus-core (see pnpm-workspace.yaml),
     // while vitepress's `plugins` field types against its own nested real `vite` --
     // two structurally-identical but nominally distinct `Plugin` types.
-    plugins: (dev ? [reviewModePlugin(webDir), referenceDataPlugin(dev)] : [referenceDataPlugin(dev)]) as never,
+    plugins: (dev
+      ? [reviewModePlugin(webDir), referenceDataPlugin(dev), notationEntriesPlugin()]
+      : [referenceDataPlugin(dev), notationEntriesPlugin()]) as never,
   },
   title: "enumeratio",
   description:

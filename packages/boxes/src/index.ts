@@ -6,6 +6,7 @@ export { BOXES_TYPE, declareBoxes } from "./declare.ts";
 export { BoxFormError, fromMathJson, toMathJson } from "./json.ts";
 export { APPLY_FUNCTION, INVISIBLE_TIMES, makeBoxes } from "./make.ts";
 export {
+  combineNotation,
   fence,
   indexed,
   isList,
@@ -13,6 +14,7 @@ export {
   type Notation,
   type NotationRule,
   notationOf,
+  type PackageNotation,
   registerNotation,
   scalars,
   subscripted,

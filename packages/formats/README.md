@@ -7,7 +7,7 @@ notation and need it back as an expression.
 
 ## Entry points
 
-- `.` — the registry (`registerFormat`, `getFormat`, `exportTo`, `importFrom`,
+- `.` — the registry (`registerFileFormat`, `getFormat`, `exportTo`, `importFrom`,
   `fileFormat`, `sniffFormat`, `mimeTypeToFormatList`) and the built-in formats,
   registered as a side effect of import.
 - `./node` — adds the PNG codec (needs the native rasterizer, [`raster`](../raster/README.md)) and

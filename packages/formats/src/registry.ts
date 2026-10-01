@@ -45,7 +45,7 @@ export function isImageValue(value: unknown): value is ImageValue {
 
 const REGISTRY = new Map<string, Format>(); // key: lowercased name or alias
 
-export function registerFormat(format: Format): void {
+export function registerFileFormat(format: Format): void {
   for (const key of [format.name, ...(format.aliases ?? [])]) REGISTRY.set(key.toLowerCase(), format);
 }
 

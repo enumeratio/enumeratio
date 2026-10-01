@@ -2,7 +2,7 @@
 // class numbers, the Rademacher functions. (KroneckerSymbol is compute-engine's own head,
 // so its Legendre-family notation lives in @enumeratio/boxes' ENGINE_NOTATION.)
 
-import { fence, grid, named, type Notation, scalars } from "@enumeratio/boxes";
+import { fence, grid, named, type Notation, scalars, type PackageNotation } from "@enumeratio/boxes";
 
 export const MODULAR_NOTATION: Notation = {
   ModularMatrix: scalars((args, write) =>
@@ -24,3 +24,6 @@ export const MODULAR_NOTATION: Notation = {
   RademacherPhi: scalars(named("Φ", 1)),
   RademacherSymbol: scalars(named("Ψ", 1)),
 };
+
+/** This package's notation, which a host loads before it builds an engine. */
+export const notation: PackageNotation = { traditional: MODULAR_NOTATION };

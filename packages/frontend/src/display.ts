@@ -7,6 +7,7 @@
 import type { ComputeEngine, MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
 import { type Box, form, makeBoxes, notationOf } from "@enumeratio/boxes";
+import { BOXES_LATEX } from "@enumeratio/boxes/render";
 import { CONVENTIONAL_LATEX } from "./conventional-latex.ts";
 import { mergeLatex } from "./engine.ts";
 import { latexOf, NOTATIO_LATEX } from "./latex.ts";
@@ -17,10 +18,11 @@ export type DisplayBoxes = Partial<Record<DisplayForm, Box>>;
 
 type Entry = Partial<LatexDictionaryEntry>;
 
-/** The LaTeX dictionary a kernel's engine writes with: `base` (compute-engine's), ours, then
- *  `extra` (a library's notation), as the page engine merges them. */
+/** The LaTeX dictionary a kernel's engine writes with: `base` (compute-engine's), ours (with
+ *  boxes' DisplayForm and RawBoxes, which typeset through the serialisers), then `extra` (the
+ *  packages' notation), as the page engine merges them. */
 export const displayDictionary = (base: readonly Entry[], extra: readonly Entry[] = []): Entry[] =>
-  mergeLatex(base, [...NOTATIO_LATEX, ...CONVENTIONAL_LATEX, ...extra]);
+  mergeLatex(base, [...NOTATIO_LATEX, ...CONVENTIONAL_LATEX, ...BOXES_LATEX, ...extra]);
 
 const isList = (json: unknown): boolean => Array.isArray(json) && json[0] === "List";
 
