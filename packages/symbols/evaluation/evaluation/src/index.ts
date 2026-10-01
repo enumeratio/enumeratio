@@ -1,3 +1,4 @@
+export { aboutOf, aboutRecord, declareAbout, nameGiven } from "./about.ts";
 export { ABORTED, declareEvaluation } from "./declare.ts";
 export { evaluate } from "./evaluate.ts";
 export type { Outcome, TestResult, VerificationTestOptions } from "./verification-test.ts";

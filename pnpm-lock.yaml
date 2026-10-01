@@ -359,12 +359,18 @@ importers:
       '@enumeratio/combinatorics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/combinatorics
+      '@enumeratio/evaluation':
+        specifier: workspace:*
+        version: link:../symbols/evaluation/evaluation
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats
       '@enumeratio/frontend':
         specifier: workspace:*
         version: link:../frontend
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../manifest
       '@enumeratio/raster':
         specifier: workspace:*
         version: link:../raster
@@ -1272,6 +1278,9 @@ importers:
 
   packages/symbols/evaluation/evaluation:
     dependencies:
+      '@enumeratio/ce-patches':
+        specifier: workspace:*
+        version: link:../../../ce-patches
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../../../engine

@@ -13,8 +13,10 @@
 
 import { type DefinitionAttribute, declarationOf } from "./declaration.ts";
 import type { NotationData } from "./notation-data.ts";
+import { describe, namespaceOf, noteDescription } from "./describe.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import { type Library, type Lookup, packagesFor, packagesNeeded, plan } from "./resolve.ts";
+import type { Description } from "./types.ts";
 
 /** What a registry needs of an engine: compute-engine's `declare`, `assign` and `lookupDefinition`. */
 export interface DeclaringEngine {
@@ -38,6 +40,8 @@ export interface Definition {
   readonly examples?: readonly Example[];
   /** How it's written; not part of the pin, since a change to it never changes a value. */
   readonly notation?: NotationData;
+  /** Its record's summary; not part of the pin. */
+  readonly summary?: string;
 }
 
 /** One of a definition's examples, as a record's are: what `expr` evaluates to. */
@@ -70,11 +74,14 @@ export interface Registry<Engine extends object> {
   resolve(name: string, pin?: string): Resolution<Engine> | undefined | Promise<Resolution<Engine> | undefined>;
   /** The names a namespace offers, or undefined where this registry doesn't serve it: its index. */
   names?(namespace: string): readonly string[] | undefined | Promise<readonly string[] | undefined>;
+  /**
+   * What is known about `name` from the index alone, or undefined where this registry doesn't
+   * serve it: no definition fetched, no install check run.
+   */
+  describe?(name: string): Description | undefined | Promise<Description | undefined>;
 }
 
-/** A package's namespace: `number-theory` is `NumberTheory`. */
-export const namespaceOf = (pkg: string): string =>
-  pkg.replace(/(^|-)([a-z0-9])/g, (_, _dash: string, c: string) => c.toUpperCase());
+export { namespaceOf };
 
 /**
  * Our packages as a registry: a head resolves to the libraries that declare it (every one that
@@ -99,6 +106,12 @@ export function manifestRegistry<Engine extends object>(
       }
       if (packages.size === 0) return undefined;
       return { head, libraries: plan(packages, libraries).libraries };
+    },
+    async describe(name) {
+      const dot = name.indexOf(".");
+      if (dot > 0 && !byNamespace.has(name.slice(0, dot))) return undefined;
+      const described = await describe(name);
+      return described.kind === "unknown" ? undefined : described;
     },
   };
 }
@@ -174,6 +187,52 @@ export function definitionRegistry<Engine extends object>(
         ...(examples === undefined ? {} : { examples: async () => examples }),
       };
     },
+    async describe(name) {
+      const [ns, member, ...rest] = name.split(".");
+      if (ns !== namespace || member === undefined || rest.length > 0 || !Object.hasOwn(definitions, member))
+        return undefined;
+      const { definition, pin } = (await versions(member)).at(-1)!;
+      const { body } = definition;
+      const names = Array.isArray(body) && body[0] === "Function" ? body.slice(2) : [];
+      const params = names.every((n): n is string => typeof n === "string") ? names : undefined;
+      return describeLibrarySymbol(name, { ...definition, params, examples: definition.examples?.length }, pin);
+    },
+  };
+}
+
+/** What describes a library symbol: its index entry, or a definition less its body. */
+export interface LibrarySymbolFacts {
+  readonly signature: string;
+  readonly summary?: string;
+  readonly requires?: Readonly<Record<string, string>>;
+  readonly params?: readonly string[];
+  readonly defaults?: Readonly<Record<string, unknown>>;
+  readonly attributes?: readonly DefinitionAttribute[];
+  /** How many examples it has. */
+  readonly examples?: number;
+  readonly notation?: NotationData;
+}
+
+/** A library symbol's description: `ns.Name` at `pin`, declared as its `pinnedHead`. */
+export function describeLibrarySymbol(name: string, facts: LibrarySymbolFacts, pin: string): Description {
+  const { signature, summary, params, defaults, attributes, requires, examples, notation } = facts;
+  const triggers = (notation?.latex ?? []).map((e) => e.trigger);
+  const dot = name.lastIndexOf(".");
+  const namespace = name.slice(0, dot);
+  return {
+    name,
+    kind: "function",
+    ...(summary === undefined ? {} : { description: summary }),
+    signature,
+    ...(params?.length ? { params } : {}),
+    ...(defaults !== undefined && Object.keys(defaults).length > 0 ? { defaults } : {}),
+    ...(attributes?.length ? { attributes } : {}),
+    ...(examples ? { examples } : {}),
+    ...(triggers.length > 0 ? { triggers } : {}),
+    namespace,
+    pin,
+    ...(requires !== undefined && Object.keys(requires).length > 0 ? { requires } : {}),
+    head: pinnedHead(namespace, name.slice(dot + 1), pin),
   };
 }
 
@@ -190,6 +249,13 @@ export function combineRegistries<Engine extends object>(...registries: readonly
     async names(namespace) {
       for (const registry of registries) {
         const found = await registry.names?.(namespace);
+        if (found !== undefined) return found;
+      }
+      return undefined;
+    },
+    async describe(name) {
+      for (const registry of registries) {
+        const found = await registry.describe?.(name);
         if (found !== undefined) return found;
       }
       return undefined;
@@ -329,13 +395,45 @@ function plainNamesOf(json: unknown, into: Set<string>): Set<string> {
   return into;
 }
 
-/** `json` with each qualified name `heads` has replaced by its head: a call by a call of it. */
-export function withHeads(json: unknown, heads: ReadonlyMap<string, string>): unknown {
+const NONE: ReadonlySet<string> = new Set();
+
+/**
+ * `json` with each qualified name `heads` has replaced by its head: a call by a call of it. A
+ * name given to a `describeOnly` head (`About(ada.Sq)`) stays as written, or it would describe
+ * the pinned head.
+ */
+export function withHeads(
+  json: unknown,
+  heads: ReadonlyMap<string, string>,
+  describeOnly: ReadonlySet<string> = NONE,
+): unknown {
   if (!Array.isArray(json)) return json;
   const name = qualifiedNameAt(json);
   const head = name === undefined ? undefined : heads.get(name);
-  if (head !== undefined) return json[0] === "Field" ? head : [head, ...json.slice(3).map((a) => withHeads(a, heads))];
-  return json.map((item) => withHeads(item, heads));
+  if (head !== undefined)
+    return json[0] === "Field" ? head : [head, ...json.slice(3).map((a) => withHeads(a, heads, describeOnly))];
+  if (typeof json[0] === "string" && describeOnly.has(json[0]))
+    return [json[0], ...json.slice(1).map((a) => (pathOf(a) === undefined ? withHeads(a, heads, describeOnly) : a))];
+  return json.map((item) => withHeads(item, heads, describeOnly));
+}
+
+/**
+ * `json` less the names given to a `describeOnly` head, which go in `described`: what is left
+ * is what to resolve. Only an argument that is a name (`Sin`, `ada.Sq`) is described; any
+ * other (`About(Sin(x))`) resolves as usual.
+ */
+function withoutDescribed(json: unknown, describeOnly: ReadonlySet<string>, described: Set<string>): unknown {
+  if (!Array.isArray(json)) return json;
+  if (typeof json[0] === "string" && describeOnly.has(json[0])) {
+    const rest: unknown[] = [];
+    for (const arg of json.slice(1)) {
+      const name = pathOf(arg);
+      if (name === undefined) rest.push(withoutDescribed(arg, describeOnly, described));
+      else described.add(name);
+    }
+    return [json[0], ...rest];
+  }
+  return json.map((item) => withoutDescribed(item, describeOnly, described));
 }
 
 export interface Ensured {
@@ -356,6 +454,8 @@ export interface Ensured {
   readonly errors: readonly string[];
   /** Definitions checked in this call whose examples failed, by name: the failures. */
   readonly failed: Readonly<Record<string, readonly string[]>>;
+  /** Names given to a `describeOnly` head, described and not declared, by name. */
+  readonly described: Readonly<Record<string, Description>>;
 }
 
 /** Install checking: a definition's examples run in a scratch engine before it is declared. */
@@ -419,13 +519,21 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
     path,
     check,
     notation,
+    describeOnly: describing = [],
   }: {
     path?: SearchPath;
     check?: InstallCheck<Engine>;
     /** Register a declared definition's notation, under the head it's declared as (boxes' `compileNotation`). */
     notation?: (ce: Engine, head: string, data: NotationData) => void;
+    /**
+     * Heads that describe a name rather than use it (`About`, `Information`): a name given to
+     * one is described through `registry.describe`, and noted on the engine for the head to
+     * read (`describedIn`), never declared or lowered.
+     */
+    describeOnly?: readonly string[];
   } = {},
 ): RegistryResolver<Engine> {
+  const describeOnly = new Set(describing);
   const states = new WeakMap<Engine, EngineState>();
   // Each pin's failures, checked once for every engine this resolver serves.
   const checked = new Map<string, Promise<readonly string[]>>();
@@ -457,7 +565,9 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
 
   return {
     async ensure(ce, given, lock = {}) {
-      const json = path === undefined ? given : qualifyHeads(given, path);
+      const written = path === undefined ? given : qualifyHeads(given, path);
+      const describedNames = new Set<string>();
+      const json = describeOnly.size === 0 ? written : withoutDescribed(written, describeOnly, describedNames);
       const state = states.get(ce) ?? {
         asked: new Set(),
         libraries: new Set(),
@@ -569,8 +679,14 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         const head = state.namespaces.get(name.slice(0, dot))?.get(name.slice(dot + 1));
         if (head !== undefined && (state.attributed.has(head) || callsByName(json, name))) lowered.set(name, head);
       }
-      const expression = lowered.size === 0 ? json : withHeads(json, lowered);
-      return { expression, declared, unresolved, pins, errors, failed };
+      const expression = lowered.size === 0 ? written : withHeads(written, lowered, describeOnly);
+      const described: Record<string, Description> = {};
+      for (const name of describedNames) {
+        const found = (await registry.describe?.(name)) ?? (await describe(name));
+        noteDescription(ce, found);
+        described[name] = found;
+      }
+      return { expression, declared, unresolved, pins, errors, failed, described };
     },
   };
 }

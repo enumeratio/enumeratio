@@ -191,6 +191,26 @@ test("options are optional named parameters, defaults filling what a call leaves
   expect(written[0]![1]).toMatchObject({ latex: [{ trigger: "\\scaled", kind: "function" }] });
 });
 
+test("a symbol is described from the index alone: no definition fetched, no install check", async () => {
+  const { fetch, log } = cdn();
+  const npm = catalog<Engine>(SPECS, { host: npmHost({ fetch }) });
+  const resolver = createRegistryResolver(npm, {
+    check: { engine: () => new ComputeEngine() },
+    describeOnly: ["About"],
+  });
+  const { described, declared } = await resolver.ensure(new ComputeEngine(), ["About", ["Field", "bob", "'Scaled'"]]);
+  expect(declared).toEqual([]);
+  expect(described["bob.Scaled"]).toMatchObject({
+    description: "Its argument times factor, two unless given.",
+    signature: "(x: number, factor: number?) -> number",
+    defaults: { factor: 2 },
+    examples: 2,
+    triggers: ["\\scaled"],
+    package: "@bob/extra@2.0.0",
+  });
+  expect(log.filter((path) => !path.endsWith("package.json") && !path.endsWith("index.json"))).toEqual([]);
+});
+
 test("from ranges: lock the versions, then read them", async () => {
   const { fetch } = cdn();
   const listVersions = async (name: string) =>

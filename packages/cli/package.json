@@ -27,8 +27,10 @@
   "dependencies": {
     "@cortex-js/compute-engine": "^0.142.0",
     "@enumeratio/combinatorics": "workspace:*",
+    "@enumeratio/evaluation": "workspace:*",
     "@enumeratio/formats": "workspace:*",
     "@enumeratio/frontend": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/raster": "workspace:*",
     "@enumeratio/statistics": "workspace:*",
     "@enumeratio/structures": "workspace:*"

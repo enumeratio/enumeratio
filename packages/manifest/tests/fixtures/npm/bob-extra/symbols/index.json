@@ -9,14 +9,16 @@
         "ada.Twice": "sha256-a6ca5cce8d3e17fc60c7e9298332578c8a551ba47d71bbb8c10ec667a46acc45"
       },
       "examples": 1,
-      "params": ["x"]
+      "params": ["x"],
+      "summary": "Eight times its argument, as ada's Quad of Twice."
     },
     "Quoted": {
       "signature": "(any) -> any",
       "pin": "sha256-54c098409117a53c284bb84ca061da0b5b4ef0985ef3f9e639f61072ad2f0922",
       "examples": 1,
       "params": ["x"],
-      "attributes": ["HoldAll"]
+      "attributes": ["HoldAll"],
+      "summary": "Its argument, held as written."
     },
     "Scaled": {
       "signature": "(x: number, factor: number?) -> number",
@@ -43,7 +45,8 @@
             "kind": "function"
           }
         ]
-      }
+      },
+      "summary": "Its argument times factor, two unless given."
     },
     "Zh": {
       "signature": "(number) -> number",
