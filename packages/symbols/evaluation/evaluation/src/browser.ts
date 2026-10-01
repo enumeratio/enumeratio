@@ -421,6 +421,8 @@ export interface BrowserEvaluateSessionOptions {
   readonly evaluate?: boolean;
   readonly raw?: boolean;
   readonly write?: string;
+  /** With `session`: the kernel forgets that session. */
+  readonly close?: boolean;
 }
 
 export interface BrowserSessionEvaluateResult {
@@ -628,8 +630,8 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
       // hanging forever against a session that never actually started.
       spawnTimer = setTimeout(kill, spawnTimeoutMs);
 
-      const { source, session, evaluate, raw, write } = callOptions;
-      currentPort.postMessage({ id, json, timeMs, source, session, evaluate, raw, write });
+      const { source, session, evaluate, raw, write, close } = callOptions;
+      currentPort.postMessage({ id, json, timeMs, source, session, evaluate, raw, write, close });
     });
   }
 
