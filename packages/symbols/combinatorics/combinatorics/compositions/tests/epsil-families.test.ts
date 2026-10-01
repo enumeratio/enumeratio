@@ -7,12 +7,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, kernelOn } from "../../collections/src/families/epsil.ts";
-import {
-  CompositionCount,
-  CompositionFromMask,
-  CompositionRank,
-  IsCompositionOf,
-} from "../../collections/src/families/kernels-combinatorics.ts";
+import { CompositionCount, IsCompositionOf } from "../../collections/src/families/kernels-combinatorics.ts";
 import {
   CompositionsIntoKPartsCount,
   CompositionsIntoKPartsRank,
@@ -43,12 +38,20 @@ function words(length: number, alphabet: readonly number[]): number[][] {
 }
 const span = (from: number, to: number): number[] => Array.from({ length: to - from + 1 }, (_, i) => from + i);
 
+/** Every composition of n, lex on the parts. */
+function lexCompositions(n: number): number[][] {
+  if (n === 0) return [[]];
+  return Array.from({ length: n }, (_, i) => i + 1).flatMap((first) =>
+    first === n ? [[n]] : lexCompositions(n - first).map((rest) => [first, ...rest]),
+  );
+}
+
 const READINGS: Record<string, Reading> = {
   IntegerCompositions: {
     params: [[0], [1], [2], [3], [4], [5]],
     count: ([n]) => CompositionCount(n),
-    unrank: ([n], r) => CompositionFromMask(n, r),
-    rank: (x: number[]) => CompositionRank(x),
+    unrank: ([n], r) => lexCompositions(n)[r],
+    rank: (x: number[], [n]) => lexCompositions(n).findIndex((c) => c.join() === x.join()),
     valid: (x: number[], [n]) => IsCompositionOf(x, n),
     // near misses: every word of length n over 0..n (a zero part or an out-of-range part), plus
     // words one shorter or longer over 1..n.
@@ -153,8 +156,9 @@ test("past 2^53 IntegerCompositions answers in exact integers", () => {
   let total = 1n;
   for (let i = 0; i < n - 1; i++) total *= 2n;
   expect(kernel.count([n])).toBe(total);
+  expect(kernel.unrank([n], 0n)).toEqual(Array.from({ length: n }, () => 1));
   const last = kernel.unrank([n], total - 1n);
-  expect(last).toEqual(Array.from({ length: n }, () => 1));
+  expect(last).toEqual([n]);
   expect(kernel.rank(last, [n])).toBe(total - 1n);
   const middle = kernel.unrank([n], total / 3n);
   expect(kernel.rank(middle, [n])).toBe(total / 3n);
