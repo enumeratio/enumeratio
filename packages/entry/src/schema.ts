@@ -259,6 +259,17 @@ export const REFERENCE_ENTRY_SCHEMA: JsonSchema = {
     details: { type: "array", items: { type: "string" } },
     outForm: { type: "string" },
     outEvaluate: { type: "boolean" },
+    definition: {
+      type: "object",
+      properties: {
+        signature: { type: "string" },
+        body: { type: "string" },
+        defaults: { type: "object", additionalProperties: { type: "string" } },
+        requires: { type: "object", additionalProperties: { type: "string" } },
+      },
+      required: ["signature", "body"],
+      additionalProperties: false,
+    },
     bindings: { type: "array", items: { $ref: "#/$defs/ReferenceBinding" } },
     primitive: { enum: ["kernel", "numeric", "foreign", "axiom"] },
     references: { type: "array", items: { $ref: "#/$defs/Reference" } },

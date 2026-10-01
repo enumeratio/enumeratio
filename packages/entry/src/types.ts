@@ -372,12 +372,30 @@ export interface ReferenceEntry {
   readonly stub?: "engine" | "carrier";
   /** Wolfram-style attributes; `HoldAll` is compute-engine's `lazy` (https://github.com/enumeratio/enumeratio/wiki/Manifest). */
   readonly attributes?: readonly SymbolAttribute[];
+  /** A library symbol's definition, in Epsil: what packing makes its `definition.json` from. */
+  readonly definition?: EpsilDefinition;
   /** A combinatorial map's laws, in the shorthand vocabulary -- see `EntryLaw`. Absent for
    *  anything that isn't a map. */
   readonly laws?: readonly EntryLaw[];
 }
 
 export type SymbolAttribute = "HoldAll";
+
+/**
+ * A definition as its author writes it (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2):
+ * Epsil throughout. Packing parses it into `definition.json`, the body a `Function` over the
+ * signature's parameter names, and fills each pin it can find.
+ */
+export interface EpsilDefinition {
+  /** Named parameters, `?` for an option: `(n: integer, sides: integer?) -> integer`. */
+  readonly signature: string;
+  /** The body, in terms of the parameters: `((sides - 2) * n^2 - (sides - 4) * n) / 2`. */
+  readonly body: string;
+  /** Each option's default, in Epsil. */
+  readonly defaults?: Readonly<Record<string, string>>;
+  /** Pins packing can't find (a dependency that isn't installed), by qualified name. */
+  readonly requires?: Readonly<Record<string, string>>;
+}
 
 // --- the implementations record (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2, §6) -----------------------
 //
