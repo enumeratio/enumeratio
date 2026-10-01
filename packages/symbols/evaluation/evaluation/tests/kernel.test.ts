@@ -127,6 +127,34 @@ test("a call without a session binds nothing another call sees, and a closed ses
   expect(scopes).toEqual(["(own)", "(own)", "s", "s"]);
 });
 
+test("a function a cell defines survives its own recording", async () => {
+  const ce = new ComputeEngine();
+  const scope = ce.createScope({});
+  const kernel = createKernel(ce, [], {
+    // As the notebook's session does: an `Assign` claims its name in this scope first.
+    session: () => ({
+      run: (fn, input) => {
+        ce.pushScope(scope);
+        try {
+          if (Array.isArray(input) && input[0] === "Assign" && typeof input[1] === "string")
+            try {
+              ce.declare(input[1], "unknown");
+            } catch {
+              // already claimed here
+            }
+          return fn();
+        } finally {
+          ce.popScope();
+        }
+      },
+      record: () => 1,
+    }),
+  });
+  const square = ce.parse("h(x)\\coloneq x^2+1").json;
+  expect(await kernel.evaluate({ json: square, session: "s" })).toMatchObject({ ok: true, line: 1 });
+  expect((await kernel.evaluate({ json: ["h", 4], session: "s" })).json).toBe(17);
+});
+
 test("a compile request hands the input to the host's compile, evaluating nothing", async () => {
   const seen: unknown[] = [];
   const kernel = createKernel(new ComputeEngine(), catalogue([]), {
