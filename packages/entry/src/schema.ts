@@ -392,6 +392,34 @@ export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
   },
 };
 
+/** A symbol's mappings (`mappings.json`): its references, bindings and implementations, for a library's targets. */
+export const SYMBOL_MAPPINGS_SCHEMA: JsonSchema = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: "https://enumeratio.dev/schema/symbol-mappings.schema.json",
+  title: "SymbolMappings",
+  description:
+    "What a library symbol is mapped to outside itself, for the targets the library tracks: " +
+    "the ids other sources give it, how other systems write it, and each example as they write and answer it.",
+  type: "object",
+  properties: {
+    references: { type: "array", items: { $ref: "#/$defs/Reference" } },
+    bindings: { type: "array", items: { $ref: "#/$defs/ReferenceBinding" } },
+    implementations: {
+      type: "object",
+      additionalProperties: { type: "object", additionalProperties: { $ref: "#/$defs/SystemImplementation" } },
+    },
+  },
+  additionalProperties: false,
+  $defs: {
+    MathJSON: MATHJSON,
+    Reference: REFERENCE,
+    ReferenceBinding: REFERENCE_IMPLEMENTATION,
+    RenderedForm: RENDERED_FORM,
+    EvaluationMessage: EVALUATION_MESSAGE,
+    SystemImplementation: SYSTEM_IMPLEMENTATION,
+  },
+};
+
 // --- validation -----------------------------------------------------------------------------
 //
 // ajv (draft 2020-12) does the checking; this only turns its errors into one line each, in

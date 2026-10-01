@@ -27,6 +27,8 @@ export interface LibraryField extends PackageField {
   readonly index: string;
   /** The range of the system its definitions were written against. */
   readonly system?: string;
+  /** The targets it tracks (`@enumeratio/entry`'s `SOURCES`): what its scans run and its `mappings.json` hold. */
+  readonly mappings?: readonly string[];
 }
 
 /**
@@ -49,6 +51,8 @@ export interface IndexedSymbol {
   /** Its options' defaults: the optional parameters a call may leave out. */
   readonly defaults?: Readonly<Record<string, unknown>>;
   readonly attributes?: readonly DefinitionAttribute[];
+  /** The targets `<Name>/mappings.json` has anything for. */
+  readonly mappings?: readonly string[];
   /** How it's written (`<Name>/notation.json`), inline so a host can load every library's LaTeX before it builds an engine. */
   readonly notation?: NotationData;
   /** Its record's summary, for describing it without its definition; not part of the pin. */
@@ -101,6 +105,7 @@ export async function libraryIndexOf(
   namespace: string,
   definitions: Readonly<Record<string, Definition>>,
   notation?: NotationSummary,
+  mappings: Readonly<Record<string, readonly string[]>> = {},
 ): Promise<LibraryIndex> {
   const symbols: Record<string, IndexedSymbol> = {};
   for (const name of Object.keys(definitions).toSorted()) {
@@ -117,6 +122,7 @@ export async function libraryIndexOf(
       ...(attributes?.length ? { attributes } : {}),
       ...(notation === undefined ? {} : { notation }),
       ...(summary === undefined ? {} : { summary }),
+      ...(mappings[name]?.length ? { mappings: mappings[name] } : {}),
     };
   }
   return { namespace, symbols, ...(notation === undefined ? {} : { notation }) };
