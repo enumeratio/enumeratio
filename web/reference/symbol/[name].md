@@ -1,3 +1,3 @@
 # {{ $params.name }}
 
-<ReferencePage :name="$params.name" :entry="$params.entry" />
+<ReferencePage :name="$params.name" :entry="$params.entry" :prerendered="$params.prerendered" />
