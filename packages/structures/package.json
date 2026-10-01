@@ -31,13 +31,13 @@
     "@enumeratio/engine": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.141.0",
+    "@cortex-js/compute-engine": "^0.142.0",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.141.0"
+    "@cortex-js/compute-engine": "^0.142.0"
   },
   "enumeratio": {
     "notation": "./notation"

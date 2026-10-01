@@ -9,15 +9,12 @@ import {
   clausenPatch,
   dirichlet,
   lerchPhiPatch,
-  polylogPrecision,
-  hurwitzZetaForms,
   polygammaLogGamma,
   logGammaPatch,
   stieltjes,
   gammaInfinity,
   sqrtInfinity,
   ceilFloorInfinity,
-  exactRounding,
   infinityArgs,
   rangeRationalStep,
   solveIdentity,
@@ -119,9 +116,10 @@ import { declareNSum } from "./nsum.ts";
  * `StieltjesGamma` are all cortex-js/compute-engine#340 candidates: they live in
  * `@enumeratio/ce-patches` as patches (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10) and are
  * applied here at the point their declarations used to run, so declare order and behaviour
- * are unchanged. `HurwitzZeta`, the two-argument `Zeta`, and `PolyLog`/`PolyGamma`'s
- * complex-argument widenings landed natively in compute-engine 0.141 and are no longer
- * patches; special-functions-remaining.ts and generalized-special.ts still call
+ * are unchanged. `HurwitzZeta`, the two-argument `Zeta`, `PolyLog`/`PolyGamma`'s
+ * complex-argument widenings, `PolyLog` at the engine's precision and exact `Floor`/`Ceil`/
+ * `Round`/`Truncate` are native in compute-engine and no longer patches;
+ * special-functions-remaining.ts and generalized-special.ts still call
  * `evaluateHurwitz`/`evaluateZeta`/`evaluatePolygamma` directly for certified-precision
  * evaluation.
  *
@@ -161,8 +159,6 @@ import { declareNSum } from "./nsum.ts";
 export function declareAnalytic(ce: ComputeEngine): void {
   registerNotation(ce, ANALYTIC_NOTATION);
   applyPatch(ce, lerchPhiPatch);
-  applyPatch(ce, polylogPrecision);
-  applyPatch(ce, hurwitzZetaForms);
   applyPatch(ce, polygammaLogGamma);
 
   // Gamma(s, z₀, z₁) and GammaRegularized(s, z₀, z₁): the generalized incomplete gamma,
@@ -198,7 +194,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, gammaInfinity);
   applyPatch(ce, sqrtInfinity);
   applyPatch(ce, ceilFloorInfinity);
-  applyPatch(ce, exactRounding);
   applyPatch(ce, rangeRationalStep);
   applyPatch(ce, solveIdentity);
   applyPatch(ce, takeDropNegativeCount);

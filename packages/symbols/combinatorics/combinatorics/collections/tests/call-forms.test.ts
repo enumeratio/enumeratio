@@ -36,16 +36,10 @@ function stripLists(x: unknown): unknown {
   return x;
 }
 
-/** Every element of a lazy collection, read through `At` one at a time -- materializing
- *  via `.evaluate({ materialization: true })` truncates past a display-sized cutoff
- *  (`ContinuationPlaceholder`), which a brute-force cross-check can't have. */
+/** Every element of a lazy collection. */
 function elementsOf(expr: unknown): unknown[] {
-  const total = Number(countOf(expr));
-  const out: unknown[] = [];
-  for (let i = 1; i <= total; i++) {
-    out.push(stripLists(ce.box(["At", expr, i] as never).evaluate().json));
-  }
-  return out;
+  const list = ce.box(expr as never).evaluate({ materialization: true }).json as unknown[];
+  return list.slice(1).map(stripLists);
 }
 
 const canon = (rows: readonly (readonly number[])[]): string[] => rows.map((r) => JSON.stringify(r)).toSorted();

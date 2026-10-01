@@ -40,31 +40,18 @@ export function evaluateCooperatively(
   materialize = false,
 ): CooperativeResult {
   const boxed: BoxedExpression = ce.box(json as never);
-  // A lazy collection (`Range`, `Tabulate`, …) stays lazy unless asked: its `.json` is
-  // then still the call, not the elements. Only the RESULT is materialized: compute-engine
-  // applies `materialization` to every argument on the way down too, and there `true` means
-  // the elided display form (five elements, a placeholder, five more), so
-  // `Length(Range(1, 20))` counted the eleven items of the display and gave 11. On the
-  // result, too, `true` elides past ten elements (`Range(1, 20)` comes back as five, a
-  // `ContinuationPlaceholder`, five) -- see
-  // .git/lanes/data/upstream-materialization-true-elides.md -- so a known count is passed
-  // as the element budget instead, up to MATERIALIZE_LIMIT.
-  //
-  // Past that (count unknown -- a `Select`/`Filter` result never reports one ahead of
-  // walking it -- or too large to fit the budget), there is no numeric budget we can hand
-  // `evaluate()` that materializes it exactly: passing `true` would hit the compute-engine
-  // bug above and splice a literal `"ContinuationPlaceholder"` string into `.json`, silently
-  // corrupting real data for any caller that reads the result programmatically. DECLINE
-  // instead: hand back the still-lazy result exactly as `materialize: false` would. A caller
-  // that asked for materialized data and gets a lazy expression back can tell the difference
-  // (`isLazyCollection` on what it received) -- a caller that gets a `ContinuationPlaceholder`
-  // spliced into its data cannot.
+  // A lazy collection (`Range`, `Tabulate`, …) stays lazy unless asked: its `.json` is then
+  // still the call, not the elements. Asked, a result with a known count up to
+  // MATERIALIZE_LIMIT is expanded in full. Past that (count unknown -- a `Select`/`Filter`
+  // result may not report one ahead of walking it -- or too large), it stays lazy, exactly as
+  // `materialize: false` would leave it: a caller can tell a lazy expression
+  // (`isLazyCollection`) from data, but not a truncated list from a whole one.
   const run = (): BoxedExpression => {
     const result = boxed.evaluate();
     if (!materialize || !result.isLazyCollection) return result;
     const count = result.count;
     if (count === undefined || !Number.isFinite(count) || count > MATERIALIZE_LIMIT) return result;
-    return result.evaluate({ materialization: Math.max(count, 1) });
+    return result.evaluate({ materialization: true });
   };
   // compute-engine's `N(x, d)` leaves `ce.precision` at `d` once it returns, so every later
   // evaluation on the same engine -- the next case in a pooled worker, the next notebook

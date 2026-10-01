@@ -38,7 +38,8 @@ patches: `lerch-phi` (`LerchPhi`), `dirichlet` (`DirichletEta`, `DirichletBeta`,
 (`LogGamma`), `clausen` (`ClausenCl`), and `stieltjes` (`StieltjesGamma`). `zeta-hurwitz`
 (complex `Zeta`, `Zeta(s, a)`, `HurwitzZeta`; offered as PR #350), `polylog-order` and
 `polygamma-complex` (`PolyLog`/`PolyGamma` widened to non-integer/complex arguments), and
-`round-places` all landed in compute-engine 0.141 and were retired; the arbitrary-precision
+`round-places` landed in compute-engine 0.141, and `hurwitz-zeta-forms`,
+`polylog-precision` and `exact-rounding` in 0.142, and were retired; the arbitrary-precision
 kernels and `evaluateHurwitz`/`evaluateZeta`/`evaluatePolygamma` they left behind are
 re-exported straight from `src/index.ts` for `@enumeratio/analytic` to call directly.
 `hyperbolic-zero`, `elliptic-e-complex` and `number-theory-large-integers` are each their

@@ -1,7 +1,5 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { lerchPhiPatch } from "./patches/lerch-phi.ts";
-import { polylogPrecision } from "./patches/polylog-precision.ts";
-import { hurwitzZetaForms } from "./patches/hurwitz-zeta-forms.ts";
 import { polygammaLogGamma } from "./patches/polygamma-log-gamma.ts";
 import { dirichlet } from "./patches/dirichlet.ts";
 import { barnesGPatch } from "./patches/barnes-g.ts";
@@ -11,7 +9,6 @@ import { stieltjes } from "./patches/stieltjes.ts";
 import { gammaInfinity } from "./patches/gamma-infinity.ts";
 import { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 import { ceilFloorInfinity } from "./patches/ceil-floor-infinity.ts";
-import { exactRounding } from "./patches/exact-rounding.ts";
 import { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 import { infinityArgs } from "./patches/infinity-args.ts";
 import { rangeRationalStep } from "./patches/range-rational-step.ts";
@@ -26,7 +23,8 @@ export { applyPatch, applyPatches, declareLibrary, patchSymbols } from "./patch.
 // #340 special-function family (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10; @enumeratio/analytic's
 // declareAnalytic calls applyPatch for each of these at the point their declares used to run).
 // round-places, zeta-hurwitz (HurwitzZeta/Zeta's N(x, d) precision), polylog-order and
-// polygamma-complex all landed in compute-engine 0.141 and were retired; the functions
+// polygamma-complex landed in compute-engine 0.141, and hurwitz-zeta-forms,
+// polylog-precision and exact-rounding in 0.142, and were retired; the functions
 // still used directly by @enumeratio/analytic (evaluateHurwitz/evaluateZeta/
 // evaluatePolygamma) and the arbitrary-precision kernels are re-exported straight from
 // their library file below.
@@ -61,8 +59,6 @@ export {
   pow as bigPow,
   round as bigRound,
 } from "./compute-engine/numerics/hurwitz-zeta-big.ts";
-export { polylogPrecision, polyLogPrecise } from "./patches/polylog-precision.ts";
-export { hurwitzZetaForms } from "./patches/hurwitz-zeta-forms.ts";
 export { polygammaLogGamma } from "./patches/polygamma-log-gamma.ts";
 export {
   lerchPhiPatch,
@@ -99,7 +95,6 @@ export { logGammaPatch, evaluateLogGamma, logGamma, logGammaReal, logGammaBig } 
 export { gammaInfinity, evaluateGammaAtInfinity } from "./patches/gamma-infinity.ts";
 export { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches/ceil-floor-infinity.ts";
-export { exactRounding, evaluateRoundingOnExactRationals, roundExactRational } from "./patches/exact-rounding.ts";
 export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 export { rangeRationalStep, evaluateRangeWithRationalStep } from "./patches/range-rational-step.ts";
 export { solveIdentity, evaluateSolveIdentity } from "./patches/solve-identity.ts";
@@ -208,8 +203,6 @@ export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/c
 /** Every patch offered upstream. `tests/landed.test.ts` holds each one to being unfixed. */
 export const PATCHES: readonly Patch[] = [
   lerchPhiPatch,
-  polylogPrecision,
-  hurwitzZetaForms,
   polygammaLogGamma,
   dirichlet,
   barnesGPatch,
@@ -219,7 +212,6 @@ export const PATCHES: readonly Patch[] = [
   gammaInfinity,
   sqrtInfinity,
   ceilFloorInfinity,
-  exactRounding,
   multiplyDirectedInfinity,
   infinityArgs,
   rangeRationalStep,
