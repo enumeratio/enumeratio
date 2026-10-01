@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type BoxedExpression, type ComputeEngine, loadEngine } from "@enumeratio/elements";
+import { type BoxedExpression, type ComputeEngine, loadEngine } from "@enumeratio/components";
 import { onMounted, ref, shallowRef, watch } from "vue";
 
 type Mode = "latex" | "mathjson";

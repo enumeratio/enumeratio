@@ -126,7 +126,8 @@ test("the product is a polynomial in the loop parameter, and it is bilinear", ()
           ]),
     );
   }
-  expect([...combined.keys()].sort()).toEqual([...separate.keys()].sort());
+  const byDegree = (a: number, b: number): number => a - b;
+  expect([...combined.keys()].toSorted(byDegree)).toEqual([...separate.keys()].toSorted(byDegree));
   for (const [degree, part] of combined) same(part, separate.get(degree) as AlgebraElement);
 });
 

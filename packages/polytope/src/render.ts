@@ -27,7 +27,7 @@ export interface Projected {
 }
 
 /** Supplied by the caller, so this module needs no camera of its own —
- *  `@enumeratio/elements` has one that fits the unit cube. */
+ *  `@enumeratio/components` has one that fits the unit cube. */
 export type Project = (point: Point3) => Projected;
 
 /** Two faces are the same when their DATA is. */

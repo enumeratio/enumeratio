@@ -280,7 +280,7 @@ test("H_z = ψ(z+1) + γ off the integers (Wolfram values)", () => {
 
 test("HarmonicNumber(z, r) = ζ(r) − ζ(r, z+1) off the integers (Wolfram values)", () => {
   expect(num(["HarmonicNumber", ["Rational", 1, 2], 2])).toBeCloseTo(0.7101318663035469, 13);
-  expect(num(["HarmonicNumber", 5, ["Rational", 1, 2]])).toBeCloseTo(3.2316706458761312, 12);
+  expect(num(["HarmonicNumber", 5, ["Rational", 1, 2]])).toBeCloseTo(3.231670645876131, 12);
 });
 
 test("complex z (mpmath/Wolfram agree via golden), and a float argument evaluates under plain evaluate()", () => {

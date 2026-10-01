@@ -1,6 +1,6 @@
 # Playground
 
-notatio, one piece at a time: a storybook for the `@enumeratio/elements` web
+notatio, one piece at a time: a storybook for the `@enumeratio/components` web
 components — the notebook, the input and output, the plots, glyphs, tables and prose
 controls that make up the interface. One page per component, each a focused, shared
 place to look at the behaviour and talk about how to improve it. Some pages are
@@ -9,20 +9,20 @@ experimental and move fast.
 ## Components
 
 - [Notebook](/playground/notebook) — `<notatio-notebook>`, a scoped session
-- [Input](/playground/input) — `<notatio-input>`, the live math editor (and its read-only mode)
-- [Output](/playground/output) — `<notatio-output>`, typeset read-only rendering + display forms
+- [Input](/playground/in) — `<notatio-in>`, the live math editor (and its read-only mode)
+- [Output](/playground/out) — `<notatio-out>`, typeset read-only rendering + display forms
 - [Cell](/playground/cell) — `<notatio-cell>`, a notebook In/Out pair
 - [Figure (glyphs)](/playground/figure) — `<notatio-figure>`, combinatorial pictorial forms
 - [Plot](/playground/plot) — `<notatio-plot>`, function plots of one variable
-- [Plot 3D](/playground/plot3d) — `<notatio-plot3d>`, bivariate surfaces, projected and shaded in plain SVG
-- [Contour Plot](/playground/contourplot) — `<notatio-contourplot>`, contour lines / filled bands of a bivariate function (or a pre-sampled grid) via marching squares
-- [Density Plot](/playground/densityplot) — `<notatio-densityplot>`, a bivariate function (or a pre-sampled grid) as a heatmap on a sequential ramp
-- [Vector & Stream Plot](/playground/vectorplot) — `<notatio-vectorplot>`, a planar vector field as arrows, or as streamlines by fixed-step RK4
-- [Polar Plot](/playground/polarplot) — `<notatio-polarplot>`, r(θ) curves (and explicit point lists) on a polar grid
-- [List Plot 3D](/playground/listplot3d) — `<notatio-listplot3d>`, 3-D scatters and height-grid surfaces, orthographically projected
-- [Bar Chart 3D](/playground/barchart3d) — `<notatio-barchart3d>`, a matrix of heights as depth-sorted 3-D bars
+- [Plot 3D](/playground/plot-3d) — `<notatio-plot-3d>`, bivariate surfaces, projected and shaded in plain SVG
+- [Contour Plot](/playground/contour-plot) — `<notatio-contour-plot>`, contour lines / filled bands of a bivariate function (or a pre-sampled grid) via marching squares
+- [Density Plot](/playground/density-plot) — `<notatio-density-plot>`, a bivariate function (or a pre-sampled grid) as a heatmap on a sequential ramp
+- [Vector & Stream Plot](/playground/vector-plot) — `<notatio-vector-plot>`, a planar vector field as arrows, or as streamlines by fixed-step RK4
+- [Polar Plot](/playground/polar-plot) — `<notatio-polar-plot>`, r(θ) curves (and explicit point lists) on a polar grid
+- [List Plot 3D](/playground/list-plot-3d) — `<notatio-list-plot-3d>`, 3-D scatters and height-grid surfaces, orthographically projected
+- [Bar Chart 3D](/playground/bar-chart-3d) — `<notatio-bar-chart-3d>`, a matrix of heights as depth-sorted 3-D bars
 - [Chart](/playground/chart) — `<notatio-chart>`, data-driven 2-D charts (bar, histogram, pie, box-whisker, array, discrete, list)
-- [GraphPlot](/playground/graphplot) — `<notatio-graphplot>`, graph & hierarchical layouts (tree, graph, layered graph, dendrogram)
+- [GraphPlot](/playground/graph-plot) — `<notatio-graph-plot>`, graph & hierarchical layouts (tree, graph, layered graph, dendrogram)
 - [Complex Plot](/playground/complex-plot) — `<notatio-complex-plot>`, domain-colouring of a complex expression, one WebGPU invocation per pixel
 - [Collection table](/playground/collection-table) — `<notatio-collection-table>`, a paged table over a lazy indexed collection, with statistics as columns
 - [Worksheet](/playground/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells
@@ -46,8 +46,8 @@ implicit multiplication works as usual. That holds for the editable components t
 cell's `value` and a notebook's or worksheet's `seed` are notatio, converted to LaTeX
 only for the MathLive field that edits them; `in-form="latex"` hands the field LaTeX as
 written, for the rare thing notatio cannot yet say. Two components keep LaTeX as their
-own form: `<notatio-input>` _is_ the math field, so its `value` is the field's LaTeX,
-and `<notatio-output>` renders a given encoding rather than taking authored input, so
+own form: `<notatio-in>` _is_ the math field, so its `value` is the field's LaTeX,
+and `<notatio-out>` renders a given encoding rather than taking authored input, so
 it keeps its `format` attribute (`latex` by default; `mathjson` and `notatio` too).
 
 ## Debugging
@@ -63,7 +63,7 @@ localStorage["notatio:debug"] = "plot3d"; // or "plot*", or "*"
 
 A single expression can be shown many ways. Following Wolfram's `*Form` symbols,
 each way is a named **representation** you can request explicitly. The textual
-forms ship on `<notatio-output>` (the In/Out menu); the visual forms live in
+forms ship on `<notatio-out>` (the In/Out menu); the visual forms live in
 `<notatio-figure>` and the plot components.
 
 | Representation           | Kind       | Status  | Wolfram analogue                                                                     |

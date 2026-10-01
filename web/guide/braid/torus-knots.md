@@ -15,7 +15,7 @@ $\sin qt$ push it in and out through the hole $q$ times.
 <Story
   title="T(2,3) — the trefoil, on the torus it lives on">
 <ClientOnly>
-<notatio-curve3d
+<notatio-curve-3d
   value="KnotCurve(TorusKnot(2, 3))"
   torus="2,1"
   azimuth="45"
@@ -85,7 +85,7 @@ winds three times round the tube. The two dials count those windings as they hap
 <p><notatio-clock label="one clock for the page" /></p>
 <div class="torus-pair">
 <notatio-torus-square p="2" q="3" />
-<notatio-curve3d value="KnotCurve(TorusKnot(2, 3))" torus="2,1" azimuth="35" elevation="30" clock label="T(2,3) — the trefoil" />
+<notatio-curve-3d value="KnotCurve(TorusKnot(2, 3))" torus="2,1" azimuth="35" elevation="30" clock label="T(2,3) — the trefoil" />
 </div>
 </Story>
 </ClientOnly>
@@ -105,7 +105,7 @@ the tube, and the slope $7/3$ <em>is</em> that sentence.
 </template>
 <div class="torus-pair">
 <notatio-torus-square p="3" q="7" />
-<notatio-curve3d value="KnotCurve(TorusKnot(3, 7))" torus="2,1" azimuth="20" elevation="35" clock label="T(3,7)" />
+<notatio-curve-3d value="KnotCurve(TorusKnot(3, 7))" torus="2,1" azimuth="20" elevation="35" clock label="T(3,7)" />
 </div>
 </Story>
 </ClientOnly>
@@ -146,7 +146,7 @@ straight: $T(1, q)$ and $T(p, 1)$ are **unknots**, however large the other numbe
 
 <Story title="T(1,7) — a circle, wound seven times">
 <ClientOnly>
-<notatio-curve3d value="KnotCurve(TorusKnot(1, 7))" azimuth="45" elevation="25" label="T(1,7) — a circle, wound seven times" />
+<notatio-curve-3d value="KnotCurve(TorusKnot(1, 7))" azimuth="45" elevation="25" label="T(1,7) — a circle, wound seven times" />
 </ClientOnly>
 </Story>
 
@@ -161,8 +161,8 @@ $p$ and $q$ is reflecting the line in the diagonal.
 
 <Story title="T(2,3) and T(3,2)">
 <ClientOnly>
-<notatio-curve3d value="KnotCurve(TorusKnot(2, 3))" azimuth="20" label="T(2,3)" />
-<notatio-curve3d value="KnotCurve(TorusKnot(3, 2))" azimuth="20" label="T(3,2) — the same knot" />
+<notatio-curve-3d value="KnotCurve(TorusKnot(2, 3))" azimuth="20" label="T(2,3)" />
+<notatio-curve-3d value="KnotCurve(TorusKnot(3, 2))" azimuth="20" label="T(3,2) — the same knot" />
 </ClientOnly>
 </Story>
 
@@ -172,8 +172,8 @@ $\langle a, b \mid a^p = b^q \rangle$ remembers $p$ and $q$ and nothing else.
 
 <Story title="T(7,3) and T(5,4)">
 <ClientOnly>
-<notatio-curve3d value="KnotCurve(TorusKnot(7, 3))" azimuth="30" label="T(7,3)" />
-<notatio-curve3d value="KnotCurve(TorusKnot(5, 4))" azimuth="30" label="T(5,4) — genuinely different" />
+<notatio-curve-3d value="KnotCurve(TorusKnot(7, 3))" azimuth="30" label="T(7,3)" />
+<notatio-curve-3d value="KnotCurve(TorusKnot(5, 4))" azimuth="30" label="T(5,4) — genuinely different" />
 </ClientOnly>
 </Story>
 

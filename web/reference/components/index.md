@@ -4,7 +4,7 @@ Every `<notatio-*>` custom element, with its attributes, types and defaults read
 out of the source at build time — so these tables cannot drift from the code.
 
 The components are plain custom elements built on [Lit](https://lit.dev). They need no
-framework: import `@enumeratio/elements` for the side effect and use the tags in any
+framework: import `@enumeratio/components` for the side effect and use the tags in any
 HTML. The [playground](/playground/) shows each one working; this reference is for
 reading the dials.
 
@@ -20,8 +20,8 @@ That includes the editable components: a `<notatio-cell>`'s `value` and a
 only for the MathLive field that edits them; `in-form="latex"` hands the field LaTeX as
 written. A seed may bind with `:=` — a cell is notatio plus one binding.
 
-Two components keep LaTeX as their own form. `<notatio-input>` _is_ the math field, so its
-`value` is the field's LaTeX. `<notatio-output>` renders an encoding it is handed rather
+Two components keep LaTeX as their own form. `<notatio-in>` _is_ the math field, so its
+`value` is the field's LaTeX. `<notatio-out>` renders an encoding it is handed rather
 than input someone authored, so it keeps a `format` attribute naming the encoding —
 `latex` (the default), `mathjson` or `notatio`. The [formats reference](/reference/formats/)
 covers those.

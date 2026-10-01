@@ -79,7 +79,8 @@ test("both coproducts are coassociative", () => {
           right.set(triple, (right.get(triple) ?? 0) + c * ic);
         }
       }
-      expect([...left].sort(), `${algebra.name} coassociativity`).toEqual([...right].sort());
+      // Map equality is entry-wise and order-blind, which is the comparison wanted.
+      expect(left, `${algebra.name} coassociativity`).toEqual(right);
     }
   }
 });
