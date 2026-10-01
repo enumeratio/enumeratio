@@ -3,7 +3,7 @@
 // same roadmap item don't collide on one file. Reuses ./kernels.ts (Factorial/PermutationUnrank/
 // PermutationRank/IsPermutationOf/LehmerCode/Inversions) and ./kernels-extra.ts (KPermutation*) wherever
 // the element representation already matches; only genuinely new combinatorics get new code here.
-import { binomial, catalanNumber } from "../../../collections/src/families/shared.ts";
+import { catalanNumber } from "../../../collections/src/families/shared.ts";
 import {
   Factorial,
   Inversions,
@@ -23,6 +23,7 @@ import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { inducedOrder } from "../../../collections/src/families/induced-order.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { kCyclePermutations } from "./core.ts";
+import { alternatingPermutations, connectedPermutations, kDescentPermutations } from "./restrictions.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
 const ints = (
@@ -115,84 +116,9 @@ function isSubexcedant(terms: number[], n: number): boolean {
   return true;
 }
 
-// ─── AlternatingPermutations(n): a₁<a₂>a₃<… (Euler zigzag / Entringer numbers, A000111). ──────────
-// The max value n can only sit at a position i whose required relation to i+1 is "descend" (n can't be
-// less than what follows) — that's exactly the ODD 0-indexed positions (an "i = n−1, no next" slot turns
-// out to coincide with this: the last position only admits n when n−1 itself is odd). Split the other
-// n−1 values into a left block of size i and a right block of size n−1−i, freely (any subset — the
-// pattern only constrains ADJACENT pairs, so left/right values don't need to interleave by magnitude,
-// unlike the 231 decomposition); each block is independently alternating on its relative values.
-const alternatingCache = new Map<number, number>();
-function alternatingCount(n: number): number {
-  if (n <= 1) return 1;
-  const cached = alternatingCache.get(n);
-  if (cached !== undefined) return cached;
-  let total = 0;
-  for (let i = 1; i < n; i += 2) total += binomial(n - 1, i) * alternatingCount(i) * alternatingCount(n - 1 - i);
-  alternatingCache.set(n, total);
-  return total;
-}
-function isAlternating(perm: readonly number[], n: number): boolean {
-  if (!IsPermutationOf(perm as number[], n)) return false;
-  for (let i = 0; i + 1 < n; i++) {
-    const needAscent = i % 2 === 0;
-    if (needAscent ? !(perm[i] < perm[i + 1]) : !(perm[i] > perm[i + 1])) return false;
-  }
-  return true;
-}
-
-// ─── ConnectedPermutations(n): indecomposable — no proper prefix's values are exactly {1,…,j} (A003319) ─
-// Insert values 1,2,…,n in increasing order (each newly-inserted value is the current max, so it either
-// starts a new "record" or fills a gap below the current running max). Track only e = runningMax −
-// position — how far the max is ahead of where it "should" be for a decomposition to occur right there
-// (e=0 mid-sequence IS a decomposition point, so every intermediate step must keep e ≥ 1). At each step,
-// from (remaining count m, excess e): either extend the run by choosing how far above the old max to
-// jump (m−e ways, each landing on a distinct new e′ ≥ e — always safe), or drop into one of the e
-// still-open "gap" values below the running max (e ways, e′ = e−1 — safe only if e ≥ 2, or if this is
-// the very last placement). f(m, e) counts completions from that state; f(n, 0) is the top-level count
-// (its own m>1,e=0,t=1 branch — "place the new value BELOW itself", impossible — is excluded, which is
-// exactly what rules out an immediate decomposition at the very first position).
-const connectedF = new Map<string, number>();
-function connectedFCompletions(m: number, e: number): number {
-  if (m === 0) return 1;
-  const key = `${m},${e}`;
-  const cached = connectedF.get(key);
-  if (cached !== undefined) return cached;
-  let total = 0;
-  const maxT = m - e;
-  for (let t = 1; t <= maxT; t++) {
-    if (e === 0 && m > 1 && t === 1) continue; // would decompose right here
-    total += connectedFCompletions(m - 1, e + (t - 1));
-  }
-  if (e >= 2 || m === 1) total += e * connectedFCompletions(m - 1, e - 1);
-  connectedF.set(key, total);
-  return total;
-}
-function connectedCount(n: number): number {
-  return connectedFCompletions(n, 0);
-}
-function isConnected(perm: readonly number[], n: number): boolean {
-  if (!IsPermutationOf(perm as number[], n)) return false;
-  let runningMax = 0;
-  for (let j = 1; j < n; j++) {
-    runningMax = Math.max(runningMax, perm[j - 1]);
-    if (runningMax === j) return false;
-  }
-  return true;
-}
-
 // ─── PermutationsAvoiding{123,132,213,231,312,321}(n): classical length-3 pattern classes, all ────────
-// Catalan-counted (Knuth). `containsPattern` (an O(n³) triple check, parameterized by the pattern) is
-// what `valid()` uses for every one of the six — cheap at any n, and the only check needed for
-// membership. Rank/unrank need to be efficient though (these get `at()`-ed from docs), so instead of
-// searching we reuse ONE genuinely recursive decomposition (231, split on the position of n: everything
-// before it must be the block {1,…,m}, everything after {m+1,…,n−1}, each in turn 231-avoiding — the
-// standard Catalan convolution) and reach the other three "quadrant" patterns via the classical
-// reverse/complement/inverse symmetries of pattern classes (reverse∘231=132, complement∘231=213,
-// inverse∘231=312). 123 and 321 don't decompose that way (n can't play a role in the *ascending*
-// pattern's extremal position without extra bookkeeping); 321 instead uses the standard "insert values
-// 1..n in increasing order, tracking only the length of the current increasing suffix" DP — a genuine
-// insertion bijection, not a search — and 123 is its complement (complement∘321=123).
+// Catalan-counted (Knuth). `containsPattern` is an O(n³) check of every triple. Unrank and rank
+// filter the permutations of n in lex order (`inducedOrder`) until each class has a completion count.
 const PATTERNS: Record<string, readonly [number, number, number]> = {
   PermutationsAvoiding123: [1, 2, 3],
   PermutationsAvoiding132: [1, 3, 2],
@@ -216,46 +142,6 @@ function containsPattern(perm: readonly number[], pattern: readonly [number, num
         if (p[0] === pattern[0] && p[1] === pattern[1] && p[2] === pattern[2]) return true;
       }
   return false;
-}
-
-// Av(231): position m of n splits into a {1,…,m} block (231-avoiding) then n then a {m+1,…,n−1} block
-// (231-avoiding) — any before/after pair with before > after would itself be a 231 with n as the "3", so
-// avoidance forces the blocks apart like this. Count is the Catalan convolution by construction.
-
-// Av(321): insert values 1,2,…,n in increasing order. Each new value is the current max, so it can only
-// violate 321 by sitting before a still-later descent; valid gaps are exactly "within the current
-// trailing increasing run", (s+1) of them where s is that run's length — and the run's length after
-// inserting is all the DP needs to remember (not the whole arrangement). f(remaining, s) = completions
-// from state s with `remaining` insertions left to place.
-
-// The remaining four are these two under the classical symmetries of pattern classes: reverse maps
-// Av(231)→Av(132), complement maps Av(231)→Av(213) and Av(321)→Av(123), inverse maps Av(231)→Av(312).
-
-// ─── KCyclePermutations(n,k): exactly k cycles — the unsigned Stirling-1 triangle. ─────────────────
-// Built by the standard insertion bijection: c(n,k) = c(n−1,k−1) + (n−1)·c(n−1,k) — element n either
-// starts a new (singleton) cycle, or is spliced in right after one of the n−1 existing elements, in
-// "successor function" terms (which is exactly one-line notation: image[i] = successor of i).
-
-// ─── KDescentPermutations(n,k): exactly k descents — the Eulerian triangle. ────────────────────────
-// Insertion bijection: A(n,k) = (k+1)·A(n−1,k) + (n−k)·A(n−1,k−1). Inserting the max value n into a
-// permutation of [n−1]: the (k+1) gaps that leave the descent count at k are "after the last element"
-// plus "right at each of its k existing descents"; the (n−k) gaps that raise it from k−1 to k are
-// "before the first element" plus "right at each of its ascents".
-const eulerianCache = new Map<string, number>();
-function eulerianA(n: number, k: number): number {
-  if (n === 0) return k === 0 ? 1 : 0;
-  if (k < 0 || k > n - 1) return 0;
-  const key = `${n},${k}`;
-  const cached = eulerianCache.get(key);
-  if (cached !== undefined) return cached;
-  const v = (k + 1) * eulerianA(n - 1, k) + (n - k) * eulerianA(n - 1, k - 1);
-  eulerianCache.set(key, v);
-  return v;
-}
-function descentPositions(perm: readonly number[]): number[] {
-  const res: number[] = [];
-  for (let i = 0; i + 1 < perm.length; i++) if (perm[i] > perm[i + 1]) res.push(i);
-  return res;
 }
 
 // ─── KInversionPermutations(n,k): exactly k inversions — the Mahonian triangle. ────────────────────
@@ -436,25 +322,10 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     ),
     carrier: "SubexcedantSeq",
   },
-  inducedOrder({
-    head: "AlternatingPermutations",
-    paramCount: 1,
-    count: ([n]) => alternatingCount(n),
-    member: (a, [n]) => isAlternating(a as number[], n),
-  }),
-  inducedOrder({
-    head: "ConnectedPermutations",
-    paramCount: 1,
-    count: ([n]) => connectedCount(n),
-    member: (a, [n]) => isConnected(a as number[], n),
-  }),
+  alternatingPermutations,
+  connectedPermutations,
   kCyclePermutations,
-  inducedOrder({
-    head: "KDescentPermutations",
-    paramCount: 2,
-    count: ([n, k]) => eulerianA(n, k),
-    member: (a, [, k]) => descentPositions(a as number[]).length === k,
-  }),
+  kDescentPermutations,
   {
     ...ints(
       "KInversionPermutations",

@@ -26,6 +26,13 @@ import {
   SignedPermutationUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
 import { epsilEntries, kCyclePermutations } from "../src/families/core.ts";
+import {
+  alternatingPermutations,
+  cograssmannianPermutations,
+  connectedPermutations,
+  grassmannianPermutations,
+  kDescentPermutations,
+} from "../src/families/restrictions.ts";
 
 const ce = new ComputeEngine();
 
@@ -47,6 +54,10 @@ function words(length: number, alphabet: readonly number[]): number[][] {
   return words(length - 1, alphabet).flatMap((w) => alphabet.map((a) => [...w, a]));
 }
 const span = (from: number, to: number): number[] => Array.from({ length: to - from + 1 }, (_, i) => from + i);
+
+/** How many adjacent pairs `turn` holds for. */
+const turns = (x: readonly number[], turn: (a: number, b: number) => boolean): number =>
+  x.slice(1).filter((v, i) => turn(x[i], v)).length;
 
 /** The number of cycles of a permutation word. */
 function cycles(x: readonly number[]): number {
@@ -111,6 +122,29 @@ const READINGS: Record<string, Reading> = {
   CyclicPermutations: lexRestriction([[0], [1], [2], [3], [4], [5]], (x, [n]) => n >= 1 && IsCyclicPermutationOf(x, n)),
   Involutions: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x, [n]) => IsInvolutionOf(x, n)),
   Derangements: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x, [n]) => IsDerangementOf(x, n)),
+  AlternatingPermutations: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) =>
+    x.every((v, i) => i === 0 || (i % 2 === 1 ? x[i - 1] < v : x[i - 1] > v)),
+  ),
+  ConnectedPermutations: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) =>
+    x.every((_, j) => j === x.length - 1 || Math.max(...x.slice(0, j + 1)) !== j + 1),
+  ),
+  KDescentPermutations: lexRestriction(
+    [
+      [0, 0],
+      [3, 0],
+      [3, 1],
+      [4, 1],
+      [5, 2],
+      [6, 3],
+      [2, 3],
+    ],
+    (x, [, k]) => turns(x, (a, b) => a > b) === k,
+  ),
+  GrassmannianPermutations: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => turns(x, (a, b) => a > b) <= 1),
+  CograssmannianPermutations: lexRestriction(
+    [[0], [1], [2], [3], [4], [5], [6]],
+    (x) => turns(x, (a, b) => a < b) <= 1,
+  ),
   KCyclePermutations: lexRestriction(
     [
       [0, 0],
@@ -144,7 +178,17 @@ const READINGS: Record<string, Reading> = {
   },
 };
 
-const byHead = new Map([...epsilEntries, kCyclePermutations].map((family) => [family.head, family]));
+const byHead = new Map(
+  [
+    ...epsilEntries,
+    kCyclePermutations,
+    alternatingPermutations,
+    connectedPermutations,
+    kDescentPermutations,
+    grassmannianPermutations,
+    cograssmannianPermutations,
+  ].map((family) => [family.head, family]),
+);
 
 for (const [head, reading] of Object.entries(READINGS)) {
   const family = byHead.get(head)!;

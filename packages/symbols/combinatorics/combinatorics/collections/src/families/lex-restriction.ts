@@ -173,6 +173,8 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
   return {
     ...shape,
     kind: "ints",
+    // Completion counting interpreted with exact integers takes minutes past 2^53.
+    declinePastDoubles: true,
     epsil: {
       count: withTables(count),
       unrank: withTables(unrank),

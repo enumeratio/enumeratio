@@ -34,6 +34,10 @@ export interface EpsilFamily extends FamilyShape {
   /** The compiler's type for an element, where the kind's own is too loose: a fixed-length
    *  element read by position is a tuple, since `At` on a `list<list<integer>>` may be missing. */
   readonly elementType?: string;
+  /** Past 2^53, where compiled code can't answer, unrank and rank decline (unknown) rather
+   *  than interpret: for definitions the interpreter takes minutes over at that size. The count
+   *  stays exact. */
+  readonly declinePastDoubles?: true;
   readonly epsil: FamilyEpsil;
 }
 
@@ -130,7 +134,7 @@ export function kernelOn(
   generated: Readonly<Record<string, GeneratedFamily>> = COMPILED_FAMILIES,
 ): FamilyKernel {
   if (!isEpsilFamily(family)) return family;
-  const { params, epsil, elementType: _, ...shape } = family;
+  const { params, epsil, elementType: _, declinePastDoubles, ...shape } = family;
   const ahead = generated[family.head];
   const current = ahead?.hash === familyHash(family) ? ahead : undefined;
 
@@ -162,6 +166,10 @@ export function kernelOn(
   };
   const interpret = (operation: Operation, p: number[], extra: Record<string, unknown>): unknown =>
     evaluateEpsil(ce, epsil[operation], { ...bind(p), ...extra });
+  // The message `needsBigint` recognises: the handlers answer unknown.
+  const decline = (p: number[]): never => {
+    throw new RangeError(`${family.head}(${p.join(", ")}): past 2^53, not bigint yet`);
+  };
   const fail = (operation: Operation, p: number[], json: unknown): never => {
     throw new Error(`${family.head}(${p.join(", ")}): its ${operation} definition gave ${JSON.stringify(json)}`);
   };
@@ -202,7 +210,7 @@ export function kernelOn(
       if (exact(p)) {
         const fast = run("unrank", { ...bind(p), _r: Number(r) });
         if (wellFormed(family.kind, fast)) return fast as Element;
-      }
+      } else if (declinePastDoubles) decline(p);
       const json = interpret("unrank", p, { _r: bigintJson(r) });
       return elementOf(json) ?? fail("unrank", p, json);
     },
@@ -211,7 +219,7 @@ export function kernelOn(
       if (exact(p)) {
         const fast = run("rank", { ...bind(p), _x: element });
         if (isInteger(fast)) return BigInt(fast);
-      }
+      } else if (declinePastDoubles) decline(p);
       const json = interpret("rank", p, { _x: elementJson(element) });
       return integerOf(json) ?? fail("rank", p, json);
     },

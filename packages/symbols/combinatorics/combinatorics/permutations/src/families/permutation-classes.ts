@@ -18,7 +18,8 @@ import {
   FibonacciWordUnrank,
   SchroederCount,
 } from "../../../collections/src/families/kernels-extra.ts";
-import { inducedOrder } from "../../../collections/src/families/induced-order.ts";
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { cograssmannianPermutations, grassmannianPermutations } from "./restrictions.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors permutations.ts's private `ints`.
@@ -174,36 +175,6 @@ function booleanRank(perm: readonly number[]): number {
   return FibonacciWordRank(word);
 }
 
-// ─── GrassmannianPermutations(n): at most one descent — 2ⁿ−n, A000325. Any permutation with ≤1 descent
-// is the sorted-ascending concatenation of a "first block" value-set A and its sorted-ascending
-// complement, split at the descent; conversely every subset A of [n] gives such a permutation, EXCEPT
-// that all n+1 "prefix" subsets A={1,…,k} (k=0,…,n) collapse to the same permutation, the identity. Fix
-// the identity's canonical preimage at A=∅ (rank 0) and, for each size k=1,…,n−1, skip subset-rank 0
-// (KSubsetUnrank's colex order puts the prefix {1,…,k} at rank 0) — 2ⁿ − (n+1) + 1 = 2ⁿ−n distinct
-// permutations, one A=[n] (k=n, all-prefix) dropped entirely since the identity is already covered.
-function descentCount(perm: readonly number[]): number {
-  let c = 0;
-  for (let i = 0; i + 1 < perm.length; i++) if (perm[i] > perm[i + 1]) c++;
-  return c;
-}
-function ascentCount(perm: readonly number[]): number {
-  let c = 0;
-  for (let i = 0; i + 1 < perm.length; i++) if (perm[i] < perm[i + 1]) c++;
-  return c;
-}
-function grassmannianCount(n: number): number {
-  return 2 ** n - n;
-}
-function isGrassmannian(perm: readonly number[], n: number): boolean {
-  return IsPermutationOf(perm as number[], n) && descentCount(perm) <= 1;
-}
-
-// ─── CograssmannianPermutations(n): at most one ascent — the complement (v ↦ n+1−v) of a Grassmannian
-// permutation, since complementing turns every descent into an ascent and vice versa. Same count 2ⁿ−n.
-function isCograssmannian(perm: readonly number[], n: number): boolean {
-  return IsPermutationOf(perm as number[], n) && ascentCount(perm) <= 1;
-}
-
 // ─── NonCrossingPermutations(n): permutations whose cycles, read as a set partition of [n], form a
 // non-crossing partition (no a<b<c<d with a,c in one block and b,d in a distinct block). Recurrence:
 // the block containing 1 has some size k (1≤k≤n); its k elements split the remaining n−k into k ordered
@@ -318,7 +289,7 @@ const smoothClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["3412", 
 // ─── VexillaryPermutations(n): Av(2143) — A005802.
 const vexillaryClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["2143"]));
 
-export const entries: NumberKernel[] = [
+export const entries: (NumberKernel | EpsilFamily)[] = [
   {
     ...ints(
       "BaxterPermutations",
@@ -342,18 +313,8 @@ export const entries: NumberKernel[] = [
     ),
     carrier: "Permutation",
   },
-  inducedOrder({
-    head: "GrassmannianPermutations",
-    paramCount: 1,
-    count: ([n]) => grassmannianCount(n),
-    member: (a, [n]) => isGrassmannian(a, n),
-  }),
-  inducedOrder({
-    head: "CograssmannianPermutations",
-    paramCount: 1,
-    count: ([n]) => grassmannianCount(n),
-    member: (a, [n]) => isCograssmannian(a, n),
-  }),
+  grassmannianPermutations,
+  cograssmannianPermutations,
   {
     ...ints(
       "NonCrossingPermutations",
