@@ -2,7 +2,7 @@ id	in	out
 union-list-1-2-3-list-3-4	\bigl\lbrack1, 2, 3\bigr\rbrack\cup\operatorname{List}(3, 4)	\lbrace1, 2, 3, 4\rbrace
 union-list-1-2-list-2-3-list-3-4	\operatorname{List}(1, 2)\cup\operatorname{List}(2, 3)\cup\operatorname{List}(3, 4)	\lbrace1, 2, 3, 4\rbrace
 union-list-a-b-c-list-b-c-d	\bigl\lbrack a, b, c\bigr\rbrack\cup\bigl\lbrack b, c, d\bigr\rbrack	\lbrace a, b, c, d\rbrace
-union-list-a-b-a-c-list-d-a-exponentiale-b-list	\bigl\lbrack a, b, a, c\bigr\rbrack\cup\bigl\lbrack d, a, e, b\bigr\rbrack\cup\operatorname{List}(c, a)	\lbrace e, a, b, c, d\rbrace
+union-list-a-b-a-c-list-d-a-k-b-list-c-a	\bigl\lbrack a, b, a, c\bigr\rbrack\cup\bigl\lbrack d, a, k, b\bigr\rbrack\cup\operatorname{List}(c, a)	\lbrace a, b, c, d, k\rbrace
 a-single-list-is-de-duplicated	\mathrm{Union}(\bigl\lbrack1, 2, 1, 3, 6, 2, 2\bigr\rbrack)	\lbrace1, 2, 3, 6\rbrace
 symbolic-elements-merged-across-three-lists	\bigl\lbrack a, b, a, c\bigr\rbrack\cup\bigl\lbrack d, a, f, b\bigr\rbrack\cup\operatorname{List}(c, a)	\lbrace a, b, c, d, f\rbrace
 elements-can-themselves-be-lists-1-2-and-2-1	\operatorname{List}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)\cup\operatorname{List}(\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)\cup\operatorname{List}(\bigl\lbrack3, 2, 1\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)	\lbrace\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack3, 2, 1\bigr\rbrack\rbrace

@@ -5,8 +5,8 @@ last-list-a-b-c	\operatorname{Last}([a,b,c])	c
 last-default-ignored-when-nonempty	\operatorname{Last}([1,2,3],99)	3
 last-of-association-is-last-value	\operatorname{Last}(\operatorname{Association}(\operatorname{Rule}(1,a),\operatorname{Rule}(2,b),\operatorname{Rule}(3,c)))	c
 last-of-empty-association-falls-through	\operatorname{Last}(\operatorname{Association}(),99)	99
-last-list-list-a-b-list-c-d-list-exponentiale-f	\operatorname{Last}([[a,b],[c,d],[e,f]])	[e,f]
 last-list-x	\operatorname{Last}([],x)	x
+last-list-list-a-b-list-c-d-list-k-f	\operatorname{Last}([[a,b],[c,d],[k,f]])	[k,f]
 a-second-argument-supplies-a-default-for-an	\operatorname{Last}([],99)	99
 of-a-matrix-the-last-row	\operatorname{Last}([[a,b],[c,d],[f,g]])	[f,g]
 a-lazy-range-works-too	\operatorname{Last}(\operatorname{Range}(5,10))	10

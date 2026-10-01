@@ -3,9 +3,9 @@ discretedelta-zero	\operatorname{DiscreteDelta}(0)	1
 discretedelta-nonzero	\operatorname{DiscreteDelta}(1)	0
 discretedelta-multi-all-zero	\operatorname{DiscreteDelta}(0,0)	1
 discretedelta-multi-one-nonzero	\operatorname{DiscreteDelta}(1,0)	0
-discretedelta-exponentiale-catalan-1-over-2	\operatorname{DiscreteDelta}(e,\operatorname{Catalan},\frac{1}{2})	0
 discretedelta-0-0-0	\operatorname{DiscreteDelta}(0,0,0)	1
 discretedelta-0-0-0-0	\operatorname{DiscreteDelta}(0,0,0,0)	1
 assuming-x-lt-0-y-gt-0-refine-discretedelta-x-x	\operatorname{Assuming}(x<0\land y>0,\operatorname{Refine}(\operatorname{DiscreteDelta}(x,x,y)))	\operatorname{DiscreteDelta}(x,x,y)
 fullsimplify-matrixfunction-discretedelta-list		
+discretedelta-exponentiale-catalan-1-over-2	\operatorname{DiscreteDelta}(e,\operatorname{Catalan},\frac{1}{2})	0
 discretedelta-1-over-2-times-sqrt-2-minus-sqrt-2	\operatorname{DiscreteDelta}(\frac{1}{2}\sqrt{2-\sqrt{2+\sqrt{2}}}-\sin(\frac{1}{16}\pi))	0

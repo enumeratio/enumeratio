@@ -14,9 +14,9 @@ kfreeintegers-2-first-term-is-1	<At><KFreeIntegers>2</KFreeIntegers> 1</At>	<ToE
 at-lazy-family-collection-element	<At><KSubsets>5 2</KSubsets> 1</At>	<Finset><Tuple>5 <List>1 2</List></Tuple></Finset>
 at-span-submatrix-two-levels	<At><List><List>1 2 3</List> <List>4 5 6</List> <List>7 8 9</List></List> <Span>2 3</Span> <Span>1 2</Span></At>	<List><List>4 5</List> <List>7 8</List></List>
 at-integer-without-span-unaffected	<At><List>a b c</List> 2</At>	<b />
-list-a-b-c-d-exponentiale-f-list-3	<At><List>a b c d ExponentialE f</List> 3</At>	<c />
-list-a-b-c-d-exponentiale-f-list-neg-2	<At><List>a b c d ExponentialE f</List> -2</At>	<ExponentialE />
-list-a-b-c-d-exponentiale-f-list-span-2-4	<At><List>a b c d ExponentialE f</List> <Span>2 4</Span></At>	<List>b c d</List>
+list-a-b-c-d-k-f-list-3	<At><List>a b c d k f</List> 3</At>	<c />
+list-a-b-c-d-k-f-list-neg-2	<At><List>a b c d k f</List> -2</At>	<k />
+list-a-b-c-d-k-f-list-span-2-4	<At><List>a b c d k f</List> <Span>2 4</Span></At>	<List>b c d</List>
 a-list-of-indices-selects-several-elements-at	<At><List>a b c d</List> <List>1 3</List></At>	<List>a c</List>
 a-range-also-works-as-an-index-list-extracting-a	<At><List>a b c d e</List> <Range>2 4</Range></At>	<List>b c d</List>
 index-0-is-the-collection-s-own-head-matching	<At><List>1 2 3</List> 0</At>	<List />
@@ -37,18 +37,18 @@ indexes-into-a-named-integer-collection	<At>TriangularNumbers 5</At>	<ToExpressi
 indexes-into-a-parameterized-collection	<At><PolygonalNumbers>5</PolygonalNumbers> 3</At>	<ToExpression>12</ToExpression>
 first-term-of-fibonaccinumbers-is-0	<At>FibonacciNumbers 1</At>	<ToExpression>0</ToExpression>
 at-bellnumbers-5-is-bell-4-15	<At>BellNumbers 5</At>	<ToExpression>15</ToExpression>
-list-a-b-c-d-exponentiale-f-list-list-1-3-1-2	<At><List>a b c d ExponentialE f</List> <List>1 3 1 2 -1 6</List></At>	<List>a c a b f f</List>
-list-a-b-c-d-exponentiale-f-list-span-1-neg-3	<At><List>a b c d ExponentialE f</List> <Span>1 -3</Span></At>	<List>a b c d</List>
-list-a-b-c-d-exponentiale-f-g-h-i-j-k-list-span	<At><List>a b c d ExponentialE f g h <Complex>0 1</Complex> j k</List> <Span>3 -3 2</Span></At>	<List>c ExponentialE g <Complex>0 1</Complex></List>
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-i	<At><List><List>a b c</List> <List>d ExponentialE f</List> <List>g h <Complex>0 1</Complex></List></List> 2 3</At>	<f />
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-2	<At><List><List>a b c</List> <List>d ExponentialE f</List> <List>g h <Complex>0 1</Complex></List></List> 2</At>	<List>d ExponentialE f</List>
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-3	<At><List><List>a b c</List> <List>d ExponentialE f</List> <List>g h <Complex>0 1</Complex></List></List> <List>1 3</List></At>	<List><List>a b c</List> <List>g h <Complex>0 1</Complex></List></List>
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-4	<At><List><List>a b c</List> <List>d ExponentialE f</List> <List>g h <Complex>0 1</Complex></List></List> <List>1 3</List> <List>2 3</List></At>	<List><List>b c</List> <List>h <Complex>0 1</Complex></List></List>
 list-x-4-y-5-list-1-2	<At><List><Tuple>x 4</Tuple> <Tuple>y 5</Tuple></List> 1 2</At>	<ToExpression>4</ToExpression>
-list-a-b-c-d-exponentiale-list-3	<At><List>a b c d ExponentialE</List> 3</At>	<c />
-list-a-b-c-d-exponentiale-list-span-2-4	<At><List>a b c d ExponentialE</List> <Span>2 4</Span></At>	<List>b c d</List>
+list-a-b-c-d-k-f-list-list-1-3-1-2-neg-1-6	<At><List>a b c d k f</List> <List>1 3 1 2 -1 6</List></At>	<List>a c a b f f</List>
+list-a-b-c-d-k-f-list-span-1-neg-3	<At><List>a b c d k f</List> <Span>1 -3</Span></At>	<List>a b c d</List>
+list-a-b-c-d-n-f-g-h-m-j-k-list-span-3-neg-3-2	<At><List>a b c d n f g h m j k</List> <Span>3 -3 2</Span></At>	<List>c n g m</List>
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2-3	<At><List><List>a b c</List> <List>d m f</List> <List>g h k</List></List> 2 3</At>	<f />
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2	<At><List><List>a b c</List> <List>d m f</List> <List>g h k</List></List> 2</At>	<List>d m f</List>
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-list	<At><List><List>a b c</List> <List>d m f</List> <List>g h k</List></List> <List>1 3</List></At>	<List><List>a b c</List> <List>g h k</List></List>
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-lis-2	<At><List><List>a b c</List> <List>d m f</List> <List>g h k</List></List> <List>1 3</List> <List>2 3</List></At>	<List><List>b c</List> <List>h k</List></List>
+list-a-b-c-d-k-list-3	<At><List>a b c d k</List> 3</At>	<c />
+list-a-b-c-d-k-list-span-2-4	<At><List>a b c d k</List> <Span>2 4</Span></At>	<List>b c d</List>
 chaining-at-reaches-into-nested-collections-like	<At><At><List><List>1 2</List> <List>3 4</List></List> 2</At> 1</At>	<ToExpression>3</ToExpression>
-list-a-b-c-d-exponentiale-list-list-4-5-1-2-3	<At><List>a b c d ExponentialE</List> <List>4 5 1 2 3</List></At>	<List>d ExponentialE a b c</List>
+list-a-b-c-d-k-list-list-4-5-1-2-3	<At><List>a b c d k</List> <List>4 5 1 2 3</List></At>	<List>d k a b c</List>
 list-a-b-c-list-0	<At><List>a b c</List> 0</At>	<List />
 list-1-2-3-list-list	<At><List>1 2 3</List> <Apply>List</Apply></At>	<Apply>List</Apply>
 an-out-of-range-index-evaluates-to-nan-rather	<At><List>1 2 3</List> 10</At>	<NaN />

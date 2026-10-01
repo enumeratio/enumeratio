@@ -47,7 +47,6 @@ findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	\operatorname{FindInstance}((a^
 one-step-of-rsa-style-modular-exponentiation-7	(7^{13}\bmod33)	13
 341-11-cdot-31-passes-fermat-s-test-to-base-2	(2^{340}\bmod341)	1
 diffie-hellman-both-parties-reach-the-shared-key	((5^6\bmod23)^{15}\bmod23)=((5^{15}\bmod23)^6\bmod23)	\operatorname{True}
-powermod-tocharactercode-rsa-in-mathematica	({\operatorname{ToCharacterCode}(\text{“RSA in Mathematica”})}^e\bmod n)	[(82^e\bmod n),(83^e\bmod n),(65^e\bmod n),(32^e\bmod n),(105^e\bmod n),(110^e\bmod n),(32^e\bmod n),(77^e\bmod n),(97^e\bmod n),(116^e\bmod n),(104^e\bmod n),(101^e\bmod n),(109^e\bmod n),(97^e\bmod n),(116^e\bmod n),(105^e\bmod n),(99^e\bmod n),(97^e\bmod n)]
 by-definition-a-b-bmod-m-computed-without-ever	(2^{10}\bmod3)=\bmod(2^{10},3)	\operatorname{True}
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	(7^{\varphi(19)}\bmod19)	1
 list-powermod-7-2-5-powermod-12-2-5	[(7^2\bmod5),(12^2\bmod5)]	[4,4]

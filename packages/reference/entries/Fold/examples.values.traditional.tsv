@@ -19,7 +19,6 @@ horner-s-rule-for-ax-2-bx-c	\operatorname{Fold}(\operatorname{Function}(x\_1+\_2
 evaluate-the-continued-fraction-1-2-2-2-from-the	\operatorname{Fold}(\operatorname{Function}(\_2+\frac{1}{\_1}),2,[2,2,1])	\frac{17}{12}
 reduce-reverse-list-a-b-c-d-function-1-over-1	\operatorname{Reduce}(\operatorname{Reverse}([a,b,c,d]),\operatorname{Function}(\operatorname{Block}(\frac{1}{\_1+\_2}),\_1,\_2),x)	\frac{1}{a+\frac{1}{b+\frac{1}{c+\frac{1}{d+x}}}}
 reduce-list-4-5-1-6-7-8-function-10-times-1-plus	\operatorname{Reduce}([4,5,1,6,7,8],\operatorname{Function}(\operatorname{Block}(10\_1+\_2),\_1,\_2),0)	451678
-reduce-reverse-list-a-b-c-d-exponentiale	\operatorname{Reduce}(\operatorname{Reverse}([a,b,c,d,e]),\operatorname{Function}(\operatorname{Block}(-\_1+\_2),\_1,\_2),0)	a-b+c-d+e
 reduce-list-a-b-c-d-function-list-2-1-1-2-x	\operatorname{Reduce}([a,b,c,d],\operatorname{Function}(\operatorname{Block}([\_2,\_1]),\_1,\_2),x)	[d,[c,[b,[a,x]]]]
 reduce-list-2-4-3-partition-range-1-30	\operatorname{Reduce}([2,4,3],\operatorname{Partition},\operatorname{Range}(1,30))	[[[[1,2],[3,4],[5,6],[7,8]],[[9,10],[11,12],[13,14],[15,16]],[[17,18],[19,20],[21,22],[23,24]]]]
 reduce-list-a-b-c-d-k-function-1-times-x-plus-2	\operatorname{Reduce}([a,b,c,d,k],\operatorname{Function}(\operatorname{Block}(\_1x+\_2),\_1,\_2),0)	x(x(x(ax+b)+c)+d)+k

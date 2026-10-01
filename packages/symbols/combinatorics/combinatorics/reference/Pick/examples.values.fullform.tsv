@@ -1,6 +1,6 @@
 id	in	out
 keeps-elements-where-sel-is-true	Pick(List(a, b, c), List(True, False, True))	List(a, c)
-pick-list-a-b-c-d-exponentiale-list-1-0-1-0-0-1	Pick(List(a, b, c, d, ExponentialE), List(1, 0, 1, 0, 0), 1)	List(a, c)
-pick-list-list-a-b-c-list-d-exponentiale-f-list		
+pick-list-a-b-c-d-k-list-1-0-1-0-0-1	Pick(List(a, b, c, d, k), List(1, 0, 1, 0, 0), 1)	List(a, c)
+pick-list-list-a-b-c-list-d-k-f-list-list-1-0-0		
 an-explicit-pattern-keeps-elements-matching	Pick(List(a, b, c, d), List(1, 0, 1, 0), 1)	List(a, c)
 pick-list-a-b-c-d-list-true-false-false-true	Pick(List(a, b, c, d), List(True, False, False, True))	List(a, d)

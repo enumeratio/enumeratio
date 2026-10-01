@@ -1,8 +1,8 @@
 id	in	out
 1-factorial-eq-2	<NotEqual>1 2</NotEqual>	<True />
 3-over-2-factorial-eq-5-over-3	<NotEqual><Rational>3 2</Rational> <Rational>5 3</Rational></NotEqual>	<True />
-pi-pow-exponentiale-factorial-eq-exponentiale	<NotEqual><Power>Pi ExponentialE</Power> <Power>ExponentialE Pi</Power></NotEqual>	<True />
 3-factorial-eq-4-4-factorial-eq-5	<And><NotEqual>3 4</NotEqual> <NotEqual>4 5</NotEqual></And>	<True />
-list-a-b-c-factorial-eq-list-d-exponentiale	<NotEqual><List>a b c</List> <List>d ExponentialE</List></NotEqual>	<True />
 abc-factorial-eq-abc	<NotEqual>"abc" "ABC"</NotEqual>	<True />
+pi-pow-exponentiale-factorial-eq-exponentiale	<NotEqual><Power>Pi ExponentialE</Power> <Power>ExponentialE Pi</Power></NotEqual>	<True />
+list-a-b-c-factorial-eq-list-d-k	<NotEqual><List>a b c</List> <List>d k</List></NotEqual>	<True />
 list-x-factorial-eq-x-x-factorial-eq-y-sqrt-2	<List><NotEqual>x x</NotEqual> <NotEqual>x y</NotEqual> <NotEqual><Add><Sqrt>2</Sqrt> <Sqrt>3</Sqrt></Add> <Sqrt><Add>5 <Multiply>2 <Sqrt>6</Sqrt></Multiply></Add></Sqrt></NotEqual> <NotEqual>Pi <N>Pi</N></NotEqual></List>	<List>False <NotEqual>x y</NotEqual> False False</List>

@@ -8,7 +8,7 @@ an-exact-irrational-result	<GeometricMean><List>2 3</List></GeometricMean>	<Sqrt
 sqrt-3-6	<GeometricMean><List>1 2 3</List></GeometricMean>	<Root>6 3</Root>
 symbolic-data	<GeometricMean><List>a b</List></GeometricMean>	<Sqrt><Multiply>a b</Multiply></Sqrt>
 geometricmean-list-1-2-3-4	<GeometricMean><List>1 2 3 4</List></GeometricMean>	<Root>24 4</Root>
-geometricmean-list-pi-exponentiale-2	<GeometricMean><List>Pi ExponentialE 2</List></GeometricMean>	<Root><Multiply>2 ExponentialE Pi</Multiply> 3</Root>
 geometricmean-n-list-1-2-3-4-30	<GeometricMean><N><List>1 2 3 4</List> 30</N></GeometricMean>	<Root>24 4</Root>
+geometricmean-list-pi-exponentiale-2	<GeometricMean><List>Pi ExponentialE 2</List></GeometricMean>	<Root><Multiply>2 ExponentialE Pi</Multiply> 3</Root>
 powerexpand-ln-geometricmean-list-a-b-c-d	<PowerExpand><Ln><GeometricMean><List>a b c d</List></GeometricMean></Ln></PowerExpand>	<Multiply><Rational>1 4</Rational> <Add><Ln>a</Ln> <Ln>b</Ln> <Ln>c</Ln> <Ln>d</Ln></Add></Multiply>
 powerexpand-1-over-ln-geometricmean-list-a-b-c-d	<PowerExpand><Divide>1 <Ln><GeometricMean><List>a b c d</List></GeometricMean></Ln></Divide></PowerExpand>	<Divide>4 <Add><Ln>a</Ln> <Ln>b</Ln> <Ln>c</Ln> <Ln>d</Ln></Add></Divide>

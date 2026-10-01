@@ -47,7 +47,6 @@ findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	FindInstance(And(Equal(PowerMod
 one-step-of-rsa-style-modular-exponentiation-7	PowerMod(7, 13, 33)	13
 341-11-cdot-31-passes-fermat-s-test-to-base-2	PowerMod(2, 340, 341)	1
 diffie-hellman-both-parties-reach-the-shared-key	Equal(PowerMod(PowerMod(5, 6, 23), 15, 23), PowerMod(PowerMod(5, 15, 23), 6, 23))	True
-powermod-tocharactercode-rsa-in-mathematica	PowerMod(ToCharacterCode("RSA in Mathematica"), ExponentialE, n)	List(PowerMod(82, ExponentialE, n), PowerMod(83, ExponentialE, n), PowerMod(65, ExponentialE, n), PowerMod(32, ExponentialE, n), PowerMod(105, ExponentialE, n), PowerMod(110, ExponentialE, n), PowerMod(32, ExponentialE, n), PowerMod(77, ExponentialE, n), PowerMod(97, ExponentialE, n), PowerMod(116, ExponentialE, n), PowerMod(104, ExponentialE, n), PowerMod(101, ExponentialE, n), PowerMod(109, ExponentialE, n), PowerMod(97, ExponentialE, n), PowerMod(116, ExponentialE, n), PowerMod(105, ExponentialE, n), PowerMod(99, ExponentialE, n), PowerMod(97, ExponentialE, n))
 by-definition-a-b-bmod-m-computed-without-ever	Equal(PowerMod(2, 10, 3), Mod(Power(2, 10), 3))	True
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	PowerMod(7, Totient(19), 19)	1
 list-powermod-7-2-5-powermod-12-2-5	List(PowerMod(7, 2, 5), PowerMod(12, 2, 5))	List(4, 4)

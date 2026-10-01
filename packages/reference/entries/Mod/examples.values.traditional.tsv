@@ -68,10 +68,10 @@ the-remainder-of-quotient	\bmod(7+5i,2+i)=7+5i-(2+i)\operatorname{Quotient}(7+5i
 12-mod-8	\bmod(12,8)	4
 neg-3-mod-neg-2	\bmod(-3,-2)	-1
 neg-27-over-10-mod-23-over-5	\bmod(\frac{-27}{10},\frac{23}{5})	\frac{19}{10}
-pi-mod-exponentiale	\bmod(\pi,e)	\pi-e
 0-mod-2	\bmod(0,2)	0
 1-mod-1	\bmod(1,1)	0
 15-mod-7	\bmod(15,7)	1
+pi-mod-exponentiale	\bmod(\pi,e)	\pi-e
 division-by-a-0-modulus-yields-nan-rather-than	\bmod(5,0)	\operatorname{Indeterminate}
 periodicity-with-a-zero-modulus-on-one-side	\bmod(35,13)=\bmod(17+3\cdot5,0)	\operatorname{False}
 rounding-ties-to-even-means-1-and-1-both-appear	[\bmod(1+2i,2),\bmod(3+2i,2)]	[1,-1]

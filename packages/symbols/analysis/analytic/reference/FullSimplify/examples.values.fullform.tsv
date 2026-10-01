@@ -6,7 +6,7 @@ the-functional-equation-of-gamma	FullSimplify(Divide(Gamma(Add(x, 1)), Gamma(x))
 denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3	FullSimplify(Subtract(Add(Sqrt(2), Sqrt(3)), Sqrt(Add(5, Multiply(2, Sqrt(6))))))	0
 the-hyperbolic-pythagorean-identity	FullSimplify(Subtract(Power(Cosh(x), 2), Power(Sinh(x), 2)))	1
 fullsimplify-x-pow-10-minus-1-times-x-pow-10	FullSimplify(Multiply(Add(Power(x, 10), -1), Add(Power(x, 10), 1)))	Add(Power(x, 20), -1)
-fullsimplify-1-minus-i-times-exponentiale-pow-i	FullSimplify(Add(Multiply(Complex(1, -1), Power(ExponentialE, Multiply(Complex(0, 1), x))), Multiply(Complex(1, 1), Power(ExponentialE, Multiply(Complex(0, -1), x)))))	Add(Multiply(2, Sin(x)), Multiply(2, Cos(x)))
 fullsimplify-neg-4-times-arctan-1-over-239-plus	FullSimplify(Add(Multiply(-4, Arctan(Rational(1, 239))), Multiply(16, Arctan(Rational(1, 5)))))	Pi
 fullsimplify-4-times-sin-x-times-cos-x-plus-4	FullSimplify(Add(Multiply(4, Sin(x), Cos(x)), Multiply(4, Power(Sin(x), 2), Power(Cos(x), 2)), 1))	Add(Multiply(2, Sin(Multiply(2, x))), Multiply(4, Power(Sin(x), 2), Power(Cos(x), 2)), 1)
+fullsimplify-1-minus-i-times-exponentiale-pow-i	FullSimplify(Add(Multiply(Complex(1, -1), Power(ExponentialE, Multiply(Complex(0, 1), x))), Multiply(Complex(1, 1), Power(ExponentialE, Multiply(Complex(0, -1), x)))))	Add(Multiply(2, Sin(x)), Multiply(2, Cos(x)))
 assuming-re-x-gt-0-fullsimplify-exponentiale-pow	Assuming(Greater(Re(x), 0), FullSimplify(Power(ExponentialE, GammaLn(x))))	Add(Sinh(GammaLn(x)), Cosh(GammaLn(x)))

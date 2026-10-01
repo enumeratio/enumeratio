@@ -8,7 +8,7 @@ an-exact-irrational-result	\mathrm{GeometricMean}(\bigl\lbrack2, 3\bigr\rbrack)	
 sqrt-3-6	\mathrm{GeometricMean}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\sqrt[3]{6}
 symbolic-data	\mathrm{GeometricMean}(\bigl\lbrack a, b\bigr\rbrack)	\sqrt{ab}
 geometricmean-list-1-2-3-4	\mathrm{GeometricMean}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\sqrt[4]{24}
-geometricmean-list-pi-exponentiale-2	\mathrm{GeometricMean}(\bigl\lbrack\pi, e, 2\bigr\rbrack)	\sqrt[3]{2e\pi}
 geometricmean-n-list-1-2-3-4-30	\mathrm{GeometricMean}(N(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, 30))	\sqrt[4]{24}
+geometricmean-list-pi-exponentiale-2	\mathrm{GeometricMean}(\bigl\lbrack\pi, e, 2\bigr\rbrack)	\sqrt[3]{2e\pi}
 powerexpand-ln-geometricmean-list-a-b-c-d	\mathrm{PowerExpand}(\ln(\mathrm{GeometricMean}(\bigl\lbrack a, b, c, d\bigr\rbrack)))	\frac{1}{4}(\ln(a)+\ln(b)+\ln(c)+\ln(d))
 powerexpand-1-over-ln-geometricmean-list-a-b-c-d	\mathrm{PowerExpand}((\ln(\mathrm{GeometricMean}(\bigl\lbrack a, b, c, d\bigr\rbrack)))^{-1})	(4)(\ln(a)+\ln(b)+\ln(c)+\ln(d))^{-1}

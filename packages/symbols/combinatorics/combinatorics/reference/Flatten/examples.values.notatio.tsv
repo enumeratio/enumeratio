@@ -3,8 +3,8 @@ flatten-list-list-1-2-list-3-4	<Flatten><List><List>1 2</List> <List>3 4</List><
 flatten-list-list-1-list-2-3-list-4	<Flatten><List><List>1 <List>2 3</List></List> <List>4</List></List></Flatten>	<List>1 2 3 4</List>
 flatten-list-list-a-b-list-c-list-d-f-list-g	<Flatten><List><List>a b</List> <List>c <List>d</List> f</List> <List>g <List>h k</List></List></List></Flatten>	<List>a b c d f g h k</List>
 flatten-single-level-non-list-unaffected	<Flatten><f>a b</f></Flatten>	<f>a b</f>
-flatten-list-list-a-b-list-c-list-d-exponentiale	<Flatten><List><List>a b</List> <List>c <List>d</List> ExponentialE</List> <List>f <List>g h</List></List></List></Flatten>	<List>a b c d ExponentialE f g h</List>
-flatten-list-list-a-b-list-c-list-d-exponentia-2	<Flatten><List><List>a b</List> <List>c <List>d</List> ExponentialE</List> <List>f <List>g h</List></List></List> 1</Flatten>	<List>a b c <List>d</List> ExponentialE f <List>g h</List></List>
+flatten-list-list-a-b-list-c-list-d-k-list-f	<Flatten><List><List>a b</List> <List>c <List>d</List> k</List> <List>f <List>g h</List></List></List></Flatten>	<List>a b c d k f g h</List>
+flatten-list-list-a-b-list-c-list-d-k-list-f-2	<Flatten><List><List>a b</List> <List>c <List>d</List> k</List> <List>f <List>g h</List></List></List> 1</Flatten>	<List>a b c <List>d</List> k f <List>g h</List></List>
 a-depth-argument-limits-flattening-to-just-that	<Flatten><List><List>1 2</List> <List>3 <List>4</List></List></List> 1</Flatten>	<List>1 2 3 <List>4</List></List>
 flatten-only-the-first-level	<Flatten><List><List>a b</List> <List>c <List>d</List> f</List> <List>g <List>h k</List></List></List> 1</Flatten>	<List>a b c <List>d</List> f g <List>h k</List></List>
 depth-0-leaves-the-list-unchanged	<Flatten><List>0 <List>1</List> <List><List>2 -2</List></List> <List><List><List>3</List> <List>-3</List></List></List> <List><List><List><List>4</List></List></List></List></List> 0</Flatten>	<List>0 <List>1</List> <List><List>2 -2</List></List> <List><List><List>3</List> <List>-3</List></List></List> <List><List><List><List>4</List></List></List></List></List>

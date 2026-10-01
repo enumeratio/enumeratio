@@ -36,8 +36,8 @@ ceil-neg-3	ceil(-3)
 piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1			
 ceil-neg-pi	ceil((-pi))		
 ceil-neg-27-over-10	ceil((-27/10))		
-ceil-23-over-10-plus-neg-i-times-exponentiale	ceil(((23/10) + ((0 + -1*I) * e)))		
 ceil-negativeinfinity	ceil(-oo)		
+ceil-23-over-10-plus-neg-i-times-exponentiale	ceil(((23/10) + ((0 + -1*I) * e)))		
 a-zero-divisor-inside-ceil	ceil((16 / 0))	ZeroDivisionError: rational division by zero	error
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceil(-3.7)	-3	
 nan-propagates-rather-than-erroring	ceil(NaN)		

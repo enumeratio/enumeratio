@@ -5,8 +5,8 @@ last-list-a-b-c	last([a, b, c])	c
 last-default-ignored-when-nonempty	last([1, 2, 3], 99)	3
 last-of-association-is-last-value	last(Association(Rule(1, a), Rule(2, b), Rule(3, c)))	c
 last-of-empty-association-falls-through	last(Association(), 99)	99
-last-list-list-a-b-list-c-d-list-exponentiale-f	last([[a, b], [c, d], [exponentialE, f]])	[exponentialE, f]
 last-list-x	last([], x)	x
+last-list-list-a-b-list-c-d-list-k-f	last([[a, b], [c, d], [k, f]])	[k, f]
 a-second-argument-supplies-a-default-for-an	last([], 99)	99
 of-a-matrix-the-last-row	last([[a, b], [c, d], [f, g]])	[f, g]
 a-lazy-range-works-too	last(Range(5, 10))	10

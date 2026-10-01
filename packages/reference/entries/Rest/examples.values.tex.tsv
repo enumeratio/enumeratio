@@ -1,3 +1,3 @@
 id	in	out
 rest-list-a-b-c-d	\mathrm{Rest}(\bigl\lbrack a, b, c, d\bigr\rbrack)	\bigl\lbrack b, c, d\bigr\rbrack
-nestlist-rest-list-a-b-c-d-exponentiale-3	\mathrm{NestList}(\mathrm{Rest}, \bigl\lbrack a, b, c, d, e\bigr\rbrack, 3)	\bigl\lbrack\bigl\lbrack a, b, c, d, e\bigr\rbrack, \bigl\lbrack b, c, d, e\bigr\rbrack, \bigl\lbrack c, d, e\bigr\rbrack, \bigl\lbrack d, e\bigr\rbrack\bigr\rbrack
+nestlist-rest-list-a-b-c-d-k-3	\mathrm{NestList}(\mathrm{Rest}, \bigl\lbrack a, b, c, d, k\bigr\rbrack, 3)	\bigl\lbrack\bigl\lbrack a, b, c, d, k\bigr\rbrack, \bigl\lbrack b, c, d, k\bigr\rbrack, \bigl\lbrack c, d, k\bigr\rbrack, \bigl\lbrack d, k\bigr\rbrack\bigr\rbrack

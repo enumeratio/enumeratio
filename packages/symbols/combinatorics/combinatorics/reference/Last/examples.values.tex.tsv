@@ -5,8 +5,8 @@ last-list-a-b-c	\mathrm{Last}(\bigl\lbrack a, b, c\bigr\rbrack)	c
 last-default-ignored-when-nonempty	\mathrm{Last}(\bigl\lbrack1, 2, 3\bigr\rbrack, 99)	3
 last-of-association-is-last-value	\mathrm{Last}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b), \mathrm{Rule}(3, c)))	c
 last-of-empty-association-falls-through	\mathrm{Last}(\mathrm{Association}(), 99)	99
-last-list-list-a-b-list-c-d-list-exponentiale-f	\mathrm{Last}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack e, f\bigr\rbrack\bigr\rbrack)	\bigl\lbrack e, f\bigr\rbrack
 last-list-x	\mathrm{Last}(\bigl\lbrack\bigr\rbrack, x)	x
+last-list-list-a-b-list-c-d-list-k-f	\mathrm{Last}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack k, f\bigr\rbrack\bigr\rbrack)	\bigl\lbrack k, f\bigr\rbrack
 a-second-argument-supplies-a-default-for-an	\mathrm{Last}(\bigl\lbrack\bigr\rbrack, 99)	99
 of-a-matrix-the-last-row	\mathrm{Last}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack f, g\bigr\rbrack\bigr\rbrack)	\bigl\lbrack f, g\bigr\rbrack
 a-lazy-range-works-too	\mathrm{Last}(5..10)	10

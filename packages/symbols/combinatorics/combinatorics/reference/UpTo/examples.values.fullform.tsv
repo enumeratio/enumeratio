@@ -6,5 +6,5 @@ take-list-a-b-c-d-upto-2	Take(List(a, b, c, d), UpTo(2))	List(a, b)
 partition-range-1-10-upto-3	Partition(Range(1, 10), UpTo(3))	List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9), List(10))
 in-partition-a-shorter-final-chunk-is-allowed	Partition(List(1, 2, 3, 4, 5, 6), UpTo(4))	List(List(1, 2, 3, 4), List(5, 6))
 in-ordering-at-most-6-positions-of-a-5-element	Ordering(List(2, 6, 1, 9, 2), UpTo(6))	List(3, 1, 5, 2, 4)
-partition-list-a-b-c-d-exponentiale-f-g-upto-3	Partition(List(a, b, c, d, ExponentialE, f, g), UpTo(3))	List(List(a, b, c), List(d, ExponentialE, f), List(g))
 commonest-list-b-a-c-2-a-b-1-2-upto-6		
+partition-list-a-b-c-d-k-f-g-upto-3	Partition(List(a, b, c, d, k, f, g), UpTo(3))	List(List(a, b, c), List(d, k, f), List(g))

@@ -47,7 +47,6 @@ findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	\mathrm{FindInstance}(\mathrm{P
 one-step-of-rsa-style-modular-exponentiation-7	\mathrm{PowerMod}(7, 13, 33)	13
 341-11-cdot-31-passes-fermat-s-test-to-base-2	\mathrm{PowerMod}(2, 340, 341)	1
 diffie-hellman-both-parties-reach-the-shared-key	\mathrm{PowerMod}(\mathrm{PowerMod}(5, 6, 23), 15, 23)=\mathrm{PowerMod}(\mathrm{PowerMod}(5, 15, 23), 6, 23)	\top
-powermod-tocharactercode-rsa-in-mathematica	\mathrm{PowerMod}(\mathrm{ToCharacterCode}(\text{RSA in Mathematica}), e, n)	\bigl\lbrack\mathrm{PowerMod}(82, e, n), \mathrm{PowerMod}(83, e, n), \mathrm{PowerMod}(65, e, n), \mathrm{PowerMod}(32, e, n), \mathrm{PowerMod}(105, e, n), \mathrm{PowerMod}(110, e, n), \mathrm{PowerMod}(32, e, n), \mathrm{PowerMod}(77, e, n), \mathrm{PowerMod}(97, e, n), \mathrm{PowerMod}(116, e, n), \mathrm{PowerMod}(104, e, n), \mathrm{PowerMod}(101, e, n), \mathrm{PowerMod}(109, e, n), \mathrm{PowerMod}(97, e, n), \mathrm{PowerMod}(116, e, n), \mathrm{PowerMod}(105, e, n), \mathrm{PowerMod}(99, e, n), \mathrm{PowerMod}(97, e, n)\bigr\rbrack
 by-definition-a-b-bmod-m-computed-without-ever	\mathrm{PowerMod}(2, 10, 3)=2^{10}\bmod3	\top
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	\mathrm{PowerMod}(7, \mathrm{Totient}(19), 19)	1
 list-powermod-7-2-5-powermod-12-2-5	\bigl\lbrack\mathrm{PowerMod}(7, 2, 5), \mathrm{PowerMod}(12, 2, 5)\bigr\rbrack	\bigl\lbrack4, 4\bigr\rbrack

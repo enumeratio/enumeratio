@@ -17,8 +17,8 @@ symbolic-terms-build-the-nested-fraction-left	\mathrm{FromContinuedFraction}(\bi
 25-terms-past-the-double-precision-wall	\mathrm{ContinuedFraction}(\varphi, 25)	\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack
 continuedfraction-n-pi	\mathrm{ContinuedFraction}(N(\pi))	\bigl\lbrack3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14\bigr\rbrack
 continuedfraction-n-pi-20	\mathrm{ContinuedFraction}(N(\pi, 20))	\bigl\lbrack3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14\bigr\rbrack
-continuedfraction-sqrt-exponentiale-25	\mathrm{ContinuedFraction}(\sqrt{e}, 25)	\bigl\lbrack1, 1, 1, 1, 5, 1, 1, 9, 1, 1, 13, 1, 1, 17, 1, 1, 21, 1, 1, 25, 1, 1, 29, 1, 1\bigr\rbrack
 n-root-product-continuedfraction-pi-1-000-1-000	N(\sqrt[1\,000]{\prod\mathrm{ContinuedFraction}(\pi, 1\,000)})	2.665\,625\,529\,320\,168\,601\,49
+continuedfraction-sqrt-exponentiale-25	\mathrm{ContinuedFraction}(\sqrt{e}, 25)	\bigl\lbrack1, 1, 1, 1, 5, 1, 1, 9, 1, 1, 13, 1, 1, 17, 1, 1, 21, 1, 1, 25, 1, 1, 29, 1, 1\bigr\rbrack
 continuedfraction-exponentiale-pow-sqrt-163	\mathrm{ContinuedFraction}(\exp(\sqrt{163}\pi), 10)	\bigl\lbrack262\,537\,412\,640\,768\,743, 1, 1\,333\,462\,407\,511, 1, 8, 1, 1, 5, 1, 4\bigr\rbrack
 and-back-again	\mathrm{FromSternBrocotPath}(\text{RLR})	\frac{5}{3}
 1-cdot-2-3-cdot-1-1	\mathrm{FareyNeighbours}(1, 3, 1, 2)	\top

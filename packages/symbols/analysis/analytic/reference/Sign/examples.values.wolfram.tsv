@@ -17,7 +17,6 @@ sign-positiveinfinity	Sign[Infinity]	1		\text{sgn}(\infty )	1
 an-interval-entirely-above-0-has-sign-1	Sign[Interval[List[1, 3]]]	1		\text{sgn}(\text{Interval}[\{1,3\}])	1	
 decides-the-sign-of-the-exact-number-sqrt-2-2-by	Sign[Subtract[Sqrt[2], 2]]	-1		\text{sgn}\left(\sqrt{2}-2\right)	-1	
 2-sqrt-2-is-the-same-certified-decision-the	Sign[Subtract[2, Sqrt[2]]]	1		\text{sgn}\left(2-\sqrt{2}\right)	1	
-n-sign-exponentiale-plus-i-times-pi-20	N[Sign[Plus[E, Times[Complex[0, 1], Pi]]], 20]	0.6543211207366890281901510704962030089`19.96630593688529 + 0.75621681478123932246550916601679566934`20.029161327676174*I	0.65432112073668902819 + 0.75621681478123932247 I	N[\text{sgn}(e+i \pi ),20]	0.65432112073668902819+0.75621681478123932247 i	
 sign-123	Sign[123]	1		\text{sgn}(123)	1	
 sign-123-minus-456i	Sign[Complex[123, -456]]	(41 - 152*I)/Sqrt[24785]		\text{sgn}(123-456 i)	\frac{41-152 i}{\sqrt{24785}}	
 fullsimplify-matrixfunction-sign-list-list-1	FullSimplify[MatrixFunction[Sign, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]]	{{0, -Sqrt[3/5]}, {-Sqrt[5/3], 0}}		\text{FullSimplify}\left[\text{MatrixFunction}\left[\text{Sign},\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  -\frac{5}{3} & \frac{1}{2} \\ \end{array} \right)\right]\right]	\left( \begin{array}{cc}  0 & -\sqrt{\frac{3}{5}} \\  -\sqrt{\frac{5}{3}} & 0 \\ \end{array} \right)	
@@ -25,6 +24,7 @@ piecewiseexpand-sign-x-neg-2-lt-x-lt-2	PiecewiseExpand[Sign[x], Less[-2, x, 2]]	
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1	(Sign[Conjugate[Complex[1, 2]]] == Conjugate[Sign[Complex[1, 2]]])	True		\text{sgn}\left((1+2 i)^*\right)=\text{sgn}(1+2 i)^*	\text{True}	
 d-sign-x-x	D[Sign[x], x]	Derivative[1][Sign][x]				inconclusive
 sign-positiveinfinity-times-i	Sign[Times[Infinity, Complex[0, 1]]]	I		\text{sgn}(\infty  i)	i	disagree
+n-sign-exponentiale-plus-i-times-pi-20	N[Sign[Plus[E, Times[Complex[0, 1], Pi]]], 20]	0.65432112073668902819015107049620300909`19.96630593688529 + 0.75621681478123932246550916601679566917`20.029161327676174*I	0.65432112073668902819 + 0.75621681478123932247 I	N[\text{sgn}(e+i \pi ),20]	0.65432112073668902819+0.75621681478123932247 i	
 tells-you-the-temperature-dropped-but-not-by-how	Sign[Subtract[70, 95]]	-1		\text{sgn}(70-95)	-1	
 sign-z-z-z-see-abs	(Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])	True		\text{sgn}(3+4 i)=\frac{3+4 i}{| 3+4 i| }	\text{True}	
 x-cdot-sign-x-x-here-at-x-5	(Times[-5, Sign[-5]] == Abs[-5])	True		-5 \text{sgn}(-5)=| -5|	\text{True}	

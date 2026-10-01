@@ -1,8 +1,8 @@
 id	in	out
 1-factorial-eq-2	1 != 2	True
 3-over-2-factorial-eq-5-over-3	3 / 2 != 5 / 3	True
-pi-pow-exponentiale-factorial-eq-exponentiale	pi ^ exponentialE != exponentialE ^ pi	True
 3-factorial-eq-4-4-factorial-eq-5	3 != 4 && 4 != 5	True
-list-a-b-c-factorial-eq-list-d-exponentiale	[a, b, c] != [d, exponentialE]	True
 abc-factorial-eq-abc	"\"abc\" != \"ABC\""	True
+pi-pow-exponentiale-factorial-eq-exponentiale	pi ^ exponentialE != exponentialE ^ pi	True
+list-a-b-c-factorial-eq-list-d-k	[a, b, c] != [d, k]	True
 list-x-factorial-eq-x-x-factorial-eq-y-sqrt-2	[x != x, x != y, sqrt(2) + sqrt(3) != sqrt(5 + 2 * sqrt(6)), pi != N(pi)]	[False, x != y, False, False]

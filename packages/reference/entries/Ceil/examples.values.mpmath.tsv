@@ -36,8 +36,8 @@ ceil-neg-3	ceil(-3)
 piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1			
 ceil-neg-pi	ceil((-pi))		
 ceil-neg-27-over-10	ceil((mpf(-27)/10))		
-ceil-23-over-10-plus-neg-i-times-exponentiale	ceil(((mpf(23)/10) + (mpc(0, -1) * e)))		
 ceil-negativeinfinity	ceil(-inf)		
+ceil-23-over-10-plus-neg-i-times-exponentiale	ceil(((mpf(23)/10) + (mpc(0, -1) * e)))		
 a-zero-divisor-inside-ceil			
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceil(-3.7)	-3.0	
 nan-propagates-rather-than-erroring	ceil(nan)		

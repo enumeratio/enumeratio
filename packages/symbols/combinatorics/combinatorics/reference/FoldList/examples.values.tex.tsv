@@ -22,9 +22,9 @@ foldlist-function-neg-1-plus-2-1-2-0-list-a-b-c
 foldlist-function-list-2-1-1-2-x-list-a-b-c-d		
 foldlist-length-is-one-more	\mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1	\top
 foldlist-last-is-fold	\mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)	\top
-rest-foldlist-add-0-list-a-b-c-d-exponentiale	\mathrm{Rest}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack a, b, c, d, e\bigr\rbrack))	\bigl\lbrack a, a+b, a+b+c, a+b+c+d, a+b+c+d+e\bigr\rbrack
 foldlist-f-x-list	\mathrm{FoldList}(f, x, \bigl\lbrack\bigr\rbrack)	\bigl\lbrack x\bigr\rbrack
 foldlist-f-x-list-a-b-c	\mathrm{FoldList}(f, x, \bigl\lbrack a, b, c\bigr\rbrack)	\bigl\lbrack x, f(x, a), f(f(x, a), b), f(f(f(x, a), b), c)\bigr\rbrack
 foldlist-add-list-a-b-c-d	\mathrm{FoldList}(\mathrm{Add}, \bigl\lbrack a, b, c, d\bigr\rbrack)	\bigl\lbrack a, a+b, a+b+c, a+b+c+d\bigr\rbrack
 length-foldlist-f-x-range-1-10	\mathrm{Length}(\mathrm{FoldList}(f, x, 1..10))	11
+rest-foldlist-add-0-list-a-b-c-d-k	\mathrm{Rest}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack a, b, c, d, k\bigr\rbrack))	\bigl\lbrack a, a+b, a+b+c, a+b+c+d, a+b+c+d+k\bigr\rbrack
 foldlist-f-list	\mathrm{FoldList}(f, \bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack

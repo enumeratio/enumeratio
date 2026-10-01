@@ -1,13 +1,10 @@
 id	in	out
-drop-list-a-b-c-d-exponentiale-f-2	\operatorname{Drop}([a,b,c,d,e,f],2)	[c,d,e,f]
 drop-list-a-b-c-d-k-f-2	\operatorname{Drop}([a,b,c,d,k,f],2)	[c,d,k,f]
 drop-list-a-b-c-d-k-f-neg-3	\operatorname{Drop}([a,b,c,d,k,f],-3)	[a,b,c]
 drop-list-list-11-12-13-list-21-22-23-list-31-32	\operatorname{Drop}([[11,12,13],[21,22,23],[31,32,33]],1)	[[21,22,23],[31,32,33]]
 drop-list-1-2-3-4-5-negative-2	\operatorname{Drop}([1,2,3,4,5],-2)	[1,2,3]
-drop-list-a-b-c-d-exponentiale-1	\operatorname{Drop}([a,b,c,d,e],1)	[b,c,d,e]
 drop-list-a-b-c-d-k-1	\operatorname{Drop}([a,b,c,d,k],1)	[b,c,d,k]
 drop-list-a-b-c-d-k-neg-1	\operatorname{Drop}([a,b,c,d,k],-1)	[a,b,c,d]
-drop-list-a-b-c-d-exponentiale-4	\operatorname{Drop}([a,b,c,d,e],4)	[e]
 drop-list-1-2-negative-5-overflow-declines	\operatorname{Drop}([1,2],-5)	\operatorname{Drop}([1,2],-5)
 drop-list-1-2-5-overflow-declines	\operatorname{Drop}([1,2],5)	\operatorname{Drop}([1,2],5)
 drop-list-a-b-c-d-k-4	\operatorname{Drop}([a,b,c,d,k],4)	[k]

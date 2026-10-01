@@ -1,8 +1,8 @@
 id	in	out
 pairs-each-element-with-its-1-based-index	\operatorname{MapIndexed}(f,[a,b,c])	[f(a,[1]),f(b,[2]),f(c,[3])]
 mapindexed-f-list-a-b-c-d	\operatorname{MapIndexed}(f,[a,b,c,d])	[f(a,[1]),f(b,[2]),f(c,[3]),f(d,[4])]
-mapindexed-f-list-list-a-b-list-c-d-exponentiale	\operatorname{MapIndexed}(f,[[a,b],[c,d,e]])	[f([a,b],[1]),f([c,d,e],[2])]
+mapindexed-f-list-list-a-b-list-c-d-k	\operatorname{MapIndexed}(f,[[a,b],[c,d,k]])	[f([a,b],[1]),f([c,d,k],[2])]
 mapindexed-f-list-list-list-list-list-a	\operatorname{MapIndexed}(f,[[[[[a]]]]])	[f([[[[a]]]],[1])]
 mapindexed-labeled-list-x-pow-2-x-plus-y-y-pow-2	\operatorname{MapIndexed}(\operatorname{Labeled},[x^2,x+y,y^2,y^3])	[\operatorname{Labeled}(x^2,[1]),\operatorname{Labeled}(x+y,[2]),\operatorname{Labeled}(y^2,[3]),\operatorname{Labeled}(y^3,[4])]
-sum-mapindexed-function-1-times-x-pow-first-2-1	\sum\operatorname{MapIndexed}(\operatorname{Function}(\operatorname{Block}(\_1x^{\operatorname{First}(\_2)}),\_1,\_2),[a,b,c,d,e])	ex^5+dx^4+cx^3+bx^2+ax
 first-last-reap-mapindexed-function-sow-2-list		
+sum-mapindexed-function-1-times-x-pow-first-2-1	\sum\operatorname{MapIndexed}(\operatorname{Function}(\operatorname{Block}(\_1x^{\operatorname{First}(\_2)}),\_1,\_2),[a,b,c,d,k])	kx^5+dx^4+cx^3+bx^2+ax

@@ -1,7 +1,7 @@
 id	in	out
 accumulate-1-2-3-4	Accumulate(List(1, 2, 3, 4))	List(1, 3, 6, 10)
 accumulate-list-a-b-c-d	Accumulate(List(a, b, c, d))	List(a, Add(a, b), Add(a, b, c), Add(a, b, c, d))
-accumulate-list-list-a-b-list-c-d-list	Accumulate(List(List(a, b), List(c, d), List(ExponentialE, f)))	List(List(a, b), List(Add(a, c), Add(b, d)), List(Add(a, c, ExponentialE), Add(b, d, f)))
+accumulate-list-list-a-b-list-c-d-list-k-f	Accumulate(List(List(a, b), List(c, d), List(k, f)))	List(List(a, b), List(Add(a, c), Add(b, d)), List(Add(a, c, k), Add(b, d, f)))
 accumulate-empty	Accumulate(List())	List()
 accumulate-data		
 accumulate-v		

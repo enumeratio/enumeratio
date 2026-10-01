@@ -3,12 +3,12 @@ setminus-1-2-3-2	\operatorname{SetMinus}(\{1,2,3\},\{2\})	\{1,3\}
 setminus-1-2-3-4-2-4	\operatorname{SetMinus}(\{1,2,3,4\},\{2,4\})	\{1,3\}
 removing-elements-that-aren-t-present-leaves-the	\operatorname{SetMinus}(\{1,2,3\},\{9\})	\{1,2,3\}
 several-sets-can-be-removed-at-once	\operatorname{SetMinus}(\{a,b,c,d,f\},\{a,c\},\{d\})	\{b,f\}
-setminus-a-b-c-d-exponentiale-a-c-d	\operatorname{SetMinus}(\{a,b,c,d,e\},\{a,c\},\{d\})	\{b,e\}
+setminus-a-b-c-d-k-a-c-d	\operatorname{SetMinus}(\{a,b,c,d,k\},\{a,c\},\{d\})	\{b,k\}
 lists-as-well-as-sets-as-wolfram-s-complement	\operatorname{SetMinus}([a,b,c,d,f],[a,c],[d])	\{b,f\}
 a-range-as-the-universe-to-remove-from-compute	\operatorname{SetMinus}(\operatorname{Range}(1,10),\{2,3\})	\{1,4,5,6,7,8,9,10\}
 a-setminus-a-setminus-b-a-cap-b-see-intersection	\operatorname{SetMinus}(\{1,2,3,4\},\operatorname{SetMinus}(\{1,2,3,4\},\{2,4\}))=\operatorname{Intersection}(\{1,2,3,4\},\{2,4\})	\operatorname{True}
 removing-the-empty-set-changes-nothing-a	\operatorname{SetMinus}(\{1,2,3\},\emptyset)	\{1,2,3\}
 a-setminus-a-varnothing	\operatorname{SetMinus}(\{1,2,3\},\{1,2,3\})	\emptyset
-setminus-b-exponentiale-d-a-c-b-c	\operatorname{SetMinus}(\{b,e,d,a,c\},\{b,c\})	\{e,d,a\}
+setminus-b-k-d-a-c-b-c	\operatorname{SetMinus}(\{b,k,d,a,c\},\{b,c\})	\{k,d,a\}
 setminus-is-not-commutative-b-setminus-a-can	\operatorname{SetMinus}(\{2,4\},\{1,2,3,4\})	\emptyset
 the-result-keeps-the-first-set-s-order-rather	\operatorname{SetMinus}(\{5,4,3,2,1\},\{2\})	\{5,4,3,1\}

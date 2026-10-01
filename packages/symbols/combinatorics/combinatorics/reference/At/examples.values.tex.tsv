@@ -14,9 +14,9 @@ kfreeintegers-2-first-term-is-1	\mathrm{KFreeIntegers}(2)[1]	1
 at-lazy-family-collection-element	\mathrm{KSubsets}(5, 2)[1]	\mathrm{Finset}(\operatorname{Tuple}(5,\bigl\lbrack1, 2\bigr\rbrack))
 at-span-submatrix-two-levels	\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack[\mathrm{Span}(2, 3), \mathrm{Span}(1, 2)]	\bigl\lbrack\bigl\lbrack4, 5\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack
 at-integer-without-span-unaffected	\bigl\lbrack a, b, c\bigr\rbrack[2]	b
-list-a-b-c-d-exponentiale-f-list-3	\bigl\lbrack a, b, c, d, e, f\bigr\rbrack[3]	c
-list-a-b-c-d-exponentiale-f-list-neg-2	\bigl\lbrack a, b, c, d, e, f\bigr\rbrack[-2]	e
-list-a-b-c-d-exponentiale-f-list-span-2-4	\bigl\lbrack a, b, c, d, e, f\bigr\rbrack[\mathrm{Span}(2, 4)]	\bigl\lbrack b, c, d\bigr\rbrack
+list-a-b-c-d-k-f-list-3	\bigl\lbrack a, b, c, d, k, f\bigr\rbrack[3]	c
+list-a-b-c-d-k-f-list-neg-2	\bigl\lbrack a, b, c, d, k, f\bigr\rbrack[-2]	k
+list-a-b-c-d-k-f-list-span-2-4	\bigl\lbrack a, b, c, d, k, f\bigr\rbrack[\mathrm{Span}(2, 4)]	\bigl\lbrack b, c, d\bigr\rbrack
 a-list-of-indices-selects-several-elements-at	\bigl\lbrack a, b, c, d\bigr\rbrack[\bigl\lbrack1, 3\bigr\rbrack]	\bigl\lbrack a, c\bigr\rbrack
 a-range-also-works-as-an-index-list-extracting-a	\bigl\lbrack a, b, c, d, e\bigr\rbrack[2..4]	\bigl\lbrack b, c, d\bigr\rbrack
 index-0-is-the-collection-s-own-head-matching	\bigl\lbrack1, 2, 3\bigr\rbrack[0]	\mathrm{List}
@@ -37,18 +37,18 @@ indexes-into-a-named-integer-collection	\mathrm{TriangularNumbers}[5]	15
 indexes-into-a-parameterized-collection	\mathrm{PolygonalNumbers}(5)[3]	12
 first-term-of-fibonaccinumbers-is-0	\mathrm{FibonacciNumbers}[1]	0
 at-bellnumbers-5-is-bell-4-15	\mathrm{BellNumbers}[5]	15
-list-a-b-c-d-exponentiale-f-list-list-1-3-1-2	\bigl\lbrack a, b, c, d, e, f\bigr\rbrack[\bigl\lbrack1, 3, 1, 2, -1, 6\bigr\rbrack]	\bigl\lbrack a, c, a, b, f, f\bigr\rbrack
-list-a-b-c-d-exponentiale-f-list-span-1-neg-3	\bigl\lbrack a, b, c, d, e, f\bigr\rbrack[\mathrm{Span}(1, -3)]	\bigl\lbrack a, b, c, d\bigr\rbrack
-list-a-b-c-d-exponentiale-f-g-h-i-j-k-list-span	\bigl\lbrack a, b, c, d, e, f, g, h, i, j, k\bigr\rbrack[\mathrm{Span}(3, -3, 2)]	\bigl\lbrack c, e, g, i\bigr\rbrack
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-i	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e, f\bigr\rbrack, \bigl\lbrack g, h, i\bigr\rbrack\bigr\rbrack[2, 3]	f
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-2	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e, f\bigr\rbrack, \bigl\lbrack g, h, i\bigr\rbrack\bigr\rbrack[2]	\bigl\lbrack d, e, f\bigr\rbrack
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-3	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e, f\bigr\rbrack, \bigl\lbrack g, h, i\bigr\rbrack\bigr\rbrack[\bigl\lbrack1, 3\bigr\rbrack]	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack g, h, i\bigr\rbrack\bigr\rbrack
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-4	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, e, f\bigr\rbrack, \bigl\lbrack g, h, i\bigr\rbrack\bigr\rbrack[\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack]	\bigl\lbrack\bigl\lbrack b, c\bigr\rbrack, \bigl\lbrack h, i\bigr\rbrack\bigr\rbrack
 list-x-4-y-5-list-1-2	\bigl\lbrack(x,4), (y,5)\bigr\rbrack[1, 2]	4
-list-a-b-c-d-exponentiale-list-3	\bigl\lbrack a, b, c, d, e\bigr\rbrack[3]	c
-list-a-b-c-d-exponentiale-list-span-2-4	\bigl\lbrack a, b, c, d, e\bigr\rbrack[\mathrm{Span}(2, 4)]	\bigl\lbrack b, c, d\bigr\rbrack
+list-a-b-c-d-k-f-list-list-1-3-1-2-neg-1-6	\bigl\lbrack a, b, c, d, k, f\bigr\rbrack[\bigl\lbrack1, 3, 1, 2, -1, 6\bigr\rbrack]	\bigl\lbrack a, c, a, b, f, f\bigr\rbrack
+list-a-b-c-d-k-f-list-span-1-neg-3	\bigl\lbrack a, b, c, d, k, f\bigr\rbrack[\mathrm{Span}(1, -3)]	\bigl\lbrack a, b, c, d\bigr\rbrack
+list-a-b-c-d-n-f-g-h-m-j-k-list-span-3-neg-3-2	\bigl\lbrack a, b, c, d, n, f, g, h, m, j, k\bigr\rbrack[\mathrm{Span}(3, -3, 2)]	\bigl\lbrack c, n, g, m\bigr\rbrack
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2-3	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, m, f\bigr\rbrack, \bigl\lbrack g, h, k\bigr\rbrack\bigr\rbrack[2, 3]	f
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, m, f\bigr\rbrack, \bigl\lbrack g, h, k\bigr\rbrack\bigr\rbrack[2]	\bigl\lbrack d, m, f\bigr\rbrack
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-list	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, m, f\bigr\rbrack, \bigl\lbrack g, h, k\bigr\rbrack\bigr\rbrack[\bigl\lbrack1, 3\bigr\rbrack]	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack g, h, k\bigr\rbrack\bigr\rbrack
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-lis-2	\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack d, m, f\bigr\rbrack, \bigl\lbrack g, h, k\bigr\rbrack\bigr\rbrack[\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack]	\bigl\lbrack\bigl\lbrack b, c\bigr\rbrack, \bigl\lbrack h, k\bigr\rbrack\bigr\rbrack
+list-a-b-c-d-k-list-3	\bigl\lbrack a, b, c, d, k\bigr\rbrack[3]	c
+list-a-b-c-d-k-list-span-2-4	\bigl\lbrack a, b, c, d, k\bigr\rbrack[\mathrm{Span}(2, 4)]	\bigl\lbrack b, c, d\bigr\rbrack
 chaining-at-reaches-into-nested-collections-like	\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack[2][1]	3
-list-a-b-c-d-exponentiale-list-list-4-5-1-2-3	\bigl\lbrack a, b, c, d, e\bigr\rbrack[\bigl\lbrack4, 5, 1, 2, 3\bigr\rbrack]	\bigl\lbrack d, e, a, b, c\bigr\rbrack
+list-a-b-c-d-k-list-list-4-5-1-2-3	\bigl\lbrack a, b, c, d, k\bigr\rbrack[\bigl\lbrack4, 5, 1, 2, 3\bigr\rbrack]	\bigl\lbrack d, k, a, b, c\bigr\rbrack
 list-a-b-c-list-0	\bigl\lbrack a, b, c\bigr\rbrack[0]	\mathrm{List}
 list-1-2-3-list-list	\bigl\lbrack1, 2, 3\bigr\rbrack[\bigl\lbrack\bigr\rbrack]	\bigl\lbrack\bigr\rbrack
 an-out-of-range-index-evaluates-to-nan-rather	\bigl\lbrack1, 2, 3\bigr\rbrack[10]	\operatorname{NaN}

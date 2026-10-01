@@ -3,5 +3,5 @@ dot-list-a-b-c-list-x-y-z	Dot(List(a, b, c), List(x, y, z))	Add(Multiply(a, x), 
 dot-list-list-a-b-list-c-d-list-x-y	Dot(List(List(a, b), List(c, d)), List(x, y))	List(Add(Multiply(a, x), Multiply(b, y)), Add(Multiply(c, x), Multiply(d, y)))
 dot-list-x-y-list-list-a-b-list-c-d	Dot(List(x, y), List(List(a, b), List(c, d)))	List(Add(Multiply(a, x), Multiply(c, y)), Add(Multiply(b, x), Multiply(d, y)))
 dot-list-1-2-3-4-5-list-1-8-9-0-neg-1	Dot(List(1, 2, 3, 4, 5), List(1, 8, 9, 0, -1))	39
-dot-list-a-b-c-list-0-b-d-plus-exponentiale	Dot(List(a, b, c), List(0, b, Add(d, ExponentialE)))	Add(Power(b, 2), Multiply(c, d), Multiply(ExponentialE, c))
 dot-list-list-2-0-0-list-0-0-35-over-2-list-0-35	Dot(List(List(2, 0, 0), List(0, 0, Rational(35, 2)), List(0, Rational(35, 2), 0)), List(List(8, 0, 0), List(0, 0, 10), List(0, 10, 0)))	List(List(16, 0, 0), List(0, 175, 0), List(0, 0, 175))
+dot-list-a-b-c-list-0-b-d-plus-k	Dot(List(a, b, c), List(0, b, Add(d, k)))	Add(Power(b, 2), Multiply(c, d), Multiply(c, k))

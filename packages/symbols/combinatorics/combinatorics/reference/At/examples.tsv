@@ -14,9 +14,9 @@ kfreeintegers-2-first-term-is-1		test	[At, [KFreeIntegers, 2], 1]	1	KFreeInteger
 at-lazy-family-collection-element		test	[At, [KSubsets, 5, 2], 1]	[Finset, [Tuple, 5, [List, 1, 2]]]			
 at-span-submatrix-two-levels		test	[At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]	[List, [List, 4, 5], [List, 7, 8]]			
 at-integer-without-span-unaffected		test	[At, [List, a, b, c], 2]	b			
-list-a-b-c-d-exponentiale-f-list-3			[At, [List, a, b, c, d, ExponentialE, f], 3]	c			
-list-a-b-c-d-exponentiale-f-list-neg-2			[At, [List, a, b, c, d, ExponentialE, f], -2]	ExponentialE			
-list-a-b-c-d-exponentiale-f-list-span-2-4			[At, [List, a, b, c, d, ExponentialE, f], [Span, 2, 4]]	[List, b, c, d]			
+list-a-b-c-d-k-f-list-3			[At, [List, a, b, c, d, k, f], 3]	c			
+list-a-b-c-d-k-f-list-neg-2			[At, [List, a, b, c, d, k, f], -2]	k			
+list-a-b-c-d-k-f-list-span-2-4			[At, [List, a, b, c, d, k, f], [Span, 2, 4]]	[List, b, c, d]			
 a-list-of-indices-selects-several-elements-at	Scope		[At, [List, a, b, c, d], [List, 1, 3]]	[List, a, c]	A list of indices selects several elements at once		
 a-range-also-works-as-an-index-list-extracting-a	Scope		[At, [List, a, b, c, d, e], [Range, 2, 4]]	[List, b, c, d]	A [[Range]] also works as an index list, extracting a contiguous slice		
 index-0-is-the-collection-s-own-head-matching	Scope		[At, [List, 1, 2, 3], 0]	List	Index 0 is the collection's own head, matching Wolfram's Part[c, 0]		
@@ -37,18 +37,18 @@ indexes-into-a-named-integer-collection	Scope		[At, TriangularNumbers, 5]	15	Rea
 indexes-into-a-parameterized-collection	Scope		[At, [PolygonalNumbers, 5], 3]	12	Also works on a parameterized collection like $PolygonalNumbers(k)$		
 first-term-of-fibonaccinumbers-is-0	Scope		[At, FibonacciNumbers, 1]	0			
 at-bellnumbers-5-is-bell-4-15	Scope		[At, BellNumbers, 5]	15	At(BellNumbers, 5) is Bell(4) = 15 (1-indexed At, 0-indexed term)		
-list-a-b-c-d-exponentiale-f-list-list-1-3-1-2	Scope		[At, [List, a, b, c, d, ExponentialE, f], [List, 1, 3, 1, 2, -1, 6]]	[List, a, c, a, b, f, f]			
-list-a-b-c-d-exponentiale-f-list-span-1-neg-3	Scope		[At, [List, a, b, c, d, ExponentialE, f], [Span, 1, -3]]	[List, a, b, c, d]			
-list-a-b-c-d-exponentiale-f-g-h-i-j-k-list-span	Scope		[At, [List, a, b, c, d, ExponentialE, f, g, h, [Complex, 0, 1], j, k], [Span, 3, -3, 2]]	[List, c, ExponentialE, g, [Complex, 0, 1]]			
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-i	Scope		[At, [List, [List, a, b, c], [List, d, ExponentialE, f], [List, g, h, [Complex, 0, 1]]], 2, 3]	f			
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-2	Scope		[At, [List, [List, a, b, c], [List, d, ExponentialE, f], [List, g, h, [Complex, 0, 1]]], 2]	[List, d, ExponentialE, f]			
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-3	Scope		[At, [List, [List, a, b, c], [List, d, ExponentialE, f], [List, g, h, [Complex, 0, 1]]], [List, 1, 3]]	[List, [List, a, b, c], [List, g, h, [Complex, 0, 1]]]			
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-4	Scope		[At, [List, [List, a, b, c], [List, d, ExponentialE, f], [List, g, h, [Complex, 0, 1]]], [List, 1, 3], [List, 2, 3]]	[List, [List, b, c], [List, h, [Complex, 0, 1]]]			
 list-x-4-y-5-list-1-2	Scope		[At, [List, [Tuple, x, 4], [Tuple, y, 5]], 1, 2]	4			
-list-a-b-c-d-exponentiale-list-3	Scope		[At, [List, a, b, c, d, ExponentialE], 3]	c			
-list-a-b-c-d-exponentiale-list-span-2-4	Scope		[At, [List, a, b, c, d, ExponentialE], [Span, 2, 4]]	[List, b, c, d]			
+list-a-b-c-d-k-f-list-list-1-3-1-2-neg-1-6	Scope		[At, [List, a, b, c, d, k, f], [List, 1, 3, 1, 2, -1, 6]]	[List, a, c, a, b, f, f]			
+list-a-b-c-d-k-f-list-span-1-neg-3	Scope		[At, [List, a, b, c, d, k, f], [Span, 1, -3]]	[List, a, b, c, d]			
+list-a-b-c-d-n-f-g-h-m-j-k-list-span-3-neg-3-2	Scope		[At, [List, a, b, c, d, n, f, g, h, m, j, k], [Span, 3, -3, 2]]	[List, c, n, g, m]			
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2-3	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], 2, 3]	f			
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], 2]	[List, d, m, f]			
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-list	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], [List, 1, 3]]	[List, [List, a, b, c], [List, g, h, k]]			
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-lis-2	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], [List, 1, 3], [List, 2, 3]]	[List, [List, b, c], [List, h, k]]			
+list-a-b-c-d-k-list-3	Scope		[At, [List, a, b, c, d, k], 3]	c			
+list-a-b-c-d-k-list-span-2-4	Scope		[At, [List, a, b, c, d, k], [Span, 2, 4]]	[List, b, c, d]			
 chaining-at-reaches-into-nested-collections-like	Applications		[At, [At, [List, [List, 1, 2], [List, 3, 4]], 2], 1]	3	Chaining $At$ reaches into nested collections, like indexing a matrix row then column		
-list-a-b-c-d-exponentiale-list-list-4-5-1-2-3	Applications		[At, [List, a, b, c, d, ExponentialE], [List, 4, 5, 1, 2, 3]]	[List, d, ExponentialE, a, b, c]			
+list-a-b-c-d-k-list-list-4-5-1-2-3	Applications		[At, [List, a, b, c, d, k], [List, 4, 5, 1, 2, 3]]	[List, d, k, a, b, c]			
 list-a-b-c-list-0	Properties		[At, [List, a, b, c], 0]	List			
 list-1-2-3-list-list	Properties		[At, [List, 1, 2, 3], [List]]	[List]			
 an-out-of-range-index-evaluates-to-nan-rather	Possible issues		[At, [List, 1, 2, 3], 10]	NaN	An out-of-range index evaluates to $NaN$ rather than raising an error	undefined-form	An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).

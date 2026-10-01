@@ -5,5 +5,5 @@ isnumeric-sin-sqrt-2	IsNumeric(Sin(Sqrt(2)))	True
 isnumeric-plain-symbol	IsNumeric(x)	False
 isnumeric-sqrt-2	IsNumeric(Sqrt(2))	True
 isnumeric-expr	IsNumeric(expr)	False
-isnumeric-exponentiale	IsNumeric(ExponentialE)	True
+isnumeric-k	IsNumeric(k)	False
 ismatrix-m-isnumeric		

@@ -36,8 +36,8 @@ ceil-neg-3
 piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1	\operatorname{PiecewiseExpand}(\lceil x+13^{-1}+{\lceil1-x2^{-1}\rceil}^3\rceil,x\in\mathbb{R}\land-1<x<1)	\lceil x+{\lceil\frac{-1}{2}x+1\rceil}^3+\frac{1}{3}\rceil
 ceil-neg-pi		
 ceil-neg-27-over-10	\lceil\frac{-27}{10}\rceil	-2
-ceil-23-over-10-plus-neg-i-times-exponentiale	\lceil\frac{23}{10}+(-ie)\rceil	3-2i
 ceil-negativeinfinity		
+ceil-23-over-10-plus-neg-i-times-exponentiale	\lceil\frac{23}{10}+(-ie)\rceil	3-2i
 a-zero-divisor-inside-ceil		
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3		
 nan-propagates-rather-than-erroring		

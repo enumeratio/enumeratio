@@ -6,11 +6,11 @@ sortby-list-list-1-2-3-list-2-3-1-list-3-1-2-2	\mathrm{SortBy}(\bigl\lbrack\bigl
 sortby-range-1-10-function-1-mod-3-1	\mathrm{SortBy}(1..10, ()\mapsto\operatorname{\_1}\bmod3)	\bigl\lbrack3, 6, 9, 1, 4, 7, 10, 2, 5, 8\bigr\rbrack
 sorted-by-the-square-of-each-element	\mathrm{SortBy}(\bigl\lbrack4, -5, 1, 3, -2\bigr\rbrack, ()\mapsto\operatorname{\_1}^2)	\bigl\lbrack1, -2, 3, 4, -5\bigr\rbrack
 sorting-by-x-gives-descending-order	\mathrm{SortBy}(\bigl\lbrack3, 1, 2\bigr\rbrack, \mathrm{Negate})	\bigl\lbrack3, 2, 1\bigr\rbrack
-sortby-list-exponentiale-pi-sin-1-sqrt-2-n	\mathrm{SortBy}(\bigl\lbrack e, \pi, \sin(1), \sqrt{2}\bigr\rbrack, N)	\bigl\lbrack\sin(1), \sqrt{2}, e, \pi\bigr\rbrack
 sortby-list-dog-zebra-donkey-anteater-fish	\mathrm{SortBy}(\bigl\lbrack\text{dog}, \text{zebra}, \text{donkey}, \text{anteater}, \text{fish}\bigr\rbrack, \mathrm{StringLength})	\bigl\lbrack\text{dog}, \text{fish}, \text{zebra}, \text{donkey}, \text{anteater}\bigr\rbrack
-sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	\mathrm{SortBy}(\bigl\lbrack1, \sqrt{1+e^{-10}}, \exp(2+i), \exp(-1+2i), \exp(i)\bigr\rbrack, ()\mapsto N(\vert\operatorname{\_1}\vert))	\bigl\lbrack\exp(-1+2i), 1, i\sin(1)+\cos(1), \sqrt{1+e^{-10}}, \exp(2+i)\bigr\rbrack
 sortby-list-sqrt-1-plus-exponentiale-pow-neg-10	\mathrm{SortBy}(\bigl\lbrack\sqrt{1+\exp(-10i)}, \exp(2+i), \exp(-1+2i), \exp(i)\bigr\rbrack, \mathrm{Abs})	\bigl\lbrack\exp(-1+2i), \sqrt{1+i\sin(-10)+\cos(-10)}, i\sin(1)+\cos(1), \exp(2+i)\bigr\rbrack
 sortby-tab-function-slot-age		
+sortby-list-exponentiale-pi-sin-1-sqrt-2-n	\mathrm{SortBy}(\bigl\lbrack e, \pi, \sin(1), \sqrt{2}\bigr\rbrack, N)	\bigl\lbrack\sin(1), \sqrt{2}, e, \pi\bigr\rbrack
+sortby-list-1-sqrt-1-plus-exponentiale-pow-neg	\mathrm{SortBy}(\bigl\lbrack1, \sqrt{1+e^{-10}}, \exp(2+i), \exp(-1+2i), \exp(i)\bigr\rbrack, ()\mapsto N(\vert\operatorname{\_1}\vert))	\bigl\lbrack\exp(-1+2i), 1, i\sin(1)+\cos(1), \sqrt{1+e^{-10}}, \exp(2+i)\bigr\rbrack
 sortby-exprs-err		
 sortby-list-abs		
 sortby-list-first		

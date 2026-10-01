@@ -19,7 +19,6 @@ horner-s-rule-for-ax-2-bx-c	fold(Function(x * _1 + _2), 0, [a, b, c])	x * (a * x
 evaluate-the-continued-fraction-1-2-2-2-from-the	fold(Function(_2 + 1 / _1), 2, [2, 2, 1])	17 / 12	Unreadable
 reduce-reverse-list-a-b-c-d-function-1-over-1	reduce(reverse([a, b, c, d]), Function(1 / (_1 + _2), _1, _2), x)	1 / (a + 1 / (b + 1 / (c + 1 / (d + x))))	Unreadable
 reduce-list-4-5-1-6-7-8-function-10-times-1-plus	reduce([4, 5, 1, 6, 7, 8], Function(10 * _1 + _2, _1, _2), 0)	451_678	Unreadable
-reduce-reverse-list-a-b-c-d-exponentiale	reduce(reverse([a, b, c, d, exponentialE]), Function(-_1 + _2, _1, _2), 0)	a - b + c - d + exponentialE	Unreadable
 reduce-list-a-b-c-d-function-list-2-1-1-2-x	reduce([a, b, c, d], Function([_2, _1], _1, _2), x)	[d, [c, [b, [a, x]]]]	Unreadable
 reduce-list-2-4-3-partition-range-1-30	reduce([2, 4, 3], partition, Range(1, 30))	"[[\n   [[1, 2], [3, 4], [5, 6], [7, 8]],\n   [[9, 10], [11, 12], [13, 14], [15, 16]],\n   [[17, 18], [19, 20], [21, 22], [23, 24]],\n ]]"	
 reduce-list-a-b-c-d-k-function-1-times-x-plus-2	reduce([a, b, c, d, k], Function(_1 * x + _2, _1, _2), 0)	x * (x * (x * (a * x + b) + c) + d) + k	Unreadable

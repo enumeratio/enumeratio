@@ -26,10 +26,7 @@ n-decimalizes-a-combined-product	<N><Multiply><Exp>1</Exp> <Exp>2</Exp></Multipl
 agrees-numerically-at-a-complex-point	<N><Multiply><Exp><Complex>1.3 0.7</Complex></Exp> <Exp><Complex>-0.4 2.1</Complex></Exp></Multiply></N>	<Complex>-2.317493000510215 0.8239378963241757</Complex>
 to-50-significant-digits-every-one-correctly	<N><Exp>1</Exp> 50</N>	<ToExpression>2.7182818284590452353602874713526624977572470937000</ToExpression>
 to-1-significant-digit	<N><Exp>1</Exp> 1</N>	<ToExpression>3</ToExpression>
-n-exponentiale-pow-8-over-5-50	<N><Power>ExponentialE <Rational>8 5</Rational></Power> 50</N>	<ToExpression>4.9530324243951148036542863564239642564130311235566</ToExpression>
 matrixfunction-exp-list-list-1-1-over-2-times-i	<MatrixFunction>Exp <List><List>1 <Multiply><Complex>0 <Rational>1 2</Rational></Complex> Pi</Multiply></List> <List>0 1</List></List></MatrixFunction>	<List><List>ExponentialE <Multiply><Complex>0 <Rational>1 2</Rational></Complex> ExponentialE Pi</Multiply></List> <List>0 ExponentialE</List></List>
-exponentiale-pow-9-over-2-times-i-times-pi	<Power>ExponentialE <Multiply><Complex>0 <Rational>9 2</Rational></Complex> Pi</Multiply></Power>	<Complex>0 1</Complex>
-exptotrig-exponentiale-pow-1-over-5-times-i	<ExpToTrig><Power>ExponentialE <Multiply><Complex>0 <Rational>1 5</Rational></Complex> Pi</Multiply></Power></ExpToTrig>	<Add><Rational>1 4</Rational> <Divide><Sqrt>5</Sqrt> 4</Divide> <Multiply><Complex>0 <Divide><Sqrt>2</Sqrt> 4</Divide></Complex> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply></Add>
 functiondomain-exp-x-x	<FunctionDomain><Exp>x</Exp> x</FunctionDomain>	<True />
 functionrange-exp-x-x-y	<FunctionRange><Exp>x</Exp> x y</FunctionRange>	<Less>0 y</Less>
 functionanalytic-exp-x-x	<FunctionAnalytic><Exp>x</Exp> x</FunctionAnalytic>	<True />
@@ -42,6 +39,9 @@ functionsign-exp-x-x	<FunctionSign><Exp>x</Exp> x</FunctionSign>	<ToExpression>1
 functionsingularities-exp-x-x	<FunctionSingularities><Exp>x</Exp> x</FunctionSingularities>	<False />
 functiondiscontinuities-exp-x-x	<FunctionDiscontinuities><Exp>x</Exp> x</FunctionDiscontinuities>	<False />
 functionconvexity-exp-x-x	<FunctionConvexity><Exp>x</Exp> x</FunctionConvexity>	<ToExpression>1</ToExpression>
+n-exponentiale-pow-8-over-5-50	<N><Power>ExponentialE <Rational>8 5</Rational></Power> 50</N>	<ToExpression>4.9530324243951148036542863564239642564130311235566</ToExpression>
+exponentiale-pow-9-over-2-times-i-times-pi	<Power>ExponentialE <Multiply><Complex>0 <Rational>9 2</Rational></Complex> Pi</Multiply></Power>	<Complex>0 1</Complex>
+exptotrig-exponentiale-pow-1-over-5-times-i	<ExpToTrig><Power>ExponentialE <Multiply><Complex>0 <Rational>1 5</Rational></Complex> Pi</Multiply></Power></ExpToTrig>	<Add><Rational>1 4</Rational> <Divide><Sqrt>5</Sqrt> 4</Divide> <Multiply><Complex>0 <Divide><Sqrt>2</Sqrt> 4</Divide></Complex> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply></Add>
 threads-element-wise-over-a-list	<Exp><List>0 1</List></Exp>	<List>1 ExponentialE</List>
 inverse-of-ln-e-ln-x-x	<Equal><Exp><Ln>5</Ln></Exp> 5</Equal>	<True />
 e-a-e-b-e-a-b	<Equal><Multiply><Exp>2</Exp> <Exp>3</Exp></Multiply> <Exp>5</Exp></Equal>	<True />

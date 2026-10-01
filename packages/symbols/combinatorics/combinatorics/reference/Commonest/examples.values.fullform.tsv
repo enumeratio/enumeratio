@@ -7,10 +7,10 @@ commonest-list-b-a-c-2-a-b-1-2-4
 commonest-list-b-a-c-2-a-b-1-2-upto-6		
 all-distinct-all-tie	Commonest(List(1, 2, 3))	List(1, 2, 3)
 the-n-commonest-most-frequent-first	Commonest(List(1, 2, 2, 3, 3, 3, 4), 2)	List(3, 2)
-commonest-list-a-exponentiale-sin-y-exponentiale	Commonest(List(a, ExponentialE, Sin(y), ExponentialE, a, 7))	List(a, ExponentialE)
 commonest-n-list-1-2-2-3-3-3-4	Commonest(N(List(1, 2, 2, 3, 3, 3, 4)))	List(3)
 commonest-n-list-1-2-2-3-3-3-4-30	Commonest(N(List(1, 2, 2, 3, 3, 3, 4), 30))	List(3)
 commonest-data		
+commonest-list-a-exponentiale-sin-y-exponentiale	Commonest(List(a, ExponentialE, Sin(y), ExponentialE, a, 7))	List(a, ExponentialE)
 commonest-heights		
 with-a-unique-mode-commonest-c-mode-c-see-mode	First(Commonest(List(1, 2, 2, 3)))	2
 without-a-tie-the-single-commonest-element-is	Equal(First(Commonest(List(1, 2, 2, 3, 3, 3, 4))), Mode(List(1, 2, 2, 3, 3, 3, 4)))	True

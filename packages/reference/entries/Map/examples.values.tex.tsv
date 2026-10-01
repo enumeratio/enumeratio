@@ -2,18 +2,18 @@ id	in	out
 map-square-over-1-2-3-4	\mathrm{Map}(\mathrm{Square}, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 4, 9, 16\bigr\rbrack
 map-a-lambda-adding-1-to-each-element	\mathrm{Map}(()\mapsto\operatorname{\_}+1, \bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack2, 3, 4\bigr\rbrack
 map-add-over-two-collections-zips-them	\mathrm{Map}(\mathrm{Add}, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack10, 20, 30\bigr\rbrack)	\bigl\lbrack11, 22, 33\bigr\rbrack
-map-f-list-a-b-c-d-exponentiale	\mathrm{Map}(f, \bigl\lbrack a, b, c, d, e\bigr\rbrack)	\bigl\lbrack f(a), f(b), f(c), f(d), f(e)\bigr\rbrack
-map-f-list-list-a-b-list-c-d-exponentiale	\mathrm{Map}(f, \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d, e\bigr\rbrack\bigr\rbrack)	\bigl\lbrack f(\bigl\lbrack a, b\bigr\rbrack), f(\bigl\lbrack c, d, e\bigr\rbrack)\bigr\rbrack
 map-function-x-pow-2-x-list-1-2-3-4	\mathrm{Map}(x\mapsto x^2, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, 4, 9, 16\bigr\rbrack
-map-f-list-list-a-b-list-c-d-exponentiale-list-2		
+map-f-list-a-b-c-d-k	\mathrm{Map}(f, \bigl\lbrack a, b, c, d, k\bigr\rbrack)	\bigl\lbrack f(a), f(b), f(c), f(d), f(k)\bigr\rbrack
+map-f-list-list-a-b-list-c-d-k	\mathrm{Map}(f, \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d, k\bigr\rbrack\bigr\rbrack)	\bigl\lbrack f(\bigl\lbrack a, b\bigr\rbrack), f(\bigl\lbrack c, d, k\bigr\rbrack)\bigr\rbrack
+map-f-list-list-a-b-list-c-d-k-list-2		
 map-f-list-list-list-list-list-a	\mathrm{Map}(f, \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack a\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack)	\bigl\lbrack f(\bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack a\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack)\bigr\rbrack
 map-f-list-a-b-c	\mathrm{Map}(f, \bigl\lbrack a, b, c\bigr\rbrack)	\bigl\lbrack f(a), f(b), f(c)\bigr\rbrack
 map-f-list-list-list-list-list-a-list-2	\mathrm{Map}(f, \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack a\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack2\bigr\rbrack)	\bigl\lbrack f(\bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack a\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack, 2)\bigr\rbrack
 map-f-list-list-list-list-list-a-list-0-2		
 map-f-list-list-list-list-list-a-list-0		
 map-f-list-list-list-list-list-a-list-2-neg-3		
-map-reverse-list-list-a-b-list-c-d-list	\mathrm{Map}(\mathrm{Reverse}, \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack e, f\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack b, a\bigr\rbrack, \bigl\lbrack d, c\bigr\rbrack, \bigl\lbrack f, e\bigr\rbrack\bigr\rbrack
 map-function-1-plus-list-x-y-1-list-list-1-1	\mathrm{Map}(()\mapsto\operatorname{\_1}+\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2, 2\bigr\rbrack, \bigl\lbrack3, 3\bigr\rbrack, \bigl\lbrack4, 4\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack x+1, y+1\bigr\rbrack, \bigl\lbrack x+2, y+2\bigr\rbrack, \bigl\lbrack x+3, y+3\bigr\rbrack, \bigl\lbrack x+4, y+4\bigr\rbrack\bigr\rbrack
+map-reverse-list-list-a-b-list-c-d-list-k-f	\mathrm{Map}(\mathrm{Reverse}, \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack, \bigl\lbrack k, f\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack b, a\bigr\rbrack, \bigl\lbrack d, c\bigr\rbrack, \bigl\lbrack f, k\bigr\rbrack\bigr\rbrack
 mapping-over-an-empty-collection-returns-empty	\mathrm{Map}(\mathrm{Square}, \bigl\lbrack\bigr\rbrack)	\bigl\lbrack\bigr\rbrack
 map-sqrt-list-1-2-3-4	\mathrm{Map}(\mathrm{Sqrt}, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack1, \sqrt{2}, \sqrt{3}, 2\bigr\rbrack
 map-f-list-x-y-z	\mathrm{Map}(f, \bigl\lbrack x, y, z\bigr\rbrack)	\bigl\lbrack f(x), f(y), f(z)\bigr\rbrack

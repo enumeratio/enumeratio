@@ -26,10 +26,7 @@ n-decimalizes-a-combined-product	N(e^1e^2)	20.085536923187668
 agrees-numerically-at-a-complex-point	N(e^{1.3+0.7i}e^{-0.4+2.1i})	-2.317493000510215+0.8239378963241757i
 to-50-significant-digits-every-one-correctly	N(e^1,50)	2.7182818284590452353602874713526624977572470937000
 to-1-significant-digit	N(e^1,1)	3
-n-exponentiale-pow-8-over-5-50	N(e^{\frac{8}{5}},50)	4.9530324243951148036542863564239642564130311235566
 matrixfunction-exp-list-list-1-1-over-2-times-i	\operatorname{MatrixFunction}(\operatorname{Exp},[[1,\frac{1}{2}i\pi],[0,1]])	[[e,\frac{1}{2}ie\pi],[0,e]]
-exponentiale-pow-9-over-2-times-i-times-pi	e^{\frac{9}{2}i\pi}	i
-exptotrig-exponentiale-pow-1-over-5-times-i	\operatorname{ExpToTrig}(e^{\frac{1}{5}i\pi})	\frac{1}{4}+\frac{\sqrt{5}}{4}+\frac{\sqrt{2}}{4}i\sqrt{5-\sqrt{5}}
 functiondomain-exp-x-x	\operatorname{FunctionDomain}(e^x,x)	\operatorname{True}
 functionrange-exp-x-x-y	\operatorname{FunctionRange}(e^x,x,y)	0<y
 functionanalytic-exp-x-x	\operatorname{FunctionAnalytic}(e^x,x)	\operatorname{True}
@@ -42,6 +39,9 @@ functionsign-exp-x-x	\operatorname{FunctionSign}(e^x,x)	1
 functionsingularities-exp-x-x	\operatorname{FunctionSingularities}(e^x,x)	\operatorname{False}
 functiondiscontinuities-exp-x-x	\operatorname{FunctionDiscontinuities}(e^x,x)	\operatorname{False}
 functionconvexity-exp-x-x	\operatorname{FunctionConvexity}(e^x,x)	1
+n-exponentiale-pow-8-over-5-50	N(e^{\frac{8}{5}},50)	4.9530324243951148036542863564239642564130311235566
+exponentiale-pow-9-over-2-times-i-times-pi	e^{\frac{9}{2}i\pi}	i
+exptotrig-exponentiale-pow-1-over-5-times-i	\operatorname{ExpToTrig}(e^{\frac{1}{5}i\pi})	\frac{1}{4}+\frac{\sqrt{5}}{4}+\frac{\sqrt{2}}{4}i\sqrt{5-\sqrt{5}}
 threads-element-wise-over-a-list	e^{[0,1]}	[1,e]
 inverse-of-ln-e-ln-x-x	e^{\ln(5)}=5	\operatorname{True}
 e-a-e-b-e-a-b	e^2e^3=e^5	\operatorname{True}

@@ -68,10 +68,10 @@ the-remainder-of-quotient	Equal(Mod(Complex(7, 5), Complex(2, 1)), Subtract(Comp
 12-mod-8	Mod(12, 8)	4
 neg-3-mod-neg-2	Mod(-3, -2)	-1
 neg-27-over-10-mod-23-over-5	Mod(Rational(-27, 10), Rational(23, 5))	Rational(19, 10)
-pi-mod-exponentiale	Mod(Pi, ExponentialE)	Add(Pi, Negate(ExponentialE))
 0-mod-2	Mod(0, 2)	0
 1-mod-1	Mod(1, 1)	0
 15-mod-7	Mod(15, 7)	1
+pi-mod-exponentiale	Mod(Pi, ExponentialE)	Add(Pi, Negate(ExponentialE))
 division-by-a-0-modulus-yields-nan-rather-than	Mod(5, 0)	Indeterminate
 periodicity-with-a-zero-modulus-on-one-side	Equal(Mod(35, 13), Mod(Add(17, Multiply(3, 5)), 0))	False
 rounding-ties-to-even-means-1-and-1-both-appear	List(Mod(Complex(1, 2), 2), Mod(Complex(3, 2), 2))	List(1, -1)

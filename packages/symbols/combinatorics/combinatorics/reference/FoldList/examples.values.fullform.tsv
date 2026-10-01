@@ -22,9 +22,9 @@ foldlist-function-neg-1-plus-2-1-2-0-list-a-b-c
 foldlist-function-list-2-1-1-2-x-list-a-b-c-d		
 foldlist-length-is-one-more	Equal(Length(FoldList(Add, 0, List(1, 2, 3, 4, 5))), Add(Length(List(1, 2, 3, 4, 5)), 1))	True
 foldlist-last-is-fold	Equal(Last(FoldList(Add, 0, List(1, 2, 3))), Fold(Add, 0, List(1, 2, 3)))	True
-rest-foldlist-add-0-list-a-b-c-d-exponentiale	Rest(FoldList(Add, 0, List(a, b, c, d, ExponentialE)))	List(a, Add(a, b), Add(a, b, c), Add(a, b, c, d), Add(a, b, c, d, ExponentialE))
 foldlist-f-x-list	FoldList(f, x, List())	List(x)
 foldlist-f-x-list-a-b-c	FoldList(f, x, List(a, b, c))	List(x, f(x, a), f(f(x, a), b), f(f(f(x, a), b), c))
 foldlist-add-list-a-b-c-d	FoldList(Add, List(a, b, c, d))	List(a, Add(a, b), Add(a, b, c), Add(a, b, c, d))
 length-foldlist-f-x-range-1-10	Length(FoldList(f, x, Range(1, 10)))	11
+rest-foldlist-add-0-list-a-b-c-d-k	Rest(FoldList(Add, 0, List(a, b, c, d, k)))	List(a, Add(a, b), Add(a, b, c), Add(a, b, c, d), Add(a, b, c, d, k))
 foldlist-f-list	FoldList(f, List())	List()

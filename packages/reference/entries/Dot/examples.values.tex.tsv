@@ -3,5 +3,5 @@ dot-list-a-b-c-list-x-y-z	\mathrm{Dot}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\l
 dot-list-list-a-b-list-c-d-list-x-y	\mathrm{Dot}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack)	\bigl\lbrack ax+by, cx+dy\bigr\rbrack
 dot-list-x-y-list-list-a-b-list-c-d	\mathrm{Dot}(\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)	\bigl\lbrack ax+cy, bx+dy\bigr\rbrack
 dot-list-1-2-3-4-5-list-1-8-9-0-neg-1	\mathrm{Dot}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, \bigl\lbrack1, 8, 9, 0, -1\bigr\rbrack)	39
-dot-list-a-b-c-list-0-b-d-plus-exponentiale	\mathrm{Dot}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack0, b, d+e\bigr\rbrack)	b^2+cd+e c
 dot-list-list-2-0-0-list-0-0-35-over-2-list-0-35	\mathrm{Dot}(\bigl\lbrack\bigl\lbrack2, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, \frac{35}{2}\bigr\rbrack, \bigl\lbrack0, \frac{35}{2}, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack8, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 10\bigr\rbrack, \bigl\lbrack0, 10, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack16, 0, 0\bigr\rbrack, \bigl\lbrack0, 175, 0\bigr\rbrack, \bigl\lbrack0, 0, 175\bigr\rbrack\bigr\rbrack
+dot-list-a-b-c-list-0-b-d-plus-k	\mathrm{Dot}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack0, b, d+k\bigr\rbrack)	b^2+cd+ck

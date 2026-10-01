@@ -2,18 +2,18 @@ id	in	out
 map-square-over-1-2-3-4	\operatorname{Map}(\operatorname{Square},[1,2,3,4])	[1,4,9,16]
 map-a-lambda-adding-1-to-each-element	\operatorname{Map}(\operatorname{Function}(\_+1),[1,2,3])	[2,3,4]
 map-add-over-two-collections-zips-them	\operatorname{Map}(\operatorname{Add},[1,2,3],[10,20,30])	[11,22,33]
-map-f-list-a-b-c-d-exponentiale	\operatorname{Map}(f,[a,b,c,d,e])	[f(a),f(b),f(c),f(d),f(e)]
-map-f-list-list-a-b-list-c-d-exponentiale	\operatorname{Map}(f,[[a,b],[c,d,e]])	[f([a,b]),f([c,d,e])]
 map-function-x-pow-2-x-list-1-2-3-4	\operatorname{Map}(\operatorname{Function}(\operatorname{Block}(x^2),x),[1,2,3,4])	[1,4,9,16]
-map-f-list-list-a-b-list-c-d-exponentiale-list-2		
+map-f-list-a-b-c-d-k	\operatorname{Map}(f,[a,b,c,d,k])	[f(a),f(b),f(c),f(d),f(k)]
+map-f-list-list-a-b-list-c-d-k	\operatorname{Map}(f,[[a,b],[c,d,k]])	[f([a,b]),f([c,d,k])]
+map-f-list-list-a-b-list-c-d-k-list-2		
 map-f-list-list-list-list-list-a	\operatorname{Map}(f,[[[[[a]]]]])	[f([[[[a]]]])]
 map-f-list-a-b-c	\operatorname{Map}(f,[a,b,c])	[f(a),f(b),f(c)]
 map-f-list-list-list-list-list-a-list-2	\operatorname{Map}(f,[[[[[a]]]]],[2])	[f([[[[a]]]],2)]
 map-f-list-list-list-list-list-a-list-0-2		
 map-f-list-list-list-list-list-a-list-0		
 map-f-list-list-list-list-list-a-list-2-neg-3		
-map-reverse-list-list-a-b-list-c-d-list	\operatorname{Map}(\operatorname{Reverse},[[a,b],[c,d],[e,f]])	[[b,a],[d,c],[f,e]]
 map-function-1-plus-list-x-y-1-list-list-1-1	\operatorname{Map}(\operatorname{Function}(\operatorname{Block}(\_1+[x,y]),\_1),[[1,1],[2,2],[3,3],[4,4]])	[[x+1,y+1],[x+2,y+2],[x+3,y+3],[x+4,y+4]]
+map-reverse-list-list-a-b-list-c-d-list-k-f	\operatorname{Map}(\operatorname{Reverse},[[a,b],[c,d],[k,f]])	[[b,a],[d,c],[f,k]]
 mapping-over-an-empty-collection-returns-empty	\operatorname{Map}(\operatorname{Square},[])	[]
 map-sqrt-list-1-2-3-4	\operatorname{Map}(\operatorname{Sqrt},[1,2,3,4])	[1,\sqrt{2},\sqrt{3},2]
 map-f-list-x-y-z	\operatorname{Map}(f,[x,y,z])	[f(x),f(y),f(z)]

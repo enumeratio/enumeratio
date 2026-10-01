@@ -5,5 +5,5 @@ isnumeric-sin-sqrt-2	\operatorname{IsNumeric}(\sin(\sqrt{2}))	\operatorname{True
 isnumeric-plain-symbol	\operatorname{IsNumeric}(x)	\operatorname{False}
 isnumeric-sqrt-2	\operatorname{IsNumeric}(\sqrt{2})	\operatorname{True}
 isnumeric-expr	\operatorname{IsNumeric}(\operatorname{expr})	\operatorname{False}
-isnumeric-exponentiale	\operatorname{IsNumeric}(e)	\operatorname{True}
+isnumeric-k	\operatorname{IsNumeric}(k)	\operatorname{False}
 ismatrix-m-isnumeric		

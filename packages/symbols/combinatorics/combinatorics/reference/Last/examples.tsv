@@ -5,8 +5,8 @@ last-list-a-b-c			[Last, [List, a, b, c]]	c
 last-default-ignored-when-nonempty		test	[Last, [List, 1, 2, 3], 99]	3				
 last-of-association-is-last-value		test	[Last, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]	c				
 last-of-empty-association-falls-through		test	[Last, [Association], 99]	99				
-last-list-list-a-b-list-c-d-list-exponentiale-f			[Last, [List, [List, a, b], [List, c, d], [List, ExponentialE, f]]]	[List, ExponentialE, f]				
 last-list-x			[Last, [List], x]	x				
+last-list-list-a-b-list-c-d-list-k-f			[Last, [List, [List, a, b], [List, c, d], [List, k, f]]]	[List, k, f]				
 a-second-argument-supplies-a-default-for-an	Scope		[Last, [List], 99]	99	A second argument supplies a default for an empty collection			
 of-a-matrix-the-last-row	Scope		[Last, [List, [List, a, b], [List, c, d], [List, f, g]]]	[List, f, g]	Of a matrix, the last row			
 a-lazy-range-works-too	Scope		[Last, [Range, 5, 10]]	10	A lazy [[Range]] works too			

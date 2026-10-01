@@ -47,7 +47,6 @@ findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	"FindInstance(\n              p
 one-step-of-rsa-style-modular-exponentiation-7	powerMod(7, 13, 33)	13
 341-11-cdot-31-passes-fermat-s-test-to-base-2	powerMod(2, 340, 341)	1
 diffie-hellman-both-parties-reach-the-shared-key	powerMod(powerMod(5, 6, 23), 15, 23) == powerMod(powerMod(5, 15, 23), 6, 23)	True
-powermod-tocharactercode-rsa-in-mathematica	powerMod(ToCharacterCode("RSA in Mathematica"), exponentialE, n)	"[\n  powerMod(82, exponentialE, n),\n  powerMod(83, exponentialE, n),\n  powerMod(65, exponentialE, n),\n  powerMod(32, exponentialE, n),\n  powerMod(105, exponentialE, n),\n  powerMod(110, exponentialE, n),\n  powerMod(32, exponentialE, n),\n  powerMod(77, exponentialE, n),\n  powerMod(97, exponentialE, n),\n  powerMod(116, exponentialE, n),\n  powerMod(104, exponentialE, n),\n  powerMod(101, exponentialE, n),\n  powerMod(109, exponentialE, n),\n  powerMod(97, exponentialE, n),\n  powerMod(116, exponentialE, n),\n  powerMod(105, exponentialE, n),\n  powerMod(99, exponentialE, n),\n  powerMod(97, exponentialE, n),\n]"
 by-definition-a-b-bmod-m-computed-without-ever	powerMod(2, 10, 3) == 2 ^ 10 % 3	True
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	powerMod(7, totient(19), 19)	1
 list-powermod-7-2-5-powermod-12-2-5	[powerMod(7, 2, 5), powerMod(12, 2, 5)]	[4, 4]

@@ -68,10 +68,10 @@ the-remainder-of-quotient
 12-mod-8	mod(12, 8)		
 neg-3-mod-neg-2	mod(-3, -2)		
 neg-27-over-10-mod-23-over-5	mod((-27 // 10), (23 // 5))		
-pi-mod-exponentiale			
 0-mod-2	mod(0, 2)		
 1-mod-1	mod(1, 1)		
 15-mod-7	mod(15, 7)		
+pi-mod-exponentiale			
 division-by-a-0-modulus-yields-nan-rather-than	mod(5, 0)	DivideError: integer division error	error
 periodicity-with-a-zero-modulus-on-one-side	(mod(35, 13) == mod((17 + (3 * 5)), 0))		
 rounding-ties-to-even-means-1-and-1-both-appear	[mod(complex(1, 2), 2), mod(complex(3, 2), 2)]	MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met	error

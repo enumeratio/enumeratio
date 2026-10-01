@@ -14,9 +14,9 @@ kfreeintegers-2-first-term-is-1	KFreeIntegers(2)[1]	1
 at-lazy-family-collection-element	KSubsets(5, 2)[1]	Finset((5, [1, 2]))
 at-span-submatrix-two-levels	[[1, 2, 3], [4, 5, 6], [7, 8, 9]][Span(2, 3), Span(1, 2)]	[[4, 5], [7, 8]]
 at-integer-without-span-unaffected	[a, b, c][2]	b
-list-a-b-c-d-exponentiale-f-list-3	[a, b, c, d, exponentialE, f][3]	c
-list-a-b-c-d-exponentiale-f-list-neg-2	[a, b, c, d, exponentialE, f][-2]	exponentialE
-list-a-b-c-d-exponentiale-f-list-span-2-4	[a, b, c, d, exponentialE, f][Span(2, 4)]	[b, c, d]
+list-a-b-c-d-k-f-list-3	[a, b, c, d, k, f][3]	c
+list-a-b-c-d-k-f-list-neg-2	[a, b, c, d, k, f][-2]	k
+list-a-b-c-d-k-f-list-span-2-4	[a, b, c, d, k, f][Span(2, 4)]	[b, c, d]
 a-list-of-indices-selects-several-elements-at	[a, b, c, d][[1, 3]]	[a, c]
 a-range-also-works-as-an-index-list-extracting-a	[a, b, c, d, e][Range(2, 4)]	[b, c, d]
 index-0-is-the-collection-s-own-head-matching	[1, 2, 3][0]	List
@@ -37,18 +37,18 @@ indexes-into-a-named-integer-collection	TriangularNumbers[5]	15
 indexes-into-a-parameterized-collection	PolygonalNumbers(5)[3]	12
 first-term-of-fibonaccinumbers-is-0	FibonacciNumbers[1]	0
 at-bellnumbers-5-is-bell-4-15	BellNumbers[5]	15
-list-a-b-c-d-exponentiale-f-list-list-1-3-1-2	[a, b, c, d, exponentialE, f][[1, 3, 1, 2, -1, 6]]	[a, c, a, b, f, f]
-list-a-b-c-d-exponentiale-f-list-span-1-neg-3	[a, b, c, d, exponentialE, f][Span(1, -3)]	[a, b, c, d]
-list-a-b-c-d-exponentiale-f-g-h-i-j-k-list-span	[a, b, c, d, exponentialE, f, g, h, i, j, k][Span(3, -3, 2)]	[c, exponentialE, g, i]
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-i	[[a, b, c], [d, exponentialE, f], [g, h, i]][2, 3]	f
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-2	[[a, b, c], [d, exponentialE, f], [g, h, i]][2]	[d, exponentialE, f]
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-3	[[a, b, c], [d, exponentialE, f], [g, h, i]][[1, 3]]	[[a, b, c], [g, h, i]]
-list-list-a-b-c-list-d-exponentiale-f-list-g-h-4	[[a, b, c], [d, exponentialE, f], [g, h, i]][[1, 3], [2, 3]]	[[b, c], [h, i]]
 list-x-4-y-5-list-1-2	[(x, 4), (y, 5)][1, 2]	4
-list-a-b-c-d-exponentiale-list-3	[a, b, c, d, exponentialE][3]	c
-list-a-b-c-d-exponentiale-list-span-2-4	[a, b, c, d, exponentialE][Span(2, 4)]	[b, c, d]
+list-a-b-c-d-k-f-list-list-1-3-1-2-neg-1-6	[a, b, c, d, k, f][[1, 3, 1, 2, -1, 6]]	[a, c, a, b, f, f]
+list-a-b-c-d-k-f-list-span-1-neg-3	[a, b, c, d, k, f][Span(1, -3)]	[a, b, c, d]
+list-a-b-c-d-n-f-g-h-m-j-k-list-span-3-neg-3-2	[a, b, c, d, n, f, g, h, m, j, k][Span(3, -3, 2)]	[c, n, g, m]
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2-3	[[a, b, c], [d, m, f], [g, h, k]][2, 3]	f
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2	[[a, b, c], [d, m, f], [g, h, k]][2]	[d, m, f]
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-list	[[a, b, c], [d, m, f], [g, h, k]][[1, 3]]	[[a, b, c], [g, h, k]]
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-lis-2	[[a, b, c], [d, m, f], [g, h, k]][[1, 3], [2, 3]]	[[b, c], [h, k]]
+list-a-b-c-d-k-list-3	[a, b, c, d, k][3]	c
+list-a-b-c-d-k-list-span-2-4	[a, b, c, d, k][Span(2, 4)]	[b, c, d]
 chaining-at-reaches-into-nested-collections-like	[[1, 2], [3, 4]][2][1]	3
-list-a-b-c-d-exponentiale-list-list-4-5-1-2-3	[a, b, c, d, exponentialE][[4, 5, 1, 2, 3]]	[d, exponentialE, a, b, c]
+list-a-b-c-d-k-list-list-4-5-1-2-3	[a, b, c, d, k][[4, 5, 1, 2, 3]]	[d, k, a, b, c]
 list-a-b-c-list-0	[a, b, c][0]	List
 list-1-2-3-list-list	[1, 2, 3][[]]	[]
 an-out-of-range-index-evaluates-to-nan-rather	[1, 2, 3][10]	`NaN`

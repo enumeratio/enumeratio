@@ -7,9 +7,9 @@ exact-numeric-arguments-stay-exact	\operatorname{IntegerPart}(\pi)	3
 threads-element-wise-over-a-list	\operatorname{IntegerPart}([2.5,-2.5])	[2,-2]
 complex-numbers-real-and-imaginary-parts	\operatorname{IntegerPart}(2.5+3.7i)	2.0+3.0i
 integerpart-neg-5-over-4	\operatorname{IntegerPart}(\frac{-5}{4})	-1
-integerpart-exponentiale-plus-pi	\operatorname{IntegerPart}(e+\pi)	5
 integerpart-0	\operatorname{IntegerPart}(0)	0
 piecewiseexpand-integerpart-x-0-lt-x-lt-4	\operatorname{PiecewiseExpand}(\operatorname{IntegerPart}(x),0<x<4)	\operatorname{IntegerPart}(x)
+integerpart-exponentiale-plus-pi	\operatorname{IntegerPart}(e+\pi)	5
 x-integerpart-x-fractionalpart-x	\operatorname{IntegerPart}(\frac{-7}{2})+\operatorname{FractionalPart}(\frac{-7}{2})=\frac{-7}{2}	\operatorname{True}
 piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	\operatorname{PiecewiseExpand}(\operatorname{IntegerPart}(x^2+\sqrt{x}),0<x<2)	\operatorname{IntegerPart}(x^2+\sqrt{x})
 integerpart-1	\operatorname{IntegerPart}(1)	1

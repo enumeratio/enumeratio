@@ -7,9 +7,9 @@ exact-numeric-arguments-stay-exact	<IntegerPart>Pi</IntegerPart>	<ToExpression>3
 threads-element-wise-over-a-list	<IntegerPart><List>2.5 -2.5</List></IntegerPart>	<List>2 -2</List>
 complex-numbers-real-and-imaginary-parts	<IntegerPart><Complex>2.5 3.7</Complex></IntegerPart>	<Complex>2.0 3.0</Complex>
 integerpart-neg-5-over-4	<IntegerPart><Rational>-5 4</Rational></IntegerPart>	<ToExpression>-1</ToExpression>
-integerpart-exponentiale-plus-pi	<IntegerPart><Add>ExponentialE Pi</Add></IntegerPart>	<ToExpression>5</ToExpression>
 integerpart-0	<IntegerPart>0</IntegerPart>	<ToExpression>0</ToExpression>
 piecewiseexpand-integerpart-x-0-lt-x-lt-4	<PiecewiseExpand><IntegerPart>x</IntegerPart> <Less>0 x 4</Less></PiecewiseExpand>	<IntegerPart>x</IntegerPart>
+integerpart-exponentiale-plus-pi	<IntegerPart><Add>ExponentialE Pi</Add></IntegerPart>	<ToExpression>5</ToExpression>
 x-integerpart-x-fractionalpart-x	<Equal><Add><IntegerPart><Rational>-7 2</Rational></IntegerPart> <FractionalPart><Rational>-7 2</Rational></FractionalPart></Add> <Rational>-7 2</Rational></Equal>	<True />
 piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	<PiecewiseExpand><IntegerPart><Add><Power>x 2</Power> <Sqrt>x</Sqrt></Add></IntegerPart> <Less>0 x 2</Less></PiecewiseExpand>	<IntegerPart><Add><Power>x 2</Power> <Sqrt>x</Sqrt></Add></IntegerPart>
 integerpart-1	<IntegerPart>1</IntegerPart>	<ToExpression>1</ToExpression>

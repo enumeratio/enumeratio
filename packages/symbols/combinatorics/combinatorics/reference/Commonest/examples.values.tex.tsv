@@ -7,10 +7,10 @@ commonest-list-b-a-c-2-a-b-1-2-4
 commonest-list-b-a-c-2-a-b-1-2-upto-6		
 all-distinct-all-tie	\mathrm{Commonest}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\bigl\lbrack1, 2, 3\bigr\rbrack
 the-n-commonest-most-frequent-first	\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack, 2)	\bigl\lbrack3, 2\bigr\rbrack
-commonest-list-a-exponentiale-sin-y-exponentiale	\mathrm{Commonest}(\bigl\lbrack a, e, \sin(y), e, a, 7\bigr\rbrack)	\bigl\lbrack a, e\bigr\rbrack
 commonest-n-list-1-2-2-3-3-3-4	\mathrm{Commonest}(N(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))	\bigl\lbrack3\bigr\rbrack
 commonest-n-list-1-2-2-3-3-3-4-30	\mathrm{Commonest}(N(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack, 30))	\bigl\lbrack3\bigr\rbrack
 commonest-data		
+commonest-list-a-exponentiale-sin-y-exponentiale	\mathrm{Commonest}(\bigl\lbrack a, e, \sin(y), e, a, 7\bigr\rbrack)	\bigl\lbrack a, e\bigr\rbrack
 commonest-heights		
 with-a-unique-mode-commonest-c-mode-c-see-mode	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))	2
 without-a-tie-the-single-commonest-element-is	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))=\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)	\top

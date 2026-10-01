@@ -2,7 +2,7 @@ id	in	out
 union-list-1-2-3-list-3-4	\operatorname{Union}([1,2,3],[3,4])	\{1,2,3,4\}
 union-list-1-2-list-2-3-list-3-4	\operatorname{Union}([1,2],[2,3],[3,4])	\{1,2,3,4\}
 union-list-a-b-c-list-b-c-d	\operatorname{Union}([a,b,c],[b,c,d])	\{a,b,c,d\}
-union-list-a-b-a-c-list-d-a-exponentiale-b-list	\operatorname{Union}([a,b,a,c],[d,a,e,b],[c,a])	\{e,a,b,c,d\}
+union-list-a-b-a-c-list-d-a-k-b-list-c-a	\operatorname{Union}([a,b,a,c],[d,a,k,b],[c,a])	\{a,b,c,d,k\}
 a-single-list-is-de-duplicated	\operatorname{Union}([1,2,1,3,6,2,2])	\{1,2,3,6\}
 symbolic-elements-merged-across-three-lists	\operatorname{Union}([a,b,a,c],[d,a,f,b],[c,a])	\{a,b,c,d,f\}
 elements-can-themselves-be-lists-1-2-and-2-1	\operatorname{Union}([[1,2],[1,2,3]],[[2,1],[1,2]],[[3,2,1],[1,2,3]])	\{[1,2],[1,2,3],[2,1],[3,2,1]\}

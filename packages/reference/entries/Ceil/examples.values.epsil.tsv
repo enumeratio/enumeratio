@@ -36,8 +36,8 @@ ceil-neg-3	ceil(-3)	-3
 piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1	"PiecewiseExpand(ceil(x + 1 * 3 ^ -1 + ceil(1 - x * 2 ^ -1) ^ 3), x in\n                                                                 realNumbers && -1 < x < 1)"	ceil(x + ceil(-1 / 2 * x + 1) ^ 3 + 1 / 3)
 ceil-neg-pi	ceil(-pi)	-3
 ceil-neg-27-over-10	ceil(-27 / 10)	-2
-ceil-23-over-10-plus-neg-i-times-exponentiale	ceil(23 / 10 + -i * exponentialE)	3 - 2i
 ceil-negativeinfinity	ceil(negativeInfinity)	negativeInfinity
+ceil-23-over-10-plus-neg-i-times-exponentiale	ceil(23 / 10 + -i * exponentialE)	3 - 2i
 a-zero-divisor-inside-ceil	ceil(16 / 0)	complexInfinity
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceil(-3.7)	-3
 nan-propagates-rather-than-erroring	ceil(`NaN`)	`NaN`

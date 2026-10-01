@@ -22,9 +22,9 @@ foldlist-function-neg-1-plus-2-1-2-0-list-a-b-c
 foldlist-function-list-2-1-1-2-x-list-a-b-c-d		
 foldlist-length-is-one-more	<Equal><Length><FoldList>Add 0 <List>1 2 3 4 5</List></FoldList></Length> <Add><Length><List>1 2 3 4 5</List></Length> 1</Add></Equal>	<True />
 foldlist-last-is-fold	<Equal><Last><FoldList>Add 0 <List>1 2 3</List></FoldList></Last> <Fold>Add 0 <List>1 2 3</List></Fold></Equal>	<True />
-rest-foldlist-add-0-list-a-b-c-d-exponentiale	<Rest><FoldList>Add 0 <List>a b c d ExponentialE</List></FoldList></Rest>	<List>a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add> <Add>a b c d ExponentialE</Add></List>
 foldlist-f-x-list	<FoldList>f x <Apply>List</Apply></FoldList>	<List>x</List>
 foldlist-f-x-list-a-b-c	<FoldList>f x <List>a b c</List></FoldList>	<List>x <f>x a</f> <f><f>x a</f> b</f> <f><f><f>x a</f> b</f> c</f></List>
 foldlist-add-list-a-b-c-d	<FoldList>Add <List>a b c d</List></FoldList>	<List>a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add></List>
 length-foldlist-f-x-range-1-10	<Length><FoldList>f x <Range>1 10</Range></FoldList></Length>	<ToExpression>11</ToExpression>
+rest-foldlist-add-0-list-a-b-c-d-k	<Rest><FoldList>Add 0 <List>a b c d k</List></FoldList></Rest>	<List>a <Add>a b</Add> <Add>a b c</Add> <Add>a b c d</Add> <Add>a b c d k</Add></List>
 foldlist-f-list	<FoldList>f <Apply>List</Apply></FoldList>	<Apply>List</Apply>

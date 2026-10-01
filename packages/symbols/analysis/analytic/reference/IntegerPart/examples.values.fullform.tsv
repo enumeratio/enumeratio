@@ -7,9 +7,9 @@ exact-numeric-arguments-stay-exact	IntegerPart(Pi)	3
 threads-element-wise-over-a-list	IntegerPart(List(2.5, -2.5))	List(2, -2)
 complex-numbers-real-and-imaginary-parts	IntegerPart(Complex(2.5, 3.7))	Complex(2.0, 3.0)
 integerpart-neg-5-over-4	IntegerPart(Rational(-5, 4))	-1
-integerpart-exponentiale-plus-pi	IntegerPart(Add(ExponentialE, Pi))	5
 integerpart-0	IntegerPart(0)	0
 piecewiseexpand-integerpart-x-0-lt-x-lt-4	PiecewiseExpand(IntegerPart(x), Less(0, x, 4))	IntegerPart(x)
+integerpart-exponentiale-plus-pi	IntegerPart(Add(ExponentialE, Pi))	5
 x-integerpart-x-fractionalpart-x	Equal(Add(IntegerPart(Rational(-7, 2)), FractionalPart(Rational(-7, 2))), Rational(-7, 2))	True
 piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	PiecewiseExpand(IntegerPart(Add(Power(x, 2), Sqrt(x))), Less(0, x, 2))	IntegerPart(Add(Power(x, 2), Sqrt(x)))
 integerpart-1	IntegerPart(1)	1
