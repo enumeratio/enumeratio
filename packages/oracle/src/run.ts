@@ -2,12 +2,12 @@
 //
 // One process per batch, not one per expression: starting a Wolfram kernel or a Sage session
 // costs seconds, and there are hundreds of expressions. Batches run one at a time and each
-// item is time-capped (and memory-capped, in Wolfram and the Python family), so one runaway
+// item is time-capped (and memory-capped, in Wolfram, the Python family and Julia), so one runaway
 // example can neither take the machine down nor lose the rest of the scan. Each runner
 // returns results positionally, with a per-item error rather than a failed batch.
 //
 // Every kernel also runs under the process-group watchdog (bounded.ts), the ceiling for the
-// kernels with no per-item cap of their own (Julia, Lean).
+// kernels with no per-item cap of their own (Lean).
 
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -38,26 +38,34 @@ export type Result =
 
 // A time cap cannot stop C code (PARI) that only grows, and a thread inside the kernel cannot
 // run while that code holds the GIL. So a supervisor outside it polls the kernel's process
-// group, kills it past MAX_BYTES, and names the item it was on (the one after the last
-// printed); runIn resumes the batch after that.
+// group, kills it past a byte limit -- or, given a stall limit, once no line has come for that
+// many seconds since the first -- and names the item it was on (the one after the last
+// printed); runIn resumes the batch after that. Arguments: bytes, stall seconds (0: none),
+// then the kernel's command line.
 const SUPERVISOR = `
 import os, re, signal, subprocess, sys, threading, time
 limit = int(sys.argv[1])
-kernel = subprocess.Popen(sys.argv[2:], stdout=subprocess.PIPE, text=True, start_new_session=True)
-killed = False
+stall = int(sys.argv[2])
+kernel = subprocess.Popen(sys.argv[3:], stdout=subprocess.PIPE, text=True, start_new_session=True)
+killed = None
+progress = None
 def watch():
     global killed
     while kernel.poll() is None:
         table = subprocess.run(["ps", "-A", "-o", "pgid=,rss="], capture_output=True, text=True).stdout
         rss = sum(int(r) for g, r in (row.split() for row in table.splitlines()) if int(g) == kernel.pid)
         if rss * 1024 > limit:
-            killed = True
+            killed = "MemoryError: over %d MiB" % (limit // 2**20)
+        elif stall and progress is not None and time.time() - progress > stall:
+            killed = "TimeoutError: over %d s" % stall
+        if killed:
             os.killpg(kernel.pid, signal.SIGKILL)
             return
         time.sleep(0.1)
 threading.Thread(target=watch, daemon=True).start()
 last = 0
 for line in kernel.stdout:
+    progress = time.time()
     done = re.match(r"<<(\\d+)", line)
     if done:
         last = int(done.group(1))
@@ -65,7 +73,7 @@ for line in kernel.stdout:
     sys.stdout.flush()
 kernel.wait()
 if killed:
-    print("<<%d>>!!MemoryError: over %d MiB" % (last + 1, limit // 2**20), flush=True)
+    print("<<%d>>!!%s" % (last + 1, killed), flush=True)
 elif kernel.returncode != 0:
     # Killed from outside (macOS reclaims memory faster than the poll) or crashed.
     print("<<%d>>!!KernelDied: exit %d" % (last + 1, kernel.returncode), flush=True)
@@ -204,7 +212,7 @@ async function runPython(
   valueOf?: string,
 ): Promise<Result[]> {
   const program = pythonBatchCode(sources, preamble, evalExpr, valueOf);
-  const run = await transcript("python3", ["-c", SUPERVISOR, String(MAX_BYTES), binary, ...args, program]);
+  const run = await transcript("python3", ["-c", SUPERVISOR, String(MAX_BYTES), "0", binary, ...args, program]);
   if (!("out" in run)) return failAll(sources.length, run.reason);
   return valueOf ? collectWolfram(run.out, sources.length) : collect(run.out, sources.length);
 }
@@ -223,15 +231,24 @@ async function runJulia(
   // A JSON string is a Julia string literal once `$` stops interpolating.
   const list = sources.map((source) => JSON.stringify(source).replace(/\$/g, "\\$")).join(",\n");
   const program = `${juliaHeader(using, preamble)}
+println("<<0>>"); flush(stdout)
 for (i, src) in enumerate([${list}])
     try
         println("<<", i, ">>", show_oracle(Core.eval(Main, Meta.parse(src))))
     catch e
         println("<<", i, ">>!!", first(replace(sprint(showerror, e), '\\n' => ' '), 100))
     end
+    flush(stdout)
 end
 `;
-  const run = await withFile("batch.jl", program, (file) => transcript("julia", [...juliaFlags(project), file], {}));
+  // Julia has no per-item caps of its own, so the supervisor holds each item to its time and
+  // memory (below the watchdog's cap), naming a runaway on its own rather than losing the
+  // batch; `<<0>>` starts the clock once the packages have loaded.
+  const limit = Math.floor(memoryCapMb() * 0.9) * 2 ** 20;
+  const stall = String(2 * ITEM_SECONDS);
+  const run = await withFile("batch.jl", program, (file) =>
+    transcript("python3", ["-c", SUPERVISOR, String(limit), stall, "julia", ...juliaFlags(project), file]),
+  );
   return "out" in run ? collect(run.out, sources.length) : failAll(sources.length, run.reason);
 }
 

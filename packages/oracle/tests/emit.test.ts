@@ -114,7 +114,7 @@ test("Max/Min flatten a (possibly nested) list argument, matching Wolfram — ba
 test("Length of an atom emits 0 (matching Wolfram), not len()'s TypeError", () => {
   expect(emit(["Length", 4], "sympy")).toEqual({
     ok: true,
-    source: "(len(4) if hasattr(4, '__len__') else (len(4.args) if hasattr(4, 'args') else 0))",
+    source: "(len(4) if hasattr(4, '__len__') else (len((4).args) if hasattr(4, 'args') else 0))",
   });
 });
 
@@ -126,7 +126,7 @@ test("Length of a compound sympy expression counts its .args, not just Python's 
   expect(emit(["Length", ["Add", "a", "b", "c", "d"]], "sympy")).toEqual({
     ok: true,
     source:
-      '(len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), \'__len__\') else (len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")).args) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), \'args\') else 0))',
+      '(len((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), \'__len__\') else (len(((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d"))).args) if hasattr((Symbol("a") + Symbol("b") + Symbol("c") + Symbol("d")), \'args\') else 0))',
     freeSymbols: ["a", "b", "c", "d"],
   });
 });

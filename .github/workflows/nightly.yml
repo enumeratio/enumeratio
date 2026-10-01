@@ -56,16 +56,21 @@ jobs:
   # Slower and flakier than the PR gate's checks, so it lives here instead: advisory, never
   # required, and a failure doesn't block anything.
   component-stories:
-    name: component stories (Playwright)
+    name: component stories (Playwright) ${{ matrix.shard }}/3
     if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    # A page load per story on the dev server: one runner no longer fits them in the budget.
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm --filter @enumeratio/web exec playwright install --with-deps chromium
         continue-on-error: true
-      - run: pnpm --filter @enumeratio/web run test:stories
+      - run: pnpm --filter @enumeratio/web run test:stories --shard=${{ matrix.shard }}/3
         continue-on-error: true
 
   # The Python ecosystem: every example with an mpmath or SymPy mapping, rescanned against the committed
