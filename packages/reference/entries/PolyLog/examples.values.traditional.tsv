@@ -35,10 +35,10 @@ n-polylog-2p5-0p25	N(\operatorname{PolyLog}(2.5,0.25))	0.2621937704285516
 n-polylog-2p5-0p9	N(\operatorname{PolyLog}(2.5,0.9))	1.1390030252021563
 n-polylog-2p5-1-over-3	N(\operatorname{PolyLog}(2.5,\frac{1}{3}))	0.35583074003232074
 n-polylog-2p5-0p4-plus-0p3i	N(\operatorname{PolyLog}(2.5,0.4+0.3i))	0.4072217113246216+0.3507424837631956i
-n-polylog-neg-1-0p5	N(\operatorname{PolyLog}(-1,0.5))	2
+n-polylog-neg-1-0p5	N(\operatorname{PolyLog}(-1,0.5))	2.0
 n-polylog-neg-1-neg-0p5	N(\operatorname{PolyLog}(-1,-0.5))	-0.222222222222222222222
 n-polylog-neg-1-0p25	N(\operatorname{PolyLog}(-1,0.25))	0.444444444444444444445
-n-polylog-neg-1-0p9	N(\operatorname{PolyLog}(-1,0.9))	90
+n-polylog-neg-1-0p9	N(\operatorname{PolyLog}(-1,0.9))	90.0
 n-polylog-neg-1-1-over-3	N(\operatorname{PolyLog}(-1,\frac{1}{3}))	0.74999999999999999999925
 n-polylog-neg-1-0p4-plus-0p3i	N(\operatorname{PolyLog}(-1,0.4+0.3i))	1.9136\times10^{-16}+1.1111111111111114i
 n-polylog-2-plus-i-0p5	N(\operatorname{PolyLog}(2+i,0.5))	0.5548535453533205-0.05804956179169715i

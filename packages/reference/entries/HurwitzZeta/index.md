@@ -6,6 +6,8 @@ summary: The Hurwitz zeta function $\zeta(s, a) = \sum_{n=0}^{\infty} (n+a)^{-s}
 signatures:
   - call: HurwitzZeta(s, a)
     description: the Hurwitz zeta function $\zeta(s, a)$.
+  - call: HurwitzZeta(s, a)
+    description: the same, threaded over a list and over an interval in a.
     library: enumeratio-analytic
     type: (complex | infinity, complex | infinity, integer?) -> number
     overrides: compute-engine

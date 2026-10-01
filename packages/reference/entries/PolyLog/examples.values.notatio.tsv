@@ -35,10 +35,10 @@ n-polylog-2p5-0p25	<N><PolyLog>2.5 0.25</PolyLog></N>	<ToExpression>0.2621937704
 n-polylog-2p5-0p9	<N><PolyLog>2.5 0.9</PolyLog></N>	<ToExpression>1.1390030252021563</ToExpression>
 n-polylog-2p5-1-over-3	<N><PolyLog>2.5 <Rational>1 3</Rational></PolyLog></N>	<ToExpression>0.35583074003232074</ToExpression>
 n-polylog-2p5-0p4-plus-0p3i	<N><PolyLog>2.5 <Complex>0.4 0.3</Complex></PolyLog></N>	<Complex>0.4072217113246216 0.3507424837631956</Complex>
-n-polylog-neg-1-0p5	<N><PolyLog>-1 0.5</PolyLog></N>	<ToExpression>2</ToExpression>
+n-polylog-neg-1-0p5	<N><PolyLog>-1 0.5</PolyLog></N>	<ToExpression>2.0</ToExpression>
 n-polylog-neg-1-neg-0p5	<N><PolyLog>-1 -0.5</PolyLog></N>	<ToExpression>-0.222222222222222222222</ToExpression>
 n-polylog-neg-1-0p25	<N><PolyLog>-1 0.25</PolyLog></N>	<ToExpression>0.444444444444444444445</ToExpression>
-n-polylog-neg-1-0p9	<N><PolyLog>-1 0.9</PolyLog></N>	<ToExpression>90</ToExpression>
+n-polylog-neg-1-0p9	<N><PolyLog>-1 0.9</PolyLog></N>	<ToExpression>90.0</ToExpression>
 n-polylog-neg-1-1-over-3	<N><PolyLog>-1 <Rational>1 3</Rational></PolyLog></N>	<ToExpression>0.74999999999999999999925</ToExpression>
 n-polylog-neg-1-0p4-plus-0p3i	<N><PolyLog>-1 <Complex>0.4 0.3</Complex></PolyLog></N>	<Complex>1.9136e-16 1.1111111111111114</Complex>
 n-polylog-2-plus-i-0p5	<N><PolyLog><Complex>2 1</Complex> 0.5</PolyLog></N>	<Complex>0.5548535453533205 -0.05804956179169715</Complex>

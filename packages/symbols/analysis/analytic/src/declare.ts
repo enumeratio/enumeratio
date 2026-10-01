@@ -9,15 +9,12 @@ import {
   clausenPatch,
   dirichlet,
   lerchPhiPatch,
-  polylogPrecision,
-  hurwitzZetaForms,
   polygammaLogGamma,
   logGammaPatch,
   stieltjes,
   gammaInfinity,
   sqrtInfinity,
   ceilFloorInfinity,
-  exactRounding,
   infinityArgs,
   rangeRationalStep,
   solveIdentity,
@@ -161,8 +158,6 @@ import { declareNSum } from "./nsum.ts";
 export function declareAnalytic(ce: ComputeEngine): void {
   registerNotation(ce, ANALYTIC_NOTATION);
   applyPatch(ce, lerchPhiPatch);
-  applyPatch(ce, polylogPrecision);
-  applyPatch(ce, hurwitzZetaForms);
   applyPatch(ce, polygammaLogGamma);
 
   // Gamma(s, z₀, z₁) and GammaRegularized(s, z₀, z₁): the generalized incomplete gamma,
@@ -198,7 +193,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, gammaInfinity);
   applyPatch(ce, sqrtInfinity);
   applyPatch(ce, ceilFloorInfinity);
-  applyPatch(ce, exactRounding);
   applyPatch(ce, rangeRationalStep);
   applyPatch(ce, solveIdentity);
   applyPatch(ce, takeDropNegativeCount);

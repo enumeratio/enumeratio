@@ -30,10 +30,13 @@ export const forEach = (over: MathJSON, body: MathJSON, variable = "i"): MathJSO
 
 export const size: MathJSON = ["Count", "_raw"];
 
-/** `body` with `name` bound to `value` — a `let`, as a lambda applied to its argument. */
-export const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => [
+/** `body` with `name` bound to `value` — a `let`, as a lambda applied to its argument. A
+ *  list value needs its `type`, e.g. `"list<integer>"`: an untyped lambda applied to a list
+ *  maps over it, so `Max(cw)` would run once per element; and compiled `Max` of a
+ *  `collection`-typed parameter comes out `null`. */
+export const bind = (name: string, value: MathJSON, body: MathJSON, type?: string): MathJSON => [
   "Apply",
-  ["Function", body, name],
+  ["Function", body, type === undefined ? name : ["Typed", name, `'${type}'`]],
   value,
 ];
 

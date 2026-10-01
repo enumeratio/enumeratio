@@ -158,6 +158,7 @@ const conjugacyClassRepresentative: MathJSON = bind(
       blockStart("ends", "blk"),
     ]),
   ),
+  "list<integer>",
 );
 
 // Foata's (first) fundamental transformation: write the permutation in cycle notation with
@@ -184,7 +185,9 @@ const foataWord: MathJSON = (() => {
         positions,
         bind("blk", blockIndexAt("ends", "i"), ["If", ["Equal", offset, 0], leader, iterate(leader, offset)]),
       ),
+      "list<integer>",
     ),
+    "list<integer>",
   );
 })();
 
@@ -402,6 +405,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
       "cw",
       byIndex(size, ["List"], ["Join", "cacc", ["List", leadersUpTo(orbitLeast("i"))]], "cacc", "i"),
       blocksOf("cw", 1),
+      "list<integer>",
     ),
     summary: "The orbits, as a set partition of the positions.",
     note: "Removed once for giving every position the same label. The cause was the laziness rule in tableau.ts — folding over a list taken out of the accumulator instead of indexing a range. Written by index it is right first time.",

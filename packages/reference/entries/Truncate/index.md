@@ -6,11 +6,6 @@ summary: The integer part of x, rounding toward 0.
 signatures:
   - call: Truncate(x)
     description: the integer part of x, rounded toward 0.
-  - call: Truncate(x)
-    description: the integer part of x, rounded toward 0, exact for an exact rational.
-    library: enumeratio-analytic
-    type: (real | signed_infinity) -> integer | signed_infinity
-    overrides: compute-engine
 seeAlso:
   - Floor
   - Ceil
