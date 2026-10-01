@@ -9,7 +9,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
-import { portableTeX } from "@enumeratio/formats/tex";
+import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
 import { displayDictionary } from "@enumeratio/frontend/display";
 import { type Prerendered, prerender } from "@enumeratio/frontend/prerender";
 import { createResolver, NOTATIONS } from "@enumeratio/manifest";
@@ -52,6 +52,8 @@ export async function makeEngine(): Promise<ComputeEngine> {
     ),
   );
   const notation = combineNotation(entries);
+  // `typeset` expands them, as the page's `configureMacros` does.
+  registerTeXMacros(notation.macros);
   const ce = new ComputeEngine({
     latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, notation.latex) }),
   });

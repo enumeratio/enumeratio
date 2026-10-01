@@ -7,7 +7,7 @@
 // This module owns the whole MathLive integration (fonts, CSS) so hosts depend on
 // @enumeratio/components alone, not on mathlive.
 
-import { portableTeX } from "@enumeratio/formats/tex";
+import { portableTeX, registerTeXMacros, texMacros } from "@enumeratio/formats/tex";
 
 // The engine itself lives in the base (`@enumeratio/frontend`); re-exported here so
 // the elements' imports read as before.
@@ -37,9 +37,24 @@ export function ensureMathliveAssets(): Promise<void> {
   return assetsPromise;
 }
 
-/** Load + register MathLive's `<math-field>` editor (heavy) with fonts ready. */
-export function loadEditor(): Promise<void> {
-  return ensureMathliveAssets();
+let macrosPromise: Promise<void> = Promise.resolve();
+
+/**
+ * The packages' LaTeX macros (`combineNotation(…).macros`), for the commands their notation
+ * writes: the typesetter expands them and the editor shows them. Set before the first
+ * element typesets; a page with no engine still needs them.
+ */
+export function configureMacros(
+  macros: Readonly<Record<string, string>> | Promise<Readonly<Record<string, string>>>,
+): void {
+  macrosPromise = Promise.resolve(macros).then(registerTeXMacros);
+}
+
+/** Load + register MathLive's `<math-field>` editor (heavy) with fonts ready, and the
+ *  macros it shows. */
+export async function loadEditor(): Promise<Readonly<Record<string, string>>> {
+  await Promise.all([ensureMathliveAssets(), macrosPromise]);
+  return texMacros();
 }
 
 /**
@@ -47,7 +62,7 @@ export function loadEditor(): Promise<void> {
  * LaTeX is written for MathLive, so it goes through `portableTeX` first.
  */
 export function loadMarkup(): Promise<(latex: string) => string> {
-  markupPromise ??= Promise.all([import("katex"), import("katex/dist/katex.min.css")]).then(([m]) => {
+  markupPromise ??= Promise.all([import("katex"), import("katex/dist/katex.min.css"), macrosPromise]).then(([m]) => {
     const katex = m.default;
     return (latex: string): string =>
       katex.renderToString(portableTeX(latex), { throwOnError: false, output: "htmlAndMathml" });
