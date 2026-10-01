@@ -14,7 +14,7 @@ import {
   getFormat,
   type ImageValue,
   importFrom,
-  registerFormat,
+  registerFileFormat,
   sniffFormat,
 } from "./registry.ts";
 
@@ -24,7 +24,7 @@ const asSvg = (v: unknown): string => {
 };
 const bytes = (d: string | Uint8Array): Uint8Array => (typeof d === "string" ? Buffer.from(d, "binary") : d);
 
-registerFormat({
+registerFileFormat({
   name: "PNG",
   aliases: ["png"],
   mimeTypes: ["image/png"],

@@ -16,23 +16,26 @@
 // `import()` of a URL the build never emitted.
 import { startSessionWorker } from "../../../packages/symbols/evaluation/evaluation/src/session-worker-core.ts";
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
-import { BOXES_LATEX } from "@enumeratio/boxes/render";
+import { combineNotation, registerNotation } from "@enumeratio/boxes";
 import { displayDictionary } from "@enumeratio/frontend/display";
 import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
-import { RESIDUES_LATEX } from "@enumeratio/residues";
+import NOTATION_ENTRIES from "virtual:notation-entries";
 import { CATALOGUE } from "./worker-catalogue.ts";
 
+// Every catalogued package's notation, which its package.json names: a dictionary is fixed at
+// construction, so the notation is all in up front while the definitions stay lazy.
+const notation = combineNotation(CATALOGUE.flatMap((library) => NOTATION_ENTRIES[library.name] ?? []));
+
 // A kernel: no libraries up front, each one declared when a call first needs it. It reads a
-// cell's text, keeps each notebook's session, and writes each answer's display itself, with
-// the page's notation: a dictionary is fixed at construction, so the notation is the host's,
-// up front.
+// cell's text, keeps each notebook's session, and writes each answer's display itself.
 startSessionWorker(undefined, {
   catalogue: CATALOGUE,
-  createEngine: () =>
-    new ComputeEngine({
-      latexSyntax: new LatexSyntax({
-        dictionary: displayDictionary(LATEX_DICTIONARY, [...RESIDUES_LATEX, ...BOXES_LATEX]),
-      }),
-    }),
+  createEngine: () => {
+    const ce = new ComputeEngine({
+      latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, notation.latex) }),
+    });
+    registerNotation(ce, notation.traditional);
+    return ce;
+  },
   ...NOTEBOOK_KERNEL,
 });

@@ -15,7 +15,7 @@ import { fromAsciiMath, toAsciiMath } from "./asciimath.ts";
 import { fromMathML, type MathMLOptions, toMathML } from "./mathml.ts";
 import { parseExpression } from "./expression.ts";
 import { portableTeX } from "./tex.ts";
-import { type FormatOptions, type ImageValue, registerFormat } from "./registry.ts";
+import { type FormatOptions, type ImageValue, registerFileFormat } from "./registry.ts";
 
 const asExpr = (v: unknown): BoxedExpression => v as BoxedExpression;
 const asSvg = (v: unknown): string => {
@@ -56,7 +56,7 @@ const inputFormDecode = (d: string | Uint8Array, o?: FormatOptions): unknown => 
   return json;
 };
 
-registerFormat({
+registerFileFormat({
   name: "InputForm",
   aliases: ["inputform", "Text", "text"],
   mimeTypes: ["text/plain"],
@@ -66,7 +66,7 @@ registerFormat({
   decode: inputFormDecode,
 });
 
-registerFormat({
+registerFileFormat({
   name: "TeX",
   aliases: ["tex", "latex", "TeXForm"],
   mimeTypes: ["application/x-tex", "text/x-tex"],
@@ -78,7 +78,7 @@ registerFormat({
 });
 
 // Presentation MathML. `opts.display` / `opts.fragment` pass through on the way out.
-registerFormat({
+registerFileFormat({
   name: "MathML",
   aliases: ["mathml", "MathMLForm"],
   mimeTypes: ["application/mathml-presentation+xml", "application/mathml+xml"],
@@ -89,7 +89,7 @@ registerFormat({
 });
 
 // StandardForm's notation as one line of Unicode text, for a terminal or a title. Not read back.
-registerFormat({
+registerFileFormat({
   name: "OutputForm",
   aliases: ["outputform", "text"],
   mimeTypes: ["text/x-outputform"],
@@ -98,7 +98,7 @@ registerFormat({
   encode: (v) => toText(makeBoxes(asExpr(v).json)),
 });
 
-registerFormat({
+registerFileFormat({
   name: "AsciiMath",
   aliases: ["asciimath"],
   mimeTypes: ["text/x-asciimath"],
@@ -108,7 +108,7 @@ registerFormat({
   decode: (d, o) => fromAsciiMath(text(d), engine(o)),
 });
 
-registerFormat({
+registerFileFormat({
   name: "MathJSON",
   aliases: ["mathjson"],
   mimeTypes: [MATHJSON_MIME, "application/json"],
@@ -128,7 +128,7 @@ registerFormat({
   },
 });
 
-registerFormat({
+registerFileFormat({
   name: "WL",
   aliases: ["Wolfram", "WolframLanguage", "wolfram", "WolframFullForm"],
   mimeTypes: ["application/vnd.wolfram.wl", "text/plain"],
@@ -139,7 +139,7 @@ registerFormat({
   sniff: (d) => /^[A-Z][A-Za-z0-9]*\[[\s\S]*\]\s*$/.test(text(d).trim()),
 });
 
-registerFormat({
+registerFileFormat({
   name: "Epsil",
   aliases: ["epsil", "ep"],
   mimeTypes: ["text/x-epsil"],
@@ -149,7 +149,7 @@ registerFormat({
   decode: epsilDecode,
 });
 
-registerFormat({
+registerFileFormat({
   name: "Python",
   aliases: ["python", "numpy", "py"],
   mimeTypes: ["text/x-python"],
@@ -158,7 +158,7 @@ registerFormat({
   encode: (v) => new PythonTarget().compileToSource(asExpr(v)),
 });
 
-registerFormat({
+registerFileFormat({
   name: "GLSL",
   aliases: ["glsl"],
   mimeTypes: ["x-shader/x-fragment"],
@@ -167,7 +167,7 @@ registerFormat({
   encode: (v) => new GLSLTarget().compileToSource(asExpr(v)),
 });
 
-registerFormat({
+registerFileFormat({
   name: "WGSL",
   aliases: ["wgsl"],
   mimeTypes: ["text/wgsl"],
@@ -176,7 +176,7 @@ registerFormat({
   encode: (v) => new WGSLTarget().compileToSource(asExpr(v)),
 });
 
-registerFormat({
+registerFileFormat({
   name: "JavaScript",
   aliases: ["javascript", "js"],
   mimeTypes: ["text/javascript", "application/javascript"],
@@ -185,7 +185,7 @@ registerFormat({
   encode: (v) => compile(asExpr(v)).code,
 });
 
-registerFormat({
+registerFileFormat({
   name: "SVG",
   aliases: ["svg"],
   mimeTypes: ["image/svg+xml"],

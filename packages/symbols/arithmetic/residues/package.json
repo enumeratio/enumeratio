@@ -14,6 +14,10 @@
       "import": "./dist/index.mjs"
     },
     "./src": "./src/index.ts",
+    "./notation": {
+      "types": "./dist/notation.d.mts",
+      "import": "./dist/notation.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -23,6 +27,7 @@
     "check": "vp check"
   },
   "dependencies": {
+    "@enumeratio/boxes": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/structures": "workspace:*"
@@ -36,5 +41,8 @@
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.141.0"
+  },
+  "enumeratio": {
+    "notation": "./notation"
   }
 }

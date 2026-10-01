@@ -13,6 +13,7 @@ import {
   subscripted,
   superscript,
   underscript,
+  type PackageNotation,
 } from "@enumeratio/boxes";
 
 export const ANALYTIC_NOTATION: Notation = {
@@ -50,3 +51,6 @@ export const ANALYTIC_NOTATION: Notation = {
       : superscript(write.tight(x), overscript(write.box(n), "‾")),
   ),
 };
+
+/** This package's notation, which a host loads before it builds an engine. */
+export const notation: PackageNotation = { traditional: ANALYTIC_NOTATION };

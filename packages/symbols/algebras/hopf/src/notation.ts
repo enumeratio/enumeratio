@@ -2,7 +2,16 @@
 // ⊗), and the NSym/QSym bases indexed by composition.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { type Box, named, type Notation, type NotationRule, row, scalars, subscript } from "@enumeratio/boxes";
+import {
+  type Box,
+  named,
+  type Notation,
+  type NotationRule,
+  row,
+  scalars,
+  subscript,
+  type PackageNotation,
+} from "@enumeratio/boxes";
 
 /** A literal list of numbers, or `undefined`. */
 const numbers = (x: MathJsonExpression | undefined): number[] | undefined => {
@@ -40,3 +49,6 @@ export const HOPF_NOTATION: Notation = {
   NSymH: byComposition("H"),
   NSymR: byComposition("R"),
 };
+
+/** This package's notation, which a host loads before it builds an engine. */
+export const notation: PackageNotation = { traditional: HOPF_NOTATION };

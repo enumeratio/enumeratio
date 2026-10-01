@@ -27,7 +27,7 @@ export {
   isImageFormat,
   isImageValue,
   mimeTypeToFormatList,
-  registerFormat,
+  registerFileFormat,
   sniffFormat,
 } from "./registry.ts";
 

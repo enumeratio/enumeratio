@@ -1,3 +1,4 @@
+import { NOTATIONS } from "./generated/notations.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import type { SymbolInfo } from "./types.ts";
 
@@ -6,6 +7,10 @@ export type { DeclaredSymbol, FindStatId, Overload, SymbolAttribute, SymbolInfo 
 
 /** Every head we know, by name. */
 export { SYMBOLS };
+
+/** Each package's notation entry (`package.json`'s `enumeratio.notation`), by manifest name:
+ *  the specifier a host imports before it builds an engine. */
+export { NOTATIONS };
 
 /** The head called `name`, or undefined. */
 export const symbolInfo = (name: string): SymbolInfo | undefined =>
@@ -47,4 +52,5 @@ export {
   searchPath,
   withHeads,
 } from "./registry.ts";
+export { notationSpecifier, type PackageField } from "./package-field.ts";
 export { SYSTEM_VERSION } from "./system.ts";

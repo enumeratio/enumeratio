@@ -3,6 +3,7 @@
 // the engine it declares into, so whatever renders that engine's values finds it.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
 import { type Box, row, subscript } from "./box.ts";
 
 /** Writes a rule's arguments, as `makeBoxes` writes anything. */
@@ -61,3 +62,28 @@ export function registerNotation(owner: object, notation: Notation): void {
 
 /** The notation registered on `owner`. */
 export const notationOf = (owner: object): Notation => registered.get(owner) ?? {};
+
+/** A package's notation, as its `./notation` entry exports it (`notation`): what a host loads
+ *  for every catalogued package before it builds an engine, whose LaTeX dictionary is fixed
+ *  at construction. Light: no definitions, nothing beyond boxes and compute-engine types. */
+export interface PackageNotation {
+  /** TraditionalForm: box rules for `makeBoxes`. */
+  readonly traditional?: Notation;
+  /** StandardForm: LaTeX dictionary entries, each a parse and serialise pair. */
+  readonly latex?: readonly Partial<LatexDictionaryEntry>[];
+  /** MathLive macros for the LaTeX commands `latex` introduces, by command name. */
+  readonly macros?: Readonly<Record<string, string>>;
+}
+
+/** Several packages' notation as one, in order: later rules and macros win. */
+export function combineNotation(packages: readonly PackageNotation[]): Required<PackageNotation> {
+  const traditional: Record<string, NotationRule> = {};
+  const latex: Partial<LatexDictionaryEntry>[] = [];
+  const macros: Record<string, string> = {};
+  for (const p of packages) {
+    Object.assign(traditional, p.traditional);
+    latex.push(...(p.latex ?? []));
+    Object.assign(macros, p.macros);
+  }
+  return { traditional, latex, macros };
+}
