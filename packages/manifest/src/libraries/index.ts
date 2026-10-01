@@ -6,3 +6,12 @@ export { admitsSystem, type LibraryIndex, libraryIndexOf, type LibraryField } fr
 export { type FetchJson, fetchJson, githubHost, type JsdelivrOptions, npmHost, type PackageHost } from "./host.ts";
 export { type LockOptions, lockLibraries, type LibraryLock, specsOf } from "./lock.ts";
 export { catalog, type CatalogOptions } from "./catalog.ts";
+export {
+  type Change,
+  changesOf,
+  type IsSubtype,
+  type Level,
+  levelOf,
+  type LibrarySnapshot,
+  versionSays,
+} from "./versioning.ts";
