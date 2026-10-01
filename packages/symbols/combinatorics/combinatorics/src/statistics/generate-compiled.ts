@@ -5,9 +5,10 @@
 // merges every area's table back into one lookup for `compiledStatistic`.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { compileTyped, definitionHash } from "@enumeratio/engine/compiled";
+import { compileTyped, definitionHash, fromJs, toJs } from "@enumeratio/engine/compiled";
+import { evaluateEpsil } from "@enumeratio/structures";
 import type { Definition } from "./types.ts";
-import { signatureOf } from "./types.ts";
+import { SUBJECT, signatureOf } from "./types.ts";
 
 export interface CompiledDefinition {
   readonly signature: string;
@@ -16,16 +17,57 @@ export interface CompiledDefinition {
 }
 
 /** Every compilable definition of `definitions`, over subjects of `shape` (the carrier's bare
- *  shape, e.g. `list<integer>` — definitions the compiler can't take yet are left out). */
-export function compiledDefinitionsFor(definitions: readonly Definition[], shape: string): CompiledDefinition[] {
+ *  shape, e.g. `list<integer>`). Definitions the compiler can't take yet are left out, and so are
+ *  those whose compiled code answers differently from the interpreter on any of
+ *  `subjectsOf(carrier)`: compiled code is otherwise trusted, so a miscompile would answer
+ *  wrong silently. */
+export function compiledDefinitionsFor(
+  definitions: readonly Definition[],
+  shape: string,
+  subjectsOf: (ce: ComputeEngine, carrier: string) => readonly unknown[],
+): { compiled: CompiledDefinition[]; disagreed: string[] } {
   const ce = new ComputeEngine();
-  const out: CompiledDefinition[] = [];
+  const subjects = new Map<string, readonly unknown[]>();
+  const compiled: CompiledDefinition[] = [];
+  const disagreed: string[] = [];
   for (const definition of definitions) {
-    const compiled = compileTyped(ce, definition.expr, { _x: shape });
-    if (compiled === undefined) continue;
-    out.push({ signature: signatureOf(definition), hash: definitionHash(definition.expr), code: compiled.code });
+    const code = compileTyped(ce, definition.expr, { [SUBJECT]: shape });
+    if (code === undefined) continue;
+    if (!subjects.has(definition.on)) subjects.set(definition.on, subjectsOf(ce, definition.on));
+    if (!agrees(ce, definition, code.run, subjects.get(definition.on)!)) {
+      disagreed.push(signatureOf(definition));
+      continue;
+    }
+    compiled.push({ signature: signatureOf(definition), hash: definitionHash(definition.expr), code: code.code });
   }
-  return out.toSorted((a, b) => (a.signature < b.signature ? -1 : a.signature > b.signature ? 1 : 0));
+  return {
+    compiled: compiled.toSorted((a, b) => (a.signature < b.signature ? -1 : a.signature > b.signature ? 1 : 0)),
+    disagreed: disagreed.toSorted(),
+  };
+}
+
+/** Whether compiled code gives the interpreter's answer wherever it answers at all (where it
+ *  can't answer exactly, the interpreter does at run time anyway). */
+function agrees(
+  ce: ComputeEngine,
+  definition: Definition,
+  run: (vars: Record<string, unknown>) => unknown,
+  subjects: readonly unknown[],
+): boolean {
+  for (const subject of subjects) {
+    const value = toJs(subject);
+    if (value === undefined) continue;
+    let answer;
+    try {
+      answer = fromJs(run({ [SUBJECT]: value }));
+    } catch {
+      continue;
+    }
+    if (answer === undefined) continue;
+    const expected = evaluateEpsil(ce, definition.expr, { [SUBJECT]: subject });
+    if (JSON.stringify(answer) !== JSON.stringify(expected)) return false;
+  }
+  return true;
 }
 
 /** Renders `entries` as the `statistics.compiled.generated.js` module text. */
