@@ -399,6 +399,9 @@ importers:
       '@enumeratio/boxes':
         specifier: workspace:*
         version: link:../boxes
+      '@enumeratio/ce-patches':
+        specifier: workspace:*
+        version: link:../ce-patches
       '@enumeratio/cli':
         specifier: workspace:*
         version: link:../cli
@@ -549,6 +552,9 @@ importers:
       '@enumeratio/boxes':
         specifier: workspace:*
         version: link:../boxes
+      '@enumeratio/ce-patches':
+        specifier: workspace:*
+        version: link:../ce-patches
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../engine

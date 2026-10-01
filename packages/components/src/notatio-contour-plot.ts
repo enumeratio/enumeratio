@@ -1,19 +1,6 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-
-// Real-valued kernels for the compiled fast path -- see notatio-plot-3d.ts.
-const RUNTIME = {
-  __hz: hurwitzZetaReal,
-  __zg: zetaGeneralizedReal,
-  __lp: lerchPhiReal,
-  __pl: polyLogReal,
-} as const;
-
-import { parseExpression } from "@enumeratio/formats/expression";
-import { loadEngine } from "./mathlive.ts";
+import { plotFunctions } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import { contourSvg, debug } from "@enumeratio/frontend/core";
 
@@ -78,6 +65,8 @@ export class NotatioContourPlot extends LitElement {
     label: { type: String },
     /** A pre-sampled grid as a JSON matrix, plotted instead of `expr`. */
     data: { type: String },
+    /** Values for the expression's other free names, from a surrounding Manipulate. */
+    bindings: { attribute: false },
     _svg: { state: true },
   };
 
@@ -94,6 +83,7 @@ export class NotatioContourPlot extends LitElement {
   declare yLabel: string;
   declare label: string;
   declare data: string;
+  declare bindings: Record<string, number> | undefined;
   declare _svg: string;
 
   constructor() {
@@ -133,7 +123,8 @@ export class NotatioContourPlot extends LitElement {
       changed.has("axes") ||
       changed.has("xLabel") ||
       changed.has("yLabel") ||
-      changed.has("label")
+      changed.has("label") ||
+      changed.has("bindings")
     ) {
       void this.#recompute();
     }
@@ -181,54 +172,31 @@ export class NotatioContourPlot extends LitElement {
       return;
     }
     try {
-      const engine = await loadEngine();
-      const { json, errors } = parseExpression(raw, {
-        ce: engine,
-        parseLatex: (tex) => engine.parse(tex).json,
-      });
-      if (errors.length) {
-        log("expr is not Epsil", raw, errors);
+      const loaded = await plotFunctions(raw);
+      if (raw !== this.expr?.trim()) return;
+      const sampler = loaded.samplers[0];
+      if (!sampler) {
         this._svg = "";
         return;
       }
-      const expr = engine.box(json);
-      const vx = this.xvar || expr.unknowns[0] || "x";
-      const vy = this.yvar || expr.unknowns.find((u: string) => u !== vx) || "y";
+      const scope = loaded.scope();
+      Object.assign(scope, this.bindings);
+      const free = loaded.plot.unknowns.filter((u) => !u.startsWith("_"));
+      const vx = this.xvar || free[0] || "x";
+      const vy = this.yvar || free.find((u) => u !== vx) || "y";
       const [xlo, xhi] = this.#span(this.xrange, [-3, 3]);
       const [ylo, yhi] = this.#span(this.yrange, [-3, 3]);
       const size = Math.max(2, Math.min(120, this.n));
       const xs = Array.from({ length: size }, (_, i) => xlo + ((xhi - xlo) * i) / (size - 1));
       const ys = Array.from({ length: size }, (_, j) => ylo + ((yhi - ylo) * j) / (size - 1));
 
-      // Precompile to a native JS function -- see notatio-plot-3d.ts's rationale.
-      // Falls back to symbolic subs()+N() per sample when the compiler can't
-      // emit the expression (e.g. a special function).
-      const compileFn = (e: BoxedExpression): ((x: number, y: number) => number) | undefined => {
-        try {
-          const r = new JavaScriptTarget().compile(e) as { success?: boolean; code?: string };
-          if (!r?.success || !r.code) return undefined;
-          // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-          const g = new Function("_", `"use strict"; return (${r.code});`) as (s: Record<string, unknown>) => unknown;
-          const scope: Record<string, unknown> = { ...RUNTIME };
-          return (x, y) => {
-            scope[vx] = x;
-            scope[vy] = y;
-            const v = g(scope);
-            return typeof v === "number" ? v : Number.NaN;
-          };
-        } catch {
-          return undefined;
-        }
-      };
-      const f = compileFn(expr);
-      const grid: number[][] = f
-        ? ys.map((y) => xs.map((x) => f(x, y)))
-        : ys.map((y) =>
-            xs.map((x) => {
-              const z = expr.subs({ [vx]: engine.number(x), [vy]: engine.number(y) }).N();
-              return typeof z.re === "number" ? z.re : Number.NaN;
-            }),
-          );
+      const grid: number[][] = ys.map((y) =>
+        xs.map((x) => {
+          scope[vx] = x;
+          scope[vy] = y;
+          return sampler(scope);
+        }),
+      );
 
       this._svg = contourSvg(grid, xs, ys, view);
     } catch (error) {

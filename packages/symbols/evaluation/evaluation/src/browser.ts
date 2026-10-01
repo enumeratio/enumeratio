@@ -421,6 +421,8 @@ export interface BrowserEvaluateSessionOptions {
   readonly evaluate?: boolean;
   readonly raw?: boolean;
   readonly write?: string;
+  /** For a kernel worker: compile rather than evaluate (`./kernel.ts`'s `KernelRequest`). */
+  readonly compile?: unknown;
   /** With `session`: the kernel forgets that session. */
   readonly close?: boolean;
 }
@@ -441,6 +443,8 @@ export interface BrowserSessionEvaluateResult {
   readonly messages?: readonly unknown[];
   /** A translation's text (a request with `write`). */
   readonly written?: string;
+  /** What the kernel compiled (a request with `compile`). */
+  readonly compiled?: unknown;
   /** Where in the source a syntax error is. */
   readonly range?: unknown;
   /** Why a kernel couldn't answer (a syntax error, a failed declare); `value` is `Aborted`. */
@@ -607,6 +611,7 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
           line?: number;
           messages?: readonly unknown[];
           written?: string;
+          compiled?: unknown;
           range?: unknown;
         };
         if (m.id !== id || settled) return;
@@ -622,8 +627,8 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         cleanup();
         // A cooperative stop (m.json === "Aborted") arrives over THIS message path too --
         // the worker survived, so no reset either way.
-        const { boxes, input, line, messages, error, written, range } = m;
-        const extra = Object.entries({ boxes, input, line, messages, error, written, range }).filter(
+        const { boxes, input, line, messages, error, written, range, compiled } = m;
+        const extra = Object.entries({ boxes, input, line, messages, error, written, range, compiled }).filter(
           ([, v]) => v !== undefined,
         );
         resolve({ value: m.ok ? m.json : ABORTED, reset: false, ...Object.fromEntries(extra) });
@@ -644,8 +649,8 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
       // hanging forever against a session that never actually started.
       spawnTimer = setTimeout(notStarted, spawnTimeoutMs);
 
-      const { source, session, evaluate, raw, write, close } = callOptions;
-      currentPort.postMessage({ id, json, timeMs, source, session, evaluate, raw, write, close });
+      const { source, session, evaluate, raw, write, compile, close } = callOptions;
+      currentPort.postMessage({ id, json, timeMs, source, session, evaluate, raw, write, compile, close });
     });
   }
 

@@ -49,6 +49,7 @@ export interface EvaluateRequest {
   readonly evaluate?: boolean;
   readonly raw?: boolean;
   readonly write?: string;
+  readonly compile?: unknown;
   readonly close?: boolean;
   /** The host's `timeMs`, tried cooperatively here first — see ./cooperative-evaluate.ts.
    * A call that stops this way keeps every port's bindings, including a SharedWorker's
@@ -76,6 +77,7 @@ export interface EvaluateResponse {
   readonly line?: number;
   readonly messages?: readonly unknown[];
   readonly written?: string;
+  readonly compiled?: unknown;
   readonly range?: unknown;
 }
 
@@ -134,7 +136,7 @@ export function startSessionWorker(configure?: ConfigureFn, options?: KernelWork
       const request = event.data as EvaluateRequest;
       void (engine as Promise<ComputeEngine>).then(
         async (ce) => {
-          const { id, json, timeMs, source, session, evaluate, raw, write, close } = request;
+          const { id, json, timeMs, source, session, evaluate, raw, write, compile, close } = request;
           port.postMessage({ id, kind: "started" });
           // Bound to the session's one persistent `ce`: a `:=` here is visible to the
           // next call, on this port and (on a SharedWorker) any other tab's port too.
@@ -143,7 +145,7 @@ export function startSessionWorker(configure?: ConfigureFn, options?: KernelWork
             return;
           }
           kernel ??= createKernel(ce, catalogue, options);
-          const answer = await kernel.evaluate({ json, source, session, evaluate, raw, write, close, timeMs });
+          const answer = await kernel.evaluate({ json, source, session, evaluate, raw, write, compile, close, timeMs });
           port.postMessage({ id, kind: "result", ...answer });
         },
         (error: unknown) => {

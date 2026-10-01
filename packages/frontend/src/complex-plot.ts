@@ -1,5 +1,6 @@
 /// <reference types="@webgpu/types" />
-import { type ComplexWGSL, MAX_SLOTS, zetaWGSL } from "@enumeratio/analytic/src";
+import { zetaWGSL } from "@enumeratio/analytic/shader";
+import { type ComplexWGSL, MAX_SLOTS } from "@enumeratio/ce-patches/wgsl-complex";
 
 // WebGPU domain-coloring of a complex-valued expression: one fragment-shader
 // invocation per pixel, hue = arg, brightness = a compressed log-magnitude.

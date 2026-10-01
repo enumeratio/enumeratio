@@ -22,6 +22,17 @@ import {
 } from "@enumeratio/frontend/core";
 import { SliderPlayback } from "./sweep.ts";
 
+/** A `value` template on an element that samples its own code with wildcard values. */
+const takesBindings = (t: Template): boolean =>
+  ("attr" in t ? t.attr : t.prop) === "value" &&
+  ((
+    customElements.get(t.el.localName) as { elementProperties?: Map<PropertyKey, unknown> } | undefined
+  )?.elementProperties?.has("bindings") ??
+    false);
+
+/** How long a Manipulate waits for its templates' elements to be defined (they load on use). */
+const DEFINE_WAIT_MS = 2000;
+
 /**
  * `<Manipulate params="{a, 1, 5}">` -- a generic Wolfram-style
  * `Manipulate`: it renders a slider (or setter) per parameter and re-binds those
@@ -181,16 +192,32 @@ export class NotatioManipulate extends LitElement {
     const slot = (t: Template): string => ("attr" in t ? `@${t.attr}` : t.prop);
     const fresh = found.filter((t) => !this.#templates.some((o) => o.el === t.el && slot(o) === slot(t)));
     this.#templates = more ? [...this.#templates, ...fresh] : found;
+    // Whether an element takes bindings is its class's to say, so wait for the classes.
+    const pending = [...new Set(this.#templates.map((t) => t.el.localName))].filter(
+      (tag) => tag.includes("-") && customElements.get(tag) === undefined,
+    );
+    if (pending.length > 0) {
+      await Promise.race([
+        Promise.all(pending.map((tag) => customElements.whenDefined(tag))),
+        new Promise((resolve) => setTimeout(resolve, DEFINE_WAIT_MS)),
+      ]);
+    }
     // The libraries the templates name, before any is filled and evaluated.
     await ensureFor(engine, ["List", ...this.#templates.map((t) => t.json)]);
   }
 
   // Fill each template's `_name` wildcards with the current control values and
-  // write the re-serialized Epsil back to the attribute/property.
+  // write the re-serialized Epsil back to the attribute/property. An element that takes
+  // `bindings` (a plot sampling code its kernel compiled) keeps its `value` as written and
+  // gets the values instead, so a control move resamples rather than recompiles.
   #apply(): void {
     const engine = this.#engine;
     if (!engine) return;
-    applyTemplates(engine, this.#templates, new Map(this._controls.map((c) => [c.name, engine.number(c.value)])));
+    const bindings = Object.fromEntries(this._controls.map((c) => [`_${c.name}`, c.value]));
+    const bound = this.#templates.filter(takesBindings);
+    for (const t of bound) (t.el as { bindings?: Record<string, number> }).bindings = bindings;
+    const rest = this.#templates.filter((t) => !bound.includes(t));
+    applyTemplates(engine, rest, new Map(this._controls.map((c) => [c.name, engine.number(c.value)])));
   }
 
   /** Playback covers one step per this many milliseconds, whatever the frame rate. */

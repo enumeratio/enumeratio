@@ -1,5 +1,4 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { loadBareEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
@@ -77,7 +76,10 @@ export class NotatioInputField extends LitElement {
       return;
     }
     // Only parsed here: what evaluates the value declares what it names.
-    const engine = await loadBareEngine();
+    const [engine, { parseExpression }] = await Promise.all([
+      loadBareEngine(),
+      import("@enumeratio/formats/expression"),
+    ]);
     const { json, errors } = parseExpression(trimmed, {
       ce: engine,
       parseLatex: (tex) => engine.parse(tex).json,

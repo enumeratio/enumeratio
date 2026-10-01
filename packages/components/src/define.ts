@@ -21,8 +21,9 @@ export function defineControl(tag: string, ctor: CustomElementConstructor): void
   if (typeof document !== "undefined") void pageScope().refresh();
 }
 
-/** The selector that finds every control under an element. */
-export const controlSelector = (): string => [...CONTROL_TAGS].join(", ");
+/** The selector that finds every control under an element; one that matches nothing before
+ *  any control is defined (a page defines its elements as it uses them). */
+export const controlSelector = (): string => (CONTROL_TAGS.size > 0 ? [...CONTROL_TAGS].join(", ") : ":not(*)");
 
 /** Dispatch a change from `el`, filling the numeric shorthand from the value when it is one. */
 export function emitControl(

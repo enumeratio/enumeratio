@@ -1,15 +1,13 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { emitComplexWGSL } from "@enumeratio/analytic/src";
-import { parseExpression } from "@enumeratio/formats/expression";
+import { emitComplexWGSL } from "@enumeratio/ce-patches/wgsl-complex";
+import type { ComplexFunction } from "@enumeratio/frontend";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { loadEngine } from "./mathlive.ts";
+import { loadEngineFor } from "@enumeratio/frontend/core";
+import { bindWildcards, canonicalOf } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import {
   CANVAS_THRESHOLD,
-  type ComplexFunction,
   type ComplexSurface,
-  complexFunction,
   complexGrid,
   complexSurfaceOf,
   complexSurfaceScene,
@@ -23,12 +21,23 @@ import {
   type SurfacePaint,
   type SurfaceScene,
   surfaceSceneSvg,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 
 const W = 360;
 const H = 260;
 
 const log = debug("complex-plot-3d");
+
+/** The slow path: substitute and `N()` per sample, on the page's engine, for a head the
+ *  evaluator lacks. */
+async function engineFunction(json: unknown, variable: string): Promise<ComplexFunction> {
+  const engine = await loadEngineFor(json);
+  const expr = engine.box(json as never);
+  return ([re, im]) => {
+    const w = expr.subs({ [variable]: engine.number(engine.complex(re, im)) }).N();
+    return [typeof w.re === "number" ? w.re : Number.NaN, typeof w.im === "number" ? w.im : 0];
+  };
+}
 
 /**
  * `<ComplexPlot3D value="1/(z^2 + 1)">` -- Wolfram's `ComplexPlot3D`: |f(z)|
@@ -56,6 +65,8 @@ export class NotatioComplexPlot3D extends LitElement {
   static properties = {
     /** The complex-valued expression to draw, in Epsil. */
     value: { type: String },
+    /** Values for the wildcards in `value`, set by a surrounding Manipulate. */
+    bindings: { attribute: false },
     /** The complex variable; defaults to `z`. */
     var: { type: String },
     /** The rectangle to sample, as `re0,re1,im0,im1`. */
@@ -83,6 +94,7 @@ export class NotatioComplexPlot3D extends LitElement {
   };
 
   declare value: string;
+  declare bindings: Record<string, number> | undefined;
   declare var: string;
   declare domain: string;
   declare samples: number;
@@ -135,6 +147,7 @@ export class NotatioComplexPlot3D extends LitElement {
   protected override willUpdate(changed: PropertyValues): void {
     if (
       changed.has("value") ||
+      changed.has("bindings") ||
       changed.has("var") ||
       changed.has("domain") ||
       changed.has("samples") ||
@@ -162,18 +175,8 @@ export class NotatioComplexPlot3D extends LitElement {
       return;
     }
     try {
-      const engine = await loadEngine();
-      const { json, errors } = parseExpression(raw, {
-        ce: engine,
-        parseLatex: (tex) => engine.parse(tex).json,
-      });
-      if (errors.length) {
-        log("value is not Epsil", raw, errors);
-        this._status = `Could not parse: ${raw}`;
-        this._svg = "";
-        return;
-      }
-      const expr = engine.box(json);
+      const json = bindWildcards(await canonicalOf(raw), this.bindings);
+      if (raw !== this.value?.trim()) return;
       const variable = this.var || "z";
       const domain = parseComplexDomain(this.domain);
       const maxHeight = Number(this.maxHeight);
@@ -183,7 +186,7 @@ export class NotatioComplexPlot3D extends LitElement {
       let surface: ComplexSurface | undefined;
       if (this.gpu !== "false") {
         try {
-          const emitted = emitComplexWGSL(expr.json as never, variable);
+          const emitted = emitComplexWGSL(json as never, variable);
           if (emitted) {
             const { xs, ys } = complexGrid({ domain, samples: Number(this.gpu) || this.samples });
             const values = await evalComplexGridGPU(emitted, variable, xs, ys);
@@ -195,7 +198,8 @@ export class NotatioComplexPlot3D extends LitElement {
       }
       this.#usedGpu = surface !== undefined;
       if (!surface) {
-        const f = complexFunction(expr.json, variable) ?? this.#engineFunction(expr, variable);
+        const { complexFunction } = await import("@enumeratio/frontend");
+        const f = complexFunction(json, variable) ?? (await engineFunction(json, variable));
         surface = sampleComplexSurface(f, { domain, samples: Number(this.samples), maxHeight });
       }
       this.#surface = surface;
@@ -208,15 +212,6 @@ export class NotatioComplexPlot3D extends LitElement {
       this._status = `Could not evaluate: ${raw}`;
       this._svg = "";
     }
-  }
-
-  /** The slow path: substitute and `N()` per sample, for a head the evaluator lacks. */
-  #engineFunction(expr: BoxedExpression, variable: string): ComplexFunction {
-    const engine = expr.engine;
-    return ([re, im]) => {
-      const w = expr.subs({ [variable]: engine.number(engine.complex(re, im)) }).N();
-      return [typeof w.re === "number" ? w.re : Number.NaN, typeof w.im === "number" ? w.im : 0];
-    };
   }
 
   #draw(): void {

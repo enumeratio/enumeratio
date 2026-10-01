@@ -1,43 +1,25 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
-import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
-
-// Real-valued kernels for the compiled fast path: compute-engine's `compile`
-// handler for these heads emits `_.__hz(…)` / `_.__zg(…)`, resolved on the scope.
-const RUNTIME = {
-  __hz: hurwitzZetaReal,
-  __zg: zetaGeneralizedReal,
-  __lp: lerchPhiReal,
-  __pl: polyLogReal,
-} as const;
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { controlsTemplate } from "./manipulate-ui.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
-import { loadEngine } from "./mathlive.ts";
+import { compilePlotText, plotFunctions } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import {
   clamp,
   type Control,
   debug,
-  evalGridGPU,
   type Loop,
   Orbit,
   ORBIT_HINT,
   parseControls,
   type Surface3dOptions,
   surfacesSvg,
-  toWgslFn,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
+import { evalGridGPU } from "@enumeratio/frontend/core";
 import { SliderPlayback } from "./sweep.ts";
 
 const log = debug("plot3d");
-
-const LIST_HEADS = new Set(["List", "Set", "Tuple", "Sequence"]);
-const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
-  (e as unknown as { ops?: readonly BoxedExpression[] }).ops;
 
 /**
  * `<Plot3D value="Sin(x) * Cos(y)" x-domain="-3,3" y-domain="-3,3">` --
@@ -91,6 +73,8 @@ export class NotatioPlot3D extends LitElement {
     gpu: { type: String },
     /** Manipulate-style controls, e.g. `{k, 1, 4}`, filling the `_k` wildcards in `value`. */
     params: { type: String },
+    /** Values for the wildcards in `value`, set by a surrounding Manipulate. */
+    bindings: { attribute: false },
     /** What a playing slider does at the ends: `cycle` (default), `reflect` or `none`. */
     loop: { type: String, reflect: true },
     _svg: { state: true },
@@ -116,6 +100,7 @@ export class NotatioPlot3D extends LitElement {
   declare spin: string;
   declare gpu: string;
   declare params: string;
+  declare bindings: Record<string, number> | undefined;
   declare loop: Loop | "";
   declare _svg: string;
   declare _controls: Control[];
@@ -213,7 +198,8 @@ export class NotatioPlot3D extends LitElement {
       changed.has("xScale") ||
       changed.has("yScale") ||
       changed.has("zScale") ||
-      changed.has("params")
+      changed.has("params") ||
+      changed.has("bindings")
     ) {
       if (changed.has("params")) this._controls = parseControls(this.params);
       void this.#recompute();
@@ -244,79 +230,52 @@ export class NotatioPlot3D extends LitElement {
       return;
     }
     try {
-      const engine = await loadEngine();
-      const { json, errors } = parseExpression(raw, {
-        ce: engine,
-        parseLatex: (tex) => engine.parse(tex).json,
-      });
-      if (errors.length) {
-        log("value is not Epsil", raw, errors);
-        this._svg = "";
-        return;
-      }
-      const parsed = engine.box(json);
-      // Bind Manipulate parameters first (control `k` fills the wildcard `_k`);
-      // the surface variables are the two free symbols that remain.
-      const paramSubs = Object.fromEntries(this._controls.map((c) => [`_${c.name}`, engine.number(c.value)]));
-      const expr = this._controls.length > 0 ? parsed.subs(paramSubs) : parsed;
       // A list of expressions overlays several surfaces on a shared scale.
-      const items = (LIST_HEADS.has(expr.operator) && opsOf(expr)) || [expr];
-      const vx = this.xvar || expr.unknowns[0] || "x";
-      const vy = this.yvar || expr.unknowns.find((u: string) => u !== vx) || "y";
+      const loaded = await plotFunctions(raw, { each: true });
+      const { plot, samplers } = loaded;
+      if (raw !== this.value?.trim()) return;
+      // Manipulate parameters (control `k` fills the wildcard `_k`) are set on the scope;
+      // the surface variables are the two free symbols that remain.
+      const scope = loaded.scope();
+      for (const c of this._controls) scope[`_${c.name}`] = c.value;
+      Object.assign(scope, this.bindings);
+      const free = plot.unknowns.filter((u) => !u.startsWith("_"));
+      const vx = this.xvar || free[0] || "x";
+      const vy = this.yvar || free.find((u) => u !== vx) || "y";
       const [xlo, xhi] = this.#span(this.xDomain, [-3, 3]);
       const [ylo, yhi] = this.#span(this.yDomain, [-3, 3]);
       const size = Math.max(2, Math.min(60, this.n));
       const xs = Array.from({ length: size }, (_, i) => xlo + ((xhi - xlo) * i) / (size - 1));
       const ys = Array.from({ length: size }, (_, j) => ylo + ((yhi - ylo) * j) / (size - 1));
-      // Precompile the surface to a native JS function and sample that -- orders of
-      // magnitude faster than a subs()+N() per grid point, which keeps Manipulate
-      // sliders smooth. Falls back to symbolic eval for expressions compute-engine's
-      // compiler can't emit (e.g. special functions like HurwitzZeta).
-      const compileFn = (e: BoxedExpression): ((x: number, y: number) => number) | undefined => {
-        try {
-          const r = new JavaScriptTarget().compile(e) as { success?: boolean; code?: string };
-          if (!r?.success || !r.code) return undefined;
-          // `code` is an expression over a scope object `_` (e.g. `Math.sin(_.x)`).
-          // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-          const g = new Function("_", `"use strict"; return (${r.code});`) as (s: Record<string, unknown>) => unknown;
-          const scope: Record<string, unknown> = { ...RUNTIME };
-          return (x, y) => {
+      // Each surface is code the kernel compiled, sampled per grid point: orders of
+      // magnitude faster than a subs()+N() each, which keeps Manipulate sliders smooth.
+      const sampleGrid = (k: number): number[][] =>
+        ys.map((y) =>
+          xs.map((x) => {
             scope[vx] = x;
             scope[vy] = y;
-            const v = g(scope);
-            return typeof v === "number" ? v : Number.NaN;
-          };
-        } catch {
-          return undefined;
-        }
-      };
-      const sampleGrid = (e: BoxedExpression): number[][] => {
-        const f = compileFn(e);
-        if (f) return ys.map((y) => xs.map((x) => f(x, y)));
-        return ys.map((y) =>
-          xs.map((x) => {
-            const z = e.subs({ [vx]: engine.number(x), [vy]: engine.number(y) }).N();
-            return typeof z.re === "number" ? z.re : Number.NaN;
+            return samplers[k]!(scope);
           }),
         );
-      };
       // Opt-in GPU path: compile every surface to WGSL and evaluate the grid on the
-      // GPU in parallel. Only taken when `gpu` is set, WebGPU is available, and every
-      // surface compiled — otherwise the CPU sampler above runs. `gpu` accepts an
-      // optional grid override (`gpu="120"`) since the GPU handles far denser grids.
+      // GPU in parallel. Only taken when `gpu` is set, WebGPU is available and every
+      // surface compiled -- otherwise the CPU sampler above runs. WGSL has no scope, so the
+      // wildcards' values are compiled in. `gpu` accepts an optional grid override
+      // (`gpu="120"`) since the GPU handles far denser grids.
       const wantGpu = this.gpu !== "false" && this.gpu !== undefined && this.gpu !== "";
       let grids: number[][][] | undefined;
       if (wantGpu) {
         const gsize = Math.max(2, Math.min(400, Number(this.gpu) || size));
         const gxs = Array.from({ length: gsize }, (_, i) => xlo + ((xhi - xlo) * i) / (gsize - 1));
         const gys = Array.from({ length: gsize }, (_, j) => ylo + ((yhi - ylo) * j) / (gsize - 1));
+        const bindings: Record<string, number> = {};
+        for (const u of plot.unknowns) if (u.startsWith("_") && typeof scope[u] === "number") bindings[u] = scope[u];
+        const wgsl = await compilePlotText(raw, { target: "wgsl", vars: [vx, vy], each: true, bindings });
+        if (raw !== this.value?.trim()) return;
         const results = await Promise.all(
-          items.map((e) => {
-            const fn = toWgslFn(e, vx, vy);
-            return fn ? evalGridGPU(fn, gxs, gys) : Promise.resolve(undefined);
-          }),
+          wgsl.items.map((item) => (item.code ? evalGridGPU(item.code, gxs, gys) : Promise.resolve(undefined))),
         );
-        if (results.every((g): g is number[][] => g !== undefined)) {
+        if (results.length > 0 && results.every((g): g is number[][] => g !== undefined)) {
           grids = results;
           this.#xs = gxs;
           this.#ys = gys;
@@ -324,7 +283,7 @@ export class NotatioPlot3D extends LitElement {
       }
       this.#usedGpu = grids !== undefined;
       if (!grids) {
-        grids = items.map(sampleGrid);
+        grids = plot.items.map((_, k) => sampleGrid(k));
         this.#xs = xs;
         this.#ys = ys;
       }
