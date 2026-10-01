@@ -134,19 +134,155 @@ const distinctMembers = (n: MathJSON): MathJSON =>
     "j",
   );
 
-/** The subsets of 1..n, ordered by their membership mask: element i is in the rank-th subset iff
- *  bit i − 1 of the rank is set. */
-export function subsets(shape: Shape): EpsilFamily {
+// ─── Subsets, lex within a size and graded by size ───────────────────────────────────────────
+// A subset is a set, so its order is by size, then lex on its ascending members (Wolfram's
+// `Subsets` order). The bitmask order is `BinaryWords(n)` through `Finset(word)`.
+
+/** The k-subset of 1..N with lex rank R, ascending: member j is the smallest value above member
+ *  j − 1 whose subsets (C(N − v, K − j) of them, choosing the rest above v) hold the rank left.
+ *  The fold's state is the rank left, then the members so far. */
+const lexKSubset = (N: MathJSON, K: MathJSON, R: MathJSON, tag: string): MathJSON => {
+  const [state, slot, pick, v] = [`ls_${tag}`, `lj_${tag}`, `lp_${tag}`, `lv_${tag}`];
+  const previous = ["If", equal(slot, 1), 0, at(state, slot)];
+  const choose = fold(
+    [
+      "If",
+      ["Or", ["NotEqual", at(pick, 2), 0], ["LessEqual", v, previous]],
+      pick,
+      [
+        "If",
+        ["Less", at(pick, 1), binomial(sub(N, v), sub(K, slot))],
+        ["List", at(pick, 1), v],
+        ["List", sub(at(pick, 1), binomial(sub(N, v), sub(K, slot))), 0],
+      ],
+    ],
+    pick,
+    v,
+    ["List", at(state, 1), 0],
+    upTo(1, N),
+  );
+  return [
+    "Rest",
+    fold(
+      [
+        "Apply",
+        [
+          "Function",
+          ["Join", ["List", at("lc", 1)], ["Rest", state], ["List", at("lc", 2)]],
+          ["Typed", "lc", "'list<integer>'"],
+        ],
+        choose,
+      ],
+      state,
+      slot,
+      ["List", R],
+      upTo(1, K),
+    ),
+  ];
+};
+
+/** The lex rank of the K-subset `y` (ascending) of 1..N: before each member, the subsets that
+ *  have a smaller value there. */
+const lexKSubsetRank = (N: MathJSON, K: MathJSON, y: string): MathJSON =>
+  fold(
+    add(
+      "kr",
+      fold(
+        add("kq", binomial(sub(N, "kv"), sub(K, "kj"))),
+        "kq",
+        "kv",
+        0,
+        upTo(add(["If", equal("kj", 1), 0, at(y, sub("kj", 1))], 1), sub(at(y, "kj"), 1)),
+      ),
+    ),
+    "kr",
+    "kj",
+    0,
+    upTo(1, K),
+  );
+
+interface Graded extends Shape {
+  /** Whether subsets of this size belong. */
+  readonly size?: (k: MathJSON) => MathJSON;
+  /** No two members consecutive: a k-subset is a k-subset of 1..n − k + 1 with member i raised
+   *  by i − 1, which keeps lex order. */
+  readonly spread?: boolean;
+}
+
+/** Subsets of 1..n graded by size (the sizes `size` allows), lex within a size. */
+function gradedSubsets(shape: Graded): EpsilFamily {
+  const { size = () => "True", spread = false } = shape;
+  const universe = (k: MathJSON): MathJSON => (spread ? add(sub("_n", k), 1) : "_n");
+  const block = (k: MathJSON): MathJSON => ["If", size(k), binomial(universe(k), k), 0];
+  const blocksBelow = (k: MathJSON): MathJSON => fold(add("gb", block("gt")), "gb", "gt", 0, upTo(0, sub(k, 1)));
+  // Unrank: the size first (the first block holding the rank), then the lex member list.
+  const sizeAndLeft = fold(
+    [
+      "If",
+      ["GreaterEqual", at("gs", 2), 0],
+      "gs",
+      [
+        "If",
+        ["Less", at("gs", 1), block("gk")],
+        ["List", at("gs", 1), "gk"],
+        ["List", sub(at("gs", 1), block("gk")), -1],
+      ],
+    ],
+    "gs",
+    "gk",
+    ["List", "_r", -1],
+    upTo(0, "_n"),
+  );
+  const members = lexKSubset(universe(at("gp", 2)), at("gp", 2), at("gp", 1), "g");
+  const unrank = [
+    "Apply",
+    [
+      "Function",
+      spread ? map(add(at("gm", "gi"), sub("gi", 1)), "gi", upTo(1, ["Length", "gm"])) : "gm",
+      ["Typed", "gm", "'list<integer>'"],
+    ],
+    members,
+  ];
+  // Rank: the blocks of smaller sizes, then the lex rank among subsets of its own size.
+  const lowered = spread ? map(sub(at("gx", "gi"), sub("gi", 1)), "gi", upTo(1, len)) : "gx";
+  const rank = [
+    "Apply",
+    ["Function", add(blocksBelow(len), lexKSubsetRank(universe(len), len, "gy")), ["Typed", "gy", "'list<integer>'"]],
+    ["Apply", ["Function", lowered, ["Typed", "gx", "'list<integer>'"]], ["Sort", "_x"]],
+  ];
+  const noneAdjacent = all((j) => ["Greater", sub(at("gz", j), at("gz", sub(j, 1))), 1], upTo(2, len), "ga");
   return {
     ...shapeOf(shape),
     epsil: {
-      count: pow(2, "_n"),
-      unrank: membersWhere("_n", (i) => equal(digitOf("_r", 2, sub(i, 1)), 1)),
-      rank: fold(add("acc", pow(2, sub(element("j"), 1))), "acc", "j", 0, upTo(1, len)),
-      valid: distinctMembers("_n"),
+      count: fold(add("gc", block("gn")), "gc", "gn", 0, upTo(0, "_n")),
+      unrank: ["Apply", ["Function", unrank, ["Typed", "gp", "'list<integer>'"]], sizeAndLeft],
+      rank,
+      valid: [
+        "And",
+        distinctMembers("_n"),
+        size(len),
+        ...(spread ? [["Apply", ["Function", noneAdjacent, ["Typed", "gz", "'list<integer>'"]], ["Sort", "_x"]]] : []),
+      ],
     },
   };
 }
+
+/** The subsets of 1..n, 2^n of them, graded by size and lex within a size. */
+export const subsets = (shape: Shape): EpsilFamily => gradedSubsets(shape);
+
+/** The k-subsets of 1..n in lex order, C(n, k) of them. */
+export const kSubsets = (shape: Shape): EpsilFamily => gradedSubsets({ ...shape, size: (k) => equal(k, "_k") });
+
+/** The subsets of 1..n with at most k members, graded by size. */
+export const subsetsOfSizeAtMost = (shape: Shape): EpsilFamily =>
+  gradedSubsets({ ...shape, size: (k) => ["LessEqual", k, "_k"] });
+
+/** The subsets of 1..n of even (or odd) size, graded by size. */
+export const subsetsOfParity = (shape: Shape, odd: boolean): EpsilFamily =>
+  gradedSubsets({ ...shape, size: (k) => equal(["Mod", k, 2], odd ? 1 : 0) });
+
+/** The subsets of 1..n with no two consecutive members, graded by size. */
+export const subsetsWithoutConsecutive = (shape: Shape): EpsilFamily => gradedSubsets({ ...shape, spread: true });
 
 /** The subsets of 1..n in binary-reflected Gray-code order: the mask is g = r xor (r >> 1), so
  *  bit i of g is bit i of r differing from bit i + 1; the rank is g's inverse, bit i of r being the
@@ -277,23 +413,6 @@ const leftover = (i: MathJSON, size: MathJSON, universe: MathJSON, tag: string):
 /** The m-th smallest member, 0-based, of the `size`-subset of 0..universe − 1 with rank `_r`. */
 const colexMember = (m: MathJSON, size: MathJSON, universe: MathJSON): MathJSON =>
   digitAt(m, leftover(m, size, universe, "r"), universe, "d");
-
-/** The k-subsets of 1..n in colex order, as ascending lists; C(n, k) of them. */
-export function kSubsets(shape: Shape): EpsilFamily {
-  // `_x` may list a subset's members in any order, so a member's place in the subset is how many
-  // entries are below it, plus one.
-  const place = (j: MathJSON): MathJSON =>
-    add(1, fold(add("c", ["If", ["Less", element("t"), element(j)], 1, 0]), "c", "t", 0, upTo(1, len)));
-  return {
-    ...shapeOf(shape),
-    epsil: {
-      count: binomial("_n", "_k"),
-      unrank: map(add(colexMember("m", "_k", "_n"), 1), "m", upTo(1, "_k")),
-      rank: fold(add("acc", binomial(sub(element("j"), 1), place("j"))), "acc", "j", 0, upTo(1, len)),
-      valid: ["And", equal(len, "_k"), distinctMembers("_n")],
-    },
-  };
-}
 
 /** The k-multisets of 1..n as non-decreasing lists: the k-subset of 1..n + k − 1 with its i-th
  *  member lowered by i − 1. */

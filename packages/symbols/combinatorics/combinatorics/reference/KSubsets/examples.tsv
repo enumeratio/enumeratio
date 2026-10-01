@@ -1,4 +1,4 @@
 id	section	role	expr	expected	caption
 binom-5-2			[Count, [KSubsets, 5, 2]]	10	$\binom{5}{2}$
 ksubsets-5-2-list-1			[At, [KSubsets, 5, 2], 1]	[Finset, [Tuple, 5, [List, 1, 2]]]	
-colex-not-lex-lexicographic-order-would-give-1-4	Properties		[At, [KSubsets, 5, 2], 3]	[Finset, [Tuple, 5, [List, 2, 3]]]	colex, not lex — lexicographic order would give $\{1,4\}$
+lex-order-the-third-2-subset-of-5-is-1-4	Properties		[At, [KSubsets, 5, 2], 3]	[Finset, [Tuple, 5, [List, 1, 4]]]	lex order: after $\{1,2\}$ and $\{1,3\}$ comes $\{1,4\}$

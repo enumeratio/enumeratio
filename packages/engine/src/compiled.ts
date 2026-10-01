@@ -15,10 +15,11 @@ export type CompiledRun = (vars: Record<string, unknown>) => unknown;
 /** Generated code's shape: compute-engine's runtime helpers and the free variables. */
 export type GeneratedRun = (sys: unknown, vars: Record<string, unknown>) => unknown;
 
-/** MathJSON integers and lists of them as plain JS, or undefined for anything else. */
+/** MathJSON integers, and lists and tuples of them, as plain JS (a tuple as an array: compiled
+ *  code reads both by position); undefined for anything else. */
 export function toJs(json: unknown): Js | undefined {
   if (typeof json === "number") return Number.isInteger(json) ? json : undefined;
-  if (!Array.isArray(json) || json[0] !== "List") return undefined;
+  if (!Array.isArray(json) || (json[0] !== "List" && json[0] !== "Tuple")) return undefined;
   const out: Js[] = [];
   for (const item of json.slice(1)) {
     const value = toJs(item);

@@ -2,7 +2,7 @@
 name: SubsetsOfSizeAtMost
 domain: Collections
 signature: SubsetsOfSizeAtMost(n, k)
-summary: The subsets of $\{1, \dots, n\}$ of size at most $k$, ordered by size then colexicographically within each size — a size-bounded slice of [[Subsets]].
+summary: The subsets of $\{1, \dots, n\}$ of size at most $k$, ordered by size then lexicographically within each size — a size-bounded slice of [[Subsets]].
 signatures:
   - call: SubsetsOfSizeAtMost(n, k)
     description: the $\sum_{i=0}^{k} \binom{n}{i}$ subsets of $\{1, \dots, n\}$ of size $\le k$

@@ -25,11 +25,7 @@ import {
 import { allFamilies, type EpsilFamily, isEpsilFamily, kernelOn } from "../src/families/index.ts";
 import {
   BinaryStringCount,
-  IsKSubsetOf,
   IsMultisetOf,
-  KSubsetCount,
-  KSubsetRank,
-  KSubsetUnrank,
   MultisetCount,
   MultisetRank,
   MultisetUnrank,
@@ -41,8 +37,6 @@ import {
   IsSubsetOf,
   IsTupleOf,
   SubsetCount,
-  SubsetRank,
-  SubsetUnrank,
   TupleCount,
   TupleRank,
   TupleUnrank,
@@ -84,36 +78,12 @@ function mutations(member: number[], letters: number[]): number[][] {
 }
 
 const READINGS: Record<string, Reading> = {
-  Subsets: {
-    params: [[0], [1], [2], [3], [4]],
-    count: ([n]) => SubsetCount(n),
-    unrank: ([n], r) => SubsetUnrank(n, r),
-    rank: (x) => SubsetRank(x),
-    valid: (x, [n]) => IsSubsetOf(x, n),
-    letters: ([n]) => span(0, n + 1),
-  },
   GrayCodeSubsets: {
     params: [[0], [1], [2], [3], [4]],
     count: ([n]) => SubsetCount(n),
     unrank: ([n], r) => GrayCodeSubsetUnrank(n, r),
     rank: (x) => GrayCodeSubsetRank(x),
     valid: (x, [n]) => IsSubsetOf(x, n),
-    letters: ([n]) => span(0, n + 1),
-  },
-  KSubsets: {
-    params: [
-      [0, 0],
-      [3, 0],
-      [3, 1],
-      [4, 2],
-      [5, 3],
-      [2, 3],
-      [4, 4],
-    ],
-    count: ([n, k]) => KSubsetCount(n, k),
-    unrank: ([n, k], r) => KSubsetUnrank(n, k, r),
-    rank: (x) => KSubsetRank(x),
-    valid: (x, [n, k]) => IsKSubsetOf(x, n, k),
     letters: ([n]) => span(0, n + 1),
   },
   Multisets: {
