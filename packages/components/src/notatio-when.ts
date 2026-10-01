@@ -1,6 +1,6 @@
 import { parseExpression } from "@enumeratio/formats/expression";
 import { LitElement, nothing, type PropertyValues } from "lit";
-import { loadEngine } from "./mathlive.ts";
+import { parseFor } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 
 /**
@@ -52,10 +52,10 @@ export class NotatioWhen extends LitElement {
   async #holds(): Promise<boolean> {
     const source = this.test.trim();
     if (!source) return !this.invert;
-    const engine = await loadEngine();
-    const { json, errors } = parseExpression(source, {
-      parseLatex: (tex: string) => engine.parse(tex).json,
-    });
+    const { engine, parsed } = await parseFor((ce) =>
+      parseExpression(source, { parseLatex: (tex: string) => ce.parse(tex).json }),
+    );
+    const { json, errors } = parsed;
     // An unfilled wildcard (`_n`, before the dynamic module has substituted) is not false, it is
     // unknown — keep the previous state rather than flickering the prose out and back.
     if (errors.length) return !this.hasAttribute("hidden");

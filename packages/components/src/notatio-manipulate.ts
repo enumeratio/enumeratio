@@ -4,7 +4,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
 import { controlsTemplate } from "./manipulate-ui.ts";
-import { loadEngine, loadMarkup } from "./mathlive.ts";
+import { ensureFor, loadBareEngine, loadMarkup } from "./mathlive.ts";
 import "./notatio-dynamic.ts";
 import "./notatio-knob.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
@@ -174,13 +174,15 @@ export class NotatioManipulate extends LitElement {
   // prose, whose readouts are templates like any other.
   async #capture(more = false): Promise<void> {
     this.#captured = true;
-    const engine = (this.#engine ??= await loadEngine());
+    const engine = (this.#engine ??= await loadBareEngine());
     const names = new Set(this._controls.map((c) => c.name));
     const found = captureTemplates(this, names, engine, this.prose ? undefined : this.#host);
     // A template already applied no longer reads as one; keep it rather than lose it.
     const slot = (t: Template): string => ("attr" in t ? `@${t.attr}` : t.prop);
     const fresh = found.filter((t) => !this.#templates.some((o) => o.el === t.el && slot(o) === slot(t)));
     this.#templates = more ? [...this.#templates, ...fresh] : found;
+    // The libraries the templates name, before any is filled and evaluated.
+    await ensureFor(engine, ["List", ...this.#templates.map((t) => t.json)]);
   }
 
   // Fill each template's `_name` wildcards with the current control values and

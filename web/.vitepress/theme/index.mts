@@ -2,7 +2,8 @@ import type { EnhanceAppContext } from "vitepress";
 import { defineAsyncComponent } from "vue";
 import DefaultTheme from "vitepress/theme";
 import "katex/dist/katex.min.css";
-import { applyEngineLibraries } from "./engine-libraries.ts";
+import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Resolver } from "@enumeratio/manifest";
 import Layout from "./Layout.vue";
 import { createSessionSharedWorker, createSessionWorker } from "./worker-factories.ts";
 
@@ -54,100 +55,40 @@ export default {
     // evaluate in the playground and docs -- collections (Combinations/Subsets/…),
     // analytic (HurwitzZeta, the two-argument Zeta), and the hypercomplex families.
     if (!import.meta.env.SSR) {
-      // Publish the readiness promise synchronously (before any element mounts) so
-      // the shared engine waits for these libraries to be declared before its first
-      // evaluation — see `loadEngine` in @enumeratio/components. The imports resolve
-      // from source here, which is slower than a prebuilt dist, so this gate is what
-      // keeps cells/plots from rendering before their heads exist.
-      const startEngine = async (): Promise<void> => {
-        const [
-          { configureEngine, configureLatex },
-          { CARRIERS, declareCombinatorics, declareMaps },
-          { declareFrontendCarriers },
-          { declareAnalytic, declareFractals },
-          { declareGraphics },
-          { combineNotation, declareBoxes },
-          { declareCarrierElement, declareCarrierPlurals, declareStructures },
-          { declareHypercomplex },
-          { declareGeometric },
-          { declareDiagrams },
-          { declareResidues },
-          { declareNumerals },
-          { declareHecke },
-          { declareIncidence },
-          { declareQuiver },
-          { declareHopf },
-          { declareGroupAlgebra },
-          { declareModular },
-          { declareNumberTheory },
-          { declareAdeles },
-          { declareBraid },
-          { declareEvaluation },
-        ] = await Promise.all([
-          import("@enumeratio/frontend/core"),
-          import("@enumeratio/combinatorics"),
-          import("@enumeratio/frontend/declare-carriers"),
-          import("@enumeratio/analytic"),
-          import("@enumeratio/formats"),
-          import("@enumeratio/boxes"),
-          import("@enumeratio/structures"),
-          import("@enumeratio/hypercomplex"),
-          import("@enumeratio/geometric"),
-          import("@enumeratio/diagram"),
-          import("@enumeratio/residues"),
-          import("@enumeratio/numerals"),
-          import("@enumeratio/hecke"),
-          import("@enumeratio/incidence"),
-          import("@enumeratio/quiver"),
-          import("@enumeratio/hopf"),
-          import("@enumeratio/groupalgebra"),
-          import("@enumeratio/modular"),
-          import("@enumeratio/number-theory"),
-          import("@enumeratio/adeles"),
-          import("@enumeratio/braid"),
-          import("@enumeratio/evaluation"),
-        ]);
-        // Notation has to be in before the engine is built: its dictionary is fixed then.
-        const [{ default: NOTATION_ENTRIES }, { CATALOGUE }] = await Promise.all([
-          import("virtual:notation-entries"),
-          import("./worker-catalogue.ts"),
-        ]);
-        configureLatex(combineNotation(CATALOGUE.flatMap((library) => NOTATION_ENTRIES[library.name] ?? [])).latex);
-        applyEngineLibraries(configureEngine, {
-          declareCombinatorics,
-          declareCarrierPlurals,
-          declareCarrierElement,
-          declareFrontendCarriers,
-          declareMaps,
-          CARRIERS,
-          declareAnalytic,
-          declareFractals,
-          declareGraphics,
-          declareBoxes,
-          declareStructures,
-          declareHypercomplex,
-          declareGeometric,
-          declareDiagrams,
-          declareResidues,
-          declareNumerals,
-          declareHecke,
-          declareIncidence,
-          declareQuiver,
-          declareHopf,
-          declareGroupAlgebra,
-          declareModular,
-          declareNumberTheory,
-          declareAdeles,
-          declareBraid,
-        });
-        configureEngine(declareEvaluation);
+      // What every page engine needs before it's built, whatever it declares: the notation
+      // (its dictionary is fixed then) and evaluation. Set synchronously, before any element
+      // mounts, and run by the first engine a page builds.
+      let setup: Promise<void> | undefined;
+      (globalThis as { __notatioEngineSetup?: () => Promise<unknown> }).__notatioEngineSetup = () =>
+        (setup ??= (async () => {
+          const [{ configureEngine, configureLatex }, { combineNotation }, { declareEvaluation }, notation, catalogue] =
+            await Promise.all([
+              import("@enumeratio/frontend/core"),
+              import("@enumeratio/boxes"),
+              import("@enumeratio/evaluation"),
+              import("virtual:notation-entries"),
+              import("./worker-catalogue.ts"),
+            ]);
+          const entries = catalogue.CATALOGUE.flatMap((library) => notation.default[library.name] ?? []);
+          configureLatex(combineNotation(entries).latex);
+          configureEngine(declareEvaluation);
+        })());
+      // The libraries, declared as an element's expression first names them, through the same
+      // catalogue the kernels resolve with: a page with a Dynamic over Binomial loads
+      // combinatorics, not every library. An element that asks for the whole engine
+      // (`loadEngine()`) gets every library, through the same resolver, so none is declared twice.
+      let resolver: Promise<Resolver<ComputeEngine>> | undefined;
+      const resolve = (): Promise<Resolver<ComputeEngine>> =>
+        (resolver ??= Promise.all([import("@enumeratio/manifest"), import("./worker-catalogue.ts")]).then(
+          ([{ createResolver }, { CATALOGUE }]) => createResolver(CATALOGUE),
+        ));
+      (globalThis as { __notatioEngineResolver?: unknown }).__notatioEngineResolver = {
+        ensure: async (ce: ComputeEngine, json: unknown) => (await resolve()).ensure(ce, json),
+        ensureAll: async (ce: ComputeEngine) => {
+          const [{ SYMBOLS }, r] = await Promise.all([import("@enumeratio/manifest"), resolve()]);
+          return r.ensure(ce, Object.keys(SYMBOLS));
+        },
       };
-      // Called by the first `loadEngine` (a plot, a cell whose kernel can't start), not at
-      // startup: cells go through the kernel worker, so most pages never load the libraries
-      // on the page at all.
-      let ready: Promise<void> | undefined;
-      (globalThis as { __notatioEngineReady?: () => Promise<unknown> }).__notatioEngineReady = () =>
-        (ready ??= startEngine());
       // The elements load at idle, so the page paints first, and only those the page uses: a
       // page of cells loads no engine.
       const define = (): void => void import("@enumeratio/components/lazy").then((m) => m.defineOnUse());
@@ -159,7 +100,7 @@ export default {
       // whose `configure(ce)` declares this page's own libraries into its
       // `@enumeratio/evaluation/browser` session -- `notatio-dynamic-module.ts`'s own
       // `#openSession` reads this the same way `loadEngine` reads
-      // `__notatioEngineReady` above. A `URL` (not a bare specifier) so the worker's
+      // `__notatioEngineSetup` above. A `URL` (not a bare specifier) so the worker's
       // own `import(setup)` -- running in a different module graph -- can resolve it.
       (globalThis as { __notatioWorkerSetup?: string }).__notatioWorkerSetup = new URL(
         "./worker-engine-setup.ts",

@@ -11,7 +11,14 @@ import { portableTeX } from "@enumeratio/formats/tex";
 
 // The engine itself lives in the base (`@enumeratio/frontend`); re-exported here so
 // the elements' imports read as before.
-export { configureEngine, configureLatex, loadEngine } from "@enumeratio/frontend/core";
+export {
+  configureEngine,
+  configureLatex,
+  ensureFor,
+  loadBareEngine,
+  loadEngine,
+  parseFor,
+} from "@enumeratio/frontend/core";
 
 let assetsPromise: Promise<void> | undefined;
 let markupPromise: Promise<(latex: string) => string> | undefined;

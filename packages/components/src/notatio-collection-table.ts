@@ -5,7 +5,7 @@ import { toInputForm } from "@enumeratio/formats/inputform";
 import { carrierTypeForName } from "@enumeratio/structures";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { loadEngine } from "./mathlive.ts";
+import { type loadBareEngine, parseFor } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 import {
   blockLists,
@@ -29,7 +29,7 @@ import {
 
 const log = debug("collection-table");
 
-type Engine = Awaited<ReturnType<typeof loadEngine>>;
+type Engine = Awaited<ReturnType<typeof loadBareEngine>>;
 type BoxInput = Parameters<Engine["box"]>[0];
 
 interface Column {
@@ -269,13 +269,12 @@ export class NotatioCollectionTable extends LitElement {
     const src = this.expr?.trim() ?? "";
     if (!src) return;
     try {
-      const engine = await loadEngine();
+      const { engine, parsed } = await parseFor((ce) =>
+        parseExpression(src, { ce, parseLatex: (tex) => ce.parse(tex).json }),
+      );
       if (generation !== this.#generation) return;
       this.#engine = engine;
-      const { json, errors } = parseExpression(src, {
-        ce: engine,
-        parseLatex: (tex) => engine.parse(tex).json,
-      });
+      const { json, errors } = parsed;
       if (errors.length > 0) throw new Error(errors.join("; "));
       const coll = engine.box(json as BoxInput);
       if (!coll.isCollection || coll.isFiniteCollection === false) {
