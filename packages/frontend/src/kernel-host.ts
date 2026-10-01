@@ -4,7 +4,8 @@
 // renders what comes back, with no engine of its own.
 
 import type { ComputeEngine, MathJsonExpression } from "@cortex-js/compute-engine";
-import { makeBoxes, notationOf, toAscii } from "@enumeratio/boxes";
+import { makeBoxes, notationOf } from "@enumeratio/boxes";
+import { toAscii } from "@enumeratio/boxes/render";
 import type { KernelOptions, KernelSession, KernelSource } from "@enumeratio/evaluation";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { toInputForm } from "@enumeratio/formats/inputform";

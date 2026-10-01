@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
-import { makeBoxes, notationOf, toAscii, toLatex } from "@enumeratio/boxes";
+import { makeBoxes, notationOf } from "@enumeratio/boxes";
+import { toAscii, toLatex } from "@enumeratio/boxes/render";
 import type { Display } from "@enumeratio/frontend/kernel-host";
 import { collectMessages, type Message } from "@enumeratio/engine";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";

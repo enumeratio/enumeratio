@@ -16,7 +16,7 @@
 // `import()` of a URL the build never emitted.
 import { startSessionWorker } from "../../../packages/symbols/evaluation/evaluation/src/session-worker-core.ts";
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
-import { BOXES_LATEX } from "@enumeratio/boxes";
+import { BOXES_LATEX } from "@enumeratio/boxes/render";
 import { displayDictionary } from "@enumeratio/frontend/display";
 import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import { RESIDUES_LATEX } from "@enumeratio/residues";
