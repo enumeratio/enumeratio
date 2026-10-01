@@ -63,7 +63,8 @@ export interface KernelResult {
 
 /** A session's scope and history, kept by the host. */
 export interface KernelSession {
-  /** Runs `fn` in the session's scope; `input` is what's about to evaluate there. */
+  /** Runs `fn` in the session's scope; `input` is what's about to evaluate there, or
+   *  `undefined` when nothing is (recording a line). */
   run<T>(fn: () => T, input: unknown): T;
   /** Records an evaluation, returning its line number, or `undefined` when there's no history. */
   record?(source: KernelSource | undefined, input: unknown, value: unknown): number | undefined;
@@ -170,8 +171,13 @@ export function createKernel(
       ),
     );
     if (!answer.ok) return { ...answer, input, messages, ...resolved };
+    // Recording evaluates nothing, so the session isn't told an input: one that claims an
+    // `Assign`'s name before it evaluates would claim it again, replacing a function the
+    // cell just defined.
     const line =
-      request.evaluate === false ? undefined : within(() => session?.record?.(request.source, input, answer.json));
+      request.evaluate === false || session === undefined
+        ? undefined
+        : session.run(() => session.record?.(request.source, input, answer.json), undefined);
     const result: KernelResult = {
       ...answer,
       input,
