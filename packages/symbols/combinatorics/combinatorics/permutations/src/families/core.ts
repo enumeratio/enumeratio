@@ -271,29 +271,33 @@ const rewrite = (state: string, size: MathJSON, value: (slot: string) => MathJSO
   map(value("slot"), "slot", upTo(1, size));
 const slots = add("_n", 1);
 
-/** The telephone number T(m), the involutions of m: Σ m! / (q! 2^q (m − 2q)!). */
-const telephone = (m: MathJSON, q: string): MathJSON =>
-  fold(
-    add(`t_${q}`, [
-      "Divide",
-      ["Factorial", m],
-      ["Multiply", ["Factorial", q], ["Power", 2, q], ["Factorial", sub(m, ["Multiply", 2, q])]],
-    ]),
-    `t_${q}`,
-    q,
-    0,
-    upTo(0, quotient(m, 2)),
-  );
+// Telephone and subfactorial numbers come from a table built once per call by their
+// recurrences, then read by index: summing factorials afresh at every step costs more than the
+// rest of the step.
 
-/** The subfactorial D(m), the derangements of m: Σ (−1)^i m! / i!, and 0 for m < 0. */
-const subfactorial = (m: MathJSON, i: string): MathJSON =>
-  fold(
-    add(`d_${i}`, ["Multiply", ["Power", -1, i], ["Divide", ["Factorial", m], ["Factorial", i]]]),
-    `d_${i}`,
-    i,
-    0,
-    upTo(0, m),
-  );
+/** T(0..n), the involutions of 0..n: T(i) = T(i − 1) + (i − 1) T(i − 2). */
+const telephoneTable = fold(
+  ["Append", "tt", add(at("tt", "ti"), ["Multiply", sub("ti", 1), at("tt", sub("ti", 1))])],
+  "tt",
+  "ti",
+  ["List", 1, 1],
+  upTo(2, "_n"),
+);
+/** D(0..n), the derangements of 0..n: D(i) = (i − 1) (D(i − 1) + D(i − 2)). */
+const subfactorialTable = fold(
+  ["Append", "dt", ["Multiply", sub("di", 1), add(at("dt", "di"), at("dt", sub("di", 1)))]],
+  "dt",
+  "di",
+  ["List", 1, 0],
+  upTo(2, "_n"),
+);
+/** T(m), from the table bound as `telephones`. */
+const telephone = (m: MathJSON): MathJSON => at("telephones", add(m, 1));
+/** D(m), from the table bound as `subfactorials`, and 0 for m < 0. */
+const subfactorial = (m: MathJSON): MathJSON => ["If", ["Less", m, 0], 0, at("subfactorials", add(m, 1))];
+const withTelephones = (body: MathJSON): MathJSON => typedBind("telephones", telephoneTable, body, "list<integer>");
+const withSubfactorials = (body: MathJSON): MathJSON =>
+  typedBind("subfactorials", subfactorialTable, body, "list<integer>");
 
 const permutationOfN = (then: MathJSON): MathJSON =>
   hasLength("_x", "_n", ["If", injective("_n", "_n", element), then, "False"]);
@@ -312,7 +316,7 @@ const involutionUnrankStep = lets(
     lets(
       [
         ["r", at("s", slots), "integer"],
-        ["t1", telephone(sub("m", 1), "qa"), "integer"],
+        ["t1", telephone(sub("m", 1)), "integer"],
         ["last", at("L", "m"), "integer"],
       ],
       [
@@ -321,7 +325,7 @@ const involutionUnrankStep = lets(
         rewrite("s", slots, (p) => ["If", ["Equal", p, "last"], "last", at("s", p)]),
         lets(
           [
-            ["t2", telephone(sub("m", 2), "qb"), "integer"],
+            ["t2", telephone(sub("m", 2)), "integer"],
             ["left", sub("r", "t1"), "integer"],
             ["partner", at("L", add(quotient("left", "t2"), 1)), "integer"],
           ],
@@ -362,10 +366,10 @@ const involutionRankStep = lets(
           [
             "If",
             ["Equal", p, slots],
-            add(at("s", slots), telephone(sub("m", 1), "qa"), [
+            add(at("s", slots), telephone(sub("m", 1)), [
               "Multiply",
               ["Count", ["Filter", "L", ["Function", ["Less", "y", "partner"], "y"]]],
-              telephone(sub("m", 2), "qb"),
+              telephone(sub("m", 2)),
             ]),
             at("s", p),
           ],
@@ -383,12 +387,14 @@ const involutions: EpsilFamily = {
   kind: "ints",
   params: ["_n"],
   epsil: {
-    count: telephone("_n", "q"),
-    unrank: [
+    count: withTelephones(telephone("_n")),
+    unrank: withTelephones([
       "Most",
       fold(involutionUnrankStep, "s", "step", ["Append", map(0, "y", upTo(1, "_n")), "_r"], upTo(1, "_n")),
-    ],
-    rank: at(fold(involutionRankStep, "s", "step", ["Append", map(0, "y", upTo(1, "_n")), 0], upTo(1, "_n")), slots),
+    ]),
+    rank: withTelephones(
+      at(fold(involutionRankStep, "s", "step", ["Append", map(0, "y", upTo(1, "_n")), 0], upTo(1, "_n")), slots),
+    ),
     valid: permutationOfN(all((j) => ["Equal", element(element(j)), j], upTo(1, "_n"))),
   },
 };
@@ -410,8 +416,8 @@ const derangementChoiceStep = lets(
     lets(
       [
         ["r", at("s", add(["Multiply", 2, "_n"], 1)), "integer"],
-        ["swaps", subfactorial(sub("size", 2), "ia"), "integer"],
-        ["block", add("swaps", subfactorial(sub("size", 1), "ib")), "integer"],
+        ["swaps", subfactorial(sub("size", 2)), "integer"],
+        ["block", add("swaps", subfactorial(sub("size", 1))), "integer"],
         ["m", at("L", "size"), "integer"],
         ["p", at("L", add(quotient("r", "block"), 1)), "integer"],
         ["left", ["Mod", "r", "block"], "integer"],
@@ -501,13 +507,13 @@ const derangementRankStep = lets(
       [
         ["m", at("L", "size"), "integer"],
         ["p", at("s", add("_n", "m")), "integer"],
-        ["swaps", subfactorial(sub("size", 2), "ia"), "integer"],
+        ["swaps", subfactorial(sub("size", 2)), "integer"],
         [
           "start",
           [
             "Multiply",
             ["Count", ["Filter", "L", ["Function", ["Less", "y", "p"], "y"]]],
-            add("swaps", subfactorial(sub("size", 1), "ib")),
+            add("swaps", subfactorial(sub("size", 1))),
           ],
           "integer",
         ],
@@ -545,16 +551,26 @@ const derangements: EpsilFamily = {
   kind: "ints",
   params: ["_n"],
   epsil: {
-    count: subfactorial("_n", "i"),
-    unrank: typedBind(
-      "choices",
-      derangementChoices,
-      fold(derangementApplyStep, "t", "m", map(0, "y", upTo(1, "_n")), upTo(1, "_n")),
-      "list<integer>",
+    count: withSubfactorials(subfactorial("_n")),
+    unrank: withSubfactorials(
+      typedBind(
+        "choices",
+        derangementChoices,
+        fold(derangementApplyStep, "t", "m", map(0, "y", upTo(1, "_n")), upTo(1, "_n")),
+        "list<integer>",
+      ),
     ),
-    rank: at(
-      fold(derangementRankStep, "s", "step", ["Append", ["Join", map(0, "y", upTo(1, "_n")), "_x"], 0], upTo(1, "_n")),
-      add(["Multiply", 2, "_n"], 1),
+    rank: withSubfactorials(
+      at(
+        fold(
+          derangementRankStep,
+          "s",
+          "step",
+          ["Append", ["Join", map(0, "y", upTo(1, "_n")), "_x"], 0],
+          upTo(1, "_n"),
+        ),
+        add(["Multiply", 2, "_n"], 1),
+      ),
     ),
     valid: permutationOfN(all((j) => ["NotEqual", element(j), j], upTo(1, "_n"))),
   },

@@ -181,28 +181,18 @@ const cyclesOfLength = (size: number): MathJSON => count(cycleLengths, equals("c
 //
 //   - a `Fold` accumulator can GROW. `Join(a, List(b))` appends, and the accumulator can be a
 //     list of lists. There is no fixed-width limit.
-//   - the rebuilt pile list is built with a FOLD rather than a `Map` over a `Range`. `Map`
-//     over a range stays lazy and does not evaluate to a list on its own; a fold evaluates
-//     eagerly. When a list has to BE a value rather than a promise, fold it.
+//   - the pile to replace is found once per entry, then the piles are rebuilt by mapping over
+//     the pile list itself. A `Map` over the list (not over a `Range` of its indices, which
+//     stays lazy and makes the compiler decline) evaluates to a list and compiles.
 const piles = (ahead: MathJSON): MathJSON => {
-  const smaller: MathJSON = ["Count", ["Filter", "a", ["Function", ahead, "t"]]];
-  const target: MathJSON = ["Add", smaller, 1];
-  return fold(
-    x,
-    ["List"],
-    [
-      "If",
-      ["Greater", target, ["Count", "a"]],
-      ["Join", "a", ["List", visiting]],
-      fold(
-        "a",
-        ["List"],
-        ["Join", "acc", ["List", ["If", ["Equal", "e", ["At", "a", target]], visiting, "e"]]],
-        "acc",
-        "e",
-      ),
-    ],
-  );
+  const target: MathJSON = ["Add", ["Count", ["Filter", "a", ["Function", ahead, "t"]]], 1];
+  const step: MathJSON = [
+    "If",
+    ["Greater", "k", ["Count", "a"]],
+    ["Join", "a", ["List", visiting]],
+    ["Map", ["Function", ["If", ["Equal", "e", ["At", "a", "k"]], visiting, "e"], "e"], "a"],
+  ];
+  return fold(x, ["List"], ["Apply", ["Function", step, "k"], target]);
 };
 
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
