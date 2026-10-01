@@ -1,7 +1,7 @@
-id	in
-even-cycle-is-bipartite	BipartiteGraphQ[CycleGraph[6]]
-odd-cycle-is-not	BipartiteGraphQ[CycleGraph[5]]
-a-self-loop-is-never-bipartite	BipartiteGraphQ[Graph[List[UndirectedEdge[1, 1]]]]
-a-4-cycle-is-bipartite	BipartiteGraphQ[CycleGraph[4]]
-a-path-is-always-bipartite	BipartiteGraphQ[enumeratio`PathGraph[7]]
-isbipartitegraph-cyclegraph-3	BipartiteGraphQ[CycleGraph[3]]
+id	in	out
+even-cycle-is-bipartite	IsBipartiteGraph(CycleGraph(6))	True
+odd-cycle-is-not	IsBipartiteGraph(CycleGraph(5))	False
+a-self-loop-is-never-bipartite	IsBipartiteGraph(Graph(List(UndirectedEdge(1, 1))))	False
+a-4-cycle-is-bipartite	IsBipartiteGraph(CycleGraph(4))	True
+a-path-is-always-bipartite	IsBipartiteGraph(PathGraph(7))	True
+isbipartitegraph-cyclegraph-3	IsBipartiteGraph(CycleGraph(3))	False

@@ -1,6 +1,6 @@
-id	in
-an-interior-point	IntervalMemberQ[Interval[List[1, 5]], 3]
-isintervalmember-interval-2-5-pi	IntervalMemberQ[Interval[List[2, 5]], Pi]
-a-closed-endpoint-is-a-member	IntervalMemberQ[Interval[List[1, 5]], 5]
-an-open-endpoint-is-not-a-member	IntervalMemberQ[Interval[Open[1], 5], 1]
-outside-the-interval	IntervalMemberQ[Interval[List[1, 5]], 6]
+id	in	out
+an-interior-point	IsIntervalMember(Interval(1, 5), 3)	True
+isintervalmember-interval-2-5-pi	IsIntervalMember(Interval(2, 5), Pi)	True
+a-closed-endpoint-is-a-member	IsIntervalMember(Interval(1, 5), 5)	True
+an-open-endpoint-is-not-a-member	IsIntervalMember(Interval(Open(1), 5), 1)	False
+outside-the-interval	IsIntervalMember(Interval(1, 5), 6)	False

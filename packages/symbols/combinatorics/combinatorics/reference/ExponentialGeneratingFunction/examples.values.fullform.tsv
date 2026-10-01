@@ -1,12 +1,12 @@
-id	in
-factorial	ExponentialGeneratingFunction[Factorial[n], n, x]
-derangements	ExponentialGeneratingFunction[Subfactorial[n], n, x]
-bell-numbers	ExponentialGeneratingFunction[BellB[n], n, x]
-fibonacci	ExponentialGeneratingFunction[Fibonacci[n], n, x]
-exponentialgeneratingfunction-1-n-x	ExponentialGeneratingFunction[1, n, x]
-list-exponentialgeneratingfunction-unitstep-n-n	
-list-exponentialgeneratingfunction-n-times	
-list-exponentialgeneratingfunction-n-n-z	
-exponentialgeneratingfunction-1-n-1-times-z-pow	ExponentialGeneratingFunction[1, n, Times[1, Power[z, -1]]]
-exponentialgeneratingfunction-fibonacci-n-n-z	ExponentialGeneratingFunction[Fibonacci[n], n, z]
-list-exponentialgeneratingfunction-n-n-z-2	
+id	in	out
+factorial	ExponentialGeneratingFunction(Factorial(n), n, x)	Divide(1, Add(Negate(x), 1))
+derangements	ExponentialGeneratingFunction(Subfactorial(n), n, x)	Divide(Power(ExponentialE, Negate(x)), Add(Negate(x), 1))
+bell-numbers	ExponentialGeneratingFunction(BellNumber(n), n, x)	Power(ExponentialE, Add(Power(ExponentialE, x), -1))
+fibonacci	ExponentialGeneratingFunction(Fibonacci(n), n, x)	Add(Multiply(Negate(Divide(Sqrt(5), 5)), Power(ExponentialE, Multiply(Rational(1, 2), x, Add(1, Negate(Sqrt(5)))))), Multiply(Divide(Sqrt(5), 5), Power(ExponentialE, Multiply(Rational(1, 2), x, Add(1, Sqrt(5))))))
+exponentialgeneratingfunction-1-n-x	ExponentialGeneratingFunction(1, n, x)	Power(ExponentialE, x)
+list-exponentialgeneratingfunction-unitstep-n-n		
+list-exponentialgeneratingfunction-n-times		
+list-exponentialgeneratingfunction-n-n-z		
+exponentialgeneratingfunction-1-n-1-times-z-pow	ExponentialGeneratingFunction(1, n, Multiply(1, Power(z, -1)))	Power(ExponentialE, Divide(1, z))
+exponentialgeneratingfunction-fibonacci-n-n-z	ExponentialGeneratingFunction(Fibonacci(n), n, z)	Add(Multiply(Negate(Divide(Sqrt(5), 5)), Power(ExponentialE, Multiply(Rational(1, 2), z, Add(1, Negate(Sqrt(5)))))), Multiply(Divide(Sqrt(5), 5), Power(ExponentialE, Multiply(Rational(1, 2), z, Add(1, Sqrt(5))))))
+list-exponentialgeneratingfunction-n-n-z-2		

@@ -8,6 +8,7 @@ import { compile, GLSLTarget, PythonTarget, WGSLTarget } from "@cortex-js/comput
 import { parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 import { MATHJSON_MIME } from "@enumeratio/boxes/render";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
+import { toFullForm } from "./fullform.ts";
 import { toInputForm } from "./inputform.ts";
 import { makeBoxes } from "@enumeratio/boxes";
 import { toText } from "@enumeratio/boxes/render";
@@ -137,6 +138,18 @@ registerFileFormat({
   encode: wolfram,
   decode: (d) => fromWolfram(text(d)),
   sniff: (d) => /^[A-Z][A-Za-z0-9]*\[[\s\S]*\]\s*$/.test(text(d).trim()),
+});
+
+// FullForm: the tree as Epsil, every head a call. Any Epsil reads back.
+registerFileFormat({
+  name: "FullForm",
+  aliases: ["fullform"],
+  // Its own type so a lookup by type still finds Epsil; the text is Epsil, so no extension of its own.
+  mimeTypes: ["text/x-epsil-fullform"],
+  extensions: [],
+  binary: false,
+  encode: (v) => toFullForm(asExpr(v).json, asExpr(v).engine as never),
+  decode: epsilDecode,
 });
 
 registerFileFormat({

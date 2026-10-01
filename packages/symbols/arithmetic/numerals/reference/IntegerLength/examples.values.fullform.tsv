@@ -1,9 +1,9 @@
-id	in
-integerlength-12-345	IntegerLength[12345]
-integerlength-123-456-789	IntegerLength[123456789]
-integerlength-100-factorial-2	IntegerLength[Factorial[100], 2]
-integerlength-2-pow-100	IntegerLength[Power[2, 100]]
-255-ff-16	IntegerLength[255, 16]
-listable	IntegerLength[List[1, 10, 100]]
-the-sign-is-not-counted	IntegerLength[-123]
-0-has-length-0-unlike-its-one-element	IntegerLength[0]
+id	in	out
+integerlength-12-345	IntegerLength(12345)	5
+integerlength-123-456-789	IntegerLength(123456789)	9
+integerlength-100-factorial-2	IntegerLength(Factorial(100), 2)	525
+integerlength-2-pow-100	IntegerLength(Power(2, 100))	31
+255-ff-16	IntegerLength(255, 16)	2
+listable	IntegerLength(List(1, 10, 100))	List(1, 2, 3)
+the-sign-is-not-counted	IntegerLength(-123)	3
+0-has-length-0-unlike-its-one-element	IntegerLength(0)	0

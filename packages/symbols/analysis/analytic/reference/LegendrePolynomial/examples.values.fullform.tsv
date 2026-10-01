@@ -1,20 +1,20 @@
-id	in
-the-quadratic	LegendreP[2, x]
-the-cubic	LegendreP[3, x]
-the-quartic	LegendreP[4, x]
-at-a-real	LegendreP[5, 0.7]
-at-p0-0-7	N[LegendreP[0, 0.7]]
-at-p1-0-7	N[LegendreP[1, 0.7]]
-at-p2-0-7	N[LegendreP[2, 0.7]]
-at-p5-0-7	N[LegendreP[5, 0.7]]
-at-p-1-0-7	N[LegendreP[-1, 0.7]]
-at-p-4-0-7	N[LegendreP[-4, 0.7]]
-at-p4-2-3i	N[LegendreP[4, Complex[2, 3]]]
-at-a-rational	LegendreP[3, Rational[1, 2]]
-at-a-complex-argument	LegendreP[3, Complex[2, 3]]
-a-symbolic-order-stays-unevaluated	LegendreP[n, x]
-at-1	LegendreP[6, 1]
-at-minus-1	LegendreP[5, -1]
-at-0	LegendreP[4, 0]
-bonnet-recurrence	Equal[Times[4, LegendreP[4, 3]], Subtract[Times[7, 3, LegendreP[3, 3]], Times[3, LegendreP[2, 3]]]]
-negative-order	LegendreP[-3, x]
+id	in	out
+the-quadratic	LegendrePolynomial(2, x)	Add(Multiply(Rational(3, 2), Power(x, 2)), Rational(-1, 2))
+the-cubic	LegendrePolynomial(3, x)	Add(Multiply(Rational(5, 2), Power(x, 3)), Multiply(Rational(-3, 2), x))
+the-quartic	LegendrePolynomial(4, x)	Add(Multiply(Rational(35, 8), Power(x, 4)), Multiply(Rational(-15, 4), Power(x, 2)), Rational(3, 8))
+at-a-real	LegendrePolynomial(5, 0.7)	-0.3651987499999999
+at-p0-0-7	N(LegendrePolynomial(0, 0.7))	1
+at-p1-0-7	N(LegendrePolynomial(1, 0.7))	0.7
+at-p2-0-7	N(LegendrePolynomial(2, 0.7))	0.23499999999999988
+at-p5-0-7	N(LegendrePolynomial(5, 0.7))	-0.3651987499999999
+at-p-1-0-7	N(LegendrePolynomial(-1, 0.7))	1
+at-p-4-0-7	N(LegendrePolynomial(-4, 0.7))	-0.19250000000000014
+at-p4-2-3i	N(LegendrePolynomial(4, Complex(2, 3)))	Complex(-501.5, -570)
+at-a-rational	LegendrePolynomial(3, Rational(1, 2))	Rational(-7, 16)
+at-a-complex-argument	LegendrePolynomial(3, Complex(2, 3))	Complex(-118, 18)
+a-symbolic-order-stays-unevaluated	LegendrePolynomial(n, x)	LegendrePolynomial(n, x)
+at-1	LegendrePolynomial(6, 1)	1
+at-minus-1	LegendrePolynomial(5, -1)	-1
+at-0	LegendrePolynomial(4, 0)	Rational(3, 8)
+bonnet-recurrence	Equal(Multiply(4, LegendrePolynomial(4, 3)), Subtract(Multiply(7, 3, LegendrePolynomial(3, 3)), Multiply(3, LegendrePolynomial(2, 3))))	True
+negative-order	LegendrePolynomial(-3, x)	Add(Multiply(Rational(3, 2), Power(x, 2)), Rational(-1, 2))

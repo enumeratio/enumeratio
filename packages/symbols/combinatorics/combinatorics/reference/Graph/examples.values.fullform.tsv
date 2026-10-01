@@ -1,5 +1,5 @@
-id	in
-a-triangle-vertices-inferred	Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 1]]]
-an-isolated-vertex-needs-the-explicit-form	VertexList[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2]]]]
-the-1-arg-form-is-not-normalized-to-2-arg	Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]]]
-edgeweight-option-is-held-exactly	Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]]
+id	in	out
+a-triangle-vertices-inferred	Graph(List(UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 1)))	Graph(List(UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 1)))
+an-isolated-vertex-needs-the-explicit-form	VertexList(Graph(List(1, 2, 3), List(UndirectedEdge(1, 2))))	List(1, 2, 3)
+the-1-arg-form-is-not-normalized-to-2-arg	Graph(List(UndirectedEdge(1, 2), UndirectedEdge(2, 3)))	Graph(List(UndirectedEdge(1, 2), UndirectedEdge(2, 3)))
+edgeweight-option-is-held-exactly	Graph(List(UndirectedEdge(1, 2), UndirectedEdge(2, 3)), KeyValuePair(EdgeWeight, List(5, 7)))	Graph(List(UndirectedEdge(1, 2), UndirectedEdge(2, 3)), Tuple(EdgeWeight, List(5, 7)))

@@ -1,4 +1,4 @@
-id	in	back
-count-semistandardtableaux-4-3-39-every-ssyt-of	Length[SemistandardTableaux[4, 3]]	[Length, [SemistandardTableaux, 4, 3]]
-every-element-of-semistandardtableaux-3-2	Take[SemistandardTableaux[3, 2], 6]	
-the-first-ssyt-of-3-cells-with-entries-in-1-2-as	Part[SemistandardTableaux[3, 2], 1]	
+id	in	out
+count-semistandardtableaux-4-3-39-every-ssyt-of	Count(SemistandardTableaux(4, 3))	39
+every-element-of-semistandardtableaux-3-2	Take(SemistandardTableaux(3, 2), 6)	List(List(List(1, 1), List(2)), List(List(1, 2), List(2)), List(List(1, 1, 1)), List(List(1, 1, 2)), List(List(1, 2, 2)), List(List(2, 2, 2)))
+the-first-ssyt-of-3-cells-with-entries-in-1-2-as	At(SemistandardTableaux(3, 2), 1)	List(List(1, 1), List(2))

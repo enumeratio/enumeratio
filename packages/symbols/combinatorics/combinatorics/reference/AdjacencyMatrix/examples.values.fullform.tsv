@@ -1,5 +1,5 @@
-id	in
-adjacency-matrix-of-k4	AdjacencyMatrix[CompleteGraph[4]]
-a-directed-edge-is-asymmetric	AdjacencyMatrix[Graph[List[1, 2], List[DirectedEdge[1, 2]]]]
-shape-adjacencymatrix-g	
-adjacencymatrix-graph-list-list	AdjacencyMatrix[Graph[List[], List[]]]
+id	in	out
+adjacency-matrix-of-k4	AdjacencyMatrix(CompleteGraph(4))	List(List(0, 1, 1, 1), List(1, 0, 1, 1), List(1, 1, 0, 1), List(1, 1, 1, 0))
+a-directed-edge-is-asymmetric	AdjacencyMatrix(Graph(List(1, 2), List(DirectedEdge(1, 2))))	List(List(0, 1), List(0, 0))
+shape-adjacencymatrix-g		
+adjacencymatrix-graph-list-list	AdjacencyMatrix(Graph(List(), List()))	List()

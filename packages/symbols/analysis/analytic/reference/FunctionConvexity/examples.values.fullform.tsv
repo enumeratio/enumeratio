@@ -1,7 +1,7 @@
-id	in
-a-parabola-is-convex	FunctionConvexity[Power[x, 2], x]
-a-cubic-has-an-inflection-point	FunctionConvexity[Power[x, 3], x]
-exp-is-always-convex	FunctionConvexity[Exp[x], x]
-map-function-functionconvexity-1-list-x-y-1-list	
-functionconvexity-x-pow-2-minus-1-x	FunctionConvexity[Plus[Power[x, 2], -1], x]
-a-restricted-domain-answers-indeterminate	FunctionConvexity[Divide[1, x], x]
+id	in	out
+a-parabola-is-convex	FunctionConvexity(Power(x, 2), x)	1
+a-cubic-has-an-inflection-point	FunctionConvexity(Power(x, 3), x)	FunctionConvexity(Power(x, 3), x)
+exp-is-always-convex	FunctionConvexity(Exp(x), x)	1
+map-function-functionconvexity-1-list-x-y-1-list		
+functionconvexity-x-pow-2-minus-1-x	FunctionConvexity(Add(Power(x, 2), -1), x)	1
+a-restricted-domain-answers-indeterminate	FunctionConvexity(Divide(1, x), x)	FunctionConvexity(Divide(1, x), x)

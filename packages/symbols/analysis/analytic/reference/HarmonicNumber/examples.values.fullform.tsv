@@ -1,49 +1,49 @@
-id	in
-h-10-frac-7381-2520	HarmonicNumber[10]
-h-0-0-the-empty-sum	HarmonicNumber[0]
-h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	HarmonicNumber[5, -1]
-a-floating-point-argument-evaluates-via-psi-z-1	HarmonicNumber[2.5]
-h-10-2-sum-k-1-10-k-2-exact	HarmonicNumber[10, 2]
-h-1-the-first-term	HarmonicNumber[1]
-h-10-3-exact-generalized-sum	HarmonicNumber[10, 3]
-h-5-0-sum-k-1-5-1-5	HarmonicNumber[5, 0]
-h-0-3-the-empty-sum-at-a-nonzero-order	HarmonicNumber[0, 3]
-h-0-2-the-empty-sum-at-order-2	HarmonicNumber[0, 2]
-no-sum-below-n-0-one-argument-form	HarmonicNumber[-1]
-no-sum-below-n-0-two-argument-form	HarmonicNumber[-2, 3]
-symbolic-n-one-argument-form-stays-symbolic	HarmonicNumber[n]
-n-harmonicnumber-0p5	N[HarmonicNumber[0.5]]
-n-harmonicnumber-complex-3-plus-2i	N[HarmonicNumber[Complex[3, 2]]]
-n-harmonicnumber-1-over-2-order-2	N[HarmonicNumber[Rational[1, 2], 2]]
-n-harmonicnumber-5-order-1-over-2	N[HarmonicNumber[5, Rational[1, 2]]]
-n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	N[HarmonicNumber[2.5, 1]]
-h-10-1-order-1-reduces-to-the-plain-h-10	HarmonicNumber[10, 1]
-h-2-is-three-halves	HarmonicNumber[2]
-h-neg0-5	HarmonicNumber[-0.5]
-h-neg2-5	HarmonicNumber[-2.5]
-h-10-5	HarmonicNumber[10.5]
-n-harmonicnumber-7-3-rational	N[HarmonicNumber[Rational[7, 3]]]
-h-complex-neg1-5-plus-4i	HarmonicNumber[Complex[-1.5, 4]]
-h-complex-0-2-minus-3i	HarmonicNumber[Complex[0.2, -3]]
-h-2-5-order-2	HarmonicNumber[2.5, 2]
-h-0-5-order-3	HarmonicNumber[0.5, 3]
-n-harmonicnumber-complex-3-plus-2i-order-2	N[HarmonicNumber[Complex[3, 2], 2]]
-h-complex-neg1-5-plus-4i-order-3-2	HarmonicNumber[Complex[-1.5, 4], Rational[3, 2]]
-non-integer-arguments-via-psi-z-1-gamma	HarmonicNumber[0.33]
-the-generalized-form-off-the-integers-via-zeta-r	HarmonicNumber[0.8, 3]
-complex-arguments	HarmonicNumber[Complex[1.5, 2]]
-order-r-1-off-the-integers-is-plain-h-z-h-e-1	N[HarmonicNumber[E, 1]]
-listable-threads-over-a-list	HarmonicNumber[List[2, 3, 5, 7, 11]]
-threads-elementwise-over-an-array-of-orders-and	HarmonicNumber[2, List[List[Rational[1, 2], 2], List[2, Rational[1, 2]]]]
-interval-arithmetic-in-the-order	HarmonicNumber[0.2, Interval[List[2.1, 2.2]]]
-uncertainty-propagation-in-the-order	HarmonicNumber[Rational[3, 2], Around[2.1, 0.01]]
-to-exactly-30-significant-digits-not-yet-31-come	N[HarmonicNumber[Rational[1, 2]], 30]
-order-1-gives-h-z-itself-not-the-zeta-1-pole	N[HarmonicNumber[2.5, 1]]
-at-an-integer-order-1-agrees-exactly-with-the	HarmonicNumber[10, 1]
-no-sum-below-n-0	HarmonicNumber[-3]
-h-1-2-2-2-ln-2-exact-at-rational-arguments-by	HarmonicNumber[Rational[1, 2]]
-h-1-4-4-frac-pi-2-3-ln-2	HarmonicNumber[Rational[1, 4]]
-symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	HarmonicNumber[n, -1]
-the-harmonic-series-diverges	HarmonicNumber[Infinity]
-h-infty-r-zeta-r-for-r-1-the-basel-sum	HarmonicNumber[Infinity, 2]
-a-non-integer-order-stays-symbolic-under-plain	HarmonicNumber[5, Rational[1, 2]]
+id	in	out
+h-10-frac-7381-2520	HarmonicNumber(10)	Rational(7381, 2520)
+h-0-0-the-empty-sum	HarmonicNumber(0)	0
+h-5-1-sum-k-1-5-k-15-a-negative-order-is-still	HarmonicNumber(5, -1)	15
+a-floating-point-argument-evaluates-via-psi-z-1	HarmonicNumber(2.5)	1.680372305546776047837
+h-10-2-sum-k-1-10-k-2-exact	HarmonicNumber(10, 2)	Rational(1968329, 1270080)
+h-1-the-first-term	HarmonicNumber(1)	1
+h-10-3-exact-generalized-sum	HarmonicNumber(10, 3)	Rational(19164113947, 16003008000)
+h-5-0-sum-k-1-5-1-5	HarmonicNumber(5, 0)	5
+h-0-3-the-empty-sum-at-a-nonzero-order	HarmonicNumber(0, 3)	0
+h-0-2-the-empty-sum-at-order-2	HarmonicNumber(0, 2)	0
+no-sum-below-n-0-one-argument-form	HarmonicNumber(-1)	ComplexInfinity
+no-sum-below-n-0-two-argument-form	HarmonicNumber(-2, 3)	ComplexInfinity
+symbolic-n-one-argument-form-stays-symbolic	HarmonicNumber(n)	HarmonicNumber(n)
+n-harmonicnumber-0p5	N(HarmonicNumber(0.5))	0.613705638880109381166
+n-harmonicnumber-complex-3-plus-2i	N(HarmonicNumber(Complex(3, 2)))	Complex(1.9725764110447408, 0.5169611287960764)
+n-harmonicnumber-1-over-2-order-2	N(HarmonicNumber(Rational(1, 2), 2))	0.710131866303547127053
+n-harmonicnumber-5-order-1-over-2	N(HarmonicNumber(5, Rational(1, 2)))	3.231670645876131228192
+n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole	N(HarmonicNumber(2.5, 1))	1.680372305546776047837
+h-10-1-order-1-reduces-to-the-plain-h-10	HarmonicNumber(10, 1)	Rational(7381, 2520)
+h-2-is-three-halves	HarmonicNumber(2)	Rational(3, 2)
+h-neg0-5	HarmonicNumber(-0.5)	-1.3862943611198906188344642429163531361508
+h-neg2-5	HarmonicNumber(-2.5)	1.2803723055467760478322024237503135305157
+h-10-5	HarmonicNumber(10.5)	2.9754547944373144739743437361702637213642
+n-harmonicnumber-7-3-rational	N(HarmonicNumber(Rational(7, 3)))	1.6237533134521551090386644443665621483152
+h-complex-neg1-5-plus-4i	HarmonicNumber(Complex(-1.5, 4))	Complex(1.9916455964528293606065120900824024310422, 1.816950172910536)
+h-complex-0-2-minus-3i	HarmonicNumber(Complex(0.2, -3))	Complex(1.6983479033451581606065120900824024310422, -1.3395520039987705)
+h-2-5-order-2	HarmonicNumber(2.5, 2)	1.3145763107479915714996141111523940660066
+h-0-5-order-3	HarmonicNumber(0.5, 3)	0.7876585810424342876015710309313000554101
+n-harmonicnumber-complex-3-plus-2i-order-2	N(HarmonicNumber(Complex(3, 2), 2))	Complex(1.429588703523849896472415166646025189219, 0.12181963298746644)
+h-complex-neg1-5-plus-4i-order-3-2	HarmonicNumber(Complex(-1.5, 4), Rational(3, 2))	Complex(2.005917820915590443348567567924071630571, 0.7781594851952996)
+non-integer-arguments-via-psi-z-1-gamma	HarmonicNumber(0.33)	0.441523646937363528111
+the-generalized-form-off-the-integers-via-zeta-r	HarmonicNumber(0.8, 3)	0.940124048948776980484
+complex-arguments	HarmonicNumber(Complex(1.5, 2))	Complex(1.6170494230744863, 0.7801971357298588)
+order-r-1-off-the-integers-is-plain-h-z-h-e-1	N(HarmonicNumber(ExponentialE, 1))	1.7500213805365417
+listable-threads-over-a-list	HarmonicNumber(List(2, 3, 5, 7, 11))	List(Rational(3, 2), Rational(11, 6), Rational(137, 60), Rational(363, 140), Rational(83711, 27720))
+threads-elementwise-over-an-array-of-orders-and	HarmonicNumber(2, List(List(Rational(1, 2), 2), List(2, Rational(1, 2))))	List(List(Add(1, Divide(Sqrt(2), 2)), Rational(5, 4)), List(Rational(5, 4), Add(1, Divide(Sqrt(2), 2))))
+interval-arithmetic-in-the-order	HarmonicNumber(0.2, Interval(2.1, 2.2))	Interval(0.3863469411841759, 0.3950923922402868)
+uncertainty-propagation-in-the-order	HarmonicNumber(Rational(3, 2), Around(2.1, 0.01))	Around(1.1455164340491326, 0.0008799826466981091)
+to-exactly-30-significant-digits-not-yet-31-come	N(HarmonicNumber(Rational(1, 2)), 30)	0.613705638880109381165535757084
+order-1-gives-h-z-itself-not-the-zeta-1-pole	N(HarmonicNumber(2.5, 1))	1.680372305546776047837
+at-an-integer-order-1-agrees-exactly-with-the	HarmonicNumber(10, 1)	Rational(7381, 2520)
+no-sum-below-n-0	HarmonicNumber(-3)	ComplexInfinity
+h-1-2-2-2-ln-2-exact-at-rational-arguments-by	HarmonicNumber(Rational(1, 2))	Add(2, Multiply(-2, Ln(2)))
+h-1-4-4-frac-pi-2-3-ln-2	HarmonicNumber(Rational(1, 4))	Add(4, Multiply(-3, Ln(2)), Multiply(Rational(-1, 2), Pi))
+symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays	HarmonicNumber(n, -1)	Add(Multiply(Rational(1, 2), Power(n, 2)), Multiply(Rational(1, 2), n))
+the-harmonic-series-diverges	HarmonicNumber(PositiveInfinity)	PositiveInfinity
+h-infty-r-zeta-r-for-r-1-the-basel-sum	HarmonicNumber(PositiveInfinity, 2)	Multiply(Rational(1, 6), Power(Pi, 2))
+a-non-integer-order-stays-symbolic-under-plain	HarmonicNumber(5, Rational(1, 2))	HarmonicNumber(5, Rational(1, 2))

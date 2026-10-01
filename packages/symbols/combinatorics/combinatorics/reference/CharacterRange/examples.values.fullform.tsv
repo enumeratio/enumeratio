@@ -1,8 +1,8 @@
-id	in
-letters-a-through-e	CharacterRange[String[a], String[e]]
-characterrange-a-z	CharacterRange["a", "z"]
-characterrange-1-000-1-020	
-by-code-point	CharacterRange[97, 101]
-characterrange-a-z-2	CharacterRange["A", "Z"]
-characterrange-0-9	CharacterRange["0", "9"]
-characterrange	
+id	in	out
+letters-a-through-e	CharacterRange(String(a), String(e))	List("a", "b", "c", "d", "e")
+characterrange-a-z	CharacterRange("a", "z")	List("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+characterrange-1-000-1-020		
+by-code-point	CharacterRange(97, 101)	List("a", "b", "c", "d", "e")
+characterrange-a-z-2	CharacterRange("A", "Z")	List("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+characterrange-0-9	CharacterRange("0", "9")	List("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
+characterrange		

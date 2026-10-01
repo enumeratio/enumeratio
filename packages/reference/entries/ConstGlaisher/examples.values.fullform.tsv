@@ -1,5 +1,5 @@
-id	in
-const-glaisher-numeric-value	N[Glaisher]
-n-constglaisher-50	N[Glaisher, 50]
-round-constglaisher-pow-100	Round[Power[Glaisher, 100]]
-1-lt-constglaisher-lt-2	Less[1, Glaisher, 2]
+id	in	out
+const-glaisher-numeric-value	N(ConstGlaisher)	1.2824271291006226
+n-constglaisher-50	N(ConstGlaisher, 50)	1.282427129100622636875342568869791727767688927325
+round-constglaisher-pow-100	Round(Power(ConstGlaisher, 100))	63572555914
+1-lt-constglaisher-lt-2	Less(1, ConstGlaisher, 2)	True

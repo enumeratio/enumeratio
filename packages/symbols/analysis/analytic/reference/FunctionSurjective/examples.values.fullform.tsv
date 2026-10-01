@@ -1,12 +1,12 @@
-id	in	back
-an-odd-degree-polynomial-is-onto	FunctionSurjective[Power[x, 3], x, Reals]	[FunctionSurjective, [Power, x, 3], x, RealNumbers]
-exp-misses-the-non-positive-reals	FunctionSurjective[Exp[x], x, Reals]	[FunctionSurjective, [Exp, x], x, RealNumbers]
-log-is-onto-the-reals	FunctionSurjective[Log[x], x, Reals]	[FunctionSurjective, [Ln, x], x, RealNumbers]
-a-reciprocal-never-hits-zero	FunctionSurjective[Divide[1, x], x, Reals]	[FunctionSurjective, [Divide, 1, x], x, RealNumbers]
-an-unsupported-codomain-declines	FunctionSurjective[Power[x, 3], x, Integers]	
-functionsurjective-tan-x-x	FunctionSurjective[Tan[x], x]	
-functionsurjective-x-pow-3-minus-x-x	FunctionSurjective[Plus[Power[x, 3], Times[-1, x]], x]	
-functionsurjective-sqrt-x-x	FunctionSurjective[Sqrt[x], x]	
-functionsurjective-sin-x-x	FunctionSurjective[Sin[x], x]	
-functionsurjective-x-pow-2-plus-x-plus-1-x	FunctionSurjective[Plus[Power[x, 2], x, 1], x]	
-functionsurjective-x-pow-3-plus-x-plus-1-x	FunctionSurjective[Plus[Power[x, 3], x, 1], x]	
+id	in	out
+an-odd-degree-polynomial-is-onto	FunctionSurjective(Power(x, 3), x, Reals)	True
+exp-misses-the-non-positive-reals	FunctionSurjective(Exp(x), x, Reals)	False
+log-is-onto-the-reals	FunctionSurjective(Ln(x), x, Reals)	True
+a-reciprocal-never-hits-zero	FunctionSurjective(Divide(1, x), x, Reals)	False
+an-unsupported-codomain-declines	FunctionSurjective(Power(x, 3), x, Integers)	FunctionSurjective(Power(x, 3), x, Integers)
+functionsurjective-tan-x-x	FunctionSurjective(Tan(x), x)	True
+functionsurjective-x-pow-3-minus-x-x	FunctionSurjective(Add(Power(x, 3), Multiply(-1, x)), x)	True
+functionsurjective-sqrt-x-x	FunctionSurjective(Sqrt(x), x)	False
+functionsurjective-sin-x-x	FunctionSurjective(Sin(x), x)	False
+functionsurjective-x-pow-2-plus-x-plus-1-x	FunctionSurjective(Add(Power(x, 2), x, 1), x)	False
+functionsurjective-x-pow-3-plus-x-plus-1-x	FunctionSurjective(Add(Power(x, 3), x, 1), x)	True

@@ -1,4 +1,4 @@
-id	in
-a-tree-is-acyclic	AcyclicGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
-a-cycle-is-not-acyclic	AcyclicGraphQ[CycleGraph[4]]
-a-directed-2-cycle-is-a-cycle	AcyclicGraphQ[Graph[List[1, 2], List[DirectedEdge[1, 2], DirectedEdge[2, 1]]]]
+id	in	out
+a-tree-is-acyclic	IsAcyclicGraph(Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 4))))	True
+a-cycle-is-not-acyclic	IsAcyclicGraph(CycleGraph(4))	False
+a-directed-2-cycle-is-a-cycle	IsAcyclicGraph(Graph(List(1, 2), List(DirectedEdge(1, 2), DirectedEdge(2, 1))))	False

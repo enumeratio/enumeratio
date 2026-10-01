@@ -1,7 +1,7 @@
-id	in
-gamma-pdf-exact	PDF[GammaDistribution[2, 2], 3]
-gamma-cdf-exact	CDF[GammaDistribution[2, 2], 3]
-gamma-mean-exact	Mean[GammaDistribution[2, 2]]
-gamma-variance-exact	Variance[GammaDistribution[2, 2]]
-gamma-distribution-one-argument-defaults-scale	GammaDistribution[2]
-gamma-cdf-clamps-below-support	N[CDF[GammaDistribution[2, 2], -1]]
+id	in	out
+gamma-pdf-exact	PDF(GammaDistribution(2, 2), 3)	Divide(3, Multiply(4, Gamma(2), Power(ExponentialE, Rational(3, 2))))
+gamma-cdf-exact	CDF(GammaDistribution(2, 2), 3)	Add(1, Divide(-5, Multiply(2, Power(ExponentialE, Rational(3, 2)))))
+gamma-mean-exact	Mean(GammaDistribution(2, 2))	4
+gamma-variance-exact	Variance(GammaDistribution(2, 2))	8
+gamma-distribution-one-argument-defaults-scale	GammaDistribution(2)	GammaDistribution(2, 1)
+gamma-cdf-clamps-below-support	N(CDF(GammaDistribution(2, 2), -1))	0

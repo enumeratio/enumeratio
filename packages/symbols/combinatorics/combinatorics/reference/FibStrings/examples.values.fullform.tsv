@@ -1,4 +1,4 @@
-id	in	back
-count-fibstrings-4	Length[FibStrings[4]]	[Length, [FibStrings, 4]]
-first-element-of-fibstrings-4	Part[FibStrings[4], 1]	
-every-element-of-fibstrings-4	Take[FibStrings[4], 8]	
+id	in	out
+count-fibstrings-4	Count(FibStrings(4))	8
+first-element-of-fibstrings-4	At(FibStrings(4), 1)	BinaryWord(List(0, 0, 0, 0))
+every-element-of-fibstrings-4	Take(FibStrings(4), 8)	List(BinaryWord(List(0, 0, 0, 0)), BinaryWord(List(0, 0, 0, 1)), BinaryWord(List(0, 0, 1, 0)), BinaryWord(List(0, 1, 0, 0)), BinaryWord(List(0, 1, 0, 1)), BinaryWord(List(1, 0, 0, 0)), BinaryWord(List(1, 0, 0, 1)), BinaryWord(List(1, 0, 1, 0)))

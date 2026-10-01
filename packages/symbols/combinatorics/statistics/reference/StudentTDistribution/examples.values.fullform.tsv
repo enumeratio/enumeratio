@@ -1,5 +1,5 @@
-id	in
-studentt-pdf-exact	PDF[StudentTDistribution[5], 0]
-studentt-cdf-symmetric	CDF[StudentTDistribution[5], 0]
-studentt-mean-exact	Mean[StudentTDistribution[5]]
-studentt-variance-exact	Variance[StudentTDistribution[5]]
+id	in	out
+studentt-pdf-exact	PDF(StudentTDistribution(5), 0)	Divide(Multiply(Sqrt(5), Gamma(3)), Multiply(5, Gamma(Rational(5, 2)), Sqrt(Pi)))
+studentt-cdf-symmetric	CDF(StudentTDistribution(5), 0)	Rational(1, 2)
+studentt-mean-exact	Mean(StudentTDistribution(5))	0
+studentt-variance-exact	Variance(StudentTDistribution(5))	Rational(5, 3)

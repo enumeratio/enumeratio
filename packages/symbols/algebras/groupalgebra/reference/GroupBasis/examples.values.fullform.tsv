@@ -1,5 +1,5 @@
-id	in	back
-2-5-7-equiv-1	GroupProduct[CyclicGroup[6], GroupBasis[String[2]], GroupBasis[String[5]]]	[GroupProduct, [CyclicGroup, 6], [GroupBasis, [String, 2]], [GroupBasis, [String, 5]]]
-d-4-8	AlgebraDimension[GroupAlgebra[DihedralGroup[4]]]	
-s-2-1	GroupProduct[DihedralGroup[4], GroupBasis[String[s0]], GroupBasis[String[s0]]]	
-so-k-d-4-is-not-commutative-either	GroupIsAbelian[DihedralGroup[4]]	
+id	in	out
+2-5-7-equiv-1	GroupProduct(CyclicGroup(6), GroupBasis(String(2)), GroupBasis(String(5)))	GroupBasis("1")
+d-4-8	AlgebraDimension(GroupAlgebra(DihedralGroup(4)))	8
+s-2-1	GroupProduct(DihedralGroup(4), GroupBasis(String(s0)), GroupBasis(String(s0)))	GroupBasis("0")
+so-k-d-4-is-not-commutative-either	GroupIsAbelian(DihedralGroup(4))	False

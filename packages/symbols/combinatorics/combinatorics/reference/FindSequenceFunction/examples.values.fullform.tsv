@@ -1,9 +1,9 @@
-id	in
-geometric	FindSequenceFunction[List[1, 2, 4, 8, 16], n]
-polynomial	FindSequenceFunction[List[1, 4, 9, 16, 25], n]
-catalan-numbers	FindSequenceFunction[List[1, 1, 2, 5, 14, 42, 132], n]
-factorial	FindSequenceFunction[List[1, 1, 2, 6, 24, 120], n]
-findsequencefunction-list-1-1-2-3-5-8-13-n	FindSequenceFunction[List[1, 1, 2, 3, 5, 8, 13], n]
-findsequencefunction-list-neg-1-1-neg-1-1-neg-1	FindSequenceFunction[List[-1, 1, -1, 1, -1, 1], n]
-findsequencefunction-list-2-5-10-17-26-37-50-n	FindSequenceFunction[List[2, 5, 10, 17, 26, 37, 50], n]
-findsequencefunction-list-3-7-13-21-31-43-57-n	FindSequenceFunction[List[3, 7, 13, 21, 31, 43, 57], n]
+id	in	out
+geometric	FindSequenceFunction(List(1, 2, 4, 8, 16), n)	Power(2, n)
+polynomial	FindSequenceFunction(List(1, 4, 9, 16, 25), n)	Add(Power(n, 2), Multiply(2, n), 1)
+catalan-numbers	FindSequenceFunction(List(1, 1, 2, 5, 14, 42, 132), n)	CatalanNumber(n)
+factorial	FindSequenceFunction(List(1, 1, 2, 6, 24, 120), n)	Factorial(n)
+findsequencefunction-list-1-1-2-3-5-8-13-n	FindSequenceFunction(List(1, 1, 2, 3, 5, 8, 13), n)	Add(Multiply(Rational(1, 10), Add(5, Negate(Sqrt(5))), Power(Multiply(Rational(1, 2), Add(1, Negate(Sqrt(5)))), n)), Multiply(Divide(Sqrt(5), 10), Add(1, Sqrt(5)), Power(Multiply(Rational(1, 2), Add(1, Sqrt(5))), n)))
+findsequencefunction-list-neg-1-1-neg-1-1-neg-1	FindSequenceFunction(List(-1, 1, -1, 1, -1, 1), n)	Negate(Power(-1, n))
+findsequencefunction-list-2-5-10-17-26-37-50-n	FindSequenceFunction(List(2, 5, 10, 17, 26, 37, 50), n)	Add(Power(n, 2), Multiply(2, n), 2)
+findsequencefunction-list-3-7-13-21-31-43-57-n	FindSequenceFunction(List(3, 7, 13, 21, 31, 43, 57), n)	Add(Power(n, 2), Multiply(3, n), 3)

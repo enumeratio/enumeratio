@@ -1,13 +1,13 @@
-id	in
-iscomposite-4	CompositeQ[4]
-iscomposite-13	CompositeQ[13]
-iscomposite-1-plus-10-pow-3-000	CompositeQ[Plus[1, Power[10, 3000]]]
-iscomposite-list-1-2-3-4-5-6	CompositeQ[List[1, 2, 3, 4, 5, 6]]
-iscomposite-5	CompositeQ[5]
-iscomposite-3-plus-i	
-iscomposite-8	CompositeQ[8]
-iscomposite-12	CompositeQ[12]
-iscomposite-67	CompositeQ[67]
-iscomposite-28	CompositeQ[28]
-iscomposite-60	CompositeQ[60]
-iscomposite-48-828-125	CompositeQ[48828125]
+id	in	out
+iscomposite-4	IsComposite(4)	True
+iscomposite-13	IsComposite(13)	False
+iscomposite-1-plus-10-pow-3-000	IsComposite(Add(1, Power(10, 3000)))	True
+iscomposite-list-1-2-3-4-5-6	IsComposite(List(1, 2, 3, 4, 5, 6))	List(False, False, False, True, False, True)
+iscomposite-5	IsComposite(5)	False
+iscomposite-3-plus-i		
+iscomposite-8	IsComposite(8)	True
+iscomposite-12	IsComposite(12)	True
+iscomposite-67	IsComposite(67)	False
+iscomposite-28	IsComposite(28)	True
+iscomposite-60	IsComposite(60)	True
+iscomposite-48-828-125	IsComposite(48828125)	True

@@ -1,19 +1,19 @@
-id	in
-conjugate-0	Conjugate[0]
-conjugate-1	Conjugate[1]
-conjugate-neg-1	Conjugate[-1]
-conjugate-i	Conjugate[Complex[0, 1]]
-conjugate-neg-i	Conjugate[Complex[0, -1]]
-conjugate-1-plus-i	Conjugate[Complex[1, 1]]
-conjugate-neg-1-plus-i	Conjugate[Complex[-1, 1]]
-conjugate-neg-1-minus-i	Conjugate[Complex[-1, -1]]
-conjugate-1-minus-i	Conjugate[Complex[1, -1]]
-conjugate-sqrt-3-plus-i	Conjugate[Plus[Sqrt[3], Complex[0, 1]]]
-conjugate-1-plus-sqrt-3-times-i	Conjugate[Plus[1, Complex[0, Sqrt[3]]]]
-conjugate-neg-1-plus-sqrt-3-times-i	Conjugate[Plus[-1, Complex[0, Sqrt[3]]]]
-conjugate-neg-sqrt-3-plus-i	Conjugate[Plus[Minus[Sqrt[3]], Complex[0, 1]]]
-conjugate-neg-sqrt-3-minus-i	Conjugate[Plus[Minus[Sqrt[3]], Complex[0, -1]]]
-conjugate-neg-1-plus-neg-sqrt-3-times-i	Conjugate[Plus[-1, Complex[0, Minus[Sqrt[3]]]]]
-conjugate-1-plus-neg-sqrt-3-times-i	Conjugate[Plus[1, Complex[0, Minus[Sqrt[3]]]]]
-conjugate-sqrt-3-minus-i	Conjugate[Plus[Sqrt[3], Complex[0, -1]]]
-conjugate-2	Conjugate[2]
+id	in	out
+conjugate-0	Conjugate(0)	0
+conjugate-1	Conjugate(1)	1
+conjugate-neg-1	Conjugate(-1)	-1
+conjugate-i	Conjugate(Complex(0, 1))	Complex(0, -1)
+conjugate-neg-i	Conjugate(Complex(0, -1))	Complex(0, 1)
+conjugate-1-plus-i	Conjugate(Complex(1, 1))	Complex(1, -1)
+conjugate-neg-1-plus-i	Conjugate(Complex(-1, 1))	Complex(-1, -1)
+conjugate-neg-1-minus-i	Conjugate(Complex(-1, -1))	Complex(-1, 1)
+conjugate-1-minus-i	Conjugate(Complex(1, -1))	Complex(1, 1)
+conjugate-sqrt-3-plus-i	Conjugate(Add(Sqrt(3), Complex(0, 1)))	Add(Sqrt(3), Complex(0, -1))
+conjugate-1-plus-sqrt-3-times-i	Conjugate(Add(1, Complex(0, Sqrt(3))))	Add(1, Complex(0, Negate(Sqrt(3))))
+conjugate-neg-1-plus-sqrt-3-times-i	Conjugate(Add(-1, Complex(0, Sqrt(3))))	Add(-1, Complex(0, Negate(Sqrt(3))))
+conjugate-neg-sqrt-3-plus-i	Conjugate(Add(Negate(Sqrt(3)), Complex(0, 1)))	Add(Negate(Sqrt(3)), Complex(0, -1))
+conjugate-neg-sqrt-3-minus-i	Conjugate(Add(Negate(Sqrt(3)), Complex(0, -1)))	Add(Negate(Sqrt(3)), Complex(0, 1))
+conjugate-neg-1-plus-neg-sqrt-3-times-i	Conjugate(Add(-1, Complex(0, Negate(Sqrt(3)))))	Add(-1, Complex(0, Sqrt(3)))
+conjugate-1-plus-neg-sqrt-3-times-i	Conjugate(Add(1, Complex(0, Negate(Sqrt(3)))))	Add(1, Complex(0, Sqrt(3)))
+conjugate-sqrt-3-minus-i	Conjugate(Add(Sqrt(3), Complex(0, -1)))	Add(Sqrt(3), Complex(0, 1))
+conjugate-2	Conjugate(2)	2

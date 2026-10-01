@@ -1,11 +1,11 @@
-id	in
-heavisidetheta-negative	HeavisideTheta[-1]
-heavisidetheta-positive	HeavisideTheta[1]
-heavisidetheta-zero-unevaluated	HeavisideTheta[0]
-heavisidetheta-product-both-positive	HeavisideTheta[1, 2]
-heavisidetheta-product-one-negative	HeavisideTheta[1, -1]
-matrixfunction-heavisidetheta-list-list-neg-1	MatrixFunction[HeavisideTheta, List[List[-1, Rational[-1, 2]], List[Rational[-1, 2], Rational[1, 2]]]]
-assuming-a-gt-0-refine-heavisidetheta-a-a-a-a	Assuming[Greater[a, 0], Refine[HeavisideTheta[a, a, a, a]]]
-assuming-a-lt-0-refine-heavisidetheta-a-a-a-a	Assuming[Less[a, 0], Refine[HeavisideTheta[a, a, a, a]]]
-assuming-a-lt-0-b-gt-0-refine-heavisidetheta-b-b	Assuming[And[Less[a, 0], Greater[b, 0]], Refine[HeavisideTheta[b, b, a]]]
-heavisidetheta-derivative	D[HeavisideTheta[x], x]
+id	in	out
+heavisidetheta-negative	HeavisideTheta(-1)	0
+heavisidetheta-positive	HeavisideTheta(1)	1
+heavisidetheta-zero-unevaluated	HeavisideTheta(0)	HeavisideTheta(0)
+heavisidetheta-product-both-positive	HeavisideTheta(1, 2)	1
+heavisidetheta-product-one-negative	HeavisideTheta(1, -1)	0
+matrixfunction-heavisidetheta-list-list-neg-1	MatrixFunction(HeavisideTheta, List(List(-1, Rational(-1, 2)), List(Rational(-1, 2), Rational(1, 2))))	List(List(Multiply(Divide(Sqrt(13), 26), Add(-3, Sqrt(13))), Negate(Divide(Sqrt(13), 13))), List(Negate(Divide(Sqrt(13), 13)), Multiply(Divide(Sqrt(13), 26), Add(3, Sqrt(13)))))
+assuming-a-gt-0-refine-heavisidetheta-a-a-a-a	Assuming(Greater(a, 0), Refine(HeavisideTheta(a, a, a, a)))	HeavisideTheta(a, a, a, a)
+assuming-a-lt-0-refine-heavisidetheta-a-a-a-a	Assuming(Less(a, 0), Refine(HeavisideTheta(a, a, a, a)))	HeavisideTheta(a, a, a, a)
+assuming-a-lt-0-b-gt-0-refine-heavisidetheta-b-b	Assuming(And(Less(a, 0), Greater(b, 0)), Refine(HeavisideTheta(b, b, a)))	HeavisideTheta(b, b, a)
+heavisidetheta-derivative	D(HeavisideTheta(x), x)	DiracDelta(x)

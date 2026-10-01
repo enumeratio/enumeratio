@@ -1,4 +1,4 @@
-id	in	back
-count-klyndonwords-4-3	Length[KLyndonWords[4, 3]]	[Length, [KLyndonWords, 4, 3]]
-first-element-of-klyndonwords-4-3	Part[KLyndonWords[4, 3], 1]	
-every-element-of-klyndonwords-4-3	Take[KLyndonWords[4, 3], 6]	
+id	in	out
+count-klyndonwords-4-3	Count(KLyndonWords(4, 3))	18
+first-element-of-klyndonwords-4-3	At(KLyndonWords(4, 3), 1)	List(1, 1, 1, 2)
+every-element-of-klyndonwords-4-3	Take(KLyndonWords(4, 3), 6)	List(List(1, 1, 1, 2), List(1, 1, 1, 3), List(1, 1, 2, 2), List(1, 1, 2, 3), List(1, 1, 3, 2), List(1, 1, 3, 3))

@@ -1,5 +1,5 @@
-id	in
-r-1-1-h-1-1-h-2	InCompleteBasis[NSymR[List[1, 1]]]
-the-fundamental-basis-sums-over-refinements	InMonomialBasis[QSymF[List[2]]]
-one-signed-term	Antipode[NSymR[List[3]]]
-self-conjugate-the-convention-is-settled-by-the	ConjugateComposition[List[2, 1]]
+id	in	out
+r-1-1-h-1-1-h-2	InCompleteBasis(NSymR(List(1, 1)))	Add(Negate(NSymH(List(2))), NSymH(List(1, 1)))
+the-fundamental-basis-sums-over-refinements	InMonomialBasis(QSymF(List(2)))	Add(QSymM(List(2)), QSymM(List(1, 1)))
+one-signed-term	Antipode(NSymR(List(3)))	Negate(NSymR(List(1, 1, 1)))
+self-conjugate-the-convention-is-settled-by-the	ConjugateComposition(List(2, 1))	List(2, 1)

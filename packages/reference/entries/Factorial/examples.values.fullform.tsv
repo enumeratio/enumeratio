@@ -1,20 +1,20 @@
-id	in
-5-factorial	Factorial[5]
-6-factorial	Factorial[6]
-the-empty-product-is-1-by-convention	Factorial[0]
-10-factorial	Factorial[10]
-threads-element-wise-over-a-list	Factorial[List[1, 2, 3, 4]]
-frac-n-n-1-simplifies-to-n-under-simplify-plain	Simplify[Divide[Factorial[n], Factorial[Subtract[n, 1]]]]
-real-arguments-evaluate-as-gamma-n-1	Factorial[3.5]
-negative-non-integers-are-defined-too-2-5-gamma	Factorial[-2.5]
-complex-arguments-1-i-gamma-2-i	Factorial[Complex[1, 1]]
-frac-12-gamma-frac-12-sqrt-pi-returned-as-a	Factorial[Rational[-1, 2]]
-infty-infty	Factorial[Infinity]
-the-number-of-ways-to-arrange-8-distinct-books	Factorial[8]
-recurrence-n-n-n-1	Equal[Factorial[5], Times[5, Factorial[4]]]
-extends-to-non-integers-via-the-gamma-function	Factorial[Rational[1, 2]]
-n-gamma-n-1-see-gamma	Equal[Factorial[5], Gamma[6]]
-the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e	Sum[Divide[1, Factorial[k]], List[k, 0, Infinity]]
-negative-integers-are-poles-of-the-gamma	Factorial[-1]
-factorials-grow-fast-20-already-exceeds-2-times	Factorial[20]
-30-has-33-digits-and-ends-in-seven-zeros	Factorial[30]
+id	in	out
+5-factorial	Factorial(5)	120
+6-factorial	Factorial(6)	720
+the-empty-product-is-1-by-convention	Factorial(0)	1
+10-factorial	Factorial(10)	3628800
+threads-element-wise-over-a-list	Factorial(List(1, 2, 3, 4))	List(1, 2, 6, 24)
+frac-n-n-1-simplifies-to-n-under-simplify-plain	Simplify(Divide(Factorial(n), Factorial(Subtract(n, 1))))	n
+real-arguments-evaluate-as-gamma-n-1	Factorial(3.5)	11.631728396567457
+negative-non-integers-are-defined-too-2-5-gamma	Factorial(-2.5)	2.363271801207353
+complex-arguments-1-i-gamma-2-i	Factorial(Complex(1, 1))	Complex(0.6529654964201674, 0.3430658398165463)
+frac-12-gamma-frac-12-sqrt-pi-returned-as-a	Factorial(Rational(-1, 2))	1.7724538509055159
+infty-infty	Factorial(PositiveInfinity)	PositiveInfinity
+the-number-of-ways-to-arrange-8-distinct-books	Factorial(8)	40320
+recurrence-n-n-n-1	Equal(Factorial(5), Multiply(5, Factorial(4)))	True
+extends-to-non-integers-via-the-gamma-function	Factorial(Rational(1, 2))	0.8862269254527586
+n-gamma-n-1-see-gamma	Equal(Factorial(5), Gamma(6))	True
+the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e	Sum(Divide(1, Factorial(k)), Tuple(k, 0, PositiveInfinity))	ExponentialE
+negative-integers-are-poles-of-the-gamma	Factorial(-1)	ComplexInfinity
+factorials-grow-fast-20-already-exceeds-2-times	Factorial(20)	2432902008176640000
+30-has-33-digits-and-ends-in-seven-zeros	Factorial(30)	26525285981219105863630848e+7

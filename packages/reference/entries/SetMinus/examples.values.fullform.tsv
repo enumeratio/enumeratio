@@ -1,14 +1,14 @@
-id	in	back
-setminus-1-2-3-2	Complement[Union[List[1, 2, 3]], Union[List[2]]]	[SetMinus, [Union, [List, 1, 2, 3]], [Union, [List, 2]]]
-setminus-1-2-3-4-2-4	Complement[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]	[SetMinus, [Union, [List, 1, 2, 3, 4]], [Union, [List, 2, 4]]]
-removing-elements-that-aren-t-present-leaves-the	Complement[Union[List[1, 2, 3]], Union[List[9]]]	[SetMinus, [Union, [List, 1, 2, 3]], [Union, [List, 9]]]
-several-sets-can-be-removed-at-once	Complement[Union[List[a, b, c, d, f]], Union[List[a, c]], Union[List[d]]]	[SetMinus, [Union, [List, a, b, c, d, f]], [Union, [List, a, c]], [Union, [List, d]]]
-setminus-a-b-c-d-exponentiale-a-c-d	Complement[Union[List[a, b, c, d, E]], Union[List[a, c]], Union[List[d]]]	[SetMinus, [Union, [List, a, b, c, d, ExponentialE]], [Union, [List, a, c]], [Union, [List, d]]]
-lists-as-well-as-sets-as-wolfram-s-complement	Complement[List[a, b, c, d, f], List[a, c], List[d]]	
-a-range-as-the-universe-to-remove-from-compute	Complement[Range[1, 10], Union[List[2, 3]]]	[SetMinus, [Range, 1, 10], [Union, [List, 2, 3]]]
-a-setminus-a-setminus-b-a-cap-b-see-intersection	Equal[Complement[Union[List[1, 2, 3, 4]], Complement[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]], Intersection[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]]	[Equal, [SetMinus, [Union, [List, 1, 2, 3, 4]], [SetMinus, [Union, [List, 1, 2, 3, 4]], [Union, [List, 2, 4]]]], [Intersection, [Union, [List, 1, 2, 3, 4]], [Union, [List, 2, 4]]]]
-removing-the-empty-set-changes-nothing-a	Complement[Union[List[1, 2, 3]], EmptySet]	[SetMinus, [Union, [List, 1, 2, 3]], EmptySet]
-a-setminus-a-varnothing	Complement[Union[List[1, 2, 3]], Union[List[1, 2, 3]]]	[SetMinus, [Union, [List, 1, 2, 3]], [Union, [List, 1, 2, 3]]]
-setminus-b-exponentiale-d-a-c-b-c	Complement[Union[List[b, E, d, a, c]], Union[List[b, c]]]	[SetMinus, [Union, [List, b, ExponentialE, d, a, c]], [Union, [List, b, c]]]
-setminus-is-not-commutative-b-setminus-a-can	Complement[Union[List[2, 4]], Union[List[1, 2, 3, 4]]]	[SetMinus, [Union, [List, 2, 4]], [Union, [List, 1, 2, 3, 4]]]
-the-result-keeps-the-first-set-s-order-rather	Complement[Union[List[5, 4, 3, 2, 1]], Union[List[2]]]	[SetMinus, [Union, [List, 5, 4, 3, 2, 1]], [Union, [List, 2]]]
+id	in	out
+setminus-1-2-3-2	SetMinus(Set(1, 2, 3), Set(2))	Set(1, 3)
+setminus-1-2-3-4-2-4	SetMinus(Set(1, 2, 3, 4), Set(2, 4))	Set(1, 3)
+removing-elements-that-aren-t-present-leaves-the	SetMinus(Set(1, 2, 3), Set(9))	Set(1, 2, 3)
+several-sets-can-be-removed-at-once	SetMinus(Set(a, b, c, d, f), Set(a, c), Set(d))	Set(b, f)
+setminus-a-b-c-d-exponentiale-a-c-d	SetMinus(Set(a, b, c, d, ExponentialE), Set(a, c), Set(d))	Set(b, ExponentialE)
+lists-as-well-as-sets-as-wolfram-s-complement	SetMinus(List(a, b, c, d, f), List(a, c), List(d))	Set(b, f)
+a-range-as-the-universe-to-remove-from-compute	SetMinus(Range(1, 10), Set(2, 3))	Set(1, 4, 5, 6, 7, 8, 9, 10)
+a-setminus-a-setminus-b-a-cap-b-see-intersection	Equal(SetMinus(Set(1, 2, 3, 4), SetMinus(Set(1, 2, 3, 4), Set(2, 4))), Intersection(Set(1, 2, 3, 4), Set(2, 4)))	True
+removing-the-empty-set-changes-nothing-a	SetMinus(Set(1, 2, 3), EmptySet)	Set(1, 2, 3)
+a-setminus-a-varnothing	SetMinus(Set(1, 2, 3), Set(1, 2, 3))	EmptySet
+setminus-b-exponentiale-d-a-c-b-c	SetMinus(Set(b, ExponentialE, d, a, c), Set(b, c))	Set(ExponentialE, d, a)
+setminus-is-not-commutative-b-setminus-a-can	SetMinus(Set(2, 4), Set(1, 2, 3, 4))	EmptySet
+the-result-keeps-the-first-set-s-order-rather	SetMinus(Set(5, 4, 3, 2, 1), Set(2))	Set(5, 4, 3, 1)

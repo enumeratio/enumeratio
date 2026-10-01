@@ -1,44 +1,44 @@
-id	in	back
-factorinteger-360	FactorInteger[360]	
-factorinteger-84	FactorInteger[84]	
-factorinteger-120	FactorInteger[120]	
-factorinteger-36	FactorInteger[36]	
-threads-element-wise-over-a-list-as-wolfram-s	FactorInteger[List[12, 18]]	
-5-i-1-2i-2-i	FactorInteger[5, Rule[GaussianIntegers, True]]	[FactorInteger, 5, [KeyValuePair, GaussianIntegers, True]]
-3-4i-2-i-2	FactorInteger[Complex[3, 4]]	
-a-21-digit-gaussian-integer-through-its-norm	FactorInteger[Complex[100000000000000000039, 100000000000000000129]]	[FactorInteger, [Complex, 100000000000000000000, 100000000000000000000]]
-rationals-the-denominator-s-primes-get-negative	FactorInteger[Rational[3, 8]]	
-9-12i-3-2-i-2	FactorInteger[Complex[9, 12]]	
-36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime	FactorInteger[36, Rule[GaussianIntegers, True]]	[FactorInteger, 36, [KeyValuePair, GaussianIntegers, True]]
-listable-threads-over-a-list	FactorInteger[List[11, 101, 1001]]	
-a-21-digit-prime-cubed-factors-at-once	FactorInteger[Power[100000000000000000039, 3]]	[FactorInteger, [Power, 100000000000000000000, 3]]
-factorinteger-of-a-negative-rational	FactorInteger[Rational[-3, 8]]	
-a-unit-factors-as-itself	FactorInteger[Complex[0, 1]]	
-the-ramified-prime-above-2-factors-as-itself	FactorInteger[Complex[1, 1]]	
-a-prime-above-5-factors-as-itself	FactorInteger[Complex[2, 1]]	
-a-composite-of-norm-25-2-i-2	FactorInteger[Complex[3, 4]]	
-a-composite-of-norm-25-the-conjugate-family	FactorInteger[Complex[4, 3]]	
-an-associate-carries-its-normalising-unit-in	FactorInteger[Complex[-3, -4]]	
-a-composite-with-a-real-and-a-gaussian-factor	FactorInteger[Complex[6, 8]]	
-a-large-norm-composite	FactorInteger[Complex[123, 456]]	
-an-associate-carries-its-unit-times-i	FactorInteger[Complex[4, -3]]	
-a-prime-above-13-factors-as-itself	FactorInteger[Complex[3, 2]]	
-a-real-prime-s-associate-by-the-unit-i-factors	FactorInteger[Complex[0, 7]]	
-a-negative-real-prime-complex-argument-form	FactorInteger[-7]	
-a-composite-past-2-53-through-its-norm	FactorInteger[Complex[100000000000000000001, 9007199254740993]]	[FactorInteger, [Complex, 100000000000000000000, 9007199254740992]]
-7-3-mod-4-factors-as-itself-in-z-i	FactorInteger[7, Rule[GaussianIntegers, True]]	[FactorInteger, 7, [KeyValuePair, GaussianIntegers, True]]
-a-negative-prime-3-mod-4	FactorInteger[-7, Rule[GaussianIntegers, True]]	[FactorInteger, -7, [KeyValuePair, GaussianIntegers, True]]
-13-1-mod-4-splits-into-two-gaussian-primes	FactorInteger[13, Rule[GaussianIntegers, True]]	[FactorInteger, 13, [KeyValuePair, GaussianIntegers, True]]
-a-real-composite-5-squared-factors-through-its	FactorInteger[25, Rule[GaussianIntegers, True]]	[FactorInteger, 25, [KeyValuePair, GaussianIntegers, True]]
-a-negative-real-composite	FactorInteger[-15, Rule[GaussianIntegers, True]]	[FactorInteger, -15, [KeyValuePair, GaussianIntegers, True]]
-19-3-mod-4-factors-as-itself	FactorInteger[19, Rule[GaussianIntegers, True]]	[FactorInteger, 19, [KeyValuePair, GaussianIntegers, True]]
-2-ramifies-as-i-1-i-2	FactorInteger[2, Rule[GaussianIntegers, True]]	[FactorInteger, 2, [KeyValuePair, GaussianIntegers, True]]
-4-factors-through-the-ramified-prime	FactorInteger[4, Rule[GaussianIntegers, True]]	[FactorInteger, 4, [KeyValuePair, GaussianIntegers, True]]
-multiplying-the-p-e-factors-back-together	Equal[Times[Power[2, 3], Power[3, 2], 5], 360]	
-compute-engine-returns-the-trivial-factor-1-1	FactorInteger[1]	
-0-is-represented-as-0-1	FactorInteger[0]	
-negative-numbers-carry-an-explicit-1-unit-factor	FactorInteger[-60]	
-1-is-a-unit-and-factors-as-itself	FactorInteger[-1]	
-factorinteger-neg-12	FactorInteger[-12]	
-a-non-integer-real-stays-unevaluated	FactorInteger[2.5]	
-the-hardy-ramanujan-taxicab-number-7-times-13	FactorInteger[1729]	
+id	in	out
+factorinteger-360	FactorInteger(360)	List(Tuple(2, 3), Tuple(3, 2), Tuple(5, 1))
+factorinteger-84	FactorInteger(84)	List(Tuple(2, 2), Tuple(3, 1), Tuple(7, 1))
+factorinteger-120	FactorInteger(120)	List(Tuple(2, 3), Tuple(3, 1), Tuple(5, 1))
+factorinteger-36	FactorInteger(36)	List(Tuple(2, 2), Tuple(3, 2))
+threads-element-wise-over-a-list-as-wolfram-s	FactorInteger(List(12, 18))	List(List(Tuple(2, 2), Tuple(3, 1)), List(Tuple(2, 1), Tuple(3, 2)))
+5-i-1-2i-2-i	FactorInteger(5, KeyValuePair(Over, GaussianIntegers))	List(Tuple(Complex(0, -1), 1), Tuple(Complex(1, 2), 1), Tuple(Complex(2, 1), 1))
+3-4i-2-i-2	FactorInteger(Complex(3, 4))	List(Tuple(Complex(2, 1), 2))
+a-21-digit-gaussian-integer-through-its-norm	FactorInteger(Complex(100000000000000000039, 100000000000000000129))	List(Tuple(Complex(0, -1), 1), Tuple(Complex(1, 1), 1), Tuple(Complex(99, 34), 1), Tuple(Complex(1538, 213), 1), Tuple(Complex(277789996706096, 549000467740335), 1))
+rationals-the-denominator-s-primes-get-negative	FactorInteger(Rational(3, 8))	List(Tuple(2, -3), Tuple(3, 1))
+9-12i-3-2-i-2	FactorInteger(Complex(9, 12))	List(Tuple(Complex(2, 1), 2), Tuple(3, 1))
+36-1-i-4-cdot-3-2-2-ramifies-3-stays-prime	FactorInteger(36, KeyValuePair(Over, GaussianIntegers))	List(Tuple(-1, 1), Tuple(Complex(1, 1), 4), Tuple(3, 2))
+listable-threads-over-a-list	FactorInteger(List(11, 101, 1001))	List(List(Tuple(11, 1)), List(Tuple(101, 1)), List(Tuple(7, 1), Tuple(11, 1), Tuple(13, 1)))
+a-21-digit-prime-cubed-factors-at-once	FactorInteger(Power(100000000000000000039, 3))	List(Tuple(100000000000000000039, 3))
+factorinteger-of-a-negative-rational	FactorInteger(Rational(-3, 8))	List(Tuple(-1, 1), Tuple(2, -3), Tuple(3, 1))
+a-unit-factors-as-itself	FactorInteger(Complex(0, 1))	List(Tuple(Complex(0, 1), 1))
+the-ramified-prime-above-2-factors-as-itself	FactorInteger(Complex(1, 1))	List(Tuple(Complex(1, 1), 1))
+a-prime-above-5-factors-as-itself	FactorInteger(Complex(2, 1))	List(Tuple(Complex(2, 1), 1))
+a-composite-of-norm-25-2-i-2	FactorInteger(Complex(3, 4))	List(Tuple(Complex(2, 1), 2))
+a-composite-of-norm-25-the-conjugate-family	FactorInteger(Complex(4, 3))	List(Tuple(Complex(0, -1), 1), Tuple(Complex(1, 2), 2))
+an-associate-carries-its-normalising-unit-in	FactorInteger(Complex(-3, -4))	List(Tuple(-1, 1), Tuple(Complex(2, 1), 2))
+a-composite-with-a-real-and-a-gaussian-factor	FactorInteger(Complex(6, 8))	List(Tuple(Complex(0, -1), 1), Tuple(Complex(1, 1), 2), Tuple(Complex(2, 1), 2))
+a-large-norm-composite	FactorInteger(Complex(123, 456))	List(Tuple(Complex(1, 2), 1), Tuple(3, 1), Tuple(Complex(69, 14), 1))
+an-associate-carries-its-unit-times-i	FactorInteger(Complex(4, -3))	List(Tuple(Complex(0, -1), 1), Tuple(Complex(2, 1), 2))
+a-prime-above-13-factors-as-itself	FactorInteger(Complex(3, 2))	List(Tuple(Complex(3, 2), 1))
+a-real-prime-s-associate-by-the-unit-i-factors	FactorInteger(Complex(0, 7))	List(Tuple(Complex(0, 1), 1), Tuple(7, 1))
+a-negative-real-prime-complex-argument-form	FactorInteger(-7)	List(Tuple(-1, 1), Tuple(7, 1))
+a-composite-past-2-53-through-its-norm	FactorInteger(Complex(100000000000000000001, 9007199254740993))	List(Tuple(Complex(0, 1), 1), Tuple(Complex(1, 1), 1), Tuple(Complex(2, 1), 2), Tuple(Complex(14, 1), 1), Tuple(Complex(2051, 260), 1), Tuple(Complex(3540, 4951), 1), Tuple(Complex(15605, 48328), 1), Tuple(Complex(1306794, 882271), 1))
+7-3-mod-4-factors-as-itself-in-z-i	FactorInteger(7, KeyValuePair(Over, GaussianIntegers))	List(Tuple(7, 1))
+a-negative-prime-3-mod-4	FactorInteger(-7, KeyValuePair(Over, GaussianIntegers))	List(Tuple(-1, 1), Tuple(7, 1))
+13-1-mod-4-splits-into-two-gaussian-primes	FactorInteger(13, KeyValuePair(Over, GaussianIntegers))	List(Tuple(Complex(0, -1), 1), Tuple(Complex(2, 3), 1), Tuple(Complex(3, 2), 1))
+a-real-composite-5-squared-factors-through-its	FactorInteger(25, KeyValuePair(Over, GaussianIntegers))	List(Tuple(-1, 1), Tuple(Complex(1, 2), 2), Tuple(Complex(2, 1), 2))
+a-negative-real-composite	FactorInteger(-15, KeyValuePair(Over, GaussianIntegers))	List(Tuple(Complex(0, 1), 1), Tuple(Complex(1, 2), 1), Tuple(Complex(2, 1), 1), Tuple(3, 1))
+19-3-mod-4-factors-as-itself	FactorInteger(19, KeyValuePair(Over, GaussianIntegers))	List(Tuple(19, 1))
+2-ramifies-as-i-1-i-2	FactorInteger(2, KeyValuePair(Over, GaussianIntegers))	List(Tuple(Complex(0, -1), 1), Tuple(Complex(1, 1), 2))
+4-factors-through-the-ramified-prime	FactorInteger(4, KeyValuePair(Over, GaussianIntegers))	List(Tuple(-1, 1), Tuple(Complex(1, 1), 4))
+multiplying-the-p-e-factors-back-together	Equal(Multiply(Power(2, 3), Power(3, 2), 5), 360)	True
+compute-engine-returns-the-trivial-factor-1-1	FactorInteger(1)	List(Tuple(1, 1))
+0-is-represented-as-0-1	FactorInteger(0)	List(Tuple(0, 1))
+negative-numbers-carry-an-explicit-1-unit-factor	FactorInteger(-60)	List(Tuple(-1, 1), Tuple(2, 2), Tuple(3, 1), Tuple(5, 1))
+1-is-a-unit-and-factors-as-itself	FactorInteger(-1)	List(Tuple(-1, 1))
+factorinteger-neg-12	FactorInteger(-12)	List(Tuple(-1, 1), Tuple(2, 2), Tuple(3, 1))
+a-non-integer-real-stays-unevaluated	FactorInteger(2.5)	FactorInteger(2.5)
+the-hardy-ramanujan-taxicab-number-7-times-13	FactorInteger(1729)	List(Tuple(7, 1), Tuple(13, 1), Tuple(19, 1))

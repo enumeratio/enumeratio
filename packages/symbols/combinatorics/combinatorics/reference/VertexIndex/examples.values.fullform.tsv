@@ -1,2 +1,2 @@
-id	in
-matches-vertexlist-position	VertexIndex[Graph[List[5, 1, 2], List[UndirectedEdge[1, 2]]], 1]
+id	in	out
+matches-vertexlist-position	VertexIndex(Graph(List(5, 1, 2), List(UndirectedEdge(1, 2))), 1)	2

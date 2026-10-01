@@ -1,4 +1,4 @@
-id	in	back
-2-3	Length[Tuples[Range[2], 3]]	[Length, [Tuples, [Range, 2], 3]]
-tuples-2-3-list-1	Part[Tuples[Range[2], 3], 1]	[At, [Tuples, [Range, 2], 3], 1]
+id	in	out
+2-3	Count(Tuples(2, 3))	8
+tuples-2-3-list-1	At(Tuples(2, 3), 1)	List(1, 1, 1)
 thread-tuples-list-1-0-3-neg-gt-integerdigits-30		

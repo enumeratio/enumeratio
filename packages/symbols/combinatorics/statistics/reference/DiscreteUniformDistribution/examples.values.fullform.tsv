@@ -1,5 +1,5 @@
-id	in
-discreteuniform-pdf-exact	PDF[DiscreteUniformDistribution[List[1, 6]], 3]
-discreteuniform-cdf-exact	CDF[DiscreteUniformDistribution[List[1, 6]], 3]
-discreteuniform-mean-exact	Mean[DiscreteUniformDistribution[List[1, 6]]]
-discreteuniform-variance-exact	Variance[DiscreteUniformDistribution[List[1, 6]]]
+id	in	out
+discreteuniform-pdf-exact	PDF(DiscreteUniformDistribution(List(1, 6)), 3)	Rational(1, 6)
+discreteuniform-cdf-exact	CDF(DiscreteUniformDistribution(List(1, 6)), 3)	Rational(1, 2)
+discreteuniform-mean-exact	Mean(DiscreteUniformDistribution(List(1, 6)))	Rational(7, 2)
+discreteuniform-variance-exact	Variance(DiscreteUniformDistribution(List(1, 6)))	Rational(35, 12)

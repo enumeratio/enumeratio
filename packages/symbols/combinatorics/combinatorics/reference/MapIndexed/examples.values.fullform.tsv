@@ -1,8 +1,8 @@
-id	in	back
-pairs-each-element-with-its-1-based-index	MapIndexed[f, List[a, b, c]]	
-mapindexed-f-list-a-b-c-d	MapIndexed[f, List[a, b, c, d]]	
-mapindexed-f-list-list-a-b-list-c-d-exponentiale	MapIndexed[f, List[List[a, b], List[c, d, E]]]	
-mapindexed-f-list-list-list-list-list-a	MapIndexed[f, List[List[List[List[List[a]]]]]]	
-mapindexed-labeled-list-x-pow-2-x-plus-y-y-pow-2	MapIndexed[Labeled, List[Power[x, 2], Plus[x, y], Power[y, 2], Power[y, 3]]]	
-sum-mapindexed-function-1-times-x-pow-first-2-1	Total[MapIndexed[Function[Times[Slot[1], Power[x, First[Slot[2]]]]], List[a, b, c, d, E]]]	[Sum, [MapIndexed, [Function, [Multiply, _1, [Power, x, [First, _2]]]], [List, a, b, c, d, ExponentialE]]]
+id	in	out
+pairs-each-element-with-its-1-based-index	MapIndexed(f, List(a, b, c))	List(f(a, List(1)), f(b, List(2)), f(c, List(3)))
+mapindexed-f-list-a-b-c-d	MapIndexed(f, List(a, b, c, d))	List(f(a, List(1)), f(b, List(2)), f(c, List(3)), f(d, List(4)))
+mapindexed-f-list-list-a-b-list-c-d-exponentiale	MapIndexed(f, List(List(a, b), List(c, d, ExponentialE)))	List(f(List(a, b), List(1)), f(List(c, d, ExponentialE), List(2)))
+mapindexed-f-list-list-list-list-list-a	MapIndexed(f, List(List(List(List(List(a))))))	List(f(List(List(List(List(a)))), List(1)))
+mapindexed-labeled-list-x-pow-2-x-plus-y-y-pow-2	MapIndexed(Labeled, List(Power(x, 2), Add(x, y), Power(y, 2), Power(y, 3)))	List(Labeled(Power(x, 2), List(1)), Labeled(Add(x, y), List(2)), Labeled(Power(y, 2), List(3)), Labeled(Power(y, 3), List(4)))
+sum-mapindexed-function-1-times-x-pow-first-2-1	Sum(MapIndexed(Function(Block(Multiply(_1, Power(x, First(_2)))), _1, _2), List(a, b, c, d, ExponentialE)))	Add(Multiply(ExponentialE, Power(x, 5)), Multiply(d, Power(x, 4)), Multiply(c, Power(x, 3)), Multiply(b, Power(x, 2)), Multiply(a, x))
 first-last-reap-mapindexed-function-sow-2-list		

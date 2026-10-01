@@ -1,7 +1,7 @@
-id	in
-a-dihedral-group	GroupOrder[DihedralGroup[100]]
-grouporder-permutationgroup-list-cycles-list	GroupOrder[PermutationGroup[List[Cycles[List[List[2, 10], List[4, 11], List[5, 7], List[8, 9]]], Cycles[List[List[1, 4, 3, 8], List[2, 5, 6, 7]]]]]]
-a-permutation-group	GroupOrder[PermutationGroup[List[Cycles[List[List[1, 9, 6], List[3, 7]]]]]]
-the-symmetric-group	GroupOrder[SymmetricGroup[4]]
-grouporder-permutationgroup-list	GroupOrder[PermutationGroup[List[]]]
-grouporder-permutationgroup-list-cycles-list-2	GroupOrder[PermutationGroup[List[Cycles[List[]]]]]
+id	in	out
+a-dihedral-group	GroupOrder(DihedralGroup(100))	200
+grouporder-permutationgroup-list-cycles-list	GroupOrder(PermutationGroup(List(Cycles(List(List(2, 10), List(4, 11), List(5, 7), List(8, 9))), Cycles(List(List(1, 4, 3, 8), List(2, 5, 6, 7))))))	2880
+a-permutation-group	GroupOrder(PermutationGroup(List(Cycles(List(List(1, 9, 6), List(3, 7))))))	6
+the-symmetric-group	GroupOrder(SymmetricGroup(4))	24
+grouporder-permutationgroup-list	GroupOrder(PermutationGroup(List()))	1
+grouporder-permutationgroup-list-cycles-list-2	GroupOrder(PermutationGroup(List(Cycles(List()))))	1

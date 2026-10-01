@@ -1,10 +1,10 @@
-id	in	back
-equal-over-lists	Thread[Unevaluated[Equal[List[1, 2, 3], List[1, 5, 3]]]]	[Thread, [Unevaluated, [Equal, [List, 1, 2, 3], [List, 1, 5, 3]]]]
-thread-list-a-b-c-eq-list-x-y-z	Thread[Unevaluated[Equal[List[a, b, c], List[x, y, z]]]]	[Thread, [Unevaluated, [Equal, [List, a, b, c], [List, x, y, z]]]]
-thread-ln-x-eq-y-equal	Thread[Log[Equal[x, y]], Equal]	
-scalar-broadcast	Thread[Unevaluated[Equal[List[1, 2, 3], 1]]]	[Thread, [Unevaluated, [Equal, [List, 1, 2, 3], 1]]]
-custom-head	Thread[f[g[1, 2], g[3, 4]], g]	
-thread-list-list-a-b-c-0	Thread[List[List[a, b, c], 0]]	
-thread-list-a-b-c-neg-gt-list-1-2-3	Thread[Rule[List[a, b, c], List[1, 2, 3]]]	
-thread-list-list-a-b-c-list-x-y-z	Thread[List[List[a, b, c], List[x, y, z]]]	
+id	in	out
+equal-over-lists	Thread(Equal(List(1, 2, 3), List(1, 5, 3)))	List(Equal(1, 1), Equal(2, 5), Equal(3, 3))
+thread-list-a-b-c-eq-list-x-y-z	Thread(Equal(List(a, b, c), List(x, y, z)))	List(Equal(a, x), Equal(b, y), Equal(c, z))
+thread-ln-x-eq-y-equal	Thread(Ln(Equal(x, y)), Equal)	Equal(Ln(x), Ln(y))
+scalar-broadcast	Thread(Equal(List(1, 2, 3), 1))	List(Equal(1, 1), Equal(2, 1), Equal(3, 1))
+custom-head	Thread(f(g(1, 2), g(3, 4)), g)	g(f(1, 3), f(2, 4))
+thread-list-list-a-b-c-0	Thread(List(List(a, b, c), 0))	List(List(a, 0), List(b, 0), List(c, 0))
+thread-list-a-b-c-neg-gt-list-1-2-3	Thread(KeyValuePair(List(a, b, c), List(1, 2, 3)))	List(Tuple(a, 1), Tuple(b, 2), Tuple(c, 3))
+thread-list-list-a-b-c-list-x-y-z	Thread(List(List(a, b, c), List(x, y, z)))	List(List(a, x), List(b, y), List(c, z))
 thread-d-list-x-x-times-y-x-times-z-list-x-y-z		

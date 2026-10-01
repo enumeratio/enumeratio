@@ -1,23 +1,23 @@
-id	in	back
-rank-5	ArrayDepth[5]	
-rank-list-1-2-3	ArrayDepth[List[1, 2, 3]]	
-rank-list-list-1-0-list-0-1	ArrayDepth[List[List[1, 0], List[0, 1]]]	
-rank-list-list-list-1-2-list-3-4-list-list-5-6	ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]	
-symbolic-entries	ArrayDepth[List[List[a, b], List[c, d]]]	
-a-symbol-is-a-scalar	ArrayDepth[x]	
-rectangular-arrays	ArrayDepth[List[List[1, 2, 3], List[4, 5, 6]]]	
-rank-identitymatrix-3	ArrayDepth[IdentityMatrix[3]]	
-a-ragged-list-has-depth-1-only-its-outer-level	ArrayDepth[List[List[1, 2], List[3]]]	
-likewise-a-list-mixing-scalars-and-lists	ArrayDepth[List[1, List[2, 3]]]	
-the-empty-list-is-still-a-vector-of-length-0	ArrayDepth[List[]]	
-and-a-1-0-matrix	ArrayDepth[List[List[]]]	
-a-2-3-grid-of-unevaluated-calls-still-reads-as-a	ArrayDepth[Array[f, List[2, 3]]]	[Rank, [Array, f, [List, 2, 3]]]
-rank-list-list-a-b-list-c	ArrayDepth[List[List[a, b], List[c]]]	
-the-length-of-the-array-s-shape	Equal[ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]], Length[Dimensions[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]]]	
-rank-list-list-a-b-list-c-d-eq-length-shape-list	Equal[ArrayDepth[List[List[a, b], List[c, d]]], Length[Dimensions[List[List[a, b], List[c, d]]]]]	
-rank-1	ArrayDepth[1]	
-rank-list-1-2	ArrayDepth[List[1, 2]]	
-rank-list-list-1-2	ArrayDepth[List[List[1, 2]]]	
-rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	Equal[ArrayDepth[Array[a, List[2, 1, 4, 3]]], Length[List[2, 1, 4, 3]]]	
-a-singular-2-2-matrix-still-has-rank-2-its	ArrayDepth[List[List[1, 2], List[2, 4]]]	
-rank-sqrt-2	ArrayDepth[Sqrt[2]]	
+id	in	out
+rank-5	Rank(5)	0
+rank-list-1-2-3	Rank(List(1, 2, 3))	1
+rank-list-list-1-0-list-0-1	Rank(List(List(1, 0), List(0, 1)))	2
+rank-list-list-list-1-2-list-3-4-list-list-5-6	Rank(List(List(List(1, 2), List(3, 4)), List(List(5, 6), List(7, 8))))	3
+symbolic-entries	Rank(List(List(a, b), List(c, d)))	2
+a-symbol-is-a-scalar	Rank(x)	0
+rectangular-arrays	Rank(List(List(1, 2, 3), List(4, 5, 6)))	2
+rank-identitymatrix-3	Rank(IdentityMatrix(3))	2
+a-ragged-list-has-depth-1-only-its-outer-level	Rank(List(List(1, 2), List(3)))	1
+likewise-a-list-mixing-scalars-and-lists	Rank(List(1, List(2, 3)))	1
+the-empty-list-is-still-a-vector-of-length-0	Rank(List())	1
+and-a-1-0-matrix	Rank(List(List()))	2
+a-2-3-grid-of-unevaluated-calls-still-reads-as-a	Rank(Tabulate(f, 2, 3))	2
+rank-list-list-a-b-list-c	Rank(List(List(a, b), List(c)))	1
+the-length-of-the-array-s-shape	Equal(Rank(List(List(List(1, 2), List(3, 4)), List(List(5, 6), List(7, 8)))), Length(Shape(List(List(List(1, 2), List(3, 4)), List(List(5, 6), List(7, 8))))))	True
+rank-list-list-a-b-list-c-d-eq-length-shape-list	Equal(Rank(List(List(a, b), List(c, d))), Length(Shape(List(List(a, b), List(c, d)))))	True
+rank-1	Rank(1)	0
+rank-list-1-2	Rank(List(1, 2))	1
+rank-list-list-1-2	Rank(List(List(1, 2)))	2
+rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	Equal(Rank(Array(a, List(2, 1, 4, 3))), Length(List(2, 1, 4, 3)))	True
+a-singular-2-2-matrix-still-has-rank-2-its	Rank(List(List(1, 2), List(2, 4)))	2
+rank-sqrt-2	Rank(Sqrt(2))	0

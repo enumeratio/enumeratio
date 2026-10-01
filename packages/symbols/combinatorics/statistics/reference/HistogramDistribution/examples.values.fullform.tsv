@@ -1,6 +1,6 @@
-id	in
-histogram-distribution-pdf	PDF[HistogramDistribution[List[1, 1, 2, 2, 2, 3, 3, 4], List[0, 5, 1]], Rational[3, 2]]
-histogram-distribution-pdf-outside	PDF[HistogramDistribution[List[1, 1, 2, 2, 2, 3, 3, 4], List[0, 5, 1]], 10]
-histogram-distribution-cdf	CDF[HistogramDistribution[List[1, 1, 2, 2, 2, 3, 3, 4], List[0, 5, 1]], 2]
-histogram-distribution-mean	Mean[HistogramDistribution[List[1, 1, 2, 2, 2, 3, 3, 4], List[0, 5, 1]]]
-histogram-distribution-dx-only-form	PDF[HistogramDistribution[List[1, 2, 2, 3], List[1]], Rational[3, 2]]
+id	in	out
+histogram-distribution-pdf	PDF(HistogramDistribution(List(1, 1, 2, 2, 2, 3, 3, 4), List(0, 5, 1)), Rational(3, 2))	Rational(1, 4)
+histogram-distribution-pdf-outside	PDF(HistogramDistribution(List(1, 1, 2, 2, 2, 3, 3, 4), List(0, 5, 1)), 10)	0
+histogram-distribution-cdf	CDF(HistogramDistribution(List(1, 1, 2, 2, 2, 3, 3, 4), List(0, 5, 1)), 2)	Rational(1, 4)
+histogram-distribution-mean	Mean(HistogramDistribution(List(1, 1, 2, 2, 2, 3, 3, 4), List(0, 5, 1)))	Rational(11, 4)
+histogram-distribution-dx-only-form	PDF(HistogramDistribution(List(1, 2, 2, 3), List(1)), Rational(3, 2))	Rational(1, 4)

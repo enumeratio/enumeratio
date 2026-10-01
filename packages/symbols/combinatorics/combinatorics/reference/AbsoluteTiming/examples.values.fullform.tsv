@@ -1,2 +1,2 @@
-id	in
-the-value-half-is-deterministic	Part[AbsoluteTiming[Plus[1, 2]], 2]
+id	in	out
+the-value-half-is-deterministic	At(AbsoluteTiming(Add(1, 2)), 2)	3

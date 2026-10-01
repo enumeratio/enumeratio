@@ -1,3 +1,3 @@
-id	in
-elliptick-1-plus-sqrt-2-minus-sqrt-2-times-1	EllipticK[Power[Plus[1, Sqrt[2], Minus[Sqrt[Times[2, Plus[1, Sqrt[2]]]]]], 4]]
-elliptick-1	EllipticK[1]
+id	in	out
+elliptick-1-plus-sqrt-2-minus-sqrt-2-times-1	EllipticK(Power(Add(1, Sqrt(2), Negate(Sqrt(Multiply(2, Add(1, Sqrt(2)))))), 4))	EllipticK(Power(Add(1, Sqrt(2), Multiply(Negate(Sqrt(2)), Sqrt(Add(1, Sqrt(2))))), 4))
+elliptick-1	EllipticK(1)	PositiveInfinity

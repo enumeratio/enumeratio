@@ -1,18 +1,18 @@
-id	in
-matches-hypergeometric0f1-2-0-5-gamma-2	Hypergeometric0F1Regularized[2, 0.5]
-b-1-is-a-pole-of-gamma-but-the-regularized-form	Hypergeometric0F1Regularized[-1, 0.5]
-at-the-pole-b-1-under-n	N[Hypergeometric0F1Regularized[-1, 2]]
-b-1-5-at-neg-0-7	Hypergeometric0F1Regularized[1.5, -0.7]
-rational-order-7-3-at-2-5	Hypergeometric0F1Regularized[Rational[7, 3], 2.5]
-complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1Regularized[Complex[1, 1], 0.5]]
-order-2-at-a-complex-argument	N[Hypergeometric0F1Regularized[2, Complex[0.5, 0.5]]]
-negative-order-neg-0-5-at-0-3	Hypergeometric0F1Regularized[-0.5, 0.3]
-complex-order-and-argument	N[Hypergeometric0F1Regularized[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]
-order-0	Hypergeometric0F1Regularized[0, 0.5]
-order-neg-2-at-0-7	Hypergeometric0F1Regularized[-2, 0.7]
-order-0-at-a-complex-argument	N[Hypergeometric0F1Regularized[0, Complex[0.3, 0.4]]]
-order-neg-1-at-a-complex-argument	N[Hypergeometric0F1Regularized[-1, Complex[-0.5, 0.2]]]
-n-hypergeometric0f1regularized-0-neg-48-50	
-n-hypergeometric0f1regularized-4-0-25	
-matrixfunction-function	
-exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized[-1, 2]
+id	in	out
+matches-hypergeometric0f1-2-0-5-gamma-2	Hypergeometric0F1Regularized(2, 0.5)	1.2717234563121365
+b-1-is-a-pole-of-gamma-but-the-regularized-form	Hypergeometric0F1Regularized(-1, 0.5)	0.1471797367221067
+at-the-pole-b-1-under-n	N(Hypergeometric0F1Regularized(-1, 2))	3.7150355604584364
+b-1-5-at-neg-0-7	Hypergeometric0F1Regularized(1.5, -0.7)	0.6707946255741352
+rational-order-7-3-at-2-5	Hypergeometric0F1Regularized(Rational(7, 3), 2.5)	2.150351150907756
+complex-order-1-plus-i-at-0-5	N(Hypergeometric0F1Regularized(Complex(1, 1), 0.5))	Complex(2.476270194944867, 0.18885329562027878)
+order-2-at-a-complex-argument	N(Hypergeometric0F1Regularized(2, Complex(0.5, 0.5)))	Complex(1.248175636885929, 0.2934012962643341)
+negative-order-neg-0-5-at-0-3	Hypergeometric0F1Regularized(-0.5, 0.3)	-0.05857240214082423
+complex-order-and-argument	N(Hypergeometric0F1Regularized(Complex(-2.5, 1.5), Complex(1.2, -0.8)))	Complex(2.7356652974870386, 25.894454183167475)
+order-0	Hypergeometric0F1Regularized(0, 0.5)	0.6358617281560686
+order-neg-2-at-0-7	Hypergeometric0F1Regularized(-2, 0.7)	0.06789905147462627
+order-0-at-a-complex-argument	N(Hypergeometric0F1Regularized(0, Complex(0.3, 0.4)))	Complex(0.25488334300581544, 0.5234223951841015)
+order-neg-1-at-a-complex-argument	N(Hypergeometric0F1Regularized(-1, Complex(-0.5, 0.2)))	Complex(0.09427166608970403, -0.07802491943203783)
+n-hypergeometric0f1regularized-0-neg-48-50		
+n-hypergeometric0f1regularized-4-0-25		
+matrixfunction-function		
+exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized(-1, 2)	Hypergeometric0F1Regularized(-1, 2)

@@ -1,12 +1,12 @@
-id	in
-gamma-to-exp	InverseMellinTransform[Gamma[s], s, x]
-pi-csc-to-one-over-one-plus-x	InverseMellinTransform[Times[Pi, Csc[Times[Pi, s]]], s, x]
-pi-csc-over-s-to-log-reciprocal	InverseMellinTransform[Divide[Times[Pi, Csc[Times[Pi, s]]], s], s, x]
-inversemellintransform-1-over-gamma-neg-1-over-2	
-shift-gamma-a-plus-s	InverseMellinTransform[Gamma[Plus[a, s]], s, x]
-inversemellintransform-gamma-s-s-neg-2	
-inversemellintransform-1-over-b-plus-s-times-a	
-inversemellintransform-1-over-gamma-neg-1-over-3	
-inversemellintransform-gamma-s-times-1-over-a	
-inversemellintransform-1-over-gamma-neg-1-over-4	
-inversemellintransform-1-over-neg-s-plus-1-times	
+id	in	out
+gamma-to-exp	InverseMellinTransform(Gamma(s), s, x)	Power(ExponentialE, Negate(x))
+pi-csc-to-one-over-one-plus-x	InverseMellinTransform(Multiply(Pi, Csc(Multiply(Pi, s))), s, x)	Divide(1, Add(x, 1))
+pi-csc-over-s-to-log-reciprocal	InverseMellinTransform(Divide(Multiply(Pi, Csc(Multiply(Pi, s))), s), s, x)	Ln(Add(Divide(1, x), 1))
+inversemellintransform-1-over-gamma-neg-1-over-2		
+shift-gamma-a-plus-s	InverseMellinTransform(Gamma(Add(a, s)), s, x)	Multiply(Power(ExponentialE, Negate(x)), Power(x, a))
+inversemellintransform-gamma-s-s-neg-2		
+inversemellintransform-1-over-b-plus-s-times-a		
+inversemellintransform-1-over-gamma-neg-1-over-3		
+inversemellintransform-gamma-s-times-1-over-a		
+inversemellintransform-1-over-gamma-neg-1-over-4		
+inversemellintransform-1-over-neg-s-plus-1-times		

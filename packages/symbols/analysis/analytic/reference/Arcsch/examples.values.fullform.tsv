@@ -1,20 +1,20 @@
-id	in	back
-n-arcsch-2	N[ArcCsch[2]]	
-a-pole-at-0	ArcCsch[0]	
-arcsch-positiveinfinity	ArcCsch[Infinity]	
-a-float-argument-evaluates-directly	ArcCsch[1.5]	
-as-a-logarithm-arcsch-1-ln-1-sqrt-2	TrigToExp[ArcCsch[1]]	
-oddness-pulls-the-sign-out-of-a-symbolic	ArcCsch[Minus[x]]	
-derivative-for-real-x-ne-0	D[ArcCsch[x], x]	
-n-arcsch-5-50	N[ArcCsch[5], 50]	
-arcsch-list-list-2i-0-list-i-neg-2-times-i	ArcCsch[List[List[Complex[0, 2], 0], List[Complex[0, 1], Complex[0, -2]]]]	
-arcsch-complexinfinity	ArcCsch[ComplexInfinity]	
-matrixfunction-function-arcsch-1-1-list-list-2i	MatrixFunction[Function[ArcCsch[Slot[1]]], List[List[Complex[0, 2], 0], List[Complex[0, 1], Complex[0, -2]]]]	[MatrixFunction, [Function, [Arcsch, _1]], [List, [List, [Complex, 0, 2], 0], [List, [Complex, 0, 1], [Complex, 0, -2]]]]
-arcsch-i-times-neg-sqrt-2-plus-sqrt-6	ArcCsch[Times[Complex[0, 1], Plus[Minus[Sqrt[2]], Sqrt[6]]]]	
-arcsch-i-times-neg-sqrt-6-plus-sqrt-2	ArcCsch[Times[Complex[0, 1], Plus[Minus[Sqrt[6]], Sqrt[2]]]]	
-arcsch-i-times-sqrt-2-plus-neg-2-over-5-times	ArcCsch[Times[Complex[0, 1], Sqrt[Plus[2, Times[Rational[-2, 5], Sqrt[5]]]]]]	
-arcsch-neg-i-times-sqrt-2-plus-neg-2-over-5	ArcCsch[Times[Complex[0, -1], Sqrt[Plus[2, Times[Rational[-2, 5], Sqrt[5]]]]]]	
-arcsch-2i-times-sqrt-1-over-2-plus-sqrt-2	ArcCsch[Times[Complex[0, 2], Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	
-arcsch-neg-2-times-i-times-sqrt-1-over-2-plus	ArcCsch[Times[Complex[0, -2], Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	
-arcsch-i-times-sqrt-2-plus-2-over-5-times-sqrt-5	ArcCsch[Times[Complex[0, 1], Sqrt[Plus[2, Times[Rational[2, 5], Sqrt[5]]]]]]	
-arcsch-neg-i-times-sqrt-2-plus-2-over-5-times	ArcCsch[Times[Complex[0, -1], Sqrt[Plus[2, Times[Rational[2, 5], Sqrt[5]]]]]]	
+id	in	out
+n-arcsch-2	N(Arcsch(2))	0.481211825059603447495
+a-pole-at-0	Arcsch(0)	ComplexInfinity
+arcsch-positiveinfinity	Arcsch(PositiveInfinity)	0
+a-float-argument-evaluates-directly	Arcsch(1.5)	0.625145117250416687636
+as-a-logarithm-arcsch-1-ln-1-sqrt-2	TrigToExp(Arcsch(1))	Ln(Add(1, Sqrt(2)))
+oddness-pulls-the-sign-out-of-a-symbolic	Arcsch(Negate(x))	Negate(Arcsch(x))
+derivative-for-real-x-ne-0	D(Arcsch(x), x)	Divide(-1, Multiply(Abs(x), Sqrt(Add(Power(x, 2), 1))))
+n-arcsch-5-50	N(Arcsch(5), 50)	0.19869011034924140647463691595020696822130879422445
+arcsch-list-list-2i-0-list-i-neg-2-times-i	Arcsch(List(List(Complex(0, 2), 0), List(Complex(0, 1), Complex(0, -2))))	List(List(Arcsch(Complex(0, 2)), ComplexInfinity), List(Arcsch(Complex(0, 1)), Arcsch(Complex(0, -2))))
+arcsch-complexinfinity	Arcsch(ComplexInfinity)	0
+matrixfunction-function-arcsch-1-1-list-list-2i	MatrixFunction(Function(Block(Arcsch(_1)), _1), List(List(Complex(0, 2), 0), List(Complex(0, 1), Complex(0, -2))))	List(List(Arcsch(Complex(0, 2)), 0), List(Add(Multiply(Rational(-1, 4), Arcsch(Complex(0, -2))), Multiply(Rational(1, 4), Arcsch(Complex(0, 2)))), Arcsch(Complex(0, -2))))
+arcsch-i-times-neg-sqrt-2-plus-sqrt-6	Arcsch(Multiply(Complex(0, 1), Add(Negate(Sqrt(2)), Sqrt(6))))	Arcsch(Multiply(Complex(0, Sqrt(2)), Add(-1, Sqrt(3))))
+arcsch-i-times-neg-sqrt-6-plus-sqrt-2	Arcsch(Multiply(Complex(0, 1), Add(Negate(Sqrt(6)), Sqrt(2))))	Arcsch(Multiply(Complex(0, Sqrt(2)), Add(1, Negate(Sqrt(3)))))
+arcsch-i-times-sqrt-2-plus-neg-2-over-5-times	Arcsch(Multiply(Complex(0, 1), Sqrt(Add(2, Multiply(Rational(-2, 5), Sqrt(5))))))	Arcsch(Multiply(Complex(0, Divide(Sqrt(10), 5)), Sqrt(Add(5, Negate(Sqrt(5))))))
+arcsch-neg-i-times-sqrt-2-plus-neg-2-over-5	Arcsch(Multiply(Complex(0, -1), Sqrt(Add(2, Multiply(Rational(-2, 5), Sqrt(5))))))	Arcsch(Multiply(Complex(0, Negate(Divide(Sqrt(10), 5))), Sqrt(Add(5, Negate(Sqrt(5))))))
+arcsch-2i-times-sqrt-1-over-2-plus-sqrt-2	Arcsch(Multiply(Complex(0, 2), Sqrt(Divide(1, Add(2, Sqrt(2))))))	Arcsch(Divide(Complex(0, 2), Sqrt(Add(2, Sqrt(2)))))
+arcsch-neg-2-times-i-times-sqrt-1-over-2-plus	Arcsch(Multiply(Complex(0, -2), Sqrt(Divide(1, Add(2, Sqrt(2))))))	Arcsch(Divide(Complex(0, -2), Sqrt(Add(2, Sqrt(2)))))
+arcsch-i-times-sqrt-2-plus-2-over-5-times-sqrt-5	Arcsch(Multiply(Complex(0, 1), Sqrt(Add(2, Multiply(Rational(2, 5), Sqrt(5))))))	Arcsch(Multiply(Complex(0, Divide(Sqrt(10), 5)), Sqrt(Add(5, Sqrt(5)))))
+arcsch-neg-i-times-sqrt-2-plus-2-over-5-times	Arcsch(Multiply(Complex(0, -1), Sqrt(Add(2, Multiply(Rational(2, 5), Sqrt(5))))))	Arcsch(Multiply(Complex(0, Negate(Divide(Sqrt(10), 5))), Sqrt(Add(5, Sqrt(5)))))

@@ -1,43 +1,43 @@
-id	in	back
-ceil-7-over-2	Ceiling[Rational[7, 2]]	
-ceil-3p2	Ceiling[3.2]	
-ceil-3p7	Ceiling[3.7]	
-integers-pass-through-unchanged	Ceiling[5]	
-threads-element-wise-over-a-list	Ceiling[List[1.2, -1.2, 3.7]]	
-ceil-2p4	Ceiling[2.4]	
-ceil-2p6	Ceiling[2.6]	
-idempotent-lceil-lceil-x-rceil-rceil	Ceiling[Ceiling[x]]	
-stays-symbolic	Ceiling[x]	
-exact-radicals-are-decided-numerically	Ceiling[Sqrt[50]]	
-evaluates-at-an-exact-constant-lceil-pi-rceil-4	Ceiling[Pi]	
-a-second-argument-rounds-up-to-a-multiple-of-it	Ceiling[226, 10]	
-the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	Ceiling[-10.3, 3.5]	
-nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	Ceiling[Subtract[Times[2, Pi], E], Rational[5, 4]]	
-rounds-the-real-and-imaginary-parts-up	Ceiling[Complex[5.37, -1.3]]	
-ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	Ceiling[List[List[Rational[1, 2], -1], List[0, Rational[-1, 2]]]]	
-matrixfunction-ceil-list-list-1-over-2-neg-1	MatrixFunction[Ceiling, List[List[Rational[1, 2], -1], List[0, Rational[-1, 2]]]]	
-ceil-0	Ceiling[0]	
-ceil-positiveinfinity	Ceiling[Infinity]	
-piecewiseexpand-ceil-x-2-0-lt-x-lt-4	PiecewiseExpand[Ceiling[x, 2], Less[0, x, 4]]	
+id	in	out
+ceil-7-over-2	Ceil(Rational(7, 2))	4
+ceil-3p2	Ceil(3.2)	4
+ceil-3p7	Ceil(3.7)	4
+integers-pass-through-unchanged	Ceil(5)	5
+threads-element-wise-over-a-list	Ceil(List(1.2, -1.2, 3.7))	List(2, -1, 4)
+ceil-2p4	Ceil(2.4)	3
+ceil-2p6	Ceil(2.6)	3
+idempotent-lceil-lceil-x-rceil-rceil	Ceil(Ceil(x))	Ceil(x)
+stays-symbolic	Ceil(x)	Ceil(x)
+exact-radicals-are-decided-numerically	Ceil(Sqrt(50))	8
+evaluates-at-an-exact-constant-lceil-pi-rceil-4	Ceil(Pi)	4
+a-second-argument-rounds-up-to-a-multiple-of-it	Ceil(226, 10)	230
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	Ceil(-10.3, 3.5)	-7.0
+nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	Ceil(Subtract(Multiply(2, Pi), ExponentialE), Rational(5, 4))	Rational(15, 4)
+rounds-the-real-and-imaginary-parts-up	Ceil(Complex(5.37, -1.3))	Complex(6, -1)
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	Ceil(List(List(Rational(1, 2), -1), List(0, Rational(-1, 2))))	List(List(1, -1), List(0, 0))
+matrixfunction-ceil-list-list-1-over-2-neg-1	MatrixFunction(Ceil, List(List(Rational(1, 2), -1), List(0, Rational(-1, 2))))	List(List(1, -1), List(0, 0))
+ceil-0	Ceil(0)	0
+ceil-positiveinfinity	Ceil(PositiveInfinity)	PositiveInfinity
+piecewiseexpand-ceil-x-2-0-lt-x-lt-4	PiecewiseExpand(Ceil(x, 2), Less(0, x, 4))	Ceil(x, 2)
 d-ceil-x-x		
-how-many-5-seat-vans-are-needed-to-carry-17	Ceiling[Divide[17, 5]]	
-ten-bits-are-enough-to-number-1000-items-lceil	Ceiling[Log[2, 1000]]	
-lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	Equal[Ceiling[Rational[7, 2]], Plus[Floor[Rational[7, 2]], 1]]	
-floor-and-ceil-agree-exactly-on-integers	Equal[Ceiling[5], Floor[5]]	
-ceil-16-3	Ceiling[16, 3]	
-piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2	PiecewiseExpand[Ceiling[Power[x, 2]], Less[0, x, 2]]	
-generatingfunction-ceil-n-4-n-x	GeneratingFunction[Ceiling[n, 4], n, x]	
-ceil-1	Ceiling[1]	
-ceil-neg-1	Ceiling[-1]	
-ceil-i	Ceiling[Complex[0, 1]]	
-ceil-neg-i	Ceiling[Complex[0, -1]]	
-ceil-23-over-10	Ceiling[Rational[23, 10]]	
-ceil-neg-3	Ceiling[-3]	
-piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1	PiecewiseExpand[Ceiling[Plus[x, Times[1, Power[3, -1]], Power[Ceiling[Plus[1, Times[-1, Times[x, Power[2, -1]]]]], 3]]], And[Element[x, Reals], Less[-1, x, 1]]]	
-ceil-neg-pi	Ceiling[Minus[Pi]]	
-ceil-neg-27-over-10	Ceiling[Rational[-27, 10]]	
-ceil-23-over-10-plus-neg-i-times-exponentiale	Ceiling[Plus[Rational[23, 10], Times[Complex[0, -1], E]]]	
-ceil-negativeinfinity	Ceiling[-Infinity]	
-a-zero-divisor-inside-ceil	Ceiling[Divide[16, 0]]	
-rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Ceiling[-3.7]	
-nan-propagates-rather-than-erroring	Ceiling[Indeterminate]	[Ceil, Indeterminate]
+how-many-5-seat-vans-are-needed-to-carry-17	Ceil(Divide(17, 5))	4
+ten-bits-are-enough-to-number-1000-items-lceil	Ceil(Log(1000, 2))	10
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	Equal(Ceil(Rational(7, 2)), Add(Floor(Rational(7, 2)), 1))	True
+floor-and-ceil-agree-exactly-on-integers	Equal(Ceil(5), Floor(5))	True
+ceil-16-3	Ceil(16, 3)	18
+piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2	PiecewiseExpand(Ceil(Power(x, 2)), Less(0, x, 2))	Ceil(Power(x, 2))
+generatingfunction-ceil-n-4-n-x	GeneratingFunction(Ceil(n, 4), n, x)	Divide(Multiply(4, x), Add(Power(x, 5), Negate(Power(x, 4)), Negate(x), 1))
+ceil-1	Ceil(1)	1
+ceil-neg-1	Ceil(-1)	-1
+ceil-i	Ceil(Complex(0, 1))	Complex(0, 1)
+ceil-neg-i	Ceil(Complex(0, -1))	Complex(0, -1)
+ceil-23-over-10	Ceil(Rational(23, 10))	3
+ceil-neg-3	Ceil(-3)	-3
+piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1	PiecewiseExpand(Ceil(Add(x, Multiply(1, Power(3, -1)), Power(Ceil(Add(1, Multiply(-1, Multiply(x, Power(2, -1))))), 3))), And(Element(x, RealNumbers), Less(-1, x, 1)))	Ceil(Add(x, Power(Ceil(Add(Multiply(Rational(-1, 2), x), 1)), 3), Rational(1, 3)))
+ceil-neg-pi	Ceil(Negate(Pi))	-3
+ceil-neg-27-over-10	Ceil(Rational(-27, 10))	-2
+ceil-23-over-10-plus-neg-i-times-exponentiale	Ceil(Add(Rational(23, 10), Multiply(Complex(0, -1), ExponentialE)))	Complex(3, -2)
+ceil-negativeinfinity	Ceil(NegativeInfinity)	NegativeInfinity
+a-zero-divisor-inside-ceil	Ceil(Divide(16, 0))	ComplexInfinity
+rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Ceil(-3.7)	-3
+nan-propagates-rather-than-erroring	Ceil(`NaN`)	`NaN`

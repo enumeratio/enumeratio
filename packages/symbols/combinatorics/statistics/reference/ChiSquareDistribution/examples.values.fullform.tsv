@@ -1,5 +1,5 @@
-id	in
-chisquare-pdf-exact	PDF[ChiSquareDistribution[3], 2]
-chisquare-cdf-exact	CDF[ChiSquareDistribution[3], 2]
-chisquare-mean-exact	Mean[ChiSquareDistribution[3]]
-chisquare-variance-exact	Variance[ChiSquareDistribution[3]]
+id	in	out
+chisquare-pdf-exact	PDF(ChiSquareDistribution(3), 2)	Divide(1, Multiply(2, ExponentialE, Gamma(Rational(3, 2))))
+chisquare-cdf-exact	CDF(ChiSquareDistribution(3), 2)	Add(1, Negate(GammaRegularized(Rational(3, 2), 1)))
+chisquare-mean-exact	Mean(ChiSquareDistribution(3))	3
+chisquare-variance-exact	Variance(ChiSquareDistribution(3))	6

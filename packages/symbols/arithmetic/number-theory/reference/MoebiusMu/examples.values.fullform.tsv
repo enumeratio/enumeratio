@@ -1,32 +1,32 @@
-id	in	back
-moebiusmu-1	MoebiusMu[1]	
-moebiusmu-11	MoebiusMu[11]	
-12-22-3-is-not-squarefree	MoebiusMu[12]	
-10-2-5-a-product-of-an-even-number-of-distinct	MoebiusMu[10]	
-threads-element-wise-over-a-list-as-wolfram-s	MoebiusMu[List[1, 2, 3, 4]]	
-gaussian-integers-5-6i-is-a-gaussian-prime-norm	MoebiusMu[Complex[5, 6]]	
-listable-threads-over-a-list	MoebiusMu[List[4, 10, 17, 20]]	
-listable-over-a-range	MoebiusMu[Range[20]]	
-moebiusmu-15-factorial-eq-0	Unequal[MoebiusMu[15], 0]	
-divisorsum-1-function-moebiusmu-1-1	DivisorSum[1, Function[MoebiusMu[Slot[1]]]]	[DivisorSum, 1, [Function, [MoebiusMu, _1]]]
-sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]	
-moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	Equal[MoebiusMu[253], Times[MoebiusMu[11], MoebiusMu[23]]]	
-moebiusmu-5-187	MoebiusMu[5187]	
-moebiusmu-32-538	MoebiusMu[32538]	
-moebiusmu-1-440	MoebiusMu[1440]	
-list-isprimepower-121-iscomposite-121-moebiusmu	List[And[PrimePowerQ[121], CompositeQ[121]], MoebiusMu[121]]	
-list-isprime-11-moebiusmu-11	List[PrimeQ[11], MoebiusMu[11]]	
-moebiusmu-2	MoebiusMu[2]	
-moebiusmu-3	MoebiusMu[3]	
-moebiusmu-4	MoebiusMu[4]	
-moebiusmu-5	MoebiusMu[5]	
-moebiusmu-6	MoebiusMu[6]	
-moebiusmu-7	MoebiusMu[7]	
-moebiusmu-8	MoebiusMu[8]	
-moebiusmu-9	MoebiusMu[9]	
-moebiusmu-13	MoebiusMu[13]	
-moebiusmu-14	MoebiusMu[14]	
-moebiusmu-15	MoebiusMu[15]	
-moebiusmu-16	MoebiusMu[16]	
-moebiusmu-17	MoebiusMu[17]	
-mu-is-only-defined-for-positive-integers-compute	MoebiusMu[0]	
+id	in	out
+moebiusmu-1	MoebiusMu(1)	1
+moebiusmu-11	MoebiusMu(11)	-1
+12-22-3-is-not-squarefree	MoebiusMu(12)	0
+10-2-5-a-product-of-an-even-number-of-distinct	MoebiusMu(10)	1
+threads-element-wise-over-a-list-as-wolfram-s	MoebiusMu(List(1, 2, 3, 4))	List(1, -1, -1, 0)
+gaussian-integers-5-6i-is-a-gaussian-prime-norm	MoebiusMu(Complex(5, 6))	-1
+listable-threads-over-a-list	MoebiusMu(List(4, 10, 17, 20))	List(0, 1, -1, 0)
+listable-over-a-range	MoebiusMu(Range(20))	List(1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0)
+moebiusmu-15-factorial-eq-0	NotEqual(MoebiusMu(15), 0)	True
+divisorsum-1-function-moebiusmu-1-1	DivisorSum(1, Function(Block(MoebiusMu(_1)), _1))	1
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	Add(MoebiusMu(1), MoebiusMu(2), MoebiusMu(3), MoebiusMu(4), MoebiusMu(6), MoebiusMu(12))	0
+moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	Equal(MoebiusMu(253), Multiply(MoebiusMu(11), MoebiusMu(23)))	True
+moebiusmu-5-187	MoebiusMu(5187)	1
+moebiusmu-32-538	MoebiusMu(32538)	-1
+moebiusmu-1-440	MoebiusMu(1440)	0
+list-isprimepower-121-iscomposite-121-moebiusmu	List(And(IsPrimePower(121), IsComposite(121)), MoebiusMu(121))	List(True, 0)
+list-isprime-11-moebiusmu-11	List(IsPrime(11), MoebiusMu(11))	List(True, -1)
+moebiusmu-2	MoebiusMu(2)	-1
+moebiusmu-3	MoebiusMu(3)	-1
+moebiusmu-4	MoebiusMu(4)	0
+moebiusmu-5	MoebiusMu(5)	-1
+moebiusmu-6	MoebiusMu(6)	1
+moebiusmu-7	MoebiusMu(7)	-1
+moebiusmu-8	MoebiusMu(8)	0
+moebiusmu-9	MoebiusMu(9)	0
+moebiusmu-13	MoebiusMu(13)	-1
+moebiusmu-14	MoebiusMu(14)	1
+moebiusmu-15	MoebiusMu(15)	1
+moebiusmu-16	MoebiusMu(16)	0
+moebiusmu-17	MoebiusMu(17)	-1
+mu-is-only-defined-for-positive-integers-compute	MoebiusMu(0)	MoebiusMu(0)

@@ -1,5 +1,5 @@
-id	in
-distance-along-a-path-graph	GraphDistance[enumeratio`PathGraph[5], 1, 5]
-unreachable-is-infinite	GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], UndirectedEdge[3, 4]]], 4, 1]
-unreachable-against-a-longer-directed-chain	GraphDistance[Graph[List[1, 2, 3, 4], List[DirectedEdge[1, 2], DirectedEdge[2, 3], UndirectedEdge[3, 4]]], 4, 1]
-weighted-distance-is-summed-weight-not-hop-count	GraphDistance[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]], Rule[EdgeWeight, List[5, 7]]], 1, 3]
+id	in	out
+distance-along-a-path-graph	GraphDistance(PathGraph(5), 1, 5)	4
+unreachable-is-infinite	GraphDistance(Graph(List(1, 2, 3, 4), List(DirectedEdge(1, 2), UndirectedEdge(3, 4))), 4, 1)	PositiveInfinity
+unreachable-against-a-longer-directed-chain	GraphDistance(Graph(List(1, 2, 3, 4), List(DirectedEdge(1, 2), DirectedEdge(2, 3), UndirectedEdge(3, 4))), 4, 1)	PositiveInfinity
+weighted-distance-is-summed-weight-not-hop-count	GraphDistance(Graph(List(1, 2, 3), List(UndirectedEdge(1, 2), UndirectedEdge(2, 3)), KeyValuePair(EdgeWeight, List(5, 7))), 1, 3)	12

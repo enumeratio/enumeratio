@@ -1,7 +1,7 @@
-id	in
-sin-a-plus-sin-b	TrigFactor[Plus[Sin[a], Sin[b]]]
-cos-a-minus-cos-b	TrigFactor[Subtract[Cos[a], Cos[b]]]
-one-minus-cos-x	TrigFactor[Subtract[1, Cos[x]]]
-poly-in-sin-cos	TrigFactor[Plus[Power[Sin[x], 2], Times[2, Sin[x], Cos[x]], Power[Cos[x], 2]]]
-trigfactor-neg-cos-x-pow-2-plus-sin-x-pow-2	TrigFactor[Plus[Minus[Power[Cos[x], 2]], Power[Sin[x], 2]]]
-trigfactor-1-over-sinh-x-plus-1-over-neg-cos-x	TrigFactor[Plus[Divide[1, Sinh[x]], Times[Divide[1, Plus[Minus[Power[Cos[x], 2]], Power[Sin[x], 2]]], Cosh[Plus[x, y]]]]]
+id	in	out
+sin-a-plus-sin-b	TrigFactor(Add(Sin(a), Sin(b)))	Multiply(2, Sin(Multiply(Rational(1, 2), Add(a, b))), Cos(Multiply(Rational(1, 2), Add(a, Negate(b)))))
+cos-a-minus-cos-b	TrigFactor(Subtract(Cos(a), Cos(b)))	Multiply(-2, Sin(Multiply(Rational(1, 2), Add(a, b))), Sin(Multiply(Rational(1, 2), Add(a, Negate(b)))))
+one-minus-cos-x	TrigFactor(Subtract(1, Cos(x)))	Multiply(2, Power(Sin(Multiply(Rational(1, 2), x)), 2))
+poly-in-sin-cos	TrigFactor(Add(Power(Sin(x), 2), Multiply(2, Sin(x), Cos(x)), Power(Cos(x), 2)))	Power(Add(Sin(x), Cos(x)), 2)
+trigfactor-neg-cos-x-pow-2-plus-sin-x-pow-2	TrigFactor(Add(Negate(Power(Cos(x), 2)), Power(Sin(x), 2)))	Multiply(Add(Negate(Cos(x)), Sin(x)), Add(Sin(x), Cos(x)))
+trigfactor-1-over-sinh-x-plus-1-over-neg-cos-x	TrigFactor(Add(Divide(1, Sinh(x)), Multiply(Divide(1, Add(Negate(Power(Cos(x), 2)), Power(Sin(x), 2))), Cosh(Add(x, y)))))	TrigFactor(Add(Divide(1, Sinh(x)), Divide(Cosh(Add(x, y)), Add(Negate(Power(Cos(x), 2)), Power(Sin(x), 2)))))

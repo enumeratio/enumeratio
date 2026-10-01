@@ -1,12 +1,13 @@
 // Every reference example's forms, as the printers and transpilers make them today, are the
 // ones its implementations record pins (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2): our `epsil`, `tex`, `notatio`
-// and `traditional`, each other system's `in`, and `fullform` with its `back` wherever
-// @enumeratio/wolfram's FullForm doesn't read back as the example. A printer or transpiler change shows up here as a data diff to
-// commit, in the same PR. No kernel needed.
+// `traditional` and `fullform`, and each other system's `in`. A printer or transpiler change
+// shows up here as a data diff to commit, in the same PR. No kernel needed.
 
+import { toFullForm } from "@enumeratio/formats/fullform";
 import { loadReferenceData, PACKAGES } from "@enumeratio/reference/node";
+import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
-import { recordWithForms } from "../scripts/forms.ts";
+import { fullFormBack, recordWithForms } from "../scripts/forms.ts";
 
 const FIX = "regenerate: UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts";
 
@@ -28,10 +29,27 @@ test.each(heads.map((h) => [`${h.package}/${h.head}`, h] as const))(
 // A transpiler that stopped emitting, or a reader that stopped reading, would show here first.
 test("most examples make the trip to Wolfram and back exactly", () => {
   let exact = 0;
-  for (const { implementations } of heads)
-    for (const rows of Object.values(implementations ?? {}))
-      if (rows["fullform"]?.in && rows["fullform"].back === undefined) exact++;
+  for (const { entry } of heads)
+    for (const { expr } of entry.examples) {
+      try {
+        if (JSON.stringify(fromWolfram(toWolfram(expr as never))) === JSON.stringify(expr)) exact++;
+      } catch {
+        // a head with no Wolfram spelling
+      }
+    }
   expect(exact).toBeGreaterThan(3500);
+});
+
+// FullForm is the tree: read back, every example and every expected value is the expression
+// it came from, uncanonicalised. Canonically, `e` and `i` become ExponentialE and the
+// imaginary unit, so that comparison would not hold.
+test("every example's FullForm reads back as the example", () => {
+  const lossy: string[] = [];
+  for (const { head, entry } of heads)
+    for (const { id, expr, expected } of entry.examples)
+      for (const json of [expr, expected])
+        if (fullFormBack(json as never, toFullForm(json as never)) !== undefined) lossy.push(`${head}#${id}`);
+  expect(lossy).toEqual([]);
 });
 
 // The vdom markup is FullForm: read back, every example is the expression it came from.

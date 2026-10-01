@@ -1,12 +1,12 @@
-id	in
-romannumeral-1-988	RomanNumeral[1988]
-romannumeral-2-024	RomanNumeral[2024]
-romannumeral-2-023	RomanNumeral[2023]
-the-largest-with-standard-symbols	RomanNumeral[3999]
-listable-4-is-written-subtractively	RomanNumeral[List[1, 2, 3, 4]]
-romannumeral-list-1-2-3-4-5-10-50-60-100-250-500	RomanNumeral[List[1, 2, 3, 4, 5, 10, 50, 60, 100, 250, 500, 1000, 1500, 2600]]
-romannumeral-range-1-10	RomanNumeral[Range[1, 10]]
-romannumeral-3-749	RomanNumeral[3749]
-romannumeral-1-234	RomanNumeral[1234]
-romannumeral-3-748	RomanNumeral[3748]
-zero-is-written-n-for-nulla	RomanNumeral[0]
+id	in	out
+romannumeral-1-988	RomanNumeral(1988)	"\"MCMLXXXVIII\""
+romannumeral-2-024	RomanNumeral(2024)	"\"MMXXIV\""
+romannumeral-2-023	RomanNumeral(2023)	"\"MMXXIII\""
+the-largest-with-standard-symbols	RomanNumeral(3999)	"\"MMMCMXCIX\""
+listable-4-is-written-subtractively	RomanNumeral(List(1, 2, 3, 4))	List("I", "II", "III", "IV")
+romannumeral-list-1-2-3-4-5-10-50-60-100-250-500	RomanNumeral(List(1, 2, 3, 4, 5, 10, 50, 60, 100, 250, 500, 1000, 1500, 2600))	List("I", "II", "III", "IV", "V", "X", "L", "LX", "C", "CCL", "D", "M", "MD", "MMDC")
+romannumeral-range-1-10	RomanNumeral(Range(1, 10))	List("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X")
+romannumeral-3-749	RomanNumeral(3749)	"\"MMMDCCXLIX\""
+romannumeral-1-234	RomanNumeral(1234)	"\"MCCXXXIV\""
+romannumeral-3-748	RomanNumeral(3748)	"\"MMMDCCXLVIII\""
+zero-is-written-n-for-nulla	RomanNumeral(0)	"\"N\""

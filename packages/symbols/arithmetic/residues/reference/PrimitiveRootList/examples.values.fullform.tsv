@@ -1,16 +1,16 @@
-id	in
-primitiverootlist-7	PrimitiveRootList[7]
-primitiverootlist-9	PrimitiveRootList[9]
-10-2-cdot-5-is-of-the-form-2p	PrimitiveRootList[10]
-an-odd-prime-power-varphi-varphi-25-8-generators	PrimitiveRootList[25]
-n-4-is-one-of-the-small-cyclic-cases	PrimitiveRootList[4]
-threads-over-a-list	PrimitiveRootList[List[9, 11]]
-18-2-cdot-3-2-is-of-the-form-2p-k	PrimitiveRootList[18]
-length-primitiverootlist-1-009	Length[PrimitiveRootList[1009]]
-there-are-varphi-varphi-n-of-them	Equal[Length[PrimitiveRootList[1009]], EulerPhi[EulerPhi[1009]]]
-the-first-is-primitiveroot	Equal[First[PrimitiveRootList[1009]], PrimitiveRoot[1009]]
-z-12-times-cong-c-2-times-c-2-is-not-cyclic	PrimitiveRootList[12]
-z-8-times-cong-c-2-times-c-2-is-not-cyclic	PrimitiveRootList[8]
-past-100-000-roots-the-list-is-not-built-but-its	Length[PrimitiveRootList[1000003]]
-past-the-cap-primitiverootlist-itself-stays	PrimitiveRootList[1000003]
-the-first-element-still-answers-past-the-cap	Part[PrimitiveRootList[1000003], 1]
+id	in	out
+primitiverootlist-7	PrimitiveRootList(7)	List(3, 5)
+primitiverootlist-9	PrimitiveRootList(9)	List(2, 5)
+10-2-cdot-5-is-of-the-form-2p	PrimitiveRootList(10)	List(3, 7)
+an-odd-prime-power-varphi-varphi-25-8-generators	PrimitiveRootList(25)	List(2, 3, 8, 12, 13, 17, 22, 23)
+n-4-is-one-of-the-small-cyclic-cases	PrimitiveRootList(4)	List(3)
+threads-over-a-list	PrimitiveRootList(List(9, 11))	List(List(2, 5), List(2, 6, 7, 8))
+18-2-cdot-3-2-is-of-the-form-2p-k	PrimitiveRootList(18)	List(5, 11)
+length-primitiverootlist-1-009	Length(PrimitiveRootList(1009))	288
+there-are-varphi-varphi-n-of-them	Equal(Length(PrimitiveRootList(1009)), Totient(Totient(1009)))	True
+the-first-is-primitiveroot	Equal(First(PrimitiveRootList(1009)), PrimitiveRoot(1009))	True
+z-12-times-cong-c-2-times-c-2-is-not-cyclic	PrimitiveRootList(12)	List()
+z-8-times-cong-c-2-times-c-2-is-not-cyclic	PrimitiveRootList(8)	List()
+past-100-000-roots-the-list-is-not-built-but-its	Length(PrimitiveRootList(1000003))	333332
+past-the-cap-primitiverootlist-itself-stays	PrimitiveRootList(1000003)	PrimitiveRootList(1000003)
+the-first-element-still-answers-past-the-cap	At(PrimitiveRootList(1000003), 1)	2

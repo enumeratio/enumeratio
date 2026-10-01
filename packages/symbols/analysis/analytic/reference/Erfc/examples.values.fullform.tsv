@@ -1,24 +1,24 @@
-id	in	back
-erfc-0	Erfc[0]	
-erfc-infinity	Erfc[Infinity]	[Erfc, PositiveInfinity]
-erfc-negativeinfinity	Erfc[-Infinity]	
-a-floating-point-argument-evaluates-directly-to	Erfc[0.5]	
-a-machine-precision-argument	Erfc[1.5]	
-threads-element-wise-over-a-list-as-wolfram-s	Erfc[List[0, 1]]	
-complex-arguments-should-evaluate-as-they-do-for	Erfc[Complex[1.5, -1]]	
-listable-threads-over-its-limits-at-pm-infty	Erfc[List[Infinity, -Infinity]]	
-interval-arithmetic-erfc-is-decreasing-so-the	Erfc[Interval[List[0.2, 0.3]]]	
-uncertainty-propagation	Erfc[Around[2, 0.01]]	
-to-30-significant-digits-every-one-correctly	N[Erfc[2], 30]	
-n-erfc-3-over-2-50	N[Erfc[Rational[3, 2]], 50]	
-functionexpand-matrixfunction-erfc-list-list-0-1	FunctionExpand[MatrixFunction[Erfc, List[List[0, Times[Complex[0, Rational[1, 2]], Pi]], List[Pi, 0]]]]	
-fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	FullSimplify[Equal[Erfc[Minus[z]], Plus[Minus[Erfc[z]], 2]]]	
-erfc-z-2-erfc-z-here-at-z-1	Equal[Plus[Erfc[-1], Erfc[1]], 2]	
-definition-erf-z-erfc-z-1-see-erf	Equal[Plus[Erf[2], Erfc[2]], 1]	
-erfc-x-2-erfc-x-applied-symbolically	Erfc[Minus[x]]	
-frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	D[Erfc[x], x]	
-an-exact-integer-argument-is-left-unevaluated	Erfc[1]	
-far-in-the-tail-erfc-keeps-full-relative	Erfc[9.5]	
-whereas-1-erf-9-5-cancels-to-exactly-0-in	Subtract[1, Erf[9.5]]	
-erfc-complexinfinity-is-indeterminate-inheriting	Erfc[ComplexInfinity]	
-the-gaussian-tail-shrinks-fast-only-about-7	Erfc[3.5]	
+id	in	out
+erfc-0	Erfc(0)	1
+erfc-infinity	Erfc(PositiveInfinity)	0
+erfc-negativeinfinity	Erfc(NegativeInfinity)	2
+a-floating-point-argument-evaluates-directly-to	Erfc(0.5)	0.479500122186953462317
+a-machine-precision-argument	Erfc(1.5)	0.033894853524689272933
+threads-element-wise-over-a-list-as-wolfram-s	Erfc(List(0, 1))	List(1, Erfc(1))
+complex-arguments-should-evaluate-as-they-do-for	Erfc(Complex(1.5, -1))	Complex(-0.07839920749893345, -0.027963711238655847)
+listable-threads-over-its-limits-at-pm-infty	Erfc(List(PositiveInfinity, NegativeInfinity))	List(0, 2)
+interval-arithmetic-erfc-is-decreasing-so-the	Erfc(Interval(0.2, 0.3))	Interval(0.6713732405408726, 0.7772974107895215)
+uncertainty-propagation	Erfc(Around(2, 0.01))	Around(0.004677734981047266, 0.00020666985354092054)
+to-30-significant-digits-every-one-correctly	N(Erfc(2), 30)	0.00467773498104726583793074363275
+n-erfc-3-over-2-50	N(Erfc(Rational(3, 2)), 50)	0.033894853524689272933023738354052141318589520742363
+functionexpand-matrixfunction-erfc-list-list-0-1	FunctionExpand(MatrixFunction(Erfc, List(List(0, Multiply(Complex(0, Rational(1, 2)), Pi)), List(Pi, 0))))	List(List(Add(Multiply(Rational(1, 2), Erfc(Multiply(Complex(Rational(-1, 2), Rational(-1, 2)), Pi))), Multiply(Rational(1, 2), Erfc(Multiply(Complex(Rational(1, 2), Rational(1, 2)), Pi)))), Add(Multiply(Complex(Rational(-1, 4), Rational(-1, 4)), Erfc(Multiply(Complex(Rational(-1, 2), Rational(-1, 2)), Pi))), Multiply(Complex(Rational(1, 4), Rational(1, 4)), Erfc(Multiply(Complex(Rational(1, 2), Rational(1, 2)), Pi))))), List(Add(Multiply(Complex(Rational(1, 2), Rational(-1, 2)), Erfc(Multiply(Complex(Rational(1, 2), Rational(1, 2)), Pi))), Multiply(Complex(Rational(-1, 2), Rational(1, 2)), Erfc(Multiply(Complex(Rational(-1, 2), Rational(-1, 2)), Pi)))), Add(Multiply(Rational(1, 2), Erfc(Multiply(Complex(Rational(-1, 2), Rational(-1, 2)), Pi))), Multiply(Rational(1, 2), Erfc(Multiply(Complex(Rational(1, 2), Rational(1, 2)), Pi))))))
+fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	FullSimplify(Equal(Erfc(Negate(z)), Add(Negate(Erfc(z)), 2)))	True
+erfc-z-2-erfc-z-here-at-z-1	Equal(Add(Erfc(-1), Erfc(1)), 2)	True
+definition-erf-z-erfc-z-1-see-erf	Equal(Add(Erf(2), Erfc(2)), 1)	True
+erfc-x-2-erfc-x-applied-symbolically	Erfc(Negate(x))	Add(Negate(Erfc(x)), 2)
+frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	D(Erfc(x), x)	Divide(Multiply(-2, Power(ExponentialE, Negate(Power(x, 2)))), Sqrt(Pi))
+an-exact-integer-argument-is-left-unevaluated	Erfc(1)	Erfc(1)
+far-in-the-tail-erfc-keeps-full-relative	Erfc(9.5)	3.76921448565487994168e-41
+whereas-1-erf-9-5-cancels-to-exactly-0-in	Subtract(1, Erf(9.5))	0.0
+erfc-complexinfinity-is-indeterminate-inheriting	Erfc(ComplexInfinity)	Indeterminate
+the-gaussian-tail-shrinks-fast-only-about-7	Erfc(3.5)	7.43098372341412745524e-7

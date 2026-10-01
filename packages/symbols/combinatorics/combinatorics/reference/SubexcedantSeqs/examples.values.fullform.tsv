@@ -1,4 +1,4 @@
-id	in	back
-count-subexcedantseqs-4	Length[SubexcedantSeqs[4]]	[Length, [SubexcedantSeqs, 4]]
-first-element-of-subexcedantseqs-4	Part[SubexcedantSeqs[4], 1]	
-every-element-of-subexcedantseqs-4	Take[SubexcedantSeqs[4], 24]	
+id	in	out
+count-subexcedantseqs-4	Count(SubexcedantSeqs(4))	24
+first-element-of-subexcedantseqs-4	At(SubexcedantSeqs(4), 1)	SubexcedantSeq(List(0, 0, 0, 0))
+every-element-of-subexcedantseqs-4	Take(SubexcedantSeqs(4), 24)	List(SubexcedantSeq(List(0, 0, 0, 0)), SubexcedantSeq(List(0, 0, 0, 1)), SubexcedantSeq(List(0, 0, 0, 2)), SubexcedantSeq(List(0, 0, 0, 3)), SubexcedantSeq(List(0, 0, 1, 0)), SubexcedantSeq(List(0, 0, 1, 1)), SubexcedantSeq(List(0, 0, 1, 2)), SubexcedantSeq(List(0, 0, 1, 3)), SubexcedantSeq(List(0, 0, 2, 0)), SubexcedantSeq(List(0, 0, 2, 1)), SubexcedantSeq(List(0, 0, 2, 2)), SubexcedantSeq(List(0, 0, 2, 3)), SubexcedantSeq(List(0, 1, 0, 0)), SubexcedantSeq(List(0, 1, 0, 1)), SubexcedantSeq(List(0, 1, 0, 2)), SubexcedantSeq(List(0, 1, 0, 3)), SubexcedantSeq(List(0, 1, 1, 0)), SubexcedantSeq(List(0, 1, 1, 1)), SubexcedantSeq(List(0, 1, 1, 2)), SubexcedantSeq(List(0, 1, 1, 3)), SubexcedantSeq(List(0, 1, 2, 0)), SubexcedantSeq(List(0, 1, 2, 1)), SubexcedantSeq(List(0, 1, 2, 2)), SubexcedantSeq(List(0, 1, 2, 3)))

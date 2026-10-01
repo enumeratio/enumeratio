@@ -1,8 +1,8 @@
-id	in	back
-centre-degree-of-a-6-vertex-star	VertexDegree[StarGraph[6], 1]	
-stargraph-8	StarGraph[8]	
-stargraph-6	StarGraph[6]	
-map-function-vertexeccentricity-stargraph-6-1-1	Map[Function[VertexEccentricity[StarGraph[6], Slot[1]]], VertexList[StarGraph[6]]]	[Map, [Function, [VertexEccentricity, [StarGraph, 6], _1]], [VertexList, [StarGraph, 6]]]
-istreegraph-stargraph-5	TreeGraphQ[StarGraph[5]]	
-isbipartitegraph-stargraph-5	BipartiteGraphQ[StarGraph[5]]	
-stargraph-7	StarGraph[7]	
+id	in	out
+centre-degree-of-a-6-vertex-star	VertexDegree(StarGraph(6), 1)	5
+stargraph-8	StarGraph(8)	Graph(List(1, 2, 3, 4, 5, 6, 7, 8), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(1, 5), UndirectedEdge(1, 6), UndirectedEdge(1, 7), UndirectedEdge(1, 8)))
+stargraph-6	StarGraph(6)	Graph(List(1, 2, 3, 4, 5, 6), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(1, 5), UndirectedEdge(1, 6)))
+map-function-vertexeccentricity-stargraph-6-1-1	Map(Function(Block(VertexEccentricity(StarGraph(6), _1)), _1), VertexList(StarGraph(6)))	List(1, 2, 2, 2, 2, 2)
+istreegraph-stargraph-5	IsTreeGraph(StarGraph(5))	True
+isbipartitegraph-stargraph-5	IsBipartiteGraph(StarGraph(5))	True
+stargraph-7	StarGraph(7)	Graph(List(1, 2, 3, 4, 5, 6, 7), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(1, 5), UndirectedEdge(1, 6), UndirectedEdge(1, 7)))

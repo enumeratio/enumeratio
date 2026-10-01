@@ -1,4 +1,4 @@
-id	in
-wiener-slice-mean	Mean[SliceDistribution[WienerProcess[2, 3], 5]]
-wiener-slice-variance	Variance[SliceDistribution[WienerProcess[0, 3], 4]]
-wiener-default-slice	SliceDistribution[WienerProcess[], 4]
+id	in	out
+wiener-slice-mean	Mean(SliceDistribution(WienerProcess(2, 3), 5))	10
+wiener-slice-variance	Variance(SliceDistribution(WienerProcess(0, 3), 4))	36
+wiener-default-slice	SliceDistribution(WienerProcess(), 4)	NormalDistribution(0, 2)

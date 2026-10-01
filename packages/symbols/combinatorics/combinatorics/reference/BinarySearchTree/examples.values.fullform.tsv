@@ -1,2 +1,2 @@
-id	in
-the-one-line-word-231	BinarySearchTree[Permutation[List[2, 3, 1]]]
+id	in	out
+the-one-line-word-231	BinarySearchTree(Permutation(List(2, 3, 1)))	BinaryTree(List(List(0, 0), List(0, 0)))

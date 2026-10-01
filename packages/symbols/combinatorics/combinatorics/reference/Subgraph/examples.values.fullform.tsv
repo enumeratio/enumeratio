@@ -1,2 +1,2 @@
-id	in
-three-of-k4s-vertices	Subgraph[CompleteGraph[4], List[1, 2, 3]]
+id	in	out
+three-of-k4s-vertices	Subgraph(CompleteGraph(4), List(1, 2, 3))	Graph(List(1, 2, 3), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(2, 3)))

@@ -1,27 +1,27 @@
-id	in
-bellnumber-0	BellB[0]
-bellnumber-1	BellB[1]
-bellnumber-3	BellB[3]
-bellnumber-5	BellB[5]
-bellnumber-10	BellB[10]
-threads-element-wise-over-a-list-as-wolfram-s	BellB[List[1, 2, 3, 4]]
-exact-for-large-n	BellB[30]
-the-two-argument-form-gives-the-bell-touchard	BellB[5, x]
-the-bell-polynomial-at-a-real-point-b-20-0-5	BellB[20, 0.5]
-bellnumber-list-1-2-3-4-5-6	BellB[List[1, 2, 3, 4, 5, 6]]
-the-number-of-ways-to-partition-a-4-element-set	BellB[4]
-recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	Equal[BellB[5], Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]]]
-the-bell-polynomial-at-1-is-the-bell-number-b-n	BellB[5, 1]
-dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	Divide[Sum[Divide[Power[k, 5], Factorial[k]], List[k, 0, Infinity]], E]
-touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	Equal[Mod[BellB[9], 7], Mod[Plus[BellB[2], BellB[3]], 7]]
-exponentialgeneratingfunction-bellnumber-n-n-x	ExponentialGeneratingFunction[BellB[n], n, x]
-bellnumber-2	BellB[2]
-bellnumber-6	BellB[6]
-bellnumber-7	BellB[7]
-bellnumber-8	BellB[8]
-bellnumber-9	BellB[9]
-bellnumber-1-0	BellB[1, 0]
-bellnumber-2-0	BellB[2, 0]
-a-negative-argument-is-left-unevaluated	BellB[-1]
-a-zero-modulus-inside-a-congruence-check-is-nan	Equal[Mod[BellB[9], 23], Mod[Plus[BellB[4], BellB[5]], 0]]
-bellnumber-range-1-10	BellB[Range[1, 10]]
+id	in	out
+bellnumber-0	BellNumber(0)	1
+bellnumber-1	BellNumber(1)	1
+bellnumber-3	BellNumber(3)	5
+bellnumber-5	BellNumber(5)	52
+bellnumber-10	BellNumber(10)	115975
+threads-element-wise-over-a-list-as-wolfram-s	BellNumber(List(1, 2, 3, 4))	List(1, 2, 5, 15)
+exact-for-large-n	BellNumber(30)	846749014511809332450147
+the-two-argument-form-gives-the-bell-touchard	BellNumber(5, x)	Add(Power(x, 5), Multiply(10, Power(x, 4)), Multiply(25, Power(x, 3)), Multiply(15, Power(x, 2)), x)
+the-bell-polynomial-at-a-real-point-b-20-0-5	BellNumber(20, 0.5)	270190131940.15192
+bellnumber-list-1-2-3-4-5-6	BellNumber(List(1, 2, 3, 4, 5, 6))	List(1, 2, 5, 15, 52, 203)
+the-number-of-ways-to-partition-a-4-element-set	BellNumber(4)	15
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	Equal(BellNumber(5), Add(Multiply(Binomial(4, 0), BellNumber(0)), Multiply(Binomial(4, 1), BellNumber(1)), Multiply(Binomial(4, 2), BellNumber(2)), Multiply(Binomial(4, 3), BellNumber(3)), Multiply(Binomial(4, 4), BellNumber(4))))	True
+the-bell-polynomial-at-1-is-the-bell-number-b-n	BellNumber(5, 1)	52
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	Divide(Sum(Divide(Power(k, 5), Factorial(k)), Tuple(k, 0, PositiveInfinity)), ExponentialE)	52
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	Equal(Mod(BellNumber(9), 7), Mod(Add(BellNumber(2), BellNumber(3)), 7))	True
+exponentialgeneratingfunction-bellnumber-n-n-x	ExponentialGeneratingFunction(BellNumber(n), n, x)	Power(ExponentialE, Add(Power(ExponentialE, x), -1))
+bellnumber-2	BellNumber(2)	2
+bellnumber-6	BellNumber(6)	203
+bellnumber-7	BellNumber(7)	877
+bellnumber-8	BellNumber(8)	4140
+bellnumber-9	BellNumber(9)	21147
+bellnumber-1-0	BellNumber(1, 0)	0
+bellnumber-2-0	BellNumber(2, 0)	0
+a-negative-argument-is-left-unevaluated	BellNumber(-1)	BellNumber(-1)
+a-zero-modulus-inside-a-congruence-check-is-nan	Equal(Mod(BellNumber(9), 23), Mod(Add(BellNumber(4), BellNumber(5)), 0))	False
+bellnumber-range-1-10	BellNumber(Range(1, 10))	List(1, 2, 5, 15, 52, 203, 877, 4140, 21147, 115975)

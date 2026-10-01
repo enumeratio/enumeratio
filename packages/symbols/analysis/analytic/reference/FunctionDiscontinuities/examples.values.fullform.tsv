@@ -1,5 +1,5 @@
-id	in
-a-pole-is-a-discontinuity	FunctionDiscontinuities[Divide[1, x], x]
-tangent-s-poles	FunctionDiscontinuities[Tan[x], x]
-a-polynomial-is-continuous-everywhere	FunctionDiscontinuities[Power[x, 2], x]
-functiondiscontinuities-sqrt-x-x	FunctionDiscontinuities[Sqrt[x], x]
+id	in	out
+a-pole-is-a-discontinuity	FunctionDiscontinuities(Divide(1, x), x)	Equal(x, 0)
+tangent-s-poles	FunctionDiscontinuities(Tan(x), x)	Equal(Cos(x), 0)
+a-polynomial-is-continuous-everywhere	FunctionDiscontinuities(Power(x, 2), x)	False
+functiondiscontinuities-sqrt-x-x	FunctionDiscontinuities(Sqrt(x), x)	LessEqual(x, 0)

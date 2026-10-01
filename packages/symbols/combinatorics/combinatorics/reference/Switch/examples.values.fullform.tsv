@@ -1,3 +1,3 @@
-id	in	back
-match-a-literal-form	Switch[2, 1, one, 2, two, 3, three]	
-fall-through-to-a-blank-default	Switch[99, 1, one, Slot[1], other]	[Switch, 99, 1, one, _1, other]
+id	in	out
+match-a-literal-form	Switch(2, 1, one, 2, two, 3, three)	two
+fall-through-to-a-blank-default	Switch(99, 1, one, _, other)	other

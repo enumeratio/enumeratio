@@ -1,49 +1,49 @@
-id	in
-abs-neg-5	Abs[-5]
-abs-5	Abs[5]
-0-is-the-only-value-with-x-0	Abs[0]
-abs-neg-7-over-2	Abs[Rational[-7, 2]]
-the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	Abs[Complex[3, 4]]
-threads-element-wise-over-a-list	Abs[List[-1, 2, -3]]
-abs-neg-2p5	Abs[-2.5]
-the-modulus-of-a-complex-number-with-approximate	Abs[Complex[1.4, 2.3]]
-threads-over-a-matrix-entry-by-entry	Abs[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
-exact-numeric-constants	Abs[Minus[Pi]]
-an-exact-complex-number-gives-an-exact-radical	Abs[Complex[1, 1]]
-abs-imaginaryunit	Abs[I]
-e-i-pi-3-lies-on-the-unit-circle	Abs[Exp[Times[I, Divide[Pi, 3]]]]
-abs-negativeinfinity	Abs[-Infinity]
-complex-infinity-has-infinite-magnitude-in-every	Abs[ComplexInfinity]
-an-interval-maps-to-the-interval-of-absolute	Abs[Interval[List[-3, 5]]]
-an-interval-straddling-0-maps-to-0-the-larger	Abs[Interval[List[-3, 2]]]
-decides-the-sign-of-an-exact-numeric-expression	Abs[Subtract[Sqrt[2], 2]]
-a-complex-radicand-inside-the-subtraction	Abs[Subtract[Sqrt[-10], 2]]
-n-abs-pi-plus-i-times-catalan-25	N[Abs[Plus[Pi, Times[Complex[0, 1], Catalan]]], 25]
-fullsimplify-matrixfunction-abs-list-list-1-over	FullSimplify[MatrixFunction[Abs, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]]
-abs-positiveinfinity	Abs[Infinity]
-abs-positiveinfinity-times-i	Abs[Times[Infinity, Complex[0, 1]]]
-piecewiseexpand-abs-imaginaryunit-times-x-neg-2	PiecewiseExpand[Abs[Times[I, x]], Less[-2, x, 2]]
-complexexpand-abs-x	ComplexExpand[Abs[x]]
-complexexpand-abs-x-plus-i-times-y	ComplexExpand[Abs[Plus[x, Times[Complex[0, 1], y]]]]
-the-gap-between-two-temperatures-70-and-95	Abs[Subtract[70, 95]]
-the-distance-between-the-points-1-i-and-4-5i-of	Abs[Subtract[Complex[1, 1], Complex[4, 5]]]
-even-function-x-x	Equal[Abs[-8], Abs[8]]
-triangle-inequality-a-b-le-a-b	LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]
-z-2-z-bar-z	Equal[Power[Abs[Complex[3, 4]], 2], Times[Complex[3, 4], Conjugate[Complex[3, 4]]]]
-multiplicative-ab-a-b	Equal[Abs[Times[Complex[1, 2], Complex[3, -1]]], Times[Abs[Complex[1, 2]], Abs[Complex[3, -1]]]]
-abs-1	Abs[1]
-abs-neg-1	Abs[-1]
-abs-neg-i	Abs[Complex[0, -1]]
-abs-neg-1-plus-i	Abs[Complex[-1, 1]]
-abs-neg-1-minus-i	Abs[Complex[-1, -1]]
-abs-1-minus-i	Abs[Complex[1, -1]]
-abs-sqrt-3-plus-i	Abs[Plus[Sqrt[3], Complex[0, 1]]]
-abs-1-plus-sqrt-3-times-i	Abs[Plus[1, Complex[0, Sqrt[3]]]]
-abs-neg-1-plus-sqrt-3-times-i	Abs[Plus[-1, Complex[0, Sqrt[3]]]]
-abs-neg-sqrt-3-plus-i	Abs[Plus[Minus[Sqrt[3]], Complex[0, 1]]]
-abs-neg-sqrt-3-minus-i	Abs[Plus[Minus[Sqrt[3]], Complex[0, -1]]]
-abs-neg-1-plus-neg-sqrt-3-times-i	Abs[Plus[-1, Complex[0, Minus[Sqrt[3]]]]]
-abs-1-plus-neg-sqrt-3-times-i	Abs[Plus[1, Complex[0, Minus[Sqrt[3]]]]]
-abs-sqrt-3-minus-i	Abs[Plus[Sqrt[3], Complex[0, -1]]]
-abs-2	Abs[2]
-doesn-t-factor-constants-out-of-a-symbolic	Abs[Times[-3, x]]
+id	in	out
+abs-neg-5	Abs(-5)	5
+abs-5	Abs(5)	5
+0-is-the-only-value-with-x-0	Abs(0)	0
+abs-neg-7-over-2	Abs(Rational(-7, 2))	Rational(7, 2)
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	Abs(Complex(3, 4))	5
+threads-element-wise-over-a-list	Abs(List(-1, 2, -3))	List(1, 2, 3)
+abs-neg-2p5	Abs(-2.5)	2.5
+the-modulus-of-a-complex-number-with-approximate	Abs(Complex(1.4, 2.3))	2.69258240356725201563
+threads-over-a-matrix-entry-by-entry	Abs(List(List(Rational(1, 2), -1), List(Rational(-5, 3), Rational(1, 2))))	List(List(Rational(1, 2), 1), List(Rational(5, 3), Rational(1, 2)))
+exact-numeric-constants	Abs(Negate(Pi))	Pi
+an-exact-complex-number-gives-an-exact-radical	Abs(Complex(1, 1))	Sqrt(2)
+abs-imaginaryunit	Abs(ImaginaryUnit)	1
+e-i-pi-3-lies-on-the-unit-circle	Abs(Exp(Multiply(ImaginaryUnit, Divide(Pi, 3))))	1
+abs-negativeinfinity	Abs(NegativeInfinity)	PositiveInfinity
+complex-infinity-has-infinite-magnitude-in-every	Abs(ComplexInfinity)	PositiveInfinity
+an-interval-maps-to-the-interval-of-absolute	Abs(Interval(-3, 5))	Interval(0, 5)
+an-interval-straddling-0-maps-to-0-the-larger	Abs(Interval(-3, 2))	Interval(0, 3)
+decides-the-sign-of-an-exact-numeric-expression	Abs(Subtract(Sqrt(2), 2))	Add(2, Negate(Sqrt(2)))
+a-complex-radicand-inside-the-subtraction	Abs(Subtract(Sqrt(-10), 2))	Sqrt(14)
+n-abs-pi-plus-i-times-catalan-25	N(Abs(Add(Pi, Multiply(Complex(0, 1), Catalan))), 25)	3.272399329361528960349014
+fullsimplify-matrixfunction-abs-list-list-1-over	FullSimplify(MatrixFunction(Abs, List(List(Rational(1, 2), -1), List(Rational(-5, 3), Rational(1, 2)))))	List(List(Divide(Sqrt(15), 3), Negate(Divide(Sqrt(15), 10))), List(Negate(Divide(Sqrt(15), 6)), Divide(Sqrt(15), 3)))
+abs-positiveinfinity	Abs(PositiveInfinity)	PositiveInfinity
+abs-positiveinfinity-times-i	Abs(Multiply(PositiveInfinity, Complex(0, 1)))	PositiveInfinity
+piecewiseexpand-abs-imaginaryunit-times-x-neg-2	PiecewiseExpand(Abs(Multiply(ImaginaryUnit, x)), Less(-2, x, 2))	Abs(Multiply(Complex(0, 1), x))
+complexexpand-abs-x	ComplexExpand(Abs(x))	Sqrt(Power(x, 2))
+complexexpand-abs-x-plus-i-times-y	ComplexExpand(Abs(Add(x, Multiply(Complex(0, 1), y))))	Sqrt(Add(Power(x, 2), Power(y, 2)))
+the-gap-between-two-temperatures-70-and-95	Abs(Subtract(70, 95))	25
+the-distance-between-the-points-1-i-and-4-5i-of	Abs(Subtract(Complex(1, 1), Complex(4, 5)))	5
+even-function-x-x	Equal(Abs(-8), Abs(8))	True
+triangle-inequality-a-b-le-a-b	LessEqual(Abs(Add(3, -8)), Add(Abs(3), Abs(-8)))	True
+z-2-z-bar-z	Equal(Power(Abs(Complex(3, 4)), 2), Multiply(Complex(3, 4), Conjugate(Complex(3, 4))))	True
+multiplicative-ab-a-b	Equal(Abs(Multiply(Complex(1, 2), Complex(3, -1))), Multiply(Abs(Complex(1, 2)), Abs(Complex(3, -1))))	True
+abs-1	Abs(1)	1
+abs-neg-1	Abs(-1)	1
+abs-neg-i	Abs(Complex(0, -1))	1
+abs-neg-1-plus-i	Abs(Complex(-1, 1))	Sqrt(2)
+abs-neg-1-minus-i	Abs(Complex(-1, -1))	Sqrt(2)
+abs-1-minus-i	Abs(Complex(1, -1))	Sqrt(2)
+abs-sqrt-3-plus-i	Abs(Add(Sqrt(3), Complex(0, 1)))	2
+abs-1-plus-sqrt-3-times-i	Abs(Add(1, Complex(0, Sqrt(3))))	2
+abs-neg-1-plus-sqrt-3-times-i	Abs(Add(-1, Complex(0, Sqrt(3))))	2
+abs-neg-sqrt-3-plus-i	Abs(Add(Negate(Sqrt(3)), Complex(0, 1)))	2
+abs-neg-sqrt-3-minus-i	Abs(Add(Negate(Sqrt(3)), Complex(0, -1)))	2
+abs-neg-1-plus-neg-sqrt-3-times-i	Abs(Add(-1, Complex(0, Negate(Sqrt(3)))))	2
+abs-1-plus-neg-sqrt-3-times-i	Abs(Add(1, Complex(0, Negate(Sqrt(3)))))	2
+abs-sqrt-3-minus-i	Abs(Add(Sqrt(3), Complex(0, -1)))	2
+abs-2	Abs(2)	2
+doesn-t-factor-constants-out-of-a-symbolic	Abs(Multiply(-3, x))	Abs(Multiply(-3, x))

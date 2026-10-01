@@ -1,5 +1,5 @@
-id	in	back
-b-0-x-1	BernoulliB[0, x]	[BernoulliB, 0, x]
-b-1-x-x-1-2	BernoulliB[1, x]	[BernoulliB, 1, x]
-b-2-0-1-6	N[BernoulliB[2, 0]]	[N, [BernoulliB, 2, 0]]
-b-2-1-1-6	N[BernoulliB[2, 1]]	[N, [BernoulliB, 2, 1]]
+id	in	out
+b-0-x-1	BernoulliPolynomial(0, x)	1
+b-1-x-x-1-2	BernoulliPolynomial(1, x)	Add(x, Rational(-1, 2))
+b-2-0-1-6	N(BernoulliPolynomial(2, 0))	0.16666666666666666
+b-2-1-1-6	N(BernoulliPolynomial(2, 1))	0.16666666666666666

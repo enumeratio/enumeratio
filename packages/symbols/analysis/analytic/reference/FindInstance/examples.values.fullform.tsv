@@ -1,12 +1,12 @@
-id	in	back
-a-quadratic-with-two-real-roots	FindInstance[Equal[Power[x, 2], 4], x, Reals]	[FindInstance, [Equal, [Power, x, 2], 4], x, RealNumbers]
-both-roots-with-an-explicit-count	FindInstance[Equal[Power[x, 2], 4], x, Reals, 2]	[FindInstance, [Equal, [Power, x, 2], 4], x, RealNumbers, 2]
-an-irrational-root-is-exact	FindInstance[Equal[Power[x, 2], 2], x, Reals]	[FindInstance, [Equal, [Power, x, 2], 2], x, RealNumbers]
-a-linear-equation	FindInstance[Equal[Plus[Times[2, x], 3], 7], x, Reals]	[FindInstance, [Equal, [Add, [Multiply, 2, x], 3], 7], x, RealNumbers]
-no-real-root-is-a-proven-empty-result	FindInstance[Equal[Power[x, 2], -1], x, Reals]	[FindInstance, [Equal, [Power, x, 2], -1], x, RealNumbers]
-a-non-integer-root-is-also-proven-empty	FindInstance[Equal[Power[x, 2], 2], x, Integers]	
-a-bounded-integer-search	FindInstance[And[Greater[x, 0], Less[x, 10]], x, Integers, 3]	
-a-multivariate-bounded-integer-search	FindInstance[And[Equal[Plus[x, y], 5], Greater[x, 0], Less[x, 10], Greater[y, 0], Less[y, 10]], List[x, y], Integers, 3]	
-findinstance-x-pow-5-minus-2x-plus-1-eq-0-x	FindInstance[Equal[Plus[Power[x, 5], Times[-1, Times[2, x]], 1], 0], x, Reals]	
-declines-without-an-explicit-domain	FindInstance[Greater[x, 0], x]	
-declines-on-a-pure-inequality-over-reals	FindInstance[Greater[x, 0], x, Reals]	[FindInstance, [Greater, x, 0], x, RealNumbers]
+id	in	out
+a-quadratic-with-two-real-roots	FindInstance(Equal(Power(x, 2), 4), x, Reals)	List(List(Rule(x, 2)))
+both-roots-with-an-explicit-count	FindInstance(Equal(Power(x, 2), 4), x, Reals, 2)	List(List(Rule(x, 2)), List(Rule(x, -2)))
+an-irrational-root-is-exact	FindInstance(Equal(Power(x, 2), 2), x, Reals)	List(List(Rule(x, Sqrt(2))))
+a-linear-equation	FindInstance(Equal(Add(Multiply(2, x), 3), 7), x, Reals)	List(List(Rule(x, 2)))
+no-real-root-is-a-proven-empty-result	FindInstance(Equal(Power(x, 2), -1), x, Reals)	List()
+a-non-integer-root-is-also-proven-empty	FindInstance(Equal(Power(x, 2), 2), x, Integers)	List()
+a-bounded-integer-search	FindInstance(And(Greater(x, 0), Less(x, 10)), x, Integers, 3)	List(List(Rule(x, 1)), List(Rule(x, 2)), List(Rule(x, 3)))
+a-multivariate-bounded-integer-search	FindInstance(And(Equal(Add(x, y), 5), Greater(x, 0), Less(x, 10), Greater(y, 0), Less(y, 10)), List(x, y), Integers, 3)	List(List(Rule(x, 1), Rule(y, 4)), List(Rule(x, 2), Rule(y, 3)), List(Rule(x, 3), Rule(y, 2)))
+findinstance-x-pow-5-minus-2x-plus-1-eq-0-x	FindInstance(Equal(Add(Power(x, 5), Multiply(-1, Multiply(2, x)), 1), 0), x, RealNumbers)	List(List(Rule(x, 1)))
+declines-without-an-explicit-domain	FindInstance(Greater(x, 0), x)	FindInstance(Greater(x, 0), x)
+declines-on-a-pure-inequality-over-reals	FindInstance(Greater(x, 0), x, Reals)	FindInstance(Greater(x, 0), x, Reals)

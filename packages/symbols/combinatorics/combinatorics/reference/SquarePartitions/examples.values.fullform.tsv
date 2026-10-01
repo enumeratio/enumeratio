@@ -1,4 +1,4 @@
-id	in	back
-count-squarepartitions-12	Length[SquarePartitions[12]]	[Length, [SquarePartitions, 12]]
-first-element-of-squarepartitions-12	Part[SquarePartitions[12], 1]	
-every-element-of-squarepartitions-12	Take[SquarePartitions[12], 5]	
+id	in	out
+count-squarepartitions-12	Count(SquarePartitions(12))	5
+first-element-of-squarepartitions-12	At(SquarePartitions(12), 1)	IntegerPartition(List(9, 1, 1, 1))
+every-element-of-squarepartitions-12	Take(SquarePartitions(12), 5)	List(IntegerPartition(List(9, 1, 1, 1)), IntegerPartition(List(4, 4, 4)), IntegerPartition(List(4, 4, 1, 1, 1, 1)), IntegerPartition(List(4, 1, 1, 1, 1, 1, 1, 1, 1)), IntegerPartition(List(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)))

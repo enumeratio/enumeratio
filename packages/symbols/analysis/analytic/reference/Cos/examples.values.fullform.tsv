@@ -1,62 +1,62 @@
-id	in	back
-cos-0	Cos[0]	
-cos-pi-over-6	Cos[Divide[Pi, 6]]	
-cos-pi-over-4	Cos[Divide[Pi, 4]]	
-cos-pi-over-3	Cos[Divide[Pi, 3]]	
-cos-pi-over-2	Cos[Divide[Pi, 2]]	
-cos-pi	Cos[Pi]	
-cos-30-circ-exactly	Cos[Times[30, Degree]]	[Cos, [Multiply, 30, Degree]]
-a-machine-precision-argument-evaluates	Cos[1.2]	
-a-huge-24-40-argument	N[Cos[Power[24, 40]]]	
-a-huge-3-200-argument	N[Cos[Power[3, 200]]]	
-a-huge-neg-7-60-argument	N[Cos[Minus[Power[7, 60]]]]	
-a-huge-10-80-plus-1-over-3-argument	N[Cos[Divide[Plus[Power[10, 80], 1], 3]]]	
-cos-2-5	Cos[2.5]	
-n-of-an-exact-argument-gives-an-arbitrary	N[Cos[Rational[6, 5]]]	
-evaluates-at-a-complex-argument	Cos[Complex[2.5, 1]]	
-threads-element-wise-over-a-matrix	Cos[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]	
-cos-pi-12-frac-sqrt-6-sqrt-2-4	Cos[Divide[Pi, 12]]	
-cos-pi-8-frac-sqrt-2-sqrt-2-2	Cos[Divide[Pi, 8]]	
-cos-pi-10-frac-sqrt-10-2-sqrt-5-4	Cos[Divide[Pi, 10]]	
-cos-2-pi-5-frac-sqrt-5-1-4	Cos[Times[Rational[2, 5], Pi]]	
-cos-3-pi-5-frac-1-sqrt-5-4	Cos[Times[Rational[3, 5], Pi]]	
-reduced-into-the-first-quadrant-by-symmetry	Cos[Times[Rational[11, 6], Pi]]	
-interval-arithmetic-the-image-of-pi-3-pi-2-is-0	Cos[Interval[List[Divide[Pi, 3], Divide[Pi, 2]]]]	
-uncertainty-propagation-cos-2-pm-0-01-approx-0	Cos[Around[2, 0.01]]	
-cos-infty-should-be-the-oscillation-range-1-1	Cos[Infinity]	
-an-imaginary-argument-rewrites-to-cosh-cos-ix	Cos[Times[I, x]]	
-evenness-drops-the-sign-of-a-symbolic-argument	Cos[Minus[x]]	
-cos-arccos-x-x-for-every-x	Cos[ArcCos[x]]	
-cos-arccos-2-2-past-the-real-domain	Cos[ArcCos[2]]	
-cos-arcsin-x-sqrt-1-x-2	Cos[ArcSin[x]]	
-cos-arctan-x-frac-1-sqrt-1-x-2	Cos[ArcTan[x]]	
-derivative-sin-x	D[Cos[x], x]	
-antiderivative	Integrate[Cos[x], x]	
-taylor-series-about-0-only-even-powers-appear	Series[Cos[x], x, 0, 6]	
-to-30-significant-digits-every-one-correctly	N[Cos[1], 30]	
-to-1-significant-digit	N[Cos[1], 1]	
-a-huge-10-100-argument-reduces-exactly-mod-2-pi	N[Cos[Power[10, 100]]]	
-n-cos-6-over-5-50	N[Cos[Rational[6, 5]], 50]	
-functiondomain-cos-x-x	FunctionDomain[Cos[x], x]	
-functionrange-cos-x-x-y	FunctionRange[Cos[x], x, y]	
-functionperiod-cos-x-x	FunctionPeriod[Cos[x], x]	
-functionanalytic-cos-x-x	FunctionAnalytic[Cos[x], x]	
-functioninjective-cos-x-x	FunctionInjective[Cos[x], x]	
-functionsurjective-cos-x-x	FunctionSurjective[Cos[x], x]	
-functionsingularities-cos-x-x	FunctionSingularities[Cos[x], x]	
-functiondiscontinuities-cos-x-x	FunctionDiscontinuities[Cos[x], x]	
-matrixfunction-function-cos-1-1-list-list-5-over	MatrixFunction[Function[Cos[Slot[1]]], List[List[Times[Rational[5, 6], Pi], 0], List[Times[Rational[3, 2], Pi], Times[Rational[-1, 2], Pi]]]]	[MatrixFunction, [Function, [Cos, _1]], [List, [List, [Multiply, [Rational, 5, 6], Pi], 0], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 2], Pi]]]]
+id	in	out
+cos-0	Cos(0)	1
+cos-pi-over-6	Cos(Divide(Pi, 6))	Divide(Sqrt(3), 2)
+cos-pi-over-4	Cos(Divide(Pi, 4))	Divide(Sqrt(2), 2)
+cos-pi-over-3	Cos(Divide(Pi, 3))	Rational(1, 2)
+cos-pi-over-2	Cos(Divide(Pi, 2))	0
+cos-pi	Cos(Pi)	-1
+cos-30-circ-exactly	Cos(Degrees(30))	Divide(Sqrt(3), 2)
+a-machine-precision-argument-evaluates	Cos(1.2)	0.362357754476673577638
+a-huge-24-40-argument	N(Cos(Power(24, 40)))	0.91647884367824463046141
+a-huge-3-200-argument	N(Cos(Power(3, 200)))	-0.34464877666349228352018
+a-huge-neg-7-60-argument	N(Cos(Negate(Power(7, 60))))	-0.93095983636224747470287
+a-huge-10-80-plus-1-over-3-argument	N(Cos(Divide(Add(Power(10, 80), 1), 3)))	0.17055416950276543839113
+cos-2-5	Cos(2.5)	-0.8011436155469337
+n-of-an-exact-argument-gives-an-arbitrary	N(Cos(Rational(6, 5)))	0.362357754476673577638
+evaluates-at-a-complex-argument	Cos(Complex(2.5, 1))	Complex(-1.236229198856342, -0.7033251781135347)
+threads-element-wise-over-a-matrix	Cos(List(List(Multiply(5, Divide(Pi, 6)), 0), List(Multiply(3, Divide(Pi, 2)), Negate(Divide(Pi, 2)))))	List(List(Negate(Divide(Sqrt(3), 2)), 1), List(0, 0))
+cos-pi-12-frac-sqrt-6-sqrt-2-4	Cos(Divide(Pi, 12))	Add(Divide(Sqrt(2), 4), Divide(Sqrt(6), 4))
+cos-pi-8-frac-sqrt-2-sqrt-2-2	Cos(Divide(Pi, 8))	Multiply(Rational(1, 2), Sqrt(Add(2, Sqrt(2))))
+cos-pi-10-frac-sqrt-10-2-sqrt-5-4	Cos(Divide(Pi, 10))	Multiply(Divide(Sqrt(2), 4), Sqrt(Add(5, Sqrt(5))))
+cos-2-pi-5-frac-sqrt-5-1-4	Cos(Multiply(Rational(2, 5), Pi))	Add(Rational(-1, 4), Divide(Sqrt(5), 4))
+cos-3-pi-5-frac-1-sqrt-5-4	Cos(Multiply(Rational(3, 5), Pi))	Add(Rational(1, 4), Negate(Divide(Sqrt(5), 4)))
+reduced-into-the-first-quadrant-by-symmetry	Cos(Multiply(Rational(11, 6), Pi))	Divide(Sqrt(3), 2)
+interval-arithmetic-the-image-of-pi-3-pi-2-is-0	Cos(Interval(Divide(Pi, 3), Divide(Pi, 2)))	Interval(0, Rational(1, 2))
+uncertainty-propagation-cos-2-pm-0-01-approx-0	Cos(Around(2, 0.01))	Around(-0.4161468365471424, 0.009092974268256816)
+cos-infty-should-be-the-oscillation-range-1-1	Cos(PositiveInfinity)	Interval(-1, 1)
+an-imaginary-argument-rewrites-to-cosh-cos-ix	Cos(Multiply(ImaginaryUnit, x))	Cosh(x)
+evenness-drops-the-sign-of-a-symbolic-argument	Cos(Negate(x))	Cos(x)
+cos-arccos-x-x-for-every-x	Cos(Arccos(x))	x
+cos-arccos-2-2-past-the-real-domain	Cos(Arccos(2))	2
+cos-arcsin-x-sqrt-1-x-2	Cos(Arcsin(x))	Sqrt(Add(Negate(Power(x, 2)), 1))
+cos-arctan-x-frac-1-sqrt-1-x-2	Cos(Arctan(x))	Divide(1, Sqrt(Add(Power(x, 2), 1)))
+derivative-sin-x	D(Cos(x), x)	Negate(Sin(x))
+antiderivative	Integrate(Cos(x), x)	Sin(x)
+taylor-series-about-0-only-even-powers-appear	Series(Cos(x), x, 0, 6)	Add(Multiply(Rational(-1, 720), Power(x, 6)), Multiply(Rational(1, 24), Power(x, 4)), Multiply(Rational(-1, 2), Power(x, 2)), BigO(Power(x, 8)), 1)
+to-30-significant-digits-every-one-correctly	N(Cos(1), 30)	0.540302305868139717400936607443
+to-1-significant-digit	N(Cos(1), 1)	0.5
+a-huge-10-100-argument-reduces-exactly-mod-2-pi	N(Cos(Power(10, 100)))	-0.928081905074655343456
+n-cos-6-over-5-50	N(Cos(Rational(6, 5)), 50)	0.36235775447667357763837335562307602033994778557665
+functiondomain-cos-x-x	FunctionDomain(Cos(x), x)	True
+functionrange-cos-x-x-y	FunctionRange(Cos(x), x, y)	LessEqual(-1, y, 1)
+functionperiod-cos-x-x	FunctionPeriod(Cos(x), x)	Multiply(2, Pi)
+functionanalytic-cos-x-x	FunctionAnalytic(Cos(x), x)	True
+functioninjective-cos-x-x	FunctionInjective(Cos(x), x)	False
+functionsurjective-cos-x-x	FunctionSurjective(Cos(x), x)	False
+functionsingularities-cos-x-x	FunctionSingularities(Cos(x), x)	False
+functiondiscontinuities-cos-x-x	FunctionDiscontinuities(Cos(x), x)	False
+matrixfunction-function-cos-1-1-list-list-5-over	MatrixFunction(Function(Block(Cos(_1)), _1), List(List(Multiply(Rational(5, 6), Pi), 0), List(Multiply(Rational(3, 2), Pi), Multiply(Rational(-1, 2), Pi))))	List(List(Negate(Divide(Sqrt(3), 2)), 0), List(Multiply(Rational(-9, 16), Sqrt(3)), 0))
 assuming-m-in-integers-refine-cos-pi-times-1		
 assuming-m-in-integers-fullsimplify-refine-cos		
-threads-element-wise-over-a-list	Cos[List[0, Divide[Pi, 2], Pi]]	
-even-function-cos-x-cos-x	Equal[Cos[Minus[Divide[Pi, 3]]], Cos[Divide[Pi, 3]]]	
-co-function-identity-cos-x-sin-pi-2-x	Equal[Cos[Divide[Pi, 6]], Sin[Subtract[Divide[Pi, 2], Divide[Pi, 6]]]]	
-double-angle-formula-cos-2x-cos-2-x-sin-2-x	TrigExpand[Cos[Times[2, x]]]	
-angle-addition-formula	TrigExpand[Cos[Plus[x, y]]]	
-power-reduction-cos-2-x-frac-1-cos-2x-2	TrigReduce[Power[Cos[x], 2]]	
-euler-s-formula-cos-x-frac-e-ix-e-ix-2	TrigToExp[Cos[x]]	
-cos-3-over-10-times-pi	Cos[Times[Rational[3, 10], Pi]]	
-as-with-sin-a-non-special-numeric-argument-stays	Cos[2]	
-pi-24-is-past-the-automatic-special-angle-table	Cos[Times[Rational[1, 24], Pi]]	
-cos-complexinfinity-is-indeterminate-for-the	Cos[ComplexInfinity]	
-cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	Cos[Divide[Pi, 5]]	
+threads-element-wise-over-a-list	Cos(List(0, Divide(Pi, 2), Pi))	List(1, 0, -1)
+even-function-cos-x-cos-x	Equal(Cos(Negate(Divide(Pi, 3))), Cos(Divide(Pi, 3)))	True
+co-function-identity-cos-x-sin-pi-2-x	Equal(Cos(Divide(Pi, 6)), Sin(Subtract(Divide(Pi, 2), Divide(Pi, 6))))	True
+double-angle-formula-cos-2x-cos-2-x-sin-2-x	TrigExpand(Cos(Multiply(2, x)))	Add(Negate(Power(Sin(x), 2)), Power(Cos(x), 2))
+angle-addition-formula	TrigExpand(Cos(Add(x, y)))	Add(Multiply(Cos(x), Cos(y)), Negate(Multiply(Sin(x), Sin(y))))
+power-reduction-cos-2-x-frac-1-cos-2x-2	TrigReduce(Power(Cos(x), 2))	Add(Multiply(Rational(1, 2), Cos(Multiply(2, x))), Rational(1, 2))
+euler-s-formula-cos-x-frac-e-ix-e-ix-2	TrigToExp(Cos(x))	Multiply(Rational(1, 2), Add(Power(ExponentialE, Multiply(Complex(0, 1), x)), Power(ExponentialE, Multiply(Complex(0, -1), x))))
+cos-3-over-10-times-pi	Cos(Multiply(Rational(3, 10), Pi))	Multiply(Divide(Sqrt(2), 4), Sqrt(Add(5, Negate(Sqrt(5)))))
+as-with-sin-a-non-special-numeric-argument-stays	Cos(2)	Cos(2)
+pi-24-is-past-the-automatic-special-angle-table	Cos(Multiply(Rational(1, 24), Pi))	Cos(Multiply(Rational(1, 24), Pi))
+cos-complexinfinity-is-indeterminate-for-the	Cos(ComplexInfinity)	Indeterminate
+cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	Cos(Divide(Pi, 5))	Add(Rational(1, 4), Divide(Sqrt(5), 4))

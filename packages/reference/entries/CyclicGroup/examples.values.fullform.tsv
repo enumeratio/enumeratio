@@ -1,6 +1,6 @@
-id	in
-grouporder-cyclicgroup-10	GroupOrder[CyclicGroup[10]]
-groupelements-cyclicgroup-10	GroupElements[CyclicGroup[10]]
-groupelements-cyclicgroup-1	GroupElements[CyclicGroup[1]]
-groupelements-cyclicgroup-2	GroupElements[CyclicGroup[2]]
-groupelements-cyclicgroup-3	GroupElements[CyclicGroup[3]]
+id	in	out
+grouporder-cyclicgroup-10	GroupOrder(CyclicGroup(10))	10
+groupelements-cyclicgroup-10	GroupElements(CyclicGroup(10))	List(GroupBasis("0"), GroupBasis("1"), GroupBasis("2"), GroupBasis("3"), GroupBasis("4"), GroupBasis("5"), GroupBasis("6"), GroupBasis("7"), GroupBasis("8"), GroupBasis("9"))
+groupelements-cyclicgroup-1	GroupElements(CyclicGroup(1))	List(GroupBasis("0"))
+groupelements-cyclicgroup-2	GroupElements(CyclicGroup(2))	List(GroupBasis("0"), GroupBasis("1"))
+groupelements-cyclicgroup-3	GroupElements(CyclicGroup(3))	List(GroupBasis("0"), GroupBasis("1"), GroupBasis("2"))

@@ -1,12 +1,12 @@
-id	in
-positions-2-through-4-2-4-in-wolfram	Part[List[a, b, c, d, f], Span[2, 4]]
-every-other-element-through-the-last-1-1-2	Part[List[a, b, c, d, f], Span[1, -1, 2]]
-list-a-b-c-d-exponentiale-f-g-h-list-span-2-5	Part[List[a, b, c, d, E, f, g, h], Span[2, 5]]
-list-a-b-c-d-exponentiale-f-g-h-list-span-1-neg	Part[List[a, b, c, d, E, f, g, h], Span[1, -1, 3]]
-a-negative-step-walks-backwards-1-1-1	Part[List[a, b, c, d, f], Span[-1, 1, -1]]
-negative-bounds-the-last-two-elements	Part[List[a, b, c, d, f], Span[-2, -1]]
-spans-at-two-levels-cut-out-a-submatrix	Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], Span[2, 3], Span[1, 2]]
-list-a-b-c-d-exponentiale-f-g-h-list-span-2-neg	Part[List[a, b, c, d, E, f, g, h], Span[2, -3]]
-characterrange-a-z-list-span-1-5	Part[CharacterRange["a", "z"], Span[1, 5]]
-range-1-10-list-span-3-neg-1	Part[Range[1, 10], Span[3, -1]]
-range-1-10-list-span-1-neg-1-2	Part[Range[1, 10], Span[1, -1, 2]]
+id	in	out
+positions-2-through-4-2-4-in-wolfram	At(List(a, b, c, d, f), Span(2, 4))	List(b, c, d)
+every-other-element-through-the-last-1-1-2	At(List(a, b, c, d, f), Span(1, -1, 2))	List(a, c, f)
+list-a-b-c-d-exponentiale-f-g-h-list-span-2-5	At(List(a, b, c, d, ExponentialE, f, g, h), Span(2, 5))	List(b, c, d, ExponentialE)
+list-a-b-c-d-exponentiale-f-g-h-list-span-1-neg	At(List(a, b, c, d, ExponentialE, f, g, h), Span(1, -1, 3))	List(a, d, g)
+a-negative-step-walks-backwards-1-1-1	At(List(a, b, c, d, f), Span(-1, 1, -1))	List(f, d, c, b, a)
+negative-bounds-the-last-two-elements	At(List(a, b, c, d, f), Span(-2, -1))	List(d, f)
+spans-at-two-levels-cut-out-a-submatrix	At(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9)), Span(2, 3), Span(1, 2))	List(List(4, 5), List(7, 8))
+list-a-b-c-d-exponentiale-f-g-h-list-span-2-neg	At(List(a, b, c, d, ExponentialE, f, g, h), Span(2, -3))	List(b, c, d, ExponentialE, f)
+characterrange-a-z-list-span-1-5	At(CharacterRange("a", "z"), Span(1, 5))	List("a", "b", "c", "d", "e")
+range-1-10-list-span-3-neg-1	At(Range(1, 10), Span(3, -1))	List(3, 4, 5, 6, 7, 8, 9, 10)
+range-1-10-list-span-1-neg-1-2	At(Range(1, 10), Span(1, -1, 2))	List(1, 3, 5, 7, 9)

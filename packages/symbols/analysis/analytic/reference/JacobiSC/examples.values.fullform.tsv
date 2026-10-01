@@ -1,7 +1,7 @@
-id	in
-a-floating-point-argument-evaluates-directly-to	N[JacobiSC[0.6, 0.4]]
-m-greater-than-1-via-the-reciprocal-modulus	N[JacobiSC[1.2, 3]]
-u-0-is-0-for-any-m	JacobiSC[0, m]
-symbolic-arguments-are-left-unevaluated-rather	JacobiSC[u, m]
-m-1-at-a-shared-pole-of-sn-and-cn	N[JacobiSC[Times[Rational[1, 2], I, Pi], 1]]
-u-1e16-declines-rather-than-answering-wrong	N[JacobiSC[Power[10, 16], Rational[1, 4]]]
+id	in	out
+a-floating-point-argument-evaluates-directly-to	N(JacobiSC(0.6, 0.4))	0.6647443227328587
+m-greater-than-1-via-the-reciprocal-modulus	N(JacobiSC(1.2, 3))	0.6660771819422742
+u-0-is-0-for-any-m	JacobiSC(0, m)	0
+symbolic-arguments-are-left-unevaluated-rather	JacobiSC(u, m)	JacobiSC(u, m)
+m-1-at-a-shared-pole-of-sn-and-cn	N(JacobiSC(Multiply(Rational(1, 2), ImaginaryUnit, Pi), 1))	Complex(0.0, 1.0)
+u-1e16-declines-rather-than-answering-wrong	N(JacobiSC(Power(10, 16), Rational(1, 4)))	JacobiSC(10000000000000000, 0.25)
