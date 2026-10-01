@@ -2,7 +2,9 @@
 // ahead of time, with compute-engine's own compiler, into src/compiled-maps.generated.js. Each
 // entry carries the hash of the definition it came from: at run time an entry is used only while
 // its hash matches, so an edited map is compiled on first use (or interpreted) until this is
-// rerun. Maps the compiler can't take yet are left out.
+// rerun. Maps the compiler can't take yet are left out; a map whose compiled code answers
+// differently from the interpreter on small elements of its source carrier is listed as
+// `interpreted`, so it isn't compiled on first use either.
 //
 //   vp node packages/symbols/combinatorics/combinatorics/scripts/compile-maps.ts
 
@@ -10,37 +12,70 @@ import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { compileTyped, definitionHash } from "@enumeratio/engine/compiled";
+import { compileTyped, definitionHash, fromJs, toJs } from "@enumeratio/engine/compiled";
 import { CARRIERS } from "../src/carriers.ts";
-import { MAPS } from "../src/maps.ts";
+import { evaluateDefinition, MAPS } from "../src/maps.ts";
+import { smallElements } from "./samples.ts";
 
 interface Entry {
   readonly key: string;
   readonly hash: string;
-  readonly body: string;
+  readonly body?: string;
   readonly guard?: string;
 }
 
-/** Each compilable map's key (`Name@from`), hash and generated code. */
+type Run = (vars: Record<string, unknown>) => unknown;
+
+/** Whether the compiled body (and guard) give the interpreter's answer on every subject the
+ *  compiled code answers at all: the same image, or a decline where the guard declines. */
+function agrees(
+  ce: ComputeEngine,
+  map: (typeof MAPS)[number],
+  body: Run,
+  guard: Run | undefined,
+  subjects: readonly unknown[],
+): boolean {
+  for (const subject of subjects) {
+    const raw = toJs(subject);
+    if (raw === undefined) continue;
+    let answer;
+    try {
+      const image = body({ _raw: raw });
+      answer = fromJs(image);
+      if (answer !== undefined && guard !== undefined && guard({ _raw: raw, _image: image }) !== true) answer = null;
+    } catch {
+      continue;
+    }
+    if (answer === undefined) continue;
+    const expected = evaluateDefinition(ce, map, subject) ?? null;
+    if (JSON.stringify(answer) !== JSON.stringify(expected)) return false;
+  }
+  return true;
+}
+
+/** Each compilable map's key (`Name@from`), hash and generated code; no code for a map whose
+ *  compiled code disagreed with the interpreter. */
 export function compiledMaps(): Entry[] {
   const ce = new ComputeEngine();
-  const shapeOf = new Map(CARRIERS.map((carrier) => [carrier.type, carrier.shape]));
+  const carrierOf = new Map(CARRIERS.map((carrier) => [carrier.type, carrier]));
   const out: Entry[] = [];
   for (const map of MAPS) {
     if (map.body === undefined) continue;
-    const from = shapeOf.get(map.from);
-    const to = shapeOf.get(map.to);
+    const from = carrierOf.get(map.from);
+    const to = carrierOf.get(map.to);
     if (from === undefined || to === undefined) continue;
-    const body = compileTyped(ce, map.body, { _raw: from });
+    const body = compileTyped(ce, map.body, { _raw: from.shape });
     if (body === undefined) continue;
-    const guard = map.guard === undefined ? undefined : compileTyped(ce, map.guard, { _raw: from, _image: to });
+    const guard =
+      map.guard === undefined ? undefined : compileTyped(ce, map.guard, { _raw: from.shape, _image: to.shape });
     if (map.guard !== undefined && guard === undefined) continue;
-    out.push({
-      key: `${map.name}@${map.from}`,
-      hash: definitionHash({ body: map.body, guard: map.guard }),
-      body: body.code,
-      ...(guard === undefined ? {} : { guard: guard.code }),
-    });
+    const key = `${map.name}@${map.from}`;
+    const hash = definitionHash({ body: map.body, guard: map.guard });
+    if (!agrees(ce, map, body.run, guard?.run, smallElements(ce, from.name))) {
+      out.push({ key, hash });
+      continue;
+    }
+    out.push({ key, hash, body: body.code, ...(guard === undefined ? {} : { guard: guard.code }) });
   }
   return out.toSorted((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
 }
@@ -51,7 +86,7 @@ function render(entries: readonly Entry[]): string {
       [
         `  ${JSON.stringify(e.key)}: {`,
         `    hash: ${JSON.stringify(e.hash)},`,
-        `    run: (_SYS, _) => ${e.body},`,
+        e.body === undefined ? "    interpreted: true," : `    run: (_SYS, _) => ${e.body},`,
         ...(e.guard === undefined ? [] : [`    guard: (_SYS, _) => ${e.guard},`]),
         "  },",
       ].join("\n"),
@@ -75,5 +110,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   writeFileSync(target, render(entries));
   // Laid out as `vp fmt` lays it out, so a rerun with nothing changed changes nothing.
   execFileSync("vp", ["fmt", target], { stdio: "ignore" });
-  console.log(`${entries.length} of ${MAPS.filter((m) => m.body !== undefined).length} map definitions compiled`);
+  const compiled = entries.filter((e) => e.body !== undefined);
+  console.log(`${compiled.length} of ${MAPS.filter((m) => m.body !== undefined).length} map definitions compiled`);
+  for (const e of entries.filter((entry) => entry.body === undefined))
+    console.log(`${e.key}: compiled code disagreed with the interpreter; left interpreted`);
 }

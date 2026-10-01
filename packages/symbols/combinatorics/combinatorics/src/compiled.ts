@@ -28,8 +28,10 @@ type Compiled = Pick<NonNullable<ReturnType<typeof compileTyped>>, "run">;
 /** A map's definition compiled ahead of time, with the hash of the definition it came from. */
 export interface GeneratedMap {
   readonly hash: string;
-  readonly run: GeneratedRun;
+  readonly run?: GeneratedRun;
   readonly guard?: GeneratedRun;
+  /** Its compiled code disagreed with the interpreter when generated: never compiled. */
+  readonly interpreted?: true;
 }
 
 /** One map's definition as a function of its argument's contents: compiled where it compiles,
@@ -51,6 +53,7 @@ export function fastDefinition(options: {
   let compiled: { body: Compiled; guard?: Compiled } | null | undefined;
   const compile = (): { body: Compiled; guard?: Compiled } | null => {
     if (generated !== undefined && generated.hash === hash) {
+      if (generated.interpreted === true || generated.run === undefined) return null;
       const sys = runtimeHelpers(ce);
       const run = generated.run;
       const check = generated.guard;
