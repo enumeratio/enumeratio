@@ -2,7 +2,7 @@
 // tests/fixtures/npm by an injected fetch: @ada/primes, and @bob/extra, which pins two of
 // ada's symbols and uses a system one unpinned.
 
-import { cpSync, mkdtempSync, readFileSync } from "node:fs";
+import { cpSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ComputeEngine } from "@cortex-js/compute-engine";
@@ -42,6 +42,23 @@ test("the fixtures' indexes are what packing their definitions writes", async ()
     const index = (path: string): unknown => JSON.parse(readFileSync(path, "utf8"));
     expect(index(await packLibrary(copy))).toEqual(index(join(FIXTURES, dir, "symbols/index.json")));
   }
+});
+
+test("packing maps each symbol to the targets its library tracks, and only those", async () => {
+  const copy = join(mkdtempSync(join(tmpdir(), "pack-")), "ada-primes");
+  cpSync(join(FIXTURES, "ada-primes"), copy, { recursive: true });
+  await packLibrary(copy);
+  const mappings = JSON.parse(readFileSync(join(copy, "symbols/Twice/mappings.json"), "utf8"));
+  // The record also has a MathWorld reference, which ada doesn't track.
+  expect(mappings.references.map((r: { system: string }) => r.system)).toEqual(["wikipedia"]);
+  expect(Object.keys(mappings.implementations)).toEqual(["twice-3"]);
+  const pkgPath = join(copy, "package.json");
+  const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));
+  writeFileSync(
+    pkgPath,
+    JSON.stringify({ ...pkg, enumeratio: { ...pkg.enumeratio, mappings: ["wolfram", "nowhere"] } }),
+  );
+  await expect(packLibrary(copy)).rejects.toThrow('"mappings" names nowhere, which no target is');
 });
 
 test("a package's symbols evaluate at their pins, fetching only what the expression uses", async () => {
@@ -179,6 +196,9 @@ test("options are optional named parameters, defaults filling what a call leaves
     return evaluate(ce, ensured.expression);
   };
   expect(await ensure(scaled(3))).toBe(6);
+  // As Epsil's parser gives it: the long form, with source offsets.
+  const parsed = { fn: ["MemberCall", { sym: "bob", sourceOffsets: [0, 3] }, { str: "Scaled" }, { num: "3" }] };
+  expect(await ensure(parsed)).toBe(6);
   expect(await ensure(scaled(3, 5))).toBe(15);
   // By name, and held: the expression ensure returns calls these by head, where compute-engine
   // sees the parameter names and the attributes a namespace record hides.

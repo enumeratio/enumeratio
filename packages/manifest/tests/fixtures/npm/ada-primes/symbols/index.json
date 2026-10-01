@@ -16,7 +16,8 @@
       "pin": "sha256-a6ca5cce8d3e17fc60c7e9298332578c8a551ba47d71bbb8c10ec667a46acc45",
       "examples": 2,
       "params": ["x"],
-      "summary": "Twice its argument."
+      "summary": "Twice its argument.",
+      "mappings": ["wikipedia", "wolfram"]
     }
   }
 }

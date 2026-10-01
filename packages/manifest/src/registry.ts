@@ -347,6 +347,21 @@ function qualifyHeads(json: unknown, path: SearchPath): unknown {
   return ["MemberCall", qualified.slice(0, dot), `'${qualified.slice(dot + 1)}'`, ...ops];
 }
 
+/**
+ * MathJSON in its short form: `{ fn }` as its array, `{ sym }` a string, `{ str }` quoted, `{ num }`
+ * a number where it reads back exactly. Epsil's parser gives the long form, with source offsets.
+ */
+export function shortForm(json: unknown): unknown {
+  if (Array.isArray(json)) return json.map(shortForm);
+  if (json === null || typeof json !== "object") return json;
+  const { fn, sym, str, num } = json as { fn?: unknown; sym?: unknown; str?: unknown; num?: unknown };
+  if (Array.isArray(fn)) return fn.map(shortForm);
+  if (typeof sym === "string") return sym;
+  if (typeof str === "string") return `'${str}'`;
+  if (typeof num === "string") return String(Number(num)) === num ? Number(num) : { num };
+  return json;
+}
+
 const isSymbol = (json: unknown): json is string => typeof json === "string" && !/^'.*'$/s.test(json);
 const memberOf = (json: unknown): string | undefined =>
   typeof json === "string" && /^'.*'$/s.test(json) ? json.slice(1, -1) : undefined;
@@ -565,7 +580,8 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
 
   return {
     async ensure(ce, given, lock = {}) {
-      const written = path === undefined ? given : qualifyHeads(given, path);
+      const short = shortForm(given);
+      const written = path === undefined ? short : qualifyHeads(short, path);
       const describedNames = new Set<string>();
       const json = describeOnly.size === 0 ? written : withoutDescribed(written, describeOnly, describedNames);
       const state = states.get(ce) ?? {

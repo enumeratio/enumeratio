@@ -7,14 +7,17 @@
 //
 // Reads `package.json`'s `enumeratio` field and every `symbols/<Name>/definition.json` beside
 // the index it names, writes each symbol's examples (from its record, `index.md` and
-// `examples.tsv`, less the aspirational and triage ones) as `examples.json` for the install check, and
+// `examples.tsv`, less the aspirational and triage ones) as `examples.json` for the install check,
+// each symbol's mappings to the targets the package names as `mappings.json` (§4.4), and
 // writes the index (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2), and the package's
 // JavaScript entry, `dist/index.js` and `dist/index.d.ts` (library-entry.ts).
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
-import { readEntries } from "@enumeratio/entry/node";
+import { isCrosswalkSystem, mappingsOf, targetsOf } from "@enumeratio/entry";
+import { readHead } from "@enumeratio/entry/node";
+import { SYMBOL_MAPPINGS_SCHEMA, validateSchema } from "@enumeratio/entry/schema";
 import { validRange } from "semver";
 import { type NotationData, notationProblem } from "../src/notation-data.ts";
 import type { Definition, Example } from "../src/registry.ts";
@@ -40,8 +43,11 @@ export async function packLibrary(dir: string): Promise<string> {
     throw new Error(`${dir}: "system" is ${pkg.enumeratio.system}, which isn't a version range`);
   const indexPath = join(dir, pkg.enumeratio.index);
   const symbolsDir = dirname(indexPath);
-  const records = new Map(readEntries(symbolsDir).map((entry) => [entry.name, entry]));
+  const targets = pkg.enumeratio.mappings ?? [];
+  const unknown = targets.filter((t) => !isCrosswalkSystem(t));
+  if (unknown.length > 0) throw new Error(`${dir}: "mappings" names ${unknown.join(", ")}, which no target is`);
   const definitions: Record<string, Definition> = {};
+  const mapped: Record<string, string[]> = {};
   for (const name of readdirSync(symbolsDir)) {
     const file = join(symbolsDir, name, "definition.json");
     if (!existsSync(file)) continue;
@@ -51,7 +57,15 @@ export async function packLibrary(dir: string): Promise<string> {
     const notation = readJson<NotationData>(join(symbolsDir, name, "notation.json"));
     const unwritable = notation === undefined ? undefined : notationProblem(notation);
     if (unwritable !== undefined) throw new Error(`${dir}: ${name}'s notation: ${unwritable}`);
-    const examples: Example[] = (records.get(name)?.examples ?? [])
+    const record = existsSync(join(symbolsDir, name, "index.md")) ? readHead(symbolsDir, name) : undefined;
+    const mappings = record === undefined ? undefined : mappingsOf(record, targets);
+    if (mappings !== undefined) {
+      const invalid = validateSchema(SYMBOL_MAPPINGS_SCHEMA, mappings);
+      if (invalid.length > 0) throw new Error(`${dir}: ${name}'s mappings\n  ${invalid.join("\n  ")}`);
+      writeFileSync(join(symbolsDir, name, "mappings.json"), `${JSON.stringify(mappings, null, 2)}\n`);
+      mapped[name] = targetsOf(mappings);
+    }
+    const examples: Example[] = (record?.entry.examples ?? [])
       .filter((e) => e.role !== "aspirational" && e.role !== "triage")
       .map(({ id, expr, expected, tolerance }) => ({
         id,
@@ -61,7 +75,7 @@ export async function packLibrary(dir: string): Promise<string> {
       }));
     if (examples.length > 0)
       writeFileSync(join(symbolsDir, name, "examples.json"), `${JSON.stringify(examples, null, 2)}\n`);
-    const summary = records.get(name)?.summary;
+    const summary = record?.entry.summary;
     definitions[name] = {
       ...definition,
       examples,
@@ -69,7 +83,7 @@ export async function packLibrary(dir: string): Promise<string> {
       ...(summary === undefined ? {} : { summary }),
     };
   }
-  const index = await libraryIndexOf(pkg.enumeratio.namespace, definitions, await notationOf(dir, pkg));
+  const index = await libraryIndexOf(pkg.enumeratio.namespace, definitions, await notationOf(dir, pkg), mapped);
   // A namespace another package serves is its scope's: `ada.*` from the `@ada/…` dependency.
   const packages: Record<string, string> = {};
   for (const dependency of Object.keys(pkg.dependencies ?? {})) {

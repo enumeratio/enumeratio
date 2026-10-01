@@ -2,9 +2,13 @@
 // duplicate trigger, and MathLive flags only LaTeX it can't read, so a package whose trigger
 // shadows another's, or whose StandardForm doesn't read back, is caught here or nowhere.
 
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
+import { compileNotation } from "@enumeratio/boxes";
 import { displayDictionary } from "@enumeratio/frontend/display";
+import type { NotationData } from "@enumeratio/manifest";
 import { referenceData } from "@enumeratio/reference/node";
 import { expect, test } from "vite-plus/test";
 import { DECLARATIONS, NOTATION, NOTATION_ENTRIES } from "../src/engine.ts";
@@ -32,7 +36,32 @@ function claims(owners: Readonly<Record<string, readonly Entry[]>>): Map<string,
   return out;
 }
 
-const LATEX = Object.fromEntries(Object.entries(NOTATION_ENTRIES).map(([name, n]) => [name, n.latex ?? []]));
+const PACKAGES = Object.fromEntries(Object.entries(NOTATION_ENTRIES).map(([name, n]) => [name, n.latex ?? []]));
+
+/**
+ * A published library's notation, as a host loads it beside ours: every `symbols/<Name>/notation.json`
+ * of the manifest's fixture libraries, compiled for the head its definition is declared as. A
+ * library whose trigger shadows ours is caught by the same checks.
+ */
+const LIBRARIES_DIR = new URL("../../manifest/tests/fixtures/npm/", import.meta.url).pathname;
+const LIBRARIES: Record<string, readonly Entry[]> = {};
+for (const library of readdirSync(LIBRARIES_DIR, { withFileTypes: true }).filter((d) => d.isDirectory())) {
+  const symbols = join(LIBRARIES_DIR, library.name, "symbols");
+  for (const name of readdirSync(symbols, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)) {
+    const file = join(symbols, name, "notation.json");
+    if (!existsSync(file)) continue;
+    const data = JSON.parse(readFileSync(file, "utf8")) as NotationData;
+    LIBRARIES[`${library.name}/${name}`] = compileNotation(`${library.name}_${name}`, data).latex;
+  }
+}
+
+const LATEX = { ...PACKAGES, ...LIBRARIES };
+
+test("the fixture libraries' notation is among what's checked", () => {
+  expect(Object.keys(LIBRARIES)).toContain("bob-extra/Scaled");
+});
 
 test("no trigger is claimed by two packages' entries of the same kind", () => {
   const shared = [...claims(LATEX)].filter(([, who]) => who.length > 1);

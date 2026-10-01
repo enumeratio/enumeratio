@@ -10,6 +10,7 @@ export { type CrosswalkSource, type CrosswalkSystem, isCrosswalkSystem, SOURCES,
 export { checkImplementations, type Exists, type Problem } from "./validate.ts";
 export { isCanonicalYaml, parseYaml, type StringifyOptions, stringifyFlow, stringifyYaml } from "./yaml.ts";
 export { orderImplementations, OWN_FORMS } from "./order.ts";
+export { mappingsOf, type SymbolMappings, targetsOf } from "./mappings.ts";
 export { captionId, dedupeId, EXAMPLE_ID, EXAMPLE_ID_MAX, slugId } from "./id.ts";
 export { bySection, SECTIONS } from "./sections.ts";
 export { isSettled } from "./roles.ts";

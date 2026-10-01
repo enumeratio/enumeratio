@@ -1,0 +1,18 @@
+{
+  "references": [
+    {
+      "system": "wikipedia",
+      "identity": "Multiplication",
+      "relation": "conceptual"
+    }
+  ],
+  "implementations": {
+    "twice-3": {
+      "wolfram": {
+        "in": "2*3",
+        "out": "6",
+        "verdict": "agree"
+      }
+    }
+  }
+}
