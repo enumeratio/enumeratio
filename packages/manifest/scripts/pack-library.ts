@@ -61,7 +61,13 @@ export async function packLibrary(dir: string): Promise<string> {
       }));
     if (examples.length > 0)
       writeFileSync(join(symbolsDir, name, "examples.json"), `${JSON.stringify(examples, null, 2)}\n`);
-    definitions[name] = { ...definition, examples, ...(notation === undefined ? {} : { notation }) };
+    const summary = records.get(name)?.summary;
+    definitions[name] = {
+      ...definition,
+      examples,
+      ...(notation === undefined ? {} : { notation }),
+      ...(summary === undefined ? {} : { summary }),
+    };
   }
   const index = await libraryIndexOf(pkg.enumeratio.namespace, definitions, await notationOf(dir, pkg));
   // A namespace another package serves is its scope's: `ada.*` from the `@ada/…` dependency.

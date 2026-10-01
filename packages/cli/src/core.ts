@@ -9,6 +9,7 @@ import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { can, type Environment, ENVIRONMENTS, environmentNamed } from "../../frontend/src/environment.ts";
 import { evaluateReadouts, reduce } from "../../frontend/src/reduce.ts";
 import { bold, cyan, dim, red } from "./ansi.ts";
+import { information } from "./information.ts";
 import {
   FORM_LABEL,
   FORMS,
@@ -103,6 +104,7 @@ export class Repl {
     if (!input) return { text: "" };
     try {
       if (input.startsWith(":")) return this.meta(input);
+      if (input.startsWith("?")) return { text: information(this.session.ce, input, this.color) };
       if (/^let\s/.test(input)) return this.assignment(input);
       const res = this.session.evaluate(input);
       return { text: this.formatOut(res.n, this.session.render(this.reduced(res.expr))) };
@@ -259,6 +261,8 @@ const HELP = `Commands:
   :latex / :mathjson / :wolfram / :epsil <expr>   force an input syntax for one line
                          (short aliases: :tex, :mj or :json, :wl, :ep)
   let <name> = <expr>    bind a variable
+  ?Name  ??Name          what a name is; ?? adds its overloads, parameters and examples
+                         (?Zeta* lists the heads a pattern matches)
   %  %%  %n              refer to the last / 2nd-last / n-th result
   Out(n)  In(n)          the n-th result / the n-th input, re-evaluated (n<0 counts back)
   InString(n)            the n-th input line, as typed

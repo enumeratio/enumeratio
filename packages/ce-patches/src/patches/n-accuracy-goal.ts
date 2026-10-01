@@ -6,6 +6,7 @@ import { evaluateNAccuracyGoal } from "../compute-engine/library/eval-options.ts
 // good to an absolute error of 10^-a, instead of answering at machine precision.
 export const nAccuracyGoal: Patch = {
   id: "n-accuracy-goal",
+  issue: "https://github.com/cortex-js/compute-engine/issues/391",
   lands: "N(x, {Infinity, a}) meets an absolute accuracy goal of 10^-a",
   files: ["src/compute-engine/library/eval-options.ts"],
   heads: ["N"],

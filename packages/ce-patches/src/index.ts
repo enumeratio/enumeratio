@@ -17,6 +17,7 @@ import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 import { logCombinationSign } from "./patches/log-combination-sign.ts";
 import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
 import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
+import { aboutFields } from "./patches/about-fields.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -103,6 +104,7 @@ export { rangeRationalStep, evaluateRangeWithRationalStep } from "./patches/rang
 export { solveIdentity, evaluateSolveIdentity } from "./patches/solve-identity.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 export { logCombinationSign, simplifyLogCombinationOnProvablePositivity } from "./patches/log-combination-sign.ts";
+export { aboutFields, dictionaryOf, entriesOf, evaluateAboutFields } from "./patches/about-fields.ts";
 export {
   infinityArgs,
   evaluateArcsinArccosAtInfinity,
@@ -223,6 +225,7 @@ export const PATCHES: readonly Patch[] = [
   logCombinationSign,
   directedInfinityParts,
   nAccuracyGoal,
+  aboutFields,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

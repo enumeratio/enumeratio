@@ -10,7 +10,7 @@ import { evaluateMultiplyDirectedInfinity } from "../compute-engine/library/arit
 // does, but never does because Multiply gets there first.
 export const multiplyDirectedInfinity: Patch = {
   id: "multiply-directed-infinity",
-  issue: "https://github.com/cortex-js/compute-engine/issues/341",
+  issue: "https://github.com/cortex-js/compute-engine/issues/396",
   lands: "Multiply(c, +-Infinity) = DirectedInfinity(c/Abs(c)) for finite nonzero complex c",
   files: ["src/compute-engine/library/arithmetic.ts"],
   heads: ["Multiply"],

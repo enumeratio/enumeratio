@@ -3,7 +3,7 @@
 // namespace and then only the definitions an expression uses. Every definition is checked
 // against its pin before it is used.
 
-import { type Definition, type Example, pinnedHead, pinOf, type Registry } from "../registry.ts";
+import { type Definition, describeLibrarySymbol, type Example, pinnedHead, pinOf, type Registry } from "../registry.ts";
 import { SYSTEM_VERSION } from "../system.ts";
 import { admitsSystem, type LibraryIndex, type LibraryField } from "./format.ts";
 import { npmHost, type PackageHost } from "./host.ts";
@@ -78,6 +78,14 @@ export function catalog<Engine extends object>(
     async names(namespace) {
       const found = (await open()).get(namespace);
       return found === undefined ? undefined : Object.keys(found.index.symbols);
+    },
+    async describe(name) {
+      const [namespace, member, ...rest] = name.split(".");
+      if (member === undefined || rest.length > 0) return undefined;
+      const found = (await open()).get(namespace!);
+      const entry = found?.index.symbols[member];
+      if (found === undefined || entry === undefined) return undefined;
+      return { ...describeLibrarySymbol(name, entry, entry.pin), package: `${found.name}@${found.version}` };
     },
     async resolve(name, pin) {
       const [namespace, member, ...rest] = name.split(".");

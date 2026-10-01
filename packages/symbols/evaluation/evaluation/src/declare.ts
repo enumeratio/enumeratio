@@ -10,6 +10,7 @@ import {
   withDeadline,
 } from "@enumeratio/engine";
 import { SUMMARIES } from "@enumeratio/manifest/package/evaluation";
+import { declareAbout } from "./about.ts";
 import type { Outcome, TestResult } from "./verification-test.ts";
 import { verificationTest } from "./verification-test.ts";
 
@@ -95,6 +96,7 @@ export function declareEvaluation(ce: ComputeEngine): void {
   });
 
   declareVerificationTest(ce);
+  declareAbout(ce);
 }
 
 function declareVerificationTest(ce: ComputeEngine): void {

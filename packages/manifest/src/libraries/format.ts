@@ -51,6 +51,8 @@ export interface IndexedSymbol {
   readonly attributes?: readonly DefinitionAttribute[];
   /** How it's written (`<Name>/notation.json`), inline so a host can load every library's LaTeX before it builds an engine. */
   readonly notation?: NotationData;
+  /** Its record's summary, for describing it without its definition; not part of the pin. */
+  readonly summary?: string;
 }
 
 /** What a library's notation entry defines, as the version check reads it. */
@@ -104,7 +106,7 @@ export async function libraryIndexOf(
   for (const name of Object.keys(definitions).toSorted()) {
     const definition = definitions[name]!;
     const params = paramsOf(definition);
-    const { requires, examples, defaults, attributes, notation } = definition;
+    const { requires, examples, defaults, attributes, notation, summary } = definition;
     symbols[name] = {
       signature: definition.signature,
       pin: await pinOf(definition),
@@ -114,6 +116,7 @@ export async function libraryIndexOf(
       ...(defaults !== undefined && Object.keys(defaults).length > 0 ? { defaults } : {}),
       ...(attributes?.length ? { attributes } : {}),
       ...(notation === undefined ? {} : { notation }),
+      ...(summary === undefined ? {} : { summary }),
     };
   }
   return { namespace, symbols, ...(notation === undefined ? {} : { notation }) };
