@@ -35,7 +35,7 @@
     "@enumeratio/structures": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.141.0",
+    "@cortex-js/compute-engine": "^0.142.0",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
@@ -47,7 +47,7 @@
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.141.0"
+    "@cortex-js/compute-engine": "^0.142.0"
   },
   "generated": [
     "src/statistics/naming-data.ts",
