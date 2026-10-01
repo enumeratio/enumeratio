@@ -39,3 +39,6 @@ export * from "./engine.ts";
 export * from "./latex.ts";
 export * from "./environment.ts";
 export * from "./textplot.ts";
+export * from "./complex-plot.ts";
+export * from "./gpu-eval.ts";
+export * from "./complex-plot-3d.ts";

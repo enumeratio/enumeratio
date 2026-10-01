@@ -33,6 +33,8 @@ export interface RemoteRequest {
   readonly raw?: boolean;
   /** Only translate, into this syntax. */
   readonly write?: string;
+  /** Only compile (`@enumeratio/frontend/plot-compile`'s `PlotCompileSpec`). */
+  readonly compile?: unknown;
 }
 
 export interface RemoteAnswer {
@@ -50,6 +52,8 @@ export interface RemoteAnswer {
   readonly range?: unknown;
   /** A translation's text. */
   readonly written?: string;
+  /** What the kernel compiled (`compile`). */
+  readonly compiled?: unknown;
 }
 
 /** The session a page's loose cells share (`@enumeratio/frontend/kernel-host`'s `PAGE_SESSION`). */

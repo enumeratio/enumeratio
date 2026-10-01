@@ -1,13 +1,11 @@
 /// <reference types="@webgpu/types" />
-import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { WGSLTarget } from "@cortex-js/compute-engine/compile";
-import { type ComplexWGSL, MAX_SLOTS, zetaWGSL } from "@enumeratio/analytic/src";
+import { zetaWGSL } from "@enumeratio/analytic/shader";
+import { type ComplexWGSL, MAX_SLOTS } from "@enumeratio/ce-patches/wgsl-complex";
 
-// Opt-in GPU evaluation of a plot grid: compile the plotted expression to a WGSL
-// function via compute-engine's WGSL target (special-function heads emit calls into
-// `zetaWGSL`), then run one compute-shader invocation per grid point. Real-scalar,
-// matching the CPU sampler. Returns `undefined` when WebGPU is unavailable or the
-// expression can't be compiled, so callers fall back to the CPU path.
+// Opt-in GPU evaluation of a plot grid: one compute-shader invocation per grid point of a
+// WGSL `plotFn` (`plot-compile.ts`'s `toWgslFn`, compiled in a kernel). Real-scalar,
+// matching the CPU sampler. Returns `undefined` when WebGPU is unavailable or the shader
+// doesn't compile, so callers fall back to the CPU path.
 
 let devicePromise: Promise<GPUDevice | null> | undefined;
 
@@ -19,21 +17,6 @@ function getDevice(): Promise<GPUDevice | null> {
     return adapter ? adapter.requestDevice() : null;
   })().catch(() => null);
   return devicePromise;
-}
-
-/**
- * Compile a bivariate expression to a WGSL `__f(vx, vy) -> f32` function, or return
- * undefined if the WGSL target can't emit it. `zetaWGSL` is prepended so HurwitzZeta
- * / Zeta calls resolve (harmless when unused).
- */
-export function toWgslFn(expr: BoxedExpression, vx: string, vy: string): string | undefined {
-  try {
-    const r = new WGSLTarget().compile(expr) as { success?: boolean; code?: string };
-    if (!r?.success || !r.code) return undefined;
-    return `${zetaWGSL}\nfn plotFn(${vx}: f32, ${vy}: f32) -> f32 { return ${r.code}; }`;
-  } catch {
-    return undefined;
-  }
 }
 
 const TAIL = `

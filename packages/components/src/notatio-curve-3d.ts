@@ -1,8 +1,7 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { loadEngine } from "./mathlive.ts";
+import { numericValueOf } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import {
   type Clock,
@@ -151,31 +150,18 @@ export class NotatioCurve3D extends LitElement {
   /** Evaluate the expression and read a list of points out of the result. */
   async #sample(): Promise<void> {
     if (!this.value.trim()) return;
-    const engine = await loadEngine();
+    const source = this.value;
     let json: unknown;
-    let errors: readonly unknown[];
     try {
-      ({ json, errors } = parseExpression(this.value, {
-        parseLatex: (tex: string) => engine.parse(tex).json,
-      }));
+      json = await numericValueOf(source);
     } catch (err) {
       this._error = err instanceof Error ? err.message : String(err);
       return;
     }
-    if (errors.length) {
-      this._error = `could not parse: ${this.value}`;
-      return;
-    }
-    let value: BoxedExpression;
-    try {
-      value = engine.box(json as Parameters<typeof engine.box>[0]).evaluate();
-    } catch (err) {
-      this._error = err instanceof Error ? err.message : String(err);
-      return;
-    }
+    if (source !== this.value) return;
     let points: Triple[];
     try {
-      points = pointsOf(value);
+      points = pointsOfJson(json);
     } catch (err) {
       this._error = err instanceof Error ? err.message : String(err);
       return;
@@ -263,7 +249,11 @@ export function pointsOf(value: BoxedExpression): Triple[] {
     }
     if (out.length > 0) return out;
   }
-  const json = value.json as unknown;
+  return pointsOfJson(value.json);
+}
+
+/** The points of a list of numeric triples, as MathJSON (numbers and rationals). */
+export function pointsOfJson(json: unknown): Triple[] {
   if (!Array.isArray(json) || json[0] !== "List") return [];
   const out: Triple[] = [];
   for (const row of json.slice(1)) {

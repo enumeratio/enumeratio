@@ -5,9 +5,7 @@
 // (`@enumeratio/components`) and the framework mirrors are built on this.
 export * from "./core.ts";
 export * from "./declare-carriers.ts";
-export * from "./complex-plot.ts";
-export * from "./complex-plot-3d.ts";
-export * from "./gpu-eval.ts";
+export * from "./complex-eval.ts";
 export * from "./conventional-latex.ts";
 export * from "./source.ts";
 export * from "./symbols.ts";
@@ -15,3 +13,4 @@ export * from "./tracked-symbols.ts";
 export * from "./vdom.ts";
 export * from "./head-names.ts";
 export * from "./reduce.ts";
+export * from "./plot-compile.ts";

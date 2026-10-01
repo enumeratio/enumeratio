@@ -126,3 +126,19 @@ test("a call without a session binds nothing another call sees, and a closed ses
   expect((await kernel.evaluate({ json: "b", session: "s" })).json).toBe("b");
   expect(scopes).toEqual(["(own)", "(own)", "s", "s"]);
 });
+
+test("a compile request hands the input to the host's compile, evaluating nothing", async () => {
+  const seen: unknown[] = [];
+  const kernel = createKernel(new ComputeEngine(), catalogue([]), {
+    compile: (_ce, json, spec) => {
+      seen.push([json, spec]);
+      return { code: "x" };
+    },
+  });
+  const answer = await kernel.evaluate({ json: ["Add", 1, 2], compile: { target: "javascript" } });
+  expect(answer.compiled).toEqual({ code: "x" });
+  expect(answer.json).toEqual(["Add", 1, 2]);
+  expect(seen).toEqual([[["Add", 1, 2], { target: "javascript" }]]);
+  const without = await createKernel(new ComputeEngine(), catalogue([])).evaluate({ json: 1, compile: {} });
+  expect(without.ok).toBe(false);
+});

@@ -1,9 +1,7 @@
 /// <reference types="@webgpu/types" />
-import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { emitComplexWGSL } from "@enumeratio/analytic/src";
-import { parseExpression } from "@enumeratio/formats/expression";
+import { emitComplexWGSL } from "@enumeratio/ce-patches/wgsl-complex";
 import { html, LitElement, type PropertyValues } from "lit";
-import { loadEngine } from "./mathlive.ts";
+import { bindWildcards, canonicalOf } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import {
   ComplexPlotRenderer,
@@ -11,7 +9,7 @@ import {
   getComplexPlotDevice,
   parseNumeric,
   zoomAbout,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 
 /**
  * `<ComplexPlot value="PolyLog(2, z)">` -- domain-colouring of a complex-valued
@@ -41,6 +39,7 @@ export class NotatioComplexPlot extends LitElement {
   static properties = {
     /** The complex-valued expression to colour, in Epsil. */
     value: { type: String },
+    bindings: { attribute: false },
     /** The complex variable; defaults to `z`. */
     var: { type: String },
     /** Centre of the view in the complex plane, as `re,im`. Dragging pans it. */
@@ -58,6 +57,9 @@ export class NotatioComplexPlot extends LitElement {
   };
 
   declare value: string;
+  /** Wildcard values (`_a` → 2) from a surrounding Manipulate: they fill the literal slots,
+   *  so the shader is reused. */
+  declare bindings: Record<string, number> | undefined;
   declare var: string;
   declare center: string;
   declare extent: number;
@@ -70,7 +72,6 @@ export class NotatioComplexPlot extends LitElement {
   declare _fps: number;
 
   #canvas: HTMLCanvasElement | undefined;
-  #engine: ComputeEngine | undefined;
   #renderer: ComplexPlotRenderer | undefined;
   #view: ComplexPlotView = { center: [0, 0], extent: 2.4, mask: 0 };
   #home: ComplexPlotView = { center: [0, 0], extent: 2.4, mask: 0 };
@@ -114,7 +115,6 @@ export class NotatioComplexPlot extends LitElement {
       return;
     }
     this.#renderer = new ComplexPlotRenderer(device, canvas);
-    this.#engine ??= await loadEngine();
     this.#readView();
     this.#home = {
       center: [...this.#view.center],
@@ -142,27 +142,22 @@ export class NotatioComplexPlot extends LitElement {
     this.#view.mask = Number.isFinite(this.mask) && this.mask > 0 ? this.mask : 0;
   }
 
-  /** Parse `value`, emit complex WGSL, and hand it to the renderer. */
+  /** `value` in canonical form (from the page's kernel), emitted as complex WGSL for the renderer. */
   async #compile(): Promise<void> {
-    const engine = this.#engine;
     const renderer = this.#renderer;
-    if (!engine || !renderer || !this.value.trim()) return;
-    const parseLatex = (tex: string) => engine.parse(tex).json;
-    const { json, errors } = parseExpression(this.value, { parseLatex });
-    if (errors.length) {
-      this._status = `Could not parse: ${this.value}`;
-      return;
-    }
+    const value = this.value;
+    if (!renderer || !value.trim()) return;
     let canonical: unknown;
     try {
-      canonical = engine.box(json as Parameters<ComputeEngine["box"]>[0]).json;
+      canonical = bindWildcards(await canonicalOf(value), this.bindings);
     } catch {
-      this._status = `Could not evaluate: ${this.value}`;
+      this._status = `Could not parse: ${value}`;
       return;
     }
+    if (value !== this.value) return;
     const emitted = emitComplexWGSL(canonical as never, this.var);
     if (!emitted) {
-      this._status = `No complex GPU lowering for: ${this.value}`;
+      this._status = `No complex GPU lowering for: ${value}`;
       return;
     }
     const outcome = await renderer.setExpression(emitted);
@@ -213,7 +208,7 @@ export class NotatioComplexPlot extends LitElement {
   };
 
   protected override updated(changed: PropertyValues): void {
-    if (changed.has("value") || changed.has("var")) void this.#compile();
+    if (changed.has("value") || changed.has("var") || changed.has("bindings")) void this.#compile();
     if (changed.has("center") || changed.has("extent") || changed.has("mask")) {
       this.#readView();
       this.#draw();

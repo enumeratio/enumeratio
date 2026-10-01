@@ -7,7 +7,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CONTROL_EVENT, type ControlChange, debug } from "@enumeratio/frontend/core";
-import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
+import type { Template } from "./bindings.ts";
 import { CONTROL_TAGS, type ControlElement, controlSelector } from "./define.ts";
 import { ensureFor, loadBareEngine } from "./mathlive.ts";
 
@@ -31,6 +31,7 @@ const OWNERS = "notatio-dynamic-module, notatio-manipulate";
 export class Scope {
   #engine: ComputeEngine | undefined;
   #templates: Template[] = [];
+  #templating: typeof import("./bindings.ts") | undefined;
   /** Current value per control name, as MathJSON: a number, `True`, a `List`, ... */
   #values = new Map<string, MathJsonExpression>();
   #pending: Promise<void> | undefined;
@@ -74,7 +75,9 @@ export class Scope {
     await Promise.all([...new Set(controls.map((el) => el.localName))].map((tag) => customElements.whenDefined(tag)));
     // No control, no template to fill: a page without one never loads the engine for it.
     if (controls.length === 0 && this.#templates.length === 0) return;
+    // The templates' reader and writer come with the engine: a page of cells loads neither.
     const engine = (this.#engine ??= await loadBareEngine());
+    const templating = (this.#templating ??= await import("./bindings.ts"));
     for (const el of controls) this.#read(el);
     // A re-read MERGES: a template already applied has its result where the wildcard
     // was, so it would not be found again -- keep what was captured, forget only what
@@ -83,7 +86,7 @@ export class Scope {
     const seen = new Set(
       kept.map((t) => `${"attr" in t ? "a:" + t.attr : "p:" + t.prop}`).map((k, i) => `${k}@${idOf(kept[i].el)}`),
     );
-    const found = captureTemplates(this.root, new Set(this.#values.keys()), engine, (el) => !this.owns(el));
+    const found = templating.captureTemplates(this.root, new Set(this.#values.keys()), engine, (el) => !this.owns(el));
     for (const t of found) {
       const key = `${"attr" in t ? "a:" + t.attr : "p:" + t.prop}@${idOf(t.el)}`;
       if (!seen.has(key)) {
@@ -122,10 +125,11 @@ export class Scope {
   /** Refill every template from the current scope. */
   #apply(): void {
     const engine = this.#engine;
-    if (!engine) return;
+    const templating = this.#templating;
+    if (!engine || !templating) return;
     const boxed = new Map<string, BoxedExpression>();
     for (const [name, value] of this.#values) boxed.set(name, engine.box(value as never));
-    applyTemplates(engine, this.#templates, boxed);
+    templating.applyTemplates(engine, this.#templates, boxed);
   }
 }
 

@@ -1,19 +1,7 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
-// Real-valued kernels for the compiled fast path -- see notatio-plot-3d.ts.
-const RUNTIME = {
-  __hz: hurwitzZetaReal,
-  __zg: zetaGeneralizedReal,
-  __lp: lerchPhiReal,
-  __pl: polyLogReal,
-} as const;
-
-import { parseExpression } from "@enumeratio/formats/expression";
-import { loadEngine } from "./mathlive.ts";
+import { plotFunctions } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import { debug, polarPlotSvg, type PolarPoint, samplePolar } from "@enumeratio/frontend/core";
 
@@ -78,6 +66,7 @@ export class NotatioPolarPlot extends LitElement {
     label: { type: String },
     /** An explicit point list — `[[θ,r],…]` or bare radii — plotted instead of `expr`. */
     data: { type: String },
+    bindings: { attribute: false },
     _svg: { state: true },
   };
 
@@ -92,6 +81,8 @@ export class NotatioPolarPlot extends LitElement {
   declare markers: string;
   declare label: string;
   declare data: string;
+  /** Wildcard values (`_a` → 2) from a surrounding Manipulate: sampled into the same code. */
+  declare bindings: Record<string, number> | undefined;
   declare _svg: string;
 
   constructor() {
@@ -127,7 +118,8 @@ export class NotatioPolarPlot extends LitElement {
       changed.has("filled") ||
       changed.has("markers") ||
       changed.has("label") ||
-      changed.has("data")
+      changed.has("data") ||
+      changed.has("bindings")
     ) {
       void this.#recompute();
     }
@@ -164,44 +156,19 @@ export class NotatioPolarPlot extends LitElement {
       return;
     }
     try {
-      const engine = await loadEngine();
-      const { json, errors } = parseExpression(raw, {
-        ce: engine,
-        parseLatex: (tex) => engine.parse(tex).json,
-      });
-      if (errors.length) {
-        log("expr is not Epsil", raw, errors);
-        this._svg = "";
-        return;
-      }
-      const expr = engine.box(json);
-      const vt = this.tvar || expr.unknowns[0] || "theta";
-
-      // Precompile to native JS -- see notatio-contour-plot.ts's rationale.
-      const compileFn = (e: BoxedExpression): ((t: number) => number) => {
-        try {
-          const r = new JavaScriptTarget().compile(e) as { success?: boolean; code?: string };
-          if (r?.success && r.code) {
-            // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-            const g = new Function("_", `"use strict"; return (${r.code});`) as (s: Record<string, unknown>) => unknown;
-            const scope: Record<string, unknown> = { ...RUNTIME };
-            return (t) => {
-              scope[vt] = t;
-              const out = g(scope);
-              return typeof out === "number" ? out : Number.NaN;
-            };
-          }
-        } catch {
-          // fall through to the symbolic path
-        }
-        return (t) => {
-          const z = e.subs({ [vt]: engine.number(t) }).N();
-          return typeof z.re === "number" ? z.re : Number.NaN;
-        };
+      const loaded = await plotFunctions(raw);
+      const { plot, samplers } = loaded;
+      if (raw !== this.expr?.trim()) return;
+      const scope = loaded.scope();
+      Object.assign(scope, this.bindings);
+      const vt = this.tvar || plot.unknowns.find((u) => !u.startsWith("_")) || "theta";
+      const sample = (t: number): number => {
+        scope[vt] = t;
+        return samplers[0]!(scope);
       };
 
       const size = Math.max(2, Math.min(2000, this.n));
-      this._svg = polarPlotSvg(samplePolar(compileFn(expr), t0, t1, size), view);
+      this._svg = polarPlotSvg(samplePolar(sample, t0, t1, size), view);
     } catch (error) {
       log("could not plot", raw, error);
       this._svg = "";

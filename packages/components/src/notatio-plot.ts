@@ -1,23 +1,11 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
-import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 
-// Real-valued kernels for the compiled fast path: compute-engine's `compile`
-// handler for these heads emits `_.__hz(…)` / `_.__zg(…)`, resolved on the scope.
-const RUNTIME = {
-  __hz: hurwitzZetaReal,
-  __zg: zetaGeneralizedReal,
-  __lp: lerchPhiReal,
-  __pl: polyLogReal,
-} as const;
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { controlsTemplate } from "./manipulate-ui.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
-import { loadEngine } from "./mathlive.ts";
+import { plotFunctions, readEpsil } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import {
   adaptiveParam,
@@ -38,18 +26,13 @@ import { SliderPlayback } from "./sweep.ts";
 
 const log = debug("plot");
 
-const LIST_HEADS = new Set(["List", "Set", "Tuple", "Sequence"]);
-
-// `ops` lives on CE's narrowed function interface; read it structurally.
-const opsOf = (e: BoxedExpression): readonly BoxedExpression[] | undefined =>
-  (e as unknown as { ops?: readonly BoxedExpression[] }).ops;
-
 /**
  * `<Plot value="Sin(x)" domain="-6.28,6.28">` -- a 2-D line plot of a
  * univariate expression. `value` is **Epsil** by default, and accepts LaTeX
  * inside a `$…$` island. Samples the
  * expression across `domain` by substituting `var` (defaults to the sole free
- * variable) and taking the numeric value. compute-engine is loaded on demand.
+ * variable) and taking the numeric value. The page's kernel compiles it; the page samples
+ * the code.
  *
  * A list of expressions (`{Sin(x), Cos(x)}`) overlays one series per entry; a
  * list of numeric pairs is plotted as data (ListPlot). `parametric` reads a pair
@@ -108,6 +91,7 @@ export class NotatioPlot extends LitElement {
     colorBy: { type: String, attribute: "color-by" },
     /** Manipulate-style controls, e.g. `{a, 1, 5}`, filling the `_a` wildcards in `value`. */
     params: { type: String },
+    bindings: { attribute: false },
     /** What a playing slider does at the ends: `cycle` (default), `reflect` or `none`. */
     loop: { type: String, reflect: true },
     _svg: { state: true },
@@ -136,6 +120,8 @@ export class NotatioPlot extends LitElement {
   declare label: string;
   declare colorBy: string;
   declare params: string;
+  /** Wildcard values (`_a` → 2) from a surrounding Manipulate: sampled into the same code. */
+  declare bindings: Record<string, number> | undefined;
   declare loop: Loop | "";
   declare _svg: string;
   declare _hover: number | undefined;
@@ -202,6 +188,7 @@ export class NotatioPlot extends LitElement {
   }
 
   protected override willUpdate(changed: PropertyValues): void {
+    if (changed.has("epilog") || changed.has("prolog")) void this.#readMarks();
     if (
       changed.has("value") ||
       changed.has("var") ||
@@ -213,7 +200,8 @@ export class NotatioPlot extends LitElement {
       changed.has("parametric") ||
       changed.has("mode") ||
       changed.has("adaptive") ||
-      changed.has("params")
+      changed.has("params") ||
+      changed.has("bindings")
     ) {
       if (changed.has("params")) this._controls = parseControls(this.params);
       void this.#recompute();
@@ -245,72 +233,35 @@ export class NotatioPlot extends LitElement {
       return;
     }
     try {
-      const engine = await loadEngine();
-      const { json, errors } = parseExpression(raw, {
-        ce: engine,
-        parseLatex: (tex) => engine.parse(tex).json,
-      });
-      if (errors.length) {
-        log("value is not Epsil", raw, errors);
-        this.#series = [];
-        this._svg = "";
-        return;
-      }
-      const parsed = engine.box(json);
-      // Bind the Manipulate parameters first (each control `a` fills the wildcard
-      // slot `_a`); the plot variable is then whatever free symbol remains.
-      const paramSubs = Object.fromEntries(this._controls.map((c) => [`_${c.name}`, engine.number(c.value)]));
-      const expr = this._controls.length > 0 ? parsed.subs(paramSubs) : parsed;
-      const variable = this.var || expr.unknowns[0] || "x";
+      const loaded = await plotFunctions(raw, { each: true });
+      const { plot, samplers } = loaded;
+      if (raw !== this.value?.trim()) return;
+      // The Manipulate parameters fill the wildcard slots (`_a`), from this plot's own
+      // controls or a surrounding Manipulate's bindings; the plot variable is then whatever
+      // free symbol remains.
+      const scope = loaded.scope();
+      for (const c of this._controls) scope[`_${c.name}`] = c.value;
+      Object.assign(scope, this.bindings);
+      const variable = this.var || plot.unknowns.find((u) => !u.startsWith("_")) || "x";
       const [lo, hi] = this.#range();
       const count = Math.max(2, Math.min(1000, this.samples));
       const ts = Array.from({ length: count }, (_, i) => lo + ((hi - lo) * i) / (count - 1));
       const style = this.mode === "points" ? "points" : "line";
-      // Precompile each curve to a native JS function sampled per t -- vastly
-      // faster than a subs()+N() per sample (a 1000-point sweep or an animated
-      // Manipulate slider stays smooth). Falls back to symbolic eval for
-      // expressions compute-engine's compiler can't emit (e.g. special functions).
-      const compiledNum = (e: BoxedExpression): ((t: number) => number) => {
-        try {
-          // `run` is the ready-to-call form, with compute-engine's `_SYS` runtime
-          // helpers bound (integer powers, etc.) — correct where the raw `code`
-          // string would reference `_SYS`. The analytic kernels (HurwitzZeta, …)
-          // resolve from the scope, read by the compiled code as `_.__hz(…)`.
-          const r = new JavaScriptTarget().compile(e) as {
-            success?: boolean;
-            run?: (scope: Record<string, unknown>) => unknown;
-          };
-          if (r?.success && typeof r.run === "function") {
-            const run = r.run;
-            const scope: Record<string, unknown> = { ...RUNTIME };
-            return (t) => {
-              scope[variable] = t;
-              const v = run(scope);
-              return typeof v === "number" ? v : Number.NaN;
-            };
-          }
-        } catch {
-          /* fall through to symbolic sampling */
-        }
-        return (t) => {
-          const v = e.subs({ [variable]: engine.number(t) }).N();
-          return typeof v.re === "number" ? v.re : Number.NaN;
+      // Each curve is code the kernel compiled, sampled per t: vastly faster than a
+      // subs()+N() per sample, so a 1000-point sweep or an animated slider stays smooth.
+      const at =
+        (k: number) =>
+        (t: number): number => {
+          scope[variable] = t;
+          return samplers[k]!(scope);
         };
-      };
-      const pair = (e: BoxedExpression): [number, number] | undefined => {
-        const ops = opsOf(e);
-        if (!ops || ops.length !== 2 || !LIST_HEADS.has(e.operator)) return undefined;
-        const [a, b] = ops.map((o) => o.N().re);
-        return typeof a === "number" && typeof b === "number" ? [a, b] : undefined;
-      };
-      const items = (LIST_HEADS.has(expr.operator) && opsOf(expr)) || [expr];
+      const items = plot.items;
       const parametric = this.parametric !== "false" && this.parametric !== undefined;
       if (parametric && items.length === 2) {
         // (x(t), y(t)) traced over the domain in t; refined by planar bend.
-        const [fx, fy] = items;
         const useAdaptive = this.adaptive !== "false" && style === "line";
-        const fxn = compiledNum(fx);
-        const fyn = compiledNum(fy);
+        const fxn = at(0);
+        const fyn = at(1);
         const trace = (t: number): [number, number] => [fxn(t), fyn(t)];
         this.#series = [
           {
@@ -323,21 +274,18 @@ export class NotatioPlot extends LitElement {
             style,
           },
         ];
-      } else if (items.length > 0 && items.every((e) => pair(e) !== undefined)) {
+      } else if (items.length > 0 && items.every((item) => item.point !== undefined)) {
         // A list of numeric pairs: data points, drawn as dots unless told otherwise.
-        const pts: PlotPoint[] = items.map((e) => {
-          const [x, y] = pair(e) as [number, number];
-          return { x, y };
-        });
+        const pts: PlotPoint[] = items.map((item) => ({ x: item.point![0], y: item.point![1] }));
         this.#series = [{ points: pts, style: this.mode === "line" ? "line" : "points" }];
       } else {
         const useAdaptive = this.adaptive !== "false" && style === "line";
-        this.#series = items.map((e) => {
-          const en = compiledNum(e);
+        this.#series = items.map((item, k) => {
+          const en = at(k);
           return {
             points: useAdaptive ? adaptiveSample(en, lo, hi, { init: count }) : ts.map((t) => ({ x: t, y: en(t) })),
             style,
-            label: items.length > 1 ? e.toString() : undefined,
+            label: items.length > 1 ? item.label : undefined,
           };
         });
       }
@@ -380,11 +328,23 @@ export class NotatioPlot extends LitElement {
     this.dispatchEvent(new CustomEvent("notatio-plot-render"));
   }
 
-  /** Graphics primitives from an `epilog`/`prolog` attribute's Epsil; nothing on a parse error. */
+  // Graphics primitives from an `epilog`/`prolog` attribute's Epsil, read once each
+  // (`#readMarks`); nothing on a parse error.
+  #marksOf = new Map<string, Primitive[] | undefined>();
+
   #marks(source: string): Primitive[] | undefined {
-    if (!source.trim()) return undefined;
-    const { json, errors } = parseExpression(source);
-    return errors.length ? undefined : primitivesOf(json as MathJsonExpression);
+    return source.trim() ? this.#marksOf.get(source) : undefined;
+  }
+
+  async #readMarks(): Promise<void> {
+    let read = false;
+    for (const source of [this.epilog, this.prolog]) {
+      if (!source?.trim() || this.#marksOf.has(source)) continue;
+      const json = await readEpsil(source);
+      this.#marksOf.set(source, json === undefined ? undefined : primitivesOf(json as MathJsonExpression));
+      read = true;
+    }
+    if (read) this.#draw();
   }
 
   #onPointerMove = (e: PointerEvent): void => {

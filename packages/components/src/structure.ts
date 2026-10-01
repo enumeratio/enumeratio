@@ -9,6 +9,7 @@
 // Options arrive as attributes already (`plot-range="All"`); the ones a component
 // spells differently (`PlotLabel` is the plot's `label`) are mapped the same way.
 
+import { isClaimed } from "./lazy.ts";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { withOptions } from "@enumeratio/formats";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
@@ -154,6 +155,15 @@ function scopeNames(el: Element): Set<string> {
 export function adoptStructure(el: Element): void {
   const symbol = BY_TAG.get(el.localName);
   if (symbol === undefined || ADOPTED.has(el)) return;
+  // A hand-written element in it whose module is still loading (`lazy.ts`) is waited for:
+  // its class reads the arguments.
+  const pending = [el, ...el.querySelectorAll("*")]
+    .map((e) => e.localName)
+    .filter((tag, i, all) => all.indexOf(tag) === i && isClaimed(tag) && customElements.get(tag) === undefined);
+  if (pending.length > 0) {
+    void Promise.all(pending.map((tag) => customElements.whenDefined(tag))).then(() => adoptStructure(el));
+    return;
+  }
   // The children may not have been defined or upgraded yet, and their expressions live
   // on the instances.
   defineUsed(el);
@@ -228,13 +238,15 @@ export function adoptStructures(root: ParentNode): void {
   const rest = tags.filter(([, s]) => !CONTROL_HEADS.has(s.head)).map(([t]) => t);
   // A control's own arguments can be built too (a `Labeled` entry); they must stand for
   // their expressions before the control reads its entries from them.
-  const within = Array.from(root.querySelectorAll(rest.join(","))).filter(
-    (el) => el.parentElement?.closest(controls.join(",")) != null,
+  // A selector for none of them when there are none.
+  const any = (list: readonly string[]): string => (list.length > 0 ? list.join(",") : ":not(*)");
+  const within = Array.from(root.querySelectorAll(any(rest))).filter(
+    (el) => el.parentElement?.closest(any(controls)) != null,
   );
   for (const el of within.toReversed()) adoptStructure(el);
-  for (const el of root.querySelectorAll(controls.join(","))) adoptStructure(el);
+  for (const el of root.querySelectorAll(any(controls))) adoptStructure(el);
   // Reverse document order: a descendant always follows its ancestor.
-  const others = Array.from(root.querySelectorAll(rest.join(",")));
+  const others = Array.from(root.querySelectorAll(any(rest)));
   for (const el of others.toReversed()) adoptStructure(el);
 }
 

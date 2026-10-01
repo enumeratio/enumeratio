@@ -31,6 +31,9 @@ export interface KernelRequest {
   /** Only translate: read the input and write it in this syntax (`latex`, `epsil`), evaluating
    *  nothing. */
   readonly write?: string;
+  /** Only compile: read the input and hand it to the host's `compile` with this (what to
+   *  compile it to, over which variables), evaluating nothing. */
+  readonly compile?: unknown;
   readonly timeMs?: number;
 }
 
@@ -54,6 +57,8 @@ export interface KernelResult {
   readonly written?: string;
   /** Where in the source a syntax error is, as the host's reader reports it. */
   readonly range?: unknown;
+  /** What the host's `compile` made of the input (`KernelRequest.compile`). */
+  readonly compiled?: unknown;
 }
 
 /** A session's scope and history, kept by the host. */
@@ -75,6 +80,9 @@ export interface KernelOptions {
   /** The answer's display, built here where the definitions are, so a front end needs no
    *  engine to render it. */
   readonly display?: (ce: ComputeEngine, json: unknown) => unknown;
+  /** The input compiled as `spec` asks (code for a plot to run), so a front end draws it
+   *  with no engine of its own. */
+  readonly compile?: (ce: ComputeEngine, json: unknown, spec: unknown) => unknown;
 }
 
 export interface Kernel {
@@ -140,6 +148,14 @@ export function createKernel(
       if (options.write === undefined) return failed("this kernel doesn't translate");
       try {
         return { ok: true, json: input, written: options.write(ce, input, request.write), ...resolved };
+      } catch (error) {
+        return failed(error);
+      }
+    }
+    if (request.compile !== undefined) {
+      if (options.compile === undefined) return failed("this kernel doesn't compile");
+      try {
+        return { ok: true, json: input, compiled: options.compile(ce, input, request.compile), ...resolved };
       } catch (error) {
         return failed(error);
       }

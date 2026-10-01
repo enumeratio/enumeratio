@@ -22,6 +22,7 @@
   "dependencies": {
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/boxes": "workspace:*",
+    "@enumeratio/ce-patches": "workspace:*",
     "@enumeratio/cli": "workspace:*",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/engine": "workspace:*",

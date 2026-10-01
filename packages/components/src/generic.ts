@@ -19,6 +19,7 @@
 // a scope the outermost's `value` is a template like any other attribute, which is how
 // `<notatio-binomial>_n, 2</notatio-binomial>` follows a knob.
 
+import { isClaimed } from "./lazy.ts";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf, withOptions } from "@enumeratio/formats";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
@@ -310,13 +311,16 @@ const headOfTag = (tag: string): string | undefined =>
 
 /**
  * Define the generic elements `root` uses that nothing has defined yet -- deepest first, so
- * an outer element finds its arguments already upgraded. Returns how many it defined.
+ * an outer element finds its arguments already upgraded -- except the tags `claimed` says a
+ * hand-written element's module is on its way for (by default, every tag `lazy.ts` loads
+ * by module). Returns how many it defined.
  */
-export function defineUsed(root: ParentNode): number {
+export function defineUsed(root: ParentNode, claimed: (tag: string) => boolean = isClaimed): number {
   const deepest = new Map<string, number>();
   const consider = (el: Element): void => {
     const tag = el.localName;
     if (!tag.startsWith("notatio-") || customElements.get(tag) !== undefined || headOfTag(tag) === undefined) return;
+    if (claimed(tag)) return;
     let depth = 0;
     for (let p = el.parentElement; p !== null; p = p.parentElement) depth++;
     deepest.set(tag, Math.max(depth, deepest.get(tag) ?? 0));

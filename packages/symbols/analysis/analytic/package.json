@@ -19,6 +19,7 @@
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
     },
+    "./shader": "./src/shader.ts",
     "./package.json": "./package.json"
   },
   "scripts": {

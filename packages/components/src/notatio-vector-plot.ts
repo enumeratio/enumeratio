@@ -1,19 +1,7 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
-// Real-valued kernels for the compiled fast path -- see notatio-plot-3d.ts.
-const RUNTIME = {
-  __hz: hurwitzZetaReal,
-  __zg: zetaGeneralizedReal,
-  __lp: lerchPhiReal,
-  __pl: polyLogReal,
-} as const;
-
-import { parseExpression } from "@enumeratio/formats/expression";
-import { loadEngine } from "./mathlive.ts";
+import { plotFunctions } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import { debug, type Field2d, vectorPlotSvg } from "@enumeratio/frontend/core";
 
@@ -94,6 +82,8 @@ export class NotatioVectorPlot extends LitElement {
     yLabel: { type: String, attribute: "y-label" },
     /** Caption drawn above the figure. */
     label: { type: String },
+    /** Values for a surrounding Manipulate's wildcards, set by the host. */
+    bindings: { attribute: false },
     _svg: { state: true },
   };
 
@@ -111,6 +101,7 @@ export class NotatioVectorPlot extends LitElement {
   declare xLabel: string;
   declare yLabel: string;
   declare label: string;
+  declare bindings: Record<string, number> | undefined;
   declare _svg: string;
 
   constructor() {
@@ -152,7 +143,8 @@ export class NotatioVectorPlot extends LitElement {
       changed.has("axes") ||
       changed.has("xLabel") ||
       changed.has("yLabel") ||
-      changed.has("label")
+      changed.has("label") ||
+      changed.has("bindings")
     ) {
       void this.#recompute();
     }
@@ -163,63 +155,49 @@ export class NotatioVectorPlot extends LitElement {
     return Number.isFinite(a) && Number.isFinite(b) ? [a, b] : fallback;
   }
 
-  async #recompute(): Promise<void> {
+  #pair(): readonly [string, string] | undefined {
     const parts = this.u?.trim() && this.v?.trim() ? ([this.u, this.v] as const) : undefined;
-    const pair = parts ?? (this.field?.trim() ? splitField(this.field) : undefined);
+    return parts ?? (this.field?.trim() ? splitField(this.field) : undefined);
+  }
+
+  #key(): string {
+    const pair = this.#pair();
+    return pair ? `${pair[0]}\u0000${pair[1]}` : "";
+  }
+
+  async #recompute(): Promise<void> {
+    const pair = this.#pair();
     if (!pair) {
       this._svg = "";
       return;
     }
 
     try {
-      const engine = await loadEngine();
       const vx = this.xvar || "x";
       const vy = this.yvar || "y";
-      const box = (src: string): BoxedExpression | undefined => {
-        const { json, errors } = parseExpression(src, {
-          ce: engine,
-          parseLatex: (tex) => engine.parse(tex).json,
-        });
-        if (errors.length) {
-          log("component is not Epsil", src, errors);
-          return undefined;
-        }
-        return engine.box(json);
-      };
+      const key = `${pair[0]}\u0000${pair[1]}`;
+      const vars = { vars: [vx, vy] };
+      const [lu, lv] = await Promise.all([plotFunctions(pair[0], vars), plotFunctions(pair[1], vars)]);
+      if (key !== this.#key()) return;
 
-      // Precompile each component to native JS -- see notatio-contour-plot.ts.
-      // Falls back to symbolic subs()+N() when the compiler can't emit it.
-      const compileFn = (e: BoxedExpression): ((x: number, y: number) => number) => {
-        try {
-          const r = new JavaScriptTarget().compile(e) as { success?: boolean; code?: string };
-          if (r?.success && r.code) {
-            // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-            const g = new Function("_", `"use strict"; return (${r.code});`) as (s: Record<string, unknown>) => unknown;
-            const scope: Record<string, unknown> = { ...RUNTIME };
-            return (x, y) => {
-              scope[vx] = x;
-              scope[vy] = y;
-              const out = g(scope);
-              return typeof out === "number" ? out : Number.NaN;
-            };
-          }
-        } catch {
-          // fall through to the symbolic path
-        }
-        return (x, y) => {
-          const z = e.subs({ [vx]: engine.number(x), [vy]: engine.number(y) }).N();
-          return typeof z.re === "number" ? z.re : Number.NaN;
-        };
-      };
-
-      const [u, v] = [box(pair[0]), box(pair[1])];
-      if (!u || !v) {
+      // Wildcards come from a surrounding Manipulate's bindings.
+      const scopeU = lu.scope();
+      const scopeV = lv.scope();
+      Object.assign(scopeU, this.bindings);
+      Object.assign(scopeV, this.bindings);
+      const su = lu.samplers[0];
+      const sv = lv.samplers[0];
+      if (!su || !sv) {
         this._svg = "";
         return;
       }
-      const fu = compileFn(u);
-      const fv = compileFn(v);
-      const f: Field2d = (x, y) => [fu(x, y), fv(x, y)];
+      const f: Field2d = (x, y) => {
+        scopeU[vx] = x;
+        scopeU[vy] = y;
+        scopeV[vx] = x;
+        scopeV[vy] = y;
+        return [su(scopeU), sv(scopeV)];
+      };
 
       const [x0, x1] = this.#span(this.xrange, [-2, 2]);
       const [y0, y1] = this.#span(this.yrange, [-2, 2]);

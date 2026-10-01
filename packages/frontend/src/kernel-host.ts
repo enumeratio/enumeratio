@@ -11,6 +11,7 @@ import { parseExpression } from "@enumeratio/formats/expression";
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { type CodeForm, codeForms } from "./code-forms.ts";
 import { type DisplayBoxes, displayBoxes } from "./display.ts";
+import { compilePlot, type PlotCompileSpec } from "./plot-compile.ts";
 import { boundName } from "./reactive.ts";
 import { renderingOf } from "./symbols.ts";
 import { Transcript } from "./transcript.ts";
@@ -105,4 +106,5 @@ export const NOTEBOOK_KERNEL: KernelOptions = {
   write: writeSource,
   session: transcriptSession,
   display,
+  compile: (ce, json, spec) => compilePlot(ce, json, spec as PlotCompileSpec),
 };
