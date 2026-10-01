@@ -39,10 +39,7 @@ export const HIERARCHY: Readonly<Record<string, Placement>> = {
   "number-theory": { layer: "extension", area: "arithmetic", extends: ["numerals"] },
   adeles: { layer: "extension", area: "arithmetic", extends: ["number-theory"] },
 
-  // Over structures in the design, but not declared after it yet: ce-patches' Ceil/Floor
-  // signature, set as analytic declares, would replace structures' wider one, and
-  // Floor(23/10 - i e) would stay unevaluated.
-  analytic: { layer: "extension", area: "analysis", extends: ["boxes"] },
+  analytic: { layer: "extension", area: "analysis", extends: ["structures"] },
 
   hypercomplex: { layer: "extension", area: "algebras", extends: ["structures"] },
   geometric: { layer: "extension", area: "algebras", extends: ["hypercomplex"] },

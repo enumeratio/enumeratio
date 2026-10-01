@@ -115,11 +115,12 @@ test("libraries: only what an expression names, each once per engine", async () 
   const libraries = [library("analytic"), library("hypercomplex"), library("structures")];
   const resolver = createRegistryResolver(combineRegistries(await ada(), manifestRegistry(libraries)));
   const ce = new ComputeEngine();
-  expect((await resolver.ensure(ce, ["HurwitzZeta", 2, 1])).declared).toEqual(["analytic"]);
+  // What it names, after what that extends.
+  expect((await resolver.ensure(ce, ["HurwitzZeta", 2, 1])).declared).toEqual(["structures", "analytic"]);
   expect((await resolver.ensure(ce, ["HurwitzZeta", 3, 1])).declared).toEqual([]);
   // Qualified by its package's namespace, the same head; by another's, nothing.
   const qualified = ["MemberCall", "Analytic", "'HurwitzZeta'", 2, 1];
-  expect((await resolver.ensure(new ComputeEngine(), qualified)).declared).toEqual(["analytic"]);
+  expect((await resolver.ensure(new ComputeEngine(), qualified)).declared).toEqual(["structures", "analytic"]);
   const wrong = ["MemberCall", "Hypercomplex", "'HurwitzZeta'", 2, 1];
   expect((await resolver.ensure(new ComputeEngine(), wrong)).unresolved).toEqual(["Hypercomplex.HurwitzZeta"]);
 });
