@@ -213,7 +213,7 @@ arguments by name too: `<notatio-binomial n="5" k="2">`.
   title="A plot, structurally">
 <notatio-plot plot-range="-1,1" grid-lines="true">
 <notatio-sin>x</notatio-sin>
-<notatio-tuple>x, 0, 10</notatio-tuple>
+<notatio-tuple>x 0 10</notatio-tuple>
 </notatio-plot>
 </Story>
 
@@ -248,12 +248,12 @@ component form is. The elements do the rest, lowering their own children.
 <code>notatio-row</code> holding a <code>notatio-list</code> of a <code>notatio-slider</code>,
 a string and a <code>notatio-dynamic</code>.
 </template>
-<notatio-row><notatio-list><notatio-slider><notatio-tuple>k, 1</notatio-tuple><notatio-tuple>0, 5, 0.5</notatio-tuple></notatio-slider><notatio-string value="squared is"></notatio-string><notatio-dynamic><notatio-power>k, 2</notatio-power></notatio-dynamic></notatio-list></notatio-row>
+<notatio-row><notatio-list><notatio-slider><notatio-tuple>k 1</notatio-tuple><notatio-tuple>0 5 0.5</notatio-tuple></notatio-slider><notatio-string value="squared is"></notatio-string><notatio-dynamic><notatio-power>k 2</notatio-power></notatio-dynamic></notatio-list></notatio-row>
 </Story>
 
 <Story
   title="A plot with options, as a vdom">
-<notatio-plot plot-range="(-1, 1)" epilog="Point((1.5, 1))"><notatio-sin>x</notatio-sin><notatio-tuple>x, 0, 10</notatio-tuple></notatio-plot>
+<notatio-plot plot-range="(-1, 1)" epilog="Point((1.5, 1))"><notatio-sin>x</notatio-sin><notatio-tuple>x 0 10</notatio-tuple></notatio-plot>
 </Story>
 
 ## Every symbol, and no wrapper
@@ -272,8 +272,8 @@ No component was written for <code>Binomial</code>, <code>Sqrt</code> or
 <code>Add</code>. The outermost typesets; the ones inside are structure.
 </template>
 <p>
-<notatio-binomial>n, 2</notatio-binomial>,
-<notatio-sqrt><notatio-add><notatio-power>x, 2</notatio-power><notatio-integer value="1" /></notatio-add></notatio-sqrt>,
+<notatio-binomial>n 2</notatio-binomial>,
+<notatio-sqrt><notatio-add><notatio-power>x 2</notatio-power><notatio-integer value="1" /></notatio-add></notatio-sqrt>,
 <notatio-integer value="42" />, <notatio-string value="a string" />.
 </p>
 </Story>
@@ -286,7 +286,7 @@ scope binds it to the readout and to the generic element beside it.
 </template>
 <p>
 <notatio-slider name="m" value="4" min="0" max="10" step="1" readout /> choose 2 is
-<notatio-binomial evaluate>_m, 2</notatio-binomial>, and squared it is
+<notatio-binomial evaluate>_m 2</notatio-binomial>, and squared it is
 <notatio-dynamic value="_m^2" />.
 </p>
 </Story>

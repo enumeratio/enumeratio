@@ -89,6 +89,7 @@ const ROUND_TRIPS: unknown[] = [
   ["MemberCall", ["Field", "a", "'b'"], "'C'", "x"],
   ["MemberCall", "Stats", "'Mean'"],
   ["ToExpression", "'x'"],
+  ["Dictionary", ["KeyValuePair", "'a'", 1], ["KeyValuePair", "'b c'", ["List", 2, 3]]],
   [
     "Add",
     ["Multiply", ["Power", "x", 2], ["Sin", ["Divide", ["Multiply", "Pi", "x"], 4]]],
@@ -109,4 +110,12 @@ test("the printer's spelling", () => {
   expect(markupOf(["Random"])).toBe("<Apply>Random</Apply>");
   expect(markupOf("Pi")).toBe("<Pi />");
   expect(markupOf(["MemberCall", "Stats", "'Mean'", "xs"])).toBe("<Stats.Mean>xs</Stats.Mean>");
+});
+
+test("a dictionary literal is written as the dictionary it is", () => {
+  expect(stripMetadata({ dict: { a: 1, b: { str: "x" } } })).toEqual([
+    "Dictionary",
+    ["KeyValuePair", "'a'", 1],
+    ["KeyValuePair", "'b'", "'x'"],
+  ]);
 });

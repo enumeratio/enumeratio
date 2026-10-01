@@ -27,7 +27,15 @@ type Json = unknown;
 export interface MarkupNode {
   readonly tag: string;
   readonly props: Readonly<Record<string, string | true>> | null;
-  readonly children: readonly (MarkupNode | string)[];
+  readonly children: readonly (MarkupNode | ReadNode | string)[];
+}
+
+/**
+ * A child that is already an expression: a DOM host's component (a plot inside a generic
+ * element) that knows its own, or a node read earlier.
+ */
+export interface ReadNode {
+  readonly json: Json;
 }
 
 /** An Epsil parser, `parseExpression`'s shape: injected so this module stays engine-free. */
@@ -195,7 +203,9 @@ function read(node: MarkupNode, parseText: ParseText | undefined, errors: string
   const args: Json[] = [];
   for (const child of node.children) {
     if (typeof child === "string") args.push(...tokenize(child, errors));
-    else {
+    else if ("json" in child) {
+      if (child.json !== undefined) args.push(child.json);
+    } else {
       const arg = read(child, parseText, errors);
       if (arg !== undefined) args.push(arg);
     }
@@ -243,7 +253,12 @@ export function stripMetadata(expr: Json): Json {
     if (typeof o.str === "string") return `'${o.str}'`;
     if (typeof o.num === "string") return NUMBER.test(o.num) ? numberOf(o.num) : { num: o.num };
     if (typeof o.num === "number") return o.num;
-    if (o.dict !== undefined) throw new Error("markup: a dictionary literal has no markup yet");
+    // A dictionary literal as its applied form: the same value, and a tree markup can write.
+    if (o.dict !== null && typeof o.dict === "object")
+      return [
+        "Dictionary",
+        ...Object.entries(o.dict).map(([key, value]) => ["KeyValuePair", `'${key}'`, stripMetadata(value)]),
+      ];
   }
   return expr;
 }

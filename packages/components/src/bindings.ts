@@ -13,7 +13,12 @@ import { parseExpression, serializeExpression } from "@enumeratio/formats/expres
 type Json = ReturnType<typeof parseExpression>["json"];
 
 /** One captured template: where the result goes, and the expression it comes from. */
-export type Template = { el: Element; json: Json } & ({ attr: string } | { prop: string });
+/** `list`: the slot holds an argument list (a generic element's `value`), not one expression. */
+export type Template = { el: Element; json: Json; list?: true } & ({ attr: string } | { prop: string });
+
+/** A generic element's `value` is its arguments, `n, 2`: a template there is read as `[n, 2]`. */
+const holdsArguments = (el: Element, slot: string): boolean =>
+  slot === "value" && el.hasAttribute("data-notatio-generic");
 
 /**
  * Every attribute/property under `root` that is an Epsil expression over `names`.
@@ -35,9 +40,9 @@ export function captureTemplates(
         ? skip
         : (el: Element) => el === skip || skip.contains(el);
   const parseLatex = (tex: string) => engine.parse(tex).json;
-  const slotted = (src: string): Json | undefined => {
+  const slotted = (src: string, list = false): Json | undefined => {
     if (!src.includes("_")) return undefined;
-    const { json, wildcards, errors } = parseExpression(src, { parseLatex });
+    const { json, wildcards, errors } = parseExpression(list ? `[${src}]` : src, { parseLatex });
     if (errors.length) return undefined;
     return wildcards.some((w) => names.has(w.slice(1))) ? json : undefined;
   };
@@ -45,15 +50,17 @@ export function captureTemplates(
   for (const el of root.querySelectorAll("*")) {
     if (skipped(el)) continue;
     for (const attr of el.getAttributeNames()) {
-      const json = slotted(el.getAttribute(attr) ?? "");
-      if (json !== undefined) templates.push({ el, attr, json });
+      const list = holdsArguments(el, attr);
+      const json = slotted(el.getAttribute(attr) ?? "", list);
+      if (json !== undefined) templates.push({ el, attr, json, ...(list ? { list: true as const } : {}) });
     }
     if (el.tagName.includes("-")) {
       const props = (el.constructor as { properties?: Record<string, unknown> }).properties;
       for (const prop of props ? Object.keys(props) : []) {
         const v = (el as unknown as Record<string, unknown>)[prop];
-        const json = typeof v === "string" ? slotted(v) : undefined;
-        if (json !== undefined) templates.push({ el, prop, json });
+        const list = holdsArguments(el, prop);
+        const json = typeof v === "string" ? slotted(v, list) : undefined;
+        if (json !== undefined) templates.push({ el, prop, json, ...(list ? { list: true as const } : {}) });
       }
     }
   }
@@ -75,7 +82,8 @@ export function applyTemplates(
   for (const t of templates) {
     let next: string;
     try {
-      next = serializeExpression(engine.box(t.json).subs(subs).evaluate().json);
+      const filled = engine.box(t.json).subs(subs).evaluate().json;
+      next = t.list ? serializeExpression(filled).replace(/^\[|\]$/g, "") : serializeExpression(filled);
     } catch {
       continue;
     }

@@ -2,31 +2,34 @@
 // no hand-written component, a generic `notatio-<head>` is registered here. It stands
 // for the expression `Head(args)`:
 //
-//   - `value` is the text the head's constructor takes -- the whole expression as
-//     Epsil, or for an atom (`Integer`, `Real`, `String`, `Symbol`) its literal --
-//     which is what a framework or a scope writes into it;
-//   - otherwise its ARGUMENTS ARE ITS CHILDREN: each child element contributes its own
-//     `expression`, and a run of text is an Epsil argument list, so
-//     `<notatio-binomial>n, 2</notatio-binomial>` and
+//   - its ARGUMENTS ARE ITS CHILDREN, as the vdom markup reads them (`@enumeratio/formats/markup`):
+//     each child element contributes its own `expression`, and a run of text is
+//     whitespace-separated atoms, so `<notatio-binomial>n 2</notatio-binomial>` and
 //     `<notatio-binomial><notatio-symbol value="n" /><notatio-integer value="2" /></notatio-binomial>`
-//     are the same thing -- or, for a head of fixed arity whose parameters the reference
-//     names, the arguments are ATTRIBUTES: `<notatio-binomial n="5" k="2">`;
+//     are the same thing;
+//   - or `value` holds them, as Epsil (`<notatio-binomial value="n, 2">`), which is what
+//     a scope fills; an atom's (`Integer`, `Real`, `String`, `Symbol`) is its literal;
+//   - or, for a head of fixed arity whose parameters the reference names, the arguments
+//     are ATTRIBUTES: `<notatio-binomial n="5" k="2">`;
 //   - every other attribute is an OPTION, Wolfram's way: `<notatio-plot plot-range="All">`
 //     is `Plot(…, PlotRange -> All)`, the name un-kebab-cased.
 //
 // Only the OUTERMOST generic element typesets, through `<notatio-out>`; the ones inside
 // it are structure -- they exist so the tree is addressable, not so each draws. Inside
 // a scope the outermost's `value` is a template like any other attribute, which is how
-// `<notatio-binomial>_n, 2</notatio-binomial>` follows a knob.
+// `<notatio-binomial>_n 2</notatio-binomial>` follows a knob.
 
 import { isClaimed } from "./lazy.ts";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf, withOptions } from "@enumeratio/formats";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
-import { HEADS, PARAMS, tagOf } from "@enumeratio/frontend";
+import { tokenize } from "@enumeratio/formats/markup";
+import { debug, HEADS, PARAMS, tagOf } from "@enumeratio/frontend";
 import { html, LitElement, nothing } from "lit";
 import "./notatio-out.ts";
 import { ensureStyles } from "./styles.ts";
+
+const log = debug("generic");
 
 /** The leaf tags: their text is a literal, not an argument list. */
 const ATOMS: Record<string, (text: string) => MathJsonExpression> = {
@@ -73,8 +76,8 @@ export class NotatioGeneric extends LitElement {
 
   static properties = {
     /**
-     * The expression as text -- the whole `Head(args)` as Epsil, or an atom's literal.
-     * Set, it wins over the children; inside a scope it is a template.
+     * The arguments as Epsil (`n, 2`), or an atom's literal. Set, it wins over the
+     * children; inside a scope it is a template.
      */
     value: { type: String },
     /** Evaluate before typesetting, rather than showing the expression as written. */
@@ -149,8 +152,15 @@ export class NotatioGeneric extends LitElement {
     super.disconnectedCallback();
   }
 
-  /** Did we write `value` ourselves, from the children? Then the children still lead. */
-  #derived = false;
+  /**
+   * The `value` we wrote ourselves, from the children. While `value` is still that, the
+   * children lead; anything else in it (an author's, or a scope's filled template) wins.
+   */
+  #published: string | undefined;
+
+  get #derived(): boolean {
+    return this.#published !== undefined && this.value === this.#published;
+  }
 
   /**
    * Publish the children's expression as `value`, so a scope sees it as a template
@@ -159,11 +169,16 @@ export class NotatioGeneric extends LitElement {
    */
   #derive(): void {
     if (this.value.trim() && !this.#derived) return;
-    const fromChildren = this.#fromChildren();
-    if (fromChildren === undefined) return;
-    const text = ATOMS[this.head] ? this.#ownText() : serializeExpression(fromChildren);
+    let text: string;
+    if (ATOMS[this.head]) text = this.#ownText();
+    else {
+      const args = this.#namedArguments() ?? this.#arguments();
+      if (args.length === 0) return;
+      text = argumentsText(args);
+    }
+    if (!text) return;
     if (text !== this.value) {
-      this.#derived = true;
+      this.#published = text;
       this.value = text;
     }
   }
@@ -216,8 +231,10 @@ export class NotatioGeneric extends LitElement {
     if (text && !this.#derived) {
       const atom = ATOMS[head];
       if (atom) return atom(text);
-      const { json, errors } = parseExpression(text);
-      return errors.length ? undefined : (json as MathJsonExpression);
+      const { json, errors } = parseExpression(`[${text}]`);
+      const list = (json as { fn?: unknown[] }).fn;
+      if (errors.length || !Array.isArray(list)) return undefined;
+      return withOptions(head, list.slice(1) as MathJsonExpression[], this.#options());
     }
     return this.#fromChildren();
   }
@@ -245,18 +262,17 @@ export class NotatioGeneric extends LitElement {
       .trim();
   }
 
-  /** The arguments: element children's expressions, and text runs as Epsil lists. */
+  /** The arguments: element children's expressions, and text runs as their atoms. */
   #arguments(): MathJsonExpression[] {
     const args: MathJsonExpression[] = [];
     for (const node of this.#nodes) {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = (node.textContent ?? "").trim();
         if (!text) continue;
-        const { json, errors } = parseExpression(`(${text})`);
-        if (errors.length) continue;
-        const fn = (json as { fn?: unknown[] }).fn;
-        if (Array.isArray(fn) && fn[0] === "Tuple") args.push(...(fn.slice(1) as MathJsonExpression[]));
-        else args.push(json as MathJsonExpression);
+        const errors: string[] = [];
+        const atoms = tokenize(text, errors);
+        if (errors.length) log("text isn't atoms (Epsil goes in value):", text, errors);
+        args.push(...(atoms as MathJsonExpression[]));
       } else if (node.nodeType === Node.ELEMENT_NODE) {
         const el = node as Element;
         if (isExpressive(el)) {
@@ -345,3 +361,8 @@ export function defineOnDemand(root: Document | ShadowRoot = document): Mutation
 /** The expression a whole subtree of elements stands for, from its outermost generic. */
 export const expressionOf = (el: Element): MathJsonExpression | undefined =>
   isExpressive(el) ? el.expression : undefined;
+
+/** Arguments as `value` holds them: Epsil, comma-separated, without the brackets. */
+export function argumentsText(args: readonly MathJsonExpression[]): string {
+  return serializeExpression(["List", ...args] as MathJsonExpression).replace(/^\[|\]$/g, "");
+}

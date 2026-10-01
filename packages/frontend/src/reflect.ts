@@ -14,7 +14,6 @@
 
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import type { Rendering } from "./symbols.ts";
 
 export interface AttributeDoc {
   /** The DOM attribute, e.g. `x-domain`. */
@@ -192,38 +191,4 @@ export function headOfTag(tag: string): string {
     .split("-")
     .map((part) => (/^\d/.test(part) ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
     .join("");
-}
-
-const escapeAttribute = (value: string): string => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
-
-/** A leaf of a structural tree: an atom (`Integer`, `Symbol`, …) with a `value` and no children. */
-const isLeaf = (node: Rendering): boolean => node.children === undefined && node.text === undefined;
-
-/** `attributes` as a markup attribute list, kebab names already in place (they're options). */
-function printAttributes(attributes: Readonly<Record<string, string>>): string {
-  return Object.entries(attributes)
-    .map(([name, value]) => ` ${name}="${escapeAttribute(value)}"`)
-    .join("");
-}
-
-/**
- * A structural tree (`structuralOf`) as the markup a person would author by hand
- * (https://github.com/enumeratio/enumeratio/wiki/Vdom): lit tags renamed to their head (`notatio-bar-chart-3d` ->
- * `BarChart3D`), attributes as-is (`structuralOf` already lowers options into kebab-case
- * attributes), and a run of leaf children collapsed to their comma-joined `value`s
- * (`<Tuple>x, 0, 10</Tuple>`) rather than one nested atom tag each -- the "short spelling" the
- * design doc calls out as equivalent to the fully nested one.
- */
-export function structuralMarkupOf(rendering: Rendering, depth = 0): string {
-  const pad = "  ".repeat(depth);
-  const name = headOfTag(rendering.tag);
-  const attrs = printAttributes(rendering.attributes);
-  if (isLeaf(rendering)) return `${pad}<${name}${attrs} />`;
-  const open = `${pad}<${name}${attrs}`;
-  if (rendering.text !== undefined) return `${open}>${rendering.text}</${name}>`;
-  const children = rendering.children ?? [];
-  if (children.length === 0) return `${open} />`;
-  if (children.every(isLeaf)) return `${open}>${children.map((c) => c.attributes.value ?? "").join(", ")}</${name}>`;
-  const inner = children.map((c) => structuralMarkupOf(c, depth + 1)).join("\n");
-  return `${open}>\n${inner}\n${pad}</${name}>`;
 }
