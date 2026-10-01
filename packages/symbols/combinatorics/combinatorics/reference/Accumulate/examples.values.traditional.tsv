@@ -6,5 +6,5 @@ accumulate-empty	\operatorname{Accumulate}([])	[]
 accumulate-data		
 accumulate-v		
 accumulate-range-1-10	\operatorname{Accumulate}(\operatorname{Range}(1,10))	[1,3,6,10,15,21,28,36,45,55]
-accumulate-last-is-total	\operatorname{Last}(\operatorname{Accumulate}([1,2,3,4,5]))=1+2+3+4+5	\operatorname{True}
+accumulate-last-is-total	\operatorname{Last}(\operatorname{Accumulate}([1,2,3,4,5]))=1+2+3+4+5	\top
 transpose-nestlist-accumulate-range-1-5-5	\operatorname{Transpose}(\operatorname{NestList}(\operatorname{Accumulate},\operatorname{Range}(1,5),5))	[[1,1,1,1,1,1],[2,3,4,5,6,7],[3,6,10,15,21,28],[4,10,20,35,56,84],[5,15,35,70,126,210]]

@@ -4,5 +4,5 @@ count-integermodring-12	\mathrm{Count}(\mathrm{IntegerModRing}(12))	12
 count-integermodring-5	\mathrm{Count}(\mathrm{IntegerModRing}(5))	5
 z-12-z	\mathbb{Z}_{12}	\mathrm{IntegerModRing}(12)
 z-5-z	\mathbb{Z}_{5}	\mathrm{IntegerModRing}(5)
-integermod-3-5-in-integermodring-5	\mathrm{IntegerMod}(3, 5)\in\mathrm{IntegerModRing}(5)	\top
-integermod-3-7-not-in-integermodring-5	\mathrm{IntegerMod}(3, 7)\in\mathrm{IntegerModRing}(5)	\bot
+integermod-3-5-in-integermodring-5	\mathrm{IntegerMod}(3, 5)\in\mathrm{IntegerModRing}(5)	\mathrm{True}
+integermod-3-7-not-in-integermodring-5	\mathrm{IntegerMod}(3, 7)\in\mathrm{IntegerModRing}(5)	\mathrm{False}

@@ -11,9 +11,9 @@ complex-arguments-1-i-gamma-2-i	(1+i)!	0.652\,965\,496\,420\,167\,4+0.343\,065\,
 frac-12-gamma-frac-12-sqrt-pi-returned-as-a	(-\frac{1}{2})!	1.772\,453\,850\,905\,515\,9
 infty-infty	\infty!	\infty
 the-number-of-ways-to-arrange-8-distinct-books	8!	40\,320
-recurrence-n-n-n-1	5!=5\times4!	\top
+recurrence-n-n-n-1	5!=5\times4!	\mathrm{True}
 extends-to-non-integers-via-the-gamma-function	(\frac{1}{2})!	0.886\,226\,925\,452\,758\,6
-n-gamma-n-1-see-gamma	5!=\Gamma(6)	\top
+n-gamma-n-1-see-gamma	5!=\Gamma(6)	\mathrm{True}
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e	\sum_{k=0}^{\infty}\frac{1}{k!}	e
 negative-integers-are-poles-of-the-gamma	(-1)!	\tilde\infty
 factorials-grow-fast-20-already-exceeds-2-times	20!	2\,432\,902\,008\,176\,640\,000

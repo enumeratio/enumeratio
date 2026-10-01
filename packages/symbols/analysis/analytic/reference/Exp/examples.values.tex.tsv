@@ -30,21 +30,21 @@ n-exponentiale-pow-8-over-5-50	N(\exp(\frac{8}{5}), 50)	4.953\,032\,424\,395\,11
 matrixfunction-exp-list-list-1-1-over-2-times-i	\mathrm{MatrixFunction}(\mathrm{Exp}, \bigl\lbrack\bigl\lbrack1, (1/2i)\pi\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack e, (\frac{1}{2}i)e\pi\bigr\rbrack, \bigl\lbrack0, e\bigr\rbrack\bigr\rbrack
 exponentiale-pow-9-over-2-times-i-times-pi	e^{(\frac{9}{2}i)\pi}	i
 exptotrig-exponentiale-pow-1-over-5-times-i	\mathrm{ExpToTrig}(\exp((\frac{1}{5}i)\pi))	\frac{1}{4}+\frac{\sqrt{5}}{4}+(\frac{\sqrt{2}}{4}i)\sqrt{5-\sqrt{5}}
-functiondomain-exp-x-x	\mathrm{FunctionDomain}(e^{x}, x)	\top
+functiondomain-exp-x-x	\mathrm{FunctionDomain}(e^{x}, x)	\mathrm{True}
 functionrange-exp-x-x-y	\mathrm{FunctionRange}(e^{x}, x, y)	0\lt y
-functionanalytic-exp-x-x	\mathrm{FunctionAnalytic}(e^{x}, x)	\top
+functionanalytic-exp-x-x	\mathrm{FunctionAnalytic}(e^{x}, x)	\mathrm{True}
 functionmonotonicity-exp-x-x	\mathrm{FunctionMonotonicity}(e^{x}, x)	1
-functioninjective-exp-x-x	\mathrm{FunctionInjective}(e^{x}, x)	\top
-functionsurjective-exp-x-x	\mathrm{FunctionSurjective}(e^{x}, x)	\bot
+functioninjective-exp-x-x	\mathrm{FunctionInjective}(e^{x}, x)	\mathrm{True}
+functionsurjective-exp-x-x	\mathrm{FunctionSurjective}(e^{x}, x)	\mathrm{False}
 assuming-n-in-integers-refine-exp-2-times-pi	\mathrm{Assuming}(n\in\mathbb{Z}, \mathrm{Refine}(\exp(2\pi i n)))	e^{2i\pi n}
 assuming-n-in-integers-refine-exp-2-times-pi-2	\mathrm{Assuming}(n\in\mathbb{Z}, \mathrm{Refine}(\exp(2\pi i(n+\frac{1}{2}))))	e^{2i\pi(n+\frac{1}{2})}
 functionsign-exp-x-x	\mathrm{FunctionSign}(e^{x}, x)	1
-functionsingularities-exp-x-x	\mathrm{FunctionSingularities}(e^{x}, x)	\bot
-functiondiscontinuities-exp-x-x	\mathrm{FunctionDiscontinuities}(e^{x}, x)	\bot
+functionsingularities-exp-x-x	\mathrm{FunctionSingularities}(e^{x}, x)	\mathrm{False}
+functiondiscontinuities-exp-x-x	\mathrm{FunctionDiscontinuities}(e^{x}, x)	\mathrm{False}
 functionconvexity-exp-x-x	\mathrm{FunctionConvexity}(e^{x}, x)	1
 threads-element-wise-over-a-list	\exp\bigl\lbrack0, 1\bigr\rbrack	\bigl\lbrack1, e\bigr\rbrack
-inverse-of-ln-e-ln-x-x	\exp(\ln(5))=5	\top
-e-a-e-b-e-a-b	e^{2}e^{3}=e^{5}	\top
+inverse-of-ln-e-ln-x-x	\exp(\ln(5))=5	\mathrm{True}
+e-a-e-b-e-a-b	e^{2}e^{3}=e^{5}	\mathrm{True}
 e-as-the-limit-lim-x-to-infty-1-1-x-x	\lim_{x\to\infty}(1+\frac{1}{x})^{x}	e
 lim-x-to-0-frac-e-x-1-x-1	\lim_{x\to0}\frac{e^{x}-1}{x}	1
 a-product-of-exponentials-should-combine-e-x-e-y	e^{x}e^{y}	e^{x+y}

@@ -1,3 +1,3 @@
 id	in	out
-a-plain-triangle-is-simple	\operatorname{IsSimpleGraph}(\operatorname{CompleteGraph}(3))	\operatorname{True}
-a-repeated-undirected-edge-is-not-simple	\operatorname{IsSimpleGraph}(\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,1)]))	\operatorname{False}
+a-plain-triangle-is-simple	\operatorname{IsSimpleGraph}(\operatorname{CompleteGraph}(3))	\top
+a-repeated-undirected-edge-is-not-simple	\operatorname{IsSimpleGraph}(\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,1)]))	\bot

@@ -1,5 +1,5 @@
 id	in	out
 petersen-is-3-regular	\mathrm{VertexDegree}(\mathrm{PetersenGraph}())	\bigl\lbrack3, 3, 3, 3, 3, 3, 3, 3, 3, 3\bigr\rbrack
-petersen-is-not-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{PetersenGraph}())	\bot
+petersen-is-not-bipartite	\mathrm{IsBipartiteGraph}(\mathrm{PetersenGraph}())	\mathrm{False}
 petersen-has-10-vertices	\mathrm{VertexCount}(\mathrm{PetersenGraph}())	10
 petersen-has-15-edges	\mathrm{EdgeCount}(\mathrm{PetersenGraph}())	15

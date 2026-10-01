@@ -10,7 +10,7 @@ integerpart-neg-5-over-4	\operatorname{IntegerPart}(\frac{-5}{4})	-1
 integerpart-exponentiale-plus-pi	\operatorname{IntegerPart}(e+\pi)	5
 integerpart-0	\operatorname{IntegerPart}(0)	0
 piecewiseexpand-integerpart-x-0-lt-x-lt-4	\operatorname{PiecewiseExpand}(\operatorname{IntegerPart}(x),0<x<4)	\operatorname{IntegerPart}(x)
-x-integerpart-x-fractionalpart-x	\operatorname{IntegerPart}(\frac{-7}{2})+\operatorname{FractionalPart}(\frac{-7}{2})=\frac{-7}{2}	\operatorname{True}
+x-integerpart-x-fractionalpart-x	\operatorname{IntegerPart}(\frac{-7}{2})+\operatorname{FractionalPart}(\frac{-7}{2})=\frac{-7}{2}	\top
 piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	\operatorname{PiecewiseExpand}(\operatorname{IntegerPart}(x^2+\sqrt{x}),0<x<2)	\operatorname{IntegerPart}(x^2+\sqrt{x})
 integerpart-1	\operatorname{IntegerPart}(1)	1
 integerpart-neg-1	\operatorname{IntegerPart}(-1)	-1

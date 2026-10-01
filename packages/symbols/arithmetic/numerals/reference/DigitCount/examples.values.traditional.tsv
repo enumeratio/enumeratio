@@ -10,8 +10,8 @@ a-list-of-digit-values-gives-one-count-each	\operatorname{DigitCount}(242442422,
 counts-over-the-12-least-significant-base-3	\operatorname{DigitCount}(242442422,3,[1,2],12)	[4,4]
 threads-element-wise-over-a-list-as-wolfram-s	\operatorname{DigitCount}([23,45])	[[0,1,1,0,0,0,0,0,0,0],[0,0,0,1,1,0,0,0,0,0]]
 the-3-argument-form-isolates-a-single-digit-s	\operatorname{DigitCount}(2147,10,1)	1
-digitcount-242-442-422-3-0-eq-count	\operatorname{DigitCount}(242442422,3,0)=\operatorname{Count}(\operatorname{IntegerDigits}(242442422,3),0)	\operatorname{True}
-digitcount-242-442-422-3-0-20-eq-count-padleft	\operatorname{DigitCount}(242442422,3,0,20)=\operatorname{Count}(\operatorname{PadLeft}(\operatorname{IntegerDigits}(242442422,3),20),0)	\operatorname{True}
+digitcount-242-442-422-3-0-eq-count	\operatorname{DigitCount}(242442422,3,0)=\operatorname{Count}(\operatorname{IntegerDigits}(242442422,3),0)	\top
+digitcount-242-442-422-3-0-20-eq-count-padleft	\operatorname{DigitCount}(242442422,3,0,20)=\operatorname{Count}(\operatorname{PadLeft}(\operatorname{IntegerDigits}(242442422,3),20),0)	\top
 digitcount-0-2	\operatorname{DigitCount}(0,2)	[0,1]
 digitcount-1-2	\operatorname{DigitCount}(1,2)	[1,0]
 digitcount-2-2	\operatorname{DigitCount}(2,2)	[1,1]

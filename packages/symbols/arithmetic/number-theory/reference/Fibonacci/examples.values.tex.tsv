@@ -18,18 +18,18 @@ n-fibonacci-15-over-17-50	N(\mathrm{Fibonacci}(\frac{15}{17}), 50)	0.956\,519\,9
 n-fibonacci-5-8-minus-i	N(\mathrm{Fibonacci}(5, 8-i))	3\,903-2\,064i
 functionexpand-fibonacci-n-x	\mathrm{FunctionExpand}(\mathrm{Fibonacci}(n, x))	\frac{(\frac{1}{2}(x+(x^2+4)^{1/2}))^{n}-\frac{\cos(\pi n)}{((x+(x^2+4)^{1/2})/2)^{n}}}{\sqrt{x^2+4}}
 functionexpand-fibonacci-1-over-2-x	\mathrm{FunctionExpand}(\mathrm{Fibonacci}(\frac{1}{2}, x))	\frac{\sqrt{2}\sqrt{x+\sqrt{x^2+4}}}{2\sqrt{x^2+4}}
-fibonacci-2-neg-x-eq-neg-fibonacci-2-x	\mathrm{Fibonacci}(2, -x)=-\mathrm{Fibonacci}(2, x)	\top
-fibonacci-1-neg-x-eq-fibonacci-1-x	\mathrm{Fibonacci}(1, -x)=\mathrm{Fibonacci}(1, x)	\top
+fibonacci-2-neg-x-eq-neg-fibonacci-2-x	\mathrm{Fibonacci}(2, -x)=-\mathrm{Fibonacci}(2, x)	\mathrm{True}
+fibonacci-1-neg-x-eq-fibonacci-1-x	\mathrm{Fibonacci}(1, -x)=\mathrm{Fibonacci}(1, x)	\mathrm{True}
 fibonacci-list-1-2-3-4-5	\mathrm{Fibonacci}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)	\bigl\lbrack1, 1, 2, 3, 5\bigr\rbrack
 generatingfunction-fibonacci-n-n-x	\mathrm{GeneratingFunction}(\mathrm{Fibonacci}(n), n, x)	(x)(-x^2-x+1)^{-1}
-fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1	\mathrm{Fibonacci}(1, \overline{z})=\overline{\mathrm{Fibonacci}(1, z)}	\top
+fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1	\mathrm{Fibonacci}(1, \overline{z})=\overline{\mathrm{Fibonacci}(1, z)}	\mathrm{True}
 matrixfunction-function-fibonacci-3-1-1-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{Fibonacci}(3, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, 5\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 26\bigr\rbrack\bigr\rbrack
 consecutive-ratios-f-n-1-f-n-converge-to-the	\frac{\mathrm{Fibonacci}(20)}{\mathrm{Fibonacci}(19)}	\frac{6\,765}{4\,181}
 sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	\sum_{k=1}^{10}\mathrm{Fibonacci}(k)	143
-the-doubling-identity-f-2n-f-n-l-n-see-lucasl	\mathrm{Fibonacci}(20)=\mathrm{Fibonacci}(10)\mathrm{LucasL}(10)	\top
-the-defining-recurrence-f-10-f-9-f-8	\mathrm{Fibonacci}(10)=\mathrm{Fibonacci}(9)+\mathrm{Fibonacci}(8)	\top
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	\mathrm{Fibonacci}(20)=\mathrm{Fibonacci}(10)\mathrm{LucasL}(10)	\mathrm{True}
+the-defining-recurrence-f-10-f-9-f-8	\mathrm{Fibonacci}(10)=\mathrm{Fibonacci}(9)+\mathrm{Fibonacci}(8)	\mathrm{True}
 cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	\mathrm{Fibonacci}(5)\mathrm{Fibonacci}(7)-\mathrm{Fibonacci}(6)^2	1
-gcd-f-12-f-18-f-gcd-12-18	\gcd(\mathrm{Fibonacci}(12), \mathrm{Fibonacci}(18))=\mathrm{Fibonacci}(\gcd(12, 18))	\top
+gcd-f-12-f-18-f-gcd-12-18	\gcd(\mathrm{Fibonacci}(12), \mathrm{Fibonacci}(18))=\mathrm{Fibonacci}(\gcd(12, 18))	\mathrm{True}
 negative-indices-are-supported-via-f-n-1-n-1-f-n	\mathrm{Fibonacci}(-5)	5
 fibonacci-2	\mathrm{Fibonacci}(2)	1
 fibonacci-3	\mathrm{Fibonacci}(3)	2

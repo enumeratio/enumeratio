@@ -1,12 +1,12 @@
 id	in	out
-an-odd-degree-polynomial-is-onto	\mathrm{FunctionSurjective}(x^3, x, \mathrm{Reals})	\top
-exp-misses-the-non-positive-reals	\mathrm{FunctionSurjective}(e^{x}, x, \mathrm{Reals})	\bot
-log-is-onto-the-reals	\mathrm{FunctionSurjective}(\ln(x), x, \mathrm{Reals})	\top
-a-reciprocal-never-hits-zero	\mathrm{FunctionSurjective}(\frac{1}{x}, x, \mathrm{Reals})	\bot
+an-odd-degree-polynomial-is-onto	\mathrm{FunctionSurjective}(x^3, x, \mathrm{Reals})	\mathrm{True}
+exp-misses-the-non-positive-reals	\mathrm{FunctionSurjective}(e^{x}, x, \mathrm{Reals})	\mathrm{False}
+log-is-onto-the-reals	\mathrm{FunctionSurjective}(\ln(x), x, \mathrm{Reals})	\mathrm{True}
+a-reciprocal-never-hits-zero	\mathrm{FunctionSurjective}(\frac{1}{x}, x, \mathrm{Reals})	\mathrm{False}
 an-unsupported-codomain-declines	\mathrm{FunctionSurjective}(x^3, x, \mathbb{Z})	\mathrm{FunctionSurjective}(x^3, x, \mathbb{Z})
-functionsurjective-tan-x-x	\mathrm{FunctionSurjective}(\tan(x), x)	\top
-functionsurjective-x-pow-3-minus-x-x	\mathrm{FunctionSurjective}(x^3-x, x)	\top
-functionsurjective-sqrt-x-x	\mathrm{FunctionSurjective}(\sqrt{x}, x)	\bot
-functionsurjective-sin-x-x	\mathrm{FunctionSurjective}(\sin(x), x)	\bot
-functionsurjective-x-pow-2-plus-x-plus-1-x	\mathrm{FunctionSurjective}(x^2+x+1, x)	\bot
-functionsurjective-x-pow-3-plus-x-plus-1-x	\mathrm{FunctionSurjective}(x^3+x+1, x)	\top
+functionsurjective-tan-x-x	\mathrm{FunctionSurjective}(\tan(x), x)	\mathrm{True}
+functionsurjective-x-pow-3-minus-x-x	\mathrm{FunctionSurjective}(x^3-x, x)	\mathrm{True}
+functionsurjective-sqrt-x-x	\mathrm{FunctionSurjective}(\sqrt{x}, x)	\mathrm{False}
+functionsurjective-sin-x-x	\mathrm{FunctionSurjective}(\sin(x), x)	\mathrm{False}
+functionsurjective-x-pow-2-plus-x-plus-1-x	\mathrm{FunctionSurjective}(x^2+x+1, x)	\mathrm{False}
+functionsurjective-x-pow-3-plus-x-plus-1-x	\mathrm{FunctionSurjective}(x^3+x+1, x)	\mathrm{True}

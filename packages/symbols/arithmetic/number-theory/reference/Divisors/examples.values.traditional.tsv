@@ -27,7 +27,7 @@ a-negative-real-composite	\operatorname{Divisors}(-15,\operatorname{KeyValuePair
 divisors-3	\operatorname{Divisors}(3)	[1,3]
 8-times-sum-filter-divisors-20-function	8\sum\operatorname{Filter}(\operatorname{Divisors}(20),\operatorname{Function}(\operatorname{Block}(\lnot\operatorname{Divides}(4,\_1)),\_1))	144
 filter-range-1-9-999-function-sum-divisors-1-eq		
-the-divisor-count-d-n-equals-sigma-0-n-see	\operatorname{Length}(\operatorname{Divisors}(20))=\sigma_0(20)	\operatorname{True}
+the-divisor-count-d-n-equals-sigma-0-n-see	\operatorname{Length}(\operatorname{Divisors}(20))=\sigma_0(20)	\top
 divisors-2	\operatorname{Divisors}(2)	[1,2]
 divisors-4	\operatorname{Divisors}(4)	[1,2,4]
 divisors-5	\operatorname{Divisors}(5)	[1,5]

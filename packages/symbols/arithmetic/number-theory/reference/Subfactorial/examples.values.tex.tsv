@@ -13,11 +13,11 @@ subfactorial-list-5-10-20	\mathrm{Subfactorial}(\bigl\lbrack5, 10, 20\bigr\rbrac
 matrixfunction-function-subfactorial-1-1-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{Subfactorial}(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
 n-subfactorial-1-over-3-50		
 the-hat-check-problem-the-number-of-ways-6	\mathrm{Subfactorial}(6)	265
-recurrence-d-n-n-d-n-1-1-n	\mathrm{Subfactorial}(4)=4\mathrm{Subfactorial}(3)+(-1)^4	\top
-d-n-is-frac-n-e-rounded-to-the-nearest-integer	\mathrm{Subfactorial}(10)=\mathrm{round}(\frac{10!}{e})	\top
-two-term-recurrence-d-n-1-n-d-n-d-n-1	\mathrm{Subfactorial}(6)=5(\mathrm{Subfactorial}(5)+\mathrm{Subfactorial}(4))	\top
+recurrence-d-n-n-d-n-1-1-n	\mathrm{Subfactorial}(4)=4\mathrm{Subfactorial}(3)+(-1)^4	\mathrm{True}
+d-n-is-frac-n-e-rounded-to-the-nearest-integer	\mathrm{Subfactorial}(10)=\mathrm{round}(\frac{10!}{e})	\mathrm{True}
+two-term-recurrence-d-n-1-n-d-n-d-n-1	\mathrm{Subfactorial}(6)=5(\mathrm{Subfactorial}(5)+\mathrm{Subfactorial}(4))	\mathrm{True}
 exponentialgeneratingfunction-subfactorial-n-n-x	\mathrm{ExponentialGeneratingFunction}(\mathrm{Subfactorial}(n), n, x)	\frac{\exp(-x)}{1-x}
 subfactorial-2	\mathrm{Subfactorial}(2)	1
 subfactorial-3	\mathrm{Subfactorial}(3)	2
 a-negative-argument-is-left-unevaluated	\mathrm{Subfactorial}(-1)	\mathrm{Subfactorial}(-1)
-148-349-eq-sum-subfactorial-list-1-4-8-3-4-9	148\,349=\sum\mathrm{Subfactorial}(\bigl\lbrack1, 4, 8, 3, 4, 9\bigr\rbrack)	\top
+148-349-eq-sum-subfactorial-list-1-4-8-3-4-9	148\,349=\sum\mathrm{Subfactorial}(\bigl\lbrack1, 4, 8, 3, 4, 9\bigr\rbrack)	\mathrm{True}

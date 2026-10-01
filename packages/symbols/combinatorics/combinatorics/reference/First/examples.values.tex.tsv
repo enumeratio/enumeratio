@@ -13,6 +13,6 @@ a-lazy-range-works-too	\mathrm{First}(5..10)	5
 any-expression-not-just-a-list-the-first-term-of	\mathrm{First}(a^2+b^2)	a^2
 a-default-is-ignored-when-the-collection-has-a	\mathrm{First}(\bigl\lbrack a, b\bigr\rbrack, x)	a
 first-sparsearray-range-1-100		
-first-c-at-c-1-see-at	\mathrm{First}(\bigl\lbrack1, 2, 3\bigr\rbrack)=\bigl\lbrack1, 2, 3\bigr\rbrack[1]	\top
+first-c-at-c-1-see-at	\mathrm{First}(\bigl\lbrack1, 2, 3\bigr\rbrack)=\bigl\lbrack1, 2, 3\bigr\rbrack[1]	\mathrm{True}
 an-empty-collection-has-no-first-element-compute	\mathrm{First}(\bigl\lbrack\bigr\rbrack)	\mathrm{Missing}
 first-a-pow-neg-2	\mathrm{First}(\frac{1}{a^2})	a

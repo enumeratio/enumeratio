@@ -29,6 +29,6 @@ product-j-times-k-k-1-n-j-nothing-nothing	\prod_{k=1}^njk	\prod_{k=1}^n\prod_{j=
 product-3-times-q-pow-2k-plus-5-k-nothing		
 product-1-over-q-pow-8k-plus-11-times-q-pow-8		
 range-stays-lazy-on-its-own-but-product-forces	\prod\operatorname{Range}(1,6)	720
-the-product-of-1-through-n-is-n-see-factorial	\prod[1,2,3,4]=4!	\operatorname{True}
+the-product-of-1-through-n-is-n-see-factorial	\prod[1,2,3,4]=4!	\top
 the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2	\prod_{k=1}^{\infty}\frac{4k^2}{4k^2-1}	\frac{1}{2}\pi
 an-asymmetric-infinite-product-n-n-3-n-1-n-2	\prod_{n=1}^{\infty}\frac{n(n+3)}{(n+1)(n+2)}	\frac{1}{3}

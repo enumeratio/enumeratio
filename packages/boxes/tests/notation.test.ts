@@ -11,9 +11,9 @@ test("compute-engine's heads have their traditional notation", () => {
   expect(tex(["Stirling", 5, 2])).toContain("5");
 });
 
-test("True and False are words, not lattice elements", () => {
-  expect(tex("True")).toBe("\\operatorname{True}");
-  expect(tex("False")).toBe("\\operatorname{False}");
+test("TraditionalForm writes True and False as ⊤ and ⊥", () => {
+  expect(tex("True")).toBe("\\top");
+  expect(tex("False")).toBe("\\bot");
 });
 
 test("a package's notation reaches its heads anywhere in a tree, and a call it declines stays a call", () => {

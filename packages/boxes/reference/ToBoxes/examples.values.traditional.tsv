@@ -1,7 +1,7 @@
 id	in	out
 power	\operatorname{ToBoxes}(x^2)	\operatorname{SuperscriptBox}(\text{“x”},\text{“2”})
 evaluates-first	\operatorname{ToBoxes}(2+3)	\text{“5”}
-binomial	\operatorname{ToBoxes}(\binom{n}{k})	\operatorname{RowBox}([\text{“(”},\operatorname{FractionBox}(\text{“n”},\text{“k”},(\operatorname{FractionLine},\operatorname{False})),\text{“)”}])
+binomial	\operatorname{ToBoxes}(\binom{n}{k})	\operatorname{RowBox}([\text{“(”},\operatorname{FractionBox}(\text{“n”},\text{“k”},(\operatorname{FractionLine},\bot)),\text{“)”}])
 square-root-over-y	\operatorname{ToBoxes}(\frac{\sqrt{x}}{y})	\operatorname{FractionBox}(\operatorname{SqrtBox}(\text{“x”}),\text{“y”})
 toboxes-b-pow-2-plus-a	\operatorname{ToBoxes}(b^2+a)	\operatorname{RowBox}([\operatorname{SuperscriptBox}(\text{“b”},\text{“2”}),\text{“+”},\text{“a”}])
 toboxes-beta-a-b	\operatorname{ToBoxes}(\operatorname{Beta}(a,b))	\operatorname{RowBox}([\text{“Beta”},\text{“⁡”},\operatorname{RowBox}([\text{“(”},\text{“a”},\text{“,”},\text{“b”},\text{“)”}])])

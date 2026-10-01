@@ -7,6 +7,6 @@ the-least-solution-ge-200-52-2-cdot-105	\operatorname{ChineseRemainder}([1,2,3],
 over-classes-the-answer-is-a-class-and-reading	\operatorname{ChineseRemainder}(\operatorname{IntegerMod}(2,3),\operatorname{IntegerMod}(3,5),\operatorname{IntegerMod}(2,7))	\operatorname{IntegerMod}(23,105)
 a-third-argument-asks-for-the-smallest-solution	\operatorname{ChineseRemainder}([1,2],[3,5],100)	112
 recover-123456-bmod-1001-from-its-residues-mod-7	\operatorname{ChineseRemainder}(\bmod(123456,[7,11,13]),[7,11,13])	333
-verifies-the-solution-satisfies-both-congruences	\bmod(\operatorname{ChineseRemainder}([3,4],[4,5]),4)=3\land\bmod(\operatorname{ChineseRemainder}([3,4],[4,5]),5)=4	\operatorname{True}
+verifies-the-solution-satisfies-both-congruences	\bmod(\operatorname{ChineseRemainder}([3,4],[4,5]),4)=3\land\bmod(\operatorname{ChineseRemainder}([3,4],[4,5]),5)=4	\top
 chineseremainder-list-1-2-list-3-5	\operatorname{ChineseRemainder}([1,2],[3,5])	7
 no-solution-exists-when-the-remainders-are	\operatorname{ChineseRemainder}([1,2],[6,10])	\operatorname{ChineseRemainder}([1,2],[6,10])

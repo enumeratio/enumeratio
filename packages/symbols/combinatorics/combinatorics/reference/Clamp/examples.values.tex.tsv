@@ -13,6 +13,6 @@ clamp-7-over-2-1-3	\mathrm{Clamp}(\frac{7}{2}, 1, 3)	3
 infinities-clamp-to-the-nearer-bound	\mathrm{Clamp}(\infty, 0, 3)	3
 wolfram-s-clip-x-min-max-v-min-v-max-returns	\mathrm{Clamp}(5, 0, 3, -1, 10)	10
 capping-a-percentage-like-value-at-100	\mathrm{Clamp}(112, 0, 100)	100
-idempotent-clamping-an-already-clamped-value	\mathrm{Clamp}(\mathrm{Clamp}(5, 0, 3), 0, 3)=\mathrm{Clamp}(5, 0, 3)	\top
+idempotent-clamping-an-already-clamped-value	\mathrm{Clamp}(\mathrm{Clamp}(5, 0, 3), 0, 3)=\mathrm{Clamp}(5, 0, 3)	\mathrm{True}
 no-validation-that-lower-upper-with-the-bounds	\mathrm{Clamp}(5, 3, 0)	0
 a-symbolic-value-is-left-unevaluated-rather-than	\mathrm{Clamp}(x, 0, 3)	\mathrm{Clamp}(x, 0, 3)

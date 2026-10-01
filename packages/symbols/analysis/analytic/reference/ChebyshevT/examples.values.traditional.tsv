@@ -19,13 +19,13 @@ chebyshevt-2-5	\operatorname{ChebyshevT}(2,5)	49
 chebyshevt-0-0	\operatorname{ChebyshevT}(0,0)	1
 chebyshevt-0-positiveinfinity	\operatorname{ChebyshevT}(0,\infty)	1
 chebyshevt-7-x	\operatorname{ChebyshevT}(7,x)	64x^7-112x^5+56x^3-7x
-chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	\operatorname{ChebyshevT}(1,-x)=-\operatorname{ChebyshevT}(1,x)	\operatorname{True}
-chebyshevt-2-neg-x-eq-chebyshevt-2-x	\operatorname{ChebyshevT}(2,-x)=\operatorname{ChebyshevT}(2,x)	\operatorname{True}
+chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	\operatorname{ChebyshevT}(1,-x)=-\operatorname{ChebyshevT}(1,x)	\top
+chebyshevt-2-neg-x-eq-chebyshevt-2-x	\operatorname{ChebyshevT}(2,-x)=\operatorname{ChebyshevT}(2,x)	\top
 matrixfunction-function-chebyshevt-2-1-1-list	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{ChebyshevT}(2,\_1)),\_1),[[1,2],[3,4]])	[[-\frac{\sqrt{33}}{132}(-3-\sqrt{33})(-2+(5-\sqrt{33})^2)+\frac{\sqrt{33}}{132}(-3+\sqrt{33})(-2+(5+\sqrt{33})^2),-\frac{\sqrt{33}}{33}(5-\sqrt{33})^2+\frac{\sqrt{33}}{33}(5+\sqrt{33})^2],[-\frac{\sqrt{33}}{22}(5-\sqrt{33})^2+\frac{\sqrt{33}}{22}(5+\sqrt{33})^2,-\frac{\sqrt{33}}{132}(-2+(5-\sqrt{33})^2)(3-\sqrt{33})+\frac{\sqrt{33}}{132}(-2+(5+\sqrt{33})^2)(3+\sqrt{33})]]
-cos-n-theta	\operatorname{ChebyshevT}(6,\frac{1}{2})=\cos(6\frac{\pi}{3})	\operatorname{True}
+cos-n-theta	\operatorname{ChebyshevT}(6,\frac{1}{2})=\cos(6\frac{\pi}{3})	\top
 at-1	\operatorname{ChebyshevT}(7,1)	1
 at-minus-1	\operatorname{ChebyshevT}(7,-1)	-1
-parity	\operatorname{ChebyshevT}(5,\frac{-1}{3})=-\operatorname{ChebyshevT}(5,\frac{1}{3})	\operatorname{True}
+parity	\operatorname{ChebyshevT}(5,\frac{-1}{3})=-\operatorname{ChebyshevT}(5,\frac{1}{3})	\top
 negative-order	\operatorname{ChebyshevT}(-3,x)	4x^3-3x
 pell-identity	{\operatorname{ChebyshevT}(4,3)}^2-8{\operatorname{ChebyshevU}(3,3)}^2	1
 chebyshevt-0-1	\operatorname{ChebyshevT}(0,1)	1

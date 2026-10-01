@@ -1,4 +1,4 @@
 id	in	out
 a-permutation-of-4-seeded	\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{Random}(\operatorname{Permutations}(4))])	\operatorname{Permutation}([1,2,3,4])
 a-count-draws-that-many	\operatorname{Length}(\operatorname{Last}([\operatorname{SeedRandom}(1),\operatorname{Random}(\operatorname{IntegerPartitions}(10),3)]))	3
-randominteger-is-random-over-a-range	\operatorname{Last}([\operatorname{SeedRandom}(5),\operatorname{RandomInteger}([10,20])])=\operatorname{Last}([\operatorname{SeedRandom}(5),\operatorname{Random}(\operatorname{Range}(10,20))])	\operatorname{True}
+randominteger-is-random-over-a-range	\operatorname{Last}([\operatorname{SeedRandom}(5),\operatorname{RandomInteger}([10,20])])=\operatorname{Last}([\operatorname{SeedRandom}(5),\operatorname{Random}(\operatorname{Range}(10,20))])	\top

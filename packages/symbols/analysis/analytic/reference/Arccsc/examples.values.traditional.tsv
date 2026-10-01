@@ -13,7 +13,7 @@ list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	[\operatorname{arccsc}(-\sqrt{2
 arccsc-complexinfinity	\operatorname{arccsc}(\tilde\infty)	0
 arccsc-list-1-neg-1-0	\operatorname{arccsc}([1,-1,0])	[\frac{1}{2}\pi,\frac{-1}{2}\pi,\tilde\infty]
 matrixfunction-function-arccsc-1-1-list-list	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{arccsc}(\_1)),\_1),[[\sqrt{2},-\sqrt{2}],[0,-\sqrt{2}]])	[[\frac{1}{4}\pi,\frac{-1}{4}\pi],[0,\frac{-1}{4}\pi]]
-undoes-csc-csc-arccsc-x-x	\csc(\operatorname{arccsc}(2))=2	\operatorname{True}
+undoes-csc-csc-arccsc-x-x	\csc(\operatorname{arccsc}(2))=2	\top
 arccsc-neg-1	\operatorname{arccsc}(-1)	\frac{-1}{2}\pi
 arccsc-neg-sqrt-2-plus-sqrt-6	\operatorname{arccsc}(-\sqrt{2}+\sqrt{6})	\frac{5}{12}\pi
 arccsc-neg-sqrt-6-plus-sqrt-2	\operatorname{arccsc}(-\sqrt{6}+\sqrt{2})	\frac{-5}{12}\pi

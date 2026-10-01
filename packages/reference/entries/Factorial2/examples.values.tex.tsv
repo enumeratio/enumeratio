@@ -10,9 +10,9 @@ negative-odd-integers-follow-the-recurrence	(-3)!!	-1
 5-frac-1-3-by-the-backward-recurrence	(-5)!!	\frac{1}{3}
 real-arguments-use-the-analytic-continuation-2-1	2.5!!	2.407\,069\,456\,116\,044
 the-number-of-ways-to-pair-up-10-people-into-5	9!!	945
-splits-an-ordinary-factorial-into-even-and-odd	8!=8!!\times7!!	\top
-even-double-factorials-2n-2-n-n	10!!=2^5\times5!	\top
-odd-double-factorials-2n-1-frac-2n-2-n-n	9!!=(10!)(2^5\times5!)^{-1}	\top
+splits-an-ordinary-factorial-into-even-and-odd	8!=8!!\times7!!	\mathrm{True}
+even-double-factorials-2n-2-n-n	10!!=2^5\times5!	\mathrm{True}
+odd-double-factorials-2n-1-frac-2n-2-n-n	9!!=(10!)(2^5\times5!)^{-1}	\mathrm{True}
 negative-even-arguments-hit-a-pole-in-the	(-2)!!	\operatorname{NaN}
 15-2-027-025-already-past-two-million-despite	15!!	2\,027\,025
 factorial2-of-negative-infinity-is-indeterminate	-\infty!!	\operatorname{Indeterminate}

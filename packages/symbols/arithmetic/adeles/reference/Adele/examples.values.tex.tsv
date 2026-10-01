@@ -2,8 +2,8 @@ id	in	out
 the-principal-adele-5-at-every-place	\mathrm{Adele}(5)	\mathrm{Adele}(5, 5)
 adele-2-profinitenumber-1-6-times-3	3\mathrm{Adele}(2, \mathrm{ProfiniteNumber}(1, 6))	\mathrm{Adele}(6, \mathrm{ProfiniteNumber}(3, 18))
 adding-a-principal-adele-and-one-carrying-pi	\mathrm{Adele}(5)+\mathrm{Adele}(\pi, \mathrm{ProfiniteNumber}(1, 6))	\mathrm{Adele}(5+\pi, \mathrm{ProfiniteNumber}(0, 6))
-equal-adeles-need-not-share-a-modulus	\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))	\top
-unequal-real-parts-are-not-equal	\mathrm{Adele}(2, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))	\bot
+equal-adeles-need-not-share-a-modulus	\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))	\mathrm{True}
+unequal-real-parts-are-not-equal	\mathrm{Adele}(2, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))	\mathrm{False}
 golden-idele-to-adele-1	\mathrm{Adele}(\mathrm{Idele}(-1, -\frac{5}{2}))	\mathrm{Adele}(-1, -\frac{5}{2})
 golden-idele-to-adele-2	\mathrm{Adele}(\mathrm{Idele}(-1, \frac{4}{3}))	\mathrm{Adele}(-1, \frac{4}{3})
 golden-idele-to-adele-3	\mathrm{Adele}(\mathrm{Idele}(-1, -1))	\mathrm{Adele}(-1, -1)

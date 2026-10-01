@@ -1,13 +1,13 @@
 id	in	out
-all-list-2-4-6-function-1-mod-2-eq-0	\mathrm{All}(\bigl\lbrack2, 4, 6\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)	\top
-all-list-2-4-5-function-1-mod-2-eq-0	\mathrm{All}(\bigl\lbrack2, 4, 5\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)	\bot
-a-named-predicate	\mathrm{All}(\bigl\lbrack2, 3, 5, 7\bigr\rbrack, \mathrm{IsPrime})	\top
-all-list-1-2-3-function-1-gt-0	\mathrm{All}(\bigl\lbrack1, 2, 3\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt0)	\top
-all-list-2-3-4-6-8-iseven	\mathrm{All}(\bigl\lbrack2, 3, 4, 6, 8\bigr\rbrack, \mathrm{IsEven})	\bot
-all-list-2-4-6-8-iseven	\mathrm{All}(\bigl\lbrack2, 4, 6, 8\bigr\rbrack, \mathrm{IsEven})	\top
-all-list-2-6-x-4-y-15-function-1-lt-10-1	\mathrm{All}(\bigl\lbrack2, 6, x, 4, y, 15\bigr\rbrack, ()\mapsto\operatorname{\_1}\lt10)	\bot
-all-list-2-6-x-4-y-function-istrue-1-lt-10-1	\mathrm{All}(\bigl\lbrack2, 6, x, 4, y\bigr\rbrack, ()\mapsto\mathrm{IsTrue}(\operatorname{\_1}\lt10))	\bot
-one-definite-failure-decides-the-answer-even	\mathrm{All}(\bigl\lbrack1, x\bigr\rbrack, \mathrm{IsEven})	\bot
-without-a-predicate-tests-the-elements	\mathrm{All}(\bigl\lbrack\top, \top\bigr\rbrack)	\top
-a-level-argument-tests-the-elements-at-depth-2	\mathrm{All}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt0, 2)	\top
-vacuously-true-on-an-empty-list	\mathrm{All}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})	\top
+all-list-2-4-6-function-1-mod-2-eq-0	\mathrm{All}(\bigl\lbrack2, 4, 6\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)	\mathrm{True}
+all-list-2-4-5-function-1-mod-2-eq-0	\mathrm{All}(\bigl\lbrack2, 4, 5\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)	\mathrm{False}
+a-named-predicate	\mathrm{All}(\bigl\lbrack2, 3, 5, 7\bigr\rbrack, \mathrm{IsPrime})	\mathrm{True}
+all-list-1-2-3-function-1-gt-0	\mathrm{All}(\bigl\lbrack1, 2, 3\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt0)	\mathrm{True}
+all-list-2-3-4-6-8-iseven	\mathrm{All}(\bigl\lbrack2, 3, 4, 6, 8\bigr\rbrack, \mathrm{IsEven})	\mathrm{False}
+all-list-2-4-6-8-iseven	\mathrm{All}(\bigl\lbrack2, 4, 6, 8\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}
+all-list-2-6-x-4-y-15-function-1-lt-10-1	\mathrm{All}(\bigl\lbrack2, 6, x, 4, y, 15\bigr\rbrack, ()\mapsto\operatorname{\_1}\lt10)	\mathrm{False}
+all-list-2-6-x-4-y-function-istrue-1-lt-10-1	\mathrm{All}(\bigl\lbrack2, 6, x, 4, y\bigr\rbrack, ()\mapsto\mathrm{IsTrue}(\operatorname{\_1}\lt10))	\mathrm{False}
+one-definite-failure-decides-the-answer-even	\mathrm{All}(\bigl\lbrack1, x\bigr\rbrack, \mathrm{IsEven})	\mathrm{False}
+without-a-predicate-tests-the-elements	\mathrm{All}(\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack)	\mathrm{True}
+a-level-argument-tests-the-elements-at-depth-2	\mathrm{All}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt0, 2)	\mathrm{True}
+vacuously-true-on-an-empty-list	\mathrm{All}(\bigl\lbrack\bigr\rbrack, \mathrm{IsEven})	\mathrm{True}

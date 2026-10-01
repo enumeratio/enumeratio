@@ -6,8 +6,8 @@ duplicates-are-dropped-as-well	\bigl\lbrack1, 1, 2, 3\bigr\rbrack\cap\bigl\lbrac
 symbolic-elements	\bigl\lbrack a, b, c\bigr\rbrack\cap\bigl\lbrack b, c, d\bigr\rbrack	\lbrace b, c\rbrace
 a-single-collection-comes-back-as-a-set	\mathrm{Intersection}(\bigl\lbrack1, 2, 3\bigr\rbrack)	\lbrace1, 2, 3\rbrace
 the-divisors-common-to-45-and-78	\mathrm{Divisors}(45)\cap\mathrm{Divisors}(78)	\lbrace1, 3\rbrace
-intersection-is-idempotent-a-cap-a-a	\lbrace1, 2, 3\rbrace\cap\lbrace1, 2, 3\rbrace=\lbrace1, 2, 3\rbrace	\top
-the-same-inclusion-exclusion-count-rearranged-a	\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack)=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)	\top
+intersection-is-idempotent-a-cap-a-a	\lbrace1, 2, 3\rbrace\cap\lbrace1, 2, 3\rbrace=\lbrace1, 2, 3\rbrace	\mathrm{True}
+the-same-inclusion-exclusion-count-rearranged-a	\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack)=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)	\mathrm{True}
 intersecting-with-the-empty-set-gives-the-empty	\bigl\lbrack1, 2, 3\bigr\rbrack\cap\emptyset	\emptyset
 intersection-list-a-b-c-list-d-exponentiale-f	\bigl\lbrack a, b, c\bigr\rbrack\cap\bigl\lbrack d, e, f\bigr\rbrack	\emptyset
 disjoint-collections-intersect-to-the-special	\operatorname{List}(1, 2)\cap\operatorname{List}(3, 4)	\emptyset

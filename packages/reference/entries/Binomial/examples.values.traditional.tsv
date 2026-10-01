@@ -25,13 +25,13 @@ binomial-n-4	\binom{n}{4}	\frac{n(n-1)(n-2)(n-3)}{24}
 matrixfunction-function-binomial-1-2-1-list-list	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\binom{\_1}{2}),\_1),[[\frac{5}{6}\pi,0],[\frac{3}{2}\pi,\frac{-1}{2}\pi]])	[[\frac{5}{72}\pi(-6+5\pi),0],[\frac{-9}{64}\pi(2+\pi)+\frac{5}{64}\pi(-6+5\pi),\frac{1}{8}\pi(2+\pi)]]
 the-number-of-distinct-5-card-hands-dealt-from-a	\binom{52}{5}	2598960
 the-probability-of-exactly-3-heads-in-10-fair		
-symmetry-binom-n-k-binom-n-n-k	\binom{10}{3}=\binom{10}{7}	\operatorname{True}
-pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	\binom{9}{2}+\binom{9}{3}=\binom{10}{3}	\operatorname{True}
-row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	\binom{4}{0}+\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4}=2^4	\operatorname{True}
-sum-of-squares-along-a-row-sum-k-binom-n-k-2	\sum_{k=0}^6\binom{6}{k}^2=\binom{12}{6}	\operatorname{True}
-vandermonde-s-identity-sum-k-binom-m-k-binom-n-r	\sum_{k=0}^3\binom{5}{k}\binom{4}{3-k}=\binom{9}{3}	\operatorname{True}
+symmetry-binom-n-k-binom-n-n-k	\binom{10}{3}=\binom{10}{7}	\top
+pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	\binom{9}{2}+\binom{9}{3}=\binom{10}{3}	\top
+row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	\binom{4}{0}+\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4}=2^4	\top
+sum-of-squares-along-a-row-sum-k-binom-n-k-2	\sum_{k=0}^6\binom{6}{k}^2=\binom{12}{6}	\top
+vandermonde-s-identity-sum-k-binom-m-k-binom-n-r	\sum_{k=0}^3\binom{5}{k}\binom{4}{3-k}=\binom{9}{3}	\top
 the-alternating-row-sum-vanishes-sum-k-1-k-binom	\sum_{k=0}^6(-1)^k\binom{6}{k}	0
-the-factorial-form-binom-n-k-frac-n-k-n-k-see	\binom{7}{3}=\frac{7!}{3!4!}	\operatorname{True}
+the-factorial-form-binom-n-k-frac-n-k-n-k-see	\binom{7}{3}=\frac{7!}{3!4!}	\top
 choosing-more-elements-than-available-k-n-gives		
 a-negative-k-also-gives-0		
 a-negative-n-uses-the-generalized-formula-binom		
@@ -45,6 +45,6 @@ a-negative-n-again-binom-neg-4-1
 a-negative-k-with-n-2-binom-2-neg-2		
 a-negative-n-zero-k-binom-neg-1-0		
 a-negative-k-past-n-binom-100-neg-50		
-symmetry-doesn-t-hold-across-mismatched-n	\binom{2}{6}=\binom{-18}{2}	\operatorname{False}
-not-pascal-s-rule-across-mismatched-n	\binom{-23}{2}+\binom{-2}{3}=\binom{-20}{6}	\operatorname{False}
+symmetry-doesn-t-hold-across-mismatched-n	\binom{2}{6}=\binom{-18}{2}	\bot
+not-pascal-s-rule-across-mismatched-n	\binom{-23}{2}+\binom{-2}{3}=\binom{-20}{6}	\bot
 the-central-binomial-coefficient-binom-100-50	\binom{100}{50}	100891344545564193334812497256

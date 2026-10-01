@@ -18,8 +18,8 @@ chebyshevu-2-5	\mathrm{ChebyshevU}(2, 5)	99
 chebyshevu-0-0	\mathrm{ChebyshevU}(0, 0)	1
 chebyshevu-0-positiveinfinity	\mathrm{ChebyshevU}(0, \infty)	1
 chebyshevu-7-x	\mathrm{ChebyshevU}(7, x)	128x^7-192x^5+80x^3-8x
-chebyshevu-1-neg-x-eq-neg-chebyshevu-1-x	\mathrm{ChebyshevU}(1, -x)=-\mathrm{ChebyshevU}(1, x)	\top
-chebyshevu-2-neg-x-eq-chebyshevu-2-x	\mathrm{ChebyshevU}(2, -x)=\mathrm{ChebyshevU}(2, x)	\top
+chebyshevu-1-neg-x-eq-neg-chebyshevu-1-x	\mathrm{ChebyshevU}(1, -x)=-\mathrm{ChebyshevU}(1, x)	\mathrm{True}
+chebyshevu-2-neg-x-eq-chebyshevu-2-x	\mathrm{ChebyshevU}(2, -x)=\mathrm{ChebyshevU}(2, x)	\mathrm{True}
 matrixfunction-function-chebyshevu-2-1-1-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{ChebyshevU}(2, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{66}(\sqrt{33}(33^{1/2}-3)((5+33^{1/2})^2-1))-\frac{1}{66}(\sqrt{33}(-33^{1/2}-3)((5-33^{1/2})^2-1)), \frac{1}{33}(2\sqrt{33}(5+33^{1/2})^2)-\frac{1}{33}(2\sqrt{33}(5-33^{1/2})^2)\bigr\rbrack, \bigl\lbrack\frac{1}{11}(\sqrt{33}(5+33^{1/2})^2)-\frac{1}{11}(\sqrt{33}(5-33^{1/2})^2), \frac{1}{66}(\sqrt{33}((5+33^{1/2})^2-1)(3+\sqrt{33}))-\frac{1}{66}(\sqrt{33}((5-33^{1/2})^2-1)(3-33^{1/2}))\bigr\rbrack\bigr\rbrack
 at-1	\mathrm{ChebyshevU}(5, 1)	6
 at-minus-1	\mathrm{ChebyshevU}(5, -1)	-6

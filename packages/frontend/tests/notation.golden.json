@@ -51,7 +51,7 @@
   "[\"Stirling\",5,2]": "\\begin{Bmatrix}5\\\\2\\end{Bmatrix}",
   "[\"StirlingS1\",5,2]": "s(5,2)",
   "[\"Subfactorial\",[\"Add\",\"n\",1]]": "!(n+1)",
-  "[\"List\",\"True\",\"False\"]": "[\\operatorname{True},\\operatorname{False}]",
+  "[\"List\",\"True\",\"False\"]": "[\\top,\\bot]",
   "[\"IntegerExponent\",2000,5]": "v_5(2000)",
   "[\"AdicValuation\",[\"AdicNumeral\",5,75]]": "v_5(75)",
   "[\"AdicNorm\",[\"AdicNumeral\",5,75]]": "|75|_5",

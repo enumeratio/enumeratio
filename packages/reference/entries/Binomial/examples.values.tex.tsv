@@ -25,13 +25,13 @@ binomial-n-4	\binom{n}{4}	\frac{1}{24}(n\times(n-1)(n-2)(n-3))
 matrixfunction-function-binomial-1-2-1-list-list	\mathrm{MatrixFunction}(()\mapsto\binom{\operatorname{\_1}}{2}, \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\frac{\pi}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{72}(5\pi(5\pi-6)), 0\bigr\rbrack, \bigl\lbrack\frac{1}{64}(5\pi(5\pi-6))-\frac{1}{64}(9\pi(2+\pi)), \frac{\pi(2+\pi)}{8}\bigr\rbrack\bigr\rbrack
 the-number-of-distinct-5-card-hands-dealt-from-a	\binom{52}{5}	2\,598\,960
 the-probability-of-exactly-3-heads-in-10-fair	\frac{\binom{10}{3}}{2^{10}}	\frac{15}{128}
-symmetry-binom-n-k-binom-n-n-k	\binom{10}{3}=\binom{10}{7}	\top
-pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	\binom{9}{2}+\binom{9}{3}=\binom{10}{3}	\top
-row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	\binom{4}{0}+\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4}=2^4	\top
-sum-of-squares-along-a-row-sum-k-binom-n-k-2	\sum_{k=0}^6\binom{6}{k}^2=\binom{12}{6}	\top
-vandermonde-s-identity-sum-k-binom-m-k-binom-n-r	\sum_{k=0}^3\binom{5}{k}\binom{4}{3-k}=\binom{9}{3}	\top
+symmetry-binom-n-k-binom-n-n-k	\binom{10}{3}=\binom{10}{7}	\mathrm{True}
+pascal-s-rule-binom-n-1-k-1-binom-n-1-k-binom-n	\binom{9}{2}+\binom{9}{3}=\binom{10}{3}	\mathrm{True}
+row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4	\binom{4}{0}+\binom{4}{1}+\binom{4}{2}+\binom{4}{3}+\binom{4}{4}=2^4	\mathrm{True}
+sum-of-squares-along-a-row-sum-k-binom-n-k-2	\sum_{k=0}^6\binom{6}{k}^2=\binom{12}{6}	\mathrm{True}
+vandermonde-s-identity-sum-k-binom-m-k-binom-n-r	\sum_{k=0}^3\binom{5}{k}\binom{4}{3-k}=\binom{9}{3}	\mathrm{True}
 the-alternating-row-sum-vanishes-sum-k-1-k-binom	\sum_{k=0}^6(-1)^{k}\binom{6}{k}	0
-the-factorial-form-binom-n-k-frac-n-k-n-k-see	\binom{7}{3}=\frac{7!}{3!\times4!}	\top
+the-factorial-form-binom-n-k-frac-n-k-n-k-see	\binom{7}{3}=\frac{7!}{3!\times4!}	\mathrm{True}
 choosing-more-elements-than-available-k-n-gives	\binom{5}{7}	0
 a-negative-k-also-gives-0	\binom{5}{-1}	0
 a-negative-n-uses-the-generalized-formula-binom	\binom{-5}{2}	15
@@ -45,6 +45,6 @@ a-negative-n-again-binom-neg-4-1	\binom{-4}{1}	-4
 a-negative-k-with-n-2-binom-2-neg-2	\binom{-2}{2}	3
 a-negative-n-zero-k-binom-neg-1-0	\binom{-1}{0}	1
 a-negative-k-past-n-binom-100-neg-50	\binom{100}{-50}	0
-symmetry-doesn-t-hold-across-mismatched-n	\binom{2}{6}=\binom{-18}{2}	\bot
-not-pascal-s-rule-across-mismatched-n	\binom{-23}{2}+\binom{-2}{3}=\binom{-20}{6}	\bot
+symmetry-doesn-t-hold-across-mismatched-n	\binom{2}{6}=\binom{-18}{2}	\mathrm{False}
+not-pascal-s-rule-across-mismatched-n	\binom{-23}{2}+\binom{-2}{3}=\binom{-20}{6}	\mathrm{False}
 the-central-binomial-coefficient-binom-100-50	\binom{100}{50}	100\,891\,344\,545\,564\,193\,334\,812\,497\,256

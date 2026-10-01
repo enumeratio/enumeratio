@@ -38,12 +38,12 @@ reduce-12-18-to-lowest-terms-by-dividing-out-the	\frac{12}{\operatorname{GCD}(12
 gcd-14-105	\operatorname{GCD}(14,105)	7
 gcd-24-12	\operatorname{GCD}(24,12)	12
 gcd-6-21	\operatorname{GCD}(6,21)	3
-gcd-6-3-mod-3-eq-0	\bmod(\operatorname{GCD}(6,3),3)=0	\operatorname{True}
-commutative-gcd-a-b-gcd-b-a	\operatorname{GCD}(12,18)=\operatorname{GCD}(18,12)	\operatorname{True}
-gcd-a-b-cdot-lcm-a-b-ab-see-lcm	\operatorname{GCD}(12,18)\operatorname{LCM}(12,18)=12\cdot18	\operatorname{True}
+gcd-6-3-mod-3-eq-0	\bmod(\operatorname{GCD}(6,3),3)=0	\top
+commutative-gcd-a-b-gcd-b-a	\operatorname{GCD}(12,18)=\operatorname{GCD}(18,12)	\top
+gcd-a-b-cdot-lcm-a-b-ab-see-lcm	\operatorname{GCD}(12,18)\operatorname{LCM}(12,18)=12\cdot18	\top
 gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	\operatorname{GCD}(F_{12},F_{18})	8
 gcd-7-11-29	\operatorname{GCD}(7,11,29)	1
-gcd-5-6-eq-1	\operatorname{GCD}(5,6)=1	\operatorname{True}
+gcd-5-6-eq-1	\operatorname{GCD}(5,6)=1	\top
 a-single-argument-is-returned-unchanged	\operatorname{GCD}(4)	4
 with-no-arguments-compute-engine-returns-0-the	\operatorname{GCD}()	0
 0-is-absorbed-every-integer-divides-it-so-gcd-0	\operatorname{GCD}(0,5)	5

@@ -4,8 +4,8 @@ the-empty-partition	\operatorname{PartitionsQ}(0)	1
 exact-for-large-n	\operatorname{PartitionsQ}(100)	444793
 threads-over-a-list	\operatorname{PartitionsQ}([1,2,3,4,5,6,7,8])	[1,1,2,2,3,4,5,6]
 partitionsq-list-2-4-6	\operatorname{PartitionsQ}([2,4,6])	[1,2,4]
-counts-the-distinctpartitions-family	\operatorname{PartitionsQ}(10)=\operatorname{Count}(\operatorname{DistinctPartitions}(10))	\operatorname{True}
-euler-as-many-partitions-into-odd-parts-as-into	\operatorname{PartitionsQ}(12)=\operatorname{Count}(\operatorname{IntegerPartitions}(12,\operatorname{All},[1,3,5,7,9,11]))	\operatorname{True}
+counts-the-distinctpartitions-family	\operatorname{PartitionsQ}(10)=\operatorname{Count}(\operatorname{DistinctPartitions}(10))	\top
+euler-as-many-partitions-into-odd-parts-as-into	\operatorname{PartitionsQ}(12)=\operatorname{Count}(\operatorname{IntegerPartitions}(12,\operatorname{All},[1,3,5,7,9,11]))	\top
 partitionsq-5	\operatorname{PartitionsQ}(5)	3
 partitionsq-1	\operatorname{PartitionsQ}(1)	1
 partitionsq-2	\operatorname{PartitionsQ}(2)	1

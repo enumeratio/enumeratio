@@ -37,10 +37,10 @@ the-smallest-number-divisible-by-each-of-1	\operatorname{LCM}(1,2,3,4,5,6,7,8,9,
 lcm-10-15	\operatorname{LCM}(10,15)	30
 foldlist-lcm-1-range-2-10		
 ln-lcm-range-1-10		
-gcd-a-b-cdot-lcm-a-b-ab-see-gcd	\operatorname{GCD}(27,81)\operatorname{LCM}(27,81)=27\cdot81	\operatorname{True}
+gcd-a-b-cdot-lcm-a-b-ab-see-gcd	\operatorname{GCD}(27,81)\operatorname{LCM}(27,81)=27\cdot81	\top
 lcm-27-81	\operatorname{LCM}(27,81)	81
-lcm-6-11-25-eq-1-650	\operatorname{LCM}(6,11,25)=1650	\operatorname{True}
-lcm-5-7-2-eq-70	\operatorname{LCM}(5,7,2)=70	\operatorname{True}
+lcm-6-11-25-eq-1-650	\operatorname{LCM}(6,11,25)=1650	\top
+lcm-5-7-2-eq-70	\operatorname{LCM}(5,7,2)=70	\top
 ln-1-over-lcm-range-1-4-times-lcm-range-1-5		
 a-single-argument-is-returned-unchanged	\operatorname{LCM}(5)	5
 0-absorbs-the-lcm-with-0-is-0	\operatorname{LCM}(0,5)	0

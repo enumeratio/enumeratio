@@ -2,4 +2,4 @@ id	in	out
 khinchin-s-constant	N(\operatorname{Khinchin})	2.6854520010653062
 n-khinchin-50	N(\operatorname{Khinchin},50)	2.6854520010653064453097148354817956938203822939945
 round-khinchin-pow-100	\operatorname{Round}(\operatorname{Khinchin}^{100})	7.975160530073655\times10^{42}
-2-lt-khinchin-lt-3	2<\operatorname{Khinchin}<3	\operatorname{True}
+2-lt-khinchin-lt-3	2<\operatorname{Khinchin}<3	\top

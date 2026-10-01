@@ -49,21 +49,21 @@ the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1
 to-30-significant-digits-every-one-correctly	N(\sin(1),30)	0.841470984807896506652502321630
 a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(\sin(24^{40}))	0.400083152719766047071
 n-sin-6-over-5-50	N(\sin(\frac{6}{5}),50)	0.93203908596722634967013443549482599541507058820873
-functiondomain-sin-x-x	\operatorname{FunctionDomain}(\sin(x),x)	\operatorname{True}
+functiondomain-sin-x-x	\operatorname{FunctionDomain}(\sin(x),x)	\top
 functionrange-sin-x-x-y	\operatorname{FunctionRange}(\sin(x),x,y)	-1\le y\le1
 functionperiod-sin-x-x	\operatorname{FunctionPeriod}(\sin(x),x)	2\pi
-functionanalytic-sin-x-x	\operatorname{FunctionAnalytic}(\sin(x),x)	\operatorname{True}
-functioninjective-sin-x-x	\operatorname{FunctionInjective}(\sin(x),x)	\operatorname{False}
-functionsurjective-sin-x-x	\operatorname{FunctionSurjective}(\sin(x),x)	\operatorname{False}
-functionsingularities-sin-x-x	\operatorname{FunctionSingularities}(\sin(x),x)	\operatorname{False}
-functiondiscontinuities-sin-x-x	\operatorname{FunctionDiscontinuities}(\sin(x),x)	\operatorname{False}
+functionanalytic-sin-x-x	\operatorname{FunctionAnalytic}(\sin(x),x)	\top
+functioninjective-sin-x-x	\operatorname{FunctionInjective}(\sin(x),x)	\bot
+functionsurjective-sin-x-x	\operatorname{FunctionSurjective}(\sin(x),x)	\bot
+functionsingularities-sin-x-x	\operatorname{FunctionSingularities}(\sin(x),x)	\bot
+functiondiscontinuities-sin-x-x	\operatorname{FunctionDiscontinuities}(\sin(x),x)	\bot
 matrixfunction-function-sin-1-1-list-list-5-over	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\sin(\_1)),\_1),[[\frac{5}{6}\pi,0],[\frac{3}{2}\pi,\frac{-1}{2}\pi]])	[[\frac{1}{2},0],[\frac{27}{16},-1]]
 assuming-m-in-integers-refine-sin-pi-times-m		
 assuming-m-in-integers-fullsimplify-sin-pi-times		
 threads-element-wise-over-a-list	\sin([0,\frac{\pi}{2},\pi])	[0,1,0]
 degrees-d-converts-a-degree-measure-to-radians	\sin(\operatorname{Degrees}(30))	\frac{1}{2}
 pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	{\sin(\frac{\pi}{6})}^2+{\cos(\frac{\pi}{6})}^2	1
-odd-function-sin-x-sin-x	\sin(-\frac{\pi}{6})=-\sin(\frac{\pi}{6})	\operatorname{True}
+odd-function-sin-x-sin-x	\sin(-\frac{\pi}{6})=-\sin(\frac{\pi}{6})	\top
 period-2-pi-adding-a-full-turn-doesn-t-change		
 double-angle-formula-via-trigexpand	\operatorname{TrigExpand}(\sin(2x))	2\sin(x)\cos(x)
 angle-addition-formula-via-trigexpand	\operatorname{TrigExpand}(\sin(x+y))	\sin(y)\cos(x)+\sin(x)\cos(y)

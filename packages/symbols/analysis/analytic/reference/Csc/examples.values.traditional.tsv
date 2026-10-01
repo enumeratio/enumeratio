@@ -26,7 +26,7 @@ matrixfunction-function-csc-1-1-list-list-1-over	\operatorname{MatrixFunction}(\
 assuming-m-in-integers-refine-csc-pi-times-m		
 assuming-m-in-integers-fullsimplify-refine-csc		
 csc-positiveinfinity		
-reciprocal-of-sin-csc-x-frac-1-sin-x	\csc(\frac{\pi}{6})=\frac{1}{\sin(\frac{\pi}{6})}	\operatorname{True}
+reciprocal-of-sin-csc-x-frac-1-sin-x	\csc(\frac{\pi}{6})=\frac{1}{\sin(\frac{\pi}{6})}	\top
 csc-1-over-8-times-pi	\csc(\frac{1}{8}\pi)	\sqrt{4+2\sqrt{2}}
 csc-3-over-10-times-pi	\csc(\frac{3}{10}\pi)	-1+\sqrt{5}
 a-pole-sin-0-0		

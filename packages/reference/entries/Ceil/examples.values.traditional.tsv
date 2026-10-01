@@ -22,8 +22,8 @@ piecewiseexpand-ceil-x-2-0-lt-x-lt-4	\operatorname{PiecewiseExpand}(\lceil x\rce
 d-ceil-x-x		
 how-many-5-seat-vans-are-needed-to-carry-17		
 ten-bits-are-enough-to-number-1000-items-lceil	\lceil\log_2(1000)\rceil	10
-lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	\lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1	\operatorname{True}
-floor-and-ceil-agree-exactly-on-integers	\lceil5\rceil=\lfloor5\rfloor	\operatorname{True}
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	\lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1	\top
+floor-and-ceil-agree-exactly-on-integers	\lceil5\rceil=\lfloor5\rfloor	\top
 ceil-16-3		
 piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2	\operatorname{PiecewiseExpand}(\lceil x^2\rceil,0<x<2)	\lceil x^2\rceil
 generatingfunction-ceil-n-4-n-x	\operatorname{GeneratingFunction}(\lceil n\rceil,n,x)	\frac{4x}{x^5-x^4-x+1}

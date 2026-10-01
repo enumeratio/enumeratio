@@ -1,7 +1,7 @@
 id	in	out
-even-cycle-is-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(6))	\operatorname{True}
-odd-cycle-is-not	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(5))	\operatorname{False}
-a-self-loop-is-never-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{Graph}([\operatorname{UndirectedEdge}(1,1)]))	\operatorname{False}
-a-4-cycle-is-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(4))	\operatorname{True}
-a-path-is-always-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{PathGraph}(7))	\operatorname{True}
-isbipartitegraph-cyclegraph-3	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(3))	\operatorname{False}
+even-cycle-is-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(6))	\top
+odd-cycle-is-not	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(5))	\bot
+a-self-loop-is-never-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{Graph}([\operatorname{UndirectedEdge}(1,1)]))	\bot
+a-4-cycle-is-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(4))	\top
+a-path-is-always-bipartite	\operatorname{IsBipartiteGraph}(\operatorname{PathGraph}(7))	\top
+isbipartitegraph-cyclegraph-3	\operatorname{IsBipartiteGraph}(\operatorname{CycleGraph}(3))	\bot

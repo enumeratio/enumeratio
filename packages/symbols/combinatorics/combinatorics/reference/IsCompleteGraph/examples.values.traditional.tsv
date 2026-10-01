@@ -1,4 +1,4 @@
 id	in	out
-completegraph-n-is-complete	\operatorname{IsCompleteGraph}(\operatorname{CompleteGraph}(5))	\operatorname{True}
-a-path-is-not-complete	\operatorname{IsCompleteGraph}(\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3)]))	\operatorname{False}
-a-directed-2-cycle-is-complete	\operatorname{IsCompleteGraph}(\operatorname{Graph}([1,2],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,1)]))	\operatorname{True}
+completegraph-n-is-complete	\operatorname{IsCompleteGraph}(\operatorname{CompleteGraph}(5))	\top
+a-path-is-not-complete	\operatorname{IsCompleteGraph}(\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3)]))	\bot
+a-directed-2-cycle-is-complete	\operatorname{IsCompleteGraph}(\operatorname{Graph}([1,2],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,1)]))	\top

@@ -13,7 +13,7 @@ list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	\bigl\lbrack\mathrm{arccsc}(-\s
 arccsc-complexinfinity	\mathrm{arccsc}(\tilde\infty)	0
 arccsc-list-1-neg-1-0	\mathrm{arccsc}(\bigl\lbrack1, -1, 0\bigr\rbrack)	\bigl\lbrack\frac{\pi}{2}, -\frac{\pi}{2}, \tilde\infty\bigr\rbrack
 matrixfunction-function-arccsc-1-1-list-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{arccsc}(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\sqrt{2}, -2^{1/2}\bigr\rbrack, \bigl\lbrack0, -2^{1/2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\pi}{4}, -\frac{\pi}{4}\bigr\rbrack, \bigl\lbrack0, -\frac{\pi}{4}\bigr\rbrack\bigr\rbrack
-undoes-csc-csc-arccsc-x-x	\csc(\mathrm{arccsc}(2))=2	\top
+undoes-csc-csc-arccsc-x-x	\csc(\mathrm{arccsc}(2))=2	\mathrm{True}
 arccsc-neg-1	\mathrm{arccsc}(-1)	-\frac{\pi}{2}
 arccsc-neg-sqrt-2-plus-sqrt-6	\mathrm{arccsc}(\sqrt{6}-\sqrt{2})	\frac{5\pi}{12}
 arccsc-neg-sqrt-6-plus-sqrt-2	\mathrm{arccsc}(\sqrt{2}-\sqrt{6})	-\frac{5\pi}{12}

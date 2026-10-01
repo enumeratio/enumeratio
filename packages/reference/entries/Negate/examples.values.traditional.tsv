@@ -10,7 +10,7 @@ threads-over-a-matrix-entry-by-entry	-[[1,-2],[3,4]]	[[-1,2],[-3,-4]]
 folds-into-a-numeric-coefficient	-2x	-2x
 recording-a-42-50-charge-as-a-negative-balance		
 double-negation-cancels-x-x	-(-x)	x
-distributes-over-a-sum-a-b-a-b	-(a+b)=-a-b	\operatorname{True}
+distributes-over-a-sum-a-b-a-b	-(a+b)=-a-b	\top
 a-b-b-a	-(a-b)	-a+b
 the-additive-inverse-x-x-0	-x+x	0
 flips-signed-infinities-too		

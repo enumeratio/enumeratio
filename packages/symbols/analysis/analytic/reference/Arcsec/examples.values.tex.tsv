@@ -13,7 +13,7 @@ arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	\mathrm{arcsec}(\bigl\lbrack\bigl\
 arcsec-2-over-3-times-sqrt-3	\mathrm{arcsec}(\frac{2\sqrt{3}}{3})	\frac{\pi}{6}
 arcsec-complexinfinity	\mathrm{arcsec}(\tilde\infty)	\frac{\pi}{2}
 matrixfunction-function-arcsec-1-1-list-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{arcsec}(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\sqrt{2}, -2^{1/2}\bigr\rbrack, \bigl\lbrack0, -2^{1/2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\pi}{4}, \frac{\pi}{4}\bigr\rbrack, \bigl\lbrack0, \frac{3\pi}{4}\bigr\rbrack\bigr\rbrack
-undoes-sec-sec-arcsec-x-x	\sec(\mathrm{arcsec}(2))=2	\top
+undoes-sec-sec-arcsec-x-x	\sec(\mathrm{arcsec}(2))=2	\mathrm{True}
 arcsec-neg-sqrt-2-plus-sqrt-6	\mathrm{arcsec}(\sqrt{6}-\sqrt{2})	\frac{\pi}{12}
 arcsec-neg-sqrt-6-plus-sqrt-2	\mathrm{arcsec}(\sqrt{2}-\sqrt{6})	\frac{11\pi}{12}
 arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	\mathrm{arcsec}(2\sqrt{\frac{1}{2+\sqrt{2}}})	\mathrm{arcsec}(\frac{2}{\sqrt{2+\sqrt{2}}})

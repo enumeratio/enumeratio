@@ -16,7 +16,7 @@ a-list-of-levels-regroups-the-dimensions-here	\operatorname{Flatten}([[1,2],[3,4
 nested-calls-of-any-one-head-flatten-not-just	\operatorname{Flatten}(f(a,f(b,f(c))))	f(a,b,c)
 flatten-list-0-list-1-list-list-2-neg-2-list	\operatorname{Flatten}([0,[1],[[2,-2]],[[[3],[-3]]],[[[[4]]]]],1)	[0,1,[2,-2],[[3],[-3]],[[[4]]]]
 flatten-list-0-list-1-list-list-2-neg-2-list-2	\operatorname{Flatten}([0,[1],[[2,-2]],[[[3],[-3]]],[[[[4]]]]])	[0,1,2,-2,3,-3,4]
-flatten-undoes-partition-chunking-and-re	\operatorname{Flatten}(\operatorname{Partition}([1,2,3,4,5,6],2))=[1,2,3,4,5,6]	\operatorname{True}
+flatten-undoes-partition-chunking-and-re	\operatorname{Flatten}(\operatorname{Partition}([1,2,3,4,5,6],2))=[1,2,3,4,5,6]	\top
 a-list-with-no-nesting-is-unchanged	\operatorname{Flatten}([1,2,3])	[1,2,3]
 flattening-an-m-times-n-matrix-gives-mn-elements	\operatorname{Length}(\operatorname{Flatten}([[1,2,3],[4,5,6]]))	6
 flatten-array-a-list-3-4	\operatorname{Flatten}(\operatorname{Array}(a,[3,4]))	[a(1,1),a(1,2),a(1,3),a(1,4),a(2,1),a(2,2),a(2,3),a(2,4),a(3,1),a(3,2),a(3,3),a(3,4)]

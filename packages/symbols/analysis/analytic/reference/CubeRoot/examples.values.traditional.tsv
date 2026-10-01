@@ -10,8 +10,8 @@ matrixfunction-cuberoot-list-list-1-over-2-neg-1	\operatorname{MatrixFunction}(\
 cuberoot-0	\operatorname{CubeRoot}(0)	0
 cuberoot-positiveinfinity	\operatorname{CubeRoot}(\infty)	\infty
 cuberoot-negativeinfinity	\operatorname{CubeRoot}(-\infty)	-\infty
-cuberoot-x-eq-surd-x-3	\operatorname{CubeRoot}(x)=\operatorname{Surd}(x,3)	\operatorname{True}
-fullsimplify-d-integrate-cuberoot-x-x-nothing	\operatorname{FullSimplify}(\frac{d}{dx}\int_{\operatorname{}}^{\operatorname{}}\operatorname{CubeRoot}(x)dx=\operatorname{CubeRoot}(x))	\operatorname{True}
+cuberoot-x-eq-surd-x-3	\operatorname{CubeRoot}(x)=\operatorname{Surd}(x,3)	\top
+fullsimplify-d-integrate-cuberoot-x-x-nothing	\operatorname{FullSimplify}(\frac{d}{dx}\int_{\operatorname{}}^{\operatorname{}}\operatorname{CubeRoot}(x)dx=\operatorname{CubeRoot}(x))	\top
 fullsimplify-integrate-sin-x-times-cuberoot-x-x	\operatorname{FullSimplify}(\int_0^5\sin(x)\operatorname{CubeRoot}(x)dx)	\int_0^5\sin(x)\sqrt[3]{x}dx
 d-cuberoot-x-x	\frac{d}{dx}\operatorname{CubeRoot}(x)	\frac{1}{3x^{\frac{2}{3}}}
 solve-cuberoot-x-eq-3-times-2-pow-neg-1-x		
@@ -19,5 +19,5 @@ fullsimplify-d-cuberoot-x-list-x-k
 seriescoefficient-cuberoot-x-list-x-1-n		
 fullsimplify-fourierseries-cuberoot-x-x-1		
 fullsimplify-integrate-cuberoot-x-times		
-the-same-as-root-with-index-3	\operatorname{CubeRoot}(-64)=\sqrt[3]{-64}	\operatorname{True}
+the-same-as-root-with-index-3	\operatorname{CubeRoot}(-64)=\sqrt[3]{-64}	\top
 cuberoot-neg-8	\operatorname{CubeRoot}(-8)	-2

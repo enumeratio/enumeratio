@@ -19,7 +19,7 @@ gamma-n-1-gamma-n-the-two-argument-form-reduces	\gamma_1(1)	\gamma_1
 gamma-0-1-psi-1-gamma-polygamma-0-z-routes	\gamma_0(1)	\gamma
 gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now	\gamma_0(\frac{1}{2})	\gamma+2\ln(2)
 gamma-3-1-gamma-3-order-1-at-a-1-is-just-the	\gamma_3(1)	\gamma_3
-0-lt-stieltjesgamma-10-lt-10-pow-neg-3	0<\gamma_{10}<10^{-3}	\operatorname{True}
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3	0<\gamma_{10}<10^{-3}	\top
 gamma-n-a-has-poles-at-the-nonpositive-integers	\gamma_2(-1)	\tilde\infty
 orders-past-30-stay-unevaluated-even-under-n-the	\gamma_{40}	\gamma_{40}
 stieltjesgamma-2-1	\gamma_2(1)	\gamma_2

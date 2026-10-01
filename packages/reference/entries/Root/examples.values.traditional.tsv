@@ -9,6 +9,6 @@ any-odd-root-of-a-negative-number-is-real
 approximate-negative-radicands-stay-real-too	\sqrt[5]{-3.5}	-1.28473515712343933868
 threads-element-wise-over-a-list	\sqrt[3]{[-8,27]}	[-2,3]
 the-edge-length-of-a-cube-with-volume-1000	\sqrt[3]{1000}	10
-sqrt-n-x-n-x-for-a-perfect-nth-power	{\sqrt[3]{8}}^3=8	\operatorname{True}
-root-x-2-agrees-with-sqrt	\sqrt[2]{16}=\sqrt{16}	\operatorname{True}
+sqrt-n-x-n-x-for-a-perfect-nth-power	{\sqrt[3]{8}}^3=8	\top
+root-x-2-agrees-with-sqrt	\sqrt[2]{16}=\sqrt{16}	\top
 an-even-root-of-a-negative-non-perfect-power	\sqrt[2]{-8}	\sqrt{-8}

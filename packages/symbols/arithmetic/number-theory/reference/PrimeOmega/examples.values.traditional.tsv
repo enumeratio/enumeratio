@@ -8,10 +8,10 @@ gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	\Omega(5+9i)	2
 gaussianintegers-true-12-1-i-4-cdot-3	\operatorname{PrimeOmega}(12,\operatorname{KeyValuePair}(\operatorname{Over},\operatorname{GaussianIntegers}))	5
 listable-over-a-range	\Omega(\operatorname{Range}(20))	[0,1,1,2,1,2,1,3,2,2,1,3,1,2,2,4,1,3,1,3]
 primeomega-28	\Omega(28)	3
-completely-additive-omega-mn-omega-m-omega-n-for	\Omega(24\cdot40)=\Omega(24)+\Omega(40)	\operatorname{True}
-omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	\Omega(8)\ge\omega(8)	\operatorname{True}
+completely-additive-omega-mn-omega-m-omega-n-for	\Omega(24\cdot40)=\Omega(24)+\Omega(40)	\top
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3	\Omega(8)\ge\omega(8)	\top
 primeomega-100	\Omega(100)	4
 primeomega-16-807	\Omega(16807)	5
-primeomega-165-eq-primenu-165	\Omega(165)=\omega(165)	\operatorname{True}
-all-range-1-100-function-primenu-1-lt-eq	\operatorname{All}(\operatorname{Range}(1,100),\operatorname{Function}(\operatorname{Block}(\omega(\_1)\le\Omega(\_1)),\_1))	\operatorname{True}
+primeomega-165-eq-primenu-165	\Omega(165)=\omega(165)	\top
+all-range-1-100-function-primenu-1-lt-eq	\operatorname{All}(\operatorname{Range}(1,100),\operatorname{Function}(\operatorname{Block}(\omega(\_1)\le\Omega(\_1)),\_1))	\top
 1-has-no-prime-factors	\Omega(1)	0

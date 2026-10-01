@@ -1,22 +1,22 @@
 id	in	out
-8-2-3	\mathrm{IsPrimePower}(8)	\top
-12-2-2-cdot-3-has-two-distinct-primes	\mathrm{IsPrimePower}(12)	\bot
-a-prime-is-its-own-first-power	\mathrm{IsPrimePower}(7)	\top
-isprimepower-6	\mathrm{IsPrimePower}(6)	\bot
-listable	\mathrm{IsPrimePower}(\bigl\lbrack2, 4, 6, 9, 10, 16\bigr\rbrack)	\bigl\lbrack\top, \top, \bot, \top, \bot, \top\bigr\rbrack
-large-integers	\mathrm{IsPrimePower}(3^{40})	\top
-isprimepower-9	\mathrm{IsPrimePower}(9)	\top
-isprimepower-list-1-2-3-4-5-6-7	\mathrm{IsPrimePower}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7\bigr\rbrack)	\bigl\lbrack\bot, \top, \top, \top, \top, \bot, \top\bigr\rbrack
+8-2-3	\mathrm{IsPrimePower}(8)	\mathrm{True}
+12-2-2-cdot-3-has-two-distinct-primes	\mathrm{IsPrimePower}(12)	\mathrm{False}
+a-prime-is-its-own-first-power	\mathrm{IsPrimePower}(7)	\mathrm{True}
+isprimepower-6	\mathrm{IsPrimePower}(6)	\mathrm{False}
+listable	\mathrm{IsPrimePower}(\bigl\lbrack2, 4, 6, 9, 10, 16\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{False}, \mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
+large-integers	\mathrm{IsPrimePower}(3^{40})	\mathrm{True}
+isprimepower-9	\mathrm{IsPrimePower}(9)	\mathrm{True}
+isprimepower-list-1-2-3-4-5-6-7	\mathrm{IsPrimePower}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7\bigr\rbrack)	\bigl\lbrack\mathrm{False}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{False}, \mathrm{True}\bigr\rbrack
 filter-range-1-100-function-isprimepower-1	\mathrm{Filter}(1..100, ()\mapsto\mathrm{IsPrimePower}(\operatorname{\_1})\land\lnot\mathrm{IsPrime}(\operatorname{\_1}))	\bigl\lbrack4, 8, 9, 16, 25, 27, 32, 49, 64, 81\bigr\rbrack
-isprimepower-625	\mathrm{IsPrimePower}(625)	\top
-isprimepower-53	\mathrm{IsPrimePower}(53)	\top
-list-isprimepower-27-issquarefree-27	\bigl\lbrack\mathrm{IsPrimePower}(27), \mathrm{IsSquareFree}(27)\bigr\rbrack	\bigl\lbrack\top, \bot\bigr\rbrack
-list-isprimepower-3-issquarefree-3	\bigl\lbrack\mathrm{IsPrimePower}(3), \mathrm{IsSquareFree}(3)\bigr\rbrack	\bigl\lbrack\top, \top\bigr\rbrack
-isprimepower-25	\mathrm{IsPrimePower}(25)	\top
-isprimepower-16-807	\mathrm{IsPrimePower}(16\,807)	\top
-list-isprimepower-121-iscomposite-121-moebiusmu	\bigl\lbrack\mathrm{IsPrimePower}(121), \mathrm{IsComposite}(121), \mathrm{MoebiusMu}(121)\bigr\rbrack	\bigl\lbrack\top, \top, 0\bigr\rbrack
-list-isprimepower-11-isprime-11-moebiusmu-11	\bigl\lbrack\mathrm{IsPrimePower}(11), \mathrm{IsPrime}(11), \mathrm{MoebiusMu}(11)\bigr\rbrack	\bigl\lbrack\top, \top, -1\bigr\rbrack
-isprimepower-2-401	\mathrm{IsPrimePower}(2\,401)	\top
-isprimepower-121	\mathrm{IsPrimePower}(121)	\top
-map-function-divisorsigma-1-1-lt-2-times-1-1	\mathrm{Map}(()\mapsto\mathrm{DivisorSigma}(1, \operatorname{\_1})\lt2\operatorname{\_1}, \mathrm{Filter}(1..100, \mathrm{IsPrimePower}))	\bigl\lbrack\top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top, \top\bigr\rbrack
-1-is-p-0-which-does-not-count	\mathrm{IsPrimePower}(1)	\bot
+isprimepower-625	\mathrm{IsPrimePower}(625)	\mathrm{True}
+isprimepower-53	\mathrm{IsPrimePower}(53)	\mathrm{True}
+list-isprimepower-27-issquarefree-27	\bigl\lbrack\mathrm{IsPrimePower}(27), \mathrm{IsSquareFree}(27)\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{False}\bigr\rbrack
+list-isprimepower-3-issquarefree-3	\bigl\lbrack\mathrm{IsPrimePower}(3), \mathrm{IsSquareFree}(3)\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
+isprimepower-25	\mathrm{IsPrimePower}(25)	\mathrm{True}
+isprimepower-16-807	\mathrm{IsPrimePower}(16\,807)	\mathrm{True}
+list-isprimepower-121-iscomposite-121-moebiusmu	\bigl\lbrack\mathrm{IsPrimePower}(121), \mathrm{IsComposite}(121), \mathrm{MoebiusMu}(121)\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}, 0\bigr\rbrack
+list-isprimepower-11-isprime-11-moebiusmu-11	\bigl\lbrack\mathrm{IsPrimePower}(11), \mathrm{IsPrime}(11), \mathrm{MoebiusMu}(11)\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}, -1\bigr\rbrack
+isprimepower-2-401	\mathrm{IsPrimePower}(2\,401)	\mathrm{True}
+isprimepower-121	\mathrm{IsPrimePower}(121)	\mathrm{True}
+map-function-divisorsigma-1-1-lt-2-times-1-1	\mathrm{Map}(()\mapsto\mathrm{DivisorSigma}(1, \operatorname{\_1})\lt2\operatorname{\_1}, \mathrm{Filter}(1..100, \mathrm{IsPrimePower}))	\bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}, \mathrm{True}\bigr\rbrack
+1-is-p-0-which-does-not-count	\mathrm{IsPrimePower}(1)	\mathrm{False}

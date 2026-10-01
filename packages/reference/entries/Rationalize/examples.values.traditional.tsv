@@ -18,7 +18,7 @@ threads-element-wise-over-a-list-compute-engine	\operatorname{Rationalize}([0.5,
 a-zero-tolerance-gives-the-exact-rational-the	\operatorname{Rationalize}(N(\pi),0)	\frac{884279719003555}{281474976710656}
 recovers-a-simple-fraction-from-a-decimal	\operatorname{Rationalize}(0.75)	\frac{3}{4}
 recognizes-a-ratio-of-consecutive-fibonacci	\operatorname{Rationalize}(0.618034,0.0001)	\frac{55}{89}
-with-an-explicit-tolerance-recovers-a-classic	\operatorname{Rationalize}(\pi,0.01)=\frac{22}{7}	\operatorname{True}
+with-an-explicit-tolerance-recovers-a-classic	\operatorname{Rationalize}(\pi,0.01)=\frac{22}{7}	\top
 without-enough-repeating-digits-to-reach-machine	\operatorname{Rationalize}(0.333333)	\frac{333333}{1000000}
 a-loose-tolerance-can-snap-to-something-far	\operatorname{Rationalize}(0.1,0.5)	0
 without-a-tolerance-a-float-with-no-simple	\operatorname{Rationalize}(N(\pi))	\frac{80143857}{25510582}

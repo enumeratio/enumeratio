@@ -10,7 +10,7 @@ expand-x-plus-y-pow-2-times-x-minus-y-pow-2-pow	\mathrm{Expand}(\frac{(x+y)^2}{(
 expand-sin-x-plus-cos-x-pow-2	\mathrm{Expand}((\sin(x)+\cos(x))^2)	\sin(x)^2+\cos(x)^2+2\sin(x)\cos(x)
 expand-sqrt-1-plus-x-pow-2	\mathrm{Expand}(\sqrt{(1+x)^2})	\sqrt{(x+1)^2}
 expand-x-plus-y-pow-2-times-z-plus-y-pow-2-pow	\mathrm{Expand}(\frac{(x+y)^2}{(z+y)^2})	\frac{x^2}{(y+z)^2}+\frac{y^2}{(y+z)^2}+\frac{2xy}{(y+z)^2}
-x-pow-5-plus-5-times-x-pow-4-plus-10-times-x-pow	x^5+5x^4+10x^3+10x^2+5x+1=\mathrm{Expand}((x+1)^5)	\top
+x-pow-5-plus-5-times-x-pow-4-plus-10-times-x-pow	x^5+5x^4+10x^3+10x^2+5x+1=\mathrm{Expand}((x+1)^5)	\mathrm{True}
 expand-x-plus-imaginaryunit-times-x-minus	\mathrm{Expand}((x+i)(x-i))	x^2+1
 expand-1-minus-x-times-neg-1-minus-x-times-1	\mathrm{Expand}((1-x)(-x-1)(1-x)(-x-1))	x^4-2x^2+1
 expand-1-plus-x-plus-y-times-2-minus-x-pow-3	\mathrm{Expand}((1+x+y)(2-x)^3)	-x^4-yx^3+5x^3+6yx^2-6x^2-12xy-4x+8y+8

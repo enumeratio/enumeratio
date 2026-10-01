@@ -20,8 +20,8 @@ foldlist-function-1-over-1-plus-2-1-2-x-reverse
 foldlist-function-1-times-x-plus-2-1-2-0-list-a		
 foldlist-function-neg-1-plus-2-1-2-0-list-a-b-c		
 foldlist-function-list-2-1-1-2-x-list-a-b-c-d		
-foldlist-length-is-one-more	\operatorname{Length}(\operatorname{FoldList}(\operatorname{Add},0,[1,2,3,4,5]))=\operatorname{Length}([1,2,3,4,5])+1	\operatorname{True}
-foldlist-last-is-fold	\operatorname{Last}(\operatorname{FoldList}(\operatorname{Add},0,[1,2,3]))=\operatorname{Fold}(\operatorname{Add},0,[1,2,3])	\operatorname{True}
+foldlist-length-is-one-more	\operatorname{Length}(\operatorname{FoldList}(\operatorname{Add},0,[1,2,3,4,5]))=\operatorname{Length}([1,2,3,4,5])+1	\top
+foldlist-last-is-fold	\operatorname{Last}(\operatorname{FoldList}(\operatorname{Add},0,[1,2,3]))=\operatorname{Fold}(\operatorname{Add},0,[1,2,3])	\top
 rest-foldlist-add-0-list-a-b-c-d-exponentiale	\operatorname{Rest}(\operatorname{FoldList}(\operatorname{Add},0,[a,b,c,d,e]))	[a,a+b,a+b+c,a+b+c+d,a+b+c+d+e]
 foldlist-f-x-list	\operatorname{FoldList}(f,x,[])	[x]
 foldlist-f-x-list-a-b-c	\operatorname{FoldList}(f,x,[a,b,c])	[x,f(x,a),f(f(x,a),b),f(f(f(x,a),b),c)]

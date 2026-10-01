@@ -22,7 +22,7 @@ the-limit-at-infty	\lim_{x\to\infty}\arctan(x)	\frac{1}{2}\pi
 to-30-significant-digits-every-one-correctly	N(\arctan(\frac{1}{2}),30)	0.463647609000806116214256231461
 n-arctan-1-over-2-50	N(\arctan(\frac{1}{2}),50)	0.46364760900080611621425623146121440202853705428612
 arctan-list-list-1-sqrt-3-list-0-sqrt-3	\arctan([[1,\sqrt{3}],[0,\sqrt{3}]])	[[\frac{1}{4}\pi,\frac{1}{3}\pi],[0,\frac{1}{3}\pi]]
-tan-arctan-x-x	\tan(\arctan(1))=1	\operatorname{True}
+tan-arctan-x-x	\tan(\arctan(1))=1	\top
 as-logarithms-arctan-x-frac-i-2-ln-1-ix-frac-i-2	\operatorname{TrigToExp}(\arctan(x))	\frac{-1}{2}i\ln(ix+1)+\frac{1}{2}i\ln(-ix+1)
 arctan-neg-2-plus-sqrt-3	\arctan(-2+\sqrt{3})	\frac{-1}{12}\pi
 arctan-neg-sqrt-1-plus-neg-2-over-5-times-sqrt-5	\arctan(-\sqrt{1+\frac{-2}{5}\sqrt{5}})	-\arctan(\sqrt{1+\frac{-2}{5}\sqrt{5}})

@@ -12,6 +12,6 @@ combining-the-divisors-of-10-12-and-20-into-one	\operatorname{Union}(\operatorna
 counting-the-distinct-values-in-a-list-see	\operatorname{Length}(\operatorname{Union}([1,2,1,3,6,2,2]))	4
 union-partition-integerdigits-10-factorial-2-3-1	\operatorname{Union}(\operatorname{Partition}(\operatorname{IntegerDigits}(10!,2),3,1))	\{[1,1,0],[1,0,1],[0,1,1],[1,1,1],[0,1,0],[1,0,0],[0,0,0]\}
 union-nestlist-function-5-times-1-mod-11-1-1-100	\operatorname{Union}(\operatorname{NestList}(\operatorname{Function}(\operatorname{Block}(\bmod(5\_1,11)),\_1),1,100))	\{1,3,4,5,9\}
-union-is-commutative-argument-order-doesn-t	\operatorname{Union}([1,2,3],[2,3,4])=\operatorname{Union}([2,3,4],[1,2,3])	\operatorname{True}
-inclusion-exclusion-a-cup-b-a-b-a-cap-b-see	\operatorname{Length}(\operatorname{Union}([1,2,3],[2,3,4]))=\operatorname{Length}([1,2,3])+\operatorname{Length}([2,3,4])-\operatorname{Length}(\operatorname{Intersection}([1,2,3],[2,3,4]))	\operatorname{True}
+union-is-commutative-argument-order-doesn-t	\operatorname{Union}([1,2,3],[2,3,4])=\operatorname{Union}([2,3,4],[1,2,3])	\top
+inclusion-exclusion-a-cup-b-a-b-a-cap-b-see	\operatorname{Length}(\operatorname{Union}([1,2,3],[2,3,4]))=\operatorname{Length}([1,2,3])+\operatorname{Length}([2,3,4])-\operatorname{Length}(\operatorname{Intersection}([1,2,3],[2,3,4]))	\top
 the-empty-set-is-the-identity-for-union-a-cup	\operatorname{Union}(\{1,2\},\emptyset)	\{1,2\}

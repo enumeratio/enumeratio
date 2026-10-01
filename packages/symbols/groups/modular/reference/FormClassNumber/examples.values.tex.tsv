@@ -1,9 +1,9 @@
 id	in	out
 four-classes-of-discriminant-60	\mathrm{FormClassNumber}(60)	4
 the-discriminant-of-a-form	\mathrm{FormDiscriminant}(\mathrm{QuadraticForm}(1, 1, -1))	5
-indefinite-when-d-5	\mathrm{IsIndefinite}(\mathrm{QuadraticForm}(1, 1, -1))	\top
-definite-when-d-4	\mathrm{IsIndefinite}(\mathrm{QuadraticForm}(1, 0, 1))	\bot
-already-reduced	\mathrm{IsReducedForm}(\mathrm{QuadraticForm}(1, 1, -1))	\top
+indefinite-when-d-5	\mathrm{IsIndefinite}(\mathrm{QuadraticForm}(1, 1, -1))	\mathrm{True}
+definite-when-d-4	\mathrm{IsIndefinite}(\mathrm{QuadraticForm}(1, 0, 1))	\mathrm{False}
+already-reduced	\mathrm{IsReducedForm}(\mathrm{QuadraticForm}(1, 1, -1))	\mathrm{True}
 evaluate-a-form-at-a-point	\mathrm{EvaluateForm}(\mathrm{QuadraticForm}(1, 1, -1), 2, 3)	1
 one-class-of-discriminant-5	\mathrm{FormClassNumber}(5)	1
 two-classes-of-discriminant-12	\mathrm{FormClassNumber}(12)	2

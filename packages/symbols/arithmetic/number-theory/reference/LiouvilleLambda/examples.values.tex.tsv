@@ -7,8 +7,8 @@ liouvillelambda-9	\mathrm{LiouvilleLambda}(9)	1
 listable	\mathrm{LiouvilleLambda}(1..10)	\bigl\lbrack1, -1, -1, 1, -1, 1, -1, -1, 1, 1\bigr\rbrack
 liouvillelambda-1-plus-10-pow-30	\mathrm{LiouvilleLambda}(1+10^{30})	-1
 liouvillelambda-list-1-2-3-4-5-6	\mathrm{LiouvilleLambda}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack1, -1, -1, 1, -1, 1\bigr\rbrack
-lambda-n-1-omega-n-see-primeomega	\mathrm{LiouvilleLambda}(360)=(-1)^{\mathrm{PrimeOmega}(360)}	\top
-liouvillelambda-162-eq-liouvillelambda-6-times	\mathrm{LiouvilleLambda}(162)=\mathrm{LiouvilleLambda}(6)\mathrm{LiouvilleLambda}(27)	\top
+lambda-n-1-omega-n-see-primeomega	\mathrm{LiouvilleLambda}(360)=(-1)^{\mathrm{PrimeOmega}(360)}	\mathrm{True}
+liouvillelambda-162-eq-liouvillelambda-6-times	\mathrm{LiouvilleLambda}(162)=\mathrm{LiouvilleLambda}(6)\mathrm{LiouvilleLambda}(27)	\mathrm{True}
 liouvillelambda-60	\mathrm{LiouvilleLambda}(60)	1
 liouvillelambda-30	\mathrm{LiouvilleLambda}(30)	-1
 liouvillelambda-120	\mathrm{LiouvilleLambda}(120)	-1

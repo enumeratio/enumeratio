@@ -13,4 +13,4 @@ realabs-0	\operatorname{RealAbs}(0)	0
 realabs-positiveinfinity	\operatorname{RealAbs}(\infty)	\infty
 realabs-negativeinfinity	\operatorname{RealAbs}(-\infty)	\infty
 piecewiseexpand-realabs-x	\operatorname{PiecewiseExpand}(\operatorname{RealAbs}(x))	|x|
-agrees-with-abs-on-the-reals	\operatorname{RealAbs}(-5)=|-5|	\operatorname{True}
+agrees-with-abs-on-the-reals	\operatorname{RealAbs}(-5)=|-5|	\top

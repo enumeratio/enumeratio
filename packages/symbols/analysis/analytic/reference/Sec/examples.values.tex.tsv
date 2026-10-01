@@ -27,8 +27,8 @@ matrixfunction-function-sec-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\maps
 assuming-m-in-integers-refine-sec-pi-times-1		
 assuming-m-in-integers-fullsimplify-refine-sec		
 sec-positiveinfinity		
-reciprocal-of-cos-sec-x-frac-1-cos-x	\sec(\frac{\pi}{3})=\frac{1}{\cos(\frac{\pi}{3})}	\top
-pythagorean-identity-1-tan-2-x-sec-2-x	1+\tan(\pi/6)^2=\sec(\pi/6)^2	\top
+reciprocal-of-cos-sec-x-frac-1-cos-x	\sec(\frac{\pi}{3})=\frac{1}{\cos(\frac{\pi}{3})}	\mathrm{True}
+pythagorean-identity-1-tan-2-x-sec-2-x	1+\tan(\pi/6)^2=\sec(\pi/6)^2	\mathrm{True}
 sec-1-over-10-times-pi	\sec(\frac{\pi}{10})	\frac{1}{5}(\sqrt{10}\sqrt{5-\sqrt{5}})
 sec-3-over-10-times-pi	\sec(\frac{3\pi}{10})	\frac{1}{5}(\sqrt{10}\sqrt{5+\sqrt{5}})
 a-pole-cos-pi-2-0	\sec(\frac{\pi}{2})	\tilde\infty

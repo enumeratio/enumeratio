@@ -18,8 +18,8 @@ chebyshevu-2-5	\operatorname{ChebyshevU}(2,5)	99
 chebyshevu-0-0	\operatorname{ChebyshevU}(0,0)	1
 chebyshevu-0-positiveinfinity	\operatorname{ChebyshevU}(0,\infty)	1
 chebyshevu-7-x	\operatorname{ChebyshevU}(7,x)	128x^7-192x^5+80x^3-8x
-chebyshevu-1-neg-x-eq-neg-chebyshevu-1-x	\operatorname{ChebyshevU}(1,-x)=-\operatorname{ChebyshevU}(1,x)	\operatorname{True}
-chebyshevu-2-neg-x-eq-chebyshevu-2-x	\operatorname{ChebyshevU}(2,-x)=\operatorname{ChebyshevU}(2,x)	\operatorname{True}
+chebyshevu-1-neg-x-eq-neg-chebyshevu-1-x	\operatorname{ChebyshevU}(1,-x)=-\operatorname{ChebyshevU}(1,x)	\top
+chebyshevu-2-neg-x-eq-chebyshevu-2-x	\operatorname{ChebyshevU}(2,-x)=\operatorname{ChebyshevU}(2,x)	\top
 matrixfunction-function-chebyshevu-2-1-1-list	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{ChebyshevU}(2,\_1)),\_1),[[1,2],[3,4]])	[[-\frac{\sqrt{33}}{66}(-3-\sqrt{33})(-1+(5-\sqrt{33})^2)+\frac{\sqrt{33}}{66}(-3+\sqrt{33})(-1+(5+\sqrt{33})^2),\frac{-2}{33}\sqrt{33}(5-\sqrt{33})^2+\frac{2}{33}\sqrt{33}(5+\sqrt{33})^2],[-\frac{\sqrt{33}}{11}(5-\sqrt{33})^2+\frac{\sqrt{33}}{11}(5+\sqrt{33})^2,-\frac{\sqrt{33}}{66}(-1+(5-\sqrt{33})^2)(3-\sqrt{33})+\frac{\sqrt{33}}{66}(-1+(5+\sqrt{33})^2)(3+\sqrt{33})]]
 at-1	\operatorname{ChebyshevU}(5,1)	6
 at-minus-1	\operatorname{ChebyshevU}(5,-1)	-6

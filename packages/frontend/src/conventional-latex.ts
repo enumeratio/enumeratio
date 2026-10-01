@@ -178,8 +178,20 @@ const eulerGamma: Entry = {
   serialize: () => "\\gamma",
 };
 
+/** A truth value written as the word, as InputForm spells it; ⊤ and ⊥ are TraditionalForm's
+ *  and still read. */
+const truth = (name: "True" | "False", trigger: string): Entry => ({
+  name,
+  kind: "symbol",
+  standaloneSymbol: true,
+  latexTrigger: [trigger],
+  serialize: () => `\\mathrm{${name}}`,
+});
+
 /** The overrides, one per native head that needed one. */
 export const CONVENTIONAL_LATEX: readonly Entry[] = [
+  truth("True", "\\top"),
+  truth("False", "\\bot"),
   operatorname("LCM", "lcm"),
   operatorname("MatrixRank", "rank"),
   operatorname("Erf", "erf"),

@@ -19,13 +19,13 @@ chebyshevt-2-5	\mathrm{ChebyshevT}(2, 5)	49
 chebyshevt-0-0	\mathrm{ChebyshevT}(0, 0)	1
 chebyshevt-0-positiveinfinity	\mathrm{ChebyshevT}(0, \infty)	1
 chebyshevt-7-x	\mathrm{ChebyshevT}(7, x)	64x^7-112x^5+56x^3-7x
-chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	\mathrm{ChebyshevT}(1, -x)=-\mathrm{ChebyshevT}(1, x)	\top
-chebyshevt-2-neg-x-eq-chebyshevt-2-x	\mathrm{ChebyshevT}(2, -x)=\mathrm{ChebyshevT}(2, x)	\top
+chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	\mathrm{ChebyshevT}(1, -x)=-\mathrm{ChebyshevT}(1, x)	\mathrm{True}
+chebyshevt-2-neg-x-eq-chebyshevt-2-x	\mathrm{ChebyshevT}(2, -x)=\mathrm{ChebyshevT}(2, x)	\mathrm{True}
 matrixfunction-function-chebyshevt-2-1-1-list	\mathrm{MatrixFunction}(()\mapsto\mathrm{ChebyshevT}(2, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{132}(\sqrt{33}(33^{1/2}-3)((5+33^{1/2})^2-2))-\frac{1}{132}(\sqrt{33}(-33^{1/2}-3)((5-33^{1/2})^2-2)), \frac{1}{33}(\sqrt{33}(5+33^{1/2})^2)-\frac{1}{33}(\sqrt{33}(5-33^{1/2})^2)\bigr\rbrack, \bigl\lbrack\frac{1}{22}(\sqrt{33}(5+33^{1/2})^2)-\frac{1}{22}(\sqrt{33}(5-33^{1/2})^2), \frac{1}{132}(\sqrt{33}((5+33^{1/2})^2-2)(3+\sqrt{33}))-\frac{1}{132}(\sqrt{33}((5-33^{1/2})^2-2)(3-33^{1/2}))\bigr\rbrack\bigr\rbrack
-cos-n-theta	\mathrm{ChebyshevT}(6, \frac{1}{2})=\cos(\frac{6\pi}{3})	\top
+cos-n-theta	\mathrm{ChebyshevT}(6, \frac{1}{2})=\cos(\frac{6\pi}{3})	\mathrm{True}
 at-1	\mathrm{ChebyshevT}(7, 1)	1
 at-minus-1	\mathrm{ChebyshevT}(7, -1)	-1
-parity	\mathrm{ChebyshevT}(5, -\frac{1}{3})=-\mathrm{ChebyshevT}(5, \frac{1}{3})	\top
+parity	\mathrm{ChebyshevT}(5, -\frac{1}{3})=-\mathrm{ChebyshevT}(5, \frac{1}{3})	\mathrm{True}
 negative-order	\mathrm{ChebyshevT}(-3, x)	4x^3-3x
 pell-identity	\mathrm{ChebyshevT}(4, 3)^2-8\mathrm{ChebyshevU}(3, 3)^2	1
 chebyshevt-0-1	\mathrm{ChebyshevT}(0, 1)	1

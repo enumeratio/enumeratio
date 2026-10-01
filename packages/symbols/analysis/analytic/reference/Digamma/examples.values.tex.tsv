@@ -11,10 +11,10 @@ gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln	\mathrm{Digamma}(\frac{1}{4})	-3
 psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3	\mathrm{Digamma}(\frac{1}{3})	-\frac{3\ln(3)}{2}-\frac{\sqrt{3}\pi}{6}-\gamma
 interval-arithmetic-psi-is-increasing-on-0-infty	\mathrm{Digamma}(\mathrm{Interval}(1.23, 1.24))	\mathrm{Interval}(-0.251\,669\,430\,696\,100\,1, -0.239\,493\,679\,125\,936\,8)
 to-30-significant-digits-every-one-correctly	N(\mathrm{Digamma}(\frac{1}{3}), 30)	-3.132\,033\,780\,020\,806\,323
-harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	\mathrm{Digamma}(6)+\gamma=1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}	\top
-psi-1-gamma	\mathrm{Digamma}(1)+\gamma=0	\top
-recurrence-psi-z-1-psi-z-1-z-here-at-z-1	\mathrm{Digamma}(2)=\mathrm{Digamma}(1)+1	\top
-psi-1-2-gamma-2-ln-2	\mathrm{Digamma}(\frac{1}{2})+\gamma+2\ln(2)=0	\top
+harmonic-numbers-via-digamma-psi-n-1-gamma-h-n	\mathrm{Digamma}(6)+\gamma=1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}	\mathrm{True}
+psi-1-gamma	\mathrm{Digamma}(1)+\gamma=0	\mathrm{True}
+recurrence-psi-z-1-psi-z-1-z-here-at-z-1	\mathrm{Digamma}(2)=\mathrm{Digamma}(1)+1	\mathrm{True}
+psi-1-2-gamma-2-ln-2	\mathrm{Digamma}(\frac{1}{2})+\gamma+2\ln(2)=0	\mathrm{True}
 psi-x-is-the-trigamma-psi-1-x	\frac{\mathrm{d}\mathrm{Digamma}(x)}{\mathrm{d}x}	\mathrm{Trigamma}(x)
 reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot	\mathrm{Digamma}(0.7)-\mathrm{Digamma}(0.3)	2.282\,500\,668\,502\,198\,374\,21
 psi-1-gamma-2	\mathrm{Digamma}(1)	-\gamma

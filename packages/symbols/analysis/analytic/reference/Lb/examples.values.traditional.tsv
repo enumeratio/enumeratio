@@ -8,4 +8,4 @@ same-exact-negative-power-fold-as-log2-lb-frac	\operatorname{lb}(\frac{1}{8})	-3
 lb-0	\operatorname{lb}(0)	-\infty
 threads-element-wise-over-a-list	\operatorname{lb}([1,2,4,8])	[0,1,2,3]
 same-as-log2-the-logarithm-of-complex-infinity	\operatorname{lb}(\tilde\infty)	\infty
-identical-to-log2	\operatorname{lb}(64)=\operatorname{Log2}(64)	\operatorname{True}
+identical-to-log2	\operatorname{lb}(64)=\operatorname{Log2}(64)	\top
