@@ -10,7 +10,10 @@ const WATCH_MS = 200;
 const bell = new BroadcastChannel(CHANNEL);
 /** Calls asked for and not yet answered, by key: `{ resolve, observe }`. */
 const waiting = new Map();
+/** Each worker's last heartbeat, as the bell brings it. */
+const beats = new Map();
 bell.onmessage = (e) => {
+  if (e.data?.type === "beat") beats.set(e.data.id, e.data.at);
   if (e.data?.type !== "done") return;
   for (const record of e.data.records) waiting.get(record.key)?.resolve(record);
 };
@@ -89,8 +92,8 @@ async function flushSubmits() {
 
 let watching;
 
-/** One watchdog for every call this page waits on: one read of the workers' heartbeats and
- *  the claimed calls a tick. A worker whose heartbeat goes quiet has its calls re-run: the
+/** One watchdog for every call this page waits on: one read of the claimed calls a tick,
+ *  against the heartbeats the bell brought. A worker whose heartbeat goes quiet has its calls re-run: the
  *  first it hadn't answered (the one it's stuck on) in the safer mode, the rest as they were. */
 function watch() {
   watching ??= setInterval(async () => {
@@ -101,8 +104,7 @@ function watch() {
     }
     stats.watches++;
     const now = Date.now();
-    const requeued = await tx(db, ["inputs", "workers"], async ({ inputs, workers }, done) => {
-      const beats = new Map((await req(workers.getAll())).map((w) => [w.id, w.at]));
+    const requeued = await tx(db, ["inputs"], async ({ inputs }, done) => {
       const claimed = await req(inputs.index("status").getAll(IDBKeyRange.only("claimed")));
       for (const call of claimed) waiting.get(call.key)?.observe?.(call, beats.get(call.owner));
       const stuck = new Map();
@@ -259,15 +261,16 @@ export async function run({ engines = 4, sequential = 100, concurrent = 200, ce 
   // A stall in a batch: the engine blocks on the first call it claimed, writing no heartbeat.
   // That call is re-run in the safer mode; the three claimed behind it are re-run as they
   // were; the stalled engine's late answers are refused.
+  const refusedBefore = await refused(ports);
   const s0 = performance.now();
   const [stalled, ...behind] = await Promise.all([
     submit(["Stall", 2500]),
     ...[1, 2, 3].map((n) => submit(["Subtract", 100, n])),
   ]);
-  const refusedBefore = await refused(ports);
+  const answeredAt = performance.now();
   await new Promise((r) => setTimeout(r, 2000));
   out.stall = {
-    answeredMs: Math.round(performance.now() - s0 - 2000),
+    answeredMs: Math.round(answeredAt - s0),
     value: stalled.value,
     stalledBy: stalled.stalledBy,
     answeredBy: stalled.by,

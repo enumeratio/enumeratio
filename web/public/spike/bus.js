@@ -4,11 +4,10 @@
 // - `inputs`: one record per call as written (version, format, text), with its status, its
 //   owner and attempt, and once answered a pointer to its value record.
 // - `values`: one record per canonical expression, for answers worth keeping.
-// - `workers`: one record per engine worker, its heartbeat: how a stall is noticed.
 //
 // Everything goes in batches: a worker claims several calls in one transaction and writes
 // their answers in one, a page submits what it asked for in a tick in one, and the watchdog
-// reads every claimed call in one.
+// reads every claimed call in one. Heartbeats go on the bell.
 
 export const DB = "kernel-spike";
 export const CHANNEL = "kernel-spike";
@@ -21,7 +20,6 @@ export function openDb() {
       const inputs = open.result.createObjectStore("inputs", { keyPath: "key" });
       inputs.createIndex("status", "status");
       open.result.createObjectStore("values", { keyPath: "key" });
-      open.result.createObjectStore("workers", { keyPath: "id" });
     };
     open.onsuccess = () => resolve(open.result);
     open.onerror = () => reject(open.error);

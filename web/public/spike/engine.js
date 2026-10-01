@@ -2,7 +2,7 @@
 // canonical form, answers from the value records when it can, and otherwise evaluates it.
 // Answers are written a batch at a time too, flushed at the end of the batch or once a flush
 // interval has passed, so a long batch still answers its first calls early. Its liveness is
-// its own heartbeat record, not each call's. Also answers direct postMessage calls, the
+// its own heartbeat, on the bell, not each call's. Also answers direct postMessage calls, the
 // baseline.
 
 import { CHANNEL, openDb, req, tx, VERSION } from "./bus.js";
@@ -133,9 +133,12 @@ async function drain() {
   }
 }
 
+// The heartbeat goes on the bell, not in the store: a write issued just before a blocking
+// evaluation can't commit until the worker comes back, and its lock would hold up every
+// watchdog that reads the store.
 function heartbeat() {
   stats.heartbeats++;
-  void tx(db, ["workers"], ({ workers }) => workers.put({ id, at: Date.now(), busy }));
+  bell.postMessage({ type: "beat", id, at: Date.now(), busy });
 }
 
 bell.onmessage = (e) => {
