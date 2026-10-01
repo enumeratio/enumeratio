@@ -165,7 +165,11 @@ test("a packed package is a plain library too: declare(ce), and compiled functio
 test("options are optional named parameters, defaults filling what a call leaves out; attributes hold", async () => {
   const { fetch } = cdn();
   const npm = catalog<Engine>(SPECS, { host: npmHost({ fetch }) });
-  const resolver = createRegistryResolver(npm, { check: { engine: () => new ComputeEngine(), mode: "enforce" } });
+  const written: [string, unknown][] = [];
+  const resolver = createRegistryResolver(npm, {
+    check: { engine: () => new ComputeEngine(), mode: "enforce" },
+    notation: (_ce, head, data) => written.push([head, data]),
+  });
   const ce = new ComputeEngine();
   const scaled = (...args: unknown[]) => ["MemberCall", "bob", "'Scaled'", ...args];
   const quoted = ["MemberCall", "bob", "'Quoted'", ["Add", 1, 2]];
@@ -181,6 +185,10 @@ test("options are optional named parameters, defaults filling what a call leaves
   expect(await ensure(scaled(3, ["NamedArgument", "'factor'", 5]))).toBe(15);
   expect(await ensure(quoted)).toEqual(["Hold", ["Add", 1, 2]]);
   expect(evaluate(ce, quoted)).toEqual(["Hold", 3]);
+  // Its notation is handed over under the head it was declared as, which it never had to name.
+  const head = (await npm.resolve("bob.Scaled"))!.head;
+  expect(written.map(([h]) => h)).toEqual([head]);
+  expect(written[0]![1]).toMatchObject({ latex: [{ trigger: "\\scaled", kind: "function" }] });
 });
 
 test("from ranges: lock the versions, then read them", async () => {

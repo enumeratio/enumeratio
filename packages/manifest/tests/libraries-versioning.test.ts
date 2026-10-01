@@ -96,6 +96,22 @@ test("named slots, attributes and notation: renamed or rebound is a break", () =
   ]);
 });
 
+test("a symbol's own notation: a trigger moving to another symbol is a break, a new template a patch", () => {
+  const symbol = (notation: object) => ({ signature: "(number) -> number", pin: "sha256-a", notation });
+  const before = snapshot({
+    A: symbol({ latex: [{ trigger: "\\a" }], traditional: [{ params: ["x"], call: "A" }] }),
+    B: symbol({}),
+  } as never);
+  const after = snapshot({
+    A: symbol({ traditional: [{ params: ["x"], call: "𝒜" }] }),
+    B: symbol({ latex: [{ trigger: "\\a" }] }),
+  } as never);
+  expect(changesOf(before, after, isSubtype)).toEqual([
+    { level: "major", what: "notation \\a now reads as B" },
+    { symbol: "A", level: "patch", what: "TraditionalForm changed" },
+  ]);
+});
+
 test("what a version number says, as a caret range reads it", () => {
   expect(versionSays("1.2.3", "2.0.0", "major")).toBe(true);
   expect(versionSays("1.2.3", "1.3.0", "major")).toBe(false);

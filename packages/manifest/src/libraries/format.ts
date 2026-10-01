@@ -4,7 +4,8 @@
 //   "enumeratio": { "namespace": "ada", "index": "./symbols/index.json", "system": "0.x" }
 //
 // (any package, library or not, may also name its notation entry: `"notation": "./notation"`,
-// JavaScript for now, whose LaTeX triggers and TraditionalForm heads the index lists)
+// JavaScript, whose LaTeX triggers and TraditionalForm heads the index lists; a library's own
+// notation is data, `symbols/<Name>/notation.json`, inline in the index)
 //
 // and ships `symbols/<Name>/definition.json` (signature, body, requires, and any attributes and
 // defaults) beside the index,
@@ -13,6 +14,7 @@
 
 import { satisfies, validRange } from "semver";
 import type { DefinitionAttribute } from "../declaration.ts";
+import type { NotationData } from "../notation-data.ts";
 import { type Definition, pinOf } from "../registry.ts";
 import type { PackageField } from "../package-field.ts";
 import { SYSTEM_VERSION } from "../system.ts";
@@ -47,6 +49,8 @@ export interface IndexedSymbol {
   /** Its options' defaults: the optional parameters a call may leave out. */
   readonly defaults?: Readonly<Record<string, unknown>>;
   readonly attributes?: readonly DefinitionAttribute[];
+  /** How it's written (`<Name>/notation.json`), inline so a host can load every library's LaTeX before it builds an engine. */
+  readonly notation?: NotationData;
 }
 
 /** What a library's notation entry defines, as the version check reads it. */
@@ -100,7 +104,7 @@ export async function libraryIndexOf(
   for (const name of Object.keys(definitions).toSorted()) {
     const definition = definitions[name]!;
     const params = paramsOf(definition);
-    const { requires, examples, defaults, attributes } = definition;
+    const { requires, examples, defaults, attributes, notation } = definition;
     symbols[name] = {
       signature: definition.signature,
       pin: await pinOf(definition),
@@ -109,6 +113,7 @@ export async function libraryIndexOf(
       ...(params?.length ? { params } : {}),
       ...(defaults !== undefined && Object.keys(defaults).length > 0 ? { defaults } : {}),
       ...(attributes?.length ? { attributes } : {}),
+      ...(notation === undefined ? {} : { notation }),
     };
   }
   return { namespace, symbols, ...(notation === undefined ? {} : { notation }) };

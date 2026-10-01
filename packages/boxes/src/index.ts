@@ -20,3 +20,4 @@ export {
   subscripted,
   type Writer,
 } from "./notation.ts";
+export { compileNotation } from "./notation-data.ts";

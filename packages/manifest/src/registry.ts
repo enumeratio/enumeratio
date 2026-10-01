@@ -12,6 +12,7 @@
 // versions of one name can live in one engine.
 
 import { type DefinitionAttribute, declarationOf } from "./declaration.ts";
+import type { NotationData } from "./notation-data.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import { type Library, type Lookup, packagesFor, packagesNeeded, plan } from "./resolve.ts";
 
@@ -35,6 +36,8 @@ export interface Definition {
   readonly defaults?: Readonly<Record<string, unknown>>;
   /** Its examples, for `definitionRegistry`; not part of the pin. */
   readonly examples?: readonly Example[];
+  /** How it's written; not part of the pin, since a change to it never changes a value. */
+  readonly notation?: NotationData;
 }
 
 /** One of a definition's examples, as a record's are: what `expr` evaluates to. */
@@ -412,7 +415,16 @@ const callsByName = (json: unknown, name: string): boolean =>
  */
 export function createRegistryResolver<Engine extends DeclaringEngine>(
   registry: Registry<Engine>,
-  { path, check }: { path?: SearchPath; check?: InstallCheck<Engine> } = {},
+  {
+    path,
+    check,
+    notation,
+  }: {
+    path?: SearchPath;
+    check?: InstallCheck<Engine>;
+    /** Register a declared definition's notation, under the head it's declared as (boxes' `compileNotation`). */
+    notation?: (ce: Engine, head: string, data: NotationData) => void;
+  } = {},
 ): RegistryResolver<Engine> {
   const states = new WeakMap<Engine, EngineState>();
   // Each pin's failures, checked once for every engine this resolver serves.
@@ -524,6 +536,7 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         }
         ce.declare(found.head, declarationOf(found.definition, withHeads(body, heads)) as never);
         if (found.definition.attributes?.length) state.attributed.add(found.head);
+        if (found.definition.notation !== undefined) notation?.(ce, found.head, found.definition.notation);
         state.definitions.set(found.pin, true);
         declared.push(found.head);
         return true;

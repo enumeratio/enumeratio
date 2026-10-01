@@ -25,6 +25,24 @@
       "params": ["x", "factor"],
       "defaults": {
         "factor": 2
+      },
+      "notation": {
+        "traditional": [
+          {
+            "params": ["x"],
+            "call": "S"
+          },
+          {
+            "params": ["x", "factor"],
+            "box": ["RowBox", [["TemplateSlot", "factor"], "·", ["TemplateSlot", "x"]]]
+          }
+        ],
+        "latex": [
+          {
+            "trigger": "\\scaled",
+            "kind": "function"
+          }
+        ]
       }
     },
     "Zh": {
@@ -36,10 +54,10 @@
   "notation": {
     "latex": [
       {
-        "trigger": "\\scaled",
-        "name": "Scaled"
+        "trigger": "\\zh",
+        "name": "Zh"
       }
     ],
-    "traditional": ["Scaled"]
+    "traditional": ["Zh"]
   }
 }
