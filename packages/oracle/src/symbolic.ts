@@ -158,6 +158,8 @@ export function symbolicAgreementSource(
   freeSymbols: readonly string[],
 ): string | undefined {
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
+  // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
+  if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;
   if (!solving && (isStructured(expr) || isStructured(expected))) return undefined;
   const theirs = emit(expr, system);
   const ours = emit(expected, system);

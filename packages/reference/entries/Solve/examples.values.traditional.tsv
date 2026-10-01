@@ -13,15 +13,15 @@ solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-2
 solve-x-pow-4-minus-1-times-x-pow-4-minus-4-eq-3		
 solve-x-pow-4-minus-x-pow-2-minus-5-eq-0-x		
 solve-x-pow-2-minus-1-times-x-pow-4-minus-1-eq-0		
-solve-a-times-x-pow-5-plus-b-times-x-plus-c-eq-0		
-solve-sin-x-eq-1-times-3-pow-neg-1-x		
-solve-x-pow-2a-plus-2-times-x-pow-a-plus-1-eq-0		
-solve-x-pow-5-minus-1-pow-x-eq-0-x		
-solve-arctan-1-times-sqrt-1-plus-x-pow-2-pow-neg		
-solve-5-eq-x-times-2-pow-x-pow-2-x		
-solve-gamma-x-minus-ln-x-eq-imaginaryunit-times		
-solve-x-eq-exponentiale-pow-1-times-x-pow-neg-1		
-solve-cos-exp-x-eq-3-times-exp-neg-x-plus-1-0-lt		
+solve-a-times-x-pow-5-plus-b-times-x-plus-c-eq-0	\operatorname{Solve}(ax^5+bx+c=0,x)	\operatorname{Solve}(ax^5+bx+c=0,x)
+solve-sin-x-eq-1-times-3-pow-neg-1-x	\operatorname{Solve}(\sin(x)=13^{-1},x)	\operatorname{Solve}(\sin(x)=13^{-1},x)
+solve-x-pow-2a-plus-2-times-x-pow-a-plus-1-eq-0	\operatorname{Solve}(x^{2a}+2x^a+1=0,x)	\operatorname{Solve}(x^{2a}+2x^a+1=0,x)
+solve-x-pow-5-minus-1-pow-x-eq-0-x	\operatorname{Solve}((x^5-1)^x=0,x)	\operatorname{Solve}((x^5-1)^x=0,x)
+solve-arctan-1-times-sqrt-1-plus-x-pow-2-pow-neg	\operatorname{Solve}(\arctan(1{\sqrt{1+x^2}}^{-1},x{\sqrt{1+x^2}}^{-1})=a,x)	\operatorname{Solve}(\arctan(1{\sqrt{1+x^2}}^{-1},x{\sqrt{1+x^2}}^{-1})=a,x)
+solve-5-eq-x-times-2-pow-x-pow-2-x	\operatorname{Solve}(5=x2^{x^2},x)	\operatorname{Solve}(5=x2^{x^2},x)
+solve-gamma-x-minus-ln-x-eq-imaginaryunit-times	\operatorname{Solve}(\Gamma(x)-\ln(x)=i2^{-1}\land|x-2|<32^{-1},x)	\operatorname{Solve}(\Gamma(x)-\ln(x)=i2^{-1}\land|x-2|<32^{-1},x)
+solve-x-eq-exponentiale-pow-1-times-x-pow-neg-1	\operatorname{Solve}(x=e^{1x^{-1}}\land|x|<5,x)	\operatorname{Solve}(x=e^{1x^{-1}}\land|x|<5,x)
+solve-cos-exp-x-eq-3-times-exp-neg-x-plus-1-0-lt	\operatorname{Solve}(\cos(e^x)=3e^{-x}+1\land0\le\operatorname{Re}(x)\le1,x)	\operatorname{Solve}(\cos(e^x)=3e^{-x}+1\land0\le\operatorname{Re}(x)\le1,x)
 solve-list-x-plus-2y-plus-3z-eq-4-3x-plus-4y	\operatorname{Solve}([x+2y+3z=4,3x+4y+5z=6,7x+7y+8z=9],x,y,z)	[(0,-1,2)]
 a-2-2-linear-system-each-solution-is-a-tuple	\operatorname{Solve}([x+y=3,x-y=1],[x,y])	[(2,1)]
 solve-x-eq-x-for-x	\operatorname{Solve}(x=x,x)	[[]]
