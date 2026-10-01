@@ -1,13 +1,13 @@
-id	in
-order-is-n-factorial-over-two	GroupOrder[AlternatingGroup[5]]
-generators-odd-n	GroupGenerators[AlternatingGroup[5]]
-generators-even-n	GroupGenerators[AlternatingGroup[4]]
-generators-collapse-at-three	GroupGenerators[AlternatingGroup[3]]
-elements-of-a3	GroupElements[AlternatingGroup[3]]
-grouporder-alternatinggroup-10	GroupOrder[AlternatingGroup[10]]
-groupgenerators-alternatinggroup-10	GroupGenerators[AlternatingGroup[10]]
-groupelements-alternatinggroup-4	GroupElements[AlternatingGroup[4]]
-trivial-for-n-equals-one	GroupOrder[AlternatingGroup[1]]
-trivial-for-n-equals-two	GroupOrder[AlternatingGroup[2]]
-groupelements-alternatinggroup-1	GroupElements[AlternatingGroup[1]]
-groupelements-alternatinggroup-2	GroupElements[AlternatingGroup[2]]
+id	in	out
+order-is-n-factorial-over-two	GroupOrder(AlternatingGroup(5))	60
+generators-odd-n	GroupGenerators(AlternatingGroup(5))	List(Cycles(List(List(1, 2, 3))), Cycles(List(List(1, 2, 3, 4, 5))))
+generators-even-n	GroupGenerators(AlternatingGroup(4))	List(Cycles(List(List(1, 2, 3))), Cycles(List(List(2, 3, 4))))
+generators-collapse-at-three	GroupGenerators(AlternatingGroup(3))	List(Cycles(List(List(1, 2, 3))))
+elements-of-a3	GroupElements(AlternatingGroup(3))	List(Cycles(List()), Cycles(List(List(1, 2, 3))), Cycles(List(List(1, 3, 2))))
+grouporder-alternatinggroup-10	GroupOrder(AlternatingGroup(10))	1814400
+groupgenerators-alternatinggroup-10	GroupGenerators(AlternatingGroup(10))	List(Cycles(List(List(1, 2, 3))), Cycles(List(List(2, 3, 4, 5, 6, 7, 8, 9, 10))))
+groupelements-alternatinggroup-4	GroupElements(AlternatingGroup(4))	List(Cycles(List()), Cycles(List(List(2, 3, 4))), Cycles(List(List(2, 4, 3))), Cycles(List(List(1, 2), List(3, 4))), Cycles(List(List(1, 2, 3))), Cycles(List(List(1, 2, 4))), Cycles(List(List(1, 3, 2))), Cycles(List(List(1, 3, 4))), Cycles(List(List(1, 3), List(2, 4))), Cycles(List(List(1, 4, 2))), Cycles(List(List(1, 4, 3))), Cycles(List(List(1, 4), List(2, 3))))
+trivial-for-n-equals-one	GroupOrder(AlternatingGroup(1))	1
+trivial-for-n-equals-two	GroupOrder(AlternatingGroup(2))	1
+groupelements-alternatinggroup-1	GroupElements(AlternatingGroup(1))	List(Cycles(List()))
+groupelements-alternatinggroup-2	GroupElements(AlternatingGroup(2))	List(Cycles(List()))

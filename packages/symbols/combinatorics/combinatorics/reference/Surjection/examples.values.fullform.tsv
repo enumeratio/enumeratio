@@ -1,2 +1,2 @@
-id	in
-from-a-set-composition	Surjection[SetComposition[List[List[2, 4], List[1], List[3]]]]
+id	in	out
+from-a-set-composition	Surjection(SetComposition(List(List(2, 4), List(1), List(3))))	Surjection(List(2, 1, 3, 1))

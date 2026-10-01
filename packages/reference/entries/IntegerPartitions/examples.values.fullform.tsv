@@ -1,14 +1,14 @@
-id	in	back
-the-partitions-of-8-into-at-most-3-parts	IntegerPartitions[8, 3]	
-integerpartitions-5	IntegerPartitions[5]	
-exactly-3-parts	IntegerPartitions[8, List[3]]	
-parts-restricted-to-1-2-5	IntegerPartitions[8, All, List[1, 2, 5]]	
+id	in	out
+the-partitions-of-8-into-at-most-3-parts	IntegerPartitions(8, 3)	List(IntegerPartition(List(8)), IntegerPartition(List(7, 1)), IntegerPartition(List(6, 2)), IntegerPartition(List(6, 1, 1)), IntegerPartition(List(5, 3)), IntegerPartition(List(5, 2, 1)), IntegerPartition(List(4, 4)), IntegerPartition(List(4, 3, 1)), IntegerPartition(List(4, 2, 2)), IntegerPartition(List(3, 3, 2)))
+integerpartitions-5	IntegerPartitions(5)	List(IntegerPartition(List(5)), IntegerPartition(List(4, 1)), IntegerPartition(List(3, 2)), IntegerPartition(List(3, 1, 1)), IntegerPartition(List(2, 2, 1)), IntegerPartition(List(2, 1, 1, 1)), IntegerPartition(List(1, 1, 1, 1, 1)))
+exactly-3-parts	IntegerPartitions(8, List(3))	List(IntegerPartition(List(6, 1, 1)), IntegerPartition(List(5, 2, 1)), IntegerPartition(List(4, 3, 1)), IntegerPartition(List(4, 2, 2)), IntegerPartition(List(3, 3, 2)))
+parts-restricted-to-1-2-5	IntegerPartitions(8, All, List(1, 2, 5))	List(IntegerPartition(List(5, 2, 1)), IntegerPartition(List(5, 1, 1, 1)), IntegerPartition(List(2, 2, 2, 2)), IntegerPartition(List(2, 2, 2, 1, 1)), IntegerPartition(List(2, 2, 1, 1, 1, 1)), IntegerPartition(List(2, 1, 1, 1, 1, 1, 1)), IntegerPartition(List(1, 1, 1, 1, 1, 1, 1, 1)))
 integerpartitions-6-list-2-positiveinfinity-2		
 integerpartitions-3-10-list-1-1-over-3-3-over-4		
 integerpartitions-5-10-list-1-neg-1		
-the-ways-to-make-change-for-a-dollar-from-1-5-10	Length[IntegerPartitions[100, All, List[1, 5, 10, 25, 50]]]	[Length, [IntegerPartitions, 100, All, [List, 1, 5, 10, 25, 50]]]
+the-ways-to-make-change-for-a-dollar-from-1-5-10	Count(IntegerPartitions(100, All, List(1, 5, 10, 25, 50)))	292
 integerpartitions-156-10-list-1-5-10-25		
-the-family-has-p-8-22-members-compute-engine-s	NPartition[8]	
-integerpartitions-4	IntegerPartitions[4]	
-length-integerpartitions-10	Length[IntegerPartitions[10]]	
-euler-partitions-into-odd-parts-are-as-many-as	Length[IntegerPartitions[10, All, List[1, 3, 5, 7, 9]]]	[Length, [IntegerPartitions, 10, All, [List, 1, 3, 5, 7, 9]]]
+the-family-has-p-8-22-members-compute-engine-s	NPartition(8)	22
+integerpartitions-4	IntegerPartitions(4)	List(IntegerPartition(List(4)), IntegerPartition(List(3, 1)), IntegerPartition(List(2, 2)), IntegerPartition(List(2, 1, 1)), IntegerPartition(List(1, 1, 1, 1)))
+length-integerpartitions-10	Length(IntegerPartitions(10))	42
+euler-partitions-into-odd-parts-are-as-many-as	Count(IntegerPartitions(10, All, List(1, 3, 5, 7, 9)))	10

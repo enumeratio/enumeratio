@@ -1,5 +1,5 @@
-id	in	back
-truncate-7-over-2	IntegerPart[Rational[7, 2]]	[IntegerPart, [Rational, 7, 2]]
-truncate-neg-7-over-2	IntegerPart[Rational[-7, 2]]	[IntegerPart, [Rational, -7, 2]]
-truncate-neg-3p7	IntegerPart[-3.7]	[IntegerPart, -3.7]
-truncate-big-rational	IntegerPart[Divide[15511210043330985983999999, Factorial[24]]]	[IntegerPart, [Divide, 1.5511210043330986e+25, [Factorial, 24]]]
+id	in	out
+truncate-7-over-2	Truncate(Rational(7, 2))	3
+truncate-neg-7-over-2	Truncate(Rational(-7, 2))	-3
+truncate-neg-3p7	Truncate(-3.7)	-3
+truncate-big-rational	Truncate(Divide(15511210043330985983999999, Factorial(24)))	24

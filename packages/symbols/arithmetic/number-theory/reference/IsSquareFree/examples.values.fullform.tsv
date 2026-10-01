@@ -1,30 +1,30 @@
-id	in	back
-issquarefree-10	SquareFreeQ[10]	
-issquarefree-4	SquareFreeQ[4]	
-issquarefree-12	SquareFreeQ[12]	
-every-prime-is-squarefree	SquareFreeQ[17]	
-issquarefree-20	SquareFreeQ[20]	
-threads-element-wise-over-a-list	SquareFreeQ[List[10, 4, 12]]	
-gaussian-integers-3-2i-is-a-gaussian-prime	SquareFreeQ[Complex[3, 2]]	
-gaussianintegers-true-2-i-1-i-2	SquareFreeQ[2, Rule[GaussianIntegers, True]]	[IsSquareFree, 2, [KeyValuePair, GaussianIntegers, True]]
-rationals-numerator-and-denominator-are-both	SquareFreeQ[Rational[2, 3]]	
-polynomials-x-2-6x-6-has-no-repeated-factor	SquareFreeQ[Plus[Power[x, 2], Times[6, x], 6]]	
-multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	SquareFreeQ[Subtract[Power[x, 3], Times[Power[x, 2], y]]]	
-squarefree-as-a-polynomial-in-x-alone-y-is-just	SquareFreeQ[Times[x, Power[y, 2]], x]	
-but-not-in-y-alone-y-appears-squared	SquareFreeQ[Times[x, Power[y, 2]], y]	
-a-non-squarefree-rational	SquareFreeQ[Rational[4, 3]]	
-x-1-2-has-a-repeated-root	SquareFreeQ[Plus[Power[x, 2], Times[-2, x], 1]]	
-x-3-y-3-has-no-repeated-factor	SquareFreeQ[Subtract[Power[x, 3], Power[y, 3]]]	
-issquarefree-3-plus-10-pow-70	SquareFreeQ[Plus[3, Power[10, 70]]]	
-issquarefree-2	SquareFreeQ[2]	
-issquarefree-x-pow-2-minus-3	SquareFreeQ[Plus[Power[x, 2], -3]]	
+id	in	out
+issquarefree-10	IsSquareFree(10)	True
+issquarefree-4	IsSquareFree(4)	False
+issquarefree-12	IsSquareFree(12)	False
+every-prime-is-squarefree	IsSquareFree(17)	True
+issquarefree-20	IsSquareFree(20)	False
+threads-element-wise-over-a-list	IsSquareFree(List(10, 4, 12))	List(True, False, False)
+gaussian-integers-3-2i-is-a-gaussian-prime	IsSquareFree(Complex(3, 2))	True
+gaussianintegers-true-2-i-1-i-2	IsSquareFree(2, KeyValuePair(Over, GaussianIntegers))	False
+rationals-numerator-and-denominator-are-both	IsSquareFree(Rational(2, 3))	True
+polynomials-x-2-6x-6-has-no-repeated-factor	IsSquareFree(Add(Power(x, 2), Multiply(6, x), 6))	True
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	IsSquareFree(Subtract(Power(x, 3), Multiply(Power(x, 2), y)))	False
+squarefree-as-a-polynomial-in-x-alone-y-is-just	IsSquareFree(Multiply(x, Power(y, 2)), x)	True
+but-not-in-y-alone-y-appears-squared	IsSquareFree(Multiply(x, Power(y, 2)), y)	False
+a-non-squarefree-rational	IsSquareFree(Rational(4, 3))	False
+x-1-2-has-a-repeated-root	IsSquareFree(Add(Power(x, 2), Multiply(-2, x), 1))	False
+x-3-y-3-has-no-repeated-factor	IsSquareFree(Subtract(Power(x, 3), Power(y, 3)))	True
+issquarefree-3-plus-10-pow-70	IsSquareFree(Add(3, Power(10, 70)))	True
+issquarefree-2	IsSquareFree(2)	True
+issquarefree-x-pow-2-minus-3	IsSquareFree(Add(Power(x, 2), -3))	True
 n-1-over-100-000-times-length-filter-range-1-100		
 issquarefree-q		
-n-is-squarefree-exactly-when-mu-n-neq-0-see	Equal[SquareFreeQ[10], Not[Equal[MoebiusMu[10], 0]]]	
-issquarefree-210	SquareFreeQ[210]	
-issquarefree-14	SquareFreeQ[14]	
-isprimepower-17-issquarefree-17	And[PrimePowerQ[17], SquareFreeQ[17]]	
-issquarefree-x-pow-2-minus-2x-plus-1-x	SquareFreeQ[Plus[Power[x, 2], Times[-2, x], 1], x]	
-simplify-issquarefree-a-pow-2-a-in-integers	Simplify[SquareFreeQ[Power[a, 2]], Element[a, Integers]]	
-issquarefree-expand-x-plus-1-pow-3-times-x-plus	SquareFreeQ[Expand[Times[Power[Plus[x, 1], 3], Power[Plus[x, 2], 2], Power[Plus[x, 3], 2]]]]	
-1-is-vacuously-squarefree-it-has-no-repeated	SquareFreeQ[1]	
+n-is-squarefree-exactly-when-mu-n-neq-0-see	Equal(IsSquareFree(10), Not(Equal(MoebiusMu(10), 0)))	True
+issquarefree-210	IsSquareFree(210)	True
+issquarefree-14	IsSquareFree(14)	True
+isprimepower-17-issquarefree-17	And(IsPrimePower(17), IsSquareFree(17))	True
+issquarefree-x-pow-2-minus-2x-plus-1-x	IsSquareFree(Add(Power(x, 2), Multiply(-2, x), 1), x)	False
+simplify-issquarefree-a-pow-2-a-in-integers	Simplify(IsSquareFree(Power(a, 2)), Element(a, Integers))	False
+issquarefree-expand-x-plus-1-pow-3-times-x-plus	IsSquareFree(Expand(Multiply(Power(Add(x, 1), 3), Power(Add(x, 2), 2), Power(Add(x, 3), 2))))	False
+1-is-vacuously-squarefree-it-has-no-repeated	IsSquareFree(1)	True

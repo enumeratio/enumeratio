@@ -1,2 +1,2 @@
-id	in
-line-graph-of-a-triangle-is-a-triangle	EdgeCount[LineGraph[CompleteGraph[3]]]
+id	in	out
+line-graph-of-a-triangle-is-a-triangle	EdgeCount(LineGraph(CompleteGraph(3)))	3

@@ -1,15 +1,15 @@
-id	in
-isquadraticirrational-sqrt-2	QuadraticIrrationalQ[Sqrt[2]]
-the-golden-ratio	QuadraticIrrationalQ[Divide[Plus[1, Sqrt[5]], 2]]
-a-cube-root-is-algebraic-of-degree-3	QuadraticIrrationalQ[Power[2, Rational[1, 3]]]
-isquadraticirrational-1-plus-sqrt-2	QuadraticIrrationalQ[Plus[1, Sqrt[2]]]
-isquadraticirrational-sqrt-2-plus-sqrt-3	QuadraticIrrationalQ[Plus[Sqrt[2], Sqrt[3]]]
-transcendental	QuadraticIrrationalQ[Pi]
-sqrt-4-is-rational-once-simplified	QuadraticIrrationalQ[Sqrt[4]]
-a-plain-integer	QuadraticIrrationalQ[5]
-a-rational-multiple-of-a-surd	QuadraticIrrationalQ[Times[3, Sqrt[2]]]
-a-surd-subtracted-from-a-rational	QuadraticIrrationalQ[Subtract[1, Sqrt[3]]]
-isquadraticirrational-3-over-2	QuadraticIrrationalQ[Rational[3, 2]]
-isquadraticirrational-list-sqrt-2-sqrt-3-2	QuadraticIrrationalQ[List[Sqrt[2], Sqrt[3], 2]]
-isquadraticirrational-s	
-a-rational-is-not-irrational	QuadraticIrrationalQ[Rational[3, 4]]
+id	in	out
+isquadraticirrational-sqrt-2	IsQuadraticIrrational(Sqrt(2))	True
+the-golden-ratio	IsQuadraticIrrational(Divide(Add(1, Sqrt(5)), 2))	True
+a-cube-root-is-algebraic-of-degree-3	IsQuadraticIrrational(Power(2, Rational(1, 3)))	False
+isquadraticirrational-1-plus-sqrt-2	IsQuadraticIrrational(Add(1, Sqrt(2)))	True
+isquadraticirrational-sqrt-2-plus-sqrt-3	IsQuadraticIrrational(Add(Sqrt(2), Sqrt(3)))	False
+transcendental	IsQuadraticIrrational(Pi)	False
+sqrt-4-is-rational-once-simplified	IsQuadraticIrrational(Sqrt(4))	False
+a-plain-integer	IsQuadraticIrrational(5)	False
+a-rational-multiple-of-a-surd	IsQuadraticIrrational(Multiply(3, Sqrt(2)))	True
+a-surd-subtracted-from-a-rational	IsQuadraticIrrational(Subtract(1, Sqrt(3)))	True
+isquadraticirrational-3-over-2	IsQuadraticIrrational(Rational(3, 2))	False
+isquadraticirrational-list-sqrt-2-sqrt-3-2	IsQuadraticIrrational(List(Sqrt(2), Sqrt(3), 2))	List(True, True, False)
+isquadraticirrational-s		
+a-rational-is-not-irrational	IsQuadraticIrrational(Rational(3, 4))	False

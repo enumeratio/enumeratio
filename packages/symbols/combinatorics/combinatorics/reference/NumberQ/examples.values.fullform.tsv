@@ -1,10 +1,10 @@
-id	in
-an-integer-literal	NumberQ[2]
-a-symbolic-constant-is-not-numberq	NumberQ[Pi]
-a-plain-symbol-is-not-numberq	NumberQ[x]
-numberq-n-sqrt-2	NumberQ[N[Sqrt[2]]]
-list-numberq-c-numberq-d	List[NumberQ[c], NumberQ[d]]
-list-numberq-o-numberq-u	List[NumberQ[o], NumberQ[u]]
-numberq-sqrt-2	NumberQ[Sqrt[2]]
-numberq-positiveinfinity	NumberQ[Infinity]
-ismatrix-m-numberq	
+id	in	out
+an-integer-literal	NumberQ(2)	True
+a-symbolic-constant-is-not-numberq	NumberQ(Pi)	False
+a-plain-symbol-is-not-numberq	NumberQ(x)	False
+numberq-n-sqrt-2	NumberQ(N(Sqrt(2)))	True
+list-numberq-c-numberq-d	List(NumberQ(c), NumberQ(d))	List(False, False)
+list-numberq-o-numberq-u	List(NumberQ(o), NumberQ(u))	List(False, False)
+numberq-sqrt-2	NumberQ(Sqrt(2))	True
+numberq-positiveinfinity	NumberQ(PositiveInfinity)	True
+ismatrix-m-numberq		

@@ -1,2 +1,2 @@
-id	in	back
-2-4	Length[IntegerCompositions[5]]	[Length, [IntegerCompositions, 5]]
+id	in	out
+2-4	Count(IntegerCompositions(5))	16

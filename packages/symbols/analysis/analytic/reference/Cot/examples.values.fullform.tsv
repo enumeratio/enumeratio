@@ -1,36 +1,36 @@
-id	in	back
-cot-pi-over-6	Cot[Divide[Pi, 6]]	
-cot-pi-over-4	Cot[Divide[Pi, 4]]	
-cot-pi-over-3	Cot[Divide[Pi, 3]]	
-cot-60-circ-frac-sqrt-3-3-exactly	Cot[Times[60, Degree]]	[Cot, [Multiply, 60, Degree]]
-a-machine-precision-argument-evaluates	Cot[1.2]	
-a-huge-24-40-argument	N[Cot[Power[24, 40]]]	
-a-huge-10-100-argument	N[Cot[Power[10, 100]]]	
-a-huge-3-200-argument	N[Cot[Power[3, 200]]]	
-a-huge-neg-7-60-argument	N[Cot[Minus[Power[7, 60]]]]	
-a-huge-10-80-plus-1-over-3-argument	N[Cot[Divide[Plus[Power[10, 80], 1], 3]]]	
-cot-7-under-n	N[Cot[7]]	
-n-of-an-exact-argument-gives-an-arbitrary	N[Cot[Rational[6, 5]]]	
-evaluates-at-a-complex-argument	Cot[Complex[2.5, 1]]	
-threads-element-wise-over-a-matrix	Cot[List[List[Times[5, Divide[Pi, 6]], Divide[Pi, 2]], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 6]]]]]	
-cot-pi-8-1-sqrt-2	Cot[Divide[Pi, 8]]	
-cot-pi-12-2-sqrt-3	Cot[Divide[Pi, 12]]	
-cot-pi-over-5	Cot[Divide[Pi, 5]]	
-an-interval-straddling-the-pole-at-0-maps-to-two	Cot[Interval[List[Minus[Divide[Pi, 4]], Divide[Pi, 4]]]]	
-uncertainty-propagation-near-a-pole-grows-fast	Cot[Around[3, 0.01]]	
-oddness-pulls-the-sign-out-of-a-symbolic	Cot[Minus[x]]	
-derivative-csc-2-x	D[Cot[x], x]	
-antiderivative-ln-sin-x	Integrate[Cot[x], x]	
-n-cot-6-over-5-50	N[Cot[Rational[6, 5]], 50]	
-matrixfunction-function-cot-1-1-list-list-5-over	MatrixFunction[Function[Cot[Slot[1]]], List[List[Times[Rational[5, 6], Pi], Times[Rational[1, 2], Pi]], List[Times[Rational[3, 2], Pi], Times[Rational[-1, 6], Pi]]]]	[MatrixFunction, [Function, [Cot, _1]], [List, [List, [Multiply, [Rational, 5, 6], Pi], [Multiply, [Rational, 1, 2], Pi]], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 6], Pi]]]]
+id	in	out
+cot-pi-over-6	Cot(Divide(Pi, 6))	Sqrt(3)
+cot-pi-over-4	Cot(Divide(Pi, 4))	1
+cot-pi-over-3	Cot(Divide(Pi, 3))	Divide(Sqrt(3), 3)
+cot-60-circ-frac-sqrt-3-3-exactly	Cot(Degrees(60))	Divide(Sqrt(3), 3)
+a-machine-precision-argument-evaluates	Cot(1.2)	0.388779569368204911634
+a-huge-24-40-argument	N(Cot(Power(24, 40)))	2.290720910010880678424893
+a-huge-10-100-argument	N(Cot(Power(10, 100)))	2.492323879279820694866405
+a-huge-3-200-argument	N(Cot(Power(3, 200)))	0.36714300103369787917328
+a-huge-neg-7-60-argument	N(Cot(Negate(Power(7, 60))))	-2.549725448552896594744082
+a-huge-10-80-plus-1-over-3-argument	N(Cot(Divide(Add(Power(10, 80), 1), 3)))	0.17309023544614244604558
+cot-7-under-n	N(Cot(7))	1.1475154224051356
+n-of-an-exact-argument-gives-an-arbitrary	N(Cot(Rational(6, 5)))	0.388779569368204911634
+evaluates-at-a-complex-argument	Cot(Complex(2.5, 1))	Complex(-0.27566912122989945, -1.0426406420944216)
+threads-element-wise-over-a-matrix	Cot(List(List(Multiply(5, Divide(Pi, 6)), Divide(Pi, 2)), List(Multiply(3, Divide(Pi, 2)), Negate(Divide(Pi, 6)))))	List(List(Negate(Sqrt(3)), 0), List(0, Negate(Sqrt(3))))
+cot-pi-8-1-sqrt-2	Cot(Divide(Pi, 8))	Add(1, Sqrt(2))
+cot-pi-12-2-sqrt-3	Cot(Divide(Pi, 12))	Add(2, Sqrt(3))
+cot-pi-over-5	Cot(Divide(Pi, 5))	Multiply(Divide(Sqrt(5), 5), Sqrt(Add(5, Multiply(2, Sqrt(5)))))
+an-interval-straddling-the-pole-at-0-maps-to-two	Cot(Interval(Negate(Divide(Pi, 4)), Divide(Pi, 4)))	Union(Interval(NegativeInfinity, -1), Interval(1, PositiveInfinity))
+uncertainty-propagation-near-a-pole-grows-fast	Cot(Around(3, 0.01))	Around(-7.015252551434534, 0.5021376836040873)
+oddness-pulls-the-sign-out-of-a-symbolic	Cot(Negate(x))	Negate(Cot(x))
+derivative-csc-2-x	D(Cot(x), x)	Negate(Power(Csc(x), 2))
+antiderivative-ln-sin-x	Integrate(Cot(x), x)	Ln(Abs(Sin(x)))
+n-cot-6-over-5-50	N(Cot(Rational(6, 5)), 50)	0.38877956936820491163419150497190340959498492594098
+matrixfunction-function-cot-1-1-list-list-5-over	MatrixFunction(Function(Block(Cot(_1)), _1), List(List(Multiply(Rational(5, 6), Pi), Multiply(Rational(1, 2), Pi)), List(Multiply(Rational(3, 2), Pi), Multiply(Rational(-1, 6), Pi))))	List(List(Divide(Sqrt(3), 3), 0), List(0, Divide(Sqrt(3), 3)))
 assuming-m-in-integers-refine-cot-pi-times-1		
 assuming-m-in-integers-fullsimplify-refine-cot		
 cot-positiveinfinity		
-reciprocal-of-tan-cot-x-frac-1-tan-x	Equal[Cot[Divide[Pi, 4]], Divide[1, Tan[Divide[Pi, 4]]]]	
-pythagorean-identity-1-cot-2-x-csc-2-x	Equal[Plus[1, Power[Cot[Divide[Pi, 6]], 2]], Power[Csc[Divide[Pi, 6]], 2]]	
-cot-1-over-10-times-pi	Cot[Times[Rational[1, 10], Pi]]	
-cot-3-over-10-times-pi	Cot[Times[Rational[3, 10], Pi]]	
-cot-3-over-8-times-pi	Cot[Times[Rational[3, 8], Pi]]	
-a-pole-sin-0-0	Cot[0]	
-not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	Cot[Divide[Pi, 2]]	
-cot-complexinfinity-is-indeterminate-for-the	Cot[ComplexInfinity]	
+reciprocal-of-tan-cot-x-frac-1-tan-x	Equal(Cot(Divide(Pi, 4)), Divide(1, Tan(Divide(Pi, 4))))	True
+pythagorean-identity-1-cot-2-x-csc-2-x	Equal(Add(1, Power(Cot(Divide(Pi, 6)), 2)), Power(Csc(Divide(Pi, 6)), 2))	True
+cot-1-over-10-times-pi	Cot(Multiply(Rational(1, 10), Pi))	Sqrt(Add(5, Multiply(2, Sqrt(5))))
+cot-3-over-10-times-pi	Cot(Multiply(Rational(3, 10), Pi))	Sqrt(Add(5, Multiply(-2, Sqrt(5))))
+cot-3-over-8-times-pi	Cot(Multiply(Rational(3, 8), Pi))	Add(-1, Sqrt(2))
+a-pole-sin-0-0	Cot(0)	ComplexInfinity
+not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	Cot(Divide(Pi, 2))	0
+cot-complexinfinity-is-indeterminate-for-the	Cot(ComplexInfinity)	Indeterminate

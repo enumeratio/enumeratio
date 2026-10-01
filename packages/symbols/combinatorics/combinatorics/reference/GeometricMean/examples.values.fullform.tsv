@@ -1,14 +1,14 @@
-id	in
-sqrt-2-cdot-8-4	GeometricMean[List[2, 8]]
-sqrt-3-1-cdot-2-cdot-4-2	GeometricMean[List[1, 2, 4]]
-geometricmean-of-equal-values	GeometricMean[List[7, 7, 7]]
-geometricmean-list-a-b-c-d	GeometricMean[List[a, b, c, d]]
-geometricmean-list-list-5-10-list-2-1-list-4-3	GeometricMean[List[List[5, 10], List[2, 1], List[4, 3], List[12, 15]]]
-an-exact-irrational-result	GeometricMean[List[2, 3]]
-sqrt-3-6	GeometricMean[List[1, 2, 3]]
-symbolic-data	GeometricMean[List[a, b]]
-geometricmean-list-1-2-3-4	GeometricMean[List[1, 2, 3, 4]]
-geometricmean-list-pi-exponentiale-2	GeometricMean[List[Pi, E, 2]]
-geometricmean-n-list-1-2-3-4-30	GeometricMean[N[List[1, 2, 3, 4], 30]]
-powerexpand-ln-geometricmean-list-a-b-c-d	PowerExpand[Log[GeometricMean[List[a, b, c, d]]]]
-powerexpand-1-over-ln-geometricmean-list-a-b-c-d	PowerExpand[Divide[1, Log[GeometricMean[List[a, b, c, d]]]]]
+id	in	out
+sqrt-2-cdot-8-4	GeometricMean(List(2, 8))	4
+sqrt-3-1-cdot-2-cdot-4-2	GeometricMean(List(1, 2, 4))	2
+geometricmean-of-equal-values	GeometricMean(List(7, 7, 7))	7
+geometricmean-list-a-b-c-d	GeometricMean(List(a, b, c, d))	Root(Multiply(a, b, c, d), 4)
+geometricmean-list-list-5-10-list-2-1-list-4-3	GeometricMean(List(List(5, 10), List(2, 1), List(4, 3), List(12, 15)))	List(Root(480, 4), Root(450, 4))
+an-exact-irrational-result	GeometricMean(List(2, 3))	Sqrt(6)
+sqrt-3-6	GeometricMean(List(1, 2, 3))	Root(6, 3)
+symbolic-data	GeometricMean(List(a, b))	Sqrt(Multiply(a, b))
+geometricmean-list-1-2-3-4	GeometricMean(List(1, 2, 3, 4))	Root(24, 4)
+geometricmean-list-pi-exponentiale-2	GeometricMean(List(Pi, ExponentialE, 2))	Root(Multiply(2, ExponentialE, Pi), 3)
+geometricmean-n-list-1-2-3-4-30	GeometricMean(N(List(1, 2, 3, 4), 30))	Root(24, 4)
+powerexpand-ln-geometricmean-list-a-b-c-d	PowerExpand(Ln(GeometricMean(List(a, b, c, d))))	Multiply(Rational(1, 4), Add(Ln(a), Ln(b), Ln(c), Ln(d)))
+powerexpand-1-over-ln-geometricmean-list-a-b-c-d	PowerExpand(Divide(1, Ln(GeometricMean(List(a, b, c, d)))))	Divide(4, Add(Ln(a), Ln(b), Ln(c), Ln(d)))

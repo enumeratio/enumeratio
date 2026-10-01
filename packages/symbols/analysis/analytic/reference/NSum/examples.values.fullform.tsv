@@ -1,8 +1,8 @@
-id	in
-zeta-2-via-euler-maclaurin	NSum[Power[n, -2], List[n, 1, Infinity]]
-the-alternating-harmonic-series	NSum[Divide[Power[-1, Plus[n, 1]], n], List[n, 1, Infinity]]
-e-minus-one	NSum[Divide[1, Factorial[n]], List[n, 1, Infinity]]
-a-finite-range-is-a-direct-sum	NSum[n, List[n, 1, 5]]
-a-much-more-slowly-convergent-power-law	NSum[Power[n, -1.1], List[n, 1, Infinity]]
-declines-the-harmonic-series	NSum[Divide[1, n], List[n, 1, Infinity]]
-declines-a-series-whose-terms-grow	NSum[n, List[n, 1, Infinity]]
+id	in	out
+zeta-2-via-euler-maclaurin	NSum(Power(n, -2), List(n, 1, PositiveInfinity))	1.6449340668482282
+the-alternating-harmonic-series	NSum(Divide(Power(-1, Add(n, 1)), n), List(n, 1, PositiveInfinity))	0.6931471805599454
+e-minus-one	NSum(Divide(1, Factorial(n)), List(n, 1, PositiveInfinity))	1.7182818284590455
+a-finite-range-is-a-direct-sum	NSum(n, List(n, 1, 5))	15
+a-much-more-slowly-convergent-power-law	NSum(Power(n, -1.1), List(n, 1, PositiveInfinity))	10.584448464950803
+declines-the-harmonic-series	NSum(Divide(1, n), List(n, 1, PositiveInfinity))	NSum(Divide(1, n), List(n, 1, PositiveInfinity))
+declines-a-series-whose-terms-grow	NSum(n, List(n, 1, PositiveInfinity))	NSum(n, List(n, 1, PositiveInfinity))

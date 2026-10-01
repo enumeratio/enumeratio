@@ -1,9 +1,9 @@
-id	in
-isnumeric-pi	NumericQ[Pi]
-isnumeric-literal	NumericQ[5]
-isnumeric-sin-sqrt-2	NumericQ[Sin[Sqrt[2]]]
-isnumeric-plain-symbol	NumericQ[x]
-isnumeric-sqrt-2	NumericQ[Sqrt[2]]
-isnumeric-expr	NumericQ[expr]
-isnumeric-exponentiale	NumericQ[E]
-ismatrix-m-isnumeric	
+id	in	out
+isnumeric-pi	IsNumeric(Pi)	True
+isnumeric-literal	IsNumeric(5)	True
+isnumeric-sin-sqrt-2	IsNumeric(Sin(Sqrt(2)))	True
+isnumeric-plain-symbol	IsNumeric(x)	False
+isnumeric-sqrt-2	IsNumeric(Sqrt(2))	True
+isnumeric-expr	IsNumeric(expr)	False
+isnumeric-exponentiale	IsNumeric(ExponentialE)	True
+ismatrix-m-isnumeric		

@@ -1,23 +1,23 @@
-id	in
-integerpart-2p4	IntegerPart[2.4]
-truncates-toward-0-unlike-floor	IntegerPart[-2.4]
-integerpart-7-over-2	IntegerPart[Rational[7, 2]]
-integerpart-neg-7-over-2	IntegerPart[Rational[-7, 2]]
-exact-numeric-arguments-stay-exact	IntegerPart[Pi]
-threads-element-wise-over-a-list	IntegerPart[List[2.5, -2.5]]
-complex-numbers-real-and-imaginary-parts	IntegerPart[Complex[2.5, 3.7]]
-integerpart-neg-5-over-4	IntegerPart[Rational[-5, 4]]
-integerpart-exponentiale-plus-pi	IntegerPart[Plus[E, Pi]]
-integerpart-0	IntegerPart[0]
-piecewiseexpand-integerpart-x-0-lt-x-lt-4	PiecewiseExpand[IntegerPart[x], Less[0, x, 4]]
-x-integerpart-x-fractionalpart-x	Equal[Plus[IntegerPart[Rational[-7, 2]], FractionalPart[Rational[-7, 2]]], Rational[-7, 2]]
-piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	PiecewiseExpand[IntegerPart[Plus[Power[x, 2], Sqrt[x]]], Less[0, x, 2]]
-integerpart-1	IntegerPart[1]
-integerpart-neg-1	IntegerPart[-1]
-integerpart-23-over-10	IntegerPart[Rational[23, 10]]
-integerpart-neg-3	IntegerPart[-3]
-integerpart-neg-pi	IntegerPart[Minus[Pi]]
-integerpart-neg-27-over-10	IntegerPart[Rational[-27, 10]]
-simplify-integerpart-x-plus-1-minus-integerpart	Simplify[Plus[IntegerPart[Plus[x, 1]], Times[-1, IntegerPart[x]]], GreaterEqual[x, 0]]
-piecewiseexpand-integerpart-x-plus-1-times-3-pow	PiecewiseExpand[IntegerPart[Plus[x, Times[1, Power[3, -1]], Power[IntegerPart[Plus[1, Times[-1, Times[x, Power[2, -1]]]]], 3]]], And[Element[x, Reals], Less[-2, x, 3]]]
-integerpart-1-plus-2pi-minus-1-plus-pi-pow-2	IntegerPart[Plus[1, Times[2, Pi], Minus[Power[Plus[1, Pi], 2]], Power[Pi, 2]]]
+id	in	out
+integerpart-2p4	IntegerPart(2.4)	2
+truncates-toward-0-unlike-floor	IntegerPart(-2.4)	-2
+integerpart-7-over-2	IntegerPart(Rational(7, 2))	3
+integerpart-neg-7-over-2	IntegerPart(Rational(-7, 2))	-3
+exact-numeric-arguments-stay-exact	IntegerPart(Pi)	3
+threads-element-wise-over-a-list	IntegerPart(List(2.5, -2.5))	List(2, -2)
+complex-numbers-real-and-imaginary-parts	IntegerPart(Complex(2.5, 3.7))	Complex(2.0, 3.0)
+integerpart-neg-5-over-4	IntegerPart(Rational(-5, 4))	-1
+integerpart-exponentiale-plus-pi	IntegerPart(Add(ExponentialE, Pi))	5
+integerpart-0	IntegerPart(0)	0
+piecewiseexpand-integerpart-x-0-lt-x-lt-4	PiecewiseExpand(IntegerPart(x), Less(0, x, 4))	IntegerPart(x)
+x-integerpart-x-fractionalpart-x	Equal(Add(IntegerPart(Rational(-7, 2)), FractionalPart(Rational(-7, 2))), Rational(-7, 2))	True
+piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	PiecewiseExpand(IntegerPart(Add(Power(x, 2), Sqrt(x))), Less(0, x, 2))	IntegerPart(Add(Power(x, 2), Sqrt(x)))
+integerpart-1	IntegerPart(1)	1
+integerpart-neg-1	IntegerPart(-1)	-1
+integerpart-23-over-10	IntegerPart(Rational(23, 10))	2
+integerpart-neg-3	IntegerPart(-3)	-3
+integerpart-neg-pi	IntegerPart(Negate(Pi))	-3
+integerpart-neg-27-over-10	IntegerPart(Rational(-27, 10))	-2
+simplify-integerpart-x-plus-1-minus-integerpart	Simplify(Add(IntegerPart(Add(x, 1)), Multiply(-1, IntegerPart(x))), GreaterEqual(x, 0))	Add(Negate(IntegerPart(x)), IntegerPart(Add(x, 1)))
+piecewiseexpand-integerpart-x-plus-1-times-3-pow	PiecewiseExpand(IntegerPart(Add(x, Multiply(1, Power(3, -1)), Power(IntegerPart(Add(1, Multiply(-1, Multiply(x, Power(2, -1))))), 3))), And(Element(x, RealNumbers), Less(-2, x, 3)))	IntegerPart(Add(x, Power(IntegerPart(Add(Multiply(Rational(-1, 2), x), 1)), 3), Rational(1, 3)))
+integerpart-1-plus-2pi-minus-1-plus-pi-pow-2	IntegerPart(Add(1, Multiply(2, Pi), Negate(Power(Add(1, Pi), 2)), Power(Pi, 2)))	0

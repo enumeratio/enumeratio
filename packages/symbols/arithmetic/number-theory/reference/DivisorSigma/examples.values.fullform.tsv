@@ -1,28 +1,28 @@
-id	in	back
-k-0-gives-the-number-of-divisors	DivisorSigma[0, 20]	
-k-1-gives-the-sum-of-divisors	DivisorSigma[1, 20]	
-divisorsigma-2-20	DivisorSigma[2, 20]	
-divisorsigma-2-6	DivisorSigma[2, 6]	
-a-negative-order-sums-reciprocal-powers-sigma-1	DivisorSigma[-1, 6]	
-large-integers	DivisorSigma[2, Power[10, 30]]	
-negative-k-1-frac-14-frac-1-25-frac-1-100	DivisorSigma[-2, 10]	
-rational-k-the-square-roots-of-the-divisors-of	DivisorSigma[Rational[1, 2], 12]	
-gaussian-integers-1-1-i-1-2i-3-i-over-divisors	DivisorSigma[1, Complex[3, 1]]	
-gaussianintegers-true-squares-of-1-1-i-2-3-3-3i	DivisorSigma[2, 6, Rule[GaussianIntegers, True]]	[DivisorSigma, 2, 6, [KeyValuePair, GaussianIntegers, True]]
-listable-in-n	DivisorSigma[2, List[1, 2, 3, 4, 5]]	
-symbolic-k-expands-over-the-divisors	DivisorSigma[k, 30]	
-6-is-a-perfect-number-sigma-1-6-2-times-6	DivisorSigma[1, 6]	
-28-is-the-next-perfect-number-sigma-1-28-2-times	DivisorSigma[1, 28]	
-filter-range-1-30-function-divisorsigma-1-1-eq-2	Select[Range[1, 30], Function[Equal[DivisorSigma[1, Slot[1]], Times[2, Slot[1]]]]]	[Filter, [Range, 1, 30], [Function, [Equal, [DivisorSigma, 1, _1], [Multiply, 2, _1]]]]
-filter-range-1-30-function-divisorsigma-1-1-lt-2	Select[Range[1, 30], Function[Less[DivisorSigma[1, Slot[1]], Times[2, Slot[1]]]]]	[Filter, [Range, 1, 30], [Function, [Less, [DivisorSigma, 1, _1], [Multiply, 2, _1]]]]
-filter-range-1-30-function-2-times-1-lt	Select[Range[1, 30], Function[Less[Times[2, Slot[1]], DivisorSigma[1, Slot[1]]]]]	[Filter, [Range, 1, 30], [Function, [Less, [Multiply, 2, _1], [DivisorSigma, 1, _1]]]]
-nestlist-function-neg-1-plus-divisorsigma-1-1-1	NestList[Function[Plus[Minus[Slot[1]], DivisorSigma[1, Slot[1]]]], 276, 20]	[NestList, [Function, [Add, [Negate, _1], [DivisorSigma, 1, _1]]], 276, 20]
-multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n	Equal[Times[DivisorSigma[1, 9], DivisorSigma[1, 8]], DivisorSigma[1, 72]]	
-divisorsigma-5-100	DivisorSigma[5, 100]	
-divisorsigma-3-18-times-divisorsigma-3-25-eq	Equal[Times[DivisorSigma[3, 18], DivisorSigma[3, 25]], DivisorSigma[3, 450]]	
-divisorsigma-neg-1-28	DivisorSigma[-1, 28]	
-divisorsigma-0-1	DivisorSigma[0, 1]	
-divisorsigma-0-2	DivisorSigma[0, 2]	
-divisorsigma-0-3	DivisorSigma[0, 3]	
-map-function-divisorsigma-1-1-lt-2-times-1-1	Map[Function[Less[DivisorSigma[1, Slot[1]], Times[2, Slot[1]]]], Select[Range[1, 100], PrimePowerQ]]	[Map, [Function, [Less, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], [Filter, [Range, 1, 100], IsPrimePower]]
-the-trivial-base-case	DivisorSigma[1, 1]	
+id	in	out
+k-0-gives-the-number-of-divisors	DivisorSigma(0, 20)	6
+k-1-gives-the-sum-of-divisors	DivisorSigma(1, 20)	42
+divisorsigma-2-20	DivisorSigma(2, 20)	546
+divisorsigma-2-6	DivisorSigma(2, 6)	50
+a-negative-order-sums-reciprocal-powers-sigma-1	DivisorSigma(-1, 6)	2
+large-integers	DivisorSigma(2, Power(10, 30))	1388888888888888888587721618754026546109040824596043713112451
+negative-k-1-frac-14-frac-1-25-frac-1-100	DivisorSigma(-2, 10)	Rational(13, 10)
+rational-k-the-square-roots-of-the-divisors-of	DivisorSigma(Rational(1, 2), 12)	Add(3, Sqrt(2), Sqrt(6), Multiply(3, Sqrt(3)))
+gaussian-integers-1-1-i-1-2i-3-i-over-divisors	DivisorSigma(1, Complex(3, 1))	Complex(6, 4)
+gaussianintegers-true-squares-of-1-1-i-2-3-3-3i	DivisorSigma(2, 6, KeyValuePair(Over, GaussianIntegers))	Complex(50, 20)
+listable-in-n	DivisorSigma(2, List(1, 2, 3, 4, 5))	List(1, 5, 10, 21, 26)
+symbolic-k-expands-over-the-divisors	DivisorSigma(k, 30)	Add(Power(2, k), Power(3, k), Power(5, k), Power(6, k), Power(10, k), Power(15, k), Power(30, k), 1)
+6-is-a-perfect-number-sigma-1-6-2-times-6	DivisorSigma(1, 6)	12
+28-is-the-next-perfect-number-sigma-1-28-2-times	DivisorSigma(1, 28)	56
+filter-range-1-30-function-divisorsigma-1-1-eq-2	Filter(Range(1, 30), Function(Block(Equal(DivisorSigma(1, _1), Multiply(2, _1))), _1))	List(6, 28)
+filter-range-1-30-function-divisorsigma-1-1-lt-2	Filter(Range(1, 30), Function(Block(Less(DivisorSigma(1, _1), Multiply(2, _1))), _1))	List(1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 21, 22, 23, 25, 26, 27, 29)
+filter-range-1-30-function-2-times-1-lt	Filter(Range(1, 30), Function(Block(Less(Multiply(2, _1), DivisorSigma(1, _1))), _1))	List(12, 18, 20, 24, 30)
+nestlist-function-neg-1-plus-divisorsigma-1-1-1	NestList(Function(Block(Add(Negate(_1), DivisorSigma(1, _1))), _1), 276, 20)	List(276, 396, 696, 1104, 1872, 3770, 3790, 3050, 2716, 2772, 5964, 10164, 19628, 19684, 22876, 26404, 30044, 33796, 38780, 54628, 54684)
+multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n	Equal(Multiply(DivisorSigma(1, 9), DivisorSigma(1, 8)), DivisorSigma(1, 72))	True
+divisorsigma-5-100	DivisorSigma(5, 100)	10325569807
+divisorsigma-3-18-times-divisorsigma-3-25-eq	Equal(Multiply(DivisorSigma(3, 18), DivisorSigma(3, 25)), DivisorSigma(3, 450))	True
+divisorsigma-neg-1-28	DivisorSigma(-1, 28)	2
+divisorsigma-0-1	DivisorSigma(0, 1)	1
+divisorsigma-0-2	DivisorSigma(0, 2)	2
+divisorsigma-0-3	DivisorSigma(0, 3)	2
+map-function-divisorsigma-1-1-lt-2-times-1-1	Map(Function(Block(Less(DivisorSigma(1, _1), Multiply(2, _1))), _1), Filter(Range(1, 100), IsPrimePower))	List(True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True)
+the-trivial-base-case	DivisorSigma(1, 1)	1

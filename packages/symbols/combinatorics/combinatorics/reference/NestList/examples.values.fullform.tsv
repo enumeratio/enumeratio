@@ -1,22 +1,22 @@
-id	in	back
-nestlist-f-x-3	NestList[f, x, 3]	
-powers-of-2	NestList[Function[Times[2, Slot[1]]], 1, 5]	
-nestlist-f-x-4	NestList[f, x, 4]	
-nestlist-cos-1-10	NestList[Cos, 1, 10]	
+id	in	out
+nestlist-f-x-3	NestList(f, x, 3)	List(x, f(x), f(f(x)), f(f(f(x))))
+powers-of-2	NestList(Function(Multiply(2, _1)), 1, 5)	List(1, 2, 4, 8, 16, 32)
+nestlist-f-x-4	NestList(f, x, 4)	List(x, f(x), f(f(x)), f(f(f(x))), f(f(f(f(x)))))
+nestlist-cos-1-10	NestList(Cos, 1, 10)	List(1, Cos(1), Cos(Cos(1)), Cos(Cos(Cos(1))), Cos(Cos(Cos(Cos(1)))), Cos(Cos(Cos(Cos(Cos(1))))), Cos(Cos(Cos(Cos(Cos(Cos(1)))))), Cos(Cos(Cos(Cos(Cos(Cos(Cos(1))))))), Cos(Cos(Cos(Cos(Cos(Cos(Cos(Cos(1)))))))), Cos(Cos(Cos(Cos(Cos(Cos(Cos(Cos(Cos(1))))))))), Cos(Cos(Cos(Cos(Cos(Cos(Cos(Cos(Cos(Cos(1)))))))))))
 nestlist-function-1-plus-1-pow-2-1-x-3		
-zero-steps-just-the-seed	NestList[f, x, 0]	
-nestlist-sqrt-100-4	NestList[Sqrt, 100, 4]	
-3-is-a-primitive-root-mod-7-its-powers-visit	NestList[Function[Mod[Times[3, Slot[1]], 7]], 1, 6]	
-newton-iterates-converging-to-sqrt-2	NestList[Function[Divide[Plus[Slot[1], Divide[2, Slot[1]]], 2]], 1, 3]	
-nestlist-function-2-times-1-1-1-10	NestList[Function[Times[2, Slot[1]]], 1, 10]	[NestList, [Function, [Multiply, 2, _1]], 1, 10]
-nestlist-function-1-plus-1-1-0-10	NestList[Function[Plus[Slot[1], 1]], 0, 10]	[NestList, [Function, [Add, _1, 1]], 0, 10]
-nestlist-function-1-pow-2-1-2-6	NestList[Function[Power[Slot[1], 2]], 2, 6]	[NestList, [Function, [Power, _1, 2]], 2, 6]
-nestlist-function-1-over-2-times-1-plus-2-times	NestList[Function[Times[Rational[1, 2], Plus[Slot[1], Times[2, Divide[1, Slot[1]]]]]], 1, 5]	[NestList, [Function, [Multiply, [Rational, 1, 2], [Add, _1, [Multiply, 2, [Divide, 1, _1]]]]], 1, 5]
-nestlist-function-4-times-1-times-neg-1-plus-1-1	NestList[Function[Times[4, Slot[1], Plus[Minus[Slot[1]], 1]]], Rational[1, 3], 5]	[NestList, [Function, [Multiply, 4, _1, [Add, [Negate, _1], 1]]], [Rational, 1, 3], 5]
-nestlist-function-59-times-1-mod-101-1-1-15	NestList[Function[Mod[Times[59, Slot[1]], 101]], 1, 15]	[NestList, [Function, [Mod, [Multiply, 59, _1], 101]], 1, 15]
+zero-steps-just-the-seed	NestList(f, x, 0)	List(x)
+nestlist-sqrt-100-4	NestList(Sqrt, 100, 4)	List(100, 10, Sqrt(10), Sqrt(Sqrt(10)), Sqrt(Sqrt(Sqrt(10))))
+3-is-a-primitive-root-mod-7-its-powers-visit	NestList(Function(Mod(Multiply(3, _1), 7)), 1, 6)	List(1, 3, 2, 6, 4, 5, 1)
+newton-iterates-converging-to-sqrt-2	NestList(Function(Divide(Add(_1, Divide(2, _1)), 2)), 1, 3)	List(1, Rational(3, 2), Rational(17, 12), Rational(577, 408))
+nestlist-function-2-times-1-1-1-10	NestList(Function(Block(Multiply(2, _1)), _1), 1, 10)	List(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024)
+nestlist-function-1-plus-1-1-0-10	NestList(Function(Block(Add(_1, 1)), _1), 0, 10)	List(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+nestlist-function-1-pow-2-1-2-6	NestList(Function(Block(Power(_1, 2)), _1), 2, 6)	List(2, 4, 16, 256, 65536, 4294967296, 18446744073709551616)
+nestlist-function-1-over-2-times-1-plus-2-times	NestList(Function(Block(Multiply(Rational(1, 2), Add(_1, Multiply(2, Divide(1, _1))))), _1), 1, 5)	List(1, Rational(3, 2), Rational(17, 12), Rational(577, 408), Rational(665857, 470832), Rational(886731088897, 627013566048))
+nestlist-function-4-times-1-times-neg-1-plus-1-1	NestList(Function(Block(Multiply(4, _1, Add(Negate(_1), 1))), _1), Rational(1, 3), 5)	List(Rational(1, 3), Rational(8, 9), Rational(32, 81), Rational(6272, 6561), Rational(7250432, 43046721), Rational(1038154236987392, 1853020188851841))
+nestlist-function-59-times-1-mod-101-1-1-15	NestList(Function(Block(Mod(Multiply(59, _1), 101)), _1), 1, 15)	List(1, 59, 47, 46, 88, 41, 96, 8, 68, 73, 65, 98, 25, 61, 64, 39)
 nestlist-function-d-function-1-x-x-1-x-pow-n-3		
 nestlist-function-symbol-x-1-list-a-5		
 nestlist-function-1-over-1-plus-1-1-x-5		
-nestlist-function-floor-1-over-2-times-1-plus-1	NestList[Function[Plus[Floor[Times[Rational[1, 2], Slot[1]]], 1]], 1000, 15]	[NestList, [Function, [Add, [Floor, [Multiply, [Rational, 1, 2], _1]], 1]], 1000, 15]
-nestlist-function-x-pow-1-1-x-6	NestList[Function[Power[x, Slot[1]]], x, 6]	[NestList, [Function, [Power, x, _1]], x, 6]
-nestlist-function-1-pow-1-1-x-4	NestList[Function[Power[Slot[1], Slot[1]]], x, 4]	[NestList, [Function, [Power, _1, _1]], x, 4]
+nestlist-function-floor-1-over-2-times-1-plus-1	NestList(Function(Block(Add(Floor(Multiply(Rational(1, 2), _1)), 1)), _1), 1000, 15)	List(1000, 501, 251, 126, 64, 33, 17, 9, 5, 3, 2, 2, 2, 2, 2, 2)
+nestlist-function-x-pow-1-1-x-6	NestList(Function(Block(Power(x, _1)), _1), x, 6)	List(x, Power(x, x), Power(x, Power(x, x)), Power(x, Power(x, Power(x, x))), Power(x, Power(x, Power(x, Power(x, x)))), Power(x, Power(x, Power(x, Power(x, Power(x, x))))), Power(x, Power(x, Power(x, Power(x, Power(x, Power(x, x)))))))
+nestlist-function-1-pow-1-1-x-4	NestList(Function(Block(Power(_1, _1)), _1), x, 4)	List(x, Power(x, x), Power(Power(x, x), Power(x, x)), Power(Power(Power(x, x), Power(x, x)), Power(Power(x, x), Power(x, x))), Power(Power(Power(Power(x, x), Power(x, x)), Power(Power(x, x), Power(x, x))), Power(Power(Power(x, x), Power(x, x)), Power(Power(x, x), Power(x, x)))))

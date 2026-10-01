@@ -1,10 +1,10 @@
-id	in
-n-elliptice-1-over-3-50	N[EllipticE[Rational[1, 3]], 50]
-elliptice-list-list-1-0-list-0-1	EllipticE[List[List[1, 0], List[0, 1]]]
-matrixfunction-elliptice-list-list-1-0-list-0-1	MatrixFunction[EllipticE, List[List[1, 0], List[0, 1]]]
-list-elliptice-0-elliptice-1	List[EllipticE[0], EllipticE[1]]
-list-elliptice-positiveinfinity-elliptice	List[EllipticE[Infinity], EllipticE[ComplexInfinity]]
-n-elliptice-2-over-3-2-50	
-elliptice-0-1	EllipticE[0, 1]
-elliptice-0-0	EllipticE[0, 0]
-elliptice-1	EllipticE[1]
+id	in	out
+n-elliptice-1-over-3-50	N(EllipticE(Rational(1, 3)), 50)	1.4303152571722197239225284145322837302944509074089
+elliptice-list-list-1-0-list-0-1	EllipticE(List(List(1, 0), List(0, 1)))	List(List(1, EllipticE(0)), List(EllipticE(0), 1))
+matrixfunction-elliptice-list-list-1-0-list-0-1	MatrixFunction(EllipticE, List(List(1, 0), List(0, 1)))	List(List(1, 0), List(0, 1))
+list-elliptice-0-elliptice-1	List(EllipticE(0), EllipticE(1))	List(EllipticE(0), 1)
+list-elliptice-positiveinfinity-elliptice	List(EllipticE(PositiveInfinity), EllipticE(ComplexInfinity))	List(ComplexInfinity, ComplexInfinity)
+n-elliptice-2-over-3-2-50		
+elliptice-0-1	EllipticE(0, 1)	0
+elliptice-0-0	EllipticE(0, 0)	0
+elliptice-1	EllipticE(1)	1

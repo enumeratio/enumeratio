@@ -1,17 +1,17 @@
-id	in	back
-commonest-list-1-1-2-2-3	Commonest[List[1, 1, 2, 2, 3]]	
-with-a-unique-mode-commonest-returns-a-single	Commonest[List[1, 2, 2, 3]]	
-every-element-tied-for-most-frequent-symbols-and	Commonest[List[b, a, c, 2, a, b, 1, 2]]	
-a-single-most-frequent-element-still-comes-back	Commonest[List[1, 2, 2, 3, 3, 3, 4]]	
+id	in	out
+commonest-list-1-1-2-2-3	Commonest(List(1, 1, 2, 2, 3))	List(1, 2)
+with-a-unique-mode-commonest-returns-a-single	Commonest(List(1, 2, 2, 3))	List(2)
+every-element-tied-for-most-frequent-symbols-and	Commonest(List(b, a, c, 2, a, b, 1, 2))	List(b, a, 2)
+a-single-most-frequent-element-still-comes-back	Commonest(List(1, 2, 2, 3, 3, 3, 4))	List(3)
 commonest-list-b-a-c-2-a-b-1-2-4		
 commonest-list-b-a-c-2-a-b-1-2-upto-6		
-all-distinct-all-tie	Commonest[List[1, 2, 3]]	
-the-n-commonest-most-frequent-first	Commonest[List[1, 2, 2, 3, 3, 3, 4], 2]	
-commonest-list-a-exponentiale-sin-y-exponentiale	Commonest[List[a, E, Sin[y], E, a, 7]]	
-commonest-n-list-1-2-2-3-3-3-4	Commonest[N[List[1, 2, 2, 3, 3, 3, 4]]]	
-commonest-n-list-1-2-2-3-3-3-4-30	Commonest[N[List[1, 2, 2, 3, 3, 3, 4], 30]]	
+all-distinct-all-tie	Commonest(List(1, 2, 3))	List(1, 2, 3)
+the-n-commonest-most-frequent-first	Commonest(List(1, 2, 2, 3, 3, 3, 4), 2)	List(3, 2)
+commonest-list-a-exponentiale-sin-y-exponentiale	Commonest(List(a, ExponentialE, Sin(y), ExponentialE, a, 7))	List(a, ExponentialE)
+commonest-n-list-1-2-2-3-3-3-4	Commonest(N(List(1, 2, 2, 3, 3, 3, 4)))	List(3)
+commonest-n-list-1-2-2-3-3-3-4-30	Commonest(N(List(1, 2, 2, 3, 3, 3, 4), 30))	List(3)
 commonest-data		
 commonest-heights		
-with-a-unique-mode-commonest-c-mode-c-see-mode	First[Commonest[List[1, 2, 2, 3]]]	
-without-a-tie-the-single-commonest-element-is	Equal[First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]], First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]]]	[Equal, [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]], [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]]]
-a-frequency-tie-between-4-and-1-is-broken-by	Commonest[List[4, 1, 1, 4], 1]	
+with-a-unique-mode-commonest-c-mode-c-see-mode	First(Commonest(List(1, 2, 2, 3)))	2
+without-a-tie-the-single-commonest-element-is	Equal(First(Commonest(List(1, 2, 2, 3, 3, 3, 4))), Mode(List(1, 2, 2, 3, 3, 3, 4)))	True
+a-frequency-tie-between-4-and-1-is-broken-by	Commonest(List(4, 1, 1, 4), 1)	List(4)

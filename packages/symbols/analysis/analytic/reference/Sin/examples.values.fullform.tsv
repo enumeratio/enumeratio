@@ -1,84 +1,84 @@
-id	in	back
-sin-0	Sin[0]	
-exact-value-at-a-special-angle	Sin[Divide[Pi, 6]]	
-sin-pi-over-4	Sin[Divide[Pi, 4]]	
-sin-pi-over-3	Sin[Divide[Pi, 3]]	
-sin-pi-over-2	Sin[Divide[Pi, 2]]	
-sin-pi	Sin[Pi]	
-degrees-d-converts-to-radians-so-sin-60-circ-is	Sin[Times[60, Degree]]	[Sin, [Multiply, 60, Degree]]
-a-machine-precision-argument-evaluates	Sin[1.2]	
-a-huge-10-100-argument	N[Sin[Power[10, 100]]]	
-a-huge-3-200-argument	N[Sin[Power[3, 200]]]	
-a-huge-neg-7-60-argument	N[Sin[Minus[Power[7, 60]]]]	
-a-huge-10-80-plus-1-over-3-argument	N[Sin[Divide[Plus[Power[10, 80], 1], 3]]]	
-sin-1-under-n	N[Sin[1]]	
-n-of-an-exact-argument-gives-an-arbitrary	N[Sin[Rational[6, 5]]]	
-evaluates-at-a-complex-argument	Sin[Complex[2.5, 1]]	
-threads-element-wise-over-a-matrix	Sin[List[List[Times[5, Divide[Pi, 6]], 0], List[Times[3, Divide[Pi, 2]], Minus[Divide[Pi, 2]]]]]	
-exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	Sin[Divide[Pi, 12]]	
-sin-pi-8-frac-sqrt-2-sqrt-2-2	Sin[Divide[Pi, 8]]	
-sin-pi-10-frac-sqrt-5-1-4	Sin[Divide[Pi, 10]]	
-sin-5-pi-12-frac-sqrt-6-sqrt-2-4	Sin[Times[Rational[5, 12], Pi]]	
-sin-3-pi-8-frac-sqrt-2-sqrt-2-2	Sin[Times[Rational[3, 8], Pi]]	
-large-rational-multiples-of-pi-are-reduced	Sin[Times[Rational[100, 3], Pi]]	
-any-integer-multiple-of-pi-is-a-zero-of-sine	Sin[Times[1000001, Pi]]	
-sin-negate-pi-is-also-zero	Sin[Minus[Pi]]	
-sin-4-pi-is-zero	Sin[Times[4, Pi]]	
-a-full-turn-shift-of-a-symbolic-argument-doesn-t	Sin[Plus[x, Times[2, Pi]]]	
-sin-i-pi-2-i-sinh-pi-2-exactly	Sin[Times[I, Divide[Pi, 2]]]	
-n-decimalizes-sin-i-pi-2-not-just-the-exact-form	N[Sin[Times[I, Divide[Pi, 2]]]]	
-interval-arithmetic-the-image-of-pi-6-pi-6-is	Sin[Interval[List[Minus[Divide[Pi, 6]], Divide[Pi, 6]]]]	
-the-image-of-the-whole-real-line-is-1-1	Sin[Interval[List[-Infinity, Infinity]]]	
-wolfram-answers-sin-infty-with-the-range-of-its	Sin[Infinity]	
-uncertainty-propagation-sin-2-pm-0-01-approx-0	Sin[Around[2, 0.01]]	
-an-imaginary-argument-rewrites-to-sinh-sin-ix-i	Sin[Times[I, x]]	
-oddness-pulls-the-sign-out-of-a-symbolic	Sin[Minus[x]]	
-a-half-period-shift-reduces-sin-x-pi-sin-x	Sin[Plus[x, Pi]]	
-sin-arcsin-x-x-for-every-x	Sin[ArcSin[x]]	
-sin-arcsin-2-2-past-the-real-domain	Sin[ArcSin[2]]	
-sin-arcsin-of-a-complex-argument	Sin[ArcSin[Complex[1, 2]]]	
-sin-arccos-x-sqrt-1-x-2	Sin[ArcCos[x]]	
-sin-arctan-x-frac-x-sqrt-1-x-2	Sin[ArcTan[x]]	
-derivative-frac-d-dx-sin-x-cos-x	D[Sin[x], x]	
-second-derivative	D[Sin[x], x, x]	
-antiderivative	Integrate[Sin[x], x]	
-area-under-one-arch-int-0-pi-sin-x-dx-2	Integrate[Sin[x], List[x, 0, Pi]]	
-int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	Integrate[Power[Sin[x], 3], x]	
-taylor-series-about-0-only-odd-powers-appear	Series[Sin[x], x, 0, 10]	
-the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	Limit[Divide[Sin[x], x], Rule[x, 0]]	[Limit, [Divide, [Sin, x], x], [KeyValuePair, x, 0]]
-to-30-significant-digits-every-one-correctly	N[Sin[1], 30]	
-a-huge-24-40-argument-reduces-exactly-mod-2-pi	N[Sin[Power[24, 40]]]	
-n-sin-6-over-5-50	N[Sin[Rational[6, 5]], 50]	
-functiondomain-sin-x-x	FunctionDomain[Sin[x], x]	
-functionrange-sin-x-x-y	FunctionRange[Sin[x], x, y]	
-functionperiod-sin-x-x	FunctionPeriod[Sin[x], x]	
-functionanalytic-sin-x-x	FunctionAnalytic[Sin[x], x]	
-functioninjective-sin-x-x	FunctionInjective[Sin[x], x]	
-functionsurjective-sin-x-x	FunctionSurjective[Sin[x], x]	
-functionsingularities-sin-x-x	FunctionSingularities[Sin[x], x]	
-functiondiscontinuities-sin-x-x	FunctionDiscontinuities[Sin[x], x]	
-matrixfunction-function-sin-1-1-list-list-5-over	MatrixFunction[Function[Sin[Slot[1]]], List[List[Times[Rational[5, 6], Pi], 0], List[Times[Rational[3, 2], Pi], Times[Rational[-1, 2], Pi]]]]	[MatrixFunction, [Function, [Sin, _1]], [List, [List, [Multiply, [Rational, 5, 6], Pi], 0], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 2], Pi]]]]
+id	in	out
+sin-0	Sin(0)	0
+exact-value-at-a-special-angle	Sin(Divide(Pi, 6))	Rational(1, 2)
+sin-pi-over-4	Sin(Divide(Pi, 4))	Divide(Sqrt(2), 2)
+sin-pi-over-3	Sin(Divide(Pi, 3))	Divide(Sqrt(3), 2)
+sin-pi-over-2	Sin(Divide(Pi, 2))	1
+sin-pi	Sin(Pi)	0
+degrees-d-converts-to-radians-so-sin-60-circ-is	Sin(Degrees(60))	Divide(Sqrt(3), 2)
+a-machine-precision-argument-evaluates	Sin(1.2)	0.93203908596722634967
+a-huge-10-100-argument	N(Sin(Power(10, 100)))	-0.37237612366127668826208
+a-huge-3-200-argument	N(Sin(Power(3, 200)))	-0.93873170860707491963714
+a-huge-neg-7-60-argument	N(Sin(Negate(Power(7, 60))))	0.36512160040235555007603
+a-huge-10-80-plus-1-over-3-argument	N(Sin(Divide(Add(Power(10, 80), 1), 3)))	0.9853483014981159217555
+sin-1-under-n	N(Sin(1))	0.8414709848078965
+n-of-an-exact-argument-gives-an-arbitrary	N(Sin(Rational(6, 5)))	0.93203908596722634967
+evaluates-at-a-complex-argument	Sin(Complex(2.5, 1))	Complex(0.9234907760431731, -0.9415049332708672)
+threads-element-wise-over-a-matrix	Sin(List(List(Multiply(5, Divide(Pi, 6)), 0), List(Multiply(3, Divide(Pi, 2)), Negate(Divide(Pi, 2)))))	List(List(Rational(1, 2), 0), List(-1, -1))
+exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4	Sin(Divide(Pi, 12))	Add(Negate(Divide(Sqrt(2), 4)), Divide(Sqrt(6), 4))
+sin-pi-8-frac-sqrt-2-sqrt-2-2	Sin(Divide(Pi, 8))	Multiply(Rational(1, 2), Sqrt(Add(2, Negate(Sqrt(2)))))
+sin-pi-10-frac-sqrt-5-1-4	Sin(Divide(Pi, 10))	Add(Rational(-1, 4), Divide(Sqrt(5), 4))
+sin-5-pi-12-frac-sqrt-6-sqrt-2-4	Sin(Multiply(Rational(5, 12), Pi))	Add(Divide(Sqrt(2), 4), Divide(Sqrt(6), 4))
+sin-3-pi-8-frac-sqrt-2-sqrt-2-2	Sin(Multiply(Rational(3, 8), Pi))	Multiply(Rational(1, 2), Sqrt(Add(2, Sqrt(2))))
+large-rational-multiples-of-pi-are-reduced	Sin(Multiply(Rational(100, 3), Pi))	Negate(Divide(Sqrt(3), 2))
+any-integer-multiple-of-pi-is-a-zero-of-sine	Sin(Multiply(1000001, Pi))	0
+sin-negate-pi-is-also-zero	Sin(Negate(Pi))	0
+sin-4-pi-is-zero	Sin(Multiply(4, Pi))	0
+a-full-turn-shift-of-a-symbolic-argument-doesn-t	Sin(Add(x, Multiply(2, Pi)))	Sin(x)
+sin-i-pi-2-i-sinh-pi-2-exactly	Sin(Multiply(ImaginaryUnit, Divide(Pi, 2)))	Multiply(Complex(0, 1), Sinh(Multiply(Rational(1, 2), Pi)))
+n-decimalizes-sin-i-pi-2-not-just-the-exact-form	N(Sin(Multiply(ImaginaryUnit, Divide(Pi, 2))))	Complex(0, 2.3012989023072947)
+interval-arithmetic-the-image-of-pi-6-pi-6-is	Sin(Interval(Negate(Divide(Pi, 6)), Divide(Pi, 6)))	Interval(Rational(-1, 2), Rational(1, 2))
+the-image-of-the-whole-real-line-is-1-1	Sin(Interval(NegativeInfinity, PositiveInfinity))	Interval(-1, 1)
+wolfram-answers-sin-infty-with-the-range-of-its	Sin(PositiveInfinity)	Interval(-1, 1)
+uncertainty-propagation-sin-2-pm-0-01-approx-0	Sin(Around(2, 0.01))	Around(0.9092974268256817, 0.004161468365471424)
+an-imaginary-argument-rewrites-to-sinh-sin-ix-i	Sin(Multiply(ImaginaryUnit, x))	Multiply(Complex(0, 1), Sinh(x))
+oddness-pulls-the-sign-out-of-a-symbolic	Sin(Negate(x))	Negate(Sin(x))
+a-half-period-shift-reduces-sin-x-pi-sin-x	Sin(Add(x, Pi))	Negate(Sin(x))
+sin-arcsin-x-x-for-every-x	Sin(Arcsin(x))	x
+sin-arcsin-2-2-past-the-real-domain	Sin(Arcsin(2))	2
+sin-arcsin-of-a-complex-argument	Sin(Arcsin(Complex(1, 2)))	Complex(1, 2)
+sin-arccos-x-sqrt-1-x-2	Sin(Arccos(x))	Sqrt(Add(Negate(Power(x, 2)), 1))
+sin-arctan-x-frac-x-sqrt-1-x-2	Sin(Arctan(x))	Divide(x, Sqrt(Add(Power(x, 2), 1)))
+derivative-frac-d-dx-sin-x-cos-x	D(Sin(x), x)	Cos(x)
+second-derivative	D(Sin(x), x, x)	Negate(Sin(x))
+antiderivative	Integrate(Sin(x), x)	Negate(Cos(x))
+area-under-one-arch-int-0-pi-sin-x-dx-2	Integrate(Sin(x), Limits(x, 0, Pi))	2
+int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers	Integrate(Power(Sin(x), 3), x)	Add(Multiply(Rational(1, 3), Power(Cos(x), 3)), Negate(Cos(x)))
+taylor-series-about-0-only-odd-powers-appear	Series(Sin(x), x, 0, 10)	Add(Multiply(Rational(1, 362880), Power(x, 9)), Multiply(Rational(-1, 5040), Power(x, 7)), Multiply(Rational(1, 120), Power(x, 5)), Multiply(Rational(-1, 6), Power(x, 3)), x, BigO(Power(x, 11)))
+the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1	Limit(Function(Divide(Sin(x), x), x), 0)	1
+to-30-significant-digits-every-one-correctly	N(Sin(1), 30)	0.84147098480789650665250232163
+a-huge-24-40-argument-reduces-exactly-mod-2-pi	N(Sin(Power(24, 40)))	0.400083152719766047071
+n-sin-6-over-5-50	N(Sin(Rational(6, 5)), 50)	0.93203908596722634967013443549482599541507058820873
+functiondomain-sin-x-x	FunctionDomain(Sin(x), x)	True
+functionrange-sin-x-x-y	FunctionRange(Sin(x), x, y)	LessEqual(-1, y, 1)
+functionperiod-sin-x-x	FunctionPeriod(Sin(x), x)	Multiply(2, Pi)
+functionanalytic-sin-x-x	FunctionAnalytic(Sin(x), x)	True
+functioninjective-sin-x-x	FunctionInjective(Sin(x), x)	False
+functionsurjective-sin-x-x	FunctionSurjective(Sin(x), x)	False
+functionsingularities-sin-x-x	FunctionSingularities(Sin(x), x)	False
+functiondiscontinuities-sin-x-x	FunctionDiscontinuities(Sin(x), x)	False
+matrixfunction-function-sin-1-1-list-list-5-over	MatrixFunction(Function(Block(Sin(_1)), _1), List(List(Multiply(Rational(5, 6), Pi), 0), List(Multiply(Rational(3, 2), Pi), Multiply(Rational(-1, 2), Pi))))	List(List(Rational(1, 2), 0), List(Rational(27, 16), -1))
 assuming-m-in-integers-refine-sin-pi-times-m		
 assuming-m-in-integers-fullsimplify-sin-pi-times		
-threads-element-wise-over-a-list	Sin[List[0, Divide[Pi, 2], Pi]]	
-degrees-d-converts-a-degree-measure-to-radians	Sin[Times[30, Degree]]	[Sin, [Multiply, 30, Degree]]
-pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]	
-odd-function-sin-x-sin-x	Equal[Sin[Minus[Divide[Pi, 6]]], Minus[Sin[Divide[Pi, 6]]]]	
-period-2-pi-adding-a-full-turn-doesn-t-change	Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]	
-double-angle-formula-via-trigexpand	TrigExpand[Sin[Times[2, x]]]	
-angle-addition-formula-via-trigexpand	TrigExpand[Sin[Plus[x, y]]]	
-triple-angle-formula	TrigExpand[Sin[Times[3, x]]]	
-power-reduction-sin-2-x-frac-1-cos-2x-2	TrigReduce[Power[Sin[x], 2]]	
-euler-s-formula-sin-x-frac-e-ix-e-ix-2i	TrigToExp[Sin[x]]	
-simplify-knows-the-pythagorean-identity	Simplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]	
-the-same-through-fullsimplify	FullSimplify[Plus[Power[Sin[x], 2], Power[Cos[x], 2]]]	
-sin-3-over-10-times-pi	Sin[Times[Rational[3, 10], Pi]]	
-1-radian-isn-t-a-recognized-special-angle-so	Sin[1]	
-sin-2-a-generic-argument-stays-symbolic	Sin[2]	
-sin-x-plus-y-stays-symbolic	Sin[Plus[x, y]]	
-pi-15-has-a-radical-form-but-like-wolfram-s	Sin[Divide[Pi, 15]]	
-a-huge-exact-argument-is-reduced-modulo-2-pi	N[Sin[Power[10, 20]]]	
-an-even-huger-argument-11-38	N[Sin[Power[11, 38]]]	
-sin-complexinfinity-is-indeterminate-off-the	Sin[ComplexInfinity]	
-the-special-angle-table-reaches-past-30-45-60	Sin[Divide[Pi, 5]]	
-functionexpand-gives-the-nested-radical-form	FunctionExpand[Sin[Divide[Pi, 15]]]	
+threads-element-wise-over-a-list	Sin(List(0, Divide(Pi, 2), Pi))	List(0, 1, 0)
+degrees-d-converts-a-degree-measure-to-radians	Sin(Degrees(30))	Rational(1, 2)
+pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x	Add(Power(Sin(Divide(Pi, 6)), 2), Power(Cos(Divide(Pi, 6)), 2))	1
+odd-function-sin-x-sin-x	Equal(Sin(Negate(Divide(Pi, 6))), Negate(Sin(Divide(Pi, 6))))	True
+period-2-pi-adding-a-full-turn-doesn-t-change	Sin(Add(Divide(Pi, 6), Multiply(2, Pi)))	Rational(1, 2)
+double-angle-formula-via-trigexpand	TrigExpand(Sin(Multiply(2, x)))	Multiply(2, Sin(x), Cos(x))
+angle-addition-formula-via-trigexpand	TrigExpand(Sin(Add(x, y)))	Add(Multiply(Sin(y), Cos(x)), Multiply(Sin(x), Cos(y)))
+triple-angle-formula	TrigExpand(Sin(Multiply(3, x)))	Add(Negate(Power(Sin(x), 3)), Multiply(3, Sin(x), Power(Cos(x), 2)))
+power-reduction-sin-2-x-frac-1-cos-2x-2	TrigReduce(Power(Sin(x), 2))	Add(Multiply(Rational(-1, 2), Cos(Multiply(2, x))), Rational(1, 2))
+euler-s-formula-sin-x-frac-e-ix-e-ix-2i	TrigToExp(Sin(x))	Add(Multiply(Complex(0, Rational(-1, 2)), Power(ExponentialE, Multiply(Complex(0, 1), x))), Multiply(Complex(0, Rational(1, 2)), Power(ExponentialE, Multiply(Complex(0, -1), x))))
+simplify-knows-the-pythagorean-identity	Simplify(Add(Power(Sin(x), 2), Power(Cos(x), 2)))	1
+the-same-through-fullsimplify	FullSimplify(Add(Power(Sin(x), 2), Power(Cos(x), 2)))	1
+sin-3-over-10-times-pi	Sin(Multiply(Rational(3, 10), Pi))	Add(Rational(1, 4), Divide(Sqrt(5), 4))
+1-radian-isn-t-a-recognized-special-angle-so	Sin(1)	Sin(1)
+sin-2-a-generic-argument-stays-symbolic	Sin(2)	Sin(2)
+sin-x-plus-y-stays-symbolic	Sin(Add(x, y))	Sin(Add(x, y))
+pi-15-has-a-radical-form-but-like-wolfram-s	Sin(Divide(Pi, 15))	Sin(Multiply(Rational(1, 15), Pi))
+a-huge-exact-argument-is-reduced-modulo-2-pi	N(Sin(Power(10, 20)))	-0.645251285265780844206
+an-even-huger-argument-11-38	N(Sin(Power(11, 38)))	0.867534193184863032082
+sin-complexinfinity-is-indeterminate-off-the	Sin(ComplexInfinity)	Indeterminate
+the-special-angle-table-reaches-past-30-45-60	Sin(Divide(Pi, 5))	Multiply(Divide(Sqrt(2), 4), Sqrt(Add(5, Negate(Sqrt(5)))))
+functionexpand-gives-the-nested-radical-form	FunctionExpand(Sin(Divide(Pi, 15)))	Multiply(Rational(1, 8), Add(Negate(Sqrt(15)), Sqrt(3), Sqrt(Add(10, Multiply(2, Sqrt(5))))))

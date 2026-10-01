@@ -1,5 +1,5 @@
-id	in
-centers-add-and-radii-add	Plus[CenteredInterval[1, Rational[1, 2]], CenteredInterval[2, Rational[1, 4]]]
-an-exact-factor-scales-center-and-radius	Times[2, CenteredInterval[2, Rational[1, 2]]]
-converts-an-interval-to-center-radius-form	CenteredInterval[Interval[List[1, 3]]]
-radii-add-under-subtraction-too	Subtract[CenteredInterval[5, Rational[1, 4]], CenteredInterval[1, Rational[1, 4]]]
+id	in	out
+centers-add-and-radii-add	Add(CenteredInterval(1, Rational(1, 2)), CenteredInterval(2, Rational(1, 4)))	CenteredInterval(3, Rational(3, 4))
+an-exact-factor-scales-center-and-radius	Multiply(2, CenteredInterval(2, Rational(1, 2)))	CenteredInterval(4, 1)
+converts-an-interval-to-center-radius-form	CenteredInterval(Interval(1, 3))	CenteredInterval(2, 1)
+radii-add-under-subtraction-too	Subtract(CenteredInterval(5, Rational(1, 4)), CenteredInterval(1, Rational(1, 4)))	CenteredInterval(4, Rational(1, 2))

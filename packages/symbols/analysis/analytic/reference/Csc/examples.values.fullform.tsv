@@ -1,33 +1,33 @@
-id	in	back
-csc-pi-over-6	Csc[Divide[Pi, 6]]	
-csc-pi-over-4	Csc[Divide[Pi, 4]]	
-csc-pi-over-2	Csc[Divide[Pi, 2]]	
-csc-60-circ-frac-2-sqrt-3-3-exactly	Csc[Times[60, Degree]]	[Csc, [Multiply, 60, Degree]]
-a-machine-precision-argument-evaluates	Csc[1.2]	
-a-huge-24-40-argument	N[Csc[Power[24, 40]]]	
-a-huge-10-100-argument	N[Csc[Power[10, 100]]]	
-a-huge-3-200-argument	N[Csc[Power[3, 200]]]	
-a-huge-neg-7-60-argument	N[Csc[Minus[Power[7, 60]]]]	
-a-huge-10-80-plus-1-over-3-argument	N[Csc[Divide[Plus[Power[10, 80], 1], 3]]]	
-csc-5-under-n	N[Csc[5]]	
-n-of-an-exact-argument-gives-an-arbitrary	N[Csc[Rational[6, 5]]]	
-evaluates-at-a-complex-argument	Csc[Complex[2.5, 1]]	
-threads-element-wise-over-a-matrix-with	Csc[List[List[Divide[Pi, 3], Pi], List[Divide[Pi, 6], Minus[Divide[Pi, 2]]]]]	
-csc-pi-12-sqrt-6-sqrt-2	Csc[Divide[Pi, 12]]	
-csc-pi-10-1-sqrt-5	Csc[Divide[Pi, 10]]	
-csc-pi-over-5	Csc[Divide[Pi, 5]]	
-interval-arithmetic-the-image-of-pi-6-pi-3-is	Csc[Interval[List[Divide[Pi, 6], Divide[Pi, 3]]]]	
-uncertainty-propagation-csc-2-pm-0-01-approx-1	Csc[Around[2, 0.01]]	
-oddness-pulls-the-sign-out-of-a-symbolic	Csc[Minus[x]]	
-derivative-csc-x-cot-x	D[Csc[x], x]	
-antiderivative-ln-csc-x-cot-x	Integrate[Csc[x], x]	
-n-csc-6-over-5-50	N[Csc[Rational[6, 5]], 50]	
-matrixfunction-function-csc-1-1-list-list-1-over	MatrixFunction[Function[Csc[Slot[1]]], List[List[Times[Rational[1, 3], Pi], Pi], List[Times[Rational[1, 6], Pi], Times[Rational[-1, 2], Pi]]]]	[MatrixFunction, [Function, [Csc, _1]], [List, [List, [Multiply, [Rational, 1, 3], Pi], Pi], [List, [Multiply, [Rational, 1, 6], Pi], [Multiply, [Rational, -1, 2], Pi]]]]
+id	in	out
+csc-pi-over-6	Csc(Divide(Pi, 6))	2
+csc-pi-over-4	Csc(Divide(Pi, 4))	Sqrt(2)
+csc-pi-over-2	Csc(Divide(Pi, 2))	1
+csc-60-circ-frac-2-sqrt-3-3-exactly	Csc(Degrees(60))	Multiply(Rational(2, 3), Sqrt(3))
+a-machine-precision-argument-evaluates	Csc(1.2)	1.07291637770989722871
+a-huge-24-40-argument	N(Csc(Power(24, 40)))	2.499480403516114245745403
+a-huge-10-100-argument	N(Csc(Power(10, 100)))	-2.685456817606348002023834
+a-huge-3-200-argument	N(Csc(Power(3, 200)))	-1.065267094773902176582317
+a-huge-neg-7-60-argument	N(Csc(Negate(Power(7, 60))))	2.738813586755818206167883
+a-huge-10-80-plus-1-over-3-argument	N(Csc(Divide(Add(Power(10, 80), 1), 3)))	1.014869562853670879001739
+csc-5-under-n	N(Csc(5))	-1.0428352127714058
+n-of-an-exact-argument-gives-an-arbitrary	N(Csc(Rational(6, 5)))	1.07291637770989722871
+evaluates-at-a-complex-argument	Csc(Complex(2.5, 1))	Complex(0.5309655776211742, 0.5413229061900025)
+threads-element-wise-over-a-matrix-with	Csc(List(List(Divide(Pi, 3), Pi), List(Divide(Pi, 6), Negate(Divide(Pi, 2)))))	List(List(Multiply(Rational(2, 3), Sqrt(3)), ComplexInfinity), List(2, -1))
+csc-pi-12-sqrt-6-sqrt-2	Csc(Divide(Pi, 12))	Add(Sqrt(2), Sqrt(6))
+csc-pi-10-1-sqrt-5	Csc(Divide(Pi, 10))	Add(1, Sqrt(5))
+csc-pi-over-5	Csc(Divide(Pi, 5))	Multiply(Divide(Sqrt(10), 5), Sqrt(Add(5, Sqrt(5))))
+interval-arithmetic-the-image-of-pi-6-pi-3-is	Csc(Interval(Divide(Pi, 6), Divide(Pi, 3)))	Interval(Multiply(Rational(2, 3), Sqrt(3)), 2)
+uncertainty-propagation-csc-2-pm-0-01-approx-1	Csc(Around(2, 0.01))	Around(1.0997501702946164, 0.00503308973344342)
+oddness-pulls-the-sign-out-of-a-symbolic	Csc(Negate(x))	Negate(Csc(x))
+derivative-csc-x-cot-x	D(Csc(x), x)	Negate(Multiply(Csc(x), Cot(x)))
+antiderivative-ln-csc-x-cot-x	Integrate(Csc(x), x)	Negate(Ln(Abs(Add(Csc(x), Cot(x)))))
+n-csc-6-over-5-50	N(Csc(Rational(6, 5)), 50)	1.0729163777098972287051169224352391548376390066978
+matrixfunction-function-csc-1-1-list-list-1-over	MatrixFunction(Function(Block(Csc(_1)), _1), List(List(Multiply(Rational(1, 3), Pi), Pi), List(Multiply(Rational(1, 6), Pi), Multiply(Rational(-1, 2), Pi))))	List(List(Add(Rational(6, 7), Multiply(Rational(-2, 21), Sqrt(3))), Add(Rational(6, 7), Multiply(Rational(4, 7), Sqrt(3)))), List(Add(Rational(1, 7), Multiply(Rational(2, 21), Sqrt(3))), Add(Rational(1, 7), Multiply(Rational(-4, 7), Sqrt(3)))))
 assuming-m-in-integers-refine-csc-pi-times-m		
 assuming-m-in-integers-fullsimplify-refine-csc		
 csc-positiveinfinity		
-reciprocal-of-sin-csc-x-frac-1-sin-x	Equal[Csc[Divide[Pi, 6]], Divide[1, Sin[Divide[Pi, 6]]]]	
-csc-1-over-8-times-pi	Csc[Times[Rational[1, 8], Pi]]	
-csc-3-over-10-times-pi	Csc[Times[Rational[3, 10], Pi]]	
-a-pole-sin-0-0	Csc[0]	
-csc-complexinfinity-is-indeterminate-for-the	Csc[ComplexInfinity]	
+reciprocal-of-sin-csc-x-frac-1-sin-x	Equal(Csc(Divide(Pi, 6)), Divide(1, Sin(Divide(Pi, 6))))	True
+csc-1-over-8-times-pi	Csc(Multiply(Rational(1, 8), Pi))	Sqrt(Add(4, Multiply(2, Sqrt(2))))
+csc-3-over-10-times-pi	Csc(Multiply(Rational(3, 10), Pi))	Add(-1, Sqrt(5))
+a-pole-sin-0-0	Csc(0)	ComplexInfinity
+csc-complexinfinity-is-indeterminate-for-the	Csc(ComplexInfinity)	Indeterminate

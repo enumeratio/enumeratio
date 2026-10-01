@@ -1,21 +1,21 @@
-id	in	back
-join-list-1-2-list-3-4	Join[List[1, 2], List[3, 4]]	
-join-list-1-2-list-3-4-list-5	Join[List[1, 2], List[3, 4], List[5]]	
-join-list-a-b-c-list-x-y-list-u-v-w	Join[List[a, b, c], List[x, y], List[u, v, w]]	
-join-tolerates-shorter-array-second	Join[List[List[1, 2], List[3, 4]], List[List[x]], 2]	
-join-splices-any-shared-head	Join[f[a], f[b], f[c]]	
-join-associations-first-seen-order	Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]	[Join, [Association, [KeyValuePair, a, b]], [Association, [KeyValuePair, c, d], [KeyValuePair, a, f]]]
-a-trailing-integer-argument-joins-at-that-level	Join[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]], 2]	
-joining-matrices-stacks-their-rows	Join[List[List[a, b], List[c, d]], List[List[1, 2], List[3, 4]]]	
-sets-as-well-as-lists-as-long-as-all-arguments	Join[Union[List[1, 2]], Union[List[3]]]	[Join, [Union, [List, 1, 2]], [Union, [List, 3]]]
-a-lazy-range-is-spliced-in	Join[List[1, 2], Range[3, 5]]	
-with-no-arguments-the-empty-list	Join[]	
-at-level-2-matrices-are-joined-side-by-side	Join[List[List[a, b], List[c, d]], List[List[1, 2], List[3, 4]], 2]	
-ragged-rows-join-at-level-2-too	Join[List[List[1], List[5, 6]], List[List[2, 3], List[7]], List[List[4], List[8]], 2]	
-a-row-missing-from-the-shorter-array-simply-isn	Join[List[List[x]], List[List[1, 2], List[3, 4]], 2]	
-any-head-as-long-as-all-the-arguments-share-it	Join[f[a], f[b]]	
+id	in	out
+join-list-1-2-list-3-4	Join(List(1, 2), List(3, 4))	List(1, 2, 3, 4)
+join-list-1-2-list-3-4-list-5	Join(List(1, 2), List(3, 4), List(5))	List(1, 2, 3, 4, 5)
+join-list-a-b-c-list-x-y-list-u-v-w	Join(List(a, b, c), List(x, y), List(u, v, w))	List(a, b, c, x, y, u, v, w)
+join-tolerates-shorter-array-second	Join(List(List(1, 2), List(3, 4)), List(List(x)), 2)	List(List(1, 2, x), List(3, 4))
+join-splices-any-shared-head	Join(f(a), f(b), f(c))	f(a, b, c)
+join-associations-first-seen-order	Join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))	Association(Rule(a, f), Rule(c, d))
+a-trailing-integer-argument-joins-at-that-level	Join(List(List(1, 2), List(3, 4)), List(List(5, 6), List(7, 8)), 2)	List(List(1, 2, 5, 6), List(3, 4, 7, 8))
+joining-matrices-stacks-their-rows	Join(List(List(a, b), List(c, d)), List(List(1, 2), List(3, 4)))	List(List(a, b), List(c, d), List(1, 2), List(3, 4))
+sets-as-well-as-lists-as-long-as-all-arguments	Join(Set(1, 2), Set(3))	Set(1, 2, 3)
+a-lazy-range-is-spliced-in	Join(List(1, 2), Range(3, 5))	List(1, 2, 3, 4, 5)
+with-no-arguments-the-empty-list	Join()	List()
+at-level-2-matrices-are-joined-side-by-side	Join(List(List(a, b), List(c, d)), List(List(1, 2), List(3, 4)), 2)	List(List(a, b, 1, 2), List(c, d, 3, 4))
+ragged-rows-join-at-level-2-too	Join(List(List(1), List(5, 6)), List(List(2, 3), List(7)), List(List(4), List(8)), 2)	List(List(1, 2, 3, 4), List(5, 6, 7, 8))
+a-row-missing-from-the-shorter-array-simply-isn	Join(List(List(x)), List(List(1, 2), List(3, 4)), 2)	List(List(x, 1, 2), List(3, 4))
+any-head-as-long-as-all-the-arguments-share-it	Join(f(a), f(b))	f(a, b)
 join-aa-bb		
-join-a-b-flatten-a-b-1-see-flatten	Equal[Join[List[1, 2], List[3, 4]], Flatten[List[List[1, 2], List[3, 4]], 1]]	
-join-is-associative	Equal[Join[Join[List[a, b, c], List[x, y]], List[u, v, w]], Join[List[a, b, c], Join[List[x, y], List[u, v, w]]]]	
-nestlist-function-join-1-1-1-list-x-4	NestList[Function[Join[Slot[1], Slot[1]]], List[x], 4]	[NestList, [Function, [Join, _1, _1]], [List, x], 4]
+join-a-b-flatten-a-b-1-see-flatten	Equal(Join(List(1, 2), List(3, 4)), Flatten(List(List(1, 2), List(3, 4)), 1))	True
+join-is-associative	Equal(Join(Join(List(a, b, c), List(x, y)), List(u, v, w)), Join(List(a, b, c), Join(List(x, y), List(u, v, w))))	True
+nestlist-function-join-1-1-1-list-x-4	NestList(Function(Block(Join(_1, _1)), _1), List(x), 4)	List(List(x), List(x, x), List(x, x, x, x), List(x, x, x, x, x, x, x, x), List(x, x, x, x, x, x, x, x, x, x, x, x, x, x, x, x))
 nestlist-function-list-1-neg-1-plus-1-1-list-1-5		

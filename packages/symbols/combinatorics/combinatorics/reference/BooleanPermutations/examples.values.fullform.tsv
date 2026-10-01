@@ -1,3 +1,3 @@
-id	in	back
-count-booleanpermutations-5-f-6-8-see-fibonacci	Length[BooleanPermutations[5]]	[Length, [BooleanPermutations, 5]]
-every-element-of-booleanpermutations-5	Take[BooleanPermutations[5], 8]	
+id	in	out
+count-booleanpermutations-5-f-6-8-see-fibonacci	Count(BooleanPermutations(5))	8
+every-element-of-booleanpermutations-5	Take(BooleanPermutations(5), 8)	List(Permutation(List(1, 2, 3, 4, 5)), Permutation(List(1, 2, 3, 5, 4)), Permutation(List(1, 2, 4, 3, 5)), Permutation(List(1, 3, 2, 4, 5)), Permutation(List(1, 3, 2, 5, 4)), Permutation(List(2, 1, 3, 4, 5)), Permutation(List(2, 1, 3, 5, 4)), Permutation(List(2, 1, 4, 3, 5)))

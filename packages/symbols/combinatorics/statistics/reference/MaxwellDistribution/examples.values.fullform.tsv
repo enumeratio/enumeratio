@@ -1,5 +1,5 @@
-id	in
-maxwell-pdf-exact	PDF[MaxwellDistribution[1], 2]
-maxwell-cdf-exact	CDF[MaxwellDistribution[1], 2]
-maxwell-mean-exact	Mean[MaxwellDistribution[1]]
-maxwell-variance-exact	Variance[MaxwellDistribution[1]]
+id	in	out
+maxwell-pdf-exact	PDF(MaxwellDistribution(1), 2)	Divide(Multiply(4, Sqrt(2)), Multiply(Power(ExponentialE, 2), Sqrt(Pi)))
+maxwell-cdf-exact	CDF(MaxwellDistribution(1), 2)	Add(1, Negate(GammaRegularized(Rational(3, 2), 2)))
+maxwell-mean-exact	Mean(MaxwellDistribution(1))	Divide(Multiply(2, Sqrt(2)), Sqrt(Pi))
+maxwell-variance-exact	Variance(MaxwellDistribution(1))	Divide(Add(-8, Multiply(3, Pi)), Pi)

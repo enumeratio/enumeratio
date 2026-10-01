@@ -1,4 +1,4 @@
-id	in	back
-count-oddcompositions-6	Length[OddCompositions[6]]	[Length, [OddCompositions, 6]]
-first-element-of-oddcompositions-6	Part[OddCompositions[6], 1]	
-every-element-of-oddcompositions-6	Take[OddCompositions[6], 8]	
+id	in	out
+count-oddcompositions-6	Count(OddCompositions(6))	8
+first-element-of-oddcompositions-6	At(OddCompositions(6), 1)	Composition(List(1, 1, 1, 1, 1, 1))
+every-element-of-oddcompositions-6	Take(OddCompositions(6), 8)	List(Composition(List(1, 1, 1, 1, 1, 1)), Composition(List(1, 1, 1, 3)), Composition(List(1, 1, 3, 1)), Composition(List(1, 3, 1, 1)), Composition(List(1, 5)), Composition(List(3, 1, 1, 1)), Composition(List(3, 3)), Composition(List(5, 1)))

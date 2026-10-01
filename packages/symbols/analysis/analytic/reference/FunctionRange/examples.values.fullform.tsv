@@ -1,9 +1,9 @@
-id	in
-a-parabola-s-range-is-bounded-below	FunctionRange[Power[x, 2], x, y]
-a-reciprocal-never-reaches-zero	FunctionRange[Divide[1, x], x, y]
-sine-s-range-is-the-unit-interval	FunctionRange[Sin[x], x, y]
-exp-s-range-is-the-positive-reals	FunctionRange[Exp[x], x, y]
-functionrange-x-pow-2-minus-1-x-y	FunctionRange[Plus[Power[x, 2], -1], x, y]
-functionrange-x-pow-2-minus-4-x-y	FunctionRange[Plus[Power[x, 2], -4], x, y]
-functionrange-tan-x-x-y	FunctionRange[Tan[x], x, y]
-a-quadratic-denominator-is-declined	FunctionRange[Divide[1, Plus[Power[x, 2], -1]], x, y]
+id	in	out
+a-parabola-s-range-is-bounded-below	FunctionRange(Power(x, 2), x, y)	LessEqual(0, y)
+a-reciprocal-never-reaches-zero	FunctionRange(Divide(1, x), x, y)	Or(Less(y, 0), Less(0, y))
+sine-s-range-is-the-unit-interval	FunctionRange(Sin(x), x, y)	LessEqual(-1, y, 1)
+exp-s-range-is-the-positive-reals	FunctionRange(Exp(x), x, y)	Less(0, y)
+functionrange-x-pow-2-minus-1-x-y	FunctionRange(Add(Power(x, 2), -1), x, y)	LessEqual(-1, y)
+functionrange-x-pow-2-minus-4-x-y	FunctionRange(Add(Power(x, 2), -4), x, y)	LessEqual(-4, y)
+functionrange-tan-x-x-y	FunctionRange(Tan(x), x, y)	True
+a-quadratic-denominator-is-declined	FunctionRange(Divide(1, Add(Power(x, 2), -1)), x, y)	FunctionRange(Divide(1, Add(Power(x, 2), -1)), x, y)

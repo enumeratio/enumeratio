@@ -1,3 +1,3 @@
-id	in
-makeboxes-rawboxes-rowbox-list-1-plus-2	MakeBoxes[RawBoxes[RowBox[List["1", "+", "2"]]]]
-makeboxes-rawboxes-fractionbox-1-2-3	
+id	in	out
+makeboxes-rawboxes-rowbox-list-1-plus-2	MakeBoxes(RawBoxes(RowBox(List("1", "+", "2"))))	RowBox(List("1", "+", "2"))
+makeboxes-rawboxes-fractionbox-1-2-3		

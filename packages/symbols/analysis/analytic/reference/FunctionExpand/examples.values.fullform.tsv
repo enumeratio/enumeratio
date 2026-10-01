@@ -1,13 +1,13 @@
-id	in
-eta-s-1-2-1-s-zeta-s	FunctionExpand[DirichletEta[s]]
-beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34	FunctionExpand[DirichletBeta[s]]
-g-frac-12-in-glaisher-s-constant	FunctionExpand[BarnesG[Rational[1, 2]]]
-radicals-past-the-automatic-special-angle-table	FunctionExpand[Sin[Divide[Pi, 15]]]
-half-angle-radicals-cos-frac-pi-24-frac-12-sqrt	FunctionExpand[Cos[Divide[Pi, 24]]]
-a-rising-factorial-with-an-integer-length	FunctionExpand[Pochhammer[x, 3]]
-binom-n2-frac-n-n-1-2	FunctionExpand[Binomial[n, 2]]
-functionexpand-1-over-sqrt-x-pow-2-times-sin	FunctionExpand[Times[Divide[1, Sqrt[Power[x, 2]]], Sin[Sqrt[Power[x, 2]]]]]
-functionexpand-1-over-zeta-z-times-zeta-neg-z	FunctionExpand[Times[Divide[1, Zeta[z]], Zeta[Plus[Minus[z], 1]]]]
-functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg	
-functionexpand-polylog-2-z-plus-polylog-2-neg-z	FunctionExpand[Plus[PolyLog[2, z], PolyLog[2, Plus[Minus[z], 1]], Minus[Zeta[2]]]]
-a-generic-cos-argument-passes-through-unchanged	FunctionExpand[Cos[theta]]
+id	in	out
+eta-s-1-2-1-s-zeta-s	FunctionExpand(DirichletEta(s))	Multiply(Add(Negate(Power(2, Add(Negate(s), 1))), 1), Zeta(s))
+beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34	FunctionExpand(DirichletBeta(s))	Multiply(Add(Negate(Zeta(s, Rational(3, 4))), Zeta(s, Rational(1, 4))), Power(4, Negate(s)))
+g-frac-12-in-glaisher-s-constant	FunctionExpand(BarnesG(Rational(1, 2)))	Multiply(Divide(1, Root(Pi, 4)), Root(2, 24), Power(ConstGlaisher, Rational(-3, 2)), Root(ExponentialE, 8))
+radicals-past-the-automatic-special-angle-table	FunctionExpand(Sin(Divide(Pi, 15)))	Multiply(Rational(1, 8), Add(Negate(Sqrt(15)), Sqrt(3), Sqrt(Add(10, Multiply(2, Sqrt(5))))))
+half-angle-radicals-cos-frac-pi-24-frac-12-sqrt	FunctionExpand(Cos(Divide(Pi, 24)))	Multiply(Divide(Sqrt(2), 4), Sqrt(Add(4, Sqrt(2), Sqrt(6))))
+a-rising-factorial-with-an-integer-length	FunctionExpand(Pochhammer(x, 3))	Multiply(x, Add(x, 1), Add(x, 2))
+binom-n2-frac-n-n-1-2	FunctionExpand(Binomial(n, 2))	Divide(Multiply(n, Subtract(n, 1)), 2)
+functionexpand-1-over-sqrt-x-pow-2-times-sin	FunctionExpand(Multiply(Divide(1, Sqrt(Power(x, 2))), Sin(Sqrt(Power(x, 2)))))	Divide(Sin(Sqrt(Power(x, 2))), Sqrt(Power(x, 2)))
+functionexpand-1-over-zeta-z-times-zeta-neg-z	FunctionExpand(Multiply(Divide(1, Zeta(z)), Zeta(Add(Negate(z), 1))))	Divide(Zeta(Add(Negate(z), 1)), Zeta(z))
+functionexpand-list-sqrt-neg-x-pow-2-ln-sqrt-neg		
+functionexpand-polylog-2-z-plus-polylog-2-neg-z	FunctionExpand(Add(PolyLog(2, z), PolyLog(2, Add(Negate(z), 1)), Negate(Zeta(2))))	Add(PolyLog(2, z), PolyLog(2, Add(Negate(z), 1)), Multiply(Rational(-1, 6), Power(Pi, 2)))
+a-generic-cos-argument-passes-through-unchanged	FunctionExpand(Cos(theta))	Cos(theta)

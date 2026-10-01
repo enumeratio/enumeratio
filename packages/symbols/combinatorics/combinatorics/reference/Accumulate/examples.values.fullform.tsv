@@ -1,10 +1,10 @@
-id	in
-accumulate-1-2-3-4	Accumulate[List[1, 2, 3, 4]]
-accumulate-list-a-b-c-d	Accumulate[List[a, b, c, d]]
-accumulate-list-list-a-b-list-c-d-list	Accumulate[List[List[a, b], List[c, d], List[E, f]]]
-accumulate-empty	Accumulate[List[]]
-accumulate-data	
-accumulate-v	
-accumulate-range-1-10	Accumulate[Range[1, 10]]
-accumulate-last-is-total	Equal[Last[Accumulate[List[1, 2, 3, 4, 5]]], Plus[1, 2, 3, 4, 5]]
-transpose-nestlist-accumulate-range-1-5-5	Transpose[NestList[Accumulate, Range[1, 5], 5]]
+id	in	out
+accumulate-1-2-3-4	Accumulate(List(1, 2, 3, 4))	List(1, 3, 6, 10)
+accumulate-list-a-b-c-d	Accumulate(List(a, b, c, d))	List(a, Add(a, b), Add(a, b, c), Add(a, b, c, d))
+accumulate-list-list-a-b-list-c-d-list	Accumulate(List(List(a, b), List(c, d), List(ExponentialE, f)))	List(List(a, b), List(Add(a, c), Add(b, d)), List(Add(a, c, ExponentialE), Add(b, d, f)))
+accumulate-empty	Accumulate(List())	List()
+accumulate-data		
+accumulate-v		
+accumulate-range-1-10	Accumulate(Range(1, 10))	List(1, 3, 6, 10, 15, 21, 28, 36, 45, 55)
+accumulate-last-is-total	Equal(Last(Accumulate(List(1, 2, 3, 4, 5))), Add(1, 2, 3, 4, 5))	True
+transpose-nestlist-accumulate-range-1-5-5	Transpose(NestList(Accumulate, Range(1, 5), 5))	List(List(1, 1, 1, 1, 1, 1), List(2, 3, 4, 5, 6, 7), List(3, 6, 10, 15, 21, 28), List(4, 10, 20, 35, 56, 84), List(5, 15, 35, 70, 126, 210))

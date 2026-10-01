@@ -1,40 +1,40 @@
-id	in	back
-sign-neg-3	Sign[-3]	
-sign-3	Sign[3]	
-zero-is-its-own-sign	Sign[0]	
-sign-neg-1-over-2	Sign[Rational[-1, 2]]	
-the-unit-complex-number-pointing-the-same	Sign[Complex[3, 4]]	
-threads-element-wise-over-a-list	Sign[List[-3, 0, 7]]	
-sign-neg-2p5	Sign[-2.5]	
-sign-3p14	Sign[3.14]	
-a-complex-number-with-approximate-parts	Sign[Complex[1.4, 2.3]]	
-an-exact-complex-argument-comes-back-exact-sign	Sign[Complex[1, 1]]	
-threads-over-a-matrix-entry-by-entry	Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]	
-exact-numeric-constants	Sign[Pi]	
-sign-neg-exponentiale	Sign[Minus[E]]	
-sign-imaginaryunit	Sign[I]	
-sign-positiveinfinity	Sign[Infinity]	
-an-interval-entirely-above-0-has-sign-1	Sign[Interval[List[1, 3]]]	
-decides-the-sign-of-the-exact-number-sqrt-2-2-by	Sign[Subtract[Sqrt[2], 2]]	
-2-sqrt-2-is-the-same-certified-decision-the	Sign[Subtract[2, Sqrt[2]]]	
-n-sign-exponentiale-plus-i-times-pi-20	N[Sign[Plus[E, Times[Complex[0, 1], Pi]]], 20]	
-sign-123	Sign[123]	
-sign-123-minus-456i	Sign[Complex[123, -456]]	
-fullsimplify-matrixfunction-sign-list-list-1	FullSimplify[MatrixFunction[Sign, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]]	
-piecewiseexpand-sign-x-neg-2-lt-x-lt-2	PiecewiseExpand[Sign[x], Less[-2, x, 2]]	
-sign-conjugate-1-plus-2i-eq-conjugate-sign-1	Equal[Sign[Conjugate[Complex[1, 2]]], Conjugate[Sign[Complex[1, 2]]]]	
+id	in	out
+sign-neg-3	Sign(-3)	-1
+sign-3	Sign(3)	1
+zero-is-its-own-sign	Sign(0)	0
+sign-neg-1-over-2	Sign(Rational(-1, 2))	-1
+the-unit-complex-number-pointing-the-same	Sign(Complex(3, 4))	Complex(Rational(3, 5), Rational(4, 5))
+threads-element-wise-over-a-list	Sign(List(-3, 0, 7))	List(-1, 0, 1)
+sign-neg-2p5	Sign(-2.5)	-1
+sign-3p14	Sign(3.14)	1
+a-complex-number-with-approximate-parts	Sign(Complex(1.4, 2.3))	Complex(0.5199469468957452168102, 0.8541985556144385)
+an-exact-complex-argument-comes-back-exact-sign	Sign(Complex(1, 1))	Complex(Divide(Sqrt(2), 2), Divide(Sqrt(2), 2))
+threads-over-a-matrix-entry-by-entry	Sign(List(List(Rational(1, 2), -1), List(Rational(-5, 3), Rational(1, 2))))	List(List(1, -1), List(-1, 1))
+exact-numeric-constants	Sign(Pi)	1
+sign-neg-exponentiale	Sign(Negate(ExponentialE))	-1
+sign-imaginaryunit	Sign(ImaginaryUnit)	Complex(0, 1)
+sign-positiveinfinity	Sign(PositiveInfinity)	1
+an-interval-entirely-above-0-has-sign-1	Sign(Interval(1, 3))	1
+decides-the-sign-of-the-exact-number-sqrt-2-2-by	Sign(Subtract(Sqrt(2), 2))	-1
+2-sqrt-2-is-the-same-certified-decision-the	Sign(Subtract(2, Sqrt(2)))	1
+n-sign-exponentiale-plus-i-times-pi-20	N(Sign(Add(ExponentialE, Multiply(Complex(0, 1), Pi))), 20)	Complex(0.65432112073668902819, 0.75621681478123932247)
+sign-123	Sign(123)	1
+sign-123-minus-456i	Sign(Complex(123, -456))	Complex(Multiply(Rational(41, 24785), Sqrt(24785)), Multiply(Rational(-152, 24785), Sqrt(24785)))
+fullsimplify-matrixfunction-sign-list-list-1	FullSimplify(MatrixFunction(Sign, List(List(Rational(1, 2), -1), List(Rational(-5, 3), Rational(1, 2)))))	List(List(0, Negate(Divide(Sqrt(15), 5))), List(Negate(Divide(Sqrt(15), 3)), 0))
+piecewiseexpand-sign-x-neg-2-lt-x-lt-2	PiecewiseExpand(Sign(x), Less(-2, x, 2))	Piecewise(List(List(-1, Less(x, 0)), List(1, Less(0, x))), 0)
+sign-conjugate-1-plus-2i-eq-conjugate-sign-1	Equal(Sign(Conjugate(Complex(1, 2))), Conjugate(Sign(Complex(1, 2))))	True
 d-sign-x-x		
 sign-positiveinfinity-times-i		
-tells-you-the-temperature-dropped-but-not-by-how	Sign[Subtract[70, 95]]	
-sign-z-z-z-see-abs	Equal[Sign[Complex[3, 4]], Divide[Complex[3, 4], Abs[Complex[3, 4]]]]	
-x-cdot-sign-x-x-here-at-x-5	Equal[Times[-5, Sign[-5]], Abs[-5]]	
-the-sign-of-a-nonzero-complex-number-lies-on-the	Equal[Abs[Sign[Complex[3, 4]]], 1]	
-sign-1	Sign[1]	
-sign-neg-1	Sign[-1]	
-sign-neg-i	Sign[Complex[0, -1]]	
-sign-neg-1-plus-i	Sign[Complex[-1, 1]]	
-sign-neg-1-minus-i	Sign[Complex[-1, -1]]	
-sign-1-minus-i	Sign[Complex[1, -1]]	
-sign-2	Sign[2]	
-nan-propagates-rather-than-being-treated-as-0	Sign[Indeterminate]	[Sign, Indeterminate]
-sign-complexinfinity-is-indeterminate-no	Sign[ComplexInfinity]	
+tells-you-the-temperature-dropped-but-not-by-how	Sign(Subtract(70, 95))	-1
+sign-z-z-z-see-abs	Equal(Sign(Complex(3, 4)), Divide(Complex(3, 4), Abs(Complex(3, 4))))	True
+x-cdot-sign-x-x-here-at-x-5	Equal(Multiply(-5, Sign(-5)), Abs(-5))	True
+the-sign-of-a-nonzero-complex-number-lies-on-the	Equal(Abs(Sign(Complex(3, 4))), 1)	True
+sign-1	Sign(1)	1
+sign-neg-1	Sign(-1)	-1
+sign-neg-i	Sign(Complex(0, -1))	Complex(0, -1)
+sign-neg-1-plus-i	Sign(Complex(-1, 1))	Complex(Negate(Divide(Sqrt(2), 2)), Divide(Sqrt(2), 2))
+sign-neg-1-minus-i	Sign(Complex(-1, -1))	Complex(Negate(Divide(Sqrt(2), 2)), Negate(Divide(Sqrt(2), 2)))
+sign-1-minus-i	Sign(Complex(1, -1))	Complex(Divide(Sqrt(2), 2), Negate(Divide(Sqrt(2), 2)))
+sign-2	Sign(2)	1
+nan-propagates-rather-than-being-treated-as-0	Sign(`NaN`)	`NaN`
+sign-complexinfinity-is-indeterminate-no	Sign(ComplexInfinity)	Indeterminate

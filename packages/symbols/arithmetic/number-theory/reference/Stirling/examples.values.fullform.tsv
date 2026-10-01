@@ -1,38 +1,38 @@
-id	in
-stirling-5-2	StirlingS2[5, 2]
-stirling-6-3	StirlingS2[6, 3]
-stirling-20-10	StirlingS2[20, 10]
-exact-for-large-n	StirlingS2[50, 2]
-threads-element-wise-over-a-list-as-wolfram-s	StirlingS2[List[2, 4, 6], 2]
-the-ways-to-split-10-distinct-items-among-3	StirlingS2[10, 3]
-stirling-n-range-1-n	
-one-block-means-one-partition-s-n-1-1	StirlingS2[5, 1]
-singletons-only-s-n-n-1	StirlingS2[5, 5]
-row-sums-give-the-bell-numbers	Equal[Sum[StirlingS2[4, k], List[k, 0, 4]], BellB[4]]
-two-blocks-s-n-2-2-n-1-1	Equal[StirlingS2[10, 2], Subtract[Power[2, 9], 1]]
-s-n-n-1-binom-n-2-one-block-is-a-pair	Equal[StirlingS2[6, 5], Binomial[6, 2]]
-explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	Equal[StirlingS2[6, 3], Divide[Sum[Times[Power[-1, Subtract[3, j]], Binomial[3, j], Power[j, 6]], List[j, 0, 3]], Factorial[3]]]
-orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	Sum[Times[StirlingS1[4, k], StirlingS2[k, 2]], List[k, 0, 4]]
-n-stirling-120-10	N[StirlingS2[120, 10]]
-stirling-10-4	StirlingS2[10, 4]
-stirling-1-0	StirlingS2[1, 0]
-stirling-1-1	StirlingS2[1, 1]
-stirling-1-2	StirlingS2[1, 2]
-stirling-2-0	StirlingS2[2, 0]
-stirling-2-1	StirlingS2[2, 1]
-stirling-2-2	StirlingS2[2, 2]
-stirling-2-3	StirlingS2[2, 3]
-stirling-3-0	StirlingS2[3, 0]
-stirling-3-1	StirlingS2[3, 1]
-stirling-3-2	StirlingS2[3, 2]
-stirling-3-3	StirlingS2[3, 3]
-stirling-3-4	StirlingS2[3, 4]
-stirling-4-0	StirlingS2[4, 0]
-stirling-4-1	StirlingS2[4, 1]
-stirling-4-2	StirlingS2[4, 2]
-stirling-4-3	StirlingS2[4, 3]
-the-empty-set-has-one-partition-into-no-blocks	StirlingS2[0, 0]
-no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	StirlingS2[5, 0]
-k-n-is-0	StirlingS2[3, 5]
-stirling-0-1-is-also-0	StirlingS2[0, 1]
-a-negative-k-stays-symbolic	StirlingS2[10, -5]
+id	in	out
+stirling-5-2	Stirling(5, 2)	15
+stirling-6-3	Stirling(6, 3)	90
+stirling-20-10	Stirling(20, 10)	5917584964655
+exact-for-large-n	Stirling(50, 2)	562949953421311
+threads-element-wise-over-a-list-as-wolfram-s	Stirling(List(2, 4, 6), 2)	List(1, 7, 31)
+the-ways-to-split-10-distinct-items-among-3	Stirling(10, 3)	9330
+stirling-n-range-1-n		
+one-block-means-one-partition-s-n-1-1	Stirling(5, 1)	1
+singletons-only-s-n-n-1	Stirling(5, 5)	1
+row-sums-give-the-bell-numbers	Equal(Sum(Stirling(4, k), Tuple(k, 0, 4)), BellNumber(4))	True
+two-blocks-s-n-2-2-n-1-1	Equal(Stirling(10, 2), Subtract(Power(2, 9), 1))	True
+s-n-n-1-binom-n-2-one-block-is-a-pair	Equal(Stirling(6, 5), Binomial(6, 2))	True
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	Equal(Stirling(6, 3), Divide(Sum(Multiply(Power(-1, Subtract(3, j)), Binomial(3, j), Power(j, 6)), Tuple(j, 0, 3)), Factorial(3)))	True
+orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	Sum(Multiply(StirlingS1(4, k), Stirling(k, 2)), Tuple(k, 0, 4))	0
+n-stirling-120-10	N(Stirling(120, 10))	275564293332645612796076533812387578132055070471681207862920555299757965212186923458011526847229561561721294169780
+stirling-10-4	Stirling(10, 4)	34105
+stirling-1-0	Stirling(1, 0)	0
+stirling-1-1	Stirling(1, 1)	1
+stirling-1-2	Stirling(1, 2)	0
+stirling-2-0	Stirling(2, 0)	0
+stirling-2-1	Stirling(2, 1)	1
+stirling-2-2	Stirling(2, 2)	1
+stirling-2-3	Stirling(2, 3)	0
+stirling-3-0	Stirling(3, 0)	0
+stirling-3-1	Stirling(3, 1)	1
+stirling-3-2	Stirling(3, 2)	3
+stirling-3-3	Stirling(3, 3)	1
+stirling-3-4	Stirling(3, 4)	0
+stirling-4-0	Stirling(4, 0)	0
+stirling-4-1	Stirling(4, 1)	1
+stirling-4-2	Stirling(4, 2)	7
+stirling-4-3	Stirling(4, 3)	6
+the-empty-set-has-one-partition-into-no-blocks	Stirling(0, 0)	1
+no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	Stirling(5, 0)	0
+k-n-is-0	Stirling(3, 5)	0
+stirling-0-1-is-also-0	Stirling(0, 1)	0
+a-negative-k-stays-symbolic	Stirling(10, -5)	Stirling(10, -5)

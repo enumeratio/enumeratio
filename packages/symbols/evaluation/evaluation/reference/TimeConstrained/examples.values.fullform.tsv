@@ -1,6 +1,6 @@
-id	in	back
-finishes-well-inside-the-deadline-so-the-value	TimeConstrained[Sum[k, List[k, 1, 10]], 1]	
-factoring-a-30-digit-semiprime-outruns-a-50-ms	TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05]	[TimeConstrained, [FactorInteger, 1.00100000000004e+30], 0.05]
-a-custom-failexpr-replaces-the-default-aborted	TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05, -1]	[TimeConstrained, [FactorInteger, 1.00100000000004e+30], 0.05, -1]
-an-infinite-time-limit-imposes-no-constraint	TimeConstrained[Plus[1, 2], Infinity]	
-failexpr-is-held-it-is-never-evaluated-when-expr	TimeConstrained[Plus[2, 3], 1, Divide[1, 0]]	
+id	in	out
+finishes-well-inside-the-deadline-so-the-value	TimeConstrained(Sum(k, Tuple(k, 1, 10)), 1)	55
+factoring-a-30-digit-semiprime-outruns-a-50-ms	TimeConstrained(FactorInteger(1001000000000040037000000000111), 0.05)	Aborted
+a-custom-failexpr-replaces-the-default-aborted	TimeConstrained(FactorInteger(1001000000000040037000000000111), 0.05, -1)	-1
+an-infinite-time-limit-imposes-no-constraint	TimeConstrained(Add(1, 2), PositiveInfinity)	3
+failexpr-is-held-it-is-never-evaluated-when-expr	TimeConstrained(Add(2, 3), 1, Divide(1, 0))	5

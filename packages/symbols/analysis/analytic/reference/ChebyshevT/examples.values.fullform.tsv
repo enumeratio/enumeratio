@@ -1,35 +1,35 @@
-id	in	back
-the-cubic	ChebyshevT[3, x]	
-the-quartic	ChebyshevT[4, x]	
-at-an-integer	ChebyshevT[5, 2]	
-at-a-real	ChebyshevT[5, 0.7]	
-at-t0-0-7	N[ChebyshevT[0, 0.7]]	
-at-t1-0-7	N[ChebyshevT[1, 0.7]]	
-at-t2-0-7	N[ChebyshevT[2, 0.7]]	
-at-t5-0-7	N[ChebyshevT[5, 0.7]]	
-at-t5-2	N[ChebyshevT[5, 2]]	
-at-t-5-0-7	N[ChebyshevT[-5, 0.7]]	
-at-t4-2-3i	N[ChebyshevT[4, Complex[2, 3]]]	
-chebyshevt-2-3	ChebyshevT[2, 3]	
-chebyshevt-10-x	ChebyshevT[10, x]	
-at-a-rational	ChebyshevT[5, Rational[1, 3]]	
-at-a-complex-argument	ChebyshevT[4, Complex[2, 3]]	
-a-symbolic-order-stays-unevaluated	ChebyshevT[n, x]	
-chebyshevt-2-5	ChebyshevT[2, 5]	
-chebyshevt-0-0	ChebyshevT[0, 0]	
-chebyshevt-0-positiveinfinity	ChebyshevT[0, Infinity]	
-chebyshevt-7-x	ChebyshevT[7, x]	
-chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	Equal[ChebyshevT[1, Minus[x]], Minus[ChebyshevT[1, x]]]	
-chebyshevt-2-neg-x-eq-chebyshevt-2-x	Equal[ChebyshevT[2, Minus[x]], ChebyshevT[2, x]]	
-matrixfunction-function-chebyshevt-2-1-1-list	MatrixFunction[Function[ChebyshevT[2, Slot[1]]], List[List[1, 2], List[3, 4]]]	[MatrixFunction, [Function, [ChebyshevT, 2, _1]], [List, [List, 1, 2], [List, 3, 4]]]
-cos-n-theta	Equal[ChebyshevT[6, Rational[1, 2]], Cos[Times[6, Divide[Pi, 3]]]]	
-at-1	ChebyshevT[7, 1]	
-at-minus-1	ChebyshevT[7, -1]	
-parity	Equal[ChebyshevT[5, Rational[-1, 3]], Minus[ChebyshevT[5, Rational[1, 3]]]]	
-negative-order	ChebyshevT[-3, x]	
-pell-identity	Subtract[Power[ChebyshevT[4, 3], 2], Times[8, Power[ChebyshevU[3, 3], 2]]]	
-chebyshevt-0-1	ChebyshevT[0, 1]	
-chebyshevt-1-positiveinfinity	ChebyshevT[1, Infinity]	
-chebyshevt-1-negativeinfinity	ChebyshevT[1, -Infinity]	
-chebyshevt-2-positiveinfinity	ChebyshevT[2, Infinity]	
-chebyshevt-2-negativeinfinity	ChebyshevT[2, -Infinity]	
+id	in	out
+the-cubic	ChebyshevT(3, x)	Add(Multiply(4, Power(x, 3)), Multiply(-3, x))
+the-quartic	ChebyshevT(4, x)	Add(Multiply(8, Power(x, 4)), Multiply(-8, Power(x, 2)), 1)
+at-an-integer	ChebyshevT(5, 2)	362
+at-a-real	ChebyshevT(5, 0.7)	-0.6708799999999998
+at-t0-0-7	N(ChebyshevT(0, 0.7))	1
+at-t1-0-7	N(ChebyshevT(1, 0.7))	0.7
+at-t2-0-7	N(ChebyshevT(2, 0.7))	-0.02000000000000013
+at-t5-0-7	N(ChebyshevT(5, 0.7))	-0.6708799999999998
+at-t5-2	N(ChebyshevT(5, 2))	362
+at-t-5-0-7	N(ChebyshevT(-5, 0.7))	-0.6708799999999998
+at-t4-2-3i	N(ChebyshevT(4, Complex(2, 3)))	Complex(-911.0, -1056.0)
+chebyshevt-2-3	ChebyshevT(2, 3)	17
+chebyshevt-10-x	ChebyshevT(10, x)	Add(Multiply(512, Power(x, 10)), Multiply(-1280, Power(x, 8)), Multiply(1120, Power(x, 6)), Multiply(-400, Power(x, 4)), Multiply(50, Power(x, 2)), -1)
+at-a-rational	ChebyshevT(5, Rational(1, 3))	Rational(241, 243)
+at-a-complex-argument	ChebyshevT(4, Complex(2, 3))	Complex(-911, -1056)
+a-symbolic-order-stays-unevaluated	ChebyshevT(n, x)	ChebyshevT(n, x)
+chebyshevt-2-5	ChebyshevT(2, 5)	49
+chebyshevt-0-0	ChebyshevT(0, 0)	1
+chebyshevt-0-positiveinfinity	ChebyshevT(0, PositiveInfinity)	1
+chebyshevt-7-x	ChebyshevT(7, x)	Add(Multiply(64, Power(x, 7)), Multiply(-112, Power(x, 5)), Multiply(56, Power(x, 3)), Multiply(-7, x))
+chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	Equal(ChebyshevT(1, Negate(x)), Negate(ChebyshevT(1, x)))	True
+chebyshevt-2-neg-x-eq-chebyshevt-2-x	Equal(ChebyshevT(2, Negate(x)), ChebyshevT(2, x))	True
+matrixfunction-function-chebyshevt-2-1-1-list	MatrixFunction(Function(Block(ChebyshevT(2, _1)), _1), List(List(1, 2), List(3, 4)))	List(List(Add(Multiply(Negate(Divide(Sqrt(33), 132)), Add(-3, Negate(Sqrt(33))), Add(-2, Power(Add(5, Negate(Sqrt(33))), 2))), Multiply(Divide(Sqrt(33), 132), Add(-3, Sqrt(33)), Add(-2, Power(Add(5, Sqrt(33)), 2)))), Add(Multiply(Negate(Divide(Sqrt(33), 33)), Power(Add(5, Negate(Sqrt(33))), 2)), Multiply(Divide(Sqrt(33), 33), Power(Add(5, Sqrt(33)), 2)))), List(Add(Multiply(Negate(Divide(Sqrt(33), 22)), Power(Add(5, Negate(Sqrt(33))), 2)), Multiply(Divide(Sqrt(33), 22), Power(Add(5, Sqrt(33)), 2))), Add(Multiply(Negate(Divide(Sqrt(33), 132)), Add(-2, Power(Add(5, Negate(Sqrt(33))), 2)), Add(3, Negate(Sqrt(33)))), Multiply(Divide(Sqrt(33), 132), Add(-2, Power(Add(5, Sqrt(33)), 2)), Add(3, Sqrt(33))))))
+cos-n-theta	Equal(ChebyshevT(6, Rational(1, 2)), Cos(Multiply(6, Divide(Pi, 3))))	True
+at-1	ChebyshevT(7, 1)	1
+at-minus-1	ChebyshevT(7, -1)	-1
+parity	Equal(ChebyshevT(5, Rational(-1, 3)), Negate(ChebyshevT(5, Rational(1, 3))))	True
+negative-order	ChebyshevT(-3, x)	Add(Multiply(4, Power(x, 3)), Multiply(-3, x))
+pell-identity	Subtract(Power(ChebyshevT(4, 3), 2), Multiply(8, Power(ChebyshevU(3, 3), 2)))	1
+chebyshevt-0-1	ChebyshevT(0, 1)	1
+chebyshevt-1-positiveinfinity	ChebyshevT(1, PositiveInfinity)	PositiveInfinity
+chebyshevt-1-negativeinfinity	ChebyshevT(1, NegativeInfinity)	NegativeInfinity
+chebyshevt-2-positiveinfinity	ChebyshevT(2, PositiveInfinity)	PositiveInfinity
+chebyshevt-2-negativeinfinity	ChebyshevT(2, NegativeInfinity)	PositiveInfinity

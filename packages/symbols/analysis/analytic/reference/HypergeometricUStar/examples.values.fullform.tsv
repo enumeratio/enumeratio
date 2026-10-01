@@ -1,8 +1,8 @@
-id	in
-u-frac-12-frac-32-2-1	Chop[Subtract[N[HypergeometricUStar[Rational[1, 2], Rational[3, 2], 2]], 1]]
-a-generic-point-checked-against-mpmath-s-hyperu	HypergeometricUStar[1.3, 2.7, 4]
-a-complex-point-checked-against-mpmath-s-hyperu	HypergeometricUStar[1, 2.5, Complex[3, 1]]
-another-point-checked-against-mpmath-s-hyperu	HypergeometricUStar[0.2, 0.6, 1.5]
-a-third-point-checked-against-mpmath-s-hyperu	HypergeometricUStar[2, 4.5, 5]
-a-negative-a-checked-against-mpmath-s-hyperu	HypergeometricUStar[-0.5, 1.5, 2]
-integer-b-stays-symbolic-the-connection-formula	HypergeometricUStar[1, 2, 3]
+id	in	out
+u-frac-12-frac-32-2-1	Chop(Subtract(N(HypergeometricUStar(Rational(1, 2), Rational(3, 2), 2)), 1))	0.0
+a-generic-point-checked-against-mpmath-s-hyperu	HypergeometricUStar(1.3, 2.7, 4)	1.1137052905867906
+a-complex-point-checked-against-mpmath-s-hyperu	HypergeometricUStar(1, 2.5, Complex(3, 1))	Complex(1.1347341768643813, -0.04036080125312244)
+another-point-checked-against-mpmath-s-hyperu	HypergeometricUStar(0.2, 0.6, 1.5)	0.94573733904295
+a-third-point-checked-against-mpmath-s-hyperu	HypergeometricUStar(2, 4.5, 5)	1.680941114165958
+a-negative-a-checked-against-mpmath-s-hyperu	HypergeometricUStar(-0.5, 1.5, 2)	0.75
+integer-b-stays-symbolic-the-connection-formula	HypergeometricUStar(1, 2, 3)	HypergeometricUStar(1, 2, 3)

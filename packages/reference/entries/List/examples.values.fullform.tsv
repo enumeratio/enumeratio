@@ -1,13 +1,13 @@
-id	in	back
-2-times-list-1-2-3	Times[2, List[1, 2, 3]]	
-a-times-list-list-1-2-list-3-4	Times[a, List[List[1, 2], List[3, 4]]]	
-exponentiale-pow-list-list-1-2-3-list-4-5-6	Power[E, List[List[1, 2, 3], List[4, 5, 6]]]	
-outer-f-list-1-2-list-a-b-c	Outer[f, List[1, 2], List[a, b, c]]	
-prepend-list-1-2-3-list-a-b-c	Prepend[List[1, 2, 3], List[a, b, c]]	
-flatten-list-list-1-2-list-a-b-c	Flatten[List[List[1, 2], List[a, b, c]]]	
-map-f-list-1-2-3-4	Map[f, List[1, 2, 3, 4]]	
-list-a-b-c-plus-list-1-2-3	Plus[List[a, b, c], List[1, 2, 3]]	
-subsets-list-1-2-3	Subsets[List[1, 2, 3]]	
-solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y	Solve[List[Equal[Plus[x, Times[-1, y]], 1], Equal[Plus[x, y], 0]], List[x, y]]	[Solve, [List, [Equal, [Add, x, [Multiply, -1, y]], 1], [Equal, [Add, x, y], 0]], [List, x, y]]
+id	in	out
+2-times-list-1-2-3	Multiply(2, List(1, 2, 3))	List(2, 4, 6)
+a-times-list-list-1-2-list-3-4	Multiply(a, List(List(1, 2), List(3, 4)))	List(List(a, Multiply(2, a)), List(Multiply(3, a), Multiply(4, a)))
+exponentiale-pow-list-list-1-2-3-list-4-5-6	Power(ExponentialE, List(List(1, 2, 3), List(4, 5, 6)))	List(List(ExponentialE, Power(ExponentialE, 2), Power(ExponentialE, 3)), List(Power(ExponentialE, 4), Power(ExponentialE, 5), Power(ExponentialE, 6)))
+outer-f-list-1-2-list-a-b-c	Outer(f, List(1, 2), List(a, b, c))	List(List(f(1, a), f(1, b), f(1, c)), List(f(2, a), f(2, b), f(2, c)))
+prepend-list-1-2-3-list-a-b-c	Prepend(List(1, 2, 3), List(a, b, c))	List(List(a, b, c), 1, 2, 3)
+flatten-list-list-1-2-list-a-b-c	Flatten(List(List(1, 2), List(a, b, c)))	List(1, 2, a, b, c)
+map-f-list-1-2-3-4	Map(f, List(1, 2, 3, 4))	List(f(1), f(2), f(3), f(4))
+list-a-b-c-plus-list-1-2-3	Add(List(a, b, c), List(1, 2, 3))	List(Add(a, 1), Add(b, 2), Add(c, 3))
+subsets-list-1-2-3	Subsets(List(1, 2, 3))	List(List(), List(1), List(2), List(1, 2), List(3), List(1, 3), List(2, 3), List(1, 2, 3))
+solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y	Solve(List(Equal(Add(x, Multiply(-1, y)), 1), Equal(Add(x, y), 0)), x, y)	List(Tuple(Rational(1, 2), Rational(-1, 2)))
 map-f-list-list-1-2-list-3-4-list-5-6-list-2		
-solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y	Solve[List[Equal[Plus[x, y, z], 0], Equal[Plus[x, y], 1], Equal[Plus[y, z], 2]], List[x, y, z]]	[Solve, [List, [Equal, [Add, x, y, z], 0], [Equal, [Add, x, y], 1], [Equal, [Add, y, z], 2]], [List, x, y, z]]
+solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y	Solve(List(Equal(Add(x, y, z), 0), Equal(Add(x, y), 1), Equal(Add(y, z), 2)), x, y, z)	List(Tuple(-2, 3, -1))

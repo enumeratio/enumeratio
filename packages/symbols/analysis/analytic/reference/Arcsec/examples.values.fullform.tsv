@@ -1,24 +1,24 @@
-id	in	back
-arcsec-1	ArcSec[1]	
-arcsec-2	ArcSec[2]	
-arcsec-sqrt-2-pi-4	ArcSec[Sqrt[2]]	
-arcsec-neg-1	ArcSec[-1]	
-arcsec-2-2-pi-3	ArcSec[-2]	
-inside-1-1-the-value-is-purely-imaginary	ArcSec[0.5]	
-arcsec-positiveinfinity	ArcSec[Infinity]	
-a-pole-arcsec-0-is-complex-infinity	ArcSec[0]	
-derivative-for-real-x-1	D[ArcSec[x], x]	
-n-arcsec-5-50	N[ArcSec[5], 50]	
-arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	ArcSec[List[List[Sqrt[2], Minus[Sqrt[2]]], List[0, Minus[Sqrt[2]]]]]	
-arcsec-2-over-3-times-sqrt-3	ArcSec[Times[Rational[2, 3], Sqrt[3]]]	
-arcsec-complexinfinity	ArcSec[ComplexInfinity]	
-matrixfunction-function-arcsec-1-1-list-list	MatrixFunction[Function[ArcSec[Slot[1]]], List[List[Sqrt[2], Minus[Sqrt[2]]], List[0, Minus[Sqrt[2]]]]]	[MatrixFunction, [Function, [Arcsec, _1]], [List, [List, [Sqrt, 2], [Negate, [Sqrt, 2]]], [List, 0, [Negate, [Sqrt, 2]]]]]
-undoes-sec-sec-arcsec-x-x	Equal[Sec[ArcSec[2]], 2]	
-arcsec-neg-sqrt-2-plus-sqrt-6	ArcSec[Plus[Minus[Sqrt[2]], Sqrt[6]]]	
-arcsec-neg-sqrt-6-plus-sqrt-2	ArcSec[Plus[Minus[Sqrt[6]], Sqrt[2]]]	
-arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	ArcSec[Times[2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	
-arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	ArcSec[Times[-2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	
-arcsec-neg-2-over-3-times-sqrt-3	ArcSec[Times[Rational[-2, 3], Sqrt[3]]]	
-arcsec-neg-1-plus-sqrt-5	ArcSec[Plus[-1, Sqrt[5]]]	
-arcsec-1-minus-sqrt-5	ArcSec[Plus[1, Minus[Sqrt[5]]]]	
-arcsec-neg-sqrt-2	ArcSec[Minus[Sqrt[2]]]	
+id	in	out
+arcsec-1	Arcsec(1)	0
+arcsec-2	Arcsec(2)	Multiply(Rational(1, 3), Pi)
+arcsec-sqrt-2-pi-4	Arcsec(Sqrt(2))	Multiply(Rational(1, 4), Pi)
+arcsec-neg-1	Arcsec(-1)	Pi
+arcsec-2-2-pi-3	Arcsec(-2)	Multiply(Rational(2, 3), Pi)
+inside-1-1-the-value-is-purely-imaginary	Arcsec(0.5)	Complex(0, 1.3169578969248166)
+arcsec-positiveinfinity	Arcsec(PositiveInfinity)	Multiply(Rational(1, 2), Pi)
+a-pole-arcsec-0-is-complex-infinity	Arcsec(0)	ComplexInfinity
+derivative-for-real-x-1	D(Arcsec(x), x)	Divide(1, Multiply(Abs(x), Sqrt(Add(Power(x, 2), -1))))
+n-arcsec-5-50	N(Arcsec(5), 50)	1.3694384060045658277761961394221280318585466182853
+arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	Arcsec(List(List(Sqrt(2), Negate(Sqrt(2))), List(0, Negate(Sqrt(2)))))	List(List(Multiply(Rational(1, 4), Pi), Multiply(Rational(3, 4), Pi)), List(ComplexInfinity, Multiply(Rational(3, 4), Pi)))
+arcsec-2-over-3-times-sqrt-3	Arcsec(Multiply(Rational(2, 3), Sqrt(3)))	Multiply(Rational(1, 6), Pi)
+arcsec-complexinfinity	Arcsec(ComplexInfinity)	Multiply(Rational(1, 2), Pi)
+matrixfunction-function-arcsec-1-1-list-list	MatrixFunction(Function(Block(Arcsec(_1)), _1), List(List(Sqrt(2), Negate(Sqrt(2))), List(0, Negate(Sqrt(2)))))	List(List(Multiply(Rational(1, 4), Pi), Multiply(Rational(1, 4), Pi)), List(0, Multiply(Rational(3, 4), Pi)))
+undoes-sec-sec-arcsec-x-x	Equal(Sec(Arcsec(2)), 2)	True
+arcsec-neg-sqrt-2-plus-sqrt-6	Arcsec(Add(Negate(Sqrt(2)), Sqrt(6)))	Multiply(Rational(1, 12), Pi)
+arcsec-neg-sqrt-6-plus-sqrt-2	Arcsec(Add(Negate(Sqrt(6)), Sqrt(2)))	Multiply(Rational(11, 12), Pi)
+arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	Arcsec(Multiply(2, Sqrt(Divide(1, Add(2, Sqrt(2))))))	Arcsec(Divide(2, Sqrt(Add(2, Sqrt(2)))))
+arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	Arcsec(Multiply(-2, Sqrt(Divide(1, Add(2, Sqrt(2))))))	Arcsec(Divide(-2, Sqrt(Add(2, Sqrt(2)))))
+arcsec-neg-2-over-3-times-sqrt-3	Arcsec(Multiply(Rational(-2, 3), Sqrt(3)))	Multiply(Rational(5, 6), Pi)
+arcsec-neg-1-plus-sqrt-5	Arcsec(Add(-1, Sqrt(5)))	Multiply(Rational(1, 5), Pi)
+arcsec-1-minus-sqrt-5	Arcsec(Add(1, Negate(Sqrt(5))))	Multiply(Rational(4, 5), Pi)
+arcsec-neg-sqrt-2	Arcsec(Negate(Sqrt(2)))	Multiply(Rational(3, 4), Pi)

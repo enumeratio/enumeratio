@@ -1,4 +1,4 @@
-id	in
-deconcatenation-cut-at-each-gap	Coproduct[QSymM[List[1, 2]]]
-delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes	Coproduct[NSymH[List[2]]]
-the-counit-picks-out-the-constant-term	Counit[NSymH[List[]]]
+id	in	out
+deconcatenation-cut-at-each-gap	Coproduct(QSymM(List(1, 2)))	Add(HopfTensor(QSymM(List()), QSymM(List(1, 2))), HopfTensor(QSymM(List(1, 2)), QSymM(List())), HopfTensor(QSymM(List(1)), QSymM(List(2))))
+delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes	Coproduct(NSymH(List(2)))	Add(HopfTensor(NSymH(List()), NSymH(List(2))), HopfTensor(NSymH(List(2)), NSymH(List())), HopfTensor(NSymH(List(1)), NSymH(List(1))))
+the-counit-picks-out-the-constant-term	Counit(NSymH(List()))	1

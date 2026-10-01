@@ -1,11 +1,11 @@
-id	in	back
-tabulate-function-1-pow-2-5	Array[Function[Power[Slot[1], 2]], 5]	[Array, [Function, [Power, _1, 2]], 5]
-a-symbolic-function-shows-the-indices	Array[f, 3]	[Array, f, 3]
-the-multi-dimensional-form-a-rectangular-grid	Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]	[Array, [Function, [Multiply, _1, _2]], [List, 2, 2]]
-a-2-3-grid	Array[f, List[2, 3]]	[Array, f, [List, 2, 3]]
-tabulate-add-2-2	Array[Plus, List[2, 2]]	[Array, Add, [List, 2, 2]]
-three-dimensions-give-a-2-2-2-array	Array[f, List[2, 2, 2]]	[Array, f, [List, 2, 2, 2]]
-length-0-gives-the-empty-list	Array[f, 0]	[Array, f, 0]
-the-3-3-hilbert-matrix-1-i-j-1	Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]	[Array, [Function, [Divide, 1, [Subtract, [Add, _1, _2], 1]]], [List, 3, 3]]
-the-3-3-identity-matrix	Array[Function[If[Equal[Slot[1], Slot[2]], 1, 0]], List[3, 3]]	[Array, [Function, [If, [Equal, _1, _2], 1, 0]], [List, 3, 3]]
-pascal-s-triangle-as-a-lower-triangular-matrix	Array[Binomial, List[3, 3]]	[Array, Binomial, [List, 3, 3]]
+id	in	out
+tabulate-function-1-pow-2-5	Tabulate(Function(Power(_1, 2)), 5)	List(1, 4, 9, 16, 25)
+a-symbolic-function-shows-the-indices	Tabulate(f, 3)	List(f(1), f(2), f(3))
+the-multi-dimensional-form-a-rectangular-grid	Tabulate(Function(Multiply(_1, _2)), 2, 2)	List(List(1, 2), List(2, 4))
+a-2-3-grid	Tabulate(f, 2, 3)	List(List(f(1, 1), f(1, 2), f(1, 3)), List(f(2, 1), f(2, 2), f(2, 3)))
+tabulate-add-2-2	Tabulate(Add, 2, 2)	List(List(2, 3), List(3, 4))
+three-dimensions-give-a-2-2-2-array	Tabulate(f, 2, 2, 2)	List(List(List(f(1, 1, 1), f(1, 1, 2)), List(f(1, 2, 1), f(1, 2, 2))), List(List(f(2, 1, 1), f(2, 1, 2)), List(f(2, 2, 1), f(2, 2, 2))))
+length-0-gives-the-empty-list	Tabulate(f, 0)	List()
+the-3-3-hilbert-matrix-1-i-j-1	Tabulate(Function(Divide(1, Subtract(Add(_1, _2), 1))), 3, 3)	List(List(1, Rational(1, 2), Rational(1, 3)), List(Rational(1, 2), Rational(1, 3), Rational(1, 4)), List(Rational(1, 3), Rational(1, 4), Rational(1, 5)))
+the-3-3-identity-matrix	Tabulate(Function(If(Equal(_1, _2), 1, 0)), 3, 3)	List(List(1, 0, 0), List(0, 1, 0), List(0, 0, 1))
+pascal-s-triangle-as-a-lower-triangular-matrix	Tabulate(Binomial, 3, 3)	List(List(1, 0, 0), List(2, 1, 0), List(3, 3, 1))

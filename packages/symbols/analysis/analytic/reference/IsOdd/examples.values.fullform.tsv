@@ -1,18 +1,18 @@
-id	in
-isodd-3	OddQ[3]
-isodd-4	OddQ[4]
-negative-integers-count-too	OddQ[-7]
-isodd-0	OddQ[0]
-isodd-9	OddQ[9]
-a-non-integer-is-not-odd	OddQ[3.5]
-isodd-1-over-3	OddQ[Rational[1, 3]]
-big-integers	OddQ[Plus[Power[2, 100], 1]]
-pi-is-known-not-to-be-an-integer-so-it-is	OddQ[Pi]
-threads-element-wise-over-a-list	OddQ[List[1, 2, 3]]
-select-the-odd-numbers-up-to-10	Select[Range[10], OddQ]
-isvector-list-1-5-7-11-isodd	VectorQ[List[1, 5, 7, 11], OddQ]
-isvector-list-2-5-7-11-isodd	VectorQ[List[2, 5, 7, 11], OddQ]
-an-integer-is-odd-exactly-when-it-is-not-even	Equal[OddQ[7], Not[EvenQ[7]]]
-isodd-2	OddQ[2]
-isodd-15	OddQ[15]
-a-symbol-stays-undecided-rather-than-false	OddQ[x]
+id	in	out
+isodd-3	IsOdd(3)	True
+isodd-4	IsOdd(4)	False
+negative-integers-count-too	IsOdd(-7)	True
+isodd-0	IsOdd(0)	False
+isodd-9	IsOdd(9)	True
+a-non-integer-is-not-odd	IsOdd(3.5)	False
+isodd-1-over-3	IsOdd(Rational(1, 3))	False
+big-integers	IsOdd(Add(Power(2, 100), 1))	True
+pi-is-known-not-to-be-an-integer-so-it-is	IsOdd(Pi)	False
+threads-element-wise-over-a-list	IsOdd(List(1, 2, 3))	List(True, False, True)
+select-the-odd-numbers-up-to-10	Filter(Range(10), IsOdd)	List(1, 3, 5, 7, 9)
+isvector-list-1-5-7-11-isodd	IsVector(List(1, 5, 7, 11), IsOdd)	True
+isvector-list-2-5-7-11-isodd	IsVector(List(2, 5, 7, 11), IsOdd)	False
+an-integer-is-odd-exactly-when-it-is-not-even	Equal(IsOdd(7), Not(IsEven(7)))	True
+isodd-2	IsOdd(2)	False
+isodd-15	IsOdd(15)	True
+a-symbol-stays-undecided-rather-than-false	IsOdd(x)	IsOdd(x)

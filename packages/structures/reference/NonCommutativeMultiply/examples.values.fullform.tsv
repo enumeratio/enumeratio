@@ -1,15 +1,15 @@
-id	in
-the-canonical-order	NonCommutativeMultiply[Subscript[e, 1], Subscript[e, 2]]
-noncommutativemultiply-a-b-c-eq	Equal[NonCommutativeMultiply[a, b, c], NonCommutativeMultiply[a, b, c]]
-list-a-times-b-eq-a-times-b	
-scalars-the-implied-identity-factor	CircleTimes[2, 3]
-commuting-units-agrees-with-times	CircleTimes[Subscript[i, 2], Subscript[i, 1]]
-the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	NonCommutativeMultiply[Plus[1, Times[2, Subscript[f, 1]], Times[3, Subscript[f, 2]], Times[4, Subscript[f, 1], Subscript[f, 2]]], Plus[2, Minus[Subscript[f, 1]], Subscript[f, 2], Times[-3, Subscript[f, 1], Subscript[f, 2]]]]
-reversing-the-operands-flips-the-sign	NonCommutativeMultiply[Subscript[e, 2], Subscript[e, 1]]
-e-1e-2-2-1	NonCommutativeMultiply[Subscript[e, 1], Subscript[e, 2], Subscript[e, 1], Subscript[e, 2]]
-associative-nested-products-flatten	NonCommutativeMultiply[a, NonCommutativeMultiply[b, c]]
-undeclared-symbols-are-taken-to-commute-so-the	NonCommutativeMultiply[b, a]
-list-noncommutativemultiply-0-a	
-neg-a-times-c-plus-noncommutativemultiply-a-plus	
-plain-times-declines-both-orders-arrive	Times[Subscript[e, 2], Subscript[e, 1]]
-noncommutativemultiply-a	NonCommutativeMultiply[a]
+id	in	out
+the-canonical-order	NonCommutativeMultiply(e_1, e_2)	Multiply(e_1, e_2)
+noncommutativemultiply-a-b-c-eq	Equal(NonCommutativeMultiply(a, b, c), NonCommutativeMultiply(a, b, c))	True
+list-a-times-b-eq-a-times-b		
+scalars-the-implied-identity-factor	CircleTimes(2, 3)	6
+commuting-units-agrees-with-times	CircleTimes(i_2, i_1)	Multiply(i_1, i_2)
+the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	NonCommutativeMultiply(Add(1, Multiply(2, f_1), Multiply(3, f_2), Multiply(4, f_1, f_2)), Add(2, Negate(f_1), f_2, Multiply(-3, f_1, f_2)))	Add(Multiply(10, f_1, f_2), Multiply(-10, f_1), Multiply(9, f_2), 13)
+reversing-the-operands-flips-the-sign	NonCommutativeMultiply(e_2, e_1)	Negate(Multiply(e_1, e_2))
+e-1e-2-2-1	NonCommutativeMultiply(e_1, e_2, e_1, e_2)	-1
+associative-nested-products-flatten	NonCommutativeMultiply(a, NonCommutativeMultiply(b, c))	NonCommutativeMultiply(a, b, c)
+undeclared-symbols-are-taken-to-commute-so-the	NonCommutativeMultiply(b, a)	NonCommutativeMultiply(b, a)
+list-noncommutativemultiply-0-a		
+neg-a-times-c-plus-noncommutativemultiply-a-plus		
+plain-times-declines-both-orders-arrive	Multiply(e_2, e_1)	Multiply(e_1, e_2)
+noncommutativemultiply-a	NonCommutativeMultiply(a)	a

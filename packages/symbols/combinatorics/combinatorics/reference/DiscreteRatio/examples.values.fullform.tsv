@@ -1,31 +1,31 @@
-id	in
-factorial-ratio	DiscreteRatio[Factorial[n], n]
-geometric-ratio	DiscreteRatio[Power[2, n], n]
-discreteratio-r-pow-k-k	DiscreteRatio[Power[r, k], k]
-discreteratio-pochhammer-x-k-k	DiscreteRatio[Pochhammer[x, k], k]
-discreteratio-x-pow-2-x	DiscreteRatio[Power[x, 2], x]
-discreteratio-x-minus-r-1-times-x-minus-r-2-x	DiscreteRatio[Times[Plus[x, Times[-1, Subscript[r, 1]]], Plus[x, Times[-1, Subscript[r, 2]]]], x]
-discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	DiscreteRatio[Times[Plus[1, x], Power[Plus[1, Power[x, 2]], -1]], x]
-discreteratio-x-minus-r-1-times-x-minus-r-2	DiscreteRatio[Times[Plus[x, Times[-1, Subscript[r, 1]]], Plus[x, Times[-1, Subscript[r, 2]]], Power[Times[Plus[x, Times[-1, Subscript[p, 1]]], Plus[x, Times[-1, Subscript[p, 2]]]], -1]], x]
-discreteratio-fallingfactorial-a-x-x	DiscreteRatio[FactorialPower[a, x], x]
-discreteratio-pochhammer-a-x-x	DiscreteRatio[Pochhammer[a, x], x]
-discreteratio-x-factorial-x	DiscreteRatio[Factorial[x], x]
-discreteratio-gamma-x-x	DiscreteRatio[Gamma[x], x]
-discreteratio-binomial-x-k-x	DiscreteRatio[Binomial[x, k], x]
-discreteratio-binomial-n-x-x	DiscreteRatio[Binomial[n, x], x]
-discreteratio-r-pow-x-x	DiscreteRatio[Power[r, x], x]
-discreteratio-fallingfactorial-x-a-1-times	DiscreteRatio[Times[Times[FactorialPower[x, Subscript[a, 1]], Binomial[x, Subscript[a, 2]], Power[Times[Pochhammer[x, Subscript[b, 1]], Factorial[x]], -1]], Power[r, x]], x]
-discreteratio-catalannumber-x-x	DiscreteRatio[CatalanNumber[x], x]
-list-discreteratio-f-n-discreteratio-f-k	List[DiscreteRatio[f, n], DiscreteRatio[f, k]]
-discreteratio-gammaregularized-n-z-n	DiscreteRatio[GammaRegularized[n, z], n]
-list-discreteratio-binomial-n-k-n-discreteratio	List[DiscreteRatio[Binomial[n, k], n], DiscreteRatio[Binomial[n, k], k]]
-discreteratio-a-times-q-pow-x-plus-b-times-q-pow	
-discreteratio-q-pow-x-minus-r-1-times-q-pow-x	
-discreteratio-a-times-q-pow-x-plus-b-times-q-p-2	
-discreteratio-q-pow-x-minus-r-1-times-q-pow-x-2	
-discreteratio-qpochhammer-a-q-x-x	
-discreteratio-qbinomial-a-x-q-times-qfactorial-x	
-discreteratio-barnesg-x-x	
-discreteratio-hyperfactorial-x-x	
-discreteratio-betaregularized-z-n-m-m	
-discreteratio-c-pow-a-times-k-plus-b-k	DiscreteRatio[Power[c, Plus[Times[a, k], b]], k]
+id	in	out
+factorial-ratio	DiscreteRatio(Factorial(n), n)	Add(n, 1)
+geometric-ratio	DiscreteRatio(Power(2, n), n)	2
+discreteratio-r-pow-k-k	DiscreteRatio(Power(r, k), k)	r
+discreteratio-pochhammer-x-k-k	DiscreteRatio(Pochhammer(x, k), k)	Divide(Pochhammer(x, Add(k, 1)), Pochhammer(x, k))
+discreteratio-x-pow-2-x	DiscreteRatio(Power(x, 2), x)	Divide(Power(Add(x, 1), 2), Power(x, 2))
+discreteratio-x-minus-r-1-times-x-minus-r-2-x	DiscreteRatio(Multiply(Add(x, Multiply(-1, r_1)), Add(x, Multiply(-1, r_2))), x)	Divide(Multiply(Add(Negate(r_1), x, 1), Add(Negate(r_2), x, 1)), Multiply(Add(Negate(r_1), x), Add(Negate(r_2), x)))
+discreteratio-1-plus-x-times-1-plus-x-pow-2-pow	DiscreteRatio(Multiply(Add(1, x), Power(Add(1, Power(x, 2)), -1)), x)	Divide(Add(Power(x, 3), Multiply(2, Power(x, 2)), x, 2), Multiply(Add(x, 1), Add(Power(Add(x, 1), 2), 1)))
+discreteratio-x-minus-r-1-times-x-minus-r-2	DiscreteRatio(Multiply(Add(x, Multiply(-1, r_1)), Add(x, Multiply(-1, r_2)), Power(Multiply(Add(x, Multiply(-1, p_1)), Add(x, Multiply(-1, p_2))), -1)), x)	Divide(Multiply(Add(Negate(r_1), x, 1), Add(Negate(r_2), x, 1), Add(Negate(p_1), x), Add(Negate(p_2), x)), Multiply(Add(Negate(p_1), x, 1), Add(Negate(p_2), x, 1), Add(Negate(r_1), x), Add(Negate(r_2), x)))
+discreteratio-fallingfactorial-a-x-x	DiscreteRatio(FallingFactorial(a, x), x)	Divide(FallingFactorial(a, Add(x, 1)), FallingFactorial(a, x))
+discreteratio-pochhammer-a-x-x	DiscreteRatio(Pochhammer(a, x), x)	Divide(Pochhammer(a, Add(x, 1)), Pochhammer(a, x))
+discreteratio-x-factorial-x	DiscreteRatio(Factorial(x), x)	Add(x, 1)
+discreteratio-gamma-x-x	DiscreteRatio(Gamma(x), x)	Divide(Gamma(Add(x, 1)), Gamma(x))
+discreteratio-binomial-x-k-x	DiscreteRatio(Binomial(x, k), x)	Divide(Binomial(Add(x, 1), k), Binomial(x, k))
+discreteratio-binomial-n-x-x	DiscreteRatio(Binomial(n, x), x)	Divide(Binomial(n, Add(x, 1)), Binomial(n, x))
+discreteratio-r-pow-x-x	DiscreteRatio(Power(r, x), x)	r
+discreteratio-fallingfactorial-x-a-1-times	DiscreteRatio(Multiply(Multiply(FallingFactorial(x, a_1), Binomial(x, a_2), Power(Multiply(Pochhammer(x, b_1), Factorial(x)), -1)), Power(r, x)), x)	Divide(Multiply(Factorial(x), Pochhammer(x, b_1), FallingFactorial(Add(x, 1), a_1), Binomial(Add(x, 1), a_2), Power(r, Add(x, 1))), Multiply(Factorial(Add(x, 1)), Pochhammer(Add(x, 1), b_1), FallingFactorial(x, a_1), Binomial(x, a_2), Power(r, x)))
+discreteratio-catalannumber-x-x	DiscreteRatio(CatalanNumber(x), x)	Divide(CatalanNumber(Add(x, 1)), CatalanNumber(x))
+list-discreteratio-f-n-discreteratio-f-k	List(DiscreteRatio(f, n), DiscreteRatio(f, k))	List(1, 1)
+discreteratio-gammaregularized-n-z-n	DiscreteRatio(GammaRegularized(n, z), n)	Divide(GammaRegularized(Add(n, 1), z), GammaRegularized(n, z))
+list-discreteratio-binomial-n-k-n-discreteratio	List(DiscreteRatio(Binomial(n, k), n), DiscreteRatio(Binomial(n, k), k))	List(Divide(Binomial(Add(n, 1), k), Binomial(n, k)), Divide(Binomial(n, Add(k, 1)), Binomial(n, k)))
+discreteratio-a-times-q-pow-x-plus-b-times-q-pow		
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x		
+discreteratio-a-times-q-pow-x-plus-b-times-q-p-2		
+discreteratio-q-pow-x-minus-r-1-times-q-pow-x-2		
+discreteratio-qpochhammer-a-q-x-x		
+discreteratio-qbinomial-a-x-q-times-qfactorial-x		
+discreteratio-barnesg-x-x		
+discreteratio-hyperfactorial-x-x		
+discreteratio-betaregularized-z-n-m-m		
+discreteratio-c-pow-a-times-k-plus-b-k	DiscreteRatio(Power(c, Add(Multiply(a, k), b)), k)	Power(c, a)

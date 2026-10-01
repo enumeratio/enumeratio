@@ -1,8 +1,8 @@
-id	in
-heavisidepi-inside	HeavisidePi[0]
-heavisidepi-boundary-unevaluated	HeavisidePi[Rational[1, 2]]
-heavisidepi-neg-boundary-unevaluated	HeavisidePi[Rational[-1, 2]]
-heavisidepi-outside	HeavisidePi[1]
-heavisidepi-neg-1	HeavisidePi[-1]
-heavisidepi-1-over-4	HeavisidePi[Rational[1, 4]]
-matrixfunction-heavisidepi-list-list-neg-1-0	MatrixFunction[HeavisidePi, List[List[-1, 0], List[0, 1]]]
+id	in	out
+heavisidepi-inside	HeavisidePi(0)	1
+heavisidepi-boundary-unevaluated	HeavisidePi(Rational(1, 2))	HeavisidePi(Rational(1, 2))
+heavisidepi-neg-boundary-unevaluated	HeavisidePi(Rational(-1, 2))	HeavisidePi(Rational(-1, 2))
+heavisidepi-outside	HeavisidePi(1)	0
+heavisidepi-neg-1	HeavisidePi(-1)	0
+heavisidepi-1-over-4	HeavisidePi(Rational(1, 4))	1
+matrixfunction-heavisidepi-list-list-neg-1-0	MatrixFunction(HeavisidePi, List(List(-1, 0), List(0, 1)))	List(List(0, 0), List(0, 0))

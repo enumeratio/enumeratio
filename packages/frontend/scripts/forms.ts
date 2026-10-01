@@ -1,8 +1,8 @@
 // How we write each reference example, as data (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2): the rows of
 // its implementations record that no kernel is needed for. Our own forms -- `epsil`, the
 // InputForm you can retype; `tex`, our TeX serialisation; `traditional`, the TraditionalForm
-// TeX where it differs; `fullform`, the Wolfram FullForm @enumeratio/wolfram writes, with
-// `back` wherever it doesn't read back as the example; `notatio`, the vdom as markup, with
+// TeX where it differs; `fullform`, the tree as Epsil with every head explicit, with `back`
+// wherever it doesn't read back as the example; `notatio`, the vdom as markup, with
 // `back` likewise -- and, for every other system, the `in` the oracle scan sends it.
 //
 // scripts/collect-forms.ts writes these into the records (`UPDATE_FORMS=1`), and
@@ -10,13 +10,14 @@
 
 import { isDeepStrictEqual } from "node:util";
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
+import { parseEpsil } from "@cortex-js/compute-engine/epsil";
 import type { ExampleImplementations, HeadImplementations, MathJSON, SystemImplementation } from "@enumeratio/entry";
+import { toFullForm } from "@enumeratio/formats/fullform";
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { markupOf, readMarkupText, stripMetadata } from "@enumeratio/formats/markup";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
-import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
 import { makeBoxes, notationOf } from "@enumeratio/boxes";
 import { toLatex } from "@enumeratio/boxes/render";
@@ -81,6 +82,30 @@ function inputFormBack(expr: MathJSON, printed: string): MathJSON | undefined {
   return reread === undefined ? "Unreadable" : (box(json as MathJSON).json as MathJSON);
 }
 
+/** What FullForm `printed` reads back as, uncanonicalised, where that is not `expr`. */
+export function fullFormBack(expr: MathJSON, printed: string): MathJSON | undefined {
+  const [json, errors] = parseEpsil(printed);
+  if (errors.length > 0) return "Unreadable";
+  const read = attempt(() => JSON.stringify(numbersAsValues(box(stripOffsets(json)).json)));
+  if (read === attempt(() => JSON.stringify(numbersAsValues(box(expr).json)))) return undefined;
+  return read === undefined ? "Unreadable" : (JSON.parse(read) as MathJSON);
+}
+
+const stripOffsets = (json: unknown): MathJSON =>
+  JSON.parse(JSON.stringify(json, (k, v: unknown) => (k === "sourceOffsets" ? undefined : v))) as MathJSON;
+
+// Digits a double holds exactly, so a `{num}` that short reads as the same plain number.
+const DOUBLE_DIGITS = 15;
+
+/** `json` with each short `{num}` as the plain number it is: Epsil reads `1e+30` as `{num}`. */
+function numbersAsValues(json: unknown): unknown {
+  if (Array.isArray(json)) return json.map(numbersAsValues);
+  const num = (json as { num?: unknown })?.num;
+  if (typeof num !== "string") return json;
+  const digits = num.replace(/^[+-]/, "").replace(/e.*$/i, "").replace(".", "").replace(/^0+/, "").length;
+  return digits <= DOUBLE_DIGITS && Number.isFinite(Number(num)) ? Number(num) : json;
+}
+
 /** Our own forms of one example, and each system's `in`, in the order a record lists them. */
 export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementations {
   const out: Record<string, SystemImplementation> = {};
@@ -98,18 +123,17 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
   const traditional = [attempt(() => traditionalOf(expr)), attempt(() => traditionalOf(expected))];
   if (traditional[0] !== undefined && (traditional[0] !== tex[0] || traditional[1] !== tex[1]))
     out.traditional = { in: traditional[0], ...(traditional[1] === undefined ? {} : { out: traditional[1] }) };
-  // FullForm, as @enumeratio/wolfram writes it, and what it reads back as where the trip loses
-  // something: the converter pair's round trip, over every example.
-  const full = attempt(() => toWolfram(expr as never));
-  if (full !== undefined) {
-    // A float too big for a double reads back as Infinity, which JSON can't hold.
-    const read = attempt(() =>
-      JSON.stringify(fromWolfram(full), (_k, v: unknown) =>
-        typeof v === "number" && !Number.isFinite(v) ? { num: String(v) } : v,
-      ),
-    );
-    const back = read === JSON.stringify(expr) ? undefined : read === undefined ? "Unreadable" : JSON.parse(read);
-    out.fullform = { in: full, ...(back === undefined ? {} : { back: back as MathJSON }) };
+  // FullForm: the tree as Epsil, every head explicit, with what `in` reads back as where the
+  // trip loses something (none should). `out` is the evaluated tree, so the two differ by what
+  // canonicalisation and evaluation did.
+  const full = [attempt(() => toFullForm(expr as never, ce)), attempt(() => toFullForm(expected as never, ce))];
+  if (full[0] !== undefined) {
+    const back = fullFormBack(expr, full[0]);
+    out.fullform = {
+      in: full[0],
+      ...(full[1] === undefined ? {} : { out: full[1] }),
+      ...(back === undefined ? {} : { back }),
+    };
   }
   // The vdom as markup, FullForm written as JSX, and what it reads back as where the trip
   // loses something: none should.

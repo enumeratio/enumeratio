@@ -1,4 +1,4 @@
-id	in	back
-count-noncrossingpartitions-4	Length[NonCrossingPartitions[4]]	[Length, [NonCrossingPartitions, 4]]
-first-element-of-noncrossingpartitions-4	Part[NonCrossingPartitions[4], 1]	
-every-element-of-noncrossingpartitions-4	Take[NonCrossingPartitions[4], 5]	
+id	in	out
+count-noncrossingpartitions-4	Count(NonCrossingPartitions(4))	14
+first-element-of-noncrossingpartitions-4	At(NonCrossingPartitions(4), 1)	SetPartition(List(List(1), List(2), List(3), List(4)))
+every-element-of-noncrossingpartitions-4	Take(NonCrossingPartitions(4), 5)	List(SetPartition(List(List(1), List(2), List(3), List(4))), SetPartition(List(List(1, 4), List(2), List(3))), SetPartition(List(List(1), List(2, 4), List(3))), SetPartition(List(List(1), List(2), List(3, 4))), SetPartition(List(List(1, 3), List(2), List(4))))

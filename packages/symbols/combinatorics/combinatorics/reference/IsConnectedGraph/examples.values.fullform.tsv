@@ -1,4 +1,4 @@
-id	in
-petersen-is-connected	ConnectedGraphQ[PetersenGraph[]]
-two-disjoint-edges-are-not-connected	ConnectedGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]
-weakly-connected-despite-two-scc	ConnectedGraphQ[Graph[List[1, 2, 3], List[DirectedEdge[1, 2], DirectedEdge[2, 1], DirectedEdge[2, 3]]]]
+id	in	out
+petersen-is-connected	IsConnectedGraph(PetersenGraph())	True
+two-disjoint-edges-are-not-connected	IsConnectedGraph(Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(3, 4))))	False
+weakly-connected-despite-two-scc	IsConnectedGraph(Graph(List(1, 2, 3), List(DirectedEdge(1, 2), DirectedEdge(2, 1), DirectedEdge(2, 3))))	True

@@ -430,9 +430,9 @@ export interface SystemImplementation {
   /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
   readonly tolerance?: number;
   readonly messages?: readonly EvaluationMessage[];
-  /** `fullform` and `epsil` only: what `in` reads back as, where the trip loses something --
-   * through @enumeratio/wolfram for FullForm (a head with no Wolfram of its own to reverse
-   * from), through notatio for InputForm. Absent when it reads back as the example's `expr`. */
+  /** Our own forms only: what `in` reads back as, where the trip loses something -- through
+   * `parseEpsil` uncanonicalised for FullForm, a notebook cell for InputForm, the markup reader
+   * for notatio. Absent when it reads back as the example's `expr`. */
   readonly back?: MathJSON;
 }
 

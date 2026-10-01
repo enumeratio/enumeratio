@@ -1,13 +1,13 @@
-id	in
-symmetric-matrix-is-undirected	EdgeList[AdjacencyGraph[List[List[0, 1, 1], List[1, 0, 0], List[1, 0, 0]]]]
-asymmetric-matrix-is-directed	EdgeList[AdjacencyGraph[List[List[0, 1], List[0, 0]]]]
-adjacencygraph-list-list-0-1-1-list-1-0-1-list-1	AdjacencyGraph[List[List[0, 1, 1], List[1, 0, 1], List[1, 1, 0]]]
-adjacencygraph-list-list-0-1-0-list-0-0-1-list-1	
-vertexlist-adjacencygraph-list-list-1-1-1-0-list	VertexList[AdjacencyGraph[List[List[1, 1, 1, 0], List[1, 0, 1, 1], List[1, 1, 0, 1], List[0, 1, 1, 0]]]]
-vertexlist-adjacencygraph-list-a-b-c-d-list-list	VertexList[AdjacencyGraph[List[a, b, c, d], List[List[1, 1, 1, 0], List[1, 0, 1, 1], List[1, 1, 0, 1], List[0, 1, 1, 0]]]]
-adjacencygraph-list-list-0-1-1-0-list-1-0-1-1	AdjacencyGraph[List[List[0, 1, 1, 0], List[1, 0, 1, 1], List[1, 1, 0, 1], List[0, 1, 1, 0]]]
-adjacencygraph-list-list-0-1-1-1-1-list-1-0-1-1	AdjacencyGraph[List[List[0, 1, 1, 1, 1], List[1, 0, 1, 1, 1], List[1, 1, 0, 1, 1], List[1, 1, 1, 0, 1], List[1, 1, 1, 1, 0]]]
-adjacencygraph-list-list-0-1-0-0-list-1-0-0-0	
-list-adjacencygraph-list-list-1-1-1-0-list-1-0-1	
-adjacencygraph-list-list-0-1-1-1-1-list-0-0-0-0	
-adjacencygraph-list-list-1-1-1-list-1-0-1-list-1	AdjacencyGraph[List[List[1, 1, 1], List[1, 0, 1], List[1, 1, 1]]]
+id	in	out
+symmetric-matrix-is-undirected	EdgeList(AdjacencyGraph(List(List(0, 1, 1), List(1, 0, 0), List(1, 0, 0))))	List(UndirectedEdge(1, 2), UndirectedEdge(1, 3))
+asymmetric-matrix-is-directed	EdgeList(AdjacencyGraph(List(List(0, 1), List(0, 0))))	List(DirectedEdge(1, 2))
+adjacencygraph-list-list-0-1-1-list-1-0-1-list-1	AdjacencyGraph(List(List(0, 1, 1), List(1, 0, 1), List(1, 1, 0)))	Graph(List(1, 2, 3), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(2, 3)))
+adjacencygraph-list-list-0-1-0-list-0-0-1-list-1		
+vertexlist-adjacencygraph-list-list-1-1-1-0-list	VertexList(AdjacencyGraph(List(List(1, 1, 1, 0), List(1, 0, 1, 1), List(1, 1, 0, 1), List(0, 1, 1, 0))))	List(1, 2, 3, 4)
+vertexlist-adjacencygraph-list-a-b-c-d-list-list	VertexList(AdjacencyGraph(List(a, b, c, d), List(List(1, 1, 1, 0), List(1, 0, 1, 1), List(1, 1, 0, 1), List(0, 1, 1, 0))))	List(a, b, c, d)
+adjacencygraph-list-list-0-1-1-0-list-1-0-1-1	AdjacencyGraph(List(List(0, 1, 1, 0), List(1, 0, 1, 1), List(1, 1, 0, 1), List(0, 1, 1, 0)))	Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(2, 3), UndirectedEdge(2, 4), UndirectedEdge(3, 4)))
+adjacencygraph-list-list-0-1-1-1-1-list-1-0-1-1	AdjacencyGraph(List(List(0, 1, 1, 1, 1), List(1, 0, 1, 1, 1), List(1, 1, 0, 1, 1), List(1, 1, 1, 0, 1), List(1, 1, 1, 1, 0)))	Graph(List(1, 2, 3, 4, 5), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(1, 5), UndirectedEdge(2, 3), UndirectedEdge(2, 4), UndirectedEdge(2, 5), UndirectedEdge(3, 4), UndirectedEdge(3, 5), UndirectedEdge(4, 5)))
+adjacencygraph-list-list-0-1-0-0-list-1-0-0-0		
+list-adjacencygraph-list-list-1-1-1-0-list-1-0-1		
+adjacencygraph-list-list-0-1-1-1-1-list-0-0-0-0		
+adjacencygraph-list-list-1-1-1-list-1-0-1-list-1	AdjacencyGraph(List(List(1, 1, 1), List(1, 0, 1), List(1, 1, 1)))	Graph(List(1, 2, 3), List(UndirectedEdge(1, 1), UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(2, 3), UndirectedEdge(3, 3)))
