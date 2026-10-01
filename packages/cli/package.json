@@ -31,6 +31,7 @@
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/diagram": "workspace:*",
+    "@enumeratio/evaluation": "workspace:*",
     "@enumeratio/formats": "workspace:*",
     "@enumeratio/frontend": "workspace:*",
     "@enumeratio/groupalgebra": "workspace:*",
@@ -38,6 +39,7 @@
     "@enumeratio/hopf": "workspace:*",
     "@enumeratio/hypercomplex": "workspace:*",
     "@enumeratio/incidence": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/modular": "workspace:*",
     "@enumeratio/number-theory": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
@@ -48,7 +50,6 @@
     "@enumeratio/structures": "workspace:*"
   },
   "devDependencies": {
-    "@enumeratio/manifest": "workspace:*",
     "@types/node": "^24",
     "tsx": "^4.19.2",
     "typescript": "^7.0.2",

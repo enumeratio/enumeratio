@@ -9,7 +9,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { ReferenceEntry } from "@enumeratio/entry";
-import { headNames, INDEX_FILE, parseIndex, recordDirs } from "@enumeratio/entry/node";
+import { decodeHead, EXAMPLES_FILE, headNames, INDEX_FILE, parseIndex, recordDirs } from "@enumeratio/entry/node";
 import { canonicalOrder } from "../src/canonical.ts";
 import { notationSpecifier, type PackageField } from "../src/package-field.ts";
 import type { DeclaredSymbol, FindStatId, Overload, SymbolAttribute, SymbolInfo } from "../src/types.ts";
@@ -40,13 +40,18 @@ function paramsOf(signature: string): string[] | undefined {
 
 // --- the records ------------------------------------------------------------------------
 
-const records: { package: string; record: Record_ }[] = [];
+const records: { package: string; record: Record_; examples: number }[] = [];
 for (const { package: pkg, dir } of recordDirs(PACKAGES)) {
   for (const head of headNames(dir).toSorted(cmp)) {
-    records.push({
-      package: pkg,
-      record: parseIndex(readFileSync(join(dir, head, INDEX_FILE), "utf8")).fields as Record_,
-    });
+    const index = readFileSync(join(dir, head, INDEX_FILE), "utf8");
+    const tsv = join(dir, head, EXAMPLES_FILE);
+    const files = new Map([
+      [INDEX_FILE, index],
+      ...(existsSync(tsv) ? [[EXAMPLES_FILE, readFileSync(tsv, "utf8")] as const] : []),
+    ]);
+    // The examples its page shows and holds it to: not a bulk `test` row, nor one in triage.
+    const examples = decodeHead(files).entry.examples.filter((e) => e.role !== "test" && e.role !== "triage").length;
+    records.push({ package: pkg, record: parseIndex(index).fields as Record_, examples });
   }
 }
 
@@ -150,7 +155,9 @@ for (const name of [...byName.keys()].toSorted(cmp)) {
 
 // What each package's `declare` reads: its records' summaries, and its own typed overload.
 const perPackage = new Map<string, Record<string, DeclaredSymbol>>();
-for (const { package: pkg, record } of records) {
+const examplesOf = new Map<string, Record<string, number>>();
+for (const { package: pkg, record, examples } of records) {
+  if (examples > 0) examplesOf.set(pkg, { ...examplesOf.get(pkg), [record.name]: examples });
   const own = (record.signatures ?? []).filter((row) => packageOf(row.library) === pkg && row.type !== undefined);
   const types = new Set(own.map((row) => row.type));
   if (types.size > 1) {
@@ -217,8 +224,30 @@ export const SYMBOLS: Readonly<Record<string, DeclaredSymbol>> = ${JSON.stringif
 
 /** Each head's record \`summary\`, for its \`description\`. */
 export const SUMMARIES: Readonly<Record<string, string>> = ${JSON.stringify(summaries)};
+
+/** How many examples each head's record shows and holds it to, where it has any. */
+export const EXAMPLES: Readonly<Record<string, number>> = ${JSON.stringify(sorted(examplesOf.get(pkg) ?? {}))};
 `,
   );
 }
 
-console.log(`manifest: ${Object.keys(symbols).length} heads, ${perPackage.size} packages -> ${OUT}`);
+// A literal import per package, so a bundler keeps each one its own chunk, loaded by `describe`.
+const loaders = [...perPackage.keys()]
+  .toSorted(cmp)
+  .map((pkg) => `  ${JSON.stringify(pkg)}: () => import("./package/${pkg}.ts"),`);
+writeFileSync(
+  join(OUT, "package-modules.ts"),
+  `${HEADER}/** What \`describe\` reads of a package's module. */
+export interface PackageModule {
+  readonly SUMMARIES: Readonly<Record<string, string>>;
+  readonly EXAMPLES?: Readonly<Record<string, number>>;
+}
+
+/** Each package's module, imported on first use. */
+export const PACKAGE_MODULES: Readonly<Record<string, () => Promise<PackageModule>>> = {
+${loaders.join("\n")}
+};
+`,
+);
+
+console.log(`manifest:${Object.keys(symbols).length} heads, ${perPackage.size} packages -> ${OUT}`);

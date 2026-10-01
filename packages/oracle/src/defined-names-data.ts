@@ -9,6 +9,7 @@
 
 export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "Aborted",
+  "About",
   "Abs",
   "AbsoluteTiming",
   "AbundantNumbers",
@@ -311,6 +312,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "FibonacciCompositions",
   "FibonacciNumbers",
   "FibonacciPrimes",
+  "Field",
   "FigureEightKnot",
   "Filter",
   "FindInstance",

@@ -3,7 +3,17 @@ import { SYMBOLS } from "./generated/symbols.ts";
 import type { SymbolInfo } from "./types.ts";
 
 export { canonicalOrder } from "./canonical.ts";
-export type { DeclaredSymbol, FindStatId, Overload, SymbolAttribute, SymbolInfo } from "./types.ts";
+export type { DeclaredSymbol, Description, FindStatId, Overload, SymbolAttribute, SymbolInfo } from "./types.ts";
+export {
+  type DescribeOptions,
+  describe,
+  describedIn,
+  describeNow,
+  loadSummaries,
+  matching,
+  noteDescription,
+  winningOverload,
+} from "./describe.ts";
 
 /** Every head we know, by name. */
 export { SYMBOLS };
@@ -34,7 +44,9 @@ export {
   type DeclaringEngine,
   type Definition,
   definitionRegistry,
+  describeLibrarySymbol,
   type Ensured,
+  type LibrarySymbolFacts,
   type Example,
   type InstallCheck,
   manifestRegistry,

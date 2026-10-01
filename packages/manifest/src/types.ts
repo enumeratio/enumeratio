@@ -45,3 +45,44 @@ export interface DeclaredSymbol {
   readonly type?: string;
   readonly attributes?: readonly SymbolAttribute[];
 }
+
+/**
+ * What is known about a name without an engine: compute-engine `About`'s keys where they mean
+ * the same thing, and ours. `describe` assembles it (src/describe.ts).
+ */
+export interface Description {
+  readonly name: string;
+  /** `function` or `constant` by its type, `symbol` for another value, `unknown` for a name
+   *  nothing knows. */
+  readonly kind: "function" | "constant" | "symbol" | "unknown";
+  /** Its record's summary. */
+  readonly description?: string;
+  /** Its reference page, for a documented head. */
+  readonly url?: string;
+  /** A function's signature: the overload no other replaces, the widest of those. */
+  readonly signature?: string;
+  /** A constant's or symbol's type. */
+  readonly type?: string;
+  /** Every overload, most specific first, with the package that gives it. */
+  readonly overloads?: readonly Overload[];
+  readonly params?: readonly string[];
+  /** Its optional parameters' defaults. */
+  readonly defaults?: Readonly<Record<string, unknown>>;
+  readonly attributes?: readonly string[];
+  /** The packages that document it. */
+  readonly documented?: readonly string[];
+  readonly findstat?: readonly FindStatId[];
+  /** How many examples its record holds it to. */
+  readonly examples?: number;
+  /** The LaTeX that reads as it (`\scaled`), where its notation gives any. */
+  readonly triggers?: readonly string[];
+  /** A library symbol's namespace. */
+  readonly namespace?: string;
+  readonly pin?: string;
+  /** Its body's pinned dependencies. */
+  readonly requires?: Readonly<Record<string, string>>;
+  /** The head a library symbol is declared as (`pinnedHead`). */
+  readonly head?: string;
+  /** The package that serves a library symbol, `name@version`. */
+  readonly package?: string;
+}
