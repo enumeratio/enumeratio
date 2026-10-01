@@ -1,7 +1,7 @@
 // Boxes as LaTeX -- for MathLive, KaTeX and print. Display only: the reading direction
 // is compute-engine's LaTeX parser, which goes to an expression, not to boxes.
 
-import { type Box, type BoxNode, isNode, optionsOfBox, tokenClass } from "./box.ts";
+import { type Box, type BoxNode, isNode, optionsOfBox, tokenClass } from "../box.ts";
 import { texSource } from "./markdown.ts";
 
 const COMMANDS: Record<string, string> = {

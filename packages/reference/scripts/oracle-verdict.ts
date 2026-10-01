@@ -13,6 +13,7 @@ import {
   type Leaf,
   type MathJSON,
   reduce,
+  solutionSet,
   symbolic,
   type System,
   type Tree,
@@ -71,9 +72,13 @@ export const show = (expr: MathJSON): string => {
 };
 
 /** Wolfram's answer, parsed and reduced by `evaluate`; `undefined` when it cannot be read. */
-const theirTree = (fullForm: string, evaluate: (expr: MathJSON) => Leaf): Tree | undefined => {
+const theirTree = (
+  fullForm: string,
+  evaluate: (expr: MathJSON) => Leaf,
+  prepare: (expr: MathJSON) => MathJSON = (expr) => expr,
+): Tree | undefined => {
   try {
-    return reduce(fromWolfram(fullForm) as MathJSON, evaluate);
+    return reduce(prepare(fromWolfram(fullForm) as MathJSON), evaluate);
   } catch {
     return undefined;
   }
@@ -112,13 +117,21 @@ function ourDigits(expr: MathJSON): string[] {
   return text === undefined || !/[.eE]/.test(text) ? [] : [significant(text)];
 }
 
+/** Our side of a Wolfram comparison: Wolfram has no NaN, it spells "no value" `Indeterminate`
+ * (emit.ts maps both of ours there), so the two read as one. */
+const wolframLeaf = (expr: MathJSON): Leaf => {
+  const value = leaf(expr);
+  return value === "NaN" ? "Indeterminate" : value;
+};
+
 /**
  * Do the digits Wolfram displays match ours, digit for digit? For an `N(x, d)` example, where
  * the last digit is the point: the tolerant comparison can't see it, and Wolfram holds more
  * digits than it shows. `undefined` when the two can't be lined up number for number.
  */
 export function sameDigits(expected: MathJSON, shown: string): boolean | undefined {
-  const ours = ourDigits(expected);
+  // A lone integer (`N(E, 1)` is 3) has no decimal point, but its digits are still promised.
+  const ours = typeof expected === "number" ? [significant(String(expected))] : ourDigits(expected);
   const theirs = (shown.match(/\d+\.\d*|\.\d+/g) ?? []).map(significant);
   if (ours.length === 0 || ours.length !== theirs.length) return undefined;
   return ours.every((digits, i) => digits === theirs[i]);
@@ -131,6 +144,8 @@ export function verdictOf(
   tolerance?: number,
   /** An `N(x, d)` example: Wolfram's displayed digits must match ours, the last included. */
   asksForDigits = false,
+  /** The head of the example's expression: `Solve` answers rules in Wolfram and values here, compared as a set. */
+  head?: string,
 ): Verdict {
   const theirs = result.value ?? "";
   let verdict: Verdict;
@@ -139,15 +154,19 @@ export function verdictOf(
     // declined (`MatrixRank[{1, 2, 3}]`) comes back as our own answer and agrees. So its
     // exact form is compared as text — an unevaluated form we pinned too — and its
     // numbers are Wolfram's own `N`, of which only numeric values are read as numbers.
-    const ours = reduce(expected, leaf);
+    const prepare = head === "Solve" ? solutionSet : undefined;
+    const ours = reduce(prepare === undefined ? expected : prepare(expected), wolframLeaf);
     const trees = [
-      theirTree(theirs, symbolic),
-      result.numeric === undefined ? undefined : theirTree(result.numeric, valuesOnly(leaf)),
+      theirTree(theirs, symbolic, prepare),
+      result.numeric === undefined ? undefined : theirTree(result.numeric, valuesOnly(leaf), prepare),
     ].filter((tree) => tree !== undefined);
     const verdicts = trees.map((tree) => compareTrees(ours, tree, tolerance));
     verdict = verdicts.length === 0 ? "inconclusive" : verdicts.includes("agree") ? "agree" : (verdicts[0] as Verdict);
-    if (verdict === "agree" && asksForDigits && result.shown !== undefined) {
-      if (sameDigits(expected, result.shown) === false) verdict = "disagree";
+    // The digits Wolfram displays are the answer: it keeps more than it shows, so the value
+    // alone is too strict (N[E, 1] holds 2.718 and shows 3.) as well as too loose.
+    if (asksForDigits && result.shown !== undefined) {
+      const same = sameDigits(expected, result.shown);
+      if (same !== undefined) verdict = same ? "agree" : "disagree";
     }
   } else if (theirs.startsWith("combination:")) {
     verdict = compareCombination(expected, theirs);

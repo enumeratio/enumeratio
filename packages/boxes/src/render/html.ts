@@ -1,7 +1,7 @@
 // Prose boxes as HTML. The typesetter is passed in -- KaTeX's `renderToString` on a page,
 // at build or in the browser -- so this package keeps no runtime dependency.
 
-import { type Box, type BoxNode, isBoxSequence, isNode, optionsOfBox } from "./box.ts";
+import { type Box, type BoxNode, isBoxSequence, isNode, optionsOfBox } from "../box.ts";
 import { toLatex } from "./latex.ts";
 import { texSource } from "./markdown.ts";
 

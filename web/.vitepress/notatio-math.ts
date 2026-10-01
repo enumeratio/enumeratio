@@ -26,7 +26,7 @@ interface StateBlock {
 // `$latex$` and `$$latex$$` in markdown pages, typeset by KaTeX at build: TeX held as written,
 // recognised by the same rule as record prose (boxes' `closeDollar`), and drawn by the same
 // `tex` (prose.ts), so a formula in a guide and in a reference entry are one thing.
-import { closeDollar } from "@enumeratio/boxes";
+import { closeDollar } from "@enumeratio/boxes/render";
 import { tex } from "./prose.ts";
 
 // Vue compiles the page as a template, so `{{` would be an interpolation; KaTeX's MathML

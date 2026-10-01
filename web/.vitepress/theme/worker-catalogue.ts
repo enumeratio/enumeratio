@@ -5,9 +5,9 @@
 // needs it.
 //
 // The resolver learns what each library declares from `@enumeratio/manifest`'s DECLARERS,
-// collected over reference's engine. Libraries it doesn't cover yet (formats' graphics,
-// geometric, the frontend's carriers) are `global`: declared with the first call that
-// declares anything.
+// collected over reference's engine, and what each needs declared first from its HIERARCHY.
+// Libraries it doesn't cover yet (formats' graphics, geometric, the frontend's carriers) are
+// `global`: declared with the first call that declares anything.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { Library } from "@enumeratio/manifest";
@@ -26,12 +26,10 @@ export const CATALOGUE: readonly Library<ComputeEngine>[] = [
   { name: "structures", declare: async (ce) => (await import("@enumeratio/structures")).declareStructures(ce) },
   // As reference's LIBRARIES: `CombinatorialStat`'s table is a registry declaring can't see.
   { name: "combinatorics", names: ["CombinatorialStat", "Tally"], declare: combinatorics },
-  // Only the frontend's carriers, not the package, whose own dependencies (analytic among
-  // them) aren't what declaring these needs.
+  // The frontend's carriers: as a library it extends structures, not the analytic its plots import.
   {
-    name: "frontend-carriers",
+    name: "frontend",
     global: true,
-    requires: ["structures"],
     declare: async (ce) => (await import("@enumeratio/frontend/declare-carriers")).declareFrontendCarriers(ce),
   },
   {
@@ -48,7 +46,6 @@ export const CATALOGUE: readonly Library<ComputeEngine>[] = [
   {
     name: "geometric",
     global: true,
-    requires: ["hypercomplex"],
     declare: async (ce) => (await import("@enumeratio/geometric")).declareGeometric(ce),
   },
   { name: "diagram", declare: async (ce) => (await import("@enumeratio/diagram")).declareDiagrams(ce) },

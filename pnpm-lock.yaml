@@ -1191,9 +1191,6 @@ importers:
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../../../engine
-      '@enumeratio/formats':
-        specifier: workspace:*
-        version: link:../../../formats
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../../../manifest
@@ -1247,12 +1244,6 @@ importers:
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../../../engine
-      '@enumeratio/manifest':
-        specifier: workspace:*
-        version: link:../../../manifest
-      '@enumeratio/structures':
-        specifier: workspace:*
-        version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.141.0

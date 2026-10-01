@@ -19,8 +19,10 @@ import type { Verdict } from "./compare.ts";
 export type Leaf = number | boolean | { readonly re: number; readonly im: number } | string;
 export type Tree = Leaf | readonly Tree[];
 
-/** Heads whose operands are compared element-wise. `Set` is reduced order-free. */
-const SEQUENCE_HEADS = new Set(["List", "Tuple", "Set"]);
+/** Heads whose operands are compared element-wise. `Set` is reduced order-free. An `Interval`
+ * is its endpoints: without this the whole call reduces to its text, and `Interval(1/e, 2)`
+ * never lines up with Wolfram's `Interval[{E^-1, 2}]`, whose endpoints are a numeric value. */
+const SEQUENCE_HEADS = new Set(["List", "Tuple", "Set", "Interval"]);
 
 /** A key/value pair, compared by its two operands, not its head — `fromWolfram` reads a
  * Wolfram `Rule[k, v]` back as `KeyValuePair` (`REVERSE_HEADS`'s ambiguity, resolved for the
@@ -33,6 +35,27 @@ const PAIR_HEADS = new Set(["Rule", "KeyValuePair"]);
 /** Numbers by value, everything else by its text — a stable order for a Set. */
 const byValue = (a: Tree, b: Tree): number =>
   typeof a === "number" && typeof b === "number" ? a - b : JSON.stringify(a).localeCompare(JSON.stringify(b));
+
+/**
+ * `Solve`'s answers as bare values, order-free. Wolfram answers a list of solutions, each a
+ * list of rules (`{{x -> -1}, {x -> 1}}`); ours is a list of values, a `Tuple` for several
+ * unknowns. The two say the same thing once the rules are read as their right-hand sides and
+ * the solutions as a set. Anything that is not a list of rule lists is left alone.
+ */
+export function solutionSet(expr: MathJSON): MathJSON {
+  if (!Array.isArray(expr) || expr[0] !== "List") return expr;
+  const solutions = expr.slice(1) as MathJSON[];
+  const isRule = (e: MathJSON): boolean => Array.isArray(e) && PAIR_HEADS.has(e[0] as string) && e.length === 3;
+  const isRuleList = (e: MathJSON): boolean => Array.isArray(e) && e[0] === "List" && e.slice(1).every(isRule);
+  if (!solutions.every(isRuleList)) return ["Set", ...solutions] as MathJSON;
+  return [
+    "Set",
+    ...solutions.map((solution) => {
+      const values = (solution as MathJSON[]).slice(1).map((rule) => (rule as MathJSON[])[2] as MathJSON);
+      return values.length === 1 ? (values[0] as MathJSON) : (["Tuple", ...values] as MathJSON);
+    }),
+  ] as MathJSON;
+}
 
 /** The canonical text for something that did not reduce to a value. */
 export const symbolic = (expr: MathJSON): string => (typeof expr === "string" ? expr : JSON.stringify(expr));

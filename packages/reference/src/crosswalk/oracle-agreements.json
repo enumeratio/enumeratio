@@ -185,8 +185,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 42,
-      "disagree": 1
+      "agree": 43,
+      "disagree": 0
     }
   ],
   "Arctan": [
@@ -699,8 +699,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 48,
-      "disagree": 7
+      "agree": 49,
+      "disagree": 6
     }
   ],
   "Cosh": [
@@ -747,8 +747,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 22,
-      "disagree": 7
+      "agree": 23,
+      "disagree": 6
     }
   ],
   "Csch": [
@@ -1175,8 +1175,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 54,
-      "disagree": 2
+      "agree": 56,
+      "disagree": 0
     }
   ],
   "Expand": [
@@ -1627,8 +1627,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 45,
-      "disagree": 4
+      "agree": 46,
+      "disagree": 3
     }
   ],
   "GammaLn": [
@@ -2703,8 +2703,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 42,
-      "disagree": 1
+      "agree": 43,
+      "disagree": 0
     }
   ],
   "Log": [
@@ -2719,16 +2719,16 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 23,
-      "disagree": 1
+      "agree": 24,
+      "disagree": 0
     }
   ],
   "Log2": [
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 21,
-      "disagree": 1
+      "agree": 22,
+      "disagree": 0
     }
   ],
   "LogBarnesG": [
@@ -2743,8 +2743,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 21,
-      "disagree": 1
+      "agree": 22,
+      "disagree": 0
     }
   ],
   "LogicalExpand": [
@@ -2859,8 +2859,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 16,
-      "disagree": 4
+      "agree": 17,
+      "disagree": 3
     }
   ],
   "Maximize": [
@@ -3127,8 +3127,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 24,
-      "disagree": 11
+      "agree": 28,
+      "disagree": 7
     }
   ],
   "Negate": [
@@ -3991,8 +3991,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 23,
-      "disagree": 8
+      "agree": 24,
+      "disagree": 7
     }
   ],
   "Sech": [
@@ -4067,8 +4067,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 36,
-      "disagree": 2
+      "agree": 37,
+      "disagree": 1
     }
   ],
   "Sin": [
@@ -4105,8 +4105,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 1,
-      "disagree": 24
+      "agree": 12,
+      "disagree": 15
     }
   ],
   "Sort": [
@@ -4175,8 +4175,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 36,
-      "disagree": 1
+      "agree": 37,
+      "disagree": 0
     }
   ],
   "Square": [
@@ -4367,16 +4367,16 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 45,
-      "disagree": 7
+      "agree": 46,
+      "disagree": 6
     }
   ],
   "Tanh": [
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 30,
-      "disagree": 1
+      "agree": 31,
+      "disagree": 0
     }
   ],
   "TemperleyLiebAlgebra": [

@@ -4,7 +4,7 @@
 // itself: a host lists its libraries and how to declare each.
 
 import { CANONICAL, CARRIER_TYPES, DECLARERS } from "./declarers-data.ts";
-import { PACKAGES } from "./generated/packages.ts";
+import { PACKAGES } from "./hierarchy.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import type { Overload, SymbolInfo } from "./types.ts";
 
@@ -18,8 +18,8 @@ export interface Library<Engine extends object = never> {
   readonly declare: (ce: Engine) => unknown;
   /** Declared whenever anything is: a package whose effects reach heads it doesn't own. */
   readonly global?: boolean;
-  /** Libraries it needs declared first beyond its package's own dependencies: what the host
-   *  passes it (statistics takes combinatorics' carrier types). */
+  /** Libraries it needs declared first beyond what its package extends (`HIERARCHY`): what
+   *  the host passes it. */
   readonly requires?: readonly string[];
   /** Names it adds to without redeclaring them, which declaring can't see: a registry a head
    *  reads (statistics' entries in `CombinatorialStat`'s table). */
@@ -113,8 +113,8 @@ export function packagesNeeded(
 }
 
 /**
- * The libraries to declare for `packages`: each one asked for, what it requires (the
- * manifest's `PACKAGES`, and its own `requires`), transitively, and every global one. In
+ * The libraries to declare for `packages`: each one asked for, what it requires (what its
+ * package extends, in `HIERARCHY`, and its own `requires`), transitively, and every global one. In
  * `libraries`' order, except that a library comes after what it requires. A package with no
  * library is `missing`.
  */

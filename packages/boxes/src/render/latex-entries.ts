@@ -1,6 +1,6 @@
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { fromMathJson } from "./json.ts";
+import { fromMathJson } from "../json.ts";
 import { toLatex } from "./latex.ts";
 
 // `DisplayForm(boxes)` and `RawBoxes(boxes)` typeset as their boxes. Serialisation only;

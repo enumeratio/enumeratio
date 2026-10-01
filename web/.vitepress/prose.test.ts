@@ -1,4 +1,5 @@
-import { type Box, readInlineMarkdown, texSource } from "@enumeratio/boxes";
+import { type Box } from "@enumeratio/boxes";
+import { readInlineMarkdown, texSource } from "@enumeratio/boxes/render";
 import { referenceData } from "@enumeratio/reference/node";
 import katex from "katex";
 import { expect, test } from "vite-plus/test";

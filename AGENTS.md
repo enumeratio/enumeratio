@@ -138,6 +138,9 @@ so a page reads the same on GitHub and on the site.
 
 ## Code
 
+- **Import down the hierarchy.** A package imports only what it extends in
+  `packages/manifest/src/hierarchy.ts`, plus infra (presentation imports any library);
+  its `tests/hierarchy.test.ts` holds that, and moving a package is one edit there.
 - **Every route in the same change.** A fix to what a head evaluates to also fixes `.N()`,
   simplification and each compile target (JavaScript, WGSL). A fact that must hold on
   several routes lives in one helper they all call, not a copy per route.

@@ -18,7 +18,8 @@ import { portableTeX } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
-import { makeBoxes, notationOf, toLatex } from "@enumeratio/boxes";
+import { makeBoxes, notationOf } from "@enumeratio/boxes";
+import { toLatex } from "@enumeratio/boxes/render";
 import { declaredEngine } from "../../reference/scripts/engines.ts";
 
 const ce = new ComputeEngine({

@@ -14,6 +14,11 @@
       "import": "./dist/index.mjs"
     },
     "./src": "./src/index.ts",
+    "./render": {
+      "types": "./dist/render.d.mts",
+      "import": "./dist/render.mjs"
+    },
+    "./render/src": "./src/render/index.ts",
     "./package.json": "./package.json"
   },
   "scripts": {

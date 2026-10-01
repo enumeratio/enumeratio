@@ -1,25 +1,25 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-log10-1-000			[Log10, 1000]	3			
-log10-1			[Log10, 1]	0			
-log10-100-000			[Log10, 100000]	5			
-log10-1-000-000			[Log10, 1000000]	6			
-n-for-a-decimal-value			[N, [Log10, 2]]	{num: "0.301029995663981195214"}	N(...) for a decimal value		
-log-2			[Log, 2]	[Log, 2, 10]			
-an-exact-negative-power-of-10-folds-too-log-10	Scope		[Log10, [Rational, 1, 100]]	-2	An exact negative power of 10 folds too: $\log_{10} \tfrac1{100} = -2$		
-a-symbolic-argument-becomes-compute-engine-s	Scope		[Log10, x]	[Log, x]	A symbolic argument becomes compute-engine's default-base [[Log]]		
-log10-5p5	Scope		[Log10, 5.5]	{num: "0.740362689494243845536"}			
-threads-element-wise-over-a-list	Scope		[Log10, [List, 1, 10, 100, 1000]]	[List, 0, 1, 2, 3]	Threads element-wise over a list		
-element-wise-over-a-matrix-including-the-exact	Scope		[Log10, [List, [List, 1, 100], [List, 0, [Rational, 1, 100]]]]	[List, [List, 0, 2], [List, NegativeInfinity, -2]]	Element-wise over a matrix, including the exact $\tfrac1{100}$ entry		
-as-with-ln-the-logarithm-of-complex-infinity-is	Scope		[Log10, ComplexInfinity]	PositiveInfinity	As with [[Ln]], the logarithm of complex infinity is $+\infty$		
-interval-arithmetic-log-10-frac-13-2-log-10-3	Scope		[Log10, [Interval, [Rational, 1, 3], 2]]	[Interval, [Log, [Rational, 1, 3], 10], [Log, 2, 10]]	Interval arithmetic: $\log_{10}[\tfrac13, 2] = [\log_{10} \tfrac13, \log_{10} 2]$	shape	Wolfram writes the lower end as -Log[10, 3], the same value.
-uncertainty-propagation-log-10-frac-1-101-pm-0	Scope		[Log10, [Around, [Rational, 1, 101], 0.01]]	[Around, -2.0043213737826426, 0.43863742672228434]	Uncertainty propagation, to first order: $\log_{10}(\tfrac1{101} \pm 0.01) \approx -2.00 \pm 0.44$		
-derivative-frac-1-x-ln-10	Scope		[D, [Log10, x], x]	[Divide, 1, [Multiply, x, [Ln, 10]]]	Derivative: $\frac{1}{x\ln 10}$		
-to-30-significant-digits-every-one-correctly	Scope		[N, [Log10, 7], 30]	{num: "0.845098040014256830712216258593"}	To 30 significant digits, every one correctly rounded		
-log-5	Scope		[Log, 5]	[Log, 5, 10]			
-n-log-45-100	Scope		[N, [Log, 45], 100]	{num: "1.653212513775343679376316911785737591632067846919283188349303819483350116292897736599009459177046431"}			
-n-log-4-plus-i	Scope		[N, [Log, [Complex, 4, 1]]]	[Complex, 0.6152244606891369, 0.10639288158003271]			
-fullsimplify-matrixfunction-log10-list-list-1	Scope		[FullSimplify, [MatrixFunction, Log10, [List, [List, 1, 100], [List, 0, [Rational, 1, 100]]]]]	[List, [List, 0, [Rational, 20000, 99]], [List, 0, -2]]			
-log-positiveinfinity	Scope		[Log, PositiveInfinity]	PositiveInfinity			
-log-0	Scope		[Log, 0]	NegativeInfinity			
-a-float-argument-folds-even-for-a-fractional	Applications		[Log10, 0.001]	{num: "-3.0"}	A float argument folds even for a fractional power of 10		
-same-as-compute-engine-s-default-base-log	Properties		[Equal, [Log10, 1000], [Log, 1000]]	True	Same as compute-engine's default-base [[Log]]		
+id	section	role	expr	expected	caption
+log10-1-000			[Log10, 1000]	3	
+log10-1			[Log10, 1]	0	
+log10-100-000			[Log10, 100000]	5	
+log10-1-000-000			[Log10, 1000000]	6	
+n-for-a-decimal-value			[N, [Log10, 2]]	{num: "0.301029995663981195214"}	N(...) for a decimal value
+log-2			[Log, 2]	[Log, 2, 10]	
+an-exact-negative-power-of-10-folds-too-log-10	Scope		[Log10, [Rational, 1, 100]]	-2	An exact negative power of 10 folds too: $\log_{10} \tfrac1{100} = -2$
+a-symbolic-argument-becomes-compute-engine-s	Scope		[Log10, x]	[Log, x]	A symbolic argument becomes compute-engine's default-base [[Log]]
+log10-5p5	Scope		[Log10, 5.5]	{num: "0.740362689494243845536"}	
+threads-element-wise-over-a-list	Scope		[Log10, [List, 1, 10, 100, 1000]]	[List, 0, 1, 2, 3]	Threads element-wise over a list
+element-wise-over-a-matrix-including-the-exact	Scope		[Log10, [List, [List, 1, 100], [List, 0, [Rational, 1, 100]]]]	[List, [List, 0, 2], [List, NegativeInfinity, -2]]	Element-wise over a matrix, including the exact $\tfrac1{100}$ entry
+as-with-ln-the-logarithm-of-complex-infinity-is	Scope		[Log10, ComplexInfinity]	PositiveInfinity	As with [[Ln]], the logarithm of complex infinity is $+\infty$
+interval-arithmetic-log-10-frac-13-2-log-10-3	Scope		[Log10, [Interval, [Rational, 1, 3], 2]]	[Interval, [Log, [Rational, 1, 3], 10], [Log, 2, 10]]	Interval arithmetic: $\log_{10}[\tfrac13, 2] = [\log_{10} \tfrac13, \log_{10} 2]$
+uncertainty-propagation-log-10-frac-1-101-pm-0	Scope		[Log10, [Around, [Rational, 1, 101], 0.01]]	[Around, -2.0043213737826426, 0.43863742672228434]	Uncertainty propagation, to first order: $\log_{10}(\tfrac1{101} \pm 0.01) \approx -2.00 \pm 0.44$
+derivative-frac-1-x-ln-10	Scope		[D, [Log10, x], x]	[Divide, 1, [Multiply, x, [Ln, 10]]]	Derivative: $\frac{1}{x\ln 10}$
+to-30-significant-digits-every-one-correctly	Scope		[N, [Log10, 7], 30]	{num: "0.845098040014256830712216258593"}	To 30 significant digits, every one correctly rounded
+log-5	Scope		[Log, 5]	[Log, 5, 10]	
+n-log-45-100	Scope		[N, [Log, 45], 100]	{num: "1.653212513775343679376316911785737591632067846919283188349303819483350116292897736599009459177046431"}	
+n-log-4-plus-i	Scope		[N, [Log, [Complex, 4, 1]]]	[Complex, 0.6152244606891369, 0.10639288158003271]	
+fullsimplify-matrixfunction-log10-list-list-1	Scope		[FullSimplify, [MatrixFunction, Log10, [List, [List, 1, 100], [List, 0, [Rational, 1, 100]]]]]	[List, [List, 0, [Rational, 20000, 99]], [List, 0, -2]]	
+log-positiveinfinity	Scope		[Log, PositiveInfinity]	PositiveInfinity	
+log-0	Scope		[Log, 0]	NegativeInfinity	
+a-float-argument-folds-even-for-a-fractional	Applications		[Log10, 0.001]	{num: "-3.0"}	A float argument folds even for a fractional power of 10
+same-as-compute-engine-s-default-base-log	Properties		[Equal, [Log10, 1000], [Log, 1000]]	True	Same as compute-engine's default-base [[Log]]

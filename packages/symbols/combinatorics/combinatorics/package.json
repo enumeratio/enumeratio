@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "@enumeratio/engine": "workspace:*",
-    "@enumeratio/formats": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/residues": "workspace:*",
     "@enumeratio/structures": "workspace:*"
@@ -39,7 +38,6 @@
     "@cortex-js/compute-engine": "^0.141.0",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
-    "@enumeratio/formats": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/plausible": "workspace:*",
     "@enumeratio/residues": "workspace:*",

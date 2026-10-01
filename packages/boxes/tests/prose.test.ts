@@ -1,17 +1,15 @@
 import { expect, test } from "vite-plus/test";
+import { type Box, fromMathJson, toMathJson } from "../src/index.ts";
 import {
-  type Box,
-  fromMathJson,
   readInlineMarkdown,
   readMarkdown,
   texToAscii,
   texToText,
   toHtml,
   toMarkdown,
-  toMathJson,
   toAscii,
   toText,
-} from "../src/index.ts";
+} from "../src/render/index.ts";
 
 const tex = (latex: string, display: boolean): string => `<k${display ? " display" : ""}>${latex}</k>`;
 const html = (md: string): string => toHtml(readMarkdown(md), { tex, link: (h) => `/reference/symbol/${h}` });
