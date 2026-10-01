@@ -93,6 +93,11 @@ export default {
           return r.ensure(ce, Object.keys(SYMBOLS));
         },
       };
+      // The host: the service worker the build writes (host/service-worker.ts), which caches
+      // the kernel's libraries so it starts warm and the site works offline. Not in dev, where
+      // there is no build.
+      if (import.meta.env.PROD && "serviceWorker" in navigator)
+        void navigator.serviceWorker.register("/sw.js").catch(() => undefined);
       // The elements load at idle, so the page paints first, and only those the page uses: a
       // page of cells loads no engine.
       const define = (): void => void import("@enumeratio/components/lazy").then((m) => m.defineOnUse());
