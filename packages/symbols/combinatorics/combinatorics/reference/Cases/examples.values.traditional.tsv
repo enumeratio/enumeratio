@@ -1,6 +1,0 @@
-id	in	out
-cases-wildcard-keeps-everything	\operatorname{Cases}([1,a,2,b],\_)	[1,a,2,b]
-cases-literal-value	\operatorname{Cases}([1,2,1,3,1],1)	[1,1,1]
-cases-structural-pattern	\operatorname{Cases}([[1],2,[3]],[\_a])	[[1],[3]]
-cases-count-agree-on-length	\operatorname{Length}(\operatorname{Cases}([1,2,1,3,1],1))=\operatorname{Count}([1,2,1,3,1],1)	\top
-cases-typed-pattern-not-typed-here	\operatorname{Length}(\operatorname{Cases}([1,a,2,b],\_Integer))	4

@@ -1,2 +1,0 @@
-id	in	out
-echo-returns-its-argument	Echo(42)	42

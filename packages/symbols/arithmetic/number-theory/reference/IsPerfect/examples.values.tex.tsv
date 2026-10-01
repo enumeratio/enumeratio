@@ -1,9 +1,0 @@
-id	in	out
-isperfect-6	\mathrm{IsPerfect}(6)	\mathrm{True}
-isperfect-12	\mathrm{IsPerfect}(12)	\mathrm{False}
-listable	\mathrm{IsPerfect}(\bigl\lbrack6, 28, 12\bigr\rbrack)	\bigl\lbrack\mathrm{True}, \mathrm{True}, \mathrm{False}\bigr\rbrack
-isperfect-496	\mathrm{IsPerfect}(496)	\mathrm{True}
-isperfect-28	\mathrm{IsPerfect}(28)	\mathrm{True}
-negative-numbers-are-not-perfect	\mathrm{IsPerfect}(-6)	\mathrm{False}
-isperfect-1-234-121	\mathrm{IsPerfect}(1\,234\,121)	\mathrm{False}
-isperfect-simplify-x	\mathrm{IsPerfect}(\mathrm{Simplify}(x))	\mathrm{IsPerfect}(x)

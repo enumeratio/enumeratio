@@ -1,5 +1,0 @@
-id	in	out
-empirical-pdf-is-the-observed-proportion	\operatorname{PDF}(\operatorname{EmpiricalDistribution}([1,2,2,3]),2)	\frac{1}{2}
-empirical-cdf-is-the-observed-proportion-at-most	\operatorname{CDF}(\operatorname{EmpiricalDistribution}([1,2,2,3]),2)	\frac{3}{4}
-empirical-mean-matches-mean-of-the-data	\operatorname{Mean}(\operatorname{EmpiricalDistribution}([1,2,2,3]))	2
-empirical-variance-matches-variance-of-the-data	\operatorname{Variance}(\operatorname{EmpiricalDistribution}([1,2,2,3]))	\frac{2}{3}

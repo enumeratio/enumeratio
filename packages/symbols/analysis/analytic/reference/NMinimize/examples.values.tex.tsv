@@ -1,3 +1,0 @@
-id	in	out
-a-quartic-with-two-symmetric-minima	\mathrm{NMinimize}(\bigl\lbrack x^4-x^2, x\ge-2\land x\le2\bigr\rbrack, x)	\bigl\lbrack-0.25, \bigl\lbrack\mathrm{Rule}(x, -0.707\,106\,778\,558\,382)\bigr\rbrack\bigr\rbrack
-declines-without-a-bounded-constraint	\mathrm{NMinimize}(x^2, x)	\mathrm{NMinimize}(x^2, x)

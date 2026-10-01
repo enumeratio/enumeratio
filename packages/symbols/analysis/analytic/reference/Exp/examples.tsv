@@ -1,58 +1,58 @@
-id	section	role	expr	expected	known	source	caption	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note	rust.kind	rust.note
-exp-0			[Exp, 0]	1												
-stays-the-exact-constant-rather-than			[Exp, 1]	ExponentialE			Stays the exact constant rather than decimalizing									
-compute-engine-represents-exp-x-as-e-x-once-the			[Exp, x]	[Power, ExponentialE, x]			compute-engine represents Exp(x) as $e^x$ once the argument is symbolic									
-a-machine-precision-argument-evaluates			[Exp, 3.4]	{num: "29.9641000473970133482"}			A machine-precision argument evaluates numerically									
-broadcasts-element-wise-giving-begin-pmatrix-1-e	Scope		[Exp, [List, [List, 0, 1], [List, 1, 0]]]	[List, [List, 1, ExponentialE], [List, ExponentialE, 1]]			Broadcasts element-wise, giving $\begin{pmatrix}1 & e\\ e & 1\end{pmatrix}$ -- NOT the matrix exponential $\begin{pmatrix}\cosh 1 & \sinh 1\\ \sinh 1 & \cosh 1\end{pmatrix}$, which is [[MatrixExp]]	Wolfram's Exp also maps element-wise over a matrix; it names the matrix exponential MatrixExp, which this library provides too.							threading	compute-engine's Exp of a matrix stays element-wise, threading over the nested list; the Rust crate takes scalars only.
-arbitrary-precision-via-n	Scope		[N, [Exp, [Rational, 8, 5]]]	{num: "4.95303242439511480365"}			Arbitrary precision via N(...)									
-evaluates-at-a-complex-argument	Scope		[Exp, [Complex, 2.5, 1]]	[Complex, {num: "6.5822295781927729844"}, 10.251215190529404]			Evaluates at a complex argument									
-euler-s-identity-e-i-pi-1	Scope		[Exp, [Multiply, ImaginaryUnit, Pi]]	-1			Euler's identity $e^{i\pi} = -1$									
-exp-imaginaryunit-times-pi-over-2	Scope		[Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]	[Complex, 0, 1]												
-a-special-imaginary-argument-folds-through-e-i	Scope		[Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 5]]]	[Add, [Rational, 1, 4], [Divide, [Sqrt, 5], 4], [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]]]			A special imaginary argument folds through $e^{i\theta} = \cos\theta + i\sin\theta$	Wolfram keeps E^(I Pi/5) as is; ExpToTrig or ComplexExpand gives this radical form.								
-exp-ln-2	Scope		[Exp, [Ln, 2]]	2												
-exp-ln-neg-1	Scope	test	[Exp, [Ln, -1]]	-1			$e^{\ln(-1)} = e^{i\pi} = -1$ folds all the way through, unlike Exp(Ln(-2)) below								domain	Rust's f64 ln is real-only and gives NaN for Ln(-1), which poisons the Exp around it; compute-engine folds Exp(Ln(-1)) = e^{i\pi} = -1 exactly.
-inverse-of-ln-symbolically	Scope		[Exp, [Ln, x]]	x			Inverse of [[Ln]] symbolically									
-exp-ln-of-a-complex-argument-is-that-argument	Scope		[Exp, [Ln, [Complex, 1, 2]]]	[Complex, 1, 2]			$e^{\ln(1+2i)} = 1+2i$ -- compute-engine's native $e^{\ln z} = z$ fold holds for complex z too									
-exp-negativeinfinity	Scope		[Exp, NegativeInfinity]	0												
-exp-positiveinfinity	Scope		[Exp, PositiveInfinity]	PositiveInfinity												
-element-wise-over-a-matrix-not-the-matrix	Scope		[Exp, [List, [List, 1, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]], [List, 0, 1]]]	[List, [List, ExponentialE, [Complex, 0, 1]], [List, 1, ExponentialE]]			Element-wise over a matrix (not the matrix exponential -- see above)									
-interval-arithmetic-exp-1-ln-2-e-1-2	Scope		[Exp, [Interval, -1, [Ln, 2]]]	[Interval, [Divide, 1, ExponentialE], 2]			Interval arithmetic: $\exp[-1, \ln 2] = [e^{-1}, 2]$									
-uncertainty-propagation-e-2-pm-0-01-approx-7-389	Scope		[Exp, [Around, 2, 0.01]]	[Around, 7.38905609893065, 0.0738905609893065]			Uncertainty propagation: $e^{2 \pm 0.01} \approx 7.389 \pm 0.074$									
-around-0-still-fires-the-e-base-power-rule	Scope	test	[N, [Exp, [Around, 0, 0.1]]]	[Around, 1, 0.1]			N() decimalizes [[ExponentialE]] before the Power resolver's $e$-base check runs, but the rule still fires									
-its-own-derivative	Scope		[D, [Exp, x], x]	[Power, ExponentialE, x]			Its own derivative									
-its-own-antiderivative	Scope		[Integrate, [Exp, x], x]	[Power, ExponentialE, x]			Its own antiderivative									
-taylor-series-about-0	Scope		[Series, [Exp, x], x, 0, 4]	[Add, [Multiply, [Rational, 1, 24], [Power, x, 4]], [Multiply, [Rational, 1, 6], [Power, x, 3]], [Multiply, [Rational, 1, 2], [Power, x, 2]], x, [BigO, [Power, x, 5]], 1]			Taylor series about 0									
-n-decimalizes-a-combined-product	Scope		[N, [Multiply, [Exp, 1], [Exp, 2]]]	20.085536923187668			$N()$ still decimalizes a combined product									
-agrees-numerically-at-a-complex-point	Scope		[N, [Multiply, [Exp, [Complex, 1.3, 0.7]], [Exp, [Complex, -0.4, 2.1]]]]	[Complex, -2.317493000510215, 0.8239378963241757]			Agrees numerically with the plain product at a complex point									
-to-50-significant-digits-every-one-correctly	Scope		[N, [Exp, 1], 50]	{num: "2.7182818284590452353602874713526624977572470937000"}			To 50 significant digits, every one correctly rounded									
-to-1-significant-digit	Scope	test	[N, [Exp, 1], 1]	3			A single requested digit, next to the 50-digit example above		precision	N's digit count is dropped for Sage, per the mapping's own note; it always returns full double precision rather than the one digit asked for.	precision	The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit.	precision	N's digit count is dropped for mpmath, per the mapping's own note -- it always returns full working precision rather than the one digit asked for (same gap as the Rust row above).	precision	N's digit count is dropped for Rust, per the mapping's own note -- it always returns full f64 precision rather than the one digit asked for.
-n-exponentiale-pow-8-over-5-50	Scope		[N, [Power, ExponentialE, [Rational, 8, 5]], 50]	{num: "4.9530324243951148036542863564239642564130311235566"}												
-matrixfunction-exp-list-list-1-1-over-2-times-i	Scope		[MatrixFunction, Exp, [List, [List, 1, [Multiply, [Complex, 0, [Rational, 1, 2]], Pi]], [List, 0, 1]]]	[List, [List, ExponentialE, [Multiply, [Complex, 0, [Rational, 1, 2]], ExponentialE, Pi]], [List, 0, ExponentialE]]												
-exponentiale-pow-9-over-2-times-i-times-pi	Scope		[Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 9, 2]], Pi]]	[Complex, 0, 1]												
-exptotrig-exponentiale-pow-1-over-5-times-i	Scope		[ExpToTrig, [Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 1, 5]], Pi]]]	[Add, [Rational, 1, 4], [Divide, [Sqrt, 5], 4], [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]]]												
-functiondomain-exp-x-x	Scope		[FunctionDomain, [Exp, x], x]	True												
-functionrange-exp-x-x-y	Scope		[FunctionRange, [Exp, x], x, y]	[Less, 0, y]												
-functionanalytic-exp-x-x	Scope		[FunctionAnalytic, [Exp, x], x]	True												
-functionmonotonicity-exp-x-x	Scope		[FunctionMonotonicity, [Exp, x], x]	1												
-functioninjective-exp-x-x	Scope		[FunctionInjective, [Exp, x], x]	True												
-functionsurjective-exp-x-x	Scope		[FunctionSurjective, [Exp, x], x]	False												
-assuming-n-in-integers-refine-exp-2-times-pi	Scope		[Assuming, [Element, n, Integers], [Refine, [Exp, [Multiply, 2, Pi, ImaginaryUnit, n]]]]	[Power, ExponentialE, [Multiply, [Complex, 0, 2], Pi, n]]												
-assuming-n-in-integers-refine-exp-2-times-pi-2	Scope		[Assuming, [Element, n, Integers], [Refine, [Exp, [Multiply, 2, Pi, ImaginaryUnit, [Add, n, [Multiply, 1, [Power, 2, -1]]]]]]]	[Power, ExponentialE, [Multiply, [Complex, 0, 2], Pi, [Add, n, [Rational, 1, 2]]]]												
-functionsign-exp-x-x	Scope		[FunctionSign, [Exp, x], x]	1												
-functionsingularities-exp-x-x	Scope		[FunctionSingularities, [Exp, x], x]	False												
-functiondiscontinuities-exp-x-x	Scope		[FunctionDiscontinuities, [Exp, x], x]	False												
-functionconvexity-exp-x-x	Scope		[FunctionConvexity, [Exp, x], x]	1												
-threads-element-wise-over-a-list	Applications		[Exp, [List, 0, 1]]	[List, 1, ExponentialE]			Threads element-wise over a list								threading	compute-engine's Exp is Listable and threads over the list; the Rust crates take scalars.
-inverse-of-ln-e-ln-x-x	Properties		[Equal, [Exp, [Ln, 5]], 5]	True			Inverse of [[Ln]]: $e^{\ln x} = x$									
-e-a-e-b-e-a-b	Properties		[Equal, [Multiply, [Exp, 2], [Exp, 3]], [Exp, 5]]	True			$e^a \, e^b = e^{a+b}$									
-e-as-the-limit-lim-x-to-infty-1-1-x-x	Properties		[Limit, [Function, [Power, [Add, 1, [Divide, 1, x]], x], x], PositiveInfinity]	ExponentialE			$e$ as the limit $\lim_{x\to\infty}(1 + 1/x)^x$									
-lim-x-to-0-frac-e-x-1-x-1	Properties		[Limit, [Function, [Divide, [Subtract, [Exp, x], 1], x], x], 0]	1			$\lim_{x\to0}\frac{e^x - 1}{x} = 1$									
-a-product-of-exponentials-should-combine-e-x-e-y	Properties		[Multiply, [Exp, x], [Exp, y]]	[Power, ExponentialE, [Add, x, y]]			A product of exponentials combines: $e^x e^y = e^{x+y}$									
-combines-past-two-factors	Properties		[Multiply, [Exp, a], [Exp, b], [Exp, c]]	[Power, ExponentialE, [Add, a, b, c]]			Combines past two factors									
-combines-past-extra-non-exponential-factors	Properties		[Multiply, 2, [Exp, x], [Exp, y], z]	[Multiply, 2, z, [Power, ExponentialE, [Add, x, y]]]			Combines past extra, non-exponential factors in the product									
-e-x-e-x-cancels-to-1	Properties		[Multiply, [Exp, x], [Exp, [Negate, x]]]	1			$e^x e^{-x}$ cancels to 1, past what compute-engine's own like-term merge catches									
-euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig	Properties		[ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]	[Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]			Euler's formula $e^{ix} = \cos x + i\sin x$ via [[ExpToTrig]]									
-exp-ln-of-a-negative-real-is-left-unevaluated	Possible issues		[Exp, [Ln, -2]]	[Power, ExponentialE, [Add, [Multiply, [Complex, 0, 1], Pi], [Ln, 2]]]			$e^{\ln(-2)}$ is left as $e^{i\pi + \ln 2}$ rather than folding to $-2$	Wolfram folds Exp[Log[-2]] to -2 (and native compute-engine does too, checked against a bare engine with nothing declared) -- this package's own Ln(-q) = Ln(q) + i*pi rule (widened.ts, a deliberate, documented choice, see Ln.yaml) evaluates the negative-real Ln away before Exp's native e^(ln z) = z fold ever sees a literal Ln node to recognize, since Exp(z) canonicalizes straight to Power(ExponentialE, z) inside compute-engine's own box() step without ever consulting a customizable canonical hook (confirmed by patching Power's canonical and evaluate directly and observing neither intercepts in time). N(Exp(Ln(-2))) is unaffected, still -2.							domain	Rust's f64 ln is real-only (NaN); compute-engine keeps exp(ln(-2)) exact.
-a-lone-exp-factor-is-untouched	Possible issues		[Multiply, [Exp, x], y]	[Multiply, y, [Power, ExponentialE, x]]			A lone `Exp` factor is untouched -- the combine rule needs at least two									
-same-base-non-e-powers-are-left-alone	Possible issues		[Multiply, [Power, 2, x], [Power, 2, y]]	[Multiply, [Power, 2, x], [Power, 2, y]]			$2^x 2^y$ is also an identity, but this rule only touches `ExponentialE` -- left to compute-engine's own rules									
-exp-complexinfinity-is-indeterminate-via	Possible issues		[Exp, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.2, via Power(ExponentialE, ComplexInfinity)	Exp(ComplexInfinity) is Indeterminate -- Exp(z) canonicalizes to Power(ExponentialE, z) before this head's own evaluate ever runs, so the fix lives on Power's exponent side. See Power.									
+id	section	role	expr	expected	known	source	caption	fullform.in	fullform.out	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note	rust.kind	rust.note
+exp-0			[Exp, 0]	1				Exp(0)	1									
+stays-the-exact-constant-rather-than			[Exp, 1]	ExponentialE			Stays the exact constant rather than decimalizing											
+compute-engine-represents-exp-x-as-e-x-once-the			[Exp, x]	[Power, ExponentialE, x]			compute-engine represents Exp(x) as $e^x$ once the argument is symbolic											
+a-machine-precision-argument-evaluates			[Exp, 3.4]	{num: "29.9641000473970133482"}			A machine-precision argument evaluates numerically											
+broadcasts-element-wise-giving-begin-pmatrix-1-e	Scope		[Exp, [List, [List, 0, 1], [List, 1, 0]]]	[List, [List, 1, ExponentialE], [List, ExponentialE, 1]]			Broadcasts element-wise, giving $\begin{pmatrix}1 & e\\ e & 1\end{pmatrix}$ -- NOT the matrix exponential $\begin{pmatrix}\cosh 1 & \sinh 1\\ \sinh 1 & \cosh 1\end{pmatrix}$, which is [[MatrixExp]]			Wolfram's Exp also maps element-wise over a matrix; it names the matrix exponential MatrixExp, which this library provides too.							threading	compute-engine's Exp of a matrix stays element-wise, threading over the nested list; the Rust crate takes scalars only.
+arbitrary-precision-via-n	Scope		[N, [Exp, [Rational, 8, 5]]]	{num: "4.95303242439511480365"}			Arbitrary precision via N(...)											
+evaluates-at-a-complex-argument	Scope		[Exp, [Complex, 2.5, 1]]	[Complex, {num: "6.5822295781927729844"}, 10.251215190529404]			Evaluates at a complex argument											
+euler-s-identity-e-i-pi-1	Scope		[Exp, [Multiply, ImaginaryUnit, Pi]]	-1			Euler's identity $e^{i\pi} = -1$											
+exp-imaginaryunit-times-pi-over-2	Scope		[Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]]	[Complex, 0, 1]														
+a-special-imaginary-argument-folds-through-e-i	Scope		[Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 5]]]	[Add, [Rational, 1, 4], [Divide, [Sqrt, 5], 4], [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]]]			A special imaginary argument folds through $e^{i\theta} = \cos\theta + i\sin\theta$			Wolfram keeps E^(I Pi/5) as is; ExpToTrig or ComplexExpand gives this radical form.								
+exp-ln-2	Scope		[Exp, [Ln, 2]]	2														
+exp-ln-neg-1	Scope	test	[Exp, [Ln, -1]]	-1			$e^{\ln(-1)} = e^{i\pi} = -1$ folds all the way through, unlike Exp(Ln(-2)) below										domain	Rust's f64 ln is real-only and gives NaN for Ln(-1), which poisons the Exp around it; compute-engine folds Exp(Ln(-1)) = e^{i\pi} = -1 exactly.
+inverse-of-ln-symbolically	Scope		[Exp, [Ln, x]]	x			Inverse of [[Ln]] symbolically											
+exp-ln-of-a-complex-argument-is-that-argument	Scope		[Exp, [Ln, [Complex, 1, 2]]]	[Complex, 1, 2]			$e^{\ln(1+2i)} = 1+2i$ -- compute-engine's native $e^{\ln z} = z$ fold holds for complex z too											
+exp-negativeinfinity	Scope		[Exp, NegativeInfinity]	0				Exp(NegativeInfinity)	0									
+exp-positiveinfinity	Scope		[Exp, PositiveInfinity]	PositiveInfinity				Exp(PositiveInfinity)	PositiveInfinity									
+element-wise-over-a-matrix-not-the-matrix	Scope		[Exp, [List, [List, 1, [Multiply, ImaginaryUnit, [Divide, Pi, 2]]], [List, 0, 1]]]	[List, [List, ExponentialE, [Complex, 0, 1]], [List, 1, ExponentialE]]			Element-wise over a matrix (not the matrix exponential -- see above)											
+interval-arithmetic-exp-1-ln-2-e-1-2	Scope		[Exp, [Interval, -1, [Ln, 2]]]	[Interval, [Divide, 1, ExponentialE], 2]			Interval arithmetic: $\exp[-1, \ln 2] = [e^{-1}, 2]$											
+uncertainty-propagation-e-2-pm-0-01-approx-7-389	Scope		[Exp, [Around, 2, 0.01]]	[Around, 7.38905609893065, 0.0738905609893065]			Uncertainty propagation: $e^{2 \pm 0.01} \approx 7.389 \pm 0.074$											
+around-0-still-fires-the-e-base-power-rule	Scope	test	[N, [Exp, [Around, 0, 0.1]]]	[Around, 1, 0.1]			N() decimalizes [[ExponentialE]] before the Power resolver's $e$-base check runs, but the rule still fires											
+its-own-derivative	Scope		[D, [Exp, x], x]	[Power, ExponentialE, x]			Its own derivative											
+its-own-antiderivative	Scope		[Integrate, [Exp, x], x]	[Power, ExponentialE, x]			Its own antiderivative											
+taylor-series-about-0	Scope		[Series, [Exp, x], x, 0, 4]	[Add, [Multiply, [Rational, 1, 24], [Power, x, 4]], [Multiply, [Rational, 1, 6], [Power, x, 3]], [Multiply, [Rational, 1, 2], [Power, x, 2]], x, [BigO, [Power, x, 5]], 1]			Taylor series about 0											
+n-decimalizes-a-combined-product	Scope		[N, [Multiply, [Exp, 1], [Exp, 2]]]	20.085536923187668			$N()$ still decimalizes a combined product											
+agrees-numerically-at-a-complex-point	Scope		[N, [Multiply, [Exp, [Complex, 1.3, 0.7]], [Exp, [Complex, -0.4, 2.1]]]]	[Complex, -2.317493000510215, 0.8239378963241757]			Agrees numerically with the plain product at a complex point											
+to-50-significant-digits-every-one-correctly	Scope		[N, [Exp, 1], 50]	{num: "2.7182818284590452353602874713526624977572470937000"}			To 50 significant digits, every one correctly rounded											
+to-1-significant-digit	Scope	test	[N, [Exp, 1], 1]	3			A single requested digit, next to the 50-digit example above				precision	N's digit count is dropped for Sage, per the mapping's own note; it always returns full double precision rather than the one digit asked for.	precision	The mapping evaluates at the system's own precision and drops N's digit count, so it prints every digit.	precision	N's digit count is dropped for mpmath, per the mapping's own note -- it always returns full working precision rather than the one digit asked for (same gap as the Rust row above).	precision	N's digit count is dropped for Rust, per the mapping's own note -- it always returns full f64 precision rather than the one digit asked for.
+n-exponentiale-pow-8-over-5-50	Scope		[N, [Power, ExponentialE, [Rational, 8, 5]], 50]	{num: "4.9530324243951148036542863564239642564130311235566"}														
+matrixfunction-exp-list-list-1-1-over-2-times-i	Scope		[MatrixFunction, Exp, [List, [List, 1, [Multiply, [Complex, 0, [Rational, 1, 2]], Pi]], [List, 0, 1]]]	[List, [List, ExponentialE, [Multiply, [Complex, 0, [Rational, 1, 2]], ExponentialE, Pi]], [List, 0, ExponentialE]]														
+exponentiale-pow-9-over-2-times-i-times-pi	Scope		[Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 9, 2]], Pi]]	[Complex, 0, 1]														
+exptotrig-exponentiale-pow-1-over-5-times-i	Scope		[ExpToTrig, [Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 1, 5]], Pi]]]	[Add, [Rational, 1, 4], [Divide, [Sqrt, 5], 4], [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]]]														
+functiondomain-exp-x-x	Scope		[FunctionDomain, [Exp, x], x]	True														
+functionrange-exp-x-x-y	Scope		[FunctionRange, [Exp, x], x, y]	[Less, 0, y]														
+functionanalytic-exp-x-x	Scope		[FunctionAnalytic, [Exp, x], x]	True														
+functionmonotonicity-exp-x-x	Scope		[FunctionMonotonicity, [Exp, x], x]	1														
+functioninjective-exp-x-x	Scope		[FunctionInjective, [Exp, x], x]	True														
+functionsurjective-exp-x-x	Scope		[FunctionSurjective, [Exp, x], x]	False														
+assuming-n-in-integers-refine-exp-2-times-pi	Scope		[Assuming, [Element, n, Integers], [Refine, [Exp, [Multiply, 2, Pi, ImaginaryUnit, n]]]]	[Power, ExponentialE, [Multiply, [Complex, 0, 2], Pi, n]]														
+assuming-n-in-integers-refine-exp-2-times-pi-2	Scope		[Assuming, [Element, n, Integers], [Refine, [Exp, [Multiply, 2, Pi, ImaginaryUnit, [Add, n, [Multiply, 1, [Power, 2, -1]]]]]]]	[Power, ExponentialE, [Multiply, [Complex, 0, 2], Pi, [Add, n, [Rational, 1, 2]]]]														
+functionsign-exp-x-x	Scope		[FunctionSign, [Exp, x], x]	1														
+functionsingularities-exp-x-x	Scope		[FunctionSingularities, [Exp, x], x]	False														
+functiondiscontinuities-exp-x-x	Scope		[FunctionDiscontinuities, [Exp, x], x]	False														
+functionconvexity-exp-x-x	Scope		[FunctionConvexity, [Exp, x], x]	1														
+threads-element-wise-over-a-list	Applications		[Exp, [List, 0, 1]]	[List, 1, ExponentialE]			Threads element-wise over a list										threading	compute-engine's Exp is Listable and threads over the list; the Rust crates take scalars.
+inverse-of-ln-e-ln-x-x	Properties		[Equal, [Exp, [Ln, 5]], 5]	True			Inverse of [[Ln]]: $e^{\ln x} = x$											
+e-a-e-b-e-a-b	Properties		[Equal, [Multiply, [Exp, 2], [Exp, 3]], [Exp, 5]]	True			$e^a \, e^b = e^{a+b}$											
+e-as-the-limit-lim-x-to-infty-1-1-x-x	Properties		[Limit, [Function, [Power, [Add, 1, [Divide, 1, x]], x], x], PositiveInfinity]	ExponentialE			$e$ as the limit $\lim_{x\to\infty}(1 + 1/x)^x$											
+lim-x-to-0-frac-e-x-1-x-1	Properties		[Limit, [Function, [Divide, [Subtract, [Exp, x], 1], x], x], 0]	1			$\lim_{x\to0}\frac{e^x - 1}{x} = 1$											
+a-product-of-exponentials-should-combine-e-x-e-y	Properties		[Multiply, [Exp, x], [Exp, y]]	[Power, ExponentialE, [Add, x, y]]			A product of exponentials combines: $e^x e^y = e^{x+y}$											
+combines-past-two-factors	Properties		[Multiply, [Exp, a], [Exp, b], [Exp, c]]	[Power, ExponentialE, [Add, a, b, c]]			Combines past two factors											
+combines-past-extra-non-exponential-factors	Properties		[Multiply, 2, [Exp, x], [Exp, y], z]	[Multiply, 2, z, [Power, ExponentialE, [Add, x, y]]]			Combines past extra, non-exponential factors in the product											
+e-x-e-x-cancels-to-1	Properties		[Multiply, [Exp, x], [Exp, [Negate, x]]]	1			$e^x e^{-x}$ cancels to 1, past what compute-engine's own like-term merge catches											
+euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig	Properties		[ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]	[Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]			Euler's formula $e^{ix} = \cos x + i\sin x$ via [[ExpToTrig]]											
+exp-ln-of-a-negative-real-is-left-unevaluated	Possible issues		[Exp, [Ln, -2]]	[Power, ExponentialE, [Add, [Multiply, [Complex, 0, 1], Pi], [Ln, 2]]]			$e^{\ln(-2)}$ is left as $e^{i\pi + \ln 2}$ rather than folding to $-2$			Wolfram folds Exp[Log[-2]] to -2 (and native compute-engine does too, checked against a bare engine with nothing declared) -- this package's own Ln(-q) = Ln(q) + i*pi rule (widened.ts, a deliberate, documented choice, see Ln.yaml) evaluates the negative-real Ln away before Exp's native e^(ln z) = z fold ever sees a literal Ln node to recognize, since Exp(z) canonicalizes straight to Power(ExponentialE, z) inside compute-engine's own box() step without ever consulting a customizable canonical hook (confirmed by patching Power's canonical and evaluate directly and observing neither intercepts in time). N(Exp(Ln(-2))) is unaffected, still -2.							domain	Rust's f64 ln is real-only (NaN); compute-engine keeps exp(ln(-2)) exact.
+a-lone-exp-factor-is-untouched	Possible issues		[Multiply, [Exp, x], y]	[Multiply, y, [Power, ExponentialE, x]]			A lone `Exp` factor is untouched -- the combine rule needs at least two											
+same-base-non-e-powers-are-left-alone	Possible issues		[Multiply, [Power, 2, x], [Power, 2, y]]	[Multiply, [Power, 2, x], [Power, 2, y]]			$2^x 2^y$ is also an identity, but this rule only touches `ExponentialE` -- left to compute-engine's own rules											
+exp-complexinfinity-is-indeterminate-via	Possible issues		[Exp, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.2, via Power(ExponentialE, ComplexInfinity)	Exp(ComplexInfinity) is Indeterminate -- Exp(z) canonicalizes to Power(ExponentialE, z) before this head's own evaluate ever runs, so the fix lives on Power's exponent side. See Power.											

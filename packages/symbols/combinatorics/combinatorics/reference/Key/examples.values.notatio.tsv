@@ -1,3 +1,0 @@
-id	in	out
-looks-up-an-existing-key	<At><Association><Rule>a 1</Rule> <Rule>b 2</Rule></Association> <Key>b</Key></At>	<ToExpression>2</ToExpression>
-missing-key-answers-missing	<At><Association><Rule>a 1</Rule></Association> <Key>z</Key></At>	<Missing />

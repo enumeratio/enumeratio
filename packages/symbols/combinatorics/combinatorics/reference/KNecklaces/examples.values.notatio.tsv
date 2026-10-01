@@ -1,4 +1,0 @@
-id	in	out
-count-knecklaces-4-3	<Count><KNecklaces>4 3</KNecklaces></Count>	<ToExpression>24</ToExpression>
-first-element-of-knecklaces-4-3	<At><KNecklaces>4 3</KNecklaces> 1</At>	<List>1 1 1 1</List>
-every-element-of-knecklaces-4-3	<Take><KNecklaces>4 3</KNecklaces> 6</Take>	<List><List>1 1 1 1</List> <List>2 2 2 2</List> <List>3 3 3 3</List> <List>1 2 1 2</List> <List>1 3 1 3</List> <List>2 3 2 3</List></List>

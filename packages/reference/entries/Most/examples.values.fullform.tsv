@@ -1,3 +1,0 @@
-id	in	out
-most-list-a-b-c-d	Most(List(a, b, c, d))	List(a, b, c)
-nestlist-most-list-a-b-c-d-exponentiale-3	NestList(Most, List(a, b, c, d, ExponentialE), 3)	List(List(a, b, c, d, ExponentialE), List(a, b, c, d), List(a, b, c), List(a, b))

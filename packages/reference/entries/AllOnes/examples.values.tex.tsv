@@ -1,4 +1,0 @@
-id	in	out
-the-first-25-terms	\mathrm{Take}(\mathrm{AllOnes}, 25)	\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack
-1-is-in-allones	1\in\mathrm{AllOnes}	\mathrm{True}
-2-is-not-in-allones	2\in\mathrm{AllOnes}	\mathrm{False}

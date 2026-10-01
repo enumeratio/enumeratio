@@ -1,2 +1,0 @@
-id	in	out
-the-first-25-terms	\mathrm{Take}(\mathrm{OctagonalNumbers}, 25)	\bigl\lbrack1, 8, 21, 40, 65, 96, 133, 176, 225, 280, 341, 408, 481, 560, 645, 736, 833, 936, 1\,045, 1\,160, 1\,281, 1\,408, 1\,541, 1\,680, 1\,825\bigr\rbrack

@@ -1,8 +1,0 @@
-id	in	out
-filter-list-1-2-4-7-6-2-iseven	\mathrm{Filter}(\bigl\lbrack1, 2, 4, 7, 6, 2\bigr\rbrack, \mathrm{IsEven})	\bigl\lbrack2, 4, 6, 2\bigr\rbrack
-filter-list-1-2-4-7-6-2-isodd	\mathrm{Filter}(\bigl\lbrack1, 2, 4, 7, 6, 2\bigr\rbrack, \mathrm{IsOdd})	\bigl\lbrack1, 7\bigr\rbrack
-filter-list-list-1-y-list-2-x-list-3-x-list-4-z	\mathrm{Filter}(\bigl\lbrack\bigl\lbrack1, y\bigr\rbrack, \bigl\lbrack2, x\bigr\rbrack, \bigl\lbrack3, x\bigr\rbrack, \bigl\lbrack4, z\bigr\rbrack, \bigl\lbrack5, x\bigr\rbrack, \bigl\lbrack6, y\bigr\rbrack\bigr\rbrack, ()\mapsto\mathrm{Contains}(\operatorname{\_1}, x))	\bigl\lbrack\bigl\lbrack2, x\bigr\rbrack, \bigl\lbrack3, x\bigr\rbrack, \bigl\lbrack5, x\bigr\rbrack\bigr\rbrack
-filter-list-list-1-y-list-2-x-list-3-x-list-4-2	\mathrm{Filter}(\bigl\lbrack\bigl\lbrack1, y\bigr\rbrack, \bigl\lbrack2, x\bigr\rbrack, \bigl\lbrack3, x\bigr\rbrack, \bigl\lbrack4, z\bigr\rbrack, \bigl\lbrack5, x\bigr\rbrack, \bigl\lbrack6, y\bigr\rbrack\bigr\rbrack, ()\mapsto\mathrm{Contains}(\operatorname{\_1}, z))	\bigl\lbrack\bigl\lbrack4, z\bigr\rbrack\bigr\rbrack
-filter-list-1-2-4-7-6-2-function-2-lt-1-1	\mathrm{Filter}(\bigl\lbrack1, 2, 4, 7, 6, 2\bigr\rbrack, ()\mapsto2\lt\operatorname{\_1})	\bigl\lbrack4, 7, 6\bigr\rbrack
-filter-range-1-100-function-1-mod-3-eq-1-1-mod-5	\mathrm{Filter}(1..100, ()\mapsto\operatorname{\_1}\bmod3=1\land\operatorname{\_1}\bmod5=1)	\bigl\lbrack1, 16, 31, 46, 61, 76, 91\bigr\rbrack
-filter-range-1-10-iseven	\mathrm{Filter}(1..10, \mathrm{IsEven})	\bigl\lbrack2, 4, 6, 8, 10\bigr\rbrack

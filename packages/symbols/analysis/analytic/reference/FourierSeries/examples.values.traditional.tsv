@@ -1,9 +1,0 @@
-id	in	out
-order-2-series-of-x	\operatorname{FourierSeries}(x,x,2)	-ie^{ix}+\frac{-1}{2}ie^{-2ix}+\frac{1}{2}ie^{2ix}+ie^{-ix}
-fourierseries-1-over-2-times-t-t-3	\operatorname{FourierSeries}(\frac{1}{2}t,t,3)	\frac{-1}{2}ie^{it}+\frac{-1}{4}ie^{-2it}+\frac{-1}{6}ie^{3it}+\frac{1}{6}ie^{-3it}+\frac{1}{4}ie^{2it}+\frac{1}{2}ie^{-it}
-order-3-series-of-sin-is-itself	\operatorname{FourierSeries}(\sin(x),x,3)	\frac{-1}{2}ie^{ix}+\frac{1}{2}ie^{-ix}
-cos-squared-a-sin-cos-polynomial	\operatorname{FourierSeries}({\cos(x)}^2,x,2)	\frac{1}{4}e^{-2ix}+\frac{1}{4}e^{2ix}+\frac{1}{2}
-order-0-series-of-x-squared-is-its-average	\operatorname{FourierSeries}(x^2,x,0)	\frac{1}{3}\pi^2
-fourierseries-exponentiale-pow-neg-t-t-3	\operatorname{FourierSeries}(e^{-t},t,3)	\frac{(\frac{-1}{2}+\frac{-1}{2}i)\sinh(\pi)e^{-it}}{\pi}+\frac{(\frac{1}{5}+\frac{-2}{5}i)\sinh(\pi)e^{2it}}{\pi}+\frac{(\frac{-1}{10}+\frac{-3}{10}i)\sinh(\pi)e^{-3it}}{\pi}+\frac{(\frac{-1}{10}+\frac{3}{10}i)\sinh(\pi)e^{3it}}{\pi}+\frac{(\frac{1}{5}+\frac{2}{5}i)\sinh(\pi)e^{-2it}}{\pi}+\frac{(\frac{-1}{2}+\frac{1}{2}i)\sinh(\pi)e^{it}}{\pi}+\frac{\sinh(\pi)}{\pi}
-fourierseries-abs-t-t-2	\operatorname{FourierSeries}(|t|,t,2)	\frac{-2e^{-it}}{\pi}+\frac{-2e^{it}}{\pi}+\frac{1}{2}\pi
-declines-a-mixed-polynomial-trig-product	\operatorname{FourierSeries}(x\cos(x),x,1)	\operatorname{FourierSeries}(x\cos(x),x,1)

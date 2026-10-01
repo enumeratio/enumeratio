@@ -1,7 +1,0 @@
-id	in	out
-a-floating-point-argument-evaluates-directly-to	N(JacobiNS(0.3, 0.5))	3.408_168_381_792_332_3
-jacobins-0-4-0-5i-0-3	N(JacobiNS(0.4 - 0.5i, 0.3))	1.061_562_389_406_855_8 + 1.111_029_734_408_047i
-m-less-than-0-via-the-imaginary-modulus	N(JacobiNS(0.3, -2))	3.289_220_683_752_634_8
-u-0-is-a-pole-for-any-m	JacobiNS(0, m)	complexInfinity
-symbolic-arguments-are-left-unevaluated-rather	JacobiNS(u, m)	JacobiNS(u, m)
-u-1e16-declines-rather-than-answering-wrong	N(JacobiNS(10 ^ 16, 2 / 3))	JacobiNS(10_000_000_000_000_000.0, 0.666_666_666_666_666_666_667)

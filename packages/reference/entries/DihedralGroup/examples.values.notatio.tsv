@@ -1,3 +1,0 @@
-id	in	out
-grouporder-dihedralgroup-10	<GroupOrder><DihedralGroup>10</DihedralGroup></GroupOrder>	<ToExpression>20</ToExpression>
-groupelements-dihedralgroup-4	<GroupElements><DihedralGroup>4</DihedralGroup></GroupElements>	<List><GroupBasis>"0"</GroupBasis> <GroupBasis>"1"</GroupBasis> <GroupBasis>"2"</GroupBasis> <GroupBasis>"3"</GroupBasis> <GroupBasis>"s0"</GroupBasis> <GroupBasis>"s1"</GroupBasis> <GroupBasis>"s2"</GroupBasis> <GroupBasis>"s3"</GroupBasis></List>

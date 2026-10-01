@@ -1,5 +1,0 @@
-id	in	out
-count-largestpartpartitions-10-4	count(LargestPartPartitions(10, 4))	9
-first-element-of-largestpartpartitions-10-4	LargestPartPartitions(10, 4)[1]	IntegerPartition([4, 4, 2])
-every-element-of-largestpartpartitions-10-4	take(LargestPartPartitions(10, 4), 9)	"[\n  IntegerPartition([4, 4, 2]),\n  IntegerPartition([4, 4, 1, 1]),\n  IntegerPartition([4, 3, 3]),\n  IntegerPartition([4, 3, 2, 1]),\n  IntegerPartition([4, 3, 1, 1, 1]),\n  IntegerPartition([4, 2, 2, 2]),\n  IntegerPartition([4, 2, 2, 1, 1]),\n  IntegerPartition([4, 2, 1, 1, 1, 1]),\n  IntegerPartition([4, 1, 1, 1, 1, 1, 1]),\n]"
-every-element-of-largestpartpartitions-10-1	take(LargestPartPartitions(10, 1), 1)	[IntegerPartition([1, 1, 1, 1, 1, 1, 1, 1, 1, 1])]

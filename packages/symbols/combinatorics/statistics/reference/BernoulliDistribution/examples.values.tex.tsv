@@ -1,5 +1,0 @@
-id	in	out
-bernoulli-pdf-exact	\operatorname{PDF}(\mathrm{BernoulliDistribution}(\frac{1}{3}), 1)	\frac{1}{3}
-bernoulli-cdf-exact	\operatorname{CDF}(\mathrm{BernoulliDistribution}(\frac{1}{3}), 0)	\frac{2}{3}
-bernoulli-mean-exact	\mathrm{mean}(\mathrm{BernoulliDistribution}(\frac{1}{3}))	\frac{1}{3}
-bernoulli-variance-exact	\mathrm{Variance}(\mathrm{BernoulliDistribution}(\frac{1}{3}))	\frac{2}{9}

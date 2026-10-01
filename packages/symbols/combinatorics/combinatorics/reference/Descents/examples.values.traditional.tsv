@@ -1,7 +1,0 @@
-id	in	out
-only-3-1	\operatorname{Descents}([3,1,2])	1
-every-step-falls	\operatorname{Descents}([3,2,1])	2
-the-one-line-word-312	\operatorname{Descents}(\operatorname{Permutation}([3,1,2]))	1
-the-one-line-word-312-as-a-plain-list	\operatorname{Descents}([3,1,2])	1
-the-one-line-word-2413	\operatorname{Descents}(\operatorname{Permutation}([2,4,1,3]))	1
-descents-and-ascents-partition-the-n-1-steps	\operatorname{Descents}([3,1,2])+\operatorname{Ascents}([3,1,2])=2	\top

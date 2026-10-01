@@ -1,6 +1,0 @@
-id	in	out
-a-floating-point-argument-evaluates-directly-to	N(JacobiDC(0.6, 0.4))	1.124780426911555
-m-less-than-0-via-the-imaginary-modulus	N(JacobiDC(0.3, -0.7))	1.0799397700832252
-u-0-is-1-for-any-m	JacobiDC(0, m)	1
-symbolic-arguments-are-left-unevaluated-rather	JacobiDC(u, m)	JacobiDC(u, m)
-u-1e16-declines-rather-than-answering-wrong	N(JacobiDC(Power(10, 16), Rational(5, 7)))	JacobiDC(10000000000000000, 0.714285714285714285714)

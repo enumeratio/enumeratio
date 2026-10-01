@@ -1,3 +1,0 @@
-id	in	out
-count-binarybracelets-6-13-a000029	\operatorname{Count}(\operatorname{BinaryBracelets}(6))	13
-every-element-of-binarybracelets-6	\operatorname{Take}(\operatorname{BinaryBracelets}(6),13)	[[0,0,0,0,0,0],[0,0,0,0,0,1],[0,0,0,0,1,1],[0,0,0,1,0,1],[0,0,0,1,1,1],[0,0,1,0,0,1],[0,0,1,0,1,1],[0,0,1,1,1,1],[0,1,0,1,0,1],[0,1,0,1,1,1],[0,1,1,0,1,1],[0,1,1,1,1,1],[1,1,1,1,1,1]]

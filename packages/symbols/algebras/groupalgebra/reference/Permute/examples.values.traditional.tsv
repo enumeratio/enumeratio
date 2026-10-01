@@ -1,7 +1,0 @@
-id	in	out
-by-a-cycle	\operatorname{Permute}([a,b,c,d],\operatorname{Cycles}([[1,3,2]]))	[b,c,a,d]
-permute-list-a-b-c-d-exponentiale-cycles-list	\operatorname{Permute}([a,b,c,d,e],\operatorname{Cycles}([[1,3,2]]))	[b,c,a,d,e]
-permute-list-a-b-c-d-exponentiale-list-3-1-2	\operatorname{Permute}([a,b,c,d,e],[3,1,2])	[b,c,a,d,e]
-by-disjoint-cycles	\operatorname{Permute}([a,b,c,d],\operatorname{Cycles}([[1,3],[2,4]]))	[c,d,a,b]
-by-a-one-line-word	\operatorname{Permute}([a,b,c,d],[2,3,4,1])	[d,a,b,c]
-by-a-permutation-group	\operatorname{Permute}([a,b,c],\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,2,3]])]))	[[a,b,c],[c,a,b],[b,c,a]]

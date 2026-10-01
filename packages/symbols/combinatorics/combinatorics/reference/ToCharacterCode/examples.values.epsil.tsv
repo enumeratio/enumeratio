@@ -1,4 +1,0 @@
-id	in	out	back
-reads-ascii-code-points	ToCharacterCode("\(ABC)")	[65, 66, 67]	[ToCharacterCode, [String, "''", ABC]]
-tocharactercode-factorial-mod-times-plus-neg			
-tocharactercode-a	ToCharacterCode("a")	[97]	

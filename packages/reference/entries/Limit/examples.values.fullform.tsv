@@ -1,4 +1,0 @@
-id	in	out
-lim-x-to-0-sin-x-x-1	Limit(Function(Divide(Sin(_1), _1)), 0)	1
-right-hand-limit-of-1-x-at-0-is-infinity	Limit(Function(Divide(1, _1)), 0, 1)	PositiveInfinity
-limit-of-1-x-as-x-to-infinity-is-0	Limit(Function(Divide(1, _1)), PositiveInfinity)	0

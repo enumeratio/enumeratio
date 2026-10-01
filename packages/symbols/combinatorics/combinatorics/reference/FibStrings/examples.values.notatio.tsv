@@ -1,4 +1,0 @@
-id	in	out
-count-fibstrings-4	<Count><FibStrings>4</FibStrings></Count>	<ToExpression>8</ToExpression>
-first-element-of-fibstrings-4	<At><FibStrings>4</FibStrings> 1</At>	<BinaryWord><List>0 0 0 0</List></BinaryWord>
-every-element-of-fibstrings-4	<Take><FibStrings>4</FibStrings> 8</Take>	<List><BinaryWord><List>0 0 0 0</List></BinaryWord> <BinaryWord><List>0 0 0 1</List></BinaryWord> <BinaryWord><List>0 0 1 0</List></BinaryWord> <BinaryWord><List>0 1 0 0</List></BinaryWord> <BinaryWord><List>0 1 0 1</List></BinaryWord> <BinaryWord><List>1 0 0 0</List></BinaryWord> <BinaryWord><List>1 0 0 1</List></BinaryWord> <BinaryWord><List>1 0 1 0</List></BinaryWord></List>

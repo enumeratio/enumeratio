@@ -1,4 +1,0 @@
-id	in	out
-count-binarypalindromes-4	<Count><BinaryPalindromes>4</BinaryPalindromes></Count>	<ToExpression>4</ToExpression>
-first-element-of-binarypalindromes-4	<At><BinaryPalindromes>4</BinaryPalindromes> 1</At>	<BinaryWord><List>0 0 0 0</List></BinaryWord>
-every-element-of-binarypalindromes-4	<Take><BinaryPalindromes>4</BinaryPalindromes> 4</Take>	<List><BinaryWord><List>0 0 0 0</List></BinaryWord> <BinaryWord><List>0 1 1 0</List></BinaryWord> <BinaryWord><List>1 0 0 1</List></BinaryWord> <BinaryWord><List>1 1 1 1</List></BinaryWord></List>

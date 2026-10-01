@@ -1,6 +1,0 @@
-id	in	out
-repeat-c-10	Repeat(c, 10)	List(c, c, c, c, c, c, c, c, c, c)
-repeat-0-10	Repeat(0, 10)	List(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-repeat-1-10	Repeat(1, 10)	List(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-dot-list-repeat-1-length-list	Dot(list, Repeat(1, Length(list)))	Dot(list, List())
-shape-repeat-c-dims		

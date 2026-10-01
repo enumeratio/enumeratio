@@ -1,3 +1,0 @@
-id	in	out
-in-process-the-call-simply-does-not-reduce-see	<MemoryConstrained><Add>1 2</Add> 1000000</MemoryConstrained>	<MemoryConstrained><Add>1 2</Add> 1000000</MemoryConstrained>
-a-failexpr-does-not-change-that-in-process-there	<MemoryConstrained><Add>1 2</Add> 1000000 -1</MemoryConstrained>	<MemoryConstrained><Add>1 2</Add> 1000000 -1</MemoryConstrained>

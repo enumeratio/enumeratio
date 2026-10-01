@@ -1,7 +1,0 @@
-id	in	out
-erfi-0	\operatorname{Erfi}(0)	0
-erfi-0p5	\operatorname{Erfi}(0.5)	0.61495209469651098084
-erfi-1	N(\operatorname{Erfi}(1))	1.65042575879754287603
-threads-element-wise-over-a-list	\operatorname{Erfi}([0,1])	[0,\operatorname{Erfi}(1)]
-listable-threads-over-its-limits-at-pm-infty	\operatorname{Erfi}([\infty,-\infty])	[\infty,-\infty]
-erfi-complexinfinity-is-indeterminate-inheriting	\operatorname{Erfi}(\tilde\infty)	\operatorname{Indeterminate}

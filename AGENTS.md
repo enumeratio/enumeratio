@@ -85,8 +85,11 @@ so a page reads the same on GitHub and on the site.
 - Each head's record is a folder, `reference/<Head>/`, in the package that declares it
   (`packages/reference/entries/` for compute-engine's own heads): `index.md` (front matter,
   then a markdown body the page renders as written), `examples.tsv` (one hand-written row
-  per example, in page order, each with a stable lowercase `id`), and the generated
-  `examples.values.<system>.tsv`. The format is on the wiki's
+  per example, in page order, each with a stable lowercase `id`), and each kernel's generated
+  `examples.values.<system>.tsv`. Our own printed forms (`epsil`, `tex`, `traditional`,
+  `fullform`, `notatio`) are built, not committed; `examples.tsv` pins a few as
+  `<form>.in`/`<form>.out` snapshots, and every `back`/`backOut` (a round trip that loses
+  something). The format is on the wiki's
   [Contributing](https://github.com/enumeratio/enumeratio/wiki/Contributing#where-a-change-goes) and
   [Examples-as-Data](https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data).
 - Read and write records through `@enumeratio/entry/node` (`readHead`, `writeHead`,
@@ -97,7 +100,8 @@ so a page reads the same on GitHub and on the site.
 - An example with `known` (and its `source`) is held to it by `tests/known.test.ts`: never
   "fix" a failing known check by rewriting `expected`.
 - After adding or changing an example (or a printer or transpiler), run
-  `UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts`. Kernel answers come from
+  `UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts`: it writes each system's
+  `in` and refreshes the pins. Kernel answers come from
   `oracle-scan.ts --accept`; notes and classifications are the hand columns.
 - Everything reads the records through `@enumeratio/reference/node` (`referenceData`). Add a
   head by adding its folder.

@@ -1,3 +1,0 @@
-id	in	out
-match-a-literal-form	\operatorname{Switch}(2,1,\operatorname{one},2,\operatorname{two},3,\operatorname{three})	\operatorname{two}
-fall-through-to-a-blank-default	\operatorname{Switch}(99,1,\operatorname{one},\_,\operatorname{other})	\operatorname{other}

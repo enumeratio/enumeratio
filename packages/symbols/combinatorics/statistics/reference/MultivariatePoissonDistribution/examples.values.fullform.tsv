@@ -1,5 +1,0 @@
-id	in	out
-multivariate-poisson-mean	Mean(MultivariatePoissonDistribution(1, List(2, 3)))	List(3, 4)
-multivariate-poisson-variance	Variance(MultivariatePoissonDistribution(1, List(2, 3)))	List(3, 4)
-multivariate-poisson-covariance	Covariance(MultivariatePoissonDistribution(1, List(2, 3)))	List(List(3, 1), List(1, 4))
-multivariate-poisson-pdf	PDF(MultivariatePoissonDistribution(1, List(2, 3)), List(1, 1))	Divide(7, Power(ExponentialE, 6))

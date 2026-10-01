@@ -1,8 +1,0 @@
-id	in	out
-mersenneprimeexponent-1	<MersennePrimeExponent>1</MersennePrimeExponent>	<ToExpression>2</ToExpression>
-mersenneprimeexponent-5	<MersennePrimeExponent>5</MersennePrimeExponent>	<ToExpression>13</ToExpression>
-mersenneprimeexponent-10	<MersennePrimeExponent>10</MersennePrimeExponent>	<ToExpression>89</ToExpression>
-listable	<MersennePrimeExponent><List>1 2 3 4 5 6</List></MersennePrimeExponent>	<List>2 3 5 7 13 17</List>
-mersenneprimeexponent-range-1-10	<MersennePrimeExponent><Range>1 10</Range></MersennePrimeExponent>	<List>2 3 5 7 13 17 19 31 61 89</List>
-past-the-known-table-of-mersenne-prime-exponents	<MersennePrimeExponent>1000</MersennePrimeExponent>	<MersennePrimeExponent>1000</MersennePrimeExponent>
-timeconstrained-mersenneprimeexponent-50-10	<TimeConstrained><MersennePrimeExponent>50</MersennePrimeExponent> 10</TimeConstrained>	<MersennePrimeExponent>50</MersennePrimeExponent>

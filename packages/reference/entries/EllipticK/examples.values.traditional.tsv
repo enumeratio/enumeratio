@@ -1,3 +1,0 @@
-id	in	out
-elliptick-1-plus-sqrt-2-minus-sqrt-2-times-1	\operatorname{EllipticK}((1+\sqrt{2}-\sqrt{2(1+\sqrt{2})})^4)	\operatorname{EllipticK}((1+\sqrt{2}+(-\sqrt{2}\sqrt{1+\sqrt{2}}))^4)
-elliptick-1	\operatorname{EllipticK}(1)	\infty

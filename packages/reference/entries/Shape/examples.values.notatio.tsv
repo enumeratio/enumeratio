@@ -1,8 +1,0 @@
-id	in	out
-shape-list-list-list-list-a-b	<Shape><List><List><List><List>a b</List></List></List></List></Shape>	<Tuple>1 1 1 2</Tuple>
-shape-1	<Shape>1</Shape>	<Apply>Tuple</Apply>
-shape-list-1-2	<Shape><List>1 2</List></Shape>	<Tuple>2</Tuple>
-shape-list-list-1-2	<Shape><List><List>1 2</List></List></Shape>	<Tuple>1 2</Tuple>
-length-shape-list-list-a-b-list-c-d-eq-rank-list	<Equal><Length><Shape><List><List>a b</List> <List>c d</List></List></Shape></Length> <Rank><List><List>a b</List> <List>c d</List></List></Rank></Equal>	<True />
-shape-array-a-list-2-1-4-3		
-shape-sqrt-2		

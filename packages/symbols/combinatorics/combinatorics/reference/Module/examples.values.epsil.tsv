@@ -1,3 +1,0 @@
-id	in	out
-a-local-counter	Module([i == 0], i := i + 1)	1
-locals-do-not-leak-or-clobber	[Module([n == 10], n + 1), Module([n == 20], n + 1)]	[11, 21]

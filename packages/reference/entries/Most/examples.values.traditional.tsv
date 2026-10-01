@@ -1,3 +1,0 @@
-id	in	out
-most-list-a-b-c-d	\operatorname{Most}([a,b,c,d])	[a,b,c]
-nestlist-most-list-a-b-c-d-exponentiale-3	\operatorname{NestList}(\operatorname{Most},[a,b,c,d,e],3)	[[a,b,c,d,e],[a,b,c,d],[a,b,c],[a,b]]

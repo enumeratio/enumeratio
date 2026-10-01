@@ -1,3 +1,0 @@
-id	in	out
-4	\operatorname{Count}(\operatorname{Derangements}(4))	9
-two-cycle-types	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{Derangements}(5),\text{“CycleCount”}))	([2,1],[20,24])

@@ -1,9 +1,0 @@
-id	in	out
-2-cdot-6-12-equiv-1-pmod-11	\operatorname{RationalReconstruction}(6,11)	\frac{1}{2}
-a-round-trip-through-z-1000003	\operatorname{RationalReconstruction}(((\frac{22}{7})^1\bmod1000003),1000003)	\frac{22}{7}
-explicit-bounds-denominators-of-1-only	\operatorname{RationalReconstruction}(5,11,5,1)	5
-rationalreconstruction-list-6-9-10-11	\operatorname{RationalReconstruction}([6,9,10],11)	[\frac{1}{2},-2,-1]
-the-harmonic-number-h-20-back-from-its-image-mod	\operatorname{RationalReconstruction}(((\frac{55835135}{15519504})^1\bmod2^{61}-1),2^{61}-1)	\frac{55835135}{15519504}
-one-word-size-prime-is-not-enough-for-h-20-2nd-m	\operatorname{RationalReconstruction}(((\frac{55835135}{15519504})^1\bmod1000000007),1000000007)	\operatorname{RationalReconstruction}(301316272,1000000007)
-multi-modular-arithmetic-glue-two-images-with	\operatorname{RationalReconstruction}(\operatorname{ChineseRemainder}([((\frac{55835135}{15519504})^1\bmod1000000007),((\frac{55835135}{15519504})^1\bmod1000000009)],[1000000007,1000000009]),1000000007\cdot1000000009)	\frac{55835135}{15519504}
-mod-11-the-bounds-are-n-d-le-2-and-no-such	\operatorname{RationalReconstruction}(3,11)	\operatorname{RationalReconstruction}(3,11)

@@ -1,5 +1,0 @@
-id	in	out
-erlang-pdf-exact	<PDF><ErlangDistribution>3 2</ErlangDistribution> 1</PDF>	<Divide>8 <Multiply><Gamma>3</Gamma> <Power>ExponentialE 2</Power></Multiply></Divide>
-erlang-cdf-exact	<CDF><ErlangDistribution>3 2</ErlangDistribution> 1</CDF>	<Add>1 <Divide>-5 <Power>ExponentialE 2</Power></Divide></Add>
-erlang-mean-exact	<Mean><ErlangDistribution>3 2</ErlangDistribution></Mean>	<Rational>3 2</Rational>
-erlang-variance-exact	<Variance><ErlangDistribution>3 2</ErlangDistribution></Variance>	<Rational>3 4</Rational>

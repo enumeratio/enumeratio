@@ -1,2 +1,0 @@
-id	in	out
-held	MakeBoxes(Add(2, 3))	RowBox(List("2", "+", "3"))

@@ -1,4 +1,0 @@
-id	in	out
-count-ballotsequences-4	Count(BallotSequences(4))	14
-first-element-of-ballotsequences-4	At(BallotSequences(4), 1)	DyckPath(List(1, 1, 1, 1, 0, 0, 0, 0))
-every-element-of-ballotsequences-4	Take(BallotSequences(4), 5)	List(DyckPath(List(1, 1, 1, 1, 0, 0, 0, 0)), DyckPath(List(1, 1, 1, 0, 1, 0, 0, 0)), DyckPath(List(1, 1, 1, 0, 0, 1, 0, 0)), DyckPath(List(1, 1, 1, 0, 0, 0, 1, 0)), DyckPath(List(1, 1, 0, 1, 1, 0, 0, 0)))

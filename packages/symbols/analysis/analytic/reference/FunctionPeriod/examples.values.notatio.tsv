@@ -1,7 +1,0 @@
-id	in	out
-sine-s-period-is-2-pi	<FunctionPeriod><Sin>x</Sin> x</FunctionPeriod>	<Multiply>2 Pi</Multiply>
-tangent-s-period-is-pi	<FunctionPeriod><Tan>x</Tan> x</FunctionPeriod>	<Pi />
-scaling-the-argument-scales-the-period	<FunctionPeriod><Sin><Multiply>2 x</Multiply></Sin> x</FunctionPeriod>	<Pi />
-exp-is-not-periodic	<FunctionPeriod><Exp>x</Exp> x</FunctionPeriod>	<ToExpression>0</ToExpression>
-a-polynomial-is-not-periodic	<FunctionPeriod><Power>x 2</Power> x</FunctionPeriod>	<ToExpression>0</ToExpression>
-assuming-a-gt-0-functionperiod-sin-a-times-x-x	<Assuming><Greater>a 0</Greater> <FunctionPeriod><Sin><Multiply>a x</Multiply></Sin> x</FunctionPeriod></Assuming>	<FunctionPeriod><Sin><Multiply>a x</Multiply></Sin> x</FunctionPeriod>

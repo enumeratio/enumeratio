@@ -1,4 +1,0 @@
-id	in	out
-pairs-keys-with-values-two-argument-form	\mathrm{AssociationThread}(\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)	\mathrm{Association}(\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2))
-accepts-the-one-argument-rule-keys-values-form	\mathrm{AssociationThread}(\mathrm{Rule}(\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack))	\mathrm{Association}(\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2))
-length-on-the-result-agrees-with-association	\mathrm{Length}(\mathrm{AssociationThread}(\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack))	3

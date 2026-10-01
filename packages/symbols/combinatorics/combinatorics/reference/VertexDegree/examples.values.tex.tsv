@@ -1,6 +1,0 @@
-id	in	out
-degrees-around-a-path	\mathrm{VertexDegree}(\mathrm{PathGraph}(5))	\bigl\lbrack1, 2, 2, 2, 1\bigr\rbrack
-the-degree-of-one-vertex	\mathrm{VertexDegree}(\mathrm{StarGraph}(6), 1)	5
-a-self-loop-counts-twice-at-its-own-vertex	\mathrm{VertexDegree}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 1), \mathrm{UndirectedEdge}(1, 1)\bigr\rbrack))	\bigl\lbrack4, 2, 2\bigr\rbrack
-the-degree-of-vertex-2-in-a-mixed-graph	\mathrm{VertexDegree}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{DirectedEdge}(3, 1)\bigr\rbrack), 2)	2
-the-degree-of-vertex-3-in-a-mixed-graph	\mathrm{VertexDegree}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{DirectedEdge}(3, 1)\bigr\rbrack), 3)	2

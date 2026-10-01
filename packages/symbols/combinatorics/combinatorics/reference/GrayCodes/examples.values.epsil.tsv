@@ -1,4 +1,0 @@
-id	in	out
-count-graycodes-3	count(GrayCodes(3))	8
-first-element-of-graycodes-3	GrayCodes(3)[1]	BinaryWord([0, 0, 0])
-every-element-of-graycodes-3	take(GrayCodes(3), 8)	"[\n  BinaryWord([0, 0, 0]),\n  BinaryWord([0, 0, 1]),\n  BinaryWord([0, 1, 1]),\n  BinaryWord([0, 1, 0]),\n  BinaryWord([1, 1, 0]),\n  BinaryWord([1, 1, 1]),\n  BinaryWord([1, 0, 1]),\n  BinaryWord([1, 0, 0]),\n]"

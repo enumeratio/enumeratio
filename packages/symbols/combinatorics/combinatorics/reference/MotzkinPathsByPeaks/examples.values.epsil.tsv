@@ -1,4 +1,0 @@
-id	in	out
-count-motzkinpathsbypeaks-5-1	count(MotzkinPathsByPeaks(5, 1))	10
-first-element-of-motzkinpathsbypeaks-5-1	MotzkinPathsByPeaks(5, 1)[1]	MotzkinPath([1, 1, -1, 0, -1])
-every-element-of-motzkinpathsbypeaks-5-1	take(MotzkinPathsByPeaks(5, 1), 5)	"[\n  MotzkinPath([1, 1, -1, 0, -1]),\n  MotzkinPath([1, 1, -1, -1, 0]),\n  MotzkinPath([1, 0, 1, -1, -1]),\n  MotzkinPath([1, 0, -1, 1, -1]),\n  MotzkinPath([1, -1, 1, 0, -1]),\n]"

@@ -1,4 +1,0 @@
-id	in	out
-relabelled-cycle-is-isomorphic-to-itself	"IsIsomorphicGraph(CycleGraph(4), Graph([3, 1, 4, 2], [\n                                                       UndirectedEdge(3, 1),\n                                                       UndirectedEdge(1, 4),\n                                                       UndirectedEdge(4, 2),\n                                                       UndirectedEdge(2, 3),\n                                                     ]))"	True
-same-vertex-count-different-structure	IsIsomorphicGraph(CycleGraph(4), StarGraph(4))	False
-isisomorphicgraph-cyclegraph-3-cyclegraph-4	IsIsomorphicGraph(CycleGraph(3), CycleGraph(4))	False

@@ -1,5 +1,0 @@
-id	in	out
-b-6	\mathrm{AlgebraDimension}(\mathrm{PartitionAlgebra}(3))	203
-b-8-the-closed-form-answers-past-any-useful	\mathrm{AlgebraDimension}(\mathrm{PartitionAlgebra}(4))	4\,140
-c-6-planarity-cuts-203-down-to-132	\mathrm{AlgebraDimension}(\mathrm{PlanarPartitionAlgebra}(3))	132
-a-block-of-three-is-a-partition-diagram-and	\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2, -1\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack, \bigl\lbrack-2\bigr\rbrack\bigr\rbrack)\in\mathrm{PartitionAlgebra}(3)	\mathrm{True}

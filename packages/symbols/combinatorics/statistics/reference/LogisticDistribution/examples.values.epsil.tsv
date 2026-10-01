@@ -1,5 +1,0 @@
-id	in	out
-logistic-pdf-exact	pdf(LogisticDistribution(0, 1), 0)	1 / 4
-logistic-cdf-exact	cdf(LogisticDistribution(0, 1), 0)	1 / 2
-logistic-mean-exact	mean(LogisticDistribution(0, 1))	0
-logistic-variance-exact	variance(LogisticDistribution(0, 1))	1 / 3 * pi ^ 2

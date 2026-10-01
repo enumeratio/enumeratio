@@ -1,9 +1,0 @@
-id	in	out
-the-median-of-beta-2-3	\mathrm{InverseBetaRegularized}(0.5, 2, 3)	0.385\,727\,568\,132\,389\,5
-inversebetaregularized-0p3-2p5-1p5	\mathrm{InverseBetaRegularized}(0.3, 2.5, 1.5)	0.509\,497\,412\,428\,341\,3
-i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	\mathrm{InverseBetaRegularized}(0.25, 2, 1)	0.5
-iinv-0-7-4-2	\mathrm{InverseBetaRegularized}(0.7, 4, 2)	0.781\,973\,084\,236\,775\,1
-i-x-1-1-x-is-its-own-inverse	\mathrm{InverseBetaRegularized}(s, 1, 1)	s
-i-x-a-1-x-a-inverts-to-s-1-a	\mathrm{InverseBetaRegularized}(s, a, 1)	\sqrt[a]{s}
-inversebetaregularized-0-2-3	\mathrm{InverseBetaRegularized}(0, 2, 3)	0
-inversebetaregularized-1-2-3	\mathrm{InverseBetaRegularized}(1, 2, 3)	1

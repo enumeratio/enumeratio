@@ -1,5 +1,0 @@
-id	in	out
-single-letter	\mathrm{LetterNumber}(\text{d})	4
-letternumber-d	\mathrm{LetterNumber}(\text{D})	4
-string	\mathrm{LetterNumber}(\text{cab})	\bigl\lbrack3, 1, 2\bigr\rbrack
-letternumber-c	\mathrm{LetterNumber}(\text{c})	3

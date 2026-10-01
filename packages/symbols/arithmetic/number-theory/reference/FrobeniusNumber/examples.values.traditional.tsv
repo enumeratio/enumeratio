@@ -1,6 +1,0 @@
-id	in	out
-the-mcnugget-number	\operatorname{FrobeniusNumber}([6,9,20])	43
-frobeniusnumber-list-3-5	\operatorname{FrobeniusNumber}([3,5])	7
-frobeniusnumber-list-12-16-20-27	\operatorname{FrobeniusNumber}([12,16,20,27])	89
-two-generators-ab-a-b	\operatorname{FrobeniusNumber}([4,7])	17
-not-coprime-infinitely-many-numbers-are	\operatorname{FrobeniusNumber}([2,4])	\infty

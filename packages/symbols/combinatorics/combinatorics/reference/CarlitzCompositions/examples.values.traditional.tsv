@@ -1,4 +1,0 @@
-id	in	out
-count-carlitzcompositions-5	\operatorname{Count}(\operatorname{CarlitzCompositions}(5))	7
-first-element-of-carlitzcompositions-5	\operatorname{At}(\operatorname{CarlitzCompositions}(5),1)	\operatorname{Composition}([1,3,1])
-every-element-of-carlitzcompositions-5	\operatorname{Take}(\operatorname{CarlitzCompositions}(5),7)	[\operatorname{Composition}([1,3,1]),\operatorname{Composition}([1,4]),\operatorname{Composition}([2,1,2]),\operatorname{Composition}([2,3]),\operatorname{Composition}([3,2]),\operatorname{Composition}([4,1]),\operatorname{Composition}([5])]

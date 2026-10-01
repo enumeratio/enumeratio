@@ -1,6 +1,0 @@
-id	in	out
-perfectnumber-1	\operatorname{PerfectNumber}(1)	6
-perfectnumber-3	\operatorname{PerfectNumber}(3)	496
-perfectnumber-5	\operatorname{PerfectNumber}(5)	33550336
-listable	\operatorname{PerfectNumber}([1,2,3,4])	[6,28,496,8128]
-perfectnumber-range-1-10	\operatorname{PerfectNumber}(\operatorname{Range}(1,10))	[6,28,496,8128,33550336,8589869056,137438691328,2305843008139952128,2658455991569831744654692615953842176,191561942608236107294793378084303638130997321548169216]

@@ -1,6 +1,0 @@
-id	in	out
-the-mcnugget-number	\mathrm{FrobeniusNumber}(\bigl\lbrack6, 9, 20\bigr\rbrack)	43
-frobeniusnumber-list-3-5	\mathrm{FrobeniusNumber}(\bigl\lbrack3, 5\bigr\rbrack)	7
-frobeniusnumber-list-12-16-20-27	\mathrm{FrobeniusNumber}(\bigl\lbrack12, 16, 20, 27\bigr\rbrack)	89
-two-generators-ab-a-b	\mathrm{FrobeniusNumber}(\bigl\lbrack4, 7\bigr\rbrack)	17
-not-coprime-infinitely-many-numbers-are	\mathrm{FrobeniusNumber}(\bigl\lbrack2, 4\bigr\rbrack)	\infty

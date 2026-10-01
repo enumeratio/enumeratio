@@ -1,2 +1,0 @@
-id	in	out
-path-5-center-is-the-middle-vertex	\operatorname{GraphCenter}(\operatorname{Graph}([1,2,3,4,5],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4),\operatorname{UndirectedEdge}(4,5)]))	[3]

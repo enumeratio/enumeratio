@@ -1,6 +1,0 @@
-id	in	out
-probability-equal-is-pdf-for-discrete	Probability(x == 2, Distributed(x, poissonDistribution(3)))	9 / (2 * exponentialE ^ 3)
-probability-equal-is-zero-for-continuous	Probability(x == 2, Distributed(x, normalDistribution(0, 1)))	0
-probability-lessequal-is-cdf	Probability(x <= 5, Distributed(x, poissonDistribution(3)))	92 / (5 * exponentialE ^ 3)
-probability-of-a-chained-range	Probability(1 <= x && x <= 5, Distributed(x, poissonDistribution(3)))	87 / (5 * exponentialE ^ 3)
-probability-greater-is-canonicalized-first	N(Probability(x > 0, Distributed(x, normalDistribution(0, 1))))	0.5

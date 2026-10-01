@@ -1,4 +1,0 @@
-id	in	out
-ijk-1	\operatorname{NonCommutativeMultiply}(f_1,f_2,f_1f_2)	-1
-k-in-h	f_1f_2\in\operatorname{Quaternions}	\top
-a-multicomplex-unit-is-not-a-quaternion	i_1\in\operatorname{Quaternions}	\bot

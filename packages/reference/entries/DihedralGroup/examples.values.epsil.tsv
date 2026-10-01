@@ -1,3 +1,0 @@
-id	in	out
-grouporder-dihedralgroup-10	GroupOrder(DihedralGroup(10))	20
-groupelements-dihedralgroup-4	GroupElements(DihedralGroup(4))	"[\n  GroupBasis(\"0\"),\n  GroupBasis(\"1\"),\n  GroupBasis(\"2\"),\n  GroupBasis(\"3\"),\n  GroupBasis(\"s0\"),\n  GroupBasis(\"s1\"),\n  GroupBasis(\"s2\"),\n  GroupBasis(\"s3\"),\n]"

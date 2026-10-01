@@ -1,4 +1,0 @@
-id	in	out
-unit-square-default-seed	<Last><List><SeedRandom>42</SeedRandom> <Apply>RandomComplex</Apply></List></Last>	<Complex>0.6011037519201636 0.44829055899754167</Complex>
-rectangle-from-0-to-zmax	<Last><List><SeedRandom>7</SeedRandom> <RandomComplex><Complex>2 3</Complex></RandomComplex></List></Last>	<Complex>0.023409506306052208 0.18587477272376418</Complex>
-rectangle-from-zmin-to-zmax	<Last><List><SeedRandom>9</SeedRandom> <RandomComplex><List><Complex>-1 -1</Complex> <Complex>1 1</Complex></List></RandomComplex></List></Last>	<Complex>-0.6025421638041735 0.7024215925484896</Complex>

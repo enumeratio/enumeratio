@@ -1,9 +1,0 @@
-id	in	out
-isperfect-6	\operatorname{IsPerfect}(6)	\top
-isperfect-12	\operatorname{IsPerfect}(12)	\bot
-listable	\operatorname{IsPerfect}([6,28,12])	[\top,\top,\bot]
-isperfect-496	\operatorname{IsPerfect}(496)	\top
-isperfect-28	\operatorname{IsPerfect}(28)	\top
-negative-numbers-are-not-perfect	\operatorname{IsPerfect}(-6)	\bot
-isperfect-1-234-121	\operatorname{IsPerfect}(1234121)	\bot
-isperfect-simplify-x	\operatorname{IsPerfect}(\operatorname{Simplify}(x))	\operatorname{IsPerfect}(x)

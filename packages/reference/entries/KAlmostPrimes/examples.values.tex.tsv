@@ -1,2 +1,0 @@
-id	in	out
-the-first-20-terms-at-3	\mathrm{Take}(\mathrm{KAlmostPrimes}(3), 20)	\bigl\lbrack8, 12, 18, 20, 27, 28, 30, 42, 44, 45, 50, 52, 63, 66, 68, 70, 75, 76, 78, 92\bigr\rbrack

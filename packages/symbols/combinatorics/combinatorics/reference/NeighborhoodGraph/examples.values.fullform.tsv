@@ -1,3 +1,0 @@
-id	in	out
-immediate-neighbours-on-a-path	VertexList(NeighborhoodGraph(PathGraph(7), 4))	List(3, 4, 5)
-radius-2	VertexList(NeighborhoodGraph(PathGraph(7), 4, 2))	List(2, 3, 4, 5, 6)

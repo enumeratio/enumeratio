@@ -1,5 +1,0 @@
-id	in	out
-sigma1sigma2-cycles-the-three-strands	\operatorname{BraidPermutation}(\sigma_1\sigma_2)	[2,3,1]
-two-positive-crossings-and-one-negative	w(\sigma_1{\sigma_2}^{-1}\sigma_1)	1
-the-hopf-link	\operatorname{BraidComponents}({\sigma_1}^2)	2
-t-2-q-is-a-knot-for-odd-q	\operatorname{BraidIsKnot}(T_{2,5})	\top

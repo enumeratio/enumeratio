@@ -1,30 +1,30 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-issquarefree-10			[IsSquareFree, 10]	True				
-issquarefree-4			[IsSquareFree, 4]	False				
-issquarefree-12			[IsSquareFree, 12]	False				
-every-prime-is-squarefree			[IsSquareFree, 17]	True	Every prime is squarefree			
-issquarefree-20			[IsSquareFree, 20]	False				
-threads-element-wise-over-a-list	Scope		[IsSquareFree, [List, 10, 4, 12]]	[List, True, False, False]	Threads element-wise over a list		domain	We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.
-gaussian-integers-3-2i-is-a-gaussian-prime	Scope		[IsSquareFree, [Complex, 3, 2]]	True	Gaussian integers: $3+2i$ is a Gaussian prime			
-gaussianintegers-true-2-i-1-i-2	Scope		[IsSquareFree, 2, [KeyValuePair, Over, GaussianIntegers]]	False	GaussianIntegers -> True: $2=-i(1+i)^2$			
-rationals-numerator-and-denominator-are-both	Scope		[IsSquareFree, [Rational, 2, 3]]	True	Rationals: numerator and denominator are both squarefree			
-polynomials-x-2-6x-6-has-no-repeated-factor	Scope		[IsSquareFree, [Add, [Power, x, 2], [Multiply, 6, x], 6]]	True	Polynomials: $x^2+6x+6$ has no repeated factor -- decided by $\gcd(f, f')$ via [[D]] and compute-engine's own PolynomialGCD			
-multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	Scope		[IsSquareFree, [Subtract, [Power, x, 3], [Multiply, [Power, x, 2], y]]]	False	Multivariate: $x^3-x^2y=x^2(x-y)$, a repeated factor of $x$			
-squarefree-as-a-polynomial-in-x-alone-y-is-just	Scope		[IsSquareFree, [Multiply, x, [Power, y, 2]], x]	True	Squarefree as a polynomial in $x$ alone -- $y$ is just a coefficient here			
-but-not-in-y-alone-y-appears-squared	Scope		[IsSquareFree, [Multiply, x, [Power, y, 2]], y]	False	…but not in $y$ alone: $y$ appears squared			
-a-non-squarefree-rational	Scope	test	[IsSquareFree, [Rational, 4, 3]]	False	A non-squarefree rational			
-x-1-2-has-a-repeated-root	Scope	test	[IsSquareFree, [Add, [Power, x, 2], [Multiply, -2, x], 1]]	False	$(x-1)^2$ has a repeated root			
-x-3-y-3-has-no-repeated-factor	Scope	test	[IsSquareFree, [Subtract, [Power, x, 3], [Power, y, 3]]]	True	$x^3-y^3$ has no repeated factor			
-issquarefree-3-plus-10-pow-70	Scope		[IsSquareFree, [Add, 3, [Power, 10, 70]]]	True				
-issquarefree-2	Scope		[IsSquareFree, 2]	True				
-issquarefree-x-pow-2-minus-3	Scope		[IsSquareFree, [Add, [Power, x, 2], -3]]	True				
-n-1-over-100-000-times-length-filter-range-1-100	Applications	triage	[N, [Multiply, [Rational, 1, 100000], [Length, [Filter, [Range, 1, 100000], IsSquareFree]]]]	0.00002		gap		IsSquareFree itself is correct even for large individual integers (spot-checked up to 9973^2) — hardened it anyway to route plain integers through this package's own factorInteger and decline instead of silently answering False when compute-engine's native factoring gives up (fixed, see backlog.test.ts). But the row's actual failure is in Filter/Range over a large collection: Length(Filter(Range(1,n), IsSquareFree)) is correct up to n=1678 and collapses to a near-empty result exactly at n=1679 (1678 = 2*839, and the correct count at 1678 is exactly 1024 = 2^10 — a suspicious power-of-two buffer/chunk-size limit in the lazy-collection/Filter machinery). That's a collection-iteration bug in the generic evaluation machinery, not in IsSquareFree, and out of scope for this arithmetic-scoped lane; flagging for whoever owns Filter/collection materialization (possibly the same lazy-Range-materialization issue found in the LCM/FoldList rows below).
-issquarefree-q	Applications	triage	[IsSquareFree, q]	True		emit		our bug (emit): DEFINED_NAMES wrongly excluded m/s/q/A/C (and Integers had no CONSTANTS pass-through row) from free-variable treatment, so this row was reported un-emittable and skipped as unscanned. Fixed in reference/scripts/defined-names.ts's isDefinedName (a scalar-typed, non-constant lookupDefinition() hit is a free variable, same as no hit at all) and emit.ts's CONSTANTS (added Integers); now emits — leave for the next oracle scan to produce a real verdict.
-n-is-squarefree-exactly-when-mu-n-neq-0-see	Properties		[Equal, [IsSquareFree, 10], [Not, [Equal, [MoebiusMu, 10], 0]]]	True	$n$ is squarefree exactly when $\mu(n)\neq0$. See [[MoebiusMu]]			
-issquarefree-210	Properties		[IsSquareFree, 210]	True				
-issquarefree-14	Properties		[IsSquareFree, 14]	True				
-isprimepower-17-issquarefree-17	Properties		[And, [IsPrimePower, 17], [IsSquareFree, 17]]	True				
-issquarefree-x-pow-2-minus-2x-plus-1-x	Properties		[IsSquareFree, [Add, [Power, x, 2], [Multiply, -2, x], 1], x]	False				
-simplify-issquarefree-a-pow-2-a-in-integers	Properties		[Simplify, [IsSquareFree, [Power, a, 2]], [Element, a, Integers]]	False				
-issquarefree-expand-x-plus-1-pow-3-times-x-plus	Properties		[IsSquareFree, [Expand, [Multiply, [Power, [Add, x, 1], 3], [Power, [Add, x, 2], 2], [Power, [Add, x, 3], 2]]]]	False				
-1-is-vacuously-squarefree-it-has-no-repeated	Possible issues		[IsSquareFree, 1]	True	1 is vacuously squarefree: it has no repeated prime factors			
+id	section	role	expr	expected	caption	triage	epsil.back	wolfram.kind	wolfram.note
+issquarefree-10			[IsSquareFree, 10]	True					
+issquarefree-4			[IsSquareFree, 4]	False					
+issquarefree-12			[IsSquareFree, 12]	False					
+every-prime-is-squarefree			[IsSquareFree, 17]	True	Every prime is squarefree				
+issquarefree-20			[IsSquareFree, 20]	False					
+threads-element-wise-over-a-list	Scope		[IsSquareFree, [List, 10, 4, 12]]	[List, True, False, False]	Threads element-wise over a list			domain	We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.
+gaussian-integers-3-2i-is-a-gaussian-prime	Scope		[IsSquareFree, [Complex, 3, 2]]	True	Gaussian integers: $3+2i$ is a Gaussian prime				
+gaussianintegers-true-2-i-1-i-2	Scope		[IsSquareFree, 2, [KeyValuePair, Over, GaussianIntegers]]	False	GaussianIntegers -> True: $2=-i(1+i)^2$				
+rationals-numerator-and-denominator-are-both	Scope		[IsSquareFree, [Rational, 2, 3]]	True	Rationals: numerator and denominator are both squarefree				
+polynomials-x-2-6x-6-has-no-repeated-factor	Scope		[IsSquareFree, [Add, [Power, x, 2], [Multiply, 6, x], 6]]	True	Polynomials: $x^2+6x+6$ has no repeated factor -- decided by $\gcd(f, f')$ via [[D]] and compute-engine's own PolynomialGCD				
+multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	Scope		[IsSquareFree, [Subtract, [Power, x, 3], [Multiply, [Power, x, 2], y]]]	False	Multivariate: $x^3-x^2y=x^2(x-y)$, a repeated factor of $x$				
+squarefree-as-a-polynomial-in-x-alone-y-is-just	Scope		[IsSquareFree, [Multiply, x, [Power, y, 2]], x]	True	Squarefree as a polynomial in $x$ alone -- $y$ is just a coefficient here				
+but-not-in-y-alone-y-appears-squared	Scope		[IsSquareFree, [Multiply, x, [Power, y, 2]], y]	False	…but not in $y$ alone: $y$ appears squared				
+a-non-squarefree-rational	Scope	test	[IsSquareFree, [Rational, 4, 3]]	False	A non-squarefree rational				
+x-1-2-has-a-repeated-root	Scope	test	[IsSquareFree, [Add, [Power, x, 2], [Multiply, -2, x], 1]]	False	$(x-1)^2$ has a repeated root				
+x-3-y-3-has-no-repeated-factor	Scope	test	[IsSquareFree, [Subtract, [Power, x, 3], [Power, y, 3]]]	True	$x^3-y^3$ has no repeated factor				
+issquarefree-3-plus-10-pow-70	Scope		[IsSquareFree, [Add, 3, [Power, 10, 70]]]	True					
+issquarefree-2	Scope		[IsSquareFree, 2]	True					
+issquarefree-x-pow-2-minus-3	Scope		[IsSquareFree, [Add, [Power, x, 2], -3]]	True					
+n-1-over-100-000-times-length-filter-range-1-100	Applications	triage	[N, [Multiply, [Rational, 1, 100000], [Length, [Filter, [Range, 1, 100000], IsSquareFree]]]]	0.00002		gap			IsSquareFree itself is correct even for large individual integers (spot-checked up to 9973^2) — hardened it anyway to route plain integers through this package's own factorInteger and decline instead of silently answering False when compute-engine's native factoring gives up (fixed, see backlog.test.ts). But the row's actual failure is in Filter/Range over a large collection: Length(Filter(Range(1,n), IsSquareFree)) is correct up to n=1678 and collapses to a near-empty result exactly at n=1679 (1678 = 2*839, and the correct count at 1678 is exactly 1024 = 2^10 — a suspicious power-of-two buffer/chunk-size limit in the lazy-collection/Filter machinery). That's a collection-iteration bug in the generic evaluation machinery, not in IsSquareFree, and out of scope for this arithmetic-scoped lane; flagging for whoever owns Filter/collection materialization (possibly the same lazy-Range-materialization issue found in the LCM/FoldList rows below).
+issquarefree-q	Applications	triage	[IsSquareFree, q]	True		emit			our bug (emit): DEFINED_NAMES wrongly excluded m/s/q/A/C (and Integers had no CONSTANTS pass-through row) from free-variable treatment, so this row was reported un-emittable and skipped as unscanned. Fixed in reference/scripts/defined-names.ts's isDefinedName (a scalar-typed, non-constant lookupDefinition() hit is a free variable, same as no hit at all) and emit.ts's CONSTANTS (added Integers); now emits — leave for the next oracle scan to produce a real verdict.
+n-is-squarefree-exactly-when-mu-n-neq-0-see	Properties		[Equal, [IsSquareFree, 10], [Not, [Equal, [MoebiusMu, 10], 0]]]	True	$n$ is squarefree exactly when $\mu(n)\neq0$. See [[MoebiusMu]]				
+issquarefree-210	Properties		[IsSquareFree, 210]	True					
+issquarefree-14	Properties		[IsSquareFree, 14]	True					
+isprimepower-17-issquarefree-17	Properties		[And, [IsPrimePower, 17], [IsSquareFree, 17]]	True					
+issquarefree-x-pow-2-minus-2x-plus-1-x	Properties		[IsSquareFree, [Add, [Power, x, 2], [Multiply, -2, x], 1], x]	False					
+simplify-issquarefree-a-pow-2-a-in-integers	Properties		[Simplify, [IsSquareFree, [Power, a, 2]], [Element, a, Integers]]	False					
+issquarefree-expand-x-plus-1-pow-3-times-x-plus	Properties		[IsSquareFree, [Expand, [Multiply, [Power, [Add, x, 1], 3], [Power, [Add, x, 2], 2], [Power, [Add, x, 3], 2]]]]	False			[IsSquareFree, [Expand, [Multiply, [Multiply, [Power, [Add, x, 1], 3], [Power, [Add, x, 2], 2]], [Power, [Add, x, 3], 2]]]]		
+1-is-vacuously-squarefree-it-has-no-repeated	Possible issues		[IsSquareFree, 1]	True	1 is vacuously squarefree: it has no repeated prime factors				

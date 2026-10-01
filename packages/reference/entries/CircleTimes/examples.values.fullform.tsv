@@ -1,3 +1,0 @@
-id	in	out
-circletimes-x-y-z	CircleTimes(x, y, z)	Multiply(x, y, z)
-circletimes-a-b-c-plus-circletimes-x-y-z	Add(CircleTimes(a, b, c), CircleTimes(x, y, z))	Add(Multiply(a, b, c), Multiply(x, y, z))

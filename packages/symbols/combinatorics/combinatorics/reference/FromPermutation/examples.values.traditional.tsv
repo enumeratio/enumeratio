@@ -1,2 +1,0 @@
-id	in	out
-the-one-line-word-231	\operatorname{FromPermutation}(\operatorname{Permutation}([2,3,1]))	\operatorname{IncreasingBinaryTree}([1,[2,0,[3,0,0]],0])

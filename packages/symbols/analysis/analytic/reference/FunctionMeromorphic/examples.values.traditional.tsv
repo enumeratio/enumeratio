@@ -1,9 +1,0 @@
-id	in	out
-a-rational-function-is-meromorphic	\operatorname{FunctionMeromorphic}(\frac{1}{x},x)	\top
-tangent-is-a-ratio-of-entire-functions	\operatorname{FunctionMeromorphic}(\tan(x),x)	\top
-a-branch-point-is-not-a-pole	\operatorname{FunctionMeromorphic}(\ln(x),x)	\bot
-polynomials-are-meromorphic	\operatorname{FunctionMeromorphic}(x^2,x)	\top
-functionmeromorphic-sqrt-z-z	\operatorname{FunctionMeromorphic}(\sqrt{z},z)	\bot
-functionmeromorphic-ln-z-z	\operatorname{FunctionMeromorphic}(\ln(z),z)	\bot
-list-functionmeromorphic-x-times-x-pow-2-plus-1		
-list-functionmeromorphic-tan-x-x		

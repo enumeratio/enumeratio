@@ -1,4 +1,0 @@
-id	in	out
-marginal-single-factor	"MarginalDistribution(ProductDistribution(\n                                          normalDistribution(0, 1),\n                                          normalDistribution(5, 2),\n                                        ), 2)"	normalDistribution(5, 2)
-marginal-single-factor-mean	"mean(MarginalDistribution(ProductDistribution(\n                                               normalDistribution(0, 1),\n                                               normalDistribution(5, 2),\n                                             ), 2))"	5
-marginal-index-list	"MarginalDistribution(ProductDistribution(\n                                          normalDistribution(0, 1),\n                                          normalDistribution(5, 2),\n                                          normalDistribution(9, 1),\n                                        ), [1, 3])"	ProductDistribution(normalDistribution(0, 1), normalDistribution(9, 1))

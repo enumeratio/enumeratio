@@ -1,9 +1,0 @@
-id	in	out
-from-character-code-of-a-single-code-point	\operatorname{FromCharacterCode}(65)	\text{“A”}
-fromcharactercode-list-97-98-99	\operatorname{FromCharacterCode}([97,98,99])	\text{“abc”}
-inverts-tocharactercode	\operatorname{FromCharacterCode}(\operatorname{ToCharacterCode}(\operatorname{String}(\operatorname{hello})))	\text{“hello”}
-round-trips-a-non-ascii-string-emoji-astral	\operatorname{FromCharacterCode}(\operatorname{ToCharacterCode}(\operatorname{String}(\operatorname{a😀b→c})))	\text{“a😀b→c”}
-fromcharactercode-97	\operatorname{FromCharacterCode}(97)	\text{“a”}
-fromcharactercode-list-61-726-62-520-62-521-62		
-fromcharactercode-list-128-512-128-513-128-514		
-fromcharactercode-list-128-105-127-997-8-205-127		

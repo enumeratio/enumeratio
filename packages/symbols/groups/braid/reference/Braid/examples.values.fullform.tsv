@@ -1,5 +1,0 @@
-id	in	out
-sigma1sigma2-cycles-the-three-strands	BraidPermutation(Braid(3, List(1, 2)))	List(2, 3, 1)
-two-positive-crossings-and-one-negative	BraidWrithe(Braid(3, List(1, -2, 1)))	1
-the-hopf-link	BraidComponents(Braid(2, List(1, 1)))	2
-t-2-q-is-a-knot-for-odd-q	BraidIsKnot(TorusBraid(2, 5))	True

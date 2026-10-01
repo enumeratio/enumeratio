@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption
-the-first-five-abundant-numbers			[Take, AbundantNumbers, 5]	[List, 12, 18, 20, 24, 30]	The first five abundant numbers
-12-is-abundant	Properties		[Element, 12, AbundantNumbers]	True	
-28-is-perfect-not-abundant	Properties		[Element, 28, AbundantNumbers]	False	28 is perfect, not abundant
+id	section	role	expr	expected	caption	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out
+the-first-five-abundant-numbers			[Take, AbundantNumbers, 5]	[List, 12, 18, 20, 24, 30]	The first five abundant numbers	take(AbundantNumbers, 5)	[12, 18, 20, 24, 30]	\mathrm{Take}(\mathrm{AbundantNumbers}, 5)	\bigl\lbrack12, 18, 20, 24, 30\bigr\rbrack	\operatorname{Take}(\operatorname{AbundantNumbers},5)	[12,18,20,24,30]	Take(AbundantNumbers, 5)	List(12, 18, 20, 24, 30)	<Take>AbundantNumbers 5</Take>	<List>12 18 20 24 30</List>
+12-is-abundant	Properties		[Element, 12, AbundantNumbers]	True											
+28-is-perfect-not-abundant	Properties		[Element, 28, AbundantNumbers]	False	28 is perfect, not abundant										

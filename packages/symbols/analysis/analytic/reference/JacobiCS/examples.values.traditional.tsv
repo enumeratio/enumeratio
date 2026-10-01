@@ -1,6 +1,0 @@
-id	in	out
-a-floating-point-argument-evaluates-directly-to	N(\operatorname{JacobiCS}(1.1,0.9))	0.7225880618717211
-m-greater-than-1-via-the-reciprocal-modulus	N(\operatorname{JacobiCS}(0.3,1.5))	3.3098097501258734
-u-0-is-a-pole-for-any-m	\operatorname{JacobiCS}(0,m)	\tilde\infty
-symbolic-arguments-are-left-unevaluated-rather	\operatorname{JacobiCS}(u,m)	\operatorname{JacobiCS}(u,m)
-m-1-at-a-shared-pole-of-sn-and-cn	N(\operatorname{JacobiCS}(\frac{1}{2}i\pi,1))	0.0-1.0i

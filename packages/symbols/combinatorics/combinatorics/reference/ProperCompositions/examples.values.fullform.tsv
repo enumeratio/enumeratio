@@ -1,4 +1,0 @@
-id	in	out
-count-propercompositions-6	Count(ProperCompositions(6))	5
-first-element-of-propercompositions-6	At(ProperCompositions(6), 1)	Composition(List(2, 2, 2))
-every-element-of-propercompositions-6	Take(ProperCompositions(6), 5)	List(Composition(List(2, 2, 2)), Composition(List(2, 4)), Composition(List(3, 3)), Composition(List(4, 2)), Composition(List(6)))

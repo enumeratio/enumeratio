@@ -1,4 +1,0 @@
-id	in	out
-s-m-1-m-1	<Antipode><QSymM><List>1</List></QSymM></Antipode>	<Negate><QSymM><List>1</List></QSymM></Negate>
-s-2-id-since-qsym-is-commutative	<Antipode><Antipode><QSymM><List>1 2</List></QSymM></Antipode></Antipode>	<QSymM><List>1 2</List></QSymM>
-the-product-is-homogeneous-so-degrees-add	<HopfDegree><NonCommutativeMultiply><QSymM><List>1</List></QSymM> <QSymM><List>2</List></QSymM></NonCommutativeMultiply></HopfDegree>	<ToExpression>3</ToExpression>

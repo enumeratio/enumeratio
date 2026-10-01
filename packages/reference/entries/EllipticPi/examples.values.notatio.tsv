@@ -1,9 +1,0 @@
-id	in	out
-functionexpand-ellipticpi-list-list-neg-1-0-list	<FunctionExpand><EllipticPi><List><List>-1 0</List> <List>0 <Rational>1 2</Rational></List></List> 0</EllipticPi></FunctionExpand>	<List><List><EllipticPi>-1 0</EllipticPi> <EllipticPi>0 0</EllipticPi></List> <List><EllipticPi>0 0</EllipticPi> <EllipticPi><Rational>1 2</Rational> 0</EllipticPi></List></List>
-functionexpand-matrixfunction-function	<FunctionExpand><MatrixFunction><Function><Block><EllipticPi>_1 0</EllipticPi></Block> _1</Function> <List><List>-1 0</List> <List>0 <Rational>1 2</Rational></List></List></MatrixFunction></FunctionExpand>	<List><List><EllipticPi>-1 0</EllipticPi> 0</List> <List>0 <EllipticPi><Rational>1 2</Rational> 0</EllipticPi></List></List>
-n-ellipticpi-3-over-10-2-over-5-50		
-n-ellipticpi-3-over-10-2-2-over-5-50		
-simplify-integrate-ellipticpi-n-m-m		
-ellipticpi-0-0-1	<EllipticPi>0 0 1</EllipticPi>	<ToExpression>0</ToExpression>
-ellipticpi-0-0-0	<EllipticPi>0 0 0</EllipticPi>	<ToExpression>0</ToExpression>
-n-ellipticpi-2-i-times-list-neg-1-1-times-10-pow		

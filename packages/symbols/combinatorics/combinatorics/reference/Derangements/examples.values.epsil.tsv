@@ -1,3 +1,0 @@
-id	in	out
-4	count(Derangements(4))	9
-two-cycle-types	tally(CombinatorialStat(Derangements(5), "CycleCount"))	([2, 1], [20, 24])

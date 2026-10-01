@@ -1,3 +1,0 @@
-id	in	out
-count-unlabeledfreetrees-7-11-a000055	Count(UnlabeledFreeTrees(7))	11
-every-element-of-unlabeledfreetrees-6	Take(UnlabeledFreeTrees(6), 6)	List(UnlabeledFreeTree(List(0, 1, 1, 1, 1, 1)), UnlabeledFreeTree(List(0, 1, 2, 1, 1, 1)), UnlabeledFreeTree(List(0, 1, 2, 1, 2, 1)), UnlabeledFreeTree(List(0, 1, 2, 2, 1, 1)), UnlabeledFreeTree(List(0, 1, 2, 2, 1, 2)), UnlabeledFreeTree(List(0, 1, 2, 3, 1, 2)))

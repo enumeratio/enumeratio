@@ -1,9 +1,0 @@
-id	in	out
-the-first-occurrence-of-b-nested-inside-the	<FirstPosition><List><List>a a b</List> <List>b a a</List> <List>a b a</List></List> b</FirstPosition>	<List>1 3</List>
-the-empty-list-when-the-value-isn-t-found	<FirstPosition><List>a <List>a c</List></List> b</FirstPosition>	<Apply>List</Apply>
-firstposition-list-a-b-a-a-b-c-b-b	<FirstPosition><List>a b a a b c b</List> b</FirstPosition>	<List>2</List>
-firstposition-list-x-y-z-b		
-firstposition-list-list-1-2-list-2-3-list-3-1-3	<FirstPosition><List><List>1 2</List> <List>2 3</List> <List>3 1</List></List> 3</FirstPosition>	<List>2 2</List>
-firstposition-x-pow-2-plus-y-pow-2-power		
-a-match-nested-inside-an-earlier-sublist-beats-a	<FirstPosition><List>a <List>a b</List> b</List> b</FirstPosition>	<List>2 2</List>
-firstposition-list-a-b-b-a-a-c-a	<FirstPosition><List>a b b a a c</List> a</FirstPosition>	<List>1</List>

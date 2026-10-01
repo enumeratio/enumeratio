@@ -1,9 +1,0 @@
-id	in	out
-2-cdot-6-12-equiv-1-pmod-11	<RationalReconstruction>6 11</RationalReconstruction>	<Rational>1 2</Rational>
-a-round-trip-through-z-1000003	<RationalReconstruction><PowerMod><Rational>22 7</Rational> 1 1000003</PowerMod> 1000003</RationalReconstruction>	<Rational>22 7</Rational>
-explicit-bounds-denominators-of-1-only	<RationalReconstruction>5 11 5 1</RationalReconstruction>	<ToExpression>5</ToExpression>
-rationalreconstruction-list-6-9-10-11	<RationalReconstruction><List>6 9 10</List> 11</RationalReconstruction>	<List><Rational>1 2</Rational> -2 -1</List>
-the-harmonic-number-h-20-back-from-its-image-mod	<RationalReconstruction><PowerMod><Rational>55835135 15519504</Rational> 1 <Subtract><Power>2 61</Power> 1</Subtract></PowerMod> <Subtract><Power>2 61</Power> 1</Subtract></RationalReconstruction>	<Rational>55835135 15519504</Rational>
-one-word-size-prime-is-not-enough-for-h-20-2nd-m	<RationalReconstruction><PowerMod><Rational>55835135 15519504</Rational> 1 1000000007</PowerMod> 1000000007</RationalReconstruction>	<RationalReconstruction>301316272 1000000007</RationalReconstruction>
-multi-modular-arithmetic-glue-two-images-with	<RationalReconstruction><ChineseRemainder><List><PowerMod><Rational>55835135 15519504</Rational> 1 1000000007</PowerMod> <PowerMod><Rational>55835135 15519504</Rational> 1 1000000009</PowerMod></List> <List>1000000007 1000000009</List></ChineseRemainder> <Multiply>1000000007 1000000009</Multiply></RationalReconstruction>	<Rational>55835135 15519504</Rational>
-mod-11-the-bounds-are-n-d-le-2-and-no-such	<RationalReconstruction>3 11</RationalReconstruction>	<RationalReconstruction>3 11</RationalReconstruction>

@@ -1,2 +1,0 @@
-id	in	out
-the-composition-2-1-3	CutWord(Composition([2, 1, 3]))	BinaryWord([0, 0, 1, 1, 0])

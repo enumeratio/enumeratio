@@ -1,8 +1,0 @@
-id	in	out
-four-rights-one-left	<RademacherSymbol>"LRRRR"</RademacherSymbol>	<ToExpression>3</ToExpression>
-the-arithmetic-side	<DedekindSum>4 3</DedekindSum>	<Rational>1 18</Rational>
-phi-on-t-n-just-counts	<RademacherPhi><ModularMatrix>1 7 0 1</ModularMatrix></RademacherPhi>	<ToExpression>7</ToExpression>
-the-same-number-by-counting-letters	<WordSymbol>"LRRRR"</WordSymbol>	<ToExpression>3</ToExpression>
-and-again-by-the-linking-number	<LinkingWithTrefoil>"LRRRR"</LinkingWithTrefoil>	<ToExpression>3</ToExpression>
-s-1-5	<DedekindSum>1 5</DedekindSum>	<Rational>1 5</Rational>
-turning-equally-both-ways-gives-linking-number	<LinkingWithTrefoil>"LLRR"</LinkingWithTrefoil>	<ToExpression>0</ToExpression>

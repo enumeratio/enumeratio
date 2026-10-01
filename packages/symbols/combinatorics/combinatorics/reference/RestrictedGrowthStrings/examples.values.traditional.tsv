@@ -1,5 +1,0 @@
-id	in	out
-count-restrictedgrowthstrings-4	\operatorname{Count}(\operatorname{RestrictedGrowthStrings}(4))	15
-first-element-of-restrictedgrowthstrings-4	\operatorname{At}(\operatorname{RestrictedGrowthStrings}(4),1)	\operatorname{RestrictedGrowthString}([0,0,0,0])
-every-element-of-restrictedgrowthstrings-4	\operatorname{Take}(\operatorname{RestrictedGrowthStrings}(4),5)	[\operatorname{RestrictedGrowthString}([0,0,0,0]),\operatorname{RestrictedGrowthString}([0,0,0,1]),\operatorname{RestrictedGrowthString}([0,0,1,0]),\operatorname{RestrictedGrowthString}([0,0,1,1]),\operatorname{RestrictedGrowthString}([0,0,1,2])]
-blocks-through-set-partitions	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{RestrictedGrowthStrings}(4),\text{“Blocks”}))	([1,2,3,4],[1,7,6,1])

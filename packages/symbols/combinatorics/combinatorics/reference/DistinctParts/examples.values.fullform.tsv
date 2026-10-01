@@ -1,3 +1,0 @@
-id	in	out
-the-partition-4-2-1-of-7	DistinctParts(IntegerPartition(List(4, 2, 1)))	3
-the-partition-3-3-1-of-7	DistinctParts(IntegerPartition(List(3, 3, 1)))	2

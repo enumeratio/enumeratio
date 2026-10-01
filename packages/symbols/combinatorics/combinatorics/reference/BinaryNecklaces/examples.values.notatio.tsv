@@ -1,4 +1,0 @@
-id	in	out
-count-binarynecklaces-5	<Count><BinaryNecklaces>5</BinaryNecklaces></Count>	<ToExpression>8</ToExpression>
-first-element-of-binarynecklaces-5	<At><BinaryNecklaces>5</BinaryNecklaces> 1</At>	<List>0 0 0 0 0</List>
-every-element-of-binarynecklaces-5	<Take><BinaryNecklaces>5</BinaryNecklaces> 8</Take>	<List><List>0 0 0 0 0</List> <List>1 1 1 1 1</List> <List>0 0 0 0 1</List> <List>0 0 0 1 1</List> <List>0 0 1 0 1</List> <List>0 0 1 1 1</List> <List>0 1 0 1 1</List> <List>0 1 1 1 1</List></List>

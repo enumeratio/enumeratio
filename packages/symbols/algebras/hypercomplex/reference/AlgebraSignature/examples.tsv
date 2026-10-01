@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption
-algebrasignature-quaternions			[AlgebraSignature, Quaternions]	[List, -1, -1]	
-cl-2-1			[AlgebraSignature, [CliffordAlgebra, 2, 1]]	[List, 1, 1, -1]	$\mathrm{Cl}(2,1)$
-nilpotent	Scope		[AlgebraSignature, DualNumbers]	[List, 0]	nilpotent
+id	section	role	expr	expected	caption	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out
+algebrasignature-quaternions			[AlgebraSignature, Quaternions]	[List, -1, -1]		AlgebraSignature(Quaternions)	[-1, -1]	\mathrm{AlgebraSignature}(\mathrm{Quaternions})	\bigl\lbrack-1, -1\bigr\rbrack	\operatorname{AlgebraSignature}(\operatorname{Quaternions})	[-1,-1]	AlgebraSignature(Quaternions)	List(-1, -1)	<AlgebraSignature>Quaternions</AlgebraSignature>	<List>-1 -1</List>
+cl-2-1			[AlgebraSignature, [CliffordAlgebra, 2, 1]]	[List, 1, 1, -1]	$\mathrm{Cl}(2,1)$										
+nilpotent	Scope		[AlgebraSignature, DualNumbers]	[List, 0]	nilpotent										

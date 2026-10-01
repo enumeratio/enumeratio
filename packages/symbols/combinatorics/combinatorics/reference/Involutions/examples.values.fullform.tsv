@@ -1,3 +1,0 @@
-id	in	out
-count-involutions-4	Count(Involutions(4))	10
-by-fixed-points	Tally(CombinatorialStat(Involutions(5), "FixedPoints"))	Tuple(List(5, 3, 1), List(1, 10, 15))

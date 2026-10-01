@@ -1,9 +1,0 @@
-id	in	out
-isperfect-6	<IsPerfect>6</IsPerfect>	<True />
-isperfect-12	<IsPerfect>12</IsPerfect>	<False />
-listable	<IsPerfect><List>6 28 12</List></IsPerfect>	<List>True True False</List>
-isperfect-496	<IsPerfect>496</IsPerfect>	<True />
-isperfect-28	<IsPerfect>28</IsPerfect>	<True />
-negative-numbers-are-not-perfect	<IsPerfect>-6</IsPerfect>	<False />
-isperfect-1-234-121	<IsPerfect>1234121</IsPerfect>	<False />
-isperfect-simplify-x	<IsPerfect><Simplify>x</Simplify></IsPerfect>	<IsPerfect>x</IsPerfect>

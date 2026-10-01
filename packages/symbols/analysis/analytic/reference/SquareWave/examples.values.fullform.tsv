@@ -1,8 +1,0 @@
-id	in	out
-squarewave-zero	SquareWave(0)	1
-squarewave-half	SquareWave(Rational(1, 2))	-1
-squarewave-neg-quarter	SquareWave(Rational(-1, 4))	-1
-squarewave-ranged	SquareWave(List(0, 10), 0)	10
-squarewave-negative-pi-exact	SquareWave(Negate(Pi))	-1
-squarewave-periodic	Equal(SquareWave(Rational(1, 4)), SquareWave(Add(Rational(1, 4), 2)))	True
-squarewave-one	SquareWave(1)	1

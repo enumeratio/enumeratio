@@ -1,7 +1,0 @@
-id	in	out
-throw-aborts-to-the-nearest-catch	Catch(Throw(abandoned))	abandoned
-a-tag-mismatch-propagates-past-a-catch	Catch(Catch(Throw(deep, x), y), x)	deep
-catch-list-a-throw-b-c	Catch(List(a, Throw(b), c))	b
-catch-list-throw-a-throw-b-throw-c	Catch(List(Throw(a), Throw(b), Throw(c)))	a
-catch-throw-a-u-u	Catch(Throw(a, u), u)	a
-catch-list-catch-list-a-throw-b-c-d-k	Catch(List(Catch(List(a, Throw(b), c)), d, k))	List(b, d, k)

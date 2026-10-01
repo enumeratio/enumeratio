@@ -1,5 +1,0 @@
-id	in	out
-dirac-delta	\mathrm{InverseFourierTransform}(\mathrm{DiracDelta}(w), w, t)	\sqrt{\frac{1}{2\pi}}
-constant	\mathrm{InverseFourierTransform}(1, w, t)	\sqrt{2}\mathrm{DiracDelta}(t)\sqrt{\pi}
-inversefouriertransform-u-times-v-times-w-pow-5	\mathrm{InverseFourierTransform}((uvw)^5\exp(-u^2-v^2-w^2), \bigl\lbrack u, v, w\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack)	\mathrm{InverseFourierTransform}(u^5v^5w^5\exp(-u^2-v^2-w^2), \bigl\lbrack u, v, w\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack)
-inversefouriertransform-neg-1-over-u-pow-2-plus	\mathrm{InverseFourierTransform}(-\frac{-(uvw)+u+v+w}{(u^2+1)(v^2+1)(w^2+1)}, \bigl\lbrack u, v, w\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack)	\mathrm{InverseFourierTransform}(\frac{uvw-u-v-w}{(u^2+1)(v^2+1)(w^2+1)}, \bigl\lbrack u, v, w\bigr\rbrack, \bigl\lbrack x, y, z\bigr\rbrack)

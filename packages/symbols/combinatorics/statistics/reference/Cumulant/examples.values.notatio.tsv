@@ -1,4 +1,0 @@
-id	in	out
-cumulant-order-1-is-mean	<Cumulant><ChiSquareDistribution>3</ChiSquareDistribution> 1</Cumulant>	<ToExpression>3</ToExpression>
-cumulant-order-2-is-variance	<Cumulant><ChiSquareDistribution>3</ChiSquareDistribution> 2</Cumulant>	<ToExpression>6</ToExpression>
-cumulant-poisson-order-5	<Cumulant><PoissonDistribution>3</PoissonDistribution> 5</Cumulant>	<ToExpression>3</ToExpression>

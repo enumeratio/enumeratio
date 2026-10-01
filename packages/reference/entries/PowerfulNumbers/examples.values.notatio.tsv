@@ -1,4 +1,0 @@
-id	in	out
-the-first-25-terms	<Take>PowerfulNumbers 25</Take>	<List>1 4 8 9 16 25 27 32 36 49 64 72 81 100 108 121 125 128 144 169 196 200 216 225 243</List>
-36-is-powerful	<Element>36 PowerfulNumbers</Element>	<True />
-12-is-not-powerful	<Element>12 PowerfulNumbers</Element>	<False />

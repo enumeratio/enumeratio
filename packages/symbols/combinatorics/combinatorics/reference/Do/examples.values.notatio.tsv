@@ -1,3 +1,0 @@
-id	in	out
-sum-one-to-five	<List><Assign>total 0</Assign> <Do><Assign>total <Add>total i</Add></Assign> <List>i 1 5</List></Do> total</List>	<List>0 15</List>
-repeat-with-no-loop-variable	<List><Assign>count 0</Assign> <Do><Assign>count <Add>count 1</Add></Assign> 4</Do> count</List>	<List>0 4</List>

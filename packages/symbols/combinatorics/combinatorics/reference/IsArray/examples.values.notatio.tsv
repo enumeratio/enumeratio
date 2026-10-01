@@ -1,9 +1,0 @@
-id	in	out
-a-rectangular-nesting-is-an-array	<IsArray><List><List>1 2</List> <List>3 4</List></List></IsArray>	<True />
-isarray-list-1-2-3-4	<IsArray><List>1 2 3 4</List></IsArray>	<True />
-isarray-list-1-2-list-3-4	<IsArray><List>1 2 <List>3</List> 4</List></IsArray>	<False />
-a-ragged-nesting-is-not-an-array	<IsArray><List><List>1 2</List> <List>3</List></List></IsArray>	<False />
-a-flat-list-is-a-rank-1-array	<IsArray><List>1 2 3</List></IsArray>	<True />
-a-non-list-is-not-an-array	<IsArray>3</IsArray>	<False />
-a-test-function-must-hold-of-every-leaf	<IsArray><List><List>2 4</List> <List>6 8</List></List> IsEven</IsArray>	<True />
-list-isarray-mat-isarray-expr	<List><IsArray>mat</IsArray> <IsArray>expr</IsArray></List>	<List>False False</List>

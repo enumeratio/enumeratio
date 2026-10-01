@@ -1,8 +1,0 @@
-id	in	out
-mode-list-1-2-2-3	mode([1, 2, 2, 3])	2
-mode-list-1-2-3-3-2-3	mode([1, 2, 3, 3, 2, 3])	3
-exact-rationals	mode([1 / 2, 1, 1 / 2])	1 / 2
-symbols-and-numbers-mixed-three-way-tie-wolfram	mode([b, a, c, 2, a, b, 1, 2])	b
-the-mode-occurs-exactly-as-many-times-as-the	count([1, 2, 2, 3], mode([1, 2, 2, 3])) == 2	True
-with-a-tie-for-most-frequent-mode-returns-just	mode([1, 1, 2, 2, 3])	1
-empty-data-has-no-mode-compute-engine-returns	mode([])	`NaN`

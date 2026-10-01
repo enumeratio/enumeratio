@@ -1,4 +1,0 @@
-id	in	out
-wiener-slice-mean	<Mean><SliceDistribution><WienerProcess>2 3</WienerProcess> 5</SliceDistribution></Mean>	<ToExpression>10</ToExpression>
-wiener-slice-variance	<Variance><SliceDistribution><WienerProcess>0 3</WienerProcess> 4</SliceDistribution></Variance>	<ToExpression>36</ToExpression>
-wiener-default-slice	<SliceDistribution><Apply>WienerProcess</Apply> 4</SliceDistribution>	<NormalDistribution>0 2</NormalDistribution>

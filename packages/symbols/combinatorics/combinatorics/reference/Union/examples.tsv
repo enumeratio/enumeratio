@@ -1,17 +1,17 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-union-list-1-2-3-list-3-4			[Union, [List, 1, 2, 3], [List, 3, 4]]	[Set, 1, 2, 3, 4]			
-union-list-1-2-list-2-3-list-3-4			[Union, [List, 1, 2], [List, 2, 3], [List, 3, 4]]	[Set, 1, 2, 3, 4]			
-union-list-a-b-c-list-b-c-d			[Union, [List, a, b, c], [List, b, c, d]]	[Set, a, b, c, d]			
-union-list-a-b-a-c-list-d-a-exponentiale-b-list			[Union, [List, a, b, a, c], [List, d, a, ExponentialE, b], [List, c, a]]	[Set, ExponentialE, a, b, c, d]			
-a-single-list-is-de-duplicated	Scope		[Union, [List, 1, 2, 1, 3, 6, 2, 2]]	[Set, 1, 2, 3, 6]	A single list is de-duplicated		
-symbolic-elements-merged-across-three-lists	Scope		[Union, [List, a, b, a, c], [List, d, a, f, b], [List, c, a]]	[Set, a, b, c, d, f]	Symbolic elements, merged across three lists		
-elements-can-themselves-be-lists-1-2-and-2-1	Scope		[Union, [List, [List, 1, 2], [List, 1, 2, 3]], [List, [List, 2, 1], [List, 1, 2]], [List, [List, 3, 2, 1], [List, 1, 2, 3]]]	[Set, [List, 1, 2], [List, 1, 2, 3], [List, 2, 1], [List, 3, 2, 1]]	Elements can themselves be lists; $\{1, 2\}$ and $\{2, 1\}$ stay distinct	shape	Same four elements, listed in a different order.
-with-no-arguments-the-union-is-empty	Scope		[Union]	EmptySet	With no arguments, the union is empty	shape	Same empty result; ours prints the canonical EmptySet symbol, Wolfram's Union[] returns a literal empty list.
-combining-the-divisors-of-10-and-15-into-one-set	Applications		[Union, [Divisors, 10], [Divisors, 15]]	[Set, 1, 2, 3, 5, 10, 15]	Combining the divisors of 10 and 15 into one set		
-combining-the-divisors-of-10-12-and-20-into-one	Applications		[Union, [Divisors, 10], [Divisors, 12], [Divisors, 20]]	[Set, 1, 2, 3, 4, 5, 6, 10, 12, 20]	Combining the divisors of 10, 12 and 20 into one sorted set		
-counting-the-distinct-values-in-a-list-see	Applications		[Length, [Union, [List, 1, 2, 1, 3, 6, 2, 2]]]	4	Counting the distinct values in a list. See [[Length]]		
-union-partition-integerdigits-10-factorial-2-3-1	Applications		[Union, [Partition, [IntegerDigits, [Factorial, 10], 2], 3, 1]]	[Set, [List, 1, 1, 0], [List, 1, 0, 1], [List, 0, 1, 1], [List, 1, 1, 1], [List, 0, 1, 0], [List, 1, 0, 0], [List, 0, 0, 0]]			
-union-nestlist-function-5-times-1-mod-11-1-1-100	Applications		[Union, [NestList, [Function, [Block, [Mod, [Multiply, 5, _1], 11]], _1], 1, 100]]	[Set, 1, 3, 4, 5, 9]			
-union-is-commutative-argument-order-doesn-t	Properties		[Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]	True	$Union$ is commutative: argument order doesn't matter		
-inclusion-exclusion-a-cup-b-a-b-a-cap-b-see	Properties		[Equal, [Length, [Union, [List, 1, 2, 3], [List, 2, 3, 4]]], [Subtract, [Add, [Length, [List, 1, 2, 3]], [Length, [List, 2, 3, 4]]], [Length, [Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]]]]	True	Inclusion-exclusion: $|A \cup B| = |A| + |B| - |A \cap B|$. See [[Length]] and [[Intersection]]		
-the-empty-set-is-the-identity-for-union-a-cup	Properties		[Union, [Set, 1, 2], EmptySet]	[Set, 1, 2]	The empty set is the identity for $Union$: $A \cup \varnothing = A$		
+id	section	role	expr	expected	caption	epsil.back	fullform.in	fullform.out	wolfram.kind	wolfram.note
+union-list-1-2-3-list-3-4			[Union, [List, 1, 2, 3], [List, 3, 4]]	[Set, 1, 2, 3, 4]						
+union-list-1-2-list-2-3-list-3-4			[Union, [List, 1, 2], [List, 2, 3], [List, 3, 4]]	[Set, 1, 2, 3, 4]						
+union-list-a-b-c-list-b-c-d			[Union, [List, a, b, c], [List, b, c, d]]	[Set, a, b, c, d]						
+union-list-a-b-a-c-list-d-a-exponentiale-b-list			[Union, [List, a, b, a, c], [List, d, a, ExponentialE, b], [List, c, a]]	[Set, ExponentialE, a, b, c, d]						
+a-single-list-is-de-duplicated	Scope		[Union, [List, 1, 2, 1, 3, 6, 2, 2]]	[Set, 1, 2, 3, 6]	A single list is de-duplicated					
+symbolic-elements-merged-across-three-lists	Scope		[Union, [List, a, b, a, c], [List, d, a, f, b], [List, c, a]]	[Set, a, b, c, d, f]	Symbolic elements, merged across three lists					
+elements-can-themselves-be-lists-1-2-and-2-1	Scope		[Union, [List, [List, 1, 2], [List, 1, 2, 3]], [List, [List, 2, 1], [List, 1, 2]], [List, [List, 3, 2, 1], [List, 1, 2, 3]]]	[Set, [List, 1, 2], [List, 1, 2, 3], [List, 2, 1], [List, 3, 2, 1]]	Elements can themselves be lists; $\{1, 2\}$ and $\{2, 1\}$ stay distinct				shape	Same four elements, listed in a different order.
+with-no-arguments-the-union-is-empty	Scope		[Union]	EmptySet	With no arguments, the union is empty		Union()	EmptySet	shape	Same empty result; ours prints the canonical EmptySet symbol, Wolfram's Union[] returns a literal empty list.
+combining-the-divisors-of-10-and-15-into-one-set	Applications		[Union, [Divisors, 10], [Divisors, 15]]	[Set, 1, 2, 3, 5, 10, 15]	Combining the divisors of 10 and 15 into one set					
+combining-the-divisors-of-10-12-and-20-into-one	Applications		[Union, [Divisors, 10], [Divisors, 12], [Divisors, 20]]	[Set, 1, 2, 3, 4, 5, 6, 10, 12, 20]	Combining the divisors of 10, 12 and 20 into one sorted set					
+counting-the-distinct-values-in-a-list-see	Applications		[Length, [Union, [List, 1, 2, 1, 3, 6, 2, 2]]]	4	Counting the distinct values in a list. See [[Length]]					
+union-partition-integerdigits-10-factorial-2-3-1	Applications		[Union, [Partition, [IntegerDigits, [Factorial, 10], 2], 3, 1]]	[Set, [List, 1, 1, 0], [List, 1, 0, 1], [List, 0, 1, 1], [List, 1, 1, 1], [List, 0, 1, 0], [List, 1, 0, 0], [List, 0, 0, 0]]						
+union-nestlist-function-5-times-1-mod-11-1-1-100	Applications		[Union, [NestList, [Function, [Block, [Mod, [Multiply, 5, _1], 11]], _1], 1, 100]]	[Set, 1, 3, 4, 5, 9]		Unreadable				
+union-is-commutative-argument-order-doesn-t	Properties		[Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]	True	$Union$ is commutative: argument order doesn't matter					
+inclusion-exclusion-a-cup-b-a-b-a-cap-b-see	Properties		[Equal, [Length, [Union, [List, 1, 2, 3], [List, 2, 3, 4]]], [Subtract, [Add, [Length, [List, 1, 2, 3]], [Length, [List, 2, 3, 4]]], [Length, [Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]]]]	True	Inclusion-exclusion: $|A \cup B| = |A| + |B| - |A \cap B|$. See [[Length]] and [[Intersection]]					
+the-empty-set-is-the-identity-for-union-a-cup	Properties		[Union, [Set, 1, 2], EmptySet]	[Set, 1, 2]	The empty set is the identity for $Union$: $A \cup \varnothing = A$					

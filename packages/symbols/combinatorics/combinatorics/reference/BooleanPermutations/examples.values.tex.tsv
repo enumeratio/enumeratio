@@ -1,3 +1,0 @@
-id	in	out
-count-booleanpermutations-5-f-6-8-see-fibonacci	\mathrm{Count}(\mathrm{BooleanPermutations}(5))	8
-every-element-of-booleanpermutations-5	\mathrm{Take}(\mathrm{BooleanPermutations}(5), 8)	\bigl\lbrack\mathrm{Permutation}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack), \mathrm{Permutation}(\bigl\lbrack1, 2, 3, 5, 4\bigr\rbrack), \mathrm{Permutation}(\bigl\lbrack1, 2, 4, 3, 5\bigr\rbrack), \mathrm{Permutation}(\bigl\lbrack1, 3, 2, 4, 5\bigr\rbrack), \mathrm{Permutation}(\bigl\lbrack1, 3, 2, 5, 4\bigr\rbrack), \mathrm{Permutation}(\bigl\lbrack2, 1, 3, 4, 5\bigr\rbrack), \mathrm{Permutation}(\bigl\lbrack2, 1, 3, 5, 4\bigr\rbrack), \mathrm{Permutation}(\bigl\lbrack2, 1, 4, 3, 5\bigr\rbrack)\bigr\rbrack

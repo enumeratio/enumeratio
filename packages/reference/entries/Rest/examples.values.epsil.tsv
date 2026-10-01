@@ -1,3 +1,0 @@
-id	in	out
-rest-list-a-b-c-d	rest([a, b, c, d])	[b, c, d]
-nestlist-rest-list-a-b-c-d-exponentiale-3	NestList(rest, [a, b, c, d, exponentialE], 3)	"[\n  [a, b, c, d, exponentialE],\n  [b, c, d, exponentialE],\n  [c, d, exponentialE],\n  [d, exponentialE],\n]"

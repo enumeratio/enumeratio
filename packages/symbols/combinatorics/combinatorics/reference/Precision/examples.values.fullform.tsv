@@ -1,7 +1,0 @@
-id	in	out
-precision-exact-integer	Precision(2)	PositiveInfinity
-precision-6-over-5	Precision(Rational(6, 5))	PositiveInfinity
-precision-rational	Precision(Rational(1, 3))	PositiveInfinity
-precision-inexact-literal	Precision(2.5)	2
-precision-extended	Precision(3.141592653589793)	16
-precision-5-times-x-pow-2-plus-3	Precision(Add(Multiply(5, Power(x, 2)), 3))	PositiveInfinity

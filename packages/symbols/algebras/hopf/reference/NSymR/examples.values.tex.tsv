@@ -1,5 +1,0 @@
-id	in	out
-r-1-1-h-1-1-h-2	\mathrm{InCompleteBasis}(\mathrm{NSymR}(\bigl\lbrack1, 1\bigr\rbrack))	\mathrm{NSymH}(\bigl\lbrack1, 1\bigr\rbrack)-\mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack)
-the-fundamental-basis-sums-over-refinements	\mathrm{InMonomialBasis}(\mathrm{QSymF}(\bigl\lbrack2\bigr\rbrack))	\mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack)+\mathrm{QSymM}(\bigl\lbrack1, 1\bigr\rbrack)
-one-signed-term	\mathrm{Antipode}(\mathrm{NSymR}(\bigl\lbrack3\bigr\rbrack))	-\mathrm{NSymR}(\bigl\lbrack1, 1, 1\bigr\rbrack)
-self-conjugate-the-convention-is-settled-by-the	\mathrm{ConjugateComposition}(\bigl\lbrack2, 1\bigr\rbrack)	\bigl\lbrack2, 1\bigr\rbrack

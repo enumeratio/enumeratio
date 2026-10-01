@@ -1,4 +1,0 @@
-id	in	out
-pairs-keys-with-values-two-argument-form	<AssociationThread><List>a b</List> <List>1 2</List></AssociationThread>	<Association><Rule>a 1</Rule> <Rule>b 2</Rule></Association>
-accepts-the-one-argument-rule-keys-values-form	<AssociationThread><Rule><List>a b</List> <List>1 2</List></Rule></AssociationThread>	<Association><Rule>a 1</Rule> <Rule>b 2</Rule></Association>
-length-on-the-result-agrees-with-association	<Length><AssociationThread><List>a b c</List> <List>1 2 3</List></AssociationThread></Length>	<ToExpression>3</ToExpression>

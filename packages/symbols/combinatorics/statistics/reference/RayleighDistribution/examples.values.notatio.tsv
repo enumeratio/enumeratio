@@ -1,5 +1,0 @@
-id	in	out
-rayleigh-pdf-exact	<PDF><RayleighDistribution>3</RayleighDistribution> 3</PDF>	<Divide>1 <Multiply>3 <Sqrt>ExponentialE</Sqrt></Multiply></Divide>
-rayleigh-cdf-exact	<CDF><RayleighDistribution>3</RayleighDistribution> 3</CDF>	<Add>1 <Negate><Sqrt><Divide>1 ExponentialE</Divide></Sqrt></Negate></Add>
-rayleigh-mean-exact	<Mean><RayleighDistribution>3</RayleighDistribution></Mean>	<Multiply><Rational>3 2</Rational> <Sqrt>2</Sqrt> <Sqrt>Pi</Sqrt></Multiply>
-rayleigh-variance-exact	<Variance><RayleighDistribution>3</RayleighDistribution></Variance>	<Multiply><Rational>9 2</Rational> <Add>4 <Negate>Pi</Negate></Add></Multiply>

@@ -1,6 +1,0 @@
-id	in	out
-2-times-list-x-y-z	2[x,y,z]	[2x,2y,2z]
-list-list-a-b-list-c-d-times-list-x-y	[[a,b],[c,d]][x,y]	[ax+by,cx+dy]
-interval-neg-1-2-times-interval-2-3	[-1,2][2,3]	[-3,6]
-neg-noncommutativemultiply-b-a-plus		
-product-1-over-k-plus-2-times-k-plus-1-k-1-n	\prod_{k=1}^n\frac{1}{k+2}(k+1)	\frac{2}{n+2}

@@ -1,7 +1,0 @@
-id	in	out
-erfi-0	Erfi(0)	0
-erfi-0p5	Erfi(0.5)	0.61495209469651098084
-erfi-1	N(Erfi(1))	1.65042575879754287603
-threads-element-wise-over-a-list	Erfi(List(0, 1))	List(0, Erfi(1))
-listable-threads-over-its-limits-at-pm-infty	Erfi(List(PositiveInfinity, NegativeInfinity))	List(PositiveInfinity, NegativeInfinity)
-erfi-complexinfinity-is-indeterminate-inheriting	Erfi(ComplexInfinity)	Indeterminate

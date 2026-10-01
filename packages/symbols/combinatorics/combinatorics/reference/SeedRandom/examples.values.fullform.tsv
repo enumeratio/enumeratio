@@ -1,3 +1,0 @@
-id	in	out
-seedrandom-returns-nothing	SeedRandom(7)	Nothing
-seedrandom-pins-the-next-draw	Last(List(SeedRandom(7), RandomInteger(100)))	1

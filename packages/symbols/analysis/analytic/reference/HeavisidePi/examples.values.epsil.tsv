@@ -1,8 +1,0 @@
-id	in	out
-heavisidepi-inside	HeavisidePi(0)	1
-heavisidepi-boundary-unevaluated	HeavisidePi(1 / 2)	HeavisidePi(1 / 2)
-heavisidepi-neg-boundary-unevaluated	HeavisidePi(-1 / 2)	HeavisidePi(-1 / 2)
-heavisidepi-outside	HeavisidePi(1)	0
-heavisidepi-neg-1	HeavisidePi(-1)	0
-heavisidepi-1-over-4	HeavisidePi(1 / 4)	1
-matrixfunction-heavisidepi-list-list-neg-1-0	MatrixFunction(HeavisidePi, [[-1, 0], [0, 1]])	[[0, 0], [0, 0]]

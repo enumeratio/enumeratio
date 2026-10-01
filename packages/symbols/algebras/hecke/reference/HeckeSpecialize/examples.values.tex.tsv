@@ -1,4 +1,0 @@
-id	in	out
-q-t-e-q-1-t-s-at-q-1-is-just-t-e	\mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack)), 1)	\mathrm{HeckeT}(\bigl\lbrack1, 2, 3\bigr\rbrack)
-the-ordinary-product-of-permutations	\mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack)), 1)	\mathrm{HeckeT}(\bigl\lbrack2, 3, 1\bigr\rbrack)
-at-q-2-it-stays-spread-over-two-basis-elements	\mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack)), 2)	2\mathrm{HeckeT}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack)

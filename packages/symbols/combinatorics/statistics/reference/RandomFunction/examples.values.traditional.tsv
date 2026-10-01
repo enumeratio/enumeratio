@@ -1,5 +1,0 @@
-id	in	out
-randomfunction-poisson-counts-nondecreasing	\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{RandomFunction}(\operatorname{PoissonProcess}(4),[0,2,0.5]),\operatorname{SeedRandom}(42)])	[[0,0],[0.5,0],[1,0],[1.5,4],[2,5]]
-randomfunction-default-grid-length	\operatorname{Last}([\operatorname{Length}(\operatorname{RandomFunction}(\operatorname{WienerProcess}(0,1),[0,1])),\operatorname{SeedRandom}(42)])	101
-randomfunction-wiener-path-starts-at-zero	\operatorname{First}(\operatorname{Last}([\operatorname{SeedRandom}(3),\operatorname{RandomFunction}(\operatorname{WienerProcess}(0,1),[0,1,0.5]),\operatorname{SeedRandom}(42)]))	[0,0]
-randomfunction-reproducible-for-a-fixed-seed	\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{RandomFunction}(\operatorname{PoissonProcess}(4),[0,2,0.5]),\operatorname{SeedRandom}(42)])=\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{RandomFunction}(\operatorname{PoissonProcess}(4),[0,2,0.5]),\operatorname{SeedRandom}(42)])	\top

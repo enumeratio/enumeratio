@@ -1,4 +1,0 @@
-id	in	out
-posetelements-divisorlattice-12	\operatorname{PosetElements}(D_{12})	[1,2,3,4,6,12]
-posetelements-chain-4	\operatorname{PosetElements}(C_4)	[1,2,3,4]
-3-3-intervals	\dim(I(B_3))	27

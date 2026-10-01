@@ -1,6 +1,0 @@
-id	in	out
-beta-pdf-exact	<PDF><BetaDistribution>2 3</BetaDistribution> <Rational>1 2</Rational></PDF>	<Rational>3 2</Rational>
-beta-cdf-exact	<CDF><BetaDistribution>2 3</BetaDistribution> <Rational>1 2</Rational></CDF>	<BetaRegularized><Rational>1 2</Rational> 2 3</BetaRegularized>
-beta-mean-exact	<Mean><BetaDistribution>2 3</BetaDistribution></Mean>	<Rational>2 5</Rational>
-beta-variance-exact	<Variance><BetaDistribution>2 3</BetaDistribution></Variance>	<Rational>1 25</Rational>
-beta-cdf-clamps-below-support	<N><CDF><BetaDistribution>2 3</BetaDistribution> -1</CDF></N>	<ToExpression>0</ToExpression>

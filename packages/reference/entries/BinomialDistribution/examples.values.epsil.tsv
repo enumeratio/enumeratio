@@ -1,7 +1,0 @@
-id	in	out
-mean-binomialdistribution-n-p	mean(binomialDistribution(n, p))	n * p
-variance-binomialdistribution-n-p	variance(binomialDistribution(n, p))	n * p * (-p + 1)
-pdf-binomialdistribution-n-p-k	pdf(binomialDistribution(n, p), k)	"Which(\n       floor(k) == k && 0 <= k && k <= n,\n       binomial(n, k) * p ^ k * (-p + 1) ^ (-k + n),\n       True,\n       0,\n     )"
-cdf-binomialdistribution-n-p-k	cdf(binomialDistribution(n, p), k)	"Which(k < 0, 0, n <= k, 1, True, betaRegularized(\n                                                  -p + 1,\n                                                  n - floor(k),\n                                                  floor(k) + 1,\n                                                ))"
-pdf-binomialdistribution-n-p-x	pdf(binomialDistribution(n, p), x)	"Which(\n       floor(x) == x && 0 <= x && x <= n,\n       binomial(n, x) * p ^ x * (-p + 1) ^ (n - x),\n       True,\n       0,\n     )"
-functionexpand-pdf-binomialdistribution-n-p-k		

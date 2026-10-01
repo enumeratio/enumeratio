@@ -1,3 +1,0 @@
-id	in	out
-elliptick-1-plus-sqrt-2-minus-sqrt-2-times-1	<EllipticK><Power><Add>1 <Sqrt>2</Sqrt> <Negate><Sqrt><Multiply>2 <Add>1 <Sqrt>2</Sqrt></Add></Multiply></Sqrt></Negate></Add> 4</Power></EllipticK>	<EllipticK><Power><Add>1 <Sqrt>2</Sqrt> <Multiply><Negate><Sqrt>2</Sqrt></Negate> <Sqrt><Add>1 <Sqrt>2</Sqrt></Add></Sqrt></Multiply></Add> 4</Power></EllipticK>
-elliptick-1	<EllipticK>1</EllipticK>	<PositiveInfinity />

@@ -1,2 +1,0 @@
-id	in	out
-from-a-set-composition	\mathrm{Surjection}(\mathrm{SetComposition}(\bigl\lbrack\bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack))	\mathrm{Surjection}(\bigl\lbrack2, 1, 3, 1\bigr\rbrack)

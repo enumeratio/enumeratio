@@ -1,8 +1,0 @@
-id	in	out
-one-line-to-cycles	\mathrm{PermutationCycles}(\bigl\lbrack2, 5, 3, 6, 1, 8, 7, 9, 4, 10\bigr\rbrack)	\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack\bigr\rbrack)
-identity-has-no-cycles	\mathrm{PermutationCycles}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)	\mathrm{Cycles}(\bigl\lbrack\bigr\rbrack)
-with-a-custom-head	\mathrm{PermutationCycles}(\bigl\lbrack2, 5, 3, 6, 1, 8, 7, 9, 4, 10\bigr\rbrack, \mathrm{head})	\mathrm{head}(\bigl\lbrack\bigl\lbrack1, 2, 5\bigr\rbrack, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack4, 6, 8, 9\bigr\rbrack, \bigl\lbrack7\bigr\rbrack, \bigl\lbrack10\bigr\rbrack\bigr\rbrack)
-idempotent-on-cycles	\mathrm{PermutationCycles}(\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 5\bigr\rbrack, \bigl\lbrack2, 4, 6\bigr\rbrack\bigr\rbrack))	\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 5\bigr\rbrack, \bigl\lbrack2, 4, 6\bigr\rbrack\bigr\rbrack)
-permutationcycles-list-6-3-2-5-4-1	\mathrm{PermutationCycles}(\bigl\lbrack6, 3, 2, 5, 4, 1\bigr\rbrack)	\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 6\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack\bigr\rbrack)
-permutationcycles-list-2-3-1-4-5-6-7-8-9-10-12	\mathrm{PermutationCycles}(\bigl\lbrack2, 3, 1, 4, 5, 6, 7, 8, 9, 10, 12, 11, 13, 14, 15, 16, 17, 18, 19, 20\bigr\rbrack)	\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack11, 12\bigr\rbrack\bigr\rbrack)
-permutationcycles-list-4-5-1-3-2	\mathrm{PermutationCycles}(\bigl\lbrack4, 5, 1, 3, 2\bigr\rbrack)	\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 4, 3\bigr\rbrack, \bigl\lbrack2, 5\bigr\rbrack\bigr\rbrack)

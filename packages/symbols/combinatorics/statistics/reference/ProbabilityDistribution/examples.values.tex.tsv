@@ -1,9 +1,0 @@
-id	in	out
-probability-distribution-pdf-in-range	\operatorname{PDF}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack), \frac{1}{2})	1
-probability-distribution-pdf-outside	\operatorname{PDF}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack), 2)	0
-probability-distribution-mean	\mathrm{mean}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack))	\frac{2}{3}
-probability-distribution-variance	\mathrm{Variance}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack))	\frac{1}{18}
-probability-distribution-cdf	\operatorname{CDF}(\mathrm{ProbabilityDistribution}(2x, \bigl\lbrack x, 0, 1\bigr\rbrack), \frac{1}{2})	\frac{1}{4}
-probability-distribution-discrete-pdf	\operatorname{PDF}(\mathrm{ProbabilityDistribution}(\frac{1}{4}, \bigl\lbrack x, 1, 4, 1\bigr\rbrack), 2)	\frac{1}{4}
-probability-distribution-discrete-mean	\mathrm{mean}(\mathrm{ProbabilityDistribution}(\frac{1}{4}, \bigl\lbrack x, 1, 4, 1\bigr\rbrack))	\frac{5}{2}
-probability-distribution-stays-unevaluated	\mathrm{mean}(\mathrm{ProbabilityDistribution}(\sin(x^{x}), \bigl\lbrack x, 0, 1\bigr\rbrack))	\mathrm{mean}(\mathrm{ProbabilityDistribution}(\sin(x^{x}), \bigl\lbrack x, 0, 1\bigr\rbrack))

@@ -1,4 +1,0 @@
-id	in	out
-count-primepartition-12	count(PrimePartitions(12))	7
-first-element-of-primepartition-12	PrimePartitions(12)[1]	IntegerPartition([7, 5])
-every-element-of-primepartition-12	take(PrimePartitions(12), 7)	"[\n  IntegerPartition([7, 5]),\n  IntegerPartition([7, 3, 2]),\n  IntegerPartition([5, 5, 2]),\n  IntegerPartition([5, 3, 2, 2]),\n  IntegerPartition([3, 3, 3, 3]),\n  IntegerPartition([3, 3, 2, 2, 2]),\n  IntegerPartition([2, 2, 2, 2, 2, 2]),\n]"

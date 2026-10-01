@@ -1,5 +1,0 @@
-id	in	out
-the-shortest-knotted-geodesic-draws-a-trefoil	\Delta_{\text{“LLRLR”}}(t)	t^2-t+1
-a-rotation-by-2-on-5-points-hence-t-2-3	\operatorname{LorenzPermutation}(\text{“LLRLR”})	[3,4,5,1,2]
-braid-index-2	\operatorname{TripNumber}(\text{“LLRLR”})	2
-one-hump-each-way-is-unknotted-however-long	\Delta_{\text{“LLLRRRR”}}(t)	1

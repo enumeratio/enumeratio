@@ -1,4 +1,0 @@
-id	in	out
-weibull-pdf-exact	PDF(WeibullDistribution(2, 5), 4)	Divide(8, Multiply(25, Power(ExponentialE, Rational(16, 25))))
-weibull-cdf-exact	CDF(WeibullDistribution(2, 5), 4)	Add(1, Negate(Power(ExponentialE, Rational(-16, 25))))
-weibull-mean-exact	Mean(WeibullDistribution(2, 5))	Multiply(5, Gamma(Rational(3, 2)))

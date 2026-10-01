@@ -1,3 +1,0 @@
-id	in	out
-4	\mathrm{Count}(\mathrm{Derangements}(4))	9
-two-cycle-types	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{Derangements}(5), \text{CycleCount}))	\operatorname{Tuple}(\bigl\lbrack2, 1\bigr\rbrack,\bigl\lbrack20, 24\bigr\rbrack)

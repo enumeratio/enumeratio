@@ -1,4 +1,0 @@
-id	in	out
-count-finepaths-5	<Count><FinePaths>5</FinePaths></Count>	<ToExpression>18</ToExpression>
-first-element-of-finepaths-5	<At><FinePaths>5</FinePaths> 1</At>	<DyckPath><List>1 1 0 0 1 1 1 0 0 0</List></DyckPath>
-every-element-of-finepaths-5	<Take><FinePaths>5</FinePaths> 5</Take>	<List><DyckPath><List>1 1 0 0 1 1 1 0 0 0</List></DyckPath> <DyckPath><List>1 1 0 0 1 1 0 1 0 0</List></DyckPath> <DyckPath><List>1 1 1 0 0 0 1 1 0 0</List></DyckPath> <DyckPath><List>1 1 0 1 0 0 1 1 0 0</List></DyckPath> <DyckPath><List>1 1 1 1 1 0 0 0 0 0</List></DyckPath></List>

@@ -1,8 +1,0 @@
-id	in	out
-a-numeric-chain-that-holds	Inequality(0, LessEqual, 2, Less, 5)	True
-a-numeric-chain-that-fails	Inequality(0, LessEqual, 5, Less, 5)	False
-a-symbolic-mixed-chain-partially-simplifies	Inequality(0, LessEqual, x, Less, 5)	And(LessEqual(0, x), Less(x, 5))
-a-three-link-chain	Inequality(1, Less, 2, LessEqual, 2, Less, 10)	True
-equal-and-notequal-are-valid-links-too	Inequality(0, Less, x, NotEqual, 3)	And(Less(0, x), NotEqual(x, 3))
-a-homogeneous-chain-still-goes-through-and	Inequality(0, Less, x, Less, 5)	And(Less(0, x), Less(x, 5))
-declines-on-a-non-relation-link	Inequality(0, Add, 5)	Inequality(0, Add, 5)

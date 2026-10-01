@@ -1,4 +1,0 @@
-id	in	out
-merging-four-points-into-one-block-1-3-3	\operatorname{PartitionMobius}(\operatorname{Diagram}([[1],[2],[-1],[-2]]),\operatorname{Diagram}([[1,2,-1,-2]]))	-6
-the-coarsest-partition-has-nothing-above-it	\operatorname{InOrbitBasis}(\operatorname{Diagram}([[1,-1]]))	\operatorname{OrbitDiagram}([[1,-1]])
-the-interval-of-length-zero	\operatorname{PartitionMobius}(\operatorname{Diagram}([[1,-1]]),\operatorname{Diagram}([[1,-1]]))	1

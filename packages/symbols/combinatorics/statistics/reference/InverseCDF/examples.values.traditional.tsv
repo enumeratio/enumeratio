@@ -1,2 +1,0 @@
-id	in	out
-inversecdf-normal-median	\operatorname{InverseCDF}(\operatorname{NormalDistribution}(0,1),\frac{1}{2})	-6.957290979756837\times10^{-17}

@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-the-value-half-is-deterministic			[At, [AbsoluteTiming, [Add, 1, 2]], 2]	3	the value half of the result, extracted with At (seconds is not pinned)
+id	section	role	expr	expected	caption	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out
+the-value-half-is-deterministic			[At, [AbsoluteTiming, [Add, 1, 2]], 2]	3	the value half of the result, extracted with At (seconds is not pinned)	AbsoluteTiming(1 + 2)[2]	3	\mathrm{AbsoluteTiming}(1+2)[2]	3	\operatorname{At}(\operatorname{AbsoluteTiming}(1+2),2)	3	At(AbsoluteTiming(Add(1, 2)), 2)	3	<At><AbsoluteTiming><Add>1 2</Add></AbsoluteTiming> 2</At>	<ToExpression>3</ToExpression>

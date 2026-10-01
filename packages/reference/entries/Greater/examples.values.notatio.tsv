@@ -1,7 +1,0 @@
-id	in	out
-0-lt-1	<Less>0 1</Less>	<True />
-4-over-3-lt-3-over-2	<Less><Rational>4 3</Rational> <Rational>3 2</Rational></Less>	<True />
-1-minus-128-times-10-pow-neg-16-lt-1	<Less><Add>1 <Multiply>-128 <Power>10 -16</Power></Multiply></Add> 1</Less>	<True />
-1-minus-256-times-10-pow-neg-16-lt-1	<Less><Add>1 <Multiply>-256 <Power>10 -16</Power></Multiply></Add> 1</Less>	<True />
-pi-pow-exponentiale-lt-exponentiale-pow-pi	<Less><Power>Pi ExponentialE</Power> <Power>ExponentialE Pi</Power></Less>	<True />
-refine-sqrt-x-pow-2-x-gt-0	<Refine><Sqrt><Power>x 2</Power></Sqrt> <Greater>x 0</Greater></Refine>	<x />

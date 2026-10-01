@@ -1,4 +1,0 @@
-id	in	out
-c-4	<Count><BinaryTreeParentArrays>4</BinaryTreeParentArrays></Count>	<ToExpression>14</ToExpression>
-first-element-of-binarytreeparentarrays-3	<At><BinaryTreeParentArrays>3</BinaryTreeParentArrays> 1</At>	<BinaryTreeParentArray><List>0 1 2</List></BinaryTreeParentArray>
-returns-are-the-catalan-triangle	<Tally><CombinatorialStat><BinaryTreeParentArrays>3</BinaryTreeParentArrays> "Returns"</CombinatorialStat></Tally>	<Tuple><List>3 2 1</List> <List>1 2 2</List></Tuple>

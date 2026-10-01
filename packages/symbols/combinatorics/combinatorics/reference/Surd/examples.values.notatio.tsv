@@ -1,3 +1,0 @@
-id	in	out
-negative-cube-root	<Surd>-8 3</Surd>	<ToExpression>-2</ToExpression>
-nonnegative-base	<Surd>8 3</Surd>	<ToExpression>2</ToExpression>

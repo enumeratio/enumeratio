@@ -1,2 +1,0 @@
-id	in	out
-from-a-surjection	SetComposition(Surjection(List(2, 1, 3, 1)))	SetComposition(List(List(2, 4), List(1), List(3)))

@@ -1,5 +1,0 @@
-id	in	out
-a-downward-parabola-s-maximum-value	MaxValue(-x ^ 2 + 4x - 1, x)	3
-maxvalue-neg-2-times-x-pow-2-minus-3x-plus-5-x	MaxValue(-2 * x ^ 2 - 3x + 5, x)	49 / 8
-the-amplitude-of-sine-alone-is-exact	MaxValue(sin(x), x)	1
-an-unbounded-cubic	MaxValue(x ^ 3, x)	positiveInfinity

@@ -1,4 +1,0 @@
-id	in	out
-posetelements-divisorlattice-12	\mathrm{PosetElements}(\mathrm{DivisorLattice}(12))	\bigl\lbrack1, 2, 3, 4, 6, 12\bigr\rbrack
-posetelements-chain-4	\mathrm{PosetElements}(\mathrm{Chain}(4))	\bigl\lbrack1, 2, 3, 4\bigr\rbrack
-3-3-intervals	\mathrm{AlgebraDimension}(\mathrm{IncidenceAlgebra}(\mathrm{BooleanLattice}(3)))	27

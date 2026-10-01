@@ -1,5 +1,0 @@
-id	in	out
-khinchin-s-constant	N(\mathrm{Khinchin})	2.685\,452\,001\,065\,306\,2
-n-khinchin-50	N(\mathrm{Khinchin}, 50)	2.685\,452\,001\,065\,306\,445\,31
-round-khinchin-pow-100	\mathrm{round}(\mathrm{Khinchin}^{100})	7.975\,160\,530\,073\,655\cdot10^{42}
-2-lt-khinchin-lt-3	2\lt\mathrm{Khinchin}\lt3	\mathrm{True}

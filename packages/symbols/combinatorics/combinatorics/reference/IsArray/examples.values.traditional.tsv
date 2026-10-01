@@ -1,9 +1,0 @@
-id	in	out
-a-rectangular-nesting-is-an-array	\operatorname{IsArray}([[1,2],[3,4]])	\top
-isarray-list-1-2-3-4	\operatorname{IsArray}([1,2,3,4])	\top
-isarray-list-1-2-list-3-4	\operatorname{IsArray}([1,2,[3],4])	\bot
-a-ragged-nesting-is-not-an-array	\operatorname{IsArray}([[1,2],[3]])	\bot
-a-flat-list-is-a-rank-1-array	\operatorname{IsArray}([1,2,3])	\top
-a-non-list-is-not-an-array	\operatorname{IsArray}(3)	\bot
-a-test-function-must-hold-of-every-leaf	\operatorname{IsArray}([[2,4],[6,8]],\operatorname{IsEven})	\top
-list-isarray-mat-isarray-expr	[\operatorname{IsArray}(\operatorname{mat}),\operatorname{IsArray}(\operatorname{expr})]	[\bot,\bot]

@@ -1,4 +1,0 @@
-id	in	out
-counts-code-points-not-utf-16-units	\operatorname{StringLength}(\operatorname{String}(\operatorname{a😀b}))	3
-stringlength-tiger	\operatorname{StringLength}(\text{“tiger”})	5
-stringlength	\operatorname{StringLength}(\text{“”})	0

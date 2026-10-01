@@ -1,5 +1,0 @@
-id	in	out
-petersen-is-3-regular	VertexDegree(PetersenGraph())	[3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
-petersen-is-not-bipartite	IsBipartiteGraph(PetersenGraph())	False
-petersen-has-10-vertices	VertexCount(PetersenGraph())	10
-petersen-has-15-edges	EdgeCount(PetersenGraph())	15

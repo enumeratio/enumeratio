@@ -1,9 +1,0 @@
-id	in	out
-n-arsinh-1-100	N(\operatorname{arsinh}(1),100)	0.8813735870195430252326093249797923090281603282616354107532956086533771842220260878337068919102560429
-arsinh-list-list-i-sqrt-2-over-2-times-i-list-0	\operatorname{arsinh}([[i,\frac{\sqrt{2}}{2}i],[0,-\frac{\sqrt{2}}{2}i]])	[[\operatorname{arsinh}(i),\operatorname{arsinh}(\frac{\sqrt{2}}{2}i)],[0,\operatorname{arsinh}(-\frac{\sqrt{2}}{2}i)]]
-arsinh-positiveinfinity	\operatorname{arsinh}(\infty)	\infty
-arsinh-0	\operatorname{arsinh}(0)	0
-d-arsinh-x-x	\frac{d}{dx}\operatorname{arsinh}(x)	\frac{1}{\sqrt{x^2+1}}
-arsinh-1-over-2-times-i-times-sqrt-1-over-2	\operatorname{arsinh}(\frac{1}{2}i\sqrt{\frac{1}{2}(5-\sqrt{5})})	\operatorname{arsinh}(\frac{\sqrt{2}}{4}i\sqrt{5-\sqrt{5}})
-arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2	\operatorname{arsinh}(\frac{-1}{2}i\sqrt{\frac{1}{2}(5-\sqrt{5})})	\operatorname{arsinh}(-\frac{\sqrt{2}}{4}i\sqrt{5-\sqrt{5}})
-arsinh-complexinfinity-is-complexinfinity	\operatorname{arsinh}(\tilde\infty)	\tilde\infty

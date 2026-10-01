@@ -1,4 +1,0 @@
-id	in	out
-count-words-3-2	Count(Words(3, 2))	8
-first-element-of-words-3-2	At(Words(3, 2), 1)	Word(List(1, 1, 1))
-every-element-of-words-3-2	Take(Words(3, 2), 8)	List(Word(List(1, 1, 1)), Word(List(1, 1, 2)), Word(List(1, 2, 1)), Word(List(1, 2, 2)), Word(List(2, 1, 1)), Word(List(2, 1, 2)), Word(List(2, 2, 1)), Word(List(2, 2, 2)))

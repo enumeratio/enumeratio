@@ -1,3 +1,0 @@
-id	in	out
-booleanconvert-factorial-a-b	BooleanConvert(Not(And(a, b)))	Or(Not(a), Not(b))
-booleanconvert-factorial-a-b-c	BooleanConvert(Not(Or(a, b, c)))	And(Not(a), Not(b), Not(c))

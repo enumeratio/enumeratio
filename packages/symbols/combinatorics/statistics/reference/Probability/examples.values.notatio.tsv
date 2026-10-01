@@ -1,6 +1,0 @@
-id	in	out
-probability-equal-is-pdf-for-discrete	<Probability><Equal>x 2</Equal> <Distributed>x <PoissonDistribution>3</PoissonDistribution></Distributed></Probability>	<Divide>9 <Multiply>2 <Power>ExponentialE 3</Power></Multiply></Divide>
-probability-equal-is-zero-for-continuous	<Probability><Equal>x 2</Equal> <Distributed>x <NormalDistribution>0 1</NormalDistribution></Distributed></Probability>	<ToExpression>0</ToExpression>
-probability-lessequal-is-cdf	<Probability><LessEqual>x 5</LessEqual> <Distributed>x <PoissonDistribution>3</PoissonDistribution></Distributed></Probability>	<Divide>92 <Multiply>5 <Power>ExponentialE 3</Power></Multiply></Divide>
-probability-of-a-chained-range	<Probability><And><LessEqual>1 x</LessEqual> <LessEqual>x 5</LessEqual></And> <Distributed>x <PoissonDistribution>3</PoissonDistribution></Distributed></Probability>	<Divide>87 <Multiply>5 <Power>ExponentialE 3</Power></Multiply></Divide>
-probability-greater-is-canonicalized-first	<N><Probability><Greater>x 0</Greater> <Distributed>x <NormalDistribution>0 1</NormalDistribution></Distributed></Probability></N>	<ToExpression>0.5</ToExpression>

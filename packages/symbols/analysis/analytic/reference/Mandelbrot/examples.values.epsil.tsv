@@ -1,2 +1,0 @@
-id	in	out
-mandelbrot-neg-1-2-iterations-returns-to-0	N(mandelbrot(-1, 2))	0

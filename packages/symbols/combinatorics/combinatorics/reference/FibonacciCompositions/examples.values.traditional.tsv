@@ -1,4 +1,0 @@
-id	in	out
-count-fibonaccicompositions-6	\operatorname{Count}(\operatorname{FibonacciCompositions}(6))	13
-first-element-of-fibonaccicompositions-6	\operatorname{At}(\operatorname{FibonacciCompositions}(6),1)	\operatorname{Composition}([1,1,1,1,1,1])
-every-element-of-fibonaccicompositions-6	\operatorname{Take}(\operatorname{FibonacciCompositions}(6),13)	[\operatorname{Composition}([1,1,1,1,1,1]),\operatorname{Composition}([1,1,1,1,2]),\operatorname{Composition}([1,1,1,2,1]),\operatorname{Composition}([1,1,2,1,1]),\operatorname{Composition}([1,1,2,2]),\operatorname{Composition}([1,2,1,1,1]),\operatorname{Composition}([1,2,1,2]),\operatorname{Composition}([1,2,2,1]),\operatorname{Composition}([2,1,1,1,1]),\operatorname{Composition}([2,1,1,2]),\operatorname{Composition}([2,1,2,1]),\operatorname{Composition}([2,2,1,1]),\operatorname{Composition}([2,2,2])]

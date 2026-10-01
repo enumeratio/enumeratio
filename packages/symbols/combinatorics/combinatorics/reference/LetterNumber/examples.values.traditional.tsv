@@ -1,5 +1,0 @@
-id	in	out
-single-letter	\operatorname{LetterNumber}(\text{“d”})	4
-letternumber-d	\operatorname{LetterNumber}(\text{“D”})	4
-string	\operatorname{LetterNumber}(\text{“cab”})	[3,1,2]
-letternumber-c	\operatorname{LetterNumber}(\text{“c”})	3

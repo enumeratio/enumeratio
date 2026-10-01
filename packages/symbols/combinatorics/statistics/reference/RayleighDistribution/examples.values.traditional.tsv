@@ -1,5 +1,0 @@
-id	in	out
-rayleigh-pdf-exact	\operatorname{PDF}(\operatorname{RayleighDistribution}(3),3)	\frac{1}{3\sqrt{e}}
-rayleigh-cdf-exact	\operatorname{CDF}(\operatorname{RayleighDistribution}(3),3)	1-\sqrt{\frac{1}{e}}
-rayleigh-mean-exact	\operatorname{Mean}(\operatorname{RayleighDistribution}(3))	\frac{3}{2}\sqrt{2}\sqrt{\pi}
-rayleigh-variance-exact	\operatorname{Variance}(\operatorname{RayleighDistribution}(3))	\frac{9}{2}(4-\pi)

@@ -1,7 +1,0 @@
-id	in	out
-exp-neg-x-gamma	MellinTransform(Exp(Negate(x)), x, s)	Gamma(s)
-one-over-one-plus-x	MellinTransform(Divide(1, Add(1, x)), x, s)	Multiply(Pi, Csc(Multiply(Pi, s)))
-gaussian	MellinTransform(Exp(Negate(Power(x, 2))), x, s)	Multiply(Rational(1, 2), Gamma(Multiply(Rational(1, 2), s)))
-log-one-plus-x	MellinTransform(Ln(Add(1, x)), x, s)	Divide(Multiply(Pi, Csc(Multiply(Pi, s))), s)
-power-shift-x-c-exp	MellinTransform(Multiply(Power(x, a), Exp(Negate(x))), x, s)	Gamma(Add(a, s))
-mellintransform-1-over-x-plus-1-x-1-over-2	MellinTransform(Divide(1, Add(x, 1)), x, Rational(1, 2))	Pi

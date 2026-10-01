@@ -1,6 +1,0 @@
-id	in	out
-a-plain-integer	<IsInteger>4</IsInteger>	<True />
-isinteger-x-plus-4	<IsInteger><Add>x 4</Add></IsInteger>	<False />
-a-rational-is-not-an-integer	<IsInteger><Rational>1 2</Rational></IsInteger>	<False />
-a-free-symbol-is-false	<IsInteger>x</IsInteger>	<False />
-a-negative-integer	<IsInteger>-3</IsInteger>	<True />

@@ -1,3 +1,0 @@
-id	in	out
-circletimes-x-y-z	x\otimes y\otimes z	xyz
-circletimes-a-b-c-plus-circletimes-x-y-z	a\otimes b\otimes c+x\otimes y\otimes z	abc+xyz

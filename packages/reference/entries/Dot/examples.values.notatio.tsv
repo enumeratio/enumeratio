@@ -1,7 +1,0 @@
-id	in	out
-dot-list-a-b-c-list-x-y-z	<Dot><List>a b c</List> <List>x y z</List></Dot>	<Add><Multiply>a x</Multiply> <Multiply>b y</Multiply> <Multiply>c z</Multiply></Add>
-dot-list-list-a-b-list-c-d-list-x-y	<Dot><List><List>a b</List> <List>c d</List></List> <List>x y</List></Dot>	<List><Add><Multiply>a x</Multiply> <Multiply>b y</Multiply></Add> <Add><Multiply>c x</Multiply> <Multiply>d y</Multiply></Add></List>
-dot-list-x-y-list-list-a-b-list-c-d	<Dot><List>x y</List> <List><List>a b</List> <List>c d</List></List></Dot>	<List><Add><Multiply>a x</Multiply> <Multiply>c y</Multiply></Add> <Add><Multiply>b x</Multiply> <Multiply>d y</Multiply></Add></List>
-dot-list-1-2-3-4-5-list-1-8-9-0-neg-1	<Dot><List>1 2 3 4 5</List> <List>1 8 9 0 -1</List></Dot>	<ToExpression>39</ToExpression>
-dot-list-a-b-c-list-0-b-d-plus-exponentiale	<Dot><List>a b c</List> <List>0 b <Add>d ExponentialE</Add></List></Dot>	<Add><Power>b 2</Power> <Multiply>c d</Multiply> <Multiply>ExponentialE c</Multiply></Add>
-dot-list-list-2-0-0-list-0-0-35-over-2-list-0-35	<Dot><List><List>2 0 0</List> <List>0 0 <Rational>35 2</Rational></List> <List>0 <Rational>35 2</Rational> 0</List></List> <List><List>8 0 0</List> <List>0 0 10</List> <List>0 10 0</List></List></Dot>	<List><List>16 0 0</List> <List>0 175 0</List> <List>0 0 175</List></List>

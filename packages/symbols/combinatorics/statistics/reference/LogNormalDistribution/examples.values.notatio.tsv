@@ -1,5 +1,0 @@
-id	in	out
-lognormal-pdf-exact	<PDF><LogNormalDistribution>0 1</LogNormalDistribution> 1</PDF>	<Sqrt><Divide>1 <Multiply>2 Pi</Multiply></Divide></Sqrt>
-lognormal-cdf-exact	<CDF><LogNormalDistribution>0 1</LogNormalDistribution> 1</CDF>	<Rational>1 2</Rational>
-lognormal-mean-exact	<Mean><LogNormalDistribution>0 1</LogNormalDistribution></Mean>	<Sqrt>ExponentialE</Sqrt>
-lognormal-variance-exact	<Variance><LogNormalDistribution>0 1</LogNormalDistribution></Variance>	<Multiply>ExponentialE <Add>-1 ExponentialE</Add></Multiply>

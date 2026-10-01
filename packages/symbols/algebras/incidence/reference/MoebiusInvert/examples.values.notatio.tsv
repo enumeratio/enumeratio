@@ -1,4 +1,0 @@
-id	in	out
-partial-sums-along-the-chain	<PosetSumDown><Chain>4</Chain> <List>1 2 3 4</List></PosetSumDown>	<List>1 3 6 10</List>
-and-back-again	<MoebiusInvert><Chain>4</Chain> <List>1 3 6 10</List></MoebiusInvert>	<List>1 2 3 4</List>
-inclusion-exclusion-round-tripped	<MoebiusInvert><BooleanLattice>2</BooleanLattice> <PosetSumDown><BooleanLattice>2</BooleanLattice> <List>5 1 2 7</List></PosetSumDown></MoebiusInvert>	<List>5 1 2 7</List>

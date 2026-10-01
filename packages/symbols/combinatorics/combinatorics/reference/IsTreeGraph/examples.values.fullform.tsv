@@ -1,7 +1,0 @@
-id	in	out
-a-star-is-a-tree	IsTreeGraph(StarGraph(5))	True
-a-cycle-is-not-a-tree	IsTreeGraph(CycleGraph(4))	False
-a-disconnected-forest-is-not-a-tree	IsTreeGraph(Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(3, 4))))	False
-a-path-is-a-tree	IsTreeGraph(PathGraph(5))	True
-a-ternary-complete-tree-is-a-tree	IsTreeGraph(CompleteKaryTree(3, 3))	True
-a-complete-graph-past-k2-is-not-a-tree	IsTreeGraph(CompleteGraph(4))	False

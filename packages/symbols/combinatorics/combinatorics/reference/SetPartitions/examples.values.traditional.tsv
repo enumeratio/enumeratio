@@ -1,5 +1,0 @@
-id	in	out
-b-4	\operatorname{Count}(\operatorname{SetPartitions}(4))	15
-blocks-are-stirling-numbers-of-the-second-kind	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{SetPartitions}(5),\text{“Blocks”}))	([1,2,3,4,5],[1,15,25,10,1])
-by-singleton-blocks	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{SetPartitions}(5),\text{“SingletonBlocks”}))	([0,1,2,3,5],[11,20,10,10,1])
-one-crossing-at-4	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{SetPartitions}(4),\text{“Crossings”}))	([0,1],[14,1])

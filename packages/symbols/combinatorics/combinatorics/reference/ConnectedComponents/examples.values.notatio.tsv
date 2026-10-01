@@ -1,5 +1,0 @@
-id	in	out
-a-2-cycle-and-a-downstream-only-vertex	<ConnectedComponents><Graph><List>1 2 3</List> <List><DirectedEdge>1 2</DirectedEdge> <DirectedEdge>2 1</DirectedEdge> <DirectedEdge>2 3</DirectedEdge></List></Graph></ConnectedComponents>	<List><List>1 2</List> <List>3</List></List>
-length-first-connectedcomponents-g	<Length><First><ConnectedComponents>g</ConnectedComponents></First></Length>	<ToExpression>0</ToExpression>
-length-connectedcomponents-g-minus-1	<Add><Length><ConnectedComponents>g</ConnectedComponents></Length> -1</Add>	<ToExpression>0</ToExpression>
-length-connectedcomponents-g	<Length><ConnectedComponents>g</ConnectedComponents></Length>	<ToExpression>1</ToExpression>

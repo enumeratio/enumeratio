@@ -22,6 +22,7 @@ import {
   REFERENCE_EXAMPLES_SCHEMA,
   validateSchema,
 } from "@enumeratio/entry/schema";
+import { OWN_FORMS as OWN_FORMS_LIST } from "@enumeratio/entry";
 import { EXAMPLES_FILE, headNames, type HeadRecord, INDEX_FILE, readHead, recordDirs } from "@enumeratio/entry/node";
 import { isCrosswalkSystem } from "./crosswalk/sources.ts";
 
@@ -141,9 +142,9 @@ export function canonicalHeads(heads: readonly LoadedHead[]): ReadonlyMap<string
 /** Every system's kernel version, as the last scan of it recorded (scripts/oracle-scan.ts). */
 const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
 
-/** Our own forms of an example (frontend/scripts/forms.ts): rows a record keeps beside the
+/** Our own forms of an example (frontend/scripts/forms.ts): the pins a record keeps beside the
  * systems', with no kernel behind them. */
-const OWN_FORMS = new Set(["epsil", "tex", "traditional", "fullform", "notatio"]);
+const OWN_FORMS = new Set<string>(OWN_FORMS_LIST);
 
 /** A record row as the page reads it: a scanned system's run of one example. */
 const runOf = (row: SystemImplementation): OtherSystemRun => ({

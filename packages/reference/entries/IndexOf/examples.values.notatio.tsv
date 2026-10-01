@@ -1,8 +1,0 @@
-id	in	out
-indexof-list-1-2-3-2	<IndexOf><List>1 2 3</List> 2</IndexOf>	<ToExpression>2</ToExpression>
-0-signals-that-the-value-isn-t-present-since-0	<IndexOf><List>1 2 3</List> 9</IndexOf>	<ToExpression>0</ToExpression>
-only-the-first-of-several-occurrences-is	<IndexOf><List>a b a a b c b</List> b</IndexOf>	<ToExpression>2</ToExpression>
-the-value-can-itself-be-a-list	<IndexOf><List><List>1 2</List> <List>3 4</List></List> <List>3 4</List></IndexOf>	<ToExpression>2</ToExpression>
-at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at	<Equal><At><List>10 20 30</List> <IndexOf><List>10 20 30</List> 20</IndexOf></At> 20</Equal>	<True />
-indexof-reports-only-the-first-occurrence-see	<IndexOf><List>1 2 3 2</List> 2</IndexOf>	<ToExpression>2</ToExpression>
-indexof-stays-at-the-top-level-where-this-value	<IndexOf><List><List>a a b</List> <List>b a a</List> <List>a b a</List></List> b</IndexOf>	<ToExpression>0</ToExpression>

@@ -1,4 +1,0 @@
-id	in	out
-reads-ascii-code-points	<ToCharacterCode><String>ABC</String></ToCharacterCode>	<List>65 66 67</List>
-tocharactercode-factorial-mod-times-plus-neg		
-tocharactercode-a	<ToCharacterCode>"a"</ToCharacterCode>	<List>97</List>

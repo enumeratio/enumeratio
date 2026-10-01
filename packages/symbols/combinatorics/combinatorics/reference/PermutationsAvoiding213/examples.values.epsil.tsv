@@ -1,4 +1,0 @@
-id	in	out
-count-permutationsavoiding213-4	count(PermutationsAvoiding213(4))	14
-first-element-of-permutationsavoiding213-4	PermutationsAvoiding213(4)[1]	Permutation([1, 2, 3, 4])
-every-element-of-permutationsavoiding213-4	take(PermutationsAvoiding213(4), 14)	"[\n  Permutation([1, 2, 3, 4]),\n  Permutation([1, 2, 4, 3]),\n  Permutation([1, 4, 2, 3]),\n  Permutation([1, 3, 4, 2]),\n  Permutation([1, 4, 3, 2]),\n  Permutation([4, 1, 2, 3]),\n  Permutation([4, 1, 3, 2]),\n  Permutation([3, 4, 1, 2]),\n  Permutation([4, 3, 1, 2]),\n  Permutation([2, 3, 4, 1]),\n  Permutation([2, 4, 3, 1]),\n  Permutation([4, 2, 3, 1]),\n  Permutation([3, 4, 2, 1]),\n  Permutation([4, 3, 2, 1]),\n]"

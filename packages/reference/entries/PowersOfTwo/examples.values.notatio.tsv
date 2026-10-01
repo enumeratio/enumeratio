@@ -1,4 +1,0 @@
-id	in	out
-the-first-25-terms	<Take>PowersOfTwo 25</Take>	<List>1 2 4 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768 65536 131072 262144 524288 1048576 2097152 4194304 8388608 16777216</List>
-64-is-a-power-of-two	<Element>64 PowersOfTwo</Element>	<True />
-48-is-not-a-power-of-two	<Element>48 PowersOfTwo</Element>	<False />

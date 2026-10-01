@@ -1,6 +1,0 @@
-id	in	out
-a-pole-at-the-origin	\mathrm{FunctionSingularities}(\frac{1}{x}, x)	x=0
-sqrt-is-singular-at-its-own-boundary	\mathrm{FunctionSingularities}(\sqrt{x}, x)	x\le0
-a-polynomial-has-no-singularities	\mathrm{FunctionSingularities}(x^2, x)	\mathrm{False}
-log-s-branch-cut	\mathrm{FunctionSingularities}(\ln(x), x)	x\le0
-functionsingularities-tan-x-x	\mathrm{FunctionSingularities}(\tan(x), x)	\cos(x)=0

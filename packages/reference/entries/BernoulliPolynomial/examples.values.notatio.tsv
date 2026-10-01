@@ -1,5 +1,0 @@
-id	in	out
-b-0-x-1	<BernoulliPolynomial>0 x</BernoulliPolynomial>	<ToExpression>1</ToExpression>
-b-1-x-x-1-2	<BernoulliPolynomial>1 x</BernoulliPolynomial>	<Add>x <Rational>-1 2</Rational></Add>
-b-2-0-1-6	<N><BernoulliPolynomial>2 0</BernoulliPolynomial></N>	<ToExpression>0.16666666666666666</ToExpression>
-b-2-1-1-6	<N><BernoulliPolynomial>2 1</BernoulliPolynomial></N>	<ToExpression>0.16666666666666666</ToExpression>

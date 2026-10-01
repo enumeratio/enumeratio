@@ -1,15 +1,15 @@
-id	section	role	expr	expected	caption
-default-base-is-10			[Log, 100]	2	Default base is 10
-same-result-written-with-an-explicit-base			[Log, 100, 10]	2	Same result written with an explicit base
-base-2-via-the-explicit-second-argument			[Log, 8, 2]	3	Base 2 via the explicit second argument
-log-3-1-5-at-machine-precision	Scope		[Log, 1.5, 3]	{num: "0.3690702464285425629"}	$\log_3 1.5$ at machine precision
-log-9-3	Scope		[Log, 9, 3]	2	
-threads-over-a-list-of-values	Scope		[Log, [List, 2, 4, 8], 2]	[List, 1, 2, 3]	Threads over a list of values
-threads-over-a-list-of-bases	Scope		[Log, 2.5, [List, 2, ExponentialE, 10]]	[List, {num: "1.32192809488736234787"}, {num: "0.91629073187415514452"}, {num: "0.397940008672037609573"}]	Threads over a list of bases
-derivative-in-base-3-frac-1-x-ln-3	Scope		[D, [Log, x, 3], x]	[Divide, 1, [Multiply, x, [Ln, 3]]]	Derivative in base 3: $\frac{1}{x\ln 3}$
-log-2-frac-18-3-an-exact-negative-power-of-the	Scope		[Log, [Rational, 1, 8], 2]	-3	$\log_2\tfrac18 = -3$; an exact negative power of the base folds too
-confirms-the-default-base-is-10	Properties		[Equal, [Log, 100], [Log, 100, 10]]	True	Confirms the default base is 10
-product-rule-log-b-xy-log-b-x-log-b-y	Properties		[Equal, [Log, [Multiply, 8, 4], 2], [Add, [Log, 8, 2], [Log, 4, 2]]]	True	Product rule: $\log_b(xy) = \log_b(x) + \log_b(y)$
-power-rule-log-b-x-k-k-log-b-x	Properties		[Equal, [Log, [Power, 2, 5], 2], [Multiply, 5, [Log, 2, 2]]]	True	Power rule: $\log_b(x^k) = k \log_b(x)$
-log-10-0-infty	Possible issues		[Log, 0]	NegativeInfinity	$\log_{10}(0) = -\infty$
-a-negative-argument-stays-symbolic-with-the	Possible issues		[Log, -5]	[Log, -5, 10]	A negative argument stays symbolic, with the default base filled in; wrap in N(...) for the complex value
+id	section	role	expr	expected	caption	epsil.in	fullform.in
+default-base-is-10			[Log, 100]	2	Default base is 10		
+same-result-written-with-an-explicit-base			[Log, 100, 10]	2	Same result written with an explicit base		
+base-2-via-the-explicit-second-argument			[Log, 8, 2]	3	Base 2 via the explicit second argument		
+log-3-1-5-at-machine-precision	Scope		[Log, 1.5, 3]	{num: "0.3690702464285425629"}	$\log_3 1.5$ at machine precision		
+log-9-3	Scope		[Log, 9, 3]	2			
+threads-over-a-list-of-values	Scope		[Log, [List, 2, 4, 8], 2]	[List, 1, 2, 3]	Threads over a list of values		
+threads-over-a-list-of-bases	Scope		[Log, 2.5, [List, 2, ExponentialE, 10]]	[List, {num: "1.32192809488736234787"}, {num: "0.91629073187415514452"}, {num: "0.397940008672037609573"}]	Threads over a list of bases	log(2.5, [2, exponentialE, 10])	Log(2.5, List(2, ExponentialE, 10))
+derivative-in-base-3-frac-1-x-ln-3	Scope		[D, [Log, x, 3], x]	[Divide, 1, [Multiply, x, [Ln, 3]]]	Derivative in base 3: $\frac{1}{x\ln 3}$		
+log-2-frac-18-3-an-exact-negative-power-of-the	Scope		[Log, [Rational, 1, 8], 2]	-3	$\log_2\tfrac18 = -3$; an exact negative power of the base folds too		
+confirms-the-default-base-is-10	Properties		[Equal, [Log, 100], [Log, 100, 10]]	True	Confirms the default base is 10		
+product-rule-log-b-xy-log-b-x-log-b-y	Properties		[Equal, [Log, [Multiply, 8, 4], 2], [Add, [Log, 8, 2], [Log, 4, 2]]]	True	Product rule: $\log_b(xy) = \log_b(x) + \log_b(y)$		
+power-rule-log-b-x-k-k-log-b-x	Properties		[Equal, [Log, [Power, 2, 5], 2], [Multiply, 5, [Log, 2, 2]]]	True	Power rule: $\log_b(x^k) = k \log_b(x)$		
+log-10-0-infty	Possible issues		[Log, 0]	NegativeInfinity	$\log_{10}(0) = -\infty$		
+a-negative-argument-stays-symbolic-with-the	Possible issues		[Log, -5]	[Log, -5, 10]	A negative argument stays symbolic, with the default base filled in; wrap in N(...) for the complex value		

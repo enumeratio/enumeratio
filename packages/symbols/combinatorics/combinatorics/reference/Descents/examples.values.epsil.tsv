@@ -1,7 +1,0 @@
-id	in	out
-only-3-1	Descents([3, 1, 2])	1
-every-step-falls	Descents([3, 2, 1])	2
-the-one-line-word-312	Descents(Permutation([3, 1, 2]))	1
-the-one-line-word-312-as-a-plain-list	Descents([3, 1, 2])	1
-the-one-line-word-2413	Descents(Permutation([2, 4, 1, 3]))	1
-descents-and-ascents-partition-the-n-1-steps	Descents([3, 1, 2]) + Ascents([3, 1, 2]) == 2	True

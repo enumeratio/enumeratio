@@ -1,2 +1,0 @@
-id	in	out
-count-up-to-a-limit	List(Assign(n, 0), While(Less(n, 5), Assign(n, Add(n, 1))), n)	List(0, 5)

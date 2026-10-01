@@ -1,6 +1,0 @@
-id	in	out
-dirac-delta-at-origin	FourierTransform(DiracDelta(t), t, w)	Sqrt(Divide(1, Multiply(2, Pi)))
-gaussian	FourierTransform(Power(ExponentialE, Negate(Power(t, 2))), t, w)	Multiply(Divide(Sqrt(2), 2), Power(ExponentialE, Multiply(Rational(-1, 4), Power(w, 2))))
-cosine	FourierTransform(Cos(Multiply(a, t)), t, w)	Multiply(Divide(Sqrt(2), 2), Add(DiracDelta(Add(a, w)), DiracDelta(Add(Negate(a), w))), Sqrt(Pi))
-fouriertransform-x-times-y-times-z-pow-3-times	FourierTransform(Multiply(Power(Multiply(x, y, z), 3), Power(ExponentialE, Add(Negate(Power(x, 2)), Negate(Power(y, 2)), Negate(Power(z, 2))))), List(x, y, z), List(u, v, w))	FourierTransform(Multiply(Power(x, 3), Power(y, 3), Power(z, 3), Power(ExponentialE, Add(Negate(Power(x, 2)), Negate(Power(y, 2)), Negate(Power(z, 2))))), List(x, y, z), List(u, v, w))
-fouriertransform-squarewave-y-times-1-over-2pi	FourierTransform(Multiply(SquareWave(Multiply(y, Divide(1, Multiply(2, Pi)))), Power(ExponentialE, Negate(Abs(x)))), List(x, y), List(u, v))	FourierTransform(Multiply(SquareWave(Divide(y, Multiply(2, Pi))), Power(ExponentialE, Negate(Abs(x)))), List(x, y), List(u, v))

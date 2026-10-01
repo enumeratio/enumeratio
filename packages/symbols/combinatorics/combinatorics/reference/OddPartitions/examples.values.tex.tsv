@@ -1,4 +1,0 @@
-id	in	out
-count-oddpartitions-10	\mathrm{Count}(\mathrm{OddPartitions}(10))	10
-first-element-of-oddpartitions-10	\mathrm{OddPartitions}(10)[1]	\mathrm{IntegerPartition}(\bigl\lbrack9, 1\bigr\rbrack)
-every-element-of-oddpartitions-10	\mathrm{Take}(\mathrm{OddPartitions}(10), 10)	\bigl\lbrack\mathrm{IntegerPartition}(\bigl\lbrack9, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack7, 3\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack7, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack5, 5\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack5, 3, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack5, 1, 1, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 3, 3, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack)\bigr\rbrack

@@ -1,4 +1,0 @@
-id	in	out
-count-dyadiccompositions-6	count(DyadicCompositions(6))	18
-first-element-of-dyadiccompositions-6	DyadicCompositions(6)[1]	Composition([1, 1, 1, 1, 1, 1])
-every-element-of-dyadiccompositions-6	take(DyadicCompositions(6), 18)	"[\n  Composition([1, 1, 1, 1, 1, 1]),\n  Composition([1, 1, 1, 1, 2]),\n  Composition([1, 1, 1, 2, 1]),\n  Composition([1, 1, 2, 1, 1]),\n  Composition([1, 1, 2, 2]),\n  Composition([1, 1, 4]),\n  Composition([1, 2, 1, 1, 1]),\n  Composition([1, 2, 1, 2]),\n  Composition([1, 2, 2, 1]),\n  Composition([1, 4, 1]),\n  Composition([2, 1, 1, 1, 1]),\n  Composition([2, 1, 1, 2]),\n  Composition([2, 1, 2, 1]),\n  Composition([2, 2, 1, 1]),\n  Composition([2, 2, 2]),\n  Composition([2, 4]),\n  Composition([4, 1, 1]),\n  Composition([4, 2]),\n]"

@@ -1,8 +1,0 @@
-id	in	out
-a-floating-point-argument-evaluates-directly-to	N(\operatorname{JacobiCD}(0.3,0.5))	0.9772503364442499
-jacobicd-0-4-0-5i-0-3	N(\operatorname{JacobiCD}(0.4+0.5i,0.3))	1.0340171900053388-0.13933796721263517i
-m-greater-than-1-via-the-reciprocal-modulus	N(\operatorname{JacobiCD}(0.3,1.5))	1.023633106578735
-u-0-is-1-for-any-m	\operatorname{JacobiCD}(0,m)	1
-symbolic-arguments-are-left-unevaluated-rather	\operatorname{JacobiCD}(u,m)	\operatorname{JacobiCD}(u,m)
-u-1e16-declines-rather-than-answering-wrong	N(\operatorname{JacobiCD}(10^{16},\frac{2}{7}))	\operatorname{JacobiCD}(10000000000000000,0.285714285714285714286)
-u-1e16-mpmath-true-value	N(\operatorname{JacobiCD}(10^{16},\frac{2}{7}))	0.22404752357450412066

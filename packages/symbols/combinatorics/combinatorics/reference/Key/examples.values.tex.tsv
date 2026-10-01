@@ -1,3 +1,0 @@
-id	in	out
-looks-up-an-existing-key	\mathrm{Association}(\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2))[\mathrm{Key}(b)]	2
-missing-key-answers-missing	\mathrm{Association}(\mathrm{Rule}(a, 1))[\mathrm{Key}(z)]	\mathrm{Missing}

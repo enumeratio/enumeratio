@@ -1,8 +1,0 @@
-id	in	out
-squarewave-zero	<SquareWave>0</SquareWave>	<ToExpression>1</ToExpression>
-squarewave-half	<SquareWave><Rational>1 2</Rational></SquareWave>	<ToExpression>-1</ToExpression>
-squarewave-neg-quarter	<SquareWave><Rational>-1 4</Rational></SquareWave>	<ToExpression>-1</ToExpression>
-squarewave-ranged	<SquareWave><List>0 10</List> 0</SquareWave>	<ToExpression>10</ToExpression>
-squarewave-negative-pi-exact	<SquareWave><Negate>Pi</Negate></SquareWave>	<ToExpression>-1</ToExpression>
-squarewave-periodic	<Equal><SquareWave><Rational>1 4</Rational></SquareWave> <SquareWave><Add><Rational>1 4</Rational> 2</Add></SquareWave></Equal>	<True />
-squarewave-one	<SquareWave>1</SquareWave>	<ToExpression>1</ToExpression>

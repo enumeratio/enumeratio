@@ -1,3 +1,0 @@
-id	in	out
-sum-k-pow-2-k-nothing-10	Sum(Power(k, 2), Limits(k, Nothing, 10))	385
-sum-k-pow-neg-6-k-1-positiveinfinity	Sum(Power(k, -6), Limits(k, 1, PositiveInfinity))	Divide(Power(Pi, 6), 945)

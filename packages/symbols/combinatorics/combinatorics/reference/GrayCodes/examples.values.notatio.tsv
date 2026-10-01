@@ -1,4 +1,0 @@
-id	in	out
-count-graycodes-3	<Count><GrayCodes>3</GrayCodes></Count>	<ToExpression>8</ToExpression>
-first-element-of-graycodes-3	<At><GrayCodes>3</GrayCodes> 1</At>	<BinaryWord><List>0 0 0</List></BinaryWord>
-every-element-of-graycodes-3	<Take><GrayCodes>3</GrayCodes> 8</Take>	<List><BinaryWord><List>0 0 0</List></BinaryWord> <BinaryWord><List>0 0 1</List></BinaryWord> <BinaryWord><List>0 1 1</List></BinaryWord> <BinaryWord><List>0 1 0</List></BinaryWord> <BinaryWord><List>1 1 0</List></BinaryWord> <BinaryWord><List>1 1 1</List></BinaryWord> <BinaryWord><List>1 0 1</List></BinaryWord> <BinaryWord><List>1 0 0</List></BinaryWord></List>

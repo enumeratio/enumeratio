@@ -1,4 +1,0 @@
-id	in	out
-count-squarepartitions-12	<Count><SquarePartitions>12</SquarePartitions></Count>	<ToExpression>5</ToExpression>
-first-element-of-squarepartitions-12	<At><SquarePartitions>12</SquarePartitions> 1</At>	<IntegerPartition><List>9 1 1 1</List></IntegerPartition>
-every-element-of-squarepartitions-12	<Take><SquarePartitions>12</SquarePartitions> 5</Take>	<List><IntegerPartition><List>9 1 1 1</List></IntegerPartition> <IntegerPartition><List>4 4 4</List></IntegerPartition> <IntegerPartition><List>4 4 1 1 1 1</List></IntegerPartition> <IntegerPartition><List>4 1 1 1 1 1 1 1 1</List></IntegerPartition> <IntegerPartition><List>1 1 1 1 1 1 1 1 1 1 1 1</List></IntegerPartition></List>

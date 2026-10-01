@@ -1,5 +1,0 @@
-id	in	out
-p-6	\mathrm{Count}(\mathrm{IntegerPartitions}(6))	11
-the-single-part-6	\mathrm{IntegerPartitions}(6)[1]	\mathrm{IntegerPartition}(\bigl\lbrack6\bigr\rbrack)
-by-largest-part	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{IntegerPartitions}(7), \text{LargestPart}))	\operatorname{Tuple}(\bigl\lbrack7, 6, 5, 4, 3, 2, 1\bigr\rbrack,\bigl\lbrack1, 1, 2, 3, 4, 3, 1\bigr\rbrack)
-by-distinct-part-sizes	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{IntegerPartitions}(7), \text{DistinctParts}))	\operatorname{Tuple}(\bigl\lbrack1, 2, 3\bigr\rbrack,\bigl\lbrack2, 11, 2\bigr\rbrack)

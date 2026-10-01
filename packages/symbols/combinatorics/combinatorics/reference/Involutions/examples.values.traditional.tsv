@@ -1,3 +1,0 @@
-id	in	out
-count-involutions-4	\operatorname{Count}(\operatorname{Involutions}(4))	10
-by-fixed-points	\operatorname{Tally}(\operatorname{CombinatorialStat}(\operatorname{Involutions}(5),\text{“FixedPoints”}))	([5,3,1],[1,10,15])

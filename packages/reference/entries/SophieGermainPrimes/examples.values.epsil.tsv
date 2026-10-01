@@ -1,2 +1,0 @@
-id	in	out
-the-first-20-terms	take(SophieGermainPrimes, 20)	"[\n  2,\n  3,\n  5,\n  11,\n  23,\n  29,\n  41,\n  53,\n  83,\n  89,\n  113,\n  131,\n  173,\n  179,\n  191,\n  233,\n  239,\n  251,\n  281,\n  293,\n]"

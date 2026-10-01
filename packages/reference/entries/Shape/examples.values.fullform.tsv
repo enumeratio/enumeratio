@@ -1,8 +1,0 @@
-id	in	out
-shape-list-list-list-list-a-b	Shape(List(List(List(List(a, b)))))	Tuple(1, 1, 1, 2)
-shape-1	Shape(1)	Tuple()
-shape-list-1-2	Shape(List(1, 2))	Tuple(2)
-shape-list-list-1-2	Shape(List(List(1, 2)))	Tuple(1, 2)
-length-shape-list-list-a-b-list-c-d-eq-rank-list	Equal(Length(Shape(List(List(a, b), List(c, d)))), Rank(List(List(a, b), List(c, d))))	True
-shape-array-a-list-2-1-4-3		
-shape-sqrt-2		

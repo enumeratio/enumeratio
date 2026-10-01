@@ -1,8 +1,0 @@
-id	in	out
-mersenneprimeexponent-1	MersennePrimeExponent(1)	2
-mersenneprimeexponent-5	MersennePrimeExponent(5)	13
-mersenneprimeexponent-10	MersennePrimeExponent(10)	89
-listable	MersennePrimeExponent(List(1, 2, 3, 4, 5, 6))	List(2, 3, 5, 7, 13, 17)
-mersenneprimeexponent-range-1-10	MersennePrimeExponent(Range(1, 10))	List(2, 3, 5, 7, 13, 17, 19, 31, 61, 89)
-past-the-known-table-of-mersenne-prime-exponents	MersennePrimeExponent(1000)	MersennePrimeExponent(1000)
-timeconstrained-mersenneprimeexponent-50-10	TimeConstrained(MersennePrimeExponent(50), 10)	MersennePrimeExponent(50)

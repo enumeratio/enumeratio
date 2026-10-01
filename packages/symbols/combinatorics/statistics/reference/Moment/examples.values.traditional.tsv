@@ -1,6 +1,0 @@
-id	in	out
-moment-order-0	\operatorname{Moment}(\operatorname{GeometricDistribution}(\frac{1}{4}),0)	1
-moment-order-1-is-mean	\operatorname{Moment}(\operatorname{GeometricDistribution}(\frac{1}{4}),1)	3
-moment-order-2	\operatorname{Moment}(\operatorname{GeometricDistribution}(\frac{1}{4}),2)	21
-moment-bernoulli-order-5	\operatorname{Moment}(\operatorname{BernoulliDistribution}(\frac{2}{5}),5)	\frac{2}{5}
-moment-order-3-unevaluated	\operatorname{Moment}(\operatorname{GeometricDistribution}(\frac{1}{4}),3)	\operatorname{Moment}(\operatorname{GeometricDistribution}(\frac{1}{4}),3)

@@ -1,5 +1,0 @@
-id	in	out
-centers-add-and-radii-add	<Add><CenteredInterval>1 <Rational>1 2</Rational></CenteredInterval> <CenteredInterval>2 <Rational>1 4</Rational></CenteredInterval></Add>	<CenteredInterval>3 <Rational>3 4</Rational></CenteredInterval>
-an-exact-factor-scales-center-and-radius	<Multiply>2 <CenteredInterval>2 <Rational>1 2</Rational></CenteredInterval></Multiply>	<CenteredInterval>4 1</CenteredInterval>
-converts-an-interval-to-center-radius-form	<CenteredInterval><Interval>1 3</Interval></CenteredInterval>	<CenteredInterval>2 1</CenteredInterval>
-radii-add-under-subtraction-too	<Subtract><CenteredInterval>5 <Rational>1 4</Rational></CenteredInterval> <CenteredInterval>1 <Rational>1 4</Rational></CenteredInterval></Subtract>	<CenteredInterval>4 <Rational>1 2</Rational></CenteredInterval>

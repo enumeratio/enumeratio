@@ -1,4 +1,0 @@
-id	in	out
-relabelled-cycle-is-isomorphic-to-itself	\operatorname{IsIsomorphicGraph}(\operatorname{CycleGraph}(4),\operatorname{Graph}([3,1,4,2],[\operatorname{UndirectedEdge}(3,1),\operatorname{UndirectedEdge}(1,4),\operatorname{UndirectedEdge}(4,2),\operatorname{UndirectedEdge}(2,3)]))	\top
-same-vertex-count-different-structure	\operatorname{IsIsomorphicGraph}(\operatorname{CycleGraph}(4),\operatorname{StarGraph}(4))	\bot
-isisomorphicgraph-cyclegraph-3-cyclegraph-4	\operatorname{IsIsomorphicGraph}(\operatorname{CycleGraph}(3),\operatorname{CycleGraph}(4))	\bot

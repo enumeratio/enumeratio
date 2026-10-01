@@ -1,7 +1,0 @@
-id	in	out
-a-floating-point-argument-evaluates-directly-to	N(\operatorname{JacobiSC}(0.6,0.4))	0.6647443227328587
-m-greater-than-1-via-the-reciprocal-modulus	N(\operatorname{JacobiSC}(1.2,3))	0.6660771819422742
-u-0-is-0-for-any-m	\operatorname{JacobiSC}(0,m)	0
-symbolic-arguments-are-left-unevaluated-rather	\operatorname{JacobiSC}(u,m)	\operatorname{JacobiSC}(u,m)
-m-1-at-a-shared-pole-of-sn-and-cn	N(\operatorname{JacobiSC}(\frac{1}{2}i\pi,1))	0.0+1.0i
-u-1e16-declines-rather-than-answering-wrong	N(\operatorname{JacobiSC}(10^{16},\frac{1}{4}))	\operatorname{JacobiSC}(10000000000000000,0.25)

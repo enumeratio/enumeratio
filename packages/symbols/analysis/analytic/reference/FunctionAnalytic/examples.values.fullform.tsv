@@ -1,8 +1,0 @@
-id	in	out
-polynomials-are-entire	FunctionAnalytic(Power(x, 2), x)	True
-a-pole-anywhere-in-the-plane-disqualifies-it	FunctionAnalytic(Divide(1, x), x)	False
-sqrt-has-a-branch-point	FunctionAnalytic(Sqrt(x), x)	False
-sine-is-entire	FunctionAnalytic(Sin(x), x)	True
-functionanalytic-tan-x-x	FunctionAnalytic(Tan(x), x)	False
-list-functionanalytic-x-x-functionanalytic-x-pow	List(FunctionAnalytic(x, x), FunctionAnalytic(Add(Power(x, 2), 1), x), FunctionAnalytic(Add(Power(x, 3), Multiply(-1, Multiply(2, Power(x, 2))), Multiply(-1, Multiply(5, x)), 6), x))	List(True, True, True)
-list-functionanalytic-sin-x-x-functionanalytic	List(FunctionAnalytic(Sin(x), x), FunctionAnalytic(Cos(x), x), FunctionAnalytic(Exp(x), x))	List(True, True, True)

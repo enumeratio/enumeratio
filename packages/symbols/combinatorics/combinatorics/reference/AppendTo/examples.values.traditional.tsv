@@ -1,3 +1,0 @@
-id	in	out
-append-to-a-bound-list	[\operatorname{Assign}(\operatorname{appendToDemoList},[1,2,3]),\operatorname{AppendTo}(\operatorname{appendToDemoList},4)]	[[1,2,3],[1,2,3,4]]
-appendto-m-list-e-f		

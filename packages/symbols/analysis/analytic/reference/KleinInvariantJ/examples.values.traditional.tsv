@@ -1,8 +1,0 @@
-id	in	out
-j-i-1	N(\operatorname{KleinInvariantJ}(i))	1
-j-2i-66-3-1728-1331-8	N(\operatorname{KleinInvariantJ}(2i))	166.375
-j-1-2i-modular-invariance-with-2i	N(\operatorname{KleinInvariantJ}(1+2i))	166.375
-exact-at-the-elliptic-point-i	\operatorname{KleinInvariantJ}(i)	1
-tau-1e22-declines-rather-than-answering-wrong	N(\operatorname{KleinInvariantJ}(i+\pi10^{22}))	\operatorname{KleinInvariantJ}(3.141592653589793238462643\times10^{22}+i)
-tau-1e22-mpmath-true-value	N(\operatorname{KleinInvariantJ}(i+\pi10^{22}))	-0.000011229920025421934504-0.000039540519390658590150i
-heegner-number-163-j-bigl-frac-1-i-sqrt-163-2	N(\operatorname{KleinInvariantJ}(\frac{1}{2}(1+\sqrt{163}i)))	-151931373055998.97

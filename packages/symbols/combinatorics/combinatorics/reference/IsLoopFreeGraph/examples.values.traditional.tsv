@@ -1,3 +1,0 @@
-id	in	out
-no-self-loop	\operatorname{IsLoopFreeGraph}(\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2)]))	\top
-a-self-loop	\operatorname{IsLoopFreeGraph}(\operatorname{Graph}([\operatorname{UndirectedEdge}(1,1)]))	\bot

@@ -1,4 +1,0 @@
-id	in	out
-count-primecompositions-7	\operatorname{Count}(\operatorname{PrimeCompositions}(7))	6
-first-element-of-primecompositions-7	\operatorname{At}(\operatorname{PrimeCompositions}(7),1)	\operatorname{Composition}([2,2,3])
-every-element-of-primecompositions-7	\operatorname{Take}(\operatorname{PrimeCompositions}(7),6)	[\operatorname{Composition}([2,2,3]),\operatorname{Composition}([2,3,2]),\operatorname{Composition}([2,5]),\operatorname{Composition}([3,2,2]),\operatorname{Composition}([5,2]),\operatorname{Composition}([7])]

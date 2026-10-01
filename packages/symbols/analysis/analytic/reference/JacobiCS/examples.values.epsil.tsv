@@ -1,6 +1,0 @@
-id	in	out
-a-floating-point-argument-evaluates-directly-to	N(JacobiCS(1.1, 0.9))	0.722_588_061_871_721_1
-m-greater-than-1-via-the-reciprocal-modulus	N(JacobiCS(0.3, 1.5))	3.309_809_750_125_873_4
-u-0-is-a-pole-for-any-m	JacobiCS(0, m)	complexInfinity
-symbolic-arguments-are-left-unevaluated-rather	JacobiCS(u, m)	JacobiCS(u, m)
-m-1-at-a-shared-pole-of-sn-and-cn	N(JacobiCS(1 / 2 * imaginaryUnit * pi, 1))	-i

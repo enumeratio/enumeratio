@@ -1,4 +1,0 @@
-id	in	out
-1-to-2-then-2-to-3	QuiverCompose(LinearQuiver(4), QuiverPath(1, [0]), QuiverPath(2, [1]))	QuiverPath(1, [0, 1])
-the-ends-do-not-meet	QuiverCompose(LinearQuiver(4), QuiverPath(2, [1]), QuiverPath(1, [0]))	0
-a-trivial-path-is-a-local-identity	QuiverCompose(LinearQuiver(4), QuiverPath(1, []), QuiverPath(1, [0]))	QuiverPath(1, [0])

@@ -1,3 +1,0 @@
-id	in	out
-looks-up-an-existing-key	\operatorname{At}(\operatorname{Association}(\operatorname{Rule}(a,1),\operatorname{Rule}(b,2)),\operatorname{Key}(b))	2
-missing-key-answers-missing	\operatorname{At}(\operatorname{Association}(\operatorname{Rule}(a,1)),\operatorname{Key}(z))	\operatorname{Missing}

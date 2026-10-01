@@ -1,3 +1,0 @@
-id	in	out
-most-list-a-b-c-d	most([a, b, c, d])	[a, b, c]
-nestlist-most-list-a-b-c-d-exponentiale-3	NestList(most, [a, b, c, d, exponentialE], 3)	[[a, b, c, d, exponentialE], [a, b, c, d], [a, b, c], [a, b]]

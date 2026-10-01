@@ -1,3 +1,0 @@
-id	in	out
-edge-count-of-k4	\operatorname{EdgeCount}(\operatorname{CompleteGraph}(4))	6
-edge-count-of-a-triangle	\operatorname{EdgeCount}(\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,1)]))	3

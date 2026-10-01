@@ -1,4 +1,0 @@
-id	in	out
-count-fibonaccicompositions-6	Count(FibonacciCompositions(6))	13
-first-element-of-fibonaccicompositions-6	At(FibonacciCompositions(6), 1)	Composition(List(1, 1, 1, 1, 1, 1))
-every-element-of-fibonaccicompositions-6	Take(FibonacciCompositions(6), 13)	List(Composition(List(1, 1, 1, 1, 1, 1)), Composition(List(1, 1, 1, 1, 2)), Composition(List(1, 1, 1, 2, 1)), Composition(List(1, 1, 2, 1, 1)), Composition(List(1, 1, 2, 2)), Composition(List(1, 2, 1, 1, 1)), Composition(List(1, 2, 1, 2)), Composition(List(1, 2, 2, 1)), Composition(List(2, 1, 1, 1, 1)), Composition(List(2, 1, 1, 2)), Composition(List(2, 1, 2, 1)), Composition(List(2, 2, 1, 1)), Composition(List(2, 2, 2)))

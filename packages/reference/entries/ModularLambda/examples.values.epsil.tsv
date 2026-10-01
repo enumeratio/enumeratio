@@ -1,9 +1,0 @@
-id	in	out
-modularlambda-0-1i	N(ModularLambda(i))	0.5
-modularlambda-0-5-0-8660254037844386i	N(ModularLambda(-0.5 + 0.866_025_403_784_438_6i))	0.500_000_000_000_000_4 - 0.866_025_403_784_438_7i
-modularlambda-0-3-1-1i	N(ModularLambda(0.3 + 1.1i))	0.317_633_000_758_201_17 + 0.295_583_928_557_386_5i
-modularlambda-0-3-0-05i	N(ModularLambda(0.3 + 0.05i))	-3.965_485_727_741_77 - 6.452_991_541_554_556i
-modularlambda-1-3-0-05i	N(ModularLambda(1.3 + 0.05i))	0.925_102_574_522_605_4 + 0.097_334_375_646_195_51i
-modularlambda-2-7-1-4i	N(ModularLambda(2.7 + 1.4i))	-0.108_381_931_026_521_3 + 0.177_977_531_732_565_47i
-modularlambda-1-4-0-6i	N(ModularLambda(-1.4 + 0.6i))	2.280_306_310_755_823_7 + 1.533_054_618_426_143i
-tau-1e22-declines-rather-than-answering-wrong	N(ModularLambda(imaginaryUnit + pi * 10 ^ 22))	ModularLambda(3.141_592_653_589_793_238_462_643e22 + i)

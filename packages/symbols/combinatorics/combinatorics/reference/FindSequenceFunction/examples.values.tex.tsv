@@ -1,9 +1,0 @@
-id	in	out
-geometric	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 2, 4, 8, 16\bigr\rbrack, n)	2^{n}
-polynomial	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack, n)	n^2+2n+1
-catalan-numbers	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 5, 14, 42, 132\bigr\rbrack, n)	\mathrm{CatalanNumber}(n)
-factorial	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 6, 24, 120\bigr\rbrack, n)	n!
-findsequencefunction-list-1-1-2-3-5-8-13-n	\mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 3, 5, 8, 13\bigr\rbrack, n)	\frac{1}{10}((5-\sqrt{5})(\frac{1-5^{1/2}}{2})^{n})+\frac{1}{10}(\sqrt{5}(1+\sqrt{5})(\frac{1+\sqrt{5}}{2})^{n})
-findsequencefunction-list-neg-1-1-neg-1-1-neg-1	\mathrm{FindSequenceFunction}(\bigl\lbrack-1, 1, -1, 1, -1, 1\bigr\rbrack, n)	-(-1)^{n}
-findsequencefunction-list-2-5-10-17-26-37-50-n	\mathrm{FindSequenceFunction}(\bigl\lbrack2, 5, 10, 17, 26, 37, 50\bigr\rbrack, n)	n^2+2n+2
-findsequencefunction-list-3-7-13-21-31-43-57-n	\mathrm{FindSequenceFunction}(\bigl\lbrack3, 7, 13, 21, 31, 43, 57\bigr\rbrack, n)	n^2+3n+3

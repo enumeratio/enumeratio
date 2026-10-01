@@ -1,6 +1,0 @@
-id	in	out
-csgn-1-1	<Csgn>1</Csgn>	<ToExpression>1</ToExpression>
-csgn-neg-3-neg-1	<Csgn>-3</Csgn>	<ToExpression>-1</ToExpression>
-csgn-0-0	<Csgn>0</Csgn>	<ToExpression>0</ToExpression>
-csgn-i-1	<N><Csgn><Complex>0 1</Complex></Csgn></N>	<ToExpression>1</ToExpression>
-csgn-neg-i-neg-1	<N><Csgn><Complex>0 -1</Complex></Csgn></N>	<ToExpression>-1</ToExpression>

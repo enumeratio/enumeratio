@@ -1,3 +1,0 @@
-id	in	out
-makeboxes-rawboxes-rowbox-list-1-plus-2	MakeBoxes(RawBoxes(RowBox(["1", "+", "2"])))	RowBox(["1", "+", "2"])
-makeboxes-rawboxes-fractionbox-1-2-3		

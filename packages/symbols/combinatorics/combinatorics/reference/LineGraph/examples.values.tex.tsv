@@ -1,2 +1,0 @@
-id	in	out
-line-graph-of-a-triangle-is-a-triangle	\mathrm{EdgeCount}(\mathrm{LineGraph}(\mathrm{CompleteGraph}(3)))	3

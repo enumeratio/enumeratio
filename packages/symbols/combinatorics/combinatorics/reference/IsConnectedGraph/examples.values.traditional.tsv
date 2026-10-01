@@ -1,4 +1,0 @@
-id	in	out
-petersen-is-connected	\operatorname{IsConnectedGraph}(\operatorname{PetersenGraph}())	\top
-two-disjoint-edges-are-not-connected	\operatorname{IsConnectedGraph}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(3,4)]))	\bot
-weakly-connected-despite-two-scc	\operatorname{IsConnectedGraph}(\operatorname{Graph}([1,2,3],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,1),\operatorname{DirectedEdge}(2,3)]))	\top
