@@ -1,11 +1,11 @@
 // What a library's version number must say, computed from what changed
 // (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.3): a range (`^1.2.0`) trusts it
 // when it pulls in a newer version, so it's checked, not declared. Diffs the surfaces a
-// published library carries: its names, their signatures, their definitions (pins), their
-// examples, and its system range. Attributes, named slots and notation aren't published yet.
+// published library carries: its names, their signatures, parameter names and attributes, their
+// definitions (pins), their examples, its notation's triggers, and its system range.
 
 import { gt, gte, inc, satisfies, subset } from "semver";
-import type { LibraryIndex } from "./format.ts";
+import type { LibraryIndex, NotationSummary } from "./format.ts";
 
 export type Level = "none" | "patch" | "minor" | "major";
 
@@ -61,16 +61,45 @@ export function changesOf(previous: LibrarySnapshot, next: LibrarySnapshot, isSu
           what: `signature ${old.signature} to ${now.signature}${substitutable ? ", widened" : ""}`,
         });
     }
+    // A parameter's name is how markup and a named argument give it.
+    (old.params ?? []).forEach((name, i) => {
+      const renamed = now.params?.[i];
+      if (renamed !== undefined && renamed !== name)
+        changes.push({ symbol, level: "major", what: `parameter ${name} renamed ${renamed}` });
+    });
+    const [had, has] = [(old.attributes ?? []).toSorted().join(", "), (now.attributes ?? []).toSorted().join(", ")];
+    if (had !== has) changes.push({ symbol, level: "major", what: `attributes ${had || "none"} to ${has || "none"}` });
     if (old.pin !== now.pin) changes.push({ symbol, level: "patch", what: "definition changed" });
     if ((now.examples ?? 0) > (old.examples ?? 0)) changes.push({ symbol, level: "minor", what: "examples added" });
   }
   for (const symbol of Object.keys(after).toSorted())
     if (!(symbol in before)) changes.push({ symbol, level: "minor", what: "added" });
+  changes.push(...notationChanges(previous.index.notation, next.index.notation));
   const [was, is] = [previous.system ?? "*", next.system ?? "*"];
   if (was !== is) {
     const widened = subset(was, is);
     changes.push({ level: widened ? "minor" : "major", what: `system ${was} to ${is}${widened ? ", widened" : ""}` });
   }
+  return changes;
+}
+
+/**
+ * A trigger added is minor; one removed, or reading as another head, is major (a document stops
+ * parsing, or means something else); a TraditionalForm rule only changes printing, a patch.
+ */
+function notationChanges(before: NotationSummary | undefined, after: NotationSummary | undefined): Change[] {
+  const changes: Change[] = [];
+  const reads = (n: NotationSummary | undefined) => new Map((n?.latex ?? []).map((e) => [e.trigger, e.name ?? ""]));
+  const [old, now] = [reads(before), reads(after)];
+  for (const [trigger, name] of [...old].toSorted(([a], [b]) => (a < b ? -1 : 1))) {
+    const next = now.get(trigger);
+    if (next === undefined) changes.push({ level: "major", what: `notation ${trigger} removed` });
+    else if (next !== name) changes.push({ level: "major", what: `notation ${trigger} now reads as ${next}` });
+  }
+  for (const trigger of [...now.keys()].toSorted())
+    if (!old.has(trigger)) changes.push({ level: "minor", what: `notation ${trigger} added` });
+  const [had, has] = [(before?.traditional ?? []).join(", "), (after?.traditional ?? []).join(", ")];
+  if (had !== has) changes.push({ level: "patch", what: `TraditionalForm rules ${had || "none"} to ${has || "none"}` });
   return changes;
 }
 

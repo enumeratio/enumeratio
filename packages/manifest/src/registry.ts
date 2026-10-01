@@ -11,6 +11,7 @@
 // Its body is declared against those pins, not against whatever a namespace holds, so two
 // versions of one name can live in one engine.
 
+import { type DefinitionAttribute, declarationOf } from "./declaration.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import { type Library, type Lookup, packagesFor, packagesNeeded, plan } from "./resolve.ts";
 
@@ -23,12 +24,15 @@ export interface DeclaringEngine {
 
 /**
  * An Epsil definition: its signature, a `Function` its calls evaluate (array-form MathJSON),
- * and the pin of every non-system name its body uses, by qualified name.
+ * and the pin of every non-system name its body uses, by qualified name. Its options are the
+ * signature's optional named parameters, with their defaults here (`declaration.ts`).
  */
 export interface Definition {
   readonly signature: string;
   readonly body: unknown;
   readonly requires?: Readonly<Record<string, string>>;
+  readonly attributes?: readonly DefinitionAttribute[];
+  readonly defaults?: Readonly<Record<string, unknown>>;
   /** Its examples, for `definitionRegistry`; not part of the pin. */
   readonly examples?: readonly Example[];
 }
@@ -104,10 +108,21 @@ const canonicalJson = (value: unknown): string =>
       : v,
   );
 
-/** A definition's pin: `sha256-` and the hex digest of its signature, body and requires. */
+/**
+ * A definition's pin: `sha256-` and the hex digest of what it evaluates by: its signature, body,
+ * requires, and its attributes and defaults where it has them (so a definition without them pins
+ * as it always has).
+ */
 export async function pinOf(definition: Definition): Promise<string> {
-  const { signature, body, requires = {} } = definition;
-  const bytes = new TextEncoder().encode(canonicalJson({ signature, body, requires }));
+  const { signature, body, requires = {}, attributes, defaults } = definition;
+  const content = {
+    signature,
+    body,
+    requires,
+    ...(attributes?.length ? { attributes: attributes.toSorted() } : {}),
+    ...(defaults !== undefined && Object.keys(defaults).length > 0 ? { defaults } : {}),
+  };
+  const bytes = new TextEncoder().encode(canonicalJson(content));
   const digest = new Uint8Array(await globalThis.crypto.subtle.digest("SHA-256", bytes));
   return `sha256-${Array.from(digest, (b) => b.toString(16).padStart(2, "0")).join("")}`;
 }
@@ -321,7 +336,12 @@ export function withHeads(json: unknown, heads: ReadonlyMap<string, string>): un
 }
 
 export interface Ensured {
-  /** The expression to evaluate: the one given, with the search path's bare heads qualified. */
+  /**
+   * The expression to evaluate: the one given, with the search path's bare heads qualified, and
+   * a call by namespace lowered to its head where the namespace would lose something: a
+   * definition with attributes, or a call by named argument. compute-engine evaluates a field
+   * callee's arguments, and sees no parameter names on it.
+   */
   readonly expression: unknown;
   /** Libraries and definitions newly declared, in order. */
   readonly declared: readonly string[];
@@ -371,7 +391,17 @@ interface EngineState {
   /** Heads declared from definitions, by pin: `false` while its dependencies are resolving. */
   readonly definitions: Map<string, boolean>;
   readonly namespaces: Map<string, Map<string, string>>;
+  /** Heads whose definitions carry attributes: called by head, not through their namespace. */
+  readonly attributed: Set<string>;
 }
+
+/** Whether `json` calls `name` (`MemberCall(N, "m", …)`) with a named argument. */
+const callsByName = (json: unknown, name: string): boolean =>
+  Array.isArray(json) &&
+  ((json[0] === "MemberCall" &&
+    qualifiedNameAt(json) === name &&
+    json.slice(3).some((a) => Array.isArray(a) && a[0] === "NamedArgument")) ||
+    json.some((item) => callsByName(item, name)));
 
 /**
  * Resolve every name `json` uses and declare what resolves. A definition's body is declared
@@ -421,6 +451,7 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         libraries: new Set(),
         definitions: new Map(),
         namespaces: new Map(),
+        attributed: new Set(),
       };
       states.set(ce, state);
       const declared: string[] = [];
@@ -456,7 +487,7 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         name: string,
         found: Resolution<Engine> & { definition: Definition; pin: string },
       ): Promise<boolean> => {
-        const { signature, body, requires = {} } = found.definition;
+        const { body, requires = {} } = found.definition;
         const heads = new Map<string, string>();
         for (const used of qualifiedNamesOf(body)) {
           const pin = requires[used];
@@ -491,7 +522,8 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
             }
           }
         }
-        ce.declare(found.head, { signature, evaluate: withHeads(body, heads) } as never);
+        ce.declare(found.head, declarationOf(found.definition, withHeads(body, heads)) as never);
+        if (found.definition.attributes?.length) state.attributed.add(found.head);
         state.definitions.set(found.pin, true);
         declared.push(found.head);
         return true;
@@ -518,7 +550,14 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
         const found = await registry.resolve(name);
         if (found !== undefined && "libraries" in found) await declareLibraries(found.libraries);
       }
-      return { expression: json, declared, unresolved, pins, errors, failed };
+      const lowered = new Map<string, string>();
+      for (const name of qualifiedNamesOf(json)) {
+        const dot = name.lastIndexOf(".");
+        const head = state.namespaces.get(name.slice(0, dot))?.get(name.slice(dot + 1));
+        if (head !== undefined && (state.attributed.has(head) || callsByName(json, name))) lowered.set(name, head);
+      }
+      const expression = lowered.size === 0 ? json : withHeads(json, lowered);
+      return { expression, declared, unresolved, pins, errors, failed };
     },
   };
 }

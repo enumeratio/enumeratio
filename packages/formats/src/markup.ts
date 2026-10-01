@@ -42,7 +42,7 @@ export interface ReadNode {
 /** An Epsil parser, `parseExpression`'s shape: injected so this module stays engine-free. */
 export type ParseText = (epsil: string) => { json: unknown; errors: readonly unknown[] };
 
-/** A head's parameter names, in order, where its signature names them. */
+/** A head's parameter names, in order, where its signature names them; a dotted tag asks by its dotted name. */
 export type ParamsOf = (head: string) => readonly string[] | undefined;
 
 export interface ReadOptions {
@@ -270,18 +270,13 @@ function read(node: MarkupNode, options: ReadOptions, errors: string[]): Json {
     if (args.length !== 1 || slots.length > 0) errors.push("markup: <ToExpression> holds one expression");
     return args[0];
   }
-  if (parts.length > 1) {
-    const receiver = receiverOf(parts.slice(0, -1));
-    const member = `'${parts.at(-1)!}'`;
-    if (args.length === 0 && slots.length === 0) return ["Field", receiver, member];
-    return ["MemberCall", receiver, member, ...args, ...slots];
-  }
   if (tag === "Apply" && isSymbol(args[0])) return [args[0], ...args.slice(1), ...slots];
-  if (args.length === 0 && slots.length === 0) return tag;
+  if (args.length === 0 && slots.length === 0)
+    return parts.length > 1 ? ["Field", receiverOf(parts.slice(0, -1)), `'${parts.at(-1)!}'`] : tag;
   const params = options.paramsOf?.(tag);
-  const ops = params === undefined ? undefined : placed(tag, params, args, named, errors);
-  if (ops !== undefined) return [tag, ...ops];
-  return [tag, ...args, ...slots];
+  const ops = (params === undefined ? undefined : placed(tag, params, args, named, errors)) ?? [...args, ...slots];
+  if (parts.length > 1) return ["MemberCall", receiverOf(parts.slice(0, -1)), `'${parts.at(-1)!}'`, ...ops];
+  return [tag, ...ops];
 }
 
 // --- printing ---------------------------------------------------------------------------

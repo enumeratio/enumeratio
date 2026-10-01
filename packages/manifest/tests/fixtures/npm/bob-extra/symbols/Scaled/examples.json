@@ -1,0 +1,12 @@
+[
+  {
+    "id": "scaled-default",
+    "expr": ["MemberCall", "bob", "'Scaled'", 3],
+    "expected": 6
+  },
+  {
+    "id": "scaled-factor",
+    "expr": ["MemberCall", "bob", "'Scaled'", 3, 5],
+    "expected": 15
+  }
+]

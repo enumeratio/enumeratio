@@ -1,0 +1,5 @@
+{
+  "signature": "(x: number, factor: number?) -> number",
+  "body": ["Function", ["Multiply", "factor", "x"], "x", "factor"],
+  "defaults": { "factor": 2 }
+}
