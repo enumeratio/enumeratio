@@ -18,7 +18,10 @@ export default defineConfig({
   // on purpose so a slow CI runner doesn't fail the smoke test over compile time.
   timeout: 180_000,
   expect: { timeout: 120_000 },
-  fullyParallel: false,
+  // Test-level, so the nightly job can `--shard` one spec file across runners; one worker
+  // each, as one dev server's cold transforms don't like company.
+  fullyParallel: true,
+  workers: 1,
   retries: process.env.CI ? 1 : 0,
   reporter: "list",
   use: {
