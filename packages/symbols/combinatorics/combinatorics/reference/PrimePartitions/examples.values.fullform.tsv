@@ -1,4 +1,4 @@
-id	in	back
-count-primepartition-12	Length[PrimePartitions[12]]	[Length, [PrimePartitions, 12]]
-first-element-of-primepartition-12	Part[PrimePartitions[12], 1]	
-every-element-of-primepartition-12	Take[PrimePartitions[12], 7]	
+id	in	out
+count-primepartition-12	Count(PrimePartitions(12))	7
+first-element-of-primepartition-12	At(PrimePartitions(12), 1)	IntegerPartition(List(7, 5))
+every-element-of-primepartition-12	Take(PrimePartitions(12), 7)	List(IntegerPartition(List(7, 5)), IntegerPartition(List(7, 3, 2)), IntegerPartition(List(5, 5, 2)), IntegerPartition(List(5, 3, 2, 2)), IntegerPartition(List(3, 3, 3, 3)), IntegerPartition(List(3, 3, 2, 2, 2)), IntegerPartition(List(2, 2, 2, 2, 2, 2)))

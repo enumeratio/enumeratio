@@ -1,6 +1,6 @@
-id	in	back
-filter-list-1-neg-1-2-neg-2-3-function-0-lt-1-1	Select[List[1, -1, 2, -2, 3], Function[Less[0, Slot[1]]]]	[Filter, [List, 1, -1, 2, -2, 3], [Function, [Less, 0, _1]]]
-array-function-1-pow-2-plus-1-1-10	Array[Function[Plus[Power[Slot[1], 2], 1]], 10]	[Array, [Function, [Add, [Power, _1, 2], 1]], 10]
-sort-list-list-a-2-list-c-1-list-d-3-function-1	Sort[List[List[a, 2], List[c, 1], List[d, 3]], Function[Less[Part[Slot[1], 2], Part[Slot[2], 2]]]]	[Sort, [List, [List, a, 2], [List, c, 1], [List, d, 3]], [Function, [Less, [At, _1, 2], [At, _2, 2]]]]
-map-function-17-list-1-2-3	Map[Function[17], List[1, 2, 3]]	[Map, [Function, 17], [List, 1, 2, 3]]
-array-function-1-pow-2-1-10	Array[Function[Power[Slot[1], 2]], 10]	[Array, [Function, [Power, _1, 2]], 10]
+id	in	out
+filter-list-1-neg-1-2-neg-2-3-function-0-lt-1-1	Filter(List(1, -1, 2, -2, 3), Function(Block(Less(0, _1)), _1))	List(1, 2, 3)
+array-function-1-pow-2-plus-1-1-10	Array(Function(Block(Add(Power(_1, 2), 1)), _1), 10)	List(2, 5, 10, 17, 26, 37, 50, 65, 82, 101)
+sort-list-list-a-2-list-c-1-list-d-3-function-1	Sort(List(List(a, 2), List(c, 1), List(d, 3)), Function(Block(Less(At(_1, 2), At(_2, 2))), _1, _2))	List(List(c, 1), List(a, 2), List(d, 3))
+map-function-17-list-1-2-3	Map(Function(Block(17)), List(1, 2, 3))	List(17, 17, 17)
+array-function-1-pow-2-1-10	Array(Function(Block(Power(_1, 2)), _1), 10)	List(1, 4, 9, 16, 25, 36, 49, 64, 81, 100)

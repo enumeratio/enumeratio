@@ -1,10 +1,10 @@
-id	in
-transpose-list-list-a-x-list-b-y-list-c-z	Transpose[List[List[a, x], List[b, y], List[c, z]]]
-transpose-m	
-transpose-s	
-chop-dot-u-transpose-u	Chop[Dot[u, Transpose[u]]]
-chop-dot-v-transpose-v	Chop[Dot[v, Transpose[v]]]
-s-eq-transpose-s	
-transpose-s-eq-s	
-conjugate-transpose-m	
-shape-transpose-a-perm	
+id	in	out
+transpose-list-list-a-x-list-b-y-list-c-z	Transpose(List(List(a, x), List(b, y), List(c, z)))	List(List(a, b, c), List(x, y, z))
+transpose-m		
+transpose-s		
+chop-dot-u-transpose-u	Chop(Dot(u, Transpose(u)))	Chop(MatrixMultiply(u, Transpose(u)))
+chop-dot-v-transpose-v	Chop(Dot(v, Transpose(v)))	Chop(MatrixMultiply(v, Transpose(v)))
+s-eq-transpose-s		
+transpose-s-eq-s		
+conjugate-transpose-m		
+shape-transpose-a-perm		

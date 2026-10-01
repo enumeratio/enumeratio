@@ -1,4 +1,4 @@
-id	in
-chi-pdf-exact	PDF[ChiDistribution[3], 1]
-chi-cdf-exact	CDF[ChiDistribution[3], 1]
-chi-mean-exact	Mean[ChiDistribution[3]]
+id	in	out
+chi-pdf-exact	PDF(ChiDistribution(3), 1)	Divide(Sqrt(2), Multiply(2, Gamma(Rational(3, 2)), Sqrt(ExponentialE)))
+chi-cdf-exact	CDF(ChiDistribution(3), 1)	Add(1, Negate(GammaRegularized(Rational(3, 2), Rational(1, 2))))
+chi-mean-exact	Mean(ChiDistribution(3))	Divide(Multiply(Sqrt(2), Gamma(2)), Gamma(Rational(3, 2)))

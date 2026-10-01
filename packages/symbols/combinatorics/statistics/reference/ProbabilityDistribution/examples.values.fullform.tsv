@@ -1,9 +1,9 @@
-id	in
-probability-distribution-pdf-in-range	PDF[ProbabilityDistribution[Times[2, x], List[x, 0, 1]], Rational[1, 2]]
-probability-distribution-pdf-outside	PDF[ProbabilityDistribution[Times[2, x], List[x, 0, 1]], 2]
-probability-distribution-mean	Mean[ProbabilityDistribution[Times[2, x], List[x, 0, 1]]]
-probability-distribution-variance	Variance[ProbabilityDistribution[Times[2, x], List[x, 0, 1]]]
-probability-distribution-cdf	CDF[ProbabilityDistribution[Times[2, x], List[x, 0, 1]], Rational[1, 2]]
-probability-distribution-discrete-pdf	PDF[ProbabilityDistribution[Rational[1, 4], List[x, 1, 4, 1]], 2]
-probability-distribution-discrete-mean	Mean[ProbabilityDistribution[Rational[1, 4], List[x, 1, 4, 1]]]
-probability-distribution-stays-unevaluated	Mean[ProbabilityDistribution[Sin[Power[x, x]], List[x, 0, 1]]]
+id	in	out
+probability-distribution-pdf-in-range	PDF(ProbabilityDistribution(Multiply(2, x), List(x, 0, 1)), Rational(1, 2))	1
+probability-distribution-pdf-outside	PDF(ProbabilityDistribution(Multiply(2, x), List(x, 0, 1)), 2)	0
+probability-distribution-mean	Mean(ProbabilityDistribution(Multiply(2, x), List(x, 0, 1)))	Rational(2, 3)
+probability-distribution-variance	Variance(ProbabilityDistribution(Multiply(2, x), List(x, 0, 1)))	Rational(1, 18)
+probability-distribution-cdf	CDF(ProbabilityDistribution(Multiply(2, x), List(x, 0, 1)), Rational(1, 2))	Rational(1, 4)
+probability-distribution-discrete-pdf	PDF(ProbabilityDistribution(Rational(1, 4), List(x, 1, 4, 1)), 2)	Rational(1, 4)
+probability-distribution-discrete-mean	Mean(ProbabilityDistribution(Rational(1, 4), List(x, 1, 4, 1)))	Rational(5, 2)
+probability-distribution-stays-unevaluated	Mean(ProbabilityDistribution(Sin(Power(x, x)), List(x, 0, 1)))	Mean(ProbabilityDistribution(Sin(Power(x, x)), List(x, 0, 1)))

@@ -1,13 +1,13 @@
-id	in
-integerdigits-571-mixedradixnumerals-list-12-9-6	IntegerDigits[571, MixedRadix[List[12, 9, 6]]]
-integerlength-1-024-mixedradixnumerals-list-6-4	IntegerLength[1024, MixedRadix[List[6, 4, 2]]]
-integerdigits-534-mixedradixnumerals-list-15-10	IntegerDigits[534, MixedRadix[List[15, 10, 5]]]
-fromdigits-list-10-6-4-mixedradixnumerals-list	FromDigits[List[10, 6, 4], MixedRadix[List[15, 10, 5]]]
-integerreverse-1-024-mixedradixnumerals-list-6-4	IntegerReverse[1024, MixedRadix[List[6, 4, 2]]]
-integerdigits-1-000-000-mixedradixnumerals-list	IntegerDigits[1000000, MixedRadix[List[19, 17, 13, 11, 7, 5, 3, 2]]]
-integerdigits-437-mixedradixnumerals-list-6-5-4	IntegerDigits[437, MixedRadix[List[6, 5, 4, 3, 2, 1]]]
-integerdigits-100-000-mixedradixnumerals-list-10	IntegerDigits[100000, MixedRadix[List[10, 9, 8, 7]]]
-integerdigits-4-237-mixedradixnumerals-list-10	IntegerDigits[4237, MixedRadix[List[10, 10, 10, 10]]]
-integerdigits-2-135-mixedradixnumerals-list-10-8	IntegerDigits[2135, MixedRadix[List[10, 8, 6, 4, 2]]]
-integerdigits-10-000-mixedradixnumerals-list-24	IntegerDigits[10000, MixedRadix[List[24, 60, 60]]]
-fromdigits-list-2-46-40-mixedradixnumerals-list	FromDigits[List[2, 46, 40], MixedRadix[List[24, 60, 60]]]
+id	in	out
+integerdigits-571-mixedradixnumerals-list-12-9-6	IntegerDigits(571, MixedRadixNumerals(List(12, 9, 6)))	List(10, 5, 1)
+integerlength-1-024-mixedradixnumerals-list-6-4	IntegerLength(1024, MixedRadixNumerals(List(6, 4, 2)))	4
+integerdigits-534-mixedradixnumerals-list-15-10	IntegerDigits(534, MixedRadixNumerals(List(15, 10, 5)))	List(10, 6, 4)
+fromdigits-list-10-6-4-mixedradixnumerals-list	FromDigits(List(10, 6, 4), MixedRadixNumerals(List(15, 10, 5)))	534
+integerreverse-1-024-mixedradixnumerals-list-6-4	IntegerReverse(1024, MixedRadixNumerals(List(6, 4, 2)))	25
+integerdigits-1-000-000-mixedradixnumerals-list	IntegerDigits(1000000, MixedRadixNumerals(List(19, 17, 13, 11, 7, 5, 3, 2)))	List(1, 16, 3, 9, 6, 1, 2, 0)
+integerdigits-437-mixedradixnumerals-list-6-5-4	IntegerDigits(437, MixedRadixNumerals(List(6, 5, 4, 3, 2, 1)))	List(3, 3, 0, 2, 1, 0)
+integerdigits-100-000-mixedradixnumerals-list-10	IntegerDigits(100000, MixedRadixNumerals(List(10, 9, 8, 7)))	List(19, 8, 3, 5, 5)
+integerdigits-4-237-mixedradixnumerals-list-10	IntegerDigits(4237, MixedRadixNumerals(List(10, 10, 10, 10)))	List(4, 2, 3, 7)
+integerdigits-2-135-mixedradixnumerals-list-10-8	IntegerDigits(2135, MixedRadixNumerals(List(10, 8, 6, 4, 2)))	List(5, 4, 2, 3, 1)
+integerdigits-10-000-mixedradixnumerals-list-24	IntegerDigits(10000, MixedRadixNumerals(List(24, 60, 60)))	List(2, 46, 40)
+fromdigits-list-2-46-40-mixedradixnumerals-list	FromDigits(List(2, 46, 40), MixedRadixNumerals(List(24, 60, 60)))	10000

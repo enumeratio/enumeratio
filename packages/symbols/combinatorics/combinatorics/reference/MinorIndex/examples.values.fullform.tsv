@@ -1,8 +1,8 @@
-id	in
-the-lone-ascent-at-position-2	MinorIndex[List[3, 1, 2]]
-ascents-at-both-positions-1-2	MinorIndex[List[1, 2, 3]]
-no-ascents	MinorIndex[List[3, 2, 1]]
-the-one-line-word-312	MinorIndex[Permutation[List[3, 1, 2]]]
-the-one-line-word-312-as-a-plain-list	MinorIndex[List[3, 1, 2]]
-the-one-line-word-2413	MinorIndex[Permutation[List[2, 4, 1, 3]]]
-major-and-minor-index-split-binom-n-2	Equal[Plus[MajorIndex[List[3, 1, 2]], MinorIndex[List[3, 1, 2]]], Binomial[3, 2]]
+id	in	out
+the-lone-ascent-at-position-2	MinorIndex(List(3, 1, 2))	2
+ascents-at-both-positions-1-2	MinorIndex(List(1, 2, 3))	3
+no-ascents	MinorIndex(List(3, 2, 1))	0
+the-one-line-word-312	MinorIndex(Permutation(List(3, 1, 2)))	2
+the-one-line-word-312-as-a-plain-list	MinorIndex(List(3, 1, 2))	2
+the-one-line-word-2413	MinorIndex(Permutation(List(2, 4, 1, 3)))	4
+major-and-minor-index-split-binom-n-2	Equal(Add(MajorIndex(List(3, 1, 2)), MinorIndex(List(3, 1, 2))), Binomial(3, 2))	True

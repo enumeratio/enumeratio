@@ -1,4 +1,4 @@
-id	in
-the-first-five-abundant-numbers	Take[AbundantNumbers, 5]
-12-is-abundant	Element[12, AbundantNumbers]
-28-is-perfect-not-abundant	Element[28, AbundantNumbers]
+id	in	out
+the-first-five-abundant-numbers	Take(AbundantNumbers, 5)	List(12, 18, 20, 24, 30)
+12-is-abundant	Element(12, AbundantNumbers)	True
+28-is-perfect-not-abundant	Element(28, AbundantNumbers)	False

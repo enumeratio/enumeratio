@@ -1,2 +1,2 @@
-id	in
-from-its-growth-string	SetPartition[RestrictedGrowthString[List[0, 1, 0, 2]]]
+id	in	out
+from-its-growth-string	SetPartition(RestrictedGrowthString(List(0, 1, 0, 2)))	SetPartition(List(List(1, 3), List(2), List(4)))

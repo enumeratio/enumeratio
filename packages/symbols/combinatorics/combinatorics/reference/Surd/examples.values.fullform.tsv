@@ -1,3 +1,3 @@
-id	in
-negative-cube-root	Surd[-8, 3]
-nonnegative-base	Surd[8, 3]
+id	in	out
+negative-cube-root	Surd(-8, 3)	-2
+nonnegative-base	Surd(8, 3)	2

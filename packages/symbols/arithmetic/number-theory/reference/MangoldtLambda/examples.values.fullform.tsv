@@ -1,30 +1,30 @@
-id	in	back
-8-2-3	MangoldtLambda[8]	
-6-is-not-a-prime-power	MangoldtLambda[6]	
-mangoldtlambda-7	MangoldtLambda[7]	
-mangoldtlambda-9	MangoldtLambda[9]	
-mangoldtlambda-25	MangoldtLambda[25]	
-numerically-ln-3	N[MangoldtLambda[9]]	
-listable	MangoldtLambda[List[2, 4, 6, 25]]	
-n-of-a-zero-result-is-still-0	N[MangoldtLambda[6]]	
-mangoldtlambda-125	MangoldtLambda[125]	
-mangoldtlambda-7-pow-300	MangoldtLambda[Power[7, 300]]	
-mangoldtlambda-list-2-6-9-8-15	MangoldtLambda[List[2, 6, 9, 8, 15]]	
-mangoldtlambda-81-factorial-eq-0	Unequal[MangoldtLambda[81], 0]	
-list-mangoldtlambda-6-mangoldtlambda-2-plus	List[MangoldtLambda[6], Plus[MangoldtLambda[2], MangoldtLambda[3]]]	
-list-mangoldtlambda-6-mangoldtlambda-2-times	List[MangoldtLambda[6], Times[MangoldtLambda[2], MangoldtLambda[3]]]	
-mangoldtlambda-5	MangoldtLambda[5]	
-mangoldtlambda-2	MangoldtLambda[2]	
-mangoldtlambda-3	MangoldtLambda[3]	
-mangoldtlambda-4	MangoldtLambda[4]	
-mangoldtlambda-10	MangoldtLambda[10]	
-mangoldtlambda-11	MangoldtLambda[11]	
-mangoldtlambda-12	MangoldtLambda[12]	
-simplify-sum-mangoldtlambda-n-n-20	Simplify[Sum[MangoldtLambda[n], List[n, 20]]]	
-mangoldtlambda-13	MangoldtLambda[13]	
-mangoldtlambda-14	MangoldtLambda[14]	
-mangoldtlambda-15	MangoldtLambda[15]	
-mangoldtlambda-16	MangoldtLambda[16]	
-mangoldtlambda-17	MangoldtLambda[17]	
-ln-16-eq-divisorsum-16-function-mangoldtlambda-1	Equal[Log[16], DivisorSum[16, Function[MangoldtLambda[Slot[1]]]]]	[Equal, [Ln, 16], [DivisorSum, 16, [Function, [MangoldtLambda, _1]]]]
-lambda-1-0	MangoldtLambda[1]	
+id	in	out
+8-2-3	MangoldtLambda(8)	Ln(2)
+6-is-not-a-prime-power	MangoldtLambda(6)	0
+mangoldtlambda-7	MangoldtLambda(7)	Ln(7)
+mangoldtlambda-9	MangoldtLambda(9)	Ln(3)
+mangoldtlambda-25	MangoldtLambda(25)	Ln(5)
+numerically-ln-3	N(MangoldtLambda(9))	1.0986122886681098
+listable	MangoldtLambda(List(2, 4, 6, 25))	List(Ln(2), Ln(2), 0, Ln(5))
+n-of-a-zero-result-is-still-0	N(MangoldtLambda(6))	0
+mangoldtlambda-125	MangoldtLambda(125)	Ln(5)
+mangoldtlambda-7-pow-300	MangoldtLambda(Power(7, 300))	Ln(7)
+mangoldtlambda-list-2-6-9-8-15	MangoldtLambda(List(2, 6, 9, 8, 15))	List(Ln(2), 0, Ln(3), Ln(2), 0)
+mangoldtlambda-81-factorial-eq-0	NotEqual(MangoldtLambda(81), 0)	True
+list-mangoldtlambda-6-mangoldtlambda-2-plus	List(MangoldtLambda(6), Add(MangoldtLambda(2), MangoldtLambda(3)))	List(0, Add(Ln(2), Ln(3)))
+list-mangoldtlambda-6-mangoldtlambda-2-times	List(MangoldtLambda(6), Multiply(MangoldtLambda(2), MangoldtLambda(3)))	List(0, Multiply(Ln(2), Ln(3)))
+mangoldtlambda-5	MangoldtLambda(5)	Ln(5)
+mangoldtlambda-2	MangoldtLambda(2)	Ln(2)
+mangoldtlambda-3	MangoldtLambda(3)	Ln(3)
+mangoldtlambda-4	MangoldtLambda(4)	Ln(2)
+mangoldtlambda-10	MangoldtLambda(10)	0
+mangoldtlambda-11	MangoldtLambda(11)	Ln(11)
+mangoldtlambda-12	MangoldtLambda(12)	0
+simplify-sum-mangoldtlambda-n-n-20	Simplify(Sum(MangoldtLambda(n), Tuple(n, 20)))	Add(Multiply(2, Ln(3)), Multiply(4, Ln(2)), Ln(1616615))
+mangoldtlambda-13	MangoldtLambda(13)	Ln(13)
+mangoldtlambda-14	MangoldtLambda(14)	0
+mangoldtlambda-15	MangoldtLambda(15)	0
+mangoldtlambda-16	MangoldtLambda(16)	Ln(2)
+mangoldtlambda-17	MangoldtLambda(17)	Ln(17)
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	Equal(Ln(16), DivisorSum(16, Function(Block(MangoldtLambda(_1)), _1)))	True
+lambda-1-0	MangoldtLambda(1)	0

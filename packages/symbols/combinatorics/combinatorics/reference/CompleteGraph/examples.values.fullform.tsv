@@ -1,9 +1,9 @@
-id	in	back
-k4	EdgeCount[CompleteGraph[4]]	
-completegraph-4	CompleteGraph[4]	
-completegraph-5	CompleteGraph[5]	
-map-function-vertexeccentricity-completegraph-5	Map[Function[VertexEccentricity[CompleteGraph[5], Slot[1]]], VertexList[CompleteGraph[5]]]	[Map, [Function, [VertexEccentricity, [CompleteGraph, 5], _1]], [VertexList, [CompleteGraph, 5]]]
-completegraph-6	CompleteGraph[6]	
-list-completegraph-3-cyclegraph-3	List[CompleteGraph[3], CycleGraph[3]]	
-list-completegraph-4-wheelgraph-4	List[CompleteGraph[4], WheelGraph[4]]	
-list-completegraph-6-linegraph-stargraph-7	List[CompleteGraph[6], LineGraph[StarGraph[7]]]	
+id	in	out
+k4	EdgeCount(CompleteGraph(4))	6
+completegraph-4	CompleteGraph(4)	Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(2, 3), UndirectedEdge(2, 4), UndirectedEdge(3, 4)))
+completegraph-5	CompleteGraph(5)	Graph(List(1, 2, 3, 4, 5), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(1, 5), UndirectedEdge(2, 3), UndirectedEdge(2, 4), UndirectedEdge(2, 5), UndirectedEdge(3, 4), UndirectedEdge(3, 5), UndirectedEdge(4, 5)))
+map-function-vertexeccentricity-completegraph-5	Map(Function(Block(VertexEccentricity(CompleteGraph(5), _1)), _1), VertexList(CompleteGraph(5)))	List(1, 1, 1, 1, 1)
+completegraph-6	CompleteGraph(6)	Graph(List(1, 2, 3, 4, 5, 6), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(1, 5), UndirectedEdge(1, 6), UndirectedEdge(2, 3), UndirectedEdge(2, 4), UndirectedEdge(2, 5), UndirectedEdge(2, 6), UndirectedEdge(3, 4), UndirectedEdge(3, 5), UndirectedEdge(3, 6), UndirectedEdge(4, 5), UndirectedEdge(4, 6), UndirectedEdge(5, 6)))
+list-completegraph-3-cyclegraph-3	List(CompleteGraph(3), CycleGraph(3))	List(Graph(List(1, 2, 3), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(2, 3))), Graph(List(1, 2, 3), List(UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 1))))
+list-completegraph-4-wheelgraph-4	List(CompleteGraph(4), WheelGraph(4))	List(Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(2, 3), UndirectedEdge(2, 4), UndirectedEdge(3, 4))), Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(2, 3), UndirectedEdge(3, 4), UndirectedEdge(4, 2))))
+list-completegraph-6-linegraph-stargraph-7	List(CompleteGraph(6), LineGraph(StarGraph(7)))	List(Graph(List(1, 2, 3, 4, 5, 6), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(1, 5), UndirectedEdge(1, 6), UndirectedEdge(2, 3), UndirectedEdge(2, 4), UndirectedEdge(2, 5), UndirectedEdge(2, 6), UndirectedEdge(3, 4), UndirectedEdge(3, 5), UndirectedEdge(3, 6), UndirectedEdge(4, 5), UndirectedEdge(4, 6), UndirectedEdge(5, 6))), Graph(List(1, 2, 3, 4, 5, 6), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 4), UndirectedEdge(1, 5), UndirectedEdge(1, 6), UndirectedEdge(2, 3), UndirectedEdge(2, 4), UndirectedEdge(2, 5), UndirectedEdge(2, 6), UndirectedEdge(3, 4), UndirectedEdge(3, 5), UndirectedEdge(3, 6), UndirectedEdge(4, 5), UndirectedEdge(4, 6), UndirectedEdge(5, 6))))

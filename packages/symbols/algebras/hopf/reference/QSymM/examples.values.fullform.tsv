@@ -1,5 +1,5 @@
-id	in
-the-quasi-shuffle-overlap-term-included	NonCommutativeMultiply[QSymM[List[1]], QSymM[List[1]]]
-two-interleavings-and-one-overlap	NonCommutativeMultiply[QSymM[List[1]], QSymM[List[2]]]
-nsym-just-concatenates	NonCommutativeMultiply[NSymH[List[2]], NSymH[List[1, 3]]]
-2-4-compositions-of-5	AlgebraDimension[QSymAlgebra[5]]
+id	in	out
+the-quasi-shuffle-overlap-term-included	NonCommutativeMultiply(QSymM(List(1)), QSymM(List(1)))	Add(Multiply(2, QSymM(List(1, 1))), QSymM(List(2)))
+two-interleavings-and-one-overlap	NonCommutativeMultiply(QSymM(List(1)), QSymM(List(2)))	Add(QSymM(List(3)), QSymM(List(1, 2)), QSymM(List(2, 1)))
+nsym-just-concatenates	NonCommutativeMultiply(NSymH(List(2)), NSymH(List(1, 3)))	NSymH(List(2, 1, 3))
+2-4-compositions-of-5	AlgebraDimension(QSymAlgebra(5))	16

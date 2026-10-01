@@ -1,4 +1,4 @@
-id	in
-partial-sums-along-the-chain	PosetSumDown[Chain[4], List[1, 2, 3, 4]]
-and-back-again	MoebiusInvert[Chain[4], List[1, 3, 6, 10]]
-inclusion-exclusion-round-tripped	MoebiusInvert[BooleanLattice[2], PosetSumDown[BooleanLattice[2], List[5, 1, 2, 7]]]
+id	in	out
+partial-sums-along-the-chain	PosetSumDown(Chain(4), List(1, 2, 3, 4))	List(1, 3, 6, 10)
+and-back-again	MoebiusInvert(Chain(4), List(1, 3, 6, 10))	List(1, 2, 3, 4)
+inclusion-exclusion-round-tripped	MoebiusInvert(BooleanLattice(2), PosetSumDown(BooleanLattice(2), List(5, 1, 2, 7)))	List(5, 1, 2, 7)

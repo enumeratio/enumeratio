@@ -1,7 +1,7 @@
-id	in
-sine-s-period-is-2-pi	FunctionPeriod[Sin[x], x]
-tangent-s-period-is-pi	FunctionPeriod[Tan[x], x]
-scaling-the-argument-scales-the-period	FunctionPeriod[Sin[Times[2, x]], x]
-exp-is-not-periodic	FunctionPeriod[Exp[x], x]
-a-polynomial-is-not-periodic	FunctionPeriod[Power[x, 2], x]
-assuming-a-gt-0-functionperiod-sin-a-times-x-x	Assuming[Greater[a, 0], FunctionPeriod[Sin[Times[a, x]], x]]
+id	in	out
+sine-s-period-is-2-pi	FunctionPeriod(Sin(x), x)	Multiply(2, Pi)
+tangent-s-period-is-pi	FunctionPeriod(Tan(x), x)	Pi
+scaling-the-argument-scales-the-period	FunctionPeriod(Sin(Multiply(2, x)), x)	Pi
+exp-is-not-periodic	FunctionPeriod(Exp(x), x)	0
+a-polynomial-is-not-periodic	FunctionPeriod(Power(x, 2), x)	0
+assuming-a-gt-0-functionperiod-sin-a-times-x-x	Assuming(Greater(a, 0), FunctionPeriod(Sin(Multiply(a, x)), x))	FunctionPeriod(Sin(Multiply(a, x)), x)

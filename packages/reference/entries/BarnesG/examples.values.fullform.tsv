@@ -1,30 +1,30 @@
-id	in
-g-5-0-1-2-3-12	BarnesG[5]
-g-7-34560	BarnesG[7]
-the-superfactorials-threaded-over-a-list	BarnesG[List[1, 2, 3, 4, 5, 6]]
-a-floating-point-argument-evaluates-numerically	BarnesG[2.5]
-g-10-prod-k-0-8-k-exact	BarnesG[10]
-g-3-0-1-1	BarnesG[3]
-g-frac-12-to-machine-precision	BarnesG[0.5]
-g-1-1	BarnesG[1]
-g-2-1	BarnesG[2]
-g-4-2	BarnesG[4]
-g-6-288	BarnesG[6]
-barnesg-of-a-symbol-stays-symbolic	BarnesG[z]
-n-barnesg-5-over-2	N[BarnesG[Rational[5, 2]]]
-complex-arguments	BarnesG[Complex[1.3, 1]]
-negative-non-integer-arguments-between-the-zeros	BarnesG[-2.5]
-threads-elementwise-over-an-array	BarnesG[List[List[Rational[1, 2], 1], List[1, Rational[1, 2]]]]
-g-infty-infty	BarnesG[Infinity]
-interval-arithmetic-g-is-increasing-on-1-17-1-18	BarnesG[Interval[List[1.17, 1.18]]]
-uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm	BarnesG[Around[2.1, 0.01]]
-to-30-significant-digits-not-yet-the-requested	N[BarnesG[Rational[1, 2]], 30]
-image-over-1p17-to-1p18	BarnesG[Interval[List[1.17, 1.18]]]
-image-over-1-to-3	BarnesG[Interval[List[1, 3]]]
-image-over-0p5-to-1p5	BarnesG[Interval[List[0.5, 1.5]]]
-image-over-2p2-to-2p9	BarnesG[Interval[List[2.2, 2.9]]]
-image-over-neg-1p9-to-neg-1p1	BarnesG[Interval[List[-1.9, -1.1]]]
-g-vanishes-at-the-nonpositive-integers	BarnesG[0]
-all-of-them	BarnesG[-3]
-the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	Divide[Power[Gamma[6], 5], BarnesG[6]]
-an-exact-non-integer-argument-stays-symbolic	BarnesG[Rational[5, 2]]
+id	in	out
+g-5-0-1-2-3-12	BarnesG(5)	12
+g-7-34560	BarnesG(7)	34560
+the-superfactorials-threaded-over-a-list	BarnesG(List(1, 2, 3, 4, 5, 6))	List(1, 1, 1, 2, 12, 288)
+a-floating-point-argument-evaluates-numerically	BarnesG(2.5)	0.9475739010840627
+g-10-prod-k-0-8-k-exact	BarnesG(10)	5056584744960000
+g-3-0-1-1	BarnesG(3)	1
+g-frac-12-to-machine-precision	BarnesG(0.5)	0.6032442812095893
+g-1-1	BarnesG(1)	1
+g-2-1	BarnesG(2)	1
+g-4-2	BarnesG(4)	2
+g-6-288	BarnesG(6)	288
+barnesg-of-a-symbol-stays-symbolic	BarnesG(z)	BarnesG(z)
+n-barnesg-5-over-2	N(BarnesG(Rational(5, 2)))	0.947573901083825776884
+complex-arguments	BarnesG(Complex(1.3, 1))	Complex(1.4446139350503153, -0.2985488252115687)
+negative-non-integer-arguments-between-the-zeros	BarnesG(-2.5)	0.07617297965688405
+threads-elementwise-over-an-array	BarnesG(List(List(Rational(1, 2), 1), List(1, Rational(1, 2))))	List(List(BarnesG(Rational(1, 2)), 1), List(1, BarnesG(Rational(1, 2))))
+g-infty-infty	BarnesG(PositiveInfinity)	PositiveInfinity
+interval-arithmetic-g-is-increasing-on-1-17-1-18	BarnesG(Interval(1.17, 1.18))	Interval(1.05221632868619, 1.0541936064357)
+uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm	BarnesG(Around(2.1, 0.01))	Around(0.9847727243540465, 0.001449505695943639)
+to-30-significant-digits-not-yet-the-requested	N(BarnesG(Rational(1, 2)), 30)	0.603244281209446206191429224535
+image-over-1p17-to-1p18	BarnesG(Interval(1.17, 1.18))	Interval(1.05221632868619, 1.0541936064357)
+image-over-1-to-3	BarnesG(Interval(1, 3))	Interval(0.94684560489907, 1.07305178568314)
+image-over-0p5-to-1p5	BarnesG(Interval(0.5, 1.5))	Interval(0.603244281209446, 1.07305178568311)
+image-over-2p2-to-2p9	BarnesG(Interval(2.2, 2.9))	Interval(0.946845605269706, 0.97729308820856)
+image-over-neg-1p9-to-neg-1p1	BarnesG(Interval(-1.9, -1.1))	Interval(-0.0740999440022038, -0.0018501712803283)
+g-vanishes-at-the-nonpositive-integers	BarnesG(0)	0
+all-of-them	BarnesG(-3)	0
+the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here	Divide(Power(Gamma(6), 5), BarnesG(6))	86400000
+an-exact-non-integer-argument-stays-symbolic	BarnesG(Rational(5, 2))	BarnesG(Rational(5, 2))

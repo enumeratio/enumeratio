@@ -1,4 +1,4 @@
-id	in
-relabelled-cycle-is-isomorphic-to-itself	IsomorphicGraphQ[CycleGraph[4], Graph[List[3, 1, 4, 2], List[UndirectedEdge[3, 1], UndirectedEdge[1, 4], UndirectedEdge[4, 2], UndirectedEdge[2, 3]]]]
-same-vertex-count-different-structure	IsomorphicGraphQ[CycleGraph[4], StarGraph[4]]
-isisomorphicgraph-cyclegraph-3-cyclegraph-4	IsomorphicGraphQ[CycleGraph[3], CycleGraph[4]]
+id	in	out
+relabelled-cycle-is-isomorphic-to-itself	IsIsomorphicGraph(CycleGraph(4), Graph(List(3, 1, 4, 2), List(UndirectedEdge(3, 1), UndirectedEdge(1, 4), UndirectedEdge(4, 2), UndirectedEdge(2, 3))))	True
+same-vertex-count-different-structure	IsIsomorphicGraph(CycleGraph(4), StarGraph(4))	False
+isisomorphicgraph-cyclegraph-3-cyclegraph-4	IsIsomorphicGraph(CycleGraph(3), CycleGraph(4))	False

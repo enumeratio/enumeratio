@@ -1,31 +1,31 @@
-id	in
-digitsum-58-127	DigitSum[58127]
-in-base-2-this-is-the-number-of-set-bits	DigitSum[58127, 2]
-255-ff-16-15-15	DigitSum[255, 16]
-threads-element-wise-over-a-list-as-wolfram-s	DigitSum[List[12, 345]]
-just-the-first-4-digits-6-3-4-5-18-not-the-full	DigitSum[6345354, 10, 4]
-a-negative-k-sums-the-last-3-digits-instead	DigitSum[6345354, 10, -3]
-k-at-least-the-digit-count-is-the-plain-sum	DigitSum[6345354, 10, 7]
-digitsum-1-plus-9-pow-1-000	DigitSum[Plus[1, Power[9, 1000]]]
-digitsum-58-127-16	DigitSum[58127, 16]
-digitsum-list-6-7-2-2	DigitSum[List[6, 7, 2], 2]
-digitsum-7-list-2-3-4	DigitSum[7, List[2, 3, 4]]
-digitsum-6-345-354-10-neg-4	DigitSum[6345354, 10, -4]
-digitsum-35-297	DigitSum[35297]
-digit-sum-n-mod-9-the-basis-of-the-classic	Equal[Mod[DigitSum[58127], 9], Mod[58127, 9]]
-digitsum-37-103	DigitSum[37103]
-digitsum-143-2	DigitSum[143, 2]
-digitsum-123-000-10-neg-3	DigitSum[123000, 10, -3]
-digitsum-0-10-neg-3	DigitSum[0, 10, -3]
-digitsum-2-147-2	DigitSum[2147, 2]
-digitsum-2-147	DigitSum[2147]
-digitsum-1-over-9-times-neg-1-plus-10-pow-17	DigitSum[Times[Rational[1, 9], Plus[-1, Power[10, 17]]]]
-digitsum-123-456-10-7	DigitSum[123456, 10, 7]
-digitsum-263-5	DigitSum[263, 5]
-digitsum-integerreverse-263-5-5	DigitSum[IntegerReverse[263, 5], 5]
-digitsum-neg-3-134	DigitSum[-3134]
-digitsum-0	DigitSum[0]
-the-sign-is-discarded	DigitSum[-123]
-sign-is-discarded-in-the-3-argument-form-too	DigitSum[-6345354, 10, 4]
-digitsum-100-factorial	DigitSum[Factorial[100]]
-the-digit-sum-of-2-1000	DigitSum[Power[2, 1000]]
+id	in	out
+digitsum-58-127	DigitSum(58127)	23
+in-base-2-this-is-the-number-of-set-bits	DigitSum(58127, 2)	9
+255-ff-16-15-15	DigitSum(255, 16)	30
+threads-element-wise-over-a-list-as-wolfram-s	DigitSum(List(12, 345))	List(3, 12)
+just-the-first-4-digits-6-3-4-5-18-not-the-full	DigitSum(6345354, 10, 4)	18
+a-negative-k-sums-the-last-3-digits-instead	DigitSum(6345354, 10, -3)	12
+k-at-least-the-digit-count-is-the-plain-sum	DigitSum(6345354, 10, 7)	30
+digitsum-1-plus-9-pow-1-000	DigitSum(Add(1, Power(9, 1000)))	4339
+digitsum-58-127-16	DigitSum(58127, 16)	32
+digitsum-list-6-7-2-2	DigitSum(List(6, 7, 2), 2)	List(2, 3, 1)
+digitsum-7-list-2-3-4	DigitSum(7, List(2, 3, 4))	List(3, 3, 4)
+digitsum-6-345-354-10-neg-4	DigitSum(6345354, 10, -4)	17
+digitsum-35-297	DigitSum(35297)	26
+digit-sum-n-mod-9-the-basis-of-the-classic	Equal(Mod(DigitSum(58127), 9), Mod(58127, 9))	True
+digitsum-37-103	DigitSum(37103)	14
+digitsum-143-2	DigitSum(143, 2)	5
+digitsum-123-000-10-neg-3	DigitSum(123000, 10, -3)	0
+digitsum-0-10-neg-3	DigitSum(0, 10, -3)	0
+digitsum-2-147-2	DigitSum(2147, 2)	5
+digitsum-2-147	DigitSum(2147)	14
+digitsum-1-over-9-times-neg-1-plus-10-pow-17	DigitSum(Multiply(Rational(1, 9), Add(-1, Power(10, 17))))	17
+digitsum-123-456-10-7	DigitSum(123456, 10, 7)	21
+digitsum-263-5	DigitSum(263, 5)	7
+digitsum-integerreverse-263-5-5	DigitSum(IntegerReverse(263, 5), 5)	7
+digitsum-neg-3-134	DigitSum(-3134)	11
+digitsum-0	DigitSum(0)	0
+the-sign-is-discarded	DigitSum(-123)	6
+sign-is-discarded-in-the-3-argument-form-too	DigitSum(-6345354, 10, 4)	18
+digitsum-100-factorial	DigitSum(Factorial(100))	648
+the-digit-sum-of-2-1000	DigitSum(Power(2, 1000))	1366

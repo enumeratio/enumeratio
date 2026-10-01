@@ -1,8 +1,8 @@
-id	in
-trianglewave-zero	TriangleWave[0]
-trianglewave-quarter-peak	TriangleWave[Rational[1, 4]]
-trianglewave-half	TriangleWave[Rational[1, 2]]
-trianglewave-three-quarters-trough	TriangleWave[Rational[3, 4]]
-trianglewave-ranged	TriangleWave[List[0, 10], Rational[1, 2]]
-trianglewave-negative-pi-exact	TriangleWave[Minus[Pi]]
-trianglewave-periodic	Equal[TriangleWave[Rational[1, 4]], TriangleWave[Plus[Rational[1, 4], 3]]]
+id	in	out
+trianglewave-zero	TriangleWave(0)	0
+trianglewave-quarter-peak	TriangleWave(Rational(1, 4))	1
+trianglewave-half	TriangleWave(Rational(1, 2))	0
+trianglewave-three-quarters-trough	TriangleWave(Rational(3, 4))	-1
+trianglewave-ranged	TriangleWave(List(0, 10), Rational(1, 2))	5
+trianglewave-negative-pi-exact	TriangleWave(Negate(Pi))	Add(12, Multiply(-4, Pi))
+trianglewave-periodic	Equal(TriangleWave(Rational(1, 4)), TriangleWave(Add(Rational(1, 4), 3)))	True

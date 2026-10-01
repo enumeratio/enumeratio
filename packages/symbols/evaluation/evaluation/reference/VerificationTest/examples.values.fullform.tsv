@@ -1,13 +1,13 @@
-id	in
-input-matches-expected	VerificationTest[Plus[2, 3], 5]
-input-evaluates-but-does-not-match-expected	VerificationTest[Plus[2, 3], 6]
-one-argument-a-predicate-that-evaluates-to-true	VerificationTest[Greater[2, 1]]
-verificationtest-2-plus-2-3	VerificationTest[Plus[2, 2], 3]
-verificationtest-1-times-0-pow-neg-1	VerificationTest[Times[1, Power[0, -1]], ComplexInfinity]
-a-symbolic-computation-checked-against-its	VerificationTest[Expand[Power[Plus[x, 1], 2]], Plus[Power[x, 2], Times[2, x], 1]]
-a-testid-is-carried-into-the-result	VerificationTest[Divide[1, 0], ComplexInfinity, Rule[TestID, "pole"]]
-a-sametest-with-a-tolerance-22-7-3-14-0-01	VerificationTest[Divide[22, 7], 3.14, Rule[SameTest, Function[List[a, b], Less[Abs[Subtract[a, b]], 0.01]]]]
-memoryconstraint-in-process-is-an-error-not-a	VerificationTest[Plus[2, 3], 5, Rule[MemoryConstraint, 1000000]]
-one-argument-succeeds-whenever-input-evaluates	VerificationTest[Plus[1, 1]]
-the-default-comparison-is-structural	VerificationTest[Plus[Power[x, 2], Times[2, x], 1], Power[Plus[x, 1], 2]]
-verificationtest-complexinfinity-1-times-0-pow	VerificationTest[ComplexInfinity, Times[1, Power[0, -1]]]
+id	in	out
+input-matches-expected	VerificationTest(Add(2, 3), 5)	TestResultObject(Tuple("Outcome", "Success"), Tuple("Input", 5), Tuple("ExpectedOutput", 5), Tuple("ActualOutput", 5), Tuple("AbsoluteTimeUsed", 0))
+input-evaluates-but-does-not-match-expected	VerificationTest(Add(2, 3), 6)	TestResultObject(Tuple("Outcome", "Failure"), Tuple("Input", 5), Tuple("ExpectedOutput", 6), Tuple("ActualOutput", 5), Tuple("AbsoluteTimeUsed", 0))
+one-argument-a-predicate-that-evaluates-to-true	VerificationTest(Greater(2, 1))	TestResultObject(Tuple("Outcome", "Success"), Tuple("Input", Less(1, 2)), Tuple("ExpectedOutput", Missing), Tuple("ActualOutput", True), Tuple("AbsoluteTimeUsed", 0))
+verificationtest-2-plus-2-3	VerificationTest(Add(2, 2), 3)	TestResultObject(Tuple("Outcome", "Failure"), Tuple("Input", 4), Tuple("ExpectedOutput", 3), Tuple("ActualOutput", 4), Tuple("AbsoluteTimeUsed", 0))
+verificationtest-1-times-0-pow-neg-1	VerificationTest(Multiply(1, Power(0, -1)), ComplexInfinity)	TestResultObject(Tuple("Outcome", "Success"), Tuple("Input", ComplexInfinity), Tuple("ExpectedOutput", ComplexInfinity), Tuple("ActualOutput", ComplexInfinity), Tuple("AbsoluteTimeUsed", 0))
+a-symbolic-computation-checked-against-its	VerificationTest(Expand(Power(Add(x, 1), 2)), Add(Power(x, 2), Multiply(2, x), 1))	TestResultObject(Tuple("Outcome", "Success"), Tuple("Input", Expand(Power(Add(x, 1), 2))), Tuple("ExpectedOutput", Add(Power(x, 2), Multiply(2, x), 1)), Tuple("ActualOutput", Add(Power(x, 2), Multiply(2, x), 1)), Tuple("AbsoluteTimeUsed", 0))
+a-testid-is-carried-into-the-result	VerificationTest(Divide(1, 0), ComplexInfinity, KeyValuePair(TestID, "pole"))	TestResultObject(Tuple("Outcome", "Success"), Tuple("Input", ComplexInfinity), Tuple("ExpectedOutput", ComplexInfinity), Tuple("ActualOutput", ComplexInfinity), Tuple("AbsoluteTimeUsed", 0), Tuple("TestID", "pole"))
+a-sametest-with-a-tolerance-22-7-3-14-0-01	VerificationTest(Divide(22, 7), 3.14, KeyValuePair(SameTest, Function(Less(Abs(Subtract(a, b)), 0.01), a, b)))	TestResultObject(Tuple("Outcome", "Success"), Tuple("Input", Rational(22, 7)), Tuple("ExpectedOutput", 3.14), Tuple("ActualOutput", Rational(22, 7)), Tuple("AbsoluteTimeUsed", 0))
+memoryconstraint-in-process-is-an-error-not-a	VerificationTest(Add(2, 3), 5, KeyValuePair(MemoryConstraint, 1000000))	TestResultObject(Tuple("Outcome", "Error"), Tuple("Input", 5), Tuple("ExpectedOutput", 5), Tuple("ActualOutput", Missing), Tuple("AbsoluteTimeUsed", 0))
+one-argument-succeeds-whenever-input-evaluates	VerificationTest(Add(1, 1))	TestResultObject(Tuple("Outcome", "Success"), Tuple("Input", 2), Tuple("ExpectedOutput", Missing), Tuple("ActualOutput", 2), Tuple("AbsoluteTimeUsed", 0))
+the-default-comparison-is-structural	VerificationTest(Add(Power(x, 2), Multiply(2, x), 1), Power(Add(x, 1), 2))	TestResultObject(Tuple("Outcome", "Failure"), Tuple("Input", Add(Power(x, 2), Multiply(2, x), 1)), Tuple("ExpectedOutput", Power(Add(x, 1), 2)), Tuple("ActualOutput", Add(Power(x, 2), Multiply(2, x), 1)), Tuple("AbsoluteTimeUsed", 0))
+verificationtest-complexinfinity-1-times-0-pow	VerificationTest(ComplexInfinity, Multiply(1, Power(0, -1)))	TestResultObject(Tuple("Outcome", "Success"), Tuple("Input", ComplexInfinity), Tuple("ExpectedOutput", ComplexInfinity), Tuple("ActualOutput", ComplexInfinity), Tuple("AbsoluteTimeUsed", 0))

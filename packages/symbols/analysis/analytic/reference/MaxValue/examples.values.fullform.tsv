@@ -1,5 +1,5 @@
-id	in
-a-downward-parabola-s-maximum-value	MaxValue[Plus[Minus[Power[x, 2]], Times[4, x], -1], x]
-maxvalue-neg-2-times-x-pow-2-minus-3x-plus-5-x	MaxValue[Plus[Times[-2, Power[x, 2]], Times[-1, Times[3, x]], 5], x]
-the-amplitude-of-sine-alone-is-exact	MaxValue[Sin[x], x]
-an-unbounded-cubic	MaxValue[Power[x, 3], x]
+id	in	out
+a-downward-parabola-s-maximum-value	MaxValue(Add(Negate(Power(x, 2)), Multiply(4, x), -1), x)	3
+maxvalue-neg-2-times-x-pow-2-minus-3x-plus-5-x	MaxValue(Add(Multiply(-2, Power(x, 2)), Multiply(-1, Multiply(3, x)), 5), x)	Rational(49, 8)
+the-amplitude-of-sine-alone-is-exact	MaxValue(Sin(x), x)	1
+an-unbounded-cubic	MaxValue(Power(x, 3), x)	PositiveInfinity

@@ -1,8 +1,8 @@
-id	in	back
-listfrom-integermodring-3	ListFrom[IntegerModRing[3]]	
-count-integermodring-12	Length[IntegerModRing[12]]	[Length, [IntegerModRing, 12]]
-count-integermodring-5	Length[IntegerModRing[5]]	[Length, [IntegerModRing, 5]]
-z-12-z	QuotientRing[Integers, 12]	
-z-5-z	QuotientRing[Integers, 5]	
-integermod-3-5-in-integermodring-5	Element[IntegerMod[3, 5], IntegerModRing[5]]	
-integermod-3-7-not-in-integermodring-5	Element[IntegerMod[3, 7], IntegerModRing[5]]	
+id	in	out
+listfrom-integermodring-3	ListFrom(IntegerModRing(3))	List(IntegerMod(0, 3), IntegerMod(1, 3), IntegerMod(2, 3))
+count-integermodring-12	Count(IntegerModRing(12))	12
+count-integermodring-5	Count(IntegerModRing(5))	5
+z-12-z	QuotientRing(Integers, 12)	IntegerModRing(12)
+z-5-z	QuotientRing(Integers, 5)	IntegerModRing(5)
+integermod-3-5-in-integermodring-5	Element(IntegerMod(3, 5), IntegerModRing(5))	True
+integermod-3-7-not-in-integermodring-5	Element(IntegerMod(3, 7), IntegerModRing(5))	False

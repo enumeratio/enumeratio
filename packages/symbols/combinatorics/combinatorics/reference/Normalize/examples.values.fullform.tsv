@@ -1,8 +1,8 @@
-id	in
-3-4-5	Normalize[List[3, 4]]
-normalize-list-1-5-1	Normalize[List[1, 5, 1]]
-zero-vector	Normalize[List[0, 0]]
-normalize-list-x-y-f	
-normalize-s	
-normalize-list-x-y	
-normalize-1-plus-x-plus-x-pow-2-function	
+id	in	out
+3-4-5	Normalize(List(3, 4))	List(Rational(3, 5), Rational(4, 5))
+normalize-list-1-5-1	Normalize(List(1, 5, 1))	List(Divide(Sqrt(3), 9), Multiply(Rational(5, 9), Sqrt(3)), Divide(Sqrt(3), 9))
+zero-vector	Normalize(List(0, 0))	List(0, 0)
+normalize-list-x-y-f		
+normalize-s		
+normalize-list-x-y		
+normalize-1-plus-x-plus-x-pow-2-function		

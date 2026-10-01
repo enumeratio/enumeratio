@@ -1,15 +1,15 @@
-id	in	back
-default-base-is-10	Log[10, 100]	[Log, 100, 10]
-same-result-written-with-an-explicit-base	Log[10, 100]	
-base-2-via-the-explicit-second-argument	Log[2, 8]	
-log-3-1-5-at-machine-precision	Log[3, 1.5]	
-log-9-3	Log[3, 9]	
-threads-over-a-list-of-values	Log[2, List[2, 4, 8]]	
-threads-over-a-list-of-bases	Log[List[2, E, 10], 2.5]	
-derivative-in-base-3-frac-1-x-ln-3	D[Log[3, x], x]	
-log-2-frac-18-3-an-exact-negative-power-of-the	Log[2, Rational[1, 8]]	
-confirms-the-default-base-is-10	Equal[Log[10, 100], Log[10, 100]]	[Equal, [Log, 100, 10], [Log, 100, 10]]
-product-rule-log-b-xy-log-b-x-log-b-y	Equal[Log[2, Times[8, 4]], Plus[Log[2, 8], Log[2, 4]]]	
-power-rule-log-b-x-k-k-log-b-x	Equal[Log[2, Power[2, 5]], Times[5, Log[2, 2]]]	
-log-10-0-infty	Log[10, 0]	[Log, 0, 10]
-a-negative-argument-stays-symbolic-with-the	Log[10, -5]	[Log, -5, 10]
+id	in	out
+default-base-is-10	Log(100)	2
+same-result-written-with-an-explicit-base	Log(100, 10)	2
+base-2-via-the-explicit-second-argument	Log(8, 2)	3
+log-3-1-5-at-machine-precision	Log(1.5, 3)	0.3690702464285425629
+log-9-3	Log(9, 3)	2
+threads-over-a-list-of-values	Log(List(2, 4, 8), 2)	List(1, 2, 3)
+threads-over-a-list-of-bases	Log(2.5, List(2, ExponentialE, 10))	List(1.32192809488736234787, 0.91629073187415514452, 0.397940008672037609573)
+derivative-in-base-3-frac-1-x-ln-3	D(Log(x, 3), x)	Divide(1, Multiply(x, Ln(3)))
+log-2-frac-18-3-an-exact-negative-power-of-the	Log(Rational(1, 8), 2)	-3
+confirms-the-default-base-is-10	Equal(Log(100), Log(100, 10))	True
+product-rule-log-b-xy-log-b-x-log-b-y	Equal(Log(Multiply(8, 4), 2), Add(Log(8, 2), Log(4, 2)))	True
+power-rule-log-b-x-k-k-log-b-x	Equal(Log(Power(2, 5), 2), Multiply(5, Log(2, 2)))	True
+log-10-0-infty	Log(0)	NegativeInfinity
+a-negative-argument-stays-symbolic-with-the	Log(-5)	Log(-5, 10)

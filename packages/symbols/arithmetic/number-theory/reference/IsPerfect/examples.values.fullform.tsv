@@ -1,9 +1,9 @@
-id	in
-isperfect-6	PerfectNumberQ[6]
-isperfect-12	PerfectNumberQ[12]
-listable	PerfectNumberQ[List[6, 28, 12]]
-isperfect-496	PerfectNumberQ[496]
-isperfect-28	PerfectNumberQ[28]
-negative-numbers-are-not-perfect	PerfectNumberQ[-6]
-isperfect-1-234-121	PerfectNumberQ[1234121]
-isperfect-simplify-x	PerfectNumberQ[Simplify[x]]
+id	in	out
+isperfect-6	IsPerfect(6)	True
+isperfect-12	IsPerfect(12)	False
+listable	IsPerfect(List(6, 28, 12))	List(True, True, False)
+isperfect-496	IsPerfect(496)	True
+isperfect-28	IsPerfect(28)	True
+negative-numbers-are-not-perfect	IsPerfect(-6)	False
+isperfect-1-234-121	IsPerfect(1234121)	False
+isperfect-simplify-x	IsPerfect(Simplify(x))	IsPerfect(x)

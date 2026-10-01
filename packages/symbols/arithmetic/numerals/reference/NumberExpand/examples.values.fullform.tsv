@@ -1,12 +1,12 @@
-id	in
-numberexpand-1-234	NumberExpand[1234]
-numberexpand-157	NumberExpand[157]
-numberexpand-157-2	NumberExpand[157, 2]
-numberexpand-157-2-3	
-base-2-zero-terms-kept	NumberExpand[10, 2]
-every-term-carries-the-sign	NumberExpand[-123]
-numberexpand-1-437	NumberExpand[1437]
-numberexpand-neg-14-379	NumberExpand[-14379]
-numberexpand-1-532	NumberExpand[1532]
-numberexpand-1-532-10	NumberExpand[1532, 10]
-numberexpand-1-437-10-8	
+id	in	out
+numberexpand-1-234	NumberExpand(1234)	List(1000, 200, 30, 4)
+numberexpand-157	NumberExpand(157)	List(100, 50, 7)
+numberexpand-157-2	NumberExpand(157, 2)	List(128, 0, 0, 16, 8, 4, 0, 1)
+numberexpand-157-2-3		
+base-2-zero-terms-kept	NumberExpand(10, 2)	List(8, 0, 2, 0)
+every-term-carries-the-sign	NumberExpand(-123)	List(-100, -20, -3)
+numberexpand-1-437	NumberExpand(1437)	List(1000, 400, 30, 7)
+numberexpand-neg-14-379	NumberExpand(-14379)	List(-10000, -4000, -300, -70, -9)
+numberexpand-1-532	NumberExpand(1532)	List(1000, 500, 30, 2)
+numberexpand-1-532-10	NumberExpand(1532, 10)	List(1000, 500, 30, 2)
+numberexpand-1-437-10-8		

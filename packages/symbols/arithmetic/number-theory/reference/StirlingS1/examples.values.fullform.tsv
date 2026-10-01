@@ -1,35 +1,35 @@
-id	in
-stirlings1-5-2	StirlingS1[5, 2]
-stirlings1-4-2	StirlingS1[4, 2]
-s-n-n-is-always-1	StirlingS1[3, 3]
-s-n-0-is-0-for-n-0	StirlingS1[5, 0]
-stirlings1-20-10	StirlingS1[20, 10]
-threads-element-wise-over-a-list-as-wolfram-s	StirlingS1[List[2, 4, 6], 2]
-exact-for-large-n	StirlingS1[50, 2]
-a-mid-sized-n-and-k-past-the-fast-paths	StirlingS1[40, 14]
-the-number-of-permutations-of-5-elements-with	StirlingS1[5, 3]
-abs-stirlings1-n-range-1-n	Abs[StirlingS1[n, Range[1, n]]]
-the-unsigned-values-in-a-row-sum-to-n	Equal[Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]], Factorial[4]]
-the-signed-row-sum-vanishes-for-n-ge-2	Sum[StirlingS1[6, k], List[k, 0, 6]]
-s-n-n-1-binom-n-2	Equal[StirlingS1[6, 5], Minus[Binomial[6, 2]]]
-the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	Equal[Sum[Times[StirlingS1[4, k], Power[x, k]], List[k, 0, 4]], Expand[Times[x, Subtract[x, 1], Subtract[x, 2], Subtract[x, 3]]]]
-n-stirlings1-100-11	N[StirlingS1[100, 11]]
-stirlings1-0-1	StirlingS1[0, 1]
-stirlings1-1-0	StirlingS1[1, 0]
-stirlings1-1-1	StirlingS1[1, 1]
-stirlings1-1-2	StirlingS1[1, 2]
-stirlings1-2-0	StirlingS1[2, 0]
-stirlings1-2-1	StirlingS1[2, 1]
-stirlings1-2-2	StirlingS1[2, 2]
-stirlings1-2-3	StirlingS1[2, 3]
-stirlings1-3-0	StirlingS1[3, 0]
-stirlings1-3-1	StirlingS1[3, 1]
-stirlings1-3-2	StirlingS1[3, 2]
-stirlings1-3-4	StirlingS1[3, 4]
-stirlings1-4-0	StirlingS1[4, 0]
-stirlings1-4-1	StirlingS1[4, 1]
-stirlings1-4-3	StirlingS1[4, 3]
-the-empty-case-s-0-0-1-by-convention-distinct	StirlingS1[0, 0]
-k-n-is-0	StirlingS1[5, 6]
-a-negative-k-stays-symbolic	StirlingS1[4, -1]
-s-n-1-1-n-1-n-1-so-s-10-1-9	StirlingS1[10, 1]
+id	in	out
+stirlings1-5-2	StirlingS1(5, 2)	-50
+stirlings1-4-2	StirlingS1(4, 2)	11
+s-n-n-is-always-1	StirlingS1(3, 3)	1
+s-n-0-is-0-for-n-0	StirlingS1(5, 0)	0
+stirlings1-20-10	StirlingS1(20, 10)	381922055502195
+threads-element-wise-over-a-list-as-wolfram-s	StirlingS1(List(2, 4, 6), 2)	List(1, 11, 274)
+exact-for-large-n	StirlingS1(50, 2)	27246193725912647616517114941876245307260051542398468096e+8
+a-mid-sized-n-and-k-past-the-fast-paths	StirlingS1(40, 14)	1640591781294212129275881145293779479141760
+the-number-of-permutations-of-5-elements-with	StirlingS1(5, 3)	35
+abs-stirlings1-n-range-1-n	Abs(StirlingS1(n, Range(1, n)))	Map(Function(Block(Abs(_1)), _1), Map(Function(Block(StirlingS1(n, _1)), _1), Range(1, n)))
+the-unsigned-values-in-a-row-sum-to-n	Equal(Sum(Abs(StirlingS1(4, k)), Tuple(k, 0, 4)), Factorial(4))	True
+the-signed-row-sum-vanishes-for-n-ge-2	Sum(StirlingS1(6, k), Tuple(k, 0, 6))	0
+s-n-n-1-binom-n-2	Equal(StirlingS1(6, 5), Negate(Binomial(6, 2)))	True
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	Equal(Sum(Multiply(StirlingS1(4, k), Power(x, k)), Tuple(k, 0, 4)), Expand(Multiply(x, Subtract(x, 1), Subtract(x, 2), Subtract(x, 3))))	True
+n-stirlings1-100-11	N(StirlingS1(100, 11))	-39037677347638979654358501304806555266909530477307108864265096777794153959501678609053112651997892866499295802826178188343719785980096409468141568e+10
+stirlings1-0-1	StirlingS1(0, 1)	0
+stirlings1-1-0	StirlingS1(1, 0)	0
+stirlings1-1-1	StirlingS1(1, 1)	1
+stirlings1-1-2	StirlingS1(1, 2)	0
+stirlings1-2-0	StirlingS1(2, 0)	0
+stirlings1-2-1	StirlingS1(2, 1)	-1
+stirlings1-2-2	StirlingS1(2, 2)	1
+stirlings1-2-3	StirlingS1(2, 3)	0
+stirlings1-3-0	StirlingS1(3, 0)	0
+stirlings1-3-1	StirlingS1(3, 1)	2
+stirlings1-3-2	StirlingS1(3, 2)	-3
+stirlings1-3-4	StirlingS1(3, 4)	0
+stirlings1-4-0	StirlingS1(4, 0)	0
+stirlings1-4-1	StirlingS1(4, 1)	-6
+stirlings1-4-3	StirlingS1(4, 3)	-6
+the-empty-case-s-0-0-1-by-convention-distinct	StirlingS1(0, 0)	1
+k-n-is-0	StirlingS1(5, 6)	0
+a-negative-k-stays-symbolic	StirlingS1(4, -1)	StirlingS1(4, -1)
+s-n-1-1-n-1-n-1-so-s-10-1-9	StirlingS1(10, 1)	-362880

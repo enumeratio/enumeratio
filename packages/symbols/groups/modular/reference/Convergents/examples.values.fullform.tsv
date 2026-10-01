@@ -1,11 +1,11 @@
-id	in
-from-a-list-of-terms	Convergents[List[3, 7, 15, 1]]
-the-first-five-convergents-of-pi	Convergents[Pi, 5]
-convergents-goldenratio-10	Convergents[GoldenRatio, 10]
-convergents-list-1-1-1-1-1	Convergents[List[1, 1, 1, 1, 1]]
-a-rational-the-last-convergent-is-the-number	Convergents[Rational[47, 17]]
-convergents-pi-10	Convergents[Pi, 10]
-convergents-sqrt-7-10	Convergents[Sqrt[7], 10]
-convergents-7-over-17	Convergents[Rational[7, 17]]
-convergents-of-sqrt-2-solve-pell-s-equations-p-2	Convergents[Sqrt[2], 5]
-neg-n-pi-plus-convergents-pi-10	Plus[Minus[N[Pi]], Convergents[Pi, 10]]
+id	in	out
+from-a-list-of-terms	Convergents(List(3, 7, 15, 1))	List(3, Rational(22, 7), Rational(333, 106), Rational(355, 113))
+the-first-five-convergents-of-pi	Convergents(Pi, 5)	List(3, Rational(22, 7), Rational(333, 106), Rational(355, 113), Rational(103993, 33102))
+convergents-goldenratio-10	Convergents(GoldenRatio, 10)	List(1, 2, Rational(3, 2), Rational(5, 3), Rational(8, 5), Rational(13, 8), Rational(21, 13), Rational(34, 21), Rational(55, 34), Rational(89, 55))
+convergents-list-1-1-1-1-1	Convergents(List(1, 1, 1, 1, 1))	List(1, 2, Rational(3, 2), Rational(5, 3), Rational(8, 5))
+a-rational-the-last-convergent-is-the-number	Convergents(Rational(47, 17))	List(2, 3, Rational(11, 4), Rational(47, 17))
+convergents-pi-10	Convergents(Pi, 10)	List(3, Rational(22, 7), Rational(333, 106), Rational(355, 113), Rational(103993, 33102), Rational(104348, 33215), Rational(208341, 66317), Rational(312689, 99532), Rational(833719, 265381), Rational(1146408, 364913))
+convergents-sqrt-7-10	Convergents(Sqrt(7), 10)	List(2, 3, Rational(5, 2), Rational(8, 3), Rational(37, 14), Rational(45, 17), Rational(82, 31), Rational(127, 48), Rational(590, 223), Rational(717, 271))
+convergents-7-over-17	Convergents(Rational(7, 17))	List(0, Rational(1, 2), Rational(2, 5), Rational(7, 17))
+convergents-of-sqrt-2-solve-pell-s-equations-p-2	Convergents(Sqrt(2), 5)	List(1, Rational(3, 2), Rational(7, 5), Rational(17, 12), Rational(41, 29))
+neg-n-pi-plus-convergents-pi-10	Add(Negate(N(Pi)), Convergents(Pi, 10))	List(-0.141592653589793238462643, 0.001264489267349618677357, -0.000083219627529087522643, 2.66764189062417357e-7, -5.77890634392643e-10, 3.31627806247357e-10, -1.22356532942643e-10, 2.9143384937357e-11, -8.715467262643e-12, 1.610740017357e-12)

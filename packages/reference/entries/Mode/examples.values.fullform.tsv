@@ -1,8 +1,8 @@
-id	in	back
-mode-list-1-2-2-3	First[Commonest[List[1, 2, 2, 3]]]	[First, [Commonest, [List, 1, 2, 2, 3]]]
-mode-list-1-2-3-3-2-3	First[Commonest[List[1, 2, 3, 3, 2, 3]]]	[First, [Commonest, [List, 1, 2, 3, 3, 2, 3]]]
-exact-rationals	First[Commonest[List[Rational[1, 2], 1, Rational[1, 2]]]]	[First, [Commonest, [List, [Rational, 1, 2], 1, [Rational, 1, 2]]]]
-symbols-and-numbers-mixed-three-way-tie-wolfram	First[Commonest[List[b, a, c, 2, a, b, 1, 2]]]	[First, [Commonest, [List, b, a, c, 2, a, b, 1, 2]]]
-the-mode-occurs-exactly-as-many-times-as-the	Equal[Count[List[1, 2, 2, 3], First[Commonest[List[1, 2, 2, 3]]]], 2]	[Equal, [Count, [List, 1, 2, 2, 3], [First, [Commonest, [List, 1, 2, 2, 3]]]], 2]
-with-a-tie-for-most-frequent-mode-returns-just	First[Commonest[List[1, 1, 2, 2, 3]]]	[First, [Commonest, [List, 1, 1, 2, 2, 3]]]
-empty-data-has-no-mode-compute-engine-returns	First[Commonest[List[]]]	[First, [Commonest, [List]]]
+id	in	out
+mode-list-1-2-2-3	Mode(List(1, 2, 2, 3))	2
+mode-list-1-2-3-3-2-3	Mode(List(1, 2, 3, 3, 2, 3))	3
+exact-rationals	Mode(List(Rational(1, 2), 1, Rational(1, 2)))	Rational(1, 2)
+symbols-and-numbers-mixed-three-way-tie-wolfram	Mode(List(b, a, c, 2, a, b, 1, 2))	b
+the-mode-occurs-exactly-as-many-times-as-the	Equal(Count(List(1, 2, 2, 3), Mode(List(1, 2, 2, 3))), 2)	True
+with-a-tie-for-most-frequent-mode-returns-just	Mode(List(1, 1, 2, 2, 3))	1
+empty-data-has-no-mode-compute-engine-returns	Mode(List())	`NaN`

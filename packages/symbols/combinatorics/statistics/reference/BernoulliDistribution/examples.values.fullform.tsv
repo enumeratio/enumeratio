@@ -1,5 +1,5 @@
-id	in
-bernoulli-pdf-exact	PDF[BernoulliDistribution[Rational[1, 3]], 1]
-bernoulli-cdf-exact	CDF[BernoulliDistribution[Rational[1, 3]], 0]
-bernoulli-mean-exact	Mean[BernoulliDistribution[Rational[1, 3]]]
-bernoulli-variance-exact	Variance[BernoulliDistribution[Rational[1, 3]]]
+id	in	out
+bernoulli-pdf-exact	PDF(BernoulliDistribution(Rational(1, 3)), 1)	Rational(1, 3)
+bernoulli-cdf-exact	CDF(BernoulliDistribution(Rational(1, 3)), 0)	Rational(2, 3)
+bernoulli-mean-exact	Mean(BernoulliDistribution(Rational(1, 3)))	Rational(1, 3)
+bernoulli-variance-exact	Variance(BernoulliDistribution(Rational(1, 3)))	Rational(2, 9)

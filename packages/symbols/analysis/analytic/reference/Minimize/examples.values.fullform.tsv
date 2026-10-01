@@ -1,15 +1,15 @@
-id	in
-a-quadratic-s-vertex	Minimize[Power[x, 2], x]
-unbounded-below-reports-negative-infinity	Minimize[Power[x, 3], x]
-a-simple-interval-constraint	Minimize[List[Power[x, 2], GreaterEqual[x, 1]], x]
-the-variable-as-a-one-element-list	Minimize[Power[x, 2], List[x]]
-minimize-2-times-x-pow-2-minus-3x-plus-5-x	Minimize[Plus[Times[2, Power[x, 2]], Times[-1, Times[3, x]], 5], x]
-a-rational-function-s-irrational-point	Minimize[Divide[Subtract[x, 1], Plus[Power[x, 2], 1]], x]
-log-s-minimum-is-at-its-domain-edge	Minimize[Log[x], x]
-exp-s-infimum-is-not-attained	Minimize[Exp[x], x]
-declines-a-non-exact-critical-point	Minimize[Subtract[Power[x, 4], Times[4, Power[x, 2]]], x]
-a-quartic-with-a-doubled-root	Minimize[Plus[Power[x, 4], Times[-2, Power[x, 2]], 1], x]
-a-product-of-two-quadratics	Minimize[Times[Plus[Power[x, 2], -3], Plus[Power[x, 2], -5]], x]
-declines-an-irreducible-cubic-factor	Minimize[Subtract[Subtract[Times[Rational[1, 4], Power[x, 4]], Times[Rational[1, 2], Power[x, 2]]], x], x]
-declines-more-than-one-variable	Minimize[Plus[Power[x, 2], Power[y, 2]], List[x, y]]
-declines-sin-s-point-despite-an-exact-value	Minimize[Sin[x], x]
+id	in	out
+a-quadratic-s-vertex	Minimize(Power(x, 2), x)	List(0, List(Rule(x, 0)))
+unbounded-below-reports-negative-infinity	Minimize(Power(x, 3), x)	List(NegativeInfinity, List(Rule(x, NegativeInfinity)))
+a-simple-interval-constraint	Minimize(List(Power(x, 2), GreaterEqual(x, 1)), x)	List(1, List(Rule(x, 1)))
+the-variable-as-a-one-element-list	Minimize(Power(x, 2), List(x))	List(0, List(Rule(x, 0)))
+minimize-2-times-x-pow-2-minus-3x-plus-5-x	Minimize(Add(Multiply(2, Power(x, 2)), Multiply(-1, Multiply(3, x)), 5), x)	List(Rational(31, 8), List(Rule(x, Rational(3, 4))))
+a-rational-function-s-irrational-point	Minimize(Divide(Subtract(x, 1), Add(Power(x, 2), 1)), x)	List(Divide(Negate(Sqrt(2)), Add(1, Power(Add(1, Negate(Sqrt(2))), 2))), List(Rule(x, Add(1, Negate(Sqrt(2))))))
+log-s-minimum-is-at-its-domain-edge	Minimize(Ln(x), x)	List(NegativeInfinity, List(Rule(x, 0)))
+exp-s-infimum-is-not-attained	Minimize(Exp(x), x)	List(0, List(Rule(x, NegativeInfinity)))
+declines-a-non-exact-critical-point	Minimize(Subtract(Power(x, 4), Multiply(4, Power(x, 2))), x)	List(-4, List(Rule(x, Negate(Sqrt(2)))))
+a-quartic-with-a-doubled-root	Minimize(Add(Power(x, 4), Multiply(-2, Power(x, 2)), 1), x)	List(0, List(Rule(x, -1)))
+a-product-of-two-quadratics	Minimize(Multiply(Add(Power(x, 2), -3), Add(Power(x, 2), -5)), x)	List(-1, List(Rule(x, -2)))
+declines-an-irreducible-cubic-factor	Minimize(Subtract(Subtract(Multiply(Rational(1, 4), Power(x, 4)), Multiply(Rational(1, 2), Power(x, 2))), x), x)	Minimize(Subtract(Subtract(Multiply(Rational(1, 4), Power(x, 4)), Multiply(Rational(1, 2), Power(x, 2))), x), x)
+declines-more-than-one-variable	Minimize(Add(Power(x, 2), Power(y, 2)), List(x, y))	Minimize(Add(Power(x, 2), Power(y, 2)), List(x, y))
+declines-sin-s-point-despite-an-exact-value	Minimize(Sin(x), x)	Minimize(Sin(x), x)

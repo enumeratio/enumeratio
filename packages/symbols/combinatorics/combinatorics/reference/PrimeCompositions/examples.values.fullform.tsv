@@ -1,4 +1,4 @@
-id	in	back
-count-primecompositions-7	Length[PrimeCompositions[7]]	[Length, [PrimeCompositions, 7]]
-first-element-of-primecompositions-7	Part[PrimeCompositions[7], 1]	
-every-element-of-primecompositions-7	Take[PrimeCompositions[7], 6]	
+id	in	out
+count-primecompositions-7	Count(PrimeCompositions(7))	6
+first-element-of-primecompositions-7	At(PrimeCompositions(7), 1)	Composition(List(2, 2, 3))
+every-element-of-primecompositions-7	Take(PrimeCompositions(7), 6)	List(Composition(List(2, 2, 3)), Composition(List(2, 3, 2)), Composition(List(2, 5)), Composition(List(3, 2, 2)), Composition(List(5, 2)), Composition(List(7)))

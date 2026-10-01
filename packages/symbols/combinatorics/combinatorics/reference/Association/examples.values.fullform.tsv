@@ -1,6 +1,6 @@
-id	in	back
-length-counts-the-key-value-pairs	Length[Association[Rule[1, 2], Rule[3, 4]]]	[Length, [Association, [KeyValuePair, 1, 2], [KeyValuePair, 3, 4]]]
-first-is-the-first-value-not-the-first-rule	First[Association[Rule[1, a], Rule[2, b]]]	[First, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b]]]
-last-is-the-last-value	Last[Association[Rule[1, a], Rule[2, b]]]	[Last, [Association, [KeyValuePair, 1, a], [KeyValuePair, 2, b]]]
-join-merges-keys-a-later-value-for-a-repeated	Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]	[Join, [Association, [KeyValuePair, a, b]], [Association, [KeyValuePair, c, d], [KeyValuePair, a, f]]]
-sort-orders-the-entries-by-value	Sort[Association[Rule[a, 4], Rule[b, 1], Rule[c, 3]]]	[Sort, [Association, [KeyValuePair, a, 4], [KeyValuePair, b, 1], [KeyValuePair, c, 3]]]
+id	in	out
+length-counts-the-key-value-pairs	Length(Association(Rule(1, 2), Rule(3, 4)))	2
+first-is-the-first-value-not-the-first-rule	First(Association(Rule(1, a), Rule(2, b)))	a
+last-is-the-last-value	Last(Association(Rule(1, a), Rule(2, b)))	b
+join-merges-keys-a-later-value-for-a-repeated	Join(Association(Rule(a, b)), Association(Rule(c, d), Rule(a, f)))	Association(Rule(a, f), Rule(c, d))
+sort-orders-the-entries-by-value	Sort(Association(Rule(a, 4), Rule(b, 1), Rule(c, 3)))	Association(Rule(b, 1), Rule(c, 3), Rule(a, 4))

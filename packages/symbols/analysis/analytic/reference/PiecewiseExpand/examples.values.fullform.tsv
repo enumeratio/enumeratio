@@ -1,20 +1,20 @@
-id	in	back
-abs-of-a-real-variable	PiecewiseExpand[Abs[x], Element[x, Reals]]	
-sign-of-a-real-variable	PiecewiseExpand[Sign[x], Element[x, Reals]]	
-clip-of-a-real-variable	PiecewiseExpand[Clip[x, List[-1, 1]], Element[x, Reals]]	[PiecewiseExpand, [Clamp, x, -1, 1], [Element, x, RealNumbers]]
-max-of-two-real-variables	PiecewiseExpand[Max[x, y], And[Element[x, Reals], Element[y, Reals]]]	
-piecewiseexpand-max-a-b-c-d	PiecewiseExpand[Max[a, b, c, d]]	
-piecewiseexpand-floor-x-0-lt-x-lt-4	PiecewiseExpand[Floor[x], Less[0, x, 4]]	
-piecewiseexpand-primepi-x-0-lt-x-lt-6	PiecewiseExpand[PrimePi[x], Less[0, x, 6]]	
-piecewiseexpand-0-lt-floor-x-plus-round-x-pow-2	PiecewiseExpand[Less[0, Plus[Floor[Plus[x, Round[Power[x, 2]]]], Times[-1, x]], 4]]	
-assuming-0-lt-x-lt-3-piecewiseexpand-floor-x	Assuming[Less[0, x, 3], PiecewiseExpand[Floor[x]]]	
-assuming-x-pow-2-lt-3-piecewiseexpand-floor-x	Assuming[Less[Power[x, 2], 3], PiecewiseExpand[Plus[Floor[x], Round[y]], Less[Power[y, 2], 2]]]	
-piecewiseexpand-pw	PiecewiseExpand[pw]	
-piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1	PiecewiseExpand[LessEqual[-1, Max[x, y], 1]]	
-piecewiseexpand-max-abs-x-abs-y-realnumbers	PiecewiseExpand[Max[Abs[x], Abs[y]], Reals]	
+id	in	out
+abs-of-a-real-variable	PiecewiseExpand(Abs(x), Element(x, RealNumbers))	Piecewise(List(List(Negate(x), Less(x, 0))), x)
+sign-of-a-real-variable	PiecewiseExpand(Sign(x), Element(x, RealNumbers))	Piecewise(List(List(-1, Less(x, 0)), List(1, Less(0, x))), 0)
+clip-of-a-real-variable	PiecewiseExpand(Clip(x, List(-1, 1)), Element(x, RealNumbers))	Piecewise(List(List(-1, Less(x, -1)), List(1, Less(1, x))), x)
+max-of-two-real-variables	PiecewiseExpand(Max(x, y), And(Element(x, RealNumbers), Element(y, RealNumbers)))	Piecewise(List(List(x, LessEqual(y, x))), y)
+piecewiseexpand-max-a-b-c-d	PiecewiseExpand(Max(a, b, c, d))	Max(a, b, c, d)
+piecewiseexpand-floor-x-0-lt-x-lt-4	PiecewiseExpand(Floor(x), Less(0, x, 4))	Floor(x)
+piecewiseexpand-primepi-x-0-lt-x-lt-6	PiecewiseExpand(PrimePi(x), Less(0, x, 6))	PrimePi(x)
+piecewiseexpand-0-lt-floor-x-plus-round-x-pow-2	PiecewiseExpand(Less(0, Add(Floor(Add(x, Round(Power(x, 2)))), Multiply(-1, x)), 4))	Less(0, Add(Negate(x), Floor(Add(x, Round(Power(x, 2))))), 4)
+assuming-0-lt-x-lt-3-piecewiseexpand-floor-x	Assuming(Less(0, x, 3), PiecewiseExpand(Floor(x)))	Floor(x)
+assuming-x-pow-2-lt-3-piecewiseexpand-floor-x	Assuming(Less(Power(x, 2), 3), PiecewiseExpand(Add(Floor(x), Round(y)), Less(Power(y, 2), 2)))	Add(Floor(x), Round(y))
+piecewiseexpand-pw	PiecewiseExpand(pw)	pw
+piecewiseexpand-neg-1-lt-eq-max-x-y-lt-eq-1	PiecewiseExpand(LessEqual(-1, Max(x, y), 1))	LessEqual(-1, Max(x, y), 1)
+piecewiseexpand-max-abs-x-abs-y-realnumbers	PiecewiseExpand(Max(Abs(x), Abs(y)), RealNumbers)	Max(Abs(x), Abs(y))
 map-piecewiseexpand-list-min-x-y-max-x-y-z		
 assuming-list-0-lt-eq-x-lt-eq-3-map		
 assuming-0-lt-eq-k-lt-eq-3m-map-piecewiseexpand		
 map-piecewiseexpand-list-unitbox-x-unittriangle		
 assuming-list-0-lt-eq-x-lt-eq-3-map-2		
-without-a-realness-assumption-it-declines	PiecewiseExpand[Abs[x]]	
+without-a-realness-assumption-it-declines	PiecewiseExpand(Abs(x))	Abs(x)

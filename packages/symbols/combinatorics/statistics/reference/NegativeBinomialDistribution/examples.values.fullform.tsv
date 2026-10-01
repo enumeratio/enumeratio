@@ -1,5 +1,5 @@
-id	in
-negativebinomial-pdf-exact	PDF[NegativeBinomialDistribution[5, Rational[1, 3]], 2]
-negativebinomial-cdf-exact	CDF[NegativeBinomialDistribution[5, Rational[1, 3]], 2]
-negativebinomial-mean-exact	Mean[NegativeBinomialDistribution[5, Rational[1, 3]]]
-negativebinomial-variance-exact	Variance[NegativeBinomialDistribution[5, Rational[1, 3]]]
+id	in	out
+negativebinomial-pdf-exact	PDF(NegativeBinomialDistribution(5, Rational(1, 3)), 2)	Rational(20, 729)
+negativebinomial-cdf-exact	CDF(NegativeBinomialDistribution(5, Rational(1, 3)), 2)	BetaRegularized(Rational(1, 3), 5, 3)
+negativebinomial-mean-exact	Mean(NegativeBinomialDistribution(5, Rational(1, 3)))	10
+negativebinomial-variance-exact	Variance(NegativeBinomialDistribution(5, Rational(1, 3)))	30

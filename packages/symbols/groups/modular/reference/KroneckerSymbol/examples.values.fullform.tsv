@@ -1,55 +1,55 @@
-id	in
-kroneckersymbol-17-6	KroneckerSymbol[17, 6]
-kroneckersymbol-10-13	KroneckerSymbol[10, 13]
-0-whenever-a-1-and-n-0	KroneckerSymbol[5, 0]
-a-1-is-the-sign-of-a-here-a-0	KroneckerSymbol[-3, -1]
-a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues	KroneckerSymbol[3, 2]
-a-n-0	KroneckerSymbol[0, 0]
-n-0-a-1	KroneckerSymbol[1, 0]
-n-0-even-a-not-a-unit	KroneckerSymbol[2, 0]
-n-0-odd-a-1	KroneckerSymbol[3, 0]
-a-0-n-1	KroneckerSymbol[0, 1]
-n-1-is-always-1	KroneckerSymbol[5, 1]
-n-1-negative-a	KroneckerSymbol[-7, 1]
-a-0-n-1-2	KroneckerSymbol[0, -1]
-n-1-positive-a	KroneckerSymbol[3, -1]
-n-1-negative-a-sign-of-a	KroneckerSymbol[-5, -1]
-a-0-odd-n-1	KroneckerSymbol[0, 5]
-a-0-even-n	KroneckerSymbol[0, 4]
-a-0-negative-odd-n	KroneckerSymbol[0, -5]
-a-0-n-prime	KroneckerSymbol[0, 7]
-a-1-is-always-1	KroneckerSymbol[1, 7]
-a-1-negative-n	KroneckerSymbol[1, -7]
-1-p-p-7-3-mod-4	KroneckerSymbol[-1, 7]
-1-p-p-5-1-mod-4	KroneckerSymbol[-1, 5]
-2-n-character-n-7-7-mod-8	KroneckerSymbol[2, 7]
-2-n-character-n-3-3-mod-8	KroneckerSymbol[2, 3]
-2-n-character-n-5-5-mod-8	KroneckerSymbol[2, 5]
-2-n-character	KroneckerSymbol[-2, 7]
-a-2-odd-a-5-5-mod-8	KroneckerSymbol[5, 2]
-a-2-odd-a-9-1-mod-8	KroneckerSymbol[9, 2]
-a-2-even-a-0	KroneckerSymbol[4, 2]
-even-a-and-even-n	KroneckerSymbol[6, 4]
-odd-square-a-9-mod-2-3	KroneckerSymbol[9, 8]
-even-composite-n-2-3-negative	KroneckerSymbol[7, -6]
-even-a-negative-even-n	KroneckerSymbol[10, -6]
-negative-odd-n	KroneckerSymbol[5, -3]
-negative-a-negative-odd-n	KroneckerSymbol[-5, -9]
-perfect-square-a-qr	KroneckerSymbol[4, 7]
-non-square-a-qnr-mod-7	KroneckerSymbol[3, 7]
-both-at-negative-grid-edge	KroneckerSymbol[-10, -10]
-mixed-sign-edge	KroneckerSymbol[10, -10]
-composite-a-prime-n	KroneckerSymbol[10, 7]
-negative-a-odd-square-n-9	KroneckerSymbol[-10, 9]
-threads-element-wise-over-a-list-as-wolfram-s	KroneckerSymbol[List[2, 3, 5, 7, 11], 6]
-larger-arguments-10-11-1-against-the-2000th	KroneckerSymbol[Plus[Power[10, 11], 1], Prime[2000]]
-even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	KroneckerSymbol[7, 6]
-generatingfunction-kroneckersymbol-n-7-n-x	GeneratingFunction[KroneckerSymbol[n, 7], n, x]
-the-character-mod-4-4-p-1-for-primes-p-equiv-3	KroneckerSymbol[-4, 7]
-kroneckersymbol-2-7-eq-kroneckersymbol-23-7	Equal[KroneckerSymbol[2, 7], KroneckerSymbol[23, 7]]
-kroneckersymbol-neg-4-list-1-5-7-11	KroneckerSymbol[-4, List[1, 5, 7, 11]]
-completely-multiplicative-in-n	Equal[KroneckerSymbol[7, Times[3, 5]], Times[KroneckerSymbol[7, 3], KroneckerSymbol[7, 5]]]
-kroneckersymbol-9-12	KroneckerSymbol[9, 12]
-kroneckersymbol-12-7-eq-kroneckersymbol-3-7	Equal[KroneckerSymbol[12, 7], Times[KroneckerSymbol[3, 7], KroneckerSymbol[4, 7]]]
-kroneckersymbol-3-63-eq-kroneckersymbol-3-9	Equal[KroneckerSymbol[3, 63], Times[KroneckerSymbol[3, 9], KroneckerSymbol[3, 7]]]
-a-0-1-for-a-pm-1	KroneckerSymbol[-1, 0]
+id	in	out
+kroneckersymbol-17-6	KroneckerSymbol(17, 6)	-1
+kroneckersymbol-10-13	KroneckerSymbol(10, 13)	1
+0-whenever-a-1-and-n-0	KroneckerSymbol(5, 0)	0
+a-1-is-the-sign-of-a-here-a-0	KroneckerSymbol(-3, -1)	-1
+a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues	KroneckerSymbol(3, 2)	-1
+a-n-0	KroneckerSymbol(0, 0)	0
+n-0-a-1	KroneckerSymbol(1, 0)	1
+n-0-even-a-not-a-unit	KroneckerSymbol(2, 0)	0
+n-0-odd-a-1	KroneckerSymbol(3, 0)	0
+a-0-n-1	KroneckerSymbol(0, 1)	1
+n-1-is-always-1	KroneckerSymbol(5, 1)	1
+n-1-negative-a	KroneckerSymbol(-7, 1)	1
+a-0-n-1-2	KroneckerSymbol(0, -1)	1
+n-1-positive-a	KroneckerSymbol(3, -1)	1
+n-1-negative-a-sign-of-a	KroneckerSymbol(-5, -1)	-1
+a-0-odd-n-1	KroneckerSymbol(0, 5)	0
+a-0-even-n	KroneckerSymbol(0, 4)	0
+a-0-negative-odd-n	KroneckerSymbol(0, -5)	0
+a-0-n-prime	KroneckerSymbol(0, 7)	0
+a-1-is-always-1	KroneckerSymbol(1, 7)	1
+a-1-negative-n	KroneckerSymbol(1, -7)	1
+1-p-p-7-3-mod-4	KroneckerSymbol(-1, 7)	-1
+1-p-p-5-1-mod-4	KroneckerSymbol(-1, 5)	1
+2-n-character-n-7-7-mod-8	KroneckerSymbol(2, 7)	1
+2-n-character-n-3-3-mod-8	KroneckerSymbol(2, 3)	-1
+2-n-character-n-5-5-mod-8	KroneckerSymbol(2, 5)	-1
+2-n-character	KroneckerSymbol(-2, 7)	-1
+a-2-odd-a-5-5-mod-8	KroneckerSymbol(5, 2)	-1
+a-2-odd-a-9-1-mod-8	KroneckerSymbol(9, 2)	1
+a-2-even-a-0	KroneckerSymbol(4, 2)	0
+even-a-and-even-n	KroneckerSymbol(6, 4)	0
+odd-square-a-9-mod-2-3	KroneckerSymbol(9, 8)	1
+even-composite-n-2-3-negative	KroneckerSymbol(7, -6)	1
+even-a-negative-even-n	KroneckerSymbol(10, -6)	0
+negative-odd-n	KroneckerSymbol(5, -3)	-1
+negative-a-negative-odd-n	KroneckerSymbol(-5, -9)	-1
+perfect-square-a-qr	KroneckerSymbol(4, 7)	1
+non-square-a-qnr-mod-7	KroneckerSymbol(3, 7)	-1
+both-at-negative-grid-edge	KroneckerSymbol(-10, -10)	0
+mixed-sign-edge	KroneckerSymbol(10, -10)	0
+composite-a-prime-n	KroneckerSymbol(10, 7)	-1
+negative-a-odd-square-n-9	KroneckerSymbol(-10, 9)	1
+threads-element-wise-over-a-list-as-wolfram-s	KroneckerSymbol(List(2, 3, 5, 7, 11), 6)	List(0, 0, 1, 1, 1)
+larger-arguments-10-11-1-against-the-2000th	KroneckerSymbol(Add(Power(10, 11), 1), NthPrime(2000))	-1
+even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	KroneckerSymbol(7, 6)	1
+generatingfunction-kroneckersymbol-n-7-n-x	GeneratingFunction(KroneckerSymbol(n, 7), n, x)	Divide(Add(Power(x, 5), Multiply(2, Power(x, 4)), Power(x, 3), Multiply(2, Power(x, 2)), x), Add(Power(x, 6), Power(x, 5), Power(x, 4), Power(x, 3), Power(x, 2), x, 1))
+the-character-mod-4-4-p-1-for-primes-p-equiv-3	KroneckerSymbol(-4, 7)	-1
+kroneckersymbol-2-7-eq-kroneckersymbol-23-7	Equal(KroneckerSymbol(2, 7), KroneckerSymbol(23, 7))	True
+kroneckersymbol-neg-4-list-1-5-7-11	KroneckerSymbol(-4, List(1, 5, 7, 11))	List(1, 1, -1, -1)
+completely-multiplicative-in-n	Equal(KroneckerSymbol(7, Multiply(3, 5)), Multiply(KroneckerSymbol(7, 3), KroneckerSymbol(7, 5)))	True
+kroneckersymbol-9-12	KroneckerSymbol(9, 12)	0
+kroneckersymbol-12-7-eq-kroneckersymbol-3-7	Equal(KroneckerSymbol(12, 7), Multiply(KroneckerSymbol(3, 7), KroneckerSymbol(4, 7)))	True
+kroneckersymbol-3-63-eq-kroneckersymbol-3-9	Equal(KroneckerSymbol(3, 63), Multiply(KroneckerSymbol(3, 9), KroneckerSymbol(3, 7)))	True
+a-0-1-for-a-pm-1	KroneckerSymbol(-1, 0)	1

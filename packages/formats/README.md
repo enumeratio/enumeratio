@@ -20,6 +20,9 @@ notation and need it back as an expression.
 - `./inputform` — `toInputForm`: an expression printed as Epsil you could retype, with a
   normalization pass over compute-engine's raw and canonical serializations (written in
   [`engine`](../engine/README.md), re-exported here).
+- `./fullform` — `toFullForm`: the expression's tree as Epsil, every head an explicit call
+  (`Take(List(a, b, c), 2)`), no operators or sugar; `parseEpsil` reads it back as the same
+  uncanonical MathJSON. Wolfram's FullForm is the `WL` format.
 - `./tex` — `portableTeX`: compute-engine's LaTeX rewritten for a document (amsmath/amssymb
   macros in place of MathLive-only commands like `\imaginaryI`).
 - `./mathml`, `./asciimath` — MathMLForm and AsciiMath, built on [`boxes`](../boxes/README.md)'s

@@ -1,43 +1,43 @@
-id	in	back
-fibonacci-0	Fibonacci[0]	
-fibonacci-1	Fibonacci[1]	
-fibonacci-10	Fibonacci[10]	
-fibonacci-20	Fibonacci[20]	
-fibonacci-8	Fibonacci[8]	
-exact-at-any-size-f-100-has-21-digits	Fibonacci[100]	
-a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	Fibonacci[1.5]	
-the-two-argument-fibonacci-polynomial-f-7-x-from	Fibonacci[7, x]	
-the-fibonacci-polynomial-at-a-real-order-and	Fibonacci[5.8, 3]	
-special-value-of-the-fibonacci-polynomial-f-1-0	Fibonacci[1, 0]	
-special-value-of-the-fibonacci-polynomial-f-0-0	Fibonacci[0, 0]	
-f-3-x-x-2-1-threads-element-wise-over-a-matrix	Fibonacci[3, List[List[-1, 0], List[0, 5]]]	
-threads-element-wise-over-a-list-as-wolfram-s	Fibonacci[List[1, 2, 3, 4]]	
-fibonacci-n-x-symbolic-order-stays-exact	Fibonacci[n, x]	
-fibonacci-half-x-exact-closed-form	Fibonacci[Rational[1, 2], x]	
-n-fibonacci-15-over-17-50	N[Fibonacci[Rational[15, 17]], 50]	
-n-fibonacci-5-8-minus-i	N[Fibonacci[5, Complex[8, -1]]]	
-functionexpand-fibonacci-n-x	FunctionExpand[Fibonacci[n, x]]	
-functionexpand-fibonacci-1-over-2-x	FunctionExpand[Fibonacci[Rational[1, 2], x]]	
-fibonacci-2-neg-x-eq-neg-fibonacci-2-x	Equal[Fibonacci[2, Minus[x]], Minus[Fibonacci[2, x]]]	
-fibonacci-1-neg-x-eq-fibonacci-1-x	Equal[Fibonacci[1, Minus[x]], Fibonacci[1, x]]	
-fibonacci-list-1-2-3-4-5	Fibonacci[List[1, 2, 3, 4, 5]]	
-generatingfunction-fibonacci-n-n-x	GeneratingFunction[Fibonacci[n], n, x]	
-fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1	Equal[Fibonacci[1, Conjugate[z]], Conjugate[Fibonacci[1, z]]]	
-matrixfunction-function-fibonacci-3-1-1-list	MatrixFunction[Function[Fibonacci[3, Slot[1]]], List[List[-1, 0], List[0, 5]]]	[MatrixFunction, [Function, [Fibonacci, 3, _1]], [List, [List, -1, 0], [List, 0, 5]]]
-consecutive-ratios-f-n-1-f-n-converge-to-the	Divide[Fibonacci[20], Fibonacci[19]]	
-sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	Sum[Fibonacci[k], List[k, 1, 10]]	
-the-doubling-identity-f-2n-f-n-l-n-see-lucasl	Equal[Fibonacci[20], Times[Fibonacci[10], LucasL[10]]]	
-the-defining-recurrence-f-10-f-9-f-8	Equal[Fibonacci[10], Plus[Fibonacci[9], Fibonacci[8]]]	
-cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]	
-gcd-f-12-f-18-f-gcd-12-18	Equal[GCD[Fibonacci[12], Fibonacci[18]], Fibonacci[GCD[12, 18]]]	
-negative-indices-are-supported-via-f-n-1-n-1-f-n	Fibonacci[-5]	
-fibonacci-2	Fibonacci[2]	
-fibonacci-3	Fibonacci[3]	
-fibonacci-4	Fibonacci[4]	
-fibonacci-5	Fibonacci[5]	
-fibonacci-6	Fibonacci[6]	
-fibonacci-7	Fibonacci[7]	
-fibonacci-9	Fibonacci[9]	
-fibonacci-neg-1	Fibonacci[-1]	
-f-1000-has-209-digits-see-integerdigits	Length[IntegerDigits[Fibonacci[1000]]]	
-they-grow-fast-f-50-already-exceeds-twelve	Fibonacci[50]	
+id	in	out
+fibonacci-0	Fibonacci(0)	0
+fibonacci-1	Fibonacci(1)	1
+fibonacci-10	Fibonacci(10)	55
+fibonacci-20	Fibonacci(20)	6765
+fibonacci-8	Fibonacci(8)	21
+exact-at-any-size-f-100-has-21-digits	Fibonacci(100)	354224848179261915075
+a-real-index-uses-f-nu-frac-varphi-nu-cos-pi-nu	Fibonacci(1.5)	0.920442065259926
+the-two-argument-fibonacci-polynomial-f-7-x-from	Fibonacci(7, x)	Add(Power(x, 6), Multiply(5, Power(x, 4)), Multiply(6, Power(x, 2)), 1)
+the-fibonacci-polynomial-at-a-real-order-and	Fibonacci(5.8, 3)	283.4827308329499
+special-value-of-the-fibonacci-polynomial-f-1-0	Fibonacci(1, 0)	1
+special-value-of-the-fibonacci-polynomial-f-0-0	Fibonacci(0, 0)	0
+f-3-x-x-2-1-threads-element-wise-over-a-matrix	Fibonacci(3, List(List(-1, 0), List(0, 5)))	List(List(2, 1), List(1, 26))
+threads-element-wise-over-a-list-as-wolfram-s	Fibonacci(List(1, 2, 3, 4))	List(1, 1, 2, 3)
+fibonacci-n-x-symbolic-order-stays-exact	Fibonacci(n, x)	Divide(Add(Power(Multiply(Rational(1, 2), Add(x, Sqrt(Add(Power(x, 2), 4)))), n), Negate(Multiply(Cos(Multiply(Pi, n)), Power(Multiply(Rational(1, 2), Add(x, Sqrt(Add(Power(x, 2), 4)))), Negate(n))))), Sqrt(Add(Power(x, 2), 4)))
+fibonacci-half-x-exact-closed-form	Fibonacci(Rational(1, 2), x)	Divide(Multiply(Sqrt(2), Sqrt(Add(x, Sqrt(Add(Power(x, 2), 4))))), Multiply(2, Sqrt(Add(Power(x, 2), 4))))
+n-fibonacci-15-over-17-50	N(Fibonacci(Rational(15, 17)), 50)	0.95651991392431122508582263427692298648606969012061
+n-fibonacci-5-8-minus-i	N(Fibonacci(5, Complex(8, -1)))	Complex(3903, -2064)
+functionexpand-fibonacci-n-x	FunctionExpand(Fibonacci(n, x))	Divide(Add(Power(Multiply(Rational(1, 2), Add(x, Sqrt(Add(Power(x, 2), 4)))), n), Negate(Multiply(Cos(Multiply(Pi, n)), Power(Multiply(Rational(1, 2), Add(x, Sqrt(Add(Power(x, 2), 4)))), Negate(n))))), Sqrt(Add(Power(x, 2), 4)))
+functionexpand-fibonacci-1-over-2-x	FunctionExpand(Fibonacci(Rational(1, 2), x))	Divide(Multiply(Sqrt(2), Sqrt(Add(x, Sqrt(Add(Power(x, 2), 4))))), Multiply(2, Sqrt(Add(Power(x, 2), 4))))
+fibonacci-2-neg-x-eq-neg-fibonacci-2-x	Equal(Fibonacci(2, Negate(x)), Negate(Fibonacci(2, x)))	True
+fibonacci-1-neg-x-eq-fibonacci-1-x	Equal(Fibonacci(1, Negate(x)), Fibonacci(1, x))	True
+fibonacci-list-1-2-3-4-5	Fibonacci(List(1, 2, 3, 4, 5))	List(1, 1, 2, 3, 5)
+generatingfunction-fibonacci-n-n-x	GeneratingFunction(Fibonacci(n), n, x)	Divide(x, Add(Negate(Power(x, 2)), Negate(x), 1))
+fibonacci-1-conjugate-z-eq-conjugate-fibonacci-1	Equal(Fibonacci(1, Conjugate(z)), Conjugate(Fibonacci(1, z)))	True
+matrixfunction-function-fibonacci-3-1-1-list	MatrixFunction(Function(Block(Fibonacci(3, _1)), _1), List(List(-1, 0), List(0, 5)))	List(List(2, 0), List(0, 26))
+consecutive-ratios-f-n-1-f-n-converge-to-the	Divide(Fibonacci(20), Fibonacci(19))	Rational(6765, 4181)
+sum-k-1-n-f-k-f-n-2-1-here-f-12-1-143	Sum(Fibonacci(k), Tuple(k, 1, 10))	143
+the-doubling-identity-f-2n-f-n-l-n-see-lucasl	Equal(Fibonacci(20), Multiply(Fibonacci(10), LucasL(10)))	True
+the-defining-recurrence-f-10-f-9-f-8	Equal(Fibonacci(10), Add(Fibonacci(9), Fibonacci(8)))	True
+cassini-s-identity-f-n-1-f-n-1-f-n-2-1-n-here-at	Subtract(Multiply(Fibonacci(5), Fibonacci(7)), Power(Fibonacci(6), 2))	1
+gcd-f-12-f-18-f-gcd-12-18	Equal(GCD(Fibonacci(12), Fibonacci(18)), Fibonacci(GCD(12, 18)))	True
+negative-indices-are-supported-via-f-n-1-n-1-f-n	Fibonacci(-5)	5
+fibonacci-2	Fibonacci(2)	1
+fibonacci-3	Fibonacci(3)	2
+fibonacci-4	Fibonacci(4)	3
+fibonacci-5	Fibonacci(5)	5
+fibonacci-6	Fibonacci(6)	8
+fibonacci-7	Fibonacci(7)	13
+fibonacci-9	Fibonacci(9)	34
+fibonacci-neg-1	Fibonacci(-1)	1
+f-1000-has-209-digits-see-integerdigits	Length(IntegerDigits(Fibonacci(1000)))	209
+they-grow-fast-f-50-already-exceeds-twelve	Fibonacci(50)	12586269025

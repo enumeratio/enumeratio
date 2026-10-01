@@ -1,2 +1,2 @@
-id	in
-xgcd-240-46	XGCD[240, 46]
+id	in	out
+xgcd-240-46	XGCD(240, 46)	Tuple(2, -9, 47)

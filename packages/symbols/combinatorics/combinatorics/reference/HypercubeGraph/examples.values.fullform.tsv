@@ -1,6 +1,6 @@
-id	in	back
-q3-has-8-vertices-12-edges	List[VertexCount[HypercubeGraph[3]], EdgeCount[HypercubeGraph[3]]]	
-hypercubegraph-3	HypercubeGraph[3]	
-map-function-vertexeccentricity-hypercubegraph-3	Map[Function[VertexEccentricity[HypercubeGraph[3], Slot[1]]], VertexList[HypercubeGraph[3]]]	[Map, [Function, [VertexEccentricity, [HypercubeGraph, 3], _1]], [VertexList, [HypercubeGraph, 3]]]
-isbipartitegraph-hypercubegraph-3	BipartiteGraphQ[HypercubeGraph[3]]	
-hypercubegraph-2	HypercubeGraph[2]	
+id	in	out
+q3-has-8-vertices-12-edges	List(VertexCount(HypercubeGraph(3)), EdgeCount(HypercubeGraph(3)))	List(8, 12)
+hypercubegraph-3	HypercubeGraph(3)	Graph(List(1, 2, 3, 4, 5, 6, 7, 8), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(1, 5), UndirectedEdge(2, 4), UndirectedEdge(2, 6), UndirectedEdge(3, 4), UndirectedEdge(3, 7), UndirectedEdge(4, 8), UndirectedEdge(5, 6), UndirectedEdge(5, 7), UndirectedEdge(6, 8), UndirectedEdge(7, 8)))
+map-function-vertexeccentricity-hypercubegraph-3	Map(Function(Block(VertexEccentricity(HypercubeGraph(3), _1)), _1), VertexList(HypercubeGraph(3)))	List(3, 3, 3, 3, 3, 3, 3, 3)
+isbipartitegraph-hypercubegraph-3	IsBipartiteGraph(HypercubeGraph(3))	True
+hypercubegraph-2	HypercubeGraph(2)	Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(1, 3), UndirectedEdge(2, 4), UndirectedEdge(3, 4)))

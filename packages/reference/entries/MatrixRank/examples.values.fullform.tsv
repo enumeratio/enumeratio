@@ -1,30 +1,30 @@
-id	in	back
-matrixrank-list-list-1-0-list-0-1	MatrixRank[List[List[1, 0], List[0, 1]]]	
-matrixrank-list-list-1-2-list-2-4	MatrixRank[List[List[1, 2], List[2, 4]]]	
-matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9	MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]	
-non-square-matrices-too	MatrixRank[List[List[1, 2, 3], List[2, 4, 6]]]	
-matrixrank-list-list-0-0-list-0-0	MatrixRank[List[List[0, 0], List[0, 0]]]	
-a-matrix-of-pairwise-distinct-symbols-has-full	MatrixRank[List[List[a, b], List[c, d]]]	
-matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0	MatrixRank[List[List[0, 5, 2, 4, 4], List[2, 5, 0, 4, 0], List[5, 1, 5, 4, 5]]]	
-approximate-entries	MatrixRank[List[List[1, 2.5], List[3.5, 4]]]	
-complex-entries-the-second-row-is-i-times-the	MatrixRank[List[List[1, I], List[I, -1]]]	
-exact-numeric-entries	MatrixRank[List[List[Pi, E], List[Times[2, Pi], Times[2, E]]]]	
-the-second-row-is-sqrt-2-times-the-first	MatrixRank[List[List[Sqrt[2], 1], List[2, Sqrt[2]]]]	
-a-3-4-matrix-with-one-dependent-row	MatrixRank[List[List[1, 2, 3, 4], List[2, 4, 6, 8], List[1, 0, 1, 0]]]	
-matrixrank-identitymatrix-5	MatrixRank[IdentityMatrix[5]]	
-a-3-times-3-matrix-of-pairwise-distinct-symbols	MatrixRank[List[List[p, q, r], List[s, t, u], List[v, w, x]]]	
-matrixrank-list-list-a-b-list-2a-2b	MatrixRank[List[List[a, b], List[Times[2, a], Times[2, b]]]]	
-matrixrank-hilbertmatrix-3	MatrixRank[HilbertMatrix[3]]	
+id	in	out
+matrixrank-list-list-1-0-list-0-1	MatrixRank(List(List(1, 0), List(0, 1)))	2
+matrixrank-list-list-1-2-list-2-4	MatrixRank(List(List(1, 2), List(2, 4)))	1
+matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9	MatrixRank(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9)))	2
+non-square-matrices-too	MatrixRank(List(List(1, 2, 3), List(2, 4, 6)))	1
+matrixrank-list-list-0-0-list-0-0	MatrixRank(List(List(0, 0), List(0, 0)))	0
+a-matrix-of-pairwise-distinct-symbols-has-full	MatrixRank(List(List(a, b), List(c, d)))	2
+matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0	MatrixRank(List(List(0, 5, 2, 4, 4), List(2, 5, 0, 4, 0), List(5, 1, 5, 4, 5)))	3
+approximate-entries	MatrixRank(List(List(1, 2.5), List(3.5, 4)))	2
+complex-entries-the-second-row-is-i-times-the	MatrixRank(List(List(1, ImaginaryUnit), List(ImaginaryUnit, -1)))	1
+exact-numeric-entries	MatrixRank(List(List(Pi, ExponentialE), List(Multiply(2, Pi), Multiply(2, ExponentialE))))	1
+the-second-row-is-sqrt-2-times-the-first	MatrixRank(List(List(Sqrt(2), 1), List(2, Sqrt(2))))	1
+a-3-4-matrix-with-one-dependent-row	MatrixRank(List(List(1, 2, 3, 4), List(2, 4, 6, 8), List(1, 0, 1, 0)))	2
+matrixrank-identitymatrix-5	MatrixRank(IdentityMatrix(5))	5
+a-3-times-3-matrix-of-pairwise-distinct-symbols	MatrixRank(List(List(p, q, r), List(s, t, u), List(v, w, x)))	3
+matrixrank-list-list-a-b-list-2a-2b	MatrixRank(List(List(a, b), List(Multiply(2, a), Multiply(2, b))))	1
+matrixrank-hilbertmatrix-3	MatrixRank(HilbertMatrix(3))	3
 matrixrank-m		
 matrixrank-n-m		
-the-4-4-hilbert-matrix-is-badly-conditioned-but	MatrixRank[Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[4, 4]]]	[MatrixRank, [Array, [Function, [Divide, 1, [Subtract, [Add, _1, _2], 1]]], [List, 4, 4]]]
-row-rank-equals-column-rank	Equal[MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]], MatrixRank[Transpose[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]]]	
-rank-nullity-the-rank-plus-the-dimension-of-the	Plus[MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]], Length[Kernel[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]]]	
-an-outer-product-u-v-top-has-rank-1-a-lazy	MatrixRank[Array[Times, List[4, 4]]]	[MatrixRank, [Array, Multiply, [List, 4, 4]]]
+the-4-4-hilbert-matrix-is-badly-conditioned-but	MatrixRank(Tabulate(Function(Divide(1, Subtract(Add(_1, _2), 1))), 4, 4))	4
+row-rank-equals-column-rank	Equal(MatrixRank(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))), MatrixRank(Transpose(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9)))))	True
+rank-nullity-the-rank-plus-the-dimension-of-the	Add(MatrixRank(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9))), Length(Kernel(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 9)))))	3
+an-outer-product-u-v-top-has-rank-1-a-lazy	MatrixRank(Tabulate(Multiply, 4, 4))	1
 list-matrixrank-m-matrixrank-transpose-m		
-a-symbolic-matrix-stays-unevaluated-wolfram	MatrixRank[List[List[x, 1], List[1, x]]]	
-a-vector-is-treated-as-a-1-n-matrix-wolfram	MatrixRank[List[1, 2, 3]]	
-a-non-square-matrix-of-distinct-symbols-stays	MatrixRank[List[List[a, b, c], List[d, g, h]]]	
-repeating-a-symbol-across-rows-doesn-t-qualify	MatrixRank[List[List[a, b], List[a, b]]]	
-matrixrank-list-list-1-0-list-0-0	MatrixRank[List[List[1, 0], List[0, 0]]]	
-every-matrix-with-entries-i-j-has-rank-2	MatrixRank[Array[Plus, List[4, 4]]]	[MatrixRank, [Array, Add, [List, 4, 4]]]
+a-symbolic-matrix-stays-unevaluated-wolfram	MatrixRank(List(List(x, 1), List(1, x)))	MatrixRank(List(List(x, 1), List(1, x)))
+a-vector-is-treated-as-a-1-n-matrix-wolfram	MatrixRank(List(1, 2, 3))	1
+a-non-square-matrix-of-distinct-symbols-stays	MatrixRank(List(List(a, b, c), List(d, g, h)))	MatrixRank(List(List(a, b, c), List(d, g, h)))
+repeating-a-symbol-across-rows-doesn-t-qualify	MatrixRank(List(List(a, b), List(a, b)))	1
+matrixrank-list-list-1-0-list-0-0	MatrixRank(List(List(1, 0), List(0, 0)))	1
+every-matrix-with-entries-i-j-has-rank-2	MatrixRank(Tabulate(Add, 4, 4))	2

@@ -1,5 +1,5 @@
-id	in	back
-count-restrictedgrowthstrings-4	Length[RestrictedGrowthStrings[4]]	[Length, [RestrictedGrowthStrings, 4]]
-first-element-of-restrictedgrowthstrings-4	Part[RestrictedGrowthStrings[4], 1]	
-every-element-of-restrictedgrowthstrings-4	Take[RestrictedGrowthStrings[4], 5]	
-blocks-through-set-partitions	Tally[CombinatorialStat[RestrictedGrowthStrings[4], "Blocks"]]	
+id	in	out
+count-restrictedgrowthstrings-4	Count(RestrictedGrowthStrings(4))	15
+first-element-of-restrictedgrowthstrings-4	At(RestrictedGrowthStrings(4), 1)	RestrictedGrowthString(List(0, 0, 0, 0))
+every-element-of-restrictedgrowthstrings-4	Take(RestrictedGrowthStrings(4), 5)	List(RestrictedGrowthString(List(0, 0, 0, 0)), RestrictedGrowthString(List(0, 0, 0, 1)), RestrictedGrowthString(List(0, 0, 1, 0)), RestrictedGrowthString(List(0, 0, 1, 1)), RestrictedGrowthString(List(0, 0, 1, 2)))
+blocks-through-set-partitions	Tally(CombinatorialStat(RestrictedGrowthStrings(4), "Blocks"))	Tuple(List(1, 2, 3, 4), List(1, 7, 6, 1))

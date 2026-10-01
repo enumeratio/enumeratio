@@ -1,4 +1,4 @@
-id	in
-completegraph-n-is-complete	CompleteGraphQ[CompleteGraph[5]]
-a-path-is-not-complete	CompleteGraphQ[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]]]]
-a-directed-2-cycle-is-complete	CompleteGraphQ[Graph[List[1, 2], List[DirectedEdge[1, 2], DirectedEdge[2, 1]]]]
+id	in	out
+completegraph-n-is-complete	IsCompleteGraph(CompleteGraph(5))	True
+a-path-is-not-complete	IsCompleteGraph(Graph(List(1, 2, 3), List(UndirectedEdge(1, 2), UndirectedEdge(2, 3))))	False
+a-directed-2-cycle-is-complete	IsCompleteGraph(Graph(List(1, 2), List(DirectedEdge(1, 2), DirectedEdge(2, 1))))	True

@@ -1,35 +1,35 @@
-id	in
-totient-12	EulerPhi[12]
-totient-36	EulerPhi[36]
-totient-1	EulerPhi[1]
-totient-10	EulerPhi[10]
-varphi-0-0-as-in-wolfram	EulerPhi[0]
-threads-element-wise-over-a-list-as-wolfram-s	EulerPhi[List[2, 4, 6]]
-large-integers-varphi-50	EulerPhi[Factorial[50]]
-negative-n-varphi-n-varphi-n	EulerPhi[-10]
-rsa-key-setup-varphi-17-times-23-16-times-22-352	EulerPhi[391]
-euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	PowerMod[7, EulerPhi[10], 10]
-sum-d-mid-n-varphi-d-n-checked-over-the-divisors	Plus[EulerPhi[1], EulerPhi[2], EulerPhi[3], EulerPhi[4], EulerPhi[6], EulerPhi[12]]
-multiplicative-varphi-mn-varphi-m-varphi-n-when	Equal[EulerPhi[12], Times[EulerPhi[4], EulerPhi[3]]]
-varphi-p-p-1-for-a-prime-p	EulerPhi[17]
-varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	EulerPhi[81]
-totient-100	EulerPhi[100]
-totient-35	EulerPhi[35]
-divides-carmichaellambda-8-totient-8	Divisible[EulerPhi[8], CarmichaelLambda[8]]
-list-totient-25-carmichaellambda-25	List[EulerPhi[25], CarmichaelLambda[25]]
-divisorsum-15-totient-eq-15	Equal[DivisorSum[15, EulerPhi], 15]
-totient-1-023-eq-totient-3-times-totient-11	Equal[EulerPhi[1023], Times[EulerPhi[3], EulerPhi[11], EulerPhi[31]]]
-totient-2	EulerPhi[2]
-totient-3	EulerPhi[3]
-totient-4	EulerPhi[4]
-totient-5	EulerPhi[5]
-totient-6	EulerPhi[6]
-totient-7	EulerPhi[7]
-totient-8	EulerPhi[8]
-totient-9	EulerPhi[9]
-totient-11	EulerPhi[11]
-totient-13	EulerPhi[13]
-totient-14	EulerPhi[14]
-totient-15	EulerPhi[15]
-totient-16	EulerPhi[16]
-assuming-p-in-primes-r-in-integers-r-gt-0	
+id	in	out
+totient-12	Totient(12)	4
+totient-36	Totient(36)	12
+totient-1	Totient(1)	1
+totient-10	Totient(10)	4
+varphi-0-0-as-in-wolfram	Totient(0)	0
+threads-element-wise-over-a-list-as-wolfram-s	Totient(List(2, 4, 6))	List(1, 2, 2)
+large-integers-varphi-50	Totient(Factorial(50))	42185592008858390426793121078167038417888549535744e+14
+negative-n-varphi-n-varphi-n	Totient(-10)	4
+rsa-key-setup-varphi-17-times-23-16-times-22-352	Totient(391)	352
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when	PowerMod(7, Totient(10), 10)	1
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors	Add(Totient(1), Totient(2), Totient(3), Totient(4), Totient(6), Totient(12))	12
+multiplicative-varphi-mn-varphi-m-varphi-n-when	Equal(Totient(12), Multiply(Totient(4), Totient(3)))	True
+varphi-p-p-1-for-a-prime-p	Totient(17)	16
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	Totient(81)	54
+totient-100	Totient(100)	40
+totient-35	Totient(35)	24
+divides-carmichaellambda-8-totient-8	Divides(CarmichaelLambda(8), Totient(8))	True
+list-totient-25-carmichaellambda-25	List(Totient(25), CarmichaelLambda(25))	List(20, 20)
+divisorsum-15-totient-eq-15	Equal(DivisorSum(15, Totient), 15)	True
+totient-1-023-eq-totient-3-times-totient-11	Equal(Totient(1023), Multiply(Totient(3), Totient(11), Totient(31)))	True
+totient-2	Totient(2)	1
+totient-3	Totient(3)	2
+totient-4	Totient(4)	2
+totient-5	Totient(5)	4
+totient-6	Totient(6)	2
+totient-7	Totient(7)	6
+totient-8	Totient(8)	4
+totient-9	Totient(9)	6
+totient-11	Totient(11)	10
+totient-13	Totient(13)	12
+totient-14	Totient(14)	6
+totient-15	Totient(15)	8
+totient-16	Totient(16)	8
+assuming-p-in-primes-r-in-integers-r-gt-0		

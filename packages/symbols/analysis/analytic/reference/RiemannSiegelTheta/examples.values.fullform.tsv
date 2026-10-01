@@ -1,5 +1,5 @@
-id	in
-riemannsiegeltheta-1p5	RiemannSiegelTheta[1.5]
-n-riemannsiegeltheta-10	N[RiemannSiegelTheta[10]]
-riemannsiegeltheta-50	N[RiemannSiegelTheta[50]]
-riemannsiegeltheta-0	RiemannSiegelTheta[0]
+id	in	out
+riemannsiegeltheta-1p5	RiemannSiegelTheta(1.5)	-2.19819085737941
+n-riemannsiegeltheta-10	N(RiemannSiegelTheta(10))	-3.0670743962898954
+riemannsiegeltheta-50	N(RiemannSiegelTheta(50))	26.46136607016141
+riemannsiegeltheta-0	RiemannSiegelTheta(0)	0

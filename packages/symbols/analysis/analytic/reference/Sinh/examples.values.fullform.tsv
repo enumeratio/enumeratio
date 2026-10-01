@@ -1,36 +1,36 @@
-id	in	back
-n-forces-the-numeric-result-that-plain	N[Sinh[0]]	
-n-sinh-1	N[Sinh[1]]	
-stays-symbolic-even-at-0-compute-engine-doesn-t	Sinh[0]	
-a-float-argument-evaluates-directly-no-n-needed	Sinh[1.4]	
-arbitrary-precision-via-n	N[Sinh[Rational[7, 5]]]	
-evaluates-at-a-complex-argument	Sinh[Complex[2.5, 1]]	
-sinh-i-pi-2-i-sin-pi-2-i	Sinh[Times[I, Divide[Pi, 2]]]	
-element-wise-over-a-matrix-of-imaginary	Sinh[List[List[Times[I, Divide[Times[1, Pi], 3]], Minus[Times[I, Divide[Times[1, Pi], 3]]]], List[0, Minus[Times[I, Divide[Times[1, Pi], 6]]]]]]	
-interval-arithmetic-sinh-is-increasing-so-sinh-0	Sinh[Interval[List[0, Log[3]]]]	
-uncertainty-propagation-sinh-2-sqrt-3-pm-0-1	Sinh[Around[Divide[2, Sqrt[3]], 0.1]]	
-sinh-positiveinfinity	Sinh[Infinity]	
-sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic	Sinh[Log[2]]	
-a-real-symbolic-argument-is-untouched	Sinh[x]	
-oddness-pulls-the-sign-out-of-a-symbolic	Sinh[Minus[x]]	
-sinh-arsinh-x-x-for-every-x	Sinh[ArcSinh[x]]	
-sinh-arsinh-2-2-for-every-x	Sinh[ArcSinh[2]]	
-derivative-cosh-x	D[Sinh[x], x]	
-antiderivative	Integrate[Sinh[x], x]	
-taylor-series-about-0	Series[Sinh[x], x, 0, 5]	
-to-30-significant-digits-not-yet-the-last-digit	N[Sinh[1], 30]	
-n-decimalizes-sinh-i-pi-2-not-just-the-exact	N[Sinh[Times[I, Divide[Pi, 2]]]]	
-n-sinh-7-over-5-50	N[Sinh[Rational[7, 5]], 50]	
-sinh-1-over-5-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 5]], Pi]]	
-sinh-1-over-24-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 24]], Pi]]	
-matrixfunction-function-sinh-1-1-list-list-1	MatrixFunction[Function[Sinh[Slot[1]]], List[List[Times[Complex[0, Rational[1, 3]], Pi], Times[Complex[0, Rational[-1, 3]], Pi]], List[0, Times[Complex[0, Rational[-1, 6]], Pi]]]]	[MatrixFunction, [Function, [Sinh, _1]], [List, [List, [Multiply, [Complex, 0, [Rational, 1, 3]], Pi], [Multiply, [Complex, 0, [Rational, -1, 3]], Pi]], [List, 0, [Multiply, [Complex, 0, [Rational, -1, 6]], Pi]]]]
-odd-function-sinh-x-sinh-x	Equal[Sinh[Minus[1]], Minus[Sinh[1]]]	
-definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2	Equal[Sinh[1], Divide[Subtract[Exp[1], Exp[Minus[1]]], 2]]	
-the-definition-sinh-x-frac-e-x-e-x-2	TrigToExp[Sinh[x]]	
-sinh-1-over-12-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 12]], Pi]]	
-sinh-1-over-10-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 10]], Pi]]	
-sinh-1-over-9-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 9]], Pi]]	
-sinh-1-over-8-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 8]], Pi]]	
-sinh-1-over-7-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 7]], Pi]]	
-sinh-1-over-6-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 6]], Pi]]	
-sinh-2-over-9-times-i-times-pi	Sinh[Times[Complex[0, Rational[2, 9]], Pi]]	
+id	in	out
+n-forces-the-numeric-result-that-plain	N(Sinh(0))	0
+n-sinh-1	N(Sinh(1))	1.17520119364380145688
+stays-symbolic-even-at-0-compute-engine-doesn-t	Sinh(0)	0
+a-float-argument-evaluates-directly-no-n-needed	Sinh(1.4)	1.90430150145153405514
+arbitrary-precision-via-n	N(Sinh(Rational(7, 5)))	1.90430150145153405514
+evaluates-at-a-complex-argument	Sinh(Complex(2.5, 1))	Complex(3.268939432079549, 5.160143667579705)
+sinh-i-pi-2-i-sin-pi-2-i	Sinh(Multiply(ImaginaryUnit, Divide(Pi, 2)))	Complex(0, 1)
+element-wise-over-a-matrix-of-imaginary	Sinh(List(List(Multiply(ImaginaryUnit, Divide(Multiply(1, Pi), 3)), Negate(Multiply(ImaginaryUnit, Divide(Multiply(1, Pi), 3)))), List(0, Negate(Multiply(ImaginaryUnit, Divide(Multiply(1, Pi), 6))))))	List(List(Complex(0, Divide(Sqrt(3), 2)), Complex(0, Negate(Divide(Sqrt(3), 2)))), List(0, Complex(0, Rational(-1, 2))))
+interval-arithmetic-sinh-is-increasing-so-sinh-0	Sinh(Interval(0, Ln(3)))	Interval(0, Rational(4, 3))
+uncertainty-propagation-sinh-2-sqrt-3-pm-0-1	Sinh(Around(Divide(2, Sqrt(3)), 0.1))	Around(1.4289605814815758, 0.1744112480153778)
+sinh-positiveinfinity	Sinh(PositiveInfinity)	PositiveInfinity
+sinh-ln-2-frac-2-1-2-2-frac-34-stays-symbolic	Sinh(Ln(2))	Rational(3, 4)
+a-real-symbolic-argument-is-untouched	Sinh(x)	Sinh(x)
+oddness-pulls-the-sign-out-of-a-symbolic	Sinh(Negate(x))	Negate(Sinh(x))
+sinh-arsinh-x-x-for-every-x	Sinh(Arsinh(x))	x
+sinh-arsinh-2-2-for-every-x	Sinh(Arsinh(2))	2
+derivative-cosh-x	D(Sinh(x), x)	Cosh(x)
+antiderivative	Integrate(Sinh(x), x)	Cosh(x)
+taylor-series-about-0	Series(Sinh(x), x, 0, 5)	Add(Multiply(Rational(1, 120), Power(x, 5)), Multiply(Rational(1, 6), Power(x, 3)), x, BigO(Power(x, 7)))
+to-30-significant-digits-not-yet-the-last-digit	N(Sinh(1), 30)	1.1752011936438014568823818506
+n-decimalizes-sinh-i-pi-2-not-just-the-exact	N(Sinh(Multiply(ImaginaryUnit, Divide(Pi, 2))))	Complex(0.0, 1.0)
+n-sinh-7-over-5-50	N(Sinh(Rational(7, 5)), 50)	1.9043015014515340551421238276974263095516386837213
+sinh-1-over-5-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(1, 5)), Pi))	Multiply(Complex(0, Divide(Sqrt(2), 4)), Sqrt(Add(5, Negate(Sqrt(5)))))
+sinh-1-over-24-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(1, 24)), Pi))	Multiply(Complex(0, 1), Sin(Multiply(Rational(1, 24), Pi)))
+matrixfunction-function-sinh-1-1-list-list-1	MatrixFunction(Function(Block(Sinh(_1)), _1), List(List(Multiply(Complex(0, Rational(1, 3)), Pi), Multiply(Complex(0, Rational(-1, 3)), Pi)), List(0, Multiply(Complex(0, Rational(-1, 6)), Pi))))	List(List(Complex(0, Divide(Sqrt(3), 2)), Add(Complex(0, Negate(Divide(Sqrt(3), 3))), Complex(0, Rational(-1, 3)))), List(0, Complex(0, Rational(-1, 2))))
+odd-function-sinh-x-sinh-x	Equal(Sinh(Negate(1)), Negate(Sinh(1)))	True
+definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2	Equal(Sinh(1), Divide(Subtract(Exp(1), Exp(Negate(1))), 2))	True
+the-definition-sinh-x-frac-e-x-e-x-2	TrigToExp(Sinh(x))	Multiply(Rational(1, 2), Add(Negate(Power(ExponentialE, Negate(x))), Power(ExponentialE, x)))
+sinh-1-over-12-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(1, 12)), Pi))	Multiply(Complex(0, Divide(Sqrt(2), 4)), Add(-1, Sqrt(3)))
+sinh-1-over-10-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(1, 10)), Pi))	Multiply(Complex(0, Rational(1, 4)), Add(-1, Sqrt(5)))
+sinh-1-over-9-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(1, 9)), Pi))	Multiply(Complex(0, 1), Sin(Multiply(Rational(1, 9), Pi)))
+sinh-1-over-8-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(1, 8)), Pi))	Multiply(Complex(0, Rational(1, 2)), Sqrt(Add(2, Negate(Sqrt(2)))))
+sinh-1-over-7-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(1, 7)), Pi))	Multiply(Complex(0, 1), Sin(Multiply(Rational(1, 7), Pi)))
+sinh-1-over-6-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(1, 6)), Pi))	Complex(0, Rational(1, 2))
+sinh-2-over-9-times-i-times-pi	Sinh(Multiply(Complex(0, Rational(2, 9)), Pi))	Multiply(Complex(0, 1), Sin(Multiply(Rational(2, 9), Pi)))

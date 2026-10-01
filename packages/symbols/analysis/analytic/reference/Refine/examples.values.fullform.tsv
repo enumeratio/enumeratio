@@ -1,31 +1,31 @@
-id	in
-sqrt-of-x-squared-under-x-greater-than-0	Refine[Sqrt[Power[x, 2]], Greater[x, 0]]
-sqrt-of-x-squared-under-x-less-than-0	Refine[Sqrt[Power[x, 2]], Less[x, 0]]
-abs-under-x-greater-than-0	Refine[Abs[x], Greater[x, 0]]
-sign-under-x-greater-than-0	Refine[Sign[x], Greater[x, 0]]
-log-of-exp-under-x-real	Refine[Log[Exp[x]], Element[x, Reals]]
-refine-sqrt-x-pow-2-x-in-realnumbers	Refine[Sqrt[Power[x, 2]], Element[x, Reals]]
-refine-x-pow-3-pow-1-times-3-pow-neg-1-x-gt-eq-0	Refine[Power[Power[x, 3], Times[1, Power[3, -1]]], GreaterEqual[x, 0]]
-refine-a-pow-b-pow-c-neg-1-lt-b-lt-1	Refine[Power[Power[a, b], c], Less[-1, b, 1]]
-refine-a-pow-p-times-b-pow-p-a-gt-0-b-gt-0	Refine[Times[Power[a, p], Power[b, p]], And[Greater[a, 0], Greater[b, 0]]]
-refine-ln-x-x-lt-0	Refine[Log[x], Less[x, 0]]
-refine-ln-x-pow-p-neg-1-lt-p-lt-1	Refine[Log[Power[x, p]], Less[-1, p, 1]]
-refine-a-pow-2-minus-b-pow-2-plus-1-eq-0-a-plus	Refine[Equal[Plus[Power[a, 2], Times[-1, Power[b, 2]], 1], 0], Equal[Plus[a, b], 0]]
-refine-x-minus-1-pow-2-plus-y-minus-2-pow-2-lt-3	Refine[Less[Plus[Power[Plus[x, -1], 2], Power[Plus[y, -2], 2]], Times[3, Power[2, -1]]], LessEqual[Plus[Power[x, 2], Power[y, 2]], 1]]
-refine-ceil-x-inequality-2-less-x-lessequal-3	Refine[Ceiling[x], Inequality[2, Less, x, LessEqual, 3]]
-refine-fractionalpart-a-a-lt-0-a-mod-1-eq-1	Refine[FractionalPart[a], And[Less[a, 0], Equal[Mod[a, 1], Times[1, Power[3, -1]]]]]
-assuming-x-gt-0-refine-sqrt-x-pow-2	Assuming[Greater[x, 0], Refine[Sqrt[Power[x, 2]]]]
-refine-sin-k-times-pi-k-in-integers	Refine[Sin[Times[k, Pi]], Element[k, Integers]]
-refine-cos-x-plus-k-times-pi-k-in-integers	Refine[Cos[Plus[x, Times[k, Pi]]], Element[k, Integers]]
-refine-2x-plus-x-pow-p-times-x-times-gamma-x	Refine[Element[Times[Plus[Times[2, x], Power[x, p]], Power[Times[x, Gamma[Plus[x, 2]]], -1]], Reals], And[Greater[x, 0], Greater[p, 0]]]
-refine-2-times-k-pow-3-times-floor-x-pow-k-in	Refine[Element[Times[2, Power[k, 3], Power[Floor[x], k]], Integers], And[Element[k, Integers], Greater[k, 0], Element[x, Reals]]]
-refine-floor-2a-plus-1-a-in-integers	Refine[Floor[Plus[Times[2, a], 1]], Element[a, Integers]]
-refine-a-mod-4-a-plus-3-times-4-pow-neg-1-in	Refine[Mod[a, 4], Element[Times[Plus[a, 3], Power[4, -1]], Integers]]
-refine-sqrt-x-pow-2	Refine[Sqrt[Power[x, 2]]]
-assuming-x-gt-0-refine-sqrt-x-pow-2-times-y-pow	Assuming[Greater[x, 0], Refine[Sqrt[Times[Power[x, 2], Power[y, 2]]], Less[y, 0]]]
-refine-arctan-tan-x-neg-pi-times-2-pow-neg-1-lt	Refine[ArcTan[Tan[x]], Less[Times[Times[-1, Pi], Power[2, -1]], Re[x], Times[Pi, Power[2, -1]]]]
-refine-ln-x-pow-y-x-gt-0-y-in-realnumbers	Refine[Log[Power[x, y]], And[Greater[x, 0], Element[y, Reals]]]
-refine-sqrt-x-pow-2-plus-2-times-x-times-y-plus	Refine[Sqrt[Plus[Power[x, 2], Times[2, x, y], Power[y, 2]]], GreaterEqual[Plus[x, y], 0]]
-an-undecidable-inequality-is-left-alone	Refine[Greater[Power[x, 2], 0]]
-refine-x-in-realnumbers-x-pow-2-lt-1	Refine[Element[x, Reals], Less[Power[x, 2], 1]]
-refine-neg-1-lt-x-lt-1-x-pow-2-lt-1	
+id	in	out
+sqrt-of-x-squared-under-x-greater-than-0	Refine(Sqrt(Power(x, 2)), Greater(x, 0))	x
+sqrt-of-x-squared-under-x-less-than-0	Refine(Sqrt(Power(x, 2)), Less(x, 0))	Negate(x)
+abs-under-x-greater-than-0	Refine(Abs(x), Greater(x, 0))	x
+sign-under-x-greater-than-0	Refine(Sign(x), Greater(x, 0))	1
+log-of-exp-under-x-real	Refine(Ln(Exp(x)), Element(x, RealNumbers))	x
+refine-sqrt-x-pow-2-x-in-realnumbers	Refine(Sqrt(Power(x, 2)), Element(x, RealNumbers))	Abs(x)
+refine-x-pow-3-pow-1-times-3-pow-neg-1-x-gt-eq-0	Refine(Power(Power(x, 3), Multiply(1, Power(3, -1))), GreaterEqual(x, 0))	x
+refine-a-pow-b-pow-c-neg-1-lt-b-lt-1	Refine(Power(Power(a, b), c), Less(-1, b, 1))	Power(Power(a, b), c)
+refine-a-pow-p-times-b-pow-p-a-gt-0-b-gt-0	Refine(Multiply(Power(a, p), Power(b, p)), And(Greater(a, 0), Greater(b, 0)))	Multiply(Power(a, p), Power(b, p))
+refine-ln-x-x-lt-0	Refine(Ln(x), Less(x, 0))	Ln(x)
+refine-ln-x-pow-p-neg-1-lt-p-lt-1	Refine(Ln(Power(x, p)), Less(-1, p, 1))	Multiply(p, Ln(x))
+refine-a-pow-2-minus-b-pow-2-plus-1-eq-0-a-plus	Refine(Equal(Add(Power(a, 2), Multiply(-1, Power(b, 2)), 1), 0), Equal(Add(a, b), 0))	Equal(Add(Power(a, 2), Negate(Power(b, 2)), 1), 0)
+refine-x-minus-1-pow-2-plus-y-minus-2-pow-2-lt-3	Refine(Less(Add(Power(Add(x, -1), 2), Power(Add(y, -2), 2)), Multiply(3, Power(2, -1))), LessEqual(Add(Power(x, 2), Power(y, 2)), 1))	Less(Add(Power(Add(x, -1), 2), Power(Add(y, -2), 2)), Rational(3, 2))
+refine-ceil-x-inequality-2-less-x-lessequal-3	Refine(Ceil(x), Inequality(2, Less, x, LessEqual, 3))	Ceil(x)
+refine-fractionalpart-a-a-lt-0-a-mod-1-eq-1	Refine(FractionalPart(a), And(Less(a, 0), Equal(Mod(a, 1), Multiply(1, Power(3, -1)))))	FractionalPart(a)
+assuming-x-gt-0-refine-sqrt-x-pow-2	Assuming(Greater(x, 0), Refine(Sqrt(Power(x, 2))))	x
+refine-sin-k-times-pi-k-in-integers	Refine(Sin(Multiply(k, Pi)), Element(k, Integers))	0
+refine-cos-x-plus-k-times-pi-k-in-integers	Refine(Cos(Add(x, Multiply(k, Pi))), Element(k, Integers))	Cos(Add(Multiply(Pi, k), x))
+refine-2x-plus-x-pow-p-times-x-times-gamma-x	Refine(Element(Multiply(Add(Multiply(2, x), Power(x, p)), Power(Multiply(x, Gamma(Add(x, 2))), -1)), RealNumbers), And(Greater(x, 0), Greater(p, 0)))	Element(Divide(Add(Multiply(2, x), Power(x, p)), Multiply(x, Gamma(Add(x, 2)))), RealNumbers)
+refine-2-times-k-pow-3-times-floor-x-pow-k-in	Refine(Element(Multiply(2, Power(k, 3), Power(Floor(x), k)), Integers), And(Element(k, Integers), Greater(k, 0), Element(x, RealNumbers)))	Element(Multiply(2, Power(k, 3), Power(Floor(x), k)), Integers)
+refine-floor-2a-plus-1-a-in-integers	Refine(Floor(Add(Multiply(2, a), 1)), Element(a, Integers))	Floor(Add(Multiply(2, a), 1))
+refine-a-mod-4-a-plus-3-times-4-pow-neg-1-in	Refine(Mod(a, 4), Element(Multiply(Add(a, 3), Power(4, -1)), Integers))	Mod(a, 4)
+refine-sqrt-x-pow-2	Refine(Sqrt(Power(x, 2)))	Abs(x)
+assuming-x-gt-0-refine-sqrt-x-pow-2-times-y-pow	Assuming(Greater(x, 0), Refine(Sqrt(Multiply(Power(x, 2), Power(y, 2))), Less(y, 0)))	Negate(Multiply(x, y))
+refine-arctan-tan-x-neg-pi-times-2-pow-neg-1-lt	Refine(Arctan(Tan(x)), Less(Multiply(Multiply(-1, Pi), Power(2, -1)), Re(x), Multiply(Pi, Power(2, -1))))	Arctan(Tan(x))
+refine-ln-x-pow-y-x-gt-0-y-in-realnumbers	Refine(Ln(Power(x, y)), And(Greater(x, 0), Element(y, RealNumbers)))	Multiply(y, Ln(x))
+refine-sqrt-x-pow-2-plus-2-times-x-times-y-plus	Refine(Sqrt(Add(Power(x, 2), Multiply(2, x, y), Power(y, 2))), GreaterEqual(Add(x, y), 0))	Abs(Add(x, y))
+an-undecidable-inequality-is-left-alone	Refine(Greater(Power(x, 2), 0))	Less(0, Power(x, 2))
+refine-x-in-realnumbers-x-pow-2-lt-1	Refine(Element(x, RealNumbers), Less(Power(x, 2), 1))	Element(x, RealNumbers)
+refine-neg-1-lt-x-lt-1-x-pow-2-lt-1		

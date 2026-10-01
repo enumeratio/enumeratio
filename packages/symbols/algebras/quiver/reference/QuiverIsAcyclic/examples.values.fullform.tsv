@@ -1,4 +1,4 @@
-id	in
-quiverisacyclic-linearquiver-4	QuiverIsAcyclic[LinearQuiver[4]]
-a-loop-is-a-cycle	QuiverIsAcyclic[JordanQuiver]
-binom-7-2-the-same-as-incidencealgebra-chain-6	AlgebraDimension[PathAlgebra[LinearQuiver[6]]]
+id	in	out
+quiverisacyclic-linearquiver-4	QuiverIsAcyclic(LinearQuiver(4))	True
+a-loop-is-a-cycle	QuiverIsAcyclic(JordanQuiver)	False
+binom-7-2-the-same-as-incidencealgebra-chain-6	AlgebraDimension(PathAlgebra(LinearQuiver(6)))	21

@@ -2,6 +2,7 @@
 // effect of ./formats.ts), then re-exports the registry + Import/Export API.
 import "./formats.ts";
 
+export { toFullForm } from "./fullform.ts";
 export { normalizeInputForm, toInputForm } from "./inputform.ts";
 export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "@enumeratio/engine";
 export { asciiMathToTeX, fromAsciiMath, toAsciiMath } from "./asciimath.ts";

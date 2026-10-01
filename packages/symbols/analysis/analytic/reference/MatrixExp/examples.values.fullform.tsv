@@ -1,21 +1,21 @@
-id	in
-the-2-2-closed-form-exact-not-decimalized	MatrixExp[List[List[0, 1], List[1, 0]]]
-the-exponential-of-the-zero-matrix-is-the	MatrixExp[List[List[0, 0], List[0, 0]]]
-a-diagonal-matrix-exponentiates-entry-by-entry	MatrixExp[List[List[1, 0], List[0, 2]]]
-a-generic-2-2-matrix-no-special-structure	N[MatrixExp[List[List[1, 2], List[3, 4]]]]
-an-upper-triangular-3-3-matrix-numeric-path	N[MatrixExp[List[List[1, 2, 0], List[0, 3, 4], List[0, 0, 5]]]]
-a-nilpotent-4-4-generator-numeric-path	N[MatrixExp[List[List[0, 1, 0, 0], List[0, 0, 1, 0], List[0, 0, 0, 1], List[0, 0, 0, 0]]]]
-a-nilpotent-matrix-i-a-since-a-2-0	MatrixExp[List[List[0, 1], List[0, 0]]]
-a-diagonal-matrix-exp-of-each-diagonal-entry	MatrixExp[List[List[1, 0, 0], List[0, 2, 0], List[0, 0, 3]]]
-a-3-3-matrix-with-no-diagonal-nilpotent-or-2-2	N[MatrixExp[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]]
-a-jordan-block-e-i-n-e-i-n	MatrixExp[List[List[1, 1], List[0, 1]]]
-applied-to-a-vector-e-a-v-computed-as-e-a-via	MatrixExp[List[List[0, 1], List[0, 0]], List[1, 1]]
-a-3-times-3-nilpotent-generator-the-exponential	MatrixExp[List[List[0, 1, 0], List[0, 0, 1], List[0, 0, 0]]]
-a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	MatrixExp[List[List[2, 1], List[0, 2]]]
-matrixexp-list-list-a-b-list-0-c	
-matrixexp-diagonalmatrix-list-a-b-c	
-a-skew-symmetric-generator-gives-a-rotation	MatrixExp[List[List[0, 1], List[-1, 0]]]
-matrixexp-a-eq-matrixfunction-exp-a	Equal[MatrixExp[a], MatrixFunction[Exp, a]]
-rejects-a-non-square-argument	MatrixExp[List[List[1, 2, 3], List[4, 5, 6]]]
-a-generic-matrix-with-no-closed-form-stays	MatrixExp[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]
-euler-s-identity-for-matrices-rotation-by-pi-is	MatrixExp[List[List[0, Minus[Pi]], List[Pi, 0]]]
+id	in	out
+the-2-2-closed-form-exact-not-decimalized	MatrixExp(List(List(0, 1), List(1, 0)))	List(List(Cosh(1), Sinh(1)), List(Sinh(1), Cosh(1)))
+the-exponential-of-the-zero-matrix-is-the	MatrixExp(List(List(0, 0), List(0, 0)))	List(List(1, 0), List(0, 1))
+a-diagonal-matrix-exponentiates-entry-by-entry	MatrixExp(List(List(1, 0), List(0, 2)))	List(List(ExponentialE, 0), List(0, Power(ExponentialE, 2)))
+a-generic-2-2-matrix-no-special-structure	N(MatrixExp(List(List(1, 2), List(3, 4))))	List(List(51.968956198705, 74.73656456700321), List(112.10484685050481, 164.07380304920983))
+an-upper-triangular-3-3-matrix-numeric-path	N(MatrixExp(List(List(1, 2, 0), List(0, 3, 4), List(0, 0, 5))))	List(List(2.718281828459045, 17.367255094728623, 110.96036708466032), List(0, 20.085536923187668, 256.65524435877785), List(0, 0, 148.4131591025766))
+a-nilpotent-4-4-generator-numeric-path	N(MatrixExp(List(List(0, 1, 0, 0), List(0, 0, 1, 0), List(0, 0, 0, 1), List(0, 0, 0, 0))))	List(List(1, 1, 0.5, 0.16666666666666666), List(0, 1, 1, 0.5), List(0, 0, 1, 1), List(0, 0, 0, 1))
+a-nilpotent-matrix-i-a-since-a-2-0	MatrixExp(List(List(0, 1), List(0, 0)))	List(List(1, 1), List(0, 1))
+a-diagonal-matrix-exp-of-each-diagonal-entry	MatrixExp(List(List(1, 0, 0), List(0, 2, 0), List(0, 0, 3)))	List(List(ExponentialE, 0, 0), List(0, Power(ExponentialE, 2), 0), List(0, 0, Power(ExponentialE, 3)))
+a-3-3-matrix-with-no-diagonal-nilpotent-or-2-2	N(MatrixExp(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 10))))	List(List(1892793.8019664665, 2319804.34843383, 2921688.7942849034), List(4267596.877957099, 5230361.132647167, 6587401.226390927), List(7065281.732605146, 8659197.695551049, 10905868.064094879))
+a-jordan-block-e-i-n-e-i-n	MatrixExp(List(List(1, 1), List(0, 1)))	List(List(ExponentialE, ExponentialE), List(0, ExponentialE))
+applied-to-a-vector-e-a-v-computed-as-e-a-via	MatrixExp(List(List(0, 1), List(0, 0)), List(1, 1))	List(2, 1)
+a-3-times-3-nilpotent-generator-the-exponential	MatrixExp(List(List(0, 1, 0), List(0, 0, 1), List(0, 0, 0)))	List(List(1, 1, Rational(1, 2)), List(0, 1, 1), List(0, 0, 1))
+a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	MatrixExp(List(List(2, 1), List(0, 2)))	List(List(Power(ExponentialE, 2), Power(ExponentialE, 2)), List(0, Power(ExponentialE, 2)))
+matrixexp-list-list-a-b-list-0-c		
+matrixexp-diagonalmatrix-list-a-b-c		
+a-skew-symmetric-generator-gives-a-rotation	MatrixExp(List(List(0, 1), List(-1, 0)))	List(List(Cos(1), Sin(1)), List(Negate(Sin(1)), Cos(1)))
+matrixexp-a-eq-matrixfunction-exp-a	Equal(MatrixExp(a), MatrixFunction(Exp, a))	True
+rejects-a-non-square-argument	MatrixExp(List(List(1, 2, 3), List(4, 5, 6)))	Error("expected-square-matrix", "[[1,2,3],[4,5,6]]")
+a-generic-matrix-with-no-closed-form-stays	MatrixExp(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 10)))	MatrixExp(List(List(1, 2, 3), List(4, 5, 6), List(7, 8, 10)))
+euler-s-identity-for-matrices-rotation-by-pi-is	MatrixExp(List(List(0, Negate(Pi)), List(Pi, 0)))	List(List(-1, 0), List(0, -1))

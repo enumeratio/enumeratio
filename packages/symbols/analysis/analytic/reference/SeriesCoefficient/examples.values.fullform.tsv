@@ -1,13 +1,13 @@
-id	in
-exp-about-a-nonzero-point	SeriesCoefficient[Exp[x], List[x, 1, 2]]
-sin-about-zero	SeriesCoefficient[Sin[x], List[x, 0, 5]]
-geometric-series	SeriesCoefficient[Divide[1, Subtract[1, x]], List[x, 0, 10]]
-log-series	SeriesCoefficient[Log[Plus[1, x]], List[x, 0, 4]]
-seriescoefficient-x-times-1-over-x-minus-5-list	SeriesCoefficient[Times[x, Divide[1, Plus[x, -5]]], List[x, 0, n]]
-seriescoefficient-1-over-x-minus-3-times-x-minus	SeriesCoefficient[Times[Divide[1, Times[Plus[x, -3], Plus[x, -2], Plus[x, -1]]], Power[x, 3]], List[x, 0, n]]
-seriescoefficient-1-over-neg-x-plus-1-times	SeriesCoefficient[Times[Divide[1, Plus[Minus[x], 1]], Power[E, x]], List[x, 0, n]]
-seriescoefficient-ln-1-over-sqrt-neg-5-times-x	SeriesCoefficient[Log[Divide[1, Sqrt[Plus[Times[-5, Power[x, 2]], 1]]]], List[x, 0, n]]
-seriescoefficient-ln-1-over-sqrt-5-times-x-pow-2	SeriesCoefficient[Log[Divide[1, Sqrt[Plus[Times[5, Power[x, 2]], 1]]]], List[x, 0, n]]
-a-puiseux-half-integer-order-declines	SeriesCoefficient[Sqrt[x], List[x, 0, Rational[1, 2]]]
-a-negative-order-laurent-coefficient-declines	SeriesCoefficient[Divide[1, x], List[x, 0, -1]]
-a-removable-singularity-declines	SeriesCoefficient[Divide[Sin[x], x], List[x, 0, 0]]
+id	in	out
+exp-about-a-nonzero-point	SeriesCoefficient(Exp(x), List(x, 1, 2))	Multiply(Rational(1, 2), ExponentialE)
+sin-about-zero	SeriesCoefficient(Sin(x), List(x, 0, 5))	Rational(1, 120)
+geometric-series	SeriesCoefficient(Divide(1, Subtract(1, x)), List(x, 0, 10))	1
+log-series	SeriesCoefficient(Ln(Add(1, x)), List(x, 0, 4))	Rational(-1, 4)
+seriescoefficient-x-times-1-over-x-minus-5-list	SeriesCoefficient(Multiply(x, Divide(1, Add(x, -5))), List(x, 0, n))	SeriesCoefficient(Divide(x, Add(x, -5)), List(x, 0, n))
+seriescoefficient-1-over-x-minus-3-times-x-minus	SeriesCoefficient(Multiply(Divide(1, Multiply(Add(x, -3), Add(x, -2), Add(x, -1))), Power(x, 3)), List(x, 0, n))	SeriesCoefficient(Divide(Power(x, 3), Multiply(Add(x, -3), Add(x, -2), Add(x, -1))), List(x, 0, n))
+seriescoefficient-1-over-neg-x-plus-1-times	SeriesCoefficient(Multiply(Divide(1, Add(Negate(x), 1)), Power(ExponentialE, x)), List(x, 0, n))	SeriesCoefficient(Divide(Power(ExponentialE, x), Add(Negate(x), 1)), List(x, 0, n))
+seriescoefficient-ln-1-over-sqrt-neg-5-times-x	SeriesCoefficient(Ln(Divide(1, Sqrt(Add(Multiply(-5, Power(x, 2)), 1)))), List(x, 0, n))	SeriesCoefficient(Multiply(Rational(-1, 2), Ln(Add(Multiply(-5, Power(x, 2)), 1))), List(x, 0, n))
+seriescoefficient-ln-1-over-sqrt-5-times-x-pow-2	SeriesCoefficient(Ln(Divide(1, Sqrt(Add(Multiply(5, Power(x, 2)), 1)))), List(x, 0, n))	SeriesCoefficient(Multiply(Rational(-1, 2), Ln(Add(Multiply(5, Power(x, 2)), 1))), List(x, 0, n))
+a-puiseux-half-integer-order-declines	SeriesCoefficient(Sqrt(x), List(x, 0, Rational(1, 2)))	SeriesCoefficient(Sqrt(x), List(x, 0, Rational(1, 2)))
+a-negative-order-laurent-coefficient-declines	SeriesCoefficient(Divide(1, x), List(x, 0, -1))	SeriesCoefficient(Divide(1, x), List(x, 0, -1))
+a-removable-singularity-declines	SeriesCoefficient(Divide(Sin(x), x), List(x, 0, 0))	SeriesCoefficient(Divide(Sin(x), x), List(x, 0, 0))

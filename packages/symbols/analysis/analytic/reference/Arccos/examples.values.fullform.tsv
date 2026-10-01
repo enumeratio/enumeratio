@@ -1,39 +1,39 @@
-id	in	back
-arccos-1	ArcCos[1]	
-arccos-1-over-2	ArcCos[Rational[1, 2]]	
-arccos-0	ArcCos[0]	
-the-top-of-the-principal-range	ArcCos[-1]	
-a-machine-precision-argument-evaluates	ArcCos[0.4]	
-outside-1-1-the-value-is-purely-imaginary	ArcCos[1.5]	
-arbitrary-precision-via-n	N[ArcCos[Rational[1, 3]]]	
-evaluates-at-a-complex-argument	ArcCos[Complex[2.5, 1]]	
-threads-element-wise-over-a-matrix	ArcCos[List[List[1, Divide[1, Sqrt[2]]], List[0, Divide[1, Sqrt[2]]]]]	
-exact-inverse-of-a-special-value	ArcCos[Divide[Sqrt[3], 2]]	
-arccos-neg-sqrt-2-over-2	ArcCos[Minus[Divide[Sqrt[2], 2]]]	
-recognizes-cos-pi-5-frac-1-sqrt-5-4	ArcCos[Divide[Plus[1, Sqrt[5]], 4]]	
-interval-arithmetic-decreasing-so-arccos-frac-13	ArcCos[Interval[List[Rational[1, 3], Rational[1, 2]]]]	
-uncertainty-propagation-arccos-0-9-pm-0-1-approx	ArcCos[Around[0.9, 0.1]]	
-derivative-frac-1-sqrt-1-x-2	D[ArcCos[x], x]	
-antiderivative	Integrate[ArcCos[x], x]	
-not-simply-4-4-is-outside-the-principal-range-0	ArcCos[Cos[4]]	
-arccos-infinity-is-a-directed-infinity-along-the	ArcCos[Infinity]	
-arccos-infinity-is-the-opposite-directed	ArcCos[-Infinity]	
-n-arccos-1-over-3-50	N[ArcCos[Rational[1, 3]], 50]	
-integrate-arccos-x-x-neg-1-1	Integrate[Function[x, ArcCos[x]], List[x, -1, 1]]	[Integrate, [Function, [Arccos, x], x], [Limits, x, -1, 1]]
-cos-arccos-x-x-on-the-principal-branch	Equal[Cos[ArcCos[Rational[1, 2]]], Rational[1, 2]]	
-reflection-arccos-x-pi-arccos-x	ArcCos[Minus[x]]	
-arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	ArcCos[Times[Divide[Sqrt[2], 4], Plus[-1, Sqrt[3]]]]	
-arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	ArcCos[Times[Minus[Divide[Sqrt[2], 4]], Plus[-1, Sqrt[3]]]]	
-arccos-1-over-4-times-neg-1-plus-sqrt-5	ArcCos[Times[Rational[1, 4], Plus[-1, Sqrt[5]]]]	
-arccos-1-over-4-times-1-minus-sqrt-5	ArcCos[Times[Rational[1, 4], Plus[1, Minus[Sqrt[5]]]]]	
-arccos-1-over-2-times-sqrt-2-minus-sqrt-2	ArcCos[Times[Rational[1, 2], Sqrt[Plus[2, Minus[Sqrt[2]]]]]]	
-arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2	ArcCos[Times[Rational[-1, 2], Sqrt[Plus[2, Minus[Sqrt[2]]]]]]	
-arccos-neg-1-over-2	ArcCos[Rational[-1, 2]]	
-arccos-1-over-2-times-sqrt-1-over-2-times-5	ArcCos[Times[Rational[1, 2], Sqrt[Times[Rational[1, 2], Plus[5, Minus[Sqrt[5]]]]]]]	
-arccos-neg-1-over-2-times-sqrt-1-over-2-times-5	ArcCos[Times[Rational[-1, 2], Sqrt[Times[Rational[1, 2], Plus[5, Minus[Sqrt[5]]]]]]]	
-arccos-sqrt-2-over-2	ArcCos[Divide[Sqrt[2], 2]]	
-arccos-1-over-4-times-neg-1-minus-sqrt-5	ArcCos[Times[Rational[1, 4], Plus[-1, Minus[Sqrt[5]]]]]	
-arccos-neg-sqrt-3-over-2	ArcCos[Minus[Divide[Sqrt[3], 2]]]	
-arccos-1-over-2-times-sqrt-2-plus-sqrt-2	ArcCos[Times[Rational[1, 2], Sqrt[Plus[2, Sqrt[2]]]]]	
-outside-1-1-this-stays-symbolic-same-as-arcsin-n	ArcCos[2]	
-arccos-complexinfinity-is-complexinfinity	ArcCos[ComplexInfinity]	
+id	in	out
+arccos-1	Arccos(1)	0
+arccos-1-over-2	Arccos(Rational(1, 2))	Multiply(Rational(1, 3), Pi)
+arccos-0	Arccos(0)	Multiply(Rational(1, 2), Pi)
+the-top-of-the-principal-range	Arccos(-1)	Pi
+a-machine-precision-argument-evaluates	Arccos(0.4)	1.15927948072740859985
+outside-1-1-the-value-is-purely-imaginary	Arccos(1.5)	Complex(0, 0.9624236501192069)
+arbitrary-precision-via-n	N(Arccos(Rational(1, 3)))	1.23095941734077468214
+evaluates-at-a-complex-argument	Arccos(Complex(2.5, 1))	Complex(0.40617281650551185, -1.6586932988564347)
+threads-element-wise-over-a-matrix	Arccos(List(List(1, Divide(1, Sqrt(2))), List(0, Divide(1, Sqrt(2)))))	List(List(0, Multiply(Rational(1, 4), Pi)), List(Multiply(Rational(1, 2), Pi), Multiply(Rational(1, 4), Pi)))
+exact-inverse-of-a-special-value	Arccos(Divide(Sqrt(3), 2))	Multiply(Rational(1, 6), Pi)
+arccos-neg-sqrt-2-over-2	Arccos(Negate(Divide(Sqrt(2), 2)))	Multiply(Rational(3, 4), Pi)
+recognizes-cos-pi-5-frac-1-sqrt-5-4	Arccos(Divide(Add(1, Sqrt(5)), 4))	Multiply(Rational(1, 5), Pi)
+interval-arithmetic-decreasing-so-arccos-frac-13	Arccos(Interval(Rational(1, 3), Rational(1, 2)))	Interval(Multiply(Rational(1, 3), Pi), Arccos(Rational(1, 3)))
+uncertainty-propagation-arccos-0-9-pm-0-1-approx	Arccos(Around(0.9, 0.1))	Around(0.45102681179626236, 0.2294157338705618)
+derivative-frac-1-sqrt-1-x-2	D(Arccos(x), x)	Divide(-1, Sqrt(Add(Negate(Power(x, 2)), 1)))
+antiderivative	Integrate(Arccos(x), x)	Add(Multiply(x, Arccos(x)), Negate(Sqrt(Add(Negate(Power(x, 2)), 1))))
+not-simply-4-4-is-outside-the-principal-range-0	Arccos(Cos(4))	Add(-4, Multiply(2, Pi))
+arccos-infinity-is-a-directed-infinity-along-the	Arccos(PositiveInfinity)	DirectedInfinity(Complex(0, 1))
+arccos-infinity-is-the-opposite-directed	Arccos(NegativeInfinity)	DirectedInfinity(Complex(0, -1))
+n-arccos-1-over-3-50	N(Arccos(Rational(1, 3)), 50)	1.2309594173407746821349291782479873757103400093551
+integrate-arccos-x-x-neg-1-1	Integrate(Function(Block(Arccos(x)), x), Limits(x, -1, 1))	Pi
+cos-arccos-x-x-on-the-principal-branch	Equal(Cos(Arccos(Rational(1, 2))), Rational(1, 2))	True
+reflection-arccos-x-pi-arccos-x	Arccos(Negate(x))	Add(Negate(Arccos(x)), Pi)
+arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	Arccos(Multiply(Divide(Sqrt(2), 4), Add(-1, Sqrt(3))))	Multiply(Rational(5, 12), Pi)
+arccos-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	Arccos(Multiply(Negate(Divide(Sqrt(2), 4)), Add(-1, Sqrt(3))))	Multiply(Rational(7, 12), Pi)
+arccos-1-over-4-times-neg-1-plus-sqrt-5	Arccos(Multiply(Rational(1, 4), Add(-1, Sqrt(5))))	Multiply(Rational(2, 5), Pi)
+arccos-1-over-4-times-1-minus-sqrt-5	Arccos(Multiply(Rational(1, 4), Add(1, Negate(Sqrt(5)))))	Multiply(Rational(3, 5), Pi)
+arccos-1-over-2-times-sqrt-2-minus-sqrt-2	Arccos(Multiply(Rational(1, 2), Sqrt(Add(2, Negate(Sqrt(2))))))	Multiply(Rational(3, 8), Pi)
+arccos-neg-1-over-2-times-sqrt-2-minus-sqrt-2	Arccos(Multiply(Rational(-1, 2), Sqrt(Add(2, Negate(Sqrt(2))))))	Multiply(Rational(5, 8), Pi)
+arccos-neg-1-over-2	Arccos(Rational(-1, 2))	Multiply(Rational(2, 3), Pi)
+arccos-1-over-2-times-sqrt-1-over-2-times-5	Arccos(Multiply(Rational(1, 2), Sqrt(Multiply(Rational(1, 2), Add(5, Negate(Sqrt(5)))))))	Arccos(Multiply(Divide(Sqrt(2), 4), Sqrt(Add(5, Negate(Sqrt(5))))))
+arccos-neg-1-over-2-times-sqrt-1-over-2-times-5	Arccos(Multiply(Rational(-1, 2), Sqrt(Multiply(Rational(1, 2), Add(5, Negate(Sqrt(5)))))))	Arccos(Multiply(Negate(Divide(Sqrt(2), 4)), Sqrt(Add(5, Negate(Sqrt(5))))))
+arccos-sqrt-2-over-2	Arccos(Divide(Sqrt(2), 2))	Multiply(Rational(1, 4), Pi)
+arccos-1-over-4-times-neg-1-minus-sqrt-5	Arccos(Multiply(Rational(1, 4), Add(-1, Negate(Sqrt(5)))))	Multiply(Rational(4, 5), Pi)
+arccos-neg-sqrt-3-over-2	Arccos(Negate(Divide(Sqrt(3), 2)))	Multiply(Rational(5, 6), Pi)
+arccos-1-over-2-times-sqrt-2-plus-sqrt-2	Arccos(Multiply(Rational(1, 2), Sqrt(Add(2, Sqrt(2)))))	Multiply(Rational(1, 8), Pi)
+outside-1-1-this-stays-symbolic-same-as-arcsin-n	Arccos(2)	Arccos(2)
+arccos-complexinfinity-is-complexinfinity	Arccos(ComplexInfinity)	ComplexInfinity

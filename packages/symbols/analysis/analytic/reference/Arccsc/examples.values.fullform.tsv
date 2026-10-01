@@ -1,26 +1,26 @@
-id	in	back
-arccsc-1	ArcCsc[1]	
-arccsc-2	ArcCsc[2]	
-arccsc-sqrt-2-pi-4	ArcCsc[Sqrt[2]]	
-an-odd-function	ArcCsc[-2]	
-inside-1-1-the-value-is-complex	ArcCsc[0.5]	
-arccsc-positiveinfinity	ArcCsc[Infinity]	
-a-pole-arccsc-0-is-complex-infinity	ArcCsc[0]	
-derivative-for-real-x-1	D[ArcCsc[x], x]	
-n-arccsc-5-50	N[ArcCsc[5], 50]	
-arccsc-list-list-sqrt-2-neg-sqrt-2-list-0-neg	ArcCsc[List[List[Sqrt[2], Minus[Sqrt[2]]], List[0, Minus[Sqrt[2]]]]]	
-list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	List[ArcCsc[Minus[Sqrt[2]]], ArcCsc[Times[Rational[-2, 3], Sqrt[3]]], ArcCsc[Times[Rational[2, 3], Sqrt[3]]], ArcCsc[Sqrt[2]]]	
-arccsc-complexinfinity	ArcCsc[ComplexInfinity]	
-arccsc-list-1-neg-1-0	ArcCsc[List[1, -1, 0]]	
-matrixfunction-function-arccsc-1-1-list-list	MatrixFunction[Function[ArcCsc[Slot[1]]], List[List[Sqrt[2], Minus[Sqrt[2]]], List[0, Minus[Sqrt[2]]]]]	[MatrixFunction, [Function, [Arccsc, _1]], [List, [List, [Sqrt, 2], [Negate, [Sqrt, 2]]], [List, 0, [Negate, [Sqrt, 2]]]]]
-undoes-csc-csc-arccsc-x-x	Equal[Csc[ArcCsc[2]], 2]	
-arccsc-neg-1	ArcCsc[-1]	
-arccsc-neg-sqrt-2-plus-sqrt-6	ArcCsc[Plus[Minus[Sqrt[2]], Sqrt[6]]]	
-arccsc-neg-sqrt-6-plus-sqrt-2	ArcCsc[Plus[Minus[Sqrt[6]], Sqrt[2]]]	
-arccsc-2-times-sqrt-1-over-2-plus-sqrt-2	ArcCsc[Times[2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	
-arccsc-neg-2-times-sqrt-1-over-2-plus-sqrt-2	ArcCsc[Times[-2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	
-arccsc-2-over-3-times-sqrt-3	ArcCsc[Times[Rational[2, 3], Sqrt[3]]]	
-arccsc-neg-2-over-3-times-sqrt-3	ArcCsc[Times[Rational[-2, 3], Sqrt[3]]]	
-arccsc-neg-1-plus-sqrt-5	ArcCsc[Plus[-1, Sqrt[5]]]	
-arccsc-1-minus-sqrt-5	ArcCsc[Plus[1, Minus[Sqrt[5]]]]	
-arccsc-neg-sqrt-2	ArcCsc[Minus[Sqrt[2]]]	
+id	in	out
+arccsc-1	Arccsc(1)	Multiply(Rational(1, 2), Pi)
+arccsc-2	Arccsc(2)	Multiply(Rational(1, 6), Pi)
+arccsc-sqrt-2-pi-4	Arccsc(Sqrt(2))	Multiply(Rational(1, 4), Pi)
+an-odd-function	Arccsc(-2)	Multiply(Rational(-1, 6), Pi)
+inside-1-1-the-value-is-complex	Arccsc(0.5)	Complex(1.5707963267948966, -1.3169578969248166)
+arccsc-positiveinfinity	Arccsc(PositiveInfinity)	0
+a-pole-arccsc-0-is-complex-infinity	Arccsc(0)	ComplexInfinity
+derivative-for-real-x-1	D(Arccsc(x), x)	Divide(-1, Multiply(Abs(x), Sqrt(Add(Power(x, 2), -1))))
+n-arccsc-5-50	N(Arccsc(5), 50)	0.20135792079033079145512555221762341024003808140223
+arccsc-list-list-sqrt-2-neg-sqrt-2-list-0-neg	Arccsc(List(List(Sqrt(2), Negate(Sqrt(2))), List(0, Negate(Sqrt(2)))))	List(List(Multiply(Rational(1, 4), Pi), Multiply(Rational(-1, 4), Pi)), List(ComplexInfinity, Multiply(Rational(-1, 4), Pi)))
+list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	List(Arccsc(Negate(Sqrt(2))), Arccsc(Multiply(Rational(-2, 3), Sqrt(3))), Arccsc(Multiply(Rational(2, 3), Sqrt(3))), Arccsc(Sqrt(2)))	List(Multiply(Rational(-1, 4), Pi), Multiply(Rational(-1, 3), Pi), Multiply(Rational(1, 3), Pi), Multiply(Rational(1, 4), Pi))
+arccsc-complexinfinity	Arccsc(ComplexInfinity)	0
+arccsc-list-1-neg-1-0	Arccsc(List(1, -1, 0))	List(Multiply(Rational(1, 2), Pi), Multiply(Rational(-1, 2), Pi), ComplexInfinity)
+matrixfunction-function-arccsc-1-1-list-list	MatrixFunction(Function(Block(Arccsc(_1)), _1), List(List(Sqrt(2), Negate(Sqrt(2))), List(0, Negate(Sqrt(2)))))	List(List(Multiply(Rational(1, 4), Pi), Multiply(Rational(-1, 4), Pi)), List(0, Multiply(Rational(-1, 4), Pi)))
+undoes-csc-csc-arccsc-x-x	Equal(Csc(Arccsc(2)), 2)	True
+arccsc-neg-1	Arccsc(-1)	Multiply(Rational(-1, 2), Pi)
+arccsc-neg-sqrt-2-plus-sqrt-6	Arccsc(Add(Negate(Sqrt(2)), Sqrt(6)))	Multiply(Rational(5, 12), Pi)
+arccsc-neg-sqrt-6-plus-sqrt-2	Arccsc(Add(Negate(Sqrt(6)), Sqrt(2)))	Multiply(Rational(-5, 12), Pi)
+arccsc-2-times-sqrt-1-over-2-plus-sqrt-2	Arccsc(Multiply(2, Sqrt(Divide(1, Add(2, Sqrt(2))))))	Arccsc(Divide(2, Sqrt(Add(2, Sqrt(2)))))
+arccsc-neg-2-times-sqrt-1-over-2-plus-sqrt-2	Arccsc(Multiply(-2, Sqrt(Divide(1, Add(2, Sqrt(2))))))	Arccsc(Divide(-2, Sqrt(Add(2, Sqrt(2)))))
+arccsc-2-over-3-times-sqrt-3	Arccsc(Multiply(Rational(2, 3), Sqrt(3)))	Multiply(Rational(1, 3), Pi)
+arccsc-neg-2-over-3-times-sqrt-3	Arccsc(Multiply(Rational(-2, 3), Sqrt(3)))	Multiply(Rational(-1, 3), Pi)
+arccsc-neg-1-plus-sqrt-5	Arccsc(Add(-1, Sqrt(5)))	Multiply(Rational(3, 10), Pi)
+arccsc-1-minus-sqrt-5	Arccsc(Add(1, Negate(Sqrt(5))))	Multiply(Rational(-3, 10), Pi)
+arccsc-neg-sqrt-2	Arccsc(Negate(Sqrt(2)))	Multiply(Rational(-1, 4), Pi)

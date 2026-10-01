@@ -1,7 +1,7 @@
-id	in
-conditioned-probability-point-given-bound	Probability[Conditioned[Equal[x, 2], LessEqual[x, 5]], Distributed[x, PoissonDistribution[3]]]
-conditioned-expectation-mean-given-bound	Expectation[Conditioned[x, LessEqual[x, 3]], Distributed[x, PoissonDistribution[3]]]
-conditioned-expectation-point	Expectation[Conditioned[Power[x, 2], Equal[x, 3]], Distributed[x, PoissonDistribution[3]]]
-conditioned-probability-interval-given-bound	Probability[Conditioned[LessEqual[x, 3], LessEqual[1, x]], Distributed[x, PoissonDistribution[3]]]
-conditioned-probability-continuous-interval	Probability[Conditioned[LessEqual[x, 0], LessEqual[-1, x]], Distributed[x, NormalDistribution[0, 1]]]
-conditioned-expectation-continuous-unevaluated	Expectation[Conditioned[x, LessEqual[x, 3]], Distributed[x, NormalDistribution[0, 1]]]
+id	in	out
+conditioned-probability-point-given-bound	Probability(Conditioned(Equal(x, 2), LessEqual(x, 5)), Distributed(x, PoissonDistribution(3)))	Rational(45, 184)
+conditioned-expectation-mean-given-bound	Expectation(Conditioned(x, LessEqual(x, 3)), Distributed(x, PoissonDistribution(3)))	1.961538461538462
+conditioned-expectation-point	Expectation(Conditioned(Power(x, 2), Equal(x, 3)), Distributed(x, PoissonDistribution(3)))	9
+conditioned-probability-interval-given-bound	Probability(Conditioned(LessEqual(x, 3), LessEqual(1, x)), Distributed(x, PoissonDistribution(3)))	Divide(12, Multiply(Add(1, Negate(Power(ExponentialE, -3))), Power(ExponentialE, 3)))
+conditioned-probability-continuous-interval	Probability(Conditioned(LessEqual(x, 0), LessEqual(-1, x)), Distributed(x, NormalDistribution(0, 1)))	Divide(Negate(Erf(Negate(Divide(Sqrt(2), 2)))), Add(1, Negate(Erf(Negate(Divide(Sqrt(2), 2))))))
+conditioned-expectation-continuous-unevaluated	Expectation(Conditioned(x, LessEqual(x, 3)), Distributed(x, NormalDistribution(0, 1)))	Expectation(Conditioned(x, LessEqual(x, 3)), Distributed(x, NormalDistribution(0, 1)))

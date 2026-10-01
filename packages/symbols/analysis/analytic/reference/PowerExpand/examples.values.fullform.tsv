@@ -1,12 +1,12 @@
-id	in
-sqrt-x-2-x-for-positive-x	PowerExpand[Sqrt[Power[x, 2]]]
-splits-a-logarithm-of-a-product	PowerExpand[Log[Times[x, y]]]
-powerexpand-sqrt-x-times-y	PowerExpand[Sqrt[Times[x, y]]]
-pulls-out-an-exponent	PowerExpand[Log[Power[x, n]]]
-distributes-a-power-over-a-product	PowerExpand[Power[Times[a, b], c]]
-powerexpand-sqrt-a-times-b	PowerExpand[Sqrt[Times[a, b]]]
-powerexpand-x-times-y-pow-a	PowerExpand[Power[Times[x, y], a]]
-powerexpand-sqrt-z-pow-2	PowerExpand[Sqrt[Power[z, 2]]]
-powerexpand-ln-1-over-z	PowerExpand[Log[Divide[1, z]]]
-powerexpand-ln-z-pow-a	PowerExpand[Log[Power[z, a]]]
-powerexpand-sqrt-x-minus-y-pow-2-plus-sqrt-neg-x	PowerExpand[Plus[Sqrt[Power[Plus[x, Minus[y]], 2]], Sqrt[Power[Plus[Minus[x], y], 2]]]]
+id	in	out
+sqrt-x-2-x-for-positive-x	PowerExpand(Sqrt(Power(x, 2)))	x
+splits-a-logarithm-of-a-product	PowerExpand(Ln(Multiply(x, y)))	Add(Ln(x), Ln(y))
+powerexpand-sqrt-x-times-y	PowerExpand(Sqrt(Multiply(x, y)))	Multiply(Sqrt(x), Sqrt(y))
+pulls-out-an-exponent	PowerExpand(Ln(Power(x, n)))	Multiply(n, Ln(x))
+distributes-a-power-over-a-product	PowerExpand(Power(Multiply(a, b), c))	Multiply(Power(a, c), Power(b, c))
+powerexpand-sqrt-a-times-b	PowerExpand(Sqrt(Multiply(a, b)))	Multiply(Sqrt(a), Sqrt(b))
+powerexpand-x-times-y-pow-a	PowerExpand(Power(Multiply(x, y), a))	Multiply(Power(x, a), Power(y, a))
+powerexpand-sqrt-z-pow-2	PowerExpand(Sqrt(Power(z, 2)))	z
+powerexpand-ln-1-over-z	PowerExpand(Ln(Divide(1, z)))	Negate(Ln(z))
+powerexpand-ln-z-pow-a	PowerExpand(Ln(Power(z, a)))	Multiply(a, Ln(z))
+powerexpand-sqrt-x-minus-y-pow-2-plus-sqrt-neg-x	PowerExpand(Add(Sqrt(Power(Add(x, Negate(y)), 2)), Sqrt(Power(Add(Negate(x), y), 2))))	0
