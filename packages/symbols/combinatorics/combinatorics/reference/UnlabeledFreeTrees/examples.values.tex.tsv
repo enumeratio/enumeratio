@@ -1,3 +1,0 @@
-id	in	out
-count-unlabeledfreetrees-7-11-a000055	\mathrm{Count}(\mathrm{UnlabeledFreeTrees}(7))	11
-every-element-of-unlabeledfreetrees-6	\mathrm{Take}(\mathrm{UnlabeledFreeTrees}(6), 6)	\bigl\lbrack\mathrm{UnlabeledFreeTree}(\bigl\lbrack0, 1, 1, 1, 1, 1\bigr\rbrack), \mathrm{UnlabeledFreeTree}(\bigl\lbrack0, 1, 2, 1, 1, 1\bigr\rbrack), \mathrm{UnlabeledFreeTree}(\bigl\lbrack0, 1, 2, 1, 2, 1\bigr\rbrack), \mathrm{UnlabeledFreeTree}(\bigl\lbrack0, 1, 2, 2, 1, 1\bigr\rbrack), \mathrm{UnlabeledFreeTree}(\bigl\lbrack0, 1, 2, 2, 1, 2\bigr\rbrack), \mathrm{UnlabeledFreeTree}(\bigl\lbrack0, 1, 2, 3, 1, 2\bigr\rbrack)\bigr\rbrack

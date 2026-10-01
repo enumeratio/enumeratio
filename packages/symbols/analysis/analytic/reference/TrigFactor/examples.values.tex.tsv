@@ -1,7 +1,0 @@
-id	in	out
-sin-a-plus-sin-b	\mathrm{TrigFactor}(\sin(a)+\sin(b))	2\sin(\frac{a+b}{2})\cos(\frac{a-b}{2})
-cos-a-minus-cos-b	\mathrm{TrigFactor}(\cos(a)-\cos(b))	-2\sin(\frac{a+b}{2})\sin(\frac{a-b}{2})
-one-minus-cos-x	\mathrm{TrigFactor}(1-\cos(x))	2\sin(\frac{x}{2})^2
-poly-in-sin-cos	\mathrm{TrigFactor}(\sin(x)^2+2\sin(x)\cos(x)+\cos(x)^2)	(\sin(x)+\cos(x))^2
-trigfactor-neg-cos-x-pow-2-plus-sin-x-pow-2	\mathrm{TrigFactor}(\sin(x)^2-\cos(x)^2)	(\sin(x)-\cos(x))(\sin(x)+\cos(x))
-trigfactor-1-over-sinh-x-plus-1-over-neg-cos-x	\mathrm{TrigFactor}(\frac{1}{\sinh(x)}+\frac{\cosh(x+y)}{\sin(x)^2-\cos(x)^2})	\mathrm{TrigFactor}(\frac{1}{\sinh(x)}+\frac{\cosh(x+y)}{\sin(x)^2-\cos(x)^2})

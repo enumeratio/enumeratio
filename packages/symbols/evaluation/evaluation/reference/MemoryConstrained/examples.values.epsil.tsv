@@ -1,3 +1,0 @@
-id	in	out
-in-process-the-call-simply-does-not-reduce-see	MemoryConstrained(1 + 2, 1_000_000)	MemoryConstrained(1 + 2, 1_000_000)
-a-failexpr-does-not-change-that-in-process-there	MemoryConstrained(1 + 2, 1_000_000, -1)	MemoryConstrained(1 + 2, 1_000_000, -1)

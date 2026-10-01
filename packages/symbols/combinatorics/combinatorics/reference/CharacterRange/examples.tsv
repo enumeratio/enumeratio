@@ -1,5 +1,5 @@
 id	section	role	expr	expected	triage	wolfram.note
-letters-a-through-e			[CharacterRange, [String, a], [String, e]]	[List, "'a'", "'b'", "'c'", "'d'", "'e'"]		
+letters-a-through-e			[CharacterRange, "'a'", "'e'"]	[List, "'a'", "'b'", "'c'", "'d'", "'e'"]		
 characterrange-a-z			[CharacterRange, "'a'", "'z'"]	[List, "'a'", "'b'", "'c'", "'d'", "'e'", "'f'", "'g'", "'h'", "'i'", "'j'", "'k'", "'l'", "'m'", "'n'", "'o'", "'p'", "'q'", "'r'", "'s'", "'t'", "'u'", "'v'", "'w'", "'x'", "'y'", "'z'"]		
 characterrange-1-000-1-020		triage	[CharacterRange, 1000, 1020]	[List, "'Ϩ'", "'ϩ'", "'Ϫ'", "'ϫ'", "'Ϭ'", "'ϭ'", "'Ϯ'", "'ϯ'", "'ϰ'", "'ϱ'", "'ϲ'", "'ϳ'", "'ϴ'", "'ϵ'", "'϶'", "'Ϸ'", "'ϸ'", "'Ϲ'", "'Ϻ'", "'ϻ'", "'ϼ'"]	ours?	
 by-code-point	Scope		[CharacterRange, 97, 101]	[List, "'a'", "'b'", "'c'", "'d'", "'e'"]		

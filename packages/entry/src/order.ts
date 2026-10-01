@@ -4,8 +4,22 @@
 
 import type { ExampleImplementations, HeadImplementations } from "./types.ts";
 
-const OWN_FORMS = ["epsil", "tex", "traditional", "fullform", "notatio"];
-const FIELDS = ["in", "out", "shown", "tex", "verdict", "kind", "note", "issue", "tolerance", "messages", "back"];
+/** Our own forms of an example, as the forms pipeline (frontend/scripts/forms.ts) prints them. */
+export const OWN_FORMS = ["epsil", "tex", "traditional", "fullform", "notatio"] as const;
+const FIELDS = [
+  "in",
+  "out",
+  "shown",
+  "tex",
+  "verdict",
+  "kind",
+  "note",
+  "issue",
+  "tolerance",
+  "messages",
+  "back",
+  "backOut",
+];
 
 /** `keys`, those in `first` in that order, then the rest by code unit (not locale). */
 function ordered(keys: readonly string[], first: readonly string[]): string[] {

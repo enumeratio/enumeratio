@@ -1,3 +1,0 @@
-id	in	out
-distributes-a-list-of-functions-over-argument	\operatorname{Through}(\textcolor{red}{\text{[["List","f","g"],"x"]}})	[f(x),g(x)]
-distributes-an-add-of-functions-evaluates-sum	\operatorname{Through}(\textcolor{red}{\text{[["Add","f","g"],"x"]}})	g(x)+f(x)

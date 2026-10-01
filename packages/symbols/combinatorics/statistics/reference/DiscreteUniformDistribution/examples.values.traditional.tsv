@@ -1,5 +1,0 @@
-id	in	out
-discreteuniform-pdf-exact	\operatorname{PDF}(\operatorname{DiscreteUniformDistribution}([1,6]),3)	\frac{1}{6}
-discreteuniform-cdf-exact	\operatorname{CDF}(\operatorname{DiscreteUniformDistribution}([1,6]),3)	\frac{1}{2}
-discreteuniform-mean-exact	\operatorname{Mean}(\operatorname{DiscreteUniformDistribution}([1,6]))	\frac{7}{2}
-discreteuniform-variance-exact	\operatorname{Variance}(\operatorname{DiscreteUniformDistribution}([1,6]))	\frac{35}{12}

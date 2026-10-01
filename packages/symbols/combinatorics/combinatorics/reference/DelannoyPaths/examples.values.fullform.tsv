@@ -1,4 +1,0 @@
-id	in	out
-count-delannoypaths-3	Count(DelannoyPaths(3))	63
-first-element-of-delannoypaths-3	At(DelannoyPaths(3), 1)	DelannoyPath(List(0, 0, 0, 1, 1, 1))
-every-element-of-delannoypaths-3	Take(DelannoyPaths(3), 5)	List(DelannoyPath(List(0, 0, 0, 1, 1, 1)), DelannoyPath(List(0, 0, 1, 0, 1, 1)), DelannoyPath(List(0, 0, 1, 1, 0, 1)), DelannoyPath(List(0, 0, 1, 1, 1, 0)), DelannoyPath(List(0, 0, 1, 1, 2)))

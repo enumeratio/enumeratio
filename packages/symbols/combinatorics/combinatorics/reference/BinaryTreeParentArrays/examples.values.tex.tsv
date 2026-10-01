@@ -1,4 +1,0 @@
-id	in	out
-c-4	\mathrm{Count}(\mathrm{BinaryTreeParentArrays}(4))	14
-first-element-of-binarytreeparentarrays-3	\mathrm{BinaryTreeParentArrays}(3)[1]	\mathrm{BinaryTreeParentArray}(\bigl\lbrack0, 1, 2\bigr\rbrack)
-returns-are-the-catalan-triangle	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{BinaryTreeParentArrays}(3), \text{Returns}))	\operatorname{Tuple}(\bigl\lbrack3, 2, 1\bigr\rbrack,\bigl\lbrack1, 2, 2\bigr\rbrack)

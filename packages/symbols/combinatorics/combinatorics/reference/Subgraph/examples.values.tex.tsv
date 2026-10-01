@@ -1,2 +1,0 @@
-id	in	out
-three-of-k4s-vertices	\mathrm{Subgraph}(\mathrm{CompleteGraph}(4), \bigl\lbrack1, 2, 3\bigr\rbrack)	\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(1, 3), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack)

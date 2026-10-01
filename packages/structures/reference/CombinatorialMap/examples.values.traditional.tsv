@@ -1,4 +1,0 @@
-id	in	out
-inverse-of-a-permutation	\operatorname{CombinatorialMap}(\operatorname{Permutation}([3,1,2]),\text{“Inverse”})	\operatorname{Permutation}([2,3,1])
-reverse-of-a-permutation	\operatorname{CombinatorialMap}(\operatorname{Permutation}([3,1,2]),\text{“Reverse”})	\operatorname{Permutation}([2,1,3])
-by-findstat-id	\operatorname{CombinatorialMap}(\operatorname{Permutation}([3,1,2]),\text{“Mp00066”})	\operatorname{Permutation}([2,3,1])

@@ -1,5 +1,0 @@
-id	in	out
-product-pdf	"pdf(\n     ProductDistribution(normalDistribution(0, 1), normalDistribution(5, 2)),\n     [0, 5],\n   )"	1 / (4Pi)
-product-mean	mean(ProductDistribution(normalDistribution(0, 1), normalDistribution(5, 2)))	[0, 5]
-product-variance	variance(ProductDistribution(normalDistribution(0, 1), normalDistribution(5, 2)))	[1, 4]
-product-repeated-form-mean	mean(ProductDistribution([normalDistribution(0, 1), 3]))	[0, 0, 0]

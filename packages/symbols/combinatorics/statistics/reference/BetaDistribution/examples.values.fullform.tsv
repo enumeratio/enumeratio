@@ -1,6 +1,0 @@
-id	in	out
-beta-pdf-exact	PDF(BetaDistribution(2, 3), Rational(1, 2))	Rational(3, 2)
-beta-cdf-exact	CDF(BetaDistribution(2, 3), Rational(1, 2))	BetaRegularized(Rational(1, 2), 2, 3)
-beta-mean-exact	Mean(BetaDistribution(2, 3))	Rational(2, 5)
-beta-variance-exact	Variance(BetaDistribution(2, 3))	Rational(1, 25)
-beta-cdf-clamps-below-support	N(CDF(BetaDistribution(2, 3), -1))	0

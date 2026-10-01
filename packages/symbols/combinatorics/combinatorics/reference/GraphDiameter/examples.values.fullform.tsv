@@ -1,3 +1,0 @@
-id	in	out
-path-5-has-diameter-4	GraphDiameter(Graph(List(1, 2, 3, 4, 5), List(UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 4), UndirectedEdge(4, 5))))	4
-disconnected-graph-has-infinite-diameter	GraphDiameter(Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(3, 4))))	PositiveInfinity

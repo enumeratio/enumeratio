@@ -1,6 +1,0 @@
-id	in	out
-cases-wildcard-keeps-everything	<Cases><List>1 a 2 b</List> _</Cases>	<List>1 a 2 b</List>
-cases-literal-value	<Cases><List>1 2 1 3 1</List> 1</Cases>	<List>1 1 1</List>
-cases-structural-pattern	<Cases><List><List>1</List> 2 <List>3</List></List> <List>_a</List></Cases>	<List><List>1</List> <List>3</List></List>
-cases-count-agree-on-length	<Equal><Length><Cases><List>1 2 1 3 1</List> 1</Cases></Length> <Count><List>1 2 1 3 1</List> 1</Count></Equal>	<True />
-cases-typed-pattern-not-typed-here	<Length><Cases><List>1 a 2 b</List> _Integer</Cases></Length>	<ToExpression>4</ToExpression>

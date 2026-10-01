@@ -1,9 +1,0 @@
-id	in	out
-a-rational-function-is-meromorphic	<FunctionMeromorphic><Divide>1 x</Divide> x</FunctionMeromorphic>	<True />
-tangent-is-a-ratio-of-entire-functions	<FunctionMeromorphic><Tan>x</Tan> x</FunctionMeromorphic>	<True />
-a-branch-point-is-not-a-pole	<FunctionMeromorphic><Ln>x</Ln> x</FunctionMeromorphic>	<False />
-polynomials-are-meromorphic	<FunctionMeromorphic><Power>x 2</Power> x</FunctionMeromorphic>	<True />
-functionmeromorphic-sqrt-z-z	<FunctionMeromorphic><Sqrt>z</Sqrt> z</FunctionMeromorphic>	<False />
-functionmeromorphic-ln-z-z	<FunctionMeromorphic><Ln>z</Ln> z</FunctionMeromorphic>	<False />
-list-functionmeromorphic-x-times-x-pow-2-plus-1		
-list-functionmeromorphic-tan-x-x		

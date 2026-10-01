@@ -1,10 +1,10 @@
-id	section	role	expr	expected	caption	sage.kind	sage.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note
-square-5			[Square, 5]	25							
-same-result-for-x-and-x			[Square, -5]	25	Same result for x and -x						
-square-2-over-3			[Square, [Rational, 2, 3]]	[Rational, 4, 9]							
-canonicalizes-to-x-2			[Square, x]	[Power, x, 2]	Canonicalizes to $x^2$						
-threads-element-wise-over-a-list			[Square, [List, 2, 3, -4]]	[List, 4, 9, 16]	Threads element-wise over a list	threading	compute-engine's Square is Listable and threads over the list; Sage's takes scalars only.	threading	compute-engine's Square threads over (or pools) the list; SymPy's takes scalars.	threading	compute-engine's Square threads over the list; mpmath's takes scalars.
-the-area-of-a-3-3-square-tile	Applications		[Square, 3]	9	The area of a 3×3 square tile						
-even-function-x-2-x-2	Properties		[Equal, [Square, -5], [Square, 5]]	True	Even function: $(-x)^2 = x^2$						
-1-i-2-2i-squaring-a-complex-number-needn-t-stay	Properties		[Equal, [Square, [Complex, 1, 1]], [Complex, 0, 2]]	True	$(1+i)^2 = 2i$ -- squaring a complex number needn't stay real						
-infinity-squared-stays-infinite-rather-than	Possible issues		[Square, PositiveInfinity]	PositiveInfinity	Infinity squared stays infinite rather than erroring						
+id	section	role	expr	expected	caption	fullform.in	fullform.out	sage.kind	sage.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note
+square-5			[Square, 5]	25		Square(5)	25						
+same-result-for-x-and-x			[Square, -5]	25	Same result for x and -x	Square(-5)	25						
+square-2-over-3			[Square, [Rational, 2, 3]]	[Rational, 4, 9]		Square(Rational(2, 3))	Rational(4, 9)						
+canonicalizes-to-x-2			[Square, x]	[Power, x, 2]	Canonicalizes to $x^2$	Square(x)	Power(x, 2)						
+threads-element-wise-over-a-list			[Square, [List, 2, 3, -4]]	[List, 4, 9, 16]	Threads element-wise over a list			threading	compute-engine's Square is Listable and threads over the list; Sage's takes scalars only.	threading	compute-engine's Square threads over (or pools) the list; SymPy's takes scalars.	threading	compute-engine's Square threads over the list; mpmath's takes scalars.
+the-area-of-a-3-3-square-tile	Applications		[Square, 3]	9	The area of a 3×3 square tile	Square(3)	9						
+even-function-x-2-x-2	Properties		[Equal, [Square, -5], [Square, 5]]	True	Even function: $(-x)^2 = x^2$								
+1-i-2-2i-squaring-a-complex-number-needn-t-stay	Properties		[Equal, [Square, [Complex, 1, 1]], [Complex, 0, 2]]	True	$(1+i)^2 = 2i$ -- squaring a complex number needn't stay real								
+infinity-squared-stays-infinite-rather-than	Possible issues		[Square, PositiveInfinity]	PositiveInfinity	Infinity squared stays infinite rather than erroring	Square(PositiveInfinity)	PositiveInfinity						

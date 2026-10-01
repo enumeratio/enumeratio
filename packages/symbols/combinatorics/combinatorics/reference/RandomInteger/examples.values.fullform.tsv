@@ -1,5 +1,0 @@
-id	in	out
-randominteger-default-seed-is-reproducible	Last(List(SeedRandom(42), RandomInteger(100)))	60
-randominteger-range-scope	Last(List(SeedRandom(1), RandomInteger(List(10, 20))))	16
-randominteger-list-of-draws	Length(Last(List(SeedRandom(2), RandomInteger(6, 10))))	10
-randominteger-array-shape	Shape(Last(List(SeedRandom(3), RandomInteger(1, List(2, 3)))))	Tuple(2, 3)

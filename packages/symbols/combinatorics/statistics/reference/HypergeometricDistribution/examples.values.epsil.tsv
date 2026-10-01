@@ -1,5 +1,0 @@
-id	in	out
-hypergeometric-pdf-exact	pdf(HypergeometricDistribution(20, 50, 100), 10)	10_272_278_170 / 52_177_653_441
-hypergeometric-cdf-exact-sum	cdf(HypergeometricDistribution(3, 5, 10), 2)	11 / 12
-hypergeometric-mean-exact	mean(HypergeometricDistribution(20, 50, 100))	10
-hypergeometric-variance-exact	variance(HypergeometricDistribution(20, 50, 100))	400 / 99

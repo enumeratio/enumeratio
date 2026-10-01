@@ -1,4 +1,0 @@
-id	in	out
-count-lukasiewiczpaths-4	Count(LukasiewiczPaths(4))	14
-first-element-of-lukasiewiczpaths-4	At(LukasiewiczPaths(4), 1)	LukasiewiczPath(List(0, 0, 0, 0, -1))
-every-element-of-lukasiewiczpaths-4	Take(LukasiewiczPaths(4), 5)	List(LukasiewiczPath(List(0, 0, 0, 0, -1)), LukasiewiczPath(List(0, 0, 1, -1, -1)), LukasiewiczPath(List(0, 1, 0, -1, -1)), LukasiewiczPath(List(1, 0, 0, -1, -1)), LukasiewiczPath(List(0, 1, -1, 0, -1)))

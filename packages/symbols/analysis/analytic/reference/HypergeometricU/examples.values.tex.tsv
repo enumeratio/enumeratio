@@ -1,7 +1,0 @@
-id	in	out
-a-generic-point-checked-against-mpmath-s-hyperu	\mathrm{HypergeometricU}(1, 2.5, 3)	0.382\,340\,662\,490\,315\,6
-a-0-5-b-1-5-at-2	\mathrm{HypergeometricU}(0.5, 1.5, 2)	0.707\,106\,781\,186\,547\,6
-a-complex-argument	N(\mathrm{HypergeometricU}(1, 2.5, 0.5+0.5i))	1.118\,755\,711\,946\,713\,7-1.717\,111\,537\,089\,523\,8i
-complex-a-at-1-5	N(\mathrm{HypergeometricU}(1+0.5i, 2.5, 1.5))	0.862\,949\,429\,353\,628\,6-0.337\,017\,321\,736\,867\,94i
-b-negative-1-5-at-0-8	\mathrm{HypergeometricU}(2, -1.5, 0.8)	0.058\,323\,838\,256\,163\,77
-integer-b-stays-symbolic-the-connection-formula	\mathrm{HypergeometricU}(1, 2, 3)	\mathrm{HypergeometricU}(1, 2, 3)

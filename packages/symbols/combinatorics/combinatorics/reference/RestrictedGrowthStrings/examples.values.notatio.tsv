@@ -1,5 +1,0 @@
-id	in	out
-count-restrictedgrowthstrings-4	<Count><RestrictedGrowthStrings>4</RestrictedGrowthStrings></Count>	<ToExpression>15</ToExpression>
-first-element-of-restrictedgrowthstrings-4	<At><RestrictedGrowthStrings>4</RestrictedGrowthStrings> 1</At>	<RestrictedGrowthString><List>0 0 0 0</List></RestrictedGrowthString>
-every-element-of-restrictedgrowthstrings-4	<Take><RestrictedGrowthStrings>4</RestrictedGrowthStrings> 5</Take>	<List><RestrictedGrowthString><List>0 0 0 0</List></RestrictedGrowthString> <RestrictedGrowthString><List>0 0 0 1</List></RestrictedGrowthString> <RestrictedGrowthString><List>0 0 1 0</List></RestrictedGrowthString> <RestrictedGrowthString><List>0 0 1 1</List></RestrictedGrowthString> <RestrictedGrowthString><List>0 0 1 2</List></RestrictedGrowthString></List>
-blocks-through-set-partitions	<Tally><CombinatorialStat><RestrictedGrowthStrings>4</RestrictedGrowthStrings> "Blocks"</CombinatorialStat></Tally>	<Tuple><List>1 2 3 4</List> <List>1 7 6 1</List></Tuple>

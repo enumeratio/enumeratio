@@ -1,6 +1,0 @@
-id	in	out
-multinomial-pdf	<PDF><MultinomialDistribution>4 <List><Rational>1 2</Rational> <Rational>1 3</Rational> <Rational>1 6</Rational></List></MultinomialDistribution> <List>2 1 1</List></PDF>	<Rational>1 6</Rational>
-multinomial-pdf-zero	<PDF><MultinomialDistribution>4 <List><Rational>1 2</Rational> <Rational>1 2</Rational></List></MultinomialDistribution> <List>1 1</List></PDF>	<ToExpression>0</ToExpression>
-multinomial-mean	<Mean><MultinomialDistribution>10 <List><Rational>1 5</Rational> <Rational>4 5</Rational></List></MultinomialDistribution></Mean>	<List>2 8</List>
-multinomial-variance	<Variance><MultinomialDistribution>10 <List><Rational>1 5</Rational> <Rational>4 5</Rational></List></MultinomialDistribution></Variance>	<List><Rational>8 5</Rational> <Rational>8 5</Rational></List>
-multinomial-covariance	<Covariance><MultinomialDistribution>10 <List><Rational>1 5</Rational> <Rational>4 5</Rational></List></MultinomialDistribution></Covariance>	<List><List><Rational>8 5</Rational> <Rational>-8 5</Rational></List> <List><Rational>-8 5</Rational> <Rational>8 5</Rational></List></List>

@@ -1,2 +1,0 @@
-id	in	out
-zero-modulus	Mod(5, 0)	NaN

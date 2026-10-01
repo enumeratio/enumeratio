@@ -1,3 +1,0 @@
-id	in	out
-count-shiftedstandardtableaux-5-6-standard	\operatorname{Count}(\operatorname{ShiftedStandardTableaux}(5))	6
-every-element-of-shiftedstandardtableaux-5	\operatorname{Take}(\operatorname{ShiftedStandardTableaux}(5),6)	[\operatorname{ShiftedStandardTableau}([[1,2,3,4,5]]),\operatorname{ShiftedStandardTableau}([[1,2,4,5],[3]]),\operatorname{ShiftedStandardTableau}([[1,2,3,5],[4]]),\operatorname{ShiftedStandardTableau}([[1,2,3,4],[5]]),\operatorname{ShiftedStandardTableau}([[1,2,4],[3,5]]),\operatorname{ShiftedStandardTableau}([[1,2,3],[4,5]])]

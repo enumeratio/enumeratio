@@ -1,4 +1,0 @@
-id	in	out	back
-counts-code-points-not-utf-16-units	StringLength("a😀b")	3	[StringLength, "'a😀b'"]
-stringlength-tiger	StringLength("tiger")	5	
-stringlength	StringLength("")	0	

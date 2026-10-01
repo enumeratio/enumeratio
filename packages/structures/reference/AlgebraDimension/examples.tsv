@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption	sage.kind	sage.note
-algebradimension-quaternions			[AlgebraDimension, Quaternions]	4		domain	compute-engine has no definition for the symbol Quaternions itself (unlike Primes, which is defined), so the free-symbol rule (DEFINED_NAMES) emits it as SR.var("Quaternions") instead of recognizing it as a domain — Sage's plain symbolic variable has no .dimension(). A gap in how the domain is declared, not a value disagreement.
-algebradimension-cliffordalgebra-2-1			[AlgebraDimension, [CliffordAlgebra, 2, 1]]	8			
-c-4			[AlgebraDimension, [MulticomplexAlgebra, 4]]	16	$\mathbb{C}_4$		
+id	section	role	expr	expected	caption	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out	sage.kind	sage.note
+algebradimension-quaternions			[AlgebraDimension, Quaternions]	4		AlgebraDimension(Quaternions)	4	\mathrm{AlgebraDimension}(\mathrm{Quaternions})	4	\dim(\operatorname{Quaternions})	4	AlgebraDimension(Quaternions)	4	<AlgebraDimension>Quaternions</AlgebraDimension>	<ToExpression>4</ToExpression>	domain	compute-engine has no definition for the symbol Quaternions itself (unlike Primes, which is defined), so the free-symbol rule (DEFINED_NAMES) emits it as SR.var("Quaternions") instead of recognizing it as a domain — Sage's plain symbolic variable has no .dimension(). A gap in how the domain is declared, not a value disagreement.
+algebradimension-cliffordalgebra-2-1			[AlgebraDimension, [CliffordAlgebra, 2, 1]]	8													
+c-4			[AlgebraDimension, [MulticomplexAlgebra, 4]]	16	$\mathbb{C}_4$												

@@ -1,4 +1,0 @@
-id	in	out
-from-a-binary-tree	DyckPath(BinaryTree([[0, 0], [0, [0, 0]]]))	DyckPath([1, 1, 0, 0, 1, 0, 1, 0])
-by-target-collection	CombinatorialMap(BinaryTree([[0, 0], [0, [0, 0]]]), DyckPaths)	DyckPath([1, 1, 0, 0, 1, 0, 1, 0])
-by-findstat-id	CombinatorialMap(BinaryTree([[0, 0], [0, [0, 0]]]), "Mp00012")	DyckPath([1, 1, 0, 0, 1, 0, 1, 0])

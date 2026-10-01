@@ -1,8 +1,0 @@
-id	in	out
-n-csch-9-over-5-50	N(\operatorname{csch}(\frac{9}{5}),50)	0.33988469141549370714075814946653211798477613243671
-csch-list-list-1-over-3-times-i-times-pi-neg-1	\operatorname{csch}([[\frac{1}{3}i\pi,\frac{-1}{3}i\pi],[0,\frac{-1}{6}i\pi]])	[[\operatorname{csch}(\frac{1}{3}i\pi),\operatorname{csch}(\frac{-1}{3}i\pi)],[\tilde\infty,\operatorname{csch}(\frac{-1}{6}i\pi)]]
-csch-positiveinfinity		
-csch-0		
-d-csch-x-x	\frac{d}{dx}\operatorname{csch}(x)	-\operatorname{csch}(x)\coth(x)
-matrixfunction-function-csch-1-1-list-list-1	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{csch}(\_1)),\_1),[[\frac{1}{3}i\pi,\frac{-1}{3}i\pi],[0,\frac{-1}{6}i\pi]])	[[\operatorname{csch}(\frac{1}{3}i\pi),\frac{-2}{3}\operatorname{csch}(\frac{1}{3}i\pi)+\frac{2}{3}\operatorname{csch}(\frac{-1}{6}i\pi)],[0,\operatorname{csch}(\frac{-1}{6}i\pi)]]
-integrate-csch-x-x-nothing-nothing	\int_{\operatorname{}}^{\operatorname{}}\operatorname{csch}(x)dx	-\ln(\coth(\frac{1}{2}|x|))

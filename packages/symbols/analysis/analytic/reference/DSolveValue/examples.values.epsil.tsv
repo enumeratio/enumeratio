@@ -1,6 +1,0 @@
-id	in	out
-harmonic-oscillator	DSolveValue(apply(derivative(Y, 2), x) + Y(x) == 0, Y(x), x)	sin(x) * C(2) + cos(x) * C(1)
-with-initial-conditions	"DSolveValue([\n              apply(derivative(Y, 2), x) + Y(x) == 0,\n              Y(0) == 1,\n              apply(derivative(Y, 1), 0) == 0,\n            ], Y(x), x)"	cos(x)
-distinct-real-roots	"DSolveValue(\n             apply(derivative(Y, 2), x) - 3 * apply(derivative(Y, 1), x) + 2 *\n                                                                           Y(x) == 0,\n             Y(x),\n             x,\n           )"	C(1) * exponentialE ^ (2x) + C(2) * exponentialE ^ x
-repeated-root	"DSolveValue(\n             apply(derivative(Y, 2), x) - 4 * apply(derivative(Y, 1), x) + 4 *\n                                                                           Y(x) == 0,\n             Y(x),\n             x,\n           )"	(x * C(2) + C(1)) * exponentialE ^ (2x)
-resonance-sine-forcing	DSolveValue(apply(derivative(Y, 2), x) + Y(x) == sin(x), Y(x), x)	-1 / 2 * x * cos(x) + sin(x) * C(2) + cos(x) * C(1)

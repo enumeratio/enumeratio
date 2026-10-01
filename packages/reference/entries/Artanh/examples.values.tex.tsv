@@ -1,9 +1,0 @@
-id	in	out
-n-artanh-1-over-2-50	N(\mathrm{artanh}(\frac{1}{2}), 50)	0.549\,306\,144\,334\,054\,845\,698
-artanh-positiveinfinity	\mathrm{artanh}(\infty)	(-\frac{1}{2}i)\pi
-artanh-0	\mathrm{artanh}(0)	0
-d-artanh-x-x	\frac{\mathrm{d}\mathrm{artanh}(x)}{\mathrm{d}x}	\frac{1}{1-x^2}
-fullsimplify-neg-1-over-x-times-y-plus-1-times-x	\mathrm{FullSimplify}(\tanh(\mathrm{artanh}(x)+\mathrm{artanh}(y))-\frac{x+y}{xy+1})	\frac{-x-y}{xy+1}+\tanh(\mathrm{artanh}(x)+\mathrm{artanh}(y))
-trigtoexp-artanh-z	\mathrm{TrigToExp}(\mathrm{artanh}(z))	\mathrm{artanh}(z)
-integrate-artanh-x-x-nothing-nothing	\int\!\mathrm{artanh}(x)\, \mathrm{d}x	x\mathrm{artanh}(x)+\frac{1}{2}(\ln(1-x^2))
-artanh-complexinfinity-is-indeterminate-the-sign	\mathrm{artanh}(\tilde\infty)	\operatorname{Indeterminate}

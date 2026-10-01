@@ -1,4 +1,0 @@
-id	in	out
-s-m-1-m-1	\mathrm{Antipode}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack))	-\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack)
-s-2-id-since-qsym-is-commutative	\mathrm{Antipode}(\mathrm{Antipode}(\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack)))	\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack)
-the-product-is-homogeneous-so-degrees-add	\mathrm{HopfDegree}(\mathrm{NonCommutativeMultiply}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack)))	3

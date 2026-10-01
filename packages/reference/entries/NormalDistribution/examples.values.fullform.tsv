@@ -1,3 +1,0 @@
-id	in	out
-pdf-normaldistribution-0-1-x	PDF(NormalDistribution(0, 1), x)	Divide(Multiply(Sqrt(2), Power(ExponentialE, Multiply(Rational(-1, 2), Power(x, 2)))), Multiply(2, Sqrt(Pi)))
-transformeddistribution-u-times-1-over-v	TransformedDistribution(Multiply(u, Divide(1, v)), Distributed(List(u, v), ProductDistribution(List(NormalDistribution(), 2))))	TransformedDistribution(Divide(u, v), Distributed(List(u, v), ProductDistribution(List(NormalDistribution(), 2))))

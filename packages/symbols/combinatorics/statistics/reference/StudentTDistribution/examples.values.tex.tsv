@@ -1,5 +1,0 @@
-id	in	out
-studentt-pdf-exact	\operatorname{PDF}(\mathrm{StudentTDistribution}(5), 0)	\frac{\sqrt{5}\Gamma(3)}{5\Gamma(\frac{5}{2})\sqrt{\pi}}
-studentt-cdf-symmetric	\operatorname{CDF}(\mathrm{StudentTDistribution}(5), 0)	\frac{1}{2}
-studentt-mean-exact	\mathrm{mean}(\mathrm{StudentTDistribution}(5))	0
-studentt-variance-exact	\mathrm{Variance}(\mathrm{StudentTDistribution}(5))	\frac{5}{3}

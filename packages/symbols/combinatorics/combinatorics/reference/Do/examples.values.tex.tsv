@@ -1,3 +1,0 @@
-id	in	out
-sum-one-to-five	\bigl\lbrack\mathrm{total}\coloneq0, \mathrm{Do}(\mathrm{total}\coloneq\mathrm{total}+i, \bigl\lbrack i, 1, 5\bigr\rbrack), \mathrm{total}\bigr\rbrack	\bigl\lbrack0, 15\bigr\rbrack
-repeat-with-no-loop-variable	\bigl\lbrack\mathrm{count}\coloneq0, \mathrm{Do}(\mathrm{count}\coloneq\mathrm{count}+1, 4), \mathrm{count}\bigr\rbrack	\bigl\lbrack0, 4\bigr\rbrack

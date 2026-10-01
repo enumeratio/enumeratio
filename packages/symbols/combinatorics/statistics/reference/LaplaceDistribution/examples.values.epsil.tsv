@@ -1,5 +1,0 @@
-id	in	out
-laplace-pdf-exact	pdf(LaplaceDistribution(0, 1 / 2), 0)	1
-laplace-cdf-exact	cdf(LaplaceDistribution(0, 1 / 2), 0)	1 / 2
-laplace-mean-exact	mean(LaplaceDistribution(0, 1 / 2))	0
-laplace-variance-exact	variance(LaplaceDistribution(0, 1 / 2))	1 / 2

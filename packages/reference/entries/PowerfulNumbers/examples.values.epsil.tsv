@@ -1,4 +1,0 @@
-id	in	out
-the-first-25-terms	take(PowerfulNumbers, 25)	"[\n  1,\n  4,\n  8,\n  9,\n  16,\n  25,\n  27,\n  32,\n  36,\n  49,\n  64,\n  72,\n  81,\n  100,\n  108,\n  121,\n  125,\n  128,\n  144,\n  169,\n  196,\n  200,\n  216,\n  225,\n  243,\n]"
-36-is-powerful	36 in PowerfulNumbers	True
-12-is-not-powerful	12 in PowerfulNumbers	False

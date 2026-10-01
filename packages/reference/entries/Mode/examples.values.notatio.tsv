@@ -1,8 +1,0 @@
-id	in	out
-mode-list-1-2-2-3	<Mode><List>1 2 2 3</List></Mode>	<ToExpression>2</ToExpression>
-mode-list-1-2-3-3-2-3	<Mode><List>1 2 3 3 2 3</List></Mode>	<ToExpression>3</ToExpression>
-exact-rationals	<Mode><List><Rational>1 2</Rational> 1 <Rational>1 2</Rational></List></Mode>	<Rational>1 2</Rational>
-symbols-and-numbers-mixed-three-way-tie-wolfram	<Mode><List>b a c 2 a b 1 2</List></Mode>	<b />
-the-mode-occurs-exactly-as-many-times-as-the	<Equal><Count><List>1 2 2 3</List> <Mode><List>1 2 2 3</List></Mode></Count> 2</Equal>	<True />
-with-a-tie-for-most-frequent-mode-returns-just	<Mode><List>1 1 2 2 3</List></Mode>	<ToExpression>1</ToExpression>
-empty-data-has-no-mode-compute-engine-returns	<Mode><Apply>List</Apply></Mode>	<NaN />

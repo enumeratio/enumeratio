@@ -1,4 +1,0 @@
-id	in	out
-poisson-process-slice-mean	\operatorname{Mean}(\operatorname{SliceDistribution}(\operatorname{PoissonProcess}(3),5))	15
-poisson-process-slice-distribution	\operatorname{SliceDistribution}(\operatorname{PoissonProcess}(2),3)	\operatorname{PoissonDistribution}(6)
-poisson-process-slice-variance	\operatorname{Variance}(\operatorname{SliceDistribution}(\operatorname{PoissonProcess}(2),3))	6

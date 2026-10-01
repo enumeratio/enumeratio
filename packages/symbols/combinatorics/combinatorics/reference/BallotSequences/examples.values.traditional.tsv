@@ -1,4 +1,0 @@
-id	in	out
-count-ballotsequences-4	\operatorname{Count}(\operatorname{BallotSequences}(4))	14
-first-element-of-ballotsequences-4	\operatorname{At}(\operatorname{BallotSequences}(4),1)	\operatorname{DyckPath}([1,1,1,1,0,0,0,0])
-every-element-of-ballotsequences-4	\operatorname{Take}(\operatorname{BallotSequences}(4),5)	[\operatorname{DyckPath}([1,1,1,1,0,0,0,0]),\operatorname{DyckPath}([1,1,1,0,1,0,0,0]),\operatorname{DyckPath}([1,1,1,0,0,1,0,0]),\operatorname{DyckPath}([1,1,1,0,0,0,1,0]),\operatorname{DyckPath}([1,1,0,1,1,0,0,0])]

@@ -1,5 +1,0 @@
-id	in	out
-triangular-pdf-exact	PDF(TriangularDistribution(List(0, 1)), Rational(1, 4))	1
-triangular-cdf-exact	CDF(TriangularDistribution(List(0, 1)), Rational(1, 4))	Rational(1, 8)
-triangular-mean-exact	Mean(TriangularDistribution(List(0, 1)))	Rational(1, 2)
-triangular-variance-exact	Variance(TriangularDistribution(List(0, 1)))	Rational(1, 24)

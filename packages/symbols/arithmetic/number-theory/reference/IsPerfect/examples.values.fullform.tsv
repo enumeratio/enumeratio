@@ -1,9 +1,0 @@
-id	in	out
-isperfect-6	IsPerfect(6)	True
-isperfect-12	IsPerfect(12)	False
-listable	IsPerfect(List(6, 28, 12))	List(True, True, False)
-isperfect-496	IsPerfect(496)	True
-isperfect-28	IsPerfect(28)	True
-negative-numbers-are-not-perfect	IsPerfect(-6)	False
-isperfect-1-234-121	IsPerfect(1234121)	False
-isperfect-simplify-x	IsPerfect(Simplify(x))	IsPerfect(x)

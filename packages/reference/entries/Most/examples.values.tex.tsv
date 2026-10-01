@@ -1,3 +1,0 @@
-id	in	out
-most-list-a-b-c-d	\mathrm{Most}(\bigl\lbrack a, b, c, d\bigr\rbrack)	\bigl\lbrack a, b, c\bigr\rbrack
-nestlist-most-list-a-b-c-d-k-3	\mathrm{NestList}(\mathrm{Most}, \bigl\lbrack a, b, c, d, k\bigr\rbrack, 3)	\bigl\lbrack\bigl\lbrack a, b, c, d, k\bigr\rbrack, \bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack a, b\bigr\rbrack\bigr\rbrack

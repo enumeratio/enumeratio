@@ -1,6 +1,0 @@
-id	in	out
-multinomial-pdf	\operatorname{PDF}(\operatorname{MultinomialDistribution}(4,[\frac{1}{2},\frac{1}{3},\frac{1}{6}]),[2,1,1])	\frac{1}{6}
-multinomial-pdf-zero	\operatorname{PDF}(\operatorname{MultinomialDistribution}(4,[\frac{1}{2},\frac{1}{2}]),[1,1])	0
-multinomial-mean	\operatorname{Mean}(\operatorname{MultinomialDistribution}(10,[\frac{1}{5},\frac{4}{5}]))	[2,8]
-multinomial-variance	\operatorname{Variance}(\operatorname{MultinomialDistribution}(10,[\frac{1}{5},\frac{4}{5}]))	[\frac{8}{5},\frac{8}{5}]
-multinomial-covariance	\operatorname{Covariance}(\operatorname{MultinomialDistribution}(10,[\frac{1}{5},\frac{4}{5}]))	[[\frac{8}{5},\frac{-8}{5}],[\frac{-8}{5},\frac{8}{5}]]

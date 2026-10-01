@@ -1,8 +1,0 @@
-id	in	out	back
-letters-a-through-e	CharacterRange("\(a)", "\(e)")	["a", "b", "c", "d", "e"]	[CharacterRange, [String, "''", a], [String, "''", e]]
-characterrange-a-z	CharacterRange("a", "z")	"[\n  \"a\",\n  \"b\",\n  \"c\",\n  \"d\",\n  \"e\",\n  \"f\",\n  \"g\",\n  \"h\",\n  \"i\",\n  \"j\",\n  \"k\",\n  \"l\",\n  \"m\",\n  \"n\",\n  \"o\",\n  \"p\",\n  \"q\",\n  \"r\",\n  \"s\",\n  \"t\",\n  \"u\",\n  \"v\",\n  \"w\",\n  \"x\",\n  \"y\",\n  \"z\",\n]"	
-characterrange-1-000-1-020			
-by-code-point	CharacterRange(97, 101)	["a", "b", "c", "d", "e"]	
-characterrange-a-z-2	CharacterRange("A", "Z")	"[\n  \"A\",\n  \"B\",\n  \"C\",\n  \"D\",\n  \"E\",\n  \"F\",\n  \"G\",\n  \"H\",\n  \"I\",\n  \"J\",\n  \"K\",\n  \"L\",\n  \"M\",\n  \"N\",\n  \"O\",\n  \"P\",\n  \"Q\",\n  \"R\",\n  \"S\",\n  \"T\",\n  \"U\",\n  \"V\",\n  \"W\",\n  \"X\",\n  \"Y\",\n  \"Z\",\n]"	
-characterrange-0-9	CharacterRange("0", "9")	["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]	
-characterrange			

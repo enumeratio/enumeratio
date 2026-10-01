@@ -1,9 +1,0 @@
-id	in	out
-geometric	\operatorname{FindSequenceFunction}([1,2,4,8,16],n)	2^n
-polynomial	\operatorname{FindSequenceFunction}([1,4,9,16,25],n)	n^2+2n+1
-catalan-numbers	\operatorname{FindSequenceFunction}([1,1,2,5,14,42,132],n)	C_n
-factorial	\operatorname{FindSequenceFunction}([1,1,2,6,24,120],n)	n!
-findsequencefunction-list-1-1-2-3-5-8-13-n	\operatorname{FindSequenceFunction}([1,1,2,3,5,8,13],n)	\frac{1}{10}(5-\sqrt{5})(\frac{1}{2}(1-\sqrt{5}))^n+\frac{\sqrt{5}}{10}(1+\sqrt{5})(\frac{1}{2}(1+\sqrt{5}))^n
-findsequencefunction-list-neg-1-1-neg-1-1-neg-1	\operatorname{FindSequenceFunction}([-1,1,-1,1,-1,1],n)	-(-1)^n
-findsequencefunction-list-2-5-10-17-26-37-50-n	\operatorname{FindSequenceFunction}([2,5,10,17,26,37,50],n)	n^2+2n+2
-findsequencefunction-list-3-7-13-21-31-43-57-n	\operatorname{FindSequenceFunction}([3,7,13,21,31,43,57],n)	n^2+3n+3

@@ -1,6 +1,0 @@
-id	in	out
-finishes-well-inside-the-deadline-so-the-value	<TimeConstrained><Sum>k <Tuple>k 1 10</Tuple></Sum> 1</TimeConstrained>	<ToExpression>55</ToExpression>
-factoring-a-30-digit-semiprime-outruns-a-50-ms	<TimeConstrained><FactorInteger>`1001000000000040037000000000111`</FactorInteger> 0.05</TimeConstrained>	<Aborted />
-a-custom-failexpr-replaces-the-default-aborted	<TimeConstrained><FactorInteger>`1001000000000040037000000000111`</FactorInteger> 0.05 -1</TimeConstrained>	<ToExpression>-1</ToExpression>
-an-infinite-time-limit-imposes-no-constraint	<TimeConstrained><Add>1 2</Add> PositiveInfinity</TimeConstrained>	<ToExpression>3</ToExpression>
-failexpr-is-held-it-is-never-evaluated-when-expr	<TimeConstrained><Add>2 3</Add> 1 <Divide>1 0</Divide></TimeConstrained>	<ToExpression>5</ToExpression>

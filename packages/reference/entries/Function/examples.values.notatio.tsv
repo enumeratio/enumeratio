@@ -1,6 +1,0 @@
-id	in	out
-filter-list-1-neg-1-2-neg-2-3-function-0-lt-1-1	<Filter><List>1 -1 2 -2 3</List> <Function><Block><Less>0 _1</Less></Block> _1</Function></Filter>	<List>1 2 3</List>
-array-function-1-pow-2-plus-1-1-10	<Array><Function><Block><Add><Power>_1 2</Power> 1</Add></Block> _1</Function> 10</Array>	<List>2 5 10 17 26 37 50 65 82 101</List>
-sort-list-list-a-2-list-c-1-list-d-3-function-1	<Sort><List><List>a 2</List> <List>c 1</List> <List>d 3</List></List> <Function><Block><Less><At>_1 2</At> <At>_2 2</At></Less></Block> _1 _2</Function></Sort>	<List><List>c 1</List> <List>a 2</List> <List>d 3</List></List>
-map-function-17-list-1-2-3	<Map><Function><Block>17</Block></Function> <List>1 2 3</List></Map>	<List>17 17 17</List>
-array-function-1-pow-2-1-10	<Array><Function><Block><Power>_1 2</Power></Block> _1</Function> 10</Array>	<List>1 4 9 16 25 36 49 64 81 100</List>

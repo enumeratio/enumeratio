@@ -1,7 +1,0 @@
-id	in	out
-3-at-position-2-tops-both-neighbors	\mathrm{Peaks}(\bigl\lbrack2, 3, 1\bigr\rbrack)	1
-monotone-increasing-has-no-interior-peak	\mathrm{Peaks}(\bigl\lbrack1, 2, 3\bigr\rbrack)	0
-the-lone-peak-at-position-2	\mathrm{Peaks}(\bigl\lbrack1, 3, 2, 4\bigr\rbrack)	1
-the-one-line-word-312	\mathrm{Peaks}(\mathrm{Permutation}(\bigl\lbrack3, 1, 2\bigr\rbrack))	0
-the-one-line-word-312-as-a-plain-list	\mathrm{Peaks}(\bigl\lbrack3, 1, 2\bigr\rbrack)	0
-the-one-line-word-2413	\mathrm{Peaks}(\mathrm{Permutation}(\bigl\lbrack2, 4, 1, 3\bigr\rbrack))	1

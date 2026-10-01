@@ -1,4 +1,0 @@
-id	in	out
-count-graycodes-3	\operatorname{Count}(\operatorname{GrayCodes}(3))	8
-first-element-of-graycodes-3	\operatorname{At}(\operatorname{GrayCodes}(3),1)	\operatorname{BinaryWord}([0,0,0])
-every-element-of-graycodes-3	\operatorname{Take}(\operatorname{GrayCodes}(3),8)	[\operatorname{BinaryWord}([0,0,0]),\operatorname{BinaryWord}([0,0,1]),\operatorname{BinaryWord}([0,1,1]),\operatorname{BinaryWord}([0,1,0]),\operatorname{BinaryWord}([1,1,0]),\operatorname{BinaryWord}([1,1,1]),\operatorname{BinaryWord}([1,0,1]),\operatorname{BinaryWord}([1,0,0])]

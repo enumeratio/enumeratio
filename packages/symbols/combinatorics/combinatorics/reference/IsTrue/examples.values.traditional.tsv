@@ -1,5 +1,0 @@
-id	in	out
-true-is-true	\operatorname{IsTrue}(\top)	\top
-false-is-not-true	\operatorname{IsTrue}(\bot)	\bot
-an-evaluating-comparison	\operatorname{IsTrue}(1=1)	\top
-an-unevaluated-symbol-is-false	\operatorname{IsTrue}(x)	\bot

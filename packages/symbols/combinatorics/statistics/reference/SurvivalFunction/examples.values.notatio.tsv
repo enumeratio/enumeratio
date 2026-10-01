@@ -1,2 +1,0 @@
-id	in	out
-survivalfunction-chisquare	<SurvivalFunction><ChiSquareDistribution>3</ChiSquareDistribution> 2</SurvivalFunction>	<GammaRegularized><Rational>3 2</Rational> 1</GammaRegularized>

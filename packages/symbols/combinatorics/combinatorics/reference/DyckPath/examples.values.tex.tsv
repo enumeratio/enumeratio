@@ -1,4 +1,0 @@
-id	in	out
-from-a-binary-tree	\mathrm{DyckPath}(\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack))	\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0, 1, 0\bigr\rbrack)
-by-target-collection	\mathrm{CombinatorialMap}(\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack), \mathrm{DyckPaths})	\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0, 1, 0\bigr\rbrack)
-by-findstat-id	\mathrm{CombinatorialMap}(\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack), \text{Mp00012})	\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0, 1, 0\bigr\rbrack)

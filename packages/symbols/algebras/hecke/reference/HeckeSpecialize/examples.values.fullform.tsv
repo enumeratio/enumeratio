@@ -1,4 +1,0 @@
-id	in	out
-q-t-e-q-1-t-s-at-q-1-is-just-t-e	HeckeSpecialize(NonCommutativeMultiply(HeckeT(List(2, 1, 3)), HeckeT(List(2, 1, 3))), 1)	HeckeT(List(1, 2, 3))
-the-ordinary-product-of-permutations	HeckeSpecialize(NonCommutativeMultiply(HeckeT(List(2, 1, 3)), HeckeT(List(1, 3, 2))), 1)	HeckeT(List(2, 3, 1))
-at-q-2-it-stays-spread-over-two-basis-elements	HeckeSpecialize(NonCommutativeMultiply(HeckeT(List(2, 1, 3)), HeckeT(List(2, 1, 3))), 2)	Add(Multiply(2, HeckeT(List(1, 2, 3))), HeckeT(List(2, 1, 3)))

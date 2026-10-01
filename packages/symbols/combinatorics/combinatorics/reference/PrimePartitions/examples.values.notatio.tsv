@@ -1,4 +1,0 @@
-id	in	out
-count-primepartition-12	<Count><PrimePartitions>12</PrimePartitions></Count>	<ToExpression>7</ToExpression>
-first-element-of-primepartition-12	<At><PrimePartitions>12</PrimePartitions> 1</At>	<IntegerPartition><List>7 5</List></IntegerPartition>
-every-element-of-primepartition-12	<Take><PrimePartitions>12</PrimePartitions> 7</Take>	<List><IntegerPartition><List>7 5</List></IntegerPartition> <IntegerPartition><List>7 3 2</List></IntegerPartition> <IntegerPartition><List>5 5 2</List></IntegerPartition> <IntegerPartition><List>5 3 2 2</List></IntegerPartition> <IntegerPartition><List>3 3 3 3</List></IntegerPartition> <IntegerPartition><List>3 3 2 2 2</List></IntegerPartition> <IntegerPartition><List>2 2 2 2 2 2</List></IntegerPartition></List>

@@ -1,3 +1,0 @@
-id	in	out
-vertex-count-of-k4	<VertexCount><CompleteGraph>4</CompleteGraph></VertexCount>	<ToExpression>4</ToExpression>
-vertex-count-of-a-triangle	<VertexCount><Graph><List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 1</UndirectedEdge></List></Graph></VertexCount>	<ToExpression>3</ToExpression>

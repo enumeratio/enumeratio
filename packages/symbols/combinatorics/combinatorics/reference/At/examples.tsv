@@ -1,54 +1,54 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-list-1-2-3-4-list-2			[At, [List, 1, 2, 3, 4], 2]	2			
-list-1-2-3-4-list-neg-1			[At, [List, 1, 2, 3, 4], -1]	4			
-list-a-b-c-d-list-neg-2			[At, [List, a, b, c, d], -2]	c			
-list-a-b-c-d-list-3			[At, [List, a, b, c, d], 3]	c			
-twinprimes-3rd-lesser-twin-prime		test	[At, TwinPrimes, 3]	11	At(collection, n) gives the n-th lesser twin prime, 1-indexed		
-kalmostprimes-3-first-term-is-8		test	[At, [KAlmostPrimes, 3], 1]	8	KAlmostPrimes and RoughNumbers are one-parameter operators		
-roughnumbers-5-first-term-is-1		test	[At, [RoughNumbers, 5], 1]	1			
-primepairs-gap-2-first-term-is-3		test	[At, [PrimePairs, 2], 1]	3	PrimePairs(gap) selects the twin/cousin/sexy family by gap		
-primepairs-gap-4-first-term-is-3		test	[At, [PrimePairs, 4], 1]	3			
-primepairs-gap-6-first-term-is-5		test	[At, [PrimePairs, 6], 1]	5			
-deficientnumbers-6th-term-is-7		test	[At, DeficientNumbers, 6]	7	At(collection, n) gives the n-th deficient number, 1-indexed		
-kfreeintegers-2-first-term-is-1		test	[At, [KFreeIntegers, 2], 1]	1	KFreeIntegers(k) is a one-parameter operator agreeing with SquareFreeNumbers at k=2		
-at-lazy-family-collection-element		test	[At, [KSubsets, 5, 2], 1]	[Finset, [Tuple, 5, [List, 1, 2]]]			
-at-span-submatrix-two-levels		test	[At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]	[List, [List, 4, 5], [List, 7, 8]]			
-at-integer-without-span-unaffected		test	[At, [List, a, b, c], 2]	b			
-list-a-b-c-d-k-f-list-3			[At, [List, a, b, c, d, k, f], 3]	c			
-list-a-b-c-d-k-f-list-neg-2			[At, [List, a, b, c, d, k, f], -2]	k			
-list-a-b-c-d-k-f-list-span-2-4			[At, [List, a, b, c, d, k, f], [Span, 2, 4]]	[List, b, c, d]			
-a-list-of-indices-selects-several-elements-at	Scope		[At, [List, a, b, c, d], [List, 1, 3]]	[List, a, c]	A list of indices selects several elements at once		
-a-range-also-works-as-an-index-list-extracting-a	Scope		[At, [List, a, b, c, d, e], [Range, 2, 4]]	[List, b, c, d]	A [[Range]] also works as an index list, extracting a contiguous slice		
-index-0-is-the-collection-s-own-head-matching	Scope		[At, [List, 1, 2, 3], 0]	List	Index 0 is the collection's own head, matching Wolfram's Part[c, 0]		
-several-indices-reach-into-successive-levels-row	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6]], 2, 3]	6	Several indices reach into successive levels: row 2, column 3		
-negative-indices-work-at-every-level	Scope		[At, [List, [List, 1, 2], [List, 3, 4]], -1, -1]	4	Negative indices work at every level		
-negative-indices-inside-an-index-list	Scope		[At, [List, a, b, c, d, f], [List, -1, -2]]	[List, f, d]	Negative indices inside an index list		
-a-stepped-range-takes-every-other-element	Scope		[At, [List, a, b, c, d, f], [Range, 1, 5, 2]]	[List, a, c, f]	A stepped [[Range]] takes every other element		
-negative-bounds-count-from-the-end-the-last	Scope		[At, [List, a, b, c, d, f], [Range, -3, -1]]	[List, c, d, f]	Negative bounds count from the end: the last three elements		
-a-lazy-range-is-indexed-directly	Scope		[At, [Range, 5, 10], 2]	6	A lazy [[Range]] is indexed directly		
-all-at-the-first-level-should-take-a-whole	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6]], All, 2]	[List, 2, 5]	$All$ at the first level takes a whole column		
-index-lists-at-two-levels-extract-a-submatrix	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [List, 1, 3], [List, 2, 3]]	[List, [List, 2, 3], [List, 8, 9]]	Index lists at two levels extract a submatrix (rows 1 and 3, columns 2 and 3)		
-a-span-2-4-in-wolfram-takes-a-contiguous-slice	Scope		[At, [List, a, b, c, d, f], [Span, 2, 4]]	[List, b, c, d]	A [[Span]] ($2;;4$ in Wolfram) takes a contiguous slice		
-a-stepped-span-1-1-2-takes-every-other-element	Scope		[At, [List, a, b, c, d, f], [Span, 1, -1, 2]]	[List, a, c, f]	A stepped [[Span]] ($1;;-1;;2$) takes every other element up to the end		
-a-negative-step-1-1-1-walks-backwards-reversing	Scope		[At, [List, a, b, c, d, f], [Span, -1, 1, -1]]	[List, f, d, c, b, a]	A negative step ($-1;;1;;-1$) walks backwards, reversing the list		
-negative-bounds-the-last-two-elements	Scope		[At, [List, a, b, c, d, f], [Span, -2, -1]]	[List, d, f]	Negative bounds: the last two elements		
-parts-of-any-expression-not-just-lists-the	Scope		[At, [Add, a, b, c], 2]	b	Parts of any expression, not just lists: the second term of a sum		
-indexes-into-a-named-integer-collection	Scope		[At, TriangularNumbers, 5]	15	Reaches into a named collection, not just a literal list — here the 5th triangular number, 1-indexed		
-indexes-into-a-parameterized-collection	Scope		[At, [PolygonalNumbers, 5], 3]	12	Also works on a parameterized collection like $PolygonalNumbers(k)$		
-first-term-of-fibonaccinumbers-is-0	Scope		[At, FibonacciNumbers, 1]	0			
-at-bellnumbers-5-is-bell-4-15	Scope		[At, BellNumbers, 5]	15	At(BellNumbers, 5) is Bell(4) = 15 (1-indexed At, 0-indexed term)		
-list-x-4-y-5-list-1-2	Scope		[At, [List, [Tuple, x, 4], [Tuple, y, 5]], 1, 2]	4			
-list-a-b-c-d-k-f-list-list-1-3-1-2-neg-1-6	Scope		[At, [List, a, b, c, d, k, f], [List, 1, 3, 1, 2, -1, 6]]	[List, a, c, a, b, f, f]			
-list-a-b-c-d-k-f-list-span-1-neg-3	Scope		[At, [List, a, b, c, d, k, f], [Span, 1, -3]]	[List, a, b, c, d]			
-list-a-b-c-d-n-f-g-h-m-j-k-list-span-3-neg-3-2	Scope		[At, [List, a, b, c, d, n, f, g, h, m, j, k], [Span, 3, -3, 2]]	[List, c, n, g, m]			
-list-list-a-b-c-list-d-m-f-list-g-h-k-list-2-3	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], 2, 3]	f			
-list-list-a-b-c-list-d-m-f-list-g-h-k-list-2	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], 2]	[List, d, m, f]			
-list-list-a-b-c-list-d-m-f-list-g-h-k-list-list	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], [List, 1, 3]]	[List, [List, a, b, c], [List, g, h, k]]			
-list-list-a-b-c-list-d-m-f-list-g-h-k-list-lis-2	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], [List, 1, 3], [List, 2, 3]]	[List, [List, b, c], [List, h, k]]			
-list-a-b-c-d-k-list-3	Scope		[At, [List, a, b, c, d, k], 3]	c			
-list-a-b-c-d-k-list-span-2-4	Scope		[At, [List, a, b, c, d, k], [Span, 2, 4]]	[List, b, c, d]			
-chaining-at-reaches-into-nested-collections-like	Applications		[At, [At, [List, [List, 1, 2], [List, 3, 4]], 2], 1]	3	Chaining $At$ reaches into nested collections, like indexing a matrix row then column		
-list-a-b-c-d-k-list-list-4-5-1-2-3	Applications		[At, [List, a, b, c, d, k], [List, 4, 5, 1, 2, 3]]	[List, d, k, a, b, c]			
-list-a-b-c-list-0	Properties		[At, [List, a, b, c], 0]	List			
-list-1-2-3-list-list	Properties		[At, [List, 1, 2, 3], [List]]	[List]			
-an-out-of-range-index-evaluates-to-nan-rather	Possible issues		[At, [List, 1, 2, 3], 10]	NaN	An out-of-range index evaluates to $NaN$ rather than raising an error	undefined-form	An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).
+id	section	role	expr	expected	caption	fullform.in	fullform.out	wolfram.kind	wolfram.note
+list-1-2-3-4-list-2			[At, [List, 1, 2, 3, 4], 2]	2					
+list-1-2-3-4-list-neg-1			[At, [List, 1, 2, 3, 4], -1]	4					
+list-a-b-c-d-list-neg-2			[At, [List, a, b, c, d], -2]	c					
+list-a-b-c-d-list-3			[At, [List, a, b, c, d], 3]	c					
+twinprimes-3rd-lesser-twin-prime		test	[At, TwinPrimes, 3]	11	At(collection, n) gives the n-th lesser twin prime, 1-indexed				
+kalmostprimes-3-first-term-is-8		test	[At, [KAlmostPrimes, 3], 1]	8	KAlmostPrimes and RoughNumbers are one-parameter operators				
+roughnumbers-5-first-term-is-1		test	[At, [RoughNumbers, 5], 1]	1					
+primepairs-gap-2-first-term-is-3		test	[At, [PrimePairs, 2], 1]	3	PrimePairs(gap) selects the twin/cousin/sexy family by gap				
+primepairs-gap-4-first-term-is-3		test	[At, [PrimePairs, 4], 1]	3					
+primepairs-gap-6-first-term-is-5		test	[At, [PrimePairs, 6], 1]	5					
+deficientnumbers-6th-term-is-7		test	[At, DeficientNumbers, 6]	7	At(collection, n) gives the n-th deficient number, 1-indexed				
+kfreeintegers-2-first-term-is-1		test	[At, [KFreeIntegers, 2], 1]	1	KFreeIntegers(k) is a one-parameter operator agreeing with SquareFreeNumbers at k=2				
+at-lazy-family-collection-element		test	[At, [KSubsets, 5, 2], 1]	[Finset, [Tuple, 5, [List, 1, 2]]]					
+at-span-submatrix-two-levels		test	[At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]	[List, [List, 4, 5], [List, 7, 8]]					
+at-integer-without-span-unaffected		test	[At, [List, a, b, c], 2]	b					
+list-a-b-c-d-k-f-list-3			[At, [List, a, b, c, d, k, f], 3]	c					
+list-a-b-c-d-k-f-list-neg-2			[At, [List, a, b, c, d, k, f], -2]	k					
+list-a-b-c-d-k-f-list-span-2-4			[At, [List, a, b, c, d, k, f], [Span, 2, 4]]	[List, b, c, d]					
+a-list-of-indices-selects-several-elements-at	Scope		[At, [List, a, b, c, d], [List, 1, 3]]	[List, a, c]	A list of indices selects several elements at once				
+a-range-also-works-as-an-index-list-extracting-a	Scope		[At, [List, a, b, c, d, e], [Range, 2, 4]]	[List, b, c, d]	A [[Range]] also works as an index list, extracting a contiguous slice				
+index-0-is-the-collection-s-own-head-matching	Scope		[At, [List, 1, 2, 3], 0]	List	Index 0 is the collection's own head, matching Wolfram's Part[c, 0]				
+several-indices-reach-into-successive-levels-row	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6]], 2, 3]	6	Several indices reach into successive levels: row 2, column 3				
+negative-indices-work-at-every-level	Scope		[At, [List, [List, 1, 2], [List, 3, 4]], -1, -1]	4	Negative indices work at every level				
+negative-indices-inside-an-index-list	Scope		[At, [List, a, b, c, d, f], [List, -1, -2]]	[List, f, d]	Negative indices inside an index list				
+a-stepped-range-takes-every-other-element	Scope		[At, [List, a, b, c, d, f], [Range, 1, 5, 2]]	[List, a, c, f]	A stepped [[Range]] takes every other element				
+negative-bounds-count-from-the-end-the-last	Scope		[At, [List, a, b, c, d, f], [Range, -3, -1]]	[List, c, d, f]	Negative bounds count from the end: the last three elements				
+a-lazy-range-is-indexed-directly	Scope		[At, [Range, 5, 10], 2]	6	A lazy [[Range]] is indexed directly				
+all-at-the-first-level-should-take-a-whole	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6]], All, 2]	[List, 2, 5]	$All$ at the first level takes a whole column				
+index-lists-at-two-levels-extract-a-submatrix	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [List, 1, 3], [List, 2, 3]]	[List, [List, 2, 3], [List, 8, 9]]	Index lists at two levels extract a submatrix (rows 1 and 3, columns 2 and 3)				
+a-span-2-4-in-wolfram-takes-a-contiguous-slice	Scope		[At, [List, a, b, c, d, f], [Span, 2, 4]]	[List, b, c, d]	A [[Span]] ($2;;4$ in Wolfram) takes a contiguous slice				
+a-stepped-span-1-1-2-takes-every-other-element	Scope		[At, [List, a, b, c, d, f], [Span, 1, -1, 2]]	[List, a, c, f]	A stepped [[Span]] ($1;;-1;;2$) takes every other element up to the end				
+a-negative-step-1-1-1-walks-backwards-reversing	Scope		[At, [List, a, b, c, d, f], [Span, -1, 1, -1]]	[List, f, d, c, b, a]	A negative step ($-1;;1;;-1$) walks backwards, reversing the list				
+negative-bounds-the-last-two-elements	Scope		[At, [List, a, b, c, d, f], [Span, -2, -1]]	[List, d, f]	Negative bounds: the last two elements				
+parts-of-any-expression-not-just-lists-the	Scope		[At, [Add, a, b, c], 2]	b	Parts of any expression, not just lists: the second term of a sum	At(Add(a, b, c), 2)	b		
+indexes-into-a-named-integer-collection	Scope		[At, TriangularNumbers, 5]	15	Reaches into a named collection, not just a literal list — here the 5th triangular number, 1-indexed				
+indexes-into-a-parameterized-collection	Scope		[At, [PolygonalNumbers, 5], 3]	12	Also works on a parameterized collection like $PolygonalNumbers(k)$				
+first-term-of-fibonaccinumbers-is-0	Scope		[At, FibonacciNumbers, 1]	0					
+at-bellnumbers-5-is-bell-4-15	Scope		[At, BellNumbers, 5]	15	At(BellNumbers, 5) is Bell(4) = 15 (1-indexed At, 0-indexed term)				
+list-x-4-y-5-list-1-2	Scope		[At, [List, [Tuple, x, 4], [Tuple, y, 5]], 1, 2]	4					
+list-a-b-c-d-k-f-list-list-1-3-1-2-neg-1-6	Scope		[At, [List, a, b, c, d, k, f], [List, 1, 3, 1, 2, -1, 6]]	[List, a, c, a, b, f, f]					
+list-a-b-c-d-k-f-list-span-1-neg-3	Scope		[At, [List, a, b, c, d, k, f], [Span, 1, -3]]	[List, a, b, c, d]					
+list-a-b-c-d-n-f-g-h-m-j-k-list-span-3-neg-3-2	Scope		[At, [List, a, b, c, d, n, f, g, h, m, j, k], [Span, 3, -3, 2]]	[List, c, n, g, m]					
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2-3	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], 2, 3]	f					
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-2	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], 2]	[List, d, m, f]					
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-list	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], [List, 1, 3]]	[List, [List, a, b, c], [List, g, h, k]]					
+list-list-a-b-c-list-d-m-f-list-g-h-k-list-lis-2	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], [List, 1, 3], [List, 2, 3]]	[List, [List, b, c], [List, h, k]]					
+list-a-b-c-d-k-list-3	Scope		[At, [List, a, b, c, d, k], 3]	c					
+list-a-b-c-d-k-list-span-2-4	Scope		[At, [List, a, b, c, d, k], [Span, 2, 4]]	[List, b, c, d]					
+chaining-at-reaches-into-nested-collections-like	Applications		[At, [At, [List, [List, 1, 2], [List, 3, 4]], 2], 1]	3	Chaining $At$ reaches into nested collections, like indexing a matrix row then column				
+list-a-b-c-d-k-list-list-4-5-1-2-3	Applications		[At, [List, a, b, c, d, k], [List, 4, 5, 1, 2, 3]]	[List, d, k, a, b, c]					
+list-a-b-c-list-0	Properties		[At, [List, a, b, c], 0]	List					
+list-1-2-3-list-list	Properties		[At, [List, 1, 2, 3], [List]]	[List]					
+an-out-of-range-index-evaluates-to-nan-rather	Possible issues		[At, [List, 1, 2, 3], 10]	NaN	An out-of-range index evaluates to $NaN$ rather than raising an error			undefined-form	An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).

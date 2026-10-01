@@ -1,8 +1,0 @@
-id	in	out
-centre-degree-of-a-6-vertex-star	<VertexDegree><StarGraph>6</StarGraph> 1</VertexDegree>	<ToExpression>5</ToExpression>
-stargraph-8	<StarGraph>8</StarGraph>	<Graph><List>1 2 3 4 5 6 7 8</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>1 3</UndirectedEdge> <UndirectedEdge>1 4</UndirectedEdge> <UndirectedEdge>1 5</UndirectedEdge> <UndirectedEdge>1 6</UndirectedEdge> <UndirectedEdge>1 7</UndirectedEdge> <UndirectedEdge>1 8</UndirectedEdge></List></Graph>
-stargraph-6	<StarGraph>6</StarGraph>	<Graph><List>1 2 3 4 5 6</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>1 3</UndirectedEdge> <UndirectedEdge>1 4</UndirectedEdge> <UndirectedEdge>1 5</UndirectedEdge> <UndirectedEdge>1 6</UndirectedEdge></List></Graph>
-map-function-vertexeccentricity-stargraph-6-1-1	<Map><Function><Block><VertexEccentricity><StarGraph>6</StarGraph> _1</VertexEccentricity></Block> _1</Function> <VertexList><StarGraph>6</StarGraph></VertexList></Map>	<List>1 2 2 2 2 2</List>
-istreegraph-stargraph-5	<IsTreeGraph><StarGraph>5</StarGraph></IsTreeGraph>	<True />
-isbipartitegraph-stargraph-5	<IsBipartiteGraph><StarGraph>5</StarGraph></IsBipartiteGraph>	<True />
-stargraph-7	<StarGraph>7</StarGraph>	<Graph><List>1 2 3 4 5 6 7</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>1 3</UndirectedEdge> <UndirectedEdge>1 4</UndirectedEdge> <UndirectedEdge>1 5</UndirectedEdge> <UndirectedEdge>1 6</UndirectedEdge> <UndirectedEdge>1 7</UndirectedEdge></List></Graph>

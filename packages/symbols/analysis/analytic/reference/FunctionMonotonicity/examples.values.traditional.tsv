@@ -1,6 +1,0 @@
-id	in	out
-a-cubic-is-increasing-everywhere	\operatorname{FunctionMonotonicity}(x^3,x)	1
-a-parabola-is-not-globally-monotonic	\operatorname{FunctionMonotonicity}(x^2,x)	\operatorname{FunctionMonotonicity}(x^2,x)
-exp-of-an-affine-argument-is-always-monotonic	\operatorname{FunctionMonotonicity}(e^x,x)	1
-map-function-functionmonotonicity-1-x-1-list		
-a-restricted-domain-answers-indeterminate	\operatorname{FunctionMonotonicity}(\sqrt{x},x)	\operatorname{FunctionMonotonicity}(\sqrt{x},x)

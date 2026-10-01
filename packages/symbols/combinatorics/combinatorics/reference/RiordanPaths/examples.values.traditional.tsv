@@ -1,4 +1,0 @@
-id	in	out
-count-riordanpaths-6	\operatorname{Count}(\operatorname{RiordanPaths}(6))	15
-first-element-of-riordanpaths-6	\operatorname{At}(\operatorname{RiordanPaths}(6),1)	\operatorname{MotzkinPath}([1,1,1,-1,-1,-1])
-every-element-of-riordanpaths-6	\operatorname{Take}(\operatorname{RiordanPaths}(6),5)	[\operatorname{MotzkinPath}([1,1,1,-1,-1,-1]),\operatorname{MotzkinPath}([1,1,0,0,-1,-1]),\operatorname{MotzkinPath}([1,1,0,-1,0,-1]),\operatorname{MotzkinPath}([1,1,-1,1,-1,-1]),\operatorname{MotzkinPath}([1,1,-1,0,0,-1])]

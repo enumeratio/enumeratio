@@ -1,3 +1,0 @@
-id	in	out
-from-a-dyck-path	\mathrm{BinaryTree}(\mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack))	\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)
-from-a-parent-array	\mathrm{BinaryTree}(\mathrm{BinaryTreeParentArray}(\bigl\lbrack2, 0, 2, 3\bigr\rbrack))	\mathrm{BinaryTree}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack)

@@ -1,7 +1,0 @@
-id	in	out
-prints-a-list-as-notatio-source	ToString(List(1, 2, 3))	"\"[1, 2, 3]\""
-tostring-x-pow-2		
-prints-an-arithmetic-expression	ToString(Add(x, 1))	"\"x + 1\""
-tostring-exponentiale-pow-x		
-tostring-cos-x-plus-cos-y		
-tostring-kappa	ToString(kappa)	"\"kappa\""

@@ -434,6 +434,8 @@ export interface SystemImplementation {
    * `parseEpsil` uncanonicalised for FullForm, a notebook cell for InputForm, the markup reader
    * for notatio. Absent when it reads back as the example's `expr`. */
   readonly back?: MathJSON;
+  /** Our own forms only: what `out` reads back as, where that is not the example's `expected`. */
+  readonly backOut?: MathJSON;
 }
 
 /**

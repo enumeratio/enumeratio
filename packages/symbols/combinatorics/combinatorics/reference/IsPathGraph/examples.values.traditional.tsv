@@ -1,7 +1,0 @@
-id	in	out
-an-actual-path-is-a-path	\operatorname{IsPathGraph}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4)]))	\top
-a-cycle-is-not-a-path	\operatorname{IsPathGraph}(\operatorname{CycleGraph}(4))	\bot
-ispathgraph-graph-list-1-list	\operatorname{IsPathGraph}(\operatorname{Graph}([1],[]))	\top
-ispathgraph-gridgraph-list-1-4	\operatorname{IsPathGraph}(\operatorname{GridGraph}([1,4]))	\top
-ispathgraph-gridgraph-list-4-1	\operatorname{IsPathGraph}(\operatorname{GridGraph}([4,1]))	\top
-ispathgraph-gridgraph-list-1-4-1	\operatorname{IsPathGraph}(\operatorname{GridGraph}([1,4,1]))	\top

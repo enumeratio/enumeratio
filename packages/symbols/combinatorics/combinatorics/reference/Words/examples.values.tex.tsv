@@ -1,4 +1,0 @@
-id	in	out
-count-words-3-2	\mathrm{Count}(\mathrm{Words}(3, 2))	8
-first-element-of-words-3-2	\mathrm{Words}(3, 2)[1]	\mathrm{Word}(\bigl\lbrack1, 1, 1\bigr\rbrack)
-every-element-of-words-3-2	\mathrm{Take}(\mathrm{Words}(3, 2), 8)	\bigl\lbrack\mathrm{Word}(\bigl\lbrack1, 1, 1\bigr\rbrack), \mathrm{Word}(\bigl\lbrack1, 1, 2\bigr\rbrack), \mathrm{Word}(\bigl\lbrack1, 2, 1\bigr\rbrack), \mathrm{Word}(\bigl\lbrack1, 2, 2\bigr\rbrack), \mathrm{Word}(\bigl\lbrack2, 1, 1\bigr\rbrack), \mathrm{Word}(\bigl\lbrack2, 1, 2\bigr\rbrack), \mathrm{Word}(\bigl\lbrack2, 2, 1\bigr\rbrack), \mathrm{Word}(\bigl\lbrack2, 2, 2\bigr\rbrack)\bigr\rbrack

@@ -1,5 +1,0 @@
-id	in	out
-empirical-pdf-is-the-observed-proportion	pdf(EmpiricalDistribution([1, 2, 2, 3]), 2)	1 / 2
-empirical-cdf-is-the-observed-proportion-at-most	cdf(EmpiricalDistribution([1, 2, 2, 3]), 2)	3 / 4
-empirical-mean-matches-mean-of-the-data	mean(EmpiricalDistribution([1, 2, 2, 3]))	2
-empirical-variance-matches-variance-of-the-data	variance(EmpiricalDistribution([1, 2, 2, 3]))	2 / 3

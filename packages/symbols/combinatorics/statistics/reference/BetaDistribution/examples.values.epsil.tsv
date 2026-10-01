@@ -1,6 +1,0 @@
-id	in	out
-beta-pdf-exact	pdf(BetaDistribution(2, 3), 1 / 2)	3 / 2
-beta-cdf-exact	cdf(BetaDistribution(2, 3), 1 / 2)	betaRegularized(1 / 2, 2, 3)
-beta-mean-exact	mean(BetaDistribution(2, 3))	2 / 5
-beta-variance-exact	variance(BetaDistribution(2, 3))	1 / 25
-beta-cdf-clamps-below-support	N(cdf(BetaDistribution(2, 3), -1))	0

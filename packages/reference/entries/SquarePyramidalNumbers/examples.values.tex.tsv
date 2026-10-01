@@ -1,2 +1,0 @@
-id	in	out
-the-first-25-terms	\mathrm{Take}(\mathrm{SquarePyramidalNumbers}, 25)	\bigl\lbrack1, 5, 14, 30, 55, 91, 140, 204, 285, 385, 506, 650, 819, 1\,015, 1\,240, 1\,496, 1\,785, 2\,109, 2\,470, 2\,870, 3\,311, 3\,795, 4\,324, 4\,900, 5\,525\bigr\rbrack

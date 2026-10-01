@@ -1,8 +1,0 @@
-id	in	out
-letters-a-through-e	\mathrm{CharacterRange}(\text{a}, \text{e})	\bigl\lbrack\text{a}, \text{b}, \text{c}, \text{d}, \text{e}\bigr\rbrack
-characterrange-a-z	\mathrm{CharacterRange}(\text{a}, \text{z})	\bigl\lbrack\text{a}, \text{b}, \text{c}, \text{d}, \text{e}, \text{f}, \text{g}, \text{h}, \text{i}, \text{j}, \text{k}, \text{l}, \text{m}, \text{n}, \text{o}, \text{p}, \text{q}, \text{r}, \text{s}, \text{t}, \text{u}, \text{v}, \text{w}, \text{x}, \text{y}, \text{z}\bigr\rbrack
-characterrange-1-000-1-020		
-by-code-point	\mathrm{CharacterRange}(97, 101)	\bigl\lbrack\text{a}, \text{b}, \text{c}, \text{d}, \text{e}\bigr\rbrack
-characterrange-a-z-2	\mathrm{CharacterRange}(\text{A}, \text{Z})	\bigl\lbrack\text{A}, \text{B}, \text{C}, \text{D}, \text{E}, \text{F}, \text{G}, \text{H}, \text{I}, \text{J}, \text{K}, \text{L}, \text{M}, \text{N}, \text{O}, \text{P}, \text{Q}, \text{R}, \text{S}, \text{T}, \text{U}, \text{V}, \text{W}, \text{X}, \text{Y}, \text{Z}\bigr\rbrack
-characterrange-0-9	\mathrm{CharacterRange}(\text{0}, \text{9})	\bigl\lbrack\text{0}, \text{1}, \text{2}, \text{3}, \text{4}, \text{5}, \text{6}, \text{7}, \text{8}, \text{9}\bigr\rbrack
-characterrange		

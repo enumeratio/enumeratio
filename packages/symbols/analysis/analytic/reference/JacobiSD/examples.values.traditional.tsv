@@ -1,7 +1,0 @@
-id	in	out
-a-floating-point-argument-evaluates-directly-to	N(\operatorname{JacobiSD}(0.3,-2))	0.2793015774746946
-m-greater-than-1-via-the-reciprocal-modulus	N(\operatorname{JacobiSD}(1.1,0.9))	1.2678217669206615
-u-0-is-0-for-any-m	\operatorname{JacobiSD}(0,m)	0
-symbolic-arguments-are-left-unevaluated-rather	\operatorname{JacobiSD}(u,m)	\operatorname{JacobiSD}(u,m)
-m-1-at-a-shared-pole-of-sn-and-cn	N(\operatorname{JacobiSD}(\frac{1}{2}i\pi,1))	0.0+1.0i
-u-1e16-declines-rather-than-answering-wrong	N(\operatorname{JacobiSD}(10^{16},\frac{1}{5}))	\operatorname{JacobiSD}(10000000000000000,0.2)

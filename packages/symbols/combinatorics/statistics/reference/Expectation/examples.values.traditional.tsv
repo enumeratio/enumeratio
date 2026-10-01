@@ -1,5 +1,0 @@
-id	in	out
-expectation-of-the-bound-variable-is-the-mean	\operatorname{Expectation}(x,\operatorname{Distributed}(x,\operatorname{NormalDistribution}(2,3)))	2
-expectation-of-x-squared	\operatorname{Expectation}(x^2,\operatorname{Distributed}(x,\operatorname{NormalDistribution}(2,3)))	13
-expectation-is-linear	\operatorname{Expectation}(2x+1,\operatorname{Distributed}(x,\operatorname{NormalDistribution}(2,3)))	5
-a-shape-with-no-closed-form-stays-unevaluated	\operatorname{Expectation}(\sin(x),\operatorname{Distributed}(x,\operatorname{NormalDistribution}(2,3)))	\operatorname{Expectation}(\sin(x),\operatorname{Distributed}(x,\operatorname{NormalDistribution}(2,3)))

@@ -1,7 +1,0 @@
-id	in	out
-1-dips-below-both-neighbors	<Valleys><List>3 1 2</List></Valleys>	<ToExpression>1</ToExpression>
-monotone-increasing-has-no-interior-valley	<Valleys><List>1 2 3</List></Valleys>	<ToExpression>0</ToExpression>
-the-lone-valley-at-position-3	<Valleys><List>1 3 2 4</List></Valleys>	<ToExpression>1</ToExpression>
-the-one-line-word-312	<Valleys><Permutation><List>3 1 2</List></Permutation></Valleys>	<ToExpression>1</ToExpression>
-the-one-line-word-312-as-a-plain-list	<Valleys><List>3 1 2</List></Valleys>	<ToExpression>1</ToExpression>
-the-one-line-word-2413	<Valleys><Permutation><List>2 4 1 3</List></Permutation></Valleys>	<ToExpression>1</ToExpression>

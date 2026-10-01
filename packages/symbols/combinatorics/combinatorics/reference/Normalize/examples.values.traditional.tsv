@@ -1,8 +1,0 @@
-id	in	out
-3-4-5	\operatorname{Normalize}([3,4])	[\frac{3}{5},\frac{4}{5}]
-normalize-list-1-5-1	\operatorname{Normalize}([1,5,1])	[\frac{\sqrt{3}}{9},\frac{5}{9}\sqrt{3},\frac{\sqrt{3}}{9}]
-zero-vector	\operatorname{Normalize}([0,0])	[0,0]
-normalize-list-x-y-f		
-normalize-s		
-normalize-list-x-y		
-normalize-1-plus-x-plus-x-pow-2-function		

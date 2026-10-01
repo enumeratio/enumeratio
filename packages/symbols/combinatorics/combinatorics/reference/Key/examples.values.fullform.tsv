@@ -1,3 +1,0 @@
-id	in	out
-looks-up-an-existing-key	At(Association(Rule(a, 1), Rule(b, 2)), Key(b))	2
-missing-key-answers-missing	At(Association(Rule(a, 1)), Key(z))	Missing

@@ -1,6 +1,0 @@
-id	in	out
-beta-pdf-exact	\operatorname{PDF}(\mathrm{BetaDistribution}(2, 3), \frac{1}{2})	\frac{3}{2}
-beta-cdf-exact	\operatorname{CDF}(\mathrm{BetaDistribution}(2, 3), \frac{1}{2})	\operatorname{BetaRegularized}(\frac{1}{2}, 2, 3)
-beta-mean-exact	\mathrm{mean}(\mathrm{BetaDistribution}(2, 3))	\frac{2}{5}
-beta-variance-exact	\mathrm{Variance}(\mathrm{BetaDistribution}(2, 3))	\frac{1}{25}
-beta-cdf-clamps-below-support	N(\operatorname{CDF}(\mathrm{BetaDistribution}(2, 3), -1))	0

@@ -1,7 +1,0 @@
-id	in	out
-inversions-of-a-permutation	<CombinatorialStat><Permutation><List>3 1 2</List></Permutation> "Inversions"</CombinatorialStat>	<ToExpression>2</ToExpression>
-by-findstat-id	<CombinatorialStat><Permutation><List>3 1 2</List></Permutation> "St000018"</CombinatorialStat>	<ToExpression>2</ToExpression>
-sign-of-a-three-cycle	<CombinatorialStat><Permutation><List>3 1 2</List></Permutation> "Sign"</CombinatorialStat>	<ToExpression>1</ToExpression>
-distinct-parts-of-a-partition	<CombinatorialStat><IntegerPartition><List>3 1 1</List></IntegerPartition> "DistinctParts"</CombinatorialStat>	<ToExpression>2</ToExpression>
-count-of-a-collection	<CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "Count"</CombinatorialStat>	<ToExpression>24</ToExpression>
-the-mahonian-distribution	<Tally><CombinatorialStat><SymmetricGroup>4</SymmetricGroup> "Inversions"</CombinatorialStat></Tally>	<Tuple><List>0 1 2 3 4 5 6</List> <List>1 3 5 6 5 3 1</List></Tuple>

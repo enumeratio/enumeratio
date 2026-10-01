@@ -1,4 +1,0 @@
-id	in	out
-every-element-of-a-permutation-group	GroupElements(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]))	"[\n  Cycles([]),\n  Cycles([[3, 7]]),\n  Cycles([[1, 6, 9]]),\n  Cycles([[1, 6, 9], [3, 7]]),\n  Cycles([[1, 9, 6]]),\n  Cycles([[1, 9, 6], [3, 7]]),\n]"
-the-first-three-elements	GroupElements(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]), [1, 2, 3])	[Cycles([]), Cycles([[3, 7]]), Cycles([[1, 6, 9]])]
-the-last-element	GroupElements(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]), [-1])	[Cycles([[1, 9, 6], [3, 7]])]

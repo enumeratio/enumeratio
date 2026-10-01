@@ -1,6 +1,0 @@
-id	in	out
-standarddeviation-list-1-2-3-4	\mathrm{StandardDeviation}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\frac{\sqrt{15}}{3}
-standarddeviation-n-list-1-2-3-4-30	\mathrm{StandardDeviation}(N(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, 30))	\frac{\sqrt{15}}{3}
-n-standarddeviation-ts	N(\mathrm{StandardDeviation}(\mathrm{ts}))	\mathrm{StandardDeviation}(\mathrm{ts})
-standarddeviation-binomialdistribution-n-p	\mathrm{StandardDeviation}(\operatorname{BinomialDistribution}(n, p))	\sqrt{np\times(1-p)}
-standarddeviation-probabilitydistribution-sqrt-2	\mathrm{StandardDeviation}(\mathrm{ProbabilityDistribution}((\sqrt{2})(\pi((x-2)^4+1))^{-1}, \bigl\lbrack x, -\infty, \infty\bigr\rbrack))	\mathrm{StandardDeviation}(\mathrm{ProbabilityDistribution}((\sqrt{2})(\pi(x-2)^4+\pi)^{-1}, \bigl\lbrack x, -\infty, \infty\bigr\rbrack))

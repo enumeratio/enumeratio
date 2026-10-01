@@ -1,2 +1,4 @@
 dist
 node_modules
+# Written by `build` (scripts/build-forms.ts); never committed.
+generated/

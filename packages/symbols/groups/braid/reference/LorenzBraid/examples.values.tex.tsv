@@ -1,5 +1,0 @@
-id	in	out
-the-shortest-knotted-geodesic-draws-a-trefoil	\mathrm{AlexanderPolynomial}(\text{LLRLR})	t^2-t+1
-a-rotation-by-2-on-5-points-hence-t-2-3	\mathrm{LorenzPermutation}(\text{LLRLR})	\bigl\lbrack3, 4, 5, 1, 2\bigr\rbrack
-braid-index-2	\mathrm{TripNumber}(\text{LLRLR})	2
-one-hump-each-way-is-unknotted-however-long	\mathrm{AlexanderPolynomial}(\text{LLLRRRR})	1

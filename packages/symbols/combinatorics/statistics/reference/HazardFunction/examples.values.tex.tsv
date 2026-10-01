@@ -1,2 +1,0 @@
-id	in	out
-hazardfunction-rayleigh	\mathrm{HazardFunction}(\mathrm{RayleighDistribution}(3), 2)	\frac{2}{9}

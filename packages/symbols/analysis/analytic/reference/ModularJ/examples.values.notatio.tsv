@@ -1,8 +1,0 @@
-id	in	out
-modularj-0-1i	<N><ModularJ><Complex>0 1</Complex></ModularJ></N>	<ToExpression>1728.0000000000036</ToExpression>
-modularj-0-5-0-8660254037844386i	<N><ModularJ><Complex>-0.5 0.8660254037844386</Complex></ModularJ></N>	<ToExpression>3.6016213418191444e-46</ToExpression>
-modularj-0-3-1-1i	<N><ModularJ><Complex>0.3 1.1</Complex></ModularJ></N>	<Complex>356.64791175873415 -781.1038124900573</Complex>
-modularj-0-3-0-05i	<N><ModularJ><Complex>0.3 0.05</Complex></ModularJ></N>	<Complex>-4855.820311312893 14742.066710322199</Complex>
-modularj-1-3-0-05i	<N><ModularJ><Complex>1.3 0.05</Complex></ModularJ></N>	<Complex>-4855.8203113128575 14742.066710322193</Complex>
-modularj-2-7-1-4i	<N><ModularJ><Complex>2.7 1.4</Complex></ModularJ></N>	<Complex>-1308.447144412869 6259.207407927292</Complex>
-modularj-1-4-0-6i	<N><ModularJ><Complex>-1.4 0.6</Complex></ModularJ></N>	<Complex>919.9216942971344 1256.4700249350494</Complex>

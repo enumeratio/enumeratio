@@ -1,5 +1,0 @@
-id	in	out
-triangular-pdf-exact	pdf(TriangularDistribution([0, 1]), 1 / 4)	1
-triangular-cdf-exact	cdf(TriangularDistribution([0, 1]), 1 / 4)	1 / 8
-triangular-mean-exact	mean(TriangularDistribution([0, 1]))	1 / 2
-triangular-variance-exact	variance(TriangularDistribution([0, 1]))	1 / 24

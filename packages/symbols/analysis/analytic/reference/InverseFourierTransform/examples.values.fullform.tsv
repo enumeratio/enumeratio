@@ -1,5 +1,0 @@
-id	in	out
-dirac-delta	InverseFourierTransform(DiracDelta(w), w, t)	Sqrt(Divide(1, Multiply(2, Pi)))
-constant	InverseFourierTransform(1, w, t)	Multiply(Sqrt(2), DiracDelta(t), Sqrt(Pi))
-inversefouriertransform-neg-1-over-u-pow-2-plus	InverseFourierTransform(Negate(Multiply(Divide(1, Multiply(Add(Power(u, 2), 1), Add(Power(v, 2), 1), Add(Power(w, 2), 1))), Add(Negate(Multiply(u, v, w)), u, v, w))), List(u, v, w), List(x, y, z))	InverseFourierTransform(Divide(Add(Multiply(u, v, w), Negate(u), Negate(v), Negate(w)), Multiply(Add(Power(u, 2), 1), Add(Power(v, 2), 1), Add(Power(w, 2), 1))), List(u, v, w), List(x, y, z))
-inversefouriertransform-u-times-v-times-w-pow-5	InverseFourierTransform(Multiply(Power(Multiply(u, v, w), 5), Power(ExponentialE, Add(Negate(Power(u, 2)), Negate(Power(v, 2)), Negate(Power(w, 2))))), List(u, v, w), List(x, y, z))	InverseFourierTransform(Multiply(Power(u, 5), Power(v, 5), Power(w, 5), Power(ExponentialE, Add(Negate(Power(u, 2)), Negate(Power(v, 2)), Negate(Power(w, 2))))), List(u, v, w), List(x, y, z))

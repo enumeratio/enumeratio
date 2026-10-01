@@ -1,3 +1,0 @@
-id	in	out
-rest-list-a-b-c-d	\operatorname{Rest}([a,b,c,d])	[b,c,d]
-nestlist-rest-list-a-b-c-d-k-3	\operatorname{NestList}(\operatorname{Rest},[a,b,c,d,k],3)	[[a,b,c,d,k],[b,c,d,k],[c,d,k],[d,k]]

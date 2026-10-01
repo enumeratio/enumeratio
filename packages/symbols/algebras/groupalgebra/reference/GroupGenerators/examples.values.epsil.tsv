@@ -1,4 +1,0 @@
-id	in	out
-the-given-generators-come-back	GroupGenerators(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]))	[Cycles([[1, 9, 6], [3, 7]])]
-groupgenerators-permutationgroup-list-cycles	GroupGenerators(PermutationGroup([Cycles([[1, 2]]), Cycles([[1, 3], [2, 4]])]))	[Cycles([[1, 2]]), Cycles([[1, 3], [2, 4]])]
-groupgenerators-permutationgroup-list-cycles-2	"GroupGenerators(PermutationGroup([\n                                   Cycles([[1, 2], [3, 4]]),\n                                   Cycles([[1, 3], [2, 4]]),\n                                 ]))"	[Cycles([[1, 2], [3, 4]]), Cycles([[1, 3], [2, 4]])]

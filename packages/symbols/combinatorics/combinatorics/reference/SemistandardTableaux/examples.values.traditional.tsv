@@ -1,4 +1,0 @@
-id	in	out
-count-semistandardtableaux-4-3-39-every-ssyt-of	\operatorname{Count}(\operatorname{SemistandardTableaux}(4,3))	39
-every-element-of-semistandardtableaux-3-2	\operatorname{Take}(\operatorname{SemistandardTableaux}(3,2),6)	[[[1,1],[2]],[[1,2],[2]],[[1,1,1]],[[1,1,2]],[[1,2,2]],[[2,2,2]]]
-the-first-ssyt-of-3-cells-with-entries-in-1-2-as	\operatorname{At}(\operatorname{SemistandardTableaux}(3,2),1)	[[1,1],[2]]

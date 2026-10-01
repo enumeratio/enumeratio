@@ -1,6 +1,0 @@
-id	in	out
-dirac-delta-at-origin	FourierTransform(DiracDelta(t), t, w)	sqrt(1 / (2Pi))
-gaussian	FourierTransform(exponentialE ^ (-t ^ 2), t, w)	sqrt(2) / 2 * exponentialE ^ (-1 / 4 * w ^ 2)
-cosine	FourierTransform(cos(a * t), t, w)	sqrt(2) / 2 * (DiracDelta(a + w) + DiracDelta(-a + w)) * sqrt(pi)
-fouriertransform-x-times-y-times-z-pow-3-times	"FourierTransform(\n                  (x * y * z) ^ 3 * exponentialE ^ (-x ^ 2 - y ^ 2 - z ^ 2),\n                  [x, y, z],\n                  [u, v, w],\n                )"	"FourierTransform(\n                  x ^ 3 * y ^ 3 * z ^ 3 * exponentialE ^\n                                          (-x ^ 2 - y ^ 2 - z ^ 2),\n                  [x, y, z],\n                  [u, v, w],\n                )"
-fouriertransform-squarewave-y-times-1-over-2pi	"FourierTransform(\n                  SquareWave(y * (1 / (2Pi))) * exponentialE ^ (-abs(x)),\n                  [x, y],\n                  [u, v],\n                )"	"FourierTransform(\n                  SquareWave(y / (2Pi)) * exponentialE ^ (-abs(x)),\n                  [x, y],\n                  [u, v],\n                )"

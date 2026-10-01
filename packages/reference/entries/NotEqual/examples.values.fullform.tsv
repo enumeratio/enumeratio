@@ -1,8 +1,0 @@
-id	in	out
-1-factorial-eq-2	NotEqual(1, 2)	True
-3-over-2-factorial-eq-5-over-3	NotEqual(Rational(3, 2), Rational(5, 3))	True
-3-factorial-eq-4-4-factorial-eq-5	And(NotEqual(3, 4), NotEqual(4, 5))	True
-abc-factorial-eq-abc	NotEqual("abc", "ABC")	True
-pi-pow-exponentiale-factorial-eq-exponentiale	NotEqual(Power(Pi, ExponentialE), Power(ExponentialE, Pi))	True
-list-a-b-c-factorial-eq-list-d-k	NotEqual(List(a, b, c), List(d, k))	True
-list-x-factorial-eq-x-x-factorial-eq-y-sqrt-2	List(NotEqual(x, x), NotEqual(x, y), NotEqual(Add(Sqrt(2), Sqrt(3)), Sqrt(Add(5, Multiply(2, Sqrt(6))))), NotEqual(Pi, N(Pi)))	List(False, NotEqual(x, y), False, False)

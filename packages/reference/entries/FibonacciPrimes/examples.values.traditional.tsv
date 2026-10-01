@@ -1,2 +1,0 @@
-id	in	out
-the-first-11-terms	\operatorname{Take}(\operatorname{FibonacciPrimes},11)	[2,3,5,13,89,233,1597,28657,514229,433494437,2971215073]

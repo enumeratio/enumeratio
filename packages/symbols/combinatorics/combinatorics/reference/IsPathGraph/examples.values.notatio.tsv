@@ -1,7 +1,0 @@
-id	in	out
-an-actual-path-is-a-path	<IsPathGraph><Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph></IsPathGraph>	<True />
-a-cycle-is-not-a-path	<IsPathGraph><CycleGraph>4</CycleGraph></IsPathGraph>	<False />
-ispathgraph-graph-list-1-list	<IsPathGraph><Graph><List>1</List> <Apply>List</Apply></Graph></IsPathGraph>	<True />
-ispathgraph-gridgraph-list-1-4	<IsPathGraph><GridGraph><List>1 4</List></GridGraph></IsPathGraph>	<True />
-ispathgraph-gridgraph-list-4-1	<IsPathGraph><GridGraph><List>4 1</List></GridGraph></IsPathGraph>	<True />
-ispathgraph-gridgraph-list-1-4-1	<IsPathGraph><GridGraph><List>1 4 1</List></GridGraph></IsPathGraph>	<True />

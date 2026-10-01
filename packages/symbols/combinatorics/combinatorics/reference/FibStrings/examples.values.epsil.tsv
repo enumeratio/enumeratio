@@ -1,4 +1,0 @@
-id	in	out
-count-fibstrings-4	count(FibStrings(4))	8
-first-element-of-fibstrings-4	FibStrings(4)[1]	BinaryWord([0, 0, 0, 0])
-every-element-of-fibstrings-4	take(FibStrings(4), 8)	"[\n  BinaryWord([0, 0, 0, 0]),\n  BinaryWord([0, 0, 0, 1]),\n  BinaryWord([0, 0, 1, 0]),\n  BinaryWord([0, 1, 0, 0]),\n  BinaryWord([0, 1, 0, 1]),\n  BinaryWord([1, 0, 0, 0]),\n  BinaryWord([1, 0, 0, 1]),\n  BinaryWord([1, 0, 1, 0]),\n]"

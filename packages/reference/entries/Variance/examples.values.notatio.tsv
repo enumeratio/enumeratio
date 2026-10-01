@@ -1,8 +1,0 @@
-id	in	out
-variance-list-1-2-3-4	<Variance><List>1 2 3 4</List></Variance>	<Rational>5 3</Rational>
-variance-n-list-1-2-3-4-30	<Variance><N><List>1 2 3 4</List> 30</N></Variance>	<Rational>5 3</Rational>
-n-variance-ts	<N><Variance>ts</Variance></N>	<Variance>ts</Variance>
-variance-binomialdistribution-n-p	<Variance><BinomialDistribution>n p</BinomialDistribution></Variance>	<Multiply>n p <Add><Negate>p</Negate> 1</Add></Multiply>
-variance-probabilitydistribution-sqrt-2-times-1	<Variance><ProbabilityDistribution><Multiply><Sqrt>2</Sqrt> <Divide>1 Pi</Divide> <Divide>1 <Add><Power><Add>x -2</Add> 4</Power> 1</Add></Divide></Multiply> <List>x NegativeInfinity PositiveInfinity</List></ProbabilityDistribution></Variance>	<Variance><ProbabilityDistribution><Divide><Sqrt>2</Sqrt> <Add><Multiply>Pi <Power><Add>x -2</Add> 4</Power></Multiply> Pi</Add></Divide> <List>x NegativeInfinity PositiveInfinity</List></ProbabilityDistribution></Variance>
-n-list-mean-data-variance-data	<N><List><Mean>data</Mean> <Variance>data</Variance></List></N>	<List><Mean>data</Mean> <Variance>data</Variance></List>
-n-variance-heights	<N><Variance>heights</Variance></N>	<Variance>heights</Variance>

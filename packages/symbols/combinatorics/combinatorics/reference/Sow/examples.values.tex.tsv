@@ -1,6 +1,0 @@
-id	in	out
-sow-feeds-the-nearest-reap	\mathrm{Reap}(\mathrm{Sow}(5))	\bigl\lbrack5, \bigl\lbrack\bigl\lbrack5\bigr\rbrack\bigr\rbrack\bigr\rbrack
-sow-outside-any-reap-is-a-no-op	\mathrm{Sow}(7)	7
-reap-sum-sow-k-pow-2-plus-1-k-10		
-reap-do-sow-k-k-pow-2-mod-10-list-k-20		
-sow-x	\mathrm{Sow}(x)	x

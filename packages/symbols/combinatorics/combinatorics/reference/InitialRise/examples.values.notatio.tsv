@@ -1,3 +1,0 @@
-id	in	out
-the-step-word-uuddud	<InitialRise><DyckPath><List>1 1 0 0 1 0</List></DyckPath></InitialRise>	<ToExpression>2</ToExpression>
-the-step-word-uduudd	<InitialRise><DyckPath><List>1 0 1 1 0 0</List></DyckPath></InitialRise>	<ToExpression>1</ToExpression>

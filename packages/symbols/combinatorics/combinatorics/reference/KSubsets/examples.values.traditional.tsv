@@ -1,4 +1,0 @@
-id	in	out
-binom-5-2	\operatorname{Count}(\operatorname{KSubsets}(5,2))	10
-ksubsets-5-2-list-1	\operatorname{At}(\operatorname{KSubsets}(5,2),1)	\operatorname{Finset}((5,[1,2]))
-colex-not-lex-lexicographic-order-would-give-1-4	\operatorname{At}(\operatorname{KSubsets}(5,2),3)	\operatorname{Finset}((5,[2,3]))

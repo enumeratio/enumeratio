@@ -1,9 +1,0 @@
-id	in	out
-abs-resolves-once-the-sign-is-known	Assuming(x > 0, abs(x))	x
-sign-of-x-plus-sign-of-y-under-opposite-signs	Assuming([x > 0, y < 0], sign(x) + sign(y))	0
-assuming-a-gt-0-list-refine-sqrt-a-pow-2		
-assuming-n-in-integers-p-in-primes-n-gt-0	Assuming(n in integers && p in primes && n > 0, operations)	operations
-assuming-a-gt-0-list-integrate-1-times-x-plus-a		
-the-assumption-does-not-leak	[Assuming(z > 0, sign(z)), sign(z)]	[1, sign(z)]
-assuming-x-gt-eq-0-assuming-y-lt-0-refine-sqrt-x	Assuming(x >= 0, Assuming(y < 0, Refine(sqrt(x ^ 2 * y ^ 2))))	-(x * y)
-assuming-m-mod-2-eq-0-simplify-cos-k-times-pi		

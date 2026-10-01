@@ -1,4 +1,0 @@
-id	in	out
-unit-square-default-seed	\operatorname{Last}([\operatorname{SeedRandom}(42),\operatorname{RandomComplex}()])	0.6011037519201636+0.44829055899754167i
-rectangle-from-0-to-zmax	\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{RandomComplex}(2+3i)])	0.023409506306052208+0.18587477272376418i
-rectangle-from-zmin-to-zmax	\operatorname{Last}([\operatorname{SeedRandom}(9),\operatorname{RandomComplex}([-1-i,1+i])])	-0.6025421638041735+0.7024215925484896i

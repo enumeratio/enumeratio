@@ -1,7 +1,0 @@
-id	in	out
-gamma-pdf-exact	\operatorname{PDF}(\mathrm{GammaDistribution}(2, 2), 3)	(3)(4\Gamma(2)\exp(\frac{3}{2}))^{-1}
-gamma-cdf-exact	\operatorname{CDF}(\mathrm{GammaDistribution}(2, 2), 3)	1-(5)(2\exp(\frac{3}{2}))^{-1}
-gamma-mean-exact	\mathrm{mean}(\mathrm{GammaDistribution}(2, 2))	4
-gamma-variance-exact	\mathrm{Variance}(\mathrm{GammaDistribution}(2, 2))	8
-gamma-distribution-one-argument-defaults-scale	\mathrm{GammaDistribution}(2)	\mathrm{GammaDistribution}(2, 1)
-gamma-cdf-clamps-below-support	N(\operatorname{CDF}(\mathrm{GammaDistribution}(2, 2), -1))	0

@@ -1,4 +1,0 @@
-id	in	out
-count-binarywordsbyweight-4-2	\operatorname{Count}(\operatorname{BinaryWordsByWeight}(4,2))	6
-first-element-of-binarywordsbyweight-4-2	\operatorname{At}(\operatorname{BinaryWordsByWeight}(4,2),1)	\operatorname{BinaryWord}([0,0,1,1])
-every-element-of-binarywordsbyweight-4-2	\operatorname{Take}(\operatorname{BinaryWordsByWeight}(4,2),6)	[\operatorname{BinaryWord}([0,0,1,1]),\operatorname{BinaryWord}([0,1,0,1]),\operatorname{BinaryWord}([0,1,1,0]),\operatorname{BinaryWord}([1,0,0,1]),\operatorname{BinaryWord}([1,0,1,0]),\operatorname{BinaryWord}([1,1,0,0])]

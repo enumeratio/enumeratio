@@ -1,5 +1,0 @@
-id	in	out
-a-2-cycle-and-a-downstream-only-vertex	"ConnectedComponents(Graph([1, 2, 3], [\n                                       DirectedEdge(1, 2),\n                                       DirectedEdge(2, 1),\n                                       DirectedEdge(2, 3),\n                                     ]))"	[[1, 2], [3]]
-length-first-connectedcomponents-g	length(first(ConnectedComponents(g)))	0
-length-connectedcomponents-g-minus-1	length(ConnectedComponents(g)) - 1	0
-length-connectedcomponents-g	length(ConnectedComponents(g))	1

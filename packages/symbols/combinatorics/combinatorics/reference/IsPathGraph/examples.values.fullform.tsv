@@ -1,7 +1,0 @@
-id	in	out
-an-actual-path-is-a-path	IsPathGraph(Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 4))))	True
-a-cycle-is-not-a-path	IsPathGraph(CycleGraph(4))	False
-ispathgraph-graph-list-1-list	IsPathGraph(Graph(List(1), List()))	True
-ispathgraph-gridgraph-list-1-4	IsPathGraph(GridGraph(List(1, 4)))	True
-ispathgraph-gridgraph-list-4-1	IsPathGraph(GridGraph(List(4, 1)))	True
-ispathgraph-gridgraph-list-1-4-1	IsPathGraph(GridGraph(List(1, 4, 1)))	True

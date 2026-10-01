@@ -1,4 +1,0 @@
-id	in	out
-unit-square-default-seed	last([SeedRandom(42), RandomComplex()])	0.601_103_751_920_163_6 + 0.448_290_558_997_541_67i
-rectangle-from-0-to-zmax	last([SeedRandom(7), RandomComplex(2 + 3i)])	0.023_409_506_306_052_208 + 0.185_874_772_723_764_18i
-rectangle-from-zmin-to-zmax	last([SeedRandom(9), RandomComplex([-1 - i, 1 + i])])	-0.602_542_163_804_173_5 + 0.702_421_592_548_489_6i

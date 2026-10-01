@@ -1,3 +1,0 @@
-id	in	out
-a-geometric-sequence	\mathrm{RecurrenceTable}(\begin{cases}a(n+1)=3a(n)\\a(1)=7\end{cases}, a, \bigl\lbrack n, 1, 5\bigr\rbrack)	\bigl\lbrack7, 21, 63, 189, 567\bigr\rbrack
-the-fibonacci-recurrence	\mathrm{RecurrenceTable}(\begin{cases}a(n)=a(n-1)+a(n-2)\\a(1)=1\\a(2)=1\end{cases}, a, \bigl\lbrack n, 1, 10\bigr\rbrack)	\bigl\lbrack1, 1, 2, 3, 5, 8, 13, 21, 34, 55\bigr\rbrack

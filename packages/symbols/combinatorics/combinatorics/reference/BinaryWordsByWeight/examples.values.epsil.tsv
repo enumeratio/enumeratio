@@ -1,4 +1,0 @@
-id	in	out
-count-binarywordsbyweight-4-2	count(BinaryWordsByWeight(4, 2))	6
-first-element-of-binarywordsbyweight-4-2	BinaryWordsByWeight(4, 2)[1]	BinaryWord([0, 0, 1, 1])
-every-element-of-binarywordsbyweight-4-2	take(BinaryWordsByWeight(4, 2), 6)	"[\n  BinaryWord([0, 0, 1, 1]),\n  BinaryWord([0, 1, 0, 1]),\n  BinaryWord([0, 1, 1, 0]),\n  BinaryWord([1, 0, 0, 1]),\n  BinaryWord([1, 0, 1, 0]),\n  BinaryWord([1, 1, 0, 0]),\n]"

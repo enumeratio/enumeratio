@@ -1,9 +1,0 @@
-id	in	out
-the-median-of-beta-2-3	<InverseBetaRegularized>0.5 2 3</InverseBetaRegularized>	<ToExpression>0.3857275681323895</ToExpression>
-inversebetaregularized-0p3-2p5-1p5	<InverseBetaRegularized>0.3 2.5 1.5</InverseBetaRegularized>	<ToExpression>0.5094974124283413</ToExpression>
-i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2	<InverseBetaRegularized>0.25 2 1</InverseBetaRegularized>	<ToExpression>0.5</ToExpression>
-iinv-0-7-4-2	<InverseBetaRegularized>0.7 4 2</InverseBetaRegularized>	<ToExpression>0.7819730842367751</ToExpression>
-i-x-1-1-x-is-its-own-inverse	<InverseBetaRegularized>s 1 1</InverseBetaRegularized>	<s />
-i-x-a-1-x-a-inverts-to-s-1-a	<InverseBetaRegularized>s a 1</InverseBetaRegularized>	<Power>s <Divide>1 a</Divide></Power>
-inversebetaregularized-0-2-3	<InverseBetaRegularized>0 2 3</InverseBetaRegularized>	<ToExpression>0</ToExpression>
-inversebetaregularized-1-2-3	<InverseBetaRegularized>1 2 3</InverseBetaRegularized>	<ToExpression>1</ToExpression>

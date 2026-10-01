@@ -1,7 +1,0 @@
-id	in	out
-inverse-dft-of-1-2-3-4	<InverseFourier><List>1 2 3 4</List></InverseFourier>	<List>5 <Complex>-1.0 1.0</Complex> -1 <Complex>-1.0 -1.0</Complex></List>
-round-trips-through-fourier	<Fourier><InverseFourier><List>1 2 3 4</List></InverseFourier></Fourier>	<List>1 2 3 4</List>
-a-2x2-matrix	<InverseFourier><List><List>5 -1</List> <List>-2 0</List></List></InverseFourier>	<List><List>1 2</List> <List>3 4</List></List>
-a-custom-fourierparameters	<InverseFourier><List>1 2 3 4</List> <KeyValuePair>FourierParameters <List>1 -1</List></KeyValuePair></InverseFourier>	<List>2.5 <Complex>-0.5 -0.5</Complex> -0.5 <Complex>-0.5 0.5</Complex></List>
-inversefourier-n-x-24	<InverseFourier><N>x 24</N></InverseFourier>	<InverseFourier>x</InverseFourier>
-declines-a-symbolic-list	<InverseFourier><List>a b</List></InverseFourier>	<InverseFourier><List>a b</List></InverseFourier>

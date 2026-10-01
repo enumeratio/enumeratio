@@ -1,4 +1,0 @@
-id	in	out
-count-primepartition-12	\mathrm{Count}(\mathrm{PrimePartitions}(12))	7
-first-element-of-primepartition-12	\mathrm{PrimePartitions}(12)[1]	\mathrm{IntegerPartition}(\bigl\lbrack7, 5\bigr\rbrack)
-every-element-of-primepartition-12	\mathrm{Take}(\mathrm{PrimePartitions}(12), 7)	\bigl\lbrack\mathrm{IntegerPartition}(\bigl\lbrack7, 5\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack7, 3, 2\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack5, 5, 2\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack5, 3, 2, 2\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 3, 3, 3\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack3, 3, 2, 2, 2\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack2, 2, 2, 2, 2, 2\bigr\rbrack)\bigr\rbrack

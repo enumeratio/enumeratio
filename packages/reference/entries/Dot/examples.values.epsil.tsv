@@ -1,7 +1,0 @@
-id	in	out
-dot-list-a-b-c-list-x-y-z	dot([a, b, c], [x, y, z])	a * x + b * y + c * z
-dot-list-list-a-b-list-c-d-list-x-y	dot([[a, b], [c, d]], [x, y])	[a * x + b * y, c * x + d * y]
-dot-list-x-y-list-list-a-b-list-c-d	dot([x, y], [[a, b], [c, d]])	[a * x + c * y, b * x + d * y]
-dot-list-1-2-3-4-5-list-1-8-9-0-neg-1	dot([1, 2, 3, 4, 5], [1, 8, 9, 0, -1])	39
-dot-list-list-2-0-0-list-0-0-35-over-2-list-0-35	"dot(\n     [[2, 0, 0], [0, 0, 35 / 2], [0, 35 / 2, 0]],\n     [[8, 0, 0], [0, 0, 10], [0, 10, 0]],\n   )"	[[16, 0, 0], [0, 175, 0], [0, 0, 175]]
-dot-list-a-b-c-list-0-b-d-plus-k	dot([a, b, c], [0, b, d + k])	b ^ 2 + c * d + c * k

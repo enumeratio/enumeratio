@@ -1,4 +1,0 @@
-id	in	out
-the-first-five-primes	\operatorname{Take}(\operatorname{Primes},5)	[2,3,5,7,11]
-11-is-prime	11\in\operatorname{Primes}	\top
-9-is-not-prime	9\in\operatorname{Primes}	\bot

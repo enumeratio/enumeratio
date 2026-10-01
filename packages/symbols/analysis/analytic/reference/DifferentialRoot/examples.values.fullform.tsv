@@ -1,2 +1,0 @@
-id	in	out
-a-hand-built-first-order-ode	Apply(DifferentialRoot(Function(List(Equal(Add(Negate(y(x)), Apply(Derivative(y, 1), x)), 0), Equal(y(0), 1)), y, x)), 2)	7.389056098930649

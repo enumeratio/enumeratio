@@ -1,9 +1,0 @@
-id	in	out
-modularlambda-0-1i	N(ModularLambda(Complex(0, 1)))	0.5
-modularlambda-0-5-0-8660254037844386i	N(ModularLambda(Complex(-0.5, 0.8660254037844386)))	Complex(0.5000000000000004, -0.8660254037844387)
-modularlambda-0-3-1-1i	N(ModularLambda(Complex(0.3, 1.1)))	Complex(0.31763300075820117, 0.2955839285573865)
-modularlambda-0-3-0-05i	N(ModularLambda(Complex(0.3, 0.05)))	Complex(-3.96548572774177, -6.452991541554556)
-modularlambda-1-3-0-05i	N(ModularLambda(Complex(1.3, 0.05)))	Complex(0.9251025745226054, 0.09733437564619551)
-modularlambda-2-7-1-4i	N(ModularLambda(Complex(2.7, 1.4)))	Complex(-0.1083819310265213, 0.17797753173256547)
-modularlambda-1-4-0-6i	N(ModularLambda(Complex(-1.4, 0.6)))	Complex(2.2803063107558237, 1.533054618426143)
-tau-1e22-declines-rather-than-answering-wrong	N(ModularLambda(Add(ImaginaryUnit, Multiply(Pi, Power(10, 22)))))	ModularLambda(Complex(3.141592653589793238462643e+22, 1))

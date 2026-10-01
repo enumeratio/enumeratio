@@ -1,4 +1,0 @@
-id	in	out
-poisson-process-slice-mean	Mean(SliceDistribution(PoissonProcess(3), 5))	15
-poisson-process-slice-distribution	SliceDistribution(PoissonProcess(2), 3)	PoissonDistribution(6)
-poisson-process-slice-variance	Variance(SliceDistribution(PoissonProcess(2), 3))	6

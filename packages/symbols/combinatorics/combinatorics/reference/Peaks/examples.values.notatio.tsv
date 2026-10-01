@@ -1,7 +1,0 @@
-id	in	out
-3-at-position-2-tops-both-neighbors	<Peaks><List>2 3 1</List></Peaks>	<ToExpression>1</ToExpression>
-monotone-increasing-has-no-interior-peak	<Peaks><List>1 2 3</List></Peaks>	<ToExpression>0</ToExpression>
-the-lone-peak-at-position-2	<Peaks><List>1 3 2 4</List></Peaks>	<ToExpression>1</ToExpression>
-the-one-line-word-312	<Peaks><Permutation><List>3 1 2</List></Permutation></Peaks>	<ToExpression>0</ToExpression>
-the-one-line-word-312-as-a-plain-list	<Peaks><List>3 1 2</List></Peaks>	<ToExpression>0</ToExpression>
-the-one-line-word-2413	<Peaks><Permutation><List>2 4 1 3</List></Permutation></Peaks>	<ToExpression>1</ToExpression>

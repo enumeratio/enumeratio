@@ -1,4 +1,0 @@
-id	in	out
-algebradimension-quaternions	<AlgebraDimension>Quaternions</AlgebraDimension>	<ToExpression>4</ToExpression>
-algebradimension-cliffordalgebra-2-1	<AlgebraDimension><CliffordAlgebra>2 1</CliffordAlgebra></AlgebraDimension>	<ToExpression>8</ToExpression>
-c-4	<AlgebraDimension><MulticomplexAlgebra>4</MulticomplexAlgebra></AlgebraDimension>	<ToExpression>16</ToExpression>

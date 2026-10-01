@@ -1,4 +1,0 @@
-id	in	out
-nprobability-normal-outside-one-sigma-ish	\operatorname{NProbability}(x^2>1,\operatorname{Distributed}(x,\operatorname{NormalDistribution}(0,1)))	0.3173105078387169
-nprobability-poisson-is-even	\operatorname{NProbability}(\bmod(x,2)=0,\operatorname{Distributed}(x,\operatorname{PoissonDistribution}(4)))	0.5001677313139468
-nprobability-agrees-with-exact-cdf	\operatorname{NProbability}(x\le5,\operatorname{Distributed}(x,\operatorname{PoissonDistribution}(3)))	0.9160820579686966

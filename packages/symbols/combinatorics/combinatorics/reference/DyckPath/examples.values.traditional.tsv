@@ -1,4 +1,0 @@
-id	in	out
-from-a-binary-tree	\operatorname{DyckPath}(\operatorname{BinaryTree}([[0,0],[0,[0,0]]]))	\operatorname{DyckPath}([1,1,0,0,1,0,1,0])
-by-target-collection	\operatorname{CombinatorialMap}(\operatorname{BinaryTree}([[0,0],[0,[0,0]]]),\operatorname{DyckPaths})	\operatorname{DyckPath}([1,1,0,0,1,0,1,0])
-by-findstat-id	\operatorname{CombinatorialMap}(\operatorname{BinaryTree}([[0,0],[0,[0,0]]]),\text{“Mp00012”})	\operatorname{DyckPath}([1,1,0,0,1,0,1,0])

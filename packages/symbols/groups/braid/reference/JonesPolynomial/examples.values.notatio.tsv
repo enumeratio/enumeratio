@@ -1,6 +1,0 @@
-id	in	out
-the-right-handed-trefoil	<JonesPolynomial><Braid>2 <List>1 1 1</List></Braid></JonesPolynomial>	<Add><Negate><Power>t -4</Power></Negate> <Divide>1 t</Divide> <Power>t -3</Power></Add>
-the-shortest-knotted-modular-geodesic-by-yet	<JonesPolynomial>"LLRLR"</JonesPolynomial>	<Add><Negate><Power>t -4</Power></Negate> <Divide>1 t</Divide> <Power>t -3</Power></Add>
-the-figure-eight-through-the-braid-it-carries-as	<JonesPolynomial><Apply>FigureEightKnot</Apply></JonesPolynomial>	<Add><Power>t 2</Power> <Negate>t</Negate> <Divide>-1 t</Divide> <Power>t -2</Power> 1</Add>
-not-yet-an-invariant	<KauffmanBracket><Braid>2 <List>1</List></Braid></KauffmanBracket>	<Negate><Power>A 3</Power></Negate>
-and-the-writhe-correction-fixes-it	<BracketInvariant><Braid>2 <List>1</List></Braid></BracketInvariant>	<ToExpression>1</ToExpression>

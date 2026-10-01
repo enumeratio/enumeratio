@@ -1,6 +1,0 @@
-id	in	out
-histogram-distribution-pdf	\operatorname{PDF}(\operatorname{HistogramDistribution}([1,1,2,2,2,3,3,4],[0,5,1]),\frac{3}{2})	\frac{1}{4}
-histogram-distribution-pdf-outside	\operatorname{PDF}(\operatorname{HistogramDistribution}([1,1,2,2,2,3,3,4],[0,5,1]),10)	0
-histogram-distribution-cdf	\operatorname{CDF}(\operatorname{HistogramDistribution}([1,1,2,2,2,3,3,4],[0,5,1]),2)	\frac{1}{4}
-histogram-distribution-mean	\operatorname{Mean}(\operatorname{HistogramDistribution}([1,1,2,2,2,3,3,4],[0,5,1]))	\frac{11}{4}
-histogram-distribution-dx-only-form	\operatorname{PDF}(\operatorname{HistogramDistribution}([1,2,2,3],[1]),\frac{3}{2})	\frac{1}{4}

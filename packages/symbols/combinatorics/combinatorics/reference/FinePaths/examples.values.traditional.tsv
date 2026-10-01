@@ -1,4 +1,0 @@
-id	in	out
-count-finepaths-5	\operatorname{Count}(\operatorname{FinePaths}(5))	18
-first-element-of-finepaths-5	\operatorname{At}(\operatorname{FinePaths}(5),1)	\operatorname{DyckPath}([1,1,0,0,1,1,1,0,0,0])
-every-element-of-finepaths-5	\operatorname{Take}(\operatorname{FinePaths}(5),5)	[\operatorname{DyckPath}([1,1,0,0,1,1,1,0,0,0]),\operatorname{DyckPath}([1,1,0,0,1,1,0,1,0,0]),\operatorname{DyckPath}([1,1,1,0,0,0,1,1,0,0]),\operatorname{DyckPath}([1,1,0,1,0,0,1,1,0,0]),\operatorname{DyckPath}([1,1,1,1,1,0,0,0,0,0])]

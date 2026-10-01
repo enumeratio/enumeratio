@@ -1,6 +1,0 @@
-id	in	out
-length-counts-the-key-value-pairs	\mathrm{Length}(\mathrm{Association}(\mathrm{Rule}(1, 2), \mathrm{Rule}(3, 4)))	2
-first-is-the-first-value-not-the-first-rule	\mathrm{First}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)))	a
-last-is-the-last-value	\mathrm{Last}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)))	b
-join-merges-keys-a-later-value-for-a-repeated	\mathrm{Join}(\mathrm{Association}(\mathrm{Rule}(a, b)), \mathrm{Association}(\mathrm{Rule}(c, d), \mathrm{Rule}(a, f)))	\mathrm{Association}(\mathrm{Rule}(a, f), \mathrm{Rule}(c, d))
-sort-orders-the-entries-by-value	\mathrm{Sort}(\mathrm{Association}(\mathrm{Rule}(a, 4), \mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3)))	\mathrm{Association}(\mathrm{Rule}(b, 1), \mathrm{Rule}(c, 3), \mathrm{Rule}(a, 4))

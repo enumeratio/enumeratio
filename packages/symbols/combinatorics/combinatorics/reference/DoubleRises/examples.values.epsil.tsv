@@ -1,3 +1,0 @@
-id	in	out
-the-step-word-uuddud	DoubleRises(DyckPath([1, 1, 0, 0, 1, 0]))	1
-the-step-word-uduudd	DoubleRises(DyckPath([1, 0, 1, 1, 0, 0]))	1

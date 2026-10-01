@@ -1,4 +1,0 @@
-id	in	out
-count-delannoypaths-3	\operatorname{Count}(\operatorname{DelannoyPaths}(3))	63
-first-element-of-delannoypaths-3	\operatorname{At}(\operatorname{DelannoyPaths}(3),1)	\operatorname{DelannoyPath}([0,0,0,1,1,1])
-every-element-of-delannoypaths-3	\operatorname{Take}(\operatorname{DelannoyPaths}(3),5)	[\operatorname{DelannoyPath}([0,0,0,1,1,1]),\operatorname{DelannoyPath}([0,0,1,0,1,1]),\operatorname{DelannoyPath}([0,0,1,1,0,1]),\operatorname{DelannoyPath}([0,0,1,1,1,0]),\operatorname{DelannoyPath}([0,0,1,1,2])]

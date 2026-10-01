@@ -1,4 +1,0 @@
-id	in	out
-count-granddyckpaths-3	\mathrm{Count}(\mathrm{GrandDyckPaths}(3))	20
-first-element-of-granddyckpaths-3	\mathrm{GrandDyckPaths}(3)[1]	\mathrm{DyckPath}(\bigl\lbrack1, 1, 1, 0, 0, 0\bigr\rbrack)
-every-element-of-granddyckpaths-3	\mathrm{Take}(\mathrm{GrandDyckPaths}(3), 5)	\bigl\lbrack\mathrm{DyckPath}(\bigl\lbrack1, 1, 1, 0, 0, 0\bigr\rbrack), \mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 1, 0, 0\bigr\rbrack), \mathrm{DyckPath}(\bigl\lbrack1, 0, 1, 1, 0, 0\bigr\rbrack), \mathrm{DyckPath}(\bigl\lbrack0, 1, 1, 1, 0, 0\bigr\rbrack), \mathrm{DyckPath}(\bigl\lbrack1, 1, 0, 0, 1, 0\bigr\rbrack)\bigr\rbrack

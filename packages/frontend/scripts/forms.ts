@@ -1,17 +1,26 @@
 // How we write each reference example, as data (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2): the rows of
 // its implementations record that no kernel is needed for. Our own forms -- `epsil`, the
 // InputForm you can retype; `tex`, our TeX serialisation; `traditional`, the TraditionalForm
-// TeX where it differs; `fullform`, the tree as Epsil with every head explicit, with `back`
-// wherever it doesn't read back as the example; `notatio`, the vdom as markup, with
-// `back` likewise -- and, for every other system, the `in` the oracle scan sends it.
+// TeX where it differs; `fullform`, the tree as Epsil with every head explicit; `notatio`, the
+// vdom as markup -- each an `in` and an `out`, with `back` and `backOut` wherever one doesn't
+// read back as the example's `expr` or `expected`; and, for every other system, the `in` the
+// oracle scan sends it.
 //
-// scripts/collect-forms.ts writes these into the records (`UPDATE_FORMS=1`), and
+// Our own forms are built, not kept (scripts/build-forms.ts); a record keeps only the ones
+// pinned in examples.tsv as `<form>.<field>`, and every `back`/`backOut`. A system's `in` is
+// kept in its values file: scripts/collect-forms.ts writes those (`UPDATE_FORMS=1`).
 // tests/forms.test.ts fails when a printer or transpiler no longer produces what's pinned.
 
 import { isDeepStrictEqual } from "node:util";
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { parseEpsil } from "@cortex-js/compute-engine/epsil";
-import type { ExampleImplementations, HeadImplementations, MathJSON, SystemImplementation } from "@enumeratio/entry";
+import {
+  type ExampleImplementations,
+  type HeadImplementations,
+  type MathJSON,
+  OWN_FORMS,
+  type SystemImplementation,
+} from "@enumeratio/entry";
 import { toFullForm } from "@enumeratio/formats/fullform";
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { markupOf, readMarkupText, stripMetadata } from "@enumeratio/formats/markup";
@@ -83,7 +92,7 @@ function inputFormBack(expr: MathJSON, printed: string): MathJSON | undefined {
 }
 
 /** What FullForm `printed` reads back as, uncanonicalised, where that is not `expr`. */
-export function fullFormBack(expr: MathJSON, printed: string): MathJSON | undefined {
+function fullFormBack(expr: MathJSON, printed: string): MathJSON | undefined {
   const [json, errors] = parseEpsil(printed);
   if (errors.length > 0) return "Unreadable";
   const read = attempt(() => JSON.stringify(numbersAsValues(box(stripOffsets(json)).json)));
@@ -106,16 +115,25 @@ function numbersAsValues(json: unknown): unknown {
   return digits <= DOUBLE_DIGITS && Number.isFinite(Number(num)) ? Number(num) : json;
 }
 
+/** What markup `printed` reads back as, where that is not `expr`. */
+function markupBack(expr: MathJSON, printed: string): MathJSON | undefined {
+  const { json, errors } = readMarkupText(printed);
+  if (errors.length > 0) return "Unreadable";
+  return isDeepStrictEqual(json, stripMetadata(expr)) ? undefined : (json as MathJSON);
+}
+
 /** Our own forms of one example, and each system's `in`, in the order a record lists them. */
 export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementations {
   const out: Record<string, SystemImplementation> = {};
   const epsil = [attempt(() => toInputForm(expr as never)), attempt(() => toInputForm(expected as never))];
   if (epsil[0] !== undefined) {
     const back = inputFormBack(expr, epsil[0]);
+    const backOut = epsil[1] === undefined ? undefined : inputFormBack(expected, epsil[1]);
     out.epsil = {
       in: epsil[0],
       ...(epsil[1] === undefined ? {} : { out: epsil[1] }),
       ...(back === undefined ? {} : { back }),
+      ...(backOut === undefined ? {} : { backOut }),
     };
   }
   const tex = [attempt(() => portableTeX(box(expr).latex)), attempt(() => portableTeX(box(expected).latex))];
@@ -123,16 +141,18 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
   const traditional = [attempt(() => traditionalOf(expr)), attempt(() => traditionalOf(expected))];
   if (traditional[0] !== undefined && (traditional[0] !== tex[0] || traditional[1] !== tex[1]))
     out.traditional = { in: traditional[0], ...(traditional[1] === undefined ? {} : { out: traditional[1] }) };
-  // FullForm: the tree as Epsil, every head explicit, with what `in` reads back as where the
-  // trip loses something (none should). `out` is the evaluated tree, so the two differ by what
-  // canonicalisation and evaluation did.
+  // FullForm: the tree as Epsil, every head explicit, with what `in` and `out` read back as
+  // where the trip loses something (none should). `out` is the evaluated tree, so the two differ
+  // by what canonicalisation and evaluation did.
   const full = [attempt(() => toFullForm(expr as never, ce)), attempt(() => toFullForm(expected as never, ce))];
   if (full[0] !== undefined) {
     const back = fullFormBack(expr, full[0]);
+    const backOut = full[1] === undefined ? undefined : fullFormBack(expected, full[1]);
     out.fullform = {
       in: full[0],
       ...(full[1] === undefined ? {} : { out: full[1] }),
       ...(back === undefined ? {} : { back }),
+      ...(backOut === undefined ? {} : { backOut }),
     };
   }
   // The vdom as markup, FullForm written as JSX, and what it reads back as where the trip
@@ -142,12 +162,13 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
     attempt(() => markupOf(expected, { width: Infinity })),
   ];
   if (notatio[0] !== undefined) {
-    const { json, errors } = readMarkupText(notatio[0]);
-    const exact = errors.length === 0 && isDeepStrictEqual(json, stripMetadata(expr));
+    const back = markupBack(expr, notatio[0]);
+    const backOut = notatio[1] === undefined ? undefined : markupBack(expected, notatio[1]);
     out.notatio = {
       in: notatio[0],
       ...(notatio[1] === undefined ? {} : { out: notatio[1] }),
-      ...(exact ? {} : { back: errors.length > 0 ? "Unreadable" : (json as MathJSON) }),
+      ...(back === undefined ? {} : { back }),
+      ...(backOut === undefined ? {} : { backOut }),
     };
   }
   // What the oracle scan sends each system: `emit` adds the mappings and the comparison
@@ -159,26 +180,67 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
   return out;
 }
 
-/** The fields of a row `formsOf` owns: an own form's whole row, and a system's `in`. */
-export const OWN_FORMS = ["epsil", "tex", "traditional", "fullform", "notatio"] as const;
+const isOwn = (key: string): boolean => (OWN_FORMS as readonly string[]).includes(key);
 
-/** `record`'s rows for one example with the forms replaced and a kernel's answers kept. */
+/** Every example's forms, by id: a row in triage isn't on the page and its `expected` isn't
+ * settled, so it gets none. */
+export function headForms(
+  examples: readonly { id: string; expr: unknown; expected: unknown; role?: string }[],
+): Record<string, ExampleImplementations> {
+  const forms: Record<string, ExampleImplementations> = {};
+  for (const example of examples)
+    if (example.role !== "triage") forms[example.id] = formsOf(example.expr as never, example.expected as never);
+  return forms;
+}
+
+/** Only our own forms of `forms`: what the build writes for the site. */
+export function ownForms(forms: Record<string, ExampleImplementations>): Record<string, ExampleImplementations> {
+  return Object.fromEntries(
+    Object.entries(forms).map(([id, rows]) => [id, Object.fromEntries(Object.entries(rows).filter(([k]) => isOwn(k)))]),
+  );
+}
+
+// A trip that loses something is always pinned, so a new loss (or a fixed one) shows up.
+const ALWAYS_PINNED = ["back", "backOut"] as const;
+const PINNABLE = ["in", "out"] as const;
+
+/** An own form's pins as the printers make them now: a pinned `in` or `out` takes the printed
+ * value, `back` and `backOut` are there exactly when the trip loses something, and anything
+ * else a person wrote stays. */
+function repinned(pinned: SystemImplementation | undefined, made: SystemImplementation | undefined) {
+  const row: Record<string, unknown> = { ...pinned };
+  const printed = (made ?? {}) as unknown as Record<string, unknown>;
+  for (const field of PINNABLE)
+    if (row[field] !== undefined) {
+      if (printed[field] === undefined) delete row[field];
+      else row[field] = printed[field];
+    }
+  for (const field of ALWAYS_PINNED)
+    if (printed[field] === undefined) delete row[field];
+    else row[field] = printed[field];
+  return Object.keys(row).length === 0 ? undefined : (row as unknown as SystemImplementation);
+}
+
+/** `record`'s rows for one example with each system's `in` replaced and our own forms'
+ * pins refreshed, keeping a kernel's answers. */
 export function withForms(
   rows: ExampleImplementations | undefined,
   forms: ExampleImplementations,
 ): ExampleImplementations {
   const next: Record<string, SystemImplementation> = {};
+  for (const form of OWN_FORMS) {
+    const row = repinned(rows?.[form], forms[form]);
+    if (row !== undefined) next[form] = row;
+  }
   for (const [key, row] of Object.entries(forms)) {
-    if ((OWN_FORMS as readonly string[]).includes(key)) next[key] = row;
-    else {
-      const { in: _in, back: _back, ...kept } = rows?.[key] ?? {};
-      next[key] = { ...row, ...kept };
-    }
+    if (isOwn(key)) continue;
+    const { in: _in, back: _back, ...kept } = rows?.[key] ?? {};
+    next[key] = { ...row, ...kept };
   }
   // Rows the forms don't cover: a system that no longer emits keeps only what a kernel or a
   // person wrote (a transpiled `in` without an answer goes with the mapping).
   for (const [key, row] of Object.entries(rows ?? {})) {
-    if (key in next || (OWN_FORMS as readonly string[]).includes(key)) continue;
+    if (key in next || isOwn(key)) continue;
     const { back: _back, ...kept } = row;
     if (kept.out !== undefined || kept.note !== undefined) next[key] = kept;
   }
@@ -189,20 +251,19 @@ export function withForms(
 export function recordWithForms(
   examples: readonly { id: string; expr: unknown; expected: unknown; role?: string }[],
   record: HeadImplementations | undefined,
+  forms: Record<string, ExampleImplementations> = headForms(examples),
 ): HeadImplementations {
   const next: Record<string, ExampleImplementations> = {};
-  // A row in triage isn't on the page and its `expected` isn't settled: it gets no forms.
-  for (const example of examples)
-    if (example.role !== "triage")
-      next[example.id] = withForms(record?.[example.id], formsOf(example.expr as never, example.expected as never));
-  // Rows for an example that's gone, or in triage: what the forms wrote goes; a kernel's
-  // answer or a note stays for the scan (or a person) to deal with.
+  for (const [id, rows] of Object.entries(forms)) {
+    const kept = withForms(record?.[id], rows);
+    if (Object.keys(kept).length > 0) next[id] = kept;
+  }
+  // Rows for an example that's gone, or in triage: a kernel's answer, a note or a pin stays
+  // for the scan (or a person) to deal with.
   for (const [id, rows] of Object.entries(record ?? {})) {
     if (id in next) continue;
     const kept = Object.fromEntries(
-      Object.entries(rows).filter(
-        ([key, row]) => !(OWN_FORMS as readonly string[]).includes(key) && (row.out !== undefined || row.note),
-      ),
+      Object.entries(rows).filter(([key, row]) => isOwn(key) || row.out !== undefined || row.note),
     );
     if (Object.keys(kept).length > 0) next[id] = kept;
   }

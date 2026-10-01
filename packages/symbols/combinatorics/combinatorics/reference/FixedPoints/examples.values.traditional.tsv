@@ -1,6 +1,0 @@
-id	in	out
-only-1-is-fixed	\operatorname{FixedPoints}(\operatorname{Permutation}([1,3,2]))	1
-the-identity-fixes-all	\operatorname{FixedPoints}(\operatorname{Permutation}([1,2,3]))	3
-the-one-line-word-312	\operatorname{FixedPoints}(\operatorname{Permutation}([3,1,2]))	0
-the-one-line-word-2413	\operatorname{FixedPoints}(\operatorname{Permutation}([2,4,1,3]))	0
-a-derangement-fixes-nothing	\operatorname{FixedPoints}(\operatorname{Permutation}([2,3,1]))	0

@@ -1,4 +1,0 @@
-id	in	out
-mixture-mean	\mathrm{mean}(\mathrm{MixtureDistribution}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(10, 1)\bigr\rbrack))	5
-mixture-variance-total-law	\mathrm{Variance}(\mathrm{MixtureDistribution}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(10, 1)\bigr\rbrack))	26
-mixture-cdf-far-right	N(\operatorname{CDF}(\mathrm{MixtureDistribution}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(10, 1)\bigr\rbrack), 100))	1.0

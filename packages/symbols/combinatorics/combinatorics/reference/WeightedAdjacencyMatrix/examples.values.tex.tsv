@@ -1,3 +1,0 @@
-id	in	out
-two-weighted-edges	\mathrm{WeightedAdjacencyMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{EdgeWeight}, \bigl\lbrack5, 7\bigr\rbrack)))	\bigl\lbrack\bigl\lbrack0, 5, 0\bigr\rbrack, \bigl\lbrack5, 0, 7\bigr\rbrack, \bigl\lbrack0, 0, 0\bigr\rbrack\bigr\rbrack
-no-edgeweight-falls-back-to-adjacencymatrix	\mathrm{WeightedAdjacencyMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))	\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack

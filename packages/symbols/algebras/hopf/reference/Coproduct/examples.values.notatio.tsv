@@ -1,4 +1,0 @@
-id	in	out
-deconcatenation-cut-at-each-gap	<Coproduct><QSymM><List>1 2</List></QSymM></Coproduct>	<Add><HopfTensor><QSymM><Apply>List</Apply></QSymM> <QSymM><List>1 2</List></QSymM></HopfTensor> <HopfTensor><QSymM><List>1 2</List></QSymM> <QSymM><Apply>List</Apply></QSymM></HopfTensor> <HopfTensor><QSymM><List>1</List></QSymM> <QSymM><List>2</List></QSymM></HopfTensor></Add>
-delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes	<Coproduct><NSymH><List>2</List></NSymH></Coproduct>	<Add><HopfTensor><NSymH><Apply>List</Apply></NSymH> <NSymH><List>2</List></NSymH></HopfTensor> <HopfTensor><NSymH><List>2</List></NSymH> <NSymH><Apply>List</Apply></NSymH></HopfTensor> <HopfTensor><NSymH><List>1</List></NSymH> <NSymH><List>1</List></NSymH></HopfTensor></Add>
-the-counit-picks-out-the-constant-term	<Counit><NSymH><Apply>List</Apply></NSymH></Counit>	<ToExpression>1</ToExpression>

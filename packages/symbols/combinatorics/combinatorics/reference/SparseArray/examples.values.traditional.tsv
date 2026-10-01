@@ -1,5 +1,0 @@
-id	in	out
-sparsearray-vector	\operatorname{SparseArray}([\operatorname{Rule}(1,x),\operatorname{Rule}(3,y)],4)	[x,0,y,0]
-sparsearray-infers-dims	\operatorname{SparseArray}([\operatorname{Rule}([1,1],5),\operatorname{Rule}([2,2],7)])	[[5,0],[0,7]]
-sparsearray-custom-default	\operatorname{SparseArray}([\operatorname{Rule}(2,9)],3,-1)	[-1,9,-1]
-sparsearray-normal-is-identity	\operatorname{Normal}(\operatorname{SparseArray}([\operatorname{Rule}(1,a)],2))	[a,0]

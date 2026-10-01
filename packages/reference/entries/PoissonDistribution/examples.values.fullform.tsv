@@ -1,5 +1,0 @@
-id	in	out
-standarddeviation-poissondistribution-100	StandardDeviation(PoissonDistribution(100))	10
-n-probability-x-eq-0-distributed-x	N(Probability(Equal(x, 0), Distributed(x, PoissonDistribution(Rational(16, 25)))))	Probability(Equal(x, 0), Distributed(x, PoissonDistribution(0.64)))
-probability-n-eq-0-distributed-n	Probability(Equal(n, 0), Distributed(n, PoissonDistribution(Multiply(10000, Power(10, -3)))))	Probability(Equal(n, 0), Distributed(n, PoissonDistribution(10)))
-nprobability-n-lt-eq-15-distributed-n	NProbability(LessEqual(n, 15), Distributed(n, PoissonDistribution(Multiply(10368000, Power(10, -6)))))	NProbability(LessEqual(n, 15), Distributed(n, PoissonDistribution(Rational(1296, 125))))

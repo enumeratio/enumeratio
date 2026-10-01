@@ -1,4 +1,0 @@
-id	in	out
-the-order-of-s-5-is-5	\mathrm{GroupOrder}(\mathrm{SymmetricGroup}(5))	120
-s-10-10	\mathrm{GroupOrder}(\mathrm{SymmetricGroup}(10))	3\,628\,800
-the-one-line-words-are-compute-engine-s	\mathrm{Length}(\mathrm{Permutations}(\bigl\lbrack1, 2, 3\bigr\rbrack))	6

@@ -1,3 +1,0 @@
-id	in	out
-petersen-is-2-eccentric-everywhere	<VertexEccentricity><Apply>PetersenGraph</Apply> 1</VertexEccentricity>	<ToExpression>2</ToExpression>
-disconnected-vertex-is-infinite	<VertexEccentricity><Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph> 1</VertexEccentricity>	<PositiveInfinity />

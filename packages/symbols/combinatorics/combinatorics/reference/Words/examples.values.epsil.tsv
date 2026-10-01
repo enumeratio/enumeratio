@@ -1,4 +1,0 @@
-id	in	out
-count-words-3-2	count(Words(3, 2))	8
-first-element-of-words-3-2	Words(3, 2)[1]	Word([1, 1, 1])
-every-element-of-words-3-2	take(Words(3, 2), 8)	"[\n  Word([1, 1, 1]),\n  Word([1, 1, 2]),\n  Word([1, 2, 1]),\n  Word([1, 2, 2]),\n  Word([2, 1, 1]),\n  Word([2, 1, 2]),\n  Word([2, 2, 1]),\n  Word([2, 2, 2]),\n]"

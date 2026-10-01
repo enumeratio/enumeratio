@@ -1,2 +1,0 @@
-id	in	out
-incidence-matrix-of-a-mixed-graph	\mathrm{IncidenceMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack))	\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack

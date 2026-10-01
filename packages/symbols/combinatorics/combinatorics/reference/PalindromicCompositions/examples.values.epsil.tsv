@@ -1,4 +1,0 @@
-id	in	out
-count-palindromiccompositions-6	count(PalindromicCompositions(6))	8
-first-element-of-palindromiccompositions-6	PalindromicCompositions(6)[1]	Composition([1, 1, 2, 1, 1])
-every-element-of-palindromiccompositions-6	take(PalindromicCompositions(6), 8)	"[\n  Composition([1, 1, 2, 1, 1]),\n  Composition([2, 2, 2]),\n  Composition([1, 4, 1]),\n  Composition([6]),\n  Composition([1, 1, 1, 1, 1, 1]),\n  Composition([1, 2, 2, 1]),\n  Composition([2, 1, 1, 2]),\n  Composition([3, 3]),\n]"

@@ -1,5 +1,0 @@
-id	in	out
-path-4-matches-wolfram	\operatorname{EigenvectorCentrality}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4)]))	[0.190983005625053,0.309016994374947,0.309016994374947,0.190983005625053]
-star-4-hub-is-most-central	\operatorname{EigenvectorCentrality}(\operatorname{StarGraph}(4))	[0.366025403784439,0.211324865405187,0.211324865405187,0.211324865405187]
-reverse-sortby-transpose-list-vertexlist-g		
-1-over-neg-length-connectedcomponents-g-plus	\frac{1}{-\operatorname{Length}(\operatorname{ConnectedComponents}(g))+\operatorname{VertexCount}(g)}(\operatorname{VertexCount}(h)-1)\operatorname{EigenvectorCentrality}(h)	\frac{(\operatorname{VertexCount}(h)-1)\operatorname{EigenvectorCentrality}(h)}{\operatorname{VertexCount}(g)-1}

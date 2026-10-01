@@ -1,7 +1,0 @@
-id	in	out
-a-dihedral-group	|D_{100}|	200
-grouporder-permutationgroup-list-cycles-list	|\operatorname{PermutationGroup}([\operatorname{Cycles}([[2,10],[4,11],[5,7],[8,9]]),\operatorname{Cycles}([[1,4,3,8],[2,5,6,7]])])|	2880
-a-permutation-group	|\operatorname{PermutationGroup}([\operatorname{Cycles}([[1,9,6],[3,7]])])|	6
-the-symmetric-group	|\operatorname{SymmetricGroup}(4)|	24
-grouporder-permutationgroup-list	|\operatorname{PermutationGroup}([])|	1
-grouporder-permutationgroup-list-cycles-list-2	|\operatorname{PermutationGroup}([\operatorname{Cycles}([])])|	1

@@ -1,9 +1,0 @@
-id	in	out
-n-arsinh-1-100	<N><Arsinh>1</Arsinh> 100</N>	<ToExpression>0.8813735870195430252326093249797923090281603282616354107532956086533771842220260878337068919102560429</ToExpression>
-arsinh-list-list-i-sqrt-2-over-2-times-i-list-0	<Arsinh><List><List><Complex>0 1</Complex> <Complex>0 <Divide><Sqrt>2</Sqrt> 2</Divide></Complex></List> <List>0 <Complex>0 <Negate><Divide><Sqrt>2</Sqrt> 2</Divide></Negate></Complex></List></List></Arsinh>	<List><List><Arsinh><Complex>0 1</Complex></Arsinh> <Arsinh><Complex>0 <Divide><Sqrt>2</Sqrt> 2</Divide></Complex></Arsinh></List> <List>0 <Arsinh><Complex>0 <Negate><Divide><Sqrt>2</Sqrt> 2</Divide></Negate></Complex></Arsinh></List></List>
-arsinh-positiveinfinity	<Arsinh>PositiveInfinity</Arsinh>	<PositiveInfinity />
-arsinh-0	<Arsinh>0</Arsinh>	<ToExpression>0</ToExpression>
-d-arsinh-x-x	<D><Arsinh>x</Arsinh> x</D>	<Divide>1 <Sqrt><Add><Power>x 2</Power> 1</Add></Sqrt></Divide>
-arsinh-1-over-2-times-i-times-sqrt-1-over-2	<Arsinh><Multiply><Complex>0 <Rational>1 2</Rational></Complex> <Sqrt><Multiply><Rational>1 2</Rational> <Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Multiply></Sqrt></Multiply></Arsinh>	<Arsinh><Multiply><Complex>0 <Divide><Sqrt>2</Sqrt> 4</Divide></Complex> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply></Arsinh>
-arsinh-neg-1-over-2-times-i-times-sqrt-1-over-2	<Arsinh><Multiply><Complex>0 <Rational>-1 2</Rational></Complex> <Sqrt><Multiply><Rational>1 2</Rational> <Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Multiply></Sqrt></Multiply></Arsinh>	<Arsinh><Multiply><Complex>0 <Negate><Divide><Sqrt>2</Sqrt> 4</Divide></Negate></Complex> <Sqrt><Add>5 <Negate><Sqrt>5</Sqrt></Negate></Add></Sqrt></Multiply></Arsinh>
-arsinh-complexinfinity-is-complexinfinity	<Arsinh>ComplexInfinity</Arsinh>	<ComplexInfinity />

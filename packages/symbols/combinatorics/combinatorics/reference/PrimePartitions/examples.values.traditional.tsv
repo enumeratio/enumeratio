@@ -1,4 +1,0 @@
-id	in	out
-count-primepartition-12	\operatorname{Count}(\operatorname{PrimePartitions}(12))	7
-first-element-of-primepartition-12	\operatorname{At}(\operatorname{PrimePartitions}(12),1)	\operatorname{IntegerPartition}([7,5])
-every-element-of-primepartition-12	\operatorname{Take}(\operatorname{PrimePartitions}(12),7)	[\operatorname{IntegerPartition}([7,5]),\operatorname{IntegerPartition}([7,3,2]),\operatorname{IntegerPartition}([5,5,2]),\operatorname{IntegerPartition}([5,3,2,2]),\operatorname{IntegerPartition}([3,3,3,3]),\operatorname{IntegerPartition}([3,3,2,2,2]),\operatorname{IntegerPartition}([2,2,2,2,2,2])]

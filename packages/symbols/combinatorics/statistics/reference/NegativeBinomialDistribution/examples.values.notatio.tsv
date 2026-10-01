@@ -1,5 +1,0 @@
-id	in	out
-negativebinomial-pdf-exact	<PDF><NegativeBinomialDistribution>5 <Rational>1 3</Rational></NegativeBinomialDistribution> 2</PDF>	<Rational>20 729</Rational>
-negativebinomial-cdf-exact	<CDF><NegativeBinomialDistribution>5 <Rational>1 3</Rational></NegativeBinomialDistribution> 2</CDF>	<BetaRegularized><Rational>1 3</Rational> 5 3</BetaRegularized>
-negativebinomial-mean-exact	<Mean><NegativeBinomialDistribution>5 <Rational>1 3</Rational></NegativeBinomialDistribution></Mean>	<ToExpression>10</ToExpression>
-negativebinomial-variance-exact	<Variance><NegativeBinomialDistribution>5 <Rational>1 3</Rational></NegativeBinomialDistribution></Variance>	<ToExpression>30</ToExpression>

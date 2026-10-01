@@ -1,3 +1,0 @@
-id	in	out
-count-simplepermutations-5-6-a111111	<Count><SimplePermutations>5</SimplePermutations></Count>	<ToExpression>6</ToExpression>
-every-element-of-simplepermutations-5	<Take><SimplePermutations>5</SimplePermutations> 6</Take>	<List><Permutation><List>2 4 1 5 3</List></Permutation> <Permutation><List>2 5 3 1 4</List></Permutation> <Permutation><List>3 1 5 2 4</List></Permutation> <Permutation><List>3 5 1 4 2</List></Permutation> <Permutation><List>4 1 3 5 2</List></Permutation> <Permutation><List>4 2 5 1 3</List></Permutation></List>

@@ -1,7 +1,0 @@
-id	in	out
-n-sech-9-over-5-50	N(\mathrm{sech}(\frac{9}{5}), 50)	0.321\,804\,869\,506\,587\,868\,35
-sech-list-list-1-over-3-times-i-times-pi-neg-1	\mathrm{sech}(\bigl\lbrack\bigl\lbrack(1/3i)\pi, (-1/3i)\pi\bigr\rbrack, \bigl\lbrack0, (-1/6i)\pi\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\mathrm{sech}((1/3i)\pi), \mathrm{sech}((-1/3i)\pi)\bigr\rbrack, \bigl\lbrack1, \mathrm{sech}((-1/6i)\pi)\bigr\rbrack\bigr\rbrack
-sech-positiveinfinity	\mathrm{sech}(\infty)	0
-sech-0	\mathrm{sech}(0)	1
-d-sech-x-x	\frac{\mathrm{d}\mathrm{sech}(x)}{\mathrm{d}x}	-(\tanh(x)\mathrm{sech}(x))
-matrixfunction-function-sech-1-1-list-list-1	\mathrm{MatrixFunction}(()\mapsto\mathrm{sech}(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack(1/3i)\pi, (-1/3i)\pi\bigr\rbrack, \bigl\lbrack0, (-1/6i)\pi\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\mathrm{sech}((1/3i)\pi), \frac{1}{3}(2\mathrm{sech}((-1/6i)\pi))-\frac{1}{3}(2\mathrm{sech}((1/3i)\pi))\bigr\rbrack, \bigl\lbrack0, \mathrm{sech}((-1/6i)\pi)\bigr\rbrack\bigr\rbrack

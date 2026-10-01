@@ -1,9 +1,0 @@
-id	in	out
-n-artanh-1-over-2-50	<N><Artanh><Rational>1 2</Rational></Artanh> 50</N>	<ToExpression>0.54930614433405484569762261846126285232374527891137</ToExpression>
-artanh-positiveinfinity	<Artanh>PositiveInfinity</Artanh>	<Multiply><Complex>0 <Rational>-1 2</Rational></Complex> Pi</Multiply>
-artanh-0	<Artanh>0</Artanh>	<ToExpression>0</ToExpression>
-d-artanh-x-x	<D><Artanh>x</Artanh> x</D>	<Divide>1 <Add><Negate><Power>x 2</Power></Negate> 1</Add></Divide>
-fullsimplify-neg-1-over-x-times-y-plus-1-times-x	<FullSimplify><Add><Negate><Multiply><Divide>1 <Add><Multiply>x y</Multiply> 1</Add></Divide> <Add>x y</Add></Multiply></Negate> <Tanh><Add><Artanh>x</Artanh> <Artanh>y</Artanh></Add></Tanh></Add></FullSimplify>	<Add><Divide><Add><Negate>x</Negate> <Negate>y</Negate></Add> <Add><Multiply>x y</Multiply> 1</Add></Divide> <Tanh><Add><Artanh>x</Artanh> <Artanh>y</Artanh></Add></Tanh></Add>
-trigtoexp-artanh-z	<TrigToExp><Artanh>z</Artanh></TrigToExp>	<Artanh>z</Artanh>
-integrate-artanh-x-x-nothing-nothing	<Integrate><Function><Block><Artanh>x</Artanh></Block> x</Function> <Limits>x Nothing Nothing</Limits></Integrate>	<Add><Multiply>x <Artanh>x</Artanh></Multiply> <Multiply><Rational>1 2</Rational> <Ln><Add><Negate><Power>x 2</Power></Negate> 1</Add></Ln></Multiply></Add>
-artanh-complexinfinity-is-indeterminate-the-sign	<Artanh>ComplexInfinity</Artanh>	<Indeterminate />

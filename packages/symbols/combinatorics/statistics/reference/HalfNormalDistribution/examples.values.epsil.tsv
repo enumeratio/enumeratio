@@ -1,5 +1,0 @@
-id	in	out
-halfnormal-pdf-exact	pdf(HalfNormalDistribution(1), 1)	sqrt(2) / sqrt(exponentialE * pi)
-halfnormal-cdf-exact	cdf(HalfNormalDistribution(1), 1)	erf(sqrt(2) / 2)
-halfnormal-mean-exact	mean(HalfNormalDistribution(1))	sqrt(2 / pi)
-halfnormal-variance-exact	variance(HalfNormalDistribution(1))	(-2 + pi) / pi

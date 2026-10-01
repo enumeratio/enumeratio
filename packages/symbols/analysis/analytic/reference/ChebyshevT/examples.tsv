@@ -1,35 +1,35 @@
-id	section	role	expr	expected	known	source	caption	wolfram.kind	wolfram.note
-the-cubic			[ChebyshevT, 3, x]	[Add, [Multiply, 4, [Power, x, 3]], [Multiply, -3, x]]			$T_3(x) = 4x^3 - 3x$		
-the-quartic			[ChebyshevT, 4, x]	[Add, [Multiply, 8, [Power, x, 4]], [Multiply, -8, [Power, x, 2]], 1]			$T_4(x) = 8x^4 - 8x^2 + 1$		
-at-an-integer			[ChebyshevT, 5, 2]	362			At an integer the value is exact		
-at-a-real			[ChebyshevT, 5, 0.7]	-0.6708799999999998			At a floating-point $x$		
-at-t0-0-7		test	[N, [ChebyshevT, 0, 0.7]]	1					
-at-t1-0-7		test	[N, [ChebyshevT, 1, 0.7]]	0.7					
-at-t2-0-7		test	[N, [ChebyshevT, 2, 0.7]]	-0.02000000000000013					
-at-t5-0-7		test	[N, [ChebyshevT, 5, 0.7]]	-0.6708799999999998					
-at-t5-2		test	[N, [ChebyshevT, 5, 2]]	362					
-at-t-5-0-7		test	[N, [ChebyshevT, -5, 0.7]]	-0.6708799999999998					
-at-t4-2-3i		test	[N, [ChebyshevT, 4, [Complex, 2, 3]]]	[Complex, {num: "-911.0"}, {num: "-1056.0"}]					
-chebyshevt-2-3			[ChebyshevT, 2, 3]	17					
-chebyshevt-10-x			[ChebyshevT, 10, x]	[Add, [Multiply, 512, [Power, x, 10]], [Multiply, -1280, [Power, x, 8]], [Multiply, 1120, [Power, x, 6]], [Multiply, -400, [Power, x, 4]], [Multiply, 50, [Power, x, 2]], -1]					
-at-a-rational	Scope		[ChebyshevT, 5, [Rational, 1, 3]]	[Rational, 241, 243]			At a rational $x$ the value is an exact rational		
-at-a-complex-argument	Scope		[ChebyshevT, 4, [Complex, 2, 3]]	[Complex, -911, -1056]			At a Gaussian integer		
-a-symbolic-order-stays-unevaluated	Scope		[ChebyshevT, n, x]	[ChebyshevT, n, x]			A symbolic order stays unevaluated		
-chebyshevt-2-5	Scope		[ChebyshevT, 2, 5]	49					
-chebyshevt-0-0	Scope		[ChebyshevT, 0, 0]	1					
-chebyshevt-0-positiveinfinity	Scope		[ChebyshevT, 0, PositiveInfinity]	1					
-chebyshevt-7-x	Scope		[ChebyshevT, 7, x]	[Add, [Multiply, 64, [Power, x, 7]], [Multiply, -112, [Power, x, 5]], [Multiply, 56, [Power, x, 3]], [Multiply, -7, x]]					
-chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	Scope		[Equal, [ChebyshevT, 1, [Negate, x]], [Negate, [ChebyshevT, 1, x]]]	True					
-chebyshevt-2-neg-x-eq-chebyshevt-2-x	Scope		[Equal, [ChebyshevT, 2, [Negate, x]], [ChebyshevT, 2, x]]	True					
-matrixfunction-function-chebyshevt-2-1-1-list	Scope		[MatrixFunction, [Function, [Block, [ChebyshevT, 2, _1]], _1], [List, [List, 1, 2], [List, 3, 4]]]	[List, [List, [Add, [Multiply, [Negate, [Divide, [Sqrt, 33], 132]], [Add, -3, [Negate, [Sqrt, 33]]], [Add, -2, [Power, [Add, 5, [Negate, [Sqrt, 33]]], 2]]], [Multiply, [Divide, [Sqrt, 33], 132], [Add, -3, [Sqrt, 33]], [Add, -2, [Power, [Add, 5, [Sqrt, 33]], 2]]]], [Add, [Multiply, [Negate, [Divide, [Sqrt, 33], 33]], [Power, [Add, 5, [Negate, [Sqrt, 33]]], 2]], [Multiply, [Divide, [Sqrt, 33], 33], [Power, [Add, 5, [Sqrt, 33]], 2]]]], [List, [Add, [Multiply, [Negate, [Divide, [Sqrt, 33], 22]], [Power, [Add, 5, [Negate, [Sqrt, 33]]], 2]], [Multiply, [Divide, [Sqrt, 33], 22], [Power, [Add, 5, [Sqrt, 33]], 2]]], [Add, [Multiply, [Negate, [Divide, [Sqrt, 33], 132]], [Add, -2, [Power, [Add, 5, [Negate, [Sqrt, 33]]], 2]], [Add, 3, [Negate, [Sqrt, 33]]]], [Multiply, [Divide, [Sqrt, 33], 132], [Add, -2, [Power, [Add, 5, [Sqrt, 33]], 2]], [Add, 3, [Sqrt, 33]]]]]]					
-cos-n-theta	Properties		[Equal, [ChebyshevT, 6, [Rational, 1, 2]], [Cos, [Multiply, 6, [Divide, Pi, 3]]]]	True			$T_n(\cos\theta) = \cos(n\theta)$, here at $\theta = \pi/3$		
-at-1	Properties		[ChebyshevT, 7, 1]	1			$T_n(1) = 1$		
-at-minus-1	Properties		[ChebyshevT, 7, -1]	-1			$T_n(-1) = (-1)^n$		
-parity	Properties		[Equal, [ChebyshevT, 5, [Rational, -1, 3]], [Negate, [ChebyshevT, 5, [Rational, 1, 3]]]]	True			Odd degree, odd function: $T_n(-x) = (-1)^n T_n(x)$		
-negative-order	Properties		[ChebyshevT, -3, x]	[Add, [Multiply, 4, [Power, x, 3]], [Multiply, -3, x]]			A negative order folds: $T_{-n} = T_n$		
-pell-identity	Properties		[Subtract, [Power, [ChebyshevT, 4, 3], 2], [Multiply, 8, [Power, [ChebyshevU, 3, 3], 2]]]	1			$T_n(x)^2 - (x^2 - 1)\,U_{n-1}(x)^2 = 1$, here at $x = 3$. See [[ChebyshevU]]		
-chebyshevt-0-1	Properties		[ChebyshevT, 0, 1]	1	1	Wolfram MathematicalFunctionData, ChebyshevT			
-chebyshevt-1-positiveinfinity	Properties		[ChebyshevT, 1, PositiveInfinity]	PositiveInfinity	PositiveInfinity	Wolfram MathematicalFunctionData, ChebyshevT:Polynomial			
-chebyshevt-1-negativeinfinity	Properties		[ChebyshevT, 1, NegativeInfinity]	NegativeInfinity	NegativeInfinity	Wolfram MathematicalFunctionData, ChebyshevT:Polynomial			
-chebyshevt-2-positiveinfinity	Properties		[ChebyshevT, 2, PositiveInfinity]	PositiveInfinity	PositiveInfinity	Wolfram MathematicalFunctionData, ChebyshevT:Polynomial		domain	ChebyshevT[2,x] = 2x^2-1, an even-degree polynomial with no branch ambiguity; at x=+Infinity the value is unambiguously PositiveInfinity by direct substitution. Real Wolfram declines (Infinity::indet, 'Indeterminate') rather than extending the closed form -- verified live. We answer past Wolfram's implemented domain here.
-chebyshevt-2-negativeinfinity	Properties		[ChebyshevT, 2, NegativeInfinity]	PositiveInfinity	PositiveInfinity	Wolfram MathematicalFunctionData, ChebyshevT:Polynomial		domain	ChebyshevT[2,x] = 2x^2-1, an even-degree polynomial with no branch ambiguity; at x=-Infinity the value is unambiguously PositiveInfinity by direct substitution. Real Wolfram declines (Infinity::indet, 'Indeterminate') rather than extending the closed form -- verified live. We answer past Wolfram's implemented domain here.
+id	section	role	expr	expected	known	source	caption	epsil.back	wolfram.kind	wolfram.note
+the-cubic			[ChebyshevT, 3, x]	[Add, [Multiply, 4, [Power, x, 3]], [Multiply, -3, x]]			$T_3(x) = 4x^3 - 3x$			
+the-quartic			[ChebyshevT, 4, x]	[Add, [Multiply, 8, [Power, x, 4]], [Multiply, -8, [Power, x, 2]], 1]			$T_4(x) = 8x^4 - 8x^2 + 1$			
+at-an-integer			[ChebyshevT, 5, 2]	362			At an integer the value is exact			
+at-a-real			[ChebyshevT, 5, 0.7]	-0.6708799999999998			At a floating-point $x$			
+at-t0-0-7		test	[N, [ChebyshevT, 0, 0.7]]	1						
+at-t1-0-7		test	[N, [ChebyshevT, 1, 0.7]]	0.7						
+at-t2-0-7		test	[N, [ChebyshevT, 2, 0.7]]	-0.02000000000000013						
+at-t5-0-7		test	[N, [ChebyshevT, 5, 0.7]]	-0.6708799999999998						
+at-t5-2		test	[N, [ChebyshevT, 5, 2]]	362						
+at-t-5-0-7		test	[N, [ChebyshevT, -5, 0.7]]	-0.6708799999999998						
+at-t4-2-3i		test	[N, [ChebyshevT, 4, [Complex, 2, 3]]]	[Complex, {num: "-911.0"}, {num: "-1056.0"}]						
+chebyshevt-2-3			[ChebyshevT, 2, 3]	17						
+chebyshevt-10-x			[ChebyshevT, 10, x]	[Add, [Multiply, 512, [Power, x, 10]], [Multiply, -1280, [Power, x, 8]], [Multiply, 1120, [Power, x, 6]], [Multiply, -400, [Power, x, 4]], [Multiply, 50, [Power, x, 2]], -1]						
+at-a-rational	Scope		[ChebyshevT, 5, [Rational, 1, 3]]	[Rational, 241, 243]			At a rational $x$ the value is an exact rational			
+at-a-complex-argument	Scope		[ChebyshevT, 4, [Complex, 2, 3]]	[Complex, -911, -1056]			At a Gaussian integer			
+a-symbolic-order-stays-unevaluated	Scope		[ChebyshevT, n, x]	[ChebyshevT, n, x]			A symbolic order stays unevaluated			
+chebyshevt-2-5	Scope		[ChebyshevT, 2, 5]	49						
+chebyshevt-0-0	Scope		[ChebyshevT, 0, 0]	1						
+chebyshevt-0-positiveinfinity	Scope		[ChebyshevT, 0, PositiveInfinity]	1						
+chebyshevt-7-x	Scope		[ChebyshevT, 7, x]	[Add, [Multiply, 64, [Power, x, 7]], [Multiply, -112, [Power, x, 5]], [Multiply, 56, [Power, x, 3]], [Multiply, -7, x]]						
+chebyshevt-1-neg-x-eq-neg-chebyshevt-1-x	Scope		[Equal, [ChebyshevT, 1, [Negate, x]], [Negate, [ChebyshevT, 1, x]]]	True						
+chebyshevt-2-neg-x-eq-chebyshevt-2-x	Scope		[Equal, [ChebyshevT, 2, [Negate, x]], [ChebyshevT, 2, x]]	True						
+matrixfunction-function-chebyshevt-2-1-1-list	Scope		[MatrixFunction, [Function, [Block, [ChebyshevT, 2, _1]], _1], [List, [List, 1, 2], [List, 3, 4]]]	[List, [List, [Add, [Multiply, [Negate, [Divide, [Sqrt, 33], 132]], [Add, -3, [Negate, [Sqrt, 33]]], [Add, -2, [Power, [Add, 5, [Negate, [Sqrt, 33]]], 2]]], [Multiply, [Divide, [Sqrt, 33], 132], [Add, -3, [Sqrt, 33]], [Add, -2, [Power, [Add, 5, [Sqrt, 33]], 2]]]], [Add, [Multiply, [Negate, [Divide, [Sqrt, 33], 33]], [Power, [Add, 5, [Negate, [Sqrt, 33]]], 2]], [Multiply, [Divide, [Sqrt, 33], 33], [Power, [Add, 5, [Sqrt, 33]], 2]]]], [List, [Add, [Multiply, [Negate, [Divide, [Sqrt, 33], 22]], [Power, [Add, 5, [Negate, [Sqrt, 33]]], 2]], [Multiply, [Divide, [Sqrt, 33], 22], [Power, [Add, 5, [Sqrt, 33]], 2]]], [Add, [Multiply, [Negate, [Divide, [Sqrt, 33], 132]], [Add, -2, [Power, [Add, 5, [Negate, [Sqrt, 33]]], 2]], [Add, 3, [Negate, [Sqrt, 33]]]], [Multiply, [Divide, [Sqrt, 33], 132], [Add, -2, [Power, [Add, 5, [Sqrt, 33]], 2]], [Add, 3, [Sqrt, 33]]]]]]				Unreadable		
+cos-n-theta	Properties		[Equal, [ChebyshevT, 6, [Rational, 1, 2]], [Cos, [Multiply, 6, [Divide, Pi, 3]]]]	True			$T_n(\cos\theta) = \cos(n\theta)$, here at $\theta = \pi/3$			
+at-1	Properties		[ChebyshevT, 7, 1]	1			$T_n(1) = 1$			
+at-minus-1	Properties		[ChebyshevT, 7, -1]	-1			$T_n(-1) = (-1)^n$			
+parity	Properties		[Equal, [ChebyshevT, 5, [Rational, -1, 3]], [Negate, [ChebyshevT, 5, [Rational, 1, 3]]]]	True			Odd degree, odd function: $T_n(-x) = (-1)^n T_n(x)$			
+negative-order	Properties		[ChebyshevT, -3, x]	[Add, [Multiply, 4, [Power, x, 3]], [Multiply, -3, x]]			A negative order folds: $T_{-n} = T_n$			
+pell-identity	Properties		[Subtract, [Power, [ChebyshevT, 4, 3], 2], [Multiply, 8, [Power, [ChebyshevU, 3, 3], 2]]]	1			$T_n(x)^2 - (x^2 - 1)\,U_{n-1}(x)^2 = 1$, here at $x = 3$. See [[ChebyshevU]]			
+chebyshevt-0-1	Properties		[ChebyshevT, 0, 1]	1	1	Wolfram MathematicalFunctionData, ChebyshevT				
+chebyshevt-1-positiveinfinity	Properties		[ChebyshevT, 1, PositiveInfinity]	PositiveInfinity	PositiveInfinity	Wolfram MathematicalFunctionData, ChebyshevT:Polynomial				
+chebyshevt-1-negativeinfinity	Properties		[ChebyshevT, 1, NegativeInfinity]	NegativeInfinity	NegativeInfinity	Wolfram MathematicalFunctionData, ChebyshevT:Polynomial				
+chebyshevt-2-positiveinfinity	Properties		[ChebyshevT, 2, PositiveInfinity]	PositiveInfinity	PositiveInfinity	Wolfram MathematicalFunctionData, ChebyshevT:Polynomial			domain	ChebyshevT[2,x] = 2x^2-1, an even-degree polynomial with no branch ambiguity; at x=+Infinity the value is unambiguously PositiveInfinity by direct substitution. Real Wolfram declines (Infinity::indet, 'Indeterminate') rather than extending the closed form -- verified live. We answer past Wolfram's implemented domain here.
+chebyshevt-2-negativeinfinity	Properties		[ChebyshevT, 2, NegativeInfinity]	PositiveInfinity	PositiveInfinity	Wolfram MathematicalFunctionData, ChebyshevT:Polynomial			domain	ChebyshevT[2,x] = 2x^2-1, an even-degree polynomial with no branch ambiguity; at x=-Infinity the value is unambiguously PositiveInfinity by direct substitution. Real Wolfram declines (Infinity::indet, 'Indeterminate') rather than extending the closed form -- verified live. We answer past Wolfram's implemented domain here.

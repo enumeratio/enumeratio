@@ -1,8 +1,0 @@
-id	in	out
-mersenneprimeexponent-1	\mathrm{MersennePrimeExponent}(1)	2
-mersenneprimeexponent-5	\mathrm{MersennePrimeExponent}(5)	13
-mersenneprimeexponent-10	\mathrm{MersennePrimeExponent}(10)	89
-listable	\mathrm{MersennePrimeExponent}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack2, 3, 5, 7, 13, 17\bigr\rbrack
-mersenneprimeexponent-range-1-10	\mathrm{MersennePrimeExponent}(1..10)	\bigl\lbrack2, 3, 5, 7, 13, 17, 19, 31, 61, 89\bigr\rbrack
-past-the-known-table-of-mersenne-prime-exponents	\mathrm{MersennePrimeExponent}(1\,000)	\mathrm{MersennePrimeExponent}(1\,000)
-timeconstrained-mersenneprimeexponent-50-10	\mathrm{TimeConstrained}(\mathrm{MersennePrimeExponent}(50), 10)	\mathrm{MersennePrimeExponent}(50)

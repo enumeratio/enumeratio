@@ -1,2 +1,0 @@
-id	in	out
-count-up-to-a-limit	\bigl\lbrack n\coloneq0, \mathrm{While}(n\lt5, n\coloneq n+1), n\bigr\rbrack	\bigl\lbrack0, 5\bigr\rbrack

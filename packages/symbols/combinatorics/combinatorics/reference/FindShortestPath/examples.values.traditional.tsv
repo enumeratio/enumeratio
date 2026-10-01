@@ -1,5 +1,0 @@
-id	in	out
-shortest-path-along-a-path-graph	\operatorname{FindShortestPath}(\operatorname{PathGraph}(5),1,5)	[1,2,3,4,5]
-no-path-back-against-directed-edges	\operatorname{FindShortestPath}(\operatorname{Graph}([1,2,3,4],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4)]),4,1)	[]
-a-path-crossing-both-directed-and-undirected	\operatorname{FindShortestPath}(\operatorname{Graph}([1,2,3,4],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4)]),1,4)	[1,2,3,4]
-a-weighted-shortcut-loses-to-three-cheaper-hops	\operatorname{FindShortestPath}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4),\operatorname{UndirectedEdge}(1,4)],\operatorname{KeyValuePair}(\operatorname{EdgeWeight},[1,1,1,10])),1,4)	[1,2,3,4]

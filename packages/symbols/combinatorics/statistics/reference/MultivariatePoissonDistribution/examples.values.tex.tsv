@@ -1,5 +1,0 @@
-id	in	out
-multivariate-poisson-mean	\mathrm{mean}(\mathrm{MultivariatePoissonDistribution}(1, \bigl\lbrack2, 3\bigr\rbrack))	\bigl\lbrack3, 4\bigr\rbrack
-multivariate-poisson-variance	\mathrm{Variance}(\mathrm{MultivariatePoissonDistribution}(1, \bigl\lbrack2, 3\bigr\rbrack))	\bigl\lbrack3, 4\bigr\rbrack
-multivariate-poisson-covariance	\operatorname{Covariance}(\mathrm{MultivariatePoissonDistribution}(1, \bigl\lbrack2, 3\bigr\rbrack))	\bigl\lbrack\bigl\lbrack3, 1\bigr\rbrack, \bigl\lbrack1, 4\bigr\rbrack\bigr\rbrack
-multivariate-poisson-pdf	\operatorname{PDF}(\mathrm{MultivariatePoissonDistribution}(1, \bigl\lbrack2, 3\bigr\rbrack), \bigl\lbrack1, 1\bigr\rbrack)	\frac{7}{e^{6}}

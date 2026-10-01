@@ -1,5 +1,0 @@
-id	in	out
-sigma1sigma2-cycles-the-three-strands	<BraidPermutation><Braid>3 <List>1 2</List></Braid></BraidPermutation>	<List>2 3 1</List>
-two-positive-crossings-and-one-negative	<BraidWrithe><Braid>3 <List>1 -2 1</List></Braid></BraidWrithe>	<ToExpression>1</ToExpression>
-the-hopf-link	<BraidComponents><Braid>2 <List>1 1</List></Braid></BraidComponents>	<ToExpression>2</ToExpression>
-t-2-q-is-a-knot-for-odd-q	<BraidIsKnot><TorusBraid>2 5</TorusBraid></BraidIsKnot>	<True />

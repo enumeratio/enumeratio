@@ -1,5 +1,0 @@
-id	in	out
-lognormal-pdf-exact	pdf(LogNormalDistribution(0, 1), 1)	sqrt(1 / (2Pi))
-lognormal-cdf-exact	cdf(LogNormalDistribution(0, 1), 1)	1 / 2
-lognormal-mean-exact	mean(LogNormalDistribution(0, 1))	sqrt(exponentialE)
-lognormal-variance-exact	variance(LogNormalDistribution(0, 1))	exponentialE * (-1 + exponentialE)

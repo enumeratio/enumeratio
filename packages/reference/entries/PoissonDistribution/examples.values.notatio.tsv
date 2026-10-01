@@ -1,5 +1,0 @@
-id	in	out
-standarddeviation-poissondistribution-100	<StandardDeviation><PoissonDistribution>100</PoissonDistribution></StandardDeviation>	<ToExpression>10</ToExpression>
-n-probability-x-eq-0-distributed-x	<N><Probability><Equal>x 0</Equal> <Distributed>x <PoissonDistribution><Rational>16 25</Rational></PoissonDistribution></Distributed></Probability></N>	<Probability><Equal>x 0</Equal> <Distributed>x <PoissonDistribution>0.64</PoissonDistribution></Distributed></Probability>
-probability-n-eq-0-distributed-n	<Probability><Equal>n 0</Equal> <Distributed>n <PoissonDistribution><Multiply>10000 <Power>10 -3</Power></Multiply></PoissonDistribution></Distributed></Probability>	<Probability><Equal>n 0</Equal> <Distributed>n <PoissonDistribution>10</PoissonDistribution></Distributed></Probability>
-nprobability-n-lt-eq-15-distributed-n	<NProbability><LessEqual>n 15</LessEqual> <Distributed>n <PoissonDistribution><Multiply>10368000 <Power>10 -6</Power></Multiply></PoissonDistribution></Distributed></NProbability>	<NProbability><LessEqual>n 15</LessEqual> <Distributed>n <PoissonDistribution><Rational>1296 125</Rational></PoissonDistribution></Distributed></NProbability>

@@ -1,3 +1,0 @@
-id	in	out
-substitute-a-fixed-value	With(List(Equal(x, 3)), Multiply(x, x))	9
-several-bindings-at-once	With(List(Equal(x, 2), Equal(y, 5)), Add(x, y))	7

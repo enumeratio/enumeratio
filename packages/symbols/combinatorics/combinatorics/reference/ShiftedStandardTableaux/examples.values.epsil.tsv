@@ -1,3 +1,0 @@
-id	in	out
-count-shiftedstandardtableaux-5-6-standard	count(ShiftedStandardTableaux(5))	6
-every-element-of-shiftedstandardtableaux-5	take(ShiftedStandardTableaux(5), 6)	"[\n  ShiftedStandardTableau([[1, 2, 3, 4, 5]]),\n  ShiftedStandardTableau([[1, 2, 4, 5], [3]]),\n  ShiftedStandardTableau([[1, 2, 3, 5], [4]]),\n  ShiftedStandardTableau([[1, 2, 3, 4], [5]]),\n  ShiftedStandardTableau([[1, 2, 4], [3, 5]]),\n  ShiftedStandardTableau([[1, 2, 3], [4, 5]]),\n]"

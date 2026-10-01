@@ -1,4 +1,0 @@
-id	in	out
-count-binarypalindromes-4	Count(BinaryPalindromes(4))	4
-first-element-of-binarypalindromes-4	At(BinaryPalindromes(4), 1)	BinaryWord(List(0, 0, 0, 0))
-every-element-of-binarypalindromes-4	Take(BinaryPalindromes(4), 4)	List(BinaryWord(List(0, 0, 0, 0)), BinaryWord(List(0, 1, 1, 0)), BinaryWord(List(1, 0, 0, 1)), BinaryWord(List(1, 1, 1, 1)))

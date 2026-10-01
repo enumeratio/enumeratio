@@ -1,4 +1,0 @@
-id	in	out
-the-first-20-terms	\mathrm{Take}(\mathrm{SmithNumbers}, 20)	\bigl\lbrack4, 22, 27, 58, 85, 94, 121, 166, 202, 265, 274, 319, 346, 355, 378, 382, 391, 438, 454, 483\bigr\rbrack
-4-is-a-smith-number	4\in\mathrm{SmithNumbers}	\mathrm{True}
-6-is-not-a-smith-number	6\in\mathrm{SmithNumbers}	\mathrm{False}

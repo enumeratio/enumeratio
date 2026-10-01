@@ -1,6 +1,0 @@
-id	in	out
-the-mcnugget-number	<FrobeniusNumber><List>6 9 20</List></FrobeniusNumber>	<ToExpression>43</ToExpression>
-frobeniusnumber-list-3-5	<FrobeniusNumber><List>3 5</List></FrobeniusNumber>	<ToExpression>7</ToExpression>
-frobeniusnumber-list-12-16-20-27	<FrobeniusNumber><List>12 16 20 27</List></FrobeniusNumber>	<ToExpression>89</ToExpression>
-two-generators-ab-a-b	<FrobeniusNumber><List>4 7</List></FrobeniusNumber>	<ToExpression>17</ToExpression>
-not-coprime-infinitely-many-numbers-are	<FrobeniusNumber><List>2 4</List></FrobeniusNumber>	<PositiveInfinity />

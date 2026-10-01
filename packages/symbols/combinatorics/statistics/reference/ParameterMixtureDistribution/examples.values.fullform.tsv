@@ -1,7 +1,0 @@
-id	in	out
-parameter-mixture-poisson-gamma-pdf	PDF(ParameterMixtureDistribution(PoissonDistribution(theta), Distributed(theta, GammaDistribution(3, 2))), 4)	Rational(80, 729)
-parameter-mixture-poisson-gamma-mean	Mean(ParameterMixtureDistribution(PoissonDistribution(theta), Distributed(theta, GammaDistribution(3, 2))))	6
-parameter-mixture-poisson-gamma-variance	Variance(ParameterMixtureDistribution(PoissonDistribution(theta), Distributed(theta, GammaDistribution(3, 2))))	18
-parameter-mixture-binomial-beta-mean	Mean(ParameterMixtureDistribution(BinomialDistribution(10, theta), Distributed(theta, BetaDistribution(2, 3))))	4
-parameter-mixture-binomial-beta-variance	Variance(ParameterMixtureDistribution(BinomialDistribution(10, theta), Distributed(theta, BetaDistribution(2, 3))))	6
-parameter-mixture-binomial-beta-pdf	PDF(ParameterMixtureDistribution(BinomialDistribution(4, theta), Distributed(theta, BetaDistribution(2, 2))), 2)	Rational(9, 35)

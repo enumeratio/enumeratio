@@ -1,3 +1,0 @@
-id	in	out
-match-a-literal-form	\mathrm{Switch}(2, 1, 1, 2, 2, 3, 3)	2
-fall-through-to-a-blank-default	\mathrm{Switch}(99, 1, 1, \operatorname{\_}, \mathrm{other})	\mathrm{other}

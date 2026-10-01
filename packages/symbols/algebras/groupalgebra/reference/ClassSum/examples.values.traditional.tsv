@@ -1,5 +1,0 @@
-id	in	out
-the-identity-s-class-is-a-singleton	\operatorname{ClassSum}(D_3,1)	\operatorname{GroupBasis}(\text{“0”})
-in-an-abelian-group-everything-is-central	\operatorname{IsCentral}(C_6,\operatorname{GroupBasis}(\operatorname{String}(3)))	\top
-class-sums-are-central	\operatorname{IsCentral}(D_3,\operatorname{ClassSum}(D_3,2))	\top
-a-lone-reflection-is-not	\operatorname{IsCentral}(D_3,\operatorname{GroupBasis}(\operatorname{String}(\operatorname{s0})))	\bot

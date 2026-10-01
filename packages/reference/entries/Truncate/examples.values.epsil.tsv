@@ -1,5 +1,0 @@
-id	in	out
-truncate-7-over-2	truncate(7 / 2)	3
-truncate-neg-7-over-2	truncate(-7 / 2)	-3
-truncate-neg-3p7	truncate(-3.7)	-3
-truncate-big-rational	truncate(15_511_210_043_330_985_983_999_999 / 24!)	24

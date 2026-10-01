@@ -1,6 +1,0 @@
-id	in	out
-standarddeviation-list-1-2-3-4	\operatorname{StandardDeviation}([1,2,3,4])	\frac{\sqrt{15}}{3}
-standarddeviation-n-list-1-2-3-4-30	\operatorname{StandardDeviation}(N([1,2,3,4],30))	\frac{\sqrt{15}}{3}
-n-standarddeviation-ts	N(\operatorname{StandardDeviation}(\operatorname{ts}))	\operatorname{StandardDeviation}(\operatorname{ts})
-standarddeviation-binomialdistribution-n-p	\operatorname{StandardDeviation}(\operatorname{BinomialDistribution}(n,p))	\sqrt{np(-p+1)}
-standarddeviation-probabilitydistribution-sqrt-2	\operatorname{StandardDeviation}(\operatorname{ProbabilityDistribution}(\sqrt{2}\frac{1}{\pi}\frac{1}{(x-2)^4+1},[x,-\infty,\infty]))	\operatorname{StandardDeviation}(\operatorname{ProbabilityDistribution}(\frac{\sqrt{2}}{\pi(x-2)^4+\pi},[x,-\infty,\infty]))

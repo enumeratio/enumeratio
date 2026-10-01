@@ -1,5 +1,0 @@
-id	in	out
-m-6	<AlgebraDimension><MotzkinAlgebra>3</MotzkinAlgebra></AlgebraDimension>	<ToExpression>51</ToExpression>
-algebradimension-rookalgebra-3	<AlgebraDimension><RookAlgebra>3</RookAlgebra></AlgebraDimension>	<ToExpression>34</ToExpression>
-5	<AlgebraDimension><SymmetricGroupAlgebra>5</SymmetricGroupAlgebra></AlgebraDimension>	<ToExpression>120</ToExpression>
-a-cup-cap-is-not-a-permutation	<Element><Diagram><List><List>1 2</List> <List>-1 -2</List> <List>3 -3</List></List></Diagram> <SymmetricGroupAlgebra>3</SymmetricGroupAlgebra></Element>	<False />

@@ -1,26 +1,26 @@
-id	section	role	expr	expected	known	source	caption	wolfram.kind	wolfram.note
-round-7-over-2			[Round, [Rational, 7, 2]]	4					
-round-3p5			[Round, 3.5]	4					
-round-3p7		test	[Round, 3.7]	4					
-integers-pass-through-unchanged			[Round, 5]	5			Integers pass through unchanged		
-a-second-argument-rounds-to-that-many-decimal			[Round, 3.14159, 2]	[Rational, 157, 50]			A second argument rounds to that many decimal places		
-threads-element-wise-over-a-list			[Round, [List, 1.5, -1.5, 2.4]]	[List, 2, -2, 2]			Threads element-wise over a list		
-round-2p4			[Round, 2.4]	2					
-round-2p6			[Round, 2.6]	3					
-round-5p37			[Round, 5.37]	5					
-round-neg-3p7			[Round, -3.7]	-4					
-idempotent-round-round-x-round-x		test	[Round, [Round, x]]	[Round, x]			Idempotent: $\mathrm{round}(\mathrm{round}(x)) = \mathrm{round}(x)$		
-stays-symbolic	Scope		[Round, x]	[Round, x]			Stays symbolic		
-to-the-nearest-ten	Scope		[Round, 226, -1]	230			To the nearest ten		Wolfram's second argument is the step itself: $\mathrm{Round}[226, 10] = 230$.
-an-exact-argument-rounds-to-an-exact-rational	Scope		[Round, [Sqrt, 2], 4]	[Rational, 7071, 5000]			An exact argument rounds to an exact rational		
-evaluates-at-an-exact-constant-round-pi-3	Scope		[Round, Pi]	3			Evaluates at an exact constant: $\mathrm{Round}(\pi) = 3$		
-100e-approx-271-83-rounds-to-272	Scope		[Round, [Multiply, 100, ExponentialE]]	272			$100e \approx 271.83$ rounds to 272		
-rounds-the-real-and-imaginary-parts-separately	Scope		[Round, [Complex, 5.37, -1.3]]	[Complex, 5, -1]			Rounds the real and imaginary parts separately		
-rounding-a-price-to-the-nearest-cent-19-995	Applications		[Round, 19.995, 2]	20			Rounding a price to the nearest cent: 19.995 rounds up to 20		
-a-negative-second-argument-rounds-to-the-nearest	Properties		[Equal, [Round, 1234, -2], 1200]	True			A negative second argument rounds to the nearest power of ten instead -- here, the nearest hundred		Wolfram reads the second argument as a step to round to a multiple of, so $\mathrm{Round}[1234, -2] = 1234$.
-rounding-to-0-decimal-places-matches-the-1	Properties		[Equal, [Round, 3.14159, 0], [Round, 3.14159]]	True			Rounding to 0 decimal places matches the 1-argument form		Wolfram treats the step literally, so $\mathrm{Round}[3.14159, 0]$ is $\mathrm{Indeterminate}$.
-rounds-half-away-from-zero-not-banker-s-rounding	Possible issues		[Round, 2.5]	3			Rounds half away from zero, not banker's rounding: 2.5 rounds to 3, not 2	rounding-mode	Wolfram uses round-half-to-even (banker's rounding), so $\mathrm{Round}[2.5] = 2$.
-and-by-the-same-convention-2-5-rounds-to-3-not-2	Possible issues		[Round, -2.5]	-3			...and by the same convention, -2.5 rounds to -3, not -2	rounding-mode	Wolfram's half-to-even gives $\mathrm{Round}[-2.5] = -2$.
-round-5-over-2-exact-rational-tie	Possible issues		[Round, [Rational, 5, 2]]	3			The same tie-breaking rule on an exact rational, not just a float: 5/2 rounds to 3	rounding-mode	Wolfram round-half-to-even gives Round[5/2] = 2.
-an-exact-half-rounds-away-from-zero-as-well	Possible issues		[Round, [Rational, 1, 2]]	1			An exact half rounds away from zero as well	rounding-mode	Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.
-round-complexinfinity-is-complexinfinity-the	Possible issues		[Round, ComplexInfinity]	ComplexInfinity	ComplexInfinity	Wolfram Round[ComplexInfinity]	Round(ComplexInfinity) is ComplexInfinity: rounding an infinite magnitude with no direction is still that magnitude, the same convention as Ceil and Floor		
+id	section	role	expr	expected	known	source	caption	epsil.in	fullform.in	wolfram.kind	wolfram.note
+round-7-over-2			[Round, [Rational, 7, 2]]	4							
+round-3p5			[Round, 3.5]	4							
+round-3p7		test	[Round, 3.7]	4							
+integers-pass-through-unchanged			[Round, 5]	5			Integers pass through unchanged				
+a-second-argument-rounds-to-that-many-decimal			[Round, 3.14159, 2]	[Rational, 157, 50]			A second argument rounds to that many decimal places				
+threads-element-wise-over-a-list			[Round, [List, 1.5, -1.5, 2.4]]	[List, 2, -2, 2]			Threads element-wise over a list				
+round-2p4			[Round, 2.4]	2							
+round-2p6			[Round, 2.6]	3							
+round-5p37			[Round, 5.37]	5							
+round-neg-3p7			[Round, -3.7]	-4							
+idempotent-round-round-x-round-x		test	[Round, [Round, x]]	[Round, x]			Idempotent: $\mathrm{round}(\mathrm{round}(x)) = \mathrm{round}(x)$				
+stays-symbolic	Scope		[Round, x]	[Round, x]			Stays symbolic				
+to-the-nearest-ten	Scope		[Round, 226, -1]	230			To the nearest ten				Wolfram's second argument is the step itself: $\mathrm{Round}[226, 10] = 230$.
+an-exact-argument-rounds-to-an-exact-rational	Scope		[Round, [Sqrt, 2], 4]	[Rational, 7071, 5000]			An exact argument rounds to an exact rational				
+evaluates-at-an-exact-constant-round-pi-3	Scope		[Round, Pi]	3			Evaluates at an exact constant: $\mathrm{Round}(\pi) = 3$				
+100e-approx-271-83-rounds-to-272	Scope		[Round, [Multiply, 100, ExponentialE]]	272			$100e \approx 271.83$ rounds to 272	round(100 * exponentialE)	Round(Multiply(100, ExponentialE))		
+rounds-the-real-and-imaginary-parts-separately	Scope		[Round, [Complex, 5.37, -1.3]]	[Complex, 5, -1]			Rounds the real and imaginary parts separately				
+rounding-a-price-to-the-nearest-cent-19-995	Applications		[Round, 19.995, 2]	20			Rounding a price to the nearest cent: 19.995 rounds up to 20				
+a-negative-second-argument-rounds-to-the-nearest	Properties		[Equal, [Round, 1234, -2], 1200]	True			A negative second argument rounds to the nearest power of ten instead -- here, the nearest hundred				Wolfram reads the second argument as a step to round to a multiple of, so $\mathrm{Round}[1234, -2] = 1234$.
+rounding-to-0-decimal-places-matches-the-1	Properties		[Equal, [Round, 3.14159, 0], [Round, 3.14159]]	True			Rounding to 0 decimal places matches the 1-argument form				Wolfram treats the step literally, so $\mathrm{Round}[3.14159, 0]$ is $\mathrm{Indeterminate}$.
+rounds-half-away-from-zero-not-banker-s-rounding	Possible issues		[Round, 2.5]	3			Rounds half away from zero, not banker's rounding: 2.5 rounds to 3, not 2			rounding-mode	Wolfram uses round-half-to-even (banker's rounding), so $\mathrm{Round}[2.5] = 2$.
+and-by-the-same-convention-2-5-rounds-to-3-not-2	Possible issues		[Round, -2.5]	-3			...and by the same convention, -2.5 rounds to -3, not -2			rounding-mode	Wolfram's half-to-even gives $\mathrm{Round}[-2.5] = -2$.
+round-5-over-2-exact-rational-tie	Possible issues		[Round, [Rational, 5, 2]]	3			The same tie-breaking rule on an exact rational, not just a float: 5/2 rounds to 3			rounding-mode	Wolfram round-half-to-even gives Round[5/2] = 2.
+an-exact-half-rounds-away-from-zero-as-well	Possible issues		[Round, [Rational, 1, 2]]	1			An exact half rounds away from zero as well			rounding-mode	Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.
+round-complexinfinity-is-complexinfinity-the	Possible issues		[Round, ComplexInfinity]	ComplexInfinity	ComplexInfinity	Wolfram Round[ComplexInfinity]	Round(ComplexInfinity) is ComplexInfinity: rounding an infinite magnitude with no direction is still that magnitude, the same convention as Ceil and Floor				

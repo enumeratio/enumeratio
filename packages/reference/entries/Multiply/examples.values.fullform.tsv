@@ -1,6 +1,0 @@
-id	in	out
-2-times-list-x-y-z	Multiply(2, List(x, y, z))	List(Multiply(2, x), Multiply(2, y), Multiply(2, z))
-list-list-a-b-list-c-d-times-list-x-y	Multiply(List(List(a, b), List(c, d)), List(x, y))	List(Add(Multiply(a, x), Multiply(b, y)), Add(Multiply(c, x), Multiply(d, y)))
-interval-neg-1-2-times-interval-2-3	Multiply(Interval(-1, 2), Interval(2, 3))	Interval(-3, 6)
-neg-noncommutativemultiply-b-a-plus		
-product-1-over-k-plus-2-times-k-plus-1-k-1-n	Product(Multiply(Divide(1, Add(k, 2)), Add(k, 1)), Limits(k, 1, n))	Divide(2, Add(n, 2))

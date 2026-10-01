@@ -1,6 +1,6 @@
-// Write every reference example's forms (forms.ts) into its head's record (the values files),
-// keeping what the kernels answered and what people wrote. Run after changing a printer, a
-// transpiler or an example:
+// Write each system's `in` for every reference example (forms.ts) into its head's record (the
+// values files), keeping what the kernels answered, what people wrote and our own forms' pins.
+// Run after changing a transpiler or an example:
 //
 //   UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts
 //
@@ -28,8 +28,12 @@ for (const h of heads) {
     h.entry.examples.map((e) => e.id),
     SYSTEMS.map((s) => s.name),
   );
-  // Order counts: a record another tool wrote in its own order is rewritten in this one.
-  if (JSON.stringify(next) === JSON.stringify(h.implementations ?? {})) continue;
+  const current = orderImplementations(
+    h.implementations ?? {},
+    h.entry.examples.map((e) => e.id),
+    SYSTEMS.map((s) => s.name),
+  );
+  if (JSON.stringify(next) === JSON.stringify(current)) continue;
   await updateHead(h.dir, h.head, { implementations: Object.keys(next).length === 0 ? undefined : next });
   written++;
 }

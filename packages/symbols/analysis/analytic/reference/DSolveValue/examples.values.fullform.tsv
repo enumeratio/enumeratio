@@ -1,6 +1,0 @@
-id	in	out
-harmonic-oscillator	DSolveValue(Equal(Add(Apply(Derivative(Y, 2), x), Y(x)), 0), Y(x), x)	Add(Multiply(Sin(x), C(2)), Multiply(Cos(x), C(1)))
-with-initial-conditions	DSolveValue(List(Equal(Add(Apply(Derivative(Y, 2), x), Y(x)), 0), Equal(Y(0), 1), Equal(Apply(Derivative(Y, 1), 0), 0)), Y(x), x)	Cos(x)
-distinct-real-roots	DSolveValue(Equal(Add(Apply(Derivative(Y, 2), x), Negate(Multiply(3, Apply(Derivative(Y, 1), x))), Multiply(2, Y(x))), 0), Y(x), x)	Add(Multiply(C(1), Power(ExponentialE, Multiply(2, x))), Multiply(C(2), Power(ExponentialE, x)))
-repeated-root	DSolveValue(Equal(Add(Apply(Derivative(Y, 2), x), Negate(Multiply(4, Apply(Derivative(Y, 1), x))), Multiply(4, Y(x))), 0), Y(x), x)	Multiply(Add(Multiply(x, C(2)), C(1)), Power(ExponentialE, Multiply(2, x)))
-resonance-sine-forcing	DSolveValue(Equal(Add(Apply(Derivative(Y, 2), x), Y(x)), Sin(x)), Y(x), x)	Add(Multiply(Rational(-1, 2), x, Cos(x)), Multiply(Sin(x), C(2)), Multiply(Cos(x), C(1)))

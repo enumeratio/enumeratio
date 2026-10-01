@@ -1,4 +1,0 @@
-id	in	out
-count-triangularpartitions-12	Count(TriangularPartitions(12))	10
-first-element-of-triangularpartitions-12	At(TriangularPartitions(12), 1)	IntegerPartition(List(10, 1, 1))
-every-element-of-triangularpartitions-12	Take(TriangularPartitions(12), 10)	List(IntegerPartition(List(10, 1, 1)), IntegerPartition(List(6, 6)), IntegerPartition(List(6, 3, 3)), IntegerPartition(List(6, 3, 1, 1, 1)), IntegerPartition(List(6, 1, 1, 1, 1, 1, 1)), IntegerPartition(List(3, 3, 3, 3)), IntegerPartition(List(3, 3, 3, 1, 1, 1)), IntegerPartition(List(3, 3, 1, 1, 1, 1, 1, 1)), IntegerPartition(List(3, 1, 1, 1, 1, 1, 1, 1, 1, 1)), IntegerPartition(List(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)))

@@ -1,9 +1,0 @@
-id	in	out
-2-cdot-6-12-equiv-1-pmod-11	\mathrm{RationalReconstruction}(6, 11)	\frac{1}{2}
-a-round-trip-through-z-1000003	\mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{22}{7}, 1, 1\,000\,003), 1\,000\,003)	\frac{22}{7}
-explicit-bounds-denominators-of-1-only	\mathrm{RationalReconstruction}(5, 11, 5, 1)	5
-rationalreconstruction-list-6-9-10-11	\mathrm{RationalReconstruction}(\bigl\lbrack6, 9, 10\bigr\rbrack, 11)	\bigl\lbrack\frac{1}{2}, -2, -1\bigr\rbrack
-the-harmonic-number-h-20-back-from-its-image-mod	\mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{55\,835\,135}{15\,519\,504}, 1, 2^{61}-1), 2^{61}-1)	\frac{55\,835\,135}{15\,519\,504}
-one-word-size-prime-is-not-enough-for-h-20-2nd-m	\mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{55\,835\,135}{15\,519\,504}, 1, 1\,000\,000\,007), 1\,000\,000\,007)	\mathrm{RationalReconstruction}(301\,316\,272, 1\,000\,000\,007)
-multi-modular-arithmetic-glue-two-images-with	\mathrm{RationalReconstruction}(\mathrm{ChineseRemainder}(\bigl\lbrack\mathrm{PowerMod}(55\,835\,135/15\,519\,504, 1, 1\,000\,000\,007), \mathrm{PowerMod}(55\,835\,135/15\,519\,504, 1, 1\,000\,000\,009)\bigr\rbrack, \bigl\lbrack1\,000\,000\,007, 1\,000\,000\,009\bigr\rbrack), 1\,000\,000\,007\times1\,000\,000\,009)	\frac{55\,835\,135}{15\,519\,504}
-mod-11-the-bounds-are-n-d-le-2-and-no-such	\mathrm{RationalReconstruction}(3, 11)	\mathrm{RationalReconstruction}(3, 11)

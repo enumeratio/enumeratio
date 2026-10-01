@@ -1,5 +1,0 @@
-id	in	out
-m-6	\dim(M_3)	51
-algebradimension-rookalgebra-3	\dim(R_3)	34
-5	\dim(k[S_5])	120
-a-cup-cap-is-not-a-permutation	\operatorname{Diagram}([[1,2],[-1,-2],[3,-3]])\in k[S_3]	\bot

@@ -1,5 +1,0 @@
-id	in	out
-laplace-pdf-exact	\operatorname{PDF}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}), 0)	1
-laplace-cdf-exact	\operatorname{CDF}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}), 0)	\frac{1}{2}
-laplace-mean-exact	\mathrm{mean}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}))	0
-laplace-variance-exact	\mathrm{Variance}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}))	\frac{1}{2}

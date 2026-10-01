@@ -1,6 +1,0 @@
-id	in	out
-csgn-1-1	\operatorname{Csgn}(1)	1
-csgn-neg-3-neg-1	\operatorname{Csgn}(-3)	-1
-csgn-0-0	\operatorname{Csgn}(0)	0
-csgn-i-1	N(\operatorname{Csgn}(i))	1
-csgn-neg-i-neg-1	N(\operatorname{Csgn}(-i))	-1

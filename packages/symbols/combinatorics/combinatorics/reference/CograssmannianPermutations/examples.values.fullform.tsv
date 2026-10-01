@@ -1,3 +1,0 @@
-id	in	out
-count-cograssmannianpermutations-5-2-5-5-27	Count(CograssmannianPermutations(5))	27
-every-element-of-cograssmannianpermutations-4	Take(CograssmannianPermutations(4), 12)	List(Permutation(List(4, 3, 2, 1)), Permutation(List(3, 4, 2, 1)), Permutation(List(2, 4, 3, 1)), Permutation(List(1, 4, 3, 2)), Permutation(List(4, 2, 3, 1)), Permutation(List(3, 2, 4, 1)), Permutation(List(4, 1, 3, 2)), Permutation(List(3, 1, 4, 2)), Permutation(List(2, 1, 4, 3)), Permutation(List(4, 3, 1, 2)), Permutation(List(4, 2, 1, 3)), Permutation(List(3, 2, 1, 4)))

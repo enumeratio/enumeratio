@@ -1,5 +1,0 @@
-id	in	out
-a-downward-parabola-s-maximum-value	<MaxValue><Add><Negate><Power>x 2</Power></Negate> <Multiply>4 x</Multiply> -1</Add> x</MaxValue>	<ToExpression>3</ToExpression>
-maxvalue-neg-2-times-x-pow-2-minus-3x-plus-5-x	<MaxValue><Add><Multiply>-2 <Power>x 2</Power></Multiply> <Multiply>-1 <Multiply>3 x</Multiply></Multiply> 5</Add> x</MaxValue>	<Rational>49 8</Rational>
-the-amplitude-of-sine-alone-is-exact	<MaxValue><Sin>x</Sin> x</MaxValue>	<ToExpression>1</ToExpression>
-an-unbounded-cubic	<MaxValue><Power>x 3</Power> x</MaxValue>	<PositiveInfinity />

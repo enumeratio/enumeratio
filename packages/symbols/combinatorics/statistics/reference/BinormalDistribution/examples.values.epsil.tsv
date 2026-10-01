@@ -1,5 +1,0 @@
-id	in	out
-binormal-pdf-rho-only-form	pdf(BinormalDistribution(1 / 2), [0, 0])	sqrt(3) / (3Pi)
-binormal-mean-is-the-mean-vector	mean(BinormalDistribution([1, 2], [1, 1], 1 / 2))	[1, 2]
-binormal-variance-is-the-covariance-matrix	variance(BinormalDistribution(1 / 2))	[[1, 1 / 2], [1 / 2, 1]]
-binormal-cdf-has-no-closed-form	cdf(BinormalDistribution(1 / 2), [0, 0])	cdf(BinormalDistribution(1 / 2), [0, 0])

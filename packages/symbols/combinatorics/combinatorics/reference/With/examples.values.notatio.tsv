@@ -1,3 +1,0 @@
-id	in	out
-substitute-a-fixed-value	<With><List><Equal>x 3</Equal></List> <Multiply>x x</Multiply></With>	<ToExpression>9</ToExpression>
-several-bindings-at-once	<With><List><Equal>x 2</Equal> <Equal>y 5</Equal></List> <Add>x y</Add></With>	<ToExpression>7</ToExpression>

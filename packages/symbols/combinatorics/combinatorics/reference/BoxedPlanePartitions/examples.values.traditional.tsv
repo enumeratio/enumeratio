@@ -1,4 +1,0 @@
-id	in	out
-count-boxedplanepartitions-2-2-2-20-macmahon-s	\operatorname{Count}(\operatorname{BoxedPlanePartitions}(2,2,2))	20
-every-element-of-boxedplanepartitions-2-2-2	\operatorname{Take}(\operatorname{BoxedPlanePartitions}(2,2,2),20)	[[],[[1]],[[2]],[[1],[1]],[[2],[1]],[[2],[2]],[[1,1]],[[2,1]],[[2,2]],[[1,1],[1]],[[2,1],[1]],[[2,1],[2]],[[2,2],[1]],[[2,2],[2]],[[1,1],[1,1]],[[2,1],[1,1]],[[2,1],[2,1]],[[2,2],[1,1]],[[2,2],[2,1]],[[2,2],[2,2]]]
-a-degenerate-1-times-1-times-n-box-count-n-1	\operatorname{Count}(\operatorname{BoxedPlanePartitions}(1,1,4))	5

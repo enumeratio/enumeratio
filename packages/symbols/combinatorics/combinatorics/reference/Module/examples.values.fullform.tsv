@@ -1,3 +1,0 @@
-id	in	out
-a-local-counter	Module(List(Equal(i, 0)), Assign(i, Add(i, 1)))	1
-locals-do-not-leak-or-clobber	List(Module(List(Equal(n, 10)), Add(n, 1)), Module(List(Equal(n, 20)), Add(n, 1)))	List(11, 21)

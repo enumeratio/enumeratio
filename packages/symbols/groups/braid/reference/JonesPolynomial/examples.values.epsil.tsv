@@ -1,6 +1,0 @@
-id	in	out
-the-right-handed-trefoil	JonesPolynomial(Braid(2, [1, 1, 1]))	-t ^ -4 + 1 / t + t ^ -3
-the-shortest-knotted-modular-geodesic-by-yet	JonesPolynomial("LLRLR")	-t ^ -4 + 1 / t + t ^ -3
-the-figure-eight-through-the-braid-it-carries-as	JonesPolynomial(FigureEightKnot())	t ^ 2 - t + -1 / t + t ^ -2 + 1
-not-yet-an-invariant	KauffmanBracket(Braid(2, [1]))	-A ^ 3
-and-the-writhe-correction-fixes-it	BracketInvariant(Braid(2, [1]))	1

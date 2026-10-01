@@ -1,4 +1,0 @@
-id	in	out
-count-lyndonwords-5	\mathrm{Count}(\mathrm{LyndonWords}(5))	6
-first-element-of-lyndonwords-5	\mathrm{LyndonWords}(5)[1]	\bigl\lbrack0, 0, 0, 0, 1\bigr\rbrack
-every-element-of-lyndonwords-5	\mathrm{Take}(\mathrm{LyndonWords}(5), 6)	\bigl\lbrack\bigl\lbrack0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack

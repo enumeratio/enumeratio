@@ -5,7 +5,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareEvaluation } from "@enumeratio/evaluation/src";
-import { readMarkupText } from "@enumeratio/formats/markup";
+import { markupOf, readMarkupText } from "@enumeratio/formats/markup";
 import { createRegistryResolver, manifestRegistry, namespaceOf } from "@enumeratio/manifest";
 import { expect, test } from "vite-plus/test";
 import { declaredEngine, LIBRARIES } from "../scripts/engines.ts";
@@ -38,8 +38,9 @@ test("an example's markup evaluates, through the registry, as the example does",
   for (const h of loadReferenceData(PACKAGES).heads) {
     if (!SAMPLE.has(h.head)) continue;
     for (const example of h.entry.examples) {
-      const markup = h.implementations?.[example.id]?.["notatio"]?.in;
-      if (markup === undefined) continue;
+      // A row in triage isn't on the page, so it has no markup there.
+      if (example.role === "triage") continue;
+      const markup = markupOf(example.expr as never, { width: Infinity });
       const { json, errors } = readMarkupText(markup);
       expect(errors).toEqual([]);
       const expected = value(full, example.expr);

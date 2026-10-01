@@ -1,4 +1,0 @@
-id	in	out
-ijk-1	NonCommutativeMultiply(f_1, f_2, Multiply(f_1, f_2))	-1
-k-in-h	Element(Multiply(f_1, f_2), Quaternions)	True
-a-multicomplex-unit-is-not-a-quaternion	Element(i_1, Quaternions)	False

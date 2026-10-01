@@ -1,3 +1,4 @@
+import { OWN_FORMS as OWN_FORM_NAMES } from "@enumeratio/entry";
 import { DIVERGENCE_KINDS, emit } from "@enumeratio/oracle/src";
 import { expect, test } from "vite-plus/test";
 import { referenceData, referenceEntries } from "../src/node.ts";
@@ -8,7 +9,7 @@ import { referenceData, referenceEntries } from "../src/node.ts";
 // and a Wolfram row's `in` is what we'd still emit today.
 
 const data = referenceData();
-const OWN_FORMS = new Set(["epsil", "tex", "traditional", "fullform", "notatio"]);
+const OWN_FORMS = new Set<string>(OWN_FORM_NAMES);
 const entries = referenceEntries(data);
 // The record the site shows for each head: the one beside the entry it chose.
 const records = data.heads.filter((h) => h.implementations && data.packageOf.get(h.head) === h.package);

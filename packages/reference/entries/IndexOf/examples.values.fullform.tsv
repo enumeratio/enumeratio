@@ -1,8 +1,0 @@
-id	in	out
-indexof-list-1-2-3-2	IndexOf(List(1, 2, 3), 2)	2
-0-signals-that-the-value-isn-t-present-since-0	IndexOf(List(1, 2, 3), 9)	0
-only-the-first-of-several-occurrences-is	IndexOf(List(a, b, a, a, b, c, b), b)	2
-the-value-can-itself-be-a-list	IndexOf(List(List(1, 2), List(3, 4)), List(3, 4))	2
-at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at	Equal(At(List(10, 20, 30), IndexOf(List(10, 20, 30), 20)), 20)	True
-indexof-reports-only-the-first-occurrence-see	IndexOf(List(1, 2, 3, 2), 2)	2
-indexof-stays-at-the-top-level-where-this-value	IndexOf(List(List(a, a, b), List(b, a, a), List(a, b, a)), b)	0
