@@ -1,0 +1,23 @@
+/* What the build rendered for an element (components/NotatioPrerendered.vue) shows until the
+   element has rendered itself (`data-rendered`); until then the element's own rows don't. */
+.notatio-prerendered {
+  display: contents;
+}
+:is(notatio-cell, notatio-plot)[data-rendered] > .notatio-prerendered {
+  display: none;
+}
+:is(notatio-cell, notatio-plot):not([data-rendered]):has(> .notatio-prerendered:not(:empty))
+  > :not(.notatio-prerendered, [slot]) {
+  display: none;
+}
+.notatio-preview {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 0.75rem;
+  align-items: baseline;
+  margin: 0.25rem 0;
+}
+.notatio-preview-label {
+  color: var(--vp-c-text-3);
+  font-size: 0.8em;
+}

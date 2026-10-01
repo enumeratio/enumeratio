@@ -289,6 +289,17 @@ export class NotatioCell extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
+    // The build's answer, when it rendered this cell into the page (the site's
+    // NotatioPrerendered): shown until the cell renders, then the cell's own.
+    const answer = this.querySelector(":scope > .notatio-prerendered > script.notatio-answer");
+    if (answer?.textContent && this.prerendered === undefined) {
+      try {
+        this.prerendered = JSON.parse(answer.textContent) as Prerendered;
+      } catch {
+        // not one this cell can read: it asks its kernel
+      }
+    }
+    this.addEventListener("notatio-assert", this.#onRendered);
     // Light DOM has no native slotting; grab the aside children once, before the
     // first render would otherwise clear them along with the rest of our content.
     if (this.#aside.length === 0) {
@@ -297,7 +308,14 @@ export class NotatioCell extends LitElement {
     }
   }
 
+  // The Out has rendered: what the build wrote for this cell gives way (`data-rendered`).
+  #onRendered = (event: Event): void => {
+    if (((event.target as { value?: string }).value ?? "") === "") return;
+    this.toggleAttribute("data-rendered", true);
+  };
+
   override disconnectedCallback(): void {
+    this.removeEventListener("notatio-assert", this.#onRendered);
     clearTimeout(this.#hintTimer);
     globalThis.document?.removeEventListener("pointerdown", this.#onDocPointerDown);
     super.disconnectedCallback();
@@ -366,7 +384,12 @@ export class NotatioCell extends LitElement {
       return;
     }
     try {
-      const json = await parseSyntax(format, this.value);
+      // An answer from the build carries the input as read, too.
+      const known = this.prerendered;
+      const json =
+        known !== undefined && known.input.text === this.value && known.input.format === format
+          ? known.json
+          : await parseSyntax(format, this.value);
       if (token !== this.#token) return;
       this._json = json;
       // An answer from the build carries the input's TeX too, so the In row needs no kernel.

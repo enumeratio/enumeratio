@@ -9,6 +9,8 @@ import { notationEntriesPlugin } from "./notation-entries.ts";
 import { docRoute, docsSidebar, workspacePackages } from "./data/repo-docs.ts";
 import { loaderWatchPlugin } from "./loader-watch.ts";
 import { fillPrerendered } from "./data/prerender.ts";
+import { fillMarkup } from "./data/prerender-markup.ts";
+import { chunksIn, pageTags, preloads, prerenderMarkup } from "./prerender-markup.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
@@ -136,20 +138,38 @@ const config = defineConfig({
   transformPageData(pageData: { params?: { name?: string }; title?: string }) {
     if (pageData.params?.name) pageData.title = pageData.params.name;
   },
-  // A reference page's examples, typeset at build (data/prerender.ts), into its placeholders.
-  transformHtml(code: string, _id: string, ctx: { pageData: { relativePath: string; params?: { name?: string } } }) {
+  // A reference page's examples, and any page's own cells and plots, rendered at build
+  // (data/prerender.ts, data/prerender-markup.ts) into their placeholders.
+  async transformHtml(
+    code: string,
+    _id: string,
+    ctx: { pageData: { relativePath: string; params?: { name?: string } } },
+  ) {
     const name = ctx.pageData.params?.name;
-    return name !== undefined && ctx.pageData.relativePath.startsWith("reference/symbol/")
-      ? fillPrerendered(code, name)
-      : code;
+    const page =
+      name !== undefined && ctx.pageData.relativePath.startsWith("reference/symbol/")
+        ? fillPrerendered(code, name)
+        : code;
+    return fillMarkup(page, ctx.pageData.relativePath);
   },
-  // `$latex$` / `$$latex$$` render through <notatio-out format="latex">, the same MathLive path the
-  // reference pages use — one renderer for the whole site, and no second math library.
+  // The chunks a page's cells and plots load (lazy.ts loads them at idle), fetched with the page.
+  // The client bundle is written before any page renders, so its chunks are on disk.
+  transformHead(ctx: { siteConfig: { outDir: string }; pageData: { relativePath: string } }) {
+    const tags = pageTags(ctx.pageData.relativePath);
+    if (tags.size === 0) return [];
+    return chunksIn(ctx.siteConfig.outDir)
+      .filter((asset) => preloads(asset, tags))
+      .map((href) => ["link", { rel: "modulepreload", href }] as [string, Record<string, string>]);
+  },
+
+  // `$latex$` / `$$latex$$` typeset by KaTeX at build (notatio-math.ts), as cells are at runtime;
+  // cells and plots marked for the build to render (prerender-markup.ts).
   markdown: {
     config: (md) => {
       notatioMath(md);
       notatioMarkup(md);
       notatioSymbols(md);
+      prerenderMarkup(md);
     },
   },
   vue: {

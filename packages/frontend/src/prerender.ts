@@ -15,6 +15,8 @@ export interface CellInput {
 
 export interface Prerendered {
   readonly input: CellInput;
+  /** The input as read (MathJSON): a cell needs no kernel to read it. */
+  readonly json: unknown;
   /** The input's TeX, as written (not canonical): what the In row typesets. */
   readonly inputLatex: string;
   /** The answer, as MathJSON. */
@@ -53,6 +55,7 @@ export function prerender(
   const latex = standard === undefined ? "" : toLatex(standard);
   return {
     input,
+    json,
     inputLatex,
     value,
     display: shown,
