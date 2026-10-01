@@ -6,6 +6,7 @@ import { evaluateAboutFields } from "../compute-engine/library/core.ts";
 // a list, `lazy` among them.
 export const aboutFields: Patch = {
   id: "about-fields",
+  issue: "https://github.com/cortex-js/compute-engine/issues/398",
   lands: "About reports a definition's examples and keywords, its attributes as a list, lazy among them",
   files: ["src/compute-engine/library/core.ts"],
   heads: ["About"],

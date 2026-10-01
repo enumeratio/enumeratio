@@ -7,6 +7,7 @@ import { evaluateRealImaginaryOfDirectedInfinity } from "../compute-engine/libra
 // Re(I*Infinity) = 0.
 export const directedInfinityParts: Patch = {
   id: "directed-infinity-parts",
+  issue: "https://github.com/cortex-js/compute-engine/issues/396",
   lands: "Re and Im of DirectedInfinity(d) are the infinity of the part's sign, or 0; Abs is +Infinity",
   files: ["src/compute-engine/library/arithmetic.ts"],
   heads: ["Real", "Imaginary", "Abs"],
