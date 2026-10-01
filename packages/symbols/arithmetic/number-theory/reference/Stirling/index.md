@@ -34,31 +34,31 @@ bindings:
     template: StirlingS2[$1, $2]
     arity: 2
     threadArg: 1
-    note: compute-engine's Stirling is the SECOND kind; see https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+    note: compute-engine's Stirling is the SECOND kind (Wolfram's StirlingS2). Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
   - origin: mapped
     form: sympy
     template: stirling($1, $2)
     arity: 2
     threadArg: 1
-    note: compute-engine's Stirling is the SECOND kind; see https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+    note: compute-engine's Stirling is the SECOND kind (Wolfram's StirlingS2). Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
   - origin: mapped
     form: sage
     template: stirling_number2($1, $2)
     arity: 2
     threadArg: 1
-    note: compute-engine's Stirling is the SECOND kind; see https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+    note: compute-engine's Stirling is the SECOND kind (Wolfram's StirlingS2). Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
   - origin: mapped
     form: julia
     template: Combinatorics.stirlings2(big($1), $2)
     arity: 2
     threadArg: 1
-    note: compute-engine's Stirling is the SECOND kind; see https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+    note: compute-engine's Stirling is the SECOND kind (Wolfram's StirlingS2). Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
   - origin: mapped
     form: mathlib4
     template: (Nat.stirlingSecond $1 $2)
     arity: 2
     threadArg: 1
-    note: compute-engine's Stirling is the SECOND kind; see https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.5. Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
+    note: compute-engine's Stirling is the SECOND kind (Wolfram's StirlingS2). Combinatorics.jl's stirlings2 needs n as a BigInt past its Int64 lookup table (n > 20).
 catalog:
   - system: wolfram
     identity: StirlingS2

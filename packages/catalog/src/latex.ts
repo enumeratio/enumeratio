@@ -1,7 +1,6 @@
 // The `ƒ` spelling. This CANNOT be contributed by `declareCatalog` — compute-engine takes
 // its LaTeX dictionary as a CONSTRUCTOR option that REPLACES the default, so notation has
-// to be assembled by whoever calls `new ComputeEngine`. See https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.7;
-// this is the first place where that gap costs ergonomics rather than cosmetics.
+// to be assembled by whoever calls `new ComputeEngine`; this is the first place where that gap costs ergonomics rather than cosmetics.
 //
 //   import { LatexSyntax, ComputeEngine } from "@cortex-js/compute-engine";
 //   const ce = new ComputeEngine({

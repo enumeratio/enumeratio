@@ -4,8 +4,8 @@ import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { afterAll, expect, test } from "vite-plus/test";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
 
-// Conventional spellings for native compute-engine heads (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8,
-// old-repo issue #376): `LCM`/`MatrixRank`/`Erf` under `\operatorname{...}`, `Zeta` under
+// Conventional spellings for native compute-engine heads
+// (old-repo issue #376): `LCM`/`MatrixRank`/`Erf` under `\operatorname{...}`, `Zeta` under
 // `\zeta` not `\Zeta`. Golden JSON compared with `toEqual` (AGENTS.md); regenerate
 // with `UPDATE_LATEX=1 vp test`.
 
@@ -58,7 +58,7 @@ for (const { json, parses } of FIXED) {
 }
 
 test("Lcm/Gcd naming: the native heads are all-caps (LCM/GCD), not TitleCase", () => {
-  // See packages/symbols/combinatorics/statistics/src/permutation.ts and https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.5 — the
+  // See packages/symbols/combinatorics/statistics/src/permutation.ts — the
   // naming incoherence this old-repo issue's "Lcm"/"Gcd" spelling predates.
   expect(!!bare.box(["LCM", 4, 6]).operatorDefinition).toBe(true);
   expect(!!bare.box(["Lcm", 4, 6]).operatorDefinition).toBe(false);

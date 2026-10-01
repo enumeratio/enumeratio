@@ -19,7 +19,7 @@
 // display — which is the honest division rather than a compromise.
 //
 // These entries cannot be contributed by `declareCarriers`: compute-engine takes its LaTeX
-// dictionary as a CONSTRUCTOR option that REPLACES the default (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.7).
+// dictionary as a CONSTRUCTOR option that REPLACES the default.
 // A caller merges them:
 //
 //   new ComputeEngine({ latexSyntax: new LatexSyntax({

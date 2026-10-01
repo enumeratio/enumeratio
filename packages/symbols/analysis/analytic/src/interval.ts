@@ -33,7 +33,7 @@ import type { Resolver } from "./tagged-arithmetic.ts";
 // compute-engine ships a floating-point interval kernel (`@cortex-js/compute-engine/interval`)
 // that looks like it would serve for Γ, but it is not rigorous there: its `gamma` misses the
 // true value by a few ulps (Γ(2.5) falls below its lower bound), and its `gammaln` returns
-// `lo > hi` on (0, 1.4616…). Both are recorded in https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8; Γ's shape is known,
+// `lo > hi` on (0, 1.4616…). Γ's shape is known,
 // so route 2 covers it without the kernel.
 
 // `Subtract(a, b)` is not handled directly: compute-engine canonicalizes it to

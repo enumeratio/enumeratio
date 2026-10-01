@@ -1,5 +1,5 @@
 // Conventional LaTeX for native compute-engine heads that write or read it wrong
-// (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8): `Zeta` and `Beta` serialise as `\Zeta`/`\Beta` (not LaTeX
+//: `Zeta` and `Beta` serialise as `\Zeta`/`\Beta` (not LaTeX
 // commands), `LCM` as `\lcm`; `\operatorname{lcm|rank|erf}` don't parse back to
 // `LCM`/`MatrixRank`/`Erf`. A fraction's sign goes in front of it, and every logarithm but
 // the natural one names its base.
