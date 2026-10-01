@@ -1,5 +1,5 @@
-// src/maps-laws.generated.ts is current with every map's own record.
-// Regenerate with `vp node packages/symbols/combinatorics/combinatorics/scripts/generate-map-laws.ts`.
+// src/maps-laws.generated.ts (written at build) matches every map's own record.
+// Rerun with `vp node packages/symbols/combinatorics/combinatorics/scripts/generate-map-laws.ts`.
 
 import { expect, test } from "vite-plus/test";
 import { mapLaws } from "../scripts/generate-map-laws.ts";

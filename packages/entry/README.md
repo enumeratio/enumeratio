@@ -20,7 +20,7 @@ mean on an example.
   YAML (component stories).
 - **`./schema` (`src/schema.ts`)** — the JSON Schemas the records validate against
   (`REFERENCE_ENTRY_SCHEMA`, `REFERENCE_EXAMPLES_SCHEMA`, `HEAD_IMPLEMENTATIONS_SCHEMA`,
-  `COMPONENT_STORIES_SCHEMA`), committed under `schema/*.schema.json`.
+  `COMPONENT_STORIES_SCHEMA`), written by `build` into the uncommitted `schema/*.schema.json`.
 - **`./node` (`src/node.ts`)** — the fs reader/writer every tool goes through:
   `readHead`/`writeHead`/`updateHead`/`removeHead`, `readEntries`/`writeEntries`,
   `headNames`/`headExists`/`isWrittenHead`, component `.stories.yaml`. Node-only, so it never
@@ -37,12 +37,9 @@ empty string) is JSON-encoded (`src/tsv.ts`).
 
 ```sh
 vp check                                       # format, lint, type check
-vp test                                        # tests/*.test.ts, incl. schema drift
-node packages/entry/scripts/generate-schema.ts # regenerate schema/*.schema.json after a type change
+vp test                                        # tests/*.test.ts
+pnpm --filter @enumeratio/entry build          # write schema/*.schema.json
 ```
-
-`tests/schema.test.ts` fails if a committed schema file drifts from `src/schema.ts` — run
-the generator to bring it back in sync.
 
 ## Next
 

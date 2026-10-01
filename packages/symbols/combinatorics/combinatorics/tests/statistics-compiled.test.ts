@@ -1,6 +1,4 @@
-// The statistics compiled ahead of time from their Epsil (src/compiled.generated.js):
-//   - the generated module is current: every definition that compiles has an entry, with the
-//     hash of the Epsil it came from, and nothing else does;
+// The statistics compiled at build from their Epsil (each area's statistics.compiled.generated.js):
 //   - compiled answers equal the interpreter's, exactly, over small subjects of every carrier;
 //   - under DEEP_TESTS, compiled answers equal the hand-written kernels' over subjects spanning
 //     orders of magnitude in size, and the timings are reported — the gap is what the compiler
@@ -11,52 +9,31 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCombinatorics } from "@enumeratio/combinatorics/src";
 import { operationOf } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { compiledDefinitionsFor } from "../src/statistics/generate-compiled.ts";
 import { ALL_STATISTICS } from "../src/statistics/all.ts";
 import { compiledStatistic } from "../src/statistics/compiled.ts";
 import { interpretDefinition } from "../src/statistics/declare.ts";
 import { signatureOf } from "../src/statistics/types.ts";
 import { COMPILED as PERMUTATIONS_COMPILED } from "../permutations/src/statistics.compiled.generated.js";
-import { PERMUTATION_STATISTICS } from "../permutations/src/statistics.ts";
 import { COMPILED as PARTITIONS_COMPILED } from "../partitions/src/statistics.compiled.generated.js";
-import { PARTITION_STATISTICS } from "../partitions/src/statistics.ts";
 import { COMPILED as LATTICE_PATHS_COMPILED } from "../lattice-paths/src/statistics.compiled.generated.js";
-import { DYCK_STATISTICS } from "../lattice-paths/src/statistics.ts";
 import { COMPILED as SET_PARTITIONS_COMPILED } from "../set-partitions/src/statistics.compiled.generated.js";
-import { SET_PARTITION_STATISTICS } from "../set-partitions/src/statistics.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const ce = new ComputeEngine();
 const list = (values: readonly unknown[]): unknown => ["List", ...values];
 
-/** One generator per area (step 6b): each area's own `scripts/compile-definitions.ts`
- *  writes its own `statistics.compiled.generated.js` — the drift check moves with it, one
- *  per area, rather than one combined check over `../scripts/compile-definitions.ts` (gone). */
+/** Each area's own `scripts/compile-definitions.ts` (run by `build`) writes its own table. */
 const AREAS = [
-  {
-    name: "permutations",
-    definitions: PERMUTATION_STATISTICS,
-    shape: "list<integer>",
-    compiled: PERMUTATIONS_COMPILED,
-  },
-  { name: "partitions", definitions: PARTITION_STATISTICS, shape: "list<integer>", compiled: PARTITIONS_COMPILED },
-  { name: "lattice-paths", definitions: DYCK_STATISTICS, shape: "list<integer>", compiled: LATTICE_PATHS_COMPILED },
-  {
-    name: "set-partitions",
-    definitions: SET_PARTITION_STATISTICS,
-    shape: "list<list<integer>>",
-    compiled: SET_PARTITIONS_COMPILED,
-  },
+  { name: "permutations", compiled: PERMUTATIONS_COMPILED },
+  { name: "partitions", compiled: PARTITIONS_COMPILED },
+  { name: "lattice-paths", compiled: LATTICE_PATHS_COMPILED },
+  { name: "set-partitions", compiled: SET_PARTITIONS_COMPILED },
 ] as const;
 
 for (const area of AREAS) {
-  test(`${area.name}: the compiled module is current (rerun its scripts/compile-definitions.ts)`, () => {
-    const current = Object.fromEntries(
-      compiledDefinitionsFor(area.definitions, area.shape).map((e) => [e.signature, e.hash]),
-    );
-    const generated = Object.fromEntries(Object.entries(area.compiled).map(([signature, e]) => [signature, e.hash]));
-    expect(generated).toEqual(current);
-  }, 60_000);
+  test(`${area.name}: the build compiled definitions`, () => {
+    expect(Object.keys(area.compiled).length).toBeGreaterThan(0);
+  });
 }
 
 /** Every signature ANY area's compiled table has an entry for. */

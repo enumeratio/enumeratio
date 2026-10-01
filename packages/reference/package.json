@@ -10,6 +10,7 @@
     "./node": "./src/node.ts"
   },
   "scripts": {
+    "build": "node scripts/collect-catalog-references.ts && node scripts/collect-curated.ts && node scripts/oracle-scan.ts --digest",
     "test": "vp test",
     "check": "vp check",
     "crosswalk:collect": "node scripts/collect-crosswalk.ts",
@@ -54,5 +55,9 @@
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
-  }
+  },
+  "generated": [
+    "src/crosswalk/catalog-references-data.ts",
+    "src/crosswalk/curated-data.ts"
+  ]
 }

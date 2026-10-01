@@ -17,7 +17,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack",
+    "build": "node ../reference/scripts/collect-catalog-records.ts && vp pack",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -37,5 +37,8 @@
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.141.0"
-  }
+  },
+  "generated": [
+    "src/catalog-records-data.ts"
+  ]
 }

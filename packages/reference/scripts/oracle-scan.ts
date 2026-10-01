@@ -75,7 +75,7 @@ const idFilter = idsIndex >= 0 ? new Set((args[idsIndex + 1] ?? "").split(",")) 
 const requested = args.filter(
   (argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head" && args[index - 1] !== "--ids",
 );
-// `--digest` scans nothing: it rebuilds `disagreements.md` from the committed records.
+// `--digest` scans nothing: it rebuilds `disagreements.md` from the records (`build` runs it).
 const digestOnly = args.includes("--digest");
 // `--new-only` skips a case (per system) that already has a committed answer for it — a fast
 // pass over the gaps a `--head`/`--ids` run just widened, without re-asking a kernel about
@@ -391,11 +391,10 @@ if (changedVerdicts.length > 0) {
   for (const line of changedVerdicts) process.stderr.write(`  ${line}\n`);
 }
 
-// A readable digest of the disagreements, COMMITTED — the records are regenerated per
+// A readable digest of the disagreements, uncommitted (`build` writes it) — the records are regenerated per
 // kernel version and are not worth diffing wholesale, but the disagreements are exactly the
 // thing to review and to watch move over time. Built from every record rather than this
-// run, so it covers every system scanned so far and a rescan that changes nothing leaves it
-// identical — which is what lets the nightly lanes fail on drift.
+// run, so it covers every system scanned so far.
 const exampleAt = new Map(
   referenceEntries(data).flatMap((entry) =>
     entry.examples

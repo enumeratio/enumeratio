@@ -1,1 +1,6 @@
 .data/
+# Written by `build` (scripts/generate.ts); never committed. Cargo.lock is cargo's own output.
+/generated/*
+!/generated/rust/
+/generated/rust/*
+!/generated/rust/Cargo.lock

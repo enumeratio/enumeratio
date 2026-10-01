@@ -11,8 +11,8 @@ Cross-system benchmarks; the design is `https://github.com/enumeratio/enumeratio
   `<<name>>{json}` out; Wolfram over TCP, since wolframscript's kernel can't read stdin). The
   coordinator feeds cases round-robin across systems, applies the correctness gate, and
   summarises every system's samples with the same statistics.
-- `generated/<system>/`: each system's harness, generated from the catalogue and committed
-  (`node packages/bench/scripts/generate.ts`; a test fails when it's stale).
+- `generated/<system>/`: each system's harness, generated from the catalogue by `build` (not committed, except rust's `Cargo.lock`)
+  (`node packages/bench/scripts/generate.ts`).
 
 ```sh
 node packages/bench/scripts/bench.ts --only Factorial --systems ts,julia --out .scratch/bench

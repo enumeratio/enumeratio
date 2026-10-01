@@ -1,5 +1,6 @@
 // The site resolves workspace packages through their built `dist/`. Before `dev`, build any package whose
-// dist entry is missing (with its dependencies), so a fresh or cleaned checkout starts. Stale dists are not detected.
+// dist entry or generated file (a package.json `generated` list, written by its build, not committed) is missing
+// (with its dependencies), so a fresh or cleaned checkout starts. Stale dists are not detected.
 
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
@@ -21,8 +22,9 @@ const packages: Pkg[] = JSON.parse(pnpm("ls", "-r", "--depth", "-1", "--json"));
 const missing = packages
   .filter(({ name }) => name !== "@enumeratio/web")
   .filter(({ path }) => {
-    const { exports } = JSON.parse(readFileSync(join(path, "package.json"), "utf8"));
-    return distTargets(exports).some((target) => !existsSync(join(path, target)));
+    const pkg = JSON.parse(readFileSync(join(path, "package.json"), "utf8"));
+    const { generated = [] }: { generated?: string[] } = pkg;
+    return [...distTargets(pkg.exports), ...generated].some((target) => !existsSync(join(path, target)));
   })
   .map(({ name }) => name);
 

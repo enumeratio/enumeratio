@@ -23,7 +23,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack",
+    "build": "node scripts/build-generated.ts && vp pack",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -48,5 +48,10 @@
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.141.0"
-  }
+  },
+  "generated": [
+    "src/statistics/naming-data.ts",
+    "src/maps-laws.generated.ts",
+    "src/compiled-maps.generated.js"
+  ]
 }

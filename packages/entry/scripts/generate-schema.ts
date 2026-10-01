@@ -1,10 +1,9 @@
 // Write the JSON Schema for the three records (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §4) to
-// `schema/*.schema.json`. `tests/schema.test.ts` fails if a committed file drifts from this;
-// run this script to bring it back in sync.
+// `schema/*.schema.json` (uncommitted; `build` runs this).
 //
 //   vp node packages/entry/scripts/generate-schema.ts
 
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import {
   COMPONENT_STORIES_SCHEMA,
@@ -14,6 +13,8 @@ import {
 } from "../src/schema.ts";
 
 const schemaDir = fileURLToPath(new URL("../schema/", import.meta.url));
+
+mkdirSync(schemaDir, { recursive: true });
 
 for (const [file, schema] of [
   ["reference-entry.schema.json", REFERENCE_ENTRY_SCHEMA],

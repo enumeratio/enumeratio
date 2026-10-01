@@ -1,0 +1,4 @@
+# Written by `build` (scripts/build-generated.ts); never committed.
+src/statistics/naming-data.ts
+src/maps-laws.generated.ts
+*.generated.js
