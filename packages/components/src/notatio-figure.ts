@@ -1,7 +1,7 @@
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ensureStyles } from "./styles.ts";
-import { type GlyphKind, renderGlyph } from "@enumeratio/frontend";
+import { type GlyphKind, renderGlyph } from "@enumeratio/frontend/core";
 
 const KINDS = new Set<GlyphKind>([
   "permutation",

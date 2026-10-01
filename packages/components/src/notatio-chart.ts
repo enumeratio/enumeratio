@@ -13,7 +13,7 @@ import {
   linePlotSvg,
   pieChartSvg,
   type PlotPoint,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 
 /** Parse a JSON attribute defensively -- an empty/invalid value reads as `undefined`. */
 function parseJson(value: string): unknown {

@@ -1,6 +1,6 @@
 import { html, LitElement } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { highlightCode } from "@enumeratio/frontend";
+import { highlightCode } from "@enumeratio/frontend/core";
 
 /**
  * `<Code language="wolfram" value="Binomial[n, k]">` -- a small code box

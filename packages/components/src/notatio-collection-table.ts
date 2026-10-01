@@ -25,7 +25,7 @@ import {
   substituteRow,
   substituteRowPerHead,
   wantsCarrier,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 
 const log = debug("collection-table");
 

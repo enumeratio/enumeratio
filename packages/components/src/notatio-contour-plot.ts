@@ -15,7 +15,7 @@ const RUNTIME = {
 import { parseExpression } from "@enumeratio/formats/expression";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
-import { contourSvg, debug } from "@enumeratio/frontend";
+import { contourSvg, debug } from "@enumeratio/frontend/core";
 
 /** Parse a JSON attribute defensively -- an empty/invalid value reads as `undefined`. */
 function parseJson(value: string): unknown {

@@ -33,7 +33,7 @@ import {
   type PlotSeries,
   type Primitive,
   primitivesOf,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 import { SliderPlayback } from "./sweep.ts";
 
 const log = debug("plot");

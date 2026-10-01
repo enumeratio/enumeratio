@@ -19,7 +19,7 @@ import {
   parseControls,
   parseProse,
   type ProsePart,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 import { SliderPlayback } from "./sweep.ts";
 
 /**

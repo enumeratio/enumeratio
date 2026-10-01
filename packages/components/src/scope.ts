@@ -6,7 +6,7 @@
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { CONTROL_EVENT, type ControlChange, debug } from "@enumeratio/frontend";
+import { CONTROL_EVENT, type ControlChange, debug } from "@enumeratio/frontend/core";
 import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
 import { CONTROL_TAGS, type ControlElement, controlSelector } from "./define.ts";
 import { loadEngine } from "./mathlive.ts";

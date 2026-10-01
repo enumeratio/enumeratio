@@ -21,11 +21,11 @@
 // Each resolved reference says which of these it came from, so a page can show a Wikidata
 // id next to a FindStat number without pretending they were found the same way.
 
-import { COLLECTIONS } from "@enumeratio/catalog/src";
+import { COLLECTIONS } from "@enumeratio/catalog/records";
 import { crosswalk as derived } from "../crosswalk-data.ts";
 import { CATALOG_REFERENCES } from "./catalog-references-data.ts";
 import { engineSymbols } from "../engine-symbols-data.ts";
-import { findstat } from "@enumeratio/combinatorics/src";
+import { findstat } from "@enumeratio/combinatorics/findstat";
 import { oeis } from "../oeis-data.ts";
 import { fungrimSymbols } from "../fungrim-symbols-data.ts";
 import type { ReferenceEntry } from "../types.ts";

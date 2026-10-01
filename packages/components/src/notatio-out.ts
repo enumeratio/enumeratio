@@ -1,37 +1,36 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
+import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { makeBoxes, notationOf } from "@enumeratio/boxes";
 import { toAscii, toLatex } from "@enumeratio/boxes/render";
 import type { Display } from "@enumeratio/frontend/kernel-host";
-import { collectMessages, type Message } from "@enumeratio/engine";
-import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
-import { toMathML } from "@enumeratio/formats/mathml";
+import type { Message } from "@enumeratio/engine";
 import { portableTeX } from "@enumeratio/formats/tex";
-import { parseExpression } from "@enumeratio/formats/expression";
-import { toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./notatio-code.ts";
-import { notebookSession, pageKernel, type RemoteAnswer, type RemoteRequest } from "./kernel-client.ts";
-import { WorkerUnavailableError } from "./notatio-dynamic-module.ts";
+import {
+  notebookSession,
+  pageKernel,
+  type RemoteAnswer,
+  type RemoteRequest,
+  WorkerUnavailableError,
+} from "./kernel-client.ts";
+import { defineEverything } from "./lazy.ts";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
+import type { PlotInfo } from "./out-engine.ts";
 import { ensureStyles } from "./styles.ts";
-import { visualMarkup } from "./visual.ts";
 import {
   boundName,
   collectErrors,
   debug,
   deepEqual,
-  elideResult,
   type Environment,
   environmentNamed,
   highlightCode,
-  latexOf,
   pageEnvironment,
-  substitutedForm,
   type Transcript,
   watchPageEnvironment,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 
 /** A cell's answer, as `#evaluate` gives it to `#compute`. */
 interface Evaluated {
@@ -68,47 +67,6 @@ function cachedMarkup(convert: (latex: string) => string, latex: string): string
   return made;
 }
 
-/**
- * What a cell draws its input FROM, when `plot` asks for it: the expression with every
- * currently-bound name substituted but not evaluated, and the free names left over --
- * `reactive.ts`'s `substitutedForm`/`PassCell.plot`, generalised off any `Transcript`'s
- * live scope rather than a worksheet pass's own tracked bindings.
- */
-interface PlotInfo {
-  /** InputForm -- Epsil a plot element can re-parse (`toInputForm`, round-trips). */
-  readonly source: string;
-  /** The names still free after substitution, sorted. */
-  readonly free: readonly string[];
-}
-
-/**
- * Claim `name` in `engine`'s CURRENT (innermost pushed) scope before an `Assign`
- * evaluates it, the way `reactive.ts`'s `runPass` already does for a worksheet's own
- * pass -- see that function's comment for why this is load-bearing rather than tidy.
- * A no-op when `name` is `undefined` (not an assignment) or already declared there.
- */
-function declareLocal(engine: ComputeEngine, name: string | undefined): void {
-  if (name === undefined) return;
-  try {
-    engine.declare(name, "unknown");
-  } catch {
-    // Already declared locally (a re-run of this same cell), or a protected name --
-    // either way there is nothing to claim.
-  }
-}
-
-/** `PlotInfo` for `raw` (parsed, unevaluated), read against `engine`'s current scope. */
-function plotOf(engine: ComputeEngine, raw: BoxedExpression): PlotInfo | undefined {
-  try {
-    const substituted = substitutedForm(engine, raw);
-    return {
-      source: toInputForm(substituted.json as MathJsonExpression),
-      free: [...substituted.unknowns].toSorted(),
-    };
-  } catch {
-    return undefined;
-  }
-}
 // `localStorage["notatio:debug"] = "out"` -- see @enumeratio/frontend's debug.ts. Used to
 // make an `Evaluator -> "Worker"` cell's routing visible: a Worker-mode cell that never
 // logs `worker-evaluate` is silently running locally instead (see the guard right after
@@ -166,7 +124,7 @@ function substitute(expr: unknown, bindings: ReadonlyMap<string, unknown>): unkn
 }
 
 /** A `<DynamicModule>` that can hand out its shared evaluation scope. */
-interface TranscriptHost extends Element {
+export interface TranscriptHost extends Element {
   transcriptFor(engine: ComputeEngine): Transcript;
   /**
    * `Evaluator` (https://github.com/enumeratio/enumeratio/wiki/Computation, `notatio-dynamic-module.ts`): `"Local"`
@@ -223,17 +181,10 @@ function replaceAt(tree: unknown, path: string, replacement: unknown): unknown {
   return Array.isArray(tree) ? next : { ...(tree as object), fn: next };
 }
 
-// Code forms whose source comes from a compute-engine compilation TARGET (via
-// `target.compileToSource`). The map is `form -> target export name`; held as a
-// value so the classes aren't tree-shaken out of the bundle. JavaScript is a
-// code form too but uses the free `compile().code` path (see #codeSources).
-const CODE_TARGETS = {
-  python: "PythonTarget",
-  glsl: "GLSLTarget",
-  wgsl: "WGSLTarget",
-} as const;
-type CodeForm = keyof typeof CODE_TARGETS | "javascript" | "gpushader";
-const CODE_FORMS = new Set<Form>([...(Object.keys(CODE_TARGETS) as Form[]), "javascript", "gpushader"]);
+// The code forms, each the source a compilation target writes (`out-engine.ts`'s
+// `codeSources`, or the kernel's display).
+const CODE_FORMS = new Set<Form>(["python", "glsl", "wgsl", "javascript", "gpushader"]);
+type CodeForm = "python" | "glsl" | "wgsl" | "javascript" | "gpushader";
 
 // The display forms offered by the In/Out menu.
 const FORMS: readonly Form[] = [
@@ -505,6 +456,7 @@ export class NotatioOut extends LitElement {
       // unfilled; asking for it is what pays for the engine.
       void this.#recompute();
     }
+    if (changed.has("form") && !this._wolfram) void this.#writeTextForms();
     if (changed.has("env") && changed.get("env") !== undefined) this.#visualize();
     // Escape stops a running Worker-evaluator call (`stop()`) -- only listened for
     // while actually busy, and only matters when there is something to abort.
@@ -530,14 +482,7 @@ export class NotatioOut extends LitElement {
     }
     const answered = await this.#askKernel(source);
     if (answered !== undefined) return answered;
-    const engine = await loadEngine();
-    // `raw` keeps the authored tree; evaluation canonicalises regardless, so it wins.
-    const form = this.raw && !this.evaluate ? { form: "raw" as const } : undefined;
     const host = transcriptHostOf(this);
-    const transcript = host?.transcriptFor(engine);
-    const parseText = (): BoxedExpression =>
-      this.format === "latex" ? engine.parse(source, form) : engine.box(this.#json(engine), form);
-
     // A host in Worker mode but missing `evaluateRemote` would otherwise fall through to
     // the LOCAL evaluation below without a trace -- exactly the failure mode that let
     // `Notebook(cells, Evaluator -> Worker)` silently run every cell on the page's own
@@ -545,7 +490,7 @@ export class NotatioOut extends LitElement {
     // `packages/frontend/tests/dynamic-module-evaluator.test.ts`). `evaluateRemote` is
     // always defined on `NotatioDynamicModule`, so this only fires for a non-conforming
     // host (e.g. a test double) -- loud on purpose.
-    if (transcript && this.evaluate && host?.evaluatorKind === "Worker") {
+    if (host !== undefined && this.evaluate && host.evaluatorKind === "Worker") {
       log("worker-evaluate: host has no evaluateRemote -- falling back to LOCAL", host);
       console.error(
         'notatio-out: Evaluator -> "Worker" host has no evaluateRemote(); evaluating locally instead',
@@ -553,44 +498,18 @@ export class NotatioOut extends LitElement {
       );
     }
 
-    let parsed: BoxedExpression | undefined;
-    let plotInfo: PlotInfo | undefined;
-    const { value: result, messages } = collectMessages(engine, () => {
-      if (transcript && this.evaluate) {
-        // `InString(n)` reads back what the reader typed. Read the JSON *before* boxing:
-        // `engine.box` folds closed numeric arithmetic (`3 + 4` boxes straight to `7`).
-        const input = this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
-        // Inside the transcript's scope: `a := 5` binds there, and the result becomes the
-        // next `In[n]`/`Out[n]`.
-        return transcript.run(() => {
-          const boxed = parseText();
-          parsed = boxed;
-          // Claim the name locally before it assigns, the way `runPass` already does
-          // for a worksheet's own pass (see that function's comment) -- an `Assign`
-          // with nothing declared here yet has nowhere of its own to land. This closes
-          // the common case (nothing else on the page has touched the name yet); it is
-          // NOT a complete fix for two sheets sharing a name once BOTH have assigned to
-          // it at least once -- that residual cross-scope leak is tracked separately
-          // (PR description) rather than solved here.
-          declareLocal(engine, boundName(boxed.json));
-          const value = boxed.evaluate();
-          this.#historyN = transcript.record(input, boxed, value);
-          // Read from the scope after `boxed.evaluate()` has had its chance to bind --
-          // an `Assign` is not itself substitutable for, so this is only ever something
-          // ELSE in the cell reading a binding another cell (or an earlier pass) made.
-          if (this.plot) plotInfo = plotOf(engine, boxed);
-          return value;
-        });
-      }
-      this.#historyN = undefined;
-      const boxed = parseText();
-      parsed = boxed;
-      return this.evaluate ? boxed.evaluate() : boxed;
+    const [engine, here] = await Promise.all([loadEngine(), import("./out-engine.ts")]);
+    const { evaluated, line } = here.evaluateHere(engine, {
+      source,
+      format: this.format,
+      raw: this.raw,
+      evaluate: this.evaluate,
+      plot: this.plot,
+      elideAbove: this.elideAbove,
+      host,
     });
-    const name = parsed ? boundName(parsed.json) : undefined;
-    const latex =
-      this.elideAbove > 0 ? (elideResult(result, this.elideAbove) ?? latexOf(engine, result)) : latexOf(engine, result);
-    return { latex, json: result.json, messages, name, plot: plotInfo };
+    this.#historyN = line;
+    return evaluated;
   }
 
   /**
@@ -652,18 +571,6 @@ export class NotatioOut extends LitElement {
     };
   }
 
-  /** `value` as MathJSON, for the two encodings that are not LaTeX. An Epsil diagnostic throws. */
-  #json(engine: ComputeEngine): MathJsonExpression {
-    const source = this.value ?? "";
-    if (this.format === "mathjson") return JSON.parse(source) as MathJsonExpression;
-    const { json, errors } = parseExpression(source, {
-      ce: engine,
-      parseLatex: (tex) => engine.parse(tex).json,
-    });
-    if (errors.length) throw new Error(errors.join("; "));
-    return json;
-  }
-
   #assert(actual: unknown): void {
     const errors = actual === undefined ? [] : collectErrors(actual);
     if (errors.length > 0) {
@@ -690,70 +597,6 @@ export class NotatioOut extends LitElement {
     } else {
       this._status = "mismatch";
       this._detail = `expected ${this.expect}, got ${JSON.stringify(actual)}`;
-    }
-  }
-
-  // Source for every code form, via compute-engine's compilation targets. Each
-  // only handles numeric/function expressions, so non-numeric results (lists,
-  // boolean comparisons) simply yield no source for that form.
-  async #codeSources(
-    engine: Awaited<ReturnType<typeof loadEngine>>,
-    json: unknown,
-  ): Promise<Partial<Record<CodeForm, string>>> {
-    const out: Partial<Record<CodeForm, string>> = {};
-    try {
-      const mod = (await import("@cortex-js/compute-engine")) as unknown as Record<
-        string,
-        new () => { compileToSource(e: unknown): unknown }
-      >;
-      const expr = engine.box(json as Parameters<typeof engine.box>[0]);
-      for (const [form, targetName] of Object.entries(CODE_TARGETS)) {
-        try {
-          const src = new mod[targetName]().compileToSource(expr);
-          if (typeof src === "string") out[form as CodeForm] = src;
-        } catch {
-          // this target can't compile this expression -- leave it out
-        }
-      }
-      // JavaScript uses the free compile() path; its result carries `.code`.
-      try {
-        const compileFn = (mod as unknown as { compile?: (e: unknown, o: unknown) => unknown }).compile;
-        const res = compileFn?.(json, { engine });
-        const code = (res as { code?: unknown } | undefined)?.code;
-        if (typeof code === "string") out.javascript = code;
-      } catch {
-        // not compilable to JavaScript
-      }
-      out.gpushader = await this.#gpuShader(expr);
-    } catch {
-      // compute-engine module unavailable
-    }
-    return out;
-  }
-
-  // GPUShaderForm: the whole shader one of our GPU paths would run for this expression,
-  // not just the expression's WGSL. One unknown is a complex variable, so the phase
-  // portrait's fragment shader (<notatio-complex-plot>); one or two reals, the plot grid's
-  // compute shader (gpu-eval). Anything neither path takes has no shader form.
-  async #gpuShader(expr: { unknowns: ReadonlyArray<string> }): Promise<string | undefined> {
-    const unknowns = [...expr.unknowns].toSorted();
-    if (unknowns.length === 0 || unknowns.length > 2) return undefined;
-    try {
-      if (unknowns.length === 1) {
-        const [{ emitComplexWGSL }, { portraitShader }] = await Promise.all([
-          import("@enumeratio/analytic/src"),
-          import("@enumeratio/frontend"),
-        ]);
-        const emitted = emitComplexWGSL((expr as unknown as { json: unknown }).json as never, unknowns[0]);
-        if (emitted) return portraitShader(emitted.code);
-      }
-      const { computeShader, toWgslFn } = await import("@enumeratio/frontend");
-      // A lone unknown still gets a two-parameter plot function; the second is unused.
-      const [vx, vy = vx === "y" ? "x" : "y"] = unknowns;
-      const fn = toWgslFn(expr as never, vx, vy);
-      return fn ? computeShader(fn) : undefined;
-    } catch {
-      return undefined;
     }
   }
 
@@ -807,13 +650,14 @@ export class NotatioOut extends LitElement {
       this.#name = name;
       this.#plot = plot;
       this.#value = json as MathJsonExpression | undefined;
+      // A kernel says whether the value draws; a value from this page's engine is checked.
+      this.#draws = display === undefined || display.draws;
       this.#visualize();
-      this._wolfram = json === undefined ? "" : toWolfram(json as Parameters<typeof toWolfram>[0]);
-      // MathMLForm: presentation MathML, straight off the MathJSON tree -- no engine,
-      // and output only, so nothing parses it back.
-      this._mathml = json === undefined ? "" : toMathML(json as MathJsonExpression);
+      this._wolfram = "";
+      this._mathml = "";
+      void this.#writeTextForms();
       // InputForm: the same expression as Epsil you could type back in.
-      this._input = json === undefined ? "" : toInputForm(json as MathJsonExpression);
+      this._input = json === undefined ? "" : (display?.text.inputform ?? "");
       if (json === undefined) {
         this._traditional = this._markup;
         this._tex = portableTeX(latex);
@@ -828,11 +672,12 @@ export class NotatioOut extends LitElement {
         const matrix = display.boxes.MatrixForm;
         this._matrix = matrix === undefined ? this._markup : convert(toLatex(matrix));
         this._ascii = display.text.asciimath ?? "";
-        const { asciimath: _, ...code } = display.text;
+        const { asciimath: _, inputform: __, ...code } = display.text;
         this._code = code;
       } else {
-        const engine = await loadEngine();
+        const [engine, here] = await Promise.all([loadEngine(), import("./out-engine.ts")]);
         if (run !== this.#runs) return;
+        this._input = here.inputFormOf(json as MathJsonExpression);
         const traditional = toLatex(makeBoxes(json as MathJsonExpression, notationOf(engine)));
         this._traditional = convert(traditional);
         // TeXForm is the TeX of TraditionalForm, as in Wolfram.
@@ -845,7 +690,7 @@ export class NotatioOut extends LitElement {
         this._matrix = this._canMatrix ? convert(engine.box(matrixExpr).latex) : this._markup;
         // AsciiMathForm: the traditional boxes, as AsciiMath spells them.
         this._ascii = toAscii(makeBoxes(json as MathJsonExpression, notationOf(engine)));
-        this._code = await this.#codeSources(engine, json);
+        this._code = await here.codeSources(engine, json);
       }
       if (json === undefined) {
         this._ascii = "";
@@ -965,6 +810,7 @@ export class NotatioOut extends LitElement {
   // This evaluation's `In[n]`/`Out[n]` line number, when it ran inside a transcript --
   // `undefined` outside one, or before the first evaluation.
   #historyN: number | undefined;
+  #draws = true;
   // The bound symbol, when the input is an assignment -- surfaced on `notatio-result`.
   #name: string | undefined;
   // `PlotInfo`, when `plot` asked for it -- surfaced on `notatio-result`.
@@ -977,12 +823,21 @@ export class NotatioOut extends LitElement {
   #unwatch = (): void => {};
 
   #visualize(): void {
+    const value = this.#value;
+    if (value === undefined || !this.#draws) {
+      this._visual = "";
+      return;
+    }
     // Own attribute, then the nearest ancestor that forces one, then the page.
     const env =
       environmentNamed(this.env) ??
       environmentNamed(this.parentElement?.closest("[env]")?.getAttribute("env") ?? undefined) ??
       this.#page;
-    this._visual = this.#value === undefined ? "" : visualMarkup(this.#value, env);
+    // The renderer writes attributes as Epsil, so it loads with the engine's writer; the
+    // picture's elements are defined with it.
+    void Promise.all([import("./visual.ts"), defineEverything()]).then(([{ visualMarkup }]) => {
+      if (this.#value === value) this._visual = visualMarkup(value, env);
+    });
   }
 
   override connectedCallback(): void {
@@ -1036,9 +891,13 @@ export class NotatioOut extends LitElement {
   async #inputForm(): Promise<string> {
     if (this._input) return this._input;
     try {
-      const engine = await loadEngine();
-      const json = this.format === "latex" ? engine.parse(this.value ?? "", { form: "raw" }).json : this.#json(engine);
-      this._input = toInputForm(json);
+      const [engine, here] = await Promise.all([loadEngine(), import("./out-engine.ts")]);
+      const source = this.value ?? "";
+      const json =
+        this.format === "latex"
+          ? engine.parse(source, { form: "raw" }).json
+          : here.cellJson(engine, this.format, source);
+      this._input = here.inputFormOf(json);
     } catch {
       this._input = "";
     }
@@ -1119,12 +978,25 @@ export class NotatioOut extends LitElement {
       case "asciimath":
         return this._ascii !== "";
       case "mathml":
-        return this._mathml !== "";
       case "wolfram":
-        return this._wolfram !== "";
+        return this._json !== "";
       default:
         return true;
     }
+  }
+
+  // WolframForm and MathMLForm (presentation MathML): straight off the MathJSON tree, and
+  // output only. Written once one is shown: their writers share a chunk with the engine's.
+  async #writeTextForms(): Promise<void> {
+    const json = this.#value;
+    if (json === undefined || (this.form !== "wolfram" && this.form !== "mathml")) return;
+    const [{ toWolfram }, { toMathML }] = await Promise.all([
+      import("@enumeratio/wolfram"),
+      import("@enumeratio/formats/mathml"),
+    ]);
+    if (this.#value !== json) return;
+    this._wolfram = toWolfram(json as Parameters<typeof toWolfram>[0]);
+    this._mathml = toMathML(json);
   }
 
   #toggleNode(path: string): void {
@@ -1199,18 +1071,30 @@ export class NotatioOut extends LitElement {
   // One TreeForm node. An application shows its head and a disclosure control; closed, the
   // arguments follow as one line of InputForm, open, each argument is a node of its own.
   // Leaves (symbols, numbers, strings) are just themselves.
+  // TreeForm's one-line summaries, from `out-engine.ts` once a tree is shown.
+  #oneLine: ((json: MathJsonExpression) => string) | undefined;
+  #oneLineLoading = false;
+
+  #loadOneLine(): void {
+    if (this.#oneLineLoading) return;
+    this.#oneLineLoading = true;
+    void import("./out-engine.ts").then((here) => {
+      this.#oneLine = here.oneLine;
+      this.requestUpdate();
+    });
+  }
+
   #node(json: unknown, path: string): unknown {
+    this.#loadOneLine();
     const fn = Array.isArray(json) ? json : (json as { fn?: unknown[] } | null)?.fn;
     if (Array.isArray(fn) && typeof fn[0] === "string") {
       const [head, ...args] = fn as [string, ...unknown[]];
       const open = this._expanded.has(path);
       // The closed summary is the argument list, since the head is already shown.
-      const oneLine = (arg: unknown): string =>
-        serializeEpsil(normalizeInputForm(arg as MathJsonExpression), {
-          margin: Number.POSITIVE_INFINITY,
-          softMargin: Number.POSITIVE_INFINITY,
-        });
-      const summary = `(${args.map(oneLine).join(", ")})`;
+      // InputForm needs the engine's writer: until it loads, the summary is an ellipsis.
+      const oneLine = this.#oneLine;
+      const summary =
+        oneLine === undefined ? "(…)" : `(${args.map((arg) => oneLine(arg as MathJsonExpression)).join(", ")})`;
       return html`<div class="notatio-tree-node" data-path=${path}>
         <button type="button" class="notatio-tree-toggle" aria-expanded=${open} @click=${() => this.#toggleNode(path)}>
           ${open ? "▾" : "▸"}

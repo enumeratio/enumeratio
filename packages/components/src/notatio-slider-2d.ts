@@ -11,7 +11,7 @@ import {
   numberJson,
   numberLatex,
   parseComplex,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 import { defineControl, emitControl } from "./define.ts";
 
 /** `a,b` -> [a, b]; a single number -> [n, n]; nothing -> undefined. */

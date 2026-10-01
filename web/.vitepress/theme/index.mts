@@ -66,12 +66,12 @@ export default {
           { declareFrontendCarriers },
           { declareAnalytic, declareFractals },
           { declareGraphics },
-          { declareBoxes },
+          { combineNotation, declareBoxes },
           { declareCarrierElement, declareCarrierPlurals, declareStructures },
           { declareHypercomplex },
           { declareGeometric },
           { declareDiagrams },
-          { declareResidues, RESIDUES_LATEX },
+          { declareResidues },
           { declareNumerals },
           { declareHecke },
           { declareIncidence },
@@ -84,7 +84,7 @@ export default {
           { declareBraid },
           { declareEvaluation },
         ] = await Promise.all([
-          import("@enumeratio/components"),
+          import("@enumeratio/frontend/core"),
           import("@enumeratio/combinatorics"),
           import("@enumeratio/frontend/declare-carriers"),
           import("@enumeratio/analytic"),
@@ -108,8 +108,11 @@ export default {
           import("@enumeratio/evaluation"),
         ]);
         // Notation has to be in before the engine is built: its dictionary is fixed then.
-        configureLatex(RESIDUES_LATEX);
-        configureLatex((await import("@enumeratio/boxes/render")).BOXES_LATEX);
+        const [{ default: NOTATION_ENTRIES }, { CATALOGUE }] = await Promise.all([
+          import("virtual:notation-entries"),
+          import("./worker-catalogue.ts"),
+        ]);
+        configureLatex(combineNotation(CATALOGUE.flatMap((library) => NOTATION_ENTRIES[library.name] ?? [])).latex);
         applyEngineLibraries(configureEngine, {
           declareCombinatorics,
           declareCarrierPlurals,
@@ -145,8 +148,9 @@ export default {
       let ready: Promise<void> | undefined;
       (globalThis as { __notatioEngineReady?: () => Promise<unknown> }).__notatioEngineReady = () =>
         (ready ??= startEngine());
-      // The elements themselves load at idle, so the page paints first.
-      const define = (): void => void import("@enumeratio/components");
+      // The elements load at idle, so the page paints first, and only those the page uses: a
+      // page of cells loads no engine.
+      const define = (): void => void import("@enumeratio/components/lazy").then((m) => m.defineOnUse());
       const idle = (globalThis as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void })
         .requestIdleCallback;
       if (idle) idle(define, { timeout: 2000 });

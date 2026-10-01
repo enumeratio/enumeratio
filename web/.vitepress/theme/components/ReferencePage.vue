@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { crosswalkFor, type ReferenceEntry, type ResolvedReference } from "@enumeratio/reference";
-import { visualSymbol } from "@enumeratio/frontend/symbols";
 import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { data as components } from "../../data/components.data.ts";
 import { getEntry, resolveHead } from "../../data/reference.ts";
@@ -16,10 +15,7 @@ const entry = computed(() => (import.meta.env.DEV ? getEntry(props.name) : (prop
 // Where this head is drawn, if it is -- symbols.ts's own head<->tag map
 // (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols), not the record's `bindings` (a `component` binding is
 // about an implementation origin, not this cross-link).
-const drawnAs = computed(() => {
-  const tag = visualSymbol(props.name)?.tag;
-  return tag === undefined ? undefined : components.find((c) => c.tag === tag)?.name;
-});
+const drawnAs = computed(() => components.find((c) => c.heads.includes(props.name))?.name);
 
 // Where this head lives elsewhere. Rows about one call form (Zeta at two arguments is
 // Hurwitz's) sit with that signature; everything else heads the page.

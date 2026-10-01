@@ -14,6 +14,7 @@
       "import": "./dist/index.mjs"
     },
     "./src": "./src/index.ts",
+    "./findstat": "./findstat/src/findstat-data.ts",
     "./collections": {
       "types": "./dist/collections.d.mts",
       "import": "./dist/collections.mjs"

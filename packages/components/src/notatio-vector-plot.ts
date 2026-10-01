@@ -15,7 +15,7 @@ const RUNTIME = {
 import { parseExpression } from "@enumeratio/formats/expression";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
-import { debug, type Field2d, vectorPlotSvg } from "@enumeratio/frontend";
+import { debug, type Field2d, vectorPlotSvg } from "@enumeratio/frontend/core";
 
 /**
  * Split a `field` attribute into its two components. Handles an optional
