@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics/src";
-import { canonicalFor, REPRESENTATIONS, representationsFor } from "@enumeratio/structures";
+import { ALL_REPRESENTATIONS, canonicalFor, REPRESENTATIONS, representationsFor } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { declareRendering } from "../src/carrier-render.ts";
 
@@ -87,4 +87,18 @@ test("every representation names a carrier that exists", () => {
       CARRIERS.some((c) => c.type === representation.on),
       representation.on,
     ).toBe(true);
+});
+
+test("latex representations are for reading, reached through Render", () => {
+  expect(text(["Render", perm(2, 3, 1), "'oneline'", "'latex'"])).toBe("'2\\,3\\,1'");
+  expect(text(["Render", perm(2, 3, 1), "'cycle'", "'latex'"])).toBe("'(1\\,2\\,3)'");
+  expect(text(["Render", ["IntegerPartition", ["List", 3, 3, 1]], "'exponential'", "'latex'"])).toBe("'3^{2}\\,1'");
+  expect(text(["Render", ["IntegerPartition", ["List", 3, 1]], "'young'", "'latex'"])).toBe("'\\lambda = (3, 1)'");
+});
+
+test("every latex representation is display-only, and says so by having no parse", () => {
+  // Conventional notation doesn't read back (combinatorics' notation test measures it), so a
+  // latex representation with a `parse` would claim what isn't so.
+  for (const representation of ALL_REPRESENTATIONS.filter((r) => r.medium === "latex"))
+    expect(representation.parse, `${representation.on}/${representation.name}`).toBeUndefined();
 });

@@ -5,6 +5,7 @@ export default defineConfig({
     entry: {
       index: "src/index.ts",
       collections: "collections/src/index.ts",
+      notation: "src/notation.ts",
     },
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo" },

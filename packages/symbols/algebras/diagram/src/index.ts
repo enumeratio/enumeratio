@@ -1,5 +1,4 @@
 export { declareDiagrams } from "./declare.ts";
-export { DIAGRAM_NOTATION } from "./notation.ts";
 export {
   CLASS_ADMITS,
   composeDiagrams,

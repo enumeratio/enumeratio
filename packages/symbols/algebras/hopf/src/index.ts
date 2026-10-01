@@ -1,5 +1,4 @@
 export { declareHopf } from "./declare.ts";
-export { HOPF_NOTATION } from "./notation.ts";
 export {
   antipode,
   basis,

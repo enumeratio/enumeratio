@@ -1,5 +1,4 @@
 export { declareBraid } from "./declare.ts";
-export { BRAID_NOTATION } from "./notation.ts";
 export * from "./braid.ts";
 export * from "./laurent.ts";
 export * from "./lorenz.ts";

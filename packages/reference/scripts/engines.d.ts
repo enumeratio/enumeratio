@@ -1,6 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles/src";
-import type { Library } from "@enumeratio/manifest";
+import type { PackageNotation } from "@enumeratio/boxes";
+import { type Library } from "@enumeratio/manifest";
 /** Every library we ship, in the order the reference tests declare them. */
 export declare const DECLARATIONS: (typeof declareAdeles)[];
 /**
@@ -9,6 +10,9 @@ export declare const DECLARATIONS: (typeof declareAdeles)[];
  * carriers' plurals with it, where `LIBRARY_DECLARATIONS` declares those last.
  */
 export declare const LIBRARIES: readonly Library<ComputeEngine>[];
+/** Every package's notation entry, as the manifest lists them. Imported from here because this
+ *  package depends on every library, so each specifier resolves. */
+export declare const packageNotations: () => Promise<PackageNotation[]>;
 export declare const declaredEngine: () => ComputeEngine;
 /**
  * `configure(ce)` for `@enumeratio/evaluation/node`'s isolated evaluator (`evaluateIsolated`,

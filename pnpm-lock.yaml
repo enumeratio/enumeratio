@@ -356,18 +356,60 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.142.0
         version: 0.142.0
+      '@enumeratio/analytic':
+        specifier: workspace:*
+        version: link:../symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
+      '@enumeratio/braid':
+        specifier: workspace:*
+        version: link:../symbols/groups/braid
       '@enumeratio/combinatorics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/combinatorics
+      '@enumeratio/diagram':
+        specifier: workspace:*
+        version: link:../symbols/algebras/diagram
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats
       '@enumeratio/frontend':
         specifier: workspace:*
         version: link:../frontend
+      '@enumeratio/groupalgebra':
+        specifier: workspace:*
+        version: link:../symbols/algebras/groupalgebra
+      '@enumeratio/hecke':
+        specifier: workspace:*
+        version: link:../symbols/algebras/hecke
+      '@enumeratio/hopf':
+        specifier: workspace:*
+        version: link:../symbols/algebras/hopf
+      '@enumeratio/hypercomplex':
+        specifier: workspace:*
+        version: link:../symbols/algebras/hypercomplex
+      '@enumeratio/incidence':
+        specifier: workspace:*
+        version: link:../symbols/algebras/incidence
+      '@enumeratio/modular':
+        specifier: workspace:*
+        version: link:../symbols/groups/modular
+      '@enumeratio/number-theory':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/number-theory
+      '@enumeratio/numerals':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/numerals
+      '@enumeratio/quiver':
+        specifier: workspace:*
+        version: link:../symbols/algebras/quiver
       '@enumeratio/raster':
         specifier: workspace:*
         version: link:../raster
+      '@enumeratio/residues':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/residues
       '@enumeratio/statistics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/statistics
@@ -375,6 +417,9 @@ importers:
         specifier: workspace:*
         version: link:../structures
     devDependencies:
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../manifest
       '@types/node':
         specifier: ^24
         version: 24.13.4
@@ -1197,6 +1242,9 @@ importers:
 
   packages/symbols/combinatorics/combinatorics:
     dependencies:
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../../../boxes
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../../../engine

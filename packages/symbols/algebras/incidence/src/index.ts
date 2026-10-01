@@ -1,5 +1,4 @@
 export { declareIncidence } from "./declare.ts";
-export { INCIDENCE_NOTATION } from "./notation.ts";
 export {
   booleanLattice,
   chain,

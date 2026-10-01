@@ -4,11 +4,13 @@
 // No Node builtins, no file I/O, no rendering — the graphic side of :plot/:glyph
 // is returned as structured data and drawn by whichever adapter runs the core.
 
-import { type BoxedExpression, ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
+import { type BoxedExpression, ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { combineNotation, registerNotation } from "@enumeratio/boxes";
 import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
 import { declareCarrierElement, declareCarrierPlurals } from "@enumeratio/structures";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
-import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
+import { displayDictionary } from "@enumeratio/frontend/display";
+import { NOTATION_ENTRIES } from "./notation.ts";
 import {
   declareDistributions,
   declareDistributions2,
@@ -195,6 +197,10 @@ export interface Parsed {
   raw: BoxedExpression;
 }
 
+/** Every package's notation as one: its LaTeX goes into the dictionary, which is fixed when the
+ *  engine is built, and its box rules onto the engine. */
+const NOTATION = combineNotation(Object.values(NOTATION_ENTRIES));
+
 /** Each carrier type mapped to the head that constructs it -- what `declareMaps` wraps with. */
 const CONSTRUCTOR_FOR: Readonly<Record<string, string>> = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 
@@ -208,8 +214,9 @@ export class Session {
 
   constructor(defaults: SessionDefaults = {}) {
     this.ce = new ComputeEngine({
-      latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
+      latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, NOTATION.latex) as never[] }),
     });
+    registerNotation(this.ce, NOTATION.traditional);
     // Carriers, the families typed by them, the plural type-spaces and Element, and the maps
     // between carriers -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3).
     declareCombinatorics(this.ce);

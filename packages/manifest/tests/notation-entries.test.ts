@@ -1,7 +1,7 @@
 // Each package's notation entry (`package.json`'s `enumeratio.notation`) against the code: it is
 // exported, the manifest lists it, and it stays light. A host imports every one of them before
-// it builds an engine, so an entry reaches nothing beyond boxes' main entry and compute-engine's
-// types, through its own files.
+// it builds an engine, so an entry reaches nothing beyond boxes' main entry and types, through
+// its own files.
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
@@ -55,8 +55,9 @@ const STATEMENT =
 
 /** Why an entry may not import `specifier` this way, or undefined when it may. */
 function forbidden(specifier: string, typeOnly: boolean): string | undefined {
-  if (specifier === "@enumeratio/boxes") return undefined;
-  if (specifier.startsWith("@cortex-js/compute-engine")) return typeOnly ? undefined : "compute-engine beyond types";
+  // A type import is erased: it costs the entry nothing at run time.
+  if (typeOnly || specifier === "@enumeratio/boxes") return undefined;
+  if (specifier.startsWith("@cortex-js/compute-engine")) return "compute-engine beyond types";
   return specifier;
 }
 
@@ -110,7 +111,7 @@ test("the manifest lists every notation entry", () => {
   expect({ ...NOTATIONS }).toEqual(expected);
 });
 
-test("notation entries import nothing beyond boxes and compute-engine's types", () => {
+test("notation entries import nothing beyond boxes and types", () => {
   const bad = WITH_NOTATION.flatMap((ws) => heavyImports(sourceOf(ws, ws.field!.notation!)!));
   expect(bad).toEqual([]);
 });
