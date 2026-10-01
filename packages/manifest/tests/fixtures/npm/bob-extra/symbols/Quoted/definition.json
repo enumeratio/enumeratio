@@ -1,0 +1,5 @@
+{
+  "signature": "(any) -> any",
+  "body": ["Function", ["Hold", "x"], "x"],
+  "attributes": ["HoldAll"]
+}

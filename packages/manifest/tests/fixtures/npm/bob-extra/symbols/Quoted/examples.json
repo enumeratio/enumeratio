@@ -1,0 +1,7 @@
+[
+  {
+    "id": "quoted-sum",
+    "expr": ["MemberCall", "bob", "'Quoted'", ["Add", 1, 2]],
+    "expected": ["Hold", ["Add", 1, 2]]
+  }
+]

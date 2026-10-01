@@ -1,0 +1,2 @@
+id	section	role	expr	expected
+quoted-sum			[MemberCall, bob, "'Quoted'", [Add, 1, 2]]	[Hold, [Add, 1, 2]]

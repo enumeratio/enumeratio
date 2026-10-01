@@ -39,8 +39,8 @@ test("the fixtures' indexes are what packing their definitions writes", async ()
   for (const dir of Object.values(PACKAGES)) {
     const copy = join(mkdtempSync(join(tmpdir(), "pack-")), dir);
     cpSync(join(FIXTURES, dir), copy, { recursive: true });
-    const index = (path: string) => readFileSync(path, "utf8");
-    expect(index(await packLibrary(copy))).toBe(index(join(FIXTURES, dir, "symbols/index.json")));
+    const index = (path: string): unknown => JSON.parse(readFileSync(path, "utf8"));
+    expect(index(await packLibrary(copy))).toEqual(index(join(FIXTURES, dir, "symbols/index.json")));
   }
 });
 
@@ -150,12 +150,37 @@ test("a packed package is a plain library too: declare(ce), and compiled functio
   bob.declare(ce);
   expect(evaluate(ce, ["MemberCall", "bob", "'Octuple'", 2])).toBe(16);
   expect(evaluate(ce, ["MemberCall", "ada", "'Quad'", 2])).toBe(8);
+  expect(evaluate(ce, ["MemberCall", "bob", "'Scaled'", 3])).toBe(6);
+  expect(evaluate(ce, [bob.definitions.Quoted.head, ["Add", 1, 2]])).toEqual(["Hold", ["Add", 1, 2]]);
+  // A definition with defaults or attributes isn't a plain function.
+  expect(bob.Scaled).toBeUndefined();
   // The heads are the registry's, so a pin means the same thing either way.
   const npm = catalog<Engine>(SPECS, { host: npmHost(cdn()) });
   expect((await npm.resolve("ada.Quad"))?.head).toBe(ada.definitions.Quad.head);
   expect(readFileSync(join(root, "node_modules/@ada/primes/dist/index.d.ts"), "utf8")).toContain(
     "export declare const Twice: (x0: number) => number;",
   );
+});
+
+test("options are optional named parameters, defaults filling what a call leaves out; attributes hold", async () => {
+  const { fetch } = cdn();
+  const npm = catalog<Engine>(SPECS, { host: npmHost({ fetch }) });
+  const resolver = createRegistryResolver(npm, { check: { engine: () => new ComputeEngine(), mode: "enforce" } });
+  const ce = new ComputeEngine();
+  const scaled = (...args: unknown[]) => ["MemberCall", "bob", "'Scaled'", ...args];
+  const quoted = ["MemberCall", "bob", "'Quoted'", ["Add", 1, 2]];
+  const ensure = async (json: unknown) => {
+    const ensured = await resolver.ensure(ce, json);
+    expect(ensured.errors).toEqual([]);
+    return evaluate(ce, ensured.expression);
+  };
+  expect(await ensure(scaled(3))).toBe(6);
+  expect(await ensure(scaled(3, 5))).toBe(15);
+  // By name, and held: the expression ensure returns calls these by head, where compute-engine
+  // sees the parameter names and the attributes a namespace record hides.
+  expect(await ensure(scaled(3, ["NamedArgument", "'factor'", 5]))).toBe(15);
+  expect(await ensure(quoted)).toEqual(["Hold", ["Add", 1, 2]]);
+  expect(evaluate(ce, quoted)).toEqual(["Hold", 3]);
 });
 
 test("from ranges: lock the versions, then read them", async () => {

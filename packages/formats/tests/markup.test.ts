@@ -46,12 +46,13 @@ test("slots are trailing pairs; a bare one is True; Epsil where one token won't 
 });
 
 test("a slot naming a parameter takes its place, the children filling the rest", () => {
-  const paramsOf = (head: string) => ({ PolyLog: ["s", "z"], F: ["a", "b", "c"] })[head];
+  const paramsOf = (head: string) => ({ PolyLog: ["s", "z"], F: ["a", "b", "c"], "bob.Scaled": ["x", "factor"] })[head];
   const placed = (text: string) => readMarkupText(text, { parseText: parseExpression, paramsOf });
   expect(placed('<PolyLog s="2">z</PolyLog>')).toEqual({ json: ["PolyLog", 2, "z"], errors: [] });
   expect(placed('<PolyLog z="x" s="2" />').json).toEqual(["PolyLog", 2, "x"]);
   expect(placed('<F b="2" Opt="1">x</F>').json).toEqual(["F", "x", 2, ["KeyValuePair", "Opt", 1]]);
   expect(placed('<F a="1" b="2" />').json).toEqual(["F", 1, 2]);
+  expect(placed('<bob.Scaled factor="5">3</bob.Scaled>').json).toEqual(["MemberCall", "bob", "'Scaled'", 3, 5]);
   // Without a parameter named, or without `paramsOf`, a slot is a trailing pair.
   expect(placed('<PolyLog Opt="1">2 z</PolyLog>').json).toEqual(["PolyLog", 2, "z", ["KeyValuePair", "Opt", 1]]);
   expect(read('<PolyLog s="2">z</PolyLog>').json).toEqual(["PolyLog", "z", ["KeyValuePair", "s", 2]]);

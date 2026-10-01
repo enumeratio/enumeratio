@@ -50,6 +50,52 @@ test("each surface's change, and the level it needs", () => {
   expect(levelOf([])).toBe("none");
 });
 
+test("named slots, attributes and notation: renamed or rebound is a break", () => {
+  const before: LibrarySnapshot = {
+    version: "1.0.0",
+    index: {
+      namespace: "ada",
+      symbols: {
+        Scaled: { signature: "(x: number, factor: number?) -> number", pin: "sha256-a", params: ["x", "factor"] },
+        Quoted: { signature: "(any) -> any", pin: "sha256-b", attributes: ["HoldAll"] },
+      },
+      notation: {
+        latex: [
+          { trigger: "\\scaled", name: "Scaled" },
+          { trigger: "\\q", name: "Quoted" },
+        ],
+        traditional: [],
+      },
+    },
+  };
+  const after: LibrarySnapshot = {
+    version: "1.1.0",
+    index: {
+      namespace: "ada",
+      symbols: {
+        Scaled: { signature: "(x: number, by: number?) -> number", pin: "sha256-c", params: ["x", "by"] },
+        Quoted: { signature: "(any) -> any", pin: "sha256-b" },
+      },
+      notation: {
+        latex: [
+          { trigger: "\\scaled", name: "Quoted" },
+          { trigger: "\\twice", name: "Scaled" },
+        ],
+        traditional: ["Scaled"],
+      },
+    },
+  };
+  expect(changesOf(before, after, isSubtype)).toEqual([
+    { symbol: "Quoted", level: "major", what: "attributes HoldAll to none" },
+    { symbol: "Scaled", level: "major", what: "parameter factor renamed by" },
+    { symbol: "Scaled", level: "patch", what: "definition changed" },
+    { level: "major", what: "notation \\q removed" },
+    { level: "major", what: "notation \\scaled now reads as Quoted" },
+    { level: "minor", what: "notation \\twice added" },
+    { level: "patch", what: "TraditionalForm rules none to Scaled" },
+  ]);
+});
+
 test("what a version number says, as a caret range reads it", () => {
   expect(versionSays("1.2.3", "2.0.0", "major")).toBe(true);
   expect(versionSays("1.2.3", "1.3.0", "major")).toBe(false);
