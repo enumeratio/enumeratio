@@ -45,9 +45,10 @@ function declareRoundingHead(ce: ComputeEngine, name: "Floor" | "Ceil" | "Round"
     ce,
     [name, 1],
     (ops) => ops[0] !== undefined && looksConstant(ops[0]),
-    () => (ops) => {
+    (native) => (ops, options) => {
       const n = ops[0]!.N();
-      if (n.im !== 0 || !Number.isFinite(n.re)) return undefined;
+      // A non-real or non-finite value is another package's (complex Floor), not ours to end.
+      if (n.im !== 0 || !Number.isFinite(n.re)) return native?.(ops, options);
       return ce.number(round(n.re));
     },
     1,
@@ -81,15 +82,15 @@ function declareExtremum(ce: ComputeEngine, name: "Max" | "Min", better: (a: num
       const items = pool(ops);
       return items.length >= 2 && items.some(looksConstant);
     },
-    () => (ops, options) => {
+    (native) => (ops, options) => {
       const items = pool(ops);
       let best: { op: BoxedExpression; v: number } | undefined;
       for (const op of items) {
         const n = op.N();
-        if (n.im !== 0 || !Number.isFinite(n.re)) return undefined;
+        if (n.im !== 0 || !Number.isFinite(n.re)) return native?.(ops, options);
         if (best === undefined || better(n.re, best.v)) best = { op, v: n.re };
       }
-      if (best === undefined) return undefined;
+      if (best === undefined) return native?.(ops, options);
       return options.numericApproximation ? best.op.N() : best.op;
     },
     { min: 1 },

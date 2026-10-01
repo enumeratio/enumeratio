@@ -9,7 +9,7 @@ signatures:
   - call: IsSquareFree(f)
     description: for a polynomial $f$, whether it has no repeated irreducible factor.
     library: enumeratio-number-theory
-    type: (expression, expression?) -> boolean
+    type: (expression, any*) -> boolean
     overrides: compute-engine
   - call: IsSquareFree(f, x)
     description: whether $f$ has no repeated factor as a polynomial in $x$ alone.
