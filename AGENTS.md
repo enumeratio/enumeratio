@@ -136,6 +136,14 @@ so a page reads the same on GitHub and on the site.
   `deep-tests` job sets (give the package a filter there). Keep the important cases in the
   standard run as fixed examples, not left to the sample. Don't just raise a timeout.
 
+## Generated from our own sources
+
+Output made from the repo's own sources (records, definitions, the schema) is written by its
+package's `build`, gitignored and never committed; a test asserts on the built output instead
+of comparing it to a copy. After pulling or editing records, rerun `pnpm -r --filter '!web' run
+build` (or that package's `build`); `web dev` builds what is missing. Output that needs a
+kernel, the network or hand curation stays committed.
+
 ## Code
 
 - **Import down the hierarchy.** A package imports only what it extends in

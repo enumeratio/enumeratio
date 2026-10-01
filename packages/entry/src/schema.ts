@@ -1,12 +1,11 @@
 // JSON Schema for the two YAML records (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2, §4), generated from
 // the types in `types.ts` -- so an editor with a YAML language server gets completion and
 // validation on `reference/<Head>/index.md` and `reference/<Head>/examples.values.*.tsv`. This
-// module is the generator; `scripts/generate-schema.ts` writes its output to `schema/`, and
-// `tests/schema.test.ts` fails if the committed files drift from it.
+// module is the generator; `scripts/generate-schema.ts` writes its output to `schema/` (at build, uncommitted).
 //
 // Hand-written, not reflected off the TypeScript types: there is no type-to-JSON-Schema
 // step in this repo's toolchain, and the two schemas are small and stable enough that
-// keeping them in sync by eye (with the test as a tripwire) beats a new build-time
+// keeping them in sync by eye beats a new build-time
 // dependency. A JSON Schema author needs the *serialized* shape anyway, which for `expr` /
 // `expected` is "any JSON value", not the `MathJSON` union as TypeScript sees it.
 

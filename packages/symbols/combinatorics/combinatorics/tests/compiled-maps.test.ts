@@ -1,12 +1,11 @@
-// Maps compiled ahead of time from their Epsil (src/compiled-maps.generated.js): the generated
-// module is current, and every compiled map gives the interpreter's answers exactly, over the
-// small elements of every family on its source carrier.
+// Maps compiled at build from their Epsil (src/compiled-maps.generated.js): every compiled map
+// gives the interpreter's answers exactly, over the small elements of every family on its
+// source carrier.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { allKernels, type FamilyKernel } from "../collections/src/index.ts";
 import { CARRIERS } from "../src/carriers.ts";
-import { compiledMaps } from "../scripts/compile-maps.ts";
 import { COMPILED_MAPS } from "../src/compiled-maps.generated.js";
 import { fastDefinition } from "../src/compiled.ts";
 import { evaluateDefinition, MAPS } from "../src/maps.ts";
@@ -39,11 +38,9 @@ function subjectsOf(carrier: string): unknown[] {
 
 const ce = new ComputeEngine();
 
-test("the compiled module is current (rerun scripts/compile-maps.ts)", () => {
-  const current = Object.fromEntries(compiledMaps().map((e) => [e.key, e.hash]));
-  const generated = Object.fromEntries(Object.entries(COMPILED_MAPS).map(([key, e]) => [key, e.hash]));
-  expect(generated).toEqual(current);
-}, 60_000);
+test("the build compiled maps", () => {
+  expect(Object.keys(COMPILED_MAPS).length).toBeGreaterThan(0);
+});
 
 // Every map compiled ahead of time, run from its generated code, against the interpreter.
 for (const map of MAPS.filter((m) => COMPILED_MAPS[`${m.name}@${m.from}`] !== undefined)) {

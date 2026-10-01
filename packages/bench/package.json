@@ -12,6 +12,7 @@
   "scripts": {
     "test": "vp test",
     "check": "vp check",
+    "build": "node scripts/generate.ts",
     "bench": "node scripts/bench.ts"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 // Structural checks on the generated Python-family harnesses (https://github.com/enumeratio/enumeratio/wiki/Benchmarking §4):
-// no kernel needed, just the emitted text. `generated.test.ts` checks the committed files
-// match a fresh generation; these check what a fresh generation should contain.
+// no kernel needed, just the emitted text. These check what a
+// fresh generation should contain.
 
 import { describe, expect, test } from "vite-plus/test";
 import { catalogPlan, planned } from "../src/generate.ts";

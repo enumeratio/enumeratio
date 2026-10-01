@@ -1,2 +1,4 @@
 dist
 node_modules
+# Written by `build` (scripts/collect-stories.ts); never committed.
+src/stories-data.ts
