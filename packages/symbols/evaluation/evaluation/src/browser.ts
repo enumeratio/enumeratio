@@ -496,8 +496,12 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
   // `id`s are unique for the session's whole lifetime, so one shared map survives a
   // `spawnDedicated()` port swap without needing per-port bookkeeping.
   const dispatchers = new Map<number, (event: WorkerMessageEvent) => void>();
+  // Ports that have said anything (the worker's `connected` on the handshake, or any reply):
+  // their worker is running, so a call still waiting on one is queued, not stuck.
+  const live = new WeakSet<MessagePortLike>();
   function attachDispatcher(p: MessagePortLike): void {
     p.onmessage = (event) => {
+      live.add(p);
       const id = (event.data as { id?: number } | undefined)?.id;
       if (id !== undefined) dispatchers.get(id)?.(event);
     };
@@ -566,7 +570,10 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         if (settled) return;
         settled = true;
         cleanup();
-        if (wasDedicated) {
+        // Concurrent calls on one port each give up on it, but it's replaced only once.
+        if (port !== currentPort) {
+          // already abandoned by another call
+        } else if (wasDedicated) {
           // Kill it outright (the only reliable cancel for a tight, uncooperative loop --
           // https://github.com/enumeratio/enumeratio/wiki/Computation §5.3) and start fresh for the next call.
           terminateMine?.();
@@ -580,6 +587,13 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
           spawnDedicated();
         }
         resolve({ value: ABORTED, reset: true });
+      };
+      // The spawn guard: a port that never said anything has a worker that never started.
+      // One that has is busy with earlier calls (the kernel runs them one at a time), and a
+      // call waiting behind them isn't stuck.
+      const notStarted = (): void => {
+        spawnTimer = undefined;
+        if (!live.has(currentPort)) kill();
       };
       const onMessage = (event: WorkerMessageEvent): void => {
         const m = event.data as {
@@ -628,7 +642,7 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
       // itself; those are two different guards (see SPAWN_TIMEOUT_MS's own comment).
       // Gating this behind `timeMs !== undefined` left a call with no deadline at all
       // hanging forever against a session that never actually started.
-      spawnTimer = setTimeout(kill, spawnTimeoutMs);
+      spawnTimer = setTimeout(notStarted, spawnTimeoutMs);
 
       const { source, session, evaluate, raw, write, close } = callOptions;
       currentPort.postMessage({ id, json, timeMs, source, session, evaluate, raw, write, close });

@@ -91,7 +91,7 @@ export interface KernelWorkerOptions extends KernelOptions {
 /** The subset of `MessagePort` (a `SharedWorker` connection) or `self` (a dedicated
  * `Worker`, which doubles as its own port) this needs. */
 export interface PortLike {
-  postMessage(message: EvaluateResponse): void;
+  postMessage(message: EvaluateResponse | { readonly kind: "connected" }): void;
   onmessage: ((event: { data: HandshakeRequest | EvaluateRequest }) => void) | null;
   start?(): void;
 }
@@ -172,6 +172,9 @@ export function startSessionWorker(configure?: ConfigureFn, options?: KernelWork
       const fromSetup = catalogue === undefined && setup !== undefined ? urlConfigure(setup) : undefined;
       engine ??= buildEngine(configure ?? fromSetup, options?.createEngine);
       attachEvaluateHandler(port);
+      // Running: the host's spawn guard stops waiting on this port, though the engine may
+      // still be building.
+      port.postMessage({ kind: "connected" });
     };
     port.start?.();
   }

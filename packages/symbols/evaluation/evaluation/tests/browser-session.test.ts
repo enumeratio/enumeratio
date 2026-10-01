@@ -265,6 +265,48 @@ test("a SharedWorker that never reports started also poisons this tab's session 
   session.close();
 });
 
+test("a call waiting behind others on a running worker isn't given up on", async () => {
+  // The worker said `connected` but answers later than the spawn guard: a kernel running
+  // earlier calls first. The call waits for its answer rather than abandoning the worker.
+  const shared = fakePort({ autoStart: false });
+  const dedicatedWorkers: ReturnType<typeof fakeWorker>[] = [];
+  const session = openSession({
+    spawnTimeoutMs: 5,
+    createSharedWorker: (): SharedWorkerLike => ({ port: shared.port }),
+    createWorker: () => {
+      const fake = fakeWorker();
+      dedicatedWorkers.push(fake);
+      return fake.worker;
+    },
+  });
+  shared.respond({ kind: "connected" });
+  const queued = session.evaluate(["Add", 1, 1]);
+  await new Promise((resolve) => setTimeout(resolve, 20));
+  shared.respond({ id: 0, kind: "result", ok: true, json: 2 });
+  await expect(queued).resolves.toEqual({ value: 2, reset: false });
+  expect(shared.closedCount()).toBe(0);
+  expect(dedicatedWorkers).toHaveLength(0);
+});
+
+test("calls on a worker that never started replace it once, not once each", async () => {
+  const shared = fakePort({ autoStart: false });
+  const dedicatedWorkers: ReturnType<typeof fakeWorker>[] = [];
+  const session = openSession({
+    spawnTimeoutMs: 5,
+    createSharedWorker: (): SharedWorkerLike => ({ port: shared.port }),
+    createWorker: () => {
+      const fake = fakeWorker();
+      dedicatedWorkers.push(fake);
+      return fake.worker;
+    },
+  });
+  const calls = [1, 2, 3].map((n) => session.evaluate(["Add", n, 1]));
+  for (const call of calls) await expect(call).resolves.toEqual({ value: "Aborted", reset: true });
+  expect(shared.closedCount()).toBe(1);
+  expect(dedicatedWorkers).toHaveLength(1);
+  session.close();
+});
+
 test("openSession passes its name through to createSharedWorker", () => {
   const fake = fakePort();
   let seenName: string | undefined;
