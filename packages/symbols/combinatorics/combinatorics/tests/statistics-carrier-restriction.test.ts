@@ -76,24 +76,21 @@ const members = (expr: unknown): string[] => {
   return Array.from({ length: total }, (_, i) => JSON.stringify(ce.box(["At", expr, i + 1] as never).evaluate().json));
 };
 
-test("the specification agrees with the fast kernel — as a SET", () => {
-  // `Derangements` and `CyclicPermutations` already exist as hand-written collections with
-  // their own count and unrank. The restriction is the SPECIFICATION of the same family, so
-  // filtering the base must reproduce it — the reference/accelerated differential this
-  // project runs everywhere else, arriving for collections.
-  //
-  // It agrees on membership and disagrees on ORDER: filtering S4 gives [2,1,4,3] first,
-  // while the kernel gives [4,3,2,1]. Neither is wrong. A restriction says WHICH elements,
-  // not in what sequence — enumeratio gives each collection its own canonical order, and a
-  // restricted collection's order is its own data rather than the parent's induced one.
-  // That is more evidence for §4: a restriction is a set.
+test("the specification agrees with the fast kernel, in order where the base's order is induced", () => {
+  // A named restriction with a fast collection (`Derangements`, `CyclicPermutations`) is the
+  // same family as filtering its base, so filtering must reproduce it. A restriction of the
+  // symmetric group keeps its lex order (https://github.com/enumeratio/enumeratio/wiki/Speculative-Restrictions),
+  // so there the two agree element by element. The other bases' restrictions are not audited
+  // for order yet, and are compared as sets.
   for (const restriction of RESTRICTIONS) {
     if (!ce.lookupDefinition(restriction.name)) continue;
+    const ordered = restriction.base === "SymmetricGroup";
     for (let n = 0; n <= 5; n++) {
       const specified = ["Restricted", [restriction.base, n], ["Function", fillRestriction(restriction), "_e"]];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());
+      const [a, b] = [members(specified), members(kernel)];
+      expect(ordered ? a : a.toSorted(), `${restriction.name}(${n}) members`).toEqual(ordered ? b : b.toSorted());
     }
   }
 });
@@ -113,7 +110,7 @@ const COMPOSITION_RESTRICTION_NAMES = new Set([
 ]);
 
 test("composition restrictions agree with their kernels for n = 0..8", () => {
-  // Same recipe as the generic SET differential above, but out to n = 8 (composition counts
+  // Same recipe as the differential above, as sets, but out to n = 8 (composition counts
   // grow like 2^n, so this stays cheap while covering more of each family's shape than n ≤ 5).
   for (const restriction of RESTRICTIONS) {
     if (!COMPOSITION_RESTRICTION_NAMES.has(restriction.name)) continue;
@@ -135,7 +132,7 @@ const PARTITION_RESTRICTION_NAMES = new Set([
 ]);
 
 test("partition restrictions agree with their kernels for n = 0..8", () => {
-  // Same recipe as the generic SET differential above, but out to n = 8 — the kernel elements,
+  // Same recipe as the differential above, as sets, but out to n = 8 — the kernel elements,
   // as a SET, must equal Filter(IntegerPartitions(n), predicate).
   for (const restriction of RESTRICTIONS) {
     if (!PARTITION_RESTRICTION_NAMES.has(restriction.name)) continue;

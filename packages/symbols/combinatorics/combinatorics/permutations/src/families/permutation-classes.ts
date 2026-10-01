@@ -16,10 +16,9 @@ import {
   FibonacciWordCount,
   FibonacciWordRank,
   FibonacciWordUnrank,
-  KSubsetRank,
-  KSubsetUnrank,
   SchroederCount,
 } from "../../../collections/src/families/kernels-extra.ts";
+import { inducedOrder } from "../../../collections/src/families/induced-order.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors permutations.ts's private `ints`.
@@ -195,57 +194,14 @@ function ascentCount(perm: readonly number[]): number {
 function grassmannianCount(n: number): number {
   return 2 ** n - n;
 }
-function buildFromFirstBlock(n: number, block: readonly number[]): number[] {
-  const inBlock = new Set(block);
-  const rest: number[] = [];
-  for (let v = 1; v <= n; v++) if (!inBlock.has(v)) rest.push(v);
-  return [...block, ...rest];
-}
-function grassmannianUnrank(n: number, r: number): number[] {
-  const total = grassmannianCount(n);
-  let rr = total ? ((Math.trunc(r) % total) + total) % total : 0;
-  if (rr === 0) return PermutationUnrank(n, 0); // identity, A = ∅
-  rr -= 1;
-  for (let k = 1; k <= n - 1; k++) {
-    const countK = binomial(n, k) - 1; // exclude the prefix subset {1,…,k}
-    if (rr < countK) return buildFromFirstBlock(n, KSubsetUnrank(n, k, rr + 1));
-    rr -= countK;
-  }
-  throw new Error(`grassmannianUnrank: rank out of range for n=${n}`);
-}
 function isGrassmannian(perm: readonly number[], n: number): boolean {
   return IsPermutationOf(perm as number[], n) && descentCount(perm) <= 1;
-}
-function grassmannianRank(perm: readonly number[]): number {
-  const n = perm.length;
-  let d = -1;
-  for (let i = 0; i + 1 < n; i++)
-    if (perm[i] > perm[i + 1]) {
-      d = i;
-      break;
-    }
-  if (d === -1) return 0; // identity
-  const k = d + 1;
-  const idx = KSubsetRank(perm.slice(0, k));
-  let rank = 1;
-  for (let kk = 1; kk < k; kk++) rank += binomial(n, kk) - 1;
-  return rank + (idx - 1);
 }
 
 // ─── CograssmannianPermutations(n): at most one ascent — the complement (v ↦ n+1−v) of a Grassmannian
 // permutation, since complementing turns every descent into an ascent and vice versa. Same count 2ⁿ−n.
-function permutationComplement(perm: readonly number[]): number[] {
-  const n = perm.length;
-  return perm.map((v) => n + 1 - v);
-}
-function cograssmannianUnrank(n: number, r: number): number[] {
-  return permutationComplement(grassmannianUnrank(n, r));
-}
 function isCograssmannian(perm: readonly number[], n: number): boolean {
   return IsPermutationOf(perm as number[], n) && ascentCount(perm) <= 1;
-}
-function cograssmannianRank(perm: readonly number[]): number {
-  return grassmannianRank(permutationComplement(perm));
 }
 
 // ─── NonCrossingPermutations(n): permutations whose cycles, read as a set partition of [n], form a
@@ -386,28 +342,18 @@ export const entries: NumberKernel[] = [
     ),
     carrier: "Permutation",
   },
-  {
-    ...ints(
-      "GrassmannianPermutations",
-      1,
-      ([n]) => grassmannianCount(n),
-      ([n], r) => grassmannianUnrank(n, r),
-      (a, [n]) => isGrassmannian(a, n),
-      (a) => grassmannianRank(a),
-    ),
-    carrier: "Permutation",
-  },
-  {
-    ...ints(
-      "CograssmannianPermutations",
-      1,
-      ([n]) => grassmannianCount(n),
-      ([n], r) => cograssmannianUnrank(n, r),
-      (a, [n]) => isCograssmannian(a, n),
-      (a) => cograssmannianRank(a),
-    ),
-    carrier: "Permutation",
-  },
+  inducedOrder({
+    head: "GrassmannianPermutations",
+    paramCount: 1,
+    count: ([n]) => grassmannianCount(n),
+    member: (a, [n]) => isGrassmannian(a, n),
+  }),
+  inducedOrder({
+    head: "CograssmannianPermutations",
+    paramCount: 1,
+    count: ([n]) => grassmannianCount(n),
+    member: (a, [n]) => isCograssmannian(a, n),
+  }),
   {
     ...ints(
       "NonCrossingPermutations",

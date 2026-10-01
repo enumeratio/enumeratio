@@ -1,5 +1,9 @@
+import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/permutations.ts";
+import { kernelsOn, liftFamily } from "../../collections/src/families/epsil.ts";
+import { entries as families } from "../src/families/permutations.ts";
+
+const entries = kernelsOn(new ComputeEngine(), families.map(liftFamily));
 
 // Certify every permutation family: rank(unrank(p, r), p) === r across the whole
 // family, unranked elements are valid members, and count matches the enumeration —
@@ -58,8 +62,8 @@ const PARAMS: Record<string, number[][]> = {
 for (const entry of entries) {
   for (const p of PARAMS[entry.head] ?? [[3]]) {
     test(`${entry.head}(${p.join(", ")}) round-trips`, () => {
-      const total = entry.count(p);
-      for (let r = 0; r < total; r++) {
+      const total = entry.count(p) as bigint;
+      for (let r = 0n; r < total; r++) {
         const element = entry.unrank(p, r);
         expect(entry.valid(element, p)).toBe(true);
         expect(entry.rank(element, p)).toBe(r);
@@ -71,7 +75,7 @@ for (const entry of entries) {
 // Counts against OEIS, independent of the round-trip above (a family could round-trip
 // consistently against a WRONG count if unrank/rank/count were all wrong the same way).
 const byHead = Object.fromEntries(entries.map((e) => [e.head, e]));
-const countsOf = (head: string, ps: number[][]) => ps.map((p) => byHead[head].count(p));
+const countsOf = (head: string, ps: number[][]) => ps.map((p) => Number(byHead[head].count(p)));
 
 test("EvenPermutations count = A001710 (n!/2, n<=1 -> 1)", () => {
   expect(countsOf("EvenPermutations", [[0], [1], [2], [3], [4], [5], [6], [7]])).toEqual([

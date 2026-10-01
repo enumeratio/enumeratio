@@ -4,7 +4,8 @@
 // number for most, a fold peeling off the largest free label for involutions and derangements.
 
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
-import { bind } from "../../../src/map-helpers.ts";
+import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
+import { cell, lets, rowTable } from "../../../collections/src/families/tables.ts";
 
 type MathJSON = unknown;
 
@@ -204,76 +205,153 @@ const colouredPermutations: EpsilFamily = {
   },
 };
 
-// A cyclic permutation is one n-cycle, written from 1: (1 w_1+1 … w_{n−1}+1), where w is the
-// permutation of n − 1 with the same rank. Entry m of the image is the value after m in the
-// cycle: w_{p+1} + 1 where m = w_p + 1 (taking w_0 = 0, so m = 1 sits at p = 0), and 1 after the
-// last.
-const cycleWord = (p: MathJSON): MathJSON => lexEntry(sub("_n", 1), sub("_n", 1), "_r", p);
-const successor = (m: MathJSON): MathJSON =>
+// Restrictions of the symmetric group, in its lex order: the k-th member is the k-th
+// permutation of n, in lex order, that the restriction contains. Each is defined by how many
+// of its members start with a given prefix (`permutationRestriction`): `prefix` holds n slots,
+// the first `filled` set, the rest 0.
+
+const pre = (q: MathJSON): MathJSON => at("prefix", q);
+const filledSlots = upTo(1, "filled");
+
+/**
+ * Following the prefix from slot s: the cycle's length when it returns to s, as −length; −(n + 1)
+ * when it runs into an unfilled slot first; and with `leaderOnly`, −(n + 2) when it meets a slot
+ * smaller than s, so that a cycle is counted once, at its least point.
+ */
+const walk = (s: string, leaderOnly = false): MathJSON =>
   fold(
     [
       "If",
+      ["LessEqual", `w_${s}`, 0],
+      `w_${s}`,
       [
-        "Or",
-        ["And", ["Equal", "p", 0], ["Equal", m, 1]],
-        ["And", ["Greater", "p", 0], ["Equal", cycleWord("p"), sub(m, 1)]],
+        "If",
+        ["Equal", `w_${s}`, s],
+        ["Negate", `k_${s}`],
+        [
+          "If",
+          ["Greater", `w_${s}`, "filled"],
+          ["Negate", add("_n", 1)],
+          leaderOnly ? ["If", ["Less", `w_${s}`, s], ["Negate", add("_n", 2)], pre(`w_${s}`)] : pre(`w_${s}`),
+        ],
       ],
-      ["If", ["Equal", "p", sub("_n", 1)], 1, add(cycleWord(add("p", 1)), 1)],
-      "after",
     ],
-    "after",
-    "p",
-    0,
-    upTo(0, sub("_n", 1)),
+    `w_${s}`,
+    `k_${s}`,
+    pre(s),
+    upTo(1, "_n"),
   );
-/** The value t steps along the cycle from 1. */
-const walk = (t: MathJSON): MathJSON => fold(element("s"), "s", "step", 1, upTo(1, t));
+/** Whether the walk from s came back to s, closing a cycle. */
+const closes = (walked: MathJSON): MathJSON => ["And", ["Less", walked, 0], ["GreaterEqual", walked, ["Negate", "_n"]]];
 
-/** The permutations of n that are a single n-cycle, (n − 1)! of them for n ≥ 1. */
-const cyclicPermutations: EpsilFamily = {
+/** The permutations of n that are a single n-cycle, (n − 1)! of them for n ≥ 1. A prefix
+ *  extends to one unless it already closes a cycle; its paths (one per label nothing maps to
+ *  yet, n − filled of them) join into a single cycle in (n − filled − 1)! ways. */
+const cyclicPermutations: EpsilFamily = permutationRestriction({
   head: "CyclicPermutations",
   carrier: "Permutation",
   paramCount: 1,
-  kind: "ints",
   params: ["_n"],
-  epsil: {
-    count: ["If", ["Less", "_n", 1], 0, ["Factorial", sub("_n", 1)]],
-    unrank: map(successor("m"), "m", upTo(1, "_n")),
-    rank: lexRank(sub("_n", 1), sub("_n", 1), (j) => sub(walk(j), 1)),
-    valid: [
-      "And",
-      ["GreaterEqual", "_n", 1],
-      hasLength("_x", "_n", [
-        "And",
-        injective("_n", "_n", element),
-        all((t) => ["NotEqual", walk(t), 1], upTo(1, sub("_n", 1)), "t"),
-      ]),
+  completions: [
+    "If",
+    ["Less", "_n", 1],
+    0,
+    [
+      "If",
+      fold(
+        ["Or", "short", ["And", closes(walk("cs")), ["Less", ["Negate", walk("cs")], "_n"]]],
+        "short",
+        "cs",
+        "False",
+        filledSlots,
+      ),
+      0,
+      ["If", ["Equal", "filled", "_n"], 1, ["Factorial", sub(sub("_n", "filled"), 1)]],
     ],
-  },
-};
+  ],
+});
 
-// Involutions and derangements are ranked by peeling off the largest label still free, which
-// leaves a smaller set to rank in turn. The set is a fold's list state: one slot per label (0
-// while it is free, else its image, or 1 for "taken" when ranking), with the running rank or
-// leftover r after them. Each step binds the free labels once.
+/** The permutations of n with exactly k cycles, c(n, k) of them (unsigned Stirling numbers of
+ *  the first kind). A prefix has closed some cycles already, q of them; its n − filled open
+ *  paths close into the remaining k − q cycles in c(n − filled, k − q) ways. */
+const stirlingWidth = add("_n", 1);
+const stirling = cell("stirling", stirlingWidth);
+export const kCyclePermutations: EpsilFamily = permutationRestriction({
+  head: "KCyclePermutations",
+  carrier: "Permutation",
+  paramCount: 2,
+  params: ["_n", "_k"],
+  tables: [
+    [
+      "stirling",
+      rowTable(
+        "st",
+        add("_n", 1),
+        stirlingWidth,
+        (c) => ["If", ["Equal", c, 0], 1, 0],
+        (prev, r, c) => [
+          "If",
+          ["Equal", c, 0],
+          0,
+          add(prev(sub(r, 1), sub(c, 1)), ["Multiply", sub(r, 1), prev(sub(r, 1), c)]),
+        ],
+      ),
+    ],
+  ],
+  completions: lets(
+    [
+      ["left", sub("_k", fold(add("q", ["If", closes(walk("ks", true)), 1, 0]), "q", "ks", 0, filledSlots)), "integer"],
+      ["open", sub("_n", "filled"), "integer"],
+    ],
+    ["If", ["Or", ["Less", "left", 0], ["Greater", "left", "open"]], 0, stirling("open", "left")],
+  ),
+});
 
-// map-helpers' MathJSON is structural; definitions here are built as `unknown`.
-const typedBind = bind as (name: string, value: MathJSON, body: MathJSON, type?: string) => MathJSON;
-const lets = (bindings: readonly [string, MathJSON, string][], body: MathJSON): MathJSON =>
-  bindings.reduceRight<MathJSON>((inner, [name, value, type]) => typedBind(name, value, inner, type), body);
-const freeLabels = (state: string): MathJSON => [
-  "Filter",
-  upTo(1, "_n"),
-  ["Function", ["Equal", at(state, "x"), 0], "x"],
-];
-/** The state after one step: each slot of `state` rewritten to `value(slot)`. */
-const rewrite = (state: string, size: MathJSON, value: (slot: string) => MathJSON): MathJSON =>
-  map(value("slot"), "slot", upTo(1, size));
-const slots = add("_n", 1);
-
-// Telephone and subfactorial numbers come from a table built once per call by their
-// recurrences, then read by index: summing factorials afresh at every step costs more than the
-// rest of the step.
+/** The permutations of n with no fixed point, D(n) of them. Of the open slots, m have their own
+ *  label still free; by inclusion–exclusion over those, Σ (−1)^i C(m, i) (n − filled − i)!. */
+const derangements: EpsilFamily = permutationRestriction({
+  head: "Derangements",
+  carrier: "Permutation",
+  paramCount: 1,
+  params: ["_n"],
+  completions: [
+    "If",
+    all((q) => ["NotEqual", pre(q), q], filledSlots, "dq"),
+    lets(
+      [
+        [
+          "m",
+          fold(
+            add("dm", [
+              "If",
+              fold(["Or", "taken", ["Equal", pre("dt"), "dp"]], "taken", "dt", "False", filledSlots),
+              0,
+              1,
+            ]),
+            "dm",
+            "dp",
+            0,
+            upTo(add("filled", 1), "_n"),
+          ),
+          "integer",
+        ],
+      ],
+      fold(
+        add("dsum", [
+          "Multiply",
+          ["Power", -1, "di"],
+          ["Binomial", "m", "di"],
+          ["Factorial", sub(sub("_n", "filled"), "di")],
+        ]),
+        "dsum",
+        "di",
+        0,
+        upTo(0, "m"),
+      ),
+    ),
+    0,
+  ],
+});
 
 /** T(0..n), the involutions of 0..n: T(i) = T(i − 1) + (i − 1) T(i − 2). */
 const telephoneTable = fold(
@@ -283,298 +361,32 @@ const telephoneTable = fold(
   ["List", 1, 1],
   upTo(2, "_n"),
 );
-/** D(0..n), the derangements of 0..n: D(i) = (i − 1) (D(i − 1) + D(i − 2)). */
-const subfactorialTable = fold(
-  ["Append", "dt", ["Multiply", sub("di", 1), add(at("dt", "di"), at("dt", sub("di", 1)))]],
-  "dt",
-  "di",
-  ["List", 1, 0],
-  upTo(2, "_n"),
-);
-/** T(m), from the table bound as `telephones`. */
-const telephone = (m: MathJSON): MathJSON => at("telephones", add(m, 1));
-/** D(m), from the table bound as `subfactorials`, and 0 for m < 0. */
-const subfactorial = (m: MathJSON): MathJSON => ["If", ["Less", m, 0], 0, at("subfactorials", add(m, 1))];
-const withTelephones = (body: MathJSON): MathJSON => typedBind("telephones", telephoneTable, body, "list<integer>");
-const withSubfactorials = (body: MathJSON): MathJSON =>
-  typedBind("subfactorials", subfactorialTable, body, "list<integer>");
 
-const permutationOfN = (then: MathJSON): MathJSON =>
-  hasLength("_x", "_n", ["If", injective("_n", "_n", element), then, "False"]);
-
-// Involutions: of m free labels, the largest is either fixed (the first T(m − 1) ranks) or
-// paired with the j-th free label below it (T(m − 2) ranks each).
-const involutionUnrankStep = lets(
-  [
-    ["L", freeLabels("s"), "list<integer>"],
-    ["m", ["Length", "L"], "integer"],
-  ],
-  [
-    "If",
-    ["Equal", "m", 0],
-    "s",
-    lets(
-      [
-        ["r", at("s", slots), "integer"],
-        ["t1", telephone(sub("m", 1)), "integer"],
-        ["last", at("L", "m"), "integer"],
-      ],
-      [
-        "If",
-        ["Less", "r", "t1"],
-        rewrite("s", slots, (p) => ["If", ["Equal", p, "last"], "last", at("s", p)]),
-        lets(
-          [
-            ["t2", telephone(sub("m", 2)), "integer"],
-            ["left", sub("r", "t1"), "integer"],
-            ["partner", at("L", add(quotient("left", "t2"), 1)), "integer"],
-          ],
-          rewrite("s", slots, (p) => [
-            "If",
-            ["Equal", p, "last"],
-            "partner",
-            ["If", ["Equal", p, "partner"], "last", ["If", ["Equal", p, slots], ["Mod", "left", "t2"], at("s", p)]],
-          ]),
-        ),
-      ],
-    ),
-  ],
-);
-
-const involutionRankStep = lets(
-  [
-    ["L", freeLabels("s"), "list<integer>"],
-    ["m", ["Length", "L"], "integer"],
-  ],
-  [
-    "If",
-    ["LessEqual", "m", 1],
-    "s",
-    lets(
-      [
-        ["last", at("L", "m"), "integer"],
-        ["partner", element("last"), "integer"],
-      ],
-      [
-        "If",
-        ["Equal", "partner", "last"],
-        rewrite("s", slots, (p) => ["If", ["Equal", p, "last"], 1, at("s", p)]),
-        rewrite("s", slots, (p) => [
-          "If",
-          ["Or", ["Equal", p, "last"], ["Equal", p, "partner"]],
-          1,
-          [
-            "If",
-            ["Equal", p, slots],
-            add(at("s", slots), telephone(sub("m", 1)), [
-              "Multiply",
-              ["Count", ["Filter", "L", ["Function", ["Less", "y", "partner"], "y"]]],
-              telephone(sub("m", 2)),
-            ]),
-            at("s", p),
-          ],
-        ]),
-      ],
-    ),
-  ],
-);
-
-/** The self-inverse permutations of n, T(n) of them. */
-const involutions: EpsilFamily = {
+/** The self-inverse permutations of n, T(n) of them (telephone numbers). A prefix is consistent
+ *  when each slot that points back into the prefix is pointed back at; the labels it hasn't
+ *  touched (neither a filled slot nor pointed at by one) pair up or stay fixed in T(free) ways. */
+const involutions: EpsilFamily = permutationRestriction({
   head: "Involutions",
   carrier: "Permutation",
   paramCount: 1,
-  kind: "ints",
   params: ["_n"],
-  epsil: {
-    count: withTelephones(telephone("_n")),
-    unrank: withTelephones([
-      "Most",
-      fold(involutionUnrankStep, "s", "step", ["Append", map(0, "y", upTo(1, "_n")), "_r"], upTo(1, "_n")),
-    ]),
-    rank: withTelephones(
-      at(fold(involutionRankStep, "s", "step", ["Append", map(0, "y", upTo(1, "_n")), 0], upTo(1, "_n")), slots),
-    ),
-    valid: permutationOfN(all((j) => ["Equal", element(element(j)), j], upTo(1, "_n"))),
-  },
-};
-
-// Derangements: of s free labels, the largest m goes to the label of index ⌊r / (D(s−2) + D(s−1))⌋
-// below it. Either the two swap (the first D(s − 2) of those ranks), or m is spliced into a
-// derangement of the other s − 1 labels: the label that went to p goes to m instead. A splice
-// needs the smaller derangement first, so unranking records each step's choice in a slot of its
-// own (p for a swap, −p for a splice, at m), then applies the choices smallest m first.
-const derangementChoiceStep = lets(
-  [
-    ["L", freeLabels("s"), "list<integer>"],
-    ["size", ["Length", "L"], "integer"],
-  ],
-  [
+  tables: [["telephones", telephoneTable]],
+  completions: [
     "If",
-    ["Equal", "size", 0],
-    "s",
-    lets(
-      [
-        ["r", at("s", add(["Multiply", 2, "_n"], 1)), "integer"],
-        ["swaps", subfactorial(sub("size", 2)), "integer"],
-        ["block", add("swaps", subfactorial(sub("size", 1))), "integer"],
-        ["m", at("L", "size"), "integer"],
-        ["p", at("L", add(quotient("r", "block"), 1)), "integer"],
-        ["left", ["Mod", "r", "block"], "integer"],
-      ],
-      [
-        "If",
-        ["Less", "left", "swaps"],
-        rewrite("s", add(["Multiply", 2, "_n"], 1), (q) => [
-          "If",
-          ["Or", ["Equal", q, "m"], ["Equal", q, "p"]],
-          1,
-          [
-            "If",
-            ["Equal", q, add("_n", "m")],
-            "p",
-            ["If", ["Equal", q, add(["Multiply", 2, "_n"], 1)], "left", at("s", q)],
-          ],
-        ]),
-        rewrite("s", add(["Multiply", 2, "_n"], 1), (q) => [
-          "If",
-          ["Equal", q, "m"],
-          1,
-          [
-            "If",
-            ["Equal", q, add("_n", "m")],
-            ["Negate", "p"],
-            ["If", ["Equal", q, add(["Multiply", 2, "_n"], 1)], sub("left", "swaps"), at("s", q)],
-          ],
-        ]),
-      ],
-    ),
-  ],
-);
-/** Choice at m applied to the image built so far, `t`: a swap sets both ends, a splice reroutes. */
-const derangementApplyStep = lets(
-  [["c", at("choices", "m"), "integer"]],
-  [
-    "If",
-    ["Equal", "c", 0],
-    "t",
-    [
-      "If",
-      ["Greater", "c", 0],
-      map(["If", ["Equal", "q", "m"], "c", ["If", ["Equal", "q", "c"], "m", at("t", "q")]], "q", upTo(1, "_n")),
-      map(
-        [
-          "If",
-          ["Equal", "q", "m"],
-          ["Negate", "c"],
-          ["If", ["Equal", at("t", "q"), ["Negate", "c"]], "m", at("t", "q")],
-        ],
-        "q",
-        upTo(1, "_n"),
-      ),
-    ],
-  ],
-);
-const derangementChoices = lets(
-  [
-    [
-      "final",
-      fold(
-        derangementChoiceStep,
-        "s",
-        "step",
-        ["Append", map(0, "y", upTo(1, ["Multiply", 2, "_n"])), "_r"],
-        upTo(1, "_n"),
-      ),
-      "list<integer>",
-    ],
-  ],
-  map(at("final", add("_n", "m")), "m", upTo(1, "_n")),
-);
-
-// Ranking reverses it, largest label first: a swap adds its block's start; a splice adds the
-// swaps too, and undoes the reroute (the label that went to m goes to p) before going on.
-const derangementRankStep = lets(
-  [
-    ["L", freeLabels("s"), "list<integer>"],
-    ["size", ["Length", "L"], "integer"],
-  ],
-  [
-    "If",
-    ["Equal", "size", 0],
-    "s",
-    lets(
-      [
-        ["m", at("L", "size"), "integer"],
-        ["p", at("s", add("_n", "m")), "integer"],
-        ["swaps", subfactorial(sub("size", 2)), "integer"],
-        [
-          "start",
-          [
-            "Multiply",
-            ["Count", ["Filter", "L", ["Function", ["Less", "y", "p"], "y"]]],
-            add("swaps", subfactorial(sub("size", 1))),
-          ],
-          "integer",
-        ],
-      ],
-      [
-        "If",
-        ["Equal", at("s", add("_n", "p")), "m"],
-        rewrite("s", add(["Multiply", 2, "_n"], 1), (q) => [
-          "If",
-          ["Or", ["Equal", q, "m"], ["Equal", q, "p"]],
-          1,
-          ["If", ["Equal", q, add(["Multiply", 2, "_n"], 1)], add(at("s", q), "start"), at("s", q)],
-        ]),
-        rewrite("s", add(["Multiply", 2, "_n"], 1), (q) => [
-          "If",
-          ["Equal", q, "m"],
-          1,
-          [
-            "If",
-            ["Equal", q, add(["Multiply", 2, "_n"], 1)],
-            add(at("s", q), "start", "swaps"),
-            ["If", ["And", ["Greater", q, "_n"], ["Equal", at("s", q), "m"]], "p", at("s", q)],
-          ],
-        ]),
-      ],
-    ),
-  ],
-);
-
-/** The permutations of n with no fixed point, D(n) of them. */
-const derangements: EpsilFamily = {
-  head: "Derangements",
-  carrier: "Permutation",
-  paramCount: 1,
-  kind: "ints",
-  params: ["_n"],
-  epsil: {
-    count: withSubfactorials(subfactorial("_n")),
-    unrank: withSubfactorials(
-      typedBind(
-        "choices",
-        derangementChoices,
-        fold(derangementApplyStep, "t", "m", map(0, "y", upTo(1, "_n")), upTo(1, "_n")),
-        "list<integer>",
-      ),
-    ),
-    rank: withSubfactorials(
-      at(
-        fold(
-          derangementRankStep,
-          "s",
-          "step",
-          ["Append", ["Join", map(0, "y", upTo(1, "_n")), "_x"], 0],
-          upTo(1, "_n"),
+    all((q) => ["If", ["LessEqual", pre(q), "filled"], ["Equal", pre(pre(q)), q], "True"], filledSlots, "iq"),
+    at(
+      "telephones",
+      add(
+        sub(
+          sub("_n", "filled"),
+          fold(add("ahead", ["If", ["Greater", pre("ip"), "filled"], 1, 0]), "ahead", "ip", 0, filledSlots),
         ),
-        add(["Multiply", 2, "_n"], 1),
+        1,
       ),
     ),
-    valid: permutationOfN(all((j) => ["NotEqual", element(j), j], upTo(1, "_n"))),
-  },
-};
+    0,
+  ],
+});
 
 export const epsilEntries: readonly EpsilFamily[] = [
   symmetricGroup,

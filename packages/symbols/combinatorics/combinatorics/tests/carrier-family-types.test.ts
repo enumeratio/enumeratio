@@ -63,7 +63,7 @@ import {
 // collectionsEntries are FamilyKernel already) -- see each `declare<Area>` for the grouping this mirrors.
 const allFamilies: readonly FamilyKernel[] = [
   ...kernelsOn(new ComputeEngine(), permutationsCoreFamilies),
-  ...[...permutationsEntries, ...permutationClassesEntries].map(numberKernel),
+  ...kernelsOn(new ComputeEngine(), [...permutationsEntries, ...permutationClassesEntries].map(liftFamily)),
   ...kernelsOn(new ComputeEngine(), partitionsCoreEpsilFamilies),
   ...[...partitionsCoreEntries, ...partitionsEntries, ...partitionsTableauxPlaneEntries].map(numberKernel),
   ...kernelsOn(new ComputeEngine(), compositionsCoreFamilies),
