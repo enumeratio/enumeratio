@@ -15,6 +15,8 @@ import { rangeRationalStep } from "./patches/range-rational-step.ts";
 import { solveIdentity } from "./patches/solve-identity.ts";
 import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 import { logCombinationSign } from "./patches/log-combination-sign.ts";
+import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
+import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -95,6 +97,8 @@ export { gammaInfinity, evaluateGammaAtInfinity } from "./patches/gamma-infinity
 export { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches/ceil-floor-infinity.ts";
 export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
+export { directedInfinityParts, evaluateRealImaginaryOfDirectedInfinity } from "./patches/directed-infinity-parts.ts";
+export { nAccuracyGoal, evaluateNAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 export { rangeRationalStep, evaluateRangeWithRationalStep } from "./patches/range-rational-step.ts";
 export { solveIdentity, evaluateSolveIdentity } from "./patches/solve-identity.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
@@ -217,6 +221,8 @@ export const PATCHES: readonly Patch[] = [
   solveIdentity,
   takeDropNegativeCount,
   logCombinationSign,
+  directedInfinityParts,
+  nAccuracyGoal,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

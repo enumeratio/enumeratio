@@ -321,17 +321,30 @@ export function declareExpressionOps(ce: ComputeEngine): void {
 
   // Pick(list, sel, patt?): elements of `list` whose corresponding `sel` element matches
   // `patt` — default `True`, Wolfram's own 2-argument reading (keep where `sel` is True).
+  // A `sel` element that is itself a list, against a list element, picks inside it
+  // (`Pick({{a,b},{c,d}}, {{0,0},{1,1}}, 1)` is `{{}, {c,d}}`); mismatched lengths decline.
   ce.declare("Pick", {
     signature: "(list<any>, list<any>, any?) -> list<any>",
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const [listExpr, selExpr, pattExpr] = ops;
       if (listExpr === undefined || selExpr === undefined) return undefined;
-      const items = operandsOf(listExpr);
-      const sels = operandsOf(selExpr);
-      if (items.length !== sels.length) return undefined;
       const pattern = pattExpr ?? ce.True;
-      const picked = items.filter((_, i) => sels[i]!.match(pattern) !== null);
-      return ce.box(["List", ...picked]);
+      const pick = (list: BoxedExpression, sel: BoxedExpression): BoxedExpression | undefined => {
+        const items = operandsOf(list);
+        const sels = operandsOf(sel);
+        if (items.length !== sels.length) return undefined;
+        const picked: BoxedExpression[] = [];
+        for (let i = 0; i < items.length; i++) {
+          if (sels[i]!.match(pattern) !== null) picked.push(items[i]!);
+          else if (sels[i]!.operator === "List" && items[i]!.operator === "List") {
+            const inner = pick(items[i]!, sels[i]!);
+            if (inner === undefined) return undefined;
+            picked.push(inner);
+          }
+        }
+        return ce.box(["List", ...picked]);
+      };
+      return pick(listExpr, selExpr);
     },
   });
 

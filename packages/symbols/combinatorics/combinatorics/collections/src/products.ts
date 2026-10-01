@@ -150,7 +150,9 @@ export function limitsOf(expr: BoxedExpression): Limits | undefined {
   const ops = operandsOf(expr);
   const index = ops[0] === undefined ? undefined : symbolNameOf(ops[0]);
   if (index === undefined || ops[1] === undefined || ops[2] === undefined) return undefined;
-  return { index, lo: ops[1], hi: ops[2], step: ops[3] };
+  // `{k, n}` boxes as `Limits(k, Nothing, n)`: a range from 1.
+  const lo = symbolNameOf(ops[1]) === "Nothing" ? ops[1].engine.One : ops[1];
+  return { index, lo, hi: ops[2], step: ops[3] };
 }
 
 export function declareProducts(ce: ComputeEngine): void {

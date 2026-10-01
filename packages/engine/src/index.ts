@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { EVALUATES_OPERANDS } from "./overloads.ts";
 
 // Reading values back out of compute-engine expressions.
 //
@@ -171,10 +172,11 @@ export function wrapOperator(
   const native = operator.evaluate;
   const handler = build(native);
   const lazy = operator.lazy === true;
+  const foldsOperands = lazy && EVALUATES_OPERANDS.has(probe[0]);
   operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
     if (!fitsArity(arity, ops.length)) return native?.(ops, options);
     const values = lazy ? ops.map((op) => op.evaluate()) : ops;
-    return applies(values) ? handler(values, options) : native?.(ops, options);
+    return applies(values) ? handler(values, options) : native?.(foldsOperands ? values : ops, options);
   };
 }
 

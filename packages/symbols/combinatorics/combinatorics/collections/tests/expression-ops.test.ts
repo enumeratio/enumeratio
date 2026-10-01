@@ -172,6 +172,20 @@ test("Level(expr, Infinity) reaches every level, post-order", () => {
 test("Pick keeps elements where sel is True", () => {
   expect(run(["Pick", ["List", "a", "b", "c"], ["List", "True", "False", "True"]])).toEqual(["List", "a", "c"]);
 });
+test("Pick picks inside a nested list where sel is nested", () => {
+  const list = ["List", ["List", "a", "b"], ["List", "c", "d"]];
+  expect(run(["Pick", list, ["List", ["List", 0, 0], ["List", 1, 1]], 1])).toEqual([
+    "List",
+    ["List"],
+    ["List", "c", "d"],
+  ]);
+  expect(run(["Pick", list, ["List", ["List", 1, 2, 3], ["List", 0, 1]], 1])).toEqual([
+    "Pick",
+    list,
+    ["List", ["List", 1, 2, 3], ["List", 0, 1]],
+    1,
+  ]);
+});
 test("Pick with an explicit pattern keeps elements matching it", () => {
   expect(run(["Pick", ["List", "a", "b", "c", "d"], ["List", 1, 0, 1, 0], 1])).toEqual(["List", "a", "c"]);
 });

@@ -68,3 +68,8 @@ test("The symbolic triangular product matches the direct nested product at sever
     expect(at(symbolic, { p }), `p=${p}`).toEqual(direct);
   }
 });
+
+test("Product(a^k, {k, n}) starts at k = 1", () => {
+  const product = ce.box(["Product", ["Power", "a", "k"], ["Tuple", "k", "n"]]).evaluate();
+  expect(product.subs({ a: 2, n: 4 }).evaluate().re).toBe(2 ** 10);
+});

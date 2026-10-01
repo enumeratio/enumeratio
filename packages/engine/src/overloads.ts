@@ -6,6 +6,12 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import type { EvaluateOptions } from "./index.ts";
 
+/** Lazy heads that only evaluate their operands, never hold or bind them. The wrapper has
+ *  evaluated those already, so it hands the native handler the values: the written operands
+ *  would be evaluated a second time (a `Sow` inside an `Add` would record twice). A head that
+ *  holds its operands (`Do`, `Sum`) must get them as written. */
+export const EVALUATES_OPERANDS: ReadonlySet<string> = new Set(["Add", "Multiply"]);
+
 type Arity = number | { readonly min: number; readonly max?: number };
 
 export interface Overload {
@@ -205,7 +211,8 @@ export function defineOverload(ce: ComputeEngine, head: string, overload: Overlo
         const gates = created.rows.flatMap((row) => row.native ?? []);
         if (gates.length > 0 && !values.every((op) => gates.every((accepts) => accepts(op)))) return undefined;
       }
-      return created.native?.(ops, options);
+      // See `EVALUATES_OPERANDS`: native would evaluate the written operands a second time.
+      return created.native?.(lazy && EVALUATES_OPERANDS.has(head) ? values : ops, options);
     };
     created.dispatch = operator.evaluate;
   }

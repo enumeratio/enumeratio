@@ -45,6 +45,16 @@ test("nested Module locals of the same name don't collide", () => {
 test("Reap collects everything Sow-ed, untagged sows sharing one group", () => {
   expect(run(["Reap", ["Last", ["List", ["Sow", 1], ["Sow", 2], 3]]])).toEqual(["List", 3, ["List", ["List", 1, 2]]]);
 });
+test("Reap keeps the first slot when the body is Do, which gives Nothing", () => {
+  expect(run(["Reap", ["Do", ["Sow", "k"], ["List", "k", 3]]])).toEqual([
+    "List",
+    "Nothing",
+    ["List", ["List", 1, 2, 3]],
+  ]);
+});
+test("a Sow inside Add records once", () => {
+  expect(run(["Reap", ["Add", ["Sow", 5], 1]])).toEqual(["List", 6, ["List", ["List", 5]]]);
+});
 test("Reap with nothing sown gives an empty group list", () => {
   expect(run(["Reap", 5])).toEqual(["List", 5, ["List"]]);
 });

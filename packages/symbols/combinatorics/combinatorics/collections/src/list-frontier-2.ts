@@ -343,7 +343,7 @@ function declarePascalBinomial(ce: ComputeEngine): void {
 
 /** One elementary-rule (`k = 2` colors, radius 1) step: `next[i]` is bit
  *  `4·row[i-1] + 2·row[i] + row[i+1]` of `rule`. A GROWING window reads an out-of-range
- *  neighbor as `background`; a FIXED window (a bare `{list}` init, no explicit background —
+ *  neighbor as the (evolving) background; a FIXED window (a bare `{list}` init, no explicit background —
  *  see `CAInit.grows`) wraps CYCLICALLY instead — confirmed against Wolfram by example
  *  (`CellularAutomaton[30, {1, 0, 0, 0, 0, 0}, 2]`'s first step sets position 5, which a
  *  fixed background of 0 at the edges could never do; only wraparound reaches it from
@@ -426,8 +426,12 @@ function declareCellularAutomaton(ce: ComputeEngine): void {
       const at0 = (p: number): number => (p >= 0 && p < cells.length ? cells[p]! : background);
       let row = Array.from({ length: right - left + 1 }, (_, k) => at0(left + k));
       const history: number[][] = [row.slice()];
+      // The background is itself a cell the rule updates (rule 73 turns 000 into 1), so
+      // what lies past the window changes every generation.
+      let edge = background;
       for (let step = 0; step < t; step++) {
-        row = elementaryStep(rule, row, background, !grows);
+        row = elementaryStep(rule, row, edge, !grows);
+        edge = (rule >> (edge ? 7 : 0)) & 1;
         history.push(row.slice());
       }
       return ce.function(

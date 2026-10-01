@@ -194,6 +194,11 @@ function declareSow(ce: ComputeEngine): void {
  *  only, documented per the task's "at least exact-tag matching"); a requested tag nothing
  *  was sown under comes back as `{}` in its position. */
 function declareReap(ce: ComputeEngine): void {
+  // A canonical List drops `Nothing` (our `Null`), so `Reap(Do(..))` would lose its first slot.
+  const reaped = (value: BoxedExpression, groups: BoxedExpression): BoxedExpression =>
+    symbolNameOf(value) === "Nothing"
+      ? ce.function("List", [value, groups], { form: "raw" })
+      : ce.box(["List", value, groups]);
   ce.declare("Reap", {
     signature: "(any, any?) -> any",
     lazy: true,
@@ -213,7 +218,7 @@ function declareReap(ce: ComputeEngine): void {
       const form = ops[1];
       if (form === undefined) {
         const groups = frame.map((g) => ce.box(["List", ...g.values]));
-        return ce.box(["List", value, ce.box(["List", ...groups])]);
+        return reaped(value, ce.box(["List", ...groups]));
       }
       const formValue = form.evaluate();
       const requestedTags = formValue.operator === "List" ? operandsOf(formValue) : [formValue];
@@ -221,7 +226,7 @@ function declareReap(ce: ComputeEngine): void {
         const found = frame.find((g) => g.tag !== DEFAULT_TAG && (g.tag as BoxedExpression).isSame(tag));
         return ce.box(["List", ...(found?.values ?? [])]);
       });
-      return ce.box(["List", value, ce.box(["List", ...groups])]);
+      return reaped(value, ce.box(["List", ...groups]));
     },
   });
 }
