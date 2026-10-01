@@ -7,16 +7,16 @@ threads-over-a-list	ReIm[List[Complex[1, 2], Complex[3, 4]]]	{{1, 2}, {3, 4}}	\t
 reim-neg-3	ReIm[-3]	{-3, 0}	\text{ReIm}[-3]	\{-3,0\}	
 reim-3-over-5	ReIm[Rational[3, 5]]	{3/5, 0}	\text{ReIm}\left[\frac{3}{5}\right]	\left\{\frac{3}{5},0\right\}	
 reim-root-neg-17-4	ReIm[Power[-17, Divide[1, 4]]]	{17^(1/4)/Sqrt[2], 17^(1/4)/Sqrt[2]}	\text{ReIm}\left[(-17)^{\frac{1}{4}}\right]	\left\{\frac{\sqrt[4]{17}}{\sqrt{2}},\frac{\sqrt[4]{17}}{\sqrt{2}}\right\}	
-reim-exponentiale-pow-2-over-3-times-i-times-pi	ReIm[Power[E, Times[Complex[0, Rational[2, 3]], Pi]]]	{-1/2, Sqrt[3]/2}	\text{ReIm}\left[e^{(\text{Rational}[2,3] i) \pi }\right]	\left\{-\frac{1}{2},\frac{\sqrt{3}}{2}\right\}	
 reim-gamma-neg-1-over-2	ReIm[Gamma[Rational[-1, 2]]]	{-2*Sqrt[Pi], 0}	\text{ReIm}\left[\Gamma \left(-\frac{1}{2}\right)\right]	\left\{-2 \sqrt{\pi },0\right\}	
 reim-list-list-1-neg-1-0-list-0-1	ReIm[List[List[1, -1, 0], List[0, 1]]]	{{{1, 0}, {-1, 0}, {0, 0}}, {{0, 0}, {1, 0}}}	\text{ReIm}[\{\{1,-1,0\},\{0,1\}\}]	\left\{\left( \begin{array}{cc}  1 & 0 \\  -1 & 0 \\  0 & 0 \\ \end{array} \right),\left( \begin{array}{cc}  0 & 0 \\  1 & 0 \\ \end{array} \right)\right\}	
 reim-z	ReIm[z]	{Re[z], Im[z]}			disagree
 reim-2z	ReIm[Times[2, z]]	{2*Re[z], 2*Im[z]}			disagree
 reim-w-plus-z	ReIm[Plus[w, z]]	{Re[w + z], Im[w + z]}			disagree
 reim-list-a-list-b-c	ReIm[List[a, List[b, c]]]	{{Re[a], Im[a]}, {{Re[b], Im[b]}, {Re[c], Im[c]}}}			disagree
+reim-exponentiale-pow-2-over-3-times-i-times-pi	ReIm[Power[E, Times[Complex[0, Rational[2, 3]], Pi]]]	{-1/2, Sqrt[3]/2}	\text{ReIm}\left[e^{(\text{Rational}[2,3] i) \pi }\right]	\left\{-\frac{1}{2},\frac{\sqrt{3}}{2}\right\}	
 rank-reim-mat	ArrayDepth[ReIm[mat]]	1	\text{ArrayDepth}[\text{ReIm}[\text{mat}]]	1	
 reim-i	ReIm[Complex[0, 1]]	{0, 1}	\text{ReIm}[i]	\{0,1\}	
-reim-5-times-exponentiale-pow-3-over-4-times-i	ReIm[Times[5, Power[E, Times[Complex[0, Rational[3, 4]], Pi]]]]	{-5/Sqrt[2], 5/Sqrt[2]}	\text{ReIm}\left[5 e^{(\text{Rational}[3,4] i) \pi }\right]	\left\{-\frac{5}{\sqrt{2}},\frac{5}{\sqrt{2}}\right\}	
 reim-2x-plus-i	ReIm[Plus[Times[2, x], Complex[0, 1]]]	{2*Re[x], 1 + 2*Im[x]}			disagree
 shape-reim-mat	Dimensions[ReIm[mat]]	{2}			disagree
+reim-5-times-exponentiale-pow-3-over-4-times-i	ReIm[Times[5, Power[E, Times[Complex[0, Rational[3, 4]], Pi]]]]	{-5/Sqrt[2], 5/Sqrt[2]}	\text{ReIm}\left[5 e^{(\text{Rational}[3,4] i) \pi }\right]	\left\{-\frac{5}{\sqrt{2}},\frac{5}{\sqrt{2}}\right\}	
 reim-list-i-neg-i-0	ReIm[List[Complex[0, 1], Complex[0, -1], 0]]	{{0, 1}, {0, -1}, {0, 0}}	\text{ReIm}[\{i,-i,0\}]	\left( \begin{array}{cc}  0 & 1 \\  0 & -1 \\  0 & 0 \\ \end{array} \right)	

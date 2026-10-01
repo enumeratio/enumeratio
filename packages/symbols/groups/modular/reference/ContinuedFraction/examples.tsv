@@ -17,8 +17,8 @@ symbolic-terms-build-the-nested-fraction-left	Scope		[FromContinuedFraction, [Li
 25-terms-past-the-double-precision-wall	Scope		[ContinuedFraction, GoldenRatio, 25]	[List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]	25 terms, past the 13-term double-precision wall																
 continuedfraction-n-pi	Scope		[ContinuedFraction, [N, Pi]]	[List, 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14]																	
 continuedfraction-n-pi-20	Scope		[ContinuedFraction, [N, Pi, 20]]	[List, 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14]												precision	We extract 13 certified continued-fraction terms from N(Pi, 20); Wolfram's doc example shows 19. Both are legitimate given a fixed 20-digit input -- our term-count is governed by a certification threshold (agreement across working precisions) that's more conservative than Wolfram's, not a wrong term list.				
-continuedfraction-sqrt-exponentiale-25	Applications		[ContinuedFraction, [Sqrt, ExponentialE], 25]	[List, 1, 1, 1, 1, 5, 1, 1, 9, 1, 1, 13, 1, 1, 17, 1, 1, 21, 1, 1, 25, 1, 1, 29, 1, 1]																	
 n-root-product-continuedfraction-pi-1-000-1-000	Applications		[N, [Root, [Product, [ContinuedFraction, Pi, 1000]], 1000]]	{num: "2.66562552932016860149"}																	
+continuedfraction-sqrt-exponentiale-25	Applications		[ContinuedFraction, [Sqrt, ExponentialE], 25]	[List, 1, 1, 1, 1, 5, 1, 1, 9, 1, 1, 13, 1, 1, 17, 1, 1, 21, 1, 1, 25, 1, 1, 29, 1, 1]																	
 continuedfraction-exponentiale-pow-sqrt-163	Applications		[ContinuedFraction, [Power, ExponentialE, [Multiply, [Sqrt, 163], Pi]], 10]	[List, {num: "262537412640768743"}, 1, 1333462407511, 1, 8, 1, 1, 5, 1, 4]																	
 and-back-again	Properties		[FromSternBrocotPath, "'RLR'"]	[Rational, 5, 3]	and back again																
 1-cdot-2-3-cdot-1-1	Properties		[FareyNeighbours, 1, 3, 1, 2]	True	$1\cdot2 - 3\cdot1 = -1$																

@@ -7,9 +7,9 @@ exact-numeric-arguments-stay-exact	Scope		[IntegerPart, Pi]	3			Exact numeric ar
 threads-element-wise-over-a-list	Scope		[IntegerPart, [List, 2.5, -2.5]]	[List, 2, -2]			Threads element-wise over a list	
 complex-numbers-real-and-imaginary-parts	Scope		[IntegerPart, [Complex, 2.5, 3.7]]	[Complex, {num: "2.0"}, {num: "3.0"}]			Complex numbers: real and imaginary parts truncated separately	
 integerpart-neg-5-over-4	Scope		[IntegerPart, [Rational, -5, 4]]	-1				
-integerpart-exponentiale-plus-pi	Scope		[IntegerPart, [Add, ExponentialE, Pi]]	5				
 integerpart-0	Scope		[IntegerPart, 0]	0				
 piecewiseexpand-integerpart-x-0-lt-x-lt-4	Scope		[PiecewiseExpand, [IntegerPart, x], [Less, 0, x, 4]]	[IntegerPart, x]				
+integerpart-exponentiale-plus-pi	Scope		[IntegerPart, [Add, ExponentialE, Pi]]	5				
 x-integerpart-x-fractionalpart-x	Properties		[Equal, [Add, [IntegerPart, [Rational, -7, 2]], [FractionalPart, [Rational, -7, 2]]], [Rational, -7, 2]]	True			$x = \mathrm{IntegerPart}(x) + \mathrm{FractionalPart}(x)$	
 piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	Properties		[PiecewiseExpand, [IntegerPart, [Add, [Power, x, 2], [Sqrt, x]]], [Less, 0, x, 2]]	[IntegerPart, [Add, [Power, x, 2], [Sqrt, x]]]				
 integerpart-1	Properties		[IntegerPart, 1]	1	1	Wolfram MathematicalFunctionData, IntegerPart		

@@ -1,8 +1,8 @@
 id	in	out	tex.in	tex.out
 1-factorial-eq-2	Unequal[1, 2]	True	1\neq 2	\text{True}
 3-over-2-factorial-eq-5-over-3	Unequal[Rational[3, 2], Rational[5, 3]]	True	\frac{3}{2}\neq \frac{5}{3}	\text{True}
-pi-pow-exponentiale-factorial-eq-exponentiale	Unequal[Power[Pi, E], Power[E, Pi]]	True	\pi ^e\neq e^{\pi }	\text{True}
 3-factorial-eq-4-4-factorial-eq-5	And[Unequal[3, 4], Unequal[4, 5]]	True	3\neq 4\land 4\neq 5	\text{True}
-list-a-b-c-factorial-eq-list-d-exponentiale	Unequal[List[a, b, c], List[d, E]]	True	\{a,b,c\}\neq \{d,e\}	\text{True}
 abc-factorial-eq-abc	Unequal["abc", "ABC"]	True	\text{abc}\neq \text{ABC}	\text{True}
+pi-pow-exponentiale-factorial-eq-exponentiale	Unequal[Power[Pi, E], Power[E, Pi]]	True	\pi ^e\neq e^{\pi }	\text{True}
+list-a-b-c-factorial-eq-list-d-k	Unequal[List[a, b, c], List[d, k]]	True	\{a,b,c\}\neq \{d,k\}	\text{True}
 list-x-factorial-eq-x-x-factorial-eq-y-sqrt-2	List[Unequal[x, x], Unequal[x, y], Unequal[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]], Unequal[Pi, N[Pi]]]	{False, x != y, False, False}	\left\{x\neq x,x\neq y,\sqrt{2}+\sqrt{3}\neq \sqrt{5+2 \sqrt{6}},\pi \neq N[\pi ]\right\}	\{\text{False},x\neq y,\text{False},\text{False}\}

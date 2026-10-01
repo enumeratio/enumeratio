@@ -17,7 +17,6 @@ sign-positiveinfinity	sign(oo)
 an-interval-entirely-above-0-has-sign-1		
 decides-the-sign-of-the-exact-number-sqrt-2-2-by	sign((sqrt(2) - 2))	-1
 2-sqrt-2-is-the-same-certified-decision-the	sign((2 - sqrt(2)))	1
-n-sign-exponentiale-plus-i-times-pi-20	N(sign((E + ((0 + 1*I) * pi))), 30)	
 sign-123	sign(123)	
 sign-123-minus-456i	sign((123 + -456*I))	
 fullsimplify-matrixfunction-sign-list-list-1		
@@ -25,6 +24,7 @@ piecewiseexpand-sign-x-neg-2-lt-x-lt-2
 sign-conjugate-1-plus-2i-eq-conjugate-sign-1		
 d-sign-x-x		
 sign-positiveinfinity-times-i		
+n-sign-exponentiale-plus-i-times-pi-20	N(sign((E + ((0 + 1*I) * pi))), 30)	
 tells-you-the-temperature-dropped-but-not-by-how	sign((70 - 95))	-1
 sign-z-z-z-see-abs	enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))	True
 x-cdot-sign-x-x-here-at-x-5	enumeratio_equal((-5 * sign(-5)), Abs(-5))	True

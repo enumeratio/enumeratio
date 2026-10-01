@@ -2,8 +2,8 @@ id	section	role	expr	expected	wolfram.kind	wolfram.note
 0-lt-eq-1			[LessEqual, 0, 1]	True		
 4-over-3-lt-eq-3-over-2	Scope		[LessEqual, [Rational, 4, 3], [Rational, 3, 2]]	True		
 pi-lt-eq-n-pi-20	Scope		[LessEqual, Pi, [N, Pi, 20]]	True		
-pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	Scope		[LessEqual, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True		
 sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	Scope		[LessEqual, [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]], [Add, [Sqrt, 2], [Sqrt, 3]]]	True		
 pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	Scope		[LessEqual, [Multiply, Pi, [Add, 1, [Multiply, 256, [Power, 10, -20]]]], [N, Pi, 20]]	True	convention	Same numeric-tolerance-vs-strict-equality divergence as the Equal Pi row.
 x-lt-eq-x	Scope		[LessEqual, x, x]	True	domain	We simplify x <= x to True unconditionally (reflexivity); Wolfram declines for a free symbol since <= isn't provably defined for every value x could hold (e.g. a non-real). We answer past the domain Wolfram requires before simplifying.
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	Scope		[LessEqual, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True		
 refine-sqrt-x-pow-2-x-gt-eq-0	Properties		[Refine, [Sqrt, [Power, x, 2]], [GreaterEqual, x, 0]]	x		

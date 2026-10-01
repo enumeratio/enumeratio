@@ -22,9 +22,9 @@ foldlist-function-neg-1-plus-2-1-2-0-list-a-b-c	Applications	triage	[FoldList, [
 foldlist-function-list-2-1-1-2-x-list-a-b-c-d	Applications	triage	[FoldList, [Function, [Block, [List, _2, _1]], _1, _2], x, [List, a, b, c, d]]	[List, x, [List, a, x], [List, [List, b, a], [List, b, x]], [List, [List, [List, c, b], [List, c, a]], [List, [List, c, b], [List, c, x]]], [List, [List, [List, [List, d, c], [List, d, b]], [List, [List, d, c], [List, d, a]]], [List, [List, [List, d, c], [List, d, b]], [List, [List, d, c], [List, d, x]]]]]				ours?	
 foldlist-length-is-one-more	Properties		[Equal, [Length, [FoldList, Add, 0, [List, 1, 2, 3, 4, 5]]], [Add, [Length, [List, 1, 2, 3, 4, 5]], 1]]	True			One longer than the input list		
 foldlist-last-is-fold	Properties		[Equal, [Last, [FoldList, Add, 0, [List, 1, 2, 3]]], [Fold, Add, 0, [List, 1, 2, 3]]]	True			The last element is what Fold alone would give		
-rest-foldlist-add-0-list-a-b-c-d-exponentiale	Properties		[Rest, [FoldList, Add, 0, [List, a, b, c, d, ExponentialE]]]	[List, a, [Add, a, b], [Add, a, b, c], [Add, a, b, c, d], [Add, a, b, c, d, ExponentialE]]					
 foldlist-f-x-list	Properties		[FoldList, f, x, [List]]	[List, x]					
 foldlist-f-x-list-a-b-c	Properties		[FoldList, f, x, [List, a, b, c]]	[List, x, [f, x, a], [f, [f, x, a], b], [f, [f, [f, x, a], b], c]]					
 foldlist-add-list-a-b-c-d	Properties		[FoldList, Add, [List, a, b, c, d]]	[List, a, [Add, a, b], [Add, a, b, c], [Add, a, b, c, d]]					
 length-foldlist-f-x-range-1-10	Properties		[Length, [FoldList, f, x, [Range, 1, 10]]]	11					
+rest-foldlist-add-0-list-a-b-c-d-k	Properties		[Rest, [FoldList, Add, 0, [List, a, b, c, d, k]]]	[List, a, [Add, a, b], [Add, a, b, c], [Add, a, b, c, d], [Add, a, b, c, d, k]]					
 foldlist-f-list	Possible issues		[FoldList, f, [List]]	[List]					

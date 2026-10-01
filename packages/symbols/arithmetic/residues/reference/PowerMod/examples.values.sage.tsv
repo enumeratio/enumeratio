@@ -47,7 +47,6 @@ findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0
 one-step-of-rsa-style-modular-exponentiation-7	power_mod(7, 13, 33)	13	
 341-11-cdot-31-passes-fermat-s-test-to-base-2	power_mod(2, 340, 341)	1	
 diffie-hellman-both-parties-reach-the-shared-key	bool(power_mod(power_mod(5, 6, 23), 15, 23) == power_mod(power_mod(5, 15, 23), 6, 23))	True	
-powermod-tocharactercode-rsa-in-mathematica			
 by-definition-a-b-bmod-m-computed-without-ever	bool(power_mod(2, 10, 3) == (((2)^10) % 3))	True	
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	power_mod(7, euler_phi(19), 19)	1	
 list-powermod-7-2-5-powermod-12-2-5	[power_mod(7, 2, 5), power_mod(12, 2, 5)]		

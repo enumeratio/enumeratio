@@ -2,8 +2,8 @@ id	in	out	tex.in	tex.out	verdict
 2-over-17-lt-eq-1-over-5-lt-eq-1-over-10-times	LessEqual[Rational[2, 17], Rational[1, 5], Times[Rational[1, 10], Pi]]	True	\frac{2}{17}\leq \frac{1}{5}\leq \frac{1}{10} \pi	\text{True}	
 3-over-2-lt-eq-5-over-3	LessEqual[Rational[3, 2], Rational[5, 3]]	True	\frac{3}{2}\leq \frac{5}{3}	\text{True}	
 n-pi-20-lt-eq-pi	LessEqual[N[Pi, 20], Pi]	True	N[\pi ,20]\leq \pi	\text{True}	
-pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	LessEqual[Power[Pi, E], Power[E, Pi]]	True	\pi ^e\leq e^{\pi }	\text{True}	
 sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	LessEqual[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]]	True	\sqrt{2}+\sqrt{3}\leq \sqrt{5+2 \sqrt{6}}	\text{True}	
 n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	LessEqual[N[Pi, 20], Times[Pi, Plus[1, Times[-256, Power[10, -20]]]]]	False			disagree
 x-lt-eq-x	LessEqual[x, x]	x <= x			disagree
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	LessEqual[Power[Pi, E], Power[E, Pi]]	True	\pi ^e\leq e^{\pi }	\text{True}	
 refine-sqrt-x-pow-2-x-lt-eq-0	Refine[Sqrt[Power[x, 2]], LessEqual[x, 0]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Refine}\left[\sqrt{x^2},x\leq 0\right]--x\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(\frac{7}{3}\right)^2},\frac{7}{3}\leq 0\right]--\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(-\frac{11}{5}\right)^2},-\frac{11}{5}\leq 0\right]--\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Refine}\left[\sqrt{\left(\frac{13}{4}\right)^2},\frac{13}{4}\leq 0\right]--\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
