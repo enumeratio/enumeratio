@@ -50,7 +50,7 @@ export interface EngineLibraries {
  * Declares every library the page ships, in dependency order, via `apply` -- either
  * `configureEngine` (deferred until the engine exists) or a direct `(fn) => fn(ce)`.
  * Does NOT include `@enumeratio/evaluation` itself or the LaTeX dictionary
- * (`configureLatex(RESIDUES_LATEX)`): the page engine needs both, but a session's
+ * (the packages' notation, `configureLatex`): the page engine needs both, but a session's
  * engine already has evaluation declared before `configure` runs (see
  * `browser-session-worker.ts`) and never parses LaTeX at all (see
  * `worker-engine-setup.ts`'s own comment) -- both callers handle those two on their own.

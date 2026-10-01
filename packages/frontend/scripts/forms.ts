@@ -25,15 +25,20 @@ import { toFullForm } from "@enumeratio/formats/fullform";
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { markupOf, readMarkupText, stripMetadata } from "@enumeratio/formats/markup";
 import { parseExpression } from "@enumeratio/formats/expression";
-import { portableTeX } from "@enumeratio/formats/tex";
+import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
-import { makeBoxes, notationOf } from "@enumeratio/boxes";
+import { mergeLatex } from "../src/engine.ts";
+import { combineNotation, makeBoxes, notationOf } from "@enumeratio/boxes";
 import { toLatex } from "@enumeratio/boxes/render";
-import { declaredEngine } from "../../reference/scripts/engines.ts";
+import { declaredEngine, packageNotations } from "../../reference/scripts/engines.ts";
+
+// StandardForm: every package's LaTeX, and its macros expanded, so `tex` is portable TeX.
+const PACKAGES = combineNotation(await packageNotations());
+registerTeXMacros(PACKAGES.macros);
 
 const ce = new ComputeEngine({
-  latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
+  latexSyntax: new LatexSyntax({ dictionary: mergeLatex(conventionalLatexDictionary(), PACKAGES.latex) as never[] }),
 });
 
 // TraditionalForm: every package's notation, as the engine that declares them all registers it.

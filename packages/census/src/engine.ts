@@ -12,7 +12,10 @@
 // depend back on collections without a cycle the task graph rejects. Nothing depends on
 // this package, which is what lets it depend on everything.
 
-import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
+import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
+import { displayDictionary } from "@enumeratio/frontend/display";
+import { NOTATIONS } from "@enumeratio/manifest";
 import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareEvaluation } from "@enumeratio/evaluation/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
@@ -29,7 +32,6 @@ import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
 import { declareModular } from "@enumeratio/modular/src";
-import { conventionalLatexDictionary } from "@enumeratio/frontend/conventional-latex";
 import { declareFrontendCarriers } from "@enumeratio/frontend/declare-carriers";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
@@ -152,11 +154,25 @@ export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Dec
 /** Every declaration, in order. */
 export const DECLARATIONS: readonly Declare[] = PACKAGE_DECLARATIONS.map(([, declare]) => declare);
 
-/** An engine with everything we ship declared on it. */
+/** Every package's notation entry, by manifest name, as the manifest lists them. */
+export const NOTATION_ENTRIES: Readonly<Record<string, PackageNotation>> = Object.fromEntries(
+  await Promise.all(
+    Object.entries(NOTATIONS).map(
+      async ([name, specifier]) =>
+        [name, ((await import(specifier)) as { notation: PackageNotation }).notation] as const,
+    ),
+  ),
+);
+
+/** Every package's notation as one. */
+export const NOTATION = combineNotation(Object.values(NOTATION_ENTRIES));
+
+/** An engine with everything we ship declared on it, and every package's notation. */
 export const fullEngine = (): ComputeEngine => {
   const ce = new ComputeEngine({
-    latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
+    latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, NOTATION.latex) as never[] }),
   });
+  registerNotation(ce, NOTATION.traditional);
   for (const declare of DECLARATIONS) declare(ce);
   return ce;
 };

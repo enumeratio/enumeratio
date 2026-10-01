@@ -23,7 +23,8 @@ import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareResidues } from "@enumeratio/residues/src";
 import { declareBoxes } from "@enumeratio/boxes/src";
-import type { Library } from "@enumeratio/manifest";
+import type { PackageNotation } from "@enumeratio/boxes";
+import { type Library, NOTATIONS } from "@enumeratio/manifest";
 import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures/src";
 
 /** Every library we ship BESIDES `@enumeratio/evaluation`, in the order the reference
@@ -127,6 +128,15 @@ export const LIBRARIES: readonly Library<ComputeEngine>[] = [
   { name: "braid", declare: declareBraid },
   { name: "number-theory", declare: declareNumberTheory },
 ];
+
+/** Every package's notation entry, as the manifest lists them. Imported from here because this
+ *  package depends on every library, so each specifier resolves. */
+export const packageNotations = (): Promise<PackageNotation[]> =>
+  Promise.all(
+    Object.values(NOTATIONS).map(
+      async (specifier) => ((await import(specifier)) as { notation: PackageNotation }).notation,
+    ),
+  );
 
 export const declaredEngine = (): ComputeEngine => {
   const ce = new ComputeEngine();

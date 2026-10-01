@@ -1,5 +1,4 @@
 export { declareGroupAlgebra } from "./declare.ts";
-export { GROUPALGEBRA_NOTATION } from "./notation.ts";
 export {
   basisElement,
   classSum,
