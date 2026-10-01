@@ -39,6 +39,8 @@ async function loadLocal(): Promise<Local> {
 interface MathField extends HTMLElement {
   value: string;
   readOnly: boolean;
+  /** MathLive's macros, by command name. */
+  macros: Readonly<Record<string, unknown>>;
   /** MathLive's current selection, and a reader for the LaTeX inside it. */
   selection?: unknown;
   getValue?: (range?: unknown, format?: string) => string;
@@ -48,6 +50,9 @@ interface MathField extends HTMLElement {
   onExport: (field: MathField, latex: string, range: unknown) => string;
   insert: (latex: string, options: { format: "latex"; insertionMode: string; selectionMode: string }) => boolean;
 }
+
+/** The fields given the packages' macros. */
+const withMacros = new WeakSet<MathField>();
 
 /**
  * How a compute-engine type is written on the page. Everything else falls back to
@@ -515,9 +520,14 @@ export class NotatioIn extends LitElement {
 
   protected override async updated(changed: PropertyValues): Promise<void> {
     if (this.#typeset) return;
-    await loadEditor();
+    const macros = await loadEditor();
     const field = this.#field;
     if (!field) return;
+    // The packages' commands (`\permutation`) show as their definitions, and stay in the value.
+    if (!withMacros.has(field)) {
+      field.macros = { ...field.macros, ...macros };
+      withMacros.add(field);
+    }
     if (changed.has("_editing")) queueMicrotask(() => field.focus());
     field.onExport = this.#onExport;
     if (this.#pinned) {

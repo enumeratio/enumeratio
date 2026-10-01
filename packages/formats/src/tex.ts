@@ -58,9 +58,52 @@ function unwrapMarkup(text: string): string {
   }
 }
 
-/** `latex` with MathLive-only commands rewritten for a LaTeX document. */
+// The packages' macros (`PackageNotation.macros`): MathLive's, by command name, `#1`… for
+// arguments. A host registers them before it typesets.
+let registered: Readonly<Record<string, string>> = {};
+let registeredPattern: RegExp | undefined;
+
+// A macro whose definition names itself would expand forever: past this many expansions the
+// rest is left as written.
+const MAX_EXPANSIONS = 1000;
+
+/** Register the packages' LaTeX macros, which `portableTeX` expands. Later calls add to them. */
+export function registerTeXMacros(macros: Readonly<Record<string, string>>): void {
+  registered = { ...registered, ...macros };
+  // A command name is letters only (`\permutation`); anything else can't be written as one.
+  const names = Object.keys(registered).filter((n) => /^[a-zA-Z]+$/.test(n));
+  registeredPattern = names.length === 0 ? undefined : new RegExp(`\\\\(${names.join("|")})(?![a-zA-Z])`);
+}
+
+/** The registered macros, as MathLive's `macros` option takes them. */
+export const texMacros = (): Readonly<Record<string, string>> => registered;
+
+/** `\permutation(2, 3, 1)` → `{\operatorname{Permutation}}(2, 3, 1)`, outermost first. */
+function expandMacros(text: string): string {
+  if (registeredPattern === undefined) return text;
+  let out = text;
+  for (let n = 0; n < MAX_EXPANSIONS; n++) {
+    const match = registeredPattern.exec(out);
+    if (match === null) return out;
+    const definition = registered[match[1] as string] as string;
+    const arity = Math.max(0, ...[...definition.matchAll(/#(\d)/g)].map((m) => Number(m[1])));
+    const args: string[] = [];
+    let end = match.index + match[0].length;
+    for (let i = 0; i < arity; i++) {
+      const arg = group(out, end);
+      if (arg === undefined) return out;
+      [args[i], end] = arg;
+    }
+    const body = definition.replace(/#(\d)/g, (_, k: string) => args[Number(k) - 1] ?? "");
+    out = out.slice(0, match.index) + `{${body}}` + out.slice(end);
+  }
+  return out;
+}
+
+/** `latex` with MathLive-only commands, and the packages' macros, rewritten for a LaTeX
+ *  document. */
 export function portableTeX(latex: string): string {
-  let out = unwrapMarkup(latex);
+  let out = expandMacros(unwrapMarkup(latex));
   for (const [pattern, replacement] of MACROS) out = out.replace(pattern, replacement as string);
   return out;
 }

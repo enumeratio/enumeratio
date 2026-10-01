@@ -6,6 +6,8 @@
 // `tests/lazy.test.ts` holds this table to the main entry's, and the modules a page of cells
 // or plots loads to no engine.
 
+export { configureMacros } from "./mathlive.ts";
+
 const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-in": () => import("./notatio-in.ts"),
   "notatio-out": () => import("./notatio-out.ts"),

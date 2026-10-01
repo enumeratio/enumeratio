@@ -4,6 +4,7 @@ import DefaultTheme from "vitepress/theme";
 import "katex/dist/katex.min.css";
 import "./prerendered.css";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { PackageNotation } from "@enumeratio/boxes";
 import type { Resolver } from "@enumeratio/manifest";
 import Layout from "./Layout.vue";
 import NotatioPrerendered from "./components/NotatioPrerendered.vue";
@@ -62,19 +63,25 @@ export default {
       // What every page engine needs before it's built, whatever it declares: the notation
       // (its dictionary is fixed then) and evaluation. Set synchronously, before any element
       // mounts, and run by the first engine a page builds.
+      // Every catalogued package's notation, in the kernels' order. Light: boxes and the entries.
+      let combined: Promise<Required<PackageNotation>> | undefined;
+      const notation = (): Promise<Required<PackageNotation>> =>
+        (combined ??= Promise.all([
+          import("@enumeratio/boxes"),
+          import("virtual:notation-entries"),
+          import("./worker-catalogue.ts"),
+        ]).then(([{ combineNotation }, entries, { CATALOGUE }]) =>
+          combineNotation(CATALOGUE.flatMap((library) => entries.default[library.name] ?? [])),
+        ));
       let setup: Promise<void> | undefined;
       (globalThis as { __notatioEngineSetup?: () => Promise<unknown> }).__notatioEngineSetup = () =>
         (setup ??= (async () => {
-          const [{ configureEngine, configureLatex }, { combineNotation }, { declareEvaluation }, notation, catalogue] =
-            await Promise.all([
-              import("@enumeratio/frontend/core"),
-              import("@enumeratio/boxes"),
-              import("@enumeratio/evaluation"),
-              import("virtual:notation-entries"),
-              import("./worker-catalogue.ts"),
-            ]);
-          const entries = catalogue.CATALOGUE.flatMap((library) => notation.default[library.name] ?? []);
-          configureLatex(combineNotation(entries).latex);
+          const [{ configureEngine, configureLatex }, { declareEvaluation }, { latex }] = await Promise.all([
+            import("@enumeratio/frontend/core"),
+            import("@enumeratio/evaluation"),
+            notation(),
+          ]);
+          configureLatex(latex);
           configureEngine(declareEvaluation);
         })());
       // The libraries, declared as an element's expression first names them, through the same
@@ -100,7 +107,12 @@ export default {
         void navigator.serviceWorker.register("/sw.js").catch(() => undefined);
       // The elements load at idle, so the page paints first, and only those the page uses: a
       // page of cells loads no engine.
-      const define = (): void => void import("@enumeratio/components/lazy").then((m) => m.defineOnUse());
+      // The packages' macros go first: a page with no engine still typesets their commands.
+      const define = (): void =>
+        void import("@enumeratio/components/lazy").then((m) => {
+          m.configureMacros(notation().then((n) => n.macros));
+          m.defineOnUse();
+        });
       const idle = (globalThis as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => void })
         .requestIdleCallback;
       if (idle) idle(define, { timeout: 2000 });
