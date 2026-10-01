@@ -1141,7 +1141,6 @@ export const DECLARERS: Readonly<Record<string, readonly string[]>> = {
   TrigFactor: ["analytic"],
   TrigToExp: ["analytic"],
   TripNumber: ["braid"],
-  Truncate: ["analytic"],
   Tuples: ["combinatorics"],
   TuranGraph: ["combinatorics"],
   TwinPrimes: ["combinatorics"],

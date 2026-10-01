@@ -229,7 +229,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Truncate",
-    provenance: "override",
+    provenance: "compute-engine",
     declared: null,
     wolframAlias: "IntegerPart",
     elsewhere: [],
@@ -9896,8 +9896,8 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "HurwitzZeta",
-    provenance: "override",
-    declared: "enumeratio-analytic",
+    provenance: "compute-engine",
+    declared: null,
     wolframAlias: "HurwitzZeta",
     elsewhere: ["wolfram"],
   },

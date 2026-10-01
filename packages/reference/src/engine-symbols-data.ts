@@ -748,8 +748,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Comprehension",
     kind: "operator",
     description:
-      "Value-producing comprehension: evaluate `body` in nested iteration over one or more `Element` clauses and collect the results into an indexed collection (a `List`). Later clauses see earlier bindings; independent clauses produce a Cartesian product. A clause with a third operand, `Element(x, xs, cond)`, is a guard: only the elements for which `cond` evaluates to `True` are visited.",
-    signature: "(body: expression, iterators: expression+) -> indexed_collection",
+      "Value-producing comprehension: evaluate `body` in nested iteration over one or more `Element` clauses and collect the results into a list. Later clauses see earlier bindings; independent clauses produce a Cartesian product. A clause with a third operand, `Element(x, xs, cond)`, is a guard: only the elements for which `cond` evaluates to `True` are visited.",
+    signature: "(body: expression, iterators: expression+) -> list",
   },
   {
     name: "Condition",
@@ -1848,14 +1848,15 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "IndexOf",
     kind: "operator",
     description:
-      "Return the 1-based index of the first occurrence of value in collection, or 0 if not found. The comparison is structural, so an absent value is found where the same marker sits: `IndexOf([1, NaN], NaN)` is 2.",
-    signature: "(collection<any>, any) -> integer",
+      "Return the 1-based index of the first occurrence of value in collection, or 0 if not found. The comparison is structural, so an absent value is found where the same marker sits: `IndexOf([1, NaN], NaN)` is 2. Stays unevaluated when the collection cannot be searched (a symbol with no value, an unbounded source with no match).",
+    signature: "(indexed_collection<any>, any) -> integer",
   },
   {
     name: "IndexWhere",
     kind: "operator",
-    description: "Return the 1-based index of the first element satisfying the predicate, or 0 if not found.",
-    signature: "(collection<T>, predicate: (T) any -> boolean) -> integer where T",
+    description:
+      "Return the 1-based index of the first element satisfying the predicate, or 0 if not found. Stays unevaluated when the collection cannot be searched (a symbol with no value, an unbounded source with no match).",
+    signature: "(indexed_collection<T>, predicate: (T) any -> boolean) -> integer where T",
   },
   {
     name: "IndexedSequence",
@@ -2328,7 +2329,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Linspace",
     kind: "operator",
     description: "A sequence of evenly spaced numbers between a start and end value, both endpoints included.",
-    signature: "(start: number, end: number?, count: number?) -> indexed_collection",
+    signature: "(start: number, end: number?, count: number?) -> list<number>",
   },
   {
     name: "List",
@@ -3474,7 +3475,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Range",
     kind: "operator",
     description: "A sequence of numbers from a start to an end value with an optional step.",
-    signature: "(number, number?, step: number?) -> indexed_collection<number>",
+    signature: "(number, number?, step: number?) -> list<number>",
   },
   {
     name: "RangeOf",
@@ -4096,7 +4097,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Tabulate",
     kind: "operator",
     description: "Create a collection by applying a function to each index in the specified dimensions.",
-    signature: "(generator: function, integer, integer?) -> indexed_collection",
+    signature: "(generator: function, integer, integer?) -> list",
     keywords: ["table"],
   },
   {
