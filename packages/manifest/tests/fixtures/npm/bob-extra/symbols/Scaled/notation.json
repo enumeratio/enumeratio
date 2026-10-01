@@ -1,0 +1,7 @@
+{
+  "traditional": [
+    { "params": ["x"], "call": "S" },
+    { "params": ["x", "factor"], "box": ["RowBox", [["TemplateSlot", "factor"], "·", ["TemplateSlot", "x"]]] }
+  ],
+  "latex": [{ "trigger": "\\scaled", "kind": "function" }]
+}

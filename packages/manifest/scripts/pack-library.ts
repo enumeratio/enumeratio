@@ -16,6 +16,7 @@ import { dirname, join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { readEntries } from "@enumeratio/entry/node";
 import { validRange } from "semver";
+import { type NotationData, notationProblem } from "../src/notation-data.ts";
 import type { Definition, Example } from "../src/registry.ts";
 import { entryOf } from "./library-entry.ts";
 import {
@@ -47,6 +48,9 @@ export async function packLibrary(dir: string): Promise<string> {
     const definition = JSON.parse(readFileSync(file, "utf8")) as Definition;
     const problem = declarationProblem(definition);
     if (problem !== undefined) throw new Error(`${dir}: ${name} ${problem}`);
+    const notation = readJson<NotationData>(join(symbolsDir, name, "notation.json"));
+    const unwritable = notation === undefined ? undefined : notationProblem(notation);
+    if (unwritable !== undefined) throw new Error(`${dir}: ${name}'s notation: ${unwritable}`);
     const examples: Example[] = (records.get(name)?.examples ?? [])
       .filter((e) => e.role !== "aspirational" && e.role !== "triage")
       .map(({ id, expr, expected, tolerance }) => ({
@@ -57,7 +61,7 @@ export async function packLibrary(dir: string): Promise<string> {
       }));
     if (examples.length > 0)
       writeFileSync(join(symbolsDir, name, "examples.json"), `${JSON.stringify(examples, null, 2)}\n`);
-    definitions[name] = { ...definition, examples };
+    definitions[name] = { ...definition, examples, ...(notation === undefined ? {} : { notation }) };
   }
   const index = await libraryIndexOf(pkg.enumeratio.namespace, definitions, await notationOf(dir, pkg));
   // A namespace another package serves is its scope's: `ada.*` from the `@ada/…` dependency.

@@ -74,13 +74,33 @@ export function changesOf(previous: LibrarySnapshot, next: LibrarySnapshot, isSu
   }
   for (const symbol of Object.keys(after).toSorted())
     if (!(symbol in before)) changes.push({ symbol, level: "minor", what: "added" });
-  changes.push(...notationChanges(previous.index.notation, next.index.notation));
+  changes.push(...notationChanges(notationOf(previous.index), notationOf(next.index)));
+  for (const symbol of Object.keys(before).toSorted()) {
+    const [was, is] = [before[symbol]!.notation?.traditional, after[symbol]?.notation?.traditional];
+    if (was !== undefined && is !== undefined && JSON.stringify(was) !== JSON.stringify(is))
+      changes.push({ symbol, level: "patch", what: "TraditionalForm changed" });
+  }
   const [was, is] = [previous.system ?? "*", next.system ?? "*"];
   if (was !== is) {
     const widened = subset(was, is);
     changes.push({ level: widened ? "minor" : "major", what: `system ${was} to ${is}${widened ? ", widened" : ""}` });
   }
   return changes;
+}
+
+/** Every trigger and TraditionalForm head: the notation entry's, and each symbol's own. */
+function notationOf(index: LibraryIndex): NotationSummary {
+  const own = Object.entries(index.symbols);
+  return {
+    latex: [
+      ...(index.notation?.latex ?? []),
+      ...own.flatMap(([name, s]) => (s.notation?.latex ?? []).map(({ trigger }) => ({ trigger, name }))),
+    ],
+    traditional: [
+      ...(index.notation?.traditional ?? []),
+      ...own.flatMap(([name, s]) => (s.notation?.traditional?.length ? [name] : [])),
+    ].toSorted(),
+  };
 }
 
 /**

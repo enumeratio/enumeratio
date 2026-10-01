@@ -93,7 +93,7 @@ export function catalog<Engine extends object>(
         : undefined;
       return {
         head: pinnedHead(namespace!, member, entry.pin),
-        definition,
+        definition: entry.notation === undefined ? definition : { ...definition, notation: entry.notation },
         pin: entry.pin,
         ...(examples === undefined ? {} : { examples }),
       };
