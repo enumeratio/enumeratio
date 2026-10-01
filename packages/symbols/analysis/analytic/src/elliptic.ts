@@ -18,9 +18,9 @@ import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
 
 // The incomplete Legendre elliptic integrals, and one precision fix for the native
 // complete one. compute-engine already declares EllipticE/EllipticF/EllipticK/EllipticPi
-// natively (see https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8), so nothing here redeclares those heads.
+// natively, so nothing here redeclares those heads.
 //
-// `EllipticE`'s precision loss at complex modulus (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8: three
+// `EllipticE`'s precision loss at complex modulus (three
 // Fungrim identities catch it, e.g. m = 0.57 + 0.23i gives four correct digits against
 // mpmath and the engine's own Hypergeometric2F1 identity), cortex-js/compute-engine
 // #346/#348, landed natively in compute-engine 0.139 (with hardening beyond what our PR

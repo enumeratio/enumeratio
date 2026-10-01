@@ -1,4 +1,4 @@
-// The special-function heads offered upstream (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10): BarnesG,
+// The special-function heads offered upstream: BarnesG,
 // LogBarnesG, LogGamma, ClausenCl, StieltjesGamma and LerchPhi. A pull request for a plain
 // record below adds it to compute-engine's own library/special-functions.ts.
 //

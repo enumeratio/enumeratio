@@ -4,8 +4,7 @@ import { expect, test } from "vite-plus/test";
 
 // The full oracle comparison for EllipticE(m) at a complex modulus -- golden values gathered
 // from mpmath (ellipe) and a Wolfram kernel by @enumeratio/analytic's
-// scripts/collect-elliptic-goldens.ts, moved here with the patch (https://github.com/enumeratio/enumeratio/wiki/Upstreaming
-// §10). compute-engine 0.139 shipped this fix natively, so the ce-patches
+// scripts/collect-elliptic-goldens.ts, moved here with the patch. compute-engine 0.139 shipped this fix natively, so the ce-patches
 // elliptic-e-complex patch was retired -- this now checks native EllipticE directly.
 
 const ce = new ComputeEngine();

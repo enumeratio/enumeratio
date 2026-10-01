@@ -3,7 +3,7 @@ import type { LatexDictionaryEntry, Parser } from "@cortex-js/compute-engine/lat
 import { INTEGER_MOD, INTEGER_MOD_RING } from "./names.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
-// dictionary only at construction (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §3.7), so a host loads
+// dictionary only at construction, so a host loads
 // these from the package's notation entry (`./notation`) before it builds an engine.
 //
 //   a \pmod{n}             IntegerMod(a, n)

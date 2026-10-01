@@ -22,7 +22,7 @@ import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 export type { LibraryRecord, Patch } from "./patch.ts";
 export { applyPatch, applyPatches, declareLibrary, patchSymbols } from "./patch.ts";
 
-// #340 special-function family (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10; @enumeratio/analytic's
+// #340 special-function family (@enumeratio/analytic's
 // declareAnalytic calls applyPatch for each of these at the point their declares used to run).
 // round-places, zeta-hurwitz (HurwitzZeta/Zeta's N(x, d) precision), polylog-order and
 // polygamma-complex all landed in compute-engine 0.141 and were retired; the functions
@@ -124,7 +124,7 @@ export {
 } from "./patches/stieltjes.ts";
 
 // Kernels several of the above (and @enumeratio/analytic's own non-candidate heads) depend
-// on -- see https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10 ("Kernels several candidates share").
+// on (see the README, "Kernels several patches share").
 export {
   type Cx,
   cx,
@@ -230,7 +230,7 @@ export function applyAllPatches(ce: ComputeEngine): void {
   applyPatches(ce, PATCHES);
 }
 
-/** Every head any patch declares -- cheap, no engine needed (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §10). */
+/** Every head any patch declares -- cheap, no engine needed. */
 export function symbols(): readonly string[] {
   return symbolsOf(PATCHES);
 }

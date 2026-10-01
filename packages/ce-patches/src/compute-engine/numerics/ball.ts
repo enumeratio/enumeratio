@@ -15,8 +15,7 @@ import { atDigits } from "./hurwitz-zeta-big.ts";
 // compute-engine's BigDecimal documents a bound for `div` and `sqrt` (`divToward`,
 // `sqrtToward`) but none for `ln`, `exp` or `pow`, so those are ours: `exp` sums its Taylor
 // series with the tail bounded, and `ln` takes compute-engine's `ln` as a guess and proves
-// it with that `exp`, never trusting it. https://github.com/enumeratio/enumeratio/wiki/Upstreaming §9 lists what we'd ask
-// compute-engine for, to drop them.
+// it with that `exp`, never trusting it.
 
 /** A real in `[mid − rad, mid + rad]`. */
 export interface Ball {
