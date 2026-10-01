@@ -60,6 +60,31 @@ test("a polynomial whose roots a domain excludes keeps the empty answer", () => 
   expect(box(noIntegerRoots).evaluate().json).toEqual(["List"]);
 });
 
+test("an answer with fewer roots than the degree declines over the complexes", () => {
+  declines(equal(["Add", power("x", 5), "x", 1], 0), "x");
+  declines(equal(["Subtract", power("x", 4), 1], 0), "x");
+  declines(equal(["Subtract", power("x", 4), 1], 0), ["Element", "x", "ComplexNumbers"]);
+  declines(equal(["Subtract", power("x", 3), 1], 0), "x");
+});
+
+test("roots counted with multiplicity, and real or integer domains, keep their answers", () => {
+  const repeated = equal(["Multiply", power(["Subtract", "x", 1], 2), ["Add", "x", 2]], 0);
+  expect(box(["Solve", repeated, "x"]).evaluate().json).toEqual(["List", 1, -2]);
+  const quartic = equal(["Subtract", power("x", 4), 1], 0);
+  expect(box(["Solve", quartic, ["Element", "x", "RealNumbers"]]).evaluate().json).toEqual(["List", 1, -1]);
+  expect(box(["Solve", quartic, ["Element", "x", "Integers"]]).evaluate().json).toEqual(["List", 1, -1]);
+});
+
+test("a principal square root and an absolute value are never negative", () => {
+  expect(box(["Solve", equal(["Sqrt", "x"], -1), "x"]).evaluate().json).toEqual(["List"]);
+  expect(box(["Solve", equal(["Abs", "x"], -1), "x"]).evaluate().json).toEqual(["List"]);
+});
+
+test("sin x == 2 and e^x == -1 have complex solutions, so they decline", () => {
+  declines(equal(["Sin", "x"], 2), "x");
+  declines(equal(power("ExponentialE", "x"), -1), "x");
+});
+
 test("solvable equations and systems are untouched", () => {
   expect(box(["Solve", equal(["Ln", "x"], 0), "x"]).evaluate().json).toEqual(["List", 1]);
   const system = ["Solve", ["List", equal(["Add", "x", "y"], 3), equal(["Subtract", "x", "y"], 1)], ["List", "x", "y"]];

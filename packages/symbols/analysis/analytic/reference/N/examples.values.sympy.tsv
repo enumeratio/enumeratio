@@ -28,7 +28,7 @@ n-exponentiale-pow-x-plus-pi	N((S(E)**(Symbol("x") + pi)), 30)
 n-k	N(Symbol("k"), 30)		
 n-1-minus-goldenratio-plus-1-over-goldenratio-20			
 n-1-minus-goldenratio-plus-1-over-goldenratio			
-n-exponentiale-pow-100-list-positiveinfinity-neg			
+n-exponentiale-pow-100-list-positiveinfinity-neg	N((S(E)**100), 30)		
 n-10-000-000-000-times-neg-exponentiale-pow-999			
 n-exponentiale-pow-sin-1-000	N((S(E)**sin(1000)), 30)		
 n-exponentiale-pow-sin-1-000-47	N((S(E)**sin(1000)), 30)		

@@ -48,6 +48,9 @@ function cpowInto(zr: number, zi: number, wr: number, wi: number): void {
   _pi = m * Math.sin(ei);
 }
 
+// Increments in a row below 1e-17 of the sum before the Euler transform stops.
+const EULER_CONSECUTIVE_SMALL = 3;
+
 /**
  * Σ_{n≥0} zⁿ (n+a)^(−s) for real z < 0 by the van Wijngaarden Euler transform
  * (Numerical Recipes `eulsum`, carried through the complex terms). The signed,
@@ -63,6 +66,7 @@ function lerchEuler(zRe: number, s: Cx, a: Cx): Cx {
   let sumR = 0;
   let sumI = 0;
   let zpow = 1; // zⁿ (signed: z < 0 makes the terms alternate)
+  let smallRun = 0;
   for (let n = 0; n < 512; n++, zpow *= zRe) {
     const br = a.re + n;
     // termₙ = zⁿ (n+a)^(−s), the signed term the Euler transform averages.
@@ -107,7 +111,11 @@ function lerchEuler(zRe: number, s: Cx, a: Cx): Cx {
     }
     sumR += incR;
     sumI += incI;
-    if (n > 4 && Math.hypot(incR, incI) < 1e-17 * (Math.hypot(sumR, sumI) + 1e-17)) break;
+    // A single tiny increment is not convergence: for a polynomial times zⁿ (s a non-positive
+    // integer, Φ(−1/3, −1, 1)) a table entry can vanish while later terms still matter.
+    if (n > 4 && Math.hypot(incR, incI) < 1e-17 * (Math.hypot(sumR, sumI) + 1e-17)) {
+      if (++smallRun === EULER_CONSECUTIVE_SMALL) break;
+    } else smallRun = 0;
   }
   return { re: sumR, im: sumI };
 }

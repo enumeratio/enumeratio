@@ -18,6 +18,10 @@ import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 // A trig equation answers its principal solutions only (`sin x == 1/3` drops the 2*Pi*k
 // families; `tan x == 1` and `sin x == 0` too), a wrong answer by omission with no `C[1]`
 // parameter to say otherwise, so those decline as well (see `dropsPeriodicFamilies`).
+//
+// Over the complexes a polynomial equation has as many roots as its degree, counting multiplicity;
+// an answer with fewer is a wrong answer by omission (`x^5 + x + 1` answers one real root,
+// `x^4 == 1` answers only `+-1`), so it declines too (see `missesRoots`).
 export function evaluateSolveIdentity(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("Solve");
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
@@ -28,7 +32,9 @@ export function evaluateSolveIdentity(ce: ComputeEngine): void {
     const result = native(ops, options);
     const condition = ops[0];
     if (condition === undefined || result === undefined) return result;
-    if (!isEmptySolutionList(result)) return dropsPeriodicFamilies(ops) ? undefined : result;
+    if (!isEmptySolutionList(result)) {
+      return dropsPeriodicFamilies(ops) || missesRoots(ce, ops, result) ? undefined : result;
+    }
     if (symbolNameOf(condition.evaluate()) === "True") return ce.function("List", [ce.function("List", [])]);
     return provesNoSolution(ce, ops) ? result : undefined;
   };
@@ -66,6 +72,8 @@ function provesNoSolution(ce: ComputeEngine, ops: readonly BoxedExpression[]): b
     return ce.function("Subtract", [left!, right!]).simplify();
   });
   if (residuals.some(neverZero)) return true;
+  const sides = equationsOf(statement).map((equation) => operandsOf(equation) as [BoxedExpression, BoxedExpression]);
+  if (sides.some(([left, right]) => isImpossible(left, right))) return true;
 
   const unknown = soleUnknown(ops);
   if (unknown === undefined) return false;
@@ -100,6 +108,79 @@ function neverZero(expr: BoxedExpression): boolean {
     default:
       return expr.unknowns.length === 0 && expr.is(0) === false && Number.isFinite(expr.N().re);
   }
+}
+
+/**
+ * Can `a == b` never hold? A principal square root has a non-negative real part and an absolute
+ * value is a non-negative real, so neither equals a constant that is negative (`sqrt(x) == -1`,
+ * `|x| == -1`). Either side may carry the function.
+ */
+function isImpossible(a: BoxedExpression, b: BoxedExpression): boolean {
+  const impossibleAgainst = (side: BoxedExpression, constant: BoxedExpression) => {
+    if (constant.unknowns.length > 0) return false;
+    const value = constant.N();
+    if (!(value.re < 0)) return false;
+    return side.operator === "Sqrt" || (side.operator === "Abs" && value.im === 0);
+  };
+  return impossibleAgainst(a, b) || impossibleAgainst(b, a);
+}
+
+// Relative size below which a derivative at a root counts as zero when measuring multiplicity.
+const MULTIPLICITY_TOLERANCE = 1e-9;
+
+/** The magnitude of `expr` with the unknown set to `value`; NaN when that is not a number. */
+function magnitudeAt(expr: BoxedExpression, unknown: string, value: BoxedExpression): number {
+  const n = expr.subs({ [unknown]: value }).N();
+  return Math.hypot(n.re, n.im);
+}
+
+/**
+ * The multiplicity of `root` in `polynomial`: how many successive derivatives vanish there,
+ * measured against the same derivative one unit away. 1 when the numbers do not evaluate.
+ */
+function multiplicityOf(
+  ce: ComputeEngine,
+  polynomial: BoxedExpression,
+  unknown: string,
+  root: BoxedExpression,
+  degree: number,
+): number {
+  const x = ce.symbol(unknown);
+  const near = [root.add(ce.One), root.sub(ce.One)];
+  let derivative = polynomial;
+  for (let multiplicity = 0; multiplicity < degree; multiplicity++) {
+    const here = magnitudeAt(derivative, unknown, root);
+    const scale = Math.max(...near.map((point) => magnitudeAt(derivative, unknown, point)));
+    if (!Number.isFinite(here) || !Number.isFinite(scale)) return Math.max(multiplicity, 1);
+    if (here > MULTIPLICITY_TOLERANCE * Math.max(scale, 1)) return Math.max(multiplicity, 1);
+    derivative = ce.function("D", [derivative, x]).evaluate();
+  }
+  return degree;
+}
+
+/**
+ * Did an answer to a polynomial equation over the complexes (no domain, or `Element(x, ComplexNumbers)`)
+ * leave out roots? Fewer roots than the degree, each counted with its multiplicity, means some
+ * are missing: `x^4 == 1` without `+-i`, a quintic with one numeric root. A system, a real or
+ * integer domain, or a non-polynomial equation is not judged here.
+ */
+function missesRoots(ce: ComputeEngine, ops: readonly BoxedExpression[], result: BoxedExpression): boolean {
+  const statement = ops[0]?.canonical;
+  const unknown = soleUnknown(ops);
+  if (statement === undefined || statement.operator !== "Equal" || unknown === undefined) return false;
+  const domain = ops[1]?.operator === "Element" ? symbolNameOf(operandsOf(ops[1])[1]!) : undefined;
+  if (domain !== undefined && domain !== "ComplexNumbers") return false;
+
+  const [left, right] = operandsOf(statement);
+  const polynomial = ce.function("Subtract", [left!, right!]).evaluate();
+  const degree = integerAt(ce.function("PolynomialDegree", [polynomial, ce.symbol(unknown)]).evaluate());
+  if (degree === undefined || degree < 1) return false;
+
+  const found = operandsOf(result).reduce(
+    (sum, root) => sum + multiplicityOf(ce, polynomial, unknown, root, degree),
+    0,
+  );
+  return found < degree;
 }
 
 /** The one unknown a `Solve` names, bare or as `Element(x, domain)`; none for a system. */

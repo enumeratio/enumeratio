@@ -22,6 +22,12 @@ test("Flatten(list, PositiveInfinity) fully flattens, like the default", () => {
   expect(run(["Flatten", nested, "PositiveInfinity"])).toEqual(run(["Flatten", nested]));
 });
 
+// A lazy `Map` is flattened natively, not as a same-head call.
+test("Flatten(Map(f, xs)) splices the lists f returns", () => {
+  const map = ["Map", ["Function", ["List", "x", "x"], "x"], ["List", 1, 2]];
+  expect(run(["Flatten", map])).toEqual(["List", 1, 1, 2, 2]);
+});
+
 // Join(a, b, …): any head, as long as every argument shares it.
 test("Join still rejects mismatched heads (stays unevaluated)", () => {
   const result = run(["Join", ["f", "a"], ["g", "b"]]) as readonly unknown[];

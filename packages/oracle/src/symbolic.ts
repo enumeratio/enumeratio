@@ -139,6 +139,27 @@ function solveAgreementSource(theirs: string, ours: string): string {
 }
 
 /**
+ * A proposition against ours, side by side: `a == b` and `c == d` state the same thing when
+ * `a - b` and `c - d` differ by nothing, or by a sign (`b == a`); an inequality with the same
+ * relation needs each side to match; a conjunction needs each conjunct to. Term order inside a
+ * side (`Cos[x] + I Sin[x]` against `I Sin[x] + Cos[x]`) is not a disagreement. A reply of a
+ * different shape (`True`, a bare value) is not decided here.
+ */
+function propositionAgreementSource(theirs: string, ours: string): string {
+  return (
+    `Module[{zero, agree}, ` +
+    `zero[e_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], 10, $Aborted]]}], # === 0 &]; ` +
+    `agree[t_And, o_And] /; Length[t] == Length[o] := And @@ MapThread[agree, {List @@ t, List @@ o}]; ` +
+    `agree[t_Equal, o_Equal] /; Length[t] == 2 && Length[o] == 2 := ` +
+    `zero[t[[1]] - t[[2]] - (o[[1]] - o[[2]])] || zero[t[[1]] - t[[2]] + (o[[1]] - o[[2]])]; ` +
+    `agree[t_, o_] /; MatchQ[t, _Less | _LessEqual | _Greater | _GreaterEqual] && Head[t] === Head[o] && ` +
+    `Length[t] == 2 && Length[o] == 2 := zero[t[[1]] - o[[1]]] && zero[t[[2]] - o[[2]]]; ` +
+    `agree[_, _] := Indeterminate; ` +
+    `agree[${theirs}, ${ours}]]`
+  );
+}
+
+/**
  * The kernel source for "does `expr` agree with `expected`", for an example whose emitted
  * form carries a free symbol. `undefined` when either side doesn't emit for `system`, OR when
  * `expected` doesn't depend on the SAME free symbol at all — the caller falls back to the
@@ -160,12 +181,15 @@ export function symbolicAgreementSource(
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
   if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;
-  if (!solving && (isStructured(expr) || isStructured(expected))) return undefined;
+  const equating =
+    system === "wolfram" && Array.isArray(expected) && (expected[0] === "Equal" || expected[0] === "And");
+  if (!solving && !equating && (isStructured(expr) || isStructured(expected))) return undefined;
   const theirs = emit(expr, system);
   const ours = emit(expected, system);
   if (!theirs.ok || !ours.ok) return undefined;
   if (!(ours.freeSymbols ?? []).some((name) => freeSymbols.includes(name))) return undefined;
   if (solving) return solveAgreementSource(theirs.source, ours.source);
+  if (equating) return propositionAgreementSource(theirs.source, ours.source);
   const trials = Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) =>
     trialSources(system, expr, expected, freeSymbols, trial),
   );

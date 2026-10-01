@@ -8,5 +8,6 @@ signatures:
     description: as compute-engine declares it
 names:
   fungrim: Im
+  wolfram: Im
 stub: engine
 ---

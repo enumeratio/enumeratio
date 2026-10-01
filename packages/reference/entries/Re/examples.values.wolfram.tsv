@@ -1,35 +1,35 @@
-id	in	out	tex.in	tex.out	verdict
-re-of-3-plus-4i-is-3	Re[Complex[3, 4]]	3	\Re(3+4 i)	3	
-re-of-a-real-number-is-itself	Re[5]	5	\Re(5)	5	
-re-of-pi-is-pi-a-real-symbolic-constant	Re[Pi]	Pi	\Re(\pi )	\pi	
-real-2-plus-3i	""				
-real-2-times-exponentiale-pow-1-over-3-times-i	""				
-real-3-over-2-plus-4-over-5-times-i	""				
-n-real-exponentiale-plus-i-times-pi-25	""				
-real-41-over-25-minus-2i	""				
-real-list-list-1-u-list-v-neg-i	""				
-real-0	""				
-real-positiveinfinity	""				
-real-positiveinfinity-times-i	""				
-real-complexinfinity	""				
-piecewiseexpand-re-imaginaryunit-times-x-neg-2	PiecewiseExpand[Re[Times[I, x]], Less[-2, x, 2]]	-Im[x]	\text{PiecewiseExpand}[\Re(i x),-2<x<2]	-\Im(x)	disagree
-simplify-re-x-x-gt-0	Simplify[Re[x], Greater[x, 0]]	x	\text{Simplify}[\Re(x),x>0]	x	disagree
-re-of-a-symbolic-value-stays-unevaluated	Re[x]	Re[x]	\Re(x)	\Re(x)	disagree
-real-1					
-real-neg-1					
-real-i					
-real-neg-i					
-real-1-plus-i					
-real-neg-1-plus-i					
-real-neg-1-minus-i					
-real-1-minus-i					
-real-sqrt-3-plus-i					
-real-1-plus-sqrt-3-times-i					
-real-neg-1-plus-sqrt-3-times-i					
-real-neg-sqrt-3-plus-i					
-list-real-x-times-exponentiale-pow-1-over-5					
-real-neg-sqrt-3-minus-i					
-real-neg-1-plus-neg-sqrt-3-times-i					
-real-1-plus-neg-sqrt-3-times-i					
-real-sqrt-3-minus-i					
-real-2					
+id	in	out	shown	tex.in	tex.out	verdict
+re-of-3-plus-4i-is-3	Re[Complex[3, 4]]	3		\Re(3+4 i)	3	
+re-of-a-real-number-is-itself	Re[5]	5		\Re(5)	5	
+re-of-pi-is-pi-a-real-symbolic-constant	Re[Pi]	Pi		\Re(\pi )	\pi	
+real-2-plus-3i	Re[Complex[2, 3]]	2		\Re(2+3 i)	2	
+real-2-times-exponentiale-pow-1-over-3-times-i	Re[Times[2, Power[E, Times[Complex[0, Rational[1, 3]], Pi]]]]	1		\Re\left(2 e^{(\text{Rational}[1,3] i) \pi }\right)	1	
+real-3-over-2-plus-4-over-5-times-i	Re[Complex[Rational[3, 2], Rational[4, 5]]]	3/2		\Re(\text{Rational}[3,2]+\text{Rational}[4,5] i)	\frac{3}{2}	
+n-real-exponentiale-plus-i-times-pi-25	N[Re[Plus[E, Times[Complex[0, 1], Pi]]], 25]	2.71828182845904523536028747134926561337`25.	2.718281828459045235360287	N[\Re(e+i \pi ),25]	2.718281828459045235360287	
+real-41-over-25-minus-2i	Re[Complex[Rational[41, 25], -2]]	41/25		\Re(\text{Rational}[41,25]-2 i)	\frac{41}{25}	
+real-list-list-1-u-list-v-neg-i	Re[List[List[1, u], List[v, Complex[0, -1]]]]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\Re\left(\left( \begin{array}{cc}  1 & u \\  v & -i \\ \end{array} \right)\right)-\left( \begin{array}{cc}  1 & \Re(u) \\  \Re(v) & 0 \\ \end{array} \right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Re\left(\left( \begin{array}{cc}  1 & \frac{7}{3} \\  -\frac{11}{5} & -i \\ \end{array} \right)\right)-\left( \begin{array}{cc}  1 & \Re\left(\frac{7}{3}\right) \\  \Re\left(-\frac{11}{5}\right) & 0 \\ \end{array} \right)\right]\right],\text{Chop}\left[N\left[\Re\left(\left( \begin{array}{cc}  1 & \frac{13}{4} \\  -\frac{17}{6} & -i \\ \end{array} \right)\right)-\left( \begin{array}{cc}  1 & \Re\left(\frac{13}{4}\right) \\  \Re\left(-\frac{17}{6}\right) & 0 \\ \end{array} \right)\right]\right],\text{Chop}\left[N\left[\Re\left(\left( \begin{array}{cc}  1 & \frac{19}{8} \\  -\frac{23}{9} & -i \\ \end{array} \right)\right)-\left( \begin{array}{cc}  1 & \Re\left(\frac{19}{8}\right) \\  \Re\left(-\frac{23}{9}\right) & 0 \\ \end{array} \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+real-0	Re[0]	0		\Re(0)	0	
+real-positiveinfinity	Re[Infinity]	Infinity		\Re(\infty )	\infty	
+real-positiveinfinity-times-i	Re[Times[Infinity, Complex[0, 1]]]	0		\Re(\infty  i)	0	disagree
+real-complexinfinity	Re[ComplexInfinity]	Indeterminate		\Re(\text{ComplexInfinity})	\text{Indeterminate}	
+piecewiseexpand-re-imaginaryunit-times-x-neg-2	PiecewiseExpand[Re[Times[I, x]], Less[-2, x, 2]]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PiecewiseExpand}[\Re(i x),-2<x<2]-\Re(i x)],10,\text{$\$$Aborted}]]\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\Re\left(i \frac{7}{3}\right),-2<\frac{7}{3}<2\right]-\Re\left(i \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\Re\left(i \left(-\frac{11}{5}\right)\right),-2<-\frac{11}{5}<2\right]-\Re\left(i \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\Re\left(i \frac{13}{4}\right),-2<\frac{13}{4}<2\right]-\Re\left(i \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+simplify-re-x-x-gt-0	Simplify[Re[x], Greater[x, 0]]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Simplify}[\Re(x),x>0]-\Re(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Simplify}\left[\Re\left(\frac{7}{3}\right),\frac{7}{3}>0\right]-\Re\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Simplify}\left[\Re\left(-\frac{11}{5}\right),-\frac{11}{5}>0\right]-\Re\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Simplify}\left[\Re\left(\frac{13}{4}\right),\frac{13}{4}>0\right]-\Re\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+re-of-a-symbolic-value-stays-unevaluated	Re[x]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Re(x)-\Re(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Re\left(\frac{7}{3}\right)-\Re\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\Re\left(-\frac{11}{5}\right)-\Re\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\Re\left(\frac{13}{4}\right)-\Re\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+real-1	Re[1]					
+real-neg-1	Re[-1]					
+real-i	Re[Complex[0, 1]]					
+real-neg-i	Re[Complex[0, -1]]					
+real-1-plus-i	Re[Complex[1, 1]]					
+real-neg-1-plus-i	Re[Complex[-1, 1]]					
+real-neg-1-minus-i	Re[Complex[-1, -1]]					
+real-1-minus-i	Re[Complex[1, -1]]					
+real-sqrt-3-plus-i	Re[Plus[Sqrt[3], Complex[0, 1]]]					
+real-1-plus-sqrt-3-times-i	Re[Plus[1, Complex[0, Sqrt[3]]]]					
+real-neg-1-plus-sqrt-3-times-i	Re[Plus[-1, Complex[0, Sqrt[3]]]]					
+real-neg-sqrt-3-plus-i	Re[Plus[Minus[Sqrt[3]], Complex[0, 1]]]					
+list-real-x-times-exponentiale-pow-1-over-5	List[Re[Times[x, Power[E, Times[Complex[0, Rational[1, 5]], Pi]]]], Re[Plus[Times[2, x], Complex[0, 1]]]]	Indeterminate		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\left\{\Re\left(x e^{(\text{Rational}[1,5] i) \pi }\right),\Re(2 x+i)\right\}-\left\{\Re\left(x \left(\frac{1}{4}+\frac{\sqrt{5}}{4}+\left(\frac{\sqrt{2}}{4} i\right) \sqrt{5-\sqrt{5}}\right)\right),\Re(2 x+i)\right\}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\{\Re\left(\frac{7}{3} e^{(\text{Rational}[1,5] i) \pi }\right),\Re\left(2 \frac{7}{3}+i\right)\right\}-\left\{\Re\left(\frac{7}{3} \left(\frac{1}{4}+\frac{\sqrt{5}}{4}+\left(\frac{\sqrt{2}}{4} i\right) \sqrt{5-\sqrt{5}}\right)\right),\Re\left(2 \frac{7}{3}+i\right)\right\}\right]\right],\text{Chop}\left[N\left[\left\{\Re\left(-\frac{11}{5} e^{(\text{Rational}[1,5] i) \pi }\right),\Re\left(2 \left(-\frac{11}{5}\right)+i\right)\right\}-\left\{\Re\left(-\frac{11}{5} \left(\frac{1}{4}+\frac{\sqrt{5}}{4}+\left(\frac{\sqrt{2}}{4} i\right) \sqrt{5-\sqrt{5}}\right)\right),\Re\left(2 \left(-\frac{11}{5}\right)+i\right)\right\}\right]\right],\text{Chop}\left[N\left[\left\{\Re\left(\frac{13}{4} e^{(\text{Rational}[1,5] i) \pi }\right),\Re\left(2 \frac{13}{4}+i\right)\right\}-\left\{\Re\left(\frac{13}{4} \left(\frac{1}{4}+\frac{\sqrt{5}}{4}+\left(\frac{\sqrt{2}}{4} i\right) \sqrt{5-\sqrt{5}}\right)\right),\Re\left(2 \frac{13}{4}+i\right)\right\}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive
+real-neg-sqrt-3-minus-i	Re[Plus[Minus[Sqrt[3]], Complex[0, -1]]]					
+real-neg-1-plus-neg-sqrt-3-times-i	Re[Plus[-1, Complex[0, Minus[Sqrt[3]]]]]					
+real-1-plus-neg-sqrt-3-times-i	Re[Plus[1, Complex[0, Minus[Sqrt[3]]]]]					
+real-sqrt-3-minus-i	Re[Plus[Sqrt[3], Complex[0, -1]]]					
+real-2	Re[2]					
