@@ -2,7 +2,7 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import { ensureStyles } from "./styles.ts";
-import { gridFromPoints, mesh3dSvg, type Point3, scatter3dSvg } from "@enumeratio/frontend";
+import { gridFromPoints, mesh3dSvg, type Point3, scatter3dSvg } from "@enumeratio/frontend/core";
 
 /** Parse a JSON attribute defensively -- an empty/invalid value reads as `undefined`. */
 function parseJson(value: string): unknown {

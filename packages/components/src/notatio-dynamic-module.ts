@@ -5,8 +5,17 @@ import {
   type WorkerFactory,
 } from "@enumeratio/evaluation/browser";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { closePageSession, notebookSession, type RemoteAnswer, type RemoteRequest } from "./kernel-client.ts";
-import { CONTROL_EVENT, Transcript, type TrackedSymbols } from "@enumeratio/frontend";
+import {
+  closePageSession,
+  notebookSession,
+  type RemoteAnswer,
+  type RemoteRequest,
+  WorkerUnavailableError,
+} from "./kernel-client.ts";
+
+export { WorkerUnavailableError };
+import { CONTROL_EVENT, Transcript } from "@enumeratio/frontend/core";
+import type { TrackedSymbols } from "@enumeratio/frontend";
 import { LitElement, nothing } from "lit";
 import "./notatio-dynamic.ts";
 import "./notatio-knob.ts";
@@ -56,17 +65,6 @@ type WorkerFactoriesGate = {
     readonly createSharedWorker?: SharedWorkerFactory;
   };
 };
-
-/** Thrown by `evaluateRemote` when a session's worker (and its one respawned retry)
- * both failed to ever start -- `notatio-out.ts`'s worker branch catches exactly this and
- * evaluates that one cell locally instead of showing `$Aborted` for a failure that was
- * never the reader's doing. */
-export class WorkerUnavailableError extends Error {
-  constructor() {
-    super('Evaluator -> "Worker": no worker could be started for this session');
-    this.name = "WorkerUnavailableError";
-  }
-}
 
 /**
  * How long `stop()` waits for the worker's own answer to arrive on its own before

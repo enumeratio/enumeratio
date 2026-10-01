@@ -5,6 +5,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type ComponentDoc as Reflected, collectComponents as reflect, headOfTag } from "@enumeratio/frontend/reflect";
+import { DRAWING_SYMBOLS } from "@enumeratio/frontend/symbols";
 
 export type { AttributeDoc } from "@enumeratio/frontend/reflect";
 
@@ -14,6 +15,9 @@ export interface ComponentDoc extends Reflected {
    * itself is pure; the browser build just can't pull in this module for one function
    * (`collectComponents` reads the filesystem at import time). */
   name: string;
+  /** The heads drawn by this element (symbols.ts's head-to-tag map), read here so a page
+   *  needn't load the symbol table to link a head to its component. */
+  heads: readonly string[];
   /** The playground page that exercises this component, when there is one. */
   playground?: string;
 }
@@ -53,5 +57,10 @@ function playgroundPages(): Map<string, string> {
 /** Re-read every element module. Called per build (and per change, in dev). */
 export function collectComponents(): ComponentDoc[] {
   const playgrounds = playgroundPages();
-  return reflect(srcDir).map((c) => ({ ...c, name: headOfTag(c.tag), playground: playgrounds.get(c.tag) }));
+  return reflect(srcDir).map((c) => ({
+    ...c,
+    name: headOfTag(c.tag),
+    heads: DRAWING_SYMBOLS.filter((s) => s.tag === c.tag).map((s) => s.head),
+    playground: playgrounds.get(c.tag),
+  }));
 }

@@ -2,7 +2,7 @@ import { html, LitElement } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import { ensureStyles } from "./styles.ts";
-import { type Clock, pageClock, torusSquareSvg } from "@enumeratio/frontend";
+import { type Clock, pageClock, torusSquareSvg } from "@enumeratio/frontend/core";
 
 /**
  * `<TorusSquare p="2" q="3">` -- the torus as a square with its opposite edges glued,

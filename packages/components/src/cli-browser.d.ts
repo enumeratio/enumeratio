@@ -3,7 +3,7 @@
 // the small browser surface the terminal element consumes. Keep in sync with
 // packages/cli/src/browser.ts.
 declare module "@enumeratio/cli/browser" {
-  import type { Environment } from "@enumeratio/frontend";
+  import type { Environment } from "@enumeratio/frontend/core";
 
   export type GlyphKind = "permutation" | "partition" | "composition" | "subset" | "dyck";
 

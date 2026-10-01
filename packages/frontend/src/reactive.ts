@@ -1,4 +1,4 @@
-import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
+import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 
 // The dataflow core shared by `<notatio-notebook>` and `<notatio-worksheet>`: cells with
 // stable identity, evaluated top-to-bottom in a scope that is rebuilt from scratch on
@@ -482,7 +482,7 @@ export function substitutedForm(engine: ComputeEngine, expr: BoxedExpression): B
   for (const name of expr.symbols) {
     try {
       const bound = engine.box(name).evaluate();
-      if (!isSymbol(bound) || bound.symbol !== name) bindings[name] = bound;
+      if ((bound as { symbol?: string }).symbol !== name) bindings[name] = bound;
     } catch {
       // an unresolvable name is left free
     }

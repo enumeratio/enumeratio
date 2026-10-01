@@ -12,7 +12,7 @@ import {
   type OrbitView,
   pageClock,
   type Triple,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 
 /**
  * `<Curve3D value="KnotCurve(TorusKnot(2, 3))">` -- a curve in space, from an

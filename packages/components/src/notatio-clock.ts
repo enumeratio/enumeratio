@@ -4,7 +4,7 @@ import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
 import { LongPress } from "./popover.ts";
 import { ensureStyles } from "./styles.ts";
-import { type Clock, type Loop, pageClock, type Tick } from "@enumeratio/frontend";
+import { type Clock, type Loop, pageClock, type Tick } from "@enumeratio/frontend/core";
 
 /**
  * `<Clock>` -- play, pause and scrub the page's shared clock.

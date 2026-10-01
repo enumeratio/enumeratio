@@ -7,7 +7,7 @@ import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { LitElement, type PropertyValues } from "lit";
 import { entryMarkup } from "./choice-menu.ts";
 import { ensureStyles } from "./styles.ts";
-import { type Choice, choiceBinding, parseChoices, parseEntries } from "@enumeratio/frontend";
+import { type Choice, choiceBinding, parseChoices, parseEntries } from "@enumeratio/frontend/core";
 import { emitControl } from "./define.ts";
 
 export abstract class ChoiceControl extends LitElement {

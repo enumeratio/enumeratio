@@ -17,7 +17,7 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { createRef, ref } from "lit/directives/ref.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Terminal } from "@xterm/xterm";
-import { environmentNamed, linePlotSvg, renderGlyph, TTY } from "@enumeratio/frontend";
+import { environmentNamed, linePlotSvg, renderGlyph, TTY } from "@enumeratio/frontend/core";
 
 // A real terminal emulator (xterm) running the actual @enumeratio/cli logic in
 // the browser. Three modes: `repl` drives the interactive core (In[n]/Out[n], :plot

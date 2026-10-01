@@ -12,6 +12,7 @@ import { toInputForm } from "@enumeratio/formats/inputform";
 import { type CodeForm, codeForms } from "./code-forms.ts";
 import { type DisplayBoxes, displayBoxes } from "./display.ts";
 import { boundName } from "./reactive.ts";
+import { renderingOf } from "./symbols.ts";
 import { Transcript } from "./transcript.ts";
 
 /** The session a page's cells outside any notebook share: one scope, no `Out[n]` history. */
@@ -20,7 +21,9 @@ export const PAGE_SESSION = "page";
 /** An answer as the kernel shows it: boxes by form, and the forms that are text. */
 export interface Display {
   readonly boxes: DisplayBoxes;
-  readonly text: Partial<Record<CodeForm | "asciimath", string>>;
+  readonly text: Partial<Record<CodeForm | "asciimath" | "inputform", string>>;
+  /** Whether the value is a head that draws: a front end loads its renderer only then. */
+  readonly draws: boolean;
 }
 
 /** A cell's text as MathJSON: Epsil (`$…$` islands in LaTeX), LaTeX, or MathJSON itself. */
@@ -82,7 +85,18 @@ export function display(ce: ComputeEngine, json: unknown): Display {
   } catch {
     // no AsciiMath for this value
   }
-  return { boxes: displayBoxes(ce, json), text };
+  try {
+    text.inputform = toInputForm(json as MathJsonExpression);
+  } catch {
+    // no InputForm for this value
+  }
+  let draws = false;
+  try {
+    draws = renderingOf(json as MathJsonExpression) !== undefined;
+  } catch {
+    // not a head that draws
+  }
+  return { boxes: displayBoxes(ce, json), text, draws };
 }
 
 /** `createKernel`'s options for notatio's cells. */

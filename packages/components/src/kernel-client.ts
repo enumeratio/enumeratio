@@ -11,7 +11,17 @@ import {
   type WorkerFactory,
 } from "@enumeratio/evaluation/browser";
 import type { Message } from "@enumeratio/engine";
-import { WorkerUnavailableError } from "./notatio-dynamic-module.ts";
+
+/** Thrown by `evaluateRemote` when a session's worker (and its one respawned retry)
+ * both failed to ever start -- `notatio-out.ts`'s worker branch catches exactly this and
+ * evaluates that one cell locally instead of showing `$Aborted` for a failure that was
+ * never the reader's doing. */
+export class WorkerUnavailableError extends Error {
+  constructor() {
+    super('Evaluator -> "Worker": no worker could be started for this session');
+    this.name = "WorkerUnavailableError";
+  }
+}
 
 export interface RemoteRequest {
   /** MathJSON, or `source` for the kernel to parse. */

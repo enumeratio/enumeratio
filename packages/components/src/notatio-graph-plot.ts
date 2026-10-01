@@ -8,7 +8,7 @@ import {
   layeredGraphPlotSvg,
   type TreeNode,
   treePlotSvg,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 
 export type GraphType = "tree" | "graph" | "layered" | "dendrogram";
 

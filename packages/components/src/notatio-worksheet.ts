@@ -33,7 +33,7 @@ import {
   stackLayers,
   type Triple,
   type WorksheetControl,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 import { SliderPlayback } from "./sweep.ts";
 
 /**

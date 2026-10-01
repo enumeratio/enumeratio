@@ -12,7 +12,7 @@ import {
   polytope3dSvg,
   spellFaces,
   toggleFace,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 
 /**
  * `<Polytope which="permutahedron" n="4">` -- a polytope's face poset, drawn,

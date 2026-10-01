@@ -3,7 +3,7 @@
 // package's `playback.ts`; this is the part that owns a `requestAnimationFrame` and a
 // long press.
 
-import { advancePlayback, type Direction, iterate, type Loop, rewindFor, type Span } from "@enumeratio/frontend";
+import { advancePlayback, type Direction, iterate, type Loop, rewindFor, type Span } from "@enumeratio/frontend/core";
 import { LongPress } from "./popover.ts";
 
 export class Playback {

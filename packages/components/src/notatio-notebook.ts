@@ -2,7 +2,7 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { repeat } from "lit/directives/repeat.js";
 import "./notatio-cell.ts";
 import "./notatio-dynamic-module.ts";
-import { referencesOrdinal } from "@enumeratio/frontend";
+import { referencesOrdinal } from "@enumeratio/frontend/core";
 import { ensureStyles } from "./styles.ts";
 
 export { referencesOrdinal };

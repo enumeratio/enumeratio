@@ -15,7 +15,7 @@ import {
   modifierGear,
   numberLatex,
   sweepInterval,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 import { Sweep } from "./sweep.ts";
 import { defineControl, emitControl } from "./define.ts";
 

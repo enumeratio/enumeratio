@@ -1,7 +1,7 @@
 // Registering a control's tag and dispatching its change: the DOM half of the control
 // contract, whose shape is the base package's `controls.ts`.
 
-import { CONTROL_EVENT, type BoundControl, type ControlChange, numericParts } from "@enumeratio/frontend";
+import { CONTROL_EVENT, type BoundControl, type ControlChange, numericParts } from "@enumeratio/frontend/core";
 import { pageScope } from "./scope.ts";
 
 /** What a scope reads off a control element. */

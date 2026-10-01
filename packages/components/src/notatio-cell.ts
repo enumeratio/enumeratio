@@ -1,6 +1,3 @@
-import { toInputForm } from "@enumeratio/formats/inputform";
-import { parseExpression } from "@enumeratio/formats/expression";
-import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import "./notatio-in.ts";
 import { type HeadInfo, transcriptHostOf } from "./notatio-out.ts";
@@ -54,7 +51,7 @@ async function parseSyntax(syntax: Syntax, text: string): Promise<unknown> {
     case "mathjson":
       return JSON.parse(text);
     case "wolfram":
-      return fromWolfram(text);
+      return (await import("@enumeratio/wolfram")).fromWolfram(text);
     case "latex": {
       // The page's kernel reads it, when there is one, so the page needn't load an engine.
       const read = await translate({ source: { text, format: "latex" }, raw: true, write: "mathjson" });
@@ -71,7 +68,7 @@ async function parseSyntax(syntax: Syntax, text: string): Promise<unknown> {
         const range = (err as { range?: readonly [number, number] }).range;
         throw new SyntaxProblem(err instanceof Error ? err.message : String(err), range);
       }
-      const engine = await loadEngine();
+      const [engine, { parseExpression }] = await Promise.all([loadEngine(), import("@enumeratio/formats/expression")]);
       // `Assign` is otherwise a statement Epsil rejects outside a notebook -- a cell IS
       // a notebook line (`a := 5`, then `a^2` reads it back), whether or not it sits in a
       // transcript.
@@ -92,8 +89,10 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
   switch (syntax) {
     case "mathjson":
       return JSON.stringify(json);
-    case "wolfram":
+    case "wolfram": {
+      const { toWolfram } = await import("@enumeratio/wolfram");
       return toWolfram(json as Parameters<typeof toWolfram>[0]);
+    }
     case "latex": {
       if (engine === undefined) {
         const written = (await translate({ json, write: "latex" }))?.written;
@@ -103,8 +102,14 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
       return e.box(json as Parameters<Engine["box"]>[0], { form: "raw" }).latex;
     }
     case "epsil":
-    default:
+    default: {
+      if (engine === undefined) {
+        const written = (await translate({ json, write: "epsil" }))?.written;
+        if (written !== undefined) return written;
+      }
+      const { toInputForm } = await import("@enumeratio/formats/inputform");
       return toInputForm(json as Parameters<typeof toInputForm>[0]);
+    }
   }
 }
 

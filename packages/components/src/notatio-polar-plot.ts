@@ -15,7 +15,7 @@ const RUNTIME = {
 import { parseExpression } from "@enumeratio/formats/expression";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
-import { debug, polarPlotSvg, type PolarPoint, samplePolar } from "@enumeratio/frontend";
+import { debug, polarPlotSvg, type PolarPoint, samplePolar } from "@enumeratio/frontend/core";
 
 /** Parse a JSON attribute defensively -- an empty/invalid value reads as `undefined`. */
 function parseJson(value: string): unknown {

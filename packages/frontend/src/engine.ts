@@ -5,14 +5,13 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
-import { CONVENTIONAL_LATEX } from "./conventional-latex.ts";
-import { NOTATIO_LATEX } from "./latex.ts";
 
 let engine: ComputeEngine | undefined;
 let enginePromise: Promise<ComputeEngine> | undefined;
 
 const configurators: ((ce: ComputeEngine) => void)[] = [];
-const latexEntries: Partial<LatexDictionaryEntry>[] = [...NOTATIO_LATEX, ...CONVENTIONAL_LATEX];
+// The hosts' entries: the packages' notation, after ours when the engine is built.
+const latexEntries: Partial<LatexDictionaryEntry>[] = [];
 
 /**
  * Contribute LaTeX dictionary entries -- a library's notation, parsed and serialised --
@@ -65,9 +64,13 @@ export function loadEngine(): Promise<ComputeEngine> {
     const ready = (globalThis as EngineGate).__notatioEngineReady;
     const gate = typeof ready === "function" ? ready() : ready;
     if (gate) await gate.catch(() => {});
-    const { ComputeEngine, LatexSyntax, LATEX_DICTIONARY } = await import("@cortex-js/compute-engine");
+    const [{ ComputeEngine, LatexSyntax, LATEX_DICTIONARY }, { displayDictionary }] = await Promise.all([
+      import("@cortex-js/compute-engine"),
+      import("./display.ts"),
+    ]);
+    // The kernel's dictionary, so the page writes and reads LaTeX as a kernel does.
     engine = new ComputeEngine({
-      latexSyntax: new LatexSyntax({ dictionary: mergeLatex(LATEX_DICTIONARY, latexEntries) }),
+      latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, latexEntries) }),
     });
     for (const fn of configurators) fn(engine);
     return engine;

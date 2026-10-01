@@ -1,5 +1,3 @@
-import { toInputForm } from "@enumeratio/formats/inputform";
-import { parseExpression } from "@enumeratio/formats/expression";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
@@ -17,9 +15,25 @@ import {
   sweepInterval,
   symbolLatex,
   wrapHead,
-} from "@enumeratio/frontend";
+} from "@enumeratio/frontend/core";
 import { Sweep } from "./sweep.ts";
 import { translate } from "./kernel-client.ts";
+
+/** The page's engine, with Epsil's reader and InputForm's writer. */
+interface Local {
+  readonly engine: Awaited<ReturnType<typeof loadEngine>>;
+  readonly parseExpression: typeof import("@enumeratio/formats/expression").parseExpression;
+  readonly toInputForm: typeof import("@enumeratio/formats/inputform").toInputForm;
+}
+
+async function loadLocal(): Promise<Local> {
+  const [engine, { parseExpression }, { toInputForm }] = await Promise.all([
+    loadEngine(),
+    import("@enumeratio/formats/expression"),
+    import("@enumeratio/formats/inputform"),
+  ]);
+  return { engine, parseExpression, toInputForm };
+}
 
 /** The subset of MathLive's `<math-field>` this element drives. */
 interface MathField extends HTMLElement {
@@ -187,8 +201,9 @@ export class NotatioIn extends LitElement {
   }
 
   // Light DOM so the shared stylesheet and MathLive static CSS apply.
-  // The engine, once loaded, so copy and paste can reach it without awaiting.
-  static #engine: Awaited<ReturnType<typeof loadEngine>> | undefined;
+  // The engine and its Epsil reader and writer, once loaded, so copy and paste can reach
+  // them without awaiting.
+  static #local: Local | undefined;
 
   protected override createRenderRoot(): HTMLElement {
     return this;
@@ -439,7 +454,7 @@ export class NotatioIn extends LitElement {
       const translated = await translate({ source: { text: latex, format: "latex" }, raw: true, write: "epsil" });
       let next = translated?.written;
       if (next === undefined) {
-        const engine = (NotatioIn.#engine ??= await loadEngine());
+        const { engine, toInputForm } = (NotatioIn.#local ??= await loadLocal());
         next = toInputForm(engine.parse(latex, { form: "raw" }).json);
       }
       if (this.value === latex) this.inputForm = next;
@@ -471,8 +486,8 @@ export class NotatioIn extends LitElement {
   // The LaTeX of Epsil `text`, or undefined when it isn't Epsil (or the engine isn't
   // loaded yet, and MathLive's own reading will have to do).
   #latexOf(text: string): string | undefined {
-    const engine = NotatioIn.#engine;
-    if (!engine) return undefined;
+    if (!NotatioIn.#local) return undefined;
+    const { engine, parseExpression } = NotatioIn.#local;
     const { json, errors } = parseExpression(text, {
       allow: ["Assign"],
       ce: engine,
@@ -489,8 +504,8 @@ export class NotatioIn extends LitElement {
   // A synchronous InputForm for a partial selection, possible only once the engine has
   // been loaded (which `#syncInputForm` has already done by the time anyone selects).
   #inputFormOf(latex: string): string {
-    const engine = NotatioIn.#engine;
-    if (!engine) return "";
+    if (!NotatioIn.#local) return "";
+    const { engine, toInputForm } = NotatioIn.#local;
     try {
       return toInputForm(engine.parse(latex, { form: "raw" }).json);
     } catch {
