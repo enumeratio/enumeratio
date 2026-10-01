@@ -528,8 +528,7 @@ export class NotatioOut extends LitElement {
   #prerenderedAnswer(): Evaluated | undefined {
     const pre = this.prerendered;
     if (pre === undefined || this.#codeAsked || this.raw || this.plot || this.elideAbove > 0) return undefined;
-    if (this.format !== "mathjson" || this.value !== pre.input.text || pre.input.format !== "mathjson")
-      return undefined;
+    if (this.format !== "mathjson" || this.value !== JSON.stringify(pre.json)) return undefined;
     // Its typeset HTML is the markup for its TeX: nothing needs typesetting again.
     if (pre.html !== undefined) markupCache.set(pre.latex, pre.html.output);
     return { latex: pre.latex, json: pre.value, messages: [], display: pre.display };

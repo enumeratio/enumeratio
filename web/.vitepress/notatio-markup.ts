@@ -28,6 +28,8 @@ export const VUE_COMPONENTS: ReadonlySet<string> = new Set([
   "Symbol",
   "ComponentPage",
   "BenchViewer",
+  // where the build writes what it rendered (prerender-markup.ts)
+  "NotatioPrerendered",
   // VitePress and Vue
   "Badge",
   "ClientOnly",

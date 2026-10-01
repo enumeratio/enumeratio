@@ -517,3 +517,62 @@ export function linePlot(input: readonly PlotPoint[] | readonly PlotSeries[], op
     frame: frameOut,
   };
 }
+
+/** A compiled curve as `plotSeries` reads it: its label, or the point it is. */
+export interface SeriesItem {
+  readonly label: string;
+  readonly point?: readonly [number, number];
+}
+
+export interface SeriesOptions {
+  readonly domain: readonly [number, number];
+  readonly samples: number;
+  /** `points` draws dots; anything else, lines (data points default to dots). */
+  readonly mode?: string;
+  readonly adaptive?: boolean;
+  /** Read a pair of items as `(x(t), y(t))`. */
+  readonly parametric?: boolean;
+}
+
+/**
+ * The series `<Plot>` draws: `items` sampled over the domain by `at(k)`, item `k` as a
+ * function of the plot variable. A pair of items is a parametric curve when asked; items that
+ * are all points are data; otherwise each item is a curve, sampled adaptively unless not.
+ */
+export function plotSeries(
+  items: readonly SeriesItem[],
+  at: (k: number) => (t: number) => number,
+  options: SeriesOptions,
+): PlotSeries[] {
+  const [lo, hi] = options.domain;
+  const count = Math.max(2, Math.min(1000, options.samples));
+  const ts = Array.from({ length: count }, (_, i) => lo + ((hi - lo) * i) / (count - 1));
+  const style = options.mode === "points" ? "points" : "line";
+  const useAdaptive = options.adaptive !== false && style === "line";
+  if (options.parametric === true && items.length === 2) {
+    // (x(t), y(t)) traced over the domain in t; refined by planar bend.
+    const fxn = at(0);
+    const fyn = at(1);
+    const trace = (t: number): [number, number] => [fxn(t), fyn(t)];
+    const points = useAdaptive
+      ? adaptiveParam(trace, lo, hi, { init: count })
+      : ts.map((t) => {
+          const [x, y] = trace(t);
+          return { x, y };
+        });
+    return [{ points, style }];
+  }
+  if (items.length > 0 && items.every((item) => item.point !== undefined)) {
+    // A list of numeric pairs: data points, drawn as dots unless told otherwise.
+    const points = items.map((item) => ({ x: item.point![0], y: item.point![1] }));
+    return [{ points, style: options.mode === "line" ? "line" : "points" }];
+  }
+  return items.map((item, k) => {
+    const en = at(k);
+    return {
+      points: useAdaptive ? adaptiveSample(en, lo, hi, { init: count }) : ts.map((t) => ({ x: t, y: en(t) })),
+      style,
+      label: items.length > 1 ? item.label : undefined,
+    };
+  });
+}

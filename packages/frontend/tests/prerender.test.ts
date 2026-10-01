@@ -11,6 +11,8 @@ test("a recorded answer is shown as the kernel shows it, with the input kept as 
   const json = ["Add", 1, 2];
   const pre = prerender(ce, { text: JSON.stringify(json), format: "mathjson" }, json, 3, (tex) => `<b>${tex}</b>`);
   expect(pre.input).toEqual({ text: '["Add",1,2]', format: "mathjson" });
+  expect(pre.json).toEqual(json);
+  expect(pre.json).toEqual(json);
   expect(pre.inputLatex).toBe("1+2");
   expect(pre.value).toBe(3);
   expect(pre.latex).toBe("3");

@@ -2,9 +2,11 @@ import type { EnhanceAppContext } from "vitepress";
 import { defineAsyncComponent } from "vue";
 import DefaultTheme from "vitepress/theme";
 import "katex/dist/katex.min.css";
+import "./prerendered.css";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { Resolver } from "@enumeratio/manifest";
 import Layout from "./Layout.vue";
+import NotatioPrerendered from "./components/NotatioPrerendered.vue";
 import { createSessionSharedWorker, createSessionWorker } from "./worker-factories.ts";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
@@ -50,6 +52,8 @@ export default {
     app.component("Symbol", SymbolRef);
     app.component("ComponentPage", ComponentPage);
     app.component("BenchViewer", BenchViewer);
+    // Not async: it must render on the server, where the build fills it.
+    app.component("NotatioPrerendered", NotatioPrerendered);
     // Client only: register the custom elements (they call customElements.define)
     // and declare the extension libraries against the shared engine so their heads
     // evaluate in the playground and docs -- collections (Combinations/Subsets/…),

@@ -41,23 +41,31 @@ export function fillPrerendered(html: string, page: string): string {
 }
 
 /** TeX as the page's `<notatio-out>` typesets it (`@enumeratio/components`' `loadMarkup`). */
-const typeset = (latex: string): string =>
+export const typeset = (latex: string): string =>
   katex.renderToString(portableTeX(latex), { throwOnError: false, output: "htmlAndMathml" });
+
+/** An engine as the site's worker kernel makes one: its dictionary and every package's notation. */
+export async function makeEngine(): Promise<ComputeEngine> {
+  const entries = await Promise.all(
+    Object.values(NOTATIONS).map(
+      async (specifier) => ((await import(specifier)) as { notation: PackageNotation }).notation,
+    ),
+  );
+  const notation = combineNotation(entries);
+  const ce = new ComputeEngine({
+    latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, notation.latex) }),
+  });
+  registerNotation(ce, notation.traditional);
+  return ce;
+}
 
 let kernel: Promise<{ ce: ComputeEngine; ensure: (json: unknown) => Promise<unknown> }> | undefined;
 
+/** The engine the reference examples are shown with, made once, and how to declare what an
+ *  expression names into it. */
 function buildKernel(): NonNullable<typeof kernel> {
   kernel ??= (async () => {
-    const entries = await Promise.all(
-      Object.values(NOTATIONS).map(
-        async (specifier) => ((await import(specifier)) as { notation: PackageNotation }).notation,
-      ),
-    );
-    const notation = combineNotation(entries);
-    const ce = new ComputeEngine({
-      latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, notation.latex) }),
-    });
-    registerNotation(ce, notation.traditional);
+    const ce = await makeEngine();
     const resolver = createResolver(CATALOGUE);
     return { ce, ensure: (json) => resolver.ensure(ce, json) };
   })();

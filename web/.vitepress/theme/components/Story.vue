@@ -70,6 +70,8 @@ function print(nodes: VNode[], depth = 0): string[] {
     // A fragment, or a nameless wrapper component (`<ClientOnly>`), is not markup the
     // author wrote for its own sake: print what is inside it.
     const tag = node.type === Fragment ? undefined : tagOf(node);
+    // Where the build writes what it rendered: not markup the author wrote.
+    if (tag === "NotatioPrerendered") continue;
     if (!tag) {
       lines.push(...print(childrenOf(node), depth));
       continue;
@@ -126,11 +128,11 @@ const live = computed((): string => {
       <p v-if="$slots.description" class="story-desc"><slot name="description" /></p>
     </div>
     <div class="story-canvas" :class="{ 'is-edited': edited !== undefined }">
-      <ClientOnly>
-        <!-- eslint-disable-next-line vue/no-v-html -- the reader's own edit, in their own page -->
-        <div v-if="edited !== undefined" class="story-live" v-html="live"></div>
-        <slot v-else />
-      </ClientOnly>
+      <!-- The body renders on the server too, so what the build drew for it shows from the
+           first paint; a reader's own edit is the browser's. -->
+      <!-- eslint-disable-next-line vue/no-v-html -- the reader's own edit, in their own page -->
+      <div v-if="edited !== undefined" class="story-live" v-html="live"></div>
+      <slot v-else />
     </div>
     <details v-if="$slots.default" class="story-code">
       <summary>

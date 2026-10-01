@@ -8,16 +8,14 @@ import { openPlaybackMenu } from "./playback-menu.ts";
 import { plotFunctions, readEpsil } from "./plot-kernel.ts";
 import { ensureStyles } from "./styles.ts";
 import {
-  adaptiveParam,
-  adaptiveSample,
   clamp,
   type Control,
   debug,
   linePlot,
   type Loop,
   parseControls,
+  plotSeries,
   type PlotFrame,
-  type PlotPoint,
   type PlotSeries,
   type Primitive,
   primitivesOf,
@@ -243,10 +241,6 @@ export class NotatioPlot extends LitElement {
       for (const c of this._controls) scope[`_${c.name}`] = c.value;
       Object.assign(scope, this.bindings);
       const variable = this.var || plot.unknowns.find((u) => !u.startsWith("_")) || "x";
-      const [lo, hi] = this.#range();
-      const count = Math.max(2, Math.min(1000, this.samples));
-      const ts = Array.from({ length: count }, (_, i) => lo + ((hi - lo) * i) / (count - 1));
-      const style = this.mode === "points" ? "points" : "line";
       // Each curve is code the kernel compiled, sampled per t: vastly faster than a
       // subs()+N() per sample, so a 1000-point sweep or an animated slider stays smooth.
       const at =
@@ -255,40 +249,13 @@ export class NotatioPlot extends LitElement {
           scope[variable] = t;
           return samplers[k]!(scope);
         };
-      const items = plot.items;
-      const parametric = this.parametric !== "false" && this.parametric !== undefined;
-      if (parametric && items.length === 2) {
-        // (x(t), y(t)) traced over the domain in t; refined by planar bend.
-        const useAdaptive = this.adaptive !== "false" && style === "line";
-        const fxn = at(0);
-        const fyn = at(1);
-        const trace = (t: number): [number, number] => [fxn(t), fyn(t)];
-        this.#series = [
-          {
-            points: useAdaptive
-              ? adaptiveParam(trace, lo, hi, { init: count })
-              : ts.map((t) => {
-                  const [x, y] = trace(t);
-                  return { x, y };
-                }),
-            style,
-          },
-        ];
-      } else if (items.length > 0 && items.every((item) => item.point !== undefined)) {
-        // A list of numeric pairs: data points, drawn as dots unless told otherwise.
-        const pts: PlotPoint[] = items.map((item) => ({ x: item.point![0], y: item.point![1] }));
-        this.#series = [{ points: pts, style: this.mode === "line" ? "line" : "points" }];
-      } else {
-        const useAdaptive = this.adaptive !== "false" && style === "line";
-        this.#series = items.map((item, k) => {
-          const en = at(k);
-          return {
-            points: useAdaptive ? adaptiveSample(en, lo, hi, { init: count }) : ts.map((t) => ({ x: t, y: en(t) })),
-            style,
-            label: items.length > 1 ? item.label : undefined,
-          };
-        });
-      }
+      this.#series = plotSeries(plot.items, at, {
+        domain: this.#range(),
+        samples: this.samples,
+        mode: this.mode,
+        adaptive: this.adaptive !== "false",
+        parametric: this.parametric !== "false" && this.parametric !== undefined,
+      });
       this.#draw();
     } catch (error) {
       log("could not plot", raw, error);
@@ -322,6 +289,8 @@ export class NotatioPlot extends LitElement {
       prolog: this.#marks(this.prolog),
     });
     this._svg = svg;
+    // What the build drew for this plot gives way (`data-rendered`).
+    this.toggleAttribute("data-rendered", true);
     this.#xAt = xAt;
     this.#frame = frame;
     // Overlays reposition on the new geometry.
