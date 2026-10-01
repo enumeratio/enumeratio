@@ -192,7 +192,7 @@ const piles = (ahead: MathJSON): MathJSON => {
     ["Join", "a", ["List", visiting]],
     ["Map", ["Function", ["If", ["Equal", "e", ["At", "a", "k"]], visiting, "e"], "e"], "a"],
   ];
-  return fold(x, ["List"], ["Apply", ["Function", step, ["Typed", "k", "'integer'"]], target]);
+  return fold(x, ["List"], ["Apply", ["Function", step, "k"], target]);
 };
 
 export const PERMUTATION_STATISTICS: readonly Definition[] = [
