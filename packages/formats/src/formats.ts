@@ -144,7 +144,8 @@ registerFileFormat({
 registerFileFormat({
   name: "FullForm",
   aliases: ["fullform"],
-  mimeTypes: [],
+  // Its own type so a lookup by type still finds Epsil; the text is Epsil, so no extension of its own.
+  mimeTypes: ["text/x-epsil-fullform"],
   extensions: [],
   binary: false,
   encode: (v) => toFullForm(asExpr(v).json, asExpr(v).engine as never),
