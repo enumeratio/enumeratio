@@ -1,9 +1,8 @@
 // Conventional LaTeX for native compute-engine heads that write or read it wrong
 // (https://github.com/enumeratio/enumeratio/wiki/Upstreaming §8): `Zeta` and `Beta` serialise as `\Zeta`/`\Beta` (not LaTeX
 // commands), `LCM` as `\lcm`; `\operatorname{lcm|rank|erf}` don't parse back to
-// `LCM`/`MatrixRank`/`Erf`. A power's base is bracketed when it binds looser than the
-// superscript (boxed's `POWER_LATEX`), a fraction's sign goes in front of it, and every
-// logarithm but the natural one names its base.
+// `LCM`/`MatrixRank`/`Erf`. A fraction's sign goes in front of it, and every logarithm but
+// the natural one names its base.
 // (`Rank` is array depth, not matrix rank, so it keeps its default `\mathrm{Rank}`.)
 // GCD, Determinant, Trace, Sign, Arg, Mod, Max, Min and Sinc were probed and are fine.
 // The shared engine carries these via its configureLatex list (engine.ts); engines built
@@ -11,7 +10,6 @@
 
 import { LATEX_DICTIONARY, type MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry, Serializer } from "@cortex-js/compute-engine/latex-syntax";
-import { POWER_LATEX } from "@enumeratio/engine";
 
 type Entry = Partial<LatexDictionaryEntry>;
 
@@ -188,7 +186,6 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
   zeta,
   beta,
   betaRoman,
-  POWER_LATEX,
   square,
   eulerGamma,
   signOut("Divide"),
