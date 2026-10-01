@@ -1,0 +1,23 @@
+{
+  "traditional": [
+    {
+      "params": ["k", "j", "z"],
+      "box": [
+        "RowBox",
+        [
+          "L",
+          [
+            "RowBox",
+            [
+              "(",
+              ["TemplateSlot", "z"],
+              ", ",
+              ["SubscriptBox", "χ", ["RowBox", [["TemplateSlot", "k"], ",", ["TemplateSlot", "j"]]]],
+              ")"
+            ]
+          ]
+        ]
+      ]
+    }
+  ]
+}

@@ -1100,6 +1100,12 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.142.0
         version: 0.142.0
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../../../entry
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../../../oracle

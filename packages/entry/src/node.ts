@@ -144,6 +144,7 @@ export async function staleEntries(dir: string | URL, { entries, owned, fields }
       entry: withCurated(path, entry, fields),
       implementations: current?.implementations,
       body: current?.body ?? "",
+      notation: current?.notation,
     });
     const onDisk = existsSync(join(path, entry.name)) ? readdirSync(join(path, entry.name)) : [];
     for (const [file, text] of want) {
@@ -179,6 +180,7 @@ export {
   type HeadRecord,
   INDEX_FILE,
   isValuesFile,
+  NOTATION_FILE,
   parseIndex,
   readHead,
   removeHead,
