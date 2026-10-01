@@ -34,7 +34,7 @@ a-negative-real-composite	\mathrm{FactorInteger}(-15, \mathrm{KeyValuePair}(\mat
 19-3-mod-4-factors-as-itself	\mathrm{FactorInteger}(19, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack(19,1)\bigr\rbrack
 2-ramifies-as-i-1-i-2	\mathrm{FactorInteger}(2, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack(-i,1), (1+i,2)\bigr\rbrack
 4-factors-through-the-ramified-prime	\mathrm{FactorInteger}(4, \mathrm{KeyValuePair}(\mathrm{Over}, \mathrm{GaussianIntegers}))	\bigl\lbrack(-1,1), (1+i,4)\bigr\rbrack
-multiplying-the-p-e-factors-back-together	2^3\times3^2\times5=360	\top
+multiplying-the-p-e-factors-back-together	2^3\times3^2\times5=360	\mathrm{True}
 compute-engine-returns-the-trivial-factor-1-1	\mathrm{FactorInteger}(1)	\bigl\lbrack(1,1)\bigr\rbrack
 0-is-represented-as-0-1	\mathrm{FactorInteger}(0)	\bigl\lbrack(0,1)\bigr\rbrack
 negative-numbers-carry-an-explicit-1-unit-factor	\mathrm{FactorInteger}(-60)	\bigl\lbrack(-1,1), (2,2), (3,1), (5,1)\bigr\rbrack

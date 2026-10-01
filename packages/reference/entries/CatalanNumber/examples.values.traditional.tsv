@@ -20,7 +20,7 @@ closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n	\frac{\binom{2\cdot5}{5}}{5+1}	4
 the-closed-form-through-a-negative-n-in-binomial	\frac{\binom{2\cdot(-13)}{5}}{4+1}	\frac{-142506}{5}
 equivalently-c-n-binom-2n-n-binom-2n-n-1		
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	\frac{C_6}{C_5}	\frac{22}{7}
-segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	C_4=\sum_{i=0}^3C_iC_{3-i}	\operatorname{True}
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	C_4=\sum_{i=0}^3C_iC_{3-i}	\top
 generatingfunction-catalannumber-n-n-x	\operatorname{GeneratingFunction}(C_n,n,x)	\frac{-\sqrt{-4x+1}+1}{2x}
 catalannumber-neg-10	C_{-10}	0
 catalannumber-neg-9	C_{-9}	0

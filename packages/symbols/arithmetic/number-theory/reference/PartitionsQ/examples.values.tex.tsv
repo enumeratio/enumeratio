@@ -4,8 +4,8 @@ the-empty-partition	\mathrm{PartitionsQ}(0)	1
 exact-for-large-n	\mathrm{PartitionsQ}(100)	444\,793
 threads-over-a-list	\mathrm{PartitionsQ}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7, 8\bigr\rbrack)	\bigl\lbrack1, 1, 2, 2, 3, 4, 5, 6\bigr\rbrack
 partitionsq-list-2-4-6	\mathrm{PartitionsQ}(\bigl\lbrack2, 4, 6\bigr\rbrack)	\bigl\lbrack1, 2, 4\bigr\rbrack
-counts-the-distinctpartitions-family	\mathrm{PartitionsQ}(10)=\mathrm{Count}(\mathrm{DistinctPartitions}(10))	\top
-euler-as-many-partitions-into-odd-parts-as-into	\mathrm{PartitionsQ}(12)=\mathrm{Count}(\mathrm{IntegerPartitions}(12, \mathrm{All}, \bigl\lbrack1, 3, 5, 7, 9, 11\bigr\rbrack))	\top
+counts-the-distinctpartitions-family	\mathrm{PartitionsQ}(10)=\mathrm{Count}(\mathrm{DistinctPartitions}(10))	\mathrm{True}
+euler-as-many-partitions-into-odd-parts-as-into	\mathrm{PartitionsQ}(12)=\mathrm{Count}(\mathrm{IntegerPartitions}(12, \mathrm{All}, \bigl\lbrack1, 3, 5, 7, 9, 11\bigr\rbrack))	\mathrm{True}
 partitionsq-5	\mathrm{PartitionsQ}(5)	3
 partitionsq-1	\mathrm{PartitionsQ}(1)	1
 partitionsq-2	\mathrm{PartitionsQ}(2)	1

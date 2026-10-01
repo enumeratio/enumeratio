@@ -1,7 +1,7 @@
 id	in	out
-an-actual-path-is-a-path	\mathrm{IsPathGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))	\top
-a-cycle-is-not-a-path	\mathrm{IsPathGraph}(\mathrm{CycleGraph}(4))	\bot
-ispathgraph-graph-list-1-list	\mathrm{IsPathGraph}(\mathrm{Graph}(\bigl\lbrack1\bigr\rbrack, \bigl\lbrack\bigr\rbrack))	\top
-ispathgraph-gridgraph-list-1-4	\mathrm{IsPathGraph}(\mathrm{GridGraph}(\bigl\lbrack1, 4\bigr\rbrack))	\top
-ispathgraph-gridgraph-list-4-1	\mathrm{IsPathGraph}(\mathrm{GridGraph}(\bigl\lbrack4, 1\bigr\rbrack))	\top
-ispathgraph-gridgraph-list-1-4-1	\mathrm{IsPathGraph}(\mathrm{GridGraph}(\bigl\lbrack1, 4, 1\bigr\rbrack))	\top
+an-actual-path-is-a-path	\mathrm{IsPathGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))	\mathrm{True}
+a-cycle-is-not-a-path	\mathrm{IsPathGraph}(\mathrm{CycleGraph}(4))	\mathrm{False}
+ispathgraph-graph-list-1-list	\mathrm{IsPathGraph}(\mathrm{Graph}(\bigl\lbrack1\bigr\rbrack, \bigl\lbrack\bigr\rbrack))	\mathrm{True}
+ispathgraph-gridgraph-list-1-4	\mathrm{IsPathGraph}(\mathrm{GridGraph}(\bigl\lbrack1, 4\bigr\rbrack))	\mathrm{True}
+ispathgraph-gridgraph-list-4-1	\mathrm{IsPathGraph}(\mathrm{GridGraph}(\bigl\lbrack4, 1\bigr\rbrack))	\mathrm{True}
+ispathgraph-gridgraph-list-1-4-1	\mathrm{IsPathGraph}(\mathrm{GridGraph}(\bigl\lbrack1, 4, 1\bigr\rbrack))	\mathrm{True}

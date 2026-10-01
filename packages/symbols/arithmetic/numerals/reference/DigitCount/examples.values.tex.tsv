@@ -10,8 +10,8 @@ a-list-of-digit-values-gives-one-count-each	\mathrm{DigitCount}(242\,442\,422, 3
 counts-over-the-12-least-significant-base-3	\mathrm{DigitCount}(242\,442\,422, 3, \bigl\lbrack1, 2\bigr\rbrack, 12)	\bigl\lbrack4, 4\bigr\rbrack
 threads-element-wise-over-a-list-as-wolfram-s	\mathrm{DigitCount}(\bigl\lbrack23, 45\bigr\rbrack)	\bigl\lbrack\bigl\lbrack0, 1, 1, 0, 0, 0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1, 0, 0, 0, 0, 0\bigr\rbrack\bigr\rbrack
 the-3-argument-form-isolates-a-single-digit-s	\mathrm{DigitCount}(2\,147, 10, 1)	1
-digitcount-242-442-422-3-0-eq-count	\mathrm{DigitCount}(242\,442\,422, 3, 0)=\mathrm{Count}(\mathrm{IntegerDigits}(242\,442\,422, 3), 0)	\top
-digitcount-242-442-422-3-0-20-eq-count-padleft	\mathrm{DigitCount}(242\,442\,422, 3, 0, 20)=\mathrm{Count}(\mathrm{PadLeft}(\mathrm{IntegerDigits}(242\,442\,422, 3), 20), 0)	\top
+digitcount-242-442-422-3-0-eq-count	\mathrm{DigitCount}(242\,442\,422, 3, 0)=\mathrm{Count}(\mathrm{IntegerDigits}(242\,442\,422, 3), 0)	\mathrm{True}
+digitcount-242-442-422-3-0-20-eq-count-padleft	\mathrm{DigitCount}(242\,442\,422, 3, 0, 20)=\mathrm{Count}(\mathrm{PadLeft}(\mathrm{IntegerDigits}(242\,442\,422, 3), 20), 0)	\mathrm{True}
 digitcount-0-2	\mathrm{DigitCount}(0, 2)	\bigl\lbrack0, 1\bigr\rbrack
 digitcount-1-2	\mathrm{DigitCount}(1, 2)	\bigl\lbrack1, 0\bigr\rbrack
 digitcount-2-2	\mathrm{DigitCount}(2, 2)	\bigl\lbrack1, 1\bigr\rbrack

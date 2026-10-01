@@ -18,7 +18,7 @@ matrixrank-hilbertmatrix-3	\operatorname{rank}(\mathrm{HilbertMatrix}(3))	3
 matrixrank-m		
 matrixrank-n-m		
 the-4-4-hilbert-matrix-is-badly-conditioned-but	\operatorname{rank}(\mathrm{Tabulate}(()\mapsto\frac{1}{(\operatorname{\_1}+\operatorname{\_2})-1}, 4, 4))	4
-row-rank-equals-column-rank	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack)=\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack^T)	\top
+row-rank-equals-column-rank	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack)=\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack^T)	\mathrm{True}
 rank-nullity-the-rank-plus-the-dimension-of-the	\operatorname{rank}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack)+\mathrm{Length}(\ker\left(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack\right))	3
 an-outer-product-u-v-top-has-rank-1-a-lazy	\operatorname{rank}(\mathrm{Tabulate}(\mathrm{Multiply}, 4, 4))	1
 list-matrixrank-m-matrixrank-transpose-m		

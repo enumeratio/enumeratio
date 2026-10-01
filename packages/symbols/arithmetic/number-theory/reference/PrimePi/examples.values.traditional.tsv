@@ -10,7 +10,7 @@ the-primes-below-a-million	\pi(1000000)	78498
 listable-threads-over-a-list	\operatorname{PrimePi}([3,5,17,25])	[2,3,7,9]
 nthprime-range-1-primepi-100	p_{\operatorname{Range}(1,\pi(100))}	[2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97]
 primepi-5-000	\pi(5000)	669
-same-inverse-relation-viewed-from-primepi-s-side	\pi(p_{50})=50	\operatorname{True}
+same-inverse-relation-viewed-from-primepi-s-side	\pi(p_{50})=50	\top
 primepi-nthprime-100	\pi(p_{100})	100
 primepi-1-000	\pi(1000)	168
 primepi-3	\pi(3)	2

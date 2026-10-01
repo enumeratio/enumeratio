@@ -1,5 +1,5 @@
 id	in	out
-a-polynomial-is-defined-everywhere	\operatorname{FunctionDomain}(x^2,x)	\operatorname{True}
+a-polynomial-is-defined-everywhere	\operatorname{FunctionDomain}(x^2,x)	\top
 division-by-zero-excludes-the-origin	\operatorname{FunctionDomain}(\frac{1}{x},x)	x<0\lor0<x
 sqrt-of-a-bounded-quadratic	\operatorname{FunctionDomain}(\sqrt{-x^2+4},x)	-2\le x\le2
 a-monomial-with-negative-integer-exponent	\operatorname{FunctionDomain}(x^{-3},x)	x<0\lor0<x

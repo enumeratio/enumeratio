@@ -1,7 +1,7 @@
 id	in	out
 12-hat-z-8-hat-z-4-hat-z	\operatorname{ProfiniteNumber}(3,12)+\operatorname{ProfiniteNumber}(5,8)	\operatorname{ProfiniteNumber}(0,4)
 profinitenumber-3-12-times-profinitenumber-5-8	\operatorname{ProfiniteNumber}(3,12)\operatorname{ProfiniteNumber}(5,8)	\operatorname{ProfiniteNumber}(3,12)
-equal-cosets-need-not-share-a-modulus	\operatorname{ProfiniteNumber}(6,20)=\operatorname{ProfiniteNumber}(6,40)	\operatorname{True}
+equal-cosets-need-not-share-a-modulus	\operatorname{ProfiniteNumber}(6,20)=\operatorname{ProfiniteNumber}(6,40)	\top
 numerator-profinitenumber-2-over-3-5	\operatorname{Numerator}(\operatorname{ProfiniteNumber}(\frac{2}{3},5))	\operatorname{ProfiniteNumber}(2,15)
 denominator-profinitenumber-2-over-3-5	\operatorname{Denominator}(\operatorname{ProfiniteNumber}(\frac{2}{3},5))	3
 projecting-to-q-2	\operatorname{AdicNumeral}(2,\operatorname{ProfiniteNumber}(100,24))	\operatorname{AdicNumeral}(2,4,3)
@@ -31,10 +31,10 @@ golden-multiply-187-4-mod-47-1-mod-3	\operatorname{ProfiniteNumber}(\frac{187}{4
 golden-multiply-7-4-mod-57-2-1-4	\operatorname{ProfiniteNumber}(\frac{7}{4},\frac{57}{2})\frac{1}{4}	\operatorname{ProfiniteNumber}(\frac{7}{16},\frac{57}{8})
 golden-multiply-2-mod-48-12	\operatorname{ProfiniteNumber}(2,48)12	\operatorname{ProfiniteNumber}(24,576)
 golden-multiply-2-27-mod-31	2\operatorname{ProfiniteNumber}(27,31)	\operatorname{ProfiniteNumber}(54,62)
-golden-equal-2-4-3-mod-37-6	-2=\operatorname{ProfiniteNumber}(\frac{4}{3},\frac{37}{6})	\operatorname{False}
-golden-equal-11-mod-18-2-mod-35	\operatorname{ProfiniteNumber}(11,18)=\operatorname{ProfiniteNumber}(2,35)	\operatorname{True}
-golden-equal-2-mod-29-3-3-mod-5	\operatorname{ProfiniteNumber}(2,\frac{29}{3})=\operatorname{ProfiniteNumber}(3,5)	\operatorname{True}
-golden-equal-2-mod-48-12	\operatorname{ProfiniteNumber}(2,48)=12	\operatorname{False}
+golden-equal-2-4-3-mod-37-6	-2=\operatorname{ProfiniteNumber}(\frac{4}{3},\frac{37}{6})	\bot
+golden-equal-11-mod-18-2-mod-35	\operatorname{ProfiniteNumber}(11,18)=\operatorname{ProfiniteNumber}(2,35)	\top
+golden-equal-2-mod-29-3-3-mod-5	\operatorname{ProfiniteNumber}(2,\frac{29}{3})=\operatorname{ProfiniteNumber}(3,5)	\top
+golden-equal-2-mod-48-12	\operatorname{ProfiniteNumber}(2,48)=12	\bot
 golden-numerator-2	\operatorname{Numerator}(-2)	-2
 golden-numerator-11-mod-18	\operatorname{Numerator}(\operatorname{ProfiniteNumber}(11,18))	\operatorname{ProfiniteNumber}(11,18)
 golden-numerator-187-4-mod-47	\operatorname{Numerator}(\operatorname{ProfiniteNumber}(\frac{187}{4},47))	\operatorname{ProfiniteNumber}(187,188)

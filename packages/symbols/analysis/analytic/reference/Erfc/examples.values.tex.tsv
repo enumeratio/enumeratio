@@ -12,9 +12,9 @@ uncertainty-propagation	\mathrm{Erfc}(\mathrm{Around}(2, 0.01))	\mathrm{Around}(
 to-30-significant-digits-every-one-correctly	N(\mathrm{Erfc}(2), 30)	0.004\,677\,734\,981\,047\,265\,837\,93
 n-erfc-3-over-2-50	N(\mathrm{Erfc}(\frac{3}{2}), 50)	0.033\,894\,853\,524\,689\,272\,933
 functionexpand-matrixfunction-erfc-list-list-0-1	\mathrm{FunctionExpand}(\mathrm{MatrixFunction}(\mathrm{Erfc}, \bigl\lbrack\bigl\lbrack0, (1/2i)\pi\bigr\rbrack, \bigl\lbrack\pi, 0\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack\frac{1}{2}(\mathrm{Erfc}((-1/2-1/2i)\pi))+\frac{1}{2}(\mathrm{Erfc}((1/2+1/2i)\pi)), (-\frac{1}{4}-\frac{1}{4}i)\mathrm{Erfc}((-1/2-1/2i)\pi)+(\frac{1}{4}+\frac{1}{4}i)\mathrm{Erfc}((1/2+1/2i)\pi)\bigr\rbrack, \bigl\lbrack(\frac{1}{2}-\frac{1}{2}i)\mathrm{Erfc}((1/2+1/2i)\pi)+(-\frac{1}{2}+\frac{1}{2}i)\mathrm{Erfc}((-1/2-1/2i)\pi), \frac{1}{2}(\mathrm{Erfc}((-1/2-1/2i)\pi))+\frac{1}{2}(\mathrm{Erfc}((1/2+1/2i)\pi))\bigr\rbrack\bigr\rbrack
-fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	\mathrm{FullSimplify}(\mathrm{Erfc}(-z)=2-\mathrm{Erfc}(z))	\top
-erfc-z-2-erfc-z-here-at-z-1	\mathrm{Erfc}(-1)+\mathrm{Erfc}(1)=2	\top
-definition-erf-z-erfc-z-1-see-erf	\operatorname{erf}(2)+\mathrm{Erfc}(2)=1	\top
+fullsimplify-erfc-neg-z-eq-neg-erfc-z-plus-2	\mathrm{FullSimplify}(\mathrm{Erfc}(-z)=2-\mathrm{Erfc}(z))	\mathrm{True}
+erfc-z-2-erfc-z-here-at-z-1	\mathrm{Erfc}(-1)+\mathrm{Erfc}(1)=2	\mathrm{True}
+definition-erf-z-erfc-z-1-see-erf	\operatorname{erf}(2)+\mathrm{Erfc}(2)=1	\mathrm{True}
 erfc-x-2-erfc-x-applied-symbolically	\mathrm{Erfc}(-x)	2-\mathrm{Erfc}(x)
 frac-d-dx-erfc-x-frac-2-sqrt-pi-e-x-2	\frac{\mathrm{d}\mathrm{Erfc}(x)}{\mathrm{d}x}	(-\frac{2}{e^{x^2}})/\sqrt{\pi}
 an-exact-integer-argument-is-left-unevaluated	\mathrm{Erfc}(1)	\mathrm{Erfc}(1)

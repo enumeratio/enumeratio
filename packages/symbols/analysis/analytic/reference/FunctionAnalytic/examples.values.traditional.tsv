@@ -1,8 +1,8 @@
 id	in	out
-polynomials-are-entire	\operatorname{FunctionAnalytic}(x^2,x)	\operatorname{True}
-a-pole-anywhere-in-the-plane-disqualifies-it	\operatorname{FunctionAnalytic}(\frac{1}{x},x)	\operatorname{False}
-sqrt-has-a-branch-point	\operatorname{FunctionAnalytic}(\sqrt{x},x)	\operatorname{False}
-sine-is-entire	\operatorname{FunctionAnalytic}(\sin(x),x)	\operatorname{True}
-functionanalytic-tan-x-x	\operatorname{FunctionAnalytic}(\tan(x),x)	\operatorname{False}
-list-functionanalytic-x-x-functionanalytic-x-pow	[\operatorname{FunctionAnalytic}(x,x),\operatorname{FunctionAnalytic}(x^2+1,x),\operatorname{FunctionAnalytic}(x^3-2x^2-5x+6,x)]	[\operatorname{True},\operatorname{True},\operatorname{True}]
-list-functionanalytic-sin-x-x-functionanalytic	[\operatorname{FunctionAnalytic}(\sin(x),x),\operatorname{FunctionAnalytic}(\cos(x),x),\operatorname{FunctionAnalytic}(e^x,x)]	[\operatorname{True},\operatorname{True},\operatorname{True}]
+polynomials-are-entire	\operatorname{FunctionAnalytic}(x^2,x)	\top
+a-pole-anywhere-in-the-plane-disqualifies-it	\operatorname{FunctionAnalytic}(\frac{1}{x},x)	\bot
+sqrt-has-a-branch-point	\operatorname{FunctionAnalytic}(\sqrt{x},x)	\bot
+sine-is-entire	\operatorname{FunctionAnalytic}(\sin(x),x)	\top
+functionanalytic-tan-x-x	\operatorname{FunctionAnalytic}(\tan(x),x)	\bot
+list-functionanalytic-x-x-functionanalytic-x-pow	[\operatorname{FunctionAnalytic}(x,x),\operatorname{FunctionAnalytic}(x^2+1,x),\operatorname{FunctionAnalytic}(x^3-2x^2-5x+6,x)]	[\top,\top,\top]
+list-functionanalytic-sin-x-x-functionanalytic	[\operatorname{FunctionAnalytic}(\sin(x),x),\operatorname{FunctionAnalytic}(\cos(x),x),\operatorname{FunctionAnalytic}(e^x,x)]	[\top,\top,\top]

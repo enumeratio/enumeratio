@@ -51,6 +51,8 @@ const ASCII: Readonly<Record<string, string>> = {
   "∂": "del",
   "∇": "grad",
   "∅": "O/",
+  "⊤": "TT",
+  "⊥": "_|_",
   "∑": "sum",
   "∏": "prod",
   "∫": "int",

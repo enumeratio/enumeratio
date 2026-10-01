@@ -19,7 +19,7 @@ gamma-n-1-gamma-n-the-two-argument-form-reduces	\mathrm{StieltjesGamma}(1, 1)	\m
 gamma-0-1-psi-1-gamma-polygamma-0-z-routes	\mathrm{StieltjesGamma}(0, 1)	\gamma
 gamma-0-frac-12-psi-frac-12-gamma-2-ln-2-now	\mathrm{StieltjesGamma}(0, \frac{1}{2})	\gamma+2\ln(2)
 gamma-3-1-gamma-3-order-1-at-a-1-is-just-the	\mathrm{StieltjesGamma}(3, 1)	\mathrm{StieltjesGamma}(3)
-0-lt-stieltjesgamma-10-lt-10-pow-neg-3	0\lt\mathrm{StieltjesGamma}(10)\lt\frac{1}{1\,000}	\top
+0-lt-stieltjesgamma-10-lt-10-pow-neg-3	0\lt\mathrm{StieltjesGamma}(10)\lt\frac{1}{1\,000}	\mathrm{True}
 gamma-n-a-has-poles-at-the-nonpositive-integers	\mathrm{StieltjesGamma}(2, -1)	\tilde\infty
 orders-past-30-stay-unevaluated-even-under-n-the	\mathrm{StieltjesGamma}(40)	\mathrm{StieltjesGamma}(40)
 stieltjesgamma-2-1	\mathrm{StieltjesGamma}(2, 1)	\mathrm{StieltjesGamma}(2)

@@ -6,7 +6,7 @@ a-symbolic-base	\mathrm{RisingFactorial}(a, 3)	a\times(a+1)(a+2)
 a-rational-base	\mathrm{RisingFactorial}(\frac{1}{2}, 3)	\frac{15}{8}
 a-symbolic-order-is-pochhammer	\mathrm{RisingFactorial}(a, n)	\mathrm{Pochhammer}(a, n)
 complex-base-and-order	N(\mathrm{RisingFactorial}(2+5i, 3+2i))	20.647\,407\,894\,772\,527+24.047\,356\,710\,232\,72i
-agrees-with-pochhammer	\mathrm{RisingFactorial}(4, 3)=\mathrm{Pochhammer}(4, 3)	\top
+agrees-with-pochhammer	\mathrm{RisingFactorial}(4, 3)=\mathrm{Pochhammer}(4, 3)	\mathrm{True}
 negative-order	\mathrm{RisingFactorial}(5, -2)	\frac{1}{12}
 a-zero-factor	\mathrm{RisingFactorial}(-3, 4)	0
 a-pole-of-gamma-a	N(\mathrm{RisingFactorial}(-2, 1+i))	0.0

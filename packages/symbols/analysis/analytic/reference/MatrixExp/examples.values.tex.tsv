@@ -15,7 +15,7 @@ a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	\mathrm{MatrixExp}(\bigl\lbrack
 matrixexp-list-list-a-b-list-0-c		
 matrixexp-diagonalmatrix-list-a-b-c		
 a-skew-symmetric-generator-gives-a-rotation	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack-1, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\cos(1), \sin(1)\bigr\rbrack, \bigl\lbrack-\sin(1), \cos(1)\bigr\rbrack\bigr\rbrack
-matrixexp-a-eq-matrixfunction-exp-a	\mathrm{MatrixExp}(a)=\mathrm{MatrixFunction}(\mathrm{Exp}, a)	\top
+matrixexp-a-eq-matrixfunction-exp-a	\mathrm{MatrixExp}(a)=\mathrm{MatrixFunction}(\mathrm{Exp}, a)	\mathrm{True}
 rejects-a-non-square-argument	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack)	{\text{[[1,2,3],[4,5,6]]}}
 a-generic-matrix-with-no-closed-form-stays	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 10\bigr\rbrack\bigr\rbrack)	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 10\bigr\rbrack\bigr\rbrack)
 euler-s-identity-for-matrices-rotation-by-pi-is	\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, -\pi\bigr\rbrack, \bigl\lbrack\pi, 0\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, -1\bigr\rbrack\bigr\rbrack

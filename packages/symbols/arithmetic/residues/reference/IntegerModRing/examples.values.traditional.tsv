@@ -4,5 +4,5 @@ count-integermodring-12	\operatorname{Count}(\operatorname{IntegerModRing}(12))	
 count-integermodring-5	\operatorname{Count}(\operatorname{IntegerModRing}(5))	5
 z-12-z	\operatorname{QuotientRing}(\mathbb{Z},12)	\operatorname{IntegerModRing}(12)
 z-5-z	\operatorname{QuotientRing}(\mathbb{Z},5)	\operatorname{IntegerModRing}(5)
-integermod-3-5-in-integermodring-5	\operatorname{IntegerMod}(3,5)\in\operatorname{IntegerModRing}(5)	\operatorname{True}
-integermod-3-7-not-in-integermodring-5	\operatorname{IntegerMod}(3,7)\in\operatorname{IntegerModRing}(5)	\operatorname{False}
+integermod-3-5-in-integermodring-5	\operatorname{IntegerMod}(3,5)\in\operatorname{IntegerModRing}(5)	\top
+integermod-3-7-not-in-integermodring-5	\operatorname{IntegerMod}(3,7)\in\operatorname{IntegerModRing}(5)	\bot

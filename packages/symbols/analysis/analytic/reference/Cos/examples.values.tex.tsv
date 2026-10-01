@@ -37,20 +37,20 @@ to-30-significant-digits-every-one-correctly	N(\cos(1), 30)	0.540\,302\,305\,868
 to-1-significant-digit	N(\cos(1), 1)	0.5
 a-huge-10-100-argument-reduces-exactly-mod-2-pi	N(\cos(10^{100}))	-0.928\,081\,905\,074\,655\,343\,456
 n-cos-6-over-5-50	N(\cos(\frac{6}{5}), 50)	0.362\,357\,754\,476\,673\,577\,638
-functiondomain-cos-x-x	\mathrm{FunctionDomain}(\cos(x), x)	\top
+functiondomain-cos-x-x	\mathrm{FunctionDomain}(\cos(x), x)	\mathrm{True}
 functionrange-cos-x-x-y	\mathrm{FunctionRange}(\cos(x), x, y)	-1\le y\le1
 functionperiod-cos-x-x	\mathrm{FunctionPeriod}(\cos(x), x)	2\pi
-functionanalytic-cos-x-x	\mathrm{FunctionAnalytic}(\cos(x), x)	\top
-functioninjective-cos-x-x	\mathrm{FunctionInjective}(\cos(x), x)	\bot
-functionsurjective-cos-x-x	\mathrm{FunctionSurjective}(\cos(x), x)	\bot
-functionsingularities-cos-x-x	\mathrm{FunctionSingularities}(\cos(x), x)	\bot
-functiondiscontinuities-cos-x-x	\mathrm{FunctionDiscontinuities}(\cos(x), x)	\bot
+functionanalytic-cos-x-x	\mathrm{FunctionAnalytic}(\cos(x), x)	\mathrm{True}
+functioninjective-cos-x-x	\mathrm{FunctionInjective}(\cos(x), x)	\mathrm{False}
+functionsurjective-cos-x-x	\mathrm{FunctionSurjective}(\cos(x), x)	\mathrm{False}
+functionsingularities-cos-x-x	\mathrm{FunctionSingularities}(\cos(x), x)	\mathrm{False}
+functiondiscontinuities-cos-x-x	\mathrm{FunctionDiscontinuities}(\cos(x), x)	\mathrm{False}
 matrixfunction-function-cos-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\mapsto\cos(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{3\pi}{2}, -\frac{\pi}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack-\frac{3^{1/2}}{2}, 0\bigr\rbrack, \bigl\lbrack-\frac{9\sqrt{3}}{16}, 0\bigr\rbrack\bigr\rbrack
 assuming-m-in-integers-refine-cos-pi-times-1		
 assuming-m-in-integers-fullsimplify-refine-cos		
 threads-element-wise-over-a-list	\cos(\bigl\lbrack0, \frac{\pi}{2}, \pi\bigr\rbrack)	\bigl\lbrack1, 0, -1\bigr\rbrack
-even-function-cos-x-cos-x	\cos(-\frac{\pi}{3})=\cos(\frac{\pi}{3})	\top
-co-function-identity-cos-x-sin-pi-2-x	\cos(\frac{\pi}{6})=\sin(\frac{\pi}{2}-\frac{\pi}{6})	\top
+even-function-cos-x-cos-x	\cos(-\frac{\pi}{3})=\cos(\frac{\pi}{3})	\mathrm{True}
+co-function-identity-cos-x-sin-pi-2-x	\cos(\frac{\pi}{6})=\sin(\frac{\pi}{2}-\frac{\pi}{6})	\mathrm{True}
 double-angle-formula-cos-2x-cos-2-x-sin-2-x	\mathrm{TrigExpand}(\cos(2x))	\cos(x)^2-\sin(x)^2
 angle-addition-formula	\mathrm{TrigExpand}(\cos(x+y))	\cos(x)\cos(y)-\sin(x)\sin(y)
 power-reduction-cos-2-x-frac-1-cos-2x-2	\mathrm{TrigReduce}(\cos(x)^2)	\frac{\cos(2x)}{2}+\frac{1}{2}

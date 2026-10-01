@@ -16,5 +16,5 @@ a-symbolic-order-stays-unevaluated	\mathrm{LegendrePolynomial}(n, x)	\mathrm{Leg
 at-1	\mathrm{LegendrePolynomial}(6, 1)	1
 at-minus-1	\mathrm{LegendrePolynomial}(5, -1)	-1
 at-0	\mathrm{LegendrePolynomial}(4, 0)	\frac{3}{8}
-bonnet-recurrence	4\mathrm{LegendrePolynomial}(4, 3)=7\times3\mathrm{LegendrePolynomial}(3, 3)-3\mathrm{LegendrePolynomial}(2, 3)	\top
+bonnet-recurrence	4\mathrm{LegendrePolynomial}(4, 3)=7\times3\mathrm{LegendrePolynomial}(3, 3)-3\mathrm{LegendrePolynomial}(2, 3)	\mathrm{True}
 negative-order	\mathrm{LegendrePolynomial}(-3, x)	\frac{3x^2}{2}-\frac{1}{2}

@@ -47,6 +47,8 @@ const COMMANDS: Record<string, string> = {
   "∞": "\\infty",
   "∞̃": "\\tilde\\infty",
   "∅": "\\emptyset",
+  "⊤": "\\top",
+  "⊥": "\\bot",
   "°": "^\\circ",
   ℝ: "\\mathbb{R}",
   ℤ: "\\mathbb{Z}",

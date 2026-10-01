@@ -6,7 +6,7 @@ a-symbolic-base	a^{\overline{3}}	a(a+1)(a+2)
 a-rational-base	(\frac{1}{2})^{\overline{3}}	\frac{15}{8}
 a-symbolic-order-is-pochhammer	a^{\overline{n}}	(a)_n
 complex-base-and-order	N((2+5i)^{\overline{3+2i}})	20.647407894772527+24.04735671023272i
-agrees-with-pochhammer	4^{\overline{3}}=(4)_3	\operatorname{True}
+agrees-with-pochhammer	4^{\overline{3}}=(4)_3	\top
 negative-order	5^{\overline{-2}}	\frac{1}{12}
 a-zero-factor	(-3)^{\overline{4}}	0
 a-pole-of-gamma-a	N((-2)^{\overline{1+i}})	0.0

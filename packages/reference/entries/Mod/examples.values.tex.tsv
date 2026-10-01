@@ -51,18 +51,18 @@ generatingfunction-n-mod-4-n-x	\mathrm{GeneratingFunction}(n\bmod4, n, x)	\frac{
 282-475-249-mod-11	282\,475\,249\bmod11	1
 7-pow-totient-12-mod-12	7^{\mathrm{Totient}(12)}\bmod12	1
 list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod	\bigl\lbrack a, b, c\bigr\rbrack[1+((1..10)-1)\bmod3]	\bigl\lbrack a, b, c, a, b, c, a, b, c, a\bigr\rbrack
-periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	17\bmod5=(17+3\times5)\bmod5	\top
+periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	17\bmod5=(17+3\times5)\bmod5	\mathrm{True}
 a-negative-modulus-gives-a-result-in-n-0	(-5)\bmod(-3)	-2
-the-remainder-of-quotient	(7+5i)\bmod(2+i)=(7+5i)-(2+i)\mathrm{Quotient}(7+5i, 2+i)	\top
-5-mod-3-eq-2-mod-3	5\bmod3=2\bmod3	\top
-2-mod-3-eq-8-mod-3	2\bmod3=8\bmod3	\top
+the-remainder-of-quotient	(7+5i)\bmod(2+i)=(7+5i)-(2+i)\mathrm{Quotient}(7+5i, 2+i)	\mathrm{True}
+5-mod-3-eq-2-mod-3	5\bmod3=2\bmod3	\mathrm{True}
+2-mod-3-eq-8-mod-3	2\bmod3=8\bmod3	\mathrm{True}
 0-mod-1	0\bmod1	0
 1-mod-2	1\bmod2	1
 1-mod-3	1\bmod3	1
 2-mod-3	2\bmod3	2
 3-mod-3	3\bmod3	0
 4-mod-3	4\bmod3	1
-8-mod-3-eq-5-mod-3	8\bmod3=5\bmod3	\top
+8-mod-3-eq-5-mod-3	8\bmod3=5\bmod3	\mathrm{True}
 8-mod-2	8\bmod2	0
 17-mod-6	17\bmod6	5
 12-mod-8	12\bmod8	4
@@ -73,6 +73,6 @@ neg-27-over-10-mod-23-over-5	-\frac{27}{10}\bmod\frac{23}{5}	\frac{19}{10}
 15-mod-7	15\bmod7	1
 pi-mod-exponentiale	\pi\bmod e	\pi-e
 division-by-a-0-modulus-yields-nan-rather-than	5\bmod0	\operatorname{Indeterminate}
-periodicity-with-a-zero-modulus-on-one-side	35\bmod13=(17+3\times5)\bmod0	\bot
+periodicity-with-a-zero-modulus-on-one-side	35\bmod13=(17+3\times5)\bmod0	\mathrm{False}
 rounding-ties-to-even-means-1-and-1-both-appear	\bigl\lbrack(1+2i)\bmod2, (3+2i)\bmod2\bigr\rbrack	\bigl\lbrack1, -1\bigr\rbrack
 a-free-symbol-is-untouched	x\bmod2	x\bmod2

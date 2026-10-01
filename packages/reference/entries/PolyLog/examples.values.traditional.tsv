@@ -104,7 +104,7 @@ certified-digits-li-2-1-3	N(\operatorname{PolyLog}(2,\frac{1}{3}),40)	0.36621322
 certified-digits-li-5-2-minus-1-2	N(\operatorname{PolyLog}(\frac{5}{2},\frac{-1}{2}),40)	-0.4622977821900634381891643232745464898869
 li-1-z-ln-1-z-symbolically	\operatorname{PolyLog}(1,z)	-\ln(-z+1)
 li-1-z-z-1-z-2-negative-orders-are-rational	\operatorname{PolyLog}(-1,z)	\frac{z}{(-z+1)^2}
-li-2-1-2-pi-2-12-ln-2-2-2	\operatorname{PolyLog}(2,0.5)+0.5{\ln(2)}^2=\frac{\pi^2}{12}	\operatorname{True}
+li-2-1-2-pi-2-12-ln-2-2-2	\operatorname{PolyLog}(2,0.5)+0.5{\ln(2)}^2=\frac{\pi^2}{12}	\top
 li-s-1-zeta-s-for-symbolic-s	\operatorname{PolyLog}(s,1)	\operatorname{Zeta}(s)
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	\frac{d}{dx}\operatorname{PolyLog}(n,x)	\frac{\operatorname{PolyLog}(n-1,x)}{x}
 polylog-3-exponentiale-pow-1-over-3-times-i	\operatorname{PolyLog}(3,e^{\frac{1}{3}i\pi})	\operatorname{PolyLog}(3,\frac{1}{2}+\frac{\sqrt{3}}{2}i)

@@ -21,13 +21,13 @@ n-root-product-continuedfraction-pi-1-000-1-000	N(\sqrt[1000]{\prod\operatorname
 continuedfraction-sqrt-exponentiale-25	\operatorname{ContinuedFraction}(\sqrt{e},25)	[1,1,1,1,5,1,1,9,1,1,13,1,1,17,1,1,21,1,1,25,1,1,29,1,1]
 continuedfraction-exponentiale-pow-sqrt-163	\operatorname{ContinuedFraction}(e^{\sqrt{163}\pi},10)	[262537412640768743,1,1333462407511,1,8,1,1,5,1,4]
 and-back-again	\operatorname{FromSternBrocotPath}(\text{“RLR”})	\frac{5}{3}
-1-cdot-2-3-cdot-1-1	\operatorname{FareyNeighbours}(1,3,1,2)	\operatorname{True}
+1-cdot-2-3-cdot-1-1	\operatorname{FareyNeighbours}(1,3,1,2)	\top
 fromcontinuedfraction-inverts-it	\operatorname{FromContinuedFraction}(\operatorname{ContinuedFraction}(\frac{47}{17}))	\frac{47}{17}
 a-periodic-tail-rebuilds-the-quadratic	\operatorname{FromContinuedFraction}([3,[1,1,1,1,6]])	\sqrt{13}
 1-overline-2-sqrt-2	\operatorname{FromContinuedFraction}([1,[2]])	\sqrt{2}
 a-plain-finite-list-inverts-continuedfraction	\operatorname{FromContinuedFraction}([3,7,16])	\frac{355}{113}
 the-golden-ratio-s-convergents-alternate	\operatorname{SternBrocotPath}(13,8)	\text{“RLRLR”}
-not-farey-neighbours	\operatorname{FareyNeighbours}(1,3,2,3)	\operatorname{False}
+not-farey-neighbours	\operatorname{FareyNeighbours}(1,3,2,3)	\bot
 a-multi-term-pre-period-folds-too	\operatorname{FromContinuedFraction}(\operatorname{ContinuedFraction}(2-\sqrt{3}))	2-\sqrt{3}
 continuedfraction-pi-21	\operatorname{ContinuedFraction}(\pi,21)	[3,7,15,1,292,1,1,1,2,1,3,1,14,2,1,1,2,2,2,2,1]
 negative-a-floor-for-a-0-then-positive-terms-3-1	\operatorname{ContinuedFraction}(\frac{-47}{17})	[-3,4,4]

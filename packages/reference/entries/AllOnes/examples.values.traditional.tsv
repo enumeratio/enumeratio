@@ -1,4 +1,4 @@
 id	in	out
 the-first-25-terms	\operatorname{Take}(\operatorname{AllOnes},25)	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-1-is-in-allones	1\in\operatorname{AllOnes}	\operatorname{True}
-2-is-not-in-allones	2\in\operatorname{AllOnes}	\operatorname{False}
+1-is-in-allones	1\in\operatorname{AllOnes}	\top
+2-is-not-in-allones	2\in\operatorname{AllOnes}	\bot

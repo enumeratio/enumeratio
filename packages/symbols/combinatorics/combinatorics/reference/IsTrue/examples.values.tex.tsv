@@ -1,5 +1,5 @@
 id	in	out
-true-is-true	\mathrm{IsTrue}(\top)	\top
-false-is-not-true	\mathrm{IsTrue}(\bot)	\bot
-an-evaluating-comparison	\mathrm{IsTrue}(1=1)	\top
-an-unevaluated-symbol-is-false	\mathrm{IsTrue}(x)	\bot
+true-is-true	\mathrm{IsTrue}(\mathrm{True})	\mathrm{True}
+false-is-not-true	\mathrm{IsTrue}(\mathrm{False})	\mathrm{False}
+an-evaluating-comparison	\mathrm{IsTrue}(1=1)	\mathrm{True}
+an-unevaluated-symbol-is-false	\mathrm{IsTrue}(x)	\mathrm{False}

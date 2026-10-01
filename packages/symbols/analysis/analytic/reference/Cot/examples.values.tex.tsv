@@ -26,8 +26,8 @@ matrixfunction-function-cot-1-1-list-list-5-over	\mathrm{MatrixFunction}(()\maps
 assuming-m-in-integers-refine-cot-pi-times-1		
 assuming-m-in-integers-fullsimplify-refine-cot		
 cot-positiveinfinity		
-reciprocal-of-tan-cot-x-frac-1-tan-x	\cot(\frac{\pi}{4})=\frac{1}{\tan(\frac{\pi}{4})}	\top
-pythagorean-identity-1-cot-2-x-csc-2-x	1+\cot(\pi/6)^2=\csc(\pi/6)^2	\top
+reciprocal-of-tan-cot-x-frac-1-tan-x	\cot(\frac{\pi}{4})=\frac{1}{\tan(\frac{\pi}{4})}	\mathrm{True}
+pythagorean-identity-1-cot-2-x-csc-2-x	1+\cot(\pi/6)^2=\csc(\pi/6)^2	\mathrm{True}
 cot-1-over-10-times-pi	\cot(\frac{\pi}{10})	\sqrt{5+2\sqrt{5}}
 cot-3-over-10-times-pi	\cot(\frac{3\pi}{10})	\sqrt{5-2\sqrt{5}}
 cot-3-over-8-times-pi	\cot(\frac{3\pi}{8})	\sqrt{2}-1

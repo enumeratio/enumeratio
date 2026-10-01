@@ -27,10 +27,10 @@ complexexpand-abs-x	\mathrm{ComplexExpand}(\vert x\vert)	\sqrt{x^2}
 complexexpand-abs-x-plus-i-times-y	\mathrm{ComplexExpand}(\vert x+i y\vert)	\sqrt{x^2+y^2}
 the-gap-between-two-temperatures-70-and-95	\vert70-95\vert	25
 the-distance-between-the-points-1-i-and-4-5i-of	\vert(1+i)-(4+5i)\vert	5
-even-function-x-x	\vert-8\vert=\vert8\vert	\top
-triangle-inequality-a-b-le-a-b	\vert3-8\vert\le\vert3\vert+\vert-8\vert	\top
-z-2-z-bar-z	\vert3+4i\vert^2=(3+4i)\overline{3+4i}	\top
-multiplicative-ab-a-b	\vert(1+2i)(3-i)\vert=\vert1+2i\vert\vert3-i\vert	\top
+even-function-x-x	\vert-8\vert=\vert8\vert	\mathrm{True}
+triangle-inequality-a-b-le-a-b	\vert3-8\vert\le\vert3\vert+\vert-8\vert	\mathrm{True}
+z-2-z-bar-z	\vert3+4i\vert^2=(3+4i)\overline{3+4i}	\mathrm{True}
+multiplicative-ab-a-b	\vert(1+2i)(3-i)\vert=\vert1+2i\vert\vert3-i\vert	\mathrm{True}
 abs-1	\vert1\vert	1
 abs-neg-1	\vert-1\vert	1
 abs-neg-i	\vert-i\vert	1

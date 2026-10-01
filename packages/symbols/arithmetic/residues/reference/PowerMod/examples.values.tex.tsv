@@ -46,14 +46,14 @@ sum-powermod-a-2-7-a-nothing-7	\sum_{a}^7\mathrm{PowerMod}(a, 2, 7)	14
 findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	\mathrm{FindInstance}(\mathrm{PowerMod}(a, b, 17)=1\land0\lt a\lt17\land0\lt b\lt17, \bigl\lbrack a, b\bigr\rbrack, \mathbb{Z}, 2)	\bigl\lbrack\bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 1)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(a, 1), \mathrm{Rule}(b, 2)\bigr\rbrack\bigr\rbrack
 one-step-of-rsa-style-modular-exponentiation-7	\mathrm{PowerMod}(7, 13, 33)	13
 341-11-cdot-31-passes-fermat-s-test-to-base-2	\mathrm{PowerMod}(2, 340, 341)	1
-diffie-hellman-both-parties-reach-the-shared-key	\mathrm{PowerMod}(\mathrm{PowerMod}(5, 6, 23), 15, 23)=\mathrm{PowerMod}(\mathrm{PowerMod}(5, 15, 23), 6, 23)	\top
-by-definition-a-b-bmod-m-computed-without-ever	\mathrm{PowerMod}(2, 10, 3)=2^{10}\bmod3	\top
+diffie-hellman-both-parties-reach-the-shared-key	\mathrm{PowerMod}(\mathrm{PowerMod}(5, 6, 23), 15, 23)=\mathrm{PowerMod}(\mathrm{PowerMod}(5, 15, 23), 6, 23)	\mathrm{True}
+by-definition-a-b-bmod-m-computed-without-ever	\mathrm{PowerMod}(2, 10, 3)=2^{10}\bmod3	\mathrm{True}
 euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime	\mathrm{PowerMod}(7, \mathrm{Totient}(19), 19)	1
 list-powermod-7-2-5-powermod-12-2-5	\bigl\lbrack\mathrm{PowerMod}(7, 2, 5), \mathrm{PowerMod}(12, 2, 5)\bigr\rbrack	\bigl\lbrack4, 4\bigr\rbrack
 list-powermod-2-3-5-8-mod-5	\bigl\lbrack\mathrm{PowerMod}(2, 3, 5), 8\bmod5\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
 list-powermod-2-neg-1-5-modularinverse-2-5	\bigl\lbrack\mathrm{PowerMod}(2, -1, 5), \mathrm{ModularInverse}(2, 5)\bigr\rbrack	\bigl\lbrack3, 3\bigr\rbrack
-list-divides-2-8-powermod-8-3-2-eq-0	\bigl\lbrack2\mid8, \mathrm{PowerMod}(8, 3, 2)=0\bigr\rbrack	\bigl\lbrack\top, \top\bigr\rbrack
-powermod-7-totient-19-19-eq-1	\mathrm{PowerMod}(7, \mathrm{Totient}(19), 19)=1	\top
+list-divides-2-8-powermod-8-3-2-eq-0	\bigl\lbrack2\mid8, \mathrm{PowerMod}(8, 3, 2)=0\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
+powermod-7-totient-19-19-eq-1	\mathrm{PowerMod}(7, \mathrm{Totient}(19), 19)=1	\mathrm{True}
 powermod-2-16-17	\mathrm{PowerMod}(2, 16, 17)	1
 powermod-list-5-neg-5-2-3	\mathrm{PowerMod}(\bigl\lbrack5, -5\bigr\rbrack, 2, 3)	\bigl\lbrack1, 1\bigr\rbrack
 powermod-list-5-neg-5-2-neg-3	\mathrm{PowerMod}(\bigl\lbrack5, -5\bigr\rbrack, 2, -3)	\bigl\lbrack\mathrm{PowerMod}(5, 2, -3), \mathrm{PowerMod}(-5, 2, -3)\bigr\rbrack

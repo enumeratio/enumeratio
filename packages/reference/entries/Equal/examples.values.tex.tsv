@@ -1,10 +1,10 @@
 id	in	out
-4-eq-4	4=4	\top
-n-pi-20-eq-pi	N(\pi, 20)=\pi	\top
-sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	\sqrt{2}+\sqrt{3}=\sqrt{5+2\sqrt{6}}	\top
-x-eq-x	x=x	\top
-3-eq-3-eq-3	3=3=3	\top
-list-1-2-eq-list-1-2	\bigl\lbrack1, 2\bigr\rbrack=\bigl\lbrack1, 2\bigr\rbrack	\top
-n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	N(\pi, 20)=\pi(1+\frac{256}{10^{20}})	\top
-list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	\begin{cases}x=x\\x=y\\\sqrt{2}+\sqrt{3}=\sqrt{5+2\sqrt{6}}\\\pi=N(\pi)\end{cases}	\bigl\lbrack\top, x=y, \top, \top\bigr\rbrack
+4-eq-4	4=4	\mathrm{True}
+n-pi-20-eq-pi	N(\pi, 20)=\pi	\mathrm{True}
+sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	\sqrt{2}+\sqrt{3}=\sqrt{5+2\sqrt{6}}	\mathrm{True}
+x-eq-x	x=x	\mathrm{True}
+3-eq-3-eq-3	3=3=3	\mathrm{True}
+list-1-2-eq-list-1-2	\bigl\lbrack1, 2\bigr\rbrack=\bigl\lbrack1, 2\bigr\rbrack	\mathrm{True}
+n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	N(\pi, 20)=\pi(1+\frac{256}{10^{20}})	\mathrm{True}
+list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	\begin{cases}x=x\\x=y\\\sqrt{2}+\sqrt{3}=\sqrt{5+2\sqrt{6}}\\\pi=N(\pi)\end{cases}	\bigl\lbrack\mathrm{True}, x=y, \mathrm{True}, \mathrm{True}\bigr\rbrack
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	\mathrm{Solve}(ax^2+bx+c=0, x)	\bigl\lbrack\frac{\sqrt{b^2-4ac}-b}{2a}, \frac{-b-\sqrt{b^2-4ac}}{2a}\bigr\rbrack

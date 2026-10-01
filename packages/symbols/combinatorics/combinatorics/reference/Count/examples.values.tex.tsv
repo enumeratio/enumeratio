@@ -13,6 +13,6 @@ only-top-level-elements-are-compared-by-default	\mathrm{Count}(\bigl\lbrack\bigl
 a-bare-level-spec-counts-matches-down-through	\mathrm{Count}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, b, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b, 2)	3
 2-counts-matches-at-level-2-only	\mathrm{Count}(\bigl\lbrack\bigl\lbrack a, a, b\bigr\rbrack, b, \bigl\lbrack a, b, a\bigr\rbrack\bigr\rbrack, b, \bigl\lbrack2\bigr\rbrack)	2
 count-of-an-infinite-collection	\mathrm{Count}(\mathrm{FactorialNumbers})	\infty
-the-counts-of-the-distinct-values-add-up-to-the	\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 1)+\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 2)+\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 3)=\mathrm{Length}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack)	\top
+the-counts-of-the-distinct-values-add-up-to-the	\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 1)+\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 2)+\mathrm{Count}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack, 3)=\mathrm{Length}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack)	\mathrm{True}
 count-tests-exact-equality-a-typed-pattern-like	\mathrm{Count}(\bigl\lbrack1, a, 2, b\bigr\rbrack, \operatorname{\_Integer})	0
 count-tests-exact-equality-so-a-pattern-like	\mathrm{Count}(\bigl\lbrack a, 2, a, a, 1, c, b, 3, 3\bigr\rbrack, \operatorname{\_Integer})	0

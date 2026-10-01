@@ -13,6 +13,6 @@ only-top-level-elements-are-compared-by-default	\operatorname{Count}([[a,a,b],b,
 a-bare-level-spec-counts-matches-down-through	\operatorname{Count}([[a,a,b],b,[a,b,a]],b,2)	3
 2-counts-matches-at-level-2-only	\operatorname{Count}([[a,a,b],b,[a,b,a]],b,[2])	2
 count-of-an-infinite-collection	\operatorname{Count}(\operatorname{FactorialNumbers})	\infty
-the-counts-of-the-distinct-values-add-up-to-the	\operatorname{Count}([1,2,2,3,3,3],1)+\operatorname{Count}([1,2,2,3,3,3],2)+\operatorname{Count}([1,2,2,3,3,3],3)=\operatorname{Length}([1,2,2,3,3,3])	\operatorname{True}
+the-counts-of-the-distinct-values-add-up-to-the	\operatorname{Count}([1,2,2,3,3,3],1)+\operatorname{Count}([1,2,2,3,3,3],2)+\operatorname{Count}([1,2,2,3,3,3],3)=\operatorname{Length}([1,2,2,3,3,3])	\top
 count-tests-exact-equality-a-typed-pattern-like	\operatorname{Count}([1,a,2,b],\_Integer)	0
 count-tests-exact-equality-so-a-pattern-like	\operatorname{Count}([a,2,a,a,1,c,b,3,3],\_Integer)	0

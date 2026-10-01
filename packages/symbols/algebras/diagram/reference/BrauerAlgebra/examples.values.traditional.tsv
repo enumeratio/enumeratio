@@ -1,5 +1,5 @@
 id	in	out
 5	\dim(B_3)	15
 algebradimension-braueralgebra-4	\dim(B_4)	105
-a-crossing-is-a-brauer-diagram	\operatorname{Diagram}([[1,-2],[2,-1],[3,-3]])\in B_3	\operatorname{True}
-but-not-a-planar-one	\operatorname{Diagram}([[1,-2],[2,-1],[3,-3]])\in\operatorname{TL}_3	\operatorname{False}
+a-crossing-is-a-brauer-diagram	\operatorname{Diagram}([[1,-2],[2,-1],[3,-3]])\in B_3	\top
+but-not-a-planar-one	\operatorname{Diagram}([[1,-2],[2,-1],[3,-3]])\in\operatorname{TL}_3	\bot

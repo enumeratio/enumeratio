@@ -13,4 +13,4 @@ realabs-0	\mathrm{RealAbs}(0)	0
 realabs-positiveinfinity	\mathrm{RealAbs}(\infty)	\infty
 realabs-negativeinfinity	\mathrm{RealAbs}(-\infty)	\infty
 piecewiseexpand-realabs-x	\mathrm{PiecewiseExpand}(\mathrm{RealAbs}(x))	\vert x\vert
-agrees-with-abs-on-the-reals	\mathrm{RealAbs}(-5)=\vert-5\vert	\top
+agrees-with-abs-on-the-reals	\mathrm{RealAbs}(-5)=\vert-5\vert	\mathrm{True}

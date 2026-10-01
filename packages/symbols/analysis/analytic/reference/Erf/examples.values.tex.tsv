@@ -14,8 +14,8 @@ uncertainty-propagation-with-slope-frac-2-sqrt	\operatorname{erf}(\mathrm{Around
 to-40-significant-digits-every-one-correctly	N(\operatorname{erf}(1), 40)	0.842\,700\,792\,949\,714\,869\,341
 erf-1-sqrt-2-approx-0-6827-the-68-in-the	\operatorname{erf}(0.707\,106\,781\,186\,547\,6)	0.682\,689\,492\,137\,085\,948\,91
 the-standard-normal-cdf-phi-x-frac-12-1-erf-x	0.5(1+\operatorname{erf}(\frac{1.96}{\sqrt{2}}))	0.975\,002\,104\,851\,779\,565\,864
-odd-function-erf-z-erf-z-here-at-z-2	\operatorname{erf}(2)+\operatorname{erf}(-2)=0	\top
-complementary-with-erfc-erf-z-erfc-z-1-see-erfc	\operatorname{erf}(2)+\mathrm{Erfc}(2)=1	\top
+odd-function-erf-z-erf-z-here-at-z-2	\operatorname{erf}(2)+\operatorname{erf}(-2)=0	\mathrm{True}
+complementary-with-erfc-erf-z-erfc-z-1-see-erfc	\operatorname{erf}(2)+\mathrm{Erfc}(2)=1	\mathrm{True}
 oddness-applied-symbolically-erf-x-erf-x	\operatorname{erf}(-x)	-\operatorname{erf}(x)
 erf-erfinv-x-x-symbolically-see-erfinv	\operatorname{erf}(\mathrm{ErfInv}(x))	x
 on-the-imaginary-axis-erf-i-i-erfi-1	\operatorname{erf}(i)	i\mathrm{Erfi}(1)

@@ -6,8 +6,8 @@ duplicates-are-dropped-as-well	\operatorname{Intersection}([1,1,2,3],[3,1,4],[4,
 symbolic-elements	\operatorname{Intersection}([a,b,c],[b,c,d])	\{b,c\}
 a-single-collection-comes-back-as-a-set	\operatorname{Intersection}([1,2,3])	\{1,2,3\}
 the-divisors-common-to-45-and-78	\operatorname{Intersection}(\operatorname{Divisors}(45),\operatorname{Divisors}(78))	\{1,3\}
-intersection-is-idempotent-a-cap-a-a	\operatorname{Intersection}(\{1,2,3\},\{1,2,3\})=\{1,2,3\}	\operatorname{True}
-the-same-inclusion-exclusion-count-rearranged-a	\operatorname{Length}([1,2,3])+\operatorname{Length}([2,3,4])=\operatorname{Length}(\operatorname{Union}([1,2,3],[2,3,4]))+\operatorname{Length}(\operatorname{Intersection}([1,2,3],[2,3,4]))	\operatorname{True}
+intersection-is-idempotent-a-cap-a-a	\operatorname{Intersection}(\{1,2,3\},\{1,2,3\})=\{1,2,3\}	\top
+the-same-inclusion-exclusion-count-rearranged-a	\operatorname{Length}([1,2,3])+\operatorname{Length}([2,3,4])=\operatorname{Length}(\operatorname{Union}([1,2,3],[2,3,4]))+\operatorname{Length}(\operatorname{Intersection}([1,2,3],[2,3,4]))	\top
 intersecting-with-the-empty-set-gives-the-empty	\operatorname{Intersection}([1,2,3],\emptyset)	\emptyset
 intersection-list-a-b-c-list-d-exponentiale-f	\operatorname{Intersection}([a,b,c],[d,e,f])	\emptyset
 disjoint-collections-intersect-to-the-special	\operatorname{Intersection}([1,2],[3,4])	\emptyset

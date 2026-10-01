@@ -2,4 +2,4 @@ id	in	out
 const-glaisher-numeric-value	N(\mathrm{ConstGlaisher})	1.282\,427\,129\,100\,622\,6
 n-constglaisher-50	N(\mathrm{ConstGlaisher}, 50)	1.282\,427\,129\,100\,622\,636\,88
 round-constglaisher-pow-100	\mathrm{round}(\mathrm{ConstGlaisher}^{100})	63\,572\,555\,914
-1-lt-constglaisher-lt-2	1\lt\mathrm{ConstGlaisher}\lt2	\top
+1-lt-constglaisher-lt-2	1\lt\mathrm{ConstGlaisher}\lt2	\mathrm{True}

@@ -2,6 +2,6 @@ id	in	out
 four-closed-geodesics-of-symbolic-length-4	\operatorname{ModularClasses}(4)	[\text{“LLLR”},\text{“LLRR”},\text{“LRLR”},\text{“LRRR”}]
 same-word-length-as-lllr-different-geodesic	\operatorname{ModularTrace}(\text{“LRLR”})	7
 the-same-geodesic-entered-elsewhere	\operatorname{ModularClass}(\text{“LRL”})	\text{“LLR”}
-lrlr-is-lr-traversed-twice	\operatorname{IsPrimitiveClass}(\text{“LRLR”})	\operatorname{False}
+lrlr-is-lr-traversed-twice	\operatorname{IsPrimitiveClass}(\text{“LRLR”})	\bot
 the-same-geodesic-yet-again	\operatorname{ModularClass}(\text{“RLL”})	\text{“LLR”}
-lrr-is-primitive	\operatorname{IsPrimitiveClass}(\text{“LRR”})	\operatorname{True}
+lrr-is-primitive	\operatorname{IsPrimitiveClass}(\text{“LRR”})	\top

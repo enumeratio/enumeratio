@@ -13,11 +13,11 @@ subfactorial-list-5-10-20	\operatorname{Subfactorial}([5,10,20])	[44,1334961,895
 matrixfunction-function-subfactorial-1-1-list	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(!\_1),\_1),[[2,0],[0,2]])	[[1,0],[0,1]]
 n-subfactorial-1-over-3-50		
 the-hat-check-problem-the-number-of-ways-6	!6	265
-recurrence-d-n-n-d-n-1-1-n	!4=4!3+(-1)^4	\operatorname{True}
-d-n-is-frac-n-e-rounded-to-the-nearest-integer	!10=\operatorname{Round}(\frac{10!}{e})	\operatorname{True}
-two-term-recurrence-d-n-1-n-d-n-d-n-1	!6=5(!5+!4)	\operatorname{True}
+recurrence-d-n-n-d-n-1-1-n	!4=4!3+(-1)^4	\top
+d-n-is-frac-n-e-rounded-to-the-nearest-integer	!10=\operatorname{Round}(\frac{10!}{e})	\top
+two-term-recurrence-d-n-1-n-d-n-d-n-1	!6=5(!5+!4)	\top
 exponentialgeneratingfunction-subfactorial-n-n-x	\operatorname{ExponentialGeneratingFunction}(!n,n,x)	\frac{e^{-x}}{-x+1}
 subfactorial-2	!2	1
 subfactorial-3	!3	2
 a-negative-argument-is-left-unevaluated	!(-1)	!(-1)
-148-349-eq-sum-subfactorial-list-1-4-8-3-4-9	148349=\sum\operatorname{Subfactorial}([1,4,8,3,4,9])	\operatorname{True}
+148-349-eq-sum-subfactorial-list-1-4-8-3-4-9	148349=\sum\operatorname{Subfactorial}([1,4,8,3,4,9])	\top

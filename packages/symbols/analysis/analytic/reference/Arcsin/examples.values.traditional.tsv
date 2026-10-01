@@ -25,8 +25,8 @@ arcsin-2-past-1-1-the-odd-function-mirror-of	\arcsin(-2)	\frac{-1}{2}\pi+i\ln(2+
 arcsin-infinity-is-a-directed-infinity-along-the	\arcsin(\infty)	\operatorname{DirectedInfinity}(-i)
 arcsin-infinity-is-the-opposite-directed	\arcsin(-\infty)	\operatorname{DirectedInfinity}(i)
 n-arcsin-1-over-3-50	N(\arcsin(\frac{1}{3}),50)	0.33983690945412193709639251339176406638824469033246
-sin-arcsin-x-x-on-the-principal-branch	\sin(\arcsin(\frac{1}{2}))=\frac{1}{2}	\operatorname{True}
-co-function-identity-arcsin-x-arccos-x-pi-2	\arcsin(\frac{1}{2})+\arccos(\frac{1}{2})=\frac{\pi}{2}	\operatorname{True}
+sin-arcsin-x-x-on-the-principal-branch	\sin(\arcsin(\frac{1}{2}))=\frac{1}{2}	\top
+co-function-identity-arcsin-x-arccos-x-pi-2	\arcsin(\frac{1}{2})+\arccos(\frac{1}{2})=\frac{\pi}{2}	\top
 as-a-logarithm-arcsin-x-i-ln-ix-sqrt-1-x-2	\operatorname{TrigToExp}(\arcsin(x))	-i\ln(ix+\sqrt{-x^2+1})
 arcsin-neg-sqrt-2-over-4-times-neg-1-plus-sqrt-3	\arcsin(-\frac{\sqrt{2}}{4}(-1+\sqrt{3}))	\frac{-1}{12}\pi
 arcsin-1-over-4-times-1-minus-sqrt-5	\arcsin(\frac{1}{4}(1-\sqrt{5}))	\frac{-1}{10}\pi

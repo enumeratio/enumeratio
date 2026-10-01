@@ -10,7 +10,7 @@ the-primes-below-a-million	\mathrm{PrimePi}(1\,000\,000)	78\,498
 listable-threads-over-a-list	\mathrm{PrimePi}(\bigl\lbrack3, 5, 17, 25\bigr\rbrack)	\bigl\lbrack2, 3, 7, 9\bigr\rbrack
 nthprime-range-1-primepi-100	\mathrm{NthPrime}(1..\mathrm{PrimePi}(100))	\bigl\lbrack2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97\bigr\rbrack
 primepi-5-000	\mathrm{PrimePi}(5\,000)	669
-same-inverse-relation-viewed-from-primepi-s-side	\mathrm{PrimePi}(\mathrm{NthPrime}(50))=50	\top
+same-inverse-relation-viewed-from-primepi-s-side	\mathrm{PrimePi}(\mathrm{NthPrime}(50))=50	\mathrm{True}
 primepi-nthprime-100	\mathrm{PrimePi}(\mathrm{NthPrime}(100))	100
 primepi-1-000	\mathrm{PrimePi}(1\,000)	168
 primepi-3	\mathrm{PrimePi}(3)	2

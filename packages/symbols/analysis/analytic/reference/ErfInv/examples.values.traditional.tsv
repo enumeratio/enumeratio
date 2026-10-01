@@ -15,10 +15,10 @@ erfinv-a-erf-a-z	\operatorname{ErfInv}(a,\operatorname{Erf}(a,z))	\operatorname{
 functionexpand-erf-erfinv-s		
 erfinv-s-eq-erfinv-0-s		
 the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0	\sqrt{2}\operatorname{erf}^{-1}(0.95)	1.95996398454005423552746040017785193571357792
-inverse-of-erf-erf-erfinv-x-x-see-erf	\operatorname{Erf}(\operatorname{erf}^{-1}(0.5))=0.5	\operatorname{True}
+inverse-of-erf-erf-erfinv-x-x-see-erf	\operatorname{Erf}(\operatorname{erf}^{-1}(0.5))=0.5	\top
 odd-erfinv-x-erfinv-x-applied-symbolically	\operatorname{erf}^{-1}(-x)	-\operatorname{erf}^{-1}(x)
 frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2	\frac{d}{dx}\operatorname{erf}^{-1}(x)	\frac{1}{2}e^{{\operatorname{erf}^{-1}(x)}^2}\sqrt{\pi}
-isnumeric-erfinv-1-over-pi-1-over-2	\operatorname{IsNumeric}(\operatorname{ErfInv}(\frac{1}{\pi},\frac{1}{2}))	\operatorname{True}
+isnumeric-erfinv-1-over-pi-1-over-2	\operatorname{IsNumeric}(\operatorname{ErfInv}(\frac{1}{\pi},\frac{1}{2}))	\top
 erfinv-0-0	\operatorname{ErfInv}(0,0)	0
 erfinv-0-1	\operatorname{ErfInv}(0,1)	\infty
 erfinv-1-0	\operatorname{ErfInv}(1,0)	\operatorname{erf}^{-1}(\operatorname{Erf}(1))

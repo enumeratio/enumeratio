@@ -22,4 +22,4 @@ fullsimplify-matrixfunction-log10-list-list-1	\operatorname{FullSimplify}(\opera
 log-positiveinfinity	\log(\infty)	\infty
 log-0	\log(0)	-\infty
 a-float-argument-folds-even-for-a-fractional	\operatorname{Log10}(0.001)	-3.0
-same-as-compute-engine-s-default-base-log	\operatorname{Log10}(1000)=\log(1000)	\operatorname{True}
+same-as-compute-engine-s-default-base-log	\operatorname{Log10}(1000)=\log(1000)	\top

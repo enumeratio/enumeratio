@@ -20,4 +20,4 @@ n-log-2-plus-i-2	N(\log_{2}(2+i))	1.160\,964\,047\,443\,681+0.668\,902\,106\,225
 fullsimplify-matrixfunction-log2-list-list-2-1	\mathrm{FullSimplify}(\mathrm{MatrixFunction}(\mathrm{Log2}, \bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack0, 1/2\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack1, \frac{4}{3}\bigr\rbrack, \bigl\lbrack0, -1\bigr\rbrack\bigr\rbrack
 log-positiveinfinity-2	\log_{2}(\infty)	\infty
 a-float-argument-folds-even-for-a-fractional	\log_{2}(0.5)	-1.0
-same-as-log-z-2	\log_{2}(8)=\log_{2}(8)	\top
+same-as-log-z-2	\log_{2}(8)=\log_{2}(8)	\mathrm{True}

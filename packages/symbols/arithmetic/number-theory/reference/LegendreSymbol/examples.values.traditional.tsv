@@ -4,5 +4,5 @@ id	in	out
 0-when-p-divides-n	(\frac{14}{7})	0
 listable-in-n-the-residues-mod-7-are-1-2-4	\operatorname{LegendreSymbol}([1,2,3,4,5,6],7)	[1,1,-1,1,-1,-1]
 1-is-a-residue-mod-p-exactly-when-p-equiv-1-pmod	(\frac{-1}{13})	1
-euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here	(\frac{3}{7})=(3^3\bmod7)-7	\operatorname{True}
+euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here	(\frac{3}{7})=(3^3\bmod7)-7	\top
 9-is-not-prime-so-the-call-stays-symbolic-see	(\frac{2}{9})	(\frac{2}{9})

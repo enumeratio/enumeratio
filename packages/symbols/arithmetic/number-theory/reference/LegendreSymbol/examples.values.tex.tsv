@@ -4,5 +4,5 @@ id	in	out
 0-when-p-divides-n	\mathrm{LegendreSymbol}(14, 7)	0
 listable-in-n-the-residues-mod-7-are-1-2-4	\mathrm{LegendreSymbol}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 7)	\bigl\lbrack1, 1, -1, 1, -1, -1\bigr\rbrack
 1-is-a-residue-mod-p-exactly-when-p-equiv-1-pmod	\mathrm{LegendreSymbol}(-1, 13)	1
-euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here	\mathrm{LegendreSymbol}(3, 7)=\mathrm{PowerMod}(3, 3, 7)-7	\top
+euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here	\mathrm{LegendreSymbol}(3, 7)=\mathrm{PowerMod}(3, 3, 7)-7	\mathrm{True}
 9-is-not-prime-so-the-call-stays-symbolic-see	\mathrm{LegendreSymbol}(2, 9)	\mathrm{LegendreSymbol}(2, 9)

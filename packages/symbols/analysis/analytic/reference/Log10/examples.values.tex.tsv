@@ -22,4 +22,4 @@ fullsimplify-matrixfunction-log10-list-list-1	\mathrm{FullSimplify}(\mathrm{Matr
 log-positiveinfinity	\log_{10}(\infty)	\infty
 log-0	\log_{10}(0)	-\infty
 a-float-argument-folds-even-for-a-fractional	\log_{10}(0.001)	-3.0
-same-as-compute-engine-s-default-base-log	\log_{10}(1\,000)=\log_{10}(1\,000)	\top
+same-as-compute-engine-s-default-base-log	\log_{10}(1\,000)=\log_{10}(1\,000)	\mathrm{True}

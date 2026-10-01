@@ -37,7 +37,7 @@ zeta-2-list-list-1-over-2-0-list-0-3-over-2	\zeta(2, \bigl\lbrack\bigl\lbrack\fr
 zeta-4-5	\zeta(4, 5)	\frac{\pi^4}{90}-\frac{22\,369}{20\,736}
 zeta-list-1-2-3-4	\zeta(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)	\bigl\lbrack\tilde\infty, \frac{\pi^2}{6}, \zeta(3), \frac{\pi^4}{90}\bigr\rbrack
 matrixfunction-function-zeta-2-1-1-list-list-1	\mathrm{MatrixFunction}(()\mapsto\zeta(2, \operatorname{\_1}), \bigl\lbrack\bigl\lbrack\frac{1}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{3}{2}\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{\pi^2}{2}, 0\bigr\rbrack, \bigl\lbrack0, \zeta(2, \frac{3}{2})\bigr\rbrack\bigr\rbrack
-the-probability-that-two-random-positive	\frac{1}{\zeta(2)}=\frac{6}{\pi^2}	\top
+the-probability-that-two-random-positive	\frac{1}{\zeta(2)}=\frac{6}{\pi^2}	\mathrm{True}
 certified-digits-zeta-3	N(\zeta(3), 40)	1.202\,056\,903\,159\,594\,285\,4
 zeta-0-1-2	\zeta(0)	-\frac{1}{2}
 trivial-zero-zeta-2n-0-for-positive-integer-n	\zeta(-2)	0

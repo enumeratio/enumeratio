@@ -1,5 +1,5 @@
 id	in	out
 5	\mathrm{AlgebraDimension}(\mathrm{BrauerAlgebra}(3))	15
 algebradimension-braueralgebra-4	\mathrm{AlgebraDimension}(\mathrm{BrauerAlgebra}(4))	105
-a-crossing-is-a-brauer-diagram	\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -2\bigr\rbrack, \bigl\lbrack2, -1\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{BrauerAlgebra}(3)	\top
-but-not-a-planar-one	\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -2\bigr\rbrack, \bigl\lbrack2, -1\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{TemperleyLiebAlgebra}(3)	\bot
+a-crossing-is-a-brauer-diagram	\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -2\bigr\rbrack, \bigl\lbrack2, -1\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{BrauerAlgebra}(3)	\mathrm{True}
+but-not-a-planar-one	\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -2\bigr\rbrack, \bigl\lbrack2, -1\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{TemperleyLiebAlgebra}(3)	\mathrm{False}

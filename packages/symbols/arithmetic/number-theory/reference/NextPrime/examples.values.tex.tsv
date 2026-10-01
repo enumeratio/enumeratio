@@ -15,10 +15,10 @@ array-nextprime-100-mod-10	\mathrm{Array}(\mathrm{NextPrime}, 100)\bmod10	\bigl\
 filter-range-1-100-function-isprime-1-nextprime	\mathrm{Filter}(1..100, ()\mapsto\mathrm{IsPrime}(\operatorname{\_1})\land\mathrm{NextPrime}(\operatorname{\_1})=\operatorname{\_1}+2)	\bigl\lbrack3, 5, 11, 17, 29, 41, 59, 71\bigr\rbrack
 map-function-nextprime-10-pow-1-1-range-0-20	\mathrm{Map}(()\mapsto\mathrm{NextPrime}(10^{\operatorname{\_1}}), 0..20)	\bigl\lbrack2, 11, 101, 1\,009, 10\,007, 100\,003, 1\,000\,003, 10\,000\,019, 100\,000\,007, 1\,000\,000\,007, 10\,000\,000\,019, 100\,000\,000\,003, 1\,000\,000\,000\,039, 10\,000\,000\,000\,037, 100\,000\,000\,000\,031, 1\,000\,000\,000\,000\,037, 10\,000\,000\,000\,000\,061, 100\,000\,000\,000\,000\,003, 1\,000\,000\,000\,000\,000\,003, 10\,000\,000\,000\,000\,000\,051, 100\,000\,000\,000\,000\,000\,039\bigr\rbrack
 map-function-neg-10-pow-1-plus-nextprime-10-pow	\mathrm{Map}(()\mapsto\mathrm{NextPrime}(10^{\operatorname{\_1}})-10^{\operatorname{\_1}}, 0..20)	\bigl\lbrack1, 1, 1, 9, 7, 3, 3, 19, 7, 7, 19, 3, 39, 37, 31, 37, 61, 3, 3, 51, 39\bigr\rbrack
-nextprime-steps-from-p-n-to-p-n-1-see-nthprime	\mathrm{NextPrime}(\mathrm{NthPrime}(20))=\mathrm{NthPrime}(21)	\top
+nextprime-steps-from-p-n-to-p-n-1-see-nthprime	\mathrm{NextPrime}(\mathrm{NthPrime}(20))=\mathrm{NthPrime}(21)	\mathrm{True}
 nextprime-1-39	\mathrm{NextPrime}(1, 39)	167
 nextprime-15	\mathrm{NextPrime}(15)	17
-nextprime-30-in-primes	\mathrm{NextPrime}(30)\in\mathbb{P}	\top
+nextprime-30-in-primes	\mathrm{NextPrime}(30)\in\mathbb{P}	\mathrm{True}
 a-negative-k-walks-backward-giving-the-prime	\mathrm{NextPrime}(10, -1)	7
 negative-n-wolfram-counts-7-as-prime-and-returns	\mathrm{NextPrime}(-10)	-7
 nextprime-neg-2	\mathrm{NextPrime}(-2)	2

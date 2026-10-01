@@ -5,5 +5,5 @@ sine-s-range-is-the-unit-interval	\operatorname{FunctionRange}(\sin(x),x,y)	-1\l
 exp-s-range-is-the-positive-reals	\operatorname{FunctionRange}(e^x,x,y)	0<y
 functionrange-x-pow-2-minus-1-x-y	\operatorname{FunctionRange}(x^2-1,x,y)	-1\le y
 functionrange-x-pow-2-minus-4-x-y	\operatorname{FunctionRange}(x^2-4,x,y)	-4\le y
-functionrange-tan-x-x-y	\operatorname{FunctionRange}(\tan(x),x,y)	\operatorname{True}
+functionrange-tan-x-x-y	\operatorname{FunctionRange}(\tan(x),x,y)	\top
 a-quadratic-denominator-is-declined	\operatorname{FunctionRange}(\frac{1}{x^2-1},x,y)	\operatorname{FunctionRange}(\frac{1}{x^2-1},x,y)

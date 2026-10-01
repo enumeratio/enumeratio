@@ -14,12 +14,12 @@ a-rational-base-frac-12-cdot-frac-32-cdot-frac	(\frac{1}{2})_3	\frac{15}{8}
 a-rational-order-evaluates-through-gamma-exactly	(\frac{3}{2})_{\frac{1}{2}}	\frac{2}{\sqrt{\pi}}
 complex-base-and-order-evaluate-through-gamma	(2+5i)_{8i}	0.0000021386822918680963-0.000014218737711709974i
 dividing-by-k-counts-multisets-binom-n-k-1-k	\frac{(5)_3}{3!}	35
-1-n-n-since-the-rising-factorial-from-1-just	(1)_5=5!	\operatorname{True}
+1-n-n-since-the-rising-factorial-from-1-just	(1)_5=5!	\top
 negative-order-gives-the-reciprocal-a-n-frac-1-a	(5)_{-2}	\frac{1}{12}
 order-0-is-the-empty-product-a-0-1	(a)_0	1
 a-1-a	(a)_1	a
-the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	(4)_3=\frac{\Gamma(7)}{\Gamma(4)}	\operatorname{True}
-rising-and-falling-factorials-x-underline-n-1-n	5^{\underline{3}}=-(-5)_3	\operatorname{True}
+the-gamma-form-a-n-frac-gamma-a-n-gamma-a-see	(4)_3=\frac{\Gamma(7)}{\Gamma(4)}	\top
+rising-and-falling-factorials-x-underline-n-1-n	5^{\underline{3}}=-(-5)_3	\top
 if-a-is-a-non-positive-integer-with-a-n-the	(-3)_4	0
 pochhammer-0-negative-1-is-exact	(0)_{-1}	-1
 pochhammer-0-negative-2-is-exact	(0)_{-2}	\frac{1}{2}

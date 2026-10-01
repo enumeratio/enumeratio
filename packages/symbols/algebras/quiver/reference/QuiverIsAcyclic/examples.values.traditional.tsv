@@ -1,4 +1,4 @@
 id	in	out
-quiverisacyclic-linearquiver-4	\operatorname{QuiverIsAcyclic}({\vec{A}}_4)	\operatorname{True}
-a-loop-is-a-cycle	\operatorname{QuiverIsAcyclic}(\operatorname{JordanQuiver})	\operatorname{False}
+quiverisacyclic-linearquiver-4	\operatorname{QuiverIsAcyclic}({\vec{A}}_4)	\top
+a-loop-is-a-cycle	\operatorname{QuiverIsAcyclic}(\operatorname{JordanQuiver})	\bot
 binom-7-2-the-same-as-incidencealgebra-chain-6	\dim(k{\vec{A}}_6)	21

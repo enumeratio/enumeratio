@@ -10,7 +10,7 @@ n-of-a-zero-result-is-still-0	N(\mathrm{MangoldtLambda}(6))	0
 mangoldtlambda-125	\mathrm{MangoldtLambda}(125)	\ln(5)
 mangoldtlambda-7-pow-300	\mathrm{MangoldtLambda}(7^{300})	\ln(7)
 mangoldtlambda-list-2-6-9-8-15	\mathrm{MangoldtLambda}(\bigl\lbrack2, 6, 9, 8, 15\bigr\rbrack)	\bigl\lbrack\ln(2), 0, \ln(3), \ln(2), 0\bigr\rbrack
-mangoldtlambda-81-factorial-eq-0	\mathrm{MangoldtLambda}(81)\ne0	\top
+mangoldtlambda-81-factorial-eq-0	\mathrm{MangoldtLambda}(81)\ne0	\mathrm{True}
 list-mangoldtlambda-6-mangoldtlambda-2-plus	\bigl\lbrack\mathrm{MangoldtLambda}(6), \mathrm{MangoldtLambda}(2)+\mathrm{MangoldtLambda}(3)\bigr\rbrack	\bigl\lbrack0, \ln(2)+\ln(3)\bigr\rbrack
 list-mangoldtlambda-6-mangoldtlambda-2-times	\bigl\lbrack\mathrm{MangoldtLambda}(6), \mathrm{MangoldtLambda}(2)\mathrm{MangoldtLambda}(3)\bigr\rbrack	\bigl\lbrack0, \ln(2)\ln(3)\bigr\rbrack
 mangoldtlambda-5	\mathrm{MangoldtLambda}(5)	\ln(5)
@@ -26,5 +26,5 @@ mangoldtlambda-14	\mathrm{MangoldtLambda}(14)	0
 mangoldtlambda-15	\mathrm{MangoldtLambda}(15)	0
 mangoldtlambda-16	\mathrm{MangoldtLambda}(16)	\ln(2)
 mangoldtlambda-17	\mathrm{MangoldtLambda}(17)	\ln(17)
-ln-16-eq-divisorsum-16-function-mangoldtlambda-1	\ln(16)=\mathrm{DivisorSum}(16, ()\mapsto\mathrm{MangoldtLambda}(\operatorname{\_1}))	\top
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	\ln(16)=\mathrm{DivisorSum}(16, ()\mapsto\mathrm{MangoldtLambda}(\operatorname{\_1}))	\mathrm{True}
 lambda-1-0	\mathrm{MangoldtLambda}(1)	0

@@ -4,5 +4,5 @@ squarewave-half	\operatorname{SquareWave}(\frac{1}{2})	-1
 squarewave-neg-quarter	\operatorname{SquareWave}(\frac{-1}{4})	-1
 squarewave-ranged	\operatorname{SquareWave}([0,10],0)	10
 squarewave-negative-pi-exact	\operatorname{SquareWave}(-\pi)	-1
-squarewave-periodic	\operatorname{SquareWave}(\frac{1}{4})=\operatorname{SquareWave}(\frac{1}{4}+2)	\operatorname{True}
+squarewave-periodic	\operatorname{SquareWave}(\frac{1}{4})=\operatorname{SquareWave}(\frac{1}{4}+2)	\top
 squarewave-one	\operatorname{SquareWave}(1)	1

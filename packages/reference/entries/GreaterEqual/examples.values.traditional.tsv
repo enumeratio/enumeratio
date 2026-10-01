@@ -1,9 +1,9 @@
 id	in	out
-0-lt-eq-1	0\le1	\operatorname{True}
-4-over-3-lt-eq-3-over-2	\frac{4}{3}\le\frac{3}{2}	\operatorname{True}
-pi-lt-eq-n-pi-20	\pi\le N(\pi,20)	\operatorname{True}
-sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	\sqrt{5+2\sqrt{6}}\le\sqrt{2}+\sqrt{3}	\operatorname{True}
-pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	\pi(1+25610^{-20})\le N(\pi,20)	\operatorname{True}
-x-lt-eq-x	x\le x	\operatorname{True}
-pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	\pi^e\le e^{\pi}	\operatorname{True}
+0-lt-eq-1	0\le1	\top
+4-over-3-lt-eq-3-over-2	\frac{4}{3}\le\frac{3}{2}	\top
+pi-lt-eq-n-pi-20	\pi\le N(\pi,20)	\top
+sqrt-5-plus-2-times-sqrt-6-lt-eq-sqrt-2-plus	\sqrt{5+2\sqrt{6}}\le\sqrt{2}+\sqrt{3}	\top
+pi-times-1-plus-256-times-10-pow-neg-20-lt-eq-n	\pi(1+25610^{-20})\le N(\pi,20)	\top
+x-lt-eq-x	x\le x	\top
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	\pi^e\le e^{\pi}	\top
 refine-sqrt-x-pow-2-x-gt-eq-0	\operatorname{Refine}(\sqrt{x^2},x\ge0)	x

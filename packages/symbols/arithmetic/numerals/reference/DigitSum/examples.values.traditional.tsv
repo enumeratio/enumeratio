@@ -12,7 +12,7 @@ digitsum-list-6-7-2-2	\operatorname{DigitSum}([6,7,2],2)	[2,3,1]
 digitsum-7-list-2-3-4	\operatorname{DigitSum}(7,[2,3,4])	[3,3,4]
 digitsum-6-345-354-10-neg-4	\operatorname{DigitSum}(6345354,10,-4)	17
 digitsum-35-297	\operatorname{DigitSum}(35297)	26
-digit-sum-n-mod-9-the-basis-of-the-classic	\bmod(\operatorname{DigitSum}(58127),9)=\bmod(58127,9)	\operatorname{True}
+digit-sum-n-mod-9-the-basis-of-the-classic	\bmod(\operatorname{DigitSum}(58127),9)=\bmod(58127,9)	\top
 digitsum-37-103	\operatorname{DigitSum}(37103)	14
 digitsum-143-2	\operatorname{DigitSum}(143,2)	5
 digitsum-123-000-10-neg-3	\operatorname{DigitSum}(123000,10,-3)	0

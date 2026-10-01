@@ -13,5 +13,5 @@ commonest-data
 commonest-list-a-exponentiale-sin-y-exponentiale	\mathrm{Commonest}(\bigl\lbrack a, e, \sin(y), e, a, 7\bigr\rbrack)	\bigl\lbrack a, e\bigr\rbrack
 commonest-heights		
 with-a-unique-mode-commonest-c-mode-c-see-mode	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))	2
-without-a-tie-the-single-commonest-element-is	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))=\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)	\top
+without-a-tie-the-single-commonest-element-is	\mathrm{First}(\mathrm{Commonest}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack))=\mathrm{Mode}(\bigl\lbrack1, 2, 2, 3, 3, 3, 4\bigr\rbrack)	\mathrm{True}
 a-frequency-tie-between-4-and-1-is-broken-by	\mathrm{Commonest}(\bigl\lbrack4, 1, 1, 4\bigr\rbrack, 1)	\bigl\lbrack4\bigr\rbrack
