@@ -19,6 +19,8 @@ import type { Declared, NumberKernel } from "./types.ts";
 const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
 const MIN_SAFE_BIG = BigInt(Number.MIN_SAFE_INTEGER);
 
+const CLOSED: Declared["cost"] = { count: "closed", unrank: "closed", rank: "closed", valid: "closed" };
+
 /** bigint -> plain number when exact there, else the bigint itself (still an exact integer,
  *  just not representable as an IEEE double without loss). Cast at the call site, since
  *  `NumberKernel`'s scalar element type is `number` and this package's FILES boundary
@@ -77,6 +79,9 @@ function quadraticRank(a: bigint, b: bigint, c: bigint, denom: bigint, x: bigint
 
 function quadraticFamily(head: string, a: bigint, b: bigint, c: bigint, denom: bigint): NumberKernel {
   return {
+    // Closed-form inversion via the quadratic formula (isqrt, never floating sqrt): every op
+    // is exact arithmetic, no table, no search.
+    declared: { carrier: "Numeric", params: [], cost: CLOSED },
     head,
     paramCount: 0,
     kind: "scalar",
@@ -121,6 +126,13 @@ function bisectRank(term: (n: bigint) => bigint, x: bigint): number {
 
 function monotoneFamily(head: string, term: (n: bigint) => bigint): NumberKernel {
   return {
+    declared: {
+      carrier: "Numeric",
+      params: [],
+      // unrank is the direct formula; rank/valid have no closed-form inverse (that's why
+      // this bisects), but the bisection is a loop over candidate n, polynomial in the rank.
+      cost: { count: "closed", unrank: "closed", rank: "polynomial", valid: "polynomial" },
+    },
     head,
     paramCount: 0,
     kind: "scalar",
@@ -167,6 +179,14 @@ function scanRank(term: (n: number) => bigint, x: bigint): number {
 
 function scanFamily(head: string, term: (n: number) => bigint): NumberKernel {
   return {
+    declared: {
+      carrier: "Numeric",
+      params: [],
+      // term() grows the cache by index, not by searching candidate values, so both
+      // directions cost a loop polynomial in the rank (cheap here since the sequence is
+      // super-exponential — scanRank never needs more than a few dozen steps).
+      cost: { count: "closed", unrank: "polynomial", rank: "polynomial", valid: "polynomial" },
+    },
     head,
     paramCount: 0,
     kind: "scalar",
@@ -206,8 +226,6 @@ const primorialAt = growingSequence((_index0, prev) => {
   return prev * BigInt(candidate);
 });
 
-const CLOSED: Declared["cost"] = { count: "closed", unrank: "closed", rank: "closed", valid: "closed" };
-
 export const entries: NumberKernel[] = [
   // ---- figurate numbers: all k-gonal, P(k, n) = ((k-2)n^2 - (k-4)n)/2. ----
   quadraticFamily("TriangularNumbers", 1n, 1n, 0n, 2n), // P(3, n) = n(n+1)/2, A000217
@@ -235,6 +253,7 @@ export const entries: NumberKernel[] = [
   // ---- powers of two: direct formula and bit-trick invert, no need to bisect. At(S, 1) =
   // 2^0 = 1, matching OEIS A000079 (a(0) = 1). ----
   {
+    declared: { carrier: "Numeric", params: [], cost: CLOSED }, // direct shift/mask, no bisection needed
     head: "PowersOfTwo",
     paramCount: 0,
     kind: "scalar",

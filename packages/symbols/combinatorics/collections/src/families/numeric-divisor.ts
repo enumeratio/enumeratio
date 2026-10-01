@@ -307,6 +307,22 @@ const IDONEAL_NUMBERS = [
   385, 408, 462, 520, 760, 840, 1320, 1365, 1848,
 ];
 
+/** An infinite numeric set driven by a predicate scan: `unrank`/`rank` cost `cost` (a
+ *  nthMatchCache search proportional to the value), `valid` a direct predicate test. */
+const numeric = (rest: Partial<Declared> = {}): Declared => ({
+  carrier: "Numeric",
+  params: [],
+  cost: { count: "closed", unrank: "scan", rank: "scan", valid: "polynomial" },
+  ...rest,
+});
+
+/** A `sized` capping the largest rank a scan can cheaply reach at any size — for a predicate
+ *  so rare or so costly per candidate that the raw scan blows past a second well before the
+ *  default (unbounded) size does. */
+const cappedAt = (cap: number): Pick<Declared, "sized"> => ({
+  sized: (_p, size) => BigInt(Math.min(size, cap)),
+});
+
 /** A paramCount:0 scalar family known only as far as its table: an open problem (count NaN)
  *  whose known terms end with the table. */
 function tableEntry(table: readonly number[]): Pick<NumberKernel, "unrank" | "valid" | "rank" | "declared"> {
@@ -346,6 +362,7 @@ function cacheEntry(cache: ReturnType<typeof nthMatchCache>): Pick<NumberKernel,
 
 export const entries: NumberKernel[] = [
   {
+    declared: numeric(),
     head: "DeficientNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -360,6 +377,7 @@ export const entries: NumberKernel[] = [
     ...tableEntry(PERFECT_NUMBERS),
   },
   {
+    declared: numeric(),
     head: "SemiperfectNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -367,6 +385,9 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isSemiperfect),
   },
   {
+    // isSemiperfect is an O(n) subset-sum DP per candidate, and weird numbers thin out fast
+    // (rank 10 is already past 10000): cap how far a single draw scans.
+    declared: numeric(cappedAt(8)),
     head: "WeirdNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -374,6 +395,7 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isWeird),
   },
   {
+    declared: numeric(),
     head: "PracticalNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -381,6 +403,9 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isPractical),
   },
   {
+    // A record-setting scan: valid has no cheaper test than the same rankOf scan, so it's
+    // "scan" too, not "polynomial". Records thin out fast (rank 35 is already past 500000).
+    declared: numeric({ cost: { count: "closed", unrank: "scan", rank: "scan", valid: "scan" }, ...cappedAt(30) }),
     head: "HighlyCompositeNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -388,6 +413,7 @@ export const entries: NumberKernel[] = [
     ...cacheEntry(highlyComposite),
   },
   {
+    declared: numeric({ cost: { count: "closed", unrank: "scan", rank: "scan", valid: "scan" }, ...cappedAt(25) }),
     head: "SuperabundantNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -395,6 +421,7 @@ export const entries: NumberKernel[] = [
     ...cacheEntry(superabundant),
   },
   {
+    declared: numeric(),
     head: "ArithmeticNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -402,6 +429,7 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isArithmetic),
   },
   {
+    declared: numeric(),
     head: "UntouchableNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -409,6 +437,7 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isUntouchable),
   },
   {
+    declared: numeric(),
     head: "AchillesNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -416,6 +445,7 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isAchilles),
   },
   {
+    declared: numeric(),
     head: "PowerfulNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -423,6 +453,9 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isPowerful),
   },
   {
+    // isPerfectPower binary-searches each exponent, cheap per candidate, but the scan still
+    // has to cover every integer: keep it well under a second at any size.
+    declared: numeric(cappedAt(400)),
     head: "PerfectPowerNumbers",
     paramCount: 0,
     kind: "scalar",
@@ -430,6 +463,7 @@ export const entries: NumberKernel[] = [
     ...predicateEntry(isPerfectPower),
   },
   {
+    declared: numeric(),
     head: "SquareFreeNumbers",
     paramCount: 0,
     kind: "scalar",
