@@ -194,7 +194,10 @@ function realRootsOfQuadratic(ce: ComputeEngine, coeffs: readonly number[]): Box
  * completeness proof (`Solve` returns the same empty list for "no solution", "solves to
  * every value" and "gave up" — see the header note). Never used to declare infeasibility. */
 function solveRealCandidates(ce: ComputeEngine, equation: BoxedExpression, x: string): BoxedExpression[] {
-  const solved = ce.function("Solve", [equation, ce.symbol(x)]).evaluate();
+  // Over the reals: an unrestricted `Solve` declines a polynomial whose complex roots it can't all name.
+  const solved = ce
+    .function("Solve", [equation, ce.function("Element", [ce.symbol(x), ce.symbol("RealNumbers")])])
+    .evaluate();
   return solved.operator === "List" ? operandsOf(solved).filter((v) => v.N().im === 0) : [];
 }
 

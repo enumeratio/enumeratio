@@ -6559,7 +6559,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "Imaginary",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
+    wolframAlias: "Im",
     elsewhere: [],
   },
   {
@@ -6825,7 +6825,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "Real",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
+    wolframAlias: "Re",
     elsewhere: ["wolfram"],
   },
   {

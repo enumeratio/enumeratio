@@ -638,7 +638,9 @@ export function declareListHeads(ce: ComputeEngine): void {
     if (operator !== undefined) {
       const nativeCanonical = operator.canonical;
       operator.canonical = (ops, options) => {
-        if (ops.length === 2 && !NATIVE_APPEND_HEADS.has(ops[0].operator)) {
+        // An atom has no operands and a pseudo-head ("Symbol", "Number"): `Append(x, k)` for a
+        // free `x` (a `Function` slot, say) stays the call, not `Symbol(k)`.
+        if (ops.length === 2 && !NATIVE_APPEND_HEADS.has(ops[0].operator) && operandsOf(ops[0]).length > 0) {
           return ce.function(ops[0].operator, [...operandsOf(ops[0]), ops[1]]);
         }
         return nativeCanonical?.call(operator, ops, options);

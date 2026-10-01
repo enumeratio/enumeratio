@@ -30,4 +30,4 @@ reduce-list-1-2-3-4-5-append-list	Properties		[Reduce, [List, 1, 2, 3, 4, 5], Ap
 reduce-rest-list-a-f-first-list-a	Properties		[Reduce, [Rest, [List, a]], f, [First, [List, a]]]	[First, [List, a]]					
 reduce-list-a-b-c-d-g-x	Properties		[Reduce, [List, a, b, c, d], g, x]	[g, [g, [g, [g, x, a], b], c], d]					
 reduce-rest-list-f-first-list	Possible issues	triage	[Reduce, [Rest, [List]], f, [First, [List]]]	[First, [List]]		ours?		unclassified	""
-reduce-list-a-b-c-function-join-s-map-function	Neat examples	triage	[Reduce, [List, a, b, c], [Function, [Block, [Join, s, [Map, [Function, [Block, [Symbol, k]], _1], s]]], s, k], [List, [List]]]	[List, [List], a, b, b, c, c, c, c]		unscanned			
+reduce-list-a-b-c-function-join-s-map-function	Neat examples		[Reduce, [List, a, b, c], [Function, [Block, [Join, s, [Map, [Function, [Block, [Append, _1, k]], _1], s]]], s, k], [List, [List]]]	[List, [List], [List, a], [List, b], [List, a, b], [List, c], [List, a, c], [List, b, c], [List, a, b, c]]			Unreadable		

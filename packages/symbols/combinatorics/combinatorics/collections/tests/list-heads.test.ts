@@ -73,3 +73,9 @@ test("Position's first entry agrees with IndexOf", () => {
   const positions = run(["Position", list, 2]) as readonly unknown[];
   expect(positions[1]).toEqual(["List", indexOf]);
 });
+
+// Append(f(...), v) works on any head, but an atom (a free symbol, a Function slot) has no operands.
+test("Append(x, k) for a free x stays the call", () => {
+  expect(run(["Append", "x", "k"])).toEqual(["Append", "x", "k"]);
+  expect(run(["Append", ["f", 1], "k"])).toEqual(["f", 1, "k"]);
+});

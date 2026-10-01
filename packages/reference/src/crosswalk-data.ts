@@ -3427,6 +3427,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f4e249",
       "fbfb81",
     ],
+    wolfram: "Im",
   },
   {
     name: "ImaginaryUnit",
@@ -5495,6 +5496,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f35a37",
       "fa6ff7",
     ],
+    wolfram: "Re",
   },
   {
     name: "RealAbs",

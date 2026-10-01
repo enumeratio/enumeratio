@@ -347,8 +347,10 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
     ["Flatten", 1, 1],
     // A bare symbol's `.operator` is the pseudo-head `"Symbol"` too — excluded so
     // `Flatten(array)`, for a free `array`, stays unevaluated (see `Accumulate`'s note in
-    // list-frontier.ts).
-    (ops) => ops.length === 1 && ops[0].operator !== "List" && symbolNameOf(ops[0]) === undefined,
+    // list-frontier.ts). A lazy collection (`Map`, `Take`, `Range`) is flattened natively:
+    // `Flatten(Map(f, xs))` splices the lists `f` returns, not nested `Map`s.
+    (ops) =>
+      ops.length === 1 && ops[0].operator !== "List" && symbolNameOf(ops[0]) === undefined && !ops[0].isLazyCollection,
     () => (ops) => flattenSameHead(ce, ops[0]),
   );
 

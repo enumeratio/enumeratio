@@ -1289,7 +1289,6 @@ export const DECLARERS: Readonly<Record<string, readonly string[]>> = {
 
 // The heads each head canonicalises to (`Lb(x)` is `Log(x, 2)`), which an expression needs too.
 export const CANONICAL: Readonly<Record<string, readonly string[]>> = {
-  Append: ["Symbol"],
   Arg: ["Argument"],
   Exp: ["ExponentialE", "Power"],
   Exp2: ["Power"],
