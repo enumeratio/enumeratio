@@ -114,11 +114,6 @@ function scoped<T>(ce: ComputeEngine, f: () => T): T {
 const { heads } = referenceData();
 const text = (value: unknown): string => JSON.stringify(value);
 
-/** Heads whose StandardForm reads back as another expression that evaluates to it. */
-const EVALUATES_BACK: Record<string, string> = {
-  IntegerModRing: "`\\mathbb{Z}/m\\mathbb{Z}` reads as compute-engine's QuotientRing(Integers, m)",
-};
-
 test("StandardForm round trip: each head with a LaTeX entry writes what reads back", () => {
   const ce = engine(NOTATION.latex);
   const named = new Set(NOTATION.latex.map((e) => e.name).filter((n) => n !== undefined));
@@ -128,11 +123,8 @@ test("StandardForm round trip: each head with a LaTeX entry writes what reads ba
       scoped(ce, () => {
         const before = ce.box(example.expr as never);
         const after = ce.parse(before.latex);
-        const same =
-          h.head in EVALUATES_BACK
-            ? text(after.evaluate().json) === text(before.evaluate().json)
-            : text(after.json) === text(before.json);
-        if (!same) failures.push(`${h.head} example/${example.id}: ${before.latex} reads as ${text(after.json)}`);
+        if (text(after.json) !== text(before.json))
+          failures.push(`${h.head} example/${example.id}: ${before.latex} reads as ${text(after.json)}`);
       });
   expect(failures).toEqual([]);
 });

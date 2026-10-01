@@ -6787,13 +6787,6 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram", "sympy"],
   },
   {
-    name: "QuotientRing",
-    provenance: "unknown",
-    declared: "enumeratio-residues",
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
     name: "Random",
     provenance: "override",
     declared: null,
@@ -8451,6 +8444,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-residues",
     wolframAlias: "PrimitiveRootList",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "QuotientRing",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
   },
   {
     name: "CarmichaelLambda",

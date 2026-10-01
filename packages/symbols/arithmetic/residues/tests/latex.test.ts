@@ -22,7 +22,7 @@ test("\\pmod is a class; \\bmod is still the remainder; \\equiv…\\pmod is stil
   expect(parse("x = 2 \\pmod{5}")).toEqual(["Congruent", "x", 2, 5]);
 });
 
-test("IntegerMod and IntegerModRing write what reads back", () => {
+test("IntegerMod and QuotientRing(Integers, m) write what reads back", () => {
   for (const expr of [
     ["IntegerMod", 2, 5],
     ["IntegerMod", ["Add", "a", 1], 5],
@@ -37,8 +37,14 @@ test("IntegerMod and IntegerModRing write what reads back", () => {
   // non-power base like IntegerMod gets bare parens, matching Add's below.
   expect(latex(["Power", ["IntegerMod", 3, 7], "k"])).toBe("(3\\pmod{7})^{k}");
   expect(latex(["Power", ["Add", "x", 1], 2])).toBe("(x+1)^2");
-  expect(latex(["IntegerModRing", 6])).toBe("\\mathbb{Z}/6\\mathbb{Z}");
-  expect(ce.parse("\\mathbb{Z}/6\\mathbb{Z}").evaluate().json).toEqual(["IntegerModRing", 6]);
+  const z6 = ["QuotientRing", "Integers", 6];
+  expect(latex(z6)).toBe("\\mathbb{Z}/6\\mathbb{Z}");
+  expect(parse(latex(z6))).toEqual(z6);
+  expect(parse(latex(["QuotientRing", "Integers", ["Add", "n", 1]]))).toEqual([
+    "QuotientRing",
+    "Integers",
+    ["Add", "n", 1],
+  ]);
 });
 
 test("typed arithmetic evaluates in the ring", () => {

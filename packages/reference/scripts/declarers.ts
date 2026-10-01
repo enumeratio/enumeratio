@@ -17,10 +17,28 @@ function snapshot(ce: ComputeEngine): Map<string, readonly unknown[]> {
     for (const [name, binding] of scope.bindings) {
       if (out.has(name)) continue;
       const def = ce.lookupDefinition(name) as
-        | { operator?: { evaluate?: unknown; canonical?: unknown; signature?: unknown }; value?: unknown }
+        | {
+            operator?: {
+              evaluate?: unknown;
+              canonical?: unknown;
+              signature?: unknown;
+              collection?: unknown;
+              type?: unknown;
+            };
+            value?: unknown;
+          }
         | undefined;
       const op = def?.operator;
-      out.set(name, [binding, op?.evaluate, op?.canonical, `${(op?.signature as string | undefined) ?? ""}`]);
+      // `collection` and `type` too: a patch can make a native head a collection in place
+      // (QuotientRing), changing neither its handler nor its signature.
+      out.set(name, [
+        binding,
+        op?.evaluate,
+        op?.canonical,
+        `${(op?.signature as string | undefined) ?? ""}`,
+        op?.collection,
+        op?.type,
+      ]);
     }
   }
   return out;

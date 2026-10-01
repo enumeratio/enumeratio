@@ -1,6 +1,6 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry, Parser } from "@cortex-js/compute-engine/latex-syntax";
-import { INTEGER_MOD, INTEGER_MOD_RING } from "./names.ts";
+import { INTEGER_MOD, QUOTIENT_RING } from "./names.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
 // dictionary only at construction, so a host loads
@@ -9,8 +9,7 @@ import { INTEGER_MOD, INTEGER_MOD_RING } from "./names.ts";
 //   a \pmod{n}             IntegerMod(a, n)
 //   a = b \pmod{n}         Congruent(a, b, n), as `a \equiv b \pmod{n}` already is
 //   a \bmod n              Mod(a, n), untouched: the remainder, an integer
-//   \mathbb{Z}/m\mathbb{Z} IntegerModRing(m) -- written here; it parses to CE's
-//                          QuotientRing(Integers, m), which evaluates to it
+//   \mathbb{Z}/m\mathbb{Z} QuotientRing(Integers, m) -- CE parses it; written here
 //
 // compute-engine's own infix `\pmod`, just under the relations (245), so `a + b \pmod{n}`
 // takes the whole sum. `a \equiv b \pmod{n}` never reaches it: `\equiv` reads its
@@ -40,7 +39,12 @@ export const RESIDUES_LATEX: readonly Partial<LatexDictionaryEntry>[] = [
       `${serializer.wrap(operand(expr, 1), RELATION_PRECEDENCE)}\\pmod{${serializer.serialize(operand(expr, 2))}}`,
   },
   {
-    name: INTEGER_MOD_RING,
-    serialize: (serializer, expr) => `\\mathbb{Z}/${serializer.wrapShort(operand(expr, 1))}\\mathbb{Z}`,
+    name: QUOTIENT_RING,
+    // Not compute-engine's `\mathbb{Z}_m`, which reads as the p-adic integers as often as ℤ/m.
+    // Another base keeps the functional form, which reads back.
+    serialize: (serializer, expr) =>
+      operand(expr, 1) === "Integers"
+        ? `\\mathbb{Z}/${serializer.wrapShort(operand(expr, 2))}\\mathbb{Z}`
+        : serializer.serializeFunction(expr),
   },
 ];

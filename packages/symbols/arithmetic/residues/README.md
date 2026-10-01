@@ -32,7 +32,8 @@ FactorInteger(360)         // [[2, 3], [3, 2], [5, 1]]
 **Modular arithmetic**
 
 - [`ChineseRemainder`](https://enumeratio.dev/reference/symbol/ChineseRemainder) — CRT, also over [`IntegerMod`](https://enumeratio.dev/reference/symbol/IntegerMod) classes
-- [`IntegerMod`](https://enumeratio.dev/reference/symbol/IntegerMod) / [`IntegerModRing`](https://enumeratio.dev/reference/symbol/IntegerModRing) — an element of $\mathbb{Z}/m$, and the ring itself, as values; `Add`/`Multiply`/`Negate`/`Divide`/`Power` are widened to carry them
+- [`IntegerMod`](https://enumeratio.dev/reference/symbol/IntegerMod) — an element of $\mathbb{Z}/m$ as a value; `Add`/`Multiply`/`Negate`/`Divide`/`Power` are widened to carry it
+- [`QuotientRing`](https://enumeratio.dev/reference/symbol/QuotientRing)`(Integers, m)` — compute-engine's $\mathbb{Z}/m\mathbb{Z}$, made the collection of its `IntegerMod` classes (`IntegerModRing(m)` is its old spelling)
 - [`PowerMod`](https://enumeratio.dev/reference/symbol/PowerMod) — modular exponentiation, widened to a rational exponent `s/r` (the least r-th root) and a rational base
 - [`PowerModList`](https://enumeratio.dev/reference/symbol/PowerModList) — every r-th root of $a^s$ mod $m$
 - [`MultiplicativeOrder`](https://enumeratio.dev/reference/symbol/MultiplicativeOrder) — the order of $a$ mod $n$, widened to a discrete log against a target list

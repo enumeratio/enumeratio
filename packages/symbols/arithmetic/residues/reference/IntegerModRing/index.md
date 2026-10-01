@@ -2,16 +2,12 @@
 name: IntegerModRing
 domain: Modular arithmetic
 signature: IntegerModRing(m)
-summary: The ring $\mathbb{Z}/m$, as the finite collection of its $m$ [[IntegerMod]] classes.
+summary: "The old spelling of [[QuotientRing]]`(Integers, m)`, kept working: `IntegerModRing(m)` evaluates to its canonical form."
 signatures:
   - call: IntegerModRing(m)
-    description: $\mathbb{Z}/m$ — Sage's `Zmod(m)`
+    description: same as QuotientRing(Integers, m)
     library: enumeratio-residues
     type: (integer) -> set
 seeAlso:
-  - IntegerMod
+  - QuotientRing
 ---
-
-- A collection: it counts, enumerates and answers membership, so `Count`, `ListFrom` and `Element` work on it directly
-- Membership is by modulus — `IntegerMod(3, 7)` is not in `IntegerModRing(5)`
-- compute-engine's `QuotientRing(Integers, m)` — what $\mathbb{Z}/m\mathbb{Z}$ parses to — specialises to it, and it is written back that way

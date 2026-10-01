@@ -1,8 +1,2 @@
-id	section	role	expr	expected	caption
-listfrom-integermodring-3			[ListFrom, [IntegerModRing, 3]]	[List, [IntegerMod, 0, 3], [IntegerMod, 1, 3], [IntegerMod, 2, 3]]	
-count-integermodring-12			[Count, [IntegerModRing, 12]]	12	
-count-integermodring-5		test	[Count, [IntegerModRing, 5]]	5	
-z-12-z	Scope		[QuotientRing, Integers, 12]	[IntegerModRing, 12]	$\mathbb{Z}/12\mathbb{Z}$
-z-5-z	Scope	test	[QuotientRing, Integers, 5]	[IntegerModRing, 5]	$\mathbb{Z}/5\mathbb{Z}$
-integermod-3-5-in-integermodring-5	Properties		[Element, [IntegerMod, 3, 5], [IntegerModRing, 5]]	True	
-integermod-3-7-not-in-integermodring-5	Properties	test	[Element, [IntegerMod, 3, 7], [IntegerModRing, 5]]	False	different modulus, so it is not a member
+id	section	role	expr	expected
+integermodring-12			[IntegerModRing, 12]	[QuotientRing, Integers, 12]

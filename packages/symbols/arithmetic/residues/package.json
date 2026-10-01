@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@enumeratio/boxes": "workspace:*",
+    "@enumeratio/ce-patches": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/structures": "workspace:*"
