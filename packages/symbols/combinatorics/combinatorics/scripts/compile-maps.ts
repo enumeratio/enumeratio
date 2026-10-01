@@ -61,7 +61,7 @@ function render(entries: readonly Entry[]): string {
 // JavaScript compiler. Do not edit: rerun the script. Each entry is used only while \`hash\`
 // matches its definition; see src/compiled.ts.
 // A definition that ignores its argument compiles to code that never reads it.
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars, unicorn/no-useless-spread */
 
 export const COMPILED_MAPS = {
 ${body}
