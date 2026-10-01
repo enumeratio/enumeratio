@@ -7,6 +7,8 @@
 //                                     and our own forms' pinned snapshots (`epsil.in`, …)
 //   examples.values.<system>.tsv      generated: another system's writing of each example and
 //                                     its answer, same rows. Our own forms are built, not kept.
+//   notation.json                     optional: how the head is written, as data (manifest's
+//                                     `NotationData`)
 //
 // Read, the folder is the same `ReferenceEntry` and `HeadImplementations` the tools have always
 // had; written, those split back into these files. Node-only.
@@ -30,6 +32,7 @@ import { parseYaml, stringifyYaml } from "./yaml.ts";
 
 export const INDEX_FILE = "index.md";
 export const EXAMPLES_FILE = "examples.tsv";
+export const NOTATION_FILE = "notation.json";
 const VALUES_PREFIX = "examples.values.";
 const VALUES_SUFFIX = ".tsv";
 export const valuesFile = (system: string): string => `${VALUES_PREFIX}${system}${VALUES_SUFFIX}`;
@@ -97,6 +100,12 @@ const cellOf = (columns: readonly (readonly [string, Cell])[], column: string): 
 
 async function formatYaml(value: unknown): Promise<string> {
   const { code, errors } = await format("record.yaml", stringifyYaml(value), FORMAT);
+  if (errors.length > 0) throw new Error(`oxfmt: ${JSON.stringify(errors)}`);
+  return code;
+}
+
+async function formatJson(value: unknown): Promise<string> {
+  const { code, errors } = await format("notation.json", JSON.stringify(value), FORMAT);
   if (errors.length > 0) throw new Error(`oxfmt: ${JSON.stringify(errors)}`);
   return code;
 }
@@ -223,6 +232,8 @@ export interface HeadRecord {
   readonly implementations?: HeadImplementations;
   /** `index.md`'s markdown body, "" when there is none. */
   readonly body: string;
+  /** `notation.json`: manifest's `NotationData`, unchecked here. Absent when the head has none. */
+  readonly notation?: Readonly<Record<string, unknown>>;
 }
 
 /** The heads with a folder in `dir`, by name. */
@@ -242,14 +253,19 @@ export function readHead(dir: string, head: string): HeadRecord {
   const files = new Map(
     readdirSync(folder)
       .filter(
-        (f) => f === INDEX_FILE || f === EXAMPLES_FILE || (f.startsWith(VALUES_PREFIX) && f.endsWith(VALUES_SUFFIX)),
+        (f) =>
+          f === INDEX_FILE ||
+          f === EXAMPLES_FILE ||
+          f === NOTATION_FILE ||
+          (f.startsWith(VALUES_PREFIX) && f.endsWith(VALUES_SUFFIX)),
       )
       .map((f) => [f, readFileSync(join(folder, f), "utf8")] as const),
   );
   return decodeHead(files);
 }
 
-/** A head's record from its files' text, by name (`index.md`, `examples.tsv`, the values files). */
+/** A head's record from its files' text, by name (`index.md`, `examples.tsv`, the values files,
+ * `notation.json`). */
 export function decodeHead(files: ReadonlyMap<string, string>): HeadRecord {
   const index = files.get(INDEX_FILE);
   if (index === undefined) throw new Error(`no ${INDEX_FILE}`);
@@ -303,16 +319,24 @@ export function decodeHead(files: ReadonlyMap<string, string>): HeadRecord {
   }
   if (body.trim() !== "" && fields["details"] === undefined) fields["details"] = detailsOf(body);
   const entry = { ...fields, examples } as unknown as ReferenceEntry;
-  if (Object.keys(record).length === 0) return { entry, body };
+  const notationText = files.get(NOTATION_FILE);
+  const notation = notationText === undefined ? {} : { notation: JSON.parse(notationText) as Record<string, unknown> };
+  if (Object.keys(record).length === 0) return { entry, body, ...notation };
   const implementations = orderImplementations(record as unknown as HeadImplementations, ids, SYSTEM_ORDER);
-  return { entry, implementations, body };
+  return { entry, implementations, body, ...notation };
 }
 
 /** The files a head's record is written to, by name inside its folder. */
-export async function headFiles({ entry, implementations = {}, body }: HeadRecord): Promise<Map<string, string>> {
+export async function headFiles({
+  entry,
+  implementations = {},
+  body,
+  notation,
+}: HeadRecord): Promise<Map<string, string>> {
   const { examples, ...fields } = JSON.parse(JSON.stringify(entry)) as ReferenceEntry;
   const clean = bySection(examples.map(({ others: _others, divergence: _divergence, ...e }) => e as ReferenceExample));
   const files = new Map([[INDEX_FILE, await indexText(fields as Record<string, unknown>, body)]]);
+  if (notation !== undefined) files.set(NOTATION_FILE, await formatJson(notation));
   if (clean.length === 0) return files;
   files.set(EXAMPLES_FILE, exampleTable(clean, implementations));
   for (const system of systemsOf(implementations)) {
@@ -324,7 +348,8 @@ export async function headFiles({ entry, implementations = {}, body }: HeadRecor
   return files;
 }
 
-/** Write a head's folder: every file `headFiles` makes, and nothing else of the record's. */
+/** Write a head's folder: every file `headFiles` makes, and nothing else of the record's. A
+ * record without `notation` leaves the folder's `notation.json` as it is. */
 export async function writeHead(dir: string, head: string, record: HeadRecord): Promise<void> {
   const folder = join(dir, head);
   mkdirSync(folder, { recursive: true });
@@ -334,12 +359,17 @@ export async function writeHead(dir: string, head: string, record: HeadRecord): 
   for (const [file, text] of files) writeFileSync(join(folder, file), text);
 }
 
-/** Replace one part of a head's record -- its entry, its implementations or its body --
- * keeping the others as they are on disk. */
+/** Replace one part of a head's record -- its entry, its implementations, its body or its
+ * notation -- keeping the others as they are on disk. */
 export async function updateHead(
   dir: string,
   head: string,
-  part: { entry?: ReferenceEntry; implementations?: HeadImplementations; body?: string },
+  part: {
+    entry?: ReferenceEntry;
+    implementations?: HeadImplementations;
+    body?: string;
+    notation?: HeadRecord["notation"];
+  },
 ): Promise<void> {
   const current: HeadRecord = headExists(dir, head)
     ? readHead(dir, head)
@@ -348,6 +378,7 @@ export async function updateHead(
     entry: part.entry ?? current.entry,
     implementations: "implementations" in part ? part.implementations : current.implementations,
     body: part.body ?? current.body,
+    notation: "notation" in part ? part.notation : current.notation,
   });
 }
 

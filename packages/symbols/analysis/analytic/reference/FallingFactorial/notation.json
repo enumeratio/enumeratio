@@ -1,0 +1,12 @@
+{
+  "traditional": [
+    {
+      "params": ["x", "n"],
+      "box": [
+        "SuperscriptBox",
+        ["TemplateSlot", "x", { "Tight": true }],
+        ["UnderscriptBox", ["TemplateSlot", "n"], "_"]
+      ]
+    }
+  ]
+}

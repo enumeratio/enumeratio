@@ -1,0 +1,13 @@
+{
+  "traditional": [
+    { "params": ["n"], "box": ["SubscriptBox", "H", ["TemplateSlot", "n"]] },
+    {
+      "params": ["n", "r"],
+      "box": [
+        "SuperscriptBox",
+        ["SubscriptBox", "H", ["TemplateSlot", "n"]],
+        ["RowBox", ["(", ["TemplateSlot", "r"], ")"]]
+      ]
+    }
+  ]
+}

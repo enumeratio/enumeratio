@@ -1,0 +1,6 @@
+{
+  "traditional": [
+    { "params": ["n"], "box": ["SubscriptBox", "γ", ["TemplateSlot", "n"]] },
+    { "params": ["n", "x"], "call": ["SubscriptBox", "γ", ["TemplateSlot", "n"]] }
+  ]
+}
