@@ -1,2 +1,0 @@
-id	in	out
-survivalfunction-chisquare	\operatorname{SurvivalFunction}(\operatorname{ChiSquareDistribution}(3),2)	Q(\frac{3}{2},1)

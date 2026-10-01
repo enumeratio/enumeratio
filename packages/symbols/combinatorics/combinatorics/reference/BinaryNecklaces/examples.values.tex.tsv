@@ -1,4 +1,0 @@
-id	in	out
-count-binarynecklaces-5	\mathrm{Count}(\mathrm{BinaryNecklaces}(5))	8
-first-element-of-binarynecklaces-5	\mathrm{BinaryNecklaces}(5)[1]	\bigl\lbrack0, 0, 0, 0, 0\bigr\rbrack
-every-element-of-binarynecklaces-5	\mathrm{Take}(\mathrm{BinaryNecklaces}(5), 8)	\bigl\lbrack\bigl\lbrack0, 0, 0, 0, 0\bigr\rbrack, \bigl\lbrack1, 1, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 1, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 0, 1, 1\bigr\rbrack, \bigl\lbrack0, 1, 1, 1, 1\bigr\rbrack\bigr\rbrack

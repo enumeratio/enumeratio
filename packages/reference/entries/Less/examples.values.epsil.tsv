@@ -1,7 +1,0 @@
-id	in	out
-2-over-17-lt-1-over-5-lt-1-over-10-times-pi	2 / 17 < 1 / 5 < 1 / 10 * pi	True
-3-over-2-lt-5-over-3	3 / 2 < 5 / 3	True
-1-lt-1-plus-128-times-10-pow-neg-16	1 < 1 + 128 * 10 ^ -16	True
-1-lt-1-plus-256-times-10-pow-neg-16	1 < 1 + 256 * 10 ^ -16	True
-pi-pow-exponentiale-lt-exponentiale-pow-pi	pi ^ exponentialE < exponentialE ^ pi	True
-refine-sqrt-x-pow-2-x-lt-0	Refine(sqrt(x ^ 2), x < 0)	-x

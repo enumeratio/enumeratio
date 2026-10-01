@@ -1,4 +1,0 @@
-id	in	out
-count-motzkinpathsbypeaks-5-1	\operatorname{Count}(\operatorname{MotzkinPathsByPeaks}(5,1))	10
-first-element-of-motzkinpathsbypeaks-5-1	\operatorname{At}(\operatorname{MotzkinPathsByPeaks}(5,1),1)	\operatorname{MotzkinPath}([1,1,-1,0,-1])
-every-element-of-motzkinpathsbypeaks-5-1	\operatorname{Take}(\operatorname{MotzkinPathsByPeaks}(5,1),5)	[\operatorname{MotzkinPath}([1,1,-1,0,-1]),\operatorname{MotzkinPath}([1,1,-1,-1,0]),\operatorname{MotzkinPath}([1,0,1,-1,-1]),\operatorname{MotzkinPath}([1,0,-1,1,-1]),\operatorname{MotzkinPath}([1,-1,1,0,-1])]

@@ -1,4 +1,0 @@
-id	in	out
-the-first-20-terms	\mathrm{Take}(\mathrm{NarcissisticNumbers}, 20)	\bigl\lbrack1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407, 1\,634, 8\,208, 9\,474, 54\,748, 92\,727, 93\,084, 548\,834\bigr\rbrack
-the-88th-and-largest-term-is-exact	\mathrm{NarcissisticNumbers}[88]	115\,132\,219\,018\,763\,992\,565\,095\,597\,973\,971\,522\,401
-narcissistic-armstrong-numbers-are-proven-finite	\mathrm{Count}(\mathrm{NarcissisticNumbers})	88

@@ -1,4 +1,0 @@
-id	in	out
-count-squarepartitions-12	\mathrm{Count}(\mathrm{SquarePartitions}(12))	5
-first-element-of-squarepartitions-12	\mathrm{SquarePartitions}(12)[1]	\mathrm{IntegerPartition}(\bigl\lbrack9, 1, 1, 1\bigr\rbrack)
-every-element-of-squarepartitions-12	\mathrm{Take}(\mathrm{SquarePartitions}(12), 5)	\bigl\lbrack\mathrm{IntegerPartition}(\bigl\lbrack9, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack4, 4, 4\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack4, 4, 1, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack4, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack), \mathrm{IntegerPartition}(\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack)\bigr\rbrack

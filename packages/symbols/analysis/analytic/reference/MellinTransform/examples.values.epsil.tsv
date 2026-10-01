@@ -1,7 +1,0 @@
-id	in	out
-exp-neg-x-gamma	MellinTransform(exp(-x), x, s)	gamma(s)
-one-over-one-plus-x	MellinTransform(1 / (1 + x), x, s)	pi * csc(pi * s)
-gaussian	MellinTransform(exp(-x ^ 2), x, s)	1 / 2 * gamma(1 / 2 * s)
-log-one-plus-x	MellinTransform(ln(1 + x), x, s)	pi * csc(pi * s) / s
-power-shift-x-c-exp	MellinTransform(x ^ a * exp(-x), x, s)	gamma(a + s)
-mellintransform-1-over-x-plus-1-x-1-over-2	MellinTransform(1 / (x + 1), x, 1 / 2)	pi

@@ -1,3 +1,0 @@
-id	in	out
-turn-on-orderless	[\operatorname{SetAttributes}(\operatorname{HarmonicMean},\operatorname{Orderless}),\operatorname{Attributes}(\operatorname{HarmonicMean})]	[[\operatorname{Orderless}]]
-attributes-setattributes		

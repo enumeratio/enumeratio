@@ -1,3 +1,0 @@
-id	in	out
-rest-list-a-b-c-d	<Rest><List>a b c d</List></Rest>	<List>b c d</List>
-nestlist-rest-list-a-b-c-d-exponentiale-3	<NestList>Rest <List>a b c d ExponentialE</List> 3</NestList>	<List><List>a b c d ExponentialE</List> <List>b c d ExponentialE</List> <List>c d ExponentialE</List> <List>d ExponentialE</List></List>

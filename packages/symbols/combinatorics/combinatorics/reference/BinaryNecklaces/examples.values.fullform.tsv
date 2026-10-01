@@ -1,4 +1,0 @@
-id	in	out
-count-binarynecklaces-5	Count(BinaryNecklaces(5))	8
-first-element-of-binarynecklaces-5	At(BinaryNecklaces(5), 1)	List(0, 0, 0, 0, 0)
-every-element-of-binarynecklaces-5	Take(BinaryNecklaces(5), 8)	List(List(0, 0, 0, 0, 0), List(1, 1, 1, 1, 1), List(0, 0, 0, 0, 1), List(0, 0, 0, 1, 1), List(0, 0, 1, 0, 1), List(0, 0, 1, 1, 1), List(0, 1, 0, 1, 1), List(0, 1, 1, 1, 1))

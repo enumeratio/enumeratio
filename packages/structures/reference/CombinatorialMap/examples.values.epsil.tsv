@@ -1,4 +1,0 @@
-id	in	out
-inverse-of-a-permutation	CombinatorialMap(Permutation([3, 1, 2]), "Inverse")	Permutation([2, 3, 1])
-reverse-of-a-permutation	CombinatorialMap(Permutation([3, 1, 2]), "Reverse")	Permutation([2, 1, 3])
-by-findstat-id	CombinatorialMap(Permutation([3, 1, 2]), "Mp00066")	Permutation([2, 3, 1])

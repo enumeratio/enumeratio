@@ -1,6 +1,0 @@
-id	in	out
-dirac-delta-at-origin	\operatorname{FourierTransform}(\operatorname{DiracDelta}(t),t,w)	\sqrt{\frac{1}{2\pi}}
-gaussian	\operatorname{FourierTransform}(e^{-t^2},t,w)	\frac{\sqrt{2}}{2}e^{\frac{-1}{4}w^2}
-cosine	\operatorname{FourierTransform}(\cos(at),t,w)	\frac{\sqrt{2}}{2}(\operatorname{DiracDelta}(a+w)+\operatorname{DiracDelta}(-a+w))\sqrt{\pi}
-fouriertransform-x-times-y-times-z-pow-3-times	\operatorname{FourierTransform}((xyz)^3e^{-x^2-y^2-z^2},[x,y,z],[u,v,w])	\operatorname{FourierTransform}(x^3y^3z^3e^{-x^2-y^2-z^2},[x,y,z],[u,v,w])
-fouriertransform-squarewave-y-times-1-over-2pi	\operatorname{FourierTransform}(\operatorname{SquareWave}(y\frac{1}{2\pi})e^{-|x|},[x,y],[u,v])	\operatorname{FourierTransform}(\operatorname{SquareWave}(\frac{y}{2\pi})e^{-|x|},[x,y],[u,v])

@@ -1,6 +1,0 @@
-id	in	out
-standarddeviation-list-1-2-3-4	standardDeviation([1, 2, 3, 4])	sqrt(15) / 3
-standarddeviation-n-list-1-2-3-4-30	standardDeviation(N([1, 2, 3, 4], 30))	sqrt(15) / 3
-n-standarddeviation-ts	N(standardDeviation(ts))	standardDeviation(ts)
-standarddeviation-binomialdistribution-n-p	standardDeviation(binomialDistribution(n, p))	sqrt(n * p * (-p + 1))
-standarddeviation-probabilitydistribution-sqrt-2	"standardDeviation(ProbabilityDistribution(\n                                           sqrt(2) * (1 / pi) * (1 / ((x - 2) ^\n                                                                      4 + 1)),\n                                           [\n                                             x,\n                                             negativeInfinity,\n                                             positiveInfinity,\n                                           ],\n                                         ))"	"standardDeviation(ProbabilityDistribution(\n                                           sqrt(2) / (pi * (x - 2) ^ 4 + pi),\n                                           [\n                                             x,\n                                             negativeInfinity,\n                                             positiveInfinity,\n                                           ],\n                                         ))"

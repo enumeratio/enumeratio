@@ -1,3 +1,0 @@
-id	in	out
-the-partition-4-2-1-of-7	<DysonRank><IntegerPartition><List>4 2 1</List></IntegerPartition></DysonRank>	<ToExpression>1</ToExpression>
-the-partition-3-3-1-of-7	<DysonRank><IntegerPartition><List>3 3 1</List></IntegerPartition></DysonRank>	<ToExpression>0</ToExpression>

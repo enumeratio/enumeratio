@@ -1,5 +1,0 @@
-id	in	out
-nexpectation-sin-of-normal	NExpectation(sin(x), Distributed(x, normalDistribution(2, 3)))	0.010_101_381_966_839_188
-nexpectation-cube-of-exponential	NExpectation(x ^ 3, Distributed(x, exponentialDistribution(2)))	0.750_000_000_000_000_1
-nexpectation-poisson-reciprocal	NExpectation((x + 1) ^ -1, Distributed(x, poissonDistribution(3)))	0.316_737_643_877_377_7
-nexpectation-binomial-cube-finite-sum	NExpectation(x ^ 3, Distributed(x, binomialDistribution(5, 2 / 5)))	15.44

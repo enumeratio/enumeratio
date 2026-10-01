@@ -1,2 +1,0 @@
-id	in	out
-the-first-20-terms	\mathrm{Take}(\mathrm{SophieGermainPrimes}, 20)	\bigl\lbrack2, 3, 5, 11, 23, 29, 41, 53, 83, 89, 113, 131, 173, 179, 191, 233, 239, 251, 281, 293\bigr\rbrack

@@ -1,3 +1,0 @@
-id	in	out
-count-shiftedstandardtableaux-5-6-standard	Count(ShiftedStandardTableaux(5))	6
-every-element-of-shiftedstandardtableaux-5	Take(ShiftedStandardTableaux(5), 6)	List(ShiftedStandardTableau(List(List(1, 2, 3, 4, 5))), ShiftedStandardTableau(List(List(1, 2, 4, 5), List(3))), ShiftedStandardTableau(List(List(1, 2, 3, 5), List(4))), ShiftedStandardTableau(List(List(1, 2, 3, 4), List(5))), ShiftedStandardTableau(List(List(1, 2, 4), List(3, 5))), ShiftedStandardTableau(List(List(1, 2, 3), List(4, 5))))

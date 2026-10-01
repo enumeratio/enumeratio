@@ -1,6 +1,0 @@
-id	in	out
-a-plain-integer	\operatorname{IsInteger}(4)	\top
-isinteger-x-plus-4	\operatorname{IsInteger}(x+4)	\bot
-a-rational-is-not-an-integer	\operatorname{IsInteger}(\frac{1}{2})	\bot
-a-free-symbol-is-false	\operatorname{IsInteger}(x)	\bot
-a-negative-integer	\operatorname{IsInteger}(-3)	\top

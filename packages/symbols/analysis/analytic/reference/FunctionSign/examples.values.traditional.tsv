@@ -1,6 +1,0 @@
-id	in	out
-a-perfect-square-is-never-negative	\operatorname{FunctionSign}(x^2,x)	1
-a-sum-of-a-square-and-a-positive-constant	\operatorname{FunctionSign}(\frac{1}{x^2+1},x)	1
-exp-is-always-positive	\operatorname{FunctionSign}(e^x,x)	1
-map-function-functionsign-1-x-1-list-x-pow-2-x	\operatorname{Map}(\operatorname{Function}(\operatorname{Block}(\operatorname{FunctionSign}(\_1,x)),\_1),[x^2,x^2+1])	[1,1]
-a-cubic-changes-sign	\operatorname{FunctionSign}(x^3,x)	\operatorname{FunctionSign}(x^3,x)

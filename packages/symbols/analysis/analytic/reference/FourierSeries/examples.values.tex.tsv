@@ -1,9 +1,0 @@
-id	in	out
-order-2-series-of-x	\mathrm{FourierSeries}(x, x, 2)	-i\exp(i x)+(-\frac{1}{2}i)\exp(-2i x)+(\frac{1}{2}i)\exp(2i x)+i\exp(-i x)
-fourierseries-1-over-2-times-t-t-3	\mathrm{FourierSeries}(\frac{t}{2}, t, 3)	(-\frac{1}{2}i)\exp(i t)+(-\frac{1}{4}i)\exp(-2i t)+(-\frac{1}{6}i)\exp(3i t)+(\frac{1}{6}i)\exp(-3i t)+(\frac{1}{4}i)\exp(2i t)+(\frac{1}{2}i)\exp(-i t)
-order-3-series-of-sin-is-itself	\mathrm{FourierSeries}(\sin(x), x, 3)	(-\frac{1}{2}i)\exp(i x)+(\frac{1}{2}i)\exp(-i x)
-cos-squared-a-sin-cos-polynomial	\mathrm{FourierSeries}(\cos(x)^2, x, 2)	\frac{1}{4}(\exp(-2i x))+\frac{1}{4}(\exp(2i x))+\frac{1}{2}
-order-0-series-of-x-squared-is-its-average	\mathrm{FourierSeries}(x^2, x, 0)	\frac{\pi^2}{3}
-fourierseries-exponentiale-pow-neg-t-t-3	\mathrm{FourierSeries}(\exp(-t), t, 3)	\frac{1}{\pi}((-\frac{1}{2}-\frac{1}{2}i)\sinh(\pi)\exp(-i t))+\frac{1}{\pi}((\frac{1}{5}-\frac{2}{5}i)\sinh(\pi)\exp(2i t))+\frac{1}{\pi}((-\frac{1}{10}-\frac{3}{10}i)\sinh(\pi)\exp(-3i t))+\frac{1}{\pi}((-\frac{1}{10}+\frac{3}{10}i)\sinh(\pi)\exp(3i t))+\frac{1}{\pi}((\frac{1}{5}+\frac{2}{5}i)\sinh(\pi)\exp(-2i t))+\frac{1}{\pi}((-\frac{1}{2}+\frac{1}{2}i)\sinh(\pi)\exp(i t))+\frac{\sinh(\pi)}{\pi}
-fourierseries-abs-t-t-2	\mathrm{FourierSeries}(\vert t\vert, t, 2)	-\frac{1}{\pi}(2\exp(-i t))-\frac{1}{\pi}(2\exp(i t))+\frac{\pi}{2}
-declines-a-mixed-polynomial-trig-product	\mathrm{FourierSeries}(x\cos(x), x, 1)	\mathrm{FourierSeries}(x\cos(x), x, 1)

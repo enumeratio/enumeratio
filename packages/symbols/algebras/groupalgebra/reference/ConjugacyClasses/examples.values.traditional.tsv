@@ -1,5 +1,0 @@
-id	in	out
-abelian-one-class-per-element	\operatorname{GroupCentreDimension}(C_6)	6
-d-3-cong-s-3	\operatorname{GroupCentreDimension}(D_3)	3
-direct-products-work-too	|C_2\times C_3|	6
-4-6-2	\operatorname{GroupCentreDimension}(D_4)	5

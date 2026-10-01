@@ -1,8 +1,0 @@
-id	in	out
-x-occurs-in-x-2-plus-1	<FreeQ><Add><Power>x 2</Power> 1</Add> x</FreeQ>	<False />
-freeq-list-1-2-4-1-0-0	<FreeQ><List>1 2 4 1 0</List> 0</FreeQ>	<False />
-freeq-list-list-1-1-3-0-list-2-1-2-2-0	<FreeQ><List><List>1 1 3 0</List> <List>2 1 2 2</List></List> 0</FreeQ>	<False />
-freeq-association-a-neg-gt-1-1	<FreeQ><Association><KeyValuePair>a 1</KeyValuePair></Association> 1</FreeQ>	<False />
-freeq-association-a-neg-gt-1-a		
-y-never-occurs	<FreeQ><Add><Power>x 2</Power> 1</Add> y</FreeQ>	<True />
-looks-inside-subexpressions-not-just-top-level	<FreeQ><List><List>a b</List></List> b</FreeQ>	<False />

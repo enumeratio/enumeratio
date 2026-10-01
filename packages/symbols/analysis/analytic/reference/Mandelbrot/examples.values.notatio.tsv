@@ -1,2 +1,0 @@
-id	in	out
-mandelbrot-neg-1-2-iterations-returns-to-0	<N><Mandelbrot>-1 2</Mandelbrot></N>	<ToExpression>0</ToExpression>

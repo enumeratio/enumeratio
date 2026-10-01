@@ -1,4 +1,0 @@
-id	in	out
-count-propercompositions-6	<Count><ProperCompositions>6</ProperCompositions></Count>	<ToExpression>5</ToExpression>
-first-element-of-propercompositions-6	<At><ProperCompositions>6</ProperCompositions> 1</At>	<Composition><List>2 2 2</List></Composition>
-every-element-of-propercompositions-6	<Take><ProperCompositions>6</ProperCompositions> 5</Take>	<List><Composition><List>2 2 2</List></Composition> <Composition><List>2 4</List></Composition> <Composition><List>3 3</List></Composition> <Composition><List>4 2</List></Composition> <Composition><List>6</List></Composition></List>

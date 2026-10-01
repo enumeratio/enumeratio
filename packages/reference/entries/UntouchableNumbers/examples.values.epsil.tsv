@@ -1,2 +1,0 @@
-id	in	out
-the-first-25-terms	take(UntouchableNumbers, 25)	"[\n  2,\n  5,\n  52,\n  88,\n  96,\n  120,\n  124,\n  146,\n  162,\n  188,\n  206,\n  210,\n  216,\n  238,\n  246,\n  248,\n  262,\n  268,\n  276,\n  288,\n  290,\n  292,\n  304,\n  306,\n  322,\n]"

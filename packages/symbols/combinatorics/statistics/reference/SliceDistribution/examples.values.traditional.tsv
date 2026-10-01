@@ -1,4 +1,0 @@
-id	in	out
-slice-distribution-wiener	\operatorname{SliceDistribution}(\operatorname{WienerProcess}(1,2),3)	\operatorname{NormalDistribution}(3,2\sqrt{3})
-slice-distribution-poisson	\operatorname{SliceDistribution}(\operatorname{PoissonProcess}(5),2)	\operatorname{PoissonDistribution}(10)
-slice-distribution-feeds-pdf-unchanged	\operatorname{Mean}(\operatorname{SliceDistribution}(\operatorname{PoissonProcess}(5),2))	10

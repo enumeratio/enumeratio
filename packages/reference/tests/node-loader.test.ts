@@ -14,7 +14,7 @@ test("loads every head from every package's reference/ directory", () => {
   expect(result.heads.map((h) => `${h.package}/${h.head}`)).toEqual(["pkg-a/Mod", "pkg-b/FromDigits"]);
 });
 
-test("reads the optional examples.values files alongside its entry", () => {
+test("reads the values files and the pinned forms alongside its entry", () => {
   const result = loadReferenceData(fixture("node-loader"));
   const mod = result.heads.find((h) => h.head === "Mod");
   expect(mod?.implementations).toEqual({

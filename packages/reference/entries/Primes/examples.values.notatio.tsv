@@ -1,4 +1,0 @@
-id	in	out
-the-first-five-primes	<Take>Primes 5</Take>	<List>2 3 5 7 11</List>
-11-is-prime	<Element>11 Primes</Element>	<True />
-9-is-not-prime	<Element>9 Primes</Element>	<False />

@@ -1,6 +1,0 @@
-id	in	out
-multinormal-mean	\mathrm{mean}(\mathrm{MultinormalDistribution}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\bigl\lbrack4, 0\bigr\rbrack, \bigl\lbrack0, 9\bigr\rbrack\bigr\rbrack))	\bigl\lbrack1, 2\bigr\rbrack
-multinormal-mean-one-arg	\mathrm{mean}(\mathrm{MultinormalDistribution}(\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack))	\bigl\lbrack0, 0\bigr\rbrack
-multinormal-variance	\mathrm{Variance}(\mathrm{MultinormalDistribution}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\bigl\lbrack4, 0\bigr\rbrack, \bigl\lbrack0, 9\bigr\rbrack\bigr\rbrack))	\bigl\lbrack4, 9\bigr\rbrack
-multinormal-covariance	\operatorname{Covariance}(\mathrm{MultinormalDistribution}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\bigl\lbrack4, 1\bigr\rbrack, \bigl\lbrack1, 9\bigr\rbrack\bigr\rbrack))	\bigl\lbrack\bigl\lbrack4, 1\bigr\rbrack, \bigl\lbrack1, 9\bigr\rbrack\bigr\rbrack
-multinormal-pdf-standard-origin	\operatorname{PDF}(\mathrm{MultinormalDistribution}(\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack), \bigl\lbrack0, 0\bigr\rbrack)	\frac{1}{2\pi}

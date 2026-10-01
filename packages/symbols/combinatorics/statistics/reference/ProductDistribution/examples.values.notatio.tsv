@@ -1,5 +1,0 @@
-id	in	out
-product-pdf	<PDF><ProductDistribution><NormalDistribution>0 1</NormalDistribution> <NormalDistribution>5 2</NormalDistribution></ProductDistribution> <List>0 5</List></PDF>	<Divide>1 <Multiply>4 Pi</Multiply></Divide>
-product-mean	<Mean><ProductDistribution><NormalDistribution>0 1</NormalDistribution> <NormalDistribution>5 2</NormalDistribution></ProductDistribution></Mean>	<List>0 5</List>
-product-variance	<Variance><ProductDistribution><NormalDistribution>0 1</NormalDistribution> <NormalDistribution>5 2</NormalDistribution></ProductDistribution></Variance>	<List>1 4</List>
-product-repeated-form-mean	<Mean><ProductDistribution><List><NormalDistribution>0 1</NormalDistribution> 3</List></ProductDistribution></Mean>	<List>0 0 0</List>

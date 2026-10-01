@@ -1,7 +1,0 @@
-id	in	out
-sum-p-1-p-2	N(\mathrm{PrimeZetaP}(2))	0.452\,247\,420\,041\,065\,5
-n-primezetap-3	N(\mathrm{PrimeZetaP}(3))	0.174\,762\,639\,299\,443\,55
-n-primezetap-4	N(\mathrm{PrimeZetaP}(4))	0.076\,993\,139\,764\,246\,85
-n-primezetap-2-50		
-primezetap-2p5	\mathrm{PrimeZetaP}(2.5)	0.273\,680\,737\,993\,234
-n-primezetap-4-over-11-50		

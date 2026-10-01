@@ -1,5 +1,0 @@
-id	in	out
-distance-along-a-path-graph	\operatorname{GraphDistance}(\operatorname{PathGraph}(5),1,5)	4
-unreachable-is-infinite	\operatorname{GraphDistance}(\operatorname{Graph}([1,2,3,4],[\operatorname{DirectedEdge}(1,2),\operatorname{UndirectedEdge}(3,4)]),4,1)	\infty
-unreachable-against-a-longer-directed-chain	\operatorname{GraphDistance}(\operatorname{Graph}([1,2,3,4],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4)]),4,1)	\infty
-weighted-distance-is-summed-weight-not-hop-count	\operatorname{GraphDistance}(\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3)],\operatorname{KeyValuePair}(\operatorname{EdgeWeight},[5,7])),1,3)	12

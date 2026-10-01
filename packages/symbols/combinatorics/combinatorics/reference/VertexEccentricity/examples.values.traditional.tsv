@@ -1,3 +1,0 @@
-id	in	out
-petersen-is-2-eccentric-everywhere	\operatorname{VertexEccentricity}(\operatorname{PetersenGraph}(),1)	2
-disconnected-vertex-is-infinite	\operatorname{VertexEccentricity}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(3,4)]),1)	\infty

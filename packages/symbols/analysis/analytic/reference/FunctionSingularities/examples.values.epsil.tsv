@@ -1,6 +1,0 @@
-id	in	out
-a-pole-at-the-origin	FunctionSingularities(1 / x, x)	x == 0
-sqrt-is-singular-at-its-own-boundary	FunctionSingularities(sqrt(x), x)	x <= 0
-a-polynomial-has-no-singularities	FunctionSingularities(x ^ 2, x)	False
-log-s-branch-cut	FunctionSingularities(ln(x), x)	x <= 0
-functionsingularities-tan-x-x	FunctionSingularities(tan(x), x)	cos(x) == 0

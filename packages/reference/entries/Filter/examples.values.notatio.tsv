@@ -1,8 +1,0 @@
-id	in	out
-filter-list-1-2-4-7-6-2-iseven	<Filter><List>1 2 4 7 6 2</List> IsEven</Filter>	<List>2 4 6 2</List>
-filter-list-1-2-4-7-6-2-isodd	<Filter><List>1 2 4 7 6 2</List> IsOdd</Filter>	<List>1 7</List>
-filter-list-list-1-y-list-2-x-list-3-x-list-4-z	<Filter><List><List>1 y</List> <List>2 x</List> <List>3 x</List> <List>4 z</List> <List>5 x</List> <List>6 y</List></List> <Function><Block><Contains>_1 x</Contains></Block> _1</Function></Filter>	<List><List>2 x</List> <List>3 x</List> <List>5 x</List></List>
-filter-list-list-1-y-list-2-x-list-3-x-list-4-2	<Filter><List><List>1 y</List> <List>2 x</List> <List>3 x</List> <List>4 z</List> <List>5 x</List> <List>6 y</List></List> <Function><Block><Contains>_1 z</Contains></Block> _1</Function></Filter>	<List><List>4 z</List></List>
-filter-list-1-2-4-7-6-2-function-2-lt-1-1	<Filter><List>1 2 4 7 6 2</List> <Function><Block><Less>2 _1</Less></Block> _1</Function></Filter>	<List>4 7 6</List>
-filter-range-1-100-function-1-mod-3-eq-1-1-mod-5	<Filter><Range>1 100</Range> <Function><Block><And><Equal><Mod>_1 3</Mod> 1</Equal> <Equal><Mod>_1 5</Mod> 1</Equal></And></Block> _1</Function></Filter>	<List>1 16 31 46 61 76 91</List>
-filter-range-1-10-iseven	<Filter><Range>1 10</Range> IsEven</Filter>	<List>2 4 6 8 10</List>

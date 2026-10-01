@@ -9,6 +9,7 @@
 // dependency. A JSON Schema author needs the *serialized* shape anyway, which for `expr` /
 // `expected` is "any JSON value", not the `MathJSON` union as TypeScript sees it.
 
+import { OWN_FORMS } from "./order.ts";
 import { Ajv2020, type ErrorObject, type ValidateFunction } from "ajv/dist/2020.js";
 
 /** A minimal JSON Schema value -- just enough of draft 2020-12 for these two documents. */
@@ -354,13 +355,18 @@ const SYSTEM_IMPLEMENTATION: JsonSchema = {
     tolerance: { type: "number" },
     messages: { type: "array", items: { $ref: "#/$defs/EvaluationMessage" } },
     back: { $ref: "#/$defs/MathJSON" },
+    backOut: { $ref: "#/$defs/MathJSON" },
   },
   required: ["in"],
   additionalProperties: false,
 };
 
+/** Our own forms' pins: any of a row's fields, since a pin may hold only an `out` or a `back`. */
+const PINNED_FORM: JsonSchema = { ...SYSTEM_IMPLEMENTATION, required: [] };
+
 /**
- * `reference/<Head>/examples.values.*.tsv`: every example's implementations, keyed by id
+ * A head's implementations, from `reference/<Head>/examples.values.*.tsv` and examples.tsv's
+ * `<system>.<field>` columns: every example's, keyed by id
  * (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data §2, §6).
  */
 export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
@@ -368,11 +374,13 @@ export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
   $id: "https://enumeratio.dev/schema/head-implementations.schema.json",
   title: "HeadImplementations",
   description:
-    "One compute-engine head's reference/<Head>/examples.values.*.tsv: every example's " +
-    "own forms and each external system's rendering and answer, keyed by example id.",
+    "One compute-engine head's implementations (reference/<Head>/examples.values.*.tsv, and " +
+    "examples.tsv's <system>.<field> columns): every example's pinned own forms and each " +
+    "external system's rendering and answer, keyed by example id.",
   type: "object",
   additionalProperties: {
     type: "object",
+    properties: Object.fromEntries(OWN_FORMS.map((form) => [form, { $ref: "#/$defs/PinnedForm" }])),
     additionalProperties: { $ref: "#/$defs/SystemImplementation" },
   },
   $defs: {
@@ -380,6 +388,7 @@ export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
     RenderedForm: RENDERED_FORM,
     EvaluationMessage: EVALUATION_MESSAGE,
     SystemImplementation: SYSTEM_IMPLEMENTATION,
+    PinnedForm: PINNED_FORM,
   },
 };
 

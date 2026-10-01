@@ -1,5 +1,0 @@
-id	in	out
-triangular-pdf-exact	\operatorname{PDF}(\mathrm{TriangularDistribution}(\bigl\lbrack0, 1\bigr\rbrack), \frac{1}{4})	1
-triangular-cdf-exact	\operatorname{CDF}(\mathrm{TriangularDistribution}(\bigl\lbrack0, 1\bigr\rbrack), \frac{1}{4})	\frac{1}{8}
-triangular-mean-exact	\mathrm{mean}(\mathrm{TriangularDistribution}(\bigl\lbrack0, 1\bigr\rbrack))	\frac{1}{2}
-triangular-variance-exact	\mathrm{Variance}(\mathrm{TriangularDistribution}(\bigl\lbrack0, 1\bigr\rbrack))	\frac{1}{24}

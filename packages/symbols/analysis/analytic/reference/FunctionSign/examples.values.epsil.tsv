@@ -1,6 +1,0 @@
-id	in	out	back
-a-perfect-square-is-never-negative	FunctionSign(x ^ 2, x)	1	
-a-sum-of-a-square-and-a-positive-constant	FunctionSign(1 / (x ^ 2 + 1), x)	1	
-exp-is-always-positive	FunctionSign(exp(x), x)	1	
-map-function-functionsign-1-x-1-list-x-pow-2-x	map(Function(FunctionSign(_1, x), _1), [x ^ 2, x ^ 2 + 1])	[1, 1]	Unreadable
-a-cubic-changes-sign	FunctionSign(x ^ 3, x)	FunctionSign(x ^ 3, x)	

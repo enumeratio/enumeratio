@@ -1,7 +1,0 @@
-id	in	out
-mean-binomialdistribution-n-p	\mathrm{mean}(\operatorname{BinomialDistribution}(n, p))	np
-variance-binomialdistribution-n-p	\mathrm{Variance}(\operatorname{BinomialDistribution}(n, p))	np\times(1-p)
-pdf-binomialdistribution-n-p-k	\operatorname{PDF}(\operatorname{BinomialDistribution}(n, p), k)	\begin{cases}\binom{n}{k}p^{k}(1-p)^{n-k}&\lfloor k\rfloor=k\land0\le k\land k\le n\\0&\mathrm{True}\end{cases}
-cdf-binomialdistribution-n-p-k	\operatorname{CDF}(\operatorname{BinomialDistribution}(n, p), k)	\begin{cases}0&k\lt0\\1&n\le k\\\operatorname{BetaRegularized}(1-p, n-\lfloor k\rfloor, \lfloor k\rfloor+1)&\mathrm{True}\end{cases}
-pdf-binomialdistribution-n-p-x	\operatorname{PDF}(\operatorname{BinomialDistribution}(n, p), x)	\begin{cases}\binom{n}{x}p^{x}(1-p)^{n-x}&\lfloor x\rfloor=x\land0\le x\land x\le n\\0&\mathrm{True}\end{cases}
-functionexpand-pdf-binomialdistribution-n-p-k		

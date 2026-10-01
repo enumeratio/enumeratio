@@ -1,4 +1,0 @@
-id	in	out
-single-arg	<HankelMatrix><List>1 2 3</List></HankelMatrix>	<List><List>1 2 3</List> <List>2 3 0</List> <List>3 0 0</List></List>
-with-last-row	<HankelMatrix><List>1 2 3</List> <List>3 4 5</List></HankelMatrix>	<List><List>1 2 3</List> <List>2 3 4</List> <List>3 4 5</List></List>
-hankelmatrix-list-list-1-over-7-1-over-5-1-over		

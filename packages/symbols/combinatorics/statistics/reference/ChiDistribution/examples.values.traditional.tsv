@@ -1,4 +1,0 @@
-id	in	out
-chi-pdf-exact	\operatorname{PDF}(\operatorname{ChiDistribution}(3),1)	\frac{\sqrt{2}}{2\Gamma(\frac{3}{2})\sqrt{e}}
-chi-cdf-exact	\operatorname{CDF}(\operatorname{ChiDistribution}(3),1)	1-Q(\frac{3}{2},\frac{1}{2})
-chi-mean-exact	\operatorname{Mean}(\operatorname{ChiDistribution}(3))	\frac{\sqrt{2}\Gamma(2)}{\Gamma(\frac{3}{2})}

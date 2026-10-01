@@ -1,4 +1,0 @@
-id	in	out
-deconcatenation-cut-at-each-gap	Coproduct(QSymM([1, 2]))	"HopfTensor(QSymM([]), QSymM([1, 2])) + HopfTensor(QSymM([1, 2]), QSymM([])) +\nHopfTensor(QSymM([1]), QSymM([2]))"
-delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes	Coproduct(NSymH([2]))	"HopfTensor(NSymH([]), NSymH([2])) + HopfTensor(NSymH([2]), NSymH([])) +\nHopfTensor(NSymH([1]), NSymH([1]))"
-the-counit-picks-out-the-constant-term	Counit(NSymH([]))	1

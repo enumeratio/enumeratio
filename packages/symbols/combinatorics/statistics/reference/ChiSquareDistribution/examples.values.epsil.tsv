@@ -1,5 +1,0 @@
-id	in	out
-chisquare-pdf-exact	pdf(ChiSquareDistribution(3), 2)	1 / (2 * exponentialE * gamma(3 / 2))
-chisquare-cdf-exact	cdf(ChiSquareDistribution(3), 2)	1 - gammaRegularized(3 / 2, 1)
-chisquare-mean-exact	mean(ChiSquareDistribution(3))	3
-chisquare-variance-exact	variance(ChiSquareDistribution(3))	6

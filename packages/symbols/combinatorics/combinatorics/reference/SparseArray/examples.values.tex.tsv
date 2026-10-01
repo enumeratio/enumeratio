@@ -1,5 +1,0 @@
-id	in	out
-sparsearray-vector	\mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(1, x), \mathrm{Rule}(3, y)\bigr\rbrack, 4)	\bigl\lbrack x, 0, y, 0\bigr\rbrack
-sparsearray-infers-dims	\mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(\bigl\lbrack1, 1\bigr\rbrack, 5), \mathrm{Rule}(\bigl\lbrack2, 2\bigr\rbrack, 7)\bigr\rbrack)	\bigl\lbrack\bigl\lbrack5, 0\bigr\rbrack, \bigl\lbrack0, 7\bigr\rbrack\bigr\rbrack
-sparsearray-custom-default	\mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(2, 9)\bigr\rbrack, 3, -1)	\bigl\lbrack-1, 9, -1\bigr\rbrack
-sparsearray-normal-is-identity	\operatorname{Normal}(\mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(1, a)\bigr\rbrack, 2))	\bigl\lbrack a, 0\bigr\rbrack

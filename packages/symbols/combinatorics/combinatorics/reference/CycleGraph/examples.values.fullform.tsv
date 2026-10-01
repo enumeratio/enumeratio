@@ -1,9 +1,0 @@
-id	in	out
-c5-is-not-bipartite	IsBipartiteGraph(CycleGraph(5))	False
-c6-is-bipartite	IsBipartiteGraph(CycleGraph(6))	True
-cyclegraph-3	CycleGraph(3)	Graph(List(1, 2, 3), List(UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 1)))
-map-function-vertexeccentricity-cyclegraph-5-1-1	Map(Function(Block(VertexEccentricity(CycleGraph(5), _1)), _1), VertexList(CycleGraph(5)))	List(2, 2, 2, 2, 2)
-isacyclicgraph-cyclegraph-5	IsAcyclicGraph(CycleGraph(5))	False
-vertexdegree-cyclegraph-7	VertexDegree(CycleGraph(7))	List(2, 2, 2, 2, 2, 2, 2)
-cyclegraph-4	CycleGraph(4)	Graph(List(1, 2, 3, 4), List(UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 4), UndirectedEdge(4, 1)))
-ispathgraph-cyclegraph-5		

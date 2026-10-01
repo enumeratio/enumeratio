@@ -1,6 +1,0 @@
-id	in	out
-truncated-uniform-pdf	\operatorname{PDF}(\mathrm{TruncatedDistribution}(\bigl\lbrack\frac{1}{4}, \frac{3}{4}\bigr\rbrack, \operatorname{UniformDistribution}(0, 1)), \frac{1}{2})	2
-truncated-uniform-pdf-outside	\operatorname{PDF}(\mathrm{TruncatedDistribution}(\bigl\lbrack\frac{1}{4}, \frac{3}{4}\bigr\rbrack, \operatorname{UniformDistribution}(0, 1)), \frac{1}{10})	0
-truncated-uniform-mean	\mathrm{mean}(\mathrm{TruncatedDistribution}(\bigl\lbrack\frac{1}{4}, \frac{3}{4}\bigr\rbrack, \operatorname{UniformDistribution}(0, 1)))	\frac{1}{2}
-truncated-normal-mean-symmetric	\mathrm{mean}(\mathrm{TruncatedDistribution}(\bigl\lbrack-1, 1\bigr\rbrack, \operatorname{NormalDistribution}(0, 1)))	0
-truncated-discrete-half-open-excludes-lower	\operatorname{PDF}(\mathrm{TruncatedDistribution}(\bigl\lbrack1, 4\bigr\rbrack, \operatorname{PoissonDistribution}(2)), 1)	0

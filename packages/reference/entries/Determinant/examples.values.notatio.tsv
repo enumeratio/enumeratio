@@ -1,7 +1,0 @@
-id	in	out
-determinant-list-list-a-1-a-1-list-a-2-a-2	<Determinant><List><List>a_1 a_1</List> <List>a_2 a_2</List></List></Determinant>	<ToExpression>0</ToExpression>
-determinant-list-list-1-2-3-list-4-5-6-list-7-8	<Determinant><List><List>1 2 3</List> <List>4 5 6</List> <List>7 8 9</List></List></Determinant>	<ToExpression>0</ToExpression>
-determinant-list-list-1-plus-i-2-3-minus-2i-list	<Determinant><List><List><Complex>1 1</Complex> 2 <Complex>3 -2</Complex></List> <List>0 <Multiply>4 Pi</Multiply> <Complex>0 5</Complex></List> <List>3 0 6</List></List></Determinant>	<Add><Complex>0 30</Complex> <Multiply><Complex>-12 48</Complex> Pi</Multiply></Add>
-determinant-list-list-1-2-4-list-5-4-5-list-9-2	<Determinant><List><List>1 2 4</List> <List>5 4 5</List> <List>9 2 7</List></List></Determinant>	<ToExpression>-66</ToExpression>
-determinant-list-list-a-b-c-list-d-exponentiale	<Determinant><List><List>a b c</List> <List>d ExponentialE f</List> <List>g h <Complex>0 1</Complex></List></List></Determinant>	<Add><Multiply>b f g</Multiply> <Multiply>c d h</Multiply> <Negate><Multiply>a f h</Multiply></Negate> <Multiply><Complex>0 -1</Complex> b d</Multiply> <Negate><Multiply>ExponentialE c g</Multiply></Negate> <Multiply><Complex>0 1</Complex> ExponentialE a</Multiply></Add>
-neg-determinant-list-list-1-3-4-list-5-7-8-list	<Negate><Determinant><List><List>1 3 4</List> <List>5 7 8</List> <List>5 2 1</List></List></Determinant></Negate>	<ToExpression>4</ToExpression>

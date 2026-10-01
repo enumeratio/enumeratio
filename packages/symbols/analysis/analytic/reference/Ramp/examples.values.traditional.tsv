@@ -1,8 +1,0 @@
-id	in	out
-ramp-negative	\operatorname{Ramp}(-2)	0
-ramp-positive	\operatorname{Ramp}(3)	3
-ramp-zero	\operatorname{Ramp}(0)	0
-ramp-pi-exact	\operatorname{Ramp}(\pi)	\pi
-ramp-negative-pi-exact	\operatorname{Ramp}(-\pi)	0
-ramp-equals-x-times-unitstep	\operatorname{Ramp}(5)=5\operatorname{UnitStep}(5)	\top
-ramp-derivative	\frac{d}{dx}\operatorname{Ramp}(x)	\operatorname{Piecewise}([[0,x<0],[1,0<x]],\operatorname{Indeterminate})

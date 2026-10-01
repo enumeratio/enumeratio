@@ -1,3 +1,0 @@
-id	in	out
-the-partition-1-3-mid-2	<BlocksAtLeastTwo><SetPartition><List><List>1 3</List> <List>2</List></List></SetPartition></BlocksAtLeastTwo>	<ToExpression>1</ToExpression>
-the-partition-1-mid-2-4-mid-3	<BlocksAtLeastTwo><SetPartition><List><List>1</List> <List>2 4</List> <List>3</List></List></SetPartition></BlocksAtLeastTwo>	<ToExpression>1</ToExpression>

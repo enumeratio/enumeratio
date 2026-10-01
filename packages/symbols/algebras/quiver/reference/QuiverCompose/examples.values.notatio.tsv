@@ -1,4 +1,0 @@
-id	in	out
-1-to-2-then-2-to-3	<QuiverCompose><LinearQuiver>4</LinearQuiver> <QuiverPath>1 <List>0</List></QuiverPath> <QuiverPath>2 <List>1</List></QuiverPath></QuiverCompose>	<QuiverPath>1 <List>0 1</List></QuiverPath>
-the-ends-do-not-meet	<QuiverCompose><LinearQuiver>4</LinearQuiver> <QuiverPath>2 <List>1</List></QuiverPath> <QuiverPath>1 <List>0</List></QuiverPath></QuiverCompose>	<ToExpression>0</ToExpression>
-a-trivial-path-is-a-local-identity	<QuiverCompose><LinearQuiver>4</LinearQuiver> <QuiverPath>1 <Apply>List</Apply></QuiverPath> <QuiverPath>1 <List>0</List></QuiverPath></QuiverCompose>	<QuiverPath>1 <List>0</List></QuiverPath>

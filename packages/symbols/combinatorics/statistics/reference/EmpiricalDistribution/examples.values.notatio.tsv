@@ -1,5 +1,0 @@
-id	in	out
-empirical-pdf-is-the-observed-proportion	<PDF><EmpiricalDistribution><List>1 2 2 3</List></EmpiricalDistribution> 2</PDF>	<Rational>1 2</Rational>
-empirical-cdf-is-the-observed-proportion-at-most	<CDF><EmpiricalDistribution><List>1 2 2 3</List></EmpiricalDistribution> 2</CDF>	<Rational>3 4</Rational>
-empirical-mean-matches-mean-of-the-data	<Mean><EmpiricalDistribution><List>1 2 2 3</List></EmpiricalDistribution></Mean>	<ToExpression>2</ToExpression>
-empirical-variance-matches-variance-of-the-data	<Variance><EmpiricalDistribution><List>1 2 2 3</List></EmpiricalDistribution></Variance>	<Rational>2 3</Rational>

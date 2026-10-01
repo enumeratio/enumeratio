@@ -1,4 +1,0 @@
-id	in	out
-count-dyckpathsbyheight-4-2	Count(DyckPathsByHeight(4, 2))	7
-first-element-of-dyckpathsbyheight-4-2	At(DyckPathsByHeight(4, 2), 1)	DyckPath(List(1, 1, 0, 1, 0, 1, 0, 0))
-every-element-of-dyckpathsbyheight-4-2	Take(DyckPathsByHeight(4, 2), 5)	List(DyckPath(List(1, 1, 0, 1, 0, 1, 0, 0)), DyckPath(List(1, 1, 0, 1, 0, 0, 1, 0)), DyckPath(List(1, 1, 0, 0, 1, 1, 0, 0)), DyckPath(List(1, 1, 0, 0, 1, 0, 1, 0)), DyckPath(List(1, 0, 1, 1, 0, 1, 0, 0)))

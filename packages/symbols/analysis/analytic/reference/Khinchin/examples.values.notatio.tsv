@@ -1,5 +1,0 @@
-id	in	out
-khinchin-s-constant	<N>Khinchin</N>	<ToExpression>2.6854520010653062</ToExpression>
-n-khinchin-50	<N>Khinchin 50</N>	<ToExpression>2.6854520010653064453097148354817956938203822939945</ToExpression>
-round-khinchin-pow-100	<Round><Power>Khinchin 100</Power></Round>	<ToExpression>7.975160530073655e+42</ToExpression>
-2-lt-khinchin-lt-3	<Less>2 Khinchin 3</Less>	<True />

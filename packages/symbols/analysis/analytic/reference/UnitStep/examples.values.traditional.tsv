@@ -1,8 +1,0 @@
-id	in	out
-unitstep-neg-1	\operatorname{UnitStep}(-1)	0
-1-at-0-unlike-heaviside-s-1-2	\operatorname{UnitStep}(0)	1
-unitstep-2p5	\operatorname{UnitStep}(2.5)	1
-threads-element-wise-over-a-list	\operatorname{UnitStep}([-1,0,1])	[0,1,1]
-several-arguments-the-product-of-their-unit	\operatorname{UnitStep}(1,2)	1
-zero-as-soon-as-any-argument-is-negative	\operatorname{UnitStep}(1,-1)	0
-exact-numeric-arguments	\operatorname{UnitStep}(\pi-3)	1

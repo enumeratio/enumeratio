@@ -1,4 +1,0 @@
-id	in	out
-count-connectedpermutations-4	count(ConnectedPermutations(4))	13
-first-element-of-connectedpermutations-4	ConnectedPermutations(4)[1]	Permutation([2, 3, 4, 1])
-every-element-of-connectedpermutations-4	take(ConnectedPermutations(4), 13)	"[\n  Permutation([2, 3, 4, 1]),\n  Permutation([2, 4, 1, 3]),\n  Permutation([2, 4, 3, 1]),\n  Permutation([3, 4, 1, 2]),\n  Permutation([3, 4, 2, 1]),\n  Permutation([3, 1, 4, 2]),\n  Permutation([3, 2, 4, 1]),\n  Permutation([4, 1, 2, 3]),\n  Permutation([4, 1, 3, 2]),\n  Permutation([4, 2, 1, 3]),\n  Permutation([4, 2, 3, 1]),\n  Permutation([4, 3, 1, 2]),\n  Permutation([4, 3, 2, 1]),\n]"

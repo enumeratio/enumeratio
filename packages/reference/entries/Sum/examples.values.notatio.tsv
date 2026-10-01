@@ -1,3 +1,0 @@
-id	in	out
-sum-k-pow-2-k-nothing-10	<Sum><Power>k 2</Power> <Limits>k Nothing 10</Limits></Sum>	<ToExpression>385</ToExpression>
-sum-k-pow-neg-6-k-1-positiveinfinity	<Sum><Power>k -6</Power> <Limits>k 1 PositiveInfinity</Limits></Sum>	<Divide><Power>Pi 6</Power> 945</Divide>

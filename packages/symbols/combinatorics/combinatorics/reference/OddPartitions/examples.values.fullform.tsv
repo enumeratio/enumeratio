@@ -1,4 +1,0 @@
-id	in	out
-count-oddpartitions-10	Count(OddPartitions(10))	10
-first-element-of-oddpartitions-10	At(OddPartitions(10), 1)	IntegerPartition(List(9, 1))
-every-element-of-oddpartitions-10	Take(OddPartitions(10), 10)	List(IntegerPartition(List(9, 1)), IntegerPartition(List(7, 3)), IntegerPartition(List(7, 1, 1, 1)), IntegerPartition(List(5, 5)), IntegerPartition(List(5, 3, 1, 1)), IntegerPartition(List(5, 1, 1, 1, 1, 1)), IntegerPartition(List(3, 3, 3, 1)), IntegerPartition(List(3, 3, 1, 1, 1, 1)), IntegerPartition(List(3, 1, 1, 1, 1, 1, 1, 1)), IntegerPartition(List(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)))

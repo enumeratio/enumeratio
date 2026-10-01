@@ -1,5 +1,0 @@
-id	in	out
-pdf-normaldistribution-0-1-x	pdf(normalDistribution(0, 1), x)	sqrt(2) * exponentialE ^ (-1 / 2 * x ^ 2) / (2 * sqrt(pi))
-pdf-weibulldistribution-2-5-n-4-25		
-pdf-negativebinomialdistribution-20-n-1-over-3		
-pdf-poissondistribution-m-5		

@@ -1,3 +1,0 @@
-id	in	out
-the-step-word-uuddud	\operatorname{Area}(\operatorname{DyckPath}([1,1,0,0,1,0]))	5
-the-step-word-uduudd	\operatorname{Area}(\operatorname{DyckPath}([1,0,1,1,0,0]))	5

@@ -1,2 +1,0 @@
-id	in	out
-count-up-to-a-limit	[\operatorname{Assign}(n,0),\operatorname{While}(n<5,\operatorname{Assign}(n,n+1)),n]	[0,5]

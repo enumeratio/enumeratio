@@ -1,5 +1,0 @@
-id	in	out
-studentt-pdf-exact	pdf(StudentTDistribution(5), 0)	sqrt(5) * gamma(3) / (5 * gamma(5 / 2) * sqrt(pi))
-studentt-cdf-symmetric	cdf(StudentTDistribution(5), 0)	1 / 2
-studentt-mean-exact	mean(StudentTDistribution(5))	0
-studentt-variance-exact	variance(StudentTDistribution(5))	5 / 3

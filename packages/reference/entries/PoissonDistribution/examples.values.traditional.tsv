@@ -1,5 +1,0 @@
-id	in	out
-standarddeviation-poissondistribution-100	\operatorname{StandardDeviation}(\operatorname{PoissonDistribution}(100))	10
-n-probability-x-eq-0-distributed-x	N(\operatorname{Probability}(x=0,\operatorname{Distributed}(x,\operatorname{PoissonDistribution}(\frac{16}{25}))))	\operatorname{Probability}(x=0,\operatorname{Distributed}(x,\operatorname{PoissonDistribution}(0.64)))
-probability-n-eq-0-distributed-n	\operatorname{Probability}(n=0,\operatorname{Distributed}(n,\operatorname{PoissonDistribution}(1000010^{-3})))	\operatorname{Probability}(n=0,\operatorname{Distributed}(n,\operatorname{PoissonDistribution}(10)))
-nprobability-n-lt-eq-15-distributed-n	\operatorname{NProbability}(n\le15,\operatorname{Distributed}(n,\operatorname{PoissonDistribution}(1036800010^{-6})))	\operatorname{NProbability}(n\le15,\operatorname{Distributed}(n,\operatorname{PoissonDistribution}(\frac{1296}{125})))

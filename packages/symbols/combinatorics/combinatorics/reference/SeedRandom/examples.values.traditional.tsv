@@ -1,3 +1,0 @@
-id	in	out
-seedrandom-returns-nothing	\operatorname{SeedRandom}(7)	\operatorname{}
-seedrandom-pins-the-next-draw	\operatorname{Last}([\operatorname{SeedRandom}(7),\operatorname{RandomInteger}(100)])	1

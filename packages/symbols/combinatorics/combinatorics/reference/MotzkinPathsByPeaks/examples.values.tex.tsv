@@ -1,4 +1,0 @@
-id	in	out
-count-motzkinpathsbypeaks-5-1	\mathrm{Count}(\mathrm{MotzkinPathsByPeaks}(5, 1))	10
-first-element-of-motzkinpathsbypeaks-5-1	\mathrm{MotzkinPathsByPeaks}(5, 1)[1]	\mathrm{MotzkinPath}(\bigl\lbrack1, 1, -1, 0, -1\bigr\rbrack)
-every-element-of-motzkinpathsbypeaks-5-1	\mathrm{Take}(\mathrm{MotzkinPathsByPeaks}(5, 1), 5)	\bigl\lbrack\mathrm{MotzkinPath}(\bigl\lbrack1, 1, -1, 0, -1\bigr\rbrack), \mathrm{MotzkinPath}(\bigl\lbrack1, 1, -1, -1, 0\bigr\rbrack), \mathrm{MotzkinPath}(\bigl\lbrack1, 0, 1, -1, -1\bigr\rbrack), \mathrm{MotzkinPath}(\bigl\lbrack1, 0, -1, 1, -1\bigr\rbrack), \mathrm{MotzkinPath}(\bigl\lbrack1, -1, 1, 0, -1\bigr\rbrack)\bigr\rbrack

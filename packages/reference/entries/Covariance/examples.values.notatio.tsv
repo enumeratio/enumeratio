@@ -1,3 +1,0 @@
-id	in	out
-covariance-list-1-3-over-2-list-2-11	<Covariance><List>1 <Rational>3 2</Rational></List> <List>2 11</List></Covariance>	<Rational>9 4</Rational>
-covariance-n-list-1-2-5-6-20-n-list-2-3-6-8-20	<Covariance><N><List>1 2 5 6</List> 20</N> <N><List>2 3 6 8</List> 20</N></Covariance>	<Rational>13 2</Rational>

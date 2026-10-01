@@ -1,8 +1,0 @@
-id	in	out
-u-frac-12-frac-32-2-1	\mathrm{chop}(N(\mathrm{HypergeometricUStar}(1/2, 3/2, 2))-1)	0.0
-a-generic-point-checked-against-mpmath-s-hyperu	\mathrm{HypergeometricUStar}(1.3, 2.7, 4)	1.113\,705\,290\,586\,790\,6
-a-complex-point-checked-against-mpmath-s-hyperu	\mathrm{HypergeometricUStar}(1, 2.5, 3+i)	1.134\,734\,176\,864\,381\,3-0.040\,360\,801\,253\,122\,44i
-another-point-checked-against-mpmath-s-hyperu	\mathrm{HypergeometricUStar}(0.2, 0.6, 1.5)	0.945\,737\,339\,042\,95
-a-third-point-checked-against-mpmath-s-hyperu	\mathrm{HypergeometricUStar}(2, 4.5, 5)	1.680\,941\,114\,165\,958
-a-negative-a-checked-against-mpmath-s-hyperu	\mathrm{HypergeometricUStar}(-0.5, 1.5, 2)	0.75
-integer-b-stays-symbolic-the-connection-formula	\mathrm{HypergeometricUStar}(1, 2, 3)	\mathrm{HypergeometricUStar}(1, 2, 3)

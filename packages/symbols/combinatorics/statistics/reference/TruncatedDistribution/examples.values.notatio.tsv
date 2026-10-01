@@ -1,6 +1,0 @@
-id	in	out
-truncated-uniform-pdf	<PDF><TruncatedDistribution><List><Rational>1 4</Rational> <Rational>3 4</Rational></List> <UniformDistribution>0 1</UniformDistribution></TruncatedDistribution> <Rational>1 2</Rational></PDF>	<ToExpression>2</ToExpression>
-truncated-uniform-pdf-outside	<PDF><TruncatedDistribution><List><Rational>1 4</Rational> <Rational>3 4</Rational></List> <UniformDistribution>0 1</UniformDistribution></TruncatedDistribution> <Rational>1 10</Rational></PDF>	<ToExpression>0</ToExpression>
-truncated-uniform-mean	<Mean><TruncatedDistribution><List><Rational>1 4</Rational> <Rational>3 4</Rational></List> <UniformDistribution>0 1</UniformDistribution></TruncatedDistribution></Mean>	<Rational>1 2</Rational>
-truncated-normal-mean-symmetric	<Mean><TruncatedDistribution><List>-1 1</List> <NormalDistribution>0 1</NormalDistribution></TruncatedDistribution></Mean>	<ToExpression>0</ToExpression>
-truncated-discrete-half-open-excludes-lower	<PDF><TruncatedDistribution><List>1 4</List> <PoissonDistribution>2</PoissonDistribution></TruncatedDistribution> 1</PDF>	<ToExpression>0</ToExpression>

@@ -1,5 +1,0 @@
-id	in	out
-c-4	<Count><BinaryTrees>4</BinaryTrees></Count>	<ToExpression>14</ToExpression>
-first-element-of-binarytrees-3	<At><BinaryTrees>3</BinaryTrees> 1</At>	<BinaryTree><List>0 <List>0 <List>0 0</List></List></List></BinaryTree>
-every-element-of-binarytrees-3	<Take><BinaryTrees>3</BinaryTrees> 5</Take>	<List><BinaryTree><List>0 <List>0 <List>0 0</List></List></List></BinaryTree> <BinaryTree><List>0 <List><List>0 0</List> 0</List></List></BinaryTree> <BinaryTree><List><List>0 0</List> <List>0 0</List></List></BinaryTree> <BinaryTree><List><List>0 <List>0 0</List></List> 0</List></BinaryTree> <BinaryTree><List><List><List>0 0</List> 0</List> 0</List></BinaryTree></List>
-peaks-are-narayana	<Tally><CombinatorialStat><BinaryTrees>4</BinaryTrees> "Peaks"</CombinatorialStat></Tally>	<Tuple><List>4 3 2 1</List> <List>1 6 6 1</List></Tuple>

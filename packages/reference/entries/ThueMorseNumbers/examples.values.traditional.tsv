@@ -1,3 +1,0 @@
-id	in	out
-the-first-20-terms-oeis-a010060	\operatorname{Take}(\operatorname{ThueMorseNumbers},20)	[0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,1,0,0,1]
-the-first-40-terms	\operatorname{Take}(\operatorname{ThueMorseNumbers},40)	[0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0]

@@ -1,6 +1,0 @@
-id	in	out
-discreteshift-one-step	DiscreteShift(a(n), n)	a(Add(n, 1))
-discreteshift-sin-neg-2-over-7-times-i-times-pi	DiscreteShift(Sin(Multiply(Complex(0, Rational(-2, 7)), Pi)), List(Complex(0, 1), 10))	DiscreteShift(Multiply(Complex(0, 1), Sinh(Multiply(Rational(-2, 7), Pi))), List(Complex(0, 1), 10))
-discreteshift-h-step	DiscreteShift(a(n), List(n, 2))	a(Add(n, 2))
-discreteshift-floor-i-i	DiscreteShift(Floor(Complex(0, 1)), Complex(0, 1))	DiscreteShift(Complex(0, 1), Complex(0, 1))
-discreteshift-round-i-list-i-3	DiscreteShift(Round(Complex(0, 1)), List(Complex(0, 1), 3))	DiscreteShift(Complex(0, 1), List(Complex(0, 1), 3))

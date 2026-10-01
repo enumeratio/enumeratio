@@ -1,4 +1,0 @@
-id	in	out
-characteristicfunction-normal	CharacteristicFunction(normalDistribution(2, 3), t)	exponentialE ^ (-9 / 2 * t ^ 2 + 2i * t)
-characteristicfunction-poisson	CharacteristicFunction(poissonDistribution(2), 0)	1
-characteristicfunction-cauchy-standard	CharacteristicFunction(CauchyDistribution(0, 1), t)	exponentialE ^ (-abs(t))

@@ -1,5 +1,0 @@
-id	in	out
-true-is-true	IsTrue(True)	True
-false-is-not-true	IsTrue(False)	False
-an-evaluating-comparison	IsTrue(1 == 1)	True
-an-unevaluated-symbol-is-false	IsTrue(x)	False

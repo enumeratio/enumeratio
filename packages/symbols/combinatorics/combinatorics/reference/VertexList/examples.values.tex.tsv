@@ -1,5 +1,0 @@
-id	in	out
-vertices-of-a-path	\mathrm{VertexList}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(3, 1), \mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))	\bigl\lbrack3, 1, 2\bigr\rbrack
-declared-vertices-come-before-edge-endpoints	\mathrm{VertexList}(\mathrm{Graph}(\bigl\lbrack5, 1\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))	\bigl\lbrack5, 1, 2\bigr\rbrack
-length-vertexlist-g	\mathrm{Length}(\mathrm{VertexList}(g))	1
-position-vertexlist-g-c	\mathrm{Position}(\mathrm{VertexList}(g), \text{c})	\bigl\lbrack\bigr\rbrack

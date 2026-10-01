@@ -1,5 +1,0 @@
-id	in	out
-c-4	<AlgebraDimension><TemperleyLiebAlgebra>4</TemperleyLiebAlgebra></AlgebraDimension>	<ToExpression>14</ToExpression>
-the-cup-cap-and-the-identity-all-of-tl-2	<Basis><TemperleyLiebAlgebra>2</TemperleyLiebAlgebra></Basis>	<List><Diagram><List><List>1 2</List> <List>-1 -2</List></List></Diagram> <Diagram><List><List>1 -1</List> <List>2 -2</List></List></Diagram></List>
-the-cup-cap-is-planar-so-it-belongs	<Element><Diagram><List><List>1 2</List> <List>-1 -2</List> <List>3 -3</List></List></Diagram> <TemperleyLiebAlgebra>3</TemperleyLiebAlgebra></Element>	<True />
-e-1-2-delta-e-1	<NonCommutativeMultiply><Diagram><List><List>1 2</List> <List>-1 -2</List></List></Diagram> <Diagram><List><List>1 2</List> <List>-1 -2</List></List></Diagram></NonCommutativeMultiply>	<Multiply>delta <Diagram><List><List>1 2</List> <List>-1 -2</List></List></Diagram></Multiply>

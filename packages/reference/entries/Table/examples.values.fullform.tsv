@@ -1,6 +1,0 @@
-id	in	out
-table-of-i-2-for-i-from-1-to-5	Table(Power(i, 2), Set(i, 1, 5))	List(1, 4, 9, 16, 25)
-odd-numbers-from-1-to-9-stepping-by-2	Table(i, Set(i, 1, 10, 2))	List(1, 3, 5, 7, 9)
-tabulate-x-10	Tabulate(x, 10)	List(x(1), x(2), x(3), x(4), x(5), x(6), x(7), x(8), x(9), x(10))
-the-same-shape-of-table-with-a-plain-function	Table(Function(Power(_1, 2)), 5)	List(1, 4, 9, 16, 25)
-a-constant-body-is-still-evaluated-once-per	Table(0, Set(i, 1, 3))	List(0, 0, 0)

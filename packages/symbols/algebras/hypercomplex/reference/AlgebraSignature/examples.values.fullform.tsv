@@ -1,4 +1,0 @@
-id	in	out
-algebrasignature-quaternions	AlgebraSignature(Quaternions)	List(-1, -1)
-cl-2-1	AlgebraSignature(CliffordAlgebra(2, 1))	List(1, 1, -1)
-nilpotent	AlgebraSignature(DualNumbers)	List(0)

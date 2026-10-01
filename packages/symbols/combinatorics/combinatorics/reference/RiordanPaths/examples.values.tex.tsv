@@ -1,4 +1,0 @@
-id	in	out
-count-riordanpaths-6	\mathrm{Count}(\mathrm{RiordanPaths}(6))	15
-first-element-of-riordanpaths-6	\mathrm{RiordanPaths}(6)[1]	\mathrm{MotzkinPath}(\bigl\lbrack1, 1, 1, -1, -1, -1\bigr\rbrack)
-every-element-of-riordanpaths-6	\mathrm{Take}(\mathrm{RiordanPaths}(6), 5)	\bigl\lbrack\mathrm{MotzkinPath}(\bigl\lbrack1, 1, 1, -1, -1, -1\bigr\rbrack), \mathrm{MotzkinPath}(\bigl\lbrack1, 1, 0, 0, -1, -1\bigr\rbrack), \mathrm{MotzkinPath}(\bigl\lbrack1, 1, 0, -1, 0, -1\bigr\rbrack), \mathrm{MotzkinPath}(\bigl\lbrack1, 1, -1, 1, -1, -1\bigr\rbrack), \mathrm{MotzkinPath}(\bigl\lbrack1, 1, -1, 0, 0, -1\bigr\rbrack)\bigr\rbrack

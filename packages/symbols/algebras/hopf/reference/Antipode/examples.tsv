@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption
-s-m-1-m-1			[Antipode, [QSymM, [List, 1]]]	[Negate, [QSymM, [List, 1]]]	$S(M_1) = -M_1$
-s-2-id-since-qsym-is-commutative	Properties		[Antipode, [Antipode, [QSymM, [List, 1, 2]]]]	[QSymM, [List, 1, 2]]	$S^2 = \mathrm{id}$, since QSym is commutative
-the-product-is-homogeneous-so-degrees-add	Properties		[HopfDegree, [NonCommutativeMultiply, [QSymM, [List, 1]], [QSymM, [List, 2]]]]	3	the product is homogeneous, so degrees add
+id	section	role	expr	expected	caption	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out
+s-m-1-m-1			[Antipode, [QSymM, [List, 1]]]	[Negate, [QSymM, [List, 1]]]	$S(M_1) = -M_1$	Antipode(QSymM([1]))	-QSymM([1])	\mathrm{Antipode}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack))	-\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack)	S(M_{(1)})	-M_{(1)}	Antipode(QSymM(List(1)))	Negate(QSymM(List(1)))	<Antipode><QSymM><List>1</List></QSymM></Antipode>	<Negate><QSymM><List>1</List></QSymM></Negate>
+s-2-id-since-qsym-is-commutative	Properties		[Antipode, [Antipode, [QSymM, [List, 1, 2]]]]	[QSymM, [List, 1, 2]]	$S^2 = \mathrm{id}$, since QSym is commutative										
+the-product-is-homogeneous-so-degrees-add	Properties		[HopfDegree, [NonCommutativeMultiply, [QSymM, [List, 1]], [QSymM, [List, 2]]]]	3	the product is homogeneous, so degrees add										

@@ -1,4 +1,0 @@
-id	in	out
-pairs-keys-with-values-two-argument-form	\operatorname{AssociationThread}([a,b],[1,2])	\operatorname{Association}(\operatorname{Rule}(a,1),\operatorname{Rule}(b,2))
-accepts-the-one-argument-rule-keys-values-form	\operatorname{AssociationThread}(\operatorname{Rule}([a,b],[1,2]))	\operatorname{Association}(\operatorname{Rule}(a,1),\operatorname{Rule}(b,2))
-length-on-the-result-agrees-with-association	\operatorname{Length}(\operatorname{AssociationThread}([a,b,c],[1,2,3]))	3

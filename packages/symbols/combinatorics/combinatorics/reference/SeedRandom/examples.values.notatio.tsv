@@ -1,3 +1,0 @@
-id	in	out
-seedrandom-returns-nothing	<SeedRandom>7</SeedRandom>	<Nothing />
-seedrandom-pins-the-next-draw	<Last><List><SeedRandom>7</SeedRandom> <RandomInteger>100</RandomInteger></List></Last>	<ToExpression>1</ToExpression>

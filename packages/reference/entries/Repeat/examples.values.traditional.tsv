@@ -1,6 +1,0 @@
-id	in	out
-repeat-c-10	\operatorname{Repeat}(c,10)	[c,c,c,c,c,c,c,c,c,c]
-repeat-0-10	\operatorname{Repeat}(0,10)	[0,0,0,0,0,0,0,0,0,0]
-repeat-1-10	\operatorname{Repeat}(1,10)	[1,1,1,1,1,1,1,1,1,1]
-dot-list-repeat-1-length-list	\operatorname{Dot}(\operatorname{list},\operatorname{Repeat}(1,\operatorname{Length}(\operatorname{list})))	\operatorname{Dot}(\operatorname{list},[])
-shape-repeat-c-dims		

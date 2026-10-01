@@ -1,5 +1,0 @@
-id	in	out
-r-1-1-h-1-1-h-2	InCompleteBasis(NSymR([1, 1]))	-NSymH([2]) + NSymH([1, 1])
-the-fundamental-basis-sums-over-refinements	InMonomialBasis(QSymF([2]))	QSymM([2]) + QSymM([1, 1])
-one-signed-term	Antipode(NSymR([3]))	-NSymR([1, 1, 1])
-self-conjugate-the-convention-is-settled-by-the	ConjugateComposition([2, 1])	[2, 1]

@@ -1,6 +1,0 @@
-id	in	out
-the-set-partitions-of-an-explicit-list-in-the	\operatorname{SetPartitions}([a,b,c])	[[[a,b,c]],[[a,b],[c]],[[a,c],[b]],[[a],[b,c]],[[a],[b],[c]]]
-exactly-2-blocks	\operatorname{SetPartitions}(3,2)	[\operatorname{SetPartition}([[1,2],[3]]),\operatorname{SetPartition}([[1,3],[2]]),\operatorname{SetPartition}([[1],[2,3]])]
-the-partitions-of-a-4-set-into-2-blocks-number-s	\operatorname{Count}(\operatorname{SetPartitions}(4,2))	7
-the-family-has-b-4-15-members-see-bellnumber	B_4	15
-those-with-exactly-2-blocks-number-s-4-2-7-see	\begin{Bmatrix}4\\2\end{Bmatrix}	7

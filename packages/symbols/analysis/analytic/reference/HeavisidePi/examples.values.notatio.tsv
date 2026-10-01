@@ -1,8 +1,0 @@
-id	in	out
-heavisidepi-inside	<HeavisidePi>0</HeavisidePi>	<ToExpression>1</ToExpression>
-heavisidepi-boundary-unevaluated	<HeavisidePi><Rational>1 2</Rational></HeavisidePi>	<HeavisidePi><Rational>1 2</Rational></HeavisidePi>
-heavisidepi-neg-boundary-unevaluated	<HeavisidePi><Rational>-1 2</Rational></HeavisidePi>	<HeavisidePi><Rational>-1 2</Rational></HeavisidePi>
-heavisidepi-outside	<HeavisidePi>1</HeavisidePi>	<ToExpression>0</ToExpression>
-heavisidepi-neg-1	<HeavisidePi>-1</HeavisidePi>	<ToExpression>0</ToExpression>
-heavisidepi-1-over-4	<HeavisidePi><Rational>1 4</Rational></HeavisidePi>	<ToExpression>1</ToExpression>
-matrixfunction-heavisidepi-list-list-neg-1-0	<MatrixFunction>HeavisidePi <List><List>-1 0</List> <List>0 1</List></List></MatrixFunction>	<List><List>0 0</List> <List>0 0</List></List>

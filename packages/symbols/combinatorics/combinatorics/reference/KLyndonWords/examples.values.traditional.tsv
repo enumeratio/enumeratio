@@ -1,4 +1,0 @@
-id	in	out
-count-klyndonwords-4-3	\operatorname{Count}(\operatorname{KLyndonWords}(4,3))	18
-first-element-of-klyndonwords-4-3	\operatorname{At}(\operatorname{KLyndonWords}(4,3),1)	[1,1,1,2]
-every-element-of-klyndonwords-4-3	\operatorname{Take}(\operatorname{KLyndonWords}(4,3),6)	[[1,1,1,2],[1,1,1,3],[1,1,2,2],[1,1,2,3],[1,1,3,2],[1,1,3,3]]

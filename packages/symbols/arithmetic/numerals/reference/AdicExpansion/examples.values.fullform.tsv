@@ -1,9 +1,0 @@
-id	in	out
-adicexpansion-adicnumeral-10-1-over-3-8	AdicExpansion(AdicNumeral(10, Rational(1, 3)), 8)	"\"…66666667\""
-the-same-1-3-2-adically	AdicExpansion(AdicNumeral(2, Rational(1, 3)), 8)	"\"…10101011\""
-as-a-list-least-significant-first	AdicDigits(AdicNumeral(10, Rational(1, 3)), 6)	List(7, 6, 6, 6, 6, 6)
-7-25-2-5-2-1-5-1	AdicExpansion(AdicNumeral(5, Rational(7, 25)), 8)	"\"0.12\""
-a-plain-non-negative-integer-terminates-with-no	AdicExpansion(AdicNumeral(10, 42))	"\"42\""
-1-is-the-all-9s-repeating-tail-since-1-999-in-z	AdicExpansion(AdicNumeral(10, -1), 6)	"\"…999999\""
-digits-at-or-above-10-print-bracketed-as-in-15	AdicExpansion(AdicNumeral(16, -1), 3)	"\"…[15][15][15]\""
-digits-run-least-significant-first-1-s-first	AdicDigits(AdicNumeral(10, -1), 4)	List(9, 9, 9, 9)

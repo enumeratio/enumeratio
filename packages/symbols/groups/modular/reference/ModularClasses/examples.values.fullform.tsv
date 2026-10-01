@@ -1,7 +1,0 @@
-id	in	out
-four-closed-geodesics-of-symbolic-length-4	ModularClasses(4)	List("LLLR", "LLRR", "LRLR", "LRRR")
-same-word-length-as-lllr-different-geodesic	ModularTrace("LRLR")	7
-the-same-geodesic-entered-elsewhere	ModularClass("LRL")	"\"LLR\""
-lrlr-is-lr-traversed-twice	IsPrimitiveClass("LRLR")	False
-the-same-geodesic-yet-again	ModularClass("RLL")	"\"LLR\""
-lrr-is-primitive	IsPrimitiveClass("LRR")	True

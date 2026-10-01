@@ -1,5 +1,0 @@
-id	in	out
-randominteger-default-seed-is-reproducible	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(42), \mathrm{RandomInteger}(100)\bigr\rbrack)	60
-randominteger-range-scope	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(1), \mathrm{RandomInteger}(\bigl\lbrack10, 20\bigr\rbrack)\bigr\rbrack)	16
-randominteger-list-of-draws	\mathrm{Length}(\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(2), \mathrm{RandomInteger}(6, 10)\bigr\rbrack))	10
-randominteger-array-shape	\mathrm{Shape}(\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(3), \mathrm{RandomInteger}(1, \bigl\lbrack2, 3\bigr\rbrack)\bigr\rbrack))	(2,3)

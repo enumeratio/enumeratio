@@ -1,4 +1,0 @@
-id	in	out
-algebradimension-quaternions	\dim(\operatorname{Quaternions})	4
-algebradimension-cliffordalgebra-2-1	\dim(\operatorname{Cl}_{2,1}(\mathbb{R}))	8
-c-4	\dim(\mathbb{C}_4)	16

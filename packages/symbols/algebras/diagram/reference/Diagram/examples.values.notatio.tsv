@@ -1,5 +1,0 @@
-id	in	out
-the-cup-cap-squared-closes-one-loop-e-1-2-delta	<NonCommutativeMultiply><Diagram><List><List>1 2</List> <List>-1 -2</List></List></Diagram> <Diagram><List><List>1 2</List> <List>-1 -2</List></List></Diagram></NonCommutativeMultiply>	<Multiply>delta <Diagram><List><List>1 2</List> <List>-1 -2</List></List></Diagram></Multiply>
-e-1e-2e-1-e-1-with-no-loop-closed	<NonCommutativeMultiply><Diagram><List><List>1 2</List> <List>-1 -2</List> <List>3 -3</List></List></Diagram> <Diagram><List><List>2 3</List> <List>-2 -3</List> <List>1 -1</List></List></Diagram> <Diagram><List><List>1 2</List> <List>-1 -2</List> <List>3 -3</List></List></Diagram></NonCommutativeMultiply>	<Diagram><List><List>1 2</List> <List>3 -3</List> <List>-1 -2</List></List></Diagram>
-blocks-come-back-in-canonical-order	<Diagram><List><List>-1 -2</List> <List>3 -3</List> <List>1 2</List></List></Diagram>	<Diagram><List><List>1 2</List> <List>3 -3</List> <List>-1 -2</List></List></Diagram>
-malformed-the-point-2-is-missing-so-it-is-left	<Diagram><List><List>1 -1</List> <List>2</List></List></Diagram>	<Diagram><List><List>1 -1</List> <List>2</List></List></Diagram>

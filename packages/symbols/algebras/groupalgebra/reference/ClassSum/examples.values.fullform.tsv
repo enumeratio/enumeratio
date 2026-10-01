@@ -1,5 +1,0 @@
-id	in	out
-the-identity-s-class-is-a-singleton	ClassSum(DihedralGroup(3), 1)	GroupBasis("0")
-in-an-abelian-group-everything-is-central	IsCentral(CyclicGroup(6), GroupBasis(String(3)))	True
-class-sums-are-central	IsCentral(DihedralGroup(3), ClassSum(DihedralGroup(3), 2))	True
-a-lone-reflection-is-not	IsCentral(DihedralGroup(3), GroupBasis(String(s0)))	False

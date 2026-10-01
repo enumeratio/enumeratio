@@ -1,21 +1,21 @@
-id	section	role	expr	expected	known	source	caption
-omega-12-3			[LiouvilleLambda, 12]	-1			$\Omega(12)=3$
-liouvillelambda-10			[LiouvilleLambda, 10]	1			
-liouvillelambda-1			[LiouvilleLambda, 1]	1			
-liouvillelambda-8			[LiouvilleLambda, 8]	-1			
-liouvillelambda-9			[LiouvilleLambda, 9]	1			
-listable	Scope		[LiouvilleLambda, [Range, 10]]	[List, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1]			Listable
-liouvillelambda-1-plus-10-pow-30	Scope		[LiouvilleLambda, [Add, 1, [Power, 10, 30]]]	-1			
-liouvillelambda-list-1-2-3-4-5-6	Scope		[LiouvilleLambda, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, -1, -1, 1, -1, 1]			
-lambda-n-1-omega-n-see-primeomega	Properties		[Equal, [LiouvilleLambda, 360], [Power, -1, [PrimeOmega, 360]]]	True			$\lambda(n)=(-1)^{\Omega(n)}$. See [[PrimeOmega]]
-liouvillelambda-162-eq-liouvillelambda-6-times	Properties		[Equal, [LiouvilleLambda, 162], [Multiply, [LiouvilleLambda, 6], [LiouvilleLambda, 27]]]	True			
-liouvillelambda-60	Properties		[LiouvilleLambda, 60]	1			
-liouvillelambda-30	Properties		[LiouvilleLambda, 30]	-1			
-liouvillelambda-120	Properties		[LiouvilleLambda, 120]	-1			
-liouvillelambda-25	Properties		[LiouvilleLambda, 25]	1			
-liouvillelambda-2	Properties		[LiouvilleLambda, 2]	-1	-1	Wolfram MathematicalFunctionData, LiouvilleLambda	
-liouvillelambda-3	Properties		[LiouvilleLambda, 3]	-1	-1	Wolfram MathematicalFunctionData, LiouvilleLambda	
-liouvillelambda-4	Properties		[LiouvilleLambda, 4]	1	1	Wolfram MathematicalFunctionData, LiouvilleLambda	
-liouvillelambda-6	Properties		[LiouvilleLambda, 6]	1	1	Wolfram MathematicalFunctionData, LiouvilleLambda	
-divisorsum-64-function-liouvillelambda-1-1	Properties		[DivisorSum, 64, [Function, [Block, [LiouvilleLambda, _1]], _1]]	1			
-divisorsum-7-function-liouvillelambda-1-1	Properties		[DivisorSum, 7, [Function, [Block, [LiouvilleLambda, _1]], _1]]	0			
+id	section	role	expr	expected	known	source	caption	epsil.back
+omega-12-3			[LiouvilleLambda, 12]	-1			$\Omega(12)=3$	
+liouvillelambda-10			[LiouvilleLambda, 10]	1				
+liouvillelambda-1			[LiouvilleLambda, 1]	1				
+liouvillelambda-8			[LiouvilleLambda, 8]	-1				
+liouvillelambda-9			[LiouvilleLambda, 9]	1				
+listable	Scope		[LiouvilleLambda, [Range, 10]]	[List, 1, -1, -1, 1, -1, 1, -1, -1, 1, 1]			Listable	
+liouvillelambda-1-plus-10-pow-30	Scope		[LiouvilleLambda, [Add, 1, [Power, 10, 30]]]	-1				
+liouvillelambda-list-1-2-3-4-5-6	Scope		[LiouvilleLambda, [List, 1, 2, 3, 4, 5, 6]]	[List, 1, -1, -1, 1, -1, 1]				
+lambda-n-1-omega-n-see-primeomega	Properties		[Equal, [LiouvilleLambda, 360], [Power, -1, [PrimeOmega, 360]]]	True			$\lambda(n)=(-1)^{\Omega(n)}$. See [[PrimeOmega]]	
+liouvillelambda-162-eq-liouvillelambda-6-times	Properties		[Equal, [LiouvilleLambda, 162], [Multiply, [LiouvilleLambda, 6], [LiouvilleLambda, 27]]]	True				
+liouvillelambda-60	Properties		[LiouvilleLambda, 60]	1				
+liouvillelambda-30	Properties		[LiouvilleLambda, 30]	-1				
+liouvillelambda-120	Properties		[LiouvilleLambda, 120]	-1				
+liouvillelambda-25	Properties		[LiouvilleLambda, 25]	1				
+liouvillelambda-2	Properties		[LiouvilleLambda, 2]	-1	-1	Wolfram MathematicalFunctionData, LiouvilleLambda		
+liouvillelambda-3	Properties		[LiouvilleLambda, 3]	-1	-1	Wolfram MathematicalFunctionData, LiouvilleLambda		
+liouvillelambda-4	Properties		[LiouvilleLambda, 4]	1	1	Wolfram MathematicalFunctionData, LiouvilleLambda		
+liouvillelambda-6	Properties		[LiouvilleLambda, 6]	1	1	Wolfram MathematicalFunctionData, LiouvilleLambda		
+divisorsum-64-function-liouvillelambda-1-1	Properties		[DivisorSum, 64, [Function, [Block, [LiouvilleLambda, _1]], _1]]	1				Unreadable
+divisorsum-7-function-liouvillelambda-1-1	Properties		[DivisorSum, 7, [Function, [Block, [LiouvilleLambda, _1]], _1]]	0				Unreadable

@@ -1,4 +1,0 @@
-id	in	out
-count-lukasiewiczpaths-4	<Count><LukasiewiczPaths>4</LukasiewiczPaths></Count>	<ToExpression>14</ToExpression>
-first-element-of-lukasiewiczpaths-4	<At><LukasiewiczPaths>4</LukasiewiczPaths> 1</At>	<LukasiewiczPath><List>0 0 0 0 -1</List></LukasiewiczPath>
-every-element-of-lukasiewiczpaths-4	<Take><LukasiewiczPaths>4</LukasiewiczPaths> 5</Take>	<List><LukasiewiczPath><List>0 0 0 0 -1</List></LukasiewiczPath> <LukasiewiczPath><List>0 0 1 -1 -1</List></LukasiewiczPath> <LukasiewiczPath><List>0 1 0 -1 -1</List></LukasiewiczPath> <LukasiewiczPath><List>1 0 0 -1 -1</List></LukasiewiczPath> <LukasiewiczPath><List>0 1 -1 0 -1</List></LukasiewiczPath></List>

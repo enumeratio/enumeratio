@@ -1,4 +1,0 @@
-id	in	out
-counts-code-points-not-utf-16-units	<StringLength><String>`a😀b`</String></StringLength>	<ToExpression>3</ToExpression>
-stringlength-tiger	<StringLength>"tiger"</StringLength>	<ToExpression>5</ToExpression>
-stringlength	<StringLength>""</StringLength>	<ToExpression>0</ToExpression>

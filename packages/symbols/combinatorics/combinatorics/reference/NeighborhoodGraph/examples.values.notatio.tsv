@@ -1,3 +1,0 @@
-id	in	out
-immediate-neighbours-on-a-path	<VertexList><NeighborhoodGraph><PathGraph>7</PathGraph> 4</NeighborhoodGraph></VertexList>	<List>3 4 5</List>
-radius-2	<VertexList><NeighborhoodGraph><PathGraph>7</PathGraph> 4 2</NeighborhoodGraph></VertexList>	<List>2 3 4 5 6</List>

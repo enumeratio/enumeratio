@@ -1,4 +1,0 @@
-id	in	out
-fareysequence-5	<FareySequence>5</FareySequence>	<List>0 <Rational>1 5</Rational> <Rational>1 4</Rational> <Rational>1 3</Rational> <Rational>2 5</Rational> <Rational>1 2</Rational> <Rational>3 5</Rational> <Rational>2 3</Rational> <Rational>3 4</Rational> <Rational>4 5</Rational> 1</List>
-fareysequence-3	<FareySequence>3</FareySequence>	<List>0 <Rational>1 3</Rational> <Rational>1 2</Rational> <Rational>2 3</Rational> 1</List>
-fareysequence-50-list-500	<At><FareySequence>50</FareySequence> 500</At>	<Rational>29 45</Rational>

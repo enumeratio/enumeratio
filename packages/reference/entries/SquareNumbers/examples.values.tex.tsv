@@ -1,2 +1,0 @@
-id	in	out
-the-first-five-squares	\mathrm{Take}(\mathrm{SquareNumbers}, 5)	\bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack

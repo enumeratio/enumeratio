@@ -1,25 +1,32 @@
-// Every formula written in the site's markdown pages, and every example's own TeX (as written and as evaluated, in StandardForm and TraditionalForm)
+// Every formula written in the site's markdown pages, and every example's own TeX from the built forms table (as written and as evaluated, in StandardForm and TraditionalForm)
 // typesets in KaTeX once `portableTeX` has rewritten compute-engine's MathLive-only commands:
 // the reference page's cells draw them that way.
 
 import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { createRequire } from "node:module";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { closeDollar } from "@enumeratio/boxes/render";
 import { portableTeX } from "@enumeratio/formats/tex";
-import { referenceData } from "@enumeratio/reference/node";
 import katex from "katex";
 import { expect, test } from "vite-plus/test";
 import { repoRoot, workspacePackages } from "./data/repo-docs.ts";
 
+type Printed = { in?: string; out?: string };
+// Written by @enumeratio/frontend's build (scripts/build-forms.ts).
+const FORMS = JSON.parse(
+  readFileSync(
+    join(dirname(createRequire(import.meta.url).resolve("@enumeratio/frontend/package.json")), "generated/forms.json"),
+    "utf8",
+  ),
+) as Record<string, Record<string, Record<string, Printed | undefined>>>;
+
 test("every example's TeX typesets in KaTeX", { timeout: 60_000 }, () => {
   const failed: string[] = [];
   let typeset = 0;
-  for (const { head, entry, implementations } of referenceData().heads) {
-    // A row in triage isn't on the page, so its TeX isn't typeset there.
-    const triage = new Set(entry.examples.filter((e) => e.role === "triage").map((e) => e.id));
-    for (const [id, forms] of Object.entries(implementations ?? {})) {
-      if (triage.has(id)) continue;
+  // The built forms table holds no row in triage: those aren't on the page.
+  for (const [head, examples] of Object.entries(FORMS))
+    for (const [id, forms] of Object.entries(examples))
       for (const system of ["tex", "traditional"] as const) {
         const form = forms[system];
         for (const latex of [form?.in, form?.out]) {
@@ -32,8 +39,6 @@ test("every example's TeX typesets in KaTeX", { timeout: 60_000 }, () => {
           }
         }
       }
-    }
-  }
   expect(typeset).toBeGreaterThan(10_000);
   expect(failed).toEqual([]);
 });

@@ -1,6 +1,0 @@
-id	in	out
-discreteshift-one-step	\operatorname{DiscreteShift}(a(n),n)	a(n+1)
-discreteshift-sin-neg-2-over-7-times-i-times-pi	\operatorname{DiscreteShift}(\sin(\frac{-2}{7}i\pi),[i,10])	\operatorname{DiscreteShift}(i\sinh(\frac{-2}{7}\pi),[i,10])
-discreteshift-h-step	\operatorname{DiscreteShift}(a(n),[n,2])	a(n+2)
-discreteshift-floor-i-i	\operatorname{DiscreteShift}(\lfloor i\rfloor,i)	\operatorname{DiscreteShift}(i,i)
-discreteshift-round-i-list-i-3	\operatorname{DiscreteShift}(\operatorname{Round}(i),[i,3])	\operatorname{DiscreteShift}(i,[i,3])

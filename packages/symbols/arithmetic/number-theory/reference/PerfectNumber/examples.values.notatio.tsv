@@ -1,6 +1,0 @@
-id	in	out
-perfectnumber-1	<PerfectNumber>1</PerfectNumber>	<ToExpression>6</ToExpression>
-perfectnumber-3	<PerfectNumber>3</PerfectNumber>	<ToExpression>496</ToExpression>
-perfectnumber-5	<PerfectNumber>5</PerfectNumber>	<ToExpression>33550336</ToExpression>
-listable	<PerfectNumber><List>1 2 3 4</List></PerfectNumber>	<List>6 28 496 8128</List>
-perfectnumber-range-1-10	<PerfectNumber><Range>1 10</Range></PerfectNumber>	<List>6 28 496 8128 33550336 8589869056 137438691328 2305843008139952128 2658455991569831744654692615953842176 191561942608236107294793378084303638130997321548169216</List>

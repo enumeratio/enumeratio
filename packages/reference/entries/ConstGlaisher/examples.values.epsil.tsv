@@ -1,5 +1,0 @@
-id	in	out
-const-glaisher-numeric-value	N(ConstGlaisher)	1.282_427_129_100_622_6
-n-constglaisher-50	N(ConstGlaisher, 50)	1.282_427_129_100_622_636_875_342_568_869_791_727_767_688_927_325
-round-constglaisher-pow-100	round(ConstGlaisher ^ 100)	63_572_555_914
-1-lt-constglaisher-lt-2	1 < ConstGlaisher < 2	True

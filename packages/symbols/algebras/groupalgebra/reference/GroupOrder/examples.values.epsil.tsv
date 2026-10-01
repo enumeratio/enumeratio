@@ -1,7 +1,0 @@
-id	in	out
-a-dihedral-group	GroupOrder(DihedralGroup(100))	200
-grouporder-permutationgroup-list-cycles-list	"GroupOrder(PermutationGroup([\n                              Cycles([[2, 10], [4, 11], [5, 7], [8, 9]]),\n                              Cycles([[1, 4, 3, 8], [2, 5, 6, 7]]),\n                            ]))"	2_880
-a-permutation-group	GroupOrder(PermutationGroup([Cycles([[1, 9, 6], [3, 7]])]))	6
-the-symmetric-group	GroupOrder(SymmetricGroup(4))	24
-grouporder-permutationgroup-list	GroupOrder(PermutationGroup([]))	1
-grouporder-permutationgroup-list-cycles-list-2	GroupOrder(PermutationGroup([Cycles([])]))	1

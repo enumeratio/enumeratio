@@ -1,4 +1,0 @@
-id	in	out
-wiener-slice-mean	\mathrm{mean}(\mathrm{SliceDistribution}(\mathrm{WienerProcess}(2, 3), 5))	10
-wiener-slice-variance	\mathrm{Variance}(\mathrm{SliceDistribution}(\mathrm{WienerProcess}(0, 3), 4))	36
-wiener-default-slice	\mathrm{SliceDistribution}(\mathrm{WienerProcess}(), 4)	\operatorname{NormalDistribution}(0, 2)

@@ -1,5 +1,0 @@
-id	in	out
-a-triangle-vertices-inferred	\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,1)])	\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,1)])
-an-isolated-vertex-needs-the-explicit-form	\operatorname{VertexList}(\operatorname{Graph}([1,2,3],[\operatorname{UndirectedEdge}(1,2)]))	[1,2,3]
-the-1-arg-form-is-not-normalized-to-2-arg	\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3)])	\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3)])
-edgeweight-option-is-held-exactly	\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3)],\operatorname{KeyValuePair}(\operatorname{EdgeWeight},[5,7]))	\operatorname{Graph}([\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3)],(\operatorname{EdgeWeight},[5,7]))

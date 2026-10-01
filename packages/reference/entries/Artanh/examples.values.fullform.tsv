@@ -1,9 +1,0 @@
-id	in	out
-n-artanh-1-over-2-50	N(Artanh(Rational(1, 2)), 50)	0.54930614433405484569762261846126285232374527891137
-artanh-positiveinfinity	Artanh(PositiveInfinity)	Multiply(Complex(0, Rational(-1, 2)), Pi)
-artanh-0	Artanh(0)	0
-d-artanh-x-x	D(Artanh(x), x)	Divide(1, Add(Negate(Power(x, 2)), 1))
-fullsimplify-neg-1-over-x-times-y-plus-1-times-x	FullSimplify(Add(Negate(Multiply(Divide(1, Add(Multiply(x, y), 1)), Add(x, y))), Tanh(Add(Artanh(x), Artanh(y)))))	Add(Divide(Add(Negate(x), Negate(y)), Add(Multiply(x, y), 1)), Tanh(Add(Artanh(x), Artanh(y))))
-trigtoexp-artanh-z	TrigToExp(Artanh(z))	Artanh(z)
-integrate-artanh-x-x-nothing-nothing	Integrate(Function(Block(Artanh(x)), x), Limits(x, Nothing, Nothing))	Add(Multiply(x, Artanh(x)), Multiply(Rational(1, 2), Ln(Add(Negate(Power(x, 2)), 1))))
-artanh-complexinfinity-is-indeterminate-the-sign	Artanh(ComplexInfinity)	Indeterminate

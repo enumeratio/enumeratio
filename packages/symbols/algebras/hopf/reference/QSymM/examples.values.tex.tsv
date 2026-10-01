@@ -1,5 +1,0 @@
-id	in	out
-the-quasi-shuffle-overlap-term-included	\mathrm{NonCommutativeMultiply}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack))	2\mathrm{QSymM}(\bigl\lbrack1, 1\bigr\rbrack)+\mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack)
-two-interleavings-and-one-overlap	\mathrm{NonCommutativeMultiply}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack))	\mathrm{QSymM}(\bigl\lbrack3\bigr\rbrack)+\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack)+\mathrm{QSymM}(\bigl\lbrack2, 1\bigr\rbrack)
-nsym-just-concatenates	\mathrm{NonCommutativeMultiply}(\mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack), \mathrm{NSymH}(\bigl\lbrack1, 3\bigr\rbrack))	\mathrm{NSymH}(\bigl\lbrack2, 1, 3\bigr\rbrack)
-2-4-compositions-of-5	\mathrm{AlgebraDimension}(\mathrm{QSymAlgebra}(5))	16

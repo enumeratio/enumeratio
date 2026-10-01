@@ -1,4 +1,0 @@
-id	in	out
-count-semistandardtableaux-4-3-39-every-ssyt-of	<Count><SemistandardTableaux>4 3</SemistandardTableaux></Count>	<ToExpression>39</ToExpression>
-every-element-of-semistandardtableaux-3-2	<Take><SemistandardTableaux>3 2</SemistandardTableaux> 6</Take>	<List><List><List>1 1</List> <List>2</List></List> <List><List>1 2</List> <List>2</List></List> <List><List>1 1 1</List></List> <List><List>1 1 2</List></List> <List><List>1 2 2</List></List> <List><List>2 2 2</List></List></List>
-the-first-ssyt-of-3-cells-with-entries-in-1-2-as	<At><SemistandardTableaux>3 2</SemistandardTableaux> 1</At>	<List><List>1 1</List> <List>2</List></List>

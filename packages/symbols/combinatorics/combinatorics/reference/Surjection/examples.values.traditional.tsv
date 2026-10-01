@@ -1,2 +1,0 @@
-id	in	out
-from-a-set-composition	\operatorname{Surjection}(\operatorname{SetComposition}([[2,4],[1],[3]]))	\operatorname{Surjection}([2,1,3,1])

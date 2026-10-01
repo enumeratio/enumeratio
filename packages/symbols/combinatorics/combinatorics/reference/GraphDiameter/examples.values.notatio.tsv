@@ -1,3 +1,0 @@
-id	in	out
-path-5-has-diameter-4	<GraphDiameter><Graph><List>1 2 3 4 5</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>2 3</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge> <UndirectedEdge>4 5</UndirectedEdge></List></Graph></GraphDiameter>	<ToExpression>4</ToExpression>
-disconnected-graph-has-infinite-diameter	<GraphDiameter><Graph><List>1 2 3 4</List> <List><UndirectedEdge>1 2</UndirectedEdge> <UndirectedEdge>3 4</UndirectedEdge></List></Graph></GraphDiameter>	<PositiveInfinity />

@@ -1,6 +1,0 @@
-id	in	out
-grouporder-cyclicgroup-10	\mathrm{GroupOrder}(\mathrm{CyclicGroup}(10))	10
-groupelements-cyclicgroup-10	\mathrm{GroupElements}(\mathrm{CyclicGroup}(10))	\bigl\lbrack\mathrm{GroupBasis}(\text{0}), \mathrm{GroupBasis}(\text{1}), \mathrm{GroupBasis}(\text{2}), \mathrm{GroupBasis}(\text{3}), \mathrm{GroupBasis}(\text{4}), \mathrm{GroupBasis}(\text{5}), \mathrm{GroupBasis}(\text{6}), \mathrm{GroupBasis}(\text{7}), \mathrm{GroupBasis}(\text{8}), \mathrm{GroupBasis}(\text{9})\bigr\rbrack
-groupelements-cyclicgroup-1	\mathrm{GroupElements}(\mathrm{CyclicGroup}(1))	\bigl\lbrack\mathrm{GroupBasis}(\text{0})\bigr\rbrack
-groupelements-cyclicgroup-2	\mathrm{GroupElements}(\mathrm{CyclicGroup}(2))	\bigl\lbrack\mathrm{GroupBasis}(\text{0}), \mathrm{GroupBasis}(\text{1})\bigr\rbrack
-groupelements-cyclicgroup-3	\mathrm{GroupElements}(\mathrm{CyclicGroup}(3))	\bigl\lbrack\mathrm{GroupBasis}(\text{0}), \mathrm{GroupBasis}(\text{1}), \mathrm{GroupBasis}(\text{2})\bigr\rbrack

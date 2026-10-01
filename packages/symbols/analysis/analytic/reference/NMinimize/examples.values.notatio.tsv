@@ -1,3 +1,0 @@
-id	in	out
-a-quartic-with-two-symmetric-minima	<NMinimize><List><Subtract><Power>x 4</Power> <Power>x 2</Power></Subtract> <And><GreaterEqual>x -2</GreaterEqual> <LessEqual>x 2</LessEqual></And></List> x</NMinimize>	<List>-0.25 <List><Rule>x -0.707106778558382</Rule></List></List>
-declines-without-a-bounded-constraint	<NMinimize><Power>x 2</Power> x</NMinimize>	<NMinimize><Power>x 2</Power> x</NMinimize>

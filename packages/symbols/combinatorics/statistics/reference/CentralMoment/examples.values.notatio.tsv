@@ -1,4 +1,0 @@
-id	in	out
-centralmoment-order-0	<CentralMoment><ChiSquareDistribution>3</ChiSquareDistribution> 0</CentralMoment>	<ToExpression>1</ToExpression>
-centralmoment-order-1	<CentralMoment><ChiSquareDistribution>3</ChiSquareDistribution> 1</CentralMoment>	<ToExpression>0</ToExpression>
-centralmoment-order-2-is-variance	<CentralMoment><ChiSquareDistribution>3</ChiSquareDistribution> 2</CentralMoment>	<ToExpression>6</ToExpression>

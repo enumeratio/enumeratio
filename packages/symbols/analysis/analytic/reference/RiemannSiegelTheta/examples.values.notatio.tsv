@@ -1,5 +1,0 @@
-id	in	out
-riemannsiegeltheta-1p5	<RiemannSiegelTheta>1.5</RiemannSiegelTheta>	<ToExpression>-2.19819085737941</ToExpression>
-n-riemannsiegeltheta-10	<N><RiemannSiegelTheta>10</RiemannSiegelTheta></N>	<ToExpression>-3.0670743962898954</ToExpression>
-riemannsiegeltheta-50	<N><RiemannSiegelTheta>50</RiemannSiegelTheta></N>	<ToExpression>26.46136607016141</ToExpression>
-riemannsiegeltheta-0	<RiemannSiegelTheta>0</RiemannSiegelTheta>	<ToExpression>0</ToExpression>

@@ -1,7 +1,0 @@
-id	in	out
-erfi-0	<Erfi>0</Erfi>	<ToExpression>0</ToExpression>
-erfi-0p5	<Erfi>0.5</Erfi>	<ToExpression>0.61495209469651098084</ToExpression>
-erfi-1	<N><Erfi>1</Erfi></N>	<ToExpression>1.65042575879754287603</ToExpression>
-threads-element-wise-over-a-list	<Erfi><List>0 1</List></Erfi>	<List>0 <Erfi>1</Erfi></List>
-listable-threads-over-its-limits-at-pm-infty	<Erfi><List>PositiveInfinity NegativeInfinity</List></Erfi>	<List>PositiveInfinity NegativeInfinity</List>
-erfi-complexinfinity-is-indeterminate-inheriting	<Erfi>ComplexInfinity</Erfi>	<Indeterminate />

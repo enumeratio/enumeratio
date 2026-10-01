@@ -1,4 +1,0 @@
-id	in	out
-characteristicfunction-normal	<CharacteristicFunction><NormalDistribution>2 3</NormalDistribution> t</CharacteristicFunction>	<Power>ExponentialE <Add><Multiply><Rational>-9 2</Rational> <Power>t 2</Power></Multiply> <Multiply><Complex>0 2</Complex> t</Multiply></Add></Power>
-characteristicfunction-poisson	<CharacteristicFunction><PoissonDistribution>2</PoissonDistribution> 0</CharacteristicFunction>	<ToExpression>1</ToExpression>
-characteristicfunction-cauchy-standard	<CharacteristicFunction><CauchyDistribution>0 1</CauchyDistribution> t</CharacteristicFunction>	<Power>ExponentialE <Negate><Abs>t</Abs></Negate></Power>

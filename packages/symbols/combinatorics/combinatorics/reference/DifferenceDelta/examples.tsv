@@ -2,7 +2,7 @@ id	section	role	expr	expected	caption	triage	wolfram.note
 quadratic			[DifferenceDelta, [Power, n, 2], n]	[Add, [Multiply, 2, n], 1]	$(n+1)^2 - n^2 = 2n + 1$		
 linear			[DifferenceDelta, [Add, [Multiply, 3, n], 5], n]	3	The forward difference of a linear function is its slope, everywhere		
 differencedelta-fallingfactorial-k-n-k			[DifferenceDelta, [FallingFactorial, k, n], k]	[Add, [Negate, [FallingFactorial, k, n]], [FallingFactorial, [Add, k, 1], n]]			
-shift-var-named-i	Scope		[DifferenceDelta, [a, i], i]	[Add, [Negate, [a, [Complex, 0, 1]]], [a, [Complex, 1, 1]]]	Naming the index $i$ resolves it to the imaginary unit first, not a fresh bound variable		Wolfram's `{i, ...}` binds `i` as a local dummy that shadows the built-in `I`; ours has no such shadowing, so a Wolfram example naming its index `i` collides with our imaginary unit. Renaming the index avoids it.
+shift-var-named-i	Scope	triage	[DifferenceDelta, [a, i], i]	[Add, [Negate, [a, i]], [a, [Add, i, 1]]]	Naming the index $i$ keeps it a bound variable, not the imaginary unit	gap	CE lifts a variable i to ImaginaryUnit at canonical boxing; guards the roadmap fix
 differencedelta-binomial-i-plus-n-n-i	Scope	triage	[DifferenceDelta, [Binomial, [Add, i, n], n], i]	[Add, [Negate, [Binomial, [Add, n, [Complex, 0, 1]], n]], [Binomial, [Add, n, [Complex, 1, 1]], n]]		unscanned	
 differencedelta-gamma-i-i	Scope	triage	[DifferenceDelta, [Gamma, i], i]	[Add, [Negate, [Gamma, [Complex, 0, 1]]], [Gamma, [Complex, 1, 1]]]		unscanned	
 differencedelta-beta-i-n-i	Scope	triage	[DifferenceDelta, [Beta, i, n], i]	[Add, [Negate, [Beta, [Complex, 0, 1], n]], [Beta, [Complex, 1, 1], n]]		unscanned	

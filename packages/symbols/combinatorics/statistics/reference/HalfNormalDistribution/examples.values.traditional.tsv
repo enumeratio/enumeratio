@@ -1,5 +1,0 @@
-id	in	out
-halfnormal-pdf-exact	\operatorname{PDF}(\operatorname{HalfNormalDistribution}(1),1)	\frac{\sqrt{2}}{\sqrt{e\pi}}
-halfnormal-cdf-exact	\operatorname{CDF}(\operatorname{HalfNormalDistribution}(1),1)	\operatorname{Erf}(\frac{\sqrt{2}}{2})
-halfnormal-mean-exact	\operatorname{Mean}(\operatorname{HalfNormalDistribution}(1))	\sqrt{\frac{2}{\pi}}
-halfnormal-variance-exact	\operatorname{Variance}(\operatorname{HalfNormalDistribution}(1))	\frac{-2+\pi}{\pi}

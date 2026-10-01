@@ -1,5 +1,0 @@
-id	in	out
-geometric-pdf-exact	\operatorname{PDF}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)	\frac{9}{64}
-geometric-cdf-exact	\operatorname{CDF}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)	\frac{37}{64}
-geometric-mean-exact	\mathrm{mean}(\mathrm{GeometricDistribution}(\frac{1}{4}))	3
-geometric-variance-exact	\mathrm{Variance}(\mathrm{GeometricDistribution}(\frac{1}{4}))	12

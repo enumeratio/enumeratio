@@ -1,3 +1,0 @@
-id	in	out
-from-a-dyck-path	BinaryTree(DyckPath([1, 1, 0, 0, 1, 0]))	BinaryTree([[0, 0], [0, 0]])
-from-a-parent-array	BinaryTree(BinaryTreeParentArray([2, 0, 2, 3]))	BinaryTree([[0, 0], [0, [0, 0]]])

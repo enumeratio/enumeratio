@@ -1,4 +1,0 @@
-id	in	out
-dirichlet-mean	\operatorname{Mean}(\operatorname{DirichletDistribution}([1,4,5]))	[\frac{1}{10},\frac{2}{5}]
-dirichlet-variance	\operatorname{Variance}(\operatorname{DirichletDistribution}([1,4,5]))	[\frac{9}{1100},\frac{6}{275}]
-dirichlet-pdf	\operatorname{PDF}(\operatorname{DirichletDistribution}([1,4,5]),[\frac{1}{10},\frac{2}{5}])	\frac{\Gamma(10)}{250\Gamma(1)\Gamma(4)\Gamma(5)}

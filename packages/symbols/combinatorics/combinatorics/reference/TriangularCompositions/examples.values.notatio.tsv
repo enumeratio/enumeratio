@@ -1,4 +1,0 @@
-id	in	out
-count-triangularcomposition-6	<Count><TriangularCompositions>6</TriangularCompositions></Count>	<ToExpression>7</ToExpression>
-first-element-of-triangularcomposition-6	<At><TriangularCompositions>6</TriangularCompositions> 1</At>	<Composition><List>1 1 1 1 1 1</List></Composition>
-every-element-of-triangularcomposition-6	<Take><TriangularCompositions>6</TriangularCompositions> 7</Take>	<List><Composition><List>1 1 1 1 1 1</List></Composition> <Composition><List>1 1 1 3</List></Composition> <Composition><List>1 1 3 1</List></Composition> <Composition><List>1 3 1 1</List></Composition> <Composition><List>3 1 1 1</List></Composition> <Composition><List>3 3</List></Composition> <Composition><List>6</List></Composition></List>

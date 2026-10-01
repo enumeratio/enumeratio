@@ -1,7 +1,0 @@
-id	in	out
-a-floating-point-argument-evaluates-directly-to	<N><JacobiNS>0.3 0.5</JacobiNS></N>	<ToExpression>3.4081683817923323</ToExpression>
-jacobins-0-4-0-5i-0-3	<N><JacobiNS><Complex>0.4 -0.5</Complex> 0.3</JacobiNS></N>	<Complex>1.0615623894068558 1.111029734408047</Complex>
-m-less-than-0-via-the-imaginary-modulus	<N><JacobiNS>0.3 -2</JacobiNS></N>	<ToExpression>3.2892206837526348</ToExpression>
-u-0-is-a-pole-for-any-m	<JacobiNS>0 m</JacobiNS>	<ComplexInfinity />
-symbolic-arguments-are-left-unevaluated-rather	<JacobiNS>u m</JacobiNS>	<JacobiNS>u m</JacobiNS>
-u-1e16-declines-rather-than-answering-wrong	<N><JacobiNS><Power>10 16</Power> <Rational>2 3</Rational></JacobiNS></N>	<JacobiNS>10000000000000000 0.666666666666666666667</JacobiNS>

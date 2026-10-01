@@ -1,2 +1,0 @@
-id	in	out
-the-composition-2-1-3	\mathrm{CutWord}(\mathrm{Composition}(\bigl\lbrack2, 1, 3\bigr\rbrack))	\mathrm{BinaryWord}(\bigl\lbrack0, 0, 1, 1, 0\bigr\rbrack)

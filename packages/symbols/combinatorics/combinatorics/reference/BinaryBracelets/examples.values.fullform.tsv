@@ -1,3 +1,0 @@
-id	in	out
-count-binarybracelets-6-13-a000029	Count(BinaryBracelets(6))	13
-every-element-of-binarybracelets-6	Take(BinaryBracelets(6), 13)	List(List(0, 0, 0, 0, 0, 0), List(0, 0, 0, 0, 0, 1), List(0, 0, 0, 0, 1, 1), List(0, 0, 0, 1, 0, 1), List(0, 0, 0, 1, 1, 1), List(0, 0, 1, 0, 0, 1), List(0, 0, 1, 0, 1, 1), List(0, 0, 1, 1, 1, 1), List(0, 1, 0, 1, 0, 1), List(0, 1, 0, 1, 1, 1), List(0, 1, 1, 0, 1, 1), List(0, 1, 1, 1, 1, 1), List(1, 1, 1, 1, 1, 1))

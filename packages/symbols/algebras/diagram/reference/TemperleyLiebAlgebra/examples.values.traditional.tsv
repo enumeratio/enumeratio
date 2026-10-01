@@ -1,5 +1,0 @@
-id	in	out
-c-4	\dim(\operatorname{TL}_4)	14
-the-cup-cap-and-the-identity-all-of-tl-2	\operatorname{Basis}(\operatorname{TL}_2)	[\operatorname{Diagram}([[1,2],[-1,-2]]),\operatorname{Diagram}([[1,-1],[2,-2]])]
-the-cup-cap-is-planar-so-it-belongs	\operatorname{Diagram}([[1,2],[-1,-2],[3,-3]])\in\operatorname{TL}_3	\top
-e-1-2-delta-e-1	\operatorname{NonCommutativeMultiply}(\operatorname{Diagram}([[1,2],[-1,-2]]),\operatorname{Diagram}([[1,2],[-1,-2]]))	\delta\operatorname{Diagram}([[1,2],[-1,-2]])

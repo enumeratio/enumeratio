@@ -1,7 +1,0 @@
-id	in	out
-dft-of-1-2-3-4	\operatorname{Fourier}([1,2,3,4])	[5,-1.0-1.0i,-1,-1.0+1.0i]
-round-trips-through-inversefourier	\operatorname{InverseFourier}(\operatorname{Fourier}([1,2,3,4]))	[1,2,3,4]
-a-2x2-matrix-the-separable-2d-transform	\operatorname{Fourier}([[1,2],[3,4]])	[[5,-1],[-2,0]]
-a-custom-fourierparameters	\operatorname{Fourier}([1,2,3,4],\operatorname{KeyValuePair}(\operatorname{FourierParameters},[1,-1]))	[10,-2.0+2.0i,-2,-2.0-2.0i]
-fourier-n-x-24	\operatorname{Fourier}(N(x,24))	\operatorname{Fourier}(x)
-declines-a-symbolic-list	\operatorname{Fourier}([a,b])	\operatorname{Fourier}([a,b])

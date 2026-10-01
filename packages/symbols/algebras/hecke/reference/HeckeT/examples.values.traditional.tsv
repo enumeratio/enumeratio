@@ -1,6 +1,0 @@
-id	in	out
-length-goes-up-so-no-q-appears	\operatorname{NonCommutativeMultiply}(T_{213},T_{132})	T_{231}
-n-the-same-basis-as-z-s-n	\dim(H_4(q))	24
-the-quadratic-relation-t-s-2-q-q-1-t-s	\operatorname{NonCommutativeMultiply}(T_{213},T_{213})	qT_{123}+(q-1)T_{213}
-t-st-tt-s-the-longest-element-of-s-3	\operatorname{NonCommutativeMultiply}(T_{213},T_{132},T_{213})	T_{321}
-and-t-tt-st-t-gives-the-same-which-is-the-braid	\operatorname{NonCommutativeMultiply}(T_{132},T_{213},T_{132})	T_{321}

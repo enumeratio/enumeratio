@@ -1,4 +1,0 @@
-id	in	out
-momentgeneratingfunction-gamma	\mathrm{MomentGeneratingFunction}(\mathrm{GammaDistribution}(2, 1), t)	\frac{1}{(1-t)^2}
-momentgeneratingfunction-poisson-at-zero	\mathrm{MomentGeneratingFunction}(\operatorname{PoissonDistribution}(2), 0)	1
-momentgeneratingfunction-cauchy-undeclared	\mathrm{MomentGeneratingFunction}(\mathrm{CauchyDistribution}(0, 1), 1)	\mathrm{MomentGeneratingFunction}(\mathrm{CauchyDistribution}(0, 1), 1)

@@ -1,5 +1,0 @@
-id	in	out
-replaces-a-single-1-based-position	<ReplacePart><List>a b c</List> <Rule>2 z</Rule></ReplacePart>	<List>a z c</List>
-with-a-negative-position-counts-from-the-end	<ReplacePart><List>a b c</List> <Rule>-1 z</Rule></ReplacePart>	<List>a b z</List>
-applies-a-list-of-rules	<ReplacePart><List>a b c</List> <List><Rule>1 x</Rule> <Rule>3 y</Rule></List></ReplacePart>	<List>x b y</List>
-with-a-nested-i-j-position-drills-into-a-sublist	<ReplacePart><List><List>a b</List> c</List> <Rule><List>1 2</List> z</Rule></ReplacePart>	<List><List>a z</List> c</List>

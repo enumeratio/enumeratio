@@ -1,6 +1,0 @@
-id	in	out
-a-perfect-square-is-never-negative	<FunctionSign><Power>x 2</Power> x</FunctionSign>	<ToExpression>1</ToExpression>
-a-sum-of-a-square-and-a-positive-constant	<FunctionSign><Divide>1 <Add><Power>x 2</Power> 1</Add></Divide> x</FunctionSign>	<ToExpression>1</ToExpression>
-exp-is-always-positive	<FunctionSign><Exp>x</Exp> x</FunctionSign>	<ToExpression>1</ToExpression>
-map-function-functionsign-1-x-1-list-x-pow-2-x	<Map><Function><Block><FunctionSign>_1 x</FunctionSign></Block> _1</Function> <List><Power>x 2</Power> <Add><Power>x 2</Power> 1</Add></List></Map>	<List>1 1</List>
-a-cubic-changes-sign	<FunctionSign><Power>x 3</Power> x</FunctionSign>	<FunctionSign><Power>x 3</Power> x</FunctionSign>

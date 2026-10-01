@@ -1,4 +1,0 @@
-id	in	out
-count-palindromiccompositions-6	<Count><PalindromicCompositions>6</PalindromicCompositions></Count>	<ToExpression>8</ToExpression>
-first-element-of-palindromiccompositions-6	<At><PalindromicCompositions>6</PalindromicCompositions> 1</At>	<Composition><List>1 1 2 1 1</List></Composition>
-every-element-of-palindromiccompositions-6	<Take><PalindromicCompositions>6</PalindromicCompositions> 8</Take>	<List><Composition><List>1 1 2 1 1</List></Composition> <Composition><List>2 2 2</List></Composition> <Composition><List>1 4 1</List></Composition> <Composition><List>6</List></Composition> <Composition><List>1 1 1 1 1 1</List></Composition> <Composition><List>1 2 2 1</List></Composition> <Composition><List>2 1 1 2</List></Composition> <Composition><List>3 3</List></Composition></List>

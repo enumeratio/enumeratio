@@ -1,4 +1,0 @@
-id	in	out
-1-to-2-then-2-to-3	\operatorname{QuiverCompose}({\vec{A}}_4,\operatorname{QuiverPath}(1,[0]),\operatorname{QuiverPath}(2,[1]))	\operatorname{QuiverPath}(1,[0,1])
-the-ends-do-not-meet	\operatorname{QuiverCompose}({\vec{A}}_4,\operatorname{QuiverPath}(2,[1]),\operatorname{QuiverPath}(1,[0]))	0
-a-trivial-path-is-a-local-identity	\operatorname{QuiverCompose}({\vec{A}}_4,\operatorname{QuiverPath}(1,[]),\operatorname{QuiverPath}(1,[0]))	\operatorname{QuiverPath}(1,[0])

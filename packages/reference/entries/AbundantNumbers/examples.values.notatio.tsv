@@ -1,4 +1,0 @@
-id	in	out
-the-first-five-abundant-numbers	<Take>AbundantNumbers 5</Take>	<List>12 18 20 24 30</List>
-12-is-abundant	<Element>12 AbundantNumbers</Element>	<True />
-28-is-perfect-not-abundant	<Element>28 AbundantNumbers</Element>	<False />

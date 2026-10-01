@@ -1,6 +1,0 @@
-id	in	out
-an-interior-point	\operatorname{IsIntervalMember}([1,5],3)	\top
-isintervalmember-interval-2-5-pi	\operatorname{IsIntervalMember}([2,5],\pi)	\top
-a-closed-endpoint-is-a-member	\operatorname{IsIntervalMember}([1,5],5)	\top
-an-open-endpoint-is-not-a-member	\operatorname{IsIntervalMember}((1,5],1)	\bot
-outside-the-interval	\operatorname{IsIntervalMember}([1,5],6)	\bot

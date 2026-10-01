@@ -1,4 +1,0 @@
-id	in	out
-poisson-process-slice-mean	<Mean><SliceDistribution><PoissonProcess>3</PoissonProcess> 5</SliceDistribution></Mean>	<ToExpression>15</ToExpression>
-poisson-process-slice-distribution	<SliceDistribution><PoissonProcess>2</PoissonProcess> 3</SliceDistribution>	<PoissonDistribution>6</PoissonDistribution>
-poisson-process-slice-variance	<Variance><SliceDistribution><PoissonProcess>2</PoissonProcess> 3</SliceDistribution></Variance>	<ToExpression>6</ToExpression>

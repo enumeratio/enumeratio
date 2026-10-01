@@ -1,9 +1,0 @@
-id	in	out
-2-over-17-lt-eq-1-over-5-lt-eq-1-over-10-times	\frac{2}{17}\le\frac{1}{5}\le\frac{\pi}{10}	\mathrm{True}
-3-over-2-lt-eq-5-over-3	\frac{3}{2}\le\frac{5}{3}	\mathrm{True}
-n-pi-20-lt-eq-pi	N(\pi, 20)\le\pi	\mathrm{True}
-pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	\pi^{e}\le e^{\pi}	\mathrm{True}
-sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	\sqrt{2}+\sqrt{3}\le\sqrt{5+2\sqrt{6}}	\mathrm{True}
-n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	N(\pi, 20)\le\pi(1-\frac{256}{10^{20}})	\mathrm{True}
-x-lt-eq-x	x\le x	\mathrm{True}
-refine-sqrt-x-pow-2-x-lt-eq-0	\mathrm{Refine}(\sqrt{x^2}, x\le0)	-x

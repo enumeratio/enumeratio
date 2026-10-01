@@ -1,4 +1,0 @@
-id	in	out
-fareysequence-5	FareySequence(5)	[0, 1 / 5, 1 / 4, 1 / 3, 2 / 5, 1 / 2, 3 / 5, 2 / 3, 3 / 4, 4 / 5, 1]
-fareysequence-3	FareySequence(3)	[0, 1 / 3, 1 / 2, 2 / 3, 1]
-fareysequence-50-list-500	FareySequence(50)[500]	29 / 45

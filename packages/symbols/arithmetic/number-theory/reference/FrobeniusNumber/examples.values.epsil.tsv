@@ -1,6 +1,0 @@
-id	in	out
-the-mcnugget-number	FrobeniusNumber([6, 9, 20])	43
-frobeniusnumber-list-3-5	FrobeniusNumber([3, 5])	7
-frobeniusnumber-list-12-16-20-27	FrobeniusNumber([12, 16, 20, 27])	89
-two-generators-ab-a-b	FrobeniusNumber([4, 7])	17
-not-coprime-infinitely-many-numbers-are	FrobeniusNumber([2, 4])	positiveInfinity

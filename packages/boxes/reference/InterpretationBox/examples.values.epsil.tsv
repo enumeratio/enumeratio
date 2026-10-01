@@ -1,2 +1,0 @@
-id	in	out
-held	InterpretationBox("F", 2 + 3)	InterpretationBox("F", 2 + 3)

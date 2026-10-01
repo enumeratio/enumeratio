@@ -1,2 +1,0 @@
-id	in	out
-the-first-11-terms	take(FibonacciPrimes, 11)	[2, 3, 5, 13, 89, 233, 1_597, 28_657, 514_229, 433_494_437, 2_971_215_073]

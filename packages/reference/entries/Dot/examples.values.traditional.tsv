@@ -1,7 +1,0 @@
-id	in	out
-dot-list-a-b-c-list-x-y-z	\operatorname{Dot}([a,b,c],[x,y,z])	ax+by+cz
-dot-list-list-a-b-list-c-d-list-x-y	\operatorname{Dot}([[a,b],[c,d]],[x,y])	[ax+by,cx+dy]
-dot-list-x-y-list-list-a-b-list-c-d	\operatorname{Dot}([x,y],[[a,b],[c,d]])	[ax+cy,bx+dy]
-dot-list-1-2-3-4-5-list-1-8-9-0-neg-1	\operatorname{Dot}([1,2,3,4,5],[1,8,9,0,-1])	39
-dot-list-a-b-c-list-0-b-d-plus-exponentiale	\operatorname{Dot}([a,b,c],[0,b,d+e])	b^2+cd+ec
-dot-list-list-2-0-0-list-0-0-35-over-2-list-0-35	\operatorname{Dot}([[2,0,0],[0,0,\frac{35}{2}],[0,\frac{35}{2},0]],[[8,0,0],[0,0,10],[0,10,0]])	[[16,0,0],[0,175,0],[0,0,175]]

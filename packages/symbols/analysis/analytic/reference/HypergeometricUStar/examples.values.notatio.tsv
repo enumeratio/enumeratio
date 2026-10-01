@@ -1,8 +1,0 @@
-id	in	out
-u-frac-12-frac-32-2-1	<Chop><Subtract><N><HypergeometricUStar><Rational>1 2</Rational> <Rational>3 2</Rational> 2</HypergeometricUStar></N> 1</Subtract></Chop>	<ToExpression>0.0</ToExpression>
-a-generic-point-checked-against-mpmath-s-hyperu	<HypergeometricUStar>1.3 2.7 4</HypergeometricUStar>	<ToExpression>1.1137052905867906</ToExpression>
-a-complex-point-checked-against-mpmath-s-hyperu	<HypergeometricUStar>1 2.5 <Complex>3 1</Complex></HypergeometricUStar>	<Complex>1.1347341768643813 -0.04036080125312244</Complex>
-another-point-checked-against-mpmath-s-hyperu	<HypergeometricUStar>0.2 0.6 1.5</HypergeometricUStar>	<ToExpression>0.94573733904295</ToExpression>
-a-third-point-checked-against-mpmath-s-hyperu	<HypergeometricUStar>2 4.5 5</HypergeometricUStar>	<ToExpression>1.680941114165958</ToExpression>
-a-negative-a-checked-against-mpmath-s-hyperu	<HypergeometricUStar>-0.5 1.5 2</HypergeometricUStar>	<ToExpression>0.75</ToExpression>
-integer-b-stays-symbolic-the-connection-formula	<HypergeometricUStar>1 2 3</HypergeometricUStar>	<HypergeometricUStar>1 2 3</HypergeometricUStar>

@@ -1,3 +1,0 @@
-id	in	out
-a-local-counter	\mathrm{Module}(\bigl\lbrack i=0\bigr\rbrack, i\coloneq i+1)	1
-locals-do-not-leak-or-clobber	\bigl\lbrack\mathrm{Module}(\bigl\lbrack n=10\bigr\rbrack, n+1), \mathrm{Module}(\bigl\lbrack n=20\bigr\rbrack, n+1)\bigr\rbrack	\bigl\lbrack11, 21\bigr\rbrack

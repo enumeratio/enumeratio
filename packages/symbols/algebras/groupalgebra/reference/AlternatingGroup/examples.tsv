@@ -1,13 +1,13 @@
-id	section	role	expr	expected	caption
-order-is-n-factorial-over-two			[GroupOrder, [AlternatingGroup, 5]]	60	$|A_5| = 5!/2 = 60$
-generators-odd-n			[GroupGenerators, [AlternatingGroup, 5]]	[List, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2, 3, 4, 5]]]]	for odd $n$, an $n$-cycle is even — $(1\,2\,3\,4\,5)$ decomposes into 4 transpositions
-generators-even-n			[GroupGenerators, [AlternatingGroup, 4]]	[List, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 2, 3, 4]]]]	for even $n$, the full $n$-cycle would be odd, so the second generator is one point shorter: $(2\,3\,4)$
-generators-collapse-at-three			[GroupGenerators, [AlternatingGroup, 3]]	[List, [Cycles, [List, [List, 1, 2, 3]]]]	at $n = 3$ the two generators coincide, so there is only one
-elements-of-a3			[GroupElements, [AlternatingGroup, 3]]	[List, [Cycles, [List]], [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 3, 2]]]]	$A_3$ is cyclic of order 3 — the identity and the two 3-cycles
-grouporder-alternatinggroup-10			[GroupOrder, [AlternatingGroup, 10]]	1814400	
-groupgenerators-alternatinggroup-10			[GroupGenerators, [AlternatingGroup, 10]]	[List, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 2, 3, 4, 5, 6, 7, 8, 9, 10]]]]	
-groupelements-alternatinggroup-4			[GroupElements, [AlternatingGroup, 4]]	[List, [Cycles, [List]], [Cycles, [List, [List, 2, 3, 4]]], [Cycles, [List, [List, 2, 4, 3]]], [Cycles, [List, [List, 1, 2], [List, 3, 4]]], [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2, 4]]], [Cycles, [List, [List, 1, 3, 2]]], [Cycles, [List, [List, 1, 3, 4]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]], [Cycles, [List, [List, 1, 4, 2]]], [Cycles, [List, [List, 1, 4, 3]]], [Cycles, [List, [List, 1, 4], [List, 2, 3]]]]	
-trivial-for-n-equals-one	Scope		[GroupOrder, [AlternatingGroup, 1]]	1	$A_1$ is the trivial group — $1!/2$ isn't even an integer, so this is a base case, not the formula
-trivial-for-n-equals-two	Scope		[GroupOrder, [AlternatingGroup, 2]]	1	$A_2$ is trivial too — $S_2$'s only even permutation is the identity
-groupelements-alternatinggroup-1	Scope		[GroupElements, [AlternatingGroup, 1]]	[List, [Cycles, [List]]]	
-groupelements-alternatinggroup-2	Scope		[GroupElements, [AlternatingGroup, 2]]	[List, [Cycles, [List]]]	
+id	section	role	expr	expected	caption	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out
+order-is-n-factorial-over-two			[GroupOrder, [AlternatingGroup, 5]]	60	$|A_5| = 5!/2 = 60$	GroupOrder(AlternatingGroup(5))	60	\mathrm{GroupOrder}(\mathrm{AlternatingGroup}(5))	60	|\operatorname{AlternatingGroup}(5)|	60	GroupOrder(AlternatingGroup(5))	60	<GroupOrder><AlternatingGroup>5</AlternatingGroup></GroupOrder>	<ToExpression>60</ToExpression>
+generators-odd-n			[GroupGenerators, [AlternatingGroup, 5]]	[List, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2, 3, 4, 5]]]]	for odd $n$, an $n$-cycle is even — $(1\,2\,3\,4\,5)$ decomposes into 4 transpositions										
+generators-even-n			[GroupGenerators, [AlternatingGroup, 4]]	[List, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 2, 3, 4]]]]	for even $n$, the full $n$-cycle would be odd, so the second generator is one point shorter: $(2\,3\,4)$										
+generators-collapse-at-three			[GroupGenerators, [AlternatingGroup, 3]]	[List, [Cycles, [List, [List, 1, 2, 3]]]]	at $n = 3$ the two generators coincide, so there is only one										
+elements-of-a3			[GroupElements, [AlternatingGroup, 3]]	[List, [Cycles, [List]], [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 3, 2]]]]	$A_3$ is cyclic of order 3 — the identity and the two 3-cycles										
+grouporder-alternatinggroup-10			[GroupOrder, [AlternatingGroup, 10]]	1814400											
+groupgenerators-alternatinggroup-10			[GroupGenerators, [AlternatingGroup, 10]]	[List, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 2, 3, 4, 5, 6, 7, 8, 9, 10]]]]											
+groupelements-alternatinggroup-4			[GroupElements, [AlternatingGroup, 4]]	[List, [Cycles, [List]], [Cycles, [List, [List, 2, 3, 4]]], [Cycles, [List, [List, 2, 4, 3]]], [Cycles, [List, [List, 1, 2], [List, 3, 4]]], [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2, 4]]], [Cycles, [List, [List, 1, 3, 2]]], [Cycles, [List, [List, 1, 3, 4]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]], [Cycles, [List, [List, 1, 4, 2]]], [Cycles, [List, [List, 1, 4, 3]]], [Cycles, [List, [List, 1, 4], [List, 2, 3]]]]											
+trivial-for-n-equals-one	Scope		[GroupOrder, [AlternatingGroup, 1]]	1	$A_1$ is the trivial group — $1!/2$ isn't even an integer, so this is a base case, not the formula										
+trivial-for-n-equals-two	Scope		[GroupOrder, [AlternatingGroup, 2]]	1	$A_2$ is trivial too — $S_2$'s only even permutation is the identity										
+groupelements-alternatinggroup-1	Scope		[GroupElements, [AlternatingGroup, 1]]	[List, [Cycles, [List]]]											
+groupelements-alternatinggroup-2	Scope		[GroupElements, [AlternatingGroup, 2]]	[List, [Cycles, [List]]]											

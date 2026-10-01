@@ -1,3 +1,0 @@
-id	in	out
-append-to-a-bound-list	<List><Assign>appendToDemoList <List>1 2 3</List></Assign> <AppendTo>appendToDemoList 4</AppendTo></List>	<List><List>1 2 3</List> <List>1 2 3 4</List></List>
-appendto-m-list-e-f		

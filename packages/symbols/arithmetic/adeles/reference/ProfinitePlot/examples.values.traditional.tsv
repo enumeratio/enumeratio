@@ -1,3 +1,0 @@
-id	in	out
-the-identity-function-an-anti-diagonal-of-filled	\operatorname{ProfinitePlot}(x,x,3)	\operatorname{ArrayPlot}([[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,1,0,0],[0,0,1,0,0,0],[0,1,0,0,0,0],[1,0,0,0,0,0]])
-k-capped-at-6-a-larger-precision-refuses	\operatorname{ProfinitePlot}(x,x,9)	\operatorname{ProfinitePlot}(x,x,9)

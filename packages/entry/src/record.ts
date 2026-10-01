@@ -4,8 +4,9 @@
 //                                     markdown body's list
 //   examples.tsv                      one row per example, in page order: everything written
 //                                     by hand, including each system's classification columns
-//   examples.values.<system>.tsv      generated: that system's writing of each example (and,
-//                                     for another system, its answer), same rows
+//                                     and our own forms' pinned snapshots (`epsil.in`, …)
+//   examples.values.<system>.tsv      generated: another system's writing of each example and
+//                                     its answer, same rows. Our own forms are built, not kept.
 //
 // Read, the folder is the same `ReferenceEntry` and `HeadImplementations` the tools have always
 // had; written, those split back into these files. Node-only.
@@ -14,7 +15,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { join } from "node:path";
 import { format } from "oxfmt";
 import { FORMAT } from "./format.ts";
-import { orderImplementations } from "./order.ts";
+import { OWN_FORMS, orderImplementations } from "./order.ts";
 import { bySection } from "./sections.ts";
 import { SYSTEM_ORDER } from "./sources.ts";
 import { type Cell, decodeCell, encodeCell, parseTsv, stringifyTsv } from "./tsv.ts";
@@ -62,6 +63,22 @@ const HAND_FIELDS: readonly (readonly [string, Cell])[] = [
 ];
 const HAND = new Set(HAND_FIELDS.map(([field]) => field));
 
+/** Our own forms' snapshot fields, pinned by hand in examples.tsv as `<form>.<field>`: a
+ * printed `in` or `out`, and what one reads back as where the trip loses something. */
+const PIN_FIELDS: readonly (readonly [string, Cell])[] = [
+  ["in", "text"],
+  ["out", "text"],
+  ["back", "flow"],
+  ["backOut", "flow"],
+];
+const PIN = new Set(PIN_FIELDS.map(([field]) => field));
+const OWN = new Set<string>(OWN_FORMS);
+
+/** Whether `system`'s `field` is written by hand in examples.tsv rather than generated. */
+const isHand = (system: string, field: string): boolean => HAND.has(field) || (OWN.has(system) && PIN.has(field));
+const handFieldsOf = (system: string): readonly (readonly [string, Cell])[] =>
+  OWN.has(system) ? [...PIN_FIELDS, ...HAND_FIELDS] : HAND_FIELDS;
+
 /** A values file's columns after `id`. `tex` splits in two; anything else is a flow column. */
 const VALUE_COLUMNS: readonly (readonly [string, Cell])[] = [
   ["in", "text"],
@@ -71,7 +88,6 @@ const VALUE_COLUMNS: readonly (readonly [string, Cell])[] = [
   ["tex.out", "text"],
   ["verdict", "text"],
   ["messages", "flow"],
-  ["back", "flow"],
 ];
 
 const cellOf = (columns: readonly (readonly [string, Cell])[], column: string): Cell =>
@@ -131,10 +147,12 @@ function exampleTable(examples: readonly ReferenceExample[], record: HeadImpleme
   for (const rows of Object.values(record))
     for (const [system, row] of Object.entries(rows))
       for (const field of Object.keys(row))
-        if (HAND.has(field)) (hand.get(system) ?? hand.set(system, new Set()).get(system)!).add(field);
+        if (isHand(system, field)) (hand.get(system) ?? hand.set(system, new Set()).get(system)!).add(field);
   const systems = [...hand.keys()].toSorted(bySystem);
   const handColumns = systems.flatMap((system) =>
-    HAND_FIELDS.filter(([field]) => hand.get(system)!.has(field)).map(([field, cell]) => ({ system, field, cell })),
+    handFieldsOf(system)
+      .filter(([field]) => hand.get(system)!.has(field))
+      .map(([field, cell]) => ({ system, field, cell })),
   );
   const always = new Set(["id", "section", "role", "expr", "expected"]);
   const used = EXAMPLE_COLUMNS.filter(([column, field]) => always.has(column) || examples.some((e) => field in e));
@@ -164,7 +182,7 @@ function valueTable(system: string, examples: readonly ReferenceExample[], recor
   const present = new Set<string>();
   for (const { id } of examples)
     for (const [field, value] of Object.entries(rowOf(id) ?? {}))
-      if (!HAND.has(field))
+      if (!isHand(system, field))
         if (field === "tex") ["tex.in", "tex.out"].forEach((c) => present.add(c));
         else if (value !== undefined) present.add(field);
   const known = VALUE_COLUMNS.map(([c]) => c).filter((c) => present.has(c));
@@ -186,7 +204,7 @@ function valueTable(system: string, examples: readonly ReferenceExample[], recor
   return stringifyTsv({ columns, rows });
 }
 
-const SYSTEM_RANK = ["epsil", "tex", "traditional", "fullform", "notatio", ...SYSTEM_ORDER];
+const SYSTEM_RANK: readonly string[] = [...OWN_FORMS, ...SYSTEM_ORDER];
 function bySystem(a: string, b: string): number {
   const rank = (s: string): number => (SYSTEM_RANK.indexOf(s) + 1 || SYSTEM_RANK.length + 1) - 1;
   return rank(a) - rank(b) || (a < b ? -1 : a > b ? 1 : 0);
@@ -251,7 +269,7 @@ export function decodeHead(files: ReadonlyMap<string, string>): HeadRecord {
           if (value !== undefined) example[spec[1]] = value;
         } else if (dot > 0) {
           const [system, field] = [column.slice(0, dot), column.slice(dot + 1)];
-          const value = decodeCell(row[column]!, cellOf(HAND_FIELDS, field));
+          const value = decodeCell(row[column]!, cellOf(handFieldsOf(system), field));
           if (value !== undefined) ((record[row["id"]!] ??= {})[system] ??= {})[field] = value;
         } else {
           const value = decodeCell(row[column]!, "flow");
@@ -299,7 +317,7 @@ export async function headFiles({ entry, implementations = {}, body }: HeadRecor
   files.set(EXAMPLES_FILE, exampleTable(clean, implementations));
   for (const system of systemsOf(implementations)) {
     const hasGenerated = Object.values(implementations).some((rows) =>
-      Object.keys((rows[system] ?? {}) as SystemImplementation).some((field) => !HAND.has(field)),
+      Object.keys((rows[system] ?? {}) as SystemImplementation).some((field) => !isHand(system, field)),
     );
     if (hasGenerated) files.set(valuesFile(system), valueTable(system, clean, implementations));
   }

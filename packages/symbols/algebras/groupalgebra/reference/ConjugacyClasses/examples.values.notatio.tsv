@@ -1,5 +1,0 @@
-id	in	out
-abelian-one-class-per-element	<GroupCentreDimension><CyclicGroup>6</CyclicGroup></GroupCentreDimension>	<ToExpression>6</ToExpression>
-d-3-cong-s-3	<GroupCentreDimension><DihedralGroup>3</DihedralGroup></GroupCentreDimension>	<ToExpression>3</ToExpression>
-direct-products-work-too	<GroupOrder><GroupDirectProduct><CyclicGroup>2</CyclicGroup> <CyclicGroup>3</CyclicGroup></GroupDirectProduct></GroupOrder>	<ToExpression>6</ToExpression>
-4-6-2	<GroupCentreDimension><DihedralGroup>4</DihedralGroup></GroupCentreDimension>	<ToExpression>5</ToExpression>

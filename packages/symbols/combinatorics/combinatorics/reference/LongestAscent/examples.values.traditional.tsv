@@ -1,3 +1,0 @@
-id	in	out
-the-step-word-uuddud	\operatorname{LongestAscent}(\operatorname{DyckPath}([1,1,0,0,1,0]))	2
-the-step-word-uduudd	\operatorname{LongestAscent}(\operatorname{DyckPath}([1,0,1,1,0,0]))	2

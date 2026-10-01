@@ -1,7 +1,0 @@
-id	in	out
-a-quadratic-s-minimum-value	MinValue(x ^ 2 - 4x + 3, x)	-1
-a-simple-interval-constraint	MinValue([x ^ 2, x >= 1], x)	1
-minvalue-2-times-x-pow-2-minus-3x-plus-5-x	MinValue(2 * x ^ 2 - 3x + 5, x)	31 / 8
-the-amplitude-of-cosine-alone-is-exact	MinValue(cos(3x - 1), x)	-1
-exp-s-infimum	MinValue(exp(x), x)	0
-timeconstrained-minvalue-list-x-pow-2-plus-y-pow	"TimeConstrained(MinValue([\n                           x ^ 2 + y ^ 2 + z ^ 2,\n                           x ^ 2 - 3 * x * y * z + 9 * z ^ 2 + y ^ 2 ==\n                           exponentialE && x * y * z <= pi,\n                         ], [x, y, z]), 60)"	"MinValue([x ^ 2 + y ^ 2 + z ^ 2, x ^ 2 - 3 * x * y * z + 9 * z ^ 2 + y ^ 2 ==\n                                 exponentialE && x * y * z <= pi], [x, y, z])"

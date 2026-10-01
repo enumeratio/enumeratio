@@ -1,7 +1,0 @@
-id	in	out
-sine-s-period-is-2-pi	\operatorname{FunctionPeriod}(\sin(x),x)	2\pi
-tangent-s-period-is-pi	\operatorname{FunctionPeriod}(\tan(x),x)	\pi
-scaling-the-argument-scales-the-period	\operatorname{FunctionPeriod}(\sin(2x),x)	\pi
-exp-is-not-periodic	\operatorname{FunctionPeriod}(e^x,x)	0
-a-polynomial-is-not-periodic	\operatorname{FunctionPeriod}(x^2,x)	0
-assuming-a-gt-0-functionperiod-sin-a-times-x-x	\operatorname{Assuming}(a>0,\operatorname{FunctionPeriod}(\sin(ax),x))	\operatorname{FunctionPeriod}(\sin(ax),x)

@@ -1,4 +1,0 @@
-id	in	out
-lim-x-to-0-sin-x-x-1	\lim_0\frac{\sin(\_1)}{\_1}	1
-right-hand-limit-of-1-x-at-0-is-infinity	\lim_0\frac{1}{\_1}	\infty
-limit-of-1-x-as-x-to-infinity-is-0	\lim_{\infty}\frac{1}{\_1}	0

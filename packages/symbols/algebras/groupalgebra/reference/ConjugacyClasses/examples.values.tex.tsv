@@ -1,5 +1,0 @@
-id	in	out
-abelian-one-class-per-element	\mathrm{GroupCentreDimension}(\mathrm{CyclicGroup}(6))	6
-d-3-cong-s-3	\mathrm{GroupCentreDimension}(\mathrm{DihedralGroup}(3))	3
-direct-products-work-too	\mathrm{GroupOrder}(\mathrm{GroupDirectProduct}(\mathrm{CyclicGroup}(2), \mathrm{CyclicGroup}(3)))	6
-4-6-2	\mathrm{GroupCentreDimension}(\mathrm{DihedralGroup}(4))	5

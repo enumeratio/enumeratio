@@ -1,3 +1,0 @@
-id	in	out
-vertex-count-of-k4	\mathrm{VertexCount}(\mathrm{CompleteGraph}(4))	4
-vertex-count-of-a-triangle	\mathrm{VertexCount}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 1)\bigr\rbrack))	3

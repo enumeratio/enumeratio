@@ -1,3 +1,0 @@
-id	in	out
-a-quartic-with-two-symmetric-minima	NMinimize([x ^ 4 - x ^ 2, x >= -2 && x <= 2], x)	[-0.25, [Rule(x, -0.707_106_778_558_382)]]
-declines-without-a-bounded-constraint	NMinimize(x ^ 2, x)	NMinimize(x ^ 2, x)

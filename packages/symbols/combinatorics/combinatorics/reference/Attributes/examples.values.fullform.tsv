@@ -1,5 +1,0 @@
-id	in	out
-adds-attributes	Attributes(Add)	List(Flat, HoldAll, Listable, Orderless)
-attributes-f	Attributes(f)	List()
-attributes-syms	Attributes(syms)	List()
-attributes-attributes		

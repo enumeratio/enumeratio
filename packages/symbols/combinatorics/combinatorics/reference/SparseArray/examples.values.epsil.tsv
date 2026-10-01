@@ -1,5 +1,0 @@
-id	in	out
-sparsearray-vector	SparseArray([Rule(1, x), Rule(3, y)], 4)	[x, 0, y, 0]
-sparsearray-infers-dims	SparseArray([Rule([1, 1], 5), Rule([2, 2], 7)])	[[5, 0], [0, 7]]
-sparsearray-custom-default	SparseArray([Rule(2, 9)], 3, -1)	[-1, 9, -1]
-sparsearray-normal-is-identity	normal(SparseArray([Rule(1, a)], 2))	[a, 0]

@@ -1,3 +1,0 @@
-id	in	out
-directed-edge-counts-once-at-the-head	\operatorname{VertexInDegree}(\operatorname{Graph}([1,2,3],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(3,2)]),2)	2
-undirected-edge-ignored-on-a-mixed-graph	\operatorname{VertexInDegree}(\operatorname{Graph}([1,2,3],[\operatorname{DirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{DirectedEdge}(3,1)]))	[1,1,0]

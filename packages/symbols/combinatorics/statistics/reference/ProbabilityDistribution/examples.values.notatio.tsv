@@ -1,9 +1,0 @@
-id	in	out
-probability-distribution-pdf-in-range	<PDF><ProbabilityDistribution><Multiply>2 x</Multiply> <List>x 0 1</List></ProbabilityDistribution> <Rational>1 2</Rational></PDF>	<ToExpression>1</ToExpression>
-probability-distribution-pdf-outside	<PDF><ProbabilityDistribution><Multiply>2 x</Multiply> <List>x 0 1</List></ProbabilityDistribution> 2</PDF>	<ToExpression>0</ToExpression>
-probability-distribution-mean	<Mean><ProbabilityDistribution><Multiply>2 x</Multiply> <List>x 0 1</List></ProbabilityDistribution></Mean>	<Rational>2 3</Rational>
-probability-distribution-variance	<Variance><ProbabilityDistribution><Multiply>2 x</Multiply> <List>x 0 1</List></ProbabilityDistribution></Variance>	<Rational>1 18</Rational>
-probability-distribution-cdf	<CDF><ProbabilityDistribution><Multiply>2 x</Multiply> <List>x 0 1</List></ProbabilityDistribution> <Rational>1 2</Rational></CDF>	<Rational>1 4</Rational>
-probability-distribution-discrete-pdf	<PDF><ProbabilityDistribution><Rational>1 4</Rational> <List>x 1 4 1</List></ProbabilityDistribution> 2</PDF>	<Rational>1 4</Rational>
-probability-distribution-discrete-mean	<Mean><ProbabilityDistribution><Rational>1 4</Rational> <List>x 1 4 1</List></ProbabilityDistribution></Mean>	<Rational>5 2</Rational>
-probability-distribution-stays-unevaluated	<Mean><ProbabilityDistribution><Sin><Power>x x</Power></Sin> <List>x 0 1</List></ProbabilityDistribution></Mean>	<Mean><ProbabilityDistribution><Sin><Power>x x</Power></Sin> <List>x 0 1</List></ProbabilityDistribution></Mean>

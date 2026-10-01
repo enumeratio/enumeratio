@@ -1,4 +1,0 @@
-id	in	out
-characteristicfunction-normal	\mathrm{CharacteristicFunction}(\operatorname{NormalDistribution}(2, 3), t)	e^{2i t-\frac{9t^2}{2}}
-characteristicfunction-poisson	\mathrm{CharacteristicFunction}(\operatorname{PoissonDistribution}(2), 0)	1
-characteristicfunction-cauchy-standard	\mathrm{CharacteristicFunction}(\mathrm{CauchyDistribution}(0, 1), t)	e^{-\vert t\vert}

@@ -1,5 +1,0 @@
-id	in	out
-maxwell-pdf-exact	pdf(MaxwellDistribution(1), 2)	4 * sqrt(2) / (exponentialE ^ 2 * sqrt(pi))
-maxwell-cdf-exact	cdf(MaxwellDistribution(1), 2)	1 - gammaRegularized(3 / 2, 2)
-maxwell-mean-exact	mean(MaxwellDistribution(1))	2 * sqrt(2) / sqrt(pi)
-maxwell-variance-exact	variance(MaxwellDistribution(1))	(-8 + 3Pi) / pi

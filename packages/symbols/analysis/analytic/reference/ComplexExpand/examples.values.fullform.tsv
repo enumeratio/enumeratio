@@ -1,7 +1,0 @@
-id	in	out
-sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y	ComplexExpand(Sin(Add(x, Multiply(ImaginaryUnit, y))))	Add(Multiply(Complex(0, 1), Cos(x), Sinh(y)), Multiply(Sin(x), Cosh(y)))
-polar-form-of-a-complex-exponential	ComplexExpand(Exp(Add(x, Multiply(ImaginaryUnit, y))))	Add(Multiply(Complex(0, 1), Sin(y), Power(ExponentialE, x)), Multiply(Cos(y), Power(ExponentialE, x)))
-complexexpand-reim-cos-i-pow-x		
-complexexpand-x-plus-imaginaryunit-times-y-pow-2	ComplexExpand(Power(Add(x, Multiply(ImaginaryUnit, y)), 2))	Add(Power(x, 2), Negate(Power(y, 2)), Multiply(Complex(0, 2), x, y))
-complexexpand-abs-x-plus-imaginaryunit-times-y	ComplexExpand(Abs(Add(x, Multiply(ImaginaryUnit, y))))	Sqrt(Add(Power(x, 2), Power(y, 2)))
-wolfram-leaves-e-i-pi-5-alone-until-asked-this	ComplexExpand(Exp(Multiply(ImaginaryUnit, Divide(Pi, 5))))	Add(Rational(1, 4), Divide(Sqrt(5), 4), Multiply(Complex(0, Divide(Sqrt(2), 4)), Sqrt(Add(5, Negate(Sqrt(5))))))

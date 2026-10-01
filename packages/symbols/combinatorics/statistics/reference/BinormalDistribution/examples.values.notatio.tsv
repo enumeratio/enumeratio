@@ -1,5 +1,0 @@
-id	in	out
-binormal-pdf-rho-only-form	<PDF><BinormalDistribution><Rational>1 2</Rational></BinormalDistribution> <List>0 0</List></PDF>	<Divide><Sqrt>3</Sqrt> <Multiply>3 Pi</Multiply></Divide>
-binormal-mean-is-the-mean-vector	<Mean><BinormalDistribution><List>1 2</List> <List>1 1</List> <Rational>1 2</Rational></BinormalDistribution></Mean>	<List>1 2</List>
-binormal-variance-is-the-covariance-matrix	<Variance><BinormalDistribution><Rational>1 2</Rational></BinormalDistribution></Variance>	<List><List>1 <Rational>1 2</Rational></List> <List><Rational>1 2</Rational> 1</List></List>
-binormal-cdf-has-no-closed-form	<CDF><BinormalDistribution><Rational>1 2</Rational></BinormalDistribution> <List>0 0</List></CDF>	<CDF><BinormalDistribution><Rational>1 2</Rational></BinormalDistribution> <List>0 0</List></CDF>

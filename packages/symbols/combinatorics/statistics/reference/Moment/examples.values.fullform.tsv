@@ -1,6 +1,0 @@
-id	in	out
-moment-order-0	Moment(GeometricDistribution(Rational(1, 4)), 0)	1
-moment-order-1-is-mean	Moment(GeometricDistribution(Rational(1, 4)), 1)	3
-moment-order-2	Moment(GeometricDistribution(Rational(1, 4)), 2)	21
-moment-bernoulli-order-5	Moment(BernoulliDistribution(Rational(2, 5)), 5)	Rational(2, 5)
-moment-order-3-unevaluated	Moment(GeometricDistribution(Rational(1, 4)), 3)	Moment(GeometricDistribution(Rational(1, 4)), 3)

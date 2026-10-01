@@ -1,7 +1,0 @@
-id	in	out
-precision-exact-integer	<Precision>2</Precision>	<PositiveInfinity />
-precision-6-over-5	<Precision><Rational>6 5</Rational></Precision>	<PositiveInfinity />
-precision-rational	<Precision><Rational>1 3</Rational></Precision>	<PositiveInfinity />
-precision-inexact-literal	<Precision>2.5</Precision>	<ToExpression>2</ToExpression>
-precision-extended	<Precision>3.141592653589793</Precision>	<ToExpression>16</ToExpression>
-precision-5-times-x-pow-2-plus-3	<Precision><Add><Multiply>5 <Power>x 2</Power></Multiply> 3</Add></Precision>	<PositiveInfinity />

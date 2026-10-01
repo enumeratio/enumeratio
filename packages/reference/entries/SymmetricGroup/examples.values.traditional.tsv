@@ -1,4 +1,0 @@
-id	in	out
-the-order-of-s-5-is-5	|\operatorname{SymmetricGroup}(5)|	120
-s-10-10	|\operatorname{SymmetricGroup}(10)|	3628800
-the-one-line-words-are-compute-engine-s	\operatorname{Length}(\operatorname{Permutations}([1,2,3]))	6

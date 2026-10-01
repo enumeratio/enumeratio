@@ -1,3 +1,0 @@
-id	in	out
-seedrandom-returns-nothing	\mathrm{SeedRandom}(7)	\mathrm{Nothing}
-seedrandom-pins-the-next-draw	\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomInteger}(100)\bigr\rbrack)	1

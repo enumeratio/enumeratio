@@ -1,9 +1,0 @@
-id	in	out
-isnumeric-pi	<IsNumeric>Pi</IsNumeric>	<True />
-isnumeric-literal	<IsNumeric>5</IsNumeric>	<True />
-isnumeric-sin-sqrt-2	<IsNumeric><Sin><Sqrt>2</Sqrt></Sin></IsNumeric>	<True />
-isnumeric-plain-symbol	<IsNumeric>x</IsNumeric>	<False />
-isnumeric-sqrt-2	<IsNumeric><Sqrt>2</Sqrt></IsNumeric>	<True />
-isnumeric-expr	<IsNumeric>expr</IsNumeric>	<False />
-isnumeric-exponentiale	<IsNumeric>ExponentialE</IsNumeric>	<True />
-ismatrix-m-isnumeric		

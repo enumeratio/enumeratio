@@ -1,9 +1,0 @@
-id	in	out
-integerlength-12-345	<IntegerLength>12345</IntegerLength>	<ToExpression>5</ToExpression>
-integerlength-123-456-789	<IntegerLength>123456789</IntegerLength>	<ToExpression>9</ToExpression>
-integerlength-100-factorial-2	<IntegerLength><Factorial>100</Factorial> 2</IntegerLength>	<ToExpression>525</ToExpression>
-integerlength-2-pow-100	<IntegerLength><Power>2 100</Power></IntegerLength>	<ToExpression>31</ToExpression>
-255-ff-16	<IntegerLength>255 16</IntegerLength>	<ToExpression>2</ToExpression>
-listable	<IntegerLength><List>1 10 100</List></IntegerLength>	<List>1 2 3</List>
-the-sign-is-not-counted	<IntegerLength>-123</IntegerLength>	<ToExpression>3</ToExpression>
-0-has-length-0-unlike-its-one-element	<IntegerLength>0</IntegerLength>	<ToExpression>0</ToExpression>

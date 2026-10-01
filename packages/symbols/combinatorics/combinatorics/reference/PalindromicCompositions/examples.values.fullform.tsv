@@ -1,4 +1,0 @@
-id	in	out
-count-palindromiccompositions-6	Count(PalindromicCompositions(6))	8
-first-element-of-palindromiccompositions-6	At(PalindromicCompositions(6), 1)	Composition(List(1, 1, 2, 1, 1))
-every-element-of-palindromiccompositions-6	Take(PalindromicCompositions(6), 8)	List(Composition(List(1, 1, 2, 1, 1)), Composition(List(2, 2, 2)), Composition(List(1, 4, 1)), Composition(List(6)), Composition(List(1, 1, 1, 1, 1, 1)), Composition(List(1, 2, 2, 1)), Composition(List(2, 1, 1, 2)), Composition(List(3, 3)))

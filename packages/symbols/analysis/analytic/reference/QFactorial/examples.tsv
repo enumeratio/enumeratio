@@ -1,12 +1,12 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-1-2-2-2-3-2-1-cdot-3-cdot-7			[QFactorial, 3, 2]	21	$[1]_2 [2]_2 [3]_2 = 1 \cdot 3 \cdot 7$		
-qfactorial-4-2			[QFactorial, 4, 2]	315			
-qfactorial-3-2		test	[N, [QFactorial, 3, 2]]	21			
-qfactorial-4-2-2		test	[N, [QFactorial, 4, 2]]	315			
-qfactorial-3-1-2		test	[N, [QFactorial, 3, [Rational, 1, 2]]]	2.625			
-qfactorial-6-3		test	[N, [QFactorial, 6, 3]]	91611520			
-qfactorial-3-1-over-2	Scope		[QFactorial, 3, [Rational, 1, 2]]	[Rational, 21, 8]			
-matrixfunction-function-1-pow-2-plus-1-plus-1	Scope		[MatrixFunction, [Function, [Block, [Multiply, [Add, [Power, _1, 2], _1, 1], [Add, _1, 1]]], _1], [List, [List, -1, 0], [List, 0, 5]]]	[List, [List, 0, 0], [List, 0, 186]]			
-n-qfactorial-1-over-3-6-50	Scope	triage	[N, [QFactorial, [Rational, 1, 3], 6], 50]	[QFactorial, [Rational, 1, 3], 6]		gap	QFactorial has no numeric evaluator at all; N() leaves it symbolic with a float-coerced argument.
-the-inversion-generating-function-of	Applications		[Expand, [QFactorial, 3, q]]	[Add, [Power, q, 3], [Multiply, 2, [Power, q, 2]], [Multiply, 2, q], 1]	The inversion generating function of SymmetricGroup(3): $\sum_\pi q^{\mathrm{inv}(\pi)}$		
-at-q-1-it-is-the-ordinary-factorial	Properties		[QFactorial, 5, 1]	120	At $q = 1$ it is the ordinary factorial		
+id	section	role	expr	expected	caption	triage	epsil.back	fullform.in	fullform.out	wolfram.note
+1-2-2-2-3-2-1-cdot-3-cdot-7			[QFactorial, 3, 2]	21	$[1]_2 [2]_2 [3]_2 = 1 \cdot 3 \cdot 7$			QFactorial(3, 2)	21	
+qfactorial-4-2			[QFactorial, 4, 2]	315				QFactorial(4, 2)	315	
+qfactorial-3-2		test	[N, [QFactorial, 3, 2]]	21						
+qfactorial-4-2-2		test	[N, [QFactorial, 4, 2]]	315						
+qfactorial-3-1-2		test	[N, [QFactorial, 3, [Rational, 1, 2]]]	2.625						
+qfactorial-6-3		test	[N, [QFactorial, 6, 3]]	91611520						
+qfactorial-3-1-over-2	Scope		[QFactorial, 3, [Rational, 1, 2]]	[Rational, 21, 8]				QFactorial(3, Rational(1, 2))	Rational(21, 8)	
+matrixfunction-function-1-pow-2-plus-1-plus-1	Scope		[MatrixFunction, [Function, [Block, [Multiply, [Add, [Power, _1, 2], _1, 1], [Add, _1, 1]]], _1], [List, [List, -1, 0], [List, 0, 5]]]	[List, [List, 0, 0], [List, 0, 186]]			Unreadable			
+n-qfactorial-1-over-3-6-50	Scope	triage	[N, [QFactorial, [Rational, 1, 3], 6], 50]	[QFactorial, [Rational, 1, 3], 6]		gap				QFactorial has no numeric evaluator at all; N() leaves it symbolic with a float-coerced argument.
+the-inversion-generating-function-of	Applications		[Expand, [QFactorial, 3, q]]	[Add, [Power, q, 3], [Multiply, 2, [Power, q, 2]], [Multiply, 2, q], 1]	The inversion generating function of SymmetricGroup(3): $\sum_\pi q^{\mathrm{inv}(\pi)}$					
+at-q-1-it-is-the-ordinary-factorial	Properties		[QFactorial, 5, 1]	120	At $q = 1$ it is the ordinary factorial			QFactorial(5, 1)	120	

@@ -1,5 +1,0 @@
-id	in	out
-pareto-pdf-exact	\operatorname{PDF}(\operatorname{ParetoDistribution}(1,3),2)	\frac{3}{16}
-pareto-cdf-exact	\operatorname{CDF}(\operatorname{ParetoDistribution}(1,3),2)	\frac{7}{8}
-pareto-mean-exact	\operatorname{Mean}(\operatorname{ParetoDistribution}(1,3))	\frac{3}{2}
-pareto-variance-exact	\operatorname{Variance}(\operatorname{ParetoDistribution}(1,3))	\frac{3}{4}

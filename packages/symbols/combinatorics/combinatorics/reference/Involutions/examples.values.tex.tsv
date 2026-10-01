@@ -1,3 +1,0 @@
-id	in	out
-count-involutions-4	\mathrm{Count}(\mathrm{Involutions}(4))	10
-by-fixed-points	\mathrm{Tally}(\mathrm{CombinatorialStat}(\mathrm{Involutions}(5), \text{FixedPoints}))	\operatorname{Tuple}(\bigl\lbrack5, 3, 1\bigr\rbrack,\bigl\lbrack1, 10, 15\bigr\rbrack)

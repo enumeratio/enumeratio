@@ -1,6 +1,0 @@
-id	in	out
-multinomial-pdf	PDF(MultinomialDistribution(4, List(Rational(1, 2), Rational(1, 3), Rational(1, 6))), List(2, 1, 1))	Rational(1, 6)
-multinomial-pdf-zero	PDF(MultinomialDistribution(4, List(Rational(1, 2), Rational(1, 2))), List(1, 1))	0
-multinomial-mean	Mean(MultinomialDistribution(10, List(Rational(1, 5), Rational(4, 5))))	List(2, 8)
-multinomial-variance	Variance(MultinomialDistribution(10, List(Rational(1, 5), Rational(4, 5))))	List(Rational(8, 5), Rational(8, 5))
-multinomial-covariance	Covariance(MultinomialDistribution(10, List(Rational(1, 5), Rational(4, 5))))	List(List(Rational(8, 5), Rational(-8, 5)), List(Rational(-8, 5), Rational(8, 5)))

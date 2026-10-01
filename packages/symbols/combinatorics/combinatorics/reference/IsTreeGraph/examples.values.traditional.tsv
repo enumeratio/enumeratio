@@ -1,7 +1,0 @@
-id	in	out
-a-star-is-a-tree	\operatorname{IsTreeGraph}(\operatorname{StarGraph}(5))	\top
-a-cycle-is-not-a-tree	\operatorname{IsTreeGraph}(\operatorname{CycleGraph}(4))	\bot
-a-disconnected-forest-is-not-a-tree	\operatorname{IsTreeGraph}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(3,4)]))	\bot
-a-path-is-a-tree	\operatorname{IsTreeGraph}(\operatorname{PathGraph}(5))	\top
-a-ternary-complete-tree-is-a-tree	\operatorname{IsTreeGraph}(\operatorname{CompleteKaryTree}(3,3))	\top
-a-complete-graph-past-k2-is-not-a-tree	\operatorname{IsTreeGraph}(\operatorname{CompleteGraph}(4))	\bot

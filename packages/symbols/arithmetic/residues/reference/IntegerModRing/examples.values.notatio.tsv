@@ -1,8 +1,0 @@
-id	in	out
-listfrom-integermodring-3	<ListFrom><IntegerModRing>3</IntegerModRing></ListFrom>	<List><IntegerMod>0 3</IntegerMod> <IntegerMod>1 3</IntegerMod> <IntegerMod>2 3</IntegerMod></List>
-count-integermodring-12	<Count><IntegerModRing>12</IntegerModRing></Count>	<ToExpression>12</ToExpression>
-count-integermodring-5	<Count><IntegerModRing>5</IntegerModRing></Count>	<ToExpression>5</ToExpression>
-z-12-z	<QuotientRing>Integers 12</QuotientRing>	<IntegerModRing>12</IntegerModRing>
-z-5-z	<QuotientRing>Integers 5</QuotientRing>	<IntegerModRing>5</IntegerModRing>
-integermod-3-5-in-integermodring-5	<Element><IntegerMod>3 5</IntegerMod> <IntegerModRing>5</IntegerModRing></Element>	<True />
-integermod-3-7-not-in-integermodring-5	<Element><IntegerMod>3 7</IntegerMod> <IntegerModRing>5</IntegerModRing></Element>	<False />

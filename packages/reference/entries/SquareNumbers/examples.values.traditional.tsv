@@ -1,2 +1,0 @@
-id	in	out
-the-first-five-squares	\operatorname{Take}(\operatorname{SquareNumbers},5)	[1,4,9,16,25]

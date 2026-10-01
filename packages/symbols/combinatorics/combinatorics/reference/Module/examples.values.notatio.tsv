@@ -1,3 +1,0 @@
-id	in	out
-a-local-counter	<Module><List><Equal>i 0</Equal></List> <Assign>i <Add>i 1</Add></Assign></Module>	<ToExpression>1</ToExpression>
-locals-do-not-leak-or-clobber	<List><Module><List><Equal>n 10</Equal></List> <Add>n 1</Add></Module> <Module><List><Equal>n 20</Equal></List> <Add>n 1</Add></Module></List>	<List>11 21</List>

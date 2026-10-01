@@ -1,4 +1,0 @@
-id	in	out
-1-to-2-then-2-to-3	\mathrm{QuiverCompose}(\mathrm{LinearQuiver}(4), \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack), \mathrm{QuiverPath}(2, \bigl\lbrack1\bigr\rbrack))	\mathrm{QuiverPath}(1, \bigl\lbrack0, 1\bigr\rbrack)
-the-ends-do-not-meet	\mathrm{QuiverCompose}(\mathrm{LinearQuiver}(4), \mathrm{QuiverPath}(2, \bigl\lbrack1\bigr\rbrack), \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack))	0
-a-trivial-path-is-a-local-identity	\mathrm{QuiverCompose}(\mathrm{LinearQuiver}(4), \mathrm{QuiverPath}(1, \bigl\lbrack\bigr\rbrack), \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack))	\mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack)

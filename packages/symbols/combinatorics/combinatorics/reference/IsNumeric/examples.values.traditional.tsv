@@ -1,9 +1,0 @@
-id	in	out
-isnumeric-pi	\operatorname{IsNumeric}(\pi)	\top
-isnumeric-literal	\operatorname{IsNumeric}(5)	\top
-isnumeric-sin-sqrt-2	\operatorname{IsNumeric}(\sin(\sqrt{2}))	\top
-isnumeric-plain-symbol	\operatorname{IsNumeric}(x)	\bot
-isnumeric-sqrt-2	\operatorname{IsNumeric}(\sqrt{2})	\top
-isnumeric-expr	\operatorname{IsNumeric}(\operatorname{expr})	\bot
-isnumeric-exponentiale	\operatorname{IsNumeric}(e)	\top
-ismatrix-m-isnumeric		

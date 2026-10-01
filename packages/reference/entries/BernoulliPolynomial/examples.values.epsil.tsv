@@ -1,5 +1,0 @@
-id	in	out
-b-0-x-1	BernoulliPolynomial(0, x)	1
-b-1-x-x-1-2	BernoulliPolynomial(1, x)	x + -1 / 2
-b-2-0-1-6	N(BernoulliPolynomial(2, 0))	0.166_666_666_666_666_66
-b-2-1-1-6	N(BernoulliPolynomial(2, 1))	0.166_666_666_666_666_66

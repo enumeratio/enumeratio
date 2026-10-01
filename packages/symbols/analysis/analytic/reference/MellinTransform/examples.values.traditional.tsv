@@ -1,7 +1,0 @@
-id	in	out
-exp-neg-x-gamma	\operatorname{MellinTransform}(e^{-x},x,s)	\Gamma(s)
-one-over-one-plus-x	\operatorname{MellinTransform}(\frac{1}{1+x},x,s)	\pi\csc(\pi s)
-gaussian	\operatorname{MellinTransform}(e^{-x^2},x,s)	\frac{1}{2}\Gamma(\frac{1}{2}s)
-log-one-plus-x	\operatorname{MellinTransform}(\ln(1+x),x,s)	\frac{\pi\csc(\pi s)}{s}
-power-shift-x-c-exp	\operatorname{MellinTransform}(x^ae^{-x},x,s)	\Gamma(a+s)
-mellintransform-1-over-x-plus-1-x-1-over-2	\operatorname{MellinTransform}(\frac{1}{x+1},x,\frac{1}{2})	\pi
