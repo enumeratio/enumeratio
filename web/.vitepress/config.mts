@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
+import { notatioMarkup } from "./notatio-markup.ts";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
 import { notationEntriesPlugin } from "./notation-entries.ts";
@@ -139,6 +140,7 @@ const config = defineConfig({
   markdown: {
     config: (md) => {
       notatioMath(md);
+      notatioMarkup(md);
       notatioSymbols(md);
     },
   },
