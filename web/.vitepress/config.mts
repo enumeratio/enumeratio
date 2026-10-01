@@ -6,6 +6,7 @@ import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
 import { notationEntriesPlugin } from "./notation-entries.ts";
 import { docRoute, docsSidebar, workspacePackages } from "./data/repo-docs.ts";
+import { loaderWatchPlugin } from "./loader-watch.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
@@ -117,7 +118,7 @@ const config = defineConfig({
     // while vitepress's `plugins` field types against its own nested real `vite` --
     // two structurally-identical but nominally distinct `Plugin` types.
     plugins: (dev
-      ? [reviewModePlugin(webDir), referenceDataPlugin(dev), notationEntriesPlugin()]
+      ? [reviewModePlugin(webDir), referenceDataPlugin(dev), notationEntriesPlugin(), loaderWatchPlugin()]
       : [referenceDataPlugin(dev), notationEntriesPlugin()]) as never,
   },
   title: "enumeratio",
