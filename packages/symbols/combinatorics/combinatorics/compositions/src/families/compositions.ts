@@ -187,19 +187,19 @@ function palindromicUnrank(n: number, r: number): number[] {
   }
   throw new Error("PalindromicCompositions: rank out of range");
 }
-function palindromicRank(parts: readonly number[], n: number): number {
-  const len = parts.length;
-  let rank = 0;
-  if (len % 2 === 1) {
-    const mid = (len - 1) / 2;
-    const m = parts[mid];
-    for (let mm = 1; mm < m; mm++) if ((n - mm) % 2 === 0) rank += anyComp.count((n - mm) / 2);
-    rank += anyComp.rank(parts.slice(0, mid));
-    return rank;
+/** The palindromic compositions of n, lex on the parts: the composition order they come with
+ *  as a restriction of IntegerCompositions. There are about 2^(n/2) of them; built once per n. */
+const palindromes = new Map<number, number[][]>();
+function palindromesInLex(n: number): number[][] {
+  let list = palindromes.get(n);
+  if (list === undefined) {
+    list = Array.from({ length: palindromicCount(n) }, (_, r) => palindromicUnrank(n, r)).toSorted((a, b) => {
+      for (let i = 0; i < Math.min(a.length, b.length); i++) if (a[i] !== b[i]) return a[i] - b[i];
+      return a.length - b.length;
+    });
+    palindromes.set(n, list);
   }
-  for (let mm = 1; mm <= n; mm++) if ((n - mm) % 2 === 0) rank += anyComp.count((n - mm) / 2);
-  rank += anyComp.rank(parts.slice(0, len / 2));
-  return rank;
+  return list;
 }
 function isPalindromic(parts: unknown, n: number): boolean {
   if (!isPositiveIntArray(parts)) return false;
@@ -405,9 +405,12 @@ const restricted: NumberKernel[] = [
     "PalindromicCompositions",
     1,
     ([n]) => palindromicCount(n),
-    ([n], r) => palindromicUnrank(n, r),
+    ([n], r) => palindromesInLex(n)[r],
     (a, [n]) => isPalindromic(a, n),
-    (a, [n]) => palindromicRank(a, n),
+    (a, [n]) => {
+      const key = a.join();
+      return palindromesInLex(n).findIndex((p) => p.join() === key);
+    },
   ),
   ints(
     "ZigzagCompositions",

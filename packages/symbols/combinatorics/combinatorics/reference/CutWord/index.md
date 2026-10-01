@@ -10,11 +10,7 @@ signatures:
     type: (composition) -> binary_word
 laws:
   - inverse: Composition
-  - orderIsomorphism:
-      from: IntegerCompositions
-      to: BinaryWords
-      sizeOffset: -1
 ---
 
 - Takes a `Composition` and returns a `BinaryWord` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
-- An order isomorphism: the k-th composition of n, as IntegerCompositions lists them, goes to the k-th binary word of length n - 1.
+- Not order-preserving: IntegerCompositions lists compositions lex on their parts, while BinaryWords(n - 1) through Composition(word) gives them in their cut words' order.

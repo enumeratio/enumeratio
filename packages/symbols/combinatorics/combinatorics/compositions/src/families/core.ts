@@ -29,10 +29,17 @@ const binom = (n: MathJSON, k: MathJSON): MathJSON => ["Binomial", n, k];
 const element = (j: MathJSON): MathJSON => at("_x", j);
 const lengthOf = (x: MathJSON): MathJSON => ["Length", x];
 
-// ─── IntegerCompositions(n): mask IS the rank (the gap-cut bijection) ──────────────────────────
-// Bit (i − 1) of the rank, for i = 1..n − 1, marks a cut right after position i; a composition's
-// parts are the run-lengths between cuts (and the two ends). n = 0 has one (empty) composition.
-const bitSet = (i: MathJSON): MathJSON => ["Equal", ["Mod", quotient("_r", ["Power", 2, sub(i, 1)]), 2], 1];
+// ─── IntegerCompositions(n): lex on the parts ────────────────────────────────────────────────────
+// A composition is cut after position i (i = 1..n − 1) or not. Lex on the parts puts earlier cuts
+// first (a smaller first part sorts first), so reading the cuts as a binary number with position 1
+// most significant, the rank r is 2^(n−1) − 1 minus that number. The cut word in the other order is
+// `BinaryWords(n − 1)` through `Composition(word)`. n = 0 has one (empty) composition.
+const cutMask = sub(sub(["Power", 2, sub("_n", 1)], 1), "_r");
+const bitSet = (i: MathJSON): MathJSON => [
+  "Equal",
+  ["Mod", quotient(cutMask, ["Power", 2, sub(sub("_n", 1), i)]), 2],
+  1,
+];
 /** The cut positions in 1.._n − 1, ascending. */
 const cutPositions: MathJSON = ["Filter", upTo(1, sub("_n", 1)), ["Function", bitSet("i"), "i"]];
 /** 0, every cut, then _n: parts are its consecutive differences. */
@@ -59,13 +66,21 @@ const integerCompositions: EpsilFamily = {
         upTo(1, sub(lengthOf(boundaries), 1)),
       ],
     ],
-    rank: fold(
-      add("acc", ["If", ["LessEqual", "i", sub(lengthOf("_x"), 1)], ["Power", 2, sub(prefixSum("i"), 1)], 0]),
-      "acc",
-      "i",
+    rank: [
+      "If",
+      ["Equal", "_n", 0],
       0,
-      upTo(1, sub(lengthOf("_x"), 1)),
-    ),
+      sub(
+        sub(["Power", 2, sub("_n", 1)], 1),
+        fold(
+          add("acc", ["Power", 2, sub(sub("_n", 1), prefixSum("i"))]),
+          "acc",
+          "i",
+          0,
+          upTo(1, sub(lengthOf("_x"), 1)),
+        ),
+      ),
+    ],
     // A composition of n: positive parts summing to n. Summing to n already forces the n = 0 /
     // empty-list coupling (positive parts can't sum to 0 unless there are none of them).
     valid: [

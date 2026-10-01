@@ -76,21 +76,18 @@ const members = (expr: unknown): string[] => {
   return Array.from({ length: total }, (_, i) => JSON.stringify(ce.box(["At", expr, i + 1] as never).evaluate().json));
 };
 
-test("the specification agrees with the fast kernel, in order where the base's order is induced", () => {
-  // A named restriction with a fast collection (`Derangements`, `CyclicPermutations`) is the
-  // same family as filtering its base, so filtering must reproduce it. A restriction of the
-  // symmetric group keeps its lex order (https://github.com/enumeratio/enumeratio/wiki/Speculative-Restrictions),
-  // so there the two agree element by element. The other bases' restrictions are not audited
-  // for order yet, and are compared as sets.
+test("the specification agrees with the fast kernel, element by element", () => {
+  // A named restriction with a fast collection (`Derangements`, `OddCompositions`) is the same
+  // family as filtering its base, in the base's order
+  // (https://github.com/enumeratio/enumeratio/wiki/Speculative-Restrictions), so filtering must
+  // reproduce it element by element.
   for (const restriction of RESTRICTIONS) {
     if (!ce.lookupDefinition(restriction.name)) continue;
-    const ordered = restriction.base === "SymmetricGroup";
     for (let n = 0; n <= 5; n++) {
       const specified = ["Restricted", [restriction.base, n], ["Function", fillRestriction(restriction), "_e"]];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      const [a, b] = [members(specified), members(kernel)];
-      expect(ordered ? a : a.toSorted(), `${restriction.name}(${n}) members`).toEqual(ordered ? b : b.toSorted());
+      expect(members(specified), `${restriction.name}(${n}) members`).toEqual(members(kernel));
     }
   }
 });
@@ -110,7 +107,7 @@ const COMPOSITION_RESTRICTION_NAMES = new Set([
 ]);
 
 test("composition restrictions agree with their kernels for n = 0..8", () => {
-  // Same recipe as the differential above, as sets, but out to n = 8 (composition counts
+  // Same recipe as the differential above, but out to n = 8 (composition counts
   // grow like 2^n, so this stays cheap while covering more of each family's shape than n ≤ 5).
   for (const restriction of RESTRICTIONS) {
     if (!COMPOSITION_RESTRICTION_NAMES.has(restriction.name)) continue;
@@ -119,7 +116,7 @@ test("composition restrictions agree with their kernels for n = 0..8", () => {
       const specified = ["Restricted", [restriction.base, n], ["Function", fillRestriction(restriction), "_e"]];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());
+      expect(members(specified), `${restriction.name}(${n}) members`).toEqual(members(kernel));
     }
   }
 });
@@ -132,8 +129,8 @@ const PARTITION_RESTRICTION_NAMES = new Set([
 ]);
 
 test("partition restrictions agree with their kernels for n = 0..8", () => {
-  // Same recipe as the differential above, as sets, but out to n = 8 — the kernel elements,
-  // as a SET, must equal Filter(IntegerPartitions(n), predicate).
+  // Same recipe as the differential above, but out to n = 8: the kernel's elements, in order,
+  // must be Filter(IntegerPartitions(n), predicate).
   for (const restriction of RESTRICTIONS) {
     if (!PARTITION_RESTRICTION_NAMES.has(restriction.name)) continue;
     if (!ce.lookupDefinition(restriction.name)) continue;
@@ -141,7 +138,7 @@ test("partition restrictions agree with their kernels for n = 0..8", () => {
       const specified = ["Restricted", [restriction.base, n], ["Function", fillRestriction(restriction), "_e"]];
       const kernel = [restriction.name, n];
       expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
-      expect(members(specified).toSorted(), `${restriction.name}(${n}) members`).toEqual(members(kernel).toSorted());
+      expect(members(specified), `${restriction.name}(${n}) members`).toEqual(members(kernel));
     }
   }
 });

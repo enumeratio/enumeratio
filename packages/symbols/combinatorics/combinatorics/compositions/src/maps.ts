@@ -26,7 +26,8 @@ const sizeOf = (parts: MathJSON): MathJSON => [
 ];
 
 /** A composition of n as its cut word of length n - 1: bit j is 1 when the composition is cut
- *  after position n - j, so compositions and words are listed in the same order. */
+ *  after position n - j. `BinaryWords(n - 1)` through `Composition(word)` lists compositions in
+ *  the order of these words, which is not `IntegerCompositions`' lex order. */
 const cutWordOf = (parts: MathJSON): MathJSON =>
   // `bind` spreads a list across the function's parameters, so the partial sums are inlined.
   bind("cn", sizeOf(parts), [
@@ -50,6 +51,6 @@ export const COMPOSITIONS_MAPS: readonly CombinatorialMap[] = [
     // The composition of 0 has no word: words of length n - 1 start at n = 1.
     guard: ["Greater", ["Length", "_raw"], 0],
     summary: "A composition of n as the binary word of length n - 1 marking where it is cut.",
-    note: "An order isomorphism: the k-th composition of n, as IntegerCompositions lists them, goes to the k-th binary word of length n - 1.",
+    note: "Not order-preserving: IntegerCompositions lists compositions lex on their parts, while BinaryWords(n - 1) through Composition(word) gives them in their cut words' order.",
   },
 ];

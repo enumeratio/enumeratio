@@ -16,8 +16,4 @@ signatures:
     type: ((list<integer>) -> composition) & ((binary_word) -> composition)
 laws:
   - inverse: CutWord
-  - orderIsomorphism:
-      from: BinaryWords
-      to: IntegerCompositions
-      sizeOffset: 1
 ---
