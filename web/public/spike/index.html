@@ -1,0 +1,38 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>Kernel store spike</title>
+<style>
+  body {
+    font:
+      14px/1.4 system-ui,
+      sans-serif;
+    margin: 1.5rem;
+  }
+  pre {
+    background: #f4f4f4;
+    padding: 1rem;
+    overflow: auto;
+  }
+</style>
+<h1>Kernel store spike</h1>
+<p>
+  IndexedDB as the kernel's store, BroadcastChannel as its doorbell, four engine SharedWorkers. Runs on load (about 30
+  s).
+</p>
+<pre id="out">running…</pre>
+<script type="module">
+  import { run } from "./page.js";
+  // `?ce=<url>` loads compute-engine from there; the default is next to this page, then jsDelivr.
+  const params = new URLSearchParams(location.search);
+  const ce =
+    params.get("ce") ?? "https://cdn.jsdelivr.net/npm/@cortex-js/compute-engine@0.142.0/dist/esm-min/compute-engine.js";
+  run({ ce })
+    .then((r) => {
+      window.__result = r;
+      document.getElementById("out").textContent = JSON.stringify(r, null, 2);
+    })
+    .catch((e) => {
+      window.__result = { error: String(e), stack: e.stack };
+      document.getElementById("out").textContent = String(e) + "\n" + e.stack;
+    });
+</script>
