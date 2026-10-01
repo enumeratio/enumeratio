@@ -74,11 +74,14 @@ const allFamilies: readonly FamilyKernel[] = [
       liftFamily,
     ),
   ),
-  ...[
-    ...latticePathsCoreEntries,
-    ...latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
-    ...latticePathsPathsPartitionsEntries,
-  ].map(numberKernel),
+  ...kernelsOn(
+    new ComputeEngine(),
+    [
+      ...latticePathsCoreEntries,
+      ...latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
+      ...latticePathsPathsPartitionsEntries,
+    ].map(liftFamily),
+  ),
   ...kernelsOn(
     new ComputeEngine(),
     [
@@ -89,12 +92,15 @@ const allFamilies: readonly FamilyKernel[] = [
       ...treesUnlabeledTreesEntries,
     ].map(liftFamily),
   ),
-  ...[
-    ...setPartitionsSurjectionsEntries,
-    ...setPartitionsCoreEntries,
-    ...setPartitionsPathsPartitionsEntries,
-    ...setPartitionsMatchingsEntries,
-  ].map(numberKernel),
+  ...kernelsOn(
+    new ComputeEngine(),
+    [
+      ...setPartitionsSurjectionsEntries,
+      ...setPartitionsCoreEntries,
+      ...setPartitionsPathsPartitionsEntries,
+      ...setPartitionsMatchingsEntries,
+    ].map(liftFamily),
+  ),
   ...[
     ...tableauxPlaneBeforeSkewStandardTableauxEntries,
     ...tableauxPlaneSkewStandardTableauxEntries,

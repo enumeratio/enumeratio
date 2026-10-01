@@ -8,6 +8,9 @@
 // stay in collections per step 5 rule 4, same as this file's set-partitions-domain families
 // (moved separately, see the set-partitions area commit).
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { equal, iff, mul, sub } from "../../../collections/src/families/tables.ts";
+import { completionsOf, completionsTable, type Step, walkFamily } from "./walks.ts";
 import {
   OrderedTreeUnrank,
   OrderedTreeRank,
@@ -163,11 +166,11 @@ function dpbhCompletions(s: number, height: number, cap: number, reached: boolea
   }
   return v;
 }
-function DyckPathsByHeightCount(n: number, h: number): number {
+export function DyckPathsByHeightCount(n: number, h: number): number {
   if (n < 0 || h < 0) return 0;
   return dpbhCompletions(2 * n, 0, h, h === 0);
 }
-function DyckPathsByHeightUnrank(n: number, h: number, rank: number): number[] {
+export function DyckPathsByHeightUnrank(n: number, h: number, rank: number): number[] {
   const total = DyckPathsByHeightCount(n, h);
   let r = total ? ((rank % total) + total) % total : 0;
   const out: number[] = [];
@@ -188,7 +191,7 @@ function DyckPathsByHeightUnrank(n: number, h: number, rank: number): number[] {
   }
   return out;
 }
-function DyckPathsByHeightRank(path: number[], h: number): number {
+export function DyckPathsByHeightRank(path: number[], h: number): number {
   let r = 0;
   let height = 0;
   let reached = h === 0;
@@ -207,7 +210,7 @@ function DyckPathsByHeightRank(path: number[], h: number): number {
   }
   return r;
 }
-function isDyckPathsByHeightOf(e: unknown, n: number, h: number): boolean {
+export function isDyckPathsByHeightOf(e: unknown, n: number, h: number): boolean {
   if (!Array.isArray(e) || e.length !== 2 * n) return false;
   let height = 0,
     maxHeight = 0;
@@ -313,6 +316,35 @@ function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boolean {
   return h === 0 && peaks === k;
 }
 
+// ─── DyckPathsByHeight in Epsil (./walks.ts); the TS kernel above stays as the independent
+// reading the agreement tests check against. The walks never above h that reach it are those
+// never above h less those never above h − 1, so its completions are two tables of walks under
+// a ceiling, the walk's flag saying whether it has reached h yet. ─────────────────────────────
+const UP: Step = { token: 1, rise: 1, width: 1 };
+const DOWN: Step = { token: 0, rise: -1, width: 1 };
+const dyckPathsByHeight = walkFamily({
+  head: "DyckPathsByHeight",
+  carrier: "DyckPath",
+  params: ["_n", "_h"],
+  width: mul(2, "_n"),
+  steps: [UP, DOWN],
+  tables: [
+    ["below", completionsTable("hb", [UP, DOWN], mul(2, "_n"), "_h")],
+    ["under", completionsTable("hu", [UP, DOWN], mul(2, "_n"), sub("_h", 1))],
+  ],
+  completions: (w, y, reached) =>
+    iff(
+      equal(reached, 1),
+      completionsOf("below", "_h")(w, y),
+      sub(completionsOf("below", "_h")(w, y), completionsOf("under", sub("_h", 1))(w, y)),
+    ),
+  flag: {
+    initial: iff(equal("_h", 0), 1, 0),
+    after: (reached, y) => ["Max", reached, iff(equal(y, "_h"), 1, 0)],
+  },
+  top: (top) => equal(top, "_h"),
+});
+
 // Kept separate from `entries` below only so collections/src/families/index.ts can splice
 // `latticePathsPathsPartitionsBeforeDyckPathsByHeight` (DelannoyPaths, LukasiewiczPaths) back in
 // where they held their (now consolidated) position in collections — §4 step 5.
@@ -339,17 +371,8 @@ export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
   },
 ];
 
-export const entries: NumberKernel[] = [
-  {
-    head: "DyckPathsByHeight",
-    carrier: "DyckPath",
-    paramCount: 2,
-    kind: "ints",
-    count: ([n, h]) => DyckPathsByHeightCount(n, h),
-    unrank: ([n, h], r) => DyckPathsByHeightUnrank(n, h, r),
-    valid: (e, [n, h]) => isDyckPathsByHeightOf(e, n, h),
-    rank: (e, [, h]) => DyckPathsByHeightRank(e as number[], h),
-  },
+export const entries: (NumberKernel | EpsilFamily)[] = [
+  dyckPathsByHeight,
   {
     head: "MotzkinPathsByPeaks",
     carrier: "MotzkinPath",

@@ -4,74 +4,63 @@
 // their element (list<integer>) matches MotzkinPath/SchroederPath's shape exactly, same as
 // DyckPaths <-> DyckPath. LatticePaths and FibonacciWords declare no carrier at all and stay in
 // collections per step 5 rule 4 -- so does most of paths-partitions.ts's lattice-path block for
-// the same reason (see lattice-paths/src/families/paths-partitions.ts). The generic kernel math
-// stays in collections/src/families/kernels*.ts.
-import type { NumberKernel } from "../../../collections/src/families/types.ts";
-import {
-  DyckPathCount,
-  DyckPathUnrank,
-  DyckPathRank,
-  IsDyckPath,
-  MotzkinCount,
-  MotzkinUnrank,
-  MotzkinRank,
-  IsMotzkinPath,
-  SchroederCount,
-  SchroederUnrank,
-  SchroederRank,
-  IsSchroederPath,
-} from "../../../collections/src/families/kernels-extra.ts";
+// the same reason (see lattice-paths/src/families/paths-partitions.ts).
+//
+// All three are walks defined in Epsil (./walks.ts). Their TS kernels in
+// collections/src/families/kernels-extra.ts stay as the independent reading the agreement tests
+// check against.
+import { equal, iff, less, lets, mul, quotient, sub } from "../../../collections/src/families/tables.ts";
+import { completionsOf, completionsTable, type Step, walkFamily } from "./walks.ts";
 
-// helper to cut boilerplate for the flat (number[]) shape; mirrors collections/core.ts's private `ints`.
-const ints = (
-  head: string,
-  paramCount: 1 | 2,
-  count: (p: number[]) => number,
-  unrank: (p: number[], r: number) => number[],
-  valid: (e: number[], p: number[]) => boolean,
-  rank: (e: number[], p: number[]) => number,
-): NumberKernel => ({
-  head,
-  paramCount,
-  kind: "ints",
-  count,
-  unrank,
-  valid: (e, p) => valid(e as number[], p),
-  rank: (e, p) => rank(e as number[], p),
+const UP: Step = { token: 1, rise: 1, width: 1 };
+const DOWN: Step = { token: -1, rise: -1, width: 1 };
+
+/** A walk whose completions are one table. Its height never passes `cap`, half its width: a
+ *  walk at height y has taken y steps up and has y down to go. */
+const tableWalk = (head: string, carrier: string, width: unknown, cap: unknown, steps: readonly Step[]) =>
+  walkFamily({
+    head,
+    carrier,
+    params: ["_n"],
+    width,
+    steps,
+    tables: [["walks", completionsTable("t", steps, width, cap)]],
+    completions: completionsOf("walks", cap),
+  });
+
+/** The Dyck walks of width w from height y down to 0, by the ballot formula C(w, d) − C(w, d − 1),
+ *  where d = (w − y)/2 of the w steps go up. */
+const ballot = (w: unknown, y: unknown): unknown =>
+  lets(
+    [["bd", quotient(sub(w, y), 2), "integer"]],
+    iff(
+      ["Or", less(w, y), equal(["Mod", sub(w, y), 2], 1)],
+      0,
+      sub(["Binomial", w, "bd"], iff(equal("bd", 0), 0, ["Binomial", w, sub("bd", 1)])),
+    ),
+  );
+
+/** Up (1) before down (0), semilength n: Catalan(n). Its completions are closed, so it needs no table. */
+const dyckPaths = walkFamily({
+  head: "DyckPaths",
+  carrier: "DyckPath",
+  params: ["_n"],
+  width: mul(2, "_n"),
+  steps: [UP, { token: 0, rise: -1, width: 1 }],
+  tables: [],
+  completions: ballot,
 });
+/** Up (1), level (0), down (−1), length n: the Motzkin numbers. */
+const motzkinPaths = tableWalk("MotzkinPaths", "MotzkinPath", "_n", quotient("_n", 2), [
+  UP,
+  { token: 0, rise: 0, width: 1 },
+  DOWN,
+]);
+/** Large Schröder paths of width 2n: up (1), a level step two wide (2), down (−1). */
+const schroederPaths = tableWalk("SchroederPaths", "SchroederPath", mul(2, "_n"), "_n", [
+  UP,
+  { token: 2, rise: 0, width: 2 },
+  DOWN,
+]);
 
-export const entries: NumberKernel[] = [
-  {
-    ...ints(
-      "DyckPaths",
-      1,
-      ([n]) => DyckPathCount(n),
-      ([n], r) => DyckPathUnrank(n, r),
-      (a, [n]) => IsDyckPath(a, n),
-      (a) => DyckPathRank(a),
-    ),
-    carrier: "DyckPath",
-  },
-  {
-    ...ints(
-      "MotzkinPaths",
-      1,
-      ([n]) => MotzkinCount(n),
-      ([n], r) => MotzkinUnrank(n, r),
-      (a, [n]) => IsMotzkinPath(a, n),
-      (a) => MotzkinRank(a),
-    ),
-    carrier: "MotzkinPath",
-  },
-  {
-    ...ints(
-      "SchroederPaths",
-      1,
-      ([n]) => SchroederCount(n),
-      ([n], r) => SchroederUnrank(n, r),
-      (a, [n]) => IsSchroederPath(a, n),
-      (a) => SchroederRank(a),
-    ),
-    carrier: "SchroederPath",
-  },
-];
+export const entries = [dyckPaths, motzkinPaths, schroederPaths];

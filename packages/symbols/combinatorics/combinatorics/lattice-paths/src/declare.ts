@@ -2,7 +2,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
-import { numberKernel } from "../../collections/src/families/types.ts";
+import { liftFamily } from "../../collections/src/families/epsil.ts";
 import { declareStatistics } from "../../src/statistics/declare.ts";
 import { LATTICE_PATHS_CARRIERS } from "./carrier-data.ts";
 import {
@@ -16,7 +16,7 @@ export function declareLatticePaths(ce: ComputeEngine): void {
   declareCarriers(ce, LATTICE_PATHS_CARRIERS, { plurals: false });
   declareFamilies(
     ce,
-    [...coreEntries, ...pathsPartitionsBeforeDyckPathsByHeightEntries, ...pathsPartitionsEntries].map(numberKernel),
+    [...coreEntries, ...pathsPartitionsBeforeDyckPathsByHeightEntries, ...pathsPartitionsEntries].map(liftFamily),
   );
   // Its statistics, after its own carriers and families (step 6b).
   declareStatistics(ce, DYCK_STATISTICS);
