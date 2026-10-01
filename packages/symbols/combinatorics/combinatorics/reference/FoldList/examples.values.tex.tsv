@@ -20,8 +20,8 @@ foldlist-function-1-over-1-plus-2-1-2-x-reverse
 foldlist-function-1-times-x-plus-2-1-2-0-list-a		
 foldlist-function-neg-1-plus-2-1-2-0-list-a-b-c		
 foldlist-function-list-2-1-1-2-x-list-a-b-c-d		
-foldlist-length-is-one-more	\mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1	\top
-foldlist-last-is-fold	\mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)	\top
+foldlist-length-is-one-more	\mathrm{Length}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)+1	\mathrm{True}
+foldlist-last-is-fold	\mathrm{Last}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack))=\mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3\bigr\rbrack)	\mathrm{True}
 rest-foldlist-add-0-list-a-b-c-d-exponentiale	\mathrm{Rest}(\mathrm{FoldList}(\mathrm{Add}, 0, \bigl\lbrack a, b, c, d, e\bigr\rbrack))	\bigl\lbrack a, a+b, a+b+c, a+b+c+d, a+b+c+d+e\bigr\rbrack
 foldlist-f-x-list	\mathrm{FoldList}(f, x, \bigl\lbrack\bigr\rbrack)	\bigl\lbrack x\bigr\rbrack
 foldlist-f-x-list-a-b-c	\mathrm{FoldList}(f, x, \bigl\lbrack a, b, c\bigr\rbrack)	\bigl\lbrack x, f(x, a), f(f(x, a), b), f(f(f(x, a), b), c)\bigr\rbrack

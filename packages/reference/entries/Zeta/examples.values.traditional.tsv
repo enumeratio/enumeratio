@@ -37,7 +37,7 @@ zeta-2-list-list-1-over-2-0-list-0-3-over-2	\operatorname{Zeta}(2,[[\frac{1}{2},
 zeta-4-5	\operatorname{Zeta}(4,5)	\frac{-22369}{20736}+\frac{1}{90}\pi^4
 zeta-list-1-2-3-4	\operatorname{Zeta}([1,2,3,4])	[\tilde\infty,\frac{1}{6}\pi^2,\operatorname{Zeta}(3),\frac{1}{90}\pi^4]
 matrixfunction-function-zeta-2-1-1-list-list-1	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\operatorname{Zeta}(2,\_1)),\_1),[[\frac{1}{2},0],[0,\frac{3}{2}]])	[[\frac{1}{2}\pi^2,0],[0,\operatorname{Zeta}(2,\frac{3}{2})]]
-the-probability-that-two-random-positive	\frac{1}{\operatorname{Zeta}(2)}=\frac{6}{\pi^2}	\operatorname{True}
+the-probability-that-two-random-positive	\frac{1}{\operatorname{Zeta}(2)}=\frac{6}{\pi^2}	\top
 certified-digits-zeta-3	N(\operatorname{Zeta}(3),40)	1.202056903159594285399738161511449990765
 zeta-0-1-2	\operatorname{Zeta}(0)	\frac{-1}{2}
 trivial-zero-zeta-2n-0-for-positive-integer-n	\operatorname{Zeta}(-2)	0

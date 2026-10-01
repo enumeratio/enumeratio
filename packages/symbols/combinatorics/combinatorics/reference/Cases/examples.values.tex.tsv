@@ -2,5 +2,5 @@ id	in	out
 cases-wildcard-keeps-everything	\mathrm{Cases}(\bigl\lbrack1, a, 2, b\bigr\rbrack, \operatorname{\_})	\bigl\lbrack1, a, 2, b\bigr\rbrack
 cases-literal-value	\mathrm{Cases}(\bigl\lbrack1, 2, 1, 3, 1\bigr\rbrack, 1)	\bigl\lbrack1, 1, 1\bigr\rbrack
 cases-structural-pattern	\mathrm{Cases}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, 2, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\operatorname{\_a}\bigr\rbrack)	\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack
-cases-count-agree-on-length	\mathrm{Length}(\mathrm{Cases}(\bigl\lbrack1, 2, 1, 3, 1\bigr\rbrack, 1))=\mathrm{Count}(\bigl\lbrack1, 2, 1, 3, 1\bigr\rbrack, 1)	\top
+cases-count-agree-on-length	\mathrm{Length}(\mathrm{Cases}(\bigl\lbrack1, 2, 1, 3, 1\bigr\rbrack, 1))=\mathrm{Count}(\bigl\lbrack1, 2, 1, 3, 1\bigr\rbrack, 1)	\mathrm{True}
 cases-typed-pattern-not-typed-here	\mathrm{Length}(\mathrm{Cases}(\bigl\lbrack1, a, 2, b\bigr\rbrack, \operatorname{\_Integer}))	4

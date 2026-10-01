@@ -30,7 +30,7 @@ no-inverse-mod-0	((2+i)^{-1}\bmod0)	((2+i)^{-1}\bmod0)
 a-real-base-with-no-inverse-mod-a-shared-factor	(5^{-1}\bmod5+5i)	(5^{-1}\bmod5+5i)
 modularinverse-neg-5-7	((-5)^{-1}\bmod7)	4
 modularinverse-10-pow-100-000-nextprime-1-000	({10^{100000}}^{-1}\bmod\operatorname{NextPrime}(1000))	942
-the-same-as-powermod-with-exponent-1	(3^{-1}\bmod7)=(3^{-1}\bmod7)	\operatorname{True}
+the-same-as-powermod-with-exponent-1	(3^{-1}\bmod7)=(3^{-1}\bmod7)	\top
 a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2	\bmod(12345(12345^{-1}\bmod2^{61}-1),2^{61}-1)	1
 list-modularinverse-2-5-modularinverse-7-5	[(2^{-1}\bmod5),(7^{-1}\bmod5)]	[3,3]
 list-modularinverse-3-5-powermod-3-neg-1-5	[(3^{-1}\bmod5),(3^{-1}\bmod5)]	[2,2]

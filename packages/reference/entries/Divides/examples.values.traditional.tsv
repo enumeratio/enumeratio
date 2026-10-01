@@ -1,11 +1,11 @@
 id	in	out
-divides-2-10	\operatorname{Divides}(2,10)	\operatorname{True}
-divides-2-5	\operatorname{Divides}(2,5)	\operatorname{False}
-divides-3-6	\operatorname{Divides}(3,6)	\operatorname{True}
-divides-16-001-1-plus-10-pow-3-000	\operatorname{Divides}(16001,1+10^{3000})	\operatorname{True}
-divides-3-2-895	\operatorname{Divides}(3,2895)	\operatorname{True}
-divides-11-918-082	\operatorname{Divides}(11,918082)	\operatorname{True}
-list-isinteger-5-divides-2-10	[\operatorname{IsInteger}(5),\operatorname{Divides}(2,10)]	[\operatorname{True},\operatorname{True}]
-divides-8-48	\operatorname{Divides}(8,48)	\operatorname{True}
-divides-12-25	\operatorname{Divides}(12,25)	\operatorname{False}
+divides-2-10	\operatorname{Divides}(2,10)	\top
+divides-2-5	\operatorname{Divides}(2,5)	\bot
+divides-3-6	\operatorname{Divides}(3,6)	\top
+divides-16-001-1-plus-10-pow-3-000	\operatorname{Divides}(16001,1+10^{3000})	\top
+divides-3-2-895	\operatorname{Divides}(3,2895)	\top
+divides-11-918-082	\operatorname{Divides}(11,918082)	\top
+list-isinteger-5-divides-2-10	[\operatorname{IsInteger}(5),\operatorname{Divides}(2,10)]	[\top,\top]
+divides-8-48	\operatorname{Divides}(8,48)	\top
+divides-12-25	\operatorname{Divides}(12,25)	\bot
 simplify-divides-a-b-times-a-list-a-b-in		

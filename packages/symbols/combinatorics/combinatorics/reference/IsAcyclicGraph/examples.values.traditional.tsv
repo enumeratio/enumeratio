@@ -1,4 +1,4 @@
 id	in	out
-a-tree-is-acyclic	\operatorname{IsAcyclicGraph}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4)]))	\operatorname{True}
-a-cycle-is-not-acyclic	\operatorname{IsAcyclicGraph}(\operatorname{CycleGraph}(4))	\operatorname{False}
-a-directed-2-cycle-is-a-cycle	\operatorname{IsAcyclicGraph}(\operatorname{Graph}([1,2],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,1)]))	\operatorname{False}
+a-tree-is-acyclic	\operatorname{IsAcyclicGraph}(\operatorname{Graph}([1,2,3,4],[\operatorname{UndirectedEdge}(1,2),\operatorname{UndirectedEdge}(2,3),\operatorname{UndirectedEdge}(3,4)]))	\top
+a-cycle-is-not-acyclic	\operatorname{IsAcyclicGraph}(\operatorname{CycleGraph}(4))	\bot
+a-directed-2-cycle-is-a-cycle	\operatorname{IsAcyclicGraph}(\operatorname{Graph}([1,2],[\operatorname{DirectedEdge}(1,2),\operatorname{DirectedEdge}(2,1)]))	\bot

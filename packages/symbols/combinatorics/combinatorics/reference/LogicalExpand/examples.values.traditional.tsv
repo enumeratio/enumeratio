@@ -2,9 +2,9 @@ id	in	out
 implies-becomes-or-not	\operatorname{LogicalExpand}(p\Rightarrow b)	b\lor\lnot p
 distributes-and-over-or	\operatorname{LogicalExpand}(p\land(b\lor r))	b\land p\lor p\land r
 xor-eliminated-into-dnf	\operatorname{LogicalExpand}(\operatorname{Xor}(p,b))	b\land\lnot p\lor p\land\lnot b
-a-contradictory-term-drops-out	\operatorname{LogicalExpand}(p\land\lnot p)	\operatorname{False}
+a-contradictory-term-drops-out	\operatorname{LogicalExpand}(p\land\lnot p)	\bot
 logicalexpand-a-factorial-a	\operatorname{LogicalExpand}(a\lor\lnot a)	a\lor\lnot a
-logicalexpand-a-factorial-a-2	\operatorname{LogicalExpand}(a\land\lnot a)	\operatorname{False}
+logicalexpand-a-factorial-a-2	\operatorname{LogicalExpand}(a\land\lnot a)	\bot
 logicalexpand-x-eq-a-y-eq-b-x-eq-a-y-eq-b	\operatorname{LogicalExpand}(x=a\land y=b\lor x=a\lor y=b)	x=a\lor x=a\land y=b\lor y=b
 logicalexpand-t	\operatorname{LogicalExpand}(t)	t
 logicalexpand-factorial-a-b	\operatorname{LogicalExpand}(\lnot(a\lor b))	\lnot a\land\lnot b

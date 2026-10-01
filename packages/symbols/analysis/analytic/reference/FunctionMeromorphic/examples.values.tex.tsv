@@ -1,9 +1,9 @@
 id	in	out
-a-rational-function-is-meromorphic	\mathrm{FunctionMeromorphic}(\frac{1}{x}, x)	\top
-tangent-is-a-ratio-of-entire-functions	\mathrm{FunctionMeromorphic}(\tan(x), x)	\top
-a-branch-point-is-not-a-pole	\mathrm{FunctionMeromorphic}(\ln(x), x)	\bot
-polynomials-are-meromorphic	\mathrm{FunctionMeromorphic}(x^2, x)	\top
-functionmeromorphic-sqrt-z-z	\mathrm{FunctionMeromorphic}(\sqrt{z}, z)	\bot
-functionmeromorphic-ln-z-z	\mathrm{FunctionMeromorphic}(\ln(z), z)	\bot
+a-rational-function-is-meromorphic	\mathrm{FunctionMeromorphic}(\frac{1}{x}, x)	\mathrm{True}
+tangent-is-a-ratio-of-entire-functions	\mathrm{FunctionMeromorphic}(\tan(x), x)	\mathrm{True}
+a-branch-point-is-not-a-pole	\mathrm{FunctionMeromorphic}(\ln(x), x)	\mathrm{False}
+polynomials-are-meromorphic	\mathrm{FunctionMeromorphic}(x^2, x)	\mathrm{True}
+functionmeromorphic-sqrt-z-z	\mathrm{FunctionMeromorphic}(\sqrt{z}, z)	\mathrm{False}
+functionmeromorphic-ln-z-z	\mathrm{FunctionMeromorphic}(\ln(z), z)	\mathrm{False}
 list-functionmeromorphic-x-times-x-pow-2-plus-1		
 list-functionmeromorphic-tan-x-x		

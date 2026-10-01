@@ -1,5 +1,5 @@
 id	in	out
 the-first-20-lesser-twin-primes-oeis-a001359	\operatorname{Take}(\operatorname{TwinPrimes},20)	[3,5,11,17,29,41,59,71,101,107,137,149,179,191,197,227,239,269,281,311]
 count-twinprimes-is-unknown-but-the-first-20	\operatorname{Count}(\operatorname{Take}(\operatorname{TwinPrimes},20))	20
-11-is-a-lesser-twin-prime	11\in\operatorname{TwinPrimes}	\operatorname{True}
-13-is-not-13-2-15-not-prime	13\in\operatorname{TwinPrimes}	\operatorname{False}
+11-is-a-lesser-twin-prime	11\in\operatorname{TwinPrimes}	\top
+13-is-not-13-2-15-not-prime	13\in\operatorname{TwinPrimes}	\bot

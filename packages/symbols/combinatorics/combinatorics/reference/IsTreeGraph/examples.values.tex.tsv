@@ -1,7 +1,7 @@
 id	in	out
-a-star-is-a-tree	\mathrm{IsTreeGraph}(\mathrm{StarGraph}(5))	\top
-a-cycle-is-not-a-tree	\mathrm{IsTreeGraph}(\mathrm{CycleGraph}(4))	\bot
-a-disconnected-forest-is-not-a-tree	\mathrm{IsTreeGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))	\bot
-a-path-is-a-tree	\mathrm{IsTreeGraph}(\mathrm{PathGraph}(5))	\top
-a-ternary-complete-tree-is-a-tree	\mathrm{IsTreeGraph}(\mathrm{CompleteKaryTree}(3, 3))	\top
-a-complete-graph-past-k2-is-not-a-tree	\mathrm{IsTreeGraph}(\mathrm{CompleteGraph}(4))	\bot
+a-star-is-a-tree	\mathrm{IsTreeGraph}(\mathrm{StarGraph}(5))	\mathrm{True}
+a-cycle-is-not-a-tree	\mathrm{IsTreeGraph}(\mathrm{CycleGraph}(4))	\mathrm{False}
+a-disconnected-forest-is-not-a-tree	\mathrm{IsTreeGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))	\mathrm{False}
+a-path-is-a-tree	\mathrm{IsTreeGraph}(\mathrm{PathGraph}(5))	\mathrm{True}
+a-ternary-complete-tree-is-a-tree	\mathrm{IsTreeGraph}(\mathrm{CompleteKaryTree}(3, 3))	\mathrm{True}
+a-complete-graph-past-k2-is-not-a-tree	\mathrm{IsTreeGraph}(\mathrm{CompleteGraph}(4))	\mathrm{False}

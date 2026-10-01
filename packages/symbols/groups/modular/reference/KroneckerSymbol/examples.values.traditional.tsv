@@ -46,10 +46,10 @@ larger-arguments-10-11-1-against-the-2000th	(\frac{10^{11}+1}{p_{2000}})	-1
 even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	(\frac{7}{6})	1
 generatingfunction-kroneckersymbol-n-7-n-x	\operatorname{GeneratingFunction}((\frac{n}{7}),n,x)	\frac{x^5+2x^4+x^3+2x^2+x}{x^6+x^5+x^4+x^3+x^2+x+1}
 the-character-mod-4-4-p-1-for-primes-p-equiv-3	(\frac{-4}{7})	-1
-kroneckersymbol-2-7-eq-kroneckersymbol-23-7	(\frac{2}{7})=(\frac{23}{7})	\operatorname{True}
+kroneckersymbol-2-7-eq-kroneckersymbol-23-7	(\frac{2}{7})=(\frac{23}{7})	\top
 kroneckersymbol-neg-4-list-1-5-7-11	\operatorname{KroneckerSymbol}(-4,[1,5,7,11])	[1,1,-1,-1]
-completely-multiplicative-in-n	(\frac{7}{3\cdot5})=(\frac{7}{3})(\frac{7}{5})	\operatorname{True}
+completely-multiplicative-in-n	(\frac{7}{3\cdot5})=(\frac{7}{3})(\frac{7}{5})	\top
 kroneckersymbol-9-12	(\frac{9}{12})	0
-kroneckersymbol-12-7-eq-kroneckersymbol-3-7	(\frac{12}{7})=(\frac{3}{7})(\frac{4}{7})	\operatorname{True}
-kroneckersymbol-3-63-eq-kroneckersymbol-3-9	(\frac{3}{63})=(\frac{3}{9})(\frac{3}{7})	\operatorname{True}
+kroneckersymbol-12-7-eq-kroneckersymbol-3-7	(\frac{12}{7})=(\frac{3}{7})(\frac{4}{7})	\top
+kroneckersymbol-3-63-eq-kroneckersymbol-3-9	(\frac{3}{63})=(\frac{3}{9})(\frac{3}{7})	\top
 a-0-1-for-a-pm-1	(\frac{-1}{0})	1

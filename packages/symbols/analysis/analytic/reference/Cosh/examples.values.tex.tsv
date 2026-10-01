@@ -21,8 +21,8 @@ n-cosh-6-over-5-50	N(\cosh(\frac{6}{5}), 50)	1.810\,655\,567\,324\,374\,793\,09
 cosh-1-over-5-times-i-times-pi	\cosh((\frac{1}{5}i)\pi)	\frac{1}{4}+\frac{\sqrt{5}}{4}
 cosh-1-over-24-times-i-times-pi	\cosh((\frac{1}{24}i)\pi)	\cos(\frac{\pi}{24})
 matrixfunction-function-cosh-1-1-list-list-1	\mathrm{MatrixFunction}(()\mapsto\cosh(\operatorname{\_1}), \bigl\lbrack\bigl\lbrack(1/3i)\pi, (-1/3i)\pi\bigr\rbrack, \bigl\lbrack0, (-1/6i)\pi\bigr\rbrack\bigr\rbrack)	\bigl\lbrack\bigl\lbrack\frac{1}{2}, \frac{\sqrt{3}}{3}-\frac{1}{3}\bigr\rbrack, \bigl\lbrack0, \frac{\sqrt{3}}{2}\bigr\rbrack\bigr\rbrack
-even-function-cosh-x-cosh-x	\cosh(-1)=\cosh(1)	\top
-hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	\cosh(1)^2-\sinh(1)^2=1	\top
+even-function-cosh-x-cosh-x	\cosh(-1)=\cosh(1)	\mathrm{True}
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2	\cosh(1)^2-\sinh(1)^2=1	\mathrm{True}
 the-definition-cosh-x-frac-e-x-e-x-2	\mathrm{TrigToExp}(\cosh(x))	\frac{1}{2}(e^{x}+\exp(-x))
 cosh-2-x-sinh-2-x-should-simplify-to-1	\mathrm{Simplify}(\cosh(x)^2-\sinh(x)^2)	1
 cosh-1-over-12-times-i-times-pi	\cosh((\frac{1}{12}i)\pi)	\frac{\sqrt{2}}{4}+\frac{\sqrt{6}}{4}

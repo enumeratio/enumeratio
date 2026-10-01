@@ -15,7 +15,7 @@ a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not	\operatorname{MatrixExp}([[2,1]
 matrixexp-list-list-a-b-list-0-c		
 matrixexp-diagonalmatrix-list-a-b-c		
 a-skew-symmetric-generator-gives-a-rotation	\operatorname{MatrixExp}([[0,1],[-1,0]])	[[\cos(1),\sin(1)],[-\sin(1),\cos(1)]]
-matrixexp-a-eq-matrixfunction-exp-a	\operatorname{MatrixExp}(a)=\operatorname{MatrixFunction}(\operatorname{Exp},a)	\operatorname{True}
+matrixexp-a-eq-matrixfunction-exp-a	\operatorname{MatrixExp}(a)=\operatorname{MatrixFunction}(\operatorname{Exp},a)	\top
 rejects-a-non-square-argument	\operatorname{MatrixExp}([[1,2,3],[4,5,6]])	\textcolor{red}{\text{“expected-square-matrix”}\text{“[[1,2,3],[4,5,6]]”}}
 a-generic-matrix-with-no-closed-form-stays	\operatorname{MatrixExp}([[1,2,3],[4,5,6],[7,8,10]])	\operatorname{MatrixExp}([[1,2,3],[4,5,6],[7,8,10]])
 euler-s-identity-for-matrices-rotation-by-pi-is	\operatorname{MatrixExp}([[0,-\pi],[\pi,0]])	[[-1,0],[0,-1]]

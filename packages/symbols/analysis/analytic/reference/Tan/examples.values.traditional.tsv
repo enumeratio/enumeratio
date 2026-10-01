@@ -32,11 +32,11 @@ antiderivative-ln-sec-x	\int\tan(x)dx	\ln(|\sec(x)|)
 taylor-series-about-0	\operatorname{Series}(\tan(x),x,0,7)	\frac{17}{315}x^7+\frac{2}{15}x^5+\frac{1}{3}x^3+x+\operatorname{BigO}(x^9)
 to-30-significant-digits-every-one-correctly	N(\tan(1),30)	1.55740772465490223050697480746
 n-tan-6-over-5-50	N(\tan(\frac{6}{5}),50)	2.5721516221263189354099942360333639565294093060434
-functionrange-tan-x-x-y	\operatorname{FunctionRange}(\tan(x),x,y)	\operatorname{True}
+functionrange-tan-x-x-y	\operatorname{FunctionRange}(\tan(x),x,y)	\top
 functionperiod-tan-x-x	\operatorname{FunctionPeriod}(\tan(x),x)	\pi
-functionanalytic-tan-x-x	\operatorname{FunctionAnalytic}(\tan(x),x)	\operatorname{False}
-functionmeromorphic-tan-x-x	\operatorname{FunctionMeromorphic}(\tan(x),x)	\operatorname{True}
-functionsurjective-tan-x-x	\operatorname{FunctionSurjective}(\tan(x),x)	\operatorname{True}
+functionanalytic-tan-x-x	\operatorname{FunctionAnalytic}(\tan(x),x)	\bot
+functionmeromorphic-tan-x-x	\operatorname{FunctionMeromorphic}(\tan(x),x)	\top
+functionsurjective-tan-x-x	\operatorname{FunctionSurjective}(\tan(x),x)	\top
 functionsingularities-tan-x-x	\operatorname{FunctionSingularities}(\tan(x),x)	\cos(x)=0
 functiondiscontinuities-tan-x-x	\operatorname{FunctionDiscontinuities}(\tan(x),x)	\cos(x)=0
 matrixfunction-function-tan-1-1-list-list-5-over	\operatorname{MatrixFunction}(\operatorname{Function}(\operatorname{Block}(\tan(\_1)),\_1),[[\frac{5}{6}\pi,\pi],[\frac{1}{3}\pi,-\pi]])	[[-\frac{\sqrt{3}}{39},\frac{2}{13}\sqrt{3}],[\frac{2}{39}\sqrt{3},\frac{-4}{13}\sqrt{3}]]
@@ -44,7 +44,7 @@ assuming-m-in-integers-refine-tan-pi-times-m
 assuming-m-in-integers-fullsimplify-refine-tan		
 tan-positiveinfinity		
 threads-element-wise-over-a-list	\tan([0,\frac{\pi}{4}])	[0,1]
-tan-x-frac-sin-x-cos-x	\tan(\frac{\pi}{4})=\frac{\sin(\frac{\pi}{4})}{\cos(\frac{\pi}{4})}	\operatorname{True}
+tan-x-frac-sin-x-cos-x	\tan(\frac{\pi}{4})=\frac{\sin(\frac{\pi}{4})}{\cos(\frac{\pi}{4})}	\top
 odd-function-tan-x-tan-x		
 period-pi-not-2-pi-adding-a-half-turn-doesn-t		
 sin-x-cos-x-should-simplify-to-tan-x-simplify	\operatorname{Simplify}(\frac{\sin(x)}{\cos(x)})	\tan(x)

@@ -1,7 +1,7 @@
 id	in	out
 12-hat-z-8-hat-z-4-hat-z	\mathrm{ProfiniteNumber}(3, 12)+\mathrm{ProfiniteNumber}(5, 8)	\mathrm{ProfiniteNumber}(0, 4)
 profinitenumber-3-12-times-profinitenumber-5-8	\mathrm{ProfiniteNumber}(3, 12)\mathrm{ProfiniteNumber}(5, 8)	\mathrm{ProfiniteNumber}(3, 12)
-equal-cosets-need-not-share-a-modulus	\mathrm{ProfiniteNumber}(6, 20)=\mathrm{ProfiniteNumber}(6, 40)	\top
+equal-cosets-need-not-share-a-modulus	\mathrm{ProfiniteNumber}(6, 20)=\mathrm{ProfiniteNumber}(6, 40)	\mathrm{True}
 numerator-profinitenumber-2-over-3-5	\mathrm{Numerator}(\mathrm{ProfiniteNumber}(\frac{2}{3}, 5))	\mathrm{ProfiniteNumber}(2, 15)
 denominator-profinitenumber-2-over-3-5	\mathrm{Denominator}(\mathrm{ProfiniteNumber}(\frac{2}{3}, 5))	3
 projecting-to-q-2	\mathrm{AdicNumeral}(2, \mathrm{ProfiniteNumber}(100, 24))	\mathrm{AdicNumeral}(2, 4, 3)
@@ -31,10 +31,10 @@ golden-multiply-187-4-mod-47-1-mod-3	\mathrm{ProfiniteNumber}(\frac{187}{4}, 47)
 golden-multiply-7-4-mod-57-2-1-4	\frac{1}{4}(\mathrm{ProfiniteNumber}(\frac{7}{4}, \frac{57}{2}))	\mathrm{ProfiniteNumber}(\frac{7}{16}, \frac{57}{8})
 golden-multiply-2-mod-48-12	12\mathrm{ProfiniteNumber}(2, 48)	\mathrm{ProfiniteNumber}(24, 576)
 golden-multiply-2-27-mod-31	2\mathrm{ProfiniteNumber}(27, 31)	\mathrm{ProfiniteNumber}(54, 62)
-golden-equal-2-4-3-mod-37-6	-2=\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})	\bot
-golden-equal-11-mod-18-2-mod-35	\mathrm{ProfiniteNumber}(11, 18)=\mathrm{ProfiniteNumber}(2, 35)	\top
-golden-equal-2-mod-29-3-3-mod-5	\mathrm{ProfiniteNumber}(2, \frac{29}{3})=\mathrm{ProfiniteNumber}(3, 5)	\top
-golden-equal-2-mod-48-12	\mathrm{ProfiniteNumber}(2, 48)=12	\bot
+golden-equal-2-4-3-mod-37-6	-2=\mathrm{ProfiniteNumber}(\frac{4}{3}, \frac{37}{6})	\mathrm{False}
+golden-equal-11-mod-18-2-mod-35	\mathrm{ProfiniteNumber}(11, 18)=\mathrm{ProfiniteNumber}(2, 35)	\mathrm{True}
+golden-equal-2-mod-29-3-3-mod-5	\mathrm{ProfiniteNumber}(2, \frac{29}{3})=\mathrm{ProfiniteNumber}(3, 5)	\mathrm{True}
+golden-equal-2-mod-48-12	\mathrm{ProfiniteNumber}(2, 48)=12	\mathrm{False}
 golden-numerator-2	\mathrm{Numerator}(-2)	-2
 golden-numerator-11-mod-18	\mathrm{Numerator}(\mathrm{ProfiniteNumber}(11, 18))	\mathrm{ProfiniteNumber}(11, 18)
 golden-numerator-187-4-mod-47	\mathrm{Numerator}(\mathrm{ProfiniteNumber}(\frac{187}{4}, 47))	\mathrm{ProfiniteNumber}(187, 188)

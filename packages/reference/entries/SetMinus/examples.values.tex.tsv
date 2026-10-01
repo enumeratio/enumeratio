@@ -6,7 +6,7 @@ several-sets-can-be-removed-at-once	\lbrace a, b, c, d, f\rbrace\setminus\lbrace
 setminus-a-b-c-d-exponentiale-a-c-d	\lbrace a, b, c, d, e\rbrace\setminus\lbrace a, c\rbrace\setminus\lbrace d\rbrace	\lbrace b, e\rbrace
 lists-as-well-as-sets-as-wolfram-s-complement	\bigl\lbrack a, b, c, d, f\bigr\rbrack\setminus\operatorname{List}(a, c)\setminus\bigl\lbrack d\bigr\rbrack	\lbrace b, f\rbrace
 a-range-as-the-universe-to-remove-from-compute	(1..10)\setminus\lbrace2, 3\rbrace	\lbrace1, 4, 5, 6, 7, 8, 9, 10\rbrace
-a-setminus-a-setminus-b-a-cap-b-see-intersection	\lbrace1, 2, 3, 4\rbrace\setminus(\lbrace1, 2, 3, 4\rbrace\setminus\lbrace2, 4\rbrace)=\lbrace1, 2, 3, 4\rbrace\cap\lbrace2, 4\rbrace	\top
+a-setminus-a-setminus-b-a-cap-b-see-intersection	\lbrace1, 2, 3, 4\rbrace\setminus(\lbrace1, 2, 3, 4\rbrace\setminus\lbrace2, 4\rbrace)=\lbrace1, 2, 3, 4\rbrace\cap\lbrace2, 4\rbrace	\mathrm{True}
 removing-the-empty-set-changes-nothing-a	\lbrace1, 2, 3\rbrace\setminus\emptyset	\lbrace1, 2, 3\rbrace
 a-setminus-a-varnothing	\lbrace1, 2, 3\rbrace\setminus\lbrace1, 2, 3\rbrace	\emptyset
 setminus-b-exponentiale-d-a-c-b-c	\lbrace b, e, d, a, c\rbrace\setminus\lbrace b, c\rbrace	\lbrace e, d, a\rbrace

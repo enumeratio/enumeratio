@@ -27,8 +27,8 @@ legendre-s-formula-100-ends-in-lfloor-100-5	\lfloor\frac{100}{5}\rfloor+\lfloor\
 the-number-of-decimal-digits-of-n-is-lfloor-log	\lfloor\log_{10}(12\,345)\rfloor+1	5
 the-first-four-digits-of-e	\lfloor1\,000e\rfloor	2\,718
 floor-10-over-997-times-powermod-10-999-999-997	\lfloor\frac{1}{997}(10(\mathrm{PowerMod}(10, 999\,999, 997)\bmod997))\rfloor	2
-for-a-non-integer-x-lceil-x-rceil-lfloor-x	\lfloor\frac{7}{2}\rfloor+1=\lceil\frac{7}{2}\rceil	\top
-lfloor-x-rfloor-lceil-x-rceil	\lfloor-\frac{7}{2}\rfloor=-\lceil\frac{7}{2}\rceil	\top
+for-a-non-integer-x-lceil-x-rceil-lfloor-x	\lfloor\frac{7}{2}\rfloor+1=\lceil\frac{7}{2}\rceil	\mathrm{True}
+lfloor-x-rfloor-lceil-x-rceil	\lfloor-\frac{7}{2}\rfloor=-\lceil\frac{7}{2}\rceil	\mathrm{True}
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor	\lfloor\lfloor x\rfloor\rfloor	\lfloor x\rfloor
 floor-16-3	\lfloor16\rfloor	15
 piecewiseexpand-floor-x-pow-2-0-lt-x-lt-2	\mathrm{PiecewiseExpand}(\lfloor x^2\rfloor, 0\lt x\lt2)	\lfloor x^2\rfloor

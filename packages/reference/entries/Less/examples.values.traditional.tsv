@@ -1,7 +1,7 @@
 id	in	out
-2-over-17-lt-1-over-5-lt-1-over-10-times-pi	\frac{2}{17}<\frac{1}{5}<\frac{1}{10}\pi	\operatorname{True}
-3-over-2-lt-5-over-3	\frac{3}{2}<\frac{5}{3}	\operatorname{True}
-1-lt-1-plus-128-times-10-pow-neg-16	1<1+12810^{-16}	\operatorname{True}
-1-lt-1-plus-256-times-10-pow-neg-16	1<1+25610^{-16}	\operatorname{True}
-pi-pow-exponentiale-lt-exponentiale-pow-pi	\pi^e<e^{\pi}	\operatorname{True}
+2-over-17-lt-1-over-5-lt-1-over-10-times-pi	\frac{2}{17}<\frac{1}{5}<\frac{1}{10}\pi	\top
+3-over-2-lt-5-over-3	\frac{3}{2}<\frac{5}{3}	\top
+1-lt-1-plus-128-times-10-pow-neg-16	1<1+12810^{-16}	\top
+1-lt-1-plus-256-times-10-pow-neg-16	1<1+25610^{-16}	\top
+pi-pow-exponentiale-lt-exponentiale-pow-pi	\pi^e<e^{\pi}	\top
 refine-sqrt-x-pow-2-x-lt-0	\operatorname{Refine}(\sqrt{x^2},x<0)	-x

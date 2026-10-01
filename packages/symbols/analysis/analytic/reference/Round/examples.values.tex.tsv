@@ -17,8 +17,8 @@ evaluates-at-an-exact-constant-round-pi-3	\mathrm{round}(\pi)	3
 100e-approx-271-83-rounds-to-272	\mathrm{round}(100e)	272
 rounds-the-real-and-imaginary-parts-separately	\mathrm{round}(5.37-1.3i)	5-i
 rounding-a-price-to-the-nearest-cent-19-995	\mathrm{round}(19.995, 2)	20
-a-negative-second-argument-rounds-to-the-nearest	\mathrm{round}(1\,234, -2)=1\,200	\top
-rounding-to-0-decimal-places-matches-the-1	\mathrm{round}(3.141\,59, 0)=\mathrm{round}(3.141\,59)	\top
+a-negative-second-argument-rounds-to-the-nearest	\mathrm{round}(1\,234, -2)=1\,200	\mathrm{True}
+rounding-to-0-decimal-places-matches-the-1	\mathrm{round}(3.141\,59, 0)=\mathrm{round}(3.141\,59)	\mathrm{True}
 rounds-half-away-from-zero-not-banker-s-rounding	\mathrm{round}(2.5)	3
 and-by-the-same-convention-2-5-rounds-to-3-not-2	\mathrm{round}(-2.5)	-3
 round-5-over-2-exact-rational-tie	\mathrm{round}(\frac{5}{2})	3

@@ -1,6 +1,6 @@
 id	in	out
 the-canonical-order	\mathrm{NonCommutativeMultiply}(e_1, e_2)	e_1e_2
-noncommutativemultiply-a-b-c-eq	\mathrm{NonCommutativeMultiply}(a, b, c)=\mathrm{NonCommutativeMultiply}(a, b, c)	\top
+noncommutativemultiply-a-b-c-eq	\mathrm{NonCommutativeMultiply}(a, b, c)=\mathrm{NonCommutativeMultiply}(a, b, c)	\mathrm{True}
 list-a-times-b-eq-a-times-b		
 scalars-the-implied-identity-factor	2\otimes3	6
 commuting-units-agrees-with-times	i_2\otimes i_1	i_1i_2

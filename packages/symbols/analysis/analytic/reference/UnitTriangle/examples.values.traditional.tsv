@@ -9,4 +9,4 @@ unittriangle-1-2	\operatorname{UnitTriangle}(\frac{1}{2})	\frac{1}{2}
 unittriangle-1-over-4	\operatorname{UnitTriangle}(\frac{1}{4})	\frac{3}{4}
 piecewiseexpand-unittriangle-x-0-lt-x-lt-2	\operatorname{PiecewiseExpand}(\operatorname{UnitTriangle}(x),0<x<2)	\operatorname{UnitTriangle}(x)
 n-unittriangle-neg-1-over-7-50		
-unittriangle-same-as-heavisidelambda	\operatorname{UnitTriangle}(\frac{1}{4})=\operatorname{HeavisideLambda}(\frac{1}{4})	\operatorname{True}
+unittriangle-same-as-heavisidelambda	\operatorname{UnitTriangle}(\frac{1}{4})=\operatorname{HeavisideLambda}(\frac{1}{4})	\top

@@ -7,6 +7,6 @@ a-lazy-range-is-materialised-first	\operatorname{Append}(\operatorname{Range}(1,
 any-head-not-just-a-list	\operatorname{Append}(f(a,b),c)	f(a,b,c)
 adding-a-row-to-a-matrix	\operatorname{Append}([[1,2],[3,4]],[5,6])	[[1,2],[3,4],[5,6]]
 nestlist-function-symbol-x-1-list-a-5		
-append-c-x-join-c-x-see-join	\operatorname{Append}([1,2,3],4)=\operatorname{Join}([1,2,3],[4])	\operatorname{True}
-appending-adds-exactly-one-element-see-length	\operatorname{Length}(\operatorname{Append}([1,2,3],4))=\operatorname{Length}([1,2,3])+1	\operatorname{True}
+append-c-x-join-c-x-see-join	\operatorname{Append}([1,2,3],4)=\operatorname{Join}([1,2,3],[4])	\top
+appending-adds-exactly-one-element-see-length	\operatorname{Length}(\operatorname{Append}([1,2,3],4))=\operatorname{Length}([1,2,3])+1	\top
 appending-a-list-nests-it-as-a-single-element	\operatorname{Append}([1,2,3],[9])	[1,2,3,[9]]

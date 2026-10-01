@@ -5,6 +5,6 @@ square-2-over-3
 canonicalizes-to-x-2		
 threads-element-wise-over-a-list	[2,3,-4]^2	[4,9,16]
 the-area-of-a-3-3-square-tile		
-even-function-x-2-x-2	(-5)^2=5^2	\operatorname{True}
-1-i-2-2i-squaring-a-complex-number-needn-t-stay	(1+i)^2=2i	\operatorname{True}
+even-function-x-2-x-2	(-5)^2=5^2	\top
+1-i-2-2i-squaring-a-complex-number-needn-t-stay	(1+i)^2=2i	\top
 infinity-squared-stays-infinite-rather-than		

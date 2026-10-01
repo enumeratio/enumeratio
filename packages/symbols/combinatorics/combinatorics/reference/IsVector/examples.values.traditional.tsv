@@ -1,13 +1,13 @@
 id	in	out
-a-flat-list-is-a-vector	\operatorname{IsVector}([1,2,3])	\operatorname{True}
-isvector-list-a-b-c	\operatorname{IsVector}([a,b,c])	\operatorname{True}
-isvector-list-list-1-list-2	\operatorname{IsVector}([[1],[2]])	\operatorname{False}
-isvector-vector	\operatorname{IsVector}(\operatorname{vector})	\operatorname{False}
-a-list-of-lists-is-not-a-vector	\operatorname{IsVector}([[1,2],[3,4]])	\operatorname{False}
-a-non-list-is-not-a-vector	\operatorname{IsVector}(3)	\operatorname{False}
-a-test-function-must-hold-of-every-element	\operatorname{IsVector}([2,4,6],\operatorname{IsEven})	\operatorname{True}
-a-test-function-failing-on-one-element	\operatorname{IsVector}([2,3,6],\operatorname{IsEven})	\operatorname{False}
-isvector-range-1-10-ismachinenumber	\operatorname{IsVector}(\operatorname{Range}(1,10),\operatorname{IsMachineNumber})	\operatorname{False}
+a-flat-list-is-a-vector	\operatorname{IsVector}([1,2,3])	\top
+isvector-list-a-b-c	\operatorname{IsVector}([a,b,c])	\top
+isvector-list-list-1-list-2	\operatorname{IsVector}([[1],[2]])	\bot
+isvector-vector	\operatorname{IsVector}(\operatorname{vector})	\bot
+a-list-of-lists-is-not-a-vector	\operatorname{IsVector}([[1,2],[3,4]])	\bot
+a-non-list-is-not-a-vector	\operatorname{IsVector}(3)	\bot
+a-test-function-must-hold-of-every-element	\operatorname{IsVector}([2,4,6],\operatorname{IsEven})	\top
+a-test-function-failing-on-one-element	\operatorname{IsVector}([2,3,6],\operatorname{IsEven})	\bot
+isvector-range-1-10-ismachinenumber	\operatorname{IsVector}(\operatorname{Range}(1,10),\operatorname{IsMachineNumber})	\bot
 isvector-range-1-10-isinteger		
 isvector-n-range-1-10-ismachinenumber		
-list-isvector-vec-isvector-expr	[\operatorname{IsVector}(\operatorname{vec}),\operatorname{IsVector}(\operatorname{expr})]	[\operatorname{False},\operatorname{False}]
+list-isvector-vec-isvector-expr	[\operatorname{IsVector}(\operatorname{vec}),\operatorname{IsVector}(\operatorname{expr})]	[\bot,\bot]

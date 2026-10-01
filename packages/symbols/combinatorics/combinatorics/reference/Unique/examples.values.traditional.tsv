@@ -11,4 +11,4 @@ count-the-distinct-elements	\operatorname{Length}(\operatorname{Unique}([1,2,2,3
 the-residues-mod-3-that-occur-in-order-of-first	\operatorname{Unique}(\bmod(\operatorname{Range}(10),3))	[1,2,0]
 idempotent	\operatorname{Unique}(\operatorname{Unique}([1,1,2]))	[1,2]
 unique-list-function-sum-1-eq-sum-2-1-2		
-unique-list-3-3-3-function-false	\operatorname{Unique}([3,3,3],\operatorname{Function}(\operatorname{Block}(\operatorname{False})))	[3,3,3]
+unique-list-3-3-3-function-false	\operatorname{Unique}([3,3,3],\operatorname{Function}(\operatorname{Block}(\bot)))	[3,3,3]

@@ -10,10 +10,10 @@ the-two-argument-form-gives-the-bell-touchard	\mathrm{BellNumber}(5, x)	x^5+10x^
 the-bell-polynomial-at-a-real-point-b-20-0-5	\mathrm{BellNumber}(20, 0.5)	270\,190\,131\,940.151\,92
 bellnumber-list-1-2-3-4-5-6	\mathrm{BellNumber}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)	\bigl\lbrack1, 2, 5, 15, 52, 203\bigr\rbrack
 the-number-of-ways-to-partition-a-4-element-set	\mathrm{BellNumber}(4)	15
-recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	\mathrm{BellNumber}(5)=\binom{4}{0}\mathrm{BellNumber}(0)+\binom{4}{1}\mathrm{BellNumber}(1)+\binom{4}{2}\mathrm{BellNumber}(2)+\binom{4}{3}\mathrm{BellNumber}(3)+\binom{4}{4}\mathrm{BellNumber}(4)	\top
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at	\mathrm{BellNumber}(5)=\binom{4}{0}\mathrm{BellNumber}(0)+\binom{4}{1}\mathrm{BellNumber}(1)+\binom{4}{2}\mathrm{BellNumber}(2)+\binom{4}{3}\mathrm{BellNumber}(3)+\binom{4}{4}\mathrm{BellNumber}(4)	\mathrm{True}
 the-bell-polynomial-at-1-is-the-bell-number-b-n	\mathrm{BellNumber}(5, 1)	52
 dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac	\frac{1}{e}(\sum_{k=0}^{\infty}\frac{k^5}{k!})	52
-touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	\mathrm{BellNumber}(9)\bmod7=(\mathrm{BellNumber}(2)+\mathrm{BellNumber}(3))\bmod7	\top
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod	\mathrm{BellNumber}(9)\bmod7=(\mathrm{BellNumber}(2)+\mathrm{BellNumber}(3))\bmod7	\mathrm{True}
 exponentialgeneratingfunction-bellnumber-n-n-x	\mathrm{ExponentialGeneratingFunction}(\mathrm{BellNumber}(n), n, x)	e^{e^{x}-1}
 bellnumber-2	\mathrm{BellNumber}(2)	2
 bellnumber-6	\mathrm{BellNumber}(6)	203
@@ -23,5 +23,5 @@ bellnumber-9	\mathrm{BellNumber}(9)	21\,147
 bellnumber-1-0	\mathrm{BellNumber}(1, 0)	0
 bellnumber-2-0	\mathrm{BellNumber}(2, 0)	0
 a-negative-argument-is-left-unevaluated	\mathrm{BellNumber}(-1)	\mathrm{BellNumber}(-1)
-a-zero-modulus-inside-a-congruence-check-is-nan	\mathrm{BellNumber}(9)\bmod23=(\mathrm{BellNumber}(4)+\mathrm{BellNumber}(5))\bmod0	\bot
+a-zero-modulus-inside-a-congruence-check-is-nan	\mathrm{BellNumber}(9)\bmod23=(\mathrm{BellNumber}(4)+\mathrm{BellNumber}(5))\bmod0	\mathrm{False}
 bellnumber-range-1-10	\mathrm{BellNumber}(1..10)	\bigl\lbrack1, 2, 5, 15, 52, 203, 877, 4\,140, 21\,147, 115\,975\bigr\rbrack

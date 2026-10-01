@@ -10,8 +10,8 @@ matrixfunction-cuberoot-list-list-1-over-2-neg-1	\mathrm{MatrixFunction}(\mathrm
 cuberoot-0	\mathrm{CubeRoot}(0)	0
 cuberoot-positiveinfinity	\mathrm{CubeRoot}(\infty)	\infty
 cuberoot-negativeinfinity	\mathrm{CubeRoot}(-\infty)	-\infty
-cuberoot-x-eq-surd-x-3	\mathrm{CubeRoot}(x)=\mathrm{Surd}(x, 3)	\top
-fullsimplify-d-integrate-cuberoot-x-x-nothing	\mathrm{FullSimplify}(\frac{\mathrm{d}\int\!\mathrm{CubeRoot}(x)\, \mathrm{d}x}{\mathrm{d}x}=\mathrm{CubeRoot}(x))	\top
+cuberoot-x-eq-surd-x-3	\mathrm{CubeRoot}(x)=\mathrm{Surd}(x, 3)	\mathrm{True}
+fullsimplify-d-integrate-cuberoot-x-x-nothing	\mathrm{FullSimplify}(\frac{\mathrm{d}\int\!\mathrm{CubeRoot}(x)\, \mathrm{d}x}{\mathrm{d}x}=\mathrm{CubeRoot}(x))	\mathrm{True}
 fullsimplify-integrate-sin-x-times-cuberoot-x-x	\mathrm{FullSimplify}(\int_{0}^{5}\!\sin(x)\mathrm{CubeRoot}(x)\, \mathrm{d}x)	\int_{0}^{5}\!\sin(x)\sqrt[3]{x}\, \mathrm{d}x
 d-cuberoot-x-x	\frac{\mathrm{d}\mathrm{CubeRoot}(x)}{\mathrm{d}x}	(3x^{\frac{2}{3}})^{-1}
 solve-cuberoot-x-eq-3-times-2-pow-neg-1-x		
@@ -19,5 +19,5 @@ fullsimplify-d-cuberoot-x-list-x-k
 seriescoefficient-cuberoot-x-list-x-1-n		
 fullsimplify-fourierseries-cuberoot-x-x-1		
 fullsimplify-integrate-cuberoot-x-times		
-the-same-as-root-with-index-3	\mathrm{CubeRoot}(-64)=\sqrt[3]{-64}	\top
+the-same-as-root-with-index-3	\mathrm{CubeRoot}(-64)=\sqrt[3]{-64}	\mathrm{True}
 cuberoot-neg-8	\mathrm{CubeRoot}(-8)	-2

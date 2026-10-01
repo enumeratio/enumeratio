@@ -3,6 +3,6 @@ centre-degree-of-a-6-vertex-star	\mathrm{VertexDegree}(\mathrm{StarGraph}(6), 1)
 stargraph-8	\mathrm{StarGraph}(8)	\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7, 8\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(1, 3), \mathrm{UndirectedEdge}(1, 4), \mathrm{UndirectedEdge}(1, 5), \mathrm{UndirectedEdge}(1, 6), \mathrm{UndirectedEdge}(1, 7), \mathrm{UndirectedEdge}(1, 8)\bigr\rbrack)
 stargraph-6	\mathrm{StarGraph}(6)	\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(1, 3), \mathrm{UndirectedEdge}(1, 4), \mathrm{UndirectedEdge}(1, 5), \mathrm{UndirectedEdge}(1, 6)\bigr\rbrack)
 map-function-vertexeccentricity-stargraph-6-1-1	\mathrm{Map}(()\mapsto\mathrm{VertexEccentricity}(\mathrm{StarGraph}(6), \operatorname{\_1}), \mathrm{VertexList}(\mathrm{StarGraph}(6)))	\bigl\lbrack1, 2, 2, 2, 2, 2\bigr\rbrack
-istreegraph-stargraph-5	\mathrm{IsTreeGraph}(\mathrm{StarGraph}(5))	\top
-isbipartitegraph-stargraph-5	\mathrm{IsBipartiteGraph}(\mathrm{StarGraph}(5))	\top
+istreegraph-stargraph-5	\mathrm{IsTreeGraph}(\mathrm{StarGraph}(5))	\mathrm{True}
+isbipartitegraph-stargraph-5	\mathrm{IsBipartiteGraph}(\mathrm{StarGraph}(5))	\mathrm{True}
 stargraph-7	\mathrm{StarGraph}(7)	\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4, 5, 6, 7\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(1, 3), \mathrm{UndirectedEdge}(1, 4), \mathrm{UndirectedEdge}(1, 5), \mathrm{UndirectedEdge}(1, 6), \mathrm{UndirectedEdge}(1, 7)\bigr\rbrack)

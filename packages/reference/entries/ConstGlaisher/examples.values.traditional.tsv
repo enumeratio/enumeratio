@@ -2,4 +2,4 @@ id	in	out
 const-glaisher-numeric-value	N(\operatorname{ConstGlaisher})	1.2824271291006226
 n-constglaisher-50	N(\operatorname{ConstGlaisher},50)	1.282427129100622636875342568869791727767688927325
 round-constglaisher-pow-100	\operatorname{Round}(\operatorname{ConstGlaisher}^{100})	63572555914
-1-lt-constglaisher-lt-2	1<\operatorname{ConstGlaisher}<2	\operatorname{True}
+1-lt-constglaisher-lt-2	1<\operatorname{ConstGlaisher}<2	\top

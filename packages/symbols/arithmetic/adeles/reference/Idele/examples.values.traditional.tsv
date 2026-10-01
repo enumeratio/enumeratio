@@ -10,8 +10,8 @@ principal-idele-of-negative-rational	\operatorname{Idele}(\frac{-5}{2})	\operato
 real-and-finite-parts-can-differ-in-sign	\operatorname{Idele}(-1,3)	\operatorname{Idele}(-1,3)
 multiplying-by-the-identity-idele	\operatorname{Idele}(5,2)\operatorname{Idele}(1,1)	\operatorname{Idele}(5,2)
 squaring-an-idele	{\operatorname{Idele}(2,3)}^2	\operatorname{Idele}(4,9)
-equal-ideles	\operatorname{Idele}(2,3)=\operatorname{Idele}(2,3)	\operatorname{True}
-unequal-ideles-differ-in-finite-part	\operatorname{Idele}(2,3)=\operatorname{Idele}(2,5)	\operatorname{False}
+equal-ideles	\operatorname{Idele}(2,3)=\operatorname{Idele}(2,3)	\top
+unequal-ideles-differ-in-finite-part	\operatorname{Idele}(2,3)=\operatorname{Idele}(2,5)	\bot
 inverting-an-idele	\frac{\operatorname{Idele}(1,1)}{\operatorname{Idele}(-2,\frac{3}{5})}	\operatorname{Idele}(\frac{-1}{2},\frac{5}{3})
 a-listed-component-carries-its-valuation-into	\operatorname{Idele}(1,1,[\operatorname{AdicNumeral}(5,\frac{15}{7},4)])	\operatorname{Idele}(1,5,[\operatorname{AdicNumeral}(5,54,3)])
 a-unit-known-mod-2-says-nothing-at-2	\operatorname{Idele}(1,1,[\operatorname{AdicNumeral}(2,3,1)])	\operatorname{Idele}(1,1,[])

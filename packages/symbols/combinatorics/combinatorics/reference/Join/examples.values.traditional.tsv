@@ -15,7 +15,7 @@ ragged-rows-join-at-level-2-too	\operatorname{Join}([[1],[5,6]],[[2,3],[7]],[[4]
 a-row-missing-from-the-shorter-array-simply-isn	\operatorname{Join}([[x]],[[1,2],[3,4]],2)	[[x,1,2],[3,4]]
 any-head-as-long-as-all-the-arguments-share-it	\operatorname{Join}(f(a),f(b))	f(a,b)
 join-aa-bb		
-join-a-b-flatten-a-b-1-see-flatten	\operatorname{Join}([1,2],[3,4])=\operatorname{Flatten}([[1,2],[3,4]],1)	\operatorname{True}
-join-is-associative	\operatorname{Join}(\operatorname{Join}([a,b,c],[x,y]),[u,v,w])=\operatorname{Join}([a,b,c],\operatorname{Join}([x,y],[u,v,w]))	\operatorname{True}
+join-a-b-flatten-a-b-1-see-flatten	\operatorname{Join}([1,2],[3,4])=\operatorname{Flatten}([[1,2],[3,4]],1)	\top
+join-is-associative	\operatorname{Join}(\operatorname{Join}([a,b,c],[x,y]),[u,v,w])=\operatorname{Join}([a,b,c],\operatorname{Join}([x,y],[u,v,w]))	\top
 nestlist-function-join-1-1-1-list-x-4	\operatorname{NestList}(\operatorname{Function}(\operatorname{Block}(\operatorname{Join}(\_1,\_1)),\_1),[x],4)	[[x],[x,x],[x,x,x,x],[x,x,x,x,x,x,x,x],[x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x]]
 nestlist-function-list-1-neg-1-plus-1-1-list-1-5		

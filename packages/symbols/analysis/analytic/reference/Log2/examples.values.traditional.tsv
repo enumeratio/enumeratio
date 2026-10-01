@@ -20,4 +20,4 @@ n-log-2-plus-i-2	N(\log_2(2+i))	1.160964047443681+0.6689021062254881i
 fullsimplify-matrixfunction-log2-list-list-2-1	\operatorname{FullSimplify}(\operatorname{MatrixFunction}(\operatorname{Log2},[[2,1],[0,\frac{1}{2}]]))	[[1,\frac{4}{3}],[0,-1]]
 log-positiveinfinity-2	\log_2(\infty)	\infty
 a-float-argument-folds-even-for-a-fractional	\operatorname{Log2}(0.5)	-1.0
-same-as-log-z-2	\operatorname{Log2}(8)=\log_2(8)	\operatorname{True}
+same-as-log-z-2	\operatorname{Log2}(8)=\log_2(8)	\top

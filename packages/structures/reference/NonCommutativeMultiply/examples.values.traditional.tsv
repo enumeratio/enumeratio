@@ -1,6 +1,6 @@
 id	in	out
 the-canonical-order	\operatorname{NonCommutativeMultiply}(e_1,e_2)	e_1e_2
-noncommutativemultiply-a-b-c-eq	\operatorname{NonCommutativeMultiply}(a,b,c)=\operatorname{NonCommutativeMultiply}(a,b,c)	\operatorname{True}
+noncommutativemultiply-a-b-c-eq	\operatorname{NonCommutativeMultiply}(a,b,c)=\operatorname{NonCommutativeMultiply}(a,b,c)	\top
 list-a-times-b-eq-a-times-b		
 scalars-the-implied-identity-factor	\operatorname{CircleTimes}(2,3)	6
 commuting-units-agrees-with-times	\operatorname{CircleTimes}(i_2,i_1)	i_1i_2

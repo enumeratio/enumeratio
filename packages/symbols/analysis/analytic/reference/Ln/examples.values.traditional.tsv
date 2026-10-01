@@ -32,14 +32,14 @@ n-of-a-negative-rational-argument	N(\ln(\frac{-1}{2}))	-0.6931471805599453+3.141
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the		
 n-ln-5-over-2-50	N(\ln(\frac{5}{2}),50)	0.91629073187415506518352721176801107145010121990826
 functiondomain-ln-x-x	\operatorname{FunctionDomain}(\ln(x),x)	0<x
-functionrange-ln-x-x-y	\operatorname{FunctionRange}(\ln(x),x,y)	\operatorname{True}
-functionanalytic-ln-x-x	\operatorname{FunctionAnalytic}(\ln(x),x)	\operatorname{False}
-functionmeromorphic-ln-x-x	\operatorname{FunctionMeromorphic}(\ln(x),x)	\operatorname{False}
-functioninjective-ln-x-x	\operatorname{FunctionInjective}(\ln(x),x)	\operatorname{True}
-functionsurjective-ln-x-x	\operatorname{FunctionSurjective}(\ln(x),x)	\operatorname{True}
+functionrange-ln-x-x-y	\operatorname{FunctionRange}(\ln(x),x,y)	\top
+functionanalytic-ln-x-x	\operatorname{FunctionAnalytic}(\ln(x),x)	\bot
+functionmeromorphic-ln-x-x	\operatorname{FunctionMeromorphic}(\ln(x),x)	\bot
+functioninjective-ln-x-x	\operatorname{FunctionInjective}(\ln(x),x)	\top
+functionsurjective-ln-x-x	\operatorname{FunctionSurjective}(\ln(x),x)	\top
 d-ln-z-z	\frac{d}{dz}\ln(z)	\frac{1}{z}
 d-ln-ln-x-x	\frac{d}{dx}\ln(\ln(x))	\frac{1}{x\ln(x)}
 ln-exponentiale-pow-n	\ln(e^n)	n
-inverse-of-exp-ln-e-x-x	\ln(e^5)=5	\operatorname{True}
-product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\operatorname{True}
+inverse-of-exp-ln-e-x-x	\ln(e^5)=5	\top
+product-rule-ln-ab-ln-a-ln-b	\ln(2)+\ln(3)=\ln(6)	\top
 powerexpand-splits-a-logarithm-of-a-product	\operatorname{PowerExpand}(\ln(xy))	\ln(x)+\ln(y)

@@ -13,5 +13,5 @@ commonest-n-list-1-2-2-3-3-3-4-30	\operatorname{Commonest}(N([1,2,2,3,3,3,4],30)
 commonest-data		
 commonest-heights		
 with-a-unique-mode-commonest-c-mode-c-see-mode	\operatorname{First}(\operatorname{Commonest}([1,2,2,3]))	2
-without-a-tie-the-single-commonest-element-is	\operatorname{First}(\operatorname{Commonest}([1,2,2,3,3,3,4]))=\operatorname{Mode}([1,2,2,3,3,3,4])	\operatorname{True}
+without-a-tie-the-single-commonest-element-is	\operatorname{First}(\operatorname{Commonest}([1,2,2,3,3,3,4]))=\operatorname{Mode}([1,2,2,3,3,3,4])	\top
 a-frequency-tie-between-4-and-1-is-broken-by	\operatorname{Commonest}([4,1,1,4],1)	[4]

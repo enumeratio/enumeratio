@@ -1,4 +1,4 @@
 id	in	out
-petersen-is-connected	\mathrm{IsConnectedGraph}(\mathrm{PetersenGraph}())	\top
-two-disjoint-edges-are-not-connected	\mathrm{IsConnectedGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))	\bot
-weakly-connected-despite-two-scc	\mathrm{IsConnectedGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack))	\top
+petersen-is-connected	\mathrm{IsConnectedGraph}(\mathrm{PetersenGraph}())	\mathrm{True}
+two-disjoint-edges-are-not-connected	\mathrm{IsConnectedGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))	\mathrm{False}
+weakly-connected-despite-two-scc	\mathrm{IsConnectedGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack))	\mathrm{True}

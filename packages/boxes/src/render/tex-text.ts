@@ -51,6 +51,8 @@ const SYMBOLS: Readonly<Record<string, string>> = {
   hbar: "ℏ",
   emptyset: "∅",
   varnothing: "∅",
+  top: "⊤",
+  bot: "⊥",
   sum: "∑",
   prod: "∏",
   int: "∫",

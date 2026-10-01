@@ -13,11 +13,11 @@ the-empty-list-is-still-a-vector-of-length-0	\mathrm{Rank}(\bigl\lbrack\bigr\rbr
 and-a-1-0-matrix	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack\bigr\rbrack\bigr\rbrack)	2
 a-2-3-grid-of-unevaluated-calls-still-reads-as-a	\mathrm{Rank}(\mathrm{Tabulate}(f, 2, 3))	2
 rank-list-list-a-b-list-c	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack\bigr\rbrack)	1
-the-length-of-the-array-s-shape	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack)=\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack))	\top
-rank-list-list-a-b-list-c-d-eq-length-shape-list	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)=\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack))	\top
+the-length-of-the-array-s-shape	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack)=\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack5, 6\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack\bigr\rbrack))	\mathrm{True}
+rank-list-list-a-b-list-c-d-eq-length-shape-list	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)=\mathrm{Length}(\mathrm{Shape}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack))	\mathrm{True}
 rank-1	\mathrm{Rank}(1)	0
 rank-list-1-2	\mathrm{Rank}(\bigl\lbrack1, 2\bigr\rbrack)	1
 rank-list-list-1-2	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack\bigr\rbrack)	2
-rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	\mathrm{Rank}(\mathrm{Array}(a, \bigl\lbrack2, 1, 4, 3\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack2, 1, 4, 3\bigr\rbrack)	\top
+rank-array-a-list-2-1-4-3-eq-length-list-2-1-4-3	\mathrm{Rank}(\mathrm{Array}(a, \bigl\lbrack2, 1, 4, 3\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack2, 1, 4, 3\bigr\rbrack)	\mathrm{True}
 a-singular-2-2-matrix-still-has-rank-2-its	\mathrm{Rank}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack)	2
 rank-sqrt-2	\mathrm{Rank}(\sqrt{2})	0

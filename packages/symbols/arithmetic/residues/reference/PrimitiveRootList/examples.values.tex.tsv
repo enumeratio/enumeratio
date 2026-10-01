@@ -7,8 +7,8 @@ n-4-is-one-of-the-small-cyclic-cases	\mathrm{PrimitiveRootList}(4)	\bigl\lbrack3
 threads-over-a-list	\mathrm{PrimitiveRootList}(\bigl\lbrack9, 11\bigr\rbrack)	\bigl\lbrack\bigl\lbrack2, 5\bigr\rbrack, \bigl\lbrack2, 6, 7, 8\bigr\rbrack\bigr\rbrack
 18-2-cdot-3-2-is-of-the-form-2p-k	\mathrm{PrimitiveRootList}(18)	\bigl\lbrack5, 11\bigr\rbrack
 length-primitiverootlist-1-009	\mathrm{Length}(\mathrm{PrimitiveRootList}(1\,009))	288
-there-are-varphi-varphi-n-of-them	\mathrm{Length}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{Totient}(\mathrm{Totient}(1\,009))	\top
-the-first-is-primitiveroot	\mathrm{First}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{PrimitiveRoot}(1\,009)	\top
+there-are-varphi-varphi-n-of-them	\mathrm{Length}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{Totient}(\mathrm{Totient}(1\,009))	\mathrm{True}
+the-first-is-primitiveroot	\mathrm{First}(\mathrm{PrimitiveRootList}(1\,009))=\mathrm{PrimitiveRoot}(1\,009)	\mathrm{True}
 z-12-times-cong-c-2-times-c-2-is-not-cyclic	\mathrm{PrimitiveRootList}(12)	\bigl\lbrack\bigr\rbrack
 z-8-times-cong-c-2-times-c-2-is-not-cyclic	\mathrm{PrimitiveRootList}(8)	\bigl\lbrack\bigr\rbrack
 past-100-000-roots-the-list-is-not-built-but-its	\mathrm{Length}(\mathrm{PrimitiveRootList}(1\,000\,003))	333\,332

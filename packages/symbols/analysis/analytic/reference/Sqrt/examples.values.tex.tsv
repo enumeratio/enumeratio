@@ -25,8 +25,8 @@ sqrt-neg-1-half	\sqrt{-\frac{1}{2}}	\frac{\sqrt{2}}{2}i
 sqrt-neg-1	\sqrt{-1}	i
 sqrt-neg-12-over-5	\sqrt{-\frac{12}{5}}	\frac{2\sqrt{15}}{5}i
 the-pythagorean-hypotenuse-of-a-3-4-5-triangle	\sqrt{3^2+4^2}	5
-sqrt-x-2-x-for-a-perfect-square-see-square	\sqrt{16}^2=16	\top
-sqrt-x-x-1-2	\sqrt{16}=\sqrt{16}	\top
+sqrt-x-2-x-for-a-perfect-square-see-square	\sqrt{16}^2=16	\mathrm{True}
+sqrt-x-x-1-2	\sqrt{16}=\sqrt{16}	\mathrm{True}
 sqrt-x-2-x-for-every-x	\sqrt{x}^2	x
 negative-but-not-a-perfect-square-stays-symbolic	\sqrt{-2}	\sqrt{-2}
 a-negative-rational-still-evaluates-exactly-when	\sqrt{-\frac{4}{9}}	\frac{2}{3}i

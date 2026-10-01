@@ -17,12 +17,12 @@ filter-range-1-30-function-divisorsigma-1-1-eq-2	\operatorname{Filter}(\operator
 filter-range-1-30-function-divisorsigma-1-1-lt-2	\operatorname{Filter}(\operatorname{Range}(1,30),\operatorname{Function}(\operatorname{Block}(\sigma_1(\_1)<2\_1),\_1))	[1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,21,22,23,25,26,27,29]
 filter-range-1-30-function-2-times-1-lt	\operatorname{Filter}(\operatorname{Range}(1,30),\operatorname{Function}(\operatorname{Block}(2\_1<\sigma_1(\_1)),\_1))	[12,18,20,24,30]
 nestlist-function-neg-1-plus-divisorsigma-1-1-1	\operatorname{NestList}(\operatorname{Function}(\operatorname{Block}(-\_1+\sigma_1(\_1)),\_1),276,20)	[276,396,696,1104,1872,3770,3790,3050,2716,2772,5964,10164,19628,19684,22876,26404,30044,33796,38780,54628,54684]
-multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n	\sigma_1(9)\sigma_1(8)=\sigma_1(72)	\operatorname{True}
+multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n	\sigma_1(9)\sigma_1(8)=\sigma_1(72)	\top
 divisorsigma-5-100	\sigma_5(100)	10325569807
-divisorsigma-3-18-times-divisorsigma-3-25-eq	\sigma_3(18)\sigma_3(25)=\sigma_3(450)	\operatorname{True}
+divisorsigma-3-18-times-divisorsigma-3-25-eq	\sigma_3(18)\sigma_3(25)=\sigma_3(450)	\top
 divisorsigma-neg-1-28	\sigma_{-1}(28)	2
 divisorsigma-0-1	\sigma_0(1)	1
 divisorsigma-0-2	\sigma_0(2)	2
 divisorsigma-0-3	\sigma_0(3)	2
-map-function-divisorsigma-1-1-lt-2-times-1-1	\operatorname{Map}(\operatorname{Function}(\operatorname{Block}(\sigma_1(\_1)<2\_1),\_1),\operatorname{Filter}(\operatorname{Range}(1,100),\operatorname{IsPrimePower}))	[\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True},\operatorname{True}]
+map-function-divisorsigma-1-1-lt-2-times-1-1	\operatorname{Map}(\operatorname{Function}(\operatorname{Block}(\sigma_1(\_1)<2\_1),\_1),\operatorname{Filter}(\operatorname{Range}(1,100),\operatorname{IsPrimePower}))	[\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top,\top]
 the-trivial-base-case	\sigma_1(1)	1

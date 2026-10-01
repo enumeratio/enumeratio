@@ -27,8 +27,8 @@ legendre-s-formula-100-ends-in-lfloor-100-5
 the-number-of-decimal-digits-of-n-is-lfloor-log	\lfloor\log(12345)\rfloor+1	5
 the-first-four-digits-of-e	\lfloor1000e\rfloor	2718
 floor-10-over-997-times-powermod-10-999-999-997	\lfloor\frac{10}{997}\bmod((10^{999999}\bmod997),997)\rfloor	2
-for-a-non-integer-x-lceil-x-rceil-lfloor-x	\lfloor\frac{7}{2}\rfloor+1=\lceil\frac{7}{2}\rceil	\operatorname{True}
-lfloor-x-rfloor-lceil-x-rceil	\lfloor\frac{-7}{2}\rfloor=-\lceil\frac{7}{2}\rceil	\operatorname{True}
+for-a-non-integer-x-lceil-x-rceil-lfloor-x	\lfloor\frac{7}{2}\rfloor+1=\lceil\frac{7}{2}\rceil	\top
+lfloor-x-rfloor-lceil-x-rceil	\lfloor\frac{-7}{2}\rfloor=-\lceil\frac{7}{2}\rceil	\top
 idempotent-lfloor-lfloor-x-rfloor-rfloor-lfloor		
 floor-16-3		
 piecewiseexpand-floor-x-pow-2-0-lt-x-lt-2	\operatorname{PiecewiseExpand}(\lfloor x^2\rfloor,0<x<2)	\lfloor x^2\rfloor

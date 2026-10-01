@@ -9,10 +9,10 @@ exact-for-large-n	s(50,2)	272461937259126476165171149418762453072600515423984680
 a-mid-sized-n-and-k-past-the-fast-paths	s(40,14)	1640591781294212129275881145293779479141760
 the-number-of-permutations-of-5-elements-with	s(5,3)	35
 abs-stirlings1-n-range-1-n	|s(n,\operatorname{Range}(1,n))|	\operatorname{Map}(\operatorname{Function}(\operatorname{Block}(|\_1|),\_1),\operatorname{Map}(\operatorname{Function}(\operatorname{Block}(s(n,\_1)),\_1),\operatorname{Range}(1,n)))
-the-unsigned-values-in-a-row-sum-to-n	\sum_{k=0}^4|s(4,k)|=4!	\operatorname{True}
+the-unsigned-values-in-a-row-sum-to-n	\sum_{k=0}^4|s(4,k)|=4!	\top
 the-signed-row-sum-vanishes-for-n-ge-2	\sum_{k=0}^6s(6,k)	0
-s-n-n-1-binom-n-2	s(6,5)=-\binom{6}{2}	\operatorname{True}
-the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	\sum_{k=0}^4s(4,k)x^k=\operatorname{Expand}(x(x-1)(x-2)(x-3))	\operatorname{True}
+s-n-n-1-binom-n-2	s(6,5)=-\binom{6}{2}	\top
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	\sum_{k=0}^4s(4,k)x^k=\operatorname{Expand}(x(x-1)(x-2)(x-3))	\top
 n-stirlings1-100-11	N(s(100,11))	-39037677347638979654358501304806555266909530477307108864265096777794153959501678609053112651997892866499295802826178188343719785980096409468141568\times10^{10}
 stirlings1-0-1	s(0,1)	0
 stirlings1-1-0	s(1,0)	0

@@ -7,16 +7,16 @@ carmichaellambda-neg-10	\mathrm{CarmichaelLambda}(-10)	4
 carmichaellambda-list-2-4-7	\mathrm{CarmichaelLambda}(\bigl\lbrack2, 4, 7\bigr\rbrack)	\bigl\lbrack1, 2, 6\bigr\rbrack
 561-mod-carmichaellambda-561	561\bmod\mathrm{CarmichaelLambda}(561)	1
 carmichaellambda-12	\mathrm{CarmichaelLambda}(12)	2
-list-divides-8-24-divides-carmichaellambda-8	\bigl\lbrack8\mid24, \mathrm{CarmichaelLambda}(8)\mid\mathrm{CarmichaelLambda}(24)\bigr\rbrack	\bigl\lbrack\top, \top\bigr\rbrack
+list-divides-8-24-divides-carmichaellambda-8	\bigl\lbrack8\mid24, \mathrm{CarmichaelLambda}(8)\mid\mathrm{CarmichaelLambda}(24)\bigr\rbrack	\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack
 3-pow-1-plus-carmichaellambda-17-mod-17	3^{1+\mathrm{CarmichaelLambda}(17)}\bmod17	3
-divides-multiplicativeorder-4-9-carmichaellambda	\mathrm{MultiplicativeOrder}(4, 9)\mid\mathrm{CarmichaelLambda}(9)	\top
+divides-multiplicativeorder-4-9-carmichaellambda	\mathrm{MultiplicativeOrder}(4, 9)\mid\mathrm{CarmichaelLambda}(9)	\mathrm{True}
 carmichaellambda-1	\mathrm{CarmichaelLambda}(1)	1
 carmichaellambda-2	\mathrm{CarmichaelLambda}(2)	1
 carmichaellambda-3	\mathrm{CarmichaelLambda}(3)	2
 carmichaellambda-4	\mathrm{CarmichaelLambda}(4)	2
 carmichaellambda-5	\mathrm{CarmichaelLambda}(5)	4
 carmichaellambda-6	\mathrm{CarmichaelLambda}(6)	2
-divides-carmichaellambda-8-totient-8	\mathrm{CarmichaelLambda}(8)\mid\mathrm{Totient}(8)	\top
+divides-carmichaellambda-8-totient-8	\mathrm{CarmichaelLambda}(8)\mid\mathrm{Totient}(8)	\mathrm{True}
 carmichaellambda-7	\mathrm{CarmichaelLambda}(7)	6
 carmichaellambda-8	\mathrm{CarmichaelLambda}(8)	2
 carmichaellambda-9	\mathrm{CarmichaelLambda}(9)	6

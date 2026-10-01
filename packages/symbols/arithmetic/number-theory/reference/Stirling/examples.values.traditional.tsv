@@ -8,10 +8,10 @@ the-ways-to-split-10-distinct-items-among-3	\begin{Bmatrix}10\\3\end{Bmatrix}	93
 stirling-n-range-1-n		
 one-block-means-one-partition-s-n-1-1	\begin{Bmatrix}5\\1\end{Bmatrix}	1
 singletons-only-s-n-n-1	\begin{Bmatrix}5\\5\end{Bmatrix}	1
-row-sums-give-the-bell-numbers	\sum_{k=0}^4\begin{Bmatrix}4\\k\end{Bmatrix}=B_4	\operatorname{True}
-two-blocks-s-n-2-2-n-1-1	\begin{Bmatrix}10\\2\end{Bmatrix}=2^9-1	\operatorname{True}
-s-n-n-1-binom-n-2-one-block-is-a-pair	\begin{Bmatrix}6\\5\end{Bmatrix}=\binom{6}{2}	\operatorname{True}
-explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	\begin{Bmatrix}6\\3\end{Bmatrix}=\frac{\sum_{j=0}^3(-1)^{3-j}\binom{3}{j}j^6}{3!}	\operatorname{True}
+row-sums-give-the-bell-numbers	\sum_{k=0}^4\begin{Bmatrix}4\\k\end{Bmatrix}=B_4	\top
+two-blocks-s-n-2-2-n-1-1	\begin{Bmatrix}10\\2\end{Bmatrix}=2^9-1	\top
+s-n-n-1-binom-n-2-one-block-is-a-pair	\begin{Bmatrix}6\\5\end{Bmatrix}=\binom{6}{2}	\top
+explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	\begin{Bmatrix}6\\3\end{Bmatrix}=\frac{\sum_{j=0}^3(-1)^{3-j}\binom{3}{j}j^6}{3!}	\top
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	\sum_{k=0}^4s(4,k)\begin{Bmatrix}k\\2\end{Bmatrix}	0
 n-stirling-120-10	N(\begin{Bmatrix}120\\10\end{Bmatrix})	275564293332645612796076533812387578132055070471681207862920555299757965212186923458011526847229561561721294169780
 stirling-10-4	\begin{Bmatrix}10\\4\end{Bmatrix}	34105
