@@ -12,8 +12,6 @@ import { bindings, fullEngine } from "../src/engine.ts";
 const EXEMPT: Record<string, string> = {
   PrimitiveRootList:
     "residues: a finite list per n, answered by φ(φ(n)) and an ascending scan; not a combinatorial family",
-  IntegerModRing:
-    "residues: ℤ/m as the collection of its residue classes; its elements are IntegerMod values, not kernel elements",
 };
 
 const hasCollection = (ce: ComputeEngine, name: string): boolean => {

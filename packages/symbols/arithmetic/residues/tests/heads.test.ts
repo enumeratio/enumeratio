@@ -26,6 +26,10 @@ test("Mod of a bare symbolic constant reduces exactly (#113)", () => {
   expect(exact).toBeLessThan(2);
 });
 
-test("IntegerModRing is ℤ/m as a finite collection", () => {
-  expect(ce.parse("\\mathbb{Z}/6\\mathbb{Z}").evaluate().json).toEqual(["IntegerModRing", 6]);
+test("ℤ/m is QuotientRing(Integers, m), and IntegerModRing(m) is its alias", () => {
+  const ring = ce.parse("\\mathbb{Z}/6\\mathbb{Z}").evaluate();
+  expect(ring.json).toEqual(["QuotientRing", "Integers", 6]);
+  expect(ring.count).toBe(6);
+  expect(ce.box(["IntegerModRing", 6]).evaluate().json).toEqual(["QuotientRing", "Integers", 6]);
+  expect(ce.box(["Count", ["IntegerModRing", 6]]).evaluate().json).toBe(6);
 });

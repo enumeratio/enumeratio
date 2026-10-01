@@ -1103,6 +1103,7 @@ export const DECLARERS: Readonly<Record<string, readonly string[]>> = {
   SytTwoRow: ["combinatorics"],
   Tabulate: ["combinatorics"],
   TagBox: ["boxes"],
+  Take: ["combinatorics"],
   Tan: ["analytic"],
   Tanh: ["analytic"],
   TemperleyLiebAlgebra: ["diagram"],

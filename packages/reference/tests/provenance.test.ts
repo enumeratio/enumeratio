@@ -277,6 +277,9 @@ const OVERRIDDEN = [
   // Not itself overridden -- Wolfram's CarmichaelLambda/LCM identity lists two of our
   // heads' answers in a bare List, the same reason Add is here.
   "List",
+  // Not itself overridden -- ListFrom(QuotientRing(Integers, 3)) walks the collection the
+  // quotient-ring-collection patch gives QuotientRing.
+  "ListFrom",
   "Ln",
   "Log10",
   "Log2",
@@ -312,7 +315,6 @@ const OVERRIDDEN = [
   "PrimeOmega",
   "PrimePi",
   "Product",
-  "QuotientRing",
   "Rank",
   "Rationalize",
   // Not itself overridden -- the Khinchin example takes the 1000th root of a product of
