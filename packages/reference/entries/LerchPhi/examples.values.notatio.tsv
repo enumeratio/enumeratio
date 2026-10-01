@@ -13,10 +13,10 @@ n-lerchphi-0p5-0p5-1	<N><LerchPhi>0.5 0.5 1</LerchPhi></N>	<ToExpression>1.61225
 n-lerchphi-0p5-0p5-2	<N><LerchPhi>0.5 0.5 2</LerchPhi></N>	<ToExpression>1.224506892171409</ToExpression>
 n-lerchphi-0p5-0p5-0p5	<N><LerchPhi>0.5 0.5 0.5</LerchPhi></N>	<ToExpression>2.1017124624893513</ToExpression>
 n-lerchphi-0p5-0p5-5-over-2	<N><LerchPhi>0.5 0.5 <Rational>5 2</Rational></LerchPhi></N>	<ToExpression>1.1170024386095752</ToExpression>
-n-lerchphi-0p5-neg-1-1	<N><LerchPhi>0.5 -1 1</LerchPhi></N>	<ToExpression>4</ToExpression>
-n-lerchphi-0p5-neg-1-2	<N><LerchPhi>0.5 -1 2</LerchPhi></N>	<ToExpression>6</ToExpression>
-n-lerchphi-0p5-neg-1-0p5	<N><LerchPhi>0.5 -1 0.5</LerchPhi></N>	<ToExpression>3</ToExpression>
-n-lerchphi-0p5-neg-1-5-over-2	<N><LerchPhi>0.5 -1 <Rational>5 2</Rational></LerchPhi></N>	<ToExpression>7</ToExpression>
+n-lerchphi-0p5-neg-1-1	<N><LerchPhi>0.5 -1 1</LerchPhi></N>	<ToExpression>4.0</ToExpression>
+n-lerchphi-0p5-neg-1-2	<N><LerchPhi>0.5 -1 2</LerchPhi></N>	<ToExpression>6.0</ToExpression>
+n-lerchphi-0p5-neg-1-0p5	<N><LerchPhi>0.5 -1 0.5</LerchPhi></N>	<ToExpression>3.0</ToExpression>
+n-lerchphi-0p5-neg-1-5-over-2	<N><LerchPhi>0.5 -1 <Rational>5 2</Rational></LerchPhi></N>	<ToExpression>7.0</ToExpression>
 n-lerchphi-0p5-2-plus-i-1	<N><LerchPhi>0.5 <Complex>2 1</Complex> 1</LerchPhi></N>	<Complex>1.109707090706641 -0.1160991235833943</Complex>
 n-lerchphi-0p5-2-plus-i-2	<N><LerchPhi>0.5 <Complex>2 1</Complex> 2</LerchPhi></N>	<Complex>0.21941418141328126 -0.23219824716678855</Complex>
 n-lerchphi-0p5-2-plus-i-0p5	<N><LerchPhi>0.5 <Complex>2 1</Complex> 0.5</LerchPhi></N>	<Complex>3.308545670420987 2.422109611421262</Complex>
@@ -76,7 +76,7 @@ n-lerchphi-neg-1-0p5-5-over-2	<N><LerchPhi>-1 0.5 <Rational>5 2</Rational></Lerc
 n-lerchphi-neg-1-neg-1-1	<N><LerchPhi>-1 -1 1</LerchPhi></N>	<ToExpression>0.25</ToExpression>
 n-lerchphi-neg-1-neg-1-2	<N><LerchPhi>-1 -1 2</LerchPhi></N>	<ToExpression>0.75</ToExpression>
 n-lerchphi-neg-1-neg-1-0p5	<N><LerchPhi>-1 -1 0.5</LerchPhi></N>	<ToExpression>0</ToExpression>
-n-lerchphi-neg-1-neg-1-5-over-2	<N><LerchPhi>-1 -1 <Rational>5 2</Rational></LerchPhi></N>	<ToExpression>1</ToExpression>
+n-lerchphi-neg-1-neg-1-5-over-2	<N><LerchPhi>-1 -1 <Rational>5 2</Rational></LerchPhi></N>	<ToExpression>1.0</ToExpression>
 n-lerchphi-neg-1-2-plus-i-1	<N><LerchPhi>-1 <Complex>2 1</Complex> 1</LerchPhi></N>	<Complex>0.847689164837414 0.0982683895700162</Complex>
 n-lerchphi-neg-1-2-plus-i-2	<N><LerchPhi>-1 <Complex>2 1</Complex> 2</LerchPhi></N>	<Complex>0.15231083516258656 -0.0982683895700162</Complex>
 n-lerchphi-neg-1-2-plus-i-0p5	<N><LerchPhi>-1 <Complex>2 1</Complex> 0.5</LerchPhi></N>	<Complex>2.7449197230143425 2.6519729447382763</Complex>
@@ -113,10 +113,10 @@ n-lerchphi-0p9-0p5-1	<N><LerchPhi>0.9 0.5 1</LerchPhi></N>	<ToExpression>4.46883
 n-lerchphi-0p9-0p5-2	<N><LerchPhi>0.9 0.5 2</LerchPhi></N>	<ToExpression>3.8542597870041466</ToExpression>
 n-lerchphi-0p9-0p5-0p5	<N><LerchPhi>0.9 0.5 0.5</LerchPhi></N>	<ToExpression>5.11163624496335</ToExpression>
 n-lerchphi-0p9-0p5-5-over-2	<N><LerchPhi>0.9 0.5 <Rational>5 2</Rational></LerchPhi></N>	<ToExpression>3.6575009379695027</ToExpression>
-n-lerchphi-0p9-neg-1-1	<N><LerchPhi>0.9 -1 1</LerchPhi></N>	<ToExpression>100</ToExpression>
-n-lerchphi-0p9-neg-1-2	<N><LerchPhi>0.9 -1 2</LerchPhi></N>	<ToExpression>110</ToExpression>
-n-lerchphi-0p9-neg-1-0p5	<N><LerchPhi>0.9 -1 0.5</LerchPhi></N>	<ToExpression>95</ToExpression>
-n-lerchphi-0p9-neg-1-5-over-2	<N><LerchPhi>0.9 -1 <Rational>5 2</Rational></LerchPhi></N>	<ToExpression>115</ToExpression>
+n-lerchphi-0p9-neg-1-1	<N><LerchPhi>0.9 -1 1</LerchPhi></N>	<ToExpression>100.0</ToExpression>
+n-lerchphi-0p9-neg-1-2	<N><LerchPhi>0.9 -1 2</LerchPhi></N>	<ToExpression>110.0</ToExpression>
+n-lerchphi-0p9-neg-1-0p5	<N><LerchPhi>0.9 -1 0.5</LerchPhi></N>	<ToExpression>95.0</ToExpression>
+n-lerchphi-0p9-neg-1-5-over-2	<N><LerchPhi>0.9 -1 <Rational>5 2</Rational></LerchPhi></N>	<ToExpression>115.0</ToExpression>
 n-lerchphi-0p9-2-plus-i-1	<N><LerchPhi>0.9 <Complex>2 1</Complex> 1</LerchPhi></N>	<Complex>1.1929287758657432 -0.340556246338811</Complex>
 n-lerchphi-0p9-2-plus-i-2	<N><LerchPhi>0.9 <Complex>2 1</Complex> 2</LerchPhi></N>	<Complex>0.21436530651749217 -0.37839582926534593</Complex>
 n-lerchphi-0p9-2-plus-i-0p5	<N><LerchPhi>0.9 <Complex>2 1</Complex> 0.5</LerchPhi></N>	<Complex>3.516191661909127 2.1522546812749304</Complex>

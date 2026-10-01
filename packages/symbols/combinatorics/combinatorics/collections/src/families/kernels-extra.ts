@@ -169,6 +169,8 @@ export function IsWeakCompositionOf(parts: number[], n: number, k: number): bool
 
 // ─── Multisets(n,k): k-multisets of [n] (combinations with repetition). Count C(n+k-1,k). ──────────────
 export function MultisetCount(n: number, k: number): number {
+  // C(n + k − 1, k) is C(−1, 0) = 1 at n = k = 0: the one empty multiset.
+  if (k === 0) return 1;
   return Binomial(n + k - 1, k);
 }
 /** rank-th k-multiset of [n]: k-subset s of [n+k-1], element_i = s_i - (i-1). Ascending with repeats. */

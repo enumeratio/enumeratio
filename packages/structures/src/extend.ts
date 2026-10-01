@@ -121,9 +121,8 @@ function restoreMaterialization(operator: { evaluate?: unknown; collection?: unk
   operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
     const result = dispatched(ops, options);
     if (result !== undefined) return result;
-    // `materialization` is `boolean | number | [number, number]` (a real caller -- a
-    // cooperative-evaluate.ts worker -- passes a COUNT, not `true`); anything but `false`
-    // or absent asks for it.
+    // `materialization` is `boolean | number | [number, number]`; anything but `false` or
+    // absent asks for it.
     const materialization = options.materialization as boolean | number | readonly number[] | undefined;
     if (materialization === undefined || materialization === false) return undefined;
     const expr = (options as { expression?: BoxedExpression }).expression;

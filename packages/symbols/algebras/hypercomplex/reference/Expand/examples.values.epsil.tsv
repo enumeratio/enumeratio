@@ -2,7 +2,7 @@ id	in	out	back
 expand-x-1-2-into-x-2-2x-1	expand((x + 1) ^ 2)	x ^ 2 + 2x + 1	
 expand-x-1-x-1-into-the-difference-of-squares	expand((x + 1) * (x - 1))	x ^ 2 - 1	[Expand, [Multiply, [Add, x, 1], [Subtract, x, 1]]]
 expand-x-plus-3-times-x-plus-2	expand((x + 3) * (x + 2))	x ^ 2 + 5x + 6	
-expand-1-plus-x-pow-3-times-5-times-x-pow-2-plus	expand((1 + x) ^ 3 * (5 * x ^ 2 + 1) * (x ^ 5 + 1))	"5 * x ^ 10 + 15 * x ^ 9 + 16 * x ^ 8 + 8 * x ^ 7 + 3 * x ^ 6 + 6 * x ^ 5 + 15 *\n                                                                           x ^ 4 + 16 * x ^ 3 + 8 * x ^ 2 + 3x + 1"	[Expand, [Multiply, [Multiply, [Power, [Add, 1, x], 3], [Add, [Multiply, 5, [Power, x, 2]], 1]], [Add, [Power, x, 5], 1]]]
+expand-1-plus-x-pow-3-times-5-times-x-pow-2-plus	expand((1 + x) ^ 3 * (5 * x ^ 2 + 1) * (x ^ 5 + 1))	"5 * x ^ 10 + 15 * x ^ 9 + 16 * x ^ 8 + 8 * x ^ 7 + 3 * x ^ 6 + 6 * x ^ 5 + 15 *\n                                                                           x ^ 4 + 16 *\n                                                                              x ^\n                                                                              3 +\n8 * x ^ 2 + 3x + 1"	[Expand, [Multiply, [Multiply, [Power, [Add, 1, x], 3], [Add, [Multiply, 5, [Power, x, 2]], 1]], [Add, [Power, x, 5], 1]]]
 expand-x-plus-y-pow-5-minus-x-pow-5-plus-y-pow-5	expand((x + y) ^ 5 - (x ^ 5 + y ^ 5))	5 * y * x ^ 4 + 5 * x * y ^ 4 + 10 * y ^ 3 * x ^ 2 + 10 * x ^ 3 * y ^ 2	[Expand, [Subtract, [Power, [Add, x, y], 5], [Add, [Power, x, 5], [Power, y, 5]]]]
 expand-x-y-3-a-two-variable-binomial-power	expand((x + y) ^ 3)	x ^ 3 + y ^ 3 + 3 * y * x ^ 2 + 3 * x * y ^ 2	
 expand-x-plus-y-pow-2-times-x-minus-y-pow-2	expand((x + y) ^ 2 * (x - y) ^ 2)	x ^ 4 + y ^ 4 - 2 * x ^ 2 * y ^ 2	[Expand, [Multiply, [Power, [Add, x, y], 2], [Power, [Subtract, x, y], 2]]]
@@ -13,6 +13,6 @@ expand-x-plus-y-pow-2-times-z-plus-y-pow-2-pow	expand((x + y) ^ 2 * ((z + y) ^ 2
 x-pow-5-plus-5-times-x-pow-4-plus-10-times-x-pow	x ^ 5 + 5 * x ^ 4 + 10 * x ^ 3 + 10 * x ^ 2 + 5x + 1 == expand((x + 1) ^ 5)	True	
 expand-x-plus-imaginaryunit-times-x-minus	expand((x + imaginaryUnit) * (x - imaginaryUnit))	x ^ 2 + 1	[Expand, [Multiply, [Add, x, ImaginaryUnit], [Subtract, x, ImaginaryUnit]]]
 expand-1-minus-x-times-neg-1-minus-x-times-1	expand((1 - x) * (-1 - x) * (1 - x) * (-1 - x))	x ^ 4 - 2 * x ^ 2 + 1	[Expand, [Multiply, [Multiply, [Multiply, [Subtract, 1, x], [Subtract, -1, x]], [Subtract, 1, x]], [Subtract, -1, x]]]
-expand-1-plus-x-plus-y-times-2-minus-x-pow-3	expand((1 + x + y) * (2 - x) ^ 3)	-x ^ 4 - y * x ^ 3 + 5 * x ^ 3 + 6 * y * x ^ 2 - 6 * x ^ 2 - 12 * x * y - 4x + 8y + 8	[Expand, [Multiply, [Add, [Add, 1, x], y], [Power, [Subtract, 2, x], 3]]]
+expand-1-plus-x-plus-y-times-2-minus-x-pow-3	expand((1 + x + y) * (2 - x) ^ 3)	"-x ^ 4 - y * x ^ 3 + 5 * x ^ 3 + 6 * y * x ^ 2 - 6 * x ^ 2 - 12 * x * y - 4x +\n8y + 8"	[Expand, [Multiply, [Add, [Add, 1, x], y], [Power, [Subtract, 2, x], 3]]]
 expand-1-plus-x-times-2-plus-x-times-3-plus-x	expand((1 + x) * (2 + x) * (3 + x))	x ^ 3 + 6 * x ^ 2 + 11x + 6	[Expand, [Multiply, [Multiply, [Add, 1, x], [Add, 2, x]], [Add, 3, x]]]
 expand-product-x-plus-i-i-6			

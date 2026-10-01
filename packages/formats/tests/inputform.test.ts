@@ -47,13 +47,10 @@ for (const latex of CORPUS) {
   });
 }
 
-// Regression for a printer that never returned: a ~1KB `FunctionExpand` closed
-// form nests `Power`/`Multiply`/`Add`/`Sqrt` about a dozen levels deep, deep enough
-// that compute-engine's Epsil formatter -- which re-lays out a node's line-vs-wrap
-// choice from scratch on every `serialize`/`nextCol`/`cost` call -- multiplied its
-// way to a hang (~47 s unbounded). `toInputForm` keeps every `serializeEpsil` call shallow
-// (see `renderSafely` in `inputform.ts`): ~1 s locally, ~3 s on a CI runner, so the budget
-// separates bounded from exponential without timing the runner.
+// A ~1KB `FunctionExpand` closed form nests `Power`/`Multiply`/`Add`/`Sqrt` about a
+// dozen levels deep. An Epsil formatter exponential in nesting depth hangs on it (~47 s);
+// compute-engine's is linear (cortex-js/compute-engine#379), so the budget separates
+// bounded from exponential without timing the runner.
 const HANG_BUDGET_MS = 10_000;
 
 test(
