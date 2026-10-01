@@ -5,7 +5,7 @@ map-add-over-two-collections-zips-them	Basic		[Map, Add, [List, 1, 2, 3], [List,
 map-function-x-pow-2-x-list-1-2-3-4			[Map, [Function, [Block, [Power, x, 2]], x], [List, 1, 2, 3, 4]]	[List, 1, 4, 9, 16]			Unreadable		
 map-f-list-a-b-c-d-k			[Map, f, [List, a, b, c, d, k]]	[List, [f, a], [f, b], [f, c], [f, d], [f, k]]					
 map-f-list-list-a-b-list-c-d-k			[Map, f, [List, [List, a, b], [List, c, d, k]]]	[List, [f, [List, a, b]], [f, [List, c, d, k]]]					
-map-f-list-list-a-b-list-c-d-k-list-2		triage	[Map, f, [List, [List, a, b], [List, c, d, k]], [List, 2]]	[List, [f, [List, a, b], 2]]		wolfram?		unclassified	""
+map-f-list-list-a-b-list-c-d-k-list-2		triage	[Map, f, [List, [List, a, b], [List, c, d, k]], [List, 2]]	[List, [f, [List, a, b], 2]]		gap			Wolfram's third argument here is a level spec, so Map[f, {{a,b},{c,d,k}}, {2}] maps f over the atoms. Our Map reads a third argument as another collection to zip, so {2} pairs only with the first row (and Wolfram's MapThread rejects the mismatched lengths). Same gap as the other level-spec rows: Map has no level-spec form.
 map-f-list-list-list-list-list-a	Scope		[Map, f, [List, [List, [List, [List, [List, a]]]]]]	[List, [f, [List, [List, [List, [List, a]]]]]]					
 map-f-list-a-b-c	Scope		[Map, f, [List, a, b, c]]	[List, [f, a], [f, b], [f, c]]					
 map-f-list-list-list-list-list-a-list-2	Scope		[Map, f, [List, [List, [List, [List, [List, a]]]]], [List, 2]]	[List, [f, [List, [List, [List, [List, a]]]], 2]]					

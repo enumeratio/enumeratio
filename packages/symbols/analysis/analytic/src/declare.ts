@@ -16,6 +16,9 @@ import {
   sqrtInfinity,
   ceilFloorInfinity,
   infinityArgs,
+  multiplyDirectedInfinity,
+  directedInfinityParts,
+  nAccuracyGoal,
   rangeRationalStep,
   solveIdentity,
   takeDropNegativeCount,
@@ -197,6 +200,9 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, solveIdentity);
   applyPatch(ce, takeDropNegativeCount);
   applyPatch(ce, logCombinationSign);
+  applyPatch(ce, multiplyDirectedInfinity);
+  applyPatch(ce, directedInfinityParts);
+  applyPatch(ce, nAccuracyGoal);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);

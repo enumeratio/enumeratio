@@ -167,3 +167,36 @@ export function evaluateLnAtNegativeInfinity(ce: ComputeEngine): void {
     1,
   );
 }
+
+// --- Re/Im of a directed infinity ---------------------------------------------------------
+// Wolfram: Re[DirectedInfinity[d]] is the infinity of Re[d]'s sign (0 when d is purely
+// imaginary), so Re[I Infinity] = 0 and Re[(1+I) Infinity] = Infinity; Im likewise. The
+// undirected ComplexInfinity has no direction and stays Indeterminate, as native. Its
+// magnitude is +Infinity whatever the direction (Abs[I Infinity] = Infinity).
+export function evaluateRealImaginaryOfDirectedInfinity(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["Abs"],
+    (ops: readonly BoxedExpression[]) => ops[0]?.operator === "DirectedInfinity",
+    () => () => ce.symbol("PositiveInfinity"),
+    1,
+  );
+  for (const [head, part] of [
+    ["Real", "re"],
+    ["Imaginary", "im"],
+  ] as const) {
+    wrapOperator(
+      ce,
+      [head],
+      (ops: readonly BoxedExpression[]) => ops[0]?.operator === "DirectedInfinity",
+      () => (ops) => {
+        const direction = (ops[0] as unknown as { ops?: readonly BoxedExpression[] }).ops?.[0];
+        const component = direction === undefined ? Number.NaN : direction[part];
+        if (Number.isNaN(component)) return undefined;
+        if (component === 0) return ce.Zero;
+        return ce.symbol(component > 0 ? "PositiveInfinity" : "NegativeInfinity");
+      },
+      1,
+    );
+  }
+}

@@ -503,8 +503,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 8,
-      "disagree": 1
+      "agree": 9,
+      "disagree": 0
     }
   ],
   "CenteredInterval": [
@@ -3127,8 +3127,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 28,
-      "disagree": 7
+      "agree": 30,
+      "disagree": 5
     }
   ],
   "Negate": [
@@ -3451,8 +3451,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 4,
-      "disagree": 1
+      "agree": 5,
+      "disagree": 0
     }
   ],
   "Piecewise": [
@@ -3647,8 +3647,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 28,
-      "disagree": 1
+      "agree": 30,
+      "disagree": 0
     }
   ],
   "ProfiniteDecomposition": [
@@ -3799,8 +3799,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 15,
-      "disagree": 1
+      "agree": 16,
+      "disagree": 0
     }
   ],
   "RealAbs": [
@@ -3831,8 +3831,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 4,
-      "disagree": 1
+      "agree": 5,
+      "disagree": 0
     }
   ],
   "RecurrenceTable": [
@@ -4129,8 +4129,8 @@
     {
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
-      "agree": 3,
-      "disagree": 2
+      "agree": 5,
+      "disagree": 0
     }
   ],
   "Span": [
