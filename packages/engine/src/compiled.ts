@@ -43,19 +43,29 @@ export function fromJs(value: unknown): MathJSON | undefined {
   return out;
 }
 
-/** Every `Function`'s parameters renamed to fresh `_vN`, consistently within its body. The
- *  compiler's generated loops name their own variables (`i`, `_e`), and a parameter of ours with
- *  the same name is captured by them (cortex-js/compute-engine#367). Fresh names can't collide. */
+/** Every `Function`'s parameters renamed to fresh `_vN`, consistently within its body, so an
+ *  expression substituted into it can't be captured by them. A typed parameter
+ *  (`["Typed", name, type]`) keeps its type. */
 export function freshen(expression: unknown, prefix = "_v"): unknown {
   let next = 0;
   const walk = (node: unknown, names: ReadonlyMap<string, string>): unknown => {
     if (typeof node === "string") return names.get(node) ?? node;
     if (!Array.isArray(node)) return node;
     if (node[0] === "Function" && node.length >= 2) {
-      const params = node.slice(2).filter((p): p is string => typeof p === "string");
+      const params = node.slice(2);
+      const nameOf = (p: unknown): string | undefined =>
+        typeof p === "string" ? p : Array.isArray(p) && p[0] === "Typed" && typeof p[1] === "string" ? p[1] : undefined;
       const inner = new Map(names);
-      for (const param of params) inner.set(param, `${prefix}${++next}`);
-      return ["Function", walk(node[1], inner), ...params.map((param) => inner.get(param)!)];
+      for (const param of params) {
+        const name = nameOf(param);
+        if (name !== undefined) inner.set(name, `${prefix}${++next}`);
+      }
+      const renamed = params.map((p) => {
+        const name = nameOf(p);
+        if (name === undefined) return p;
+        return typeof p === "string" ? inner.get(name)! : ["Typed", inner.get(name)!, ...(p as unknown[]).slice(2)];
+      });
+      return ["Function", walk(node[1], inner), ...renamed];
     }
     return node.map((child) => walk(child, names));
   };
@@ -76,7 +86,7 @@ export function compileTyped(
   ce.pushScope();
   try {
     for (const [name, type] of Object.entries(types)) ce.declare(name, type);
-    const result = new JavaScriptTarget().compile(ce.box(freshen(expression) as never) as BoxedExpression) as {
+    const result = new JavaScriptTarget().compile(ce.box(expression as never) as BoxedExpression) as {
       success?: boolean;
       run?: Compilation["run"];
       code?: string;
