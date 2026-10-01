@@ -1,13 +1,15 @@
 // The AST as a vdom (https://github.com/enumeratio/enumeratio/wiki/Vdom): a MathJSON node `[head, ...args]` and a vdom node
 // `{ tag, props, children }` are the same tree under a renaming, and this module is the
 // renaming both ways. `structuralOf` writes the expression out verbatim -- every head a
-// tag, every argument a child, atoms as the leaf tags Wolfram uses -- and `vdomOf`
+// tag, every argument a child, a run of atoms as its tokens, as the markup reader reads
+// them (`@enumeratio/formats/markup`) -- and `vdomOf`
 // gives the tree that draws, which is `renderingOf` with a typeset fallback. `toVNode`
 // hands either to any framework's `h`.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
+import { stripMetadata, tokenOf } from "@enumeratio/formats/markup";
 import { optionAttribute, type Rendering, renderingOf } from "./symbols.ts";
 
 type Json = MathJsonExpression;
@@ -18,6 +20,11 @@ export type VNodeFactory<N> = (
   props: Readonly<Record<string, string>>,
   children: readonly (N | string)[],
 ) => N;
+
+/** A node of the structural tree: a rendering whose children may be runs of text (atoms, as tokens). */
+export interface StructuralNode extends Omit<Rendering, "children"> {
+  readonly children?: readonly (StructuralNode | string)[];
+}
 
 /** `Plot3D` -> `notatio-plot-3d`: the naming rule, kebab-cased with digits kept together. */
 export function tagOf(head: string): string {
@@ -32,9 +39,10 @@ const headOf = (node: unknown): string | undefined => {
 
 /**
  * An atom as its leaf: Wolfram's `Integer`, `Real`, `String` and `Symbol`, with the
- * value as the node's text. `True`/`False` are symbols like any other.
+ * value as the node's text. `True`/`False` are symbols like any other. What a whole
+ * expression that is an atom renders as, and an atom no token spells.
  */
-function atom(node: Json): Rendering | undefined {
+export function leafOf(node: Json): Rendering | undefined {
   const leaf = (tag: string, value: string): Rendering => ({ tag, attributes: { value } });
   if (typeof node === "number") {
     return leaf(Number.isInteger(node) ? "notatio-integer" : "notatio-real", String(node));
@@ -58,14 +66,15 @@ function atom(node: Json): Rendering | undefined {
 }
 
 /**
- * The expression verbatim as a vdom: every positional argument a child, atoms as leaves
- * with their literal as `value`, and the trailing options (Wolfram's rules) as props --
+ * The expression verbatim as a vdom: every positional argument a child, a run of atoms as
+ * one text child of their tokens (a whole expression that is an atom a leaf), and
+ * the trailing options (Wolfram's rules) as props --
  * `PlotRange -> All` is `plot-range="All"`, and an option whose value is itself an
  * application is a slotted child, since an attribute whose value is a node is a named
  * child. Nothing else is interpreted: the element the tag names does the lowering.
  */
-export function structuralOf(expr: Json): Rendering {
-  const leaf = atom(expr);
+export function structuralOf(expr: Json): StructuralNode {
+  const leaf = leafOf(expr);
   if (leaf !== undefined) return leaf;
   const head = headOf(expr);
   if (head === undefined) {
@@ -73,7 +82,14 @@ export function structuralOf(expr: Json): Rendering {
   }
   const { ops, options } = optionsOf(expr);
   const attributes: Record<string, string> = {};
-  const children = ops.map(structuralOf);
+  const children: (StructuralNode | string)[] = [];
+  for (const op of ops) {
+    const token = leafOf(op) === undefined ? undefined : tokenOf(stripMetadata(op));
+    const last = children.at(-1);
+    if (token === undefined) children.push(structuralOf(op));
+    else if (typeof last === "string") children[children.length - 1] = `${last} ${token}`;
+    else children.push(token);
+  }
   for (const [name, value] of Object.entries(options)) {
     const attr = optionAttribute(name);
     const valueHead = headOf(value);
@@ -126,8 +142,10 @@ export function vdomOf(expr: Json): Rendering {
 }
 
 /** Hand a rendering to a framework: `toVNode(vdomOf(expr), h)`. */
-export function toVNode<N>(rendering: Rendering, h: VNodeFactory<N>): N {
+export function toVNode<N>(rendering: Rendering | StructuralNode, h: VNodeFactory<N>): N {
   const children: (N | string)[] =
-    rendering.text !== undefined ? [rendering.text] : (rendering.children?.map((c) => toVNode(c, h)) ?? []);
+    rendering.text !== undefined
+      ? [rendering.text]
+      : (rendering.children?.map((c) => (typeof c === "string" ? c : toVNode(c, h))) ?? []);
   return h(rendering.tag, rendering.attributes, children);
 }

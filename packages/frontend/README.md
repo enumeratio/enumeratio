@@ -17,14 +17,8 @@ just use notatio in an app.
   attributes + children). No DOM; the docs build, `<notatio-out>`, and anything else
   holding an expression read it the same way.
 - `./vdom` — `structuralOf` (an expression written out verbatim as a vdom: every head a
-  tag, every argument a child) and `vdomOf` (`renderingOf` with a typeset fallback);
-  `toVNode` hands either to any framework's `h`.
-- `./vue`, `./react` — the symbols as generated framework components (`<Plot>`,
-  `<Slider>`, `<Row>`) plus `<Notatio expr="…">`, which renders an expression as its own
-  vdom.
-- `./generate` — generates `vue-generated.ts` / `react-generated.ts` from the element
-  sources; the docs site's build calls this so the wrapper components exist for the
-  theme.
+  tag, every argument a child, a run of atoms as text) and `vdomOf` (`renderingOf` with a
+  typeset fallback); `toVNode` hands either to any framework's `h`.
 - `./declare-carriers` — `declareFrontendCarriers(ce)`: this package's own carrier
   (`GlyphKind`), for a host assembling every carrier it ships.
 - `./reflect`, `./conventional-latex` — reading element sources for their attributes;

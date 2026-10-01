@@ -1,6 +1,6 @@
 import { parseExpression } from "@enumeratio/formats/expression";
 import { expect, test } from "vite-plus/test";
-import { structuralOf, tagOf, toVNode, vdomOf } from "../src/vdom.ts";
+import { type StructuralNode, structuralOf, tagOf, toVNode, vdomOf } from "../src/vdom.ts";
 
 /** A vnode factory that keeps everything, for looking at. */
 const h = (tag: string, props: Readonly<Record<string, string>>, children: readonly unknown[]) => ({
@@ -16,20 +16,17 @@ test("the tag is the naming rule: notatio- plus the head, kebab-cased", () => {
   expect(tagOf("CollectionTable")).toBe("notatio-collection-table");
 });
 
-test("the structural tree is the expression verbatim: heads are tags, arguments children, atoms leaves", () => {
-  const { json } = parseExpression("Binomial(n, 2)");
+test("the structural tree is the expression verbatim: heads are tags, arguments children, atoms tokens", () => {
+  const { json } = parseExpression('Binomial(n, 2, "a b", 2.5)');
   expect(toVNode(structuralOf(json), h)).toEqual({
     tag: "notatio-binomial",
     props: {},
-    children: [
-      { tag: "notatio-symbol", props: { value: "n" }, children: [] },
-      { tag: "notatio-integer", props: { value: "2" }, children: [] },
-    ],
+    children: ['n 2 "a b" 2.5'],
   });
   const nested = parseExpression("Sin(x)^2 + 1").json;
   const tree = structuralOf(nested);
   expect(tree.tag).toBe("notatio-add");
-  expect(tree.children?.map((c) => c.tag)).toEqual(["notatio-power", "notatio-integer"]);
+  expect(tree.children?.map((c) => (typeof c === "string" ? c : c.tag))).toEqual(["notatio-power", "1"]);
   expect(structuralOf(parseExpression('"so"').json)).toEqual({
     tag: "notatio-string",
     attributes: { value: "so" },
@@ -73,13 +70,16 @@ test("options ride as props in the structural tree, a node-valued one as a slott
     ).json,
   );
   expect(tree.tag).toBe("notatio-plot");
-  expect(tree.children?.slice(0, 2).map((c) => c.tag)).toEqual(["notatio-sin", "notatio-tuple"]);
+  expect(tree.children?.slice(0, 2).map((c) => (typeof c === "string" ? c : c.tag))).toEqual([
+    "notatio-sin",
+    "notatio-tuple",
+  ]);
   expect(tree.attributes).toEqual({
     "plot-range": "all",
     frame: "true",
     epilog: "Point((1, 0.5))",
     "plot-label": "wave",
   });
-  const inset = tree.children?.find((c) => c.attributes.slot === "inset");
+  const inset = tree.children?.find((c): c is StructuralNode => typeof c !== "string" && c.attributes.slot === "inset");
   expect(inset?.tag).toBe("notatio-plot");
 });

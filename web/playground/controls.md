@@ -227,9 +227,10 @@ arguments by name too: `<notatio-binomial n="5" k="2">`.
 
 ## As a vdom
 
-The same trees, written structurally: every head a tag, every argument a child, every
-option an attribute — `structuralOf` in the base package, and what an expression's
-component form is. The elements do the rest, lowering their own children.
+The same trees, written structurally: every head a tag, every argument a child (a run of
+atoms as text, `k 1`), every option an attribute — `structuralOf` in the base package, and
+what an expression's component form is. The elements do the rest, lowering their own
+children.
 
 <Story
   title="The realized tree">
@@ -246,15 +247,27 @@ component form is. The elements do the rest, lowering their own children.
 <template #description>
 <code>Row([Slider((k, 1), (0, 5, 0.5)), "squared is", Dynamic(k^2)])</code>, structurally: a
 <code>notatio-row</code> holding a <code>notatio-list</code> of a <code>notatio-slider</code>,
-a string and a <code>notatio-dynamic</code>.
+a string (a token, as text) and a <code>notatio-dynamic</code>.
 </template>
-<notatio-row><notatio-list><notatio-slider><notatio-tuple>k 1</notatio-tuple><notatio-tuple>0 5 0.5</notatio-tuple></notatio-slider><notatio-string value="squared is"></notatio-string><notatio-dynamic><notatio-power>k 2</notatio-power></notatio-dynamic></notatio-list></notatio-row>
+<notatio-row><notatio-list><notatio-slider><notatio-tuple>k 1</notatio-tuple><notatio-tuple>0 5 0.5</notatio-tuple></notatio-slider> "squared is" <notatio-dynamic><notatio-power>k 2</notatio-power></notatio-dynamic></notatio-list></notatio-row>
 </Story>
 
 <Story
   title="A plot with options, as a vdom">
 <notatio-plot plot-range="(-1, 1)" epilog="Point((1.5, 1))"><notatio-sin>x</notatio-sin><notatio-tuple>x 0 10</notatio-tuple></notatio-plot>
 </Story>
+
+## As markup
+
+The same form without the `notatio-` prefix is markup a page can hold: FullForm written as
+JSX, read at build and shown as its value. A head's tag in a sentence is inline,
+<Binomial>10 3</Binomial> or <Fibonacci n="20" /> (a slot naming a parameter takes its
+place), and `<ToExpression value="…" />` holds Epsil: <ToExpression value="Sum(1/k^2, (k, 1, 4))" />.
+On lines of its own, it is displayed:
+
+<HurwitzZeta s="3">
+  <Divide>1 2</Divide>
+</HurwitzZeta>
 
 ## Every symbol, and no wrapper
 
@@ -273,7 +286,7 @@ No component was written for <code>Binomial</code>, <code>Sqrt</code> or
 </template>
 <p>
 <notatio-binomial>n 2</notatio-binomial>,
-<notatio-sqrt><notatio-add><notatio-power>x 2</notatio-power><notatio-integer value="1" /></notatio-add></notatio-sqrt>,
+<notatio-sqrt><notatio-add><notatio-power>x 2</notatio-power> 1</notatio-add></notatio-sqrt>,
 <notatio-integer value="42" />, <notatio-string value="a string" />.
 </p>
 </Story>

@@ -13,9 +13,12 @@ import { isClaimed } from "./lazy.ts";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { withOptions } from "@enumeratio/formats";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
+import { tokenize } from "@enumeratio/formats/markup";
 import {
   CONTROL_HEADS,
+  debug,
   DRAWING_SYMBOLS,
+  leafOf,
   lowerOptions,
   markupOf,
   optionAttribute,
@@ -31,6 +34,31 @@ for (const s of DRAWING_SYMBOLS) if (!BY_TAG.has(s.tag) && s.fixed === undefined
 for (const s of DRAWING_SYMBOLS) if (!BY_TAG.has(s.tag)) BY_TAG.set(s.tag, s);
 
 const ADOPTED = new WeakSet<Element>();
+const log = debug("structure");
+
+/**
+ * The author's text runs among `el`'s children as the leaf elements of their atoms
+ * (`<notatio-plot>x <notatio-tuple>…` holds the symbol `x`), so what follows reads every
+ * argument as an element. Only the text before the first comment: Lit renders a light-DOM
+ * component's own output after its marker.
+ */
+function leavesForText(el: Element): void {
+  for (const node of Array.from(el.childNodes)) {
+    if (node.nodeType === Node.COMMENT_NODE) return;
+    if (node.nodeType !== Node.TEXT_NODE || !node.textContent?.trim()) continue;
+    const errors: string[] = [];
+    const atoms = tokenize(node.textContent, errors);
+    if (errors.length) log("text isn't atoms (Epsil goes in value):", node.textContent, errors);
+    const leaves = atoms.flatMap((a) => {
+      const leaf = leafOf(a as MathJsonExpression);
+      if (leaf === undefined) return [];
+      const e = document.createElement(leaf.tag);
+      for (const [k, v] of Object.entries(leaf.attributes)) e.setAttribute(k, v);
+      return [e];
+    });
+    node.replaceWith(...leaves);
+  }
+}
 
 /** The argument children: the expressive ones that are not slotted options. */
 function argumentsOf(el: Element): MathJsonExpression[] {
@@ -80,6 +108,8 @@ function unwrapLayout(el: Element, head: string, names: ReadonlySet<string>): vo
   const entries: Element[] = [];
   const spread = (child: Element, depth: number): void => {
     if (child.localName === "notatio-list" && depth > 0) {
+      const holder = child.querySelector(":scope > .notatio-generic-args") ?? child;
+      leavesForText(holder);
       for (const inner of heldArguments(child)) spread(inner, depth - 1);
       child.remove();
       return;
@@ -155,6 +185,7 @@ function scopeNames(el: Element): Set<string> {
 export function adoptStructure(el: Element): void {
   const symbol = BY_TAG.get(el.localName);
   if (symbol === undefined || ADOPTED.has(el)) return;
+  leavesForText(el);
   // A hand-written element in it whose module is still loading (`lazy.ts`) is waited for:
   // its class reads the arguments.
   const pending = [el, ...el.querySelectorAll("*")]

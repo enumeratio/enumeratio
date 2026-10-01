@@ -45,6 +45,20 @@ test("slots are trailing pairs; a bare one is True; Epsil where one token won't 
   ]);
 });
 
+test("a slot naming a parameter takes its place, the children filling the rest", () => {
+  const paramsOf = (head: string) => ({ PolyLog: ["s", "z"], F: ["a", "b", "c"] })[head];
+  const placed = (text: string) => readMarkupText(text, { parseText: parseExpression, paramsOf });
+  expect(placed('<PolyLog s="2">z</PolyLog>')).toEqual({ json: ["PolyLog", 2, "z"], errors: [] });
+  expect(placed('<PolyLog z="x" s="2" />').json).toEqual(["PolyLog", 2, "x"]);
+  expect(placed('<F b="2" Opt="1">x</F>').json).toEqual(["F", "x", 2, ["KeyValuePair", "Opt", 1]]);
+  expect(placed('<F a="1" b="2" />').json).toEqual(["F", 1, 2]);
+  // Without a parameter named, or without `paramsOf`, a slot is a trailing pair.
+  expect(placed('<PolyLog Opt="1">2 z</PolyLog>').json).toEqual(["PolyLog", 2, "z", ["KeyValuePair", "Opt", 1]]);
+  expect(read('<PolyLog s="2">z</PolyLog>').json).toEqual(["PolyLog", "z", ["KeyValuePair", "s", 2]]);
+  expect(placed('<F c="3">x</F>').errors).toEqual(["markup: <F> gives c but not b"]);
+  expect(placed('<F a="1">x y z</F>').errors).toEqual(["markup: <F> has more arguments than its parameters (a, b, c)"]);
+});
+
 test("value holds the arguments, or with ToExpression the whole expression, as Epsil", () => {
   expect(read('<Binomial value="n, 2" />').json).toEqual(["Binomial", "n", 2]);
   expect(read('<ToExpression value="Sin(k * x)" />').json).toEqual(["Sin", ["Multiply", "k", "x"]]);
@@ -68,9 +82,7 @@ test("reading needs no Epsil parser unless the markup has Epsil in it", () => {
 
 test("what isn't FullForm is an error, not a guess", () => {
   expect(read("<Add>x+1</Add>").errors).toEqual(['markup: "x+1" isn\'t an atom (Epsil goes in a value attribute)']);
-  expect(read('<Plot domain="0,10" />').errors).toEqual([
-    'markup: <Plot> has "domain", which is neither a slot (PascalCase) nor value',
-  ]);
+  expect(read('<Plot data-x="1" />').errors).toEqual(['markup: <Plot> has "data-x", which isn\'t a slot name']);
   expect(read("<A/><B/>").errors).toEqual(["markup: expected one root element"]);
 });
 

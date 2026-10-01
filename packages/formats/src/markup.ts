@@ -10,9 +10,10 @@
 //   whitespace-separated atoms: numbers, symbols (`x`, or `` `a b` `` verbatim) and
 //   `"strings"` (JSON escapes);
 // - a childless element is a symbol (`<NaN/>`); a call with no arguments is `<Apply>f</Apply>`;
-// - a PascalCase attribute is a named slot, a trailing `KeyValuePair` (options, or a named
-//   parameter once the symbol says so); alone, it is `True`;
-// - `value`, the one lowercase attribute, holds the arguments as Epsil in place of children,
+// - any other attribute is a named slot, spelled as the option or parameter is: a trailing
+//   `KeyValuePair`, or the parameter's position where the caller's `paramsOf` names it;
+//   alone, it is `True`;
+// - `value`, the one reserved attribute, holds the arguments as Epsil in place of children,
 //   and `<ToExpression value="…" />` a whole expression.
 //
 // Engine-free: Epsil is only ever read through the `parseText` a caller passes in, so a page
@@ -40,6 +41,15 @@ export interface ReadNode {
 
 /** An Epsil parser, `parseExpression`'s shape: injected so this module stays engine-free. */
 export type ParseText = (epsil: string) => { json: unknown; errors: readonly unknown[] };
+
+/** A head's parameter names, in order, where its signature names them. */
+export type ParamsOf = (head: string) => readonly string[] | undefined;
+
+export interface ReadOptions {
+  readonly parseText?: ParseText;
+  /** Place a slot that names a parameter into that parameter's position. */
+  readonly paramsOf?: ParamsOf;
+}
 
 export interface ReadResult {
   readonly json: Json;
@@ -73,7 +83,7 @@ export function parseMarkup(text: string): { node: MarkupNode | undefined; error
 }
 
 /** Markup text read into MathJSON: `parseMarkup` then `readMarkup`. */
-export function readMarkupText(text: string, options: { parseText?: ParseText } = {}): ReadResult {
+export function readMarkupText(text: string, options: ReadOptions = {}): ReadResult {
   const { node, errors } = parseMarkup(text);
   return node === undefined ? { json: undefined, errors } : readMarkup(node, options);
 }
@@ -174,13 +184,50 @@ function textValue(text: string, parseText: ParseText | undefined, errors: strin
  * An element as MathJSON, non-canonical (so names resolve before canonicalisation), with
  * whatever errors reading it found.
  */
-export function readMarkup(node: MarkupNode, options: { parseText?: ParseText } = {}): ReadResult {
+export function readMarkup(node: MarkupNode, options: ReadOptions = {}): ReadResult {
   const errors: string[] = [];
-  const json = read(node, options.parseText, errors);
+  const json = read(node, options, errors);
   return { json, errors };
 }
 
-function read(node: MarkupNode, parseText: ParseText | undefined, errors: string[]): Json {
+/**
+ * The arguments with each slot that names one of `params` in that parameter's place, the
+ * children filling the others in order; the remaining slots trail as options. Undefined
+ * where no slot names a parameter, or the parameters can't all be placed.
+ */
+function placed(
+  tag: string,
+  params: readonly string[],
+  args: readonly Json[],
+  slots: readonly [string, Json][],
+  errors: string[],
+): Json[] | undefined {
+  const named = new Map(slots.filter(([name]) => params.includes(name)));
+  if (named.size === 0) return undefined;
+  const out: Json[] = [];
+  let next = 0;
+  let gap: string | undefined;
+  for (const p of params) {
+    const v = named.has(p) ? named.get(p) : next < args.length ? args[next++] : undefined;
+    if (v === undefined) {
+      gap ??= p;
+      continue;
+    }
+    if (gap !== undefined) {
+      errors.push(`markup: <${tag}> gives ${p} but not ${gap}`);
+      return undefined;
+    }
+    out.push(v);
+  }
+  if (next < args.length) {
+    errors.push(`markup: <${tag}> has more arguments than its parameters (${params.join(", ")})`);
+    return undefined;
+  }
+  return [...out, ...slots.filter(([name]) => !named.has(name)).map(([name, v]) => ["KeyValuePair", name, v])];
+}
+
+function read(node: MarkupNode, options: ReadOptions, errors: string[]): Json {
+  const { parseText } = options;
   const { tag } = node;
   const parts = dottedParts(tag);
   if (parts === undefined) {
@@ -188,17 +235,18 @@ function read(node: MarkupNode, parseText: ParseText | undefined, errors: string
     return undefined;
   }
 
-  const slots: Json[] = [];
+  const named: [string, Json][] = [];
   let value: string | undefined;
   for (const [name, raw] of Object.entries(node.props ?? {})) {
     if (name === "value") {
       if (raw === true) errors.push(`markup: <${tag} value> needs text`);
       else value = raw;
-    } else if (/^[A-Z]/.test(name)) {
+    } else if (PLAIN_SYMBOL.test(name)) {
       const v = raw === true ? "True" : textValue(raw, parseText, errors);
-      if (v !== undefined) slots.push(["KeyValuePair", name, v]);
-    } else errors.push(`markup: <${tag}> has "${name}", which is neither a slot (PascalCase) nor value`);
+      if (v !== undefined) named.push([name, v]);
+    } else errors.push(`markup: <${tag}> has "${name}", which isn't a slot name`);
   }
+  const slots: Json[] = named.map(([name, v]) => ["KeyValuePair", name, v]);
 
   const args: Json[] = [];
   for (const child of node.children) {
@@ -206,7 +254,7 @@ function read(node: MarkupNode, parseText: ParseText | undefined, errors: string
     else if ("json" in child) {
       if (child.json !== undefined) args.push(child.json);
     } else {
-      const arg = read(child, parseText, errors);
+      const arg = read(child, options, errors);
       if (arg !== undefined) args.push(arg);
     }
   }
@@ -230,6 +278,9 @@ function read(node: MarkupNode, parseText: ParseText | undefined, errors: string
   }
   if (tag === "Apply" && isSymbol(args[0])) return [args[0], ...args.slice(1), ...slots];
   if (args.length === 0 && slots.length === 0) return tag;
+  const params = options.paramsOf?.(tag);
+  const ops = params === undefined ? undefined : placed(tag, params, args, named, errors);
+  if (ops !== undefined) return [tag, ...ops];
   return [tag, ...args, ...slots];
 }
 
@@ -267,8 +318,8 @@ export function stripMetadata(expr: Json): Json {
 const escapeSpecials = (text: string): string =>
   text.replace(/[<>{}&`']/g, (c) => `\\u${c.charCodeAt(0).toString(16).padStart(4, "0")}`);
 
-/** An atom as its token. */
-function tokenOf(atom: Json): string | undefined {
+/** An atom as the token a text run reads back, or undefined if it isn't one. */
+export function tokenOf(atom: Json): string | undefined {
   if (typeof atom === "number") return Object.is(atom, -0) ? "-0" : String(atom);
   if (typeof atom === "string") {
     if (/^'.*'$/s.test(atom)) return escapeSpecials(JSON.stringify(atom.slice(1, -1)));
