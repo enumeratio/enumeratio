@@ -11,6 +11,5 @@ declare const data: readonly ComponentDoc[];
 export { data };
 
 export default defineLoader({
-  watch: ["../../../packages/components/src/notatio-*.ts"],
   load: (): readonly ComponentDoc[] => collectComponents(),
 });

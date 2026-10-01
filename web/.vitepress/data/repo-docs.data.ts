@@ -14,7 +14,6 @@ declare const data: RepoDocs;
 export { data };
 
 export default defineLoader({
-  watch: ["../../../{packages,tools,upstream}/**/{package.json,README.md,docs/**/*.md}"],
   load: (): RepoDocs => {
     const packages = workspacePackages();
     return {

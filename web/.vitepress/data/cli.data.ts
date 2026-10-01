@@ -11,10 +11,5 @@ declare const data: CliData;
 export { data };
 
 export default defineLoader({
-  watch: [
-    "../../../packages/cli/src/command.ts",
-    "../../../packages/cli/src/completion.ts",
-    "../../../packages/cli/src/engine.ts",
-  ],
   load: (): CliData => cliData,
 });
