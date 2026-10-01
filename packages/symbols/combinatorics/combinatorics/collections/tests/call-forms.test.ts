@@ -233,10 +233,10 @@ test("Subsets(n, {kmin, kmax}) defaults its step to 1", () => {
 
 // ─── Subsets(list) / SetPartitions(list) -- an explicit list of elements ────────────
 
-test("Subsets(list) is Subsets(n) unranked in the same binary-mask order, elements swapped in for positions", () => {
+test("Subsets(list) is Subsets(n)'s order, by size then lex, elements swapped in for positions", () => {
   const expr = ["Subsets", ["List", "a", "b", "c"]];
   expect(countOf(expr)).toBe(8);
-  expect(elementsOf(expr)).toEqual([[], ["a"], ["b"], ["a", "b"], ["c"], ["a", "c"], ["b", "c"], ["a", "b", "c"]]);
+  expect(elementsOf(expr)).toEqual([[], ["a"], ["b"], ["c"], ["a", "b"], ["a", "c"], ["b", "c"], ["a", "b", "c"]]);
 });
 
 test("Count(Subsets(list)) is 2^n for an n-element list", () => {
@@ -254,8 +254,8 @@ test("Subsets(list, k) and Subsets(list, {k}) size-restrict over the list's own 
   expect(elementsOf(["Subsets", list, ["List", 2]])).toEqual([
     ["a", "b"],
     ["a", "c"],
-    ["b", "c"],
     ["a", "d"],
+    ["b", "c"],
     ["b", "d"],
     ["c", "d"],
   ]);

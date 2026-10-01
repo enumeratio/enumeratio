@@ -39,10 +39,10 @@ import {
   SetPartitionsIntoKBlocksUnrank,
   StirlingS2,
 } from "./kernels-combinatorics.ts";
-import { IsKSubsetOf, IsSubsetOf, KSubsetCount, KSubsetUnrank, SubsetCount, SubsetUnrank } from "./kernels-extra.ts";
 import { partsInSet } from "../../../partitions/src/families/partitions.ts";
-import { subsetsAtMostKCount, subsetsAtMostKUnrank, subsetsAtMostKValid } from "./subsets.ts";
-import { asBlockList, asIntList, type Boxed, blocksMJ, listMJ } from "./types.ts";
+import { kSubsets, subsets, subsetsOfSizeAtMost } from "./closed-forms.ts";
+import { kernelOn } from "./epsil.ts";
+import { asBlockList, asIntList, type Boxed, blocksMJ, type FamilyKernel, listMJ } from "./types.ts";
 
 type BoxInput = Parameters<ComputeEngine["box"]>[0];
 const asBoxed = (c: BoxedExpression): Boxed => c as unknown as Boxed;
@@ -236,27 +236,45 @@ function resolveSetPartitions(ops: readonly BoxedExpression[]): Resolved<number[
 }
 
 // ─── Subsets(n) / (n, k) / (n, {k}) / (n, {kmin, kmax}) / (n, {kmin, kmax, step}) ──────
+// Graded by size, lex within a size: the Epsil families' own kernels (./closed-forms.ts), so
+// every call form lists subsets in the order `Subsets(n)` does.
 
-/** Subsets of {1,…,n} whose size lands in `sizes` -- concatenated size-blocks, each in
- *  KSubsets' own colex order (same shape as SubsetsOfSizeAtMost, generalised past 0..k). */
-function subsetsInSizesCount(n: number, sizes: readonly number[]): number {
-  let total = 0;
-  for (const k of sizes) total += KSubsetCount(n, k);
-  return total;
+/** The subset kernels on one engine. */
+interface SubsetKernels {
+  readonly all: FamilyKernel;
+  readonly ofSize: FamilyKernel;
+  readonly atMost: FamilyKernel;
 }
-function subsetsInSizesUnrank(n: number, sizes: readonly number[], r: number): number[] {
-  const total = subsetsInSizesCount(n, sizes);
-  let rr = total ? ((r % total) + total) % total : 0;
-  for (const k of sizes) {
-    const c = KSubsetCount(n, k);
-    if (rr < c) return KSubsetUnrank(n, k, rr);
-    rr -= c;
-  }
-  return [];
-}
-function subsetsInSizesValid(e: unknown, n: number, sizes: readonly number[]): boolean {
-  if (!Array.isArray(e)) return false;
-  return sizes.includes(e.length) && IsKSubsetOf(e as number[], n, e.length);
+
+const subsetKernels = (ce: ComputeEngine): SubsetKernels => ({
+  all: kernelOn(ce, subsets({ head: "Subsets", params: ["_n"] })),
+  ofSize: kernelOn(ce, kSubsets({ head: "KSubsets", params: ["_n", "_k"] })),
+  atMost: kernelOn(ce, subsetsOfSizeAtMost({ head: "SubsetsOfSizeAtMost", params: ["_n", "_k"] })),
+});
+
+/** A kernel at `p` as a call form's resolution. */
+const resolvedFrom = (kernel: FamilyKernel, p: number[], encode?: (e: number[]) => unknown): Resolved<number[]> => ({
+  count: Number(kernel.count(p)),
+  unrank: (r) => kernel.unrank(p, BigInt(r)) as number[],
+  valid: (e) => kernel.valid(e, p),
+  ...(encode === undefined ? {} : { encode }),
+});
+
+/** Subsets of {1,…,n} whose size lands in `sizes`: the size blocks in turn, each lex. */
+function subsetsInSizes(kernels: SubsetKernels, n: number, sizes: readonly number[]): Resolved<number[]> {
+  const blocks = sizes.map((k) => [k, Number(kernels.ofSize.count([n, k]))] as const);
+  return {
+    count: blocks.reduce((total, [, c]) => total + c, 0),
+    unrank: (r) => {
+      let left = r;
+      for (const [k, c] of blocks) {
+        if (left < c) return kernels.ofSize.unrank([n, k], BigInt(left)) as number[];
+        left -= c;
+      }
+      return [];
+    },
+    valid: (e) => Array.isArray(e) && sizes.includes(e.length) && kernels.ofSize.valid(e, [n, e.length]),
+  };
 }
 /** sizes kmin, kmin+step, … not exceeding kmax (Wolfram's Subsets(list, {kmin,kmax,dn})). */
 function sizesInRange(kmin: number, kmax: number, step: number): number[] {
@@ -266,37 +284,15 @@ function sizesInRange(kmin: number, kmax: number, step: number): number[] {
   return sizes;
 }
 
-/** `Subsets(list)`: the same binary-mask unranking as `Subsets(n)` over the list's
- *  positions 1..n, with each position printed as the list's own element there instead of
- *  the bare position -- `encode` overrides `listMJ` for this one resolution. */
-function resolveSubsetsOfList(elements: readonly BoxedExpression[]): Resolved<number[]> {
-  const n = elements.length;
-  return {
-    count: SubsetCount(n),
-    unrank: (r) => SubsetUnrank(n, r),
-    valid: (e) => Array.isArray(e) && IsSubsetOf(e as number[], n),
-    encode: (idxs) => ["List", ...idxs.map((i) => elements[i - 1]!.json)],
-  };
-}
-
-/** Elements over 1..n go through `wrapElement` -- Finset when the carrier is declared,
- *  the bare list otherwise (`carrierTypeForName`, checked once by the caller). The list form
- *  (`resolveSubsetsOfList`) stays unwrapped either way: its elements are the ORIGINAL list's,
- *  not necessarily a Finset's `1..n` shape, matching SetPartitions(list)'s own carrier-free
- *  encode. */
+/** Elements over 1..n go through `wrapElement` -- Finset when the carrier is declared, the bare
+ *  list otherwise. A list's own subsets are over its positions 1..n, printed as the list's
+ *  elements, and stay unwrapped: they are the original list's values, not a Finset's 1..n. */
 function resolveSubsets(
+  kernels: SubsetKernels,
   ops: readonly BoxedExpression[],
   wrapElement: (n: number, idxs: number[]) => unknown,
 ): Resolved<number[]> | undefined {
   const elements = elementsOf(ops[0]);
-  if (ops.length === 1) {
-    if (elements !== undefined) return resolveSubsetsOfList(elements);
-  }
-
-  // `Subsets(list, k)` / `Subsets(list, {k, …})`: same size-restricted kernels below, but
-  // over the list's own n positions, printed as the list's elements (elements[i-1]!.json)
-  // rather than bare integers -- the size arg never reaches `resolveSubsetsOfList`, which
-  // only handles the one-arg form.
   const n = elements !== undefined ? elements.length : integerAt(ops[0]);
   if (n === undefined) return undefined;
   const encode =
@@ -304,14 +300,7 @@ function resolveSubsets(
       ? (idxs: number[]) => ["List", ...idxs.map((i) => elements[i - 1]!.json)]
       : (idxs: number[]) => wrapElement(n, idxs);
 
-  if (ops.length <= 1) {
-    return {
-      count: SubsetCount(n),
-      unrank: (r) => SubsetUnrank(n, r),
-      valid: (e) => IsSubsetOf(e as number[], n),
-      encode,
-    };
-  }
+  if (ops.length <= 1) return resolvedFrom(kernels.all, [n], encode);
 
   const second = ops[1];
   if (second === undefined) return undefined;
@@ -322,35 +311,16 @@ function resolveSubsets(
       return undefined;
     }
     const vals = listOps as number[];
-    if (vals.length === 1) {
-      // Exactly k -- KSubsets' own kernel.
-      const k = vals[0]!;
-      return {
-        count: KSubsetCount(n, k),
-        unrank: (r) => KSubsetUnrank(n, k, r),
-        valid: (e) => IsKSubsetOf(e as number[], n, k),
-        encode,
-      };
-    }
+    // Exactly k -- KSubsets' own kernel.
+    if (vals.length === 1) return resolvedFrom(kernels.ofSize, [n, vals[0]!], encode);
     const [kmin, kmax, step = 1] = vals;
-    const sizes = sizesInRange(kmin!, kmax!, step!);
-    return {
-      count: subsetsInSizesCount(n, sizes),
-      unrank: (r) => subsetsInSizesUnrank(n, sizes, r),
-      valid: (e) => subsetsInSizesValid(e, n, sizes),
-      encode,
-    };
+    return { ...subsetsInSizes(kernels, n, sizesInRange(kmin!, kmax!, step!)), encode };
   }
 
   // At most k -- SubsetsOfSizeAtMost' own kernel.
   const k = integerAt(second);
   if (k === undefined || k < 0) return undefined;
-  return {
-    count: subsetsAtMostKCount([n, k]),
-    unrank: (r) => subsetsAtMostKUnrank([n, k], r),
-    valid: (e) => subsetsAtMostKValid(e, [n, k]),
-    encode,
-  };
+  return resolvedFrom(kernels.atMost, [n, k], encode);
 }
 
 // ─── wiring ─────────────────────────────────────────────────────────────────────────────
@@ -427,6 +397,7 @@ export function declareCallForms(ce: ComputeEngine): void {
       ? "(integer | collection<any>, (integer | list<integer>)?) -> list<list<any>>"
       : `(integer | collection<any>, (integer | list<integer>)?) -> list<${finset} | list<any>>`,
   );
+  const kernels = subsetKernels(ce);
   const wrapSubset = (n: number, idxs: number[]): unknown =>
     finset === undefined ? listMJ(idxs) : ["Finset", ["Tuple", n, listMJ(idxs)]];
   setCollection(
@@ -441,7 +412,7 @@ export function declareCallForms(ce: ComputeEngine): void {
             ? (b.ops![0]!.ops![b.ops![0]!.ops!.length - 1]! as Boxed)
             : b) as never,
         ),
-      (ops) => resolveSubsets(ops, wrapSubset),
+      (ops) => resolveSubsets(kernels, ops, wrapSubset),
     ),
   );
 

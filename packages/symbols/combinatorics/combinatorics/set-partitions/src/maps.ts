@@ -33,6 +33,20 @@ const rename = (expr: MathJSON, from: string, to: string): MathJSON =>
 
 export const SET_PARTITIONS_MAPS: readonly CombinatorialMap[] = [
   {
+    name: "BinaryWord",
+    convert: true,
+    from: "finset",
+    to: "binary_word",
+    // A Finset's contents are `Tuple(n, members)`.
+    body: [
+      "Map",
+      ["Function", ["If", ["Element", "i", ["At", "_raw", 2]], 1, 0], "i"],
+      ["Range", 1, ["At", "_raw", 1], 1],
+    ],
+    summary: "A subset of 1..n as its characteristic word: letter i is 1 when i is a member.",
+    note: "Not order-preserving: Subsets lists subsets by size, then lex, while BinaryWords(n) through Finset(word) gives them in their characteristic words' order.",
+  },
+  {
     name: "RestrictedGrowthString",
     convert: true,
     from: "set_partition",

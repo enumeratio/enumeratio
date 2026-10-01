@@ -46,4 +46,15 @@ export const WORDS_MAPS: readonly CombinatorialMap[] = [
     summary: "The composition of m + 1 a binary word of length m cuts out.",
     note: "The inverse of CutWord. Mapped over BinaryWords(m), it lists the compositions of m + 1 in their cut words' order.",
   },
+  {
+    name: "Finset",
+    convert: true,
+    from: "binary_word",
+    to: "finset",
+    // Finset's shape is params-first: n as `body`, the members as the sole `extra`.
+    body: ["Length", "_raw"],
+    extra: [["Filter", ["Range", 1, ["Length", "_raw"], 1], ["Function", ["Equal", ["At", "_raw", "i"], 1], "i"]]],
+    summary: "The subset of 1..m a binary word of length m marks: the positions holding 1.",
+    note: "The inverse of BinaryWord(finset). Mapped over BinaryWords(m), it lists the subsets of 1..m in their characteristic words' order.",
+  },
 ];

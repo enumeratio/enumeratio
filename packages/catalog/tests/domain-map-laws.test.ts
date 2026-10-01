@@ -38,7 +38,7 @@ const BUDGET = 5_000n;
 /** A family's carrier, when it's actually declared typed by one -- the same test
  *  `carrier-family-types.test.ts` uses, not the catalog's own (possibly stale) `carrier`
  *  label: a family the engine doesn't yet type has no carrier value for this test to draw. */
-const carrierOf = (f: FamilyKernel): string | undefined => f.carrier ?? f.declared?.carrier;
+const carrierOf = (f: FamilyKernel): string | undefined => f.carrier;
 
 const constructorOf = new Map(CARRIERS.map((c) => [c.type, c.name]));
 

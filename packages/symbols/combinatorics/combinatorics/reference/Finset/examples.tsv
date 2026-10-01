@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+from-its-characteristic-word	Basic		[Finset, [BinaryWord, [List, 0, 1, 1, 0, 1]]]	[Finset, [Tuple, 5, [List, 2, 3, 5]]]	From its characteristic word, the inverse of [[BinaryWord]] on a subset
