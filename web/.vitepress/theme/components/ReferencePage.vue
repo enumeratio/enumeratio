@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Prerendered } from "@enumeratio/frontend/prerender";
 import { crosswalkFor, type ReferenceEntry, type ResolvedReference } from "@enumeratio/reference";
 import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { data as components } from "../../data/components.data.ts";
@@ -8,7 +9,34 @@ import { renderBlock, renderInline, renderProse } from "../../prose.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
-const props = defineProps<{ name: string; entry?: ReferenceEntry }>();
+const props = defineProps<{
+  name: string;
+  entry?: ReferenceEntry;
+  prerendered?: readonly (Prerendered | null | undefined)[];
+}>();
+
+// Each example answered at build (data/prerender.ts): its typeset HTML shows from the first
+// paint, and the cell takes the answer instead of asking its kernel. The HTML gives way to the
+// cell once the cell has rendered.
+const rendered = reactive<Record<number, boolean>>({});
+const answered = (i: number): Prerendered | undefined => props.prerendered?.[i] ?? undefined;
+// The HTML isn't page data: the build writes it into the placeholders, and on the first load
+// it's read back from the page before hydrating, so the two agree. A later client-side
+// navigation has none, and its cells render the answers themselves.
+const typesetHtml = (key: string): string =>
+  import.meta.env.SSR ? "" : (document.querySelector(`span[data-prerender="${key}"]`)?.innerHTML ?? "");
+const prerenderedHtml = Object.fromEntries(
+  (props.prerendered ?? []).flatMap((a, i) =>
+    a
+      ? [
+          [`${i}:in`, typesetHtml(`${i}:in`)],
+          [`${i}:out`, typesetHtml(`${i}:out`)],
+        ]
+      : [],
+  ),
+);
+const typeset = (i: number): boolean =>
+  answered(i) !== undefined && (import.meta.env.SSR || (prerenderedHtml[`${i}:out`] ?? "") !== "");
 // The route hands over the whole entry in a build; dev reads it live from the reference data.
 const entry = computed(() => (import.meta.env.DEV ? getEntry(props.name) : (props.entry ?? getEntry(props.name))));
 
@@ -78,6 +106,7 @@ const PRIMITIVE_REASON: Record<string, string> = {
 const status = reactive<Record<number, string>>({});
 const onAssert = (i: number, event: Event): void => {
   status[i] = (event as CustomEvent<{ status: string }>).detail.status;
+  rendered[i] = true;
 };
 
 // Known-divergence chips, one per system the example diverges from.
@@ -288,41 +317,51 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
         </button>
       </span>
     </div>
-    <ClientOnly>
-      <details
-        v-for="group in grouped"
-        :key="group.category"
-        class="ref-section"
-        :class="{ 'is-bare': grouped.length <= 1 }"
-        :id="sectionId(group.category)"
-        :open="sectionsOpen || sectionId(group.category) === targeted || openSections.has(sectionId(group.category))"
+    <details
+      v-for="group in grouped"
+      :key="group.category"
+      class="ref-section"
+      :class="{ 'is-bare': grouped.length <= 1 }"
+      :id="sectionId(group.category)"
+      :open="sectionsOpen || sectionId(group.category) === targeted || openSections.has(sectionId(group.category))"
+    >
+      <summary class="ref-category">
+        {{ group.category }}
+        <a class="ref-anchor" :href="`#${sectionId(group.category)}`" :aria-label="`Link to ${group.category}`">#</a>
+      </summary>
+      <div
+        v-for="{ ex, i, first, key, cases } in group.items"
+        :key="key ?? i"
+        :id="anchorOf(ex)"
+        class="ref-example"
+        :class="{
+          'is-mismatch': status[i] === 'mismatch' && ex.role !== 'aspirational' && !dirty[i],
+          'is-diagnostic': status[i] === 'error' && ex.role !== 'aspirational',
+          'is-planned': ex.role === 'aspirational',
+          'is-divergent': divergences(ex).length > 0 && !dirty[i],
+          'is-edited': dirty[i],
+        }"
       >
-        <summary class="ref-category">
-          {{ group.category }}
-          <a class="ref-anchor" :href="`#${sectionId(group.category)}`" :aria-label="`Link to ${group.category}`">#</a>
-        </summary>
-        <div
-          v-for="{ ex, i, first, key, cases } in group.items"
-          :key="key ?? i"
-          :id="anchorOf(ex)"
-          class="ref-example"
-          :class="{
-            'is-mismatch': status[i] === 'mismatch' && ex.role !== 'aspirational' && !dirty[i],
-            'is-diagnostic': status[i] === 'error' && ex.role !== 'aspirational',
-            'is-planned': ex.role === 'aspirational',
-            'is-divergent': divergences(ex).length > 0 && !dirty[i],
-            'is-edited': dirty[i],
-          }"
-        >
-          <div v-if="key && cases.length > 1" class="ref-cases">
-            <button aria-label="Previous case" @click="cycle(key, cases, -1)">‹</button>
-            <span>{{ cases.indexOf(i) + 1 }} / {{ cases.length }}</span>
-            <button aria-label="Next case" @click="cycle(key, cases, 1)">›</button>
-          </div>
-          <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-          <p v-if="ex.caption" class="ref-caption" v-html="inline(ex.caption)"></p>
+        <div v-if="key && cases.length > 1" class="ref-cases">
+          <button aria-label="Previous case" @click="cycle(key, cases, -1)">‹</button>
+          <span>{{ cases.indexOf(i) + 1 }} / {{ cases.length }}</span>
+          <button aria-label="Next case" @click="cycle(key, cases, 1)">›</button>
+        </div>
+        <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
+        <p v-if="ex.caption" class="ref-caption" v-html="inline(ex.caption)"></p>
+        <!-- eslint-disable vue/no-v-html -- typeset at build from the recorded answer -->
+        <div v-if="typeset(i) && !rendered[i]" class="ref-prerendered">
+          <span class="ref-io-label">In</span
+          ><span :data-prerender="`${i}:in`" v-html="prerenderedHtml[`${i}:in`]"></span>
+          <span class="ref-io-label">Out</span
+          ><span :data-prerender="`${i}:out`" v-html="prerenderedHtml[`${i}:out`]"></span>
+        </div>
+        <!-- eslint-enable vue/no-v-html -->
+        <ClientOnly>
           <notatio-cell
             :key="i"
+            :class="{ 'ref-cell-pending': typeset(i) && !rendered[i] }"
+            :prerendered.prop="answered(i)"
             format="mathjson"
             :value="toJson(ex.expr)"
             :out-form="entry.outForm ?? 'standard'"
@@ -345,17 +384,17 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
               differs from {{ d.label }}
             </span>
           </notatio-cell>
-          <template v-if="!dirty[i] && !alternativesOf(ex)">
-            <template v-for="d in divergences(ex)" :key="d.system">
-              <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-              <p class="ref-divergence-note" v-html="inline(d.note)"></p>
-            </template>
+        </ClientOnly>
+        <template v-if="!dirty[i] && !alternativesOf(ex)">
+          <template v-for="d in divergences(ex)" :key="d.system">
+            <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
+            <p class="ref-divergence-note" v-html="inline(d.note)"></p>
           </template>
-          <!-- The value is held to one known from outside our evaluation (tests/known.test.ts). -->
-          <p v-if="ex.source" class="ref-known">Known value · {{ ex.source }}</p>
-        </div>
-      </details>
-    </ClientOnly>
+        </template>
+        <!-- The value is held to one known from outside our evaluation (tests/known.test.ts). -->
+        <p v-if="ex.source" class="ref-known">Known value · {{ ex.source }}</p>
+      </div>
+    </details>
 
     <section v-if="entry.primitive || entry.bindings?.length" id="implementation">
       <h2>Implementation</h2>
@@ -408,6 +447,20 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 </template>
 
 <style scoped>
+.ref-prerendered {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 0.75rem;
+  align-items: baseline;
+  margin: 0.25rem 0;
+}
+.ref-io-label {
+  color: var(--vp-c-text-3);
+  font-size: 0.8em;
+}
+.ref-cell-pending {
+  display: none;
+}
 .ref-sig code {
   font-size: 1.05rem;
 }

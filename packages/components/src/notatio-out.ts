@@ -3,6 +3,7 @@ import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { makeBoxes, notationOf } from "@enumeratio/boxes";
 import { toAscii, toLatex } from "@enumeratio/boxes/render";
 import type { Display } from "@enumeratio/frontend/kernel-host";
+import type { Prerendered } from "@enumeratio/frontend/prerender";
 import type { Message } from "@enumeratio/engine";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { html, LitElement, type PropertyValues } from "lit";
@@ -313,6 +314,9 @@ export class NotatioOut extends LitElement {
      * reference page supplies one built from its entries.
      */
     resolveHead: { attribute: false },
+    /** This answer computed ahead of time (`@enumeratio/frontend/prerender`): rendered as it is,
+     *  with no kernel call. */
+    prerendered: { attribute: false },
     _markup: { state: true },
     _visual: { state: true },
     _traditional: { state: true },
@@ -351,6 +355,7 @@ export class NotatioOut extends LitElement {
   declare labelMenu: boolean;
   declare busy: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
+  declare prerendered: Prerendered | undefined;
   declare _markup: string;
   /**
    * The picture, when the result is a head that draws: markup for the head's component
@@ -457,6 +462,11 @@ export class NotatioOut extends LitElement {
       void this.#recompute();
     }
     if (changed.has("form") && !this._wolfram) void this.#writeTextForms();
+    // A build's answer carries no code forms: showing one asks the kernel for them.
+    if (changed.has("form") && CODE_FORMS.has(this.form) && !this._code[this.form as CodeForm] && this.prerendered) {
+      this.#codeAsked = true;
+      void this.#recompute();
+    }
     if (changed.has("env") && changed.get("env") !== undefined) this.#visualize();
     // Escape stops a running Worker-evaluator call (`stop()`) -- only listened for
     // while actually busy, and only matters when there is something to abort.
@@ -480,6 +490,8 @@ export class NotatioOut extends LitElement {
         messages: [],
       };
     }
+    const pre = this.#prerenderedAnswer();
+    if (pre !== undefined) return pre;
     const answered = await this.#askKernel(source);
     if (answered !== undefined) return answered;
     const host = transcriptHostOf(this);
@@ -510,6 +522,17 @@ export class NotatioOut extends LitElement {
     });
     this.#historyN = line;
     return evaluated;
+  }
+
+  /** The build's answer, when it is for this value and nothing asks for the page's engine. */
+  #prerenderedAnswer(): Evaluated | undefined {
+    const pre = this.prerendered;
+    if (pre === undefined || this.#codeAsked || this.raw || this.plot || this.elideAbove > 0) return undefined;
+    if (this.format !== "mathjson" || this.value !== pre.input.text || pre.input.format !== "mathjson")
+      return undefined;
+    // Its typeset HTML is the markup for its TeX: nothing needs typesetting again.
+    if (pre.html !== undefined) markupCache.set(pre.latex, pre.html.output);
+    return { latex: pre.latex, json: pre.value, messages: [], display: pre.display };
   }
 
   /**
@@ -811,6 +834,7 @@ export class NotatioOut extends LitElement {
   // `undefined` outside one, or before the first evaluation.
   #historyN: number | undefined;
   #draws = true;
+  #codeAsked = false;
   // The bound symbol, when the input is an assignment -- surfaced on `notatio-result`.
   #name: string | undefined;
   // `PlotInfo`, when `plot` asked for it -- surfaced on `notatio-result`.

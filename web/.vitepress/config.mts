@@ -7,6 +7,7 @@ import { notatioSymbols } from "./notatio-symbols.ts";
 import { notationEntriesPlugin } from "./notation-entries.ts";
 import { docRoute, docsSidebar, workspacePackages } from "./data/repo-docs.ts";
 import { loaderWatchPlugin } from "./loader-watch.ts";
+import { fillPrerendered } from "./data/prerender.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
@@ -133,6 +134,13 @@ const config = defineConfig({
   buildEnd: (site: { outDir: string }) => writeRedirects(site.outDir),
   transformPageData(pageData: { params?: { name?: string }; title?: string }) {
     if (pageData.params?.name) pageData.title = pageData.params.name;
+  },
+  // A reference page's examples, typeset at build (data/prerender.ts), into its placeholders.
+  transformHtml(code: string, _id: string, ctx: { pageData: { relativePath: string; params?: { name?: string } } }) {
+    const name = ctx.pageData.params?.name;
+    return name !== undefined && ctx.pageData.relativePath.startsWith("reference/symbol/")
+      ? fillPrerendered(code, name)
+      : code;
   },
   // `$latex$` / `$$latex$$` render through <notatio-out format="latex">, the same MathLive path the
   // reference pages use — one renderer for the whole site, and no second math library.

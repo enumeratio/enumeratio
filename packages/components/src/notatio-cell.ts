@@ -5,6 +5,7 @@ import "./notatio-out.ts";
 import { latexForText, pastedFrom } from "./clipboard.ts";
 import { translate } from "./kernel-client.ts";
 import { loadEngine } from "./mathlive.ts";
+import type { Prerendered } from "@enumeratio/frontend/prerender";
 import { ensureStyles } from "./styles.ts";
 
 /** The syntax `notatio-cell`'s `value` is written in -- what `format` names. */
@@ -188,6 +189,9 @@ export class NotatioCell extends LitElement {
     pending: { type: Boolean, reflect: true },
     /** Property only: forwarded to the In and Out `notatio-out`s' `resolveHead`. */
     resolveHead: { attribute: false },
+    /** This cell answered ahead of time (`@enumeratio/frontend/prerender`): shown, without asking
+     *  the kernel, until the input is edited. */
+    prerendered: { attribute: false },
     /**
      * Property only: a driver (a worksheet's slider) sets this to override what the Out
      * evaluates, in `format`'s syntax, WITHOUT touching `value`/the editor field -- so a
@@ -223,6 +227,7 @@ export class NotatioCell extends LitElement {
   declare dirty: boolean;
   declare pending: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
+  declare prerendered: Prerendered | undefined;
   declare liveValue: string | undefined;
   /** The editor currently shown -- starts at `inForm`, changed live via the In menu. */
   declare _editForm: EditForm;
@@ -364,7 +369,12 @@ export class NotatioCell extends LitElement {
       const json = await parseSyntax(format, this.value);
       if (token !== this.#token) return;
       this._json = json;
-      this._raw = SYNTAX_OF[editForm] === format ? this.value : await textInSyntax(SYNTAX_OF[editForm], json);
+      // An answer from the build carries the input's TeX too, so the In row needs no kernel.
+      const pre = this.#prerendered(editForm);
+      this._raw =
+        SYNTAX_OF[editForm] === format
+          ? this.value
+          : (pre?.inputLatex ?? (await textInSyntax(SYNTAX_OF[editForm], json)));
     } catch (err) {
       if (token !== this.#token) return;
       this._json = undefined;
@@ -652,6 +662,14 @@ export class NotatioCell extends LitElement {
 
   // --- output ------------------------------------------------------------------------
 
+  /** The build's answer, when it is for this input and an editor that shows TeX. */
+  #prerendered(editForm: EditForm): Prerendered | undefined {
+    const pre = this.prerendered;
+    if (pre === undefined || pre.input.text !== this.value || pre.input.format !== (this.format || "epsil"))
+      return undefined;
+    return SYNTAX_OF[editForm] === "latex" ? pre : undefined;
+  }
+
   /** What to hand the Out: the fast-path LaTeX text, or the parsed MathJSON. */
   get #out(): { value: string; format: "latex" | "mathjson" } {
     // A live override takes over the Out only -- `_raw`/the editor stays on `value`.
@@ -690,6 +708,7 @@ export class NotatioCell extends LitElement {
       elide-above=${this.elideAbove || 0}
       ?plot=${this.plot}
       .resolveHead=${this.resolveHead}
+      .prerendered=${this.dirty ? undefined : this.prerendered}
       @notatio-result=${this.#onResult}
     ></notatio-out>`;
   }
