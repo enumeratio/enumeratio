@@ -17,5 +17,5 @@ commutative-order-doesn-t-matter	(Max[3, 7] == Max[7, 3])	True	\max (3,7)=\max (
 multiple-list-arguments-are-flattened-into-one	(Max[List[3, 1, 4], List[9, 2]] == 9)	True	\max (\{3,1,4\},\{9,2\})=9	\text{True}	
 idempotent-max-x-x-x	Max[x, x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\max (x,x)-x],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\max \left(\frac{7}{3},\frac{7}{3}\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\max \left(-\frac{11}{5},-\frac{11}{5}\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\max \left(\frac{13}{4},\frac{13}{4}\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 with-no-arguments-compute-engine-returns-nan	Max[]	-Infinity	\max ()	-\infty	disagree
-nan-poisons-the-result-overriding-every-other	Max[Indeterminate, 3]	Indeterminate	\max (\text{Indeterminate},3)	\text{Indeterminate}	disagree
+nan-poisons-the-result-overriding-every-other	Max[Indeterminate, 3]	Indeterminate	\max (\text{Indeterminate},3)	\text{Indeterminate}	
 the-max-of-an-empty-list-is-nan-too	Max[List[]]	-Infinity	\max (\{\})	-\infty	disagree

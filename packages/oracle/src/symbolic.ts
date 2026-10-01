@@ -26,7 +26,24 @@ import type { Verdict } from "./compare.ts";
  * to test, and every one of these found scanning #A-72 phase 2's newly-emitting rows came back
  * `Indeterminate` — not a kernel quirk, a category error in asking the question at all
  * (`Maximize`'s `{value, {x -> argmax}}` pair, and so on). */
-const STRUCTURED_HEADS = new Set(["Set", "Association", "Rule", "KeyValuePair", "Missing"]);
+const STRUCTURED_HEADS = new Set([
+  "Set",
+  "Association",
+  "Rule",
+  "KeyValuePair",
+  "Missing",
+  // A proposition is not a number either: the difference of two `Equal`s is nothing, and
+  // asking for it comes back `Indeterminate` however well the two sides agree.
+  "Equal",
+  "NotEqual",
+  "Less",
+  "LessEqual",
+  "Greater",
+  "GreaterEqual",
+  "And",
+  "Or",
+  "Not",
+]);
 
 /**
  * Whether `expr`'s value is a structure "is the difference zero" can't meaningfully ask about.
@@ -105,6 +122,23 @@ function trialSources(
 }
 
 /**
+ * `Solve`'s answer against ours, as sets of solutions. Wolfram answers rules (`{{x -> v}}`),
+ * ours are bare values (a tuple per solution for several unknowns), in no fixed order, so
+ * "the difference is zero" is asked of each value against its counterpart rather than of
+ * the lists. A reply that is not a list of rule lists (Solve declined) is a disagreement.
+ */
+function solveAgreementSource(theirs: string, ours: string): string {
+  return (
+    `Module[{r = Quiet[TimeConstrained[${theirs}, 20, $Aborted]], o = ${ours}, t, same}, ` +
+    `same[v_, w_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[v - w], 10, $Aborted]]}], # === 0 &]; ` +
+    `If[!MatchQ[r, {{___Rule}...}], False, ` +
+    `t = Replace[Values /@ r, {v_} :> v, {1}]; ` +
+    `Length[t] == Length[o] && AllTrue[o, Function[v, AnyTrue[t, same[v, #] &]]] && ` +
+    `AllTrue[t, Function[w, AnyTrue[o, same[#, w] &]]]]]`
+  );
+}
+
+/**
  * The kernel source for "does `expr` agree with `expected`", for an example whose emitted
  * form carries a free symbol. `undefined` when either side doesn't emit for `system`, OR when
  * `expected` doesn't depend on the SAME free symbol at all — the caller falls back to the
@@ -123,11 +157,13 @@ export function symbolicAgreementSource(
   expected: MathJSON,
   freeSymbols: readonly string[],
 ): string | undefined {
-  if (isStructured(expr) || isStructured(expected)) return undefined;
+  const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
+  if (!solving && (isStructured(expr) || isStructured(expected))) return undefined;
   const theirs = emit(expr, system);
   const ours = emit(expected, system);
   if (!theirs.ok || !ours.ok) return undefined;
   if (!(ours.freeSymbols ?? []).some((name) => freeSymbols.includes(name))) return undefined;
+  if (solving) return solveAgreementSource(theirs.source, ours.source);
   const trials = Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) =>
     trialSources(system, expr, expected, freeSymbols, trial),
   );

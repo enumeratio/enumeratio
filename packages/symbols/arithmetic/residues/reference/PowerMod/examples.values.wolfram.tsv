@@ -43,7 +43,7 @@ modulus-a-real-composite-5-squared	PowerMod[Complex[1, 1], 4, 25]	21	((1+i)^4 \b
 a-negative-unit-exponent-is-its-own-inverse	PowerMod[Complex[0, 1], -1, 7]	6*I	(i^{-1} \bmod 7)	6 i	disagree
 modulus-a-negative-associate	PowerMod[Complex[2, 1], 5, Complex[-2, -3]]	-1 - I	((2+i)^5 \bmod (-2-3 i))	-1-i	
 sum-powermod-a-2-7-a-nothing-7	Sum[PowerMod[a, 2, 7], List[a, 7]]	14	\sum _a^7 (a^2 \bmod 7)	14	
-findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	FindInstance[And[(PowerMod[a, b, 17] == 1), Less[0, a, 17], Less[0, b, 17]], List[a, b], Integers, 2]	{{a -> 1, b -> 7}, {a -> 14, b -> 16}}			disagree
+findinstance-powermod-a-b-17-eq-1-0-lt-a-lt-17-0	FindInstance[And[(PowerMod[a, b, 17] == 1), Less[0, a, 17], Less[0, b, 17]], List[a, b], Integers, 2]	{{a -> 1, b -> 7}, {a -> 14, b -> 16}}	\text{FindInstance}[(a^b \bmod 17)=1\land 0<a<17\land 0<b<17,\{a,b\},\mathbb{Z},2]	\{\{a\to 1,b\to 7\},\{a\to 14,b\to 16\}\}	disagree
 one-step-of-rsa-style-modular-exponentiation-7	PowerMod[7, 13, 33]	13	(7^{13} \bmod 33)	13	
 341-11-cdot-31-passes-fermat-s-test-to-base-2	PowerMod[2, 340, 341]	1	(2^{340} \bmod 341)	1	
 diffie-hellman-both-parties-reach-the-shared-key	(PowerMod[PowerMod[5, 6, 23], 15, 23] == PowerMod[PowerMod[5, 15, 23], 6, 23])	True	((5^6 \bmod 23)^{15} \bmod 23)=((5^{15} \bmod 23)^6 \bmod 23)	\text{True}	

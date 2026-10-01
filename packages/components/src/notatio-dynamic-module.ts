@@ -5,7 +5,7 @@ import {
   type WorkerFactory,
 } from "@enumeratio/evaluation/browser";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { closePageSession, notebookSession, type RemoteAnswer, type RemoteRequest } from "./kernel-client.ts";
+import type { RemoteAnswer, RemoteRequest } from "./kernel-client.ts";
 import { CONTROL_EVENT, Transcript, type TrackedSymbols } from "@enumeratio/frontend";
 import { LitElement, nothing } from "lit";
 import "./notatio-dynamic.ts";
@@ -341,8 +341,6 @@ export class NotatioDynamicModule extends LitElement {
     this.removeEventListener("notatio-change", this.#onCellChange as EventListener);
     this.#session?.close();
     this.#session = undefined;
-    // Its cells' session in the page's kernel goes with it.
-    closePageSession(notebookSession(this));
     super.disconnectedCallback();
   }
 

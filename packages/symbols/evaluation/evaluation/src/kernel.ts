@@ -19,11 +19,8 @@ export interface KernelRequest {
   /** MathJSON, or `source` for the kernel to parse. */
   readonly json?: unknown;
   readonly source?: KernelSource;
-  /** Whose scope and history it runs in. A call with none runs in a scope of its own, which
-   *  is forgotten after it: nothing it binds reaches another call. */
+  /** Whose scope and history it runs in; none for a call on its own. */
   readonly session?: string;
-  /** With `session`: forget it (its scope, bindings and history), and do nothing else. */
-  readonly close?: boolean;
   /** False to parse (and display) without evaluating. */
   readonly evaluate?: boolean;
   /** Keep the tree as written: no canonical form, so `3 + 4` stays a sum. */
@@ -69,9 +66,8 @@ export interface KernelOptions {
   readonly parse?: (ce: ComputeEngine, source: KernelSource, raw: boolean) => unknown;
   /** `json` as text in `syntax`; throws when it has no such spelling. */
   readonly write?: (ce: ComputeEngine, json: unknown, syntax: string) => string;
-  /** The session called `id`, made the first time it's asked for; `undefined` asks for a
-   *  throwaway one, for a call that names none. */
-  readonly session?: (ce: ComputeEngine, id: string | undefined) => KernelSession;
+  /** The session called `id`, made the first time it's asked for. */
+  readonly session?: (ce: ComputeEngine, id: string) => KernelSession;
   /** The answer's display, built here where the definitions are, so a front end needs no
    *  engine to render it. */
   readonly display?: (ce: ComputeEngine, json: unknown) => unknown;
@@ -102,20 +98,14 @@ export function createKernel(
 ): Kernel {
   const resolver = createResolver(catalogue);
   const sessions = new Map<string, KernelSession>();
-  /** The session called `id`, or, for a call with none, a throwaway one kept by no one. */
   const sessionFor = (id: string | undefined): KernelSession | undefined => {
-    if (options.session === undefined) return undefined;
-    if (id === undefined) return options.session(ce, undefined);
+    if (id === undefined || options.session === undefined) return undefined;
     let session = sessions.get(id);
     if (session === undefined) sessions.set(id, (session = options.session(ce, id)));
     return session;
   };
 
   const run = async (request: KernelRequest): Promise<KernelResult> => {
-    if (request.close === true) {
-      if (request.session !== undefined) sessions.delete(request.session);
-      return { ok: true, declared: [], missing: [] };
-    }
     const read = (): unknown => {
       if (request.source === undefined) return request.json;
       if (options.parse === undefined) throw new Error("this kernel reads MathJSON only");

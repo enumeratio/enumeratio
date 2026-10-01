@@ -16,7 +16,7 @@ threads-element-wise-over-a-matrix-with	Scope		[Csc, [List, [List, [Divide, Pi, 
 csc-pi-12-sqrt-6-sqrt-2	Scope		[Csc, [Divide, Pi, 12]]	[Add, [Sqrt, 2], [Sqrt, 6]]			$\csc(\pi/12) = \sqrt6 + \sqrt2$			
 csc-pi-10-1-sqrt-5	Scope		[Csc, [Divide, Pi, 10]]	[Add, 1, [Sqrt, 5]]			$\csc(\pi/10) = 1 + \sqrt5$			
 csc-pi-over-5	Scope		[Csc, [Divide, Pi, 5]]	[Multiply, [Divide, [Sqrt, 10], 5], [Sqrt, [Add, 5, [Sqrt, 5]]]]						
-interval-arithmetic-the-image-of-pi-6-pi-3-is	Scope		[Csc, [Interval, [Divide, Pi, 6], [Divide, Pi, 3]]]	[Interval, [Multiply, [Rational, 2, 3], [Sqrt, 3]], 2]			Interval arithmetic: the image of $[\pi/6, \pi/3]$ is $[\tfrac{2}{\sqrt3}, 2]$		shape	Same value (2/sqrt(3) = (2/3)*sqrt(3)); Wolfram's Interval[{...}] list form plus a differently rationalized radical.
+interval-arithmetic-the-image-of-pi-6-pi-3-is	Scope		[Csc, [Interval, [Divide, Pi, 6], [Divide, Pi, 3]]]	[Interval, [Multiply, [Rational, 2, 3], [Sqrt, 3]], 2]			Interval arithmetic: the image of $[\pi/6, \pi/3]$ is $[\tfrac{2}{\sqrt3}, 2]$			
 uncertainty-propagation-csc-2-pm-0-01-approx-1	Scope		[Csc, [Around, 2, 0.01]]	[Around, 1.0997501702946164, 0.00503308973344342]			Uncertainty propagation: $\csc(2 \pm 0.01) \approx 1.0998 \pm 0.0050$			
 oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Csc, [Negate, x]]	[Negate, [Csc, x]]			Oddness pulls the sign out of a symbolic argument: $\csc(-x) = -\csc x$			
 derivative-csc-x-cot-x	Scope		[D, [Csc, x], x]	[Negate, [Multiply, [Csc, x], [Cot, x]]]			Derivative: $-\csc x \cot x$			
