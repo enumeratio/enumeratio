@@ -19,6 +19,7 @@ import {
   multiplyDirectedInfinity,
   directedInfinityParts,
   nAccuracyGoal,
+  oscillatoryEndpoint,
   rangeRationalStep,
   solveIdentity,
   takeDropNegativeCount,
@@ -203,6 +204,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, multiplyDirectedInfinity);
   applyPatch(ce, directedInfinityParts);
   applyPatch(ce, nAccuracyGoal);
+  applyPatch(ce, oscillatoryEndpoint);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);

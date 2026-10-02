@@ -31,7 +31,7 @@ import { runCases } from "@enumeratio/evaluation/src/node";
 import type { FunctionRecord, LanguageRecord, RelationRecord } from "@enumeratio/oracle/src";
 import { HEADS } from "@enumeratio/wolfram/src";
 import { toInputForm } from "../../formats/src/inputform.ts";
-import { DEFAULT_TOLERANCE, disagreement } from "../src/known.ts";
+import { comparable, DEFAULT_TOLERANCE, disagreement, measuredTolerance } from "../src/known.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 import { baseId } from "./example-id.ts";
 import { ADOPTED, cachedRecords, readCached, readDeclined, WOLFRAM_CACHE } from "./wolfram-cache.ts";
@@ -70,6 +70,15 @@ const RELATION_RANK = ["NamedIdentities", "FunctionalEquations", "ReflectionSymm
 // heads that read the carriers' tables.
 const OWN_ENGINE = new Set(["statistics", "domains"]);
 const ON_CARRIERS = new Set(["CombinatorialStat", "CombinatorialMap"]);
+
+/** Wolfram's printed real and imaginary parts (`3.14*^-25`) as a MathJSON number. */
+const numeral = ([re, im]: readonly string[]): unknown => {
+  const num = (s: string | undefined) =>
+    s === undefined || !/^-?[\d.]+(\*\^-?\d+)?$/.test(s) ? undefined : { num: s.replace("*^", "e") };
+  const [x, y] = [num(re), num(im)];
+  if (x === undefined || y === undefined) return undefined;
+  return im === "0" ? x : ["Complex", x, y];
+};
 
 // InputForm for a short expression; a long one stays MathJSON, since `toInputForm` doesn't
 // return on some kilobyte-sized answers (a Fibonacci `FunctionExpand`).
@@ -174,13 +183,19 @@ for (const head of wanted) {
       else docs.push({ head, kind: "docs", expr: adapted.expr, category });
     }
   }
-  // An instance's left side is the example and its right side, as Wolfram evaluates it, the known value.
-  const instance = (kind: Kind, lhs: string, rhs: string, source: string): Candidate[] => {
+  // An instance's left side is the example and its right side, as Wolfram evaluates it, the
+  // known value; Wolfram's digits for it where the right side is in heads compute-engine
+  // alone can't evaluate (`dn(2, 1/2)/cn(2, 1/2)`), since `known.test.ts` never runs ours.
+  const instance = (kind: Kind, lhs: string, rhs: string, source: string, value?: readonly string[]): Candidate[] => {
     const [expr, known] = [adaptInput(lhs), adaptInput(rhs)];
     if (!expr.ok) reject(r, `identity ${expr.reason}`);
     else if (!known.ok) reject(r, `identity value ${known.reason}`);
     else if (!mentions(expr.expr, head)) reject(r, "off head");
-    else return [{ head, kind, expr: expr.expr, known: known.expr, source, category: "Properties" }];
+    else {
+      const digits = comparable(known.expr) || value === undefined ? undefined : numeral(value);
+      if (!comparable(known.expr) && digits === undefined) reject(r, "identity value not comparable");
+      else return [{ head, kind, expr: expr.expr, known: digits ?? known.expr, source, category: "Properties" }];
+    }
     return [];
   };
   const ofHead = <T extends { name: string }>(records: readonly T[]): T[] =>
@@ -205,8 +220,8 @@ for (const head of wanted) {
         .toSorted((a, b) => a.rank[0]! - b.rank[0]! || a.rank[1]! - b.rank[1]! || a.rank[2]! - b.rank[2]!)
         // A symmetry at a real point says nothing: `cot(conjugate(1/2))` is `cot(1/2)`.
         .filter(({ relation }) => relation.property !== "ReflectionSymmetries" || relation.lhs.includes("Complex["))
-        .flatMap(({ relation: { lhs, rhs, property, label } }) =>
-          instance("relations", lhs, rhs, `Wolfram MathematicalFunctionData, ${fn.name}, ${label ?? property}`),
+        .flatMap(({ relation: { lhs, rhs, property, label, value } }) =>
+          instance("relations", lhs, rhs, `Wolfram MathematicalFunctionData, ${fn.name}, ${label ?? property}`, value),
         )
     );
   });
@@ -275,7 +290,14 @@ function consider(c: Candidate, result: Awaited<ReturnType<typeof run>>[number])
       numeric.push({ ...c, expr: ["N", c.expr] });
     return;
   }
-  if (c.known !== undefined && disagreement(value, c.known, DEFAULT_TOLERANCE) !== undefined) {
+  // Rearranged but still in our heads (`2F(…) − F(…)/4`, a Gauss transformation's left side
+  // with its power rewritten): nothing `disagreement` can weigh until it is a number.
+  if (c.kind === "relations" && !(Array.isArray(c.expr) && c.expr[0] === "N") && !comparable(value)) {
+    numeric.push({ ...c, expr: ["N", c.expr] });
+    return;
+  }
+  const tolerance = measuredTolerance(value);
+  if (c.known !== undefined && disagreement(value, c.known, tolerance ?? DEFAULT_TOLERANCE) !== undefined) {
     r.disagreements.push({ expr: show(c.expr), ours: show(value), known: show(c.known), source: c.source! });
     return;
   }
@@ -286,6 +308,7 @@ function consider(c: Candidate, result: Awaited<ReturnType<typeof run>>[number])
     expr: c.expr,
     expected: value,
     ...(c.known !== undefined ? { known: c.known, source: c.source } : {}),
+    ...(tolerance !== undefined ? { tolerance } : {}),
     ...(c.category !== "Basic" ? { category: c.category } : {}),
   } as ReferenceExample;
   (adopted.get(c.head) ?? adopted.set(c.head, []).get(c.head)!).push(example);

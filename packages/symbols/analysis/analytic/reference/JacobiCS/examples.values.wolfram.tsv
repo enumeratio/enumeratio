@@ -2,5 +2,9 @@ id	in	out	tex.in	tex.out
 a-floating-point-argument-evaluates-directly-to	N[JacobiCS[1.1, 0.9]]	0.7225880618717214	N[\text{cs}(1.1|0.9)]	0.722588
 m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCS[0.3, 1.5]]	3.309809750125872	N[\text{cs}(0.3|1.5)]	3.30981
 u-0-is-a-pole-for-any-m	JacobiCS[0, m]			
+n-jacobics-sqrt-2-over-4-times-i-neg-1	N[JacobiCS[Complex[0, Divide[Sqrt[2], 4]], -1]]	0. - 3.004168113503714*I	N\left[\text{cs}\left(\left.\frac{\sqrt{2}}{4} i\right|-1\right)\right]	0.\, -3.00417 i
+n-jacobics-1-over-2-times-1-plus-sqrt-2-over-2-1	N[JacobiCS[Times[Rational[1, 2], Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	0.8768516029701476	N\left[\text{cs}\left(\frac{1}{2} \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	0.876852
+n-jacobics-sqrt-2-times-i-neg-1	N[JacobiCS[Complex[0, Sqrt[2]], -1]]	0. - 1.421802682497364*I	N\left[\text{cs}\left(\left.\sqrt{2} i\right|-1\right)\right]	0.\, -1.4218 i
+n-jacobics-2-times-1-plus-sqrt-2-over-2-1-minus	N[JacobiCS[Times[2, Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	3.932139508524964	N\left[\text{cs}\left(2 \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	3.93214
 symbolic-arguments-are-left-unevaluated-rather	JacobiCS[u, m]			
 m-1-at-a-shared-pole-of-sn-and-cn	N[JacobiCS[Times[Rational[1, 2], I, Pi], 1]]	0. - 1.*I	N\left[\text{cs}\left(\left.\frac{1}{2} i \pi \right|1\right)\right]	0.\, -1. i

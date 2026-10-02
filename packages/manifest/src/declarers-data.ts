@@ -744,6 +744,7 @@ export const DECLARERS: Readonly<Record<string, readonly string[]>> = {
   Multiset: ["combinatorics"],
   Multisets: ["combinatorics"],
   N: ["analytic"],
+  NIntegrate: ["analytic"],
   NMaximize: ["analytic"],
   NMinimize: ["analytic"],
   NSum: ["analytic"],

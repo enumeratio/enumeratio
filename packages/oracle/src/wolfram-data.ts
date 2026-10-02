@@ -37,11 +37,14 @@ export interface FunctionRecord {
 }
 
 /** One instance of a free-variable identity (a functional equation, a symmetry, a named
- * identity): the property it came from and its place there; `label` names a named identity. */
+ * identity): the property it came from and its place there; `label` names a named identity.
+ * `value` is the right side to 30 digits, real and imaginary parts as Wolfram prints them:
+ * the known value where the right side is in heads compute-engine alone can't evaluate. */
 export interface RelationInstance extends IdentityInstance {
   readonly property: string;
   readonly index: number;
   readonly label?: string;
+  readonly value?: readonly [string, string];
 }
 
 /** MathematicalFunctionData's free-variable identities, each instantiated at sample points. */
@@ -178,6 +181,7 @@ points = ${RELATION_POINTS};
 unevaluated = Integrate | Sum | Product | Limit | Inactive | SeriesData | Hold | $Aborted | Derivative | D;
 holds[l_, r_] := TimeConstrained[Quiet@With[{d = N[strip[l] - r, 30], s = N[r, 30]},
   NumericQ[d] && NumericQ[s] && Abs[d] <= 10^-20 Max[1, Abs[s]]], 4, False];
+digits[r_] := With[{v = N[r, 30]}, ToString[#, InputForm, NumberMarks -> False] & /@ {Re[v], Im[v]}];
 (* The function at plain numbers is a particular value, whichever identity it came from. *)
 particular[l_] := MatchQ[strip[HoldComplete @@ {l}], HoldComplete[_[(_Integer | _Rational | _Complex) ...]]];
 relation[f_Function, t_List] := Module[{b = Quiet[f @@ t], cond = True},
@@ -187,7 +191,8 @@ relation[f_Function, t_List] := Module[{b = Quiet[f @@ t], cond = True},
   Replace[b, {
     Inactive[Equal][l_, r_] :> With[{lhs = arithmetic[l], rhs = Quiet[TimeConstrained[ToRadicals[Activate[r]], ${RHS_SECONDS}, $Aborted]]},
       If[FreeQ[rhs, unevaluated] && !particular[lhs] && holds[lhs, rhs],
-        <|"lhs" -> plain[fullform[strip[HoldComplete @@ {lhs}]]], "rhs" -> plain[fullform[HoldComplete @@ {rhs}]]|>, Nothing]],
+        <|"lhs" -> plain[fullform[strip[HoldComplete @@ {lhs}]]], "rhs" -> plain[fullform[HoldComplete @@ {rhs}]],
+          "value" -> digits[rhs]|>, Nothing]],
     _ -> Nothing}]];
 relations[f_Function] /; !FreeQ[Last[f], (Alternatives @@ First[f])[___]] := {};
 (* The first tuples of points, in Tuples' order, without building them all: a relation can

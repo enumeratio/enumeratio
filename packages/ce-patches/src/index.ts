@@ -20,6 +20,7 @@ import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 import { aboutFields } from "./patches/about-fields.ts";
 import { assignFunctionDefinition } from "./patches/assign-function-definition.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
+import { oscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -108,6 +109,7 @@ export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/
 export { logCombinationSign, simplifyLogCombinationOnProvablePositivity } from "./patches/log-combination-sign.ts";
 export { aboutFields, dictionaryOf, entriesOf, evaluateAboutFields } from "./patches/about-fields.ts";
 export { assignFunctionDefinition, canonicalAssignFunctionDefinition } from "./patches/assign-function-definition.ts";
+export { oscillatoryEndpoint, integrateOscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
 export {
   quotientRingCollection,
   quotientRingOverIntegers,
@@ -238,6 +240,7 @@ export const PATCHES: readonly Patch[] = [
   aboutFields,
   assignFunctionDefinition,
   quotientRingCollection,
+  oscillatoryEndpoint,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */
