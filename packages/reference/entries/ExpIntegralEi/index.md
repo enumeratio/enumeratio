@@ -6,7 +6,5 @@ summary: Exponential integral Ei(x) = PV ∫_{−∞}^x eᵗ/t dt.
 signatures:
   - call: ExpIntegralEi(complex | infinity) -> number
     description: as compute-engine declares it
-names:
-  wikidata: Q1419948
 stub: engine
 ---

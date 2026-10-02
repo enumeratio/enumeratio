@@ -6,8 +6,6 @@ summary: Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).
 signatures:
   - call: Hypergeometric1F1(complex | infinity, complex | infinity, complex | infinity) -> number
     description: as compute-engine declares it
-names:
-  wikidata: Q783948
 stub: engine
 ---
 

@@ -222,7 +222,7 @@ test("what the finder established by value agrees with what the catalog recorded
 });
 
 test("the engine's wrong Wikidata ids are replaced, not shown", () => {
-  // 41 of the 101 ids compute-engine declares are dead or about something else entirely
+  // Ids compute-engine declares that are dead or about something else entirely
   // (`scripts/audit-wikidata.ts`); every replacement wins over the engine's, and every head
   // named here is one the engine actually declares, so a rename upstream shows up as a
   // failure rather than a silently dead fix.

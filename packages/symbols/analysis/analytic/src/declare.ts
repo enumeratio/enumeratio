@@ -19,10 +19,8 @@ import {
   multiplyDirectedInfinity,
   directedInfinityParts,
   nAccuracyGoal,
-  rangeRationalStep,
-  solveIdentity,
+  solveDeclines,
   takeDropNegativeCount,
-  logCombinationSign,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { ANALYTIC_NOTATION } from "./notation.ts";
@@ -196,10 +194,8 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, gammaInfinity);
   applyPatch(ce, sqrtInfinity);
   applyPatch(ce, ceilFloorInfinity);
-  applyPatch(ce, rangeRationalStep);
-  applyPatch(ce, solveIdentity);
+  applyPatch(ce, solveDeclines);
   applyPatch(ce, takeDropNegativeCount);
-  applyPatch(ce, logCombinationSign);
   applyPatch(ce, multiplyDirectedInfinity);
   applyPatch(ce, directedInfinityParts);
   applyPatch(ce, nAccuracyGoal);

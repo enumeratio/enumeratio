@@ -25,7 +25,6 @@ references:
 names:
   fungrim: DigammaFunction
   dlmf: psi (or digamma) function
-  wikidata: Q905326
   wolfram: PolyGamma
 ---
 

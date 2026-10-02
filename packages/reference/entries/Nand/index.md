@@ -7,7 +7,6 @@ signatures:
   - call: Nand(boolean+) -> boolean
     description: as compute-engine declares it
 names:
-  wikidata: Q3874243
   wikidataConfirmed: true
 stub: engine
 ---

@@ -6,7 +6,5 @@ summary: Plus or Minus
 signatures:
   - call: "PlusMinus(T, U) -> tuple<T, U> where T: value, U: value"
     description: as compute-engine declares it
-names:
-  wikidata: Q260387
 stub: engine
 ---

@@ -32,7 +32,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "About",
     kind: "operator",
     description:
-      "Return information about an expression as a dictionary: its kind (symbol, constant, function, number, string, expression), its static type and, when applicable, its name, value, signature, clause listing, algebraic attributes, description, wikidata and url.",
+      "Return information about an expression as a dictionary: its kind (symbol, constant, function, number, string, expression), its static type and, when applicable, its name, value, signature, clause listing, attributes (the algebraic flags and `lazy`), description, examples, keywords, wikidata and url.",
     signature: "(any) -> dictionary<any>",
   },
   {
@@ -75,28 +75,28 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Airy function of the first kind",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    wikidata: "Q109729241",
   },
   {
     name: "AiryAiPrime",
     kind: "operator",
     description: "Derivative of the Airy function of the first kind",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    wikidata: "Q409415",
   },
   {
     name: "AiryBi",
     kind: "operator",
     description: "Airy function of the second kind",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    wikidata: "Q109729257",
   },
   {
     name: "AiryBiPrime",
     kind: "operator",
     description: "Derivative of the Airy function of the second kind",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    wikidata: "Q409415",
   },
   {
     name: "All",
@@ -151,7 +151,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description: "Appell hypergeometric function F₁(a; b₁, b₂; c; x, y), double series for |x|, |y| < 1.",
     signature:
       "(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q2701540",
+    wikidata: "Q4780998",
   },
   {
     name: "Append",
@@ -362,7 +362,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Avogadro constant",
     signature: "value",
-    wikidata: "Q47574",
+    wikidata: "Q6203",
   },
   {
     name: "BaseForm",
@@ -389,35 +389,35 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Modified Bessel function of the first kind",
     signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    wikidata: "Q2607225",
   },
   {
     name: "BesselJ",
     kind: "operator",
     description: "Bessel function of the first kind",
     signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    wikidata: "Q219637",
   },
   {
     name: "BesselK",
     kind: "operator",
     description: "Modified Bessel function of the second kind (Macdonald function)",
     signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    wikidata: "Q109559130",
   },
   {
     name: "BesselY",
     kind: "operator",
     description: "Bessel function of the second kind (Neumann function)",
     signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    wikidata: "Q109545924",
   },
   {
     name: "Beta",
     kind: "operator",
     description: "Euler beta function",
     signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q189062",
+    wikidata: "Q468881",
   },
   {
     name: "BetaRegularized",
@@ -465,7 +465,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Boltzmann constant",
     signature: "value",
-    wikidata: "Q131536",
+    wikidata: "Q5962",
   },
   {
     name: "Boole",
@@ -709,7 +709,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Return all k-element combinations of a collection.",
     signature: "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
-    wikidata: "Q193606",
+    wikidata: "Q202805",
   },
   {
     name: "Complement",
@@ -974,7 +974,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Dedekind eta function η(τ), Im(τ) > 0.",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q1187208",
+    wikidata: "Q1182161",
   },
   {
     name: "Dedup",
@@ -1064,7 +1064,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Digamma function, the logarithmic derivative of the gamma function",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q1142755",
+    wikidata: "Q905326",
   },
   {
     name: "DigitCount",
@@ -1217,7 +1217,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Elliptic integral of the second kind: complete E(m) with one argument, incomplete E(φ|m) with two (amplitude first, parameter convention m = k², as in Mathematica).",
     signature: "(complex | infinity, (complex | infinity)?) -> number",
-    wikidata: "Q1375529",
+    wikidata: "Q109753012",
   },
   {
     name: "EllipticF",
@@ -1225,14 +1225,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Incomplete elliptic integral of the first kind F(φ|m) (amplitude first, parameter convention m = k², as in Mathematica). F(π/2|m) = K(m).",
     signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q1062952",
+    wikidata: "Q109752309",
   },
   {
     name: "EllipticK",
     kind: "operator",
     description: "Complete elliptic integral of the first kind K(m), parameter convention m = k².",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q1080993",
+    wikidata: "Q109752514",
   },
   {
     name: "EllipticPi",
@@ -1240,7 +1240,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Elliptic integral of the third kind: complete Π(n|m) with two arguments, incomplete Π(n; φ|m) with three (characteristic first, amplitude second, parameter convention m = k², as in Mathematica).",
     signature: "(complex | infinity, complex | infinity, (complex | infinity)?) -> number",
-    wikidata: "Q1123360",
+    wikidata: "Q109753363",
   },
   {
     name: "EmptySet",
@@ -1362,7 +1362,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Exponential integral Ei(x) = PV ∫_{−∞}^x eᵗ/t dt.",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q1361401",
+    wikidata: "Q1419948",
   },
   {
     name: "Expand",
@@ -1629,7 +1629,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Molar gas constant",
     signature: "value",
-    wikidata: "Q39600",
+    wikidata: "Q182333",
   },
   {
     name: "GeometricVector",
@@ -1656,7 +1656,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Newtonian constant of gravitation",
     signature: "value",
-    wikidata: "Q30022",
+    wikidata: "Q18373",
   },
   {
     name: "Greater",
@@ -1763,14 +1763,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).",
     signature: "(complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q1331447",
+    wikidata: "Q783948",
   },
   {
     name: "Hypergeometric2F1",
     kind: "operator",
     description: "Gauss hypergeometric function ₂F₁(a, b; c; z).",
     signature: "(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q672619",
+    wikidata: "Q21028472",
   },
   {
     name: "Hypot",
@@ -2154,7 +2154,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Jacobi theta function θⱼ(z, τ), j ∈ {1,2,3,4}, nome q = e^{iπτ} (Fungrim convention).",
     signature: "(number, complex | infinity, complex | infinity, number?) -> number",
-    wikidata: "Q1154532",
+    wikidata: "Q17098064",
   },
   {
     name: "JacobianMatrix",
@@ -2231,7 +2231,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Lambert W function (product logarithm)",
     signature: "(complex | infinity, number?) -> number",
-    wikidata: "Q429963",
+    wikidata: "Q429331",
     keywords: ["product log", "omega function"],
   },
   {
@@ -2381,7 +2381,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Logarithmic integral li(x) = PV ∫₀ˣ dt/ln t = Ei(ln x).",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q853513",
+    wikidata: "Q1350206",
   },
   {
     name: "Loop",
@@ -2666,7 +2666,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Logical NAND: the negation of AND (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `False`.",
     signature: "(boolean+) -> boolean",
-    wikidata: "Q189550",
+    wikidata: "Q3874243",
   },
   {
     name: "Negate",
@@ -2730,7 +2730,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Logical NOR: the negation of OR (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `True`.",
     signature: "(boolean+) -> boolean",
-    wikidata: "Q189561",
+    wikidata: "Q574946",
   },
   {
     name: "Norm",
@@ -3059,21 +3059,21 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Planck constant",
     signature: "value",
-    wikidata: "Q524",
+    wikidata: "Q122894",
   },
   {
     name: "PlusMinus",
     kind: "operator",
     description: "Plus or Minus",
     signature: "(T, U) -> tuple<T, U> where T: value, U: value",
-    wikidata: "Q120812",
+    wikidata: "Q260387",
   },
   {
     name: "Pochhammer",
     kind: "operator",
     description: "Rising factorial (Pochhammer symbol) (a)_k = a(a+1)…(a+k-1).",
     signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q2367490",
+    wikidata: "Q2339261",
   },
   {
     name: "PointList",
@@ -3111,14 +3111,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Polygamma function, the n-th derivative of the digamma function",
     signature: "(order: integer, complex | infinity) -> number",
-    wikidata: "Q1817679",
+    wikidata: "Q857956",
   },
   {
     name: "PolyLog",
     kind: "operator",
     description: "Polylogarithm Liₛ(z) = Σ_{k≥1} zᵏ/kˢ, at any real or complex order s.",
     signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q320067",
+    wikidata: "Q1238449",
   },
   {
     name: "Polygon",
@@ -3922,7 +3922,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Stefan-Boltzmann constant",
     signature: "value",
-    wikidata: "Q196898",
+    wikidata: "Q51374",
   },
   {
     name: "Stirling",
@@ -4267,7 +4267,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Trigamma function, the derivative of the digamma function",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q2371722",
+    wikidata: "Q1244426",
   },
   {
     name: "Trim",
@@ -4414,7 +4414,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Vacuum permittivity (electric constant)",
     signature: "value",
-    wikidata: "Q176908",
+    wikidata: "Q6158",
   },
   {
     name: "Values",

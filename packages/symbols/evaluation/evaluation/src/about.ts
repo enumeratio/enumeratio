@@ -6,7 +6,7 @@
 // value, as compute-engine has it: `About("Sin")` describes the string.
 
 import { type BoxedExpression, type ComputeEngine, isFunction, isString, isSymbol } from "@cortex-js/compute-engine";
-import { aboutFields, applyPatch, dictionaryOf, entriesOf } from "@enumeratio/ce-patches";
+import { dictionaryOf, entriesOf } from "@enumeratio/ce-patches";
 import { describe, describeNow } from "@enumeratio/manifest";
 
 /** `describe`'s keys `About` doesn't carry: the example count (compute-engine's `examples` are
@@ -104,11 +104,10 @@ const widened = new WeakSet<ComputeEngine>();
 type Evaluate = (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
 
 /** `About` widened with the manifest's description; compute-engine's `examples`, `keywords`
- *  and attribute list come with it (ce-patches' `about-fields`). */
+ *  and attribute list come with it. */
 export function declareAbout(ce: ComputeEngine): void {
   if (widened.has(ce)) return;
   widened.add(ce);
-  applyPatch(ce, aboutFields);
   const definition = ce.lookupDefinition("About") as
     | {
         operator?: {

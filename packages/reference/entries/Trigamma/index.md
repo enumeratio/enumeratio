@@ -15,6 +15,5 @@ references:
     identity: "5.15"
 names:
   dlmf: polygamma functions
-  wikidata: Q1244426
 stub: engine
 ---

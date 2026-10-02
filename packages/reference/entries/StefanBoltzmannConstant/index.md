@@ -6,7 +6,5 @@ summary: Stefan-Boltzmann constant
 signatures:
   - call: "StefanBoltzmannConstant: value"
     description: a constant, as compute-engine declares it
-names:
-  wikidata: Q51374
 stub: engine
 ---

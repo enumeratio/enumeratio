@@ -15,6 +15,5 @@ references:
     identity: "10.2"
 names:
   dlmf: Bessel function of the first kind
-  wikidata: Q219637
 stub: engine
 ---

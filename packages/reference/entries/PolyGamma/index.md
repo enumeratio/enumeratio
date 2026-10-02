@@ -25,7 +25,6 @@ references:
     identity: "5.15"
 names:
   dlmf: polygamma functions
-  wikidata: Q857956
   wolframIdentity: true
 bindings:
   - origin: mapped

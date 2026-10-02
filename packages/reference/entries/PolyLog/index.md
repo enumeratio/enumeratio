@@ -24,7 +24,6 @@ references:
   - system: dlmf
     identity: "25.12"
 names:
-  wikidata: Q1238449
   wolframIdentity: true
 bindings:
   - origin: mapped

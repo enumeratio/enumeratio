@@ -13,7 +13,5 @@ references:
     identity: Combination
   - system: rosettacode
     identity: Combinations
-names:
-  wikidata: Q202805
 stub: engine
 ---

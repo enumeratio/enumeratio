@@ -6,7 +6,5 @@ summary: Vacuum permittivity (electric constant)
 signatures:
   - call: "VacuumPermittivity: value"
     description: a constant, as compute-engine declares it
-names:
-  wikidata: Q6158
 stub: engine
 ---

@@ -6,7 +6,5 @@ summary: "Logical NOR: the negation of OR (n-ary). Short-circuits: operands are 
 signatures:
   - call: Nor(boolean+) -> boolean
     description: as compute-engine declares it
-names:
-  wikidata: Q574946
 stub: engine
 ---

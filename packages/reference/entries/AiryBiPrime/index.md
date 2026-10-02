@@ -6,7 +6,5 @@ summary: Derivative of the Airy function of the second kind
 signatures:
   - call: AiryBiPrime(complex | infinity) -> number
     description: as compute-engine declares it
-names:
-  wikidata: Q409415
 stub: engine
 ---

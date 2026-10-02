@@ -29,8 +29,6 @@ references:
     identity: LambertW-Function
   - system: dlmf
     identity: "4.13"
-names:
-  wikidata: Q429331
 ---
 
 - compute-engine's own argument order is $(z, k)$, not Wolfram's $\mathrm{ProductLog}[k, z]$ — checked directly (`LambertW(-0.14, -1)` is the $k=-1$ branch; `LambertW(-1, -0.14)` declines). The existing $k=0$/$-1$ order is kept as-is; the Wolfram crosswalk carries the reversal.
