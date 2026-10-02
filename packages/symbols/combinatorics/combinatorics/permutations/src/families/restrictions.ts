@@ -1,4 +1,4 @@
-// Restrictions of the symmetric group by descents, alternation and indecomposability, in its lex
+// Restrictions of the symmetric group by descents, alternation, indecomposability and patterns, in its lex
 // order: each is its completion count (`permutationRestriction`, collections/src/families/
 // lex-restriction.ts). Over `prefix` (n slots, the first `filled` set) the counts read the
 // prefix's last entry, how many free values lie below it (a), and m = n − filled free slots.
@@ -8,10 +8,13 @@ import type { Declared } from "../../../collections/src/families/types.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import {
   add,
+  and,
   at,
   cell,
+  equal,
   fold,
   iff,
+  less,
   lets,
   mul,
   quotient,
@@ -257,6 +260,119 @@ const kDescentPermutations: EpsilFamily = permutationRestriction({
     ),
   ),
 });
+
+// Avoiding a pattern of length 3. Every prefix the operations ask about extends one that has
+// completions, so it avoids the pattern itself; what's left is how the free values may follow it.
+// An occurrence with two entries in the prefix rules out free values in some range (none may be
+// left); one with a single entry constrains the free values relative to it. Over the free values'
+// running count `fr` (fr[v + 1] free values up to v), `between(lo, hi)` counts those strictly
+// between. The constrained values are the top or bottom k free ones (123, 132, 321, 312), leaving
+// the ballot number (k + 1)/(m + 1)·C(2m − k, m); or, for 231 and 213, the free values must come
+// run by run (a run lies between consecutive prefix values), each run avoiding it alone: a product
+// of Catalan numbers.
+const between = (lo: MathJSON, hi: MathJSON): MathJSON => sub(at("fr", hi), at("fr", add(lo, 1)));
+const catalan = (r: MathJSON): MathJSON => quotient(["Binomial", mul(2, r), r], add(r, 1));
+const ballot = (m: MathJSON, k: MathJSON): MathJSON =>
+  quotient(mul(add(k, 1), ["Binomial", sub(mul(2, m), k), m]), add(m, 1));
+const prefixMin = fold(["Min", "pmn", pre("pmi")], "pmn", "pmi", add(n, 1), upTo(1, "filled"));
+const prefixMax = fold(["Max", "pmx", pre("pmj")], "pmx", "pmj", 0, upTo(1, "filled"));
+/** Catalan(run) over the runs of free values, in value order. */
+const runs = lets(
+  [
+    [
+      "rs",
+      fold(
+        iff(
+          equal(at("fr", add("rv", 1)), at("fr", "rv")),
+          ["List", mul(at("rq", 1), catalan(at("rq", 2))), 0],
+          ["List", at("rq", 1), add(at("rq", 2), 1)],
+        ),
+        "rq",
+        "rv",
+        ["List", 1, 0],
+        upTo(1, n),
+      ),
+      "list<integer>",
+    ],
+  ],
+  mul(at("rs", 1), catalan(at("rs", 2))),
+);
+
+/** A pattern's two-entry rule: given prefix entries a before b, whether a free value it forbids is left. */
+type Forbids = (a: MathJSON, b: MathJSON) => MathJSON;
+const PATTERN_RULES: Record<string, { forbids: Forbids; rest: MathJSON }> = {
+  "123": { forbids: (a, b) => and(less(a, b), ["Greater", between(b, add(n, 1)), 0]), rest: "top" },
+  "132": { forbids: (a, b) => and(less(a, b), ["Greater", between(a, b), 0]), rest: "top" },
+  "321": { forbids: (a, b) => and(less(b, a), ["Greater", between(0, b), 0]), rest: "bottom" },
+  "312": { forbids: (a, b) => and(less(b, a), ["Greater", between(b, a), 0]), rest: "bottom" },
+  "231": { forbids: (a, b) => and(less(a, b), ["Greater", between(0, a), 0]), rest: "runs" },
+  "213": { forbids: (a, b) => and(less(b, a), ["Greater", between(a, add(n, 1)), 0]), rest: "runs" },
+};
+
+function permutationsAvoiding(pattern: string): EpsilFamily {
+  const { forbids, rest } = PATTERN_RULES[pattern];
+  const forbidden = fold(
+    ["Or", "pf", fold(["Or", "pg", forbids(pre("pi"), pre("pj"))], "pg", "pi", "False", upTo(1, sub("pj", 1)))],
+    "pf",
+    "pj",
+    "False",
+    upTo(1, "filled"),
+  );
+  const k =
+    rest === "top"
+      ? iff(equal("filled", 0), 0, sub(open, at("fr", add(prefixMin, 1))))
+      : iff(equal("filled", 0), 0, at("fr", prefixMax));
+  const [p1, p2, p3] = pattern.split("").map(Number);
+  const x = (q: string): MathJSON => at("_x", q);
+  const order = (u: number, v: number, a: string, b: string): MathJSON => (u < v ? less(x(a), x(b)) : less(x(b), x(a)));
+  const occurs = fold(
+    [
+      "Or",
+      "po",
+      fold(
+        [
+          "Or",
+          "pp",
+          fold(
+            ["Or", "pq", and(order(p1, p2, "oi", "oj"), order(p2, p3, "oj", "ok"), order(p1, p3, "oi", "ok"))],
+            "pq",
+            "oi",
+            "False",
+            upTo(1, sub("oj", 1)),
+          ),
+        ],
+        "pp",
+        "oj",
+        "False",
+        upTo(1, sub("ok", 1)),
+      ),
+    ],
+    "po",
+    "ok",
+    "False",
+    upTo(1, n),
+  );
+  return permutationRestriction({
+    head: `PermutationsAvoiding${pattern}`,
+    carrier: "Permutation",
+    paramCount: 1,
+    params: [n],
+    declared: polynomial(),
+    predicate: ["Not", occurs],
+    completions: lets(
+      [
+        [
+          "fr",
+          fold(["Append", "fs", add(at("fs", "fv"), iff(used("fv"), 0, 1))], "fs", "fv", ["List", 0], upTo(1, n)),
+          "list<integer>",
+        ],
+      ],
+      iff(forbidden, 0, rest === "runs" ? runs : ballot(open, k)),
+    ),
+  });
+}
+
+export const permutationsAvoiding3 = ["123", "132", "213", "231", "312", "321"].map(permutationsAvoiding);
 
 export const grassmannianPermutations = atMostOneTurn("GrassmannianPermutations", false);
 export const cograssmannianPermutations = atMostOneTurn("CograssmannianPermutations", true);
