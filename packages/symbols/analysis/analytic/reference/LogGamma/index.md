@@ -2,12 +2,16 @@
 name: LogGamma
 domain: Special functions
 signature: LogGamma(z)
-summary: The log-gamma function $\ln\Gamma(z)$ as an analytic continuation (branch cut on $(-\infty, 0]$), which differs from $\ln(\Gamma(z))$ by multiples of $2\pi i$ off the positive axis. Provided by `@enumeratio/analytic`.
+summary: The log-gamma function $\ln\Gamma(z)$ as an analytic continuation (branch cut on $(-\infty, 0]$), which differs from $\ln(\Gamma(z))$ by multiples of $2\pi i$ off the positive axis.
 signatures:
   - call: LogGamma(z)
     description: the log-gamma function $\ln\Gamma(z)$, analytically continued.
-    library: enumeratio-analytic
     type: (number) -> number
+  - call: LogGamma(z)
+    description: widened to an infinite argument, with huge arguments carried at the engine precision.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 bindings:
   - origin: reference
     form: notatio

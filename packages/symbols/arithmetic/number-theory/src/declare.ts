@@ -5,6 +5,7 @@ import {
   bigRationalAt,
   defineOverload,
   integerAt,
+  mayBeInteger,
   operandsOf,
   threadOverLists,
   widenSignature,
@@ -132,18 +133,26 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     3,
   );
 
-  ce.declare("RationalReconstruction", {
-    description: SUMMARIES.RationalReconstruction,
-    signature: "(integer, integer, integer?, integer?) -> rational",
-    broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+  // Native takes (a, m); the explicit numerator and denominator bounds are ours, and so is
+  // a list of residues.
+  widenSignature(ce, "RationalReconstruction", "(integer, integer, integer?, integer?) -> rational", mayBeInteger);
+  threadOverLists(ce, ["RationalReconstruction"]);
+  wrapOperator(
+    ce,
+    ["RationalReconstruction"],
+    () => true,
+    (native) => (ops, options) => {
+      if (ops.length === 2) {
+        const r = native?.(ops, options);
+        if (r !== undefined && r.operator !== "RationalReconstruction") return r;
+      }
       const [a, m, n, d] = [0, 1, 2, 3].map((i) => bigIntegerAt(ops[i]));
       if (a === undefined || m === undefined) return undefined;
       if ((ops[2] !== undefined && n === undefined) || (ops[3] !== undefined && d === undefined)) return undefined;
       const found = rationalReconstruction(a, m, n, d);
       return found === undefined ? undefined : ce.number([found[0], found[1]]);
     },
-  });
+  );
 
   // Wolfram's IntegerExponent[n, b]: the largest k with bᵏ | n; b defaults to 10, n = 0 gives
   // ∞. Rational integers here; ℤ[i] is declareIntegerExponentGaussian's, below, and a p-adic

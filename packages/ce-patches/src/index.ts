@@ -1,10 +1,4 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { polygammaLogGamma } from "./patches/polygamma-log-gamma.ts";
-import { dirichlet } from "./patches/dirichlet.ts";
-import { barnesGPatch } from "./patches/barnes-g.ts";
-import { logGammaPatch } from "./patches/log-gamma.ts";
-import { clausenPatch } from "./patches/clausen.ts";
-import { stieltjes } from "./patches/stieltjes.ts";
 import { gammaInfinity } from "./patches/gamma-infinity.ts";
 import { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 import { ceilFloorInfinity } from "./patches/ceil-floor-infinity.ts";
@@ -13,6 +7,7 @@ import { infinityArgs } from "./patches/infinity-args.ts";
 import { lerchPhiPatch } from "./patches/lerch-phi.ts";
 import { solveDeclines } from "./patches/solve-declines.ts";
 import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
+import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
 import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 import { assignFunctionDefinition } from "./patches/assign-function-definition.ts";
@@ -60,7 +55,6 @@ export {
   pow as bigPow,
   round as bigRound,
 } from "./compute-engine/numerics/hurwitz-zeta-big.ts";
-export { polygammaLogGamma } from "./patches/polygamma-log-gamma.ts";
 export {
   lerchPhiPatch,
   lerchPhi,
@@ -70,29 +64,21 @@ export {
   lerchPhiBall,
 } from "./patches/lerch-phi.ts";
 export {
-  dirichlet,
   dirichletEta,
   dirichletEtaReal,
   dirichletBeta,
   dirichletBetaReal,
+} from "./compute-engine/numerics/dirichlet.ts";
+export {
   character,
   characterExponent,
   dirichletL,
   dirichletLReal,
   eulerPhi,
-} from "./patches/dirichlet.ts";
-export {
-  barnesGPatch,
-  evaluateBarnesG,
-  barnesG,
-  barnesGReal,
-  logBarnesG,
-  logBarnesGReal,
-  barnesGBig,
-  barnesGBall,
-  barnesGPi,
-} from "./patches/barnes-g.ts";
-export { logGammaPatch, evaluateLogGamma, logGamma, logGammaReal, logGammaBig } from "./patches/log-gamma.ts";
+} from "./compute-engine/numerics/dirichlet-l.ts";
+export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./compute-engine/numerics/barnes-g.ts";
+export { barnesGBig, barnesGBall, pi as barnesGPi } from "./compute-engine/numerics/barnes-g-big.ts";
+export { logGamma, logGammaReal, logGammaBig } from "./compute-engine/numerics/log-gamma.ts";
 export { gammaInfinity, evaluateGammaAtInfinity } from "./patches/gamma-infinity.ts";
 export { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches/ceil-floor-infinity.ts";
@@ -101,6 +87,7 @@ export { directedInfinityParts, evaluateRealImaginaryOfDirectedInfinity } from "
 export { nAccuracyGoal, evaluateNAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
+export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
 export { assignFunctionDefinition, canonicalAssignFunctionDefinition } from "./patches/assign-function-definition.ts";
 export {
@@ -119,16 +106,9 @@ export {
   evaluateLnAtNegativeInfinity,
   evaluateErfcAtComplexInfinity,
 } from "./patches/infinity-args.ts";
-export { clausenPatch, evaluateClausen, clausen } from "./patches/clausen.ts";
-export {
-  stieltjes,
-  evaluateStieltjes,
-  stieltjesGamma,
-  stieltjesGammaReal,
-  stieltjesGammaBall,
-  stieltjesGammaBig,
-  STIELTJES_MAX_ORDER,
-} from "./patches/stieltjes.ts";
+export { clausen } from "./compute-engine/numerics/clausen.ts";
+export { stieltjesGamma, stieltjesGammaReal, STIELTJES_MAX_ORDER } from "./compute-engine/numerics/stieltjes.ts";
+export { stieltjesGammaBall, stieltjesGammaBig } from "./compute-engine/numerics/stieltjes-big.ts";
 
 // Kernels several of the above (and @enumeratio/analytic's own non-candidate heads) depend
 // on (see the README, "Kernels several patches share").
@@ -213,12 +193,6 @@ export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/c
 /** Every patch offered upstream. `tests/landed.test.ts` holds each one to being unfixed. */
 export const PATCHES: readonly Patch[] = [
   lerchPhiPatch,
-  polygammaLogGamma,
-  dirichlet,
-  barnesGPatch,
-  logGammaPatch,
-  clausenPatch,
-  stieltjes,
   gammaInfinity,
   sqrtInfinity,
   ceilFloorInfinity,
@@ -226,6 +200,7 @@ export const PATCHES: readonly Patch[] = [
   infinityArgs,
   solveDeclines,
   takeDropNegativeCount,
+  iteratorUpperBound,
   directedInfinityParts,
   nAccuracyGoal,
   assignFunctionDefinition,
