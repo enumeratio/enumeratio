@@ -105,9 +105,21 @@ const OPERATOR_NAMES = new Set(
   ),
 );
 
-const TEXT_SPECIALS = /[\\{}$&#^_%~]/g;
-const escapeText = (s: string): string =>
-  s.replace(TEXT_SPECIALS, (c) => (c === "\\" ? "\\textbackslash{}" : c === "~" ? "\\textasciitilde{}" : `\\${c}`));
+/** TeX's text-mode specials, escaped so a string's characters print as written (`\text{#}` is
+ *  an error). `\^` is an accent in text mode, so a caret is `\textasciicircum{}`; a character
+ *  with no glyph to show (a control or private-use code point) is `\char` by number. */
+const TEXT_SPECIALS = /[\\{}$&#^_%~]|[\p{Cc}\p{Co}]/gu;
+const NO_GLYPH = /[\p{Cc}\p{Co}]/u;
+const TEXT_ESCAPES: Readonly<Record<string, string>> = {
+  "\\": "\\textbackslash{}",
+  "~": "\\textasciitilde{}",
+  "^": "\\textasciicircum{}",
+};
+export const escapeTeXText = (text: string): string =>
+  text.replace(TEXT_SPECIALS, (c) =>
+    NO_GLYPH.test(c) ? `\\char"${c.codePointAt(0)!.toString(16).toUpperCase()} ` : (TEXT_ESCAPES[c] ?? `\\${c}`),
+  );
+const escapeText = escapeTeXText;
 
 function token(s: string): string {
   const command = COMMANDS[s];

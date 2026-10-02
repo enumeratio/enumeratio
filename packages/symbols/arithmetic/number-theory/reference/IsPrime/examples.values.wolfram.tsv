@@ -10,7 +10,7 @@ isprime-7	PrimeQ[7]	True	\text{PrimeQ}[7]	\text{True}
 threads-element-wise-over-a-short-list	PrimeQ[List[2, 3, 4]]	{True, True, False}	\text{PrimeQ}[\{2,3,4\}]	\{\text{True},\text{True},\text{False}\}
 7-is-prime-its-associate-7-is-matching-wolfram-s	PrimeQ[-7]	True	\text{PrimeQ}[-7]	\text{True}
 a-gaussian-prime-its-norm-5-is-prime	PrimeQ[Complex[2, 1]]	True	\text{PrimeQ}[2+i]	\text{True}
-5-2-i-2-i-splits-in-z-i	PrimeQ[5, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[5,\text{GaussianIntegers}\to \text{True}]	\text{False}
+5-2-i-2-i-splits-in-z-i	PrimeQ[5, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{PrimeQ}[5,\text{GaussianIntegers}\to \text{True}]	\text{False}
 large-integers-10-3000-1-is-divisible-by-10-8-1	PrimeQ[Plus[Power[10, 3000], 1]]	False	\text{PrimeQ}\left[10^{3000}+1\right]	\text{False}
 isprime-neg-1-is-false	PrimeQ[-1]	False	\text{PrimeQ}[-1]	\text{False}
 isprime-neg-4-is-false	PrimeQ[-4]	False	\text{PrimeQ}[-4]	\text{False}
@@ -26,22 +26,22 @@ a-composite-of-norm-25	PrimeQ[Complex[3, 4]]	False	\text{PrimeQ}[3+4 i]	\text{Fa
 an-associate-of-a-composite-is-still-composite	PrimeQ[Complex[-3, -4]]	False	\text{PrimeQ}[-3-4 i]	\text{False}
 a-real-prime-s-associate-by-the-unit-i-is-still	PrimeQ[Complex[0, 7]]	True	\text{PrimeQ}[7 i]	\text{True}
 a-large-norm-composite	PrimeQ[Complex[123, 456]]	False	\text{PrimeQ}[123+456 i]	\text{False}
-3-3-mod-4-stays-prime-in-z-i	PrimeQ[3, Rule[GaussianIntegers, True]]	True	\text{PrimeQ}[3,\text{GaussianIntegers}\to \text{True}]	\text{True}
-7-3-mod-4-stays-prime-in-z-i	PrimeQ[7, Rule[GaussianIntegers, True]]	True	\text{PrimeQ}[7,\text{GaussianIntegers}\to \text{True}]	\text{True}
-19-3-mod-4-stays-prime-in-z-i	PrimeQ[19, Rule[GaussianIntegers, True]]	True	\text{PrimeQ}[19,\text{GaussianIntegers}\to \text{True}]	\text{True}
-a-negative-prime-3-mod-4-stays-prime	PrimeQ[-7, Rule[GaussianIntegers, True]]	True	\text{PrimeQ}[-7,\text{GaussianIntegers}\to \text{True}]	\text{True}
-5-1-mod-4-splits-and-is-no-longer-prime	PrimeQ[5, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[5,\text{GaussianIntegers}\to \text{True}]	\text{False}
-13-1-mod-4-splits-and-is-no-longer-prime	PrimeQ[13, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[13,\text{GaussianIntegers}\to \text{True}]	\text{False}
-2-ramifies-and-is-no-longer-prime	PrimeQ[2, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[2,\text{GaussianIntegers}\to \text{True}]	\text{False}
-4-was-never-prime-and-still-isn-t	PrimeQ[4, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[4,\text{GaussianIntegers}\to \text{True}]	\text{False}
-a-real-composite-5-squared-is-not-prime	PrimeQ[25, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[25,\text{GaussianIntegers}\to \text{True}]	\text{False}
-1-is-not-prime-gaussian-or-not	PrimeQ[1, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[1,\text{GaussianIntegers}\to \text{True}]	\text{False}
-0-is-not-prime-gaussian-or-not	PrimeQ[0, Rule[GaussianIntegers, True]]	False	\text{PrimeQ}[0,\text{GaussianIntegers}\to \text{True}]	\text{False}
+3-3-mod-4-stays-prime-in-z-i	PrimeQ[3, Rule[enumeratio`Over, GaussianIntegers]]	True	\text{PrimeQ}[3,\text{GaussianIntegers}\to \text{True}]	\text{True}
+7-3-mod-4-stays-prime-in-z-i	PrimeQ[7, Rule[enumeratio`Over, GaussianIntegers]]	True	\text{PrimeQ}[7,\text{GaussianIntegers}\to \text{True}]	\text{True}
+19-3-mod-4-stays-prime-in-z-i	PrimeQ[19, Rule[enumeratio`Over, GaussianIntegers]]	True	\text{PrimeQ}[19,\text{GaussianIntegers}\to \text{True}]	\text{True}
+a-negative-prime-3-mod-4-stays-prime	PrimeQ[-7, Rule[enumeratio`Over, GaussianIntegers]]	True	\text{PrimeQ}[-7,\text{GaussianIntegers}\to \text{True}]	\text{True}
+5-1-mod-4-splits-and-is-no-longer-prime	PrimeQ[5, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{PrimeQ}[5,\text{GaussianIntegers}\to \text{True}]	\text{False}
+13-1-mod-4-splits-and-is-no-longer-prime	PrimeQ[13, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{PrimeQ}[13,\text{GaussianIntegers}\to \text{True}]	\text{False}
+2-ramifies-and-is-no-longer-prime	PrimeQ[2, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{PrimeQ}[2,\text{GaussianIntegers}\to \text{True}]	\text{False}
+4-was-never-prime-and-still-isn-t	PrimeQ[4, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{PrimeQ}[4,\text{GaussianIntegers}\to \text{True}]	\text{False}
+a-real-composite-5-squared-is-not-prime	PrimeQ[25, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{PrimeQ}[25,\text{GaussianIntegers}\to \text{True}]	\text{False}
+1-is-not-prime-gaussian-or-not	PrimeQ[1, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{PrimeQ}[1,\text{GaussianIntegers}\to \text{True}]	\text{False}
+0-is-not-prime-gaussian-or-not	PrimeQ[0, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{PrimeQ}[0,\text{GaussianIntegers}\to \text{True}]	\text{False}
 a-common-choice-of-prime-modulus-for-hashing	PrimeQ[1000000007]	True	\text{PrimeQ}[1000000007]	\text{True}
 isprime-257	PrimeQ[257]	True	\text{PrimeQ}[257]	\text{True}
 isprime-1-plus-2-pow-128	PrimeQ[Plus[1, Power[2, 128]]]	False	\text{PrimeQ}\left[1+2^{128}\right]	\text{False}
 filter-range-1-100-function-isprimepower-1	Select[Range[1, 100], Function[And[PrimePowerQ[Slot[1]], Not[PrimeQ[Slot[1]]]]]]	{4, 8, 9, 16, 25, 27, 32, 49, 64, 81}	\text{Select}[\text{Range}[1,100],\text{PrimePowerQ}[\text{$\#$1}]\land \neg \text{PrimeQ}[\text{$\#$1}]\&]	\{4,8,9,16,25,27,32,49,64,81\}
-an-odd-prime-stays-prime-in-z-i-exactly-when-p	PrimeQ[List[2, 3, 5, 7, 11, 13], Rule[GaussianIntegers, True]]	{False, True, False, True, True, False}	\text{PrimeQ}[\{2,3,5,7,11,13\},\text{GaussianIntegers}\to \text{True}]	\{\text{False},\text{True},\text{False},\text{True},\text{True},\text{False}\}
+an-odd-prime-stays-prime-in-z-i-exactly-when-p	PrimeQ[List[2, 3, 5, 7, 11, 13], Rule[enumeratio`Over, GaussianIntegers]]	{False, True, False, True, True, False}	\text{PrimeQ}[\{2,3,5,7,11,13\},\text{GaussianIntegers}\to \text{True}]	\{\text{False},\text{True},\text{False},\text{True},\text{True},\text{False}\}
 isprime-37	PrimeQ[37]	True	\text{PrimeQ}[37]	\text{True}
 isprime-29	PrimeQ[29]	True	\text{PrimeQ}[29]	\text{True}
 isprime-17	PrimeQ[17]	True	\text{PrimeQ}[17]	\text{True}

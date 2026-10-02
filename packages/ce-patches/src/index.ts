@@ -15,6 +15,7 @@ import { solveDeclines } from "./patches/solve-declines.ts";
 import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
 import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
+import { assignFunctionDefinition } from "./patches/assign-function-definition.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
@@ -101,6 +102,7 @@ export { nAccuracyGoal, evaluateNAccuracyGoal } from "./patches/n-accuracy-goal.
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
+export { assignFunctionDefinition, canonicalAssignFunctionDefinition } from "./patches/assign-function-definition.ts";
 export {
   quotientRingCollection,
   quotientRingOverIntegers,
@@ -226,6 +228,7 @@ export const PATCHES: readonly Patch[] = [
   takeDropNegativeCount,
   directedInfinityParts,
   nAccuracyGoal,
+  assignFunctionDefinition,
   quotientRingCollection,
 ];
 

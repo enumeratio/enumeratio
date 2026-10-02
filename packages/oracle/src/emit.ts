@@ -4,7 +4,7 @@
 // mapping for `RademacherSymbol` at arity 1" tells you which row to add next, and a scan
 // that counts those is a work queue rather than a verdict.
 
-import { HEADS, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
+import { CONTEXT, HEADS, isSystemName, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";
@@ -91,6 +91,11 @@ function fill(template: string, parts: readonly string[]): string {
 }
 
 /** Emit `expr` as source for `system`, collecting every head it has no mapping for. */
+/** A free name for Wolfram: one that's also a `System`` name (`E`, `I`, `K`, `O`) would
+ * be Wolfram's constant or function there, so it goes in our own context, which `fromWolfram`
+ * strips on the way back. */
+const wolframFree = (name: string): string => (isSystemName(name) ? `${CONTEXT}${name}` : toWolfram(name));
+
 export function emit(expr: MathJSON, system: System): Emitted {
   const missing: string[] = [];
   // Variables an enclosing Sum/Product iterator binds — not free, so not missing.
@@ -139,7 +144,7 @@ export function emit(expr: MathJSON, system: System): Emitted {
         // auto-declares a bare name the way Wolfram does. A numeric-only lane has nothing to
         // do with a name, so it stays missing.
         free.add(node);
-        if (system === "wolfram") return toWolfram(node);
+        if (system === "wolfram") return wolframFree(node);
         if (system === "sympy") return `Symbol(${JSON.stringify(node)})`;
         if (system === "sage") return `SR.var(${JSON.stringify(node)})`;
         missing.push(`symbol:${node}`);
@@ -340,7 +345,7 @@ export function emit(expr: MathJSON, system: System): Emitted {
     // branch, above) — this codebase's own convention, not a math name.
     if (system === "wolfram" && !DEFINED_NAMES.has(head) && !(head in CONSTANTS) && !/^_[A-Za-z]/.test(head)) {
       free.add(head);
-      return toWolfram([head, ...operands.map(walk)]);
+      return `${wolframFree(head)}[${operands.map(walk).join(", ")}]`;
     }
     missing.push(`${head}/${operands.length}`);
     return "0";

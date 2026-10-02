@@ -74,6 +74,7 @@ export const infinityArgs: Patch = {
       inf("Arctan", "ComplexInfinity").json === "Indeterminate" &&
       inf("Arccot", "ComplexInfinity").json === "Indeterminate" &&
       inf("Arcosh", "NegativeInfinity").json === "PositiveInfinity" &&
+      inf("Arcosh", "ComplexInfinity").json === "PositiveInfinity" &&
       inf("Arsinh", "ComplexInfinity").json === "Indeterminate" &&
       inf("Artanh", "ComplexInfinity").json === "Indeterminate" &&
       inf("Arsech", "ComplexInfinity").json === "Indeterminate" &&

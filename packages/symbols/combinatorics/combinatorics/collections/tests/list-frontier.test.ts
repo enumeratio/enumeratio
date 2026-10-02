@@ -43,6 +43,14 @@ test("SeedRandom pins RandomInteger to a reproducible sequence", () => {
   const second = run(["RandomInteger", 100]);
   expect(second).toEqual(first);
 });
+test("WithRandomSeed reproduces Random and RandomInteger once collections are declared", () => {
+  const seeded = (seed: number, body: unknown) => ["WithRandomSeed", seed, body];
+  const body = ["List", ["Random"], ["RandomInteger", 1000], ["Random", ["List", 1, 2, 3, 4, 5]]];
+  const first = run(seeded(7, body));
+  run(["Random"]);
+  expect(run(seeded(7, body))).toEqual(first);
+  expect(run(seeded(8, body))).not.toEqual(first);
+});
 test("RandomInteger({min, max}) stays in range", () => {
   ce.box(["SeedRandom", 1]).evaluate();
   const draws = run(["RandomInteger", ["List", 10, 20], 50]) as unknown as unknown[];

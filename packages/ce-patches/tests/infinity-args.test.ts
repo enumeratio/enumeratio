@@ -45,9 +45,9 @@ describe("Hyperbolic inverses at the infinities", () => {
     expect(at("Arcosh", "NegativeInfinity").json).toBe("PositiveInfinity");
   });
 
-  test("Arsinh/Arcosh(ComplexInfinity) are ComplexInfinity, Artanh/Arsech Indeterminate", () => {
+  test("Arsinh(ComplexInfinity) is ComplexInfinity, Arcosh +Infinity, Artanh/Arsech Indeterminate", () => {
     expect(at("Arsinh", "ComplexInfinity").json).toBe("ComplexInfinity");
-    expect(at("Arcosh", "ComplexInfinity").json).toBe("ComplexInfinity");
+    expect(at("Arcosh", "ComplexInfinity").json).toBe("PositiveInfinity");
     expect(at("Artanh", "ComplexInfinity").json).toBe("Indeterminate");
     expect(at("Arsech", "ComplexInfinity").json).toBe("Indeterminate");
   });
