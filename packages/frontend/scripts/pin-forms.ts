@@ -11,8 +11,8 @@
 //       differs from its input: every form's `in` and `out`.
 //   R3  the result is the canonical form of the input, unevaluated (raw `expected` equals
 //       canonical `expr`, which differs from raw `expr`): `fullform.in` and `fullform.out`.
-//   R4  a captioned example (written by hand: the Wolfram adopter writes no captions) whose
-//       `expr` holds ExponentialE: `epsil.in` and `fullform.in`, Euler's e apart from a variable.
+//   R4  a captioned example whose `expr` holds ExponentialE: `epsil.in` and `fullform.in`,
+//       Euler's e apart from a variable.
 // R2 and R3 skip examples naming ExponentialE, ImaginaryUnit, `e` or `i`.
 
 import { orderImplementations, OWN_FORMS } from "@enumeratio/entry";

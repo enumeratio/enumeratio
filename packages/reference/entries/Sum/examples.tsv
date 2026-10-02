@@ -1,3 +1,3 @@
-id	section	role	expr	expected
-sum-k-pow-2-k-nothing-10			[Sum, [Power, k, 2], [Limits, k, Nothing, 10]]	385
-sum-k-pow-neg-6-k-1-positiveinfinity			[Sum, [Power, k, -6], [Limits, k, 1, PositiveInfinity]]	[Divide, [Power, Pi, 6], 945]
+id	section	role	expr	expected	caption
+sum-k-pow-2-k-nothing-10			[Sum, [Power, k, 2], [Limits, k, Nothing, 10]]	385	Sum of squares up to 10, using the default start of 1
+sum-k-pow-neg-6-k-1-positiveinfinity			[Sum, [Power, k, -6], [Limits, k, 1, PositiveInfinity]]	[Divide, [Power, Pi, 6], 945]	The Basel-type sum, $\zeta(6)=\pi^6/945$

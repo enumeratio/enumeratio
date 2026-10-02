@@ -3,28 +3,28 @@ id	section	role	expr	expected	known	source	caption	epsil.back
 6-is-not-a-prime-power			[MangoldtLambda, 6]	0			6 is not a prime power	
 mangoldtlambda-7			[MangoldtLambda, 7]	[Ln, 7]				
 mangoldtlambda-9		test	[MangoldtLambda, 9]	[Ln, 3]				
-mangoldtlambda-25			[MangoldtLambda, 25]	[Ln, 5]				
+mangoldtlambda-25			[MangoldtLambda, 25]	[Ln, 5]			A prime power $5^2$ gives $\ln 5$	
 numerically-ln-3	Scope		[N, [MangoldtLambda, 9]]	1.0986122886681098			Numerically, $\ln3$	
 listable	Scope		[MangoldtLambda, [List, 2, 4, 6, 25]]	[List, [Ln, 2], [Ln, 2], 0, [Ln, 5]]			Listable	
 n-of-a-zero-result-is-still-0	Scope	test	[N, [MangoldtLambda, 6]]	0			N of a zero result is still 0	
-mangoldtlambda-125	Scope		[MangoldtLambda, 125]	[Ln, 5]				
-mangoldtlambda-7-pow-300	Scope		[MangoldtLambda, [Power, 7, 300]]	[Ln, 7]				
-mangoldtlambda-list-2-6-9-8-15	Scope		[MangoldtLambda, [List, 2, 6, 9, 8, 15]]	[List, [Ln, 2], 0, [Ln, 3], [Ln, 2], 0]				
-mangoldtlambda-81-factorial-eq-0	Applications		[NotEqual, [MangoldtLambda, 81], 0]	True				
-list-mangoldtlambda-6-mangoldtlambda-2-plus	Properties		[List, [MangoldtLambda, 6], [Add, [MangoldtLambda, 2], [MangoldtLambda, 3]]]	[List, 0, [Add, [Ln, 2], [Ln, 3]]]				
-list-mangoldtlambda-6-mangoldtlambda-2-times	Properties		[List, [MangoldtLambda, 6], [Multiply, [MangoldtLambda, 2], [MangoldtLambda, 3]]]	[List, 0, [Multiply, [Ln, 2], [Ln, 3]]]				
-mangoldtlambda-5	Properties		[MangoldtLambda, 5]	[Ln, 5]				
-mangoldtlambda-2	Properties		[MangoldtLambda, 2]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-3	Properties		[MangoldtLambda, 3]	[Ln, 3]	[Ln, 3]	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-4	Properties		[MangoldtLambda, 4]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-10	Properties		[MangoldtLambda, 10]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-11	Properties		[MangoldtLambda, 11]	[Ln, 11]	[Ln, 11]	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-12	Properties		[MangoldtLambda, 12]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda		
-simplify-sum-mangoldtlambda-n-n-20	Properties		[Simplify, [Sum, [MangoldtLambda, n], [Tuple, n, 20]]]	[Add, [Multiply, 2, [Ln, 3]], [Multiply, 4, [Ln, 2]], [Ln, 1616615]]				
-mangoldtlambda-13	Properties		[MangoldtLambda, 13]	[Ln, 13]	[Ln, 13]	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-14	Properties		[MangoldtLambda, 14]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-15	Properties		[MangoldtLambda, 15]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-16	Properties		[MangoldtLambda, 16]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda		
-mangoldtlambda-17	Properties		[MangoldtLambda, 17]	[Ln, 17]	[Ln, 17]	Wolfram MathematicalFunctionData, MangoldtLambda		
-ln-16-eq-divisorsum-16-function-mangoldtlambda-1	Properties		[Equal, [Ln, 16], [DivisorSum, 16, [Function, [Block, [MangoldtLambda, _1]], _1]]]	True				Unreadable
+mangoldtlambda-125	Scope		[MangoldtLambda, 125]	[Ln, 5]			Any power of 5 gives the same $\ln 5$	
+mangoldtlambda-7-pow-300	Scope		[MangoldtLambda, [Power, 7, 300]]	[Ln, 7]			Huge prime powers are recognised without factoring	
+mangoldtlambda-list-2-6-9-8-15	Scope		[MangoldtLambda, [List, 2, 6, 9, 8, 15]]	[List, [Ln, 2], 0, [Ln, 3], [Ln, 2], 0]			Threads over a list; non-prime-powers give $0$	
+mangoldtlambda-81-factorial-eq-0	Applications		[NotEqual, [MangoldtLambda, 81], 0]	True			$81=3^4$ is a prime power, so the value is nonzero	
+list-mangoldtlambda-6-mangoldtlambda-2-plus	Properties		[List, [MangoldtLambda, 6], [Add, [MangoldtLambda, 2], [MangoldtLambda, 3]]]	[List, 0, [Add, [Ln, 2], [Ln, 3]]]			Not additive: $\Lambda(6)=0\ne\Lambda(2)+\Lambda(3)$	
+list-mangoldtlambda-6-mangoldtlambda-2-times	Properties		[List, [MangoldtLambda, 6], [Multiply, [MangoldtLambda, 2], [MangoldtLambda, 3]]]	[List, 0, [Multiply, [Ln, 2], [Ln, 3]]]			Not multiplicative either: $\Lambda(6)=0$	
+mangoldtlambda-5	Properties		[MangoldtLambda, 5]	[Ln, 5]			A prime gives its logarithm	
+mangoldtlambda-2	Properties		[MangoldtLambda, 2]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda	$\Lambda(2)=\ln2$	
+mangoldtlambda-3	Properties		[MangoldtLambda, 3]	[Ln, 3]	[Ln, 3]	Wolfram MathematicalFunctionData, MangoldtLambda	$\Lambda(3)=\ln3$	
+mangoldtlambda-4	Properties		[MangoldtLambda, 4]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda	$4=2^2$, so $\ln 2$	
+mangoldtlambda-10	Properties		[MangoldtLambda, 10]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	Two distinct primes give $0$	
+mangoldtlambda-11	Properties		[MangoldtLambda, 11]	[Ln, 11]	[Ln, 11]	Wolfram MathematicalFunctionData, MangoldtLambda	Prime, so $\ln 11$	
+mangoldtlambda-12	Properties		[MangoldtLambda, 12]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	$12=2^2\cdot3$ is not a prime power	
+simplify-sum-mangoldtlambda-n-n-20	Properties		[Simplify, [Sum, [MangoldtLambda, n], [Tuple, n, 20]]]	[Add, [Multiply, 2, [Ln, 3]], [Multiply, 4, [Ln, 2]], [Ln, 1616615]]			$\sum_{n\le20}\Lambda(n)=\ln\operatorname{lcm}(1..20)$	
+mangoldtlambda-13	Properties		[MangoldtLambda, 13]	[Ln, 13]	[Ln, 13]	Wolfram MathematicalFunctionData, MangoldtLambda	Prime, so $\ln 13$	
+mangoldtlambda-14	Properties		[MangoldtLambda, 14]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	A semiprime gives $0$	
+mangoldtlambda-15	Properties		[MangoldtLambda, 15]	0	0	Wolfram MathematicalFunctionData, MangoldtLambda	Product of two primes: $0$	
+mangoldtlambda-16	Properties		[MangoldtLambda, 16]	[Ln, 2]	[Ln, 2]	Wolfram MathematicalFunctionData, MangoldtLambda	$2^4$ gives $\ln2$, not $4\ln2$	
+mangoldtlambda-17	Properties		[MangoldtLambda, 17]	[Ln, 17]	[Ln, 17]	Wolfram MathematicalFunctionData, MangoldtLambda	Prime, so $\ln 17$	
+ln-16-eq-divisorsum-16-function-mangoldtlambda-1	Properties		[Equal, [Ln, 16], [DivisorSum, 16, [Function, [Block, [MangoldtLambda, _1]], _1]]]	True			$\sum_{d\mid n}\Lambda(d)=\ln n$, shown at $n=16$	Unreadable
 lambda-1-0	Possible issues		[MangoldtLambda, 1]	0			$\Lambda(1)=0$	

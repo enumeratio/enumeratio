@@ -6,7 +6,7 @@ list-a-b-c-d-k-f-g-h-list-span-1-neg-1-3			[At, [List, a, b, c, d, k, f, g, h], 
 a-negative-step-walks-backwards-1-1-1	Scope		[At, [List, a, b, c, d, f], [Span, -1, 1, -1]]	[List, f, d, c, b, a]	A negative step walks backwards ($-1;;1;;-1$)
 negative-bounds-the-last-two-elements	Scope		[At, [List, a, b, c, d, f], [Span, -2, -1]]	[List, d, f]	Negative bounds: the last two elements
 spans-at-two-levels-cut-out-a-submatrix	Scope		[At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]	[List, [List, 4, 5], [List, 7, 8]]	Spans at two levels cut out a submatrix
-characterrange-a-z-list-span-1-5	Scope		[At, [CharacterRange, "'a'", "'z'"], [Span, 1, 5]]	[List, "'a'", "'b'", "'c'", "'d'", "'e'"]	
-range-1-10-list-span-3-neg-1	Scope		[At, [Range, 1, 10], [Span, 3, -1]]	[List, 3, 4, 5, 6, 7, 8, 9, 10]	
-range-1-10-list-span-1-neg-1-2	Scope		[At, [Range, 1, 10], [Span, 1, -1, 2]]	[List, 1, 3, 5, 7, 9]	
+characterrange-a-z-list-span-1-5	Scope		[At, [CharacterRange, "'a'", "'z'"], [Span, 1, 5]]	[List, "'a'", "'b'", "'c'", "'d'", "'e'"]	The first five letters
+range-1-10-list-span-3-neg-1	Scope		[At, [Range, 1, 10], [Span, 3, -1]]	[List, 3, 4, 5, 6, 7, 8, 9, 10]	A negative end counts from the last element, so the slice runs to the end
+range-1-10-list-span-1-neg-1-2	Scope		[At, [Range, 1, 10], [Span, 1, -1, 2]]	[List, 1, 3, 5, 7, 9]	A step of $2$ takes every other element
 list-a-b-c-d-k-f-g-h-list-span-2-neg-3	Scope		[At, [List, a, b, c, d, k, f, g, h], [Span, 2, -3]]	[List, b, c, d, k, f]	

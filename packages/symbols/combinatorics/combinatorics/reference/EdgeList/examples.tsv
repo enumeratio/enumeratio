@@ -1,3 +1,3 @@
 id	section	role	expr	expected	caption
 edges-of-a-mixed-graph			[EdgeList, [Graph, [List, [UndirectedEdge, 2, 1], [DirectedEdge, 1, 3]]]]	[List, [UndirectedEdge, 2, 1], [DirectedEdge, 1, 3]]	Edges of a mixed undirected/directed graph
-length-edgelist-g	Properties		[Length, [EdgeList, g]]	1	
+length-edgelist-g	Properties		[Length, [EdgeList, g]]	1	A single-edge graph has exactly one entry in its edge list

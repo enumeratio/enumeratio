@@ -3,7 +3,7 @@ a-parabola-s-range-is-bounded-below			[FunctionRange, [Power, x, 2], x, y]	[Less
 a-reciprocal-never-reaches-zero			[FunctionRange, [Divide, 1, x], x, y]	[Or, [Less, y, 0], [Less, 0, y]]			A reciprocal never reaches zero
 sine-s-range-is-the-unit-interval			[FunctionRange, [Sin, x], x, y]	[LessEqual, -1, y, 1]	[LessEqual, -1, y, 1]	Wolfram 15.0.0, hand cross-checked	Sine's range is the unit interval
 exp-s-range-is-the-positive-reals	Scope		[FunctionRange, [Exp, x], x, y]	[Less, 0, y]	[Less, 0, y]	Wolfram 15.0.0, hand cross-checked	Exp's range is the positive reals
-functionrange-x-pow-2-minus-1-x-y	Scope		[FunctionRange, [Add, [Power, x, 2], -1], x, y]	[LessEqual, -1, y]			
-functionrange-x-pow-2-minus-4-x-y	Applications		[FunctionRange, [Add, [Power, x, 2], -4], x, y]	[LessEqual, -4, y]			
-functionrange-tan-x-x-y	Applications		[FunctionRange, [Tan, x], x, y]	True			
+functionrange-x-pow-2-minus-1-x-y	Scope		[FunctionRange, [Add, [Power, x, 2], -1], x, y]	[LessEqual, -1, y]			A parabola is bounded below by its vertex value $-1$
+functionrange-x-pow-2-minus-4-x-y	Applications		[FunctionRange, [Add, [Power, x, 2], -4], x, y]	[LessEqual, -4, y]			The vertex gives the minimum $-4$
+functionrange-tan-x-x-y	Applications		[FunctionRange, [Tan, x], x, y]	True			Tangent takes every real value
 a-quadratic-denominator-is-declined	Possible issues		[FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]	[FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]	[FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]	Wolfram 15.0.0, hand cross-checked	A quadratic denominator's range needs its vertex value too, and stays unevaluated for now

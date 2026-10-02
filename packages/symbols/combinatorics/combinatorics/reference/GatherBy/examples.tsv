@@ -1,7 +1,7 @@
 id	section	role	expr	expected	caption	epsil.back
 grouped-by-residue-mod-3			[GatherBy, [List, 1, 2, 3, 4, 5, 6, 7], [Function, [Mod, _1, 3]]]	[List, [List, 1, 4, 7], [List, 2, 5], [List, 3, 6]]	Grouped by residue mod 3	Unreadable
 grouped-by-absolute-value			[GatherBy, [List, -2, 1, 2, -1, 3], Abs]	[List, [List, -2, 2], [List, 1, -1], [List, 3]]	Grouped by absolute value	
-gatherby-list-1-2-3-4-5-isodd			[GatherBy, [List, 1, 2, 3, 4, 5], IsOdd]	[List, [List, 1, 3, 5], [List, 2, 4]]		
-gatherby-list-list-a-1-list-b-1-list-a-2-list-d			[GatherBy, [List, [List, a, 1], [List, b, 1], [List, a, 2], [List, d, 1], [List, b, 3]], First]	[List, [List, [List, a, 1], [List, a, 2]], [List, [List, b, 1], [List, b, 3]], [List, [List, d, 1]]]		
+gatherby-list-1-2-3-4-5-isodd			[GatherBy, [List, 1, 2, 3, 4, 5], IsOdd]	[List, [List, 1, 3, 5], [List, 2, 4]]	Groups by the value of a test, odds first because $1$ appears first	
+gatherby-list-list-a-1-list-b-1-list-a-2-list-d			[GatherBy, [List, [List, a, 1], [List, b, 1], [List, a, 2], [List, d, 1], [List, b, 3]], First]	[List, [List, [List, a, 1], [List, a, 2]], [List, [List, b, 1], [List, b, 3]], [List, [List, d, 1]]]	Grouping by a key function: here the first element of each pair	
 pairs-grouped-by-their-last-element	Scope		[GatherBy, [List, [List, a, 1], [List, b, 2], [List, c, 1]], Last]	[List, [List, [List, a, 1], [List, c, 1]], [List, [List, b, 2]]]	Pairs grouped by their last element	
-gatherby-range-1-10-function-1-mod-3-1	Applications		[GatherBy, [Range, 1, 10], [Function, [Block, [Mod, _1, 3]], _1]]	[List, [List, 1, 4, 7, 10], [List, 2, 5, 8], [List, 3, 6, 9]]		Unreadable
+gatherby-range-1-10-function-1-mod-3-1	Applications		[GatherBy, [Range, 1, 10], [Function, [Block, [Mod, _1, 3]], _1]]	[List, [List, 1, 4, 7, 10], [List, 2, 5, 8], [List, 3, 6, 9]]	Grouping by residue gives the classes mod $3$ without writing an equivalence	Unreadable

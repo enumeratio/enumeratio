@@ -37,7 +37,7 @@ indexes-into-a-named-integer-collection	Scope		[At, TriangularNumbers, 5]	15	Rea
 indexes-into-a-parameterized-collection	Scope		[At, [PolygonalNumbers, 5], 3]	12	Also works on a parameterized collection like $PolygonalNumbers(k)$				
 first-term-of-fibonaccinumbers-is-0	Scope		[At, FibonacciNumbers, 1]	0					
 at-bellnumbers-5-is-bell-4-15	Scope		[At, BellNumbers, 5]	15	At(BellNumbers, 5) is Bell(4) = 15 (1-indexed At, 0-indexed term)				
-list-x-4-y-5-list-1-2	Scope		[At, [List, [Tuple, x, 4], [Tuple, y, 5]], 1, 2]	4					
+list-x-4-y-5-list-1-2	Scope		[At, [List, [Tuple, x, 4], [Tuple, y, 5]], 1, 2]	4	Two indices descend into nested lists				
 list-a-b-c-d-k-f-list-list-1-3-1-2-neg-1-6	Scope		[At, [List, a, b, c, d, k, f], [List, 1, 3, 1, 2, -1, 6]]	[List, a, c, a, b, f, f]					
 list-a-b-c-d-k-f-list-span-1-neg-3	Scope		[At, [List, a, b, c, d, k, f], [Span, 1, -3]]	[List, a, b, c, d]					
 list-a-b-c-d-n-f-g-h-m-j-k-list-span-3-neg-3-2	Scope		[At, [List, a, b, c, d, n, f, g, h, m, j, k], [Span, 3, -3, 2]]	[List, c, n, g, m]					
@@ -45,10 +45,10 @@ list-list-a-b-c-list-d-m-f-list-g-h-k-list-2-3	Scope		[At, [List, [List, a, b, c
 list-list-a-b-c-list-d-m-f-list-g-h-k-list-2	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], 2]	[List, d, m, f]					
 list-list-a-b-c-list-d-m-f-list-g-h-k-list-list	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], [List, 1, 3]]	[List, [List, a, b, c], [List, g, h, k]]					
 list-list-a-b-c-list-d-m-f-list-g-h-k-list-lis-2	Scope		[At, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]], [List, 1, 3], [List, 2, 3]]	[List, [List, b, c], [List, h, k]]					
-list-a-b-c-d-k-list-3	Scope		[At, [List, a, b, c, d, k], 3]	c					
-list-a-b-c-d-k-list-span-2-4	Scope		[At, [List, a, b, c, d, k], [Span, 2, 4]]	[List, b, c, d]					
+list-a-b-c-d-k-list-3	Scope		[At, [List, a, b, c, d, k], 3]	c	One-based indexing				
+list-a-b-c-d-k-list-span-2-4	Scope		[At, [List, a, b, c, d, k], [Span, 2, 4]]	[List, b, c, d]	A span selects a contiguous range				
 chaining-at-reaches-into-nested-collections-like	Applications		[At, [At, [List, [List, 1, 2], [List, 3, 4]], 2], 1]	3	Chaining $At$ reaches into nested collections, like indexing a matrix row then column				
-list-a-b-c-d-k-list-list-4-5-1-2-3	Applications		[At, [List, a, b, c, d, k], [List, 4, 5, 1, 2, 3]]	[List, d, k, a, b, c]					
-list-a-b-c-list-0	Properties		[At, [List, a, b, c], 0]	List					
-list-1-2-3-list-list	Properties		[At, [List, 1, 2, 3], [List]]	[List]					
+list-a-b-c-d-k-list-list-4-5-1-2-3	Applications		[At, [List, a, b, c, d, k], [List, 4, 5, 1, 2, 3]]	[List, d, k, a, b, c]	A list of positions reorders the elements				
+list-a-b-c-list-0	Properties		[At, [List, a, b, c], 0]	List	Index $0$ gives the head of the expression				
+list-1-2-3-list-list	Properties		[At, [List, 1, 2, 3], [List]]	[List]	An empty list of positions selects nothing				
 an-out-of-range-index-evaluates-to-nan-rather	Possible issues		[At, [List, 1, 2, 3], 10]	NaN	An out-of-range index evaluates to $NaN$ rather than raising an error			undefined-form	An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).

@@ -1,7 +1,7 @@
-id	section	role	expr	expected	wolfram.kind	wolfram.note
-an-actual-path-is-a-path			[IsPathGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]]]	True		
-a-cycle-is-not-a-path			[IsPathGraph, [CycleGraph, 4]]	False	convention	Wolfram's PathGraphQ answers True for CycleGraph[4]; ours follows the textbook definition (a path has two degree-1 endpoints, a cycle has none).
-ispathgraph-graph-list-1-list	Properties		[IsPathGraph, [Graph, [List, 1], [List]]]	True		
-ispathgraph-gridgraph-list-1-4	Properties		[IsPathGraph, [GridGraph, [List, 1, 4]]]	True		
-ispathgraph-gridgraph-list-4-1	Properties		[IsPathGraph, [GridGraph, [List, 4, 1]]]	True		
-ispathgraph-gridgraph-list-1-4-1	Properties		[IsPathGraph, [GridGraph, [List, 1, 4, 1]]]	True		
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+an-actual-path-is-a-path			[IsPathGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]]]	True			
+a-cycle-is-not-a-path			[IsPathGraph, [CycleGraph, 4]]	False		convention	Wolfram's PathGraphQ answers True for CycleGraph[4]; ours follows the textbook definition (a path has two degree-1 endpoints, a cycle has none).
+ispathgraph-graph-list-1-list	Properties		[IsPathGraph, [Graph, [List, 1], [List]]]	True	A single vertex is the trivial path		
+ispathgraph-gridgraph-list-1-4	Properties		[IsPathGraph, [GridGraph, [List, 1, 4]]]	True	A $1\times4$ grid is a path on four vertices		
+ispathgraph-gridgraph-list-4-1	Properties		[IsPathGraph, [GridGraph, [List, 4, 1]]]	True	Transposed dimensions give the same path		
+ispathgraph-gridgraph-list-1-4-1	Properties		[IsPathGraph, [GridGraph, [List, 1, 4, 1]]]	True	Trailing singleton dimensions leave it a path		

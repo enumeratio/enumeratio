@@ -11,8 +11,8 @@ sqrt-restricted-past-its-own-domain		test	[FunctionContinuous, [Sqrt, x], x, [Gr
 log-restricted-to-its-own-domain		test	[FunctionContinuous, [Ln, x], x, [Greater, x, 0]]	True	True	Wolfram 15.0.0, hand cross-checked	
 log-restricted-includes-its-singular-boundary		test	[FunctionContinuous, [Ln, x], x, [GreaterEqual, x, 0]]	False	False	Wolfram 15.0.0, hand cross-checked	
 reciprocal-restricted-below-its-pole		test	[FunctionContinuous, [Power, x, -1], x, [Less, x, 0]]	True	True	Wolfram 15.0.0, hand cross-checked	
-functioncontinuous-sin-x-x			[FunctionContinuous, [Sin, x], x]	True			
+functioncontinuous-sin-x-x			[FunctionContinuous, [Sin, x], x]	True			Sine is continuous on the reals
 reciprocal-restricted-domain	Scope		[FunctionContinuous, [Power, x, -1], x, [Greater, x, 0]]	True	True	Wolfram 15.0.0, hand cross-checked	$1/x$ restricted to $x>0$ avoids its only pole
 sqrt-closed-boundary	Scope		[FunctionContinuous, [Sqrt, x], x, [GreaterEqual, x, 0]]	True	True	Wolfram 15.0.0, hand cross-checked	$\sqrt x$ is continuous on its own closed domain boundary $x=0$
-list-functioncontinuous-x-x-functioncontinuous-x	Applications		[List, [FunctionContinuous, x, x], [FunctionContinuous, [Add, [Power, x, 2], 1], x], [FunctionContinuous, [Add, [Power, x, 3], [Multiply, -1, [Multiply, 2, [Power, x, 2]]], [Multiply, -1, [Multiply, 5, x]], 6], x]]	[List, True, True, True]			
-list-functioncontinuous-sin-x-x	Applications		[List, [FunctionContinuous, [Sin, x], x], [FunctionContinuous, [Cos, x], x], [FunctionContinuous, [Exp, x], x]]	[List, True, True, True]			
+list-functioncontinuous-x-x-functioncontinuous-x	Applications		[List, [FunctionContinuous, x, x], [FunctionContinuous, [Add, [Power, x, 2], 1], x], [FunctionContinuous, [Add, [Power, x, 3], [Multiply, -1, [Multiply, 2, [Power, x, 2]]], [Multiply, -1, [Multiply, 5, x]], 6], x]]	[List, True, True, True]			Polynomials are continuous
+list-functioncontinuous-sin-x-x	Applications		[List, [FunctionContinuous, [Sin, x], x], [FunctionContinuous, [Cos, x], x], [FunctionContinuous, [Exp, x], x]]	[List, True, True, True]			Sine, cosine and exp are continuous

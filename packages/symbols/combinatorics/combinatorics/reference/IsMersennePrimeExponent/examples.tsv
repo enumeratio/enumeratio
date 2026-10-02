@@ -1,13 +1,13 @@
-id	section	role	expr	expected
-7-is-a-mersenne-prime-exponent			[IsMersennePrimeExponent, 7]	True
-ismersenneprimeexponent-5			[IsMersennePrimeExponent, 5]	True
-ismersenneprimeexponent-8			[IsMersennePrimeExponent, 8]	False
-11-is-prime-but-not-a-mersenne-prime-exponent	Scope		[IsMersennePrimeExponent, 11]	False
-9-is-not-even-prime	Scope		[IsMersennePrimeExponent, 9]	False
-2-31-1-is-the-8th-mersenne-prime	Scope		[IsMersennePrimeExponent, 31]	True
-ismersenneprimeexponent-neg-5	Scope		[IsMersennePrimeExponent, -5]	False
-ismersenneprimeexponent-89	Applications		[IsMersennePrimeExponent, 89]	True
-ismersenneprimeexponent-12	Properties		[IsMersennePrimeExponent, 12]	False
-ismersenneprimeexponent-2	Properties		[IsMersennePrimeExponent, 2]	True
-ismersenneprimeexponent-fullsimplify-x	Possible issues		[IsMersennePrimeExponent, [FullSimplify, x]]	[IsMersennePrimeExponent, x]
-ismersenneprimeexponent-13	Neat examples		[IsMersennePrimeExponent, 13]	True
+id	section	role	expr	expected	caption
+7-is-a-mersenne-prime-exponent			[IsMersennePrimeExponent, 7]	True	
+ismersenneprimeexponent-5			[IsMersennePrimeExponent, 5]	True	$2^5 - 1 = 31$ is prime
+ismersenneprimeexponent-8			[IsMersennePrimeExponent, 8]	False	A composite exponent never works: $2^8 - 1 = 255 = 3 \cdot 5 \cdot 17$
+11-is-prime-but-not-a-mersenne-prime-exponent	Scope		[IsMersennePrimeExponent, 11]	False	
+9-is-not-even-prime	Scope		[IsMersennePrimeExponent, 9]	False	
+2-31-1-is-the-8th-mersenne-prime	Scope		[IsMersennePrimeExponent, 31]	True	
+ismersenneprimeexponent-neg-5	Scope		[IsMersennePrimeExponent, -5]	False	Negative integers are not exponents of Mersenne primes
+ismersenneprimeexponent-89	Applications		[IsMersennePrimeExponent, 89]	True	$2^{89} - 1$ is a Mersenne prime, a large one
+ismersenneprimeexponent-12	Properties		[IsMersennePrimeExponent, 12]	False	Even exponents above $2$ fail since $2^{2k} - 1$ factors
+ismersenneprimeexponent-2	Properties		[IsMersennePrimeExponent, 2]	True	The only even exponent: $2^2 - 1 = 3$
+ismersenneprimeexponent-fullsimplify-x	Possible issues		[IsMersennePrimeExponent, [FullSimplify, x]]	[IsMersennePrimeExponent, x]	With an unknown argument the test stays unevaluated
+ismersenneprimeexponent-13	Neat examples		[IsMersennePrimeExponent, 13]	True	$2^{13} - 1 = 8191$, a prime

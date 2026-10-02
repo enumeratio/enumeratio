@@ -3,6 +3,6 @@ mersenneprimeexponent-1			[MersennePrimeExponent, 1]	2
 mersenneprimeexponent-5			[MersennePrimeExponent, 5]	13			
 mersenneprimeexponent-10			[MersennePrimeExponent, 10]	89			
 listable	Scope		[MersennePrimeExponent, [List, 1, 2, 3, 4, 5, 6]]	[List, 2, 3, 5, 7, 13, 17]	Listable		
-mersenneprimeexponent-range-1-10	Scope		[MersennePrimeExponent, [Range, 1, 10]]	[List, 2, 3, 5, 7, 13, 17, 19, 31, 61, 89]			
+mersenneprimeexponent-range-1-10	Scope		[MersennePrimeExponent, [Range, 1, 10]]	[List, 2, 3, 5, 7, 13, 17, 19, 31, 61, 89]	The first ten exponents $p$ with $2^p-1$ prime		
 past-the-known-table-of-mersenne-prime-exponents	Possible issues		[MersennePrimeExponent, 1000]	[MersennePrimeExponent, 1000]	Past the known table of Mersenne-prime exponents, the call stays unevaluated rather than guessing	resource	Wolfram aborts past its table of known Mersenne prime exponents
 timeconstrained-mersenneprimeexponent-50-10	Possible issues		[TimeConstrained, [MersennePrimeExponent, 50], 10]	[MersennePrimeExponent, 50]		convention	declare-backlog.ts documents this as deliberate: the table only covers the 20 Mersenne exponents proven complete (no possibility of an undiscovered smaller one), and explicitly declines rather than search past it. Wolfram asserts completeness through the 50th (GIMPS-verified); extending our table is a data-provenance question for whoever owns completeness verification, not a lane bug fix — respecting the existing documented judgment rather than overriding it.

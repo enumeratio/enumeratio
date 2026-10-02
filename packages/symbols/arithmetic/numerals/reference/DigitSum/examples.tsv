@@ -6,24 +6,24 @@ threads-element-wise-over-a-list-as-wolfram-s	Scope		[DigitSum, [List, 12, 345]]
 just-the-first-4-digits-6-3-4-5-18-not-the-full	Scope		[DigitSum, 6345354, 10, 4]	18	Just the first 4 digits, $6+3+4+5=18$, not the full digit sum (30)
 a-negative-k-sums-the-last-3-digits-instead	Scope	test	[DigitSum, 6345354, 10, -3]	12	a negative $k$ sums the last 3 digits instead: $3+5+4=12$
 k-at-least-the-digit-count-is-the-plain-sum	Scope	test	[DigitSum, 6345354, 10, 7]	30	$k$ at least the digit count is the plain digit sum
-digitsum-1-plus-9-pow-1-000	Scope		[DigitSum, [Add, 1, [Power, 9, 1000]]]	4339	
-digitsum-58-127-16	Scope		[DigitSum, 58127, 16]	32	
-digitsum-list-6-7-2-2	Scope		[DigitSum, [List, 6, 7, 2], 2]	[List, 2, 3, 1]	
-digitsum-7-list-2-3-4	Scope		[DigitSum, 7, [List, 2, 3, 4]]	[List, 3, 3, 4]	
-digitsum-6-345-354-10-neg-4	Scope		[DigitSum, 6345354, 10, -4]	17	
-digitsum-35-297	Scope		[DigitSum, 35297]	26	
+digitsum-1-plus-9-pow-1-000	Scope		[DigitSum, [Add, 1, [Power, 9, 1000]]]	4339	Exact digit sum of a roughly thousand-digit integer
+digitsum-58-127-16	Scope		[DigitSum, 58127, 16]	32	In base 16, $58127=\text{E30F}_{16}$, so $14+3+0+15=32$
+digitsum-list-6-7-2-2	Scope		[DigitSum, [List, 6, 7, 2], 2]	[List, 2, 3, 1]	Threads over a list in base 2
+digitsum-7-list-2-3-4	Scope		[DigitSum, 7, [List, 2, 3, 4]]	[List, 3, 3, 4]	Threads over a list of bases
+digitsum-6-345-354-10-neg-4	Scope		[DigitSum, 6345354, 10, -4]	17	A negative third argument takes only the last four digits
+digitsum-35-297	Scope		[DigitSum, 35297]	26	Default base 10: $3+5+2+9+7$
 digit-sum-n-mod-9-the-basis-of-the-classic	Properties		[Equal, [Mod, [DigitSum, 58127], 9], [Mod, 58127, 9]]	True	Digit sum ≡ n (mod 9): the basis of the classic divisibility-by-9 check and the digital root
-digitsum-37-103	Properties		[DigitSum, 37103]	14	
-digitsum-143-2	Properties		[DigitSum, 143, 2]	5	
-digitsum-123-000-10-neg-3	Properties		[DigitSum, 123000, 10, -3]	0	
-digitsum-0-10-neg-3	Properties		[DigitSum, 0, 10, -3]	0	
-digitsum-2-147-2	Properties		[DigitSum, 2147, 2]	5	
-digitsum-2-147	Properties		[DigitSum, 2147]	14	
-digitsum-1-over-9-times-neg-1-plus-10-pow-17	Properties		[DigitSum, [Multiply, [Rational, 1, 9], [Add, -1, [Power, 10, 17]]]]	17	
-digitsum-123-456-10-7	Properties		[DigitSum, 123456, 10, 7]	21	
-digitsum-263-5	Properties		[DigitSum, 263, 5]	7	
-digitsum-integerreverse-263-5-5	Properties		[DigitSum, [IntegerReverse, 263, 5], 5]	7	
-digitsum-neg-3-134	Properties		[DigitSum, -3134]	11	
+digitsum-37-103	Properties		[DigitSum, 37103]	14	$3+7+1+0+3$
+digitsum-143-2	Properties		[DigitSum, 143, 2]	5	$143=10001111_2$ has five ones
+digitsum-123-000-10-neg-3	Properties		[DigitSum, 123000, 10, -3]	0	The last three digits are all zero
+digitsum-0-10-neg-3	Properties		[DigitSum, 0, 10, -3]	0	Zero has digit sum zero
+digitsum-2-147-2	Properties		[DigitSum, 2147, 2]	5	In base 2 the digit sum counts the ones
+digitsum-2-147	Properties		[DigitSum, 2147]	14	Base 10 digit sum of 2147
+digitsum-1-over-9-times-neg-1-plus-10-pow-17	Properties		[DigitSum, [Multiply, [Rational, 1, 9], [Add, -1, [Power, 10, 17]]]]	17	The repunit of 17 ones sums to $17$
+digitsum-123-456-10-7	Properties		[DigitSum, 123456, 10, 7]	21	A length argument pads with zeros, leaving the sum unchanged
+digitsum-263-5	Properties		[DigitSum, 263, 5]	7	$263=2023_5$, so the digits add to $7$
+digitsum-integerreverse-263-5-5	Properties		[DigitSum, [IntegerReverse, 263, 5], 5]	7	Reversing the digits does not change the sum
+digitsum-neg-3-134	Properties		[DigitSum, -3134]	11	Negative inputs use the absolute value
 digitsum-0	Possible issues		[DigitSum, 0]	0	
 the-sign-is-discarded	Possible issues		[DigitSum, -123]	6	The sign is discarded
 sign-is-discarded-in-the-3-argument-form-too	Possible issues	test	[DigitSum, -6345354, 10, 4]	18	the sign is discarded in the 3-argument form too

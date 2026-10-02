@@ -3,16 +3,16 @@ isodd-3			[IsOdd, 3]	True
 isodd-4			[IsOdd, 4]	False		
 negative-integers-count-too			[IsOdd, -7]	True	Negative integers count too	
 isodd-0			[IsOdd, 0]	False		
-isodd-9			[IsOdd, 9]	True		
+isodd-9			[IsOdd, 9]	True	9 is odd	
 a-non-integer-is-not-odd	Scope		[IsOdd, 3.5]	False	A non-integer is not odd	
 isodd-1-over-3	Scope		[IsOdd, [Rational, 1, 3]]	False		
 big-integers	Scope		[IsOdd, [Add, [Power, 2, 100], 1]]	True	Big integers	
 pi-is-known-not-to-be-an-integer-so-it-is	Scope		[IsOdd, Pi]	False	$\pi$ is known not to be an integer, so it is decided False	
 threads-element-wise-over-a-list	Scope		[IsOdd, [List, 1, 2, 3]]	[List, True, False, True]	Threads element-wise over a list	OddQ tests its argument as a whole: $\mathrm{OddQ}[\{1, 2, 3\}]$ is False.
 select-the-odd-numbers-up-to-10	Applications		[Filter, [Range, 10], IsOdd]	[List, 1, 3, 5, 7, 9]	Select the odd numbers up to 10	
-isvector-list-1-5-7-11-isodd	Applications		[IsVector, [List, 1, 5, 7, 11], IsOdd]	True		
-isvector-list-2-5-7-11-isodd	Applications		[IsVector, [List, 2, 5, 7, 11], IsOdd]	False		
+isvector-list-1-5-7-11-isodd	Applications		[IsVector, [List, 1, 5, 7, 11], IsOdd]	True	True if every entry is odd	
+isvector-list-2-5-7-11-isodd	Applications		[IsVector, [List, 2, 5, 7, 11], IsOdd]	False	False because the first entry is even	
 an-integer-is-odd-exactly-when-it-is-not-even	Properties		[Equal, [IsOdd, 7], [Not, [IsEven, 7]]]	True	An integer is odd exactly when it is not even. See [[IsEven]]	
-isodd-2	Properties		[IsOdd, 2]	False		
-isodd-15	Properties		[IsOdd, 15]	True		
+isodd-2	Properties		[IsOdd, 2]	False	2 is even, hence not odd	
+isodd-15	Properties		[IsOdd, 15]	True	15 is odd	
 a-symbol-stays-undecided-rather-than-false	Possible issues		[IsOdd, x]	[IsOdd, x]	A symbol stays undecided rather than False	

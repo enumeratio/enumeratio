@@ -1,7 +1,7 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 precision-exact-integer			[Precision, 2]	PositiveInfinity			
-precision-6-over-5			[Precision, [Rational, 6, 5]]	PositiveInfinity			
+precision-6-over-5			[Precision, [Rational, 6, 5]]	PositiveInfinity	Exact numbers carry infinite precision		
 precision-rational	Scope		[Precision, [Rational, 1, 3]]	PositiveInfinity	An exact rational also carries infinite precision		
 precision-inexact-literal	Scope		[Precision, 2.5]	2	An inexact literal's precision is its written digit count	convention	Wolfram represents double (machine) precision with the symbolic constant MachinePrecision rather than a number; ours returns the digit count directly.
 precision-extended	Scope		[Precision, 3.141592653589793]	16	A literal with more digits than a double can hold rounds to about 16 of them	convention	Wolfram represents double (machine) precision with the symbolic constant MachinePrecision rather than a number; ours returns the digit count directly.
-precision-5-times-x-pow-2-plus-3	Scope		[Precision, [Add, [Multiply, 5, [Power, x, 2]], 3]]	PositiveInfinity			
+precision-5-times-x-pow-2-plus-3	Scope		[Precision, [Add, [Multiply, 5, [Power, x, 2]], 3]]	PositiveInfinity	Symbolic expressions with exact coefficients also report infinite precision		

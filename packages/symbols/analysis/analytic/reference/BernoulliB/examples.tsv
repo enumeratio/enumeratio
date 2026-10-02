@@ -16,18 +16,18 @@ von-staudt-clausen-the-denominator-of-b-2n-is	Properties		[Denominator, [Bernoul
 zeta-n-frac-b-n-1-n-1-here-zeta-3-frac-1-120-see	Properties		[Equal, [Zeta, -3], [Negate, [Divide, [BernoulliB, 4], 4]]]	True			$\zeta(-n) = -\frac{B_{n+1}}{n+1}$, here $\zeta(-3) = \frac{1}{120}$. See [[Zeta]]				
 the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here	Properties		[Add, [Multiply, [Binomial, 5, 0], [BernoulliB, 0]], [Multiply, [Binomial, 5, 1], [BernoulliB, 1]], [Multiply, [Binomial, 5, 2], [BernoulliB, 2]], [Multiply, [Binomial, 5, 3], [BernoulliB, 3]], [Multiply, [Binomial, 5, 4], [BernoulliB, 4]]]	0			The recurrence $\sum_{k=0}^{n-1} \binom{n}{k} B_k = 0$, here at $n = 5$			convention	SymPy (since 1.12) takes B₁ = +1/2; compute-engine and Wolfram take B₁ = -1/2, so the recurrence sums differ.
 b-n-0-for-every-odd-n-1	Properties		[Equal, [BernoulliB, 5], 0]	True			$B_n = 0$ for every odd $n > 1$				
-bernoullib-3	Properties		[BernoulliB, 3]	0	0	Wolfram MathematicalFunctionData, BernoulliB					
-bernoullib-5	Properties		[BernoulliB, 5]	0	0	Wolfram MathematicalFunctionData, BernoulliB					
-bernoullib-6	Properties		[BernoulliB, 6]	[Rational, 1, 42]	[Rational, 1, 42]	Wolfram MathematicalFunctionData, BernoulliB					
-bernoullib-7	Properties		[BernoulliB, 7]	0	0	Wolfram MathematicalFunctionData, BernoulliB					
-bernoullib-8	Properties		[BernoulliB, 8]	[Rational, -1, 30]	[Rational, -1, 30]	Wolfram MathematicalFunctionData, BernoulliB					
-bernoullib-9	Properties		[BernoulliB, 9]	0	0	Wolfram MathematicalFunctionData, BernoulliB					
-bernoullib-2-0	Properties		[BernoulliB, 2, 0]	[Rational, 1, 6]	[Rational, 1, 6]	Wolfram MathematicalFunctionData, BernoulliB:Polynomial					
-bernoullib-3-0	Properties		[BernoulliB, 3, 0]	0	0	Wolfram MathematicalFunctionData, BernoulliB:Polynomial					
-bernoullib-2-1	Properties		[BernoulliB, 2, 1]	[Rational, 1, 6]	[Rational, 1, 6]	Wolfram MathematicalFunctionData, BernoulliB:Polynomial					
-bernoullib-3-1	Properties		[BernoulliB, 3, 1]	0	0	Wolfram MathematicalFunctionData, BernoulliB:Polynomial					
-bernoullib-0-1-over-6	Properties		[BernoulliB, 0, [Rational, 1, 6]]	1	1	Wolfram MathematicalFunctionData, BernoulliB:Polynomial					
+bernoullib-3	Properties		[BernoulliB, 3]	0	0	Wolfram MathematicalFunctionData, BernoulliB	Odd-index Bernoulli numbers beyond 1 vanish				
+bernoullib-5	Properties		[BernoulliB, 5]	0	0	Wolfram MathematicalFunctionData, BernoulliB	$B_5 = 0$: odd Bernoulli numbers past $B_1$ vanish				
+bernoullib-6	Properties		[BernoulliB, 6]	[Rational, 1, 42]	[Rational, 1, 42]	Wolfram MathematicalFunctionData, BernoulliB	$B_6 = \frac{1}{42}$				
+bernoullib-7	Properties		[BernoulliB, 7]	0	0	Wolfram MathematicalFunctionData, BernoulliB	$B_7 = 0$, the odd-index zeros continue				
+bernoullib-8	Properties		[BernoulliB, 8]	[Rational, -1, 30]	[Rational, -1, 30]	Wolfram MathematicalFunctionData, BernoulliB	$B_8 = -\frac{1}{30}$				
+bernoullib-9	Properties		[BernoulliB, 9]	0	0	Wolfram MathematicalFunctionData, BernoulliB	$B_9 = 0$, while the even ones alternate in sign				
+bernoullib-2-0	Properties		[BernoulliB, 2, 0]	[Rational, 1, 6]	[Rational, 1, 6]	Wolfram MathematicalFunctionData, BernoulliB:Polynomial	The Bernoulli polynomial at 0 is the Bernoulli number $B_2$				
+bernoullib-3-0	Properties		[BernoulliB, 3, 0]	0	0	Wolfram MathematicalFunctionData, BernoulliB:Polynomial	Odd Bernoulli polynomials vanish at 0				
+bernoullib-2-1	Properties		[BernoulliB, 2, 1]	[Rational, 1, 6]	[Rational, 1, 6]	Wolfram MathematicalFunctionData, BernoulliB:Polynomial	$B_2(1) = B_2$: for $n \ge 2$ the polynomial agrees at 0 and 1				
+bernoullib-3-1	Properties		[BernoulliB, 3, 1]	0	0	Wolfram MathematicalFunctionData, BernoulliB:Polynomial	Odd Bernoulli polynomials vanish at 1				
+bernoullib-0-1-over-6	Properties		[BernoulliB, 0, [Rational, 1, 6]]	1	1	Wolfram MathematicalFunctionData, BernoulliB:Polynomial	The index-0 polynomial is the constant 1				
 b-1-1-frac-12-is-the-other-convention-for-b-1	Possible issues		[BernoulliB, 1, 1]	[Rational, 1, 2]			$B_1(1) = +\frac12$ is the other convention for $B_1$				
 bernoulli-numbers-are-only-defined-for-n-ge-0-a	Possible issues		[BernoulliB, -1]	[BernoulliB, -1]			Bernoulli numbers are only defined for $n \ge 0$; a negative index is left unevaluated	undefined-form	Both decline: compute-engine answers ["BernoulliB", -1] and Sage raises an error.	undefined-form	Both decline BernoulliB here: compute-engine leaves it unevaluated, SymPy returns it unevaluated.
 numerators-and-denominators-grow-quickly-b-20	Neat examples		[BernoulliB, 20]	[Rational, -174611, 330]			Numerators and denominators grow quickly: $B_{20} = -\frac{174611}{330}$				
-bernoullib-12-x	Neat examples		[BernoulliB, 12, x]	[Add, [Power, x, 12], [Multiply, -6, [Power, x, 11]], [Multiply, 11, [Power, x, 10]], [Multiply, [Rational, -33, 2], [Power, x, 8]], [Multiply, 22, [Power, x, 6]], [Multiply, [Rational, -33, 2], [Power, x, 4]], [Multiply, 5, [Power, x, 2]], [Rational, -691, 2730]]							
+bernoullib-12-x	Neat examples		[BernoulliB, 12, x]	[Add, [Power, x, 12], [Multiply, -6, [Power, x, 11]], [Multiply, 11, [Power, x, 10]], [Multiply, [Rational, -33, 2], [Power, x, 8]], [Multiply, 22, [Power, x, 6]], [Multiply, [Rational, -33, 2], [Power, x, 4]], [Multiply, 5, [Power, x, 2]], [Rational, -691, 2730]]			A full degree-12 Bernoulli polynomial in $x$				

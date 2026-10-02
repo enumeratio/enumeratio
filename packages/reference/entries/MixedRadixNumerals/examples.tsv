@@ -1,13 +1,13 @@
-id	section	role	expr	expected
-integerdigits-571-mixedradixnumerals-list-12-9-6			[IntegerDigits, 571, [MixedRadixNumerals, [List, 12, 9, 6]]]	[List, 10, 5, 1]
-integerlength-1-024-mixedradixnumerals-list-6-4	Scope		[IntegerLength, 1024, [MixedRadixNumerals, [List, 6, 4, 2]]]	4
-integerdigits-534-mixedradixnumerals-list-15-10	Scope		[IntegerDigits, 534, [MixedRadixNumerals, [List, 15, 10, 5]]]	[List, 10, 6, 4]
-fromdigits-list-10-6-4-mixedradixnumerals-list	Scope		[FromDigits, [List, 10, 6, 4], [MixedRadixNumerals, [List, 15, 10, 5]]]	534
-integerreverse-1-024-mixedradixnumerals-list-6-4	Scope		[IntegerReverse, 1024, [MixedRadixNumerals, [List, 6, 4, 2]]]	25
-integerdigits-1-000-000-mixedradixnumerals-list	Applications		[IntegerDigits, 1000000, [MixedRadixNumerals, [List, 19, 17, 13, 11, 7, 5, 3, 2]]]	[List, 1, 16, 3, 9, 6, 1, 2, 0]
-integerdigits-437-mixedradixnumerals-list-6-5-4	Applications		[IntegerDigits, 437, [MixedRadixNumerals, [List, 6, 5, 4, 3, 2, 1]]]	[List, 3, 3, 0, 2, 1, 0]
-integerdigits-100-000-mixedradixnumerals-list-10	Properties		[IntegerDigits, 100000, [MixedRadixNumerals, [List, 10, 9, 8, 7]]]	[List, 19, 8, 3, 5, 5]
-integerdigits-4-237-mixedradixnumerals-list-10	Properties		[IntegerDigits, 4237, [MixedRadixNumerals, [List, 10, 10, 10, 10]]]	[List, 4, 2, 3, 7]
-integerdigits-2-135-mixedradixnumerals-list-10-8	Properties		[IntegerDigits, 2135, [MixedRadixNumerals, [List, 10, 8, 6, 4, 2]]]	[List, 5, 4, 2, 3, 1]
-integerdigits-10-000-mixedradixnumerals-list-24	Properties		[IntegerDigits, 10000, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 2, 46, 40]
-fromdigits-list-2-46-40-mixedradixnumerals-list	Properties		[FromDigits, [List, 2, 46, 40], [MixedRadixNumerals, [List, 24, 60, 60]]]	10000
+id	section	role	expr	expected	caption
+integerdigits-571-mixedradixnumerals-list-12-9-6			[IntegerDigits, 571, [MixedRadixNumerals, [List, 12, 9, 6]]]	[List, 10, 5, 1]	Digits for 571 in radices 12, 9, 6, with the top digit unbounded
+integerlength-1-024-mixedradixnumerals-list-6-4	Scope		[IntegerLength, 1024, [MixedRadixNumerals, [List, 6, 4, 2]]]	4	Four digits needed for 1024 with radices 6, 4, 2
+integerdigits-534-mixedradixnumerals-list-15-10	Scope		[IntegerDigits, 534, [MixedRadixNumerals, [List, 15, 10, 5]]]	[List, 10, 6, 4]	Digits of 534 for radices 15, 10, 5
+fromdigits-list-10-6-4-mixedradixnumerals-list	Scope		[FromDigits, [List, 10, 6, 4], [MixedRadixNumerals, [List, 15, 10, 5]]]	534	FromDigits inverts the digit expansion above
+integerreverse-1-024-mixedradixnumerals-list-6-4	Scope		[IntegerReverse, 1024, [MixedRadixNumerals, [List, 6, 4, 2]]]	25	Reversing the digits of 1024 and reading them back gives 25
+integerdigits-1-000-000-mixedradixnumerals-list	Applications		[IntegerDigits, 1000000, [MixedRadixNumerals, [List, 19, 17, 13, 11, 7, 5, 3, 2]]]	[List, 1, 16, 3, 9, 6, 1, 2, 0]	A long prime-radix expansion of a million
+integerdigits-437-mixedradixnumerals-list-6-5-4	Applications		[IntegerDigits, 437, [MixedRadixNumerals, [List, 6, 5, 4, 3, 2, 1]]]	[List, 3, 3, 0, 2, 1, 0]	A factorial-style base gives digits of 437 in radices 6 down to 1
+integerdigits-100-000-mixedradixnumerals-list-10	Properties		[IntegerDigits, 100000, [MixedRadixNumerals, [List, 10, 9, 8, 7]]]	[List, 19, 8, 3, 5, 5]	The leading digit may exceed its radix when the number is too big, here 19
+integerdigits-4-237-mixedradixnumerals-list-10	Properties		[IntegerDigits, 4237, [MixedRadixNumerals, [List, 10, 10, 10, 10]]]	[List, 4, 2, 3, 7]	With equal radices of 10 it is ordinary decimal
+integerdigits-2-135-mixedradixnumerals-list-10-8	Properties		[IntegerDigits, 2135, [MixedRadixNumerals, [List, 10, 8, 6, 4, 2]]]	[List, 5, 4, 2, 3, 1]	Radices 10, 8, 6, 4, 2 give five digits
+integerdigits-10-000-mixedradixnumerals-list-24	Properties		[IntegerDigits, 10000, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 2, 46, 40]	Ten thousand seconds as hours, minutes, seconds: 2 h 46 m 40 s
+fromdigits-list-2-46-40-mixedradixnumerals-list	Properties		[FromDigits, [List, 2, 46, 40], [MixedRadixNumerals, [List, 24, 60, 60]]]	10000	The round trip: 2 h 46 m 40 s is 10000 seconds

@@ -13,24 +13,24 @@ two-blocks-s-n-2-2-n-1-1	Properties		[Equal, [Stirling, 10, 2], [Subtract, [Powe
 s-n-n-1-binom-n-2-one-block-is-a-pair	Properties		[Equal, [Stirling, 6, 5], [Binomial, 6, 2]]	True			$S(n, n-1) = \binom{n}{2}$: one block is a pair								
 explicit-formula-s-n-k-frac-1-k-sum-j-1-k-j	Properties		[Equal, [Stirling, 6, 3], [Divide, [Sum, [Multiply, [Power, -1, [Subtract, 3, j]], [Binomial, 3, j], [Power, j, 6]], [Tuple, j, 0, 3]], [Factorial, 3]]]	True			Explicit formula $S(n, k) = \frac{1}{k!}\sum_j (-1)^{k-j}\binom{k}{j} j^n$								
 orthogonality-with-stirlings1-sum-k-s-n-k-s-k-m	Properties		[Sum, [Multiply, [StirlingS1, 4, k], [Stirling, k, 2]], [Tuple, k, 0, 4]]	0			Orthogonality with [[StirlingS1]]: $\sum_k s(n, k)\,S(k, m) = \delta_{nm}$								
-n-stirling-120-10	Properties		[N, [Stirling, 120, 10]]	{num: "275564293332645612796076533812387578132055070471681207862920555299757965212186923458011526847229561561721294169780"}											
-stirling-10-4	Properties		[Stirling, 10, 4]	34105											
-stirling-1-0	Properties		[Stirling, 1, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-1-1	Properties		[Stirling, 1, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-1-2	Properties		[Stirling, 1, 2]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-2-0	Properties		[Stirling, 2, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-2-1	Properties		[Stirling, 2, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-2-2	Properties		[Stirling, 2, 2]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-2-3	Properties		[Stirling, 2, 3]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-3-0	Properties		[Stirling, 3, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-3-1	Properties		[Stirling, 3, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-3-2	Properties		[Stirling, 3, 2]	3	3	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-3-3	Properties		[Stirling, 3, 3]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-3-4	Properties		[Stirling, 3, 4]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-4-0	Properties		[Stirling, 4, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-4-1	Properties		[Stirling, 4, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-4-2	Properties		[Stirling, 4, 2]	7	7	Wolfram MathematicalFunctionData, StirlingS2									
-stirling-4-3	Properties		[Stirling, 4, 3]	6	6	Wolfram MathematicalFunctionData, StirlingS2									
+n-stirling-120-10	Properties		[N, [Stirling, 120, 10]]	{num: "275564293332645612796076533812387578132055070471681207862920555299757965212186923458011526847229561561721294169780"}			Enormous Stirling number evaluated numerically								
+stirling-10-4	Properties		[Stirling, 10, 4]	34105			Partitions of 10 elements into 4 blocks								
+stirling-1-0	Properties		[Stirling, 1, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2	Nothing to partition into zero blocks, for $n>0$								
+stirling-1-1	Properties		[Stirling, 1, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2	One element in one block								
+stirling-1-2	Properties		[Stirling, 1, 2]	0	0	Wolfram MathematicalFunctionData, StirlingS2	More blocks than elements gives $0$								
+stirling-2-0	Properties		[Stirling, 2, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2	Nonempty set cannot fill zero blocks								
+stirling-2-1	Properties		[Stirling, 2, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2	One block holding both								
+stirling-2-2	Properties		[Stirling, 2, 2]	1	1	Wolfram MathematicalFunctionData, StirlingS2	Each element on its own								
+stirling-2-3	Properties		[Stirling, 2, 3]	0	0	Wolfram MathematicalFunctionData, StirlingS2	Too many blocks								
+stirling-3-0	Properties		[Stirling, 3, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2	Zero blocks only fit the empty set								
+stirling-3-1	Properties		[Stirling, 3, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2	A single block								
+stirling-3-2	Properties		[Stirling, 3, 2]	3	3	Wolfram MathematicalFunctionData, StirlingS2	Three ways to pick the lone element								
+stirling-3-3	Properties		[Stirling, 3, 3]	1	1	Wolfram MathematicalFunctionData, StirlingS2	All singletons								
+stirling-3-4	Properties		[Stirling, 3, 4]	0	0	Wolfram MathematicalFunctionData, StirlingS2	$k>n$ gives $0$								
+stirling-4-0	Properties		[Stirling, 4, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS2	Zero for $n\ge1$								
+stirling-4-1	Properties		[Stirling, 4, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS2	Always $1$ when $k=1$								
+stirling-4-2	Properties		[Stirling, 4, 2]	7	7	Wolfram MathematicalFunctionData, StirlingS2	$S(n,2)=2^{n-1}-1$								
+stirling-4-3	Properties		[Stirling, 4, 3]	6	6	Wolfram MathematicalFunctionData, StirlingS2	$S(4,3)=\binom42$, choosing the pair that shares a block								
 the-empty-set-has-one-partition-into-no-blocks	Possible issues		[Stirling, 0, 0]	1			The empty set has one partition (into no blocks)								
 no-blocks-for-a-non-empty-set-s-n-0-0-for-n-0	Possible issues		[Stirling, 5, 0]	0			No blocks for a non-empty set: $S(n, 0) = 0$ for $n > 0$								
 k-n-is-0	Possible issues		[Stirling, 3, 5]	0			$k > n$ is 0								

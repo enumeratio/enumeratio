@@ -1,5 +1,5 @@
 id	section	role	expr	expected	caption
 single-letter			[LetterNumber, "'d'"]	4	
-letternumber-d			[LetterNumber, "'D'"]	4	
+letternumber-d			[LetterNumber, "'D'"]	4	Position of a letter in the alphabet
 string	Scope		[LetterNumber, "'cab'"]	[List, 3, 1, 2]	A string gives one position per character
-letternumber-c	Properties		[LetterNumber, "'c'"]	3	
+letternumber-c	Properties		[LetterNumber, "'c'"]	3	Case does not matter

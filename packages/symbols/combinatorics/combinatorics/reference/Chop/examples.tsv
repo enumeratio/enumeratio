@@ -16,4 +16,4 @@ cleans-up-the-floating-point-residue-from	Applications		[Chop, [Subtract, [Multi
 only-the-value-s-own-magnitude-matters-this	Possible issues		[Chop, [Add, 1, 1e-12]]	1.000000000001	Only the value's own magnitude matters -- this stays as is since it isn't close to 0, even though it's close to the integer 1	
 a-hard-cutoff-at-about-10-10-a-value-just-above	Possible issues		[Chop, 1.0000000001e-10]	1.0000000001e-10	A hard cutoff at about $10^{-10}$: a value just above the threshold survives untouched	
 an-exact-small-number-is-chopped-too	Possible issues		[Chop, [Power, 10, -20]]	0	An exact small number is chopped too	Wolfram's Chop only touches approximate numbers: $\mathrm{Chop}[10^{-20}]$ stays $1/10^{20}$.
-chop-2-plus-i-times-10-pow-neg-12	Possible issues		[Chop, [Add, 2, [Multiply, [Complex, 0, 1], [Power, 10, -12]]]]	2		
+chop-2-plus-i-times-10-pow-neg-12	Possible issues		[Chop, [Add, 2, [Multiply, [Complex, 0, 1], [Power, 10, -12]]]]	2	A negligible imaginary part is dropped	

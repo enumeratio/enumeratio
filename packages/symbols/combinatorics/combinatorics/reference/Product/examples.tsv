@@ -3,10 +3,10 @@ product-list-1-2-3-4			[Product, [List, 1, 2, 3, 4]]	24
 the-empty-product-is-1-by-convention-matching			[Product, [List]]	1	The empty product is 1 by convention, matching [[Factorial]] of 0	
 prod-i-1-6-i-2-6-2			[Product, [Power, i, 2], [Tuple, i, 1, 6]]	518400	$\prod_{i=1}^{6} i^2 = (6!)^2$	
 a-symbolic-upper-limit-prod-i-1-n-i-2-n-2			[Product, [Power, i, 2], [Tuple, i, 1, n]]	[Power, [Factorial, n], 2]	A symbolic upper limit: $\prod_{i=1}^{n} i^2 = (n!)^2$	
-product-k-pow-2-k-1-6			[Product, [Power, k, 2], [Limits, k, 1, 6]]	518400		
-product-k-pow-2-k-1-n			[Product, [Power, k, 2], [Limits, k, 1, n]]	[Power, [Factorial, n], 2]		
-product-neg-k-pow-neg-4-plus-1-k-2			[Product, [Add, [Negate, [Power, k, -4]], 1], [Limits, k, 2, PositiveInfinity]]	[Divide, [Sinh, Pi], [Multiply, 4, Pi]]		
-product-2-pow-j-plus-k-k-1-p-j-1-k			[Product, [Power, 2, [Add, j, k]], [Limits, k, 1, p], [Limits, j, 1, k]]	[Power, 2, [Multiply, [Rational, 1, 2], p, [Power, [Add, p, 1], 2]]]		
+product-k-pow-2-k-1-6			[Product, [Power, k, 2], [Limits, k, 1, 6]]	518400	$(6!)^2 = 720^2$	
+product-k-pow-2-k-1-n			[Product, [Power, k, 2], [Limits, k, 1, n]]	[Power, [Factorial, n], 2]	A symbolic upper limit gives a closed form, $(n!)^2$	
+product-neg-k-pow-neg-4-plus-1-k-2			[Product, [Add, [Negate, [Power, k, -4]], 1], [Limits, k, 2, PositiveInfinity]]	[Divide, [Sinh, Pi], [Multiply, 4, Pi]]	An infinite product evaluated exactly: $\prod_{k\ge2}(1-k^{-4}) = \sinh\pi/(4\pi)$	
+product-2-pow-j-plus-k-k-1-p-j-1-k			[Product, [Power, 2, [Add, j, k]], [Limits, k, 1, p], [Limits, j, 1, k]]	[Power, 2, [Multiply, [Rational, 1, 2], p, [Power, [Add, p, 1], 2]]]	A double product with a dependent inner range collapses to one power of $2$	
 a-symbolic-upper-limit-prod-k-1-n-k-n-see	Scope		[Product, k, [Tuple, k, 1, n]]	[Factorial, n]	A symbolic upper limit: $\prod_{k=1}^{n} k = n!$. See [[Factorial]]	
 exponents-add-prod-k-1-n-x-k-x-n-n-1-2	Scope		[Product, [Power, x, k], [Tuple, k, 1, n]]	[Power, x, [Multiply, [Rational, 1, 2], n, [Add, n, 1]]]	Exponents add: $\prod_{k=1}^{n} x^k = x^{n(n+1)/2}$	
 a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1	Scope		[Product, [Divide, [Add, k, 1], k], [Tuple, k, 1, n]]	[Add, n, 1]	A telescoping product: $\prod_{k=1}^{n} \frac{k+1}{k} = n+1$	
@@ -24,8 +24,8 @@ exact-rationals-in-a-collection	Scope		[Product, [List, [Rational, 1, 2], [Ratio
 symbolic-elements	Scope		[Product, [List, a, b, c]]	[Multiply, a, b, c]	Symbolic elements	
 product-a-pow-k-k-nothing-n	Scope		[Product, [Power, a, k], [Limits, k, Nothing, n]]	[Power, a, [Multiply, [Rational, 1, 2], n, [Add, n, 1]]]		
 product-a-pow-k-j-nothing-m-k-nothing-j	Scope		[Product, [Power, a, k], [Limits, j, Nothing, m], [Limits, k, Nothing, j]]	[Power, a, [Multiply, [Rational, 1, 6], m, [Add, m, 1], [Add, m, 2]]]		
-product-j-times-k-k-nothing-nothing-j-nothing	Scope		[Product, [Multiply, j, k], [Limits, k, Nothing, Nothing], [Limits, j, Nothing, Nothing]]	[Product, [Product, [Multiply, j, k], [Limits, j, Nothing, Nothing]], [Limits, k, Nothing, Nothing]]		
-product-j-times-k-k-1-n-j-nothing-nothing	Scope		[Product, [Multiply, j, k], [Limits, k, 1, n], [Limits, j, Nothing, Nothing]]	[Product, [Product, [Multiply, j, k], [Limits, j, Nothing, Nothing]], [Limits, k, 1, n]]		
+product-j-times-k-k-nothing-nothing-j-nothing	Scope		[Product, [Multiply, j, k], [Limits, k, Nothing, Nothing], [Limits, j, Nothing, Nothing]]	[Product, [Product, [Multiply, j, k], [Limits, j, Nothing, Nothing]], [Limits, k, Nothing, Nothing]]	Without bounds the nested product has no value and stays unevaluated	
+product-j-times-k-k-1-n-j-nothing-nothing	Scope		[Product, [Multiply, j, k], [Limits, k, 1, n], [Limits, j, Nothing, Nothing]]	[Product, [Product, [Multiply, j, k], [Limits, j, Nothing, Nothing]], [Limits, k, 1, n]]	The unbounded inner product blocks evaluation; only nesting is made explicit	
 product-3-times-q-pow-2k-plus-5-k-nothing	Scope	triage	[Product, [Add, [Multiply, 3, [Power, q, [Multiply, 2, k]]], 5], [Limits, k, Nothing, Nothing]]	[Add, [Multiply, 3, [Power, q, 2]], 5]		unscanned
 product-1-over-q-pow-8k-plus-11-times-q-pow-8	Scope	triage	[Product, [Multiply, [Divide, 1, [Add, [Power, q, [Multiply, 8, k]], 11]], [Add, [Power, q, [Multiply, 8, [Add, k, 1]]], 11]], [Limits, k, Nothing, Nothing]]	1		unscanned
 range-stays-lazy-on-its-own-but-product-forces	Applications		[Product, [Range, 1, 6]]	720	[[Range]] stays lazy on its own, but Product forces it to compute $6!$	

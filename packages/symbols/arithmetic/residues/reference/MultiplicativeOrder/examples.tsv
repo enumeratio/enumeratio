@@ -13,11 +13,11 @@ a-discrete-log-mod-the-mersenne-prime-2-61-1	Scope		[MultiplicativeOrder, 3, [Su
 1-is-the-only-element-of-order-1	Properties		[MultiplicativeOrder, 1, 7]	1	1 is the only element of order 1				
 the-multiplicative-order-always-divides-varphi-n	Properties		[Equal, [Mod, [Totient, 7], [MultiplicativeOrder, 3, 7]], 0]	True	The multiplicative order always divides $\varphi(n)$. See [[Totient]]				
 the-discrete-log-inverts-powermod	Properties		[PowerMod, 3, [MultiplicativeOrder, 3, [Subtract, [Power, 2, 61], 1], [List, 2]], [Subtract, [Power, 2, 61], 1]]	2	the discrete log inverts [[PowerMod]]	resource	Wolfram hit the scan's per-item time or memory cap on this input; we answer it.		
-divides-multiplicativeorder-5-12-totient-12	Properties		[Divides, [MultiplicativeOrder, 5, 12], [Totient, 12]]	True					
-multiplicativeorder-5-3	Properties		[MultiplicativeOrder, 5, 3]	2					
-multiplicativeorder-neg-5-3	Properties		[MultiplicativeOrder, -5, 3]	1					
-multiplicativeorder-5-7-list-4	Properties		[MultiplicativeOrder, 5, 7, [List, 4]]	2					
+divides-multiplicativeorder-5-12-totient-12	Properties		[Divides, [MultiplicativeOrder, 5, 12], [Totient, 12]]	True	The order always divides $\varphi(n)$				
+multiplicativeorder-5-3	Properties		[MultiplicativeOrder, 5, 3]	2	$5\equiv2$ and $2^2\equiv1 \pmod3$				
+multiplicativeorder-neg-5-3	Properties		[MultiplicativeOrder, -5, 3]	1	$-5\equiv1 \pmod3$ has order $1$				
+multiplicativeorder-5-7-list-4	Properties		[MultiplicativeOrder, 5, 7, [List, 4]]	2	With target residue $4$: least $k$ with $5^k\equiv4 \pmod 7$				
 no-order-exists-when-gcd-a-n-neq-1-here-gcd-10	Possible issues		[MultiplicativeOrder, 10, 22]	[MultiplicativeOrder, 10, 22]	No order exists when $\gcd(a,n)\neq1$; here $\gcd(10,22)=2$, so compute-engine leaves it unevaluated			undefined-form	Both decline: compute-engine answers ["MultiplicativeOrder", 10, 22] and Sage raises an error.
 3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4	Possible issues		[MultiplicativeOrder, 2, 7, [List, 3]]	[MultiplicativeOrder, 2, 7, [List, 3]]	3 is not a power of 2 mod 7 — the powers are $\{1, 2, 4\}$				
-multiplicativeorder-10-21	Possible issues		[MultiplicativeOrder, 10, 21]	6					
-multiplicativeorder-21-10	Possible issues		[MultiplicativeOrder, 21, 10]	1					
+multiplicativeorder-10-21	Possible issues		[MultiplicativeOrder, 10, 21]	6	$10^6\equiv1 \pmod{21}$				
+multiplicativeorder-21-10	Possible issues		[MultiplicativeOrder, 21, 10]	1	$21\equiv1 \pmod{10}$, so order $1$; argument order matters				

@@ -34,13 +34,13 @@ lcm-of-a-large-norm-gaussian-and-a-real-prime-19	Scope	test	[LCM, [Complex, 123,
 lcm-of-two-composites-sharing-the-prime-above-13	Scope	test	[LCM, [Complex, 6, 8], [Complex, 9, 6]]	[Complex, 6, 108]			lcm of two composites sharing the prime above 13														
 lcm-of-a-lazy-range-1-10-not-a-materialised-list	Scope		[LCM, [Range, 1, 10]]	2520	2520	Hand-computed: the smallest number divisible by each of 1 through 10 (same fact as the Applications row below, over List) -- an independent check that a lazy [[Range]] argument is walked element by element	A lazy [[Range]], not a materialised [[List]]														
 the-smallest-number-divisible-by-each-of-1	Applications		[LCM, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]	2520			The smallest number divisible by each of 1 through 10														
-lcm-10-15	Applications		[LCM, 10, 15]	30																	
+lcm-10-15	Applications		[LCM, 10, 15]	30			Smallest common multiple of 10 and 15, e.g. for adding $\frac1{10}+\frac1{15}$														
 foldlist-lcm-1-range-2-10	Applications	triage	[FoldList, LCM, 1, [Range, 2, 10]]	[List, 1, 2, 10]				gap	Range(2,10) yields a lazy collection (per 'ce-lazy-collections-json'); FoldList doesn't materialize it before folding, and only gets partway through (3 elements out of the expected 10) — confirmed by re-running the identical FoldList(LCM,1,{2,...,10}) with an already-materialized List, which gives the fully correct answer. A lazy-collection materialization gap in FoldList, not in LCM.												
 ln-lcm-range-1-10	Applications	triage	[Ln, [LCM, [Range, 1, 10]]]	[Add, [Multiply, 2, [Ln, 3]], [Multiply, 3, [Ln, 2]], [Ln, 35]]				gap	Same lazy-Range-materialization cause as the FoldList row above: LCM(Range(1,10))'s single-list broadcast (just fixed for a materialized List — see CarmichaelLambda's LCM row) never sees a List operator because Range's lazy collection doesn't present as one; Ln then can't thread over the result either. Needs Range materialization ahead of LCM's broadcast check, not a further LCM change.												
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	Properties		[Equal, [Multiply, [GCD, 27, 81], [LCM, 27, 81]], [Multiply, 27, 81]]	True			$\gcd(a,b)\cdot\mathrm{lcm}(a,b)=ab$. See [[GCD]]														
-lcm-27-81	Properties		[LCM, 27, 81]	81																	
-lcm-6-11-25-eq-1-650	Properties		[Equal, [LCM, 6, 11, 25], 1650]	True																	
-lcm-5-7-2-eq-70	Properties		[Equal, [LCM, 5, 7, 2], 70]	True																	
+lcm-27-81	Properties		[LCM, 27, 81]	81			When one number divides the other, the larger is the LCM														
+lcm-6-11-25-eq-1-650	Properties		[Equal, [LCM, 6, 11, 25], 1650]	True			Accepts more than two arguments: $2\cdot3\cdot11\cdot5^2=1650$														
+lcm-5-7-2-eq-70	Properties		[Equal, [LCM, 5, 7, 2], 70]	True			Argument order does not matter; coprime inputs multiply to $70$														
 ln-1-over-lcm-range-1-4-times-lcm-range-1-5	Properties	triage	[Ln, [Multiply, [Divide, 1, [LCM, [Range, 1, 4]]], [LCM, [Range, 1, 5]]]]	[Ln, 5]				gap	Log(1/LCM(Range(1,4)) * LCM(Range(1,5))) reduces to Log(5) on our side (LCM(1..4)=12, LCM(1..5)=60, 60/12=5) — plausibly correct — but the row's Wolfram side never ran (this was an emit-bucket bracket-notation row, not a real oracle value); needs a real oracle rescan to confirm, not a code fix from this lane.												
 a-single-argument-is-returned-unchanged	Possible issues		[LCM, 5]	5			A single argument is returned unchanged														
 0-absorbs-the-lcm-with-0-is-0	Possible issues		[LCM, 0, 5]	0			0 absorbs: the LCM with 0 is 0														

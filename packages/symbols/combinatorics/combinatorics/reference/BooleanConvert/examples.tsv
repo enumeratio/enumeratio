@@ -1,8 +1,8 @@
-id	section	role	expr	expected
-default-form-is-dnf			[BooleanConvert, [And, p, [Or, b, r]]]	[Or, [And, b, p], [And, p, r]]
-cnf-distributes-or-over-and	Scope		[BooleanConvert, [Or, p, [And, b, r]], "'CNF'"]	[And, [Or, b, p], [Or, p, r]]
-nnf-pushes-not-to-the-leaves-not-distributed	Scope		[BooleanConvert, [Implies, p, b], "'NNF'"]	[Or, b, [Not, p]]
-a-tautological-clause-drops-out-of-cnf	Scope		[BooleanConvert, [Or, p, [Not, p]], "'CNF'"]	True
-an-unimplemented-form-stays-unevaluated	Scope		[BooleanConvert, p, "'ESOP'"]	[BooleanConvert, p, "'ESOP'"]
-booleanconvert-f	Scope		[BooleanConvert, f]	f
-booleanconvert-f-cnf	Scope		[BooleanConvert, f, "'CNF'"]	f
+id	section	role	expr	expected	caption
+default-form-is-dnf			[BooleanConvert, [And, p, [Or, b, r]]]	[Or, [And, b, p], [And, p, r]]	
+cnf-distributes-or-over-and	Scope		[BooleanConvert, [Or, p, [And, b, r]], "'CNF'"]	[And, [Or, b, p], [Or, p, r]]	
+nnf-pushes-not-to-the-leaves-not-distributed	Scope		[BooleanConvert, [Implies, p, b], "'NNF'"]	[Or, b, [Not, p]]	
+a-tautological-clause-drops-out-of-cnf	Scope		[BooleanConvert, [Or, p, [Not, p]], "'CNF'"]	True	
+an-unimplemented-form-stays-unevaluated	Scope		[BooleanConvert, p, "'ESOP'"]	[BooleanConvert, p, "'ESOP'"]	
+booleanconvert-f	Scope		[BooleanConvert, f]	f	A bare symbol is already in normal form
+booleanconvert-f-cnf	Scope		[BooleanConvert, f, "'CNF'"]	f	A lone symbol is its own CNF

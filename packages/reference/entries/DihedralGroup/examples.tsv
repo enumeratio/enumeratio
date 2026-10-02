@@ -1,3 +1,3 @@
-id	section	role	expr	expected	wolfram.kind	wolfram.note
-grouporder-dihedralgroup-10			[GroupOrder, [DihedralGroup, 10]]	20		
-groupelements-dihedralgroup-4			[GroupElements, [DihedralGroup, 4]]	[List, [GroupBasis, "'0'"], [GroupBasis, "'1'"], [GroupBasis, "'2'"], [GroupBasis, "'3'"], [GroupBasis, "'s0'"], [GroupBasis, "'s1'"], [GroupBasis, "'s2'"], [GroupBasis, "'s3'"]]	convention	Same GroupBasis-vs-Cycles representation choice as the CyclicGroup rows.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+grouporder-dihedralgroup-10			[GroupOrder, [DihedralGroup, 10]]	20	The dihedral group of the 10-gon has order $2n=20$		
+groupelements-dihedralgroup-4			[GroupElements, [DihedralGroup, 4]]	[List, [GroupBasis, "'0'"], [GroupBasis, "'1'"], [GroupBasis, "'2'"], [GroupBasis, "'3'"], [GroupBasis, "'s0'"], [GroupBasis, "'s1'"], [GroupBasis, "'s2'"], [GroupBasis, "'s3'"]]		convention	Same GroupBasis-vs-Cycles representation choice as the CyclicGroup rows.

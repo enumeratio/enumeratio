@@ -1,5 +1,5 @@
-id	section	role	expr	expected
-standarddeviation-poissondistribution-100	Applications		[StandardDeviation, [PoissonDistribution, 100]]	10
-n-probability-x-eq-0-distributed-x	Applications		[N, [Probability, [Equal, x, 0], [Distributed, x, [PoissonDistribution, [Rational, 16, 25]]]]]	[Probability, [Equal, x, 0], [Distributed, x, [PoissonDistribution, 0.64]]]
-probability-n-eq-0-distributed-n	Applications		[Probability, [Equal, n, 0], [Distributed, n, [PoissonDistribution, [Multiply, 10000, [Power, 10, -3]]]]]	[Probability, [Equal, n, 0], [Distributed, n, [PoissonDistribution, 10]]]
-nprobability-n-lt-eq-15-distributed-n	Applications		[NProbability, [LessEqual, n, 15], [Distributed, n, [PoissonDistribution, [Multiply, 10368000, [Power, 10, -6]]]]]	[NProbability, [LessEqual, n, 15], [Distributed, n, [PoissonDistribution, [Rational, 1296, 125]]]]
+id	section	role	expr	expected	caption
+standarddeviation-poissondistribution-100	Applications		[StandardDeviation, [PoissonDistribution, 100]]	10	The standard deviation is $\sqrt\lambda$, so $\sqrt{100}=10$
+n-probability-x-eq-0-distributed-x	Applications		[N, [Probability, [Equal, x, 0], [Distributed, x, [PoissonDistribution, [Rational, 16, 25]]]]]	[Probability, [Equal, x, 0], [Distributed, x, [PoissonDistribution, 0.64]]]	N converts the rate to 0.64 but leaves the probability unevaluated
+probability-n-eq-0-distributed-n	Applications		[Probability, [Equal, n, 0], [Distributed, n, [PoissonDistribution, [Multiply, 10000, [Power, 10, -3]]]]]	[Probability, [Equal, n, 0], [Distributed, n, [PoissonDistribution, 10]]]	The rate simplifies to 10 but the probability stays symbolic
+nprobability-n-lt-eq-15-distributed-n	Applications		[NProbability, [LessEqual, n, 15], [Distributed, n, [PoissonDistribution, [Multiply, 10368000, [Power, 10, -6]]]]]	[NProbability, [LessEqual, n, 15], [Distributed, n, [PoissonDistribution, [Rational, 1296, 125]]]]	The rate reduces to $1296/125$; the numeric probability is left unevaluated

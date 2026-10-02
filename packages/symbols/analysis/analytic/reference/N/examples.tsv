@@ -2,21 +2,21 @@ id	section	role	expr	expected	caption	triage	epsil.in	epsil.backOut	fullform.in	
 n-pi-30			[N, Pi, 30]	{num: "3.14159265358979323846264338328"}																			
 the-last-digit-correctly-rounded-computing-at-30			[N, [Sinh, 1], 30]	{num: "1.17520119364380145688238185060"}	The last digit correctly rounded: computing at 30 digits alone gives …059																		
 a-list-number-by-number			[N, [List, Pi, ExponentialE, [Sqrt, 2]], 5]	[List, 3.1416, 2.7183, 1.4142]	A list, number by number		N([pi, exponentialE, sqrt(2)], 5)		N(List(Pi, ExponentialE, Sqrt(2)), 5)			threading	compute-engine's N is Listable and threads over the list; Sage's N() takes a single value and raises ValueError trying to unpack the list.	threading	compute-engine's N is Listable and threads over the list; SymPy takes scalars only.	precision	The mapping drops N, and mpmath prints its constants as lazy objects (<pi: 3.14159~>) rather than digits.					precision	The mapping evaluates in f64 and drops N's digit count.
-n-1-over-7			[N, [Rational, 1, 7]]	{num: "0.142857142857142857143"}																			
-n-1-over-7-50			[N, [Rational, 1, 7], 50]	{num: "0.14285714285714285714285714285714285714285714285714"}																			
-n-gamma-33-over-10-50			[N, [Gamma, [Rational, 33, 10]], 50]	{num: "2.6834373819557687935963273147667112586281870043548"}																			
-n-pi-50	Scope		[N, Pi, 50]	{num: "3.1415926535897932384626433832795028841971693993751"}																			
-n-khinchin-50	Scope		[N, Khinchin, 50]	{num: "2.6854520010653064453097148354817956938203822939945"}																			
-n-arcsin-3	Scope		[N, [Arcsin, 3]]	[Complex, {num: "1.5707963267948966192313215"}, {num: "-1.76274717403908605047"}]				[Subtract, {num: "1.5707963267948966192313215"}, [Multiply, {num: "1.76274717403908605047"}, i]]															
-n-c	Scope		[N, c]	c																			
-n-c-47	Scope		[N, c, 47]	c																			
-n-poly	Scope		[N, poly]	poly																			
-n-x-pow-3-over-2	Scope		[N, [Power, x, [Rational, 3, 2]]]	[Power, x, 1.5]																			
-n-pi-pow-x	Scope		[N, [Power, Pi, x]]	[Power, {num: "3.141592653589793238462643"}, x]																			
-n-int	Scope		[N, int]	int																			
-n-neg-2-times-pit-plus-pi-list-positiveinfinity	Scope		[N, [Add, [Multiply, -2, pit], Pi], [List, PositiveInfinity, 20]]	[Add, [Multiply, -2, pit], {num: "3.141592653589793238462643"}]																			
-n-crt	Scope		[N, crt]	crt																			
-n-crt-47	Scope		[N, crt, 47]	crt																			
+n-1-over-7			[N, [Rational, 1, 7]]	{num: "0.142857142857142857143"}	An exact rational at the default precision																		
+n-1-over-7-50			[N, [Rational, 1, 7], 50]	{num: "0.14285714285714285714285714285714285714285714285714"}	A fifty-digit approximation of $\frac17$																		
+n-gamma-33-over-10-50			[N, [Gamma, [Rational, 33, 10]], 50]	{num: "2.6834373819557687935963273147667112586281870043548"}	$\Gamma(3.3)$ to 50 digits																		
+n-pi-50	Scope		[N, Pi, 50]	{num: "3.1415926535897932384626433832795028841971693993751"}	$\pi$ to 50 digits																		
+n-khinchin-50	Scope		[N, Khinchin, 50]	{num: "2.6854520010653064453097148354817956938203822939945"}	Khinchin's constant to 50 digits																		
+n-arcsin-3	Scope		[N, [Arcsin, 3]]	[Complex, {num: "1.5707963267948966192313215"}, {num: "-1.76274717403908605047"}]	Out of the real domain, the result is complex			[Subtract, {num: "1.5707963267948966192313215"}, [Multiply, {num: "1.76274717403908605047"}, i]]															
+n-c	Scope		[N, c]	c	An undefined symbol stays as it is																		
+n-c-47	Scope		[N, c, 47]	c	The requested precision does not change a symbol																		
+n-poly	Scope		[N, poly]	poly	A plain symbol is unchanged																		
+n-x-pow-3-over-2	Scope		[N, [Power, x, [Rational, 3, 2]]]	[Power, x, 1.5]	Symbolic powers get a float exponent																		
+n-pi-pow-x	Scope		[N, [Power, Pi, x]]	[Power, {num: "3.141592653589793238462643"}, x]	A float coefficient inside a symbolic expression																		
+n-int	Scope		[N, int]	int	A symbol stays symbolic																		
+n-neg-2-times-pit-plus-pi-list-positiveinfinity	Scope		[N, [Add, [Multiply, -2, pit], Pi], [List, PositiveInfinity, 20]]	[Add, [Multiply, -2, pit], {num: "3.141592653589793238462643"}]	A numeric constant is turned into a float within a symbolic expression																		
+n-crt	Scope		[N, crt]	crt	Another symbol is unchanged																		
+n-crt-47	Scope		[N, crt, 47]	crt	Even with a precision it is left alone																		
 n-2-pow-1-000-000	Scope	triage	[N, [Power, 2, 1000000]]	{num: "9.9006562292958982507e+301029"}		gap					N(2^1000000) with no explicit precision prints more significant digits (21) than a default/machine-precision computation can vouch for — Wolfram's own answer carries a `15.95...` precision annotation flagging the same limit. A real 'how many digits can we actually claim' policy question for default-precision N(), not a one-line fix.												
 n-m	Scope	triage	[N, m]	m		emit					our bug (emit): DEFINED_NAMES wrongly excluded m/s/q/A/C (and Integers had no CONSTANTS pass-through row) from free-variable treatment, so this row was reported un-emittable and skipped as unscanned. Fixed in reference/scripts/defined-names.ts's isDefinedName (a scalar-typed, non-constant lookupDefinition() hit is a free variable, same as no hit at all) and emit.ts's CONSTANTS (added Integers); now emits — leave for the next oracle scan to produce a real verdict.												
 n-pi-pow-10-list-positiveinfinity-5	Scope		[N, [Power, Pi, 10], [List, PositiveInfinity, 5]]	93648.04748						precision	An accuracy goal of 5 puts 5 digits after the point, 10 significant digits: 93648.04748. Wolfram prints 93648.0475, a digit short of the goal, though it keeps more internally.												

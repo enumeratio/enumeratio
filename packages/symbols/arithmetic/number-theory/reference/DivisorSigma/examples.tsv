@@ -13,16 +13,16 @@ listable-in-n	Scope		[DivisorSigma, 2, [List, 1, 2, 3, 4, 5]]	[List, 1, 5, 10, 2
 symbolic-k-expands-over-the-divisors	Scope		[DivisorSigma, k, 30]	[Add, [Power, 2, k], [Power, 3, k], [Power, 5, k], [Power, 6, k], [Power, 10, k], [Power, 15, k], [Power, 30, k], 1]			Symbolic $k$ expands over the divisors			
 6-is-a-perfect-number-sigma-1-6-2-times-6	Applications		[DivisorSigma, 1, 6]	12			6 is a perfect number: $\sigma_1(6)=2\times6$			
 28-is-the-next-perfect-number-sigma-1-28-2-times	Applications		[DivisorSigma, 1, 28]	56			28 is the next perfect number: $\sigma_1(28)=2\times28$			
-filter-range-1-30-function-divisorsigma-1-1-eq-2	Applications		[Filter, [Range, 1, 30], [Function, [Block, [Equal, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], _1]]	[List, 6, 28]				Unreadable		
-filter-range-1-30-function-divisorsigma-1-1-lt-2	Applications		[Filter, [Range, 1, 30], [Function, [Block, [Less, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], _1]]	[List, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 21, 22, 23, 25, 26, 27, 29]				Unreadable		
-filter-range-1-30-function-2-times-1-lt	Applications		[Filter, [Range, 1, 30], [Function, [Block, [Less, [Multiply, 2, _1], [DivisorSigma, 1, _1]]], _1]]	[List, 12, 18, 20, 24, 30]				Unreadable		
-nestlist-function-neg-1-plus-divisorsigma-1-1-1	Applications		[NestList, [Function, [Block, [Add, [Negate, _1], [DivisorSigma, 1, _1]]], _1], 276, 20]	[List, 276, 396, 696, 1104, 1872, 3770, 3790, 3050, 2716, 2772, 5964, 10164, 19628, 19684, 22876, 26404, 30044, 33796, 38780, 54628, 54684]				Unreadable		
+filter-range-1-30-function-divisorsigma-1-1-eq-2	Applications		[Filter, [Range, 1, 30], [Function, [Block, [Equal, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], _1]]	[List, 6, 28]			Perfect numbers have $\sigma(n)=2n$	Unreadable		
+filter-range-1-30-function-divisorsigma-1-1-lt-2	Applications		[Filter, [Range, 1, 30], [Function, [Block, [Less, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], _1]]	[List, 1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 21, 22, 23, 25, 26, 27, 29]			Deficient numbers, where $\sigma(n)<2n$	Unreadable		
+filter-range-1-30-function-2-times-1-lt	Applications		[Filter, [Range, 1, 30], [Function, [Block, [Less, [Multiply, 2, _1], [DivisorSigma, 1, _1]]], _1]]	[List, 12, 18, 20, 24, 30]			Abundant numbers, where $\sigma(n)>2n$	Unreadable		
+nestlist-function-neg-1-plus-divisorsigma-1-1-1	Applications		[NestList, [Function, [Block, [Add, [Negate, _1], [DivisorSigma, 1, _1]]], _1], 276, 20]	[List, 276, 396, 696, 1104, 1872, 3770, 3790, 3050, 2716, 2772, 5964, 10164, 19628, 19684, 22876, 26404, 30044, 33796, 38780, 54628, 54684]			Iterating the aliquot map from 276, a long-running sequence	Unreadable		
 multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n	Properties		[Equal, [Multiply, [DivisorSigma, 1, 9], [DivisorSigma, 1, 8]], [DivisorSigma, 1, 72]]	True			Multiplicative: $\sigma_1(mn)=\sigma_1(m)\sigma_1(n)$ when $\gcd(m,n)=1$, here for $9$ and $8$			
-divisorsigma-5-100	Properties		[DivisorSigma, 5, 100]	10325569807						
-divisorsigma-3-18-times-divisorsigma-3-25-eq	Properties		[Equal, [Multiply, [DivisorSigma, 3, 18], [DivisorSigma, 3, 25]], [DivisorSigma, 3, 450]]	True						
-divisorsigma-neg-1-28	Properties		[DivisorSigma, -1, 28]	2						
-divisorsigma-0-1	Properties		[DivisorSigma, 0, 1]	1	1	Wolfram MathematicalFunctionData, DivisorSigma				
-divisorsigma-0-2	Properties		[DivisorSigma, 0, 2]	2	2	Wolfram MathematicalFunctionData, DivisorSigma				
-divisorsigma-0-3	Properties		[DivisorSigma, 0, 3]	2	2	Wolfram MathematicalFunctionData, DivisorSigma				
-map-function-divisorsigma-1-1-lt-2-times-1-1	Properties		[Map, [Function, [Block, [Less, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], _1], [Filter, [Range, 1, 100], IsPrimePower]]	[List, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]				Unreadable		
+divisorsigma-5-100	Properties		[DivisorSigma, 5, 100]	10325569807			Sum of fifth powers of the divisors of 100			
+divisorsigma-3-18-times-divisorsigma-3-25-eq	Properties		[Equal, [Multiply, [DivisorSigma, 3, 18], [DivisorSigma, 3, 25]], [DivisorSigma, 3, 450]]	True			Multiplicative: coprime arguments multiply			
+divisorsigma-neg-1-28	Properties		[DivisorSigma, -1, 28]	2			$\sigma_{-1}(n)=\sigma(n)/n$, which is 2 for a perfect number			
+divisorsigma-0-1	Properties		[DivisorSigma, 0, 1]	1	1	Wolfram MathematicalFunctionData, DivisorSigma	$\sigma_0$ counts divisors; 1 has one			
+divisorsigma-0-2	Properties		[DivisorSigma, 0, 2]	2	2	Wolfram MathematicalFunctionData, DivisorSigma	A prime has two divisors			
+divisorsigma-0-3	Properties		[DivisorSigma, 0, 3]	2	2	Wolfram MathematicalFunctionData, DivisorSigma	Another prime, two divisors			
+map-function-divisorsigma-1-1-lt-2-times-1-1	Properties		[Map, [Function, [Block, [Less, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], _1], [Filter, [Range, 1, 100], IsPrimePower]]	[List, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]			Every prime power is deficient	Unreadable		
 the-trivial-base-case	Possible issues		[DivisorSigma, 1, 1]	1			The trivial base case			
