@@ -5,6 +5,6 @@ prepend-single-element-list		test	[Prepend, [List, 5], 10]	[List, 10, 5]
 prepend-empty-list		test	[Prepend, [List], 42]	[List, 42]				
 a-rule-inserted-at-the-front-of-an-association	Scope		[Prepend, [Association, [Rule, 1, a], [Rule, 2, b]], [Rule, 3, d]]	[Association, [Rule, 3, d], [Rule, 1, a], [Rule, 2, b]]	A rule inserted at the front of an association		shape	Same key/value pairs in the same order; Wolfram prints its native <|...|> association literal instead of our Association(...) form.
 several-rules-prepended-at-once	Scope		[Prepend, [Association, [Rule, 1, a], [Rule, 2, b]], [List, [Rule, 3, d], [Rule, 4, e]]]	[Association, [Rule, 3, d], [Rule, 4, e], [Rule, 1, a], [Rule, 2, b]]	Several rules prepended at once			
-nestlist-function-prepend-1-x-1-list-a-5	Applications		[NestList, [Function, [Block, [Prepend, _1, x]], _1], [List, a], 5]	[List, [List, a], [List, x, a], [List, x, x, a], [List, x, x, x, a], [List, x, x, x, x, a], [List, x, x, x, x, x, a]]		Unreadable		
+nestlist-function-prepend-1-x-1-list-a-5	Applications		[NestList, [Function, [Block, [Prepend, _1, x]], _1], [List, a], 5]	[List, [List, a], [List, x, a], [List, x, x, a], [List, x, x, x, a], [List, x, x, x, x, a], [List, x, x, x, x, x, a]]	Repeatedly prepending grows the list by one $x$ each step	Unreadable		
 prepend-c-x-join-x-c-see-join	Properties		[Equal, [Prepend, [List, 1, 2, 3], 0], [Join, [List, 0], [List, 1, 2, 3]]]	True	$Prepend(c, x) = Join(\{x\}, c)$. See [[Join]]			
-prepend-list-a-b-c-list-x-y	Possible issues		[Prepend, [List, a, b, c], [List, x, y]]	[List, [List, x, y], a, b, c]				
+prepend-list-a-b-c-list-x-y	Possible issues		[Prepend, [List, a, b, c], [List, x, y]]	[List, [List, x, y], a, b, c]	A list argument is added as one element, not spliced in			

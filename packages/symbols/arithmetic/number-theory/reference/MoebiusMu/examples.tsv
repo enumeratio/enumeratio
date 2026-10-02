@@ -7,26 +7,26 @@ threads-element-wise-over-a-list-as-wolfram-s	Scope		[MoebiusMu, [List, 1, 2, 3,
 gaussian-integers-5-6i-is-a-gaussian-prime-norm	Scope		[MoebiusMu, [Complex, 5, 6]]	-1			Gaussian integers: $5+6i$ is a Gaussian prime (norm 61)						domain	compute-engine's MoebiusMu takes Gaussian integers; SymPy's mobius takes integers.			domain	Oscar's moebius_mu is rational-integer only, no Gaussian integers; compute-engine extends μ through the Gaussian-prime factorization.	domain	Nemo's moebius_mu is rational-integer only, no Gaussian integers; ours extends μ through the Gaussian-prime factorization.
 listable-threads-over-a-list	Scope		[MoebiusMu, [List, 4, 10, 17, 20]]	[List, 0, 1, -1, 0]			Listable: threads over a list										threading	compute-engine's MoebiusMu is Listable and threads over the list; Oscar's moebius_mu takes scalars only.		
 listable-over-a-range	Scope		[MoebiusMu, [Range, 20]]	[List, 1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0]			Listable over a [[Range]]													
-moebiusmu-15-factorial-eq-0	Applications		[NotEqual, [MoebiusMu, 15], 0]	True																
-divisorsum-1-function-moebiusmu-1-1	Applications		[DivisorSum, 1, [Function, [Block, [MoebiusMu, _1]], _1]]	1				Unreadable												
+moebiusmu-15-factorial-eq-0	Applications		[NotEqual, [MoebiusMu, 15], 0]	True			$15=3\cdot5$ is squarefree, so $\mu\ne0$													
+divisorsum-1-function-moebiusmu-1-1	Applications		[DivisorSum, 1, [Function, [Block, [MoebiusMu, _1]], _1]]	1			$\sum_{d\mid n}\mu(d)=1$ only when $n=1$	Unreadable												
 sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind	Properties		[Add, [MoebiusMu, 1], [MoebiusMu, 2], [MoebiusMu, 3], [MoebiusMu, 4], [MoebiusMu, 6], [MoebiusMu, 12]]	0			$\sum_{d\mid n}\mu(d)=0$ for $n>1$, the identity behind Möbius inversion													
-moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	Properties		[Equal, [MoebiusMu, 253], [Multiply, [MoebiusMu, 11], [MoebiusMu, 23]]]	True																
-moebiusmu-5-187	Properties		[MoebiusMu, 5187]	1																
-moebiusmu-32-538	Properties		[MoebiusMu, 32538]	-1																
-moebiusmu-1-440	Properties		[MoebiusMu, 1440]	0																
-list-isprimepower-121-iscomposite-121-moebiusmu	Properties		[List, [And, [IsPrimePower, 121], [IsComposite, 121]], [MoebiusMu, 121]]	[List, True, 0]																
-list-isprime-11-moebiusmu-11	Properties		[List, [IsPrime, 11], [MoebiusMu, 11]]	[List, True, -1]																
-moebiusmu-2	Properties		[MoebiusMu, 2]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-3	Properties		[MoebiusMu, 3]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-4	Properties		[MoebiusMu, 4]	0	0	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-5	Properties		[MoebiusMu, 5]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-6	Properties		[MoebiusMu, 6]	1	1	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-7	Properties		[MoebiusMu, 7]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-8	Properties		[MoebiusMu, 8]	0	0	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-9	Properties		[MoebiusMu, 9]	0	0	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-13	Properties		[MoebiusMu, 13]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-14	Properties		[MoebiusMu, 14]	1	1	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-15	Properties		[MoebiusMu, 15]	1	1	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-16	Properties		[MoebiusMu, 16]	0	0	Wolfram MathematicalFunctionData, MoebiusMu														
-moebiusmu-17	Properties		[MoebiusMu, 17]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu														
+moebiusmu-253-eq-moebiusmu-11-times-moebiusmu-23	Properties		[Equal, [MoebiusMu, 253], [Multiply, [MoebiusMu, 11], [MoebiusMu, 23]]]	True			Multiplicative over coprime factors, $253=11\cdot23$													
+moebiusmu-5-187	Properties		[MoebiusMu, 5187]	1			Squarefree with an even number of primes gives $1$													
+moebiusmu-32-538	Properties		[MoebiusMu, 32538]	-1			Squarefree with an odd number of primes gives $-1$													
+moebiusmu-1-440	Properties		[MoebiusMu, 1440]	0			Divisible by a square ($1440=2^5\cdot3^2\cdot5$), so $0$													
+list-isprimepower-121-iscomposite-121-moebiusmu	Properties		[List, [And, [IsPrimePower, 121], [IsComposite, 121]], [MoebiusMu, 121]]	[List, True, 0]			A composite prime power has $\mu=0$													
+list-isprime-11-moebiusmu-11	Properties		[List, [IsPrime, 11], [MoebiusMu, 11]]	[List, True, -1]			Every prime has $\mu=-1$													
+moebiusmu-2	Properties		[MoebiusMu, 2]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu	A single prime gives $-1$													
+moebiusmu-3	Properties		[MoebiusMu, 3]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu	Another prime, again $-1$													
+moebiusmu-4	Properties		[MoebiusMu, 4]	0	0	Wolfram MathematicalFunctionData, MoebiusMu	$4=2^2$ is not squarefree													
+moebiusmu-5	Properties		[MoebiusMu, 5]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu	Prime, so $-1$													
+moebiusmu-6	Properties		[MoebiusMu, 6]	1	1	Wolfram MathematicalFunctionData, MoebiusMu	Two distinct primes give $+1$													
+moebiusmu-7	Properties		[MoebiusMu, 7]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu	One prime factor, an odd count: $\mu(7) = -1$													
+moebiusmu-8	Properties		[MoebiusMu, 8]	0	0	Wolfram MathematicalFunctionData, MoebiusMu	A cube contains a square factor, so $0$													
+moebiusmu-9	Properties		[MoebiusMu, 9]	0	0	Wolfram MathematicalFunctionData, MoebiusMu	$9=3^2$ gives $0$													
+moebiusmu-13	Properties		[MoebiusMu, 13]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu	$\mu(p) = -1$ for every prime $p$													
+moebiusmu-14	Properties		[MoebiusMu, 14]	1	1	Wolfram MathematicalFunctionData, MoebiusMu	$14=2\cdot7$, an even number of primes													
+moebiusmu-15	Properties		[MoebiusMu, 15]	1	1	Wolfram MathematicalFunctionData, MoebiusMu	$15=3\cdot5$ gives $+1$													
+moebiusmu-16	Properties		[MoebiusMu, 16]	0	0	Wolfram MathematicalFunctionData, MoebiusMu	$2^4$ is not squarefree													
+moebiusmu-17	Properties		[MoebiusMu, 17]	-1	-1	Wolfram MathematicalFunctionData, MoebiusMu	17 is prime, so its Möbius value is $-1$													
 mu-is-only-defined-for-positive-integers-compute	Possible issues		[MoebiusMu, 0]	[MoebiusMu, 0]			$\mu$ is only defined for positive integers; compute-engine leaves $n=0$ unevaluated		domain	μ(0) is left unevaluated here; Wolfram defines it as 0.	domain	Sage defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated.	undefined-form	Both decline MoebiusMu here: compute-engine leaves it unevaluated, SymPy raises.	domain	Mathlib defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated.	undefined-form	Both decline: compute-engine answers ["MoebiusMu", 0] and Oscar raises an error.	undefined-form	Both decline: compute-engine answers ["MoebiusMu", 0] and Nemo/Combinatorics.jl raises an error.

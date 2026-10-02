@@ -13,22 +13,22 @@ the-unsigned-values-in-a-row-sum-to-n	Properties		[Equal, [Sum, [Abs, [StirlingS
 the-signed-row-sum-vanishes-for-n-ge-2	Properties		[Sum, [StirlingS1, 6, k], [Tuple, k, 0, 6]]	0			The signed row sum vanishes for $n \ge 2$										
 s-n-n-1-binom-n-2	Properties		[Equal, [StirlingS1, 6, 5], [Negate, [Binomial, 6, 2]]]	True			$s(n, n-1) = -\binom{n}{2}$					convention	Sage's stirling_number1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.			convention	Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
 the-generating-property-sum-k-s-n-k-x-k-x-x-1-x	Properties		[Equal, [Sum, [Multiply, [StirlingS1, 4, k], [Power, x, k]], [Tuple, k, 0, 4]], [Expand, [Multiply, x, [Subtract, x, 1], [Subtract, x, 2], [Subtract, x, 3]]]]	True			The generating property: $\sum_k s(n, k)\,x^k = x(x-1)\cdots(x-n+1)$	[Equal, [Sum, [Multiply, [StirlingS1, 4, k], [Power, x, k]], [Tuple, k, 0, 4]], [Expand, [Multiply, [Multiply, [Multiply, x, [Subtract, x, 1]], [Subtract, x, 2]], [Subtract, x, 3]]]]									
-n-stirlings1-100-11	Properties		[N, [StirlingS1, 100, 11]]	{num: "-39037677347638979654358501304806555266909530477307108864265096777794153959501678609053112651997892866499295802826178188343719785980096409468141568e+10"}													
-stirlings1-0-1	Properties		[StirlingS1, 0, 1]	0	0	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-1-0	Properties		[StirlingS1, 1, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-1-1	Properties		[StirlingS1, 1, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-1-2	Properties		[StirlingS1, 1, 2]	0	0	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-2-0	Properties		[StirlingS1, 2, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-2-1	Properties		[StirlingS1, 2, 1]	-1	-1	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-2-2	Properties		[StirlingS1, 2, 2]	1	1	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-2-3	Properties		[StirlingS1, 2, 3]	0	0	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-3-0	Properties		[StirlingS1, 3, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-3-1	Properties		[StirlingS1, 3, 1]	2	2	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-3-2	Properties		[StirlingS1, 3, 2]	-3	-3	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-3-4	Properties		[StirlingS1, 3, 4]	0	0	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-4-0	Properties		[StirlingS1, 4, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-4-1	Properties		[StirlingS1, 4, 1]	-6	-6	Wolfram MathematicalFunctionData, StirlingS1											
-stirlings1-4-3	Properties		[StirlingS1, 4, 3]	-6	-6	Wolfram MathematicalFunctionData, StirlingS1											
+n-stirlings1-100-11	Properties		[N, [StirlingS1, 100, 11]]	{num: "-39037677347638979654358501304806555266909530477307108864265096777794153959501678609053112651997892866499295802826178188343719785980096409468141568e+10"}			A 100-digit-scale signed value, evaluated numerically										
+stirlings1-0-1	Properties		[StirlingS1, 0, 1]	0	0	Wolfram MathematicalFunctionData, StirlingS1	No ways to arrange nothing into one cycle										
+stirlings1-1-0	Properties		[StirlingS1, 1, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS1	Zero cycles can't hold an element										
+stirlings1-1-1	Properties		[StirlingS1, 1, 1]	1	1	Wolfram MathematicalFunctionData, StirlingS1	A single fixed point										
+stirlings1-1-2	Properties		[StirlingS1, 1, 2]	0	0	Wolfram MathematicalFunctionData, StirlingS1	More cycles than elements: $0$										
+stirlings1-2-0	Properties		[StirlingS1, 2, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS1	Zero cycles can't hold any element, for $n\ge1$										
+stirlings1-2-1	Properties		[StirlingS1, 2, 1]	-1	-1	Wolfram MathematicalFunctionData, StirlingS1	Signed: one 2-cycle counts as $-1$										
+stirlings1-2-2	Properties		[StirlingS1, 2, 2]	1	1	Wolfram MathematicalFunctionData, StirlingS1	Two fixed points, sign $+$										
+stirlings1-2-3	Properties		[StirlingS1, 2, 3]	0	0	Wolfram MathematicalFunctionData, StirlingS1	Too many cycles										
+stirlings1-3-0	Properties		[StirlingS1, 3, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS1	No arrangement into zero cycles										
+stirlings1-3-1	Properties		[StirlingS1, 3, 1]	2	2	Wolfram MathematicalFunctionData, StirlingS1	Two 3-cycles, positive sign since $3-1$ is even										
+stirlings1-3-2	Properties		[StirlingS1, 3, 2]	-3	-3	Wolfram MathematicalFunctionData, StirlingS1	Three permutations with one transposition, signed $-$										
+stirlings1-3-4	Properties		[StirlingS1, 3, 4]	0	0	Wolfram MathematicalFunctionData, StirlingS1	$k>n$ gives $0$										
+stirlings1-4-0	Properties		[StirlingS1, 4, 0]	0	0	Wolfram MathematicalFunctionData, StirlingS1	Zero for any $n\ge1$										
+stirlings1-4-1	Properties		[StirlingS1, 4, 1]	-6	-6	Wolfram MathematicalFunctionData, StirlingS1	$(-1)^{n-1}(n-1)!$ at $k=1$, here $-3!$										
+stirlings1-4-3	Properties		[StirlingS1, 4, 3]	-6	-6	Wolfram MathematicalFunctionData, StirlingS1	Six transpositions in $S_4$, with sign $-$										
 the-empty-case-s-0-0-1-by-convention-distinct	Possible issues		[StirlingS1, 0, 0]	1			The empty case $s(0, 0) = 1$ by convention, distinct from $s(n, 0) = 0$ for $n > 0$										
 k-n-is-0	Possible issues		[StirlingS1, 5, 6]	0			$k > n$ is 0										
 a-negative-k-stays-symbolic	Possible issues	test	[StirlingS1, 4, -1]	[StirlingS1, 4, -1]			A negative $k$ is outside the textbook domain and stays unevaluated					domain	A negative k is outside StirlingS1's textbook domain, so compute-engine leaves it symbolic; Sage's stirling_number1 extends past it and answers 0.			domain	A negative k is outside StirlingS1's textbook domain, so compute-engine leaves it symbolic; Combinatorics.jl's stirlings1 extends past it and answers 0.

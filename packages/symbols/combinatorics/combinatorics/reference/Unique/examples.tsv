@@ -2,13 +2,13 @@ id	section	role	expr	expected	caption	triage	epsil.back	wolfram.note
 unique-list-1-2-2-3-1			[Unique, [List, 1, 2, 2, 3, 1]]	[List, 1, 2, 3]				
 unique-list-a-b-a-c-b			[Unique, [List, a, b, a, c, b]]	[List, a, b, c]				
 keeps-first-occurrence-order-without-sorting			[Unique, [List, 1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1]]	[List, 1, 7, 8, 4, 3, 9, 2]	Keeps first-occurrence order, without sorting			
-unique-list-1-7-8-4-3-4-1-9-9-2			[Unique, [List, 1, 7, 8, 4, 3, 4, 1, 9, 9, 2]]	[List, 1, 7, 8, 4, 3, 9, 2]				
+unique-list-1-7-8-4-3-4-1-9-9-2			[Unique, [List, 1, 7, 8, 4, 3, 4, 1, 9, 9, 2]]	[List, 1, 7, 8, 4, 3, 9, 2]	Removes repeats, keeping first occurrences in order			
 elements-can-themselves-be-lists	Scope		[Unique, [List, [List, 1, 2], [List, 1, 2], [List, 3]]]	[List, [List, 1, 2], [List, 3]]	Elements can themselves be lists			
 unique-list	Scope		[Unique, [List]]	[List]				
 a-second-argument-says-when-two-elements-count	Scope		[Unique, [List, 1, 2, 3, 4, 5, 6], [Function, [Less, [Abs, [Subtract, _1, _2]], 2]]]	[List, 1, 3, 5]	A second argument says when two elements count as duplicates -- here, when they differ by less than 2		Unreadable	
-unique-list-1-7-8-4-3-4-1-9-8-9-2-greater	Scope		[Unique, [List, 1, 7, 8, 4, 3, 4, 1, 9, 8, 9, 2], Greater]	[List, 1, 7, 8, 9, 9]				
+unique-list-1-7-8-4-3-4-1-9-8-9-2-greater	Scope		[Unique, [List, 1, 7, 8, 4, 3, 4, 1, 9, 8, 9, 2], Greater]	[List, 1, 7, 8, 9, 9]	With a custom comparison, an element is dropped when it relates to an earlier kept one			
 count-the-distinct-elements	Applications		[Length, [Unique, [List, 1, 2, 2, 3, 3, 3]]]	3	Count the distinct elements			
 the-residues-mod-3-that-occur-in-order-of-first	Applications		[Unique, [Mod, [Range, 10], 3]]	[List, 1, 2, 0]	The residues mod 3 that occur, in order of first appearance			
 idempotent	Properties		[Unique, [Unique, [List, 1, 1, 2]]]	[List, 1, 2]	Idempotent			
 unique-list-function-sum-1-eq-sum-2-1-2	Properties	triage	[Unique, list, [Function, [Block, [Equal, [Sum, _1], [Sum, _2]]], _1, _2]]	[List]		emit		blocked on #486 (Function/Block unwrap + Limits→{x,a,b} + Simplify mapping), not yet merged; missing=["Block/1"]. Not in scope for A-126 — owner: Examples metadata session (#486).
-unique-list-3-3-3-function-false	Possible issues		[Unique, [List, 3, 3, 3], [Function, [Block, False]]]	[List, 3, 3, 3]			Unreadable	
+unique-list-3-3-3-function-false	Possible issues		[Unique, [List, 3, 3, 3], [Function, [Block, False]]]	[List, 3, 3, 3]	A test that is never true treats nothing as a duplicate		Unreadable	

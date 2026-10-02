@@ -2,21 +2,21 @@ id	section	role	expr	expected	caption	epsil.back
 8-2-3			[IsPrimePower, 8]	True	$8=2^3$	
 12-2-2-cdot-3-has-two-distinct-primes			[IsPrimePower, 12]	False	$12=2^2\cdot3$ has two distinct primes	
 a-prime-is-its-own-first-power			[IsPrimePower, 7]	True	A prime is its own first power	
-isprimepower-6			[IsPrimePower, 6]	False		
+isprimepower-6			[IsPrimePower, 6]	False	Two distinct prime factors, so not a prime power	
 listable	Scope		[IsPrimePower, [List, 2, 4, 6, 9, 10, 16]]	[List, True, True, False, True, False, True]	Listable	
 large-integers	Scope		[IsPrimePower, [Power, 3, 40]]	True	Large integers	
-isprimepower-9	Scope		[IsPrimePower, 9]	True		
-isprimepower-list-1-2-3-4-5-6-7	Scope		[IsPrimePower, [List, 1, 2, 3, 4, 5, 6, 7]]	[List, False, True, True, True, True, False, True]		
-filter-range-1-100-function-isprimepower-1	Applications		[Filter, [Range, 1, 100], [Function, [Block, [And, [IsPrimePower, _1], [Not, [IsPrime, _1]]]], _1]]	[List, 4, 8, 9, 16, 25, 27, 32, 49, 64, 81]		Unreadable
-isprimepower-625	Properties		[IsPrimePower, 625]	True		
-isprimepower-53	Properties		[IsPrimePower, 53]	True		
-list-isprimepower-27-issquarefree-27	Properties		[List, [IsPrimePower, 27], [IsSquareFree, 27]]	[List, True, False]		
-list-isprimepower-3-issquarefree-3	Properties		[List, [IsPrimePower, 3], [IsSquareFree, 3]]	[List, True, True]		
-isprimepower-25	Properties		[IsPrimePower, 25]	True		
-isprimepower-16-807	Properties		[IsPrimePower, 16807]	True		
-list-isprimepower-121-iscomposite-121-moebiusmu	Properties		[List, [IsPrimePower, 121], [IsComposite, 121], [MoebiusMu, 121]]	[List, True, True, 0]		
-list-isprimepower-11-isprime-11-moebiusmu-11	Properties		[List, [IsPrimePower, 11], [IsPrime, 11], [MoebiusMu, 11]]	[List, True, True, -1]		
-isprimepower-2-401	Properties		[IsPrimePower, 2401]	True		
-isprimepower-121	Properties		[IsPrimePower, 121]	True		
-map-function-divisorsigma-1-1-lt-2-times-1-1	Properties		[Map, [Function, [Block, [Less, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], _1], [Filter, [Range, 1, 100], IsPrimePower]]	[List, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]		Unreadable
+isprimepower-9	Scope		[IsPrimePower, 9]	True	$9=3^2$	
+isprimepower-list-1-2-3-4-5-6-7	Scope		[IsPrimePower, [List, 1, 2, 3, 4, 5, 6, 7]]	[List, False, True, True, True, True, False, True]	Threads over a list; 1 is not a prime power	
+filter-range-1-100-function-isprimepower-1	Applications		[Filter, [Range, 1, 100], [Function, [Block, [And, [IsPrimePower, _1], [Not, [IsPrime, _1]]]], _1]]	[List, 4, 8, 9, 16, 25, 27, 32, 49, 64, 81]	Prime powers that are not primes	Unreadable
+isprimepower-625	Properties		[IsPrimePower, 625]	True	$625=5^4$	
+isprimepower-53	Properties		[IsPrimePower, 53]	True	A prime counts as a prime power with exponent 1	
+list-isprimepower-27-issquarefree-27	Properties		[List, [IsPrimePower, 27], [IsSquareFree, 27]]	[List, True, False]	A prime power need not be squarefree	
+list-isprimepower-3-issquarefree-3	Properties		[List, [IsPrimePower, 3], [IsSquareFree, 3]]	[List, True, True]	A prime is both a prime power and squarefree	
+isprimepower-25	Properties		[IsPrimePower, 25]	True	$25=5^2$	
+isprimepower-16-807	Properties		[IsPrimePower, 16807]	True	$16807=7^5$	
+list-isprimepower-121-iscomposite-121-moebiusmu	Properties		[List, [IsPrimePower, 121], [IsComposite, 121], [MoebiusMu, 121]]	[List, True, True, 0]	A prime square is composite with Möbius value 0	
+list-isprimepower-11-isprime-11-moebiusmu-11	Properties		[List, [IsPrimePower, 11], [IsPrime, 11], [MoebiusMu, 11]]	[List, True, True, -1]	A prime has Möbius value $-1$	
+isprimepower-2-401	Properties		[IsPrimePower, 2401]	True	$2401=7^4$	
+isprimepower-121	Properties		[IsPrimePower, 121]	True	$121=11^2$	
+map-function-divisorsigma-1-1-lt-2-times-1-1	Properties		[Map, [Function, [Block, [Less, [DivisorSigma, 1, _1], [Multiply, 2, _1]]], _1], [Filter, [Range, 1, 100], IsPrimePower]]	[List, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]	Every prime power is deficient	Unreadable
 1-is-p-0-which-does-not-count	Possible issues		[IsPrimePower, 1]	False	1 is $p^0$, which does not count	

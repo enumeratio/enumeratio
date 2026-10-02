@@ -30,16 +30,16 @@ n-of-a-negative-integer-argument	Scope	test	[N, [Ln, -2], 10]	[Complex, 0.693147
 ln-neg-6	Scope	test	[Ln, -6]	[Add, [Multiply, [Complex, 0, 1], Pi], [Ln, 6]]												domain	Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
 n-of-a-negative-rational-argument	Scope	test	[N, [Ln, [Rational, -1, 2]]]	[Complex, -0.6931471805599453, 3.141592653589793]												domain	Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
 ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	Scope		[Ln, NegativeInfinity]	PositiveInfinity	PositiveInfinity	DLMF 4.2.5	Ln(-Infinity) is +Infinity: $\ln(-x) = \ln(x) + i\pi$, and the magnitude alone diverges as $x \to +\infty$										
-n-ln-5-over-2-50	Scope		[N, [Ln, [Rational, 5, 2]], 50]	{num: "0.91629073187415506518352721176801107145010121990826"}													
-functiondomain-ln-x-x	Scope		[FunctionDomain, [Ln, x], x]	[Less, 0, x]													
-functionrange-ln-x-x-y	Scope		[FunctionRange, [Ln, x], x, y]	True													
-functionanalytic-ln-x-x	Scope		[FunctionAnalytic, [Ln, x], x]	False													
-functionmeromorphic-ln-x-x	Scope		[FunctionMeromorphic, [Ln, x], x]	False													
-functioninjective-ln-x-x	Scope		[FunctionInjective, [Ln, x], x]	True													
-functionsurjective-ln-x-x	Scope		[FunctionSurjective, [Ln, x], x]	True													
-d-ln-z-z	Scope		[D, [Ln, z], z]	[Divide, 1, z]													
-d-ln-ln-x-x	Scope		[D, [Ln, [Ln, x]], x]	[Divide, 1, [Multiply, x, [Ln, x]]]													
-ln-exponentiale-pow-n	Scope		[Ln, [Power, ExponentialE, n]]	n													
+n-ln-5-over-2-50	Scope		[N, [Ln, [Rational, 5, 2]], 50]	{num: "0.91629073187415506518352721176801107145010121990826"}			A 50-digit value of $\ln\frac52$										
+functiondomain-ln-x-x	Scope		[FunctionDomain, [Ln, x], x]	[Less, 0, x]			The domain is the positive reals										
+functionrange-ln-x-x-y	Scope		[FunctionRange, [Ln, x], x, y]	True			The range is all of the reals										
+functionanalytic-ln-x-x	Scope		[FunctionAnalytic, [Ln, x], x]	False			The logarithm is not analytic on the whole real line										
+functionmeromorphic-ln-x-x	Scope		[FunctionMeromorphic, [Ln, x], x]	False			Not meromorphic either										
+functioninjective-ln-x-x	Scope		[FunctionInjective, [Ln, x], x]	True			Strictly increasing, so one-to-one										
+functionsurjective-ln-x-x	Scope		[FunctionSurjective, [Ln, x], x]	True			Onto the real line										
+d-ln-z-z	Scope		[D, [Ln, z], z]	[Divide, 1, z]			Derivative $\frac1z$										
+d-ln-ln-x-x	Scope		[D, [Ln, [Ln, x]], x]	[Divide, 1, [Multiply, x, [Ln, x]]]			Chain rule: $\frac{d}{dx}\ln\ln x = \frac{1}{x\ln x}$										
+ln-exponentiale-pow-n	Scope		[Ln, [Power, ExponentialE, n]]	n			Ln undoes the exponential: $\ln e^n = n$	ln(exponentialE ^ n)	Ln(Power(ExponentialE, n))								
 inverse-of-exp-ln-e-x-x	Properties		[Equal, [Ln, [Exp, 5]], 5]	True			Inverse of [[Exp]]: $\ln(e^x) = x$										
 product-rule-ln-ab-ln-a-ln-b	Properties		[Equal, [Add, [Ln, 2], [Ln, 3]], [Ln, 6]]	True			Product rule: $\ln(ab) = \ln a + \ln b$					convention	True mathematically; Sage's bool(a==b) on unevaluated symbolic logs doesn't invoke a log-identity simplification by default and reports False rather than attempting the proof.				
 powerexpand-splits-a-logarithm-of-a-product	Properties		[PowerExpand, [Ln, [Multiply, x, y]]]	[Add, [Ln, x], [Ln, y]]			[[PowerExpand]] splits a logarithm of a product, assuming positive factors										

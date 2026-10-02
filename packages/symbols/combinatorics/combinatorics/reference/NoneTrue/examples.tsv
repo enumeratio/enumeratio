@@ -1,9 +1,9 @@
 id	section	role	expr	expected	caption	epsil.back
 nonetrue-list-1-3-5-iseven			[NoneTrue, [List, 1, 3, 5], IsEven]	True		
 nonetrue-list-1-2-3-iseven			[NoneTrue, [List, 1, 2, 3], IsEven]	False		
-nonetrue-list-1-2-3-4-5-6-iseven			[NoneTrue, [List, 1, 2, 3, 4, 5, 6], IsEven]	False		
-nonetrue-list-1-3-5-7-9-iseven			[NoneTrue, [List, 1, 3, 5, 7, 9], IsEven]	True		
-nonetrue-list-12-16-x-8-14-y-function-1-lt-10-1			[NoneTrue, [List, 12, 16, x, 8, 14, y], [Function, [Block, [Less, _1, 10]], _1]]	False		Unreadable
-nonetrue-list-12-16-x-14-y-function-istrue-1-lt			[NoneTrue, [List, 12, 16, x, 14, y], [Function, [Block, [IsTrue, [Less, _1, 10]]], _1]]	True		Unreadable
+nonetrue-list-1-2-3-4-5-6-iseven			[NoneTrue, [List, 1, 2, 3, 4, 5, 6], IsEven]	False	False because some elements are even	
+nonetrue-list-1-3-5-7-9-iseven			[NoneTrue, [List, 1, 3, 5, 7, 9], IsEven]	True	True when no element passes the test	
+nonetrue-list-12-16-x-8-14-y-function-1-lt-10-1			[NoneTrue, [List, 12, 16, x, 8, 14, y], [Function, [Block, [Less, _1, 10]], _1]]	False	Symbolic entries leave the test undecided, while $8<10$ already settles it	Unreadable
+nonetrue-list-12-16-x-14-y-function-istrue-1-lt			[NoneTrue, [List, 12, 16, x, 14, y], [Function, [Block, [IsTrue, [Less, _1, 10]]], _1]]	True	Wrapping with IsTrue makes undecided tests count as not true	Unreadable
 vacuously-true-on-an-empty-list	Scope		[NoneTrue, [List], IsEven]	True	Vacuously true on an empty list	
 the-negation-of-any	Properties		[Equal, [NoneTrue, [List, 4, 6, 9], IsPrime], [Not, [Any, [List, 4, 6, 9], IsPrime]]]	True	The negation of [[Any]]	

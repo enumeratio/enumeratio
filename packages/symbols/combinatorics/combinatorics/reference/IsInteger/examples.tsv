@@ -1,6 +1,6 @@
-id	section	role	expr	expected
-a-plain-integer			[IsInteger, 4]	True
-isinteger-x-plus-4			[IsInteger, [Add, x, 4]]	False
-a-rational-is-not-an-integer	Scope		[IsInteger, [Rational, 1, 2]]	False
-a-free-symbol-is-false	Scope		[IsInteger, x]	False
-a-negative-integer	Scope		[IsInteger, -3]	True
+id	section	role	expr	expected	caption
+a-plain-integer			[IsInteger, 4]	True	
+isinteger-x-plus-4			[IsInteger, [Add, x, 4]]	False	Unknown $x$ cannot be shown integral, so the answer is False
+a-rational-is-not-an-integer	Scope		[IsInteger, [Rational, 1, 2]]	False	
+a-free-symbol-is-false	Scope		[IsInteger, x]	False	
+a-negative-integer	Scope		[IsInteger, -3]	True	

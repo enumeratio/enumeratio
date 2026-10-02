@@ -1,4 +1,4 @@
-id	section	role	expr	expected
-the-given-generators-come-back			[GroupGenerators, [PermutationGroup, [List, [Cycles, [List, [List, 1, 9, 6], [List, 3, 7]]]]]]	[List, [Cycles, [List, [List, 1, 9, 6], [List, 3, 7]]]]
-groupgenerators-permutationgroup-list-cycles			[GroupGenerators, [PermutationGroup, [List, [Cycles, [List, [List, 1, 2]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]]]	[List, [Cycles, [List, [List, 1, 2]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]
-groupgenerators-permutationgroup-list-cycles-2	Scope		[GroupGenerators, [PermutationGroup, [List, [Cycles, [List, [List, 1, 2], [List, 3, 4]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]]]	[List, [Cycles, [List, [List, 1, 2], [List, 3, 4]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]
+id	section	role	expr	expected	caption
+the-given-generators-come-back			[GroupGenerators, [PermutationGroup, [List, [Cycles, [List, [List, 1, 9, 6], [List, 3, 7]]]]]]	[List, [Cycles, [List, [List, 1, 9, 6], [List, 3, 7]]]]	
+groupgenerators-permutationgroup-list-cycles			[GroupGenerators, [PermutationGroup, [List, [Cycles, [List, [List, 1, 2]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]]]	[List, [Cycles, [List, [List, 1, 2]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]	A group built from generators returns them as given
+groupgenerators-permutationgroup-list-cycles-2	Scope		[GroupGenerators, [PermutationGroup, [List, [Cycles, [List, [List, 1, 2], [List, 3, 4]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]]]	[List, [Cycles, [List, [List, 1, 2], [List, 3, 4]]], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]	Generators of the Klein four-group, kept in order

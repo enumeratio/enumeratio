@@ -8,5 +8,5 @@ over-classes-the-answer-is-a-class-and-reading	Scope		[ChineseRemainder, [Intege
 a-third-argument-asks-for-the-smallest-solution	Scope		[ChineseRemainder, [List, 1, 2], [List, 3, 5], 100]	112	A third argument asks for the smallest solution $x \ge d$: here $x \equiv 7 \pmod{15}$, so 112										
 recover-123456-bmod-1001-from-its-residues-mod-7	Applications		[ChineseRemainder, [Mod, 123456, [List, 7, 11, 13]], [List, 7, 11, 13]]	333	recover $123456 \bmod 1001$ from its residues mod 7, 11 and 13. See [[Mod]]										
 verifies-the-solution-satisfies-both-congruences	Properties		[And, [Equal, [Mod, [ChineseRemainder, [List, 3, 4], [List, 4, 5]], 4], 3], [Equal, [Mod, [ChineseRemainder, [List, 3, 4], [List, 4, 5]], 5], 4]]	True	Verifies the solution satisfies both congruences via [[Mod]]										
-chineseremainder-list-1-2-list-3-5	Properties		[ChineseRemainder, [List, 1, 2], [List, 3, 5]]	7											
+chineseremainder-list-1-2-list-3-5	Properties		[ChineseRemainder, [List, 1, 2], [List, 3, 5]]	7	Solves $x\equiv1 \pmod3$, $x\equiv2 \pmod5$ for the smallest $x=7$										
 no-solution-exists-when-the-remainders-are	Possible issues		[ChineseRemainder, [List, 1, 2], [List, 6, 10]]	[ChineseRemainder, [List, 1, 2], [List, 6, 10]]	No solution exists when the remainders are inconsistent at $\gcd(6,10)=2$, so the call stays unevaluated and says why										

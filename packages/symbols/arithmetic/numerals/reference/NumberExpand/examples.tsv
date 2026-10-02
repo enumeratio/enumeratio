@@ -1,12 +1,12 @@
 id	section	role	expr	expected	caption	triage	wolfram.note
 numberexpand-1-234			[NumberExpand, 1234]	[List, 1000, 200, 30, 4]			
-numberexpand-157			[NumberExpand, 157]	[List, 100, 50, 7]			
-numberexpand-157-2			[NumberExpand, 157, 2]	[List, 128, 0, 0, 16, 8, 4, 0, 1]			
+numberexpand-157			[NumberExpand, 157]	[List, 100, 50, 7]	Splits into place-value parts $100+50+7$		
+numberexpand-157-2			[NumberExpand, 157, 2]	[List, 128, 0, 0, 16, 8, 4, 0, 1]	Base 2 expansion keeps zero places: $128+16+8+4+1$		
 numberexpand-157-2-3		triage	[NumberExpand, 157, 2, 3]	[List, 128, 0, 0, 16, 8, 4, 0, 1]		gap	NumberExpand ignores its 'terms' argument and its place-value/remainder-collapsing semantics entirely — it currently just emits each bit's place value (0 or 2^k) for a fixed 8-bit width, regardless of base or requested term count. Wolfram's actual behavior (place values for the first `terms` positions, with any deficit collapsed into the last term, or zero-padded with fractional-place terms when `terms` exceeds the integer digit count) needs a proper reimplementation, not a table tweak.
 base-2-zero-terms-kept	Scope		[NumberExpand, 10, 2]	[List, 8, 0, 2, 0]	base 2, zero terms kept		
 every-term-carries-the-sign	Scope		[NumberExpand, -123]	[List, -100, -20, -3]	every term carries the sign		
-numberexpand-1-437	Scope		[NumberExpand, 1437]	[List, 1000, 400, 30, 7]			
-numberexpand-neg-14-379	Scope		[NumberExpand, -14379]	[List, -10000, -4000, -300, -70, -9]			
-numberexpand-1-532	Properties		[NumberExpand, 1532]	[List, 1000, 500, 30, 2]			
-numberexpand-1-532-10	Properties		[NumberExpand, 1532, 10]	[List, 1000, 500, 30, 2]			
+numberexpand-1-437	Scope		[NumberExpand, 1437]	[List, 1000, 400, 30, 7]	Each digit scaled by its power of ten		
+numberexpand-neg-14-379	Scope		[NumberExpand, -14379]	[List, -10000, -4000, -300, -70, -9]	Negative numbers give negative parts		
+numberexpand-1-532	Properties		[NumberExpand, 1532]	[List, 1000, 500, 30, 2]	Each term is a digit times a place value		
+numberexpand-1-532-10	Properties		[NumberExpand, 1532, 10]	[List, 1000, 500, 30, 2]	Base 10 is the default		
 numberexpand-1-437-10-8	Properties	triage	[NumberExpand, 1437, 10, 8]	[List, 0, 0, 0, 0, 1000, 400, 30, 7]		gap	NumberExpand ignores its 'terms' argument and its place-value/remainder-collapsing semantics entirely — it currently just emits each bit's place value (0 or 2^k) for a fixed 8-bit width, regardless of base or requested term count. Wolfram's actual behavior (place values for the first `terms` positions, with any deficit collapsed into the last term, or zero-padded with fractional-place terms when `terms` exceeds the integer digit count) needs a proper reimplementation, not a table tweak.

@@ -3,6 +3,6 @@ heavisidepi-inside			[HeavisidePi, 0]	1
 heavisidepi-boundary-unevaluated			[HeavisidePi, [Rational, 1, 2]]	[HeavisidePi, [Rational, 1, 2]]	Unevaluated at the boundary -- unlike [[UnitBox]]		
 heavisidepi-neg-boundary-unevaluated			[HeavisidePi, [Rational, -1, 2]]	[HeavisidePi, [Rational, -1, 2]]		convention	Wolfram normalizes HeavisidePi's argument sign (an even function) before leaving it symbolic at the boundary; compute-engine doesn't apply that simplification, so the two sides show the declined case at +-1/2.
 heavisidepi-outside	Scope		[HeavisidePi, 1]	0			
-heavisidepi-neg-1	Scope		[HeavisidePi, -1]	0			
-heavisidepi-1-over-4	Scope		[HeavisidePi, [Rational, 1, 4]]	1			
-matrixfunction-heavisidepi-list-list-neg-1-0	Scope		[MatrixFunction, HeavisidePi, [List, [List, -1, 0], [List, 0, 1]]]	[List, [List, 0, 0], [List, 0, 0]]			
+heavisidepi-neg-1	Scope		[HeavisidePi, -1]	0	Zero outside the support $|x|<\frac12$		
+heavisidepi-1-over-4	Scope		[HeavisidePi, [Rational, 1, 4]]	1	Equals 1 inside the support		
+matrixfunction-heavisidepi-list-list-neg-1-0	Scope		[MatrixFunction, HeavisidePi, [List, [List, -1, 0], [List, 0, 1]]]	[List, [List, 0, 0], [List, 0, 0]]	The matrix function takes the value at each eigenvalue, here both 0		

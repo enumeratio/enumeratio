@@ -26,6 +26,8 @@ test("code, components and plain HTML are left alone", () => {
   expect(html).toContain('<Symbol name="Binomial" />');
   expect(isMarkupTag("Content")).toBe(false);
   expect(isMarkupTag("Stats.Mean")).toBe(true);
+  expect(isMarkupTag("enumeratio.PolygonalNumber")).toBe(true);
+  expect(isMarkupTag("my.element")).toBe(false);
 });
 
 test("markup that doesn't read fails, naming the page", () => {

@@ -1,7 +1,7 @@
-id	section	role	expr	expected	triage	wolfram.kind	wolfram.note
-prints-a-list-as-notatio-source			[ToString, [List, 1, 2, 3]]	"'[1, 2, 3]'"		convention	compute-engine's ToString prints a list in our own notatio/Epsil source syntax ([1, 2, 3]), by design; Wolfram prints its own native list syntax ({1, 2, 3}).
-tostring-x-pow-2		triage	[ToString, [Power, x, 2]]	"'x ^ 2'"	ours?		
-prints-an-arithmetic-expression	Scope		[ToString, [Add, x, 1]]	"'x + 1'"		convention	Wolfram's default term order for Plus prints the integer first ("1 + x"); ours prints the variable first ("x + 1"). Same expression, different default ordering convention.
-tostring-exponentiale-pow-x	Scope	triage	[ToString, [Power, ExponentialE, x]]	"'exponentialE ^ x'"	ours?		
-tostring-cos-x-plus-cos-y	Scope	triage	[ToString, [Add, [Cos, x], [Cos, y]]]	"'cos(x) + cos(y)'"	ours?		
-tostring-kappa	Properties		[ToString, kappa]	"'kappa'"			
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+prints-a-list-as-notatio-source			[ToString, [List, 1, 2, 3]]	"'[1, 2, 3]'"			convention	compute-engine's ToString prints a list in our own notatio/Epsil source syntax ([1, 2, 3]), by design; Wolfram prints its own native list syntax ({1, 2, 3}).
+tostring-x-pow-2		triage	[ToString, [Power, x, 2]]	"'x ^ 2'"		ours?		
+prints-an-arithmetic-expression	Scope		[ToString, [Add, x, 1]]	"'x + 1'"			convention	Wolfram's default term order for Plus prints the integer first ("1 + x"); ours prints the variable first ("x + 1"). Same expression, different default ordering convention.
+tostring-exponentiale-pow-x	Scope	triage	[ToString, [Power, ExponentialE, x]]	"'exponentialE ^ x'"		ours?		
+tostring-cos-x-plus-cos-y	Scope	triage	[ToString, [Add, [Cos, x], [Cos, y]]]	"'cos(x) + cos(y)'"		ours?		
+tostring-kappa	Properties		[ToString, kappa]	"'kappa'"	A symbol converts to its name			

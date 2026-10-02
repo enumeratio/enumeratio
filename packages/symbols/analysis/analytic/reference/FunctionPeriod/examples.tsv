@@ -4,4 +4,4 @@ tangent-s-period-is-pi			[FunctionPeriod, [Tan, x], x]	Pi	Pi	Wolfram 15.0.0, han
 scaling-the-argument-scales-the-period			[FunctionPeriod, [Sin, [Multiply, 2, x]], x]	Pi	Pi	Wolfram 15.0.0, hand cross-checked	Doubling the argument halves the period
 exp-is-not-periodic			[FunctionPeriod, [Exp, x], x]	0	0	Wolfram 15.0.0, hand cross-checked	Exp is monotonic, hence not periodic
 a-polynomial-is-not-periodic		test	[FunctionPeriod, [Power, x, 2], x]	0	0	Wolfram 15.0.0, hand cross-checked	
-assuming-a-gt-0-functionperiod-sin-a-times-x-x	Scope		[Assuming, [Greater, a, 0], [FunctionPeriod, [Sin, [Multiply, a, x]], x]]	[FunctionPeriod, [Sin, [Multiply, a, x]], x]			
+assuming-a-gt-0-functionperiod-sin-a-times-x-x	Scope		[Assuming, [Greater, a, 0], [FunctionPeriod, [Sin, [Multiply, a, x]], x]]	[FunctionPeriod, [Sin, [Multiply, a, x]], x]			With a symbolic frequency the period is left unevaluated even under $a>0$

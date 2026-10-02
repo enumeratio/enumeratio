@@ -1,7 +1,7 @@
 id	section	role	expr	expected	caption
 integerlength-12-345			[IntegerLength, 12345]	5	
-integerlength-123-456-789			[IntegerLength, 123456789]	9	
-integerlength-100-factorial-2			[IntegerLength, [Factorial, 100], 2]	525	
+integerlength-123-456-789			[IntegerLength, 123456789]	9	Number of decimal digits
+integerlength-100-factorial-2			[IntegerLength, [Factorial, 100], 2]	525	$100!$ takes 525 bits
 integerlength-2-pow-100	Scope		[IntegerLength, [Power, 2, 100]]	31	
 255-ff-16	Scope		[IntegerLength, 255, 16]	2	$255 = \mathrm{ff}_{16}$
 listable	Scope		[IntegerLength, [List, 1, 10, 100]]	[List, 1, 2, 3]	Listable

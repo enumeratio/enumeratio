@@ -1,11 +1,11 @@
-id	section	role	expr	expected	triage	wolfram.note
-a-2x2-is-a-matrix			[IsMatrix, [List, [List, 1, 2], [List, 3, 4]]]	True		
-ismatrix-list-list-a-b-list-3-4			[IsMatrix, [List, [List, a, b], [List, 3, 4]]]	True		
-ismatrix-list-list-1-list-2-3			[IsMatrix, [List, [List, 1], [List, 2, 3]]]	False		
-ismatrix-array-a-list-2-2-2			[IsMatrix, [Array, a, [List, 2, 2, 2]]]	False		
-a-flat-list-is-not-a-matrix	Scope		[IsMatrix, [List, 1, 2, 3]]	False		
-a-ragged-list-of-lists-is-not-a-matrix	Scope		[IsMatrix, [List, [List, 1, 2], [List, 3]]]	False		
-an-empty-list-is-not-a-matrix	Scope		[IsMatrix, [List]]	False		
-a-test-function-must-hold-of-every-entry	Scope		[IsMatrix, [List, [List, 2, 4], [List, 6, 8]], IsEven]	True		
-list-ismatrix-mat-ismatrix-expr	Properties		[List, [IsMatrix, mat], [IsMatrix, expr]]	[List, False, False]		
-ismatrix-m	Properties	triage	[IsMatrix, m]	False	emit	our bug (emit): DEFINED_NAMES wrongly excluded m/s/q/A/C (and Integers had no CONSTANTS pass-through row) from free-variable treatment, so this row was reported un-emittable and skipped as unscanned. Fixed in reference/scripts/defined-names.ts's isDefinedName (a scalar-typed, non-constant lookupDefinition() hit is a free variable, same as no hit at all) and emit.ts's CONSTANTS (added Integers); now emits — leave for the next oracle scan to produce a real verdict.
+id	section	role	expr	expected	caption	triage	wolfram.note
+a-2x2-is-a-matrix			[IsMatrix, [List, [List, 1, 2], [List, 3, 4]]]	True			
+ismatrix-list-list-a-b-list-3-4			[IsMatrix, [List, [List, a, b], [List, 3, 4]]]	True	Symbolic entries are fine: only the rectangular shape matters		
+ismatrix-list-list-1-list-2-3			[IsMatrix, [List, [List, 1], [List, 2, 3]]]	False	Rows of unequal length do not form a matrix		
+ismatrix-array-a-list-2-2-2			[IsMatrix, [Array, a, [List, 2, 2, 2]]]	False	A rank-3 array is deeper than a matrix		
+a-flat-list-is-not-a-matrix	Scope		[IsMatrix, [List, 1, 2, 3]]	False			
+a-ragged-list-of-lists-is-not-a-matrix	Scope		[IsMatrix, [List, [List, 1, 2], [List, 3]]]	False			
+an-empty-list-is-not-a-matrix	Scope		[IsMatrix, [List]]	False			
+a-test-function-must-hold-of-every-entry	Scope		[IsMatrix, [List, [List, 2, 4], [List, 6, 8]], IsEven]	True			
+list-ismatrix-mat-ismatrix-expr	Properties		[List, [IsMatrix, mat], [IsMatrix, expr]]	[List, False, False]	Undefined symbols are not known to be matrices		
+ismatrix-m	Properties	triage	[IsMatrix, m]	False		emit	our bug (emit): DEFINED_NAMES wrongly excluded m/s/q/A/C (and Integers had no CONSTANTS pass-through row) from free-variable treatment, so this row was reported un-emittable and skipped as unscanned. Fixed in reference/scripts/defined-names.ts's isDefinedName (a scalar-typed, non-constant lookupDefinition() hit is a free variable, same as no hit at all) and emit.ts's CONSTANTS (added Integers); now emits — leave for the next oracle scan to produce a real verdict.

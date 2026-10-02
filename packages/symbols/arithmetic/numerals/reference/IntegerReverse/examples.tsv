@@ -1,14 +1,14 @@
 id	section	role	expr	expected	caption	triage	wolfram.note
 the-base-10-digits-reversed			[IntegerReverse, 1234]	4321	the base-10 digits reversed		
-integerreverse-123-456			[IntegerReverse, 123456]	654321			
-integerreverse-2-015-2			[IntegerReverse, 2015, 2]	2015			
-integerreverse-1-234-10-6			[IntegerReverse, 1234, 10, 6]	432100			
+integerreverse-123-456			[IntegerReverse, 123456]	654321	Reverses the decimal digits		
+integerreverse-2-015-2			[IntegerReverse, 2015, 2]	2015	A binary palindrome: $2015=11111011111_2$		
+integerreverse-1-234-10-6			[IntegerReverse, 1234, 10, 6]	432100	A length argument pads with leading zeros first, so reversal gains trailing zeros		
 1234-10011010010-2-reversed-is-1001011001-2-601	Scope		[IntegerReverse, 1234, 2]	601	$1234 = 10011010010_2$ reversed is $1001011001_2 = 601$		
 padded-to-5-digits-first-00123-reversed	Scope		[IntegerReverse, 123, 10, 5]	32100	padded to 5 digits first: $00123$ reversed		
 listable	Scope		[IntegerReverse, [List, 12, 345]]	[List, 21, 543]	Listable		
-integerreverse-list-123-234-345-456	Scope		[IntegerReverse, [List, 123, 234, 345, 456]]	[List, 321, 432, 543, 654]			
+integerreverse-list-123-234-345-456	Scope		[IntegerReverse, [List, 123, 234, 345, 456]]	[List, 321, 432, 543, 654]	Threads over a list		
 integerreverse-1-234-mixedradixnumerals-list-7	Scope	triage	[IntegerReverse, 1234, [MixedRadixNumerals, [List, 7, 11]]]	4321		gap	IntegerReverse(1234, MixedRadix({7,11})) ignores the mixed-radix base entirely and reverses the plain decimal digits (4321) instead of the mixed-radix ones (Wolfram: 170) — likely shares its root cause with IntegerDigits' mixed-radix bug above (same underlying digit-expansion path), so grouped as one fix for whoever picks up that algorithm.
 a-palindrome-is-its-own-reversal	Applications		[IntegerReverse, 12321]	12321	a palindrome is its own reversal		
-integerreverse-842	Properties		[IntegerReverse, 842]	248			
-integerreverse-84-200	Properties		[IntegerReverse, 84200]	248			
+integerreverse-842	Properties		[IntegerReverse, 842]	248	The digits of 842 read backwards		
+integerreverse-84-200	Properties		[IntegerReverse, 84200]	248	Trailing zeros vanish when reversed		
 trailing-zeros-become-leading-zeros-and-vanish	Possible issues		[IntegerReverse, 1200]	21	trailing zeros become leading zeros and vanish		

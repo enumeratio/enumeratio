@@ -4,8 +4,8 @@ heavisidetheta-positive			[HeavisideTheta, 1]	1
 heavisidetheta-zero-unevaluated			[HeavisideTheta, 0]	[HeavisideTheta, 0]	Unevaluated at exactly 0 -- unlike [[UnitStep]]
 heavisidetheta-product-both-positive	Scope		[HeavisideTheta, 1, 2]	1	Several arguments: the product of their steps
 heavisidetheta-product-one-negative	Scope		[HeavisideTheta, 1, -1]	0	Zero as soon as any argument is negative
-matrixfunction-heavisidetheta-list-list-neg-1	Scope		[MatrixFunction, HeavisideTheta, [List, [List, -1, [Rational, -1, 2]], [List, [Rational, -1, 2], [Rational, 1, 2]]]]	[List, [List, [Multiply, [Divide, [Sqrt, 13], 26], [Add, -3, [Sqrt, 13]]], [Negate, [Divide, [Sqrt, 13], 13]]], [List, [Negate, [Divide, [Sqrt, 13], 13]], [Multiply, [Divide, [Sqrt, 13], 26], [Add, 3, [Sqrt, 13]]]]]	
-assuming-a-gt-0-refine-heavisidetheta-a-a-a-a	Scope		[Assuming, [Greater, a, 0], [Refine, [HeavisideTheta, a, a, a, a]]]	[HeavisideTheta, a, a, a, a]	
-assuming-a-lt-0-refine-heavisidetheta-a-a-a-a	Scope		[Assuming, [Less, a, 0], [Refine, [HeavisideTheta, a, a, a, a]]]	[HeavisideTheta, a, a, a, a]	
-assuming-a-lt-0-b-gt-0-refine-heavisidetheta-b-b	Scope		[Assuming, [And, [Less, a, 0], [Greater, b, 0]], [Refine, [HeavisideTheta, b, b, a]]]	[HeavisideTheta, b, b, a]	
+matrixfunction-heavisidetheta-list-list-neg-1	Scope		[MatrixFunction, HeavisideTheta, [List, [List, -1, [Rational, -1, 2]], [List, [Rational, -1, 2], [Rational, 1, 2]]]]	[List, [List, [Multiply, [Divide, [Sqrt, 13], 26], [Add, -3, [Sqrt, 13]]], [Negate, [Divide, [Sqrt, 13], 13]]], [List, [Negate, [Divide, [Sqrt, 13], 13]], [Multiply, [Divide, [Sqrt, 13], 26], [Add, 3, [Sqrt, 13]]]]]	A matrix function of the step in terms of its eigenvalues
+assuming-a-gt-0-refine-heavisidetheta-a-a-a-a	Scope		[Assuming, [Greater, a, 0], [Refine, [HeavisideTheta, a, a, a, a]]]	[HeavisideTheta, a, a, a, a]	With more than one argument the sign assumption does not resolve it
+assuming-a-lt-0-refine-heavisidetheta-a-a-a-a	Scope		[Assuming, [Less, a, 0], [Refine, [HeavisideTheta, a, a, a, a]]]	[HeavisideTheta, a, a, a, a]	Negative assumption leaves it symbolic
+assuming-a-lt-0-b-gt-0-refine-heavisidetheta-b-b	Scope		[Assuming, [And, [Less, a, 0], [Greater, b, 0]], [Refine, [HeavisideTheta, b, b, a]]]	[HeavisideTheta, b, b, a]	Mixed-sign assumptions still leave it symbolic
 heavisidetheta-derivative	Properties		[D, [HeavisideTheta, x], x]	[DiracDelta, x]	Derivative is [[DiracDelta]]

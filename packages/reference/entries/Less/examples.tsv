@@ -1,7 +1,7 @@
-id	section	role	expr	expected
-2-over-17-lt-1-over-5-lt-1-over-10-times-pi			[Less, [Rational, 2, 17], [Rational, 1, 5], [Multiply, [Rational, 1, 10], Pi]]	True
-3-over-2-lt-5-over-3	Scope		[Less, [Rational, 3, 2], [Rational, 5, 3]]	True
-1-lt-1-plus-128-times-10-pow-neg-16	Scope		[Less, 1, [Add, 1, [Multiply, 128, [Power, 10, -16]]]]	True
-1-lt-1-plus-256-times-10-pow-neg-16	Scope		[Less, 1, [Add, 1, [Multiply, 256, [Power, 10, -16]]]]	True
-pi-pow-exponentiale-lt-exponentiale-pow-pi	Scope		[Less, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True
-refine-sqrt-x-pow-2-x-lt-0	Properties		[Refine, [Sqrt, [Power, x, 2]], [Less, x, 0]]	[Negate, x]
+id	section	role	expr	expected	caption
+2-over-17-lt-1-over-5-lt-1-over-10-times-pi			[Less, [Rational, 2, 17], [Rational, 1, 5], [Multiply, [Rational, 1, 10], Pi]]	True	A chained comparison decides exactly, mixing rationals and $\pi$
+3-over-2-lt-5-over-3	Scope		[Less, [Rational, 3, 2], [Rational, 5, 3]]	True	Rationals compare exactly: $\frac{3}{2} < \frac{5}{3}$
+1-lt-1-plus-128-times-10-pow-neg-16	Scope		[Less, 1, [Add, 1, [Multiply, 128, [Power, 10, -16]]]]	True	A difference far below double precision still counts, exactly
+1-lt-1-plus-256-times-10-pow-neg-16	Scope		[Less, 1, [Add, 1, [Multiply, 256, [Power, 10, -16]]]]	True	Exact arithmetic separates 1 from a slightly larger number
+pi-pow-exponentiale-lt-exponentiale-pow-pi	Scope		[Less, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True	
+refine-sqrt-x-pow-2-x-lt-0	Properties		[Refine, [Sqrt, [Power, x, 2]], [Less, x, 0]]	[Negate, x]	Under the assumption $x<0$, $\sqrt{x^2}$ simplifies to $-x$

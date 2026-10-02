@@ -6,7 +6,13 @@
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { collectMessages, type Message } from "@enumeratio/engine";
-import { createResolver, type Library } from "@enumeratio/manifest";
+import {
+  createRegistryResolver,
+  createResolver,
+  type Library,
+  type NotationData,
+  type Registry,
+} from "@enumeratio/manifest";
 import { evaluateCooperatively } from "./cooperative-evaluate.ts";
 
 /** Text for the kernel to read, in one of the host's syntaxes (`epsil`, `latex`, `mathjson`). */
@@ -84,6 +90,14 @@ export interface KernelOptions {
   /** The input compiled as `spec` asks (code for a plot to run), so a front end draws it
    *  with no engine of its own. */
   readonly compile?: (ce: ComputeEngine, json: unknown, spec: unknown) => unknown;
+  /**
+   * Published libraries (`@enumeratio/manifest/libraries`' `catalog`), whose qualified names
+   * (`ns.Name`) resolve after the catalogue's: each definition declared at its pin, its install
+   * check run, the first time a call names it.
+   */
+  readonly libraries?: Registry<ComputeEngine>;
+  /** A library definition's notation, registered under the head it's declared as. */
+  readonly notation?: (ce: ComputeEngine, head: string, data: NotationData) => void;
 }
 
 export interface Kernel {
@@ -110,6 +124,20 @@ export function createKernel(
   options: KernelOptions = {},
 ): Kernel {
   const resolver = createResolver(catalogue);
+  const libraries =
+    options.libraries === undefined
+      ? undefined
+      : createRegistryResolver(options.libraries, {
+          check: { engine: () => new (ce.constructor as new () => ComputeEngine)(), mode: "enforce" },
+          ...(options.notation === undefined ? {} : { notation: options.notation }),
+        });
+  /** `input` with the libraries it names declared, and its calls of them as compute-engine can make them. */
+  const withLibraries = async (input: unknown): Promise<{ input: unknown; declared: string[]; missing: string[] }> => {
+    if (libraries === undefined) return { input, declared: [], missing: [] };
+    const ensured = await libraries.ensure(ce, input);
+    if (ensured.errors.length > 0) throw new Error(ensured.errors.join("; "));
+    return { input: ensured.expression, declared: [...ensured.declared], missing: [...ensured.unresolved] };
+  };
   const sessions = new Map<string, KernelSession>();
   /** The session called `id`, or, for a call with none, a throwaway one kept by no one. */
   const sessionFor = (id: string | undefined): KernelSession | undefined => {
@@ -142,6 +170,12 @@ export function createKernel(
       // A reader resolves names against what's declared (Epsil's library names), so text is
       // read again once what it named is.
       if (resolved.declared.length > 0 && request.source !== undefined) input = read();
+      const fromLibraries = await withLibraries(input);
+      input = fromLibraries.input;
+      resolved = {
+        declared: [...resolved.declared, ...fromLibraries.declared],
+        missing: [...resolved.missing, ...fromLibraries.missing],
+      };
     } catch (error) {
       return failed(error, "declaring: ");
     }

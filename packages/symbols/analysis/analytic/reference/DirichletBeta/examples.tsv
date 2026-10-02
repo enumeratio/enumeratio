@@ -16,10 +16,10 @@ fullsimplify-matrixfunction-dirichletbeta-list	Scope		[FullSimplify, [MatrixFunc
 beta-7-61-pi-7-184320-the-61-is-the-euler-number	Properties		[DirichletBeta, 7]	[Multiply, [Rational, 61, 184320], [Power, Pi, 7]]			$\beta(7) = 61\pi^7/184320$ — the $61$ is the Euler number $|E_6|$		
 beta-2k-e-2k-2-and-beta-2k-1-0	Properties		[DirichletBeta, [List, 0, -1, -2, -3, -4]]	[List, [Rational, 1, 2], 0, [Rational, -1, 2], 0, [Rational, 5, 2]]			$\beta(-2k) = E_{2k}/2$ and $\beta(-(2k+1)) = 0$		
 beta-5-5-pi-5-1536	Properties		[DirichletBeta, 5]	[Multiply, [Rational, 5, 1536], [Power, Pi, 5]]			$\beta(5) = 5\pi^5/1536$		
-dirichletbeta-neg-5	Properties		[DirichletBeta, -5]	0	0	Wolfram MathematicalFunctionData, DirichletBeta			
-dirichletbeta-neg-4	Properties		[DirichletBeta, -4]	[Rational, 5, 2]	[Rational, 5, 2]	Wolfram MathematicalFunctionData, DirichletBeta			
-dirichletbeta-neg-3	Properties		[DirichletBeta, -3]	0	0	Wolfram MathematicalFunctionData, DirichletBeta			
-dirichletbeta-neg-2	Properties		[DirichletBeta, -2]	[Rational, -1, 2]	[Rational, -1, 2]	Wolfram MathematicalFunctionData, DirichletBeta			
-dirichletbeta-neg-1	Properties		[DirichletBeta, -1]	0	0	Wolfram MathematicalFunctionData, DirichletBeta			
-dirichletbeta-0	Properties		[DirichletBeta, 0]	[Rational, 1, 2]	[Rational, 1, 2]	Wolfram MathematicalFunctionData, DirichletBeta			
+dirichletbeta-neg-5	Properties		[DirichletBeta, -5]	0	0	Wolfram MathematicalFunctionData, DirichletBeta	Zero at negative odd integers		
+dirichletbeta-neg-4	Properties		[DirichletBeta, -4]	[Rational, 5, 2]	[Rational, 5, 2]	Wolfram MathematicalFunctionData, DirichletBeta	$\beta(-4) = \frac52$, an Euler number over 2		
+dirichletbeta-neg-3	Properties		[DirichletBeta, -3]	0	0	Wolfram MathematicalFunctionData, DirichletBeta	$\beta(-3) = 0$, a trivial zero		
+dirichletbeta-neg-2	Properties		[DirichletBeta, -2]	[Rational, -1, 2]	[Rational, -1, 2]	Wolfram MathematicalFunctionData, DirichletBeta	$\beta(-2) = -\frac12$		
+dirichletbeta-neg-1	Properties		[DirichletBeta, -1]	0	0	Wolfram MathematicalFunctionData, DirichletBeta	The first trivial zero, $\beta(-1) = 0$		
+dirichletbeta-0	Properties		[DirichletBeta, 0]	[Rational, 1, 2]	[Rational, 1, 2]	Wolfram MathematicalFunctionData, DirichletBeta	$\beta(0) = \frac12$		
 even-s-ge-4-has-no-closed-form-and-stays	Possible issues		[DirichletBeta, 4]	[DirichletBeta, 4]			Even $s \ge 4$ has no closed form and stays symbolic; N() gives $0.98894\ldots$	unevaluated	Stays symbolic here; Wolfram rewrites it via $\zeta(4, 1/4)$ and $\zeta(4, 3/4)$ instead of a further-reduced number.

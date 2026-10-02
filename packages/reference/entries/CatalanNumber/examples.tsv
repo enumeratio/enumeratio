@@ -21,13 +21,13 @@ the-closed-form-through-a-negative-n-in-binomial	Properties	test	[Divide, [Binom
 equivalently-c-n-binom-2n-n-binom-2n-n-1	Properties		[Subtract, [Binomial, 10, 5], [Binomial, 10, 6]]	42			Equivalently $C_n = \binom{2n}{n} - \binom{2n}{n+1}$													
 the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2	Properties		[Divide, [CatalanNumber, 6], [CatalanNumber, 5]]	[Rational, 22, 7]			The consecutive ratio is $\frac{C_{n+1}}{C_n} = \frac{2(2n+1)}{n+2}$													
 segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i	Properties		[Equal, [CatalanNumber, 4], [Sum, [Multiply, [CatalanNumber, i], [CatalanNumber, [Subtract, 3, i]]], [Tuple, i, 0, 3]]]	True			Segner's recurrence $C_{n+1} = \sum_{i=0}^{n} C_i\,C_{n-i}$, here at $n = 3$		[Equal, [CatalanNumber, 4], [Sum, [Multiply, [CatalanNumber, i], [CatalanNumber, [Subtract, 3, i]]], [Tuple, i, 0, 3]]]											
-generatingfunction-catalannumber-n-n-x	Properties		[GeneratingFunction, [CatalanNumber, n], n, x]	[Divide, [Add, [Negate, [Sqrt, [Add, [Multiply, -4, x], 1]]], 1], [Multiply, 2, x]]																
-catalannumber-neg-10	Properties		[CatalanNumber, -10]	0	0	Wolfram MathematicalFunctionData, CatalanNumber														
-catalannumber-neg-9	Properties		[CatalanNumber, -9]	0	0	Wolfram MathematicalFunctionData, CatalanNumber														
-catalannumber-neg-8	Properties		[CatalanNumber, -8]	0	0	Wolfram MathematicalFunctionData, CatalanNumber														
-catalannumber-neg-7	Properties		[CatalanNumber, -7]	0	0	Wolfram MathematicalFunctionData, CatalanNumber														
-catalannumber-neg-6	Properties		[CatalanNumber, -6]	0	0	Wolfram MathematicalFunctionData, CatalanNumber														
-catalannumber-neg-4	Properties		[CatalanNumber, -4]	0	0	Wolfram MathematicalFunctionData, CatalanNumber														
-catalannumber-neg-3	Properties		[CatalanNumber, -3]	0	0	Wolfram MathematicalFunctionData, CatalanNumber														
+generatingfunction-catalannumber-n-n-x	Properties		[GeneratingFunction, [CatalanNumber, n], n, x]	[Divide, [Add, [Negate, [Sqrt, [Add, [Multiply, -4, x], 1]]], 1], [Multiply, 2, x]]			The Catalan generating function $\frac{1-\sqrt{1-4x}}{2x}$													
+catalannumber-neg-10	Properties		[CatalanNumber, -10]	0	0	Wolfram MathematicalFunctionData, CatalanNumber	Zero at negative integers													
+catalannumber-neg-9	Properties		[CatalanNumber, -9]	0	0	Wolfram MathematicalFunctionData, CatalanNumber	Negative index gives zero, not a pole													
+catalannumber-neg-8	Properties		[CatalanNumber, -8]	0	0	Wolfram MathematicalFunctionData, CatalanNumber	Vanishes for a negative integer index													
+catalannumber-neg-7	Properties		[CatalanNumber, -7]	0	0	Wolfram MathematicalFunctionData, CatalanNumber	Catalan numbers are zero below index 0													
+catalannumber-neg-6	Properties		[CatalanNumber, -6]	0	0	Wolfram MathematicalFunctionData, CatalanNumber	Another negative index, another zero													
+catalannumber-neg-4	Properties		[CatalanNumber, -4]	0	0	Wolfram MathematicalFunctionData, CatalanNumber	Negative arguments give 0													
+catalannumber-neg-3	Properties		[CatalanNumber, -3]	0	0	Wolfram MathematicalFunctionData, CatalanNumber	Zero at every negative integer, not just $-1$													
 differencerootreduce-catalannumber-k-k	Properties		[DifferenceRootReduce, [CatalanNumber, k], k]	[Apply, [DifferenceRoot, [Function, [Block, [List, [Equal, [Add, [Multiply, -2, [Add, [Multiply, 2, n], 1], [y, n]], [Multiply, [Add, n, 2], [y, [Add, n, 1]]]], 0], [Equal, [y, 0], 1]]], y, n]], k]						Unreadable	convention	Both recurrences are algebraically identical (-2*(2n+1) == -2-4n, coefficients just distributed differently); a different but equal closed form for the same DifferenceRoot, not a value bug.								
 they-grow-fast-c-15-already-passes-nine-million	Neat examples		[CatalanNumber, 15]	9694845			They grow fast: $C_{15}$ already passes nine million													

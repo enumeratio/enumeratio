@@ -1,6 +1,6 @@
-id	section	role	expr	expected	triage	wolfram.note
-repeat-c-10			[Repeat, c, 10]	[List, c, c, c, c, c, c, c, c, c, c]		
-repeat-0-10	Scope		[Repeat, 0, 10]	[List, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]		
-repeat-1-10	Scope		[Repeat, 1, 10]	[List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]		
-dot-list-repeat-1-length-list	Applications		[Dot, list, [Repeat, 1, [Length, list]]]	[Dot, list, [List]]		
-shape-repeat-c-dims	Properties	triage	[Shape, [Repeat, c, dims]]	[Tuple]	wolfram?	Wolfram's Dimensions reads any expression as an array of its arguments: Dimensions[Power[2, 1/2]] and an unevaluated two-argument call are {2}. Ours takes a scalar or an unevaluated call as having no dimensions. A convention, not a bug.
+id	section	role	expr	expected	caption	triage	wolfram.note
+repeat-c-10			[Repeat, c, 10]	[List, c, c, c, c, c, c, c, c, c, c]	Repeats a symbol ten times		
+repeat-0-10	Scope		[Repeat, 0, 10]	[List, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]	A list of ten zeros		
+repeat-1-10	Scope		[Repeat, 1, 10]	[List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]	A list of ten ones, handy as a weight vector		
+dot-list-repeat-1-length-list	Applications		[Dot, list, [Repeat, 1, [Length, list]]]	[Dot, list, [List]]	A symbolic length makes the repeat empty, so the dot stays unevaluated with an empty list		
+shape-repeat-c-dims	Properties	triage	[Shape, [Repeat, c, dims]]	[Tuple]		wolfram?	Wolfram's Dimensions reads any expression as an array of its arguments: Dimensions[Power[2, 1/2]] and an unevaluated two-argument call are {2}. Ours takes a scalar or an unevaluated call as having no dimensions. A convention, not a bug.

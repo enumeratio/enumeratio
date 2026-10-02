@@ -1,9 +1,9 @@
 id	section	role	expr	expected	known	source	caption
-n-artanh-1-over-2-50	Scope		[N, [Artanh, [Rational, 1, 2]], 50]	{num: "0.54930614433405484569762261846126285232374527891137"}			
-artanh-positiveinfinity	Scope		[Artanh, PositiveInfinity]	[Multiply, [Complex, 0, [Rational, -1, 2]], Pi]			
-artanh-0	Scope		[Artanh, 0]	0			
-d-artanh-x-x	Scope		[D, [Artanh, x], x]	[Divide, 1, [Add, [Negate, [Power, x, 2]], 1]]			
-fullsimplify-neg-1-over-x-times-y-plus-1-times-x	Scope		[FullSimplify, [Add, [Negate, [Multiply, [Divide, 1, [Add, [Multiply, x, y], 1]], [Add, x, y]]], [Tanh, [Add, [Artanh, x], [Artanh, y]]]]]	[Add, [Divide, [Add, [Negate, x], [Negate, y]], [Add, [Multiply, x, y], 1]], [Tanh, [Add, [Artanh, x], [Artanh, y]]]]			
-trigtoexp-artanh-z	Scope		[TrigToExp, [Artanh, z]]	[Artanh, z]			
-integrate-artanh-x-x-nothing-nothing	Scope		[Integrate, [Function, [Block, [Artanh, x]], x], [Limits, x, Nothing, Nothing]]	[Add, [Multiply, x, [Artanh, x]], [Multiply, [Rational, 1, 2], [Ln, [Add, [Negate, [Power, x, 2]], 1]]]]			
+n-artanh-1-over-2-50	Scope		[N, [Artanh, [Rational, 1, 2]], 50]	{num: "0.54930614433405484569762261846126285232374527891137"}			Fifty digits of $\operatorname{artanh}(1/2)$
+artanh-positiveinfinity	Scope		[Artanh, PositiveInfinity]	[Multiply, [Complex, 0, [Rational, -1, 2]], Pi]			The limit at infinity is a purely imaginary constant, $-i\pi/2$
+artanh-0	Scope		[Artanh, 0]	0			Vanishes at the origin
+d-artanh-x-x	Scope		[D, [Artanh, x], x]	[Divide, 1, [Add, [Negate, [Power, x, 2]], 1]]			Derivative is $1/(1-x^2)$
+fullsimplify-neg-1-over-x-times-y-plus-1-times-x	Scope		[FullSimplify, [Add, [Negate, [Multiply, [Divide, 1, [Add, [Multiply, x, y], 1]], [Add, x, y]]], [Tanh, [Add, [Artanh, x], [Artanh, y]]]]]	[Add, [Divide, [Add, [Negate, x], [Negate, y]], [Add, [Multiply, x, y], 1]], [Tanh, [Add, [Artanh, x], [Artanh, y]]]]			The addition formula is not recognised; the tanh term stays
+trigtoexp-artanh-z	Scope		[TrigToExp, [Artanh, z]]	[Artanh, z]			No exponential rewrite is applied; artanh(z) is returned as is
+integrate-artanh-x-x-nothing-nothing	Scope		[Integrate, [Function, [Block, [Artanh, x]], x], [Limits, x, Nothing, Nothing]]	[Add, [Multiply, x, [Artanh, x]], [Multiply, [Rational, 1, 2], [Ln, [Add, [Negate, [Power, x, 2]], 1]]]]			Antiderivative $x\operatorname{artanh}x + \tfrac12\ln(1-x^2)$
 artanh-complexinfinity-is-indeterminate-the-sign	Possible issues		[Artanh, ComplexInfinity]	Indeterminate	Indeterminate	DLMF 4.37.24	Artanh(ComplexInfinity) is Indeterminate -- the sign of the boundary value $\pm i\pi/2$ depends on which side of the branch cut z approaches from

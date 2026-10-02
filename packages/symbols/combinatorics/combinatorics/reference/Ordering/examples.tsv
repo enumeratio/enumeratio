@@ -9,6 +9,6 @@ a-m-n-spec-takes-the-4th-through-the-last	Scope		[Ordering, [List, 2, 6, 1, 9, 1
 a-third-argument-orders-by-a-custom-test-here	Scope		[Ordering, [List, 2, 6, 1, 9, 3], All, Greater]	[List, 4, 2, 5, 1, 3]	A third argument orders by a custom test, here descending
 upto-6-asks-for-at-most-6-positions-so-a-5	Scope		[Ordering, [List, 2, 6, 1, 9, 2], [UpTo, 6]]	[List, 3, 1, 5, 2, 4]	[[UpTo]](6) asks for at most 6 positions, so a 5-element list gives all 5
 the-position-of-the-smallest-element-see-first	Applications		[First, [Ordering, [List, 2, 6, 1, 9, 1, 2, 3]]]	3	The position of the smallest element. See [[First]]
-ordering-list-4-5-1-2-3	Applications		[Ordering, [List, 4, 5, 1, 2, 3]]	[List, 3, 4, 5, 1, 2]	
+ordering-list-4-5-1-2-3	Applications		[Ordering, [List, 4, 5, 1, 2, 3]]	[List, 3, 4, 5, 1, 2]	Positions in increasing order of value: the $1$ is third, then $2$, $3$, $4$, $5$
 on-a-permutation-ordering-is-the-inverse-so	Properties		[Ordering, [Ordering, [List, 3, 1, 2]]]	[List, 3, 1, 2]	On a permutation, $Ordering$ is the inverse, so applying it twice recovers the permutation
-ordering-list-4-5-neg-2-3-neg-1	Properties		[Ordering, [List, 4, 5, -2, 3], -1]	[List, 2]	
+ordering-list-4-5-neg-2-3-neg-1	Properties		[Ordering, [List, 4, 5, -2, 3], -1]	[List, 2]	A negative count takes from the largest end, so the position of $5$

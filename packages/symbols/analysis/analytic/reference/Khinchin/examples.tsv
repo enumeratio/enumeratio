@@ -1,5 +1,5 @@
 id	section	role	expr	expected	caption
 khinchin-s-constant			[N, Khinchin]	2.6854520010653062	Khinchin's constant
-n-khinchin-50			[N, Khinchin, 50]	{num: "2.6854520010653064453097148354817956938203822939945"}	
-round-khinchin-pow-100	Scope		[Round, [Power, Khinchin, 100]]	7.975160530073655e+42	
-2-lt-khinchin-lt-3	Properties		[Less, 2, Khinchin, 3]	True	
+n-khinchin-50			[N, Khinchin, 50]	{num: "2.6854520010653064453097148354817956938203822939945"}	Khinchin's constant to 50 digits
+round-khinchin-pow-100	Scope		[Round, [Power, Khinchin, 100]]	7.975160530073655e+42	A hundredth power is a 43-digit number, shown as a float
+2-lt-khinchin-lt-3	Properties		[Less, 2, Khinchin, 3]	True	The constant lies between 2 and 3

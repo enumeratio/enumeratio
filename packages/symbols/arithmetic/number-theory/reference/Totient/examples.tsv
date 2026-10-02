@@ -13,23 +13,23 @@ sum-d-mid-n-varphi-d-n-checked-over-the-divisors	Properties		[Add, [Totient, 1],
 multiplicative-varphi-mn-varphi-m-varphi-n-when	Properties		[Equal, [Totient, 12], [Multiply, [Totient, 4], [Totient, 3]]]	True			Multiplicative: $\varphi(mn)=\varphi(m)\varphi(n)$ when $\gcd(m,n)=1$, here for $4$ and $3$										
 varphi-p-p-1-for-a-prime-p	Properties		[Totient, 17]	16			$\varphi(p)=p-1$ for a prime $p$										
 varphi-p-k-p-k-1-p-1-3-3-cdot-2-54	Properties		[Totient, 81]	54			$\varphi(p^k)=p^{k-1}(p-1)$: $3^3\cdot2=54$										
-totient-100	Properties		[Totient, 100]	40													
-totient-35	Properties		[Totient, 35]	24													
-divides-carmichaellambda-8-totient-8	Properties		[Divides, [CarmichaelLambda, 8], [Totient, 8]]	True													
-list-totient-25-carmichaellambda-25	Properties		[List, [Totient, 25], [CarmichaelLambda, 25]]	[List, 20, 20]													
-divisorsum-15-totient-eq-15	Properties		[Equal, [DivisorSum, 15, Totient], 15]	True													
-totient-1-023-eq-totient-3-times-totient-11	Properties		[Equal, [Totient, 1023], [Multiply, [Totient, 3], [Totient, 11], [Totient, 31]]]	True													
-totient-2	Properties		[Totient, 2]	1	1	Wolfram MathematicalFunctionData, EulerPhi											
-totient-3	Properties		[Totient, 3]	2	2	Wolfram MathematicalFunctionData, EulerPhi											
-totient-4	Properties		[Totient, 4]	2	2	Wolfram MathematicalFunctionData, EulerPhi											
-totient-5	Properties		[Totient, 5]	4	4	Wolfram MathematicalFunctionData, EulerPhi											
-totient-6	Properties		[Totient, 6]	2	2	Wolfram MathematicalFunctionData, EulerPhi											
-totient-7	Properties		[Totient, 7]	6	6	Wolfram MathematicalFunctionData, EulerPhi											
-totient-8	Properties		[Totient, 8]	4	4	Wolfram MathematicalFunctionData, EulerPhi											
-totient-9	Properties		[Totient, 9]	6	6	Wolfram MathematicalFunctionData, EulerPhi											
-totient-11	Properties		[Totient, 11]	10	10	Wolfram MathematicalFunctionData, EulerPhi											
-totient-13	Properties		[Totient, 13]	12	12	Wolfram MathematicalFunctionData, EulerPhi											
-totient-14	Properties		[Totient, 14]	6	6	Wolfram MathematicalFunctionData, EulerPhi											
-totient-15	Properties		[Totient, 15]	8	8	Wolfram MathematicalFunctionData, EulerPhi											
-totient-16	Properties		[Totient, 16]	8	8	Wolfram MathematicalFunctionData, EulerPhi											
+totient-100	Properties		[Totient, 100]	40			$\varphi(100)=100\cdot\frac12\cdot\frac45$										
+totient-35	Properties		[Totient, 35]	24			$\varphi(35)=4\cdot6$ for coprime factors										
+divides-carmichaellambda-8-totient-8	Properties		[Divides, [CarmichaelLambda, 8], [Totient, 8]]	True			The Carmichael function always divides Euler's										
+list-totient-25-carmichaellambda-25	Properties		[List, [Totient, 25], [CarmichaelLambda, 25]]	[List, 20, 20]			For odd prime powers the two agree										
+divisorsum-15-totient-eq-15	Properties		[Equal, [DivisorSum, 15, Totient], 15]	True			Gauss: $\sum_{d\mid n}\varphi(d)=n$										
+totient-1-023-eq-totient-3-times-totient-11	Properties		[Equal, [Totient, 1023], [Multiply, [Totient, 3], [Totient, 11], [Totient, 31]]]	True			Multiplicative over $1023=3\cdot11\cdot31$										
+totient-2	Properties		[Totient, 2]	1	1	Wolfram MathematicalFunctionData, EulerPhi	Only $1$ is coprime to $2$										
+totient-3	Properties		[Totient, 3]	2	2	Wolfram MathematicalFunctionData, EulerPhi	A prime $p$ gives $p-1$										
+totient-4	Properties		[Totient, 4]	2	2	Wolfram MathematicalFunctionData, EulerPhi	Odd numbers below 4: $1$ and $3$										
+totient-5	Properties		[Totient, 5]	4	4	Wolfram MathematicalFunctionData, EulerPhi	Prime, so $4$										
+totient-6	Properties		[Totient, 6]	2	2	Wolfram MathematicalFunctionData, EulerPhi	Only $1$ and $5$ are coprime to $6$										
+totient-7	Properties		[Totient, 7]	6	6	Wolfram MathematicalFunctionData, EulerPhi	Prime, so $6$										
+totient-8	Properties		[Totient, 8]	4	4	Wolfram MathematicalFunctionData, EulerPhi	Half the residues are odd: $2^{k-1}$ at $2^k$										
+totient-9	Properties		[Totient, 9]	6	6	Wolfram MathematicalFunctionData, EulerPhi	$\varphi(p^2)=p(p-1)=6$										
+totient-11	Properties		[Totient, 11]	10	10	Wolfram MathematicalFunctionData, EulerPhi	Prime, so $10$										
+totient-13	Properties		[Totient, 13]	12	12	Wolfram MathematicalFunctionData, EulerPhi	Prime, so $12$										
+totient-14	Properties		[Totient, 14]	6	6	Wolfram MathematicalFunctionData, EulerPhi	$\varphi(2)\varphi(7)=6$										
+totient-15	Properties		[Totient, 15]	8	8	Wolfram MathematicalFunctionData, EulerPhi	$\varphi(3)\varphi(5)=8$										
+totient-16	Properties		[Totient, 16]	8	8	Wolfram MathematicalFunctionData, EulerPhi	$2^4$ gives $2^3=8$										
 assuming-p-in-primes-r-in-integers-r-gt-0	Properties	triage	[Assuming, [And, [Element, p, Primes], [Element, r, Integers], [Greater, r, 0]], [FunctionExpand, [Totient, [Power, p, r]]]]	[Totient, [Power, p, r]]				gap	Same Assuming/FunctionExpand/FullSimplify gap as CatalanNumber/Divides above: reducing Totient(p^r) to (p-1)*p^(r-1) needs the assumption p in Primes, which we have no channel to carry into the Totient evaluator.								

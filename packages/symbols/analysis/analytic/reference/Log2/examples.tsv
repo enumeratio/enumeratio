@@ -15,9 +15,9 @@ interval-arithmetic-log-2-frac-13-2-log-2-3-1	Scope		[Log2, [Interval, [Rational
 uncertainty-propagation-log-2-frac-15-pm-0-01	Scope		[Log2, [Around, [Rational, 1, 5], 0.01]]	[Around, -2.321928094887362, 0.07213475204444818]	Uncertainty propagation, to first order: $\log_2(\tfrac15 \pm 0.01) \approx -2.322 \pm 0.072$			
 derivative-frac-1-x-ln-2	Scope		[D, [Log2, x], x]	[Divide, 1, [Multiply, x, [Ln, 2]]]	Derivative: $\frac{1}{x\ln 2}$			
 to-30-significant-digits-every-one-correctly	Scope		[N, [Log2, 3], 30]	{num: "1.58496250072115618145373894395"}	To 30 significant digits, every one correctly rounded			
-n-log-45-2-100	Scope		[N, [Log, 45, 2], 100]	{num: "5.491853096329674710777797317385023193384460208409542732966261704898131232197342340894700693195546639"}				
-n-log-2-plus-i-2	Scope		[N, [Log, [Complex, 2, 1], 2]]	[Complex, 1.160964047443681, 0.6689021062254881]				
-fullsimplify-matrixfunction-log2-list-list-2-1	Scope		[FullSimplify, [MatrixFunction, Log2, [List, [List, 2, 1], [List, 0, [Rational, 1, 2]]]]]	[List, [List, 1, [Rational, 4, 3]], [List, 0, -1]]				
-log-positiveinfinity-2	Scope		[Log, PositiveInfinity, 2]	PositiveInfinity				
+n-log-45-2-100	Scope		[N, [Log, 45, 2], 100]	{num: "5.491853096329674710777797317385023193384460208409542732966261704898131232197342340894700693195546639"}	A 100-digit logarithm in base 2			
+n-log-2-plus-i-2	Scope		[N, [Log, [Complex, 2, 1], 2]]	[Complex, 1.160964047443681, 0.6689021062254881]	A complex argument in base 2			
+fullsimplify-matrixfunction-log2-list-list-2-1	Scope		[FullSimplify, [MatrixFunction, Log2, [List, [List, 2, 1], [List, 0, [Rational, 1, 2]]]]]	[List, [List, 1, [Rational, 4, 3]], [List, 0, -1]]	A matrix function with exact eigenvalues 1 and $-1$, since $\log_2\frac12=-1$			
+log-positiveinfinity-2	Scope		[Log, PositiveInfinity, 2]	PositiveInfinity	$\log_2\infty=\infty$			
 a-float-argument-folds-even-for-a-fractional	Applications		[Log2, 0.5]	{num: "-1.0"}	A float argument folds even for a fractional power of 2			
 same-as-log-z-2	Properties		[Equal, [Log2, 8], [Log, 8, 2]]	True	Same as Log(z, 2)			

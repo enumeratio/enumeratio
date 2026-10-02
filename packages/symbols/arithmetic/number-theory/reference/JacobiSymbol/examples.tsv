@@ -4,26 +4,26 @@ id	section	role	expr	expected	known	source	caption
 jacobisymbol-1-001-9-907			[JacobiSymbol, 1001, 9907]	-1			
 threads-element-wise-over-a-list-as-wolfram-s	Scope		[JacobiSymbol, [List, 2, 3, 5, 7, 11], 3]	[List, -1, 0, -1, 1, -1]			Threads element-wise over a list, as Wolfram's Listable heads do
 larger-arguments-10-10-1-against-the-1000th	Scope		[JacobiSymbol, [Add, [Power, 10, 10], 1], [NthPrime, 1000]]	1			Larger arguments: $10^{10}+1$ against the 1000th prime, 7919
-jacobisymbol-neg-3-list-1-3-5-7	Scope		[JacobiSymbol, -3, [List, 1, 3, 5, 7]]	[List, 1, 0, -1, 1]			
+jacobisymbol-neg-3-list-1-3-5-7	Scope		[JacobiSymbol, -3, [List, 1, 3, 5, 7]]	[List, 1, 0, -1, 1]			Threads over a list of odd moduli; $0$ where $\gcd(-3,n)>1$
 completely-multiplicative-in-the-top-argument-a	Properties		[Equal, [Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 5, 7]], [JacobiSymbol, [Multiply, 3, 5], 7]]	True			Completely multiplicative in the top argument: $(a/m)(b/m)=(ab/m)$
 quadratic-reciprocity-p-q-q-p-1-frac-p-1-2-frac	Properties		[Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 7, 3]]	-1			Quadratic reciprocity: $(p/q)(q/p)=(-1)^{\frac{p-1}2\frac{q-1}2}$, $-1$ as $3\equiv7\equiv3\pmod4$
 1-m-1-m-1-2	Properties		[JacobiSymbol, -1, 7]	-1			$(-1/m)=(-1)^{(m-1)/2}$
-jacobisymbol-neg-5-3	Properties		[JacobiSymbol, -5, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-neg-4-3	Properties		[JacobiSymbol, -4, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-neg-3-3	Properties		[JacobiSymbol, -3, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-neg-2-3	Properties		[JacobiSymbol, -2, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-neg-1-3	Properties		[JacobiSymbol, -1, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-0-3	Properties		[JacobiSymbol, 0, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-1-3	Properties		[JacobiSymbol, 1, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-2-3	Properties		[JacobiSymbol, 2, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-3-3	Properties		[JacobiSymbol, 3, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-4-3	Properties		[JacobiSymbol, 4, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-5-3	Properties		[JacobiSymbol, 5, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-6-3	Properties		[JacobiSymbol, 6, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-7-3	Properties		[JacobiSymbol, 7, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-8-3	Properties		[JacobiSymbol, 8, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-9-3	Properties		[JacobiSymbol, 9, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-10-3	Properties		[JacobiSymbol, 10, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	
-jacobisymbol-neg-5-5	Properties		[JacobiSymbol, -5, 5]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	
+jacobisymbol-neg-5-3	Properties		[JacobiSymbol, -5, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	$-5\equiv1 \pmod 3$ is a square, so the symbol is $1$
+jacobisymbol-neg-4-3	Properties		[JacobiSymbol, -4, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	$-4\equiv2 \pmod 3$ is a non-residue
+jacobisymbol-neg-3-3	Properties		[JacobiSymbol, -3, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	A multiple of the modulus gives $0$
+jacobisymbol-neg-2-3	Properties		[JacobiSymbol, -2, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	$-2\equiv1$, a residue mod 3
+jacobisymbol-neg-1-3	Properties		[JacobiSymbol, -1, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	$-1$ is not a square mod 3, since $3\equiv3 \pmod 4$
+jacobisymbol-0-3	Properties		[JacobiSymbol, 0, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	Zero is never coprime to the modulus, so the symbol vanishes
+jacobisymbol-1-3	Properties		[JacobiSymbol, 1, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	One is always a residue
+jacobisymbol-2-3	Properties		[JacobiSymbol, 2, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	$2$ is a non-residue mod 3
+jacobisymbol-3-3	Properties		[JacobiSymbol, 3, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	Shares a factor with the modulus: $0$
+jacobisymbol-4-3	Properties		[JacobiSymbol, 4, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	A perfect square gives $1$ when coprime
+jacobisymbol-5-3	Properties		[JacobiSymbol, 5, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	$5\equiv2$, a non-residue
+jacobisymbol-6-3	Properties		[JacobiSymbol, 6, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	Another multiple of 3, another $0$
+jacobisymbol-7-3	Properties		[JacobiSymbol, 7, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	$7\equiv1 \pmod 3$, so $1$
+jacobisymbol-8-3	Properties		[JacobiSymbol, 8, 3]	-1	-1	Wolfram MathematicalFunctionData, JacobiSymbol	$8\equiv2$, so $-1$
+jacobisymbol-9-3	Properties		[JacobiSymbol, 9, 3]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	Every third value in $a$ drops to $0$
+jacobisymbol-10-3	Properties		[JacobiSymbol, 10, 3]	1	1	Wolfram MathematicalFunctionData, JacobiSymbol	The pattern $1,-1,0$ repeats with period 3 in $a$
+jacobisymbol-neg-5-5	Properties		[JacobiSymbol, -5, 5]	0	0	Wolfram MathematicalFunctionData, JacobiSymbol	$\gcd(-5,5)=5$, so the symbol is $0$
 by-convention-the-symbol-is-1-whenever-m-1	Possible issues		[JacobiSymbol, 0, 1]	1			By convention the symbol is 1 whenever $m=1$
 2-15-2-3-2-5-1-yet-2-is-not-a-square-mod-15	Possible issues		[JacobiSymbol, 2, 15]	1			$(2/15)=(2/3)(2/5)=1$, yet 2 is not a square mod 15
