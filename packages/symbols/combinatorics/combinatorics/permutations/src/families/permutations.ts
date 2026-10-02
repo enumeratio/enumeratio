@@ -3,7 +3,6 @@
 // same roadmap item don't collide on one file. Reuses ./kernels.ts (Factorial/PermutationUnrank/
 // PermutationRank/IsPermutationOf/LehmerCode/Inversions) and ./kernels-extra.ts (KPermutation*) wherever
 // the element representation already matches; only genuinely new combinatorics get new code here.
-import { catalanNumber } from "../../../collections/src/families/shared.ts";
 import {
   Factorial,
   Inversions,
@@ -20,10 +19,14 @@ import {
 } from "../../../collections/src/families/kernels-extra.ts";
 import { IntegerPartitionRank } from "../../../collections/src/families/kernels-combinatorics.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
-import { inducedOrder } from "../../../collections/src/families/induced-order.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { kCyclePermutations } from "./core.ts";
-import { alternatingPermutations, connectedPermutations, kDescentPermutations } from "./restrictions.ts";
+import {
+  alternatingPermutations,
+  connectedPermutations,
+  kDescentPermutations,
+  permutationsAvoiding3,
+} from "./restrictions.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
 const ints = (
@@ -114,34 +117,6 @@ function isSubexcedant(terms: number[], n: number): boolean {
     if (!Number.isInteger(v) || v < 0 || v > i) return false;
   }
   return true;
-}
-
-// ─── PermutationsAvoiding{123,132,213,231,312,321}(n): classical length-3 pattern classes, all ────────
-// Catalan-counted (Knuth). `containsPattern` is an O(n³) check of every triple. Unrank and rank
-// filter the permutations of n in lex order (`inducedOrder`) until each class has a completion count.
-const PATTERNS: Record<string, readonly [number, number, number]> = {
-  PermutationsAvoiding123: [1, 2, 3],
-  PermutationsAvoiding132: [1, 3, 2],
-  PermutationsAvoiding213: [2, 1, 3],
-  PermutationsAvoiding231: [2, 3, 1],
-  PermutationsAvoiding312: [3, 1, 2],
-  PermutationsAvoiding321: [3, 2, 1],
-};
-
-function patternOf(a: number, b: number, c: number): readonly [number, number, number] {
-  const sorted = [a, b, c];
-  sorted.sort((x, y) => x - y);
-  return [sorted.indexOf(a) + 1, sorted.indexOf(b) + 1, sorted.indexOf(c) + 1];
-}
-function containsPattern(perm: readonly number[], pattern: readonly [number, number, number]): boolean {
-  const n = perm.length;
-  for (let i = 0; i < n; i++)
-    for (let j = i + 1; j < n; j++)
-      for (let k = j + 1; k < n; k++) {
-        const p = patternOf(perm[i], perm[j], perm[k]);
-        if (p[0] === pattern[0] && p[1] === pattern[1] && p[2] === pattern[2]) return true;
-      }
-  return false;
 }
 
 // ─── KInversionPermutations(n,k): exactly k inversions — the Mahonian triangle. ────────────────────
@@ -337,12 +312,5 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     ),
     carrier: "Permutation",
   },
-  ...Object.entries(PATTERNS).map(([head, pattern]) =>
-    inducedOrder({
-      head,
-      paramCount: 1,
-      count: ([n]) => catalanNumber(n),
-      member: (a) => !containsPattern(a as number[], pattern),
-    }),
-  ),
+  ...permutationsAvoiding3,
 ];
