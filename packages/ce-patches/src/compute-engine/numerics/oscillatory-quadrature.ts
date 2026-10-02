@@ -14,8 +14,9 @@ import { GAUSS_LEGENDRE_20 } from "./gauss-legendre.ts";
  * `π/2 − 1.0e-8`, forty times outside its own error bar.
  *
  * Returns `{ estimate, error }`; `null` when the integrand is not oscillatory, the budget
- * runs out, or the lobes fail to shrink (`∫₀^∞ sin x` diverges); `"irregular"` when they
- * shrink but not steadily, so the alternating series the acceleration assumes isn't there
+ * runs out, or the lobes fail to shrink at the end; `"irregular"` when they stall or grow
+ * (`∫₀^∞ sin t·t^(3/4)` diverges, abandoned early) or shrink but not steadily, so the alternating
+ * series the acceleration assumes isn't there
  * (`sin t·cos 3t/t`, whose lobes beat: the estimate settles 6e-6 off, its spread 7e-10).
  */
 export function integrateSemiInfiniteOscillatory(
@@ -52,6 +53,10 @@ export function integrateSemiInfiniteOscillatory(
     prevWidth = z - cur;
     cur = z;
 
+    // Give up on a divergent integral (`∫₀^∞ sin t·t^(3/4)`) once the lobes stop shrinking,
+    // before its ever-larger lobes eat the budget. Declined like the beating ones.
+    if (lobes.length >= 3 * WINDOW && lobes.length % WINDOW === 0 && !lobesShrinking(lobes)) return "irregular";
+
     // Only accept convergence once the lobes shrink, steadily: the ε-algorithm happily
     // sums a divergent alternating series (∫₀^∞ sin x → "1").
     if (lobes.length >= 6 && lobes.length % 2 === 0 && lobesDecaying(lobes) && lobesSteady(lobes)) {
@@ -67,6 +72,18 @@ export function integrateSemiInfiniteOscillatory(
   if (!final || !Number.isFinite(final.estimate)) return null;
   if (final.error > 1e-4 * (1 + Math.abs(final.estimate))) return null;
   return withFirst(final);
+}
+
+/** Lobes per window of the divergence check. */
+const WINDOW = 8;
+
+/** Did the mean lobe magnitude fall, over either of the last two windows? A convergent
+ * series' lobes shrink on average even when they beat; a divergent one's grow or stall. */
+function lobesShrinking(lobes: readonly number[]): boolean {
+  const mean = (end: number): number =>
+    lobes.slice(end - WINDOW, end).reduce((sum, x) => sum + Math.abs(x), 0) / WINDOW;
+  const [older, middle, latest] = [mean(lobes.length - 2 * WINDOW), mean(lobes.length - WINDOW), mean(lobes.length)];
+  return !(middle > 0) || middle > latest || older > middle;
 }
 
 /** Lobes the steadiness test looks back over. */
