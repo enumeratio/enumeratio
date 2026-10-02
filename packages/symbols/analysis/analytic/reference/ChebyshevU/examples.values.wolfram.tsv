@@ -35,3 +35,5 @@ chebyshevu-2-positiveinfinity	ChebyshevU[2, Infinity]	Indeterminate			disagree
 chebyshevu-2-negativeinfinity	ChebyshevU[2, -Infinity]	Indeterminate			disagree
 sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-k	Sum[Times[ChebyshevU[k, Rational[1, 2]], ChebyshevU[k, 2]], List[k, 0, 2]]	5	\sum _{k=0}^2 U_k\left(\frac{1}{2}\right) U_k(2)	5	
 sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-2	Sum[Times[ChebyshevU[k, Rational[1, 2]], ChebyshevU[k, 2]], List[k, 0, 3]]	-51	\sum _{k=0}^3 U_k\left(\frac{1}{2}\right) U_k(2)	-51	
+n-integrate-sqrt-neg-t-pow-2-plus-1-times	N[Integrate[Times[Sqrt[Plus[Minus[Power[t, 2]], 1]], Power[ChebyshevU[2, t], 2]], List[t, -1, 1]]]	1.5707963267948966	N\left[\int_{-1}^1 \sqrt{-t^2+1} U_2(t){}^2 \, dt\right]	1.5708	
+n-integrate-chebyshevu-2-t-times-chebyshevu-3-t	N[Integrate[Times[ChebyshevU[2, t], ChebyshevU[3, t], Sqrt[Plus[Minus[Power[t, 2]], 1]]], List[t, -1, 1]]]	0.	N\left[\int_{-1}^1 U_2(t) U_3(t) \sqrt{-t^2+1} \, dt\right]	0.	

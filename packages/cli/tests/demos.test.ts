@@ -37,7 +37,7 @@ afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });
 
-test("every demo runs without throwing and highlights are a subset", () => {
-  for (const demo of DEMOS) expect(() => transcript(demo)).not.toThrow();
+// Each demo already runs in its own test above, so a throw fails there.
+test("highlights are a subset", () => {
   expect(DEMOS.some((d) => d.highlight)).toBe(true);
 });

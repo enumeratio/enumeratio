@@ -15,6 +15,8 @@ import {
   nAccuracyGoal,
   solveDeclines,
   takeDropNegativeCount,
+  valuesAtZero,
+  inverseTrigRadicals,
   iteratorUpperBound,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
@@ -191,6 +193,8 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareSpecialFunctions(ce);
   declareCarlson(ce);
   declareElliptic(ce);
+  applyPatch(ce, valuesAtZero);
+  applyPatch(ce, inverseTrigRadicals);
   declareModular(ce);
   declareDerivatives(ce);
   declareBesselJZero(ce);

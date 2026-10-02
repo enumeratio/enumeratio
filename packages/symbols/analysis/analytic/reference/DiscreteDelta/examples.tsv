@@ -1,11 +1,11 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-discretedelta-zero			[DiscreteDelta, 0]	1			
-discretedelta-nonzero			[DiscreteDelta, 1]	0			
-discretedelta-multi-all-zero	Scope		[DiscreteDelta, 0, 0]	1	Multi-argument -- 1 only when every argument is 0		
-discretedelta-multi-one-nonzero	Scope		[DiscreteDelta, 1, 0]	0			
-discretedelta-0-0-0	Scope		[DiscreteDelta, 0, 0, 0]	1	Equals 1 when every argument is 0, however many there are		
-discretedelta-0-0-0-0	Scope		[DiscreteDelta, 0, 0, 0, 0]	1	Four zero arguments still give 1		
-assuming-x-lt-0-y-gt-0-refine-discretedelta-x-x	Scope		[Assuming, [And, [Less, x, 0], [Greater, y, 0]], [Refine, [DiscreteDelta, x, x, y]]]	[DiscreteDelta, x, x, y]	Sign assumptions on the arguments do not decide whether they are all zero, so it stays		
-fullsimplify-matrixfunction-discretedelta-list	Scope	triage	[FullSimplify, [MatrixFunction, DiscreteDelta, [List, [List, 1, 0], [List, 5, 1]]]]	[List, [List, 0, 0], [List, [Multiply, 5, [Apply, [Derivative, DiscreteDelta, 1], 1]], 0]]		gap	MatrixFunction's eigen-decomposition is correct, but FullSimplify can't reduce Derivative(DiscreteDelta,1) applied away from 0 to 0 (DiscreteDelta is locally constant there); needs a distributional-derivative simplification rule.
-discretedelta-exponentiale-catalan-1-over-2	Scope		[DiscreteDelta, ExponentialE, Catalan, [Rational, 1, 2]]	0			
-discretedelta-1-over-2-times-sqrt-2-minus-sqrt-2	Possible issues		[DiscreteDelta, [Add, [Multiply, [Rational, 1, 2], [Sqrt, [Add, 2, [Negate, [Sqrt, [Add, 2, [Sqrt, 2]]]]]]], [Negate, [Sin, [Multiply, [Rational, 1, 16], Pi]]]]]	0	A trigonometric identity makes the argument exactly 0		
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+discretedelta-zero			[DiscreteDelta, 0]	1				
+discretedelta-nonzero			[DiscreteDelta, 1]	0				
+discretedelta-multi-all-zero	Scope		[DiscreteDelta, 0, 0]	1	Multi-argument -- 1 only when every argument is 0			
+discretedelta-multi-one-nonzero	Scope		[DiscreteDelta, 1, 0]	0				
+discretedelta-0-0-0	Scope		[DiscreteDelta, 0, 0, 0]	1	Equals 1 when every argument is 0, however many there are			
+discretedelta-0-0-0-0	Scope		[DiscreteDelta, 0, 0, 0, 0]	1	Four zero arguments still give 1			
+assuming-x-lt-0-y-gt-0-refine-discretedelta-x-x	Scope		[Assuming, [And, [Less, x, 0], [Greater, y, 0]], [Refine, [DiscreteDelta, x, x, y]]]	[DiscreteDelta, x, x, y]	Sign assumptions on the arguments do not decide whether they are all zero, so it stays			
+fullsimplify-matrixfunction-discretedelta-list	Scope	triage	[FullSimplify, [MatrixFunction, DiscreteDelta, [List, [List, 1, 0], [List, 5, 1]]]]	[List, [List, 0, 0], [List, [Multiply, 5, [Apply, [Derivative, DiscreteDelta, 1], 1]], 0]]		gap		MatrixFunction's eigen-decomposition is correct, but FullSimplify can't reduce Derivative(DiscreteDelta,1) applied away from 0 to 0 (DiscreteDelta is locally constant there); needs a distributional-derivative simplification rule.
+discretedelta-exponentiale-catalan-1-over-2	Scope		[DiscreteDelta, ExponentialE, Catalan, [Rational, 1, 2]]	0				
+discretedelta-1-over-2-times-sqrt-2-minus-sqrt-2	Possible issues		[DiscreteDelta, [Add, [Multiply, [Rational, 1, 2], [Sqrt, [Add, 2, [Negate, [Sqrt, [Add, 2, [Sqrt, 2]]]]]]], [Negate, [Sin, [Multiply, [Rational, 1, 16], Pi]]]]]	[DiscreteDelta, [Add, [Multiply, [Rational, 1, 2], [Sqrt, [Add, 2, [Negate, [Sqrt, [Add, 2, [Sqrt, 2]]]]]]], [Negate, [Sin, [Multiply, [Rational, 1, 16], Pi]]]]]	The argument is exactly $0$ by a trigonometric identity, but its double is $2.5\times10^{-17}$: it stays unevaluated rather than guess, as Wolfram leaves it		undefined-form	Both leave it unevaluated: the argument is an exact 0 neither proves. The texts differ only in how the argument prints.

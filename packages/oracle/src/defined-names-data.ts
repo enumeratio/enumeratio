@@ -625,6 +625,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "MaxValue",
   "Maximize",
   "Mean",
+  "Measurement",
   "Median",
   "MeijerG",
   "MeijerGReduce",

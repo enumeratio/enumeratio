@@ -6431,7 +6431,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "EllipticE",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "EllipticE",
     elsewhere: ["wolfram", "sympy"],

@@ -1,4 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { compile } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
 
@@ -48,6 +49,18 @@ test("stays symbolic for a symbolic order", () => {
 });
 
 // --- LegendrePolynomial exact integer path ------------------------------------------
+
+test("compiled ChebyshevT / ChebyshevU agree with .N(), negative orders included", () => {
+  for (const head of ["ChebyshevT", "ChebyshevU"] as const) {
+    const f = compile(ce.box(["Function", [head, "n", "x"], "n", "x"])) as unknown as {
+      success: boolean;
+      run: (n: number, x: number) => number;
+    };
+    expect(f.success).toBe(true);
+    for (const n of [-4, -2, -1, 0, 1, 2, 5, 9])
+      for (const x of [-1.5, -0.3, 0, 0.7, 2]) expect(f.run(n, x)).toBeCloseTo(ce.box([head, n, x]).N().re, 10);
+  }
+});
 
 test("low-degree LegendrePolynomial, exactly, at a symbol", () => {
   sameExact(["LegendrePolynomial", 0, "x"], 1);

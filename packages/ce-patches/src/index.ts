@@ -12,6 +12,8 @@ import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
 import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 import { assignFunctionDefinition } from "./patches/assign-function-definition.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
+import { valuesAtZero } from "./patches/values-at-zero.ts";
+import { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -97,6 +99,8 @@ export {
   setResidueClasses,
   type ResidueClasses,
 } from "./patches/quotient-ring-collection.ts";
+export { valuesAtZero } from "./patches/values-at-zero.ts";
+export { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
 export {
   infinityArgs,
   evaluateArcsinArccosAtInfinity,
@@ -205,6 +209,8 @@ export const PATCHES: readonly Patch[] = [
   nAccuracyGoal,
   assignFunctionDefinition,
   quotientRingCollection,
+  valuesAtZero,
+  inverseTrigRadicals,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

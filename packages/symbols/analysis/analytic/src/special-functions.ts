@@ -1,6 +1,6 @@
 import { type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { type EvalOptions, evaluateBernoulliPolynomial } from "@enumeratio/ce-patches";
-import { evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
+import { compileChebyshevT, compileChebyshevU, evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
 import { evaluateCsgn } from "./csgn.ts";
 import { evaluateCongruentMod } from "./congruent-mod.ts";
 import { evaluateHarmonicNumber } from "./harmonic.ts";
@@ -46,6 +46,7 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
       ops[0] === undefined || ops[1] === undefined
         ? undefined
         : evaluateChebyshevT(ce, ops[0], ops[1], wants(ops, options)),
+    compile: compileChebyshevT,
   });
 
   ce.declare("ChebyshevU", {
@@ -54,6 +55,7 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
       ops[0] === undefined || ops[1] === undefined
         ? undefined
         : evaluateChebyshevU(ce, ops[0], ops[1], wants(ops, options)),
+    compile: compileChebyshevU,
   });
 
   ce.declare("LegendrePolynomial", {

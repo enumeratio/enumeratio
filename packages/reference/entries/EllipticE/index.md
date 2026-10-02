@@ -6,6 +6,11 @@ summary: "Elliptic integral of the second kind: complete E(m) with one argument,
 signatures:
   - call: EllipticE(complex | infinity, (complex | infinity)?) -> number
     description: as compute-engine declares it
+  - call: EllipticE(complex | infinity, (complex | infinity)?) -> number
+    description: π/2 at an exact 0 (the values-at-zero patch).
+    library: enumeratio-analytic
+    type: (complex | infinity, (complex | infinity)?) -> number
+    overrides: compute-engine
 references:
   - system: wikipedia
     identity: Elliptic integral
