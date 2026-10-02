@@ -51,6 +51,10 @@ sin-x-cos-x-should-simplify-to-tan-x-simplify
 rewritten-in-exponentials		
 tan-3-over-10-times-pi	tan(((mpf(3)/10) * pi))	
 tan-3-over-8-times-pi	tan(((mpf(3)/8) * pi))	
+n-1-minus-tan-1-over-2-pow-2-times-tan-1	(((1 + (-((tan((mpf(1)/2)))**2))) * tan(1)))	
+n-tan-1-over-2-plus-1-over-2-times-pi	(tan(((mpf(1)/2) + ((mpf(1)/2) * pi))))	
+n-1-minus-tan-2-pow-2-times-tan-4	(((1 + (-((tan(2))**2))) * tan(4)))	
+n-tan-2-plus-1-over-2-times-pi	(tan((2 + ((mpf(1)/2) * pi))))	
 a-pole-cos-pi-2-0-so-the-ratio-blows-up		
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(1)	1.55740772465490223050697480746
 a-pole-at-negative-pi-over-2-too		

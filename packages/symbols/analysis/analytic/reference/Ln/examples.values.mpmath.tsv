@@ -43,3 +43,7 @@ ln-exponentiale-pow-n
 inverse-of-exp-ln-e-x-x	almosteq(log(exp(5)), 5, 1e-20)	True
 product-rule-ln-ab-ln-a-ln-b	almosteq((log(2) + log(3)), log(6), 1e-20)	True
 powerexpand-splits-a-logarithm-of-a-product		
+n-ln-2-pow-2	(((log(2))**2))	
+n-ln-2-pow-3	(((log(2))**3))	
+n-ln-2-pow-4	(((log(2))**4))	
+n-ln-2-pow-5	(((log(2))**5))	

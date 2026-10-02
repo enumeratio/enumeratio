@@ -34,4 +34,8 @@ lucasl-6	Combinatorics.lucasnum(6)
 lucasl-7	Combinatorics.lucasnum(7)		
 lucasl-8	Combinatorics.lucasnum(8)		
 lucasl-9	Combinatorics.lucasnum(9)		
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-2			
+neg-lucasl-1-times-lucasl-3-plus-lucasl-2-pow-2	((-((Combinatorics.lucasnum(1) * Combinatorics.lucasnum(3)))) + (big(Combinatorics.lucasnum(2))^2))		
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-3			
+n-neg-lucasl-neg-1-over-2-times-lucasl-3-over-2	(((-((Combinatorics.lucasnum((-1 // 2)) * Combinatorics.lucasnum((3 // 2))))) + (big(Combinatorics.lucasnum((1 // 2)))^2)))		
 l-30-already-tops-1-8-million-growing-at-the	Combinatorics.lucasnum(30)	1860498	

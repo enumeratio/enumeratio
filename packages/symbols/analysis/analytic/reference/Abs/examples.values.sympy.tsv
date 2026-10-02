@@ -46,4 +46,6 @@ abs-neg-1-plus-neg-sqrt-3-times-i	Abs((-1 + (0 + (-sqrt(3))*I)))
 abs-1-plus-neg-sqrt-3-times-i	Abs((1 + (0 + (-sqrt(3))*I)))	
 abs-sqrt-3-minus-i	Abs((sqrt(3) + (0 + -1*I)))	
 abs-2	Abs(2)	
+abs-1-over-2-pow-2	(S(Abs(Rational(1, 2)))**2)	
+abs-2-pow-2	(S(Abs(2))**2)	
 doesn-t-factor-constants-out-of-a-symbolic	Abs((-3 * Symbol("x")))	True

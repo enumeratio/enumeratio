@@ -48,5 +48,9 @@ gamma-a-0-gamma-a-the-incomplete-gamma-from-zero
 gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2			
 gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc			
 gamma-x-gamma-x-psi-x-so-the-logarithmic			
+1-over-gamma-1-over-2	(n(1) / gamma(rational(n(1), n(2))))		
+gamma-1-over-2-pow-2	power(gamma(rational(n(1), n(2))), n(2))		
+gamma-neg-1-over-2-times-gamma-1-over-2	(gamma(rational(n(-1), n(2))) * gamma(rational(n(1), n(2))))		
+product-gamma-1-over-2-times-2k-plus-1-over-2-k			
 squaring-the-reflection-formula-at-z-1-2	equal(power(gamma(rational(n(1), n(2))), n(2)), x(std::f64::consts::PI))	true	
 gamma-i-2-pi-sinh-pi-0-27203			

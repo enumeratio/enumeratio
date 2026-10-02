@@ -35,5 +35,9 @@ nthprime-15	Prime[15]	47	p_{15}	47
 nthprime-16	Prime[16]	53	p_{16}	53
 nthprime-17	Prime[17]	59	p_{17}	59
 nthprime-18	Prime[18]	61	p_{18}	61
+sin-pi-times-1-over-nthprime-2-times-1-plus	Plus[Power[Sin[Times[Pi, Divide[1, Prime[2]], Plus[1, Gamma[Prime[2]]]]], 2], Power[Sin[Times[Pi, Prime[2]]], 2]]	0	\sin ^2\left(\pi  \frac{1}{p_2} \left(1+\Gamma \left(p_2\right)\right)\right)+\sin ^2\left(\pi  p_2\right)	0
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-i	Times[Divide[1, Plus[-1, Power[E, Times[Complex[0, -2], Pi, Divide[1, Prime[2]]]]]], Plus[-1, Power[E, Times[Complex[0, 2], Pi, Divide[1, Prime[2]], Gamma[Prime[2]]]]]]	1	\frac{1}{-1+e^{(-2 i) \pi  \frac{1}{p_2}}} \left(-1+e^{(2 i) \pi  \frac{1}{p_2} \Gamma \left(p_2\right)}\right)	1
+sin-pi-times-1-over-nthprime-3-times-1-plus	Plus[Power[Sin[Times[Pi, Divide[1, Prime[3]], Plus[1, Gamma[Prime[3]]]]], 2], Power[Sin[Times[Pi, Prime[3]]], 2]]	0	\sin ^2\left(\pi  \frac{1}{p_3} \left(1+\Gamma \left(p_3\right)\right)\right)+\sin ^2\left(\pi  p_3\right)	0
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-2	Times[Divide[1, Plus[-1, Power[E, Times[Complex[0, -2], Pi, Divide[1, Prime[3]]]]]], Plus[-1, Power[E, Times[Complex[0, 2], Pi, Divide[1, Prime[3]], Gamma[Prime[3]]]]]]	1	\frac{1}{-1+e^{(-2 i) \pi  \frac{1}{p_3}}} \left(-1+e^{(2 i) \pi  \frac{1}{p_3} \Gamma \left(p_3\right)}\right)	1
 n-must-be-a-positive-integer-compute-engine	Prime[0]	Prime[0]	p_0	p_0
 the-1000th-prime	Prime[1000]	7919	p_{1000}	7919

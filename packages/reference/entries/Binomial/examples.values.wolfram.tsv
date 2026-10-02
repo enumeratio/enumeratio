@@ -32,6 +32,10 @@ sum-of-squares-along-a-row-sum-k-binom-n-k-2	(Sum[Power[Binomial[6, k], 2], List
 vandermonde-s-identity-sum-k-binom-m-k-binom-n-r	(Sum[Times[Binomial[5, k], Binomial[4, Subtract[3, k]]], List[k, 0, 3]] == Binomial[9, 3])	True		\sum _{k=0}^3 \binom{5}{k} \binom{4}{3-k}=\binom{9}{3}	\text{True}	
 the-alternating-row-sum-vanishes-sum-k-1-k-binom	Sum[Times[Power[-1, k], Binomial[6, k]], List[k, 0, 6]]	0		\sum _{k=0}^6 (-1)^k \binom{6}{k}	0	
 the-factorial-form-binom-n-k-frac-n-k-n-k-see	(Binomial[7, 3] == Divide[Factorial[7], Times[Factorial[3], Factorial[4]]])	True		\binom{7}{3}=\frac{7!}{3! 4!}	\text{True}	
+binomial-1-over-2-neg-1-over-2-plus-binomial-1	Plus[Binomial[Rational[1, 2], Rational[-1, 2]], Binomial[Rational[1, 2], Rational[1, 2]]]	3/2		\binom{\frac{1}{2}}{-\frac{1}{2}}+\binom{\frac{1}{2}}{\frac{1}{2}}	\frac{3}{2}	
+sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k	Sum[Times[Power[Binomial[2, k], 2], Power[Binomial[Plus[k, 2], k], 2]], List[k, 0, 2]]	73		\sum _{k=0}^2 \binom{2}{k}^2 \binom{k+2}{k}^2	73	
+sum-binomial-2-2k-plus-1-times-2-pow-k-k-0-floor	Sum[Times[Binomial[2, Plus[Times[2, k], 1]], Power[2, k]], List[k, 0, Floor[Rational[1, 2]]]]	2		\sum _{k=0}^{\left\lfloor \frac{1}{2}\right\rfloor } \binom{2}{2 k+1} 2^k	2	
+binomial-1-over-2-1-over-2-plus-binomial-1-over	Plus[Binomial[Rational[1, 2], Rational[1, 2]], Binomial[Rational[1, 2], Rational[3, 2]]]	1		\binom{\frac{1}{2}}{\frac{1}{2}}+\binom{\frac{1}{2}}{\frac{3}{2}}	1	
 choosing-more-elements-than-available-k-n-gives	Binomial[5, 7]	0		\binom{5}{7}	0	
 a-negative-k-also-gives-0	Binomial[5, -1]	0		\binom{5}{-1}	0	
 a-negative-n-uses-the-generalized-formula-binom	Binomial[-5, 2]	15		\binom{-5}{2}	15	

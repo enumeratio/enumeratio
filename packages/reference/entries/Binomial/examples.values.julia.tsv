@@ -32,6 +32,10 @@ sum-of-squares-along-a-row-sum-k-binom-n-k-2
 vandermonde-s-identity-sum-k-binom-m-k-binom-n-r			
 the-alternating-row-sum-vanishes-sum-k-1-k-binom			
 the-factorial-form-binom-n-k-frac-n-k-n-k-see	(binomial(ZZ(7), ZZ(3)) == (factorial(ZZ(7)) // (factorial(ZZ(3)) * factorial(ZZ(4)))))	true	
+binomial-1-over-2-neg-1-over-2-plus-binomial-1	(binomial(ZZ((1 // 2)), ZZ((-1 // 2))) + binomial(ZZ((1 // 2)), ZZ((1 // 2))))		
+sum-binomial-2-k-pow-2-times-binomial-k-plus-2-k			
+sum-binomial-2-2k-plus-1-times-2-pow-k-k-0-floor			
+binomial-1-over-2-1-over-2-plus-binomial-1-over	(binomial(ZZ((1 // 2)), ZZ((1 // 2))) + binomial(ZZ((1 // 2)), ZZ((3 // 2))))		
 choosing-more-elements-than-available-k-n-gives	binomial(ZZ(5), ZZ(7))	0	
 a-negative-k-also-gives-0	binomial(ZZ(5), ZZ(-1))	0	
 a-negative-n-uses-the-generalized-formula-binom	binomial(ZZ(-5), ZZ(2))	15	

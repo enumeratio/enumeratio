@@ -33,3 +33,5 @@ chebyshevt-1-positiveinfinity	ChebyshevT[1, Infinity]	Infinity	T_1(\infty )	\inf
 chebyshevt-1-negativeinfinity	ChebyshevT[1, -Infinity]	-Infinity	T_1(-\infty )	-\infty	
 chebyshevt-2-positiveinfinity	ChebyshevT[2, Infinity]	Indeterminate			disagree
 chebyshevt-2-negativeinfinity	ChebyshevT[2, -Infinity]	Indeterminate			disagree
+sum-chebyshevt-k-1-over-2-times-chebyshevt-k-2-k	Sum[Times[ChebyshevT[k, Rational[1, 2]], ChebyshevT[k, 2]], List[k, 0, 2]]	-3/2	\sum _{k=0}^2 T_k\left(\frac{1}{2}\right) T_k(2)	-\frac{3}{2}	
+sum-chebyshevt-k-1-over-2-times-chebyshevt-k-2-2	Sum[Times[ChebyshevT[k, Rational[1, 2]], ChebyshevT[k, 2]], List[k, 0, 3]]	-55/2	\sum _{k=0}^3 T_k\left(\frac{1}{2}\right) T_k(2)	-\frac{55}{2}	

@@ -43,3 +43,7 @@ ln-exponentiale-pow-n
 inverse-of-exp-ln-e-x-x	equal(ln(exp(n(5))), n(5))	true	
 product-rule-ln-ab-ln-a-ln-b	equal((ln(n(2)) + ln(n(3))), ln(n(6)))	true	
 powerexpand-splits-a-logarithm-of-a-product			
+n-ln-2-pow-2	nf(power(ln(n(2)), n(2)))		
+n-ln-2-pow-3	nf(power(ln(n(2)), n(3)))		
+n-ln-2-pow-4	nf(power(ln(n(2)), n(4)))		
+n-ln-2-pow-5	nf(power(ln(n(2)), n(5)))		

@@ -1,9 +1,10 @@
 // Adopt farmed Wolfram examples (`farm-wolfram-data.ts`'s cache) into our heads' records:
-// documentation inputs as examples, MathematicalFunctionData's particular values as examples
-// with a `known` value. An input is adopted when all its names are ours (`adaptInput`), it
-// mentions the head, and our engine evaluates it quickly to a real answer (`judge`); a
-// particular value also has to agree with Wolfram's. Captions are ours to write: Wolfram's
-// stay in the cache. New rows only -- an example already on the head is left as it is.
+// documentation inputs as examples, MathematicalFunctionData's particular values and its
+// identities' instances (the `relation` source) as examples with a `known` value. An input is
+// adopted when all its names are ours (`adaptInput`), it mentions the head, and our engine
+// evaluates it quickly to a real answer (`judge`); a particular value or an identity's instance
+// also has to agree with Wolfram's. Captions are ours to write: Wolfram's stay in the cache.
+// New rows only -- an example already on the head is left as it is.
 //
 //   node packages/reference/scripts/adopt-wolfram-examples.ts             every mapped head
 //   node packages/reference/scripts/adopt-wolfram-examples.ts Zeta Gamma  these heads
@@ -11,6 +12,8 @@
 //   … --exclude symbols/combinatorics                                      skip records under a path
 //   … --exclude-domain "Combinatorial maps"                                skip a domain's heads
 //   … --skip Gamma,Beta                                                    skip these heads
+//   … --kind relations                                                     only this kind (docs,
+//                                                                          values, relations)
 //
 // Then the Wolfram scan over the adopted rows and `prune-wolfram-examples.ts` (its header has
 // the commands): an adopted row stays only once Wolfram agrees with it.
@@ -25,7 +28,7 @@ import { parseArgs } from "node:util";
 import { bySection, dedupeId, type ReferenceExample } from "@enumeratio/entry";
 import { writeHead } from "@enumeratio/entry/node";
 import { runCases } from "@enumeratio/evaluation/src/node";
-import type { FunctionRecord, LanguageRecord } from "@enumeratio/oracle/src";
+import type { FunctionRecord, LanguageRecord, RelationRecord } from "@enumeratio/oracle/src";
 import { HEADS } from "@enumeratio/wolfram/src";
 import { toInputForm } from "../../formats/src/inputform.ts";
 import { DEFAULT_TOLERANCE, disagreement } from "../src/known.ts";
@@ -42,11 +45,18 @@ const { values, positionals } = parseArgs({
     skip: { type: "string", default: "" },
     "max-docs": { type: "string", default: "10" },
     "max-identities": { type: "string", default: "6" },
+    "max-relations": { type: "string", default: "4" },
+    kind: { type: "string", multiple: true, default: ["docs", "values", "relations"] },
   },
   allowPositionals: true,
 });
-const MAX_DOCS = Number(values["max-docs"]);
-const MAX_IDENTITIES = Number(values["max-identities"]);
+type Kind = "docs" | "values" | "relations";
+const CAP: Record<Kind, number> = {
+  docs: Number(values["max-docs"]),
+  values: Number(values["max-identities"]),
+  relations: Number(values["max-relations"]),
+};
+const kinds = new Set(values.kind as Kind[]);
 // An adopted example is re-run by every standard test run: a quick one only.
 const TIME_MS = 2_000;
 const MEMORY_BYTES = 512 * 1024 * 1024;
@@ -54,6 +64,7 @@ const MEMORY_BYTES = 512 * 1024 * 1024;
 const MAX_VALUE_CHARS = 1_500;
 // Candidates tried per head and kind, before the cap keeps the ones that work.
 const OVERSAMPLE = 3;
+const RELATION_RANK = ["NamedIdentities", "FunctionalEquations", "ReflectionSymmetries"];
 
 // Statistics and domains run under their own engines (see tests/entries.test.ts), as do the
 // heads that read the carriers' tables.
@@ -109,6 +120,7 @@ interface HeadReport {
 
 interface Candidate {
   readonly head: string;
+  readonly kind: Kind;
   readonly expr: unknown;
   readonly category: string;
   readonly known?: unknown;
@@ -135,6 +147,7 @@ const wanted = (positionals.length > 0 ? positionals : Object.keys(HEADS)).filte
   (h) => record.has(h) && HEADS[h] !== undefined,
 );
 const functions = cachedRecords<FunctionRecord>("function");
+const relations = cachedRecords<RelationRecord>("relation");
 
 const report: Record<string, HeadReport> = {};
 const reject = (r: HeadReport, reason: string): void => {
@@ -158,27 +171,51 @@ for (const head of wanted) {
       if (adapted.ok && earlier.some((name) => mentions(adapted.expr, name))) reject(r, "uses an earlier definition");
       else if (!adapted.ok) reject(r, adapted.reason);
       else if (!mentions(adapted.expr, head)) reject(r, "off head");
-      else docs.push({ head, expr: adapted.expr, category });
+      else docs.push({ head, kind: "docs", expr: adapted.expr, category });
     }
   }
-  const identities: Candidate[] = [];
-  for (const fn of functions.filter((f) => f.name.split(":")[0] === wolfram)) {
-    for (const { lhs, rhs } of fn.particularValues) {
-      const [expr, known] = [adaptInput(lhs), adaptInput(rhs)];
-      if (!expr.ok) reject(r, `identity ${expr.reason}`);
-      else if (!known.ok) reject(r, `identity value ${known.reason}`);
-      else if (!mentions(expr.expr, head)) reject(r, "off head");
-      else
-        identities.push({
-          head,
-          expr: expr.expr,
-          known: known.expr,
-          source: `Wolfram MathematicalFunctionData, ${fn.name}`,
-          category: "Properties",
-        });
-    }
-  }
-  raw.push(...docs.slice(0, MAX_DOCS * OVERSAMPLE), ...identities.slice(0, MAX_IDENTITIES * OVERSAMPLE));
+  // An instance's left side is the example and its right side, as Wolfram evaluates it, the known value.
+  const instance = (kind: Kind, lhs: string, rhs: string, source: string): Candidate[] => {
+    const [expr, known] = [adaptInput(lhs), adaptInput(rhs)];
+    if (!expr.ok) reject(r, `identity ${expr.reason}`);
+    else if (!known.ok) reject(r, `identity value ${known.reason}`);
+    else if (!mentions(expr.expr, head)) reject(r, "off head");
+    else return [{ head, kind, expr: expr.expr, known: known.expr, source, category: "Properties" }];
+    return [];
+  };
+  const ofHead = <T extends { name: string }>(records: readonly T[]): T[] =>
+    records.filter((f) => f.name.split(":")[0] === wolfram);
+  const identities = ofHead(functions).flatMap((fn) =>
+    fn.particularValues.flatMap(({ lhs, rhs }) =>
+      instance("values", lhs, rhs, `Wolfram MathematicalFunctionData, ${fn.name}`),
+    ),
+  );
+  // One instance of each relation before a second one, named identities first: the cap
+  // keeps the most varied. The source names the identity an instance comes from.
+  const related = ofHead(relations).flatMap((fn) => {
+    const seen = new Map<string, number>();
+    const nth = fn.relations.map(({ property, index }) => {
+      const key = `${property} ${index}`;
+      seen.set(key, (seen.get(key) ?? 0) + 1);
+      return seen.get(key)!;
+    });
+    return (
+      fn.relations
+        .map((relation, i) => ({ relation, rank: [nth[i]!, RELATION_RANK.indexOf(relation.property), i] }))
+        .toSorted((a, b) => a.rank[0]! - b.rank[0]! || a.rank[1]! - b.rank[1]! || a.rank[2]! - b.rank[2]!)
+        // A symmetry at a real point says nothing: `cot(conjugate(1/2))` is `cot(1/2)`.
+        .filter(({ relation }) => relation.property !== "ReflectionSymmetries" || relation.lhs.includes("Complex["))
+        .flatMap(({ relation: { lhs, rhs, property, label } }) =>
+          instance("relations", lhs, rhs, `Wolfram MathematicalFunctionData, ${fn.name}, ${label ?? property}`),
+        )
+    );
+  });
+  for (const [kind, found] of [
+    ["docs", docs],
+    ["values", identities],
+    ["relations", related],
+  ] as const)
+    if (kinds.has(kind)) raw.push(...found.slice(0, CAP[kind] * OVERSAMPLE));
 }
 
 // Write each in our form -- the existing examples too, to compare against -- and drop repeats.
@@ -209,40 +246,42 @@ for (const [i, c] of raw.entries()) {
 process.stderr.write(`${candidates.length} candidates over ${wanted.length} heads\n`);
 
 // Evaluate, and keep what's a real answer.
-const results = await run(candidates.map((c) => c.expr));
 const same = (a: unknown, b: unknown): boolean => JSON.stringify(a) === JSON.stringify(b);
 const adopted = new Map<string, ReferenceExample[]>();
 const taken = new Map<string, number>();
-for (const [i, c] of candidates.entries()) {
+// An identity's instance our engine leaves as it is (`4 arctan(1/5) - arctan(1/239)`) still
+// holds numerically: it is tried again under `N`.
+const numeric: Candidate[] = [];
+function consider(c: Candidate, result: Awaited<ReturnType<typeof run>>[number]): void {
   const r = report[c.head]!;
-  const result = results[i]!;
   if (result.outcome !== "Evaluated") {
     reject(r, result.outcome === "Aborted" ? "slow" : "error");
-    continue;
+    return;
   }
   const value = result.value;
   if (JSON.stringify(value).length > MAX_VALUE_CHARS) {
     reject(r, "long value");
-    continue;
+    return;
   }
   if (mentions(value, "Error") || mentions(value, "Aborted")) {
     reject(r, "error");
-    continue;
+    return;
   }
   const verdict = judge(c.expr, value, same);
   if (verdict !== "keep") {
     if ("gap" in verdict) r.gaps.push(`${show(c.expr)} (${verdict.gap})`);
     else r.suspects.push({ expr: show(c.expr), ours: show(value), why: verdict.suspect });
-    continue;
+    if (c.kind === "relations" && "gap" in verdict && verdict.gap === "unevaluated")
+      numeric.push({ ...c, expr: ["N", c.expr] });
+    return;
   }
   if (c.known !== undefined && disagreement(value, c.known, DEFAULT_TOLERANCE) !== undefined) {
     r.disagreements.push({ expr: show(c.expr), ours: show(value), known: show(c.known), source: c.source! });
-    continue;
+    return;
   }
-  const kind = c.known === undefined ? "docs" : "identity";
-  const count = taken.get(`${c.head} ${kind}`) ?? 0;
-  if (count >= (kind === "docs" ? MAX_DOCS : MAX_IDENTITIES)) continue;
-  taken.set(`${c.head} ${kind}`, count + 1);
+  const count = taken.get(`${c.head} ${c.kind}`) ?? 0;
+  if (count >= CAP[c.kind]) return;
+  taken.set(`${c.head} ${c.kind}`, count + 1);
   const example = {
     expr: c.expr,
     expected: value,
@@ -252,6 +291,10 @@ for (const [i, c] of candidates.entries()) {
   (adopted.get(c.head) ?? adopted.set(c.head, []).get(c.head)!).push(example);
   r.adopted.push(`${show(c.expr)} = ${show(value)}`);
 }
+const results = await run(candidates.map((c) => c.expr));
+for (const [i, c] of candidates.entries()) consider(c, results[i]!);
+const numericResults = await run(numeric.map((c) => c.expr));
+for (const [i, c] of numeric.entries()) consider(c, numericResults[i]!);
 
 if (!values.dry) {
   // Every row written is remembered, so the prune step can take back what Wolfram disagrees with.

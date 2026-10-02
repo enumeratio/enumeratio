@@ -72,6 +72,10 @@ neg-27-over-10-mod-23-over-5	mod_floor(rational(n(-27), n(10)), rational(n(23), 
 1-mod-1	mod_floor(n(1), n(1))		
 15-mod-7	mod_floor(n(15), n(7))		
 pi-mod-exponentiale	mod_floor(x(std::f64::consts::PI), x(std::f64::consts::E))		
+2-pow-totient-3-mod-3			
+1-plus-neg-1-plus-nthprime-2-factorial-mod			
+2-minus-jacobisymbol-2-3-mod-3			
+1-plus-neg-1-plus-nthprime-3-factorial-mod			
 division-by-a-0-modulus-yields-nan-rather-than	mod_floor(n(5), n(0))	panic: attempt to divide by zero	error
 periodicity-with-a-zero-modulus-on-one-side	equal(mod_floor(n(35), n(13)), mod_floor((n(17) + (n(3) * n(5))), n(0)))	panic: attempt to divide by zero	error
 rounding-ties-to-even-means-1-and-1-both-appear			

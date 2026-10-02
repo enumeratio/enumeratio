@@ -39,5 +39,9 @@ fibonacci-6	fibonacci(6)
 fibonacci-7	fibonacci(7)	
 fibonacci-9	fibonacci(9)	
 fibonacci-neg-1	fibonacci(-1)	
+fibonacci-1-times-fibonacci-3-minus-fibonacci-2	((fibonacci(1) * fibonacci(3)) + (-(S(fibonacci(2))**2)))	
+neg-fibonacci-0-times-fibonacci-4-plus-fibonacci	((-(fibonacci(0) * fibonacci(4))) + (S(fibonacci(2))**2))	
+fibonacci-2-times-fibonacci-3-times-fibonacci-4	((fibonacci(2) * fibonacci(3) * fibonacci(4) * fibonacci(6) * fibonacci(7) * fibonacci(8)) + (S(lucas(5))**2))	
+fibonacci-0-times-fibonacci-1-times-fibonacci-3	(fibonacci(0) * fibonacci(1) * fibonacci(3) * fibonacci(4))	
 f-1000-has-209-digits-see-integerdigits		
 they-grow-fast-f-50-already-exceeds-twelve	fibonacci(50)	12586269025

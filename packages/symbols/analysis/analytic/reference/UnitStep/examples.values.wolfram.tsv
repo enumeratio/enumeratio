@@ -6,3 +6,5 @@ threads-element-wise-over-a-list	UnitStep[List[-1, 0, 1]]	{0, 1, 1}	\theta (\{-1
 several-arguments-the-product-of-their-unit	UnitStep[1, 2]	1	\theta (1,2)	1
 zero-as-soon-as-any-argument-is-negative	UnitStep[1, -1]	0	\theta (1,-1)	0
 exact-numeric-arguments	UnitStep[Subtract[Pi, 3]]	1	\theta (\pi -3)	1
+unitstep-1-over-2-pow-2	Power[UnitStep[Rational[1, 2]], 2]	1	\theta \left(\frac{1}{2}\right)^2	1
+unitstep-2-times-unitstep-1-over-2	Times[UnitStep[2], UnitStep[Rational[1, 2]]]	1	\theta (2) \theta \left(\frac{1}{2}\right)	1

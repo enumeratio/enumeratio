@@ -33,3 +33,5 @@ chebyshevu-1-positiveinfinity	ChebyshevU[1, Infinity]	Infinity	U_1(\infty )	\inf
 chebyshevu-1-negativeinfinity	ChebyshevU[1, -Infinity]	-Infinity	U_1(-\infty )	-\infty	
 chebyshevu-2-positiveinfinity	ChebyshevU[2, Infinity]	Indeterminate			disagree
 chebyshevu-2-negativeinfinity	ChebyshevU[2, -Infinity]	Indeterminate			disagree
+sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-k	Sum[Times[ChebyshevU[k, Rational[1, 2]], ChebyshevU[k, 2]], List[k, 0, 2]]	5	\sum _{k=0}^2 U_k\left(\frac{1}{2}\right) U_k(2)	5	
+sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-2	Sum[Times[ChebyshevU[k, Rational[1, 2]], ChebyshevU[k, 2]], List[k, 0, 3]]	-51	\sum _{k=0}^3 U_k\left(\frac{1}{2}\right) U_k(2)	-51	

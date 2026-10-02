@@ -48,5 +48,9 @@ gamma-a-0-gamma-a-the-incomplete-gamma-from-zero
 gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2			
 gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc			
 gamma-x-gamma-x-psi-x-so-the-logarithmic			
+1-over-gamma-1-over-2			
+gamma-1-over-2-pow-2	((gamma((mpf(1)/2)))**2)		
+gamma-neg-1-over-2-times-gamma-1-over-2	(gamma((mpf(-1)/2)) * gamma((mpf(1)/2)))		
+product-gamma-1-over-2-times-2k-plus-1-over-2-k			
 squaring-the-reflection-formula-at-z-1-2	almosteq(((gamma((mpf(1)/2)))**2), pi, 1e-20)	True	
 gamma-i-2-pi-sinh-pi-0-27203	(((fabs(gamma(mpc(0,1))))**2))	0.272029054982133162950236583672	

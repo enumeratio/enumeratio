@@ -51,6 +51,10 @@ sin-x-cos-x-should-simplify-to-tan-x-simplify
 rewritten-in-exponentials			
 tan-3-over-10-times-pi	tan((rational(n(3), n(10)) * x(std::f64::consts::PI)))		
 tan-3-over-8-times-pi	tan((rational(n(3), n(8)) * x(std::f64::consts::PI)))		
+n-1-minus-tan-1-over-2-pow-2-times-tan-1	nf(((n(1) + (-(power(tan(rational(n(1), n(2))), n(2))))) * tan(n(1))))		
+n-tan-1-over-2-plus-1-over-2-times-pi	nf(tan((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI)))))		
+n-1-minus-tan-2-pow-2-times-tan-4	nf(((n(1) + (-(power(tan(n(2)), n(2))))) * tan(n(4))))		
+n-tan-2-plus-1-over-2-times-pi	nf(tan((n(2) + (rational(n(1), n(2)) * x(std::f64::consts::PI)))))		
 a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan((x(std::f64::consts::PI) / n(2)))	1.633123935319537e16	inconclusive
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(n(1))	1.5574077246549023	
 a-pole-at-negative-pi-over-2-too	tan((x(std::f64::consts::PI) / n(-2)))	-1.633123935319537e16	inconclusive
