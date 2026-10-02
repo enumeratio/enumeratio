@@ -12,13 +12,20 @@ import { linePlot, parseControls, plotSeries } from "@enumeratio/frontend/core";
 import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import type { CompiledPlot } from "@enumeratio/frontend/plot-compile";
 import { prerender } from "@enumeratio/frontend/prerender";
+import { libraryRegistry, registerLibraryNotation } from "../theme/libraries.ts";
 import { CATALOGUE } from "../theme/worker-catalogue.ts";
 import { type MarkupSpec, specsFile } from "../prerender-markup.ts";
 import { makeEngine, typeset } from "./prerender.ts";
 
 let kernel: Promise<Kernel> | undefined;
 const pageKernel = (): Promise<Kernel> =>
-  (kernel ??= makeEngine().then((ce) => createKernel(ce, CATALOGUE, NOTEBOOK_KERNEL)));
+  (kernel ??= makeEngine().then((ce) =>
+    createKernel(ce, CATALOGUE, {
+      ...NOTEBOOK_KERNEL,
+      libraries: libraryRegistry(),
+      notation: registerLibraryNotation,
+    }),
+  ));
 
 /** A cell's attributes this build can't reproduce: the cell renders them live. */
 const LIVE_ONLY = ["box", "raw", "plot", "elide-above", "live-value", "in-form", "out-form", "env"];

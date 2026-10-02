@@ -2,7 +2,8 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
-import { notatioMarkup } from "./notatio-markup.ts";
+import { notatioMarkup, useLibraryParams } from "./notatio-markup.ts";
+import { libraryParams } from "./theme/libraries.ts";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
 import { notationEntriesPlugin } from "./notation-entries.ts";
@@ -106,6 +107,15 @@ function writeRedirects(outDir: string): void {
     );
   }
 }
+
+// The published libraries' parameter names, for markup that gives a library symbol's slots by
+// name. Offline, markup still reads; only named slots on library heads stay pairs.
+useLibraryParams(
+  await libraryParams().catch((error: unknown) => {
+    console.warn(`libraries: no parameter names (${String(error)})`);
+    return {};
+  }),
+);
 
 const config = defineConfig({
   // The page map in one shared file, not inlined into every page's HTML.

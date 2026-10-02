@@ -269,6 +269,16 @@ On lines of its own, it is displayed:
   <Divide>1 2</Divide>
 </HurwitzZeta>
 
+### From a library
+
+A published library's symbols are written the same way, by their qualified name. The page
+fetches [enumeratio/library-template](https://github.com/enumeratio/library-template) the first
+time an expression names one of its symbols, checks its examples, and declares it:
+<enumeratio.PolygonalNumber sides="5">4</enumeratio.PolygonalNumber> is the fourth pentagonal
+number, and the fourth square pyramidal number is
+
+<notatio-cell value="enumeratio.PyramidalNumber(4, 4)" />
+
 ## Every symbol, and no wrapper
 
 Every head the engine knows is an element, `notatio-` plus its name: the ones that
