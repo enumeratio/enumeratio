@@ -230,7 +230,37 @@ const truth = (name: "True" | "False", trigger: string): Entry => ({
 });
 
 /** The overrides, one per native head that needed one. */
+/** A name in a namespace, `a.b.c`, from its `Field` chain; undefined if a part isn't a name. */
+function dotted(json: MathJsonExpression | undefined): string | undefined {
+  if (typeof json === "string") return /^'.*'$/s.test(json) ? json.slice(1, -1) : json;
+  const { sym, str } = (json ?? {}) as { sym?: unknown; str?: unknown };
+  if (typeof sym === "string") return sym;
+  if (typeof str === "string") return str;
+  if (Array.isArray(json) && json[0] === "Field" && json.length === 3) {
+    const [base, member] = [dotted(json[1] as MathJsonExpression), dotted(json[2] as MathJsonExpression)];
+    return base === undefined || member === undefined ? undefined : `${base}.${member}`;
+  }
+  return undefined;
+}
+
+/** A call by namespace, `\operatorname{enumeratio.PolygonalNumber}(4, 5)`: compute-engine writes
+ *  `\mathrm{MemberCall}(enumeratio, …)`. An upstream ask (print `N.m(x)`). */
+const memberCall: Entry = {
+  name: "MemberCall",
+  serialize: (serializer, expr) => {
+    const [receiver, member, ...args] = operands(expr);
+    const name = dotted(["Field", receiver!, member!] as MathJsonExpression);
+    const written = args.map((e) => serializer.serialize(e)).join(", ");
+    return name === undefined
+      ? `\\mathrm{MemberCall}(${operands(expr)
+          .map((e) => serializer.serialize(e))
+          .join(", ")})`
+      : `\\operatorname{${name}}(${written})`;
+  },
+};
+
 export const CONVENTIONAL_LATEX: readonly Entry[] = [
+  memberCall,
   truth("True", "\\top"),
   truth("False", "\\bot"),
   operatorname("LCM", "lcm"),

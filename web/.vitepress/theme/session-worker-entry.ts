@@ -20,6 +20,7 @@ import { combineNotation, registerNotation } from "@enumeratio/boxes";
 import { displayDictionary } from "@enumeratio/frontend/display";
 import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import NOTATION_ENTRIES from "virtual:notation-entries";
+import { libraryRegistry, registerLibraryNotation } from "./libraries.ts";
 import { CATALOGUE } from "./worker-catalogue.ts";
 
 // Every catalogued package's notation, which its package.json names: a dictionary is fixed at
@@ -30,6 +31,8 @@ const notation = combineNotation(CATALOGUE.flatMap((library) => NOTATION_ENTRIES
 // cell's text, keeps each notebook's session, and writes each answer's display itself.
 startSessionWorker(undefined, {
   catalogue: CATALOGUE,
+  libraries: libraryRegistry(),
+  notation: registerLibraryNotation,
   createEngine: () => {
     const ce = new ComputeEngine({
       latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, notation.latex) }),

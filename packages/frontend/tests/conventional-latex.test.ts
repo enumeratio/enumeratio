@@ -145,3 +145,11 @@ test("a string's TeX specials are escaped once wrapped for it", () => {
   );
   expect(latex("'\u{F11E}'")).toBe('\\text{\\char"F11E }');
 });
+
+test("a call by namespace writes its qualified name, not MemberCall", () => {
+  const latex = (json: unknown): string => ce.box(json as never, { form: "raw" }).latex;
+  expect(latex(["MemberCall", "enumeratio", "'PolygonalNumber'", 4, 5])).toBe(
+    "\\operatorname{enumeratio.PolygonalNumber}(4, 5)",
+  );
+  expect(latex(["MemberCall", ["Field", "a", "'b'"], "'C'", "x"])).toBe("\\operatorname{a.b.C}(x)");
+});

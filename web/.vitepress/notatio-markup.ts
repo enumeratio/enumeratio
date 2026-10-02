@@ -45,11 +45,12 @@ export const VUE_COMPONENTS: ReadonlySet<string> = new Set([
 const HEADS: ReadonlySet<string> = new Set([...Object.keys(SYMBOLS), ...GRAPHICS_HEADS]);
 const NAME = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*/;
 
-/** Whether a tag starts markup: `ToExpression`, a dotted name, or a head no component claims. */
+/** Whether a tag starts markup: `ToExpression`, a namespaced head, or a head no component claims. */
 export function isMarkupTag(tag: string): boolean {
   if (VUE_COMPONENTS.has(tag)) return false;
   if (tag === "ToExpression") return true;
-  if (tag.includes(".")) return /^[A-Z]/.test(tag);
+  // A namespace is lowercase as often as not (`enumeratio.PolygonalNumber`); the member is the head.
+  if (tag.includes(".")) return /\.[A-Z][\w$]*$/.test(tag);
   return HEADS.has(tag);
 }
 
@@ -86,7 +87,15 @@ export function markupEnd(src: string, start: number, max = src.length): number 
   return -1;
 }
 
-const paramsOf = (head: string): readonly string[] | undefined => SYMBOLS[head]?.params;
+/** The published libraries' parameter names (theme/libraries.ts), loaded with the site's config. */
+let libraryParams: Readonly<Record<string, readonly string[]>> = {};
+
+/** Give markup the libraries' parameter names, before any page is read. */
+export const useLibraryParams = (params: Readonly<Record<string, readonly string[]>>): void => {
+  libraryParams = params;
+};
+
+const paramsOf = (head: string): readonly string[] | undefined => SYMBOLS[head]?.params ?? libraryParams[head];
 
 /** Markup text as MathJSON, or an error naming the page. */
 export function readPageMarkup(text: string, page?: string): unknown {

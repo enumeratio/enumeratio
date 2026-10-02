@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import type { Library } from "@enumeratio/manifest";
+import { definitionRegistry, type Library } from "@enumeratio/manifest";
 import { expect, test } from "vite-plus/test";
 import { createKernel } from "../src/kernel.ts";
 
@@ -169,4 +169,40 @@ test("a compile request hands the input to the host's compile, evaluating nothin
   expect(seen).toEqual([[["Add", 1, 2], { target: "javascript" }]]);
   const without = await createKernel(new ComputeEngine(), catalogue([])).evaluate({ json: 1, compile: {} });
   expect(without.ok).toBe(false);
+});
+
+test("a published library's qualified names resolve after the catalogue's, with its notation handed over", async () => {
+  const notation: string[] = [];
+  const fig = definitionRegistry<ComputeEngine>("fig", {
+    Polygonal: {
+      signature: "(n: integer, sides: integer?) -> integer",
+      body: [
+        "Function",
+        [
+          "Divide",
+          [
+            "Subtract",
+            ["Multiply", ["Subtract", "sides", 2], ["Power", "n", 2]],
+            ["Multiply", ["Subtract", "sides", 4], "n"],
+          ],
+          2,
+        ],
+        "n",
+        "sides",
+      ],
+      defaults: { sides: 3 },
+      notation: { traditional: [{ params: ["n"], box: ["SubscriptBox", "T", ["TemplateSlot", "n"]] }] },
+      examples: [{ id: "t4", expr: ["MemberCall", "fig", "'Polygonal'", 4], expected: 10 }],
+    },
+  });
+  const kernel = createKernel(new ComputeEngine(), catalogue([]), {
+    libraries: fig,
+    notation: (_ce, head) => notation.push(head),
+  });
+  const answer = await kernel.evaluate({ json: ["MemberCall", "fig", "'Polygonal'", 4, 5] });
+  expect(answer).toMatchObject({ ok: true, json: 22 });
+  expect(answer.declared).toHaveLength(1);
+  expect(notation).toEqual(answer.declared);
+  const nowhere = await kernel.evaluate({ json: ["MemberCall", "fig", "'Nowhere'", 1] });
+  expect(nowhere.missing).toContain("fig.Nowhere");
 });
