@@ -28,8 +28,11 @@ export function seedRandom(ce: ComputeEngine, seed: number = DEFAULT_SEED): void
   streams.set(ce, mulberry32(seed));
 }
 
-/** The next draw in [0, 1) from this engine's stream. */
+/** The next draw in [0, 1) -- from the enclosing `WithRandomSeed` frame when there is one
+ *  (compute-engine's counter-based stream, so a seed reproduces its draws), else from this
+ *  engine's stream. */
 export function uniform01(ce: ComputeEngine): number {
+  if (ce._randomFrame !== undefined) return ce._random();
   let next = streams.get(ce);
   if (next === undefined) {
     next = mulberry32(DEFAULT_SEED);

@@ -18,6 +18,7 @@ import { logCombinationSign } from "./patches/log-combination-sign.ts";
 import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
 import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 import { aboutFields } from "./patches/about-fields.ts";
+import { assignFunctionDefinition } from "./patches/assign-function-definition.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
@@ -106,6 +107,7 @@ export { solveIdentity, evaluateSolveIdentity } from "./patches/solve-identity.t
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 export { logCombinationSign, simplifyLogCombinationOnProvablePositivity } from "./patches/log-combination-sign.ts";
 export { aboutFields, dictionaryOf, entriesOf, evaluateAboutFields } from "./patches/about-fields.ts";
+export { assignFunctionDefinition, canonicalAssignFunctionDefinition } from "./patches/assign-function-definition.ts";
 export {
   quotientRingCollection,
   quotientRingOverIntegers,
@@ -234,6 +236,7 @@ export const PATCHES: readonly Patch[] = [
   directedInfinityParts,
   nAccuracyGoal,
   aboutFields,
+  assignFunctionDefinition,
   quotientRingCollection,
 ];
 

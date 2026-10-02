@@ -30,7 +30,10 @@ const GUARD_DIGITS = 10;
 const TAIL_PER_DIGIT = 0.4;
 
 /** Tail points tried, each half again past the last, before the kernel declines. */
-const TAIL_ATTEMPTS = 3;
+const TAIL_ATTEMPTS = 4;
+
+/** Digits past the ones asked for that the result's radius must also clear. */
+const RESULT_SLACK_DIGITS = 1;
 
 /** A decimal below 2π, so dividing by its powers overstates the remainder, never under. */
 const TWO_PI_BELOW = new BigDecimal("6.283");
@@ -47,20 +50,40 @@ export function stieltjesGammaBall(n: number, a: Ball, digits: number): Ball | u
   const ad = a.mid.toNumber();
   const target = digits + GUARD_DIGITS;
   let terms = Math.max(1, Math.ceil(TAIL_PER_DIGIT * target + n / 2 - ad));
+  // The first pass can only stop relative to the large partial sum, and a small γ_n(a) is
+  // short of digits by then. Once an attempt shows the size of γ_n(a), `tolerance` (log10 of
+  // the absolute error to stop at) and `small` (the digits that error needs) are set from it.
+  let tolerance: number | undefined;
+  let small = 0;
   for (let attempt = 0; attempt < TAIL_ATTEMPTS; attempt++) {
     const xd = terms + ad;
     // The partial sum and the subtracted log power are each ~ln^{n+1}(x)/(n+1), and cancel.
     const cancelled = Math.max(0, (n + 1) * Math.log10(Math.log(xd)) - Math.log10(n + 1));
-    const r = atDigits(target + Math.ceil(cancelled), () => certify(() => eulerMaclaurin(n, a, terms)));
-    if (r !== undefined) return r;
+    const r = atDigits(target + Math.ceil(cancelled) + small, () =>
+      certify(() => eulerMaclaurin(n, a, terms, tolerance)),
+    );
+    // A ball operand carries its own width, so only an exact one is held to the digits.
+    if (r !== undefined && (!a.rad.isZero() || wideEnough(r, digits))) return r;
+    if (r !== undefined && !r.mid.isZero()) {
+      const size = log10Abs(r.mid);
+      tolerance = size - target;
+      small = Math.max(0, Math.ceil(-size));
+    }
     // The Bernoulli terms turned before reaching the digits the cancellation and a small
     // γ_n(a) call for: move the tail point out.
     terms = Math.ceil(terms * 1.5);
   }
+  // No ball is both certified and as narrow as the digits claimed: decline.
   return undefined;
 }
 
-function eulerMaclaurin(n: number, a: Ball, terms: number): Ball | undefined {
+/** The ball's radius is below the last requested digit, with slack. */
+function wideEnough(r: Ball, digits: number): boolean {
+  if (r.mid.isZero()) return false;
+  return r.rad.lte(r.mid.abs().mul(new BigDecimal(`1e-${digits + RESULT_SLACK_DIGITS}`)));
+}
+
+function eulerMaclaurin(n: number, a: Ball, terms: number, tolerance?: number): Ball | undefined {
   const working = BigDecimal.precision;
   let sum = exact(0);
   for (let k = 0; k < terms; k++) {
@@ -80,7 +103,7 @@ function eulerMaclaurin(n: number, a: Ball, terms: number): Ball | undefined {
   let poly: bigint[] = [-1n, 1n]; // Π_{j=1}^{m} (t − j), lowest degree first, from m = 1
   let factorial = 1n; // (2j)!
   let previous = Infinity;
-  const threshold = log10Abs(sum.mid) - working;
+  const threshold = Math.min(log10Abs(sum.mid) - working, tolerance ?? Infinity);
   for (let j = 1; ; j++) {
     factorial *= BigInt((2 * j - 1) * 2 * j);
     let derivative = exact(0);
