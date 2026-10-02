@@ -13,7 +13,5 @@ references:
     identity: JacobiThetaFunctions
   - system: dlmf
     identity: "20"
-names:
-  wikidata: Q17098064
 stub: engine
 ---

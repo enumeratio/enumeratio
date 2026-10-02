@@ -9,6 +9,5 @@ signatures:
 names:
   wolfram: EllipticPi
   dlmf: Legendre's complete elliptic integral of the third kind
-  wikidata: Q109753363
 stub: engine
 ---

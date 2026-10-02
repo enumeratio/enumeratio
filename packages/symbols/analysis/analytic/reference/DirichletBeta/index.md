@@ -2,12 +2,16 @@
 name: DirichletBeta
 domain: Special functions
 signature: DirichletBeta(s)
-summary: The Dirichlet beta function $\beta(s) = \sum_{n\ge0} (-1)^n (2n+1)^{-s}$, the L-function of the nontrivial character mod 4 — entire, with $\beta(1) = \pi/4$ and $\beta(2) = G$ (Catalan). Provided by `@enumeratio/analytic`.
+summary: The Dirichlet beta function $\beta(s) = \sum_{n\ge0} (-1)^n (2n+1)^{-s}$, the L-function of the nontrivial character mod 4 — entire, with $\beta(1) = \pi/4$ and $\beta(2) = G$ (Catalan).
 signatures:
   - call: DirichletBeta(s)
     description: the Dirichlet beta function $\beta(s)$.
-    library: enumeratio-analytic
     type: (number) -> number
+  - call: DirichletBeta(s)
+    description: widened to an infinite argument.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 bindings:
   - origin: reference
     form: notatio

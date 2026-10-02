@@ -38,12 +38,37 @@ test("a lone integer answer to N(x, d) is judged by the digits Wolfram displays"
 test("Solve: Wolfram's rules and ours are the same solutions, in any order", () => {
   const rules = "List[List[Rule[x, -1]], List[Rule[x, 1]]]";
   const answer = { value: rules, numeric: rules };
-  expect(verdictOf("wolfram", ["List", 1, -1], answer, undefined, false, "Solve")).toBe("agree");
-  expect(verdictOf("wolfram", ["List", 1, 2], answer, undefined, false, "Solve")).toBe("disagree");
+  const solve = ["Solve", ["Equal", ["Power", "x", 2], 1], "x"];
+  expect(verdictOf("wolfram", ["List", 1, -1], answer, undefined, false, solve)).toBe("agree");
+  expect(verdictOf("wolfram", ["List", 1, 2], answer, undefined, false, solve)).toBe("disagree");
   const system = { value: "List[List[Rule[x, 2], Rule[y, 1]]]", numeric: "List[List[Rule[x, 2], Rule[y, 1]]]" };
-  expect(verdictOf("wolfram", ["List", ["Tuple", 2, 1]], system, undefined, false, "Solve")).toBe("agree");
-  // Without the head, a list of values is not a list of rule lists.
+  const pair = ["Solve", ["List", ["Equal", "x", 2], ["Equal", "y", 1]], ["List", "x", "y"]];
+  expect(verdictOf("wolfram", ["List", ["Tuple", 2, 1]], system, undefined, false, pair)).toBe("agree");
+  // Without the call, a list of values is not a list of rule lists.
   expect(verdictOf("wolfram", ["List", 1, -1], answer)).toBe("disagree");
+});
+
+test("Solve: an identity's fresh parameter is Wolfram's unconstrained {{}}", () => {
+  const free = { value: "List[List[]]", numeric: "List[List[]]" };
+  const identity = ["Solve", ["Equal", "x", "x"], "x"];
+  expect(verdictOf("wolfram", ["List", "t"], free, undefined, false, identity)).toBe("agree");
+  // The unknown itself, or a defined constant, is not a fresh parameter.
+  expect(verdictOf("wolfram", ["List", "x"], free, undefined, false, identity)).toBe("disagree");
+  expect(verdictOf("wolfram", ["List", "Pi"], free, undefined, false, identity)).toBe("disagree");
+  expect(verdictOf("wolfram", ["List"], free, undefined, false, identity)).toBe("disagree");
+});
+
+test("a measurement agrees with a value its error bar holds", () => {
+  // Mehler–Dirichlet at θ = 1/2: Gauss–Kronrod's 2.2214414411509225 ± 3.3e-8 against π/√2.
+  const mehler = { value: "2.221441469079183", numeric: "2.221441469079183" };
+  expect(verdictOf("wolfram", ["Measurement", 2.2214414411509225, 3.348136249957226e-8], mehler)).toBe("agree");
+  expect(verdictOf("wolfram", ["Measurement", 2.2214414411509225, 1e-9], mehler)).toBe("disagree");
+  // A Monte Carlo bar is too rough to widen the tolerance.
+  const zero = { value: "0", numeric: "0." };
+  expect(verdictOf("wolfram", ["Measurement", -0.012, 0.018], zero)).toBe("disagree");
+  expect(
+    verdictOf("mpmath", ["Measurement", 2.2214414411509225, 3.348136249957226e-8], { value: "2.221441469079183" }),
+  ).toBe("agree");
 });
 
 test("an interval is its endpoints, and NaN is Wolfram's Indeterminate", () => {

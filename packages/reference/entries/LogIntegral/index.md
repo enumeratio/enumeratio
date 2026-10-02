@@ -6,7 +6,5 @@ summary: Logarithmic integral li(x) = PV ∫₀ˣ dt/ln t = Ei(ln x).
 signatures:
   - call: LogIntegral(complex | infinity) -> number
     description: as compute-engine declares it
-names:
-  wikidata: Q1350206
 stub: engine
 ---

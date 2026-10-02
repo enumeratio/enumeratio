@@ -13,8 +13,6 @@ references:
     identity: HypergeometricFunction
   - system: dlmf
     identity: "15.2"
-names:
-  wikidata: Q21028472
 stub: engine
 ---
 

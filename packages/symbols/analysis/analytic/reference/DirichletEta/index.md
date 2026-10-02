@@ -2,12 +2,16 @@
 name: DirichletEta
 domain: Special functions
 signature: DirichletEta(s)
-summary: The Dirichlet eta function $\eta(s) = \sum_{n\ge1} (-1)^{n-1} n^{-s} = (1 - 2^{1-s})\,\zeta(s)$, the alternating zeta — entire, with $\eta(1) = \ln 2$. Provided by `@enumeratio/analytic`.
+summary: The Dirichlet eta function $\eta(s) = \sum_{n\ge1} (-1)^{n-1} n^{-s} = (1 - 2^{1-s})\,\zeta(s)$, the alternating zeta — entire, with $\eta(1) = \ln 2$.
 signatures:
   - call: DirichletEta(s)
     description: the Dirichlet eta function $\eta(s)$.
-    library: enumeratio-analytic
     type: (number) -> number
+  - call: DirichletEta(s)
+    description: widened to an infinite argument.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 bindings:
   - origin: reference
     form: notatio

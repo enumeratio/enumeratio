@@ -32,7 +32,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "About",
     kind: "operator",
     description:
-      "Return information about an expression as a dictionary: its kind (symbol, constant, function, number, string, expression), its static type and, when applicable, its name, value, signature, clause listing, algebraic attributes, description, wikidata and url.",
+      "Return information about an expression as a dictionary: its kind (symbol, constant, function, number, string, expression), its static type and, when applicable, its name, value, signature, clause listing, attributes (the algebraic flags and `lazy`), description, examples, keywords, wikidata and url.",
     signature: "(any) -> dictionary<any>",
   },
   {
@@ -75,28 +75,28 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Airy function of the first kind",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    wikidata: "Q109729241",
   },
   {
     name: "AiryAiPrime",
     kind: "operator",
     description: "Derivative of the Airy function of the first kind",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    wikidata: "Q409415",
   },
   {
     name: "AiryBi",
     kind: "operator",
     description: "Airy function of the second kind",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    wikidata: "Q109729257",
   },
   {
     name: "AiryBiPrime",
     kind: "operator",
     description: "Derivative of the Airy function of the second kind",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q403629",
+    wikidata: "Q409415",
   },
   {
     name: "All",
@@ -151,7 +151,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description: "Appell hypergeometric function F₁(a; b₁, b₂; c; x, y), double series for |x|, |y| < 1.",
     signature:
       "(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q2701540",
+    wikidata: "Q4780998",
   },
   {
     name: "Append",
@@ -362,7 +362,15 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Avogadro constant",
     signature: "value",
-    wikidata: "Q47574",
+    wikidata: "Q6203",
+  },
+  {
+    name: "BarnesG",
+    kind: "operator",
+    description:
+      "The Barnes G-function, the double gamma function G(z+1) = Γ(z)·G(z), G(1) = 1. G(n) is the superfactorial 1!·2!⋯(n−2)! at a positive integer n; G is entire, with zeros at the non-positive integers.",
+    signature: "(complex | infinity) -> number",
+    wikidata: "Q808463",
   },
   {
     name: "BaseForm",
@@ -389,35 +397,35 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Modified Bessel function of the first kind",
     signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    wikidata: "Q2607225",
   },
   {
     name: "BesselJ",
     kind: "operator",
     description: "Bessel function of the first kind",
     signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    wikidata: "Q219637",
   },
   {
     name: "BesselK",
     kind: "operator",
     description: "Modified Bessel function of the second kind (Macdonald function)",
     signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    wikidata: "Q109559130",
   },
   {
     name: "BesselY",
     kind: "operator",
     description: "Bessel function of the second kind (Neumann function)",
     signature: "(order: complex, complex | infinity) -> number",
-    wikidata: "Q627488",
+    wikidata: "Q109545924",
   },
   {
     name: "Beta",
     kind: "operator",
     description: "Euler beta function",
     signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q189062",
+    wikidata: "Q468881",
   },
   {
     name: "BetaRegularized",
@@ -465,7 +473,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Boltzmann constant",
     signature: "value",
-    wikidata: "Q131536",
+    wikidata: "Q5962",
   },
   {
     name: "Boole",
@@ -628,6 +636,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     signature: "(real | signed_infinity, real | signed_infinity, real | signed_infinity) -> real | signed_infinity",
   },
   {
+    name: "ClausenCl",
+    kind: "operator",
+    description:
+      "Clausen function Clₙ(θ) of integer order n ≥ 1 and real θ: Im Liₙ(e^{iθ}) = Σ sin(kθ)/kⁿ for even n, Re Liₙ(e^{iθ}) = Σ cos(kθ)/kⁿ for odd n. A real θ follows the engine precision.",
+    signature: "(integer, real) -> number",
+  },
+  {
     name: "Closed",
     kind: "operator",
     description:
@@ -709,7 +724,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Return all k-element combinations of a collection.",
     signature: "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
-    wikidata: "Q193606",
+    wikidata: "Q202805",
   },
   {
     name: "Complement",
@@ -974,7 +989,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Dedekind eta function η(τ), Im(τ) > 0.",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q1187208",
+    wikidata: "Q1182161",
   },
   {
     name: "Dedup",
@@ -1064,7 +1079,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Digamma function, the logarithmic derivative of the gamma function",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q1142755",
+    wikidata: "Q905326",
   },
   {
     name: "DigitCount",
@@ -1090,6 +1105,34 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Dimension of an object",
     signature: "(value) -> integer",
+  },
+  {
+    name: "DirichletBeta",
+    kind: "operator",
+    description:
+      "Dirichlet beta function β(s) = Σ_{n≥0} (−1)^n/(2n+1)^s = 4^(−s) (ζ(s, 1/4) − ζ(s, 3/4)), entire; β(1) = π/4, β(2) = G, β(+∞) = 1.",
+    signature: "(complex | infinity) -> number",
+  },
+  {
+    name: "DirichletCharacter",
+    kind: "operator",
+    description:
+      "The Dirichlet character χ_j(n) modulo `k`, the `j`-th of the φ(k) characters (Wolfram's indexing, `j = 1` the principal character). Zero where gcd(n, k) > 1; otherwise a root of unity.",
+    signature: "(integer, integer, integer) -> number",
+  },
+  {
+    name: "DirichletEta",
+    kind: "operator",
+    description:
+      "Dirichlet eta function η(s) = Σ_{n≥1} (−1)^(n−1)/n^s = (1 − 2^(1−s)) ζ(s), entire; η(1) = ln 2, η(+∞) = 1.",
+    signature: "(complex | infinity) -> number",
+  },
+  {
+    name: "DirichletL",
+    kind: "operator",
+    description:
+      "The Dirichlet L-function L(s, χ) = Σ χ(n)/nˢ (n ≥ 1) of the character χ_j modulo `k` (`DirichletCharacter(k, j, ·)`): `k^(−s) Σ_{r=1}^{k} χ(r) ζ(s, r/k)`. Entire for a non-principal character; the principal one is `ζ(s) Π_{p|k} (1 − p^(−s))`.",
+    signature: "(integer, integer, number) -> number",
   },
   {
     name: "Discriminant",
@@ -1217,7 +1260,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Elliptic integral of the second kind: complete E(m) with one argument, incomplete E(φ|m) with two (amplitude first, parameter convention m = k², as in Mathematica).",
     signature: "(complex | infinity, (complex | infinity)?) -> number",
-    wikidata: "Q1375529",
+    wikidata: "Q109753012",
   },
   {
     name: "EllipticF",
@@ -1225,14 +1268,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Incomplete elliptic integral of the first kind F(φ|m) (amplitude first, parameter convention m = k², as in Mathematica). F(π/2|m) = K(m).",
     signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q1062952",
+    wikidata: "Q109752309",
   },
   {
     name: "EllipticK",
     kind: "operator",
     description: "Complete elliptic integral of the first kind K(m), parameter convention m = k².",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q1080993",
+    wikidata: "Q109752514",
   },
   {
     name: "EllipticPi",
@@ -1240,7 +1283,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Elliptic integral of the third kind: complete Π(n|m) with two arguments, incomplete Π(n; φ|m) with three (characteristic first, amplitude second, parameter convention m = k², as in Mathematica).",
     signature: "(complex | infinity, complex | infinity, (complex | infinity)?) -> number",
-    wikidata: "Q1123360",
+    wikidata: "Q109753363",
   },
   {
     name: "EmptySet",
@@ -1362,7 +1405,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Exponential integral Ei(x) = PV ∫_{−∞}^x eᵗ/t dt.",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q1361401",
+    wikidata: "Q1419948",
   },
   {
     name: "Expand",
@@ -1629,7 +1672,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Molar gas constant",
     signature: "value",
-    wikidata: "Q39600",
+    wikidata: "Q182333",
   },
   {
     name: "GeometricVector",
@@ -1656,7 +1699,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Newtonian constant of gravitation",
     signature: "value",
-    wikidata: "Q30022",
+    wikidata: "Q18373",
   },
   {
     name: "Greater",
@@ -1763,14 +1806,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Kummer confluent hypergeometric function ₁F₁(a; b; z) = M(a, b, z).",
     signature: "(complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q1331447",
+    wikidata: "Q783948",
   },
   {
     name: "Hypergeometric2F1",
     kind: "operator",
     description: "Gauss hypergeometric function ₂F₁(a, b; c; z).",
     signature: "(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
-    wikidata: "Q672619",
+    wikidata: "Q21028472",
   },
   {
     name: "Hypot",
@@ -2154,7 +2197,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Jacobi theta function θⱼ(z, τ), j ∈ {1,2,3,4}, nome q = e^{iπτ} (Fungrim convention).",
     signature: "(number, complex | infinity, complex | infinity, number?) -> number",
-    wikidata: "Q1154532",
+    wikidata: "Q17098064",
   },
   {
     name: "JacobianMatrix",
@@ -2231,7 +2274,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Lambert W function (product logarithm)",
     signature: "(complex | infinity, number?) -> number",
-    wikidata: "Q429963",
+    wikidata: "Q429331",
     keywords: ["product log", "omega function"],
   },
   {
@@ -2377,11 +2420,25 @@ export const engineSymbols: readonly EngineSymbol[] = [
     signature: "(number) -> number",
   },
   {
+    name: "LogBarnesG",
+    kind: "operator",
+    description:
+      "The logarithm of the Barnes G-function, continued analytically with `LogGamma`: its imaginary part is not principal on the negative axis. −∞ at the zeros of G, the non-positive integers.",
+    signature: "(complex | infinity) -> number",
+  },
+  {
+    name: "LogGamma",
+    kind: "operator",
+    description:
+      "The analytic continuation of ln Γ(z), with its branch cut on (−∞, 0]; not `GammaLn`, the principal logarithm of Γ(z), which jumps by 2πi across the zeros of Im Γ.",
+    signature: "(complex | infinity) -> number",
+  },
+  {
     name: "LogIntegral",
     kind: "operator",
     description: "Logarithmic integral li(x) = PV ∫₀ˣ dt/ln t = Ei(ln x).",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q853513",
+    wikidata: "Q1350206",
   },
   {
     name: "Loop",
@@ -2592,8 +2649,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "MultiplicativeOrder",
     kind: "operator",
     description:
-      "The multiplicative order of `a` modulo `n`: the smallest `k > 0` such that `a^k ≡ 1 (mod n)`. Undefined unless `a` and `n` are coprime.",
-    signature: "(integer, integer) -> integer",
+      "The multiplicative order of `a` modulo `n`: the smallest `k > 0` such that `a^k ≡ 1 (mod n)`. Undefined unless `a` and `n` are coprime. With a list of residues, `MultiplicativeOrder(a, n, [r1, r2, …])` is the smallest `k > 0` such that `a^k ≡ r_i (mod n)` for some `i` (a discrete logarithm), and is undefined when no `r_i` is a power of `a`. The sign of `n` is ignored. Undefined for `n = 0`.",
+    signature: "(integer, integer, list<integer>?) -> integer",
   },
   {
     name: "Multiply",
@@ -2632,7 +2689,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "NIntegrate",
     kind: "operator",
     description: "Numerical approximation of a definite integral.",
-    signature: "(function, limits: (symbol | tuple)?) -> number",
+    signature: "(function, lower: number, upper: number) -> number",
   },
   {
     name: "NLimit",
@@ -2666,7 +2723,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Logical NAND: the negation of AND (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `False`.",
     signature: "(boolean+) -> boolean",
-    wikidata: "Q189550",
+    wikidata: "Q3874243",
   },
   {
     name: "Negate",
@@ -2730,7 +2787,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     description:
       "Logical NOR: the negation of OR (n-ary). Short-circuits: operands are evaluated left to right and evaluation stops at the first `True`.",
     signature: "(boolean+) -> boolean",
-    wikidata: "Q189561",
+    wikidata: "Q574946",
   },
   {
     name: "Norm",
@@ -3059,21 +3116,21 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Planck constant",
     signature: "value",
-    wikidata: "Q524",
+    wikidata: "Q122894",
   },
   {
     name: "PlusMinus",
     kind: "operator",
     description: "Plus or Minus",
     signature: "(T, U) -> tuple<T, U> where T: value, U: value",
-    wikidata: "Q120812",
+    wikidata: "Q260387",
   },
   {
     name: "Pochhammer",
     kind: "operator",
     description: "Rising factorial (Pochhammer symbol) (a)_k = a(a+1)…(a+k-1).",
     signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q2367490",
+    wikidata: "Q2339261",
   },
   {
     name: "PointList",
@@ -3111,14 +3168,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Polygamma function, the n-th derivative of the digamma function",
     signature: "(order: integer, complex | infinity) -> number",
-    wikidata: "Q1817679",
+    wikidata: "Q857956",
   },
   {
     name: "PolyLog",
     kind: "operator",
     description: "Polylogarithm Liₛ(z) = Σ_{k≥1} zᵏ/kˢ, at any real or complex order s.",
     signature: "(complex | infinity, complex | infinity) -> number",
-    wikidata: "Q320067",
+    wikidata: "Q1238449",
   },
   {
     name: "Polygon",
@@ -3229,8 +3286,15 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "PowerMod",
     kind: "operator",
     description:
-      "Return `a^b mod m` (modular exponentiation). A negative `b` uses the modular inverse of `a`; the result is undefined when that inverse does not exist (i.e. when `a` and `m` are not coprime). The result is in the range [0, m).",
-    signature: "(integer, integer, integer) -> integer",
+      "Return `a^b mod m` (modular exponentiation). A negative `b` uses the modular inverse of `a`; the result is undefined when that inverse does not exist (i.e. when `a` and `m` are not coprime). The result is in the range [0, m). A rational exponent `s/r` gives the least `x` with `x^r ≡ a^s (mod m)`, the first entry of `PowerModList(a, s/r, m)`. It is undefined when there is none, when `m` cannot be factored, or when there are too many roots to list and none of them is less than 100000.",
+    signature: "(integer, rational, integer) -> integer",
+  },
+  {
+    name: "PowerModList",
+    kind: "operator",
+    description:
+      "Return the sorted list of every `x` in [0, m) with `x^r ≡ a^s (mod m)`, for the exponent `s/r`. An integer exponent gives the single value `a^s mod m`, a negative one using the modular inverse of `a`. The list is empty when `a^s` is not an `r`-th power mod `m`. Undefined for a modulus `m < 1`, when the inverse of `a` does not exist, or when `m` cannot be factored or there are too many roots to list.",
+    signature: "(integer, rational, integer) -> list<integer>",
   },
   {
     name: "PowerSet",
@@ -3325,8 +3389,15 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "PrimitiveRoot",
     kind: "operator",
     description:
-      "The smallest primitive root modulo `n` (a generator of the multiplicative group of integers mod `n`), or undefined if none exists (which happens unless `n` is 1, 2, 4, pᵏ, or 2pᵏ for an odd prime p).",
+      "The smallest primitive root modulo `n` (a generator of the multiplicative group of integers mod `n`), or undefined if none exists (which happens unless `n` is 1, 2, 4, pᵏ, or 2pᵏ for an odd prime p). The sign of `n` is ignored, and `PrimitiveRoot(1)` is 0. Undefined for `n = 0`.",
     signature: "(integer) -> integer",
+  },
+  {
+    name: "PrimitiveRootList",
+    kind: "operator",
+    description:
+      "The sorted list of all primitive roots modulo `n`: the generators of the multiplicative group of integers mod `n`. The list is empty when there is none (unless `n` is 1, 2, 4, pᵏ, or 2pᵏ for an odd prime p), and for `n = 0`. `PrimitiveRootList(1)` is `[0]`, as `PrimitiveRoot(1)` is 0. The sign of `n` is ignored. Undefined when `n` cannot be factored or there are too many roots to list.",
+    signature: "(integer) -> list<integer>",
   },
   {
     name: "Print",
@@ -3502,6 +3573,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "The set of all finite rational numbers.",
     signature: "set<rational>",
+  },
+  {
+    name: "RationalReconstruction",
+    kind: "operator",
+    description:
+      "The rational `p/q` with `p ≡ a·q (mod m)` and `|p|, q ≤ ⌊√((m − 1)/2)⌋`, the unique such fraction in lowest terms when it exists (Wang's algorithm). Undefined for `m < 1` or when there is none.",
+    signature: "(integer, integer) -> rational",
   },
   {
     name: "Rationalize",
@@ -3922,7 +4000,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Stefan-Boltzmann constant",
     signature: "value",
-    wikidata: "Q196898",
+    wikidata: "Q51374",
+  },
+  {
+    name: "StieltjesGamma",
+    kind: "operator",
+    description:
+      "Generalized Stieltjes constants γₙ(a), the Laurent coefficients of ζ(s, a) at s = 1: ζ(s, a) = 1/(s−1) + Σₙ (−1)ⁿ γₙ(a)(s−1)ⁿ/n!. StieltjesGamma(n) is γₙ = γₙ(1), and γ₀ is Euler's constant.",
+    signature: "(integer, number?) -> number",
   },
   {
     name: "Stirling",
@@ -3935,6 +4020,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Signed Stirling number of the first kind s(n, m): the coefficient of x^m in the falling factorial x(x−1)…(x−n+1). Its absolute value counts the permutations of n elements with exactly m disjoint cycles.",
+    signature: "(integer, integer) -> integer",
+  },
+  {
+    name: "StirlingS2",
+    kind: "operator",
+    description:
+      "`StirlingS2` is an alias for `Stirling`, which is the preferred name. Returns the Stirling number of the second kind S(n, k).",
     signature: "(integer, integer) -> integer",
   },
   {
@@ -4267,7 +4359,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Trigamma function, the derivative of the digamma function",
     signature: "(complex | infinity) -> number",
-    wikidata: "Q2371722",
+    wikidata: "Q1244426",
   },
   {
     name: "Trim",
@@ -4414,7 +4506,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "Vacuum permittivity (electric constant)",
     signature: "value",
-    wikidata: "Q176908",
+    wikidata: "Q6158",
   },
   {
     name: "Values",

@@ -3,10 +3,10 @@ import type { Patch } from "../patch.ts";
 import { evaluateLerch } from "../compute-engine/library/special-functions.ts";
 import { wantsNumber } from "../support/box.ts";
 
-// compute-engine evaluates LerchPhi natively, to the engine's precision at real arguments,
-// but declines a result it can't vouch for relative digits of, which leaves the exact zeros
-// on the unit circle unevaluated (Φ(−1, −1, ½) = 0). The native handler answers first; this
-// answers only where it declines.
+// compute-engine evaluates LerchPhi natively, exactly for rational arguments and to the engine's
+// precision at real ones, but declines a result it can't vouch for relative digits of, which
+// leaves the exact zeros on the unit circle unevaluated at a float argument (Φ(−1, −1, 0.5) = 0).
+// The native handler answers first; this answers only where it declines.
 export const lerchPhiPatch: Patch = {
   id: "lerch-phi",
   issue: "https://github.com/cortex-js/compute-engine/issues/340",
@@ -18,7 +18,7 @@ export const lerchPhiPatch: Patch = {
     ce
       .box(["LerchPhi", -1, -1, ["Rational", 1, 2]])
       .N()
-      .is(0),
+      .is(0) && ce.box(["LerchPhi", -1, -1, 0.5]).N().is(0),
 
   apply: (ce) =>
     wrapOperator(

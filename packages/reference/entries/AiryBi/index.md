@@ -13,7 +13,5 @@ references:
     identity: AiryFunctions
   - system: dlmf
     identity: "9.2"
-names:
-  wikidata: Q109729257
 stub: engine
 ---

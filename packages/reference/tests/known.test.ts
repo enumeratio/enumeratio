@@ -12,8 +12,8 @@ const known = referenceData().heads.flatMap(({ head, entry }) =>
 );
 
 test("every example's expected agrees with its known value", { timeout: 60_000 }, () => {
-  const off = known.flatMap(({ head, example: { id, expected, known: value, tolerance, source } }) => {
-    const why = disagreement(expected, value, tolerance ?? DEFAULT_TOLERANCE);
+  const off = known.flatMap(({ head, example: { id, expr, expected, known: value, tolerance, source } }) => {
+    const why = disagreement(expected, value, tolerance ?? DEFAULT_TOLERANCE, expr);
     return why === undefined ? [] : [`${head}/${id} (${source}): ${why}`];
   });
   expect(off).toEqual([]);
@@ -47,4 +47,14 @@ test("a value in heads compute-engine alone can't evaluate isn't comparable", ()
   expect(comparable(["Divide", "Pi", 2])).toBe(true);
   expect(comparable(["Complex", { num: "0" }, { num: "-1.421802682497363661" }])).toBe(true);
   expect(comparable(["JacobiCN", 2, ["Rational", 1, 2]])).toBe(false);
+});
+
+test("a Solve's fresh parameter is Wolfram's unconstrained solution", () => {
+  const identity = ["Solve", ["Equal", "x", "x"], "x"];
+  expect(disagreement(["List", "t"], ["List", ["List"]], 1e-12, identity)).toBeUndefined();
+  expect(disagreement(["List", "x"], ["List", ["List"]], 1e-12, identity)).toBeDefined();
+  expect(disagreement(["List"], ["List", ["List"]], 1e-12, identity)).toBeDefined();
+  const square = ["Solve", ["Equal", ["Power", "x", 2], 1], "x"];
+  const rules = ["List", ["List", ["Rule", "x", -1]], ["List", ["Rule", "x", 1]]];
+  expect(disagreement(["List", 1, -1], rules, 1e-12, square)).toBeUndefined();
 });

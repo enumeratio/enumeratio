@@ -25,6 +25,16 @@ export function powerExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpress
       )
       .evaluate();
   }
+  // Ln(1/z) stays a quotient: compute-engine no longer rewrites it to -Ln(z) off the principal branch.
+  if (op === "Ln" && children[0].operator === "Divide" && firstOps.length === 2) {
+    const [numerator, denominator] = firstOps;
+    return ce
+      .function("Subtract", [
+        powerExpand(ce, ce.function("Ln", [numerator!]).evaluate()),
+        powerExpand(ce, ce.function("Ln", [denominator!]).evaluate()),
+      ])
+      .evaluate();
+  }
   if (op === "Ln" && children[0].operator === "Power" && firstOps.length === 2) {
     const [base, exponent] = firstOps;
     return ce.function("Multiply", [exponent, ce.function("Ln", [base]).evaluate()]).evaluate();

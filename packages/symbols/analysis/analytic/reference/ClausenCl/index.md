@@ -2,11 +2,10 @@
 name: ClausenCl
 domain: Special functions
 signature: ClausenCl(n, θ)
-summary: 'The Clausen functions $\mathrm{Cl}_n(\theta)$: $\sum_{k\ge1} \sin(k\theta)/k^n$ for even $n$ and $\sum_{k\ge1} \cos(k\theta)/k^n$ for odd $n$ — the imaginary or real part of $\operatorname{Li}_n(e^{i\theta})$. Provided by `@enumeratio/analytic`.'
+summary: 'The Clausen functions $\mathrm{Cl}_n(\theta)$: $\sum_{k\ge1} \sin(k\theta)/k^n$ for even $n$ and $\sum_{k\ge1} \cos(k\theta)/k^n$ for odd $n$ — the imaginary or real part of $\operatorname{Li}_n(e^{i\theta})$.'
 signatures:
   - call: ClausenCl(n, θ)
     description: the Clausen function $\mathrm{Cl}_n(\theta)$ of integer order $n \ge 1$ and real $\theta$.
-    library: enumeratio-analytic
     type: (integer, number) -> number
 bindings:
   - origin: reference

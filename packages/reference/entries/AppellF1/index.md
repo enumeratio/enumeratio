@@ -6,7 +6,5 @@ summary: Appell hypergeometric function F₁(a; b₁, b₂; c; x, y), double ser
 signatures:
   - call: AppellF1(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number
     description: as compute-engine declares it
-names:
-  wikidata: Q4780998
 stub: engine
 ---

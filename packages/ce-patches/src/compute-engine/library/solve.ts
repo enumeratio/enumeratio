@@ -1,28 +1,20 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
-// cortex-js/compute-engine: `Solve`'s single-unknown path (`library/solve.ts`) calls
-// `equation.solve(unknown)` and returns `List()` whenever that comes back empty, and
-// `equation.solve` returns `[]` both when it PROVES there is no solution and when it merely
-// can't find one (a quintic with symbolic coefficients, `x*2^(x^2) == 5`, a variable exponent,
-// two-argument `Arctan`, a transcendental equation under a side condition). Two wrong answers
-// follow from that, both fixed here:
+// cortex-js/compute-engine: `Solve`'s single-unknown path calls `equation.solve(unknown)`, which
+// answers a list that can be wrong by omission:
 //
-// - An empty list is an identity when the equation is true for every value of the unknown
-//   (`x == x`, `0 == 0`): Wolfram reports ONE solution with no constraint (`Solve[x == x, x]`
-//   -> `{{}}`, not `{}`). Told apart by evaluating the equation on its own: an identity
-//   evaluates all the way to `True`.
-// - An empty list is kept only when something proves it, else `Solve` stays unevaluated
-//   (see `provesNoSolution`).
-//
-// A trig equation answers its principal solutions only (`sin x == 1/3` drops the 2*Pi*k
-// families; `tan x == 1` and `sin x == 0` too), a wrong answer by omission with no `C[1]`
-// parameter to say otherwise, so those decline as well (see `dropsPeriodicFamilies`).
-//
-// Over the complexes a polynomial equation has as many roots as its degree, counting multiplicity;
-// an answer with fewer is a wrong answer by omission (`x^5 + x + 1` answers one real root,
-// `x^4 == 1` answers only `+-1`), so it declines too (see `missesRoots`).
-export function evaluateSolveIdentity(ce: ComputeEngine): void {
+// - an empty list is kept only when something proves it (see `provesNoSolution`); `sin x == 2`
+//   and `e^x == -1` have complex solutions, but come back `List()`. Where `Solve` declines
+//   an equation that is provably never satisfied (`(x^2 + 1)^-2 == 0`), the empty list is
+//   what answers;
+// - a trig equation answers its principal solutions only (`sin x == 1/3` drops the 2*Pi*k
+//   families; `tan x == 1` and `sin x == 0` too), with no `C[1]` parameter to say otherwise, so
+//   those decline (see `dropsPeriodicFamilies`);
+// - over the complexes a polynomial equation has as many roots as its degree, counting
+//   multiplicity; an answer with fewer is a wrong answer by omission (`x^5 + x + 1` answers one
+//   real root, `x^4 == 1` answers only `+-1`), so it declines too (see `missesRoots`).
+export function evaluateSolveDeclines(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("Solve");
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate;
@@ -31,12 +23,12 @@ export function evaluateSolveIdentity(ce: ComputeEngine): void {
   operator.evaluate = (ops, options) => {
     const result = native(ops, options);
     const condition = ops[0];
-    if (condition === undefined || result === undefined) return result;
+    if (condition === undefined) return result;
+    if (result === undefined) return provesNoSolution(ce, ops, false) ? ce.function("List", []) : result;
     if (!isEmptySolutionList(result)) {
       return dropsPeriodicFamilies(ops) || missesRoots(ce, ops, result) ? undefined : result;
     }
-    if (symbolNameOf(condition.evaluate()) === "True") return ce.function("List", [ce.function("List", [])]);
-    return provesNoSolution(ce, ops) ? result : undefined;
+    return provesNoSolution(ce, ops, true) ? result : undefined;
   };
 }
 
@@ -59,10 +51,11 @@ function equationsOf(expr: BoxedExpression): readonly BoxedExpression[] {
  * - the statement evaluates to `False` (`1 == 0`);
  * - an equation reduces to a nonzero constant (`x == x + 1` -> `-1 == 0`), so no value of any
  *   unknown satisfies it, and a conjunction or system containing it has none either;
- * - a single named unknown, and an equation polynomial in it of closed-form degree: every root was
- *   enumerated, so the list is empty only because a domain or side condition excluded them all.
+ * - (only when `Solve` itself answered empty) a single named unknown, and an equation polynomial in
+ *   it of closed-form degree: every root was enumerated, so the list is empty only because a
+ *   domain or side condition excluded them all.
  */
-function provesNoSolution(ce: ComputeEngine, ops: readonly BoxedExpression[]): boolean {
+function provesNoSolution(ce: ComputeEngine, ops: readonly BoxedExpression[], answeredEmpty: boolean): boolean {
   const statement = ops[0]?.canonical;
   if (statement === undefined) return false;
   if (symbolNameOf(statement.evaluate()) === "False") return true;
@@ -75,6 +68,8 @@ function provesNoSolution(ce: ComputeEngine, ops: readonly BoxedExpression[]): b
   const sides = equationsOf(statement).map((equation) => operandsOf(equation) as [BoxedExpression, BoxedExpression]);
   if (sides.some(([left, right]) => isImpossible(left, right))) return true;
 
+  // Past this point a proof rests on the native answer having enumerated every root.
+  if (!answeredEmpty) return false;
   const unknown = soleUnknown(ops);
   if (unknown === undefined) return false;
   return residuals.some((r) => {

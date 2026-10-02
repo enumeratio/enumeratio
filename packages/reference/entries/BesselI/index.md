@@ -8,6 +8,5 @@ signatures:
     description: as compute-engine declares it
 names:
   dlmf: modified Bessel function of the first kind
-  wikidata: Q2607225
 stub: engine
 ---

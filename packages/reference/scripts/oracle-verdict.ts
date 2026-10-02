@@ -21,6 +21,7 @@ import {
   valuesOnly,
 } from "@enumeratio/oracle/src";
 import { fromWolfram } from "@enumeratio/wolfram/src";
+import { MAX_MEASURED_TOLERANCE } from "../src/known.ts";
 
 const ce = new ComputeEngine();
 
@@ -137,6 +138,18 @@ export function sameDigits(expected: MathJSON, shown: string): boolean | undefin
   return ours.every((digits, i) => digits === theirs[i]);
 }
 
+/** A `Measurement(value, error)` (a numeric integral) as its value and the tolerance its bar
+ * earns, or `undefined` for anything else. */
+export function measured(expected: MathJSON): { value: MathJSON; tolerance?: number } | undefined {
+  if (!Array.isArray(expected) || expected[0] !== "Measurement" || expected.length !== 3) return undefined;
+  const value = expected[1] as MathJSON;
+  const [v, error] = [leaf(value), leaf(expected[2] as MathJSON)];
+  const size = typeof v === "number" ? Math.abs(v) : typeof v === "object" ? Math.hypot(v.re, v.im) : Number.NaN;
+  if (typeof error !== "number" || !(error >= 0) || Number.isNaN(size)) return { value };
+  const relative = error / Math.max(1, size);
+  return relative <= MAX_MEASURED_TOLERANCE ? { value, tolerance: relative } : { value };
+}
+
 export function verdictOf(
   system: System,
   expected: MathJSON,
@@ -144,9 +157,16 @@ export function verdictOf(
   tolerance?: number,
   /** An `N(x, d)` example: Wolfram's displayed digits must match ours, the last included. */
   asksForDigits = false,
-  /** The head of the example's expression: `Solve` answers rules in Wolfram and values here, compared as a set. */
-  head?: string,
+  /** The example's expression: a `Solve` answers rules in Wolfram and values here, compared as a set. */
+  call?: MathJSON,
 ): Verdict {
+  // A measurement agrees with a value its error bar holds.
+  const measurement = measured(expected);
+  if (measurement !== undefined) {
+    expected = measurement.value;
+    // 1e-9 is `compare`'s and `compareTrees`' own default.
+    if (measurement.tolerance !== undefined) tolerance = Math.max(tolerance ?? 1e-9, measurement.tolerance);
+  }
   const theirs = result.value ?? "";
   let verdict: Verdict;
   if (system === "wolfram") {
@@ -154,7 +174,8 @@ export function verdictOf(
     // declined (`MatrixRank[{1, 2, 3}]`) comes back as our own answer and agrees. So its
     // exact form is compared as text — an unevaluated form we pinned too — and its
     // numbers are Wolfram's own `N`, of which only numeric values are read as numbers.
-    const prepare = head === "Solve" ? solutionSet : undefined;
+    const prepare =
+      Array.isArray(call) && call[0] === "Solve" ? (expr: MathJSON) => solutionSet(expr, call) : undefined;
     const ours = reduce(prepare === undefined ? expected : prepare(expected), wolframLeaf);
     const trees = [
       theirTree(theirs, symbolic, prepare),

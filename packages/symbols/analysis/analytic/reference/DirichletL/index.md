@@ -2,12 +2,16 @@
 name: DirichletL
 domain: Special functions
 signature: DirichletL(k, j, s)
-summary: The Dirichlet L-function $L(s, \chi) = \sum_{n\ge1} \chi(n)\,n^{-s}$ of the $j$-th character mod $k$ — the family that contains $\zeta$, $\eta$ and $\beta$, and the setting of Dirichlet's theorem on primes in arithmetic progressions. Provided by `@enumeratio/analytic`.
+summary: The Dirichlet L-function $L(s, \chi) = \sum_{n\ge1} \chi(n)\,n^{-s}$ of the $j$-th character mod $k$ — the family that contains $\zeta$, $\eta$ and $\beta$, and the setting of Dirichlet's theorem on primes in arithmetic progressions.
 signatures:
   - call: DirichletL(k, j, s)
     description: the L-function of [[DirichletCharacter]] $\chi_j \bmod k$.
+    type: (integer, integer, number) -> number
+  - call: DirichletL(k, j, s)
+    description: widened past the native handler.
     library: enumeratio-analytic
     type: (integer, integer, number) -> number
+    overrides: compute-engine
 bindings:
   - origin: reference
     form: notatio
