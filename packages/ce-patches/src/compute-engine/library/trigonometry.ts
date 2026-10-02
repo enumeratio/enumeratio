@@ -95,9 +95,11 @@ export function evaluateArctanArccotAtComplexInfinity(ce: ComputeEngine): void {
 // bounded, same drop-the-finite-part rule as Arcsin/Arccos above.
 //
 // Arsinh/Arcosh/Artanh/Arsech all reject the undirected ComplexInfinity at boxing
-// (`complex | signed_infinity`, no `~oo`). Arsinh and Arcosh grow like ln|2z| in every
-// direction (DLMF 4.37.16, 4.37.19), so they are ComplexInfinity there, like Arcsin; Artanh
-// and Arsech stay bounded but approach +-i*Pi/2 by direction -- Indeterminate.
+// (`complex | signed_infinity`, no `~oo`). Arsinh grows like ln|2z| with an imaginary part
+// that follows the direction (DLMF 4.37.16), so it is ComplexInfinity there, like Arcsin.
+// Arcosh's real part alone diverges (arccosh z ~ ln 2z, DLMF 4.37.19, Re >= 0 on the
+// principal branch), so it is +Infinity in every direction, as Wolfram has it. Artanh and
+// Arsech stay bounded but approach +-i*Pi/2 by direction -- Indeterminate.
 export function evaluateHyperbolicInverseAtInfinity(ce: ComputeEngine): void {
   widenSignature(
     ce,
@@ -127,7 +129,12 @@ export function evaluateHyperbolicInverseAtInfinity(ce: ComputeEngine): void {
       ce,
       [head],
       (ops) => ops[0] !== undefined && isComplexInfinity(ops[0]),
-      () => () => (unbounded ? ce.symbol("ComplexInfinity") : indeterminate(ce)),
+      () => () =>
+        head === "Arcosh"
+          ? ce.symbol("PositiveInfinity")
+          : unbounded
+            ? ce.symbol("ComplexInfinity")
+            : indeterminate(ce),
       1,
     );
   }
