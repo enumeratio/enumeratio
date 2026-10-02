@@ -241,8 +241,11 @@ const walk = (s: string, leaderOnly = false): MathJSON =>
     pre(s),
     upTo(1, "_n"),
   );
+/** `body` over the result of the walk from s, bound once: read twice, it would walk twice. */
+const walked = (s: string, leaderOnly: boolean, body: (w: string) => MathJSON): MathJSON =>
+  lets([[`wk_${s}`, walk(s, leaderOnly), "integer"]], body(`wk_${s}`));
 /** Whether the walk from s came back to s, closing a cycle. */
-const closes = (walked: MathJSON): MathJSON => ["And", ["Less", walked, 0], ["GreaterEqual", walked, ["Negate", "_n"]]];
+const closes = (result: MathJSON): MathJSON => ["And", ["Less", result, 0], ["GreaterEqual", result, ["Negate", "_n"]]];
 
 /** The permutations of n that are a single n-cycle, (n − 1)! of them for n ≥ 1. A prefix
  *  extends to one unless it already closes a cycle; its paths (one per label nothing maps to
@@ -259,7 +262,7 @@ const cyclicPermutations: EpsilFamily = permutationRestriction({
     [
       "If",
       fold(
-        ["Or", "short", ["And", closes(walk("cs")), ["Less", ["Negate", walk("cs")], "_n"]]],
+        ["Or", "short", walked("cs", false, (w) => ["And", closes(w), ["Less", ["Negate", w], "_n"]])],
         "short",
         "cs",
         "False",
@@ -300,7 +303,23 @@ export const kCyclePermutations: EpsilFamily = permutationRestriction({
   ],
   completions: lets(
     [
-      ["left", sub("_k", fold(add("q", ["If", closes(walk("ks", true)), 1, 0]), "q", "ks", 0, filledSlots)), "integer"],
+      [
+        "left",
+        sub(
+          "_k",
+          fold(
+            add(
+              "q",
+              walked("ks", true, (w) => ["If", closes(w), 1, 0]),
+            ),
+            "q",
+            "ks",
+            0,
+            filledSlots,
+          ),
+        ),
+        "integer",
+      ],
       ["open", sub("_n", "filled"), "integer"],
     ],
     ["If", ["Or", ["Less", "left", 0], ["Greater", "left", "open"]], 0, stirling("open", "left")],

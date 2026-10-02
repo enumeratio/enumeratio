@@ -181,16 +181,16 @@ const cyclesOfLength = (size: number): MathJSON => count(cycleLengths, equals("c
 //
 //   - a `Fold` accumulator can GROW. `Join(a, List(b))` appends, and the accumulator can be a
 //     list of lists. There is no fixed-width limit.
-//   - the pile to replace is found once per entry, then the piles are rebuilt by mapping over
-//     the pile list itself. A `Map` over the list (not over a `Range` of its indices, which
-//     stays lazy and makes the compiler decline) evaluates to a list and compiles.
+//   - the pile to replace is found once per entry, then replaced with `ReplaceAt`. Finding it
+//     reads the piles inside a lambda, which keeps the compiled fold copying them (one native
+//     copy per entry) rather than updating in place.
 const piles = (ahead: MathJSON): MathJSON => {
   const target: MathJSON = ["Add", ["Count", ["Filter", "a", ["Function", ahead, "t"]]], 1];
   const step: MathJSON = [
     "If",
     ["Greater", "k", ["Count", "a"]],
     ["Join", "a", ["List", visiting]],
-    ["Map", ["Function", ["If", ["Equal", "e", ["At", "a", "k"]], visiting, "e"], "e"], "a"],
+    ["ReplaceAt", "a", "k", visiting],
   ];
   return fold(x, ["List"], ["Apply", ["Function", step, "k"], target]);
 };
