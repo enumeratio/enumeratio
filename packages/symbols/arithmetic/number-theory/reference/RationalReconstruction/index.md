@@ -6,11 +6,11 @@ summary: The small fraction $n/d$ whose image in $\mathbb{Z}/m$ is $a$ — the i
 signatures:
   - call: RationalReconstruction(a, m)
     description: the $n/d$ with $n \equiv a d \pmod m$ and $|n|, d \le \sqrt{(m-1)/2}$, when there is one
+  - call: RationalReconstruction(a, m, N, D)
+    description: with explicit bounds $|n| \le N$, $0 < d \le D$, and over a list of residues
     library: enumeratio-number-theory
     type: (integer, integer, integer?, integer?) -> rational
-  - call: RationalReconstruction(a, m, N, D)
-    description: with explicit bounds $|n| \le N$, $0 < d \le D$
-    library: enumeratio-number-theory
+    overrides: compute-engine
 seeAlso:
   - PowerModList
   - ChineseRemainder

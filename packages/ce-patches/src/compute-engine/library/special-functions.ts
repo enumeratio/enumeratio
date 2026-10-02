@@ -1,6 +1,9 @@
-// The special-function heads offered upstream: BarnesG,
-// LogBarnesG, LogGamma, ClausenCl, StieltjesGamma and LerchPhi. A pull request for a plain
+// The special-function heads offered upstream: LerchPhi. A pull request for a plain
 // record below adds it to compute-engine's own library/special-functions.ts.
+//
+// BarnesG, LogBarnesG, LogGamma, ClausenCl, StieltjesGamma, DirichletEta/Beta/L/Character and
+// PolyGamma at order -1 landed in compute-engine 0.146 and were retired; their kernels
+// (numerics/) stay, called directly by @enumeratio/analytic and the frontend.
 //
 // EllipticE's complex-modulus fix (#346) landed in compute-engine 0.139 and was retired
 // from here; HurwitzZeta/Zeta (#340, arbitrary-precision N(x, d)), PolyGamma (complex z)
@@ -9,7 +12,7 @@
 // kernels below stay: @enumeratio/analytic still calls them directly for certified-
 // precision evaluation, and DirichletBeta/DirichletL still need HurwitzZeta/Zeta correct
 // beyond a double's digits.
-import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
+import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, wrapOperator } from "@enumeratio/engine";
 import type { LibraryRecord } from "../../patch.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "../../support/precise.ts";
@@ -23,219 +26,17 @@ import {
   type EvalOptions,
   type NativeEval,
 } from "../../support/box.ts";
-import { cx, type Cx } from "../numerics/complex-arithmetic.ts";
-import { barnesG, logBarnesG } from "../numerics/barnes-g.ts";
-import { barnesGBig } from "../numerics/barnes-g-big.ts";
-import { clausen } from "../numerics/clausen.ts";
+import type { Cx } from "../numerics/complex-arithmetic.ts";
 import { logGamma } from "../numerics/log-gamma.ts";
 import { lerchPhi } from "../numerics/lerch-phi.ts";
 import { lerchContinued } from "../numerics/lerch-phi-continuation.ts";
 import { lerchPhiBig } from "../numerics/lerch-phi-big.ts";
-import { stieltjesGamma, STIELTJES_MAX_ORDER } from "../numerics/stieltjes.ts";
-import { stieltjesGammaBig } from "../numerics/stieltjes-big.ts";
 import { hurwitzZeta, zetaGeneralized } from "../numerics/hurwitz-zeta.ts";
 import { hurwitzZetaBig, zetaGeneralizedBig, type BigCx, bigCx } from "../numerics/hurwitz-zeta-big.ts";
 import { digamma, polygamma, polygammaCoefficient } from "../numerics/polygamma.ts";
 import { bernoulliPolyExpr } from "../numerics/bernoulli-rational.ts";
 
 type Json = number | string | { num: string } | Json[];
-
-// --- BarnesG / LogBarnesG ------------------------------------------------------------
-// cortex-js/compute-engine#340: the Barnes G-function BarnesG(z) and its logarithm
-// LogBarnesG(z). Wolfram has both; compute-engine has neither.
-
-const isNonPosInt = (x: BoxedExpression): boolean => isRealInt(x) && x.re <= 0;
-const finish = (expr: BoxedExpression, numeric: boolean): BoxedExpression => (numeric ? expr.N() : expr.evaluate());
-
-/** Superfactorial Π_{k=0}^{n−2} k! = G(n) for a positive integer n, exact. */
-function superfactorial(n: number): bigint {
-  let g = 1n;
-  let f = 1n;
-  for (let k = 1; k <= n - 2; k++) {
-    f *= BigInt(k);
-    g *= f;
-  }
-  return g;
-}
-
-const bigint = (v: bigint): Json => ({ num: v.toString() });
-
-export function evaluateBarnesG(
-  ce: ComputeEngine,
-  z: BoxedExpression,
-  numeric: boolean,
-  log: boolean,
-): BoxedExpression | undefined {
-  if (isNonPosInt(z)) return log ? ce.symbol("NegativeInfinity") : ce.number(0);
-  if (isRealInt(z)) {
-    const g = bigint(superfactorial(z.re));
-    return finish(ce.box((log ? ["Ln", g] : g) as never), numeric);
-  }
-  if (numeric) {
-    // A real z past a double's digits: the arbitrary-precision kernel (barnes-g-big.ts). Its
-    // logarithm only for z > 0: on the negative axis Wolfram's LogBarnesG continuation carries
-    // an imaginary part of 2πk that ln G alone does not.
-    const x = bigRealOperand(ce, z);
-    const g = x === undefined || (log && !x.isPositive()) ? undefined : barnesGBig(x, ce.precision);
-    if (g !== undefined) return bigResult(ce, log ? g.ln() : g);
-  }
-  if (numeric && Number.isFinite(z.re) && Number.isFinite(z.im)) {
-    const v = cx(z.re, z.im);
-    return numberResult(ce, log ? logBarnesG(v) : barnesG(v));
-  }
-  return undefined;
-}
-
-export const barnesGLibrary: LibraryRecord = {
-  BarnesG: {
-    description: "The Barnes G-function, the double gamma function satisfying G(z+1) = Γ(z)G(z).",
-    signature: "(number) -> number",
-    broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      ops[0] === undefined ? undefined : evaluateBarnesG(options.engine, ops[0], wantsNumber(ops, options), false),
-  },
-  LogBarnesG: {
-    description: "The logarithm of the Barnes G-function.",
-    signature: "(number) -> number",
-    broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      ops[0] === undefined ? undefined : evaluateBarnesG(options.engine, ops[0], wantsNumber(ops, options), true),
-  },
-};
-
-// --- LogGamma -------------------------------------------------------------------------
-// cortex-js/compute-engine#340: LogGamma(z), the analytic continuation of ln Γ(z) (branch
-// cut on (−∞, 0]). compute-engine has Gamma (complex) but no LogGamma head.
-
-export function evaluateLogGamma(ce: ComputeEngine, z: BoxedExpression, numeric: boolean): BoxedExpression | undefined {
-  if (isNonPosInt(z)) return ce.symbol("PositiveInfinity"); // Wolfram: Infinity at the poles
-  if (isRealInt(z)) return finish(ce.box(["Ln", ["Factorial", z.re - 1]] as never), numeric);
-  if (!numeric && z.im === 0 && z.re === 0.5) return ce.box(["Divide", ["Ln", "Pi"], 2] as never).evaluate();
-  // z > 0: compute-engine's own GammaLn agrees with the continuation there, and carries
-  // arbitrary precision where the double kernel below is stuck at ~1e-15. Left of the origin
-  // the continuation is complex (GammaLn keeps the real part but drops the winding, which is
-  // −iπ⌈−z⌉ there) — and a compute-engine complex number is a pair of doubles, so routing
-  // gains nothing. The kernel keeps that side.
-  if (numeric && isFiniteNum(z) && z.im === 0 && z.re > 0) {
-    const native = atEnginePrecision(ce, ce.box(["GammaLn", z.json] as never).N());
-    if (native !== undefined) return native;
-  }
-  if (numeric && isFiniteNum(z)) return numberResult(ce, logGamma(cx(z.re, z.im)));
-  return undefined;
-}
-
-export const logGammaLibrary: LibraryRecord = {
-  LogGamma: {
-    description: "The analytic continuation of ln Γ(z), with branch cut on (−∞, 0].",
-    signature: "(number) -> number",
-    broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      ops[0] === undefined ? undefined : evaluateLogGamma(options.engine, ops[0], wantsNumber(ops, options)),
-  },
-};
-
-// --- ClausenCl ------------------------------------------------------------------------
-// cortex-js/compute-engine#340: the Clausen functions ClausenCl(n, theta). Wolfram has no
-// Clausen head either — it spells these as Im/Re PolyLog[n, E^(I theta)] — but mpmath does
-// (clsin/clcos), and the family is common enough to be worth its own head.
-
-const box = (ce: ComputeEngine, expr: Json): BoxedExpression => ce.box(expr as never);
-
-/** Is this expression literally π/2 (as CE canonicalises it: Half·Pi or Pi/2)? */
-const isHalfPi = (x: BoxedExpression): boolean => {
-  const j = JSON.stringify(x.json);
-  return (
-    j === JSON.stringify(["Multiply", ["Rational", 1, 2], "Pi"]) ||
-    j === JSON.stringify(["Divide", "Pi", 2]) ||
-    j === JSON.stringify(["Multiply", "Half", "Pi"])
-  );
-};
-
-export function evaluateClausen(
-  ce: ComputeEngine,
-  n: BoxedExpression,
-  theta: BoxedExpression,
-  numeric: boolean,
-): BoxedExpression | undefined {
-  if (!isRealInt(n) || n.re < 1) return undefined;
-  const even = n.re % 2 === 0;
-  // Cl_n(0): 0 for the sine series, ζ(n) for the cosine one (and Cl₁(0) = ∞).
-  if (theta.im === 0 && theta.re === 0) {
-    if (n.re === 1) return ce.symbol("PositiveInfinity");
-    return finish(box(ce, even ? 0 : ["Zeta", n.re]), numeric);
-  }
-  // Cl_n(π) = 0 (even) or −η(n) (odd); Cl_n(π/2) = β(n) (even) or −2^{−n} η(n) (odd).
-  if (isSymbol(theta) && theta.symbol === "Pi") {
-    return finish(box(ce, even ? 0 : ["Negate", ["DirichletEta", n.re]]), numeric);
-  }
-  if (isHalfPi(theta)) {
-    const r: Json = even
-      ? ["DirichletBeta", n.re]
-      : ["Negate", ["Multiply", ["Power", 2, -n.re], ["DirichletEta", n.re]]];
-    return finish(box(ce, r), numeric);
-  }
-  if (numeric && Number.isFinite(theta.re) && Number.isFinite(theta.im) && theta.im === 0) {
-    return numberResult(ce, cx(clausen(n.re, theta.re)));
-  }
-  return undefined;
-}
-
-export const clausenLibrary: LibraryRecord = {
-  ClausenCl: {
-    description: "The Clausen functions Cl_n(θ).",
-    signature: "(integer, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      ops[0] === undefined || ops[1] === undefined
-        ? undefined
-        : evaluateClausen(options.engine, ops[0], ops[1], wantsNumber(ops, options)),
-  },
-};
-
-// --- StieltjesGamma --------------------------------------------------------------------
-// cortex-js/compute-engine#340: the generalized Stieltjes constants StieltjesGamma(n, a).
-// Wolfram has them; compute-engine does not.
-
-export function evaluateStieltjes(
-  ce: ComputeEngine,
-  n: BoxedExpression,
-  a: BoxedExpression | undefined,
-  numeric: boolean,
-): BoxedExpression | undefined {
-  const done = (expr: BoxedExpression) => (numeric ? expr.N() : expr.evaluate());
-  if (!isRealInt(n) || n.re < 0) return undefined;
-  if (a === undefined) {
-    if (n.re === 0) return done(ce.symbol("EulerGamma"));
-  } else {
-    if (isNonPosInt(a)) return ce.symbol("ComplexInfinity");
-    if (n.re === 0) {
-      // γ₀(a) = −ψ(a); the native digamma is real-only, so a complex a that it leaves
-      // unevaluated falls through to the kernel below.
-      const r = done(ce.box(["Negate", ["PolyGamma", 0, a.json]] as unknown as never));
-      if (!numeric || isNumber(r)) return r;
-    }
-  }
-  if (n.re > STIELTJES_MAX_ORDER) return undefined;
-  if (numeric) {
-    // A real a past a double's digits: the arbitrary-precision kernel (stieltjes-big.ts).
-    const x = bigRealOperand(ce, a ?? ce.One);
-    const g = x === undefined ? undefined : stieltjesGammaBig(n.re, x, ce.precision);
-    if (g !== undefined) return bigResult(ce, g);
-  }
-  const av = a === undefined ? cx(1) : cx(a.re, a.im);
-  if (numeric && Number.isFinite(av.re) && Number.isFinite(av.im)) {
-    return numberResult(ce, stieltjesGamma(n.re, av));
-  }
-  return undefined;
-}
-
-export const stieltjesLibrary: LibraryRecord = {
-  StieltjesGamma: {
-    description: "The generalized Stieltjes constants γₙ(a).",
-    signature: "(integer, number?) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      ops[0] === undefined ? undefined : evaluateStieltjes(options.engine, ops[0], ops[1], wantsNumber(ops, options)),
-  },
-};
 
 // --- LerchPhi ---------------------------------------------------------------------------
 // cortex-js/compute-engine#340: the Lerch transcendent LerchPhi(z, s, a), which generalizes

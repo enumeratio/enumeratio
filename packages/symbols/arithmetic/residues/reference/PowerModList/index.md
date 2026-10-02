@@ -6,14 +6,13 @@ summary: Every $x$ in $[0, m)$ with $x^r \equiv a^s \pmod m$ — all the values 
 signatures:
   - call: PowerModList(a, s/r, m)
     description: every $x$ in $[0, m)$ with $x^r \equiv a^s \pmod m$, ascending
-    library: enumeratio-residues
-    type: (number, number, number) -> list<number>
   - call: PowerModList(a, k, m)
     description: an integer exponent gives the single value $\{a^k \bmod m\}$
-    library: enumeratio-residues
   - call: PowerModList(a, -1, m)
     description: the modular inverse $\{a^{-1}\}$, or $\{\}$ when $\gcd(a, m) \ne 1$
     library: enumeratio-residues
+    type: (number, number, number) -> list<number>
+    overrides: compute-engine
   - call: PowerModList(a, s/r, m)
     description: Every $x$ in $[0, m)$ with $x^r \equiv a^s \pmod m$ — all the values $a^{s/r}$ can take modulo $m$.
     library: enumeratio-number-theory

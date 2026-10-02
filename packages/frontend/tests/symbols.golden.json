@@ -358,10 +358,10 @@
     "rendering": {
       "tag": "notatio-cell",
       "attributes": {
-        "value": "PowerModList(3, 1 / 2, 11)"
+        "value": "powerModList(3, 1 / 2, 11)"
       }
     },
-    "markup": "<notatio-cell value=\"PowerModList(3, 1 / 2, 11)\"></notatio-cell>"
+    "markup": "<notatio-cell value=\"powerModList(3, 1 / 2, 11)\"></notatio-cell>"
   },
   "Cell(1 + 1, InForm -> \"InputForm\", OutForm -> \"TraditionalForm\", Expected -> 2)": {
     "rendering": {

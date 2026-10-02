@@ -128,6 +128,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "CarmichaelNumbers",
   "Cases",
   "Catalan",
+  "CatalanConstant",
   "CatalanNumber",
   "CatalanNumbers",
   "Catch",

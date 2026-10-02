@@ -32,6 +32,7 @@ import {
   connectedPermutations,
   grassmannianPermutations,
   kDescentPermutations,
+  permutationsAvoiding3,
 } from "../src/families/restrictions.ts";
 
 const ce = new ComputeEngine();
@@ -69,6 +70,17 @@ function cycles(x: readonly number[]): number {
     for (let j = i; !seen.has(j); j = x[j - 1]) seen.add(j);
   }
   return count;
+}
+
+/** Whether `x` has entries at i < j < k in the relative order of `pattern`. */
+function contains(x: readonly number[], pattern: string): boolean {
+  const [a, b, c] = pattern.split("").map(Number);
+  const agrees = (u: number, v: number, p: number, q: number) => p < q === u < v;
+  for (let k = 0; k < x.length; k++)
+    for (let j = 0; j < k; j++)
+      for (let i = 0; i < j; i++)
+        if (agrees(x[i], x[j], a, b) && agrees(x[j], x[k], b, c) && agrees(x[i], x[k], a, c)) return true;
+  return false;
 }
 
 /** A restriction of the symmetric group read by filtering it: its members of n, in lex order. */
@@ -159,6 +171,12 @@ const READINGS: Record<string, Reading> = {
     ],
     (x, [n, k]) => IsPermutationOf(x, n) && cycles(x) === k,
   ),
+  ...Object.fromEntries(
+    ["123", "132", "213", "231", "312", "321"].map((pattern) => [
+      `PermutationsAvoiding${pattern}`,
+      lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !contains(x, pattern)),
+    ]),
+  ),
   ColoredPermutations: {
     params: [
       [0, 0],
@@ -185,6 +203,7 @@ const byHead = new Map(
     alternatingPermutations,
     connectedPermutations,
     kDescentPermutations,
+    ...permutationsAvoiding3,
     grassmannianPermutations,
     cograssmannianPermutations,
   ].map((family) => [family.head, family]),

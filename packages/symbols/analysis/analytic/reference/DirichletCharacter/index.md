@@ -2,11 +2,10 @@
 name: DirichletCharacter
 domain: Special functions
 signature: DirichletCharacter(k, j, n)
-summary: 'The $j$-th Dirichlet character modulo $k$ evaluated at $n$: a completely multiplicative, $k$-periodic map $\chi_j: \mathbb{Z} \to \mathbb{C}$, zero where $\gcd(n, k) > 1$. Provided by `@enumeratio/analytic`.'
+summary: 'The $j$-th Dirichlet character modulo $k$ evaluated at $n$: a completely multiplicative, $k$-periodic map $\chi_j: \mathbb{Z} \to \mathbb{C}$, zero where $\gcd(n, k) > 1$.'
 signatures:
   - call: DirichletCharacter(k, j, n)
     description: the character $\chi_j \bmod k$ at $n$, for $1 \le j \le \varphi(k)$; $j = 1$ is the principal character.
-    library: enumeratio-analytic
     type: (integer, integer, integer) -> number
 primitive: kernel
 bindings:

@@ -63,13 +63,13 @@
     "htm": "^3.1.1"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.145.0",
+    "@cortex-js/compute-engine": "^0.146.0",
     "@types/node": "^24",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.145.0"
+    "@cortex-js/compute-engine": "^0.146.0"
   }
 }

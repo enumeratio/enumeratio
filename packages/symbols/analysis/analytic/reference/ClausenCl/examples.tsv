@@ -1,5 +1,5 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-cl-2-pi-2-g-catalan-s-constant			[ClausenCl, 2, [Divide, Pi, 2]]	Catalan	$\mathrm{Cl}_2(\pi/2) = G$, Catalan's constant		
+cl-2-pi-2-g-catalan-s-constant			[ClausenCl, 2, [Divide, Pi, 2]]	CatalanConstant	$\mathrm{Cl}_2(\pi/2) = G$, Catalan's constant		
 odd-orders-are-cosine-series-cl-3-0-zeta-3			[ClausenCl, 3, 0]	[Zeta, 3]	Odd orders are cosine series: $\mathrm{Cl}_3(0) = \zeta(3)$	unevaluated	The Function Repository's ClausenCl returns an unevaluated If[OddQ, …] at θ = 0 (a bug in that function); it does not dispute ζ(3).
 cl-2-0-0		test	[ClausenCl, 2, 0]	0		unevaluated	The Function Repository's ClausenCl returns an unevaluated If[OddQ, …] at θ = 0 (a bug in that function); it does not dispute 0.
 cl-3-pi-2-frac-3-32-zeta-3		test	[ClausenCl, 3, [Divide, Pi, 2]]	[Multiply, [Rational, -3, 32], [Zeta, 3]]	$\mathrm{Cl}_3(\pi/2) = -2^{-3}\eta(3) = -\tfrac{3}{32}\zeta(3)$		

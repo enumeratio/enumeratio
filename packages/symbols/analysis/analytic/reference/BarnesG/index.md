@@ -2,12 +2,16 @@
 name: BarnesG
 domain: Special functions
 signature: BarnesG(z)
-summary: The Barnes G-function $G(z)$, the double-gamma function satisfying $G(z+1) = \Gamma(z)\,G(z)$ with $G(1) = 1$ — so $G(n) = \prod_{k=0}^{n-2} k!$, the superfactorial, at positive integers. Provided by `@enumeratio/analytic`.
+summary: The Barnes G-function $G(z)$, the double-gamma function satisfying $G(z+1) = \Gamma(z)\,G(z)$ with $G(1) = 1$ — so $G(n) = \prod_{k=0}^{n-2} k!$, the superfactorial, at positive integers.
 signatures:
   - call: BarnesG(z)
     description: the Barnes G-function $G(z)$.
-    library: enumeratio-analytic
     type: (number) -> number
+  - call: BarnesG(z)
+    description: widened to an infinite argument.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 bindings:
   - origin: reference
     form: notatio
