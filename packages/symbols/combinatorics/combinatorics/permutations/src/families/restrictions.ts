@@ -16,6 +16,7 @@ import {
   iff,
   less,
   lets,
+  map,
   mul,
   quotient,
   rowTable,
@@ -363,7 +364,13 @@ function permutationsAvoiding(pattern: string): EpsilFamily {
       [
         [
           "fr",
-          fold(["Append", "fs", add(at("fs", "fv"), iff(used("fv"), 0, 1))], "fs", "fv", ["List", 0], upTo(1, n)),
+          fold(
+            ["ReplaceAt", "fs", add("fv", 1), add(at("fs", "fv"), iff(used("fv"), 0, 1))],
+            "fs",
+            "fv",
+            map(0, "fz", upTo(0, n)),
+            upTo(1, n),
+          ),
           "list<integer>",
         ],
       ],

@@ -58,7 +58,8 @@ export const all = (condition: (x: string) => MathJSON, over: MathJSON, x: strin
 /**
  * A table T(s, c) for s = 0..rows − 1 and c = 0..width − 1, flat by rows: row 0 is `first(c)`,
  * row s is `next(prev, s, c)`, where `prev(s', c')` reads an earlier row (s' < s, 0 ≤ c' < width).
- * Rows are joined one per step, so the table is copied rows times, not once per cell.
+ * Rows are joined one per step, so the table is copied rows times, not once per cell; each row
+ * is filled in place.
  */
 export function rowTable(
   tag: string,
@@ -72,9 +73,17 @@ export function rowTable(
   const c = `${tag}_c`;
   const row = `${tag}_row`;
   const prev = (r: MathJSON, column: MathJSON): MathJSON => at(table, add(mul(r, width), column, 1));
-  // A row is appended a cell at a time: the interpreter keeps a `Map` lazy, so a table of
-  // mapped rows would re-evaluate every earlier row on each read, exponential in the rows.
-  const cells = (value: MathJSON): MathJSON => fold(["Append", row, value], row, c, ["List"], upTo(0, sub(width, 1)));
+  // A row is filled a cell at a time, in place: the interpreter keeps a `Map` lazy, so a table
+  // of mapped rows would re-evaluate every earlier row on each read, exponential in the rows.
+  // A cell never reads its own row, only the table of rows before it.
+  const cells = (value: MathJSON): MathJSON =>
+    fold(
+      ["ReplaceAt", row, add(c, 1), value],
+      row,
+      c,
+      map(0, `${tag}_z`, upTo(0, sub(width, 1))),
+      upTo(0, sub(width, 1)),
+    );
   return fold(["Join", table, cells(next(prev, s, c))], table, s, cells(first(c)), upTo(1, sub(rows, 1)));
 }
 

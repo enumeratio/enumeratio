@@ -18,9 +18,10 @@ export interface PermutationRestriction extends Omit<FamilyShape, "kind"> {
   /** The names the definitions give the family's params, in order; the first is n. */
   readonly params: readonly string[];
   /**
-   * How many members start with the prefix `prefix`: a list of n slots whose first `filled`
-   * are set (a partial permutation, values distinct) and the rest 0. 0 when no member starts
-   * so. Over the family's params and any `tables`.
+   * How many members start with the prefix `prefix`: a list whose first n slots hold a partial
+   * permutation (the first `filled` set, values distinct, and the rest 0); slots past n are
+   * scratch, so read it only at 1..n and never by `Length`. 0 when no member starts so. Over
+   * the family's params and any `tables`.
    */
   readonly completions: MathJSON;
   /** Whether `_x`, a permutation of n, is a member. Default: its completions as a full
@@ -32,28 +33,18 @@ export interface PermutationRestriction extends Omit<FamilyShape, "kind"> {
 
 const n = "_n";
 
-/** `completions` at the prefix: slots before `slot` from `entry`, `value` at `slot`. */
-const completionsAt = (
-  spec: PermutationRestriction,
-  entry: (q: string) => MathJSON,
-  slot: MathJSON,
-  value: MathJSON,
-): MathJSON =>
+/** `completions` at the prefix `base` with `value` set at `slot`: the entries before `slot` and
+ *  zeros after. A native copy of `base` beats rebuilding the n slots entry by entry. */
+const completionsAt = (spec: PermutationRestriction, base: string, slot: MathJSON, value: MathJSON): MathJSON =>
   lets(
     [
-      [
-        "prefix",
-        map(iff(equal("lr_q", slot), value, iff(less("lr_q", slot), entry("lr_q"), 0)), "lr_q", upTo(1, n)),
-        "list<integer>",
-      ],
+      ["prefix", ["ReplaceAt", base, slot, value], "list<integer>"],
       ["filled", slot, "integer"],
     ],
     spec.completions,
   );
 
-/** Whether `value` is among `entry(1..slot − 1)`. */
-const usedBefore = (entry: (q: string) => MathJSON, slot: MathJSON, value: MathJSON): MathJSON =>
-  fold(["Or", "lr_seen", equal(entry("lr_t"), value)], "lr_seen", "lr_t", "False", upTo(1, sub(slot, 1)));
+const zeros = (variable: string): MathJSON => map(0, variable, upTo(1, n));
 
 /** The family's definitions, from its completion count and predicate. */
 export function permutationRestriction(spec: PermutationRestriction): EpsilFamily {
@@ -64,19 +55,22 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
       body,
     );
 
-  // Unrank: the state is the n slots, then the rank still to go. At slot j, the free values are
-  // tried in increasing order; each that doesn't hold the remaining rank takes its completions
-  // off it.
-  const state = (q: string): MathJSON => at("lr_s", q);
+  // Unrank: the state is the n slots, then the rank still to go, then a flag per value (1 once
+  // it is placed): 2n + 1 slots. At slot j, the free values are tried in increasing order; each
+  // that doesn't hold the remaining rank takes its completions off it.
+  //
+  // The step reads the state inside lambdas (the completions fold over the prefix), which
+  // compute-engine's in-place Fold doesn't allow, so the state is copied once per slot.
+  const slotFlag = (value: MathJSON): MathJSON => add(n, 1, value);
   const choose = fold(
     iff(
       ["NotEqual", at("lr_pick", 2), 0],
       "lr_pick",
       iff(
-        usedBefore(state, "lr_j", "lr_v"),
+        equal(at("lr_s", slotFlag("lr_v")), 1),
         "lr_pick",
         lets(
-          [["lr_c", completionsAt(spec, state, "lr_j", "lr_v"), "integer"]],
+          [["lr_c", completionsAt(spec, "lr_s", "lr_j", "lr_v"), "integer"]],
           iff(
             less(at("lr_pick", 1), "lr_c"),
             ["List", at("lr_pick", 1), "lr_v"],
@@ -92,42 +86,47 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
   );
   const unrankStep = lets(
     [["lr_chosen", choose, "list<integer>"]],
-    map(
-      iff(
-        equal("lr_slot", "lr_j"),
-        at("lr_chosen", 2),
-        iff(equal("lr_slot", add(n, 1)), at("lr_chosen", 1), at("lr_s", "lr_slot")),
-      ),
-      "lr_slot",
-      upTo(1, add(n, 1)),
-    ),
+    [
+      "ReplaceAt",
+      ["ReplaceAt", ["ReplaceAt", "lr_s", "lr_j", at("lr_chosen", 2)], add(n, 1), at("lr_chosen", 1)],
+      slotFlag(at("lr_chosen", 2)),
+      1,
+    ],
   );
-  const unrank = ["Most", fold(unrankStep, "lr_s", "lr_j", ["Append", map(0, "lr_y", upTo(1, n)), "_r"], upTo(1, n))];
+  const unrank = [
+    "Take",
+    fold(unrankStep, "lr_s", "lr_j", ["Join", zeros("lr_y"), ["List", "_r"], zeros("lr_y2")], upTo(1, n)),
+    n,
+  ];
 
-  // Rank: at each slot, the members starting with every smaller free value come first.
+  // Rank: at each slot, the members starting with every smaller free value come first. Where
+  // each value sits in the element says whether it is free past a slot, and fills in place.
   const element = (q: string): MathJSON => at("_x", q);
-  const rank = fold(
-    add(
-      "lr_r",
-      fold(
-        add(
-          "lr_r2",
-          iff(
-            and(less("lr_v", element("lr_j")), ["Not", usedBefore(element, "lr_j", "lr_v")]),
-            completionsAt(spec, element, "lr_j", "lr_v"),
+  const positions = fold(["ReplaceAt", "lr_at", element("lr_p"), "lr_p"], "lr_at", "lr_p", zeros("lr_y3"), upTo(1, n));
+  const rank = lets(
+    [["lr_where", positions, "list<integer>"]],
+    fold(
+      add(
+        "lr_r",
+        lets(
+          [["lr_base", map(iff(less("lr_q", "lr_j"), element("lr_q"), 0), "lr_q", upTo(1, n)), "list<integer>"]],
+          fold(
+            add(
+              "lr_r2",
+              iff(["Greater", at("lr_where", "lr_v"), "lr_j"], completionsAt(spec, "lr_base", "lr_j", "lr_v"), 0),
+            ),
+            "lr_r2",
+            "lr_v",
             0,
+            upTo(1, sub(element("lr_j"), 1)),
           ),
         ),
-        "lr_r2",
-        "lr_v",
-        0,
-        upTo(1, n),
       ),
+      "lr_r",
+      "lr_j",
+      0,
+      upTo(1, n),
     ),
-    "lr_r",
-    "lr_j",
-    0,
-    upTo(1, n),
   );
 
   const count = lets(
