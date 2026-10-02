@@ -24,7 +24,6 @@ references:
     identity: "5.12"
 names:
   fungrim: BetaFunction
-  wikidata: Q468881
   wolframIdentity: true
 ---
 

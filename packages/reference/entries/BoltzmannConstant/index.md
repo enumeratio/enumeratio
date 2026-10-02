@@ -6,7 +6,5 @@ summary: Boltzmann constant
 signatures:
   - call: "BoltzmannConstant: value"
     description: a constant, as compute-engine declares it
-names:
-  wikidata: Q5962
 stub: engine
 ---

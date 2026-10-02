@@ -1,10 +1,10 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { applyPatch, solveIdentity } from "../src/index.ts";
+import { applyPatch, solveDeclines } from "../src/index.ts";
 
 const ce = new ComputeEngine();
 const box = (json: unknown) => ce.box(json as never);
-applyPatch(ce, solveIdentity);
+applyPatch(ce, solveDeclines);
 
 const equal = (left: unknown, right: unknown) => ["Equal", left, right];
 const power = (base: unknown, exponent: unknown) => ["Power", base, exponent];

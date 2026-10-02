@@ -20,7 +20,7 @@
     "@enumeratio/oracle": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.142.0",
+    "@cortex-js/compute-engine": "^0.144.0",
     "@types/node": "catalog:",
     "typescript": "^7.0.2",
     "vite": "catalog:",

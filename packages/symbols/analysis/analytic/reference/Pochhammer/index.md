@@ -23,7 +23,6 @@ references:
     identity: "5.2"
 names:
   fungrim: RisingFactorial
-  wikidata: Q2339261
   wolframIdentity: true
 ---
 

@@ -6,7 +6,5 @@ summary: Molar gas constant
 signatures:
   - call: "GasConstant: value"
     description: a constant, as compute-engine declares it
-names:
-  wikidata: Q182333
 stub: engine
 ---

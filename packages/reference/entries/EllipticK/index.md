@@ -16,6 +16,5 @@ references:
 names:
   wolfram: EllipticK
   dlmf: Legendre's complete elliptic integral of the first kind
-  wikidata: Q109752514
 stub: engine
 ---

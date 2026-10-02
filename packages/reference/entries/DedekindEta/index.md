@@ -15,6 +15,5 @@ references:
     identity: "23.15"
 names:
   dlmf: Dedekind's eta function (or Dedekind modular function)
-  wikidata: Q1182161
 stub: engine
 ---

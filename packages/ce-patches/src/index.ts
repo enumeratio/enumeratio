@@ -1,5 +1,4 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { lerchPhiPatch } from "./patches/lerch-phi.ts";
 import { polygammaLogGamma } from "./patches/polygamma-log-gamma.ts";
 import { dirichlet } from "./patches/dirichlet.ts";
 import { barnesGPatch } from "./patches/barnes-g.ts";
@@ -11,13 +10,11 @@ import { sqrtInfinity } from "./patches/sqrt-infinity.ts";
 import { ceilFloorInfinity } from "./patches/ceil-floor-infinity.ts";
 import { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 import { infinityArgs } from "./patches/infinity-args.ts";
-import { rangeRationalStep } from "./patches/range-rational-step.ts";
-import { solveIdentity } from "./patches/solve-identity.ts";
+import { lerchPhiPatch } from "./patches/lerch-phi.ts";
+import { solveDeclines } from "./patches/solve-declines.ts";
 import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
-import { logCombinationSign } from "./patches/log-combination-sign.ts";
 import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
 import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
-import { aboutFields } from "./patches/about-fields.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
@@ -101,11 +98,9 @@ export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches
 export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
 export { directedInfinityParts, evaluateRealImaginaryOfDirectedInfinity } from "./patches/directed-infinity-parts.ts";
 export { nAccuracyGoal, evaluateNAccuracyGoal } from "./patches/n-accuracy-goal.ts";
-export { rangeRationalStep, evaluateRangeWithRationalStep } from "./patches/range-rational-step.ts";
-export { solveIdentity, evaluateSolveIdentity } from "./patches/solve-identity.ts";
+export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
-export { logCombinationSign, simplifyLogCombinationOnProvablePositivity } from "./patches/log-combination-sign.ts";
-export { aboutFields, dictionaryOf, entriesOf, evaluateAboutFields } from "./patches/about-fields.ts";
+export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
 export {
   quotientRingCollection,
   quotientRingOverIntegers,
@@ -227,13 +222,10 @@ export const PATCHES: readonly Patch[] = [
   ceilFloorInfinity,
   multiplyDirectedInfinity,
   infinityArgs,
-  rangeRationalStep,
-  solveIdentity,
+  solveDeclines,
   takeDropNegativeCount,
-  logCombinationSign,
   directedInfinityParts,
   nAccuracyGoal,
-  aboutFields,
   quotientRingCollection,
 ];
 

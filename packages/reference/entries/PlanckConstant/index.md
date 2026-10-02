@@ -6,7 +6,5 @@ summary: Planck constant
 signatures:
   - call: "PlanckConstant: value"
     description: a constant, as compute-engine declares it
-names:
-  wikidata: Q122894
 stub: engine
 ---
