@@ -1,6 +1,6 @@
 id	in	out	shown	tex.in	tex.out	verdict
 erf-0	Erf[0]	0		\text{erf}(0)	0	
-erf-infinity	Erf[Infinity]	1		\text{erf}(\infty )	1	
+erf-infinity	Erf[enumeratio`Infinity]	1		\text{erf}(\infty )	1	
 erf-negativeinfinity	Erf[-Infinity]	-1		\text{erf}(-\infty )	-1	
 erf-complexinfinity	Erf[ComplexInfinity]	Erf[ComplexInfinity]		\text{erf}(\text{ComplexInfinity})	\text{erf}(\text{ComplexInfinity})	disagree
 a-floating-point-argument-evaluates-directly-to	Erf[0.5]	0.5204998778130465		\text{erf}(0.5)	0.5205	
