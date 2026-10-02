@@ -12,4 +12,6 @@ integrate-diracdelta-p-pow-2-plus-q-pow-2-minus	""
 fouriertransform-diracdelta-y-y-x	FourierTransform[DiracDelta[y], y, x]	1/Sqrt[2*Pi]	\mathcal{F}_y[\delta (y)](x)	\frac{1}{\sqrt{2 \pi }}
 diracdelta-1	DiracDelta[1]	0	\delta (1)	0
 laplacetransform-diracdelta-x-x-s	LaplaceTransform[DiracDelta[x], x, s]			
+diracdelta-0-times-diracdelta-3-over-2	Times[DiracDelta[0], DiracDelta[Rational[3, 2]]]	0	\delta (0) \delta \left(\frac{3}{2}\right)	0
+diracdelta-0-times-diracdelta-neg-1-over-6	Times[DiracDelta[0], DiracDelta[Rational[-1, 6]]]	0	\delta (0) \delta \left(-\frac{1}{6}\right)	0
 diracdelta-neg-1-minus-2-times-exponentiale	DiracDelta[Plus[-1, Times[-2, E], Minus[Power[E, 2]], Power[E, Minus[Power[E, Times[2, E]]]], Power[Plus[1, E], 2]]]	DiracDelta[-1 - 2*E - E^2 + E^(-E^(2*E)) + (1 + E)^2]	\delta \left(-1-2 e-e^2+e^{-e^{2 e}}+(1+e)^2\right)	\delta \left(-1-2 e-e^2+e^{-e^{2 e}}+(1+e)^2\right)

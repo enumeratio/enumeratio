@@ -39,5 +39,9 @@ fibonacci-6	BigInt(fibonacci(ZZ(6)))
 fibonacci-7	BigInt(fibonacci(ZZ(7)))		
 fibonacci-9	BigInt(fibonacci(ZZ(9)))		
 fibonacci-neg-1	BigInt(fibonacci(ZZ(-1)))		
+fibonacci-1-times-fibonacci-3-minus-fibonacci-2	((BigInt(fibonacci(ZZ(1))) * BigInt(fibonacci(ZZ(3)))) + (-((big(BigInt(fibonacci(ZZ(2))))^2))))		
+neg-fibonacci-0-times-fibonacci-4-plus-fibonacci	((-((BigInt(fibonacci(ZZ(0))) * BigInt(fibonacci(ZZ(4)))))) + (big(BigInt(fibonacci(ZZ(2))))^2))		
+fibonacci-2-times-fibonacci-3-times-fibonacci-4	((BigInt(fibonacci(ZZ(2))) * BigInt(fibonacci(ZZ(3))) * BigInt(fibonacci(ZZ(4))) * BigInt(fibonacci(ZZ(6))) * BigInt(fibonacci(ZZ(7))) * BigInt(fibonacci(ZZ(8)))) + (big(Combinatorics.lucasnum(5))^2))		
+fibonacci-0-times-fibonacci-1-times-fibonacci-3	(BigInt(fibonacci(ZZ(0))) * BigInt(fibonacci(ZZ(1))) * BigInt(fibonacci(ZZ(3))) * BigInt(fibonacci(ZZ(4))))		
 f-1000-has-209-digits-see-integerdigits			
 they-grow-fast-f-50-already-exceeds-twelve	BigInt(fibonacci(ZZ(50)))	12586269025	

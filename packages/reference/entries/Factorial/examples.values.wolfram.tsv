@@ -15,6 +15,8 @@ recurrence-n-n-n-1	(Factorial[5] == Times[5, Factorial[4]])	True	5!=5 4!	\text{T
 extends-to-non-integers-via-the-gamma-function	Factorial[Rational[1, 2]]	Sqrt[Pi]/2	\frac{1}{2}!	\frac{\sqrt{\pi }}{2}
 n-gamma-n-1-see-gamma	(Factorial[5] == Gamma[6])	True	5!=\Gamma (6)	\text{True}
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e	Sum[Divide[1, Factorial[k]], List[k, 0, Infinity]]	E	\sum _{k=0}^{\infty } \frac{1}{k!}	e
+sum-k-factorial-pow-neg-4-times-k-plus-2	Sum[Times[Power[Factorial[k], -4], Power[Factorial[Plus[k, 2]], 2], Power[Factorial[Plus[Minus[k], 2]], -2]], List[k, 0, 2]]	73	\sum _{k=0}^2 \frac{((k+2)!)^2}{(k!)^4 ((-k+2)!)^2}	73
+sum-k-factorial-pow-neg-4-times-k-plus-3	Sum[Times[Power[Factorial[k], -4], Power[Factorial[Plus[k, 3]], 2], Power[Factorial[Plus[Minus[k], 3]], -2]], List[k, 0, 3]]	1445	\sum _{k=0}^3 \frac{((k+3)!)^2}{(k!)^4 ((-k+3)!)^2}	1445
 negative-integers-are-poles-of-the-gamma	Factorial[-1]	ComplexInfinity	(-1)!	\text{ComplexInfinity}
 factorials-grow-fast-20-already-exceeds-2-times	Factorial[20]	2432902008176640000	20!	2432902008176640000
 30-has-33-digits-and-ends-in-seven-zeros	Factorial[30]	265252859812191058636308480000000	30!	265252859812191058636308480000000

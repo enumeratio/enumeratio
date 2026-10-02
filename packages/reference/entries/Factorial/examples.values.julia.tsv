@@ -15,6 +15,8 @@ recurrence-n-n-n-1	(factorial(ZZ(5)) == (5 * factorial(ZZ(4))))	true
 extends-to-non-integers-via-the-gamma-function	factorial(ZZ((1 // 2)))	AssertionError: denominator(x) == 1	error
 n-gamma-n-1-see-gamma			
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
+sum-k-factorial-pow-neg-4-times-k-plus-2			
+sum-k-factorial-pow-neg-4-times-k-plus-3			
 negative-integers-are-poles-of-the-gamma	factorial(ZZ(-1))	DomainError with -1: Argument must be non-negative	error
 factorials-grow-fast-20-already-exceeds-2-times	factorial(ZZ(20))	2432902008176640000	
 30-has-33-digits-and-ends-in-seven-zeros	factorial(ZZ(30))	265252859812191058636308480000000	

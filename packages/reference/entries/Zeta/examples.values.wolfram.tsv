@@ -58,6 +58,8 @@ zeta-2-9	Zeta[2, 9]	-1077749/705600 + Pi^2/6		\zeta (2,9)	\frac{\pi ^2}{6}-\frac
 zeta-2-10	Zeta[2, 10]	-9778141/6350400 + Pi^2/6		\zeta (2,10)	\frac{\pi ^2}{6}-\frac{9778141}{6350400}	
 zeta-4-1	Zeta[4, 1]	Pi^4/90		\zeta (4,1)	\frac{\pi ^4}{90}	
 zeta-4-2	Zeta[4, 2]	-1 + Pi^4/90		\zeta (4,2)	\frac{\pi ^4}{90}-1	
+sum-zeta-2k-times-zeta-neg-2-times-k-plus-4-k-1	Sum[Times[Zeta[Times[2, k]], Zeta[Plus[Times[-2, k], 4]]], List[k, 1, 1]]	Pi^4/36		\sum _{k=1}^1 \zeta (2 k) \zeta (-2 k+4)	\frac{\pi ^4}{36}	
+sum-zeta-2k-times-zeta-neg-2-times-k-plus-6-k-1	Sum[Times[Zeta[Times[2, k]], Zeta[Plus[Times[-2, k], 6]]], List[k, 1, 2]]	Pi^6/270		\sum _{k=1}^2 \zeta (2 k) \zeta (-2 k+6)	\frac{\pi ^6}{270}	
 odd-integers-geq-3-have-no-known-closed-form	Zeta[3]	Zeta[3]		\zeta (3)	\zeta (3)	
 zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	N[Zeta[3, Rational[-1, 2]]]	16.414398322117158		N\left[\zeta \left(3,-\frac{1}{2}\right)\right]	16.4144	
 zeta-1-2-35-12-exactly-but-at-a-negative-a-this	N[Zeta[-1, -2]]	2.9166666666666665		N[\zeta (-1,-2)]	2.91667	

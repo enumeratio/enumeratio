@@ -39,5 +39,9 @@ fibonacci-6	Properties		[Fibonacci, 6]	8	8	Wolfram MathematicalFunctionData, Fib
 fibonacci-7	Properties		[Fibonacci, 7]	13	13	Wolfram MathematicalFunctionData, Fibonacci	$F_7=13$									
 fibonacci-9	Properties		[Fibonacci, 9]	34	34	Wolfram MathematicalFunctionData, Fibonacci	$F_9=34$									
 fibonacci-neg-1	Properties		[Fibonacci, -1]	1	[Multiply, [Divide, [Sqrt, 5], 5], [Add, [Multiply, [Rational, 1, 2], [Add, -1, [Sqrt, 5]]], [Multiply, [Rational, 1, 2], [Add, 1, [Sqrt, 5]]]]]	Wolfram MathematicalFunctionData, Fibonacci	Negative index reflects: $F_{-n}=(-1)^{n+1}F_n$, so $F_{-1}=1$									
+fibonacci-1-times-fibonacci-3-minus-fibonacci-2	Properties		[Add, [Multiply, [Fibonacci, 1], [Fibonacci, 3]], [Negate, [Power, [Fibonacci, 2], 2]]]	1	1	Wolfram MathematicalFunctionData, Fibonacci, Cassini's formula										
+neg-fibonacci-0-times-fibonacci-4-plus-fibonacci	Properties		[Add, [Negate, [Multiply, [Fibonacci, 0], [Fibonacci, 4]]], [Power, [Fibonacci, 2], 2]]	1	1	Wolfram MathematicalFunctionData, Fibonacci, Catalan's identity										
+fibonacci-2-times-fibonacci-3-times-fibonacci-4	Properties		[Add, [Multiply, [Fibonacci, 2], [Fibonacci, 3], [Fibonacci, 4], [Fibonacci, 6], [Fibonacci, 7], [Fibonacci, 8]], [Power, [LucasL, 5], 2]]	13225	13225	Wolfram MathematicalFunctionData, Fibonacci, Morgado identity										
+fibonacci-0-times-fibonacci-1-times-fibonacci-3	Properties		[Multiply, [Fibonacci, 0], [Fibonacci, 1], [Fibonacci, 3], [Fibonacci, 4]]	0	0	Wolfram MathematicalFunctionData, Fibonacci, GelinâCesÃ ro identity										
 f-1000-has-209-digits-see-integerdigits	Neat examples		[Length, [IntegerDigits, [Fibonacci, 1000]]]	209			$F_{1000}$ has 209 digits. See [[IntegerDigits]]									
 they-grow-fast-f-50-already-exceeds-twelve	Neat examples		[Fibonacci, 50]	12586269025			They grow fast: $F_{50}$ already exceeds twelve billion									

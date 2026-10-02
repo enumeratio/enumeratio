@@ -27,6 +27,10 @@ bernoullib-3-0
 bernoullib-2-1			
 bernoullib-3-1			
 bernoullib-0-1-over-6			
+sum-k-plus-3-times-binomial-3-k-times-bernoullib			
+sum-1-over-k-times-1-over-neg-k-plus-3-times			
+sum-k-plus-3-times-binomial-4-k-times-bernoullib			
+sum-1-over-k-times-1-over-neg-k-plus-4-times			
 b-1-1-frac-12-is-the-other-convention-for-b-1			
 bernoulli-numbers-are-only-defined-for-n-ge-0-a	bernoulli(-1)	OverflowError: can't convert negative value to unsigned long	error
 numerators-and-denominators-grow-quickly-b-20	bernoulli(20)	-174611/330	

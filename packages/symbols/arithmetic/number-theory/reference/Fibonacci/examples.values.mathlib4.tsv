@@ -39,5 +39,9 @@ fibonacci-6	(Nat.fib 6)
 fibonacci-7	(Nat.fib 7)		
 fibonacci-9	(Nat.fib 9)		
 fibonacci-neg-1	(Nat.fib (-1))		
+fibonacci-1-times-fibonacci-3-minus-fibonacci-2	(((Nat.fib 1) * (Nat.fib 3)) + (-(((Nat.fib 2) ^ 2))))		
+neg-fibonacci-0-times-fibonacci-4-plus-fibonacci	((-(((Nat.fib 0) * (Nat.fib 4)))) + ((Nat.fib 2) ^ 2))		
+fibonacci-2-times-fibonacci-3-times-fibonacci-4			
+fibonacci-0-times-fibonacci-1-times-fibonacci-3	((Nat.fib 0) * (Nat.fib 1) * (Nat.fib 3) * (Nat.fib 4))		
 f-1000-has-209-digits-see-integerdigits			
 they-grow-fast-f-50-already-exceeds-twelve	(Nat.fib 50)	12586269025	

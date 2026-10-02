@@ -39,5 +39,9 @@ fibonacci-6	Fibonacci[6]	8		F_6	8
 fibonacci-7	Fibonacci[7]	13		F_7	13
 fibonacci-9	Fibonacci[9]	34		F_9	34
 fibonacci-neg-1	Fibonacci[-1]	1		F_{-1}	1
+fibonacci-1-times-fibonacci-3-minus-fibonacci-2	Plus[Times[Fibonacci[1], Fibonacci[3]], Minus[Power[Fibonacci[2], 2]]]	1		F_1 F_3-\left(F_2\right){}^2	1
+neg-fibonacci-0-times-fibonacci-4-plus-fibonacci	Plus[Minus[Times[Fibonacci[0], Fibonacci[4]]], Power[Fibonacci[2], 2]]	1		-\left(F_0 F_4\right)+\left(F_2\right){}^2	1
+fibonacci-2-times-fibonacci-3-times-fibonacci-4	Plus[Times[Fibonacci[2], Fibonacci[3], Fibonacci[4], Fibonacci[6], Fibonacci[7], Fibonacci[8]], Power[LucasL[5], 2]]	13225		F_2 F_3 F_4 F_6 F_7 F_8+\left(L_5\right){}^2	13225
+fibonacci-0-times-fibonacci-1-times-fibonacci-3	Times[Fibonacci[0], Fibonacci[1], Fibonacci[3], Fibonacci[4]]	0		F_0 F_1 F_3 F_4	0
 f-1000-has-209-digits-see-integerdigits	Length[IntegerDigits[Fibonacci[1000]]]	209		\text{Length}\left[\text{IntegerDigits}\left[F_{1000}\right]\right]	209
 they-grow-fast-f-50-already-exceeds-twelve	Fibonacci[50]	12586269025		F_{50}	12586269025

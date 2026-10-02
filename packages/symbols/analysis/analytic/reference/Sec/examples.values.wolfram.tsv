@@ -31,5 +31,9 @@ reciprocal-of-cos-sec-x-frac-1-cos-x	(Sec[Divide[Pi, 3]] == Divide[1, Cos[Divide
 pythagorean-identity-1-tan-2-x-sec-2-x	(Plus[1, Power[Tan[Divide[Pi, 6]], 2]] == Power[Sec[Divide[Pi, 6]], 2])	True		1+\tan ^2\left(\frac{\pi }{6}\right)=\sec ^2\left(\frac{\pi }{6}\right)	\text{True}	
 sec-1-over-10-times-pi	Sec[Times[Rational[1, 10], Pi]]	1/Sqrt[5/8 + Sqrt[5]/8]		\sec \left(\frac{1}{10} \pi \right)	\frac{1}{\sqrt{\frac{5}{8}+\frac{\sqrt{5}}{8}}}	
 sec-3-over-10-times-pi	Sec[Times[Rational[3, 10], Pi]]	1/Sqrt[5/8 - Sqrt[5]/8]		\sec \left(\frac{3}{10} \pi \right)	\frac{1}{\sqrt{\frac{5}{8}-\frac{\sqrt{5}}{8}}}	
+n-2-minus-sec-1-over-2-pow-2-times-sec-1	N[Times[Plus[2, Minus[Power[Sec[Rational[1, 2]], 2]]], Sec[1]]]	1.2984464104095252		N\left[\left(2-\sec ^2\left(\frac{1}{2}\right)\right) \sec (1)\right]	1.29845	
+n-2-times-sec-1-times-sec-1-over-2-pow-2-plus	N[Plus[Times[2, Sec[1], Power[Sec[Rational[1, 2]], 2]], Times[Plus[Times[-2, Power[Sec[Rational[1, 2]], 2]], Power[Sec[Rational[1, 2]], 4]], Power[Sec[1], 2]], Minus[Power[Sec[Rational[1, 2]], 4]]]]	-4.440892098500626*^-16		N\left[2 \sec (1) \sec ^2\left(\frac{1}{2}\right)+\left(-2 \sec ^2\left(\frac{1}{2}\right)+\sec ^4\left(\frac{1}{2}\right)\right) \sec ^2(1)-\sec ^4\left(\frac{1}{2}\right)\right]	-\text{4.440892098500626$\grave{ }$*${}^{\wedge}$-16}	
+n-sec-1-over-2-plus-1-over-2-times-pi-pow-2	N[Power[Sec[Plus[Rational[1, 2], Times[Rational[1, 2], Pi]]], 2]]	4.350685299340043		N\left[\sec ^2\left(\frac{1}{2}+\frac{1}{2} \pi \right)\right]	4.35069	
+n-2-minus-sec-2-pow-2-times-sec-4	N[Times[Plus[2, Minus[Power[Sec[2], 2]]], Sec[4]]]	5.7743992040419165		N\left[\left(2-\sec ^2(2)\right) \sec (4)\right]	5.7744	
 a-pole-cos-pi-2-0	Sec[Divide[Pi, 2]]	ComplexInfinity		\sec \left(\frac{\pi }{2}\right)	\text{ComplexInfinity}	
 sec-complexinfinity-is-indeterminate-for-the	Sec[ComplexInfinity]	Indeterminate		\sec (\text{ComplexInfinity})	\text{Indeterminate}	

@@ -34,4 +34,8 @@ lucasl-6	LucasL[6]	18		L_6	18
 lucasl-7	LucasL[7]	29		L_7	29
 lucasl-8	LucasL[8]	47		L_8	47
 lucasl-9	LucasL[9]	76		L_9	76
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-2	Sum[Times[Divide[1, LucasL[k]], Divide[1, LucasL[Plus[k, 2]]], Power[-1, k]], List[k, 1, 2]]	-17/84		\sum _{k=1}^2 \frac{1}{L_k} \frac{1}{L_{k+2}} (-1)^k	-\frac{17}{84}
+neg-lucasl-1-times-lucasl-3-plus-lucasl-2-pow-2	Plus[Minus[Times[LucasL[1], LucasL[3]]], Power[LucasL[2], 2]]	5		-\left(L_1 L_3\right)+\left(L_2\right){}^2	5
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-3	Sum[Times[Divide[1, LucasL[k]], Divide[1, LucasL[Plus[k, 2]]], Power[-1, k]], List[k, 1, 3]]	-52/231		\sum _{k=1}^3 \frac{1}{L_k} \frac{1}{L_{k+2}} (-1)^k	-\frac{52}{231}
+n-neg-lucasl-neg-1-over-2-times-lucasl-3-over-2	N[Plus[Minus[Times[LucasL[Rational[-1, 2]], LucasL[Rational[3, 2]]]], Power[LucasL[Rational[1, 2]], 2]]]	-2.220446049250313*^-16		N\left[-\left(L_{-\frac{1}{2}} L_{\frac{3}{2}}\right)+\left(L_{\frac{1}{2}}\right){}^2\right]	-\text{2.220446049250313$\grave{ }$*${}^{\wedge}$-16}
 l-30-already-tops-1-8-million-growing-at-the	LucasL[30]	1860498		L_{30}	1860498

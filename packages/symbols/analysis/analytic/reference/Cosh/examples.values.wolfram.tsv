@@ -32,3 +32,7 @@ cosh-1-over-8-times-i-times-pi	Cosh[Times[Complex[0, Rational[1, 8]], Pi]]	Cos[P
 cosh-1-over-7-times-i-times-pi	Cosh[Times[Complex[0, Rational[1, 7]], Pi]]	Cos[Pi/7]		\cosh ((\text{Rational}[1,7] i) \pi )	\cos \left(\frac{\pi }{7}\right)	
 cosh-1-over-6-times-i-times-pi	Cosh[Times[Complex[0, Rational[1, 6]], Pi]]	Sqrt[3]/2		\cosh ((\text{Rational}[1,6] i) \pi )	\frac{\sqrt{3}}{2}	
 cosh-2-over-9-times-i-times-pi	Cosh[Times[Complex[0, Rational[2, 9]], Pi]]	Cos[(2*Pi)/9]		\cosh ((\text{Rational}[2,9] i) \pi )	\cos \left(\frac{2 \pi }{9}\right)	
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	N[Power[Plus[Sinh[Rational[1, 2]], Cosh[Rational[1, 2]]], 2]]	2.7182818284590455		N\left[\left(\sinh \left(\frac{1}{2}\right)+\cosh \left(\frac{1}{2}\right)\right)^2\right]	2.71828	
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	N[Power[Plus[Minus[Sinh[Rational[1, 2]]], Cosh[Rational[1, 2]]], 2]]	0.36787944117144217		N\left[\left(-\sinh \left(\frac{1}{2}\right)+\cosh \left(\frac{1}{2}\right)\right)^2\right]	0.367879	
+n-neg-2-times-cosh-1-times-cosh-1-over-2-pow-2	N[Plus[Times[-2, Cosh[1], Power[Cosh[Rational[1, 2]], 2]], Times[2, Power[Cosh[Rational[1, 2]], 2]], Power[Cosh[1], 2]]]	1.0000000000000004		N\left[-2 \cosh (1) \cosh ^2\left(\frac{1}{2}\right)+2 \cosh ^2\left(\frac{1}{2}\right)+\cosh ^2(1)\right]	1.	
+n-cosh-1-over-2-plus-1-over-2-times-i-times-pi	N[Power[Cosh[Plus[Rational[1, 2], Times[Complex[0, Rational[1, 2]], Pi]]], 2]]	-0.2715403174076219		N\left[\cosh ^2\left(\frac{1}{2}+(\text{Rational}[1,2] i) \pi \right)\right]	-0.27154	

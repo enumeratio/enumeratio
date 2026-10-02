@@ -46,4 +46,6 @@ abs-neg-1-plus-neg-sqrt-3-times-i	fabs((-1 + mpc(0, (-sqrt(3)))))
 abs-1-plus-neg-sqrt-3-times-i	fabs((1 + mpc(0, (-sqrt(3)))))	
 abs-sqrt-3-minus-i	fabs((sqrt(3) + mpc(0, -1)))	
 abs-2	fabs(2)	
+abs-1-over-2-pow-2	((fabs((mpf(1)/2)))**2)	
+abs-2-pow-2	((fabs(2))**2)	
 doesn-t-factor-constants-out-of-a-symbolic		

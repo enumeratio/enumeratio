@@ -31,6 +31,10 @@ pythagorean-identity-1-cot-2-x-csc-2-x	(Plus[1, Power[Cot[Divide[Pi, 6]], 2]] ==
 cot-1-over-10-times-pi	Cot[Times[Rational[1, 10], Pi]]	Sqrt[5 + 2*Sqrt[5]]		\cot \left(\frac{1}{10} \pi \right)	\sqrt{5+2 \sqrt{5}}	
 cot-3-over-10-times-pi	Cot[Times[Rational[3, 10], Pi]]	Sqrt[5 - 2*Sqrt[5]]		\cot \left(\frac{3}{10} \pi \right)	\sqrt{5-2 \sqrt{5}}	
 cot-3-over-8-times-pi	Cot[Times[Rational[3, 8], Pi]]	Tan[Pi/8]		\cot \left(\frac{3}{8} \pi \right)	\tan \left(\frac{\pi }{8}\right)	
+n-cot-1-times-cot-1-over-2	N[Times[Cot[1], Cot[Rational[1, 2]]]]	1.1753426496700217		N\left[\cot (1) \cot \left(\frac{1}{2}\right)\right]	1.17534	
+n-cot-1-over-2-plus-1-over-2-times-pi	N[Cot[Plus[Rational[1, 2], Times[Rational[1, 2], Pi]]]]	-0.5463024898437905		N\left[\cot \left(\frac{1}{2}+\frac{1}{2} \pi \right)\right]	-0.546302	
+n-cot-2-times-cot-4	N[Times[Cot[2], Cot[4]]]	-0.3952747814684811		N[\cot (2) \cot (4)]	-0.395275	
+n-cot-2-plus-1-over-2-times-pi	N[Cot[Plus[2, Times[Rational[1, 2], Pi]]]]	2.185039863261519		N\left[\cot \left(2+\frac{1}{2} \pi \right)\right]	2.18504	
 a-pole-sin-0-0	Cot[0]	ComplexInfinity		\cot (0)	\text{ComplexInfinity}	
 not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	Cot[Divide[Pi, 2]]	0		\cot \left(\frac{\pi }{2}\right)	0	
 cot-complexinfinity-is-indeterminate-for-the	Cot[ComplexInfinity]	Indeterminate		\cot (\text{ComplexInfinity})	\text{Indeterminate}	

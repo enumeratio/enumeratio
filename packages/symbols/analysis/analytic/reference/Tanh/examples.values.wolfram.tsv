@@ -30,3 +30,7 @@ tanh-1-over-8-times-i-times-pi	Tanh[Times[Complex[0, Rational[1, 8]], Pi]]	I*Tan
 tanh-1-over-7-times-i-times-pi	Tanh[Times[Complex[0, Rational[1, 7]], Pi]]	I*Tan[Pi/7]		\tanh ((\text{Rational}[1,7] i) \pi )	i \tan \left(\frac{\pi }{7}\right)
 tanh-1-over-6-times-i-times-pi	Tanh[Times[Complex[0, Rational[1, 6]], Pi]]	I/Sqrt[3]		\tanh ((\text{Rational}[1,6] i) \pi )	\frac{i}{\sqrt{3}}
 tanh-2-over-9-times-i-times-pi	Tanh[Times[Complex[0, Rational[2, 9]], Pi]]	I*Tan[(2*Pi)/9]		\tanh ((\text{Rational}[2,9] i) \pi )	i \tan \left(\frac{2 \pi }{9}\right)
+n-1-plus-tanh-1-over-2-pow-2-times-tanh-1	N[Times[Plus[1, Power[Tanh[Rational[1, 2]], 2]], Tanh[1]]]	0.9242343145200195		N\left[\left(1+\tanh ^2\left(\frac{1}{2}\right)\right) \tanh (1)\right]	0.924234
+n-tanh-1-over-2-plus-1-over-2-times-i-times-pi	N[Tanh[Plus[Rational[1, 2], Times[Complex[0, Rational[1, 2]], Pi]]]]	2.163953413738653		N\left[\tanh \left(\frac{1}{2}+(\text{Rational}[1,2] i) \pi \right)\right]	2.16395
+n-1-plus-tanh-2-pow-2-times-tanh-4	N[Times[Plus[1, Power[Tanh[2], 2]], Tanh[4]]]	1.9280551601516336		N\left[\left(1+\tanh ^2(2)\right) \tanh (4)\right]	1.92806
+n-tanh-2-plus-1-over-2-times-i-times-pi	N[Tanh[Plus[2, Times[Complex[0, Rational[1, 2]], Pi]]]]	1.0373147207275482		N[\tanh (2+(\text{Rational}[1,2] i) \pi )]	1.03731

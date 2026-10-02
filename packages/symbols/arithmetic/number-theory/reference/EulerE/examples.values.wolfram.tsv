@@ -20,3 +20,5 @@ eulere-2-0	EulerE[2, 0]	0	E_2(0)	0
 eulere-1-1	EulerE[1, 1]	1/2	E_1(1)	\frac{1}{2}
 eulere-2-1	EulerE[2, 1]	0	E_2(1)	0
 eulere-0-1	EulerE[0, 1]	1	E_0(1)	1
+eulere-2-1-over-2-plus-eulere-2-3-over-2	Plus[EulerE[2, Rational[1, 2]], EulerE[2, Rational[3, 2]]]	1/2	E_2\left(\frac{1}{2}\right)+E_2\left(\frac{3}{2}\right)	\frac{1}{2}
+eulere-2-2-plus-eulere-2-3	Plus[EulerE[2, 2], EulerE[2, 3]]	8	E_2(2)+E_2(3)	8

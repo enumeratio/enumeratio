@@ -1,12 +1,13 @@
 // Wolfram's curated data about its own functions, fetched from a kernel: the documentation's
-// examples (WolframLanguageData), the function identities (MathematicalFunctionData) and the
-// formula collection (FormulaData). Each source is one entity type and a list of properties;
-// the kernel prints one JSON line per entity, and expressions come back as held FullForm, never
-// evaluated, so an example's input is what the documentation typed.
+// examples (WolframLanguageData), the function identities (MathematicalFunctionData), those
+// identities instantiated at sample points, and the formula collection (FormulaData). Each
+// source is one entity type and a list of properties; the kernel prints one JSON line per
+// entity, and expressions come back as held FullForm, never evaluated, so an example's input is
+// what the documentation typed.
 
 import { runBounded } from "./bounded.ts";
 
-export type WolframDataSource = "language" | "function" | "formula";
+export type WolframDataSource = "language" | "function" | "relation" | "formula";
 
 /** One documented example group: its inputs as held FullForm (`HoldComplete[…]`), in order,
  * and the caption text beside it — Wolfram's prose, kept as a hint, never copied into a record. */
@@ -35,13 +36,28 @@ export interface FunctionRecord {
   readonly particularValues: readonly IdentityInstance[];
 }
 
-/** FormulaData: one formula, raw. */
+/** One instance of a free-variable identity (a functional equation, a symmetry, a named
+ * identity): the property it came from and its place there; `label` names a named identity. */
+export interface RelationInstance extends IdentityInstance {
+  readonly property: string;
+  readonly index: number;
+  readonly label?: string;
+}
+
+/** MathematicalFunctionData's free-variable identities, each instantiated at sample points. */
+export interface RelationRecord {
+  readonly name: string;
+  readonly relations: readonly RelationInstance[];
+}
+
+/** FormulaData: one formula, raw. Every one is a physical or applied formula over
+ * `QuantityVariable`s; none states an identity about a function. */
 export interface FormulaRecord {
   readonly name: string;
   readonly formula: string;
 }
 
-export type WolframDataRecord = LanguageRecord | FunctionRecord | FormulaRecord;
+export type WolframDataRecord = LanguageRecord | FunctionRecord | RelationRecord | FormulaRecord;
 
 /** The MathematicalFunctionData properties kept raw; `ParticularValues` is also instantiated. */
 export const FUNCTION_PROPERTIES = [
@@ -59,7 +75,7 @@ export const FUNCTION_PROPERTIES = [
 // Entity lookups go over the network on a cold kernel; a batch is small enough that one slow
 // fetch doesn't cost the rest, and each run is capped like every other kernel run. A function's
 // identities take longest (every one instantiated), so they go a few at a time.
-const BATCH: Record<WolframDataSource, number> = { language: 20, function: 4, formula: 50 };
+const BATCH: Record<WolframDataSource, number> = { language: 20, function: 4, relation: 4, formula: 50 };
 const TIMEOUT_MS = 600_000;
 /** Per function, and per right side it evaluates: past these the record goes without. */
 const FUNCTION_SECONDS = 90;
@@ -134,6 +150,65 @@ Do[
   {n, ${list(names)}}]`;
 }
 
+/** The MathematicalFunctionData properties holding free-variable identities. */
+export const RELATION_PROPERTIES = ["FunctionalEquations", "ReflectionSymmetries", "NamedIdentities"] as const;
+/** Sample values for a relation's variables, tried in order: non-integers first, so an
+ * instance says more than a particular value does. */
+const RELATION_POINTS = "{1/2, 2, 1/3, 3, 3/2, 1 + I, 5/2, -1/2, 1, 4}";
+/** Per relation: the tuples tried, the instances kept, and the seconds spent. */
+const RELATION_TRIES = 30;
+const RELATION_INSTANCES = 2;
+const RELATION_SECONDS = 20;
+
+/** Wolfram source printing each function's free-variable identities as a `RelationRecord`.
+ * A relation is instantiated at tuples of `RELATION_POINTS` its condition admits, and an
+ * instance is kept only when Wolfram's right side is a closed form (no sum, integral or limit
+ * left), its left side is more than the function at plain numbers (a particular value), and
+ * the two sides agree to 20 digits there: a branch cut or a pole drops the point, not the
+ * relation. One whose parameter is called (\[FormalF][z]) characterises a function and
+ * is left out; \[Proportional] and other non-equations too. A bound variable (\[FormalK] in a
+ * product) prints as its plain letter. */
+export function relationCode(names: readonly string[]): string {
+  const props = `{${RELATION_PROPERTIES.map((p) => JSON.stringify(p)).join(", ")}}`;
+  return `${PRELUDE}
+strip[x_] := x //. Inactive[h_] :> h;
+arithmetic[x_] := x /. Inactive[h : (Plus | Times | Power | Subtract | Divide | Minus | Rational)] :> h;
+plain[s_String] := StringReplace[s, "\\\\[Formal" ~~ c : LetterCharacter ~~ "]" :> ToLowerCase[c]];
+points = ${RELATION_POINTS};
+unevaluated = Integrate | Sum | Product | Limit | Inactive | SeriesData | Hold | $Aborted | Derivative | D;
+holds[l_, r_] := TimeConstrained[Quiet@With[{d = N[strip[l] - r, 30], s = N[r, 30]},
+  NumericQ[d] && NumericQ[s] && Abs[d] <= 10^-20 Max[1, Abs[s]]], 4, False];
+(* The function at plain numbers is a particular value, whichever identity it came from. *)
+particular[l_] := MatchQ[strip[HoldComplete @@ {l}], HoldComplete[_[(_Integer | _Rational | _Complex) ...]]];
+relation[f_Function, t_List] := Module[{b = Quiet[f @@ t], cond = True},
+  b = b /. Inactive[ConditionalExpression][x_, c_] :> (cond = c; x);
+  b = b /. ConditionalExpression[x_, c_] :> (cond = c; x);
+  If[!TrueQ[Quiet[Activate[cond]]], Return[Nothing]];
+  Replace[b, {
+    Inactive[Equal][l_, r_] :> With[{lhs = arithmetic[l], rhs = Quiet[TimeConstrained[ToRadicals[Activate[r]], ${RHS_SECONDS}, $Aborted]]},
+      If[FreeQ[rhs, unevaluated] && !particular[lhs] && holds[lhs, rhs],
+        <|"lhs" -> plain[fullform[strip[HoldComplete @@ {lhs}]]], "rhs" -> plain[fullform[HoldComplete @@ {rhs}]]|>, Nothing]],
+    _ -> Nothing}]];
+relations[f_Function] /; !FreeQ[Last[f], (Alternatives @@ First[f])[___]] := {};
+(* The first tuples of points, in Tuples' order, without building them all: a relation can
+   have a dozen parameters (HypergeometricPFQ). *)
+relations[f_Function] := Module[{found = {}, k = Length[First[f]], n = Length[points]},
+  TimeConstrained[
+    Do[If[Length[found] < ${RELATION_INSTANCES}, found = Join[found, {relation[f, points[[1 + IntegerDigits[j, n, k]]]]}]],
+      {j, 0, Min[${RELATION_TRIES}, n^k] - 1}],
+    ${RELATION_SECONDS}];
+  found];
+relations[_] := {};
+tagged[p_, i_, label_String -> f_Function] := Append[#, "label" -> label] & /@ tagged[p, i, f];
+tagged[p_, i_, f_] := Join[#, <|"property" -> p, "index" -> i|>] & /@ relations[f];
+Do[
+  With[{vals = Quiet[EntityValue[Entity["MathematicalFunction", n], ${props}]]},
+    If[ListQ[vals],
+      emit[n, <|"name" -> n, "relations" -> Flatten[MapThread[Function[{p, v}, If[ListQ[v], MapIndexed[tagged[p, First[#2], #1] &, v], {}]], {${props}, vals}]]|>],
+      emit[n, <|"name" -> n, "missing" -> True|>]]],
+  {n, ${list(names)}}]`;
+}
+
 /** Wolfram source printing each formula as a `FormulaRecord`. */
 export function formulaCode(names: readonly string[]): string {
   return `${PRELUDE}
@@ -145,6 +220,7 @@ export function namesCode(source: WolframDataSource): string {
   const all = {
     language: `CanonicalName /@ EntityList["WolframLanguageSymbol"]`,
     function: `CanonicalName /@ EntityList["MathematicalFunction"]`,
+    relation: `CanonicalName /@ EntityList["MathematicalFunction"]`,
     formula: `Select[FormulaData[], StringQ]`,
   }[source];
   return `Scan[Print["<<", #, ">>"] &, ${all}]`;
@@ -153,6 +229,7 @@ export function namesCode(source: WolframDataSource): string {
 const CODE: Record<WolframDataSource, (names: readonly string[]) => string> = {
   language: languageCode,
   function: functionCode,
+  relation: relationCode,
   formula: formulaCode,
 };
 

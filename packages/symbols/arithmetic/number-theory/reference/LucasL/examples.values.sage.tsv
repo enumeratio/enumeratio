@@ -34,4 +34,8 @@ lucasl-6	lucas_number2(6, 1, -1)
 lucasl-7	lucas_number2(7, 1, -1)		
 lucasl-8	lucas_number2(8, 1, -1)		
 lucasl-9	lucas_number2(9, 1, -1)		
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-2			
+neg-lucasl-1-times-lucasl-3-plus-lucasl-2-pow-2	((-(lucas_number2(1, 1, -1) * lucas_number2(3, 1, -1))) + ((lucas_number2(2, 1, -1))^2))		
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-3			
+n-neg-lucasl-neg-1-over-2-times-lucasl-3-over-2	N(((-(lucas_number2((-1/2), 1, -1) * lucas_number2((3/2), 1, -1))) + ((lucas_number2((1/2), 1, -1))^2)))		
 l-30-already-tops-1-8-million-growing-at-the	lucas_number2(30, 1, -1)	1860498	

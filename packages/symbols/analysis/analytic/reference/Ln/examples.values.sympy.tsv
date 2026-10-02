@@ -43,3 +43,7 @@ ln-exponentiale-pow-n	log((S(E)**Symbol("n")))
 inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
 product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	
 powerexpand-splits-a-logarithm-of-a-product			
+n-ln-2-pow-2	N((S(log(2))**2), 30)		
+n-ln-2-pow-3	N((S(log(2))**3), 30)		
+n-ln-2-pow-4	N((S(log(2))**4), 30)		
+n-ln-2-pow-5	N((S(log(2))**5), 30)		

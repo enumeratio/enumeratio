@@ -111,4 +111,8 @@ polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, (S(E)**((0 + Rational(1, 
 polylog-3-exponentiale-pow-neg-1-over-3-times-i	polylog(3, (S(E)**((0 + Rational(-1, 3)*I) * pi)))		
 polylog-3-exponentiale-pow-2-over-3-times-i	polylog(3, (S(E)**((0 + Rational(2, 3)*I) * pi)))		
 functionexpand-polylog-2-exponentiale-pow-1-over			
+neg-polylog-2-neg-1-plus-polylog-2-1-over-2	((-polylog(2, -1)) + polylog(2, Rational(1, 2)))		
+neg-1-over-2-times-polylog-2-neg-1-over-3-plus	((Rational(-1, 2) * polylog(2, Rational(-1, 3))) + polylog(2, -1) + polylog(2, Rational(1, 3)))		
+neg-2-times-polylog-2-neg-1-over-2-plus-polylog	((-2 * (polylog(2, Rational(-1, 2)) + polylog(2, Rational(1, 2)))) + polylog(2, Rational(1, 4)))		
+polylog-2-neg-1-plus-polylog-2-0-plus-polylog-2	(polylog(2, -1) + polylog(2, 0) + polylog(2, Rational(1, 2)))		
 an-exact-argument-stays-symbolic-under-plain	polylog(2, Rational(1, 2))	-log(2)**2/2 + pi**2/12	

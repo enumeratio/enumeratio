@@ -8,3 +8,5 @@ ellipticf-0-0	EllipticF[0, 0]	0	F(0|0)	0
 ellipticf-jacobiamplitude-0-0-0	EllipticF[JacobiAmplitude[0, 0], 0]	0	F(\text{am}(0|0)|0)	0	
 ellipticf-jacobiamplitude-0-1-1	EllipticF[JacobiAmplitude[0, 1], 1]	0	F(\text{am}(0|1)|1)	0	
 solve-ellipticf-z-m-pow-3-plus-ellipticf-z-m-eq	Solve[(Plus[Power[EllipticF[z, m], 3], EllipticF[z, m]] == x), z]				
+n-2-times-ellipticf-1-over-2-1-over-2	N[Times[2, EllipticF[Rational[1, 2], Rational[1, 2]]]]	1.0209342712560094	N\left[2 F\left(\frac{1}{2}|\frac{1}{2}\right)\right]	1.02093	
+n-ellipticf-1-over-3-1-over-2-plus-ellipticf-1	N[Plus[EllipticF[Rational[1, 3], Rational[1, 2]], EllipticF[Rational[1, 2], Rational[1, 2]]]]	0.8468946341655776	N\left[F\left(\frac{1}{3}|\frac{1}{2}\right)+F\left(\frac{1}{2}|\frac{1}{2}\right)\right]	0.846895	

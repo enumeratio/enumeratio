@@ -35,5 +35,9 @@ nthprime-15	Properties		[NthPrime, 15]	47	47	Wolfram MathematicalFunctionData, P
 nthprime-16	Properties		[NthPrime, 16]	53	53	Wolfram MathematicalFunctionData, Prime	The sixteenth prime		
 nthprime-17	Properties		[NthPrime, 17]	59	59	Wolfram MathematicalFunctionData, Prime	Twin to 61		
 nthprime-18	Properties		[NthPrime, 18]	61	61	Wolfram MathematicalFunctionData, Prime	The eighteenth prime		
+sin-pi-times-1-over-nthprime-2-times-1-plus	Properties		[Add, [Power, [Sin, [Multiply, Pi, [Divide, 1, [NthPrime, 2]], [Add, 1, [Gamma, [NthPrime, 2]]]]], 2], [Power, [Sin, [Multiply, Pi, [NthPrime, 2]]], 2]]	0	0	Wolfram MathematicalFunctionData, Prime, FunctionalEquations			
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-i	Properties		[Multiply, [Divide, 1, [Add, -1, [Power, ExponentialE, [Multiply, [Complex, 0, -2], Pi, [Divide, 1, [NthPrime, 2]]]]]], [Add, -1, [Power, ExponentialE, [Multiply, [Complex, 0, 2], Pi, [Divide, 1, [NthPrime, 2]], [Gamma, [NthPrime, 2]]]]]]	1	1	Wolfram MathematicalFunctionData, Prime, FunctionalEquations			
+sin-pi-times-1-over-nthprime-3-times-1-plus	Properties		[Add, [Power, [Sin, [Multiply, Pi, [Divide, 1, [NthPrime, 3]], [Add, 1, [Gamma, [NthPrime, 3]]]]], 2], [Power, [Sin, [Multiply, Pi, [NthPrime, 3]]], 2]]	0	0	Wolfram MathematicalFunctionData, Prime, FunctionalEquations			
+1-over-neg-1-plus-exponentiale-pow-neg-2-times-2	Properties		[Multiply, [Divide, 1, [Add, -1, [Power, ExponentialE, [Multiply, [Complex, 0, -2], Pi, [Divide, 1, [NthPrime, 3]]]]]], [Add, -1, [Power, ExponentialE, [Multiply, [Complex, 0, 2], Pi, [Divide, 1, [NthPrime, 3]], [Gamma, [NthPrime, 3]]]]]]	1	1	Wolfram MathematicalFunctionData, Prime, FunctionalEquations			
 n-must-be-a-positive-integer-compute-engine	Possible issues		[NthPrime, 0]	[NthPrime, 0]			n must be a positive integer; compute-engine leaves NthPrime(0) unevaluated		
 the-1000th-prime	Neat examples		[NthPrime, 1000]	7919			The 1000th prime		

@@ -15,6 +15,8 @@ recurrence-n-n-n-1	equal(factorial(n(5)), (n(5) * factorial(n(4))))	true
 extends-to-non-integers-via-the-gamma-function	factorial(rational(n(1), n(2)))	panic: an integer, not 1/2	error
 n-gamma-n-1-see-gamma	equal(factorial(n(5)), gamma(n(6)))	true	
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
+sum-k-factorial-pow-neg-4-times-k-plus-2			
+sum-k-factorial-pow-neg-4-times-k-plus-3			
 negative-integers-are-poles-of-the-gamma	factorial(n(-1))	panic: a non-negative integer	error
 factorials-grow-fast-20-already-exceeds-2-times	factorial(n(20))	2.43290200817664e18	
 30-has-33-digits-and-ends-in-seven-zeros	factorial(n(30))	2.6525285981219103e32	

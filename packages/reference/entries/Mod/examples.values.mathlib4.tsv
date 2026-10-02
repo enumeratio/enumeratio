@@ -72,6 +72,10 @@ neg-27-over-10-mod-23-over-5	(((((-27) : ℚ) / 10) : ℤ) % ((23 : ℚ) / 5))
 1-mod-1	((1 : ℤ) % 1)		
 15-mod-7	((15 : ℤ) % 7)		
 pi-mod-exponentiale			
+2-pow-totient-3-mod-3	(((2 ^ (Nat.totient 3)) : ℤ) % 3)		
+1-plus-neg-1-plus-nthprime-2-factorial-mod			
+2-minus-jacobisymbol-2-3-mod-3			
+1-plus-neg-1-plus-nthprime-3-factorial-mod			
 division-by-a-0-modulus-yields-nan-rather-than	((5 : ℤ) % 0)	5	inconclusive
 periodicity-with-a-zero-modulus-on-one-side	(decide (((35 : ℤ) % 13) = (((17 + (3 * 5)) : ℤ) % 0)))		
 rounding-ties-to-even-means-1-and-1-both-appear			

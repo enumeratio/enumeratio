@@ -34,3 +34,7 @@ sinh-1-over-8-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 8]], Pi]]	I*Sin
 sinh-1-over-7-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 7]], Pi]]	I*Sin[Pi/7]		\sinh ((\text{Rational}[1,7] i) \pi )	i \sin \left(\frac{\pi }{7}\right)	
 sinh-1-over-6-times-i-times-pi	Sinh[Times[Complex[0, Rational[1, 6]], Pi]]	I/2		\sinh ((\text{Rational}[1,6] i) \pi )	\frac{i}{2}	
 sinh-2-over-9-times-i-times-pi	Sinh[Times[Complex[0, Rational[2, 9]], Pi]]	I*Sin[(2*Pi)/9]		\sinh ((\text{Rational}[2,9] i) \pi )	i \sin \left(\frac{2 \pi }{9}\right)	
+neg-2-times-2-times-sinh-1-over-2-pow-2-plus-2	Plus[Times[-2, Plus[Times[2, Power[Sinh[Rational[1, 2]], 2]], Times[2, Power[Sinh[Rational[1, 2]], 4]]], Power[Sinh[1], 2]], Power[Sinh[1], 4]]	-2*(2*Sinh[1/2]^2 + 2*Sinh[1/2]^4)*Sinh[1]^2 + Sinh[1]^4		-2 \left(2 \sinh ^2\left(\frac{1}{2}\right)+2 \sinh ^4\left(\frac{1}{2}\right)\right) \sinh ^2(1)+\sinh ^4(1)	\sinh ^4(1)-2 \left(2 \sinh ^4\left(\frac{1}{2}\right)+2 \sinh ^2\left(\frac{1}{2}\right)\right) \sinh ^2(1)	
+n-sinh-1-over-2-plus-cosh-1-over-2-pow-2	N[Power[Plus[Sinh[Rational[1, 2]], Cosh[Rational[1, 2]]], 2]]	2.7182818284590455		N\left[\left(\sinh \left(\frac{1}{2}\right)+\cosh \left(\frac{1}{2}\right)\right)^2\right]	2.71828	
+n-neg-sinh-1-over-2-plus-cosh-1-over-2-pow-2	N[Power[Plus[Minus[Sinh[Rational[1, 2]]], Cosh[Rational[1, 2]]], 2]]	0.36787944117144217		N\left[\left(-\sinh \left(\frac{1}{2}\right)+\cosh \left(\frac{1}{2}\right)\right)^2\right]	0.367879	
+n-sinh-1-pow-2	N[Power[Sinh[1], 2]]	1.3810978455418155		N\left[\sinh ^2(1)\right]	1.3811	

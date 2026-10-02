@@ -56,6 +56,10 @@ angle-addition-formula
 power-reduction-cos-2-x-frac-1-cos-2x-2			
 euler-s-formula-cos-x-frac-e-ix-e-ix-2			
 cos-3-over-10-times-pi	cos((rational(n(3), n(10)) * x(std::f64::consts::PI)))		
+integrate-cos-t-pow-2-t-0-1-over-2-times-pi			
+product-neg-cos-1-over-4-times-pi-times-2k-minus			
+integrate-cos-t-pow-3-t-0-1-over-2-times-pi			
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2			
 as-with-sin-a-non-special-numeric-argument-stays	cos(n(2))	-0.4161468365471424	
 pi-24-is-past-the-automatic-special-angle-table	cos((rational(n(1), n(24)) * x(std::f64::consts::PI)))	0.9914448613738104	
 cos-complexinfinity-is-indeterminate-for-the			

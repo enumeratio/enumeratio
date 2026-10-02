@@ -15,6 +15,8 @@ recurrence-n-n-n-1	(decide ((Nat.factorial 5) = (5 * (Nat.factorial 4))))	true
 extends-to-non-integers-via-the-gamma-function	(Nat.factorial ((1 : ℚ) / 2))	Type mismatch	error
 n-gamma-n-1-see-gamma			
 the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e			
+sum-k-factorial-pow-neg-4-times-k-plus-2			
+sum-k-factorial-pow-neg-4-times-k-plus-3			
 negative-integers-are-poles-of-the-gamma	(Nat.factorial (-1))	failed to synthesize instance of type class	error
 factorials-grow-fast-20-already-exceeds-2-times	(Nat.factorial 20)	2432902008176640000	
 30-has-33-digits-and-ends-in-seven-zeros	(Nat.factorial 30)		

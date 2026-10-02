@@ -12,4 +12,6 @@ integrate-diracdelta-p-pow-2-plus-q-pow-2-minus	Applications	triage	[Integrate, 
 fouriertransform-diracdelta-y-y-x	Properties		[FourierTransform, [DiracDelta, y], y, x]	[Sqrt, [Divide, 1, [Multiply, 2, Pi]]]			Variable names do not matter; still constant		
 diracdelta-1	Properties		[DiracDelta, 1]	0	0	Wolfram MathematicalFunctionData, DiracDelta	Zero at any nonzero real, however far out		
 laplacetransform-diracdelta-x-x-s	Properties	triage	[LaplaceTransform, [DiracDelta, x], x, s]	1				emit	now emits cleanly (defined-names scalar-type fix / Integers constant / Reduce-Fold mapping, or was already fine) — leave for the next oracle scan to produce a real verdict.
+diracdelta-0-times-diracdelta-3-over-2	Properties		[Multiply, [DiracDelta, 0], [DiracDelta, [Rational, 3, 2]]]	0	0	Wolfram MathematicalFunctionData, DiracDelta, FunctionalEquations			
+diracdelta-0-times-diracdelta-neg-1-over-6	Properties		[Multiply, [DiracDelta, 0], [DiracDelta, [Rational, -1, 6]]]	0	0	Wolfram MathematicalFunctionData, DiracDelta, FunctionalEquations			
 diracdelta-neg-1-minus-2-times-exponentiale	Possible issues		[DiracDelta, [Add, -1, [Multiply, -2, ExponentialE], [Negate, [Power, ExponentialE, 2]], [Power, ExponentialE, [Negate, [Power, ExponentialE, [Multiply, 2, ExponentialE]]]], [Power, [Add, 1, ExponentialE], 2]]]	0					

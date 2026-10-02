@@ -20,3 +20,5 @@ eulere-2-0	Properties		[EulerE, 2, 0]	0	0	Wolfram MathematicalFunctionData, Eule
 eulere-1-1	Properties		[EulerE, 1, 1]	[Rational, 1, 2]	[Rational, 1, 2]	Wolfram MathematicalFunctionData, EulerE:Polynomial	$E_1(1)=\tfrac12$, symmetric to $E_1(0)$
 eulere-2-1	Properties		[EulerE, 2, 1]	0	0	Wolfram MathematicalFunctionData, EulerE:Polynomial	$E_2(1)=0$
 eulere-0-1	Properties		[EulerE, 0, 1]	1	1	Wolfram MathematicalFunctionData, EulerE:Polynomial	$E_0(x)=1$ for every $x$
+eulere-2-1-over-2-plus-eulere-2-3-over-2	Properties		[Add, [EulerE, 2, [Rational, 1, 2]], [EulerE, 2, [Rational, 3, 2]]]	[Rational, 1, 2]	[Rational, 1, 2]	Wolfram MathematicalFunctionData, EulerE:Polynomial, FunctionalEquations	
+eulere-2-2-plus-eulere-2-3	Properties		[Add, [EulerE, 2, 2], [EulerE, 2, 3]]	8	8	Wolfram MathematicalFunctionData, EulerE:Polynomial, FunctionalEquations	

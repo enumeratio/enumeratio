@@ -46,4 +46,6 @@ abs-neg-1-plus-neg-sqrt-3-times-i
 abs-1-plus-neg-sqrt-3-times-i			
 abs-sqrt-3-minus-i			
 abs-2	abs(n(2))		
+abs-1-over-2-pow-2	power(abs(rational(n(1), n(2))), n(2))		
+abs-2-pow-2	power(abs(n(2)), n(2))		
 doesn-t-factor-constants-out-of-a-symbolic			

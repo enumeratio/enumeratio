@@ -7,7 +7,9 @@
 //   node packages/reference/scripts/farm-wolfram-data.ts --refresh Zeta    refetch these names
 //
 // Sources: `language` (WolframLanguageData's documentation examples), `function`
-// (MathematicalFunctionData's identities), `formula` (FormulaData, raw; every formula).
+// (MathematicalFunctionData's identities), `relation` (its free-variable identities,
+// instantiated at sample points), `formula` (FormulaData, raw; every formula -- all physical
+// or applied, none about a function, so nothing adopts them).
 
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { parseArgs } from "node:util";

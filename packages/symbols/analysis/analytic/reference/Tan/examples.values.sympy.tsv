@@ -51,6 +51,10 @@ sin-x-cos-x-should-simplify-to-tan-x-simplify
 rewritten-in-exponentials			
 tan-3-over-10-times-pi	tan((Rational(3, 10) * pi))		
 tan-3-over-8-times-pi	tan((Rational(3, 8) * pi))		
+n-1-minus-tan-1-over-2-pow-2-times-tan-1	N(((1 + (-(S(tan(Rational(1, 2)))**2))) * tan(1)), 30)		
+n-tan-1-over-2-plus-1-over-2-times-pi	N(tan((Rational(1, 2) + (Rational(1, 2) * pi))), 30)		
+n-1-minus-tan-2-pow-2-times-tan-4	N(((1 + (-(S(tan(2))**2))) * tan(4)), 30)		
+n-tan-2-plus-1-over-2-times-pi	N(tan((2 + (Rational(1, 2) * pi))), 30)		
 a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan((S(pi) / 2))	zoo	
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(1)	tan(1)	
 a-pole-at-negative-pi-over-2-too	tan((S(pi) / -2))	zoo	
