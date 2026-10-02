@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { afterAll, expect, test } from "vite-plus/test";
-import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
+import { conventionalLatexDictionary, withStringsWrapped } from "../src/conventional-latex.ts";
 
 // Conventional spellings for native compute-engine heads
 // (old-repo issue #376): `LCM`/`MatrixRank`/`Erf` under `\operatorname{...}`, `Zeta` under
@@ -127,3 +127,21 @@ for (const json of UNCHANGED) {
     expect(ce.box(json as never).latex).toEqual(bare.box(json as never).latex);
   });
 }
+
+test("a power whose base is written as an inline root keeps a single superscript", () => {
+  const power = ["Power", 2, ["Multiply", ["Rational", 1, 2], ["Add", 1, "x"]]];
+  // As a matrix entry's factor compute-engine writes the base inline, 2^{1/2}.
+  const entry = ["List", ["List", ["Multiply", ["Rational", 1, 2], power]]];
+  expect(bare.box(entry as never, { form: "raw" }).latex).toContain("2^{1/2}^{1+x}");
+  expect(ce.box(entry as never, { form: "raw" }).latex).not.toMatch(/\^\{[^{}]*\}\^\{/);
+  expect(ce.box(power as never, { form: "raw" }).latex).toBe(bare.box(power as never, { form: "raw" }).latex);
+});
+
+test("a string's TeX specials are escaped once wrapped for it", () => {
+  const latex = (json: unknown) => ce.box(withStringsWrapped(json as never) as never, { form: "raw" }).latex;
+  expect(latex("'a#b'")).toBe("\\text{a\\#b}");
+  expect(latex(["List", "'{'", "'\\'", "'^'", "'~'"])).toBe(
+    "\\bigl\\lbrack\\text{\\{}, \\text{\\textbackslash{}}, \\text{\\textasciicircum{}}, \\text{\\textasciitilde{}}\\bigr\\rbrack",
+  );
+  expect(latex("'\u{F11E}'")).toBe('\\text{\\char"F11E }');
+});

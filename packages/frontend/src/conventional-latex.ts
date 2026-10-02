@@ -10,6 +10,7 @@
 
 import { LATEX_DICTIONARY, type MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry, Serializer } from "@cortex-js/compute-engine/latex-syntax";
+import { escapeTeXText } from "@enumeratio/boxes/render";
 
 type Entry = Partial<LatexDictionaryEntry>;
 
@@ -171,6 +172,46 @@ const add: Entry = {
   serialize: (serializer, expr) => native("Add").serialize(serializer, ["Add", ...operands(expr).map(unitFactors)]),
 };
 
+/** Inside a matrix compute-engine writes a square-root base inline (`2^{1/2}`) and then stacks the
+ *  power's own exponent on it, `2^{1/2}^{1+x}`: a double superscript, which TeX rejects. Such a
+ *  power is written with its base bracketed and its exponent whole. */
+const DOUBLE_SUPERSCRIPT = /\^\{[^{}]*\}\^\{/;
+const BRACKET_ANY_OPERATOR = 900;
+const power: Entry = {
+  ...native("Power"),
+  name: "Power",
+  serialize: (serializer, expr) => {
+    const out = native("Power").serialize(serializer, expr);
+    if (!DOUBLE_SUPERSCRIPT.test(out)) return out;
+    const [base, exponent] = operands(expr);
+    return `${serializer.wrap(base ?? null, BRACKET_ANY_OPERATOR)}^{${serializer.serialize(exponent ?? null)}}`;
+  },
+};
+
+/** A string atom as one escaped `\\text{…}`. compute-engine writes a bare string atom unescaped
+ *  and without consulting the dictionary (`\\text{#}` is a TeX error), and hands `String`'s
+ *  operands over unquoted, like symbols. So a writer that needs portable TeX wraps each string
+ *  atom in this private head first (`withStringsWrapped`), which only this entry writes. */
+const TEXT_HEAD = "EscapedText";
+const escapedText: Entry = {
+  kind: "function",
+  name: TEXT_HEAD,
+  serialize: (_serializer, expr) => `\\text{${escapeTeXText(operands(expr).map(String).join(""))}}`,
+};
+
+const isStringAtom = (x: MathJsonExpression): boolean =>
+  typeof x === "string" && x.length >= 2 && x.startsWith("'") && x.endsWith("'");
+
+/** `expr` with every string atom wrapped for `escapedText` above. */
+export const withStringsWrapped = (expr: MathJsonExpression): MathJsonExpression =>
+  isStringAtom(expr)
+    ? [TEXT_HEAD, expr]
+    : Array.isArray(expr)
+      ? (expr.map((x, i) =>
+          i === 0 ? x : withStringsWrapped(x as MathJsonExpression),
+        ) as unknown as MathJsonExpression)
+      : expr;
+
 /** Euler's constant as `\\gamma`, which it already parses from, not `\\operatorname{EulerGamma}`. */
 const eulerGamma: Entry = {
   ...native("EulerGamma"),
@@ -199,6 +240,8 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
   beta,
   betaRoman,
   square,
+  power,
+  escapedText,
   eulerGamma,
   signOut("Divide"),
   signOut("Rational"),

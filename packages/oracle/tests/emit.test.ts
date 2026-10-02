@@ -1,6 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import { compare, compareCombination, linearCombination, normalise } from "../src/compare.ts";
 import { emit, unmappedHeads } from "../src/emit.ts";
+import { fromWolfram } from "@enumeratio/wolfram/src";
 import { MAPPINGS, mappingFor } from "../src/mappings.ts";
 import { SYSTEMS, wiredSystems } from "../src/systems.ts";
 
@@ -232,6 +233,12 @@ test("a free bare symbol emits verbatim on a symbolic system, and stays missing 
     source: '(Symbol("y") + Symbol("x") + Symbol("x"))',
     freeSymbols: ["x", "y"],
   });
+});
+
+test("a free name that Wolfram reserves goes in our own context, not Wolfram's", () => {
+  expect(emit(["Add", "E", 1], "wolfram")).toEqual({ ok: true, source: "Plus[enumeratio`E, 1]", freeSymbols: ["E"] });
+  expect(emit(["K", "x"], "wolfram")).toEqual({ ok: true, source: "enumeratio`K[x]", freeSymbols: ["K", "x"] });
+  expect(fromWolfram("Plus[enumeratio`E, 1]")).toEqual(["Add", "E", 1]);
 });
 
 // Found scanning the newly-emitting free-symbol rows against real kernels (#A-72 phase 2):

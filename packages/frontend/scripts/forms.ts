@@ -27,7 +27,7 @@ import { markupOf, readMarkupText, stripMetadata } from "@enumeratio/formats/mar
 import { parseExpression } from "@enumeratio/formats/expression";
 import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
-import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
+import { conventionalLatexDictionary, withStringsWrapped } from "../src/conventional-latex.ts";
 import { mergeLatex } from "../src/engine.ts";
 import { combineNotation, makeBoxes, notationOf } from "@enumeratio/boxes";
 import { toLatex } from "@enumeratio/boxes/render";
@@ -54,6 +54,8 @@ const attempt = (f: () => string): string | undefined => {
 };
 
 const box = (json: MathJSON) => ce.box(json as never, { form: "raw" });
+// String atoms go through the dictionary's escaping `String` entry (conventional-latex.ts).
+const texOf = (json: MathJSON): string => portableTeX(box(withStringsWrapped(json as never) as MathJSON).latex);
 
 /**
  * `json` with each complex literal InputForm spells out -- `2.5 + 3i`, `1 - i`, `3i`, `-i` --
@@ -141,7 +143,7 @@ export function formsOf(expr: MathJSON, expected: MathJSON): ExampleImplementati
       ...(backOut === undefined ? {} : { backOut }),
     };
   }
-  const tex = [attempt(() => portableTeX(box(expr).latex)), attempt(() => portableTeX(box(expected).latex))];
+  const tex = [attempt(() => texOf(expr)), attempt(() => texOf(expected))];
   if (tex[0] !== undefined) out.tex = { in: tex[0], ...(tex[1] === undefined ? {} : { out: tex[1] }) };
   const traditional = [attempt(() => traditionalOf(expr)), attempt(() => traditionalOf(expected))];
   if (traditional[0] !== undefined && (traditional[0] !== tex[0] || traditional[1] !== tex[1]))
