@@ -1,7 +1,7 @@
-id	section	role	expr	expected
-even-cycle-is-bipartite			[IsBipartiteGraph, [CycleGraph, 6]]	True
-odd-cycle-is-not			[IsBipartiteGraph, [CycleGraph, 5]]	False
-a-self-loop-is-never-bipartite			[IsBipartiteGraph, [Graph, [List, [UndirectedEdge, 1, 1]]]]	False
-a-4-cycle-is-bipartite		test	[IsBipartiteGraph, [CycleGraph, 4]]	True
-a-path-is-always-bipartite		test	[IsBipartiteGraph, [PathGraph, 7]]	True
-isbipartitegraph-cyclegraph-3	Properties		[IsBipartiteGraph, [CycleGraph, 3]]	False
+id	section	role	expr	expected	caption
+even-cycle-is-bipartite			[IsBipartiteGraph, [CycleGraph, 6]]	True	
+odd-cycle-is-not			[IsBipartiteGraph, [CycleGraph, 5]]	False	
+a-self-loop-is-never-bipartite			[IsBipartiteGraph, [Graph, [List, [UndirectedEdge, 1, 1]]]]	False	
+a-4-cycle-is-bipartite		test	[IsBipartiteGraph, [CycleGraph, 4]]	True	
+a-path-is-always-bipartite		test	[IsBipartiteGraph, [PathGraph, 7]]	True	
+isbipartitegraph-cyclegraph-3	Properties		[IsBipartiteGraph, [CycleGraph, 3]]	False	A triangle is an odd cycle, so it cannot be two-coloured

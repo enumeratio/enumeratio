@@ -1,9 +1,9 @@
-id	section	role	expr	expected	wolfram.kind	wolfram.note
-2-over-17-lt-eq-1-over-5-lt-eq-1-over-10-times			[LessEqual, [Rational, 2, 17], [Rational, 1, 5], [Multiply, [Rational, 1, 10], Pi]]	True		
-3-over-2-lt-eq-5-over-3	Scope		[LessEqual, [Rational, 3, 2], [Rational, 5, 3]]	True		
-n-pi-20-lt-eq-pi	Scope		[LessEqual, [N, Pi, 20], Pi]	True		
-sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	Scope		[LessEqual, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]]	True		
-n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	Scope		[LessEqual, [N, Pi, 20], [Multiply, Pi, [Add, 1, [Multiply, -256, [Power, 10, -20]]]]]	True	convention	Same numeric-tolerance-vs-strict-equality divergence as the Equal/GreaterEqual Pi rows.
-x-lt-eq-x	Scope		[LessEqual, x, x]	True	domain	Same as GreaterEqual/x-lt-eq-x: we simplify x <= x to True for any free symbol x; Wolfram declines without a realness assumption.
-pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	Scope		[LessEqual, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True		
-refine-sqrt-x-pow-2-x-lt-eq-0	Properties		[Refine, [Sqrt, [Power, x, 2]], [LessEqual, x, 0]]	[Negate, x]		
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+2-over-17-lt-eq-1-over-5-lt-eq-1-over-10-times			[LessEqual, [Rational, 2, 17], [Rational, 1, 5], [Multiply, [Rational, 1, 10], Pi]]	True	A chain of non-strict inequalities, resolved exactly		
+3-over-2-lt-eq-5-over-3	Scope		[LessEqual, [Rational, 3, 2], [Rational, 5, 3]]	True	Exact rationals again: $\frac{3}{2} \le \frac{5}{3}$		
+n-pi-20-lt-eq-pi	Scope		[LessEqual, [N, Pi, 20], Pi]	True	A 20-digit approximation of $\pi$ lies below $\pi$ itself		
+sqrt-2-plus-sqrt-3-lt-eq-sqrt-5-plus-2-times	Scope		[LessEqual, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]]	True	Nested radicals compared exactly, with equality in fact: $\sqrt2+\sqrt3 = \sqrt{5+2\sqrt6}$		
+n-pi-20-lt-eq-pi-times-1-minus-256-times-10-pow	Scope		[LessEqual, [N, Pi, 20], [Multiply, Pi, [Add, 1, [Multiply, -256, [Power, 10, -20]]]]]	True		convention	Same numeric-tolerance-vs-strict-equality divergence as the Equal/GreaterEqual Pi rows.
+x-lt-eq-x	Scope		[LessEqual, x, x]	True		domain	Same as GreaterEqual/x-lt-eq-x: we simplify x <= x to True for any free symbol x; Wolfram declines without a realness assumption.
+pi-pow-exponentiale-lt-eq-exponentiale-pow-pi	Scope		[LessEqual, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True			
+refine-sqrt-x-pow-2-x-lt-eq-0	Properties		[Refine, [Sqrt, [Power, x, 2]], [LessEqual, x, 0]]	[Negate, x]	A non-strict assumption $x\le 0$ gives the same $-x$		

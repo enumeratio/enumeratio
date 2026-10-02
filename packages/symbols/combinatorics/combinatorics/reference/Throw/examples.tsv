@@ -1,7 +1,7 @@
 id	section	role	expr	expected	caption
 throw-aborts-to-the-nearest-catch			[Catch, [Throw, abandoned]]	abandoned	Throw aborts evaluation, Catch recovers the value
 a-tag-mismatch-propagates-past-a-catch	Scope		[Catch, [Catch, [Throw, deep, x], y], x]	deep	a tag mismatch propagates past a non-matching Catch to one that matches
-catch-list-a-throw-b-c	Scope		[Catch, [List, a, [Throw, b], c]]	b	
-catch-list-throw-a-throw-b-throw-c	Scope		[Catch, [List, [Throw, a], [Throw, b], [Throw, c]]]	a	
-catch-throw-a-u-u	Scope		[Catch, [Throw, a, u], u]	a	
-catch-list-catch-list-a-throw-b-c-d-k	Scope		[Catch, [List, [Catch, [List, a, [Throw, b], c]], d, k]]	[List, b, d, k]	
+catch-list-a-throw-b-c	Scope		[Catch, [List, a, [Throw, b], c]]	b	The thrown value escapes the list and is returned directly
+catch-list-throw-a-throw-b-throw-c	Scope		[Catch, [List, [Throw, a], [Throw, b], [Throw, c]]]	a	Evaluation stops at the first Throw, so only $a$ comes back
+catch-throw-a-u-u	Scope		[Catch, [Throw, a, u], u]	a	A tagged throw is caught by a Catch with the matching tag
+catch-list-catch-list-a-throw-b-c-d-k	Scope		[Catch, [List, [Catch, [List, a, [Throw, b], c]], d, k]]	[List, b, d, k]	An inner Catch absorbs the throw, and the outer evaluation continues

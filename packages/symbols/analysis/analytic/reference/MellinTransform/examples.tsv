@@ -4,4 +4,4 @@ one-over-one-plus-x			[MellinTransform, [Divide, 1, [Add, 1, x]], x, s]	[Multipl
 gaussian			[MellinTransform, [Exp, [Negate, [Power, x, 2]]], x, s]	[Multiply, [Rational, 1, 2], [Gamma, [Multiply, [Rational, 1, 2], s]]]	$\mathcal{M}\{e^{-x^2}\}(s) = \Gamma(s/2)/2$
 log-one-plus-x			[MellinTransform, [Ln, [Add, 1, x]], x, s]	[Divide, [Multiply, Pi, [Csc, [Multiply, Pi, s]]], s]	$\mathcal{M}\{\log(1+x)\}(s) = \pi\csc(\pi s)/s$, $-1<\mathrm{Re}(s)<0$
 power-shift-x-c-exp	Scope		[MellinTransform, [Multiply, [Power, x, a], [Exp, [Negate, x]]], x, s]	[Gamma, [Add, a, s]]	power shift — $\mathcal{M}\{x^a e^{-x}\}(s) = \Gamma(a+s)$
-mellintransform-1-over-x-plus-1-x-1-over-2	Scope		[MellinTransform, [Divide, 1, [Add, x, 1]], x, [Rational, 1, 2]]	Pi	
+mellintransform-1-over-x-plus-1-x-1-over-2	Scope		[MellinTransform, [Divide, 1, [Add, x, 1]], x, [Rational, 1, 2]]	Pi	The Mellin transform of $\frac1{1+x}$ at $s=\frac12$ is $\frac{\pi}{\sin(\pi s)}=\pi$

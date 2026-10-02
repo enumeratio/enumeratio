@@ -1,12 +1,12 @@
 id	section	role	expr	expected	caption	epsil.back
 string-take-s-n-takes-the-first-n-characters			[StringTake, [String, hello world], 5]	"'hello'"		[StringTake, "'hello world'", 5]
-stringtake-abcdefghijklm-6			[StringTake, "'abcdefghijklm'", 6]	"'abcdef'"		
-stringtake-abcdefghijklm-neg-4			[StringTake, "'abcdefghijklm'", -4]	"'jklm'"		
-stringtake-abcdefghijklm-list-5-10			[StringTake, "'abcdefghijklm'", [List, 5, 10]]	"'efghij'"		
+stringtake-abcdefghijklm-6			[StringTake, "'abcdefghijklm'", 6]	"'abcdef'"	The first six characters	
+stringtake-abcdefghijklm-neg-4			[StringTake, "'abcdefghijklm'", -4]	"'jklm'"	A negative count takes from the end	
+stringtake-abcdefghijklm-list-5-10			[StringTake, "'abcdefghijklm'", [List, 5, 10]]	"'efghij'"	A pair gives an inclusive range of positions	
 string-take-s-negative-n-takes-last-n-chars	Scope		[StringTake, [String, hello world], -5]	"'world'"		[StringTake, "'hello world'", -5]
 string-take-s-n-takes-the-nth-character-alone	Scope		[StringTake, [String, hello], [List, 2]]	"'e'"		[StringTake, [String, "''", hello], [List, 2]]
 string-take-s-m-n-takes-an-inclusive-range	Scope		[StringTake, [String, hello world], [List, 1, 5]]	"'hello'"		[StringTake, "'hello world'", [List, 1, 5]]
 string-take-s-m-negative-n-counts-from-end	Scope		[StringTake, [String, hello world], [List, 1, -7]]	"'hello'"	-7 counts back from the end, landing on the same range as {1, 5}	[StringTake, "'hello world'", [List, 1, -7]]
-stringtake-abcdefghijklm-list-6	Scope		[StringTake, "'abcdefghijklm'", [List, 6]]	"'f'"		
-stringtake-abc-ndef-5	Properties		[StringTake, "'abc\ndef'", 5]	"'abc\nd'"		
-stringtake-abcdefghijklm-list-5-neg-4	Properties		[StringTake, "'abcdefghijklm'", [List, 5, -4]]	"'efghij'"		
+stringtake-abcdefghijklm-list-6	Scope		[StringTake, "'abcdefghijklm'", [List, 6]]	"'f'"	A one-element list takes just that character	
+stringtake-abc-ndef-5	Properties		[StringTake, "'abc\ndef'", 5]	"'abc\nd'"	A newline counts as one character	
+stringtake-abcdefghijklm-list-5-neg-4	Properties		[StringTake, "'abcdefghijklm'", [List, 5, -4]]	"'efghij'"	Range ends may be negative, counting from the end	

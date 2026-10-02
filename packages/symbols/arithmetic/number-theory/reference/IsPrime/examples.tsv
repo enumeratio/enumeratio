@@ -38,20 +38,20 @@ a-real-composite-5-squared-is-not-prime	Scope	test	[IsPrime, 25, [KeyValuePair, 
 1-is-not-prime-gaussian-or-not	Scope	test	[IsPrime, 1, [KeyValuePair, Over, GaussianIntegers]]	False	1 is not prime, Gaussian or not															
 0-is-not-prime-gaussian-or-not	Scope	test	[IsPrime, 0, [KeyValuePair, Over, GaussianIntegers]]	False	0 is not prime, Gaussian or not															
 a-common-choice-of-prime-modulus-for-hashing	Applications		[IsPrime, 1000000007]	True	A common choice of prime modulus for hashing, just above $10^9$															
-isprime-257	Applications		[IsPrime, 257]	True																
-isprime-1-plus-2-pow-128	Applications		[IsPrime, [Add, 1, [Power, 2, 128]]]	False																
-filter-range-1-100-function-isprimepower-1	Applications		[Filter, [Range, 1, 100], [Function, [Block, [And, [IsPrimePower, _1], [Not, [IsPrime, _1]]]], _1]]	[List, 4, 8, 9, 16, 25, 27, 32, 49, 64, 81]			Unreadable													
+isprime-257	Applications		[IsPrime, 257]	True	A Fermat prime, $2^8+1$															
+isprime-1-plus-2-pow-128	Applications		[IsPrime, [Add, 1, [Power, 2, 128]]]	False	The Fermat number $F_7$ is composite															
+filter-range-1-100-function-isprimepower-1	Applications		[Filter, [Range, 1, 100], [Function, [Block, [And, [IsPrimePower, _1], [Not, [IsPrime, _1]]]], _1]]	[List, 4, 8, 9, 16, 25, 27, 32, 49, 64, 81]	Prime powers that are not primes		Unreadable													
 an-odd-prime-stays-prime-in-z-i-exactly-when-p	Properties		[IsPrime, [List, 2, 3, 5, 7, 11, 13], [KeyValuePair, Over, GaussianIntegers]]	[List, False, True, False, True, True, False]	an odd prime stays prime in $\mathbb{Z}[i]$ exactly when $p \equiv 3 \pmod 4$															
-isprime-37	Properties		[IsPrime, 37]	True																
-isprime-29	Properties		[IsPrime, 29]	True																
-isprime-17	Properties		[IsPrime, 17]	True																
-isprime-12	Properties		[IsPrime, 12]	False																
-isprime-23	Properties		[IsPrime, 23]	True																
-isprime-24	Properties		[IsPrime, 24]	False																
-isprime-list-7-11	Properties		[IsPrime, [List, 7, 11]]	[List, True, True]																
-isprime-list-5-7-2	Properties		[IsPrime, [List, 5, 7, 2]]	[List, True, True, True]																
-isprime-19	Properties		[IsPrime, 19]	True																
-divisorsum-19-function-1-1-isprime	Properties		[DivisorSum, 19, [Function, [Block, _1], _1], IsPrime]	19			Unreadable													
+isprime-37	Properties		[IsPrime, 37]	True	37 has no divisor up to $\sqrt{37}$															
+isprime-29	Properties		[IsPrime, 29]	True	29, one of a twin pair with 31															
+isprime-17	Properties		[IsPrime, 17]	True	17, a Fermat prime $2^4+1$															
+isprime-12	Properties		[IsPrime, 12]	False	Composite: $2^2\cdot 3$															
+isprime-23	Properties		[IsPrime, 23]	True	23, the ninth prime															
+isprime-24	Properties		[IsPrime, 24]	False	Composite: $2^3\cdot 3$															
+isprime-list-7-11	Properties		[IsPrime, [List, 7, 11]]	[List, True, True]	Threads over a list															
+isprime-list-5-7-2	Properties		[IsPrime, [List, 5, 7, 2]]	[List, True, True, True]	Threads over a list; 2 is the even prime															
+isprime-19	Properties		[IsPrime, 19]	True	19, the eighth prime															
+divisorsum-19-function-1-1-isprime	Properties		[DivisorSum, 19, [Function, [Block, _1], _1], IsPrime]	19	A prime is its own only prime divisor		Unreadable													
 filter-divisors-625-isprime	Properties	triage	[Filter, [Divisors, 625], IsPrime]	[List, 5]		ours?		Agreed with Wolfram until #489 (A-131): Filter over a lazy collection (Divisors, PowersRepresentations) now stays unevaluated instead of materialising. Likely a regression there.												
 filter-divisors-2-434-500-isprime	Properties	triage	[Filter, [Divisors, 2434500], IsPrime]	[List, 2, 3, 5, 541]		ours?		Agreed with Wolfram until #489 (A-131): Filter over a lazy collection (Divisors, PowersRepresentations) now stays unevaluated instead of materialising. Likely a regression there.												
 filter-divisors-65-isprime	Properties	triage	[Filter, [Divisors, 65], IsPrime]	[List, 5, 13]		ours?		Agreed with Wolfram until #489 (A-131): Filter over a lazy collection (Divisors, PowersRepresentations) now stays unevaluated instead of materialising. Likely a regression there.												

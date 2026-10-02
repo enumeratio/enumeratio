@@ -1,18 +1,18 @@
 id	section	role	expr	expected	caption	triage	epsil.back	epsil.backOut	wolfram.note
 sigma-2-20-see-divisorsigma			[DivisorSum, 20, [Function, [Power, d, 2], d]]	546	$\sigma_2(20)$. See [[DivisorSigma]]		Unreadable		
 only-the-odd-divisors-1-3-5-15			[DivisorSum, 30, [Function, d, d], [Function, [IsOdd, d], d]]	24	Only the odd divisors: $1+3+5+15$		Unreadable		
-divisorsum-30-function-1-1			[DivisorSum, 30, [Function, [Block, _1], _1]]	72			Unreadable		
-divisorsum-20-f	Scope		[DivisorSum, 20, f]	[Add, [f, 1], [f, 2], [f, 4], [f, 5], [f, 10], [f, 20]]					
-divisorsum-20-f-isprime	Scope		[DivisorSum, 20, f, IsPrime]	[Add, [f, 2], [f, 5]]					
-divisorsum-20-function-1-1	Scope		[DivisorSum, 20, [Function, [Block, _1], _1]]	42			Unreadable		
-divisorsum-20-function-1-1-function-1-lt-5-1	Scope		[DivisorSum, 20, [Function, [Block, _1], _1], [Function, [Block, [Less, _1, 5]], _1]]	7			Unreadable		
+divisorsum-30-function-1-1			[DivisorSum, 30, [Function, [Block, _1], _1]]	72	Summing the divisors themselves gives $\sigma(30)=72$		Unreadable		
+divisorsum-20-f	Scope		[DivisorSum, 20, f]	[Add, [f, 1], [f, 2], [f, 4], [f, 5], [f, 10], [f, 20]]	With a symbolic function, the sum over divisors is written out				
+divisorsum-20-f-isprime	Scope		[DivisorSum, 20, f, IsPrime]	[Add, [f, 2], [f, 5]]	A condition restricts the sum to prime divisors				
+divisorsum-20-function-1-1	Scope		[DivisorSum, 20, [Function, [Block, _1], _1]]	42	Sum of the divisors of 20		Unreadable		
+divisorsum-20-function-1-1-function-1-lt-5-1	Scope		[DivisorSum, 20, [Function, [Block, _1], _1], [Function, [Block, [Less, _1, 5]], _1]]	7	A condition keeps divisors below 5: $1+2+4$		Unreadable		
 divisorsum-1-plus-10-pow-50-function-1-1	Scope	triage	[DivisorSum, [Add, 1, [Power, 10, 50]], [Function, [Block, _1], _1]]	[DivisorSum, {num: "100000000000000000000000000000000000000000000000001"}, [Function, [Block, _1], _1]]		gap			DivisorSum(10^50+1, ...) needs the full factorization of a 51-digit number; our budgeted Pollard-rho factorInteger correctly declines (verified: stays unevaluated, doesn't answer wrong) rather than guess. Wolfram evidently used a specialized/precomputed factorization for this particular number. A real bignum-factoring capability gap, not fixable within a rho-style budget.
 sum-d-mid-n-mu-d-0-for-n-1	Properties		[DivisorSum, 12, [Function, [MoebiusMu, d], d]]	0	$\sum_{d\mid n}\mu(d)=0$ for $n>1$		Unreadable		
 sum-d-mid-n-varphi-d-n	Properties		[DivisorSum, 36, [Function, [Totient, d], d]]	36	$\sum_{d\mid n}\varphi(d)=n$		Unreadable		
-divisorsum-1-000-function-1-pow-2-1	Properties		[DivisorSum, 1000, [Function, [Block, [Power, _1, 2]], _1]]	1383460			Unreadable		
-divisorsum-15-function-1-pow-4-1	Properties		[DivisorSum, 15, [Function, [Block, [Power, _1, 4]], _1]]	51332			Unreadable		
-divisorsum-11-function-1-1-isprime	Properties		[DivisorSum, 11, [Function, [Block, _1], _1], IsPrime]	11			Unreadable		
+divisorsum-1-000-function-1-pow-2-1	Properties		[DivisorSum, 1000, [Function, [Block, [Power, _1, 2]], _1]]	1383460	Sum of squared divisors of 1000		Unreadable		
+divisorsum-15-function-1-pow-4-1	Properties		[DivisorSum, 15, [Function, [Block, [Power, _1, 4]], _1]]	51332	Sum of fourth powers of divisors of 15		Unreadable		
+divisorsum-11-function-1-1-isprime	Properties		[DivisorSum, 11, [Function, [Block, _1], _1], IsPrime]	11	A prime has itself as its only prime divisor		Unreadable		
 1-has-one-divisor	Possible issues		[DivisorSum, 1, [Function, d, d]]	1	1 has one divisor		Unreadable		
-n-divisorsum-n-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]			Unreadable	Unreadable	
-n-divisorsum-9-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, 9, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[Rational, 17, 20]			Unreadable		
+n-divisorsum-n-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]	Stays unevaluated for symbolic $n$, even under N		Unreadable	Unreadable	
+n-divisorsum-9-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, 9, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[Rational, 17, 20]	With a concrete argument the sum evaluates: $\tfrac12+\tfrac14+\tfrac1{10}$		Unreadable		
 divisorsum-10-f-g	Possible issues	triage	[DivisorSum, 10, f, g]	0		ours?			Lane marked it fixed (our bug: DivisorSum(10, f, g) with a free g answered 0 — an undetermined cond (never resolves to True or False) was treated as 'excluded' instead of 'can't tell), but re-adopting it on main, ours isn't a settled answer: canonical form: incompatible-type.

@@ -24,24 +24,24 @@ a-real-composite-5-squared	Scope	test	[Divisors, 25, [KeyValuePair, Over, Gaussi
 2-ramifies-divisors-run-through-1-i	Scope	test	[Divisors, 2, [KeyValuePair, Over, GaussianIntegers]]	[List, 1, [Complex, 1, 1], 2]			2 ramifies: divisors run through $1+i$					
 19-3-mod-4-has-the-same-divisors-as-in-z	Scope	test	[Divisors, 19, [KeyValuePair, Over, GaussianIntegers]]	[List, 1, 19]			19, 3 mod 4, has the same divisors as in $\mathbb{Z}$					
 a-negative-real-composite	Scope	test	[Divisors, -15, [KeyValuePair, Over, GaussianIntegers]]	[List, 1, [Complex, 1, 2], [Complex, 2, 1], 3, [Complex, 3, 6], 5, [Complex, 6, 3], 15]			a negative real composite					
-divisors-3	Scope		[Divisors, 3]	[List, 1, 3]								
-8-times-sum-filter-divisors-20-function	Applications		[Multiply, 8, [Sum, [Filter, [Divisors, 20], [Function, [Block, [Not, [Divides, 4, _1]]], _1]]]]	144					Unreadable			
+divisors-3	Scope		[Divisors, 3]	[List, 1, 3]			The smallest odd prime: just 1 and 3					
+8-times-sum-filter-divisors-20-function	Applications		[Multiply, 8, [Sum, [Filter, [Divisors, 20], [Function, [Block, [Not, [Divides, 4, _1]]], _1]]]]	144			Sum of divisors of 20 not divisible by 4, scaled by 8		Unreadable			
 filter-range-1-9-999-function-sum-divisors-1-eq	Applications	triage	[Filter, [Range, 1, 9999], [Function, [Block, [Equal, [Sum, [Divisors, _1]], [Multiply, 2, _1]]], _1]]	[List, 6, 28, 496, ContinuationPlaceholder]				gap		Select(Range(1,9999), perfect-number predicate) leaks a raw internal 'ContinuationPlaceholder' token into the returned list instead of continuing to completion or declining — a deadline/checkpoint mechanism (@enumeratio/engine's checkpoint.ts) surfacing internal state into user-facing output. Likely the same lazy-collection/lo do,g-running-Select machinery implicated in the IsSquareFree/Filter row in the first batch (that one silently truncated near a power-of-two count; this one visibly leaks a placeholder) — a systemic evaluation-engine issue, out of scope for this arithmetic-scoped lane. High-priority flag: this is a leaking-abstraction bug, not just a missing feature.		
 the-divisor-count-d-n-equals-sigma-0-n-see	Properties		[Equal, [Length, [Divisors, 20]], [DivisorSigma, 0, 20]]	True			The divisor count $d(n)$ equals $\sigma_0(n)$. See [[DivisorSigma]]					
-divisors-2	Properties		[Divisors, 2]	[List, 1, 2]	[List, 1, 2]	Wolfram MathematicalFunctionData, Divisors						
-divisors-4	Properties		[Divisors, 4]	[List, 1, 2, 4]	[List, 1, 2, 4]	Wolfram MathematicalFunctionData, Divisors						
-divisors-5	Properties		[Divisors, 5]	[List, 1, 5]	[List, 1, 5]	Wolfram MathematicalFunctionData, Divisors						
-divisors-7	Properties		[Divisors, 7]	[List, 1, 7]	[List, 1, 7]	Wolfram MathematicalFunctionData, Divisors						
-divisors-8	Properties		[Divisors, 8]	[List, 1, 2, 4, 8]	[List, 1, 2, 4, 8]	Wolfram MathematicalFunctionData, Divisors						
-divisors-9	Properties		[Divisors, 9]	[List, 1, 3, 9]	[List, 1, 3, 9]	Wolfram MathematicalFunctionData, Divisors						
-divisors-10	Properties		[Divisors, 10]	[List, 1, 2, 5, 10]	[List, 1, 2, 5, 10]	Wolfram MathematicalFunctionData, Divisors						
-divisors-11	Properties		[Divisors, 11]	[List, 1, 11]	[List, 1, 11]	Wolfram MathematicalFunctionData, Divisors						
-divisors-12	Properties		[Divisors, 12]	[List, 1, 2, 3, 4, 6, 12]	[List, 1, 2, 3, 4, 6, 12]	Wolfram MathematicalFunctionData, Divisors						
-divisors-14	Properties		[Divisors, 14]	[List, 1, 2, 7, 14]	[List, 1, 2, 7, 14]	Wolfram MathematicalFunctionData, Divisors						
-divisors-15	Properties		[Divisors, 15]	[List, 1, 3, 5, 15]	[List, 1, 3, 5, 15]	Wolfram MathematicalFunctionData, Divisors						
-divisors-16	Properties		[Divisors, 16]	[List, 1, 2, 4, 8, 16]	[List, 1, 2, 4, 8, 16]	Wolfram MathematicalFunctionData, Divisors						
-divisors-17	Properties		[Divisors, 17]	[List, 1, 17]	[List, 1, 17]	Wolfram MathematicalFunctionData, Divisors						
-divisors-18	Properties		[Divisors, 18]	[List, 1, 2, 3, 6, 9, 18]	[List, 1, 2, 3, 6, 9, 18]	Wolfram MathematicalFunctionData, Divisors						
+divisors-2	Properties		[Divisors, 2]	[List, 1, 2]	[List, 1, 2]	Wolfram MathematicalFunctionData, Divisors	Smallest prime: just 1 and 2					
+divisors-4	Properties		[Divisors, 4]	[List, 1, 2, 4]	[List, 1, 2, 4]	Wolfram MathematicalFunctionData, Divisors	A prime square has three divisors					
+divisors-5	Properties		[Divisors, 5]	[List, 1, 5]	[List, 1, 5]	Wolfram MathematicalFunctionData, Divisors	A prime has only 1 and itself					
+divisors-7	Properties		[Divisors, 7]	[List, 1, 7]	[List, 1, 7]	Wolfram MathematicalFunctionData, Divisors	A prime contributes only the trivial divisors					
+divisors-8	Properties		[Divisors, 8]	[List, 1, 2, 4, 8]	[List, 1, 2, 4, 8]	Wolfram MathematicalFunctionData, Divisors	Prime cube: powers of 2 up to 8					
+divisors-9	Properties		[Divisors, 9]	[List, 1, 3, 9]	[List, 1, 3, 9]	Wolfram MathematicalFunctionData, Divisors	Prime square: 1, 3, 9					
+divisors-10	Properties		[Divisors, 10]	[List, 1, 2, 5, 10]	[List, 1, 2, 5, 10]	Wolfram MathematicalFunctionData, Divisors	Product of two primes gives four divisors					
+divisors-11	Properties		[Divisors, 11]	[List, 1, 11]	[List, 1, 11]	Wolfram MathematicalFunctionData, Divisors	11 is prime, so two divisors					
+divisors-12	Properties		[Divisors, 12]	[List, 1, 2, 3, 4, 6, 12]	[List, 1, 2, 3, 4, 6, 12]	Wolfram MathematicalFunctionData, Divisors	Six divisors, listed in increasing order					
+divisors-14	Properties		[Divisors, 14]	[List, 1, 2, 7, 14]	[List, 1, 2, 7, 14]	Wolfram MathematicalFunctionData, Divisors	$14 = 2\cdot 7$: each subset of primes gives a divisor					
+divisors-15	Properties		[Divisors, 15]	[List, 1, 3, 5, 15]	[List, 1, 3, 5, 15]	Wolfram MathematicalFunctionData, Divisors	An odd semiprime, $3\cdot 5$					
+divisors-16	Properties		[Divisors, 16]	[List, 1, 2, 4, 8, 16]	[List, 1, 2, 4, 8, 16]	Wolfram MathematicalFunctionData, Divisors	Powers of 2 up to 16					
+divisors-17	Properties		[Divisors, 17]	[List, 1, 17]	[List, 1, 17]	Wolfram MathematicalFunctionData, Divisors	Two divisors mark 17 as prime					
+divisors-18	Properties		[Divisors, 18]	[List, 1, 2, 3, 6, 9, 18]	[List, 1, 2, 3, 6, 9, 18]	Wolfram MathematicalFunctionData, Divisors	$18 = 2\cdot 3^2$ has $2\cdot 3 = 6$ divisors					
 1-has-exactly-one-divisor-itself	Possible issues		[Divisors, 1]	[List, 1]			1 has exactly one divisor: itself					
 only-positive-divisors-even-for-negative-n	Possible issues		[Divisors, -6]	[List, 1, 2, 3, 6]			Only positive divisors, even for negative $n$					
 divisors-neg-12	Possible issues	test	[Divisors, -12]	[List, 1, 2, 3, 4, 6, 12]								

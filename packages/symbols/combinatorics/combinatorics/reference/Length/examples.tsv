@@ -4,7 +4,7 @@ length-list-1-2-3-4-5			[Length, [List, 1, 2, 3, 4, 5]]	5
 works-on-any-collection-not-just-list			[Length, [Set, 1, 2, 3]]	3	Works on any collection, not just $List$				
 length-list-a-b-c-d			[Length, [List, a, b, c, d]]	4					
 length-of-association-counts-values		test	[Length, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]	3					
-length-association			[Length, [Association]]	0					
+length-association			[Length, [Association]]	0	An empty association has no entries				
 an-atom-has-no-parts-so-its-length-is-0	Scope		[Length, 5]	0	An atom has no parts, so its length is 0				
 the-empty-list-has-length-0	Scope		[Length, [List]]	0	The empty list has length 0				
 of-a-matrix-the-number-of-rows	Scope		[Length, [List, [List, 1, 2], [List, 3, 4], [List, 5, 6]]]	3	Of a matrix, the number of rows				
@@ -13,18 +13,18 @@ any-expression-the-number-of-terms-in-a-sum	Scope		[Length, [Add, a, b, c, d]]	4
 the-number-of-arguments-of-a-call-counting-only	Scope		[Length, [f, [g, x, y], z]]	2	The number of arguments of a call, counting only the top level				
 a-symbol-such-as-pi-is-an-atom-of-length-0	Scope		[Length, Pi]	0	A symbol such as $\pi$ is an atom, of length 0				
 a-lazy-range-is-counted-without-being	Scope		[Length, [Range, 1, 20]]	20	A lazy [[Range]] is counted without being materialised				
-length-x	Scope		[Length, x]	0					
-length-123-456	Scope		[Length, 123456]	0					
-length-1-over-10	Scope		[Length, [Rational, 1, 10]]	0					
-length-3-plus-i	Scope		[Length, [Complex, 3, 1]]	0				convention	SymPy's complex number is an Add of its real and imaginary terms, so it has two arguments; in compute-engine, as in Wolfram, it is an atom.
-length-string	Scope		[Length, "'string'"]	0				convention	Python's len counts a string's characters; compute-engine, like Wolfram, treats a string as an atom.
-length-x-pow-9-plus-x-pow-2-plus-x-plus-1	Applications		[Length, [Add, [Power, x, 9], [Power, x, 2], x, 1]]	4					
-length-integerdigits-1-000-factorial	Applications		[Length, [IntegerDigits, [Factorial, 1000]]]	2568					
-map-length-list-list-a-b-list-a-b-c-list-x	Applications		[Map, Length, [List, [List, a, b], [List, a, b, c], [List, x]]]	[List, 2, 3, 1]					
+length-x	Scope		[Length, x]	0	A symbol is atomic and has no parts				
+length-123-456	Scope		[Length, 123456]	0	Integers are atoms, so no parts				
+length-1-over-10	Scope		[Length, [Rational, 1, 10]]	0	A rational literal counts as an atom here				
+length-3-plus-i	Scope		[Length, [Complex, 3, 1]]	0	A complex number literal is atomic			convention	SymPy's complex number is an Add of its real and imaginary terms, so it has two arguments; in compute-engine, as in Wolfram, it is an atom.
+length-string	Scope		[Length, "'string'"]	0	A string is atomic, not a list of characters			convention	Python's len counts a string's characters; compute-engine, like Wolfram, treats a string as an atom.
+length-x-pow-9-plus-x-pow-2-plus-x-plus-1	Applications		[Length, [Add, [Power, x, 9], [Power, x, 2], x, 1]]	4	For a sum, the number of terms				
+length-integerdigits-1-000-factorial	Applications		[Length, [IntegerDigits, [Factorial, 1000]]]	2568	$1000!$ has $2568$ decimal digits				
+map-length-list-list-a-b-list-a-b-c-list-x	Applications		[Map, Length, [List, [List, a, b], [List, a, b, c], [List, x]]]	[List, 2, 3, 1]	Row lengths of a ragged list				
 length-list-list-a-b-c-list-d-k-f	Applications		[Length, [List, [List, a, b, c], [List, d, k, f]]]	2					
 length-join-a-b-length-a-length-b-see-join	Properties		[Equal, [Length, [Join, [List, 1, 2, 3], [List, 4, 5]]], [Add, [Length, [List, 1, 2, 3]], [Length, [List, 4, 5]]]]	True	$Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]]				
 length-filter-issquarefree-past-iteration-budget	Possible issues		[Length, [Filter, [Range, 1, 1679], IsSquareFree]]	[Length, [Filter, [Range, 1, 1679], IsSquareFree]]	1679 has 1025 squarefree numbers below it, one past compute-engine's own iteration budget (1024) for counting a lazy collection element by element -- this declines rather than silently answer a wrong, short count; see [[IsSquareFree]]				
-length-1-over-3	Possible issues		[Length, [Rational, 1, 3]]	0					
-length-2-plus-i	Possible issues		[Length, [Complex, 2, 1]]	0				convention	SymPy's complex number is an Add of its real and imaginary terms, so it has two arguments; in compute-engine, as in Wolfram, it is an atom.
-length-7	Possible issues		[Length, 7]	0					
+length-1-over-3	Possible issues		[Length, [Rational, 1, 3]]	0	An exact fraction is a single atom, so length zero				
+length-2-plus-i	Possible issues		[Length, [Complex, 2, 1]]	0	Complex literals have no parts			convention	SymPy's complex number is an Add of its real and imaginary terms, so it has two arguments; in compute-engine, as in Wolfram, it is an atom.
+length-7	Possible issues		[Length, 7]	0	A plain integer has length zero				
 length-sqrt-7	Possible issues		[Length, [Sqrt, 7]]	0		convention	compute-engine folds Sqrt(7) into an exact numeric-literal value (operator 'Real', no operands) rather than keeping it structurally as Power(7, 1/2); Length reads operand count, which is legitimately 0 for a numeric literal here even though Wolfram's FullForm keeps Power[7,1/2] as a 2-operand expression. Same representational root cause as NumberQ's Sqrt(2)/Infinity rows	convention	SymPy keeps sqrt(7) as Pow(7, 1/2), two arguments; compute-engine folds it into a numeric literal, an atom.

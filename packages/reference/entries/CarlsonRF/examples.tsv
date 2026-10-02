@@ -1,15 +1,15 @@
-id	section	role	expr	expected	known	tolerance	source	triage	wolfram.note
-rf-1-2-3		test	[N, [CarlsonRF, 1, 2, 3]]	0.7269459354689083	{num: "0.7269459354689082"}	1e-12	mpmath 1.3.0 elliprf		
-rf-1-1-1		test	[N, [CarlsonRF, 1, 1, 1]]	1	{num: "1"}	1e-12	mpmath 1.3.0 elliprf		
-rf-2-2-2		test	[N, [CarlsonRF, 2, 2, 2]]	0.7071067811865476	{num: "0.7071067811865476"}	1e-12	mpmath 1.3.0 elliprf		
-rf-0-1-2		test	[N, [CarlsonRF, 0, 1, 2]]	1.3110287771460603	{num: "1.3110287771460598"}	1e-12	mpmath 1.3.0 elliprf		
-rf-0-2-3		test	[N, [CarlsonRF, 0, 2, 3]]	1.0010773804561062	{num: "1.0010773804561062"}	1e-12	mpmath 1.3.0 elliprf		
-rf-0-5-1-1-5		test	[N, [CarlsonRF, 0.5, 1, 1.5]]	1.0280568010521265	{num: "1.0280568010521267"}	1e-12	mpmath 1.3.0 elliprf		
-rf-1-4-4		test	[N, [CarlsonRF, 1, 4, 4]]	0.6045997880780727	{num: "0.6045997880780726"}	1e-12	mpmath 1.3.0 elliprf		
-rf-1-1i-2-3		test	[N, [CarlsonRF, [Complex, 1, 1], 2, 3]]	[Complex, 0.6984564628349881, -0.07830401971724628]	[Complex, 0.6984564628349877, -0.07830401971724624]	1e-12	mpmath 1.3.0 elliprf		
-rf-3-2i-1-1i-5		test	[N, [CarlsonRF, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 0.5835452640550799, 0.007015540406256118]	[Complex, 0.5835452640550797, 0.00701554040625612]	1e-12	mpmath 1.3.0 elliprf		
-rf-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRF, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	1.014900023903115	{num: "1.0149000239031147"}	1e-12	mpmath 1.3.0 elliprf		
-rf-1-3-2-5-2		test	[N, [CarlsonRF, [Rational, 1, 3], 2, [Rational, 5, 2]]]	0.8506573005609459	{num: "0.8506573005609459"}	1e-12	mpmath 1.3.0 elliprf		
-n-carlsonrf-4-6-8	Scope		[N, [CarlsonRF, 4, 6, 8]]	0.4130089381246227					
-n-carlsonrf-4-neg-6-8	Scope		[N, [CarlsonRF, 4, -6, 8]]	[Complex, 0.45584813574900485, -0.2610176497773252]					
-n-carlsonrf-1-4-9-50	Scope	triage	[N, [CarlsonRF, 1, 4, 9], 50]	0.5086446185700304				gap	our N(head(...), n) for n past double (machine) precision returns only the double-precision digits (confirmed: ours agrees with Wolfram's 50-digit answer through round-off at ~16 significant digits, then stops) — no arbitrary-precision kernel implemented for this special-function family. Real feature gap (a BigDecimal/arbitrary-precision implementation per family), too big for this lane.
+id	section	role	expr	expected	known	tolerance	source	caption	triage	wolfram.note
+rf-1-2-3		test	[N, [CarlsonRF, 1, 2, 3]]	0.7269459354689083	{num: "0.7269459354689082"}	1e-12	mpmath 1.3.0 elliprf			
+rf-1-1-1		test	[N, [CarlsonRF, 1, 1, 1]]	1	{num: "1"}	1e-12	mpmath 1.3.0 elliprf			
+rf-2-2-2		test	[N, [CarlsonRF, 2, 2, 2]]	0.7071067811865476	{num: "0.7071067811865476"}	1e-12	mpmath 1.3.0 elliprf			
+rf-0-1-2		test	[N, [CarlsonRF, 0, 1, 2]]	1.3110287771460603	{num: "1.3110287771460598"}	1e-12	mpmath 1.3.0 elliprf			
+rf-0-2-3		test	[N, [CarlsonRF, 0, 2, 3]]	1.0010773804561062	{num: "1.0010773804561062"}	1e-12	mpmath 1.3.0 elliprf			
+rf-0-5-1-1-5		test	[N, [CarlsonRF, 0.5, 1, 1.5]]	1.0280568010521265	{num: "1.0280568010521267"}	1e-12	mpmath 1.3.0 elliprf			
+rf-1-4-4		test	[N, [CarlsonRF, 1, 4, 4]]	0.6045997880780727	{num: "0.6045997880780726"}	1e-12	mpmath 1.3.0 elliprf			
+rf-1-1i-2-3		test	[N, [CarlsonRF, [Complex, 1, 1], 2, 3]]	[Complex, 0.6984564628349881, -0.07830401971724628]	[Complex, 0.6984564628349877, -0.07830401971724624]	1e-12	mpmath 1.3.0 elliprf			
+rf-3-2i-1-1i-5		test	[N, [CarlsonRF, [Complex, 3, -2], [Complex, 1, 1], 5]]	[Complex, 0.5835452640550799, 0.007015540406256118]	[Complex, 0.5835452640550797, 0.00701554040625612]	1e-12	mpmath 1.3.0 elliprf			
+rf-0-5-0-5i-0-5-0-5i-2		test	[N, [CarlsonRF, [Complex, 0.5, 0.5], [Complex, 0.5, -0.5], 2]]	1.014900023903115	{num: "1.0149000239031147"}	1e-12	mpmath 1.3.0 elliprf			
+rf-1-3-2-5-2		test	[N, [CarlsonRF, [Rational, 1, 3], 2, [Rational, 5, 2]]]	0.8506573005609459	{num: "0.8506573005609459"}	1e-12	mpmath 1.3.0 elliprf			
+n-carlsonrf-4-6-8	Scope		[N, [CarlsonRF, 4, 6, 8]]	0.4130089381246227				Real positive arguments give a real value		
+n-carlsonrf-4-neg-6-8	Scope		[N, [CarlsonRF, 4, -6, 8]]	[Complex, 0.45584813574900485, -0.2610176497773252]				A negative argument pushes the value off the real axis		
+n-carlsonrf-1-4-9-50	Scope	triage	[N, [CarlsonRF, 1, 4, 9], 50]	0.5086446185700304					gap	our N(head(...), n) for n past double (machine) precision returns only the double-precision digits (confirmed: ours agrees with Wolfram's 50-digit answer through round-off at ~16 significant digits, then stops) — no arbitrary-precision kernel implemented for this special-function family. Real feature gap (a BigDecimal/arbitrary-precision implementation per family), too big for this lane.

@@ -5,7 +5,7 @@ integerdigits-58-127			[IntegerDigits, 58127]	[List, 5, 8, 1, 2, 7]
 integerdigits-58-127-2			[IntegerDigits, 58127, 2]	[List, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1]				
 93-784-seconds-as-days-hours-minutes-seconds			[IntegerDigits, 93784, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 1, 2, 3, 4]	93 784 seconds as days, hours, minutes, seconds			
 100-89-8-3-with-no-two-adjacent-ones			[IntegerDigits, 100, ZeckendorfNumerals]	[List, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0]	$100 = 89 + 8 + 3$, with no two adjacent ones			
-integerdigits-102-341-mixedradixnumerals-list-24			[IntegerDigits, 102341, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 1, 4, 25, 41]				
+integerdigits-102-341-mixedradixnumerals-list-24			[IntegerDigits, 102341, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 1, 4, 25, 41]	102341 seconds split into days, hours, minutes, seconds			
 digits-past-9-are-plain-integers-58127-e30f-16	Scope		[IntegerDigits, 58127, 16]	[List, 14, 3, 0, 15]	Digits past 9 are plain integers: $58127 = \mathrm{e30f}_{16}$			
 a-mixed-radix-spelled-mixedradix-102-341-seconds	Scope		[IntegerDigits, 102341, [MixedRadix, [List, 24, 60, 60]]]	[List, 1, 4, 25, 41]	a mixed radix, spelled `MixedRadix`: 102 341 seconds is 1d 4h 25m 41s			
 the-leading-digit-is-unbounded-137-3-cdot-3-2	Scope		[IntegerDigits, 137, [MixedRadix, [List, 3, 12]]]	[List, 3, 2, 5]	the leading digit is unbounded: $137 = (3 \cdot 3 + 2) \cdot 12 + 5$			
@@ -31,13 +31,13 @@ zeckendorf-12-is-8-3-1	Scope	test	[IntegerDigits, 12, ZeckendorfNumerals]	[List,
 ostrowski-9-over-2-2-2-is-1-2-0	Scope	test	[IntegerDigits, 9, [OstrowskiNumerals, [List, 2, 2, 2]]]	[List, 1, 2, 0]				
 bijective-base-26-27-is-aa	Scope	test	[IntegerDigits, 27, [BijectiveNumerals, 26]]	[List, 1, 1]	spreadsheet column AA			
 bijective-base-26-702-is-zz	Scope	test	[IntegerDigits, 702, [BijectiveNumerals, 26]]	[List, 26, 26]	spreadsheet column ZZ			
-integerdigits-137-mixedradixnumerals-list-3-12	Scope		[IntegerDigits, 137, [MixedRadixNumerals, [List, 3, 12]]]	[List, 3, 2, 5]				
+integerdigits-137-mixedradixnumerals-list-3-12	Scope		[IntegerDigits, 137, [MixedRadixNumerals, [List, 3, 12]]]	[List, 3, 2, 5]	A mixed radix with radices $[3,12]$ expands 137 in three places			
 integerdigits-1-084-mixedradixnumerals-list-17	Scope	triage	[IntegerDigits, 1084, [MixedRadixNumerals, [List, 17, 15, 11]], 2]	[List, 0, 6, 8, 6]		gap		IntegerDigits(1084, MixedRadix({17,15,11}), 2) returns 4 digits ([0,6,8,6]) where the 3-radix mixed-radix decomposition of 1084 has only 3 positions ({6,8,6}), and ignores the length-truncation argument (2) entirely — Wolfram truncates to the last 2 digits ({8,6}). A real bug in the mixed-radix digit-expansion path, but the fix requires re-deriving the intended place-value/truncation semantics correctly (this lane's investigation surfaced the wrong element count, not yet the full corrected algorithm) — leaving as a precisely-described gap rather than risk a wrong patch.
 the-3-argument-form-keeps-only-the-4-least	Applications		[IntegerDigits, 6345354, 10, 4]	[List, 5, 3, 5, 4]	The 3-argument form keeps only the 4 least-significant digits			
 all-3-bit-words-by-threading-a-padded-form-over	Applications		[IntegerDigits, [Range, 0, 7], 2, 3]	[List, [List, 0, 0, 0], [List, 0, 0, 1], [List, 0, 1, 0], [List, 0, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]	all 3-bit words, by threading a padded form over a range			
 the-lehmer-code-of-the-6th-permutation-of-four	Applications		[IntegerDigits, 5, FactorialNumerals, 4]	[List, 0, 2, 1, 0]	the Lehmer code of the 6th permutation of four things			
 an-integer-base-is-still-the-native-handler	Properties		[IntegerDigits, 255, 16]	[List, 15, 15]	an integer base is still the native handler			
-integerdigits-98-534-mixedradixnumerals-list-24	Properties		[IntegerDigits, 98534, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 1, 3, 22, 14]				
+integerdigits-98-534-mixedradixnumerals-list-24	Properties		[IntegerDigits, 98534, [MixedRadixNumerals, [List, 24, 60, 60]]]	[List, 1, 3, 22, 14]	Another time-of-day style split, inverse of FromDigits			
 unlike-integerstring-there-s-always-at-least-one	Possible issues		[IntegerDigits, 0]	[List, 0]	Unlike [[IntegerString]] there's always at least one digit, even for 0			
 the-sign-is-discarded	Possible issues		[IntegerDigits, -3134]	[List, 3, 1, 3, 4]	The sign is discarded			
 no-numeral-for-a-negative-in-a-system-that	Possible issues		[IntegerDigits, -3, FactorialNumerals]	[IntegerDigits, -3, FactorialNumerals]	no numeral for a negative in a system that spells only $n \ge 0$; the message says which integers it does spell			

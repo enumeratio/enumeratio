@@ -4,8 +4,8 @@ id	section	role	expr	expected	known	source	caption	epsil.in	epsil.back	fullform.
 the-result-takes-the-sign-of-the-modulus			[Mod, -7, 3]	2			The result takes the sign of the modulus																	
 threads-element-wise-over-a-list			[Mod, [List, 1, 2, 3, 4, 5], 3]	[List, 1, 2, 0, 1, 2]			Threads element-wise over a list						threading	compute-engine's Mod is Listable and threads over the list; Sage's takes scalars only.	threading	compute-engine's Mod threads over (or pools) the list; SymPy's takes scalars.	threading	compute-engine's Mod is Listable and threads over the list; Mathlib's takes scalars only.	threading	compute-engine's Mod is Listable and threads over the list; Oscar's takes scalars only.	threading	compute-engine's Mod is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only.	threading	compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars.
 mod-7-3		test	[Mod, 7, 3]	1																				
-5-mod-3			[Mod, 5, 3]	2																				
-1-plus-4-mod-3			[Add, 1, [Mod, 4, 3]]	2																				
+5-mod-3			[Mod, 5, 3]	2			The remainder of 5 divided by 3																	
+1-plus-4-mod-3			[Add, 1, [Mod, 4, 3]]	2			Mod binds tighter than addition, so this is $1 + (4 \bmod 3)$																	
 a-third-argument-offsets-the-range-the-result	Scope		[Mod, 17, 5, 1]	2			A third argument offsets the range: the result lies in $[d, d + n)$, here $[1, 6)$		[Mod, [Mod, 17, 5], 1]															
 with-offset-1-the-residues-run-1-2-3-rather-than	Scope		[Mod, 5, 3, 1]	2			With offset 1 the residues run $1, 2, 3$ rather than $0, 1, 2$		[Mod, [Mod, 5, 3], 1]															
 rationals-are-reduced-exactly	Scope		[Mod, [Rational, 5, 2], 2]	[Rational, 1, 2]			Rationals are reduced exactly						domain	compute-engine's Mod extends to rational arguments; Sage's % over the residue ring Mod(0, 2) has no multiplicative inverse and raises a ZeroDivisionError.									domain	The Rust adapter takes integers here; compute-engine's Mod extends past them.
@@ -46,32 +46,32 @@ reducing-a-real-prime-s-associate-by-the-unit-i	Scope	test	[Mod, [Complex, 3, 4]
 reducing-by-a-real-composite-5-squared	Scope	test	[Mod, [Complex, 3, 4], 25]	[Complex, 3, 4]			reducing by a real composite, 5 squared																	
 a-negative-associate-as-the-modulus	Scope	test	[Mod, [Complex, 6, 8], [Complex, -2, -3]]	[Complex, 0, -1]			a negative associate as the modulus																	
 reducing-by-a-real-prime-19	Scope	test	[Mod, [Complex, 123, 456], 19]	9			reducing by a real prime, 19																	
-1-plus-16-mod-5	Scope		[Add, 1, [Mod, 16, 5]]	2																				
-generatingfunction-n-mod-4-n-x	Scope		[GeneratingFunction, [Mod, n, 4], n, x]	[Divide, [Add, [Multiply, 3, [Power, x, 3]], [Multiply, 2, [Power, x, 2]], x], [Add, [Negate, [Power, x, 4]], 1]]																				
-282-475-249-mod-11	Applications		[Mod, 282475249, 11]	1																				
-7-pow-totient-12-mod-12	Applications		[Mod, [Power, 7, [Totient, 12]], 12]	1																				
-list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod	Applications		[At, [List, a, b, c], [Add, 1, [Mod, [Add, -1, [Range, 1, 10]], 3]]]	[List, a, b, c, a, b, c, a, b, c, a]																				
+1-plus-16-mod-5	Scope		[Add, 1, [Mod, 16, 5]]	2			Again $1 + (16 \bmod 5)$ from precedence																	
+generatingfunction-n-mod-4-n-x	Scope		[GeneratingFunction, [Mod, n, 4], n, x]	[Divide, [Add, [Multiply, 3, [Power, x, 3]], [Multiply, 2, [Power, x, 2]], x], [Add, [Negate, [Power, x, 4]], 1]]			The generating function of $n \bmod 4$ is rational																	
+282-475-249-mod-11	Applications		[Mod, 282475249, 11]	1			$282475249 = 7^{10}$, so Fermat's little theorem gives 1																	
+7-pow-totient-12-mod-12	Applications		[Mod, [Power, 7, [Totient, 12]], 12]	1			Euler's theorem: $7^{\varphi(12)} \equiv 1 \pmod{12}$																	
+list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod	Applications		[At, [List, a, b, c], [Add, 1, [Mod, [Add, -1, [Range, 1, 10]], 3]]]	[List, a, b, c, a, b, c, a, b, c, a]			Cycling an index with Mod repeats the list																	
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	Properties		[Equal, [Mod, 17, 5], [Mod, [Add, 17, [Multiply, 3, 5]], 5]]	True			Periodicity: $a \bmod n = (a+kn) \bmod n$ for any integer $k$																	
 a-negative-modulus-gives-a-result-in-n-0	Properties		[Mod, -5, -3]	-2			A negative modulus gives a result in $(n, 0]$																	
 the-remainder-of-quotient	Properties		[Equal, [Mod, [Complex, 7, 5], [Complex, 2, 1]], [Subtract, [Complex, 7, 5], [Multiply, [Complex, 2, 1], [Quotient, [Complex, 7, 5], [Complex, 2, 1]]]]]	True			the remainder of [[Quotient]]																	
-5-mod-3-eq-2-mod-3	Properties		[Equal, [Mod, 5, 3], [Mod, 2, 3]]	True																				
-2-mod-3-eq-8-mod-3	Properties		[Equal, [Mod, 2, 3], [Mod, 8, 3]]	True																				
-0-mod-1	Properties		[Mod, 0, 1]	0	0	Wolfram MathematicalFunctionData, Mod																		
-1-mod-2	Properties		[Mod, 1, 2]	1	1	Wolfram MathematicalFunctionData, Mod																		
-1-mod-3	Properties		[Mod, 1, 3]	1	1	Wolfram MathematicalFunctionData, Mod																		
-2-mod-3	Properties		[Mod, 2, 3]	2	2	Wolfram MathematicalFunctionData, Mod																		
-3-mod-3	Properties		[Mod, 3, 3]	0	0	Wolfram MathematicalFunctionData, Mod																		
-4-mod-3	Properties		[Mod, 4, 3]	1	1	Wolfram MathematicalFunctionData, Mod																		
-8-mod-3-eq-5-mod-3	Properties		[Equal, [Mod, 8, 3], [Mod, 5, 3]]	True																				
-8-mod-2	Properties		[Mod, 8, 2]	0																				
-17-mod-6	Properties		[Mod, 17, 6]	5																				
-12-mod-8	Properties		[Mod, 12, 8]	4	4	Wolfram MathematicalFunctionData, Mod																		
-neg-3-mod-neg-2	Properties		[Mod, -3, -2]	-1	-1	Wolfram MathematicalFunctionData, Mod																		
-neg-27-over-10-mod-23-over-5	Properties		[Mod, [Rational, -27, 10], [Rational, 23, 5]]	[Rational, 19, 10]	[Rational, 19, 10]	Wolfram MathematicalFunctionData, Mod																		
-0-mod-2	Properties		[Mod, 0, 2]	0	0	Wolfram MathematicalFunctionData, Mod																		
-1-mod-1	Properties		[Mod, 1, 1]	0	0	Wolfram MathematicalFunctionData, Mod																		
-15-mod-7	Properties		[Mod, 15, 7]	1																				
-pi-mod-exponentiale	Properties		[Mod, Pi, ExponentialE]	[Add, Pi, [Negate, ExponentialE]]	[Add, Pi, [Negate, ExponentialE]]	Wolfram MathematicalFunctionData, Mod																		
+5-mod-3-eq-2-mod-3	Properties		[Equal, [Mod, 5, 3], [Mod, 2, 3]]	True			Congruent numbers share a remainder																	
+2-mod-3-eq-8-mod-3	Properties		[Equal, [Mod, 2, 3], [Mod, 8, 3]]	True			$2 \equiv 8 \pmod 3$																	
+0-mod-1	Properties		[Mod, 0, 1]	0	0	Wolfram MathematicalFunctionData, Mod	Anything is 0 modulo 1																	
+1-mod-2	Properties		[Mod, 1, 2]	1	1	Wolfram MathematicalFunctionData, Mod	Odd numbers leave remainder 1 modulo 2																	
+1-mod-3	Properties		[Mod, 1, 3]	1	1	Wolfram MathematicalFunctionData, Mod	Remainder 1 at the start of the cycle																	
+2-mod-3	Properties		[Mod, 2, 3]	2	2	Wolfram MathematicalFunctionData, Mod	The remainders modulo 3 cycle through 0, 1, 2																	
+3-mod-3	Properties		[Mod, 3, 3]	0	0	Wolfram MathematicalFunctionData, Mod	A multiple of the modulus leaves 0																	
+4-mod-3	Properties		[Mod, 4, 3]	1	1	Wolfram MathematicalFunctionData, Mod	The cycle repeats after 3																	
+8-mod-3-eq-5-mod-3	Properties		[Equal, [Mod, 8, 3], [Mod, 5, 3]]	True			$8 \equiv 5 \pmod 3$, both leave 2																	
+8-mod-2	Properties		[Mod, 8, 2]	0			An even number has remainder 0 modulo 2																	
+17-mod-6	Properties		[Mod, 17, 6]	5			A larger remainder, $17 = 2\cdot 6 + 5$																	
+12-mod-8	Properties		[Mod, 12, 8]	4	4	Wolfram MathematicalFunctionData, Mod	The remainder is smaller than the modulus 8																	
+neg-3-mod-neg-2	Properties		[Mod, -3, -2]	-1	-1	Wolfram MathematicalFunctionData, Mod	Negative operands take the sign of the divisor																	
+neg-27-over-10-mod-23-over-5	Properties		[Mod, [Rational, -27, 10], [Rational, 23, 5]]	[Rational, 19, 10]	[Rational, 19, 10]	Wolfram MathematicalFunctionData, Mod	Rational operands work too: $-\frac{27}{10} + 2\cdot\frac{23}{5} = \frac{19}{10}$																	
+0-mod-2	Properties		[Mod, 0, 2]	0	0	Wolfram MathematicalFunctionData, Mod	Zero is zero modulo anything																	
+1-mod-1	Properties		[Mod, 1, 1]	0	0	Wolfram MathematicalFunctionData, Mod	Every integer is 0 modulo 1																	
+15-mod-7	Properties		[Mod, 15, 7]	1			$15 = 2\cdot 7 + 1$																	
+pi-mod-exponentiale	Properties		[Mod, Pi, ExponentialE]	[Add, Pi, [Negate, ExponentialE]]	[Add, Pi, [Negate, ExponentialE]]	Wolfram MathematicalFunctionData, Mod	Works for reals: $\pi \bmod e = \pi - e$ since $\pi < 2e$	pi % exponentialE		Mod(Pi, ExponentialE)														
 division-by-a-0-modulus-yields-nan-rather-than	Possible issues		[Mod, 5, 0]	Indeterminate			Division by a 0 modulus yields NaN rather than an error						undefined-form	Both decline: compute-engine answers "NaN" and Sage raises an error.	undefined-form	A pole or undefined value: compute-engine answers NaN, SymPy gives ZeroDivisionError: integer modulo by zer.	convention	Lean defines x % 0 = x; compute-engine leaves Mod by zero undefined (NaN).	undefined-form	Both decline: compute-engine answers "NaN" and Oscar raises an error.	undefined-form	Both decline: compute-engine answers "NaN" and Nemo/Combinatorics.jl raises an error.	undefined-form	Both decline: compute-engine answers "NaN", and Rust gives panic: attempt to divide by zero.
 periodicity-with-a-zero-modulus-on-one-side	Possible issues	test	[Equal, [Mod, 35, 13], [Mod, [Add, 17, [Multiply, 3, 5]], 0]]	False			A zero modulus on one side of the identity -- NaN never equals 9, so the comparison itself is well-defined				undefined-form	Both decline on the zero-modulus side: compute-engine's NaN makes the comparison False; Wolfram's Mod[...,0] gives Indeterminate and the equality doesn't resolve either.	undefined-form	Both decline on the zero-modulus side: compute-engine answers NaN and the comparison is False, while Sage's % raises ZeroDivisionError: Integer modulo by zero.	undefined-form	A zero modulus: compute-engine's Mod gives NaN, so the comparison is False; SymPy's % raises ZeroDivisionError.			undefined-form	Both decline: compute-engine answers "NaN" for a zero modulus (see [[Mod]]); Oscar's mod raises a DivideError, the same divergence as Mod's own zero-modulus example.			undefined-form	Both decline on the zero-modulus side: compute-engine answers "NaN", and Rust gives panic: attempt to divide by zero, same as the plain zero-modulus example above.
 rounding-ties-to-even-means-1-and-1-both-appear	Possible issues		[List, [Mod, [Complex, 1, 2], 2], [Mod, [Complex, 3, 2], 2]]	[List, 1, -1]			rounding ties to even means $1$ and $-1$ both appear as remainders mod 2						domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.	domain	SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.			domain	A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.	domain	A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.		

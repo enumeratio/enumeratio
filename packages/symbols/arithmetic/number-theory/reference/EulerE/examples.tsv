@@ -4,19 +4,19 @@ eulere-8			[EulerE, 8]	1385
 listable-odd-indices-vanish	Scope		[EulerE, [List, 0, 1, 2, 3, 4]]	[List, 1, 0, -1, 0, 5]			Listable; odd indices vanish
 the-euler-polynomial-e-2-x-x-2-x	Scope		[EulerE, 2, x]	[Add, [Power, x, 2], [Negate, x]]			the Euler polynomial $E_2(x) = x^2 - x$
 e-4-x-x-4-2x-3-x	Scope		[EulerE, 4, x]	[Add, [Power, x, 4], [Multiply, -2, [Power, x, 3]], x]			$E_4(x) = x^4 - 2x^3 + x$
-eulere-list-2-4-6	Scope		[EulerE, [List, 2, 4, 6]]	[List, -1, 5, -61]			
+eulere-list-2-4-6	Scope		[EulerE, [List, 2, 4, 6]]	[List, -1, 5, -61]			Threads over a list; the signs alternate
 e-n-2-n-e-n-frac-12-and-e-3-0	Properties		[EulerE, 3, [Rational, 1, 2]]	0			$E_n = 2^n E_n(\frac12)$, and $E_3 = 0$
-eulere-0	Properties		[EulerE, 0]	1	1	Wolfram MathematicalFunctionData, EulerE	
-eulere-1	Properties		[EulerE, 1]	0	0	Wolfram MathematicalFunctionData, EulerE	
-eulere-2	Properties		[EulerE, 2]	-1	-1	Wolfram MathematicalFunctionData, EulerE	
-eulere-3	Properties		[EulerE, 3]	0	0	Wolfram MathematicalFunctionData, EulerE	
-eulere-4	Properties		[EulerE, 4]	5	5	Wolfram MathematicalFunctionData, EulerE	
-eulere-5	Properties		[EulerE, 5]	0	0	Wolfram MathematicalFunctionData, EulerE	
-eulere-6	Properties		[EulerE, 6]	-61	-61	Wolfram MathematicalFunctionData, EulerE	
-eulere-7	Properties		[EulerE, 7]	0	0	Wolfram MathematicalFunctionData, EulerE	
-eulere-9	Properties		[EulerE, 9]	0	0	Wolfram MathematicalFunctionData, EulerE	
-eulere-1-0	Properties		[EulerE, 1, 0]	[Rational, -1, 2]	[Rational, -1, 2]	Wolfram MathematicalFunctionData, EulerE:Polynomial	
-eulere-2-0	Properties		[EulerE, 2, 0]	0	0	Wolfram MathematicalFunctionData, EulerE:Polynomial	
-eulere-1-1	Properties		[EulerE, 1, 1]	[Rational, 1, 2]	[Rational, 1, 2]	Wolfram MathematicalFunctionData, EulerE:Polynomial	
-eulere-2-1	Properties		[EulerE, 2, 1]	0	0	Wolfram MathematicalFunctionData, EulerE:Polynomial	
-eulere-0-1	Properties		[EulerE, 0, 1]	1	1	Wolfram MathematicalFunctionData, EulerE:Polynomial	
+eulere-0	Properties		[EulerE, 0]	1	1	Wolfram MathematicalFunctionData, EulerE	$E_0=1$
+eulere-1	Properties		[EulerE, 1]	0	0	Wolfram MathematicalFunctionData, EulerE	Odd-index Euler numbers vanish
+eulere-2	Properties		[EulerE, 2]	-1	-1	Wolfram MathematicalFunctionData, EulerE	$E_2=-1$
+eulere-3	Properties		[EulerE, 3]	0	0	Wolfram MathematicalFunctionData, EulerE	$E_3 = 0$, like every odd-index Euler number
+eulere-4	Properties		[EulerE, 4]	5	5	Wolfram MathematicalFunctionData, EulerE	$E_4=5$
+eulere-5	Properties		[EulerE, 5]	0	0	Wolfram MathematicalFunctionData, EulerE	The odd zeros continue: $E_5 = 0$
+eulere-6	Properties		[EulerE, 6]	-61	-61	Wolfram MathematicalFunctionData, EulerE	$E_6=-61$, with alternating signs
+eulere-7	Properties		[EulerE, 7]	0	0	Wolfram MathematicalFunctionData, EulerE	$E_7 = 0$: the secant series has only even terms
+eulere-9	Properties		[EulerE, 9]	0	0	Wolfram MathematicalFunctionData, EulerE	$E_9 = 0$
+eulere-1-0	Properties		[EulerE, 1, 0]	[Rational, -1, 2]	[Rational, -1, 2]	Wolfram MathematicalFunctionData, EulerE:Polynomial	The Euler polynomial $E_1(x)=x-\tfrac12$ at 0
+eulere-2-0	Properties		[EulerE, 2, 0]	0	0	Wolfram MathematicalFunctionData, EulerE:Polynomial	The Euler polynomial $E_2(x)=x^2-x$ vanishes at 0
+eulere-1-1	Properties		[EulerE, 1, 1]	[Rational, 1, 2]	[Rational, 1, 2]	Wolfram MathematicalFunctionData, EulerE:Polynomial	$E_1(1)=\tfrac12$, symmetric to $E_1(0)$
+eulere-2-1	Properties		[EulerE, 2, 1]	0	0	Wolfram MathematicalFunctionData, EulerE:Polynomial	$E_2(1)=0$
+eulere-0-1	Properties		[EulerE, 0, 1]	1	1	Wolfram MathematicalFunctionData, EulerE:Polynomial	$E_0(x)=1$ for every $x$
