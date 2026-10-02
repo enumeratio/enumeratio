@@ -2,12 +2,16 @@
 name: LogBarnesG
 domain: Special functions
 signature: LogBarnesG(z)
-summary: The logarithm of the Barnes G-function, $\ln G(z)$, as an analytic continuation — the form that stays finite where $G$ itself overflows. Provided by `@enumeratio/analytic`.
+summary: The logarithm of the Barnes G-function, $\ln G(z)$, as an analytic continuation — the form that stays finite where $G$ itself overflows.
 signatures:
   - call: LogBarnesG(z)
     description: the log-Barnes function $\ln G(z)$, analytically continued.
-    library: enumeratio-analytic
     type: (number) -> number
+  - call: LogBarnesG(z)
+    description: widened to an infinite argument.
+    library: enumeratio-analytic
+    type: (complex | infinity) -> number
+    overrides: compute-engine
 bindings:
   - origin: reference
     form: notatio

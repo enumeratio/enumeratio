@@ -6,8 +6,11 @@ summary: Every primitive root of $n$ — every generator of $(\mathbb{Z}/n)^\tim
 signatures:
   - call: PrimitiveRootList(n)
     description: the generators of the unit group mod $n$, or $\{\}$ when it is not cyclic
+  - call: PrimitiveRootList(n)
+    description: threads over a list, and past the listing cap is a lazy collection that still answers Length and At
     library: enumeratio-residues
     type: (integer) -> list<integer>
+    overrides: compute-engine
 seeAlso:
   - PrimitiveRoot
   - MultiplicativeOrder

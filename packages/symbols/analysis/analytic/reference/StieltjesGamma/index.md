@@ -2,15 +2,18 @@
 name: StieltjesGamma
 domain: Special functions
 signature: StieltjesGamma(n)
-summary: 'The Stieltjes constants $\gamma_n$, the coefficients of the Laurent expansion of $\zeta(s)$ at $s = 1$: $\zeta(s) = \dfrac{1}{s-1} + \sum_{n\ge0} \dfrac{(-1)^n}{n!}\gamma_n (s-1)^n$; with a second argument, the generalized $\gamma_n(a)$ for [[HurwitzZeta]]. Provided by `@enumeratio/analytic`.'
+summary: 'The Stieltjes constants $\gamma_n$, the coefficients of the Laurent expansion of $\zeta(s)$ at $s = 1$: $\zeta(s) = \dfrac{1}{s-1} + \sum_{n\ge0} \dfrac{(-1)^n}{n!}\gamma_n (s-1)^n$; with a second argument, the generalized $\gamma_n(a)$ for [[HurwitzZeta]].'
 signatures:
   - call: StieltjesGamma(n)
     description: the $n$-th Stieltjes constant $\gamma_n$.
-    library: enumeratio-analytic
     type: (integer, number?) -> number
   - call: StieltjesGamma(n, a)
     description: the generalized Stieltjes constant $\gamma_n(a)$, from the expansion of $\zeta(s, a)$ at $s = 1$.
+  - call: StieltjesGamma(n, a)
+    description: widened past the native handler.
     library: enumeratio-analytic
+    type: (integer, number?) -> number
+    overrides: compute-engine
 primitive: numeric
 bindings:
   - origin: native

@@ -1857,19 +1857,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "DirichletCharacter",
-    fungrimEntries: [
-      "3b8c97",
-      "47d430",
-      "4cf4e4",
-      "a07d28",
-      "a9337b",
-      "c9d117",
-      "d83109",
-      "d8c6d1",
-      "d9a187",
-      "fc4f6a",
-      "ff8254",
-    ],
+    fungrimEntries: ["4cf4e4", "d8c6d1", "fc4f6a"],
     wolfram: "DirichletCharacter",
   },
   {
@@ -1878,7 +1866,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "DirichletL",
-    fungrimEntries: ["3b8c97", "a07d28", "a9337b", "c9d117", "d83109", "ff8254"],
     wolfram: "DirichletL",
   },
   {
@@ -2586,7 +2573,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "Filter",
     fungrimEntries: [
       "04427b",
-      "47d430",
       "4b20ab",
       "4ec333",
       "540931",
@@ -2808,7 +2794,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "1d1653",
       "258fc7",
       "4366b2",
-      "47d430",
       "499cfc",
       "4d3127",
       "554b2e",
@@ -4390,7 +4375,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "c43533",
       "c4d78a",
       "c584c3",
-      "c9d117",
       "caf8cf",
       "cf5355",
       "cfb999",
@@ -4520,7 +4504,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "27766c",
       "40baa9",
       "44ad09",
-      "47d430",
       "4b20ab",
       "540931",
       "55498b",
@@ -4569,7 +4552,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "Max",
-    fungrimEntries: ["47d430", "632d1c", "bfe28b"],
+    fungrimEntries: ["632d1c", "bfe28b"],
     wolfram: "Max",
     oracle: [
       {
@@ -6494,7 +6477,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "a2675b",
       "a5e52e",
       "a62320",
-      "a9337b",
       "af23f7",
       "af7d3d",
       "b07750",
@@ -6516,7 +6498,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "ef2c71",
       "ef8b17",
       "fc6fe0",
-      "ff8254",
       "zeta-trivial-zeros",
     ],
     wolfram: "Zeta",

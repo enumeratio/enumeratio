@@ -353,12 +353,14 @@ const derangements: EpsilFamily = permutationRestriction({
   ],
 });
 
-/** T(0..n), the involutions of 0..n: T(i) = T(i − 1) + (i − 1) T(i − 2). */
+/** T(0..n), the involutions of 0..n: T(i) = T(i − 1) + (i − 1) T(i − 2). The list is its full
+ *  length from the seed on, so each step is one `ReplaceAt` and the compiled fold fills it in
+ *  place; the step only reads the list through `At`. */
 const telephoneTable = fold(
-  ["Append", "tt", add(at("tt", "ti"), ["Multiply", sub("ti", 1), at("tt", sub("ti", 1))])],
+  ["ReplaceAt", "tt", add("ti", 1), add(at("tt", "ti"), ["Multiply", sub("ti", 1), at("tt", sub("ti", 1))])],
   "tt",
   "ti",
-  ["List", 1, 1],
+  ["Join", ["List", 1, 1], map(0, "tz", upTo(3, add("_n", 1)))],
   upTo(2, "_n"),
 );
 

@@ -5,13 +5,7 @@ import {
   applyPatch,
   type EvalOptions,
   type NativeEval,
-  barnesGPatch,
-  clausenPatch,
-  dirichlet,
   lerchPhiPatch,
-  polygammaLogGamma,
-  logGammaPatch,
-  stieltjes,
   gammaInfinity,
   sqrtInfinity,
   ceilFloorInfinity,
@@ -21,6 +15,7 @@ import {
   nAccuracyGoal,
   solveDeclines,
   takeDropNegativeCount,
+  iteratorUpperBound,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { ANALYTIC_NOTATION } from "./notation.ts";
@@ -112,12 +107,10 @@ import { declareNSum } from "./nsum.ts";
 /**
  * Declare the analytic special-function heads on `ce`, numerically aligned with Wolfram.
  *
- * `LerchPhi`, `BarnesG`, `LogBarnesG`, `LogGamma`, `ClausenCl`, the Dirichlet family
- * (`DirichletEta`, `DirichletBeta`, `DirichletCharacter`, `DirichletL`) and
- * `StieltjesGamma` are all cortex-js/compute-engine#340 candidates: they live in
- * `@enumeratio/ce-patches` as patches and are
- * applied here at the point their declarations used to run, so declare order and behaviour
- * are unchanged. `HurwitzZeta`, the two-argument `Zeta`, and `PolyLog`/`PolyGamma`'s
+ * `LerchPhi` is a cortex-js/compute-engine#340 candidate: it lives in
+ * `@enumeratio/ce-patches` as a patch and is applied here. `BarnesG`, `LogBarnesG`, `LogGamma`,
+ * `ClausenCl`, the Dirichlet family and `StieltjesGamma` landed natively in compute-engine
+ * 0.146 and are no longer patches. `HurwitzZeta`, the two-argument `Zeta`, and `PolyLog`/`PolyGamma`'s
  * complex-argument widenings landed natively in compute-engine 0.141 and are no longer
  * patches; special-functions-remaining.ts and generalized-special.ts still call
  * `evaluateHurwitz`/`evaluateZeta`/`evaluatePolygamma` directly for certified-precision
@@ -159,7 +152,6 @@ import { declareNSum } from "./nsum.ts";
 export function declareAnalytic(ce: ComputeEngine): void {
   registerNotation(ce, ANALYTIC_NOTATION);
   applyPatch(ce, lerchPhiPatch);
-  applyPatch(ce, polygammaLogGamma);
 
   // Gamma(s, z₀, z₁) and GammaRegularized(s, z₀, z₁): the generalized incomplete gamma,
   // whose z₀ = 0 case is the lower incomplete gamma. Native for one and two arguments.
@@ -186,16 +178,12 @@ export function declareAnalytic(ce: ComputeEngine): void {
   threadOverLists(ce, ["Binomial", "Pochhammer", "BernoulliB", "Erf", "Erfc", "ErfInv", "BetaRegularized"]);
   declareWidened(ce);
 
-  applyPatch(ce, barnesGPatch);
-  applyPatch(ce, logGammaPatch);
-  applyPatch(ce, clausenPatch);
-  applyPatch(ce, dirichlet);
-  applyPatch(ce, stieltjes);
   applyPatch(ce, gammaInfinity);
   applyPatch(ce, sqrtInfinity);
   applyPatch(ce, ceilFloorInfinity);
   applyPatch(ce, solveDeclines);
   applyPatch(ce, takeDropNegativeCount);
+  applyPatch(ce, iteratorUpperBound);
   applyPatch(ce, multiplyDirectedInfinity);
   applyPatch(ce, directedInfinityParts);
   applyPatch(ce, nAccuracyGoal);

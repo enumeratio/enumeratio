@@ -365,6 +365,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     wikidata: "Q6203",
   },
   {
+    name: "BarnesG",
+    kind: "operator",
+    description:
+      "The Barnes G-function, the double gamma function G(z+1) = Γ(z)·G(z), G(1) = 1. G(n) is the superfactorial 1!·2!⋯(n−2)! at a positive integer n; G is entire, with zeros at the non-positive integers.",
+    signature: "(complex | infinity) -> number",
+    wikidata: "Q808463",
+  },
+  {
     name: "BaseForm",
     kind: "operator",
     description: "`BaseForm(expr, base=10)`",
@@ -626,6 +634,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Clamp a value to the range [lo, hi] = min(max(x, lo), hi). Broadcasts over collection arguments.",
     signature: "(real | signed_infinity, real | signed_infinity, real | signed_infinity) -> real | signed_infinity",
+  },
+  {
+    name: "ClausenCl",
+    kind: "operator",
+    description:
+      "Clausen function Clₙ(θ) of integer order n ≥ 1 and real θ: Im Liₙ(e^{iθ}) = Σ sin(kθ)/kⁿ for even n, Re Liₙ(e^{iθ}) = Σ cos(kθ)/kⁿ for odd n. A real θ follows the engine precision.",
+    signature: "(integer, real) -> number",
   },
   {
     name: "Closed",
@@ -1090,6 +1105,34 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description: "Dimension of an object",
     signature: "(value) -> integer",
+  },
+  {
+    name: "DirichletBeta",
+    kind: "operator",
+    description:
+      "Dirichlet beta function β(s) = Σ_{n≥0} (−1)^n/(2n+1)^s = 4^(−s) (ζ(s, 1/4) − ζ(s, 3/4)), entire; β(1) = π/4, β(2) = G, β(+∞) = 1.",
+    signature: "(complex | infinity) -> number",
+  },
+  {
+    name: "DirichletCharacter",
+    kind: "operator",
+    description:
+      "The Dirichlet character χ_j(n) modulo `k`, the `j`-th of the φ(k) characters (Wolfram's indexing, `j = 1` the principal character). Zero where gcd(n, k) > 1; otherwise a root of unity.",
+    signature: "(integer, integer, integer) -> number",
+  },
+  {
+    name: "DirichletEta",
+    kind: "operator",
+    description:
+      "Dirichlet eta function η(s) = Σ_{n≥1} (−1)^(n−1)/n^s = (1 − 2^(1−s)) ζ(s), entire; η(1) = ln 2, η(+∞) = 1.",
+    signature: "(complex | infinity) -> number",
+  },
+  {
+    name: "DirichletL",
+    kind: "operator",
+    description:
+      "The Dirichlet L-function L(s, χ) = Σ χ(n)/nˢ (n ≥ 1) of the character χ_j modulo `k` (`DirichletCharacter(k, j, ·)`): `k^(−s) Σ_{r=1}^{k} χ(r) ζ(s, r/k)`. Entire for a non-principal character; the principal one is `ζ(s) Π_{p|k} (1 − p^(−s))`.",
+    signature: "(integer, integer, number) -> number",
   },
   {
     name: "Discriminant",
@@ -2377,6 +2420,20 @@ export const engineSymbols: readonly EngineSymbol[] = [
     signature: "(number) -> number",
   },
   {
+    name: "LogBarnesG",
+    kind: "operator",
+    description:
+      "The logarithm of the Barnes G-function, continued analytically with `LogGamma`: its imaginary part is not principal on the negative axis. −∞ at the zeros of G, the non-positive integers.",
+    signature: "(complex | infinity) -> number",
+  },
+  {
+    name: "LogGamma",
+    kind: "operator",
+    description:
+      "The analytic continuation of ln Γ(z), with its branch cut on (−∞, 0]; not `GammaLn`, the principal logarithm of Γ(z), which jumps by 2πi across the zeros of Im Γ.",
+    signature: "(complex | infinity) -> number",
+  },
+  {
     name: "LogIntegral",
     kind: "operator",
     description: "Logarithmic integral li(x) = PV ∫₀ˣ dt/ln t = Ei(ln x).",
@@ -2592,8 +2649,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "MultiplicativeOrder",
     kind: "operator",
     description:
-      "The multiplicative order of `a` modulo `n`: the smallest `k > 0` such that `a^k ≡ 1 (mod n)`. Undefined unless `a` and `n` are coprime.",
-    signature: "(integer, integer) -> integer",
+      "The multiplicative order of `a` modulo `n`: the smallest `k > 0` such that `a^k ≡ 1 (mod n)`. Undefined unless `a` and `n` are coprime. With a list of residues, `MultiplicativeOrder(a, n, [r1, r2, …])` is the smallest `k > 0` such that `a^k ≡ r_i (mod n)` for some `i` (a discrete logarithm), and is undefined when no `r_i` is a power of `a`. The sign of `n` is ignored. Undefined for `n = 0`.",
+    signature: "(integer, integer, list<integer>?) -> integer",
   },
   {
     name: "Multiply",
@@ -2632,7 +2689,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "NIntegrate",
     kind: "operator",
     description: "Numerical approximation of a definite integral.",
-    signature: "(function, limits: (symbol | tuple)?) -> number",
+    signature: "(function, lower: number, upper: number) -> number",
   },
   {
     name: "NLimit",
@@ -3229,8 +3286,15 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "PowerMod",
     kind: "operator",
     description:
-      "Return `a^b mod m` (modular exponentiation). A negative `b` uses the modular inverse of `a`; the result is undefined when that inverse does not exist (i.e. when `a` and `m` are not coprime). The result is in the range [0, m).",
-    signature: "(integer, integer, integer) -> integer",
+      "Return `a^b mod m` (modular exponentiation). A negative `b` uses the modular inverse of `a`; the result is undefined when that inverse does not exist (i.e. when `a` and `m` are not coprime). The result is in the range [0, m). A rational exponent `s/r` gives the least `x` with `x^r ≡ a^s (mod m)`, the first entry of `PowerModList(a, s/r, m)`. It is undefined when there is none, when `m` cannot be factored, or when there are too many roots to list and none of them is less than 100000.",
+    signature: "(integer, rational, integer) -> integer",
+  },
+  {
+    name: "PowerModList",
+    kind: "operator",
+    description:
+      "Return the sorted list of every `x` in [0, m) with `x^r ≡ a^s (mod m)`, for the exponent `s/r`. An integer exponent gives the single value `a^s mod m`, a negative one using the modular inverse of `a`. The list is empty when `a^s` is not an `r`-th power mod `m`. Undefined for a modulus `m < 1`, when the inverse of `a` does not exist, or when `m` cannot be factored or there are too many roots to list.",
+    signature: "(integer, rational, integer) -> list<integer>",
   },
   {
     name: "PowerSet",
@@ -3325,8 +3389,15 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "PrimitiveRoot",
     kind: "operator",
     description:
-      "The smallest primitive root modulo `n` (a generator of the multiplicative group of integers mod `n`), or undefined if none exists (which happens unless `n` is 1, 2, 4, pᵏ, or 2pᵏ for an odd prime p).",
+      "The smallest primitive root modulo `n` (a generator of the multiplicative group of integers mod `n`), or undefined if none exists (which happens unless `n` is 1, 2, 4, pᵏ, or 2pᵏ for an odd prime p). The sign of `n` is ignored, and `PrimitiveRoot(1)` is 0. Undefined for `n = 0`.",
     signature: "(integer) -> integer",
+  },
+  {
+    name: "PrimitiveRootList",
+    kind: "operator",
+    description:
+      "The sorted list of all primitive roots modulo `n`: the generators of the multiplicative group of integers mod `n`. The list is empty when there is none (unless `n` is 1, 2, 4, pᵏ, or 2pᵏ for an odd prime p), and for `n = 0`. `PrimitiveRootList(1)` is `[0]`, as `PrimitiveRoot(1)` is 0. The sign of `n` is ignored. Undefined when `n` cannot be factored or there are too many roots to list.",
+    signature: "(integer) -> list<integer>",
   },
   {
     name: "Print",
@@ -3502,6 +3573,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "constant",
     description: "The set of all finite rational numbers.",
     signature: "set<rational>",
+  },
+  {
+    name: "RationalReconstruction",
+    kind: "operator",
+    description:
+      "The rational `p/q` with `p ≡ a·q (mod m)` and `|p|, q ≤ ⌊√((m − 1)/2)⌋`, the unique such fraction in lowest terms when it exists (Wang's algorithm). Undefined for `m < 1` or when there is none.",
+    signature: "(integer, integer) -> rational",
   },
   {
     name: "Rationalize",
@@ -3925,6 +4003,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     wikidata: "Q51374",
   },
   {
+    name: "StieltjesGamma",
+    kind: "operator",
+    description:
+      "Generalized Stieltjes constants γₙ(a), the Laurent coefficients of ζ(s, a) at s = 1: ζ(s, a) = 1/(s−1) + Σₙ (−1)ⁿ γₙ(a)(s−1)ⁿ/n!. StieltjesGamma(n) is γₙ = γₙ(1), and γ₀ is Euler's constant.",
+    signature: "(integer, number?) -> number",
+  },
+  {
     name: "Stirling",
     kind: "operator",
     description: "Stirling number of the second kind S(n, m): ways to partition n elements into m non-empty subsets.",
@@ -3935,6 +4020,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Signed Stirling number of the first kind s(n, m): the coefficient of x^m in the falling factorial x(x−1)…(x−n+1). Its absolute value counts the permutations of n elements with exactly m disjoint cycles.",
+    signature: "(integer, integer) -> integer",
+  },
+  {
+    name: "StirlingS2",
+    kind: "operator",
+    description:
+      "`StirlingS2` is an alias for `Stirling`, which is the preferred name. Returns the Stirling number of the second kind S(n, k).",
     signature: "(integer, integer) -> integer",
   },
   {

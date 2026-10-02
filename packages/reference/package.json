@@ -21,7 +21,7 @@
     "crosswalk:audit": "node scripts/audit-wikidata.ts"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.145.0",
+    "@cortex-js/compute-engine": "^0.146.0",
     "@enumeratio/adeles": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/boxes": "workspace:*",
