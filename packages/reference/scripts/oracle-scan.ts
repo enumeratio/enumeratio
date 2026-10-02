@@ -228,14 +228,7 @@ for (const system of systems) {
       verdict = interpretSymbolicAgreement(theirs);
     } else {
       const tolerance = records.get(row.item.head)?.[row.item.key]?.[system]?.tolerance;
-      verdict = verdictOf(
-        system,
-        row.item.expected,
-        result,
-        tolerance,
-        asksForDigits(row.item.expr),
-        Array.isArray(row.item.expr) ? (row.item.expr[0] as string) : undefined,
-      );
+      verdict = verdictOf(system, row.item.expected, result, tolerance, asksForDigits(row.item.expr), row.item.expr);
     }
     outcomes.push({
       id: row.item.id,

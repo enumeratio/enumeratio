@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { bigIntegerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // cortex-js/compute-engine: `QuotientRing` (`library/sets.ts`) is inert. `QuotientRing(Integers,
 // m)` -- what `\mathbb{Z}/m\mathbb{Z}` and `\mathbb{Z}_m` parse to -- is not a collection, so
@@ -40,6 +40,9 @@ export function integerQuotientModulus(expr: BoxedExpression): bigint | undefine
   return modulus !== undefined && modulus >= 1n ? modulus : undefined;
 }
 
+/** The largest count a collection's `count` handler, a double, holds exactly. */
+const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
+
 type OperatorDefinition = NonNullable<BoxedExpression["operatorDefinition"]>;
 type CollectionHandlers = NonNullable<OperatorDefinition["collection"]>;
 type TypeHandler = NonNullable<OperatorDefinition["type"]>;
@@ -54,9 +57,10 @@ export function quotientRingOverIntegers(ce: ComputeEngine): void {
   const collection: CollectionHandlers = {
     // Any other base, or a symbolic modulus, isn't a collection: its handlers stay inert.
     isCollection: (expr) => integerQuotientModulus(expr) !== undefined,
+    // The handler answers a double, so past 2^53 it leaves the count to `Count` below.
     count: (expr) => {
       const m = integerQuotientModulus(expr);
-      return m === undefined ? undefined : Number(m);
+      return m === undefined || m > MAX_SAFE ? undefined : Number(m);
     },
     isEmpty: (expr) => (integerQuotientModulus(expr) === undefined ? undefined : false),
     isFinite: (expr) => (integerQuotientModulus(expr) === undefined ? undefined : true),
@@ -82,6 +86,20 @@ export function quotientRingOverIntegers(ce: ComputeEngine): void {
     },
   };
   operator.collection = collection;
+
+  // ℤ/(2^61 − 1)ℤ has 2305843009213693951 classes: `Count` answers the exact integer, not the
+  // nearest double (…952).
+  const exactCount = (ops: readonly BoxedExpression[]): bigint | undefined => {
+    const m = ops.length === 1 ? integerQuotientModulus(ops[0] as BoxedExpression) : undefined;
+    return m !== undefined && m > MAX_SAFE ? m : undefined;
+  };
+  wrapOperator(
+    ce,
+    ["Count", ["QuotientRing", "Integers", 1]],
+    (ops) => exactCount(ops) !== undefined,
+    () => (ops) => ce.number(exactCount(ops) as bigint),
+    1,
+  );
 
   // The classes' type when a host has given them, else no claim at all -- `set<unknown>`, as
   // `adjoinType` answers for an adjunct it can't type. Never the base's elements.

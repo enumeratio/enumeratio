@@ -12,8 +12,8 @@ const known = referenceData().heads.flatMap(({ head, entry }) =>
 );
 
 test("every example's expected agrees with its known value", { timeout: 60_000 }, () => {
-  const off = known.flatMap(({ head, example: { id, expected, known: value, tolerance, source } }) => {
-    const why = disagreement(expected, value, tolerance ?? DEFAULT_TOLERANCE);
+  const off = known.flatMap(({ head, example: { id, expr, expected, known: value, tolerance, source } }) => {
+    const why = disagreement(expected, value, tolerance ?? DEFAULT_TOLERANCE, expr);
     return why === undefined ? [] : [`${head}/${id} (${source}): ${why}`];
   });
   expect(off).toEqual([]);
@@ -31,4 +31,14 @@ test("the comparison rejects what it should", () => {
   expect(disagreement(["Interval", 1.05221632868619, 1.0541936064357], truth, 1e-9)).toBeUndefined();
   expect(disagreement(["Interval", 1.0522163286862, 1.0541936064357], truth, 1e-9)).toBeDefined(); // misses the low end
   expect(disagreement(["Interval", 1.0522, 1.0542], truth, 1e-9)).toBeDefined(); // holds it, but loose
+});
+
+test("a Solve's fresh parameter is Wolfram's unconstrained solution", () => {
+  const identity = ["Solve", ["Equal", "x", "x"], "x"];
+  expect(disagreement(["List", "t"], ["List", ["List"]], 1e-12, identity)).toBeUndefined();
+  expect(disagreement(["List", "x"], ["List", ["List"]], 1e-12, identity)).toBeDefined();
+  expect(disagreement(["List"], ["List", ["List"]], 1e-12, identity)).toBeDefined();
+  const square = ["Solve", ["Equal", ["Power", "x", 2], 1], "x"];
+  const rules = ["List", ["List", ["Rule", "x", -1]], ["List", ["Rule", "x", 1]]];
+  expect(disagreement(["List", 1, -1], rules, 1e-12, square)).toBeUndefined();
 });

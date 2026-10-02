@@ -100,7 +100,6 @@ function cmp(a: Real, b: Real): -1 | 0 | 1 {
   return an === bn ? 0 : an < bn ? -1 : 1;
 }
 const isZero = (a: Real): boolean => ("frac" in a ? a.frac[0] === 0n : a.num === 0);
-const isNeg = (a: Real): boolean => ("frac" in a ? a.frac[0] < 0n : a.num < 0);
 
 function box(ce: ComputeEngine, r: Real): BoxedExpression {
   if ("frac" in r) {
@@ -328,18 +327,28 @@ const SQUARE_RANGE: readonly [Frac, Frac] = [FRAC_NEG_ONE, FRAC_ONE];
 // ---------------------------------------------------------------------------------------------
 // Evaluate handlers.
 
+/** The sign of an operand, certified: exact for a rational, the double's own for a float, and
+ *  for an exact irrational only once its double clears `BRANCH_MARGIN` -- `undefined` when it
+ *  can't. ½√(2 − √(2 + √2)) − sin(π/16) is exactly 0, and its double is 2.5e-17, not 0. */
+function signOf(x: BoxedExpression): -1 | 0 | 1 | undefined {
+  const d = decide(x);
+  if (d === undefined) return undefined;
+  if ("num" in d) return d.num === 0 ? 0 : d.num < 0 ? -1 : 1;
+  return certifiedCmpFrac(d, FRAC_ZERO);
+}
+
 function evaluateHeavisideTheta(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   if (ops.length === 0) return undefined;
   let sawZero = false;
   let undecided = false;
   for (const op of ops) {
-    const v = realOf(op);
-    if (v === undefined) {
+    const sign = signOf(op);
+    if (sign === undefined) {
       undecided = true;
       continue;
     }
-    if (isNeg(v)) return ce.number(0); // any negative factor makes the whole product 0
-    if (isZero(v)) sawZero = true;
+    if (sign < 0) return ce.number(0); // any negative factor makes the whole product 0
+    if (sign === 0) sawZero = true;
   }
   if (undecided || sawZero) return undefined; // undecided, or a genuine 0 -- stays unevaluated
   return ce.number(1);
@@ -389,9 +398,9 @@ function evaluateRamp(ce: ComputeEngine, ops: readonly BoxedExpression[]): Boxed
 function evaluateDiracDelta(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   if (ops.length === 0) return undefined;
   for (const op of ops) {
-    const v = realOf(op);
-    if (v === undefined) continue; // undecided -- keep scanning; a later nonzero still dominates
-    if (!isZero(v)) return ce.number(0);
+    const sign = signOf(op);
+    if (sign === undefined) continue; // undecided -- keep scanning; a later nonzero still dominates
+    if (sign !== 0) return ce.number(0);
   }
   return undefined; // every decided argument is 0 (or none were decided) -- stays symbolic
 }
@@ -400,12 +409,12 @@ function evaluateDiscreteDelta(ce: ComputeEngine, ops: readonly BoxedExpression[
   if (ops.length === 0) return undefined;
   let undecided = false;
   for (const op of ops) {
-    const v = realOf(op);
-    if (v === undefined) {
+    const sign = signOf(op);
+    if (sign === undefined) {
       undecided = true;
       continue;
     }
-    if (!isZero(v)) return ce.number(0);
+    if (sign !== 0) return ce.number(0);
   }
   return undecided ? undefined : ce.number(1);
 }

@@ -33,6 +33,7 @@ export {
   solutionSet,
   symbolic,
   type Tree,
+  UNCONSTRAINED,
   valuesOnly,
 } from "./structural.ts";
 export { DIVERGENCE_KINDS, type Divergence, type DivergenceKind } from "./divergence.ts";

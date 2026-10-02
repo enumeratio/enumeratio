@@ -1,4 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { compile } from "@cortex-js/compute-engine/compile";
 import { describe, expect, test } from "vite-plus/test";
 import { ensureRandom } from "../src/index.ts";
 
@@ -66,5 +67,36 @@ describe("our draws inside a span", () => {
     const spanned = ce.box(seeded(7) as never);
     expect(random.effects).toContain("random");
     expect(spanned.effects ?? []).not.toContain("random");
+  });
+});
+
+// #372: compiled code runs a `WithRandomSeed` body in the same frame, so a seed draws the
+// same numbers evaluated and compiled. The seed is the compiled function's argument, so the
+// draw isn't folded to a constant at compile time.
+describe.each([
+  ["plain compute-engine", plain],
+  ["with ensureRandom", wired],
+])("WithRandomSeed compiled agrees with evaluated (%s)", (_name, make) => {
+  // A compiled list is a JavaScript array.
+  const asJson = (value: unknown): unknown => (Array.isArray(value) ? ["List", ...value.map(asJson)] : value);
+  const bodies: [string, unknown][] = [
+    ["Random()", ["Random"]],
+    // `RandomInteger(1, 100)` (collections) rewrites to this before it draws.
+    ["an integer in a Range", ["Random", ["Range", 1, 100, 1]]],
+    ["a pick from a collection", ["Random", ["List", 2, 3, 5, 7, 11, 13]]],
+    ["an interval", ["Random", ["Interval", 0, 10]]],
+    ["several draws", ["List", ["Random"], ["Random"], ["Random", ["Range", 1, 6, 1]]]],
+  ];
+  test.each(bodies)("%s", (_label, body) => {
+    const ce = make();
+    const compiled = compile(ce.box(["Function", ["WithRandomSeed", "s", body], "s"] as never)) as unknown as {
+      success: boolean;
+      run: (seed: number) => unknown;
+    };
+    expect(compiled.success).toBe(true);
+    for (const seed of [1, 7, 42]) {
+      const evaluated = ce.box(seeded(seed, body) as never).evaluate();
+      expect(asJson(compiled.run(seed))).toEqual(evaluated.json);
+    }
   });
 });

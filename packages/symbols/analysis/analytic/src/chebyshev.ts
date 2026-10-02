@@ -105,6 +105,37 @@ function evaluate(
   return finish(box(negate ? ["Negate", expr] : expr));
 }
 
+/** The highest order the compiled recurrence runs; past it the compiled value is NaN. */
+const MAX_COMPILED_ORDER = 1_000_000;
+
+/**
+ * A JavaScript `compile` handler: the three-term recurrence inline, for a real x, with the
+ * negative orders folded as in `normalizeOrder`. Without it a compiled integrand falls back
+ * to the interpreter and `N(Integrate(…))` to Monte Carlo, whose error bar is too wide to
+ * check an orthogonality integral. Other targets aren't lowered (undefined).
+ */
+const compileChebyshev =
+  (kind: "T" | "U") =>
+  (
+    args: readonly BoxedExpression[],
+    compile: (e: BoxedExpression) => string,
+    ctx: { language?: string },
+  ): string | undefined => {
+    const [n, x] = args;
+    if (ctx.language !== "javascript" || n === undefined || x === undefined) return undefined;
+    const fold = kind === "T" ? "n = Math.abs(n);" : "if (n === -1) return 0; if (n < 0) { n = -n - 2; sign = -1; }";
+    return (
+      `((n, x) => { if (!Number.isInteger(n) || Math.abs(n) > ${MAX_COMPILED_ORDER}) return NaN; ` +
+      `let sign = 1; ${fold} if (n === 0) return sign; ` +
+      `let p = 1, c = ${kind === "T" ? "x" : "2 * x"}; ` +
+      `for (let k = 2; k <= n; k++) { const t = 2 * x * c - p; p = c; c = t; } ` +
+      `return sign * c; })(${compile(n)}, ${compile(x)})`
+    );
+  };
+
+export const compileChebyshevT = compileChebyshev("T");
+export const compileChebyshevU = compileChebyshev("U");
+
 export function evaluateChebyshevT(
   ce: ComputeEngine,
   n: BoxedExpression,

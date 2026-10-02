@@ -20,8 +20,12 @@ test("every documented head's provenance matches what its entry claims", () => {
   // The claim is the `library` field; the answer is what a bare engine actually does with
   // the head. `StirlingS1` sat documented as ours long after it was compute-engine's, and
   // only a hand probe caught it — this is that probe, for the whole catalogue.
-  const wrong = ledger.filter((row) => !row.agrees);
-  expect(wrong.map((row) => `${row.name}: computed ${row.provenance}, declared ${row.declared}`)).toEqual([]);
+  // A bare engine resolving a head a package declares is compute-engine shipping it (BL-62).
+  const why = (row: (typeof ledger)[number]): string =>
+    row.provenance === "compute-engine" && row.declared !== undefined
+      ? `compute-engine now ships ${row.name}: delete our redeclaration in ${row.declared}`
+      : `${row.name}: computed ${row.provenance}, declared ${row.declared ?? "compute-engine"}`;
+  expect(ledger.filter((row) => !row.agrees).map(why)).toEqual([]);
 });
 
 test("the catalogue is mostly compute-engine's, and we know which part is not", () => {
@@ -224,6 +228,8 @@ const OVERRIDDEN = [
   "Divisors",
   "Dot",
   "Element",
+  // EllipticE(0) = π/2 (ce-patches values-at-zero).
+  "EllipticE",
   // Not itself overridden -- Wolfram's documented identities compare our heads
   // (Fibonacci(2, -x) == -Fibonacci(2, x)); Equal is the corpus expression's outer head.
   "Equal",

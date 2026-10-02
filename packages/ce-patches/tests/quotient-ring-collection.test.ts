@@ -28,6 +28,13 @@ describe("QuotientRing(Integers, m) as a collection", () => {
     expect(ring.isEmptyCollection).toBe(false);
   });
 
+  test("counts exactly past 2^53", () => {
+    const m = 2n ** 61n - 1n;
+    const count = ce.box(["Count", ["QuotientRing", "Integers", { num: m.toString() }]]).evaluate();
+    expect(bigIntegerAt(count)).toBe(m);
+    expect(ce.box(["Count", ["QuotientRing", "Integers", 2 ** 53 - 1]]).evaluate().json).toBe(2 ** 53 - 1);
+  });
+
   test("enumerates the classes 0, …, m − 1", () => {
     expect(ce.box(["ListFrom", ["QuotientRing", "Integers", 3]]).evaluate().json).toEqual([
       "List",

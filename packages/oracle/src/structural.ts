@@ -12,6 +12,7 @@
 // stays engine-free so it can be tested on plain trees.
 
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
+import { DEFINED_NAMES } from "./defined-names-data.ts";
 import type { MathJSON } from "./emit.ts";
 import type { Verdict } from "./compare.ts";
 
@@ -36,22 +37,38 @@ const PAIR_HEADS = new Set(["Rule", "KeyValuePair"]);
 const byValue = (a: Tree, b: Tree): number =>
   typeof a === "number" && typeof b === "number" ? a - b : JSON.stringify(a).localeCompare(JSON.stringify(b));
 
+/** An unknown left free. Wolfram's empty rule list (`Solve[x == x, x]` is `{{}}`) and our
+ * fresh parameter (`[t]`, compute-engine #397) say the same thing, so both read as this. */
+export const UNCONSTRAINED = "Unconstrained";
+
+/** Whether `node` mentions the symbol `name` anywhere. */
+const mentions = (node: MathJSON, name: string): boolean =>
+  node === name || (Array.isArray(node) && node.some((n) => mentions(n as MathJSON, name)));
+
 /**
  * `Solve`'s answers as bare values, order-free. Wolfram answers a list of solutions, each a
  * list of rules (`{{x -> -1}, {x -> 1}}`); ours is a list of values, a `Tuple` for several
  * unknowns. The two say the same thing once the rules are read as their right-hand sides and
  * the solutions as a set. Anything that is not a list of rule lists is left alone.
+ *
+ * Given the `Solve` call, a solution that is a fresh parameter (a symbol compute-engine has
+ * no definition for, absent from the call) reads as `UNCONSTRAINED`, as Wolfram's `{}` does.
+ * `[Pi]` for `Solve(cos x = -1, x)` stays `Pi`: it has a definition.
  */
-export function solutionSet(expr: MathJSON): MathJSON {
+export function solutionSet(expr: MathJSON, call?: MathJSON): MathJSON {
   if (!Array.isArray(expr) || expr[0] !== "List") return expr;
   const solutions = expr.slice(1) as MathJSON[];
   const isRule = (e: MathJSON): boolean => Array.isArray(e) && PAIR_HEADS.has(e[0] as string) && e.length === 3;
   const isRuleList = (e: MathJSON): boolean => Array.isArray(e) && e[0] === "List" && e.slice(1).every(isRule);
-  if (!solutions.every(isRuleList)) return ["Set", ...solutions] as MathJSON;
+  const fresh = (e: MathJSON): boolean =>
+    call !== undefined && typeof e === "string" && !DEFINED_NAMES.has(e) && !mentions(call, e);
+  if (!solutions.every(isRuleList))
+    return ["Set", ...solutions.map((solution) => (fresh(solution) ? UNCONSTRAINED : solution))] as MathJSON;
   return [
     "Set",
     ...solutions.map((solution) => {
       const values = (solution as MathJSON[]).slice(1).map((rule) => (rule as MathJSON[])[2] as MathJSON);
+      if (values.length === 0) return UNCONSTRAINED;
       return values.length === 1 ? (values[0] as MathJSON) : (["Tuple", ...values] as MathJSON);
     }),
   ] as MathJSON;

@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // Wolfram folds Floor/Ceil/Round of an exact numeric constant expression -- Pi, E, a
@@ -30,7 +30,51 @@ function looksConstant(op: BoxedExpression): boolean {
   return CONSTANT_HEADS.has(op.operator ?? "");
 }
 
-function declareRoundingHead(ce: ComputeEngine, name: "Floor" | "Ceil" | "Round", round: (x: number) => number): void {
+/** Digits carried past a value's integer part, so its fractional part is certain. */
+const GUARD_DIGITS = 15;
+/** The most digits a rounding evaluates at: the fewest a declared constant carries is
+ *  Glaisher's 66 (const-glaisher.ts), and past them more precision only repeats them. A
+ *  value too large for this many digits declines. */
+const MAX_ROUNDING_DIGITS = 60;
+/** How close the fractional part may come to a breakpoint (an integer, or ½ for Round)
+ *  before the rounding declines: an exact zero in disguise lands right on one. */
+const BREAKPOINT_MARGIN = new BigDecimal("1e-6");
+
+type Rounding = "Floor" | "Ceil" | "Round";
+
+/**
+ * `name` of an exact real `x` as a bigint, from `x` at enough digits to hold its integer part
+ * and `GUARD_DIGITS` more: `Round(Khinchin^100)` is the 43-digit 7975160530073655774671985794452796861418592,
+ * not a double's 7.975160530073655e42. `undefined` when the value isn't real and finite,
+ * needs more than `MAX_ROUNDING_DIGITS`, or its fractional part is within
+ * `BREAKPOINT_MARGIN` of a breakpoint.
+ */
+function roundExactly(ce: ComputeEngine, name: Rounding, x: BoxedExpression): bigint | undefined {
+  const rough = x.N();
+  if (rough.im !== 0 || !Number.isFinite(rough.re)) return undefined;
+  const digits = Math.max(1, Math.ceil(Math.log10(Math.abs(rough.re) + 1))) + GUARD_DIGITS;
+  if (digits > MAX_ROUNDING_DIGITS) return undefined;
+  const precision = ce.precision;
+  let text: string;
+  try {
+    ce.precision = Math.max(precision, digits);
+    const json = x.N().json;
+    text = typeof json === "number" ? String(json) : ((json as { num?: string }).num ?? "");
+  } finally {
+    ce.precision = precision;
+  }
+  if (!/^-?[0-9.]+(e[-+]?[0-9]+)?$/.test(text)) return undefined;
+  const value = new BigDecimal(text);
+  const floor = value.floor();
+  const fraction = value.sub(floor);
+  const breakpoint = name === "Round" ? new BigDecimal("0.5") : new BigDecimal(0);
+  const near = (b: BigDecimal): boolean => fraction.sub(b).abs().lte(BREAKPOINT_MARGIN);
+  if (near(breakpoint) || (name !== "Round" && near(new BigDecimal(1)))) return undefined;
+  const up = name === "Ceil" || (name === "Round" && fraction.gt(breakpoint));
+  return floor.toBigInt() + (up ? 1n : 0n);
+}
+
+function declareRoundingHead(ce: ComputeEngine, name: Rounding): void {
   // Idempotent: Floor(Floor(x)) = Floor(x), for whatever x -- the inner value is
   // already an integer (or stays symbolic, in which case nothing changes either way).
   wrapOperator(
@@ -40,23 +84,22 @@ function declareRoundingHead(ce: ComputeEngine, name: "Floor" | "Ceil" | "Round"
     () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
     1,
   );
-  // An exact constant expression: evaluate it numerically and round that.
+  // An exact constant expression: compute-engine's own answer where it has one (Pi^40,
+  // exactly), else the value at enough digits, rounded. A non-real or non-finite value is
+  // another package's (complex Floor), not ours to end.
   wrapOperator(
     ce,
     [name, 1],
     (ops) => ops[0] !== undefined && looksConstant(ops[0]),
     (native) => (ops, options) => {
-      const n = ops[0]!.N();
-      // A non-real or non-finite value is another package's (complex Floor), not ours to end.
-      if (n.im !== 0 || !Number.isFinite(n.re)) return native?.(ops, options);
-      return ce.number(round(n.re));
+      const answer = native?.(ops, options);
+      if (answer !== undefined && answer.operator !== name) return answer;
+      const rounded = roundExactly(ce, name, ops[0]!);
+      return rounded === undefined ? answer : ce.number(rounded);
     },
     1,
   );
 }
-
-/** Round half away from zero, matching this reference's own Round convention. */
-const roundHalfAway = (x: number): number => (x >= 0 ? Math.floor(x + 0.5) : Math.ceil(x - 0.5));
 
 /** The pool Max/Min compare: a single List argument's elements, or the bare arguments. */
 function pool(ops: readonly BoxedExpression[]): readonly BoxedExpression[] {
@@ -98,9 +141,9 @@ function declareExtremum(ce: ComputeEngine, name: "Max" | "Min", better: (a: num
 }
 
 export function declareConstantRounding(ce: ComputeEngine): void {
-  declareRoundingHead(ce, "Floor", Math.floor);
-  declareRoundingHead(ce, "Ceil", Math.ceil);
-  declareRoundingHead(ce, "Round", roundHalfAway);
+  declareRoundingHead(ce, "Floor");
+  declareRoundingHead(ce, "Ceil");
+  declareRoundingHead(ce, "Round");
   declareExtremum(ce, "Max", (a, b) => a > b);
   declareExtremum(ce, "Min", (a, b) => a < b);
 

@@ -6,11 +6,16 @@ summary: The number of elements equal to value in the collection.
 signatures:
   - call: Count(collection, value)
     description: the number of elements equal to `value`.
+  - call: Count(QuotientRing(Integers, m))
+    description: $m$ exactly, past $2^{53}$ too (the quotient-ring-collection patch).
+    library: enumeratio-residues
+    type: (collection<any>, any?) -> infinity | integer
+    overrides: compute-engine
   - call: Count(collection, value, level)
     description: matches counted down to `level` (levels 1 through `level`), or — with `level` written as $\{level\}$ — at that level only.
     library: enumeratio-combinatorics
     type: (collection<any>, any?) -> infinity | integer
-    overrides: compute-engine
+    overrides: enumeratio-residues
 seeAlso:
   - Length
   - IndexOf
