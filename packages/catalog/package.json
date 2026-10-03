@@ -14,8 +14,10 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
-    "./records": "./src/catalog-records-data.ts",
+    "./records": {
+      "types": "./dist/records.d.mts",
+      "import": "./dist/records.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -31,8 +33,8 @@
     "@cortex-js/compute-engine": "^0.146.0",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/engine": "workspace:*",
+    "@enumeratio/entry": "workspace:*",
     "@enumeratio/plausible": "workspace:*",
-    "@enumeratio/statistics": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

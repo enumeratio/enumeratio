@@ -11,7 +11,7 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
-import { emit, type MathJSON } from "@enumeratio/oracle/src";
+import { emit, type MathJSON } from "@enumeratio/oracle";
 import { concretise, loadCatalogue, loadPins, PINS_FILE, type Pins } from "../src/catalogue.ts";
 import { numeric } from "../src/generators/wolfram.ts";
 import { formulaOf } from "../src/plan.ts";

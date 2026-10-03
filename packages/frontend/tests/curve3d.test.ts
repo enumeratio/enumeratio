@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { lorenzCurve, type Point3, torusKnotCurve } from "@enumeratio/braid/src";
+import { lorenzCurve, type Point3, torusKnotCurve } from "@enumeratio/braid";
 import { curve3dSvg } from "../src/plot3d.ts";
 
 const closes = (pts: readonly Point3[]) => {

@@ -9,7 +9,7 @@
 // `*^` for exponents; both are sanitized before parsing.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { applyAllPatches } from "@enumeratio/ce-patches/src";
+import { applyAllPatches } from "@enumeratio/ce-patches";
 import { runKernel } from "@enumeratio/oracle/bounded";
 
 const ce = new ComputeEngine();

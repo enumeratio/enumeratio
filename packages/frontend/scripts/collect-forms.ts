@@ -9,7 +9,7 @@
 
 import { orderImplementations } from "@enumeratio/entry";
 import { updateHead } from "@enumeratio/entry/node";
-import { SYSTEMS } from "@enumeratio/oracle/src";
+import { SYSTEMS } from "@enumeratio/oracle";
 import { loadReferenceData, PACKAGES } from "@enumeratio/reference/node";
 import { recordWithForms } from "./forms.ts";
 

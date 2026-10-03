@@ -1,7 +1,8 @@
 // Which systems have a harness, how to start it, and whether it clears caches between samples.
 
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import type { Generator } from "./generate.ts";
+import { ROOT } from "./root.ts";
 import {
   CACHES_JULIA,
   CACHES_OSCAR,
@@ -37,10 +38,8 @@ export const GENERATORS: Partial<Record<BenchSystem, Generator>> = {
 };
 
 export const HARNESSES: Partial<Record<BenchSystem, () => HarnessCommand>> = {
-  ts: () => ({
-    command: process.execPath,
-    args: [fileURLToPath(new URL("./harness-ts.ts", import.meta.url))],
-  }),
+  // Source only: it imports the reference engine from a checkout, so it is not in the package.
+  ts: () => ({ command: process.execPath, args: [join(ROOT, "src/harness-ts.ts")] }),
   wolfram: harnessWolfram,
   mpmath: harnessMpmath,
   sympy: harnessSympy,

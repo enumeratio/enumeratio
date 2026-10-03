@@ -6,7 +6,7 @@
 
 import { appendFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareCombinatorics } from "@enumeratio/combinatorics/src";
+import { declareCombinatorics } from "../src/index.ts";
 import { operationOf } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { ALL_STATISTICS } from "../src/statistics/all.ts";

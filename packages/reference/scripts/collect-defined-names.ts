@@ -13,7 +13,7 @@
 //
 //   vp node packages/reference/scripts/collect-defined-names.ts
 
-import type { MathJSON } from "@enumeratio/oracle/src";
+import type { MathJSON } from "@enumeratio/oracle";
 import { writeFormatted } from "@enumeratio/entry/node";
 import { declaredEngine } from "./engines.ts";
 import { isDefinedName, symbolsIn } from "./defined-names.ts";

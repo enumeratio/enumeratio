@@ -1,5 +1,5 @@
 import { OWN_FORMS as OWN_FORM_NAMES } from "@enumeratio/entry";
-import { DIVERGENCE_KINDS, emit } from "@enumeratio/oracle/src";
+import { DIVERGENCE_KINDS, emit } from "@enumeratio/oracle";
 import { expect, test } from "vite-plus/test";
 import { referenceData, referenceEntries } from "../src/node.ts";
 

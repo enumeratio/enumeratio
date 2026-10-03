@@ -66,7 +66,7 @@ async function plotPreview(spec: MarkupSpec): Promise<string | undefined> {
   // The wildcards start where their controls do: the plot's own, then a Manipulate's around it.
   const scope: Record<string, unknown> = {};
   if (plot.items.some((item) => item.code!.includes("_.__"))) {
-    const m = await import("@enumeratio/analytic/src");
+    const m = await import("@enumeratio/analytic");
     Object.assign(scope, {
       __hz: m.hurwitzZetaReal,
       __zg: m.zetaGeneralizedReal,

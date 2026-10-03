@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareAnalytic } from "@enumeratio/analytic/src";
+import { declareAnalytic } from "@enumeratio/analytic";
 import { expect, test } from "vite-plus/test";
 import { collectErrors } from "../src/assert.ts";
 import {

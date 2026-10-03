@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "vite-plus/test";
-import { cx, logGamma } from "@enumeratio/ce-patches/src";
+import { cx, logGamma } from "@enumeratio/ce-patches";
 
 // 67-point golden from mpmath.loggamma at 30 digits (scripts/collect-loggamma-goldens.ts,
 // UPDATE_LOGGAMMA_GOLDEN=1 to regenerate): small positive reals, the neighborhoods of 1 and

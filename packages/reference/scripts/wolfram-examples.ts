@@ -2,7 +2,7 @@
 // it can't be. An input is kept only when every Wolfram name in it is one we map back to a
 // head or symbol of ours, so the example means here what it meant there.
 
-import { fromWolfram, isSystemName, REVERSE_HEADS, SYMBOLS } from "@enumeratio/wolfram/src";
+import { fromWolfram, isSystemName, REVERSE_HEADS, SYMBOLS } from "@enumeratio/wolfram";
 
 /** Wolfram's documentation sections, as our page's (`null`: not an example we'd show). */
 export const SECTION: Readonly<Record<string, string | null>> = {

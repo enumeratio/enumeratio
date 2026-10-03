@@ -16,27 +16,27 @@ import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
 import { displayDictionary } from "@enumeratio/frontend/display";
 import { NOTATIONS } from "@enumeratio/manifest";
-import { declareAdeles } from "@enumeratio/adeles/src";
-import { declareEvaluation } from "@enumeratio/evaluation/src";
-import { declareAnalytic } from "@enumeratio/analytic/src";
-import { declareBraid } from "@enumeratio/braid/src";
-import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog/src";
-import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics/src";
-import { declareDiagrams } from "@enumeratio/diagram/src";
-import { declareGraphics } from "@enumeratio/formats/src";
-import { declareGeometric } from "@enumeratio/geometric/src";
-import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
-import { declareHecke } from "@enumeratio/hecke/src";
-import { declareHopf } from "@enumeratio/hopf/src";
-import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
-import { declareBoxes } from "@enumeratio/boxes/src";
-import { declareIncidence } from "@enumeratio/incidence/src";
-import { declareModular } from "@enumeratio/modular/src";
+import { declareAdeles } from "@enumeratio/adeles";
+import { declareEvaluation } from "@enumeratio/evaluation";
+import { declareAnalytic } from "@enumeratio/analytic";
+import { declareBraid } from "@enumeratio/braid";
+import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog";
+import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
+import { declareDiagrams } from "@enumeratio/diagram";
+import { declareGraphics } from "@enumeratio/formats";
+import { declareGeometric } from "@enumeratio/geometric";
+import { declareGroupAlgebra } from "@enumeratio/groupalgebra";
+import { declareHecke } from "@enumeratio/hecke";
+import { declareHopf } from "@enumeratio/hopf";
+import { declareHypercomplex } from "@enumeratio/hypercomplex";
+import { declareBoxes } from "@enumeratio/boxes";
+import { declareIncidence } from "@enumeratio/incidence";
+import { declareModular } from "@enumeratio/modular";
 import { declareFrontendCarriers } from "@enumeratio/frontend/declare-carriers";
-import { declareNumberTheory } from "@enumeratio/number-theory/src";
-import { declareNumerals } from "@enumeratio/numerals/src";
-import { declareQuiver } from "@enumeratio/quiver/src";
-import { declareResidues } from "@enumeratio/residues/src";
+import { declareNumberTheory } from "@enumeratio/number-theory";
+import { declareNumerals } from "@enumeratio/numerals";
+import { declareQuiver } from "@enumeratio/quiver";
+import { declareResidues } from "@enumeratio/residues";
 import {
   declareCarrierElement,
   declareCarrierPlurals,
@@ -48,7 +48,7 @@ import {
   ensureOperationHeads,
   ensureProtocols,
   RESTRICTIONS,
-} from "@enumeratio/structures/src";
+} from "@enumeratio/structures";
 import {
   declareDistributions,
   declareDistributions2,
@@ -57,7 +57,7 @@ import {
   declareDistributions5,
   declareDistributions6,
   declareProcesses,
-} from "@enumeratio/statistics/src";
+} from "@enumeratio/statistics";
 
 type Declare = (ce: ComputeEngine) => void;
 

@@ -6,7 +6,7 @@ import { type ComplexWGSL, MAX_SLOTS } from "@enumeratio/ce-patches/wgsl-complex
 // invocation per pixel, hue = arg, brightness = a compressed log-magnitude.
 //
 // Internal to the element -- deliberately not re-exported from the package index, since
-// its signatures name types from `@enumeratio/analytic/src` and pulling those into the
+// its signatures name types from `@enumeratio/analytic` and pulling those into the
 // public .d.ts makes the declaration build resolve a second package's source tree.
 //
 // The point of the split from `notatio-complex-plot.ts` is the pipeline cache. A

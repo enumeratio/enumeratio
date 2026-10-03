@@ -4,8 +4,8 @@
 // with Pi rounded to a float and stray ~1e-43 terms instead of a symbolic closed form.
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareNumerals } from "@enumeratio/numerals/src";
-import { declareResidues } from "@enumeratio/residues/src";
+import { declareNumerals } from "@enumeratio/numerals";
+import { declareResidues } from "@enumeratio/residues";
 import { declareNumberTheory } from "../src/declare.ts";
 
 const ce = new ComputeEngine();

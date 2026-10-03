@@ -7,7 +7,7 @@
 // on regen) is the proof `toWolfram`'s output over every reference example didn't move, and
 // `packages/wolfram/tests/*` (also unchanged) is the proof for that package's own suite.
 
-import { HEADS } from "@enumeratio/wolfram/src";
+import { HEADS } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 

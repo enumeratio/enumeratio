@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics/src";
+import { CARRIERS, declareCombinatoricsCarriers } from "@enumeratio/combinatorics";
 import { ALL_REPRESENTATIONS, canonicalFor, REPRESENTATIONS, representationsFor } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { declareRendering } from "../src/carrier-render.ts";

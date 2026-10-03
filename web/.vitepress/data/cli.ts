@@ -1,11 +1,11 @@
-// The CLI's own surface, read out of @enumeratio/cli's SOURCE rather than retyped here:
+// The CLI's own surface, read out of @enumeratio/cli rather than retyped here:
 // the USAGE text, the subcommand and flag lists the completion scripts advertise, and
 // the form / syntax names the parser resolves. USAGE is the prose source of truth, so the
 // per-row descriptions are parsed back out of it instead of being duplicated.
 
-import { USAGE } from "../../../packages/cli/src/command.ts";
-import { FLAGS, SHELLS, SUBCOMMANDS } from "../../../packages/cli/src/completion.ts";
-import { FORM_LABEL, FORMS, SYNTAXES } from "../../../packages/cli/src/engine.ts";
+import { USAGE } from "@enumeratio/cli/command";
+import { FLAGS, SHELLS, SUBCOMMANDS } from "@enumeratio/cli/completion";
+import { FORM_LABEL, FORMS, SYNTAXES } from "@enumeratio/cli/engine";
 
 export interface CliRow {
   /** The invocation or flag spelling, as USAGE writes it. */

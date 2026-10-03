@@ -15,7 +15,7 @@
 
 import { readFileSync } from "node:fs";
 import type { TriageBucket } from "@enumeratio/entry";
-import { emit } from "@enumeratio/oracle/src";
+import { emit } from "@enumeratio/oracle";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 import { rewriteExamples, settle } from "./triage-records.ts";
 

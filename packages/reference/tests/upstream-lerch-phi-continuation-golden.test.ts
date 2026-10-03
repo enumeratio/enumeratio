@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { type Cx, applyAllPatches, cx, lerchContinued } from "@enumeratio/ce-patches/src";
+import { type Cx, applyAllPatches, cx, lerchContinued } from "@enumeratio/ce-patches";
 
 // The full oracle comparison for LerchPhi past |z| = 1, via the Hermite-type integral in
 // numerics/lerch-phi-continuation.ts -- mpmath.lerchphi at 30 digits

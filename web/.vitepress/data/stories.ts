@@ -4,7 +4,7 @@
 // the component's head, the same rule ComponentPage.vue's `wrapper` computed derives a tag
 // by.
 
-import { STORIES_DATA, type StoryData } from "../../../packages/components/src/stories-data.ts";
+import { STORIES_DATA, type StoryData } from "@enumeratio/components/stories-data";
 
 export type { StoryData };
 

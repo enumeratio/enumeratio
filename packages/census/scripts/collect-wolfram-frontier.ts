@@ -22,7 +22,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { HEADS, isSystemName, STRUCTURAL, SYMBOLS } from "@enumeratio/wolfram/src";
+import { HEADS, isSystemName, STRUCTURAL, SYMBOLS } from "@enumeratio/wolfram";
 import { bindings, fullEngine } from "../src/engine.ts";
 import { runKernel } from "@enumeratio/oracle/bounded";
 

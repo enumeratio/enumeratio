@@ -1,7 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import { compare, compareCombination, linearCombination, normalise } from "../src/compare.ts";
 import { emit, unmappedHeads } from "../src/emit.ts";
-import { fromWolfram } from "@enumeratio/wolfram/src";
+import { fromWolfram } from "@enumeratio/wolfram";
 import { MAPPINGS, mappingFor } from "../src/mappings.ts";
 import { SYSTEMS, wiredSystems } from "../src/systems.ts";
 

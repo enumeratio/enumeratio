@@ -14,7 +14,7 @@
 // (`startSessionWorker`) and this site's catalogue (`./worker-catalogue.ts`) statically, so
 // Vite bundles them into the worker, each library a chunk of its own -- no runtime
 // `import()` of a URL the build never emitted.
-import { startSessionWorker } from "../../../packages/symbols/evaluation/evaluation/src/session-worker-core.ts";
+import { startSessionWorker } from "@enumeratio/evaluation/session-worker-core";
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
 import { combineNotation, registerNotation } from "@enumeratio/boxes";
 import { displayDictionary } from "@enumeratio/frontend/display";

@@ -6,11 +6,12 @@ export default defineConfig({
       index: "src/index.ts",
       collections: "collections/src/index.ts",
       notation: "src/notation.ts",
+      findstat: "findstat/src/findstat-data.ts",
+      sampleable: "collections/scripts/sampleable.ts",
     },
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo" },
-    // exports managed by hand in package.json so the buildless `./*/reference`
-    // and `./collections/sampleable` subpaths (src-only) survive packing.
+    // exports are managed by hand in package.json
     exports: false,
   },
   lint: {

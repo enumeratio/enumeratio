@@ -13,7 +13,7 @@
 
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { parseArgs } from "node:util";
-import { fetchWolframData, wolframDataNames, type WolframDataSource } from "@enumeratio/oracle/src";
+import { fetchWolframData, wolframDataNames, type WolframDataSource } from "@enumeratio/oracle";
 import { WOLFRAM_CACHE, cachePath, mappedWolframNames } from "./wolfram-cache.ts";
 
 const { values, positionals } = parseArgs({

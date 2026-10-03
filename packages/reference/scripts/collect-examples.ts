@@ -10,9 +10,9 @@
 //   node packages/reference/scripts/collect-examples.ts
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareAnalytic } from "@enumeratio/analytic/src";
+import { declareAnalytic } from "@enumeratio/analytic";
 import { dedupeId, type ReferenceExample, type SystemImplementation } from "@enumeratio/entry";
-import { emit } from "@enumeratio/oracle/src";
+import { emit } from "@enumeratio/oracle";
 import { writeHead } from "@enumeratio/entry/node";
 import { baseId } from "./example-id.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";

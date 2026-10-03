@@ -14,13 +14,18 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
-    "./definitions": "./src/definitions.ts",
+    "./definitions": {
+      "types": "./dist/definitions.d.mts",
+      "import": "./dist/definitions.mjs"
+    },
     "./notation": {
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
     },
-    "./shader": "./src/shader.ts",
+    "./shader": {
+      "types": "./dist/shader.d.mts",
+      "import": "./dist/shader.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -49,7 +54,8 @@
     "@cortex-js/compute-engine": "^0.146.0"
   },
   "enumeratio": {
-    "notation": "./notation"
+    "notation": "./notation",
+    "group": "analysis"
   },
   "generated": [
     "src/notation.generated.ts"

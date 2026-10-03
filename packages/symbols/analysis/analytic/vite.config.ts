@@ -2,7 +2,12 @@ import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   pack: {
-    entry: { index: "src/index.ts", notation: "src/notation.ts" },
+    entry: {
+      index: "src/index.ts",
+      notation: "src/notation.ts",
+      definitions: "src/definitions.ts",
+      shader: "src/shader.ts",
+    },
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo" },
   },

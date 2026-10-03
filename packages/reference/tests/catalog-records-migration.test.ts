@@ -19,7 +19,7 @@
 // replay note.
 
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog/src";
+import { CARRIERS, COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog";
 import { referenceData } from "../src/node.ts";
 
 test("catalog-records-data.ts is what the current records collect to", () => {

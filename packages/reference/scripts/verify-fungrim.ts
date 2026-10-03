@@ -16,7 +16,7 @@ import { spawn } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
-import { declareAnalytic } from "@enumeratio/analytic/src";
+import { declareAnalytic } from "@enumeratio/analytic";
 import type { FungrimVerdict } from "../src/fungrim-verified-data.ts";
 import type { FungrimRule, Outcome } from "./fungrim.ts";
 

@@ -1,12 +1,4 @@
-import {
-  digamma,
-  hurwitzZeta,
-  lerchPhi,
-  logGamma,
-  polygamma,
-  polyLog,
-  zetaGeneralized,
-} from "@enumeratio/analytic/src";
+import { digamma, hurwitzZeta, lerchPhi, logGamma, polygamma, polyLog, zetaGeneralized } from "@enumeratio/analytic";
 
 // A small complex evaluator over canonical MathJSON: the head set `emitComplexWGSL`
 // lowers, plus Gamma, on `[re, im]` tuples. `notatio-complex-plot-3d`'s CPU sampler,

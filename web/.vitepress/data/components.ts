@@ -2,6 +2,7 @@
 // of the element sources, plus which playground page exercises each component.
 
 import { readdirSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { type ComponentDoc as Reflected, collectComponents as reflect, headOfTag } from "@enumeratio/frontend/reflect";
@@ -23,7 +24,11 @@ export interface ComponentDoc extends Reflected {
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
-export const srcDir = resolve(here, "../../../packages/components/src");
+// The element sources the package ships: the reference is read out of them.
+export const srcDir = join(
+  dirname(createRequire(import.meta.url).resolve("@enumeratio/components/package.json")),
+  "src",
+);
 const playgroundDir = resolve(here, "../../playground");
 
 /** Every markdown page under the playground, as a path relative to it. */

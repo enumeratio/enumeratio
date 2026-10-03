@@ -13,12 +13,10 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
     "./compiled": {
       "types": "./dist/compiled.d.mts",
       "import": "./dist/compiled.mjs"
     },
-    "./compiled/src": "./src/compiled.ts",
     "./package.json": "./package.json"
   },
   "scripts": {

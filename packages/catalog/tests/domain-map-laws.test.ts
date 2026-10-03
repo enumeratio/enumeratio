@@ -10,7 +10,7 @@
 // domains/tests/map-helpers.ts's, inlined since that helper was package-internal.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { allKernels, type FamilyKernel } from "@enumeratio/combinatorics/collections/src";
+import { allKernels, type FamilyKernel } from "@enumeratio/combinatorics/collections";
 import { sampleable } from "@enumeratio/combinatorics/collections/sampleable";
 import {
   CARRIERS,
@@ -19,7 +19,7 @@ import {
   declareMaps,
   type LawFailure,
   MAPS,
-} from "@enumeratio/combinatorics/src";
+} from "@enumeratio/combinatorics";
 import { streamFor } from "@enumeratio/plausible";
 import { expect, test } from "vite-plus/test";
 

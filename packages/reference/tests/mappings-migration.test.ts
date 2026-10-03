@@ -14,7 +14,7 @@
 // "wolfram / mpmath ... same normalisation" note) -- informal prose about a head MAPPINGS
 // never covered, not one of this migration's rows -- so it is excluded from the regrouping.
 
-import { type Mapping, MAPPINGS } from "@enumeratio/oracle/src";
+import { type Mapping, MAPPINGS } from "@enumeratio/oracle";
 import { expect, test } from "vite-plus/test";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 

@@ -14,7 +14,6 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
     "./inputform": {
       "types": "./dist/inputform.d.mts",
       "import": "./dist/inputform.mjs"

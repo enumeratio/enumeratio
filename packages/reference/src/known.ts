@@ -2,7 +2,7 @@
 // interval that tightly encloses the known one, or numerically within a tolerance.
 
 import { BigDecimal, ComputeEngine } from "@cortex-js/compute-engine";
-import { type MathJSON, solutionSet } from "@enumeratio/oracle/src";
+import { type MathJSON, solutionSet } from "@enumeratio/oracle";
 
 const ce = new ComputeEngine();
 // Relative above magnitude 1, absolute below it, so a value near 0 has a sensible bound.

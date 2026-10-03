@@ -19,8 +19,8 @@ import {
   type Tree,
   type Verdict,
   valuesOnly,
-} from "@enumeratio/oracle/src";
-import { fromWolfram } from "@enumeratio/wolfram/src";
+} from "@enumeratio/oracle";
+import { fromWolfram } from "@enumeratio/wolfram";
 import { MAX_MEASURED_TOLERANCE } from "../src/known.ts";
 
 const ce = new ComputeEngine();

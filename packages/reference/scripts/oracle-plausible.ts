@@ -19,9 +19,9 @@
 //   node packages/reference/scripts/oracle-plausible.ts julia --seed 2026-09-25 --samples 4
 
 import { appendFileSync, writeFileSync } from "node:fs";
-import { runCases } from "@enumeratio/evaluation/src/node";
-import { allFamilies, type AnyFamily } from "@enumeratio/combinatorics/collections/src";
-import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle/src";
+import { runCases } from "@enumeratio/evaluation/node";
+import { allFamilies, type AnyFamily } from "@enumeratio/combinatorics/collections";
+import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle";
 import { between as edgeBiased } from "@enumeratio/plausible";
 import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";

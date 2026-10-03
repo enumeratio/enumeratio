@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
+import { declareHypercomplex } from "@enumeratio/hypercomplex";
 import { expect, test } from "vite-plus/test";
 import { declareDiagrams } from "../src/declare.ts";
 

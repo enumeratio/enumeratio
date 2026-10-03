@@ -1,4 +1,4 @@
-import { fromWolfram } from "@enumeratio/wolfram/src";
+import { fromWolfram } from "@enumeratio/wolfram";
 import { describe, expect, test } from "vite-plus/test";
 import { compare, parsePython } from "../src/compare.ts";
 import type { MathJSON } from "../src/emit.ts";

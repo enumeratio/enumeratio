@@ -49,7 +49,7 @@ const packageGlobs =
     ? ["node_modules/@enumeratio/*"]
     : ["packages/*", "packages/symbols/*/*", "tools/*"];
 
-/** The /docs groups, in page order. The symbol packages go by their `symbols/<group>` folder. */
+/** The /docs groups, in page order. A symbol package names its own in `enumeratio.group`. */
 export const groups = [
   "interface",
   "arithmetic",
@@ -74,9 +74,8 @@ const toolingPackages = new Set([
   "wolfram",
 ]);
 
-function groupOf(slug: string, dir: string): string {
-  const symbolGroup = /^packages\/symbols\/([^/]+)\//.exec(dir)?.[1];
-  if (symbolGroup) return symbolGroup;
+function groupOf(slug: string, declared: string | undefined): string {
+  if (declared) return declared;
   if (interfacePackages.has(slug)) return "interface";
   if (toolingPackages.has(slug)) return "tooling";
   return "foundation";
@@ -131,6 +130,7 @@ export function workspacePackages(): WorkspacePackage[] {
       description?: string;
       dependencies?: Record<string, string>;
       devDependencies?: Record<string, string>;
+      enumeratio?: { group?: string };
     };
     if (!pkg.name?.startsWith("@enumeratio/")) continue;
     const siblings = (deps = {}) => Object.keys(deps).filter((d) => d.startsWith("@enumeratio/"));
@@ -142,7 +142,7 @@ export function workspacePackages(): WorkspacePackage[] {
       slug,
       description: pkg.description,
       dir,
-      group: groupOf(slug, dir),
+      group: groupOf(slug, pkg.enumeratio?.group),
       deps,
       devDeps: siblings(pkg.devDependencies).filter((d) => !deps.includes(d)),
       readme: existsSync(readme) ? readme : undefined,

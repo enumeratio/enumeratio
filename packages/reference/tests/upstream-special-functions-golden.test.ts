@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { applyAllPatches } from "@enumeratio/ce-patches/src";
+import { applyAllPatches } from "@enumeratio/ce-patches";
 
 // The full oracle comparison for BarnesG, LogBarnesG, LogGamma, ClausenCl, DirichletEta,
 // DirichletBeta, StieltjesGamma, DirichletCharacter, and DirichletL -- held against

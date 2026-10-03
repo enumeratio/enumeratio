@@ -1,9 +1,9 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
-import { CARRIERS, COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog/src";
-import { CARRIERS as COMBINATORICS_CARRIERS } from "@enumeratio/combinatorics/src";
-import { MAPPINGS } from "@enumeratio/oracle/src";
-import { HEADS, SYMBOLS } from "@enumeratio/wolfram/src";
+import { CARRIERS, COLLECTIONS, MAPS, STATS } from "@enumeratio/catalog";
+import { CARRIERS as COMBINATORICS_CARRIERS } from "@enumeratio/combinatorics";
+import { MAPPINGS } from "@enumeratio/oracle";
+import { HEADS, SYMBOLS } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { crosswalk as derivedData } from "../src/crosswalk-data.ts";
 import { CATALOG_REFERENCES } from "../src/crosswalk/catalog-references-data.ts";
@@ -20,7 +20,7 @@ import { crosswalkFor, crosswalkForCollection, crosswalkForStatistic, hrefOf } f
 import { inventoryEntry } from "../src/crosswalk/inventory.ts";
 import { SOURCES } from "../src/crosswalk/sources.ts";
 import { engineEntries } from "../src/engine-entries.ts";
-import { findstat } from "@enumeratio/combinatorics/src";
+import { findstat } from "@enumeratio/combinatorics";
 import { fungrimVerified } from "../src/fungrim-verified-data.ts";
 import { KNOWN_CAUSES } from "../src/crosswalk/fungrim.ts";
 import { oeis } from "../src/oeis-data.ts";

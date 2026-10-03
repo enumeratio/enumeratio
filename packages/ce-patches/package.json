@@ -13,8 +13,10 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
-    "./wgsl-complex": "./src/compute-engine/compilation/wgsl-complex.ts",
+    "./wgsl-complex": {
+      "types": "./dist/wgsl-complex.d.mts",
+      "import": "./dist/wgsl-complex.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -29,7 +31,6 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.146.0",
     "@enumeratio/engine": "workspace:*",
-    "@enumeratio/oracle": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

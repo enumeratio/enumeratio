@@ -3,8 +3,9 @@
 // coordinator over TCP instead (`socket`). Each source is parsed once when the script loads,
 // held, and released inside the timing; `ClearSystemCache[]` runs before every sample.
 
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import { planned } from "../generate.ts";
+import { ROOT } from "../root.ts";
 import { PROTOCOL, QUIT } from "../protocol.ts";
 import type { HarnessCommand } from "../run.ts";
 import type { Plan, Precision } from "../types.ts";
@@ -85,6 +86,6 @@ Close[sock];
 
 export const harnessWolfram = (): HarnessCommand => ({
   command: "wolframscript",
-  args: ["-file", fileURLToPath(new URL("../../generated/wolfram/bench.wl", import.meta.url))],
+  args: ["-file", join(ROOT, "generated/wolfram/bench.wl")],
   socket: true,
 });

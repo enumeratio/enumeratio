@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics/src";
+import { CARRIERS, declareCombinatorics, declareMaps } from "../src/index.ts";
 import { readEntries } from "@enumeratio/entry/node";
 
 const entries = [

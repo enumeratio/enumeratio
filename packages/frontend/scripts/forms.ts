@@ -26,7 +26,7 @@ import { toInputForm } from "@enumeratio/formats/inputform";
 import { markupOf, readMarkupText, stripMetadata } from "@enumeratio/formats/markup";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
-import { emit, SYSTEMS, type System } from "@enumeratio/oracle/src";
+import { emit, SYSTEMS, type System } from "@enumeratio/oracle";
 import { conventionalLatexDictionary, withStringsWrapped } from "../src/conventional-latex.ts";
 import { mergeLatex } from "../src/engine.ts";
 import { combineNotation, makeBoxes, notationOf } from "@enumeratio/boxes";

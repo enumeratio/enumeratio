@@ -3,7 +3,7 @@
 // engine holding just the packages its head's examples name, and their requirements. The
 // standard run checks a few heads across the packages; `DEEP_TESTS=1` checks every one.
 
-import { runCases } from "@enumeratio/evaluation/src/node";
+import { runCases } from "@enumeratio/evaluation/node";
 import { CANONICAL, CARRIER_TYPES, DECLARERS, packagesNeeded, plan } from "@enumeratio/manifest";
 import { expect, test } from "vite-plus/test";
 import { canonicalNames, carrierTypes, declarers } from "../scripts/declarers.ts";

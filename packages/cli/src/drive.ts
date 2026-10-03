@@ -8,9 +8,9 @@
 // of once. This is the base's `Rendering` mounted on a cell grid; nothing of lit here.
 
 import { serializeExpression } from "@enumeratio/formats/expression";
-import { iterate } from "../../frontend/src/playback.ts";
-import { type Declaration, declarations, pinValue, pin, sampleValues } from "../../frontend/src/reduce.ts";
-import { numOf, strOf, tupleOf } from "../../frontend/src/symbols.ts";
+import { iterate } from "@enumeratio/frontend";
+import { type Declaration, declarations, pinValue, pin, sampleValues } from "@enumeratio/frontend";
+import { numOf, strOf, tupleOf } from "@enumeratio/frontend";
 import { bold, cyan, dim, stripAnsi } from "./ansi.ts";
 
 type Json = Parameters<typeof pin>[0];

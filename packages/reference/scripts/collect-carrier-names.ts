@@ -13,7 +13,7 @@
 //   vp node packages/reference/scripts/collect-carrier-names.ts
 
 import { writeFormatted } from "@enumeratio/entry/node";
-import { allCarrierNames, allCarrierParams } from "@enumeratio/structures/src";
+import { allCarrierNames, allCarrierParams } from "@enumeratio/structures";
 import { declaredEngine } from "./engines.ts";
 
 const ce = declaredEngine();

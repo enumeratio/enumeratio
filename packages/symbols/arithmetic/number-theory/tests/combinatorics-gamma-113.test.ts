@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareNumerals } from "@enumeratio/numerals/src";
+import { declareNumerals } from "@enumeratio/numerals";
 import { declareNumberTheory } from "../src/declare.ts";
 
 const ce = new ComputeEngine();

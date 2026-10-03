@@ -44,7 +44,7 @@ import { GRAPHICS_HEADS } from "@enumeratio/formats";
 import { NUMERAL_ALIASES } from "@enumeratio/numerals";
 import { CONTROL_SYMBOLS, LAYOUT_SYMBOLS, VISUAL_SYMBOLS } from "@enumeratio/frontend/symbols";
 import { referenceEntries as loadEntries } from "@enumeratio/reference/node";
-import { HEADS } from "@enumeratio/wolfram/src";
+import { HEADS } from "@enumeratio/wolfram";
 import { fullEngine } from "../src/engine.ts";
 
 const referenceEntries = loadEntries();

@@ -8,7 +8,7 @@
 // A reference example that introduces a genuinely new symbol name is exactly what should fail
 // this test — regenerate with `vp node packages/reference/scripts/collect-defined-names.ts`.
 
-import { DEFINED_NAMES, type MathJSON } from "@enumeratio/oracle/src";
+import { DEFINED_NAMES, type MathJSON } from "@enumeratio/oracle";
 import { expect, test } from "vite-plus/test";
 import { declaredEngine } from "../scripts/engines.ts";
 import { isDefinedName, symbolsIn } from "../scripts/defined-names.ts";
