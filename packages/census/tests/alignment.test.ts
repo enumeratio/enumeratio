@@ -17,7 +17,7 @@ import { declaredNames } from "../src/engine.ts";
 const ours = declaredNames();
 
 test("every head of ours that Wolfram also names is either mapped or contextualised", () => {
-  // `SYMBOLS` alongside `HEADS` because a constant is not an operator: `Catalan` reaches
+  // `SYMBOLS` alongside `HEADS` because a constant is not an operator: it reaches
   // Wolfram through the symbol map, never through `applyHead`.
   const undecided = ours
     .filter((name) => isSystemName(name))

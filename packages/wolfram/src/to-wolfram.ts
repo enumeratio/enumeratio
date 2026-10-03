@@ -26,17 +26,12 @@ export const SYMBOLS: Record<string, string> = {
   GoldenRatio: "GoldenRatio",
   EulerGamma: "EulerGamma",
   CatalanConstant: "Catalan",
-  // Our analytic library declares `Catalan` under Wolfram's own spelling, so the constant
-  // reaches here by two names. The reverse map keeps `CatalanConstant`, which is the one
-  // compute-engine ships.
-  Catalan: "Catalan",
   True: "True",
   False: "False",
   // Both our NaN (a floating-point result) and our Indeterminate (an exact indeterminate
   // form, e.g. 0/0) print as Wolfram's one Indeterminate; the reverse map (fromWolfram) needs
   // a single choice back, so Indeterminate is listed after NaN here -- last entry for a given
-  // Wolfram spelling wins the reverse lookup (see REVERSE_SYMBOLS in from-wolfram.ts, same
-  // trick as Catalan/CatalanConstant above).
+  // Wolfram spelling wins the reverse lookup (see REVERSE_SYMBOLS in from-wolfram.ts).
   NaN: "Indeterminate",
   Indeterminate: "Indeterminate",
   PositiveInfinity: "Infinity",

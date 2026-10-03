@@ -30,7 +30,7 @@ test("HurwitzZeta(s, 1/2) = (2^s - 1) Zeta(s)", () => {
   expect(evalJson(["HurwitzZeta", 2, ["Rational", 1, 4]])).not.toEqual([
     "Add",
     ["Power", "Pi", 2],
-    ["Multiply", 8, "Catalan"],
+    ["Multiply", 8, "CatalanConstant"],
   ]);
 });
 

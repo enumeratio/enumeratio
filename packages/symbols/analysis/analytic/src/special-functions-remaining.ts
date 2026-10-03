@@ -105,7 +105,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // --- LerchPhi(-1, s, 1/2) = 2^s * DirichletBeta(s): at a = 1/2, (n+1/2)^-s = 2^s
   // (2n+1)^-s, so Phi(-1,s,1/2) = 2^s * sum (-1)^n (2n+1)^-s = 2^s * beta(s) exactly
   // (DirichletBeta's own defining series). General in s; at s=2 DirichletBeta(2) is
-  // already Catalan's constant (dirichlet.ts), so this closes to 4*Catalan without any
+  // already Catalan's constant (dirichlet.ts), so this closes to 4*CatalanConstant without any
   // extra step. ---
   wrapOperator(
     ce,

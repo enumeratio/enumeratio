@@ -12,9 +12,7 @@ import { GLAISHER_VALUE } from "./const-glaisher.ts";
 
 // The heads for what's still ours beyond the zeta family — HarmonicNumber, ChebyshevT,
 // ChebyshevU, LegendrePolynomial, RisingFactorial, BernoulliPolynomial, FallingFactorial,
-// XGCD, Csgn, ConstGlaisher, CongruentMod — plus the Catalan constant (several of the
-// #340 candidates' closed forms, now in @enumeratio/ce-patches, land on it too, so
-// it stays declared here). BarnesG, LogBarnesG, LogGamma, ClausenCl, the Dirichlet family
+// XGCD, Csgn, ConstGlaisher, CongruentMod. BarnesG, LogBarnesG, LogGamma, ClausenCl, the Dirichlet family
 // and StieltjesGamma moved to ce-patches's patches;
 // see barnes-g/, log-gamma/, clausen/, dirichlet/ and stieltjes/ there. Same shape as
 // before: exact Wolfram reductions first, then the numeric kernel when a number is
@@ -25,16 +23,6 @@ const wants = (ops: readonly BoxedExpression[], options: EvalOptions): boolean =
   (options.numericApproximation ?? false) || ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false);
 
 export function declareSpecialFunctions(ce: ComputeEngine): void {
-  // Catalan's constant G = β(2) = Cl₂(π/2) = 0.9159655941…; Wolfram's `Catalan`.
-  if (ce.lookupDefinition("Catalan") === undefined) {
-    ce.declare("Catalan", {
-      type: "real",
-      isConstant: true,
-      holdUntil: "N",
-      value: ce.number("0.9159655941772190150546035149323841107741493742816721342664981196217630197762547694794"),
-    });
-  }
-
   ce.declare("HarmonicNumber", {
     signature: "(number, number?) -> number",
     evaluate: (ops, options) => evaluateHarmonicNumber(ce, ops, wants(ops, options)),

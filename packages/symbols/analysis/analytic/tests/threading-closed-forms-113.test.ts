@@ -24,7 +24,7 @@ test("closed form: HurwitzZeta(2, 1/2) = π²/2 and HurwitzZeta(2, 1/4) = π² +
   expect(evalOf(["HurwitzZeta", 2, ["Rational", 1, 2]])).toEqual(["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]]);
   expect(evalOf(["HurwitzZeta", 2, ["Rational", 1, 4]])).toEqual([
     "Add",
-    ["Multiply", 8, "Catalan"],
+    ["Multiply", 8, "CatalanConstant"],
     ["Power", "Pi", 2],
   ]);
   // symbolic s reduces through ζ(s, 1/2) = (2^s − 1)ζ(s) (generalized-special.ts)
