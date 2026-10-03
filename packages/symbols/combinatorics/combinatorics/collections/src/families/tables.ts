@@ -35,6 +35,13 @@ export const map = (body: MathJSON, variable: string, over: MathJSON): MathJSON 
 /** ⌊a / b⌋ for integers, exactly: compute-engine's `Floor` of a big rational rounds through a double. */
 export const quotient = (a: MathJSON, b: MathJSON): MathJSON => ["Divide", sub(a, ["Mod", a, b]), b];
 export const len: MathJSON = ["Length", "_x"];
+/** C(n, k), 0 outside 0 ≤ k ≤ n: compiled `Binomial` is undefined there. */
+export const choose = (n: MathJSON, k: MathJSON): MathJSON => [
+  "If",
+  ["And", ["LessEqual", 0, k], ["LessEqual", k, n]],
+  ["Binomial", n, k],
+  0,
+];
 
 /** `body` with `name` bound to `value` (a `let`). A list needs its type: an untyped lambda
  *  applied to a list maps over it. */

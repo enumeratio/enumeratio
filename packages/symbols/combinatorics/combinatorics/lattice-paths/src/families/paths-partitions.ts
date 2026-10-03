@@ -9,14 +9,27 @@
 // (moved separately, see the set-partitions area commit).
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
-import { equal, iff, mul, sub } from "../../../collections/src/families/tables.ts";
-import { completionsOf, completionsTable, type Step, walkFamily } from "./walks.ts";
 import {
-  OrderedTreeUnrank,
-  OrderedTreeRank,
-  CatalanNumber,
-  type OrdTree,
-} from "../../../collections/src/families/kernels-extra.ts";
+  add,
+  all,
+  and,
+  at,
+  cell,
+  choose,
+  equal,
+  fold,
+  iff,
+  less,
+  lets,
+  mul,
+  quotient,
+  rowTable,
+  sub,
+  upTo,
+} from "../../../collections/src/families/tables.ts";
+import { lukasiewiczPaths } from "./lukasiewicz.ts";
+import { completionsOf, completionsTable, type Step, walkFamily } from "./walks.ts";
+import { OrderedTreeUnrank, OrderedTreeRank, type OrdTree } from "../../../collections/src/families/kernels-extra.ts";
 
 // ─── DelannoyPaths(n): lattice paths from (0,0) to (n,n) using East=(1,0), North=(0,1), and
 // Diagonal=(1,1) steps — encoded as a token sequence over {0=E,1=N,2=D}. f[i][j] = # completions
@@ -39,11 +52,11 @@ function delannoyTable(n: number): number[][] {
   _delannoyMemo.set(n, f);
   return f;
 }
-function DelannoyPathCount(n: number): number {
+export function DelannoyPathCount(n: number): number {
   if (n < 0) return 0;
   return delannoyTable(n)[0][0];
 }
-function DelannoyPathUnrank(n: number, rank: number): number[] {
+export function DelannoyPathUnrank(n: number, rank: number): number[] {
   if (n <= 0) return [];
   const f = delannoyTable(n);
   const total = f[0][0];
@@ -72,7 +85,7 @@ function DelannoyPathUnrank(n: number, rank: number): number[] {
   }
   return out;
 }
-function DelannoyPathRank(path: number[], n: number): number {
+export function DelannoyPathRank(path: number[], n: number): number {
   if (n <= 0) return 0;
   const f = delannoyTable(n);
   let i = 0,
@@ -96,7 +109,7 @@ function DelannoyPathRank(path: number[], n: number): number {
   }
   return rank;
 }
-function isDelannoyPathOf(e: unknown, n: number): boolean {
+export function isDelannoyPathOf(e: unknown, n: number): boolean {
   if (!Array.isArray(e)) return false;
   let i = 0,
     j = 0;
@@ -129,13 +142,13 @@ function wordToOrderedTree(word: number[], pos: { i: number }): OrdTree {
   for (let c = 0; c < numChildren; c++) children.push(wordToOrderedTree(word, pos));
   return children;
 }
-function LukasiewiczPathUnrank(n: number, rank: number): number[] {
+export function LukasiewiczPathUnrank(n: number, rank: number): number[] {
   return preorderWord(OrderedTreeUnrank(n, rank));
 }
-function LukasiewiczPathRank(word: number[]): number {
+export function LukasiewiczPathRank(word: number[]): number {
   return OrderedTreeRank(wordToOrderedTree(word, { i: 0 }));
 }
-function isLukasiewiczPathOf(e: unknown, n: number): boolean {
+export function isLukasiewiczPathOf(e: unknown, n: number): boolean {
   if (!Array.isArray(e) || e.length !== n + 1) return false;
   let needed = 1; // node-slots still awaiting a node, starting with just the root
   for (const a of e) {
@@ -242,11 +255,11 @@ function mpbpCompletions(s: number, h: number, prevUp: boolean, peaksLeft: numbe
   }
   return v;
 }
-function MotzkinPathsByPeaksCount(n: number, k: number): number {
+export function MotzkinPathsByPeaksCount(n: number, k: number): number {
   if (n < 0 || k < 0) return 0;
   return mpbpCompletions(n, 0, false, k);
 }
-function MotzkinPathsByPeaksUnrank(n: number, k: number, rank: number): number[] {
+export function MotzkinPathsByPeaksUnrank(n: number, k: number, rank: number): number[] {
   const total = MotzkinPathsByPeaksCount(n, k);
   let r = total ? ((rank % total) + total) % total : 0;
   const out: number[] = [];
@@ -276,7 +289,7 @@ function MotzkinPathsByPeaksUnrank(n: number, k: number, rank: number): number[]
   }
   return out;
 }
-function MotzkinPathsByPeaksRank(path: number[], k: number): number {
+export function MotzkinPathsByPeaksRank(path: number[], k: number): number {
   let r = 0,
     h = 0,
     prevUp = false,
@@ -301,7 +314,7 @@ function MotzkinPathsByPeaksRank(path: number[], k: number): number {
   }
   return r;
 }
-function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boolean {
+export function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boolean {
   if (!Array.isArray(e) || e.length !== n) return false;
   let h = 0,
     peaks = 0,
@@ -345,42 +358,163 @@ const dyckPathsByHeight = walkFamily({
   top: (top) => equal(top, "_h"),
 });
 
-// Kept separate from `entries` below only so collections/src/families/index.ts can splice
-// `latticePathsPathsPartitionsBeforeDyckPathsByHeight` (DelannoyPaths, LukasiewiczPaths) back in
-// where they held their (now consolidated) position in collections — §4 step 5.
-export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
-  {
+// ─── DelannoyPaths in Epsil: the E, N, D steps tried in that order. The paths from a point a
+// columns and b rows short of (n, n) are the Delannoy number D(a, b) = Σ_k C(a, k) C(b, k) 2^k,
+// closed, so nothing is tabled; a negative side has none. ───────────────────────────────────────
+type MathJSON = unknown;
+const delannoy = (tag: string, a: MathJSON, b: MathJSON): MathJSON =>
+  fold(
+    add(`${tag}_c`, mul(choose(a, `${tag}_k`), choose(b, `${tag}_k`), ["Power", 2, `${tag}_k`])),
+    `${tag}_c`,
+    `${tag}_k`,
+    0,
+    upTo(0, ["Min", a, b]),
+  );
+/** The paths left after an E step and after an N step from a point a columns and b rows short. */
+const delannoyBlocks = (a: MathJSON, b: MathJSON): readonly [MathJSON, MathJSON] => [
+  delannoy("de", sub(a, 1), b),
+  delannoy("dn", a, sub(b, 1)),
+];
+const delannoyPaths: EpsilFamily = (() => {
+  const [us, rs] = [(i: number) => at("du_s", i), (i: number) => at("dr_s", i)];
+  const [E, N] = ["du_e", "du_n"];
+  const [e, n] = delannoyBlocks(us(2), us(3));
+  const unrankStep = iff(
+    and(equal(us(2), 0), equal(us(3), 0)),
+    "du_s",
+    lets(
+      [
+        [E, e, "integer"],
+        [N, n, "integer"],
+      ],
+      iff(
+        less(us(1), E),
+        ["Join", ["List", us(1), sub(us(2), 1), us(3)], ["Drop", "du_s", 3], ["List", 0]],
+        iff(
+          less(us(1), add(E, N)),
+          ["Join", ["List", sub(us(1), E), us(2), sub(us(3), 1)], ["Drop", "du_s", 3], ["List", 1]],
+          ["Join", ["List", sub(us(1), add(E, N)), sub(us(2), 1), sub(us(3), 1)], ["Drop", "du_s", 3], ["List", 2]],
+        ),
+      ),
+    ),
+  );
+  const [re, rn] = delannoyBlocks(rs(2), rs(3));
+  const rankStep = lets(
+    [
+      ["dr_e", re, "integer"],
+      ["dr_n", rn, "integer"],
+    ],
+    iff(
+      equal("dr_t", 0),
+      ["List", rs(1), sub(rs(2), 1), rs(3)],
+      iff(
+        equal("dr_t", 1),
+        ["List", add(rs(1), "dr_e"), rs(2), sub(rs(3), 1)],
+        ["List", add(rs(1), "dr_e", "dr_n"), sub(rs(2), 1), sub(rs(3), 1)],
+      ),
+    ),
+  );
+  const ends = (step: number) =>
+    equal(fold(add("dv_c", iff(equal("dv_t", step), 0, 1)), "dv_c", "dv_t", 0, "_x"), "_n");
+  return {
     head: "DelannoyPaths",
     carrier: "DelannoyPath",
     paramCount: 1,
     kind: "ints",
-    count: ([n]) => DelannoyPathCount(n),
-    unrank: ([n], r) => DelannoyPathUnrank(n, r),
-    valid: (e, [n]) => isDelannoyPathOf(e, n),
-    rank: (e, [n]) => DelannoyPathRank(e as number[], n),
-  },
-  {
-    head: "LukasiewiczPaths",
-    carrier: "LukasiewiczPath",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => CatalanNumber(n),
-    unrank: ([n], r) => LukasiewiczPathUnrank(n, r),
-    valid: (e, [n]) => isLukasiewiczPathOf(e, n),
-    rank: (e) => LukasiewiczPathRank(e as number[]),
-  },
-];
+    params: ["_n"],
+    epsil: {
+      count: delannoy("dc", "_n", "_n"),
+      unrank: ["Drop", fold(unrankStep, "du_s", "du_j", ["List", "_r", "_n", "_n"], upTo(1, mul(2, "_n"))), 3],
+      rank: at(fold(rankStep, "dr_s", "dr_t", ["List", 0, "_n", "_n"], "_x"), 1),
+      valid: and(
+        all((t) => and(["LessEqual", 0, t], ["LessEqual", t, 2]), "_x", "dv_a"),
+        ends(1),
+        ends(0),
+      ),
+    },
+  };
+})();
 
-export const entries: (NumberKernel | EpsilFamily)[] = [
-  dyckPathsByHeight,
-  {
-    head: "MotzkinPathsByPeaks",
-    carrier: "MotzkinPath",
-    paramCount: 2,
-    kind: "ints",
-    count: ([n, k]) => MotzkinPathsByPeaksCount(n, k),
-    unrank: ([n, k], r) => MotzkinPathsByPeaksUnrank(n, k, r),
-    valid: (e, [n, k]) => isMotzkinPathsByPeaksOf(e, n, k),
-    rank: (e, [, k]) => MotzkinPathsByPeaksRank(e as number[], k),
+// ─── MotzkinPathsByPeaks in Epsil: a Motzkin walk whose flag is 2c + u, c the peaks made so far
+// and u whether the last step was an up-step (a down-step right after it makes a peak). Its
+// completions are one table M(s, h, p) over steps left, height and peaks still to make, for a
+// walk whose last step was not an up. After an up the one difference is the down-step, which
+// then spends a peak: M₁(s, h, p) = M(s, h, p) − [h > 0] (M(s − 1, h − 1, p) − M(s − 1, h − 1, p − 1)),
+// so a row reads the two before it. The height never passes half the length. ──────────────────
+const peakCap = quotient("_n", 2);
+const peakColumns = mul(add(peakCap, 1), add("_k", 1));
+const peakColumn = (h: MathJSON, p: MathJSON): MathJSON => add(mul(h, add("_k", 1)), p);
+const peakTable = (() => {
+  const height = (c: string) => quotient(c, add("_k", 1));
+  const peaksLeft = (c: string) => ["Mod", c, add("_k", 1)];
+  return rowTable(
+    "pk",
+    add("_n", 1),
+    peakColumns,
+    (c) => iff(equal(c, 0), 1, 0),
+    (prev, s, c) => {
+      const [h, p] = [height(c), peaksLeft(c)];
+      const afterUp = sub(
+        prev(sub(s, 1), peakColumn(add(h, 1), p)),
+        iff(
+          ["GreaterEqual", s, 2],
+          sub(
+            prev(sub(s, 2), peakColumn(h, p)),
+            iff(["GreaterEqual", p, 1], prev(sub(s, 2), peakColumn(h, sub(p, 1))), 0),
+          ),
+          0,
+        ),
+      );
+      return add(
+        iff(["LessEqual", add(h, 1), peakCap], afterUp, 0),
+        prev(sub(s, 1), peakColumn(h, p)),
+        iff(["Greater", h, 0], prev(sub(s, 1), peakColumn(sub(h, 1), p)), 0),
+      );
+    },
+  );
+})();
+/** M or M₁ by the flag's u, from the table `peaks`. */
+const peakCompletions = (w: MathJSON, y: MathJSON, left: MathJSON, u: MathJSON): MathJSON => {
+  const read = cell("peaks", peakColumns);
+  const spent = sub(
+    read(sub(w, 1), peakColumn(sub(y, 1), left)),
+    iff(["GreaterEqual", left, 1], read(sub(w, 1), peakColumn(sub(y, 1), sub(left, 1))), 0),
+  );
+  return sub(read(w, peakColumn(y, left)), iff(and(equal(u, 1), ["Greater", y, 0], ["GreaterEqual", w, 1]), spent, 0));
+};
+const motzkinPathsByPeaks = walkFamily({
+  head: "MotzkinPathsByPeaks",
+  carrier: "MotzkinPath",
+  params: ["_n", "_k"],
+  width: "_n",
+  steps: [
+    { token: 1, rise: 1, width: 1 },
+    { token: 0, rise: 0, width: 1 },
+    { token: -1, rise: -1, width: 1 },
+  ],
+  tables: [["peaks", peakTable]],
+  completions: (w, y, flag) =>
+    lets(
+      [
+        ["pc", quotient(flag, 2), "integer"],
+        ["pu", ["Mod", flag, 2], "integer"],
+      ],
+      iff(["Or", ["Greater", "pc", "_k"], ["Greater", y, peakCap]], 0, peakCompletions(w, y, sub("_k", "pc"), "pu")),
+    ),
+  flag: {
+    initial: 0,
+    after: (flag, _y, rise) => {
+      const down = ["Mod", flag, 2];
+      return rise > 0 ? add(sub(flag, down), 1) : rise < 0 ? add(flag, down) : sub(flag, down);
+    },
   },
-];
+  final: (flag) => equal(quotient(flag, 2), "_k"),
+  declinePastDoubles: true,
+});
+
+// Kept separate from `entries` below only so collections/src/families/index.ts can splice
+// `latticePathsPathsPartitionsBeforeDyckPathsByHeight` (DelannoyPaths, LukasiewiczPaths) back in
+// where they held their (now consolidated) position in collections — §4 step 5.
+export const entriesBeforeDyckPathsByHeight: (NumberKernel | EpsilFamily)[] = [delannoyPaths, lukasiewiczPaths];
+
+export const entries: (NumberKernel | EpsilFamily)[] = [dyckPathsByHeight, motzkinPathsByPeaks];

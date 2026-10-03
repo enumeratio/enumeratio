@@ -43,21 +43,28 @@ export interface Walk {
   /** The tables `completions` reads, each bound once around every definition. */
   readonly tables: readonly (readonly [string, MathJSON])[];
   readonly completions: Completions;
-  /** The flag at the start, and after a step lands at height y; 1 throughout when omitted. */
-  readonly flag?: { readonly initial: MathJSON; readonly after: (reached: MathJSON, y: MathJSON) => MathJSON };
+  /** The flag at the start, and after a step of `rise` lands at height y; 1 throughout when omitted. */
+  readonly flag?: {
+    readonly initial: MathJSON;
+    readonly after: (reached: MathJSON, y: MathJSON, rise: -1 | 0 | 1) => MathJSON;
+  };
   /** A condition on the highest height a member reaches. */
   readonly top?: (top: MathJSON) => MathJSON;
+  /** A condition on the flag a member ends with; membership then walks the flag too. */
+  readonly final?: (flag: MathJSON) => MathJSON;
+  /** For tables the interpreter takes minutes to build past 2^53: unrank and rank decline there. */
+  readonly declinePastDoubles?: true;
 }
 
-const flagAfter = (walk: Walk, reached: MathJSON, y: MathJSON): MathJSON =>
-  walk.flag === undefined ? 1 : walk.flag.after(reached, y);
+const flagAfter = (walk: Walk, reached: MathJSON, y: MathJSON, rise: -1 | 0 | 1): MathJSON =>
+  walk.flag === undefined ? 1 : walk.flag.after(reached, y, rise);
 
 /** The completions of step i from (w, y): 0 where it doesn't fit or dips below 0. */
 function choice(walk: Walk, i: number, w: MathJSON, y: MathJSON, reached: MathJSON): MathJSON {
   const { rise, width } = walk.steps[i];
   const landing = add(y, rise);
   const fits = and(["LessEqual", width, w], ["GreaterEqual", landing, 0]);
-  return iff(fits, walk.completions(sub(w, width), landing, flagAfter(walk, reached, landing)), 0);
+  return iff(fits, walk.completions(sub(w, width), landing, flagAfter(walk, reached, landing, rise)), 0);
 }
 
 const withTables = (walk: Walk, body: MathJSON): MathJSON =>
@@ -104,7 +111,7 @@ function unrank(walk: Walk): MathJSON {
         const { token, rise, width } = walk.steps[i];
         return [
           "Join",
-          ["List", sub(r, before), add(y, rise), sub(w, width), flagAfter(walk, reached, add(y, rise))],
+          ["List", sub(r, before), add(y, rise), sub(w, width), flagAfter(walk, reached, add(y, rise), rise)],
           ["Drop", state, 4],
           ["List", token],
         ];
@@ -129,28 +136,38 @@ function rank(walk: Walk): MathJSON {
     (i) => equal("rx", walk.steps[i].token),
     (i, before) => {
       const { rise, width } = walk.steps[i];
-      return ["List", add(r, before), add(y, rise), sub(w, width), flagAfter(walk, reached, add(y, rise))];
+      return ["List", add(r, before), add(y, rise), sub(w, width), flagAfter(walk, reached, add(y, rise), rise)];
     },
   );
   return withTables(walk, at(fold(step, state, "rx", ["List", 0, 0, walk.width, walk.flag?.initial ?? 1], "_x"), 1));
 }
 
-/** Membership: the walk over the path, the state [y, w, top]; a step off the walk sets y to −1. */
+/** Membership: the walk over the path, the state [y, w, top, flag?]; a step off the walk sets y to −1.
+ *  The flag is walked only when the walk puts a condition on its end. */
 function valid(walk: Walk): MathJSON {
   const state = "vs";
+  const tracked = walk.final !== undefined;
   const byToken = (i: number): MathJSON => {
-    if (i === walk.steps.length) return ["List", -1, 0, 0];
+    if (i === walk.steps.length) return ["List", -1, 0, 0, ...(tracked ? [0] : [])];
     const { token, rise, width } = walk.steps[i];
     const y = add(at(state, 1), rise);
-    return iff(equal("vx", token), ["List", y, add(at(state, 2), width), ["Max", at(state, 3), y]], byToken(i + 1));
+    const next = [
+      y,
+      add(at(state, 2), width),
+      ["Max", at(state, 3), y],
+      ...(tracked ? [flagAfter(walk, at(state, 4), y, rise)] : []),
+    ];
+    return iff(equal("vx", token), ["List", ...next], byToken(i + 1));
   };
-  const end = fold(iff(less(at(state, 1), 0), state, byToken(0)), state, "vx", ["List", 0, 0, 0], "_x");
+  const start = ["List", 0, 0, 0, ...(tracked ? [walk.flag?.initial ?? 1] : [])];
+  const end = fold(iff(less(at(state, 1), 0), state, byToken(0)), state, "vx", start, "_x");
   return lets(
     [["ve", end, "list<integer>"]],
     and(
       equal(at("ve", 1), 0),
       equal(at("ve", 2), walk.width),
       ...(walk.top === undefined ? [] : [walk.top(at("ve", 3))]),
+      ...(walk.final === undefined ? [] : [walk.final(at("ve", 4))]),
     ),
   );
 }
@@ -162,6 +179,7 @@ export const walkFamily = (walk: Walk): EpsilFamily => ({
   paramCount: walk.params.length as 1 | 2,
   kind: "ints",
   params: walk.params,
+  ...(walk.declinePastDoubles === undefined ? {} : { declinePastDoubles: true as const }),
   epsil: {
     count: withTables(walk, walk.completions(walk.width, 0, walk.flag?.initial ?? 1)),
     unrank: unrank(walk),

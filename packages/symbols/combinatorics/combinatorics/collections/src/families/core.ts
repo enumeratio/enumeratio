@@ -1,18 +1,9 @@
 // The originally hand-authored collections, expressed as NumberKernel[] over the certified kernel library
 // (./kernels*.ts). Same registration mechanism as the other families — no special-casing in library.ts.
-import { binaryStrings, grayCodeSubsets, kSubsets, multisets, subsets, tuples } from "./closed-forms.ts";
+import { binaryStrings, grayCodeSubsets, kSubsets, latticePaths, multisets, subsets, tuples } from "./closed-forms.ts";
 import type { EpsilFamily } from "./epsil.ts";
 import type { NumberKernel } from "./types.ts";
-import {
-  LatticePathCount,
-  LatticePathUnrank,
-  LatticePathRank,
-  IsLatticePathOf,
-  FibonacciWordCount,
-  FibonacciWordUnrank,
-  FibonacciWordRank,
-  IsFibonacciWord,
-} from "./kernels-extra.ts";
+import { FibonacciWordCount, FibonacciWordUnrank, FibonacciWordRank, IsFibonacciWord } from "./kernels-extra.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; casts the unknown element once here,
 // same pattern subsets.ts uses at each call site.
@@ -45,6 +36,7 @@ const kSubsetsFamily = kSubsets({ head: "KSubsets", params: ["_n", "_k"], carrie
 const multisetsFamily = multisets({ head: "Multisets", params: ["_n", "_k"], carrier: "Multiset", carrierParams: 1 });
 const tuplesFamily = tuples({ head: "Tuples", params: ["_n", "_k"] });
 const binaryStringsFamily = binaryStrings({ head: "BinaryStrings", params: ["_n"] });
+const latticePathsFamily = latticePaths({ head: "LatticePaths", params: ["_a", "_b"] });
 
 // Kept separate from `entries` below only so collections/src/families/index.ts can splice
 // `latticePathsDyckPathsEntries` (DyckPaths) back in at the exact interior position it held
@@ -71,14 +63,7 @@ export const entriesBeforeDyckPaths: (NumberKernel | EpsilFamily)[] = [
   binaryStringsFamily,
 
   // ── lattice-path words ──
-  ints(
-    "LatticePaths",
-    2,
-    ([a, b]) => LatticePathCount(a, b),
-    ([a, b], r) => LatticePathUnrank(a, b, r),
-    (x, [a, b]) => IsLatticePathOf(x, a, b),
-    (x) => LatticePathRank(x),
-  ),
+  latticePathsFamily,
 ];
 
 // Kept separate from the final `entries` export below only so collections/src/families/index.ts

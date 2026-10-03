@@ -8,11 +8,16 @@ import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, kernelOn } from "../../collections/src/families/epsil.ts";
 import {
+  CatalanNumber,
   DyckPathCount,
   DyckPathRank,
   DyckPathUnrank,
   IsDyckPath,
+  IsLatticePathOf,
   IsMotzkinPath,
+  LatticePathCount,
+  LatticePathRank,
+  LatticePathUnrank,
   IsSchroederPath,
   MotzkinCount,
   MotzkinRank,
@@ -21,13 +26,26 @@ import {
   SchroederRank,
   SchroederUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
+import { entriesBeforeDyckPaths as unrestrictedEntries } from "../../collections/src/families/core.ts";
 import { entries as coreEntries } from "../src/families/core.ts";
 import {
+  DelannoyPathCount,
+  DelannoyPathRank,
+  DelannoyPathUnrank,
   DyckPathsByHeightCount,
   DyckPathsByHeightRank,
   DyckPathsByHeightUnrank,
   entries as pathsEntries,
+  entriesBeforeDyckPathsByHeight as pathsBeforeEntries,
+  isDelannoyPathOf,
   isDyckPathsByHeightOf,
+  isLukasiewiczPathOf,
+  LukasiewiczPathRank,
+  LukasiewiczPathUnrank,
+  isMotzkinPathsByPeaksOf,
+  MotzkinPathsByPeaksCount,
+  MotzkinPathsByPeaksRank,
+  MotzkinPathsByPeaksUnrank,
 } from "../src/families/paths-partitions.ts";
 
 const ce = new ComputeEngine();
@@ -98,10 +116,69 @@ const READINGS: Record<string, Reading> = {
     valid: (x, [n, h]) => isDyckPathsByHeightOf(x, n, h),
     near: ([n]) => around(2 * n, [0, 1]),
   },
+  LatticePaths: {
+    params: [
+      [0, 0],
+      [1, 0],
+      [0, 1],
+      [2, 2],
+      [3, 2],
+      [1, 5],
+      [4, 3],
+      [3, 3],
+    ],
+    count: ([a, b]) => LatticePathCount(a, b),
+    unrank: ([a, b], r) => LatticePathUnrank(a, b, r),
+    rank: (x) => LatticePathRank(x),
+    valid: (x, [a, b]) => IsLatticePathOf(x, a, b),
+    near: ([a, b]) => (a + b <= 4 ? around(a + b, [-1, 0, 1, 2]) : around(a + b, [0, 1])),
+  },
+  DelannoyPaths: {
+    params: [[0], [1], [2], [3], [4], [3]],
+    count: ([n]) => DelannoyPathCount(n),
+    unrank: ([n], r) => DelannoyPathUnrank(n, r),
+    rank: (x, [n]) => DelannoyPathRank(x, n),
+    valid: (x, [n]) => isDelannoyPathOf(x, n),
+    // Its words vary in length: every word up to one step past the longest member.
+    near: ([n]) =>
+      Array.from({ length: 2 * n + 2 }, (_, l) =>
+        words(l, n <= 2 ? [-1, 0, 1, 2, 3] : n === 3 ? [0, 1, 2, 3] : [0, 1, 2]),
+      ).flat(),
+  },
+  LukasiewiczPaths: {
+    params: [[0], [1], [2], [3], [4], [5], [6], [5]],
+    count: ([n]) => CatalanNumber(n),
+    unrank: ([n], r) => LukasiewiczPathUnrank(n, r),
+    rank: (x) => LukasiewiczPathRank(x),
+    valid: (x, [n]) => isLukasiewiczPathOf(x, n),
+    near: ([n]) => (n <= 3 ? around(n + 1, [-2, -1, 0, 1, 2]) : around(n + 1, [-1, 0, 1])),
+  },
+  MotzkinPathsByPeaks: {
+    params: [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+      [2, 1],
+      [3, 5],
+      [4, 1],
+      [4, 2],
+      [6, 2],
+      [7, 2],
+      [6, 3],
+      [5, 1],
+    ],
+    count: ([n, k]) => MotzkinPathsByPeaksCount(n, k),
+    unrank: ([n, k], r) => MotzkinPathsByPeaksUnrank(n, k, r),
+    rank: (x, [, k]) => MotzkinPathsByPeaksRank(x, k),
+    valid: (x, [n, k]) => isMotzkinPathsByPeaksOf(x, n, k),
+    near: ([n]) => (n <= 3 ? around(n, [-2, -1, 0, 1, 2]) : around(n, [-1, 0, 1])),
+  },
 };
 
 const byHead = new Map(
-  [...coreEntries, ...pathsEntries].filter((f) => "epsil" in f).map((f) => [f.head, f as EpsilFamily]),
+  [...unrestrictedEntries, ...coreEntries, ...pathsBeforeEntries, ...pathsEntries]
+    .filter((f) => "epsil" in f)
+    .map((f) => [f.head, f as EpsilFamily]),
 );
 
 for (const [head, reading] of Object.entries(READINGS)) {
@@ -157,4 +234,26 @@ test("past 2^53 DyckPaths answers in exact integers", () => {
   expect(kernel.rank(last, [n])).toBe(total - 1n);
   const middle = kernel.unrank([n], total / 3n);
   expect(kernel.rank(middle, [n])).toBe(total / 3n);
+});
+
+test("past 2^53 LatticePaths and DelannoyPaths answer in exact integers", () => {
+  const lattice = kernelOn(ce, byHead.get("LatticePaths")!);
+  const total = lattice.count([30, 30]) as bigint;
+  expect(total).toBe(118264581564861424n); // C(60, 30)
+  expect(lattice.unrank([30, 30], 0n)).toEqual([...Array(30).fill(1), ...Array(30).fill(0)]);
+  expect(lattice.unrank([30, 30], total - 1n)).toEqual([...Array(30).fill(0), ...Array(30).fill(1)]);
+  const path = lattice.unrank([30, 30], total / 3n);
+  expect(lattice.rank(path, [30, 30])).toBe(total / 3n);
+
+  const delannoy = kernelOn(ce, byHead.get("DelannoyPaths")!);
+  const n = 26;
+  const binomial = (a: number, k: number): bigint =>
+    Array.from({ length: k }, (_, i) => i).reduce((c, i) => (c * BigInt(a - i)) / BigInt(i + 1), 1n);
+  const central = Array.from({ length: n + 1 }, (_, k) => binomial(n, k) ** 2n * 2n ** BigInt(k)).reduce(
+    (a, b) => a + b,
+  );
+  expect(delannoy.count([n])).toBe(central);
+  const middle = delannoy.unrank([n], central / 3n);
+  expect(delannoy.valid(middle, [n])).toBe(true);
+  expect(delannoy.rank(middle, [n])).toBe(central / 3n);
 });
