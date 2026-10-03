@@ -5,7 +5,9 @@
   "description": "Combinatorial Hopf algebra extensions for @cortex-js/compute-engine: NSym and QSym on compositions, with product, coproduct and antipode.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

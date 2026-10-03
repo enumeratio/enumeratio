@@ -5,7 +5,8 @@
   "description": "Controlling evaluation over @cortex-js/compute-engine: cancellable evaluate, cooperative deadlines (TimeConstrained), MemoryConstrained (enforced only in the isolated evaluator), and VerificationTest. ./node adds a worker_threads isolated evaluator, a reusable worker pool, and a stateful session; ./browser adds the same over dedicated/SharedWorker; both kept out of the main entry.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {

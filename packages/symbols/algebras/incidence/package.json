@@ -5,7 +5,9 @@
   "description": "Incidence-algebra extensions for @cortex-js/compute-engine: finite posets, the zeta and Moebius functions, and Moebius inversion.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

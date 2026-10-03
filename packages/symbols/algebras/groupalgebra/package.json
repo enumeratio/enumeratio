@@ -5,7 +5,9 @@
   "description": "Group-algebra extensions for @cortex-js/compute-engine: cyclic, dihedral and product groups, their group algebras, conjugacy classes and centres.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

@@ -50,10 +50,11 @@ export async function writeStories(dir: string | URL, name: string, stories: rea
 /** Where the records live under `packages/`: `<package>/reference/`, a symbol package's
  * `symbols/<group>/<package>/reference/`, and reference's own `entries/` (the engine's heads). */
 export function recordDirs(packagesRoot: string): { package: string; dir: string }[] {
+  // A package may be a symlink (an installed one is, under node_modules/@enumeratio).
   const subdirs = (dir: string): string[] =>
     existsSync(dir)
       ? readdirSync(dir, { withFileTypes: true })
-          .filter((e) => e.isDirectory())
+          .filter((e) => e.isDirectory() || e.isSymbolicLink())
           .map((e) => e.name)
           .toSorted()
       : [];

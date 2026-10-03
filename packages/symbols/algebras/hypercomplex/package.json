@@ -5,7 +5,9 @@
   "description": "Hypercomplex-number extensions for @cortex-js/compute-engine — multicomplex, split/perplex, dual and Clifford unit families as ordinary subscripted symbols.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

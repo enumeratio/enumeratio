@@ -4,6 +4,10 @@
   "private": true,
   "description": "Structured, verified example data for compute-engine functions — the single source for reference pages and their tests.",
   "license": "WTFPL",
+  "files": [
+    "src",
+    "entries"
+  ],
   "type": "module",
   "exports": {
     ".": "./src/index.ts",

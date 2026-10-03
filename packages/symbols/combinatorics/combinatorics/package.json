@@ -5,7 +5,9 @@
   "description": "Combinatorial collections and carriers for @cortex-js/compute-engine, merged wholesale ahead of per-area carving (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible).",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

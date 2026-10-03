@@ -5,7 +5,9 @@
   "description": "Adèles and idèles over Q for @cortex-js/compute-engine: profinite numbers (Ẑ and Q̂) known modulo a rational, adèles, idèles, profinite Fibonacci and the GL_n(Q̂) = GL_n(Ẑ)·GL_n⁺(Q) factorisation — a port of Hertogh's Sage `adeles`.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

@@ -5,7 +5,8 @@
   "description": "A Wolfram-style format registry with Import/Export over MathJSON, Wolfram, TeX, code, and image formats.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {

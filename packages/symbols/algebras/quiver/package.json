@@ -5,7 +5,9 @@
   "description": "Path-algebra extensions for @cortex-js/compute-engine: quivers, their paths, and the path algebra kQ — finite-dimensional exactly when the quiver is acyclic.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

@@ -5,7 +5,9 @@
   "description": "Braid groups for @cortex-js/compute-engine: the Artin presentation, positive braids and their closures, the Burau representation, Alexander polynomials, torus knots, and the Lorenz braids of modular geodesics.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

@@ -5,7 +5,9 @@
   "description": "Iwahori-Hecke algebra extensions for @cortex-js/compute-engine: the q-deformation of the symmetric group algebra, with T-basis multiplication over Z[q].",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

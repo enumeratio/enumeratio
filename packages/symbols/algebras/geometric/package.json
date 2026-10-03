@@ -5,7 +5,8 @@
   "description": "The geometric-algebra layer over @enumeratio/hypercomplex: grade projection, the outer and regressive products, the contractions, the involutions and the Poincare dual.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {

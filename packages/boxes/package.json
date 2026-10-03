@@ -5,7 +5,8 @@
   "description": "Wolfram-style box primitives: the presentation tree between an expression and its rendering, with MathML, LaTeX and text serialisers.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {
