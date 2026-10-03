@@ -4,15 +4,23 @@
   "private": true,
   "description": "Cross-system benchmarks: a catalogue of cases as data, native scripts generated per system through the oracle's emit, one measurement protocol, and per-run JSON reports. See https://github.com/enumeratio/enumeratio/wiki/Benchmarking.",
   "license": "WTFPL",
+  "files": [
+    "dist",
+    "catalogue",
+    "generated"
+  ],
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
     "test": "vp test",
     "check": "vp check",
-    "build": "node scripts/generate.ts",
+    "build": "node scripts/generate.ts && vp pack",
     "bench": "node scripts/bench.ts"
   },
   "dependencies": {
@@ -25,5 +33,8 @@
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@cortex-js/compute-engine": "^0.146.0"
   }
 }

@@ -2,8 +2,8 @@
 
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import type { WolframDataRecord, WolframDataSource } from "@enumeratio/oracle/src";
-import { HEADS } from "@enumeratio/wolfram/src";
+import type { WolframDataRecord, WolframDataSource } from "@enumeratio/oracle";
+import { HEADS } from "@enumeratio/wolfram";
 
 export const WOLFRAM_CACHE = fileURLToPath(new URL("../.cache/wolfram-data", import.meta.url));
 

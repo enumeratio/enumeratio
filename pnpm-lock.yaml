@@ -208,12 +208,12 @@ importers:
       '@enumeratio/combinatorics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/combinatorics
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../entry
       '@enumeratio/plausible':
         specifier: workspace:*
         version: link:../plausible
-      '@enumeratio/statistics':
-        specifier: workspace:*
-        version: link:../symbols/combinatorics/statistics
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -233,9 +233,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
-      '@enumeratio/oracle':
-        specifier: workspace:*
-        version: link:../oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -247,10 +244,7 @@ importers:
         version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
 
   packages/census:
-    devDependencies:
-      '@cortex-js/compute-engine':
-        specifier: ^0.146.0
-        version: 0.146.0
+    dependencies:
       '@enumeratio/adeles':
         specifier: workspace:*
         version: link:../symbols/arithmetic/adeles
@@ -275,9 +269,6 @@ importers:
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../engine
-      '@enumeratio/entry':
-        specifier: workspace:*
-        version: link:../entry
       '@enumeratio/evaluation':
         specifier: workspace:*
         version: link:../symbols/evaluation/evaluation
@@ -317,15 +308,9 @@ importers:
       '@enumeratio/numerals':
         specifier: workspace:*
         version: link:../symbols/arithmetic/numerals
-      '@enumeratio/oracle':
-        specifier: workspace:*
-        version: link:../oracle
       '@enumeratio/quiver':
         specifier: workspace:*
         version: link:../symbols/algebras/quiver
-      '@enumeratio/reference':
-        specifier: workspace:*
-        version: link:../reference
       '@enumeratio/residues':
         specifier: workspace:*
         version: link:../symbols/arithmetic/residues
@@ -335,6 +320,19 @@ importers:
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../structures
+    devDependencies:
+      '@cortex-js/compute-engine':
+        specifier: ^0.146.0
+        version: 0.146.0
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../entry
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../oracle
+      '@enumeratio/reference':
+        specifier: workspace:*
+        version: link:../reference
       '@enumeratio/wolfram':
         specifier: workspace:*
         version: link:../wolfram
@@ -453,9 +451,6 @@ importers:
       '@enumeratio/cli':
         specifier: workspace:*
         version: link:../cli
-      '@enumeratio/combinatorics':
-        specifier: workspace:*
-        version: link:../symbols/combinatorics/combinatorics
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../engine
@@ -496,12 +491,12 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
+      '@enumeratio/combinatorics':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/combinatorics
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
-      '@enumeratio/statistics':
-        specifier: workspace:*
-        version: link:../symbols/combinatorics/statistics
       '@webgpu/types':
         specifier: ^0.1.60
         version: 0.1.72
@@ -696,6 +691,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../entry
       '@types/node':
         specifier: ^24
         version: 24.13.4
@@ -744,6 +742,19 @@ importers:
         version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
 
   packages/reference:
+    dependencies:
+      '@enumeratio/catalog':
+        specifier: workspace:*
+        version: link:../catalog
+      '@enumeratio/combinatorics':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/combinatorics
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../entry
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../oracle
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
@@ -760,24 +771,15 @@ importers:
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../symbols/groups/braid
-      '@enumeratio/catalog':
-        specifier: workspace:*
-        version: link:../catalog
       '@enumeratio/ce-patches':
         specifier: workspace:*
         version: link:../ce-patches
-      '@enumeratio/combinatorics':
-        specifier: workspace:*
-        version: link:../symbols/combinatorics/combinatorics
       '@enumeratio/diagram':
         specifier: workspace:*
         version: link:../symbols/algebras/diagram
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../engine
-      '@enumeratio/entry':
-        specifier: workspace:*
-        version: link:../entry
       '@enumeratio/evaluation':
         specifier: workspace:*
         version: link:../symbols/evaluation/evaluation
@@ -811,9 +813,6 @@ importers:
       '@enumeratio/numerals':
         specifier: workspace:*
         version: link:../symbols/arithmetic/numerals
-      '@enumeratio/oracle':
-        specifier: workspace:*
-        version: link:../oracle
       '@enumeratio/plausible':
         specifier: workspace:*
         version: link:../plausible
@@ -823,9 +822,6 @@ importers:
       '@enumeratio/residues':
         specifier: workspace:*
         version: link:../symbols/arithmetic/residues
-      '@enumeratio/statistics':
-        specifier: workspace:*
-        version: link:../symbols/combinatorics/statistics
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../structures
@@ -935,9 +931,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
-      '@enumeratio/hypercomplex':
-        specifier: workspace:*
-        version: link:../hypercomplex
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -963,9 +956,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
-      '@enumeratio/hypercomplex':
-        specifier: workspace:*
-        version: link:../hypercomplex
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -991,9 +981,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
-      '@enumeratio/hypercomplex':
-        specifier: workspace:*
-        version: link:../hypercomplex
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1044,9 +1031,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
-      '@enumeratio/hypercomplex':
-        specifier: workspace:*
-        version: link:../hypercomplex
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1072,9 +1056,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
-      '@enumeratio/hypercomplex':
-        specifier: workspace:*
-        version: link:../hypercomplex
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1177,9 +1158,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
-      '@enumeratio/oracle':
-        specifier: workspace:*
-        version: link:../../../oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1263,6 +1241,9 @@ importers:
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../../../manifest
+      '@enumeratio/plausible':
+        specifier: workspace:*
+        version: link:../../../plausible
       '@enumeratio/residues':
         specifier: workspace:*
         version: link:../../arithmetic/residues
@@ -1276,9 +1257,6 @@ importers:
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../../../entry
-      '@enumeratio/plausible':
-        specifier: workspace:*
-        version: link:../../../plausible
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1407,9 +1385,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.146.0
         version: 0.146.0
-      '@enumeratio/oracle':
-        specifier: workspace:*
-        version: link:../../../oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1440,6 +1415,9 @@ importers:
 
   packages/wolfram:
     devDependencies:
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../entry
       typescript:
         specifier: ^7.0.2
         version: 7.0.2

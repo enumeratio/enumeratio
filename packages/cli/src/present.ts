@@ -3,7 +3,7 @@
 // surface as `:env`, and, where the environment can drive its controls, the same
 // keyboard driver the Node REPL hands a result to.
 
-import { can, type Environment } from "../../frontend/src/environment.ts";
+import { can, type Environment } from "@enumeratio/frontend";
 import { dim, red } from "./ansi.ts";
 import { Repl } from "./core.ts";
 import { type DriveScreen, type Driver, drivable, driver } from "./drive.ts";

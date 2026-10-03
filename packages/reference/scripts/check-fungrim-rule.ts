@@ -10,7 +10,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
-import { declareAnalytic } from "@enumeratio/analytic/src";
+import { declareAnalytic } from "@enumeratio/analytic";
 import { checkRule, type FungrimRule } from "./fungrim.ts";
 
 const from = Number(process.argv[2] ?? 0);

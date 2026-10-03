@@ -6,12 +6,12 @@
 // of the session. Three libraries did that, so `x`, `y` and `q` were global symbols a user
 // could collide with. Probes now box inside a pushed scope; this is the net.
 
-import { CARRIERS } from "@enumeratio/combinatorics/src";
+import { CARRIERS } from "@enumeratio/combinatorics";
 import { FRONTEND_CARRIERS } from "@enumeratio/frontend/declare-carriers";
-import { HYPERCOMPLEX_CARRIERS } from "@enumeratio/hypercomplex/src";
-import { NUMBER_THEORY_CARRIERS } from "@enumeratio/number-theory/src";
-import { NUMERALS_CARRIERS } from "@enumeratio/numerals/src";
-import { RESIDUES_CARRIERS } from "@enumeratio/residues/src";
+import { HYPERCOMPLEX_CARRIERS } from "@enumeratio/hypercomplex";
+import { NUMBER_THEORY_CARRIERS } from "@enumeratio/number-theory";
+import { NUMERALS_CARRIERS } from "@enumeratio/numerals";
+import { RESIDUES_CARRIERS } from "@enumeratio/residues";
 import { expect, test } from "vite-plus/test";
 import { declaredNames } from "../src/engine.ts";
 

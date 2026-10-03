@@ -25,7 +25,7 @@
 // others (a free `f` the engine then types). The adopter doesn't write it again.
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { emit } from "@enumeratio/oracle/src";
+import { emit } from "@enumeratio/oracle";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 import { rewriteExamples, triageRows } from "./triage-records.ts";
 import { ADOPTED, decline } from "./wolfram-cache.ts";

@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareStructures } from "@enumeratio/structures/src";
+import { declareStructures } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, declareCombinatorics, declareMaps, MAPS } from "@enumeratio/combinatorics/src";
+import { CARRIERS, declareCombinatorics, declareMaps, MAPS } from "../src/index.ts";
 
 // Set partitions and restricted growth strings: one structure, two carriers, joined by an order
 // isomorphism, so what one defines the other reaches.

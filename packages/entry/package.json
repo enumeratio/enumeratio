@@ -4,14 +4,28 @@
   "private": true,
   "description": "The shape of a reference entry — the types every package's entries are written against, and the rules an implementations block has to satisfy. A leaf, so the packages that own the heads can type their entries without depending on the package that documents them.",
   "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./schema": "./src/schema.ts",
-    "./node": "./src/node.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.mts",
+      "import": "./dist/schema.mjs"
+    },
+    "./node": {
+      "types": "./dist/node.d.mts",
+      "import": "./dist/node.mjs"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node scripts/generate-schema.ts",
+    "build": "node scripts/generate-schema.ts && vp pack",
+    "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
   },

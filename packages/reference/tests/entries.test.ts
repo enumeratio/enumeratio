@@ -1,6 +1,6 @@
 // Buildless src subpath: the reference tests must run without a prior `vp pack` of
 // @enumeratio/analytic (CI runs tests before builds).
-import { runCases } from "@enumeratio/evaluation/src/node";
+import { runCases } from "@enumeratio/evaluation/node";
 import { expect, test } from "vite-plus/test";
 import { referenceData } from "../src/node.ts";
 

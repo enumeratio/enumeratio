@@ -17,7 +17,7 @@
 
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { ALL_STATISTICS, applyDefinition, type FindStatMatch } from "@enumeratio/combinatorics/src";
+import { ALL_STATISTICS, applyDefinition, type FindStatMatch } from "@enumeratio/combinatorics";
 
 const API = "https://www.findstat.org/api/StatisticsDatabase/";
 const only = process.argv.includes("--only") ? process.argv[process.argv.indexOf("--only") + 1] : undefined;

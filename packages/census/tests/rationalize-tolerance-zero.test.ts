@@ -6,8 +6,8 @@
 // answer correctly regardless of which package declares first, not just in `fullEngine`'s
 // own declaration order (analytic, then collections).
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareAnalytic } from "@enumeratio/analytic/src";
-import { declareCollections } from "@enumeratio/combinatorics/collections/src";
+import { declareAnalytic } from "@enumeratio/analytic";
+import { declareCollections } from "@enumeratio/combinatorics/collections";
 import { expect, test } from "vite-plus/test";
 
 function engineWith(order: readonly ((ce: ComputeEngine) => void)[]): ComputeEngine {

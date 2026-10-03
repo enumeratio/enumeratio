@@ -3,8 +3,9 @@
 
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import { version as ceVersion } from "@cortex-js/compute-engine";
+import { ROOT } from "./root.ts";
 import type { BenchSystem } from "./types.ts";
 
 export interface Version {
@@ -12,7 +13,7 @@ export interface Version {
   readonly packages?: Readonly<Record<string, string>>;
 }
 
-const oracle = (path: string): string => fileURLToPath(new URL(`../../oracle/${path}`, import.meta.url));
+const oracle = (path: string): string => join(ROOT, "..", "oracle", path);
 
 function probe(command: string, args: readonly string[]): string {
   try {

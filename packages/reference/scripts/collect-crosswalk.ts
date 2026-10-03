@@ -18,8 +18,8 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { writeFormatted } from "@enumeratio/entry/node";
 import { FUNGRIM_CORE } from "@cortex-js/compute-engine/identities";
-import { MAPPINGS } from "@enumeratio/oracle/src";
-import { HEADS, SYMBOLS } from "@enumeratio/wolfram/src";
+import { MAPPINGS } from "@enumeratio/oracle";
+import { HEADS, SYMBOLS } from "@enumeratio/wolfram";
 import { referenceEntries } from "../src/node.ts";
 import { crosswalk, engineSymbols } from "./crosswalk.ts";
 

@@ -1,7 +1,7 @@
 // The backlog of heads to add (src/backlog.ts) is data the reference will grow into, so it
 // is held to the same standard as an aspirational example: every example still evaluates,
 // none is met yet, and a head leaves the backlog the moment it gets an entry.
-import { runCases } from "@enumeratio/evaluation/src/node";
+import { runCases } from "@enumeratio/evaluation/node";
 import { expect, test } from "vite-plus/test";
 import { backlog } from "../src/index.ts";
 import { referenceEntries } from "../src/node.ts";

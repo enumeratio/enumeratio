@@ -9,10 +9,8 @@
 
 /**
  * A MathJSON expression, structurally. Declared here rather than imported from
- * `@enumeratio/entry`: that package is src-only, and a bundled package that reaches into
- * it for a type cannot have its declarations generated (the same reason collections keeps
- * its reference entries out of the runtime build). A definitions package should not depend
- * on the documentation package for a JSON shape anyway.
+ * `@enumeratio/entry`: a definitions package should not depend on the documentation
+ * package for a JSON shape.
  */
 export type MathJSON = string | number | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 

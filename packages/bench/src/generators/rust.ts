@@ -5,9 +5,9 @@
 // crate from here.
 
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 import type { Generator } from "../generate.ts";
 import { planned } from "../generate.ts";
+import { ROOT } from "../root.ts";
 import { PROTOCOL } from "../protocol.ts";
 import type { HarnessCommand } from "../run.ts";
 import type { Plan } from "../types.ts";
@@ -267,8 +267,7 @@ profile = "minimal"
   };
 };
 
-const here = (path: string): string => fileURLToPath(new URL(path, import.meta.url));
-const CRATE_DIR = here("../../generated/rust");
+const CRATE_DIR = join(ROOT, "generated/rust");
 
 /** Built once before the run, then the binary runs directly, so a SIGKILL past budget lands
  * on the harness itself and no build time counts against a case. */

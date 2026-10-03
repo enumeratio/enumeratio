@@ -5,6 +5,8 @@ export interface PackageField {
   /** Its notation entry, an export subpath (`./notation`): what a host loads for every package
    *  before it builds an engine, since a LaTeX dictionary is fixed at construction. */
   readonly notation?: string;
+  /** The group the docs site files the package under (`arithmetic`, `groups`, …). */
+  readonly group?: string;
 }
 
 /** The specifier a host imports a package's notation entry by, or undefined if it has none. */

@@ -3,7 +3,7 @@
 // shape every production engine uses — cli, web, census, reference/scripts/engines.ts).
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareCombinatorics } from "@enumeratio/combinatorics/src";
+import { declareCombinatorics } from "../src/index.ts";
 
 // The combinatorial statistics are declared inside `declareCombinatorics` itself now (step 6b).
 const ce = new ComputeEngine();

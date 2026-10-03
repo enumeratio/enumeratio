@@ -6,8 +6,8 @@
 // should be, widened to mean nth-prime here (see the PR history around #273/#276).
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { declareNumerals } from "@enumeratio/numerals/src";
-import { declareResidues } from "@enumeratio/residues/src";
+import { declareNumerals } from "@enumeratio/numerals";
+import { declareResidues } from "@enumeratio/residues";
 import { declareNumberTheory } from "../src/declare.ts";
 
 const ce = new ComputeEngine();

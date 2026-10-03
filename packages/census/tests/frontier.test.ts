@@ -2,7 +2,7 @@
 // contents — enough to catch a collection run that half-failed and wrote a plausible-looking
 // file, which a silent kernel error will otherwise do.
 
-import { isSystemName } from "@enumeratio/wolfram/src";
+import { isSystemName } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { declaredNames } from "../src/engine.ts";
 import { CALL_FORMS, FRONTIER } from "../src/wolfram-frontier-data.ts";

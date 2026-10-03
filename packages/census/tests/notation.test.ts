@@ -9,7 +9,7 @@ import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-synta
 import { compileNotation } from "@enumeratio/boxes";
 import { displayDictionary } from "@enumeratio/frontend/display";
 import type { NotationData } from "@enumeratio/manifest";
-import { referenceData } from "@enumeratio/reference/node";
+import { recordsRoot, referenceData } from "@enumeratio/reference/node";
 import { expect, test } from "vite-plus/test";
 import { DECLARATIONS, NOTATION, NOTATION_ENTRIES } from "../src/engine.ts";
 
@@ -40,10 +40,11 @@ const PACKAGES = Object.fromEntries(Object.entries(NOTATION_ENTRIES).map(([name,
 
 /**
  * A published library's notation, as a host loads it beside ours: every `symbols/<Name>/notation.json`
- * of the manifest's fixture libraries, compiled for the head its definition is declared as. A
- * library whose trigger shadows ours is caught by the same checks.
+ * of the fixture libraries (a copy of the manifest's, so the census stands alone), compiled for
+ * the head its definition is declared as. A library whose trigger shadows ours is caught by the
+ * same checks.
  */
-const LIBRARIES_DIR = new URL("../../manifest/tests/fixtures/npm/", import.meta.url).pathname;
+const LIBRARIES_DIR = new URL("./fixtures/libraries/", import.meta.url).pathname;
 const LIBRARIES: Record<string, readonly Entry[]> = {};
 for (const library of readdirSync(LIBRARIES_DIR, { withFileTypes: true }).filter((d) => d.isDirectory())) {
   const symbols = join(LIBRARIES_DIR, library.name, "symbols");
@@ -111,7 +112,7 @@ function scoped<T>(ce: ComputeEngine, f: () => T): T {
   }
 }
 
-const { heads } = referenceData();
+const { heads } = referenceData(recordsRoot(import.meta.dirname));
 const text = (value: unknown): string => JSON.stringify(value);
 
 test("StandardForm round trip: each head with a LaTeX entry writes what reads back", () => {

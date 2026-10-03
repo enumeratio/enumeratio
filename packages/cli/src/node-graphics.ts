@@ -8,8 +8,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { rasterize } from "@enumeratio/raster";
 // Pure renderers from the sibling package's source (no DOM, no build step).
-import { renderGlyph } from "../../frontend/src/glyphs.ts";
-import { linePlotSvg } from "../../frontend/src/plot.ts";
+import { renderGlyph } from "@enumeratio/frontend";
+import { linePlotSvg } from "@enumeratio/frontend";
 import type { Graphic } from "./core.ts";
 
 /** Draw a core Graphic as an SVG string. */

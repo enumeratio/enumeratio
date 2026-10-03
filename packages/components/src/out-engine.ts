@@ -195,7 +195,7 @@ async function gpuShader(expr: { unknowns: ReadonlyArray<string> }): Promise<str
   try {
     if (unknowns.length === 1) {
       const [{ emitComplexWGSL }, { portraitShader }] = await Promise.all([
-        import("@enumeratio/analytic/src"),
+        import("@enumeratio/analytic"),
         import("@enumeratio/frontend"),
       ]);
       const emitted = emitComplexWGSL((expr as unknown as { json: unknown }).json as never, unknowns[0]);

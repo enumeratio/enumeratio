@@ -3,7 +3,7 @@
 // timing, so "Julia is missing NextPrime" is data, not a silent gap.
 
 import { createHash } from "node:crypto";
-import { emit } from "@enumeratio/oracle/src";
+import { emit } from "@enumeratio/oracle";
 import { answerText } from "./agree.ts";
 import { loadPins, type Pins } from "./catalogue.ts";
 import { PROTOCOL } from "./protocol.ts";

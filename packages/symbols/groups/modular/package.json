@@ -15,7 +15,6 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
     "./notation": {
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
@@ -37,7 +36,6 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.146.0",
     "@enumeratio/engine": "workspace:*",
-    "@enumeratio/oracle": "workspace:*",
     "@enumeratio/residues": "workspace:*",
     "@enumeratio/structures": "workspace:*",
     "typescript": "^7.0.2",
@@ -48,6 +46,7 @@
     "@cortex-js/compute-engine": "^0.146.0"
   },
   "enumeratio": {
-    "notation": "./notation"
+    "notation": "./notation",
+    "group": "groups"
   }
 }

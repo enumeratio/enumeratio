@@ -2,11 +2,11 @@
 // reference's provenance test is what notices compute-engine shipping a head of ours
 // (BL-62), and it only sees heads with a record.
 
-import { referenceData } from "@enumeratio/reference/node";
+import { recordsRoot, referenceData } from "@enumeratio/reference/node";
 import { expect, test } from "vite-plus/test";
 import { declaredNames } from "../src/engine.ts";
 
-const recorded = new Set(referenceData().heads.map(({ head }) => head));
+const recorded = new Set(referenceData(recordsRoot(import.meta.dirname)).heads.map(({ head }) => head));
 // Heads are capitalised; the lowercase names are carrier and algebra types (namespace.test.ts).
 const heads = declaredNames().filter((name) => /^[A-Z]/.test(name));
 

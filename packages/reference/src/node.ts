@@ -8,7 +8,7 @@
 // loader on the main export would break the site build.
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   type HeadImplementations,
@@ -121,8 +121,33 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
   return { heads, issues };
 }
 
-/** The repo's `packages/`, which every caller but the loader's own tests reads. */
-export const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
+/** Whether `dir` is a checkout's `packages/`: the symbol libraries sit under it, in groups. */
+const isCheckout = (dir: string): boolean => existsSync(join(dir, "symbols"));
+
+/**
+ * The `@enumeratio` scope of the installed packages: the first `node_modules/@enumeratio` at or above
+ * `from`. Not this package's own siblings, which under pnpm are only what it declares.
+ */
+export function installedPackages(from: string = process.cwd()): string | undefined {
+  for (let dir = resolve(from); ; dir = dirname(dir)) {
+    const scope = join(dir, "node_modules", "@enumeratio");
+    if (existsSync(scope)) return scope;
+    if (dirname(dir) === dir) return undefined;
+  }
+}
+
+/**
+ * Where the records are read from by default: the workspace's `packages/` when this package sits in a
+ * checkout, else the installed packages (found from `from`, the working directory unless given).
+ * A caller that knows better passes its own root to `referenceData` and `loadReferenceData`.
+ */
+export function recordsRoot(from?: string): string {
+  const checkout = dirname(dirname(fileURLToPath(new URL(".", import.meta.url))));
+  return isCheckout(checkout) ? checkout : (installedPackages(from) ?? checkout);
+}
+
+/** The default root, resolved once. */
+export const PACKAGES = recordsRoot();
 
 /**
  * One `LoadedHead` per name, for a head two packages document (https://github.com/enumeratio/enumeratio/wiki/Examples-as-Data
@@ -139,8 +164,12 @@ export function canonicalHeads(heads: readonly LoadedHead[]): ReadonlyMap<string
   return chosen;
 }
 
-/** Every system's kernel version, as the last scan of it recorded (scripts/oracle-scan.ts). */
-const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
+/** Every system's kernel version, as the last scan of it recorded (scripts/oracle-scan.ts):
+ * `oracle/kernels.json` under the records' root, empty where there is no oracle package. */
+function kernelsIn(packagesRoot: string): Record<string, string> {
+  const file = join(packagesRoot, "oracle", "kernels.json");
+  return existsSync(file) ? (JSON.parse(readFileSync(file, "utf8")) as Record<string, string>) : {};
+}
 
 /** Our own forms of an example (frontend/scripts/forms.ts): the pins a record keeps beside the
  * systems', with no kernel behind them. */
@@ -196,9 +225,7 @@ export function referenceData(
   if (issues.length > 0)
     throw new Error(`reference data: ${issues.map((i) => `\n  ${i.file}: ${i.message}`).join("")}`);
 
-  const kernels = (
-    packagesRoot === PACKAGES && existsSync(KERNELS) ? JSON.parse(readFileSync(KERNELS, "utf8")) : {}
-  ) as Record<string, string>;
+  const kernels = kernelsIn(packagesRoot);
 
   const withRecord = (h: LoadedHead): ReferenceEntry => {
     const record = h.implementations;
@@ -264,10 +291,10 @@ export function oracleAgreementsOf(
   return out;
 }
 
-/** Rewrite oracle-agreements.json from the current data. */
+/** Rewrite oracle-agreements.json from the current data (in a checkout: the file is source). */
 export function writeOracleAgreements(data: ReferenceData = referenceData()): void {
   writeFileSync(
-    new URL("./crosswalk/oracle-agreements.json", import.meta.url),
+    join(PACKAGES, "reference/src/crosswalk/oracle-agreements.json"),
     `${JSON.stringify(oracleAgreementsOf(data), null, 2)}\n`,
   );
 }

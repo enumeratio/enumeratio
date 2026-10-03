@@ -13,7 +13,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { writeFormatted } from "@enumeratio/entry/node";
-import { HEADS } from "@enumeratio/wolfram/src";
+import { HEADS } from "@enumeratio/wolfram";
 import { referenceEntries } from "../src/node.ts";
 import { declaredEngine } from "./engines.ts";
 import { type HeadRecord, collect, renderProvenance } from "./provenance.ts";

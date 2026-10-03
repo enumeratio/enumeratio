@@ -15,14 +15,18 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
-    "./findstat": "./findstat/src/findstat-data.ts",
+    "./findstat": {
+      "types": "./dist/findstat.d.mts",
+      "import": "./dist/findstat.mjs"
+    },
     "./collections": {
       "types": "./dist/collections.d.mts",
       "import": "./dist/collections.mjs"
     },
-    "./collections/src": "./collections/src/index.ts",
-    "./collections/sampleable": "./collections/scripts/sampleable.ts",
+    "./collections/sampleable": {
+      "types": "./dist/sampleable.d.mts",
+      "import": "./dist/sampleable.mjs"
+    },
     "./notation": {
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
@@ -39,6 +43,7 @@
     "@enumeratio/boxes": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
+    "@enumeratio/plausible": "workspace:*",
     "@enumeratio/residues": "workspace:*",
     "@enumeratio/structures": "workspace:*"
   },
@@ -48,7 +53,6 @@
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
-    "@enumeratio/plausible": "workspace:*",
     "@enumeratio/residues": "workspace:*",
     "@enumeratio/structures": "workspace:*",
     "typescript": "^7.0.2",
@@ -59,7 +63,8 @@
     "@cortex-js/compute-engine": "^0.146.0"
   },
   "enumeratio": {
-    "notation": "./notation"
+    "notation": "./notation",
+    "group": "combinatorics"
   },
   "generated": [
     "src/statistics/naming-data.ts",

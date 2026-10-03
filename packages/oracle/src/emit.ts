@@ -4,7 +4,7 @@
 // mapping for `RademacherSymbol` at arity 1" tells you which row to add next, and a scan
 // that counts those is a work queue rather than a verdict.
 
-import { CONTEXT, HEADS, isSystemName, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram/src";
+import { CONTEXT, HEADS, isSystemName, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram";
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";

@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { CARRIERS, declareCombinatorics } from "@enumeratio/combinatorics/src";
+import { CARRIERS, declareCombinatorics } from "../src/index.ts";
 import {
   carrierNameForType,
   declareRestricted,

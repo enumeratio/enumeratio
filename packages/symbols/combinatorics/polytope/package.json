@@ -13,7 +13,6 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./src": "./src/index.ts",
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -34,5 +33,8 @@
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.146.0"
+  },
+  "enumeratio": {
+    "group": "combinatorics"
   }
 }

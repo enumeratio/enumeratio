@@ -2,7 +2,7 @@
 // so every run and every system sees the same inputs; the draws are written into the
 // generated scripts as literals.
 
-import type { MathJSON } from "@enumeratio/oracle/src";
+import type { MathJSON } from "@enumeratio/oracle";
 import type { Draw, Sample } from "./types.ts";
 
 /** mulberry32, as the Plausible scripts use. */

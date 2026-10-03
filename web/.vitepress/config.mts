@@ -65,11 +65,19 @@ for (const dir of packageDirs) {
 // `@enumeratio/combinatorics` keeps its `collections` area (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible)
 // under its own nested `<area>/src/index.ts` rather than a package-root `src/`, so the
 // generic dist->src rewrite above (which only swaps the `/dist/` segment) can't find it.
-// Alias the `./collections` subpath by hand.
-for (const area of fromPackages ? [] : ["collections"]) {
-  const abs = resolve(pkgsDir, "symbols/combinatorics/combinatorics", area, "src/index.ts");
+// So are the other entries whose source isn't `src/<entry>.ts`; alias them by hand.
+const sourceEntries: [specifier: string, source: string][] = fromPackages
+  ? []
+  : [
+      ["@enumeratio/combinatorics/collections", "symbols/combinatorics/combinatorics/collections/src/index.ts"],
+      ["@enumeratio/combinatorics/findstat", "symbols/combinatorics/combinatorics/findstat/src/findstat-data.ts"],
+      ["@enumeratio/catalog/records", "catalog/src/catalog-records-data.ts"],
+      ["@enumeratio/ce-patches/wgsl-complex", "ce-patches/src/compute-engine/compilation/wgsl-complex.ts"],
+    ];
+for (const [specifier, source] of sourceEntries) {
+  const abs = resolve(pkgsDir, source);
   if (!existsSync(abs)) continue;
-  srcAliases.push({ find: new RegExp(`^@enumeratio/combinatorics/${area}$`), replacement: abs });
+  srcAliases.push({ find: new RegExp(`^${specifier}$`), replacement: abs });
 }
 
 const dev = process.argv.includes("dev");

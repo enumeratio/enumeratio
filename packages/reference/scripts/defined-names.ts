@@ -3,7 +3,7 @@
 // collect-defined-names.ts for what this set is for.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import type { MathJSON } from "@enumeratio/oracle/src";
+import type { MathJSON } from "@enumeratio/oracle";
 
 /** Every bare (unquoted) string symbol anywhere in `expr` — head positions included, since a
  * head passed as a value (`Fold(Add, 0, xs)`) is exactly the kind of name this matters for. */

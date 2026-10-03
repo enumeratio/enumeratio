@@ -43,7 +43,7 @@ import {
   type System,
   type Verdict,
   wiredSystems,
-} from "@enumeratio/oracle/src";
+} from "@enumeratio/oracle";
 import { isSettled, orderImplementations, type SystemImplementation } from "@enumeratio/entry";
 import { updateHead } from "@enumeratio/entry/node";
 import { referenceData, referenceEntries } from "../src/node.ts";

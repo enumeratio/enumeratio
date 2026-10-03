@@ -4,11 +4,20 @@
   "private": true,
   "description": "Seeded, size-aware generators for Plausible, the property sampler over our value spaces (https://github.com/enumeratio/enumeratio/wiki/Plausible). A leaf with no workspace dependencies, so collections, reference and bench can all import it.",
   "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
   },

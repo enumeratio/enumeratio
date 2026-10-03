@@ -17,7 +17,7 @@
 
 import { orderImplementations, OWN_FORMS } from "@enumeratio/entry";
 import { updateHead } from "@enumeratio/entry/node";
-import { SYSTEMS } from "@enumeratio/oracle/src";
+import { SYSTEMS } from "@enumeratio/oracle";
 import { loadReferenceData, PACKAGES } from "@enumeratio/reference/node";
 import { declaredEngine } from "../../reference/scripts/engines.ts";
 import { headForms, recordWithForms } from "./forms.ts";

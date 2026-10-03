@@ -1,7 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareNumberTheory } from "@enumeratio/number-theory/src";
-import { declareNumerals } from "@enumeratio/numerals/src";
-import { declareResidues } from "@enumeratio/residues/src";
+import { declareNumberTheory } from "@enumeratio/number-theory";
+import { declareNumerals } from "@enumeratio/numerals";
+import { declareResidues } from "@enumeratio/residues";
 import { describe, expect, test } from "vite-plus/test";
 import { declareAdeles } from "../src/declare.ts";
 import golden from "./adeles.golden.json" with { type: "json" };

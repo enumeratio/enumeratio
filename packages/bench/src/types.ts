@@ -1,7 +1,7 @@
 // The shapes https://github.com/enumeratio/enumeratio/wiki/Benchmarking §3 and §7 describe: a catalogue case, the plan the
 // generators work from, and the report every runner writes.
 
-import type { MathJSON } from "@enumeratio/oracle/src";
+import type { MathJSON } from "@enumeratio/oracle";
 
 /** `exact` for integer/rational answers, `machine` for doubles, or a digit count. */
 export type Precision = "exact" | "machine" | number;

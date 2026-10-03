@@ -1,5 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { HEADS } from "@enumeratio/wolfram/src";
+import { HEADS } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { referenceEntries } from "../src/node.ts";
 

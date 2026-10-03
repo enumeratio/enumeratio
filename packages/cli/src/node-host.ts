@@ -8,7 +8,7 @@ import { type CommandHandler, type Graphic, type LineOutput, Repl } from "./core
 import type { SessionDefaults } from "./engine.ts";
 import { graphicLabel, graphicToSvg, inlineImage, writeSvg } from "./node-graphics.ts";
 import { samplePlot } from "./textual.ts";
-import { textPlot } from "../../frontend/src/textplot.ts";
+import { textPlot } from "@enumeratio/frontend";
 
 export interface HostOutput {
   text: string;

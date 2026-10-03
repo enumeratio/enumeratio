@@ -3,11 +3,11 @@
 // share everything but the `using` line, the project, and (for Oscar) the preamble include —
 // all three come from `preludeFor`, so this stays in lockstep with the oracle scan.
 
-import { relative, sep } from "node:path";
-import { fileURLToPath } from "node:url";
-import { juliaFlags, preludeFor } from "@enumeratio/oracle/src";
+import { join, relative, sep } from "node:path";
+import { juliaFlags, preludeFor } from "@enumeratio/oracle";
 import type { Generator } from "../generate.ts";
 import { planned } from "../generate.ts";
+import { ROOT } from "../root.ts";
 import { PROTOCOL, QUIT } from "../protocol.ts";
 import type { HarnessCommand } from "../run.ts";
 import type { Plan } from "../types.ts";
@@ -17,8 +17,8 @@ type JuliaSystem = "julia" | "oscar";
 export const CACHES_JULIA: "cleared" | "uncleared" = "uncleared";
 export const CACHES_OSCAR: "cleared" | "uncleared" = "uncleared";
 
-const here = (path: string): string => fileURLToPath(new URL(path, import.meta.url));
-const generatedDir = (system: JuliaSystem): string => here(`../../generated/${system}/`);
+const here = (path: string): string => join(ROOT, path);
+const generatedDir = (system: JuliaSystem): string => here(`generated/${system}/`);
 
 // `preludeFor`'s Oscar preamble `include`s preamble.jl by its absolute path on this checkout,
 // which isn't safe to bake into a committed file (a different clone, or even this worktree,
@@ -219,7 +219,7 @@ function harnessFor(system: JuliaSystem): HarnessCommand {
   // resolve it twice.
   return {
     command: prelude.binary,
-    args: [...juliaFlags(system), here(`../../generated/${system}/harness.jl`)],
+    args: [...juliaFlags(system), here(`generated/${system}/harness.jl`)],
   };
 }
 

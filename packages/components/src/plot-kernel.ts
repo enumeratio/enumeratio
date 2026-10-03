@@ -75,7 +75,7 @@ const systemHelpers = (): Promise<unknown> =>
 // (`_.__hz(…)`): loaded only for code that calls one.
 let analytic: Promise<Scope> | undefined;
 const analyticRuntime = (): Promise<Scope> =>
-  (analytic ??= import("@enumeratio/analytic/src").then((m) => ({
+  (analytic ??= import("@enumeratio/analytic").then((m) => ({
     __hz: m.hurwitzZetaReal,
     __zg: m.zetaGeneralizedReal,
     __lp: m.lerchPhiReal,

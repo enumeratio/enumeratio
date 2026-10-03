@@ -10,7 +10,7 @@
 // so it falls through and a kernel answers a different question. That is not a missing
 // answer, it is a wrong one, and nothing else in the suite would notice.
 
-import { FOREIGN, HEADS, SYMBOLS, isSystemName } from "@enumeratio/wolfram/src";
+import { FOREIGN, HEADS, SYMBOLS, isSystemName } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { declaredNames } from "../src/engine.ts";
 

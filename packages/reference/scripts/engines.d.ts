@@ -1,9 +1,9 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareAdeles } from "@enumeratio/adeles/src";
+import { declareBoxes } from "@enumeratio/boxes";
 import type { PackageNotation } from "@enumeratio/boxes";
 import { type Library } from "@enumeratio/manifest";
 /** Every library we ship, in the order the reference tests declare them. */
-export declare const DECLARATIONS: (typeof declareAdeles)[];
+export declare const DECLARATIONS: (typeof declareBoxes)[];
 /**
  * The same libraries by package, for the resolver (`@enumeratio/manifest`'s `createResolver`),
  * in the same order. A package is one library: combinatorics brings its maps and its

@@ -12,7 +12,7 @@ import {
   CARDINALITIES,
   NATIVE_TO_ENGINE,
   signatureOf,
-} from "@enumeratio/combinatorics/src";
+} from "@enumeratio/combinatorics";
 
 /** Carriers this package claims to cover. A carrier is only listed once every statistic the
  *  catalog knows for it either has a definition or sits on the frontier — so this list is

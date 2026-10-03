@@ -6,16 +6,18 @@
   "license": "WTFPL",
   "files": [
     "dist",
-    "reference"
+    "reference",
+    "src"
   ],
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
     "./lazy": "./dist/lazy.mjs",
+    "./stories-data": "./dist/stories-data.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node scripts/collect-stories.ts && vp pack src/index.ts src/lazy.ts",
+    "build": "node scripts/collect-stories.ts && vp pack src/index.ts src/lazy.ts src/stories-data.ts",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -25,7 +27,6 @@
     "@enumeratio/boxes": "workspace:*",
     "@enumeratio/ce-patches": "workspace:*",
     "@enumeratio/cli": "workspace:*",
-    "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/evaluation": "workspace:*",
     "@enumeratio/formats": "workspace:*",
@@ -43,7 +44,6 @@
     "@cortex-js/compute-engine": "^0.146.0",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/entry": "workspace:*",
-    "@enumeratio/statistics": "workspace:*",
     "@webgpu/types": "^0.1.60",
     "typescript": "^7.0.2",
     "vite": "catalog:",

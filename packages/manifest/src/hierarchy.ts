@@ -29,6 +29,8 @@ export const HIERARCHY: Readonly<Record<string, Placement>> = {
   "ce-patches": infra,
   manifest: infra,
   entry: infra,
+  // Libraries' sampleable families import it, so it is not tooling.
+  plausible: infra,
 
   boxes: { layer: "base", extends: [] },
   structures: { layer: "base", extends: ["boxes"] },
@@ -72,7 +74,6 @@ export const HIERARCHY: Readonly<Record<string, Placement>> = {
   catalog: tooling,
   census: tooling,
   oracle: tooling,
-  plausible: tooling,
   reference: tooling,
   utils: tooling,
 };

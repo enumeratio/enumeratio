@@ -6,26 +6,26 @@
 // is meant to have them; shared setup belongs here.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { declareAdeles } from "@enumeratio/adeles/src";
-import { declareEvaluation } from "@enumeratio/evaluation/src";
-import { declareAnalytic, declareFractals } from "@enumeratio/analytic/src";
-import { declareBraid } from "@enumeratio/braid/src";
-import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics/src";
-import { declareDiagrams } from "@enumeratio/diagram/src";
-import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
-import { declareHecke } from "@enumeratio/hecke/src";
-import { declareHopf } from "@enumeratio/hopf/src";
-import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
-import { declareIncidence } from "@enumeratio/incidence/src";
-import { declareModular } from "@enumeratio/modular/src";
-import { declareNumberTheory } from "@enumeratio/number-theory/src";
-import { declareNumerals } from "@enumeratio/numerals/src";
-import { declareQuiver } from "@enumeratio/quiver/src";
-import { declareResidues } from "@enumeratio/residues/src";
-import { declareBoxes } from "@enumeratio/boxes/src";
+import { declareAdeles } from "@enumeratio/adeles";
+import { declareEvaluation } from "@enumeratio/evaluation";
+import { declareAnalytic, declareFractals } from "@enumeratio/analytic";
+import { declareBraid } from "@enumeratio/braid";
+import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
+import { declareDiagrams } from "@enumeratio/diagram";
+import { declareGroupAlgebra } from "@enumeratio/groupalgebra";
+import { declareHecke } from "@enumeratio/hecke";
+import { declareHopf } from "@enumeratio/hopf";
+import { declareHypercomplex } from "@enumeratio/hypercomplex";
+import { declareIncidence } from "@enumeratio/incidence";
+import { declareModular } from "@enumeratio/modular";
+import { declareNumberTheory } from "@enumeratio/number-theory";
+import { declareNumerals } from "@enumeratio/numerals";
+import { declareQuiver } from "@enumeratio/quiver";
+import { declareResidues } from "@enumeratio/residues";
+import { declareBoxes } from "@enumeratio/boxes";
 import type { PackageNotation } from "@enumeratio/boxes";
 import { type Library, NOTATIONS } from "@enumeratio/manifest";
-import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures/src";
+import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
 
 /** Every library we ship BESIDES `@enumeratio/evaluation`, in the order the reference
  * tests declare them. Split out from `DECLARATIONS` so `configure` below (the `setup`
