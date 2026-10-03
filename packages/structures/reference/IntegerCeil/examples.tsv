@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+of-a-negative-real	Basic		[IntegerCeil, -2.5]	-2	$\lceil -2.5 \rceil = -2$
+of-a-rational	Basic		[IntegerCeil, [Rational, 7, 2]]	4	$\lceil 7/2 \rceil = 4$

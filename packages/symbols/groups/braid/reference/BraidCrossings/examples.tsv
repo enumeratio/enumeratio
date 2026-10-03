@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+three-letters	Basic		[BraidCrossings, [Braid, 3, [List, 1, -2, 1]]]	3	Length of the word

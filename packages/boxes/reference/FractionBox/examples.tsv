@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+one-half	Basic		[FractionBox, "'1'", "'2'"]	[FractionBox, "'1'", "'2'"]	a box is inert: it evaluates to itself

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+of-a-complex-number	Basic		[Imaginary, [Complex, 3, 4]]	4	$\operatorname{Im}(3+4i) = 4$
+of-a-real-infinity	Properties		[Imaginary, PositiveInfinity]	0	A real infinity has no imaginary part

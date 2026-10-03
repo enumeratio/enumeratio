@@ -1,0 +1,3 @@
+id	in
+count-colored-permutations-3-2	Length[ColoredPermutations[3, 2]]
+colored-permutations-2-2	Take[ColoredPermutations[2, 2], 8]

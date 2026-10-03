@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+dimension	Basic		[AlgebraDimension, [HeckeAlgebra, 4]]	24	$4!$, as for $S_4$
+basis	Basic		[Basis, [HeckeAlgebra, 2]]	[List, [HeckeT, [List, 1, 2]], [HeckeT, [List, 2, 1]]]	

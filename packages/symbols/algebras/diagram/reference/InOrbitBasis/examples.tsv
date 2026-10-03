@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+from-the-diagram-basis	Basic		[InOrbitBasis, [Diagram, [List, [List, 1], [List, -1]]]]	[Add, [OrbitDiagram, [List, [List, 1, -1]]], [OrbitDiagram, [List, [List, 1], [List, -1]]]]	Sums over coarsenings

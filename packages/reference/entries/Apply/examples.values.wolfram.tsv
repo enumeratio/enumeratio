@@ -1,0 +1,4 @@
+id	in
+factorial-recurrence-term	DifferenceRootReduce[Factorial[n], n][5]
+fibonacci-recurrence-term	DifferenceRootReduce[Fibonacci[n], n][10]
+catalan-recurrence-term	DifferenceRootReduce[CatalanNumber[n], n][6]

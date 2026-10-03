@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+acyclic	Basic		[QuiverIsAcyclic, [LinearQuiver, 4]]	True	
+path-algebra-dimension	Basic		[AlgebraDimension, [PathAlgebra, [LinearQuiver, 6]]]	21	$\binom{7}{2}$ paths

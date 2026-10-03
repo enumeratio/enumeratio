@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+of-a-real	Basic		[LowerTick, 2.5]	2	The greatest integer tick at or below 2.5

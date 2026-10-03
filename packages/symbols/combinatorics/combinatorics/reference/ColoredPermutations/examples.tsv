@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-colored-permutations-3-2	Basic		[Count, [ColoredPermutations, 3, 2]]	48	$2^3 \cdot 3! = 48$
+colored-permutations-2-2	Basic		[Take, [ColoredPermutations, 2, 2], 8]	[List, [List, [List, 1, 2], [List, 0, 0]], [List, [List, 2, 1], [List, 0, 0]], [List, [List, 1, 2], [List, 0, 1]], [List, [List, 2, 1], [List, 0, 1]], [List, [List, 1, 2], [List, 1, 0]], [List, [List, 2, 1], [List, 1, 0]], [List, [List, 1, 2], [List, 1, 1]], [List, [List, 2, 1], [List, 1, 1]]]	Each element is $[\text{image}, \text{colors}]$

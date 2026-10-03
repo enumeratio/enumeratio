@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+sum	Basic		[UnderoverscriptBox, "'∑'", "'n=1'", "'10'"]	[UnderoverscriptBox, "'∑'", "'n=1'", "'10'"]	a box is inert: it evaluates to itself

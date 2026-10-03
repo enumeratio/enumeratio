@@ -1,0 +1,4 @@
+id	in
+head-alone	Resource["Subsets"]
+call-the-head	Resource["Subsets", 3]
+count-subsets	Length[Resource["Subsets", 3]]

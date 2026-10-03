@@ -1,0 +1,3 @@
+id	in
+count-rooted-forests-3	Length[RootedForests[3]]
+rooted-forests-2	Take[RootedForests[2], 3]

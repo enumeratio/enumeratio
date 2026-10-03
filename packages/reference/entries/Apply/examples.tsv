@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+factorial-recurrence-term	Basic		[Apply, [DifferenceRootReduce, [Factorial, n], n], 5]	120	The 5th term, by running the recurrence forward exactly
+fibonacci-recurrence-term	Basic		[Apply, [DifferenceRootReduce, [Fibonacci, n], n], 10]	55	$F_{10}$ from $y(n+2) = y(n+1) + y(n)$
+catalan-recurrence-term	Scope		[Apply, [DifferenceRootReduce, [CatalanNumber, n], n], 6]	132	$C_6$

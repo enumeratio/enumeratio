@@ -1,0 +1,3 @@
+id	in
+count-weak-compositions-4-3	Length[WeakCompositions[4, 3]]
+weak-compositions-2-2	Take[WeakCompositions[2, 2], 3]

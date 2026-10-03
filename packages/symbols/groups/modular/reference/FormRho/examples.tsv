@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+one-step-from-1-1-1	Basic		[FormRho, [QuadraticForm, 1, 1, -1]]	[QuadraticForm, -1, 1, 1]	Gauss's $\rho$ on $x^2+xy-y^2$

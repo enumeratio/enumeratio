@@ -1,0 +1,3 @@
+id	in
+count-binary-strings-4	Length[BinaryStrings[4]]
+binary-strings-3	Take[BinaryStrings[3], 8]

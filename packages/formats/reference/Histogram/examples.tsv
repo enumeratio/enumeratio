@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+three-bins	Basic		[Histogram, [List, 1, 2, 2, 3, 3, 3], 3]	[List, [Tuple, 1, 1], [Tuple, 1.6666666666666665, 2], [Tuple, 2.333333333333333, 3]]	given a bin spec, the (bin start, count) pairs are computed

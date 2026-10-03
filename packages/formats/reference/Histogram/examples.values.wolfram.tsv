@@ -1,0 +1,3 @@
+id	in
+inert	enumeratio`Histogram[List[1, 2, 2, 3, 3, 3]]
+three-bins	enumeratio`Histogram[List[1, 2, 2, 3, 3, 3], 3]

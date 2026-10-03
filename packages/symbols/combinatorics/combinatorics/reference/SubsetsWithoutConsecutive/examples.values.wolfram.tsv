@@ -1,0 +1,3 @@
+id	in
+count-subsets-without-consecutive-5	Length[SubsetsWithoutConsecutive[5]]
+subsets-without-consecutive-3	Take[SubsetsWithoutConsecutive[3], 5]

@@ -1,0 +1,3 @@
+id	in
+count-odd-subsets-4	Length[OddSubsets[4]]
+odd-subsets-3	Take[OddSubsets[3], 4]

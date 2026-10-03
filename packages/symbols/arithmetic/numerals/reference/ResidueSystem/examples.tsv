@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+canonical-form	Basic		[ResidueSystem, [List, 7, 11]]	[ResidueNumerals, [List, 7, 11]]	Evaluates to [[ResidueNumerals]]
+digits-via-the-old-name	Basic		[IntegerDigits, 42, [ResidueSystem, [List, 7, 11]]]	[List, 0, 9]	$42 \bmod 7$ and $42 \bmod 11$

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+monomial-1-2	Basic		[InFundamentalBasis, [QSymM, [List, 1, 2]]]	[Add, [Negate, [QSymF, [List, 1, 1, 1]]], [QSymF, [List, 1, 2]]]	$M_{12}=F_{12}-F_{111}$
+monomial-2	Basic		[InFundamentalBasis, [QSymM, [List, 2]]]	[Add, [Negate, [QSymF, [List, 1, 1]]], [QSymF, [List, 2]]]	

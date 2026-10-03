@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+of-a-negative-real	Basic		[IntegerFloor, -2.5]	-3	$\lfloor -2.5 \rfloor = -3$
+of-a-rational	Basic		[IntegerFloor, [Rational, 7, 2]]	3	$\lfloor 7/2 \rfloor = 3$

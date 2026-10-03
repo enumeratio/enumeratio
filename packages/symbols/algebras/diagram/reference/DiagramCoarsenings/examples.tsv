@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+of-one-block	Basic		[DiagramCoarsenings, [Diagram, [List, [List, 1, -1]]]]	[List, [Diagram, [List, [List, 1, -1]]]]	$\mathrm{Bell}(1)=1$
+of-two-blocks	Basic		[DiagramCoarsenings, [Diagram, [List, [List, 1], [List, -1]]]]	[List, [Diagram, [List, [List, 1, -1]]], [Diagram, [List, [List, 1], [List, -1]]]]	$\mathrm{Bell}(2)=2$

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+dimension-4	Basic		[AlgebraDimension, [NSymAlgebra, 4]]	8	$2^{4-1}$ compositions
+membership	Basic		[Element, [NSymH, [List, 1, 3]], [NSymAlgebra, 4]]	True	$H_{13}$ has degree $4$

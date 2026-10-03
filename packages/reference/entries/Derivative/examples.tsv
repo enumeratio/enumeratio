@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption	epsil.backOut
+derivative-of-gamma	Basic		[Derivative, Gamma, 1]	[Function, [Block, [Multiply, [Digamma, z], [Gamma, z]]], z]	$\Gamma'(z) = \psi(z)\,\Gamma(z)$, as a function	Unreadable
+derivative-of-gamma-at-2	Basic		[Apply, [Derivative, Gamma, 1], 2]	[Add, 1, [Negate, EulerGamma]]	$\Gamma'(2) = 1 - \gamma$	

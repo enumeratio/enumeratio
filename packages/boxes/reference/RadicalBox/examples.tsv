@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+cube-root	Basic		[RadicalBox, "'x'", "'3'"]	[RadicalBox, "'x'", "'3'"]	a box is inert: it evaluates to itself

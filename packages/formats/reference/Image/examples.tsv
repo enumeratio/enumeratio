@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+data-uri	Basic		[Image, "'data:image/png;base64,AAA'"]	[Image, "'data:image/png;base64,AAA'"]	an image is a value carrying its URI, so it evaluates to itself

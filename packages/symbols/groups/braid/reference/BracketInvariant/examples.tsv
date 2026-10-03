@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+trefoil	Basic		[BracketInvariant, [TorusKnot, 2, 3]]	[Add, [Negate, [Power, A, -16]], [Power, A, -12], [Power, A, -4]]	The writhe-corrected bracket of $T(2,3)$
+figure-eight	Basic		[BracketInvariant, [FigureEightKnot]]	[Add, [Power, A, 8], [Negate, [Power, A, 4]], [Negate, [Power, A, -4]], [Power, A, -8], 1]	Amphichiral: symmetric under $A\mapsto A^{-1}$

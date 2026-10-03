@@ -1,0 +1,3 @@
+id	in
+count-subsets-of-size-at-most-2	Length[SubsetsOfSizeAtMost[5, 2]]
+subsets-of-size-at-most-1	Take[SubsetsOfSizeAtMost[3, 1], 4]

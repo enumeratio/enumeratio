@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+balanced-ternary-of-minus-5	Basic		[IntegerDigits, -5, [BalancedNumerals, 3]]	[List, -1, 1, 1]	No sign needed: $-5 = -9 + 3 + 1$
+balanced-ternary-of-100	Basic		[IntegerDigits, 100, [BalancedNumerals, 3]]	[List, 1, 1, -1, 0, 1]	$100 = 81 + 27 - 9 + 1$

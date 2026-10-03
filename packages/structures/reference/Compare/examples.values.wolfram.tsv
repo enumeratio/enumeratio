@@ -1,0 +1,4 @@
+id	in
+integers	Compare[3, 5]
+dominance-comparable	Compare[List[3, 1], List[2, 2]]
+dominance-incomparable	Compare[List[3, 1, 1, 1], List[2, 2, 2]]

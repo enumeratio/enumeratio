@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+canonical-form	Basic		[NegativeRadix, 2]	[NegativeNumerals, 2]	Evaluates to [[NegativeNumerals]]
+digits-via-the-old-name	Basic		[IntegerDigits, 10, [NegativeRadix, 2]]	[List, 1, 1, 1, 1, 0]	$10 = 16 - 8 + 4 - 2$

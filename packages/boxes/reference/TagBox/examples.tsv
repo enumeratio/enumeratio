@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+tagged	Basic		[TagBox, "'x'", Superscript]	[TagBox, "'x'", Superscript]	a box is inert: it evaluates to itself

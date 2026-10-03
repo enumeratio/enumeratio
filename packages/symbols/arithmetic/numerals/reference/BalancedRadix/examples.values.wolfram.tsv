@@ -1,0 +1,3 @@
+id	in
+canonical-form	BalancedRadix[3]
+digits-via-the-old-name	IntegerDigits[5, BalancedRadix[3]]

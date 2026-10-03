@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+the-trefoil-braid	Basic		[BraidIsKnot, [Braid, 2, [List, 1, 1, 1]]]	True	$\sigma_1^3$ has a single-cycle permutation
+the-hopf-link	Basic		[BraidIsKnot, [Braid, 2, [List, 1, 1]]]	False	$\sigma_1^2$ closes to two components

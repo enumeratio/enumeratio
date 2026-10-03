@@ -1,0 +1,3 @@
+id	in
+count-k-permutations-5-2	Length[KPermutations[5, 2]]
+k-permutations-3-2	Take[KPermutations[3, 2], 6]

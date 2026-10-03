@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+a-factorization-as-data	Basic		[Factorization, [Tuple, [List, 2, 3], [List, 3, 1]]]	[Factorization, [Tuple, [List, 2, 3], [List, 3, 1]]]	$2^3 \cdot 3^1$ as parallel base and exponent lists

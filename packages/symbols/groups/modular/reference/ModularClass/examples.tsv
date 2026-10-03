@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+rotate-to-the-least	Basic		[ModularClass, "'RLL'"]	"'LLR'"	The least rotation of $RLL$

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+trace-of-lr	Basic		[ModularTrace, [ModularMatrix, 1, 1, 1, 2]]	3	$1+2$
