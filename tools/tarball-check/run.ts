@@ -39,7 +39,8 @@ const { values: args } = parseArgs({
   },
 });
 const scratch = resolve(args.scratch ?? mkdtempSync(join(tmpdir(), "tarball-check-")));
-const out = resolve(args.out ?? join(scratch, "report"));
+// Beside the scratch directory, which a run removes unless it was given or kept.
+const out = resolve(args.out ?? `${scratch}-report`);
 const wanted = new Set<string>(args.only?.split(",") ?? STEPS);
 const bad = [...wanted].filter((s) => !(STEPS as readonly string[]).includes(s));
 if (bad.length > 0) throw new Error(`--only: unknown step ${bad.join(", ")} (steps are ${STEPS.join(", ")})`);
@@ -436,6 +437,7 @@ function census(result: Result): void {
   mkdirSync(dir, { recursive: true });
   tar("-xzf", census.tarball, "-C", dir, "--strip-components=1");
   const json = join(out, "census.json");
+  rmSync(json, { force: true });
   const code = sh(
     "census",
     join(app, "node_modules/.bin/vp"),
@@ -536,6 +538,7 @@ async function main(): Promise<void> {
     ["census", census],
     ["site", site],
   ];
+  for (const step of STEPS) rmSync(join(out, `${step}.log`), { force: true });
   let broken = "";
   for (const [step, body] of plan) {
     if (!runs(step)) continue;
