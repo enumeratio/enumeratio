@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+from-a-decomposition	Basic		[Cycles, [CycleDecomposition, [List, [List, 1, 2], [List, 3]]]]	[Cycles, [List, [List, 1, 2]]]	The fixed point $3$ is dropped

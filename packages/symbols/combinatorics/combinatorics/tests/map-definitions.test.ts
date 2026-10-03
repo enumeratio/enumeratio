@@ -46,6 +46,23 @@ function treeOfDyck(word: readonly number[]): BinTree | undefined {
   }
   return undefined;
 }
+
+/** Entry i counts the earlier entries larger than it. */
+const inversionSequence = (p: readonly number[]): number[] =>
+  p.map((v, i) => p.slice(0, i).filter((w) => w > v).length);
+/** Filled from the right: the last entry is the (a + 1)-th largest of the values still free. */
+function permutationOfInversionSequence(a: readonly number[]): number[] | undefined {
+  if (!a.every((v, i) => Number.isInteger(v) && v >= 0 && v <= i)) return undefined;
+  const free = Array.from({ length: a.length }, (_, i) => i + 1);
+  const p: number[] = [];
+  for (let i = a.length - 1; i >= 0; i--) p[i] = free.splice(free.length - 1 - a[i]!, 1)[0]!;
+  return p;
+}
+const subexcedants = (n: number): number[][] =>
+  Array.from({ length: n }, (_, i) => i + 1).reduce<number[][]>(
+    (words, bound) => words.flatMap((w) => Array.from({ length: bound }, (_, a) => [...w, a])),
+    [[]],
+  );
 const maybe = <T>(value: T | undefined, encode: (value: T) => unknown): unknown =>
   value === undefined ? undefined : encode(value);
 
@@ -57,6 +74,8 @@ const REFERENCE: Record<string, (contents: unknown) => unknown> = {
   "BinaryTree from dyck_path": (x) => maybe(treeOfDyck(intsOf(x)), nested),
   "CycleDecomposition from permutation": (x) => list(CycleDecomposition(intsOf(x)).map(list)),
   "Permutation from cycle_decomposition": (x) => maybe(PermutationOfCycleDecomposition(intsOf(x).map(intsOf)), list),
+  "SubexcedantSeq from permutation": (x) => list(inversionSequence(intsOf(x))),
+  "Permutation from subexcedant_seq": (x) => maybe(permutationOfInversionSequence(intsOf(x)), list),
 };
 
 const trees = upTo(catalan, BinaryTreeUnrank);
@@ -78,6 +97,13 @@ const SUBJECTS: Record<string, unknown[]> = {
     list([list([2, 1])]),
     list([list([1]), list([1])]),
     list([list([2]), list([1])]),
+  ],
+  subexcedant_seq: [
+    ...Array.from({ length: MAX + 1 }, (_, n) => subexcedants(n).map(list)).flat(),
+    list([1]),
+    list([0, 2]),
+    list([0, 0, 3]),
+    list([0, -1]),
   ],
 };
 
