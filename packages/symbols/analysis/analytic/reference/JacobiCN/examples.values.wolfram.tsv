@@ -37,4 +37,8 @@ jacobicn-0-0	JacobiCN[0, 0]	1	\text{cn}(0|0)	1
 jacobicn-1-over-2-times-pi-0	JacobiCN[Times[Rational[1, 2], Pi], 0]	0	\text{cn}\left(\left.\frac{1}{2} \pi \right|0\right)	0	
 jacobicn-0-1	JacobiCN[0, 1]	1	\text{cn}(0|1)	1	
 jacobicn-1-over-2-times-i-times-pi-1	JacobiCN[Times[Complex[0, Rational[1, 2]], Pi], 1]	ComplexInfinity	\text{cn}((\text{Rational}[1,2] i) \pi |1)	\text{ComplexInfinity}	
+n-jacobicn-sqrt-2-over-4-times-i-2	N[JacobiCN[Complex[0, Divide[Sqrt[2], 4]], 2]]	1.068806917319438 + 0.*I	N\left[\text{cn}\left(\left.\frac{\sqrt{2}}{4} i\right|2\right)\right]	1.06881\, +0. i	
+n-jacobicn-1-over-2-times-1-plus-sqrt-2-over-2-1	N[JacobiCN[Times[Rational[1, 2], Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	0.659292746249578	N\left[\text{cn}\left(\frac{1}{2} \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	0.659293	
+n-jacobicn-sqrt-2-times-i-2	N[JacobiCN[Complex[0, Sqrt[2]], 2]]	-6.889282219354171 + 0.*I	N\left[\text{cn}\left(\left.\sqrt{2} i\right|2\right)\right]	-6.88928+0. i	
+n-jacobicn-2-times-1-plus-sqrt-2-over-2-1-minus	N[JacobiCN[Times[2, Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	-0.9691506644900215	N\left[\text{cn}\left(2 \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	-0.969151	
 symbolic-arguments-are-left-unevaluated-rather	JacobiCN[u, m]				

@@ -30,6 +30,29 @@ function enclosure(ours: readonly unknown[], truth: readonly unknown[], toleranc
   return undefined;
 }
 
+/** Whether `disagreement` can weigh `json` numerically: compute-engine alone gives it a
+ * value. Not one in our own heads (`JacobiCN(2, 1/2)`), which this module never runs. */
+export const comparable = (json: unknown): boolean => !Number.isNaN(ce.box(json as never).N().re);
+
+/** The widest error bar, relative above magnitude 1, a measured `expected`
+ * (`Measurement(value, error)`, a numeric integral) is read at. Past it (a Monte Carlo
+ * ±0.018) the measurement is too rough to stand for the value. Shared with the oracle scan. */
+export const MAX_MEASURED_TOLERANCE = 1e-6;
+/** A few units in the last place of a double, relative above magnitude 1. */
+const DOUBLE_ROUNDING = 4 * Number.EPSILON;
+
+/** The tolerance a measured `expected` needs to be tight, or `undefined` for one that isn't
+ * measured or is too rough (`MAX_MEASURED_TOLERANCE`). */
+export function measuredTolerance(expected: unknown): number | undefined {
+  if (!Array.isArray(expected) || expected[0] !== "Measurement") return undefined;
+  const [value, error] = (expected as unknown[]).slice(1).map((x) => ce.box(x as never).N());
+  if (value === undefined || error === undefined) return undefined;
+  const relative = error.re / Math.max(1, Math.hypot(value.re, value.im || 0));
+  if (!(relative >= 0)) return undefined;
+  const tolerance = relative === 0 ? DEFAULT_TOLERANCE : 10 ** Math.ceil(Math.log10(relative));
+  return tolerance <= MAX_MEASURED_TOLERANCE ? Math.max(tolerance, DEFAULT_TOLERANCE) : undefined;
+}
+
 /** Why `expected` doesn't agree with `known`, or `undefined` when it does. `call` is the
  * example's expression: a `Solve`'s answers are compared as a set, and a known value in
  * Wolfram's rules (`{{x -> 1}}`, `{{}}` for an identity) reads as ours does. */
@@ -41,6 +64,21 @@ export function disagreement(expected: unknown, known: unknown, tolerance: numbe
   const [a, b] = [ce.box(expected as never), ce.box(known as never)];
   if (a.isSame(b)) return undefined;
   const [p, q] = [a.json, b.json];
+  // A measurement (a numeric integral) agrees when its error bar holds the known value and
+  // is tight to `tolerance`. The bar is never narrower than the value's own double rounding:
+  // compute-engine's quadrature reports ∫₁² ln³t/(t−1) dt as 0.14251419793571093 ± 1.4e-21.
+  if (Array.isArray(p) && p[0] === "Measurement") {
+    const [value, error] = (p as unknown[]).slice(1).map((x) => ce.box(x as never).N());
+    const truth = b.N();
+    if (value === undefined || error === undefined || Number.isNaN(truth.re))
+      return `${a.toString()} is not ${b.toString()}`;
+    const size = Math.max(1, Math.hypot(value.re, value.im || 0));
+    const gap = Math.hypot(value.re - truth.re, (value.im || 0) - (truth.im || 0));
+    if (gap > Math.max(error.re, DOUBLE_ROUNDING * size)) return `${a.toString()} doesn't hold ${truth.toString()}`;
+    if (error.re > tolerance * Math.max(1, Math.hypot(truth.re, truth.im || 0)))
+      return `${a.toString()} isn't tight to ${tolerance}`;
+    return undefined;
+  }
   if (Array.isArray(p) && Array.isArray(q) && p[0] === "Interval" && q[0] === "Interval")
     return enclosure((p as unknown[]).slice(1), (q as unknown[]).slice(1), tolerance);
   if (Array.isArray(p) && Array.isArray(q) && p[0] === "List" && q[0] === "List") {

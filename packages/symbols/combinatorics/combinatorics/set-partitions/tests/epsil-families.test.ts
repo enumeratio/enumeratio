@@ -9,8 +9,13 @@ import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, elementJson, kernelOn } from "../../collections/src/families/epsil.ts";
 import {
   BellB,
+  BlocksToLabels,
   BlocksToRgs,
+  Fubini,
   IsSetPartitionOf,
+  LabelsToOrderedBlocks,
+  SetCompositionRank,
+  SetCompositionUnrank,
   RgsRank,
   RgsToBlocks,
   RgsUnrank,
@@ -19,12 +24,18 @@ import {
   StirlingS2,
 } from "../../collections/src/families/kernels-combinatorics.ts";
 import {
+  IsPerfectMatchingOf,
   IsSurjectionOf,
+  PerfectMatchingCount,
+  PerfectMatchingRank,
+  PerfectMatchingUnrank,
   SurjectionCount,
   SurjectionRank,
   SurjectionUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
 import { entries, surjectionsEntries } from "../src/families/core.ts";
+import { entries as matchingEntries, readings as matchingReadings } from "../src/families/matchings.ts";
+import { entries as wordEntries, isRestrictedGrowthStringOf } from "../src/families/paths-partitions.ts";
 
 const ce = new ComputeEngine();
 
@@ -115,10 +126,76 @@ const READINGS: Record<string, Reading> = {
       ...words(n + 1, span(1, k || 1)),
     ],
   },
+  SetCompositions: {
+    params: [[0], [1], [2], [3], [4], [5]],
+    count: ([n]) => Fubini(n),
+    unrank: ([n], r) => LabelsToOrderedBlocks(SetCompositionUnrank(n, r)),
+    rank: (x: number[][], [n]) => SetCompositionRank(BlocksToLabels(x), n),
+    valid: (x: number[][], [n]) => IsSetPartitionOf(x, n),
+    near: ([n]) => nearBlocks(Math.min(n, 4)),
+  },
+  PerfectMatchings: {
+    params: [[0], [1], [2], [3], [4], [5]],
+    count: ([n]) => PerfectMatchingCount(n),
+    unrank: ([n], r) => PerfectMatchingUnrank(n, r),
+    rank: (x: number[][], [n]) => PerfectMatchingRank(x, n),
+    valid: (x: number[][], [n]) => IsPerfectMatchingOf(x, n),
+    near: ([n]) => nearPairs(n),
+  },
+  RestrictedGrowthStrings: {
+    params: [[0], [1], [2], [3], [4], [5], [6]],
+    count: ([n]) => BellB(n),
+    unrank: ([n], r) => RgsUnrank(n, r),
+    rank: (x: number[]) => RgsRank(x),
+    valid: (x: number[], [n]) => isRestrictedGrowthStringOf(x, n),
+    // every word over 0..n, and one letter short or over.
+    near: ([n]) => [
+      ...words(n, span(0, n)),
+      ...(n > 0 ? words(n - 1, span(0, n - 1)) : []),
+      ...words(n + 1, span(0, n)),
+    ],
+  },
+  ...Object.fromEntries(
+    matchingReadings.map((reading): [string, Reading] => [
+      reading.head,
+      {
+        params: [[0], [1], [2], [3], [4], [5], [6]].filter(([n]) => n <= 5 || reading.head.endsWith("Partitions")),
+        count: (p) => reading.count(p),
+        unrank: (p, r) => reading.unrank(p, r),
+        rank: (x, p) => reading.rank(x as never, p) as number,
+        valid: (x, p) => reading.valid(x as never, p),
+        // a set partition or perfect matching of 1..n or 1..2n, each of which the family may exclude
+        near: ([n]) => (reading.head.endsWith("Partitions") ? nearBlocks(Math.min(n, 4)) : nearPairs(n)),
+      },
+    ]),
+  ),
 };
 
+/**
+ * Pairs near a perfect matching of 1..2n, each pair written ascending: every matching of 1..2n
+ * (the crossing and nesting ones among them), and from each one a point changed, a pair lost or
+ * repeated, and the pairs in another order.
+ */
+function nearPairs(n: number): number[][][] {
+  const out: number[][][] = [];
+  const total = PerfectMatchingCount(n);
+  const sorted = (a: number, b: number): number[] => (a < b ? [a, b] : [b, a]);
+  for (let r = 0; r < Math.min(total, 105); r++) {
+    const pairs = PerfectMatchingUnrank(n, r);
+    out.push(pairs, pairs.toReversed());
+    if (n === 0) continue;
+    out.push(pairs.slice(1), [...pairs, pairs[0]]);
+    for (let i = 0; i < n; i++)
+      for (const point of [0, 1, 2 * n, 2 * n + 1, pairs[i][0]])
+        out.push(pairs.map((pair, j) => (j === i ? sorted(point, pair[1]) : pair)));
+  }
+  return out;
+}
+
 const byHead = new Map(
-  [...surjectionsEntries, ...entries].filter((f) => "epsil" in f).map((f) => [f.head, f as EpsilFamily]),
+  [...surjectionsEntries, ...entries, ...wordEntries, ...matchingEntries]
+    .filter((f) => "epsil" in f)
+    .map((f) => [f.head, f as EpsilFamily]),
 );
 
 for (const [head, reading] of Object.entries(READINGS)) {
@@ -144,6 +221,50 @@ test("a set partition's blocks rank in any order", () => {
   const rank = kernel.rank([[1, 4], [2], [3, 5]], [5]);
   expect(kernel.rank([[5, 3], [4, 1], [2]], [5])).toBe(rank);
   expect(rank).toBe(BigInt(RgsRank([0, 1, 2, 0, 2])));
+});
+
+test("a matching ranks with its pairs in any order and either way round", () => {
+  const kernel = kernelOn(ce, byHead.get("PerfectMatchings")!);
+  expect(
+    kernel.rank(
+      [
+        [3, 1],
+        [6, 2],
+        [5, 4],
+      ],
+      [3],
+    ),
+  ).toBe(
+    kernel.rank(
+      [
+        [1, 3],
+        [2, 6],
+        [4, 5],
+      ],
+      [3],
+    ),
+  );
+});
+
+test("a crossing or nesting pair is refused whichever way round it is written", () => {
+  expect(
+    kernelOn(ce, byHead.get("NonCrossingMatchings")!).valid(
+      [
+        [3, 1],
+        [2, 4],
+      ],
+      [2],
+    ),
+  ).toBe(false);
+  expect(
+    kernelOn(ce, byHead.get("NonNestingMatchings")!).valid(
+      [
+        [4, 1],
+        [2, 3],
+      ],
+      [2],
+    ),
+  ).toBe(false);
 });
 
 /** The definitions as the interpreter reads them, bypassing compiled code. */

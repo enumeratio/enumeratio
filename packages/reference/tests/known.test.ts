@@ -4,7 +4,7 @@
 // it off a value we know is right. Pure data: nothing here runs our heads.
 
 import { expect, test } from "vite-plus/test";
-import { DEFAULT_TOLERANCE, disagreement } from "../src/known.ts";
+import { comparable, DEFAULT_TOLERANCE, disagreement, measuredTolerance } from "../src/known.ts";
 import { referenceData } from "../src/node.ts";
 
 const known = referenceData().heads.flatMap(({ head, entry }) =>
@@ -31,6 +31,22 @@ test("the comparison rejects what it should", () => {
   expect(disagreement(["Interval", 1.05221632868619, 1.0541936064357], truth, 1e-9)).toBeUndefined();
   expect(disagreement(["Interval", 1.0522163286862, 1.0541936064357], truth, 1e-9)).toBeDefined(); // misses the low end
   expect(disagreement(["Interval", 1.0522, 1.0542], truth, 1e-9)).toBeDefined(); // holds it, but loose
+  const halfPi = ["Divide", "Pi", 2];
+  expect(disagreement(["Measurement", 1.5707963267530112, 2.5e-10], halfPi, 1e-9)).toBeUndefined();
+  expect(disagreement(["Measurement", 1.5707963167530112, 2.5e-10], halfPi, 1e-9)).toBeDefined(); // misses it
+  expect(disagreement(["Measurement", 1.5707963267530112, 2.5e-10], halfPi, 1e-12)).toBeDefined(); // loose
+});
+
+test("a measured value's tolerance is its error bar, up to a decade", () => {
+  expect(measuredTolerance(["Measurement", 1.5707963267530112, 2.5e-10])).toBe(1e-9);
+  expect(measuredTolerance(["Measurement", -0.012, 0.018])).toBeUndefined(); // too rough
+  expect(measuredTolerance(1.5)).toBeUndefined();
+});
+
+test("a value in heads compute-engine alone can't evaluate isn't comparable", () => {
+  expect(comparable(["Divide", "Pi", 2])).toBe(true);
+  expect(comparable(["Complex", { num: "0" }, { num: "-1.421802682497363661" }])).toBe(true);
+  expect(comparable(["JacobiCN", 2, ["Rational", 1, 2]])).toBe(false);
 });
 
 test("a Solve's fresh parameter is Wolfram's unconstrained solution", () => {

@@ -41,7 +41,7 @@ const ballot = (w: unknown, y: unknown): unknown =>
   );
 
 /** Up (1) before down (0), semilength n: Catalan(n). Its completions are closed, so it needs no table. */
-const dyckPaths = walkFamily({
+export const dyckPaths = walkFamily({
   head: "DyckPaths",
   carrier: "DyckPath",
   params: ["_n"],

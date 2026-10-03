@@ -6,6 +6,7 @@ import { evaluateInverseTrigAtRadicals } from "../compute-engine/library/trigono
 // multiple of π/10 fold to the angle, whichever way the radical is spelled.
 export const inverseTrigRadicals: Patch = {
   id: "inverse-trig-radicals",
+  issue: "https://github.com/cortex-js/compute-engine/issues/409",
   lands: "Arcsin(√2/4·√(5 − √5)) = π/5, Arctan(√(1 − 2/√5)) = π/10",
   files: ["src/compute-engine/library/trigonometry.ts"],
   heads: ["Arcsin", "Arccos", "Arctan"],

@@ -47,3 +47,11 @@ n-ln-2-pow-2	nf(power(ln(n(2)), n(2)))
 n-ln-2-pow-3	nf(power(ln(n(2)), n(3)))		
 n-ln-2-pow-4	nf(power(ln(n(2)), n(4)))		
 n-ln-2-pow-5	nf(power(ln(n(2)), n(5)))		
+n-ln-2-pow-2-2	nf(power(ln(n(2)), n(2)))		
+n-ln-2-pow-3-2	nf(power(ln(n(2)), n(3)))		
+n-ln-2-pow-4-2	nf(power(ln(n(2)), n(4)))		
+n-ln-2-pow-5-2	nf(power(ln(n(2)), n(5)))		
+n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t			
+n-integrate-exponentiale-pow-neg-t-times-ln-t			
+n-integrate-1-over-neg-x-times-y-plus-1-times-ln			
+n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t			
