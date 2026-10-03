@@ -7,7 +7,7 @@ signatures:
   - call: BinaryNecklaces(n)
     description: the binary words of length $n$ up to rotation, represented by the lexicographically-least word in each orbit
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 seeAlso:
   - LyndonWords
   - KNecklaces
