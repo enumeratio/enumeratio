@@ -26,6 +26,8 @@ import {
   SignedPermutationUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
 import { epsilEntries, kCyclePermutations } from "../src/families/core.ts";
+import { permutationsAsCycles } from "../src/families/cycles.ts";
+import { PermutationsAsCyclesFamily } from "../src/families/permutations.ts";
 import {
   alternatingPermutations,
   cograssmannianPermutations,
@@ -97,7 +99,33 @@ function lexRestriction(params: number[][], member: (x: number[], p: number[]) =
   };
 }
 
+/** Decompositions a step from a member: its cycles reversed, one cycle rotated, one cycle
+ *  dropped, a fixed point added, a point repeated. */
+function cycleNeighbours(cycles: number[][]): number[][][] {
+  const rotated = cycles.map((c, i) => cycles.map((d, j) => (i === j ? [...d.slice(1), d[0]] : d)));
+  return [
+    cycles.toReversed(),
+    ...rotated,
+    cycles.slice(1),
+    [...cycles, [cycles.flat().length + 1]],
+    cycles.map((c, i) => (i === 0 ? [...c, c[0]] : c)),
+    [...cycles, []],
+  ];
+}
+
 const READINGS: Record<string, Reading> = {
+  // The TS kernel enumerates every permutation of n and sorts; the Epsil definition unranks directly.
+  PermutationsAsCycles: {
+    params: [[0], [1], [2], [3], [4], [5], [6]],
+    count: ([n]) => factorial(n),
+    unrank: ([n], r) => PermutationsAsCyclesFamily.unrank([n], r),
+    rank: (x: number[][], [n]) => PermutationsAsCyclesFamily.rank(x, [n]) as number,
+    valid: (x: number[][], [n]) => PermutationsAsCyclesFamily.valid(x, [n]),
+    near: ([n]) =>
+      Array.from({ length: factorial(n) }, (_, r) => PermutationsAsCyclesFamily.unrank([n], r) as number[][]).flatMap(
+        (cycles) => [cycles, ...cycleNeighbours(cycles)],
+      ),
+  },
   SymmetricGroup: {
     params: [[0], [1], [2], [3], [4], [5]],
     count: ([n]) => factorial(n),
@@ -199,6 +227,7 @@ const READINGS: Record<string, Reading> = {
 const byHead = new Map(
   [
     ...epsilEntries,
+    permutationsAsCycles,
     kCyclePermutations,
     alternatingPermutations,
     connectedPermutations,

@@ -21,6 +21,7 @@ import { IntegerPartitionRank } from "../../../collections/src/families/kernels-
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { kCyclePermutations } from "./core.ts";
+import { permutationsAsCycles } from "./cycles.ts";
 import {
   alternatingPermutations,
   connectedPermutations,
@@ -185,6 +186,9 @@ function kInversionRank(perm: number[], n: number): number {
 // A cycle decomposition is canonical: each cycle starts at its least point, cycles in order of
 // those points. Listed by cycle type in IntegerPartitions' order (the n-cycles first, the
 // identity last), then by canonical form, lexicographically. The order is our choice.
+// The family itself is defined in Epsil (./cycles.ts), unranking directly; the kernel below
+// enumerates all n! and sorts, and stays as the independent reading its agreement test checks
+// it against.
 export function CycleDecomposition(perm: readonly number[]): number[][] {
   const seen: boolean[] = Array.from({ length: perm.length + 1 }, () => false);
   const cycles: number[][] = [];
@@ -274,7 +278,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     ),
     carrier: "Arrangement",
   },
-  PermutationsAsCyclesFamily,
+  permutationsAsCycles,
   {
     ...ints(
       "LehmerCodes",

@@ -22,6 +22,7 @@ import type { CombinatorialMap } from "./map-helpers.ts";
 import { MAP_LAWS } from "./maps-laws.generated.ts";
 import { COMPOSITIONS_MAPS } from "../compositions/src/maps.ts";
 import { LATTICE_PATHS_MAPS } from "../lattice-paths/src/maps.ts";
+import { declareCycleConversions } from "../permutations/src/cycles-conversion.ts";
 import { PERMUTATIONS_MAPS } from "../permutations/src/maps.ts";
 import { SET_PARTITIONS_MAPS } from "../set-partitions/src/maps.ts";
 import { TREES_MAPS } from "../trees/src/maps.ts";
@@ -79,4 +80,6 @@ export function declareMaps(
         .map((ref) => ref.id),
     ],
   });
+  // Overloads across the carrier boundary, which need both heads declared: after the maps.
+  declareCycleConversions(ce);
 }
