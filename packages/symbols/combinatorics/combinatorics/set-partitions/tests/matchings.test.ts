@@ -1,6 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import { check, checkFamily, random } from "../../collections/scripts/properties.ts";
 import { entries } from "../src/families/matchings.ts";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { numberKernel } from "../../collections/src/families/types.ts";
 
 // Self-cert every family in this module (mirrors collections/tests/paths-partitions.test.ts,
@@ -14,7 +15,7 @@ const PARAMS: Record<string, number[]> = {
   NonNestingMatchings: [6],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, p] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);
