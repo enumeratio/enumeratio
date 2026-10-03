@@ -65,7 +65,7 @@ test("DescentSet's size and sum are Descents and MajorIndex", () => {
   }
 });
 
-test("ToLehmerCode is subexcedant and totals the inversions", () => {
+test("ToLehmerCode is a Lehmer code and totals the inversions", () => {
   for (const p of ALL) {
     const code = p.map((v, i) => p.slice(i + 1).filter((w) => w < v).length);
     expect(result(["ToLehmerCode", perm(...p)]), `[${p.join(", ")}]`).toEqual(["List", ...code]);

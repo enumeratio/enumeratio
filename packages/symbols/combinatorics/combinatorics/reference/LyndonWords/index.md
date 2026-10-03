@@ -7,7 +7,7 @@ signatures:
   - call: LyndonWords(n)
     description: "the binary Lyndon words of length $n$: words strictly less than every one of their nontrivial rotations"
     library: enumeratio-combinatorics
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 seeAlso:
   - BinaryNecklaces
   - KLyndonWords

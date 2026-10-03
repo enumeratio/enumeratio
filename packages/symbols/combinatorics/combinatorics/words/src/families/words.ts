@@ -439,6 +439,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
         ),
     ),
     declared: wordClass("BinaryWord", 2),
+    carrier: "BinaryWord",
   },
   // LyndonWords(n): binary words strictly less than every rotation — KLyndonWords(n, 2), remapped
   // to {0,1}.
@@ -462,6 +463,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
         ),
     ),
     declared: wordClass("BinaryWord", 2),
+    carrier: "BinaryWord",
   },
   // KNecklaces(size, base): base-letter words up to rotation (lex-least reps).
   {

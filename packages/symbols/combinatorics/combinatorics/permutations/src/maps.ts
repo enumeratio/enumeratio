@@ -288,7 +288,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "ToLehmerCode",
     from: "permutation",
-    to: "subexcedant_seq",
+    to: "permutation_inversion",
     body: forEach(positions, [
       "Count",
       ["Filter", ["Range", ["Add", "i", 1], ["Length", "_raw"], 1], ["Function", ["Greater", at("i"), at("j")], "j"]],
@@ -447,6 +447,53 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
     // No reference/Permutation/ record exists yet (a pre-existing gap) to hold this map's
     // laws, so it stays inline here rather than through maps-laws.generated.ts.
     laws: [{ inverse: "CycleDecomposition" }],
+  },
+  {
+    name: "SubexcedantSeq",
+    convert: true,
+    from: "permutation",
+    to: "subexcedant_seq",
+    body: forEach(positions, [
+      "Count",
+      ["Filter", ["Range", 1, ["Subtract", "i", 1], 1], ["Function", ["Greater", at("j"), at("i")], "j"]],
+    ]),
+    summary: "Entry i counts the earlier entries larger than p(i): the permutation's inversion sequence.",
+  },
+  {
+    name: "Permutation",
+    convert: true,
+    from: "subexcedant_seq",
+    to: "permutation",
+    // Standardise the first i entries: entry i is the (a(i) + 1)-th largest of them, so it is
+    // i − a(i) once the earlier entries at or above that shift up by one.
+    body: [
+      "Fold",
+      [
+        "Function",
+        [
+          "Join",
+          [
+            "Map",
+            ["Function", ["If", ["GreaterEqual", "x", ["Subtract", "i", at("i")]], ["Add", "x", 1], "x"], "x"],
+            "acc",
+          ],
+          ["List", ["Subtract", "i", at("i")]],
+        ],
+        "acc",
+        "i",
+      ],
+      ["List"],
+      positions,
+    ],
+    guard: [
+      "Fold",
+      ["Function", ["And", "ok", ["LessEqual", 0, at("i")], ["Less", at("i"), "i"]], "ok", "i"],
+      "True",
+      positions,
+    ],
+    summary: "The permutation a subexcedant sequence is the inversion sequence of.",
+    note: "Declines a word that isn't subexcedant: entry i must lie in 0..i − 1.",
+    laws: [{ inverse: "SubexcedantSeq" }],
   },
   {
     name: "BinarySearchTreeParentArray",

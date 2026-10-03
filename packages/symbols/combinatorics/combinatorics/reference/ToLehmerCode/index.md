@@ -14,8 +14,8 @@ signatures:
   - call: ToLehmerCode(Permutation)
     description: Entry i counts the later entries smaller than p(i).
     library: enumeratio-combinatorics
-    type: (permutation) -> subexcedant_seq
+    type: (permutation) -> permutation_inversion
 ---
 
-- Takes a `Permutation` and returns a `SubexcedantSeq` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+- Takes a `Permutation` and returns a `PermutationInversion` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
 - Its total is the inversion count, which is the Lehmer code's whole point.

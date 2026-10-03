@@ -1,0 +1,3 @@
+id	in
+from-a-permutation	list(vec![n(3), n(1), n(4), n(2)])
+back-to-the-permutation	list(vec![n(0), n(1), n(0), n(2)])
