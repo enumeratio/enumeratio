@@ -298,6 +298,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
       (a, [n]) => braceletRank(a, n, 2),
     ),
     declared: wordClass("BinaryWord", 2),
+    carrier: "BinaryWord",
   },
   // KBracelets(size, base): base-letter words up to rotation and reflection.
   {

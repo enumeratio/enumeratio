@@ -7,7 +7,7 @@ signatures:
   - call: BinaryBracelets(n)
     library: enumeratio-combinatorics
     description: the bracelets of $n$ black-or-white beads on a necklace that can flip.
-    type: (integer<0..>) -> indexed_collection<list<integer>>
+    type: (integer<0..>) -> indexed_collection<binary_word>
 enumerate:
   expr: BinaryBracelets(6)
   columns: Descents, Ascents
