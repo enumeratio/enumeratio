@@ -138,8 +138,9 @@ export function colexDigits(
   return fold(step, state, i, ["Join", ["List", "_r"], map(0, `${tag}_z`, upTo(1, digits))], ["Range", digits, 1, -1]);
 }
 
-/** T(s, c) of a table from `rowTable` bound as `name`. */
+/** T(s, c) of a table from `rowTable` bound as `name`, starting `offset` cells in when several
+ *  tables share one list (`FamilyEpsil.tables` is a single list). */
 export const cell =
-  (name: string, width: MathJSON) =>
+  (name: string, width: MathJSON, offset?: MathJSON) =>
   (s: MathJSON, c: MathJSON): MathJSON =>
-    at(name, add(mul(s, width), c, 1));
+    at(name, add(...(offset === undefined ? [] : [offset]), mul(s, width), c, 1));

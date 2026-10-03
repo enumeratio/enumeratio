@@ -28,7 +28,7 @@ import {
   upTo,
 } from "../../../collections/src/families/tables.ts";
 import { lukasiewiczPaths } from "./lukasiewicz.ts";
-import { completionsOf, completionsTable, type Step, walkFamily } from "./walks.ts";
+import { completionsOf, completionsSize, completionsTable, type Step, walkFamily } from "./walks.ts";
 import { OrderedTreeUnrank, OrderedTreeRank, type OrdTree } from "../../../collections/src/families/kernels-extra.ts";
 
 // ─── DelannoyPaths(n): lattice paths from (0,0) to (n,n) using East=(1,0), North=(0,1), and
@@ -335,21 +335,23 @@ export function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boole
 // a ceiling, the walk's flag saying whether it has reached h yet. ─────────────────────────────
 const UP: Step = { token: 1, rise: 1, width: 1 };
 const DOWN: Step = { token: 0, rise: -1, width: 1 };
+const below = completionsOf("_h");
 const dyckPathsByHeight = walkFamily({
   head: "DyckPathsByHeight",
   carrier: "DyckPath",
   params: ["_n", "_h"],
   width: mul(2, "_n"),
   steps: [UP, DOWN],
+  // Two tables in one list: `below` (never above h), then `under` (never above h − 1).
   tables: [
-    ["below", completionsTable("hb", [UP, DOWN], mul(2, "_n"), "_h")],
-    ["under", completionsTable("hu", [UP, DOWN], mul(2, "_n"), sub("_h", 1))],
+    completionsTable("hb", [UP, DOWN], mul(2, "_n"), "_h"),
+    completionsTable("hu", [UP, DOWN], mul(2, "_n"), sub("_h", 1)),
   ],
   completions: (w, y, reached) =>
     iff(
       equal(reached, 1),
-      completionsOf("below", "_h")(w, y),
-      sub(completionsOf("below", "_h")(w, y), completionsOf("under", sub("_h", 1))(w, y)),
+      below(w, y),
+      sub(below(w, y), completionsOf(sub("_h", 1), completionsSize(mul(2, "_n"), "_h"))(w, y)),
     ),
   flag: {
     initial: iff(equal("_h", 0), 1, 0),
@@ -360,7 +362,9 @@ const dyckPathsByHeight = walkFamily({
 
 // ─── DelannoyPaths in Epsil: the E, N, D steps tried in that order. The paths from a point a
 // columns and b rows short of (n, n) are the Delannoy number D(a, b) = Σ_k C(a, k) C(b, k) 2^k,
-// closed, so nothing is tabled; a negative side has none. ───────────────────────────────────────
+// the count in closed form; a negative side has none. The table D(a, b), a and b in 0..n, serves
+// unrank and rank. A cell can't read its own row, so it is 1 + Σ_{j=1..b} (D(a − 1, j) + D(a − 1, j − 1)),
+// which is D(a, b) = D(a − 1, b) + D(a − 1, b − 1) + D(a, b − 1) run down to D(a, 0) = 1. ───────
 type MathJSON = unknown;
 const delannoy = (tag: string, a: MathJSON, b: MathJSON): MathJSON =>
   fold(
@@ -370,10 +374,26 @@ const delannoy = (tag: string, a: MathJSON, b: MathJSON): MathJSON =>
     0,
     upTo(0, ["Min", a, b]),
   );
+const delannoyWidth = add("_n", 1);
+const delannoyCounts = rowTable(
+  "dt",
+  delannoyWidth,
+  delannoyWidth,
+  () => 1,
+  (prev, a, b) =>
+    iff(
+      equal(b, 0),
+      1,
+      fold(add("dt_a", prev(sub(a, 1), "dt_j"), prev(sub(a, 1), sub("dt_j", 1))), "dt_a", "dt_j", 1, upTo(1, b)),
+    ),
+);
+/** D(a, b) from the table, 0 on a negative side. */
+const delannoyAt = (a: MathJSON, b: MathJSON): MathJSON =>
+  iff(and(["GreaterEqual", a, 0], ["GreaterEqual", b, 0]), cell("_tables", delannoyWidth)(a, b), 0);
 /** The paths left after an E step and after an N step from a point a columns and b rows short. */
 const delannoyBlocks = (a: MathJSON, b: MathJSON): readonly [MathJSON, MathJSON] => [
-  delannoy("de", sub(a, 1), b),
-  delannoy("dn", a, sub(b, 1)),
+  delannoyAt(sub(a, 1), b),
+  delannoyAt(a, sub(b, 1)),
 ];
 const delannoyPaths: EpsilFamily = (() => {
   const [us, rs] = [(i: number) => at("du_s", i), (i: number) => at("dr_s", i)];
@@ -424,6 +444,7 @@ const delannoyPaths: EpsilFamily = (() => {
     params: ["_n"],
     epsil: {
       count: delannoy("dc", "_n", "_n"),
+      tables: delannoyCounts,
       unrank: ["Drop", fold(unrankStep, "du_s", "du_j", ["List", "_r", "_n", "_n"], upTo(1, mul(2, "_n"))), 3],
       rank: at(fold(rankStep, "dr_s", "dr_t", ["List", 0, "_n", "_n"], "_x"), 1),
       valid: and(
@@ -475,7 +496,7 @@ const peakTable = (() => {
 })();
 /** M or M₁ by the flag's u, from the table `peaks`. */
 const peakCompletions = (w: MathJSON, y: MathJSON, left: MathJSON, u: MathJSON): MathJSON => {
-  const read = cell("peaks", peakColumns);
+  const read = cell("_tables", peakColumns);
   const spent = sub(
     read(sub(w, 1), peakColumn(sub(y, 1), left)),
     iff(["GreaterEqual", left, 1], read(sub(w, 1), peakColumn(sub(y, 1), sub(left, 1))), 0),
@@ -492,7 +513,7 @@ const motzkinPathsByPeaks = walkFamily({
     { token: 0, rise: 0, width: 1 },
     { token: -1, rise: -1, width: 1 },
   ],
-  tables: [["peaks", peakTable]],
+  tables: [peakTable],
   completions: (w, y, flag) =>
     lets(
       [

@@ -18,6 +18,7 @@ import {
   elementJson,
   elementOf,
   type EpsilFamily,
+  evaluateTables,
   familyHash,
   integerOf,
   isEpsilFamily,
@@ -75,7 +76,7 @@ export function disagreements(
   for (const p of sampleParams(family.paramCount)) {
     const params = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
     // The table the other definitions read: the interpreter's to the interpreter, as plain numbers to compiled code.
-    const table = family.epsil.tables === undefined ? undefined : evaluateEpsil(ce, family.epsil.tables, params);
+    const table = family.epsil.tables === undefined ? undefined : evaluateTables(ce, family.epsil.tables, params);
     const entries = Array.isArray(table) ? table.slice(1).map((entry) => Number(integerOf(entry))) : undefined;
     if (table !== undefined && runs.tables !== undefined) {
       if (JSON.stringify(attempt(runs.tables, params)) !== JSON.stringify(entries)) wrong.add("tables");

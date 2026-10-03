@@ -131,6 +131,16 @@ export function integerOf(json: unknown): bigint | undefined {
   return match === null ? undefined : BigInt(match[1]) * 10n ** BigInt(match[2] ?? 0);
 }
 
+/** A `tables` expression at `params`, interpreted. compute-engine can leave the last entry of a
+ *  fold of rows an unevaluated sum, so an entry that isn't an integer is evaluated again. */
+export function evaluateTables(ce: ComputeEngine, tables: unknown, params: Record<string, unknown>): unknown {
+  const table = evaluateEpsil(ce, tables, params);
+  if (!Array.isArray(table)) return table;
+  return table.map((entry, index) =>
+    index === 0 || integerOf(entry) !== undefined ? entry : evaluateEpsil(ce, entry, {}),
+  );
+}
+
 /** An interpreted element as plain JS; undefined when it isn't one. */
 export function elementOf(json: unknown): Element | undefined {
   if (isInteger(json)) return json;
@@ -237,7 +247,7 @@ export function kernelOn(
     let table = exactCache.get(key);
     if (table === undefined) {
       options.onTables?.(p, "exact");
-      table = evaluateEpsil(ce, epsil.tables, bind(p));
+      table = evaluateTables(ce, epsil.tables, bind(p));
       exactCache.set(key, table);
     }
     return table;

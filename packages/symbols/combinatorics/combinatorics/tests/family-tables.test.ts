@@ -4,7 +4,14 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
-import { type EpsilFamily, familyHash, kernelOn, operationsOf } from "../collections/src/families/epsil.ts";
+import {
+  type EpsilFamily,
+  familyHash,
+  isEpsilFamily,
+  kernelOn,
+  operationsOf,
+} from "../collections/src/families/epsil.ts";
+import { allFamilies } from "../collections/src/families/index.ts";
 import { epsilEntries as compositions } from "../compositions/src/families/core.ts";
 import { disagreements } from "../scripts/compile-families.ts";
 
@@ -30,6 +37,18 @@ test("a table is computed once per params, however many calls read it", () => {
   expect(computed).toEqual(["double:12,4"]);
   kernel.unrank([13, 4], 0n);
   expect(computed).toEqual(["double:12,4", "double:13,4"]);
+});
+
+test("a walk's tables are one list, computed once per params", () => {
+  const walk = allFamilies.filter(isEpsilFamily).find((f) => f.head === "DyckPathsByHeight")!;
+  expect(JSON.stringify(walk.epsil.tables)).toContain('"Join"');
+  const computed: string[] = [];
+  const kernel = kernelOn(ce, walk, COMPILED_FAMILIES, {
+    onTables: (p, precision) => computed.push(`${precision}:${p.join(",")}`),
+  });
+  const total = kernel.count([8, 4]) as bigint;
+  for (let r = 0n; r < total; r += 7n) expect(kernel.rank(kernel.unrank([8, 4], r), [8, 4])).toBe(r);
+  expect(computed).toEqual(["double:8,4"]);
 });
 
 test("a count that doesn't read the table doesn't build it", () => {
@@ -74,7 +93,11 @@ test("the hash changes with the tables", () => {
 });
 
 test("every operation of a family with tables is compiled, tables included", () => {
-  for (const head of ["CompositionsIntoKParts", "WeakCompositions", "PartitionsInBox", "KDescentPermutations"]) {
+  const tabled = allFamilies.filter(isEpsilFamily).filter((f) => f.epsil.tables !== undefined);
+  expect(tabled.map((f) => f.head)).toEqual(
+    expect.arrayContaining(["CompositionsIntoKParts", "DelannoyPaths", "DyckPathsByHeight", "PermutationsAsCycles"]),
+  );
+  for (const { head } of tabled) {
     const entry = COMPILED_FAMILIES[head];
     expect(entry.tables, head).toBeDefined();
     expect(entry.interpreted, head).toBeUndefined();
