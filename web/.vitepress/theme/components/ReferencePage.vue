@@ -69,7 +69,28 @@ const forSignature = (signature: { arity?: number; call: string }): ResolvedRefe
 const toJson = (expr: unknown): string => JSON.stringify(expr);
 
 // Record prose is markdown: `$…$` typeset from its TeX by KaTeX, `[[Head]]` a link to its page.
-const link = (name: string): string | undefined => (getEntry(name) ? `/reference/symbol/${name}` : undefined);
+// A page doesn't link to itself.
+const link = (name: string): string | undefined =>
+  name !== props.name && getEntry(name) ? `/reference/symbol/${name}` : undefined;
+// A call form in a code span (a signature), each head it calls linked.
+const escapeHtml = (text: string): string => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const callHtml = (text: string): string =>
+  escapeHtml(text).replace(/\b[A-Z][A-Za-z0-9]*(?=\()/g, (head) => {
+    const href = link(head);
+    return href === undefined ? head : `<a href="${href}">${head}</a>`;
+  });
+
+// `?epsil=…` (or `mathjson`, `latex`, `wolfram`) puts that expression in a live cell on the page,
+// so any source quoted elsewhere can link to a running copy of itself under the head it's about.
+const LIVE_SYNTAXES = ["epsil", "mathjson", "latex", "wolfram"] as const;
+const live = ref<{ format: string; text: string } | undefined>();
+const readLive = (): void => {
+  const query = new URLSearchParams(location.search);
+  const format = LIVE_SYNTAXES.find((f) => query.has(f));
+  live.value = format === undefined ? undefined : { format, text: query.get(format) ?? "" };
+};
+const liveCell = ref<HTMLElement>();
+const liveHref = (expr: unknown): string => `?mathjson=${encodeURIComponent(JSON.stringify(expr))}#live`;
 const inline = (text?: string): string => renderInline(text ?? "", { link });
 const block = (text: string): string => renderBlock(text, { link });
 const prose = (markdown: string): string => renderProse(markdown, { link });
@@ -173,7 +194,11 @@ const followFragment = async (): Promise<void> => {
   openAncestorSections(id);
 };
 watch(fragment, () => void followFragment());
-onMounted(() => void followFragment());
+onMounted(() => {
+  readLive();
+  if (live.value) void nextTick(() => liveCell.value?.scrollIntoView({ block: "center" }));
+  void followFragment();
+});
 
 // Examples grouped into categories, keeping each example's original index so
 // assertion status stays addressable.
@@ -260,15 +285,31 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 
     <div v-if="entry.signatures?.length" id="signatures" class="ref-signatures">
       <div v-for="(sig, i) in entry.signatures" :key="i" class="ref-signature">
-        <code>{{ sig.call }}</code>
+        <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
+        <code v-html="callHtml(sig.call)"></code>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
         <span class="ref-sig-desc" v-html="inline(sig.description)"></span>
         <Crosswalk v-if="forSignature(sig).length" :references="forSignature(sig)" inline />
       </div>
     </div>
     <p v-else id="signatures" class="ref-sig">
-      <code>{{ entry.signature }}</code>
+      <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
+      <code v-html="callHtml(entry.signature)"></code>
     </p>
+
+    <section v-if="live" id="live" ref="liveCell" class="ref-live">
+      <h2>Live</h2>
+      <ClientOnly>
+        <notatio-cell
+          :key="`${live.format}:${live.text}`"
+          :format="live.format"
+          :value="live.text"
+          :out-form="entry.outForm ?? 'standard'"
+          :evaluate.prop="entry.outEvaluate !== false"
+          :resolveHead.prop="resolveHead"
+        ></notatio-cell>
+      </ClientOnly>
+    </section>
 
     <p class="ref-meta">
       <span>Domain: {{ entry.domain }}</span>
@@ -349,6 +390,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
         <p v-if="ex.caption" class="ref-caption" v-html="inline(ex.caption)"></p>
+        <a class="ref-open" :href="liveHref(ex.expr)" title="Open this expression in a live cell">live ↗</a>
         <!-- eslint-disable vue/no-v-html -- typeset at build from the recorded answer -->
         <div v-if="typeset(i) && !rendered[i]" class="ref-prerendered">
           <span class="ref-io-label">In</span
@@ -447,6 +489,28 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 </template>
 
 <style scoped>
+.ref-live {
+  margin: 1rem 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 8px;
+}
+.ref-open {
+  float: right;
+  margin-left: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--vp-c-text-3);
+  text-decoration: none;
+}
+.ref-open:hover {
+  color: var(--vp-c-brand-1);
+}
+.ref-live h2 {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: 0;
+  font-size: 1rem;
+}
 .ref-prerendered {
   display: grid;
   grid-template-columns: max-content 1fr;

@@ -117,6 +117,167 @@ useLibraryParams(
   }),
 );
 
+type SidebarItem = { text: string; link?: string; items?: SidebarItem[]; collapsed?: boolean };
+
+function learnSidebar(): SidebarItem[] {
+  return [
+    {
+      text: "Guides",
+      items: [
+        { text: "Overview", link: "/guide/" },
+        { text: "Ranking and unranking", link: "/docs/combinatorics/ranking-and-unranking" },
+        {
+          text: "Numeral systems",
+          link: "/docs/numerals/numeral-systems",
+          items: [{ text: "b-adic numbers", link: "/docs/numerals/adic" }],
+        },
+        { text: "Adèles and idèles", link: "/docs/adeles/adeles-and-ideles" },
+        {
+          text: "Hypercomplex algebras",
+          link: "/docs/hypercomplex/hypercomplex-algebras",
+          items: [{ text: "Finite: ℤ/m and the places", link: "/docs/hypercomplex/finite" }],
+        },
+        { text: "Diagram algebras", link: "/docs/diagram/diagram-algebras" },
+        { text: "Hecke algebras", link: "/docs/hecke/hecke-algebras" },
+        { text: "Incidence algebras", link: "/docs/incidence/incidence-algebras" },
+        { text: "Path algebras", link: "/docs/quiver/path-algebras" },
+        { text: "Hopf algebras", link: "/docs/hopf/hopf-algebras" },
+        { text: "Group algebras", link: "/docs/groupalgebra/group-algebras" },
+        { text: "The modular group", link: "/docs/modular/modular-group" },
+        {
+          text: "Knots and braids",
+          link: "/docs/braid/knots-and-braids",
+          items: [
+            { text: "Torus knots", link: "/docs/braid/torus-knots" },
+            { text: "The Lorenz flow", link: "/docs/braid/lorenz" },
+          ],
+        },
+      ],
+    },
+    {
+      text: "Packages",
+      collapsed: true,
+      items: [
+        { text: "Overview", link: "/docs/" },
+        {
+          text: "Command line",
+          link: "/docs/cli/",
+          items: [
+            { text: "REPL (live)", link: "/docs/cli/repl" },
+            { text: "One-shot (live)", link: "/docs/cli/command-line" },
+          ],
+        },
+        ...docsSidebar(),
+      ],
+    },
+  ];
+}
+
+function referenceSidebar(): SidebarItem[] {
+  return [
+    {
+      // Formats and components are catalogues -- their own index pages enumerate
+      // them, so the sidebar links the entry point and stops there.
+      text: "Reference",
+      items: [
+        { text: "Overview", link: "/reference/" },
+        { text: "Symbols", link: "/reference/symbol/" },
+        { text: "Statistics", link: "/reference/statistics/" },
+        { text: "Maps", link: "/reference/maps/" },
+        { text: "Collections", link: "/reference/collections/" },
+        { text: "Domains", link: "/reference/domains/" },
+        { text: "Formats", link: "/reference/formats/" },
+        { text: "Components", link: "/reference/component/" },
+      ],
+    },
+    {
+      text: "Components, drawn",
+      collapsed: true,
+      items: [
+        { text: "Plot", link: "/reference/component/Plot" },
+        { text: "Plot 3D", link: "/reference/component/Plot3D" },
+        { text: "Contour Plot", link: "/reference/component/ContourPlot" },
+        { text: "Density Plot", link: "/reference/component/DensityPlot" },
+        { text: "Vector & Stream Plot", link: "/reference/component/VectorPlot" },
+        { text: "Polar Plot", link: "/reference/component/PolarPlot" },
+        { text: "List Plot 3D", link: "/reference/component/ListPlot3D" },
+        { text: "Bar Chart 3D", link: "/reference/component/BarChart3D" },
+        { text: "Chart", link: "/reference/component/Chart" },
+        { text: "GraphPlot", link: "/reference/component/GraphPlot" },
+        { text: "Complex Plot", link: "/reference/component/ComplexPlot" },
+        { text: "Complex Plot 3D", link: "/reference/component/ComplexPlot3D" },
+        { text: "Collection table", link: "/reference/component/CollectionTable" },
+      ],
+    },
+  ];
+}
+
+function exploreSidebar(): SidebarItem[] {
+  return [
+    {
+      text: "Explore",
+      items: [
+        { text: "Overview", link: "/explore/" },
+        {
+          text: "The two-argument zeta",
+          link: "/explore/zeta/",
+          items: [{ text: "ζ on the GPU: a phase portrait", link: "/explore/zeta/phase-portrait" }],
+        },
+        { text: "The Lerch transcendent", link: "/explore/lerchphi/" },
+        { text: "The polylog and the polygamma", link: "/explore/polylog/" },
+        { text: "Fractals", link: "/explore/fractals/" },
+      ],
+    },
+  ];
+}
+
+function playgroundSidebar(): SidebarItem[] {
+  return [
+    {
+      text: "The sheets",
+      items: [
+        { text: "Overview", link: "/playground/" },
+        { text: "Worksheet", link: "/playground/worksheet" },
+        { text: "Notebook", link: "/playground/notebook" },
+        { text: "Manipulate", link: "/playground/manipulate" },
+        { text: "Controls", link: "/playground/controls" },
+        { text: "Environments", link: "/playground/environments" },
+        { text: "Terminal", link: "/playground/terminal" },
+      ],
+    },
+    {
+      text: "Cells",
+      items: [
+        { text: "Input", link: "/playground/in" },
+        { text: "Output", link: "/playground/out" },
+        { text: "Cell", link: "/playground/cell" },
+        { text: "Verification", link: "/playground/verification" },
+      ],
+    },
+    {
+      text: "Pictures",
+      items: [
+        { text: "Figure (glyphs)", link: "/playground/figure" },
+        { text: "Polytope", link: "/playground/polytope" },
+        { text: "Plots and charts", link: "/reference/component/" },
+      ],
+    },
+    {
+      text: "Inspirations",
+      link: "/playground/inspirations/",
+      collapsed: true,
+      items: [
+        { text: "Compute Engine", link: "/playground/inspirations/compute-engine" },
+        { text: "Wolfram Language", link: "/playground/inspirations/wolfram" },
+        { text: "SageMath", link: "/playground/inspirations/sage" },
+        { text: "Mathlib", link: "/playground/inspirations/mathlib" },
+        { text: "Tangle", link: "/playground/inspirations/tangle" },
+        { text: "ganja.js", link: "/playground/inspirations/ganja" },
+      ],
+    },
+  ];
+}
+
 const config = defineConfig({
   // The page map in one shared file, not inlined into every page's HTML.
   metaChunk: true,
@@ -197,142 +358,31 @@ const config = defineConfig({
     },
   },
   themeConfig: {
-    // The sheets first, then the reading. The playground and the CLI are docs, not
-    // destinations: they live under Docs (and its sidebar), not in the top bar.
+    // One sidebar per section (matched by path prefix), not one list of everything:
+    // Learn (guides and package docs), Reference (lookup), Explore (dials), Sheets (the tools),
+    // and Playground (the interface parts, one page each).
     nav: [
-      { text: "Worksheet", link: "/worksheet/" },
-      { text: "Explore", link: "/explore/" },
-      { text: "Guides", link: "/guide/" },
-      { text: "Reference", link: "/reference/" },
-      { text: "Docs", link: "/docs/" },
-    ],
-    sidebar: [
+      { text: "Learn", link: "/docs/", activeMatch: "^/(docs|guide)/" },
+      { text: "Reference", link: "/reference/", activeMatch: "^/reference/" },
+      { text: "Explore", link: "/explore/", activeMatch: "^/explore/" },
       {
-        text: "Guides",
+        text: "Sheets",
+        activeMatch: "^/(worksheet|notebook)/",
         items: [
-          { text: "Overview", link: "/guide/" },
-          { text: "Ranking and unranking", link: "/docs/combinatorics/ranking-and-unranking" },
-          {
-            text: "Numeral systems",
-            link: "/docs/numerals/numeral-systems",
-            items: [{ text: "b-adic numbers", link: "/docs/numerals/adic" }],
-          },
-          { text: "Adèles and idèles", link: "/docs/adeles/adeles-and-ideles" },
-          {
-            text: "Hypercomplex algebras",
-            link: "/docs/hypercomplex/hypercomplex-algebras",
-            items: [{ text: "Finite: ℤ/m and the places", link: "/docs/hypercomplex/finite" }],
-          },
-          { text: "Diagram algebras", link: "/docs/diagram/diagram-algebras" },
-          { text: "Hecke algebras", link: "/docs/hecke/hecke-algebras" },
-          { text: "Incidence algebras", link: "/docs/incidence/incidence-algebras" },
-          { text: "Path algebras", link: "/docs/quiver/path-algebras" },
-          { text: "Hopf algebras", link: "/docs/hopf/hopf-algebras" },
-          { text: "Group algebras", link: "/docs/groupalgebra/group-algebras" },
-          { text: "The modular group", link: "/docs/modular/modular-group" },
-          {
-            text: "Knots and braids",
-            link: "/docs/braid/knots-and-braids",
-            items: [
-              { text: "Torus knots", link: "/docs/braid/torus-knots" },
-              { text: "The Lorenz flow", link: "/docs/braid/lorenz" },
-            ],
-          },
-        ],
-      },
-      {
-        // Formats and components are catalogues -- their own index pages enumerate
-        // them, so the sidebar links the entry point and stops there.
-        text: "Reference",
-        items: [
-          { text: "Overview", link: "/reference/" },
-          { text: "Symbols", link: "/reference/symbol/" },
-          { text: "Statistics", link: "/reference/statistics/" },
-          { text: "Maps", link: "/reference/maps/" },
-          { text: "Collections", link: "/reference/collections/" },
-          { text: "Domains", link: "/reference/domains/" },
-          { text: "Formats", link: "/reference/formats/" },
-          { text: "Components", link: "/reference/component/" },
-        ],
-      },
-      {
-        text: "Docs",
-        items: [
-          { text: "Overview", link: "/docs/" },
           { text: "Worksheet", link: "/worksheet/" },
           { text: "Notebook", link: "/notebook/" },
-          {
-            text: "Command line",
-            link: "/docs/cli/",
-            items: [
-              { text: "REPL (live)", link: "/docs/cli/repl" },
-              { text: "One-shot (live)", link: "/docs/cli/command-line" },
-            ],
-          },
-          ...docsSidebar(),
+          { text: "Command line", link: "/docs/cli/" },
         ],
       },
-      {
-        text: "Explore",
-        items: [
-          { text: "Overview", link: "/explore/" },
-          {
-            text: "The two-argument zeta",
-            link: "/explore/zeta/",
-            items: [{ text: "ζ on the GPU: a phase portrait", link: "/explore/zeta/phase-portrait" }],
-          },
-          { text: "The Lerch transcendent", link: "/explore/lerchphi/" },
-          { text: "The polylog and the polygamma", link: "/explore/polylog/" },
-          { text: "Fractals", link: "/explore/fractals/" },
-        ],
-      },
-      {
-        // Demos of the parts, one page per component -- collapsed, since they are for
-        // looking one up, not for reading through.
-        text: "Playground",
-        collapsed: true,
-        items: [
-          { text: "Overview", link: "/playground/" },
-          { text: "Notebook", link: "/playground/notebook" },
-          { text: "Input", link: "/playground/in" },
-          { text: "Output", link: "/playground/out" },
-          { text: "Cell", link: "/playground/cell" },
-          { text: "Verification", link: "/playground/verification" },
-          { text: "Figure (glyphs)", link: "/playground/figure" },
-          { text: "Plot", link: "/reference/component/Plot" },
-          { text: "Plot 3D", link: "/reference/component/Plot3D" },
-          { text: "Contour Plot", link: "/reference/component/ContourPlot" },
-          { text: "Density Plot", link: "/reference/component/DensityPlot" },
-          { text: "Vector & Stream Plot", link: "/reference/component/VectorPlot" },
-          { text: "Polar Plot", link: "/reference/component/PolarPlot" },
-          { text: "List Plot 3D", link: "/reference/component/ListPlot3D" },
-          { text: "Bar Chart 3D", link: "/reference/component/BarChart3D" },
-          { text: "Chart", link: "/reference/component/Chart" },
-          { text: "GraphPlot", link: "/reference/component/GraphPlot" },
-          { text: "Polytope", link: "/playground/polytope" },
-          { text: "Complex Plot", link: "/reference/component/ComplexPlot" },
-          { text: "Complex Plot 3D", link: "/reference/component/ComplexPlot3D" },
-          { text: "Collection table", link: "/reference/component/CollectionTable" },
-          { text: "Worksheet", link: "/playground/worksheet" },
-          { text: "Manipulate", link: "/playground/manipulate" },
-          { text: "Controls", link: "/playground/controls" },
-          { text: "Environments", link: "/playground/environments" },
-          { text: "Terminal", link: "/playground/terminal" },
-          {
-            text: "Inspirations",
-            link: "/playground/inspirations/",
-            items: [
-              { text: "Compute Engine", link: "/playground/inspirations/compute-engine" },
-              { text: "Wolfram Language", link: "/playground/inspirations/wolfram" },
-              { text: "SageMath", link: "/playground/inspirations/sage" },
-              { text: "Mathlib", link: "/playground/inspirations/mathlib" },
-              { text: "Tangle", link: "/playground/inspirations/tangle" },
-              { text: "ganja.js", link: "/playground/inspirations/ganja" },
-            ],
-          },
-        ],
-      },
+      { text: "Playground", link: "/playground/", activeMatch: "^/playground/" },
     ],
+    sidebar: {
+      "/guide/": learnSidebar(),
+      "/docs/": learnSidebar(),
+      "/reference/": referenceSidebar(),
+      "/explore/": exploreSidebar(),
+      "/playground/": playgroundSidebar(),
+    },
     socialLinks: [{ icon: "github", link: "https://github.com/enumeratio/enumeratio" }],
   },
 });

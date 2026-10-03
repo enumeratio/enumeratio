@@ -62,6 +62,16 @@ class Writer {
     return this.options.tex(latex, display);
   }
 
+  /** Link each head called in inline code (`Count(Subsets(n))`) to its page, where the site has one. */
+  linkCalls(html: string): string {
+    const link = this.options.link;
+    if (!link) return html;
+    return html.replace(/\b[A-Z][A-Za-z0-9]*(?=\()/g, (name) => {
+      const href = link(name);
+      return href === undefined ? name : `<a href="${escapeHtml(href)}">${name}</a>`;
+    });
+  }
+
   inline(box: Box): string {
     if (typeof box === "string") return escapeHtml(box);
     const options = optionsOfBox(box);
@@ -69,7 +79,7 @@ class Writer {
       case "TextData":
         return box[1].map((b) => this.inline(b)).join("");
       case "StyleBox": {
-        if (options.BaseStyle === "InlineCode") return `<code>${this.inline(box[1])}</code>`;
+        if (options.BaseStyle === "InlineCode") return `<code>${this.linkCalls(this.inline(box[1]))}</code>`;
         let html = this.inline(box[1]);
         if (options.FontSlant === "Italic") html = `<em>${html}</em>`;
         if (options.FontWeight === "Bold") html = `<strong>${html}</strong>`;
