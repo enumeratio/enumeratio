@@ -7,6 +7,7 @@
 // code) stay as the independent reading the agreement tests check against.
 
 import type { EpsilFamily } from "./epsil.ts";
+import { choose } from "./tables.ts";
 
 type MathJSON = unknown;
 
@@ -272,6 +273,51 @@ export const subsets = (shape: Shape): EpsilFamily => gradedSubsets(shape);
 
 /** The k-subsets of 1..n in lex order, C(n, k) of them. */
 export const kSubsets = (shape: Shape): EpsilFamily => gradedSubsets({ ...shape, size: (k) => equal(k, "_k") });
+
+/** LatticePaths(a, b): the 0/1 words of a + b steps with a ones (the N steps), C(a + b, a) of them,
+ *  in colex order of the ones' positions. The c-th one, at position j, has C(j − 1, c) words before
+ *  it. Unrank walks from the end, its state [rank left, ones left, the steps found…]; rank's state
+ *  is [rank, ones seen, j]. */
+export function latticePaths(shape: Shape): EpsilFamily {
+  const total = add("_a", "_b");
+  const us = (i: number): MathJSON => at("lu_s", i);
+  const rs = (i: number): MathJSON => at("lr_s", i);
+  const unrankStep = [
+    "Apply",
+    [
+      "Function",
+      [
+        "If",
+        ["GreaterEqual", us(1), "lu_o"],
+        ["Join", ["List", sub(us(1), "lu_o"), sub(us(2), 1), 1], ["Drop", "lu_s", 2]],
+        ["Join", ["List", us(1), us(2), 0], ["Drop", "lu_s", 2]],
+      ],
+      ["Typed", "lu_o", "'integer'"],
+    ],
+    choose(sub("lu_j", 1), us(2)),
+  ];
+  const one = equal("lr_t", 1);
+  const rankStep = [
+    "List",
+    add(rs(1), ["If", one, choose(sub(rs(3), 1), add(rs(2), 1)), 0]),
+    add(rs(2), ["If", one, 1, 0]),
+    add(rs(3), 1),
+  ];
+  return {
+    ...shapeOf(shape),
+    epsil: {
+      count: choose(total, "_a"),
+      unrank: ["Drop", fold(unrankStep, "lu_s", "lu_j", ["List", "_r", "_a"], ["Range", total, 1, -1]), 2],
+      rank: at(fold(rankStep, "lr_s", "lr_t", ["List", 0, 0, 1], "_x"), 1),
+      valid: [
+        "And",
+        equal(len, total),
+        all((t) => between(t, 0, 1), "_x", "lv_t"),
+        equal(fold(add("lv_c", "lv_u"), "lv_c", "lv_u", 0, "_x"), "_a"),
+      ],
+    },
+  };
+}
 
 /** The subsets of 1..n with at most k members, graded by size. */
 export const subsetsOfSizeAtMost = (shape: Shape): EpsilFamily =>

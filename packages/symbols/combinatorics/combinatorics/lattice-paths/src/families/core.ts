@@ -24,8 +24,8 @@ const tableWalk = (head: string, carrier: string, width: unknown, cap: unknown, 
     params: ["_n"],
     width,
     steps,
-    tables: [["walks", completionsTable("t", steps, width, cap)]],
-    completions: completionsOf("walks", cap),
+    tables: [completionsTable("t", steps, width, cap)],
+    completions: completionsOf(cap),
   });
 
 /** The Dyck walks of width w from height y down to 0, by the ballot formula C(w, d) − C(w, d − 1),

@@ -285,21 +285,19 @@ export const kCyclePermutations: EpsilFamily = permutationRestriction({
   paramCount: 2,
   params: ["_n", "_k"],
   tables: [
-    [
-      "stirling",
-      rowTable(
-        "st",
-        add("_n", 1),
-        stirlingWidth,
-        (c) => ["If", ["Equal", c, 0], 1, 0],
-        (prev, r, c) => [
-          "If",
-          ["Equal", c, 0],
-          0,
-          add(prev(sub(r, 1), sub(c, 1)), ["Multiply", sub(r, 1), prev(sub(r, 1), c)]),
-        ],
-      ),
-    ],
+    "stirling",
+    rowTable(
+      "st",
+      add("_n", 1),
+      stirlingWidth,
+      (c) => ["If", ["Equal", c, 0], 1, 0],
+      (prev, r, c) => [
+        "If",
+        ["Equal", c, 0],
+        0,
+        add(prev(sub(r, 1), sub(c, 1)), ["Multiply", sub(r, 1), prev(sub(r, 1), c)]),
+      ],
+    ),
   ],
   completions: lets(
     [
@@ -391,7 +389,7 @@ const involutions: EpsilFamily = permutationRestriction({
   carrier: "Permutation",
   paramCount: 1,
   params: ["_n"],
-  tables: [["telephones", telephoneTable]],
+  tables: ["telephones", telephoneTable],
   completions: [
     "If",
     all((q) => ["If", ["LessEqual", pre(q), "filled"], ["Equal", pre(pre(q)), q], "True"], filledSlots, "iq"),

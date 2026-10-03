@@ -108,8 +108,7 @@ function setPartitions(
   last: (open: string) => MathJSON,
   word = false,
 ): EpsilFamily {
-  const T = cell("rgs", add(cap, 1));
-  const withRgs = (body: MathJSON): MathJSON => withTable("rgs", rgsTable(cap, last), body);
+  const T = cell("_tables", add(cap, 1));
   // A label below `open` names an open block, T(rem, open) completions each; `open` itself
   // opens the next block. The state is [r, open, labels…].
   const unrankStep = lets(
@@ -145,14 +144,13 @@ function setPartitions(
     kind: word ? "ints" : "blocks",
     params,
     epsil: {
-      count: withRgs(T("_n", 0)),
-      unrank: withRgs(
-        lets(
-          [["uend", fold(unrankStep, "us", "ui", ["List", "_r", 0], upTo(1, "_n")), "list<integer>"]],
-          word ? ["Drop", "uend", 2] : blocksOf(["Drop", "uend", 2], at("uend", 2)),
-        ),
+      count: T("_n", 0),
+      tables: rgsTable(cap, last),
+      unrank: lets(
+        [["uend", fold(unrankStep, "us", "ui", ["List", "_r", 0], upTo(1, "_n")), "list<integer>"]],
+        word ? ["Drop", "uend", 2] : blocksOf(["Drop", "uend", 2], at("uend", 2)),
       ),
-      rank: withRgs(word ? ranked("_x") : lets([["rgs0", rgsOfBlocks, "list<integer>"]], ranked("rgs0"))),
+      rank: word ? ranked("_x") : lets([["rgs0", rgsOfBlocks, "list<integer>"]], ranked("rgs0")),
       valid: word ? growthWord : params.length === 1 ? coversOnce : and(equal(len, "_k"), coversOnce),
     },
   };
@@ -166,8 +164,9 @@ export const restrictedGrowthStrings = setPartitions("RestrictedGrowthStrings", 
 // ─── Surjections(n, k): words over 1..k using every letter, in lex order ───
 // T(rem, missing), the ways to finish rem letters with `missing` letters still unused, is
 // missing·T(rem − 1, missing − 1) (a new letter) + (k − missing)·T(rem − 1, missing) (a used one).
-// Written over the alphabet's size `k`, so SetCompositions can use it for the k it finds.
-function surjectionsOver(k: MathJSON) {
+// Written over the alphabet's size `k`, so SetCompositions can use it for the k it finds: there the
+// table depends on k, not the params alone, so it is bound per call (`withTable`) as `surj`.
+function surjectionsOver(k: MathJSON, tableName: string) {
   const table = rowTable(
     "j",
     add("_n", 1),
@@ -179,7 +178,7 @@ function surjectionsOver(k: MathJSON) {
         mul(sub(k, missing), prev(sub(rem, 1), missing)),
       ),
   );
-  const S = cell("surj", add(k, 1));
+  const S = cell(tableName, add(k, 1));
   /** The completions after letter c, `used` the letters before it and rem left after it. */
   const afterLetter = (used: MathJSON, rem: MathJSON, missing: MathJSON, c: MathJSON): MathJSON =>
     iff(contains(used, c), S(rem, missing), iff(less(0, missing), S(rem, sub(missing, 1)), 0));
@@ -236,8 +235,9 @@ function surjectionsOver(k: MathJSON) {
       ],
     );
   return {
-    /** `body` with the table bound. */
-    withTable: (body: MathJSON): MathJSON => withTable("surj", table, body),
+    table,
+    /** `body` with the table bound as `tableName`. */
+    withTable: (body: MathJSON): MathJSON => withTable(tableName, table, body),
     count: S("_n", k),
     /** The word at rank `r`; needs the table. */
     unrank: (r: MathJSON): MathJSON => ["Drop", fold(unrankStep, "su", "si", ["List", r, k], upTo(1, "_n")), 2],
@@ -246,7 +246,7 @@ function surjectionsOver(k: MathJSON) {
   };
 }
 
-const surjectionsOf = surjectionsOver("_k");
+const surjectionsOf = surjectionsOver("_k", "_tables");
 
 const surjections: EpsilFamily = {
   head: "Surjections",
@@ -255,9 +255,10 @@ const surjections: EpsilFamily = {
   kind: "ints",
   params: ["_n", "_k"],
   epsil: {
-    count: surjectionsOf.withTable(surjectionsOf.count),
-    unrank: surjectionsOf.withTable(surjectionsOf.unrank("_r")),
-    rank: surjectionsOf.withTable(surjectionsOf.rank("_x")),
+    count: surjectionsOf.count,
+    tables: surjectionsOf.table,
+    unrank: surjectionsOf.unrank("_r"),
+    rank: surjectionsOf.rank("_x"),
     valid: and(
       equal(len, "_n"),
       all((x) => and(["LessEqual", 1, x], ["LessEqual", x, "_k"]), "_x", "x"),
@@ -277,12 +278,11 @@ const fubiniTable = rowTable(
   (k) => iff(equal(k, 0), 1, 0),
   (prev, m, k) => iff(equal(k, 0), 0, mul(k, add(prev(sub(m, 1), k), prev(sub(m, 1), sub(k, 1))))),
 );
-const Fub = cell("fub", add("_n", 1));
-const withFubini = (body: MathJSON): MathJSON => withTable("fub", fubiniTable, body);
+const Fub = cell("_tables", add("_n", 1));
 /** The surjections onto fewer than k letters, the ranks before the k-block ones. */
 const surjectionsBelow = (k: MathJSON): MathJSON => fold(add("fa", Fub("_n", "fc")), "fa", "fc", 0, upTo(1, sub(k, 1)));
 
-const composition = surjectionsOver("ck");
+const composition = surjectionsOver("ck", "surj");
 
 /** The block count k and the rank within the k-block compositions: a search over k. */
 const kAndRemainder: MathJSON = fold(
@@ -315,29 +315,26 @@ const setCompositions: EpsilFamily = {
   params: ["_n"],
   epsil: {
     // Fub(0, 0) = 1 is the empty composition; for n > 0 Fub(n, 0) = 0.
-    count: withFubini(fold(add("fa", Fub("_n", "fc")), "fa", "fc", 0, upTo(0, "_n"))),
-    unrank: withFubini(
-      iff(
-        equal("_n", 0),
-        ["List"],
-        lets(
-          [
-            ["cf", kAndRemainder, "list<integer>"],
-            ["ck", at("cf", 2), "integer"],
-            ["cl", composition.withTable(composition.unrank(at("cf", 1))), "list<integer>"],
-          ],
-          blocksOfLabels("cl", 1, "ck"),
-        ),
-      ),
-    ),
-    rank: withFubini(
+    count: fold(add("fa", Fub("_n", "fc")), "fa", "fc", 0, upTo(0, "_n")),
+    tables: fubiniTable,
+    unrank: iff(
+      equal("_n", 0),
+      ["List"],
       lets(
         [
-          ["cl", labelsOfOrderedBlocks, "list<integer>"],
-          ["ck", len, "integer"],
+          ["cf", kAndRemainder, "list<integer>"],
+          ["ck", at("cf", 2), "integer"],
+          ["cl", composition.withTable(composition.unrank(at("cf", 1))), "list<integer>"],
         ],
-        add(surjectionsBelow("ck"), composition.withTable(composition.rank("cl"))),
+        blocksOfLabels("cl", 1, "ck"),
       ),
+    ),
+    rank: lets(
+      [
+        ["cl", labelsOfOrderedBlocks, "list<integer>"],
+        ["ck", len, "integer"],
+      ],
+      add(surjectionsBelow("ck"), composition.withTable(composition.rank("cl"))),
     ),
     valid: coversOnce,
   },

@@ -21,6 +21,7 @@
 // form follows.
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { cell, colexDigits, lets, pascalTable } from "../../../collections/src/families/tables.ts";
 import {
   PartitionsP,
   IntegerPartitionUnrank,
@@ -132,6 +133,9 @@ const lengthOf = (x: MathJSON): MathJSON => ["Length", x];
 const binom = (n: MathJSON, k: MathJSON): MathJSON => ["Binomial", n, k];
 
 const universe = add("_a", "_b"); // a + b: the lattice path's total step count
+// Every Binomial(c, i) below is a lookup in Pascal's triangle, built once per params as `tables`.
+const pascalWidth = add("_a", 1);
+const pascal = cell("_tables", pascalWidth);
 /** part_m for m = 1.._a, before dropping trailing zeros: b − P_m + m, P_m the m-th colex position. */
 const partAt = (m: MathJSON, positionOf: (m: MathJSON) => MathJSON): MathJSON => add(sub("_b", positionOf(m)), m);
 /** `_x`'s entry j, or 0 past its length (the padding PartitionsInBoxRank pads with explicitly). */
@@ -139,20 +143,9 @@ const partOrZero = (j: MathJSON): MathJSON => ["If", ["LessEqual", j, lengthOf("
 /** The colex position a part at index j (1-based) reconstructs to: b − part_j + j. */
 const positionOfElement = (j: MathJSON): MathJSON => add(sub("_b", partOrZero(j)), j);
 
-// unrank's P_m needs the actual combinatorial-number-system digit search (rank -> position);
-// rank's positionOfElement reads `_x` directly, no search needed — see the block comment above.
-const digitAt = (i: MathJSON, rIn: MathJSON, tag: string): MathJSON => {
-  const c = `c_${tag}`;
-  const best = `best_${tag}`;
-  return fold(["If", ["LessEqual", binom(c, i), rIn], c, best], best, c, sub(i, 1), upTo(sub(i, 1), sub(universe, 1)));
-};
-const rBefore = (i: MathJSON, tag: string): MathJSON => {
-  const hi = `hi_${tag}`;
-  const acc = `racc_${tag}`;
-  return fold(sub(acc, binom(digitAt(hi, acc, `${tag}i`), hi)), acc, hi, "_r", ["Range", "_a", add(i, 1), -1]);
-};
-/** The m-th smallest (1-based, ascending) N-step position, from the rank via colex digit search. */
-const positionFromRank = (m: MathJSON, tag: string): MathJSON => add(digitAt(m, rBefore(m, `${tag}r`), `${tag}d`), 1);
+// unrank's P_m needs the colex digit search (rank -> position), done in one pass; rank's
+// positionOfElement reads `_x` directly, no search needed — see the block comment above.
+const positionFromRank = (m: MathJSON): MathJSON => add(at("pb_digits", add(m, 1)), 1);
 
 const partitionsInBox: EpsilFamily = {
   head: "PartitionsInBox",
@@ -162,12 +155,16 @@ const partitionsInBox: EpsilFamily = {
   params: ["_a", "_b"],
   epsil: {
     count: binom(universe, "_a"),
-    unrank: [
-      "Filter",
-      ["Map", ["Function", partAt("m", (m) => positionFromRank(m, "U")), "m"], upTo(1, "_a")],
-      ["Function", ["Greater", "_t", 0], "_t"],
-    ],
-    rank: fold(add("acc", binom(sub(positionOfElement("j"), 1), "j")), "acc", "j", 0, upTo(1, "_a")),
+    tables: pascalTable("pc", ["Max", universe, 1], pascalWidth),
+    unrank: lets(
+      [["pb_digits", colexDigits("pb", "_a", universe, pascal), "list<integer>"]],
+      [
+        "Filter",
+        ["Map", ["Function", partAt("m", positionFromRank), "m"], upTo(1, "_a")],
+        ["Function", ["Greater", "_t", 0], "_t"],
+      ],
+    ),
+    rank: fold(add("acc", pascal(sub(positionOfElement("j"), 1), "j")), "acc", "j", 0, upTo(1, "_a")),
     // ≤ a parts, each in 1..b, weakly decreasing — no sum constraint (a and b bound the box, not
     // a target total).
     valid: [

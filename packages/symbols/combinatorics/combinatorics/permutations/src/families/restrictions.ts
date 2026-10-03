@@ -110,7 +110,7 @@ const alternatingPermutations: EpsilFamily = permutationRestriction({
   paramCount: 1,
   params: [n],
   declared: polynomial(),
-  tables: [["entringer", entringer]],
+  tables: ["entringer", entringer],
   completions: iff(
     fold(
       [
@@ -244,7 +244,7 @@ const kDescentPermutations: EpsilFamily = permutationRestriction({
   paramCount: 2,
   params: [n, "_k"],
   declared: polynomial(true),
-  tables: [["eulerian", eulerianByFirst]],
+  tables: ["eulerian", eulerianByFirst],
   completions: lets(
     [["need", sub("_k", iff(["Equal", "filled", 0], 0, descents)), "integer"]],
     iff(

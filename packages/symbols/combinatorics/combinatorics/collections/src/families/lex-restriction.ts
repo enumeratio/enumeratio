@@ -27,8 +27,9 @@ export interface PermutationRestriction extends Omit<FamilyShape, "kind"> {
   /** Whether `_x`, a permutation of n, is a member. Default: its completions as a full
    *  prefix are 1. */
   readonly predicate?: MathJSON;
-  /** Lists bound once around every operation, which `completions` and `predicate` may read. */
-  readonly tables?: readonly (readonly [string, MathJSON])[];
+  /** The list `completions` and `predicate` read under the name given, computed once per params
+   *  (`FamilyEpsil.tables`). */
+  readonly tables?: readonly [name: string, table: MathJSON];
 }
 
 const n = "_n";
@@ -48,12 +49,10 @@ const zeros = (variable: string): MathJSON => map(0, variable, upTo(1, n));
 
 /** The family's definitions, from its completion count and predicate. */
 export function permutationRestriction(spec: PermutationRestriction): EpsilFamily {
-  const { completions: _completions, predicate: given, tables = [], ...shape } = spec;
+  const { completions: _completions, predicate: given, tables, ...shape } = spec;
+  // The kernel binds the table as `_tables`; the definitions read it under their own name.
   const withTables = (body: MathJSON): MathJSON =>
-    lets(
-      tables.map(([name, value]) => [name, value, "list<integer>"] as const),
-      body,
-    );
+    tables === undefined ? body : lets([[tables[0], "_tables", "list<integer>"]], body);
 
   // Unrank: the state is the n slots, then the rank still to go, then a flag per value (1 once
   // it is placed): 2n + 1 slots. At slot j, the free values are tried in increasing order; each
@@ -179,6 +178,7 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
       unrank: withTables(unrank),
       rank: withTables(rank),
       valid: withTables(valid),
+      ...(tables === undefined ? {} : { tables: tables[1] }),
     },
   };
 }

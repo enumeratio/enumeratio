@@ -2,8 +2,8 @@
 // +1) and a width, staying at height ≥ 0 and ending at 0 once its widths sum to the total. Paths
 // are ordered by trying the steps in the order given, so a step's rank contribution is the
 // completions of the steps tried before it; the completions T(w, y) (width w left, height y) are
-// a table built once per call. Unrank and rank walk the path with the table; membership is the
-// walk alone.
+// a table built once per params (`FamilyEpsil.tables`). Unrank and rank walk the path with the
+// table; membership is the walk alone.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
@@ -16,10 +16,10 @@ import {
   iff,
   less,
   lets,
+  mul,
   rowTable,
   sub,
   upTo,
-  withTable,
 } from "../../../collections/src/families/tables.ts";
 
 type MathJSON = unknown;
@@ -40,28 +40,33 @@ export interface Walk {
   /** The total width. */
   readonly width: MathJSON;
   readonly steps: readonly Step[];
-  /** The tables `completions` reads, each bound once around every definition. */
-  readonly tables: readonly (readonly [string, MathJSON])[];
+  /** The tables `completions` reads. `FamilyEpsil.tables` is one list, so they are joined end to
+   *  end; `completions` reads each as `_tables` at the offset of the cells before it. */
+  readonly tables: readonly MathJSON[];
   readonly completions: Completions;
-  /** The flag at the start, and after a step lands at height y; 1 throughout when omitted. */
-  readonly flag?: { readonly initial: MathJSON; readonly after: (reached: MathJSON, y: MathJSON) => MathJSON };
+  /** The flag at the start, and after a step of `rise` lands at height y; 1 throughout when omitted. */
+  readonly flag?: {
+    readonly initial: MathJSON;
+    readonly after: (reached: MathJSON, y: MathJSON, rise: -1 | 0 | 1) => MathJSON;
+  };
   /** A condition on the highest height a member reaches. */
   readonly top?: (top: MathJSON) => MathJSON;
+  /** A condition on the flag a member ends with; membership then walks the flag too. */
+  readonly final?: (flag: MathJSON) => MathJSON;
+  /** For tables the interpreter takes minutes to build past 2^53: unrank and rank decline there. */
+  readonly declinePastDoubles?: true;
 }
 
-const flagAfter = (walk: Walk, reached: MathJSON, y: MathJSON): MathJSON =>
-  walk.flag === undefined ? 1 : walk.flag.after(reached, y);
+const flagAfter = (walk: Walk, reached: MathJSON, y: MathJSON, rise: -1 | 0 | 1): MathJSON =>
+  walk.flag === undefined ? 1 : walk.flag.after(reached, y, rise);
 
 /** The completions of step i from (w, y): 0 where it doesn't fit or dips below 0. */
 function choice(walk: Walk, i: number, w: MathJSON, y: MathJSON, reached: MathJSON): MathJSON {
   const { rise, width } = walk.steps[i];
   const landing = add(y, rise);
   const fits = and(["LessEqual", width, w], ["GreaterEqual", landing, 0]);
-  return iff(fits, walk.completions(sub(w, width), landing, flagAfter(walk, reached, landing)), 0);
+  return iff(fits, walk.completions(sub(w, width), landing, flagAfter(walk, reached, landing, rise)), 0);
 }
-
-const withTables = (walk: Walk, body: MathJSON): MathJSON =>
-  walk.tables.reduceRight<MathJSON>((inner, [name, table]) => withTable(name, table, inner), body);
 
 /**
  * The step a walk takes from (w, y): step i when `taken(i, through)` holds, `through` the
@@ -104,18 +109,18 @@ function unrank(walk: Walk): MathJSON {
         const { token, rise, width } = walk.steps[i];
         return [
           "Join",
-          ["List", sub(r, before), add(y, rise), sub(w, width), flagAfter(walk, reached, add(y, rise))],
+          ["List", sub(r, before), add(y, rise), sub(w, width), flagAfter(walk, reached, add(y, rise), rise)],
           ["Drop", state, 4],
           ["List", token],
         ];
       },
     ),
   );
-  return withTables(walk, [
+  return [
     "Drop",
     fold(step, state, "ui", ["List", "_r", 0, walk.width, walk.flag?.initial ?? 1], upTo(1, walk.width)),
     4,
-  ]);
+  ];
 }
 
 /** Rank: a fold over the path itself, the state [r, y, w, reached]. */
@@ -129,28 +134,38 @@ function rank(walk: Walk): MathJSON {
     (i) => equal("rx", walk.steps[i].token),
     (i, before) => {
       const { rise, width } = walk.steps[i];
-      return ["List", add(r, before), add(y, rise), sub(w, width), flagAfter(walk, reached, add(y, rise))];
+      return ["List", add(r, before), add(y, rise), sub(w, width), flagAfter(walk, reached, add(y, rise), rise)];
     },
   );
-  return withTables(walk, at(fold(step, state, "rx", ["List", 0, 0, walk.width, walk.flag?.initial ?? 1], "_x"), 1));
+  return at(fold(step, state, "rx", ["List", 0, 0, walk.width, walk.flag?.initial ?? 1], "_x"), 1);
 }
 
-/** Membership: the walk over the path, the state [y, w, top]; a step off the walk sets y to −1. */
+/** Membership: the walk over the path, the state [y, w, top, flag?]; a step off the walk sets y to −1.
+ *  The flag is walked only when the walk puts a condition on its end. */
 function valid(walk: Walk): MathJSON {
   const state = "vs";
+  const tracked = walk.final !== undefined;
   const byToken = (i: number): MathJSON => {
-    if (i === walk.steps.length) return ["List", -1, 0, 0];
+    if (i === walk.steps.length) return ["List", -1, 0, 0, ...(tracked ? [0] : [])];
     const { token, rise, width } = walk.steps[i];
     const y = add(at(state, 1), rise);
-    return iff(equal("vx", token), ["List", y, add(at(state, 2), width), ["Max", at(state, 3), y]], byToken(i + 1));
+    const next = [
+      y,
+      add(at(state, 2), width),
+      ["Max", at(state, 3), y],
+      ...(tracked ? [flagAfter(walk, at(state, 4), y, rise)] : []),
+    ];
+    return iff(equal("vx", token), ["List", ...next], byToken(i + 1));
   };
-  const end = fold(iff(less(at(state, 1), 0), state, byToken(0)), state, "vx", ["List", 0, 0, 0], "_x");
+  const start = ["List", 0, 0, 0, ...(tracked ? [walk.flag?.initial ?? 1] : [])];
+  const end = fold(iff(less(at(state, 1), 0), state, byToken(0)), state, "vx", start, "_x");
   return lets(
     [["ve", end, "list<integer>"]],
     and(
       equal(at("ve", 1), 0),
       equal(at("ve", 2), walk.width),
       ...(walk.top === undefined ? [] : [walk.top(at("ve", 3))]),
+      ...(walk.final === undefined ? [] : [walk.final(at("ve", 4))]),
     ),
   );
 }
@@ -162,8 +177,12 @@ export const walkFamily = (walk: Walk): EpsilFamily => ({
   paramCount: walk.params.length as 1 | 2,
   kind: "ints",
   params: walk.params,
+  ...(walk.declinePastDoubles === undefined ? {} : { declinePastDoubles: true as const }),
   epsil: {
-    count: withTables(walk, walk.completions(walk.width, 0, walk.flag?.initial ?? 1)),
+    count: walk.completions(walk.width, 0, walk.flag?.initial ?? 1),
+    ...(walk.tables.length === 0
+      ? {}
+      : { tables: walk.tables.length === 1 ? walk.tables[0] : ["Join", ...walk.tables] }),
     unrank: unrank(walk),
     rank: rank(walk),
     valid: valid(walk),
@@ -201,8 +220,12 @@ export function completionsTable(tag: string, steps: readonly Step[], total: Mat
   );
 }
 
-/** T(w, y) from a table bound as `name`, 0 above `cap` (a walk can't be there). */
+/** The cells of `completionsTable`: the offset of the table after it. */
+export const completionsSize = (total: MathJSON, cap: MathJSON): MathJSON => mul(add(total, 1), add(cap, 1));
+
+/** T(w, y) from the `completionsTable` that begins `offset` cells into `_tables`, 0 above `cap`
+ *  (a walk can't be there). */
 export const completionsOf =
-  (name: string, cap: MathJSON) =>
+  (cap: MathJSON, offset?: MathJSON) =>
   (w: MathJSON, y: MathJSON): MathJSON =>
-    iff(["Greater", y, cap], 0, cell(name, add(cap, 1))(w, y));
+    iff(["Greater", y, cap], 0, cell("_tables", add(cap, 1), offset)(w, y));

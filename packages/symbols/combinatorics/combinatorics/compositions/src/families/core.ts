@@ -7,12 +7,12 @@
 // area's core.ts for the pattern): count, unrank, rank and valid are closed expressions, no list
 // built up along the way.
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { cell, colexDigits, lets, pascalTable } from "../../../collections/src/families/tables.ts";
 
 type MathJSON = unknown;
 
 // Every Range states its step: compute-engine counts down when the end is below the start.
 const upTo = (from: MathJSON, to: MathJSON): MathJSON => ["Range", from, to, 1];
-const downTo = (from: MathJSON, to: MathJSON): MathJSON => ["Range", from, to, -1];
 const sub = (a: MathJSON, b: MathJSON): MathJSON => ["Subtract", a, b];
 const add = (...xs: MathJSON[]): MathJSON => ["Add", ...xs];
 const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
@@ -93,27 +93,11 @@ const integerCompositions: EpsilFamily = {
 
 // ─── CompositionsIntoKParts(n,k) / WeakCompositions(n,k): the colex combinatorial-number-system ──
 // A composition of `total` into k positive parts: its k − 1 cuts are a colex (k − 1)-subset of
-// 1..total − 1 (the TS reading in kernels-extra.ts: KSubsetRank/KSubsetUnrank). Digit i (from
-// k − 1 downto 1) is the greatest c with Binomial(c, i) ≤ the r left after the digits above it --
-// each depends on the previous digit's leftover r, unlike a k-permutation's independent
-// mixed-radix digits. `digitAt`/`rBefore` chase that dependency with nested scalar folds (no list
-// accumulator, no recursion): `rBefore` folds the leftover r down through the digits above i;
-// `digitAt` is the greedy search at one digit. `tag` gives every nested Fold its own bound-variable
-// names -- a fold's variable/accumulator must not collide with one from an outer or sibling fold
-// in the same expression tree.
-const digitAt = (i: MathJSON, rIn: MathJSON, universe: MathJSON, tag: string): MathJSON => {
-  const c = `c_${tag}`;
-  const best = `best_${tag}`;
-  return fold(["If", ["LessEqual", binom(c, i), rIn], c, best], best, c, sub(i, 1), upTo(sub(i, 1), sub(universe, 1)));
-};
-const rBefore = (i: MathJSON, digits: MathJSON, universe: MathJSON, tag: string): MathJSON => {
-  const hi = `hi_${tag}`;
-  const acc = `racc_${tag}`;
-  return fold(sub(acc, binom(digitAt(hi, acc, universe, `${tag}i`), hi)), acc, hi, "_r", downTo(digits, add(i, 1)));
-};
-/** The m-th smallest (1-based, ascending) cut position. */
-const cutAt = (m: MathJSON, digits: MathJSON, universe: MathJSON, tag: string): MathJSON =>
-  add(digitAt(m, rBefore(m, digits, universe, `${tag}r`), universe, `${tag}d`), 1);
+// 1..total − 1 (the TS reading in kernels-extra.ts: KSubsetRank/KSubsetUnrank). Unrank finds the
+// digits in one pass (`colexDigits`), the cuts being their values plus one; every Binomial(c, i)
+// is a lookup in Pascal's triangle, built once per params as the family's `tables`.
+const pascalWidth = add(["Max", sub("_k", 1), 0], 1);
+const pascal = cell("_tables", pascalWidth);
 
 /** A composition of `total` into `_k` positive parts, `offset` added to each part (−1 turns it
  *  into a weak composition of `total` − `_k` = `_n`: its parts are ≥ 0, built as a positive
@@ -122,14 +106,13 @@ function kSubsetComposition(head: string, total: MathJSON, offset: number, carri
   const digits = sub("_k", 1);
   const universe = sub(total, 1);
   /** 0, every cut, then `total`: the positive-part composition's boundaries. */
-  const cutValue = (m: MathJSON, tag: string): MathJSON => [
+  const cutValue = (m: MathJSON): MathJSON => [
     "If",
     ["Equal", m, 0],
     0,
-    ["If", ["Equal", m, "_k"], total, cutAt(m, digits, universe, tag)],
+    ["If", ["Equal", m, "_k"], total, add(at("cd_digits", add(m, 1)), 1)],
   ];
-  const partAt = (pos: MathJSON, tagA: string, tagB: string): MathJSON =>
-    add(sub(cutValue(pos, tagA), cutValue(sub(pos, 1), tagB)), offset);
+  const partAt = (pos: MathJSON): MathJSON => add(sub(cutValue(pos), cutValue(sub(pos, 1))), offset);
   /** `_x`'s entry j, read back as a positive part (undoing `offset`). */
   const positivePart = (j: MathJSON): MathJSON => sub(element(j), offset);
   const prefixSumPositive = (i: MathJSON): MathJSON => fold(add("acc2", positivePart("t")), "acc2", "t", 0, upTo(1, i));
@@ -141,8 +124,12 @@ function kSubsetComposition(head: string, total: MathJSON, offset: number, carri
     params: ["_n", "_k"],
     epsil: {
       count: ["If", ["Equal", total, 0], ["If", ["Equal", "_k", 0], 1, 0], binom(universe, digits)],
-      unrank: ["Map", ["Function", partAt("pos", "A", "B"), "pos"], upTo(1, "_k")],
-      rank: fold(add("acc3", binom(sub(prefixSumPositive("i"), 1), "i")), "acc3", "i", 0, upTo(1, digits)),
+      tables: pascalTable("pc", ["Max", total, 1], pascalWidth),
+      unrank: lets(
+        [["cd_digits", colexDigits("cd", digits, universe, pascal), "list<integer>"]],
+        ["Map", ["Function", partAt("pos"), "pos"], upTo(1, "_k")],
+      ),
+      rank: fold(add("acc3", pascal(sub(prefixSumPositive("i"), 1), "i")), "acc3", "i", 0, upTo(1, digits)),
       valid: [
         "And",
         ["Equal", lengthOf("_x"), "_k"],
