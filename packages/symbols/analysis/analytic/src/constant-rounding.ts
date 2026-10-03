@@ -13,7 +13,14 @@ import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 // (Pi, say) as is -- honoring `options.numericApproximation` there too, so N(Max(Pi, Pi))
 // comes back as a decimal rather than the exact Pi evaluate() alone would give.
 
-const KNOWN_CONSTANTS = new Set(["Pi", "ExponentialE", "EulerGamma", "GoldenRatio", "Catalan", "MachineEpsilon"]);
+const KNOWN_CONSTANTS = new Set([
+  "Pi",
+  "ExponentialE",
+  "EulerGamma",
+  "GoldenRatio",
+  "CatalanConstant",
+  "MachineEpsilon",
+]);
 
 // Operators an exact-constant expression can be built from. Compute-engine has already
 // evaluated every purely-numeric subexpression by the time a wrapped operator's `evaluate`

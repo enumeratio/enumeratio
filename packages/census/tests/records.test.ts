@@ -39,7 +39,6 @@ const UNRECORDED = new Set([
   "SkewTableaux",
   // Wolfram spellings bound as symbols.
   "Aborted",
-  "Catalan",
 ]);
 
 test("every head our packages declare has a reference record", () => {

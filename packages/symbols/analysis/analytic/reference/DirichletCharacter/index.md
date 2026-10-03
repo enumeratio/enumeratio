@@ -39,3 +39,4 @@ names:
 - The indexing is Wolfram's $\mathrm{DirichletCharacter}[k, j, n]$, which no published formula pins down; it is reproduced here by decomposing $(\mathbb{Z}/k)^\times$ into one cyclic factor per prime power of $k$ in ascending prime order (an odd $p^e$ contributing its least primitive root, $2^e$ contributing $\langle -1\rangle \times \langle 5 \rangle$) and reading $j - 1$ as a mixed-radix exponent vector, first component most significant. The whole table is pinned against a Wolfram kernel for every modulus up to 40.
 - For a prime $k$ with primitive root $g$ this comes out as $\chi_j(g) = e^{2\pi i (j-1)/(k-1)}$.
 - An out-of-range $j$ (greater than $\varphi(k)$) names no character and is left unevaluated.
+- A modulus past $2^{53}$ is left unevaluated too: the kernel works in machine integers.

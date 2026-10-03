@@ -124,8 +124,8 @@ import { declareNSum } from "./nsum.ts";
  *
  * Also declares the heads in special-functions.ts still ours: `HarmonicNumber`,
  * `ChebyshevT`, `ChebyshevU`, `LegendrePolynomial`, `RisingFactorial`, `BernoulliPolynomial`,
- * `FallingFactorial`, `XGCD`, `Csgn`, `CongruentMod`, and the `Catalan`/`ConstGlaisher`
- * constants — the Carlson symmetric elliptic integrals in carlson.ts: `CarlsonRF`,
+ * `FallingFactorial`, `XGCD`, `Csgn`, `CongruentMod`, and the `ConstGlaisher`
+ * constant — the Carlson symmetric elliptic integrals in carlson.ts: `CarlsonRF`,
  * `CarlsonRC`, `CarlsonRD`, `CarlsonRJ`, `CarlsonRG` — and, in elliptic.ts,
  * `IncompleteEllipticF`/`IncompleteEllipticE` plus an in-place precision fix for native
  * `EllipticE` at complex modulus; the modular heads in modular.ts: `ModularJ`,

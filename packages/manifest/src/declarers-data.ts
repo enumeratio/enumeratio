@@ -134,7 +134,6 @@ export const DECLARERS: Readonly<Record<string, readonly string[]>> = {
   CarmichaelLambda: ["number-theory"],
   CarmichaelNumbers: ["combinatorics"],
   Cases: ["combinatorics"],
-  Catalan: ["analytic"],
   CatalanNumber: ["analytic", "number-theory"],
   CatalanNumbers: ["combinatorics"],
   Catch: ["combinatorics"],

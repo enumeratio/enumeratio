@@ -17,7 +17,8 @@ const num = (input: Expr): number => ce.box(input).N().re;
 
 // --- Catalan -------------------------------------------------------------------------
 
-test("Catalan is a held numeric constant, like EulerGamma", () => {
-  exactJson("Catalan", "Catalan");
-  expect(num("Catalan")).toBeCloseTo(0.915965594177219, 15);
+test("CatalanConstant, compute-engine's, is held until N, and our closed forms land on it", () => {
+  exactJson("CatalanConstant", "CatalanConstant");
+  expect(num("CatalanConstant")).toBeCloseTo(0.915965594177219, 15);
+  exactJson(["DirichletBeta", 2], "CatalanConstant");
 });

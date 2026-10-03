@@ -94,7 +94,10 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       return bigIntegerAt(ops[0]) === 2n && a !== undefined && a[0] === 1n && a[1] === 4n;
     },
     () => (_ops, options) =>
-      finish(ce.function("Add", [ce.function("Power", ["Pi", 2]), ce.function("Multiply", [8, "Catalan"])]), options),
+      finish(
+        ce.function("Add", [ce.function("Power", ["Pi", 2]), ce.function("Multiply", [8, "CatalanConstant"])]),
+        options,
+      ),
     2,
   );
 
@@ -187,7 +190,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const [p] = bigRationalAt(ops[1])!;
       const sign = p === 1n ? 1 : -1;
       return finish(
-        ce.function("Add", [ce.function("Power", ["Pi", 2]), ce.function("Multiply", [sign * 8, "Catalan"])]),
+        ce.function("Add", [ce.function("Power", ["Pi", 2]), ce.function("Multiply", [sign * 8, "CatalanConstant"])]),
         options,
       );
     },
