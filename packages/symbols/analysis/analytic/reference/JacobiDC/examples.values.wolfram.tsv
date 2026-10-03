@@ -2,5 +2,9 @@ id	in	out	tex.in	tex.out	verdict
 a-floating-point-argument-evaluates-directly-to	N[JacobiDC[0.6, 0.4]]	1.124780426911555	N[\text{dc}(0.6|0.4)]	1.12478	
 m-less-than-0-via-the-imaginary-modulus	N[JacobiDC[0.3, -0.7]]	1.0799397700832252	N[\text{dc}(0.3|-0.7)]	1.07994	
 u-0-is-1-for-any-m	JacobiDC[0, m]				
+n-jacobidc-sqrt-2-over-4-times-i-2	N[JacobiDC[Complex[0, Divide[Sqrt[2], 4]], 2]]	1.0604763964074568 + 0.*I	N\left[\text{dc}\left(\left.\frac{\sqrt{2}}{4} i\right|2\right)\right]	1.06048\, +0. i	
+n-jacobidc-1-over-2-times-1-plus-sqrt-2-over-2-1	N[JacobiDC[Times[Rational[1, 2], Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	1.5041029492377576	N\left[\text{dc}\left(\frac{1}{2} \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	1.5041	
+n-jacobidc-sqrt-2-times-i-2	N[JacobiDC[Complex[0, Sqrt[2]], 2]]	1.4067446839536693 + 0.*I	N\left[\text{dc}\left(\left.\sqrt{2} i\right|2\right)\right]	1.40674\, +0. i	
+n-jacobidc-2-times-1-plus-sqrt-2-over-2-1-minus	N[JacobiDC[Times[2, Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	-1.0309083245016126	N\left[\text{dc}\left(2 \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	-1.03091	
 symbolic-arguments-are-left-unevaluated-rather	JacobiDC[u, m]				
 u-1e16-declines-rather-than-answering-wrong	N[JacobiDC[Power[10, 16], Rational[5, 7]]]	-1.971424716060679	N\left[\text{dc}\left(10^{16}|\frac{5}{7}\right)\right]	-1.97142	disagree

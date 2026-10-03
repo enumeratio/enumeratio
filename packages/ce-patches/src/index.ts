@@ -12,6 +12,7 @@ import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
 import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 import { assignFunctionDefinition } from "./patches/assign-function-definition.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
+import { oscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
 import { valuesAtZero } from "./patches/values-at-zero.ts";
 import { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
@@ -92,6 +93,7 @@ export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/
 export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
 export { assignFunctionDefinition, canonicalAssignFunctionDefinition } from "./patches/assign-function-definition.ts";
+export { oscillatoryEndpoint, integrateOscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
 export {
   quotientRingCollection,
   quotientRingOverIntegers,
@@ -209,6 +211,7 @@ export const PATCHES: readonly Patch[] = [
   nAccuracyGoal,
   assignFunctionDefinition,
   quotientRingCollection,
+  oscillatoryEndpoint,
   valuesAtZero,
   inverseTrigRadicals,
 ];

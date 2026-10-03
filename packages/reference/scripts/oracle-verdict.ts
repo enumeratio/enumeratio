@@ -21,6 +21,7 @@ import {
   valuesOnly,
 } from "@enumeratio/oracle/src";
 import { fromWolfram } from "@enumeratio/wolfram/src";
+import { MAX_MEASURED_TOLERANCE } from "../src/known.ts";
 
 const ce = new ComputeEngine();
 
@@ -136,11 +137,6 @@ export function sameDigits(expected: MathJSON, shown: string): boolean | undefin
   if (ours.length === 0 || ours.length !== theirs.length) return undefined;
   return ours.every((digits, i) => digits === theirs[i]);
 }
-
-/** The widest error bar, relative above magnitude 1, a measurement is read at: past it (a
- * Monte Carlo ±0.018) it is too rough to stand for a value, and is held to the usual
- * tolerance instead. */
-export const MAX_MEASURED_TOLERANCE = 1e-6;
 
 /** A `Measurement(value, error)` (a numeric integral) as its value and the tolerance its bar
  * earns, or `undefined` for anything else. */

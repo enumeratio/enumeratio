@@ -77,6 +77,14 @@ integrate-sin-t-pow-2-t-0-positiveinfinity
 integrate-sin-t-pow-2-t-0-1-over-2-times-pi			
 neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((-2 * ((-2 * (S(sin(Rational(1, 2)))**4)) + (2 * (S(sin(Rational(1, 2)))**2))) * (S(sin(1))**2)) + (S(sin(1))**4))		
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	N((S((((0 + 1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)		
+integrate-sin-t-pow-3-t-0-1-over-2-times-pi			
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	N((S((((0 + 1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)		
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	N((S((((0 + -1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)		
+n-integrate-1-over-t-times-sin-t-t-0			
+n-integrate-1-over-sqrt-t-times-sin-t-t-0			
+n-integrate-1-over-t-times-sin-1-over-2-times-t			
+n-sin-1-pow-2	N((S(sin(1))**2), 30)		
+n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	N((S(sin((Rational(1, 2) + (Rational(1, 2) * pi))))**2), 30)		
 1-radian-isn-t-a-recognized-special-angle-so	sin(1)	sin(1)	
 sin-2-a-generic-argument-stays-symbolic	sin(2)	sin(2)	
 sin-x-plus-y-stays-symbolic	sin((Symbol("x") + Symbol("y")))	True	
