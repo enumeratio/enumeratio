@@ -1,0 +1,3 @@
+id	in
+count-3-2	Length[Surjections[3, 2]]
+all-for-3-2	Take[Surjections[3, 2], 6]

@@ -1,0 +1,4 @@
+id	in
+count-cyclic-permutations-of-4	Length[CyclicPermutations[4]]
+first-cyclic-permutation-of-3	Part[CyclicPermutations[3], 1]
+second-cyclic-permutation-of-3	Part[CyclicPermutations[3], 2]

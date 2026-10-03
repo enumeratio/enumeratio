@@ -1,0 +1,4 @@
+id	in
+count-endofunctions-of-3	Length[Endofunctions[3]]
+first-endofunction-of-2	Part[Endofunctions[2], 1]
+all-endofunctions-of-2	Take[Endofunctions[2], 4]

@@ -1,0 +1,3 @@
+id	in
+count-n-4	Length[SchroederPaths[4]]
+all-for-n-2	Take[SchroederPaths[2], 6]

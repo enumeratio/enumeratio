@@ -1,0 +1,4 @@
+id	in
+count-increasing-binary-trees-on-4-nodes	Length[IncreasingBinaryTrees[4]]
+first-increasing-binary-tree-on-3-nodes	Part[IncreasingBinaryTrees[3], 1]
+count-on-3-nodes	Length[IncreasingBinaryTrees[3]]

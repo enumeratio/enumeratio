@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-n-5	Basic		[Count, [SytHookShape, 5]]	16	$2^{n-1}$ standard tableaux of hook shape
+all-for-n-3	Basic		[Take, [SytHookShape, 3], 4]	[List, [StandardTableau, [List, [List, 1], [List, 2], [List, 3]]], [StandardTableau, [List, [List, 1, 2], [List, 3]]], [StandardTableau, [List, [List, 1, 3], [List, 2]]], [StandardTableau, [List, [List, 1, 2, 3]]]]	The hook-shaped standard Young tableaux with $3$ cells

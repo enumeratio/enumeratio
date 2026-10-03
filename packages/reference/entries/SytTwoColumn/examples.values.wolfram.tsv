@@ -1,0 +1,3 @@
+id	in
+count-n-5	Length[SytTwoColumn[5]]
+all-for-n-3	Take[SytTwoColumn[3], 3]

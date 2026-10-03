@@ -1,0 +1,4 @@
+id	in
+count-compositions-of-6-into-3-parts	Length[CompositionsIntoKParts[6, 3]]
+all-compositions-of-4-into-2-parts	Take[CompositionsIntoKParts[4, 2], 3]
+first-element	Part[CompositionsIntoKParts[5, 3], 1]
