@@ -5,7 +5,9 @@
   "description": "Numeral-system extensions for @cortex-js/compute-engine: IntegerDigits/FromDigits over radix, mixed-radix, factoradic, balanced, negative, bijective, Zeckendorf, combinatorial and residue systems.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

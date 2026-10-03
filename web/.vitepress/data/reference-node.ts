@@ -3,5 +3,6 @@
 
 import { referenceData } from "@enumeratio/reference/node";
 import { assemble } from "./reference-assemble.ts";
+import { recordsRoot } from "./records-root.ts";
 
-export const { documented, entries } = assemble(referenceData().entries);
+export const { documented, entries } = assemble(referenceData(recordsRoot).entries);

@@ -5,7 +5,8 @@
   "description": "Probability distributions and random processes, defined as Epsil expressions.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {

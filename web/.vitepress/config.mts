@@ -22,10 +22,13 @@ import { reviewModePlugin } from "./review/plugin.ts";
 // them — dev and build both stay in sync with source, with no stale-dist surprises.
 // Each package's exports are read, and any target under dist/ is remapped to the
 // matching src/*.ts; exports that already point at src are used as-is.
+// SITE_FROM_PACKAGES=1 turns them off: the site resolves `@enumeratio/*` through whatever is installed,
+// as it would from the registry (tools/tarball-check builds it that way, from packed tarballs).
+const fromPackages = process.env.SITE_FROM_PACKAGES === "1";
 const pkgsDir = resolve(dirname(fileURLToPath(import.meta.url)), "../../packages");
 const srcAliases: { find: RegExp; replacement: string }[] = [];
 // Symbol packages sit a level deeper, under packages/symbols/<group>/.
-const packageDirs = readdirSync(pkgsDir).flatMap((name) =>
+const packageDirs = (fromPackages ? [] : readdirSync(pkgsDir)).flatMap((name) =>
   name === "symbols"
     ? readdirSync(resolve(pkgsDir, name)).flatMap((group) =>
         readdirSync(resolve(pkgsDir, name, group)).map((pkg) => `${name}/${group}/${pkg}`),
@@ -63,7 +66,7 @@ for (const dir of packageDirs) {
 // under its own nested `<area>/src/index.ts` rather than a package-root `src/`, so the
 // generic dist->src rewrite above (which only swaps the `/dist/` segment) can't find it.
 // Alias the `./collections` subpath by hand.
-for (const area of ["collections"]) {
+for (const area of fromPackages ? [] : ["collections"]) {
   const abs = resolve(pkgsDir, "symbols/combinatorics/combinatorics", area, "src/index.ts");
   if (!existsSync(abs)) continue;
   srcAliases.push({ find: new RegExp(`^@enumeratio/combinatorics/${area}$`), replacement: abs });

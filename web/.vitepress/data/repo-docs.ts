@@ -42,8 +42,12 @@ export interface WorkspacePackage {
   pages: DocPage[];
 }
 
-// The workspace globs, less web/ itself.
-const packageGlobs = ["packages/*", "packages/symbols/*/*", "tools/*"];
+// The workspace globs, less web/ itself. SITE_FROM_PACKAGES=1 reads the installed packages instead
+// (`node_modules/@enumeratio/*`, beside web/), as a build from the registry would.
+const packageGlobs =
+  process.env.SITE_FROM_PACKAGES === "1"
+    ? ["node_modules/@enumeratio/*"]
+    : ["packages/*", "packages/symbols/*/*", "tools/*"];
 
 /** The /docs groups, in page order. The symbol packages go by their `symbols/<group>` folder. */
 export const groups = [
@@ -84,7 +88,7 @@ function expand(glob: string): string[] {
     dirs = dirs.flatMap((dir) =>
       part === "*"
         ? readdirSync(join(repoRoot, dir), { withFileTypes: true })
-            .filter((e) => e.isDirectory() && e.name !== "node_modules")
+            .filter((e) => (e.isDirectory() || e.isSymbolicLink()) && e.name !== "node_modules")
             .map((e) => posix.join(dir, e.name))
         : [posix.join(dir, part)],
     );

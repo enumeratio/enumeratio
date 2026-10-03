@@ -5,7 +5,9 @@
   "description": "Diagram-algebra extensions for @cortex-js/compute-engine — the partition algebra and its subalgebras (Brauer, Temperley–Lieb, Motzkin, rook, symmetric group), whose bases are combinatorial diagrams.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

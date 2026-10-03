@@ -5,7 +5,9 @@
   "description": "The modular group PSL(2,Z) for @cortex-js/compute-engine: S/T and L/R words, continued fractions, the Stern-Brocot tree, hyperbolic conjugacy classes as necklaces, and the Rademacher symbol.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference",
+    "docs"
   ],
   "type": "module",
   "exports": {

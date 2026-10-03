@@ -6,6 +6,7 @@ import { resolve } from "node:path";
 import type { ReferenceEntry } from "@enumeratio/reference";
 import { referenceData } from "@enumeratio/reference/node";
 import { assemble } from "./data/reference-assemble.ts";
+import { recordsRoot } from "./data/records-root.ts";
 import type { Plugin, ViteDevServer } from "vite";
 
 const ID = "virtual:reference-entries";
@@ -29,7 +30,7 @@ export function referenceDataPlugin(dev: boolean): Plugin {
       // has nothing to invalidate, so let referenceData's own memo answer every call after the
       // first -- resolving dynamic routes, and each of the client/SSR bundles, all read the same
       // parse of the YAML.
-      const { entries } = assemble(referenceData(undefined, { fresh: dev }).entries);
+      const { entries } = assemble(referenceData(recordsRoot, { fresh: dev }).entries);
       // A build ships each symbol page its own entry (its route's params) and every page only
       // what cross-page lookups read; dev keeps whole entries here, reread on every edit.
       return `export default ${JSON.stringify(dev ? entries : entries.map(slim))};`;
@@ -38,7 +39,7 @@ export function referenceDataPlugin(dev: boolean): Plugin {
       // The config is bundled to a temp file, so paths come from the site root (web/), not import.meta.
       const packages = `${resolve(server.config.root, "../packages")}/`;
       // Every directory the loader read a record from.
-      const { heads } = referenceData();
+      const { heads } = referenceData(recordsRoot);
       server.watcher.add([...new Set(heads.map((h) => h.dir))]);
       const refresh = (file: string): void => {
         if (!WATCHED.test(file)) return;

@@ -1,0 +1,57 @@
+name: Tarballs
+
+# Do the packages work as published artifacts? Packs every package, installs only the tarballs into a scratch
+# app (no workspace links; `overrides` send every internal dependency to its tarball), then runs census's
+# tests and the site build from that install (tools/tarball-check). Phase 0 of the per-package repo split
+# (https://github.com/enumeratio/enumeratio/wiki/Speculative-Per-Package-Repos §5): when this is green, a split
+# holds nothing unknown except process.
+#
+# ADVISORY, never a required check, and `continue-on-error` until it is green: the report (report.md, a log per
+# step) is the artifact, and its summary is on the run.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "41 5 * * *" # 05:41 UTC, after nightly.yml and plausible.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tarballs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tarballs:
+    name: build and test from tarballs
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - id: run
+        continue-on-error: true
+        run: node tools/tarball-check/run.ts --out "$RUNNER_TEMP/tarball-report"
+      - name: summary
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/tarball-report/report.md" ]; then
+            cat "$RUNNER_TEMP/tarball-report/report.md" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "tools/tarball-check wrote no report" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tarball-report
+          path: ${{ runner.temp }}/tarball-report
+          if-no-files-found: ignore
+          retention-days: 14
+      # The artifact is the report; this is the red/green.
+      - if: steps.run.outcome == 'failure'
+        run: |
+          echo "::warning::build and test from tarballs failed (advisory): see the tarball-report artifact"
+          exit 1

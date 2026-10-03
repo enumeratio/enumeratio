@@ -5,7 +5,8 @@
   "description": "Mathematical structure as compute-engine protocols: orders, lattices, ticks, products. A generic head requires structure; a type conforms to it (https://github.com/enumeratio/enumeratio/wiki/Structures).",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {

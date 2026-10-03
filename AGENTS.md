@@ -188,8 +188,11 @@ kernel, the network or hand curation stays committed.
   also goes up as a Cloudflare Pages preview at `<sha7>.enumeratio.pages.dev`; the PR's
   sticky `<!-- cf-preview -->` comment carries the URL, and review links go below its first
   two lines, which each push rewrites.
-- **Advisory sweeps** (Plausible, the nightly and weekly oracle rescans) are never required
-  checks. A lane fails when an answered row changes verdict, classification or input, not on
+- **Advisory sweeps** (Plausible, the nightly and weekly oracle rescans, the tarball check) are never
+  required checks. A lane fails when an answered row changes verdict, classification or input, not on
   a float's printed digits. Failures file rolling issues labelled `nightly-fixup`; the
   nightly-fixup routine opens fix PRs and never merges. Workflows, secrets and artifacts:
   the wiki's [CI-and-Deployment](https://github.com/enumeratio/enumeratio/wiki/CI-and-Deployment).
+  The tarball check (`tarball.yml`, `tools/tarball-check`) packs every package, installs only the
+  tarballs into a scratch app, and runs census's tests and the site build (`SITE_FROM_PACKAGES=1`,
+  no `srcAliases`) from it; run it locally with `node tools/tarball-check/run.ts`.

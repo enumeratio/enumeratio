@@ -5,7 +5,8 @@
   "description": "Analytic / special-function extensions for @cortex-js/compute-engine — Hurwitz zeta and friends. Separate from the combinatorial collections.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {

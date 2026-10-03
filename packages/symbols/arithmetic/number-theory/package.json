@@ -5,7 +5,8 @@
   "description": "Number theory past Z/m for @cortex-js/compute-engine: Gaussian integers, rational reconstruction, Hermite normal form and integer valuations, all over bigints.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {
