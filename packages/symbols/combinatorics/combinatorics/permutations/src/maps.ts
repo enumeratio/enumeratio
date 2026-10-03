@@ -288,7 +288,7 @@ export const PERMUTATIONS_MAPS: readonly CombinatorialMap[] = [
   {
     name: "ToLehmerCode",
     from: "permutation",
-    to: "subexcedant_seq",
+    to: "permutation_inversion",
     body: forEach(positions, [
       "Count",
       ["Filter", ["Range", ["Add", "i", 1], ["Length", "_raw"], 1], ["Function", ["Greater", at("i"), at("j")], "j"]],
