@@ -47,3 +47,11 @@ n-ln-2-pow-2	N[Power[Log[2], 2]]	0.4804530139182014		N\left[\log ^2(2)\right]	0.
 n-ln-2-pow-3	N[Power[Log[2], 3]]	0.33302465198892944		N\left[\log ^3(2)\right]	0.333025
 n-ln-2-pow-4	N[Power[Log[2], 4]]	0.2308350985830834		N\left[\log ^4(2)\right]	0.230835
 n-ln-2-pow-5	N[Power[Log[2], 5]]	0.1600026977571413		N\left[\log ^5(2)\right]	0.160003
+n-ln-2-pow-2-2	N[Power[Log[2], 2]]	0.4804530139182014		N\left[\log ^2(2)\right]	0.480453
+n-ln-2-pow-3-2	N[Power[Log[2], 3]]	0.33302465198892944		N\left[\log ^3(2)\right]	0.333025
+n-ln-2-pow-4-2	N[Power[Log[2], 4]]	0.2308350985830834		N\left[\log ^4(2)\right]	0.230835
+n-ln-2-pow-5-2	N[Power[Log[2], 5]]	0.1600026977571413		N\left[\log ^5(2)\right]	0.160003
+n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t	N[Integrate[Times[Divide[1, Plus[t, -1]], Power[Log[t], 2]], List[t, 1, 2]]]	0.30051422578989717 - 2.6645352591003757*^-15*I		N\left[\int_1^2 \frac{1}{t-1} \log ^2(t) \, dt\right]	0.300514\, -\text{2.6645352591003757$\grave{ }$*${}^{\wedge}$-15} i
+n-integrate-exponentiale-pow-neg-t-times-ln-t	N[Integrate[Times[Power[E, Minus[t]], Power[Log[t], 2]], List[t, 0, Infinity]]]	1.9781119906559448		N\left[\int_0^{\infty } e^{-t} \log ^2(t) \, dt\right]	1.97811
+n-integrate-1-over-neg-x-times-y-plus-1-times-ln	N[Integrate[Times[Divide[1, Plus[Minus[Times[x, y]], 1]], Log[Times[x, y]]], List[x, 0, 1], List[y, 0, 1]]]	-2.4041138063191885		N\left[\int _0^1\int _0^1\frac{1}{-(x y)+1} \log (x y)dydx\right]	-2.40411
+n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t	N[Integrate[Times[Divide[1, Plus[t, -1]], Power[Log[t], 3]], List[t, 1, 2]]]	0.142514197935706 - 6.631732200427602*^-15*I		N\left[\int_1^2 \frac{1}{t-1} \log ^3(t) \, dt\right]	0.142514\, -\text{6.631732200427602$\grave{ }$*${}^{\wedge}$-15} i

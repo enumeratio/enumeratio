@@ -6668,6 +6668,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "NIntegrate",
+    provenance: "unknown",
+    declared: "enumeratio-analytic",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "NPartition",
     provenance: "unknown",
     declared: null,

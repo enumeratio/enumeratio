@@ -47,3 +47,11 @@ n-ln-2-pow-2	N((S(log(2))**2), 30)
 n-ln-2-pow-3	N((S(log(2))**3), 30)		
 n-ln-2-pow-4	N((S(log(2))**4), 30)		
 n-ln-2-pow-5	N((S(log(2))**5), 30)		
+n-ln-2-pow-2-2	N((S(log(2))**2), 30)		
+n-ln-2-pow-3-2	N((S(log(2))**3), 30)		
+n-ln-2-pow-4-2	N((S(log(2))**4), 30)		
+n-ln-2-pow-5-2	N((S(log(2))**5), 30)		
+n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t			
+n-integrate-exponentiale-pow-neg-t-times-ln-t			
+n-integrate-1-over-neg-x-times-y-plus-1-times-ln			
+n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t			

@@ -60,6 +60,14 @@ integrate-cos-t-pow-2-t-0-1-over-2-times-pi
 product-neg-cos-1-over-4-times-pi-times-2k-minus			
 integrate-cos-t-pow-3-t-0-1-over-2-times-pi			
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2			
+product-neg-cos-1-over-6-times-pi-times-2k-minus			
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2			
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow			
+n-integrate-exponentiale-pow-neg-1-over-2-times			
+n-integrate-1-over-sqrt-cos-t-minus-cos-1-over-2			
+n-neg-2-times-cos-1-times-cos-1-over-2-pow-2	nf(((n(-2) * cos(n(1)) * power(cos(rational(n(1), n(2))), n(2))) + (n(2) * power(cos(rational(n(1), n(2))), n(2))) + power(cos(n(1)), n(2))))		
+n-cos-1-over-2-plus-1-over-2-times-pi-pow-2	nf(power(cos((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI)))), n(2)))		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-3			
 as-with-sin-a-non-special-numeric-argument-stays	cos(n(2))	-0.4161468365471424	
 pi-24-is-past-the-automatic-special-angle-table	cos((rational(n(1), n(24)) * x(std::f64::consts::PI)))	0.9914448613738104	
 cos-complexinfinity-is-indeterminate-for-the			

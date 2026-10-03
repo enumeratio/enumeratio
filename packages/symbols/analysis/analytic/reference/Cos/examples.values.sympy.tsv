@@ -60,6 +60,14 @@ integrate-cos-t-pow-2-t-0-1-over-2-times-pi
 product-neg-cos-1-over-4-times-pi-times-2k-minus			
 integrate-cos-t-pow-3-t-0-1-over-2-times-pi			
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2	N((S((((0 + 1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)		
+product-neg-cos-1-over-6-times-pi-times-2k-minus			
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2	N((S((((0 + 1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)		
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow	N((S((((0 + -1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**2), 30)		
+n-integrate-exponentiale-pow-neg-1-over-2-times			
+n-integrate-1-over-sqrt-cos-t-minus-cos-1-over-2			
+n-neg-2-times-cos-1-times-cos-1-over-2-pow-2	N(((-2 * cos(1) * (S(cos(Rational(1, 2)))**2)) + (2 * (S(cos(Rational(1, 2)))**2)) + (S(cos(1))**2)), 30)		
+n-cos-1-over-2-plus-1-over-2-times-pi-pow-2	N((S(cos((Rational(1, 2) + (Rational(1, 2) * pi))))**2), 30)		
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-3	N((S((((0 + 1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**3), 30)		
 as-with-sin-a-non-special-numeric-argument-stays	cos(2)	cos(2)	
 pi-24-is-past-the-automatic-special-angle-table	cos((Rational(1, 24) * pi))	sqrt(1/2 - sqrt(2)/4)/2 + sqrt(3)*sqrt(sqrt(2)/4 + 1/2)/2	
 cos-complexinfinity-is-indeterminate-for-the	cos(zoo)		

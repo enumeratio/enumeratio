@@ -47,3 +47,11 @@ n-ln-2-pow-2	N(((log(2))^2))
 n-ln-2-pow-3	N(((log(2))^3))		
 n-ln-2-pow-4	N(((log(2))^4))		
 n-ln-2-pow-5	N(((log(2))^5))		
+n-ln-2-pow-2-2	N(((log(2))^2))		
+n-ln-2-pow-3-2	N(((log(2))^3))		
+n-ln-2-pow-4-2	N(((log(2))^4))		
+n-ln-2-pow-5-2	N(((log(2))^5))		
+n-integrate-1-over-t-minus-1-times-ln-t-pow-2-t			
+n-integrate-exponentiale-pow-neg-t-times-ln-t			
+n-integrate-1-over-neg-x-times-y-plus-1-times-ln			
+n-integrate-1-over-t-minus-1-times-ln-t-pow-3-t			

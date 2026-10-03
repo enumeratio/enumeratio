@@ -77,6 +77,14 @@ integrate-sin-t-pow-2-t-0-positiveinfinity
 integrate-sin-t-pow-2-t-0-1-over-2-times-pi			
 neg-2-times-neg-2-times-sin-1-over-2-pow-4-plus	((n(-2) * ((n(-2) * power(sin(rational(n(1), n(2))), n(4))) + (n(2) * power(sin(rational(n(1), n(2))), n(2)))) * power(sin(n(1)), n(2))) + power(sin(n(1)), n(4)))		
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2			
+integrate-sin-t-pow-3-t-0-1-over-2-times-pi			
+n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-2-2			
+n-neg-i-times-sin-1-over-2-plus-cos-1-over-2-pow			
+n-integrate-1-over-t-times-sin-t-t-0			
+n-integrate-1-over-sqrt-t-times-sin-t-t-0			
+n-integrate-1-over-t-times-sin-1-over-2-times-t			
+n-sin-1-pow-2	nf(power(sin(n(1)), n(2)))		
+n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	nf(power(sin((rational(n(1), n(2)) + (rational(n(1), n(2)) * x(std::f64::consts::PI)))), n(2)))		
 1-radian-isn-t-a-recognized-special-angle-so	sin(n(1))	0.8414709848078965	
 sin-2-a-generic-argument-stays-symbolic	sin(n(2))	0.9092974268256817	
 sin-x-plus-y-stays-symbolic			
