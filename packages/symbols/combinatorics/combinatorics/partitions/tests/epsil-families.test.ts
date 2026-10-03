@@ -83,8 +83,11 @@ for (const [head, reading] of Object.entries(READINGS)) {
 }
 
 /** The definitions as the interpreter reads them, bypassing compiled code. */
-const interpreted = (family: EpsilFamily, operation: keyof EpsilFamily["epsil"], bindings: Record<string, unknown>) =>
-  evaluateEpsil(ce, family.epsil[operation], bindings);
+const interpreted = (family: EpsilFamily, operation: keyof EpsilFamily["epsil"], bindings: Record<string, unknown>) => {
+  const { tables } = family.epsil;
+  const tabled = tables === undefined ? bindings : { ...bindings, _tables: evaluateEpsil(ce, tables, bindings) };
+  return evaluateEpsil(ce, family.epsil[operation], tabled);
+};
 
 const list = (xs: unknown[]): unknown => ["List", ...xs.map((x) => (Array.isArray(x) ? list(x) : x))];
 

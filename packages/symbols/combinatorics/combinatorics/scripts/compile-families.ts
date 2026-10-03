@@ -23,6 +23,7 @@ import {
   isEpsilFamily,
   OPERATIONS,
   type Operation,
+  operationsOf,
   operationTypes,
 } from "../collections/src/families/epsil.ts";
 import { allFamilies } from "../collections/src/families/index.ts";
@@ -55,8 +56,8 @@ const nearMiss = (element: unknown): unknown =>
 /**
  * Whether each operation's compiled code gives the interpreter's answers over the sample: the
  * count, the element at the first, middle and last ranks, their ranks, and membership of each
- * and of a near miss. Compiled code is otherwise trusted below 2^53, so a miscompile would
- * answer wrong silently.
+ * and of a near miss, and the table the others read, where there is one. Compiled code is
+ * otherwise trusted below 2^53, so a miscompile would answer wrong silently.
  */
 export function disagreements(
   ce: ComputeEngine,
@@ -72,23 +73,32 @@ export function disagreements(
     }
   };
   for (const p of sampleParams(family.paramCount)) {
-    const bind = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
+    const params = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
+    // The table the other definitions read: the interpreter's to the interpreter, as plain numbers to compiled code.
+    const table = family.epsil.tables === undefined ? undefined : evaluateEpsil(ce, family.epsil.tables, params);
+    const entries = Array.isArray(table) ? table.slice(1).map((entry) => Number(integerOf(entry))) : undefined;
+    if (table !== undefined && runs.tables !== undefined) {
+      if (JSON.stringify(attempt(runs.tables, params)) !== JSON.stringify(entries)) wrong.add("tables");
+    }
+    const bind = table === undefined ? params : { ...params, _tables: table };
+    const compiledBind = entries === undefined ? params : { ...params, _tables: entries };
     const total = integerOf(evaluateEpsil(ce, family.epsil.count, bind));
     if (total === undefined || total > BigInt(Number.MAX_SAFE_INTEGER)) continue;
-    if (runs.count !== undefined && attempt(runs.count, bind) !== Number(total)) wrong.add("count");
+    if (runs.count !== undefined && attempt(runs.count, compiledBind) !== Number(total)) wrong.add("count");
     if (total === 0n) continue;
     for (const r of new Set([0n, total / 2n, total - 1n])) {
       const element = elementOf(evaluateEpsil(ce, family.epsil.unrank, { ...bind, _r: Number(r) }));
       if (
         runs.unrank !== undefined &&
-        JSON.stringify(attempt(runs.unrank, { ...bind, _r: Number(r) })) !== JSON.stringify(element)
+        JSON.stringify(attempt(runs.unrank, { ...compiledBind, _r: Number(r) })) !== JSON.stringify(element)
       )
         wrong.add("unrank");
-      if (runs.rank !== undefined && attempt(runs.rank, { ...bind, _x: element }) !== Number(r)) wrong.add("rank");
+      if (runs.rank !== undefined && attempt(runs.rank, { ...compiledBind, _x: element }) !== Number(r))
+        wrong.add("rank");
       if (runs.valid !== undefined)
         for (const candidate of [element, nearMiss(element)]) {
           const expected = evaluateEpsil(ce, family.epsil.valid, { ...bind, _x: elementJson(candidate) }) === "True";
-          if (attempt(runs.valid, { ...bind, _x: candidate }) !== expected) wrong.add("valid");
+          if (attempt(runs.valid, { ...compiledBind, _x: candidate }) !== expected) wrong.add("valid");
         }
     }
   }
@@ -102,7 +112,7 @@ export function compiledFamilies(): Entry[] {
   for (const family of allFamilies.filter(isEpsilFamily) as EpsilFamily[]) {
     const code: Partial<Record<Operation, string>> = {};
     const runs: Partial<Record<Operation, Run>> = {};
-    for (const operation of OPERATIONS) {
+    for (const operation of operationsOf(family)) {
       const types = operationTypes(family, operation);
       const compiled = types === undefined ? undefined : compileTyped(ce, family.epsil[operation], types);
       if (compiled === undefined) continue;
@@ -153,7 +163,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   // Laid out as `vp fmt` lays it out, so a rerun with nothing changed changes nothing.
   execFileSync("vp", ["fmt", target], { stdio: "ignore" });
   const operations = entries.reduce((sum, e) => sum + Object.keys(e.code).length, 0);
-  console.log(`${operations} of ${entries.length * OPERATIONS.length} family operations compiled`);
+  const defined = (allFamilies.filter(isEpsilFamily) as EpsilFamily[]).reduce((n, f) => n + operationsOf(f).length, 0);
+  console.log(`${operations} of ${defined} family operations compiled`);
   for (const e of entries.filter((entry) => entry.interpreted.length > 0))
     console.log(`${e.head}: compiled ${e.interpreted.join(", ")} disagreed with the interpreter; left interpreted`);
 }

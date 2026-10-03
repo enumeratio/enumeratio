@@ -1,6 +1,7 @@
-// Epsil pieces for the families ranked through a table of completions: the table is built once
-// per call, bottom-up, by a `Fold` that appends one row at a time, bound with its type and read
-// with `At`. Shared by the lattice-path and set-partition areas.
+// Epsil pieces for the families ranked through a table of completions: the table is built
+// bottom-up by a `Fold` that appends one row at a time, bound with its type and read with `At`.
+// A family that declares it as `FamilyEpsil.tables` has it built once per params, else it is
+// built once per call. Shared by the lattice-path, set-partition, permutation and composition areas.
 
 type MathJSON = unknown;
 
@@ -85,6 +86,49 @@ export function rowTable(
       upTo(0, sub(width, 1)),
     );
   return fold(["Join", table, cells(next(prev, s, c))], table, s, cells(first(c)), upTo(1, sub(rows, 1)));
+}
+
+/** Pascal's triangle as a `rowTable`: C(s, c) for s = 0..rows − 1 and c = 0..width − 1. Read it
+ *  with `cell`, so a binomial is a lookup, not a product per call. */
+export const pascalTable = (tag: string, rows: MathJSON, width: MathJSON): MathJSON =>
+  rowTable(
+    tag,
+    rows,
+    width,
+    (c) => iff(equal(c, 0), 1, 0),
+    (prev, s, c) => iff(equal(c, 0), 1, add(prev(sub(s, 1), sub(c, 1)), prev(sub(s, 1), c))),
+  );
+
+/**
+ * The digits of `_r` in the colex combinatorial number system over `digits` ranks and `universe`
+ * values: c_1 < … < c_digits < universe with C(c_digits, digits) + … + C(c_1, 1) = `_r`
+ * (`choose(c, i)` reads C(c, i)). A list whose entry i + 1 is c_i, entry 1 the rank left over.
+ * Digits are found from the top: c_i is the greatest c, below c_(i+1), with C(c, i) at most what is
+ * left, so the searches together span the universe once.
+ */
+export function colexDigits(
+  tag: string,
+  digits: MathJSON,
+  universe: MathJSON,
+  choose: (c: MathJSON, i: MathJSON) => MathJSON,
+): MathJSON {
+  const [state, i, c, best, left, found] = ["st", "i", "c", "best", "left", "found"].map((name) => `${tag}_${name}`);
+  const cap = iff(equal(i, digits), universe, at(state, add(i, 2)));
+  const search = fold(
+    iff(["LessEqual", choose(c, i), left], c, best),
+    best,
+    c,
+    sub(i, 1),
+    upTo(sub(i, 1), sub(cap, 1)),
+  );
+  const step = lets(
+    [
+      [left, at(state, 1), "integer"],
+      [found, search, "integer"],
+    ],
+    ["ReplaceAt", ["ReplaceAt", state, 1, sub(left, choose(found, i))], add(i, 1), found],
+  );
+  return fold(step, state, i, ["Join", ["List", "_r"], map(0, `${tag}_z`, upTo(1, digits))], ["Range", digits, 1, -1]);
 }
 
 /** T(s, c) of a table from `rowTable` bound as `name`. */
