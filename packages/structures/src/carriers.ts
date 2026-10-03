@@ -224,7 +224,9 @@ export function declareCarrierElement(ce: ComputeEngine, carriers: readonly Carr
  *
  * `sourceConstructor` and `sourceType` are two different spellings of the same carrier — the
  * held CONSTRUCTOR (`Permutation`), checked against the runtime value's operator, and the
- * minted TYPE (`permutation`), which is what a signature clause names.
+ * minted TYPE (`permutation`), which is what a signature clause names. A conversion that needs
+ * more than the source value (`CycleDecomposition(cycles, n)`) names the types of those
+ * `extra` arguments, and `handle` receives them after the subject.
  */
 export function attachConversion(
   ce: ComputeEngine,
@@ -232,7 +234,8 @@ export function attachConversion(
   sourceConstructor: string,
   sourceType: string,
   to: string,
-  handle: (subject: BoxedExpression) => BoxedExpression | undefined,
+  handle: (subject: BoxedExpression, ...extra: BoxedExpression[]) => BoxedExpression | undefined,
+  extra: readonly string[] = [],
 ): void {
   const definition = ce.lookupDefinition(target);
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
@@ -242,9 +245,13 @@ export function attachConversion(
   // returning `b & c`.
   const existing = String(operator.signature);
   const arms = existing.includes(" & ") ? existing : `(${existing})`;
-  (operator as { signature: unknown }).signature = ce.type(`${arms} & ((${sourceType}) -> ${to})`);
+  (operator as { signature: unknown }).signature = ce.type(
+    `${arms} & ((${[sourceType, ...extra].join(", ")}) -> ${to})`,
+  );
   operator.evaluate = (ops: readonly BoxedExpression[], options) =>
-    ops.length === 1 && ops[0]?.operator === sourceConstructor ? handle(ops[0]) : existingEvaluate?.(ops, options);
+    ops.length === 1 + extra.length && ops[0]?.operator === sourceConstructor
+      ? handle(ops[0], ...ops.slice(1))
+      : existingEvaluate?.(ops, options);
 }
 
 export { carrierNameForType };

@@ -32,3 +32,4 @@ statOn:
 - Fixed points (singleton cycles) are dropped on construction — $\mathrm{Cycles}(\{\{1\},\{2,3\}\})$ and $\mathrm{Cycles}(\{\{2,3\}\})$ are the same value
 - The cycles and their internal order are kept exactly as given otherwise — nothing is sorted or rotated to a canonical start
 - [[PermutationCycles]] builds one from a one-line word; [[Permute]] applies one to a list; [[InversePermutation]] reverses one
+- Written from a [[CycleDecomposition]], it drops that value's fixed points. `CycleDecomposition(cycles, n)` is the way back, given the size
