@@ -66,6 +66,6 @@ recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2	almosteq((psi(1, 1) - psi(1, 2)), 1, 1e-
 psi-0-1-gamma-polygamma-0-z-routes-through	psi(0, 1)	-0.577215664901532860606512090082	
 psi-1-2-gamma-2-ln-2	psi(0, (mpf(1)/2))	-1.963510026021423479440976333	
 psi-1-2-pi-2-2-in-closed-form	psi(1, (mpf(1)/2))	4.93480220054467930941724549994	
-psi-1-4-pi-2-8g	psi(1, (mpf(1)/4))	17.1973291545071107392713191193	inconclusive
+psi-1-4-pi-2-8g	psi(1, (mpf(1)/4))	17.1973291545071107392713191193	
 frac-d-dx-psi-n-x-psi-n-1-x			
 an-exact-integer-argument-is-left-unevaluated	psi(1, 1)	1.64493406684822643647241516665	
