@@ -28,7 +28,6 @@ import {
   rowTable,
   sub,
   upTo,
-  withTable,
 } from "../../../collections/src/families/tables.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import { dyckPaths } from "../../../lattice-paths/src/families/core.ts";
@@ -339,8 +338,7 @@ const tailTable = rowTable(
       fold(add("gs", prev(sub(t, 1), "gm")), "gs", "gm", 0, upTo(1, a)),
     ),
 );
-const F = cell("tails", add("_n", 2));
-const withTails = (body: MathJSON): MathJSON => withTable("tails", tailTable, body);
+const F = cell("_tables", add("_n", 2));
 
 /** What extending the j-th smallest of `a` open tails leaves, with t points to go. */
 const extendWeight = (mode: TailMode, t: MathJSON, a: MathJSON, j: MathJSON): MathJSON =>
@@ -474,23 +472,20 @@ function tailPartitions(head: string, mode: TailMode, bad: Parameters<typeof noB
     epsil: {
       // f(n, 0) is the Catalan number, which DyckPaths counts in closed form.
       count: dyckPaths.epsil.count,
-      unrank: withTails(
-        lets(
-          [
-            ["tz", walked, "list<integer>"],
-            ["tlab", ["Drop", "tz", add(3, at("tz", 3))], "list<integer>"],
-          ],
-          blocksOfLabels("tlab", 0, sub(at("tz", 2), 1)),
-        ),
+      tables: tailTable,
+      unrank: lets(
+        [
+          ["tz", walked, "list<integer>"],
+          ["tlab", ["Drop", "tz", add(3, at("tz", 3))], "list<integer>"],
+        ],
+        blocksOfLabels("tlab", 0, sub(at("tz", 2), 1)),
       ),
-      rank: withTails(
-        lets(
-          [
-            ["lb", blockOfEach, "list<integer>"],
-            ["pr", earlierInBlock, "list<integer>"],
-          ],
-          at(fold(tailRankStep(mode), "rs", "ri", ["List", 0], upTo(1, "_n")), 1),
-        ),
+      rank: lets(
+        [
+          ["lb", blockOfEach, "list<integer>"],
+          ["pr", earlierInBlock, "list<integer>"],
+        ],
+        at(fold(tailRankStep(mode), "rs", "ri", ["List", 0], upTo(1, "_n")), 1),
       ),
       valid: and(coversOnce, noBadArcs(bad)),
     },

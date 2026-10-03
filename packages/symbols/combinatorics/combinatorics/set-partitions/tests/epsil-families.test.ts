@@ -268,8 +268,11 @@ test("a crossing or nesting pair is refused whichever way round it is written", 
 });
 
 /** The definitions as the interpreter reads them, bypassing compiled code. */
-const interpreted = (family: EpsilFamily, operation: keyof EpsilFamily["epsil"], bindings: Record<string, unknown>) =>
-  evaluateEpsil(ce, family.epsil[operation], bindings);
+const interpreted = (family: EpsilFamily, operation: keyof EpsilFamily["epsil"], bindings: Record<string, unknown>) => {
+  const { tables } = family.epsil;
+  const tabled = tables === undefined ? bindings : { ...bindings, _tables: evaluateEpsil(ce, tables, bindings) };
+  return evaluateEpsil(ce, family.epsil[operation], tabled);
+};
 
 test("the interpreter agrees with compiled code", () => {
   for (const [head, reading] of Object.entries(READINGS)) {

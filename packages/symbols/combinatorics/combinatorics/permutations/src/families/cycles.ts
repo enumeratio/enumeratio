@@ -35,7 +35,6 @@ import {
   rowTable,
   sub,
   upTo,
-  withTable,
 } from "../../../collections/src/families/tables.ts";
 
 type MathJSON = unknown;
@@ -72,8 +71,7 @@ const wTable = rowTable(
       upTo(0, quotient(r, b)),
     ),
 );
-const W = cell("w", width);
-const withW = (body: MathJSON): MathJSON => withTable("w", wTable, body);
+const W = cell("_tables", width);
 
 // The type walk's state is [r, rem, F, c_1 … c_n]: r the rank left within what is chosen so far,
 // rem the points not yet in a part, F the permutations a placement of the parts so far leaves
@@ -193,41 +191,35 @@ const unrankStep = lets(
   ),
 );
 
-const unrank: MathJSON = withW(
-  iff(
-    equal("_n", 0),
-    ["List"],
-    lets(
+const unrank: MathJSON = iff(
+  equal("_n", 0),
+  ["List"],
+  lets(
+    [
+      ["ty", typeWalk, "list<integer>"],
       [
-        ["ty", typeWalk, "list<integer>"],
-        [
-          "cend",
-          fold(
-            unrankStep,
-            "cs",
-            "ck",
-            [
-              "Join",
-              ["List", at("ty", 1), "_n", 1, zOf((k) => at("ty", add(k, 3))), 1],
-              ["Drop", "ty", 3],
-              first,
-              first,
-              first,
-            ],
-            upTo(2, "_n"),
-          ),
-          "list<integer>",
-        ],
+        "cend",
+        fold(
+          unrankStep,
+          "cs",
+          "ck",
+          [
+            "Join",
+            ["List", at("ty", 1), "_n", 1, zOf((k) => at("ty", add(k, 3))), 1],
+            ["Drop", "ty", 3],
+            first,
+            first,
+            first,
+          ],
+          upTo(2, "_n"),
+        ),
+        "list<integer>",
       ],
-      map(
-        map(at("cend", vI("ep")), "ep", [
-          "Filter",
-          upTo(1, "_n"),
-          ["Function", equal(at("cend", yI("eq")), "eu"), "eq"],
-        ]),
-        "eu",
-        upTo(1, at("cend", 5)),
-      ),
+    ],
+    map(
+      map(at("cend", vI("ep")), "ep", ["Filter", upTo(1, "_n"), ["Function", equal(at("cend", yI("eq")), "eu"), "eq"]]),
+      "eu",
+      upTo(1, at("cend", 5)),
     ),
   ),
 );
@@ -297,44 +289,42 @@ const rankStep = lets(
   ),
 );
 
-const rank: MathJSON = withW(
-  iff(
-    equal("_n", 0),
-    0,
-    lets(
+const rank: MathJSON = iff(
+  equal("_n", 0),
+  0,
+  lets(
+    [
+      ["flat", ["Flatten", "_x"], "list<integer>"],
+      ["lens", map(["Length", "lc"], "lc", "_x"), "list<integer>"],
       [
-        ["flat", ["Flatten", "_x"], "list<integer>"],
-        ["lens", map(["Length", "lc"], "lc", "_x"), "list<integer>"],
-        [
-          "rc",
-          map(["Count", ["Filter", "lens", ["Function", equal("ll", "ra"), "ll"]]], "ra", upTo(1, "_n")),
-          "list<integer>",
-        ],
-        [
-          "starts",
-          fold(
-            ["Join", "sa", ["List", add(at("sa", ["Length", "sa"]), at("lens", "si"))]],
-            "sa",
-            "si",
-            ["List", 1],
-            upTo(1, sub(["Length", "lens"], 1)),
-          ),
-          "list<integer>",
-        ],
-        ["off", at(fold(typeRankStep, "os", "oa", ["List", 0, "_n", 1], downTo("_n", 1)), 1), "integer"],
+        "rc",
+        map(["Count", ["Filter", "lens", ["Function", equal("ll", "ra"), "ll"]]], "ra", upTo(1, "_n")),
+        "list<integer>",
       ],
-      add(
-        "off",
-        at(
-          fold(
-            rankStep,
-            "rs",
-            "rk",
-            ["Join", ["List", 0, "_n", 1, zOf((k) => at("rc", k)), 0], "rc", first],
-            upTo(2, "_n"),
-          ),
-          1,
+      [
+        "starts",
+        fold(
+          ["Join", "sa", ["List", add(at("sa", ["Length", "sa"]), at("lens", "si"))]],
+          "sa",
+          "si",
+          ["List", 1],
+          upTo(1, sub(["Length", "lens"], 1)),
         ),
+        "list<integer>",
+      ],
+      ["off", at(fold(typeRankStep, "os", "oa", ["List", 0, "_n", 1], downTo("_n", 1)), 1), "integer"],
+    ],
+    add(
+      "off",
+      at(
+        fold(
+          rankStep,
+          "rs",
+          "rk",
+          ["Join", ["List", 0, "_n", 1, zOf((k) => at("rc", k)), 0], "rc", first],
+          upTo(2, "_n"),
+        ),
+        1,
       ),
     ),
   ),
@@ -368,5 +358,5 @@ export const permutationsAsCycles: EpsilFamily = {
     params: [{ name: "n", role: "axis", min: 0 }],
     cost: { count: "closed", unrank: "polynomial", rank: "polynomial", valid: "polynomial" },
   },
-  epsil: { count: factorial("_n"), unrank, rank, valid },
+  epsil: { count: factorial("_n"), tables: wTable, unrank, rank, valid },
 };
