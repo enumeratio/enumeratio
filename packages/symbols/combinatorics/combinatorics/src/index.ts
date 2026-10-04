@@ -111,8 +111,7 @@ export function declareCombinatorics(ce: ComputeEngine): void {
 
 /**
  * What the package declares once every other library has: its maps, then the plural type-space
- * names and `Element` membership of the carriers no family claimed. Maps widen `Inverse` (modular's
- * goes in first); a plural takes a name for itself only if nobody has (number-theory's
+ * names and `Element` membership of the carriers no family claimed. Maps add rows to `Inverse` beside modular's, in either order; a plural takes a name for itself only if nobody has (number-theory's
  * `GaussianIntegers`). A host declaring libraries one after another runs `declareCombinatorics`
  * with the rest and this after them (`enumeratio.late`).
  */

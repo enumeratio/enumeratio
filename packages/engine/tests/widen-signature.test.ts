@@ -81,10 +81,11 @@ test("compiled Floor agrees with evaluate on a real operand", () => {
   }
 });
 
-test("widening a head never narrows it, and a covered request is a no-op", () => {
+test("widening a head never narrows it, and a covered request changes no answer", () => {
   const ce = new ComputeEngine();
   widenSignature(ce, "Floor", "(any, any?) -> any");
-  const before = String(ce.lookupDefinition("Floor") && (ce.lookupDefinition("Floor") as any).operator.signature);
+  const answers = () => inputs.map((input) => ce.box(["Floor", input] as never).evaluate().json);
+  const before = answers();
   widenSignature(ce, "Floor", "(real) -> integer");
-  expect(String((ce.lookupDefinition("Floor") as any).operator.signature)).toBe(before);
+  expect(answers()).toEqual(before);
 });

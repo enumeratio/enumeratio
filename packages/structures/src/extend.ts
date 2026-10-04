@@ -22,12 +22,12 @@
 //   Reverse("abc")                  'cba'                  string overload intact
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { defineOverload, overloadTable, type EvaluateOptions } from "@enumeratio/engine";
+import { defineOverload, extendHead, overloadTable, type EvaluateOptions } from "@enumeratio/engine";
 
-/** Operators whose `evaluate` has already had the materialization fallback below layered on
+/** Heads whose `evaluate` has already had the materialization fallback below layered on
  *  -- so a second `extendBuiltin` call for another carrier on the same collection-backed head
  *  doesn't stack a second, redundant layer. */
-const materializes = new WeakSet<object>();
+const materializes = new WeakMap<ComputeEngine, Set<string>>();
 
 /** The marker that once made a name private, for a mechanism this file no longer uses (see the
  *  top of the file) — kept for the two things still spelled against it: a stray `<Head>_` a
@@ -95,7 +95,7 @@ export function extendBuiltin(ce: ComputeEngine, extension: Extension): boolean 
     types: [extension.on],
     evaluate: (ops) => extension.handle(ops[0]!, ce),
   });
-  if (added) restoreMaterialization(operator);
+  if (added) restoreMaterialization(ce, extension.head);
   return added;
 }
 
@@ -111,26 +111,31 @@ export function extendBuiltin(ce: ComputeEngine, extension: Extension): boolean 
  * `options.expression`'s own `.each()` by hand, the same elements the untouched `collection`
  * handlers would give a direct caller.
  */
-function restoreMaterialization(operator: { evaluate?: unknown; collection?: unknown }): void {
-  if (operator.collection === undefined || materializes.has(operator)) return;
-  materializes.add(operator);
+function restoreMaterialization(ce: ComputeEngine, head: string): void {
+  const operator = ce.box([head, ce.number(1)] as never).operatorDefinition;
+  const done = materializes.get(ce) ?? new Set<string>();
+  materializes.set(ce, done);
+  if (operator?.collection === undefined || done.has(head)) return;
+  done.add(head);
   const dispatched = operator.evaluate as (
     ops: readonly BoxedExpression[],
     options: EvaluateOptions,
   ) => BoxedExpression | undefined;
-  operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
-    const result = dispatched(ops, options);
-    if (result !== undefined) return result;
-    // `materialization` is `boolean | number | [number, number]`; anything but `false` or
-    // absent asks for it.
-    const materialization = options.materialization as boolean | number | readonly number[] | undefined;
-    if (materialization === undefined || materialization === false) return undefined;
-    const expr = (options as { expression?: BoxedExpression }).expression;
-    if (expr === undefined || !expr.isCollection) return undefined;
-    try {
-      return expr.engine.function("List", [...expr.each()]);
-    } catch {
-      return undefined;
-    }
-  };
+  extendHead(ce, head, {
+    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+      const result = dispatched(ops, options);
+      if (result !== undefined) return result;
+      // `materialization` is `boolean | number | [number, number]`; anything but `false` or
+      // absent asks for it.
+      const materialization = options.materialization as boolean | number | readonly number[] | undefined;
+      if (materialization === undefined || materialization === false) return undefined;
+      const expr = (options as { expression?: BoxedExpression }).expression;
+      if (expr === undefined || !expr.isCollection) return undefined;
+      try {
+        return expr.engine.function("List", [...expr.each()]);
+      } catch {
+        return undefined;
+      }
+    },
+  });
 }

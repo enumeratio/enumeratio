@@ -24,9 +24,9 @@ the resolver possible (below).
   (`enumeratio.declare`: exports of its main entry, or `./subpath#export`; `late` for what must
   come after every library's own, and `requires` and `names` where it needs them); the host
   says how to import and how to make an engine, so hosts (`reference`, `census`) list no declare
-  calls. `DECLARE_ORDER` is the order that holds though no library requires it, and
-  `DECLARE_PREFERENCE` the one the records' `overrides` were written against (BL-13): both go when
-  the winning overloads are explicit.
+  calls. `DECLARE_ORDER` is the order that holds though no library requires it (empty: BL-13's
+  clobbers are gone), and `DECLARE_PREFERENCE` the one the records' `overrides` were written
+  against.
 - **`createRegistryResolver` / `Registry` / `manifestRegistry` / `definitionRegistry` /
   `combineRegistries` / `searchPath` / `pinOf`** (`src/registry.ts`) — the same, one name at
   a time through registries, so nothing lists every name: our packages are one registry,

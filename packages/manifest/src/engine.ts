@@ -54,27 +54,20 @@ export interface EnginePlanOptions<L extends Library<never>> {
   readonly base?: boolean;
   /** Order that isn't a requirement: `[first, later]` declares `first` before `later` when
    *  both are there, even where `first` extends `later` (the extension says what it may import,
-   *  not that nothing may widen the base before it). A cycle fails. The declare-order clobbers
-   *  (BL-13) live in `DECLARE_ORDER`, which a host leaves as it is. */
+   *  not that nothing may widen the base before it). A cycle fails. `DECLARE_ORDER` is the host's
+   *  default and is empty. */
   readonly after?: readonly (readonly [first: string, later: string])[];
   /** What a library requires: what it extends in `HIERARCHY`, by default. */
   readonly requires?: (name: string) => readonly string[];
 }
 
 /**
- * Order that has to hold though no library requires it: a head two libraries both widen, and the
- * one declared last answers first. Each pair is `[first, later]` and wins over `extends` where
- * they disagree. This is BL-13's list; when the winning overloads are explicit it goes. (What
- * must come after every library, not just one, is a `late` step.)
+ * Order that has to hold though no library requires it: `[first, later]` pairs that win over
+ * `extends` where they disagree. Empty: heads two libraries both extend answer the same in any
+ * order (each contribution is a row, a union widening or a layered handler), so nothing needs it.
+ * What must come after every library, not just one, is a `late` step.
  */
-export const DECLARE_ORDER: readonly (readonly [first: string, later: string])[] = [
-  // Adeles' `Fibonacci` and `LucasL` rows go in first, number-theory's after: each row says who it
-  // overrides, and the records say adeles is overridden.
-  ["adeles", "number-theory"],
-  // Modular wraps compute-engine's `ContinuedFraction` in place, and number-theory's carrier
-  // constructor then widens it: the other way round, the wrapper ends up under the widening.
-  ["modular", "number-theory"],
-];
+export const DECLARE_ORDER: readonly (readonly [first: string, later: string])[] = [];
 
 /**
  * Where libraries go when nothing above decides: the order the census declared them in when the
