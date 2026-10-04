@@ -39,7 +39,7 @@ function claims(owners: Readonly<Record<string, readonly Entry[]>>): Map<string,
 const PACKAGES = Object.fromEntries(Object.entries(NOTATION_ENTRIES).map(([name, n]) => [name, n.latex ?? []]));
 
 /**
- * A published library's notation, as a host loads it beside ours: every `symbols/<Name>/notation.json`
+ * A published library's notation, as a host loads it beside ours: every `reference/<Name>/notation.json`
  * of the fixture libraries (a copy of the manifest's, so the census stands alone), compiled for
  * the head its definition is declared as. A library whose trigger shadows ours is caught by the
  * same checks.
@@ -47,7 +47,7 @@ const PACKAGES = Object.fromEntries(Object.entries(NOTATION_ENTRIES).map(([name,
 const LIBRARIES_DIR = new URL("./fixtures/libraries/", import.meta.url).pathname;
 const LIBRARIES: Record<string, readonly Entry[]> = {};
 for (const library of readdirSync(LIBRARIES_DIR, { withFileTypes: true }).filter((d) => d.isDirectory())) {
-  const symbols = join(LIBRARIES_DIR, library.name, "symbols");
+  const symbols = join(LIBRARIES_DIR, library.name, "reference");
   for (const name of readdirSync(symbols, { withFileTypes: true })
     .filter((d) => d.isDirectory())
     .map((d) => d.name)) {

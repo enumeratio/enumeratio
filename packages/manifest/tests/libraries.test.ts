@@ -40,7 +40,7 @@ test("the fixtures' indexes are what packing their definitions writes", async ()
     const copy = join(mkdtempSync(join(tmpdir(), "pack-")), dir);
     cpSync(join(FIXTURES, dir), copy, { recursive: true });
     const index = (path: string): unknown => JSON.parse(readFileSync(path, "utf8"));
-    expect(index(await packLibrary(copy))).toEqual(index(join(FIXTURES, dir, "symbols/index.json")));
+    expect(index(await packLibrary(copy))).toEqual(index(join(FIXTURES, dir, "reference/index.json")));
   }
 });
 
@@ -48,7 +48,7 @@ test("packing maps each symbol to the targets its library tracks, and only those
   const copy = join(mkdtempSync(join(tmpdir(), "pack-")), "ada-primes");
   cpSync(join(FIXTURES, "ada-primes"), copy, { recursive: true });
   await packLibrary(copy);
-  const mappings = JSON.parse(readFileSync(join(copy, "symbols/Twice/mappings.json"), "utf8"));
+  const mappings = JSON.parse(readFileSync(join(copy, "reference/Twice/mappings.json"), "utf8"));
   // The record also has a MathWorld reference, which ada doesn't track.
   expect(mappings.references.map((r: { system: string }) => r.system)).toEqual(["wikipedia"]);
   expect(Object.keys(mappings.implementations)).toEqual(["twice-3"]);
@@ -71,12 +71,12 @@ test("a package's symbols evaluate at their pins, fetching only what the express
   expect(evaluate(ce, octuple)).toBe(8);
   expect(log.toSorted()).toEqual([
     "@ada/primes@1.0.0/package.json",
-    "@ada/primes@1.0.0/symbols/Quad/definition.json",
-    "@ada/primes@1.0.0/symbols/Twice/definition.json",
-    "@ada/primes@1.0.0/symbols/index.json",
+    "@ada/primes@1.0.0/reference/Quad/definition.json",
+    "@ada/primes@1.0.0/reference/Twice/definition.json",
+    "@ada/primes@1.0.0/reference/index.json",
     "@bob/extra@2.0.0/package.json",
-    "@bob/extra@2.0.0/symbols/Octuple/definition.json",
-    "@bob/extra@2.0.0/symbols/index.json",
+    "@bob/extra@2.0.0/reference/Octuple/definition.json",
+    "@bob/extra@2.0.0/reference/index.json",
   ]);
 });
 
@@ -96,7 +96,7 @@ test("a definition that doesn't hash to its pin isn't served", async () => {
 test("a scoped package's namespace is its scope", async () => {
   const { fetch } = cdn((url, json) =>
     url.endsWith("@bob/extra@2.0.0/package.json")
-      ? { ...(json as object), enumeratio: { namespace: "ada", index: "./symbols/index.json" } }
+      ? { ...(json as object), enumeratio: { namespace: "ada", index: "./reference/index.json" } }
       : json,
   );
   await expect(catalog<Engine>(SPECS, { host: npmHost({ fetch }) }).names!("bob")).rejects.toThrow(
@@ -130,9 +130,9 @@ test("install check over npm: each package's examples, fetched only to check", a
   expect([ensured.errors, ensured.failed]).toEqual([[], {}]);
   expect(evaluate(ce, ["MemberCall", "bob", "'Octuple'", 2])).toBe(16);
   expect(log.filter((url) => url.endsWith("examples.json")).toSorted()).toEqual([
-    "@ada/primes@1.0.0/symbols/Quad/examples.json",
-    "@ada/primes@1.0.0/symbols/Twice/examples.json",
-    "@bob/extra@2.0.0/symbols/Octuple/examples.json",
+    "@ada/primes@1.0.0/reference/Quad/examples.json",
+    "@ada/primes@1.0.0/reference/Twice/examples.json",
+    "@bob/extra@2.0.0/reference/Octuple/examples.json",
   ]);
 });
 
