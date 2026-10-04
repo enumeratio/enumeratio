@@ -30,6 +30,7 @@ bindings:
     form: sympy
     template: zeta($1)
     arity: 1
+    threadArg: 1
     note: Riemann ζ at one argument, in every system.
   - origin: mapped
     form: mpmath
@@ -50,6 +51,7 @@ bindings:
     form: sympy
     template: zeta($1, $2)
     arity: 2
+    threadArg: 2
     note: Two arguments is Hurwitz. Wolfram's Zeta[s, a] drops the n+a=0 term like ours does (its HurwitzZeta[s, 0] diverges); Sage spells it hurwitz_zeta; SymPy and mpmath overload zeta.
   - origin: mapped
     form: mpmath

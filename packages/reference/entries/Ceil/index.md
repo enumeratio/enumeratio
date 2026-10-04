@@ -40,6 +40,7 @@ bindings:
     form: sympy
     template: ceiling($1)
     arity: 1
+    threadArg: 1
   - origin: mapped
     form: mpmath
     template: ceil($1)

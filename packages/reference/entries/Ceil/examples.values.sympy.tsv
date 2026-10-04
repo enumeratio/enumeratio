@@ -3,7 +3,7 @@ ceil-7-over-2	ceiling(Rational(7, 2))	4
 ceil-3p2	ceiling(3.2)	4	
 ceil-3p7	ceiling(3.7)	4	
 integers-pass-through-unchanged	ceiling(5)	5	
-threads-element-wise-over-a-list	ceiling([1.2, -1.2, 3.7])	AttributeError: 'list' object has no attribute 'is_Number'	error
+threads-element-wise-over-a-list	[ceiling(1.2), ceiling(-1.2), ceiling(3.7)]	AttributeError: 'list' object has no attribute 'is_Number'	error
 ceil-2p4	ceiling(2.4)	3	
 ceil-2p6	ceiling(2.6)	3	
 idempotent-lceil-lceil-x-rceil-rceil	ceiling(ceiling(Symbol("x")))	True	
@@ -14,7 +14,7 @@ a-second-argument-rounds-up-to-a-multiple-of-it
 the-step-needn-t-be-an-integer-3-5-cdot-lceil-10			
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the			
 rounds-the-real-and-imaginary-parts-up	ceiling((5.37 + -1.3*I))	6 - I	
-ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	ceiling([[Rational(1, 2), -1], [0, Rational(-1, 2)]])		
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	[[ceiling(Rational(1, 2)), ceiling(-1)], [ceiling(0), ceiling(Rational(-1, 2))]]		
 matrixfunction-ceil-list-list-1-over-2-neg-1			
 ceil-0	ceiling(0)		
 ceil-positiveinfinity	ceiling(oo)		

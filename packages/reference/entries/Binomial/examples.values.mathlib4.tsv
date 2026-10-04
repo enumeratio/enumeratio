@@ -51,4 +51,5 @@ a-negative-n-zero-k-binom-neg-1-0	(Nat.choose (-1) 0)	failed to synthesize insta
 a-negative-k-past-n-binom-100-neg-50	(Nat.choose 100 (-50))	failed to synthesize instance of type class	error
 symmetry-doesn-t-hold-across-mismatched-n	(decide ((Nat.choose 2 6) = (Nat.choose (-18) 2)))		
 not-pascal-s-rule-across-mismatched-n	(decide (((Nat.choose (-23) 2) + (Nat.choose (-2) 3)) = (Nat.choose (-20) 6)))		
+both-arguments-negative-binom-1-7	(Nat.choose (-1) (-7))		
 the-central-binomial-coefficient-binom-100-50	(Nat.choose 100 50)	100891344545564193334812497256	

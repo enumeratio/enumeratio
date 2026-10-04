@@ -30,4 +30,5 @@ catalannumber-neg-6
 catalannumber-neg-4			
 catalannumber-neg-3			
 differencerootreduce-catalannumber-k-k			
+closed-form-difference-with-a-negative-binomial	(binomial(n(10), n(5)) - binomial(n(-1), n(-7)))		
 they-grow-fast-c-15-already-passes-nine-million			

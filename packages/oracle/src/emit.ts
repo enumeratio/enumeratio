@@ -90,6 +90,10 @@ function fill(template: string, parts: readonly string[]): string {
   return template.replace(/\$(\d)/g, (_match, index: string) => parts[Number(index) - 1] ?? "");
 }
 
+/** Heads whose operands thread over lists, which Python's own operators do not. */
+const BROADCAST_HEADS = new Set(["Add", "Subtract", "Multiply", "Divide", "Power"]);
+const PYTHON_FAMILY: readonly System[] = ["sympy", "mpmath", "sage"];
+
 /** Emit `expr` as source for `system`, collecting every head it has no mapping for. */
 /** A free name for Wolfram: one that's also a `System`` name (`E`, `I`, `K`, `O`) would
  * be Wolfram's constant or function there, so it goes in our own context, which `fromWolfram`
@@ -156,6 +160,9 @@ export function emit(expr: MathJSON, system: System): Emitted {
       if (typeof value === "string") {
         if (system === "wolfram") return toWolfram({ num: value });
         if (system === "rust") return /^-?\d+$/.test(value) ? `big("${value}")` : `x(${value})`;
+        // A Python float literal holds 53 bits; SymPy keeps every digit of a longer decimal.
+        if (system === "sympy" && /[.e]/i.test(value) && value.replace(/e.*$/i, "").replace(/\D/g, "").length > 15)
+          return `Float(${JSON.stringify(value)}, 50)`;
         return value;
       }
       missing.push("literal:unrecognised");
@@ -259,6 +266,16 @@ export function emit(expr: MathJSON, system: System): Emitted {
         const others = operands.filter((_op, i) => i !== threadArg - 1).map((op) => walk(op));
         return threadOver(threaded, template, others, threadArg);
       }
+      // Arithmetic over a list: Python's `+` concatenates and `*` repeats, where compute-engine
+      // and Wolfram work element by element.
+      if (
+        BROADCAST_HEADS.has(head) &&
+        PYTHON_FAMILY.includes(system) &&
+        operands.some((op) => isCall(op) && op[0] === "List")
+      ) {
+        const params = operands.map((_op, i) => `_a${i}`);
+        return `enumeratio_broadcast(lambda ${params.join(", ")}: ${fill(template, params)}, ${operands.map(walk).join(", ")})`;
+      }
       return fill(template, operands.map(walk));
     }
     // A carrier CONSTRUCTOR call (`Permutation([2, 1, 3])`) with no mapping of its own: we
@@ -285,7 +302,12 @@ export function emit(expr: MathJSON, system: System): Emitted {
     // carrier call" heuristic: what's left after dropping the declared count of leading
     // params is either one element (unwrap to it) or several (the whole tuple carries
     // meaning, missing for a system with no bare-Tuple mapping, rather than a wrong answer).
-    if (CARRIER_NAMES.has(head) && operands.length === 1) {
+    // `ContinuedFraction(x)` of a number is the expansion, a function; only a list of terms
+    // is the carrier.
+    const expands =
+      head === "ContinuedFraction" &&
+      !(isCall(operands[0] as MathJSON) && (operands[0] as readonly MathJSON[])[0] === "List");
+    if (CARRIER_NAMES.has(head) && operands.length === 1 && !expands) {
       const contents = operands[0] as MathJSON;
       const packed = isCall(contents) && contents[0] === "Tuple" && contents.length > 2 ? contents : undefined;
       if (packed === undefined) return walk(contents);

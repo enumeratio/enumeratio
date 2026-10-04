@@ -223,6 +223,8 @@ const log10Abs = (x: BigDecimal): number => (x.isZero() ? Infinity : Math.log10(
  * Terms where k + a = 0 (a a nonpositive integer) are dropped, as in `hurwitzZeta`.
  */
 export function hurwitzZetaBig(s: BigCx, a: BigCx, digits: number): BigCx | undefined {
+  // ζ(0, a) = 1/2 − a with the (k+a)=0 term kept (see `hurwitzAtZero`).
+  if (s.re.isZero() && s.im.isZero()) return { re: bigCx(0.5).re.sub(a.re), im: a.im.neg() };
   if (s.re.eq(1) && s.im.isZero()) return undefined;
   const sd: Cx = { re: s.re.toNumber(), im: s.im.toNumber() };
   const ad: Cx = { re: a.re.toNumber(), im: a.im.toNumber() };
@@ -248,6 +250,7 @@ export function hurwitzZetaBig(s: BigCx, a: BigCx, digits: number): BigCx | unde
  * ((k+a)²)^(−s/2), then ζ(s, ·) from the first k with Re(k+a) ≥ 0, a zero there dropped.
  */
 export function zetaGeneralizedBig(s: BigCx, a: BigCx, digits: number): BigCx | undefined {
+  if (s.re.isZero() && s.im.isZero()) return hurwitzZetaBig(s, a, digits);
   const front: BigCx[] = [];
   let rest = a;
   while (rest.re.isNegative()) {

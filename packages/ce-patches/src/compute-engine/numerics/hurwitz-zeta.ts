@@ -181,6 +181,16 @@ const EM_BEYOND = 4;
 const TAYLOR_TRUSTED = 30;
 
 /**
+ * ζ(0, a) = 1/2 − a (DLMF 25.11.13) for every a, the (n+a)=0 term included: at s = 0 it is
+ * 0⁰ = 1, not a term to drop. Dropping it gives ζ(0, 0) = −1/2 and ζ(0, −1) = 1/2, where the
+ * formula (and Wolfram's Zeta[0, 0], Zeta[0, −1]) gives 1/2 and 3/2. At every other s the
+ * term is 0^(−s) and stays dropped. Undefined unless s is exactly 0.
+ */
+export function hurwitzAtZero(s: Cx, a: Cx): Cx | undefined {
+  return s.re === 0 && s.im === 0 ? cx(0.5 - a.re, -a.im) : undefined;
+}
+
+/**
  * Numeric ζ(s, a) for complex s, a. Terms where (n+a)=0 (a a nonpositive integer) are
  * dropped, matching Wolfram's `HurwitzZeta`, which omits the singular term rather than
  * diverging there. Returns a non-finite part at the s=1 pole.
@@ -191,6 +201,8 @@ const TAYLOR_TRUSTED = 30;
  * series cancels, Hermite's integral (`hurwitzHermite`), whichever measures the smaller loss.
  */
 export function hurwitzZeta(s: Cx, a: Cx): Cx {
+  const atZero = hurwitzAtZero(s, a);
+  if (atZero) return atZero;
   if (s.re >= 0 || a.re >= EM_BEYOND * emEdge(s) || !Number.isFinite(a.re) || !Number.isFinite(a.im)) {
     return hurwitzEM(s, a);
   }
@@ -396,6 +408,8 @@ function logSin(w: Cx): Cx {
  * unlike HurwitzZeta, Zeta(s, a) is finite at a = 0, −1, −2, … (Zeta(s, 0) = ζ(s)).
  */
 export function zetaGeneralized(s: Cx, a: Cx): Cx {
+  const atZero = hurwitzAtZero(s, a);
+  if (atZero) return atZero;
   const negHalfS = scale(s, -0.5);
   let acc = cx(0, 0);
   let cur = cx(a.re, a.im);

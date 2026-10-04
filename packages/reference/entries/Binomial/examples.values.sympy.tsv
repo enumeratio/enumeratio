@@ -51,4 +51,5 @@ a-negative-n-zero-k-binom-neg-1-0	binomial(-1, 0)	1
 a-negative-k-past-n-binom-100-neg-50	binomial(100, -50)	0	
 symmetry-doesn-t-hold-across-mismatched-n	enumeratio_equal(binomial(2, 6), binomial(-18, 2))	False	
 not-pascal-s-rule-across-mismatched-n	enumeratio_equal((binomial(-23, 2) + binomial(-2, 3)), binomial(-20, 6))	False	
+both-arguments-negative-binom-1-7	binomial(-1, -7)	0	disagree
 the-central-binomial-coefficient-binom-100-50	binomial(100, 50)	100891344545564193334812497256	

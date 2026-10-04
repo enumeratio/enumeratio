@@ -1,13 +1,13 @@
 id	in
-2-times-list-1-2-3	(2 * [1, 2, 3])
-a-times-list-list-1-2-list-3-4	(Symbol("a") * [[1, 2], [3, 4]])
+2-times-list-1-2-3	enumeratio_broadcast(lambda _a0, _a1: (_a0 * _a1), 2, [1, 2, 3])
+a-times-list-list-1-2-list-3-4	enumeratio_broadcast(lambda _a0, _a1: (_a0 * _a1), Symbol("a"), [[1, 2], [3, 4]])
 outer-f-list-1-2-list-a-b-c	
 prepend-list-1-2-3-list-a-b-c	
 flatten-list-list-1-2-list-a-b-c	
 map-f-list-1-2-3-4	
-list-a-b-c-plus-list-1-2-3	([Symbol("a"), Symbol("b"), Symbol("c")] + [1, 2, 3])
+list-a-b-c-plus-list-1-2-3	enumeratio_broadcast(lambda _a0, _a1: (_a0 + _a1), [Symbol("a"), Symbol("b"), Symbol("c")], [1, 2, 3])
 subsets-list-1-2-3	
 solve-list-x-minus-y-eq-1-x-plus-y-eq-0-x-y	
 map-f-list-list-1-2-list-3-4-list-5-6-list-2	
 solve-list-x-plus-y-plus-z-eq-0-x-plus-y-eq-1-y	
-exponentiale-pow-list-list-1-2-3-list-4-5-6	(S(E)**[[1, 2, 3], [4, 5, 6]])
+exponentiale-pow-list-list-1-2-3-list-4-5-6	enumeratio_broadcast(lambda _a0, _a1: (S(_a0)**_a1), E, [[1, 2, 3], [4, 5, 6]])

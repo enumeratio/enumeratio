@@ -185,7 +185,7 @@ left-of-the-strip-at-a-non-integer-a	N(hurwitz_zeta(-20, 0.7))	-80.0909738762536
 left-of-the-strip-at-a-non-integer-a-and-s	N(hurwitz_zeta(-40.5, 0.4))	7.72499748409159e15	
 a-negative-a-frac-12-5-is-real-and-so-is-the	N(hurwitz_zeta(5, (-1/2)))	0.144760409444473	
 n-hurwitzzeta-1-over-3-8-over-7-50	N(hurwitz_zeta((1/3), (8/7)))		
-hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	hurwitz_zeta(-1, [[(1/2), 1], [1, (1/2)]])		
+hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	[[hurwitz_zeta(-1, (1/2)), hurwitz_zeta(-1, 1)], [hurwitz_zeta(-1, 1), hurwitz_zeta(-1, (1/2))]]		
 functionexpand-hurwitzzeta-neg-2-a			
 functionexpand-hurwitzzeta-0-a			
 fullsimplify-matrixfunction-function-hurwitzzeta			

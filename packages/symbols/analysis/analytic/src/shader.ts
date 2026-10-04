@@ -49,6 +49,8 @@ fn ccosh(z: vec2f) -> vec2f { return vec2f(cosh(z.x) * cos(z.y), sinh(z.x) * sin
 // the strip. Mirrors hurwitzZeta in hurwitz-zeta.ts. (n+a)=0 terms are dropped (Wolfram
 // HurwitzZeta).
 fn hurwitz(s: vec2f, a: vec2f) -> vec2f {
+  // ζ(0, a) = 1/2 − a, the (n+a)=0 term kept (hurwitzAtZero in hurwitz-zeta.ts).
+  if (s.x == 0.0 && s.y == 0.0) { return vec2f(0.5, 0.0) - a; }
   let m = floor(a.x - 0.5);
   let h = vec2f(a.x - m - 1.0, a.y);
   if (s.x >= 0.0 || a.x >= 4.0 * emEdge(s) || abs(m) > 96.0 || length(h) > 0.75) { return hurwitzEM(s, a); }
@@ -158,6 +160,7 @@ fn hurwitzEM(s: vec2f, a: vec2f) -> vec2f {
 // Wolfram generalized zeta: crossed terms ((n+a)^2)^(-s/2), the (n+a)=0 slot dropped
 // (finite at a = 0, -1, -2, …, unlike hurwitz).
 fn zetaGen(s: vec2f, a0: vec2f) -> vec2f {
+  if (s.x == 0.0 && s.y == 0.0) { return hurwitz(s, a0); }
   var a = a0;
   var acc = vec2f(0.0);
   var guard = 0;

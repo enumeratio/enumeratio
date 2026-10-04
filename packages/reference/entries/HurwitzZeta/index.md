@@ -36,6 +36,7 @@ bindings:
     form: sympy
     template: zeta($1, $2)
     arity: 2
+    threadArg: 2
     note: mpmath is correct at negative-integer s where Wolfram's N[] is not; the grid in special-functions.examples.json covers that branch.
   - origin: mapped
     form: mpmath
