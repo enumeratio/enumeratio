@@ -3,7 +3,7 @@
 // in the failure names the import to make lazy, type-only, or the kernel's.
 
 import { fileURLToPath } from "node:url";
-import { pathsInto } from "@enumeratio/frontend/static-imports";
+import { pathsInto } from "../../../tools/static-imports.ts";
 import { expect, test } from "vite-plus/test";
 
 const ENGINE = /^@cortex-js\/compute-engine/;

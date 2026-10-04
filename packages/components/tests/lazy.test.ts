@@ -4,7 +4,7 @@
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { pathsInto } from "@enumeratio/frontend/static-imports";
+import { pathsInto } from "../../../tools/static-imports.ts";
 import { expect, test } from "vite-plus/test";
 import { LAZY_TAGS } from "../src/lazy.ts";
 
