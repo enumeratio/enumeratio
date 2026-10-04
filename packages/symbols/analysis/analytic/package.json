@@ -55,7 +55,11 @@
   },
   "enumeratio": {
     "notation": "./notation",
-    "group": "analysis"
+    "group": "analysis",
+    "declare": [
+      "declareAnalytic",
+      "declareFractals"
+    ]
   },
   "generated": [
     "src/notation.generated.ts"

@@ -64,7 +64,13 @@
   },
   "enumeratio": {
     "notation": "./notation",
-    "group": "combinatorics"
+    "group": "combinatorics",
+    "declare": "declareCombinatorics",
+    "names": [
+      "CombinatorialStat",
+      "Tally"
+    ],
+    "late": "declareLate"
   },
   "generated": [
     "src/statistics/naming-data.ts",

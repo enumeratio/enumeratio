@@ -3,7 +3,7 @@ import { type FetchJson, lockLibraries, npmHost, specsOf } from "../src/librarie
 
 // A small npm: each package's versions and what each version's package.json says.
 const symbols = (namespace: string, dependencies: Record<string, string> = {}, system?: string) => ({
-  enumeratio: { namespace, index: "./symbols/index.json", ...(system === undefined ? {} : { system }) },
+  enumeratio: { namespace, index: "./reference/index.json", ...(system === undefined ? {} : { system }) },
   dependencies,
 });
 const WORLD: Readonly<Record<string, Readonly<Record<string, object>>>> = {

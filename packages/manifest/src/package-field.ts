@@ -7,6 +7,16 @@ export interface PackageField {
   readonly notation?: string;
   /** The group the docs site files the package under (`arithmetic`, `groups`, …). */
   readonly group?: string;
+  /** What declares its heads into an engine: exports of its main entry (or `./subpath#export`),
+   *  called with the engine in order. Absent for a package that declares nothing (or only `late`). */
+  readonly declare?: string | readonly string[];
+  /** What it declares once every library's `declare` has run: heads that must be the last word
+   *  (generic ones over what others widen), in the same spelling. */
+  readonly late?: string | readonly string[];
+  /** Names it adds to without redeclaring them, which declaring can't see: a registry a head reads. */
+  readonly names?: readonly string[];
+  /** Libraries it needs declared first beyond what it extends in `HIERARCHY`. */
+  readonly requires?: readonly string[];
 }
 
 /** The specifier a host imports a package's notation entry by, or undefined if it has none. */

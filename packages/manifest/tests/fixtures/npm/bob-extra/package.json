@@ -10,7 +10,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./symbols/*": "./symbols/*",
+    "./reference/*": "./reference/*",
     "./notation": "./notation.js"
   },
   "dependencies": {
@@ -18,7 +18,7 @@
   },
   "enumeratio": {
     "namespace": "bob",
-    "index": "./symbols/index.json",
+    "index": "./reference/index.json",
     "notation": "./notation"
   }
 }
