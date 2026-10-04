@@ -51,4 +51,5 @@ a-negative-n-zero-k-binom-neg-1-0	Binomial[-1, 0]	1		\binom{-1}{0}	1
 a-negative-k-past-n-binom-100-neg-50	Binomial[100, -50]	0		\binom{100}{-50}	0	
 symmetry-doesn-t-hold-across-mismatched-n	(Binomial[2, 6] == Binomial[-18, 2])	False		\binom{2}{6}=\binom{-18}{2}	\text{False}	
 not-pascal-s-rule-across-mismatched-n	(Plus[Binomial[-23, 2], Binomial[-2, 3]] == Binomial[-20, 6])	False		\binom{-23}{2}+\binom{-2}{3}=\binom{-20}{6}	\text{False}	
+both-arguments-negative-binom-1-7	Binomial[-1, -7]	1		\binom{-1}{-7}	1	
 the-central-binomial-coefficient-binom-100-50	Binomial[100, 50]	100891344545564193334812497256		\binom{100}{50}	100891344545564193334812497256	

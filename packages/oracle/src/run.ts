@@ -452,6 +452,22 @@ def enumeratio_min(*args):
 # (already-evaluated, since symbolic.ts substitutes and re-emits before this call), skipped
 # (None) where a trial's substitution didn't emit. None back means neither route decided.
 def enumeratio_symbolic_agree(a, b, trials):
+    # Lists agree element by element: False if any pair is, True only if every pair is.
+    if isinstance(a, list) and isinstance(b, list):
+        if len(a) != len(b):
+            return False
+        verdicts = []
+        for i in range(len(a)):
+            sub = []
+            for trial in trials:
+                try:
+                    sub.append(None if trial is None else (trial[0][i], trial[1][i]))
+                except (TypeError, IndexError):
+                    sub.append(None)
+            verdicts.append(enumeratio_symbolic_agree(a[i], b[i], sub))
+        if any(v is False for v in verdicts):
+            return False
+        return True if all(v is True for v in verdicts) else None
     try:
         d = simplify(a - b)
         if d == 0:
@@ -476,6 +492,18 @@ def enumeratio_symbolic_agree(a, b, trials):
 // How SymPy and mpmath print a value for the scan: an exact integer or rational as it is, any
 // other number (a SymPy closed form, an mpf, an mpc) as a Python float or complex literal —
 // what parsePython reads — and anything else as the kernel prints it.
+// Arithmetic over lists, element by element, as compute-engine and Wolfram do; the emitted
+// call carries the scalar operation as a lambda. Lists of different lengths raise.
+const PY_BROADCAST = `
+def enumeratio_broadcast(f, *args):
+    lists = [a for a in args if isinstance(a, list)]
+    if not lists:
+        return f(*args)
+    if any(len(a) != len(lists[0]) for a in lists):
+        raise ValueError("lists of different lengths")
+    return [enumeratio_broadcast(f, *[a[i] if isinstance(a, list) else a for a in args]) for i in range(len(lists[0]))]
+`;
+
 const PY_VALUE = `
 def enumeratio_value(x):
     if isinstance(x, list):
@@ -764,19 +792,19 @@ export function preludeFor(system: System): Prelude {
     case "sympy":
       return {
         binary: "python3",
-        preamble: `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}`,
+        preamble: `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
         printer: "enumeratio_value",
       };
     case "mpmath":
       return {
         binary: "python3",
-        preamble: `from mpmath import *\nmp.dps = 30\n${PY_VALUE}`,
+        preamble: `from mpmath import *\nmp.dps = 30\n${PY_VALUE}\n${PY_BROADCAST}`,
         printer: "enumeratio_value",
       };
     case "sage":
       return {
         binary: "sage",
-        preamble: `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}`,
+        preamble: `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}\n${PY_BROADCAST}`,
         evaluate: (src) => `sage_eval(${src}, locals=globals())`,
         printer: "enumeratio_value",
       };
@@ -848,7 +876,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
       return runPython(
         sources,
         "python3",
-        `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}`,
+        `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}\n${PY_BROADCAST}`,
         ["-c"],
         undefined,
         "enumeratio_value",
@@ -857,7 +885,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
       return runPython(
         sources,
         "python3",
-        `from mpmath import *\nmp.dps = 30\n${PY_VALUE}`,
+        `from mpmath import *\nmp.dps = 30\n${PY_VALUE}\n${PY_BROADCAST}`,
         ["-c"],
         undefined,
         "enumeratio_value",
@@ -870,7 +898,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
       return runPython(
         sources,
         "sage",
-        `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}`,
+        `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}\n${PY_BROADCAST}`,
         ["-c"],
         (src, ns) => `sage_eval(${src}, locals=${ns})`,
         "enumeratio_value",

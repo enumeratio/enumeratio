@@ -3,7 +3,7 @@ ceil-7-over-2	ceil((7/2))	4
 ceil-3p2	ceil(3.2)	4	
 ceil-3p7	ceil(3.7)	4	
 integers-pass-through-unchanged	ceil(5)	5	
-threads-element-wise-over-a-list	ceil([1.2, -1.2, 3.7])	TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression	error
+threads-element-wise-over-a-list	[ceil(1.2), ceil(-1.2), ceil(3.7)]	TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression	error
 ceil-2p4	ceil(2.4)	3	
 ceil-2p6	ceil(2.6)	3	
 idempotent-lceil-lceil-x-rceil-rceil	ceil(ceil(SR.var("x")))	True	
@@ -14,7 +14,7 @@ a-second-argument-rounds-up-to-a-multiple-of-it
 the-step-needn-t-be-an-integer-3-5-cdot-lceil-10			
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the			
 rounds-the-real-and-imaginary-parts-up	ceil((5.37 + -1.3*I))	ceil(5.37000000000000 - 1.30000000000000*I)	disagree
-ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	ceil([[(1/2), -1], [0, (-1/2)]])		
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	[[ceil((1/2)), ceil(-1)], [ceil(0), ceil((-1/2))]]		
 matrixfunction-ceil-list-list-1-over-2-neg-1			
 ceil-0	ceil(0)		
 ceil-positiveinfinity	ceil(oo)		

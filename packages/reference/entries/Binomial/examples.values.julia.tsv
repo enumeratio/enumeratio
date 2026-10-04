@@ -51,4 +51,5 @@ a-negative-n-zero-k-binom-neg-1-0	binomial(ZZ(-1), ZZ(0))
 a-negative-k-past-n-binom-100-neg-50	binomial(ZZ(100), ZZ(-50))		
 symmetry-doesn-t-hold-across-mismatched-n	(binomial(ZZ(2), ZZ(6)) == binomial(ZZ(-18), ZZ(2)))		
 not-pascal-s-rule-across-mismatched-n	((binomial(ZZ(-23), ZZ(2)) + binomial(ZZ(-2), ZZ(3))) == binomial(ZZ(-20), ZZ(6)))		
+both-arguments-negative-binom-1-7	binomial(ZZ(-1), ZZ(-7))	0	disagree
 the-central-binomial-coefficient-binom-100-50	binomial(ZZ(100), ZZ(50))	100891344545564193334812497256	

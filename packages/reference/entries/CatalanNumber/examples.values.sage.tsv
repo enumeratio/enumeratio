@@ -30,4 +30,5 @@ catalannumber-neg-6	catalan_number(-6)
 catalannumber-neg-4	catalan_number(-4)		
 catalannumber-neg-3	catalan_number(-3)		
 differencerootreduce-catalannumber-k-k			
+closed-form-difference-with-a-negative-binomial	(binomial(10, 5) - binomial(-1, -7))		
 they-grow-fast-c-15-already-passes-nine-million	catalan_number(15)	9694845	

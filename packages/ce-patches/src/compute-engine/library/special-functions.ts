@@ -189,7 +189,8 @@ export function evaluateZeta(
   if (isRealInt(s) && s.re === 1) return ce.symbol("ComplexInfinity"); // ζ(1, a) pole
 
   // Re(a) > 0, or a symbolic: identical to HurwitzZeta (exact reductions + EM).
-  if (!isFiniteNum(a) || a.re > 0) return evaluateHurwitz(ce, ops, numeric);
+  // ζ(0, a) = 1/2 − a for every a (DLMF 25.11.13); no term is dropped at s = 0.
+  if (!isFiniteNum(a) || a.re > 0 || (isRealInt(s) && s.re === 0)) return evaluateHurwitz(ce, ops, numeric);
 
   // Zeta(s, 0) = ζ(s): the (k+a)=0 term is dropped, leaving the Riemann sum. Exact.
   if (a.re === 0 && a.im === 0) {
@@ -310,6 +311,22 @@ let zetaKernel: ZetaKernel = "bignum";
 export const setZetaKernel = (kernel: ZetaKernel): void => {
   zetaKernel = kernel;
 };
+
+/** Zeta(0, a) = 1/2 − a for every a (DLMF 25.11.13): at s = 0 the (n+a)=0 term is 0⁰ = 1, kept.
+ * Native Zeta drops it, so Zeta(0, 0) = −1/2 and Zeta(0, −1) = 1/2 where the formula gives
+ * 1/2 and 3/2. Every other s still drops the 0^(−s) term. */
+export function evaluateZetaAtZero(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["Zeta"],
+    (ops) => ops.length === 2 && ops[0]?.re === 0 && ops[0]?.im === 0,
+    () => (ops, options) => {
+      const value = ce.box(["Subtract", ["Rational", 1, 2], ops[1]!.json as never]);
+      return options.numericApproximation ? value.N() : value.evaluate();
+    },
+    2,
+  );
+}
 
 /** Complete elliptic integrals at an exact parameter m = 0, which stay unevaluated:
  * K(0) = E(0) = π/2 (DLMF 19.6.1). A float 0 is left to the native numeric kernel. */

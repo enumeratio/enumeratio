@@ -21,7 +21,16 @@
 import { appendFileSync, writeFileSync } from "node:fs";
 import { runCases } from "@enumeratio/evaluation/node";
 import { allFamilies, type AnyFamily } from "@enumeratio/combinatorics/collections";
-import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle";
+import {
+  emit,
+  interpretSymbolicAgreement,
+  isSymbolicSystem,
+  type MathJSON,
+  runIn,
+  symbolicAgreementSource,
+  type System,
+  type Verdict,
+} from "@enumeratio/oracle";
 import { between as edgeBiased } from "@enumeratio/plausible";
 import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
@@ -90,6 +99,8 @@ const numberNear = (random: Random, t: number): number =>
 const STRUCTURAL = new Set([
   "Diagram",
   "OrbitDiagram",
+  "Permutation",
+  "CycleDecomposition",
   "String",
   "GroupBasis",
   "CyclicGroup",
@@ -179,6 +190,9 @@ function mutate(expr: MathJSON, random: Random): MathJSON {
       }
       return node;
     }
+    // A Complex part that is itself an expression (`Complex(0, Sqrt(3))`) stays as written:
+    // resampling inside it can make a part non-real, which is not a Complex at all.
+    if (head === "Complex") return node;
     // A non-negative integer exponent building a big power (Power(10, 100)) must stay
     // non-negative: flipping its sign turns an intended huge integer into a tiny fraction,
     // which breaks every integer-only downstream head (LCM, IsPrime, Mod, GCD, PowerMod, ...).
@@ -230,6 +244,38 @@ const templates: Template[] = entries.flatMap((entry) =>
     })),
 );
 
+// A classified row covers the region of inputs it sits in, not only its own template: a sample
+// of the same entry whose numbers fall in the same sign/kind classes (a negative integer beside
+// a positive one, a zero modulus, ...) inherits the row's verdict and kind.
+function region(expr: MathJSON): Set<string> {
+  const classes = new Set<string>();
+  const walk = (node: MathJSON): void => {
+    if (typeof node === "number") classes.add(`${Math.sign(node)}${Number.isInteger(node) ? "i" : "f"}`);
+    else if (typeof node === "string") classes.add("sym");
+    else if (Array.isArray(node)) {
+      const [head, ...ops] = node as readonly MathJSON[];
+      if (head === "Rational" && ops.every((op) => typeof op === "number"))
+        classes.add(`${Math.sign((ops[0] as number) * (ops[1] as number))}r`);
+      else if (head === "Complex") classes.add("c");
+      else for (const op of ops) walk(op);
+    }
+  };
+  walk(expr);
+  return classes;
+}
+// A row covers a sample whose classes include all of its own; a row of plain positive integers
+// (nothing out of the ordinary to name a convention by) covers only samples of exactly that.
+const covers = (row: Set<string>, sample: Set<string>): boolean =>
+  [...row].every((c) => sample.has(c)) && (sample.size === row.size || row.size > 1 || !row.has("1i"));
+const regions = new Map<string, Set<string>[]>();
+for (const entry of entries)
+  for (const example of entry.examples)
+    for (const [system, run] of Object.entries(example.others ?? {})) {
+      if (run.kind === undefined) continue;
+      const key = `${entry.name}/${system}/${run.verdict}`;
+      regions.set(key, [...(regions.get(key) ?? []), region(example.expr as MathJSON)]);
+    }
+
 const samples: Sample[] = [];
 for (const template of templates) {
   const random = generator(template.id);
@@ -260,16 +306,97 @@ const expectedOf = new Map(ours.filter((r) => r.outcome === "Evaluated").map((r)
 // ── each lane ────────────────────────────────────────────────────────────────────
 
 /** Ours' names for a non-answer, and what other systems say when they reach one. */
-const UNDEFINED = new Set(["ComplexInfinity", "PositiveInfinity", "NegativeInfinity", "NaN"]);
-const POLE = /pole|infinit|ZeroDivision|division by zero|divide by zero|modulo by zero|undefined/i;
+const UNDEFINED = new Set(["ComplexInfinity", "PositiveInfinity", "NegativeInfinity", "NaN", "Indeterminate"]);
+const POLE =
+  /pole|infinit|ZeroDivision|DivideError|division by zero|divide by zero|integer division|modulo by zero|undefined/i;
 const RESOURCE = /TimeoutError|MemoryError|KernelDied|killed|\$Aborted/;
 /** The other system refusing an argument outside its function's domain. */
-const DOMAIN = /DomainError|non-?negative|must be positive|positive integer|not an integer|zero modulus|expected/i;
+const DOMAIN =
+  /DomainError|non-?negative|must be positive|positive integer|not an integer|an integer, not|zero modulus|expected|expecting|MethodError|AssertionError|cannot create mpf/i;
+
+/** Whether `ours` is a list of numbers and booleans that `theirs` prints with the booleans as 0 and 1. */
+function boolsAsInts(ours: MathJSON, theirs: string): boolean {
+  if (!Array.isArray(ours) || ours[0] !== "List") return false;
+  const asNumbers = ours.slice(1).map((item) => (item === "True" ? 1 : item === "False" ? 0 : item));
+  try {
+    return JSON.stringify(asNumbers) === JSON.stringify(JSON.parse(theirs));
+  } catch {
+    return false;
+  }
+}
+
+/** A value as its parts: a real, or a Python complex literal `(a+bj)`, or ours' `Complex`. */
+function parts(value: unknown): number[] | undefined {
+  if (typeof value === "number") return [value];
+  if (Array.isArray(value) && value[0] === "Complex" && value.length === 3)
+    return typeof value[1] === "number" && typeof value[2] === "number" ? [value[1], value[2]] : undefined;
+  if (typeof value !== "string") return undefined;
+  const complex = /^\(?\s*([-+]?[\d.]+(?:e[-+]?\d+)?)\s*([-+]\s*[\d.]+(?:e[-+]?\d+)?)j\)?$/i.exec(value.trim());
+  if (complex !== null) return [Number(complex[1]), Number((complex[2] as string).replace(/\s/g, ""))];
+  const real = Number(value);
+  return value.trim() !== "" && Number.isFinite(real) ? [real] : undefined;
+}
+
+/** Whether two numbers, real or complex, are within 1e-9 of each other relative to their size. */
+function agreesInNorm(ours: MathJSON, theirs: string): boolean {
+  const [a, b] = [parts(ours), parts(theirs)];
+  if (a === undefined || b === undefined) return false;
+  const [ar, ai = 0] = a;
+  const [br, bi = 0] = b;
+  return Math.hypot(ar - br, ai - bi) <= 1e-9 * Math.max(Math.hypot(ar, ai), Math.hypot(br, bi));
+}
+
+/** Whether two values differ by a Gaussian unit (1, -1, i or -i). */
+function associates(ours: MathJSON, theirs: string): boolean {
+  const [a, b] = [parts(ours), parts(theirs)];
+  if (a === undefined || b === undefined) return false;
+  const [ar, ai = 0] = a;
+  const [br, bi = 0] = b;
+  const close = (x: number, y: number) => Math.abs(x - y) <= 1e-9 * Math.max(1, Math.abs(x), Math.abs(y));
+  return [
+    [br, bi],
+    [-br, -bi],
+    [-bi, br],
+    [bi, -br],
+  ].some(([r, i]) => close(r as number, ar) && close(i as number, ai));
+}
+
+/** Whether `theirs` (full precision) rounds to `ours` at the precision `N` was asked for: `d`
+ * significant figures, or for `{precision, accuracy}` that many decimals. */
+function roundsTo(spec: MathJSON, ours: MathJSON, theirs: string): boolean {
+  const mine = parts(ours);
+  const other = parts(theirs);
+  if (mine === undefined || other === undefined || mine.length !== other.length) return false;
+  const accuracy = Array.isArray(spec) && spec[0] === "List" ? spec[2] : undefined;
+  const digits = typeof spec === "number" ? spec : Array.isArray(spec) && spec[0] === "List" ? spec[1] : undefined;
+  return other.every((x, i) => {
+    let scale: number;
+    if (typeof accuracy === "number") scale = 10 ** accuracy;
+    else if (typeof digits === "number") scale = x === 0 ? 1 : 10 ** (digits - 1 - Math.floor(Math.log10(Math.abs(x))));
+    else return false;
+    return (
+      Math.abs(Math.round(x * scale) / scale - (mine[i] as number)) <= 1e-9 * Math.max(1, Math.abs(mine[i] as number))
+    );
+  });
+}
 
 /** The kinds a sample earns without a person: both sides decline, in different words, or the
  * other system ran out of time or memory. Anything else is a finding. */
-function autoKind(sample: MathJSON, ours: MathJSON, result: { value?: string; error?: string }): string | undefined {
+function autoKind(
+  sample: MathJSON,
+  ours: MathJSON,
+  result: { value?: string; error?: string },
+  source: string,
+  system: System,
+): string | undefined {
   const theirs = result.error ?? result.value ?? "";
+  // The crate takes scalars where ours threads over a list.
+  if (result.error !== undefined && /threading|::Vector/i.test(theirs)) return "threading";
+  // Julia's array literal promotes a Bool beside an Int, so `[false, -1]` prints `[0, -1]`.
+  if (result.error === undefined && boolsAsInts(ours, theirs)) return "convention";
+  // A double can't hold the exact huge argument that ours reduces exactly.
+  if (system === "rust" && result.error === undefined && callsTrig(sample) && hasHugeInteger(sample))
+    return "precision";
   if (result.error !== undefined && RESOURCE.test(theirs)) return "resource";
   // Our own worker hit its time or memory cap on this sample (an extreme edge the mutator
   // drew, not the other system): the same "nothing to compare" shrug, from our side.
@@ -279,21 +406,8 @@ function autoKind(sample: MathJSON, ours: MathJSON, result: { value?: string; er
   // the N/2 mapping's own note), so a low `d` disagrees whenever rounding to `d` significant
   // figures actually matters. Not a real disagreement when their full-precision answer
   // rounds to ours at the requested d.
-  if (
-    Array.isArray(sample) &&
-    sample[0] === "N" &&
-    sample.length === 3 &&
-    typeof sample[2] === "number" &&
-    typeof ours === "number" &&
-    result.error === undefined
-  ) {
-    const d = sample[2];
-    const theirsNum = Number(theirs);
-    if (Number.isFinite(theirsNum) && theirsNum !== 0) {
-      const scale = 10 ** (d - 1 - Math.floor(Math.log10(Math.abs(theirsNum))));
-      const rounded = Math.round(theirsNum * scale) / scale;
-      if (Math.abs(rounded - ours) <= 1e-9 * Math.max(1, Math.abs(ours))) return "convention";
-    }
+  if (result.error === undefined && Array.isArray(sample) && sample[0] === "N" && sample.length === 3) {
+    if (roundsTo(sample[2] as MathJSON, ours, theirs)) return "convention";
   }
   // Unevaluated: the sample itself, or for `N(f(…))` the inner call.
   const inner = Array.isArray(sample) && sample[0] === "N" ? sample[1] : sample;
@@ -309,11 +423,29 @@ function autoKind(sample: MathJSON, ours: MathJSON, result: { value?: string; er
   // on their side is also a decline, whatever its message happens to say (an internal
   // IndexError from a table lookup, `ComplexResult: logarithm of a negative number`, …) — a
   // recognizable POLE message on top of that is just the common case, not a requirement.
-  if (oursDeclines && (theirsDeclines || result.error !== undefined)) return "undefined-form";
+  // A list element that is a non-answer on both sides, each in its own spelling.
+  if (
+    /"(Indeterminate|NaN|ComplexInfinity)"/.test(JSON.stringify(ours)) &&
+    /\b(nan|zoo|oo)\b|NaN|Infinity/i.test(theirs)
+  )
+    return "undefined-form";
+  // Ours stayed unevaluated at some element of a list or sum (a call to a head of the sample,
+  // left as it came), which counts as declining the whole.
+  const partlyDeclines = !oursDeclines && leavesCallOf(ours, sample);
+  if ((oursDeclines || partlyDeclines) && (theirsDeclines || result.error !== undefined)) return "undefined-form";
   // We already gave up (stayed symbolic, or answered ComplexInfinity/NaN/…) and they
   // cleanly computed something: not a pole on either side, just a capability boundary of
   // ours (an order or a branch we haven't extended this far).
-  if (oursDeclines) return "unevaluated";
+  if (oursDeclines || partlyDeclines) return "unevaluated";
+  // They echo a call of the very function asked (`lucas(1/2)`, `Mod(1 + 4*I, 2)`): theirs doesn't
+  // extend to this argument, where ours answers.
+  if (result.error === undefined && echoesCall(theirs, source, sample)) return "domain";
+  // Agreement to the size of the whole value: a component far below the dominant one (the
+  // real part beside a 1e30 pole term) is rounding noise to a system that keeps it.
+  if (result.error === undefined && agreesInNorm(ours, theirs)) return "precision";
+  // GCD and LCM are defined up to a unit, and a system may pick another associate.
+  if (result.error === undefined && callHeads(sample).has("LCM") && associates(ours, theirs)) return "convention";
+  if (result.error === undefined && callHeads(sample).has("GCD") && associates(ours, theirs)) return "convention";
   // They refuse the argument (a pole they haven't continued past, or their own domain
   // error) where ours answers: a domain difference. `theirsDeclines` already covers a pole
   // spelled as an error (ValueError, ZeroDivisionError, "complex infinity", …) or a bare
@@ -322,6 +454,54 @@ function autoKind(sample: MathJSON, ours: MathJSON, result: { value?: string; er
   if (theirsDeclines || (result.error !== undefined && DOMAIN.test(theirs))) return "domain";
   return undefined;
 }
+
+const callsTrig = (expr: MathJSON): boolean =>
+  [...callHeads(expr)].some((head) => ["Sin", "Cos", "Tan"].includes(head));
+/** Whether an integer literal, or a power of integer literals, passes the exact range of a double. */
+const hasHugeInteger = (expr: MathJSON): boolean => {
+  if (typeof expr === "number") return Math.abs(expr) > 2 ** 53;
+  if (!Array.isArray(expr)) return false;
+  const [head, ...ops] = expr as readonly MathJSON[];
+  if (head === "Power" && typeof ops[0] === "number" && typeof ops[1] === "number")
+    return Math.abs(ops[0]) ** ops[1] > 2 ** 53;
+  return ops.some(hasHugeInteger);
+};
+
+/** Heads that only combine values: a call to one is not a function left unevaluated. */
+const COMBINING = new Set([
+  "List",
+  "N",
+  "Add",
+  "Subtract",
+  "Multiply",
+  "Divide",
+  "Power",
+  "Negate",
+  "Rational",
+  "Complex",
+  "Sqrt",
+]);
+const callHeads = (expr: MathJSON, into = new Set<string>()): Set<string> => {
+  if (Array.isArray(expr) && typeof expr[0] === "string") {
+    into.add(expr[0]);
+    for (const op of expr.slice(1)) callHeads(op as MathJSON, into);
+  }
+  return into;
+};
+/** Whether `ours` holds a call to one of the sample's own (non-combining) heads. */
+const leavesCallOf = (ours: MathJSON, sample: MathJSON): boolean => {
+  const asked = callHeads(sample);
+  return [...callHeads(ours)].some((head) => asked.has(head) && !COMBINING.has(head));
+};
+/** Whether `theirs` still contains a function call the emitted source made. */
+const echoesCall = (theirs: string, source: string, sample: MathJSON): boolean => {
+  const functions = new Set([
+    ...[...source.matchAll(/([A-Za-z_]\w*)\(/g)].map((m) => m[1] as string),
+    ...[...callHeads(sample)].filter((head) => !COMBINING.has(head)),
+  ]);
+  for (const name of ["N", "S", "Rational", "Integer", "Float", "Symbol", "Abs", "sqrt"]) functions.delete(name);
+  return [...functions].some((name) => theirs.includes(`${name}(`));
+};
 
 interface Finding {
   readonly system: System;
@@ -350,7 +530,23 @@ for (const system of systems) {
     .filter((sample) => expectedOf.has(sample.id))
     .map((sample) => ({ sample, out: emit(sample.expr, system) }))
     .filter((row) => row.out.ok);
-  const sources = runnable.map((row) => (row.out as { source: string }).source);
+  // A free symbol on a symbolic system is judged as an identity (does the difference
+  // vanish?), as the scan does: two equal closed forms can be spelled differently.
+  const symbolicMode: boolean[] = [];
+  // Free symbols whose identity can't be checked because our own answer doesn't emit there.
+  const unchecked = new Set<number>();
+  const sources = runnable.map((row, index) => {
+    const plain = (row.out as { source: string }).source;
+    const freeSymbols = row.out.ok ? row.out.freeSymbols : undefined;
+    const agreement =
+      freeSymbols !== undefined && freeSymbols.length > 0 && isSymbolicSystem(system)
+        ? symbolicAgreementSource(system, row.sample.expr, expectedOf.get(row.sample.id) as MathJSON, freeSymbols)
+        : undefined;
+    symbolicMode.push(agreement !== undefined);
+    if (agreement === undefined && freeSymbols !== undefined && freeSymbols.length > 0 && isSymbolicSystem(system))
+      unchecked.add(index);
+    return agreement ?? plain;
+  });
   process.stderr.write(`${system}: ${sources.length} samples — running…\n`);
   const results = await runIn(system, sources, { deadline: Date.now() + LANE_MINUTES * 60_000 });
   let agree = 0;
@@ -362,7 +558,12 @@ for (const system of systems) {
     const result = results[i] as { value?: string; numeric?: string; error?: string };
     const expected = expectedOf.get(row.sample.id) as MathJSON;
     // The comparison evaluates in-process (an uncapped CE call can spin), so it runs capped too.
-    const judged = result.error !== undefined ? "error" : await verdicts.verdict(system, expected, result);
+    const judged =
+      result.error !== undefined
+        ? "error"
+        : symbolicMode[i]
+          ? interpretSymbolicAgreement(result.value ?? "")
+          : await verdicts.verdict(system, expected, result);
     const slowCompare = judged === "timeout";
     const verdict: Verdict | "error" = slowCompare ? "error" : judged;
     const error = slowCompare ? "TimeoutError: comparison" : result.error;
@@ -382,12 +583,19 @@ for (const system of systems) {
       continue;
     }
     const baseline = row.sample.template.others[system];
-    // The same way the template already differs, and that is classified: nothing new.
-    if (baseline !== undefined && baseline.verdict === verdict && baseline.kind !== undefined) {
+    // The same way the template already differs, and that is classified: nothing new. Or a
+    // classified row of the same entry covers the region this sample falls in.
+    const entryName = row.sample.template.id.slice(0, row.sample.template.id.indexOf("/"));
+    if (
+      (baseline !== undefined && baseline.verdict === verdict && baseline.kind !== undefined) ||
+      regions.get(`${entryName}/${system}/${verdict}`)?.some((rows) => covers(rows, region(row.sample.expr)))
+    ) {
       inherited++;
       continue;
     }
-    const auto = autoKind(row.sample.expr, expected, result);
+    const auto = unchecked.has(i)
+      ? "unchecked"
+      : autoKind(row.sample.expr, expected, result, (row.out as { source: string }).source, system);
     if (auto !== undefined) {
       autos.set(auto, (autos.get(auto) ?? 0) + 1);
       automatic++;

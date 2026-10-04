@@ -1,5 +1,5 @@
 id	in
-list-10-20-30-plus-list-1-2-3	([10, 20, 30] + [1, 2, 3])
+list-10-20-30-plus-list-1-2-3	enumeratio_broadcast(lambda _a0, _a1: (_a0 + _a1), [10, 20, 30], [1, 2, 3])
 x-plus-list-1-2-3	
 list-a-b-plus-list-c-d	
 x-plus-list-a-b-c	

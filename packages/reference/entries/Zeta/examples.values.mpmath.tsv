@@ -2,7 +2,7 @@ id	in	out	verdict
 zeta-2	zeta(2)	1.64493406684822643647241516665	
 zeta-4	zeta(4)	1.08232323371113819151600369654	
 zeta-6	zeta(6)	1.01734306198444913971451792979	
-threads-over-a-list-reducing-every-element-to	zeta([-1, -2, -3])	TypeError: cannot create mpf from [-1, -2, -3]	error
+threads-over-a-list-reducing-every-element-to	[zeta(-1), zeta(-2), zeta(-3)]	TypeError: cannot create mpf from [-1, -2, -3]	error
 apery-s-constant-zeta-3-numerically	(zeta(3))	1.20205690315959428539973816151	
 a-machine-precision-argument	zeta(1.5)	2.61237534868548834334856756792	
 zeta-8-pi-8-9450	zeta(8)	1.00407735619794433937868523851	
@@ -11,7 +11,7 @@ zeta-symbolic-s-under-n-stays-symbolic
 zeta-half-stays-symbolic-until-n	zeta((mpf(1)/2))	-1.46035450880958681288949915252	
 zeta-complex-argument-stays-symbolic-until-n	zeta(mpc(2, 1))	(1.15035570325490267174284993474 - 0.437530865919607881117527898593j)	
 n-zeta-complex-2-plus-i	(zeta(mpc(2, 1)))	(1.15035570325490267174284993474 - 0.437530865919607881117527898593j)	
-zeta-threads-over-mixed-exact-and-inexact-list	zeta([2, mpc(0.5, 14)])	TypeError: cannot create mpf from [2, mpc(real='0.5', imag='14.0')]	error
+zeta-threads-over-mixed-exact-and-inexact-list	[zeta(2), zeta(mpc(0.5, 14))]	TypeError: cannot create mpf from [2, mpc(real='0.5', imag='14.0')]	error
 zeta-3-0-drops-pole-term-like-s-2	zeta(3, 0)	ZeroDivisionError: 	error
 zeta-2-neg-2-stays-finite-unlike-hurwitzzeta	(zeta(2, -2))	ZeroDivisionError: 	error
 on-the-critical-line-zeta-1-2-14i-0-02224-0	(zeta(mpc(0.5, 14)))	(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)	
@@ -33,9 +33,9 @@ uncertainty-in-a-propagated-with-partial-a-zeta
 to-40-significant-digits-every-one-correctly	(zeta(3))	1.20205690315959428539973816151	
 n-zeta-5-over-4-50	(zeta((mpf(5)/4)))		
 n-zeta-3-2-50	(zeta(3, 2))		
-zeta-2-list-list-1-over-2-0-list-0-3-over-2	zeta(2, [[(mpf(1)/2), 0], [0, (mpf(3)/2)]])		
+zeta-2-list-list-1-over-2-0-list-0-3-over-2	[[zeta(2, (mpf(1)/2)), zeta(2, 0)], [zeta(2, 0), zeta(2, (mpf(3)/2))]]		
 zeta-4-5	zeta(4, 5)		
-zeta-list-1-2-3-4	zeta([1, 2, 3, 4])		
+zeta-list-1-2-3-4	[zeta(1), zeta(2), zeta(3), zeta(4)]		
 matrixfunction-function-zeta-2-1-1-list-list-1			
 the-probability-that-two-random-positive			
 certified-digits-zeta-3	(zeta(3))	1.20205690315959428539973816151	
@@ -60,6 +60,7 @@ zeta-4-1	zeta(4, 1)
 zeta-4-2	zeta(4, 2)		
 sum-zeta-2k-times-zeta-neg-2-times-k-plus-4-k-1			
 sum-zeta-2k-times-zeta-neg-2-times-k-plus-6-k-1			
+zeta-0-0-the-n-a-0-term-is-0-0-kept	zeta(0, 0)	0.5	
 odd-integers-geq-3-have-no-known-closed-form	zeta(3)	1.20205690315959428539973816151	
 zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s	(zeta(3, (mpf(-1)/2)))	0.41439832211715999779816713058	disagree
 zeta-1-2-35-12-exactly-but-at-a-negative-a-this	(zeta(-1, -2))	-3.08333333333333333333333333333	disagree

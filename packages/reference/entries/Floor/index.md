@@ -40,6 +40,7 @@ bindings:
     form: sympy
     template: floor($1)
     arity: 1
+    threadArg: 1
   - origin: mapped
     form: mpmath
     template: floor($1)

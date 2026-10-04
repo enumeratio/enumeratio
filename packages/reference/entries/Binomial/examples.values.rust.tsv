@@ -51,4 +51,5 @@ a-negative-n-zero-k-binom-neg-1-0	binomial(n(-1), n(0))	0	disagree
 a-negative-k-past-n-binom-100-neg-50	binomial(n(100), n(-50))	1	disagree
 symmetry-doesn-t-hold-across-mismatched-n	equal(binomial(n(2), n(6)), binomial(n(-18), n(2)))	true	disagree
 not-pascal-s-rule-across-mismatched-n	equal((binomial(n(-23), n(2)) + binomial(n(-2), n(3))), binomial(n(-20), n(6)))	true	disagree
+both-arguments-negative-binom-1-7	binomial(n(-1), n(-7))	1	
 the-central-binomial-coefficient-binom-100-50	binomial(n(100), n(50))	100891344545564193334812497256	

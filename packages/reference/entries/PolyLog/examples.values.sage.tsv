@@ -72,7 +72,7 @@ polylog-rim-theta-2p4-s-0p5-z	N(polylog(0.5, (-0.7373937155412454 + 0.6754631805
 polylog-rim-theta-2p4-s-1-z	N(polylog(1, (-0.7373937155412454 + 0.675463180551151*I)))	-0.622766653117113 + 0.370796326794897*I	
 polylog-rim-theta-2p4-s-1p5-z	N(polylog(1.5, (-0.7373937155412454 + 0.675463180551151*I)))	-0.659486088090073 + 0.440335525424700*I	
 order-one-half-at-1-is-zeta-one-half	N(polylog((1/2), 1))	-1.46035450880959	
-threads-over-a-list-of-arguments	polylog(2, [0.5, 0.25])	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error
+threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	2.78966033238278 - 1.36380370053935*I	
 complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	
 past-z-1-the-continuation-is-complex	polylog(2, 2.5)	2.42079080656593 - 2.87861223180826*I	
@@ -93,7 +93,7 @@ image-order-neg-3-over-neg-0p5-to-0p2
 image-order-5-over-neg-0p99-to-0p99			
 polylog-0-5	polylog(0, 5)		
 n-polylog-1-1-over-3-50	N(polylog(1, (1/3)))		
-polylog-2-list-list-1-over-2-0-list-0-1-over-2	polylog(2, [[(1/2), 0], [0, (1/2)]])		
+polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, (1/2)), polylog(2, 0)], [polylog(2, 0), polylog(2, (1/2))]]		
 polylog-1-0	polylog(1, 0)		
 d-polylog-n-z-z	diff(polylog(SR.var("n"), SR.var("z")), SR.var("z"))		
 matrixfunction-function-polylog-2-1-1-list-list			

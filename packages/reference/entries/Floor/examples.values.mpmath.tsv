@@ -2,7 +2,7 @@ id	in	out	verdict
 floor-7-over-2	floor((mpf(7)/2))	3.0	
 floor-3p7	floor(3.7)	3.0	
 integers-pass-through-unchanged	floor(5)	5.0	
-threads-element-wise-over-a-list	floor([1.2, -1.2, 3.7])	TypeError: cannot create mpf from [1.2, -1.2, 3.7]	error
+threads-element-wise-over-a-list	[floor(1.2), floor(-1.2), floor(3.7)]	TypeError: cannot create mpf from [1.2, -1.2, 3.7]	error
 floor-2p4	floor(2.4)	2.0	
 floor-2p6	floor(2.6)	2.0	
 floor-2p7	floor(2.7)	2.0	
@@ -16,7 +16,7 @@ a-second-argument-floors-to-a-multiple-of-it-the
 the-step-needn-t-be-an-integer-3-5-cdot-lfloor			
 nor-rational-2-pi-e-approx-3-57-floors-to-the			
 floors-the-real-and-imaginary-parts-separately	floor(mpc(5.37, -1.3))	(5.0 - 2.0j)	
-floor-list-list-1-over-2-neg-1-list-0-neg-1-over	floor([[(mpf(1)/2), -1], [0, (mpf(-1)/2)]])		
+floor-list-list-1-over-2-neg-1-list-0-neg-1-over	[[floor((mpf(1)/2)), floor(-1)], [floor(0), floor((mpf(-1)/2))]]		
 matrixfunction-floor-list-list-1-over-2-neg-1			
 floor-0	floor(0)		
 floor-positiveinfinity	floor(inf)		

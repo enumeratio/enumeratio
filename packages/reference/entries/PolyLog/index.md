@@ -34,6 +34,7 @@ bindings:
     form: sympy
     template: polylog($1, $2)
     arity: 2
+    threadArg: 2
   - origin: mapped
     form: mpmath
     template: polylog($1, $2)
