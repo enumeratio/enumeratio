@@ -68,9 +68,8 @@ function isEvenPermutation(perm: number[], n: number): boolean {
 // ─── LehmerCodes(n): the inversion tables, in their own order: read as factoradic numbers, which
 // is what makes the order implied rather than chosen. They match Permutations' lex order only
 // because that is the order we chose for Permutations. Element = LehmerCode(perm) ──
-// (length n−1, trailing implied 0 dropped, same convention ./kernels.ts already uses).
-function permutationFromLehmerCode(code: number[], n: number): number[] {
-  const L = [...code, 0];
+// (length n, the last entry always 0).
+function permutationFromLehmerCode(L: number[], n: number): number[] {
   const avail = Array.from({ length: n }, (_, i) => i + 1);
   const res: number[] = [];
   for (let i = 0; i < n; i++) {
@@ -81,7 +80,7 @@ function permutationFromLehmerCode(code: number[], n: number): number[] {
   return res;
 }
 function isValidLehmerCode(code: number[], n: number): boolean {
-  if (!Array.isArray(code) || code.length !== Math.max(n - 1, 0)) return false;
+  if (!Array.isArray(code) || code.length !== n) return false;
   for (let i = 0; i < code.length; i++) {
     const v = code[i];
     if (!Number.isInteger(v) || v < 0 || v > n - 1 - i) return false;
@@ -163,7 +162,7 @@ function kInversionUnrank(n: number, k: number, r: number): number[] {
     code.push(d);
     remaining -= d;
   }
-  return permutationFromLehmerCode(code, n);
+  return permutationFromLehmerCode([...code, 0], n);
 }
 function kInversionRank(perm: number[], n: number): number {
   const code = LehmerCode(perm);
