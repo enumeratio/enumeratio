@@ -83,5 +83,13 @@ export {
 } from "./registry.ts";
 export { type Declarable, type DefinitionAttribute, declarationOf } from "./declaration.ts";
 export { type BoxTemplate, type LatexData, type NotationData, notationProblem, slotsOf } from "./notation-data.ts";
+export {
+  assembleManifest,
+  type EngineHeads,
+  type IndexedRecord,
+  type IndexedSignature,
+  type Manifest,
+  type PackageIndex,
+} from "./assemble.ts";
 export { notationSpecifier, type PackageField } from "./package-field.ts";
 export { SYSTEM_VERSION } from "./system.ts";
