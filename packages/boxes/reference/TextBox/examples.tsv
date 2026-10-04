@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+literal	Basic		[TextBox, "'otherwise'"]	[TextBox, "'otherwise'"]	a box is inert: it evaluates to itself

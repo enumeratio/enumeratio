@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+residues-mod-16-and-625	Basic		[IntegerDigits, 42, [ResidueNumerals, [List, 16, 625]]]	[List, 10, 42]	$42 \bmod 16$ and $42 \bmod 625$: no place values
+residues-mod-7-and-11	Basic		[IntegerDigits, 100, [ResidueNumerals, [List, 7, 11]]]	[IntegerDigits, 100, [ResidueNumerals, [List, 7, 11]]]	$100 \bmod 7$ and $100 \bmod 11$

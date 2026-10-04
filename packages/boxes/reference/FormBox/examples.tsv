@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+tex-island	Basic		[FormBox, "'x^2'", TeXForm]	[FormBox, "'x^2'", TeXForm]	TeX held as written, never parsed or evaluated; the box is inert

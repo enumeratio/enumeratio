@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-n-5	Basic		[Count, [PruferSequences, 5]]	125	$5^{3} = 125$ labelled trees on $5$ vertices: [[Count]] of the sequences of length $n-2$
+all-for-n-3	Basic		[Take, [PruferSequences, 3], 3]	[List, [PruferSequence, [List, 1]], [PruferSequence, [List, 2]], [PruferSequence, [List, 3]]]	The Prüfer sequences of the $3$ labelled trees on $3$ vertices

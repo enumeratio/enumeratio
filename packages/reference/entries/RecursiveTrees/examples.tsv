@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-n-5	Basic		[Count, [RecursiveTrees, 5]]	24	$(n-1)!$ recursive trees on $n$ vertices
+all-for-n-3	Basic		[Take, [RecursiveTrees, 3], 2]	[List, [RootedLabeledTree, [List, 0, 1, 1]], [RootedLabeledTree, [List, 0, 1, 2]]]	The recursive trees on $3$ vertices, as parent lists

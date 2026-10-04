@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+lr-is-primitive	Basic		[IsPrimitiveClass, "'LR'"]	True	The shortest closed geodesic
+lrlr-repeats-lr	Basic		[IsPrimitiveClass, "'LRLR'"]	False	$LRLR=(LR)^2$

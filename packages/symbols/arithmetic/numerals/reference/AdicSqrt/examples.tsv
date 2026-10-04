@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+sqrt-of-2-in-z7	Basic		[AdicSqrt, [AdicNumeral, 7, 2], 6]	[AdicNumeral, 7, 38181, 6]	$\sqrt{2} \in \mathbb{Z}_7$, to 6 digits (2 is a quadratic residue mod 7)
+sqrt-of-minus-7-in-z2	Scope		[AdicSqrt, [AdicNumeral, 2, -7], 10]	[AdicNumeral, 2, 181, 10]	$-7 \equiv 1 \pmod 8$, so it has a square root in $\mathbb{Z}_2$
+expansion-of-the-root	Scope		[AdicExpansion, [AdicSqrt, [AdicNumeral, 7, 2], 6]]	"'…216213 + O(7^6)'"	The digits of $\sqrt{2}$, as [[AdicExpansion]] writes them

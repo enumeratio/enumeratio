@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+path-rlr	Basic		[FromSternBrocotPath, "'RLR'"]	[Rational, 5, 3]	The inverse of [[SternBrocotPath]]$(5,3)$

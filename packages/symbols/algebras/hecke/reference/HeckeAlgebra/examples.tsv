@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out
+dimension	Basic		[AlgebraDimension, [HeckeAlgebra, 4]]	24	$4!$, as for $S_4$	AlgebraDimension(HeckeAlgebra(4))	24	\mathrm{AlgebraDimension}(\mathrm{HeckeAlgebra}(4))	24	\dim(H_4(q))	24	AlgebraDimension(HeckeAlgebra(4))	24	<AlgebraDimension><HeckeAlgebra>4</HeckeAlgebra></AlgebraDimension>	<ToExpression>24</ToExpression>
+basis	Basic		[Basis, [HeckeAlgebra, 2]]	[List, [HeckeT, [List, 1, 2]], [HeckeT, [List, 2, 1]]]											

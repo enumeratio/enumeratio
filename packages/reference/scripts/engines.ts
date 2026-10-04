@@ -12,6 +12,7 @@ import { declareAnalytic, declareFractals } from "@enumeratio/analytic";
 import { declareBraid } from "@enumeratio/braid";
 import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
 import { declareDiagrams } from "@enumeratio/diagram";
+import { declareGeometric } from "@enumeratio/geometric";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra";
 import { declareHecke } from "@enumeratio/hecke";
 import { declareHopf } from "@enumeratio/hopf";
@@ -25,7 +26,13 @@ import { declareResidues } from "@enumeratio/residues";
 import { declareBoxes } from "@enumeratio/boxes";
 import type { PackageNotation } from "@enumeratio/boxes";
 import { type Library, NOTATIONS } from "@enumeratio/manifest";
-import { declareCarrierElement, declareCarrierPlurals, declareStructures } from "@enumeratio/structures";
+import {
+  declareCarrierElement,
+  declareCarrierPlurals,
+  declareCompose,
+  declareRestricted,
+  declareStructures,
+} from "@enumeratio/structures";
 
 /** Every library we ship BESIDES `@enumeratio/evaluation`, in the order the reference
  * tests declare them. Split out from `DECLARATIONS` so `configure` below (the `setup`
@@ -37,6 +44,7 @@ const LIBRARY_DECLARATIONS = [
   declareAnalytic,
   declareFractals,
   declareHypercomplex,
+  declareGeometric,
   declareDiagrams,
   // Carriers, the families typed by them, and the plural type-spaces and Element -- one call
   // (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), so the
@@ -80,6 +88,8 @@ const LIBRARY_DECLARATIONS = [
     declareCarrierPlurals(ce, CARRIERS);
     declareCarrierElement(ce, CARRIERS);
   },
+  declareRestricted,
+  declareCompose,
 ];
 
 /** Every library we ship, in the order the reference tests declare them. */
@@ -100,6 +110,7 @@ export const LIBRARIES: readonly Library<ComputeEngine>[] = [
     },
   },
   { name: "hypercomplex", declare: declareHypercomplex },
+  { name: "geometric", declare: declareGeometric },
   { name: "diagram", declare: declareDiagrams },
   {
     name: "combinatorics",

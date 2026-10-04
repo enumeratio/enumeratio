@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+one-crossing-on-three-strands	Basic		[BraidComponents, [Braid, 3, [List, 1]]]	2	The closure of $\sigma_1$ in $B_3$ is a two-component link

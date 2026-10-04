@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+primorial-digits-of-100	Basic		[IntegerDigits, 100, PrimorialNumerals]	[List, 3, 1, 2, 0]	$100 = 3\cdot 30 + 1\cdot 6 + 2\cdot 2 + 0$ (places $30, 6, 2, 1$)

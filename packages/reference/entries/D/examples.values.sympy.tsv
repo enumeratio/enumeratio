@@ -1,0 +1,4 @@
+id	in
+of-a-product	diff(((S(Symbol("x"))**2) * sin(Symbol("x"))), Symbol("x"))
+second-derivative	diff((S(Symbol("x"))**3), Symbol("x"), Symbol("x"))
+of-a-head-we-declare	

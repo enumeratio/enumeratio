@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+hyperbolic	Basic		[ModularKind, [ModularMatrix, 1, 1, 1, 2]]	"'Hyperbolic'"	Trace $3$, so $|\mathrm{tr}|>2$
+parabolic	Basic		[ModularKind, [ModularMatrix, 1, 1, 0, 1]]	"'Parabolic'"	Trace $2$

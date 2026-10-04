@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+cycle-of-1-1-1	Basic		[FormCycle, [QuadraticForm, 1, 1, -1]]	[List, [QuadraticForm, 1, 1, -1], [QuadraticForm, -1, 1, 1]]	The cycle has even length

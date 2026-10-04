@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+its-alexander-polynomial	Basic		[AlexanderPolynomial, [TorusKnot, 3, 2]]	[Add, [Power, t, 2], [Negate, t], 1]	$T(3,2)$ is the trefoil
+its-jones-polynomial	Basic		[JonesPolynomial, [TorusKnot, 2, 5]]	[Add, [Negate, [Power, t, -7]], [Negate, [Power, t, -5]], [Power, t, -6], [Power, t, -4], [Power, t, -2]]	

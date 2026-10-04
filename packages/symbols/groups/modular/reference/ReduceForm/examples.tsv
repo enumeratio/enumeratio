@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+reduce-2-5-1	Basic		[ReduceForm, [QuadraticForm, 2, 5, 1]]	[QuadraticForm, 1, 3, -2]	Walks [[FormRho]] until Gauss's condition holds

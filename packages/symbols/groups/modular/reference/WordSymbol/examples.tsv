@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+four-rights-one-left	Basic		[WordSymbol, "'LRRRR'"]	3	$4$ $R$s minus $1$ $L$

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+divisor-pair	Basic		[PosetZeta, [DivisorLattice, 12], 2, 12]	1	$2\mid 12$
+not-comparable	Basic		[PosetZeta, [DivisorLattice, 12], 3, 4]	0	$3\nmid 4$

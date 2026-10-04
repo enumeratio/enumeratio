@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+dimension-over-a-chain	Basic		[AlgebraDimension, [IncidenceAlgebra, [Chain, 4]]]	10	$\binom{5}{2}$ intervals
+dimension-over-b-3	Basic		[AlgebraDimension, [IncidenceAlgebra, [BooleanLattice, 3]]]	27	$3^3$ intervals

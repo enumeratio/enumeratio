@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+its-discriminant	Basic		[FormDiscriminant, [QuadraticForm, 1, 1, -1]]	5	$x^2+xy-y^2$ has discriminant $5$

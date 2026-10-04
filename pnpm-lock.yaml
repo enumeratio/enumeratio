@@ -786,6 +786,9 @@ importers:
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats
+      '@enumeratio/geometric':
+        specifier: workspace:*
+        version: link:../symbols/algebras/geometric
       '@enumeratio/groupalgebra':
         specifier: workspace:*
         version: link:../symbols/algebras/groupalgebra

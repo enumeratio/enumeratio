@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+sigma1-then-sigma2	Basic		[BraidProduct, [Braid, 3, [List, 1]], [Braid, 3, [List, 2]]]	[Braid, 3, [List, 1, 2]]	Words concatenate

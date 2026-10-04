@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+from-the-orbit-basis	Basic		[InDiagramBasis, [OrbitDiagram, [List, [List, 1], [List, -1]]]]	[Add, [Negate, [Diagram, [List, [List, 1, -1]]]], [Diagram, [List, [List, 1], [List, -1]]]]	Möbius inversion over the partition lattice

@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+one-half-and-two-thirds	Basic		[FareyNeighbours, 1, 2, 2, 3]	True	$|1\cdot 3-2\cdot 2| = 1$
+one-half-and-three-fifths	Basic		[FareyNeighbours, 1, 2, 3, 5]	True	$|1\cdot 5-2\cdot 3| = 1$
+one-half-and-three-sevenths	Properties		[FareyNeighbours, 1, 2, 3, 7]	True	$|1\cdot 7-2\cdot 3| = 1$

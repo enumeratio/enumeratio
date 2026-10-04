@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-lattice-paths-3-2	Basic		[Count, [LatticePaths, 3, 2]]	10	$\binom{5}{3} = 10$
+lattice-paths-2-2	Basic		[Take, [LatticePaths, 2, 2], 6]	[List, [List, 1, 1, 0, 0], [List, 1, 0, 1, 0], [List, 0, 1, 1, 0], [List, 1, 0, 0, 1], [List, 0, 1, 0, 1], [List, 0, 0, 1, 1]]	$1$ = north

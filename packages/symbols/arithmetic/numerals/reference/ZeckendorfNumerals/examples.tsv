@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+zeckendorf-digits-of-100	Basic		[IntegerDigits, 100, ZeckendorfNumerals]	[List, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0]	$100 = 89 + 8 + 3$: no two adjacent ones
