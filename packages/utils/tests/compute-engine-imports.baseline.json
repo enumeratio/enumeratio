@@ -6,7 +6,6 @@
   "packages/symbols/algebras/hecke/src/notation.ts",
   "packages/symbols/algebras/hecke/tests/heads.test.ts",
   "packages/symbols/algebras/hopf/src/declare.ts",
-  "packages/symbols/algebras/hopf/src/notation.ts",
   "packages/symbols/algebras/hopf/tests/heads.test.ts",
   "packages/symbols/algebras/hypercomplex/src/algebra.ts",
   "packages/symbols/algebras/hypercomplex/src/declare.ts",
