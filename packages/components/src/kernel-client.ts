@@ -122,12 +122,15 @@ export async function translate(request: RemoteRequest): Promise<{ json: unknown
 
 const notebookIds = new WeakMap<Element, number>();
 let nextNotebook = 1;
+// The kernel is a SharedWorker every tab reaches: without the tab in the name, two tabs'
+// first notebooks would share one session, and each other's bindings.
+const TAB = Math.random().toString(36).slice(2);
 
 /** The session a notebook's cells share in the page's kernel. */
 export function notebookSession(host: Element): string {
   let id = notebookIds.get(host);
   if (id === undefined) notebookIds.set(host, (id = nextNotebook++));
-  return `notebook:${id}`;
+  return `notebook:${TAB}:${id}`;
 }
 
 /** Tell the page's kernel to forget `sessionId` (a notebook that left the page). */

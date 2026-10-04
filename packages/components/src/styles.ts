@@ -280,6 +280,21 @@ notatio-notebook { display: block; }
 }
 .notatio-notebook .nb-cell:hover .nb-remove { opacity: 1; }
 .nb-remove:hover { color: var(--vp-c-danger-1, #c0392b); }
+/* Reset: shown once the reader's cells differ from the seed. */
+.notatio-notebook { position: relative; }
+.nb-reset {
+  position: absolute;
+  top: -1.6rem;
+  right: 0;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--vp-c-divider, #e2e2e2);
+  border-radius: 4px;
+  background: none;
+  color: var(--vp-c-text-2, #666);
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.nb-reset:hover { color: var(--vp-c-text-1, #222); border-color: var(--vp-c-text-3, #aaa); }
 /* <notatio-code>: a small source box with a language tag. */
 notatio-code { display: inline-block; vertical-align: middle; max-width: 100%; }
 .notatio-code {
