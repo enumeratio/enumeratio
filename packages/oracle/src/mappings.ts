@@ -47,10 +47,54 @@ export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage", "
  * `mappings-migration.test.ts`). */
 export const MAPPINGS: readonly Mapping[] = MAPPINGS_DATA;
 
-/** The mapping that applies to a head at a given arity, preferring the arity-specific one. */
-export function mappingFor(head: string, arity: number): Mapping | undefined {
-  const rows = MAPPINGS.filter((mapping) => mapping.head === head);
-  return rows.find((mapping) => mapping.arity === arity) ?? rows.find((m) => m.arity === undefined);
+/**
+ * The mapping that applies to a head at a given arity, preferring the arity-specific one; `extra`
+ * (a library's own, `mappingsFromBindings`) before the system's.
+ */
+export function mappingFor(head: string, arity: number, extra: readonly Mapping[] = []): Mapping | undefined {
+  for (const table of [extra, MAPPINGS]) {
+    const rows = table.filter((mapping) => mapping.head === head);
+    const found = rows.find((mapping) => mapping.arity === arity) ?? rows.find((m) => m.arity === undefined);
+    if (found !== undefined) return found;
+  }
+  return undefined;
+}
+
+/** A binding row of a head's record, as far as a mapping reads it. */
+interface MappedBinding {
+  readonly origin: string;
+  readonly form: string;
+  readonly arity?: number;
+  readonly template?: string;
+  readonly threadArg?: number;
+  readonly note?: string;
+}
+
+/**
+ * The mappings each head's `origin: mapped` bindings make, one row per head and arity, sorted. A
+ * binding with no `template` is prose about a system, not a row. `name` is the head as an
+ * expression calls it: a library's `ns.Name`.
+ */
+export function mappingsFromBindings(
+  entries: readonly { readonly name: string; readonly bindings?: readonly MappedBinding[] }[],
+): Mapping[] {
+  const byKey = new Map<
+    string,
+    { head: string; arity?: number; emit: Record<string, string>; threadArg?: number; note?: string }
+  >();
+  for (const entry of entries)
+    for (const b of entry.bindings ?? []) {
+      if (b.origin !== "mapped" || b.template === undefined) continue;
+      const key = `${entry.name}\0${b.arity ?? ""}`;
+      const row = byKey.get(key) ?? { head: entry.name, arity: b.arity, emit: {} };
+      row.emit[b.form] = b.template;
+      if (b.threadArg !== undefined) row.threadArg = b.threadArg;
+      if (b.note !== undefined) row.note = b.note;
+      byKey.set(key, row);
+    }
+  return [...byKey.values()].toSorted(
+    (a, b) => a.head.localeCompare(b.head) || (a.arity ?? -1) - (b.arity ?? -1),
+  ) as Mapping[];
 }
 
 /** Every head this table says anything about. */

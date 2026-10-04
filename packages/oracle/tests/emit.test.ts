@@ -2,7 +2,7 @@ import { expect, test } from "vite-plus/test";
 import { compare, compareCombination, linearCombination, normalise } from "../src/compare.ts";
 import { emit, unmappedHeads } from "../src/emit.ts";
 import { fromWolfram } from "@enumeratio/wolfram";
-import { MAPPINGS, mappingFor } from "../src/mappings.ts";
+import { MAPPINGS, mappingFor, mappingsFromBindings } from "../src/mappings.ts";
 import { SYSTEMS, wiredSystems } from "../src/systems.ts";
 
 test("a mapping is chosen by signature, not by name alone", () => {
@@ -448,5 +448,28 @@ test("compute-engine's canonical Function and iterator forms emit as Wolfram wri
   expect(wolfram(["Sum", ["Power", "k", 2], ["Limits", "k", "Nothing", 7]])).toMatchObject({
     ok: true,
     source: "Sum[Power[k, 2], List[k, 7]]",
+  });
+});
+
+test("a library's heads emit through its own mappings, called by namespace", () => {
+  const fig = mappingsFromBindings([
+    {
+      name: "fig.Polygonal",
+      bindings: [
+        { origin: "mapped", form: "wolfram", arity: 1, template: "PolygonalNumber[$1]" },
+        { origin: "mapped", form: "wolfram", arity: 2, template: "PolygonalNumber[$2, $1]" },
+      ],
+    },
+  ]);
+  const call = (...args: unknown[]) => ["MemberCall", "fig", "'Polygonal'", ...args] as never;
+  expect(emit(call(4, 5), "wolfram", fig)).toEqual({ ok: true, source: "PolygonalNumber[5, 4]" });
+  expect(emit(["Add", call(4), 1] as never, "wolfram", fig)).toMatchObject({
+    ok: true,
+    source: expect.stringContaining("PolygonalNumber[4]"),
+  });
+  // Another head of the same library, with no mapping: unmapped, not a call the system answers as written.
+  expect(emit(["MemberCall", "fig", "'Star'", 4] as never, "wolfram", fig)).toEqual({
+    ok: false,
+    missing: ["fig.Star/1"],
   });
 });
