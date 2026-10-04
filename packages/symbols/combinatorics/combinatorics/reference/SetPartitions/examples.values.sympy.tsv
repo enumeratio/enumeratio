@@ -1,6 +1,10 @@
 id	in	out
 the-set-partitions-of-an-explicit-list-in-the		
+b-4		
 exactly-2-blocks		
 the-partitions-of-a-4-set-into-2-blocks-number-s		
 the-family-has-b-4-15-members-see-bellnumber	bell(4)	15
-those-with-exactly-2-blocks-number-s-4-2-7-see		
+those-with-exactly-2-blocks-number-s-4-2-7-see	stirling(4, 2)	7
+blocks-are-stirling-numbers-of-the-second-kind		
+by-singleton-blocks		
+one-crossing-at-4		

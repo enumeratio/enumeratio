@@ -24,6 +24,10 @@ doesn't actually answer).
   re-sign it, or replace its handler, the type the engine ends up printing, and whether it
   holds its arguments. The manifest ([`manifest`](../manifest/README.md)) must agree —
   `tests/manifest.test.ts` holds it to it.
+- **`declarations`/`duplicateRows`** (`owners.ts`) — per head, what declared it (the engine, or
+  the package that introduced it) and who only contributes. `tests/owners.test.ts` holds the
+  rule the split into repos needs: no package redeclares a declared head, and no two packages
+  contribute the same signature.
 - **`CALL_FORMS`/`FRONTIER`/`FrontierEntry`** (`wolfram-frontier-data.ts`, generated) — what
   Wolfram's own docs examples call that we can't answer yet, ranked.
 - **`RENAME_QUEUE`/`QueuedRename`** (`rename-queue.ts`) — a head declared under a spelling

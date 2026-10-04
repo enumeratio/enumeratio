@@ -1,4 +1,0 @@
-id	in	out	tex.in	tex.out
-the-order-of-s-5-is-5	GroupOrder[SymmetricGroup[5]]	120	\text{GroupOrder}[\text{SymmetricGroup}[5]]	120
-s-10-10	GroupOrder[SymmetricGroup[10]]	3628800	\text{GroupOrder}[\text{SymmetricGroup}[10]]	3628800
-the-one-line-words-are-compute-engine-s				

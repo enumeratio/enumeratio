@@ -1,7 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-
-type NativeEvaluate = NonNullable<BoxedExpression["operatorDefinition"]>["evaluate"];
-type EvaluateHandlerOptions = Parameters<NonNullable<NativeEvaluate>>[1];
+import { widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // Graphics as *values*: an `Image` head, and a `Rasterize` that makes one.
 //
@@ -177,16 +175,13 @@ export function declareGraphics(ce: ComputeEngine): void {
   // argument at the signature. Wolfram's one-argument `Histogram[data]` is the picture;
   // widen the slot so it holds, and hand two arguments straight back to the native
   // handler. The signature otherwise mirrors the engine's, so nothing else changes.
-  const histogram = ce.lookupDefinition("Histogram");
-  const native: NativeEvaluate =
-    histogram !== undefined && "operator" in histogram ? histogram.operator.evaluate : undefined;
-  if (native !== undefined) {
-    ce.declare("Histogram", {
-      signature: "(collection<any>, (list<number> | number)?) -> any",
-      evaluate: (ops: readonly BoxedExpression[], options: EvaluateHandlerOptions) =>
-        ops.length === 1 ? undefined : native(ops, options),
-    });
-  }
+  widenSignature(ce, "Histogram", "(collection<any>, (list<number> | number)?) -> any");
+  wrapOperator(
+    ce,
+    ["Histogram", [1]],
+    (ops) => ops.length === 1,
+    () => () => undefined,
+  );
 
   // A cell holds its input: `Cell(1 + 1)` is the pair "1 + 1 → 2", not a cell of 2.
   if (!ce.lookupDefinition("Cell")) {
