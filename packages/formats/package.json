@@ -71,5 +71,8 @@
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.146.0"
+  },
+  "enumeratio": {
+    "declare": "declareGraphics"
   }
 }

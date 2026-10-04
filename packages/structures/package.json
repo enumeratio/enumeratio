@@ -40,6 +40,12 @@
     "@cortex-js/compute-engine": "^0.146.0"
   },
   "enumeratio": {
-    "notation": "./notation"
+    "notation": "./notation",
+    "declare": [
+      "ensureProtocols",
+      "ensureAlgebraHeads",
+      "ensureOperationHeads"
+    ],
+    "late": "declareStructures"
   }
 }

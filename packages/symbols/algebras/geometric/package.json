@@ -36,6 +36,7 @@
     "@cortex-js/compute-engine": "^0.146.0"
   },
   "enumeratio": {
-    "group": "algebras"
+    "group": "algebras",
+    "declare": "declareGeometric"
   }
 }

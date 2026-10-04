@@ -47,6 +47,7 @@
   },
   "enumeratio": {
     "notation": "./notation",
-    "group": "arithmetic"
+    "group": "arithmetic",
+    "declare": "declareNumerals"
   }
 }
