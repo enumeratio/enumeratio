@@ -1,0 +1,8 @@
+{
+  "traditional": [
+    {
+      "params": ["x", "...xs"],
+      "box": ["RowBox", [["TemplateSlot", "x"], "×", ["TemplateSlot", "xs", { "Separator": "×" }]]]
+    }
+  ]
+}

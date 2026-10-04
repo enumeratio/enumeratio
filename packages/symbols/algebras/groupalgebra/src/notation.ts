@@ -1,22 +1,13 @@
 // @enumeratio/groupalgebra's heads in traditional notation: the cyclic and dihedral
-// families by order, the group algebra k[G], the direct product, and |G|.
+// families by order, the group algebra k[G], the direct product, and |G|. Each head's is data,
+// `reference/<Head>/notation.json`, compiled here.
 
-import { fence, indexed, type Notation, row, scalars, type PackageNotation } from "@enumeratio/boxes";
+import { combineNotation, compileNotation, type Notation, type PackageNotation } from "@enumeratio/boxes";
+import { NOTATION_DATA } from "./notation.generated.ts";
 
-export const GROUPALGEBRA_NOTATION: Notation = {
-  CyclicGroup: scalars(indexed("C")),
-  DihedralGroup: scalars(indexed("D")),
-  GroupDirectProduct: scalars((args, write) => {
-    if (args.length < 2) return undefined;
-    return row(args.flatMap((a, i) => (i === 0 ? [write.box(a)] : ["×", write.box(a)])));
-  }),
-  GroupAlgebra: scalars(([g, ...rest], write) =>
-    g === undefined || rest.length > 0 ? undefined : row(["k", fence("[", [write.box(g)], "]")]),
-  ),
-  GroupOrder: scalars(([g, ...rest], write) =>
-    g === undefined || rest.length > 0 ? undefined : fence("|", [write.box(g)], "|"),
-  ),
-};
+const compiled = combineNotation(Object.entries(NOTATION_DATA).map(([head, data]) => compileNotation(head, data)));
+
+export const GROUPALGEBRA_NOTATION: Notation = compiled.traditional;
 
 /** This package's notation, which a host loads before it builds an engine. */
 export const notation: PackageNotation = { traditional: GROUPALGEBRA_NOTATION };

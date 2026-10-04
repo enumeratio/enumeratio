@@ -1,0 +1,13 @@
+{
+  "traditional": [
+    {
+      "params": ["alpha"],
+      "scalars": false,
+      "box": [
+        "SubscriptBox",
+        "R",
+        ["TemplateSlot", "alpha", { "Items": true, "Separator": ",", "Open": "(", "Close": ")", "Empty": "∅" }]
+      ]
+    }
+  ]
+}
