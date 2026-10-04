@@ -7,7 +7,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ROOT = fileURLToPath(new URL("../../../", import.meta.url));
+const ROOT = fileURLToPath(new URL("../", import.meta.url));
 
 function packageDirs(): string[] {
   const packages = join(ROOT, "packages");
