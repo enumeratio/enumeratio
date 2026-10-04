@@ -35,6 +35,7 @@ to-40-significant-digits-every-one-correctly	nf(gamma(rational(n(1), n(3))))	2.6
 gamma-neg-infty-indeterminate			
 gamma-complex-infinity-indeterminate			
 gamma-i-infty-0			
+gamma-directed-infinity-i			
 gamma-threads-over-the-infinities			
 the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2	equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))	true	
 extends-the-factorial-gamma-n-1-n-so-gamma-6-5	equal(gamma(n(6)), factorial(n(5)))	true	

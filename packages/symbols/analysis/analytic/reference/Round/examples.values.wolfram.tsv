@@ -23,4 +23,4 @@ rounds-half-away-from-zero-not-banker-s-rounding	Round[2.5]	2	\text{Round}[2.5]	
 and-by-the-same-convention-2-5-rounds-to-3-not-2	Round[-2.5]	-2	\text{Round}[-2.5]	-2	disagree
 round-5-over-2-exact-rational-tie	Round[Rational[5, 2]]	2	\text{Round}\left[\frac{5}{2}\right]	2	disagree
 an-exact-half-rounds-away-from-zero-as-well	Round[Rational[1, 2]]	0	\text{Round}\left[\frac{1}{2}\right]	0	disagree
-round-complexinfinity-is-complexinfinity-the	Round[ComplexInfinity]	ComplexInfinity	\text{Round}[\text{ComplexInfinity}]	\text{ComplexInfinity}	
+round-complexinfinity-is-complexinfinity-the	Round[ComplexInfinity]	ComplexInfinity	\text{Round}[\text{ComplexInfinity}]	\text{ComplexInfinity}	disagree

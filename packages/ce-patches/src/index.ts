@@ -1,14 +1,8 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { gammaInfinity } from "./patches/gamma-infinity.ts";
-import { sqrtInfinity } from "./patches/sqrt-infinity.ts";
-import { ceilFloorInfinity } from "./patches/ceil-floor-infinity.ts";
-import { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
-import { infinityArgs } from "./patches/infinity-args.ts";
 import { lerchPhiPatch } from "./patches/lerch-phi.ts";
 import { solveDeclines } from "./patches/solve-declines.ts";
 import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
-import { directedInfinityParts } from "./patches/directed-infinity-parts.ts";
 import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 import { assignFunctionDefinition } from "./patches/assign-function-definition.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
@@ -82,11 +76,6 @@ export {
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./compute-engine/numerics/barnes-g.ts";
 export { barnesGBig, barnesGBall, pi as barnesGPi } from "./compute-engine/numerics/barnes-g-big.ts";
 export { logGamma, logGammaReal, logGammaBig } from "./compute-engine/numerics/log-gamma.ts";
-export { gammaInfinity, evaluateGammaAtInfinity } from "./patches/gamma-infinity.ts";
-export { sqrtInfinity } from "./patches/sqrt-infinity.ts";
-export { ceilFloorInfinity, evaluateCeilFloorAtComplexInfinity } from "./patches/ceil-floor-infinity.ts";
-export { multiplyDirectedInfinity } from "./patches/multiply-directed-infinity.ts";
-export { directedInfinityParts, evaluateRealImaginaryOfDirectedInfinity } from "./patches/directed-infinity-parts.ts";
 export { nAccuracyGoal, evaluateNAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
@@ -103,15 +92,6 @@ export {
 } from "./patches/quotient-ring-collection.ts";
 export { valuesAtZero } from "./patches/values-at-zero.ts";
 export { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
-export {
-  infinityArgs,
-  evaluateArcsinArccosAtInfinity,
-  evaluateArctanArccotAtComplexInfinity,
-  evaluateHyperbolicInverseAtInfinity,
-  evaluateReciprocalTrigAtInfinity,
-  evaluateLnAtNegativeInfinity,
-  evaluateErfcAtComplexInfinity,
-} from "./patches/infinity-args.ts";
 export { clausen } from "./compute-engine/numerics/clausen.ts";
 export { stieltjesGamma, stieltjesGammaReal, STIELTJES_MAX_ORDER } from "./compute-engine/numerics/stieltjes.ts";
 export { stieltjesGammaBall, stieltjesGammaBig } from "./compute-engine/numerics/stieltjes-big.ts";
@@ -149,6 +129,7 @@ export {
   isRealInt,
   isFiniteNum,
   numberResult,
+  inexactComplex,
   wantsNumber,
   declined,
   realCompile,
@@ -199,15 +180,9 @@ export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/c
 /** Every patch offered upstream. `tests/landed.test.ts` holds each one to being unfixed. */
 export const PATCHES: readonly Patch[] = [
   lerchPhiPatch,
-  gammaInfinity,
-  sqrtInfinity,
-  ceilFloorInfinity,
-  multiplyDirectedInfinity,
-  infinityArgs,
   solveDeclines,
   takeDropNegativeCount,
   iteratorUpperBound,
-  directedInfinityParts,
   nAccuracyGoal,
   assignFunctionDefinition,
   quotientRingCollection,

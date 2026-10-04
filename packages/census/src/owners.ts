@@ -9,7 +9,7 @@
 // that declares the head, or its rows name a head that may not be there when it runs.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { overloadTable } from "@enumeratio/engine";
+import { isExtension, overloadTable } from "@enumeratio/engine";
 import { HIERARCHY } from "@enumeratio/manifest";
 import { contributions, ENGINE } from "./contributions.ts";
 import { fullEngine, PACKAGE_DECLARATIONS } from "./engine.ts";
@@ -74,7 +74,7 @@ export function declarations(): Map<string, HeadDeclaration> {
       }
       const replaced = was.definition !== now.definition || was.operator !== now.operator || was.value !== now.value;
       // A package's later steps may rebind what its earlier ones declared.
-      if (!replaced || current.get(name) === pkg) continue;
+      if (!replaced || isExtension(now.definition) || current.get(name) === pkg) continue;
       redeclaredBy.set(name, [...(redeclaredBy.get(name) ?? []), pkg]);
       current.set(name, pkg);
     }

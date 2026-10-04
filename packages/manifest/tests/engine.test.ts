@@ -61,12 +61,15 @@ test("an included library is declared whatever is asked, after what it requires"
 });
 
 test("a declare-order pair holds whatever order the host lists libraries in, though adeles extends number-theory", () => {
-  expect(DECLARE_ORDER).toContainEqual(["adeles", "number-theory"]);
+  const after = [["adeles", "number-theory"]] as const;
   for (const available of [AVAILABLE, AVAILABLE.toReversed()]) {
-    const order = names(enginePlan({ libraries: ["adeles", "modular"], available }).order);
+    const order = names(enginePlan({ libraries: ["adeles", "modular"], available, after }).order);
     expect(order.indexOf("adeles")).toBeLessThan(order.indexOf("number-theory"));
-    expect(order.indexOf("modular")).toBeLessThan(order.indexOf("number-theory"));
   }
+});
+
+test("no declare-order pair is needed: extending libraries answer the same in any order", () => {
+  expect(DECLARE_ORDER).toEqual([]);
 });
 
 test("libraries go in the preference order where nothing else decides", () => {

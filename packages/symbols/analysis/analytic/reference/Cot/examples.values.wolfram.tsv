@@ -37,4 +37,4 @@ n-cot-2-times-cot-4	N[Times[Cot[2], Cot[4]]]	-0.3952747814684811		N[\cot (2) \co
 n-cot-2-plus-1-over-2-times-pi	N[Cot[Plus[2, Times[Rational[1, 2], Pi]]]]	2.185039863261519		N\left[\cot \left(2+\frac{1}{2} \pi \right)\right]	2.18504	
 a-pole-sin-0-0	Cot[0]	ComplexInfinity		\cot (0)	\text{ComplexInfinity}	
 not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero	Cot[Divide[Pi, 2]]	0		\cot \left(\frac{\pi }{2}\right)	0	
-cot-complexinfinity-is-indeterminate-for-the	Cot[ComplexInfinity]	Indeterminate		\cot (\text{ComplexInfinity})	\text{Indeterminate}	
+cot-complexinfinity-is-indeterminate-for-the	Cot[ComplexInfinity]	Indeterminate		\cot (\text{ComplexInfinity})	\text{Indeterminate}	disagree

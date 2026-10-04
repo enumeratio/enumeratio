@@ -38,7 +38,7 @@
     "@enumeratio/oracle": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.146.0",
+    "@cortex-js/compute-engine": "^0.147.0",
     "@enumeratio/adeles": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/boxes": "workspace:*",
@@ -70,7 +70,7 @@
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.146.0"
+    "@cortex-js/compute-engine": "^0.147.0"
   },
   "generated": [
     "src/crosswalk/catalog-references-data.ts",

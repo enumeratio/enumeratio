@@ -29,11 +29,11 @@ test("a head we know: its summary, page, every overload, and the one it is decla
     kind: "function",
     description: "The sine of x, in radians.",
     url: "https://enumeratio.dev/reference/symbol/Sin",
-    signature: "(complex | infinity | ~oo) -> number",
+    signature: "(complex) -> number",
     params: ["x"],
     documented: ["analytic"],
   });
-  expect(sin.overloads?.map((o) => o.package)).toEqual(["compute-engine", "analytic"]);
+  expect(sin.overloads?.map((o) => o.package).toSorted()).toEqual(["analytic", "compute-engine"]);
   // The replacement chain ends at structures, whatever order the overloads are in.
   expect((await describe("Floor")).signature).toBe("(any, any?) -> any");
   expect(await describe("Pi")).toMatchObject({ kind: "constant", type: expect.stringMatching(/^real/) });

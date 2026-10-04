@@ -8,7 +8,7 @@ import type { NotationData, Registry } from "@enumeratio/manifest";
 import { catalog, githubHost, type LibraryField, type LibraryIndex } from "@enumeratio/manifest/libraries";
 
 /** Each library at an exact version: GitHub's `owner/repo@version`. */
-export const LIBRARIES: readonly string[] = ["enumeratio/library-template@0.1.0"];
+export const LIBRARIES: readonly string[] = ["enumeratio/library-template@0.1.1"];
 
 /** The libraries as a registry, as a kernel reads them. */
 export const libraryRegistry = (): Registry<ComputeEngine> => catalog<ComputeEngine>(LIBRARIES, { host: githubHost() });

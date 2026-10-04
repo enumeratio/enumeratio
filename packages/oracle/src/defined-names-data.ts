@@ -304,6 +304,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "Erfi",
   "Error",
   "ErrorBox",
+  "ErrorCode",
   "EulerE",
   "EulerGamma",
   "EvaluateForm",

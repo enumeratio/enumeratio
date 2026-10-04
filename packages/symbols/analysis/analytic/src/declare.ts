@@ -4,12 +4,6 @@ import { threadOverLists, widenSignature, wrapOperator } from "@enumeratio/engin
 import {
   applyPatch,
   lerchPhiPatch,
-  gammaInfinity,
-  sqrtInfinity,
-  ceilFloorInfinity,
-  infinityArgs,
-  multiplyDirectedInfinity,
-  directedInfinityParts,
   nAccuracyGoal,
   oscillatoryEndpoint,
   solveDeclines,
@@ -28,7 +22,6 @@ import { declareHugeArguments } from "./huge-arguments.ts";
 import { declareInverseCompositions } from "./inverse-compositions.ts";
 import { declareHyperbolicExact } from "./hyperbolic-exact.ts";
 import { declareSimplifyIdentities } from "./simplify-identities.ts";
-import { declareTrigInfinity } from "./trig-infinity.ts";
 import { declareTrigPowerIntegrals } from "./trig-power-integrals.ts";
 import { declareCarlson } from "./carlson.ts";
 import { declareDerivatives } from "./derivatives.ts";
@@ -180,14 +173,9 @@ export function declareAnalytic(ce: ComputeEngine): void {
   threadOverLists(ce, ["Binomial", "Pochhammer", "BernoulliB", "Erf", "Erfc", "ErfInv", "BetaRegularized"]);
   declareWidened(ce);
 
-  applyPatch(ce, gammaInfinity);
-  applyPatch(ce, sqrtInfinity);
-  applyPatch(ce, ceilFloorInfinity);
   applyPatch(ce, solveDeclines);
   applyPatch(ce, takeDropNegativeCount);
   applyPatch(ce, iteratorUpperBound);
-  applyPatch(ce, multiplyDirectedInfinity);
-  applyPatch(ce, directedInfinityParts);
   applyPatch(ce, nAccuracyGoal);
   applyPatch(ce, oscillatoryEndpoint);
 
@@ -256,7 +244,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareComplexArguments(ce);
   declareBetaContinuation(ce);
   declareSimplifyIdentities(ce);
-  declareTrigInfinity(ce);
   declareDobinski(ce);
   declareTrigPowerIntegrals(ce);
   declareHugeArguments(ce);
@@ -279,16 +266,4 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareNSum(ce);
   declareCorrectlyRoundedN(ce);
   declareSignals(ce);
-
-  // Applied last, deliberately: several earlier `declare*` calls above (trig-reduction.ts's
-  // `isHugeReal` chief among them -- it tests `Math.abs(op.re) > HUGE_THRESHOLD` without also
-  // requiring finiteness, so it claims PositiveInfinity/NegativeInfinity as "huge" too, then
-  // declines because it can't reduce an infinite value, swallowing whatever ran underneath) already
-  // wrap Tan/Cot/Sec/Csc/Arcsin/Arccos and friends with handlers that mis-claim an infinite operand
-  // and decline, which (per `wrapOperator`'s doc comment) returns undefined instead of falling
-  // through to a layer attached earlier. Applying this patch last makes it the outermost, most
-  // recently attached layer, so its narrow (exact `PositiveInfinity`/`NegativeInfinity`/
-  // `ComplexInfinity` only) predicates intercept before any earlier layer gets a chance to
-  // mis-claim the call.
-  applyPatch(ce, infinityArgs);
 }

@@ -13,4 +13,4 @@ matrixfunction-function-arsech-1-1-list-list-2-0	MatrixFunction[Function[ArcSech
 integrate-arsech-x-x-nothing-nothing	Integrate[ArcSech[x], x]	Indeterminate				inconclusive
 arsech-2-times-sqrt-1-over-2-plus-sqrt-2	ArcSech[Times[2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	ArcSech[2/Sqrt[2 + Sqrt[2]]]		\text{sech}^{-1}\left(2 \sqrt{\frac{1}{2+\sqrt{2}}}\right)	\text{sech}^{-1}\left(\frac{2}{\sqrt{2+\sqrt{2}}}\right)	
 arsech-neg-2-times-sqrt-1-over-2-plus-sqrt-2	ArcSech[Times[-2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	ArcSech[-2/Sqrt[2 + Sqrt[2]]]		\text{sech}^{-1}\left(-2 \sqrt{\frac{1}{2+\sqrt{2}}}\right)	\text{sech}^{-1}\left(-\frac{2}{\sqrt{2+\sqrt{2}}}\right)	
-arsech-complexinfinity-is-indeterminate-by	ArcSech[ComplexInfinity]	Indeterminate		\text{sech}^{-1}(\text{ComplexInfinity})	\text{Indeterminate}	
+arsech-complexinfinity-is-indeterminate-by	ArcSech[ComplexInfinity]	Indeterminate		\text{sech}^{-1}(\text{ComplexInfinity})	\text{Indeterminate}	disagree

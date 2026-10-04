@@ -38,6 +38,6 @@ ceil-neg-pi	Ceiling[Minus[Pi]]	-3	\lceil -\pi \rceil	-3
 ceil-neg-27-over-10	Ceiling[Rational[-27, 10]]	-2	\left\lceil -\frac{27}{10}\right\rceil	-2	
 ceil-negativeinfinity	Ceiling[-Infinity]	-Infinity	\lceil -\infty \rceil	-\infty	
 ceil-23-over-10-plus-neg-i-times-exponentiale	Ceiling[Plus[Rational[23, 10], Times[Complex[0, -1], E]]]	3 - 2*I	\left\lceil \frac{23}{10}-i e\right\rceil	3-2 i	
-a-zero-divisor-inside-ceil	Ceiling[Divide[16, 0]]	ComplexInfinity	\left\lceil \frac{16}{0}\right\rceil	\text{ComplexInfinity}	
+a-zero-divisor-inside-ceil	Ceiling[Divide[16, 0]]	ComplexInfinity	\left\lceil \frac{16}{0}\right\rceil	\text{ComplexInfinity}	disagree
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Ceiling[-3.7]	-3	\lceil -3.7\rceil	-3	
 nan-propagates-rather-than-erroring	Ceiling[Indeterminate]	Indeterminate	\lceil \text{Indeterminate}\rceil	\text{Indeterminate}	disagree

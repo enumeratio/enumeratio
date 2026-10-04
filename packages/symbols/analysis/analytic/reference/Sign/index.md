@@ -9,12 +9,12 @@ signatures:
   - call: Sign(x)
     description: "The sign of x: -1, 0, or 1 for negative, zero, or positive x."
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> Indeterminate | complex
+    type: (complex | signed_infinity) -> complex
     overrides: compute-engine
   - call: Sign(p)
     description: "A permutation's sign: 1 when it has an even number of inversions, -1 when odd (FindStat St000037)."
     library: enumeratio-combinatorics
-    type: (complex | permutation | signed_infinity | ~oo) -> Indeterminate | complex | number
+    type: (complex | permutation | signed_infinity) -> complex | number
     overrides: enumeratio-analytic
 seeAlso:
   - Abs

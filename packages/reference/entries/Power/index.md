@@ -9,7 +9,7 @@ signatures:
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-analytic
-    type: (complex | infinity, complex | signed_infinity | ~oo) -> Indeterminate | number
+    type: (complex | infinity, complex | signed_infinity) -> number
     overrides: compute-engine
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."

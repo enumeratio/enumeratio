@@ -9,7 +9,7 @@ signatures:
   - call: Arcsin(x)
     description: Arcsine, the inverse of [[Sin]] restricted to $[-\pi/2, \pi/2]$.
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number
+    type: (complex) -> number
     overrides: compute-engine
 seeAlso:
   - Sin

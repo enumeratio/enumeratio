@@ -84,6 +84,8 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     expr: { $ref: "#/$defs/MathJSON" },
     expected: { $ref: "#/$defs/MathJSON" },
     known: { $ref: "#/$defs/MathJSON" },
+    knownConvention: { type: "string" },
+    knownGap: { type: "string" },
     tolerance: { type: "number", exclusiveMinimum: 0 },
     source: { type: "string" },
     caption: { type: "string" },
@@ -99,7 +101,14 @@ const REFERENCE_EXAMPLE: JsonSchema = {
   },
   required: ["id", "expr", "expected"],
   // A known value carries where it comes from; a tolerance or source means nothing without one.
-  dependentRequired: { known: ["source"], source: ["known"], tolerance: ["known"], triage: ["role"] },
+  dependentRequired: {
+    known: ["source"],
+    source: ["known"],
+    tolerance: ["known"],
+    knownConvention: ["known"],
+    knownGap: ["known"],
+    triage: ["role"],
+  },
   additionalProperties: false,
 };
 

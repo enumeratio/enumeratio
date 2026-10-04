@@ -4,6 +4,8 @@
 // the head's signature is computed from them, never assigned.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { extendHead } from "./extend.ts";
+import { widenedSignature } from "./widen.ts";
 import type { EvaluateOptions } from "./index.ts";
 
 /** Lazy heads that only evaluate their operands, never hold or bind them. The wrapper has
@@ -52,25 +54,49 @@ export interface Overload {
 
 type Evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => BoxedExpression | undefined;
 
-interface Operator {
-  signature: unknown;
-  evaluate?: Evaluate;
-  lazy?: boolean;
-}
+type OperatorLike = { signature?: unknown; evaluate?: Evaluate; lazy?: boolean };
 
+/** What the engine has for a head right now, or `undefined` when it has no operator. */
+const visibleOperator = (ce: ComputeEngine, head: string): OperatorLike | undefined => {
+  const definition = ce.lookupDefinition(head);
+  return definition !== undefined && "operator" in definition ? (definition.operator as OperatorLike) : undefined;
+};
+
+/**
+ * Everything the engine's helpers have added to one head on one engine. `extend` builds a new
+ * definition for each patch, so this record, not the definition, is what survives: the head's
+ * signature and handler are always recomputed from it, never accumulated in patch order.
+ */
 interface Table {
-  readonly native: Evaluate | undefined;
-  /** The head's own signature, and whatever `widenSignature` has since assigned it. */
-  nativeSignature: string;
-  /** The signature the table last computed, to notice one assigned from outside it. */
-  computed?: string;
+  /** The head's own signature, with every `widenSignature` request joined in as one union. */
+  base: string;
+  /** Call shapes a package added as overloads of their own (`extendHead`'s `addSignature`). */
+  readonly added: string[];
+  /** What each `widenSignature` gate admits of the head's own handler. */
+  readonly gates: ((op: BoxedExpression) => boolean)[];
   readonly rows: Overload[];
   ordered: Overload[];
-  /** The handler the table installs, to notice one wrapped around it from outside. */
+  /** The handler the rows sit in front of: whatever `evaluate` the head had when they arrived. */
+  native?: Evaluate;
+  /** The dispatcher installed over it, to notice a handler wrapped around it from outside. */
   dispatch?: Evaluate;
+  /** The signature last installed, to notice one assigned from outside. */
+  computed?: string;
 }
 
-const tables = new WeakMap<Operator, Table>();
+const tables = new WeakMap<ComputeEngine, Map<string, Table>>();
+
+function tableOf(ce: ComputeEngine, head: string): Table | undefined {
+  const known = tables.get(ce)?.get(head);
+  if (known !== undefined) return known;
+  const operator = visibleOperator(ce, head);
+  if (operator === undefined) return undefined;
+  const created: Table = { base: String(operator.signature), added: [], gates: [], rows: [], ordered: [] };
+  const byHead = tables.get(ce) ?? new Map<string, Table>();
+  byHead.set(head, created);
+  tables.set(ce, byHead);
+  return created;
+}
 
 const fits = (arity: Arity | undefined, n: number): boolean =>
   arity === undefined || (typeof arity === "number" ? n === arity : n >= arity.min && n <= (arity.max ?? Infinity));
@@ -108,9 +134,9 @@ export function joinSignatures(signatures: readonly string[]): string {
   return shapes.length === 1 ? shapes[0]! : shapes.toSorted(cmp).map(shape).join(" & ");
 }
 
-/** The head's signature: its own, and every row's. */
+/** The head's signature: its own, and every request's and row's. */
 const signatureOf = (table: Table): string =>
-  joinSignatures([table.nativeSignature, ...table.rows.flatMap((row) => row.signature ?? [])]);
+  joinSignatures([table.base, ...table.added, ...table.rows.flatMap((row) => row.signature ?? [])]);
 
 export interface OverloadTable {
   /** The head's own signature, with any widening the table has absorbed. */
@@ -124,16 +150,13 @@ export interface OverloadTable {
   readonly resigned: boolean;
 }
 
-/** A head's table as declared on `ce`, or `undefined`. */
+/** A head's table as declared on `ce`, or `undefined` while no package has added a row to it. */
 export function overloadTable(ce: ComputeEngine, head: string): OverloadTable | undefined {
-  const definition = ce.lookupDefinition(head);
-  const operator = (definition !== undefined && "operator" in definition ? definition.operator : undefined) as
-    | Operator
-    | undefined;
-  const table = operator === undefined ? undefined : tables.get(operator);
-  if (operator === undefined || table === undefined) return undefined;
+  const table = tables.get(ce)?.get(head);
+  const operator = visibleOperator(ce, head);
+  if (operator === undefined || table === undefined || table.rows.length === 0) return undefined;
   return {
-    nativeSignature: table.nativeSignature,
+    nativeSignature: table.base,
     rows: table.rows,
     native: table.native,
     wrapped: operator.evaluate !== table.dispatch,
@@ -169,58 +192,94 @@ const matches = (row: Overload, ops: readonly BoxedExpression[]): boolean =>
   (row.unless === undefined || !ops.some((op) => row.unless!.includes(op.operator))) &&
   (row.when === undefined || row.when(ops));
 
+function dispatcherOf(table: Table, lazy: boolean, head: string): Evaluate {
+  return (ops, options) => {
+    let values = ops;
+    if (table.ordered.length > 0) {
+      let written: Set<string> | undefined;
+      const heads = (): Set<string> => (written ??= writtenHeads(ops));
+      const candidates = table.ordered.filter((row) => mayApply(row, ops, heads));
+      if (candidates.length > 0) {
+        // A lazy head (`Add`) hands over its operands as written; rows see them evaluated,
+        // once per call however many rows there are.
+        if (lazy) values = ops.map((op) => op.evaluate());
+        for (const row of candidates) {
+          if (!matches(row, values)) continue;
+          const answer = row.evaluate(values, options);
+          if (answer !== undefined) return answer;
+        }
+      }
+    }
+    const gates = [...table.gates, ...table.rows.flatMap((row) => row.native ?? [])];
+    if (gates.length > 0 && !values.every((op) => gates.every((accepts) => accepts(op)))) return undefined;
+    // See `EVALUATES_OPERANDS`: native would evaluate the written operands a second time.
+    return table.native?.(lazy && EVALUATES_OPERANDS.has(head) ? values : ops, options);
+  };
+}
+
+/**
+ * Write what `table` holds onto the head: its signature, and the dispatcher once it is needed.
+ * A widened base is assigned on the visible definition (a union is wider than what it had, so
+ * `extend`, which only narrows, would refuse it); rows only ever narrow it, so they go through
+ * `extend` as overloads.
+ */
+function install(ce: ComputeEngine, head: string, table: Table, widened: boolean): void {
+  const operator = visibleOperator(ce, head);
+  if (operator === undefined) return;
+  const signature = signatureOf(table);
+  // A collection-backed head only lets `extend` give it collection results, which a carrier
+  // arm (`(permutation) -> permutation`) isn't: the signature is assigned directly there.
+  const inPlace = widened || (operator as { collection?: unknown }).collection !== undefined;
+  if (inPlace) operator.signature = ce.type(signature as never);
+  const needsDispatch = table.rows.length > 0 || table.gates.length > 0;
+  const patch: Record<string, unknown> = inPlace ? {} : { signature };
+  if (needsDispatch && table.dispatch === undefined) {
+    table.native = operator.evaluate;
+    table.dispatch = dispatcherOf(table, operator.lazy === true, head);
+    patch.evaluate = table.dispatch;
+  }
+  extendHead(ce, head, patch);
+  table.computed = String(visibleOperator(ce, head)?.signature);
+}
+
+/** Add a call shape to a head as an overload of its own. Returns false when the engine has no such head. */
+export function addHeadOverload(ce: ComputeEngine, head: string, signature: string): boolean {
+  const table = tableOf(ce, head);
+  if (table === undefined) return false;
+  if (!table.added.includes(signature)) table.added.push(signature);
+  install(ce, head, table, false);
+  return true;
+}
+
+/**
+ * Widen a head the engine already defines to also admit `signature` (one union with what it
+ * admitted), and optionally gate what the head's own handler may be handed (see
+ * `widenSignature`). Returns false when the engine has no such head.
+ */
+export function addHeadSignature(
+  ce: ComputeEngine,
+  head: string,
+  signature: string,
+  nativeAccepts?: (op: BoxedExpression) => boolean,
+): boolean {
+  const table = tableOf(ce, head);
+  if (table === undefined) return false;
+  table.base = widenedSignature(ce, table.base, signature);
+  if (nativeAccepts !== undefined) table.gates.push(nativeAccepts);
+  install(ce, head, table, true);
+  return true;
+}
+
 /**
  * Add `overload` to `head`'s table on `ce`. The first row installs the dispatcher over the
  * head's own handler; each row recomputes the order and the signature, so which package
  * declared first doesn't matter. Returns false when the engine has no such head.
  */
 export function defineOverload(ce: ComputeEngine, head: string, overload: Overload): boolean {
-  const definition = ce.lookupDefinition(head);
-  const operator = (definition !== undefined && "operator" in definition ? definition.operator : undefined) as
-    | Operator
-    | undefined;
-  if (operator === undefined) return false;
-
-  let table = tables.get(operator);
-  if (table === undefined) {
-    const created: Table = {
-      native: operator.evaluate,
-      nativeSignature: String(operator.signature),
-      rows: [],
-      ordered: [],
-    };
-    table = created;
-    tables.set(operator, created);
-    const lazy = operator.lazy === true;
-    operator.evaluate = (ops, options) => {
-      let values = ops;
-      if (created.ordered.length > 0) {
-        let written: Set<string> | undefined;
-        const heads = (): Set<string> => (written ??= writtenHeads(ops));
-        const candidates = created.ordered.filter((row) => mayApply(row, ops, heads));
-        if (candidates.length > 0) {
-          // A lazy head (`Add`) hands over its operands as written; rows see them evaluated,
-          // once per call however many rows there are.
-          if (lazy) values = ops.map((op) => op.evaluate());
-          for (const row of candidates) {
-            if (!matches(row, values)) continue;
-            const answer = row.evaluate(values, options);
-            if (answer !== undefined) return answer;
-          }
-        }
-        const gates = created.rows.flatMap((row) => row.native ?? []);
-        if (gates.length > 0 && !values.every((op) => gates.every((accepts) => accepts(op)))) return undefined;
-      }
-      // See `EVALUATES_OPERANDS`: native would evaluate the written operands a second time.
-      return created.native?.(lazy && EVALUATES_OPERANDS.has(head) ? values : ops, options);
-    };
-    created.dispatch = operator.evaluate;
-  }
-  const current = String(operator.signature);
-  if (table.computed !== undefined && current !== table.computed) table.nativeSignature = current;
+  const table = tableOf(ce, head);
+  if (table === undefined) return false;
   table.rows.push(overload);
   table.ordered = order(table.rows);
-  operator.signature = ce.type(signatureOf(table));
-  table.computed = String(operator.signature);
+  install(ce, head, table, false);
   return true;
 }

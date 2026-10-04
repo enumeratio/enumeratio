@@ -49,6 +49,8 @@ const EXAMPLE_COLUMNS: readonly (readonly [column: string, field: string, cell: 
   ["expr", "expr", "flow"],
   ["expected", "expected", "flow"],
   ["known", "known", "flow"],
+  ["known.convention", "knownConvention", "text"],
+  ["known.gap", "knownGap", "text"],
   ["tolerance", "tolerance", "flow"],
   ["source", "source", "text"],
   ["caption", "caption", "text"],

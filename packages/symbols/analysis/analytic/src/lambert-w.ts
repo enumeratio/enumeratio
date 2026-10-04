@@ -12,6 +12,7 @@ import {
   isFiniteNum,
   isRealInt,
   wantsNumber,
+  inexactComplex,
 } from "@enumeratio/ce-patches";
 
 // LambertW(z) — compute-engine's native ProductLog — already evaluates the principal (k = 0)
@@ -97,7 +98,7 @@ export function declareLambertW(ce: ComputeEngine): void {
         const w = lambertWBranch(k, cx(zExpr.re, zExpr.im));
         if (w === undefined) return undefined;
         if (Math.abs(w.im) < 1e-14 * (1 + Math.abs(w.re))) return ce.number(w.re);
-        return ce.number(ce.complex(w.re, w.im));
+        return inexactComplex(ce, w.re, w.im);
       }
 
       // One-argument: try the native handler first (it already owns 0, real z ≥ -1/e's

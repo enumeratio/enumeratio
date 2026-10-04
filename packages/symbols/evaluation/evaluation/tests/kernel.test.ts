@@ -206,3 +206,19 @@ test("a published library's qualified names resolve after the catalogue's, with 
   const nowhere = await kernel.evaluate({ json: ["MemberCall", "fig", "'Nowhere'", 1] });
   expect(nowhere.missing).toContain("fig.Nowhere");
 });
+
+test("a published library's definition can build on the catalogue's heads", async () => {
+  const log: string[] = [];
+  const fig = definitionRegistry<ComputeEngine>("fig", {
+    Quadruple: {
+      signature: "(x: number) -> number",
+      body: ["Function", ["Double", ["Double", "x"]], "x"],
+      examples: [{ id: "q3", expr: ["MemberCall", "fig", "'Quadruple'", 3], expected: 12 }],
+    },
+  });
+  const kernel = createKernel(new ComputeEngine(), catalogue(log), { libraries: fig });
+  const answer = await kernel.evaluate({ json: ["MemberCall", "fig", "'Quadruple'", 5] });
+  expect(answer).toMatchObject({ ok: true, json: 20 });
+  // Declared in the install check's engine and in the kernel's.
+  expect(log).toEqual(["doubling", "doubling"]);
+});

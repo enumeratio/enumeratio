@@ -10,7 +10,7 @@ real-41-over-25-minus-2i	Scope		[Real, [Complex, [Rational, 41, 25], -2]]	[Ratio
 real-list-list-1-u-list-v-neg-i	Scope		[Real, [List, [List, 1, u], [List, v, [Complex, 0, -1]]]]	[List, [List, 1, [Real, u]], [List, [Real, v], 0]]							
 real-0	Scope		[Real, 0]	0							
 real-positiveinfinity	Scope		[Real, PositiveInfinity]	PositiveInfinity							
-real-positiveinfinity-times-i	Scope		[Real, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	0							
+real-positiveinfinity-times-i	Scope		[Real, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate						convention	Wolfram keeps the direction (I Infinity), so Re[I Infinity] is 0; ours reads i*Infinity as ~oo, which has no real part. compute-engine keeps one complex infinity, ~oo, and no directed one (cortex-js/compute-engine#401), so ours follows its model.
 real-complexinfinity	Scope		[Real, ComplexInfinity]	Indeterminate							
 piecewiseexpand-re-imaginaryunit-times-x-neg-2	Scope		[PiecewiseExpand, [Re, [Multiply, ImaginaryUnit, x]], [Less, -2, x, 2]]	[Real, [Multiply, [Complex, 0, 1], x]]							
 simplify-re-x-x-gt-0	Scope		[Simplify, [Re, x], [Greater, x, 0]]	[Real, x]							

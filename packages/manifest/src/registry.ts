@@ -534,12 +534,19 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
     path,
     check,
     notation,
+    system,
     describeOnly: describing = [],
   }: {
     path?: SearchPath;
     check?: InstallCheck<Engine>;
     /** Register a declared definition's notation, under the head it's declared as (boxes' `compileNotation`). */
     notation?: (ce: Engine, head: string, data: NotationData) => void;
+    /**
+     * The host's own resolver (`createResolver` over its catalogue): declares the packages a
+     * definition's body names before the definition is, in the install check's engine too, so
+     * a library can build on the system's heads and not only compute-engine's.
+     */
+    system?: (ce: Engine, json: unknown) => Promise<unknown>;
     /**
      * Heads that describe a name rather than use it (`About`, `Information`): a name given to
      * one is described through `registry.describe`, and noted on the engine for the head to
@@ -552,7 +559,8 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
   const states = new WeakMap<Engine, EngineState>();
   // Each pin's failures, checked once for every engine this resolver serves.
   const checked = new Map<string, Promise<readonly string[]>>();
-  const scratch = check === undefined ? undefined : createRegistryResolver(registry);
+  const scratch =
+    check === undefined ? undefined : createRegistryResolver(registry, system === undefined ? {} : { system });
 
   /** Run a definition's examples in a fresh engine, its name locked to its pin. */
   const failuresOf = async (name: string, found: { pin: string; examples?: () => Promise<readonly Example[]> }) => {
@@ -641,6 +649,7 @@ export function createRegistryResolver<Engine extends DeclaringEngine>(
           } else if (!(await declareDefinition(used, dependency))) return false;
           heads.set(used, dependency.head);
         }
+        if (system !== undefined) await system(ce, body);
         for (const used of plainNamesOf(body, new Set())) {
           const dependency = await registry.resolve(used);
           if (dependency !== undefined && "libraries" in dependency) await declareLibraries(dependency.libraries);

@@ -38,15 +38,17 @@ test("every head a package adds, re-signs or takes over has a typed row for that
   expect(wrong).toEqual([]);
 });
 
-test("a row overrides whoever had the head before its package", () => {
+test("a row overrides a package that contributes the same head, or the engine", () => {
+  // Which row goes first is the record's say, not declaration order: each row names the package
+  // it is tried ahead of, and that package has to have something to be tried ahead of.
   const wrong: string[] = [];
   for (const [head, list] of found) {
+    const contributors = new Set([ENGINE, ...list.map((c) => c.pkg)]);
     for (const c of list) {
       const overload = SYMBOLS[head]?.overloads.find((o) => o.package === c.pkg);
-      if (overload !== undefined && libraryPackage(overload.overrides) !== c.previous)
-        wrong.push(
-          `${head} (${c.pkg}): overrides ${overload.overrides ?? "nothing"}, before it ${c.previous ?? "nothing"}`,
-        );
+      const overridden = libraryPackage(overload?.overrides);
+      if (overridden !== undefined && (overridden === c.pkg || !contributors.has(overridden)))
+        wrong.push(`${head} (${c.pkg}): overrides ${overload?.overrides}, which does not contribute it`);
     }
   }
   expect(wrong).toEqual([]);
@@ -63,8 +65,10 @@ test("HoldAll on a record is the engine's lazy, for every head a package touches
 
 test("the check is looking at something", () => {
   expect(found.size).toBeGreaterThan(1000);
-  expect(found.get("Fibonacci")?.map((c) => [c.pkg, c.previous])).toEqual([
-    ["adeles", ENGINE],
-    ["number-theory", "adeles"],
-  ]);
+  expect(
+    found
+      .get("Fibonacci")
+      ?.map((c) => c.pkg)
+      .toSorted(),
+  ).toEqual(["adeles", "number-theory"]);
 });

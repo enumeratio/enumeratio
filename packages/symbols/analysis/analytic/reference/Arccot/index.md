@@ -9,7 +9,7 @@ signatures:
   - call: Arccot(x)
     description: Arccotangent, the inverse of [[Cot]].
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number
+    type: (complex | signed_infinity) -> number
     overrides: compute-engine
 seeAlso:
   - Cot

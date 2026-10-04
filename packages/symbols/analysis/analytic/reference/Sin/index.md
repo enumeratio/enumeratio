@@ -9,7 +9,7 @@ signatures:
   - call: Sin(x)
     description: The sine of x, in radians.
     library: enumeratio-analytic
-    type: (complex | infinity | ~oo) -> number
+    type: (complex) -> number
     overrides: compute-engine
 seeAlso:
   - Cos

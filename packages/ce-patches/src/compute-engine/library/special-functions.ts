@@ -13,13 +13,14 @@
 // precision evaluation, and DirichletBeta/DirichletL still need HurwitzZeta/Zeta correct
 // beyond a double's digits.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, wrapOperator } from "@enumeratio/engine";
+import { wrapOperator } from "@enumeratio/engine";
 import type { LibraryRecord } from "../../patch.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "../../support/precise.ts";
 import {
   declined,
   isFiniteNum,
   isRealInt,
+  inexactComplex,
   numberResult,
   realCompile,
   wantsNumber,
@@ -229,7 +230,7 @@ function bigZetaResult(
   if (zetaKernel !== "bignum") return undefined;
   const r = kernel(bigOperand(ce, s), bigOperand(ce, a), Math.max(ce.precision, 17));
   if (r === undefined) return undefined;
-  if (!r.im.isZero()) return ce.number(ce.complex(r.re.toNumber(), r.im.toNumber()));
+  if (!r.im.isZero()) return inexactComplex(ce, r.re.toNumber(), r.im.toNumber());
   return ce.number(ce.precision > DOUBLE_DIGITS ? r.re.toPrecision(ce.precision) : r.re.toNumber());
 }
 
@@ -281,49 +282,6 @@ export function evaluatePolygamma(
   // is just a lost digit budget.
   if (Number.isNaN(v.re) && z.im !== 0) return r;
   return numberResult(ce, v);
-}
-
-// --- Gamma at infinities ----------------------------------------------------------------
-// cortex-js/compute-engine#340: Gamma(z) at the infinities DLMF/Wolfram give exact answers
-// for. Native compute-engine already gets three of the four right -- Gamma(+∞) = +∞,
-// Gamma(−∞) and Gamma(ComplexInfinity) = Indeterminate -- it just doesn't recognize a
-// pure-imaginary directed infinity (DirectedInfinity(±i), Wolfram's own FullForm for i·∞)
-// as anything but an ordinary argument, and leaves it unevaluated. |Γ(iy)| → 0 as y → ±∞
-// (DLMF 5.11.9's decay off the positive real axis), so Γ(i·∞) = 0.
-
-const isPureImaginaryDirection = (z: BoxedExpression): boolean => z.re === 0 && Number.isFinite(z.im) && z.im !== 0;
-
-export function evaluateGammaAtInfinity(
-  ce: ComputeEngine,
-  native: NativeEval,
-  ops: readonly BoxedExpression[],
-  options: EvalOptions,
-): BoxedExpression | undefined {
-  const r = native?.(ops, options);
-  if (!declined(r, "Gamma")) return r;
-
-  const z = ops[0];
-  if (z === undefined || z.operator !== "DirectedInfinity") return r;
-  const direction = operandsOf(z)[0];
-  if (direction === undefined || !isPureImaginaryDirection(direction)) return r;
-
-  return ce.number(0);
-}
-
-// --- LogGamma at -Infinity ---------------------------------------------------------------
-// LogGamma's branch cut runs along (-Infinity, 0], so a real negative argument sits ON the
-// cut: Gamma(x) there oscillates in sign between poles at every negative integer, and
-// Gamma(NegativeInfinity) is already Indeterminate natively for exactly that reason (no
-// single limit, not just an unbounded one). ln of a quantity with no limit has none either
-// -- Indeterminate, not the +Infinity the poles themselves give (isNonPosInt, above).
-export function evaluateLogGammaAtNegativeInfinity(ce: ComputeEngine): void {
-  wrapOperator(
-    ce,
-    ["LogGamma"],
-    (ops: readonly BoxedExpression[]) => ops[0]?.json === "NegativeInfinity",
-    () => () => ce.symbol("Indeterminate"),
-    1,
-  );
 }
 
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "../numerics/barnes-g.ts";
