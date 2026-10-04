@@ -14,7 +14,7 @@ signatures:
   - call: Ceil(x)
     description: 'The least integer greater than or equal to x: $\lceil x \rceil$.'
     library: enumeratio-analytic
-    type: (real | signed_infinity | ~oo) -> integer | signed_infinity | ~oo
+    type: (real | signed_infinity) -> integer | signed_infinity
     overrides: compute-engine
   - call: Ceil(x)
     description: in a floor ring (Mathlib's), the least integer at or above x; in a floor order, the least tick at or above x; in a product order, coordinate by coordinate, so a complex number's real and imaginary parts are rounded up separately.

@@ -9,7 +9,7 @@ signatures:
   - call: Sec(x)
     description: Secant, the reciprocal of [[Cos]].
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number
+    type: (complex) -> number
     overrides: compute-engine
 seeAlso:
   - Cos

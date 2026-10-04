@@ -9,7 +9,7 @@ signatures:
   - call: Tan(x)
     description: The tangent of x, in radians.
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number
+    type: (complex) -> number
     overrides: compute-engine
 seeAlso:
   - Sin
