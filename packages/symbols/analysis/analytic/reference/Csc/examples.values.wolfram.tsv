@@ -34,4 +34,4 @@ n-4-times-neg-1-plus-csc-1-over-2-pow-2-times	N[Times[4, Plus[-1, Power[Csc[Rati
 n-csc-1-over-2-plus-1-over-2-times-pi-pow-2	N[Power[Csc[Plus[Rational[1, 2], Times[Rational[1, 2], Pi]]], 2]]	1.2984464104095246		N\left[\csc ^2\left(\frac{1}{2}+\frac{1}{2} \pi \right)\right]	1.29845	
 n-4-times-neg-1-plus-csc-2-pow-2-times-csc-4-pow	N[Times[4, Plus[-1, Power[Csc[2], 2]], Power[Csc[4], 2]]]	1.4627703597119728		N\left[4 \left(-1+\csc ^2(2)\right) \csc ^2(4)\right]	1.46277	
 a-pole-sin-0-0	Csc[0]	ComplexInfinity		\csc (0)	\text{ComplexInfinity}	
-csc-complexinfinity-is-indeterminate-for-the	Csc[ComplexInfinity]	Indeterminate		\csc (\text{ComplexInfinity})	\text{Indeterminate}	
+csc-complexinfinity-is-indeterminate-for-the	Csc[ComplexInfinity]	Indeterminate		\csc (\text{ComplexInfinity})	\text{Indeterminate}	disagree

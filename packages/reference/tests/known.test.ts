@@ -11,11 +11,20 @@ const known = referenceData().heads.flatMap(({ head, entry }) =>
   entry.examples.filter((e) => e.known !== undefined && e.role !== "triage").map((e) => ({ head, example: e })),
 );
 
-test("every example's expected agrees with its known value", { timeout: 60_000 }, () => {
-  const off = known.flatMap(({ head, example: { id, expr, expected, known: value, tolerance, source } }) => {
-    const why = disagreement(expected, value, tolerance ?? DEFAULT_TOLERANCE, expr);
-    return why === undefined ? [] : [`${head}/${id} (${source}): ${why}`];
-  });
+// A row may part from its `known` on purpose, and says so: `knownConvention` (compute-engine
+// follows another convention than the source) or `knownGap` (a missing capability, `known` is the
+// target). The marker is held both ways: an unmarked disagreement fails, and so does a marker on
+// a row that agrees, which would be stale.
+test("every example's expected agrees with its known value, or says why not", { timeout: 60_000 }, () => {
+  const off = known.flatMap(
+    ({ head, example: { id, expr, expected, known: value, tolerance, source, knownConvention, knownGap } }) => {
+      const why = disagreement(expected, value, tolerance ?? DEFAULT_TOLERANCE, expr);
+      const marked = knownConvention !== undefined || knownGap !== undefined;
+      if (why !== undefined && !marked) return [`${head}/${id} (${source}): ${why}`];
+      if (why === undefined && marked) return [`${head}/${id}: marked as parting from known, but agrees with it`];
+      return [];
+    },
+  );
   expect(off).toEqual([]);
 });
 
