@@ -6,8 +6,6 @@ summary: The Dyck paths of semilength $n$ — balanced up/down words — a lazy 
 signatures:
   - call: DyckPaths(n)
     description: the $C_n$ lattice paths of $n$ up- and $n$ down-steps that never dip below the axis.
-  - call: DyckPaths(n)
-    description: The Dyck paths of semilength $n$ — balanced up/down words — a lazy family of Catalan many.
     library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<dyck_path>
 enumerate:
