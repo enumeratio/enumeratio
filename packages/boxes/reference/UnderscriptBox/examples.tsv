@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+limit	Basic		[UnderscriptBox, "'lim'", "'n→∞'"]	[UnderscriptBox, "'lim'", "'n→∞'"]	a box is inert: it evaluates to itself

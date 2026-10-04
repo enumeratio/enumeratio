@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+four-strands	Basic		[BraidStrands, [Braid, 4, [List, 1, 2]]]	4	A braid in $B_4$

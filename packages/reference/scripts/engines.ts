@@ -17,7 +17,9 @@ import {
   type Library,
   loadLibraries,
   NOTATIONS,
+  type StagedLibrary,
 } from "@enumeratio/manifest";
+import { declareCompose, declareRestricted } from "@enumeratio/structures";
 
 // The libraries are the ones this package depends on (it can import each, so each specifier
 // resolves from here); what each declares, and in what order, is the manifest's to say.
@@ -40,8 +42,25 @@ const NAMES = AVAILABLE.map((library) => library.name);
 // provenance.ts), so this only affects its `provenance` classification, and it is a stub with
 // no examples either way.
 
+// `Restricted` and `Compose` are structures' over combinatorics' maps, so they follow combinatorics
+// (as in census's engine), and their examples run here.
+const late = (
+  name: string,
+  declare: (ce: ComputeEngine) => void,
+  requires: string[],
+): StagedLibrary<ComputeEngine> => ({
+  name,
+  declare,
+  late: declare,
+  requires,
+});
+const EXTRAS = [
+  late("restricted", declareRestricted, ["combinatorics"]),
+  late("compose", declareCompose, ["restricted"]),
+];
+
 /** The engine's plan: every library this package depends on, the base, and what each requires. */
-export const PLAN = enginePlan({ libraries: NAMES, available: AVAILABLE });
+export const PLAN = enginePlan({ libraries: NAMES, available: AVAILABLE, include: EXTRAS });
 
 /**
  * The same libraries by package, for the resolver (`@enumeratio/manifest`'s `createResolver`).
@@ -61,7 +80,7 @@ export const packageNotations = (): Promise<PackageNotation[]> =>
   );
 
 export const declaredEngine = (): ComputeEngine =>
-  buildEngine({ libraries: NAMES, available: AVAILABLE, engine: () => new ComputeEngine() }).engine;
+  buildEngine({ libraries: NAMES, available: AVAILABLE, include: EXTRAS, engine: () => new ComputeEngine() }).engine;
 
 /**
  * `configure(ce)` for `@enumeratio/evaluation/node`'s isolated evaluator (`evaluateIsolated`,

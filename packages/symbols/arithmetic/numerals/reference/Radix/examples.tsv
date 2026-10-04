@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+digits-via-the-old-name	Basic		[IntegerDigits, 100, [Radix, 7]]	[List, 2, 0, 2]	Same digits as [[PositionalNumerals]]

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[SqrtBox, "'x'"]	[SqrtBox, "'x'"]	a box is inert: it evaluates to itself

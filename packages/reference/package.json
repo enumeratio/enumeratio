@@ -48,6 +48,7 @@
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/evaluation": "workspace:*",
     "@enumeratio/formats": "workspace:*",
+    "@enumeratio/geometric": "workspace:*",
     "@enumeratio/groupalgebra": "workspace:*",
     "@enumeratio/hecke": "workspace:*",
     "@enumeratio/hopf": "workspace:*",

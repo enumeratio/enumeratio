@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+reduced	Basic		[IsReducedForm, [QuadraticForm, 1, 1, -1]]	True	Satisfies Gauss's condition for $D=5$
+not-reduced	Basic		[IsReducedForm, [QuadraticForm, 1, 3, -4]]	False	Fails the condition for $D=25$

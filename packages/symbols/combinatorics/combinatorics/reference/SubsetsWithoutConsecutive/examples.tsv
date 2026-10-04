@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-subsets-without-consecutive-5	Basic		[Count, [SubsetsWithoutConsecutive, 5]]	13	$F(7) = 13$
+subsets-without-consecutive-3	Basic		[Take, [SubsetsWithoutConsecutive, 3], 5]	[List, [List], [List, 1], [List, 2], [List, 3], [List, 1, 3]]	No two consecutive integers

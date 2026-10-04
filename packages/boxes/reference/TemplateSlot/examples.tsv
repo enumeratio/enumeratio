@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+hole	Basic		[TemplateSlot, "'n'"]	[TemplateSlot, "'n'"]	an unfilled hole is inert: it evaluates to itself

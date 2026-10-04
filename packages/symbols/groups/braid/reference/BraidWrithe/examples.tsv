@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+exponent-sum	Basic		[BraidWrithe, [Braid, 3, [List, 1, -2, 1]]]	1	$1-1+1$

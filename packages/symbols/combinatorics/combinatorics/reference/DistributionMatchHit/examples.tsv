@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+a-hit-as-data	Basic		[DistributionMatchHit, [Tuple, "'Permutations'", "'Descents'", [List], 1, [Rational, 1, 2]]]	[DistributionMatchHit, [Tuple, "'Permutations'", "'Descents'", [List], 1, [Rational, 1, 2]]]	A match record: collection, statistic, maps applied first, $q_a$, $q_d$

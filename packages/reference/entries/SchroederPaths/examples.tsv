@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-n-4	Basic		[Count, [SchroederPaths, 4]]	90	The large Schröder numbers: $1, 2, 6, 22, 90, \ldots$
+all-for-n-2	Basic		[Take, [SchroederPaths, 2], 6]	[List, [SchroederPath, [List, 1, 1, -1, -1]], [SchroederPath, [List, 1, 2, -1]], [SchroederPath, [List, 1, -1, 1, -1]], [SchroederPath, [List, 1, -1, 2]], [SchroederPath, [List, 2, 1, -1]], [SchroederPath, [List, 2, 2]]]	All Schröder paths of semilength $2$

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+trefoil	Basic		[KauffmanBracket, [TorusKnot, 2, 3]]	[Add, [Negate, [Power, A, 5]], [Negate, [Power, A, -3]], [Power, A, -7]]	Not yet corrected for writhe
+hopf-link	Basic		[KauffmanBracket, [Braid, 2, [List, 1, 1]]]	[Add, [Negate, [Power, A, 4]], [Negate, [Power, A, -4]]]	Defined for links too

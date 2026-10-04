@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+geodesic-lrrrr	Basic		[LinkingWithTrefoil, [ModularMatrix, 1, 4, 1, 5]]	3	The matrix of $LR^4$; equals its Rademacher symbol

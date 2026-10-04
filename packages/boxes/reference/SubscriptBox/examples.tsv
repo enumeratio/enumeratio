@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+x-sub-1	Basic		[SubscriptBox, "'x'", "'1'"]	[SubscriptBox, "'x'", "'1'"]	a box is inert: it evaluates to itself

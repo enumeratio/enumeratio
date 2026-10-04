@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+range	Basic		[Knob, x, [Tuple, 0, 10]]	[Knob, x, [Tuple, 0, 10]]	held inert: it evaluates to itself, and is drawn by the element

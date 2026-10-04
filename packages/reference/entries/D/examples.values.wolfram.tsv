@@ -1,0 +1,4 @@
+id	in
+of-a-product	D[Times[Power[x, 2], Sin[x]], x]
+second-derivative	D[Power[x, 3], x, x]
+of-a-head-we-declare	D[LogGamma[z], z]

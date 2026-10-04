@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-n-5	Basic		[Count, [SytTwoColumn, 5]]	10	The standard tableaux of two-column shape with $5$ cells
+all-for-n-3	Basic		[Take, [SytTwoColumn, 3], 3]	[List, [StandardTableau, [List, [List, 1, 2, 3], [List]]], [StandardTableau, [List, [List, 1, 2], [List, 3]]], [StandardTableau, [List, [List, 1, 3], [List, 2]]]]	The tableaux with $3$ cells

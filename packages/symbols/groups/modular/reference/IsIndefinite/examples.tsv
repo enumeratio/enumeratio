@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+indefinite-when-d-5	Basic		[IsIndefinite, [QuadraticForm, 1, 1, -1]]	True	$D=5$ is positive and not a square
+a-square-discriminant-is-not-indefinite	Basic		[IsIndefinite, [QuadraticForm, 1, 2, 1]]	False	$D=0$ is a perfect square

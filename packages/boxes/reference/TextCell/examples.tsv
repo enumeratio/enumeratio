@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+paragraph	Basic		[TextCell, [TextData, [List, "'Hello'", "'world'"]], "'Text'"]	[TextCell, [TextData, [List, "'Hello'", "'world'"]], "'Text'"]	a box is inert: it evaluates to itself

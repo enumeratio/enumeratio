@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-odd-subsets-4	Basic		[Count, [OddSubsets, 4]]	8	$2^{3}$ of the 16 subsets
+odd-subsets-3	Basic		[Take, [OddSubsets, 3], 4]	[List, [List, 1], [List, 2], [List, 3], [List, 1, 2, 3]]	Size 1 and 3 subsets of $\{1,2,3\}$

@@ -1,0 +1,2 @@
+id	in
+base-7-digits	IntegerDigits[100, 7]

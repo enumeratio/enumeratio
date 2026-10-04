@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+bold	Basic		[StyleBox, "'x'", [Tuple, FontWeight, "'Bold'"]]	[StyleBox, "'x'", [Tuple, FontWeight, "'Bold'"]]	a box is inert: it evaluates to itself

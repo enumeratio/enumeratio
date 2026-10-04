@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+negabinary-of-minus-6	Basic		[IntegerDigits, -6, [NegativeNumerals, 2]]	[List, 1, 1, 1, 0]	$-6 = -8 + 4 - 2$: no sign needed
