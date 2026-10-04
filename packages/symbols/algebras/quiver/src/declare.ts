@@ -1,7 +1,6 @@
 import { declareAlgebra } from "@enumeratio/structures";
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { integerAt, operandsOf, symbolNameOf, type Engine, type Expr } from "@enumeratio/engine";
 import { QUIVER_NOTATION } from "./notation.ts";
 import {
   allPaths,
@@ -25,14 +24,14 @@ import {
 // is to leave the call standing rather than enumerate forever or invent a number.
 // `QuiverIsAcyclic` is the head that says which side of that line a quiver is on.
 
-const integerList = (expr: BoxedExpression | undefined): number[] | undefined => {
+const integerList = (expr: Expr | undefined): number[] | undefined => {
   if (expr === undefined || expr.operator !== "List") return undefined;
   const values = operandsOf(expr).map(integerAt);
   return values.every((v): v is number => v !== undefined) ? values : undefined;
 };
 
 /** Read `Quiver(n, [[from,to],…])`, or one of the named quivers. */
-function quiverOf(expr: BoxedExpression): Quiver | undefined {
+function quiverOf(expr: Expr): Quiver | undefined {
   const name = symbolNameOf(expr);
   if (name === "JordanQuiver") return jordanQuiver();
   if (name === "KroneckerQuiver") return kroneckerQuiver();
@@ -61,7 +60,7 @@ function quiverOf(expr: BoxedExpression): Quiver | undefined {
 }
 
 /** `PathAlgebra(quiver)` → its quiver. */
-const algebraOf = (expr: BoxedExpression): Quiver | undefined =>
+const algebraOf = (expr: Expr): Quiver | undefined =>
   expr.operator === "PathAlgebra"
     ? (() => {
         const inner = operandsOf(expr)[0];
@@ -69,7 +68,7 @@ const algebraOf = (expr: BoxedExpression): Quiver | undefined =>
       })()
     : undefined;
 
-export function declareQuiver(ce: ComputeEngine): void {
+export function declareQuiver(ce: Engine): void {
   registerNotation(ce, QUIVER_NOTATION);
   ce.declare("Quiver", { signature: "(integer, list<list<integer>>) -> expression<Quiver>" });
   ce.declare("LinearQuiver", { signature: "(integer) -> expression<LinearQuiver>" });
@@ -82,7 +81,7 @@ export function declareQuiver(ce: ComputeEngine): void {
   ce.declare("PathAlgebra", { signature: `(${quiverLike}) -> path_algebra` });
   ce.declare("QuiverPath", { signature: "(integer, list<integer>) -> number" });
 
-  const pathExpression = (p: Path): BoxedExpression =>
+  const pathExpression = (p: Path): Expr =>
     ce.function("QuiverPath", [
       ce.number(p.start),
       ce.function(
@@ -92,7 +91,7 @@ export function declareQuiver(ce: ComputeEngine): void {
     ]);
 
   /** Read `QuiverPath(start, [arrows…])`. */
-  const pathOf = (expr: BoxedExpression): Path | undefined => {
+  const pathOf = (expr: Expr): Path | undefined => {
     if (expr.operator !== "QuiverPath") return undefined;
     const ops = operandsOf(expr);
     const start = integerAt(ops[0]);
@@ -102,7 +101,7 @@ export function declareQuiver(ce: ComputeEngine): void {
 
   ce.declare("QuiverIsAcyclic", {
     signature: `(${quiverLike}) -> boolean`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const q = ops[0] === undefined ? undefined : quiverOf(ops[0]);
       return q === undefined ? undefined : ce.symbol(hasCycle(q) ? "False" : "True");
     },
@@ -112,7 +111,7 @@ export function declareQuiver(ce: ComputeEngine): void {
   // QuiverPath>`), so a `QuiverPath(...)` instance types as `number` — match that here.
   ce.declare("QuiverPathEnd", {
     signature: `(${quiverLike}, number) -> integer`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const q = ops[0] === undefined ? undefined : quiverOf(ops[0]);
       const p = ops[1] === undefined ? undefined : pathOf(ops[1]);
       if (q === undefined || p === undefined || !isPath(q, p)) return undefined;
@@ -127,7 +126,7 @@ export function declareQuiver(ce: ComputeEngine): void {
    */
   ce.declare("QuiverCompose", {
     signature: `(${quiverLike}, number, number) -> number`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const q = ops[0] === undefined ? undefined : quiverOf(ops[0]);
       const a = ops[1] === undefined ? undefined : pathOf(ops[1]);
       const b = ops[2] === undefined ? undefined : pathOf(ops[2]);

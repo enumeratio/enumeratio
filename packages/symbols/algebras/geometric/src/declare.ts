@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine, Expr } from "@enumeratio/engine";
 import { type Algebra, algebraOf, type Multivector, toExpression, toMultivector } from "@enumeratio/hypercomplex";
 import { gradePart, gradesOf } from "./blades.ts";
 import { poincareDual, pseudoscalar, sandwich, vee } from "./dual.ts";
@@ -31,18 +31,17 @@ import {
 // spellings, so none of them belongs in `HEADS` or `FOREIGN` — they are ours alone.
 
 /** Read one operand as a multivector, or give up on the whole call. */
-const read = (ce: ComputeEngine, op: BoxedExpression | undefined): Multivector | undefined =>
+const read = (ce: Engine, op: Expr | undefined): Multivector | undefined =>
   op === undefined ? undefined : toMultivector(ce, op);
 
 /** Read every operand, or give up. */
-function readAll(ce: ComputeEngine, ops: readonly BoxedExpression[]): Multivector[] | undefined {
+function readAll(ce: Engine, ops: readonly Expr[]): Multivector[] | undefined {
   const parts = ops.map((op) => toMultivector(ce, op));
   return parts.every((m): m is Multivector => m !== undefined) ? parts : undefined;
 }
 
 /** The algebra an operand names, for the operations that need an ambient space. */
-const readAlgebra = (op: BoxedExpression | undefined): Algebra | undefined =>
-  op === undefined ? undefined : algebraOf(op);
+const readAlgebra = (op: Expr | undefined): Algebra | undefined => (op === undefined ? undefined : algebraOf(op));
 
 /**
  * Declare the geometric-algebra heads on `ce`. Requires `declareHypercomplex` to have
@@ -57,12 +56,12 @@ const readAlgebra = (op: BoxedExpression | undefined): Algebra | undefined =>
  *   blade it is taken against.
  * - `Sandwich(a, b)` — `a b ā`, how a versor acts.
  */
-export function declareGeometric(ce: ComputeEngine): void {
-  const binary = (name: string, op: (ce: ComputeEngine, a: Multivector, b: Multivector) => Multivector): void => {
+export function declareGeometric(ce: Engine): void {
+  const binary = (name: string, op: (ce: Engine, a: Multivector, b: Multivector) => Multivector): void => {
     ce.declare(name, {
       signature: "(number, number) -> number",
       commutative: false,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const parts = readAll(ce, ops);
         if (parts === undefined || parts.length !== 2) return undefined;
         return toExpression(ce, op(ce, parts[0]!, parts[1]!));
@@ -70,10 +69,10 @@ export function declareGeometric(ce: ComputeEngine): void {
     });
   };
 
-  const involution = (name: string, op: (ce: ComputeEngine, mv: Multivector) => Multivector): void => {
+  const involution = (name: string, op: (ce: Engine, mv: Multivector) => Multivector): void => {
     ce.declare(name, {
       signature: "(number) -> number",
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const mv = read(ce, ops[0]);
         return mv === undefined ? undefined : toExpression(ce, op(ce, mv));
       },
@@ -86,7 +85,7 @@ export function declareGeometric(ce: ComputeEngine): void {
     signature: "(number+) -> number",
     associative: true,
     commutative: false,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const parts = readAll(ce, ops);
       if (parts === undefined || parts.length === 0) return undefined;
       return toExpression(
@@ -107,7 +106,7 @@ export function declareGeometric(ce: ComputeEngine): void {
 
   ce.declare("GradePart", {
     signature: "(number, integer) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const mv = read(ce, ops[0]);
       const grade = ops[1];
       if (mv === undefined || grade === undefined) return undefined;
@@ -121,7 +120,7 @@ export function declareGeometric(ce: ComputeEngine): void {
   // grade, so it has none to report and stays unevaluated with the rest.
   ce.declare("Grade", {
     signature: "(number) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const mv = read(ce, ops[0]);
       if (mv === undefined) return undefined;
       const grades = gradesOf(mv);
@@ -135,7 +134,7 @@ export function declareGeometric(ce: ComputeEngine): void {
 
   ce.declare("Pseudoscalar", {
     signature: `(${algebraLike}) -> number`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const algebra = readAlgebra(ops[0]);
       return algebra === undefined ? undefined : toExpression(ce, pseudoscalar(ce, algebra.generators));
     },
@@ -143,7 +142,7 @@ export function declareGeometric(ce: ComputeEngine): void {
 
   ce.declare("Dual", {
     signature: `(number, ${algebraLike}) -> number`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const mv = read(ce, ops[0]);
       const algebra = readAlgebra(ops[1]);
       if (mv === undefined || algebra === undefined) return undefined;
@@ -155,7 +154,7 @@ export function declareGeometric(ce: ComputeEngine): void {
   ce.declare("Vee", {
     signature: `(number, number, ${algebraLike}) -> number`,
     commutative: false,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const a = read(ce, ops[0]);
       const b = read(ce, ops[1]);
       const algebra = readAlgebra(ops[2]);

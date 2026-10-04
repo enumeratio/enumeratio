@@ -1,4 +1,4 @@
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import {
   addMultivectors,
   type Generator,
@@ -16,7 +16,7 @@ import { cliffordConjugate, wedge } from "./products.ts";
 // read that off the expression, so the algebra is an argument.
 
 /** The top blade of an algebra: every generator, in canonical order, coefficient one. */
-export const pseudoscalar = (ce: ComputeEngine, generators: readonly Generator[]): Multivector =>
+export const pseudoscalar = (ce: Engine, generators: readonly Generator[]): Multivector =>
   term(generators, ce.number(1));
 
 /**
@@ -33,11 +33,7 @@ export const pseudoscalar = (ce: ComputeEngine, generators: readonly Generator[]
  * `undefined` when `mv` uses a generator the algebra does not have, since a complement
  * taken in the wrong ambient space is not a wrong answer so much as a different one.
  */
-export function poincareDual(
-  ce: ComputeEngine,
-  mv: Multivector,
-  generators: readonly Generator[],
-): Multivector | undefined {
+export function poincareDual(ce: Engine, mv: Multivector, generators: readonly Generator[]): Multivector | undefined {
   const parts: Multivector[] = [];
   for (const t of mv.terms.values()) {
     if (!t.blade.every((g) => generators.some((h) => same(g, h)))) return undefined;
@@ -60,7 +56,7 @@ export function poincareDual(
  * top-grade blade, so `∨` is the join of points and `∧` is the meet of lines.
  */
 export function vee(
-  ce: ComputeEngine,
+  ce: Engine,
   a: Multivector,
   b: Multivector,
   generators: readonly Generator[],
@@ -78,5 +74,5 @@ export function vee(
  * a rotor, a translator, a motor, which is every case this is reached for — the
  * conjugate and the reverse agree, so this is the familiar `R x R̃`.
  */
-export const sandwich = (ce: ComputeEngine, a: Multivector, b: Multivector): Multivector =>
+export const sandwich = (ce: Engine, a: Multivector, b: Multivector): Multivector =>
   multiplyMultivectors(ce, multiplyMultivectors(ce, a, b), cliffordConjugate(ce, a));

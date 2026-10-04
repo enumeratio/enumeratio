@@ -1,6 +1,5 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
-import { integerAt, operandsOf } from "@enumeratio/engine";
+import { integerAt, operandsOf, type Engine, type Expr } from "@enumeratio/engine";
 import {
   CLASS_ADMITS,
   composeDiagrams,
@@ -47,7 +46,7 @@ const CONSTRUCTORS: Record<string, DiagramClass> = {
 const BASIS_LIMIT = 1024;
 
 /** Read `PartitionAlgebra(n)` and friends. */
-function algebraOf(expr: BoxedExpression): { cls: DiagramClass; strands: number } | undefined {
+function algebraOf(expr: Expr): { cls: DiagramClass; strands: number } | undefined {
   const cls = CONSTRUCTORS[expr.operator];
   if (cls === undefined) return undefined;
   const strands = integerAt(operandsOf(expr)[0]);
@@ -59,7 +58,7 @@ function algebraOf(expr: BoxedExpression): { cls: DiagramClass; strands: number 
  * the largest label used — a diagram is a partition of ALL 2n points, so a missing one
  * is a malformed diagram rather than an implicit singleton.
  */
-function diagramOf(expr: BoxedExpression): Diagram | undefined {
+function diagramOf(expr: Expr): Diagram | undefined {
   if (expr.operator !== "Diagram") return undefined;
   const listed = operandsOf(expr)[0];
   if (listed === undefined || listed.operator !== "List") return undefined;
@@ -82,9 +81,9 @@ function diagramOf(expr: BoxedExpression): Diagram | undefined {
   return diagram(strands, blocks);
 }
 
-export function declareDiagrams(ce: ComputeEngine): void {
+export function declareDiagrams(ce: Engine): void {
   registerNotation(ce, DIAGRAM_NOTATION);
-  const toExpression = (d: Diagram): BoxedExpression =>
+  const toExpression = (d: Diagram): Expr =>
     ce.function("Diagram", [
       ce.function(
         "List",
@@ -98,14 +97,14 @@ export function declareDiagrams(ce: ComputeEngine): void {
     ]);
 
   /** The same blocks, spelt with the orbit head. */
-  const orbitExpression = (d: Diagram): BoxedExpression => ce.function("OrbitDiagram", operandsOf(toExpression(d)));
+  const orbitExpression = (d: Diagram): Expr => ce.function("OrbitDiagram", operandsOf(toExpression(d)));
 
   // The carrier normalises itself. A diagram has one canonical spelling — blocks
   // sorted, and sorted among themselves — so that a hand-written diagram and a computed
   // one are the SAME expression. A malformed one is left exactly as written.
   ce.declare("Diagram", {
     signature: "(list) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const d = diagramOf(ce.function("Diagram", ops));
       return d === undefined ? undefined : toExpression(d);
     },
@@ -115,7 +114,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
   for (const head of constructors) ce.declare(head, { signature: "(integer) -> diagram_algebra" });
 
   /** a·b = δ^loops · (a∘b). */
-  const product = (parts: readonly Diagram[]): BoxedExpression | undefined => {
+  const product = (parts: readonly Diagram[]): Expr | undefined => {
     let current = parts[0];
     if (current === undefined) return undefined;
     let loops = 0;
@@ -136,23 +135,21 @@ export function declareDiagrams(ce: ComputeEngine): void {
   /** The orbit basis element x_λ, carrying the same blocks as the diagram d_λ. */
   ce.declare("OrbitDiagram", {
     signature: "(list) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const d = diagramOf(ce.function("Diagram", ops));
       return d === undefined ? undefined : orbitExpression(d);
     },
   });
 
   /** Read a combination of diagrams or of orbit elements — not a mix of the two. */
-  const readAlgebra = (
-    expr: BoxedExpression,
-  ): { head: "Diagram" | "OrbitDiagram"; element: AlgebraElement } | undefined => {
+  const readAlgebra = (expr: Expr): { head: "Diagram" | "OrbitDiagram"; element: AlgebraElement } | undefined => {
     if (expr.operator === "Diagram" || expr.operator === "OrbitDiagram") {
       const d = diagramOf(ce.function("Diagram", operandsOf(expr)));
       return d === undefined ? undefined : { head: expr.operator, element: basisElement(d) };
     }
     const ops = operandsOf(expr);
     if (expr.operator === "Negate" && ops.length === 1) {
-      const inner = readAlgebra(ops[0] as BoxedExpression);
+      const inner = readAlgebra(ops[0] as Expr);
       if (inner === undefined) return undefined;
       return {
         head: inner.head,
@@ -188,21 +185,21 @@ export function declareDiagrams(ce: ComputeEngine): void {
     return undefined;
   };
 
-  const writeAlgebra = (head: "Diagram" | "OrbitDiagram", value: AlgebraElement): BoxedExpression => {
+  const writeAlgebra = (head: "Diagram" | "OrbitDiagram", value: AlgebraElement): Expr => {
     const terms = [...value.values()].toSorted((a, b) => (diagramKey(a.diagram) < diagramKey(b.diagram) ? -1 : 1));
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map(({ diagram: d, coefficient }) => {
       const b = head === "Diagram" ? toExpression(d) : orbitExpression(d);
       return coefficient === 1 ? b : ce.function("Multiply", [ce.number(coefficient), b]);
     });
-    return parts.length === 1 ? (parts[0] as BoxedExpression) : ce.function("Add", parts);
+    return parts.length === 1 ? (parts[0] as Expr) : ce.function("Add", parts);
   };
 
   /** Rewrite in the other basis, in either direction. */
   const rewrite = (head: string, into: "Diagram" | "OrbitDiagram"): void => {
     ce.declare(head, {
       signature: "(number) -> number",
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const read = ops[0] === undefined ? undefined : readAlgebra(ops[0]);
         if (read === undefined) return undefined;
         if (read.head === into) return writeAlgebra(into, read.element);
@@ -217,7 +214,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
   /** The partition lattice's Möbius function on the interval between two diagrams. */
   ce.declare("PartitionMobius", {
     signature: "(number, number) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [finer, coarser] = [ops[0], ops[1]].map((op) =>
         op === undefined ? undefined : diagramOf(ce.function("Diagram", operandsOf(op))),
       );
@@ -230,7 +227,7 @@ export function declareDiagrams(ce: ComputeEngine): void {
   /** Every partition coarser than this one — Bell(k) of them, for k blocks. */
   ce.declare("DiagramCoarsenings", {
     signature: "(number) -> list",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const d = ops[0] === undefined ? undefined : diagramOf(ce.function("Diagram", operandsOf(ops[0])));
       return d === undefined ? undefined : ce.function("List", coarsenings(d).map(toExpression));
     },

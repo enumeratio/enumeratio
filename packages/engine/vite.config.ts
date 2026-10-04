@@ -2,7 +2,12 @@ import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   pack: {
-    entry: { index: "src/index.ts", compiled: "src/compiled.ts" },
+    entry: {
+      index: "src/index.ts",
+      compiled: "src/compiled.ts",
+      testing: "src/testing.ts",
+      unstable: "src/unstable.ts",
+    },
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo" },
   },

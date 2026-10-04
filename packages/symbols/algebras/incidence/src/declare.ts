@@ -1,7 +1,6 @@
 import { declareAlgebra } from "@enumeratio/structures";
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
-import { integerAt, operandsOf } from "@enumeratio/engine";
+import { integerAt, operandsOf, type Engine, type Expr } from "@enumeratio/engine";
 import { INCIDENCE_NOTATION } from "./notation.ts";
 import {
   booleanLattice,
@@ -32,9 +31,9 @@ import {
 interface Presented {
   readonly poset: Poset;
   /** The label as a compute-engine value. */
-  show(ce: ComputeEngine, label: string): BoxedExpression;
+  show(ce: Engine, label: string): Expr;
   /** Which element index an expression names, if any. */
-  read(expr: BoxedExpression): number | undefined;
+  read(expr: Expr): number | undefined;
 }
 
 const numeric = (poset: Poset): Presented => ({
@@ -63,7 +62,7 @@ const subsets = (poset: Poset): Presented => ({
 });
 
 /** Read `Chain(n)` / `BooleanLattice(n)` / `DivisorLattice(n)`. */
-function presentedPoset(expr: BoxedExpression): Presented | undefined {
+function presentedPoset(expr: Expr): Presented | undefined {
   const n = integerAt(operandsOf(expr)[0]);
   if (n === undefined) return undefined;
   switch (expr.operator) {
@@ -85,7 +84,7 @@ function presentedPoset(expr: BoxedExpression): Presented | undefined {
 }
 
 /** `IncidenceAlgebra(poset)` → the poset it is built on. */
-const incidenceOf = (expr: BoxedExpression): Presented | undefined =>
+const incidenceOf = (expr: Expr): Presented | undefined =>
   expr.operator === "IncidenceAlgebra"
     ? (() => {
         const inner = operandsOf(expr)[0];
@@ -93,7 +92,7 @@ const incidenceOf = (expr: BoxedExpression): Presented | undefined =>
       })()
     : undefined;
 
-export function declareIncidence(ce: ComputeEngine): void {
+export function declareIncidence(ce: Engine): void {
   registerNotation(ce, INCIDENCE_NOTATION);
   ce.declare("Chain", { signature: "(integer) -> expression<Chain>" });
   ce.declare("BooleanLattice", { signature: "(integer) -> expression<BooleanLattice>" });
@@ -106,7 +105,7 @@ export function declareIncidence(ce: ComputeEngine): void {
   ce.declare("IncidenceAlgebra", { signature: `(${posetLike}) -> incidence_algebra` });
   ce.declare("PosetInterval", { signature: "(value, value) -> expression<PosetInterval>" });
 
-  const interval = (present: Presented, from: number, to: number): BoxedExpression =>
+  const interval = (present: Presented, from: number, to: number): Expr =>
     ce.function("PosetInterval", [
       present.show(ce, present.poset.elements[from]!),
       present.show(ce, present.poset.elements[to]!),
@@ -114,7 +113,7 @@ export function declareIncidence(ce: ComputeEngine): void {
 
   ce.declare("PosetElements", {
     signature: `(${posetLike}) -> list<number | list<integer>>`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const present = ops[0] === undefined ? undefined : presentedPoset(ops[0]);
       if (present === undefined) return undefined;
       return ce.function(
@@ -128,7 +127,7 @@ export function declareIncidence(ce: ComputeEngine): void {
   const pointwise = (head: string, f: (poset: Poset, i: number, j: number) => number): void => {
     ce.declare(head, {
       signature: `(${posetLike}, value, value) -> integer`,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const present = ops[0] === undefined ? undefined : presentedPoset(ops[0]);
         if (present === undefined || ops[1] === undefined || ops[2] === undefined) return undefined;
         const from = present.read(ops[1]);
@@ -146,7 +145,7 @@ export function declareIncidence(ce: ComputeEngine): void {
   /** Möbius inversion, as a head: undo a sum-down over the order. */
   ce.declare("MoebiusInvert", {
     signature: `(${posetLike}, list<number>) -> list<number>`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const present = ops[0] === undefined ? undefined : presentedPoset(ops[0]);
       const listed = ops[1];
       if (present === undefined || listed === undefined || listed.operator !== "List") {
@@ -165,7 +164,7 @@ export function declareIncidence(ce: ComputeEngine): void {
   /** The map Möbius inversion undoes: g(y) = Σ_{x ≤ y} f(x). */
   ce.declare("PosetSumDown", {
     signature: `(${posetLike}, list<number>) -> list<number>`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const present = ops[0] === undefined ? undefined : presentedPoset(ops[0]);
       const listed = ops[1];
       if (present === undefined || listed === undefined || listed.operator !== "List") {

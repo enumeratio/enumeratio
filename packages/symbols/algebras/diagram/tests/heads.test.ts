@@ -1,14 +1,12 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { declareHypercomplex } from "@enumeratio/hypercomplex";
 import { expect, test } from "vite-plus/test";
 import { declareDiagrams } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
 // Declared alongside the hypercomplex library on purpose: both wrap `Basis`,
 // `AlgebraDimension`, `Element` and the ordered product, and each defers to whatever
 // was there before, so the two have to compose.
-declareHypercomplex(ce);
-declareDiagrams(ce);
+const ce = createEngine(declareHypercomplex, declareDiagrams);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 const same = (input: Expr, expected: Expr) =>

@@ -1,4 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { box, type Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { declareNumberTheory } from "@enumeratio/number-theory";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
@@ -8,13 +9,9 @@ import golden from "./adeles.golden.json" with { type: "json" };
 
 // Every case is pinned against Hertogh's Sage `adeles` (scripts/collect-golden.py).
 
-const ce = new ComputeEngine();
-declareResidues(ce);
-declareNumerals(ce);
-declareNumberTheory(ce);
-declareAdeles(ce);
+const ce = createEngine(declareResidues, declareNumerals, declareNumberTheory, declareAdeles);
 
-const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const run = (expr: unknown): unknown => box(ce, expr as Json).evaluate().json;
 
 describe.each(Object.entries(golden))("%s", (_family, cases) => {
   test.each(cases.map((c, i) => [i, c] as const))("case %i", (_i, { input, expected }) => {

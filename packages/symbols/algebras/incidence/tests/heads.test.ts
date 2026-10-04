@@ -1,9 +1,8 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareIncidence } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareIncidence(ce);
+const ce = createEngine(declareIncidence);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 const same = (input: Expr, expected: Expr) =>

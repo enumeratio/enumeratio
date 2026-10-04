@@ -1,4 +1,3 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -7,6 +6,8 @@ import {
   mayBeInteger,
   operandsOf,
   symbolNameOf,
+  type Engine,
+  type Expr,
 } from "@enumeratio/engine";
 import { ADIC, adicOf, adic } from "@enumeratio/numerals";
 import { isPrime, mod } from "@enumeratio/residues";
@@ -36,15 +37,15 @@ export const PROFINITE = "ProfiniteNumber";
 export const ADELE = "Adele";
 export const IDELE = "Idele";
 
-type Evaluate = (ops: readonly BoxedExpression[]) => BoxedExpression | undefined;
+type Evaluate = (ops: readonly Expr[]) => Expr | undefined;
 
-const rationalAt = (expr: BoxedExpression | undefined): Rational | undefined => {
+const rationalAt = (expr: Expr | undefined): Rational | undefined => {
   const r = bigRationalAt(expr);
   return r === undefined ? undefined : Q.q(r[0], r[1]);
 };
 
 /** A profinite number, a rational read exactly, or `undefined`. */
-export function profiniteOf(expr: BoxedExpression | undefined): Profinite | undefined {
+export function profiniteOf(expr: Expr | undefined): Profinite | undefined {
   if (expr === undefined) return undefined;
   if (expr.operator === PROFINITE) {
     const [x, m] = operandsOf(expr);
@@ -56,30 +57,30 @@ export function profiniteOf(expr: BoxedExpression | undefined): Profinite | unde
   return r === undefined ? undefined : P.exact(r);
 }
 
-const numberOf = (ce: ComputeEngine, x: Rational): BoxedExpression => ce.number(Q.isInteger(x) ? x[0] : [x[0], x[1]]);
+const numberOf = (ce: Engine, x: Rational): Expr => ce.number(Q.isInteger(x) ? x[0] : [x[0], x[1]]);
 
-export const profiniteExpression = (ce: ComputeEngine, x: Profinite): BoxedExpression =>
+export const profiniteExpression = (ce: Engine, x: Profinite): Expr =>
   P.isExact(x) ? numberOf(ce, x.value) : ce.function(PROFINITE, [numberOf(ce, x.value), numberOf(ce, x.modulus)]);
 
 // ── adèles and idèles: a real part beside a finite one ──────────────────────────────
 
 interface Adele {
-  readonly real: BoxedExpression;
+  readonly real: Expr;
   readonly finite: Profinite;
 }
 
 interface Idele {
-  readonly real: BoxedExpression;
+  readonly real: Expr;
   readonly finite: IdeleFinite;
 }
 
 /** A real constant: an exact or approximate number, or a closed form like π. */
-const isRealNumber = (expr: BoxedExpression): boolean => {
+const isRealNumber = (expr: Expr): boolean => {
   const n = expr.N();
   return n.im === 0 && Number.isFinite(n.re);
 };
 
-function adeleOf(expr: BoxedExpression): Adele | undefined {
+function adeleOf(expr: Expr): Adele | undefined {
   if (expr.operator === ADELE) {
     const [real, finite] = operandsOf(expr);
     const z = profiniteOf(finite);
@@ -89,10 +90,9 @@ function adeleOf(expr: BoxedExpression): Adele | undefined {
   return r === undefined ? undefined : { real: expr, finite: P.exact(r) };
 }
 
-const adeleExpression = (ce: ComputeEngine, x: Adele): BoxedExpression =>
-  ce.function(ADELE, [x.real, profiniteExpression(ce, x.finite)]);
+const adeleExpression = (ce: Engine, x: Adele): Expr => ce.function(ADELE, [x.real, profiniteExpression(ce, x.finite)]);
 
-function ideleOf(expr: BoxedExpression): Idele | undefined {
+function ideleOf(expr: Expr): Idele | undefined {
   if (expr.operator === IDELE) {
     const [real, scale, units] = operandsOf(expr);
     const s = rationalAt(scale);
@@ -108,28 +108,28 @@ function ideleOf(expr: BoxedExpression): Idele | undefined {
   return r === undefined || Q.isZero(r) ? undefined : { real: expr, finite: { kind: "principal", value: r } };
 }
 
-function adicExpression(ce: ComputeEngine, u: adic.Adic): BoxedExpression {
+function adicExpression(ce: Engine, u: adic.Adic): Expr {
   const ops = [ce.number(u.base), numberOf(ce, [u.num, u.den])];
   if (u.prec !== undefined) ops.push(ce.number(u.prec));
   return ce.function(ADIC, ops);
 }
 
-function ideleExpression(ce: ComputeEngine, x: Idele): BoxedExpression {
+function ideleExpression(ce: Engine, x: Idele): Expr {
   const { real, finite } = x;
   if (finite.kind === "principal") return ce.function(IDELE, [real, numberOf(ce, finite.value)]);
   const units = [...finite.units.values()].map((u) => adicExpression(ce, u));
   return ce.function(IDELE, [real, numberOf(ce, finite.scale), ce.function("List", units)]);
 }
 
-export function declareAdeles(ce: ComputeEngine): void {
-  const real = (head: string, ...xs: BoxedExpression[]): BoxedExpression => ce.function(head, xs).evaluate();
+export function declareAdeles(ce: Engine): void {
+  const real = (head: string, ...xs: Expr[]): Expr => ce.function(head, xs).evaluate();
 
   // ── ProfiniteNumber ───────────────────────────────────────────────────────────
 
   ce.declare(PROFINITE, {
     description: SUMMARIES.ProfiniteNumber,
     signature: "(value | list<value>, number?) -> value",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [first, second] = ops;
       if (first === undefined) return undefined;
       if (second === undefined && (first.operator === "List" || first.operator === ADIC)) {
@@ -152,9 +152,9 @@ export function declareAdeles(ce: ComputeEngine): void {
 
   /** Fold a variadic head over values read by `read`, with `step` combining two. */
   function fold<T>(
-    read: (e: BoxedExpression) => T | undefined,
+    read: (e: Expr) => T | undefined,
     step: (x: T, y: T) => T | undefined,
-    write: (x: T) => BoxedExpression,
+    write: (x: T) => Expr,
   ): Evaluate {
     return (ops) => {
       const values = ops.map(read);
@@ -168,7 +168,7 @@ export function declareAdeles(ce: ComputeEngine): void {
     };
   }
 
-  const writeProfinite = (x: Profinite): BoxedExpression => profiniteExpression(ce, x);
+  const writeProfinite = (x: Profinite): Expr => profiniteExpression(ce, x);
   // Rows in each arithmetic head's table, by the carrier among the operands. Adèles and idèles
   // never mix with each other or with a bare profinite number, hence each row's `unless`.
 
@@ -215,7 +215,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   });
 
   // Adèles: componentwise; a rational beside an adèle is the diagonal adèle.
-  const writeAdele = (x: Adele): BoxedExpression => adeleExpression(ce, x);
+  const writeAdele = (x: Adele): Expr => adeleExpression(ce, x);
   const adeleStep =
     (head: string, finite: (x: Profinite, y: Profinite) => Profinite | undefined) =>
     (x: Adele, y: Adele): Adele | undefined => {
@@ -267,7 +267,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   });
 
   // Idèles form a group: multiplication, division, integer powers.
-  const writeIdele = (x: Idele): BoxedExpression => ideleExpression(ce, x);
+  const writeIdele = (x: Idele): Expr => ideleExpression(ce, x);
   const ideleStep =
     (head: string, finite: (x: IdeleFinite, y: IdeleFinite) => IdeleFinite | undefined) =>
     (x: Idele, y: Idele): Idele | undefined => {
@@ -307,7 +307,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   });
 
   // Hertogh's equality — the represented sets meet — for all three.
-  const equalValues = (a: BoxedExpression, b: BoxedExpression): boolean | undefined => {
+  const equalValues = (a: Expr, b: Expr): boolean | undefined => {
     const heads = [a.operator, b.operator];
     if (heads.includes(IDELE)) {
       const [x, y] = [ideleOf(a), ideleOf(b)];
@@ -344,7 +344,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   ce.declare(ADELE, {
     description: SUMMARIES.Adele,
     signature: "(value, value?) -> value",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [first, second] = ops;
       if (first === undefined) return undefined;
       if (second === undefined) {
@@ -364,7 +364,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   ce.declare(IDELE, {
     description: SUMMARIES.Idele,
     signature: "(value, value?, list<value>?) -> value",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [first, second] = ops;
       if (first === undefined) return undefined;
       if (second === undefined) {
@@ -398,7 +398,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   sequence("LucasL", P.lucas);
 
   // Natively `(number)`: the gate keeps the native handler to what its signature took.
-  const isNumber = (op: BoxedExpression): boolean => op.type.matches("number");
+  const isNumber = (op: Expr): boolean => op.type.matches("number");
   defineOverload(ce, "Numerator", {
     package: "adeles",
     signature: "(value) -> value",
@@ -449,14 +449,14 @@ export function declareAdeles(ce: ComputeEngine): void {
   ce.declare("ProfiniteDecomposition", {
     description: SUMMARIES.ProfiniteDecomposition,
     signature: "(list, number?) -> list",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const rows = operandsOf(ops[0]).map((row) => operandsOf(row).map(profiniteOf));
       if (rows.some((row) => row.some((x) => x === undefined))) return undefined;
       const det = ops[1] === undefined ? undefined : rationalAt(ops[1]);
       if (ops[1] !== undefined && det === undefined) return undefined;
       const found = profiniteDecomposition(rows as Profinite[][], det);
       if (found === undefined) return undefined;
-      const matrix = <T>(m: T[][], write: (x: T) => BoxedExpression): BoxedExpression =>
+      const matrix = <T>(m: T[][], write: (x: T) => Expr): Expr =>
         ce.function(
           "List",
           m.map((row) => ce.function("List", row.map(write))),
@@ -492,7 +492,7 @@ export function visualPosition(a: bigint, level: number): number {
   return Number(position);
 }
 
-function declareProfinitePlot(ce: ComputeEngine): void {
+function declareProfinitePlot(ce: Engine): void {
   // ProfinitePlot(f, x, k): the graph of f: Ẑ → Ẑ at precision k (Lenstra's picture, as in
   // Hertogh's ProfiniteGraph). Each cell is a pair of residue classes mod k!, laid out by
   // φ; a cell is filled when f maps its column class into its row class — f is evaluated
@@ -502,7 +502,7 @@ function declareProfinitePlot(ce: ComputeEngine): void {
     description: SUMMARIES.ProfinitePlot,
     signature: "(expression, symbol, integer?) -> expression<ArrayPlot>",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [f, x, levelExpr] = ops;
       const variable = x === undefined ? undefined : symbolNameOf(x);
       const level = levelExpr === undefined ? 5 : integerAt(levelExpr.evaluate());
