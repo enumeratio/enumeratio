@@ -5,6 +5,6 @@ import { verdictOf } from "./oracle-verdict.ts";
 
 type Args = Parameters<typeof verdictOf>;
 
-parentPort?.on("message", ([system, expected, result]: Args) => {
-  parentPort?.postMessage(verdictOf(system, expected, result));
+parentPort?.on("message", (args: Args) => {
+  parentPort?.postMessage(verdictOf(...args));
 });

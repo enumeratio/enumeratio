@@ -10,6 +10,7 @@ import {
   takeDropNegativeCount,
   valuesAtZero,
   inverseTrigRadicals,
+  polyLogLargeOrder,
   iteratorUpperBound,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
@@ -184,6 +185,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareElliptic(ce);
   applyPatch(ce, valuesAtZero);
   applyPatch(ce, inverseTrigRadicals);
+  applyPatch(ce, polyLogLargeOrder);
   declareModular(ce);
   declareDerivatives(ce);
   declareBesselJZero(ce);

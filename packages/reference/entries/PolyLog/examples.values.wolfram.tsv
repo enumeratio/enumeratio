@@ -72,6 +72,11 @@ polylog-rim-theta-2p4-s-0p5-z	N[PolyLog[0.5, Complex[-0.7373937155412454, 0.6754
 polylog-rim-theta-2p4-s-1-z	N[PolyLog[1, Complex[-0.7373937155412454, 0.675463180551151]]]	-0.6227666531171128 + 0.37079632679489666*I		N[\text{Li}_1(-0.737394+0.675463 i)]	-0.622767+0.370796 i	
 polylog-rim-theta-2p4-s-1p5-z	N[PolyLog[1.5, Complex[-0.7373937155412454, 0.675463180551151]]]	-0.6594860880903795 + 0.4403355254249126*I		N[\text{Li}_{1.5}(-0.737394+0.675463 i)]	-0.659486+0.440336 i	
 order-one-half-at-1-is-zeta-one-half	N[PolyLog[Rational[1, 2], 1]]	ComplexInfinity		N\left[\text{Li}_{\frac{1}{2}}(1)\right]	\text{ComplexInfinity}	disagree
+n-polylog-30-neg-4	N[PolyLog[30, -4]]					
+n-polylog-250-neg-4-a-large-order-past-z-1	N[PolyLog[250, -4]]					
+n-polylog-250-4-a-large-order-on-the-cut	N[PolyLog[250, 4]]					
+n-polylog-2500000-4-a-huge-order-returns	N[PolyLog[2500000, 4]]					
+n-polylog-40p5-2-plus-3i-a-large-complex-point	N[PolyLog[40.5, Complex[2, 3]]]					
 threads-over-a-list-of-arguments	PolyLog[2, List[0.5, 0.25]]	{0.5822405264650127, 0.2676526390827326}		\text{Li}_2(\{0.5,0.25\})	\{0.582241,0.267653\}	
 a-non-integer-order-past-z-1-is-left-unevaluated	PolyLog[2.5, 2]	2.789660332381895 - 1.3638037005377295*I		\text{Li}_{2.5}(2)	2.78966\, -1.3638 i	
 complex-order-and-argument	PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]	0.07032652055051612 - 0.5632932625398744*I		\text{Li}_{0.2\, +i}(0.5\, -0.5 i)	0.0703265\, -0.563293 i	
