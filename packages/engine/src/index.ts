@@ -120,6 +120,7 @@ export const bigRationalAt = (expr: BoxedExpression | undefined): readonly [bigi
 type OperatorDefinition = NonNullable<BoxedExpression["operatorDefinition"]>;
 export type NativeEvaluate = OperatorDefinition["evaluate"];
 export type EvaluateOptions = Parameters<NonNullable<NativeEvaluate>>[1];
+export type { EvaluateOptions as EvalOptions };
 export type EvaluateHandler = (
   ops: readonly BoxedExpression[],
   options: EvaluateOptions,
@@ -182,6 +183,16 @@ export function wrapOperator(
   });
 }
 
+export {
+  box,
+  type Engine,
+  type Expr,
+  type HeadDefinition,
+  isNumber,
+  isSymbol,
+  type Json,
+  type Type,
+} from "./facade.ts";
 export { type HeadPatch, isExtension } from "./extend.ts";
 export { extendHead };
 

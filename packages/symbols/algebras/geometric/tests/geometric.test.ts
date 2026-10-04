@@ -1,14 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { declareHypercomplex } from "@enumeratio/hypercomplex";
 import { expect, test } from "vite-plus/test";
 import { declareGeometric } from "../src/index.ts";
 
-function engine(): ComputeEngine {
-  const ce = new ComputeEngine();
-  declareHypercomplex(ce);
-  declareGeometric(ce);
-  return ce;
-}
+const engine = () => createEngine(declareHypercomplex, declareGeometric);
 
 const ce = engine();
 /** Evaluate a LaTeX source and return its LaTeX, so the tests read like the algebra. */

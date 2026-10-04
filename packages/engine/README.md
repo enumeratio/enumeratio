@@ -24,6 +24,16 @@ top of this one — it has no workspace dependencies of its own.
 - **`src/inputform.ts`** — `toInputForm`: an expression printed as Epsil you could retype,
   over compute-engine's `serializeEpsil`. Here so `ToString` needs no format registry;
   `@enumeratio/formats/inputform` re-exports it.
+- **`src/facade.ts`** — what a library imports in place of `@cortex-js/compute-engine`: `Engine`,
+  `Expr`, `Json`, `HeadDefinition`, `EvalOptions`, `Type` (aliases of compute-engine's own
+  types), the `isNumber` / `isSymbol` guards, and `box(ce, json)`. The `no-restricted-imports`
+  rule in the root `vite.config.ts` keeps libraries (`packages/symbols`) to it; files still
+  importing compute-engine are in `packages/utils/tests/compute-engine-imports.baseline.json`,
+  which may only shrink.
+- **`./testing` (`src/testing.ts`)** — `createEngine(...declares)`: a fresh engine with the
+  given `declareX` steps applied in order; `bareEngine()`: one with nothing declared.
+- **`./unstable` (`src/unstable.ts`)** — the full compute-engine API, outside semver. Each use
+  carries an `// unstable: <reason>` comment.
 - **`./compiled` (`src/compiled.ts`)** — a separate entry so only packages that actually
   compile Epsil to JavaScript pull in compute-engine's compiler.
 

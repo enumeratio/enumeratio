@@ -17,6 +17,14 @@
       "types": "./dist/compiled.d.mts",
       "import": "./dist/compiled.mjs"
     },
+    "./testing": {
+      "types": "./dist/testing.d.mts",
+      "import": "./dist/testing.mjs"
+    },
+    "./unstable": {
+      "types": "./dist/unstable.d.mts",
+      "import": "./dist/unstable.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {

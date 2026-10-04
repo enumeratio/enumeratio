@@ -1,4 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { box, type Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { declareNumberTheory } from "@enumeratio/number-theory";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
@@ -12,12 +13,8 @@ import { fibonacciPair } from "../src/profinite.ts";
 // here tests below the head level: internal functions, property sweeps, and one
 // declare-order artifact of this file's own engine setup.
 
-const ce = new ComputeEngine();
-declareResidues(ce);
-declareNumerals(ce);
-declareNumberTheory(ce);
-declareAdeles(ce);
-const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const ce = createEngine(declareResidues, declareNumerals, declareNumberTheory, declareAdeles);
+const run = (expr: unknown): unknown => box(ce, expr as Json).evaluate().json;
 
 test("fibonacciPair satisfies Lenstra's Lucas identity mod π(11)", () => {
   // Every n ≡ 3 mod 10 gives Lₙ ≡ 4 mod 11 (see ProfiniteNumber's "Lenstra's profinite

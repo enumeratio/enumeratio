@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine, Expr } from "@enumeratio/engine";
 import {
   addMultivectors,
   type Generator,
@@ -25,7 +25,7 @@ export const bladeKey = (blade: readonly Generator[]): string => blade.map(gener
  * Callers hand these to `addMultivectors`, which is what collects like blades and drops
  * the zeros — so this never has to know whether the coefficient survived.
  */
-export const term = (blade: readonly Generator[], coefficient: BoxedExpression): Multivector => ({
+export const term = (blade: readonly Generator[], coefficient: Expr): Multivector => ({
   terms: new Map([[bladeKey(blade), { blade, coefficient }]]),
 });
 
@@ -33,7 +33,7 @@ export const term = (blade: readonly Generator[], coefficient: BoxedExpression):
 export const zero: Multivector = { terms: new Map() };
 
 /** Multiply two coefficient expressions, keeping them exact. */
-export const scale = (ce: ComputeEngine, coefficient: BoxedExpression, sign: -1 | 1): BoxedExpression =>
+export const scale = (ce: Engine, coefficient: Expr, sign: -1 | 1): Expr =>
   sign === 1 ? coefficient : ce.function("Multiply", [ce.number(-1), coefficient]).evaluate();
 
 /**
@@ -47,7 +47,7 @@ export const scale = (ce: ComputeEngine, coefficient: BoxedExpression, sign: -1 
  * generator should be.
  */
 export function gradedProduct(
-  ce: ComputeEngine,
+  ce: Engine,
   a: Multivector,
   b: Multivector,
   pick: (gradeA: number, gradeB: number) => number,
@@ -67,7 +67,7 @@ export function gradedProduct(
 }
 
 /** Apply a sign that depends only on a blade's grade — every involution is one of these. */
-export function bySign(ce: ComputeEngine, mv: Multivector, sign: (grade: number) => -1 | 1): Multivector {
+export function bySign(ce: Engine, mv: Multivector, sign: (grade: number) => -1 | 1): Multivector {
   const parts = [...mv.terms.values()].map((t) => term(t.blade, scale(ce, t.coefficient, sign(t.blade.length))));
   return parts.length === 0 ? zero : addMultivectors(ce, parts);
 }
@@ -80,7 +80,7 @@ export function gradesOf(mv: Multivector): number[] {
 }
 
 /** `mv` restricted to one grade. */
-export function gradePart(ce: ComputeEngine, mv: Multivector, grade: number): Multivector {
+export function gradePart(ce: Engine, mv: Multivector, grade: number): Multivector {
   const parts = [...mv.terms.values()].filter((t) => t.blade.length === grade).map((t) => term(t.blade, t.coefficient));
   return parts.length === 0 ? zero : addMultivectors(ce, parts);
 }

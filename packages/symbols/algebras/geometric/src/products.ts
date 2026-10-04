@@ -1,4 +1,4 @@
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import type { Multivector } from "@enumeratio/hypercomplex";
 import { bySign, gradedProduct } from "./blades.ts";
 
@@ -13,7 +13,7 @@ import { bySign, gradedProduct } from "./blades.ts";
  * that still means something in a degenerate metric, and why the exterior algebra is
  * the same operation with nothing else attached.
  */
-export const wedge = (ce: ComputeEngine, a: Multivector, b: Multivector): Multivector =>
+export const wedge = (ce: Engine, a: Multivector, b: Multivector): Multivector =>
   gradedProduct(ce, a, b, (x, y) => x + y);
 
 /**
@@ -21,15 +21,15 @@ export const wedge = (ce: ComputeEngine, a: Multivector, b: Multivector): Multiv
  * when `a` has the higher grade. Geometrically: the part of `b` orthogonal to the
  * projection of `a` onto it. This is ganja's `<<`, unextended and unmodified.
  */
-export const leftContraction = (ce: ComputeEngine, a: Multivector, b: Multivector): Multivector =>
+export const leftContraction = (ce: Engine, a: Multivector, b: Multivector): Multivector =>
   gradedProduct(ce, a, b, (x, y) => y - x);
 
 /** The right contraction `a ⌊ b`, at grade `|a| − |b|` — the left one's mirror. */
-export const rightContraction = (ce: ComputeEngine, a: Multivector, b: Multivector): Multivector =>
+export const rightContraction = (ce: Engine, a: Multivector, b: Multivector): Multivector =>
   gradedProduct(ce, a, b, (x, y) => x - y);
 
 /** The scalar product `a * b` — grade 0 of the geometric product. */
-export const scalarProduct = (ce: ComputeEngine, a: Multivector, b: Multivector): Multivector =>
+export const scalarProduct = (ce: Engine, a: Multivector, b: Multivector): Multivector =>
   gradedProduct(ce, a, b, () => 0);
 
 /**
@@ -38,7 +38,7 @@ export const scalarProduct = (ce: ComputeEngine, a: Multivector, b: Multivector)
  *
  * This is the involution versors are built on: a rotor `R` acts as `R x R̃`.
  */
-export const reversion = (ce: ComputeEngine, mv: Multivector): Multivector =>
+export const reversion = (ce: Engine, mv: Multivector): Multivector =>
   bySign(ce, mv, (k) => (((k * (k - 1)) / 2) % 2 === 0 ? 1 : -1));
 
 /**
@@ -47,12 +47,12 @@ export const reversion = (ce: ComputeEngine, mv: Multivector): Multivector =>
  * This is the same map hypercomplex already applies for `Conjugate`; it has the
  * geometric-algebra name here because the identities are written with it.
  */
-export const gradeInvolution = (ce: ComputeEngine, mv: Multivector): Multivector =>
+export const gradeInvolution = (ce: Engine, mv: Multivector): Multivector =>
   bySign(ce, mv, (k) => (k % 2 === 0 ? 1 : -1));
 
 /**
  * Clifford conjugation `ā` — reversion after grade involution, so `(−1)^(k(k+1)/2)`.
  * ganja spells it `~`.
  */
-export const cliffordConjugate = (ce: ComputeEngine, mv: Multivector): Multivector =>
+export const cliffordConjugate = (ce: Engine, mv: Multivector): Multivector =>
   bySign(ce, mv, (k) => (((k * (k + 1)) / 2) % 2 === 0 ? 1 : -1));
