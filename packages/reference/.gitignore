@@ -2,3 +2,4 @@
 src/crosswalk/catalog-references-data.ts
 src/crosswalk/curated-data.ts
 golden/oracle/disagreements.md
+scripts/engines.d.ts
