@@ -7,7 +7,7 @@
 import { CONTEXT, HEADS, isSystemName, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram";
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
-import { mappingFor, THREADS_MANUALLY } from "./mappings.ts";
+import { type Mapping, mappingFor, THREADS_MANUALLY } from "./mappings.ts";
 import type { System } from "./systems.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
@@ -100,7 +100,9 @@ const PYTHON_FAMILY: readonly System[] = ["sympy", "mpmath", "sage"];
  * strips on the way back. */
 const wolframFree = (name: string): string => (isSystemName(name) ? `${CONTEXT}${name}` : toWolfram(name));
 
-export function emit(expr: MathJSON, system: System): Emitted {
+/** `expr` as `system`'s source. `extra` maps a library's heads (`mappingsFromBindings`), which an
+ *  expression calls by namespace: `MemberCall(ns, "Name", …)` is emitted as `ns.Name(…)`. */
+export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] = []): Emitted {
   const missing: string[] = [];
   // Variables an enclosing Sum/Product iterator binds — not free, so not missing.
   const bound = new Set<string>();
@@ -202,6 +204,18 @@ export function emit(expr: MathJSON, system: System): Emitted {
   };
 
   const walkCall = (head: string, operands: readonly MathJSON[]): string => {
+    const qualified = head === "MemberCall" ? qualifiedName(operands) : undefined;
+    if (qualified !== undefined && mappingFor(qualified, operands.length - 2, extra) !== undefined)
+      return walkCall(qualified, operands.slice(2));
+    // A head of a library `extra` maps, with no mapping of its own here: unmapped, not a free
+    // `MemberCall` the system would answer as written.
+    if (
+      qualified !== undefined &&
+      extra.some((m) => m.head.startsWith(`${qualified.slice(0, qualified.indexOf("."))}.`))
+    ) {
+      missing.push(`${qualified}/${operands.length - 2}`);
+      return "0";
+    }
     // `["String", "s0"]` spells a string, not the symbol s0.
     if (head === "String" && operands.length === 1 && typeof operands[0] === "string")
       return JSON.stringify(operands[0]);
@@ -251,7 +265,7 @@ export function emit(expr: MathJSON, system: System): Emitted {
         return toWolfram([head, ...operands] as Parameters<typeof toWolfram>[0]);
       }
     }
-    const mapping = mappingFor(head, operands.length);
+    const mapping = mappingFor(head, operands.length, extra);
     const template = mapping?.emit[system];
     if (template !== undefined) {
       const threadArg = mapping?.threadArg;
@@ -379,6 +393,13 @@ export function emit(expr: MathJSON, system: System): Emitted {
 }
 
 /** Which heads in an expression have no mapping for a system — the work queue. */
+/** `ns.Name` for a `MemberCall(ns, "Name", …)`'s first two operands, when they're a name. */
+function qualifiedName(operands: readonly MathJSON[]): string | undefined {
+  const [receiver, member] = operands;
+  if (typeof receiver !== "string" || typeof member !== "string" || !/^'.*'$/s.test(member)) return undefined;
+  return `${receiver}.${member.slice(1, -1)}`;
+}
+
 export function unmappedHeads(expr: MathJSON, system: System): string[] {
   const result = emit(expr, system);
   return result.ok ? [] : [...new Set(result.missing)];

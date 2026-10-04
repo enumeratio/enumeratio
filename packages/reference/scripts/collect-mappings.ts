@@ -11,37 +11,13 @@
 //   vp node packages/reference/scripts/collect-mappings.ts
 
 import { writeFormatted } from "@enumeratio/entry/node";
+// From the source: oracle's build runs this before oracle itself is built.
+import { mappingsFromBindings } from "../../oracle/src/mapping-rows.ts";
 import { referenceData } from "../src/node.ts";
 
 const { entries } = referenceData();
 
-interface MappingRow {
-  head: string;
-  arity?: number;
-  emit: Record<string, string>;
-  threadArg?: number;
-  note?: string;
-}
-
-const key = (head: string, arity: number | undefined): string => `${head}\0${arity ?? ""}`;
-const byKey = new Map<string, MappingRow>();
-
-for (const entry of entries) {
-  for (const b of entry.bindings ?? []) {
-    // A `mapped` binding with no `template` is a hand-written aside about a head MAPPINGS
-    // never covered (e.g. BarnesG's "wolfram / mpmath, same normalisation" note) -- prose,
-    // not one of this table's rows.
-    if (b.origin !== "mapped" || b.template === undefined) continue;
-    const k = key(entry.name, b.arity);
-    const row = byKey.get(k) ?? { head: entry.name, arity: b.arity, emit: {} };
-    row.emit[b.form] = b.template;
-    if (b.threadArg !== undefined) row.threadArg = b.threadArg;
-    if (b.note !== undefined) row.note = b.note;
-    byKey.set(k, row);
-  }
-}
-
-const rows = [...byKey.values()].toSorted((a, b) => a.head.localeCompare(b.head) || (a.arity ?? -1) - (b.arity ?? -1));
+const rows = mappingsFromBindings(entries);
 
 await writeFormatted(
   new URL("../../oracle/src/mappings-data.ts", import.meta.url),

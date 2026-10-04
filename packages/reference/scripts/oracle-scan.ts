@@ -26,6 +26,7 @@
 //   vp node packages/reference/scripts/oracle-scan.ts --ids Foo/a,Bar/b     # only these example ids
 //   vp node packages/reference/scripts/oracle-scan.ts --new-only            # skip rows already answered per system
 //   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
+//   vp node packages/reference/scripts/oracle-scan.ts --root ../my-library --accept  # a library: its records, the targets it tracks
 
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
@@ -47,6 +48,7 @@ import {
 import { isSettled, orderImplementations, type SystemImplementation } from "@enumeratio/entry";
 import { updateHead } from "@enumeratio/entry/node";
 import { referenceData, referenceEntries } from "../src/node.ts";
+import { libraryRecords } from "./library-records.ts";
 import { asksForDigits, show } from "./oracle-verdict.ts";
 import { cappedVerdicts } from "./oracle-verdict-capped.ts";
 
@@ -75,8 +77,12 @@ const idsIndex = args.indexOf("--ids");
 // a head — the free-symbol pass is the reason this exists: touching every mapped head's
 // examples would drag in disagreements this lane has nothing to do with.
 const idFilter = idsIndex >= 0 ? new Set((args[idsIndex + 1] ?? "").split(",")) : undefined;
+const rootIndex = args.indexOf("--root");
+// A published library instead of this repository: its records, and of the wired systems only the
+// targets its `enumeratio.mappings` names (library-records.ts). Writes only its records.
+const library = rootIndex >= 0 ? libraryRecords(args[rootIndex + 1] ?? ".") : undefined;
 const requested = args.filter(
-  (argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head" && args[index - 1] !== "--ids",
+  (argument, index) => !argument.startsWith("-") && !["--head", "--ids", "--root"].includes(args[index - 1] ?? ""),
 );
 // `--digest` scans nothing: it rebuilds `disagreements.md` from the records (`build` runs it).
 const digestOnly = args.includes("--digest");
@@ -87,18 +93,20 @@ const newOnly = args.includes("--new-only");
 // Without `--accept` a scan only reports (report.json, stderr); with it, what the kernels said
 // goes into the records, and the digest follows. The explicit write is what a fixup PR carries.
 const accept = args.includes("--accept");
-const systems = (digestOnly ? [] : requested.length > 0 ? requested : wiredSystems()) as System[];
+const wired = library === undefined ? wiredSystems() : wiredSystems().filter((s) => library.targets.includes(s));
+const systems = (digestOnly ? [] : requested.length > 0 ? requested : wired) as System[];
+const scannedEntries = library === undefined ? referenceEntries(data) : library.heads.map((h) => h.entry);
 
 // Every settled example (not aspirational, not in triage), UNFILTERED — the authority for "does
 // this example still exist" (the write-out loop's deletion guard, below), so a partial
 // `--head`/`--ids` run can't be misread as "every other example of this head is gone."
 const inTriage = new Map(
-  referenceEntries(data).map((entry) => [
+  scannedEntries.map((entry) => [
     entry.name,
     new Set(entry.examples.filter((example) => example.role === "triage").map((example) => example.id)),
   ]),
 );
-const allCases: Case[] = referenceEntries(data).flatMap((entry) =>
+const allCases: Case[] = scannedEntries.flatMap((entry) =>
   entry.examples
     .filter((example) => isSettled(example))
     .map((example) => ({
@@ -149,8 +157,7 @@ type Record_ = Record<string, Record<string, SystemImplementation>>;
 const dirOf = new Map<string, string>();
 const records = new Map<string, Record_>();
 const exampleIdsOf = new Map<string, string[]>();
-for (const h of data.heads) {
-  if (data.packageOf.get(h.head) !== h.package) continue;
+for (const h of library?.heads ?? data.heads.filter((h) => data.packageOf.get(h.head) === h.package)) {
   exampleIdsOf.set(
     h.head,
     h.entry.examples.map((e) => e.id),
@@ -171,7 +178,7 @@ for (const system of systems) {
     ? cases.filter((item) => records.get(item.head)?.[item.key]?.[system] === undefined)
     : cases;
   scannedIdsBySystem.set(system, new Set(casesForSystem.map((item) => item.id)));
-  const emitted = casesForSystem.map((item) => ({ item, out: emit(item.expr, system) }));
+  const emitted = casesForSystem.map((item) => ({ item, out: emit(item.expr, system, library?.mappings) }));
   const runnable = emitted.filter((row) => row.out.ok);
   // A free symbol on a symbolic system (wolfram, sympy, sage) is checked as an identity —
   // does the difference vanish? — rather than compared value-for-value, since two closed
@@ -273,7 +280,7 @@ for (const missing of Object.values(missingBySystem)) {
 }
 const queue = [...cost].toSorted((a, b) => b[1] - a[1]).slice(0, 30);
 
-if (!digestOnly)
+if (!digestOnly && library === undefined)
   writeFileSync(
     new URL("../golden/oracle/report.json", import.meta.url),
     `${JSON.stringify({ generated: new Date().toISOString(), systems, report, queue }, null, 2)}\n`,
@@ -375,7 +382,7 @@ if (accept)
             ),
     });
   }
-if (accept && !isDeepStrictEqual(kernels, data.kernels))
+if (accept && library === undefined && !isDeepStrictEqual(kernels, data.kernels))
   writeFileSync(
     KERNELS,
     `${JSON.stringify(
@@ -399,6 +406,9 @@ if (changedVerdicts.length > 0) {
   process.stderr.write(`\nverdict changed (classification kept, please re-review):\n`);
   for (const line of changedVerdicts) process.stderr.write(`  ${line}\n`);
 }
+
+// A library's scan ends with its records: the digest and the coverage queue are this repository's.
+if (library !== undefined) process.exit();
 
 // A readable digest of the disagreements, uncommitted (`build` writes it) — the records are regenerated per
 // kernel version and are not worth diffing wholesale, but the disagreements are exactly the

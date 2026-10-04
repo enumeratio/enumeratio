@@ -13,27 +13,11 @@
 // evidence the function is missing. Growing this table is the iteration: the scan says which
 // head is costing the most coverage, you add a row, you rescan.
 
+import type { Mapping } from "./mapping-rows.ts";
 import { MAPPINGS_DATA } from "./mappings-data.ts";
 import type { System } from "./systems.ts";
 
-export interface Mapping {
-  readonly head: string;
-  /** Operand count this row applies to. Omitted matches any arity. */
-  readonly arity?: number;
-  /** Source template per system, `$n` for the n-th operand. */
-  readonly emit: Partial<Record<System, string>>;
-  /**
-   * 1-based operand this head threads over (Wolfram's Listable), for the Python-family
-   * systems (sympy, mpmath, sage) whose plain function call does not auto-thread a Python
-   * list the way compute-engine and Wolfram do. When that operand's raw expression is a
-   * `List` — arbitrarily nested — emit rebuilds the same nesting as Python list literals,
-   * applying the template to each leaf, instead of handing the whole list to the scalar
-   * function (which fails: e.g. sympy's `primepi([10, 2])` raises `AttributeError`).
-   */
-  readonly threadArg?: number;
-  /** A convention difference worth remembering when a scan disagrees. */
-  readonly note?: string;
-}
+export { type Mapping, mappingsFromBindings } from "./mapping-rows.ts";
 
 /** Systems whose function calls need `threadArg`'s help: the Python family, and Julia/Nemo —
  * our emit templates are plain calls (`binomial(ZZ($1), ZZ($2))`), not `f.($1)` broadcasts, so
@@ -47,10 +31,17 @@ export const THREADS_MANUALLY: readonly System[] = ["sympy", "mpmath", "sage", "
  * `mappings-migration.test.ts`). */
 export const MAPPINGS: readonly Mapping[] = MAPPINGS_DATA;
 
-/** The mapping that applies to a head at a given arity, preferring the arity-specific one. */
-export function mappingFor(head: string, arity: number): Mapping | undefined {
-  const rows = MAPPINGS.filter((mapping) => mapping.head === head);
-  return rows.find((mapping) => mapping.arity === arity) ?? rows.find((m) => m.arity === undefined);
+/**
+ * The mapping that applies to a head at a given arity, preferring the arity-specific one; `extra`
+ * (a library's own, `mappingsFromBindings`) before the system's.
+ */
+export function mappingFor(head: string, arity: number, extra: readonly Mapping[] = []): Mapping | undefined {
+  for (const table of [extra, MAPPINGS]) {
+    const rows = table.filter((mapping) => mapping.head === head);
+    const found = rows.find((mapping) => mapping.arity === arity) ?? rows.find((m) => m.arity === undefined);
+    if (found !== undefined) return found;
+  }
+  return undefined;
 }
 
 /** Every head this table says anything about. */
