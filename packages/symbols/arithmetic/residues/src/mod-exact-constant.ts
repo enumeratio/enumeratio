@@ -1,5 +1,4 @@
-import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, symbolNameOf, wrapOperator } from "@enumeratio/engine";
+import { bigRationalAt, symbolNameOf, wrapOperator, type Engine } from "@enumeratio/engine";
 
 // Mod(x, m) for a bare symbolic numeric constant (Pi, ExponentialE, …) against a positive
 // numeric modulus: compute-engine's native Mod leaves this unevaluated, but the answer is
@@ -12,7 +11,7 @@ import { bigRationalAt, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 // exact IRRATIONAL (a Sqrt-built radical like √28), which is guarded on that expression's
 // own `isExact` flag -- a flag a bare `Symbol` node like `Pi` never carries, so the two
 // wrappers never compete for the same call regardless of which attaches first.
-export function declareModExactConstant(ce: ComputeEngine): void {
+export function declareModExactConstant(ce: Engine): void {
   wrapOperator(
     ce,
     ["Mod", 2],

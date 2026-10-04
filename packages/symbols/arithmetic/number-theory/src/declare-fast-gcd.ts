@@ -7,8 +7,7 @@
 // subtraction beat a bigint division at these sizes too, and it's already well exercised);
 // above it, Lehmer's algorithm (leading-digit simulation, HAC 14.4) wins by turning most of
 // Euclid's O(log n) full-width divisions into a handful of them.
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, wrapOperator } from "@enumeratio/engine";
+import { bigIntegerAt, wrapOperator, type Engine, type Expr } from "@enumeratio/engine";
 import { gcd, lehmerGcd } from "@enumeratio/residues";
 
 // Chosen well above Lehmer's own internal small-number cutoff (2^32) so the hybrid only
@@ -20,10 +19,10 @@ function hybridGcd(a: bigint, b: bigint): bigint {
   return Math.max(bits(a), bits(b)) >= LEHMER_THRESHOLD_BITS ? lehmerGcd(a, b) : gcd(a, b);
 }
 
-export function declareFastGcd(ce: ComputeEngine): void {
+export function declareFastGcd(ce: Engine): void {
   /** Every operand a plain real bigint (so genuinely-Gaussian calls fall through to
    *  declare-gaussian.ts's wrapper, attached ahead of this one). */
-  const allRealIntegers = (ops: readonly BoxedExpression[]): bigint[] | undefined => {
+  const allRealIntegers = (ops: readonly Expr[]): bigint[] | undefined => {
     const values: bigint[] = [];
     for (const op of ops) {
       const n = bigIntegerAt(op);

@@ -1,6 +1,14 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
-import { defineOverload, wrapOperator } from "@enumeratio/engine";
+import {
+  defineOverload,
+  type Engine,
+  type EvalOptions,
+  type Expr,
+  extendHead,
+  type NativeEvaluate,
+  nativeEvaluate,
+  wrapOperator,
+} from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { HYPERCOMPLEX_CARRIERS } from "./carrier-data.ts";
 import {
@@ -47,12 +55,10 @@ import { GENERATOR_SYMBOLS } from "./units.ts";
 // juxtaposition parses to, whose canonical handler does run and does see the operands
 // in written order.
 
-type NativeEvaluate = NonNullable<BoxedExpression["operatorDefinition"]>["evaluate"];
-type EvaluateOptions = Parameters<NonNullable<NativeEvaluate>>[1];
-type Handler = (ops: readonly BoxedExpression[], options: EvaluateOptions) => BoxedExpression | undefined;
+type Handler = (ops: readonly Expr[], options: EvalOptions) => Expr | undefined;
 
 /** The definition of an operator the engine already defines, for attaching in place. */
-function operatorDefinitionOf(ce: ComputeEngine, name: string) {
+function operatorDefinitionOf(ce: Engine, name: string) {
   const definition = ce.lookupDefinition(name);
   return definition !== undefined && "operator" in definition ? definition.operator : undefined;
 }
@@ -63,13 +69,13 @@ function operatorDefinitionOf(ce: ComputeEngine, name: string) {
  * an operator whose behaviour turns on a flag `wrap` does not know about — `lazy`,
  * say, which decides whether the handler is handed raw operands or evaluated ones.
  */
-function attach(ce: ComputeEngine, name: string, build: (native: NativeEvaluate) => Handler): void {
-  const operator = operatorDefinitionOf(ce, name);
-  if (operator === undefined) return;
-  const native = operator.evaluate;
+function attach(ce: Engine, name: string, build: (native: NativeEvaluate) => Handler): void {
+  const native = nativeEvaluate(ce, name);
   const handler = build(native);
-  operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
-    ops.some(containsGenerator) ? handler(ops, options) : native?.(ops, options);
+  extendHead(ce, name, {
+    evaluate: (ops: readonly Expr[], options: EvalOptions) =>
+      ops.some(containsGenerator) ? handler(ops, options) : native?.(ops, options),
+  });
 }
 
 /**
@@ -88,7 +94,7 @@ function attach(ce: ComputeEngine, name: string, build: (native: NativeEvaluate)
  * all (function application, a mixed number), and one already written in blade order,
  * where the sort has nothing to change.
  */
-function declareOrderedJuxtaposition(ce: ComputeEngine): void {
+function declareOrderedJuxtaposition(ce: Engine): void {
   const operator = operatorDefinitionOf(ce, "InvisibleOperator");
   if (operator === undefined) return;
   const stock = operator.canonical;
@@ -117,22 +123,22 @@ function declareOrderedJuxtaposition(ce: ComputeEngine): void {
  * commuting square root of −1 — which is the point, and what makes ℝ[i_1,…,i_n] the
  * multicomplex tower rather than a re-spelling of ℂ.
  */
-const hasGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(containsGenerator);
+const hasGenerator = (ops: readonly Expr[]): boolean => ops.some(containsGenerator);
 
 /** `hasGenerator` for Add and Multiply, which run on every sum and product: a generator
  * under a non-arithmetic head can't be read as a multivector anyway, so don't look. */
-const reachesAnyGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(reachesGenerator);
+const reachesAnyGenerator = (ops: readonly Expr[]): boolean => ops.some(reachesGenerator);
 
-export function declareHypercomplex(ce: ComputeEngine): void {
+export function declareHypercomplex(ce: Engine): void {
   registerNotation(ce, HYPERCOMPLEX_NOTATION);
   // This package's own carrier — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
   // constructor, plural type-space name and `Element` membership, all in one call.
   declareCarriers(ce, HYPERCOMPLEX_CARRIERS);
 
   const linear = (
-    ops: readonly BoxedExpression[],
-    combine: (parts: Parameters<typeof addMultivectors>[1]) => BoxedExpression | undefined,
-  ): BoxedExpression | undefined => {
+    ops: readonly Expr[],
+    combine: (parts: Parameters<typeof addMultivectors>[1]) => Expr | undefined,
+  ): Expr | undefined => {
     const parts = ops.map((op) => toMultivector(ce, op));
     if (!parts.every((p): p is NonNullable<typeof p> => p !== undefined)) return undefined;
     return combine(parts);
@@ -237,7 +243,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
   // are left untouched (there is no native handler to defer to).
   ce.declare("OverBar", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const operand = ops[0];
       if (operand === undefined || !containsGenerator(operand)) return undefined;
       const mv = toMultivector(ce, operand);

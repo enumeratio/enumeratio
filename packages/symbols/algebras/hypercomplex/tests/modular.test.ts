@@ -1,10 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareHypercomplex } from "../src/declare.ts";
 import { distinctPrimeCount, factorize, imaginaryUnitsMod, splitUnitCountMod, splitUnitsMod } from "../src/modular.ts";
 
-const ce = new ComputeEngine();
-declareHypercomplex(ce);
+const ce = createEngine(declareHypercomplex);
 
 /** Brute-force oracle: every x in [0,m) with x² ≡ target. Independent of the CRT route. */
 const bruteForce = (target: 1 | -1, m: number): number[] => {

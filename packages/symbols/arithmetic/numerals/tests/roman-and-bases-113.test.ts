@@ -1,10 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "../src/declare.ts";
 import { integerOfRomanNumeral, romanNumeralOf } from "../src/digits.ts";
 
-const ce = new ComputeEngine();
-declareNumerals(ce);
+const ce = createEngine(declareNumerals);
 const value = (expr: unknown) => ce.box(expr as never).evaluate().json;
 
 // Roman numerals round trip, both directions, over every value RomanNumeral spells.

@@ -1,14 +1,13 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
-import { collectMessages, messageLine } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
+import { collectMessages, messageLine, type Json } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareResidues } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareResidues(ce);
+const ce = createEngine(declareResidues);
 
 /** The result, and the messages evaluating it emitted. */
 const run = (expr: unknown): [unknown, string[]] => {
-  const { value, messages } = collectMessages(ce, () => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate());
+  const { value, messages } = collectMessages(ce, () => ce.box(expr as Json).evaluate());
   return [value.json, messages.map(messageLine)];
 };
 

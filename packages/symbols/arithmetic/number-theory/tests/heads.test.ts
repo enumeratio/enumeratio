@@ -1,15 +1,12 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
+import { bigIntegerAt, operandsOf, type Json } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
 import { declareNumberTheory } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareResidues(ce);
-declareNumerals(ce);
-declareNumberTheory(ce);
-const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const ce = createEngine(declareResidues, declareNumerals, declareNumberTheory);
+const run = (expr: unknown): unknown => ce.box(expr as Json).evaluate().json;
 
 test("GCD and LCM of Gaussian rationals: gcd(p1,p2)/lcm(q1,q2), lcm(p1,p2)/gcd(q1,q2) (#113)", () => {
   const c = (re: unknown, im: unknown) => ["Complex", re, im];

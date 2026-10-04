@@ -11,13 +11,12 @@
 // argument as a Wolfram-style nth-prime shortcut, but that overloads a head compute-engine
 // already owns for something else entirely. NthPrime is (and stays) the only head name for
 // it on our side; the crosswalk already maps NthPrime <-> Wolfram's Prime.
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, wrapOperator } from "@enumeratio/engine";
+import { integerAt, wrapOperator, type Engine, type Expr } from "@enumeratio/engine";
 import { nthPrime, PRIME_PI_LIMIT, primeCountUpTo } from "@enumeratio/residues";
 
-export function declareFastPrimes(ce: ComputeEngine): void {
+export function declareFastPrimes(ce: Engine): void {
   /** A plain, non-negative, safe-integer real — the only shape π/nth-prime answer exactly. */
-  const nonNegativeSafeInteger = (op: BoxedExpression): number | undefined => {
+  const nonNegativeSafeInteger = (op: Expr): number | undefined => {
     const n = integerAt(op);
     return n !== undefined && n >= 0 ? n : undefined;
   };
@@ -33,7 +32,7 @@ export function declareFastPrimes(ce: ComputeEngine): void {
     1,
   );
 
-  const positiveIndex = (op: BoxedExpression): number | undefined => {
+  const positiveIndex = (op: Expr): number | undefined => {
     const n = integerAt(op);
     return n !== undefined && n >= 1 ? n : undefined;
   };

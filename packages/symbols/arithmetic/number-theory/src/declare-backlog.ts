@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { bigIntegerAt, operandsOf, symbolNameOf, type Engine, type Expr } from "@enumeratio/engine";
 import { factorInteger, gcd as gcdBig, isqrt } from "@enumeratio/residues";
 import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
@@ -68,11 +67,10 @@ function divisorsOf(n: bigint): bigint[] | undefined {
 }
 
 /** Apply a `Function` literal (or symbol naming one) to a single boxed argument. */
-const applyFn = (ce: ComputeEngine, fn: BoxedExpression, arg: BoxedExpression): BoxedExpression =>
-  ce.box([fn.json, arg.json] as never).evaluate();
+const applyFn = (ce: Engine, fn: Expr, arg: Expr): Expr => ce.box([fn.json, arg.json] as never).evaluate();
 
-const isTrue = (expr: BoxedExpression): boolean => symbolNameOf(expr) === "True";
-const isFalse = (expr: BoxedExpression): boolean => symbolNameOf(expr) === "False";
+const isTrue = (expr: Expr): boolean => symbolNameOf(expr) === "True";
+const isFalse = (expr: Expr): boolean => symbolNameOf(expr) === "False";
 
 /** The Euler numbers E₀..E_n. Odd-indexed ones past E₀ are 0; the even ones come from
  *  ∑_{k=0}^{n/2} C(n,2k) Eₖ = 0 (n ≥ 2 even), the recurrence behind sech's series. */
@@ -109,8 +107,8 @@ function eulerPolynomialCoeffs(n: number, E: readonly bigint[]): Q[] {
 /** A polynomial from its monomial coefficients, over the boxed expression `x` — built as raw
  *  arithmetic and handed to `evaluate()`, so compute-engine's own canonicalisation (dropping
  *  a zero term, collapsing ×1 and ×(−1), sorting by degree) decides the printed form. */
-function polynomialExpr(ce: ComputeEngine, coeffs: readonly Q[], x: BoxedExpression): BoxedExpression {
-  const terms: BoxedExpression[] = [];
+function polynomialExpr(ce: Engine, coeffs: readonly Q[], x: Expr): Expr {
+  const terms: Expr[] = [];
   for (let j = 0; j < coeffs.length; j++) {
     const [num, den] = coeffs[j]!;
     if (num === 0n) continue;
@@ -266,18 +264,18 @@ const MERSENNE_EXPONENTS: readonly bigint[] = [
   4423n,
 ];
 
-export function declareBacklog(ce: ComputeEngine): void {
+export function declareBacklog(ce: Engine): void {
   ce.declare("DivisorSum", {
     description: SUMMARIES.DivisorSum,
     signature: "(integer, function, function?) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       const f = ops[1];
       if (n === undefined || n <= 0n || f === undefined) return undefined;
       const divisors = divisorsOf(n);
       if (divisors === undefined) return undefined;
       const cond = ops[2];
-      let sum: BoxedExpression = ce.Zero;
+      let sum: Expr = ce.Zero;
       for (const d of divisors) {
         const dExpr = ce.number(d);
         if (cond !== undefined) {
@@ -299,7 +297,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     description: SUMMARIES.IsCoprime,
     signature: "(number+) -> boolean",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       if (ops.length < 2) return undefined;
       for (let i = 0; i < ops.length; i++) {
         for (let j = i + 1; j < ops.length; j++) {
@@ -315,7 +313,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     description: SUMMARIES.IsPrimePower,
     signature: "(integer) -> boolean",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined) return undefined;
       if (n < 2n) return ce.symbol("False");
@@ -329,7 +327,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     description: SUMMARIES.LiouvilleLambda,
     signature: "(integer) -> integer",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined || n === 0n) return undefined;
       const factors = factorInteger(n < 0n ? -n : n);
@@ -350,7 +348,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     // Honoring the flag here -- `.N()` instead of `.evaluate()` on the built `Ln(p)` -- is
     // what makes `N(MangoldtLambda(9))` come back as the double 1.0986…, not the still-exact
     // `Ln(3)`; `N(Ln(3))` alone already worked because THAT `Ln` is compute-engine's own.
-    evaluate: (ops: readonly BoxedExpression[], options) => {
+    evaluate: (ops: readonly Expr[], options) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined || n < 1n) return undefined;
       if (n === 1n) return ce.Zero;
@@ -366,7 +364,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     description: SUMMARIES.MersennePrimeExponent,
     signature: "(integer) -> integer",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined || n < 1n || n > BigInt(MERSENNE_EXPONENTS.length)) return undefined;
       return ce.number(MERSENNE_EXPONENTS[Number(n) - 1]!);
@@ -377,7 +375,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     description: SUMMARIES.PerfectNumber,
     signature: "(integer) -> integer",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined || n < 1n || n > BigInt(MERSENNE_EXPONENTS.length)) return undefined;
       const p = MERSENNE_EXPONENTS[Number(n) - 1]!;
@@ -389,7 +387,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     description: SUMMARIES.PartitionsQ,
     signature: "(integer) -> integer",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined || n < 0n || n > 10_000n) return undefined;
       return ce.number(partitionsIntoDistinctParts(Number(n)));
@@ -399,7 +397,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   ce.declare("PowersRepresentations", {
     description: SUMMARIES.PowersRepresentations,
     signature: "(integer, integer, integer) -> list",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       const k = bigIntegerAt(ops[1]);
       const p = bigIntegerAt(ops[2]);
@@ -422,7 +420,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     description: SUMMARIES.RamanujanTau,
     signature: "(integer) -> integer",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       if (n === undefined) return undefined;
       // τ is only defined on the positive integers; Wolfram's TAU[n] is 0 off that domain.
@@ -435,7 +433,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   ce.declare("SquaresR", {
     description: SUMMARIES.SquaresR,
     signature: "(integer, integer) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const d = bigIntegerAt(ops[0]);
       const n = bigIntegerAt(ops[1]);
       if (d === undefined || n === undefined || d < 0n || d > 12n) return undefined;
@@ -448,7 +446,7 @@ export function declareBacklog(ce: ComputeEngine): void {
     // ops[0] a List (and no ops[1]) threads to a list of numbers; ops[1] present evaluates
     // the Euler polynomial at it, which stays an unreduced expression for a symbolic point.
     signature: "(value, expression?) -> number | list<number> | expression",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       if (ops[1] === undefined && ops[0]?.operator === "List") {
         const ns = operandsOf(ops[0]).map(bigIntegerAt);
         if (ns.some((v) => v === undefined || v < 0n)) return undefined;
@@ -471,7 +469,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   ce.declare("FrobeniusSolve", {
     description: SUMMARIES.FrobeniusSolve,
     signature: "(list<integer>, integer) -> list",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const coeffs = operandsOf(ops[0]).map(bigIntegerAt);
       const b = bigIntegerAt(ops[1]);
       if (coeffs.length === 0 || coeffs.some((c) => c === undefined || c <= 0n) || b === undefined || b < 0n)
@@ -492,7 +490,7 @@ export function declareBacklog(ce: ComputeEngine): void {
   ce.declare("FrobeniusNumber", {
     description: SUMMARIES.FrobeniusNumber,
     signature: "(list<integer>) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const values = operandsOf(ops[0]).map(bigIntegerAt);
       if (values.length === 0 || values.some((v) => v === undefined)) return undefined;
       const result = frobeniusNumber(values as bigint[]);

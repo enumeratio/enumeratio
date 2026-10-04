@@ -1,4 +1,3 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
 import {
   bigIntegerAt,
@@ -11,6 +10,8 @@ import {
   widenSignature,
   wrapOperator,
   type Overload,
+  type Engine,
+  type Expr,
 } from "@enumeratio/engine";
 import { valuation } from "@enumeratio/residues";
 import { declareCarriers } from "@enumeratio/structures";
@@ -34,7 +35,7 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 // PowerModList reach ℤ[i], plus rational reconstruction, integer valuations and Hermite
 // normal form. Every head stays unevaluated — never approximate — when it cannot answer.
 
-export function declareNumberTheory(ce: ComputeEngine): void {
+export function declareNumberTheory(ce: Engine): void {
   registerNotation(ce, NUMBER_THEORY_NOTATION);
   // This package's own carriers — see carrier-data.ts for why they sit here rather than in
   // numerals, and why the ordering this runs at (after numerals, after modular) is
@@ -81,18 +82,17 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     "IsPerfect",
   ]);
 
-  const list = (xs: readonly bigint[]): BoxedExpression =>
+  const list = (xs: readonly bigint[]): Expr =>
     ce.function(
       "List",
       xs.map((x) => ce.number(x)),
     );
 
   /** A call reaches into ℤ[i] when its base or modulus is a Gaussian integer off the real line. */
-  const inGaussian = (ops: readonly BoxedExpression[]): boolean =>
-    isComplexGaussian(ops[0]) || isComplexGaussian(ops[2]);
+  const inGaussian = (ops: readonly Expr[]): boolean => isComplexGaussian(ops[0]) || isComplexGaussian(ops[2]);
 
   /** The same list over ℤ[i] — beyond Wolfram, whose PowerModList stops at the integers. */
-  const gaussianRoots = (ops: readonly BoxedExpression[]): Gaussian[] | undefined => {
+  const gaussianRoots = (ops: readonly Expr[]): Gaussian[] | undefined => {
     const [a, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
     const exponent = bigRationalAt(ops[1]);
     if (a === undefined || m === undefined || exponent === undefined) return undefined;
@@ -161,7 +161,7 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     description: SUMMARIES.IntegerExponent,
     signature: "(number, number?) -> integer | number",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       const b = ops[1] === undefined ? 10n : bigIntegerAt(ops[1]);
       if (n === undefined || b === undefined || b < 2n) return undefined;
@@ -176,13 +176,13 @@ export function declareNumberTheory(ce: ComputeEngine): void {
   ce.declare("HermiteDecomposition", {
     description: SUMMARIES.HermiteDecomposition,
     signature: "(list<list<integer>>) -> list",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const rows = operandsOf(ops[0]).map((row) => operandsOf(row).map(bigIntegerAt));
       const width = rows[0]?.length ?? 0;
       if (rows.length === 0 || rows.some((row) => row.length !== width || row.some((x) => x === undefined)))
         return undefined;
       const { u, h } = hermiteDecomposition(rows as bigint[][]);
-      const matrix = (x: bigint[][]): BoxedExpression =>
+      const matrix = (x: bigint[][]): Expr =>
         ce.function(
           "List",
           x.map((row) => list(row)),
@@ -199,17 +199,16 @@ export function declareNumberTheory(ce: ComputeEngine): void {
  * reduction), the Fibonacci/Lucas/Bell polynomial families, and the k > n boundary of the
  * Stirling numbers. Kept apart from the ℤ/m-adjacent code above, which this doesn't touch.
  */
-function declareCombinatoricsGamma113(ce: ComputeEngine): void {
+function declareCombinatoricsGamma113(ce: Engine): void {
   /**
    * A genuinely non-real complex value (an evaluated `Complex`, `im !== 0`). `.im` is `NaN`
    * for a symbolic expression whose imaginary part is unknown rather than zero -- `NaN`
    * fails both the `undefined` and `!== 0` checks, so it has to be excluded explicitly.
    */
-  const isNonReal = (op: BoxedExpression): boolean =>
-    typeof op.im === "number" && Number.isFinite(op.im) && op.im !== 0;
+  const isNonReal = (op: Expr): boolean => typeof op.im === "number" && Number.isFinite(op.im) && op.im !== 0;
 
   /** n(n-1)…(n-k+1), the falling factorial -- exact whenever `k` is a nonnegative integer. */
-  const fallingFactorial = (n: BoxedExpression, k: number): BoxedExpression =>
+  const fallingFactorial = (n: Expr, k: number): Expr =>
     k <= 0
       ? ce.number(1)
       : ce
@@ -225,13 +224,11 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     return f;
   };
 
-  const gamma = (x: BoxedExpression | number): BoxedExpression => ce.function("Gamma", [x]);
-  const add = (...xs: (BoxedExpression | number)[]): BoxedExpression => ce.function("Add", xs);
-  const sub = (a: BoxedExpression | number, b: BoxedExpression | number): BoxedExpression =>
-    ce.function("Subtract", [a, b]);
-  const mul = (...xs: (BoxedExpression | number)[]): BoxedExpression => ce.function("Multiply", xs);
-  const div = (a: BoxedExpression | number, b: BoxedExpression | number): BoxedExpression =>
-    ce.function("Divide", [a, b]);
+  const gamma = (x: Expr | number): Expr => ce.function("Gamma", [x]);
+  const add = (...xs: (Expr | number)[]): Expr => ce.function("Add", xs);
+  const sub = (a: Expr | number, b: Expr | number): Expr => ce.function("Subtract", [a, b]);
+  const mul = (...xs: (Expr | number)[]): Expr => ce.function("Multiply", xs);
+  const div = (a: Expr | number, b: Expr | number): Expr => ce.function("Divide", [a, b]);
 
   // Binomial(n, n-1) -> n, for symbolic n: recognised by VALUE (k reduces to n-1), not by
   // matching a literal Subtract node, so it also fires once k arrives pre-simplified.
@@ -263,7 +260,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // Each signature is widened to `any` in the slots that need it, gated so the ORIGINAL
   // native handler still only ever runs on the integer (or, for Binomial/Pochhammer, real)
   // arguments it already handled -- anything else reaches the wrapper below instead.
-  const isInteger = (op: BoxedExpression): boolean => integerAt(op) !== undefined;
+  const isInteger = (op: Expr): boolean => integerAt(op) !== undefined;
   // An inexact number -- `2.3`, `1.5 + 0.7i` -- is what the Gamma-ratio wrappers below are for.
   // Not an exact rational: CatalanNumber(1/2) and kin already have an exact closed form
   // elsewhere (analytic continuation via reflection), which a decimal approximation must not
@@ -274,7 +271,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // themselves `isNumberLiteral` (a JS ±Infinity `re`), and running one through a Gamma
   // identity or a trig-based continuation in plain double arithmetic is how Factorial2(-∞)
   // came back the literal `NaN` (Cos(π·(-∞)) has none) instead of native's own Indeterminate.
-  const inexactNumber = (op: BoxedExpression): boolean =>
+  const inexactNumber = (op: Expr): boolean =>
     (op as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true &&
     integerAt(op) === undefined &&
     bigRationalAt(op) === undefined &&
@@ -282,9 +279,9 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     Number.isFinite(op.im);
   // The native handler takes everything the wrappers don't: integers and exact rationals, as
   // before, and every non-number, so the handlers beneath it still see those.
-  const nativeTakes = (op: BoxedExpression): boolean => !inexactNumber(op);
+  const nativeTakes = (op: Expr): boolean => !inexactNumber(op);
   // Two exact numbers, for the Binomial gate below.
-  const isExact = (op: BoxedExpression): boolean => integerAt(op) !== undefined || bigRationalAt(op) !== undefined;
+  const isExact = (op: Expr): boolean => integerAt(op) !== undefined || bigRationalAt(op) !== undefined;
   widenSignature(ce, "CatalanNumber", "(any) -> any", nativeTakes);
   widenSignature(ce, "Subfactorial", "(any) -> any", nativeTakes);
   widenSignature(ce, "Factorial2", "(any) -> any", nativeTakes);
@@ -370,7 +367,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     // Fires once some part is a real or complex non-integer; but not if another part is
     // an exact non-integer rational, which stays for whatever already handles that case.
     (ops) => {
-      const exactRational = (op: BoxedExpression) => integerAt(op) === undefined && bigRationalAt(op) !== undefined;
+      const exactRational = (op: Expr) => integerAt(op) === undefined && bigRationalAt(op) !== undefined;
       return ops.some(inexactNumber) && !ops.some(exactRational);
     },
     () => (ops) => {
@@ -432,7 +429,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // Fibonacci and LucasL at a real index and with a second (polynomial) argument: rows in
   // their tables (defineOverload), beside adeles' profinite one, so which package declared
   // first doesn't matter. The native integer recurrence only ever sees the one integer it took.
-  const integerOnly = (op: BoxedExpression): boolean => integerAt(op) !== undefined;
+  const integerOnly = (op: Expr): boolean => integerAt(op) !== undefined;
   const sequence = (head: string, row: Pick<Overload, "arity" | "when" | "evaluate">): void => {
     defineOverload(ce, head, {
       package: "number-theory",
@@ -447,7 +444,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // Fibonacci and Lucas at a real (non-integer) index, via Binet's formula: with
   // φ = (1+√5)/2, F_ν = (φ^ν - cos(πν) φ^{-ν}) / √5 and L_ν = φ^ν + cos(πν) φ^{-ν}.
   const goldenRatio = () => div(add(1, ce.function("Sqrt", [5])), 2);
-  const cosPiTerm = (nu: BoxedExpression) =>
+  const cosPiTerm = (nu: Expr) =>
     mul(
       ce.function("Cos", [mul(ce.symbol("Pi"), nu)]),
       ce.function("Power", [goldenRatio(), ce.function("Negate", [nu])]),
@@ -474,8 +471,8 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // Fibonacci(n, x), LucasL(n, x) and BellNumber(n, x): the polynomial families, exact for
   // a nonnegative integer order n and any exact x. Built by running each recurrence up to
   // n, expanding at every step so the Horner nesting never survives to the final term.
-  const notMatrix = (op: BoxedExpression): boolean => op.operator !== "List";
-  const expand = (expr: BoxedExpression): BoxedExpression => ce.function("Expand", [expr]).evaluate();
+  const notMatrix = (op: Expr): boolean => op.operator !== "List";
+  const expand = (expr: Expr): Expr => ce.function("Expand", [expr]).evaluate();
 
   sequence("Fibonacci", {
     arity: 2,
@@ -558,7 +555,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     () => (ops) => {
       const n = integerAt(ops[0])!;
       const x = ops[1];
-      const terms: BoxedExpression[] = [];
+      const terms: Expr[] = [];
       for (let k = 0; k <= n; k++) {
         const stirling = ce.function("Stirling", [n, k]).evaluate();
         terms.push(k === 0 ? stirling : mul(stirling, ce.function("Power", [x, k])));
