@@ -1,5 +1,5 @@
 // A head's notation as data: what a library publishes beside a definition
-// (`symbols/<Name>/notation.json`), with no code in it. TraditionalForm is box templates,
+// (`reference/<Name>/notation.json`), with no code in it. TraditionalForm is box templates,
 // StandardForm LaTeX entries compute-engine reads and writes from their kind and precedence
 // alone. It names no head, so it follows its definition to whatever head that's declared as.
 // `@enumeratio/boxes`' `compileNotation` makes it a package notation; this is its shape and

@@ -10,11 +10,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./symbols/*": "./symbols/*"
+    "./reference/*": "./reference/*"
   },
   "enumeratio": {
     "namespace": "ada",
-    "index": "./symbols/index.json",
+    "index": "./reference/index.json",
     "system": "0.x",
     "mappings": [
       "wolfram",
