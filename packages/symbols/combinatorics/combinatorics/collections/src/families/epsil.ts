@@ -34,6 +34,11 @@ export interface FamilyEpsil {
   readonly tables?: unknown;
 }
 
+/** A hand-written reading of a family in plain numbers, in the same order as its Epsil
+ *  definition (tests/fast-kernels.test.ts holds the two together). Each operation takes the
+ *  family's params in order; any may throw or answer undefined to leave the question to Epsil. */
+export type FastKernel = Pick<NumberKernel, "count" | "unrank" | "rank" | "valid">;
+
 export interface EpsilFamily extends FamilyShape {
   /** The names the definitions give the family's params, in order. */
   readonly params: readonly string[];
@@ -45,6 +50,9 @@ export interface EpsilFamily extends FamilyShape {
    *  stays exact. */
   readonly declinePastDoubles?: true;
   readonly epsil: FamilyEpsil;
+  /** A verified fast path: used while the fiber's count is a safe integer, ahead of Epsil.
+   *  The definitions stay the meaning; this is not part of `familyHash`. */
+  readonly fast?: FastKernel;
 }
 
 /** A family's definitions compiled ahead of time, with the hash of the definitions they came from. */
@@ -101,6 +109,13 @@ export const familyHash = (family: EpsilFamily): string =>
   definitionHash({ params: family.params, epsil: family.epsil });
 
 const isInteger = (value: unknown): value is number => Number.isSafeInteger(value);
+const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
+
+/** A fast path answers only for a fiber of at most this many members. Its kernels are plain JS:
+ *  some use 32-bit operators (`>>`, `<<`), and the ones built on `%` add the count to a rank
+ *  before reducing it, so past about 2^31 they are wrong (SymmetricGroup(18), Tuples(3, 33)) well
+ *  before a double stops counting exactly. */
+export const FAST_LIMIT = 2n ** 31n;
 
 /** Whether `value` is a plain-JS element of this shape, every entry an exact integer. */
 function wellFormed(kind: FamilyShape["kind"], value: unknown): boolean {
@@ -119,8 +134,7 @@ function wellFormed(kind: FamilyShape["kind"], value: unknown): boolean {
 export const elementJson = (value: unknown): unknown =>
   Array.isArray(value) ? ["List", ...value.map(elementJson)] : value;
 
-const bigintJson = (value: bigint): unknown =>
-  value <= BigInt(Number.MAX_SAFE_INTEGER) ? Number(value) : { num: value.toString() };
+const bigintJson = (value: bigint): unknown => (value <= MAX_SAFE ? Number(value) : { num: value.toString() });
 
 /** An interpreted integer result, exactly; undefined for anything else. */
 export function integerOf(json: unknown): bigint | undefined {
@@ -157,6 +171,8 @@ export interface KernelOptions {
   readonly tablesCacheSize?: number;
   /** Called each time a table is computed, not read from the cache. */
   readonly onTables?: (params: readonly number[], precision: "double" | "exact") => void;
+  /** `false` ignores the family's `fast` path, so the kernel runs its Epsil definitions alone. */
+  readonly fast?: boolean;
 }
 
 /** A map holding at most `size` entries, dropping the least recently read or written. */
@@ -189,7 +205,8 @@ export function kernelOn(
   options: KernelOptions = {},
 ): FamilyKernel {
   if (!isEpsilFamily(family)) return family;
-  const { params, epsil, elementType: _, declinePastDoubles, ...shape } = family;
+  const { params, epsil, elementType: _, declinePastDoubles, fast: fastKernel, ...shape } = family;
+  const quick = options.fast === false ? undefined : fastKernel;
   const ahead = generated[family.head];
   const current = ahead?.hash === familyHash(family) ? ahead : undefined;
   // An operation that never reads `_tables` (a closed-form count) doesn't wait for the table.
@@ -279,12 +296,39 @@ export function kernelOn(
     throw new Error(`${family.head}(${p.join(", ")}): its ${operation} definition gave ${JSON.stringify(json)}`);
   };
 
+  // The fast kernels read the params as written, so they take only the family's own arity of
+  // non-negative integers; anything else is left to Epsil.
+  const wellParamed = (p: readonly number[]): boolean => {
+    if (p.length !== params.length) return false;
+    for (const x of p) if (!(Number.isSafeInteger(x) && x >= 0)) return false;
+    return true;
+  };
+  // A fast operation that throws or answers undefined leaves the question to Epsil.
+  const quickCount = (p: number[]): number | undefined => {
+    if (quick === undefined || !wellParamed(p)) return undefined;
+    try {
+      const total = quick.count(p);
+      return isInteger(total) && total <= FAST_LIMIT ? total : undefined;
+    } catch {
+      return undefined;
+    }
+  };
+
   const counts = new Map<string, Count>();
+  // Calls come in runs at the same params, so the last fiber is found without building a key.
+  let lastParams: readonly number[] = [];
+  let lastTotal: Count | undefined;
+  const isLast = (p: readonly number[]): boolean => {
+    if (p.length !== lastParams.length) return false;
+    for (let i = 0; i < p.length; i++) if (p[i] !== lastParams[i]) return false;
+    return true;
+  };
   const count = (p: number[]): Count => {
+    if (lastTotal !== undefined && isLast(p)) return lastTotal;
     const key = p.join(",");
     let total = counts.get(key);
     if (total === undefined) {
-      const fast = run("count", p, {});
+      const fast = quickCount(p) ?? run("count", p, {});
       if (isInteger(fast)) total = BigInt(fast);
       else {
         const json = interpret("count", p, {});
@@ -292,16 +336,29 @@ export function kernelOn(
       }
       counts.set(key, total);
     }
+    lastParams = [...p];
+    lastTotal = total;
     return total;
   };
   // Compiled code runs in doubles, so it answers only for a fiber a double counts exactly.
   const exact = (p: number[]): boolean => {
     const total = count(p);
-    return typeof total === "bigint" && total <= BigInt(Number.MAX_SAFE_INTEGER);
+    return typeof total === "bigint" && total <= MAX_SAFE;
+  };
+
+  const fits = (p: number[]): boolean => {
+    const total = count(p);
+    return typeof total === "bigint" && total <= FAST_LIMIT && wellParamed(p);
   };
 
   const valid = (element: unknown, p: number[]): boolean => {
     if (!wellFormed(family.kind, element)) return false;
+    if (quick !== undefined && fits(p)) {
+      try {
+        const answer = quick.valid(element, p);
+        if (typeof answer === "boolean") return answer;
+      } catch {}
+    }
     const fast = run("valid", p, { _x: element });
     if (typeof fast === "boolean") return fast;
     return interpret("valid", p, { _x: elementJson(element) }) === "True";
@@ -309,10 +366,18 @@ export function kernelOn(
 
   return {
     ...shape,
+    ...(quick === undefined ? {} : { fast: true as const }),
     count,
     valid,
     unrank: (p, r) => {
-      if (exact(p)) {
+      const total = count(p);
+      if (typeof total === "bigint" && total <= MAX_SAFE) {
+        if (quick !== undefined && r >= 0n && r < total && total <= FAST_LIMIT && wellParamed(p)) {
+          try {
+            const element = quick.unrank(p, Number(r));
+            if (element !== undefined) return element;
+          } catch {}
+        }
         const fast = run("unrank", p, { _r: Number(r) });
         if (wellFormed(family.kind, fast)) return fast as Element;
       } else if (declinePastDoubles) decline(p);
@@ -322,6 +387,12 @@ export function kernelOn(
     rank: (element, p) => {
       if (!valid(element, p)) return -1n;
       if (exact(p)) {
+        if (quick !== undefined && fits(p)) {
+          try {
+            const place = quick.rank(element, p);
+            if (isInteger(place)) return BigInt(place);
+          } catch {}
+        }
         const fast = run("rank", p, { _x: element });
         if (isInteger(fast)) return BigInt(fast);
       } else if (declinePastDoubles) decline(p);
@@ -330,6 +401,10 @@ export function kernelOn(
     },
   };
 }
+
+/** The family's kernel on `ce` running its Epsil definitions alone, ignoring any `fast` path. */
+export const epsilKernelOn = (ce: ComputeEngine, family: AnyFamily): FamilyKernel =>
+  kernelOn(ce, family, COMPILED_FAMILIES, { fast: false });
 
 /** Every family's kernel on `ce`. */
 export const kernelsOn = (ce: ComputeEngine, families: readonly AnyFamily[]): FamilyKernel[] =>

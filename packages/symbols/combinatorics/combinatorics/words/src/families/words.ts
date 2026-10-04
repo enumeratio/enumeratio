@@ -8,10 +8,18 @@
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Binomial } from "../../../collections/src/families/kernels-combinatorics.ts";
 import {
+  BinaryStringCount,
+  BinaryStringRank,
+  BinaryStringUnrank,
   FibonacciWordCount,
   FibonacciWordUnrank,
   FibonacciWordRank,
+  IsBinaryString,
   IsFibonacciWord,
+  IsTupleOf,
+  TupleCount,
+  TupleRank,
+  TupleUnrank,
 } from "../../../collections/src/families/kernels-extra.ts";
 import { binaryPalindromes, binaryStrings, grayCodes, words } from "../../../collections/src/families/closed-forms.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
@@ -370,10 +378,50 @@ const wordClass = (carrier: string, base?: number): Declared => ({
 // Closed-form families, defined in Epsil (collections/src/families/closed-forms.ts). The TS
 // kernels above (byWeight*, grayCode*, palindrome*) are the independent reading their agreement
 // test checks them against.
-const binaryWords = binaryStrings({ head: "BinaryWords", params: ["_n"], carrier: "BinaryWord" });
-const wordsFamily = words({ head: "Words", params: ["_size", "_base"], carrier: "Word" });
-const grayCodesFamily = grayCodes({ head: "GrayCodes", params: ["_n"], carrier: "BinaryWord" });
-const binaryPalindromesFamily = binaryPalindromes({ head: "BinaryPalindromes", params: ["_n"], carrier: "BinaryWord" });
+const binaryWords = binaryStrings({
+  head: "BinaryWords",
+  params: ["_n"],
+  carrier: "BinaryWord",
+  fast: {
+    count: ([n]) => BinaryStringCount(n),
+    unrank: ([n], r) => BinaryStringUnrank(n, r),
+    rank: (x) => BinaryStringRank(x as number[]),
+    valid: (x, [n]) => IsBinaryString(x as number[], n),
+  },
+});
+const wordsFamily = words({
+  head: "Words",
+  params: ["_size", "_base"],
+  carrier: "Word",
+  fast: {
+    count: ([size, base]) => TupleCount(base, size),
+    unrank: ([size, base], r) => TupleUnrank(base, size, r),
+    rank: (x, [, base]) => TupleRank(x as number[], base),
+    valid: (x, [size, base]) => IsTupleOf(x as number[], base, size),
+  },
+});
+const grayCodesFamily = grayCodes({
+  head: "GrayCodes",
+  params: ["_n"],
+  carrier: "BinaryWord",
+  fast: {
+    count: ([n]) => grayCodeCount(n),
+    unrank: ([n], r) => grayCodeUnrank(n, r),
+    rank: (x) => grayCodeRank(x as number[]),
+    valid: (x, [n]) => (x as number[]).length === n && (x as number[]).every((b) => b === 0 || b === 1),
+  },
+});
+const binaryPalindromesFamily = binaryPalindromes({
+  head: "BinaryPalindromes",
+  params: ["_n"],
+  carrier: "BinaryWord",
+  fast: {
+    count: ([n]) => palindromeCount(n),
+    unrank: ([n], r) => palindromeUnrank(n, r),
+    rank: (x, [n]) => palindromeRank(x as number[], n),
+    valid: (x, [n]) => palindromeValid(x, n),
+  },
+});
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
   binaryWords,

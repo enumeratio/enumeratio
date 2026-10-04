@@ -29,7 +29,12 @@ import {
 } from "../../../collections/src/families/tables.ts";
 import { lukasiewiczPaths } from "./lukasiewicz.ts";
 import { completionsOf, completionsSize, completionsTable, type Step, walkFamily } from "./walks.ts";
-import { OrderedTreeUnrank, OrderedTreeRank, type OrdTree } from "../../../collections/src/families/kernels-extra.ts";
+import {
+  CatalanNumber,
+  OrderedTreeUnrank,
+  OrderedTreeRank,
+  type OrdTree,
+} from "../../../collections/src/families/kernels-extra.ts";
 
 // ─── DelannoyPaths(n): lattice paths from (0,0) to (n,n) using East=(1,0), North=(0,1), and
 // Diagonal=(1,1) steps — encoded as a token sequence over {0=E,1=N,2=D}. f[i][j] = # completions
@@ -339,6 +344,12 @@ const below = completionsOf("_h");
 const dyckPathsByHeight = walkFamily({
   head: "DyckPathsByHeight",
   carrier: "DyckPath",
+  fast: {
+    count: ([n, h]) => DyckPathsByHeightCount(n, h),
+    unrank: ([n, h], r) => DyckPathsByHeightUnrank(n, h, r),
+    rank: (x, [, h]) => DyckPathsByHeightRank(x as number[], h),
+    valid: (x, [n, h]) => isDyckPathsByHeightOf(x, n, h),
+  },
   params: ["_n", "_h"],
   width: mul(2, "_n"),
   steps: [UP, DOWN],
@@ -442,6 +453,12 @@ const delannoyPaths: EpsilFamily = (() => {
     paramCount: 1,
     kind: "ints",
     params: ["_n"],
+    fast: {
+      count: ([n]) => DelannoyPathCount(n),
+      unrank: ([n], r) => DelannoyPathUnrank(n, r),
+      rank: (x, [n]) => DelannoyPathRank(x as number[], n),
+      valid: (x, [n]) => isDelannoyPathOf(x, n),
+    },
     epsil: {
       count: delannoy("dc", "_n", "_n"),
       tables: delannoyCounts,
@@ -506,6 +523,12 @@ const peakCompletions = (w: MathJSON, y: MathJSON, left: MathJSON, u: MathJSON):
 const motzkinPathsByPeaks = walkFamily({
   head: "MotzkinPathsByPeaks",
   carrier: "MotzkinPath",
+  fast: {
+    count: ([n, k]) => MotzkinPathsByPeaksCount(n, k),
+    unrank: ([n, k], r) => MotzkinPathsByPeaksUnrank(n, k, r),
+    rank: (x, [, k]) => MotzkinPathsByPeaksRank(x as number[], k),
+    valid: (x, [n, k]) => isMotzkinPathsByPeaksOf(x, n, k),
+  },
   params: ["_n", "_k"],
   width: "_n",
   steps: [
@@ -536,6 +559,17 @@ const motzkinPathsByPeaks = walkFamily({
 // Kept separate from `entries` below only so collections/src/families/index.ts can splice
 // `latticePathsPathsPartitionsBeforeDyckPathsByHeight` (DelannoyPaths, LukasiewiczPaths) back in
 // where they held their (now consolidated) position in collections — §4 step 5.
-export const entriesBeforeDyckPathsByHeight: (NumberKernel | EpsilFamily)[] = [delannoyPaths, lukasiewiczPaths];
+export const entriesBeforeDyckPathsByHeight: (NumberKernel | EpsilFamily)[] = [
+  delannoyPaths,
+  {
+    ...lukasiewiczPaths,
+    fast: {
+      count: ([n]) => CatalanNumber(n),
+      unrank: ([n], r) => LukasiewiczPathUnrank(n, r),
+      rank: (x) => LukasiewiczPathRank(x as number[]),
+      valid: (x, [n]) => isLukasiewiczPathOf(x, n),
+    },
+  },
+];
 
 export const entries: (NumberKernel | EpsilFamily)[] = [dyckPathsByHeight, motzkinPathsByPeaks];

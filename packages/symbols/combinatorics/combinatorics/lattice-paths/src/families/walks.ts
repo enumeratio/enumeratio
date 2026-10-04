@@ -5,7 +5,7 @@
 // a table built once per params (`FamilyEpsil.tables`). Unrank and rank walk the path with the
 // table; membership is the walk alone.
 
-import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import {
   add,
   and,
@@ -55,6 +55,7 @@ export interface Walk {
   readonly final?: (flag: MathJSON) => MathJSON;
   /** For tables the interpreter takes minutes to build past 2^53: unrank and rank decline there. */
   readonly declinePastDoubles?: true;
+  readonly fast?: FastKernel;
 }
 
 const flagAfter = (walk: Walk, reached: MathJSON, y: MathJSON, rise: -1 | 0 | 1): MathJSON =>
@@ -178,6 +179,7 @@ export const walkFamily = (walk: Walk): EpsilFamily => ({
   kind: "ints",
   params: walk.params,
   ...(walk.declinePastDoubles === undefined ? {} : { declinePastDoubles: true as const }),
+  ...(walk.fast === undefined ? {} : { fast: walk.fast }),
   epsil: {
     count: walk.completions(walk.width, 0, walk.flag?.initial ?? 1),
     ...(walk.tables.length === 0

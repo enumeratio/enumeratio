@@ -592,9 +592,12 @@ const noNesting = lets(
   ),
 );
 
+const readingOf = new Map(readings.map((reading) => [reading.head, reading]));
+const withFast = (family: EpsilFamily): EpsilFamily => ({ ...family, fast: readingOf.get(family.head) });
+
 export const entries: EpsilFamily[] = [
   nonCrossingPartitions,
   nonNestingPartitions,
   matchingsFrom("NonCrossingMatchings", "stack", noCrossing),
   matchingsFrom("NonNestingMatchings", "queue", noNesting),
-];
+].map(withFast);

@@ -3,14 +3,14 @@
 // returned as it is.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { type EpsilFamily, kernelOn } from "../src/families/epsil.ts";
+import { type EpsilFamily, epsilKernelOn } from "../src/families/epsil.ts";
 import type { NumberKernel } from "../src/families/types.ts";
 
 const ce = new ComputeEngine();
 
 export function asNumbers(family: NumberKernel | EpsilFamily): NumberKernel {
   if (!("epsil" in family)) return family;
-  const kernel = kernelOn(ce, family);
+  const kernel = epsilKernelOn(ce, family);
   return {
     ...kernel,
     count: (p) => Number(kernel.count(p)),

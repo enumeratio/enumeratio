@@ -22,6 +22,7 @@ function counting(size?: number) {
   const computed: string[] = [];
   const kernel = kernelOn(ce, family, COMPILED_FAMILIES, {
     tablesCacheSize: size,
+    fast: false,
     onTables: (p, precision) => computed.push(`${precision}:${p.join(",")}`),
   });
   return { kernel, computed };
@@ -44,6 +45,7 @@ test("a walk's tables are one list, computed once per params", () => {
   expect(JSON.stringify(walk.epsil.tables)).toContain('"Join"');
   const computed: string[] = [];
   const kernel = kernelOn(ce, walk, COMPILED_FAMILIES, {
+    fast: false,
     onTables: (p, precision) => computed.push(`${precision}:${p.join(",")}`),
   });
   const total = kernel.count([8, 4]) as bigint;

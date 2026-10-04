@@ -6,7 +6,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { type EpsilFamily, kernelOn } from "../../collections/src/families/epsil.ts";
+import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
 import { CompositionCount, IsCompositionOf } from "../../collections/src/families/kernels-combinatorics.ts";
 import {
   CompositionsIntoKPartsCount,
@@ -111,7 +111,7 @@ const byHead = new Map(epsilEntries.map((family) => [family.head, family]));
 
 for (const [head, reading] of Object.entries(READINGS)) {
   const family = byHead.get(head)!;
-  const kernel = kernelOn(ce, family);
+  const kernel = epsilKernelOn(ce, family);
   for (const p of reading.params) {
     test(`${head}(${p.join(", ")}) agrees with its TS reading`, () => {
       const total = reading.count(p);
@@ -154,7 +154,7 @@ test("the interpreter agrees with compiled code", () => {
 });
 
 test("past 2^53 IntegerCompositions answers in exact integers", () => {
-  const kernel = kernelOn(ce, byHead.get("IntegerCompositions")!);
+  const kernel = epsilKernelOn(ce, byHead.get("IntegerCompositions")!);
   const n = 60; // 2^59 compositions, well past 2^53
   let total = 1n;
   for (let i = 0; i < n - 1; i++) total *= 2n;
