@@ -129,6 +129,8 @@ export function createKernel(
       ? undefined
       : createRegistryResolver(options.libraries, {
           check: { engine: () => new (ce.constructor as new () => ComputeEngine)(), mode: "enforce" },
+          // What a library's definition names of the catalogue's is declared first, by the same resolver.
+          system: (engine, json) => resolver.ensure(engine, json),
           ...(options.notation === undefined ? {} : { notation: options.notation }),
         });
   /** `input` with the libraries it names declared, and its calls of them as compute-engine can make them. */
