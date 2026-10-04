@@ -11,7 +11,7 @@ test("names: heads and symbols, not text or numbers", () => {
   ]);
 });
 
-test("packages: what the manifest says declares each name", () => {
+test("packages: what the records and what declaring found say declares each name", () => {
   // A native head we override, a head of our own, and one only the engine has.
   expect(packagesFor(["BarnesG", "x"])).toContain("analytic");
   expect(packagesFor(["HypergeometricPFQ", ["List", 1], ["List", 2], 0.5])).toContain("analytic");
@@ -34,9 +34,13 @@ test("packages: what the manifest says declares each name", () => {
           overloads: [{ package: "paths", type: "(lattice_path) -> integer", types: ["lattice_path"] }],
         }
       : undefined;
-  expect([...packagesFor(["Sign", -3], lookup, { Sign: ["paths"] }, { lattice_path: ["paths"] })]).toEqual([]);
-  expect([...packagesFor(["Sign", -3], lookup, { Sign: ["paths"] }, { lattice_path: ["walks"] })]).toEqual(["paths"]);
-  expect([...packagesFor(["Inverse", "x"])]).not.toContain("combinatorics");
+  const minting = (pkg: string) => ({
+    declarers: { Sign: ["paths"] },
+    canonical: {},
+    carrierTypes: { lattice_path: [pkg] },
+  });
+  expect([...packagesFor(["Sign", -3], lookup, minting("paths"))]).toEqual([]);
+  expect([...packagesFor(["Sign", -3], lookup, minting("walks"))]).toEqual(["paths"]);
   // What a head canonicalises to: Lb(x) is Log(x, 2).
   expect([...packagesFor(["Lb", "x"])]).toEqual([...packagesFor(["Log", "x"])]);
   expect([...packagesFor(["Hold", 1])]).toEqual([]);

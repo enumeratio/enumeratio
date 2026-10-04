@@ -9,6 +9,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { canonicalOf } from "./declares-of.ts";
 import { recordDirs } from "@enumeratio/entry/node";
 import { assembleManifest, type PackageIndex } from "../src/assemble.ts";
 import { notationSpecifier, type PackageField } from "../src/package-field.ts";
@@ -53,11 +54,18 @@ interface Scope {
   readonly parent?: Scope;
 }
 
+const bare = new ComputeEngine();
+const engineNames = new Set<string>();
+for (
+  let scope: Scope | undefined = (bare as unknown as { context: { lexicalScope: Scope } }).context.lexicalScope;
+  scope !== undefined;
+  scope = scope.parent
+)
+  for (const name of scope.bindings.keys()) engineNames.add(name);
+
 function engineTypes(): Map<string, string> {
-  const ce = new ComputeEngine();
-  const names = new Set<string>();
-  let scope: Scope | undefined = (ce as unknown as { context: { lexicalScope: Scope } }).context.lexicalScope;
-  for (; scope !== undefined; scope = scope.parent) for (const name of scope.bindings.keys()) names.add(name);
+  const ce = bare;
+  const names = engineNames;
   const types = new Map<string, string>();
   for (const name of names) {
     if (!/^[A-Z]/.test(name)) continue;
@@ -118,6 +126,11 @@ export const EXAMPLES: Readonly<Record<string, number>> = ${JSON.stringify(sorte
 `,
   );
 }
+
+writeFileSync(
+  join(OUT, "canonical.ts"),
+  `${HEADER}/** compute-engine's own heads that canonicalise to others (\`Lb(x)\` is \`Log(x, 2)\`), with the heads. */\nexport const ENGINE_CANONICAL: Readonly<Record<string, readonly string[]>> = ${JSON.stringify(canonicalOf(new ComputeEngine(), engineNames))};\n`,
+);
 
 // A literal import per package, so a bundler keeps each one its own chunk, loaded by `describe`.
 const loaders = [...perPackage.keys()]

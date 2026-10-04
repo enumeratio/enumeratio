@@ -7,6 +7,7 @@
 // engine, so this sits in the manifest beside `plan`, which it builds on.
 
 import { HIERARCHY, type Layer, PACKAGES } from "./hierarchy.ts";
+import type { LibraryDeclares } from "./declares.ts";
 import type { PackageField } from "./package-field.ts";
 import { type Library, plan } from "./resolve.ts";
 
@@ -260,13 +261,14 @@ async function declaring(pkg: string, field: string | readonly string[], load: I
 /**
  * The libraries named, from their packages: each one's `enumeratio.declare` (and `late`) read
  * from its own `package.json` and imported as that field says, in `DECLARE_PREFERENCE` order. A
- * name with neither is not a library and is skipped. The scope is ours; a host with another
- * passes it.
+ * name with neither is not a library and is skipped. Each one's `declares` too, unless told not
+ * to (the build that writes them). The scope is ours; a host with another passes it.
  */
 export async function loadLibraries<E extends object>(
   names: Iterable<string>,
   load: Importer,
   scope = "@enumeratio/",
+  { declares: withDeclares = true }: { readonly declares?: boolean } = {},
 ): Promise<StagedLibrary<E>[]> {
   const libraries: StagedLibrary<E>[] = [];
   for (const { name } of preferred([...new Set(names)].map((name) => ({ name })))) {
@@ -277,6 +279,10 @@ export async function loadLibraries<E extends object>(
     const main =
       field.declare === undefined ? undefined : ((await declaring(pkg, field.declare, load)) as (ce: E) => void);
     const late = field.late === undefined ? undefined : ((await declaring(pkg, field.late, load)) as (ce: E) => void);
+    const declares =
+      withDeclares && field.declares !== undefined
+        ? ((await load(`${pkg}/${field.declares.replace(/^\.\//, "")}`, { json: true })) as LibraryDeclares)
+        : undefined;
     libraries.push({
       name,
       declare: (ce) => {
@@ -287,6 +293,7 @@ export async function loadLibraries<E extends object>(
       ...(late === undefined ? {} : { late }),
       ...(field.names === undefined ? {} : { names: field.names }),
       ...(field.requires === undefined ? {} : { requires: field.requires }),
+      ...(declares === undefined ? {} : { declares }),
     });
   }
   return libraries;

@@ -15,6 +15,9 @@ export interface PackageField {
   readonly late?: string | readonly string[];
   /** Names it adds to without redeclaring them, which declaring can't see: a registry a head reads. */
   readonly names?: readonly string[];
+  /** What declaring it finds (`LibraryDeclares`), an export subpath (`./declares.json`) its
+   *  build writes: what a host's resolver reads to know which names it brings. */
+  readonly declares?: string;
   /** Libraries it needs declared first beyond what it extends in `HIERARCHY`. */
   readonly requires?: readonly string[];
 }

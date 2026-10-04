@@ -4,7 +4,13 @@ export default defineConfig({
   pack: {
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo" },
-    exports: true,
+    // The generated export map, plus what the build writes after packing (collect-declares).
+    exports: {
+      customExports(exports) {
+        exports["./declares.json"] = "./dist/declares.json";
+        return exports;
+      },
+    },
   },
   lint: {
     options: { typeAware: true, typeCheck: true },

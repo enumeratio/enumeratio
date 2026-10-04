@@ -19,10 +19,11 @@
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
     },
+    "./declares.json": "./dist/declares.json",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node ../../../manifest/scripts/collect-notation.ts . && vp pack",
+    "build": "node ../../../manifest/scripts/collect-notation.ts . && vp pack && node ../../../manifest/scripts/collect-declares.ts .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.147.0",
     "@enumeratio/engine": "workspace:*",
+    "@enumeratio/manifest": "workspace:*",
     "@enumeratio/structures": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
@@ -46,7 +48,8 @@
   "enumeratio": {
     "notation": "./notation",
     "group": "algebras",
-    "declare": "declareHopf"
+    "declare": "declareHopf",
+    "declares": "./declares.json"
   },
   "generated": [
     "src/notation.generated.ts"

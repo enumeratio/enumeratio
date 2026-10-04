@@ -3,10 +3,13 @@
 // packages' own dependencies, declared into an engine in the host's order. Loads nothing
 // itself: a host lists its libraries and how to declare each.
 
-import { CANONICAL, CARRIER_TYPES, DECLARERS } from "./declarers-data.ts";
 import { PACKAGES } from "./hierarchy.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
 import type { Overload, SymbolInfo } from "./types.ts";
+import { assembleDeclarers, type DeclarerTables, type LibraryDeclares, NO_DECLARERS } from "./declares.ts";
+import { namesOf } from "./names.ts";
+
+export { namesOf };
 
 const ENGINE = "compute-engine";
 
@@ -24,6 +27,8 @@ export interface Library<Engine extends object = never> {
   /** Names it adds to without redeclaring them, which declaring can't see: a registry a head
    *  reads (statistics' entries in `CombinatorialStat`'s table). */
   readonly names?: readonly string[];
+  /** What declaring it finds, from its build; without it, the records' overloads say. */
+  readonly declares?: LibraryDeclares;
 }
 
 /** Where a name's declaring packages are looked up: the manifest, unless told otherwise. */
@@ -31,30 +36,15 @@ export type Lookup = (name: string) => SymbolInfo | undefined;
 
 const manifest: Lookup = (name) => (Object.hasOwn(SYMBOLS, name) ? SYMBOLS[name] : undefined);
 
-/** Every head and symbol a MathJSON expression names. Strings in quotes are text, not names. */
-export function namesOf(json: unknown, into: Set<string> = new Set()): Set<string> {
-  if (typeof json === "string") {
-    if (!/^'.*'$/s.test(json) && /^[A-Za-z_]/.test(json)) into.add(json);
-  } else if (Array.isArray(json)) {
-    for (const item of json) namesOf(item, into);
-  } else if (json !== null && typeof json === "object") {
-    const { fn, sym, dict } = json as { fn?: unknown; sym?: unknown; dict?: unknown };
-    if (typeof sym === "string") into.add(sym);
-    if (fn !== undefined) namesOf(fn, into);
-    if (dict !== null && typeof dict === "object") for (const value of Object.values(dict)) namesOf(value, into);
-  }
-  return into;
-}
-
 /** What `json` names, and the heads those canonicalise to, transitively (`Lb` brings `Log`). */
-export function reachedNames(json: unknown, canonical = CANONICAL): Set<string> {
+export function reachedNames(json: unknown, canonical = NO_DECLARERS.canonical): Set<string> {
   const names = namesOf(json);
   for (const name of names) for (const next of canonical[name] ?? []) names.add(next);
   return names;
 }
 
 /**
- * The packages that declare what `json` names: what declaring them found (`DECLARERS`), or the
+ * The packages that declare what `json` names: what declaring them found (`tables`), or the
  * records' overloads for a name that isn't there. A package whose only say in a head is rows on
  * carriers it declares (`on`: adeles' `Add` on `Adele`) doesn't count for it: its rows matter
  * only where one of those exists, and whatever makes one brings the package. Any other widening
@@ -67,11 +57,10 @@ export function reachedNames(json: unknown, canonical = CANONICAL): Set<string> 
 export function packagesFor(
   json: unknown,
   lookup: Lookup = manifest,
-  declarers = DECLARERS,
-  carrierTypes = CARRIER_TYPES,
+  { declarers, canonical, carrierTypes }: DeclarerTables = NO_DECLARERS,
 ): Set<string> {
   const packages = new Set<string>();
-  const names = reachedNames(json);
+  const names = reachedNames(json, canonical);
   const named = (pattern: string): boolean => {
     const matches = new RegExp(pattern, "u");
     return [...names].some((name) => matches.test(name));
@@ -100,14 +89,16 @@ export function packagesFor(
   return packages;
 }
 
-/** What `json` needs from `libraries`: `packagesFor`, and the libraries that claim its names. */
+/** What `json` needs from `libraries`: `packagesFor` over what they declare, and the libraries
+ *  that claim its names. */
 export function packagesNeeded(
   json: unknown,
   libraries: readonly Library<never>[],
   lookup: Lookup = manifest,
+  tables: DeclarerTables = assembleDeclarers(libraries),
 ): Set<string> {
-  const names = reachedNames(json);
-  const packages = packagesFor(json, lookup);
+  const names = reachedNames(json, tables.canonical);
+  const packages = packagesFor(json, lookup, tables);
   for (const library of libraries) if (library.names?.some((name) => names.has(name))) packages.add(library.name);
   return packages;
 }
@@ -165,6 +156,7 @@ export function createResolver<Engine extends object>(
   libraries: readonly Library<Engine>[],
   lookup: Lookup = manifest,
 ): Resolver<Engine> {
+  const tables = assembleDeclarers(libraries);
   const declared = new WeakMap<Engine, Set<string>>();
   // One call at a time per engine: a call that finds a library already marked must not go on
   // until it's declared. Two elements resolving at once would otherwise declare combinatorics
@@ -184,7 +176,7 @@ export function createResolver<Engine extends object>(
   async function ensureNow(ce: Engine, json: unknown): Promise<{ declared: string[]; missing: string[] }> {
     const done = declared.get(ce) ?? new Set<string>();
     declared.set(ce, done);
-    const { libraries: needed, missing } = plan(packagesNeeded(json, libraries, lookup), libraries);
+    const { libraries: needed, missing } = plan(packagesNeeded(json, libraries, lookup, tables), libraries);
     const fresh: string[] = [];
     // In order, one at a time: a library's declarations may read an earlier one's. Across
     // calls, a library a later expression needs lands after those already declared, even if

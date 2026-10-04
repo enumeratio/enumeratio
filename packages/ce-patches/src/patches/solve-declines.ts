@@ -14,7 +14,7 @@ export const solveDeclines: Patch = {
   fixed: (ce) => {
     // Scoped: boxing a bare `x` would otherwise declare it as a free symbol on `ce` itself --
     // harmless numerically, but it leaks into anything that inspects what a library declares
-    // (e.g. `collect-declarers.ts`, which reads exactly that).
+    // (e.g. a library's `declares.json`, which reads exactly that).
     ce.pushScope();
     try {
       const solve = (equation: unknown) => ce.box(["Solve", equation, "x"] as never).evaluate();

@@ -4,11 +4,12 @@
 // repositories will run this check for themselves; here it covers every library we ship.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { buildEngine, DECLARE_ORDER, DECLARERS, PACKAGES, reachedNames } from "@enumeratio/manifest";
+import { assembleDeclarers, buildEngine, DECLARE_ORDER, PACKAGES, reachedNames } from "@enumeratio/manifest";
 import { expect, test } from "vite-plus/test";
 import { AVAILABLE, PLAN } from "../scripts/engines.ts";
 import { referenceData } from "../src/node.ts";
 
+const { canonical, declarers: DECLARERS } = assembleDeclarers(AVAILABLE);
 const BASE = new Set(["evaluation", "boxes", "structures"]);
 const requiresOf = (name: string): string[] => [
   ...(PACKAGES[name]?.requires ?? []),
@@ -67,7 +68,7 @@ for (const { name } of AVAILABLE) {
     const missing = new Set<string>();
     for (const head of heads.filter((h) => h.package === name)) {
       for (const example of head.entry.examples) {
-        for (const used of reachedNames(example.expr)) {
+        for (const used of reachedNames(example.expr, canonical)) {
           const by = DECLARERS[used];
           if (by?.some((pkg) => planned.has(pkg)) === true && !bound(engine, used)) missing.add(used);
         }
