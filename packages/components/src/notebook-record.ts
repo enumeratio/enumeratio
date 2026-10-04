@@ -1,12 +1,25 @@
 // A notebook's record (https://github.com/enumeratio/enumeratio/wiki/Speculative-Sessions-as-Data):
 // its cells as the reader left them, kept in IndexedDB so a reload or another tab shows the
 // same notebook. A notebook is reactive, so its state follows from its cells: the record holds
-// sources, not a history, and the answers are worked out again from them.
+// sources, not a history. Their last answers are kept too, but only to show at once: they're
+// worked out again from the sources, since a draw or a newer library can change them.
 
-/** One cell as kept: its stable id and its source. */
+/** A cell's last answer, as its Out reported it (`notatio-result`), for the source it answered. */
+export interface CellAnswer {
+  readonly source: string;
+  /** StandardForm TeX. */
+  readonly latex: string;
+  /** `latex` typeset: shown on open, before anything loads, until the answer is worked out again. */
+  readonly markup?: string;
+  readonly inputform?: string;
+  readonly asciimath?: string;
+}
+
+/** One cell as kept: its stable id, its source, and its last answer. */
 export interface RecordCell {
   readonly id: number;
   readonly value: string;
+  readonly answer?: CellAnswer;
 }
 
 export interface NotebookRecord {

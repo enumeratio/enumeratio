@@ -3,9 +3,10 @@ import { keyed } from "lit/directives/keyed.js";
 import { repeat } from "lit/directives/repeat.js";
 import "./notatio-cell.ts";
 import "./notatio-dynamic-module.ts";
-import { referencesOrdinal } from "@enumeratio/frontend/core";
+import { type IpynbPreset, referencesOrdinal, toIpynb } from "@enumeratio/frontend/core";
 import {
   browserStore,
+  type CellAnswer,
   isSeed,
   notebookKey,
   openingCells,
@@ -25,6 +26,7 @@ const SAVE_MS = 300;
 interface NbCell {
   id: number;
   value: string;
+  answer?: CellAnswer;
 }
 
 /**
@@ -81,6 +83,10 @@ export class NotatioNotebook extends LitElement {
   #saveTimer: ReturnType<typeof setTimeout> | undefined;
   // Set while cells come from the record, so applying them doesn't write them straight back.
   #restoring = false;
+  // Each cell's latest answer, by cell id: kept with the cells, and what an export writes.
+  readonly #answers = new Map<number, CellAnswer>();
+  // Whether the pending save changed the sources, which the other tabs are told of.
+  #announce = false;
 
   constructor() {
     super();
@@ -140,11 +146,16 @@ export class NotatioNotebook extends LitElement {
   /** Open with the reader's cells, if they left any; `fresh` starts the module over. */
   async #restore(fresh: boolean): Promise<void> {
     const record = await this.#store?.get(this.#key);
-    this.#apply(openingCells(record, this.#seeded), fresh);
+    const cells = openingCells(record, this.#seeded);
+    // Another tab announces only a change of sources; one already shown needs no redraw.
+    if (fresh && this._ready && sameSources(cells, this._cells)) return;
+    this.#apply(cells, fresh);
   }
 
   #apply(cells: readonly NbCell[], fresh: boolean): void {
     this.#restoring = true;
+    this.#answers.clear();
+    for (const cell of cells) if (cell.answer !== undefined) this.#answers.set(cell.id, cell.answer);
     this.#nextId = Math.max(0, ...cells.map((c) => c.id)) + 1;
     const last = cells.at(-1);
     this._cells = last === undefined || last.value.trim() !== "" ? [...cells, this.#cell()] : [...cells];
@@ -163,21 +174,63 @@ export class NotatioNotebook extends LitElement {
       this.#restoring = false;
       return;
     }
+    this.#save(true);
+  }
+
+  #save(announce: boolean): void {
     if (this.#store === undefined) return;
+    this.#announce ||= announce;
     clearTimeout(this.#saveTimer);
     this.#saveTimer = setTimeout(() => this.#flush(), SAVE_MS);
   }
 
-  /** Keep the cells now, and tell the other tabs; a notebook back at its seed keeps nothing. */
+  /** A cell's Out answered: kept, so the notebook shows it at once next time. */
+  #onResult = (event: Event): void => {
+    // An Out with no value yet (its cell still reading the input) has nothing to keep.
+    if (((event.target as { value?: string }).value ?? "") === "") return;
+    const cell = (event.target as Element).closest<HTMLElement & { value?: string }>("notatio-cell");
+    const id = Number(cell?.dataset.cellId);
+    if (cell === null || !Number.isInteger(id)) return;
+    const { latex, markup, inputform, asciimath } = (event as CustomEvent<Omit<CellAnswer, "source">>).detail;
+    if (latex) this.#answers.set(id, { source: cell.value ?? "", latex, markup, inputform, asciimath });
+    else this.#answers.delete(id);
+    this.#save(false);
+  };
+
+  /** Keep the cells and their answers now. Edited sources are announced to the other tabs. */
   #flush(): void {
     if (this.#saveTimer === undefined || this.#store === undefined) return;
     clearTimeout(this.#saveTimer);
     this.#saveTimer = undefined;
-    const cells = this._cells.map(({ id, value }) => ({ id, value }));
-    const saved = isSeed(cells, this.#seeded)
-      ? this.#store.delete(this.#key)
-      : this.#store.put({ key: this.#key, cells, seed: this.seed });
-    void saved.then(() => this.#channel?.postMessage({ key: this.#key, tab: TAB })).catch(() => undefined);
+    const announce = this.#announce;
+    this.#announce = false;
+    const cells = this._cells.map(({ id, value }) => {
+      const answer = this.#answers.get(id);
+      return answer?.source === value ? { id, value, answer } : { id, value };
+    });
+    void this.#store
+      .put({ key: this.#key, cells, seed: this.seed })
+      .then(() => {
+        if (announce) this.#channel?.postMessage({ key: this.#key, tab: TAB });
+      })
+      .catch(() => undefined);
+  }
+
+  /** The notebook as a Jupyter notebook file, for the reader to save. */
+  #export(preset: IpynbPreset): void {
+    const cells = this._cells.map(({ id, value }) => {
+      const answer = this.#answers.get(id);
+      return { source: value, format: this.#format, ...(answer?.source === value ? { output: answer } : {}) };
+    });
+    const title = document.title.split("|")[0]?.trim() || "Notebook";
+    const blob = new Blob([JSON.stringify(toIpynb(cells, { preset, title }), null, 1)], {
+      type: "application/x-ipynb+json",
+    });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${title.replace(/[^\w-]+/g, "-").toLowerCase()}${preset === "github" ? "-github" : ""}.ipynb`;
+    link.click();
+    URL.revokeObjectURL(link.href);
   }
 
   /** Back to the author's cells, here and in the other tabs. */
@@ -259,14 +312,23 @@ export class NotatioNotebook extends LitElement {
   protected override render(): unknown {
     if (!this._ready) return html``;
     const edited = this.#store !== undefined && !isSeed(this._cells, this.#seeded);
-    return html`<div class="notatio-notebook">
-      ${
-        edited
-          ? html`<button class="nb-reset" title="Back to the notebook as written" @click=${() => this.#reset()}>
-              Reset
-            </button>`
-          : ""
-      }
+    return html`<div class="notatio-notebook" @notatio-result=${this.#onResult}>
+      <span class="nb-actions">
+        ${
+          edited
+            ? html`<button class="nb-reset" title="Back to the notebook as written" @click=${() => this.#reset()}>
+                Reset
+              </button>`
+            : ""
+        }
+        <details class="nb-export">
+          <summary title="Save as a Jupyter notebook">Export</summary>
+          <span class="nb-export-menu">
+            <button @click=${() => this.#export("jupyter")}>Jupyter (.ipynb)</button>
+            <button @click=${() => this.#export("github")}>GitHub (.ipynb)</button>
+          </span>
+        </details>
+      </span>
       ${keyed(
         this._generation,
         html`<notatio-dynamic-module tracked-symbols="all">
@@ -298,7 +360,9 @@ export class NotatioNotebook extends LitElement {
                   @dragend=${() => this.#onDragEnd()}
                 ></span>
                 <notatio-cell
+                  data-cell-id=${cell.id}
                   .value=${cell.value}
+                  .provisional=${cell.answer?.source === cell.value ? cell.answer.markup : undefined}
                   format=${this.#format}
                   @notatio-change=${(e: Event) => this.#onChange(cell.id, e)}
                 ></notatio-cell>
@@ -323,3 +387,6 @@ export class NotatioNotebook extends LitElement {
 if (!customElements.get("notatio-notebook")) {
   customElements.define("notatio-notebook", NotatioNotebook);
 }
+
+const sameSources = (a: readonly NbCell[], b: readonly NbCell[]): boolean =>
+  a.length === b.length && a.every((cell, i) => cell.id === b[i]?.id && cell.value === b[i]?.value);

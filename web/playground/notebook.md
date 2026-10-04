@@ -18,8 +18,10 @@ references (a `Out[n]` / `In[n]` draws a diagnostic pointing you at a variable).
 Drag a cell by its number (left) to reorder it; the numbering follows automatically.
 
 Your cells are kept in the browser: reload, or open the page in another tab, and the
-notebook is as you left it (an edit in one tab shows in the others). **Reset** returns it
-to the cells as written. A notebook with `transient` (`Transient -> True`) keeps nothing.
+notebook is as you left it (an edit in one tab shows in the others). Their last answers show
+at once, while they're worked out again. **Reset** returns it to the cells as written, and
+**Export** saves it as a Jupyter notebook: for Jupyter or VS Code, or for GitHub (Markdown
+cells, each answer as display math). A notebook with `transient` (`Transient -> True`) keeps nothing.
 
 <notatio-notebook seed='["a := 5", "b := a ^ 2 + 1", "Sqrt(b)", "10b"]'></notatio-notebook>
 
