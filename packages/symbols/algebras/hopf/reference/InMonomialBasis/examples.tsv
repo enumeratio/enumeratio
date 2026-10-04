@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+fundamental-1-2	Basic		[InMonomialBasis, [QSymF, [List, 1, 2]]]	[Add, [QSymM, [List, 1, 2]], [QSymM, [List, 1, 1, 1]]]	Sums over refinements

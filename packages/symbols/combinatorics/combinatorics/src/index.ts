@@ -28,6 +28,7 @@
 //   `Inverse`'s permutation form is a row in its table (defineOverload), so it no longer has
 //   to be declared after modular's; the hosts still call it themselves, with their constructors.
 import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { declareCarrierElement, declareCarrierPlurals } from "@enumeratio/structures";
 import { declareCollections } from "../collections/src/index.ts";
 import { declareCompositions } from "../compositions/src/declare.ts";
 import { declareFindStat } from "../findstat/src/declare.ts";
@@ -39,6 +40,8 @@ import { declareSetPartitions } from "../set-partitions/src/declare.ts";
 import { declareTableaux } from "../tableaux/src/declare.ts";
 import { declareTrees } from "../trees/src/declare.ts";
 import { declareWords } from "../words/src/declare.ts";
+import { CARRIERS } from "./carriers.ts";
+import { declareMaps } from "./maps.ts";
 
 export { CARRIERS, declareCombinatoricsCarriers, LEFTOVER_CARRIERS } from "./carriers.ts";
 export { UNDEFINED_MAPS, type UndefinedMap } from "./frontier-maps.ts";
@@ -104,4 +107,17 @@ export function declareCombinatorics(ce: ComputeEngine): void {
   // The carrier-less families — permutations' own fast statistic kernels already ran inside
   // `declarePermutations`, above (step 6b).
   declareCollections(ce);
+}
+
+/**
+ * What the package declares once every other library has: its maps, then the plural type-space
+ * names and `Element` membership of the carriers no family claimed. Maps widen `Inverse` (modular's
+ * goes in first); a plural takes a name for itself only if nobody has (number-theory's
+ * `GaussianIntegers`). A host declaring libraries one after another runs `declareCombinatorics`
+ * with the rest and this after them (`enumeratio.late`).
+ */
+export function declareLate(ce: ComputeEngine): void {
+  declareMaps(ce, Object.fromEntries(CARRIERS.map((carrier) => [carrier.type, carrier.name])));
+  declareCarrierPlurals(ce, CARRIERS);
+  declareCarrierElement(ce, CARRIERS);
 }

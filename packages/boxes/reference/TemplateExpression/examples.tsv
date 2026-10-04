@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+hole	Basic		[TemplateExpression, "'n + 1'"]	[TemplateExpression, "'n + 1'"]	an unfilled hole is inert: it evaluates to itself

@@ -25,9 +25,10 @@ import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumerat
 import { between as edgeBiased } from "@enumeratio/plausible";
 import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";
-import { verdictOf } from "./oracle-verdict.ts";
+import { cappedVerdicts } from "./oracle-verdict-capped.ts";
 
 const entries = referenceEntries();
+const verdicts = cappedVerdicts();
 
 const args = process.argv.slice(2);
 const option = (name: string): string | undefined => {
@@ -38,6 +39,11 @@ const systems = args.filter((a, i) => !a.startsWith("--") && !args[i - 1]?.start
 const seed = option("seed") ?? new Date().toISOString().slice(0, 10);
 const perTemplate = Number(option("samples") ?? 3);
 const strict = args.includes("--strict");
+
+// One system's lane may spend this long before the samples not yet run are declined. The
+// Python job (setup and both drift rescans take ~10 of its 30 minutes) runs two lanes, so a
+// lane that stalls must not take the other's share.
+const LANE_MINUTES = Number(option("lane-minutes") ?? 8);
 
 // ── a seeded generator per template, so samples don't depend on iteration order ──
 
@@ -328,6 +334,8 @@ interface Finding {
   readonly was: string;
 }
 const findings: Finding[] = [];
+/** Samples a lane declined (its kernel hit a cap or its time budget ran out), by template. */
+const declined = new Map<string, { timedOut: number; unrun: number; example: string }>();
 const lines: string[] = [
   `## Oracle Plausible — seed \`${seed}\``,
   "",
@@ -344,26 +352,46 @@ for (const system of systems) {
     .filter((row) => row.out.ok);
   const sources = runnable.map((row) => (row.out as { source: string }).source);
   process.stderr.write(`${system}: ${sources.length} samples — running…\n`);
-  const results = await runIn(system, sources);
+  const results = await runIn(system, sources, { deadline: Date.now() + LANE_MINUTES * 60_000 });
   let agree = 0;
   let inherited = 0;
   let automatic = 0;
   let found = 0;
   const autos = new Map<string, number>();
-  runnable.forEach((row, i) => {
+  for (const [i, row] of runnable.entries()) {
     const result = results[i] as { value?: string; numeric?: string; error?: string };
     const expected = expectedOf.get(row.sample.id) as MathJSON;
-    const verdict: Verdict | "error" = result.error !== undefined ? "error" : verdictOf(system, expected, result);
-    if (verdict === "agree") return void agree++;
+    // The comparison evaluates in-process (an uncapped CE call can spin), so it runs capped too.
+    const judged = result.error !== undefined ? "error" : await verdicts.verdict(system, expected, result);
+    const slowCompare = judged === "timeout";
+    const verdict: Verdict | "error" = slowCompare ? "error" : judged;
+    const error = slowCompare ? "TimeoutError: comparison" : result.error;
+    if (error?.startsWith("TimeoutError")) {
+      const key = `${system} · ${row.sample.template.id}`;
+      const entry = declined.get(key) ?? { timedOut: 0, unrun: 0, example: JSON.stringify(row.sample.expr) };
+      if (error.includes("lane budget")) entry.unrun++;
+      else entry.timedOut++;
+      declined.set(key, entry);
+      // Declined, not agreement and not a finding.
+      autos.set("resource", (autos.get("resource") ?? 0) + 1);
+      automatic++;
+      continue;
+    }
+    if (verdict === "agree") {
+      agree++;
+      continue;
+    }
     const baseline = row.sample.template.others[system];
     // The same way the template already differs, and that is classified: nothing new.
     if (baseline !== undefined && baseline.verdict === verdict && baseline.kind !== undefined) {
-      return void inherited++;
+      inherited++;
+      continue;
     }
     const auto = autoKind(row.sample.expr, expected, result);
     if (auto !== undefined) {
       autos.set(auto, (autos.get(auto) ?? 0) + 1);
-      return void automatic++;
+      automatic++;
+      continue;
     }
     found++;
     findings.push({
@@ -376,13 +404,28 @@ for (const system of systems) {
       template: row.sample.template.id,
       was: baseline === undefined ? "unscanned" : `${baseline.verdict}${baseline.kind ? ` (${baseline.kind})` : ""}`,
     });
-    return undefined;
-  });
+  }
   const autoText = [...autos].map(([kind, n]) => `${kind} ${n}`).join(", ") || "0";
   lines.push(`| ${system} | ${runnable.length} | ${agree} | ${inherited} | ${autoText} | ${found} |`);
   process.stderr.write(
     `${system}: agree ${agree}, inherited ${inherited}, automatic ${automatic}, findings ${found}\n`,
   );
+}
+
+// Declined samples are not agreement: named by template so a slow one is visible.
+if (declined.size > 0) {
+  const total = (field: "timedOut" | "unrun") => [...declined.values()].reduce((n, d) => n + d[field], 0);
+  lines.push("", "### Declined", "");
+  lines.push(
+    `${total("timedOut")} samples timed out (kernel or comparison); ${total("unrun")} were not run (lane budget ${LANE_MINUTES} min).`,
+    "",
+  );
+  const slow = [...declined].filter(([, d]) => d.timedOut > 0).toSorted((a, b) => b[1].timedOut - a[1].timedOut);
+  if (slow.length > 0) {
+    lines.push("| template | timed out | a sample |", "| --- | --- | --- |");
+    for (const [key, d] of slow.slice(0, 20))
+      lines.push(`| ${key} | ${d.timedOut} | \`${d.example.slice(0, 80).replace(/\|/g, "/").replace(/`/g, "'")}\` |`);
+  }
 }
 
 const cell = (text: string): string => text.replace(/\|/g, "/").replace(/`/g, "'").slice(0, 80);
@@ -405,6 +448,7 @@ if (findings.length > 0) {
     lines.push("", "</details>", "");
   }
 }
+verdicts.close();
 const summary = `${lines.join("\n")}\n`;
 process.stdout.write(summary);
 if (process.env["GITHUB_STEP_SUMMARY"]) appendFileSync(process.env["GITHUB_STEP_SUMMARY"], summary);

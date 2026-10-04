@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+link	Basic		[ButtonBox, "'docs'", [Tuple, ButtonData, "'Subsets'"], [Tuple, BaseStyle, "'Link'"]]	[ButtonBox, "'docs'", [Tuple, ButtonData, "'Subsets'"], [Tuple, BaseStyle, "'Link'"]]	a link to the page of [[Subsets]]; the box is inert

@@ -135,7 +135,7 @@ async function packed(version: string, bodies: Record<string, unknown> = {}, rep
   cpSync(FIXTURE, dir, { recursive: true });
   const pkgPath = join(dir, "package.json");
   writeFileSync(pkgPath, JSON.stringify({ ...JSON.parse(readFileSync(pkgPath, "utf8")), version }));
-  const path = (symbol: string): string => join(dir, `symbols/${symbol}/definition.json`);
+  const path = (symbol: string): string => join(dir, `reference/${symbol}/definition.json`);
   const read = (symbol: string): Definition => JSON.parse(readFileSync(path(symbol), "utf8")) as Definition;
   for (const [symbol, body] of Object.entries(bodies))
     writeFileSync(path(symbol), JSON.stringify({ ...read(symbol), body }));

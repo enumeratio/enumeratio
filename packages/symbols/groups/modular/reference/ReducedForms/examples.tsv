@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+reduced-forms-of-discriminant-5	Basic		[ReducedForms, 5]	[List, [QuadraticForm, -1, 1, 1], [QuadraticForm, 1, 1, -1]]	Every reduced form with $D=5$

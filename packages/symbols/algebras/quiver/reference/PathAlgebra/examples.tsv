@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+linear-a4	Basic		[AlgebraDimension, [PathAlgebra, [LinearQuiver, 4]]]	10	$\binom{5}{2}$ paths
+kronecker	Basic		[AlgebraDimension, [PathAlgebra, [Quiver, 2, [List, [List, 1, 2], [List, 1, 2]]]]]	4	Two parallel arrows: $2+2$ vertex and arrow paths

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+geodesic-lllrlr	Basic		[LorenzPermutation, "'LLRLR'"]	[List, 3, 4, 5, 1, 2]	A rotation of $5$ points

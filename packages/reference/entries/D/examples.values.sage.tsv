@@ -1,0 +1,4 @@
+id	in
+of-a-product	diff((((SR.var("x"))^2) * sin(SR.var("x"))), SR.var("x"))
+second-derivative	diff(((SR.var("x"))^3), SR.var("x"), SR.var("x"))
+of-a-head-we-declare	

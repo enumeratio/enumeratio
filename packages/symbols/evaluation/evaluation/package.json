@@ -51,6 +51,7 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
-    "group": "evaluation"
+    "group": "evaluation",
+    "declare": "declareEvaluation"
   }
 }

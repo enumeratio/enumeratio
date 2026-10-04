@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+elements-of-c-4	Basic		[PosetElements, [Chain, 4]]	[List, 1, 2, 3, 4]	
+moebius-on-a-longer-interval	Basic		[MoebiusFunction, [Chain, 4], 1, 3]	0	Zero beyond a cover

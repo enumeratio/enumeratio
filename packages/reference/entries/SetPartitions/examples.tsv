@@ -1,6 +1,0 @@
-id	section	role	expr	expected	caption
-the-set-partitions-of-an-explicit-list-in-the			[SetPartitions, [List, a, b, c]]	[List, [List, [List, a, b, c]], [List, [List, a, b], [List, c]], [List, [List, a, c], [List, b]], [List, [List, a], [List, b, c]], [List, [List, a], [List, b], [List, c]]]	The set partitions of an explicit list, in the family's own RGS order
-exactly-2-blocks	Scope		[SetPartitions, 3, 2]	[List, [SetPartition, [List, [List, 1, 2], [List, 3]]], [SetPartition, [List, [List, 1, 3], [List, 2]]], [SetPartition, [List, [List, 1], [List, 2, 3]]]]	Exactly 2 blocks
-the-partitions-of-a-4-set-into-2-blocks-number-s	Scope		[Count, [SetPartitions, 4, 2]]	7	The partitions of a 4-set into 2 blocks number $S(4, 2) = 7$
-the-family-has-b-4-15-members-see-bellnumber	Properties		[BellNumber, 4]	15	The family has $B_4 = 15$ members. See [[BellNumber]]
-those-with-exactly-2-blocks-number-s-4-2-7-see	Properties		[Stirling, 4, 2]	7	Those with exactly 2 blocks number $S(4, 2) = 7$. See [[Stirling]]

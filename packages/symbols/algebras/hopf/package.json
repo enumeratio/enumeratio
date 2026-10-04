@@ -45,6 +45,7 @@
   },
   "enumeratio": {
     "notation": "./notation",
-    "group": "algebras"
+    "group": "algebras",
+    "declare": "declareHopf"
   }
 }

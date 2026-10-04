@@ -1,0 +1,4 @@
+id	in
+sine-over-cosine	Simplify[Divide[Sin[x], Cos[x]]]
+hyperbolic-quotient	Simplify[Divide[Sinh[x], Cosh[x]]]
+hyperbolic-identity	Simplify[Subtract[Power[Cosh[x], 2], Power[Sinh[x], 2]]]

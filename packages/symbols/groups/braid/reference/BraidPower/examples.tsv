@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+cube-of-sigma1	Basic		[BraidPower, [Braid, 2, [List, 1]], 3]	[Braid, 2, [List, 1, 1, 1]]	$\sigma_1^3$, the trefoil's braid

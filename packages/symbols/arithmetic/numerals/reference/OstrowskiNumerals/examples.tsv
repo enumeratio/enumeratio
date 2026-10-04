@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+golden-ratio-quotients	Basic		[IntegerDigits, 20, [OstrowskiNumerals, [List, 1, 1, 1, 1, 1, 1, 1, 1]]]	[List, 0, 1, 0, 1, 0, 1, 0, 0]	All quotients 1 gives Zeckendorf-style digits (places $1,1,2,3,5,8,13,21$)
+quotients-2	Scope		[IntegerDigits, 9, [OstrowskiNumerals, [List, 2, 2, 2]]]	[List, 1, 2, 0]	Quotients $[2,2,2]$: places $1, 2, 5$

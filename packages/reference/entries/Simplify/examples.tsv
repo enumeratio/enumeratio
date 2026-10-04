@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+sine-over-cosine	Basic		[Simplify, [Divide, [Sin, x], [Cos, x]]]	[Tan, x]	$\sin x / \cos x = \tan x$
+hyperbolic-quotient	Basic		[Simplify, [Divide, [Sinh, x], [Cosh, x]]]	[Tanh, x]	$\sinh x / \cosh x = \tanh x$
+hyperbolic-identity	Scope		[Simplify, [Subtract, [Power, [Cosh, x], 2], [Power, [Sinh, x], 2]]]	1	$\cosh^2 x - \sinh^2 x = 1$

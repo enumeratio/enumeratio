@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+x-squared	Basic		[SuperscriptBox, "'x'", "'2'"]	[SuperscriptBox, "'x'", "'2'"]	a box is inert: it evaluates to itself

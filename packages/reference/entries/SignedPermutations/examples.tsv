@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-n-3	Basic		[Count, [SignedPermutations, 3]]	48	$2^n n! = 48$ signed permutations
+all-for-n-2	Basic		[Take, [SignedPermutations, 2], 8]	[List, [SignedPermutation, [List, 1, 2]], [SignedPermutation, [List, 2, 1]], [SignedPermutation, [List, -1, 2]], [SignedPermutation, [List, -2, 1]], [SignedPermutation, [List, 1, -2]], [SignedPermutation, [List, 2, -1]], [SignedPermutation, [List, -1, -2]], [SignedPermutation, [List, -2, -1]]]	All eight signed permutations of $\{1, 2\}$

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+list	Basic		[Chart, [List, 1, 2, 3]]	[Chart, [List, 1, 2, 3]]	held inert: it evaluates to itself, and is drawn by the element
+pie	Basic		[Chart, [List, 1, 2, 3], "'pie'"]	[Chart, [List, 1, 2, 3], "'pie'"]	a second argument names the kind of chart; still inert

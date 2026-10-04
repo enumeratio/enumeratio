@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+geodesic-lllrlr	Basic		[TripNumber, "'LLRLR'"]	2	Its braid index as a Lorenz link

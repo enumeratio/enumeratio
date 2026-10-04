@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+h-1-2	Basic		[InRibbonBasis, [NSymH, [List, 1, 2]]]	[Add, [NSymR, [List, 3]], [NSymR, [List, 1, 2]]]	$H_{12}=R_{12}+R_3$

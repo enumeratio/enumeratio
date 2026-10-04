@@ -56,6 +56,9 @@
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.147.0"
   },
+  "enumeratio": {
+    "late": "./declare-carriers#declareFrontendCarriers"
+  },
   "generated": [
     "generated/forms.json"
   ]

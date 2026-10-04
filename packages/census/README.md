@@ -17,13 +17,18 @@ doesn't actually answer).
 
 `.` (`src/index.ts`):
 
-- **`DECLARATIONS`/`PACKAGE_DECLARATIONS`/`declaredNames`/`fullEngine`** (`engine.ts`) —
-  every package declared in order into one engine; `declaredNames` is the resulting binding
-  table, the input to any collision or coverage check.
+- **`PLAN`/`DECLARATIONS`/`PACKAGE_DECLARATIONS`/`declaredNames`/`fullEngine`** (`engine.ts`) —
+  every library this package depends on, declared in the order the manifest's hierarchy gives
+  (`buildEngine`) into one engine, with the steps the census adds after combinatorics;
+  `declaredNames` is the resulting binding table, the input to any collision or coverage check.
 - **`contributions`/`Contribution`** (`contributions.ts`) — per head, which packages add it,
   re-sign it, or replace its handler, the type the engine ends up printing, and whether it
   holds its arguments. The manifest ([`manifest`](../manifest/README.md)) must agree —
   `tests/manifest.test.ts` holds it to it.
+- **`declarations`/`duplicateRows`** (`owners.ts`) — per head, what declared it (the engine, or
+  the package that introduced it) and who only contributes. `tests/owners.test.ts` holds the
+  rule the split into repos needs: no package redeclares a declared head, and no two packages
+  contribute the same signature.
 - **`CALL_FORMS`/`FRONTIER`/`FrontierEntry`** (`wolfram-frontier-data.ts`, generated) — what
   Wolfram's own docs examples call that we can't answer yet, ranked.
 - **`RENAME_QUEUE`/`QueuedRename`** (`rename-queue.ts`) — a head declared under a spelling

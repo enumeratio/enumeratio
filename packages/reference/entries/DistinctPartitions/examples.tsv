@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-distinct-partitions-of-6	Basic		[Count, [DistinctPartitions, 6]]	4	6 = 6 = 5+1 = 4+2 = 3+2+1: four partitions into distinct parts
+distinct-partitions-of-6-listed	Basic		[Take, [DistinctPartitions, 6], 3]	[List, [IntegerPartition, [List, 6]], [IntegerPartition, [List, 5, 1]], [IntegerPartition, [List, 4, 2]]]	The first three, in enumeration order
+count-distinct-partitions-of-10	Properties		[Count, [DistinctPartitions, 10]]	10	Ten partitions of 10 into distinct parts (A000009)

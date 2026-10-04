@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+all-positive	Basic		[BraidIsPositive, [Braid, 3, [List, 1, 2, 1]]]	True
+one-inverted-letter	Basic		[BraidIsPositive, [Braid, 3, [List, 1, -2]]]	False

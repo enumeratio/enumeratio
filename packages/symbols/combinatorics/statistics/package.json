@@ -37,6 +37,18 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
-    "group": "combinatorics"
+    "group": "combinatorics",
+    "declare": [
+      "declareDistributions",
+      "declareDistributions2",
+      "declareDistributions3",
+      "declareDistributions4",
+      "declareDistributions5",
+      "declareDistributions6",
+      "declareProcesses"
+    ],
+    "requires": [
+      "combinatorics"
+    ]
   }
 }

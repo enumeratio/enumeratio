@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+of-a-product	Basic		[D, [Multiply, [Power, x, 2], [Sin, x]], x]	[Add, [Multiply, [Cos, x], [Power, x, 2]], [Multiply, 2, x, [Sin, x]]]	Product rule
+second-derivative	Scope		[D, [Power, x, 3], x, x]	[Multiply, 6, x]	A repeated variable differentiates again
+of-a-head-we-declare	Scope		[D, [LogGamma, z], z]	[PolyGamma, 0, z]	$\frac{d}{dz}\ln\Gamma(z) = \psi(z)$, in closed form

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+path-to-5-3	Basic		[SternBrocotPath, 5, 3]	"'RLR'"	Right, left, right from $1/1$

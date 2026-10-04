@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+classes-of-discriminant-5	Basic		[FormClasses, 5]	[List, [List, [QuadraticForm, -1, 1, 1], [QuadraticForm, 1, 1, -1]]]	One class: a single $\rho$-cycle of two forms
+classes-of-discriminant-12	Basic		[FormClasses, 12]	[List, [List, [QuadraticForm, -2, 2, 1], [QuadraticForm, 1, 2, -2]], [List, [QuadraticForm, -1, 2, 2], [QuadraticForm, 2, 2, -1]]]	Two classes

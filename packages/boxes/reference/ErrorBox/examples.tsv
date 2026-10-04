@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[ErrorBox, "'x'"]	[ErrorBox, "'x'"]	a box is inert: it evaluates to itself

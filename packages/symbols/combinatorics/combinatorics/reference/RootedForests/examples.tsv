@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-rooted-forests-3	Basic		[Count, [RootedForests, 3]]	16	$(3+1)^{2} = 16$
+rooted-forests-2	Basic		[Take, [RootedForests, 2], 3]	[List, [RootedForest, [List, 0, 1]], [RootedForest, [List, 2, 0]], [RootedForest, [List, 0, 0]]]	Parent arrays; $0$ marks a root

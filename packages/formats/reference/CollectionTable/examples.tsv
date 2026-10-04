@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+subsets	Basic		[CollectionTable, [Subsets, 2]]	[CollectionTable, [Subsets, 2]]	held inert: it evaluates to itself, and is drawn by the element

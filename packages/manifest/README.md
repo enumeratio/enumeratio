@@ -17,6 +17,16 @@ the resolver possible (below).
   manifest doesn't know how to import anything), resolves the heads and symbols it names to
   the packages that declare them, widens to those packages' own dependencies, and declares
   them into an engine in dependency order. See [Speculative Lazy Engine](https://github.com/enumeratio/enumeratio/wiki/Speculative-Lazy-Engine).
+- **`buildEngine` / `enginePlan` / `loadLibraries` / `dependedLibraries` / `DECLARE_ORDER` /
+  `DECLARE_PREFERENCE`** (`src/engine.ts`) — an engine with the libraries asked for, the base
+  (`evaluation`, `boxes`, `structures`) and what each requires, declared in the order `HIERARCHY`
+  gives, with the reason each is there. A library's own `package.json` says what declares it
+  (`enumeratio.declare`: exports of its main entry, or `./subpath#export`; `late` for what must
+  come after every library's own, and `requires` and `names` where it needs them); the host
+  says how to import and how to make an engine, so hosts (`reference`, `census`) list no declare
+  calls. `DECLARE_ORDER` is the order that holds though no library requires it, and
+  `DECLARE_PREFERENCE` the one the records' `overrides` were written against (BL-13): both go when
+  the winning overloads are explicit.
 - **`createRegistryResolver` / `Registry` / `manifestRegistry` / `definitionRegistry` /
   `combineRegistries` / `searchPath` / `pinOf`** (`src/registry.ts`) — the same, one name at
   a time through registries, so nothing lists every name: our packages are one registry,

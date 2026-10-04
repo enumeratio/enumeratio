@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+of-a-real	Basic		[UpperTick, 2.5]	3	The least integer tick at or above 2.5

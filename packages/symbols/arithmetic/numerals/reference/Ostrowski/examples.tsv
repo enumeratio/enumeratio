@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+digits-via-the-old-name	Basic		[IntegerDigits, 9, [Ostrowski, [List, 2, 2, 2]]]	[List, 1, 2, 0]	Same digits as [[OstrowskiNumerals]]

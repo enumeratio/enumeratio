@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[FrameBox, "'x'"]	[FrameBox, "'x'"]	a box is inert: it evaluates to itself

@@ -1,6 +1,6 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/engine";
-import { declined, type EvalOptions, isRealInt, type NativeEval } from "@enumeratio/ce-patches";
+import { declined, type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 
 type Q = readonly [bigint, bigint];
 const gcdBig = (a: bigint, b: bigint): bigint => (b === 0n ? (a < 0n ? -a : a) : gcdBig(b, a % b));
@@ -78,11 +78,12 @@ const isNaNValue = (r: BoxedExpression | undefined): boolean =>
  * numerically for the three-argument call: `B_z(a,b) = I_z(a,b)·B(a,b)`.
  */
 export function declareGeneralizedBeta(ce: ComputeEngine): void {
-  const nativeBeta: NativeEval = ce.box(["Beta", 2, 3]).operatorDefinition?.evaluate;
-  ce.declare("Beta", {
-    signature: "(number, number, number?, number?) -> number",
-    broadcastable: true, // preserve native threading over a list of a (or b)
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+  widenSignature(ce, "Beta", "(number, number, number?, number?) -> number");
+  wrapOperator(
+    ce,
+    ["Beta", 2, 3],
+    () => true,
+    (nativeBeta) => (ops, options) => {
       if (ops.length === 2) {
         const r = nativeBeta?.(ops, options);
         const [a, b] = ops;
@@ -141,7 +142,7 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
       }
       return undefined;
     },
-  });
+  );
 }
 
 /**
@@ -176,11 +177,12 @@ export function declareGeneralizedBetaRegularized(ce: ComputeEngine): void {
  * changes a concrete answer, only fills in what the symbolic evaluator leaves standing).
  */
 export function declareGeneralizedErf(ce: ComputeEngine): void {
-  const nativeErf: NativeEval = ce.box(["Erf", 1]).operatorDefinition?.evaluate;
-  ce.declare("Erf", {
-    signature: "(number, number?) -> number",
-    broadcastable: true, // Erf([0, 1]) still threads, like the native declaration
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+  widenSignature(ce, "Erf", "(number, number?) -> number");
+  wrapOperator(
+    ce,
+    ["Erf", 1],
+    () => true,
+    (nativeErf) => (ops, options) => {
       if (ops.length === 2) {
         const [z0, z1] = ops;
         const expr = ce.function("Subtract", [ce.function("Erf", [z1]), ce.function("Erf", [z0])]);
@@ -202,7 +204,7 @@ export function declareGeneralizedErf(ce: ComputeEngine): void {
       if (x.operator === "ErfInv") return operandsOf(x)[0];
       return nativeErf?.(ops, options);
     },
-  });
+  );
 }
 
 /**
@@ -211,11 +213,12 @@ export function declareGeneralizedErf(ce: ComputeEngine): void {
  * shifted target, plus the odd parity `ErfInv(-x) = -ErfInv(x)`.
  */
 export function declareGeneralizedErfInv(ce: ComputeEngine): void {
-  const nativeErfInv: NativeEval = ce.box(["ErfInv", 0.5]).operatorDefinition?.evaluate;
-  ce.declare("ErfInv", {
-    signature: "(number, number?) -> number",
-    broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+  widenSignature(ce, "ErfInv", "(number, number?) -> number");
+  wrapOperator(
+    ce,
+    ["ErfInv", 0.5],
+    () => true,
+    (nativeErfInv) => (ops, options) => {
       if (ops.length === 2) {
         const [z0, z] = ops;
         const expr = ce.function("ErfInv", [ce.function("Add", [z, ce.function("Erf", [z0])])]);
@@ -231,7 +234,7 @@ export function declareGeneralizedErfInv(ce: ComputeEngine): void {
       }
       return nativeErfInv?.(ops, options);
     },
-  });
+  );
 }
 
 // --- PolyGamma(z): the one-argument digamma call form ---

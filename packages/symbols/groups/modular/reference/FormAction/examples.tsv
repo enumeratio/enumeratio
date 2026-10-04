@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+translate-by-t	Basic		[FormAction, [QuadraticForm, 1, 1, -1], [ModularMatrix, 1, 1, 0, 1]]	[QuadraticForm, 1, 3, 1]	Substituting $x\mapsto x+y$ in $x^2+xy-y^2$; the discriminant stays $5$
