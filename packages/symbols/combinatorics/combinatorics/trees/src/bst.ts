@@ -9,94 +9,52 @@
 // in scripts/collect-entries.ts's `SAMPLES` (`binary_tree: { contents: ["List", 1, 2, 3] }`).
 //
 // The encoding chosen here: a PARENT-POINTER array indexed by VALUE — entry v holds the value
-// of v's parent in the tree, or 0 if v is the root. A binary search tree over the value set
-// {1, ..., n} is determined by parentage alone: which child a value is (left or right) follows
-// from the BST property by comparing it against its parent, so nothing is lost by dropping
-// the side. This is also the encoding a fold can build without ever rewriting a nested
-// structure at depth — the accumulator is one flat array, updated at one index per insertion,
-// which is what makes it fit the "iterate over a RANGE and index" rule (tableau.ts) at all.
+// of v's parent in the tree, or 0 if v is the root.
+//
+// CONSTRUCTION. When v is inserted, it lands between its predecessor and successor among the
+// values already placed (the nearest smaller and nearest larger), and hangs off whichever of
+// the two was inserted later. No descent through the tree is simulated, so a parent costs two
+// folds over the values and the whole array is quadratic in the size.
 
-type MathJSON = string | number | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
+import { bind, forEach, positions, size, type MathJSON } from "../../src/map-helpers.ts";
 
-const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
-const count = (list: MathJSON): MathJSON => ["Count", list];
+/** Where value `value` sits in the word. */
+const positionOf = (value: MathJSON): MathJSON => ["IndexOf", "_raw", value];
 
-const overRange = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: string, variable: string): MathJSON => [
+/** The nearest value to `v` on one side among those placed before it, or 0 if there is none.
+ *  `values` runs toward `v` from that side's far end (ascending below, descending above), so
+ *  the last match is the nearest. */
+const nearest = (values: MathJSON, side: "Less" | "Greater"): MathJSON => [
   "Fold",
-  ["Function", step, accumulator, variable],
-  initial,
-  ["Range", 1, n, 1],
+  ["Function", ["If", ["And", ["Less", positionOf("u"), "pv"], [side, "u", "v"]], "u", "near"], "near", "u"],
+  0,
+  values,
 ];
 
-const WORD: MathJSON = "_raw";
-const SIZE: MathJSON = count(WORD);
-const ROOT: MathJSON = at(WORD, 1);
-
-/** `v` and `x` fall on the same side of `cur` — both less, or both greater. Deciding a BST
- *  child by side rather than by value means a value can only ever match ONE candidate child,
- *  which is what lets `childOf` below pick a result with a plain fold instead of a search. */
-const sameSide = (v: MathJSON, cur: MathJSON, x: MathJSON): MathJSON => [
-  "Or",
-  ["And", ["Less", v, cur], ["Less", x, cur]],
-  ["And", ["Greater", v, cur], ["Greater", x, cur]],
-];
-
-/** The child of `cur` on `x`'s side, among values already placed in `parents` — or 0 if that
- *  side is still open. At most one `v` can satisfy `parents(v) = cur` on a given side, so
- *  folding a replacement (rather than accumulating) is exact. */
-const childOf = (parents: MathJSON, cur: MathJSON, x: MathJSON): MathJSON =>
-  overRange(
-    SIZE,
-    0,
-    ["If", ["And", ["Equal", at(parents, "v"), cur], sameSide("v", cur, x)], "v", "kacc"],
-    "kacc",
-    "v",
-  );
-
-const DS_CUR: MathJSON = at("ds", 1);
-const DS_DONE: MathJSON = at("ds", 2);
-
-/** One step down from the root toward `x`: move to the matching child, or stop and report the
- *  attachment point. `done = 1` freezes the state exactly as `carried = 0` does in
- *  tableau.ts's insertion fold — once placed, every further step is a no-op. */
-const descendStep = (parents: MathJSON, x: MathJSON): MathJSON => [
-  "If",
-  ["Equal", DS_DONE, 1],
-  "ds",
-  ["If", ["Equal", childOf(parents, DS_CUR, x), 0], ["List", DS_CUR, 1], ["List", childOf(parents, DS_CUR, x), 0]],
-];
-
-/** Where `x` attaches under `parents`, starting from the root — found within `SIZE` steps,
- *  since a tree of at most `SIZE` nodes has no deeper path than that. */
-const attachmentFor = (parents: MathJSON, x: MathJSON): MathJSON =>
-  at(overRange(SIZE, ["List", ROOT, 0], descendStep(parents, x), "ds", "_k"), 1);
-
-/** `parents` with index `x` replaced by `value` — a flat rebuild, not a patch, which is what
- *  keeps this a fold over a range instead of a mutation. */
-const withParent = (parents: MathJSON, x: MathJSON, value: MathJSON): MathJSON =>
-  overRange(
-    SIZE,
-    ["List"],
-    ["Join", "wacc", ["List", ["If", ["Equal", "w", x], value, at(parents, "w")]]],
-    "wacc",
-    "w",
-  );
-
-const INS_ACC = "pacc";
-const INS_I = "i";
-const INS_X: MathJSON = at(WORD, INS_I);
-
-/** Insert the i-th entry: the first entry needs no placement (an empty tree's root has no
- *  parent, and 0 is already every slot's initial value); every later one attaches under
- *  whatever `attachmentFor` finds in the tree built so far. */
-const insertStep: MathJSON = [
-  "If",
-  ["Equal", INS_I, 1],
-  INS_ACC,
-  withParent(INS_ACC, INS_X, attachmentFor(INS_ACC, INS_X)),
-];
-
-const zeros: MathJSON = overRange(SIZE, ["List"], ["Join", "zacc", ["List", 0]], "zacc", "_z");
+const ASCENDING: MathJSON = ["Range", 1, size, 1];
+const DESCENDING: MathJSON = ["Range", size, 1, -1];
 
 /** The finished parent-pointer array: every value's parent, 0 for the root. */
-export const bstParents: MathJSON = overRange(SIZE, zeros, insertStep, INS_ACC, INS_I);
+export const bstParents: MathJSON = forEach(
+  positions,
+  bind(
+    "pv",
+    positionOf("v"),
+    bind(
+      "below",
+      nearest(ASCENDING, "Less"),
+      bind("above", nearest(DESCENDING, "Greater"), [
+        "If",
+        ["Equal", "below", 0],
+        "above",
+        [
+          "If",
+          ["Equal", "above", 0],
+          "below",
+          ["If", ["Greater", positionOf("below"), positionOf("above")], "below", "above"],
+        ],
+      ]),
+    ),
+  ),
+  "v",
+);
