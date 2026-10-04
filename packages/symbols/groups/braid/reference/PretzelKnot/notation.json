@@ -1,9 +1,1 @@
-{
-  "traditional": [
-    {
-      "params": ["...xs"],
-      "call": "P",
-      "args": [["TemplateSlot", "xs"]]
-    }
-  ]
-}
+{ "traditional": [{ "params": ["...xs"], "call": "P", "args": [["TemplateSlot", "xs"]] }] }

@@ -1,8 +1,1 @@
-{
-  "traditional": [
-    {
-      "params": ["g"],
-      "box": ["RowBox", ["k", ["RowBox", ["[", ["TemplateSlot", "g"], "]"]]]]
-    }
-  ]
-}
+{ "traditional": [{ "params": ["g"], "box": ["RowBox", ["k", ["RowBox", ["[", ["TemplateSlot", "g"], "]"]]]] }] }

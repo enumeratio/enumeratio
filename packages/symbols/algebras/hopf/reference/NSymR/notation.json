@@ -6,17 +6,7 @@
       "box": [
         "SubscriptBox",
         "R",
-        [
-          "TemplateSlot",
-          "alpha",
-          {
-            "Items": true,
-            "Separator": ",",
-            "Open": "(",
-            "Close": ")",
-            "Empty": "∅"
-          }
-        ]
+        ["TemplateSlot", "alpha", { "Items": true, "Separator": ",", "Open": "(", "Close": ")", "Empty": "∅" }]
       ]
     }
   ]

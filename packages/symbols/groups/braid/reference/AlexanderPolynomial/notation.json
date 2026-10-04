@@ -1,9 +1,1 @@
-{
-  "traditional": [
-    {
-      "params": ["k"],
-      "call": ["SubscriptBox", "Δ", ["TemplateSlot", "k"]],
-      "args": ["t"]
-    }
-  ]
-}
+{ "traditional": [{ "params": ["k"], "call": ["SubscriptBox", "Δ", ["TemplateSlot", "k"]], "args": ["t"] }] }

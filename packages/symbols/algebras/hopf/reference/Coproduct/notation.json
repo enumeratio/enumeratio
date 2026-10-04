@@ -1,8 +1,1 @@
-{
-  "traditional": [
-    {
-      "params": ["x"],
-      "call": "Δ"
-    }
-  ]
-}
+{ "traditional": [{ "params": ["x"], "call": "Δ" }] }
