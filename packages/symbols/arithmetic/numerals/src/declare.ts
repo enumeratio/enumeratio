@@ -67,9 +67,6 @@ import {
 // canonical form, so existing expressions and Wolfram source keep reading (see
 // `declareNumerals` below).
 
-type NativeEvaluate = NonNullable<BoxedExpression["operatorDefinition"]>["evaluate"];
-type EvaluateOptions = Parameters<NonNullable<NativeEvaluate>>[1];
-
 /** Read a `List(...)` of integers. */
 function integerList(expr: BoxedExpression | undefined): number[] | undefined {
   if (expr === undefined || expr.operator !== "List") return undefined;
@@ -264,9 +261,9 @@ export function declareNumerals(ce: ComputeEngine): void {
   declareAdic(ce);
 
   /**
-   * Replace one of the two built-ins, widening the base slot to `any` so a system
-   * expression survives the type check, and deferring to the native handler for
-   * everything that is not one of ours.
+   * Extend one of the two built-ins: widen the base slot to `any` so a system expression
+   * survives the type check, and answer only when it is one of ours; everything else goes to
+   * the native handler.
    */
   const extend = (
     head: string,
@@ -274,17 +271,15 @@ export function declareNumerals(ce: ComputeEngine): void {
     signature: string,
     answer: (ops: readonly BoxedExpression[], system: NumeralSystem) => BoxedExpression | undefined,
   ): void => {
-    const definition = ce.box(probe as never).operatorDefinition;
-    const native = definition?.evaluate;
-    ce.declare(head, {
-      signature,
-      ...(definition?.type === undefined ? {} : { type: definition.type }),
-      evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
-        const base = ops[1];
-        const system = base === undefined ? undefined : systemOf(base);
-        return system === undefined ? native?.(ops, options) : answer(ops, system);
-      },
-    });
+    widenSignature(ce, head, signature);
+    const systemIn = (ops: readonly BoxedExpression[]): NumeralSystem | undefined =>
+      ops[1] === undefined ? undefined : systemOf(ops[1]);
+    wrapOperator(
+      ce,
+      probe,
+      (ops) => systemIn(ops) !== undefined,
+      () => (ops) => answer(ops, systemIn(ops)!),
+    );
   };
 
   extend("IntegerDigits", ["IntegerDigits", 10, 2], "(integer, any?, integer?) -> list<integer>", (ops, system) => {
@@ -330,7 +325,7 @@ export function declareNumerals(ce: ComputeEngine): void {
     return ce.number(value);
   });
 
-  // After the redeclarations above, which would drop the flag. Thread over a list of n, as Wolfram's do: IntegerDigits([6, 7], 2) is [[1, 1, 0], [1, 1, 1]].
+  // Thread over a list of n, as Wolfram's do: IntegerDigits([6, 7], 2) is [[1, 1, 0], [1, 1, 1]].
   // A system in the base slot is a head, never a bare list, so it is not threaded over.
   threadOverLists(ce, ["IntegerDigits", "DigitCount", "DigitSum"]);
 

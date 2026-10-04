@@ -1,16 +1,53 @@
 ---
 name: DyckPaths
-domain: Combinatorial collections
+domain: Collections
 signature: DyckPaths(n)
-summary: "The Dyck paths of semilength $n$: balanced up/down step sequences that stay non-negative."
+summary: The Dyck paths of semilength $n$ — balanced up/down words — a lazy family of Catalan many.
 signatures:
   - call: DyckPaths(n)
-    description: the Dyck paths of semilength $n$
+    description: the $C_n$ lattice paths of $n$ up- and $n$ down-steps that never dip below the axis.
     library: enumeratio-combinatorics
+    type: (integer<0..>) -> indexed_collection<dyck_path>
+enumerate:
+  expr: DyckPaths(4)
+  columns: Height, Area, Returns
+  glyph: dyck
 seeAlso:
-  - BinaryTrees
   - CatalanNumber
+  - Count
+  - At
+  - BinaryTrees
+references:
+  - system: wikipedia
+    identity: Dyck language
+  - system: mathworld
+    identity: DyckPath
+  - system: oeis
+    identity: A000108
+catalog:
+  - system: mathlib4
+    identity: catalan
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Catalan/Basic.html#catalan
+  - system: oeis
+    identity: A000108
+    url: https://oeis.org/A000108
+  - system: sage
+    identity: DyckWords(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/dyck_word.html
+  - system: wikipedia
+    identity: Dyck language
+    url: https://en.wikipedia.org/wiki/Dyck_language
+    note: titled "Dyck language" (the word/bracket formalism); the dedicated "Dyck path" title redirects to Catalan number
+    relation: conceptual
+  - system: mathlib4
+    identity: DyckWord
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/DyckWord.html#DyckWord
+grades:
+  - name: n
+    role: axis
+carrier: DyckPath
 ---
 
-- Count is the Catalan number $C_n$ (see [[CatalanNumber]])
-- Each element is a 0/1 step sequence with every prefix having at least as many 1s as 0s
+- A lazy indexed collection; the count is the Catalan number $C_n = \frac{1}{n+1}\binom{2n}{n}$ — $C_4 = 14$. See [[CatalanNumber]].
+- Each element is the step word (1 up, 0 down); drawn as a mountain range. Height, Area, Returns and Hills are Dyck-path statistics.
+- In bijection with binary trees, triangulations, and non-crossing partitions — all Catalan families.
