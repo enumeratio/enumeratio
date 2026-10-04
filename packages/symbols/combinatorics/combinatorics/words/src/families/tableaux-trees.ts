@@ -156,5 +156,6 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     valid: (e, [n]) => IsParkingFunctionOf(e, n),
     rank: (e, [n]) => ParkingFunctionRank(e as number[], n),
   },
+  // No `fast`: the TS kernel rebuilds its memo per call, so Epsil's table is 3-10x faster.
   nonDecreasingParkingFunctions,
 ];

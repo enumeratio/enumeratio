@@ -288,6 +288,17 @@ const ternaryGrayCodesFamily = ternaryGrayCodes({
   carrier: "TernaryGrayCode",
 });
 
+// The TS insertion walk is ~7-10x faster than Epsil's, in the same order.
+const stirlingPermutationsFast: EpsilFamily = {
+  ...stirlingPermutations,
+  fast: {
+    count: ([n]) => stirlingCount(n),
+    unrank: ([n], r) => stirlingUnrank(n, r),
+    rank: (x, [n]) => stirlingRank(x as number[], n),
+    valid: (x, [n]) => stirlingValid(x, n),
+  },
+};
+
 export const entries: (NumberKernel | EpsilFamily)[] = [
   // BinaryBracelets(n): binary words up to rotation and reflection — Bracelets(n, 2), A000029.
   {
@@ -315,5 +326,5 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     declared: wordClass("Word"),
   },
   ternaryGrayCodesFamily,
-  stirlingPermutations,
+  stirlingPermutationsFast,
 ];

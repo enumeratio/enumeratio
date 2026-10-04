@@ -424,9 +424,22 @@ const binaryPalindromesFamily = binaryPalindromes({
   },
 });
 
+// The TS walk is ~17x faster than Epsil's, in the same order.
+const binaryWordsByWeightFast: EpsilFamily = {
+  ...binaryWordsByWeight,
+  fast: {
+    count: ([n, k]) => byWeightCount(n, k),
+    unrank: ([n, k], r) => byWeightUnrank(n, k, r),
+    rank: (x, [n, k]) => byWeightRank(x as number[], n, k),
+    valid: (x, [n, k]) => byWeightValid(x, n, k),
+  },
+};
+
+// No `fast` for FibStrings and LucasStrings: the TS Fibonacci kernel is uncached and exponential,
+// so Epsil's completion table is ~100x faster at n = 20.
 export const entries: (NumberKernel | EpsilFamily)[] = [
   binaryWords,
-  binaryWordsByWeight,
+  binaryWordsByWeightFast,
   wordsFamily,
   // Same words as FibonacciWords, under the catalogued name.
   fibStrings,
