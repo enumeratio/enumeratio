@@ -622,6 +622,7 @@ function fibComp(m: number, last: number): number {
   if (m === 0) return 1;
   return last === 1 ? fibComp(m - 1, 0) : fibComp(m - 1, 0) + fibComp(m - 1, 1);
 }
+// Uncached and exponential in n (fibComp recurses without a table).
 export function FibonacciWordCount(n: number): number {
   return fibComp(n, 0);
 }

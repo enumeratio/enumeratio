@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/tableaux-trees.ts";
 import { CatalanNumber } from "../../collections/src/families/kernels-extra.ts";
 
@@ -12,7 +13,7 @@ const PARAMS: Record<string, number[][]> = {
   NonDecreasingParkingFunctions: [[1], [4], [6]],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, paramSets] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);
