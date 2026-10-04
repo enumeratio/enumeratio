@@ -9,7 +9,7 @@ signatures:
   - call: Csc(x)
     description: Cosecant, the reciprocal of [[Sin]].
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number
+    type: (complex) -> number
     overrides: compute-engine
 seeAlso:
   - Sin

@@ -9,7 +9,7 @@ signatures:
   - call: Arcosh(complex | signed_infinity | ~oo) -> number | signed_infinity | ~oo
     description: Inverse hyperbolic cosine (area hyperbolic cosine).
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number
+    type: (complex | signed_infinity) -> number
     overrides: compute-engine
 names:
   fungrim: Acosh

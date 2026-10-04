@@ -9,7 +9,7 @@ signatures:
   - call: Arctan(x)
     description: Arctangent, the inverse of [[Tan]] restricted to $(-\pi/2, \pi/2)$.
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number
+    type: (complex | signed_infinity) -> number
     overrides: compute-engine
 seeAlso:
   - Tan

@@ -49,6 +49,17 @@ export interface ReferenceExample {
    * (tests/known.test.ts), so a change to `expected` that breaks it is a bug, not an update.
    */
   readonly known?: MathJSON;
+  /**
+   * Marks `expected` as deliberately off `known`: compute-engine follows another convention than
+   * the source of `known` (a directed infinity, say). The note names both. A marked row still
+   * has to disagree with `known` (tests/known.test.ts), so a stale marker fails.
+   */
+  readonly knownConvention?: string;
+  /**
+   * Marks `expected` as short of `known` because of a missing capability: `known` is the target
+   * and holds in compute-engine's own model too. The note says what is missing.
+   */
+  readonly knownGap?: string;
   /** Tolerance for comparing `expected` with a numeric `known`: relative above magnitude 1,
    * absolute below it (default 1e-12). */
   readonly tolerance?: number;

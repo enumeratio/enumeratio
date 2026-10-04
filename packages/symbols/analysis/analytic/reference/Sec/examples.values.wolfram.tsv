@@ -36,4 +36,4 @@ n-2-times-sec-1-times-sec-1-over-2-pow-2-plus	N[Plus[Times[2, Sec[1], Power[Sec[
 n-sec-1-over-2-plus-1-over-2-times-pi-pow-2	N[Power[Sec[Plus[Rational[1, 2], Times[Rational[1, 2], Pi]]], 2]]	4.350685299340043		N\left[\sec ^2\left(\frac{1}{2}+\frac{1}{2} \pi \right)\right]	4.35069	
 n-2-minus-sec-2-pow-2-times-sec-4	N[Times[Plus[2, Minus[Power[Sec[2], 2]]], Sec[4]]]	5.7743992040419165		N\left[\left(2-\sec ^2(2)\right) \sec (4)\right]	5.7744	
 a-pole-cos-pi-2-0	Sec[Divide[Pi, 2]]	ComplexInfinity		\sec \left(\frac{\pi }{2}\right)	\text{ComplexInfinity}	
-sec-complexinfinity-is-indeterminate-for-the	Sec[ComplexInfinity]	Indeterminate		\sec (\text{ComplexInfinity})	\text{Indeterminate}	
+sec-complexinfinity-is-indeterminate-for-the	Sec[ComplexInfinity]	Indeterminate		\sec (\text{ComplexInfinity})	\text{Indeterminate}	disagree

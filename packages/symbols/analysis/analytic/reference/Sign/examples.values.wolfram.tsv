@@ -37,4 +37,4 @@ sign-neg-1-minus-i	Sign[Complex[-1, -1]]	(-1 - I)/Sqrt[2]		\text{sgn}(-1-i)	-\fr
 sign-1-minus-i	Sign[Complex[1, -1]]	(1 - I)/Sqrt[2]		\text{sgn}(1-i)	\frac{1-i}{\sqrt{2}}	
 sign-2	Sign[2]	1		\text{sgn}(2)	1	
 nan-propagates-rather-than-being-treated-as-0	Sign[Indeterminate]	Indeterminate		\text{sgn}(\text{Indeterminate})	\text{Indeterminate}	
-sign-complexinfinity-is-indeterminate-no	Sign[ComplexInfinity]	Indeterminate		\text{sgn}(\text{ComplexInfinity})	\text{Indeterminate}	
+sign-complexinfinity-is-indeterminate-no	Sign[ComplexInfinity]	Indeterminate		\text{sgn}(\text{ComplexInfinity})	\text{Indeterminate}	disagree

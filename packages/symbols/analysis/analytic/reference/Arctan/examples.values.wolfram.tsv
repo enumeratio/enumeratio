@@ -38,7 +38,7 @@ n-2-times-arctan-1-over-2-minus-arctan-1-over-7	N[Plus[Times[2, ArcTan[Rational[
 n-2-times-arctan-1-over-3-plus-arctan-1-over-7	N[Plus[Times[2, ArcTan[Rational[1, 3]]], ArcTan[Rational[1, 7]]]]	0.7853981633974483		N\left[2 \tan ^{-1}\left(\frac{1}{3}\right)+\tan ^{-1}\left(\frac{1}{7}\right)\right]	0.785398	
 n-4-times-arctan-1-over-5-minus-arctan-1-over	N[Plus[Times[4, ArcTan[Rational[1, 5]]], Minus[ArcTan[Rational[1, 239]]]]]	0.7853981633974484		N\left[4 \tan ^{-1}\left(\frac{1}{5}\right)-\tan ^{-1}\left(\frac{1}{239}\right)\right]	0.785398	
 compute-engine-s-arctan-takes-only-one-argument	ArcTan[1, 1]	Pi/4		\tan ^{-1}(1,1)	\frac{\pi }{4}	disagree
-arctan-complexinfinity-is-indeterminate-z-re-i	ArcTan[ComplexInfinity]	Indeterminate		\tan ^{-1}(\text{ComplexInfinity})	\text{Indeterminate}	
+arctan-complexinfinity-is-indeterminate-z-re-i	ArcTan[ComplexInfinity]	Indeterminate		\tan ^{-1}(\text{ComplexInfinity})	\text{Indeterminate}	disagree
 the-horizontal-asymptote-as-x-to-infty	ArcTan[Infinity]	Pi/2		\tan ^{-1}(\infty )	\frac{\pi }{2}	
 and-as-x-to-infty	ArcTan[-Infinity]	-1/2*Pi		\tan ^{-1}(-\infty )	-\frac{\pi }{2}	
 euler-s-machin-like-identity-arctan-frac-12	FullSimplify[Plus[ArcTan[Rational[1, 2]], ArcTan[Rational[1, 3]]]]	Pi/4		\text{FullSimplify}\left[\tan ^{-1}\left(\frac{1}{2}\right)+\tan ^{-1}\left(\frac{1}{3}\right)\right]	\frac{\pi }{4}	
