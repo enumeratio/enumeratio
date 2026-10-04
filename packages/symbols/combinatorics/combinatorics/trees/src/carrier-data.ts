@@ -29,7 +29,7 @@ export const TREES_CARRIERS: readonly Carrier[] = [
   {
     name: "IncreasingBinaryTree",
     type: "increasing_binary_tree",
-    // Nested, following BinaryTree/KAryTree/OrderedTree's own convention (leaf 0, node a
+    // Nested, following BinaryTree/FullKAryTree/OrderedTree's own convention (leaf 0, node a
     // list): [label, left, right], label folded in as the first slot. Matches what
     // IncreasingBinaryTrees (collections) and FromPermutation (permutations/src/maps.ts) both
     // build -- neither constructs the flat by-value parent-array tuple this carrier declared
@@ -39,11 +39,11 @@ export const TREES_CARRIERS: readonly Carrier[] = [
     plural: "IncreasingBinaryTrees",
   },
   {
-    name: "KAryTree",
-    type: "k_ary_tree",
+    name: "FullKAryTree",
+    type: "full_k_ary_tree",
     shape: "integer | list<any>",
-    id: "k_ary_tree",
-    plural: "KAryTrees",
+    id: "full_k_ary_tree",
+    plural: "FullKAryTrees",
   },
   {
     name: "LabeledTree",

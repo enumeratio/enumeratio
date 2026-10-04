@@ -52,8 +52,14 @@ export const HIERARCHY: Readonly<Record<string, Placement>> = {
   incidence: { layer: "extension", area: "algebras", extends: ["structures"] },
   quiver: { layer: "extension", area: "algebras", extends: ["structures"] },
 
-  // The numeric sets (`Primes`) are combinatorics' families over residues' sieve.
-  combinatorics: { layer: "extension", area: "combinatorics", extends: ["structures", "residues"] },
+  // The numeric sets (`PrimeNumbers`) are combinatorics' families over residues' sieve. It sits
+  // above groupalgebra for `Cycles(CycleDecomposition(…))`, a constructor overload on the head
+  // groupalgebra declares.
+  combinatorics: {
+    layer: "extension",
+    area: "combinatorics",
+    extends: ["structures", "residues", "groupalgebra"],
+  },
   statistics: { layer: "extension", area: "combinatorics", extends: [] },
   polytope: { layer: "extension", area: "combinatorics", extends: [] },
 

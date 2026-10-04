@@ -5,10 +5,12 @@
 // signature, a wrapped handler. What can't happen is a package redeclaring a head that's
 // already declared, because then declaration order decides the winner, and two repos can't
 // coordinate "declare me last". Two packages contributing one signature is the same clobber,
-// a step later: neither can tell which answers.
+// a step later: neither can tell which answers. And a contributor has to extend the package
+// that declares the head, or its rows name a head that may not be there when it runs.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { isExtension, overloadTable } from "@enumeratio/engine";
+import { HIERARCHY } from "@enumeratio/manifest";
 import { contributions, ENGINE } from "./contributions.ts";
 import { fullEngine, PACKAGE_DECLARATIONS } from "./engine.ts";
 
@@ -41,7 +43,7 @@ const snapshot = (ce: ComputeEngine): Map<string, Identity | undefined> =>
 export interface HeadDeclaration {
   /** What declared the head: the engine, or the package that introduced it. */
   readonly declarer: string;
-  /** Packages that declared it again afterwards, replacing its definition. Always empty, bar the known exceptions. */
+  /** Packages that declared it again afterwards, replacing its definition. Always empty. */
   readonly redeclaredBy: readonly string[];
   /** The other packages that touch it: widen it, wrap its handler, add rows. */
   readonly contributors: readonly string[];
@@ -79,7 +81,7 @@ export function declarations(): Map<string, HeadDeclaration> {
     before = after;
   }
   const out = new Map<string, HeadDeclaration>();
-  // Values (`Primes`) have no signature for `contributions` to see, but can be redeclared too.
+  // A constant has no signature for `contributions` to see, but can be redeclared too.
   for (const head of new Set([...touched.keys(), ...redeclaredBy.keys()])) {
     const list = touched.get(head) ?? [];
     const by = redeclaredBy.get(head) ?? [];
@@ -89,6 +91,33 @@ export function declarations(): Map<string, HeadDeclaration> {
       redeclaredBy: by,
       contributors: list.map((c) => c.pkg).filter((pkg) => pkg !== first),
     });
+  }
+  return out;
+}
+
+const extended = (name: string, seen = new Set<string>()): Set<string> => {
+  for (const parent of HIERARCHY[name]?.extends ?? [])
+    if (!seen.has(parent)) {
+      seen.add(parent);
+      extended(parent, seen);
+    }
+  return seen;
+};
+
+/**
+ * Contributions from a package that doesn't extend the one declaring the head, so nothing
+ * promises the head is there when the contribution runs. Presentation and tooling may reach any
+ * library, and are left out.
+ */
+export function contributionsBelowTheirDeclarer(): string[] {
+  const out: string[] = [];
+  for (const [head, { declarer, contributors }] of declarations()) {
+    if (declarer === ENGINE) continue;
+    for (const pkg of contributors) {
+      const layer = HIERARCHY[pkg]?.layer;
+      if (layer === "presentation" || layer === "tooling") continue;
+      if (!extended(pkg).has(declarer)) out.push(`${head}: ${pkg} contributes but doesn't extend ${declarer}`);
+    }
   }
   return out;
 }

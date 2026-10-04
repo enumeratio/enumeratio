@@ -1,12 +1,12 @@
 // Spike: four numeric sets/sequences as NumberKernel "scalar" entries (element = a single
 // integer, not a list). Proves out kind:"scalar" / paramCount:0 in declare.ts against a mix
-// of a sieve-backed value (Primes), a closed form (SquareNumbers), a predicate scan
+// of a sieve-backed value (PrimeNumbers), a closed form (SquareNumbers), a predicate scan
 // (AbundantNumbers), and a one-parameter operator (SmoothNumbers(k)) — not the full 88-set
 // catalogue; see design/rendering-environments-planning or the spike report for the rest.
 import { isPrime as isPrimeBig, nthPrime as sieveNthPrime, primeCountUpTo } from "@enumeratio/residues";
 import type { Declared, NumberKernel } from "./types.ts";
 
-// ---- Primes: the segmented sieve/BPSW primality of @enumeratio/residues (issue #205's
+// ---- PrimeNumbers: the segmented sieve/BPSW primality of @enumeratio/residues (issue #205's
 // nth-prime work) — no separate sieve of our own to keep in sync with it. ----
 
 /** The k-th prime (1-indexed). */
@@ -106,7 +106,7 @@ const numeric = (cost: Declared["cost"]["unrank"], rest: Partial<Declared> = {})
 
 export const entries: NumberKernel[] = [
   {
-    head: "Primes",
+    head: "PrimeNumbers",
     paramCount: 0,
     kind: "scalar",
     count: () => Number.POSITIVE_INFINITY,

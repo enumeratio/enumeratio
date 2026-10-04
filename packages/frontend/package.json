@@ -5,7 +5,8 @@
   "description": "The base of the interface: the symbol-to-component map and its lowering, the AST as a vdom, the control contract, the arithmetic of scrubbing and playback, the pure SVG renderers. No UI framework.",
   "license": "WTFPL",
   "files": [
-    "dist"
+    "dist",
+    "reference"
   ],
   "type": "module",
   "exports": {

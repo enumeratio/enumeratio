@@ -1,5 +1,5 @@
 // Recurrence-defined numeric sequences as NumberKernel "scalar" entries (element = a single
-// integer, a term of the sequence). Same shape as numeric-sets.ts's Primes/SquareNumbers/
+// integer, a term of the sequence). Same shape as numeric-sets.ts's PrimeNumbers/SquareNumbers/
 // AbundantNumbers/SmoothNumbers, but every term here is a bigint: several of these grow past
 // Number.MAX_SAFE_INTEGER well within the first 30 terms (BellNumbers, FubiniNumbers,
 // PartitionNumbers, ...), and `contains`/`rank` need exact equality, not float comparison.

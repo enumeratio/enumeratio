@@ -2489,6 +2489,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "PrimeNumbers",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "PrimePairs",
     provenance: "extension",
     declared: "enumeratio-combinatorics",
@@ -2508,13 +2515,6 @@ export const provenance: readonly HeadRecord[] = [
     declared: null,
     wolframAlias: null,
     elsewhere: [],
-  },
-  {
-    name: "Primes",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: null,
-    elsewhere: ["wolfram"],
   },
   {
     name: "PrimitiveBinaryStrings",
@@ -4099,6 +4099,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "FullKAryTree",
+    provenance: "unknown",
+    declared: "enumeratio-combinatorics",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "FullKAryTrees",
+    provenance: "unknown",
+    declared: "enumeratio-combinatorics",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "Gap",
     provenance: "unknown",
     declared: null,
@@ -4354,20 +4368,6 @@ export const provenance: readonly HeadRecord[] = [
     name: "JeuDeTaquin",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
-    name: "KAryTree",
-    provenance: "unknown",
-    declared: "enumeratio-combinatorics",
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
-    name: "KAryTrees",
-    provenance: "unknown",
-    declared: "enumeratio-combinatorics",
     wolframAlias: null,
     elsewhere: [],
   },
@@ -5234,13 +5234,6 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "PrimeGaps",
-    provenance: "unknown",
-    declared: null,
-    wolframAlias: null,
-    elsewhere: [],
-  },
-  {
-    name: "PrimeNumbers",
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
@@ -6792,6 +6785,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: null,
     wolframAlias: null,
     elsewhere: ["wolfram", "sympy"],
+  },
+  {
+    name: "Primes",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: ["wolfram"],
   },
   {
     name: "Random",

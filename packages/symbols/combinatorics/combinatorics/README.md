@@ -40,7 +40,7 @@ package rather than its own:
   `RestrictedGrowthStrings`.
 - **`compositions`** — `IntegerCompositions`, `WeakCompositions`, `OrderedFactorizations`.
 - **`words`** — `Words`, `BinaryWords`, ascent sequences, endofunctions.
-- **`trees`** — `BinaryTrees`, `KaryTree`, `RootedForests`, `PhylogeneticTrees`.
+- **`trees`** — `BinaryTrees`, `FullKAryTrees`, `RootedForests`, `PhylogeneticTrees`.
 - **`tableaux`** — `SemistandardTableaux`, `PlanePartitions`, `AlternatingSignMatrices`.
 - **`lattice-paths`** — `DyckPaths`, `LatticePaths`, Motzkin and Delannoy paths.
 - **`graphs`** — `Graph`, `PathGraph`, `CompleteGraph`, `PetersenGraph`.

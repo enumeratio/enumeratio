@@ -1,4 +1,3 @@
-id	section	role	expr	expected	caption
-the-first-five-primes			[Take, Primes, 5]	[List, 2, 3, 5, 7, 11]	The first five primes
-11-is-prime	Properties		[Element, 11, Primes]	True	
-9-is-not-prime	Properties		[Element, 9, Primes]	False	
+id	section	role	expr	expected
+11-is-prime	Properties		[Element, 11, Primes]	True
+9-is-not-prime	Properties		[Element, 9, Primes]	False

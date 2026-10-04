@@ -1,7 +1,7 @@
 // Closed-form numeric sets/sequences: every element is `f(n)` for a fixed polynomial or
 // product formula, n = 1, 2, 3, … (1-indexed, matching `At(S, 1)` = first element per
 // PR #86's convention). No sieving or predicate scanning here — see numeric-sets.ts for
-// that flavor (Primes, AbundantNumbers, SmoothNumbers(k)).
+// that flavor (PrimeNumbers, AbundantNumbers, SmoothNumbers(k)).
 //
 // Every term is computed over `bigint` and only narrowed to a plain `number` when it's
 // still exact there (`Number.isSafeInteger`); past that the raw bigint is returned instead

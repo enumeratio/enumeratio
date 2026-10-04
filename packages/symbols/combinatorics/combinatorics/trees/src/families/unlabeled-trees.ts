@@ -366,7 +366,7 @@ export function IsPhylogeneticTreeOf(e: unknown, n: number): boolean {
 // ─── NonCrossingTrees(n): A001764 — spanning trees on n+1 circle-labeled points with no crossing
 // chords; C(3n,n)/(2n+1), the same Fuss–Catalan closed form as ternary trees with n internal nodes
 // (Flajolet & Noy, "Analytic combinatorics of non-crossing configurations", 1999, give the bijection
-// explicitly). Reuses the already-certified KAryTrees(n,3) kernel and just re-presents its nested
+// explicitly). Reuses the already-certified FullKAryTrees(n,3) kernel and just re-presents its nested
 // element as the flat preorder arity word (n entries, each in 0..3) the "ints" carrier wants. ──────
 function flattenKAry(t: KTree, k: number, out: number[]): void {
   if (t === 0) {
@@ -381,7 +381,7 @@ function unflattenKAry(word: number[], pos: { i: number }): KTree {
   if (a === 0) return 0;
   const kids: KTree[] = [];
   for (let c = 0; c < a; c++) kids.push(unflattenKAry(word, pos));
-  return kids as KTree; // a is always exactly 3 here (KAryTrees(·,3) fills every internal node's 3 slots)
+  return kids as KTree; // a is always exactly 3 here (FullKAryTrees(·,3) fills every internal node's 3 slots)
 }
 export function NonCrossingTreeCount(n: number): number {
   return KAryTreeCount(n, 3);

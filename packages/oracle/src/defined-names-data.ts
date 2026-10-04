@@ -859,6 +859,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "PretzelKnot",
   "PrimeCompositions",
   "PrimeNu",
+  "PrimeNumbers",
   "PrimeOmega",
   "PrimePairs",
   "PrimePartitions",

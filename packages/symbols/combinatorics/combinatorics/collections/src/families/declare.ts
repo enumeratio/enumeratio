@@ -185,8 +185,7 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
 }
 
 /** Declare every family in `families` on `ce` (an Epsil family through its kernel on `ce`): an indexed-collection operator, or for paramCount 0
- *  an indexed-collection value (`Primes`), which shadows CE's own `set` of that name on this
- *  engine. A family's carrier, when it names one, has to already be declared on `ce` (its OWN
+ *  an indexed-collection value (`PrimeNumbers`). A family's carrier, when it names one, has to already be declared on `ce` (its OWN
  *  area's declare runs its `declareCarriers` first) -- its minted type is read back through
  *  `@enumeratio/structures`' registry (`carrierTypeForName`), not passed in. Also registers
  *  which carrier each family's elements inhabit (`registerCollectionCarrier`), for

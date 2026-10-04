@@ -232,7 +232,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // own operator carries neither an `evaluate` nor a `canonical` — compute-engine dispatches
   // it through an internal table keyed on the operator NAME, reached only when
   // `operator.evaluate` is absent, and used by the collection-protocol families this
-  // package declares elsewhere (SquareNumbers, Primes, …). Assigning ANY function to
+  // package declares elsewhere (SquareNumbers, PrimeNumbers, …). Assigning ANY function to
   // `operator.evaluate` — even one that calls through to a temporarily-unhooked re-box for
   // every shape but UpTo — permanently shadows that table: `numeric-sets.test.ts` and
   // `numeric-closed-form.test.ts`'s `Take(SquareNumbers, 5)`-style calls stopped

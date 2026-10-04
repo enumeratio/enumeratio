@@ -1,8 +1,8 @@
 // BinaryTrees/BinaryTreeParentArrays split out of collections/src/families/core.ts (which mixed
 // every area) per https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible
 // §4 step 5 -- the only two families in core.ts's "trees with nested elements" section carrying a
-// carrier ("BinaryTree" / "BinaryTreeParentArray"). KAryTrees/OrderedTrees moved in alongside
-// them (wire-carriers lane A-92): their carriers -- KAryTree, OrderedTree -- go NESTED, matching
+// carrier ("BinaryTree" / "BinaryTreeParentArray"). FullKAryTrees/OrderedTrees moved in alongside
+// them (wire-carriers lane A-92): their carriers -- FullKAryTree, OrderedTree -- go NESTED, matching
 // BinaryTree's own shape (`integer | list<any>`, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible,
 // #401), since both families' elements already are (kind "nested": KTree = 0 | KTree[], OrdTree
 // = OrdTree[]). The generic kernel math stays in collections/src/families/kernels*.ts.
@@ -55,10 +55,10 @@ export const entries: NumberKernel[] = [
     rank: (e) => BinaryTreeRank(BinaryTreeOfParentArray(e as number[]) ?? 0),
   },
   {
-    head: "KAryTrees",
+    head: "FullKAryTrees",
     paramCount: 2,
     kind: "nested",
-    carrier: "KAryTree",
+    carrier: "FullKAryTree",
     count: ([n, k]) => KAryTreeCount(n, k),
     unrank: ([n, k], r) => KAryTreeUnrank(n, k, r),
     valid: (e, [n, k]) => IsKAryTree(e, n, k),

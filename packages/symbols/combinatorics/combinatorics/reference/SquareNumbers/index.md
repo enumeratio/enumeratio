@@ -1,0 +1,35 @@
+---
+name: SquareNumbers
+domain: Collections
+signature: SquareNumbers
+summary: The perfect squares $1, 4, 9, 16, …$ as a lazy indexed collection, unranked by position.
+signatures:
+  - call: SquareNumbers
+    description: the squares $k^2$ for $k = 1, 2, 3, …$, an infinite indexed collection.
+enumerate:
+  expr: Take(SquareNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - PrimeNumbers
+  - AbundantNumbers
+catalog:
+  - system: mathlib4
+    identity: IsSquare
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Algebra/Group/Even.html
+  - system: oeis
+    identity: A000290
+    url: https://oeis.org/A000290
+  - system: wolfram
+    identity: PolygonalNumber
+    url: https://reference.wolfram.com/language/ref/PolygonalNumber.html
+    note: r=4 fixed for the square case; PolygonalNumber(4,r) — their n = our r
+grades: []
+carrier: Numeric
+unbounded: true
+---
+
+- A lazy indexed collection: $Count(SquareNumbers) = +\infty$, and $At(SquareNumbers, k) = k^2$ unranks in closed form -- $At(SquareNumbers, 5) = 25$.
+- OEIS A000290.
+- Membership goes through [[Element]]: $Element(16, SquareNumbers)$ is true, $Element(15, SquareNumbers)$ is false.
