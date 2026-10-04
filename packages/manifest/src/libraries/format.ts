@@ -1,13 +1,13 @@
 // A library's format (https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup §4.2): the host's
 // package is the transport, the symbol index is ours. A package marks itself in `package.json`:
 //
-//   "enumeratio": { "namespace": "ada", "index": "./symbols/index.json", "system": "0.x" }
+//   "enumeratio": { "namespace": "ada", "index": "./reference/index.json", "system": "0.x" }
 //
 // (any package, library or not, may also name its notation entry: `"notation": "./notation"`,
 // JavaScript, whose LaTeX triggers and TraditionalForm heads the index lists; a library's own
-// notation is data, `symbols/<Name>/notation.json`, inline in the index)
+// notation is data, `reference/<Name>/notation.json`, inline in the index)
 //
-// and ships `symbols/<Name>/definition.json` (signature, body, requires, and any attributes and
+// and ships `reference/<Name>/definition.json` (signature, body, requires, and any attributes and
 // defaults) beside the index,
 // which `libraryIndexOf` builds at pack time, with `examples.json` from the symbol's record
 // (`index.md`, `examples.tsv`, as ours are) for the install check.
@@ -67,7 +67,7 @@ export interface NotationSummary {
   readonly traditional: readonly string[];
 }
 
-/** `symbols/index.json`: each name's signature, pin, pinned dependencies and named slots. */
+/** `reference/index.json`: each name's signature, pin, pinned dependencies and named slots. */
 export interface LibraryIndex {
   readonly namespace: string;
   readonly symbols: Readonly<Record<string, IndexedSymbol>>;
@@ -100,7 +100,7 @@ export function notationSummaryOf(notation: {
   return { latex, traditional: Object.keys(notation.traditional ?? {}).toSorted() };
 }
 
-/** A package's index, from its definitions: what packing writes to `symbols/index.json`. */
+/** A package's index, from its definitions: what packing writes to `reference/index.json`. */
 export async function libraryIndexOf(
   namespace: string,
   definitions: Readonly<Record<string, Definition>>,
