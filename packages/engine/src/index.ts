@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { EVALUATES_OPERANDS } from "./overloads.ts";
+import { extendHead } from "./extend.ts";
+import { addHeadSignature, EVALUATES_OPERANDS } from "./overloads.ts";
 
 // Reading values back out of compute-engine expressions.
 //
@@ -143,11 +144,10 @@ const fitsArity = (arity: Arity | undefined, n: number): boolean =>
  * offset) otherwise reaches a predicate that only looked at `ops[0]` and `ops[1]`. A call
  * outside `arity` goes straight to the fallback without consulting `applies`.
  *
- * Attached IN PLACE rather than re-declared: `ce.declare` on a built-in head throws once
+ * Attached by `extendHead` rather than re-declared: `ce.declare` on a built-in head throws once
  * a second library tries it ("already declared in this scope"), and replacing the whole
  * definition means re-supplying every flag and handler it carried — `type`, which keeps
- * `Add` returning `number`; `lazy`, which `Subtract` needs to canonicalise at all. The
- * definition object is per engine, so attaching does not leak across instances.
+ * `Add` returning `number`; `lazy`, which `Subtract` needs to canonicalise at all.
  *
  * A lazy head (`Add`, `Multiply`) hands its handler the operands as written; `applies`
  * and `handler` get them evaluated so they see values, while the native fallback gets
@@ -173,96 +173,30 @@ export function wrapOperator(
   const handler = build(native);
   const lazy = operator.lazy === true;
   const foldsOperands = lazy && EVALUATES_OPERANDS.has(probe[0]);
-  operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
-    if (!fitsArity(arity, ops.length)) return native?.(ops, options);
-    const values = lazy ? ops.map((op) => op.evaluate()) : ops;
-    return applies(values) ? handler(values, options) : native?.(foldsOperands ? values : ops, options);
-  };
+  extendHead(ce, probe[0], {
+    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+      if (!fitsArity(arity, ops.length)) return native?.(ops, options);
+      const values = lazy ? ops.map((op) => op.evaluate()) : ops;
+      return applies(values) ? handler(values, options) : native?.(foldsOperands ? values : ops, options);
+    },
+  });
 }
+
+export { type HeadPatch, isExtension } from "./extend.ts";
+export { extendHead };
 
 export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "./options.ts";
 export { checkpoint, DeadlineExceededError, withDeadline } from "./deadline.ts";
 export { defineOverload, joinSignatures, type Overload, type OverloadTable, overloadTable } from "./overloads.ts";
 
-interface SigArg {
-  readonly type: unknown;
-}
-interface SimpleSignature {
-  kind: "signature";
-  args?: SigArg[];
-  optArgs?: SigArg[];
-  variadicArg?: SigArg;
-  variadicMin?: number;
-  result: unknown;
-  typeParams?: unknown[];
-}
-
-const isSimpleSignature = (t: unknown): t is SimpleSignature =>
-  typeof t === "object" &&
-  t !== null &&
-  (t as SimpleSignature).kind === "signature" &&
-  !(t as SimpleSignature).typeParams?.length;
-
-/** The union of two types, collapsed when one already covers the other. */
-function unionType(ce: ComputeEngine, a: unknown, b: unknown): unknown {
-  if (ce.type(b as never).matches(ce.type(a as never))) return a;
-  if (ce.type(a as never).matches(ce.type(b as never))) return b;
-  const parts = [a, b].flatMap((t) =>
-    typeof t === "object" && t !== null && (t as { kind?: string }).kind === "union"
-      ? (t as { types: unknown[] }).types
-      : [t],
-  );
-  return { kind: "union", types: parts };
-}
-
-/**
- * A signature admitting everything `current` and `requested` each admit: parameters join
- * positionally (a position only one side has becomes optional), results join by union.
- * `undefined` when either isn't a plain signature (generic, intersection).
- */
-function joinWide(ce: ComputeEngine, current: unknown, requested: unknown): SimpleSignature | undefined {
-  if (!isSimpleSignature(current) || !isSimpleSignature(requested)) return undefined;
-  const sides = [current, requested];
-  const fixed = (s: SimpleSignature): SigArg[] => [...(s.args ?? []), ...(s.optArgs ?? [])];
-  const variadic = (s: SimpleSignature): unknown => s.variadicArg?.type;
-  const join = (types: unknown[]): unknown => types.reduce((acc, t) => unionType(ce, acc, t));
-  const at = (i: number): unknown =>
-    join(sides.map((s) => fixed(s)[i]?.type ?? variadic(s)).filter((t) => t !== undefined));
-
-  const count = Math.max(...sides.map((s) => fixed(s).length));
-  const required = Math.min(...sides.map((s) => s.args?.length ?? 0));
-  const hasVariadic = sides.some((s) => variadic(s) !== undefined);
-  const args: SigArg[] = [];
-  const optArgs: SigArg[] = [];
-  // A variadic head can't also carry optionals, so a position past `required` folds into it.
-  const rest: unknown[] = sides.map(variadic).filter((t) => t !== undefined);
-  for (let i = 0; i < count; i++) {
-    if (i < required) args.push({ type: at(i) });
-    else if (hasVariadic) rest.push(at(i));
-    else optArgs.push({ type: at(i) });
-  }
-  const merged: SimpleSignature = { kind: "signature", result: join(sides.map((s) => s.result)) };
-  if (args.length) merged.args = args;
-  if (optArgs.length) merged.optArgs = optArgs;
-  if (rest.length) {
-    merged.variadicArg = { type: join(rest) };
-    // Explicit: an unset minimum prints as `+`.
-    merged.variadicMin = sides.every((s) => variadic(s) !== undefined)
-      ? Math.min(...sides.map((s) => s.variadicMin ?? 0))
-      : 0;
-  }
-  return merged;
-}
-
 /**
  * Widen the signature of an operator the engine already defines, in place, so arguments its
  * native declaration would reject at boxing reach `evaluate` — where a `wrapOperator` handler
- * can answer them and hand everything else to the native one. Re-declaring the head instead
- * would drop the rest of its definition.
+ * can answer them and hand everything else to the native one.
  *
- * Only ever widens: the result admits everything the current signature does and the requested
- * one, so packages widening one head agree in any declaration order, and a request the head
- * already covers changes nothing.
+ * Only ever widens: the request is added as an overload, so the head admits everything it did
+ * and the request, packages widening one head agree in any declaration order, and a request the
+ * head already covers changes no answer.
  *
  * The native handler trusted boxing to have checked its operands; `nativeAccepts` restores
  * that gate for it (a call it rejects stays unevaluated). Wrap after widening, so the
@@ -274,33 +208,19 @@ export function widenSignature(
   signature: string,
   nativeAccepts?: (op: BoxedExpression) => boolean,
 ): void {
-  const definition = ce.lookupDefinition(name);
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) return;
-  const slot = operator as { signature: { type?: unknown } | undefined };
-  const requested = ce.type(signature);
-  const merged = joinWide(ce, slot.signature?.type, requested.type);
-  // Shapes that can't be joined (generic, intersection) are taken as given.
-  slot.signature = merged === undefined ? requested : ce.type(merged as never);
-  const native = operator.evaluate;
-  if (nativeAccepts === undefined || native === undefined) return;
-  operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
-    ops.every(nativeAccepts) ? native(ops, options) : undefined;
+  addHeadSignature(ce, name, signature, nativeAccepts);
 }
 
 /**
  * Make operators the engine already defines thread over a list argument, as Wolfram's
- * Listable heads do: `Totient([2, 4, 6])` is `[1, 2, 2]` instead of a type error. Flagged in
- * place, like `wrapOperator`, so every other part of each definition — and any wrapper
+ * Listable heads do: `Totient([2, 4, 6])` is `[1, 2, 2]` instead of a type error. Flagged
+ * through `extendHead`, so every other part of each definition — and any wrapper
  * already attached — is kept. Only heads that reject or ignore a list natively belong here:
  * the flag widens what they answer, it never changes an answer they already give.
  */
 export function threadOverLists(ce: ComputeEngine, names: readonly string[]): void {
   for (const name of names) {
-    const definition = ce.lookupDefinition(name);
-    if (definition !== undefined && "operator" in definition) {
-      (definition.operator as { broadcastable: boolean }).broadcastable = true;
-    }
+    extendHead(ce, name, { broadcastable: true });
   }
 }
 
