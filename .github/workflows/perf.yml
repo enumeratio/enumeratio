@@ -68,27 +68,28 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+      # In a separate worktree: checking perf-data out in place deletes .github/actions/setup before
+      # its post step runs.
       - name: push history to perf-data
         if: ${{ !cancelled() }}
         run: |
           git config user.name enumeratio
           git config user.email enumeratio@users.noreply.github.com
-          history=$(mktemp)
-          cp tools/perf/.data/history.json "$history"
+          data=$(mktemp -d)
           if git ls-remote --exit-code --heads origin perf-data >/dev/null 2>&1; then
-            git checkout -B perf-data origin/perf-data
+            git worktree add -B perf-data "$data" origin/perf-data
           else
-            git checkout --orphan perf-data
-            git rm -rf --quiet . || true
+            git worktree add --orphan -b perf-data "$data"
           fi
-          cp "$history" history.json
-          git add history.json
-          if git diff --cached --quiet; then
+          cp tools/perf/.data/history.json "$data/history.json"
+          git -C "$data" add history.json
+          if git -C "$data" diff --cached --quiet; then
             echo "history unchanged, nothing to push"
           else
-            git commit -m "perf: record run ${{ github.sha }}"
-            git push origin HEAD:perf-data
+            git -C "$data" commit -m "perf: record run ${{ github.sha }}"
+            git -C "$data" push origin HEAD:perf-data
           fi
+          git worktree remove --force "$data"
 
       - name: open/reopen the tracking issue
         if: ${{ !cancelled() && steps.collect.outputs.drifted == 'true' }}
