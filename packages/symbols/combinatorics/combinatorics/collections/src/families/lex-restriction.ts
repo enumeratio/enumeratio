@@ -9,7 +9,7 @@
 // with a value not used before it.
 
 import type { EpsilFamily } from "./epsil.ts";
-import { add, all, and, at, equal, fold, iff, less, lets, map, sub, upTo } from "./tables.ts";
+import { add, all, and, at, equal, fold, iff, less, lets, map, mul, sub, upTo } from "./tables.ts";
 import type { FamilyShape } from "./types.ts";
 
 type MathJSON = unknown;
@@ -24,6 +24,19 @@ export interface PermutationRestriction extends Omit<FamilyShape, "kind"> {
    * the family's params and any `tables`.
    */
   readonly completions: MathJSON;
+  /**
+   * Opt in to `taken`: a list over the values 1..n, 0 for a value no slot of `prefix` holds and
+   * else the slot that holds it. `At(taken, v)` reads whether v is used in O(1). Read it only at 1..n.
+   */
+  readonly taken?: true;
+  /**
+   * Opt in to a prefix state `pstate`, a list carried beside `prefix` and updated by one `step`
+   * per value placed, so `completions` reads what the prefix has built up instead of walking it.
+   * `pstate` is the state after the prefix's `filled` slots. `init` is the state before any
+   * (a list, over the family's params); `step` is the state after placing `value` at `slot`
+   * (1-based), from `pstate`, `slot` and `value`. Read it only through `At`.
+   */
+  readonly state?: PrefixState;
   /** Whether `_x`, a permutation of n, is a member. Default: its completions as a full
    *  prefix are 1. */
   readonly predicate?: MathJSON;
@@ -32,15 +45,42 @@ export interface PermutationRestriction extends Omit<FamilyShape, "kind"> {
   readonly tables?: readonly [name: string, table: MathJSON];
 }
 
+/** A restriction's incremental prefix state (see `PermutationRestriction.state`). */
+export interface PrefixState {
+  readonly init: MathJSON;
+  readonly step: MathJSON;
+}
+
 const n = "_n";
 
+/** The state `spec.state` reaches from `from` by placing `value` at `slot`. */
+const stepped = (spec: PermutationRestriction, from: MathJSON, slot: MathJSON, value: MathJSON): MathJSON =>
+  lets(
+    [
+      ["pstate", from, "list<integer>"],
+      ["slot", slot, "integer"],
+      ["value", value, "integer"],
+    ],
+    spec.state!.step,
+  );
+
 /** `completions` at the prefix `base` with `value` set at `slot`: the entries before `slot` and
- *  zeros after. A native copy of `base` beats rebuilding the n slots entry by entry. */
-const completionsAt = (spec: PermutationRestriction, base: string, slot: MathJSON, value: MathJSON): MathJSON =>
+ *  zeros after. A native copy of `base` beats rebuilding the n slots entry by entry. `held` and
+ *  `from` are the `taken` list and prefix state before `slot`, where the spec opts in. */
+const completionsAt = (
+  spec: PermutationRestriction,
+  base: string,
+  slot: MathJSON,
+  value: MathJSON,
+  held: string,
+  from: string,
+): MathJSON =>
   lets(
     [
       ["prefix", ["ReplaceAt", base, slot, value], "list<integer>"],
       ["filled", slot, "integer"],
+      ...(spec.taken ? [["taken", ["ReplaceAt", held, value, slot], "list<integer>"] as const] : []),
+      ...(spec.state ? [["pstate", stepped(spec, from, slot, value), "list<integer>"] as const] : []),
     ],
     spec.completions,
   );
@@ -54,22 +94,26 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
   const withTables = (body: MathJSON): MathJSON =>
     tables === undefined ? body : lets([[tables[0], "_tables", "list<integer>"]], body);
 
-  // Unrank: the state is the n slots, then the rank still to go, then a flag per value (1 once
-  // it is placed): 2n + 1 slots. At slot j, the free values are tried in increasing order; each
-  // that doesn't hold the remaining rank takes its completions off it.
+  const { state } = spec;
+  const stateInit = state === undefined ? [] : [state.init];
+
+  // Unrank: the state is the n slots, then the rank still to go, then per value the slot that
+  // holds it (0 while free), then the prefix state where there is one: 2n + 1 slots and the
+  // state. At slot j, the free values are tried in increasing order; each that doesn't hold the
+  // remaining rank takes its completions off it.
   //
-  // The step reads the state inside lambdas (the completions fold over the prefix), which
+  // The step reads the state inside lambdas (the completions over the prefix), which
   // compute-engine's in-place Fold doesn't allow, so the state is copied once per slot.
-  const slotFlag = (value: MathJSON): MathJSON => add(n, 1, value);
+  const slotHeld = (value: MathJSON): MathJSON => add(n, 1, value);
   const choose = fold(
     iff(
       ["NotEqual", at("lr_pick", 2), 0],
       "lr_pick",
       iff(
-        equal(at("lr_s", slotFlag("lr_v")), 1),
+        ["NotEqual", at("lr_s", slotHeld("lr_v")), 0],
         "lr_pick",
         lets(
-          [["lr_c", completionsAt(spec, "lr_s", "lr_j", "lr_v"), "integer"]],
+          [["lr_c", completionsAt(spec, "lr_s", "lr_j", "lr_v", "lr_tk", "lr_ps"), "integer"]],
           iff(
             less(at("lr_pick", 1), "lr_c"),
             ["List", at("lr_pick", 1), "lr_v"],
@@ -83,18 +127,26 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
     ["List", at("lr_s", add(n, 1)), 0],
     upTo(1, n),
   );
+  const placed = [
+    "ReplaceAt",
+    ["ReplaceAt", ["ReplaceAt", "lr_s", "lr_j", at("lr_chosen", 2)], add(n, 1), at("lr_chosen", 1)],
+    slotHeld(at("lr_chosen", 2)),
+    "lr_j",
+  ];
   const unrankStep = lets(
-    [["lr_chosen", choose, "list<integer>"]],
     [
-      "ReplaceAt",
-      ["ReplaceAt", ["ReplaceAt", "lr_s", "lr_j", at("lr_chosen", 2)], add(n, 1), at("lr_chosen", 1)],
-      slotFlag(at("lr_chosen", 2)),
-      1,
+      // The lists the completions read, as they stand before slot j.
+      ...(spec.taken ? [["lr_tk", ["Take", ["Drop", "lr_s", add(n, 1)], n], "list<integer>"] as const] : []),
+      ...(state ? [["lr_ps", ["Drop", "lr_s", add(mul(2, n), 1)], "list<integer>"] as const] : []),
+      ["lr_chosen", choose, "list<integer>"],
     ],
+    state === undefined
+      ? placed
+      : ["Join", ["Take", placed, add(mul(2, n), 1)], stepped(spec, "lr_ps", "lr_j", at("lr_chosen", 2))],
   );
   const unrank = [
     "Take",
-    fold(unrankStep, "lr_s", "lr_j", ["Join", zeros("lr_y"), ["List", "_r"], zeros("lr_y2")], upTo(1, n)),
+    fold(unrankStep, "lr_s", "lr_j", ["Join", zeros("lr_y"), ["List", "_r"], zeros("lr_y2"), ...stateInit], upTo(1, n)),
     n,
   ];
 
@@ -102,52 +154,96 @@ export function permutationRestriction(spec: PermutationRestriction): EpsilFamil
   // each value sits in the element says whether it is free past a slot, and fills in place.
   const element = (q: string): MathJSON => at("_x", q);
   const positions = fold(["ReplaceAt", "lr_at", element("lr_p"), "lr_p"], "lr_at", "lr_p", zeros("lr_y3"), upTo(1, n));
+  const smaller = fold(
+    add(
+      "lr_r2",
+      iff(
+        ["Greater", at("lr_where", "lr_v"), "lr_j"],
+        completionsAt(spec, "lr_base", "lr_j", "lr_v", "lr_tk", "lr_ps"),
+        0,
+      ),
+    ),
+    "lr_r2",
+    "lr_v",
+    0,
+    upTo(1, sub(element("lr_j"), 1)),
+  );
+  // The prefix before slot j, and the lists the completions read of it.
+  const beforeSlot = (inner: MathJSON): MathJSON =>
+    lets(
+      [
+        ["lr_base", map(iff(less("lr_q", "lr_j"), element("lr_q"), 0), "lr_q", upTo(1, n)), "list<integer>"],
+        ...(spec.taken
+          ? [
+              [
+                "lr_tk",
+                map(iff(less(at("lr_where", "lr_u"), "lr_j"), at("lr_where", "lr_u"), 0), "lr_u", upTo(1, n)),
+                "list<integer>",
+              ] as const,
+            ]
+          : []),
+      ],
+      inner,
+    );
   const rank = lets(
     [["lr_where", positions, "list<integer>"]],
-    fold(
-      add(
-        "lr_r",
-        lets(
-          [["lr_base", map(iff(less("lr_q", "lr_j"), element("lr_q"), 0), "lr_q", upTo(1, n)), "list<integer>"]],
+    state === undefined
+      ? fold(add("lr_r", beforeSlot(smaller)), "lr_r", "lr_j", 0, upTo(1, n))
+      : // The fold carries the rank, then the prefix state.
+        [
+          "At",
           fold(
-            add(
-              "lr_r2",
-              iff(["Greater", at("lr_where", "lr_v"), "lr_j"], completionsAt(spec, "lr_base", "lr_j", "lr_v"), 0),
+            lets(
+              [["lr_ps", ["Drop", "lr_acc", 1], "list<integer>"]],
+              [
+                "Join",
+                ["List", add(at("lr_acc", 1), beforeSlot(smaller))],
+                stepped(spec, "lr_ps", "lr_j", element("lr_j")),
+              ],
             ),
-            "lr_r2",
-            "lr_v",
-            0,
-            upTo(1, sub(element("lr_j"), 1)),
+            "lr_acc",
+            "lr_j",
+            ["Join", ["List", 0], state.init],
+            upTo(1, n),
           ),
-        ),
-      ),
-      "lr_r",
-      "lr_j",
-      0,
-      upTo(1, n),
-    ),
+          1,
+        ],
   );
 
+  // The lists `completions` reads at a whole permutation (`_x` or the empty prefix).
+  const emptyLists = (): (readonly [string, MathJSON, string])[] => [
+    ...(spec.taken ? [["taken", zeros("lr_t0"), "list<integer>"] as const] : []),
+    ...(state ? [["pstate", state.init, "list<integer>"] as const] : []),
+  ];
+  const fullLists = (): (readonly [string, MathJSON, string])[] => [
+    ...(spec.taken
+      ? [
+          [
+            "taken",
+            fold(["ReplaceAt", "lr_iv", element("lr_ip"), "lr_ip"], "lr_iv", "lr_ip", zeros("lr_t1"), upTo(1, n)),
+            "list<integer>",
+          ] as const,
+        ]
+      : []),
+    ...(state
+      ? [
+          [
+            "pstate",
+            fold(stepped(spec, "lr_pa", "lr_pj", element("lr_pj")), "lr_pa", "lr_pj", state.init, upTo(1, n)),
+            "list<integer>",
+          ] as const,
+        ]
+      : []),
+  ];
+
   const count = lets(
-    [
-      ["prefix", map(0, "lr_y", upTo(1, n)), "list<integer>"],
-      ["filled", 0, "integer"],
-    ],
+    [["prefix", map(0, "lr_y", upTo(1, n)), "list<integer>"], ["filled", 0, "integer"], ...emptyLists()],
     spec.completions,
   );
 
   const predicate =
     given ??
-    equal(
-      lets(
-        [
-          ["prefix", "_x", "list<integer>"],
-          ["filled", n, "integer"],
-        ],
-        spec.completions,
-      ),
-      1,
-    );
+    equal(lets([["prefix", "_x", "list<integer>"], ["filled", n, "integer"], ...fullLists()], spec.completions), 1);
   // Membership needs a permutation of n before the predicate can read it.
   const valid = iff(
     equal(["Length", "_x"], n),

@@ -1,7 +1,8 @@
 // Restrictions of the symmetric group by descents, alternation, indecomposability and patterns, in its lex
 // order: each is its completion count (`permutationRestriction`, collections/src/families/
 // lex-restriction.ts). Over `prefix` (n slots, the first `filled` set) the counts read the
-// prefix's last entry, how many free values lie below it (a), and m = n − filled free slots.
+// prefix's last entry, how many free values lie below it (a), and m = n − filled free slots;
+// `taken` says in O(1) whether a value is used.
 
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared } from "../../../collections/src/families/types.ts";
@@ -41,8 +42,7 @@ const sum = (body: (i: string) => MathJSON, i: string, from: MathJSON, to: MathJ
   fold(add(`sum_${i}`, body(i)), `sum_${i}`, i, 0, upTo(from, to));
 const count = (condition: (i: string) => MathJSON, i: string, from: MathJSON, to: MathJSON): MathJSON =>
   sum((x) => iff(condition(x), 1, 0), i, from, to);
-const used = (v: MathJSON): MathJSON =>
-  fold(["Or", "seen", ["Equal", pre("ut"), v]], "seen", "ut", "False", upTo(1, "filled"));
+const used = (v: MathJSON): MathJSON => ["NotEqual", at("taken", v), 0];
 /** Free values below (or above) the prefix's last entry. */
 const freeBelow = count((v) => ["And", ["Less", v, last], ["Not", used(v)]], "fb", 1, n);
 const freeAbove = count((v) => ["And", ["Greater", v, last], ["Not", used(v)]], "fa", 1, n);
@@ -63,6 +63,7 @@ function atMostOneTurn(head: string, rises: boolean): EpsilFamily {
     paramCount: 1,
     params: [n],
     declared: polynomial(),
+    taken: true,
     completions: lets(
       [
         ["turns", iff(["Equal", "filled", 0], 0, turns), "integer"],
@@ -111,6 +112,7 @@ const alternatingPermutations: EpsilFamily = permutationRestriction({
   params: [n],
   declared: polynomial(),
   tables: ["entringer", entringer],
+  taken: true,
   completions: iff(
     fold(
       [
@@ -245,6 +247,7 @@ const kDescentPermutations: EpsilFamily = permutationRestriction({
   params: [n, "_k"],
   declared: polynomial(true),
   tables: ["eulerian", eulerianByFirst],
+  taken: true,
   completions: lets(
     [["need", sub("_k", iff(["Equal", "filled", 0], 0, descents)), "integer"]],
     iff(
@@ -360,6 +363,7 @@ function permutationsAvoiding(pattern: string): EpsilFamily {
     params: [n],
     declared: polynomial(),
     predicate: ["Not", occurs],
+    taken: true,
     completions: lets(
       [
         [
