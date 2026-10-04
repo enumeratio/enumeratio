@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+of-a-matrix	Basic		[MatrixPower, [List, [List, 1, 1], [List, 1, 0]], 10]	[List, [List, 89, 55], [List, 55, 34]]	An ordinary matrix is compute-engine's: the Fibonacci matrix to the tenth
+of-a-word	Basic		[MatrixPower, "'LR'", 2]	[ModularMatrix, 2, 3, 3, 5]	A word in $L$ and $R$, squared in $\mathrm{PSL}(2,\mathbb{Z})$
+of-a-modular-matrix	Scope		[MatrixPower, [ModularMatrix, 1, 1, 0, 1], 3]	[ModularMatrix, 1, 3, 0, 1]	A modular matrix cubed
+negative-power	Scope		[MatrixPower, [ModularMatrix, 1, 1, 0, 1], -3]	[ModularMatrix, 1, -3, 0, 1]	A negative power is a power of the inverse

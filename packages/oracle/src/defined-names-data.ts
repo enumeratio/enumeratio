@@ -454,6 +454,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "HighlyCompositeNumbers",
   "HilbertMatrix",
   "Hills",
+  "Histogram",
   "HookProduct",
   "HopfDegree",
   "HopfTensor",

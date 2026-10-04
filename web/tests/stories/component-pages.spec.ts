@@ -5,12 +5,14 @@
 //
 // Run with: pnpm --filter @enumeratio/web run test:stories
 
+import { fileURLToPath } from "node:url";
 import type { Locator } from "@playwright/test";
+import { STORIES_DATA } from "@enumeratio/components/stories-data";
 import { collectComponents, headOfTag } from "@enumeratio/frontend/reflect";
 import { expect, test } from "@playwright/test";
-import { STORIES_DATA } from "../../../packages/components/src/stories-data.ts";
 
-const srcDir = new URL("../../../packages/components/src/", import.meta.url).pathname;
+// The elements' sources, beside the package's manifest (they are what `collectComponents` reads).
+const srcDir = fileURLToPath(new URL("./src/", import.meta.resolve("@enumeratio/components/package.json")));
 
 // STORIES_DATA is keyed by the Vue/React wrapper name (`BarChart3D`); the page route is the
 // custom-element tag (`notatio-bar-chart-3d`) -- the same rule ComponentPage.vue's `wrapper`

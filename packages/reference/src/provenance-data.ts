@@ -6361,7 +6361,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Derivative",
-    provenance: "unknown",
+    provenance: "override",
     declared: "enumeratio-analytic",
     wolframAlias: null,
     elsewhere: ["wolfram", "sympy"],
@@ -6634,7 +6634,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "MatrixPower",
-    provenance: "unknown",
+    provenance: "override",
     declared: "enumeratio-modular",
     wolframAlias: null,
     elsewhere: ["wolfram"],
@@ -7810,7 +7810,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Histogram",
-    provenance: "unknown",
+    provenance: "override",
     declared: "enumeratio-formats",
     wolframAlias: null,
     elsewhere: ["wolfram"],

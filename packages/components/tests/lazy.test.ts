@@ -4,9 +4,9 @@
 
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { pathsInto } from "@enumeratio/frontend/static-imports";
 import { expect, test } from "vite-plus/test";
 import { LAZY_TAGS } from "../src/lazy.ts";
-import { pathsInto } from "./static-imports.ts";
 
 const ENGINE = /^@cortex-js\/compute-engine/;
 const source = (path: string): string => fileURLToPath(new URL(path, import.meta.url));

@@ -1,6 +1,7 @@
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
+import { wrapOperator } from "@enumeratio/engine";
 
 // Symbolic derivatives for the analytic heads.
 //
@@ -9,9 +10,9 @@ import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 // The supported way in is the `Derivative` operator itself — hand it a function literal for
 // our heads and compute-engine's chain and product rules carry from there.
 //
-// Both hooks are ATTACHED IN PLACE on the definition `lookupDefinition` returns rather than
-// re-declared: a re-declaration would silently drop the stock `canonical` and `compile`
-// handlers and the definition's effects, which is what `Derivative`'s own docs warn about.
+// Neither head is re-declared: a re-declaration would silently drop the stock `canonical` and
+// `compile` handlers and the definition's effects, which is what `Derivative`'s own docs warn
+// about. `Derivative` is a wrapper (`wrapOperator`); `D` is attached in place.
 
 /** ∂-orders that identify one partial: `[0, 1]` is ∂/∂(second argument). */
 type Orders = string;
@@ -120,25 +121,25 @@ function operatorOf(ce: ComputeEngine, name: string) {
  * nothing for every other head, whose `D` already returns something evaluated.
  */
 export function declareDerivatives(ce: ComputeEngine): void {
-  const derivative = operatorOf(ce, "Derivative");
-  if (derivative !== undefined) {
-    const native: NativeEval = derivative.evaluate;
-    derivative.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
-      const f = ops[0];
-      const table = f !== undefined && isSymbol(f) ? DERIVATIVES[f.symbol] : undefined;
-      const partial =
-        table?.[
-          ops
-            .slice(1)
-            .map((order) => order.re)
-            .join()
-        ];
-      if (partial !== undefined) {
-        return ce.box(["Function", partial.body, ...partial.params] as unknown as BoxInput);
-      }
-      return native?.(ops, options);
-    };
-  }
+  const partialOf = (ops: readonly BoxedExpression[]): Partial | undefined => {
+    const f = ops[0];
+    const table = f !== undefined && isSymbol(f) ? DERIVATIVES[f.symbol] : undefined;
+    return table?.[
+      ops
+        .slice(1)
+        .map((order) => order.re)
+        .join()
+    ];
+  };
+  wrapOperator(
+    ce,
+    ["Derivative"],
+    (ops) => partialOf(ops) !== undefined,
+    () => (ops) => {
+      const { body, params } = partialOf(ops)!;
+      return ce.box(["Function", body, ...params] as unknown as BoxInput);
+    },
+  );
 
   const d = operatorOf(ce, "D");
   if (d !== undefined) {

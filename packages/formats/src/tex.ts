@@ -3,6 +3,8 @@
 // round an operand that fails its type check. Exported TeX is for a LaTeX document, so it is
 // rewritten into commands amsmath and amssymb provide.
 
+import { setMathSymbols } from "@enumeratio/boxes/render";
+
 /** A letter for a command, spaced off a command name before it (`\lbrack e`, not `\lbracke`). */
 const letter =
   (c: string) =>
@@ -23,11 +25,12 @@ const MACROS: readonly (readonly [RegExp, string | ((...args: string[]) => strin
   [/\\tripleprime(?![a-zA-Z])/g, "\\prime\\prime\\prime"],
   // A string's text, which compute-engine sets upright a second time.
   [/\\text\{\\mathrm\{([^{}]*)\}\}/g, "\\text{$1}"],
-  // A string's `^` and `_`, which compute-engine leaves bare: math-only in text mode.
+  // A string's `^` and `_`, which compute-engine leaves bare: math-only in text mode. So are
+  // its symbols (`∑`, `≤`), which KaTeX rejects there.
   [
     /\\text\{([^{}]*)\}/g,
     (_: string, text: string) =>
-      `\\text{${text.replace(/(?<!\\)\^/g, "\\textasciicircum{}").replace(/(?<!\\)_/g, "\\_")}}`,
+      `\\text{${setMathSymbols(text.replace(/(?<!\\)\^/g, "\\textasciicircum{}").replace(/(?<!\\)_/g, "\\_"))}}`,
   ],
 ];
 

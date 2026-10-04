@@ -161,6 +161,22 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "Text",
 ];
 
+/**
+ * The engine's own `Histogram(data, bins)` computes the bins and rejects a lone argument at
+ * the signature. Wolfram's one-argument `Histogram[data]` is the picture; widen the slot so it
+ * holds, and hand two arguments straight back to the native handler. The signature otherwise
+ * mirrors the engine's, so nothing else changes.
+ */
+export function declareHistogram(ce: ComputeEngine): void {
+  widenSignature(ce, "Histogram", "(collection<any>, (list<number> | number)?) -> any");
+  wrapOperator(
+    ce,
+    ["Histogram", [1]],
+    (ops) => ops.length === 1,
+    () => () => undefined,
+  );
+}
+
 export function declareGraphics(ce: ComputeEngine): void {
   // Inert: no `evaluate`, so the expression stays what it says, while its arguments
   // are canonicalised as usual -- an iterator typed as `(x, 0, 10)` in LaTeX arrives as a
@@ -171,17 +187,7 @@ export function declareGraphics(ce: ComputeEngine): void {
     ce.declare(head, { signature: "(any*) -> any" });
   }
 
-  // The engine's own `Histogram(data, bins)` computes the bins and rejects a lone
-  // argument at the signature. Wolfram's one-argument `Histogram[data]` is the picture;
-  // widen the slot so it holds, and hand two arguments straight back to the native
-  // handler. The signature otherwise mirrors the engine's, so nothing else changes.
-  widenSignature(ce, "Histogram", "(collection<any>, (list<number> | number)?) -> any");
-  wrapOperator(
-    ce,
-    ["Histogram", [1]],
-    (ops) => ops.length === 1,
-    () => () => undefined,
-  );
+  declareHistogram(ce);
 
   // A cell holds its input: `Cell(1 + 1)` is the pair "1 + 1 → 2", not a cell of 2.
   if (!ce.lookupDefinition("Cell")) {

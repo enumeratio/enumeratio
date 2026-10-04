@@ -19,6 +19,7 @@ import {
   NOTATIONS,
   type StagedLibrary,
 } from "@enumeratio/manifest";
+import { declareHistogram } from "@enumeratio/formats";
 import { declareCompose, declareRestricted } from "@enumeratio/structures";
 
 // The libraries are the ones this package depends on (it can import each, so each specifier
@@ -43,7 +44,8 @@ const NAMES = AVAILABLE.map((library) => library.name);
 // no examples either way.
 
 // `Restricted` and `Compose` are structures' over combinatorics' maps, so they follow combinatorics
-// (as in census's engine), and their examples run here.
+// (as in census's engine), and their examples run here. `formats` is a presentation library, so
+// not in the plan by default; its `Histogram` widening of compute-engine's head joins alone.
 const late = (
   name: string,
   declare: (ce: ComputeEngine) => void,
@@ -57,6 +59,7 @@ const late = (
 const EXTRAS = [
   late("restricted", declareRestricted, ["combinatorics"]),
   late("compose", declareCompose, ["restricted"]),
+  late("histogram", declareHistogram, []),
 ];
 
 /** The engine's plan: every library this package depends on, the base, and what each requires. */

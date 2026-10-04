@@ -144,6 +144,8 @@ test("a string's TeX specials are escaped once wrapped for it", () => {
     "\\bigl\\lbrack\\text{\\{}, \\text{\\textbackslash{}}, \\text{\\textasciicircum{}}, \\text{\\textasciitilde{}}\\bigr\\rbrack",
   );
   expect(latex("'\u{F11E}'")).toBe('\\text{\\char"F11E }');
+  // KaTeX has no text-mode glyph for a math symbol: it is set in math instead.
+  expect(latex("'∑'")).toBe("\\text{$\\sum$}");
 });
 
 test("a call by namespace writes its qualified name, not MemberCall", () => {
