@@ -130,6 +130,14 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
   if (Array.isArray(expr) && typeof expr[0] === "string" && PAIR_HEADS.has(expr[0]) && expr.length === 3) {
     return expr.slice(1).map((item) => reduce(item, evaluate));
   }
+  // A delayed rule keeps its head in the tree: `x :> v` is not `x -> v`.
+  if (Array.isArray(expr) && expr[0] === "RuleDelayed" && expr.length === 3) {
+    return ["RuleDelayed", ...expr.slice(1).map((item) => reduce(item, evaluate))];
+  }
+  // An association is its entries in order, tagged so it never lines up with a bare list of rules.
+  if (Array.isArray(expr) && expr[0] === "Association") {
+    return ["Association", ...expr.slice(1).map((item) => reduce(item, evaluate))];
+  }
   // CycleDecomposition/Wolfram's own `Cycles` (unmapped -- `Cycles` is never one of OUR
   // heads, so `fromWolfram` reads it through by name): Wolfram's `Cycles` omits a FIXED
   // POINT (a length-1 cycle) entirely, while ours always keeps one for every element -- so

@@ -1,3 +1,4 @@
+import { ComputeEngine } from "@cortex-js/compute-engine";
 import { fromWolfram } from "@enumeratio/wolfram";
 import { describe, expect, test } from "vite-plus/test";
 import { compare, parsePython } from "../src/compare.ts";
@@ -145,6 +146,71 @@ test("Rule and KeyValuePair compare by their two operands, not their head", () =
   // A genuine value difference on either side still disagrees.
   const different = ["KeyValuePair", "x", 3] as MathJSON;
   expect(compareTrees(reduce(ours, symbolic), reduce(different, symbolic))).toBe("disagree");
+});
+
+// A real evaluator for the rule tests: a value is a number where it has one, as the scan's
+// own `leaf` reads it, else its symbolic text.
+const ce = new ComputeEngine();
+const evaluateReal = (expr: MathJSON): Leaf => {
+  const { re } = ce.box(expr as Parameters<ComputeEngine["box"]>[0]).N();
+  return typeof re === "number" && Number.isFinite(re) ? re : symbolic(expr);
+};
+const verdictOf = (ours: MathJSON, theirsFullForm: string, tolerance?: number) =>
+  compareTrees(reduce(ours, evaluateReal), reduce(fromWolfram(theirsFullForm) as MathJSON, evaluateReal), tolerance);
+
+describe("rules and associations compare structurally wherever they sit", () => {
+  // Minimize(x^4 - 4 x^2, x): Wolfram answers `{-4, {x -> -Sqrt[2]}}`, which is
+  // `List[-4, List[Rule[x, Times[-1, Power[2, Rational[1, 2]]]]]]` in FullForm.
+  const minimize = ["List", -4, ["List", ["Rule", "x", ["Negate", ["Sqrt", 2]]]]] as MathJSON;
+  const wolframMinimize = "List[-4, List[Rule[x, Times[-1, Power[2, Rational[1, 2]]]]]]";
+
+  test("a Rule inside a List agrees on value, whatever the spelling of the number", () => {
+    expect(verdictOf(minimize, wolframMinimize)).toBe("agree");
+  });
+
+  test("a Rule's value still disagrees when it differs, or when the key does", () => {
+    expect(verdictOf(minimize, "List[-4, List[Rule[x, Power[2, Rational[1, 2]]]]]")).toBe("disagree");
+    expect(verdictOf(minimize, "List[-4, List[Rule[y, Times[-1, Power[2, Rational[1, 2]]]]]]")).toBe("disagree");
+    expect(verdictOf(minimize, "List[-5, List[Rule[x, Times[-1, Power[2, Rational[1, 2]]]]]]")).toBe("disagree");
+  });
+
+  test("a Rule's value honours the tolerance", () => {
+    const ours = ["List", ["Rule", "x", 0.25268025516236814]] as MathJSON;
+    expect(verdictOf(ours, "List[Rule[x, 0.2526802551]]", 1e-12)).toBe("disagree");
+    expect(verdictOf(ours, "List[Rule[x, 0.2526802551]]", 1e-8)).toBe("agree");
+  });
+
+  test("rules nest: several solutions, several bindings each", () => {
+    const ours = [
+      "List",
+      ["List", ["Rule", "a", 1], ["Rule", "b", 7]],
+      ["List", ["Rule", "a", 14], ["Rule", "b", 16]],
+    ] as MathJSON;
+    const theirs = "List[List[Rule[a, 1], Rule[b, 7]], List[Rule[a, 14], Rule[b, 16]]]";
+    expect(verdictOf(ours, theirs)).toBe("agree");
+    expect(verdictOf(ours, "List[List[Rule[a, 1], Rule[b, 7]]]")).toBe("disagree");
+  });
+
+  test("a rule whose key is a list (Thread over Tuples) compares by that list", () => {
+    const ours = ["List", ["Rule", ["List", 1, 0], 2], ["Rule", ["List", 0, 1], 3]] as MathJSON;
+    expect(verdictOf(ours, "List[Rule[List[1, 0], 2], Rule[List[0, 1], 3]]")).toBe("agree");
+    expect(verdictOf(ours, "List[Rule[List[1, 0], 2], Rule[List[0, 1], 4]]")).toBe("disagree");
+  });
+
+  test("an Association is its entries, in order, and is not a list of rules", () => {
+    const ours = ["Association", ["Rule", "a", 1], ["Rule", "b", 2]] as MathJSON;
+    expect(verdictOf(ours, "Association[Rule[a, 1], Rule[b, 2]]")).toBe("agree");
+    expect(verdictOf(ours, "Association[Rule[a, 1], Rule[b, 3]]")).toBe("disagree");
+    expect(verdictOf(ours, "Association[Rule[b, 2], Rule[a, 1]]")).toBe("disagree");
+    expect(verdictOf(ours, "List[Rule[a, 1], Rule[b, 2]]")).toBe("disagree");
+  });
+
+  test("a delayed rule is not a rule", () => {
+    const ours = ["RuleDelayed", "x", 2] as MathJSON;
+    expect(verdictOf(ours, "RuleDelayed[x, 2]")).toBe("agree");
+    expect(verdictOf(ours, "Rule[x, 2]")).toBe("disagree");
+    expect(verdictOf(["Rule", "x", 2], "RuleDelayed[x, 2]")).toBe("disagree");
+  });
 });
 
 describe("comparison past the double range and of exact rationals", () => {

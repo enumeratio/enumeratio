@@ -48,3 +48,6 @@ catalog-dump.json
 
 # Farmed third-party data (packages/reference/scripts/farm-wolfram-data.ts)
 .cache/
+
+# Built beside the sources in tools/
+tools/*.d.ts

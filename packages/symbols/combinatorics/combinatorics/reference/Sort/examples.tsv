@@ -2,7 +2,7 @@ id	section	role	expr	expected	caption	triage	epsil.in	epsil.back	fullform.in	wol
 sort-list-3-1-2			[Sort, [List, 3, 1, 2]]	[List, 1, 2, 3]							
 sort-list-4-2-5-1-3			[Sort, [List, 4, 2, 5, 1, 3]]	[List, 1, 2, 3, 4, 5]							
 symbols-sort-alphabetically			[Sort, [List, d, b, c, a]]	[List, a, b, c, d]	Symbols sort alphabetically						
-sort-association-orders-by-value		test	[Sort, [Association, [Rule, a, 4], [Rule, b, 1], [Rule, c, 3]]]	[Association, [Rule, b, 1], [Rule, c, 3], [Rule, a, 4]]						shape	Same key/value pairs in the same order; Wolfram prints its native <|...|> association literal instead of our Association(...) form.
+sort-association-orders-by-value		test	[Sort, [Association, [Rule, a, 4], [Rule, b, 1], [Rule, c, 3]]]	[Association, [Rule, b, 1], [Rule, c, 3], [Rule, a, 4]]							
 sort-list-cat-fish-catfish-cat			[Sort, [List, "'cat'", "'fish'", "'catfish'", "'Cat'"]]	[List, "'Cat'", "'cat'", "'catfish'", "'fish'"]						convention	our default string sort is byte/codepoint order (uppercase before lowercase — 'Cat' < 'cat'); Wolfram's default string Sort uses a locale-aware/case-insensitive-ish collation ('cat' before 'Cat'). A collation convention difference, not a bug
 a-custom-comparator-sorts-in-a-different-order	Scope		[Sort, [List, 3, 1, 2], [Function, [Greater, _1, _2]]]	[List, 3, 2, 1]	A custom comparator sorts in a different order, here descending			Unreadable			
 a-list-of-strings-sorts-lexicographically	Scope		[Sort, [List, banana, apple, cherry]]	[List, apple, banana, cherry]	A list of strings sorts lexicographically						
