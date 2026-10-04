@@ -2,19 +2,16 @@
 // Binet rule): exact input must stay exact. The rule used to finish with an unconditional
 // `.N()`, so FunctionExpand(Fibonacci(n, x)) and FunctionExpand(Fibonacci(1/2, x)) came back
 // with Pi rounded to a float and stray ~1e-43 terms instead of a symbolic closed form.
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Expr, Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
 import { declareNumberTheory } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareResidues(ce);
-declareNumerals(ce);
-declareNumberTheory(ce);
+const ce = createEngine(declareResidues, declareNumerals, declareNumberTheory);
 
-const evaluate = (expr: unknown): ReturnType<ComputeEngine["box"]> =>
-  ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evaluate = (expr: unknown): Expr => ce.box(expr as Json).evaluate();
 
 // Any float literal anywhere in the boxed result's JSON -- the bug's signature (a rounded
 // Pi, a stray ~1e-43 cancellation term) is always some operand with digits after the point.

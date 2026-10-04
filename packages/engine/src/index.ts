@@ -194,6 +194,7 @@ export {
   type Type,
 } from "./facade.ts";
 export { type HeadPatch, isExtension } from "./extend.ts";
+export { isNativeHead, nativeEvaluate, withAssumptions } from "./probe.ts";
 export { extendHead };
 
 export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "./options.ts";

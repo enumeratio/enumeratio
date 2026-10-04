@@ -1,6 +1,5 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { compareGenerators, type Generator, generatorOf, generatorSymbol, sameGenerator } from "./units.ts";
-import { operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { operandsOf, symbolNameOf, type Engine, type Expr } from "@enumeratio/engine";
 
 // A hypercomplex element in normal form: a coefficient per BLADE, where a blade is
 // an ordered product of distinct generators (the empty blade is the scalar). Every
@@ -15,7 +14,7 @@ type BladeKey = string;
 
 interface Term {
   readonly blade: readonly Generator[];
-  readonly coefficient: BoxedExpression;
+  readonly coefficient: Expr;
 }
 
 /** An element of a hypercomplex algebra, as blade → coefficient. */
@@ -26,18 +25,18 @@ export interface Multivector {
 const bladeKey = (blade: readonly Generator[]): BladeKey => blade.map(generatorSymbol).join("*");
 
 /** Sum a list of coefficient expressions, keeping them exact. */
-const sumCoefficients = (ce: ComputeEngine, xs: readonly BoxedExpression[]): BoxedExpression =>
+const sumCoefficients = (ce: Engine, xs: readonly Expr[]): Expr =>
   xs.length === 1 ? xs[0]! : ce.function("Add", xs).evaluate();
 
-const productCoefficients = (ce: ComputeEngine, xs: readonly BoxedExpression[]): BoxedExpression =>
+const productCoefficients = (ce: Engine, xs: readonly Expr[]): Expr =>
   xs.length === 1 ? xs[0]! : ce.function("Multiply", xs).evaluate();
 
 /** Definitely zero — an unknown symbolic coefficient answers `false`, not "maybe". */
-const isDefinitelyZero = (x: BoxedExpression): boolean => x.is(0) === true;
+const isDefinitelyZero = (x: Expr): boolean => x.is(0) === true;
 
 /** Build a multivector from raw (blade, coefficient) pairs, collecting like blades. */
-function fromTerms(ce: ComputeEngine, raw: readonly Term[]): Multivector {
-  const pending = new Map<BladeKey, { blade: readonly Generator[]; parts: BoxedExpression[] }>();
+function fromTerms(ce: Engine, raw: readonly Term[]): Multivector {
+  const pending = new Map<BladeKey, { blade: readonly Generator[]; parts: Expr[] }>();
   for (const term of raw) {
     if (isDefinitelyZero(term.coefficient)) continue;
     const key = bladeKey(term.blade);
@@ -54,8 +53,7 @@ function fromTerms(ce: ComputeEngine, raw: readonly Term[]): Multivector {
   return { terms };
 }
 
-export const scalarMultivector = (ce: ComputeEngine, c: BoxedExpression): Multivector =>
-  fromTerms(ce, [{ blade: [], coefficient: c }]);
+export const scalarMultivector = (ce: Engine, c: Expr): Multivector => fromTerms(ce, [{ blade: [], coefficient: c }]);
 
 export const isScalar = (mv: Multivector): boolean => [...mv.terms.values()].every((t) => t.blade.length === 0);
 
@@ -117,13 +115,13 @@ export function multiplyBlades(
 
 // ── multivector arithmetic ──────────────────────────────────────────────────────
 
-export function addMultivectors(ce: ComputeEngine, parts: readonly Multivector[]): Multivector {
+export function addMultivectors(ce: Engine, parts: readonly Multivector[]): Multivector {
   const raw: Term[] = [];
   for (const mv of parts) raw.push(...mv.terms.values());
   return fromTerms(ce, raw);
 }
 
-export function scaleMultivector(ce: ComputeEngine, mv: Multivector, factor: BoxedExpression): Multivector {
+export function scaleMultivector(ce: Engine, mv: Multivector, factor: Expr): Multivector {
   return fromTerms(
     ce,
     [...mv.terms.values()].map((t) => ({
@@ -133,7 +131,7 @@ export function scaleMultivector(ce: ComputeEngine, mv: Multivector, factor: Box
   );
 }
 
-export function multiplyMultivectors(ce: ComputeEngine, a: Multivector, b: Multivector): Multivector {
+export function multiplyMultivectors(ce: Engine, a: Multivector, b: Multivector): Multivector {
   const raw: Term[] = [];
   for (const x of a.terms.values()) {
     for (const y of b.terms.values()) {
@@ -147,7 +145,7 @@ export function multiplyMultivectors(ce: ComputeEngine, a: Multivector, b: Multi
   return fromTerms(ce, raw);
 }
 
-export function powerMultivector(ce: ComputeEngine, mv: Multivector, exponent: number): Multivector | undefined {
+export function powerMultivector(ce: Engine, mv: Multivector, exponent: number): Multivector | undefined {
   if (!Number.isInteger(exponent)) return undefined;
   if (exponent < 0) {
     const inverse = invertMultivector(ce, mv);
@@ -167,7 +165,7 @@ export function powerMultivector(ce: ComputeEngine, mv: Multivector, exponent: n
  * A ring automorphism for the commuting families. For multicomplex this is exactly
  * "negate the odd-popcount coefficients" — the map that flips the odious basis units.
  */
-export function conjugateMultivector(ce: ComputeEngine, mv: Multivector): Multivector {
+export function conjugateMultivector(ce: Engine, mv: Multivector): Multivector {
   return fromTerms(
     ce,
     [...mv.terms.values()].map((t) => ({
@@ -194,7 +192,7 @@ export function conjugateMultivector(ce: ComputeEngine, mv: Multivector): Multiv
 const hasAnticommuting = (mv: Multivector): boolean => generatorsOf(mv).some((g) => g.family.anticommutes);
 
 /** Split `mv` at generator `x` into u (blades without x) and v (blades with x removed). */
-function splitAt(ce: ComputeEngine, mv: Multivector, x: Generator): { u: Multivector; v: Multivector } {
+function splitAt(ce: Engine, mv: Multivector, x: Generator): { u: Multivector; v: Multivector } {
   const low: Term[] = [];
   const high: Term[] = [];
   for (const term of mv.terms.values()) {
@@ -209,7 +207,7 @@ function splitAt(ce: ComputeEngine, mv: Multivector, x: Generator): { u: Multive
 }
 
 /** u² − ε·v², the norm of z = u + x·v relative to the next algebra down. */
-function relativeNorm(ce: ComputeEngine, u: Multivector, v: Multivector, square: -1 | 0 | 1): Multivector {
+function relativeNorm(ce: Engine, u: Multivector, v: Multivector, square: -1 | 0 | 1): Multivector {
   const uu = multiplyMultivectors(ce, u, u);
   if (square === 0) return uu;
   const vv = multiplyMultivectors(ce, v, v);
@@ -223,7 +221,7 @@ function relativeNorm(ce: ComputeEngine, u: Multivector, v: Multivector, square:
  * FIXED unit set, which is the theorem worth relying on. `undefined` for an
  * anticommuting element.
  */
-export function normMultivector(ce: ComputeEngine, mv: Multivector): BoxedExpression | undefined {
+export function normMultivector(ce: Engine, mv: Multivector): Expr | undefined {
   if (hasAnticommuting(mv)) return undefined;
   const generators = generatorsOf(mv);
   if (generators.length === 0) {
@@ -240,7 +238,7 @@ export function normMultivector(ce: ComputeEngine, mv: Multivector): BoxedExpres
  * carries a coefficient too symbolic to divide by). Unlike the norm this does not
  * depend on the ambient algebra — an inverse is unique wherever it exists.
  */
-export function invertMultivector(ce: ComputeEngine, mv: Multivector): Multivector | undefined {
+export function invertMultivector(ce: Engine, mv: Multivector): Multivector | undefined {
   if (hasAnticommuting(mv)) return undefined;
   const generators = generatorsOf(mv);
   if (generators.length === 0) {
@@ -258,14 +256,14 @@ export function invertMultivector(ce: ComputeEngine, mv: Multivector): Multivect
 }
 
 /** Multiply every blade of `mv` by `x` — the inverse of splitAt's high half. */
-function embedAt(ce: ComputeEngine, mv: Multivector, x: Generator): Multivector {
+function embedAt(ce: Engine, mv: Multivector, x: Generator): Multivector {
   return multiplyMultivectors(ce, mv, fromTerms(ce, [{ blade: [x], coefficient: ce.number(1) }]));
 }
 
 // ── expression ↔ multivector ────────────────────────────────────────────────────
 
 /** Does any generator symbol occur in this expression? The dispatch test. */
-export function containsGenerator(expr: BoxedExpression): boolean {
+export function containsGenerator(expr: Expr): boolean {
   if (generatorOf(symbolNameOf(expr)) !== undefined) return true;
   return operandsOf(expr).some(containsGenerator);
 }
@@ -288,7 +286,7 @@ const ARITHMETIC = new Set([
  * only a Power's base), so the check on Add and Multiply — which runs on every call — stops
  * at the first non-arithmetic head instead of walking into it.
  */
-export function reachesGenerator(expr: BoxedExpression): boolean {
+export function reachesGenerator(expr: Expr): boolean {
   if (generatorOf(symbolNameOf(expr)) !== undefined) return true;
   const operator = expr.operator;
   if (!ARITHMETIC.has(operator)) return false;
@@ -297,9 +295,9 @@ export function reachesGenerator(expr: BoxedExpression): boolean {
 }
 
 /** The distinct ANTICOMMUTING generators in an expression (Clifford `e_k`). */
-export function anticommutingGenerators(expr: BoxedExpression): Generator[] {
+export function anticommutingGenerators(expr: Expr): Generator[] {
   const found: Generator[] = [];
-  const walk = (e: BoxedExpression): void => {
+  const walk = (e: Expr): void => {
     const g = generatorOf(symbolNameOf(e));
     if (g?.family.anticommutes === true && !found.some((h) => sameGenerator(g, h))) found.push(g);
     for (const op of operandsOf(e)) walk(op);
@@ -319,7 +317,7 @@ export function anticommutingGenerators(expr: BoxedExpression): Generator[] {
  * When it is NOT safe the product is refused rather than answered with a sign that
  * canonicalisation has already thrown away — see `NonCommutativeMultiply`.
  */
-export function productIsOrderable(ops: readonly BoxedExpression[]): boolean {
+export function productIsOrderable(ops: readonly Expr[]): boolean {
   const carried = ops.map(anticommutingGenerators).filter((gs) => gs.length > 0);
   if (carried.length < 2) return true;
   return (
@@ -337,7 +335,7 @@ export function productIsOrderable(ops: readonly BoxedExpression[]): boolean {
  * a parenthesised group) occupies no place in the blade order, so where it was
  * written is load-bearing and the product has to keep it.
  */
-export function productIsInBladeOrder(ops: readonly BoxedExpression[]): boolean {
+export function productIsInBladeOrder(ops: readonly Expr[]): boolean {
   let previous: Generator | undefined;
   for (const op of ops) {
     if (anticommutingGenerators(op).length === 0) continue; // commutes with everything
@@ -358,7 +356,7 @@ export function productIsInBladeOrder(ops: readonly BoxedExpression[]): boolean 
  * A subtree with no generator in it is a SCALAR, whatever it is: that is what keeps
  * coefficients exact and lets π, rationals and free symbols ride along.
  */
-export function toMultivector(ce: ComputeEngine, expr: BoxedExpression): Multivector | undefined {
+export function toMultivector(ce: Engine, expr: Expr): Multivector | undefined {
   if (!containsGenerator(expr)) return scalarMultivector(ce, expr);
 
   const generator = generatorOf(symbolNameOf(expr));
@@ -414,7 +412,7 @@ export function toMultivector(ce: ComputeEngine, expr: BoxedExpression): Multive
 }
 
 /** Render a multivector back as an expression, in canonical blade order. */
-export function toExpression(ce: ComputeEngine, mv: Multivector): BoxedExpression {
+export function toExpression(ce: Engine, mv: Multivector): Expr {
   const terms = [...mv.terms.values()].toSorted(
     (a, b) => a.blade.length - b.blade.length || bladeKey(a.blade).localeCompare(bladeKey(b.blade)),
   );

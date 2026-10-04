@@ -1,14 +1,13 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { stringAt } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { invMod, mod } from "@enumeratio/residues";
 import * as adic from "../src/adic.ts";
 import { declareNumerals } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareNumerals(ce);
+const ce = createEngine(declareNumerals);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 const value = (input: Expr) => ce.box(input).evaluate().json;

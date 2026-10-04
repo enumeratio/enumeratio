@@ -1,9 +1,8 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareModular } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareModular(ce);
+const ce = createEngine(declareModular);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 const value = (input: Expr) => ce.box(input).evaluate().json;

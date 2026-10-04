@@ -1,4 +1,3 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
 import {
   bigIntegerAt,
@@ -13,6 +12,8 @@ import {
   threadOverLists,
   widenSignature,
   wrapOperator,
+  type Engine,
+  type Expr,
 } from "@enumeratio/engine";
 import { gcd } from "@enumeratio/residues";
 import { declareCarriers } from "@enumeratio/structures";
@@ -68,7 +69,7 @@ import {
 // `declareNumerals` below).
 
 /** Read a `List(...)` of integers. */
-function integerList(expr: BoxedExpression | undefined): number[] | undefined {
+function integerList(expr: Expr | undefined): number[] | undefined {
   if (expr === undefined || expr.operator !== "List") return undefined;
   const values = operandsOf(expr).map(integerAt);
   return values.every((v): v is number => v !== undefined) ? values : undefined;
@@ -141,7 +142,7 @@ const canonicalOf = (name: string): string => NUMERAL_ALIASES[name] ?? name;
  * `declareNumerals`), but this makes `systemOf` correct even called on an unevaluated
  * expression.
  */
-export function systemOf(expr: BoxedExpression): NumeralSystem | undefined {
+export function systemOf(expr: Expr): NumeralSystem | undefined {
   const name = symbolNameOf(expr);
   if (name !== undefined) return NULLARY[canonicalOf(name)]?.();
   const ops = operandsOf(expr);
@@ -200,7 +201,7 @@ function sharedFactor(moduli: readonly number[]): [number, number, bigint] | und
   return undefined;
 }
 
-export function declareNumerals(ce: ComputeEngine): void {
+export function declareNumerals(ce: Engine): void {
   registerNotation(ce, NUMERALS_NOTATION);
   // This package's own carriers — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
   // constructors, plural type-space names and `Element` membership, all in one call.
@@ -226,7 +227,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       // Inert still, but a residue system over moduli that share a factor is worth a word.
       ...(head === "ResidueNumerals"
         ? {
-            evaluate: (ops: readonly BoxedExpression[]) => {
+            evaluate: (ops: readonly Expr[]) => {
               const moduli = integerList(ops[0]);
               const shared = moduli === undefined ? undefined : sharedFactor(moduli);
               if (shared !== undefined) emit(ce, head, "ncop", [moduli, ...shared]);
@@ -248,12 +249,12 @@ export function declareNumerals(ce: ComputeEngine): void {
     } else if (canonical in ONE_ARGUMENT) {
       ce.declare(alias, {
         signature: "(integer) -> value",
-        evaluate: (ops: readonly BoxedExpression[]) => ce.function(canonical, ops),
+        evaluate: (ops: readonly Expr[]) => ce.function(canonical, ops),
       });
     } else if (canonical in LIST_ARGUMENT) {
       ce.declare(alias, {
         signature: "(list<integer>) -> value",
-        evaluate: (ops: readonly BoxedExpression[]) => ce.function(canonical, ops),
+        evaluate: (ops: readonly Expr[]) => ce.function(canonical, ops),
       });
     }
   }
@@ -269,10 +270,10 @@ export function declareNumerals(ce: ComputeEngine): void {
     head: string,
     probe: readonly [string, ...unknown[]],
     signature: string,
-    answer: (ops: readonly BoxedExpression[], system: NumeralSystem) => BoxedExpression | undefined,
+    answer: (ops: readonly Expr[], system: NumeralSystem) => Expr | undefined,
   ): void => {
     widenSignature(ce, head, signature);
-    const systemIn = (ops: readonly BoxedExpression[]): NumeralSystem | undefined =>
+    const systemIn = (ops: readonly Expr[]): NumeralSystem | undefined =>
       ops[1] === undefined ? undefined : systemOf(ops[1]);
     wrapOperator(
       ce,
@@ -565,11 +566,11 @@ export function declareNumerals(ce: ComputeEngine): void {
   ce.declare("NumeralSystemShape", {
     // A system is named by its head (`ZeckendorfNumerals`), which types as a function.
     signature: "(any) -> dictionary",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const system = ops[0] === undefined ? undefined : systemOf(ops[0]);
       if (system === undefined) return undefined;
       const { bijective, range, digits, width, rule } = system.shape;
-      const fields: [string, BoxedExpression][] = [
+      const fields: [string, Expr][] = [
         ["Bijective", ce.symbol(bijective ? "True" : "False")],
         ["Integers", integers(...range)],
       ];
@@ -592,13 +593,12 @@ export function declareNumerals(ce: ComputeEngine): void {
   // RomanNumeral ─────────────────────────────────────────────────────────────
 
   /** A base argument, defaulting to 10 when omitted. */
-  const baseArg = (expr: BoxedExpression | undefined): bigint =>
-    (expr === undefined ? undefined : bigIntegerAt(expr)) ?? 10n;
+  const baseArg = (expr: Expr | undefined): bigint => (expr === undefined ? undefined : bigIntegerAt(expr)) ?? 10n;
 
   ce.declare("IntegerLength", {
     signature: "(integer, integer?) -> integer",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       const base = baseArg(ops[1]);
       if (n === undefined || base < 2n) return undefined;
@@ -609,7 +609,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   ce.declare("IntegerReverse", {
     signature: "(integer, any?, integer?) -> integer",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = integerAt(ops[0]);
       // A numeral system in the base slot (MixedRadix, FactorialNumerals, …): reverse its
       // digit string and read it back, same as the plain-base path does for base 10.
@@ -645,7 +645,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   ce.declare("NumberExpand", {
     signature: "(integer, integer?, integer?) -> list",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = bigIntegerAt(ops[0]);
       const base = baseArg(ops[1]);
       const width = ops[2] === undefined ? undefined : integerAt(ops[2]);
@@ -662,7 +662,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   ce.declare("RomanNumeral", {
     signature: "(integer) -> string",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = integerAt(ops[0]);
       const roman = n === undefined ? undefined : romanNumeralOf(n);
       return roman === undefined ? undefined : ce.string(roman);
@@ -670,7 +670,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   });
 
   /** `RealDigits`' `{{digits...}, exponent}`, a periodic tail nested as its own list. */
-  const realDigitsExpr = (digits: readonly RealDigit[], exponent: number): BoxedExpression =>
+  const realDigitsExpr = (digits: readonly RealDigit[], exponent: number): Expr =>
     ce.function("List", [
       ce.function(
         "List",
@@ -692,7 +692,7 @@ export function declareNumerals(ce: ComputeEngine): void {
 
   ce.declare("RealDigits", {
     signature: "(value, integer?, integer?) -> list",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       if (ops[0] === undefined) return undefined;
       const base = baseArg(ops[1]);
       const len = ops[2] === undefined ? undefined : integerAt(ops[2]);

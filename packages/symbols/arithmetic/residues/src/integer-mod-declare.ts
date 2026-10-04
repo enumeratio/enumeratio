@@ -1,4 +1,3 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -7,6 +6,8 @@ import {
   emit,
   operandsOf,
   wrapOperator,
+  type Engine,
+  type Expr,
 } from "@enumeratio/engine";
 import { applyPatch, quotientRingCollection, setResidueClasses } from "@enumeratio/ce-patches";
 import { gcd, mod } from "./arith.ts";
@@ -25,10 +26,10 @@ import { SUMMARIES } from "@enumeratio/manifest/package/residues";
 
 export { INTEGER_MOD, INTEGER_MOD_RING, QUOTIENT_RING };
 
-const isIntegerMod = (expr: BoxedExpression | undefined): boolean => expr?.operator === INTEGER_MOD;
+const isIntegerMod = (expr: Expr | undefined): boolean => expr?.operator === INTEGER_MOD;
 
 /** Read `IntegerMod(a, m)`, normalised. */
-export function integerModOf(expr: BoxedExpression | undefined): IntegerMod | undefined {
+export function integerModOf(expr: Expr | undefined): IntegerMod | undefined {
   if (!isIntegerMod(expr)) return undefined;
   const [a, m] = operandsOf(expr);
   const value = bigRationalAt(a);
@@ -36,7 +37,7 @@ export function integerModOf(expr: BoxedExpression | undefined): IntegerMod | un
   return value === undefined || modulus === undefined ? undefined : Z.integerMod(value[0], value[1], modulus);
 }
 
-export const integerModExpression = (ce: ComputeEngine, x: IntegerMod): BoxedExpression =>
+export const integerModExpression = (ce: Engine, x: IntegerMod): Expr =>
   ce.function(INTEGER_MOD, [ce.number(x.residue), ce.number(x.modulus)]);
 
 /** The first two congruences no integer satisfies together, with the gcd that rules it out. */
@@ -52,8 +53,8 @@ export function clash(
   return undefined;
 }
 
-export function declareIntegerMod(ce: ComputeEngine): void {
-  const write = (x: IntegerMod | undefined): BoxedExpression | undefined =>
+export function declareIntegerMod(ce: Engine): void {
+  const write = (x: IntegerMod | undefined): Expr | undefined =>
     x === undefined ? undefined : integerModExpression(ce, x);
 
   // After Wolfram's PowerMod::ninv and ChineseRemainder::nsol.
@@ -79,7 +80,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   ce.declare(INTEGER_MOD, {
     description: SUMMARIES.IntegerMod,
     signature: "(rational | value, integer) -> value",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       // IntegerMod(IntegerMod(a, m), n) for n | m: the same class, read in the smaller ring
       // -- what `a \pmod{m} + b \pmod{m}` parses to.
       const inner = integerModOf(ops[0]);
@@ -107,11 +108,11 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   ce.declare(INTEGER_MOD_RING, {
     description: SUMMARIES.IntegerModRing,
     signature: "(integer) -> set",
-    evaluate: (ops: readonly BoxedExpression[]) => ce.function(QUOTIENT_RING, [ce.symbol("Integers"), ops[0]!]),
+    evaluate: (ops: readonly Expr[]) => ce.function(QUOTIENT_RING, [ce.symbol("Integers"), ops[0]!]),
   });
 
   /** Every operand as an element of the ring the IntegerMod operands meet in. */
-  const lift = (ops: readonly BoxedExpression[]): IntegerMod[] | undefined => {
+  const lift = (ops: readonly Expr[]): IntegerMod[] | undefined => {
     const moduli = ops.map((op) => integerModOf(op)?.modulus).filter((m) => m !== undefined);
     if (moduli.length === 0) return undefined;
     const ring = moduli.reduce(gcd);
@@ -125,7 +126,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
 
   const fold =
     (step: (x: IntegerMod, y: IntegerMod) => IntegerMod | undefined) =>
-    (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    (ops: readonly Expr[]): Expr | undefined => {
       const values = lift(ops);
       if (values === undefined) return undefined;
       let acc: IntegerMod | undefined = values[0];
@@ -181,7 +182,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
     },
   });
   // The native (residues, moduli) form declines an inconsistent system silently.
-  const integers = (op: BoxedExpression | undefined): bigint[] | undefined => {
+  const integers = (op: Expr | undefined): bigint[] | undefined => {
     if (op?.operator !== "List") return undefined;
     const xs = operandsOf(op).map(bigIntegerAt);
     return xs.every((x) => x !== undefined) ? xs : undefined;

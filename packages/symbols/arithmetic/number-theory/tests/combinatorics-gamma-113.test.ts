@@ -1,11 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareNumberTheory } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareNumerals(ce);
-declareNumberTheory(ce);
+const ce = createEngine(declareNumerals, declareNumberTheory);
 const run = (expr: unknown) => ce.box(expr as never).evaluate();
 const json = (expr: unknown) => run(expr).json;
 

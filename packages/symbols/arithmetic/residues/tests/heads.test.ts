@@ -1,10 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { bigIntegerAt, operandsOf } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareResidues } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareResidues(ce);
+const ce = createEngine(declareResidues);
 
 test("PowerModList reaches moduli no scan could", () => {
   const cubeRoots = operandsOf(

@@ -9,16 +9,15 @@
 // declare-fast-recurrence.ts found unsafe to attach to a native head with no canonical of
 // its own (see that file's comment). Not needed here either: Factorial(100000) alone drops
 // from ~2.8s to ~30ms, and Mod's own reduction of that value is a single cheap division.
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, wrapOperator } from "@enumeratio/engine";
+import { bigIntegerAt, wrapOperator, type Engine, type Expr } from "@enumeratio/engine";
 import { factorial } from "./fast-factorial.ts";
 
 /** Above this, n! would run past ~1M decimal digits; native Factorial (or a documented
  *  Gamma-function extension) still answers past here, just slower. */
 const FAST_FACTORIAL_LIMIT = 200_000n;
 
-export function declareFastFactorial(ce: ComputeEngine): void {
-  const fitsFastRange = (op: BoxedExpression): bigint | undefined => {
+export function declareFastFactorial(ce: Engine): void {
+  const fitsFastRange = (op: Expr): bigint | undefined => {
     const n = bigIntegerAt(op);
     return n !== undefined && n >= 0n && n <= FAST_FACTORIAL_LIMIT ? n : undefined;
   };

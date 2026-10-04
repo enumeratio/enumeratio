@@ -1,4 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
@@ -8,11 +9,8 @@ import { declareNumberTheory } from "../src/declare.ts";
 // entries/number-theory.ts). Each is brute-force cross-checked here against an independent,
 // naive implementation — not just the worked examples an entry carries.
 
-const ce = new ComputeEngine();
-declareResidues(ce);
-declareNumerals(ce);
-declareNumberTheory(ce);
-const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const ce = createEngine(declareResidues, declareNumerals, declareNumberTheory);
+const run = (expr: unknown): unknown => ce.box(expr as Json).evaluate().json;
 
 test("DivisorSum: brute force over the divisors", () => {
   const naiveDivisorSum = (n: number, f: (d: number) => number, cond?: (d: number) => boolean) => {
