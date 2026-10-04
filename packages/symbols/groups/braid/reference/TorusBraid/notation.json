@@ -1,0 +1,8 @@
+{
+  "traditional": [
+    {
+      "params": ["p", "q"],
+      "box": ["SubscriptBox", "T", ["RowBox", [["TemplateSlot", "p"], ",", ["TemplateSlot", "q"]]]]
+    }
+  ]
+}

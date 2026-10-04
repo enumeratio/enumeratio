@@ -1,0 +1,23 @@
+{
+  "traditional": [
+    {
+      "params": ["alpha"],
+      "scalars": false,
+      "box": [
+        "SubscriptBox",
+        "M",
+        [
+          "TemplateSlot",
+          "alpha",
+          {
+            "Items": true,
+            "Separator": ",",
+            "Open": "(",
+            "Close": ")",
+            "Empty": "∅"
+          }
+        ]
+      ]
+    }
+  ]
+}

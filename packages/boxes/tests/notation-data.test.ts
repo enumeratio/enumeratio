@@ -102,6 +102,78 @@ const CASES: [string, NotationData, Notation[string], unknown[]][] = [
   ],
 ];
 
+// The three extensions, each beside the code it replaces (hecke, braid, groupalgebra, hopf).
+const composition =
+  (symbol: Box): Notation[string] =>
+  ([alpha, ...rest]) => {
+    if (rest.length > 0 || !Array.isArray(alpha) || alpha[0] !== "List") return undefined;
+    const parts = (alpha as unknown[]).slice(1);
+    return subscript(symbol, parts.length === 0 ? "∅" : `(${parts.join(",")})`);
+  };
+CASES.push(
+  [
+    "HeckeAlgebra",
+    { traditional: [{ params: ["n"], call: ["SubscriptBox", "H", slot("n")], args: ["q"] }] },
+    scalars(([n, ...rest], write) =>
+      n === undefined || rest.length > 0 ? undefined : write.call(subscript("H", write.box(n)), ["q"]),
+    ),
+    [["HeckeAlgebra", 3]],
+  ],
+  [
+    "PretzelKnot",
+    { traditional: [{ params: ["...xs"], call: "P", args: [slot("xs")] }] },
+    scalars((args, write) => (args.length < 1 ? undefined : write.call("P", args))),
+    [
+      ["PretzelKnot", 2, 3, 5],
+      ["PretzelKnot", -1],
+    ],
+  ],
+  [
+    "GroupDirectProduct",
+    { traditional: [{ params: ["x", "...xs"], box: ["RowBox", [slot("x"), "×", slot("xs", { Separator: "×" })]] }] },
+    scalars((args, write) =>
+      args.length < 2 ? undefined : row(args.flatMap((a, i) => (i === 0 ? [write.box(a)] : ["×", write.box(a)]))),
+    ),
+    [
+      ["GroupDirectProduct", "G", "H"],
+      ["GroupDirectProduct", "G", "H", "K"],
+      ["GroupDirectProduct", "G"],
+    ],
+  ],
+  [
+    "HopfTensor",
+    {
+      traditional: [
+        {
+          params: ["x", "...xs"],
+          box: ["RowBox", [slot("x", { Tight: true }), "⊗", slot("xs", { Separator: "⊗", Tight: true })]],
+        },
+      ],
+    },
+    scalars((args, write) =>
+      args.length < 2 ? undefined : row(args.flatMap((a, i) => (i === 0 ? [write.tight(a)] : ["⊗", write.tight(a)]))),
+    ),
+    [["HopfTensor", ["Add", "a", "b"], "c"]],
+  ],
+  [
+    "QSymM",
+    {
+      traditional: [
+        {
+          params: ["alpha"],
+          scalars: false,
+          box: ["SubscriptBox", "M", slot("alpha", { Items: true, Separator: ",", Open: "(", Close: ")", Empty: "∅" })],
+        },
+      ],
+    },
+    composition("M"),
+    [
+      ["QSymM", ["List", 1, 2]],
+      ["QSymM", ["List"]],
+    ],
+  ],
+);
+
 test.each(CASES)("%s: data writes what its code did", (head, data, code, calls) => {
   expect(notationProblem(data)).toBeUndefined();
   const { traditional } = compileNotation(head, data);

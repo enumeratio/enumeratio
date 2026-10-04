@@ -22,7 +22,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack",
+    "build": "node ../../../manifest/scripts/collect-notation.ts . && vp pack",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -47,5 +47,8 @@
     "notation": "./notation",
     "group": "algebras",
     "declare": "declareHopf"
-  }
+  },
+  "generated": [
+    "src/notation.generated.ts"
+  ]
 }

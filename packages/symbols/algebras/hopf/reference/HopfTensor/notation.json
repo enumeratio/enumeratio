@@ -1,0 +1,28 @@
+{
+  "traditional": [
+    {
+      "params": ["x", "...xs"],
+      "box": [
+        "RowBox",
+        [
+          [
+            "TemplateSlot",
+            "x",
+            {
+              "Tight": true
+            }
+          ],
+          "⊗",
+          [
+            "TemplateSlot",
+            "xs",
+            {
+              "Separator": "⊗",
+              "Tight": true
+            }
+          ]
+        ]
+      ]
+    }
+  ]
+}

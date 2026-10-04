@@ -1,0 +1,9 @@
+{
+  "traditional": [
+    {
+      "params": ["k"],
+      "call": ["SubscriptBox", "Δ", ["TemplateSlot", "k"]],
+      "args": ["t"]
+    }
+  ]
+}

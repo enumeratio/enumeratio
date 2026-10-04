@@ -1,0 +1,8 @@
+{
+  "traditional": [
+    {
+      "params": ["g"],
+      "box": ["RowBox", ["k", ["RowBox", ["[", ["TemplateSlot", "g"], "]"]]]]
+    }
+  ]
+}

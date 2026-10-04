@@ -1,0 +1,8 @@
+{
+  "traditional": [
+    {
+      "params": ["b", "k"],
+      "box": ["SuperscriptBox", ["RowBox", ["(", ["TemplateSlot", "b"], ")"]], ["TemplateSlot", "k"]]
+    }
+  ]
+}
