@@ -1,2 +1,5 @@
 # Written by `build` (reference/scripts/collect-mappings.ts); never committed.
 src/mappings-data.ts
+# Declarations the build writes beside the sources collect-mappings imports.
+src/mapping-rows.d.ts
+src/systems.d.ts
