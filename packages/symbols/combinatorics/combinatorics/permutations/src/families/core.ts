@@ -6,6 +6,26 @@
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import { cell, lets, rowTable } from "../../../collections/src/families/tables.ts";
+import {
+  Factorial,
+  IsPermutationOf,
+  PermutationRank,
+  PermutationUnrank,
+} from "../../../collections/src/families/kernels.ts";
+import {
+  ColoredPermutationCount,
+  ColoredPermutationRank,
+  ColoredPermutationUnrank,
+  IsColoredPermutationOf,
+  IsKPermutationOf,
+  IsSignedPermutationOf,
+  KPermutationCount,
+  KPermutationRank,
+  KPermutationUnrank,
+  SignedPermutationCount,
+  SignedPermutationRank,
+  SignedPermutationUnrank,
+} from "../../../collections/src/families/kernels-extra.ts";
 
 type MathJSON = unknown;
 
@@ -103,6 +123,12 @@ const symmetricGroup: EpsilFamily = {
   paramCount: 1,
   kind: "ints",
   params: ["_n"],
+  fast: {
+    count: ([n]) => Factorial(n),
+    unrank: ([n], r) => PermutationUnrank(n, r),
+    rank: (x) => PermutationRank(x as number[]),
+    valid: (x, [n]) => IsPermutationOf(x as number[], n),
+  },
   epsil: {
     count: ["Factorial", "_n"],
     unrank: lexUnrank("_n", "_n", "_r"),
@@ -117,6 +143,12 @@ const kPermutations: EpsilFamily = {
   paramCount: 2,
   kind: "ints",
   params: ["_n", "_k"],
+  fast: {
+    count: ([n, k]) => (k > n ? 0 : KPermutationCount(n, k)),
+    unrank: ([n, k], r) => KPermutationUnrank(n, k, r),
+    rank: (x, [n]) => KPermutationRank(x as number[], n),
+    valid: (x, [n, k]) => IsKPermutationOf(x as number[], n, k),
+  },
   epsil: {
     count: ["If", ["LessEqual", "_k", "_n"], falling("_n", "_k"), 0],
     unrank: lexUnrank("_n", "_k", "_r"),
@@ -142,6 +174,12 @@ const signedPermutations: EpsilFamily = {
   paramCount: 1,
   kind: "ints",
   params: ["_n"],
+  fast: {
+    count: ([n]) => SignedPermutationCount(n),
+    unrank: ([n], r) => SignedPermutationUnrank(n, r),
+    rank: (x) => SignedPermutationRank(x as number[]),
+    valid: (x, [n]) => IsSignedPermutationOf(x as number[], n),
+  },
   epsil: {
     count: ["Multiply", ["Power", 2, "_n"], ["Factorial", "_n"]],
     unrank: map(
@@ -178,6 +216,18 @@ const colouredPermutations: EpsilFamily = {
   kind: "blocks",
   params: ["_n", "_k"],
   elementType: "tuple<list<integer>, list<integer>>",
+  fast: {
+    count: ([n, k]) => ColoredPermutationCount(n, k),
+    unrank: ([n, k], r) => ColoredPermutationUnrank(n, k, r),
+    rank: (x, [, k]) => {
+      const [image, colours] = x as number[][];
+      return ColoredPermutationRank(image, colours, k);
+    },
+    valid: (x, [n, k]) => {
+      const [image, colours] = x as number[][];
+      return (x as number[][]).length === 2 && IsColoredPermutationOf(image, colours, n, k);
+    },
+  },
   epsil: {
     count: ["If", ["Equal", "_n", 0], 1, ["Multiply", ["Power", "_k", "_n"], ["Factorial", "_n"]]],
     unrank: [

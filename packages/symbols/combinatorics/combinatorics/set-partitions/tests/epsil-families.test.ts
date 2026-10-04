@@ -6,7 +6,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { type EpsilFamily, elementJson, kernelOn } from "../../collections/src/families/epsil.ts";
+import { type EpsilFamily, elementJson, epsilKernelOn } from "../../collections/src/families/epsil.ts";
 import {
   BellB,
   BlocksToLabels,
@@ -200,7 +200,7 @@ const byHead = new Map(
 
 for (const [head, reading] of Object.entries(READINGS)) {
   const family = byHead.get(head)!;
-  const kernel = kernelOn(ce, family);
+  const kernel = epsilKernelOn(ce, family);
   for (const p of reading.params) {
     test(`${head}(${p.join(", ")}) agrees with its TS reading`, () => {
       const total = reading.count(p);
@@ -217,14 +217,14 @@ for (const [head, reading] of Object.entries(READINGS)) {
 }
 
 test("a set partition's blocks rank in any order", () => {
-  const kernel = kernelOn(ce, byHead.get("SetPartitions")!);
+  const kernel = epsilKernelOn(ce, byHead.get("SetPartitions")!);
   const rank = kernel.rank([[1, 4], [2], [3, 5]], [5]);
   expect(kernel.rank([[5, 3], [4, 1], [2]], [5])).toBe(rank);
   expect(rank).toBe(BigInt(RgsRank([0, 1, 2, 0, 2])));
 });
 
 test("a matching ranks with its pairs in any order and either way round", () => {
-  const kernel = kernelOn(ce, byHead.get("PerfectMatchings")!);
+  const kernel = epsilKernelOn(ce, byHead.get("PerfectMatchings")!);
   expect(
     kernel.rank(
       [
@@ -248,7 +248,7 @@ test("a matching ranks with its pairs in any order and either way round", () => 
 
 test("a crossing or nesting pair is refused whichever way round it is written", () => {
   expect(
-    kernelOn(ce, byHead.get("NonCrossingMatchings")!).valid(
+    epsilKernelOn(ce, byHead.get("NonCrossingMatchings")!).valid(
       [
         [3, 1],
         [2, 4],
@@ -257,7 +257,7 @@ test("a crossing or nesting pair is refused whichever way round it is written", 
     ),
   ).toBe(false);
   expect(
-    kernelOn(ce, byHead.get("NonNestingMatchings")!).valid(
+    epsilKernelOn(ce, byHead.get("NonNestingMatchings")!).valid(
       [
         [4, 1],
         [2, 3],
@@ -291,7 +291,7 @@ test("the interpreter agrees with compiled code", () => {
 });
 
 test("past 2^53 SetPartitionsIntoKBlocks answers in exact integers", () => {
-  const kernel = kernelOn(ce, byHead.get("SetPartitionsIntoKBlocks")!);
+  const kernel = epsilKernelOn(ce, byHead.get("SetPartitionsIntoKBlocks")!);
   const n = 36;
   const k = 3;
   // S(n, 3) = (3^n − 3·2^n + 3) / 6

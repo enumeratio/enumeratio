@@ -98,6 +98,8 @@ interface Family extends FamilyShape {
  *  `p` is the (possibly empty) parameter tuple. `rank` is the 0-based place in the fiber
  *  (the family at `p`), `-1n` for a non-member. */
 export interface FamilyKernel extends Family {
+  /** True when a hand-written fast path answers ahead of the family's Epsil definitions. */
+  readonly fast?: true;
   readonly count: (p: number[]) => Count;
   readonly unrank: (p: number[], r: bigint) => Element;
   readonly rank: (element: unknown, p: number[]) => bigint;

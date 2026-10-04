@@ -13,6 +13,7 @@
 // `eulerPhi` are used ONLY by the bracelet families and moved outright (removed from
 // collections' copy).
 import { ternaryGrayCodes } from "../../../collections/src/families/closed-forms.ts";
+import { stirlingPermutations } from "./epsil.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
@@ -63,6 +64,7 @@ function eulerPhi(n: number): number {
   return Math.round(result);
 }
 
+// Bracelets stay TS: enumerate-then-index over canonical orbit representatives (no arithmetic ranking).
 // ─── Bracelets(n, k): words over a k-letter alphabet up to rotation AND reflection (dihedral
 // group D_n), represented by the lex-least word in the whole orbit (rotations ∪ reflected
 // rotations). Count via Burnside's lemma over D_n (standard bracelet-counting formula — see e.g.
@@ -208,12 +210,12 @@ export function ternaryGrayList(n: number): number[][] {
 // still adjacent in the final word (nothing was inserted after it), so peeling off its two
 // adjacent occurrences — whose left index is exactly the d_n that was chosen — and repeating for
 // n-1, n-2, … recovers every digit. ──────────────────────────────────────────────────────────────
-function stirlingCount(n: number): number {
+export function stirlingCount(n: number): number {
   let c = 1;
   for (let k = 2; k <= n; k++) c *= 2 * k - 1;
   return c;
 }
-function stirlingUnrank(n: number, r: number): number[] {
+export function stirlingUnrank(n: number, r: number): number[] {
   const total = stirlingCount(n);
   let rem = normRank(r, total);
   const digits: number[] = Array.from<number>({ length: n + 1 }).fill(0); // digits[k] for k=2..n
@@ -229,7 +231,7 @@ function stirlingUnrank(n: number, r: number): number[] {
   }
   return word;
 }
-function stirlingRank(word: number[], n: number): number {
+export function stirlingRank(word: number[], n: number): number {
   // Decode top-down (k=n downTo 2) to recover each digit d_k, but Horner-combine bottom-up
   // (k=2..n ascending) — d_2 is the most-significant digit, d_n the least, matching unrank's
   // extraction order (mod-then-divide from k=n down to k=2 peels off the LEAST significant
@@ -248,7 +250,7 @@ function stirlingRank(word: number[], n: number): number {
   }
   return rank;
 }
-function stirlingValid(word: unknown, n: number): boolean {
+export function stirlingValid(word: unknown, n: number): boolean {
   if (!Array.isArray(word) || word.length !== 2 * n) return false;
   const counts = Array.from<number>({ length: n + 1 }).fill(0);
   for (const v of word) {
@@ -286,6 +288,17 @@ const ternaryGrayCodesFamily = ternaryGrayCodes({
   carrier: "TernaryGrayCode",
 });
 
+// The TS insertion walk is ~7-10x faster than Epsil's, in the same order.
+const stirlingPermutationsFast: EpsilFamily = {
+  ...stirlingPermutations,
+  fast: {
+    count: ([n]) => stirlingCount(n),
+    unrank: ([n], r) => stirlingUnrank(n, r),
+    rank: (x, [n]) => stirlingRank(x as number[], n),
+    valid: (x, [n]) => stirlingValid(x, n),
+  },
+};
+
 export const entries: (NumberKernel | EpsilFamily)[] = [
   // BinaryBracelets(n): binary words up to rotation and reflection — Bracelets(n, 2), A000029.
   {
@@ -313,16 +326,5 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     declared: wordClass("Word"),
   },
   ternaryGrayCodesFamily,
-  // StirlingPermutations(n): permutations of {1,1,2,2,...,n,n} with the betweenness property.
-  {
-    ...ints(
-      "StirlingPermutations",
-      1,
-      ([n]) => stirlingCount(n),
-      ([n], r) => stirlingUnrank(n, r),
-      (a, [n]) => stirlingValid(a, n),
-      (a, [n]) => stirlingRank(a, n),
-    ),
-    carrier: "StirlingPermutation",
-  },
+  stirlingPermutationsFast,
 ];

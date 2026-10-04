@@ -40,6 +40,10 @@ import {
   PartitionsMaxPartUnrank,
   PartitionsMaxPartRank,
   IsPartitionMaxPart,
+  IsPartitionInBox,
+  PartitionsInBoxCount,
+  PartitionsInBoxRank,
+  PartitionsInBoxUnrank,
 } from "../../../collections/src/families/kernels-extra.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors collections/core.ts's private `ints`.
@@ -153,6 +157,12 @@ const partitionsInBox: EpsilFamily = {
   paramCount: 2,
   kind: "ints",
   params: ["_a", "_b"],
+  fast: {
+    count: ([a, b]) => PartitionsInBoxCount(a, b),
+    unrank: ([a, b], r) => PartitionsInBoxUnrank(a, b, r),
+    rank: (x, [a, b]) => PartitionsInBoxRank(x as number[], a, b),
+    valid: (x, [a, b]) => IsPartitionInBox(x as number[], a, b),
+  },
   epsil: {
     count: binom(universe, "_a"),
     tables: pascalTable("pc", ["Max", universe, 1], pascalWidth),

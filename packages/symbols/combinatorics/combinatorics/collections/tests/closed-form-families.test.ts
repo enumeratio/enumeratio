@@ -22,7 +22,7 @@ import {
   palindromeUnrank,
   palindromeValid,
 } from "../../words/src/families/words.ts";
-import { allFamilies, type EpsilFamily, isEpsilFamily, kernelOn } from "../src/families/index.ts";
+import { allFamilies, type EpsilFamily, isEpsilFamily, epsilKernelOn } from "../src/families/index.ts";
 import {
   BinaryStringCount,
   IsMultisetOf,
@@ -194,7 +194,7 @@ const byHead = new Map(allFamilies.filter(isEpsilFamily).map((family) => [family
 
 for (const [head, reading] of Object.entries(READINGS)) {
   const family = byHead.get(head)!;
-  const kernel = kernelOn(ce, family);
+  const kernel = epsilKernelOn(ce, family);
   for (const p of reading.params) {
     test(`${head}(${p.join(", ")}) agrees with its TS reading`, () => {
       const total = reading.count(p);
@@ -242,7 +242,7 @@ test("the interpreter agrees with the readings", () => {
 
 test("past 2^53 the families answer in exact integers", () => {
   const check = (head: string, p: number[], total: bigint) => {
-    const kernel = kernelOn(ce, byHead.get(head)!);
+    const kernel = epsilKernelOn(ce, byHead.get(head)!);
     expect(kernel.count(p)).toBe(total);
     for (const r of [0n, 1n, total / 3n, total - 1n]) {
       const element = kernel.unrank(p, r);
@@ -265,7 +265,7 @@ test("a subset's rank does not depend on the order it is listed in", () => {
     ["GrayCodeSubsets", [5]],
     ["KSubsets", [6, 3]],
   ] as const) {
-    const kernel = kernelOn(ce, byHead.get(head)!);
+    const kernel = epsilKernelOn(ce, byHead.get(head)!);
     for (let r = 0n; r < kernel.count([...p]); r += 3n) {
       const element = kernel.unrank([...p], r) as number[];
       expect(kernel.rank(element.toReversed(), [...p])).toBe(r);
@@ -274,9 +274,9 @@ test("a subset's rank does not depend on the order it is listed in", () => {
 });
 
 test("GrayCodes neighbours differ in one place, TernaryGrayCodes neighbours by one in one place", () => {
-  const gray = kernelOn(ce, byHead.get("GrayCodes")!);
-  const ternary = kernelOn(ce, byHead.get("TernaryGrayCodes")!);
-  const steps = (kernel: ReturnType<typeof kernelOn>, p: number[]) => {
+  const gray = epsilKernelOn(ce, byHead.get("GrayCodes")!);
+  const ternary = epsilKernelOn(ce, byHead.get("TernaryGrayCodes")!);
+  const steps = (kernel: ReturnType<typeof epsilKernelOn>, p: number[]) => {
     const total = Number(kernel.count(p));
     return span(1, total - 1).map((r) => {
       const [a, b] = [kernel.unrank(p, BigInt(r - 1)), kernel.unrank(p, BigInt(r))] as number[][];

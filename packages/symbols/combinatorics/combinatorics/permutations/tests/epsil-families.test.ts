@@ -6,7 +6,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { type EpsilFamily, kernelOn } from "../../collections/src/families/epsil.ts";
+import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
 import { IsPermutationOf, PermutationRank, PermutationUnrank } from "../../collections/src/families/kernels.ts";
 import {
   ColoredPermutationCount,
@@ -240,7 +240,7 @@ const byHead = new Map(
 
 for (const [head, reading] of Object.entries(READINGS)) {
   const family = byHead.get(head)!;
-  const kernel = kernelOn(ce, family);
+  const kernel = epsilKernelOn(ce, family);
   for (const p of reading.params) {
     test(`${head}(${p.join(", ")}) agrees with its TS reading`, () => {
       const total = reading.count(p);
@@ -283,7 +283,7 @@ test("the interpreter agrees with compiled code", () => {
 });
 
 test("past 2^53 the symmetric group answers in exact integers", () => {
-  const kernel = kernelOn(ce, byHead.get("SymmetricGroup")!);
+  const kernel = epsilKernelOn(ce, byHead.get("SymmetricGroup")!);
   let total = 1n;
   for (let i = 2n; i <= 25n; i++) total *= i;
   expect(kernel.count([25])).toBe(total);

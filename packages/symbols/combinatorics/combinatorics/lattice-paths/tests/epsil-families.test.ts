@@ -6,7 +6,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { type EpsilFamily, kernelOn } from "../../collections/src/families/epsil.ts";
+import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
 import {
   CatalanNumber,
   DyckPathCount,
@@ -183,7 +183,7 @@ const byHead = new Map(
 
 for (const [head, reading] of Object.entries(READINGS)) {
   const family = byHead.get(head)!;
-  const kernel = kernelOn(ce, family);
+  const kernel = epsilKernelOn(ce, family);
   for (const p of reading.params) {
     test(`${head}(${p.join(", ")}) agrees with its TS reading`, () => {
       const total = reading.count(p);
@@ -223,7 +223,7 @@ test("the interpreter agrees with compiled code", () => {
 });
 
 test("past 2^53 DyckPaths answers in exact integers", () => {
-  const kernel = kernelOn(ce, byHead.get("DyckPaths")!);
+  const kernel = epsilKernelOn(ce, byHead.get("DyckPaths")!);
   const n = 40; // Catalan(40) is about 2.6·10^21
   const total = kernel.count([n]) as bigint;
   expect(total).toBe(2622127042276492108820n);
@@ -240,7 +240,7 @@ test("past 2^53 DyckPaths answers in exact integers", () => {
 });
 
 test("past 2^53 LatticePaths and DelannoyPaths answer in exact integers", () => {
-  const lattice = kernelOn(ce, byHead.get("LatticePaths")!);
+  const lattice = epsilKernelOn(ce, byHead.get("LatticePaths")!);
   const total = lattice.count([30, 30]) as bigint;
   expect(total).toBe(118264581564861424n); // C(60, 30)
   expect(lattice.unrank([30, 30], 0n)).toEqual([...Array(30).fill(1), ...Array(30).fill(0)]);
@@ -248,7 +248,7 @@ test("past 2^53 LatticePaths and DelannoyPaths answer in exact integers", () => 
   const path = lattice.unrank([30, 30], total / 3n);
   expect(lattice.rank(path, [30, 30])).toBe(total / 3n);
 
-  const delannoy = kernelOn(ce, byHead.get("DelannoyPaths")!);
+  const delannoy = epsilKernelOn(ce, byHead.get("DelannoyPaths")!);
   const n = 26;
   const binomial = (a: number, k: number): bigint =>
     Array.from({ length: k }, (_, i) => i).reduce((c, i) => (c * BigInt(a - i)) / BigInt(i + 1), 1n);

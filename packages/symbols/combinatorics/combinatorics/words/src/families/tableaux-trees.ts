@@ -7,6 +7,8 @@
 // their own — same shape, so it carries "ParkingFunction" too, same reasoning PerfectMatchings
 // used for "SetPartition". PruferSequences/Tournaments/LabeledGraphs/... have since moved to
 // their own areas, each now carrying its own carrier (§4 step 5).
+import { nonDecreasingParkingFunctions } from "./epsil.ts";
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
@@ -141,7 +143,9 @@ export function IsNonDecreasingParkingFunctionOf(e: unknown, n: number): boolean
   return true;
 }
 
-export const entries: NumberKernel[] = [
+// ParkingFunctions keeps its TS kernel: its completions depend on the whole vector of how many
+// entries are at most k, so there is no table of them to define it by.
+export const entries: (NumberKernel | EpsilFamily)[] = [
   {
     head: "ParkingFunctions",
     carrier: "ParkingFunction",
@@ -152,14 +156,6 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => IsParkingFunctionOf(e, n),
     rank: (e, [n]) => ParkingFunctionRank(e as number[], n),
   },
-  {
-    head: "NonDecreasingParkingFunctions",
-    carrier: "ParkingFunction",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => NonDecreasingParkingFunctionCount(n),
-    unrank: ([n], r) => NonDecreasingParkingFunctionUnrank(n, r),
-    valid: (e, [n]) => IsNonDecreasingParkingFunctionOf(e, n),
-    rank: (e, [n]) => NonDecreasingParkingFunctionRank(e as number[], n),
-  },
+  // No `fast`: the TS kernel rebuilds its memo per call, so Epsil's table is 3-10x faster.
+  nonDecreasingParkingFunctions,
 ];

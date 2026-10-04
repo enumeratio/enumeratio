@@ -6,7 +6,17 @@
 // All three are defined in Epsil (see collections/src/families/epsil.ts, and the permutations
 // area's core.ts for the pattern): count, unrank, rank and valid are closed expressions, no list
 // built up along the way.
-import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import type { AnyFamily, EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
+import {
+  CompositionsIntoKPartsCount,
+  CompositionsIntoKPartsRank,
+  CompositionsIntoKPartsUnrank,
+  IsCompositionIntoKParts,
+  IsWeakCompositionOf,
+  WeakCompositionCount,
+  WeakCompositionRank,
+  WeakCompositionUnrank,
+} from "../../../collections/src/families/kernels-extra.ts";
 import { cell, colexDigits, lets, pascalTable } from "../../../collections/src/families/tables.ts";
 
 type MathJSON = unknown;
@@ -102,7 +112,13 @@ const pascal = cell("_tables", pascalWidth);
 /** A composition of `total` into `_k` positive parts, `offset` added to each part (−1 turns it
  *  into a weak composition of `total` − `_k` = `_n`: its parts are ≥ 0, built as a positive
  *  composition of `_n` + `_k` minus 1 per part). */
-function kSubsetComposition(head: string, total: MathJSON, offset: number, carrier?: string): EpsilFamily {
+function kSubsetComposition(
+  head: string,
+  total: MathJSON,
+  offset: number,
+  fast: FastKernel,
+  carrier?: string,
+): EpsilFamily {
   const digits = sub("_k", 1);
   const universe = sub(total, 1);
   /** 0, every cut, then `total`: the positive-part composition's boundaries. */
@@ -122,6 +138,7 @@ function kSubsetComposition(head: string, total: MathJSON, offset: number, carri
     paramCount: 2,
     kind: "ints",
     params: ["_n", "_k"],
+    fast,
     epsil: {
       count: ["If", ["Equal", total, 0], ["If", ["Equal", "_k", 0], 1, 0], binom(universe, digits)],
       tables: pascalTable("pc", ["Max", total, 1], pascalWidth),
@@ -140,8 +157,24 @@ function kSubsetComposition(head: string, total: MathJSON, offset: number, carri
   };
 }
 
-const compositionsIntoKParts = kSubsetComposition("CompositionsIntoKParts", "_n", 0, "Composition");
-const weakCompositions = kSubsetComposition("WeakCompositions", add("_n", "_k"), -1);
+const compositionsIntoKParts = kSubsetComposition(
+  "CompositionsIntoKParts",
+  "_n",
+  0,
+  {
+    count: ([n, k]) => CompositionsIntoKPartsCount(n, k),
+    unrank: ([n, k], r) => CompositionsIntoKPartsUnrank(n, k, r),
+    rank: (x) => CompositionsIntoKPartsRank(x as number[]),
+    valid: (x, [n, k]) => IsCompositionIntoKParts(x as number[], n, k),
+  },
+  "Composition",
+);
+const weakCompositions = kSubsetComposition("WeakCompositions", add("_n", "_k"), -1, {
+  count: ([n, k]) => WeakCompositionCount(n, k),
+  unrank: ([n, k], r) => WeakCompositionUnrank(n, k, r),
+  rank: (x) => WeakCompositionRank(x as number[]),
+  valid: (x, [n, k]) => IsWeakCompositionOf(x as number[], n, k),
+});
 
 export const epsilEntries: readonly EpsilFamily[] = [integerCompositions, compositionsIntoKParts, weakCompositions];
 

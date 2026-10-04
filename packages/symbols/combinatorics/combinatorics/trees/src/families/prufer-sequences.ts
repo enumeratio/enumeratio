@@ -29,5 +29,15 @@ export function IsPruferSequenceOf(seq: unknown, n: number): boolean {
 }
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
-  pruferSequences({ head: "PruferSequences", params: ["_n"], carrier: "PruferSequence" }),
+  pruferSequences({
+    head: "PruferSequences",
+    params: ["_n"],
+    carrier: "PruferSequence",
+    fast: {
+      count: ([n]) => PruferSequenceCount(n),
+      unrank: ([n], r) => PruferSequenceUnrank(n, r),
+      rank: (x, [n]) => PruferSequenceRank(x as number[], n),
+      valid: (x, [n]) => IsPruferSequenceOf(x, n),
+    },
+  }),
 ];
