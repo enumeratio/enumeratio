@@ -153,9 +153,10 @@ kernel, the network or hand curation stays committed.
 
 ## Code
 
-- **Import down the hierarchy.** A package imports only what it extends in
-  `packages/manifest/src/hierarchy.ts`, plus infra (presentation imports any library);
-  its `tests/hierarchy.test.ts` holds that, and moving a package is one edit there.
+- **Import down the hierarchy.** A package imports only what it extends (its `package.json`'s
+  `enumeratio.extends`, gathered into the manifest's `HIERARCHY`), plus infra (presentation
+  imports any library); manifest's `tests/hierarchy.test.ts` holds that, and moving a package is
+  one edit to its `enumeratio.layer` and `extends`.
 - **Every route in the same change.** A fix to what a head evaluates to also fixes `.N()`,
   simplification and each compile target (JavaScript, WGSL). A fact that must hold on
   several routes lives in one helper they all call, not a copy per route.

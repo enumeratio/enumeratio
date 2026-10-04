@@ -40,6 +40,16 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "base",
+    "extends": [],
+    "entries": {
+      "./render": {
+        "layer": "presentation",
+        "extends": [
+          "boxes"
+        ]
+      }
+    },
     "declare": "declareBoxes",
     "declares": "./declares.json"
   }

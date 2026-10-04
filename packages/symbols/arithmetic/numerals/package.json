@@ -48,6 +48,11 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "extension",
+    "area": "arithmetic",
+    "extends": [
+      "residues"
+    ],
     "notation": "./notation",
     "group": "arithmetic",
     "declare": "declareNumerals",

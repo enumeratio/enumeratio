@@ -1,7 +1,25 @@
 // The `enumeratio` field any package's `package.json` may carry, a library or not. Read at
 // build time (scripts/build.ts) as well as by hosts, so it imports nothing.
 
+/** Where a package sits.
+ *  - `infra`: plumbing under everything (engine, compute-engine patches, the records' readers).
+ *  - `base`: what every extension builds on.
+ *  - `extension`: a symbol package, extending base or other extensions.
+ *  - `presentation`: writing and showing; may import any library, and is never one's parent.
+ *  - `tooling`: tests, oracles and data; imports anything, and nothing ships importing it. */
+export type Layer = "infra" | "base" | "extension" | "presentation" | "tooling";
+
+/** The family a package belongs to, where one is settled. */
+export type Area = "arithmetic" | "analysis" | "algebras" | "combinatorics";
+
 export interface PackageField {
+  /** Its place in the library hierarchy (`HIERARCHY`). */
+  readonly layer?: Layer;
+  readonly area?: Area;
+  /** The libraries it extends: declared before it, and all it may import besides infra. */
+  readonly extends?: readonly string[];
+  /** Entry points placed apart from the package, by subpath (`./render`). */
+  readonly entries?: Readonly<Record<string, { readonly layer: Layer; readonly extends: readonly string[] }>>;
   /** Its notation entry, an export subpath (`./notation`): what a host loads for every package
    *  before it builds an engine, since a LaTeX dictionary is fixed at construction. */
   readonly notation?: string;

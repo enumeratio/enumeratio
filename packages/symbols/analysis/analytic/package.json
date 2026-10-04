@@ -56,6 +56,11 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "extension",
+    "area": "analysis",
+    "extends": [
+      "structures"
+    ],
     "notation": "./notation",
     "group": "analysis",
     "declare": [

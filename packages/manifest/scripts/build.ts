@@ -12,6 +12,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { canonicalOf } from "./declares-of.ts";
 import { recordDirs } from "@enumeratio/entry/node";
 import { assembleManifest, type PackageIndex } from "../src/assemble.ts";
+import type { Placement } from "../src/hierarchy.ts";
 import { notationSpecifier, type PackageField } from "../src/package-field.ts";
 import { packageIndexOf } from "./package-index.ts";
 
@@ -24,6 +25,8 @@ const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 
 /** Each package's notation entry, from its `package.json`'s `enumeratio.notation`. */
 const notations = new Map<string, string>();
+/** Each package's place in the hierarchy, from its `enumeratio.layer`, `area` and `extends`. */
+const placements: Record<string, Placement> = {};
 const workspaceDirs = [
   ...readdirSync(PACKAGES).map((name) => join(PACKAGES, name)),
   ...readdirSync(join(PACKAGES, "symbols")).flatMap((group) =>
@@ -36,6 +39,16 @@ for (const dir of workspaceDirs) {
   const pkg = JSON.parse(readFileSync(file, "utf8")) as { name?: string; enumeratio?: PackageField };
   const specifier = pkg.name === undefined ? undefined : notationSpecifier(pkg.name, pkg.enumeratio);
   if (specifier !== undefined) notations.set(pkg.name!.replace(/^@enumeratio\//, ""), specifier);
+  const field = pkg.enumeratio;
+  if (pkg.name === undefined || field?.layer === undefined) continue;
+  const name = pkg.name.replace(/^@enumeratio\//, "");
+  placements[name] = {
+    layer: field.layer,
+    ...(field.area === undefined ? {} : { area: field.area }),
+    extends: field.extends ?? [],
+  };
+  for (const [subpath, placement] of Object.entries(field.entries ?? {}))
+    placements[`${name}/${subpath.replace(/^\.\//, "")}`] = placement;
 }
 
 // One per package with records, in the order the records are read, then those with only a notation.
@@ -127,6 +140,10 @@ export const EXAMPLES: Readonly<Record<string, number>> = ${JSON.stringify(sorte
   );
 }
 
+writeFileSync(
+  join(OUT, "hierarchy.ts"),
+  `${HEADER}import type { Placement } from "../hierarchy.ts";\n\nexport const HIERARCHY_DATA: Readonly<Record<string, Placement>> = ${JSON.stringify(sorted(placements))};\n`,
+);
 writeFileSync(
   join(OUT, "canonical.ts"),
   `${HEADER}/** compute-engine's own heads that canonicalise to others (\`Lb(x)\` is \`Log(x, 2)\`), with the heads. */\nexport const ENGINE_CANONICAL: Readonly<Record<string, readonly string[]>> = ${JSON.stringify(canonicalOf(new ComputeEngine(), engineNames))};\n`,

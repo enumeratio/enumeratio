@@ -27,6 +27,10 @@
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
+  "enumeratio": {
+    "layer": "presentation",
+    "extends": []
+  },
   "generated": [
     "src/wolfram-names-data.ts"
   ]

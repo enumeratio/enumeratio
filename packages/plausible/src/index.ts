@@ -1,7 +1,8 @@
 // Seeded, size-aware generation for Plausible (https://github.com/enumeratio/enumeratio/wiki/Plausible §3.1), after Lean 4's
 // Plausible: a `Gen` reads a random stream and a size. Every stream is seeded and printed, so
 // any run replays; `streamFor` keys a stream per family (or per template), so what one key
-// draws never depends on which keys ran before it.
+// draws never depends on which keys ran before it. Libraries' sampleable families import it,
+// so it is infra, not tooling.
 
 /** A uniform draw in [0, 1). */
 export type Rng = () => number;
