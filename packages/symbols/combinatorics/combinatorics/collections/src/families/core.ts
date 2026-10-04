@@ -98,8 +98,8 @@ export const entriesBeforeSetPartitions: NumberKernel[] = [
 // and the general `entriesBeforeTrees` name other tooling reads) as an empty array.
 export const entriesBeforeTrees: NumberKernel[] = [];
 
-// BinaryTrees/BinaryTreeParentArrays/KAryTrees/OrderedTrees moved to trees/src/families/core.ts
-// -- §4 step 5, every family in this section carrying a `carrier` (KAryTrees/OrderedTrees'
+// BinaryTrees/BinaryTreeParentArrays/FullKAryTrees/OrderedTrees moved to trees/src/families/core.ts
+// -- §4 step 5, every family in this section carrying a `carrier` (FullKAryTrees/OrderedTrees'
 // carriers wired lane A-92, matching BinaryTree's own nested shape per #401). Nothing left here
 // with no carrier at this position, but the export stays (splice position, and the general
 // `entries` name other tooling reads) as an empty array.

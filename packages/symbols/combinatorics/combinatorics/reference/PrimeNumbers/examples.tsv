@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+the-first-five-primes			[Take, PrimeNumbers, 5]	[List, 2, 3, 5, 7, 11]	The first five primes

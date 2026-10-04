@@ -356,10 +356,6 @@ const OVERRIDDEN = [
   // expression's own outer head, the same reason Add is here.
   "Sum",
   "Tabulate",
-  // Not itself overridden -- the new Primes/SquareNumbers/AbundantNumbers/etc. examples
-  // wrap Take around a collection undeclared in the bare engine, the same reason Add is
-  // here for Floor.
-  "Take",
   "Tan",
   "Tanh",
   "Totient",

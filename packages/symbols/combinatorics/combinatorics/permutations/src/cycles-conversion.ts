@@ -1,11 +1,11 @@
 // `Cycles` (groupalgebra) and `CycleDecomposition` are two carriers for one permutation: Wolfram's
 // `Cycles` drops fixed points and so doesn't know its size, `CycleDecomposition` keeps them. The
 // conversions are constructor overloads, one on each side, each naming the other by head since
-// neither package extends the other:
+// groupalgebra can't import us:
 //   Cycles(CycleDecomposition(…))     forgets the fixed points;
 //   CycleDecomposition(Cycles(…), n)  needs n to put them back (as Wolfram's PermutationList(c, n)).
-// Declared with the maps, last, once both heads exist: hosts declare groupalgebra before or after
-// combinatorics. An engine without `Cycles` gets neither.
+// combinatorics extends groupalgebra (hierarchy.ts) for this, so `Cycles` is declared first. The
+// guard is only for a bare host, a package test declaring combinatorics alone.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import { attachConversion, evaluateEpsil } from "@enumeratio/structures";

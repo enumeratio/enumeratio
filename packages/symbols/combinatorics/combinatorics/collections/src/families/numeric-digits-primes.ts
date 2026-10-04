@@ -254,7 +254,7 @@ function toBigNarcissistic(x: unknown): bigint | undefined {
 // integer-by-integer through a range no computer finishes. Instead this generates the two
 // idempotent chains mod 10^k directly by Hensel lifting (x_(k+1) = x_k + d*10^k, the unique
 // d in 0..9 with (x_(k+1))^2 = x_(k+1) mod 10^(k+1)) -- exact, and O(1) bigint work per digit
-// added, the same "construct forward, don't search" move Primes' sieve makes for primality.
+// added, the same "construct forward, don't search" move PrimeNumbers' sieve makes for primality.
 // `valid` still checks the endsWith definition directly, so it stays correct at any magnitude
 // the input can represent; only `unrank`/`rank` depend on the generated table, capped like
 // Mersenne/Fibonacci at Number.MAX_SAFE_INTEGER since a scalar element can't carry more. ----
@@ -363,7 +363,7 @@ const squarefreeSemiprimeCache = nthMatchCache(isSquarefreeSemiprime);
 const sphenicCache = nthMatchCache(isSphenic);
 const primePowerCache = nthMatchCache(isPrimePower);
 
-// ---- KAlmostPrimes(k): Omega(n) = k, a one-parameter selector. k=1 is Primes verbatim,
+// ---- KAlmostPrimes(k): Omega(n) = k, a one-parameter selector. k=1 is PrimeNumbers verbatim,
 // k=2 is SemiprimeNumbers verbatim (both cross-checked in the test file). Infinite for every
 // k >= 1: 2^(k-1) * p has Omega = k for every prime p. ----
 

@@ -6,19 +6,15 @@
 import { recordsRoot, referenceData } from "@enumeratio/reference/node";
 import { expect, test } from "vite-plus/test";
 import { ENGINE } from "../src/contributions.ts";
-import { declarations, duplicateRows } from "../src/owners.ts";
+import { fullEngine } from "../src/engine.ts";
+import { contributionsBelowTheirDeclarer, declarations, duplicateRows } from "../src/owners.ts";
 
 const declared = declarations();
 // Loaded once at collection, like `declared`: reading every record is the slow part.
 const heads = referenceData(recordsRoot(import.meta.dirname)).heads;
 
 /** Heads a package still redeclares, with the reason. The list only shrinks. */
-const REDECLARED: Record<string, Record<string, string>> = {
-  Primes: {
-    combinatorics:
-      "the engine's `Primes` is a constant of type set<integer>; ours is an indexed collection of the same name. A value can't be extended, so it shadows the engine's, and the two want one name or two",
-  },
-};
+const REDECLARED: Record<string, Record<string, string>> = {};
 
 test("no package redeclares a head that is already declared", () => {
   const stray: string[] = [];
@@ -30,6 +26,10 @@ test("no package redeclares a head that is already declared", () => {
 
 test("no two packages contribute the same signature to a head", () => {
   expect(duplicateRows()).toEqual([]);
+});
+
+test("a package contributes only to heads declared at or below it in the hierarchy", () => {
+  expect(contributionsBelowTheirDeclarer()).toEqual([]);
 });
 
 test("no two records of one head document the same signature", () => {
@@ -66,5 +66,22 @@ test("the check is looking at something", () => {
   expect(declared.get("Add")).toMatchObject({ declarer: ENGINE, redeclaredBy: [] });
   expect(declared.get("IntegerDigits")).toMatchObject({ declarer: ENGINE, redeclaredBy: [] });
   expect(declared.get("Cycles")).toMatchObject({ declarer: "groupalgebra", contributors: ["combinatorics"] });
-  expect(declared.get("Primes")?.redeclaredBy).toEqual(["combinatorics"]);
+});
+
+test("compute-engine's `Primes` is still its constant set: our indexed collection is `PrimeNumbers`", () => {
+  const ce = fullEngine();
+  expect(declared.get("Primes")?.redeclaredBy ?? []).toEqual([]);
+  expect(ce.box("Primes").type.toString()).toBe("set<integer>");
+  expect(ce.box("PrimeNumbers").type.toString()).toBe("indexed_collection<integer>");
+});
+
+test("no two records' heads differ only by case, which a case-insensitive filesystem can't hold", () => {
+  const seen = new Map<string, string>();
+  const clashes: string[] = [];
+  for (const { head } of heads) {
+    const other = seen.get(head.toLowerCase());
+    if (other !== undefined && other !== head) clashes.push(`${other} and ${head}`);
+    else seen.set(head.toLowerCase(), head);
+  }
+  expect(clashes).toEqual([]);
 });

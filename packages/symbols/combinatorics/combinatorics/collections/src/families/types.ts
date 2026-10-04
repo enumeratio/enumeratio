@@ -94,7 +94,7 @@ interface Family extends FamilyShape {
 }
 
 /** A pure combinatorial family: count + rank/unrank/valid kernels, positions in bigint.
- *  `paramCount: 0` is a value (`Primes`), otherwise an operator (`SmoothNumbers(k)`);
+ *  `paramCount: 0` is a value (`PrimeNumbers`), otherwise an operator (`SmoothNumbers(k)`);
  *  `p` is the (possibly empty) parameter tuple. `rank` is the 0-based place in the fiber
  *  (the family at `p`), `-1n` for a non-member. */
 export interface FamilyKernel extends Family {

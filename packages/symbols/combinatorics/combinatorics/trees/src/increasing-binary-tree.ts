@@ -7,7 +7,7 @@
 // which permutation it came from.
 //
 // REPRESENTATION. `increasing_binary_tree`'s declared shape (carrier-data.ts) is
-// `integer | list<any>` — BinaryTree/KAryTree/OrderedTree's own nested convention, label
+// `integer | list<any>` — BinaryTree/FullKAryTree/OrderedTree's own nested convention, label
 // folded in as the node's first slot: leaf 0, node [label, left, right]. This is what
 // IncreasingBinaryTrees (collections/src/families/tableaux-trees.ts, its `cartesianTree`)
 // already builds, so FromPermutation has to build the same shape rather than the flat

@@ -294,9 +294,9 @@ test("FibonacciPrimes.unrank answers NaN (not a hang) past the known/representab
 
 // ─── KAlmostPrimes(k) / RoughNumbers(k) / PrimePairs(gap): one-parameter selectors. ─────────
 
-test("KAlmostPrimes(1) agrees with Primes verbatim", () => {
+test("KAlmostPrimes(1) agrees with PrimeNumbers verbatim", () => {
   const kAlmost = byHead.get("KAlmostPrimes")!;
-  const primes = numericSets.find((e) => e.head === "Primes")!;
+  const primes = numericSets.find((e) => e.head === "PrimeNumbers")!;
   for (let r = 0; r < 20; r++) expect(kAlmost.unrank([1], r)).toBe(primes.unrank([], r));
 });
 

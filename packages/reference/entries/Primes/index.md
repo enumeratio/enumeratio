@@ -1,22 +1,17 @@
 ---
 name: Primes
-domain: Collections
-signature: Primes
-summary: The prime numbers $2, 3, 5, 7, 11, …$ as a lazy indexed collection, unranked by position.
+domain: Compute engine
+signature: "Primes: set<integer>"
+summary: The set of prime numbers, a constant compute-engine declares; it answers membership, not position.
 signatures:
-  - call: Primes
-    description: the primes in increasing order, an infinite indexed collection.
-enumerate:
-  expr: Take(Primes, 20)
+  - call: "Primes: set<integer>"
+    description: a constant, as compute-engine declares it
 seeAlso:
-  - Count
-  - At
+  - PrimeNumbers
   - Element
-  - SquareNumbers
-  - AbundantNumbers
-  - SmoothNumbers
+  - NthPrime
+  - NextPrime
 ---
 
-- A lazy indexed collection: $Count(Primes) = +\infty$, and $At(Primes, k)$ unranks the $k$-th prime without ever sieving a full prefix -- $At(Primes, 5) = 11$.
-- OEIS A000040.
 - Membership goes through [[Element]]: $Element(11, Primes)$ is true, $Element(9, Primes)$ is false.
+- A set has no order, so $At(Primes, k)$ and $Take(Primes, k)$ don't apply. [[PrimeNumbers]] is the same primes as an indexed collection, and [[NthPrime]] is the $k$-th one.

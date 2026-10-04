@@ -18,4 +18,4 @@ names:
 ---
 
 - Vertex i's parent is ⌊(i - 2) / k⌋ + 1 — the same heap layout [[CompleteKaryTree]] uses, but sized by VERTEX COUNT rather than level count, so the last level need not be full.
-- NOT the same thing as our KAryTrees DOMAIN (the combinatorial family of every n-node k-ary tree shape, for ranking/enumeration) or [[CompleteKaryTree]] (a LEVEL count, always perfectly filled) — three different heads that happen to share a name fragment.
+- NOT the same thing as our [[FullKAryTrees]] DOMAIN (the combinatorial family of every n-node full k-ary tree shape, for ranking/enumeration) or [[CompleteKaryTree]] (a LEVEL count, always perfectly filled) — three different heads that happen to share a name fragment.

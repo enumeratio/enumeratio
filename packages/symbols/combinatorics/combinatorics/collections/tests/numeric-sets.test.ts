@@ -6,7 +6,7 @@ import { declareCollections } from "../src/library.ts";
 // First terms per OEIS, used both to brute-force certify the kernels below and to ground
 // the CE-level At/Take checks further down.
 const OEIS: Record<string, { anum: string; terms: number[] }> = {
-  Primes: { anum: "A000040", terms: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] },
+  PrimeNumbers: { anum: "A000040", terms: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] },
   SquareNumbers: { anum: "A000290", terms: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100] },
   AbundantNumbers: { anum: "A005101", terms: [12, 18, 20, 24, 30, 36, 40, 42, 48, 54] },
 };
@@ -76,27 +76,31 @@ test("SmoothNumbers(7) excludes an 11-smooth-only value", () => {
 const ce = new ComputeEngine();
 declareCollections(ce);
 
-test("Primes is declared as an indexed_collection<integer>", () => {
-  expect(ce.box("Primes").type.toString()).toBe("indexed_collection<integer>");
+test("PrimeNumbers is declared as an indexed_collection<integer>", () => {
+  expect(ce.box("PrimeNumbers").type.toString()).toBe("indexed_collection<integer>");
 });
 
-test("At(Primes, n) gives the n-th prime, 1-indexed", () => {
-  expect(ce.box(["At", "Primes", 5]).evaluate().re).toBe(11);
+test("Primes stays compute-engine's set: the indexed collection is PrimeNumbers", () => {
+  expect(ce.box("Primes").type.toString()).toBe("set<integer>");
 });
 
-// Take/Element on Primes, SquareNumbers, AbundantNumbers and SmoothNumbers are now examples
-// (Primes, SquareNumbers, AbundantNumbers, SmoothNumbers). At/Count have no record of their
+test("At(PrimeNumbers, n) gives the n-th prime, 1-indexed", () => {
+  expect(ce.box(["At", "PrimeNumbers", 5]).evaluate().re).toBe(11);
+});
+
+// Take/Element on PrimeNumbers, SquareNumbers, AbundantNumbers and SmoothNumbers are now examples
+// (PrimeNumbers, SquareNumbers, AbundantNumbers, SmoothNumbers). At/Count have no record of their
 // own to pin an example on, so they stay here.
 
-test("Count(Primes) is +oo", () => {
-  expect(ce.box(["Count", "Primes"]).evaluate().toString()).toBe("+oo");
+test("Count(PrimeNumbers) is +oo", () => {
+  expect(ce.box(["Count", "PrimeNumbers"]).evaluate().toString()).toBe("+oo");
 });
 
 test("SmoothNumbers(k) is a one-parameter operator", () => {
   expect(ce.box(["At", ["SmoothNumbers", 7], 1]).evaluate().re).toBe(1);
 });
 
-// --- Primes at bench scale (issue #205/#276): the segmented sieve/BPSW primality of
+// --- PrimeNumbers at bench scale (issue #205/#276): the segmented sieve/BPSW primality of
 // @enumeratio/residues, not a separate scan of our own -- compared against a naive
 // trial-division reference over a range, plus the bench's own golden value. ---
 
@@ -106,8 +110,8 @@ function isPrimeTrial(n: number): boolean {
   return true;
 }
 
-test("Primes kernel agrees with trial division over 0..2000", () => {
-  const entry = byHead.get("Primes")!;
+test("PrimeNumbers kernel agrees with trial division over 0..2000", () => {
+  const entry = byHead.get("PrimeNumbers")!;
   const primes: number[] = [];
   for (let n = 0; n <= 2000; n++) if (isPrimeTrial(n)) primes.push(n);
   for (let n = 0; n <= 2000; n++) {
@@ -117,12 +121,12 @@ test("Primes kernel agrees with trial division over 0..2000", () => {
   for (let r = 0; r < primes.length; r++) expect(entry.unrank([], r)).toBe(primes[r]);
 });
 
-test("At(Primes, 10^5) is exact and matches NthPrime (bench golden, issue #205)", () => {
-  expect(ce.box(["At", "Primes", 100000]).evaluate().re).toBe(1299709);
+test("At(PrimeNumbers, 10^5) is exact and matches NthPrime (bench golden, issue #205)", () => {
+  expect(ce.box(["At", "PrimeNumbers", 100000]).evaluate().re).toBe(1299709);
 });
 
-test("Primes rank of a large prime matches PrimePi - 1", () => {
-  const entry = byHead.get("Primes")!;
+test("PrimeNumbers rank of a large prime matches PrimePi - 1", () => {
+  const entry = byHead.get("PrimeNumbers")!;
   // 1299709 is the 100000th prime (0-indexed rank 99999).
   expect(entry.rank(1299709, [])).toBe(99999);
   expect(entry.valid(1299709, [])).toBe(true);
