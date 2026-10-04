@@ -46,10 +46,10 @@ export function PermutationRank(perm: Permutation): number {
   return rank;
 }
 
-/** Lehmer code L[i] = #{ j > i : perm[j] < perm[i] }, positions 0..n-2 (the always-0 tail dropped). */
+/** Lehmer code L[i] = #{ j > i : perm[j] < perm[i] }, all n positions (the last is always 0). */
 export function LehmerCode(perm: Permutation): number[] {
   const avail = perm.map((_, i) => i + 1);
-  return perm.slice(0, -1).map((x) => {
+  return perm.map((x) => {
     const idx = avail.indexOf(x);
     avail.splice(idx, 1);
     return idx;

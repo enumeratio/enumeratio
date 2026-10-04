@@ -110,15 +110,29 @@ const OPERATOR_NAMES = new Set(
  *  with no glyph to show (a control or private-use code point) is `\char` by number. */
 const TEXT_SPECIALS = /[\\{}$&#^_%~]|[\p{Cc}\p{Co}]/gu;
 const NO_GLYPH = /[\p{Cc}\p{Co}]/u;
+/** Runs of characters with a math command (`∑`, `≤`, `π`): KaTeX has no text-mode glyph for them. */
+const MATH_ONLY = `[${Object.entries(COMMANDS)
+  .filter(([c, command]) => command !== "" && /^\P{ASCII}$/u.test(c))
+  .map(([c]) => c)
+  .join("")}]+`;
+const MATH_RUN = new RegExp(`^${MATH_ONLY}$`, "u");
+const inMath = (run: string): string => `$${Array.from(run, (c) => COMMANDS[c]).join("")}$`;
+const TEXT_RUNS = new RegExp(`${MATH_ONLY}|${TEXT_SPECIALS.source}`, "gu");
 const TEXT_ESCAPES: Readonly<Record<string, string>> = {
   "\\": "\\textbackslash{}",
   "~": "\\textasciitilde{}",
   "^": "\\textasciicircum{}",
 };
 export const escapeTeXText = (text: string): string =>
-  text.replace(TEXT_SPECIALS, (c) =>
-    NO_GLYPH.test(c) ? `\\char"${c.codePointAt(0)!.toString(16).toUpperCase()} ` : (TEXT_ESCAPES[c] ?? `\\${c}`),
-  );
+  text.replace(TEXT_RUNS, (run) => {
+    if (MATH_RUN.test(run)) return inMath(run);
+    return NO_GLYPH.test(run)
+      ? `\\char"${run.codePointAt(0)!.toString(16).toUpperCase()} `
+      : (TEXT_ESCAPES[run] ?? `\\${run}`);
+  });
+/** Text already escaped for `\text{…}`, with each run of math-only characters set in math
+ *  (`\text{∑}` is a KaTeX error): `a ≤ b` becomes `a $\le$ b`. */
+export const setMathSymbols = (text: string): string => text.replace(new RegExp(MATH_ONLY, "gu"), inMath);
 const escapeText = escapeTeXText;
 
 function token(s: string): string {

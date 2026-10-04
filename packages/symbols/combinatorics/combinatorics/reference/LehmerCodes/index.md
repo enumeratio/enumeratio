@@ -2,10 +2,10 @@
 name: LehmerCodes
 domain: Collections
 signature: LehmerCodes(n)
-summary: The Lehmer code of every permutation of $\{1, …, n\}$ — inversion tables $(a_0, …, a_{n-2})$ with $0 \le a_i \le n-1-i$.
+summary: The Lehmer code of every permutation of $\{1, …, n\}$ — inversion tables $(a_0, …, a_{n-1})$ with $0 \le a_i \le n-1-i$.
 signatures:
   - call: LehmerCodes(n)
-    description: the Lehmer code of every permutation of $\{1, …, n\}$ — inversion tables $(a_0, …, a_{n-2})$ with $0 \le a_i \le n-1-i$
+    description: the Lehmer code of every permutation of $\{1, …, n\}$ — inversion tables $(a_0, …, a_{n-1})$ with $0 \le a_i \le n-1-i$
     library: enumeratio-combinatorics
     type: (integer<0..>) -> indexed_collection<permutation_inversion>
 seeAlso:
@@ -22,7 +22,7 @@ catalog:
   - system: sage
     identity: sage.combinat.permutation.from_lehmer_code
     url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html
-    note: the encode/decode pair to_lehmer_code / from_lehmer_code, not an enumerated class; our collection is every length-n Lehmer code (subexcedant vector)
+    note: the encode/decode pair to_lehmer_code / from_lehmer_code, not an enumerated class; our collection is every length-n Lehmer code, the always-zero last entry included
   - system: wikipedia
     identity: Lehmer code
     url: https://en.wikipedia.org/wiki/Lehmer_code

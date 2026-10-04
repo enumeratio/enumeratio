@@ -1,0 +1,5 @@
+id	in
+of-log-gamma	Derivative[1][LogGamma]
+partial-of-beta	Derivative[0][Beta]
+partial-of-zeta-in-a	Derivative[0][Zeta]
+of-gamma	Derivative[1][Gamma]

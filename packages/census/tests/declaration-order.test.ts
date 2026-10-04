@@ -1,6 +1,8 @@
 // BL-13: a head several packages extend answers the same whichever declares first. Each pair
 // is declared in every order we can build from the real list (a package moved earlier or
-// later than its usual slot), and every order answers the same calls the same way.
+// later than its usual slot), and every order answers the same calls the same way. A full engine
+// per order is the cost: the standard run checks the first order of each pair, `DEEP_TESTS=1`
+// all of them.
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { PACKAGE_DECLARATIONS } from "../src/engine.ts";
@@ -27,16 +29,18 @@ const answers = (ce: ComputeEngine, calls: readonly unknown[]): unknown[] =>
     return { evaluate: expr.evaluate().json, type: String(expr.type) };
   });
 
-/** One test per order, each against the usual one: two engines apiece keeps a test well under its budget. */
+const deep = process.env.DEEP_TESTS === "1";
+// Built once, at collection: every order is compared against it.
+const usualEngine = engineWith(PACKAGE_DECLARATIONS);
+
+/** One test per order, each building one engine against the shared usual one. */
 const compare = (title: string, calls: readonly unknown[], orders: Record<string, readonly Entry[]>): void => {
-  let usual: unknown[] | undefined;
-  for (const [label, order] of Object.entries(orders)) {
-    if (label === "usual") continue;
+  const usual = answers(usualEngine, calls);
+  const labels = Object.keys(orders).filter((label) => label !== "usual");
+  for (const label of deep ? labels : labels.slice(0, 1))
     test(`${title}: ${label}`, () => {
-      usual ??= answers(engineWith(orders.usual!), calls);
-      expect(answers(engineWith(order), calls), `${label} vs usual`).toEqual(usual);
+      expect(answers(engineWith(orders[label]!), calls), `${label} vs usual`).toEqual(usual);
     });
-  }
 };
 
 const first = (pkg: string): number => indexOf(pkg) - 1;

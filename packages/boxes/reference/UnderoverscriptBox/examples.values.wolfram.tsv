@@ -1,2 +1,2 @@
 id	in
-sum	UnderoverscriptBox["Sum", "n=1", "10"]
+sum	UnderoverscriptBox["∑", "n=1", "10"]

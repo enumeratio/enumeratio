@@ -22,6 +22,11 @@ test("portableTeX spells out the hyperbolic cosecant", () => {
   expect(portableTeX("\\csch(x)")).toBe("\\operatorname{csch}(x)");
 });
 
+test("a string's math symbols are set in math, which KaTeX needs inside \\text", () => {
+  expect(portableTeX("\\text{∑}")).toBe("\\text{$\\sum$}");
+  expect(portableTeX("\\text{a ≤ b}")).toBe("\\text{a $\\le$ b}");
+});
+
 test("the packages' macros are expanded, arguments included", () => {
   registerTeXMacros({ permutation: "\\operatorname{Permutation}", pair: "\\langle #1, #2\\rangle" });
   expect(portableTeX("\\permutation(2, 3, 1)")).toBe("{\\operatorname{Permutation}}(2, 3, 1)");

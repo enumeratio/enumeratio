@@ -52,6 +52,8 @@ jobs:
       - run: pnpm --filter @enumeratio/reference exec vp test run tests/resolver.test.ts
       # Every sampled head's examples, read back from markup and evaluated through the registry.
       - run: pnpm --filter @enumeratio/reference exec vp test run tests/markup-registry.test.ts
+      # Every declaration order of the packages that extend one head (BL-13).
+      - run: pnpm --filter @enumeratio/census exec vp test run tests/declaration-order.test.ts
 
   # A real browser against a real dev server, checking every component story renders (the
   # custom element upgrades, draws something, no console errors) -- see web/tests/stories.

@@ -217,6 +217,7 @@ const OVERRIDDEN = [
   "Count",
   "Csc",
   "D",
+  "Derivative",
   "Digamma",
   "DigitCount",
   "DigitSum",
@@ -254,6 +255,7 @@ const OVERRIDDEN = [
   "Gamma",
   "GammaLn",
   "GammaRegularized",
+  "Histogram",
   // #340: HurwitzZeta/Zeta's own declarations landed in compute-engine 0.139, but only in
   // double precision -- the zeta-hurwitz patch still overrides both for the arbitrary-
   // precision N(x, d) path (see ce-patches/src/patches/zeta-hurwitz.ts), so

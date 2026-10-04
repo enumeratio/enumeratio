@@ -1,6 +1,5 @@
 import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
-import type { EvalOptions, NativeEval } from "@enumeratio/ce-patches";
+import { operandsOf, wrapOperator } from "@enumeratio/engine";
 
 // DifferenceRootReduce(f(n), n) / DifferenceRoot(...)[n]: Wolfram's holonomic (P-recursive)
 // representation of a sequence — DifferenceRoot[Function[{y, n}, {recurrence == 0, y[i] ==
@@ -26,8 +25,8 @@ import type { EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 // pole in the *coefficients* at exactly the points the unsolved form still evaluates
 // correctly, see `evaluateAt` below on Binomial(n, k)'s anchor pair).
 //
-// EVALUATION: `DifferenceRoot(fn)(n0)` is attached in place onto the native `Apply` operator
-// (never re-declared — see derivatives.ts) and runs the recurrence forward from whichever
+// EVALUATION: `DifferenceRoot(fn)(n0)` is a wrapper on the native `Apply` operator (never
+// re-declared; every other call stays compute-engine's own) and runs the recurrence forward from whichever
 // initial condition anchor is closest below `n0`, in exact rational arithmetic via `ce`'s own
 // arithmetic. It declines (stays symbolic) rather than divide by a leading coefficient that
 // evaluates to exactly 0 with no anchor to jump to.
@@ -473,16 +472,14 @@ function evaluateAt(
 }
 
 function attachDifferenceRootApply(ce: ComputeEngine): void {
-  const definition = ce.lookupDefinition("Apply");
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) return;
-  const native: NativeEval = operator.evaluate;
-  operator.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
-    const [target, arg] = ops;
-    if (ops.length === 2 && target !== undefined && target.operator === "DifferenceRoot" && arg !== undefined) {
+  wrapOperator(
+    ce,
+    ["Apply"],
+    (ops) => ops[0]?.operator === "DifferenceRoot",
+    () => (ops) => {
+      const [target, arg] = ops as [BoxedExpression, BoxedExpression];
       const fn = operandsOf(target)[0];
-      const n0 = arg.evaluate();
-      const index = intLiteral(n0);
+      const index = intLiteral(arg.evaluate());
       if (fn === undefined || index === undefined || index < 0) return undefined; // stays symbolic
       const fnOps = operandsOf(fn);
       const block: BoxedExpression | undefined = fnOps[0];
@@ -507,7 +504,7 @@ function attachDifferenceRootApply(ce: ComputeEngine): void {
       const parsed = parseRecurrence(ce, recLhs, yName, varName);
       if (parsed === undefined) return undefined;
       return evaluateAt(ce, parsed, varName, anchors, index);
-    }
-    return native?.(ops, options);
-  };
+    },
+    2,
+  );
 }
