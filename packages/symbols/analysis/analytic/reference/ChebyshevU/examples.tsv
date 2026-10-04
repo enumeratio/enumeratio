@@ -8,7 +8,7 @@ at-u5-0-7		test	[N, [ChebyshevU, 5, 0.7]]	-1.39776
 at-u-1-0-7		test	[N, [ChebyshevU, -1, 0.7]]	0						
 at-u-2-0-7		test	[N, [ChebyshevU, -2, 0.7]]	-1						
 at-u-5-0-7		test	[N, [ChebyshevU, -5, 0.7]]	0.05600000000000027						
-at-u4-2-3i		test	[N, [ChebyshevU, 4, [Complex, 2, 3]]]	[Complex, {num: "-1843.0"}, {num: "-2064.0"}]						
+at-u4-2-3i		test	[N, [ChebyshevU, 4, [Complex, 2, 3]]]	[Complex, -1843, -2064]						
 chebyshevu-2-3			[ChebyshevU, 2, 3]	35			Evaluates at an integer: $U_2(3) = 4\cdot9 - 1$			
 chebyshevu-10-x			[ChebyshevU, 10, x]	[Add, [Multiply, 1024, [Power, x, 10]], [Multiply, -2304, [Power, x, 8]], [Multiply, 1792, [Power, x, 6]], [Multiply, -560, [Power, x, 4]], [Multiply, 60, [Power, x, 2]], -1]			The degree-10 polynomial in $x$			
 at-a-rational	Scope		[ChebyshevU, 3, [Rational, 1, 2]]	-1			At a rational $x$ the value is exact			
@@ -36,4 +36,4 @@ chebyshevu-2-negativeinfinity	Properties		[ChebyshevU, 2, NegativeInfinity]	Posi
 sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-k	Properties		[Sum, [Multiply, [ChebyshevU, k, [Rational, 1, 2]], [ChebyshevU, k, 2]], [Limits, k, 0, 2]]	5	5	Wolfram MathematicalFunctionData, ChebyshevU:Polynomial, ChristoffelâDarboux formula				
 sum-chebyshevu-k-1-over-2-times-chebyshevu-k-2-2	Properties		[Sum, [Multiply, [ChebyshevU, k, [Rational, 1, 2]], [ChebyshevU, k, 2]], [Limits, k, 0, 3]]	-51	-51	Wolfram MathematicalFunctionData, ChebyshevU:Polynomial, ChristoffelâDarboux formula				
 n-integrate-sqrt-neg-t-pow-2-plus-1-times	Properties		[N, [Integrate, [Function, [Block, [Multiply, [Sqrt, [Add, [Negate, [Power, t, 2]], 1]], [Power, [ChebyshevU, 2, t], 2]]], t], [Limits, t, -1, 1]]]	[Measurement, 1.570796326794973, 7.638334409421077e-14]	[Multiply, [Rational, 1, 2], Pi]	Wolfram MathematicalFunctionData, ChebyshevU:Polynomial, Orthogonality relation				
-n-integrate-chebyshevu-2-t-times-chebyshevu-3-t	Properties		[N, [Integrate, [Function, [Block, [Multiply, [ChebyshevU, 2, t], [ChebyshevU, 3, t], [Sqrt, [Add, [Negate, [Power, t, 2]], 1]]]], t], [Limits, t, -1, 1]]]	[Measurement, 0, 9.468215858034646e-13]	0	Wolfram MathematicalFunctionData, ChebyshevU:Polynomial, Orthogonality relation				
+n-integrate-chebyshevu-2-t-times-chebyshevu-3-t	Properties		[N, [Integrate, [Function, [Block, [Multiply, [ChebyshevU, 2, t], [ChebyshevU, 3, t], [Sqrt, [Add, [Negate, [Power, t, 2]], 1]]]], t], [Limits, t, -1, 1]]]	[Measurement, {num: "0.0"}, 9.468215858034646e-13]	0	Wolfram MathematicalFunctionData, ChebyshevU:Polynomial, Orthogonality relation				
