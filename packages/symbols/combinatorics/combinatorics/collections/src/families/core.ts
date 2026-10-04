@@ -3,7 +3,32 @@
 import { binaryStrings, grayCodeSubsets, kSubsets, latticePaths, multisets, subsets, tuples } from "./closed-forms.ts";
 import type { EpsilFamily } from "./epsil.ts";
 import type { NumberKernel } from "./types.ts";
-import { FibonacciWordCount, FibonacciWordUnrank, FibonacciWordRank, IsFibonacciWord } from "./kernels-extra.ts";
+import {
+  FibonacciWordCount,
+  FibonacciWordUnrank,
+  FibonacciWordRank,
+  IsFibonacciWord,
+  GrayCodeSubsetRank,
+  GrayCodeSubsetUnrank,
+  IsLatticePathOf,
+  IsMultisetOf,
+  IsSubsetOf,
+  IsTupleOf,
+  IsBinaryString,
+  LatticePathCount,
+  LatticePathRank,
+  LatticePathUnrank,
+  MultisetCount,
+  MultisetRank,
+  MultisetUnrank,
+  SubsetCount,
+  TupleCount,
+  TupleRank,
+  TupleUnrank,
+  BinaryStringCount,
+  BinaryStringRank,
+  BinaryStringUnrank,
+} from "./kernels-extra.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; casts the unknown element once here,
 // same pattern subsets.ts uses at each call site.
@@ -31,12 +56,59 @@ const ints = (
 const subsetsFamily = subsets({ head: "Subsets", params: ["_n"], carrier: "Finset", carrierParams: 1 });
 // Not carrier-typed here: out of scope for A-116 (only Subsets/KSubsets/Multisets asked for), though
 // its elements are the same Finset shape as Subsets'.
-const grayCodeSubsetsFamily = grayCodeSubsets({ head: "GrayCodeSubsets", params: ["_n"] });
+const grayCodeSubsetsFamily = grayCodeSubsets({
+  head: "GrayCodeSubsets",
+  params: ["_n"],
+  fast: {
+    count: ([n]) => SubsetCount(n),
+    unrank: ([n], r) => GrayCodeSubsetUnrank(n, r),
+    rank: (x) => GrayCodeSubsetRank(x as number[]),
+    valid: (x, [n]) => IsSubsetOf(x as number[], n),
+  },
+});
 const kSubsetsFamily = kSubsets({ head: "KSubsets", params: ["_n", "_k"], carrier: "Finset", carrierParams: 1 });
-const multisetsFamily = multisets({ head: "Multisets", params: ["_n", "_k"], carrier: "Multiset", carrierParams: 1 });
-const tuplesFamily = tuples({ head: "Tuples", params: ["_n", "_k"] });
-const binaryStringsFamily = binaryStrings({ head: "BinaryStrings", params: ["_n"] });
-const latticePathsFamily = latticePaths({ head: "LatticePaths", params: ["_a", "_b"] });
+const multisetsFamily = multisets({
+  head: "Multisets",
+  params: ["_n", "_k"],
+  carrier: "Multiset",
+  carrierParams: 1,
+  fast: {
+    count: ([n, k]) => MultisetCount(n, k),
+    unrank: ([n, k], r) => MultisetUnrank(n, k, r),
+    rank: (x) => MultisetRank(x as number[]),
+    valid: (x, [n, k]) => IsMultisetOf(x as number[], n, k),
+  },
+});
+const tuplesFamily = tuples({
+  head: "Tuples",
+  params: ["_n", "_k"],
+  fast: {
+    count: ([n, k]) => TupleCount(n, k),
+    unrank: ([n, k], r) => TupleUnrank(n, k, r),
+    rank: (x, [n]) => TupleRank(x as number[], n),
+    valid: (x, [n, k]) => IsTupleOf(x as number[], n, k),
+  },
+});
+const binaryStringsFamily = binaryStrings({
+  head: "BinaryStrings",
+  params: ["_n"],
+  fast: {
+    count: ([n]) => BinaryStringCount(n),
+    unrank: ([n], r) => BinaryStringUnrank(n, r),
+    rank: (x) => BinaryStringRank(x as number[]),
+    valid: (x, [n]) => IsBinaryString(x as number[], n),
+  },
+});
+const latticePathsFamily = latticePaths({
+  head: "LatticePaths",
+  params: ["_a", "_b"],
+  fast: {
+    count: ([a, b]) => LatticePathCount(a, b),
+    unrank: ([a, b], r) => LatticePathUnrank(a, b, r),
+    rank: (x) => LatticePathRank(x as number[]),
+    valid: (x, [a, b]) => IsLatticePathOf(x as number[], a, b),
+  },
+});
 
 // Kept separate from `entries` below only so collections/src/families/index.ts can splice
 // `latticePathsDyckPathsEntries` (DyckPaths) back in at the exact interior position it held

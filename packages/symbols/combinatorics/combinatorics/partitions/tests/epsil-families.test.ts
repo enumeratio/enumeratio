@@ -7,7 +7,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
-import { type EpsilFamily, kernelOn } from "../../collections/src/families/epsil.ts";
+import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
 import {
   IsPartitionInBox,
   PartitionsInBoxCount,
@@ -65,7 +65,7 @@ const byHead = new Map(epsilEntries.map((family) => [family.head, family]));
 
 for (const [head, reading] of Object.entries(READINGS)) {
   const family = byHead.get(head)!;
-  const kernel = kernelOn(ce, family);
+  const kernel = epsilKernelOn(ce, family);
   for (const p of reading.params) {
     test(`${head}(${p.join(", ")}) agrees with its TS reading`, () => {
       const total = reading.count(p);
@@ -108,7 +108,7 @@ test("the interpreter agrees with compiled code", () => {
 });
 
 test("past 2^53 PartitionsInBox answers in exact integers", () => {
-  const kernel = kernelOn(ce, byHead.get("PartitionsInBox")!);
+  const kernel = epsilKernelOn(ce, byHead.get("PartitionsInBox")!);
   // Binomial(a+b, a) with a = b = 30 is ~59132290782430712, well past 2^53.
   const a = 30,
     b = 30;

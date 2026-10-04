@@ -13,6 +13,7 @@
 // collections/src/families/kernels-combinatorics.ts, and the check below) stays as the
 // independent reading the agreement tests check against. ─────────────────────────────────────
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { BellB, RgsRank, RgsUnrank } from "../../../collections/src/families/kernels-combinatorics.ts";
 import { restrictedGrowthStrings } from "./core.ts";
 
 export function isRestrictedGrowthStringOf(e: unknown, n: number): boolean {
@@ -25,4 +26,14 @@ export function isRestrictedGrowthStringOf(e: unknown, n: number): boolean {
   return true;
 }
 
-export const entries: EpsilFamily[] = [restrictedGrowthStrings];
+export const entries: EpsilFamily[] = [
+  {
+    ...restrictedGrowthStrings,
+    fast: {
+      count: ([n]) => BellB(n),
+      unrank: ([n], r) => RgsUnrank(n, r),
+      rank: (x) => RgsRank(x as number[]),
+      valid: (x, [n]) => isRestrictedGrowthStringOf(x, n),
+    },
+  },
+];

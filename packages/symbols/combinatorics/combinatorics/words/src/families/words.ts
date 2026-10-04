@@ -8,12 +8,20 @@
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Binomial } from "../../../collections/src/families/kernels-combinatorics.ts";
 import {
+  BinaryStringCount,
+  BinaryStringRank,
+  BinaryStringUnrank,
   FibonacciWordCount,
   FibonacciWordUnrank,
   FibonacciWordRank,
-  IsFibonacciWord,
+  IsBinaryString,
+  IsTupleOf,
+  TupleCount,
+  TupleRank,
+  TupleUnrank,
 } from "../../../collections/src/families/kernels-extra.ts";
 import { binaryPalindromes, binaryStrings, grayCodes, words } from "../../../collections/src/families/closed-forms.ts";
+import { binaryWordsByWeight, fibStrings, lucasStrings } from "./epsil.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
@@ -22,10 +30,10 @@ const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc
 // ─── BinaryWordsByWeight(n, k): length-n binary words with exactly k ones, in lexicographic order
 // (0 preferred over 1 at each position). Count = C(n,k). Standard combinatorial-number-system walk:
 // at each position, placing 0 leaves a block of C(posLeft, onesLeft) completions that sorts first. ──
-function byWeightCount(n: number, k: number): number {
+export function byWeightCount(n: number, k: number): number {
   return Binomial(n, k);
 }
-function byWeightUnrank(n: number, k: number, r: number): number[] {
+export function byWeightUnrank(n: number, k: number, r: number): number[] {
   const total = byWeightCount(n, k);
   let rem = normRank(r, total);
   const bits: number[] = [];
@@ -52,7 +60,7 @@ function byWeightUnrank(n: number, k: number, r: number): number[] {
   }
   return bits;
 }
-function byWeightRank(bits: number[], n: number, k: number): number {
+export function byWeightRank(bits: number[], n: number, k: number): number {
   let rem = 0;
   let onesLeft = k;
   for (let i = 0; i < n; i++) {
@@ -69,7 +77,7 @@ function byWeightRank(bits: number[], n: number, k: number): number {
   }
   return rem;
 }
-function byWeightValid(bits: unknown, n: number, k: number): boolean {
+export function byWeightValid(bits: unknown, n: number, k: number): boolean {
   if (!Array.isArray(bits) || bits.length !== n) return false;
   let ones = 0;
   for (const b of bits) {
@@ -85,12 +93,12 @@ function byWeightValid(bits: unknown, n: number, k: number): boolean {
 // FibonacciWords(n-1) suffix; b=1 forces bit 2 = 0 (linear adjacency) and bit n = 0 (wrap), so the
 // n-3 bits between them are a free FibonacciWords(n-3) middle (n=2 collapses the two forced zeros
 // into the single remaining bit). Lex order: the b=0 block sorts first. ─────────────────────────────
-function lucasCount(n: number): number {
+export function lucasCount(n: number): number {
   if (n === 0) return 1;
   if (n === 1) return 1;
   return FibonacciWordCount(n - 1) + FibonacciWordCount(Math.max(n - 3, 0));
 }
-function lucasStringsUnrank(n: number, r: number): number[] {
+export function lucasStringsUnrank(n: number, r: number): number[] {
   if (n === 0) return [];
   if (n === 1) return [0];
   const total = lucasCount(n);
@@ -102,7 +110,7 @@ function lucasStringsUnrank(n: number, r: number): number[] {
   const mid = FibonacciWordUnrank(n - 3, rem);
   return [1, 0, ...mid, 0];
 }
-function lucasStringsRank(bits: number[], n: number): number {
+export function lucasStringsRank(bits: number[], n: number): number {
   if (n <= 1) return 0;
   if (bits[0] === 0) return FibonacciWordRank(bits.slice(1));
   const sizeB0 = FibonacciWordCount(n - 1);
@@ -110,7 +118,7 @@ function lucasStringsRank(bits: number[], n: number): number {
   const mid = bits.slice(2, n - 1);
   return sizeB0 + FibonacciWordRank(mid);
 }
-function lucasStringsValid(bits: unknown, n: number): boolean {
+export function lucasStringsValid(bits: unknown, n: number): boolean {
   if (!Array.isArray(bits) || bits.length !== n) return false;
   for (const b of bits) if (b !== 0 && b !== 1) return false;
   if (n === 0) return true;
@@ -261,6 +269,7 @@ function lyndonCount(n: number, k: number): number {
   return Math.round(sum / n);
 }
 
+// Necklaces and Lyndon words stay TS: they index the FKM-generated list of words (list accumulation); no ranking arithmetic.
 // ─── KNecklaces(n, k) / KLyndonWords(n, k): words over {1..k} up to rotation, represented by the
 // lex-smallest rotation (necklaces) resp. the aperiodic subfamily (Lyndon words, strictly less than
 // every nontrivial rotation). count(n,k) = (1/n) Σ_{d|n} φ(d)·k^(n/d) resp. μ(d) variant above.
@@ -367,54 +376,74 @@ const wordClass = (carrier: string, base?: number): Declared => ({
   work: ([n, k]) => BigInt(base ?? (k as number)) ** BigInt(n as number),
 });
 
-// Closed-form families, defined in Epsil (collections/src/families/closed-forms.ts). The TS
-// kernels above (byWeight*, grayCode*, palindrome*) are the independent reading their agreement
-// test checks them against.
-const binaryWords = binaryStrings({ head: "BinaryWords", params: ["_n"], carrier: "BinaryWord" });
-const wordsFamily = words({ head: "Words", params: ["_size", "_base"], carrier: "Word" });
-const grayCodesFamily = grayCodes({ head: "GrayCodes", params: ["_n"], carrier: "BinaryWord" });
-const binaryPalindromesFamily = binaryPalindromes({ head: "BinaryPalindromes", params: ["_n"], carrier: "BinaryWord" });
+// Closed-form families, defined in Epsil (collections/src/families/closed-forms.ts, ./epsil.ts).
+// The TS kernels above (byWeight*, lucas*, grayCode*, palindrome*) are the independent reading
+// their agreement tests check them against, and the `fast` path where wired.
+const binaryWords = binaryStrings({
+  head: "BinaryWords",
+  params: ["_n"],
+  carrier: "BinaryWord",
+  fast: {
+    count: ([n]) => BinaryStringCount(n),
+    unrank: ([n], r) => BinaryStringUnrank(n, r),
+    rank: (x) => BinaryStringRank(x as number[]),
+    valid: (x, [n]) => IsBinaryString(x as number[], n),
+  },
+});
+const wordsFamily = words({
+  head: "Words",
+  params: ["_size", "_base"],
+  carrier: "Word",
+  fast: {
+    count: ([size, base]) => TupleCount(base, size),
+    unrank: ([size, base], r) => TupleUnrank(base, size, r),
+    rank: (x, [, base]) => TupleRank(x as number[], base),
+    valid: (x, [size, base]) => IsTupleOf(x as number[], base, size),
+  },
+});
+const grayCodesFamily = grayCodes({
+  head: "GrayCodes",
+  params: ["_n"],
+  carrier: "BinaryWord",
+  fast: {
+    count: ([n]) => grayCodeCount(n),
+    unrank: ([n], r) => grayCodeUnrank(n, r),
+    rank: (x) => grayCodeRank(x as number[]),
+    valid: (x, [n]) => (x as number[]).length === n && (x as number[]).every((b) => b === 0 || b === 1),
+  },
+});
+const binaryPalindromesFamily = binaryPalindromes({
+  head: "BinaryPalindromes",
+  params: ["_n"],
+  carrier: "BinaryWord",
+  fast: {
+    count: ([n]) => palindromeCount(n),
+    unrank: ([n], r) => palindromeUnrank(n, r),
+    rank: (x, [n]) => palindromeRank(x as number[], n),
+    valid: (x, [n]) => palindromeValid(x, n),
+  },
+});
 
+// The TS walk is ~17x faster than Epsil's, in the same order.
+const binaryWordsByWeightFast: EpsilFamily = {
+  ...binaryWordsByWeight,
+  fast: {
+    count: ([n, k]) => byWeightCount(n, k),
+    unrank: ([n, k], r) => byWeightUnrank(n, k, r),
+    rank: (x, [n, k]) => byWeightRank(x as number[], n, k),
+    valid: (x, [n, k]) => byWeightValid(x, n, k),
+  },
+};
+
+// No `fast` for FibStrings and LucasStrings: the TS Fibonacci kernel is uncached and exponential,
+// so Epsil's completion table is ~100x faster at n = 20.
 export const entries: (NumberKernel | EpsilFamily)[] = [
   binaryWords,
-  // BinaryWordsByWeight(n, k): length-n binary words of Hamming weight k.
-  {
-    ...ints(
-      "BinaryWordsByWeight",
-      2,
-      ([n, k]) => byWeightCount(n, k),
-      ([n, k], r) => byWeightUnrank(n, k, r),
-      (a, [n, k]) => byWeightValid(a, n, k),
-      (a, [n, k]) => byWeightRank(a, n, k),
-    ),
-    carrier: "BinaryWord",
-  },
+  binaryWordsByWeightFast,
   wordsFamily,
-  // FibStrings(n): binary words with no two consecutive 1s — F(n+2). Same family as the already
-  // declared FibonacciWords head; reuses its kernels under the catalogued name.
-  {
-    ...ints(
-      "FibStrings",
-      1,
-      ([n]) => FibonacciWordCount(n),
-      ([n], r) => FibonacciWordUnrank(n, r),
-      (a, [n]) => IsFibonacciWord(a, n),
-      (a) => FibonacciWordRank(a),
-    ),
-    carrier: "BinaryWord",
-  },
-  // LucasStrings(n): circular no-two-consecutive-1s binary words — the Lucas numbers.
-  {
-    ...ints(
-      "LucasStrings",
-      1,
-      ([n]) => lucasCount(n),
-      ([n], r) => lucasStringsUnrank(n, r),
-      (a, [n]) => lucasStringsValid(a, n),
-      (a, [n]) => lucasStringsRank(a, n),
-    ),
-    carrier: "BinaryWord",
-  },
+  // Same words as FibonacciWords, under the catalogued name.
+  fibStrings,
+  lucasStrings,
   grayCodesFamily,
   binaryPalindromesFamily,
   // BinaryNecklaces(n): binary words up to rotation (lex-least reps) — KNecklaces(n, 2), remapped
