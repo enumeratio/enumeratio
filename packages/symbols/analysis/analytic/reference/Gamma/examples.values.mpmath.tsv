@@ -35,6 +35,7 @@ to-40-significant-digits-every-one-correctly	(gamma((mpf(1)/3)))	2.6789385347077
 gamma-neg-infty-indeterminate	gamma(-inf)		
 gamma-complex-infinity-indeterminate			
 gamma-i-infty-0			
+gamma-directed-infinity-i			
 gamma-threads-over-the-infinities			
 the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2			
 extends-the-factorial-gamma-n-1-n-so-gamma-6-5			
