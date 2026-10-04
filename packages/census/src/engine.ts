@@ -2,7 +2,7 @@
 //
 // This package exists for this function. Questions about the namespace as a whole — what do
 // we add, what does it collide with, what can Wolfram do that we cannot — are only
-// answerable against a COMPLETE engine, and a library missing from the list is a library
+// answerable against a COMPLETE engine, and a library missing from the engine is a library
 // those questions pass over in silence. The catalog half (collections, domains, statistics)
 // was missing from the reference package's engine for a long time, and the checks there
 // were quietly not covering `Subsets`, `Area`, `Order`, `Composition` or `Word` at all.
@@ -10,146 +10,93 @@
 // It is its own package rather than a file in `reference` because reference is a
 // DEPENDENCY of collections (which types its entries against it), so reference cannot
 // depend back on collections without a cycle the task graph rejects. Nothing depends on
-// this package, which is what lets it depend on everything.
+// this package, which is what lets it depend on everything. That is also what completes the
+// engine: it declares every library it depends on, in the order the manifest's hierarchy
+// gives (`enginePlan`), so a new library is in once it is a dependency.
 
+import { readFileSync } from "node:fs";
 import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
-import { displayDictionary } from "@enumeratio/frontend/display";
-import { NOTATIONS } from "@enumeratio/manifest";
-import { declareAdeles } from "@enumeratio/adeles";
-import { declareEvaluation } from "@enumeratio/evaluation";
 import { declareAnalytic } from "@enumeratio/analytic";
-import { declareBraid } from "@enumeratio/braid";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog";
-import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
-import { declareDiagrams } from "@enumeratio/diagram";
-import { declareGraphics } from "@enumeratio/formats";
-import { declareGeometric } from "@enumeratio/geometric";
-import { declareGroupAlgebra } from "@enumeratio/groupalgebra";
-import { declareHecke } from "@enumeratio/hecke";
-import { declareHopf } from "@enumeratio/hopf";
-import { declareHypercomplex } from "@enumeratio/hypercomplex";
-import { declareBoxes } from "@enumeratio/boxes";
-import { declareIncidence } from "@enumeratio/incidence";
-import { declareModular } from "@enumeratio/modular";
-import { declareFrontendCarriers } from "@enumeratio/frontend/declare-carriers";
-import { declareNumberTheory } from "@enumeratio/number-theory";
-import { declareNumerals } from "@enumeratio/numerals";
-import { declareQuiver } from "@enumeratio/quiver";
-import { declareResidues } from "@enumeratio/residues";
+import { displayDictionary } from "@enumeratio/frontend/display";
 import {
-  declareCarrierElement,
-  declareCarrierPlurals,
-  declareCompose,
-  declareRestricted,
-  declareRestrictions,
-  declareStructures,
-  ensureAlgebraHeads,
-  ensureOperationHeads,
-  ensureProtocols,
-  RESTRICTIONS,
-} from "@enumeratio/structures";
-import {
-  declareDistributions,
-  declareDistributions2,
-  declareDistributions3,
-  declareDistributions4,
-  declareDistributions5,
-  declareDistributions6,
-  declareProcesses,
-} from "@enumeratio/statistics";
+  buildEngine,
+  dependedLibraries,
+  enginePlan,
+  type Importer,
+  loadLibraries,
+  NOTATIONS,
+  type StagedLibrary,
+} from "@enumeratio/manifest";
+import { declareCompose, declareRestricted, declareRestrictions, RESTRICTIONS } from "@enumeratio/structures";
 
 type Declare = (ce: ComputeEngine) => void;
 
-// `declareMaps` takes the constructor by its type, the other way around.
-const constructorTypes = (): Record<string, string> =>
-  Object.fromEntries(CARRIERS.map((carrier) => [carrier.type, carrier.name]));
+const importer: Importer = (specifier, options) =>
+  options?.json
+    ? import(/* @vite-ignore */ specifier, { with: { type: "json" } }).then((m: { default: unknown }) => m.default)
+    : import(/* @vite-ignore */ specifier);
+
+const own = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")) as Parameters<
+  typeof dependedLibraries
+>[0];
 
 /**
- * Every declaration with the package that owns it, in an order that satisfies what depends
- * on what. The package is the directory name, as the manifest names packages: what a step
- * adds or re-signs is that package's contribution (https://github.com/enumeratio/enumeratio/wiki/Manifest).
+ * Every library this package depends on, whatever its layer, each with its `declare`. Analytic
+ * declares without its fractals here, as it always has: `Julia` and `Mandelbrot` have no typed
+ * records yet, and `tests/manifest.test.ts` holds every head the census declares to one.
  */
-export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Declare])[] = [
-  ["evaluation", declareEvaluation],
-  // The protocols, algebra and operation heads first: the libraries below conform to them and
-  // fill their tables. The generic
-  // heads come later (below).
-  [
-    "structures",
+const AVAILABLE = (
+  await loadLibraries<ComputeEngine>(dependedLibraries(own, ["base", "extension", "presentation", "tooling"]), importer)
+).map((library) =>
+  library.name === "analytic" ? { ...library, declare: declareAnalytic, main: declareAnalytic } : library,
+);
+
+/** A step the census adds that is no package's own: what it adds is `package`'s contribution. */
+type Extra = StagedLibrary<ComputeEngine> & { readonly package?: string };
+
+/** A step after every library's own, and after what it `requires`. */
+const late = (name: string, declare: (ce: ComputeEngine) => void, requires: string[], pkg?: string): Extra => ({
+  name,
+  declare,
+  late: declare,
+  requires,
+  ...(pkg === undefined ? {} : { package: pkg }),
+});
+
+/**
+ * What the census declares beyond what the libraries declare themselves. The restricted heads and
+ * `Compose` are structures' over combinatorics' maps, so they follow combinatorics and count as
+ * its contribution; the catalog blesses what everything before it declared.
+ */
+const EXTRAS: readonly Extra[] = [
+  late(
+    "restrictions",
     (ce) => {
-      ensureProtocols(ce);
-      ensureAlgebraHeads(ce);
-      ensureOperationHeads(ce);
-    },
-  ],
-  ["analytic", declareAnalytic],
-  ["hypercomplex", declareHypercomplex],
-  ["geometric", declareGeometric],
-  ["diagram", declareDiagrams],
-  ["residues", declareResidues],
-  ["numerals", declareNumerals],
-  ["hecke", declareHecke],
-  ["incidence", declareIncidence],
-  ["quiver", declareQuiver],
-  ["hopf", declareHopf],
-  ["groupalgebra", declareGroupAlgebra],
-  ["modular", declareModular],
-  ["adeles", declareAdeles],
-  ["braid", declareBraid],
-  ["number-theory", declareNumberTheory],
-  // Carriers, then the families typed by them -- one call (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 3), in place of `declareCombinatoricsCarriers` + `declareCollections`
-  // separately.
-  ["combinatorics", declareCombinatorics],
-  // After collections and analytic: their Floor/Min widenings would narrow the generic ones.
-  ["structures", declareStructures],
-  ["formats", declareGraphics],
-  ["boxes", declareBoxes],
-  // AFTER declareCombinatorics (above), so a plural a collection family already claims
-  // (Permutations, DyckPaths, ...) is still free when this checks, not raced by minting a
-  // bare symbol first.
-  [
-    "combinatorics",
-    (ce) => {
-      declareCarrierPlurals(ce, CARRIERS);
-      declareCarrierElement(ce, CARRIERS);
-    },
-  ],
-  // GlyphKind — moved here from combinatorics' now-retired domains area's LEFTOVER_CARRIERS. Type, constructor,
-  // plural type-space name and `Element` membership, all in `declareFrontendCarriers` now
-  // (`declareCarriers`' default folding) — residues/numerals/number-theory/hypercomplex,
-  // listed above at their own declare call, already fold theirs the same way.
-  ["frontend", declareFrontendCarriers],
-  // The combinatorial statistics moved into `declareCombinatorics` itself (step 6b: each
-  // area declares its own statistics after its own carriers and families). What's left here
-  // is genuinely `@enumeratio/statistics`'s own: the distributions and processes.
-  [
-    "statistics",
-    (ce) => {
-      declareDistributions(ce);
-      declareDistributions2(ce);
-      declareDistributions3(ce);
-      declareDistributions4(ce);
-      declareDistributions5(ce);
-      declareDistributions6(ce);
-      declareProcesses(ce);
-    },
-  ],
-  // `declareMaps` stays out of `declareCombinatorics` and here, at its ORIGINAL position:
-  // it widens `Inverse` rather than minting it, and has to run after structures/
-  // groupalgebra/modular declare their own `Inverse` so its permutation-carrier overload is
-  // the one left standing (see @enumeratio/combinatorics' src/index.ts).
-  [
-    "combinatorics",
-    (ce) => {
-      declareMaps(ce, constructorTypes());
       declareRestricted(ce);
       declareRestrictions(ce, RESTRICTIONS);
     },
-  ],
-  ["combinatorics", declareCompose],
-  ["catalog", (ce) => declareCatalog(ce, { bless: [ENUMERATIO] })],
+    ["combinatorics"],
+    "combinatorics",
+  ),
+  late("compose", declareCompose, ["restrictions"], "combinatorics"),
+  late("catalog", (ce) => declareCatalog(ce, { bless: [ENUMERATIO] }), ["restrictions", "compose"]),
 ];
+
+const NAMES = AVAILABLE.map((library) => library.name);
+
+/** The declarations, in order, with why each library is there. */
+export const PLAN = enginePlan({ libraries: NAMES, available: AVAILABLE, include: EXTRAS });
+
+/**
+ * Every declaration with the package that owns it, in order. The package is the directory
+ * name, as the manifest names packages: what a step adds or re-signs is that package's
+ * contribution (https://github.com/enumeratio/enumeratio/wiki/Manifest).
+ */
+export const PACKAGE_DECLARATIONS: readonly (readonly [pkg: string, declare: Declare])[] = PLAN.steps.map(
+  ({ library, declare }) => [(library as Extra).package ?? library.name, declare as Declare] as const,
+);
 
 /** Every declaration, in order. */
 export const DECLARATIONS: readonly Declare[] = PACKAGE_DECLARATIONS.map(([, declare]) => declare);
@@ -168,14 +115,19 @@ export const NOTATION_ENTRIES: Readonly<Record<string, PackageNotation>> = Objec
 export const NOTATION = combineNotation(Object.values(NOTATION_ENTRIES));
 
 /** An engine with everything we ship declared on it, and every package's notation. */
-export const fullEngine = (): ComputeEngine => {
-  const ce = new ComputeEngine({
-    latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, NOTATION.latex) as never[] }),
-  });
-  registerNotation(ce, NOTATION.traditional);
-  for (const declare of DECLARATIONS) declare(ce);
-  return ce;
-};
+export const fullEngine = (): ComputeEngine =>
+  buildEngine({
+    libraries: NAMES,
+    available: AVAILABLE,
+    include: EXTRAS,
+    engine: () => {
+      const ce = new ComputeEngine({
+        latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, NOTATION.latex) as never[] }),
+      });
+      registerNotation(ce, NOTATION.traditional);
+      return ce;
+    },
+  }).engine;
 
 /**
  * Every name bound in an engine's scope chain.

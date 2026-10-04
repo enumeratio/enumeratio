@@ -44,6 +44,7 @@
     "@cortex-js/compute-engine": "^0.146.0"
   },
   "enumeratio": {
-    "group": "arithmetic"
+    "group": "arithmetic",
+    "declare": "declareAdeles"
   }
 }

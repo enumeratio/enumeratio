@@ -17,9 +17,10 @@ doesn't actually answer).
 
 `.` (`src/index.ts`):
 
-- **`DECLARATIONS`/`PACKAGE_DECLARATIONS`/`declaredNames`/`fullEngine`** (`engine.ts`) —
-  every package declared in order into one engine; `declaredNames` is the resulting binding
-  table, the input to any collision or coverage check.
+- **`PLAN`/`DECLARATIONS`/`PACKAGE_DECLARATIONS`/`declaredNames`/`fullEngine`** (`engine.ts`) —
+  every library this package depends on, declared in the order the manifest's hierarchy gives
+  (`buildEngine`) into one engine, with the steps the census adds after combinatorics;
+  `declaredNames` is the resulting binding table, the input to any collision or coverage check.
 - **`contributions`/`Contribution`** (`contributions.ts`) — per head, which packages add it,
   re-sign it, or replace its handler, the type the engine ends up printing, and whether it
   holds its arguments. The manifest ([`manifest`](../manifest/README.md)) must agree —
