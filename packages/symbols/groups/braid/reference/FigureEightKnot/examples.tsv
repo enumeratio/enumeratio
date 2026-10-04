@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+its-seifert-genus	Basic		[SeifertGenus, [FigureEightKnot]]	1	The figure-eight is a genus-1 knot

@@ -1,0 +1,4 @@
+id	in
+odd-power-of-sine	Integrate[Power[Sin[x], 3], x]
+sine-times-cosine-cubed	Integrate[Times[Power[Sin[x], 3], Cos[x]], x]
+definite	Integrate[Sin[x], List[x, 0, Pi]]

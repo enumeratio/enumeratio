@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+an-even-integer	Basic		[IsEvenTick, 4]	True	Integers' ticks have a parity

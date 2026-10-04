@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+st-word-of-a-hyperbolic-matrix	Basic		[ModularSTWord, [ModularMatrix, 1, 4, 1, 5]]	[List, 1, 5]	The $T$-exponents of $\begin{pmatrix}1&4\\1&5\end{pmatrix}$

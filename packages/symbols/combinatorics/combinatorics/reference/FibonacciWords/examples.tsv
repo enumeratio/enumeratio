@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-fibonacci-words-5	Basic		[Count, [FibonacciWords, 5]]	13	$F(7) = 13$
+fibonacci-words-3	Basic		[Take, [FibonacciWords, 3], 5]	[List, [List, 0, 0, 0], [List, 0, 0, 1], [List, 0, 1, 0], [List, 1, 0, 0], [List, 1, 0, 1]]	Length 3, no two adjacent 1s

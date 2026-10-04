@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+of-a-complex-number	Basic		[Real, [Complex, 3, 4]]	3	$\operatorname{Re}(3+4i) = 3$
+of-an-infinity	Properties		[Real, PositiveInfinity]	PositiveInfinity	Of a directed infinity, the infinity of its sign

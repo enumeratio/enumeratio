@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+dimension	Basic		[AlgebraDimension, [MulticomplexAlgebra, 3]]	8	$2^3$
+basis	Basic		[Basis, [MulticomplexAlgebra, 2]]	[List, 1, i_1, i_2, [Multiply, i_1, i_2]]	

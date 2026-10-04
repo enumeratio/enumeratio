@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+digits-of-a-positive-integer	Basic		[IntegerDigits, 1234, [AdicNumerals, 10, 6]]	[List, 0, 0, 1, 2, 3, 4]	Width-6 digits, most significant first: leading zeros pad
+minus-one-is-all-ones	Basic		[IntegerDigits, -1, [AdicNumerals, 2, 6]]	[List, 1, 1, 1, 1, 1, 1]	The sign is folded into the digits: $-1$ is all ones in base 2
+negative-in-base-10	Scope		[IntegerDigits, -7, [AdicNumerals, 10, 4]]	[List, 9, 9, 9, 3]	$-7 \equiv 9993 \pmod{10^4}$

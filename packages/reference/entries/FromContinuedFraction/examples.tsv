@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+a-finite-expansion	Basic		[FromContinuedFraction, [List, 3, 7, 15, 1]]	[Rational, 355, 113]	$[3;7,15,1]$ is the convergent $355/113$
+symbolic-terms	Scope		[FromContinuedFraction, [List, a, b, c]]	[Add, a, [Divide, 1, [Add, b, [Divide, 1, c]]]]	Built term by term, unsimplified
+periodic-tail	Scope		[FromContinuedFraction, [List, 1, [List, 1]]]	[Multiply, [Rational, 1, 2], [Add, 1, [Sqrt, 5]]]	$[1;\overline{1}]$ is the golden ratio

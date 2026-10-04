@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+membership	Basic		[Element, [PosetInterval, 2, 3], [IncidenceAlgebra, [Chain, 4]]]	True	$2\le 3$ in the chain
+not-an-interval	Basic		[Element, [PosetInterval, 3, 2], [IncidenceAlgebra, [Chain, 4]]]	False	$3\not\le 2$

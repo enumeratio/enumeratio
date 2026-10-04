@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+words	Basic		[TextData, [List, "'Hello'", "'world'"]]	[TextData, [List, "'Hello'", "'world'"]]	a box is inert: it evaluates to itself

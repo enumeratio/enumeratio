@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+unreduced-pair	Basic		[Fraction, [Tuple, 6, 4]]	[Fraction, [Tuple, 6, 4]]	Kept as written: $6/4$ is not reduced to $3/2$

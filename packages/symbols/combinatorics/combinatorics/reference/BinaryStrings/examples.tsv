@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-binary-strings-4	Basic		[Count, [BinaryStrings, 4]]	16	$2^4$ strings
+binary-strings-3	Basic		[Take, [BinaryStrings, 3], 8]	[List, [List, 0, 0, 0], [List, 0, 0, 1], [List, 0, 1, 0], [List, 0, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]	All of length 3, in counting order

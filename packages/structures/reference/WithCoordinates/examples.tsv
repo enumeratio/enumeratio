@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+rebuild-a-complex	Basic		[WithCoordinates, [Complex, 2.5, 3.7], [List, 2, 3]]	[Complex, 2, 3]	$x$ picks the implementation: a complex number rebuilt from its coordinates

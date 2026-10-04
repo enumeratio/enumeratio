@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-even-subsets-4	Basic		[Count, [EvenSubsets, 4]]	8	$2^{3}$ of the 16 subsets
+even-subsets-3	Basic		[Take, [EvenSubsets, 3], 4]	[List, [List], [List, 1, 2], [List, 1, 3], [List, 2, 3]]	Size 0 and 2 subsets of $\{1,2,3\}$

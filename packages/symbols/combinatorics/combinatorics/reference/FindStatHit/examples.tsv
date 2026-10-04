@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+a-hit-as-data	Basic		[FindStatHit, [Tuple, "'Permutations'", "'Descents'", [List, "'Inverse'"], 1, [Rational, 1, 2]]]	[FindStatHit, [Tuple, "'Permutations'", "'Descents'", [List, "'Inverse'"], 1, [Rational, 1, 2]]]	A hit record: collection, statistic, maps applied first, $q_a$, $q_d$

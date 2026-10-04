@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+count-cyclic-permutations-of-4	Basic		[Count, [CyclicPermutations, 4]]	6	$(4-1)! = 6$ permutations of 4 with a single cycle
+first-cyclic-permutation-of-3	Basic		[At, [CyclicPermutations, 3], 1]	[Permutation, [List, 2, 3, 1]]	The first cyclic permutation of 3, in one-line notation
+second-cyclic-permutation-of-3	Properties		[At, [CyclicPermutations, 3], 2]	[Permutation, [List, 3, 1, 2]]	The other, the inverse of the first

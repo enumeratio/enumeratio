@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+seifert-genus-of-p-3-5-7	Basic		[SeifertGenus, [PretzelKnot, -3, 5, 7]]	1	A genus-1 pretzel knot
+p-1-1-1-is-the-trefoil	Basic		[AlexanderPolynomial, [PretzelKnot, 1, 1, 1]]	[Add, [Power, t, 2], [Negate, t], 1]	$P(1,1,1)$ has the trefoil's Alexander polynomial

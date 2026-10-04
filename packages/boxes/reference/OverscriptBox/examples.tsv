@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+hat	Basic		[OverscriptBox, "'x'", "'^'"]	[OverscriptBox, "'x'", "'^'"]	a box is inert: it evaluates to itself

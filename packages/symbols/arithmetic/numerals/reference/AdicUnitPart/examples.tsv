@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+unit-part-of-75	Basic		[AdicUnitPart, [AdicNumeral, 5, 75]]	[AdicNumeral, 5, 3]	$75 = 5^2 \cdot 3$, so the unit part is 3

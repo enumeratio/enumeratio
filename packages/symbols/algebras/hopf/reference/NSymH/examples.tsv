@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+degree-of-h-2-1	Basic		[HopfDegree, [NSymH, [List, 2, 1]]]	3
+into-the-ribbon-basis	Basic		[InRibbonBasis, [NSymH, [List, 2, 1]]]	[Add, [NSymR, [List, 3]], [NSymR, [List, 2, 1]]]

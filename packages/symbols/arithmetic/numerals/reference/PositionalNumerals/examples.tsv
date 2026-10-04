@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+base-7-digits	Basic		[IntegerDigits, 100, [PositionalNumerals, 7]]	[List, 2, 0, 2]	$100 = 2\cdot 49 + 0\cdot 7 + 2$

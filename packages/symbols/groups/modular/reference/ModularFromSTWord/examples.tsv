@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+from-the-exponents-1-2	Basic		[ModularFromSTWord, [List, 1, 2]]	[ModularMatrix, 1, 1, 1, 2]	Inverse of [[ModularSTWord]]

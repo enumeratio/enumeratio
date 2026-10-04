@@ -28,6 +28,23 @@ export const symbolInfo = (name: string): SymbolInfo | undefined =>
 export { CANONICAL, CARRIER_TYPES, DECLARERS } from "./declarers-data.ts";
 export { HIERARCHY, type Layer, PACKAGES, type Placement } from "./hierarchy.ts";
 export {
+  type BuiltEngine,
+  buildEngine,
+  type BuildEngineOptions,
+  DECLARE_ORDER,
+  DECLARE_PREFERENCE,
+  declarePlan,
+  dependedLibraries,
+  enginePlan,
+  type EnginePlan,
+  type EnginePlanOptions,
+  type Importer,
+  loadLibraries,
+  type Reason,
+  type StagedLibrary,
+  type Step,
+} from "./engine.ts";
+export {
   createResolver,
   type Library,
   type Lookup,

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+degree-of-h-1-2	Basic		[HopfDegree, [NSymH, [List, 1, 2]]]	3	$1+2$

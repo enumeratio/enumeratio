@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+a-coproduct-term	Basic		[Coproduct, [NSymH, [List, 1]]]	[Add, [HopfTensor, [NSymH, [List]], [NSymH, [List, 1]]], [HopfTensor, [NSymH, [List, 1]], [NSymH, [List]]]]	[[Coproduct]] of $H_1$ is a sum of [[HopfTensor]] pairs
