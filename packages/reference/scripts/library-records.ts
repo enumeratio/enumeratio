@@ -9,7 +9,7 @@ import type { ReferenceEntry } from "@enumeratio/entry";
 import { headNames, readHead } from "@enumeratio/entry/node";
 import type { Mapping } from "@enumeratio/oracle";
 // From the source, as collect-mappings does: oracle's build runs before oracle is built.
-import { mappingsFromBindings } from "../../oracle/src/mappings.ts";
+import { mappingsFromBindings } from "../../oracle/src/mapping-rows.ts";
 
 export interface LibraryHead {
   readonly head: string;

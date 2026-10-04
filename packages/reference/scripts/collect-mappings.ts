@@ -12,7 +12,7 @@
 
 import { writeFormatted } from "@enumeratio/entry/node";
 // From the source: oracle's build runs this before oracle itself is built.
-import { mappingsFromBindings } from "../../oracle/src/mappings.ts";
+import { mappingsFromBindings } from "../../oracle/src/mapping-rows.ts";
 import { referenceData } from "../src/node.ts";
 
 const { entries } = referenceData();
