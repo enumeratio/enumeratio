@@ -9,6 +9,8 @@ import { ENGINE } from "../src/contributions.ts";
 import { declarations, duplicateRows } from "../src/owners.ts";
 
 const declared = declarations();
+// Loaded once at collection, like `declared`: reading every record is the slow part.
+const heads = referenceData(recordsRoot(import.meta.dirname)).heads;
 
 /** Heads a package still redeclares, with the reason. The list only shrinks. */
 const REDECLARED: Record<string, Record<string, string>> = {
@@ -33,7 +35,7 @@ test("no two packages contribute the same signature to a head", () => {
 test("no two records of one head document the same signature", () => {
   const rows = new Map<string, string>();
   const twice: string[] = [];
-  for (const { head, package: pkg, entry } of referenceData(recordsRoot(import.meta.dirname)).heads)
+  for (const { head, package: pkg, entry } of heads)
     for (const row of entry.signatures ?? []) {
       // The engine's own row is each record's way of saying where the head comes from.
       if (row.library === undefined || row.library.endsWith("compute-engine")) continue;
