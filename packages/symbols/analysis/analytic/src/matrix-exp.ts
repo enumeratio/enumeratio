@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
-import { add, cx, type Cx, mul, scale, type EvalOptions, wantsNumber } from "@enumeratio/ce-patches";
+import { add, cx, type Cx, mul, scale, type EvalOptions, wantsNumber, inexactComplex } from "@enumeratio/ce-patches";
 
 // MatrixExp(m) — the matrix exponential e^M = Σ_{k≥0} M^k / k!, for a square matrix m.
 // Wolfram names this MatrixExp too (its Exp maps element-wise, same as ours — see the
@@ -263,7 +263,7 @@ function nMatrixToExpr(ce: ComputeEngine, m: NMatrix, n: number): BoxedExpressio
     rows[i] = [];
     for (let j = 0; j < n; j++) {
       const { re, im } = m[i][j];
-      rows[i][j] = Math.abs(im) < 1e-13 * (1 + Math.abs(re)) ? ce.number(re) : ce.number(ce.complex(re, im));
+      rows[i][j] = Math.abs(im) < 1e-13 * (1 + Math.abs(re)) ? ce.number(re) : inexactComplex(ce, re, im);
     }
   }
   return listOf(ce, rows);

@@ -149,6 +149,7 @@ export {
   isRealInt,
   isFiniteNum,
   numberResult,
+  inexactComplex,
   wantsNumber,
   declined,
   realCompile,

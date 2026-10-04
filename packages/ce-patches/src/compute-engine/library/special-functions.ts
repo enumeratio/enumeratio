@@ -20,6 +20,7 @@ import {
   declined,
   isFiniteNum,
   isRealInt,
+  inexactComplex,
   numberResult,
   realCompile,
   wantsNumber,
@@ -229,7 +230,7 @@ function bigZetaResult(
   if (zetaKernel !== "bignum") return undefined;
   const r = kernel(bigOperand(ce, s), bigOperand(ce, a), Math.max(ce.precision, 17));
   if (r === undefined) return undefined;
-  if (!r.im.isZero()) return ce.number(ce.complex(r.re.toNumber(), r.im.toNumber()));
+  if (!r.im.isZero()) return inexactComplex(ce, r.re.toNumber(), r.im.toNumber());
   return ce.number(ce.precision > DOUBLE_DIGITS ? r.re.toPrecision(ce.precision) : r.re.toNumber());
 }
 

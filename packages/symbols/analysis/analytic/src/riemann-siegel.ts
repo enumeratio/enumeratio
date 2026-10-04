@@ -1,5 +1,12 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isRealInt, wantsNumber, logGamma, zetaGeneralized } from "@enumeratio/ce-patches";
+import {
+  type EvalOptions,
+  isRealInt,
+  wantsNumber,
+  logGamma,
+  zetaGeneralized,
+  inexactComplex,
+} from "@enumeratio/ce-patches";
 
 // RiemannSiegelTheta(t), RiemannSiegelZ(t), and RiemannZetaZero(k) — reusing the
 // existing log-gamma continuation (loggamma.ts) and generalized zeta kernel
@@ -116,7 +123,7 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
       if (!wantsNumber(ops, options)) return undefined;
       const t = riemannZetaZeroT(k.re);
       if (t === undefined) return undefined; // beyond MAX_T; decline rather than guess
-      return ce.number(ce.complex(0.5, t));
+      return inexactComplex(ce, 0.5, t);
     },
   });
 }

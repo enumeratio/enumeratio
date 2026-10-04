@@ -9,7 +9,7 @@ at-t2-0-7		test	[N, [ChebyshevT, 2, 0.7]]	-0.02000000000000013
 at-t5-0-7		test	[N, [ChebyshevT, 5, 0.7]]	-0.6708799999999998						
 at-t5-2		test	[N, [ChebyshevT, 5, 2]]	362						
 at-t-5-0-7		test	[N, [ChebyshevT, -5, 0.7]]	-0.6708799999999998						
-at-t4-2-3i		aspirational	[N, [ChebyshevT, 4, [Complex, 2, 3]]]	[Complex, {num: "-911.0"}, {num: "-1056.0"}]						
+at-t4-2-3i		test	[N, [ChebyshevT, 4, [Complex, 2, 3]]]	[Complex, {num: "-911.0"}, {num: "-1056.0"}]						
 chebyshevt-2-3			[ChebyshevT, 2, 3]	17			Evaluates at an integer: $T_2(3) = 2\cdot9 - 1$			
 chebyshevt-10-x			[ChebyshevT, 10, x]	[Add, [Multiply, 512, [Power, x, 10]], [Multiply, -1280, [Power, x, 8]], [Multiply, 1120, [Power, x, 6]], [Multiply, -400, [Power, x, 4]], [Multiply, 50, [Power, x, 2]], -1]			The degree-10 polynomial in $x$			
 at-a-rational	Scope		[ChebyshevT, 5, [Rational, 1, 3]]	[Rational, 241, 243]			At a rational $x$ the value is an exact rational			

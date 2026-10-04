@@ -8,7 +8,7 @@ at-u5-0-7		test	[N, [ChebyshevU, 5, 0.7]]	-1.39776
 at-u-1-0-7		test	[N, [ChebyshevU, -1, 0.7]]	0						
 at-u-2-0-7		test	[N, [ChebyshevU, -2, 0.7]]	-1						
 at-u-5-0-7		test	[N, [ChebyshevU, -5, 0.7]]	0.05600000000000027						
-at-u4-2-3i		aspirational	[N, [ChebyshevU, 4, [Complex, 2, 3]]]	[Complex, {num: "-1843.0"}, {num: "-2064.0"}]						
+at-u4-2-3i		test	[N, [ChebyshevU, 4, [Complex, 2, 3]]]	[Complex, {num: "-1843.0"}, {num: "-2064.0"}]						
 chebyshevu-2-3			[ChebyshevU, 2, 3]	35			Evaluates at an integer: $U_2(3) = 4\cdot9 - 1$			
 chebyshevu-10-x			[ChebyshevU, 10, x]	[Add, [Multiply, 1024, [Power, x, 10]], [Multiply, -2304, [Power, x, 8]], [Multiply, 1792, [Power, x, 6]], [Multiply, -560, [Power, x, 4]], [Multiply, 60, [Power, x, 2]], -1]			The degree-10 polynomial in $x$			
 at-a-rational	Scope		[ChebyshevU, 3, [Rational, 1, 2]]	-1			At a rational $x$ the value is exact			
