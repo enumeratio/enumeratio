@@ -1,10 +1,13 @@
-id	in
-4	Length[SymmetricGroup[4]]
-the-identity	Part[SymmetricGroup[3], 1]
-inversions-are-mahonian	
-major-index-is-equidistributed	
-descents-are-eulerian	
-excedances-are-eulerian-too	
-cycles-are-stirling-numbers-of-the-first-kind	
-fixed-points-are-the-rencontres-numbers	
-half-are-even	
+id	in	out	tex.in	tex.out
+the-order-of-s-5-is-5	GroupOrder[SymmetricGroup[5]]	120	\text{GroupOrder}[\text{SymmetricGroup}[5]]	120
+4	Length[SymmetricGroup[4]]			
+the-identity	Part[SymmetricGroup[3], 1]			
+s-10-10	GroupOrder[SymmetricGroup[10]]	3628800	\text{GroupOrder}[\text{SymmetricGroup}[10]]	3628800
+the-one-line-words-are-compute-engine-s				
+inversions-are-mahonian				
+major-index-is-equidistributed				
+descents-are-eulerian				
+excedances-are-eulerian-too				
+cycles-are-stirling-numbers-of-the-first-kind				
+fixed-points-are-the-rencontres-numbers				
+half-are-even				

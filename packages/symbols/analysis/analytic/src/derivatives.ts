@@ -49,15 +49,6 @@ const DERIVATIVES: Readonly<Record<string, Readonly<Record<Orders, Partial>>>> =
   Zeta: { "0,1": shiftInS("Zeta", []) },
   LerchPhi: { "0,0,1": shiftInS("LerchPhi", ["z"]) },
 
-  // Native heads we redeclare (a redeclared head loses compute-engine's own derivative rule).
-  Gamma: { "1": { params: ["z"], body: ["Multiply", ["Gamma", "z"], ["Digamma", "z"]] } },
-  Erf: {
-    "1": {
-      params: ["z"],
-      body: ["Divide", ["Multiply", 2, ["Exp", ["Negate", ["Power", "z", 2]]]], ["Sqrt", "Pi"]],
-    },
-  },
-
   LogGamma: { "1": { params: ["z"], body: ["PolyGamma", 0, "z"] } },
   // H_z = ψ(z+1) + γ, so H_z′ = ψ′(z+1).
   HarmonicNumber: { "1": { params: ["z"], body: ["PolyGamma", 1, ["Add", "z", 1]] } },

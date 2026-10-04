@@ -1,9 +1,9 @@
 ---
 name: BinaryWord
+catalogCarrier: true
 domain: Collections
 signature: BinaryWord(list)
 summary: The singular-inhabitant constructor for a word over $\{0, 1\}$.
-catalogCarrier: true
 signatures:
   - call: BinaryWord(list)
     description: The singular-inhabitant constructor for a word over $\{0, 1\}$.

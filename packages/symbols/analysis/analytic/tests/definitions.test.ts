@@ -142,7 +142,7 @@ test("a partial with no closed form stays an inert Derivative", () => {
 
 test("the stock derivative table still works", () => {
   expect(box(["D", ["Sin", "x"], "x"]).evaluate().json).toEqual(["Cos", "x"]);
-  expect(box(["D", ["Gamma", "z"], "z"]).evaluate().json).toEqual(["Multiply", ["Digamma", "z"], ["Gamma", "z"]]);
+  expect(box(["D", ["Gamma", "z"], "z"]).evaluate().json).toEqual(["Multiply", ["Gamma", "z"], ["Digamma", "z"]]);
 });
 
 // --- Arbitrary precision -------------------------------------------------------------

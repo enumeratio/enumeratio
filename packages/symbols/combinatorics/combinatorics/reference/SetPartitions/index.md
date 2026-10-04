@@ -1,16 +1,68 @@
 ---
 name: SetPartitions
-domain: Combinatorial collections
+domain: Collections
 signature: SetPartitions(n)
-summary: The partitions of the set $\{1, \dots, n\}$ into unordered non-empty blocks.
+summary: The partitions of the set $\{1, …, n\}$ into non-empty blocks, a lazy indexed family.
 signatures:
   - call: SetPartitions(n)
-    description: the partitions of an $n$-set into blocks
+    description: every way to split $\{1, …, n\}$ into disjoint non-empty blocks.
     library: enumeratio-combinatorics
+    type: (collection<any> | integer, integer?) -> indexed_collection<set_partition> | list<list<list<any>> | set_partition>
+  - call: SetPartitions(n, k)
+    description: the set partitions of $\{1, …, n\}$ into exactly $k$ blocks.
+    library: enumeratio-combinatorics
+  - call: SetPartitions(collection)
+    description: the set partitions of any finite collection.
+    library: enumeratio-combinatorics
+enumerate:
+  expr: SetPartitions(4)
+  columns: Length, Max(Map(Length, _))
+  glyph: set-partition
 seeAlso:
-  - IntegerPartitions
   - BellNumber
+  - Stirling
+  - Count
+  - At
+  - IntegerPartitions
+references:
+  - system: wikipedia
+    identity: Partition of a set
+  - system: mathworld
+    identity: SetPartition
+  - system: oeis
+    identity: A000110
+catalog:
+  - system: mathlib4
+    identity: "Finpartition (Finset.univ : Finset (Fin n))"
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Order/Partition/Finpartition.html
+  - system: oeis
+    identity: A000110
+    url: https://oeis.org/A000110
+  - system: sage
+    identity: SetPartitions(n)
+    url: https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/set_partition.html
+  - system: sympy
+    identity: multiset_partitions
+    url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.multiset_partitions
+    note: multiset_partitions(n) partitions the 0-indexed multiset range(n) — shift block elements +1 for our 1-indexed RGS
+  - system: wikipedia
+    identity: Partition of a set
+    url: https://en.wikipedia.org/wiki/Partition_of_a_set
+    relation: conceptual
+  - system: wolfram
+    identity: BellB
+    url: https://reference.wolfram.com/language/ref/BellB.html
+    note: cardinality(set_partitions(n)) = BellB(n); the set-partition collection whose count BellB gives, alongside the plain sequence at bell_numbers
+  - system: mathlib4
+    identity: Nat.bell
+    url: https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Enumerative/Bell.html#Nat.bell
+    relation: aggregate
+grades:
+  - name: n
+    role: axis
+carrier: SetPartition
 ---
 
-- Count is the Bell number $B_n$ (see [[BellNumber]])
-- Each element is a list of blocks (a list of index lists)
+- A lazy indexed collection; the count is the Bell number $B_n$ — $B_4 = 15$. See [[BellNumber]].
+- The partitions into exactly $k$ blocks number the Stirling numbers of the second kind $S(n, k)$; summing over $k$ gives $B_n$. See [[Stirling]].
+- Each element is the block list; the $set$-$partition$ glyph draws it from its restricted-growth string.
