@@ -9,6 +9,7 @@ import {
   cx,
   type Cx,
   scale,
+  inexactComplex,
 } from "@enumeratio/ce-patches";
 
 // PrimeZetaP(s) = Σ_p p^(−s), the sum over primes. Rather than sieving primes and summing
@@ -24,7 +25,7 @@ const TOL = 1e-17;
 /** ζ(z) at a (possibly complex) point, via compute-engine's own Zeta — this package's own
  * extended definition once `declareAnalytic` has run, so complex z is already covered. */
 function zetaAt(ce: ComputeEngine, z: Cx): Cx {
-  const arg = z.im === 0 ? ce.number(z.re) : ce.number(ce.complex(z.re, z.im));
+  const arg = z.im === 0 ? ce.number(z.re) : inexactComplex(ce, z.re, z.im);
   const r = ce.function("Zeta", [arg]).N();
   return cx(r.re, r.im);
 }

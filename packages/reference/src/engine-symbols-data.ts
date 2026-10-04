@@ -1044,6 +1044,12 @@ export const engineSymbols: readonly EngineSymbol[] = [
     keywords: ["differentiate"],
   },
   {
+    name: "Det",
+    kind: "operator",
+    description: "`Det` is an alias for `Determinant`, which is the preferred name. Determinant of a square matrix.",
+    signature: "(matrix) -> number",
+  },
+  {
     name: "Determinant",
     kind: "operator",
     description: "Determinant of a square matrix.",
@@ -1355,6 +1361,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     signature: "real<0.5772156649015328..0.5772156649015329>",
     wikidata: "Q273023",
     keywords: ["euler-mascheroni", "euler gamma"],
+  },
+  {
+    name: "EulerPhi",
+    kind: "operator",
+    description:
+      "`EulerPhi` is an alias for `Totient`, which is the preferred name. Euler's totient function φ(n): count of positive integers ≤ n that are coprime to n, for n ≥ 1; φ(0) = 0 and φ(−n) = φ(n).",
+    signature: "(integer) -> integer",
   },
   {
     name: "Eulerian",
@@ -2700,7 +2713,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "NPartition",
     kind: "operator",
-    description: "Number of integer partitions of n.",
+    description: "Number of integer partitions of n, for n ≥ 0; it is 0 for n < 0.",
     signature: "(integer) -> integer",
   },
   {
@@ -3077,6 +3090,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
       "Partition a collection into consecutive chunks each of size `n`; the trailing chunk may be shorter when `n` does not divide the length. With a third argument `step`, produce sliding windows of length `n` whose starts are `step` apart, keeping only complete windows. With a predicate function instead of an integer, split into two groups: elements for which the predicate is true, and those for which it is false. Asymmetry: with no `step`, the trailing partial chunk is included; with an explicit `step`, only complete windows are returned. See `Chunk` for splitting into a given number of nearly-equal groups.",
     signature: "(collection<T>, ((T) any -> boolean) | integer, integer?) -> list<list<T>> where T",
     wikidata: "Q381060",
+  },
+  {
+    name: "PartitionsP",
+    kind: "operator",
+    description:
+      "`PartitionsP` is an alias for `NPartition`, which is the preferred name. Number of integer partitions of n, for n ≥ 0; it is 0 for n < 0.",
+    signature: "(integer) -> integer",
   },
   {
     name: "Permutations",
@@ -4311,7 +4331,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Totient",
     kind: "operator",
-    description: "Euler's totient function φ(n): count of positive integers ≤ n that are coprime to n.",
+    description:
+      "Euler's totient function φ(n): count of positive integers ≤ n that are coprime to n, for n ≥ 1; φ(0) = 0 and φ(−n) = φ(n).",
     signature: "(integer) -> integer",
     wikidata: "Q190026",
   },

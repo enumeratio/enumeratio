@@ -1306,6 +1306,8 @@ export const DECLARERS: Readonly<Record<string, readonly string[]>> = {
 // The heads each head canonicalises to (`Lb(x)` is `Log(x, 2)`), which an expression needs too.
 export const CANONICAL: Readonly<Record<string, readonly string[]>> = {
   Arg: ["Argument"],
+  Det: ["Determinant"],
+  EulerPhi: ["Totient"],
   Exp: ["ExponentialE", "Power"],
   Exp2: ["Power"],
   Greater: ["Less"],
@@ -1335,6 +1337,7 @@ export const CANONICAL: Readonly<Record<string, readonly string[]>> = {
   NotTildeEqual: ["Not", "TildeEqual"],
   NotTildeFullEqual: ["Not", "TildeFullEqual"],
   Pair: ["Tuple"],
+  PartitionsP: ["NPartition"],
   PrimeNumber: ["NthPrime"],
   Rational: ["Divide"],
   Re: ["Real"],

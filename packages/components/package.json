@@ -41,7 +41,7 @@
     "mathlive": "^0.110.0"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.146.0",
+    "@cortex-js/compute-engine": "^0.147.0",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@webgpu/types": "^0.1.60",
@@ -50,7 +50,7 @@
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.146.0"
+    "@cortex-js/compute-engine": "^0.147.0"
   },
   "generated": [
     "src/stories-data.ts"

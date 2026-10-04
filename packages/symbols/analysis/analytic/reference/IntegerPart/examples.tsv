@@ -5,7 +5,7 @@ integerpart-7-over-2			[IntegerPart, [Rational, 7, 2]]	3
 integerpart-neg-7-over-2			[IntegerPart, [Rational, -7, 2]]	-3				
 exact-numeric-arguments-stay-exact	Scope		[IntegerPart, Pi]	3			Exact numeric arguments stay exact	
 threads-element-wise-over-a-list	Scope		[IntegerPart, [List, 2.5, -2.5]]	[List, 2, -2]			Threads element-wise over a list	
-complex-numbers-real-and-imaginary-parts	Scope		[IntegerPart, [Complex, 2.5, 3.7]]	[Complex, {num: "2.0"}, {num: "3.0"}]			Complex numbers: real and imaginary parts truncated separately	
+complex-numbers-real-and-imaginary-parts	Scope		[IntegerPart, [Complex, 2.5, 3.7]]	[Complex, 2, 3]			Complex numbers: real and imaginary parts truncated separately	
 integerpart-neg-5-over-4	Scope		[IntegerPart, [Rational, -5, 4]]	-1			The integer part truncates toward zero: $-\frac54\to-1$	
 integerpart-0	Scope		[IntegerPart, 0]	0			Zero is its own integer part	
 piecewiseexpand-integerpart-x-0-lt-x-lt-4	Scope		[PiecewiseExpand, [IntegerPart, x], [Less, 0, x, 4]]	[IntegerPart, x]			No piecewise form is produced for a bounded domain	

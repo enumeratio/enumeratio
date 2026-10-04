@@ -15,13 +15,20 @@ export const isRealInt = (x: BoxedExpression): boolean => x.im === 0 && Number.i
 /** A concrete (finite) numeric operand — as opposed to a symbolic one (NaN re/im). */
 export const isFiniteNum = (x: BoxedExpression): boolean => Number.isFinite(x.re) && Number.isFinite(x.im);
 
+/**
+ * A complex number boxed inexact. compute-engine 0.147 boxes a JS Complex with whole-number
+ * parts as exact (`-911 - 1056i`); a numeric route must still yield floats, so `.N()` marks it.
+ */
+export const inexactComplex = (ce: ComputeEngine, re: number, im: number): BoxedExpression =>
+  ce.number(ce.complex(re, im)).N();
+
 /** Box a complex result, collapsing to a real number when the imaginary part vanishes. */
 export const numberResult = (ce: ComputeEngine, r: Cx): BoxedExpression => {
   if (!Number.isFinite(r.re) || !Number.isFinite(r.im)) return ce.symbol("ComplexInfinity");
   // Real inputs with a positive real base stay on the Math.pow path (im exactly 0);
   // a negative real a gives a genuinely complex value.
   if (isReal(r, 1e-14 * (1 + Math.abs(r.re)))) return ce.number(r.re);
-  return ce.number(ce.complex(r.re, r.im));
+  return inexactComplex(ce, r.re, r.im);
 };
 
 /**

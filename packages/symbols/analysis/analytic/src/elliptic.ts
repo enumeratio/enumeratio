@@ -13,6 +13,7 @@ import {
   mul,
   scale,
   sub,
+  inexactComplex,
 } from "@enumeratio/ce-patches";
 import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
 
@@ -87,7 +88,7 @@ function declareIncompleteE(ce: ComputeEngine): void {
       const k = m.im !== 0 ? Math.round(phi.re / Math.PI) : 0;
       if (k === 0) return ce.box(["EllipticE", phi, m]).evaluate(options);
 
-      const phi0 = phi.im === 0 ? ce.number(phi.re - k * Math.PI) : ce.number(ce.complex(phi.re - k * Math.PI, phi.im));
+      const phi0 = phi.im === 0 ? ce.number(phi.re - k * Math.PI) : inexactComplex(ce, phi.re - k * Math.PI, phi.im);
       const eComplete = ce.box(["EllipticE", m]).evaluate(options); // the patched complete form
       const eIncomplete = ce.box(["EllipticE", phi0, m]).evaluate(options); // φ0 is back in range
       return ce.box(["Add", ["Multiply", 2 * k, eComplete], eIncomplete]).evaluate(options);
