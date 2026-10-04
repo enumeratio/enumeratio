@@ -19,6 +19,9 @@ import type { System } from "./systems.ts";
 const BATCH = 40;
 /** Seconds one item may run before it counts as an error. */
 const ITEM_SECONDS = 30;
+/** Seconds a Python kernel may print nothing before the supervisor kills it. SIGALRM only
+ * lands between bytecodes, so a C-level call (a huge integer power) outlives ITEM_SECONDS. */
+const PYTHON_STALL_SECONDS = 2 * ITEM_SECONDS;
 /** Resident bytes a kernel may reach before the item it is on counts as an error. */
 const MAX_BYTES = 1024 ** 3;
 
@@ -182,6 +185,7 @@ export function pythonBatchCode(
   return `${preamble}
 _enumeratio_base_ns = dict(globals())
 import json, signal, sys
+print("<<0>>", flush=True)
 def _timeout(signum, frame):
     raise TimeoutError("over ${ITEM_SECONDS}s")
 signal.signal(signal.SIGALRM, _timeout)
@@ -212,7 +216,15 @@ async function runPython(
   valueOf?: string,
 ): Promise<Result[]> {
   const program = pythonBatchCode(sources, preamble, evalExpr, valueOf);
-  const run = await transcript("python3", ["-c", SUPERVISOR, String(MAX_BYTES), "0", binary, ...args, program]);
+  const run = await transcript("python3", [
+    "-c",
+    SUPERVISOR,
+    String(MAX_BYTES),
+    String(PYTHON_STALL_SECONDS),
+    binary,
+    ...args,
+    program,
+  ]);
   if (!("out" in run)) return failAll(sources.length, run.reason);
   return valueOf ? collectWolfram(run.out, sources.length) : collect(run.out, sources.length);
 }
@@ -794,10 +806,25 @@ export function preludeFor(system: System): Prelude {
   }
 }
 
-export async function runIn(system: System, sources: readonly string[]): Promise<Result[]> {
+export interface RunOptions {
+  /** Epoch ms after which the items not yet started are answered `TimeoutError`, not run. */
+  readonly deadline?: number;
+}
+
+/** Seconds between progress lines on stderr, so a stalled lane is visible in a CI log. */
+const PROGRESS_SECONDS = 30;
+
+export async function runIn(system: System, sources: readonly string[], options: RunOptions = {}): Promise<Result[]> {
   const results: Result[] = [];
   let start = 0;
+  const began = Date.now();
+  let reported = began;
   while (start < sources.length) {
+    if (options.deadline !== undefined && Date.now() > options.deadline) {
+      const spent = { error: "TimeoutError: lane budget spent" };
+      while (results.length < sources.length) results.push(spent);
+      break;
+    }
     const batch = await runBatch(system, sources.slice(start, start + BATCH));
     // A kernel that died mid-batch leaves "no output" after the item that killed it.
     const lost = batch.findIndex((r) => "error" in r && r.error === "no output");
@@ -805,6 +832,10 @@ export async function runIn(system: System, sources: readonly string[]): Promise
     const kept = lost === 0 ? [{ error: "kernel died before answering" }] : lost > 0 ? batch.slice(0, lost) : batch;
     results.push(...kept);
     start += kept.length;
+    if (Date.now() - reported >= PROGRESS_SECONDS * 1000 || start >= sources.length) {
+      reported = Date.now();
+      process.stderr.write(`${system}: ${start}/${sources.length} (${Math.round((reported - began) / 1000)}s)\n`);
+    }
   }
   return results;
 }
