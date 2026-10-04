@@ -9,6 +9,7 @@ import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
 import { oscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
 import { valuesAtZero } from "./patches/values-at-zero.ts";
 import { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
+import { polyLogLargeOrder } from "./patches/polylog-huge-order.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -91,6 +92,8 @@ export {
   type ResidueClasses,
 } from "./patches/quotient-ring-collection.ts";
 export { valuesAtZero } from "./patches/values-at-zero.ts";
+export { polyLogLargeOrder, evaluatePolyLogHugeOrder } from "./patches/polylog-huge-order.ts";
+export { polyLogHugeOrder, NATIVE_MAX_ORDER } from "./compute-engine/library/special-functions.ts";
 export { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
 export { clausen } from "./compute-engine/numerics/clausen.ts";
 export { stieltjesGamma, stieltjesGammaReal, STIELTJES_MAX_ORDER } from "./compute-engine/numerics/stieltjes.ts";
@@ -189,6 +192,7 @@ export const PATCHES: readonly Patch[] = [
   oscillatoryEndpoint,
   valuesAtZero,
   inverseTrigRadicals,
+  polyLogLargeOrder,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */

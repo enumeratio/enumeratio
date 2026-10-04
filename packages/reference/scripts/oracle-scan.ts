@@ -47,9 +47,12 @@ import {
 import { isSettled, orderImplementations, type SystemImplementation } from "@enumeratio/entry";
 import { updateHead } from "@enumeratio/entry/node";
 import { referenceData, referenceEntries } from "../src/node.ts";
-import { asksForDigits, show, verdictOf } from "./oracle-verdict.ts";
+import { asksForDigits, show } from "./oracle-verdict.ts";
+import { cappedVerdicts } from "./oracle-verdict-capped.ts";
 
 const data = referenceData();
+// The comparison numerically evaluates our value in-process, which CE can fail to return from.
+const verdicts = cappedVerdicts();
 
 interface Case {
   readonly id: string;
@@ -202,7 +205,7 @@ for (const system of systems) {
       outcomes.push({ id: row.item.id, source: "", verdict: "unmapped", theirs: "", display: "" });
     }
   }
-  runnable.forEach((row, index) => {
+  for (const [index, row] of runnable.entries()) {
     const source = plainSources[index] as string;
     const result = results[index] as {
       value?: string;
@@ -220,7 +223,7 @@ for (const system of systems) {
         theirs: result.error,
         display: result.error,
       });
-      return;
+      continue;
     }
     const theirs = result.value ?? "";
     let verdict: Verdict;
@@ -228,7 +231,20 @@ for (const system of systems) {
       verdict = interpretSymbolicAgreement(theirs);
     } else {
       const tolerance = records.get(row.item.head)?.[row.item.key]?.[system]?.tolerance;
-      verdict = verdictOf(system, row.item.expected, result, tolerance, asksForDigits(row.item.expr), row.item.expr);
+      const judged = await verdicts.verdict(
+        system,
+        row.item.expected,
+        result,
+        tolerance,
+        asksForDigits(row.item.expr),
+        row.item.expr,
+      );
+      if (judged === "timeout") {
+        const reason = "TimeoutError: comparison exceeded its cap";
+        outcomes.push({ id: row.item.id, source, verdict: "error", theirs: reason, display: reason });
+        continue;
+      }
+      verdict = judged;
     }
     outcomes.push({
       id: row.item.id,
@@ -239,7 +255,7 @@ for (const system of systems) {
       ...(result.shown === undefined ? {} : { shown: result.shown }),
       ...(result.tex === undefined ? {} : { tex: result.tex }),
     });
-  });
+  }
   report[system] = outcomes;
   missingBySystem[system] = missing;
 
@@ -473,3 +489,5 @@ process.stderr.write(`\nmost-wanted mappings:\n`);
 for (const [head, count] of queue.slice(0, 12)) {
   process.stderr.write(`  ${head} — blocks ${count}\n`);
 }
+
+verdicts.close();

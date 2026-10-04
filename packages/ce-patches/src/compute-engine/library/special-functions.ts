@@ -15,7 +15,13 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { wrapOperator } from "@enumeratio/engine";
 import type { LibraryRecord } from "../../patch.ts";
-import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "../../support/precise.ts";
+import {
+  atEnginePrecision,
+  bigRealOperand,
+  bigResult,
+  DOUBLE_DIGITS,
+  exceedsDoublePrecision,
+} from "../../support/precise.ts";
 import {
   declined,
   isFiniteNum,
@@ -30,6 +36,7 @@ import {
 import type { Cx } from "../numerics/complex-arithmetic.ts";
 import { logGamma } from "../numerics/log-gamma.ts";
 import { lerchPhi } from "../numerics/lerch-phi.ts";
+import { polyLogHugeOrder } from "../numerics/polylog-huge-order.ts";
 import { lerchContinued } from "../numerics/lerch-phi-continuation.ts";
 import { lerchPhiBig } from "../numerics/lerch-phi-big.ts";
 import { hurwitzZeta, zetaGeneralized } from "../numerics/hurwitz-zeta.ts";
@@ -297,6 +304,54 @@ export { lerchPhiBig, lerchPhiBall } from "../numerics/lerch-phi-big.ts";
 export { hurwitzZeta, hurwitzZetaReal, zetaGeneralized, zetaGeneralizedReal } from "../numerics/hurwitz-zeta.ts";
 export { digamma, polygamma, polygammaReal } from "../numerics/polygamma.ts";
 export { polyLog, polyLogReal } from "../numerics/polylog.ts";
+export { polyLogHugeOrder } from "../numerics/polylog-huge-order.ts";
+
+// --- PolyLog at a large order, |z| > 1 ---------------------------------------------------
+// Native inverts to 1/z, whose (2π)ˢ/s! overflows past s = 170 (a wrong value) and whose
+// Bernoulli polynomial is O(s²) bignum work (a hang by s ~ 5000). polyLogHugeOrder
+// (numerics/polylog-huge-order.ts) answers where its remainder bound holds.
+
+/** Native's integer-order inversion takes seconds by here; where polyLogHugeOrder declines,
+ * a larger order stays unevaluated rather than reach it. */
+export const NATIVE_MAX_ORDER = 1000;
+
+export function evaluatePolyLogHugeOrder(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["PolyLog"],
+    ([s, z]) =>
+      s !== undefined &&
+      z !== undefined &&
+      isFiniteNum(s) &&
+      isFiniteNum(z) &&
+      s.im === 0 &&
+      Math.hypot(z.re, z.im) > 1,
+    (native) => (ops, options) => {
+      const [s, z] = ops;
+      if (s === undefined || z === undefined || !wantsNumber(ops, options)) return native?.(ops, options);
+      // A double's digits only: past an explicit d > 15 the answer declines.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      const value = polyLogHugeOrder(s.re, z.re, z.im);
+      if (value !== undefined) return numberResult(ce, value);
+      return s.re > NATIVE_MAX_ORDER ? undefined : native?.(ops, options);
+    },
+    2,
+  );
+  // Compiled JavaScript: native lowers to `_SYS.polyLog`, which hangs or errs the same way for
+  // z < -1 (z > 1 is NaN there, a complex value). The kernel's source rides in the emitted code.
+  const operator = (ce.lookupDefinition("PolyLog") as { operator?: { compile?: unknown } } | undefined)?.operator;
+  if (operator !== undefined)
+    operator.compile = (
+      args: readonly BoxedExpression[],
+      compile: (e: BoxedExpression) => string,
+      ctx: { language?: string },
+    ): string | undefined => {
+      const [s, z] = args;
+      if (ctx.language !== "javascript" || args.length !== 2 || s === undefined || z === undefined) return undefined;
+      // A compiled function always returns a number: where the kernel declines at a huge order, NaN.
+      return `((huge, s, z) => { if (!(z < -1)) return _SYS.polyLog(s, z); const r = huge(s, z, 0); return r !== undefined ? r.re : s > ${NATIVE_MAX_ORDER} ? NaN : _SYS.polyLog(s, z); })(${polyLogHugeOrder.toString()}, ${compile(s)}, ${compile(z)})`;
+    };
+}
 
 /**
  * Which kernel numeric `HurwitzZeta` and `Zeta` evaluate on. `"bignum"` (the default) is
