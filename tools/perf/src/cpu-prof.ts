@@ -3,7 +3,8 @@
 // by default). NODE_OPTIONS carries --cpu-prof into whatever worker vitest spawns to run the file, which is
 // good enough for an advisory profile — we're after "is this file's shape still what it was", not a
 // courtroom-grade trace. Re-running the single file also means the profile isn't diluted by the rest of the
-// suite. Each file gets a --pool=forks --poolOptions.forks.singleFork run so exactly one process profiles it.
+// suite. Each file gets a --pool=forks --maxWorkers=1 --no-isolate run (vitest 4's singleFork) so exactly one
+// process profiles it.
 //
 //   node tools/perf/src/cpu-prof.ts --slowest tools/perf/.data/slowest-files.json --out-dir /tmp/cpu-profiles
 
@@ -60,7 +61,8 @@ function main(): void {
           entry.file,
           "--run",
           "--pool=forks",
-          "--poolOptions.forks.singleFork",
+          "--maxWorkers=1",
+          "--no-isolate",
         ],
         {
           cwd: REPO_ROOT,
