@@ -271,3 +271,21 @@ test("HurwitzZeta(s,a) stays finite at a nonpositive integer when Re(s) < 0", ()
   expect(z.re).toBeCloseTo(-0.025485201889833036, 12);
   expect(z.im).toBeCloseTo(-3.8284271247461903, 12);
 });
+
+test("Zeta(s, −n) = ζ(s) + Σ j^(−s) exactly, and every route agrees with it", () => {
+  const isSame = (input: Expr, expected: Expr) => ce.box(input).evaluate().isSame(ce.box(expected).evaluate());
+  expect(isSame(["Zeta", 2, -1], ["Add", 1, ["Zeta", 2]])).toBe(true);
+  expect(isSame(["Zeta", 2, -2], ["Add", ["Rational", 5, 4], ["Zeta", 2]])).toBe(true);
+  expect(isSame(["Zeta", 3, -2], ["Add", ["Rational", 9, 8], ["Zeta", 3]])).toBe(true);
+  for (const [s, a] of [
+    [2, -1],
+    [3, -3],
+    [4, -2],
+  ] as const) {
+    const exact = ce.box(["Zeta", s, a]).evaluate().N().re;
+    expect(Math.abs(exact - num(["Zeta", s, a]))).toBeLessThan(1e-14);
+    expect(Math.abs(exact - zetaGeneralizedReal(s, a))).toBeLessThan(1e-14);
+  }
+  // Past the cap it stays symbolic.
+  expect(ce.box(["Zeta", 2, -1000]).evaluate().json).toEqual(["Zeta", 2, -1000]);
+});

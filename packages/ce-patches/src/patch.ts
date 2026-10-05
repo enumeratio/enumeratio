@@ -1,4 +1,4 @@
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { ComputeEngine } from "@cortex-js/compute-engine";
 
 // A patch: something we offered compute-engine upstream, applied locally until it lands.
 // See the package README -- laid out like compute-engine itself (numerics/, library/,
@@ -72,11 +72,24 @@ export function symbols(patches: readonly Patch[]): readonly string[] {
  */
 const appliedTo = new WeakMap<ComputeEngine, Set<string>>();
 
+/**
+ * Whether compute-engine, as installed, already answers `patch`'s repro. That depends on the
+ * installed version alone, so it is probed once on a fresh engine: `fixed` builds engines and
+ * runs a solve or an integral, and probing per engine made declaring a library the cost of
+ * every patch's repro (most of `declareAnalytic`'s time).
+ */
+const landed = new Map<string, boolean>();
+const isLanded = (patch: Patch): boolean => {
+  let fixed = landed.get(patch.id);
+  if (fixed === undefined) landed.set(patch.id, (fixed = patch.fixed(new ComputeEngine())));
+  return fixed;
+};
+
 /** Apply one patch to `ce`, unless it has already landed upstream or already run here. */
 export function applyPatch(ce: ComputeEngine, patch: Patch): void {
   const applied = appliedTo.get(ce) ?? new Set<string>();
   appliedTo.set(ce, applied);
-  if (applied.has(patch.id) || patch.fixed(ce)) return;
+  if (applied.has(patch.id) || isLanded(patch)) return;
   patch.apply(ce);
   applied.add(patch.id);
 }
