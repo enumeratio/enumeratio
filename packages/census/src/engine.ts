@@ -160,3 +160,24 @@ export function declaredNames(): string[] {
   const bare = bindings(new ComputeEngine());
   return [...bindings(fullEngine())].filter((name) => !bare.has(name)).toSorted();
 }
+
+/** What declaring our libraries ADDS as values (not operators): each name with its type and
+ *  whether it is a constant. These are the nullary symbols, as opposed to heads. */
+export function declaredValues(): { name: string; type: string; isConstant: boolean }[] {
+  const ce = fullEngine();
+  const bare = bindings(new ComputeEngine());
+  const found = new Map<string, { name: string; type: string; isConstant: boolean }>();
+  let scope: Scope | undefined = (ce as unknown as { context: { lexicalScope: Scope } }).context.lexicalScope;
+  while (scope !== undefined) {
+    for (const [name, def] of scope.bindings) {
+      const { operator, value } = def as {
+        operator?: unknown;
+        value?: { type?: { toString(): string }; isConstant?: boolean };
+      };
+      if (bare.has(name) || found.has(name) || operator !== undefined || value === undefined) continue;
+      found.set(name, { name, type: String(value.type), isConstant: value.isConstant === true });
+    }
+    scope = scope.parent;
+  }
+  return [...found.values()].toSorted((a, b) => (a.name < b.name ? -1 : 1));
+}

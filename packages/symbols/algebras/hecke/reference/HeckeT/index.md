@@ -1,13 +1,13 @@
 ---
 name: HeckeT
 domain: Hecke algebras
-signature: HeckeT(permutation)
+signature: HeckeT(permutation, q)
 summary: The basis element $T_w$ of the Iwahori–Hecke algebra $H_n(q)$, indexed by a permutation in one-line notation. Multiplication is the $q$-deformation of the symmetric group's.
 signatures:
-  - call: HeckeT([2,1,3])
+  - call: HeckeT([2,1,3], q)
     description: $T_w$ for the permutation $w$
     library: enumeratio-hecke
-    type: (list<integer>) -> number
+    type: (list<integer>, number) -> number
 seeAlso:
   - HeckeSpecialize
   - NonCommutativeMultiply

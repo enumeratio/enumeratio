@@ -110,7 +110,7 @@ export function declareDiagrams(ce: Engine): void {
     },
   });
   const constructors = Object.keys(CONSTRUCTORS);
-  ce.declareType("diagram_algebra", constructors.map((h) => `expression<${h}>`).join(" | "), { mint: true });
+  ce.declareType("diagram_algebra", constructors.map((h) => `expression<${h}>`).join(" | "), { mint: false });
   for (const head of constructors) ce.declare(head, { signature: "(integer) -> diagram_algebra" });
 
   /** a·b = δ^loops · (a∘b). */

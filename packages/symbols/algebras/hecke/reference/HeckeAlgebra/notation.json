@@ -1,1 +1,5 @@
-{ "traditional": [{ "params": ["n"], "call": ["SubscriptBox", "H", ["TemplateSlot", "n"]], "args": ["q"] }] }
+{
+  "traditional": [
+    { "params": ["n", "q"], "call": ["SubscriptBox", "H", ["TemplateSlot", "n"]], "args": [["TemplateSlot", "q"]] }
+  ]
+}

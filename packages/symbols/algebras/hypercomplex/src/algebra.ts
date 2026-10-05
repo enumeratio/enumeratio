@@ -137,7 +137,7 @@ export function declareAlgebras(ce: Engine): void {
   // its own basis would conflate the algebra with the list of its blades. Every one of them,
   // and every named algebra, is a `clifford_algebra`, which is what `Basis` dispatches on.
   const heads = ["CliffordAlgebra", ...Object.keys(SINGLE_FAMILY)];
-  ce.declareType("clifford_algebra", heads.map((h) => `expression<${h}>`).join(" | "), { mint: true });
+  ce.declareType("clifford_algebra", heads.map((h) => `expression<${h}>`).join(" | "), { mint: false });
   for (const head of Object.keys(SINGLE_FAMILY)) ce.declare(head, { signature: "(integer) -> clifford_algebra" });
   // Clifford takes p, and the optional q and r (default 0): Cl(p, q, r).
   ce.declare("CliffordAlgebra", { signature: "(integer, integer?, integer?) -> clifford_algebra" });

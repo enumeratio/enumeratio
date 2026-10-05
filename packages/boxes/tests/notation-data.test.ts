@@ -113,11 +113,11 @@ const composition =
 CASES.push(
   [
     "HeckeAlgebra",
-    { traditional: [{ params: ["n"], call: ["SubscriptBox", "H", slot("n")], args: ["q"] }] },
-    scalars(([n, ...rest], write) =>
-      n === undefined || rest.length > 0 ? undefined : write.call(subscript("H", write.box(n)), ["q"]),
+    { traditional: [{ params: ["n", "q"], call: ["SubscriptBox", "H", slot("n")], args: [slot("q")] }] },
+    scalars(([n, q, ...rest], write) =>
+      n === undefined || q === undefined || rest.length > 0 ? undefined : write.call(subscript("H", write.box(n)), [q]),
     ),
-    [["HeckeAlgebra", 3]],
+    [["HeckeAlgebra", 3, "q"]],
   ],
   [
     "PretzelKnot",

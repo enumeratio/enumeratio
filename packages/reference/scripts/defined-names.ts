@@ -37,8 +37,7 @@ export function symbolsIn(expr: MathJSON, into: Set<string>): void {
 // declared, just not by auto-declare.
 //
 // A declared number with no value that is not a constant is still a free variable, only a
-// reserved one: `HeckeParameter` (the deformation parameter) is a polynomial variable until
-// `HeckeSpecialize` gives it a value, so an external system reads it as an unknown too.
+// reserved one, so an external system reads it as an unknown too.
 export function isDefinedName(ce: ComputeEngine, name: string): boolean {
   const def = ce.lookupDefinition(name) as unknown as
     | {

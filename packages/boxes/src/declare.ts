@@ -29,7 +29,10 @@ function recorded(head: string): { signature: string; description: string; lazy?
 }
 
 export function declareBoxes(ce: ComputeEngine): void {
-  ce.declareType(BOXES_TYPE, ["string", ...BOX_HEADS.map((h) => `expression<${h}>`)].join(" | "), { alias: true });
+  ce.declareType(BOXES_TYPE, ["string", ...BOX_HEADS.map((h) => `expression<${h}>`)].join(" | "), {
+    alias: true,
+    mint: false,
+  });
 
   for (const head of BOX_HEADS) ce.declare(head, recorded(head));
 

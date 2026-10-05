@@ -101,7 +101,7 @@ export function declareIncidence(ce: Engine): void {
   /** A poset, as `presentedPoset` reads it. */
   const posetLike = "expression<Chain> | expression<BooleanLattice> | expression<DivisorLattice>";
 
-  ce.declareType("incidence_algebra", "expression<IncidenceAlgebra>", { mint: true });
+  ce.declareType("incidence_algebra", "expression<IncidenceAlgebra>", { mint: false });
   ce.declare("IncidenceAlgebra", { signature: `(${posetLike}) -> incidence_algebra` });
   ce.declare("PosetInterval", { signature: "(value, value) -> expression<PosetInterval>" });
 

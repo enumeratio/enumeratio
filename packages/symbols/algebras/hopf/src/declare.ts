@@ -74,7 +74,7 @@ export function declareHopf(ce: ComputeEngine): void {
     ce.declare(head, { signature: "(list<integer>) -> number" });
   }
   const algebraHeads = Object.keys(ALGEBRA_HEADS);
-  ce.declareType("graded_hopf_algebra", algebraHeads.map((h) => `expression<${h}>`).join(" | "), { mint: true });
+  ce.declareType("graded_hopf_algebra", algebraHeads.map((h) => `expression<${h}>`).join(" | "), { mint: false });
   for (const head of algebraHeads) ce.declare(head, { signature: "(integer) -> graded_hopf_algebra" });
   ce.declare("HopfTensor", { signature: "(number, number) -> number" });
 

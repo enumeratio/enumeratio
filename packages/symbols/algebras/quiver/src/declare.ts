@@ -77,7 +77,7 @@ export function declareQuiver(ce: Engine): void {
   // `value` parameter. An undeclared symbol types as unknown and passes — so it is
   // named here as `symbol` rather than left out of the union.
   const quiverLike = "expression<Quiver> | expression<LinearQuiver> | symbol";
-  ce.declareType("path_algebra", "expression<PathAlgebra>", { mint: true });
+  ce.declareType("path_algebra", "expression<PathAlgebra>", { mint: false });
   ce.declare("PathAlgebra", { signature: `(${quiverLike}) -> path_algebra` });
   ce.declare("QuiverPath", { signature: "(integer, list<integer>) -> number" });
 

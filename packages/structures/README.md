@@ -22,7 +22,7 @@ re-exports it all individually:
 - **`generic.ts`** — `declareGenericHeads`: widens `Min`/`Max`/`Clamp`/`Floor`/`Ceil`/`Round`
   to dispatch through conformance once the native real/unknown path doesn't apply.
 - **`algebra.ts`** — `declareAlgebra`, `ensureAlgebraHeads`, `registerProduct`: types whose
-  values name an algebra (`HeckeAlgebra(3)`) conform to `FiniteDimensionalAlgebra`; products
+  values name an algebra (`HeckeAlgebra(3, q)`) conform to `FiniteDimensionalAlgebra`; products
   are registered per library until they get a protocol of their own.
 - **`operations.ts`** — `registerOperation`/`registerCarrier`/`registerCollectionCarrier`,
   `operationOf`, `OperationCollisionError`: the operation/carrier registry generic heads

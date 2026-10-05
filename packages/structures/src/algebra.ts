@@ -3,7 +3,7 @@ import { symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import { conform, member } from "./conform.ts";
 import { ensureProtocols } from "./protocols.ts";
 
-// Algebras. A type whose values name an algebra (`HeckeAlgebra(3)`, `Quaternions`) conforms
+// Algebras. A type whose values name an algebra (`HeckeAlgebra(3, q)`, `Quaternions`) conforms
 // to `FiniteDimensionalAlgebra`, and `Basis`, `AlgebraDimension` and `Element` dispatch on it.
 //
 // The ordered product is not a protocol yet: its operands are elements, which have no types
@@ -56,7 +56,8 @@ export function ensureAlgebraHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Element", "x", "Integers"],
-    (ops) => ops[1] !== undefined && ops[1].unknowns.length === 0,
+    // A bare unknown is a variable, not an algebra; `HeckeAlgebra(3, q)` carries its parameter.
+    (ops) => ops[1] !== undefined && (ops[1].unknowns.length === 0 || symbolNameOf(ops[1]) === undefined),
     (native) => (ops, options) => {
       const verdict = member(ce, "HasElement", [ops[1]!, ops[0]!]);
       const name = verdict === undefined ? undefined : symbolNameOf(verdict);
