@@ -1,5 +1,11 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvaluateOptions, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
+import {
+  type Engine,
+  type EvaluateOptions,
+  type Expr,
+  operandsOf,
+  symbolNameOf,
+  wrapOperator,
+} from "@enumeratio/engine";
 import { bindingOf, finish, mentions, numAt } from "./distributions.ts";
 
 // The fifth wave of Wolfram-frontier probability heads, narrowed (mid-batch) to exactly two
@@ -41,7 +47,7 @@ interface Range {
 
 /** Discrete kinds' supports, `hi` possibly `Infinity`. Params read positionally, matching each
  *  kind's own constructor as declared in distributions.ts/-2.ts/-3.ts. */
-function discreteSupport(dist: BoxedExpression): Range | undefined {
+function discreteSupport(dist: Expr): Range | undefined {
   const ops = operandsOf(dist);
   switch (dist.operator) {
     case "BernoulliDistribution":
@@ -70,7 +76,7 @@ function discreteSupport(dist: BoxedExpression): Range | undefined {
 }
 
 /** Continuous kinds' domains. */
-function continuousDomain(dist: BoxedExpression): Range | undefined {
+function continuousDomain(dist: Expr): Range | undefined {
   const ops = operandsOf(dist);
   switch (dist.operator) {
     case "NormalDistribution":
@@ -240,28 +246,23 @@ function integrateIndicator(
 
 // --- shared: numeric evaluation of boxed expressions at a point ---------------------------------
 
-const numericAt = (ce: ComputeEngine, expr: BoxedExpression, varName: string, x: number): number =>
+const numericAt = (ce: Engine, expr: Expr, varName: string, x: number): number =>
   expr.subs({ [varName]: ce.number(x) }).N().re;
 
-const pdfAt = (ce: ComputeEngine, dist: BoxedExpression, k: number): number =>
+const pdfAt = (ce: Engine, dist: Expr, k: number): number =>
   ce
     .function("PDF", [dist, ce.number(k)])
     .evaluate()
     .N().re;
 
-const indicatorAt = (ce: ComputeEngine, cond: BoxedExpression, varName: string, x: number): boolean =>
+const indicatorAt = (ce: Engine, cond: Expr, varName: string, x: number): boolean =>
   symbolNameOf(cond.subs({ [varName]: ce.number(x) }).evaluate()) === "True";
 
 /** Sum `valueAt(k, pdf(k))` over a discrete support, cutting an infinite tail off once the
  *  cumulative mass is within `TOLERANCE` of 1 AND the current term is below `TOLERANCE` — the
  *  same documented tolerance the quadrature above converges to. Capped at a million terms as a
  *  hard backstop (never reached for any distribution/parameter this package's examples use). */
-function sumDiscrete(
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  range: Range,
-  valueAt: (k: number, pdf: number) => number,
-): number {
+function sumDiscrete(ce: Engine, dist: Expr, range: Range, valueAt: (k: number, pdf: number) => number): number {
   let sum = 0;
   let cumulative = 0;
   const hardCap = Number.isFinite(range.hi) ? range.hi : range.lo + 1_000_000;
@@ -281,12 +282,7 @@ function sumDiscrete(
 // `Expectation` itself stays symbolic — e.g. `f` past a linear/quadratic polynomial in `x`, or a
 // distribution `Expectation` has no closed form for at all.
 
-function nExpectationOf(
-  ce: ComputeEngine,
-  f: BoxedExpression,
-  varName: string,
-  dist: BoxedExpression,
-): number | undefined {
+function nExpectationOf(ce: Engine, f: Expr, varName: string, dist: Expr): number | undefined {
   const exact = ce.function("Expectation", [f, ce.function("Distributed", [ce.symbol(varName), dist])]).evaluate();
   const exactNum = exact.N();
   if (Number.isFinite(exactNum.re) && exactNum.im === 0) return exactNum.re;
@@ -307,12 +303,7 @@ function nExpectationOf(
 // a numeric point (not just the `Equal`/`Less`/`LessEqual`/`And` shapes `Probability` itself
 // recognizes symbolically).
 
-function nProbabilityOf(
-  ce: ComputeEngine,
-  cond: BoxedExpression,
-  varName: string,
-  dist: BoxedExpression,
-): number | undefined {
+function nProbabilityOf(ce: Engine, cond: Expr, varName: string, dist: Expr): number | undefined {
   const exact = ce.function("Probability", [cond, ce.function("Distributed", [ce.symbol(varName), dist])]).evaluate();
   const exactNum = exact.N();
   if (Number.isFinite(exactNum.re) && exactNum.im === 0) return exactNum.re;
@@ -348,15 +339,15 @@ function nProbabilityOf(
 /** "Resolved" here means: not still sitting as a bare, unevaluated call to the head we asked for
  *  (`Probability`/`Expectation`). A partially-resolved expression built out of a still-symbolic
  *  `Mean`/`CDF`/etc. call is fine — that's a real (if unsimplified) algebraic answer. */
-const isResolved = (expr: BoxedExpression, headOp: string): boolean => expr.operator !== headOp;
+const isResolved = (expr: Expr, headOp: string): boolean => expr.operator !== headOp;
 
 function conditionedProbability(
-  ce: ComputeEngine,
-  pred: BoxedExpression,
-  cond: BoxedExpression,
-  binding: BoxedExpression,
+  ce: Engine,
+  pred: Expr,
+  cond: Expr,
+  binding: Expr,
   options: EvaluateOptions,
-): BoxedExpression | undefined {
+): Expr | undefined {
   // `pred = Equal(x, k)`: P(X=k, cond)/P(cond) is just PDF(k)/P(cond), or 0 outright when `cond`
   // fails at `k` — evaluated directly rather than through `Probability`'s `And` case, which only
   // recognizes a conjunction of two `Less`/`LessEqual` relations (not `Equal` combined with
@@ -392,13 +383,13 @@ function conditionedProbability(
  *  a truncated *continuous* mean already lives in `distributions-4.ts`'s `TruncatedDistribution`,
  *  but composing through it here is out of scope for this batch. */
 function conditionedExpectation(
-  ce: ComputeEngine,
-  f: BoxedExpression,
-  cond: BoxedExpression,
+  ce: Engine,
+  f: Expr,
+  cond: Expr,
   varName: string,
-  dist: BoxedExpression,
+  dist: Expr,
   options: EvaluateOptions,
-): BoxedExpression | undefined {
+): Expr | undefined {
   if (cond.operator === "Equal") {
     const [a, b] = operandsOf(cond);
     const point = symbolNameOf(a) === varName ? b : symbolNameOf(b) === varName ? a : undefined;
@@ -431,8 +422,8 @@ function conditionedExpectation(
  *  `x <= 10` on a `PoissonDistribution`). Mirrors the bound-parsing distributions.ts's own
  *  (unexported) `probabilityOf` does for `Probability` itself; kept separate/smaller here since
  *  only the numeric cap is needed, not a probability. */
-function finiteUpperCap(cond: BoxedExpression, varName: string): { lower?: number; upper?: number } | undefined {
-  const asBound = (a: BoxedExpression, b: BoxedExpression) => {
+function finiteUpperCap(cond: Expr, varName: string): { lower?: number; upper?: number } | undefined {
+  const asBound = (a: Expr, b: Expr) => {
     if (symbolNameOf(a) === varName && !mentions(b, varName)) return { k: b, varOnLeft: true };
     if (symbolNameOf(b) === varName && !mentions(a, varName)) return { k: a, varOnLeft: false };
     return undefined;
@@ -471,14 +462,14 @@ function finiteUpperCap(cond: BoxedExpression, varName: string): { lower?: numbe
 
 // --- declarations --------------------------------------------------------------------------------
 
-function declareConstructors5(ce: ComputeEngine): void {
+function declareConstructors5(ce: Engine): void {
   // Same free-wildcard gotcha `distributions.ts` documents on `Distributed`'s own signature —
   // `any`, not `symbol`, for the bound-variable slot.
   ce.declare("Conditioned", { signature: "(any, any) -> expression<Conditioned>" });
 
   ce.declare("NExpectation", {
     signature: "(any, expression<Distributed>) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       if (ops.length !== 2) return undefined;
       const binding = bindingOf(ops[1]);
       if (binding === undefined) return undefined;
@@ -489,7 +480,7 @@ function declareConstructors5(ce: ComputeEngine): void {
 
   ce.declare("NProbability", {
     signature: "(any, expression<Distributed>) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       if (ops.length !== 2) return undefined;
       const binding = bindingOf(ops[1]);
       if (binding === undefined) return undefined;
@@ -499,7 +490,7 @@ function declareConstructors5(ce: ComputeEngine): void {
   });
 }
 
-function extendConditioned5(ce: ComputeEngine): void {
+function extendConditioned5(ce: Engine): void {
   wrapOperator(
     ce,
     ["Probability"],
@@ -535,7 +526,7 @@ function extendConditioned5(ce: ComputeEngine): void {
  *  `Distributed`/`Probability`/`Expectation` already declared) and after any other wave whose
  *  distribution kinds should be reachable through `PDF`/`CDF` (waves 2-4 extend those in place,
  *  so declaring this last picks up all of them automatically). */
-export function declareDistributions5(ce: ComputeEngine): void {
+export function declareDistributions5(ce: Engine): void {
   declareConstructors5(ce);
   extendConditioned5(ce);
 }

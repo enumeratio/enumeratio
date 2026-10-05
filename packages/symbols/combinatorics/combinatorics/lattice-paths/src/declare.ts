@@ -1,5 +1,5 @@
 // Lattice paths' own declare (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5, A-94).
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
 import { liftFamily } from "../../collections/src/families/epsil.ts";
@@ -12,7 +12,7 @@ import {
 } from "./families/index.ts";
 import { DYCK_STATISTICS } from "./statistics.ts";
 
-export function declareLatticePaths(ce: ComputeEngine): void {
+export function declareLatticePaths(ce: Engine): void {
   declareCarriers(ce, LATTICE_PATHS_CARRIERS, { plurals: false });
   declareFamilies(
     ce,

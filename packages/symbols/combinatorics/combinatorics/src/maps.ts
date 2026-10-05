@@ -12,7 +12,7 @@
 // comment, and enumeratio#411). Every host (cli, census, reference's engines.ts) still calls
 // this one function, at its own unchanged position, with its own `constructorFor`.
 
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
 import { declareMaps as declareMapsGeneric, evaluateDefinition, type Law } from "@enumeratio/structures";
 import { CARRIERS } from "./carriers.ts";
@@ -52,7 +52,7 @@ export const MAPS: readonly CombinatorialMap[] = [
  *  `declareMaps`: combinatorics supplies the fast (compiled) definition and the FindStat ids,
  *  which are the two things a generic map declaration knows nothing about. */
 export function declareMaps(
-  ce: ComputeEngine,
+  ce: Engine,
   constructorFor: Readonly<Record<string, string>>,
   maps: readonly CombinatorialMap[] = MAPS,
 ): void {

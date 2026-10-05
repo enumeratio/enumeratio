@@ -1,6 +1,7 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
+  type Engine,
   type EvaluateOptions,
+  type Expr,
   integerAt,
   operandsOf,
   symbolNameOf,
@@ -50,14 +51,14 @@ function choleskyNumeric(sigma: readonly (readonly number[])[]): number[][] {
 /** Sequential binomial draws — mirrors `distributions.ts`'s own (unexported) `binomialSample`,
  *  reimplemented locally since nothing beyond `uniform01`/`normal01`/`gammaSample`/`numAt` is
  *  exported from that file. */
-const localBinomialSample = (ce: ComputeEngine, n: number, p: number): number => {
+const localBinomialSample = (ce: Engine, n: number, p: number): number => {
   let count = 0;
   for (let i = 0; i < n; i++) if (uniform01(ce) < p) count++;
   return count;
 };
 
 /** Knuth's algorithm — mirrors `distributions.ts`'s own (unexported) `poissonSample`. */
-const localPoissonSample = (ce: ComputeEngine, lambda: number): number => {
+const localPoissonSample = (ce: Engine, lambda: number): number => {
   const L = Math.exp(-lambda);
   let k = 0;
   let p = 1;
@@ -68,18 +69,17 @@ const localPoissonSample = (ce: ComputeEngine, lambda: number): number => {
   return k - 1;
 };
 
-const listOf = (ce: ComputeEngine, xs: readonly BoxedExpression[]): BoxedExpression => ce.function("List", [...xs]);
-const sumAll = (ce: ComputeEngine, xs: readonly BoxedExpression[]): BoxedExpression =>
-  xs.length === 1 ? xs[0] : add(ce, ...xs);
+const listOf = (ce: Engine, xs: readonly Expr[]): Expr => ce.function("List", [...xs]);
+const sumAll = (ce: Engine, xs: readonly Expr[]): Expr => (xs.length === 1 ? xs[0] : add(ce, ...xs));
 
 // --- 1. MultinomialDistribution(n, {p1, ..., pk}) ------------------------------------------------
 
 interface Multinomial {
-  readonly n: BoxedExpression;
-  readonly ps: readonly BoxedExpression[];
+  readonly n: Expr;
+  readonly ps: readonly Expr[];
 }
 
-const multinomialParams = (dist: BoxedExpression): Multinomial | undefined => {
+const multinomialParams = (dist: Expr): Multinomial | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 2 || ops[1].operator !== "List") return undefined;
   const ps = operandsOf(ops[1]);
@@ -92,12 +92,7 @@ const multinomialParams = (dist: BoxedExpression): Multinomial | undefined => {
  *  probability is exactly 0 (not just an unrelated coefficient), and `If`'s branches must
  *  already be `finish`ed (same lazy-branch gotcha every `If`-building PDF in this package
  *  documents). */
-const multinomialPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multinomialPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multinomialParams(dist);
   if (params === undefined || x.operator !== "List") return undefined;
   const xs = operandsOf(x);
@@ -110,11 +105,7 @@ const multinomialPdf = (
   return finish(ce.function("If", [cond, raw, ce.Zero]), options);
 };
 
-const multinomialMean = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multinomialMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multinomialParams(dist);
   if (params === undefined) return undefined;
   return finish(
@@ -129,11 +120,7 @@ const multinomialMean = (
 /** Componentwise `n * pi * (1 - pi)` — Wolfram's own `Variance` convention for
  *  `MultinomialDistribution` (a list, not the full covariance matrix; see `Covariance` below
  *  for that). */
-const multinomialVariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multinomialVariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multinomialParams(dist);
   if (params === undefined) return undefined;
   return finish(
@@ -146,11 +133,7 @@ const multinomialVariance = (
 };
 
 /** `Cov(Xi, Xj) = -n pi pj` (i != j), `Var(Xi) = n pi (1 - pi)` on the diagonal. */
-const multinomialCovariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multinomialCovariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multinomialParams(dist);
   if (params === undefined) return undefined;
   const { n, ps } = params;
@@ -167,7 +150,7 @@ const multinomialCovariance = (
  *  remainingP)` successes out of what's left, the last category takes the remainder exactly
  *  (so counts always sum to `n`, no rounding drift). Standard construction for an exact
  *  multinomial draw out of independent binomials. */
-const multinomialDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | undefined => {
+const multinomialDraw = (ce: Engine, dist: Expr): Expr | undefined => {
   const params = multinomialParams(dist);
   if (params === undefined) return undefined;
   const n = Math.round(numAt(params.n));
@@ -192,14 +175,14 @@ const multinomialDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpress
 // --- 2. MultinormalDistribution(mu, Sigma) | MultinormalDistribution(Sigma) ----------------------
 
 interface Multinormal {
-  readonly mu: BoxedExpression;
-  readonly sigma: BoxedExpression;
+  readonly mu: Expr;
+  readonly sigma: Expr;
   readonly k: number;
 }
 
 /** `MultinormalDistribution(Sigma)` defaults `mu` to the zero vector; `(mu, Sigma)` gives both.
  *  `k` (dimension) is read off `mu`'s length either way. */
-const multinormalParams = (ce: ComputeEngine, dist: BoxedExpression): Multinormal | undefined => {
+const multinormalParams = (ce: Engine, dist: Expr): Multinormal | undefined => {
   const ops = operandsOf(dist);
   if (ops.length === 1 && ops[0].operator === "List") {
     const sigma = ops[0];
@@ -222,12 +205,7 @@ const multinormalParams = (ce: ComputeEngine, dist: BoxedExpression): Multinorma
 /** `(2 pi)^(-k/2) |Sigma|^(-1/2) exp(-1/2 (x-mu)^T Sigma^-1 (x-mu))` — exact whenever `Sigma`
  *  is rational (compute-engine's `Determinant`/`Inverse`/`Dot` all stay exact over rationals;
  *  confirmed empirically, `.scratch/probe3.mjs`). */
-const multinormalPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multinormalPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multinormalParams(ce, dist);
   if (params === undefined || x.operator !== "List") return undefined;
   const xs = operandsOf(x);
@@ -252,11 +230,7 @@ const multinormalPdf = (
   return finish(expr, options);
 };
 
-const multinormalMean = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multinormalMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multinormalParams(ce, dist);
   return params === undefined ? undefined : finish(params.mu, options);
 };
@@ -264,11 +238,7 @@ const multinormalMean = (
 /** The DIAGONAL of `Sigma` — Wolfram's own convention for `MultinormalDistribution`'s
  *  `Variance` (a length-k list of componentwise variances, not the full matrix; that's what
  *  `Covariance` answers — see below). */
-const multinormalVariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multinormalVariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multinormalParams(ce, dist);
   if (params === undefined) return undefined;
   const rows = operandsOf(params.sigma).map(operandsOf);
@@ -281,17 +251,13 @@ const multinormalVariance = (
   );
 };
 
-const multinormalCovariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multinormalCovariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multinormalParams(ce, dist);
   return params === undefined ? undefined : finish(params.sigma, options);
 };
 
 /** `x = mu + L z`, `z` iid standard normal, `L` the (numeric) Cholesky factor of `Sigma`. */
-const multinormalDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | undefined => {
+const multinormalDraw = (ce: Engine, dist: Expr): Expr | undefined => {
   const params = multinormalParams(ce, dist);
   if (params === undefined) return undefined;
   const mus = operandsOf(params.mu).map(numAt);
@@ -317,11 +283,11 @@ const multinormalDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpress
 // variance.
 
 interface MultivariatePoisson {
-  readonly mu0: BoxedExpression;
-  readonly mus: readonly BoxedExpression[];
+  readonly mu0: Expr;
+  readonly mus: readonly Expr[];
 }
 
-const multivariatePoissonParams = (dist: BoxedExpression): MultivariatePoisson | undefined => {
+const multivariatePoissonParams = (dist: Expr): MultivariatePoisson | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 2 || ops[1].operator !== "List") return undefined;
   const mus = operandsOf(ops[1]);
@@ -332,12 +298,7 @@ const multivariatePoissonParams = (dist: BoxedExpression): MultivariatePoisson |
  *  finite EXACT sum (built from compute-engine's own, already-exact, native Poisson `PDF`),
  *  needing each `xi` to resolve to a concrete nonnegative integer (the common case: a specific
  *  count vector). Symbolic `xi` stays unevaluated — there's no closed form for the sum itself. */
-const multivariatePoissonPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multivariatePoissonPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multivariatePoissonParams(dist);
   if (params === undefined || x.operator !== "List") return undefined;
   const xs = operandsOf(x);
@@ -346,7 +307,7 @@ const multivariatePoissonPdf = (
   if (xInts.some((v) => v === undefined || v < 0)) return undefined;
   const ints = xInts as number[];
   const minX = Math.min(...ints);
-  const terms: BoxedExpression[] = [];
+  const terms: Expr[] = [];
   for (let j = 0; j <= minX; j++) {
     const shockPdf = ce.function("PDF", [ce.function("PoissonDistribution", [params.mu0]), ce.number(j)]);
     const factors = params.mus.map((mu, i) =>
@@ -357,11 +318,7 @@ const multivariatePoissonPdf = (
   return finish(sumAll(ce, terms), options);
 };
 
-const multivariatePoissonMean = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multivariatePoissonMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multivariatePoissonParams(dist);
   if (params === undefined) return undefined;
   return finish(
@@ -378,11 +335,7 @@ const multivariatePoissonMean = (
 const multivariatePoissonVariance = multivariatePoissonMean;
 
 /** `Cov(Xi, Xj) = mu0` (i != j, from the shared `Y0`), `Var(Xi) = mu0 + mui` on the diagonal. */
-const multivariatePoissonCovariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const multivariatePoissonCovariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = multivariatePoissonParams(dist);
   if (params === undefined) return undefined;
   const { mu0, mus } = params;
@@ -395,7 +348,7 @@ const multivariatePoissonCovariance = (
   return finish(listOf(ce, rows), options);
 };
 
-const multivariatePoissonDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | undefined => {
+const multivariatePoissonDraw = (ce: Engine, dist: Expr): Expr | undefined => {
   const params = multivariatePoissonParams(dist);
   if (params === undefined) return undefined;
   const shock = localPoissonSample(ce, numAt(params.mu0));
@@ -415,14 +368,14 @@ const multivariatePoissonDraw = (ce: ComputeEngine, dist: BoxedExpression): Boxe
 // argument either — it is the caller's responsibility that it already integrates/sums to 1).
 
 interface ProbDist {
-  readonly pdfExpr: BoxedExpression;
+  readonly pdfExpr: Expr;
   readonly varName: string;
-  readonly min: BoxedExpression;
-  readonly max: BoxedExpression;
+  readonly min: Expr;
+  readonly max: Expr;
   readonly discrete: boolean;
 }
 
-const probabilityDistParams = (dist: BoxedExpression): ProbDist | undefined => {
+const probabilityDistParams = (dist: Expr): ProbDist | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 2 || ops[1].operator !== "List") return undefined;
   const spec = operandsOf(ops[1]);
@@ -435,12 +388,7 @@ const probabilityDistParams = (dist: BoxedExpression): ProbDist | undefined => {
 
 /** `pdf` substituted at `x`, `0` outside `[min, max]` — the in-range branch pre-`finish`ed
  *  before `If` picks a branch (same lazy-`If` idiom every PDF above documents). */
-const probabilityDistPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const probabilityDistPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = probabilityDistParams(dist);
   if (params === undefined) return undefined;
   const inRange = ce.function("And", [
@@ -457,15 +405,10 @@ const probabilityDistPdf = (
  *  reaches this through `N`, same as everywhere else in this package). `Limits`, not `List`,
  *  is the range head both `Integrate` and `Sum` actually recognize (confirmed empirically,
  *  `.scratch/probe6.mjs` — a `List` range is silently ignored). */
-const limitsOf = (ce: ComputeEngine, varName: string, lo: BoxedExpression, hi: BoxedExpression): BoxedExpression =>
+const limitsOf = (ce: Engine, varName: string, lo: Expr, hi: Expr): Expr =>
   ce.function("Limits", [ce.symbol(varName), lo, hi]);
 
-const probabilityDistCdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const probabilityDistCdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = probabilityDistParams(dist);
   if (params === undefined) return undefined;
   const head = params.discrete ? "Sum" : "Integrate";
@@ -474,11 +417,7 @@ const probabilityDistCdf = (
   return finish(raw, options);
 };
 
-const probabilityDistMean = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const probabilityDistMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = probabilityDistParams(dist);
   if (params === undefined) return undefined;
   const head = params.discrete ? "Sum" : "Integrate";
@@ -488,11 +427,7 @@ const probabilityDistMean = (
   return finish(raw, options);
 };
 
-const probabilityDistVariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const probabilityDistVariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = probabilityDistParams(dist);
   if (params === undefined) return undefined;
   const mean = probabilityDistMean(ce, dist, options);
@@ -516,12 +451,12 @@ const probabilityDistVariance = (
 // distribution/prior pair those three heads already answer, not just the two named cases.
 
 interface ParamMixture {
-  readonly inner: BoxedExpression;
+  readonly inner: Expr;
   readonly varName: string;
-  readonly prior: BoxedExpression;
+  readonly prior: Expr;
 }
 
-const parameterMixtureParams = (dist: BoxedExpression): ParamMixture | undefined => {
+const parameterMixtureParams = (dist: Expr): ParamMixture | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 2) return undefined;
   const binding = bindingOf(ops[1]);
@@ -542,7 +477,7 @@ const isPoissonGamma = (p: ParamMixture): boolean => {
 /** `p = 1/(1+scale)`, `r = shape` — the standard Gamma-Poisson identity. `GammaDistribution`'s
  *  own one-argument form (scale defaulting to 1, per `distributions.ts`'s `gammaParams`) is
  *  handled the same way here. */
-const poissonGammaAsNegBinomial = (ce: ComputeEngine, prior: BoxedExpression): BoxedExpression => {
+const poissonGammaAsNegBinomial = (ce: Engine, prior: Expr): Expr => {
   const gammaOps = operandsOf(prior);
   const shape = gammaOps[0];
   const scale = gammaOps.length === 2 ? gammaOps[1] : ce.One;
@@ -561,7 +496,7 @@ const isBinomialBeta = (p: ParamMixture): boolean => {
   );
 };
 
-const betaBinomialShape = (p: ParamMixture): { n: BoxedExpression; a: BoxedExpression; b: BoxedExpression } => {
+const betaBinomialShape = (p: ParamMixture): { n: Expr; a: Expr; b: Expr } => {
   const [n] = operandsOf(p.inner);
   const [a, b] = operandsOf(p.prior);
   return { n, a, b };
@@ -569,12 +504,7 @@ const betaBinomialShape = (p: ParamMixture): { n: BoxedExpression; a: BoxedExpre
 
 /** `C(n,x) B(x+a, n-x+b) / B(a,b)` — the Beta-Binomial PDF, a standard closed form (the
  *  Binomial's own coefficient times the ratio of two Beta functions). */
-const betaBinomialPdf = (
-  ce: ComputeEngine,
-  p: ParamMixture,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression => {
+const betaBinomialPdf = (ce: Engine, p: ParamMixture, x: Expr, options: EvaluateOptions): Expr => {
   const { n, a, b } = betaBinomialShape(p);
   const coeff = ce.function("Binomial", [n, x]);
   const betaNum = ce.function("Beta", [add(ce, x, a), add(ce, sub(ce, n, x), b)]);
@@ -582,14 +512,14 @@ const betaBinomialPdf = (
   return finish(mul(ce, coeff, div(ce, betaNum, betaDenom)), options);
 };
 
-const betaBinomialMean = (ce: ComputeEngine, p: ParamMixture, options: EvaluateOptions): BoxedExpression => {
+const betaBinomialMean = (ce: Engine, p: ParamMixture, options: EvaluateOptions): Expr => {
   const { n, a, b } = betaBinomialShape(p);
   return finish(div(ce, mul(ce, n, a), add(ce, a, b)), options);
 };
 
 /** `n a b (a+b+n) / ((a+b)^2 (a+b+1))` — the standard Beta-Binomial variance, from the law of
  *  total variance applied to `Binomial(n, theta)` over `theta ~ Beta(a,b)`. */
-const betaBinomialVariance = (ce: ComputeEngine, p: ParamMixture, options: EvaluateOptions): BoxedExpression => {
+const betaBinomialVariance = (ce: Engine, p: ParamMixture, options: EvaluateOptions): Expr => {
   const { n, a, b } = betaBinomialShape(p);
   const sum = add(ce, a, b);
   const numerator = mul(ce, n, a, b, add(ce, sum, n));
@@ -607,11 +537,7 @@ const betaBinomialVariance = (ce: ComputeEngine, p: ParamMixture, options: Evalu
  *  all, and because a non-linear `Mean(dist(theta))` (e.g. `Binomial`'s own `Variance`, `n
  *  theta (1-theta)`, un-expanded) does NOT resolve this way, which is why Binomial-Beta gets
  *  its own closed form above instead of relying on this. */
-const totalExpectationMean = (
-  ce: ComputeEngine,
-  p: ParamMixture,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const totalExpectationMean = (ce: Engine, p: ParamMixture, options: EvaluateOptions): Expr | undefined => {
   const meanTheta = ce.function("Mean", [p.inner]).evaluate();
   const distributed = ce.function("Distributed", [ce.symbol(p.varName), p.prior]);
   const result = ce.function("Expectation", [meanTheta, distributed]).evaluate();
@@ -621,11 +547,7 @@ const totalExpectationMean = (
 /** Law of total variance: `Var(X) = E_theta[Variance(dist(theta))] + Var_theta[Mean(dist(theta))]`,
  *  the second term as `E[Mean^2] - E[Mean]^2` — three `Expectation` calls, all through the same
  *  generic machinery `totalExpectationMean` uses, none resolved a priori. */
-const totalExpectationVariance = (
-  ce: ComputeEngine,
-  p: ParamMixture,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const totalExpectationVariance = (ce: Engine, p: ParamMixture, options: EvaluateOptions): Expr | undefined => {
   const meanTheta = ce.function("Mean", [p.inner]).evaluate();
   const varTheta = ce.function("Variance", [p.inner]).evaluate();
   const distributed = ce.function("Distributed", [ce.symbol(p.varName), p.prior]);
@@ -639,12 +561,7 @@ const totalExpectationVariance = (
   return finish(add(ce, eVar, varOfMean), options);
 };
 
-const mixturePdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const mixturePdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const p = parameterMixtureParams(dist);
   if (p === undefined) return undefined;
   if (isPoissonGamma(p)) return finish(ce.function("PDF", [poissonGammaAsNegBinomial(ce, p.prior), x]), options);
@@ -652,11 +569,7 @@ const mixturePdf = (
   return undefined;
 };
 
-const mixtureMean = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const mixtureMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const p = parameterMixtureParams(dist);
   if (p === undefined) return undefined;
   if (isPoissonGamma(p)) return finish(ce.function("Mean", [poissonGammaAsNegBinomial(ce, p.prior)]), options);
@@ -664,11 +577,7 @@ const mixtureMean = (
   return totalExpectationMean(ce, p, options);
 };
 
-const mixtureVariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const mixtureVariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const p = parameterMixtureParams(dist);
   if (p === undefined) return undefined;
   if (isPoissonGamma(p)) return finish(ce.function("Variance", [poissonGammaAsNegBinomial(ce, p.prior)]), options);
@@ -687,19 +596,19 @@ const mixtureVariance = (
 // division on a numeric position — there's no way around leaving that part numeric).
 
 interface HistogramSpec {
-  readonly data: readonly BoxedExpression[];
-  readonly x0: BoxedExpression;
-  readonly dx: BoxedExpression;
-  readonly x1?: BoxedExpression;
+  readonly data: readonly Expr[];
+  readonly x0: Expr;
+  readonly dx: Expr;
+  readonly x1?: Expr;
 }
 
-const histogramParams = (dist: BoxedExpression): HistogramSpec | undefined => {
+const histogramParams = (dist: Expr): HistogramSpec | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 2 || ops[0].operator !== "List" || ops[1].operator !== "List") return undefined;
   const data = operandsOf(ops[0]);
   const spec = operandsOf(ops[1]);
   if (data.length === 0) return undefined;
-  if (spec.length === 1) return { data, x0: undefined as unknown as BoxedExpression, dx: spec[0] };
+  if (spec.length === 1) return { data, x0: undefined as unknown as Expr, dx: spec[0] };
   if (spec.length === 3) return { data, x0: spec[0], dx: spec[2], x1: spec[1] };
   return undefined;
 };
@@ -730,25 +639,15 @@ const buildBins = (spec: HistogramSpec): Bins => {
 /** `x0` as a BOXED expression — either the given one (explicit-range form) or, for the `{dx}`
  *  form, rebuilt from the numeric `bins.x0n` (still exact whenever `dx`/the data are, since
  *  `x0n` is an exact multiple of `dxn` by construction). */
-const boxedX0 = (ce: ComputeEngine, spec: HistogramSpec, bins: Bins): BoxedExpression => spec.x0 ?? ce.number(bins.x0n);
+const boxedX0 = (ce: Engine, spec: HistogramSpec, bins: Bins): Expr => spec.x0 ?? ce.number(bins.x0n);
 
-const binBounds = (
-  ce: ComputeEngine,
-  spec: HistogramSpec,
-  bins: Bins,
-  index: number,
-): { a: BoxedExpression; b: BoxedExpression } => {
+const binBounds = (ce: Engine, spec: HistogramSpec, bins: Bins, index: number): { a: Expr; b: Expr } => {
   const a = add(ce, boxedX0(ce, spec, bins), mul(ce, ce.number(index), spec.dx));
   const b = add(ce, a, spec.dx);
   return { a, b };
 };
 
-const histogramPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const histogramPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const spec = histogramParams(dist);
   if (spec === undefined) return undefined;
   const bins = buildBins(spec);
@@ -762,12 +661,7 @@ const histogramPdf = (
 /** Piecewise-LINEAR (the piecewise-CONSTANT PDF's antiderivative): full bins below `x`'s bin
  *  contribute their whole count, `x`'s own bin contributes a fractional share. Built entirely
  *  from boxed arithmetic (add/mul/div/sub), so it stays exact wherever `x0`/`dx`/`x` are. */
-const histogramCdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const histogramCdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const spec = histogramParams(dist);
   if (spec === undefined) return undefined;
   const bins = buildBins(spec);
@@ -784,15 +678,11 @@ const histogramCdf = (
   return finish(div(ce, total, ce.number(bins.n)), options);
 };
 
-const histogramMean = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const histogramMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const spec = histogramParams(dist);
   if (spec === undefined) return undefined;
   const bins = buildBins(spec);
-  const terms: BoxedExpression[] = [];
+  const terms: Expr[] = [];
   for (let i = 0; i < bins.counts.length; i++) {
     if (bins.counts[i] === 0) continue;
     const { a, b } = binBounds(ce, spec, bins, i);
@@ -805,17 +695,13 @@ const histogramMean = (
 
 /** `Var = E[X^2] - Mean^2`, with each bin's `E[X^2 | bin]` the standard uniform-on-`[a,b]`
  *  second moment `(a^2 + a b + b^2) / 3`. */
-const histogramVariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const histogramVariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const spec = histogramParams(dist);
   if (spec === undefined) return undefined;
   const mean = histogramMean(ce, dist, options);
   if (mean === undefined) return undefined;
   const bins = buildBins(spec);
-  const terms: BoxedExpression[] = [];
+  const terms: Expr[] = [];
   for (let i = 0; i < bins.counts.length; i++) {
     if (bins.counts[i] === 0) continue;
     const { a, b } = binBounds(ce, spec, bins, i);
@@ -850,7 +736,7 @@ const VECTOR_KINDS6 = new Set([
   "MultivariatePoissonDistribution",
 ]);
 
-function declareConstructors6(ce: ComputeEngine): void {
+function declareConstructors6(ce: Engine): void {
   ce.declare("MultinomialDistribution", { signature: "(real<0..>, list<real>) -> distribution" });
   // `(Sigma)` defaults `mu` to zero; `(mu, Sigma)` gives both — see `multinormalParams`. `mu`
   // and `Sigma` mean different things depending on arity, so this is two overloads rather than
@@ -864,7 +750,7 @@ function declareConstructors6(ce: ComputeEngine): void {
   ce.declare("HistogramDistribution", { signature: "(list<real>, list<real>) -> distribution" });
 }
 
-function extendStats6(ce: ComputeEngine): void {
+function extendStats6(ce: Engine): void {
   wrapOperator(
     ce,
     ["PDF"],
@@ -983,7 +869,7 @@ function extendStats6(ce: ComputeEngine): void {
  *  `distribution`-typed argument outright — confirmed empirically, `.scratch/probe4.mjs`), then
  *  `wrapOperator`ed at arity 1 so the native two-collection (or one-collection-of-pairs) call
  *  is untouched. */
-function extendCovariance6(ce: ComputeEngine): void {
+function extendCovariance6(ce: Engine): void {
   widenSignature(
     ce,
     "Covariance",
@@ -1016,7 +902,7 @@ function extendCovariance6(ce: ComputeEngine): void {
  *  `PDF`/`CDF`/`Mean`/`Variance`/`RandomVariate`/`Covariance` in place. Call AFTER
  *  `declareDistributions` (needs `Distributed`/`Mean`/`Variance`/`Expectation`/
  *  `NegativeBinomialDistribution` already declared — waves 1 and 2). */
-export function declareDistributions6(ce: ComputeEngine): void {
+export function declareDistributions6(ce: Engine): void {
   declareConstructors6(ce);
   extendStats6(ce);
   extendCovariance6(ce);

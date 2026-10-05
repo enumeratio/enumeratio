@@ -1,5 +1,4 @@
-import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
-import { defineMessages, emit, wrapOperator } from "@enumeratio/engine";
+import { defineMessages, emit, type Engine, type Expr, type HeadPatch, wrapOperator } from "@enumeratio/engine";
 import { carrierTypeForName, registerCollectionCarrier } from "@enumeratio/structures";
 import {
   asBlockList,
@@ -16,9 +15,11 @@ import {
 } from "./types.ts";
 import { type AnyFamily, kernelOn } from "./epsil.ts";
 
-type BoxInput = Parameters<ComputeEngine["box"]>[0];
+type CollectionHandlers = NonNullable<HeadPatch["collection"]>;
 
-const asBoxed = (c: BoxedExpression): Boxed => c as unknown as Boxed;
+type BoxInput = Parameters<Engine["box"]>[0];
+
+const asBoxed = (c: Expr): Boxed => c as unknown as Boxed;
 
 /** Elements a kernel may generate to answer one call on the engine. Past it, a family whose
  *  unrank or rank enumerates declines with `Head::toobig` rather than exhausting the heap. */
@@ -59,7 +60,7 @@ const decoderFor = (kind: FamilyKernel["kind"]) =>
 /** A family's kernel as compute-engine collection handlers: Count, At and iteration by
  *  unranking, membership by `valid`. CE speaks plain numbers; a count past 2^53 answers
  *  `undefined` (unknown to CE) rather than a rounded one. */
-function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): CollectionHandlers {
+function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): CollectionHandlers {
   const bareEncode = encoderFor(family.kind);
   const bareDecode = decoderFor(family.kind);
   // How many of the family's own params (from the front) ride along inside the carrier's
@@ -85,7 +86,7 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
     return [carrier, ["Tuple", ...p.slice(0, carrierParams), encoded]];
   };
   const decode = (b: Boxed): unknown => {
-    if (carrier === undefined || (b as unknown as BoxedExpression).operator !== carrier) return bareDecode(b as never);
+    if (carrier === undefined || (b as unknown as Expr).operator !== carrier) return bareDecode(b as never);
     const inner = b.ops?.[0];
     if (carrierElements !== undefined) {
       const tupleOps = inner?.ops ?? [];
@@ -95,12 +96,12 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
     const tupleOps = inner?.ops;
     return bareDecode(tupleOps?.[tupleOps.length - 1] as never);
   };
-  const params = (c: BoxedExpression): number[] => {
+  const params = (c: Expr): number[] => {
     const ops = asBoxed(c).ops ?? [];
     return Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
   };
   // Undefined where the kernel declines past 2^53 (`needsBigint`): unknown, not an error.
-  const element = (p: number[], rank: bigint): BoxedExpression | undefined => {
+  const element = (p: number[], rank: bigint): Expr | undefined => {
     try {
       return ce.box(encode(p, family.unrank(p, rank)) as BoxInput);
     } catch (error) {
@@ -191,7 +192,7 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel, carrier?: string): 
  *  which carrier each family's elements inhabit (`registerCollectionCarrier`), for
  *  `CombinatorialStat(family, name)` -- self-contained per call, so a single area's declare
  *  needs nothing extra for its own families to answer it. */
-export function declareFamilies(ce: ComputeEngine, families: readonly AnyFamily[]): void {
+export function declareFamilies(ce: Engine, families: readonly AnyFamily[]): void {
   const byHead = new Map<string, FamilyKernel>();
   for (const family of families.map((f) => kernelOn(ce, f))) {
     byHead.set(family.head, family);
@@ -214,7 +215,7 @@ export function declareFamilies(ce: ComputeEngine, families: readonly AnyFamily[
   // Guarded on SymmetricGroup being among THESE entries, so this only ever wraps once --
   // permutations' own declare is the only caller whose entries include it.
   if (!byHead.has("SymmetricGroup")) return;
-  const exactCount = (op: BoxedExpression): bigint | undefined => {
+  const exactCount = (op: Expr): bigint | undefined => {
     const family = byHead.get(op.operator);
     if (family === undefined || family.declared?.cost.count === "enumerative") return undefined;
     const p = Array.from({ length: family.paramCount }, (_, i) => intOf(asBoxed(op).ops?.[i]));

@@ -6,8 +6,8 @@
 
 import { definitionHash, isCacheableDefinition, type MathJSON, pureResult } from "@enumeratio/engine/compiled";
 import { compiledStatistic } from "./compiled.ts";
-import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
+import { type Engine, type Expr, isNativeHead, operandsOf } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
 import {
   allCarrierNames,
@@ -19,7 +19,7 @@ import {
 import { findstat } from "../../findstat/src/findstat-data.ts";
 import { bySignature, type Definition, signatureOf, SUBJECT } from "./types.ts";
 
-type BoxInput = Parameters<ComputeEngine["box"]>[0];
+type BoxInput = Parameters<Engine["box"]>[0];
 
 /**
  * Evaluate `definition` at `subject` — substitute the wildcard and evaluate. Exported
@@ -28,7 +28,7 @@ type BoxInput = Parameters<ComputeEngine["box"]>[0];
 const compiledCache = new WeakMap<Definition, ReturnType<typeof compiledStatistic> | null>();
 const purity = new WeakMap<Definition, boolean>();
 
-export function applyDefinition(ce: ComputeEngine, definition: Definition, subject: BoxedExpression): BoxedExpression {
+export function applyDefinition(ce: Engine, definition: Definition, subject: Expr): Expr {
   const compute = (): MathJSON | undefined => {
     // Compiled ahead of time where it could be; the interpreter is the definition itself.
     let compiled = compiledCache.get(definition);
@@ -45,11 +45,7 @@ export function applyDefinition(ce: ComputeEngine, definition: Definition, subje
 }
 
 /** The definition evaluated by the interpreter alone: what the compiled code is held to. */
-export function interpretDefinition(
-  ce: ComputeEngine,
-  definition: Definition,
-  subject: BoxedExpression,
-): BoxedExpression {
+export function interpretDefinition(ce: Engine, definition: Definition, subject: Expr): Expr {
   // In a scope of its own: boxing declares the free `_x`, and a definition that fixes its
   // type (Depth's `Abs(At(_x, i) - i)` makes it a number) would otherwise pin that type on
   // the global `_x` for every later definition, whose `Length(_x)` then never reduces.
@@ -110,7 +106,7 @@ const BARE_SHAPE: Readonly<Record<string, string>> = {
 /** The argument type a statistic accepts, given how the caller wired the carriers — an
  *  explicit override first, then whatever the caller's own `declareCarriers` already
  *  registered on `ce` for this carrier, then the bare list as a last resort. */
-function subjectType(ce: ComputeEngine, definition: Definition, options: DeclareOptions): string {
+function subjectType(ce: Engine, definition: Definition, options: DeclareOptions): string {
   const bare = BARE_SHAPE[definition.on] ?? "list<integer>";
   const carrier = options.domainTypes?.[definition.on] ?? carrierTypeForName(ce, definition.on);
   if (carrier === undefined) return bare;
@@ -140,7 +136,7 @@ const findstatIds = (definition: Definition): string[] => [
  * 2026-09-28), so it generalises the head rather than overloading it. Every arm the head had
  * is kept; only a value of the carrier reaches the definition.
  */
-function extendEngineHead(ce: ComputeEngine, definition: Definition, type: string | undefined): void {
+function extendEngineHead(ce: Engine, definition: Definition, type: string | undefined): void {
   const found = ce.lookupDefinition(definition.head);
   const operator = found !== undefined && "operator" in found ? found.operator : undefined;
   if (operator === undefined || type === undefined) return;
@@ -159,9 +155,9 @@ function extendEngineHead(ce: ComputeEngine, definition: Definition, type: strin
   };
 }
 
-let bare: ComputeEngine | undefined;
+let bare: Engine | undefined;
 /** Whether compute-engine itself defines `head`, with a meaning of its own (`Sign`). */
-const isEngineHead = (head: string): boolean => (bare ??= new ComputeEngine()).lookupDefinition(head) !== undefined;
+const isEngineHead = (head: string): boolean => isNativeHead((bare ??= bareEngine()), head);
 
 /**
  * File every definition in its carrier's `CombinatorialStat` table, and declare it as a
@@ -178,7 +174,7 @@ const isEngineHead = (head: string): boolean => (bare ??= new ComputeEngine()).l
  * one of them is in its carrier's table.
  */
 export function declareStatistics(
-  ce: ComputeEngine,
+  ce: Engine,
   definitions: readonly Definition[],
   options: DeclareOptions = {},
 ): Map<string, Definition> {
@@ -203,7 +199,7 @@ export function declareStatistics(
 
     if (claimed.has(definition.head)) continue;
     claimed.add(definition.head);
-    if (ce.lookupDefinition(definition.head) !== undefined) {
+    if (isNativeHead(ce, definition.head)) {
       const kernel = operationOf(ce, "CombinatorialStat", definition.on, definition.head)?.kernel;
       if (kernel !== undefined) continue;
       // Another carrier already has an entry under this exact head — a call for THAT carrier
@@ -221,7 +217,7 @@ export function declareStatistics(
 
     ce.declare(definition.head, {
       signature: `(${subjectType(ce, definition, options)}) -> number`,
-      evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+      evaluate: (ops: readonly Expr[]): Expr | undefined => {
         const subject = ops[0];
         if (subject === undefined) return undefined;
         // Unwrap only an actual carrier. `definition.on` IS the constructor head's spelling,

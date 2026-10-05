@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { defineMessages, emit, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { defineMessages, emit, type Engine, type Expr, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // Wolfram-frontier scoping/control heads: With, Module, Reap/Sow, Do, Switch, NestWhile(List),
 // While, FixedPointList, Throw/Catch, Echo, AbsoluteTiming, Attributes/SetAttributes, AppendTo.
@@ -45,10 +44,9 @@ import { defineMessages, emit, integerAt, operandsOf, symbolNameOf } from "@enum
 /** Call a (possibly `Function`-headed) expression as an operator over `args` -- same
  *  technique as `list-functional.ts`'s own `applyFn`, duplicated locally per house style
  *  (see `list-frontier-2.ts`'s `invoke`). */
-const applyFn = (ce: ComputeEngine, fn: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
-  ce.function("Apply", [fn, ...args]).evaluate();
+const applyFn = (ce: Engine, fn: Expr, args: readonly Expr[]): Expr => ce.function("Apply", [fn, ...args]).evaluate();
 
-const isTrue = (expr: BoxedExpression): boolean => symbolNameOf(expr) === "True";
+const isTrue = (expr: Expr): boolean => symbolNameOf(expr) === "True";
 
 /** Iteration cap for `While`/`NestWhile`/`NestWhileList` -- unlike `Do` (whose count is
  *  given directly by the caller) these run until a test fails, which may never happen.
@@ -62,11 +60,11 @@ const MAX_ITERATIONS = 4096;
 /** Read a `[List, [Equal, sym, val]?, ...]` binding list. `requireValue` rejects a bare
  *  symbol with no `= val` (With requires one; Module allows an uninitialized local). */
 function readBindings(
-  bindings: BoxedExpression,
+  bindings: Expr,
   requireValue: boolean,
-): readonly { readonly name: string; readonly value: BoxedExpression | undefined }[] | undefined {
+): readonly { readonly name: string; readonly value: Expr | undefined }[] | undefined {
   if (bindings.operator !== "List") return undefined;
-  const result: { readonly name: string; readonly value: BoxedExpression | undefined }[] = [];
+  const result: { readonly name: string; readonly value: Expr | undefined }[] = [];
   for (const b of operandsOf(bindings)) {
     if (b.operator === "Equal") {
       const [sym, val] = operandsOf(b);
@@ -87,16 +85,16 @@ function readBindings(
  *  no fresh scope, since nothing is declared as a variable at all. Bindings are
  *  simultaneous (each value is computed against the outer context, none can see another
  *  binding in the same list), matching Wolfram. */
-function declareWith(ce: ComputeEngine): void {
+function declareWith(ce: Engine): void {
   ce.declare("With", {
     signature: "(any, any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [bindingsExpr, body] = ops;
       if (bindingsExpr === undefined || body === undefined) return undefined;
       const bindings = readBindings(bindingsExpr, true);
       if (bindings === undefined) return undefined;
-      const subs: Record<string, BoxedExpression> = {};
+      const subs: Record<string, Expr> = {};
       for (const { name, value } of bindings) subs[name] = value!.evaluate();
       return body.subs(subs).evaluate();
     },
@@ -106,11 +104,11 @@ function declareWith(ce: ComputeEngine): void {
 /** `Module({x, y = 2}, body)`: a fresh scope per call, holding one local per binding
  *  (declared, then assigned when the binding gave a value) -- popped in a `finally` so a
  *  thrown error (including our own `Throw`, below) still unwinds the scope. */
-function declareModule(ce: ComputeEngine): void {
+function declareModule(ce: Engine): void {
   ce.declare("Module", {
     signature: "(any, any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [bindingsExpr, body] = ops;
       if (bindingsExpr === undefined || body === undefined) return undefined;
       const bindings = readBindings(bindingsExpr, false);
@@ -137,8 +135,8 @@ function declareModule(ce: ComputeEngine): void {
 /** One `Sow`-ed group: everything sown under the same tag (or, for `DEFAULT_TAG`, sown
  *  with no tag at all), in first-sown order. */
 interface SowGroup {
-  readonly tag: BoxedExpression | typeof DEFAULT_TAG;
-  readonly values: BoxedExpression[];
+  readonly tag: Expr | typeof DEFAULT_TAG;
+  readonly values: Expr[];
 }
 const DEFAULT_TAG = Symbol("control.ts default Sow tag");
 
@@ -146,9 +144,9 @@ const DEFAULT_TAG = Symbol("control.ts default Sow tag");
  *  a `Sow` inside a nested `Reap` is consumed there, and does not also reach an outer
  *  `Reap` unless re-sown). A `WeakMap` keyed by the engine, so two engines never share
  *  state and nothing leaks once an engine is collected. */
-const reapStacks = new WeakMap<ComputeEngine, SowGroup[][]>();
+const reapStacks = new WeakMap<Engine, SowGroup[][]>();
 
-function reapStack(ce: ComputeEngine): SowGroup[][] {
+function reapStack(ce: Engine): SowGroup[][] {
   let stack = reapStacks.get(ce);
   if (stack === undefined) {
     stack = [];
@@ -157,17 +155,17 @@ function reapStack(ce: ComputeEngine): SowGroup[][] {
   return stack;
 }
 
-const tagsMatch = (a: BoxedExpression | typeof DEFAULT_TAG, b: BoxedExpression | typeof DEFAULT_TAG): boolean =>
+const tagsMatch = (a: Expr | typeof DEFAULT_TAG, b: Expr | typeof DEFAULT_TAG): boolean =>
   a === DEFAULT_TAG || b === DEFAULT_TAG ? a === b : a.isSame(b);
 
 /** `Sow(e)` / `Sow(e, tag)`: record `e`'s value into the nearest enclosing `Reap`'s
  *  current tag group (creating it on first use), and return `e`. Outside any `Reap`,
  *  it's a no-op that still returns `e` -- Wolfram's own behavior. */
-function declareSow(ce: ComputeEngine): void {
+function declareSow(ce: Engine): void {
   ce.declare("Sow", {
     signature: "(any, any?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const valueExpr = ops[0];
       if (valueExpr === undefined) return undefined;
       const value = valueExpr.evaluate();
@@ -193,22 +191,22 @@ function declareSow(ce: ComputeEngine): void {
  *  tag matches exactly (Wolfram's fuller pattern-matching form isn't -- exact tag equality
  *  only, documented per the task's "at least exact-tag matching"); a requested tag nothing
  *  was sown under comes back as `{}` in its position. */
-function declareReap(ce: ComputeEngine): void {
+function declareReap(ce: Engine): void {
   // A canonical List drops `Nothing` (our `Null`), so `Reap(Do(..))` would lose its first slot.
-  const reaped = (value: BoxedExpression, groups: BoxedExpression): BoxedExpression =>
+  const reaped = (value: Expr, groups: Expr): Expr =>
     symbolNameOf(value) === "Nothing"
       ? ce.function("List", [value, groups], { form: "raw" })
       : ce.box(["List", value, groups]);
   ce.declare("Reap", {
     signature: "(any, any?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const body = ops[0];
       if (body === undefined) return undefined;
       const stack = reapStack(ce);
       const frame: SowGroup[] = [];
       stack.push(frame);
-      let value: BoxedExpression;
+      let value: Expr;
       try {
         value = body.evaluate();
       } finally {
@@ -223,7 +221,7 @@ function declareReap(ce: ComputeEngine): void {
       const formValue = form.evaluate();
       const requestedTags = formValue.operator === "List" ? operandsOf(formValue) : [formValue];
       const groups = requestedTags.map((tag) => {
-        const found = frame.find((g) => g.tag !== DEFAULT_TAG && (g.tag as BoxedExpression).isSame(tag));
+        const found = frame.find((g) => g.tag !== DEFAULT_TAG && (g.tag as Expr).isSame(tag));
         return ce.box(["List", ...(found?.values ?? [])]);
       });
       return reaped(value, ce.box(["List", ...groups]));
@@ -237,19 +235,19 @@ function declareReap(ce: ComputeEngine): void {
  *  control flow of its own, so `Throw` unwinds the JS call stack directly and `Catch`
  *  intercepts it. `tag` is `undefined` for a plain `Throw(value)`. */
 class ThrowSignal {
-  readonly value: BoxedExpression;
-  readonly tag: BoxedExpression | undefined;
-  constructor(value: BoxedExpression, tag: BoxedExpression | undefined) {
+  readonly value: Expr;
+  readonly tag: Expr | undefined;
+  constructor(value: Expr, tag: Expr | undefined) {
     this.value = value;
     this.tag = tag;
   }
 }
 
-function declareThrow(ce: ComputeEngine): void {
+function declareThrow(ce: Engine): void {
   ce.declare("Throw", {
     signature: "(any, any?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const valueExpr = ops[0];
       if (valueExpr === undefined) return undefined;
       const tagExpr = ops[1];
@@ -263,11 +261,11 @@ function declareThrow(ce: ComputeEngine): void {
  *  as `Reap`'s tag form, not Wolfram's fuller pattern matching) -- an untagged `Throw` or
  *  one with a different tag propagates past this `Catch` to the next enclosing one (or out
  *  of the whole evaluation, same as Wolfram). A non-`Throw` error is never ours to catch. */
-function declareCatch(ce: ComputeEngine): void {
+function declareCatch(ce: Engine): void {
   ce.declare("Catch", {
     signature: "(any, any?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const body = ops[0];
       if (body === undefined) return undefined;
       const form = ops[1];
@@ -289,7 +287,7 @@ function declareCatch(ce: ComputeEngine): void {
  *  `{i, n}` / `{i, a, b}` / `{i, a, b, step}` (a named loop variable). Integer bounds only --
  *  Wolfram allows real/step-fractional iterators; not supported here. */
 function readDoSpec(
-  spec: BoxedExpression,
+  spec: Expr,
 ):
   | { readonly name: string | undefined; readonly start: number; readonly end: number; readonly step: number }
   | undefined {
@@ -328,11 +326,11 @@ function readDoSpec(
  *  variable, when named, lives in one fresh scope for the whole call, reassigned each
  *  step). Always returns `Nothing` -- our stand-in for Wolfram's `Null`, per the existing
  *  `Nothing: Null` entry in `@enumeratio/wolfram`'s `SYMBOLS` map. */
-function declareDo(ce: ComputeEngine): void {
+function declareDo(ce: Engine): void {
   ce.declare("Do", {
     signature: "(any, any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [body, specExpr] = ops;
       if (body === undefined || specExpr === undefined) return undefined;
       const spec = readDoSpec(specExpr);
@@ -365,11 +363,11 @@ function declareDo(ce: ComputeEngine): void {
  *  matches wins -- structural equality only, plus a bare `_` (`Blank`) as an always-match
  *  fallback, not Wolfram's fuller pattern language. Stays unevaluated when nothing
  *  matches, same as an unmatched Wolfram `Switch`. */
-function declareSwitch(ce: ComputeEngine): void {
+function declareSwitch(ce: Engine): void {
   ce.declare("Switch", {
     signature: "(any, any*) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       if (ops.length < 3 || (ops.length - 1) % 2 !== 0) return undefined;
       const value = ops[0]!.evaluate();
       for (let i = 1; i < ops.length; i += 2) {
@@ -384,11 +382,11 @@ function declareSwitch(ce: ComputeEngine): void {
 /** `While(test)` / `While(test, body)`: re-evaluates the held `test` (and `body`, if
  *  given) until `test` reads other than `True`, or `MAX_ITERATIONS` is reached. Always
  *  returns `Nothing`, like `Do`. */
-function declareWhile(ce: ComputeEngine): void {
+function declareWhile(ce: Engine): void {
   ce.declare("While", {
     signature: "(any, any?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [test, body] = ops;
       if (test === undefined) return undefined;
       for (let i = 0; i < MAX_ITERATIONS && isTrue(test.evaluate()); i++) {
@@ -403,8 +401,7 @@ function declareWhile(ce: ComputeEngine): void {
 
 /** The last (up to) `m` values of `history`, oldest first -- `NestWhile`'s `test` is
  *  called over exactly these, positionally, for `m > 1`. */
-const window = (history: readonly BoxedExpression[], m: number): readonly BoxedExpression[] =>
-  history.slice(Math.max(0, history.length - m));
+const window = (history: readonly Expr[], m: number): readonly Expr[] => history.slice(Math.max(0, history.length - m));
 
 /** `NestWhile(f, x, test)`: applies `f` to `x` repeatedly while `test` of the CURRENT
  *  value reads `True`, and returns the first value where it doesn't.
@@ -412,11 +409,11 @@ const window = (history: readonly BoxedExpression[], m: number): readonly BoxedE
  *  arguments, instead of the bare current value.
  *  `NestWhile(f, x, test, m, max)`: additionally caps the number of `f`-applications at
  *  `max` (on top of the unconditional `MAX_ITERATIONS`). */
-function declareNestWhile(ce: ComputeEngine): void {
+function declareNestWhile(ce: Engine): void {
   ce.declare("NestWhile", {
     signature: "(any, any, any, integer?, integer?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, x0, test, mExpr, maxExpr] = ops;
       if (fn === undefined || x0 === undefined || test === undefined) return undefined;
       const m = mExpr !== undefined ? integerAt(mExpr.evaluate()) : 1;
@@ -427,7 +424,7 @@ function declareNestWhile(ce: ComputeEngine): void {
         if (requested === undefined || requested < 0) return undefined;
         maxSteps = Math.min(maxSteps, requested);
       }
-      const history: BoxedExpression[] = [x0.evaluate()];
+      const history: Expr[] = [x0.evaluate()];
       for (let steps = 0; steps < maxSteps; steps++) {
         const testArgs = window(history, m);
         if (!isTrue(applyFn(ce, test, testArgs))) break;
@@ -440,14 +437,14 @@ function declareNestWhile(ce: ComputeEngine): void {
 
 /** `NestWhileList(f, x, test)`: like `NestWhile`, but returns every intermediate value
  *  from `x` up to (and including) the first one where `test` fails. */
-function declareNestWhileList(ce: ComputeEngine): void {
+function declareNestWhileList(ce: Engine): void {
   ce.declare("NestWhileList", {
     signature: "(any, any, any) -> list<any>",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, x0, test] = ops;
       if (fn === undefined || x0 === undefined || test === undefined) return undefined;
-      const history: BoxedExpression[] = [x0.evaluate()];
+      const history: Expr[] = [x0.evaluate()];
       for (let steps = 0; steps < MAX_ITERATIONS; steps++) {
         if (!isTrue(applyFn(ce, test, [history[history.length - 1]!]))) break;
         history.push(applyFn(ce, fn, [history[history.length - 1]!]));
@@ -462,15 +459,15 @@ function declareNestWhileList(ce: ComputeEngine): void {
  *  `list-functional.ts`'s `FixedPoint` uses; adequate for the exact/rational values this
  *  head's examples use, so that refinement isn't duplicated here). The repeated value
  *  ends the list once, like Wolfram's own. */
-function declareFixedPointList(ce: ComputeEngine): void {
+function declareFixedPointList(ce: Engine): void {
   ce.declare("FixedPointList", {
     signature: "(any, any) -> list<any>",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, x0] = ops;
       if (fn === undefined || x0 === undefined) return undefined;
       let current = x0.evaluate();
-      const history: BoxedExpression[] = [current];
+      const history: Expr[] = [current];
       for (let i = 0; i < MAX_ITERATIONS; i++) {
         const next = applyFn(ce, fn, [current]);
         history.push(next);
@@ -487,8 +484,8 @@ function declareFixedPointList(ce: ComputeEngine): void {
 /** `Echo::printed` / `Echo::labeled` templates are per-engine (see `@enumeratio/engine`'s
  *  `messages.ts`); this set tracks which engines already have them, so re-declaring the
  *  control heads on the same engine doesn't redefine the templates twice. */
-const echoMessagesDefined = new WeakSet<ComputeEngine>();
-function defineEchoMessagesOnce(ce: ComputeEngine): void {
+const echoMessagesDefined = new WeakSet<Engine>();
+function defineEchoMessagesOnce(ce: Engine): void {
   if (echoMessagesDefined.has(ce)) return;
   echoMessagesDefined.add(ce);
   defineMessages(ce, "Echo", {
@@ -504,11 +501,11 @@ function defineEchoMessagesOnce(ce: ComputeEngine): void {
  *  collectible with `collectMessages`) rather than skipped outright -- a caller that wants
  *  the printed text can `collectMessages(ce, () => expr.evaluate())` and read it from
  *  there, same as any other head's declined-call message. */
-function declareEcho(ce: ComputeEngine): void {
+function declareEcho(ce: Engine): void {
   defineEchoMessagesOnce(ce);
   ce.declare("Echo", {
     signature: "(any, any?, ((any) -> any)?) console -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const value = ops[0];
       if (value === undefined) return undefined;
       const label = ops[1];
@@ -525,11 +522,11 @@ function declareEcho(ce: ComputeEngine): void {
  *  the held `expr`, as a `Real`, and its value. `seconds` is inherently nondeterministic;
  *  reference examples must assert only the `value` half (e.g. via `At(result, 2)`), never
  *  pin the timing. */
-function declareAbsoluteTiming(ce: ComputeEngine): void {
+function declareAbsoluteTiming(ce: Engine): void {
   ce.declare("AbsoluteTiming", {
     signature: "(any) time -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       if (expr === undefined) return undefined;
       const start = performance.now();
@@ -564,7 +561,7 @@ interface FlaggedOperator {
   commutative: boolean;
 }
 
-function operatorFlagsOf(ce: ComputeEngine, name: string): FlaggedOperator | undefined {
+function operatorFlagsOf(ce: Engine, name: string): FlaggedOperator | undefined {
   const def = ce.lookupDefinition(name);
   return def !== undefined && "operator" in def ? (def.operator as unknown as FlaggedOperator) : undefined;
 }
@@ -604,11 +601,11 @@ const writeAttribute = (op: FlaggedOperator, attr: AttributeName): void => {
 /** `Attributes(f)`: the subset of `ATTRIBUTE_NAMES` `f`'s operator definition carries,
  *  alphabetically (Wolfram's own print order). An undeclared or non-operator `f` reads as
  *  no attributes, same as a plain symbol in Wolfram. */
-function declareAttributes(ce: ComputeEngine): void {
+function declareAttributes(ce: Engine): void {
   ce.declare("Attributes", {
     signature: "(symbol) -> list<symbol>",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const name = ops[0] !== undefined ? symbolNameOf(ops[0]) : undefined;
       if (name === undefined) return undefined;
       const op = operatorFlagsOf(ce, name);
@@ -624,11 +621,11 @@ function declareAttributes(ce: ComputeEngine): void {
  *  (stays unevaluated) for an undeclared `f`, or any attribute name outside
  *  `ATTRIBUTE_NAMES` -- silently accepting an attribute we can't actually represent would
  *  claim a change that didn't happen. Returns `Nothing`, like Wolfram's own `Null`. */
-function declareSetAttributes(ce: ComputeEngine): void {
+function declareSetAttributes(ce: Engine): void {
   ce.declare("SetAttributes", {
     signature: "(symbol, any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const name = ops[0] !== undefined ? symbolNameOf(ops[0]) : undefined;
       const attrsExpr = ops[1];
       if (name === undefined || attrsExpr === undefined) return undefined;
@@ -651,11 +648,11 @@ function declareSetAttributes(ce: ComputeEngine): void {
  *  value, is the first operand) so it can be reassigned; works for any symbol already
  *  carrying a value via `ce.assign`, including a `Module` local (assignment into a bound
  *  variable was checked to work across a scope boundary the same way `Module` itself does). */
-function declareAppendTo(ce: ComputeEngine): void {
+function declareAppendTo(ce: Engine): void {
   ce.declare("AppendTo", {
     signature: "(symbol, any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const symExpr = ops[0];
       const elemExpr = ops[1];
       const name = symExpr !== undefined ? symbolNameOf(symExpr) : undefined;
@@ -673,7 +670,7 @@ function declareAppendTo(ce: ComputeEngine): void {
  *  `Echo`, `AbsoluteTiming`, `Attributes`/`SetAttributes`, `AppendTo`. `Clear`,
  *  `Attributes`' `idempotent`/`involution` flags, and `Return` are deliberately left out --
  *  see the module doc and `declareAttributes`'s own comment for why. */
-export function declareControl(ce: ComputeEngine): void {
+export function declareControl(ce: Engine): void {
   declareWith(ce);
   declareModule(ce);
   declareSow(ce);

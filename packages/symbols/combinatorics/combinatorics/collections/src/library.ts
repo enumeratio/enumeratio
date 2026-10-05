@@ -1,4 +1,4 @@
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { declareArithHeads } from "./arith-heads.ts";
 import { declareControl } from "./control.ts";
 import { declareExpressionOps } from "./expression-ops.ts";
@@ -40,7 +40,7 @@ import { declareRoundingHeads } from "./rounding-heads.ts";
  * already claims this head" skip, unchanged). `declareStats`'s own isolated callers
  * (`collections/tests/definitions-helpers.ts`) are unaffected — they never call this function.
  */
-export function declareCollections(ce: ComputeEngine): void {
+export function declareCollections(ce: Engine): void {
   declareFamilies(ce, collectionsEntries);
   declareCallForms(ce);
   declareListOps(ce);

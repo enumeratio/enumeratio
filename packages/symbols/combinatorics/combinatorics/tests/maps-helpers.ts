@@ -3,7 +3,7 @@
 // algorithms. Used to live in @enumeratio/statistics (moved from combinatorics' domains area)
 // because it wired declareStatistics into the shared engine, which would have devDepped back
 // on statistics from combinatorics — moot since step 6b moved declareStatistics here.
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import {
   ALL_STATISTICS,
   CARRIERS,
@@ -18,7 +18,7 @@ export { CARRIERS, MAPS };
 const domainTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
 const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 
-export const ce = new ComputeEngine();
+export const ce = bareEngine();
 declareCombinatoricsCarriers(ce);
 declareStatistics(ce, ALL_STATISTICS, { domainTypes });
 declareMaps(ce, constructorFor);

@@ -9,7 +9,7 @@
 // declareStatistics and combinatorics couldn't devDep statistics without cycling back
 // (per enumeratio#408) — moot since step 6b moved declareStatistics into combinatorics itself.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import type { ReferenceEntry, ReferenceExample } from "@enumeratio/entry";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
@@ -49,7 +49,7 @@ const SAMPLES: Record<string, { contents: unknown; caption: string }> = {
 };
 
 const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCombinatoricsCarriers(ce);
 // A guard may read a statistic (KrewerasComplement's counts cycles), so the statistics go in
 // before the maps — the same order tests/entries.test.ts uses.

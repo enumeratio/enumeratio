@@ -1,12 +1,13 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCombinatorics } from "../../src/index.ts";
 
 // DyckPaths lives in lattice-paths now (A-94) -- declareCollections alone no longer declares it.
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCombinatorics(ce);
 
-const evalMJ = (mathjson: unknown) => ce.box(mathjson as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evalMJ = (mathjson: unknown) => ce.box(mathjson as Parameters<Engine["box"]>[0]).evaluate();
 
 // ─── independent cross-checks shared by the GF/EGF tests below ────────────────────────────
 

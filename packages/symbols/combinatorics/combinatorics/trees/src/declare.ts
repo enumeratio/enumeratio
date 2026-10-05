@@ -1,7 +1,7 @@
 // Trees' own declare (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5, A-94): its
 // carriers (LabeledTree and PruferSequence both live here, so the Prüfer-bijection constructor
 // overload can attach right after), then the families they type.
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
 import { liftFamily } from "../../collections/src/families/epsil.ts";
@@ -15,7 +15,7 @@ import {
 } from "./families/index.ts";
 import { declareLabeledTreeFromPruferSequence } from "./prufer-conversion.ts";
 
-export function declareTrees(ce: ComputeEngine): void {
+export function declareTrees(ce: Engine): void {
   declareCarriers(ce, TREES_CARRIERS, { plurals: false });
   declareLabeledTreeFromPruferSequence(ce);
   declareFamilies(

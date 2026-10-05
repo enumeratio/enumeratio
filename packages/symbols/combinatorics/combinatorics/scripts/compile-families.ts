@@ -11,7 +11,8 @@
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { compileTyped } from "@enumeratio/engine/compiled";
 import { evaluateEpsil } from "@enumeratio/structures";
 import {
@@ -60,11 +61,7 @@ const nearMiss = (element: unknown): unknown =>
  * and of a near miss, and the table the others read, where there is one. Compiled code is
  * otherwise trusted below 2^53, so a miscompile would answer wrong silently.
  */
-export function disagreements(
-  ce: ComputeEngine,
-  family: EpsilFamily,
-  runs: Partial<Record<Operation, Run>>,
-): Operation[] {
+export function disagreements(ce: Engine, family: EpsilFamily, runs: Partial<Record<Operation, Run>>): Operation[] {
   const wrong = new Set<Operation>();
   const attempt = (run: Run, vars: Record<string, unknown>): unknown => {
     try {
@@ -108,7 +105,7 @@ export function disagreements(
 
 /** Each Epsil family's head, hash and the generated code of the operations that compile. */
 export function compiledFamilies(): Entry[] {
-  const ce = new ComputeEngine();
+  const ce = bareEngine();
   const out: Entry[] = [];
   for (const family of allFamilies.filter(isEpsilFamily) as EpsilFamily[]) {
     const code: Partial<Record<Operation, string>> = {};

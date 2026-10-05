@@ -7,13 +7,13 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { expect, test } from "vite-plus/test";
 import { needsBigint, sampleable } from "../scripts/sampleable.ts";
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { allKernels } from "../src/families/index.ts";
 import type { FamilyKernel } from "../src/families/types.ts";
 
 const RATCHET = new URL("./plausible-undeclared.json", import.meta.url);
 const listed = JSON.parse(readFileSync(RATCHET, "utf8")) as string[];
-const allEntries = allKernels(new ComputeEngine());
+const allEntries = allKernels(bareEngine());
 const heads = new Set(allEntries.map((f) => f.head));
 
 // UPDATE_PLAUSIBLE_RATCHET=1 rewrites the ratchet after families declare (or when two

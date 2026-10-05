@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf } from "@enumeratio/engine";
 import { allPairsWeightedDistances, weightedAdjacencyMatrixExpr } from "./graph-weights.ts";
 import { degrees, directedAdjacency, type GraphModel, graphOf, integerGraph, listOf, vertexKey } from "./graphs.ts";
 import { rngFor } from "./list-frontier.ts";
@@ -14,7 +13,7 @@ import { rngFor } from "./list-frontier.ts";
 
 // ─── distance measures (all directed — GraphDistance's own convention) ────────────────────
 
-const POSITIVE_INFINITY = (ce: ComputeEngine): BoxedExpression => ce.symbol("PositiveInfinity");
+const POSITIVE_INFINITY = (ce: Engine): Expr => ce.symbol("PositiveInfinity");
 
 /** BFS distances from `source` to every vertex, over `adj` — `Infinity` (`-1` sentinel) for
  *  anything unreached. Shared by every measure below so they agree with each other and with
@@ -44,7 +43,7 @@ function allPairsDistances(model: GraphModel): Map<string, Map<string, number>> 
   return table;
 }
 
-const numberOrInfinity = (ce: ComputeEngine, d: number | undefined): BoxedExpression =>
+const numberOrInfinity = (ce: Engine, d: number | undefined): Expr =>
   d === undefined ? POSITIVE_INFINITY(ce) : ce.number(d);
 
 /** Eccentricity of `v`: the greatest distance from `v` to any other vertex, `Infinity` the
@@ -272,7 +271,7 @@ function areIsomorphic(g1: GraphModel, g2: GraphModel): boolean | undefined {
  *  which themselves form a cycle — `n` vertices total (kernel-unverified; matches the
  *  common textbook convention and gives `EdgeCount = 2(n - 1)`). Needs `n >= 4` for the rim
  *  to be an actual cycle (>= 3 vertices). */
-function wheelGraph(ce: ComputeEngine, n: number): BoxedExpression | undefined {
+function wheelGraph(ce: Engine, n: number): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 4) return undefined;
   const edges: [number, number][] = [];
   for (let i = 2; i <= n; i++) edges.push([1, i]); // spokes
@@ -284,7 +283,7 @@ function wheelGraph(ce: ComputeEngine, n: number): BoxedExpression | undefined {
 /** `CirculantGraph(n, k)` / `CirculantGraph(n, {k1, k2, …})`: vertex `i` (0-based internally,
  *  1-based in the result) joined to `i ± k (mod n)` for every offset `k` given. Offsets are
  *  deduplicated against their `n - k` mirror so `k` and `n - k` don't double an edge. */
-function circulantGraph(ce: ComputeEngine, n: number, offsets: readonly number[]): BoxedExpression | undefined {
+function circulantGraph(ce: Engine, n: number, offsets: readonly number[]): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 2) return undefined;
   if (offsets.length === 0 || offsets.some((k) => !Number.isSafeInteger(k) || k < 1 || k >= n)) return undefined;
   const seen = new Set<string>();
@@ -307,7 +306,7 @@ function circulantGraph(ce: ComputeEngine, n: number, offsets: readonly number[]
  *  `ceil(n/r)` vertices, the rest get `floor(n/r)` (kernel-unverified block ORDER — the
  *  partition sizes themselves are the graph's actual definition, order is just a labelling
  *  choice). Every pair in DIFFERENT parts is joined; same-part pairs are not. */
-function turanGraph(ce: ComputeEngine, n: number, r: number): BoxedExpression | undefined {
+function turanGraph(ce: Engine, n: number, r: number): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 1 || !Number.isSafeInteger(r) || r < 1 || r > n) return undefined;
   const base = Math.floor(n / r);
   const extra = n % r;
@@ -339,7 +338,7 @@ function turanGraph(ce: ComputeEngine, n: number, r: number): BoxedExpression | 
  *  matching this construction (0-based here: circulant offset 1, plus `0-3`, `0-4`, `1-5`,
  *  `2-6`). The even-`k` and (odd-`k`, even-`n`) cases are the standard, unambiguous Harary
  *  construction and were not separately kernel-checked. */
-function hararyGraph(ce: ComputeEngine, k: number, n: number): BoxedExpression | undefined {
+function hararyGraph(ce: Engine, k: number, n: number): Expr | undefined {
   if (!Number.isSafeInteger(k) || !Number.isSafeInteger(n) || k < 1 || n < k + 1) return undefined;
   const r = Math.floor(k / 2);
   const seen = new Set<string>();
@@ -372,7 +371,7 @@ function hararyGraph(ce: ComputeEngine, k: number, n: number): BoxedExpression |
  *  iff their edges share an endpoint in `g` (Wolfram's default `LineGraph` output; the
  *  directed variant that only connects head-to-tail is out of scope here). A shared
  *  self-loop or multi-edge pair is de-duplicated to one line-graph edge. */
-function lineGraph(ce: ComputeEngine, g: GraphModel): BoxedExpression {
+function lineGraph(ce: Engine, g: GraphModel): Expr {
   const m = g.edges.length;
   const incident = new Map<string, number[]>(g.order.map((v) => [v, []]));
   g.edges.forEach((e, idx) => {
@@ -401,11 +400,7 @@ function lineGraph(ce: ComputeEngine, g: GraphModel): BoxedExpression {
  *  nonzero-means-edge) matrix. SYMMETRIC gives an undirected graph, one edge per `i < j`
  *  pair; anything else gives a directed graph, one edge per nonzero `(i, j)` (including
  *  `i == j` self-loops, and both `(i,j)`/`(j,i)` when both are set). */
-function adjacencyGraph(
-  ce: ComputeEngine,
-  vertices: readonly BoxedExpression[] | undefined,
-  matrix: number[][],
-): BoxedExpression | undefined {
+function adjacencyGraph(ce: Engine, vertices: readonly Expr[] | undefined, matrix: number[][]): Expr | undefined {
   const n = matrix.length;
   if (n === 0 || matrix.some((row) => row.length !== n)) return undefined;
   if (vertices !== undefined && vertices.length !== n) return undefined;
@@ -420,7 +415,7 @@ function adjacencyGraph(
   }
   const vertexExprs = vertices ?? Array.from({ length: n }, (_, i) => ce.number(i + 1));
   const vertexList = listOf(ce, vertexExprs);
-  const edgeExprs: BoxedExpression[] = [];
+  const edgeExprs: Expr[] = [];
   if (symmetric) {
     for (let i = 0; i < n; i++) {
       // A 1 on the diagonal is its own self-loop, not half of an off-diagonal pair — Wolfram
@@ -442,7 +437,7 @@ function adjacencyGraph(
   return ce.function("Graph", [vertexList, listOf(ce, edgeExprs)]);
 }
 
-const numberMatrixOf = (expr: BoxedExpression): number[][] | undefined => {
+const numberMatrixOf = (expr: Expr): number[][] | undefined => {
   if (expr.operator !== "List") return undefined;
   const rows = operandsOf(expr);
   const out: number[][] = [];
@@ -461,7 +456,7 @@ const numberMatrixOf = (expr: BoxedExpression): number[][] | undefined => {
  *  `list-frontier.ts`), reseeded together by `SeedRandom`. NOT Wolfram's generator or
  *  algorithm — only `VertexCount`/`EdgeCount`/simplicity are guaranteed to match, same
  *  divergence `RandomInteger` itself documents. */
-function randomGraph(ce: ComputeEngine, n: number, m: number): BoxedExpression | undefined {
+function randomGraph(ce: Engine, n: number, m: number): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 0 || !Number.isSafeInteger(m) || m < 0) return undefined;
   const maxEdges = (n * (n - 1)) / 2;
   if (m > maxEdges) return undefined;
@@ -519,7 +514,7 @@ function closenessCentrality(
  *  `|μ| <= λmax`) while leaving the answer — the Perron eigenvector, which is what
  *  "eigenvector centrality" means — exactly the vector plain power iteration on `A` would
  *  converge to on a non-bipartite graph. */
-function eigenvectorCentrality(ce: ComputeEngine, model: GraphModel): BoxedExpression {
+function eigenvectorCentrality(ce: Engine, model: GraphModel): Expr {
   const n = model.order.length;
   if (n === 0) return listOf(ce, []);
   const index = new Map(model.order.map((v, i) => [v, i]));
@@ -556,7 +551,7 @@ function eigenvectorCentrality(ce: ComputeEngine, model: GraphModel): BoxedExpre
 
 // ─── declare ─────────────────────────────────────────────────────────────────────────────
 
-export function declareGraphs2(ce: ComputeEngine): void {
+export function declareGraphs2(ce: Engine): void {
   ce.declare("GraphDistanceMatrix", {
     signature: "(value) -> list<list<real | signed_infinity>>",
     evaluate: (ops) => {

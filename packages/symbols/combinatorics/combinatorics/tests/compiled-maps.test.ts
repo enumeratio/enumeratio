@@ -2,7 +2,7 @@
 // gives the interpreter's answers exactly, over the small elements of every family on its
 // source carrier.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS } from "../src/carriers.ts";
 import { COMPILED_MAPS } from "../src/compiled-maps.generated.js";
@@ -21,7 +21,7 @@ const carrierByType = new Map(CARRIERS.map((carrier) => [carrier.type, carrier])
 /** Small elements of every family whose elements are values of `carrier`, as its contents. */
 const subjectsOf = (carrier: string): unknown[] => smallElements(ce, carrier, MAX_SIZE, PER_FAMILY);
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 
 test("the build compiled maps", () => {
   expect(Object.keys(COMPILED_MAPS).length).toBeGreaterThan(0);

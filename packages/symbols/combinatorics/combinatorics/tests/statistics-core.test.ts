@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { ALL_STATISTICS } from "../src/statistics/all.ts";
 import { core, cycles, headUsage, tower } from "../src/statistics/core.ts";
@@ -67,7 +67,7 @@ test("every definition rests on exactly the core", () => {
 test("the core is all compute-engine's, not ours", () => {
   // If a core head were one of ours it would be a definition, not a primitive — and the
   // derivation would be lying about where the floor is.
-  const ce = new ComputeEngine();
+  const ce = bareEngine();
   const ours = new Set(ALL_STATISTICS.map((d) => d.head));
   for (const head of core()) {
     expect(ce.lookupDefinition(head), head).toBeTruthy();

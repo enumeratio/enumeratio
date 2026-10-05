@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
 
 // A second wave of Wolfram-frontier heads compute-engine has no answer for: list/array
 // utilities (Thread, MapAt, MovingMap, HankelMatrix), the discrete-math pair
@@ -13,19 +12,18 @@ import { integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engin
 
 /** Call a (possibly `Function`-headed) expression as an operator over `args` — same
  *  technique as `list-frontier.ts`'s own `invoke`, duplicated locally. */
-const invoke = (ce: ComputeEngine, f: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
-  ce.box([f, ...args] as never).evaluate();
+const invoke = (ce: Engine, f: Expr, args: readonly Expr[]): Expr => ce.box([f, ...args] as never).evaluate();
 
 // --- Thread ------------------------------------------------------------------------------------
 
 /** `Thread[f[a1, …, an]]` / `Thread[f[…], h]`: `f` applied elementwise across every operand
  *  headed by `h` (default `List`), non-`h` operands broadcast. Left unevaluated when the
  *  `h`-headed operands disagree on length, or there are none to thread over. */
-function declareThread(ce: ComputeEngine): void {
+function declareThread(ce: Engine): void {
   ce.declare("Thread", {
     signature: "(any, symbol?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       if (expr === undefined) return undefined;
       const headName = ops[1] !== undefined ? symbolNameOf(ops[1]) : "List";
@@ -37,7 +35,7 @@ function declareThread(ce: ComputeEngine): void {
       const lengths = new Set(threadAt.map((i) => operandsOf(args[i]!).length));
       if (lengths.size !== 1) return undefined;
       const n = [...lengths][0]!;
-      const rows: BoxedExpression[] = [];
+      const rows: Expr[] = [];
       for (let k = 0; k < n; k++)
         rows.push(
           ce.function(
@@ -63,11 +61,11 @@ const resolvePosition = (n: number, length: number): number | undefined => {
  *  `MapAt[f, expr, {{n1}, {n2}, …}]`: applied at each position independently. Only top-level
  *  positions are supported — a multi-element path (`{i, j}`, into a nested part) is left
  *  unevaluated rather than followed. */
-function declareMapAt(ce: ComputeEngine): void {
+function declareMapAt(ce: Engine): void {
   ce.declare("MapAt", {
     signature: "((any) -> any, any, integer | list<list<integer>>) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const f = ops[0];
       const expr = ops[1]?.evaluate();
       const spec = ops[2];
@@ -109,11 +107,11 @@ function declareMapAt(ce: ComputeEngine): void {
  *  which is `v`'s own sign/phase). Reading a non-`List`'s `Add` operands as if they were
  *  vector components — dividing each TERM of a polynomial separately — was the previous
  *  bug here. */
-function declareNormalize(ce: ComputeEngine): void {
+function declareNormalize(ce: Engine): void {
   ce.declare("Normalize", {
     signature: "(any, ((any) -> any)?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const v = ops[0]?.evaluate();
       if (v === undefined) return undefined;
       if (v.operator !== "List") {
@@ -151,10 +149,10 @@ function declareNormalize(ce: ComputeEngine): void {
 /** `Surd[x, n]`: the real `n`th root of a real `x` — unlike `Power(x, 1/n)`, stays real for
  *  negative `x` with odd `n` (`Surd(-8, 3) = -2`, not a complex cube root). An even `n` with
  *  negative `x` has no real root and is left unevaluated. */
-function declareSurd(ce: ComputeEngine): void {
+function declareSurd(ce: Engine): void {
   ce.declare("Surd", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const x = ops[0];
       const nExpr = ops[1];
       if (x === undefined || nExpr === undefined) return undefined;
@@ -182,10 +180,10 @@ const englishLetterNumber = (ch: string): number => {
 /** `LetterNumber[c]`: `c`'s 1-based position in the English alphabet (0 if not a letter).
  *  `LetterNumber[s]`: a list, one per character of string `s`. The `LetterNumber[c, alphabet]`
  *  form is only answered for `"English"`; any other named alphabet is left unevaluated. */
-function declareLetterNumber(ce: ComputeEngine): void {
+function declareLetterNumber(ce: Engine): void {
   ce.declare("LetterNumber", {
     signature: "(string, string?) -> integer | list<integer>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const s = stringAt(ops[0]);
       if (s === undefined || s.length === 0) return undefined;
       if (ops[1] !== undefined && stringAt(ops[1]) !== "English") return undefined;
@@ -204,8 +202,7 @@ function declareLetterNumber(ce: ComputeEngine): void {
  *  case `FactorialPower` expands. A symbolic `x` is left unevaluated instead: Wolfram itself
  *  doesn't expand `FactorialPower(x, 3)` into a product (only `FunctionExpand` does), so
  *  matching it means NOT expanding here either. */
-const isNumberLiteral = (x: BoxedExpression): boolean =>
-  (x as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true;
+const isNumberLiteral = (x: Expr): boolean => (x as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true;
 
 /** `FactorialPower[x, n]`: the falling factorial `x(x-1)…(x-n+1)` (`n` factors), for a
  *  concrete-number `x` only — a symbolic `x` is left unevaluated, matching Wolfram (which
@@ -213,11 +210,11 @@ const isNumberLiteral = (x: BoxedExpression): boolean =>
  *  `FactorialPower[x, n, h]`: step `h` instead of 1 — `x(x-h)…(x-(n-1)h)`.
  *  A negative integer `n` inverts: `1 / ((x+h)(x+2h)…(x+|n|h))`. A non-integer `n` (step 1
  *  only) generalizes via `Gamma(x+1)/Gamma(x-n+1)`. */
-function declareFactorialPower(ce: ComputeEngine): void {
+function declareFactorialPower(ce: Engine): void {
   ce.declare("FactorialPower", {
     signature: "(number, number, number?) -> number",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const xExpr = ops[0];
       const nExpr = ops[1];
       if (xExpr === undefined || nExpr === undefined) return undefined;
@@ -236,7 +233,7 @@ function declareFactorialPower(ce: ComputeEngine): void {
           .evaluate();
       }
       const m = Math.abs(n);
-      const factors: BoxedExpression[] = [];
+      const factors: Expr[] = [];
       for (let k = 0; k < m; k++) {
         const shift = ce.function("Multiply", [ce.number(k), h]);
         factors.push(
@@ -258,10 +255,10 @@ function declareFactorialPower(ce: ComputeEngine): void {
  *  `m = Length(r)`), with `r` as the LAST ROW of the matrix (`r[1]` coincides with `c[n]`, the
  *  shared corner, so `r[1]` itself never surfaces elsewhere: `M(i,j) = c(i+j-1)` while
  *  `i+j-1 ≤ n`, else `r(i+j-n)`). */
-function declareHankelMatrix(ce: ComputeEngine): void {
+function declareHankelMatrix(ce: Engine): void {
   ce.declare("HankelMatrix", {
     signature: "(collection<any>, collection<any>?) -> list<list<any>>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const c = ops[0];
       if (c === undefined) return undefined;
       const col = operandsOf(c);
@@ -269,15 +266,15 @@ function declareHankelMatrix(ce: ComputeEngine): void {
       if (n === 0) return ce.function("List", []);
       const rowSpec = ops[1] !== undefined ? operandsOf(ops[1]) : undefined;
       const m = rowSpec !== undefined ? rowSpec.length : n;
-      const at = (i: number, j: number): BoxedExpression => {
+      const at = (i: number, j: number): Expr => {
         const idx = i + j - 1;
         if (idx <= n) return col[idx - 1]!;
         const k = idx - n + 1;
         return rowSpec !== undefined && k >= 1 && k <= rowSpec.length ? rowSpec[k - 1]! : ce.Zero;
       };
-      const rows: BoxedExpression[] = [];
+      const rows: Expr[] = [];
       for (let i = 1; i <= n; i++) {
-        const row: BoxedExpression[] = [];
+        const row: Expr[] = [];
         for (let j = 1; j <= m; j++) row.push(at(i, j));
         rows.push(ce.function("List", row));
       }
@@ -290,11 +287,11 @@ function declareHankelMatrix(ce: ComputeEngine): void {
 
 /** `MovingMap[f, list, w]`: `f` applied to each width-`(w+1)` window of `list`, sliding by 1
  *  with no padding — `Length(list) - w` results, same as `Map(f, Partition(list, w+1, 1))`. */
-function declareMovingMap(ce: ComputeEngine): void {
+function declareMovingMap(ce: Engine): void {
   ce.declare("MovingMap", {
     signature: "((collection<any>) -> any, collection<any>, integer) -> collection",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const f = ops[0];
       const list = ops[1]?.evaluate();
       const w = ops[2] !== undefined ? integerAt(ops[2].evaluate()) : undefined;
@@ -302,7 +299,7 @@ function declareMovingMap(ce: ComputeEngine): void {
       const items = operandsOf(list);
       const windowSize = w + 1;
       if (windowSize > items.length) return ce.function("List", []);
-      const results: BoxedExpression[] = [];
+      const results: Expr[] = [];
       for (let i = 0; i + windowSize <= items.length; i++) {
         const window = items.slice(i, i + windowSize);
         results.push(invoke(ce, f, [ce.function("List", window)]));
@@ -326,10 +323,10 @@ function pascalBinomial(n: number, m: number): number {
   return Math.round(result);
 }
 
-function declarePascalBinomial(ce: ComputeEngine): void {
+function declarePascalBinomial(ce: Engine): void {
   ce.declare("PascalBinomial", {
     signature: "(number, number) -> number",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const n = integerAt(ops[0]);
       const m = integerAt(ops[1]);
       if (n === undefined || m === undefined || m < 0) return undefined;
@@ -371,7 +368,7 @@ interface CAInit {
  *  for one black cell on an otherwise-0 background, window growing), an explicit
  *  `{list, background}` pair (window growing), or a bare `{list}` (fixed window, implicit
  *  0 background). */
-function parseCAInit(initExpr: BoxedExpression): CAInit | undefined {
+function parseCAInit(initExpr: Expr): CAInit | undefined {
   if (integerAt(initExpr) === 1) return { cells: [1], background: 0, grows: true };
   if (initExpr.operator !== "List") return undefined;
   const parts = operandsOf(initExpr);
@@ -398,11 +395,11 @@ function parseCAInit(initExpr: BoxedExpression): CAInit | undefined {
  *  read as an implicit 0 while computing each step, they just never enter the window.
  *  Totalistic/multi-color rule specs and nested-list `{{rule, k, r}, …}` forms are left
  *  unevaluated. */
-function declareCellularAutomaton(ce: ComputeEngine): void {
+function declareCellularAutomaton(ce: Engine): void {
   ce.declare("CellularAutomaton", {
     signature:
       "(integer<0..255>, integer | list<integer> | tuple<list<integer>, integer>, integer<0..>) -> list<list<integer>>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const rule = integerAt(ops[0]);
       const initExpr = ops[1];
       const t = integerAt(ops[2]);
@@ -447,7 +444,7 @@ function declareCellularAutomaton(ce: ComputeEngine): void {
   });
 }
 
-export function declareListFrontier2(ce: ComputeEngine): void {
+export function declareListFrontier2(ce: Engine): void {
   declareThread(ce);
   declareMapAt(ce);
   declareNormalize(ce);

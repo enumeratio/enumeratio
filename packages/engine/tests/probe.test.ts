@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { box, isNativeHead, nativeEvaluate, withAssumptions } from "../src/index.ts";
+import { box, isNativeHead, nativeCanonical, nativeEvaluate, withAssumptions } from "../src/index.ts";
 import { bareEngine } from "../src/testing.ts";
 
 test("isNativeHead sees compute-engine's heads and later declarations, and nothing else", () => {
@@ -25,6 +25,14 @@ test("nativeEvaluate captures the current handler, for a replacement to fall bac
   // The capture is current at the time of the call: a second one sees the replacement.
   expect(nativeEvaluate(ce, "GCD")).not.toBe(native);
   expect(box(ce, ["GCD", 12, 18]).evaluate().json).toBe(6);
+});
+
+test("nativeCanonical captures a head's canonical handler", () => {
+  const ce = bareEngine();
+  expect(nativeCanonical(ce, "UniformDistribution")).toBeTypeOf("function");
+  expect(nativeCanonical(ce, "GCD")).toBeUndefined();
+  expect(nativeCanonical(ce, "NoSuchHead")).toBeUndefined();
+  expect(nativeCanonical(ce, "Pi")).toBeUndefined();
 });
 
 test("withAssumptions assumes inside the call only, and restores on a throw", () => {

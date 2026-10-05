@@ -1,8 +1,8 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCollections } from "../src/library.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCollections(ce);
 
 // Floor/Ceil(x, step): cross-checked against the hand formula step*floor(x/step), computed

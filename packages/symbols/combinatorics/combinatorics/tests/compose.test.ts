@@ -1,10 +1,10 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { declareCompose, publicName } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, declareCombinatoricsCarriers } from "../src/carriers.ts";
 import { declareMaps, MAPS } from "../src/maps.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCombinatoricsCarriers(ce);
 declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 declareCompose(ce);

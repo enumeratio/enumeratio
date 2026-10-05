@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 
 // General symbolic rules for `Product`, layered on top of compute-engine's native
 // evaluate (which already handles a literal-bound product by unrolling it term by
@@ -12,7 +11,7 @@ import { integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/e
 // concrete once the outer index substitutes in -- can reach every level in turn).
 
 /** Whether `expr` contains the free symbol `name` anywhere in its tree. */
-export function dependsOn(expr: BoxedExpression, name: string): boolean {
+export function dependsOn(expr: Expr, name: string): boolean {
   if (symbolNameOf(expr) === name) return true;
   const ops = operandsOf(expr);
   return ops.some((op) => dependsOn(op, name));
@@ -25,7 +24,7 @@ export function dependsOn(expr: BoxedExpression, name: string): boolean {
  * non-integer or index-dependent exponent, a quotient, …), which the caller reads
  * as "give up, this Product isn't one of ours to answer."
  */
-function monomialDegree(term: BoxedExpression, idxName: string): number | undefined {
+function monomialDegree(term: Expr, idxName: string): number | undefined {
   if (symbolNameOf(term) === idxName) return 1;
   if (term.operator === "Negate") return monomialDegree(operandsOf(term)[0]!, idxName);
   if (term.operator === "Power") {
@@ -49,8 +48,8 @@ function monomialDegree(term: BoxedExpression, idxName: string): number | undefi
 }
 
 /** Bernoulli-number Faulhaber formula: Σ_{k=1}^{N} k^d, exact for any integer d ≥ 0. */
-function faulhaberSum(ce: ComputeEngine, N: BoxedExpression, d: number): BoxedExpression {
-  const terms: BoxedExpression[] = [];
+function faulhaberSum(ce: Engine, N: Expr, d: number): Expr {
+  const terms: Expr[] = [];
   for (let j = 0; j <= d; j++) {
     const binomial = ce.function("Binomial", [d + 1, j]);
     const bernoulli = ce.function("BernoulliB", [j]);
@@ -64,7 +63,7 @@ function faulhaberSum(ce: ComputeEngine, N: BoxedExpression, d: number): BoxedEx
 }
 
 /** Σ_{k=lo}^{hi} k^d = faulhaberSum(hi, d) − faulhaberSum(lo − 1, d). */
-function polynomialPowerSum(ce: ComputeEngine, lo: BoxedExpression, hi: BoxedExpression, d: number): BoxedExpression {
+function polynomialPowerSum(ce: Engine, lo: Expr, hi: Expr, d: number): Expr {
   const upper = faulhaberSum(ce, hi, d);
   const lower = faulhaberSum(ce, ce.function("Subtract", [lo, 1]).evaluate(), d);
   return ce.function("Subtract", [upper, lower]).evaluate();
@@ -76,9 +75,9 @@ function polynomialPowerSum(ce: ComputeEngine, lo: BoxedExpression, hi: BoxedExp
  * factors of a top-level `Multiply` into a single `Power` so `p*(p+1)*(p+1)` reads as
  * `p*(p+1)^2`.
  */
-function combineRepeatedFactors(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+function combineRepeatedFactors(ce: Engine, expr: Expr): Expr {
   if (expr.operator !== "Multiply") return expr;
-  const groups = new Map<string, { factor: BoxedExpression; count: number }>();
+  const groups = new Map<string, { factor: Expr; count: number }>();
   const order: string[] = [];
   for (const factor of operandsOf(expr)) {
     const key = JSON.stringify(factor.json);
@@ -105,7 +104,7 @@ function combineRepeatedFactors(ce: ComputeEngine, expr: BoxedExpression): Boxed
  * form, over the OUTER index, never mentions the inner one any more by the time it gets
  * here, so it still gets factored.
  */
-function closedForm(ce: ComputeEngine, sum: BoxedExpression): BoxedExpression {
+function closedForm(ce: Engine, sum: Expr): Expr {
   if (dependsOn(sum, "i")) return sum;
   const factored = ce.function("Factor", [sum]).evaluate();
   return combineRepeatedFactors(ce, factored);
@@ -116,16 +115,10 @@ function closedForm(ce: ComputeEngine, sum: BoxedExpression): BoxedExpression {
  * expanded into monomials, each summed via `polynomialPowerSum`. `undefined` when
  * `expr` isn't a polynomial in `idxName` this way (see `monomialDegree`).
  */
-function sumOverIndex(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  idxName: string,
-  lo: BoxedExpression,
-  hi: BoxedExpression,
-): BoxedExpression | undefined {
+function sumOverIndex(ce: Engine, expr: Expr, idxName: string, lo: Expr, hi: Expr): Expr | undefined {
   const expanded = ce.function("Expand", [expr]).evaluate();
   const terms = expanded.operator === "Add" ? operandsOf(expanded) : [expanded];
-  const contributions: BoxedExpression[] = [];
+  const contributions: Expr[] = [];
   for (const term of terms) {
     const d = monomialDegree(term, idxName);
     if (d === undefined) return undefined;
@@ -140,12 +133,12 @@ function sumOverIndex(
 /** A single `Limits(index, lo, hi[, step])` clause, decoded. */
 export interface Limits {
   readonly index: string;
-  readonly lo: BoxedExpression;
-  readonly hi: BoxedExpression;
-  readonly step: BoxedExpression | undefined;
+  readonly lo: Expr;
+  readonly hi: Expr;
+  readonly step: Expr | undefined;
 }
 
-export function limitsOf(expr: BoxedExpression): Limits | undefined {
+export function limitsOf(expr: Expr): Limits | undefined {
   if (expr.operator !== "Limits" && expr.operator !== "Tuple") return undefined;
   const ops = operandsOf(expr);
   const index = ops[0] === undefined ? undefined : symbolNameOf(ops[0]);
@@ -155,7 +148,7 @@ export function limitsOf(expr: BoxedExpression): Limits | undefined {
   return { index, lo, hi: ops[2], step: ops[3] };
 }
 
-export function declareProducts(ce: ComputeEngine): void {
+export function declareProducts(ce: Engine): void {
   // Nested products -- more than one Limits clause -- fold right, innermost first:
   // Product(body, L1, L2, …, Lk) becomes Product(Product(…Product(body, Lk)…, L2), L1).
   // Evaluating that lets a concrete outer index substitute into the inner Product's own

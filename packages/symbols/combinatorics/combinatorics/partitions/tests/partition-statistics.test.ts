@@ -1,9 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { applyDefinition, declareStatistics } from "../../src/statistics/declare.ts";
 import { PARTITION_STATISTICS } from "../src/statistics.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 // Declared, not just indexed: StandardTableauCount is defined in terms of the
 // HookProduct HEAD, so the engine has to be able to resolve it.
 const index = declareStatistics(ce, PARTITION_STATISTICS);

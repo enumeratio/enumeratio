@@ -27,7 +27,7 @@
 // - `declareMaps` extends shared names (`Inverse`, `Reverse`) rather than minting fresh ones.
 //   `Inverse`'s permutation form is a row in its table (defineOverload), so it no longer has
 //   to be declared after modular's; the hosts still call it themselves, with their constructors.
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { declareCarrierElement, declareCarrierPlurals } from "@enumeratio/structures";
 import { declareCollections } from "../collections/src/index.ts";
 import { declareCompositions } from "../compositions/src/declare.ts";
@@ -93,7 +93,7 @@ export { findstat, type FindStatMatch } from "../findstat/src/findstat-data.ts";
  * NOT idempotent: every constituent `declare*` throws on a name already bound in the engine's
  * scope, so calling this twice on the same `ce` throws, same as calling any of them twice today.
  */
-export function declareCombinatorics(ce: ComputeEngine): void {
+export function declareCombinatorics(ce: Engine): void {
   declarePermutations(ce);
   declarePartitions(ce);
   declareCompositions(ce);
@@ -115,7 +115,7 @@ export function declareCombinatorics(ce: ComputeEngine): void {
  * `GaussianIntegers`). A host declaring libraries one after another runs `declareCombinatorics`
  * with the rest and this after them (`enumeratio.late`).
  */
-export function declareLate(ce: ComputeEngine): void {
+export function declareLate(ce: Engine): void {
   declareMaps(ce, Object.fromEntries(CARRIERS.map((carrier) => [carrier.type, carrier.name])));
   declareCarrierPlurals(ce, CARRIERS);
   declareCarrierElement(ce, CARRIERS);

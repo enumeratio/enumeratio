@@ -14,12 +14,12 @@
 // generator only ever merges in `details` and `examples`, the two fields it can derive from a
 // `Definition` alone (see `CURATED_FIELDS`/`STANDARD_FIELDS`).
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { ReferenceEntry, ReferenceExample } from "@enumeratio/entry";
 import { headExists, readEntry } from "@enumeratio/entry/node";
 import type { GeneratedEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
-import type { ComputeEngine as CE } from "@cortex-js/compute-engine";
+import { type Engine, isNativeHead } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { bySignature, type Definition, type FrontierEntry } from "./types.ts";
 
 type MathJSONIn = string | number | readonly MathJSONIn[];
@@ -42,7 +42,7 @@ export interface AreaEntriesOptions {
   readonly samples: readonly Sample[];
   /** Declares this area's own carriers and families on a fresh engine, before its statistics —
    *  the same order `declareCombinatorics` uses in production. */
-  readonly declareArea: (ce: CE) => void;
+  readonly declareArea: (ce: Engine) => void;
   /**
    * Heads that already have a hand-written record at `dir` (from `@enumeratio/combinatorics`'s
    * own reference, predating this generator's move there, step 6b) — the curated `domain`,
@@ -160,14 +160,14 @@ export function areaStatisticsEntries(options: AreaEntriesOptions): {
 
   // A head compute-engine itself already owns (`Sign`) is documented by the core reference,
   // not here — probe a BARE engine, the same check `declareStatistics` itself has to make.
-  const bare = new ComputeEngine();
-  const coreOwned = new Set(definitions.filter((d) => bare.lookupDefinition(d.head) !== undefined).map((d) => d.head));
+  const bare = bareEngine();
+  const coreOwned = new Set(definitions.filter((d) => isNativeHead(bare, d.head)).map((d) => d.head));
 
   // `declareArea` is this area's own real `declare<Area>`, which already calls
   // `declareStatistics(ce, definitions)` itself (step 6b: each area declares its own, after its
   // own carriers and families) — the same engine production builds, not a second one this
   // driver declares statistics into itself, which would double-declare.
-  const ce = new ComputeEngine();
+  const ce = bareEngine();
   options.declareArea(ce);
   const owner = bySignature(definitions.filter((d) => !coreOwned.has(d.head)));
 

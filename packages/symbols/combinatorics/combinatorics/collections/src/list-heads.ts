@@ -1,5 +1,13 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
+import {
+  type Engine,
+  type Expr,
+  integerAt,
+  operandsOf,
+  stringAt,
+  symbolNameOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/engine";
 
 // The core list/statistics heads compute-engine ships but doesn't fully answer yet —
 // widened arities (First/Last's empty-collection default, Ordering's take-n, Clamp's
@@ -18,7 +26,7 @@ import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOper
 /** Largest Range SetMinus lists out as a set. */
 const SET_MINUS_RANGE_MAX = 100_000;
 
-const naturalCompare = (a: BoxedExpression, b: BoxedExpression): number => {
+const naturalCompare = (a: Expr, b: Expr): number => {
   const as = stringAt(a);
   const bs = stringAt(b);
   if (as !== undefined && bs !== undefined) return as < bs ? -1 : as > bs ? 1 : 0;
@@ -32,7 +40,7 @@ const naturalCompare = (a: BoxedExpression, b: BoxedExpression): number => {
 
 /** The full permutation of 1-based indices that sorts `items` ascending by `naturalCompare`,
  *  ties broken in favor of earlier position (a stable sort). */
-const fullOrdering = (items: readonly BoxedExpression[]): number[] => {
+const fullOrdering = (items: readonly Expr[]): number[] => {
   const indices = items.map((_, i) => i);
   indices.sort((i, j) => naturalCompare(items[i], items[j]) || i - j);
   return indices.map((i) => i + 1);
@@ -52,7 +60,7 @@ type OrderingSpec =
   | { readonly kind: "range"; readonly start: number; readonly end: number }
   | { readonly kind: "upTo"; readonly n: number };
 
-const orderingSpecOf = (spec: BoxedExpression): OrderingSpec | undefined => {
+const orderingSpecOf = (spec: Expr): OrderingSpec | undefined => {
   const n = integerAt(spec);
   if (n !== undefined) return { kind: "count", n };
   if (spec.operator === "UpTo") {
@@ -89,16 +97,16 @@ const applyOrderingSpec = (full: readonly number[], spec: OrderingSpec): number[
 };
 
 /** A non-empty $List$ of $List$s, all the same shape — what Mean/Median thread over column-wise. */
-export const isMatrixLike = (expr: BoxedExpression): boolean => {
+export const isMatrixLike = (expr: Expr): boolean => {
   const rows = operandsOf(expr);
   if (rows.length === 0) return false;
   return rows.every((row) => row.operator === "List") && operandsOf(rows[0]).length > 0;
 };
 
 /** The columns of a row-major matrix (a $List$ of equal-length $List$ rows). */
-const columnsOf = (rows: readonly BoxedExpression[]): BoxedExpression[][] => {
+const columnsOf = (rows: readonly Expr[]): Expr[][] => {
   const width = operandsOf(rows[0]).length;
-  const columns: BoxedExpression[][] = Array.from({ length: width }, () => []);
+  const columns: Expr[][] = Array.from({ length: width }, () => []);
   for (const row of rows) {
     operandsOf(row).forEach((cell, i) => columns[i]?.push(cell));
   }
@@ -112,11 +120,11 @@ const columnsOf = (rows: readonly BoxedExpression[]): BoxedExpression[][] => {
  * never itself matrix-shaped, so this can't recurse back into the matrix arm.
  */
 const threadOverColumns =
-  (ce: ComputeEngine, head: string) =>
-  (matrix: BoxedExpression): BoxedExpression | undefined => {
+  (ce: Engine, head: string) =>
+  (matrix: Expr): Expr | undefined => {
     const columns = columnsOf(operandsOf(matrix));
     const results = columns.map((column) => ce.function(head, [ce.box(["List", ...column])]).evaluate());
-    return results.some((r) => r === undefined) ? undefined : ce.box(["List", ...(results as BoxedExpression[])]);
+    return results.some((r) => r === undefined) ? undefined : ce.box(["List", ...(results as Expr[])]);
   };
 
 /** Wolfram's `ArrayDepth`: how many levels of `expr` are a uniform (rectangular) array —
@@ -124,7 +132,7 @@ const threadOverColumns =
  *  the moment a level is ragged or mixes lists with non-lists: that level is still a
  *  vector (depth 1) of whatever is there. A lazy `Tabulate(f, m, n, …)` reads as depth =
  *  the count of its dimension arguments, without generating a single element. */
-const arrayRank = (expr: BoxedExpression): number => {
+const arrayRank = (expr: Expr): number => {
   if (expr.operator === "Tabulate") {
     return operandsOf(expr)
       .slice(1)
@@ -144,20 +152,20 @@ const arrayRank = (expr: BoxedExpression): number => {
 
 /** `fn(i, j)` via compute-engine's `Apply` — see `list-functional.ts`'s `applyFn` doc for
  *  why the arguments go in directly rather than wrapped in a `List`. */
-const apply2 = (ce: ComputeEngine, fn: BoxedExpression, i: number, j: number): BoxedExpression =>
+const apply2 = (ce: Engine, fn: Expr, i: number, j: number): Expr =>
   ce.function("Apply", [fn, ce.number(i), ce.number(j)]).evaluate();
 
 /** A lazy `Tabulate(f, m, n)` read into an actual `m`×`n` matrix by calling `f(i, j)` at
  *  every 1-based position — `undefined` for any other `Tabulate` arity, or a non-integer
  *  dimension. */
-const materializeTabulate = (ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | undefined => {
+const materializeTabulate = (ce: Engine, expr: Expr): Expr | undefined => {
   const [fn, mOp, nOp] = operandsOf(expr);
   const m = integerAt(mOp);
   const n = integerAt(nOp);
   if (fn === undefined || m === undefined || n === undefined) return undefined;
-  const rows: BoxedExpression[] = [];
+  const rows: Expr[] = [];
   for (let i = 1; i <= m; i++) {
-    const row: BoxedExpression[] = [];
+    const row: Expr[] = [];
     for (let j = 1; j <= n; j++) row.push(apply2(ce, fn, i, j));
     rows.push(ce.box(["List", ...row]));
   }
@@ -167,20 +175,20 @@ const materializeTabulate = (ce: ComputeEngine, expr: BoxedExpression): BoxedExp
 /** `Join` at a level `n > 1`: recursively join corresponding sublists n-1 levels down. A
  *  row missing from a shorter array (the outer lists don't all have the same length) is
  *  simply skipped rather than treated as empty — `length` is the longest, not the first. */
-const joinAtLevel = (ce: ComputeEngine, lists: readonly BoxedExpression[], level: number): BoxedExpression => {
+const joinAtLevel = (ce: Engine, lists: readonly Expr[], level: number): Expr => {
   if (level <= 1) return ce.box(["List", ...lists.flatMap((list) => operandsOf(list))]);
   const rows = lists.map((list) => operandsOf(list));
   const length = Math.max(0, ...rows.map((row) => row.length));
-  const merged: BoxedExpression[] = [];
+  const merged: Expr[] = [];
   for (let i = 0; i < length; i++) {
-    const slice = rows.map((row) => row[i]).filter((cell): cell is BoxedExpression => cell !== undefined);
+    const slice = rows.map((row) => row[i]).filter((cell): cell is Expr => cell !== undefined);
     merged.push(joinAtLevel(ce, slice, level - 1));
   }
   return ce.box(["List", ...merged]);
 };
 
 /** Declare the core list/statistics widenings, overrides and new heads. */
-export function declareListHeads(ce: ComputeEngine): void {
+export function declareListHeads(ce: Engine): void {
   // First(c, default) / Last(c, default): a fallback for an empty collection, which
   // compute-engine doesn't accept a second argument for yet.
   widenSignature(ce, "First", "(any, any?) -> any");
@@ -347,7 +355,7 @@ export function declareListHeads(ce: ComputeEngine): void {
         return ce.box(["Set", ...sorted]);
       }
       if (!ops.every((op) => op.operator === "List")) return result;
-      const elements: BoxedExpression[] = [];
+      const elements: Expr[] = [];
       for (const op of ops) {
         for (const element of operandsOf(op)) {
           if (elements.every((e) => e.isEqual(element) !== true)) elements.push(element);
@@ -441,7 +449,7 @@ export function declareListHeads(ce: ComputeEngine): void {
           ? operandsOf(ops[0])
           : operandsOf(native?.([ops[0], ops[1]], options) ?? ce.box(["List"]));
       const results = rows.map((row) => native?.([row, ops[2]], options));
-      return results.some((r) => r === undefined) ? undefined : ce.box(["List", ...(results as BoxedExpression[])]);
+      return results.some((r) => r === undefined) ? undefined : ce.box(["List", ...(results as Expr[])]);
     },
     3,
   );
@@ -481,8 +489,8 @@ export function declareListHeads(ce: ComputeEngine): void {
   // `Join(Set(1, 2), Set(3))` and `Join()` to unevaluated. Both are handled in the
   // `evaluate` wrapper below, alongside join-at-level, rather than in canonical.
   const joinsAtLevel = (
-    ops: readonly BoxedExpression[],
-  ): { readonly lists: readonly BoxedExpression[]; readonly level: number } | undefined => {
+    ops: readonly Expr[],
+  ): { readonly lists: readonly Expr[]; readonly level: number } | undefined => {
     if (ops.length < 3) return undefined;
     const level = integerAt(ops[ops.length - 1]);
     const lists = ops.slice(0, -1);
@@ -515,7 +523,7 @@ export function declareListHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
+                canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined;
               };
             }
           ).operator
@@ -543,12 +551,12 @@ export function declareListHeads(ce: ComputeEngine): void {
   // tied Mode — which stays a single value. See [[Mode]].
   ce.declare("Commonest", {
     signature: "(indexed_collection<T>) -> list<T> where T",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       // A free `c` stays unevaluated rather than answering `List()` — same trap as
       // `Accumulate` (list-frontier.ts).
       if (ops[0] === undefined || symbolNameOf(ops[0]) !== undefined) return undefined;
       const items = operandsOf(ops[0]);
-      const tally: { value: BoxedExpression; count: number }[] = [];
+      const tally: { value: Expr; count: number }[] = [];
       for (const item of items) {
         const existing = tally.find((entry) => entry.value.isEqual(item) === true);
         if (existing !== undefined) existing.count++;
@@ -575,7 +583,7 @@ export function declareListHeads(ce: ComputeEngine): void {
       const value = ops[1];
       const positions = items
         .map((item, i) => (item.isEqual(value) === true ? ce.box(["List", i + 1]) : undefined))
-        .filter((position): position is BoxedExpression => position !== undefined);
+        .filter((position): position is Expr => position !== undefined);
       return ce.box(["List", ...positions]);
     },
     2,
@@ -630,7 +638,7 @@ export function declareListHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
+                canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined;
               };
             }
           ).operator
@@ -662,12 +670,12 @@ export function declareListHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
+                canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined;
               };
             }
           ).operator
         : undefined;
-    const asSet = (op: BoxedExpression): BoxedExpression => {
+    const asSet = (op: Expr): Expr => {
       const c = op.canonical;
       if (c.operator === "List") return ce.function("Set", [...operandsOf(c)]);
       if (c.operator === "Range" && c.isFiniteCollection === true) {

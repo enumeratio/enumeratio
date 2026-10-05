@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine, Expr } from "@enumeratio/engine";
 import { listOf, type GraphModel } from "./graphs.ts";
 
 // Edge weights: `Graph(edges, EdgeWeight -> {…})` (the model-building side lives in
@@ -13,7 +13,7 @@ import { listOf, type GraphModel } from "./graphs.ts";
  *  A missing weight (an edge in an otherwise-unweighted graph — never happens today,
  *  since `graphOf` requires `EdgeWeight` to cover every edge or none, but kept as a
  *  fallback for anything built by hand) reads as Wolfram's own default, `1`. */
-export function numericWeight(weight: BoxedExpression | undefined): number {
+export function numericWeight(weight: Expr | undefined): number {
   if (weight === undefined) return 1;
   const n = weight.N().re;
   return typeof n === "number" ? n : NaN;
@@ -141,7 +141,7 @@ export function dijkstraPath(model: GraphModel, source: string, target: string):
  *  `AdjacencyMatrix` sums parallel edges' counts. Returned as a plain (dense) matrix, not
  *  Wolfram's `SparseArray` — the same simplification `AdjacencyMatrix` documents, for the
  *  same reason (no sparse-matrix head here to return instead). */
-export function weightedAdjacencyMatrixExpr(ce: ComputeEngine, g: GraphModel): BoxedExpression {
+export function weightedAdjacencyMatrixExpr(ce: Engine, g: GraphModel): Expr {
   const index = new Map(g.order.map((v, i) => [v, i]));
   const rows = g.order.map(() => Array.from({ length: g.order.length }, () => 0));
   for (const e of g.edges) {

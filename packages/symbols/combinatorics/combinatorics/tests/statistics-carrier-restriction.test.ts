@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, declareCombinatorics } from "../src/index.ts";
 import {
@@ -11,7 +11,7 @@ import {
   type Restriction,
 } from "@enumeratio/structures";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 // A-94: declareCombinatorics (each area's own carriers + families) replaces the old bare
 // declareCollections + declareCombinatoricsCarriers pair -- the restriction bases below
 // (SymmetricGroup, IntegerCompositions, IntegerPartitions, ...) live in their own areas now.
@@ -154,7 +154,7 @@ test("every restriction names a base collection and a carrier that exist", () =>
 });
 
 test("a restriction's name taken by something other than its implementation is an error", () => {
-  const other = new ComputeEngine();
+  const other = bareEngine();
   other.declare("SelfConjugatePartitions", { signature: "(integer) -> integer" });
   expect(() => declareRestrictions(other, RESTRICTIONS)).toThrow(RestrictionCollisionError);
 });

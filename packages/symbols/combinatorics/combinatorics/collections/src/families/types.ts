@@ -1,5 +1,4 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { integerAt } from "@enumeratio/engine";
+import { type Expr, integerAt } from "@enumeratio/engine";
 
 // The one collection contract, shared by every family. A FamilyKernel is a pure kernel
 // (count / unrank / rank / valid) over plain JS values, with NO compute-engine
@@ -158,8 +157,7 @@ export const countNumber = (c: Count): number | undefined =>
 /** Boxed integer -> JS number, `NaN` when the expression is not one.
  *  The decoders below are total, and `NaN` is an invalid element every family's
  *  `valid()` already rejects — which is why this rejects rather than truncates. */
-export const intOf = (x: Boxed | undefined): number =>
-  integerAt(x as unknown as BoxedExpression | undefined) ?? Number.NaN;
+export const intOf = (x: Boxed | undefined): number => integerAt(x as unknown as Expr | undefined) ?? Number.NaN;
 
 // MathJSON encoders (element -> boxed MathJSON expression input).
 export const listMJ = (xs: number[]): unknown => ["List", ...xs];

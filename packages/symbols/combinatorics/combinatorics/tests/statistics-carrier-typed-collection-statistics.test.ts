@@ -1,12 +1,12 @@
 // BL-1 (typed family elements): a statistic over a family element must type-check with no
 // wrapping by the caller, on an engine that declares carriers before collections (the real
 // shape every production engine uses — cli, web, census, reference/scripts/engines.ts).
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCombinatorics } from "../src/index.ts";
 
 // The combinatorial statistics are declared inside `declareCombinatorics` itself now (step 6b).
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCombinatorics(ce);
 
 test("CycleCount(At(Permutations(5), 3)) evaluates directly, no wrapping", () => {

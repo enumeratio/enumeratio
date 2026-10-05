@@ -6,8 +6,7 @@
 //   CycleDecomposition(Cycles(…), n)  needs n to put them back (as Wolfram's PermutationList(c, n)).
 // combinatorics extends groupalgebra (its `package.json`) for this, so `Cycles` is declared first. The
 // guard is only for a bare host, a package test declaring combinatorics alone.
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { type Engine, type Expr, isNativeHead, operandsOf } from "@enumeratio/engine";
 import { attachConversion, evaluateEpsil } from "@enumeratio/structures";
 import {
   cycleDecompositionOfCyclesBody,
@@ -16,10 +15,10 @@ import {
 } from "./cycle-decomposition.ts";
 
 /** The list of cycles `Cycles(…)` or `CycleDecomposition(…)` holds, as MathJSON. */
-const cyclesOf = (subject: BoxedExpression): unknown => operandsOf(subject)[0]?.json;
+const cyclesOf = (subject: Expr): unknown => operandsOf(subject)[0]?.json;
 
-export function declareCycleConversions(ce: ComputeEngine): void {
-  if (ce.lookupDefinition("Cycles") === undefined) return;
+export function declareCycleConversions(ce: Engine): void {
+  if (!isNativeHead(ce, "Cycles")) return;
 
   attachConversion(
     ce,
