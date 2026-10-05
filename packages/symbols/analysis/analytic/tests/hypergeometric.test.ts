@@ -34,6 +34,16 @@ test("Hypergeometric2F1Regularized and Hypergeometric3F2Regularized decline |z| 
   );
 });
 
+test("Hypergeometric2F1Regularized(a, b, b, z) is (1 - z)^-a / Gamma(b), exactly and past |z| = 1", () => {
+  expect(
+    ce.box(["Hypergeometric2F1Regularized", ["Rational", 1, 2], 1, 1, ["Rational", 1, 2]]).evaluate().json,
+  ).toEqual(["Sqrt", 2]);
+  expect(ce.box(["Hypergeometric2F1Regularized", 1, 2, 2, -3]).N().re).toBeCloseTo(0.25, 12);
+  // a pole of Gamma and the cut [1, oo) are left alone
+  expect(ce.box(["Hypergeometric2F1Regularized", 1, 0, 0, 0.5]).N().re).toBe(0);
+  expect(ce.box(["Hypergeometric2F1Regularized", 1, 2, 2, 3]).N().operator).toBe("Hypergeometric2F1Regularized");
+});
+
 test("HypergeometricU agrees with HypergeometricUStar via z^a · U = U*", () => {
   const a = 1;
   const b = 2.5;

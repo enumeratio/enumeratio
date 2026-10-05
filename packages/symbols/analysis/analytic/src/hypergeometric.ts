@@ -159,6 +159,19 @@ export function declareHypergeometric(ce: ComputeEngine): void {
   ce.declare("Hypergeometric2F1Regularized", {
     signature: "(number, number, number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+      // 2F1(a, b; b; z) = (1 − z)⁻ᵃ, so the regularized form is (1 − z)⁻ᵃ / Γ(b): exact for exact
+      // operands, and past |z| = 1 where the series gives out. Off the cut [1, ∞) of (1 − z)⁻ᵃ,
+      // and not at a pole of Γ (where the regularized value is 0 instead).
+      const [pa, pb, pc, pz] = ops;
+      const exponent = pb?.isSame(pc) ? pa : pa?.isSame(pc) ? pb : undefined;
+      const onCut = pz !== undefined && pz.im === 0 && pz.re >= 1;
+      const atPole = pc !== undefined && pc.im === 0 && pc.re <= 0 && Number.isInteger(pc.re);
+      if (exponent !== undefined && !onCut && !atPole && pz !== undefined && pc !== undefined) {
+        const base = ce.function("Subtract", [ce.One, pz]);
+        return ce
+          .function("Divide", [ce.function("Power", [base, exponent.neg()]), ce.function("Gamma", [pc])])
+          .evaluate();
+      }
       const cs = operandsOf(ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a, b, c, z] = cs;
