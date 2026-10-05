@@ -19,11 +19,11 @@
     "diagnostics": [
       {
         "cellId": 1,
-        "message": "`a` is defined in more than one cell"
+        "message": "`a` is defined in more than one cell (also cell 2)"
       },
       {
         "cellId": 2,
-        "message": "`a` is defined in more than one cell"
+        "message": "`a` is defined in more than one cell (also cell 1)"
       }
     ],
     "affected": [1]

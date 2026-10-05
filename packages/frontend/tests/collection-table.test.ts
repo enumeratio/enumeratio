@@ -3,6 +3,7 @@ import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { expect, test } from "vite-plus/test";
 import {
   blocksToRgs,
+  carrierBody,
   columnSource,
   compareCells,
   flatInts,
@@ -105,4 +106,11 @@ test("substituteRowPerHead wraps a parsed (object-encoded) `_` occurrence the sa
   expect(substituteRowPerHead(json, bare, wrapped, (head) => head === "CarrierOnlyStat")).toEqual({
     fn: ["CarrierOnlyStat", wrapped],
   });
+});
+
+test("a carrier's body drops its leading params, so statistics read the elements", () => {
+  const packed = ["Tuple", 4, ["List", 1, 3]] as unknown as MathJsonExpression;
+  expect(carrierBody(packed, 1)).toEqual(["List", 1, 3]);
+  expect(carrierBody(packed, 0)).toEqual(packed);
+  expect(carrierBody(["List", 2, 1] as unknown as MathJsonExpression, 1)).toEqual(["List", 2, 1]);
 });

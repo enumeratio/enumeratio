@@ -5,6 +5,7 @@ import "./notatio-out.ts";
 import { latexForText, pastedFrom } from "./clipboard.ts";
 import { translate } from "./kernel-client.ts";
 import { loadEngine } from "./mathlive.ts";
+import { assignLatex } from "@enumeratio/frontend/core";
 import type { Prerendered } from "@enumeratio/frontend/prerender";
 import { ensureStyles } from "./styles.ts";
 
@@ -97,10 +98,10 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
     case "latex": {
       if (engine === undefined) {
         const written = (await translate({ json, write: "latex" }))?.written;
-        if (written !== undefined) return written;
+        if (written !== undefined) return assignLatex(written);
       }
       const e = engine ?? (await loadEngine());
-      return e.box(json as Parameters<Engine["box"]>[0], { form: "raw" }).latex;
+      return assignLatex(e.box(json as Parameters<Engine["box"]>[0], { form: "raw" }).latex);
     }
     case "epsil":
     default: {
@@ -173,7 +174,7 @@ export class NotatioCell extends LitElement {
     plot: { type: Boolean },
     /**
      * Pin the `standard` editor to a binding, forwarded to `<In>`: the symbol
-     * name and its `\coloneq` become fixed chrome, and only the value can be edited. A
+     * name and its `\coloneqq` become fixed chrome, and only the value can be edited. A
      * page *about* p keeps a p bound to something, whatever the reader types into it.
      */
     bind: { type: String },

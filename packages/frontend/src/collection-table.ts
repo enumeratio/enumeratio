@@ -158,6 +158,18 @@ export function wantsCarrier(
   }
 }
 
+/**
+ * The part of a carrier value a bare-list statistic reads: `Permutation([…])` -> the list, and
+ * for a carrier with leading params (`Finset((n, [1, 3]))`, `params` 1) the slots after them,
+ * so `Length` counts the elements and not the packed `(n, list)`.
+ */
+export function carrierBody(operand: MathJsonExpression, params: number): MathJsonExpression {
+  if (params <= 0 || !Array.isArray(operand) || operand[0] !== "Tuple") return operand;
+  const rest = (operand as readonly MathJsonExpression[]).slice(1 + params);
+  if (rest.length === 0) return operand;
+  return rest.length === 1 ? rest[0]! : (["Tuple", ...rest] as MathJsonExpression);
+}
+
 /** Does the expression mention the row at all? (A column that doesn't is a constant.) */
 export function mentionsRow(json: MathJsonExpression): boolean {
   const walk = (node: unknown): boolean => {

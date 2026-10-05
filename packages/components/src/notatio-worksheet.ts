@@ -260,7 +260,7 @@ export class NotatioWorksheet extends LitElement {
       else if (this.seed) this._seedError = "seed must be a JSON array of cell sources";
     } catch (err) {
       // Swallowing this leaves an empty sheet and no hint why. The usual cause is a
-      // single backslash in a LaTeX seed: `"\\coloneq"` is a JSON escape, `"\coloneq"` is not.
+      // single backslash in a LaTeX seed: `"\\coloneqq"` is a JSON escape, `"\coloneqq"` is not.
       this._seedError = `seed is not valid JSON (${err instanceof Error ? err.message : String(err)})`;
     }
     if (this.inForm === "latex" && seeded.length > 0) {

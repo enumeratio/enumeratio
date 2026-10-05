@@ -128,15 +128,15 @@ test("a complex binding becomes two, one per part", () => {
 test("moving one part of a complex binding keeps the other", () => {
   const [only] = pass("w \\coloneq 2 + 3i");
   const [re, im] = controlsFor(only.result.name, only.value!);
-  expect(bindingSource(re, 5)).toBe("w\\coloneq 5 + 3i");
-  expect(bindingSource(im, -4)).toBe("w\\coloneq 2 - 4i");
+  expect(bindingSource(re, 5)).toBe("w\\coloneqq 5 + 3i");
+  expect(bindingSource(im, -4)).toBe("w\\coloneqq 2 - 4i");
 });
 
 test("a rewritten binding round-trips, and carries no float noise", () => {
   const [only] = pass("s \\coloneq 2");
   const [c] = controlsFor(only.result.name, only.value!);
   const src = bindingSource(c, 0.1 + 0.2); // 0.30000000000000004
-  expect(src).toBe("s\\coloneq 0.3");
+  expect(src).toBe("s\\coloneqq 0.3");
   const [back] = pass(src);
   expect(back.value?.re).toBeCloseTo(0.3, 12);
 });

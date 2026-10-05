@@ -200,11 +200,17 @@ const live = computed((): string => {
   flex-wrap: wrap;
   gap: 1rem;
   align-items: flex-end;
+  /* A wide child (a table) scrolls here rather than being clipped by .story. */
+  overflow-x: auto;
   padding: 1.25rem 1rem;
   /* A faint dotted field so glyph bounds read against the page. */
   background:
     radial-gradient(var(--vp-c-divider) 1px, transparent 1px) 0 0 / 16px 16px,
     var(--vp-c-bg-soft);
+}
+.story-canvas :deep(notatio-collection-table) {
+  max-width: 100%;
+  min-width: 0;
 }
 .story-code {
   border-top: 1px solid var(--vp-c-divider);

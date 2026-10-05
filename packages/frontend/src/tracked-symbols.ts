@@ -123,7 +123,8 @@ export function schedule(cells: readonly CellBindings[]): Schedule {
   for (const [name, ids] of definedBy) {
     if (ids.length < 2) continue;
     for (const id of ids) {
-      diagnostics.push({ cellId: id, message: `\`${name}\` is defined in more than one cell` });
+      const others = ids.filter((other) => other !== id).join(", ");
+      diagnostics.push({ cellId: id, message: `\`${name}\` is defined in more than one cell (also cell ${others})` });
     }
   }
 

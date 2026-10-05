@@ -228,11 +228,11 @@ export function symbolLatex(name: string): string {
 export function bindingSource(control: WorksheetControl, next: number, integer = false): string {
   const round = (v: number) => (integer ? Math.round(v) : Number(v.toPrecision(12)));
   const name = symbolLatex(control.name);
-  if (control.part === "real") return `${name}\\coloneq ${round(next)}`;
+  if (control.part === "real") return `${name}\\coloneqq ${round(next)}`;
   const re = round(control.part === "re" ? next : control.other);
   const im = round(control.part === "im" ? next : control.other);
   const sign = im < 0 ? "-" : "+";
-  return `${name}\\coloneq ${re} ${sign} ${Math.abs(im)}i`;
+  return `${name}\\coloneqq ${re} ${sign} ${Math.abs(im)}i`;
 }
 
 /**

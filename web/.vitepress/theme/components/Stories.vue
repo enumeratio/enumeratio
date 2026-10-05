@@ -44,13 +44,13 @@ function grouped(stories: readonly StoryData[]): { category: string; stories: St
 <template>
   <div v-if="stories.length > 0" class="stories">
     <template v-for="group in grouped(stories)" :key="group.category">
-      <h2 v-if="group.category">{{ group.category }}</h2>
+      <h3 v-if="group.category" class="story-category">{{ group.category }}</h3>
       <div v-for="story in group.stories" :id="`story/${story.id}`" :key="story.id" class="story">
         <div class="story-head">
-          <h3 class="story-title">
+          <h4 class="story-title">
             <a :href="`#story/${story.id}`" class="story-anchor" aria-hidden="true">#</a>
             <span v-html="prose(story.caption)" />
-          </h3>
+          </h4>
           <p v-if="story.notes" class="story-notes" v-html="prose(story.notes)" />
         </div>
         <div class="story-canvas">
@@ -133,10 +133,16 @@ function grouped(stories: readonly StoryData[]): { category: string; stories: St
   flex-wrap: wrap;
   gap: 1rem;
   align-items: flex-end;
+  /* A wide child (a table) scrolls here rather than being clipped by .story. */
+  overflow-x: auto;
   padding: 1.25rem 1rem;
   background:
     radial-gradient(var(--vp-c-divider) 1px, transparent 1px) 0 0 / 16px 16px,
     var(--vp-c-bg-soft);
+}
+.story-canvas :deep(notatio-collection-table) {
+  max-width: 100%;
+  min-width: 0;
 }
 .story-code {
   border-top: 1px solid var(--vp-c-divider);
