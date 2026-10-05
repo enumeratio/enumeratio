@@ -1,7 +1,5 @@
-// Lattice-path variants. Pure rank/unrank kernels over plain JS numbers/arrays (no
-// compute-engine dependency) — same contract as every other family: rank(unrank(p, r), p) ===
-// r, valid(unrank(p, r), p) === true for all r in [0, count(p)). Kept in its own file
-// (registered via install.ts) so parallel roadmap batches don't collide with core.ts.
+// Lattice-path variants: Epsil definitions over the walks of ../../../lattice-paths, their TS
+// kernels (plain JS numbers/arrays) kept as `fast` paths; FinePaths stays a TS kernel.
 //
 // RestrictedGrowthStrings and NonCrossingPartitions/NonNestingPartitions/NonCrossingMatchings/
 // NonNestingMatchings moved to set-partitions/src/families/{paths-partitions,matchings}.ts --
@@ -12,9 +10,13 @@
 // GrandDyckPaths/RiordanPaths/FinePaths/BallotSequences declare no carrier and stay here per
 // step 5 rule 4.
 import type { NumberKernel } from "./types.ts";
+import type { EpsilFamily } from "./epsil.ts";
+import { latticePaths } from "./closed-forms.ts";
+import { quotient } from "./tables.ts";
+import { dyckPaths } from "../../../lattice-paths/src/families/core.ts";
+import { completionsOf, completionsTable, type Step, walkFamily } from "../../../lattice-paths/src/families/walks.ts";
 import {
   CatalanNumber,
-  DyckPathCount,
   DyckPathRank,
   DyckPathUnrank,
   IsDyckPath,
@@ -195,41 +197,69 @@ function isFinePathOf(e: unknown, n: number): boolean {
   return true;
 }
 
-// Kept separate from `entriesAfterDyckPathsByHeight` below only so
-// collections/src/families/index.ts can splice `latticePathsPathsPartitionsEntries`
-// (DyckPathsByHeight) back in at the exact interior position it held before the lattice-paths
-// move — §4 step 5. NonCrossingPartitions/NonNestingPartitions/NonCrossingMatchings/
-// NonNestingMatchings moved to set-partitions/src/families/matchings.ts, spliced back in here
-// by collections/src/families/index.ts — they now carry "SetPartition".
-export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
-  {
-    head: "GrandDyckPaths",
-    paramCount: 1,
-    kind: "ints",
+// GrandDyckPaths is LatticePaths(n, n) under another name: the words with n ups among 2n steps,
+// in the colex order of the ups' positions that its TS kernel (KSubset) reads.
+const grandDyckPaths = latticePaths({
+  head: "GrandDyckPaths",
+  carrier: "DyckPath",
+  params: ["_n"],
+  ones: "_n",
+  zeros: "_n",
+  fast: {
     count: ([n]) => KSubsetCount(2 * n, n),
     unrank: ([n], r) => {
       const ups = new Set(KSubsetUnrank(2 * n, n, r));
       return Array.from({ length: 2 * n }, (_, i) => (ups.has(i + 1) ? 1 : 0));
     },
-    valid: (e, [n]) => isGrandDyckPathOf(e, n),
     rank: (e) => {
       const path = e as number[];
       const ups: number[] = [];
       for (let i = 0; i < path.length; i++) if (path[i] === 1) ups.push(i + 1);
       return KSubsetRank(ups);
     },
-    carrier: "DyckPath",
+    valid: (e, [n]) => isGrandDyckPathOf(e, n),
   },
-  {
-    head: "RiordanPaths",
-    paramCount: 1,
-    kind: "ints",
+});
+
+// Up (1), level (0, never at height 0), down (-1), length n: the Riordan numbers.
+const riordanSteps: readonly Step[] = [
+  { token: 1, rise: 1, width: 1 },
+  { token: 0, rise: 0, width: 1, aboveGround: true },
+  { token: -1, rise: -1, width: 1 },
+];
+const riordanPaths = walkFamily({
+  head: "RiordanPaths",
+  carrier: "MotzkinPath",
+  fast: {
     count: ([n]) => RiordanPathCount(n),
     unrank: ([n], r) => RiordanPathUnrank(n, r),
-    valid: (e, [n]) => isRiordanPathOf(e, n),
     rank: (e) => RiordanPathRank(e as number[]),
-    carrier: "MotzkinPath",
+    valid: (e, [n]) => isRiordanPathOf(e, n),
   },
+  params: ["_n"],
+  width: "_n",
+  steps: riordanSteps,
+  tables: [completionsTable("t", riordanSteps, "_n", quotient("_n", 2))],
+  completions: completionsOf(quotient("_n", 2)),
+});
+
+// FinePaths stays a TS kernel: its blocks are ordered by size, then by the Dyck order of what is
+// inside, which no single left-to-right walk of up/down steps gives (the step preferred after a
+// prefix depends on how the block closes), and its unrank nests a Dyck unrank per block into a
+// list built block by block.
+//
+// BallotSequences is DyckPaths under another name, its TS kernel the same DyckPath one.
+const ballotSequences: EpsilFamily = { ...dyckPaths, head: "BallotSequences" };
+
+// Kept separate from `entriesAfterDyckPathsByHeight` below only so
+// collections/src/families/index.ts can splice `latticePathsPathsPartitionsEntries`
+// (DyckPathsByHeight) back in at the exact interior position it held before the lattice-paths
+// move — §4 step 5. NonCrossingPartitions/NonNestingPartitions/NonCrossingMatchings/
+// NonNestingMatchings moved to set-partitions/src/families/matchings.ts, spliced back in here
+// by collections/src/families/index.ts — they now carry "SetPartition".
+export const entriesBeforeDyckPathsByHeight: (NumberKernel | EpsilFamily)[] = [
+  grandDyckPaths,
+  riordanPaths,
   {
     head: "FinePaths",
     paramCount: 1,
@@ -240,14 +270,5 @@ export const entriesBeforeDyckPathsByHeight: NumberKernel[] = [
     rank: (e) => FinePathRank(e as number[]),
     carrier: "DyckPath",
   },
-  {
-    head: "BallotSequences",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => DyckPathCount(n),
-    unrank: ([n], r) => DyckPathUnrank(n, r),
-    valid: (e, [n]) => IsDyckPath(e as number[], n),
-    rank: (e) => DyckPathRank(e as number[]),
-    carrier: "DyckPath",
-  },
+  ballotSequences,
 ];

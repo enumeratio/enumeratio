@@ -22,7 +22,7 @@ import {
   palindromeUnrank,
   palindromeValid,
 } from "../../words/src/families/words.ts";
-import { allFamilies, type EpsilFamily, isEpsilFamily, epsilKernelOn } from "../src/families/index.ts";
+import { allFamilies, type EpsilFamily, epsilKernelOn, evaluateTables, isEpsilFamily } from "../src/families/index.ts";
 import {
   BinaryStringCount,
   IsMultisetOf,
@@ -219,8 +219,11 @@ for (const [head, reading] of Object.entries(READINGS)) {
 }
 
 /** The definitions as the interpreter reads them, bypassing compiled code. */
-const interpreted = (family: EpsilFamily, operation: keyof EpsilFamily["epsil"], bindings: Record<string, unknown>) =>
-  evaluateEpsil(ce, family.epsil[operation], bindings);
+const interpreted = (family: EpsilFamily, operation: keyof EpsilFamily["epsil"], bindings: Record<string, unknown>) => {
+  const { tables } = family.epsil;
+  const tabled = tables === undefined ? bindings : { ...bindings, _tables: evaluateTables(ce, tables, bindings) };
+  return evaluateEpsil(ce, family.epsil[operation], tabled);
+};
 
 const list = (xs: number[]): unknown => ["List", ...xs];
 

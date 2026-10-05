@@ -8,7 +8,7 @@
 // path where they list in the same order.
 
 import type { EpsilFamily, FastKernel } from "./epsil.ts";
-import { choose } from "./tables.ts";
+import { cell, choose, colexDigits, iff, lets, less, pascalTable, rowTable } from "./tables.ts";
 
 type MathJSON = unknown;
 
@@ -280,9 +280,10 @@ export const kSubsets = (shape: Shape): EpsilFamily => gradedSubsets({ ...shape,
 /** LatticePaths(a, b): the 0/1 words of a + b steps with a ones (the N steps), C(a + b, a) of them,
  *  in colex order of the ones' positions. The c-th one, at position j, has C(j − 1, c) words before
  *  it. Unrank walks from the end, its state [rank left, ones left, the steps found…]; rank's state
- *  is [rank, ones seen, j]. */
-export function latticePaths(shape: Shape): EpsilFamily {
-  const total = add("_a", "_b");
+ *  is [rank, ones seen, j]. `ones` and `zeros` default to the params `_a` and `_b`. */
+export function latticePaths(shape: Shape & { readonly ones?: MathJSON; readonly zeros?: MathJSON }): EpsilFamily {
+  const { ones = "_a", zeros = "_b" } = shape;
+  const total = add(ones, zeros);
   const us = (i: number): MathJSON => at("lu_s", i);
   const rs = (i: number): MathJSON => at("lr_s", i);
   const unrankStep = [
@@ -309,14 +310,14 @@ export function latticePaths(shape: Shape): EpsilFamily {
   return {
     ...shapeOf(shape),
     epsil: {
-      count: choose(total, "_a"),
-      unrank: ["Drop", fold(unrankStep, "lu_s", "lu_j", ["List", "_r", "_a"], ["Range", total, 1, -1]), 2],
+      count: choose(total, ones),
+      unrank: ["Drop", fold(unrankStep, "lu_s", "lu_j", ["List", "_r", ones], ["Range", total, 1, -1]), 2],
       rank: at(fold(rankStep, "lr_s", "lr_t", ["List", 0, 0, 1], "_x"), 1),
       valid: [
         "And",
         equal(len, total),
         all((t) => between(t, 0, 1), "_x", "lv_t"),
-        equal(fold(add("lv_c", "lv_u"), "lv_c", "lv_u", 0, "_x"), "_a"),
+        equal(fold(add("lv_c", "lv_u"), "lv_c", "lv_u", 0, "_x"), ones),
       ],
     },
   };
@@ -433,46 +434,26 @@ export function ternaryGrayCodes(shape: Shape): EpsilFamily {
   };
 }
 
-// ─── k-subsets and k-multisets: the colex combinatorial number system ─────────────────────────
-// The rank-th k-subset of 1..n in colex order has, for i = k down to 1, its i-th smallest member
-// one more than the greatest c with C(c, i) ≤ what is left of the rank after the larger members.
-// Each digit depends on the one above's leftover, so `rBefore` folds the leftover down through
-// the digits above i and `digitAt` is the greedy search at one digit. `tag` gives every nested
-// Fold its own bound names, since a fold's variable must not collide with an enclosing or sibling
-// fold's in one expression tree. (The same search writes CompositionsIntoKParts' cuts.)
-
-const downTo = (from: MathJSON, to: MathJSON): MathJSON => ["Range", from, to, -1];
-
-const digitAt = (i: MathJSON, left: MathJSON, universe: MathJSON, tag: string): MathJSON => {
-  const c = `c_${tag}`;
-  const best = `best_${tag}`;
-  return fold(
-    ["If", ["LessEqual", binomial(c, i), left], c, best],
-    best,
-    c,
-    sub(i, 1),
-    upTo(sub(i, 1), sub(universe, 1)),
-  );
-};
-const leftover = (i: MathJSON, size: MathJSON, universe: MathJSON, tag: string): MathJSON => {
-  const hi = `hi_${tag}`;
-  const acc = `racc_${tag}`;
-  return fold(sub(acc, binomial(digitAt(hi, acc, universe, `${tag}i`), hi)), acc, hi, "_r", downTo(size, add(i, 1)));
-};
-/** The m-th smallest member, 0-based, of the `size`-subset of 0..universe − 1 with rank `_r`. */
-const colexMember = (m: MathJSON, size: MathJSON, universe: MathJSON): MathJSON =>
-  digitAt(m, leftover(m, size, universe, "r"), universe, "d");
+// ─── k-multisets: the colex combinatorial number system ──────────────────────────────────────
+// The rank-th k-subset of 0..universe − 1 in colex order has its i-th smallest member c_i with
+// C(c_k, k) + … + C(c_1, 1) = rank. `colexDigits` finds every c_i in one pass, and each Binomial
+// is a lookup in Pascal's triangle, built once per params as the family's `tables`.
 
 /** The k-multisets of 1..n as non-decreasing lists: the k-subset of 1..n + k − 1 with its i-th
  *  member lowered by i − 1. */
 export function multisets(shape: Shape): EpsilFamily {
   const universe = sub(add("_n", "_k"), 1);
+  const pascal = cell("_tables", add("_k", 1));
   return {
     ...shapeOf(shape),
     epsil: {
       count: binomial(universe, "_k"),
-      unrank: map(sub(add(colexMember("m", "_k", universe), 2), "m"), "m", upTo(1, "_k")),
-      rank: fold(add("acc", binomial(sub(add(element("j"), "j"), 2), "j")), "acc", "j", 0, upTo(1, len)),
+      tables: pascalTable("pc", ["Max", universe, 1], add("_k", 1)),
+      unrank: lets(
+        [["md_digits", colexDigits("md", "_k", universe, pascal), "list<integer>"]],
+        map(add(sub(at("md_digits", add("m", 1)), "m"), 2), "m", upTo(1, "_k")),
+      ),
+      rank: fold(add("acc", pascal(sub(add(element("j"), "j"), 2), "j")), "acc", "j", 0, upTo(1, len)),
       valid: [
         "And",
         equal(len, "_k"),
@@ -482,3 +463,90 @@ export function multisets(shape: Shape): EpsilFamily {
     },
   };
 }
+
+// ─── 0/1 words counted by a table of completions ─────────────────────────────────────────────
+// Words of length n in lex order, 0 before 1: a 1 at place j has ranked before it the words that
+// put a 0 there, of which `block(m)` complete the m places after it. A valid word never puts a
+// 1 where it isn't allowed, so the rank left is always below that block at such a place.
+
+/** The length-n 0/1 words a condition on neighbouring entries allows, ranked from a `tables`
+ *  list whose `block(m)` is the completions of the m places after a 0. */
+function zeroBlockWords(
+  shape: Shape & { readonly count: MathJSON; readonly tables: MathJSON; readonly valid: MathJSON },
+  block: (m: MathJSON) => MathJSON,
+): EpsilFamily {
+  const state = "zs";
+  const left = at(state, 1);
+  const step = lets(
+    [["zb", block(sub("_n", "zj")), "integer"]],
+    iff(
+      ["GreaterEqual", left, "zb"],
+      ["Join", ["List", sub(left, "zb")], ["Drop", state, 1], ["List", 1]],
+      ["Join", ["List", left], ["Drop", state, 1], ["List", 0]],
+    ),
+  );
+  return {
+    ...shapeOf(shape),
+    epsil: {
+      count: shape.count,
+      tables: shape.tables,
+      unrank: ["Drop", fold(step, state, "zj", ["List", "_r"], upTo(1, "_n")), 1],
+      rank: fold(add("acc", iff(equal(element("j"), 1), block(sub("_n", "j")), 0)), "acc", "j", 0, upTo(1, "_n")),
+      valid: shape.valid,
+    },
+  };
+}
+
+/** Whether `_x` is a length-n 0/1 word in which every `window` consecutive entries sum to less
+ *  than `window`: no run of `window` ones. */
+const noRunOfOnes = (window: number): MathJSON => {
+  const sums = (j: MathJSON): MathJSON => add(...Array.from({ length: window }, (_, i) => element(sub(j, i))));
+  return [
+    "And",
+    equal(len, "_n"),
+    all((j) => between(element(j), 0, 1), upTo(1, len), "j"),
+    all((j) => less(sums(j), window), upTo(window, len), "w"),
+  ];
+};
+
+/** Fibonacci words: the length-n 0/1 words with no two consecutive ones, Fib(n + 2) of them. T(m)
+ *  is the free completions of m places (T(−1) is 1), so T(m) = T(m − 1) + T(m − 2). */
+export const fibonacciWords = (shape: Shape): EpsilFamily => {
+  const completions = cell("_tables", 1);
+  return zeroBlockWords(
+    {
+      ...shape,
+      count: at("_tables", add("_n", 1)),
+      tables: rowTable(
+        "fw",
+        add("_n", 1),
+        1,
+        () => 1,
+        (prev, s) => add(prev(sub(s, 1), 0), iff(["GreaterEqual", s, 2], prev(sub(s, 2), 0), 1)),
+      ),
+      valid: noRunOfOnes(2),
+    },
+    (m) => completions(m, 0),
+  );
+};
+
+/** The length-n 0/1 words with no three consecutive ones. T(m, c) is the completions of m places
+ *  after c trailing ones: a 0 restarts the run, a 1 extends it while c < 2. */
+export const triStrings = (shape: Shape): EpsilFamily => {
+  const completions = cell("_tables", 3);
+  return zeroBlockWords(
+    {
+      ...shape,
+      count: completions("_n", 0),
+      tables: rowTable(
+        "tw",
+        add("_n", 1),
+        3,
+        () => 1,
+        (prev, s, c) => add(prev(sub(s, 1), 0), iff(less(c, 2), prev(sub(s, 1), add(c, 1)), 0)),
+      ),
+      valid: noRunOfOnes(3),
+    },
+    (m) => completions(m, 0),
+  );
+};

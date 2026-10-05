@@ -28,6 +28,8 @@ export interface Step {
   readonly token: number;
   readonly rise: -1 | 0 | 1;
   readonly width: 1 | 2;
+  /** Taken only above the ground: a level step at height 0 is not a step of the walk. */
+  readonly aboveGround?: true;
 }
 
 /** The ways to finish from width `w` and height `y`, `reached` (0 or 1) the walk's flag. */
@@ -63,9 +65,13 @@ const flagAfter = (walk: Walk, reached: MathJSON, y: MathJSON, rise: -1 | 0 | 1)
 
 /** The completions of step i from (w, y): 0 where it doesn't fit or dips below 0. */
 function choice(walk: Walk, i: number, w: MathJSON, y: MathJSON, reached: MathJSON): MathJSON {
-  const { rise, width } = walk.steps[i];
+  const { rise, width, aboveGround } = walk.steps[i];
   const landing = add(y, rise);
-  const fits = and(["LessEqual", width, w], ["GreaterEqual", landing, 0]);
+  const fits = and(
+    ["LessEqual", width, w],
+    ["GreaterEqual", landing, 0],
+    ...(aboveGround ? [["GreaterEqual", y, 1]] : []),
+  );
   return iff(fits, walk.completions(sub(w, width), landing, flagAfter(walk, reached, landing, rise)), 0);
 }
 
@@ -148,8 +154,9 @@ function valid(walk: Walk): MathJSON {
   const tracked = walk.final !== undefined;
   const byToken = (i: number): MathJSON => {
     if (i === walk.steps.length) return ["List", -1, 0, 0, ...(tracked ? [0] : [])];
-    const { token, rise, width } = walk.steps[i];
-    const y = add(at(state, 1), rise);
+    const { token, rise, width, aboveGround } = walk.steps[i];
+    const landing = add(at(state, 1), rise);
+    const y = aboveGround ? iff(equal(at(state, 1), 0), -1, landing) : landing;
     const next = [
       y,
       add(at(state, 2), width),
@@ -207,10 +214,11 @@ export function completionsTable(tag: string, steps: readonly Step[], total: Mat
         less(w, y),
         0,
         add(
-          ...steps.map(({ rise, width }) => {
+          ...steps.map(({ rise, width, aboveGround }) => {
             const landing = add(y, rise);
             const fits = [
               ...(width === 2 ? [["GreaterEqual", w, 2]] : []),
+              ...(aboveGround ? [["GreaterEqual", y, 1]] : []),
               ...(rise < 0 ? [["GreaterEqual", landing, 0]] : []),
               ...(rise > 0 ? [["LessEqual", landing, cap]] : []),
             ];

@@ -4,6 +4,8 @@
 // words.ts's necklace/Lyndon/number-theory machinery locally rather than reaching into that
 // module (only its `entries` export is public). Pure rank/unrank kernels over plain JS
 // numbers/arrays, same contract as every other family (types.ts).
+import { triStrings } from "./closed-forms.ts";
+import type { EpsilFamily } from "./epsil.ts";
 import type { NumberKernel } from "./types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
@@ -199,20 +201,21 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
-export const entries: NumberKernel[] = [
+export const entries: (NumberKernel | EpsilFamily)[] = [
   // TriStrings(n): binary words with no 3 consecutive 1s.
-  {
-    ...ints(
-      "TriStrings",
-      1,
-      ([n]) => triCount(n),
-      ([n], r) => triUnrank(n, r),
-      (a, [n]) => triValid(a, n),
-      (a, [n]) => triRank(a, n),
-    ),
+  triStrings({
+    head: "TriStrings",
     carrier: "BinaryWord",
-  },
-  // PrimitiveBinaryStrings(n): aperiodic binary words — A027375.
+    params: ["_n"],
+    fast: {
+      count: ([n]) => triCount(n),
+      unrank: ([n], r) => triUnrank(n, r),
+      rank: (a, [n]) => triRank(a as number[], n),
+      valid: (a, [n]) => triValid(a, n),
+    },
+  }),
+  // PrimitiveBinaryStrings(n): aperiodic binary words — A027375. Stays a TS kernel: its lex order
+  // has no completion counts short of enumerating the Lyndon words and their rotations.
   {
     ...ints(
       "PrimitiveBinaryStrings",
