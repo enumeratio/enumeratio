@@ -9,7 +9,8 @@ import { PACKAGES } from "../src/node.ts";
 
 let rewritten = 0;
 let heads = 0;
-for (const { dir } of recordDirs(PACKAGES))
+// An installed library's records are its own repository's to format.
+for (const { dir } of recordDirs(PACKAGES).filter((p) => p.installed !== true))
   for (const head of headNames(dir)) {
     heads++;
     if ((await isWrittenHead(dir, head)).length === 0) continue;

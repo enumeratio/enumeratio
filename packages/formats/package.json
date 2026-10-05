@@ -50,7 +50,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/asciimath.ts src/mathml.ts src/tex.ts src/markup.ts src/fullform.ts && node ../manifest/scripts/collect-declares.ts .",
+    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/asciimath.ts src/mathml.ts src/tex.ts src/markup.ts src/fullform.ts && enumeratio-collect-declares .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

@@ -9,7 +9,7 @@
 // exactly what `vp fmt` would make of it.
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { format } from "oxfmt";
 import { FORMAT } from "./format.ts";
 import type { ComponentStory, ReferenceEntry } from "./types.ts";
@@ -47,9 +47,33 @@ export async function writeStories(dir: string | URL, name: string, stories: rea
   await writeYaml(path, stories);
 }
 
-/** Where the records live under `packages/`: `<package>/reference/`, a symbol package's
- * `symbols/<group>/<package>/reference/`, and reference's own `entries/` (the engine's heads). */
-export function recordDirs(packagesRoot: string): { package: string; dir: string }[] {
+/** A package's directory: in the tree, or installed beside it. */
+export interface PackageDir {
+  /** The package's name without its scope. */
+  readonly package: string;
+  readonly dir: string;
+  /** From `node_modules`, not from the tree: read it, never write it. */
+  readonly installed?: true;
+}
+
+const SCOPE = "@enumeratio/";
+
+/** The first `node_modules/<name>` at or above `from` (an installed package is a symlink under pnpm). */
+function installedAt(from: string, name: string): string | undefined {
+  for (let dir = from; ; dir = dirname(dir)) {
+    const found = join(dir, "node_modules", name);
+    if (existsSync(join(found, "package.json"))) return found;
+    if (dirname(dir) === dir) return undefined;
+  }
+}
+
+/**
+ * Every package under `packages/` (`<package>/`, a symbol library's `symbols/<group>/<package>/`), then
+ * the `@enumeratio/*` libraries those depend on that the tree doesn't hold: installed ones, found as
+ * Node would find them from the dependent. A name in the tree wins over an installed one. Only a
+ * checkout merges the two; any other root (an installed scope, a test fixture) is what it holds.
+ */
+export function packageDirs(packagesRoot: string): PackageDir[] {
   // A package may be a symlink (an installed one is, under node_modules/@enumeratio).
   const subdirs = (dir: string): string[] =>
     existsSync(dir)
@@ -58,20 +82,37 @@ export function recordDirs(packagesRoot: string): { package: string; dir: string
           .map((e) => e.name)
           .toSorted()
       : [];
-  const packages = [
-    ...subdirs(packagesRoot).map((pkg) => ({ pkg, dir: join(packagesRoot, pkg) })),
+  const inTree: PackageDir[] = [
+    ...subdirs(packagesRoot).map((pkg) => ({ package: pkg, dir: join(packagesRoot, pkg) })),
     ...subdirs(join(packagesRoot, "symbols")).flatMap((group) =>
       subdirs(join(packagesRoot, "symbols", group)).map((pkg) => ({
-        pkg,
+        package: pkg,
         dir: join(packagesRoot, "symbols", group, pkg),
       })),
     ),
   ];
-  return packages
-    .map(({ pkg, dir }) => ({
-      package: pkg,
-      dir: join(dir, pkg === "reference" ? "entries" : "reference"),
-    }))
+  if (!existsSync(join(packagesRoot, "symbols"))) return inTree;
+  const known = new Set(inTree.map((p) => p.package));
+  const installed = new Map<string, PackageDir>();
+  for (const { dir } of inTree) {
+    const file = join(dir, "package.json");
+    if (!existsSync(file)) continue;
+    const pkg = JSON.parse(readFileSync(file, "utf8")) as Record<string, Record<string, string> | undefined>;
+    for (const field of ["dependencies", "devDependencies", "optionalDependencies", "peerDependencies"])
+      for (const name of Object.keys(pkg[field] ?? {})) {
+        const library = name.slice(SCOPE.length);
+        if (!name.startsWith(SCOPE) || known.has(library) || installed.has(library)) continue;
+        const found = installedAt(dir, name);
+        if (found !== undefined) installed.set(library, { package: library, dir: found, installed: true });
+      }
+  }
+  return [...inTree, ...[...installed.values()].toSorted((a, b) => (a.package < b.package ? -1 : 1))];
+}
+
+/** Where the records live: `<package>/reference/` for each of `packageDirs`, and reference's own `entries/` (the engine's heads). */
+export function recordDirs(packagesRoot: string): PackageDir[] {
+  return packageDirs(packagesRoot)
+    .map((p) => ({ ...p, dir: join(p.dir, p.package === "reference" ? "entries" : "reference") }))
     .filter(({ dir }) => existsSync(dir));
 }
 

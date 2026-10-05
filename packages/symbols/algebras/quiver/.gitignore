@@ -1,0 +1,3 @@
+# Build output; stated here too so the directory stands alone.
+dist
+node_modules

@@ -3,7 +3,7 @@
 // holds what it requires (declares.ts). Run by the library's build after `vp pack`, from its
 // directory, so its own dist and those of what it requires are what get declared:
 //
-//   node ../../manifest/scripts/collect-declares.ts .
+//   enumeratio-collect-declares .
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";

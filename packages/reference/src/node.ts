@@ -138,7 +138,8 @@ export function installedPackages(from: string = process.cwd()): string | undefi
 
 /**
  * Where the records are read from by default: the workspace's `packages/` when this package sits in a
- * checkout, else the installed packages (found from `from`, the working directory unless given).
+ * checkout (with the libraries its packages install beside it: `recordDirs`), else the installed
+ * packages (found from `from`, the working directory unless given).
  * A caller that knows better passes its own root to `referenceData` and `loadReferenceData`.
  */
 export function recordsRoot(from?: string): string {

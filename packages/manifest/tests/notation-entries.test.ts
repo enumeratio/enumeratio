@@ -3,9 +3,10 @@
 // it builds an engine, so an entry reaches nothing beyond boxes' main entry and types, through
 // its own files.
 
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { packageDirs } from "@enumeratio/entry/node";
 import { expect, test } from "vite-plus/test";
 import { NOTATIONS } from "../src/generated/notations.ts";
 import { notationSpecifier, type PackageField } from "../src/package-field.ts";
@@ -18,29 +19,27 @@ interface Workspace {
   readonly dir: string;
   readonly field?: PackageField;
   readonly exports: Readonly<Record<string, unknown>>;
+  /** From node_modules: its sources are its own repository's to check. */
+  readonly installed: boolean;
 }
 
 function workspaces(): Workspace[] {
-  const dirs = [
-    ...readdirSync(PACKAGES).map((name) => join(PACKAGES, name)),
-    ...readdirSync(join(PACKAGES, "symbols")).flatMap((group) =>
-      readdirSync(join(PACKAGES, "symbols", group)).map((name) => join(PACKAGES, "symbols", group, name)),
-    ),
-  ];
-  return dirs
-    .filter((dir) => existsSync(join(dir, "package.json")))
-    .map((dir) => {
+  // The tree's packages, and the libraries installed beside them.
+  return packageDirs(PACKAGES)
+    .filter(({ dir }) => existsSync(join(dir, "package.json")))
+    .map(({ dir, installed }) => {
       const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf8")) as {
         name: string;
         enumeratio?: PackageField;
         exports?: Record<string, unknown>;
       };
-      return { name: pkg.name, dir, field: pkg.enumeratio, exports: pkg.exports ?? {} };
+      return { name: pkg.name, dir, field: pkg.enumeratio, exports: pkg.exports ?? {}, installed: installed === true };
     });
 }
 
 const WORKSPACES = workspaces();
 const WITH_NOTATION = WORKSPACES.filter((ws) => ws.field?.notation !== undefined);
+const IN_TREE = WITH_NOTATION.filter((ws) => !ws.installed);
 
 /** The source behind an export: its `dist/<x>.mjs` as `src/<x>.ts`. */
 function sourceOf(ws: Workspace, subpath: string): string | undefined {
@@ -86,8 +85,8 @@ function heavyImports(file: string, seen = new Set<string>()): string[] {
 }
 
 test("every notation entry is exported, from a source that exports `notation`", () => {
-  expect(WITH_NOTATION.length).toBeGreaterThan(0);
-  for (const ws of WITH_NOTATION) {
+  expect(IN_TREE.length).toBeGreaterThan(0);
+  for (const ws of IN_TREE) {
     const source = sourceOf(ws, ws.field!.notation!);
     expect(source, `${ws.name}: ${ws.field!.notation} isn't exported`).toBeDefined();
     expect(readFileSync(source!, "utf8"), ws.name).toMatch(/^export const notation\b/m);
@@ -97,6 +96,7 @@ test("every notation entry is exported, from a source that exports `notation`", 
 test("a package whose src/notation.ts exports `notation` names it in package.json", () => {
   const unnamed = WORKSPACES.filter(
     (ws) =>
+      !ws.installed &&
       ws.field?.notation === undefined &&
       existsSync(join(ws.dir, "src/notation.ts")) &&
       /^export const notation\b/m.test(readFileSync(join(ws.dir, "src/notation.ts"), "utf8")),
@@ -112,6 +112,6 @@ test("the manifest lists every notation entry", () => {
 });
 
 test("notation entries import nothing beyond boxes and types", () => {
-  const bad = WITH_NOTATION.flatMap((ws) => heavyImports(sourceOf(ws, ws.field!.notation!)!));
+  const bad = IN_TREE.flatMap((ws) => heavyImports(sourceOf(ws, ws.field!.notation!)!));
   expect(bad).toEqual([]);
 });

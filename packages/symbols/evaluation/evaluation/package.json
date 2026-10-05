@@ -30,7 +30,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/node.ts src/worker.ts src/session-worker.ts src/session-worker-core.ts src/browser.ts src/browser-worker.ts src/browser-session-worker.ts && node ../../../manifest/scripts/collect-declares.ts .",
+    "build": "vp pack src/index.ts src/node.ts src/worker.ts src/session-worker.ts src/session-worker-core.ts src/browser.ts src/browser-worker.ts src/browser-session-worker.ts && enumeratio-collect-declares .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

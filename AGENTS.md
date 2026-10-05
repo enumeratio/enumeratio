@@ -113,6 +113,14 @@ so a page reads the same on GitHub and on the site.
   against the records, so a merge never leaves a file to regenerate. Only an external snapshot
   (a kernel's answers, a scrape, an expensive sweep) is committed, by its own `collect-*`/`fetch-*`
   script. A new `src/patches/<slug>.ts` in `ce-patches` joins `PATCHES` on its own.
+- **A library's `build` calls manifest's bins** (`enumeratio-collect-notation`,
+  `enumeratio-collect-declares`), never `node ../manifest/scripts/…`, and declares
+  `@enumeratio/manifest` as a dependency: `tools/ci` reads declared edges, and a library that
+  leaves the repository has only those.
+- **A library may be in the tree or installed.** Manifest's build, `recordDirs` and the site's package docs
+  read the tree's packages and then the `@enumeratio/*` libraries they depend on that the tree
+  doesn't hold (found in `node_modules`); a name in the tree wins. Installed records are read-only:
+  `writeHead` refuses them.
 
 ## Git hygiene
 

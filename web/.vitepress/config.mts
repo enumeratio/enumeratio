@@ -24,6 +24,7 @@ import { reviewModePlugin } from "./review/plugin.ts";
 // matching src/*.ts; exports that already point at src are used as-is.
 // SITE_FROM_PACKAGES=1 turns them off: the site resolves `@enumeratio/*` through whatever is installed,
 // as it would from the registry (tools/tarball-check builds it that way, from packed tarballs).
+// A library installed beside the tree's packages has no alias: web/ resolves it through node_modules.
 const fromPackages = process.env.SITE_FROM_PACKAGES === "1";
 const pkgsDir = resolve(dirname(fileURLToPath(import.meta.url)), "../../packages");
 const srcAliases: { find: RegExp; replacement: string }[] = [];

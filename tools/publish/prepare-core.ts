@@ -8,7 +8,7 @@ import { appendFileSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 /** What an extracted leaf library (hopf) imports or builds with, and what those import. */
-const CORE = ["engine", "entry", "manifest", "boxes", "structures"];
+const CORE = ["engine", "entry", "manifest", "boxes", "structures", "ce-patches"];
 
 const REGISTRY = "https://npm.pkg.github.com";
 

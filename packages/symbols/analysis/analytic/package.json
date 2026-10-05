@@ -30,7 +30,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node ../../../manifest/scripts/collect-notation.ts . && vp pack && node ../../../manifest/scripts/collect-declares.ts .",
+    "build": "enumeratio-collect-notation . && vp pack && enumeratio-collect-declares .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

@@ -3,7 +3,7 @@
 // so its `./notation` entry carries the data without reading the records at run time. Run by the
 // package's `build`:
 //
-//   node <manifest>/scripts/collect-notation.ts <package-dir>
+//   enumeratio-collect-notation <package-dir>
 
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";

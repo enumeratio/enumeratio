@@ -42,12 +42,46 @@ export interface WorkspacePackage {
   pages: DocPage[];
 }
 
-// The workspace globs, less web/ itself. SITE_FROM_PACKAGES=1 reads the installed packages instead
-// (`node_modules/@enumeratio/*`, beside web/), as a build from the registry would.
+// The workspace globs, less web/ itself, then the libraries installed beside them (a name in the tree
+// wins). SITE_FROM_PACKAGES=1 reads only the installed packages (`node_modules/@enumeratio/*`, beside
+// web/), as a build from the registry would.
 const packageGlobs =
   process.env.SITE_FROM_PACKAGES === "1"
     ? ["node_modules/@enumeratio/*"]
     : ["packages/*", "packages/symbols/*/*", "tools/*"];
+
+/**
+ * The `@enumeratio/*` libraries that `dirs` (and web/) depend on and the tree doesn't hold, as
+ * repo-relative directories: installed ones, found as Node would find them from the dependent.
+ */
+function installedLibraries(dirs: string[]): string[] {
+  const read = (dir: string) => {
+    const file = join(repoRoot, dir, "package.json");
+    return existsSync(file)
+      ? (JSON.parse(readFileSync(file, "utf8")) as {
+          name?: string;
+          dependencies?: Record<string, string>;
+          devDependencies?: Record<string, string>;
+        })
+      : undefined;
+  };
+  const seeds = [...dirs, "web"].map((dir) => ({ dir, pkg: read(dir) }));
+  const known = new Set(seeds.map(({ pkg }) => pkg?.name));
+  const found = new Map<string, string>();
+  for (const { dir, pkg } of seeds)
+    for (const dep of Object.keys({ ...pkg?.dependencies, ...pkg?.devDependencies })) {
+      if (!dep.startsWith("@enumeratio/") || known.has(dep) || found.has(dep)) continue;
+      for (let at = dir; ; at = posix.dirname(at)) {
+        const candidate = posix.join(at, "node_modules", dep);
+        if (existsSync(join(repoRoot, candidate, "package.json"))) {
+          found.set(dep, candidate);
+          break;
+        }
+        if (at === ".") break;
+      }
+    }
+  return [...found.values()];
+}
 
 /** The /docs groups, in page order. A symbol package names its own in `enumeratio.group`. */
 export const groups = [
@@ -122,7 +156,9 @@ function docPages(dir: string): DocPage[] {
 
 export function workspacePackages(): WorkspacePackage[] {
   const found: WorkspacePackage[] = [];
-  for (const dir of packageGlobs.flatMap(expand)) {
+  const inTree = packageGlobs.flatMap(expand);
+  const fromPackages = process.env.SITE_FROM_PACKAGES === "1";
+  for (const dir of fromPackages ? inTree : [...inTree, ...installedLibraries(inTree)]) {
     const manifest = join(repoRoot, dir, "package.json");
     if (!existsSync(manifest)) continue;
     const pkg = JSON.parse(readFileSync(manifest, "utf8")) as {
