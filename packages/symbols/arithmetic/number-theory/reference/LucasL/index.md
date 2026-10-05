@@ -10,7 +10,7 @@ signatures:
     description: a real (non-integer) index via Binet's formula, $L_\nu = \varphi^\nu + \cos(\pi\nu)\varphi^{-\nu}$.
     library: enumeratio-number-theory
     type: (number, any?) -> any
-    overrides: enumeratio-adeles
+    overrides: compute-engine
   - call: LucasL(n, x)
     description: the Lucas polynomial $L_n(x)$, from $L_n(x) = xL_{n-1}(x) + L_{n-2}(x)$ with $L_0(x) = 2$, $L_1(x) = x$, exact for a nonnegative integer n.
     library: enumeratio-number-theory
@@ -18,7 +18,7 @@ signatures:
     description: "The nth Lucas number: the Fibonacci-style recurrence started from $L_0 = 2$, $L_1 = 1$, closely related to [[Fibonacci]]."
     library: enumeratio-adeles
     type: (value) -> value
-    overrides: compute-engine
+    overrides: enumeratio-number-theory
     on:
       - ProfiniteNumber
 seeAlso:

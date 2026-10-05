@@ -10,7 +10,7 @@ signatures:
     description: a symbolic product over a range, closed-form whenever `body` is a power of the index (a factorial power) or a power WITH the index in the exponent (folds to a single power via a closed-form sum of the exponent); nested `Tuple` clauses reduce inner-first, so an inner limit depending on the outer index still closes. With `hi = PositiveInfinity` and `body` a ratio of polynomials in the index of equal degree and leading coefficient, closes via a Gamma-function product over the roots whenever those roots are exact (rational, Gaussian, or a quadratic surd) and the series converges; declines otherwise.
     library: enumeratio-combinatorics
     type: (any, tuple*) -> number
-    overrides: compute-engine
+    overrides: enumeratio-analytic
   - call: Product(body, Tuple(index))
     description: an index with neither bound stays unevaluated (an indefinite product is defined only up to a constant), where compute-engine read it as a degenerate range.
     library: enumeratio-analytic

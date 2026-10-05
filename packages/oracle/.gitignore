@@ -2,7 +2,3 @@
 src/mappings-data.ts
 src/defined-names-data.ts
 src/carrier-names-data.ts
-# Declarations the build writes beside the sources other packages' scripts import.
-src/bounded.d.ts
-src/mapping-rows.d.ts
-src/systems.d.ts

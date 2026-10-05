@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (complex | infinity, complex | signed_infinity) -> number
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."
     library: enumeratio-hypercomplex

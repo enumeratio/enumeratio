@@ -10,7 +10,7 @@ export default defineConfig({
       sampleable: "collections/scripts/sampleable.ts",
     },
     deps: { resolveDepSubpath: true },
-    dts: { generator: "tsgo" },
+    dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
     // exports are managed by hand in package.json
     exports: false,
   },

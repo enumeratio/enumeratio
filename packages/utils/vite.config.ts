@@ -5,6 +5,7 @@ export default defineConfig({
     deps: { resolveDepSubpath: true },
     dts: {
       generator: "tsgo",
+      tsconfig: "tsconfig.dts.json",
     },
     exports: true,
   },

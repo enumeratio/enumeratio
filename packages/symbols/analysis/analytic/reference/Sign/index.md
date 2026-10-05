@@ -11,6 +11,10 @@ signatures:
     library: enumeratio-analytic
     type: (complex | signed_infinity) -> complex
     overrides: compute-engine
+    on:
+      - Around
+      - CenteredInterval
+      - Interval
   - call: Sign(p)
     description: "A permutation's sign: 1 when it has an even number of inversions, -1 when odd (FindStat St000037)."
     library: enumeratio-combinatorics

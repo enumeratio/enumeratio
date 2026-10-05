@@ -10,7 +10,7 @@ export default defineConfig({
       "unstable-latex-syntax": "src/unstable-latex-syntax.ts",
     },
     deps: { resolveDepSubpath: true },
-    dts: { generator: "tsgo" },
+    dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
   lint: {
     options: { typeAware: true, typeCheck: true },

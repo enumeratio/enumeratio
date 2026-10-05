@@ -38,3 +38,5 @@ runs:
       with:
         path: ${{ runner.temp }}/dist-cache
         key: dist-${{ runner.os }}-${{ github.sha }}
+    - run: node tools/ci/clean-tree.ts
+      shell: bash

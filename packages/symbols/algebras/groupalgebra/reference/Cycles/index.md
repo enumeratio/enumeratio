@@ -8,6 +8,11 @@ signatures:
     description: the permutation that cycles each listed tuple and fixes every other point
     library: enumeratio-groupalgebra
     type: (list<list<integer>>) -> expression<Cycles>
+  - call: Cycles({{i1, i2, ...}, ...})
+    description: 'A permutation written in disjoint-cycle notation: $(i_1\,i_2\,\dots\,i_k)$ sends $i_1 \to i_2 \to \dots \to i_k \to i_1$ and fixes everything else. A carrier, like [[PermutationGroup]] — it holds the cycles rather than computing anything from them.'
+    library: enumeratio-combinatorics
+    type: ((list<list<integer>>) -> expression<Cycles>) & ((cycle_decomposition) -> expression<Cycles>)
+    overrides: enumeratio-groupalgebra
 seeAlso:
   - PermutationCycles
   - Permute

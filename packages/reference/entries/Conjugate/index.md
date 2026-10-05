@@ -10,7 +10,7 @@ signatures:
     description: Complex conjugate of a number, or the pointwise conjugate of a function.
     library: enumeratio-hypercomplex
     type: (value) -> value
-    overrides: compute-engine
+    overrides: enumeratio-analytic
   - call: Conjugate(x)
     description: holds when x isn't known to be a number, so `Conjugate(Transpose(m))` stays unevaluated instead of a type error.
     library: enumeratio-analytic
