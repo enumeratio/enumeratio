@@ -1,5 +1,9 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import {
+  atDigits,
+  bigCx,
+  hurwitzZetaBig,
+  logGammaBig,
   type EvalOptions,
   type Cx,
   cexp,
@@ -108,6 +112,37 @@ function riemannZetaZeroT(k: number): number | undefined {
   return undefined;
 }
 
+/** Working digits for `refineZeroBig`: the double root is good to ~1e-15, one Newton step squares that. */
+const REFINE_DIGITS = 40;
+/** Half-width of the central difference for Z'(t); its h² error is far below the step it scales. */
+const REFINE_H = 1e-6;
+
+/**
+ * One Newton step on Z(t) = e^{iϑ(t)} ζ(½ + it) in BigDecimal, from the double root `t`. The
+ * double Z carries ~1e-15 of noise, which put the bisected root a couple of ulps off
+ * (14.134725141734695 for 14.134725141734693…); a step at 40 digits lands within 1e-25 of the root,
+ * so rounding it gives the nearest double. Undefined if the bignum kernel declines.
+ */
+export function refineZeroBig(t: number): number | undefined {
+  return atDigits(REFINE_DIGITS, () => {
+    const z = (x: BigDecimal): BigDecimal | undefined => {
+      const zeta = hurwitzZetaBig(bigCx(0.5, x), bigCx(1), REFINE_DIGITS);
+      if (zeta === undefined) return undefined;
+      const half = x.div(2);
+      const theta = logGammaBig(bigCx(0.25, half), REFINE_DIGITS).im.sub(half.mul(BigDecimal.PI.ln()));
+      return zeta.re.mul(theta.cos()).sub(zeta.im.mul(theta.sin()));
+    };
+    const t0 = new BigDecimal(t);
+    const h = new BigDecimal(REFINE_H);
+    const [at, above, below] = [z(t0), z(t0.add(h)), z(t0.sub(h))];
+    if (at === undefined || above === undefined || below === undefined) return undefined;
+    const slope = above.sub(below).div(h.mul(2));
+    if (slope.isZero()) return undefined;
+    const root = t0.sub(at.div(slope)).toNumber();
+    return Math.abs(root - t) < 1e-9 * t ? root : undefined;
+  });
+}
+
 export function declareRiemannSiegel(ce: ComputeEngine): void {
   ce.declare("RiemannSiegelTheta", {
     signature: "(number) -> number",
@@ -143,7 +178,8 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       const t = riemannZetaZeroT(Math.abs(k.re));
       if (t === undefined) return undefined; // beyond MAX_T; decline rather than guess
-      return inexactComplex(ce, 0.5, k.re < 0 ? -t : t); // ZetaZero(-k) = Conjugate(ZetaZero(k))
+      const root = refineZeroBig(t) ?? t;
+      return inexactComplex(ce, 0.5, k.re < 0 ? -root : root); // ZetaZero(-k) = Conjugate(ZetaZero(k))
     },
   });
 }
