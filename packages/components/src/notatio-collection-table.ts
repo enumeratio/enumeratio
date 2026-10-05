@@ -1,8 +1,8 @@
 import type { BoxedExpression, BoxedType } from "@cortex-js/compute-engine";
-import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 import { parseExpression } from "@enumeratio/formats/expression";
-import { toInputForm } from "@enumeratio/formats/inputform";
-import { carrierTypeForName } from "@enumeratio/structures";
+import { normalizeInputForm } from "@enumeratio/formats/inputform";
+import { allCarrierParams, carrierTypeForName } from "@enumeratio/structures";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { type loadBareEngine, parseFor } from "./mathlive.ts";
@@ -13,6 +13,7 @@ import {
   type CellValue,
   columnLabel,
   columnSource,
+  carrierBody,
   compareCells,
   debug,
   flatInts,
@@ -26,6 +27,10 @@ import {
   substituteRowPerHead,
   wantsCarrier,
 } from "@enumeratio/frontend/core";
+
+/** A row on one line: a long permutation must not wrap into a bracket layout. */
+const oneLine = (json: MathJsonExpression): string =>
+  serializeEpsil(normalizeInputForm(json), { margin: Number.POSITIVE_INFINITY, softMargin: Number.POSITIVE_INFINITY });
 
 const log = debug("collection-table");
 
@@ -137,6 +142,7 @@ export class NotatioCollectionTable extends LitElement {
     readonly: { type: Boolean },
     _total: { state: true },
     _error: { state: true },
+    _loading: { state: true },
     _cols: { state: true },
     _predicate: { state: true },
     _matches: { state: true },
@@ -162,6 +168,8 @@ export class NotatioCollectionTable extends LitElement {
   /** `Count(expr)` — a double, so only exact below 2^53. */
   declare _total: number;
   declare _error: string;
+  /** True from a new `expr` until its collection is counted (or fails). */
+  declare _loading: boolean;
   declare _cols: readonly Column[];
   declare _predicate: { json?: MathJsonExpression; error: string };
   /** Source indices that pass the filter, in index order, as far as the scan has gone. */
@@ -180,6 +188,8 @@ export class NotatioCollectionTable extends LitElement {
   #cells = new Map<string, CellValue>();
   /** The carrier in play: `carrier` if set, else auto-derived from the collection's head. */
   #carrierName: string | undefined;
+  /** How many leading slots of the carrier's packed operand are params (`Finset`'s `n`). */
+  #carrierParams = 0;
   /** The bare list's and the carrier's own types, each boxed once from the first row seen --
    *  every row of one collection shares a shape (already a carrier value, or not), so one
    *  probe of each stands for all of them. */
@@ -205,6 +215,7 @@ export class NotatioCollectionTable extends LitElement {
     this.sortLimit = 2000;
     this.readonly = false;
     this._total = 0;
+    this._loading = false;
     this._error = "";
     this._cols = [];
     this._predicate = { error: "" };
@@ -268,6 +279,7 @@ export class NotatioCollectionTable extends LitElement {
     this._error = "";
     const src = this.expr?.trim() ?? "";
     if (!src) return;
+    this._loading = true;
     try {
       const { engine, parsed } = await parseFor((ce) =>
         parseExpression(src, { ce, parseLatex: (tex) => ce.parse(tex).json }),
@@ -286,11 +298,13 @@ export class NotatioCollectionTable extends LitElement {
       }
       this.#coll = coll;
       this._total = total;
+      this._loading = false;
       this.#resolveCarrier();
       this.#parseColumns();
       this.#restartScan();
       this.#refresh();
     } catch (err) {
+      if (generation === this.#generation) this._loading = false;
       this._error = err instanceof Error ? err.message : String(err);
       log("load failed", src, err);
     }
@@ -342,6 +356,7 @@ export class NotatioCollectionTable extends LitElement {
     const op = first?.operator;
     const derived = engine && op !== undefined && carrierTypeForName(engine, op) !== undefined ? op : undefined;
     this.#carrierName = this.carrier || derived || undefined;
+    this.#carrierParams = (engine && this.#carrierName && allCarrierParams(engine).get(this.#carrierName)) || 0;
     this.#bareType = undefined;
     this.#carrierType = undefined;
     this.#wrapCache.clear();
@@ -362,7 +377,7 @@ export class NotatioCollectionTable extends LitElement {
     if (!name || elt.operator !== name || !Array.isArray(json) || json.length !== 2) {
       return { bare: json, wrapped: json };
     }
-    return { bare: json[1] as MathJsonExpression, wrapped: json };
+    return { bare: carrierBody(json[1] as MathJsonExpression, this.#carrierParams), wrapped: json };
   }
 
   /** The bare list's and the carrier's own boxed types, each probed once from the first row
@@ -432,7 +447,7 @@ export class NotatioCollectionTable extends LitElement {
         } else if (Number.isFinite(result.re) && result.im === 0) {
           value = { num: result.re, text: String(result.re) };
         } else {
-          value = { text: toInputForm(result.json) };
+          value = { text: oneLine(result.json) };
         }
       } catch (err) {
         log("cell failed", col.source, index, err);
@@ -566,7 +581,7 @@ export class NotatioCollectionTable extends LitElement {
       if (!elt) continue;
       rows.push({
         index,
-        text: toInputForm(elt.json),
+        text: oneLine(elt.json),
         glyph: this.#glyph(elt.json),
         cells: this._cols.map((col) => this.#cell(col, index, elt)),
       });
@@ -646,8 +661,14 @@ export class NotatioCollectionTable extends LitElement {
 
   #summary(): unknown {
     const total = formatCount(this._total);
+    if (this._loading) return html`<span class="nct-count">loading…</span>`;
     if (!this._matches) {
-      return html`<span class="nct-count">${total} rows</span>${
+      // Rows past 2^53 cannot be addressed exactly, so the pager stops short of the count.
+      const reach =
+        this._total > MAX_INDEX
+          ? html`<span class="nct-note">pages reach row ${formatCount(MAX_INDEX)}</span>`
+          : nothing;
+      return html`<span class="nct-count">${total} rows</span>${reach}${
           this._predicate.error ? html`<span class="nct-error">filter: ${this._predicate.error}</span>` : nothing
         }`;
     }
@@ -787,7 +808,7 @@ export class NotatioCollectionTable extends LitElement {
             this._rows.length === 0
               ? html`<tr>
                   <td class="nct-empty" colspan=${2 + (this.glyph ? 1 : 0) + this._cols.length}>
-                    ${this._scanning ? "scanning…" : "no rows"}
+                    ${this._loading ? "loading…" : this._scanning ? "scanning…" : "no rows"}
                   </td>
                 </tr>`
               : nothing
