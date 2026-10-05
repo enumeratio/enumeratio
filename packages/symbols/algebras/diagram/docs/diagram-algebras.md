@@ -144,7 +144,7 @@ $$
 $$
 
 with $k_B$ the number of $\lambda$-blocks inside the block $B$. That is worth setting beside
-the [Hopf-algebra bases](../../hopf/docs/hopf-algebras.md), which come from the same kind of inversion over
+the [Hopf-algebra bases](https://enumeratio.dev/docs/hopf/hopf-algebras), which come from the same kind of inversion over
 the **Boolean** lattice, where the Möbius function is only a sign. The factorials here are
 the difference between merging any set of blocks and merging only adjacent ones — and they
 are checked against the recursion $\sum_{\lambda \le \nu \le \mu} \mu_\Pi(\lambda,\nu) = 0$

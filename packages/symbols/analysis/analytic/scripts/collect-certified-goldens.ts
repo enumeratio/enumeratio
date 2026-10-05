@@ -10,7 +10,7 @@
 //   node scripts/collect-certified-goldens.ts
 
 import { writeFileSync } from "node:fs";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "../../../../oracle/src/bounded.ts"; // the source: a library has no package edge to oracle
 
 export interface CertifiedGolden {
   /** A head in certified.ts, or a primitive of ball.ts: `exp`, `ln`, `pow`. */

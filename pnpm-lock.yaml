@@ -697,9 +697,81 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.148.0
         version: 0.148.0
+      '@enumeratio/adeles':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/adeles
+      '@enumeratio/analytic':
+        specifier: workspace:*
+        version: link:../symbols/analysis/analytic
+      '@enumeratio/boxes':
+        specifier: workspace:*
+        version: link:../boxes
+      '@enumeratio/braid':
+        specifier: workspace:*
+        version: link:../symbols/groups/braid
+      '@enumeratio/ce-patches':
+        specifier: workspace:*
+        version: link:../ce-patches
+      '@enumeratio/combinatorics':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/combinatorics
+      '@enumeratio/diagram':
+        specifier: workspace:*
+        version: link:../symbols/algebras/diagram
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
+      '@enumeratio/evaluation':
+        specifier: workspace:*
+        version: link:../symbols/evaluation/evaluation
+      '@enumeratio/formats':
+        specifier: workspace:*
+        version: link:../formats
+      '@enumeratio/geometric':
+        specifier: workspace:*
+        version: link:../symbols/algebras/geometric
+      '@enumeratio/groupalgebra':
+        specifier: workspace:*
+        version: link:../symbols/algebras/groupalgebra
+      '@enumeratio/hecke':
+        specifier: workspace:*
+        version: link:../symbols/algebras/hecke
+      '@enumeratio/hopf':
+        specifier: workspace:*
+        version: link:../symbols/algebras/hopf
+      '@enumeratio/hypercomplex':
+        specifier: workspace:*
+        version: link:../symbols/algebras/hypercomplex
+      '@enumeratio/incidence':
+        specifier: workspace:*
+        version: link:../symbols/algebras/incidence
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../manifest
+      '@enumeratio/modular':
+        specifier: workspace:*
+        version: link:../symbols/groups/modular
+      '@enumeratio/number-theory':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/number-theory
+      '@enumeratio/numerals':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/numerals
+      '@enumeratio/plausible':
+        specifier: workspace:*
+        version: link:../plausible
+      '@enumeratio/quiver':
+        specifier: workspace:*
+        version: link:../symbols/algebras/quiver
+      '@enumeratio/residues':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/residues
+      '@enumeratio/structures':
+        specifier: workspace:*
+        version: link:../structures
       '@types/node':
         specifier: ^24
         version: 24.13.4
@@ -1123,9 +1195,6 @@ importers:
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../../../manifest
-      '@enumeratio/oracle':
-        specifier: workspace:*
-        version: link:../../../oracle
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../../../structures
@@ -1228,9 +1297,6 @@ importers:
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../../../manifest
-      '@enumeratio/oracle':
-        specifier: workspace:*
-        version: link:../../../oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2

@@ -4,6 +4,7 @@ import { expect, test } from "vite-plus/test";
 import { referenceEntries } from "../src/node.ts";
 
 const entries = referenceEntries();
+import { coverage } from "../src/coverage-data.ts";
 import { provenance } from "../src/provenance-data.ts";
 import { declaredEngine } from "../scripts/engines.ts";
 import { classify, collect, divergences, divergingHeads, provenanceLedger } from "../scripts/provenance.ts";
@@ -366,17 +367,15 @@ test("we change exactly the compute-engine heads we mean to, and no others", () 
   expect(divergingHeads(bare, ours, corpus)).toEqual(OVERRIDDEN);
 });
 
-test("the committed provenance data is still what the engines say", () => {
-  // `src/provenance-data.ts` is generated, and generated data goes stale silently. This is
-  // the only thing stopping that: re-derive it here and compare. If it fails, run
-  // `vp node packages/reference/scripts/collect-provenance.ts` and read the diff — a change
-  // means a head moved between compute-engine's and ours, which is worth noticing.
-  // Coverage comes from an external kernel, so it is carried forward rather than re-derived
-  // here — this check is about the offline columns, which CI can always compute.
+test("the built provenance data is what the engines say", () => {
+  // `src/provenance-data.ts` is built (gitignored) by the package's `build`; re-deriving it
+  // here checks the build ran against these records and engines. A change in the diff of a
+  // rebuild means a head moved between compute-engine's and ours, which is worth noticing.
+  // `elsewhere` is the committed kernel snapshot (`coverage-data.ts`), folded in by `collect`.
   // Fresh engines, as the collector uses: not because reusing `bare`/`ours` from the ledger
-  // above would be wrong (it wouldn't — see `isolateFreeSymbols`), just to check `collect`
+  // above would be wrong (it wouldn't -- see `isolateFreeSymbols`), just to check `collect`
   // does the same thing collect-provenance.ts does, starting from the same blank state.
-  expect(collect(new ComputeEngine(), declaredEngine(), entries, HEADS, provenance)).toEqual(
+  expect(collect(new ComputeEngine(), declaredEngine(), entries, HEADS, coverage)).toEqual(
     provenance.map((record) => ({ ...record })),
   );
 });

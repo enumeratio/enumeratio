@@ -1,0 +1,64 @@
+name: Split check
+
+# Does each pilot package build and test from its dependencies' tarballs alone (tools/split-check)? ADVISORY,
+# never a required check: a red package is a finding for the nightly-fixup routine to triage. Known failures
+# are `expectFail` entries in tools/split-check/packages.json and keep the run green until they pass.
+#   nightly  — every package in the list.
+#   PR       — add the `split-check` label.
+#   dispatch — `gh workflow run split-check.yml --ref <branch>`, optionally with `package`.
+
+on:
+  schedule:
+    - cron: "23 4 * * *" # 04:23 UTC, after nightly.yml
+  pull_request:
+    types: [labeled, synchronize]
+  workflow_dispatch:
+    inputs:
+      package:
+        description: Only this package (default is the whole list)
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: split-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  list:
+    if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'split-check')
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.list.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: list
+        env:
+          ONLY: ${{ inputs.package }}
+        run: |
+          if [ -n "$ONLY" ]; then
+            echo "packages=$(jq -cn --arg p "$ONLY" '[$p]')" >> "$GITHUB_OUTPUT"
+          else
+            echo "packages=$(jq -c '[.[].name]' tools/split-check/packages.json)" >> "$GITHUB_OUTPUT"
+          fi
+
+  split-check:
+    name: split check ${{ matrix.package }}
+    needs: list
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJSON(needs.list.outputs.packages) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          packages: "@enumeratio/${{ matrix.package }}"
+      - run: node tools/split-check/ci.ts ${{ matrix.package }} --out "$RUNNER_TEMP/split-report"
+      - if: ${{ !cancelled() }}
+        run: cat "$RUNNER_TEMP/split-report/report.md" >> "$GITHUB_STEP_SUMMARY"
+        continue-on-error: true

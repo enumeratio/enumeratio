@@ -1,2 +1,6 @@
 # Written by `build` (@enumeratio/manifest's scripts/collect-notation.ts); never committed.
 src/notation.generated.ts
+
+# Build output; stated here too so the directory stands alone.
+dist
+node_modules
