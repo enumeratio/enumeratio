@@ -9,6 +9,7 @@ import {
   symbolNameOf,
   uniform01,
 } from "@enumeratio/engine";
+import { applyFunction } from "./apply-function.ts";
 
 // Wolfram-frontier list/array heads compute-engine has no answer for at all: Array's
 // n-dimensional index-range construction, Accumulate/FoldList's running folds, Cases's
@@ -17,10 +18,7 @@ import {
 // predicates/queries MachineNumberQ/NumericQ/Precision. See each section for the Wolfram
 // call forms covered and what's left as a documented divergence.
 
-/** Call a (possibly `Function`-headed) expression as an operator over `args` — same
- *  technique as `list-ops-wolfram.ts`'s own `invoke`, duplicated locally rather than
- *  exported to keep that file's surface unchanged. */
-const invoke = (ce: Engine, f: Expr, args: readonly Expr[]): Expr => ce.box([f, ...args] as never).evaluate();
+const invoke = applyFunction;
 
 // --- Array ---------------------------------------------------------------------------------
 
@@ -131,7 +129,12 @@ const declareSparseArray = (ce: Engine): void => {
     signature: "(any, any?, any?) -> collection",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const rulesExpr = ops[0];
-      if (rulesExpr === undefined || rulesExpr.operator !== "List") return undefined;
+      if (rulesExpr === undefined) return undefined;
+      // A dense array (no rules) is already its dense form.
+      const dense = ops.length === 1 ? collectionElements(rulesExpr) : undefined;
+      if (dense !== undefined && dense.length > 0 && dense.every((item) => item.operator !== "Rule"))
+        return ce.function("List", dense);
+      if (rulesExpr.operator !== "List") return undefined;
       const parts = operandsOf(rulesExpr).map(ruleParts);
       if (parts.some((p) => p === undefined)) return undefined;
       const entries = (parts as { pos: Expr; val: Expr }[]).map(({ pos, val }) => ({

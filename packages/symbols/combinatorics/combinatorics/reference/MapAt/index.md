@@ -17,4 +17,5 @@ attributes:
   - HoldAll
 ---
 
+- A position named twice gets f applied twice there.
 - Only top-level positions are answered here -- a nested path (into a sub-list) is left unevaluated.

@@ -7,7 +7,7 @@ signatures:
   - call: ReIm(z)
     description: the pair {Re(z), Im(z)}
     library: enumeratio-combinatorics
-    type: (list<any> | number) -> list<any>
+    type: (any) -> list<any>
 seeAlso:
   - NumberQ
 names:

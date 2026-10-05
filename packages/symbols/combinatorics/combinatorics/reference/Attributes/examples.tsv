@@ -1,5 +1,5 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-adds-attributes			[Attributes, Add]	[List, Flat, HoldAll, Listable, Orderless]	Add is Flat, HoldAll, Listable and Orderless on this engine		convention	compute-engine and Wolfram track different attribute vocabularies for Plus (ours flags HoldAll, which Wolfram doesn't, for a fully-evaluating head; Wolfram flags NumericFunction/OneIdentity/Protected, which we don't model).
-attributes-f			[Attributes, f]	[List]	An undeclared symbol has no attributes			
-attributes-syms	Properties		[Attributes, syms]	[List]	A symbol with nothing set returns an empty list			
-attributes-attributes	Properties	triage	[Attributes, Attributes]	[List, HoldAll]		gap		Attributes[Attributes] and Attributes[SetAttributes] both under-report (HoldAll only) vs Wolfram's {HoldAll, Listable, Protected} / {HoldFirst, Protected} — our own meta-heads' declared attribute sets are incomplete; a small fix but not one I could verify safely against the reference/protected-attribute conventions in the time this lane had
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+adds-attributes			[Attributes, Add]	[List, Flat, HoldAll, Listable, Orderless]	Add is Flat, HoldAll, Listable and Orderless on this engine	convention	compute-engine and Wolfram track different attribute vocabularies for Plus (ours flags HoldAll, which Wolfram doesn't, for a fully-evaluating head; Wolfram flags NumericFunction/OneIdentity/Protected, which we don't model).
+attributes-f			[Attributes, f]	[List]	An undeclared symbol has no attributes		
+attributes-syms	Properties		[Attributes, syms]	[List]	A symbol with nothing set returns an empty list		
+attributes-attributes	Properties		[Attributes, Attributes]	[List, HoldAll]		convention	Attributes reads compute-engine's operator flags, which give Attributes only HoldAll; Wolfram also lists Listable and Protected, flags we don't model (as for Add).

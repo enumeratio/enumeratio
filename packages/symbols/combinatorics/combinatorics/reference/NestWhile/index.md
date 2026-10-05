@@ -24,4 +24,5 @@ attributes:
   - HoldAll
 ---
 
+- With $m > 1$, the test waits until $m$ values exist, so $f$ runs $m - 1$ times before the first test.
 - Capped at 4096 applications of $f$ regardless of $max$ — see [[While]].

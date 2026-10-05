@@ -1,3 +1,3 @@
-id	section	role	expr	expected	triage	wolfram.note
+id	section	role	expr	expected	wolfram.kind	wolfram.note
 star-hub-is-maximally-close			[ClosenessCentrality, [StarGraph, 5], 1]	1		
-reverse-sortby-transpose-list-vertexlist-g	Applications	triage	[Reverse, [SortBy, [Transpose, [List, [VertexList, g], [ClosenessCentrality, g]]], Last]]	[List, [ClosenessCentrality, g], [VertexList, g]]	gap	same Reverse_ leak as EigenvectorCentrality's identical row
+reverse-sortby-transpose-list-vertexlist-g	Applications		[Reverse, [SortBy, [Transpose, [List, [VertexList, g], [ClosenessCentrality, g]]], Last]]	[List, [ClosenessCentrality, g], [VertexList, g]]	convention	SortBy keeps tied elements in input order while Wolfram orders ties canonically; both keys here are g, so the two calls come out in opposite orders.

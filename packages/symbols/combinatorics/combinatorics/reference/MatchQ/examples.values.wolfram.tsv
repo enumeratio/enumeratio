@@ -1,6 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
 add-of-two-wildcards-matches-an-add					
 matchq-1-plus-1-times-goldenratio-pow-neg-1	MatchQ[Plus[1, Times[1, Power[GoldenRatio, -1]], Times[-1, GoldenRatio]], 0]	False	\text{MatchQ}\left[1+\frac{1}{\phi }-\phi ,0\right]	\text{False}	
-matchq-simplify-1-plus-1-times-goldenratio-pow	MatchQ[Simplify[Plus[1, Times[1, Power[GoldenRatio, -1]], Times[-1, GoldenRatio]]], 0]	True			disagree
+matchq-simplify-1-plus-1-times-goldenratio-pow	MatchQ[Simplify[Plus[1, Times[1, Power[GoldenRatio, -1]], Times[-1, GoldenRatio]]], 0]	True	\text{MatchQ}\left[\text{Simplify}\left[1+\frac{1}{\phi }-\phi \right],0\right]	\text{True}	disagree
 a-product-does-not-match-an-add-pattern					
 a-sequence-wildcard-matches-the-rest-of-a-list					

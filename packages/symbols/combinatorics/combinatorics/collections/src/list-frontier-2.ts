@@ -8,6 +8,7 @@ import {
   stringAt,
   symbolNameOf,
 } from "@enumeratio/engine";
+import { applyFunction } from "./apply-function.ts";
 
 // A second wave of Wolfram-frontier heads compute-engine has no answer for: list/array
 // utilities (Thread, MapAt, MovingMap, HankelMatrix), the discrete-math pair
@@ -19,9 +20,7 @@ import {
 // MapAt paths, non-English LetterNumber alphabets, totalistic/multi-color
 // CellularAutomaton) are left unevaluated rather than guessed at.
 
-/** Call a (possibly `Function`-headed) expression as an operator over `args` — same
- *  technique as `list-frontier.ts`'s own `invoke`, duplicated locally. */
-const invoke = (ce: Engine, f: Expr, args: readonly Expr[]): Expr => ce.box([f, ...args] as never).evaluate();
+const invoke = applyFunction;
 
 // --- Thread ------------------------------------------------------------------------------------
 
@@ -104,10 +103,16 @@ function declareMapAt(ce: Engine): void {
           positions.push(resolved);
         }
       } else return undefined;
-      const chosen = new Set(positions);
+      // A position named twice gets `f` applied twice.
+      const times = new Map<number, number>();
+      for (const p of positions) times.set(p, (times.get(p) ?? 0) + 1);
       return ce.function(
         expr.operator,
-        items.map((item, i) => (chosen.has(i) ? invoke(ce, f, [item]) : item)),
+        items.map((item, i) => {
+          let value = item;
+          for (let k = times.get(i) ?? 0; k > 0; k--) value = invoke(ce, f, [value]);
+          return value;
+        }),
       );
     },
   });

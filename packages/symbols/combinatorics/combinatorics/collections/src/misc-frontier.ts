@@ -237,7 +237,7 @@ function declareReIm(ce: Engine): void {
       : ce.function("List", [ce.function("Re", [z]).evaluate(), ce.function("Im", [z]).evaluate()]);
 
   ce.declare("ReIm", {
-    signature: "(number | list<any>) -> list<any>",
+    signature: "(any) -> list<any>",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const z = ops[0];
       return z === undefined ? undefined : reIm(z);

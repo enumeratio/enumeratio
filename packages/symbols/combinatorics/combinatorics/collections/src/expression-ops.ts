@@ -1,4 +1,5 @@
 import { type Engine, type Expr, integerAt, operandsOf, stringAt, symbolNameOf, toInputForm } from "@enumeratio/engine";
+import { applyFunction } from "./apply-function.ts";
 
 // The Wolfram-frontier expression/pattern/string heads: ToString, MapThread, MatchQ,
 // MapIndexed, StringLength, FreeQ, StringTake, Replace, Through, ToCharacterCode,
@@ -32,10 +33,7 @@ import { type Engine, type Expr, integerAt, operandsOf, stringAt, symbolNameOf, 
 // `https://github.com/enumeratio/enumeratio/wiki/Syntax-and-Formats`), so there is no bare `Slot` head left to give meaning to
 // on this engine — declaring one would just shadow that lowering.
 
-/** Call a (possibly `Function`-headed) expression as an operator over `args` — same
- *  technique as `list-frontier.ts`'s own `invoke`, duplicated locally per that file's own
- *  precedent (each wave keeps its own copy rather than reaching across files). */
-const invoke = (ce: Engine, f: Expr, args: readonly Expr[]): Expr => ce.box([f, ...args] as never).evaluate();
+const invoke = applyFunction;
 
 /** Wolfram 1-based position, negative counting from the end, to a positive 1-based index. */
 const normalizePosition = (position: number, length: number): number =>
@@ -51,7 +49,17 @@ export function matches(expr: Expr, pattern: Expr): boolean {
 /** Whether `expr` matches `pattern` anywhere in its tree (itself, or any subexpression). */
 function containsMatch(expr: Expr, pattern: Expr): boolean {
   if (matches(expr, pattern)) return true;
-  return operandsOf(expr).some((op) => containsMatch(op, pattern));
+  return partsOf(expr).some((op) => containsMatch(op, pattern));
+}
+
+/** The parts a structural search looks into: an Association's values only (its keys aren't
+ *  parts in Wolfram), else the operands. */
+function partsOf(expr: Expr): readonly Expr[] {
+  const operands = operandsOf(expr);
+  if (expr.operator !== "Association") return operands;
+  return operands.map((pair) =>
+    pair.operator === "Rule" || pair.operator === "KeyValuePair" ? (operandsOf(pair)[1] ?? pair) : pair,
+  );
 }
 
 /** A level-spec bound: a plain integer, or `Infinity` for `PositiveInfinity` — which
@@ -63,56 +71,49 @@ function levelBound(expr: Expr): number | undefined {
   return integerAt(expr);
 }
 
-type LevelSpec = { readonly leaves: true } | { readonly lo: number; readonly hi: number };
+/** The levels a spec selects, as signed bounds: a negative bound counts from the leaves (a
+ *  subexpression's depth is 1 for an atom, else 1 more than its deepest operand). */
+interface LevelSpec {
+  readonly lo: number;
+  readonly hi: number;
+}
 
 /**
  * Parse a Wolfram `levelspec`: bare `n` is levels 1 through n; `{n}` is level n alone;
  * `{n1, n2}` is levels n1 through n2; `Infinity` (bare or as a bound) reaches every level.
- * `{-1}` (or bare `-1`) is Wolfram's "leaves" shorthand, handled separately — no other
- * negative level is supported (Wolfram's general negative-level-from-the-leaves counting is
- * left undone; only the all-leaves case appears in the reference examples).
+ * A negative bound counts depth from the leaves: `{-1}` is the leaves, bare `-1` (levels 1
+ * through -1) every proper subexpression.
  */
 function parseLevelSpec(spec: Expr): LevelSpec | undefined {
   if (spec.operator === "List") {
     const items = operandsOf(spec).map(levelBound);
     if (items.some((n) => n === undefined)) return undefined;
-    if (items.length === 1) {
-      const [n] = items as number[];
-      if (n === -1) return { leaves: true };
-      return n < 0 ? undefined : { lo: n, hi: n };
-    }
-    if (items.length === 2) {
-      const [lo, hi] = items as [number, number];
-      return lo < 0 || hi < 0 ? undefined : { lo, hi };
-    }
+    if (items.length === 1) return { lo: items[0]!, hi: items[0]! };
+    if (items.length === 2) return { lo: items[0]!, hi: items[1]! };
     return undefined;
   }
   const n = levelBound(spec);
-  if (n === undefined) return undefined;
-  if (n === -1) return { leaves: true };
-  return n < 0 ? undefined : { lo: 1, hi: n };
+  return n === undefined ? undefined : { lo: 1, hi: n };
 }
 
-/** Every subexpression of `expr` whose depth from the root (root = 0) falls in `[lo, hi]`,
- *  in Wolfram's own POST-ORDER: a node's own children (recursively) come before the node
- *  itself, so `Level({1, {2, 3}, 4}, 2)` is `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER
- *  its own parts `2, 3`, not before them. Siblings still keep their original left-to-right
- *  order; only each node's position relative to its OWN descendants moves. */
-function levelsInRange(expr: Expr, lo: number, hi: number): Expr[] {
+/** Whether a node at `level` (the root is 0) with the given `depth` lies in `spec`. */
+const inLevels = ({ lo, hi }: LevelSpec, level: number, depth: number): boolean =>
+  (lo >= 0 ? level >= lo : depth <= -lo) && (hi >= 0 ? level <= hi : depth >= -hi);
+
+/** Every subexpression of `expr` in `spec`, in Wolfram's own POST-ORDER: a node's own
+ *  children (recursively) come before the node itself, so `Level({1, {2, 3}, 4}, 2)` is
+ *  `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER its own parts `2, 3`, not before them.
+ *  Siblings still keep their original left-to-right order; only each node's position
+ *  relative to its OWN descendants moves. */
+function levelsInRange(expr: Expr, spec: LevelSpec): Expr[] {
   const results: Expr[] = [];
-  const walk = (node: Expr, depth: number): void => {
-    if (depth < hi) for (const op of operandsOf(node)) walk(op, depth + 1);
-    if (depth >= lo && depth <= hi) results.push(node);
+  const walk = (node: Expr, level: number): number => {
+    const depth = 1 + Math.max(0, ...operandsOf(node).map((op) => walk(op, level + 1)));
+    if (inLevels(spec, level, depth)) results.push(node);
+    return depth;
   };
   walk(expr, 0);
   return results;
-}
-
-/** Every leaf (an operand-free subexpression) of `expr`, Wolfram's `Level[expr, {-1}]`. */
-function leavesOf(expr: Expr): Expr[] {
-  const ops = operandsOf(expr);
-  if (ops.length === 0) return [expr];
-  return ops.flatMap(leavesOf);
 }
 
 /** Read a `ReplacePart` position — a plain (possibly negative) integer, or a `{i, j, …}`
@@ -179,17 +180,35 @@ export function declareExpressionOps(ce: Engine): void {
     },
   });
 
-  // MapIndexed(f, {a, b}) = {f(a, {1}), f(b, {2})} — the index is a ONE-ELEMENT LIST
-  // (Wolfram's `{i}`, since `MapIndexed` nests over levels; only the top level is done
-  // here), not a bare integer.
+  // MapIndexed(f, {a, b}) = {f(a, {1}), f(b, {2})} — the index is the part's position path,
+  // a LIST (`{i}` at the top level), not a bare integer. With a level spec, `f` goes on every
+  // part in those levels, innermost first (so `f` sees the rebuilt children), as in `Level`.
   ce.declare("MapIndexed", {
-    signature: "(function: any, list<any>) -> list<any>",
+    signature: "(function: any, list<any>, any?) -> list<any>",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
-      const [fn, listExpr] = ops;
+      const [fn, listExpr, specExpr] = ops;
       if (fn === undefined || listExpr === undefined) return undefined;
-      const items = operandsOf(listExpr);
-      const results = items.map((item, i) => invoke(ce, fn, [item, ce.box(["List", ce.number(i + 1)])]));
-      return ce.box(["List", ...results]);
+      const spec = specExpr === undefined ? { lo: 1, hi: 1 } : parseLevelSpec(specExpr);
+      if (spec === undefined) return undefined;
+      const path = (indices: readonly number[]): Expr => ce.box(["List", ...indices]);
+      // Depth (from the leaves) is only read by a negative bound; otherwise stop at `hi`.
+      const needsDepth = spec.lo < 0 || spec.hi < 0;
+      const walk = (node: Expr, indices: readonly number[]): { value: Expr; depth: number } => {
+        const operands = operandsOf(node);
+        const children =
+          needsDepth || indices.length < spec.hi ? operands.map((op, i) => walk(op, [...indices, i + 1])) : [];
+        const depth = 1 + Math.max(0, ...children.map((c) => c.depth));
+        const changed = children.some((c, i) => c.value !== operands[i]);
+        const rebuilt = changed
+          ? ce.function(
+              node.operator,
+              children.map((c) => c.value),
+            )
+          : node;
+        const value = inLevels(spec, indices.length, depth) ? invoke(ce, fn, [rebuilt, path(indices)]) : rebuilt;
+        return { value, depth };
+      };
+      return walk(listExpr, []).value;
     },
   });
 
@@ -317,8 +336,7 @@ export function declareExpressionOps(ce: Engine): void {
       if (expr === undefined || specExpr === undefined) return undefined;
       const spec = parseLevelSpec(specExpr);
       if (spec === undefined) return undefined;
-      const parts = "leaves" in spec ? leavesOf(expr) : levelsInRange(expr, spec.lo, spec.hi);
-      return ce.box(["List", ...parts]);
+      return ce.box(["List", ...levelsInRange(expr, spec)]);
     },
   });
 
