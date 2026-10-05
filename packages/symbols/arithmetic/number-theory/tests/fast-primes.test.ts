@@ -35,3 +35,10 @@ test("compute-engine's native Prime (derivative notation) is untouched", () => {
   const result = ce.box(["Prime", 100000]).evaluate();
   expect(result.operator).toBe("Prime");
 });
+
+test("PrimePi/NthPrime past the exact tiers decline at once instead of grinding natively", () => {
+  const start = Date.now();
+  expect(ce.box(["PrimePi", 10 ** 13]).evaluate().operator).toBe("PrimePi");
+  expect(ce.box(["NthPrime", 10 ** 13]).evaluate().operator).toBe("NthPrime");
+  expect(Date.now() - start).toBeLessThan(2000);
+});
