@@ -7,7 +7,7 @@ apery-s-constant-zeta-3-numerically	N(zeta(3), 30)	1.202056903159594285399738161
 a-machine-precision-argument	zeta(1.5)	2.61237534868549	
 zeta-8-pi-8-9450	zeta(8)	pi**8/9450	
 zeta-5-b-6-6-1-252	zeta(-5)	-1/252	
-zeta-symbolic-s-under-n-stays-symbolic	N(zeta(Symbol("s")), 30)	True	
+zeta-symbolic-s-under-n-stays-symbolic	N(zeta(Symbol("s")), 30)	zeta(s)	disagree
 zeta-half-stays-symbolic-until-n	zeta(Rational(1, 2))	zeta(1/2)	
 zeta-complex-argument-stays-symbolic-until-n	zeta((2 + 1*I))	zeta(2 + I)	
 n-zeta-complex-2-plus-i	N(zeta((2 + 1*I)), 30)	1.15035570325490267174284993474 - 0.437530865919607881117527898593*I	

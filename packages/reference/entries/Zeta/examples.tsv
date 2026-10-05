@@ -7,7 +7,7 @@ apery-s-constant-zeta-3-numerically			[N, [Zeta, 3]]	{num: "1.202056903159594285
 a-machine-precision-argument			[Zeta, 1.5]	{num: "2.61237534868548834335"}			A machine-precision argument									
 zeta-8-pi-8-9450			[Zeta, 8]	[Multiply, [Rational, 1, 9450], [Power, Pi, 8]]			$\zeta(8) = \pi^8/9450$									
 zeta-5-b-6-6-1-252			[Zeta, -5]	[Rational, -1, 252]			$\zeta(-5) = -B_6/6 = -1/252$									
-zeta-symbolic-s-under-n-stays-symbolic		test	[N, [Zeta, s]]	[Zeta, s]							domain	Sages N() cannot numerically evaluate zeta(s) for a free symbolic s at all (TypeError) rather than leaving it symbolic; our own N(Zeta(s)) leaves it symbolic instead of erroring.				
+zeta-symbolic-s-under-n-stays-symbolic		test	[N, [Zeta, s]]	[Zeta, s]							domain	Sages N() cannot numerically evaluate zeta(s) for a free symbolic s at all (TypeError) rather than leaving it symbolic; our own N(Zeta(s)) leaves it symbolic instead of erroring.	undefined-form	Both leave the call unevaluated; SymPy writes it zeta(s).		
 zeta-half-stays-symbolic-until-n		test	[Zeta, [Rational, 1, 2]]	[Zeta, [Rational, 1, 2]]												
 zeta-complex-argument-stays-symbolic-until-n		test	[Zeta, [Complex, 2, 1]]	[Zeta, [Complex, 2, 1]]							shape	Both stay symbolic; only the spelling differs; compute-engine keeps Zeta(2 + i), Sage keeps zeta(I + 2).				
 n-zeta-complex-2-plus-i		test	[N, [Zeta, [Complex, 2, 1]]]	[Complex, 1.1503557032549028, -0.4375308659196079]												

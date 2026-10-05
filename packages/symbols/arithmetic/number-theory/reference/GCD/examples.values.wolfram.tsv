@@ -50,5 +50,5 @@ with-no-arguments-compute-engine-returns-0-the	GCD[]	0	\gcd ()	0
 signs-are-discarded-before-computing-the-gcd	GCD[-12, 9, 57]	3	\gcd (-12,9,57)	3	
 lists-aren-t-threaded-element-wise-they-re	GCD[List[2, 4], List[6, 8]]	{2, 4}	\gcd (\{2,4\},\{6,8\})	\{2,4\}	disagree
 gcd-0-0-0-by-convention	GCD[0, 0]	0	\gcd (0,0)	0	
-symbolic-arguments-stay-unevaluated	GCD[x, y]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\gcd (x,y)-\gcd (x,y)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\gcd \left(\frac{7}{3},-\frac{11}{5}\right)-\gcd \left(\frac{7}{3},-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\gcd \left(\frac{13}{4},-\frac{17}{6}\right)-\gcd \left(\frac{13}{4},-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\gcd \left(\frac{19}{8},-\frac{23}{9}\right)-\gcd \left(\frac{19}{8},-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+symbolic-arguments-stay-unevaluated	GCD[x, y]	GCD[x, y]	\gcd (x,y)	\gcd (x,y)	
 gcd-neg-3-9	GCD[-3, 9]	3	\gcd (-3,9)	3	

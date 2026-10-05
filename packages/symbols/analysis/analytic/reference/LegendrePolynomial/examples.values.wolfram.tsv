@@ -12,7 +12,7 @@ at-p-4-0-7	N[LegendreP[-4, 0.7]]	-0.19250000000000025	N[P_{-4}(0.7)]	-0.1925
 at-p4-2-3i	N[LegendreP[4, Complex[2, 3]]]	-501.5 - 570.*I	N[P_4(2+3 i)]	-501.5-570. i
 at-a-rational	LegendreP[3, Rational[1, 2]]	-7/16	P_3\left(\frac{1}{2}\right)	-\frac{7}{16}
 at-a-complex-argument	LegendreP[3, Complex[2, 3]]	-118 + 18*I	P_3(2+3 i)	-118+18 i
-a-symbolic-order-stays-unevaluated	LegendreP[n, x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[P_n(x)-P_n(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[P_{\frac{7}{3}}\left(-\frac{11}{5}\right)-P_{\frac{7}{3}}\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[P_{\frac{13}{4}}\left(-\frac{17}{6}\right)-P_{\frac{13}{4}}\left(-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[P_{\frac{19}{8}}\left(-\frac{23}{9}\right)-P_{\frac{19}{8}}\left(-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}
+a-symbolic-order-stays-unevaluated	LegendreP[n, x]	LegendreP[n, x]	P_n(x)	P_n(x)
 at-1	LegendreP[6, 1]	1	P_6(1)	1
 at-minus-1	LegendreP[5, -1]	-1	P_5(-1)	-1
 at-0	LegendreP[4, 0]	3/8	P_4(0)	\frac{3}{8}
