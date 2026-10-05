@@ -52,3 +52,4 @@ lists-aren-t-threaded-element-wise-they-re	(Int.gcd [2, 4] [6, 8])	Application t
 gcd-0-0-0-by-convention	(Int.gcd 0 0)	0	
 symbolic-arguments-stay-unevaluated			
 gcd-neg-3-9	(Int.gcd (-3) 9)		
+gcd-with-an-infinite-argument-stays-unevaluated			

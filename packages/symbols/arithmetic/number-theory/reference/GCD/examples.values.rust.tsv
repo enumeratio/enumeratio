@@ -52,3 +52,4 @@ lists-aren-t-threaded-element-wise-they-re	gcd(list(vec![n(2), n(4)]), list(vec!
 gcd-0-0-0-by-convention	gcd(n(0), n(0))	0	
 symbolic-arguments-stay-unevaluated			
 gcd-neg-3-9	gcd(n(-3), n(9))		
+gcd-with-an-infinite-argument-stays-unevaluated			

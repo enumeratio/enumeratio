@@ -80,3 +80,6 @@ division-by-a-0-modulus-yields-nan-rather-than	((5 : ℤ) % 0)	5	inconclusive
 periodicity-with-a-zero-modulus-on-one-side	(decide (((35 : ℤ) % 13) = (((17 + (3 * 5)) : ℤ) % 0)))		
 rounding-ties-to-even-means-1-and-1-both-appear			
 a-free-symbol-is-untouched			
+an-infinite-dividend-has-no-remainder			
+an-infinite-modulus-leaves-the-dividend-whole			
+mod-with-complexinfinity-stays-unevaluated			

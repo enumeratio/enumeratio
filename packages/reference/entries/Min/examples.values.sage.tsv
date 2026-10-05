@@ -20,3 +20,4 @@ infinities-participate-directly-in-the	enumeratio_min(-oo, 3)
 multiple-arguments-lists-included-are-flattened	enumeratio_min([3, 1], 0)	0	
 with-no-arguments-it-returns-the-identity	enumeratio_min()	ValueError: min() iterable argument is empty	error
 the-min-of-an-empty-list-is-nan	enumeratio_min([])	ValueError: min() iterable argument is empty	error
+min-with-complexinfinity-stays-unevaluated	enumeratio_min(unsigned_infinity, 1)		

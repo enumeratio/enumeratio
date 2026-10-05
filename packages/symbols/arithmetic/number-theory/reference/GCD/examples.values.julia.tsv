@@ -52,3 +52,4 @@ lists-aren-t-threaded-element-wise-they-re	[gcd(ZZ([2, 4]), ZZ(6)), gcd(ZZ([2, 4
 gcd-0-0-0-by-convention	gcd(ZZ(0), ZZ(0))	0	
 symbolic-arguments-stay-unevaluated			
 gcd-neg-3-9	gcd(ZZ(-3), ZZ(9))		
+gcd-with-an-infinite-argument-stays-unevaluated			
