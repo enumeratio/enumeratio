@@ -315,6 +315,9 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       Generated from the engine's own definition: compute-engine's symbol, which we neither extend nor document by hand.
       <template v-if="!entry.examples.length">No examples yet — the crosswalk is the reason it has a page.</template>
     </p>
+    <p v-else-if="entry.stub === 'carrier' && entry.domain !== 'Carrier domains'" class="ref-stub">
+      A name from the enumeratio catalogue with no kernel of its own yet; this page carries its crosswalk only.
+    </p>
     <p v-else-if="entry.stub === 'carrier'" class="ref-stub">
       A carrier domain from <a href="/reference/domains/">the domains catalogue</a>; the signature is its storage shape.
       What is known about it elsewhere is mostly recorded against the collections that enumerate it, and says so.

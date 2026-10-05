@@ -103,12 +103,19 @@ const moved: [string, string][] = [
   ["/guide/braid/torus-knots", "/docs/braid/torus-knots"],
   ["/guide/braid/lorenz", "/docs/braid/lorenz"],
   ["/guide/braid/", "/docs/braid/knots-and-braids"],
+  ["/cli/", "/docs/cli/"],
+  ["/reference/components/", "/reference/component/"],
   ["/packages/", "/docs/"],
   ...workspacePackages().map((p): [string, string] => [`/packages/${p.slug}`, docRoute(p.slug)]),
 ];
 
+// Collection families renamed to their plural keep the old symbol page's URL.
+const renamedSymbols: [string, string][] = ["PrimePartition", "TriangularComposition", "ZigzagComposition"].map(
+  (old) => [`/reference/symbol/${old}`, `/reference/symbol/${old}s`],
+);
+
 function writeRedirects(outDir: string): void {
-  for (const [from, to] of moved) {
+  for (const [from, to] of [...moved, ...renamedSymbols]) {
     const file = resolve(outDir, from.endsWith("/") ? `.${from}index.html` : `.${from}.html`);
     mkdirSync(dirname(file), { recursive: true });
     writeFileSync(
@@ -136,7 +143,7 @@ function learnSidebar(): SidebarItem[] {
     {
       text: "Guides",
       items: [
-        { text: "Overview", link: "/guide/" },
+        { text: "Guides overview", link: "/guide/" },
         { text: "Ranking and unranking", link: "/docs/combinatorics/ranking-and-unranking" },
         {
           text: "Numeral systems",
@@ -170,7 +177,7 @@ function learnSidebar(): SidebarItem[] {
       text: "Packages",
       collapsed: true,
       items: [
-        { text: "Overview", link: "/docs/" },
+        { text: "Packages overview", link: "/docs/" },
         {
           text: "Command line",
           link: "/docs/cli/",
