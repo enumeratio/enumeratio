@@ -1,22 +1,22 @@
-id	in	out	tex.in	tex.out
-5-factorial	Factorial[5]	120	5!	120
-6-factorial	Factorial[6]	720	6!	720
-the-empty-product-is-1-by-convention	Factorial[0]	1	0!	1
-10-factorial	Factorial[10]	3628800	10!	3628800
-threads-element-wise-over-a-list	Factorial[List[1, 2, 3, 4]]	{1, 2, 6, 24}	\{1,2,3,4\}!	\{1,2,6,24\}
-frac-n-n-1-simplifies-to-n-under-simplify-plain	Simplify[Divide[Factorial[n], Factorial[Subtract[n, 1]]]]			
-real-arguments-evaluate-as-gamma-n-1	Factorial[3.5]	11.631728396567448	3.5!	11.6317
-negative-non-integers-are-defined-too-2-5-gamma	Factorial[-2.5]	2.363271801207355	(-2.5)!	2.36327
-complex-arguments-1-i-gamma-2-i	Factorial[Complex[1, 1]]	(1 + I)!	(1+i)!	(1+i)!
-frac-12-gamma-frac-12-sqrt-pi-returned-as-a	Factorial[Rational[-1, 2]]	Sqrt[Pi]	\left(-\frac{1}{2}\right)!	\sqrt{\pi }
-infty-infty	Factorial[Infinity]	Infinity	\infty !	\infty
-the-number-of-ways-to-arrange-8-distinct-books	Factorial[8]	40320	8!	40320
-recurrence-n-n-n-1	(Factorial[5] == Times[5, Factorial[4]])	True	5!=5 4!	\text{True}
-extends-to-non-integers-via-the-gamma-function	Factorial[Rational[1, 2]]	Sqrt[Pi]/2	\frac{1}{2}!	\frac{\sqrt{\pi }}{2}
-n-gamma-n-1-see-gamma	(Factorial[5] == Gamma[6])	True	5!=\Gamma (6)	\text{True}
-the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e	Sum[Divide[1, Factorial[k]], List[k, 0, Infinity]]	E	\sum _{k=0}^{\infty } \frac{1}{k!}	e
-sum-k-factorial-pow-neg-4-times-k-plus-2	Sum[Times[Power[Factorial[k], -4], Power[Factorial[Plus[k, 2]], 2], Power[Factorial[Plus[Minus[k], 2]], -2]], List[k, 0, 2]]	73	\sum _{k=0}^2 \frac{((k+2)!)^2}{(k!)^4 ((-k+2)!)^2}	73
-sum-k-factorial-pow-neg-4-times-k-plus-3	Sum[Times[Power[Factorial[k], -4], Power[Factorial[Plus[k, 3]], 2], Power[Factorial[Plus[Minus[k], 3]], -2]], List[k, 0, 3]]	1445	\sum _{k=0}^3 \frac{((k+3)!)^2}{(k!)^4 ((-k+3)!)^2}	1445
-negative-integers-are-poles-of-the-gamma	Factorial[-1]	ComplexInfinity	(-1)!	\text{ComplexInfinity}
-factorials-grow-fast-20-already-exceeds-2-times	Factorial[20]	2432902008176640000	20!	2432902008176640000
-30-has-33-digits-and-ends-in-seven-zeros	Factorial[30]	265252859812191058636308480000000	30!	265252859812191058636308480000000
+id	in	out	tex.in	tex.out	verdict
+5-factorial	Factorial[5]	120	5!	120	
+6-factorial	Factorial[6]	720	6!	720	
+the-empty-product-is-1-by-convention	Factorial[0]	1	0!	1	
+10-factorial	Factorial[10]	3628800	10!	3628800	
+threads-element-wise-over-a-list	Factorial[List[1, 2, 3, 4]]	{1, 2, 6, 24}	\{1,2,3,4\}!	\{1,2,6,24\}	
+frac-n-n-1-simplifies-to-n-under-simplify-plain	Simplify[Divide[Factorial[n], Factorial[Subtract[n, 1]]]]				
+real-arguments-evaluate-as-gamma-n-1	Factorial[3.5]	11.631728396567448	3.5!	11.6317	
+negative-non-integers-are-defined-too-2-5-gamma	Factorial[-2.5]	2.363271801207355	(-2.5)!	2.36327	
+complex-arguments-1-i-gamma-2-i	Factorial[Complex[1, 1]]	(1 + I)!	(1+i)!	(1+i)!	
+frac-12-gamma-frac-12-sqrt-pi-returned-as-a	Factorial[Rational[-1, 2]]	Sqrt[Pi]	\left(-\frac{1}{2}\right)!	\sqrt{\pi }	disagree
+infty-infty	Factorial[Infinity]	Infinity	\infty !	\infty	
+the-number-of-ways-to-arrange-8-distinct-books	Factorial[8]	40320	8!	40320	
+recurrence-n-n-n-1	(Factorial[5] == Times[5, Factorial[4]])	True	5!=5 4!	\text{True}	
+extends-to-non-integers-via-the-gamma-function	Factorial[Rational[1, 2]]	Sqrt[Pi]/2	\frac{1}{2}!	\frac{\sqrt{\pi }}{2}	disagree
+n-gamma-n-1-see-gamma	(Factorial[5] == Gamma[6])	True	5!=\Gamma (6)	\text{True}	
+the-reciprocals-sum-to-e-sum-k-ge-0-frac-1-k-e	Sum[Divide[1, Factorial[k]], List[k, 0, Infinity]]	E	\sum _{k=0}^{\infty } \frac{1}{k!}	e	
+sum-k-factorial-pow-neg-4-times-k-plus-2	Sum[Times[Power[Factorial[k], -4], Power[Factorial[Plus[k, 2]], 2], Power[Factorial[Plus[Minus[k], 2]], -2]], List[k, 0, 2]]	73	\sum _{k=0}^2 \frac{((k+2)!)^2}{(k!)^4 ((-k+2)!)^2}	73	
+sum-k-factorial-pow-neg-4-times-k-plus-3	Sum[Times[Power[Factorial[k], -4], Power[Factorial[Plus[k, 3]], 2], Power[Factorial[Plus[Minus[k], 3]], -2]], List[k, 0, 3]]	1445	\sum _{k=0}^3 \frac{((k+3)!)^2}{(k!)^4 ((-k+3)!)^2}	1445	
+negative-integers-are-poles-of-the-gamma	Factorial[-1]	ComplexInfinity	(-1)!	\text{ComplexInfinity}	
+factorials-grow-fast-20-already-exceeds-2-times	Factorial[20]	2432902008176640000	20!	2432902008176640000	
+30-has-33-digits-and-ends-in-seven-zeros	Factorial[30]	265252859812191058636308480000000	30!	265252859812191058636308480000000	
