@@ -120,6 +120,9 @@ export function gammaExactValue(ce: ComputeEngine, x: Rational): BoxedExpression
 }
 
 export function declareWidened(ce: ComputeEngine): void {
+  // Native Conjugate is typed `number`, so `Conjugate(Transpose(m))` for a symbolic m boxed to
+  // an incompatible-type error; Wolfram holds it. Only what may be a number reaches the native handler.
+  widenSignature(ce, "Conjugate", "(value) -> value", (op) => op.isNumber !== false);
   // CatalanNumber is natively typed `integer`; its half-integers have to get past boxing.
   widenSignature(ce, "CatalanNumber", "(number) -> number", mayBeInteger);
   for (const [head, ratio] of Object.entries(GAMMA_RATIOS)) {

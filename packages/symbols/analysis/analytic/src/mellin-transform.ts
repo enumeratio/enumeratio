@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { fractionFactors } from "./transforms.ts";
 
 // MellinTransform(f, x, s) = ∫_0^∞ f(x) x^(s-1) dx and InverseMellinTransform(F, s, x): a
 // rule table over nine standard pairs (Wolfram's own reference examples), plus the two
@@ -386,6 +387,54 @@ function atomicInverseMellin(
   return undefined;
 }
 
+/** `arg` as `α·s + β` with rational-valued α, β: its value at s = 0 and at s = 1. */
+function affineInS(
+  expr: BoxedExpression,
+  sName: string,
+): { readonly alpha: number; readonly beta: number } | undefined {
+  const at = (v: number) => expr.subs({ [sName]: v }).evaluate();
+  const [b0, b1] = [at(0), at(1)];
+  if (b0.im !== 0 || b1.im !== 0 || !Number.isFinite(b0.re) || !Number.isFinite(b1.re)) return undefined;
+  return { alpha: b1.re - b0.re, beta: b0.re };
+}
+
+/**
+ * M⁻¹{2^{s-1} a^{-s} Γ((ν+s)/2)/Γ(1+(ν-s)/2)} = J_ν(a x), for integer ν: DLMF 10.22.43,
+ * ∫_0^∞ J_ν(t) t^{s-1} dt = 2^{s-1} Γ(½(ν+s))/Γ(1+½(ν-s)), with the scaling rule for a.
+ */
+function inverseBesselJ(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  sName: string,
+  x: BoxedExpression,
+): BoxedExpression | undefined {
+  const { numer, denom } = fractionFactors(expr);
+  let scale: BoxedExpression = ce.One;
+  let up: BoxedExpression | undefined;
+  let down: BoxedExpression | undefined;
+  let twoPower = false;
+  for (const { base, power } of numer) {
+    if (power !== 1) return undefined;
+    if (base.operator === "Gamma" && up === undefined) up = opAt(base, 0);
+    else if (isScalePower(base, sName) && scale.isSame(ce.One)) scale = opAt(base, 0);
+    else if (base.operator === "Power" && opAt(base, 0).re === 2 && !twoPower) {
+      const e = affineInS(opAt(base, 1), sName);
+      if (e?.alpha !== 1 || e.beta !== -1) return undefined;
+      twoPower = true;
+    } else return undefined;
+  }
+  for (const { base, power } of denom) {
+    if (power !== 1 || base.operator !== "Gamma" || down !== undefined) return undefined;
+    down = opAt(base, 0);
+  }
+  if (up === undefined || down === undefined || !twoPower) return undefined;
+  const [u, d] = [affineInS(up, sName), affineInS(down, sName)];
+  if (u === undefined || d === undefined || u.alpha !== 0.5 || d.alpha !== -0.5) return undefined;
+  const nu = 2 * u.beta;
+  if (!Number.isInteger(nu) || d.beta !== 1 + nu / 2) return undefined;
+  return ce.function("BesselJ", [nu, ce.function("Multiply", [scale, x])]).evaluate();
+}
+
 export function matchInverseMellin(
   ce: ComputeEngine,
   expr: BoxedExpression,
@@ -394,6 +443,8 @@ export function matchInverseMellin(
 ): BoxedExpression | undefined {
   const sName = symbolNameOf(s);
   if (sName === undefined || !hasVar(expr, sName)) return undefined;
+  const bessel = inverseBesselJ(ce, expr, sName, x);
+  if (bessel !== undefined) return bessel;
   const { b, rest } = stripScale(ce, expr, sName);
   const f0 = atomicInverseMellin(ce, rest, sName, x);
   if (f0 === undefined) return undefined;

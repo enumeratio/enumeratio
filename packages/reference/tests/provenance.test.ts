@@ -210,6 +210,8 @@ const OVERRIDDEN = [
   "ChineseRemainder",
   "Chop",
   "Clamp",
+  // Admits a non-number operand and holds it (Conjugate of a symbolic Transpose), where compute-engine errors.
+  "Conjugate",
   "ContinuedFraction",
   "Cos",
   "Cosh",
