@@ -8,12 +8,13 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { loadLibraries, type StagedLibrary } from "../src/engine.ts";
 import { PACKAGES } from "../src/hierarchy.ts";
 import { plan } from "../src/resolve.ts";
 import { declaresOf } from "./declares-of.ts";
+import { cached } from "./stamp.ts";
 
 const dir = resolve(process.argv[2] ?? ".");
 const own = JSON.parse(readFileSync(join(dir, "package.json"), "utf8")) as { name: string };
@@ -60,8 +61,22 @@ for (let wanted = [self]; wanted.length > 0;) {
 const library = libraries.get(self);
 if (library === undefined) throw new Error(`${own.name} declares nothing`);
 
-const ce = new ComputeEngine();
-for (const dep of plan([self], [...libraries.values()]).libraries) if (dep !== library) await dep.declare(ce);
-const declares = await declaresOf(ce, self, library.declare);
-writeFileSync(join(dir, "dist", "declares.json"), `${JSON.stringify(declares)}\n`);
-console.log(`${own.name}: declares ${declares.names.length} names`);
+// Declaring reads only the built libraries (this one and what it requires, transitively) and the
+// code here, so it is skipped while their dists hash the same as at its last run.
+const output = join(dir, "dist", "declares.json");
+const dists = [...libraries.keys()].map((name) => join(dirname(resolveFrom(`${SCOPE}${name}/package.json`)), "dist"));
+const here = (path: string): string => fileURLToPath(new URL(path, import.meta.url));
+const ran = await cached(
+  "declares",
+  { dir, roots: [...dists, here("."), here("../src")], skip: (path) => path.endsWith("declares.json") },
+  [output],
+  async () => {
+    const ce = new ComputeEngine();
+    for (const dep of plan([self], [...libraries.values()]).libraries) if (dep !== library) await dep.declare(ce);
+    const declares = await declaresOf(ce, self, library.declare);
+    writeFileSync(output, `${JSON.stringify(declares)}\n`);
+    console.log(`${own.name}: declares ${declares.names.length} names`);
+  },
+  { restore: true }, // `vp pack` wipes dist before each build
+);
+if (!ran) console.log(`${own.name}: declares up to date`);

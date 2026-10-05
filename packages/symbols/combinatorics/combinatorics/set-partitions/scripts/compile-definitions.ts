@@ -7,18 +7,22 @@ import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { smallElements } from "../../scripts/samples.ts";
+import { verdictsFor } from "../../scripts/verdicts.ts";
 import { compiledDefinitionsFor, renderCompiled } from "../../src/statistics/generate-compiled.ts";
 import { SET_PARTITION_STATISTICS } from "../src/statistics.ts";
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  const verdicts = verdictsFor("compile-set-partitions");
   // A set partition is a list of BLOCKS, not integers.
   const { compiled: entries, disagreed } = compiledDefinitionsFor(
     SET_PARTITION_STATISTICS,
     "list<list<integer>>",
     smallElements,
+    verdicts,
   );
   const target = fileURLToPath(new URL("../src/statistics.compiled.generated.js", import.meta.url));
   writeFileSync(target, renderCompiled(entries));
+  verdicts.save();
   execFileSync("vp", ["fmt", target], { stdio: "ignore" });
   console.log(`${entries.length} of ${SET_PARTITION_STATISTICS.length} definitions compiled`);
   for (const signature of disagreed)

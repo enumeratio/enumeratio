@@ -16,7 +16,9 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { compileTyped, definitionHash, fromJs, toJs } from "@enumeratio/engine/compiled";
 import { CARRIERS } from "../src/carriers.ts";
 import { evaluateDefinition, MAPS } from "../src/maps.ts";
+import { noVerdicts, type Verdicts } from "../src/statistics/generate-compiled.ts";
 import { smallElements } from "./samples.ts";
+import { verdictsFor } from "./verdicts.ts";
 
 interface Entry {
   readonly key: string;
@@ -56,7 +58,7 @@ function agrees(
 
 /** Each compilable map's key (`Name@from`), hash and generated code; no code for a map whose
  *  compiled code disagreed with the interpreter. */
-export function compiledMaps(): Entry[] {
+export function compiledMaps(verdicts: Verdicts = noVerdicts): Entry[] {
   const ce = bareEngine();
   const carrierOf = new Map(CARRIERS.map((carrier) => [carrier.type, carrier]));
   const out: Entry[] = [];
@@ -72,7 +74,9 @@ export function compiledMaps(): Entry[] {
     if (map.guard !== undefined && guard === undefined) continue;
     const key = `${map.name}@${map.from}`;
     const hash = definitionHash({ body: map.body, guard: map.guard });
-    if (!agrees(ce, map, body.run, guard?.run, smallElements(ce, from.name))) {
+    const subjects = smallElements(ce, from.name);
+    const parts = { body: map.body, guard: map.guard, code: body.code, guardCode: guard?.code, subjects };
+    if (!verdicts.remember(parts, () => agrees(ce, map, body.run, guard?.run, subjects))) {
       out.push({ key, hash });
       continue;
     }
@@ -106,9 +110,11 @@ ${body}
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const entries = compiledMaps();
+  const verdicts = verdictsFor("compile-maps");
+  const entries = compiledMaps(verdicts);
   const target = fileURLToPath(new URL("../src/compiled-maps.generated.js", import.meta.url));
   writeFileSync(target, render(entries));
+  verdicts.save();
   // Laid out as `vp fmt` lays it out, so a rerun with nothing changed changes nothing.
   execFileSync("vp", ["fmt", target], { stdio: "ignore" });
   const compiled = entries.filter((e) => e.body !== undefined);

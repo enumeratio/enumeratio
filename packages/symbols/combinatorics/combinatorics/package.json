@@ -35,7 +35,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node scripts/build-generated.ts && vp pack && node ../../../manifest/scripts/collect-declares.ts .",
+    "build": "node scripts/build-generated.ts && node ../../../manifest/scripts/cached.ts pack dist -- vp pack && node ../../../manifest/scripts/collect-declares.ts .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

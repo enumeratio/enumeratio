@@ -11,6 +11,14 @@ import { evaluateEpsil } from "@enumeratio/structures";
 import type { Definition } from "./types.ts";
 import { SUBJECT, signatureOf } from "./types.ts";
 
+/** A memo of the slow, pure cross-check (the build's own: see scripts/verdicts.ts). */
+export interface Verdicts {
+  remember<T>(parts: unknown, compute: () => T): T;
+}
+
+/** Every check runs. */
+export const noVerdicts: Verdicts = { remember: (_parts, compute) => compute() };
+
 export interface CompiledDefinition {
   readonly signature: string;
   readonly hash: string;
@@ -26,6 +34,7 @@ export function compiledDefinitionsFor(
   definitions: readonly Definition[],
   shape: string,
   subjectsOf: (ce: Engine, carrier: string) => readonly unknown[],
+  verdicts: Verdicts = noVerdicts,
 ): { compiled: CompiledDefinition[]; disagreed: string[] } {
   const ce = bareEngine();
   const subjects = new Map<string, readonly unknown[]>();
@@ -35,7 +44,8 @@ export function compiledDefinitionsFor(
     const code = compileTyped(ce, definition.expr, { [SUBJECT]: shape });
     if (code === undefined) continue;
     if (!subjects.has(definition.on)) subjects.set(definition.on, subjectsOf(ce, definition.on));
-    if (!agrees(ce, definition, code.run, subjects.get(definition.on)!)) {
+    const parts = { expr: definition.expr, code: code.code, subjects: subjects.get(definition.on) };
+    if (!verdicts.remember(parts, () => agrees(ce, definition, code.run, subjects.get(definition.on)!))) {
       disagreed.push(signatureOf(definition));
       continue;
     }

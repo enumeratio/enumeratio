@@ -7,13 +7,21 @@ import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { smallElements } from "../../scripts/samples.ts";
+import { verdictsFor } from "../../scripts/verdicts.ts";
 import { compiledDefinitionsFor, renderCompiled } from "../../src/statistics/generate-compiled.ts";
 import { DYCK_STATISTICS } from "../src/statistics.ts";
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const { compiled: entries, disagreed } = compiledDefinitionsFor(DYCK_STATISTICS, "list<integer>", smallElements);
+  const verdicts = verdictsFor("compile-lattice-paths");
+  const { compiled: entries, disagreed } = compiledDefinitionsFor(
+    DYCK_STATISTICS,
+    "list<integer>",
+    smallElements,
+    verdicts,
+  );
   const target = fileURLToPath(new URL("../src/statistics.compiled.generated.js", import.meta.url));
   writeFileSync(target, renderCompiled(entries));
+  verdicts.save();
   execFileSync("vp", ["fmt", target], { stdio: "ignore" });
   console.log(`${entries.length} of ${DYCK_STATISTICS.length} definitions compiled`);
   for (const signature of disagreed)
