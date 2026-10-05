@@ -114,6 +114,45 @@ const failed = (error: unknown, prefix = ""): KernelResult => ({
   missing: [],
 });
 
+const callHead = (node: unknown): unknown => (Array.isArray(node) ? node[0] : (node as { fn?: unknown[] })?.fn?.[0]);
+
+const unquoted = (x: unknown): string => String(x).replace(/^'(.*)'$/s, "$1");
+
+/**
+ * A call the engine rejected for its arguments comes back as `Error(ErrorCode(…), culprit,
+ * ErrorTrace(ErrorFrame(head, n)))`. As in Wolfram the call stays unevaluated and a message
+ * says why; an `Error` the input itself builds is left alone.
+ */
+function rejection(
+  ce: ComputeEngine,
+  input: unknown,
+  answer: unknown,
+): { json: unknown; message: Message } | undefined {
+  if (!Array.isArray(answer) || answer[0] !== "Error") return undefined;
+  const [, code, culprit, trace] = answer as unknown[];
+  const frame = Array.isArray(trace) && trace[0] === "ErrorTrace" ? trace[1] : undefined;
+  if (!Array.isArray(frame) || callHead(input) === undefined) return undefined;
+  const [head, position] = [unquoted(frame[1]), frame[2]];
+  if (callHead(input) !== head) return undefined;
+  // The code is `ErrorCode("incompatible-type", expected, actual)`, or a bare name.
+  const [kind, expected] =
+    Array.isArray(code) && code[0] === "ErrorCode" ? [unquoted(code[1]), code[2]] : [unquoted(code)];
+  const [text, id] =
+    kind === "incompatible-type"
+      ? [
+          `Argument ${position} (${ce.box(culprit as never).toString()}) is not of type ${unquoted(expected)}.`,
+          "argtype",
+        ]
+      : kind === "unexpected-argument"
+        ? [`Unexpected argument ${position} (${ce.box(culprit as never).toString()}).`, "argx"]
+        : [undefined, ""];
+  if (text === undefined) return undefined;
+  return {
+    json: ce.box(input as never, { form: "raw" }).json,
+    message: { head, code: id, args: [String(position)], text },
+  };
+}
+
 /**
  * A kernel over `ce`, declaring from `catalogue` on demand. Requests run one at a time: a
  * library still declaring for one must not be half there for the next.
@@ -207,23 +246,26 @@ export function createKernel(
       ),
     );
     if (!answer.ok) return { ...answer, input, messages, ...resolved };
+    const rejected = rejection(ce, input, answer.json);
+    const value = rejected === undefined ? answer.json : rejected.json;
     // Recording evaluates nothing, so the session isn't told an input: one that claims an
     // `Assign`'s name before it evaluates would claim it again, replacing a function the
     // cell just defined.
     const line =
       request.evaluate === false || session === undefined
         ? undefined
-        : session.run(() => session.record?.(request.source, input, answer.json), undefined);
+        : session.run(() => session.record?.(request.source, input, value), undefined);
     const result: KernelResult = {
       ...answer,
+      json: value,
       input,
-      messages,
+      messages: rejected === undefined ? messages : [...messages, rejected.message],
       ...resolved,
       ...(line !== undefined ? { line } : {}),
     };
     if (options.display === undefined) return result;
     try {
-      return { ...result, boxes: options.display(ce, answer.json) };
+      return { ...result, boxes: options.display(ce, value) };
     } catch {
       // No display is still an answer: the front end renders the MathJSON itself.
       return result;
