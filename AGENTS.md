@@ -108,6 +108,11 @@ so a page reads the same on GitHub and on the site.
   `oracle-scan.ts --accept`; notes and classifications are the hand columns.
 - Everything reads the records through `@enumeratio/reference/node` (`referenceData`). Add a
   head by adding its folder.
+- **Data derived from our own code is built, never committed.** The package's `build` writes it
+  (gitignored, listed in its `package.json` `"generated"`), and its test checks the built file
+  against the records, so a merge never leaves a file to regenerate. Only an external snapshot
+  (a kernel's answers, a scrape, an expensive sweep) is committed, by its own `collect-*`/`fetch-*`
+  script. A new `src/patches/<slug>.ts` in `ce-patches` joins `PATCHES` on its own.
 
 ## Git hygiene
 

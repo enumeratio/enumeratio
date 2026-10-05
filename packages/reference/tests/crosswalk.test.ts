@@ -34,9 +34,9 @@ const statisticEntries = packageEntries("statistics");
 import { fungrimSymbols } from "../src/fungrim-symbols-data.ts";
 import { crosswalk, engineSymbols } from "../scripts/crosswalk.ts";
 
-test("the generated engine-symbol and crosswalk data are what the collector derives", () => {
-  // Same guard as the provenance ledger: the committed files are a cache of a derivation,
-  // and a dependency bump (a new engine, a new oracle row) has to show up as a diff here.
+test("the built engine-symbol and crosswalk data are what the collector derives", () => {
+  // Same guard as the provenance ledger: the built files (gitignored; `build` writes them) are
+  // a derivation, and this checks the build ran against the current engine, records and oracle table.
   const symbols = engineSymbols(new ComputeEngine());
   expect(symbols).toEqual(engineData);
   const names = [...new Set([...symbols.map((s) => s.name), ...entries.map((e) => e.name)])].toSorted();

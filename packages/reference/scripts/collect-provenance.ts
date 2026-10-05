@@ -1,13 +1,14 @@
-// Collect the provenance data the library ships, and rewrite `src/provenance-data.ts`.
+// Collect the provenance data the library ships, and rewrite `src/provenance-data.ts`
+// (gitignored; the package's `build` runs this).
 //
 // The classification logic lives in `provenance.ts` next door; this is the runner. Nothing
 // here is exported by the package — the package exports the DATA, and a test re-derives it
-// to make sure the committed copy has not gone stale.
+// to make sure the built copy ran against these records.
 //
 // Everything collected here is offline: two compute-engine instances, plus a reflection of
-// the head map in `@enumeratio/wolfram`. No external kernel, so it can run in CI. The
-// oracle lanes that DO need a kernel (wolframscript, mpmath, sympy, sage) report separately
-// and are never a gate.
+// the head map in `@enumeratio/wolfram`. No external kernel, so it can run in CI. The one
+// column a kernel answers, `elsewhere`, is the committed `coverage-data.ts`
+// (collect-coverage.ts), folded in here.
 //
 //   vp node packages/reference/scripts/collect-provenance.ts
 
@@ -16,19 +17,12 @@ import { writeFormatted } from "@enumeratio/entry/node";
 import { HEADS } from "@enumeratio/wolfram";
 import { referenceEntries } from "../src/node.ts";
 import { declaredEngine } from "./engines.ts";
-import { type HeadRecord, collect, renderProvenance } from "./provenance.ts";
+import { coverage } from "../src/coverage-data.ts";
+import { collect, renderProvenance } from "./provenance.ts";
 
 const entries = referenceEntries();
 
-// Coverage answers come from an external kernel (collect-coverage.ts); this pass is
-// offline, so carry whatever the last run found rather than blanking it.
-let previous: readonly HeadRecord[] = [];
-try {
-  previous = ((await import("../src/provenance-data.ts")) as { provenance: HeadRecord[] }).provenance;
-} catch {
-  previous = [];
-}
-const records = collect(new ComputeEngine(), declaredEngine(), entries, HEADS, previous);
+const records = collect(new ComputeEngine(), declaredEngine(), entries, HEADS, coverage);
 
 await writeFormatted(new URL("../src/provenance-data.ts", import.meta.url), renderProvenance(records));
 

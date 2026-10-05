@@ -14,7 +14,7 @@
 
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "../../../../oracle/src/bounded.ts"; // the source: a library has no package edge to oracle
 import { declareAnalytic } from "../src/index.ts";
 
 const ce = new ComputeEngine();

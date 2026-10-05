@@ -1,19 +1,12 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { lerchPhiPatch } from "./patches/lerch-phi.ts";
-import { solveDeclines } from "./patches/solve-declines.ts";
-import { solveDomains } from "./patches/solve-domains.ts";
-import { integratePolynomialPowers } from "./patches/integrate-polynomial-powers.ts";
-import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
-import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
-import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
-import { valuesAtZero } from "./patches/values-at-zero.ts";
-import { polyLogLargeOrder } from "./patches/polylog-huge-order.ts";
-import { rangeBigBounds } from "./patches/range-big-bounds.ts";
-import { shapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
-import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
+import { applyPatches, symbols as symbolsOf } from "./patch.ts";
+import { PATCHES } from "./patches/registry-data.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
 export { applyPatch, applyPatches, declareLibrary, patchSymbols } from "./patch.ts";
+
+// Every patch offered upstream, one per file in src/patches/ (scripts/generate-patches.ts).
+export { PATCHES };
 
 // #340 special-function family (@enumeratio/analytic's
 // declareAnalytic calls applyPatch for each of these at the point their declares used to run).
@@ -181,21 +174,6 @@ export {
 } from "./compute-engine/numerics/ball.ts";
 export { hurwitzZetaBall } from "./compute-engine/numerics/hurwitz-zeta-ball.ts";
 export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/compilation/wgsl-complex.ts";
-
-/** Every patch offered upstream. `tests/landed.test.ts` holds each one to being unfixed. */
-export const PATCHES: readonly Patch[] = [
-  lerchPhiPatch,
-  solveDeclines,
-  solveDomains,
-  takeDropNegativeCount,
-  iteratorUpperBound,
-  quotientRingCollection,
-  integratePolynomialPowers,
-  valuesAtZero,
-  polyLogLargeOrder,
-  rangeBigBounds,
-  shapeOfUnknownElements,
-];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */
 export function applyAllPatches(ce: ComputeEngine): void {

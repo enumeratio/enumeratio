@@ -1,5 +1,5 @@
 // Collect what the engine and our own tables already know about where each symbol lives
-// elsewhere, and rewrite the two generated files:
+// elsewhere, and rewrite the two generated files (gitignored; the package's `build` runs this):
 //
 //   src/engine-symbols-data.ts   every symbol a bare compute-engine binds -- its description,
 //                                signature and Wikidata id, as the engine declares them
@@ -11,7 +11,7 @@
 // each head's own record (`references:`/`names:` in `<Head>/index.md`, rebuilt into
 // `src/crosswalk/curated-data.ts` by `collect-curated.ts`) and the catalog's half on the
 // same records' `catalog:` field, rebuilt into `src/crosswalk/catalog-references-data.ts`
-// by `collect-catalog-references.ts`. Regenerate:
+// by `collect-catalog-references.ts`. Rebuild:
 //
 //   vp node packages/reference/scripts/collect-crosswalk.ts
 

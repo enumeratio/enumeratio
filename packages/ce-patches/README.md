@@ -19,7 +19,8 @@ captures a native handler), lowerings in `compilation/`. A pull request copies f
 same paths; only the code goes upstream. `src/support/` holds glue that is ours only (the
 boxing helpers, precision helpers).
 
-**A patch is a manifest**, `src/patches/<slug>.ts`, sized like the pull request it would
+**A patch is a manifest**, `src/patches/<slug>.ts` exporting one `Patch` (the registry,
+`PATCHES`, is generated from that folder at build and before tests, never committed), sized like the pull request it would
 become: the issue and PR it was offered as, the `src/compute-engine/...` files it carries, the
 library record it declares, where it lands, and how to tell whether it has landed
 (`fixed(ce)`, the issue's own repro as a probe). `applyPatches(ce)` applies every patch that
@@ -38,8 +39,9 @@ it is declared, and don't go upstream with the code.
 
 **Retiring a patch**: once `fixed(ce)` is true on the compute-engine version this repo
 pins, `tests/landed.test.ts` fails, naming the manifest to delete and its PR. Delete
-`src/patches/<slug>.ts` and the files it lists, remove it from the registry in
-`src/index.ts`, and drop the `applyPatches` (or single-patch) call from whatever package
+`src/patches/<slug>.ts` and the files it lists (the registry is generated from
+`src/patches/*.ts`, so there is no line to remove), drop its named re-export from
+`src/index.ts` if it has one, and drop the `applyPatches` (or single-patch) call from whatever package
 made it. The package's own tests catch anything that quietly depended on the patch rather
 than on the native head.
 

@@ -7,6 +7,7 @@ import { evaluateTakeDropNegativeCount } from "../compute-engine/library/collect
 // (leaving the call unevaluated) as Wolfram's `Take::take`/`Drop::drop` do.
 export const takeDropNegativeCount: Patch = {
   id: "take-drop-negative-count",
+  issue: "https://github.com/cortex-js/compute-engine/issues/414",
   lands:
     "Take/Drop of a negative count reads from the end of the source, and a count past the length declines, as Wolfram's Take/Drop do",
   files: ["src/compute-engine/library/collections.ts"],

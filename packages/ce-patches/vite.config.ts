@@ -10,4 +10,8 @@ export default defineConfig({
     options: { typeAware: true, typeCheck: true },
   },
   fmt: {},
+  test: {
+    // The registry is built from src/patches/*.ts, so a test run writes it first.
+    globalSetup: ["scripts/global-setup.ts"],
+  },
 });
