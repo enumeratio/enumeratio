@@ -1,5 +1,5 @@
 import { registerNotation } from "@enumeratio/boxes";
-import { exceedsDoublePrecision } from "@enumeratio/ce-patches";
+import { inDoubles, inDoublesIfComplex } from "@enumeratio/ce-patches";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -225,6 +225,13 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     return f;
   };
 
+  // A complex operand sends Gamma, Cos, … through double kernels; a real one stays in bignums.
+  const doublesIfComplex = (
+    ops: readonly Expr[],
+    options: Parameters<typeof inDoubles>[1],
+    compute: () => Expr | undefined,
+  ): Expr | undefined => inDoublesIfComplex(ce, ops, options, compute);
+
   const gamma = (x: Expr | number): Expr => ce.function("Gamma", [x]);
   const add = (...xs: (Expr | number)[]): Expr => ce.function("Add", xs);
   const sub = (a: Expr | number, b: Expr | number): Expr => ce.function("Subtract", [a, b]);
@@ -303,7 +310,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     ce,
     ["Binomial", ["Complex", 1, 1], 5],
     (ops) => isNonReal(ops[0]) || isNonReal(ops[1]),
-    () => (ops) => {
+    () => (ops, options) => {
       const [n, k] = ops;
       const kInt = integerAt(k);
       // An integer k stays EXACT, via the falling-factorial product -- Binomial(1+i, 5)
@@ -311,7 +318,9 @@ function declareCombinatoricsGamma113(ce: Engine): void {
       if (kInt !== undefined && kInt >= 0) {
         return div(fallingFactorial(n, kInt), ce.number(smallFactorial(kInt))).evaluate();
       }
-      return div(gamma(add(n, 1)), mul(gamma(add(k, 1)), gamma(add(sub(n, k), 1)))).N();
+      return doublesIfComplex(ops, options, () =>
+        div(gamma(add(n, 1)), mul(gamma(add(k, 1)), gamma(add(sub(n, k), 1)))).N(),
+      );
     },
     2,
   );
@@ -320,9 +329,11 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     ce,
     ["CatalanNumber", 2.3],
     (ops) => inexactNumber(ops[0]),
-    () => (ops) => {
+    () => (ops, options) => {
       const n = ops[0];
-      return div(gamma(add(mul(2, n), 1)), mul(gamma(add(n, 1)), gamma(add(n, 2)))).N();
+      return doublesIfComplex(ops, options, () =>
+        div(gamma(add(mul(2, n), 1)), mul(gamma(add(n, 1)), gamma(add(n, 2)))).N(),
+      );
     },
     1,
   );
@@ -331,9 +342,9 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     ce,
     ["Pochhammer", ["Complex", 2, 5], ["Complex", 0, 8]],
     (ops) => isNonReal(ops[0]) || isNonReal(ops[1]),
-    () => (ops) => {
+    () => (ops, options) => {
       const [a, n] = ops;
-      return div(gamma(add(a, n)), gamma(a)).N();
+      return doublesIfComplex(ops, options, () => div(gamma(add(a, n)), gamma(a)).N());
     },
     2,
   );
@@ -371,13 +382,13 @@ function declareCombinatoricsGamma113(ce: Engine): void {
       const exactRational = (op: Expr) => integerAt(op) === undefined && bigRationalAt(op) !== undefined;
       return ops.some(inexactNumber) && !ops.some(exactRational);
     },
-    () => (ops) => {
+    () => (ops, options) => {
       const total = ce.function("Add", [...ops]);
       const denom = ce.function(
         "Multiply",
         ops.map((op) => gamma(add(op, 1))),
       );
-      return div(gamma(add(total, 1)), denom).N();
+      return doublesIfComplex(ops, options, () => div(gamma(add(total, 1)), denom).N());
     },
     { min: 1 },
   );
@@ -404,11 +415,9 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     ["Subfactorial", 4.5],
     (ops) => inexactNumber(ops[0]),
     () => (ops, options) => {
-      // The complex incomplete Gamma runs in doubles: decline rather than print more digits than it has.
-      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      // The complex incomplete Gamma runs in doubles, so even a real n is a double's worth.
       const n = ops[0];
-      const incomplete = ce.function("Gamma", [add(n, 1), -1]);
-      return div(incomplete, ce.symbol("ExponentialE")).N();
+      return inDoubles(ce, options, () => div(ce.function("Gamma", [add(n, 1), -1]), ce.symbol("ExponentialE")).N());
     },
     1,
   );
@@ -456,18 +465,20 @@ function declareCombinatoricsGamma113(ce: Engine): void {
   sequence("Fibonacci", {
     arity: 1,
     when: (ops) => inexactNumber(ops[0]),
-    evaluate: (ops) => {
+    evaluate: (ops, options) => {
       const nu = ops[0];
-      return div(sub(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)), ce.function("Sqrt", [5])).N();
+      return doublesIfComplex([nu], options, () =>
+        div(sub(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)), ce.function("Sqrt", [5])).N(),
+      );
     },
   });
 
   sequence("LucasL", {
     arity: 1,
     when: (ops) => inexactNumber(ops[0]),
-    evaluate: (ops) => {
+    evaluate: (ops, options) => {
       const nu = ops[0];
-      return add(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)).N();
+      return doublesIfComplex([nu], options, () => add(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)).N());
     },
   });
 
@@ -515,7 +526,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
       const n = integerAt(ops[0]);
       return n === undefined || n < 0;
     },
-    evaluate: (ops) => {
+    evaluate: (ops, options) => {
       const [nu, x] = ops;
       const discriminant = ce.function("Sqrt", [add(mul(x, x), 4)]);
       const root = div(add(x, discriminant), 2);
@@ -524,7 +535,8 @@ function declareCombinatoricsGamma113(ce: Engine): void {
         ce.function("Power", [root, ce.function("Negate", [nu])]),
       );
       const result = div(sub(ce.function("Power", [root, nu]), otherTerm), discriminant);
-      return inexactNumber(nu) || inexactNumber(x) ? result.N() : result.evaluate();
+      if (!inexactNumber(nu) && !inexactNumber(x)) return result.evaluate();
+      return doublesIfComplex([nu], options, () => result.N());
     },
   });
 

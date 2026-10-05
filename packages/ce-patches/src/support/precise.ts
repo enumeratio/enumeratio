@@ -1,4 +1,5 @@
 import { type BigDecimal, type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
+import { inexactComplex } from "./box.ts";
 
 /** Above this many digits a double is no longer the limiting factor — and neither should we be. */
 export const DOUBLE_DIGITS = 15;
@@ -21,6 +22,47 @@ const REQUESTED_DIGITS_GUARD = 20;
  */
 export const exceedsDoublePrecision = (ce: ComputeEngine, numericApproximation: boolean | undefined): boolean =>
   (numericApproximation ?? false) && ce.precision > DOUBLE_DIGITS + REQUESTED_DIGITS_GUARD;
+
+/** An operand with a nonzero imaginary part: compute-engine's complex Gamma, Cos, … run in doubles. */
+export const hasComplexOperand = (ops: readonly BoxedExpression[]): boolean =>
+  ops.some((op) => Number.isFinite(op.re) && Number.isFinite(op.im) && op.im !== 0);
+
+/**
+ * `value` as the machine number it really is. Arithmetic over a double kernel's output
+ * (a Gamma ratio, a sum with EulerGamma) is carried out in bignums and comes back padded to
+ * the engine's precision, printing ~20 digits of which ~16 are right. Boxing the double
+ * itself, as the kernels do, prints only what it holds.
+ */
+export function asDouble(ce: ComputeEngine, value: BoxedExpression): BoxedExpression {
+  if (!isNumber(value) || !Number.isFinite(value.re) || !Number.isFinite(value.im)) return value;
+  return value.im === 0 ? ce.number(value.re) : inexactComplex(ce, value.re, value.im);
+}
+
+/**
+ * `compute()` for a route that runs on double-only kernels: declined once an explicit digit
+ * count passes a double's, else boxed as a machine number rather than padded to engine
+ * precision. An exact zero (a Gamma pole in a denominator) has no digits to back, so it stands.
+ */
+export function inDoubles(
+  ce: ComputeEngine,
+  options: { readonly numericApproximation?: boolean },
+  compute: () => BoxedExpression | undefined,
+): BoxedExpression | undefined {
+  const value = compute();
+  if (value === undefined) return undefined;
+  if (isNumber(value) && value.re === 0 && value.im === 0) return value;
+  return exceedsDoublePrecision(ce, options.numericApproximation) ? undefined : asDouble(ce, value);
+}
+
+/** `inDoubles` when an operand is complex (a head whose real route is bignum-backed), else `compute()` as is. */
+export function inDoublesIfComplex(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  options: { readonly numericApproximation?: boolean },
+  compute: () => BoxedExpression | undefined,
+): BoxedExpression | undefined {
+  return hasComplexOperand(ops) ? inDoubles(ce, options, compute) : compute();
+}
 
 /**
  * Once a periodic double-only kernel's argument spans more than this many periods, `value`'s

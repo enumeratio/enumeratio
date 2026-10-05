@@ -159,6 +159,10 @@ export {
   bigRealOperand,
   bigResult,
   exceedsDoublePrecision,
+  asDouble,
+  hasComplexOperand,
+  inDoubles,
+  inDoublesIfComplex,
   periodsExceedDouble,
   tauTooCloseToRealAxis,
 } from "./support/precise.ts";
