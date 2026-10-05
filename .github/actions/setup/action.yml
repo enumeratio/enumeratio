@@ -1,5 +1,13 @@
 name: Setup
-description: pnpm + node + install, then build every library package (type-aware lint, tests and scripts resolve siblings through dist/).
+description: pnpm + node + install, then build the library packages (type-aware lint, tests and scripts resolve siblings through dist/), restoring each package's outputs from the dist cache when nothing it reads changed.
+
+inputs:
+  packages:
+    description: Space-separated package names to build, with everything they read. Empty builds every library package.
+    default: ""
+  save:
+    description: Save the dist cache after building. Only the job that builds everything should.
+    default: "false"
 
 runs:
   using: composite
@@ -13,5 +21,20 @@ runs:
         cache: pnpm
     - run: pnpm install --frozen-lockfile
       shell: bash
-    - run: pnpm -r --filter '!@enumeratio/web' run build
+    # Entries are content-addressed, so any earlier cache is a valid seed; the newest one wins.
+    - uses: actions/cache/restore@v4
+      with:
+        path: ${{ runner.temp }}/dist-cache
+        key: dist-${{ runner.os }}-${{ github.sha }}
+        restore-keys: dist-${{ runner.os }}-
+    - id: build
+      run: node tools/ci/dist-cache.ts build $PACKAGES
       shell: bash
+      env:
+        DIST_CACHE_DIR: ${{ runner.temp }}/dist-cache
+        PACKAGES: ${{ inputs.packages }}
+    - if: inputs.save == 'true' && steps.build.outputs.built != '0'
+      uses: actions/cache/save@v4
+      with:
+        path: ${{ runner.temp }}/dist-cache
+        key: dist-${{ runner.os }}-${{ github.sha }}

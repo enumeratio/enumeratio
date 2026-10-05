@@ -25,6 +25,8 @@ jobs:
         with:
           fetch-depth: 0 # the id check reads the base commit
       - uses: ./.github/actions/setup
+        with:
+          save: "true"
       - run: pnpm exec vp check
       - name: example ids aren't renamed silently
         if: github.event_name == 'pull_request'
@@ -40,54 +42,54 @@ jobs:
           path: web/.vitepress/dist
           retention-days: 3
 
-  # Whether a PR touches anything the package suites can see: they read nothing under `web/`,
-  # so a PR confined to that (and root docs) skips the shards. Pushes to main and manual runs
-  # always test.
+  # Which packages a PR can affect (tools/ci/affected.ts): each changed package and what depends on
+  # it. Anything that can move every package (lockfile, root config, CI, the engine) selects them
+  # all, and pushes to main and manual runs always test everything. A PR confined to web/ and root
+  # docs selects nothing, so the shards skip. The shards build only their selection and what it reads.
   changes:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
-      packages: ${{ github.event_name != 'pull_request' || steps.filter.outputs.packages == 'true' }}
+      matrix: ${{ steps.select.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-      - id: filter
-        if: github.event_name == 'pull_request'
-        uses: dorny/paths-filter@v3
         with:
-          predicate-quantifier: every
-          filters: |
-            packages:
-              - '**'
-              - '!web/**'
-              - '!*.md'
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - id: select
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if [ -n "$BASE" ]; then node tools/ci/affected.ts --base "$BASE" --github-output
+          else node tools/ci/affected.ts --full --github-output; fi
 
   # A handful of suites (statistics, combinatorics) are CPU-bound and saturate a 4-vCPU
   # runner on their own, so splitting them across separate runners buys real wall-clock time —
   # unlike unordered-but-single-runner, which just makes them contend for the same 4 cores.
-  # Rebalance by moving a package between the shards below (or adding one) as suites grow.
+  # Rebalance by moving a package between the shards in tools/ci/affected.ts (SHARDS).
   test_shard:
     name: tests (${{ matrix.shard }})
     needs: changes
-    if: needs.changes.outputs.packages == 'true'
+    if: needs.changes.outputs.matrix != '[]'
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - shard: statistics
-            filter: --filter @enumeratio/statistics
-          - shard: combinatorics
-            filter: --filter @enumeratio/combinatorics
-          - shard: rest
-            filter: >-
-              --filter '!@enumeratio/web'
-              --filter '!@enumeratio/statistics'
-              --filter '!@enumeratio/combinatorics'
+        include: ${{ fromJSON(needs.changes.outputs.matrix) }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
-      - run: pnpm -r ${{ matrix.filter }} run test
+        with:
+          packages: ${{ matrix.pkgs }}
+      - env:
+          PKGS: ${{ matrix.pkgs }}
+        run: |
+          filters=()
+          for p in $PKGS; do filters+=(--filter "$p"); done
+          pnpm -r "${filters[@]}" run test
 
   # Branch protection names the required check `tests`, but that name has to stay off the matrix
   # job above (each shard would collide on it). This fans back in and fails if any shard did;
