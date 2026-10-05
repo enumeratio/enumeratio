@@ -69,6 +69,8 @@ const enumerated = (count: Cost): Declared["cost"] => ({
   valid: "polynomial",
 });
 
+// Stays TS: the order is shape then entries, and the fillings that extend a partly built tableau
+// depend on the whole of it, not a few integers an Epsil table could hold.
 // ═══ SemistandardTableaux(size, max_entry) — SSYT over every shape λ⊢size, entries in 1..max_entry ═══
 // Count: the hook-content formula s_λ(1^k) = Π (k + col − row) / hook(row,col), summed over shapes —
 // exact and closed-form (a cell needing col−row ≤ −k forces a zero factor, so shapes needing more than k
@@ -151,6 +153,7 @@ export function IsSemistandardTableauOf(e: unknown, n: number, k: number): boole
   return total === n;
 }
 
+// Stays TS: the patterns below a row depend on the whole row (a Weyl-dimension product), not a table index.
 // ═══ GelfandTsetlin(n, k) — triangular interlacing arrays, n rows, entries in 0..k ═══
 // Count: Π_{1≤i≤j≤n} (k+i+j−1)/(i+j−1) — the dimension formula (sum of hook-content over every top-row
 // shape fitting the n×k box), exact and closed-form. Element: rows top (length n) to bottom (length 1).
@@ -225,6 +228,7 @@ export function IsGelfandTsetlinOf(e: unknown, n: number, k: number): boolean {
   return true;
 }
 
+// Stays TS: the rows still to come depend on every column's partial sum, a 2^n-state table.
 // ═══ AlternatingSignMatrices(size) — n×n, entries {-1,0,1}, row/col partial sums and totals in {0,1}/1 ═══
 // Count: A(n) = Π_{j<n} (3j+1)!/(n+j)! — the ASM numbers (A005130), exact and closed-form.
 export function AlternatingSignMatrixCount(n: number): number {
@@ -308,6 +312,7 @@ const factorialBig = (n: number): bigint => {
   return f;
 };
 
+// Stays TS: shapes come from SkewPartitions (TS), and the fillings left depend on every row's count.
 // ═══ SkewStandardTableaux(size) — standard tableaux on reduced skew shapes λ/μ, summed over every shape ═══
 // No closed form. Element: `[lam, mu, rowWord]` — rowWord[i] = 0-based row of entry i+1 (placement order),
 // same convention as shifted below. A cell (row r, running count c) is legal to place next iff row r isn't
@@ -386,6 +391,7 @@ export function IsSkewStandardTableauOf(e: unknown, n: number): boolean {
   return true;
 }
 
+// PlanePartitions stays TS: ordered by shape then entries, and the layers left depend on the whole row above.
 function partitionsUnder(ceiling: readonly number[], maxSum: number): number[][] {
   const results: number[][] = [];
   function rec(idx: number, cur: number[], sum: number): void {
@@ -471,6 +477,7 @@ export function IsPlanePartitionOf(e: unknown, n: number): boolean {
   return total === n;
 }
 
+// Stays TS: same as PlanePartitions.
 // ═══ BoxedPlanePartitions(a, b, c) — plane partitions (any size) fitting in an a×b×c box ═══
 // Count: MacMahon's box formula, Π_{i=1..a} Π_{j=1..b} Π_{k=1..c} (i+j+k−1)/(i+j+k−2) — exact and
 // closed-form; accumulated as bigint numerator/denominator (not Math.round'd like the other formulas
@@ -620,6 +627,7 @@ export const skewStandardTableauxEntries: NumberKernel[] = [
   },
 ];
 
+// Stays TS: shapes come from DistinctPartitions (TS), and a shape's count is a recursion over shapes.
 // ═══ ShiftedStandardTableaux(size) — standard tableaux on shifted diagrams of STRICT partitions ═══
 // Row i (0-indexed) occupies columns i..i+shape[i]-1, so row i's k-th cell shares a column with row
 // (i-1)'s (k+1)-th cell. Same recursive-corner-removal scheme as StandardTableaux in tableaux-trees.ts
