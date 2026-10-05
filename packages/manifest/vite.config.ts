@@ -10,6 +10,9 @@ export default defineConfig({
     entry: {
       index: "src/index.ts",
       libraries: "src/libraries/index.ts",
+      // A library's build runs these (`enumeratio-collect-notation .`), from here or installed.
+      "bin/collect-notation": "scripts/collect-notation.ts",
+      "bin/collect-declares": "scripts/collect-declares.ts",
       ...Object.fromEntries(packages.map((f) => [`package/${f.slice(0, -3)}`, `${generated}/${f}`])),
     },
     dts: { generator: "tsgo" },

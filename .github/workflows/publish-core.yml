@@ -1,0 +1,44 @@
+name: Publish core
+
+# Publishes the core a library outside this repository builds on (tools/publish/prepare-core.ts's CORE) to
+# GitHub Packages as `next` prereleases, for the per-package repo split
+# (https://github.com/enumeratio/enumeratio/wiki/Speculative-Per-Package-Repos §5 step 2). Not npm: the
+# packages stay `private` in the tree, and only this run makes them publishable, to GitHub's registry.
+#
+# Push a `core-v<version>` tag (core-v0.1.0-next.1), or dispatch with the version.
+
+on:
+  push:
+    tags: ["core-v*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Prerelease to publish, e.g. 0.1.0-next.1"
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-core
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: publish core to GitHub Packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - id: prepare
+        run: node tools/publish/prepare-core.ts "$VERSION"
+        env:
+          VERSION: ${{ inputs.version || github.ref_name }}
+      - name: publish
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+          pnpm -r ${{ steps.prepare.outputs.filters }} publish --tag next --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

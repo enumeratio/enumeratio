@@ -659,6 +659,12 @@ importers:
 
   packages/manifest:
     dependencies:
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
+      '@enumeratio/entry':
+        specifier: workspace:*
+        version: link:../entry
       semver:
         specifier: 'catalog:'
         version: 7.8.5
@@ -666,12 +672,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
-      '@enumeratio/engine':
-        specifier: workspace:*
-        version: link:../engine
-      '@enumeratio/entry':
-        specifier: workspace:*
-        version: link:../entry
       '@types/node':
         specifier: ^24
         version: 24.13.4
