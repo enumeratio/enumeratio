@@ -1,17 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, ruleOf } from "@enumeratio/engine";
-import {
-  add,
-  cosPi,
-  cx,
-  mul,
-  scale,
-  sinPi,
-  type Cx,
-  type BoxInput,
-  isFiniteNum,
-  numberResult,
-} from "@enumeratio/ce-patches";
+import { add, cosPi, cx, mul, scale, sinPi, type Cx, type BoxInput, isFiniteNum } from "@enumeratio/ce-patches";
 
 // Fourier(list) / InverseFourier(list): the numeric discrete Fourier transform of a
 // list, or of a rectangular matrix (a 2D DFT is separable -- apply the 1D transform
@@ -32,6 +21,18 @@ import {
 // O(n^2) direct summation, not an FFT. Correct for any n and fast enough for the sizes
 // these heads see in practice (worked examples, small demo signals); a genuinely large
 // transform would want a radix-2 or Bluestein implementation instead of this one.
+
+/** A machine float literal: `5` is written `5.0` so it boxes inexact, as Wolfram's `5.` is. */
+const floatLiteral = (x: number): BoxInput => {
+  const text = String(x);
+  return { num: /[.eEn]/.test(text) ? text : `${text}.0` };
+};
+
+/** Fourier's entries are machine reals in Wolfram even for exact input: always inexact, never `5`. */
+function floatEntry(ce: ComputeEngine, r: Cx): BoxedExpression {
+  if (!Number.isFinite(r.re) || !Number.isFinite(r.im)) return ce.symbol("ComplexInfinity");
+  return ce.box((r.im === 0 ? floatLiteral(r.re) : ["Complex", floatLiteral(r.re), floatLiteral(r.im)]) as never);
+}
 
 const complexAt = (x: BoxedExpression): Cx | undefined => (isFiniteNum(x) ? cx(x.re, x.im) : undefined);
 
@@ -129,7 +130,7 @@ function evaluateFourier(
     return ce
       .function(
         "List",
-        dft1(vec, a, b).map((r) => numberResult(ce, r)),
+        dft1(vec, a, b).map((r) => floatEntry(ce, r)),
       )
       .evaluate();
   }
@@ -141,7 +142,7 @@ function evaluateFourier(
         dft2(mat, a, b).map((row) =>
           ce.function(
             "List",
-            row.map((r) => numberResult(ce, r)),
+            row.map((r) => floatEntry(ce, r)),
           ),
         ),
       )

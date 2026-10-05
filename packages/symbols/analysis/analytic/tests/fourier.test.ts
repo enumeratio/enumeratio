@@ -21,16 +21,24 @@ const valuesOf = (mj: unknown) => plain(evalOf(mj));
 
 test("Fourier: the DFT of a list, matching Wolfram's default FourierParameters {0,1}", () => {
   expect(valuesOf(["Fourier", ["List", 1, 2, 3, 4]])).toEqual(["List", 5, ["Complex", -1, -1], -1, ["Complex", -1, 1]]);
-  expect(evalOf(["InverseFourier", ["Fourier", ["List", 1, 2, 3, 4]]])).toEqual(["List", 1, 2, 3, 4]);
+  expect(valuesOf(["InverseFourier", ["Fourier", ["List", 1, 2, 3, 4]]])).toEqual(["List", 1, 2, 3, 4]);
+  // Wolfram answers machine reals even for exact input: every entry is a float.
+  const isFloat = (e: unknown) => typeof e === "object" && e !== null && !Array.isArray(e) && "num" in e;
+  const entries = evalOf(["Fourier", ["List", 1, 2, 3, 4]]) as unknown as unknown[];
+  expect(
+    entries
+      .slice(1)
+      .every((e) => isFloat(e) || (Array.isArray(e) && e[0] === "Complex" && isFloat(e[1]) && isFloat(e[2]))),
+  ).toBe(true);
 });
 
 test("Fourier: a rectangular matrix is the separable 2D transform", () => {
-  expect(evalOf(["Fourier", ["List", ["List", 1, 2], ["List", 3, 4]]])).toEqual([
+  expect(valuesOf(["Fourier", ["List", ["List", 1, 2], ["List", 3, 4]]])).toEqual([
     "List",
     ["List", 5, -1],
     ["List", -2, 0],
   ]);
-  expect(evalOf(["InverseFourier", ["List", ["List", 5, -1], ["List", -2, 0]]])).toEqual([
+  expect(valuesOf(["InverseFourier", ["List", ["List", 5, -1], ["List", -2, 0]]])).toEqual([
     "List",
     ["List", 1, 2],
     ["List", 3, 4],
