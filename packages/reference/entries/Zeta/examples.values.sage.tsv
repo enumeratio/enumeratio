@@ -14,6 +14,11 @@ n-zeta-complex-2-plus-i	N(zeta((2 + 1*I)))	1.15035570325490 - 0.437530865919608*
 zeta-threads-over-mixed-exact-and-inexact-list	[zeta(2), zeta((0.5 + 14*I))]	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error
 zeta-3-0-drops-pole-term-like-s-2	hurwitz_zeta(3, 0)	ValueError: psi2_eval(): pole	error
 zeta-2-neg-2-stays-finite-unlike-hurwitzzeta	N(hurwitz_zeta(2, -2))	ValueError: psi2_eval(): pole	error
+zeta-2-neg-1-keeps-terms-before-dropped-slot	hurwitz_zeta(2, -1)		
+zeta-3-neg-1-adds-one-to-zeta-3	hurwitz_zeta(3, -1)		
+zeta-3-neg-2-sums-shifted-terms	hurwitz_zeta(3, -2)		
+zeta-4-neg-3-sums-shifted-terms	hurwitz_zeta(4, -3)		
+n-zeta-3-neg-3-matches-the-exact-sum	N(hurwitz_zeta(3, -3))		
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N(zeta((0.5 + 14*I)))	0.0222411426099936 - 0.103258123266450*I	
 two-argument-zeta-s-a-via-enumeratio-analytic	hurwitz_zeta(2, 1)	1/6*pi^2	
 zeta-2-2-zeta-2-1-pi-2-6-1	hurwitz_zeta(2, 2)	1/6*pi^2 - 1	

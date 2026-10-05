@@ -14,6 +14,11 @@ n-zeta-complex-2-plus-i	(zeta(mpc(2, 1)))	(1.15035570325490267174284993474 - 0.4
 zeta-threads-over-mixed-exact-and-inexact-list	[zeta(2), zeta(mpc(0.5, 14))]	TypeError: cannot create mpf from [2, mpc(real='0.5', imag='14.0')]	error
 zeta-3-0-drops-pole-term-like-s-2	zeta(3, 0)	ZeroDivisionError: 	error
 zeta-2-neg-2-stays-finite-unlike-hurwitzzeta	(zeta(2, -2))	ZeroDivisionError: 	error
+zeta-2-neg-1-keeps-terms-before-dropped-slot	zeta(2, -1)	ZeroDivisionError: 	error
+zeta-3-neg-1-adds-one-to-zeta-3	zeta(3, -1)	ZeroDivisionError: 	error
+zeta-3-neg-2-sums-shifted-terms	zeta(3, -2)	ZeroDivisionError: 	error
+zeta-4-neg-3-sums-shifted-terms	zeta(4, -3)	ZeroDivisionError: 	error
+n-zeta-3-neg-3-matches-the-exact-sum	(zeta(3, -3))	ZeroDivisionError: 	error
 on-the-critical-line-zeta-1-2-14i-0-02224-0	(zeta(mpc(0.5, 14)))	(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)	
 two-argument-zeta-s-a-via-enumeratio-analytic	zeta(2, 1)	1.64493406684822643647241516665	
 zeta-2-2-zeta-2-1-pi-2-6-1	zeta(2, 2)	0.644934066848226436472415166646	

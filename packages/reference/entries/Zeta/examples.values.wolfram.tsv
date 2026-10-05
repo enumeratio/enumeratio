@@ -14,6 +14,11 @@ n-zeta-complex-2-plus-i	N[Zeta[Complex[2, 1]]]	1.1503557032549028 - 0.4375308659
 zeta-threads-over-mixed-exact-and-inexact-list	Zeta[List[2, Complex[0.5, 14]]]	{Pi^2/6, 0.022241142609994033 - 0.10325812326645277*I}		\zeta (\{2,0.5\, +14 i\})	\left\{\frac{\pi ^2}{6},0.0222411\, -0.103258 i\right\}	
 zeta-3-0-drops-pole-term-like-s-2	Zeta[3, 0]	Zeta[3]		\zeta (3,0)	\zeta (3)	
 zeta-2-neg-2-stays-finite-unlike-hurwitzzeta	N[Zeta[2, -2]]	2.894934066848226		N[\zeta (2,-2)]	2.89493	
+zeta-2-neg-1-keeps-terms-before-dropped-slot	Zeta[2, -1]	1 + Pi^2/6		\zeta (2,-1)	1+\frac{\pi ^2}{6}	
+zeta-3-neg-1-adds-one-to-zeta-3	Zeta[3, -1]	1 + Zeta[3]		\zeta (3,-1)	\zeta (3)+1	
+zeta-3-neg-2-sums-shifted-terms	Zeta[3, -2]	Zeta[3, -2]		\zeta (3,-2)	\zeta (3,-2)	
+zeta-4-neg-3-sums-shifted-terms	Zeta[4, -3]	1393/1296 + Pi^4/90		\zeta (4,-3)	\frac{1393}{1296}+\frac{\pi ^4}{90}	
+n-zeta-3-neg-3-matches-the-exact-sum	N[Zeta[3, -3]]	2.3640939401966317		N[\zeta (3,-3)]	2.36409	
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N[Zeta[Complex[0.5, 14]]]	0.022241142609994033 - 0.10325812326645277*I		N[\zeta (0.5\, +14 i)]	0.0222411\, -0.103258 i	
 two-argument-zeta-s-a-via-enumeratio-analytic	Zeta[2, 1]	Pi^2/6		\zeta (2,1)	\frac{\pi ^2}{6}	
 zeta-2-2-zeta-2-1-pi-2-6-1	Zeta[2, 2]	-1 + Pi^2/6		\zeta (2,2)	\frac{\pi ^2}{6}-1	
