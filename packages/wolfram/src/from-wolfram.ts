@@ -117,9 +117,22 @@ function parseString(): MathJson {
     out += peek() === "\\" ? src[pos++] + src[pos++] : src[pos++];
   }
   expect('"');
-  // `toWolfram` writes strings via JSON.stringify, so JSON.parse is the exact inverse.
-  return `'${JSON.parse(`"${out}"`)}'`;
+  return `'${unescapeString(out)}'`;
 }
+
+/** A string literal's escapes: JSON's (`toWolfram` writes strings via JSON.stringify), plus
+ * Wolfram's own `\:XXXX` (a UTF-16 unit) and `\|XXXXXX` (a code point), which a kernel prints
+ * for characters outside its output encoding (`FromCharacterCode[128512]` is `"\|01f600"`). */
+const unescapeString = (raw: string): string =>
+  JSON.parse(
+    `"${raw.replace(/\\(\\|:([0-9a-fA-F]{4})|\|([0-9a-fA-F]{6}))/g, (whole, _, unit?: string, point?: string) =>
+      unit !== undefined
+        ? `\\u${unit}`
+        : point !== undefined
+          ? JSON.stringify(String.fromCodePoint(Number.parseInt(point, 16))).slice(1, -1)
+          : whole,
+    )}"`,
+  ) as string;
 
 /** A blank pattern with no pattern name — `_`, `__`, `___`, each optionally with a head
  * (`_Integer`). `toWolfram` passes such a MathJSON wildcard through as written (see

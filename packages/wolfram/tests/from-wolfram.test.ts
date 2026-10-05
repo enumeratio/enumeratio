@@ -123,6 +123,12 @@ test("Log arg-swap reverses cleanly for the explicit-base form", () => {
   expect(fromWolfram("Log[2, x]")).toEqual(["Log", "x", 2]); // base-first -> value-first
 });
 
+test("Wolfram's own string escapes come back as the characters they name", () => {
+  expect(fromWolfram(String.raw`"\:03e8\:03e9"`)).toBe("'\u03e8\u03e9'");
+  expect(fromWolfram(String.raw`"\|01f600"`)).toBe("'\u{1f600}'");
+  expect(fromWolfram(String.raw`"a\\:03e8"`)).toBe("'a\\:03e8'");
+});
+
 test("a blank pattern comes back as the wildcard string toWolfram passed through", () => {
   expect(fromWolfram("Count[List[1, a, 2, b], _Integer]")).toEqual(["Count", ["List", 1, "a", 2, "b"], "_Integer"]);
   expect(fromWolfram(toWolfram(["Count", ["List", 1, 2], "_Integer"]))).toEqual(["Count", ["List", 1, 2], "_Integer"]);
