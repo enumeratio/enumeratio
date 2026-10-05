@@ -214,10 +214,12 @@ export function fullSimplify(ce: ComputeEngine, expr: BoxedExpression): BoxedExp
   e = hyperbolicPythagoras(e, ce);
   e = arctanSum(ce, e);
   e = denestSqrt(ce, e).simplify();
-  e = ce.box(expLogGamma(ce, e.json) as never).evaluate();
+  // Re-boxed only when the rewrite fired: boxing again would renormalize an untouched tree.
+  const rewritten = expLogGamma(ce, e.json);
+  if (JSON.stringify(rewritten) !== JSON.stringify(e.json)) e = ce.box(rewritten as never).evaluate();
   // ExpToTrig only where it shortens: e^x alone is no simpler as cosh x + sinh x.
   const trig = (evaluateExpToTrig(ce, [e]) ?? e).simplify();
-  return leafCount(trig.json) < leafCount(e.json) ? trig : e;
+  return leafCount(trig.json) <= leafCount(e.json) ? trig : e.simplify();
 }
 
 export function declareFullSimplify(ce: ComputeEngine): void {

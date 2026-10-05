@@ -9,7 +9,6 @@ import {
   logGammaBig,
   asDouble,
   hasFloatOperand,
-  exceedsDoublePrecision,
 } from "@enumeratio/ce-patches";
 
 /**
@@ -97,7 +96,7 @@ function declarePreciseLogGamma(ce: ComputeEngine): void {
       const z = ops[0];
       const nativeValue = native?.(ops, options);
       const r =
-        nativeValue !== undefined && hasFloatOperand(ops) && !exceedsDoublePrecision(ce, options.numericApproximation)
+        nativeValue !== undefined && hasFloatOperand(ops) && !options.numericApproximation
           ? asDouble(ce, nativeValue)
           : nativeValue;
       const numeric = options.numericApproximation || hasFloatOperand(ops);

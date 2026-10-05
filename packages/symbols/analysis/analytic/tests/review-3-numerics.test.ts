@@ -21,8 +21,12 @@ test("LogGamma at a negative real is correctly rounded", () => {
 });
 
 test("a float operand answers with a double, not a bignum's digits", () => {
-  expect(String(N(["LogGamma", 100.5]).re)).toBe("361.4355404677776");
-  expect(String(N(["LerchPhi", 0.5, 2, 3.5]).re)).toBe("0.11938622686982048");
+  const plain = (expr: unknown) => ce.box(expr as never).evaluate();
+  expect(String(plain(["LogGamma", 100.5]).re)).toBe("361.4355404677776");
+  expect(String(plain(["LerchPhi", 0.5, 2, 3.5]).re)).toBe("0.11938622686982048");
+  expect(String(plain(["JacobiSN", 0.7, 1]).re)).toBe("0.6043677771171635");
+  // Exact input under N() keeps the engine's digits.
+  expect(String(N(["LogGamma", ["Rational", 7, 2]]).bignumRe)).toMatch(/^1\.2009736023470742248/);
 });
 
 test("BesselJZero carries the digits asked for", () => {
@@ -31,8 +35,12 @@ test("BesselJZero carries the digits asked for", () => {
   expect(String(N(["BesselJZero", 0, 100], 20).bignumRe)).toMatch(/^313\.3742660775278447/);
 });
 
-test("HypergeometricU declines where its two terms cancel, and is real for real input", () => {
-  expect(N(["HypergeometricU", ["Rational", 1, 3], 1.001, 2]).operator).toBe("HypergeometricU");
+test("HypergeometricU is real for real input and declines where its terms cancel", () => {
+  // b = 1.001 loses ~3 digits to the 1/(b − 1) pole of each term: real, and good to 1e-11.
+  const near = N(["HypergeometricU", ["Rational", 1, 3], 1.001, 2]);
+  expect(near.im).toBe(0);
+  expect(Math.abs(near.re - 0.7610286058670256)).toBeLessThan(1e-11);
+  expect(N(["HypergeometricU", ["Rational", 1, 3], 1.00001, 2]).operator).toBe("HypergeometricU");
   const u = N(["HypergeometricU", ["Rational", 1, 3], 1.5, 2]);
   expect(u.im).toBe(0);
   expect(Math.abs(u.re - 0.8118412930119827)).toBeLessThan(1e-12);

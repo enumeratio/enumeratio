@@ -36,10 +36,10 @@ function freshSymbol(expr: BoxedExpression, base: string): string {
   for (let i = 2; ; i++) if (!used.has(`${base}${i}`)) return `${base}${i}`;
 }
 
-/** The bound variable's name: the first of `t s u v` that is neither the outer `varName` nor free in `expr`. */
+/** The bound variable's name: the first of `x t s u v` that is neither the outer `varName` nor free in `expr`. */
 function boundVariableName(expr: BoxedExpression, varName: string): string {
   const taken = new Set([varName, ...expr.freeVariables]);
-  return ["t", "s", "u", "v"].find((name) => !taken.has(name)) ?? freshSymbol(expr, "t");
+  return ["x", "t", "s", "u", "v"].find((name) => !taken.has(name)) ?? freshSymbol(expr, "t");
 }
 
 const isExactNumber = (x: BoxedExpression): boolean => isNumber(x) && x.isExact;

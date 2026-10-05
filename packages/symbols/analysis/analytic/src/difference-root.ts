@@ -47,11 +47,11 @@ function freshSymbol(expr: BoxedExpression, base: string): string {
   for (let i = 2; ; i++) if (!used.has(`${base}${i}`)) return `${base}${i}`;
 }
 
-/** The bound index's name: the first of `k j i l` that is neither the outer `varName` nor free in
+/** The bound index's name: the first of `n k j i l` that is neither the outer `varName` nor free in
  * `expr`, so the printed recurrence reads `y(k+1)` rather than `y(n2+1)`. */
 function boundIndexName(expr: BoxedExpression, varName: string): string {
   const taken = new Set([varName, ...expr.freeVariables]);
-  return ["k", "j", "i", "l"].find((name) => !taken.has(name)) ?? freshSymbol(expr, "k");
+  return ["n", "k", "j", "i", "l"].find((name) => !taken.has(name)) ?? freshSymbol(expr, "k");
 }
 
 const isExactNumber = (x: BoxedExpression): boolean => isNumber(x) && x.isExact;
