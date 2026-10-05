@@ -1,25 +1,23 @@
-// Permutation-class families (catalogued in packages/reference/entries/, carrier
-// "Permutation") that were never wired to a kernel: Baxter/Boolean/Grassmannian/Cograssmannian/
-// NonCrossing/Separable/Simple/Smooth/Vexillary permutations. Reuses ./kernels.ts and
-// ./kernels-extra.ts wherever the element representation already matches (Boolean permutations are
-// literally Fibonacci words in disguise; Grassmannian/Cograssmannian are k-subsets in disguise).
-// Baxter, NonCrossing, Separable, Simple, Smooth and Vexillary have no simple closed-form unrank —
-// each is instead an enumerate-then-index kernel: generate all n! permutations in lex order
-// (PermutationUnrank), filter by an independently-written membership predicate, and index into the
-// filtered, still-lex-sorted list. `count()` uses a closed-form/recurrence where one is known
-// (Baxter's rational formula, a verified noncrossing-partition recurrence, Separable's reuse of
-// SchroederCount); Simple/Smooth/Vexillary have no closed form implemented here, so count is the
-// enumeration's own length — exact, just not sub-factorial.
+// Permutation classes in the symmetric group's lex order. Boolean permutations are Fibonacci
+// words in disguise. Grassmannian, Cograssmannian, NonCrossing and Separable are completion counts
+// (./restrictions.ts). Baxter, Simple, Smooth and Vexillary still filter all n! permutations in lex
+// order (PermutationUnrank) by an independently written predicate, and index the filtered list:
+// Simple has no polynomial completion count known to us, and the exact ones for Baxter, Smooth
+// and Vexillary have exponential or list-valued state (wiki Speculative-Restrictions).
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Factorial, IsPermutationOf, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import {
   FibonacciWordCount,
   FibonacciWordRank,
   FibonacciWordUnrank,
-  SchroederCount,
 } from "../../../collections/src/families/kernels-extra.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
-import { cograssmannianPermutations, grassmannianPermutations } from "./restrictions.ts";
+import {
+  cograssmannianPermutations,
+  grassmannianPermutations,
+  nonCrossingPermutations,
+  separablePermutations,
+} from "./restrictions.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors permutations.ts's private `ints`.
@@ -175,65 +173,8 @@ function booleanRank(perm: readonly number[]): number {
   return FibonacciWordRank(word);
 }
 
-// ─── NonCrossingPermutations(n): permutations whose cycles, read as a set partition of [n], form a
-// non-crossing partition (no a<b<c<d with a,c in one block and b,d in a distinct block). Recurrence:
-// the block containing 1 has some size k (1≤k≤n); its k elements split the remaining n−k into k ordered
-// "gaps" (immediately after each block member), each independently a smaller non-crossing permutation
-// (relabeled) — crossing would otherwise force two gaps' elements into different blocks incompatibly.
-// The block itself, as a cycle on k labels, has (k−1)! distinct cyclic orderings. f(n) = Σ_k (k−1)!·
-// [Σ over compositions g₁+…+g_k=n−k of Πf(gᵢ)]; verified against a direct O(n⁴) brute-force crossing
-// check through n=10 (no OEIS match confirmed here, so none is cited — only the verified recurrence).
-const ncF = new Map<number, number>();
-const ncH = new Map<string, number>();
-function nonCrossingF(n: number): number {
-  if (n === 0) return 1;
-  const cached = ncF.get(n);
-  if (cached !== undefined) return cached;
-  let total = 0;
-  for (let k = 1; k <= n; k++) total += Factorial(k - 1) * nonCrossingH(n - k, k);
-  ncF.set(n, total);
-  return total;
-}
-function nonCrossingH(m: number, k: number): number {
-  if (k === 0) return m === 0 ? 1 : 0;
-  const key = `${m},${k}`;
-  const cached = ncH.get(key);
-  if (cached !== undefined) return cached;
-  let total = 0;
-  for (let g = 0; g <= m; g++) total += nonCrossingF(g) * nonCrossingH(m - g, k - 1);
-  ncH.set(key, total);
-  return total;
-}
-function cyclesOf(perm: readonly number[]): number[][] {
-  const n = perm.length;
-  const seen: boolean[] = Array.from({ length: n + 1 }, () => false);
-  const cycles: number[][] = [];
-  for (let s = 1; s <= n; s++) {
-    if (seen[s]) continue;
-    const cyc: number[] = [];
-    let cur = s;
-    while (!seen[cur]) {
-      seen[cur] = true;
-      cyc.push(cur);
-      cur = perm[cur - 1];
-    }
-    cycles.push(cyc);
-  }
-  return cycles;
-}
-function isNonCrossingCycles(perm: readonly number[]): boolean {
-  const n = perm.length;
-  const cycles = cyclesOf(perm);
-  const blockOf: number[] = Array.from({ length: n + 1 }, () => -1);
-  cycles.forEach((c, bi) => c.forEach((x) => (blockOf[x] = bi)));
-  for (let a = 1; a <= n; a++)
-    for (let b = a + 1; b <= n; b++)
-      for (let c = b + 1; c <= n; c++)
-        for (let d = c + 1; d <= n; d++)
-          if (blockOf[a] === blockOf[c] && blockOf[b] === blockOf[d] && blockOf[a] !== blockOf[b]) return false;
-  return true;
-}
-const nonCrossingClass = makeBruteForceClass((p) => isNonCrossingCycles(p), nonCrossingF);
+// ─── NonCrossingPermutations(n): cycles forming a non-crossing partition, by completion counts
+// (./restrictions.ts).
 
 // ─── length-4 vincular-free (classical) pattern helpers shared by Separable/Smooth/Vexillary. ────────
 function patternOf4(a: number, b: number, c: number, d: number): string {
@@ -251,15 +192,7 @@ function containsAnyPattern4(perm: readonly number[], patterns: readonly string[
   return false;
 }
 
-// ─── SeparablePermutations(n): Av(2413,3142) — the large Schröder numbers, A006318. |Separable(n)| =
-// SchroederCount(n−1) (kernels-extra.ts's SchroederCount(m) is already certified against Schröder
-// paths of semilength m, and is offset by one from permutation size here — verified against this
-// predicate by brute force through n=7). No simple closed-form unrank of the *permutation* itself is
-// implemented, so unrank/rank enumerate-then-index.
-const separableClass = makeBruteForceClass(
-  (p) => !containsAnyPattern4(p, ["2413", "3142"]),
-  (n) => (n <= 0 ? 1 : SchroederCount(n - 1)),
-);
+// ─── SeparablePermutations(n): Av(2413,3142), by completion counts (./restrictions.ts).
 
 // ─── SimplePermutations(n): no non-trivial interval (a contiguous run of positions whose values form a
 // contiguous range, other than a single position or the whole permutation) — A111111. No closed-form
@@ -315,30 +248,8 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
   },
   grassmannianPermutations,
   cograssmannianPermutations,
-  {
-    ...ints(
-      "NonCrossingPermutations",
-      1,
-      ([n]) => nonCrossingClass.count(n),
-      ([n], r) => nonCrossingClass.unrank(n, r),
-      (a, [n]) => nonCrossingClass.valid(a, n),
-      (a) => nonCrossingClass.rank(a),
-    ),
-    declared: nonCrossingClass.declared,
-    carrier: "Permutation",
-  },
-  {
-    ...ints(
-      "SeparablePermutations",
-      1,
-      ([n]) => separableClass.count(n),
-      ([n], r) => separableClass.unrank(n, r),
-      (a, [n]) => separableClass.valid(a, n),
-      (a) => separableClass.rank(a),
-    ),
-    declared: separableClass.declared,
-    carrier: "Permutation",
-  },
+  nonCrossingPermutations,
+  separablePermutations,
   {
     ...ints(
       "SimplePermutations",

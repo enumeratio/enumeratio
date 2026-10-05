@@ -7,9 +7,8 @@ const entries = kernelsOn(new ComputeEngine(), families.map(liftFamily));
 
 // Certify every permutation-class family: rank(unrank(p, r), p) === r across the whole
 // family, unranked elements are valid members, and count matches the enumeration —
-// same recipe as permutations.test.ts. The pattern-avoider classes (Baxter, Separable,
-// Simple, Smooth, Vexillary) and NonCrossing all filter n! permutations, so n is kept
-// small enough to stay fast (<~10s total across the suite).
+// same recipe as permutations.test.ts. Baxter, Simple, Smooth and Vexillary filter n!
+// permutations, so n is kept small enough to stay fast.
 const PARAMS: Record<string, number[][]> = {
   BaxterPermutations: [[0], [1], [2], [3], [4], [5], [6]],
   BooleanPermutations: [[0], [1], [2], [3], [4], [5], [6], [7]],
