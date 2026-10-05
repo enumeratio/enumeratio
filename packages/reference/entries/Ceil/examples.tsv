@@ -7,7 +7,7 @@ threads-element-wise-over-a-list			[Ceil, [List, 1.2, -1.2, 3.7]]	[List, 2, -1, 
 ceil-2p4			[Ceil, 2.4]	3																	
 ceil-2p6			[Ceil, 2.6]	3																	
 idempotent-lceil-lceil-x-rceil-rceil		test	[Ceil, [Ceil, x]]	[Ceil, x]			Idempotent: $\lceil\lceil x \rceil\rceil = \lceil x \rceil$														
-stays-symbolic	Scope		[Ceil, x]	[Ceil, x]			Stays symbolic														
+stays-symbolic	Scope		[Ceil, x]	[Ceil, x]			Stays symbolic									undefined-form	Both leave the call unevaluated; SymPy writes it ceiling(x).				
 exact-radicals-are-decided-numerically	Scope		[Ceil, [Sqrt, 50]]	8			Exact radicals are decided numerically														
 evaluates-at-an-exact-constant-lceil-pi-rceil-4	Scope		[Ceil, Pi]	4			Evaluates at an exact constant: $\lceil\pi\rceil = 4$														
 a-second-argument-rounds-up-to-a-multiple-of-it	Scope		[Ceil, 226, 10]	230			A second argument rounds up to a multiple of it -- the next multiple of 10 above 226														
