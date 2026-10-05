@@ -132,3 +132,9 @@ test("a dictionary literal is written as the dictionary it is", () => {
     ["KeyValuePair", "'b'", "'x'"],
   ]);
 });
+
+test("an option compute-engine canonicalised to a Tuple prints as an attribute", () => {
+  expect(markupOf(["FractionBox", "n", "k", ["Tuple", "FractionLine", "False"]])).toBe(
+    '<FractionBox FractionLine="False">n k</FractionBox>',
+  );
+});

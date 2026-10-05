@@ -341,9 +341,10 @@ function dottedName(receiver: Json, member: Json): string | undefined {
   return undefined;
 }
 
-/** A trailing `KeyValuePair(Name, atom)` as a slot attribute, or undefined. */
+/** A trailing `KeyValuePair(Name, atom)` as a slot attribute, or undefined. compute-engine
+ *  canonicalises that pair to a `Tuple`, so a capitalised-name pair of either head is an option. */
 function slotOf(arg: Json): [string, string] | undefined {
-  if (!Array.isArray(arg) || arg[0] !== "KeyValuePair" || arg.length !== 3) return undefined;
+  if (!Array.isArray(arg) || (arg[0] !== "KeyValuePair" && arg[0] !== "Tuple") || arg.length !== 3) return undefined;
   const [, key, value] = arg;
   if (typeof key !== "string" || !/^[A-Z]/.test(key) || !PLAIN_SYMBOL.test(key) || key === "ToExpression")
     return undefined;
