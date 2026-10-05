@@ -25,5 +25,6 @@ names:
 ---
 
 - compute-engine's native `BesselJ` only evaluates numerically at integer order, so the zero-finder here carries its own real $J_\nu$ series (term-ratio, stable for the double-precision range zero-finding needs) rather than depending on it — which matters for exactly the half-integer orders Fungrim's identities use.
+- A zero is located in doubles (McMahon's expansion, then a bracketed series search) and refined by Newton's method in arbitrary precision: the alternating series cancels about $x/2.3$ digits, so a double alone is good to roughly $16 - x/2.3$. Past $j = 400$ it stays symbolic.
 - McMahon's asymptotic expansion seeds a bracket around the $k$-th zero, then bisection (with a few closing Newton steps) converges it.
 - Matches mpmath's `besseljzero(nu, k)` and Wolfram's `BesselJZero[nu, k]`.

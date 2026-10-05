@@ -164,6 +164,8 @@ function dusartBracket(n: number): [number, number] {
  *  the bracket would run past `PRIME_PI_LIMIT` (documented as this function's own range). */
 function nthPrimeLarge(n: number): number | undefined {
   let [lo, hi] = dusartBracket(n);
+  // Counting past the limit costs minutes (π at 3·10^14), so the bracket is refused before any count.
+  if (hi > PRIME_PI_LIMIT) return undefined;
   // Backstop against the literature recollection above being off in either direction: widen
   // until the bracket demonstrably contains p_n. Never fires for a correct Dusart bound past
   // n ≥ 688383; only exercised (and only once or twice) below that, where the padding is
@@ -171,6 +173,7 @@ function nthPrimeLarge(n: number): number | undefined {
   for (let guard = 0; guard < 10 && primeCountLarge(hi) < n; guard++) {
     lo = hi;
     hi = Math.ceil(hi * 1.5) + 1000;
+    if (hi > PRIME_PI_LIMIT) return undefined;
   }
   for (let guard = 0; guard < 10 && lo > 2 && primeCountLarge(lo - 1) >= n; guard++) {
     hi = lo;

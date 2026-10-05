@@ -1,5 +1,5 @@
 import { registerNotation } from "@enumeratio/boxes";
-import { inDoubles, inDoublesIfComplex } from "@enumeratio/ce-patches";
+import { doublesForFloats, inDoubles, inDoublesIfComplex } from "@enumeratio/ce-patches";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -331,8 +331,10 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     (ops) => inexactNumber(ops[0]),
     () => (ops, options) => {
       const n = ops[0];
-      return doublesIfComplex(ops, options, () =>
-        div(gamma(add(mul(2, n), 1)), mul(gamma(add(n, 1)), gamma(add(n, 2)))).N(),
+      return doublesForFloats(ce, ops, options, () =>
+        doublesIfComplex(ops, options, () =>
+          div(gamma(add(mul(2, n), 1)), mul(gamma(add(n, 1)), gamma(add(n, 2)))).N(),
+        ),
       );
     },
     1,

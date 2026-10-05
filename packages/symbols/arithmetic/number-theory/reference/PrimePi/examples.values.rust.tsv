@@ -29,3 +29,4 @@ primepi-16	prime_pi(n(16))
 primepi-17	prime_pi(n(17))		
 primepi-18	prime_pi(n(18))		
 no-primes-are-a-negative-number	prime_pi(n(-1))	panic: a non-negative integer	error
+past-10-12-the-call-stays-symbolic	prime_pi(n(10000000000000))		

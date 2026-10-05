@@ -26,6 +26,7 @@ each-of-the-four-theta-functions-a-1	N[EllipticTheta[1, 0.3, 0.2]]	0.35343054374
 a-complex-argument-u	N[EllipticTheta[3, Complex[0.3, 0.1], 0.2]]	1.3380122452445202 - 0.046698857386200956*I	N[\vartheta _3(0.3\, +0.1 i,0.2)]	1.33801\, -0.0466989 i	
 a-negative-real-nome-q	N[EllipticTheta[3, 1, -0.3]]	1.239061275954273	N[\vartheta _3(1,-0.3)]	1.23906	
 a-complex-nome-q	N[EllipticTheta[2, Complex[0.5, 0.5], Complex[0.1, 0.2]]]	1.4821118035830818 + 0.1635542495976559*I	N[\vartheta _2(0.5\, +0.5 i,0.1\, +0.2 i)]	1.48211\, +0.163554 i	
+q-0-leaves-the-constant-term	EllipticTheta[3, 0.5, 0]	1.	\vartheta _3(0.5,0)	1.	
 theta1-0-q-is-0-for-any-q-an-odd	N[EllipticTheta[1, 0, 0.5]]	0.	N[\vartheta _1(0,0.5)]	0.	
 q-1-is-declined-the-series-diverges	N[EllipticTheta[3, 0.3, 1]]	EllipticTheta[3, 0.3, 1.]	N[\vartheta _3(0.3,1)]	\vartheta _3(0.3,1.)	
 symbolic-arguments-are-left-unevaluated-rather	EllipticTheta[3, u, q]	EllipticTheta[3, u, q]	\vartheta _3(u,q)	\vartheta _3(u,q)	

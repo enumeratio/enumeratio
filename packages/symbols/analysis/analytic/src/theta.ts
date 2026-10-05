@@ -118,6 +118,9 @@ function declareOne(ce: ComputeEngine, head: string, derivative: boolean): void 
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const [a, u, q] = ops;
       if (a === undefined || u === undefined || q === undefined) return undefined;
+      // q = 0 leaves only the constant term: θ3 = θ4 = 1, θ1 = θ2 = 0 (q^{1/4} factor), and every
+      // u-derivative 0. Exact, and the power series below would take 0^0.
+      if (isValidOrder(a) && q.is(0)) return a.re >= 3 && !derivative ? ce.One : ce.Zero;
       if (!wantsNumber(ops, options) || !isFiniteNum(a) || !isFiniteNum(u) || !isFiniteNum(q)) return undefined;
       // The q-series below is plain-double: N(…, d) past what a double carries would
       // otherwise silently hand back ~17 correct digits dressed as d of them.

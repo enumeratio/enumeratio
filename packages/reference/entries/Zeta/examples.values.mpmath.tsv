@@ -42,6 +42,7 @@ zeta-2-list-list-1-over-2-0-list-0-3-over-2	[[zeta(2, (mpf(1)/2)), zeta(2, 0)], 
 zeta-4-5	zeta(4, 5)		
 zeta-list-1-2-3-4	[zeta(1), zeta(2), zeta(3), zeta(4)]		
 matrixfunction-function-zeta-2-1-1-list-list-1			
+complex-s-on-the-critical-line	(zeta(mpc(0.5, 14)))	(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)	
 the-probability-that-two-random-positive			
 certified-digits-zeta-3	(zeta(3))	1.20205690315959428539973816151	
 zeta-0-1-2	zeta(0)	-0.5	

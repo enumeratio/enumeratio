@@ -11,7 +11,7 @@
 // argument as a Wolfram-style nth-prime shortcut, but that overloads a head compute-engine
 // already owns for something else entirely. NthPrime is (and stays) the only head name for
 // it on our side; the crosswalk already maps NthPrime <-> Wolfram's Prime.
-import { integerAt, wrapOperator, type Engine, type Expr } from "@enumeratio/engine";
+import { integerAt, isNumber, wrapOperator, type Engine, type Expr } from "@enumeratio/engine";
 import { nthPrime, PRIME_PI_LIMIT, primeCountUpTo } from "@enumeratio/residues";
 
 export function declareFastPrimes(ce: Engine): void {
@@ -24,11 +24,13 @@ export function declareFastPrimes(ce: Engine): void {
   wrapOperator(
     ce,
     ["PrimePi", 10000000],
-    (ops) => {
+    // Any literal non-negative integer: past the limit the handler declines, since the native
+    // fallback is an O(n) loop that grinds to its iteration cap.
+    (ops) => isNumber(ops[0]) && ops[0].isInteger === true && ops[0].isNegative !== true,
+    () => (ops) => {
       const n = nonNegativeSafeInteger(ops[0]);
-      return n !== undefined && n <= PRIME_PI_LIMIT;
+      return n !== undefined && n <= PRIME_PI_LIMIT ? ce.number(primeCountUpTo(n)) : undefined;
     },
-    () => (ops) => ce.number(primeCountUpTo(nonNegativeSafeInteger(ops[0])!)),
     1,
   );
 
@@ -40,11 +42,12 @@ export function declareFastPrimes(ce: Engine): void {
   wrapOperator(
     ce,
     ["NthPrime", 100000],
-    (ops) => {
+    (ops) => isNumber(ops[0]) && ops[0].isInteger === true && ops[0].isPositive === true,
+    () => (ops) => {
       const n = positiveIndex(ops[0]);
-      return n !== undefined && nthPrime(n) !== undefined;
+      const p = n === undefined ? undefined : nthPrime(n);
+      return p === undefined ? undefined : ce.number(p);
     },
-    () => (ops) => ce.number(nthPrime(positiveIndex(ops[0])!)!),
     1,
   );
 }

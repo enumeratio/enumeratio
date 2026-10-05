@@ -27,6 +27,10 @@ export const exceedsDoublePrecision = (ce: ComputeEngine, numericApproximation: 
 export const hasComplexOperand = (ops: readonly BoxedExpression[]): boolean =>
   ops.some((op) => Number.isFinite(op.re) && Number.isFinite(op.im) && op.im !== 0);
 
+/** An operand written as a machine float (`2.5`, not `5/2`): the caller asked for a float answer. */
+export const hasFloatOperand = (ops: readonly BoxedExpression[]): boolean =>
+  ops.some((op) => (op as Partial<{ isExact: boolean }>).isExact === false);
+
 /**
  * `value` as the machine number it really is. Arithmetic over a double kernel's output
  * (a Gamma ratio, a sum with EulerGamma) is carried out in bignums and comes back padded to
@@ -52,6 +56,22 @@ export function inDoubles(
   if (value === undefined) return undefined;
   if (isNumber(value) && value.re === 0 && value.im === 0) return value;
   return exceedsDoublePrecision(ce, options.numericApproximation) ? undefined : asDouble(ce, value);
+}
+
+/**
+ * `compute()` for a bignum-backed route called as plain `evaluate()`: a float operand gets the
+ * float answer it asked for (a double, not 21 digits of which the last few are noise). Under
+ * `N()` the operands are already numericized, so a float there cannot be told from an exact
+ * input, and the engine's precision stands.
+ */
+export function doublesForFloats(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  options: { readonly numericApproximation?: boolean },
+  compute: () => BoxedExpression | undefined,
+): BoxedExpression | undefined {
+  const value = compute();
+  return value === undefined || options.numericApproximation || !hasFloatOperand(ops) ? value : asDouble(ce, value);
 }
 
 /** `inDoubles` when an operand is complex (a head whose real route is bignum-backed), else `compute()` as is. */

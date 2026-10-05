@@ -1,5 +1,14 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, wantsNumber, logGammaReal } from "@enumeratio/ce-patches";
+import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import {
+  atDigits,
+  bigCx,
+  DOUBLE_DIGITS,
+  type EvalOptions,
+  isFiniteNum,
+  logGammaBig,
+  logGammaReal,
+  wantsNumber,
+} from "@enumeratio/ce-patches";
 
 // BesselJZero(ν, k) — the k-th positive zero of the Bessel function J_ν, real ν > −1,
 // positive integer k. compute-engine 0.128's native `BesselJ` only evaluates
@@ -93,6 +102,81 @@ export function besselJZero(nu: number, k: number): number {
   return x;
 }
 
+// --- BigDecimal refinement -------------------------------------------------------------------
+// The double series above is alternating, with terms up to ~e^x/√(2πx) summing to a value
+// near 0 at a zero, so it keeps only ~16 − x/2.3 digits (j_{0,3} = 8.65… came out 10 ulps off).
+// The answer is Newton-refined from the double zero in BigDecimal at digits + x/2.3 + guard.
+
+/** Largest zero refined in BigDecimal: the series cancels x/2.3 digits and needs ~x/2 terms. */
+const MAX_BIG_ZERO = 400;
+/** Digits carried past the ones asked for. */
+const BIG_GUARD = 15;
+/** The double series (≈16 − x/2.3 digits) seeds Newton reliably up to here. */
+const SERIES_SEED_LIMIT = 30;
+const BIG_MAX_TERMS = 4000;
+const BIG_MAX_NEWTON = 12;
+
+/** J_ν(x) and J_ν'(x) = (ν/x) J_ν(x) − J_{ν+1}(x) by the term-ratio series at the working
+ * precision; undefined if the series has not settled within `BIG_MAX_TERMS`. */
+function besselJBigAndDeriv(
+  nu: BigDecimal,
+  lnGammaNu1: BigDecimal,
+  x: BigDecimal,
+  working: number,
+): { j: BigDecimal; jp: BigDecimal } | undefined {
+  const half = x.div(2);
+  const q = half.mul(half).neg();
+  let tNu = half.pow(nu).div(lnGammaNu1.exp()); // (x/2)^ν / Γ(ν+1)
+  let tNext = tNu.mul(half).div(nu.add(1)); // (x/2)^{ν+1} / Γ(ν+2)
+  let sumNu = tNu;
+  let sumNext = tNext;
+  const floor = new BigDecimal(10).pow(-working);
+  let largest = tNu.abs();
+  for (let m = 1; m < BIG_MAX_TERMS; m++) {
+    tNu = tNu.mul(q).div(nu.add(m).mul(m));
+    tNext = tNext.mul(q).div(nu.add(m + 1).mul(m));
+    sumNu = sumNu.add(tNu);
+    sumNext = sumNext.add(tNext);
+    const size = tNu.abs().gt(tNext.abs()) ? tNu.abs() : tNext.abs();
+    if (size.gt(largest)) largest = size;
+    if (m > x.toNumber() / 2 && size.lt(largest.mul(floor))) {
+      return { j: sumNu, jp: nu.mul(sumNu).div(x).sub(sumNext) };
+    }
+  }
+  return undefined;
+}
+
+/**
+ * The k-th positive zero of J_ν to `digits` significant digits, or undefined if it cannot be
+ * vouched for (past `MAX_BIG_ZERO`, or Newton fails to settle). The double zero seeds Newton,
+ * which at a simple zero (J_ν' ≠ 0) roughly doubles the digits each step.
+ */
+export function besselJZeroBig(nu: BigDecimal, k: number, digits: number): BigDecimal | undefined {
+  const nuD = nu.toNumber();
+  // The double series is fine to x ≈ SERIES_SEED_LIMIT; beyond it the zero comes from McMahon's
+  // expansion, trusted only once k ≥ ν (it is poor for a large order and few zeros).
+  let seed = besselJZero(nuD, k);
+  if (seed > SERIES_SEED_LIMIT) {
+    if (k < nuD) return undefined;
+    seed = mcmahonZero(nuD, k);
+  }
+  if (!Number.isFinite(seed) || seed > MAX_BIG_ZERO) return undefined;
+  const working = digits + BIG_GUARD + Math.ceil(seed / 2.3);
+  return atDigits(working, () => {
+    const lnGammaNu1 = logGammaBig(bigCx(nu.add(1)), working).re;
+    let x = new BigDecimal(seed);
+    const tolerance = new BigDecimal(10).pow(-(digits + 3));
+    for (let i = 0; i < BIG_MAX_NEWTON; i++) {
+      const f = besselJBigAndDeriv(nu, lnGammaNu1, x, working);
+      if (f === undefined || f.jp.isZero()) return undefined;
+      const step = f.j.div(f.jp);
+      x = x.sub(step);
+      if (step.abs().lt(tolerance.mul(x))) return x.toPrecision(digits);
+    }
+    return undefined;
+  });
+}
+
 export function declareBesselJZero(ce: ComputeEngine): void {
   ce.declare("BesselJZero", {
     signature: "(number, integer) -> number",
@@ -102,7 +186,12 @@ export function declareBesselJZero(ce: ComputeEngine): void {
       if (!isFiniteNum(nu) || nu.im !== 0 || nu.re <= -1) return undefined;
       if (k.im !== 0 || !Number.isInteger(k.re) || k.re < 1) return undefined;
       if (!wantsNumber(ops, options)) return undefined;
-      return ce.number(besselJZero(nu.re, k.re));
+      // A double asked for stays one, correctly rounded; more digits come from the BigDecimal refinement.
+      const asked = Math.max(ce.precision, DOUBLE_DIGITS);
+      const nuBig = asked > DOUBLE_DIGITS ? (nu.bignumRe ?? ce.bignum(nu.re)) : ce.bignum(nu.re);
+      const zero = besselJZeroBig(nuBig, k.re, asked > DOUBLE_DIGITS ? asked : 30);
+      if (zero === undefined) return undefined;
+      return ce.number(ce.precision > DOUBLE_DIGITS ? zero.toPrecision(ce.precision) : zero.toNumber());
     },
   });
 }

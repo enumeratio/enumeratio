@@ -1,6 +1,12 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
-import { bernoulliRational, type BoxInput, inDoublesIfComplex, isRealInt } from "@enumeratio/ce-patches";
+import {
+  bernoulliRational,
+  type BoxInput,
+  doublesForFloats,
+  inDoublesIfComplex,
+  isRealInt,
+} from "@enumeratio/ce-patches";
 
 // HarmonicNumber(n) = Σ_{k=1}^n 1/k and HarmonicNumber(n, r) = Σ_{k=1}^n k^{-r} — exact
 // rationals for a non-negative integer n (r any integer, either arity). Off the integer
@@ -126,10 +132,12 @@ export function evaluateHarmonicNumber(
     const zJson = z.json as unknown as Json;
     const rJson = r?.json as unknown as Json;
     // A complex operand runs ψ and ζ in doubles.
-    return inDoublesIfComplex(ce, ops, options, () =>
-      r === undefined
-        ? finish(box(["Add", ["PolyGamma", 0, ["Add", zJson, 1]], "EulerGamma"]))
-        : finish(box(["Subtract", ["Zeta", rJson], ["HurwitzZeta", rJson, ["Add", zJson, 1]]])),
+    return doublesForFloats(ce, ops, options, () =>
+      inDoublesIfComplex(ce, ops, options, () =>
+        r === undefined
+          ? finish(box(["Add", ["PolyGamma", 0, ["Add", zJson, 1]], "EulerGamma"]))
+          : finish(box(["Subtract", ["Zeta", rJson], ["HurwitzZeta", rJson, ["Add", zJson, 1]]])),
+      ),
     );
   }
 

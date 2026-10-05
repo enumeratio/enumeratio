@@ -47,6 +47,13 @@ function freshSymbol(expr: BoxedExpression, base: string): string {
   for (let i = 2; ; i++) if (!used.has(`${base}${i}`)) return `${base}${i}`;
 }
 
+/** The bound index's name: the first of `n k j i l` that is neither the outer `varName` nor free in
+ * `expr`, so the printed recurrence reads `y(k+1)` rather than `y(n2+1)`. */
+function boundIndexName(expr: BoxedExpression, varName: string): string {
+  const taken = new Set([varName, ...expr.freeVariables]);
+  return ["n", "k", "j", "i", "l"].find((name) => !taken.has(name)) ?? freshSymbol(expr, "k");
+}
+
 const isExactNumber = (x: BoxedExpression): boolean => isNumber(x) && x.isExact;
 
 /** The integer an exact numeric literal names, or undefined (declines non-integers). */
@@ -103,7 +110,7 @@ function decomposeRatio(ce: ComputeEngine, expr: BoxedExpression, varName: strin
   const ops = operandsOf(expr);
   const shiftUp = (e: BoxedExpression) => e.subs({ [varName]: ["Add", varName, 1] as never }).evaluate();
 
-  if (!expr.freeVariables.includes(varName)) return { num: expr, den: ONE(ce) }; // constant factor
+  if (!expr.freeVariables.includes(varName)) return { num: ONE(ce), den: ONE(ce) }; // constant: ratio 1
 
   if (expr.operator === "Multiply") {
     let num = ONE(ce);
@@ -337,7 +344,7 @@ export function declareDifferenceRoot(ce: ComputeEngine): void {
       // otherwise rewrite the parameter declaration itself, not just the outer application's
       // argument. Rename the input to a fresh name up front and build the whole reduction in
       // terms of that name instead.
-      const boundVar = freshSymbol(expr, "n");
+      const boundVar = boundIndexName(expr, varName);
       const renamed = boundVar === varName ? expr : expr.subs({ [varName]: boundVar } as never);
       const rec = reduce(ce, renamed, boundVar);
       if (rec === undefined) return undefined;

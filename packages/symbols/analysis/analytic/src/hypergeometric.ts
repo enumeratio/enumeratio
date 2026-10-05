@@ -54,6 +54,14 @@ const invGamma = (z: Cx): Cx => (isNonPositiveInt(z) ? cx(0) : cexp(scale(logGam
 
 const mag = (z: Cx): number => Math.hypot(z.re, z.im);
 
+/** 1/Γ(n) for an integer n: 0 at the poles n ≤ 0, else 1/(n − 1)! (infinite factorials flush to 0). */
+function exactInvGammaAt(n: number): Cx {
+  if (n <= 0) return cx(0);
+  let f = 1;
+  for (let i = 2; i < n; i++) f *= i;
+  return cx(1 / f);
+}
+
 /**
  * pFq(upper; lower; z), the plain series. Declines (undefined) at a genuine pole — some lower
  * parameter landing on a non-positive integer that an upper parameter's own termination doesn't
@@ -102,9 +110,21 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
   const poleBound = lower.reduce((m, b) => (isNonPositiveInt(b) ? Math.max(m, -b.re) : m), -1);
   let core = cx(1, 0); // ∏(ai)_k · zᵏ/k!, the part regularizing doesn't change
   let sum = cx(0, 0);
+  // A real-integer lower b has 1/Γ(b + k) exactly: 0 at the poles, 1/(n − 1)! after, stepped by
+  // 1/Γ(x + 1) = (1/Γ(x))/x. A fresh exp(−lnΓ) per term would put its rounding (lnΓ is good to a few
+  // ulps) into every term: Hypergeometric2F1Regularized(1, 2, −1, ½) came out 24 − 1.4e-14.
+  const integerLower = lower.map((b) => b.im === 0 && Number.isInteger(b.re));
+  const exactInvGamma = lower.map((b, i) => (integerLower[i] ? exactInvGammaAt(b.re) : cx(1)));
   for (let k = 0; k < MAX_TERMS; k++) {
+    if (k > 0) {
+      lower.forEach((b, i) => {
+        if (integerLower[i]) exactInvGamma[i] = exactInvGammaAt(b.re + k);
+      });
+    }
     let invG = cx(1, 0);
-    for (const b of lower) invG = mul(invG, invGamma(add(b, cx(k))));
+    lower.forEach((b, i) => {
+      invG = mul(invG, integerLower[i] ? exactInvGamma[i] : invGamma(add(b, cx(k))));
+    });
     const term = mul(core, invG);
     sum = add(sum, term);
     if (core.re === 0 && core.im === 0) return sum; // terminated (a polynomial case)

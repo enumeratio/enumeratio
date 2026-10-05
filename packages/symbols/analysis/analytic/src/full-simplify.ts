@@ -13,8 +13,9 @@ import { evaluateExpToTrig } from "./exp-to-trig.ts";
 //    with a rational discriminant;
 //  - a sum of integer multiples of arctangents of rationals that is a multiple of π/4
 //    (Machin's formula);
-//  - ExpToTrig everywhere in the tree, which is how a `(e^x − e^(−x))/2` shows up as `Sinh(x)`
-//    rather than needing its own "recognize a hyperbolic definition" rule.
+//  - ExpToTrig everywhere in the tree, kept only if the result is smaller, which is how a `(e^x − e^(−x))/2` shows up as `Sinh(x)`
+//    rather than needing its own "recognize a hyperbolic definition" rule;
+//  - e^(LogGamma(z)) = Γ(z), and e^(GammaLn(z)) = Γ(z) under an assumption Re z > 0.
 //
 // What this does NOT do: no general special-function identity table (only the one Gamma
 // shift above), no general nested-radical denesting (only the depth-one quadratic form above,
@@ -174,6 +175,36 @@ function arctanSum(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
   return ce.function("Multiply", [ce.number([m, 4]), ce.Pi]).evaluate();
 }
 
+/** Total node count of a MathJSON tree, the measure a rewrite must shrink to be kept. */
+const leafCount = (json: unknown): number =>
+  Array.isArray(json) ? json.reduce<number>((n, child) => n + leafCount(child), 0) : 1;
+
+/**
+ * e^(LogGamma(z)) = Γ(z) for every z (LogGamma is the continuation of ln Γ), and e^(GammaLn(z))
+ * = Γ(z) where Γ(z) > 0 so the real log is the log: here, where Re z > 0 holds.
+ */
+function expLogGamma(ce: ComputeEngine, json: unknown): unknown {
+  if (!Array.isArray(json)) return json;
+  const [head, ...rawChildren] = json as [string, ...unknown[]];
+  const children = rawChildren.map((child) => expLogGamma(ce, child));
+  if (head === "Power" && children.length === 2 && children[0] === "ExponentialE") {
+    const exponent = children[1];
+    if (Array.isArray(exponent) && exponent.length === 2) {
+      const [inner, z] = exponent as [string, unknown];
+      if (inner === "LogGamma") return ["Gamma", z];
+      if (
+        inner === "GammaLn" &&
+        ce
+          .box(["Greater", ["Re", z], 0] as never)
+          .evaluate()
+          .is(true)
+      )
+        return ["Gamma", z];
+    }
+  }
+  return [head, ...children];
+}
+
 const denestSqrt = (ce: ComputeEngine, e: BoxedExpression): BoxedExpression =>
   ce.box(denestSqrtJson(e.json) as never).evaluate();
 
@@ -183,8 +214,12 @@ export function fullSimplify(ce: ComputeEngine, expr: BoxedExpression): BoxedExp
   e = hyperbolicPythagoras(e, ce);
   e = arctanSum(ce, e);
   e = denestSqrt(ce, e).simplify();
-  e = (evaluateExpToTrig(ce, [e]) ?? e).simplify();
-  return e;
+  // Re-boxed only when the rewrite fired: boxing again would renormalize an untouched tree.
+  const rewritten = expLogGamma(ce, e.json);
+  if (JSON.stringify(rewritten) !== JSON.stringify(e.json)) e = ce.box(rewritten as never).evaluate();
+  // ExpToTrig only where it shortens: e^x alone is no simpler as cosh x + sinh x.
+  const trig = (evaluateExpToTrig(ce, [e]) ?? e).simplify();
+  return leafCount(trig.json) <= leafCount(e.json) ? trig : e.simplify();
 }
 
 export function declareFullSimplify(ce: ComputeEngine): void {

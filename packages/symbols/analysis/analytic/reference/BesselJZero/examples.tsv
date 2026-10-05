@@ -1,10 +1,12 @@
 id	section	role	expr	expected	caption
-j-3-2-1-4-4934-also-the-first-positive-root-of			[N, [BesselJZero, [Rational, 3, 2], 1]]	4.493409457909064	$j_{3/2,1} = 4.4934\ldots$ — also the first positive root of $\tan x = x$
-j-0-1-2-4048			[N, [BesselJZero, 0, 1]]	2.404825557695773	$j_{0,1} = 2.4048\ldots$
-the-third-zero-of-j-0			[N, [BesselJZero, 0, 3]]	8.653727912911013	the third zero of $J_0$
-j-3-2-2		test	[N, [BesselJZero, [Rational, 3, 2], 2]]	7.725251836937707	
-j-1-2		test	[N, [BesselJZero, 1, 2]]	7.015586669815619	
-j-5-2-1		test	[N, [BesselJZero, [Rational, 5, 2], 1]]	5.76345919689455	
-n-list-besseljzero-0-1-besseljzero-0-2	Scope		[N, [List, [BesselJZero, 0, 1], [BesselJZero, 0, 2], [BesselJZero, 0, 3]]]	[List, 2.4048255576957724, 5.5200781102863115, 8.653727912910991]	The first three zeros of $J_0$ as floats
+j-3-2-1-4-4934-also-the-first-positive-root-of			[N, [BesselJZero, [Rational, 3, 2], 1]]	{num: "4.49340945790906417531"}	$j_{3/2,1} = 4.4934\ldots$ — also the first positive root of $\tan x = x$
+j-0-1-2-4048			[N, [BesselJZero, 0, 1]]	{num: "2.40482555769577276862"}	$j_{0,1} = 2.4048\ldots$
+the-third-zero-of-j-0			[N, [BesselJZero, 0, 3]]	{num: "8.65372791291101221695"}	the third zero of $J_0$
+j-3-2-2		test	[N, [BesselJZero, [Rational, 3, 2], 2]]	{num: "7.7252518369377071642"}	
+j-1-2		test	[N, [BesselJZero, 1, 2]]	{num: "7.01558666981561875354"}	
+j-5-2-1		test	[N, [BesselJZero, [Rational, 5, 2], 1]]	{num: "5.76345919689454979141"}	
+n-list-besseljzero-0-1-besseljzero-0-2	Scope		[N, [List, [BesselJZero, 0, 1], [BesselJZero, 0, 2], [BesselJZero, 0, 3]]]	[List, {num: "2.40482555769577276862"}, {num: "5.5200781102863106496"}, {num: "8.65372791291101221695"}]	The first three zeros of $J_0$ at engine precision
+j-0-1-to-20-digits	Scope		[N, [BesselJZero, 0, 1], 20]	{num: "2.4048255576957727686"}	$j_{0,1}$ to 20 significant digits, refined in arbitrary precision from the double zero
+the-third-zero-of-j-0-to-30-digits	Scope		[N, [BesselJZero, 0, 3], 30]	{num: "8.65372791291101221695419871266"}	$j_{0,3}$ to 30 significant digits
 n-1-over-pi-times-besseljzero-1-1	Applications		[N, [Multiply, [Divide, 1, Pi], [BesselJZero, 1, 1]]]	{num: "1.219669891266504513619177543587529225"}	Zero of $J_1$ divided by $\pi$ at high precision
 tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	Properties		[Chop, [Subtract, [Tan, [N, [BesselJZero, [Rational, 3, 2], 1]]], [N, [BesselJZero, [Rational, 3, 2], 1]]]]	{num: "0.0"}	$\tan(j_{3/2,1}) = j_{3/2,1}$ — the sinc function's first turning point

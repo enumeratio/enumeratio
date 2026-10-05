@@ -32,4 +32,4 @@ names:
 - Inherits Gamma's recurrence in log form: $\operatorname{GammaLn}(z+1) = \operatorname{GammaLn}(z) + \ln z$.
 - $\operatorname{GammaLn}(1/2) = \frac{1}{2}\ln \pi$, from $\Gamma(1/2) = \sqrt{\pi}$.
 - Diverges to $+\infty$ at the nonpositive integers, the poles of Gamma -- the log of a diverging magnitude, rather than the ComplexInfinity that [[Gamma]] itself returns there.
-- It is $\ln(\Gamma(z))$ with a PRINCIPAL logarithm, which for complex $z$ is not the same function as Wolfram's $\mathrm{LogGamma}$: the two differ by multiples of $2\pi i$ off the positive axis. [[LogGamma]] is that continuation, and the one to use where continuity in $z$ matters.
+- For real $z<0$ it is the real log-magnitude $\ln|\Gamma(z)|$ (so $\operatorname{GammaLn}(-1/2) = \ln(2\sqrt\pi)$, with no $\pi i$ where $\Gamma<0$); for complex $z$ it is $\ln(\Gamma(z))$ with a PRINCIPAL logarithm, which is not the same function as Wolfram's $\mathrm{LogGamma}$: the two differ by multiples of $2\pi i$ off the positive axis. [[LogGamma]] is that continuation, and the one to use where continuity in $z$ matters.

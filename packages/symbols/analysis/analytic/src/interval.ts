@@ -131,7 +131,25 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   };
   const intervalDiv = (a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
     const recip = intervalRecip(b);
-    return recip === undefined ? undefined : intervalMul(a, recip);
+    return recip === undefined ? divideAcrossZero(a, b) : intervalMul(a, recip);
+  };
+  /**
+   * A / B with 0 in B = [l, h], as Wolfram returns it: 1/B is the rays (−∞, 1/l] (if l < 0) and
+   * [1/h, ∞) (if h > 0), and A, excluding 0, times each ray is one piece of the union. An A
+   * containing 0 reaches every real; B = [0, 0] has no quotient.
+   */
+  const divideAcrossZero = (a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
+    const [A, B] = [asInterval(a), asInterval(b)];
+    if (numAt(lo(B)) === 0 && numAt(hi(B)) === 0) return undefined;
+    if (numAt(lo(A)) <= 0 && numAt(hi(A)) >= 0) return interval(ce.NegativeInfinity, ce.PositiveInfinity);
+    const rays: [BoxedExpression, BoxedExpression][] = [];
+    if (numAt(lo(B)) < 0) rays.push([ce.NegativeInfinity, div(ce.One, lo(B))]);
+    if (numAt(hi(B)) > 0) rays.push([div(ce.One, hi(B)), ce.PositiveInfinity]);
+    const pieces = rays.map(([from, to]) => {
+      const products = [mul(lo(A), from), mul(lo(A), to), mul(hi(A), from), mul(hi(A), to)];
+      return [minOf(products), maxOf(products)] as const;
+    });
+    return unionOf(pieces);
   };
   /** Integer powers only — the exponent the examples use, and the case with a clean rule:
    * odd powers are monotonic, even powers fold to `[0, …]` once the interval straddles 0. */

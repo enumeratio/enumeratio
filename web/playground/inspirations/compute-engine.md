@@ -32,7 +32,10 @@ through — the prose, the reference pages, the readouts.
 **Epsil** is compute-engine's own surface syntax: `Binomial(10, 3)`, capitalised
 heads, `(` for calls, `[…]` for lists, `$…$` for a stretch of LaTeX. It is what
 you type into every attribute and cell on this site, unchanged. It reads into
-MathJSON, and MathJSON is what everything else here speaks.
+MathJSON, and MathJSON is what everything else here speaks. An attribute has room
+for one expression and none for an effect, so `parseExpression` reports Epsil's
+statements, declarations and control flow as a diagnostic rather than running
+them; a cell may bind one name with `:=`. The grammar is the engine's, unchanged.
 
 ## The engine, in the page
 
@@ -49,8 +52,8 @@ retype — the arithmetic is exact, so the answer is a fraction rather than
 <Story
   title="One expression, several forms">
 <template #description>
-The In/Out label opens a menu of representations. They are not renderers we
-bolted on: <code>StandardForm</code>, <code>FullForm</code> and
+One expression, many readings of the same MathJSON. The In/Out label opens a
+menu of representations. They are not renderers we bolted on: <code>StandardForm</code>, <code>FullForm</code> and
 <code>TeXForm</code> come out of the same boxed expression, and the MathJSON
 underneath is what all of them are reading.
 </template>
@@ -105,13 +108,7 @@ Not a pretty-printer — this is the compile target the GPU pages actually run.
 
 ## Where we diverge
 
-Three places, each deliberate.
-
-**An attribute holds an expression.** Epsil has statements, assignment,
-declarations, control flow and pragmas. An attribute on a web component has room
-for one expression and no room for an effect, so `parseExpression` reports those
-as a diagnostic rather than running them; a cell may bind one name with `:=`.
-The grammar is the engine's, unchanged.
+Two places, each deliberate.
 
 **LaTeX is the escape hatch, not the default.** Bare LaTeX is an error here — it
 goes in Epsil's own `$…$` islands. The engine is perfectly happy to

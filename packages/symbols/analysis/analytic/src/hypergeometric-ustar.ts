@@ -36,20 +36,38 @@ import {
 
 const MAX_TERMS = 400;
 const NEAR_INT_EPS = 1e-8;
+/** Rounding noise per unit of term magnitude, with room for the Γ factors' own error. */
+const UNIT_ROUNDOFF = 4e-15;
+/**
+ * Worst relative error `tricomiU` answers with. The connection formula's two terms are each
+ * ~e^z/|b − n| against a U of order z^(−a), so near an integer b or at a large z they cancel
+ * to nothing (measured against mpmath: relative error 1e-6 at b = 1.001, z = 8); past this
+ * bound the kernel declines. The bound tracks the measured error closely: over a grid of 546
+ * points (a, b, z real) every answered point was within 5e-12.
+ */
+const MAX_RELATIVE_ERROR = 1e-11;
+
+interface Summed {
+  readonly value: Cx;
+  /** Σ|term|, the magnitude the roundoff scales with (cancellation in an alternating series). */
+  readonly magnitude: number;
+}
 
 /** M(a,b,z), Kummer's confluent hypergeometric ₁F₁ — entire, by direct series. */
-function kummerM(a: Cx, b: Cx, z: Cx): Cx {
+function kummerM(a: Cx, b: Cx, z: Cx): Summed {
   let term = cx(1, 0);
   let sum = cx(1, 0);
+  let magnitude = 1;
   for (let m = 0; m < MAX_TERMS; m++) {
     // t_{m+1} = t_m · (a+m)(z) / ((b+m)(m+1))
     const num = mul(add(a, cx(m)), z);
     const den = mul(add(b, cx(m)), cx(m + 1));
     term = div(mul(term, num), den);
     sum = add(sum, term);
+    magnitude += Math.hypot(term.re, term.im);
     if (Math.hypot(term.re, term.im) < 1e-17 * (1 + Math.hypot(sum.re, sum.im))) break;
   }
-  return sum;
+  return { value: sum, magnitude };
 }
 
 const cGamma = (z: Cx): Cx => cexp(logGamma(z));
@@ -65,15 +83,23 @@ const isNonPositiveInt = (z: Cx): boolean => z.im === 0 && z.re <= 0 && Number.i
  */
 const invGamma = (z: Cx): Cx => (isNonPositiveInt(z) ? cx(0) : cexp(scale(logGamma(z), -1)));
 
-/** U(a,b,z), Tricomi's confluent hypergeometric — undefined at (near-)integer b. */
+const norm = (z: Cx): number => Math.hypot(z.re, z.im);
+
+/** U(a,b,z), Tricomi's confluent hypergeometric — undefined at (near-)integer b, or where the
+ * two terms cancel past `MAX_RELATIVE_ERROR`. A real U (real a, b and z > 0) has no imaginary part. */
 function tricomiU(a: Cx, b: Cx, z: Cx): Cx | undefined {
   if (b.im === 0 && Math.abs(b.re - Math.round(b.re)) < NEAR_INT_EPS) return undefined;
   const aMinusB1 = add(sub(a, b), cx(1)); // a − b + 1, the second M's first argument
-  const term1 = mul(mul(cGamma(sub(cx(1), b)), invGamma(aMinusB1)), kummerM(a, b, z));
+  const coeff1 = mul(cGamma(sub(cx(1), b)), invGamma(aMinusB1));
+  const m1 = kummerM(a, b, z);
   const zTo1MinusB = cpow(z, sub(cx(1), b));
   const m2 = kummerM(aMinusB1, sub(cx(2), b), z); // M(a-b+1, 2-b, z)
-  const term2 = mul(mul(mul(cGamma(sub(b, cx(1))), invGamma(a)), zTo1MinusB), m2);
-  return add(term1, term2);
+  const coeff2 = mul(mul(cGamma(sub(b, cx(1))), invGamma(a)), zTo1MinusB);
+  const value = add(mul(coeff1, m1.value), mul(coeff2, m2.value));
+  const noise = UNIT_ROUNDOFF * (norm(coeff1) * m1.magnitude + norm(coeff2) * m2.magnitude);
+  if (!(noise <= MAX_RELATIVE_ERROR * norm(value))) return undefined;
+  const real = a.im === 0 && b.im === 0 && z.im === 0 && z.re > 0;
+  return real ? cx(value.re, 0) : value;
 }
 
 /** U*(a,b,z) = z^a U(a,b,z), Fungrim's `HypergeometricUStar`. */

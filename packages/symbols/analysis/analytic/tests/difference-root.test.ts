@@ -33,6 +33,17 @@ test("3^n: order 1, y(n+1) = 3 y(n)", () => {
   checkReduction(["Power", 3, "n"], POINTS_0_19);
 });
 
+test("a constant factor scales the anchor, not the ratio: 3·2^n and 5·n!", () => {
+  checkReduction(["Multiply", 3, ["Power", 2, "n"]], POINTS_0_19);
+  checkReduction(["Multiply", 5, ["Factorial", "n"]], POINTS_0_19);
+});
+
+test("a variable the expression does not mention is constant: Fibonacci(n) in m", () => {
+  const reduced = ce.box(["DifferenceRootReduce", ["Fibonacci", "n"], "m"] as never).evaluate();
+  expect(reduced.operator).toBe("Apply");
+  expect(reduced.subs({ m: 7, n: 10 }).evaluate().toString()).toBe("55");
+});
+
 test("CatalanNumber(n): order 1", () => {
   checkReduction(["CatalanNumber", "n"], POINTS_0_19);
 });

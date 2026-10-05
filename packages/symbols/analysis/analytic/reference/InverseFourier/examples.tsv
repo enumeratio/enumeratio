@@ -1,7 +1,7 @@
 id	section	role	expr	expected	caption	wolfram.note
-inverse-dft-of-1-2-3-4			[InverseFourier, [List, 1, 2, 3, 4]]	[List, 5, [Complex, {num: "-1.0"}, {num: "1.0"}], -1, [Complex, {num: "-1.0"}, {num: "-1.0"}]]	The inverse DFT of $\{1, 2, 3, 4\}$ — the conjugate kernel of [[Fourier]]	
-round-trips-through-fourier			[Fourier, [InverseFourier, [List, 1, 2, 3, 4]]]	[List, 1, 2, 3, 4]	Round-trips exactly through [[Fourier]]	
-a-2x2-matrix	Scope		[InverseFourier, [List, [List, 5, -1], [List, -2, 0]]]	[List, [List, 1, 2], [List, 3, 4]]	The inverse of [[Fourier]]'s $2\times2$ matrix example	
+inverse-dft-of-1-2-3-4			[InverseFourier, [List, 1, 2, 3, 4]]	[List, {num: "5.0"}, [Complex, {num: "-1.0"}, {num: "1.0"}], {num: "-1.0"}, [Complex, {num: "-1.0"}, {num: "-1.0"}]]	The inverse DFT of $\{1, 2, 3, 4\}$ — the conjugate kernel of [[Fourier]]	
+round-trips-through-fourier			[Fourier, [InverseFourier, [List, 1, 2, 3, 4]]]	[List, {num: "1.0"}, {num: "2.0"}, {num: "3.0"}, {num: "4.0"}]	Round-trips exactly through [[Fourier]]	
+a-2x2-matrix	Scope		[InverseFourier, [List, [List, 5, -1], [List, -2, 0]]]	[List, [List, {num: "1.0"}, {num: "2.0"}], [List, {num: "3.0"}, {num: "4.0"}]]	The inverse of [[Fourier]]'s $2\times2$ matrix example	
 a-custom-fourierparameters	Scope		[InverseFourier, [List, 1, 2, 3, 4], [KeyValuePair, FourierParameters, [List, 1, -1]]]	[List, 2.5, [Complex, -0.5, -0.5], -0.5, [Complex, -0.5, 0.5]]	A custom `FourierParameters -> {1, -1}`, equivalent to `Fourier(list, FourierParameters -> {-1, 1})`	
 inversefourier-n-x-24	Scope		[InverseFourier, [N, x, 24]]	[InverseFourier, x]	A numeric symbol is treated symbolically, so the result stays unevaluated	
 declines-a-symbolic-list	Possible issues		[InverseFourier, [List, a, b]]	[InverseFourier, [List, a, b]]	Declines a symbolic list, exactly like [[Fourier]]	Wolfram raises `Fourier::fftl` and returns the call unevaluated -- the same decline we make.
