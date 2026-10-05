@@ -6230,7 +6230,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "BesselI",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
+    wolframAlias: "BesselI",
     elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
@@ -6244,7 +6244,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "BesselK",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
+    wolframAlias: "BesselK",
     elsewhere: ["wolfram", "sympy", "mpmath"],
   },
   {
@@ -6475,7 +6475,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "ExpIntegralEi",
     provenance: "unknown",
     declared: null,
-    wolframAlias: null,
+    wolframAlias: "ExpIntegralEi",
     elsewhere: ["wolfram"],
   },
   {

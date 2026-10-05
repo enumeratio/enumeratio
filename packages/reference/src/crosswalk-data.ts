@@ -581,6 +581,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e233b0",
       "f303c9",
     ],
+    wolfram: "BesselI",
   },
   {
     name: "BesselJ",
@@ -636,6 +637,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "fd9add",
       "fda595",
     ],
+    wolfram: "BesselK",
   },
   {
     name: "BesselY",
@@ -2368,6 +2370,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "ExpIntegralE",
     wolfram: "ExpIntegralE",
+  },
+  {
+    name: "ExpIntegralEi",
+    wolfram: "ExpIntegralEi",
   },
   {
     name: "ExpToTrig",

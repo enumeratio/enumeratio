@@ -1,5 +1,5 @@
-id	in	out	tex.in	tex.out	verdict
-of-log-gamma	Derivative[1][LogGamma]	PolyGamma[0, #1] &	\text{log$\Gamma $}'	\psi ^{(0)}(\text{$\#$1})\&	disagree
-partial-of-beta	Derivative[0, 1][Beta]	Beta[#1, #2]*(PolyGamma[0, #2] - PolyGamma[0, #1 + #2]) &	B^{(0,1)}	(\psi ^{(0)}(\text{$\#$2})-\psi ^{(0)}(\text{$\#$1}+\text{$\#$2})) B(\text{$\#$1},\text{$\#$2})\&	disagree
-partial-of-zeta-in-a	Derivative[0, 1][Zeta]	-(#1*Zeta[1 + #1, #2]) &	\zeta ^{(0,1)}	-\text{$\#$1} \zeta (\text{$\#$1}+1,\text{$\#$2})\&	disagree
-of-gamma	Derivative[1][Gamma]	Gamma[#1]*PolyGamma[0, #1] &	\Gamma '	\Gamma (\text{$\#$1}) \psi ^{(0)}(\text{$\#$1})\&	disagree
+id	in	out	tex.in	tex.out
+of-log-gamma	Derivative[1][LogGamma]	PolyGamma[0, #1] &	\text{log$\Gamma $}'	\psi ^{(0)}(\text{$\#$1})\&
+partial-of-beta	Derivative[0, 1][Beta]	Beta[#1, #2]*(PolyGamma[0, #2] - PolyGamma[0, #1 + #2]) &	B^{(0,1)}	(\psi ^{(0)}(\text{$\#$2})-\psi ^{(0)}(\text{$\#$1}+\text{$\#$2})) B(\text{$\#$1},\text{$\#$2})\&
+partial-of-zeta-in-a	Derivative[0, 1][Zeta]	-(#1*Zeta[1 + #1, #2]) &	\zeta ^{(0,1)}	-\text{$\#$1} \zeta (\text{$\#$1}+1,\text{$\#$2})\&
+of-gamma	Derivative[1][Gamma]	Gamma[#1]*PolyGamma[0, #1] &	\Gamma '	\Gamma (\text{$\#$1}) \psi ^{(0)}(\text{$\#$1})\&

@@ -46,11 +46,20 @@ for (const [wl, ce] of Object.entries(REVERSE_PREFERRED)) REVERSE_HEADS[wl] = ce
 // of this small a grammar.
 let src = "";
 let pos = 0;
+let keepTags = false;
+
+/** What `fromWolfram` can be asked for beyond the expression itself. */
+export interface FromWolframOptions {
+  /** Keep a real's precision (`` x`15.95 ``) or accuracy (`` x``69.3 ``) mark, as a `precision` or
+   * `accuracy` key on its `{ num }`, instead of dropping it: what the number vouches for. */
+  readonly tags?: boolean;
+}
 
 /** Parse a Wolfram Language full-form expression into a MathJSON value. */
-export function fromWolfram(input: string): MathJson {
+export function fromWolfram(input: string, options: FromWolframOptions = {}): MathJson {
   src = input;
   pos = 0;
+  keepTags = options.tags === true;
   const result = parseExpr();
   skipWs();
   if (pos < src.length) {
@@ -97,16 +106,21 @@ function parsePrimary(): MathJson {
   throw new Error(`fromWolfram: unexpected character ${JSON.stringify(ch)} at ${pos}`);
 }
 
-/** Integer, real (`2.`, `2.5`), with an optional precision mark (`` 2.5`20. ``) and
- * `*^n` exponent — every number shape `FullForm` prints. The mark is dropped. */
-function parseNumber(): number {
-  const re = /-?\d+(\.\d*)?(`[\d.]*)?(\*\^[+-]?\d+)?/y;
+/** Integer, real (`2.`, `2.5`), with an optional precision mark (`` 2.5`20. ``), accuracy mark
+ * (`` 0``69.3 ``) and `*^n` exponent — every number shape `FullForm` prints. The mark is dropped
+ * unless `tags` asks for it (`FromWolframOptions`), which keeps the digits as text too: a real
+ * past double range (`9.9*^301029`) has no number to be. */
+function parseNumber(): MathJson {
+  const re = /-?\d+(\.\d*)?(?:(`{1,2})([\d.]*))?(\*\^[+-]?\d+)?/y;
   re.lastIndex = pos;
   const m = re.exec(src);
   if (!m) throw new Error(`fromWolfram: expected a number at ${pos}`);
   pos = re.lastIndex;
-  const text = m[0].replace(/`[\d.]*/, "").replace("*^", "e");
-  return Number(text);
+  const [, , ticks, marked] = m;
+  const text = m[0].replace(/`+[\d.]*/, "").replace("*^", "e");
+  const strength = Number(marked);
+  if (!keepTags || ticks === undefined || marked === "" || !Number.isFinite(strength)) return Number(text);
+  return ticks === "``" ? { num: text, accuracy: strength } : { num: text, precision: strength };
 }
 
 /** A Wolfram string literal, as the `'quoted'` MathJSON shorthand compute-engine's

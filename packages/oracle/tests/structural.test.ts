@@ -3,7 +3,16 @@ import { fromWolfram } from "@enumeratio/wolfram";
 import { describe, expect, test } from "vite-plus/test";
 import { compare, parsePython } from "../src/compare.ts";
 import type { MathJSON } from "../src/emit.ts";
-import { compareTrees, isNumericValue, type Leaf, reduce, symbolic, valuesOnly } from "../src/structural.ts";
+import {
+  type Approximate,
+  compareTrees,
+  isNumericValue,
+  type Leaf,
+  reduce,
+  scaled,
+  symbolic,
+  valuesOnly,
+} from "../src/structural.ts";
 
 // A stand-in for the caller's engine: it "evaluates" everything, the way compute-engine
 // evaluates a call Wolfram declined.
@@ -242,4 +251,29 @@ describe("comparison past the double range and of exact rationals", () => {
   test("a SymPy list of rationals parses", () => {
     expect(parsePython("[1/6, -1/30, 1/42]")).toEqual([1 / 6, -1 / 30, 1 / 42]);
   });
+});
+
+test("a real tagged with its precision or accuracy is compared within it", () => {
+  const tagged = (text: string) => reduce(fromWolfram(text, { tags: true }) as MathJSON, symbolic);
+  // Precision: relative error. Accuracy: absolute error, so a zero is zero within 10^-a.
+  expect(compareTrees(0.124, tagged("0.125`2."))).toBe("agree");
+  expect(compareTrees(0.2, tagged("0.125`2."))).toBe("disagree");
+  expect(compareTrees(-0, tagged("0``69.3"))).toBe("agree");
+  // The tag widens the tolerance, never narrows it: with a tight one, accuracy 69.3 is what bounds the zero.
+  expect(compareTrees(1e-75, tagged("0``69.3"), 1e-90)).toBe("agree");
+  expect(compareTrees(1e-60, tagged("0``69.3"), 1e-90)).toBe("disagree");
+  // Past double range, the scale and the leading figures decide.
+  const big = tagged("9.9006562292958982507`15.95*^301029");
+  expect(compareTrees(scaled("9.9006562292958982507e+301029") as Approximate, big)).toBe("agree");
+  expect(compareTrees(scaled("9.91e+301029") as Approximate, big)).toBe("disagree");
+  expect(compareTrees(9.9e300, big)).toBe("disagree");
+  expect(compareTrees("x", tagged("0.125`2."))).toBe("disagree");
+});
+
+test("scaled reads a decimal's mantissa and exponent", () => {
+  expect(scaled("-2.0e-340")).toEqual({ mantissa: -2, exponent: -340 });
+  expect(scaled("0.00123")).toEqual({ mantissa: 1.23, exponent: -3 });
+  expect(scaled("12500")).toEqual({ mantissa: 1.25, exponent: 4 });
+  expect(scaled("0.0")).toEqual({ mantissa: 0, exponent: 0 });
+  expect(scaled("abc")).toBeUndefined();
 });

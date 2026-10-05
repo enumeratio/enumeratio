@@ -16,8 +16,20 @@ import { DEFINED_NAMES } from "./defined-names-data.ts";
 import type { MathJSON } from "./emit.ts";
 import type { Verdict } from "./compare.ts";
 
+/**
+ * A real as `mantissa × 10^exponent` (1 <= |mantissa| < 10, or 0), for one a double cannot hold
+ * (`9.9*^301029`), and the error it vouches for: `relative` from a Wolfram precision mark
+ * (`` x`15.95 ``), `absolute` from an accuracy mark (`` 0``69.3 `` is zero within 10^-69.3).
+ */
+export interface Approximate {
+  readonly mantissa: number;
+  readonly exponent: number;
+  readonly relative?: number;
+  readonly absolute?: number;
+}
+
 /** What a leaf reduces to: a real, a complex, a truth value, or a canonical symbolic text. */
-export type Leaf = number | boolean | { readonly re: number; readonly im: number } | string;
+export type Leaf = number | boolean | { readonly re: number; readonly im: number } | string | Approximate;
 export type Tree = Leaf | readonly Tree[];
 
 /** Heads whose operands are compared element-wise. `Set` is reduced order-free. An `Interval`
@@ -126,6 +138,31 @@ export const valuesOnly =
   (expr: MathJSON): Leaf =>
     isNumericValue(expr) ? evaluate(expr) : symbolic(expr);
 
+/** A decimal's text (`-2.0e-340`, `9.9e+301029`) as mantissa and exponent, `undefined` when it is not one. */
+export function scaled(text: string): Approximate | undefined {
+  const m = /^([+-]?)(\d*)\.?(\d*)(?:[eE]([+-]?\d+))?$/.exec(text.trim());
+  if (m === null || (m[2] === "" && m[3] === "")) return undefined;
+  const figures = `${m[2]}${m[3]}`;
+  const lead = figures.search(/[1-9]/);
+  if (lead < 0) return { mantissa: 0, exponent: 0 };
+  const exponent = Number(m[4] ?? 0) + (m[2] as string).length - lead - 1;
+  return { mantissa: Number(`${m[1]}${figures[lead]}.${figures.slice(lead + 1) || "0"}`), exponent };
+}
+
+/** A tagged Wolfram real (`{ num, precision }` / `{ num, accuracy }`, as `fromWolfram` keeps it) as a leaf. */
+function taggedReal(expr: MathJSON): Approximate | undefined {
+  if (typeof expr !== "object" || expr === null || Array.isArray(expr)) return undefined;
+  const { num, precision, accuracy } = expr as { num?: unknown; precision?: unknown; accuracy?: unknown };
+  if (typeof num !== "string" || (typeof precision !== "number" && typeof accuracy !== "number")) return undefined;
+  const value = scaled(num);
+  if (value === undefined) return undefined;
+  return {
+    ...value,
+    ...(typeof precision === "number" ? { relative: 10 ** -precision } : {}),
+    ...(typeof accuracy === "number" ? { absolute: 10 ** -accuracy } : {}),
+  };
+}
+
 /**
  * Reduce `expr` to a comparable tree. `evaluate` turns a non-sequence node into a leaf —
  * a number when it has one, else its symbolic text (`symbolic` is a fine fallback).
@@ -192,6 +229,9 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
   if (Array.isArray(expr) && expr[0] === "Graph" && expr.length >= 3) {
     return reduceGraph(expr[1] as MathJSON, expr[2] as MathJSON, evaluate);
   }
+  // A real that states its own precision or accuracy is compared within it.
+  const tagged = taggedReal(expr);
+  if (tagged !== undefined) return tagged;
   if (typeof expr === "boolean") return expr;
   // Truth values are the symbols on both sides (fromWolfram reads `True` as "True"); an
   // evaluator that only reads values (`symbolic`, `valuesOnly`) would leave them as text.
@@ -288,7 +328,36 @@ function reduceGraph(vertices: MathJSON, edgeSpec: MathJSON, evaluate: (expr: Ma
 const close = (a: number, b: number, tolerance: number): boolean =>
   Number.isNaN(a) && Number.isNaN(b) ? true : Math.abs(a - b) <= tolerance * Math.max(1, Math.abs(a), Math.abs(b));
 
-const isComplex = (leaf: Leaf): leaf is { re: number; im: number } => typeof leaf === "object" && leaf !== null;
+const isComplex = (leaf: Leaf): leaf is { re: number; im: number } =>
+  typeof leaf === "object" && leaf !== null && "re" in leaf;
+
+const isApproximate = (leaf: Leaf): leaf is Approximate =>
+  typeof leaf === "object" && leaf !== null && "mantissa" in leaf;
+
+const scaledNumber = (n: number): Approximate | undefined =>
+  Number.isFinite(n) ? scaled(n.toExponential()) : undefined;
+
+const toDouble = (a: Approximate): number => Number(`${a.mantissa}e${a.exponent}`);
+
+/**
+ * Two reals, either of which may be approximate, within the loosest error either vouches for
+ * (never tighter than `tolerance`). Past double range only the mantissas can be compared, which
+ * is the relative error: a real that far out must agree in scale and in its leading figures.
+ */
+function approximatelyEqual(a: Approximate | number, b: Approximate | number, tolerance: number): boolean {
+  const [x, y] = [a, b].map((n) => (typeof n === "number" ? scaledNumber(n) : n));
+  if (x === undefined || y === undefined) return Object.is(a, b);
+  const relative = Math.max(tolerance, x.relative ?? 0, y.relative ?? 0);
+  const absolute = Math.max(x.absolute ?? 0, y.absolute ?? 0);
+  const [dx, dy] = [toDouble(x), toDouble(y)];
+  if (Number.isFinite(dx) && Number.isFinite(dy)) {
+    return Math.abs(dx - dy) <= Math.max(absolute, relative * Math.max(1, Math.abs(dx), Math.abs(dy)));
+  }
+  if (x.mantissa * y.mantissa <= 0 || Math.abs(x.exponent - y.exponent) > 1) return false;
+  const shift = 10 ** (x.exponent - y.exponent);
+  const gap = Math.abs(x.mantissa * shift - y.mantissa);
+  return gap <= relative * Math.max(Math.abs(x.mantissa * shift), Math.abs(y.mantissa));
+}
 
 /** Compare two reduced trees: element-wise, numerically within `tolerance`, textually
  * last. Never `inconclusive`: a parsed answer is always either the same or different. */
@@ -311,6 +380,12 @@ export function compareTrees(ours: Tree, theirs: Tree, tolerance = 1e-9): Verdic
     return close(a, b, tolerance) ? "agree" : "disagree";
   }
   if (typeof a === "boolean" || typeof b === "boolean") return a === b ? "agree" : "disagree";
+  if (isApproximate(a) || isApproximate(b)) {
+    const real = (leaf: Leaf): Approximate | number | undefined =>
+      typeof leaf === "number" || isApproximate(leaf) ? leaf : undefined;
+    const [x, y] = [real(a), real(b)];
+    return x !== undefined && y !== undefined && approximatelyEqual(x, y, tolerance) ? "agree" : "disagree";
+  }
   if (isComplex(a) || isComplex(b)) {
     const ca = isComplex(a) ? a : typeof a === "number" ? { re: a, im: 0 } : undefined;
     const cb = isComplex(b) ? b : typeof b === "number" ? { re: b, im: 0 } : undefined;

@@ -143,3 +143,45 @@ test("a call ours holds never agrees with the value Wolfram computed from it", (
     ] as never),
   ).toBe("agree");
 });
+
+test("a Wolfram real is compared within the precision it is tagged with, even past double range", () => {
+  const huge = "9.9006562292958982506979236163019032507`15.95*^301029";
+  const answer = { value: huge, numeric: huge };
+  expect(verdictOf("wolfram", { num: "9.9006562292958982507e+301029" }, answer)).toBe("agree");
+  // A different leading figure, or a different scale, is a disagreement however far out it sits.
+  expect(verdictOf("wolfram", { num: "9.9106562292958982507e+301029" }, answer)).toBe("disagree");
+  expect(verdictOf("wolfram", { num: "9.9006562292958982507e+301028" }, answer)).toBe("disagree");
+  // A tagged value in range is read within its tag: 0.125 at precision 2 holds 0.124.
+  const low = { value: "0.125`2.", numeric: "0.125`2." };
+  expect(verdictOf("wolfram", 0.124, low)).toBe("agree");
+  expect(verdictOf("wolfram", 0.2, low)).toBe("disagree");
+});
+
+test("an accuracy-qualified zero is zero within that accuracy, and N(x, d) rows still ask for their digits", () => {
+  const zero = { value: "0``69.3", numeric: "0``69.3", shown: "0." };
+  expect(verdictOf("wolfram", { num: "-2.0e-340" }, zero, undefined, true)).toBe("agree");
+  // The accuracy, not the default tolerance, bounds the zero when the tolerance is tighter than it.
+  expect(verdictOf("wolfram", 1e-50, zero, 1e-90, true)).toBe("disagree");
+  const shown = { value: "0.125`2.", numeric: "0.125`2.", shown: "0.13" };
+  expect(verdictOf("wolfram", 0.12, shown, 0.05, true)).toBe("disagree");
+});
+
+test("a pure function is the same up to renaming its bound variables", () => {
+  const slots = "Function[PolyGamma[0, Slot[1]]]";
+  const named = ["Function", ["Block", ["PolyGamma", 0, "z"]], "z"];
+  const answer = { value: slots, numeric: slots };
+  expect(verdictOf("wolfram", named, answer)).toBe("agree");
+  expect(verdictOf("wolfram", ["Function", ["Block", ["PolyGamma", 0, "w"]], "w"], answer)).toBe("agree");
+  expect(verdictOf("wolfram", ["Function", ["Block", ["PolyGamma", 1, "z"]], "z"], answer)).toBe("disagree");
+  // Another arity is another function, and parameters are matched by position.
+  expect(verdictOf("wolfram", ["Function", ["Block", ["PolyGamma", 0, "z"]], "z", "y"], answer)).toBe("disagree");
+  const two = { value: "Function[Subtract[Slot[1], Slot[2]]]", numeric: "Function[Subtract[Slot[1], Slot[2]]]" };
+  expect(verdictOf("wolfram", ["Function", ["Subtract", "a", "b"], "a", "b"], two)).toBe("agree");
+  expect(verdictOf("wolfram", ["Function", ["Subtract", "b", "a"], "a", "b"], two)).toBe("disagree");
+});
+
+test("ConditionalExpression is compared by its value", () => {
+  const wrapped = "ConditionalExpression[Power[x, 2], GreaterEqual[x, 0]]";
+  expect(verdictOf("wolfram", ["Power", "x", 2], { value: wrapped, numeric: wrapped })).toBe("agree");
+  expect(verdictOf("wolfram", ["Power", "x", 3], { value: wrapped, numeric: wrapped })).toBe("disagree");
+});

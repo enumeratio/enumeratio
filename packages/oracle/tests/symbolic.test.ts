@@ -1,8 +1,12 @@
 import { expect, test } from "vite-plus/test";
 import {
+  alignFunctions,
+  boundVariables,
   discreteVariables,
   interpretSymbolicAgreement,
   leavesCall,
+  lookThroughConditions,
+  positiveVariables,
   stepVariables,
   symbolicAgreementSource,
 } from "../src/symbolic.ts";
@@ -14,12 +18,15 @@ import {
 const expr = ["Add", "x", "x"];
 const expected = ["Multiply", 2, "x"];
 
+// Their side is read through any ConditionalExpression before the difference is taken.
+const through = (source: string): string => `ReplaceAll[${source}, ConditionalExpression[e_, _] :> e]`;
+
 test("wolfram: FullSimplify of the difference, with 3 fixed-rational trials as a fallback", () => {
   expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBe(
-    "Module[{d = Quiet[TimeConstrained[FullSimplify[(Plus[x, x]) - (Times[2, x])], 10, $Aborted]]}, " +
-      "If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {Chop[N[(Plus[Rational[7, 3], Rational[7, 3]]) - (Times[2, Rational[7, 3]])]], " +
-      "Chop[N[(Plus[Rational[-11, 5], Rational[-11, 5]]) - (Times[2, Rational[-11, 5]])]], " +
-      "Chop[N[(Plus[Rational[13, 4], Rational[13, 4]]) - (Times[2, Rational[13, 4]])]]}}, " +
+    `Module[{d = Quiet[TimeConstrained[FullSimplify[(${through("Plus[x, x]")}) - (Times[2, x])], 10, $Aborted]]}, ` +
+      `If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {Chop[N[(${through("Plus[Rational[7, 3], Rational[7, 3]]")}) - (Times[2, Rational[7, 3]])]], ` +
+      `Chop[N[(${through("Plus[Rational[-11, 5], Rational[-11, 5]]")}) - (Times[2, Rational[-11, 5]])]], ` +
+      `Chop[N[(${through("Plus[Rational[13, 4], Rational[13, 4]]")}) - (Times[2, Rational[13, 4]])]]}}, ` +
       "s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]",
   );
 });
@@ -173,5 +180,70 @@ test("a relation answer is compared as a statement, not by its spelling", () => 
     ["x", "y"],
   ) as string;
   expect(source).toContain("Equivalent[t, o]");
-  expect(source).toContain("agree[FunctionRange[Exp[x], x, y], Less[0, y]]");
+  expect(source).toContain(`agree[${through("FunctionRange[Exp[x], x, y]")}, Less[0, y]]`);
+});
+
+test("alignFunctions: a pure function is replaced by ours when it is the same one renamed", () => {
+  const ours = ["List", ["Function", ["Block", ["Add", "x", 1]], "x"]];
+  expect(alignFunctions(["List", ["Function", ["Add", "_1", 1]]], ours)).toEqual(ours);
+  const other = ["List", ["Function", ["Add", "_1", 2]]];
+  expect(alignFunctions(other, ours)).toEqual(other);
+});
+
+test("lookThroughConditions: a ConditionalExpression is its value", () => {
+  const wrapped = ["List", ["ConditionalExpression", ["Divide", 1, "s"], ["Greater", "s", 0]]];
+  expect(lookThroughConditions(wrapped)).toEqual(["List", ["Divide", 1, "s"]]);
+});
+
+test("a Wolfram answer is read through ConditionalExpression before the difference is taken", () => {
+  const source = symbolicAgreementSource("wolfram", ["Divide", 1, "s"], ["Divide", 1, "s"], ["s"]) as string;
+  expect(source).toContain("ConditionalExpression[e_, _] :> e");
+});
+
+test("leavesCall: a held call is held however its factors are ordered or grouped", () => {
+  const call = [
+    "LaplaceTransform",
+    [
+      "Multiply",
+      ["Divide", 1, ["Sqrt", "t"]],
+      ["ChebyshevT", "n", ["Multiply", ["Divide", 1, ["Add", "t", 1]], ["Add", ["Negate", "t"], 1]]],
+      ["Power", ["Add", "t", 1], "n"],
+    ],
+    "t",
+    "s",
+  ] as never;
+  const held = [
+    "LaplaceTransform",
+    [
+      "Divide",
+      [
+        "Multiply",
+        ["ChebyshevT", "n", ["Divide", ["Add", ["Negate", "t"], 1], ["Add", "t", 1]]],
+        ["Power", ["Add", "t", 1], "n"],
+      ],
+      ["Sqrt", "t"],
+    ],
+    "t",
+    "s",
+  ] as never;
+  expect(leavesCall(call, held)).toBe(true);
+  // Another function is not the same call.
+  expect(leavesCall(call, ["LaplaceTransform", ["Divide", ["Cos", "t"], ["Sqrt", "t"]], "t", "s"] as never)).toBe(
+    false,
+  );
+});
+
+test("a transform's result variable is sampled at positive values, and the one it integrates over not at all", () => {
+  const transform = ["LaplaceTransform", ["Divide", 1, ["Sqrt", "t"]], "t", "s"] as never;
+  expect([...positiveVariables(transform)]).toEqual(["s"]);
+  expect([...boundVariables(transform)]).toEqual(["t"]);
+  expect(positiveVariables(["Add", "x", "y"] as never).size).toBe(0);
+  const source = symbolicAgreementSource("wolfram", transform, ["Divide", ["Sqrt", "Pi"], ["Sqrt", "s"]] as never, [
+    "s",
+    "t",
+  ]) as string;
+  expect(source).toContain("Rational[7, 3]");
+  expect(source).not.toMatch(/Rational\[-\d+, \d+\]/);
+  // The integration variable stays the call's own: with `t` a number it would be no transform at all.
+  expect(source).toContain("LaplaceTransform[Divide[1, Sqrt[t]], t, Rational[7, 3]]");
 });
