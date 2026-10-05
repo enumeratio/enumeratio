@@ -1,9 +1,8 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareBraid } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareBraid(ce);
+const ce = createEngine(declareBraid);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 const same = (input: Expr, expected: Expr) =>
@@ -47,8 +46,7 @@ test("the Alexander polynomial comes back as algebra, not a coefficient list", (
   // which is 3 for the trefoil and 5 for the figure-eight.
   const at = (input: Expr, value: number) => {
     // A throwaway engine, because an assignment to `t` would leak into later examples.
-    const local = new ComputeEngine();
-    declareBraid(local);
+    const local = createEngine(declareBraid);
     local.assign("t", value);
     // Twice: the head hands back a fresh expression, which then needs evaluating itself.
     return local.box(input).evaluate().evaluate().json;

@@ -1,14 +1,12 @@
-import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import type { Json } from "@enumeratio/engine";
+import { bareEngine, createLatexEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, declareCombinatoricsCarriers } from "../src/carriers.ts";
-import { commandFor, triggerFor } from "../src/carrier-latex.ts";
+import { carrierLatex, commandFor, triggerFor } from "../src/carrier-latex.ts";
 import { notation } from "../src/notation.ts";
 
-const ce = new ComputeEngine({
-  latexSyntax: new LatexSyntax({ dictionary: [...LATEX_DICTIONARY, ...(notation.latex as never[])] }),
-});
-declareCombinatoricsCarriers(ce);
-const latex = (expr: unknown): string => ce.box(expr as never).latex;
+const ce = createLatexEngine(carrierLatex(CARRIERS), declareCombinatoricsCarriers);
+const latex = (expr: unknown): string => ce.box(expr as Json).latex;
 const parse = (tex: string): unknown => ce.parse(tex).json;
 
 function permutations(n: number): number[][] {
@@ -22,7 +20,7 @@ function permutations(n: number): number[][] {
 test("conventional notation doesn't read back on its own", () => {
   // A person reading `2\,3\,1` knows it is a permutation from the page around it; a parser
   // has no such reader, and LaTeX parentheses group rather than write cycles.
-  const bare = new ComputeEngine();
+  const bare = bareEngine();
   expect(bare.parse("2\\,3\\,1").json).toBe(231);
   expect(bare.parse("(1\\,2\\,3)").json).toBe(123);
 });

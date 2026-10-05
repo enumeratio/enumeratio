@@ -2,7 +2,7 @@
 // link invariants, torus and pretzel presentations. Each head's is data,
 // `reference/<Head>/notation.json`, compiled here, but for the braid word below.
 
-import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import type { Json } from "@enumeratio/engine";
 import {
   combineNotation,
   compileNotation,
@@ -16,7 +16,7 @@ import {
 import { NOTATION_DATA } from "./notation.generated.ts";
 
 /** A literal list of numbers, or `undefined`. */
-const numbers = (x: MathJsonExpression | undefined): number[] | undefined => {
+const numbers = (x: Json | undefined): number[] | undefined => {
   if (!Array.isArray(x) || x[0] !== "List") return undefined;
   const items = (x as readonly unknown[]).slice(1);
   return items.every((e) => typeof e === "number") ? (items as number[]) : undefined;

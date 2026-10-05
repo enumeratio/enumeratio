@@ -1,18 +1,10 @@
-// unstable: an engine built with this package's LaTeX dictionary merged in; createEngine takes no dictionary, no LatexRule hook yet
 import type { Json } from "@enumeratio/engine";
-import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@enumeratio/engine/unstable";
+import { createLatexEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareResidues } from "../src/declare.ts";
 import { RESIDUES_LATEX } from "../src/latex.ts";
 
-// Merged as notatio's engine does: an entry for a name replaces the default one.
-const redefined = new Set(RESIDUES_LATEX.map((e) => e.name));
-const ce = new ComputeEngine({
-  latexSyntax: new LatexSyntax({
-    dictionary: [...LATEX_DICTIONARY.filter((e) => !redefined.has(e.name)), ...RESIDUES_LATEX],
-  }),
-});
-declareResidues(ce);
+const ce = createLatexEngine(RESIDUES_LATEX, declareResidues);
 const parse = (tex: string): unknown => ce.parse(tex).json;
 const latex = (expr: unknown): string => ce.box(expr as Json).latex;
 

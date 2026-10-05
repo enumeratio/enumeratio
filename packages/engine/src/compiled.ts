@@ -102,6 +102,18 @@ export function compileTyped(
   }
 }
 
+/** `expr` compiled to a plain JS function of its free variables, or undefined when the compiler
+ *  has no lowering for something in it. For a hot loop that would otherwise `subs` and `N` per
+ *  point; the caller keeps the symbolic route as its fallback. */
+export function compileExpression(expr: BoxedExpression): CompiledRun | undefined {
+  try {
+    const result = new JavaScriptTarget().compile(expr.canonical) as { success?: boolean; run?: CompiledRun };
+    return result.success === true && typeof result.run === "function" ? result.run : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 const helpersByEngine = new WeakMap<ComputeEngine, unknown>();
 
 /** compute-engine's runtime helpers (`_SYS`), which generated code calls into. They belong to an
