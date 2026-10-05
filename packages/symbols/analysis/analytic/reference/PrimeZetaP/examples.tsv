@@ -2,6 +2,6 @@ id	section	role	expr	expected	known	tolerance	source	caption	triage	wolfram.note
 sum-p-1-p-2			[N, [PrimeZetaP, 2]]	0.4522474200410655	{num: "0.4522474200410655"}	1e-9	Wolfram 15.0.0 PrimeZetaP	$\sum_p 1/p^2$		
 n-primezetap-3			[N, [PrimeZetaP, 3]]	0.17476263929944355	{num: "0.17476263929944352"}	1e-9	Wolfram 15.0.0 PrimeZetaP			
 n-primezetap-4		test	[N, [PrimeZetaP, 4]]	0.07699313976424685	{num: "0.07699313976424685"}	1e-9	Wolfram 15.0.0 PrimeZetaP			
-n-primezetap-2-50		triage	[N, [PrimeZetaP, 2], 50]	0.4522474200410655					gap	our N(head(...), n) for n past double (machine) precision returns only the double-precision digits (confirmed: ours agrees with Wolfram's 50-digit answer through round-off at ~16 significant digits, then stops) — no arbitrary-precision kernel implemented for this special-function family. Real feature gap (a BigDecimal/arbitrary-precision implementation per family), too big for this lane.
+n-primezetap-2-50			[N, [PrimeZetaP, 2], 50]	{num: "0.45224742004106549850654336483224793417323134323989"}						
 primezetap-2p5	Scope		[PrimeZetaP, 2.5]	0.273680737993234	{num: "0.2736807379932342"}	1e-9	Wolfram 15.0.0 PrimeZetaP			
-n-primezetap-4-over-11-50	Scope	triage	[N, [PrimeZetaP, [Rational, 4, 11]], 50]	[PrimeZetaP, {num: "0.36363636363636363636363636363636363636363636363636"}]					gap	PrimeZetaP has no numeric evaluator at all; N() leaves it symbolic with a float-coerced argument.
+n-primezetap-4-over-11-50	Scope	triage	[N, [PrimeZetaP, [Rational, 4, 11]], 50]	[PrimeZetaP, {num: "0.36363636363636363636363636363636363636363636363636"}]					gap	the Moebius/zeta identity only converges for Re(s) > 1, so s = 4/11 stays unevaluated; Wolfram continues it with principal logarithms (imaginary part pi/2 here).

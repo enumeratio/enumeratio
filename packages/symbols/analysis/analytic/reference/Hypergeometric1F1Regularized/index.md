@@ -27,3 +27,4 @@ names:
 
 - compute-engine declares `Hypergeometric1F1` itself (real and complex $z$) but not this regularized form. Computed by the same $1/\Gamma$-per-term series as [[Hypergeometric0F1Regularized]], so it stays finite at $b$ a nonpositive integer rather than dividing by `Gamma(b)`'s pole there.
 - Entire in $z$ ($p = q$ for this series), so never declines on $z$.
+- `N(x, d)` past a double's digits runs a BigDecimal series for real arguments, to $d$ digits; a complex argument stays unevaluated there rather than print a double's digits as if they were $d$.

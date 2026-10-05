@@ -1,6 +1,14 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { BigDecimal, BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
+  atDigits,
+  bigAdd,
+  bigCx,
+  bigLog,
+  bigRealOperand,
+  bigResult,
+  exceedsDoublePrecision,
+  zetaGeneralizedBig,
   isFiniteNum,
   numberResult,
   wantsNumber,
@@ -46,6 +54,29 @@ function primeZetaP(ce: ComputeEngine, s: Cx): Cx {
   return sum;
 }
 
+/**
+ * The same identity on the bignum ζ kernel, for real s > 1: each ln ζ(ks) is below 2^(−ks), so
+ * K = ⌈digits·log₂10/s⌉ terms clear the digits asked for. Working precision also covers the
+ * size of P(s) itself, which is about 2^(−s): a large s has few significant digits left.
+ */
+function primeZetaPBig(ce: ComputeEngine, s: BigDecimal, digits: number): BigDecimal | undefined {
+  const sd = s.toNumber();
+  const working = digits + 15 + Math.ceil(sd * Math.log10(2));
+  const terms = Math.ceil((working * Math.log2(10)) / sd) + 2;
+  return atDigits(working, () => {
+    let sum = bigCx(0);
+    for (let k = 1; k <= terms; k++) {
+      const mu = moebiusMu(ce, k);
+      if (mu === 0) continue;
+      const zeta = zetaGeneralizedBig(bigCx(s.mul(k)), bigCx(1), working);
+      if (zeta === undefined) return undefined;
+      const term = bigLog(zeta);
+      sum = bigAdd(sum, { re: term.re.mul(mu).div(k), im: term.im.mul(mu).div(k) });
+    }
+    return sum.re.toPrecision(digits);
+  });
+}
+
 export function declarePrimeZetaP(ce: ComputeEngine): void {
   ce.declare("PrimeZetaP", {
     signature: "(number) -> number",
@@ -55,6 +86,12 @@ export function declarePrimeZetaP(ce: ComputeEngine): void {
       // The Möbius/ζ identity only converges for Re(s) > 1 — decline rather than guess at
       // an analytic continuation past the region it actually proves.
       if (s.re <= 1) return undefined;
+      // Past a double's digits: the bignum series for real s, else decline rather than pad.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+        const big = bigRealOperand(ce, s);
+        const value = big === undefined ? undefined : primeZetaPBig(ce, big, ce.precision);
+        return value === undefined ? undefined : bigResult(ce, value);
+      }
       return numberResult(ce, primeZetaP(ce, cx(s.re, s.im)));
     },
   });
