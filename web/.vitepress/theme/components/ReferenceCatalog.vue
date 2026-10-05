@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { ResolvedReference } from "@enumeratio/reference";
 import { computed, ref } from "vue";
+import { renderInline } from "../../prose.ts";
 import Crosswalk from "./Crosswalk.vue";
 
 // A generic reference *catalogue* — the flat, scannable list a class of things wants
@@ -68,7 +69,9 @@ const linked = computed(() => shown.value.filter((r) => r.references?.length).le
             <span v-for="b in r.badges" :key="b" class="ref-cat-badge">{{ b }}</span>
           </td>
           <td class="ref-cat-summary">
-            {{ r.summary }}<span v-if="r.note" class="ref-cat-note"> — {{ r.note }}</span>
+            <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
+            <span v-html="renderInline(r.summary ?? '')"></span
+            ><span v-if="r.note" class="ref-cat-note"> — {{ r.note }}</span>
           </td>
           <td v-if="anyReferences" class="ref-cat-refs">
             <Crosswalk v-if="r.references?.length" :references="r.references" inline />
