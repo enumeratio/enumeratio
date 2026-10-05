@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { inlineCalls, isCacheableDefinition } from "../src/compiled.ts";
+import { compileExpression, inlineCalls, isCacheableDefinition } from "../src/compiled.ts";
 
 const ce = new ComputeEngine();
 const cacheable = (expression: unknown): boolean => isCacheableDefinition(ce, expression, { _x: "integer" });
@@ -26,4 +26,8 @@ test("a call to one of our definitions expands into it, without capturing the ar
   const expanded = inlineCalls(["Function", ["Double", ["Permutation", ["List", "i"]]], "i"], lookup);
   expect(expanded).toEqual(["Function", ["Map", ["Function", ["Multiply", 2, "_c1_1"], "_c1_1"], ["List", "i"]], "i"]);
   expect(ce.box(["At", ["Apply", expanded, 5], 1] as never).evaluate().json).toEqual(10);
+});
+
+test("compileExpression gives a function of the free variables", () => {
+  expect(compileExpression(ce.box(["Add", ["Multiply", "t", "t"], 1]))?.({ t: 3 })).toBe(10);
 });

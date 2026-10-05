@@ -7,6 +7,7 @@ export default defineConfig({
       compiled: "src/compiled.ts",
       testing: "src/testing.ts",
       unstable: "src/unstable.ts",
+      "unstable-latex-syntax": "src/unstable-latex-syntax.ts",
     },
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo" },

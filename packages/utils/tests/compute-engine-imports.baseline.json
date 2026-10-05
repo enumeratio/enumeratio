@@ -166,7 +166,6 @@
   "packages/symbols/analysis/analytic/tests/trig-reduction.test.ts",
   "packages/symbols/analysis/analytic/tests/wgsl-complex.test.ts",
   "packages/symbols/analysis/analytic/tests/widened.test.ts",
-  "packages/symbols/arithmetic/residues/src/latex.ts",
   "packages/symbols/combinatorics/combinatorics/collections/scripts/plausible-worker.ts",
   "packages/symbols/combinatorics/combinatorics/collections/src/arith-heads.ts",
   "packages/symbols/combinatorics/combinatorics/collections/src/control.ts",
@@ -251,7 +250,6 @@
   "packages/symbols/combinatorics/combinatorics/set-partitions/src/declare.ts",
   "packages/symbols/combinatorics/combinatorics/set-partitions/tests/epsil-families.test.ts",
   "packages/symbols/combinatorics/combinatorics/set-partitions/tests/statistics-helpers.ts",
-  "packages/symbols/combinatorics/combinatorics/src/carrier-latex.ts",
   "packages/symbols/combinatorics/combinatorics/src/carriers.ts",
   "packages/symbols/combinatorics/combinatorics/src/compiled.ts",
   "packages/symbols/combinatorics/combinatorics/src/index.ts",
@@ -275,7 +273,6 @@
   "packages/symbols/combinatorics/combinatorics/tests/map-entries.test.ts",
   "packages/symbols/combinatorics/combinatorics/tests/maps-frontier-permutation.test.ts",
   "packages/symbols/combinatorics/combinatorics/tests/maps-helpers.ts",
-  "packages/symbols/combinatorics/combinatorics/tests/notation.test.ts",
   "packages/symbols/combinatorics/combinatorics/tests/statistics-carrier-equivalence.test.ts",
   "packages/symbols/combinatorics/combinatorics/tests/statistics-carrier-restriction.test.ts",
   "packages/symbols/combinatorics/combinatorics/tests/statistics-carrier-typed-collection-statistics.test.ts",
@@ -317,8 +314,5 @@
   "packages/symbols/evaluation/evaluation/tests/kernel.test.ts",
   "packages/symbols/evaluation/evaluation/tests/memory-constrained.test.ts",
   "packages/symbols/evaluation/evaluation/tests/time-constrained.test.ts",
-  "packages/symbols/evaluation/evaluation/tests/verification-test.test.ts",
-  "packages/symbols/groups/braid/src/declare.ts",
-  "packages/symbols/groups/braid/src/notation.ts",
-  "packages/symbols/groups/braid/tests/heads.test.ts"
+  "packages/symbols/evaluation/evaluation/tests/verification-test.test.ts"
 ]

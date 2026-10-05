@@ -19,8 +19,9 @@ top of this one — it has no workspace dependencies of its own.
   deadline frame.
 - **`src/random.ts`** — the one `Random` head, drawing from a seeded stream per engine
   ([Random](https://github.com/enumeratio/enumeratio/wiki/Random)); Wolfram's `RandomInteger` / `RandomVariate` rewrite to it.
-- **`src/latex.ts`** — the `Power` LaTeX dictionary entry every host dictionary should use in
-  place of compute-engine's native one (correct parenthesisation of the base).
+- **`src/latex.ts`** — the `LatexRule` hook: a library declares how a head reads and writes
+  LaTeX as a `LatexDictionaryEntry` narrowed to the parser and serializer methods libraries
+  call (`LatexReader`, `LatexWriter`); `latexEntries` is where it becomes compute-engine's own.
 - **`src/inputform.ts`** — `toInputForm`: an expression printed as Epsil you could retype,
   over compute-engine's `serializeEpsil`. Here so `ToString` needs no format registry;
   `@enumeratio/formats/inputform` re-exports it.
@@ -34,11 +35,15 @@ top of this one — it has no workspace dependencies of its own.
   importing compute-engine are in `packages/utils/tests/compute-engine-imports.baseline.json`,
   which may only shrink.
 - **`./testing` (`src/testing.ts`)** — `createEngine(...declares)`: a fresh engine with the
-  given `declareX` steps applied in order; `bareEngine()`: one with nothing declared.
+  given `declareX` steps applied in order; `bareEngine()`: one with nothing declared;
+  `createLatexEngine(rules, ...declares)`: one whose LaTeX dictionary has the `LatexRule`s.
 - **`./unstable` (`src/unstable.ts`)** — the full compute-engine API, outside semver. Each use
-  carries an `// unstable: <reason>` comment.
+  carries an `// unstable: <reason>` comment. **`./unstable/latex-syntax`** is the same for
+  compute-engine's `/latex-syntax`.
 - **`./compiled` (`src/compiled.ts`)** — a separate entry so only packages that actually
-  compile Epsil to JavaScript pull in compute-engine's compiler.
+  compile to JavaScript pull in compute-engine's compiler. `compileExpression` lowers an
+  expression to a function of its free variables; a head's own lowering is its definition's
+  `compile` field (`CompileHandler`).
 
 ## Commands
 
