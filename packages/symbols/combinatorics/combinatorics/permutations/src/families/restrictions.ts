@@ -783,6 +783,300 @@ const nonCrossingPermutations: EpsilFamily = permutationRestriction({
   ),
 });
 
+// Vexillary: Av(2143). Over the m free values' ranks, a prefix leaves two kinds of constraint:
+// past a prefix inversion b > a, the free ranks above b's (t, the least such) must come
+// increasing; and a prefix value between free ranks s and s + 1 (a cut, s < t) makes the ranks
+// above s increase once a rank ≤ s has appeared. A prefix 2-1-4 with a free value between its 2
+// and 4 has none. V(m, t, S), S the set of cuts, is the same for every prefix that leaves it, so
+// it is tabulated once per n over every state: the next value is rank t + 1 (the state stays,
+// one rank fewer) or a rank x ≤ t, which sets t below the least cut ≥ x and adds the cut x − 1.
+// Block m holds 2^m states: t = 0 first, then each t ≥ 1 with its 2^(t − 1) sets of cuts in
+// 1..t − 1, S read as a binary number. The table has 2^(n + 1) − 1 entries, so this is
+// exponential in n, if far short of n!.
+const vexIndex = (m: MathJSON, t: MathJSON, cuts: MathJSON): MathJSON =>
+  add(sub(["Power", 2, m], 1), iff(equal(t, 0), 0, add(["Power", 2, sub(t, 1)], quotient(cuts, 2))), 1);
+const bit = (set: MathJSON, b: MathJSON): MathJSON => equal(["Mod", quotient(set, ["Power", 2, b]), 2], 1);
+/** V(m, t, S) from the smaller blocks already in `vt`. */
+const vexEntry = lets(
+  [
+    ["vm", "vb", "integer"],
+    [
+      "vt0",
+      fold(iff(["LessEqual", ["Power", 2, sub("vk", 1)], "ve"], "vk", "vtk"), "vtk", "vk", 0, upTo(1, "vm")),
+      "integer",
+    ],
+    ["vs0", iff(equal("vt0", 0), 0, mul(2, sub("ve", ["Power", 2, sub("vt0", 1)]))), "integer"],
+  ],
+  iff(
+    ["LessEqual", "vm", 1],
+    1,
+    sum(
+      (x) =>
+        iff(
+          equal(x, add("vt0", 1)),
+          at("vt", vexIndex(sub("vm", 1), "vt0", "vs0")),
+          lets(
+            [
+              [
+                "vt2",
+                [
+                  "Min",
+                  sub("vm", 1),
+                  fold(
+                    iff(bit("vs0", "vq"), ["Min", "vtq", sub("vq", 1)], "vtq"),
+                    "vtq",
+                    "vq",
+                    sub("vt0", 1),
+                    upTo(x, sub("vt0", 1)),
+                  ),
+                ],
+                "integer",
+              ],
+              ["vlow", ["Mod", "vs0", ["Power", 2, x]], "integer"],
+              [
+                "vs2",
+                add(
+                  "vlow",
+                  iff(
+                    and(["LessEqual", 2, x], ["LessEqual", x, sub("vm", 1)], ["Not", bit("vlow", sub(x, 1))]),
+                    ["Power", 2, sub(x, 1)],
+                    0,
+                  ),
+                ),
+                "integer",
+              ],
+            ],
+            at(
+              "vt",
+              vexIndex(sub("vm", 1), "vt2", iff(["GreaterEqual", "vt2", 1], ["Mod", "vs2", ["Power", 2, "vt2"]], 0)),
+            ),
+          ),
+        ),
+      "vx",
+      1,
+      ["Min", add("vt0", 1), "vm"],
+    ),
+  ),
+);
+const vexTable = fold(
+  ["Join", "vt", tabulate(vexEntry, "ve", 0, sub(["Power", 2, "vb"], 1))],
+  "vt",
+  "vb",
+  ["List"],
+  upTo(0, n),
+);
+/** Free values below v. */
+const freeUnder = (v: MathJSON): MathJSON => at("fr", v);
+const vexDescent = (i: string, j: string): MathJSON => ["Greater", pre(i), pre(j)];
+const vexillaryPermutations: EpsilFamily = permutationRestriction({
+  head: "VexillaryPermutations",
+  carrier: "Permutation",
+  paramCount: 1,
+  params: [n],
+  declared: {
+    carrier: "Permutation",
+    params: [{ name: "size", role: "axis", min: 0 }],
+    cost: { count: "enumerative", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+    // At least the count (Av(2143) is Wilf-equivalent to Av(1234), at most 9^n) and the table.
+    work: ([size]) => 9n ** BigInt(size),
+  },
+  tables: ["vex", vexTable],
+  taken: true,
+  predicate: [
+    "Not",
+    fold(
+      [
+        "Or",
+        "vpl_",
+        fold(
+          [
+            "Or",
+            "vpk_",
+            fold(
+              [
+                "Or",
+                "vpj_",
+                fold(
+                  [
+                    "Or",
+                    "vpi_",
+                    and(
+                      less(at("_x", "vpj"), at("_x", "vpi")),
+                      less(at("_x", "vpi"), at("_x", "vpl")),
+                      less(at("_x", "vpl"), at("_x", "vpk")),
+                    ),
+                  ],
+                  "vpi_",
+                  "vpi",
+                  "False",
+                  upTo(1, sub("vpj", 1)),
+                ),
+              ],
+              "vpj_",
+              "vpj",
+              "False",
+              upTo(1, sub("vpk", 1)),
+            ),
+          ],
+          "vpk_",
+          "vpk",
+          "False",
+          upTo(1, sub("vpl", 1)),
+        ),
+      ],
+      "vpl_",
+      "vpl",
+      "False",
+      upTo(1, n),
+    ),
+  ],
+  completions: lets(
+    [
+      [
+        "fr",
+        fold(
+          ["ReplaceAt", "fs", add("fv", 1), add(at("fs", "fv"), iff(used("fv"), 0, 1))],
+          "fs",
+          "fv",
+          map(0, "fz", upTo(0, n)),
+          upTo(1, n),
+        ),
+        "list<integer>",
+      ],
+      // A 2143 ending at the last entry: the parent prefix has none.
+      [
+        "v2143",
+        iff(
+          fold(
+            [
+              "Or",
+              "vck_",
+              fold(
+                [
+                  "Or",
+                  "vcj_",
+                  fold(
+                    ["Or", "vci_", and(less(pre("vcj"), pre("vci")), less(pre("vci"), last), less(last, pre("vck")))],
+                    "vci_",
+                    "vci",
+                    "False",
+                    upTo(1, sub("vcj", 1)),
+                  ),
+                ],
+                "vcj_",
+                "vcj",
+                "False",
+                upTo(1, sub("vck", 1)),
+              ),
+            ],
+            "vck_",
+            "vck",
+            "False",
+            upTo(1, sub("filled", 1)),
+          ),
+          1,
+          0,
+        ),
+        "integer",
+      ],
+      [
+        "vtt",
+        fold(
+          [
+            "Min",
+            "vti_",
+            fold(
+              iff(vexDescent("vti", "vtj"), ["Min", "vtj_", freeUnder(pre("vti"))], "vtj_"),
+              "vtj_",
+              "vtj",
+              open,
+              upTo(add("vti", 1), "filled"),
+            ),
+          ],
+          "vti_",
+          "vti",
+          open,
+          upTo(1, "filled"),
+        ),
+        "integer",
+      ],
+      // A 2-1-4 with a free value between its 2 and 4.
+      [
+        "vzero",
+        iff(
+          fold(
+            [
+              "Or",
+              "vzi_",
+              fold(
+                [
+                  "Or",
+                  "vzj_",
+                  and(
+                    vexDescent("vzi", "vzj"),
+                    fold(
+                      [
+                        "Or",
+                        "vzk_",
+                        and(less(pre("vzi"), pre("vzk")), [
+                          "Greater",
+                          sub(freeUnder(pre("vzk")), freeUnder(add(pre("vzi"), 1))),
+                          0,
+                        ]),
+                      ],
+                      "vzk_",
+                      "vzk",
+                      "False",
+                      upTo(add("vzj", 1), "filled"),
+                    ),
+                  ),
+                ],
+                "vzj_",
+                "vzj",
+                "False",
+                upTo(add("vzi", 1), "filled"),
+              ),
+            ],
+            "vzi_",
+            "vzi",
+            "False",
+            upTo(1, "filled"),
+          ),
+          1,
+          0,
+        ),
+        "integer",
+      ],
+    ],
+    iff(
+      ["Greater", add("v2143", "vzero"), 0],
+      0,
+      iff(
+        ["LessEqual", open, 1],
+        1,
+        at(
+          "vex",
+          vexIndex(
+            open,
+            "vtt",
+            sum(
+              (c) =>
+                iff(
+                  fold(["Or", "vsq_", equal(freeUnder(pre("vsq")), c)], "vsq_", "vsq", "False", upTo(1, "filled")),
+                  ["Power", 2, c],
+                  0,
+                ),
+              "vsc",
+              1,
+              sub("vtt", 1),
+            ),
+          ),
+        ),
+      ),
+    ),
+  ),
+});
+
 export const grassmannianPermutations = atMostOneTurn("GrassmannianPermutations", false);
 export const cograssmannianPermutations = atMostOneTurn("CograssmannianPermutations", true);
 export {
@@ -791,4 +1085,5 @@ export {
   kDescentPermutations,
   nonCrossingPermutations,
   separablePermutations,
+  vexillaryPermutations,
 };

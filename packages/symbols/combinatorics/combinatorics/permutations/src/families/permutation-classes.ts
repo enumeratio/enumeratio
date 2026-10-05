@@ -1,9 +1,9 @@
 // Permutation classes in the symmetric group's lex order. Boolean permutations are Fibonacci
-// words in disguise. Grassmannian, Cograssmannian, NonCrossing and Separable are completion counts
-// (./restrictions.ts). Baxter, Simple, Smooth and Vexillary still filter all n! permutations in lex
-// order (PermutationUnrank) by an independently written predicate, and index the filtered list:
-// Simple has no polynomial completion count known to us, and the exact ones for Baxter, Smooth
-// and Vexillary have exponential or list-valued state (wiki Speculative-Restrictions).
+// words in disguise. Grassmannian, Cograssmannian, NonCrossing, Separable and Vexillary are
+// completion counts (./restrictions.ts). Baxter, Simple and Smooth still filter all n!
+// permutations in lex order (PermutationUnrank) by an independently written predicate, and index
+// the filtered list: Simple has no polynomial completion count known to us, and the exact ones for
+// Baxter and Smooth have list-valued or exponential state (wiki Speculative-Restrictions).
 import { binomial } from "../../../collections/src/families/shared.ts";
 import { Factorial, IsPermutationOf, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import {
@@ -17,6 +17,7 @@ import {
   grassmannianPermutations,
   nonCrossingPermutations,
   separablePermutations,
+  vexillaryPermutations,
 } from "./restrictions.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
@@ -219,9 +220,6 @@ const simpleClass = makeBruteForceClass((p) => !hasNonTrivialInterval(p));
 // 1998; algebraic, non-rational generating function — no simple closed-form unrank).
 const smoothClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["3412", "4231"]));
 
-// ─── VexillaryPermutations(n): Av(2143) — A005802.
-const vexillaryClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["2143"]));
-
 export const entries: (NumberKernel | EpsilFamily)[] = [
   {
     ...ints(
@@ -274,16 +272,5 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     declared: smoothClass.declared,
     carrier: "Permutation",
   },
-  {
-    ...ints(
-      "VexillaryPermutations",
-      1,
-      ([n]) => vexillaryClass.count(n),
-      ([n], r) => vexillaryClass.unrank(n, r),
-      (a, [n]) => vexillaryClass.valid(a, n),
-      (a) => vexillaryClass.rank(a),
-    ),
-    declared: vexillaryClass.declared,
-    carrier: "Permutation",
-  },
+  vexillaryPermutations,
 ];
