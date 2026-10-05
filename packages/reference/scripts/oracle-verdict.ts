@@ -147,6 +147,41 @@ export function measured(expected: MathJSON): { value: MathJSON; tolerance?: num
   return tolerance === undefined ? { value } : { value, tolerance };
 }
 
+/** `ours` against several readings of one answer, each entry agreeing with at least one reading. */
+function agreeEntrywise(ours: Tree, readings: readonly Tree[], tolerance?: number): boolean {
+  if (!Array.isArray(ours)) return readings.some((reading) => compareTrees(ours, reading, tolerance) === "agree");
+  const lists = readings.filter(
+    (reading): reading is readonly Tree[] => Array.isArray(reading) && reading.length === ours.length,
+  );
+  return (
+    lists.length > 0 &&
+    ours.every((entry, i) =>
+      agreeEntrywise(
+        entry,
+        lists.map((list) => list[i] as Tree),
+        tolerance,
+      ),
+    )
+  );
+}
+
+/** Wolfram's iterator `{n, a, b}` reads back as a `Tuple`; a held `Sum`/`Product` of ours spells it
+ * `Limits`. The two are one call, so a call both sides hold must not read as a disagreement. */
+function iteratorsAsLimits(expr: MathJSON): MathJSON {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return expr;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  const bigOperator = head === "Sum" || head === "Product";
+  return [
+    head,
+    ...operands.map((operand, i) => {
+      const inner = iteratorsAsLimits(operand);
+      return bigOperator && i > 0 && Array.isArray(inner) && inner[0] === "Tuple" && typeof inner[1] === "string"
+        ? ["Limits", ...inner.slice(1)]
+        : inner;
+    }),
+  ] as MathJSON;
+}
+
 export function verdictOf(
   system: System,
   expected: MathJSON,
@@ -171,15 +206,18 @@ export function verdictOf(
     // declined (`MatrixRank[{1, 2, 3}]`) comes back as our own answer and agrees. So its
     // exact form is compared as text — an unevaluated form we pinned too — and its
     // numbers are Wolfram's own `N`, of which only numeric values are read as numbers.
-    const prepare =
-      Array.isArray(call) && call[0] === "Solve" ? (expr: MathJSON) => solutionSet(expr, call) : undefined;
-    const ours = reduce(prepare === undefined ? expected : prepare(expected), wolframLeaf);
+    const prepare = (expr: MathJSON): MathJSON =>
+      iteratorsAsLimits(Array.isArray(call) && call[0] === "Solve" ? solutionSet(expr, call) : expr);
+    const ours = reduce(prepare(expected), wolframLeaf);
     const trees = [
       theirTree(theirs, symbolic, prepare),
       result.numeric === undefined ? undefined : theirTree(result.numeric, valuesOnly(leaf), prepare),
     ].filter((tree) => tree !== undefined);
     const verdicts = trees.map((tree) => compareTrees(ours, tree, tolerance));
     verdict = verdicts.length === 0 ? "inconclusive" : verdicts.includes("agree") ? "agree" : (verdicts[0] as Verdict);
+    // A list that holds a call in one entry and has a number in another matches neither tree whole:
+    // the exact form keeps the call, the numeric form keeps the number. Entry by entry, either will do.
+    if (verdict === "disagree" && trees.length > 1 && agreeEntrywise(ours, trees, tolerance)) verdict = "agree";
     // The digits Wolfram displays are the answer: it keeps more than it shows, so the value
     // alone is too strict (N[E, 1] holds 2.718 and shows 3.) as well as too loose.
     if (asksForDigits && result.shown !== undefined) {

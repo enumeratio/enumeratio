@@ -11,6 +11,11 @@ signatures:
     library: enumeratio-combinatorics
     type: (any, tuple*) -> number
     overrides: compute-engine
+  - call: Product(body, Tuple(index))
+    description: an index with neither bound stays unevaluated (an indefinite product is defined only up to a constant), where compute-engine read it as a degenerate range.
+    library: enumeratio-analytic
+    type: (any, tuple*) -> number
+    overrides: compute-engine
 seeAlso:
   - Length
 names:

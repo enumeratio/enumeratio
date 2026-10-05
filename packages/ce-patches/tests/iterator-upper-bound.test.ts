@@ -24,3 +24,20 @@ test("a lone lower bound still stays unevaluated", () => {
     ["Limits", "k", 1, "Nothing"],
   ]);
 });
+
+// Wolfram's `Product[f, k]` is the indefinite product, defined up to a constant: with no bounds
+// at all compute-engine answered the body at `k := Nothing` (a dropped factor).
+test("an index with no bounds stays unevaluated, as a sum or a product", () => {
+  const body = ["Add", ["Multiply", 3, ["Power", "q", ["Multiply", 2, "k"]]], 5];
+  const unbounded = ["Limits", "k", "Nothing", "Nothing"];
+  for (const head of ["Product", "Sum"]) {
+    expect(value([head, body, unbounded])).toEqual([head, body, unbounded]);
+    expect(value([head, body, "k"])).toEqual([head, body, unbounded]);
+  }
+  expect(value(["Product", ["Power", "q", "k"], unbounded])).toEqual(["Product", ["Power", "q", "k"], unbounded]);
+});
+
+test("a degenerate bound still evaluates", () => {
+  const body = ["Add", ["Multiply", 3, ["Power", "q", ["Multiply", 2, "k"]]], 5];
+  expect(value(["Product", body, ["Limits", "k", 1, 1]])).toEqual(["Add", ["Multiply", 3, ["Power", "q", 2]], 5]);
+});

@@ -76,3 +76,16 @@ test("an interval is its endpoints, and NaN is Wolfram's Indeterminate", () => {
   expect(verdictOf("wolfram", ["Interval", ["Divide", 1, "ExponentialE"], 2], interval)).toBe("agree");
   expect(verdictOf("wolfram", "NaN", { value: "Indeterminate" })).toBe("agree");
 });
+
+// A list answer that keeps a call in one entry and has a number in another matches neither of
+// Wolfram's two readings whole: the exact one keeps the call (and a number as text), the
+// numeric one turns the held `Sum` into an infinity.
+test("a held Sum in a list agrees entry by entry, however the iterator is spelled", () => {
+  const sum = ["Sum", ["Power", 2, "n"], ["Limits", "n", 0, "PositiveInfinity"]];
+  const answer = {
+    value: "List[Sum[Power[2, n], List[n, 0, DirectedInfinity[1]]], -1]",
+    numeric: "List[DirectedInfinity[], -1.`]",
+  };
+  expect(verdictOf("wolfram", ["List", sum, -1] as never, answer)).toBe("agree");
+  expect(verdictOf("wolfram", ["List", sum, -2] as never, answer)).toBe("disagree");
+});

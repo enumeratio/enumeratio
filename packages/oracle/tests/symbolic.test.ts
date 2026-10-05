@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { interpretSymbolicAgreement, symbolicAgreementSource } from "../src/symbolic.ts";
+import { interpretSymbolicAgreement, leavesCall, symbolicAgreementSource } from "../src/symbolic.ts";
 
 // `Add(x, x)` against `Multiply(2, x)`: the same identity on all three symbolic systems, to
 // pin the source each one gets asked to run. Real kernels confirmed these three strings each
@@ -100,4 +100,42 @@ test("an unevaluated call has no identity check: the difference of a call from i
   expect(symbolicAgreementSource("wolfram", ["Floor", "x"], ["Floor", "x"], ["x"])).toBeUndefined();
   // An evaluated answer still gets the identity check.
   expect(symbolicAgreementSource("wolfram", ["Sin", ["Negate", "x"]], ["Negate", ["Sin", "x"]], ["x"])).toBeDefined();
+});
+
+// A part held is as little of an answer as a whole held: the kernel evaluates ours, held entry
+// and all, so the difference vanishes there too.
+test("a list answer that holds some entries has no identity check, whole or wrapped", () => {
+  const jacobi = (argument: unknown) => ["JacobiNC", argument, "m"];
+  const poles = ["List", jacobi(["EllipticK", "m"]), jacobi(["Multiply", 3, ["EllipticK", "m"]])];
+  const partlyHeld = ["List", "ComplexInfinity", jacobi(["Multiply", 3, ["EllipticK", "m"]])];
+  expect(leavesCall(poles as never, partlyHeld as never)).toBe(true);
+  expect(symbolicAgreementSource("wolfram", poles as never, partlyHeld as never, ["m"])).toBeUndefined();
+  const evaluated = ["List", ["Add", "m", 1], ["Add", "m", 2]];
+  expect(leavesCall(poles as never, evaluated as never)).toBe(false);
+  expect(symbolicAgreementSource("wolfram", poles as never, evaluated as never, ["m"])).toBeDefined();
+  expect(leavesCall(["List", ["Sin", "x"], ["Floor", "x"]], ["List", ["Cos", ["Add", "x", 1]], 7])).toBe(false);
+  expect(leavesCall(["FunctionExpand", poles] as never, partlyHeld as never)).toBe(true);
+});
+
+test("a held call counts however ours spells it", () => {
+  // The same integral, held as `Function` and `Limits` rather than as written.
+  const integral = ["Simplify", ["Integrate", ["EllipticPi", "n", "m"], "m"]];
+  const held = [
+    "Integrate",
+    ["Function", ["Block", ["EllipticPi", "n", "m"]], "m"],
+    ["Limits", "m", "Nothing", "Nothing"],
+  ];
+  expect(leavesCall(integral as never, held as never)).toBe(true);
+  // An argument that is the same function written two ways, past what the simplifier reduces.
+  const laplace = (argument: unknown) => ["LaplaceTransform", argument, "t", "s"];
+  const sinh = [
+    "Add",
+    ["Multiply", "b", ["Sinh", ["Multiply", "a", "t"]]],
+    ["Negate", ["Multiply", "a", ["Sinh", ["Multiply", "b", "t"]]]],
+  ];
+  const denominator = ["Add", ["Power", "a", 2], ["Negate", ["Power", "b", 2]]];
+  const asked = ["Simplify", laplace(["Multiply", sinh, ["Power", denominator, -1]])];
+  expect(leavesCall(asked as never, laplace(["Divide", sinh, denominator]) as never)).toBe(true);
+  // A different transform of another function is an answer, not the call left alone.
+  expect(leavesCall(["Simplify", laplace(sinh)] as never, laplace(["Sinh", "t"]) as never)).toBe(false);
 });
