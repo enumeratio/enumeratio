@@ -85,6 +85,7 @@ export const collectionsRows: readonly CatalogRow[] = [...allFamilies]
   .map((e) => ({
     name: e.head,
     href: symbol(e.head),
+    summary: getEntry(e.head)?.summary,
     badges: [e.kind, `${e.paramCount} param${e.paramCount > 1 ? "s" : ""}`],
     references: crosswalkForCollection(e.head),
   }))

@@ -84,6 +84,9 @@ const tip = (reference: ResolvedReference): string =>
 
 <template>
   <div v-if="groups.length" class="crosswalk" :class="{ 'is-inline': inline }">
+    <span v-if="!inline && groups.some((g) => g.references.some((r) => r.verified))" class="xw-legend"
+      >✓ checked against that system · ! checked, with disagreements (hover a chip)</span
+    >
     <span v-for="group in groups" :key="group.system" class="xw-group">
       <span class="xw-system">{{ group.label }}</span>
       <template v-for="(reference, i) in shown(group)" :key="i">
@@ -107,6 +110,7 @@ const tip = (reference: ResolvedReference): string =>
             class="xw-verified"
             :class="{ 'is-broken': reference.verified.disagree }"
             :aria-label="reference.verified.disagree ? 'checked, with disagreements' : 'checked'"
+            :title="verifiedTip(reference)"
             >{{ reference.verified.disagree ? "!" : "✓" }}</span
           ><span class="xw-out" aria-hidden="true">↗</span></a
         >
@@ -124,6 +128,11 @@ const tip = (reference: ResolvedReference): string =>
 </template>
 
 <style scoped>
+.xw-legend {
+  flex-basis: 100%;
+  font-size: 0.72rem;
+  color: var(--vp-c-text-3);
+}
 .crosswalk {
   display: flex;
   flex-wrap: wrap;

@@ -91,9 +91,17 @@ const geomeans = computed(() => {
 <template>
   <div class="bench-across">
     <p class="bench-intersection-note">
-      {{ okNames.size }} of {{ caseNames.length }} benchmarks ok across every selected system (baseline
-      <code>{{ baseline }}</code
-      >).
+      <template v-if="okNames.size > 0">
+        {{ okNames.size }} of {{ caseNames.length }} benchmarks have a right, timed answer in every selected system
+        (baseline <code>{{ baseline }}</code
+        >); the geometric mean covers those.
+      </template>
+      <template v-else>
+        No benchmark has a right, timed answer in every selected system (baseline <code>{{ baseline }}</code
+        >), so there is no geometric mean; deselect a system to compare the rest.
+      </template>
+      Each ratio is that system's time over the baseline's: <b>1.32×</b> takes 1.32 times as long, <b>÷53.78</b> a
+      53.78th of the time.
     </p>
     <div class="bench-table-scroll">
       <table class="bench-table">
@@ -170,7 +178,9 @@ const geomeans = computed(() => {
         </tbody>
         <tfoot>
           <tr>
-            <th scope="row">geometric mean of ratios</th>
+            <th scope="row" title="over the benchmarks every selected system answered rightly">
+              geometric mean of ratios
+            </th>
             <td>1.00×</td>
             <td v-for="col in columns" :key="col.system">
               <template v-if="Number.isFinite(geomeans.get(col.system))">
@@ -182,6 +192,11 @@ const geomeans = computed(() => {
         </tfoot>
       </table>
     </div>
+    <p class="bench-footnote">
+      A word in place of a time says why there is none (hover for the reason): <i>unsupported</i> (the system has no
+      such function), <i>precision</i> (it can't give the digits asked), <i>denied</i> (refused to run),
+      <i>too-fast</i> (below the timer's resolution), <i>error</i>, <i>timeout</i>.
+    </p>
     <p v-if="anyWrong" class="bench-footnote">
       <sup>†</sup> The answer didn't match the pinned one (hover for both). Its time is shown for the record, but it
       stays out of every ratio's colouring and the geometric mean.

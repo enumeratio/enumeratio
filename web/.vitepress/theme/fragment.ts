@@ -28,28 +28,42 @@ export const formatFragment = (f: Fragment): string =>
 export const fragment = ref<Fragment>({ target: "" });
 
 const TARGET_CLASS = "fragment-target";
-/** Frames to wait for a target that renders late (client-only sections, async cards). */
-const ATTEMPTS = 180;
+/** How long to wait for a target that renders late (client-only sections, async cards). */
+const WAIT_MS = 30_000;
 let marked: Element | null = null;
-let pending = 0;
+// Watches the document for a target that is not there yet.
+let waiting: MutationObserver | undefined;
+let giveUp = 0;
 // Vue rewrites `className` when a component's class binding patches, which drops ours.
 let guard: MutationObserver | undefined;
 
 function unmark(): void {
-  if (pending) cancelAnimationFrame(pending);
-  pending = 0;
+  waiting?.disconnect();
+  waiting = undefined;
+  clearTimeout(giveUp);
   guard?.disconnect();
   marked?.classList.remove(TARGET_CLASS);
   marked = null;
 }
 
-function mark(target: string, scroll: boolean, attempts = ATTEMPTS): void {
+function mark(target: string, scroll: boolean): void {
   const el = document.getElementById(target);
   if (el === null) {
-    if (attempts > 0) pending = requestAnimationFrame(() => mark(target, scroll, attempts - 1));
+    // A mutation observer, not frames: a hidden tab runs none, and a slow page may spend
+    // any number of them before the card renders. A grouped card takes the target's id only
+    // once it shows that case.
+    waiting?.disconnect();
+    waiting = new MutationObserver(() => {
+      if (document.getElementById(target) === null) return;
+      waiting?.disconnect();
+      waiting = undefined;
+      mark(target, scroll);
+    });
+    waiting.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["id"] });
+    clearTimeout(giveUp);
+    giveUp = window.setTimeout(() => waiting?.disconnect(), WAIT_MS);
     return;
   }
-  pending = 0;
   el.classList.add(TARGET_CLASS);
   marked = el;
   guard ??= new MutationObserver(() => {
@@ -57,7 +71,12 @@ function mark(target: string, scroll: boolean, attempts = ATTEMPTS): void {
   });
   guard.observe(el, { attributes: true, attributeFilter: ["class"] });
   // A frame later, so a section the target sits in has opened first.
-  if (scroll) requestAnimationFrame(() => el.scrollIntoView({ block: "center" }));
+  if (scroll) {
+    const reveal = (): void => el.scrollIntoView({ block: "center" });
+    requestAnimationFrame(reveal);
+    // Again once the page has settled: cells swapping in for prerendered markup move the card.
+    setTimeout(reveal, 400);
+  }
 }
 
 /** Re-read the URL: after navigation (scroll to the target) or history moves. */

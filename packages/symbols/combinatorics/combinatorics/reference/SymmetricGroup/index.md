@@ -46,6 +46,7 @@ catalog:
     identity: generate_bell
     url: https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.generate_bell
     note: generate_bell yields the same SET in Steinhaus-Johnson-Trotter (adjacent-transposition) order, not lex order; 0-indexed tuples, shift +1
+    relation: aggregate
   - system: wikipedia
     identity: Permutation
     url: https://en.wikipedia.org/wiki/Permutation
@@ -54,6 +55,7 @@ catalog:
     identity: QFactorial
     url: https://reference.wolfram.com/language/ref/QFactorial.html
     note: "grouping permutations(n) by inversions (or major_index) gives QFactorial[n,q] coefficients — the Mahonian distribution [n]_q! (generating_functions.sql: gf_qfactorial); cardinality = QFactorial[n,1] = n!"
+    relation: aggregate
 grades:
   - name: size
     role: axis

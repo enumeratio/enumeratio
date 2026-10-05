@@ -10,6 +10,7 @@ const entry = {
   examples: [
     { id: "sum", expr: ["Add", 1, 2], expected: 3 },
     { id: "dice", expr: ["Random"], expected: 0.5, volatile: ["random"] },
+    { id: "bad", expr: ["Sin", "ComplexInfinity"], expected: ["Error", ["ErrorCode", "'incompatible-type'"], 1] },
   ],
 } as unknown as ReferenceEntry;
 
@@ -20,6 +21,8 @@ test("each example is answered from its record, typeset into the page, and kept 
   expect(answers[0]?.html).toBeUndefined();
   // A volatile value is the browser's to compute.
   expect(answers[1]).toBeUndefined();
+  // An error answer is the cell's to show, with its message.
+  expect(answers[2]).toBeUndefined();
   const page = '<span data-prerender="0:out" data-v-1></span><span data-prerender="1:out"></span>';
   const filled = fillPrerendered(page, entry.name);
   expect(filled).toMatch(

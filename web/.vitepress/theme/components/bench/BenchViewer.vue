@@ -215,6 +215,8 @@ watch([timeSystem, timeBench, timeTag], () => {
   if (view.value === "time") void loadTimeSeries();
 });
 watch(view, (v) => {
+  // Opening the trend with nothing chosen shows the first benchmark, not an empty chart.
+  if (v === "time" && !timeBench.value && !timeTag.value) timeBench.value = allCaseNames.value[0] ?? "";
   if (v === "time" && (timeBench.value || timeTag.value)) void loadTimeSeries();
 });
 

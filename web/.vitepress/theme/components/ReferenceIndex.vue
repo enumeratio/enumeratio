@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { crosswalkFor, SOURCES } from "@enumeratio/reference";
-import { entriesByDomain } from "../../data/reference.ts";
+import { entriesByDomain, getEntry } from "../../data/reference.ts";
+import { renderInline } from "../../prose.ts";
 
 // Documented heads are the reference; the generated stubs (carrier domains, and every
 // symbol the bare engine binds) are listed after them, compactly, and kept out of the
@@ -61,6 +62,10 @@ const reach = (() => {
   return { heads, covered, systems, pointers: systems.reduce((n, s) => n + s.pointers, 0) };
 })();
 const all = groups.reduce((n, group) => n + group.entries.length, 0);
+
+// Summaries are markdown: `$…$` typeset, code spans, `[[Head]]` links.
+const inline = (text: string): string =>
+  renderInline(text, { link: (name) => (getEntry(name) ? `/reference/symbol/${name}` : undefined) });
 </script>
 
 <template>
@@ -108,7 +113,9 @@ const all = groups.reduce((n, group) => n + group.entries.length, 0);
             :title="`On the primitive frontier: ${entry.primitive}`"
             >{{ entry.primitive }}</span
           >
-          -- {{ entry.summary }}
+          --
+          <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
+          <span v-html="inline(entry.summary)"></span>
         </li>
       </ul>
     </section>
