@@ -74,8 +74,16 @@ export function solutionSet(expr: MathJSON, call?: MathJSON): MathJSON {
   ] as MathJSON;
 }
 
+/** `expr` with every `Tuple` written as a `List`: Wolfram has only the one, and a call held on both
+ * sides (`StyleBox("x", (FontWeight, "Bold"))`) is the same call whichever spells its pair. */
+const tuplesAsLists = (expr: MathJSON): MathJSON =>
+  Array.isArray(expr)
+    ? ((expr[0] === "Tuple" ? ["List", ...expr.slice(1).map(tuplesAsLists)] : expr.map(tuplesAsLists)) as MathJSON)
+    : expr;
+
 /** The canonical text for something that did not reduce to a value. */
-export const symbolic = (expr: MathJSON): string => (typeof expr === "string" ? expr : JSON.stringify(expr));
+export const symbolic = (expr: MathJSON): string =>
+  typeof expr === "string" ? expr : JSON.stringify(tuplesAsLists(expr));
 
 /** Named constants a numeric value may mention, as `fromWolfram` spells them. */
 const CONSTANTS = new Set(["Pi", "ExponentialE", "ImaginaryUnit", "GoldenRatio", "EulerGamma", "CatalanConstant"]);

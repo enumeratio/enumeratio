@@ -4,6 +4,8 @@
 // coverage degrades gracefully. Pure (MathJSON in, string out): no compute-engine
 // dependency, so it ports cleanly into a compute-engine LanguageTarget later.
 
+import { isSystemName } from "./system-names.ts";
+import { ATTRIBUTE_NAMES, FORM_NAMES, OPTION_NAMES } from "./vocabulary.ts";
 import { WOLFRAM_NAMES } from "./wolfram-names-data.ts";
 
 export type MathJson =
@@ -73,6 +75,25 @@ export const STRUCTURAL: Record<string, string> = {
   Total: "Sum",
   Clip: "Clamp",
 };
+
+/** Wolfram vocabulary: attributes, option keys and format symbols, as the kernel lists them. */
+const VOCABULARY: ReadonlySet<string> = new Set([...ATTRIBUTE_NAMES, ...OPTION_NAMES, ...FORM_NAMES]);
+
+/** The infinities' own spellings, which `fromWolfram` reads back (`DirectedInfinity[1]`). */
+const INFINITIES: ReadonlySet<string> = new Set(["Infinity", "DirectedInfinity"]);
+
+/**
+ * Whether a name ours does not define still means Wolfram's own thing, so it is not a free variable
+ * that merely shares the spelling (`E`, `K`). The tests are what our own mappings already say, and
+ * what the kernel says is vocabulary: the Wolfram side of a `STRUCTURAL` pair (`Total`, `Clip`), the
+ * formatting head of a box we vouch for (`Superscript` for `SuperscriptBox`), the infinities, and an
+ * attribute, option key or format symbol.
+ */
+export const isWolframOwnName = (name: string): boolean =>
+  Object.hasOwn(STRUCTURAL, name) ||
+  INFINITIES.has(name) ||
+  VOCABULARY.has(name) ||
+  (isSystemName(name) && Object.hasOwn(HEADS, `${name}Box`));
 
 /** The context our heads emit into when Wolfram has the name for something else.
  *

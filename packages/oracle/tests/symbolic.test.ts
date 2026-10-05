@@ -1,5 +1,11 @@
 import { expect, test } from "vite-plus/test";
-import { interpretSymbolicAgreement, leavesCall, symbolicAgreementSource } from "../src/symbolic.ts";
+import {
+  discreteVariables,
+  interpretSymbolicAgreement,
+  leavesCall,
+  stepVariables,
+  symbolicAgreementSource,
+} from "../src/symbolic.ts";
 
 // `Add(x, x)` against `Multiply(2, x)`: the same identity on all three symbolic systems, to
 // pin the source each one gets asked to run. Real kernels confirmed these three strings each
@@ -14,7 +20,7 @@ test("wolfram: FullSimplify of the difference, with 3 fixed-rational trials as a
       "If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {Chop[N[(Plus[Rational[7, 3], Rational[7, 3]]) - (Times[2, Rational[7, 3]])]], " +
       "Chop[N[(Plus[Rational[-11, 5], Rational[-11, 5]]) - (Times[2, Rational[-11, 5]])]], " +
       "Chop[N[(Plus[Rational[13, 4], Rational[13, 4]]) - (Times[2, Rational[13, 4]])]]}}, " +
-      "If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]",
+      "s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]",
   );
 });
 
@@ -146,4 +152,26 @@ test("a held call counts however ours spells it", () => {
   expect(leavesCall(asked as never, laplace(["Divide", sinh, denominator]) as never)).toBe(true);
   // A different transform of another function is an answer, not the call left alone.
   expect(leavesCall(["Simplify", laplace(sinh)] as never, laplace(["Sinh", "t"]) as never)).toBe(false);
+});
+
+test("a step variable is sampled at integers, and substituted after the call is read", () => {
+  const delta = ["DifferenceDelta", ["QFactorial", "k", "q"], "k"];
+  const next = ["Subtract", ["QFactorial", ["Add", "k", 1], "q"], ["QFactorial", "k", "q"]];
+  expect(stepVariables(delta as never)).toEqual(new Set(["k"]));
+  expect(discreteVariables(["Sum", ["Power", "i", "n"], ["Tuple", "i", 1, "n"]] as never)).toEqual(new Set(["i", "n"]));
+  const source = symbolicAgreementSource("wolfram", delta as never, next as never, ["k", "q"]) as string;
+  // `k` stays the call's own variable inside it, and is a whole number only afterwards.
+  expect(source).toContain("DifferenceDelta[QFactorial[k, Rational[");
+  expect(source).toMatch(/\/\. \{k -> \d+\}/);
+});
+
+test("a relation answer is compared as a statement, not by its spelling", () => {
+  const source = symbolicAgreementSource(
+    "wolfram",
+    ["FunctionRange", ["Exp", "x"], "x", "y"] as never,
+    ["Less", 0, "y"] as never,
+    ["x", "y"],
+  ) as string;
+  expect(source).toContain("Equivalent[t, o]");
+  expect(source).toContain("agree[FunctionRange[Exp[x], x, y], Less[0, y]]");
 });

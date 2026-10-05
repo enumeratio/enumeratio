@@ -1,2 +1,2 @@
-id	in
-tagged	TagBox["x", enumeratio`Superscript]
+id	in	out	tex.in	tex.out
+tagged	TagBox["x", Superscript]	TagBox["x", Superscript]	\text{TagBox}[\text{x},\text{Superscript}]	\text{TagBox}[\text{x},\text{Superscript}]

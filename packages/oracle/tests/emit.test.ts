@@ -241,6 +241,28 @@ test("a free name that Wolfram reserves goes in our own context, not Wolfram's",
   expect(fromWolfram("Plus[enumeratio`E, 1]")).toEqual(["Add", "E", 1]);
 });
 
+test("a name that means Wolfram's own goes bare; a free variable that shares a name stays ours", () => {
+  // Infinities, attributes, option keys, format symbols, and the Wolfram side of a mapped pair.
+  expect(emit(["Erf", "Infinity"], "wolfram")).toEqual({ ok: true, source: "Erf[Infinity]" });
+  expect(emit(["SetAttributes", "HarmonicMean", "Orderless"], "wolfram")).toMatchObject({
+    source: "SetAttributes[HarmonicMean, Orderless]",
+  });
+  expect(emit(["FormBox", "'x'", "TeXForm"], "wolfram")).toMatchObject({ source: 'FormBox["x", TeXForm]' });
+  expect(emit(["TagBox", "'x'", "Superscript"], "wolfram")).toMatchObject({ source: 'TagBox["x", Superscript]' });
+  expect(emit(["ButtonBox", "'d'", ["Tuple", "ButtonData", "'S'"]], "wolfram")).toMatchObject({
+    source: expect.stringContaining("ButtonData"),
+  });
+  expect(emit(["SortBy", ["List", "a"], "Total"], "wolfram")).toMatchObject({ source: "SortBy[List[a], Total]" });
+  expect(emit(["Gamma", ["DirectedInfinity", "ImaginaryUnit"]], "wolfram")).toMatchObject({
+    source: "Gamma[DirectedInfinity[I]]",
+  });
+  // `E` and `K` are variables here, and Wolfram's own constants there.
+  expect(emit(["Add", "E", "K"], "wolfram")).toMatchObject({
+    source: "Plus[enumeratio`E, enumeratio`K]",
+    freeSymbols: ["E", "K"],
+  });
+});
+
 test("an option key and a number set go to Wolfram as its own names", () => {
   expect(emit(["Graph", ["List", 1, 2], ["KeyValuePair", "EdgeWeight", ["List", 5]]], "wolfram")).toMatchObject({
     ok: true,

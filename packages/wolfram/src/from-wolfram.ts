@@ -5,6 +5,7 @@
 // `*^` exponents — so a kernel's answer can be boxed and compared structurally.
 // Pure (string in, MathJSON out): no compute-engine dependency.
 
+import { NAMED_CHARACTERS } from "./named-characters.ts";
 import { CONTEXT, HEADS, type MathJson, SYMBOLS } from "./to-wolfram.ts";
 
 /** Strip the context off a name `toWolfram` qualified to keep it out of `System``. */
@@ -121,16 +122,24 @@ function parseString(): MathJson {
 }
 
 /** A string literal's escapes: JSON's (`toWolfram` writes strings via JSON.stringify), plus
- * Wolfram's own `\:XXXX` (a UTF-16 unit) and `\|XXXXXX` (a code point), which a kernel prints
- * for characters outside its output encoding (`FromCharacterCode[128512]` is `"\|01f600"`). */
+ * Wolfram's own `\:XXXX` (a UTF-16 unit), `\|XXXXXX` (a code point) and `\[Name]` (a named
+ * character, `NAMED_CHARACTERS`), which a kernel prints for characters outside its output encoding
+ * (`FromCharacterCode[128512]` is `"\|01f600"`, `FromCharacterCode[62520]` is `"\[Limit]"`). */
 const unescapeString = (raw: string): string =>
   JSON.parse(
-    `"${raw.replace(/\\(\\|:([0-9a-fA-F]{4})|\|([0-9a-fA-F]{6}))/g, (whole, _, unit?: string, point?: string) =>
-      unit !== undefined
-        ? `\\u${unit}`
-        : point !== undefined
-          ? JSON.stringify(String.fromCodePoint(Number.parseInt(point, 16))).slice(1, -1)
-          : whole,
+    `"${raw.replace(
+      /\\(\\|:([0-9a-fA-F]{4})|\|([0-9a-fA-F]{6})|\[([A-Za-z][A-Za-z0-9]*)\])/g,
+      (whole, _, unit?: string, point?: string, name?: string) => {
+        const code = name === undefined ? undefined : NAMED_CHARACTERS[name];
+        if (name !== undefined) {
+          return code === undefined ? `\\\\[${name}]` : JSON.stringify(String.fromCodePoint(code)).slice(1, -1);
+        }
+        return unit !== undefined
+          ? `\\u${unit}`
+          : point !== undefined
+            ? JSON.stringify(String.fromCodePoint(Number.parseInt(point, 16))).slice(1, -1)
+            : whole;
+      },
     )}"`,
   ) as string;
 

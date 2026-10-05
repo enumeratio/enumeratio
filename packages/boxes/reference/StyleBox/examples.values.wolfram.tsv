@@ -1,2 +1,2 @@
-id	in
-bold	StyleBox["x", List[enumeratio`FontWeight, "Bold"]]
+id	in	out	tex.in	tex.out
+bold	StyleBox["x", List[FontWeight, "Bold"]]	StyleBox["x", {FontWeight, "Bold"}]	\text{StyleBox}[\text{x},\{\text{FontWeight},\text{Bold}\}]	\text{StyleBox}[\text{x},\{\text{FontWeight},\text{Bold}\}]

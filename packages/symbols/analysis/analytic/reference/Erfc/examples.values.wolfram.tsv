@@ -1,6 +1,6 @@
 id	in	out	shown	tex.in	tex.out	verdict
 erfc-0	Erfc[0]	1		\text{erfc}(0)	1	
-erfc-infinity	Erfc[enumeratio`Infinity]	0		\text{erfc}(\infty )	0	
+erfc-infinity	Erfc[Infinity]	0		\text{erfc}(\infty )	0	
 erfc-negativeinfinity	Erfc[-Infinity]	2		\text{erfc}(-\infty )	2	
 a-floating-point-argument-evaluates-directly-to	Erfc[0.5]	0.4795001221869535		\text{erfc}(0.5)	0.4795	
 a-machine-precision-argument	Erfc[1.5]	0.033894853524689274		\text{erfc}(1.5)	0.0338949	

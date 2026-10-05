@@ -9,6 +9,7 @@ import {
   HEADS,
   isSystemName,
   isWolframHead,
+  isWolframOwnName,
   NUMBER_SETS,
   ringOption,
   SYMBOLS,
@@ -158,6 +159,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
         }
         // Wolfram's own name for one of our number sets is that set there too.
         if (system === "wolfram" && NUMBER_SET_NAMES.has(node)) return node;
+        // So is a name that means Wolfram's own (`Infinity`, `Orderless`, `FontWeight`): not a variable.
+        if (system === "wolfram" && isWolframOwnName(node)) return toWolfram(node);
         // A genuinely unknown lowercase bare symbol is a free variable. A symbolic system can
         // carry it through — Wolfram verbatim (toWolfram passes an unmapped name through
         // unchanged), SymPy and Sage as an explicit symbolic value, since neither
@@ -412,6 +415,7 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
     // shaped name (`_a`) is excluded for the same reason a bare one is (emit.ts's string
     // branch, above) — this codebase's own convention, not a math name.
     if (system === "wolfram" && !DEFINED_NAMES.has(head) && !(head in CONSTANTS) && !/^_[A-Za-z]/.test(head)) {
+      if (isWolframOwnName(head)) return `${toWolfram(head)}[${operands.map(walk).join(", ")}]`;
       free.add(head);
       return `${wolframFree(head)}[${operands.map(walk).join(", ")}]`;
     }

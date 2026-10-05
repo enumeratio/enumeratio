@@ -1,2 +1,2 @@
-id	in
-link	ButtonBox["docs", List[enumeratio`ButtonData, "Subsets"], List[enumeratio`BaseStyle, "Link"]]
+id	in	out	tex.in	tex.out
+link	ButtonBox["docs", List[ButtonData, "Subsets"], List[BaseStyle, "Link"]]	ButtonBox["docs", {ButtonData, "Subsets"}, {BaseStyle, "Link"}]	\text{ButtonBox}[\text{docs},\{\text{ButtonData},\text{Subsets}\},\{\text{BaseStyle},\text{Link}\}]	\text{ButtonBox}[\text{docs},\{\text{ButtonData},\text{Subsets}\},\{\text{BaseStyle},\text{Link}\}]
