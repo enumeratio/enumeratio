@@ -118,3 +118,14 @@ export function owner(pkgs: Map<string, Pkg>, file: string): Pkg | undefined {
     if (file.startsWith(`${p.dir}/`) && (best === undefined || p.dir.length > best.dir.length)) best = p;
   return best;
 }
+
+/** Full names pass through; a bare name (`reference`) matches the part after the scope. Ambiguity is an error. */
+export function resolveNames(pkgs: Map<string, Pkg>, requested: string[]): string[] {
+  return requested.map((r) => {
+    if (pkgs.has(r)) return r;
+    const hits = [...pkgs.keys()].filter((n) => n.split("/").pop() === r);
+    if (hits.length === 1) return hits[0]!;
+    if (hits.length > 1) throw new Error(`${r} is ambiguous: ${hits.toSorted().join(", ")}`);
+    throw new Error(`no workspace package ${r}`);
+  });
+}

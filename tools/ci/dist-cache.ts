@@ -2,7 +2,7 @@
 // Builds workspace packages, restoring a package's build outputs from a content-addressed cache
 // when nothing it reads has changed.
 //
-//   node tools/ci/dist-cache.ts build [name…]   build the named packages and what they read (default: all but web)
+//   node tools/ci/dist-cache.ts build [name…]   build the named packages (full or bare names) and what they read (default: all but web)
 //   node tools/ci/dist-cache.ts keys  [name…]   print each build unit's key
 //
 // A unit is a package, or a set of packages that depend on each other in a cycle (built together).
@@ -30,7 +30,7 @@ import {
 } from "node:fs";
 import { availableParallelism } from "node:os";
 import { isAbsolute, join, resolve } from "node:path";
-import { closure, git, loadWorkspace, root, type Pkg } from "./workspace.ts";
+import { closure, git, loadWorkspace, resolveNames, root, type Pkg } from "./workspace.ts";
 
 /** Bump when what the key covers or what is saved changes. */
 const KEY_VERSION = 1;
@@ -216,8 +216,7 @@ function prune(dir: string): void {
 
 async function build(requested: string[]): Promise<void> {
   const all = loadWorkspace();
-  const wanted = requested.length > 0 ? requested : [...all.keys()].filter((n) => n !== WEB);
-  for (const n of wanted) if (!all.has(n)) throw new Error(`no workspace package ${n}`);
+  const wanted = requested.length > 0 ? resolveNames(all, requested) : [...all.keys()].filter((n) => n !== WEB);
   const names = closure(wanted, (n) => all.get(n)!.deps);
   names.delete(WEB);
   const unitMap = units(all, names);
@@ -295,7 +294,7 @@ const [command, ...rest] = process.argv.slice(2);
 if (command === "build") await build(rest);
 else if (command === "keys") {
   const all = loadWorkspace();
-  const wanted = rest.length > 0 ? rest : [...all.keys()].filter((n) => n !== WEB);
+  const wanted = rest.length > 0 ? resolveNames(all, rest) : [...all.keys()].filter((n) => n !== WEB);
   const names = closure(wanted, (n) => all.get(n)!.deps);
   names.delete(WEB);
   const unitMap = units(all, names);
