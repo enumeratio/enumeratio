@@ -143,10 +143,10 @@ export function evaluateHurwitz(
     return ce.symbol("ComplexInfinity");
   }
   // Re(s) = 0, s ≠ 0: 0^{−s} = 0^{−i·Im(s)} doesn't converge to any value (it winds the
-  // unit circle) — neither the pole above nor the clean 0 that Re(s) < 0 gets. Wolfram calls
-  // this Indeterminate; N() answers NaN, plain evaluate stays symbolic.
-  if (numeric && a.im === 0 && Number.isInteger(a.re) && a.re <= 0 && isFiniteNum(s) && s.re === 0 && s.im !== 0) {
-    return ce.symbol("NaN");
+  // unit circle) — neither the pole above nor the clean 0 that Re(s) < 0 gets. Declined,
+  // not NaN: Wolfram calls it Indeterminate, which no numeric answer stands for.
+  if (a.im === 0 && Number.isInteger(a.re) && a.re <= 0 && isFiniteNum(s) && s.re === 0 && s.im !== 0) {
+    return undefined;
   }
 
   // ζ(s, m) for a positive integer m: ζ(s) − Σ_{k=1}^{m-1} k^{-s}. Skipped for a concretely

@@ -1,6 +1,16 @@
 import type { BigDecimal, BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/engine";
-import { isFiniteNum, cx, logGamma, DOUBLE_DIGITS } from "@enumeratio/ce-patches";
+import {
+  isFiniteNum,
+  cx,
+  logGamma,
+  DOUBLE_DIGITS,
+  bigCx,
+  logGammaBig,
+  asDouble,
+  hasFloatOperand,
+  exceedsDoublePrecision,
+} from "@enumeratio/ce-patches";
 
 /**
  * Box a JS double as a float, not an exact bignum integer. `ce.number(x)` for a huge,
@@ -65,6 +75,19 @@ function floatComplex(ce: ComputeEngine, re: number, im: number): BoxedExpressio
  * rather than by an argument-size threshold, since the two buggy paths kick in at
  * different sizes and either one can be the culprit.
  */
+/** Digits carried by `negativeRealLogAbsGamma`: its shift recurrence cancels about
+ * ln Γ(z + 18) − ln Γ(z) ~ 40 down to an O(1) answer, so a double's 16 need these to spare. */
+const NEGATIVE_REAL_DIGITS = 40;
+
+/**
+ * Re lnΓ(x) = ln|Γ(x)| for a real x < 0 off the poles, correctly rounded: the double kernels
+ * reflect through ln sin(πx) and subtract an O(1) lnΓ(1−x) from an O(1) ln π, losing a few
+ * ulps (lnΓ(−2.5) was off by 1e-14), so the shift recurrence runs in BigDecimal instead.
+ */
+function negativeRealLogAbsGamma(x: number): number {
+  return logGammaBig(bigCx(x), NEGATIVE_REAL_DIGITS).re.toNumber();
+}
+
 function declarePreciseLogGamma(ce: ComputeEngine): void {
   wrapOperator(
     ce,
@@ -72,8 +95,17 @@ function declarePreciseLogGamma(ce: ComputeEngine): void {
     (ops) => ops[0] !== undefined,
     (native) => (ops, options) => {
       const z = ops[0];
-      const r = native?.(ops, options);
-      if (!options.numericApproximation || r === undefined || !isFiniteNum(z)) return r;
+      const nativeValue = native?.(ops, options);
+      const r =
+        nativeValue !== undefined && hasFloatOperand(ops) && !exceedsDoublePrecision(ce, options.numericApproximation)
+          ? asDouble(ce, nativeValue)
+          : nativeValue;
+      const numeric = options.numericApproximation || hasFloatOperand(ops);
+      if (!numeric || r === undefined || !isFiniteNum(z)) return r;
+      if (z.im === 0 && z.re < 0 && !Number.isInteger(z.re) && Number.isFinite(r.re)) {
+        return floatComplex(ce, negativeRealLogAbsGamma(z.re), Math.PI * Math.floor(z.re));
+      }
+      if (!options.numericApproximation) return r;
       const isPole = z.im === 0 && z.re <= 0 && Number.isInteger(z.re);
       if (isPole) return r; // a genuine pole of Gamma — +Infinity is the right answer
       const overflowed = !Number.isFinite(r.re) || !Number.isFinite(r.im);

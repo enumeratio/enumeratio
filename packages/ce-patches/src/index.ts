@@ -148,6 +148,8 @@ export {
   exceedsDoublePrecision,
   asDouble,
   hasComplexOperand,
+  doublesForFloats,
+  hasFloatOperand,
   inDoubles,
   inDoublesIfComplex,
   periodsExceedDouble,

@@ -27,6 +27,13 @@ export const exceedsDoublePrecision = (ce: ComputeEngine, numericApproximation: 
 export const hasComplexOperand = (ops: readonly BoxedExpression[]): boolean =>
   ops.some((op) => Number.isFinite(op.re) && Number.isFinite(op.im) && op.im !== 0);
 
+/** The precision a plain `N(expr)` runs at; `N(expr, d)` runs at d + 5, so anything above it asked for digits. */
+const ENGINE_DEFAULT_PRECISION = 21;
+
+/** An operand written as a machine float (`2.5`, not `5/2`): the caller asked for a float answer. */
+export const hasFloatOperand = (ops: readonly BoxedExpression[]): boolean =>
+  ops.some((op) => (op as Partial<{ isExact: boolean }>).isExact === false);
+
 /**
  * `value` as the machine number it really is. Arithmetic over a double kernel's output
  * (a Gamma ratio, a sum with EulerGamma) is carried out in bignums and comes back padded to
@@ -52,6 +59,25 @@ export function inDoubles(
   if (value === undefined) return undefined;
   if (isNumber(value) && value.re === 0 && value.im === 0) return value;
   return exceedsDoublePrecision(ce, options.numericApproximation) ? undefined : asDouble(ce, value);
+}
+
+/**
+ * `compute()` for a bignum-backed route: a float operand gets the float answer it asked for
+ * (a double, not 21 digits of which the last few are noise), unless an explicit digit count
+ * past a double's was requested, when the bignum value stands (a float is an exact dyadic
+ * rational, so those digits are real).
+ */
+export function doublesForFloats(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  options: { readonly numericApproximation?: boolean },
+  compute: () => BoxedExpression | undefined,
+): BoxedExpression | undefined {
+  // Read before `compute()`: a nested N() leaves the engine at its own precision.
+  const wantsDoubles =
+    hasFloatOperand(ops) && !((options.numericApproximation ?? false) && ce.precision > ENGINE_DEFAULT_PRECISION);
+  const value = compute();
+  return value === undefined || !wantsDoubles ? value : asDouble(ce, value);
 }
 
 /** `inDoubles` when an operand is complex (a head whose real route is bignum-backed), else `compute()` as is. */
