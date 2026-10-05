@@ -3,4 +3,6 @@ collect-everything-sown			[Reap, [Last, [List, [Sow, 1], [Sow, 2], 3]]]	[List, 3
 nothing-sown-gives-an-empty-group-list			[Reap, 5]	[List, 5, [List]]	nothing sown gives an empty group list
 reap-sum-sow-k-pow-2-plus-1-k-10			[Reap, [Sum, [Add, [Sow, [Power, k, 2]], 1], [Tuple, k, 10]]]	[List, 395, [List, [List, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]]]	
 reap-only-a-matching-tag	Scope		[Reap, [Last, [List, [Sow, 1, a], [Sow, 2, b], [Sow, 3, a], 0]], a]	[List, 0, [List, [List, 1, 3]]]	Reap(expr, tag) collects only the matching tag's group
+reap-a-list-of-tags	Scope		[Reap, [Last, [List, [Sow, 1, a], [Sow, 2, b], 0]], [List, a, c]]	[List, 0, [List, [List, [List, 1]], [List]]]	A list of tags gives one list of groups per tag; a tag nothing was sown under gives $\{\}$
+sow-under-several-tags	Scope		[Reap, [Last, [List, [Sow, 1, [List, a, b]], 0]], b]	[List, 0, [List, [List, 1]]]	A list of tags sows under each of them
 reap-x	Properties		[Reap, x]	[List, x, [List]]	With nothing sown, the result is the value and an empty list of sown items

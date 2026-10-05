@@ -176,13 +176,18 @@ function declareSow(ce: Engine): void {
       const stack = reapStack(ce);
       const frame = stack[stack.length - 1];
       if (frame !== undefined) {
-        const tag = ops[1] !== undefined ? ops[1].evaluate() : DEFAULT_TAG;
-        let group = frame.find((g) => tagsMatch(g.tag, tag));
-        if (group === undefined) {
-          group = { tag, values: [] };
-          frame.push(group);
+        const given = ops[1]?.evaluate();
+        // A list of tags sows under each of them.
+        const tags: (Expr | typeof DEFAULT_TAG)[] =
+          given === undefined ? [DEFAULT_TAG] : given.operator === "List" ? [...operandsOf(given)] : [given];
+        for (const tag of tags) {
+          let group = frame.find((g) => tagsMatch(g.tag, tag));
+          if (group === undefined) {
+            group = { tag, values: [] };
+            frame.push(group);
+          }
+          group.values.push(value);
         }
-        group.values.push(value);
       }
       return value;
     },
@@ -222,13 +227,14 @@ function declareReap(ce: Engine): void {
         const groups = frame.map((g) => ce.box(["List", ...g.values]));
         return reaped(value, ce.box(["List", ...groups]));
       }
+      // `Reap(e, tag)`: the groups sown under that tag; a list of tags gives one such list each.
       const formValue = form.evaluate();
-      const requestedTags = formValue.operator === "List" ? operandsOf(formValue) : [formValue];
-      const groups = requestedTags.map((tag) => {
-        const found = frame.find((g) => g.tag !== DEFAULT_TAG && (g.tag as Expr).isSame(tag));
-        return ce.box(["List", ...(found?.values ?? [])]);
-      });
-      return reaped(value, ce.box(["List", ...groups]));
+      const sownUnder = (tag: Expr): Expr => {
+        const found = frame.filter((g) => g.tag !== DEFAULT_TAG && (g.tag as Expr).isSame(tag));
+        return ce.box(["List", ...found.map((g) => ce.box(["List", ...g.values]))]);
+      };
+      const perTag = formValue.operator === "List" ? operandsOf(formValue).map(sownUnder) : [sownUnder(formValue)];
+      return reaped(value, formValue.operator === "List" ? ce.box(["List", ...perTag]) : perTag[0]!);
     },
   });
 }
@@ -238,10 +244,14 @@ function declareReap(ce: Engine): void {
 /** A thrown value in flight, as a plain JS exception -- compute-engine has no non-local
  *  control flow of its own, so `Throw` unwinds the JS call stack directly and `Catch`
  *  intercepts it. `tag` is `undefined` for a plain `Throw(value)`. */
-class ThrowSignal {
+class ThrowSignal extends Error {
   readonly value: Expr;
   readonly tag: Expr | undefined;
   constructor(value: Expr, tag: Expr | undefined) {
+    // What escapes every `Catch` reaches the top as this message (Wolfram's Throw::nocatch).
+    super(
+      `Throw::nocatch: Uncaught Throw(${[value, tag].filter((x) => x !== undefined).join(", ")}) returned to top level.`,
+    );
     this.value = value;
     this.tag = tag;
   }
