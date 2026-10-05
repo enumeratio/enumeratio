@@ -54,6 +54,7 @@ export class NotatioBarChart3D extends LitElement {
     azimuth: { type: Number },
     elevation: { type: Number },
     zoom: { type: Number },
+    /** Inset of each bar within its cell, 0 to 0.9; 0.2 when unset. */
     gap: { type: Number },
     axes: { type: String },
     zrange: { type: String },
@@ -67,7 +68,7 @@ export class NotatioBarChart3D extends LitElement {
   declare azimuth: number;
   declare elevation: number;
   declare zoom: number;
-  declare gap: number;
+  declare gap: number | undefined;
   declare axes: string;
   declare zrange: string;
   declare rowLabels: string;
@@ -81,7 +82,6 @@ export class NotatioBarChart3D extends LitElement {
     this.azimuth = 30;
     this.elevation = 25;
     this.zoom = 1;
-    this.gap = -1;
     this.axes = "true";
     this.zrange = "";
     this.rowLabels = "";
@@ -127,7 +127,7 @@ export class NotatioBarChart3D extends LitElement {
       azimuth: this.azimuth,
       elevation: this.elevation,
       zoom: this.zoom,
-      gap: this.gap >= 0 ? this.gap : undefined,
+      gap: this.gap !== undefined && this.gap >= 0 ? this.gap : undefined,
       axes: this.axes !== "false",
       zRange: this.#zRange(),
       rowLabels: toLabels(this.rowLabels),

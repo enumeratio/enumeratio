@@ -25,6 +25,12 @@ In/Out pair with an outcome badge.
 <notatio-cell value="VerificationTest(FactorInteger(100000001000039100000310002511), [[100000000000031, 1], [1000000010000081, 1]], TimeConstraint -> 0.05)" />
 </Story>
 
+<Story
+  title="Error, from a bound that cannot be enforced">
+<template #description>In-process, a <code>MemoryConstraint</code> cannot be honoured, so the test itself is an <code>Error</code> rather than silently unbounded.</template>
+<notatio-cell value="VerificationTest(2 + 2, 4, MemoryConstraint -> 1000000)" />
+</Story>
+
 ## Options
 
 `SameTest`, `TimeConstraint`, `MemoryConstraint` and `TestID` are trailing rules,
