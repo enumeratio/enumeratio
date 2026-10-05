@@ -3,17 +3,33 @@
 // package stays a standalone, zero-runtime-dep compute-engine library. Each count/unrank is order-certified
 // against the SQL floor by selfcert-math.mts; kernel name IS the concept, no mapping table.
 
-import { Factorial } from "./kernels.ts";
+import { Factorial, bitOf, floorDiv, highWord, joinWords, lowWord, modRank, wordsOfBits } from "./kernels.ts";
 
 // ─── counts ──────────────────────────────────────────────────────────────────────────────────────────
 
-/** C(n,k). */
+const MAX_SAFE = Number.MAX_SAFE_INTEGER;
+
+function gcd(a: number, b: number): number {
+  while (b !== 0) [a, b] = [b, a % b];
+  return a;
+}
+
+/** c * m / d where d divides c * m: exact while the quotient is a safe integer, even when c * m
+ *  is not (d / g divides m for g = gcd(c, d)). Past 2^53 an approximation, still above it. */
+export function mulDiv(c: number, m: number, d: number): number {
+  const p = c * m;
+  if (p <= MAX_SAFE || c > MAX_SAFE) return p / d;
+  const g = gcd(c, d);
+  return (c / g) * (m / (d / g));
+}
+
+/** C(n,k), exact while it is a safe integer: every partial product C(n,i) is at most the result. */
 export function Binomial(n: number, k: number): number {
   if (k < 0 || k > n) return 0;
   k = Math.min(k, n - k);
   let c = 1;
-  for (let i = 0; i < k; i++) c = (c * (n - i)) / (i + 1);
-  return Math.round(c);
+  for (let i = 0; i < k; i++) c = mulDiv(c, n - i, i + 1);
+  return c;
 }
 
 /** #integer compositions of n = 2^(n-1) for n ≥ 1, 1 for n = 0. */
@@ -126,10 +142,12 @@ function partsAtMost(m: number, j: number): number {
 /** The rank-th composition of n by the gap-cut bijection (mask IS the rank). SQL twin: composition_from_mask. */
 export function CompositionFromMask(n: number, mask: number): number[] {
   if (n === 0) return [];
+  const hi = highWord(mask);
+  const lo = lowWord(mask, hi);
   const parts: number[] = [];
   let run = 1;
   for (let i = 1; i <= n - 1; i++) {
-    if ((mask >> (i - 1)) & 1) {
+    if (bitOf(lo, hi, i - 1)) {
       parts.push(run);
       run = 1;
     } else run++;
@@ -141,7 +159,7 @@ export function CompositionFromMask(n: number, mask: number): number[] {
 /** rank-th integer partition of n, largest-part-first order. */
 export function IntegerPartitionUnrank(n: number, rank: number): number[] {
   const total = PartitionsP(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let m = n,
     max = n;
@@ -164,7 +182,7 @@ export function IntegerPartitionUnrank(n: number, rank: number): number[] {
 export function IntegerPartitionKUnrank(n: number, k: number, rank: number): number[] {
   const total = KPartPartitionCount(n, k);
   if (total <= 0) return [];
-  let r = ((rank % total) + total) % total;
+  let r = modRank(rank, total);
   const out: number[] = [];
   let m = n,
     j = k,
@@ -202,14 +220,14 @@ function getBTable(n: number): number[][] {
 export function RgsUnrank(n: number, rank: number): number[] {
   if (n === 0) return [];
   const total = BellB(n);
-  const r = ((rank % total) + total) % total;
+  const r = modRank(rank, total);
   const b = getBTable(n);
   const result: number[] = [0];
   let m = 0,
     remaining = r;
   for (let i = 1; i < n; i++) {
     const bval = b[n - 1 - i][m];
-    let wi = Math.floor(remaining / bval);
+    let wi = floorDiv(remaining, bval);
     if (wi > m + 1) wi = m + 1;
     result.push(wi);
     remaining -= wi * bval;
@@ -235,7 +253,7 @@ function countKBlockCompletions(remaining: number, m: number, k: number): number
 /** rank-th RGS of length n with max exactly k−1 (exactly k blocks), lex order. Count = StirlingS2(n,k). */
 export function SetPartitionsIntoKBlocksUnrank(n: number, k: number, rank: number): number[] {
   const total = countKBlockCompletions(n, -1, k);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let m = -1;
   for (let i = 0; i < n; i++) {
@@ -275,7 +293,7 @@ function countCompletions(remaining: number, missing: number, k: number): number
 export function SetCompositionUnrank(n: number, rank: number): number[] {
   if (n === 0) return [];
   const total = Fubini(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   let k = 1;
   for (;;) {
     const cnt = CountSurjections(n, k);
@@ -365,13 +383,14 @@ export function IsSetPartitionOf(blocks: number[][], n: number, k?: number): boo
 
 /** Composition → gap-cut mask (its rank). */
 export function CompositionRank(parts: number[]): number {
-  let mask = 0,
-    cum = 0;
+  const cuts: number[] = [];
+  let cum = 0;
   for (let i = 0; i < parts.length - 1; i++) {
     cum += parts[i];
-    mask |= 1 << (cum - 1);
+    cuts.push(cum - 1);
   }
-  return mask;
+  const [lo, hi] = wordsOfBits(cuts);
+  return joinWords(lo, hi);
 }
 
 /** Integer partition of n → its largest-part-first rank. */

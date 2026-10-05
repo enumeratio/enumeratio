@@ -5,7 +5,16 @@
 // FibonacciWords, Tuples, k-subsets); the rest (Lucas strings, Gray code, palindromes, necklaces,
 // Lyndon words) are new, several adapted from the archived enumeratio repo's compute-engine
 // packs/words.ts (Necklaces/LyndonWords there are exactly KNecklaces/KLyndonWords here).
-import { binomial } from "../../../collections/src/families/shared.ts";
+import {
+  bitOf,
+  grayWords,
+  highWord,
+  joinWords,
+  lowWord,
+  modRank,
+  ungrayWords,
+  wordsOfBits,
+} from "../../../collections/src/families/kernels.ts";
 import { Binomial } from "../../../collections/src/families/kernels-combinatorics.ts";
 import {
   BinaryStringCount,
@@ -25,7 +34,7 @@ import { binaryWordsByWeight, fibStrings, lucasStrings } from "./epsil.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
+const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 // ─── BinaryWordsByWeight(n, k): length-n binary words with exactly k ones, in lexicographic order
 // (0 preferred over 1 at each position). Count = C(n,k). Standard combinatorial-number-system walk:
@@ -49,7 +58,7 @@ export function byWeightUnrank(n: number, k: number, r: number): number[] {
       onesLeft--;
       continue;
     }
-    const zeroBlock = binomial(posLeft, onesLeft);
+    const zeroBlock = Binomial(posLeft, onesLeft);
     if (rem < zeroBlock) {
       bits.push(0);
     } else {
@@ -71,7 +80,7 @@ export function byWeightRank(bits: number[], n: number, k: number): number {
       continue;
     }
     if (bits[i] === 1) {
-      rem += binomial(posLeft, onesLeft);
+      rem += Binomial(posLeft, onesLeft);
       onesLeft--;
     }
   }
@@ -137,17 +146,14 @@ export function grayCodeCount(n: number): number {
 export function grayCodeUnrank(n: number, r: number): number[] {
   const total = grayCodeCount(n);
   const rem = normRank(r, total);
-  const g = rem ^ (rem >> 1);
-  const bits: number[] = [];
-  for (let i = 0; i < n; i++) bits.push((g >> (n - 1 - i)) & 1);
-  return bits;
+  const hi = highWord(rem);
+  const [gLo, gHi] = grayWords(lowWord(rem, hi), hi);
+  return Array.from({ length: n }, (_, i) => bitOf(gLo, gHi, n - 1 - i));
 }
 export function grayCodeRank(bits: number[]): number {
-  let g = 0;
-  for (const b of bits) g = (g << 1) | b;
-  let r = g;
-  for (let shift = 1; shift < 31; shift <<= 1) r ^= r >> shift; // inverse Gray
-  return r >>> 0;
+  const [gLo, gHi] = wordsOfBits(bits.flatMap((b, i) => (b === 1 ? [bits.length - 1 - i] : [])));
+  const [lo, hi] = ungrayWords(gLo, gHi);
+  return joinWords(lo, hi);
 }
 
 // ─── BinaryPalindromes(n): binary words that read the same reversed. Count = 2^ceil(n/2). The free
@@ -159,15 +165,19 @@ export function palindromeUnrank(n: number, r: number): number[] {
   const half = Math.ceil(n / 2);
   const total = palindromeCount(n);
   const rem = normRank(r, total);
-  const free: number[] = [];
-  for (let i = 0; i < half; i++) free.push((rem >> (half - 1 - i)) & 1);
+  const hi = highWord(rem);
+  const lo = lowWord(rem, hi);
+  const free = Array.from({ length: half }, (_, i) => bitOf(lo, hi, half - 1 - i));
   return Array.from({ length: n }, (_, i) => (i < half ? free[i] : free[n - 1 - i]));
 }
 export function palindromeRank(bits: number[], n: number): number {
   const half = Math.ceil(n / 2);
-  let r = 0;
-  for (let i = 0; i < half; i++) r = (r << 1) | (bits[i] & 1);
-  return r >>> 0;
+  const [lo, hi] = wordsOfBits(
+    Array.from({ length: half }, (_, i) => i)
+      .filter((i) => (bits[i] & 1) === 1)
+      .map((i) => half - 1 - i),
+  );
+  return joinWords(lo, hi);
 }
 export function palindromeValid(bits: unknown, n: number): boolean {
   if (!Array.isArray(bits) || bits.length !== n) return false;

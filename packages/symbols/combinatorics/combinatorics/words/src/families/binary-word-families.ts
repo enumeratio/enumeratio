@@ -12,12 +12,13 @@
 // duplicated from the source file (mirrors the permutations pilot's `ints`); `reversed` and
 // `eulerPhi` are used ONLY by the bracelet families and moved outright (removed from
 // collections' copy).
+import { floorDiv, modRank } from "../../../collections/src/families/kernels.ts";
 import { ternaryGrayCodes } from "../../../collections/src/families/closed-forms.ts";
 import { stirlingPermutations } from "./epsil.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
+const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 function arraysEqual(a: number[], b: number[]): boolean {
   if (a.length !== b.length) return false;
@@ -222,7 +223,7 @@ export function stirlingUnrank(n: number, r: number): number[] {
   for (let k = n; k >= 2; k--) {
     const radix = 2 * k - 1;
     digits[k] = rem % radix;
-    rem = Math.floor(rem / radix);
+    rem = floorDiv(rem, radix);
   }
   let word: number[] = n >= 1 ? [1, 1] : [];
   for (let k = 2; k <= n; k++) {
