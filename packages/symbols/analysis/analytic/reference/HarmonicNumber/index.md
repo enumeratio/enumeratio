@@ -40,3 +40,4 @@ names:
 - Negative integer $n$ has no sum and is a pole: $H_{-1} = H_{-2} = \cdots = \mathrm{ComplexInfinity}$, in both the one- and two-argument forms — matching Wolfram, which does not extend the sum by the continuation there.
 - Complex $z$ and complex/non-integer $r$ are supported numerically, via [[PolyGamma]]'s digamma ($r$ absent) and [[HurwitzZeta]] ($r$ present).
 - A non-integer $r$ (or non-integer $z$ with $r$ present) stays symbolic under plain evaluation even at an otherwise-exact $n$ — the sum $\sum k^{-r}$ has no rational value there — and only reduces under N() or a floating-point argument, the same gate every head in this package uses.
+- Differs from Wolfram: $HarmonicNumber(1/4)$ reduces to its closed form on evaluation; Wolfram keeps `HarmonicNumber[1/4]` until `FunctionExpand`. Both agree as identities.

@@ -19,3 +19,4 @@ names:
 ---
 
 - Stays symbolic even at values where the reciprocal circular functions fold exactly (e.g. $x = 1$) -- wrap in N(...) for a numeric result.
+- Differs from Wolfram: the range is $(0, \pi)$, so $Arccot(-1) = 3\pi/4$; Wolfram's `ArcCot` ranges over $[-\pi/2, \pi/2]$ and gives $-\pi/4$.

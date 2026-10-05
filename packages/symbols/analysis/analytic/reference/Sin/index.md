@@ -59,3 +59,4 @@ bindings:
 - Reciprocal of [[Csc]]: $\sin(x) = \frac{1}{\csc(x)}$.
 - compute-engine evaluates exactly at rational multiples of $\pi$ that have a closed radical form -- well past the usual $\pi/6, \pi/4, \pi/3$ set, e.g. $\pi/5$.
 - A numeric argument that isn't a recognized special angle, and isn't already floating-point, is left symbolic; pass a float or wrap in N(...) for a numeric approximation.
+- Differs from Wolfram: $N(Sin(24^{40}))$ reduces the huge argument exactly and answers correctly; Wolfram's machine-precision `N[Sin[24^40]]` loses the argument and answers wrongly (it needs an explicit precision).

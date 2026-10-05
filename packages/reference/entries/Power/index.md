@@ -79,3 +79,5 @@ bindings:
     template: power($1, $2)
     arity: 2
 ---
+
+- Differs from Wolfram: $Exp(x)\,E^y$ stays a product of two powers; Wolfram combines it into $E^{x+y}$.

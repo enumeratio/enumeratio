@@ -35,4 +35,5 @@ names:
 - A second, integer argument n rounds to the nearest $10^{-n}$ instead: positive n gives n decimal places, negative n rounds to the nearest power of ten.
 - $\mathrm{Round}(x, 0)$ agrees with the 1-argument form.
 - Threads element-wise over a list.
-- The digits argument must be an integer; unlike [[Floor]] and [[Ceil]], which take no second argument at all, Round is the only one of the three with quantized rounding.
+- The digits argument must be an integer; [[Floor]] and [[Ceil]] take a step instead (a multiple to round to), not a digit count.
+- Differs from Wolfram: $Round(5/2) = 3$ and $Round(7/2) = 4$; Wolfram rounds a tie to the even integer and gives 2 and 4.

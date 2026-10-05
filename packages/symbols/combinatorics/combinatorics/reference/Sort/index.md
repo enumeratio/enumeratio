@@ -24,3 +24,4 @@ names:
 - Orders numbers numerically, strings lexicographically, and symbols alphabetically by name.
 - The comparator form `Sort(list, p)` takes a predicate `p` reporting whether a pair is already in order.
 - Works on the operands of any expression, not just a collection's elements.
+- Differs from Wolfram: strings sort by code point, so `"B"` comes before `"a"`; Wolfram's canonical order puts `a, b, B`.
