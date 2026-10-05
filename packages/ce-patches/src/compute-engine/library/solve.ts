@@ -205,3 +205,67 @@ function dropsPeriodicFamilies(ops: readonly BoxedExpression[]): boolean {
   if (ops.slice(1).some((spec) => spec.operator === "Element")) return false;
   return hasPeriodicOfUnknown(statement);
 }
+
+// cortex-js/compute-engine: `Solve(eq, Element(x, D))` filters the roots it finds only when it
+// reads them as numbers, and answers nothing for a system whose unknowns carry domains
+// (`Solve({x + y == 3, x - y == 1}, {x, y}, Integers)` stays unevaluated). A symbolic root
+// comes back unfiltered, which is wrong by inclusion: `x^2 == a` over the reals gives
+// `±sqrt(a)`, real only for `a >= 0`. Here every solution is tested against its unknown's
+// domain:
+// - a member stays and a non-member goes;
+// - a solution whose membership isn't decided makes the whole `Solve` decline;
+// - a system is solved over the complexes first, then filtered tuple by tuple.
+export function evaluateSolveDomains(ce: ComputeEngine): void {
+  const definition = ce.lookupDefinition("Solve");
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const inner = operator?.evaluate;
+  if (operator === undefined || inner === undefined) return;
+
+  /** Is `value` in `domain`? `undefined` when that isn't decided. */
+  const member = (value: BoxedExpression, domain: BoxedExpression): boolean | undefined => {
+    const verdict = symbolNameOf(ce.function("Element", [value, domain]).evaluate());
+    return verdict === "True" ? true : verdict === "False" ? false : undefined;
+  };
+
+  operator.evaluate = (ops, options) => {
+    const specs = ops.slice(1).map((spec) => {
+      const isElement = spec.operator === "Element" && operandsOf(spec).length === 2;
+      const [unknown, domain] = isElement ? operandsOf(spec) : [spec, undefined];
+      // Every number is complex: nothing to filter.
+      const restricts = domain !== undefined && symbolNameOf(domain) !== "ComplexNumbers";
+      return { name: symbolNameOf(unknown!), domain: restricts ? domain : undefined };
+    });
+    if (specs.length === 0 || specs.some(({ name }) => name === undefined) || specs.every((s) => !s.domain)) {
+      return inner(ops, options);
+    }
+
+    // A system's native solver takes bare unknowns only.
+    const answer =
+      specs.length === 1
+        ? inner(ops, options)
+        : ce
+            .function("Solve", [
+              ops[0]!,
+              ce.function(
+                "List",
+                specs.map(({ name }) => ce.symbol(name!)),
+              ),
+            ])
+            .evaluate(options);
+    if (answer === undefined || answer.operator !== "List") return undefined;
+
+    const kept: BoxedExpression[] = [];
+    for (const solution of operandsOf(answer)) {
+      const parts = specs.length === 1 ? [solution] : operandsOf(solution);
+      if (parts.length !== specs.length) return undefined;
+      const verdicts = parts.map((part, i) => {
+        const domain = specs[i]!.domain;
+        return domain === undefined ? true : member(part, domain);
+      });
+      if (verdicts.includes(false)) continue;
+      if (verdicts.includes(undefined)) return undefined;
+      kept.push(solution);
+    }
+    return ce.function("List", kept);
+  };
+}

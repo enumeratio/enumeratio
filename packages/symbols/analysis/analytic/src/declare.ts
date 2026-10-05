@@ -5,8 +5,10 @@ import {
   applyPatch,
   lerchPhiPatch,
   nAccuracyGoal,
+  integratePolynomialPowers,
   oscillatoryEndpoint,
   solveDeclines,
+  solveDomains,
   takeDropNegativeCount,
   valuesAtZero,
   inverseTrigRadicals,
@@ -177,12 +179,14 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareWidened(ce);
 
   applyPatch(ce, solveDeclines);
+  applyPatch(ce, solveDomains);
   applyPatch(ce, takeDropNegativeCount);
   applyPatch(ce, iteratorUpperBound);
   applyPatch(ce, rangeBigBounds);
   applyPatch(ce, shapeOfUnknownElements);
   applyPatch(ce, nAccuracyGoal);
   applyPatch(ce, oscillatoryEndpoint);
+  applyPatch(ce, integratePolynomialPowers);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);
