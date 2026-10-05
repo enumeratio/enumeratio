@@ -90,6 +90,27 @@ test("a Graph answer's trailing options don't change the graph", () => {
   expect(compareTrees(reduce(ours, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("agree");
 });
 
+// A directed graph's cached matrix sits in the other slot: `{SparseArray, Null}`.
+test("a directed Graph answer reads its edges from the directed SparseArray slot", () => {
+  const evaluateNumbers: (expr: MathJSON) => Leaf = (expr) => (typeof expr === "number" ? expr : symbolic(expr));
+  const ours = [
+    "Graph",
+    ["List", 1, 2, 3],
+    ["List", ["DirectedEdge", 1, 2], ["DirectedEdge", 2, 3], ["DirectedEdge", 3, 1]],
+  ] as MathJSON;
+  const theirs = fromWolfram(
+    "Graph[{1, 2, 3}, {SparseArray[Automatic, {3, 3}, 0, {1, {{0, 1, 2, 3}, {{2}, {3}, {1}}}, Pattern}], Null}]",
+  ) as MathJSON;
+  expect(compareTrees(reduce(ours, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("agree");
+  // Reversed edge directions are a different graph.
+  const reversed = [
+    "Graph",
+    ["List", 1, 2, 3],
+    ["List", ["DirectedEdge", 2, 1], ["DirectedEdge", 3, 2], ["DirectedEdge", 1, 3]],
+  ] as MathJSON;
+  expect(compareTrees(reduce(reversed, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("disagree");
+});
+
 // CycleDecomposition/from-a-permutation: `Permutation([2, 3, 1, 4])` decomposes into cycles
 // (1 2 3), a 3-cycle, and 4, a FIXED point -- ours keeps the fixed point as its own singleton
 // cycle (`[[1,2,3],[4]]`); Wolfram's `Cycles[{{1,2,3}}]` (its own answer, unwrapped by name

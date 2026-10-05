@@ -207,9 +207,10 @@ const edgeKey = (a: Tree, b: Tree, directed: boolean): string =>
   directed ? `${JSON.stringify(a)}->${JSON.stringify(b)}` : [JSON.stringify(a), JSON.stringify(b)].toSorted().join("-");
 
 /**
- * Wolfram's own `Graph` answer packs its edges as a cached `{Null, SparseArray[...]}` pair
- * rather than an explicit edge list -- `SparseArray[Automatic, {n, n}, 0, {1, {rowPtr,
- * colIndices}, values}]`, the compressed-row-storage encoding of its (0/1) adjacency matrix.
+ * Wolfram's own `Graph` answer packs its edges as a cached `{Null, SparseArray[...]}` (undirected)
+ * or `{SparseArray[...], Null}` (directed) pair rather than an explicit edge list --
+ * `SparseArray[Automatic, {n, n}, 0, {1, {rowPtr, colIndices}, values}]`, the
+ * compressed-row-storage encoding of its (0/1) adjacency matrix.
  * `values` is irrelevant to topology (an edge either is or isn't there) and often prints
  * elided/truncated besides, so only `rowPtr`/`colIndices` are read: row `i`'s nonzero columns
  * are `colIndices[rowPtr[i-1] .. rowPtr[i]-1]`, each itself a singleton `{col}`.
@@ -252,8 +253,8 @@ function reduceCycles(cyclesArg: MathJSON, evaluate: (expr: MathJSON) => Leaf): 
 
 /** `Graph(vertices, edgeSpec)` reduced to `["Graph", sortedVertices, sortedEdgeKeys]`: our
  *  own `List[UndirectedEdge[a, b], ...]` / `List[DirectedEdge[a, b], ...]` edge spec, or
- *  Wolfram's cached `List[Null, SparseArray[...]]` one, read down to the same comparable
- *  shape either way. An edge spec neither form decodes reduces to an empty edge list rather
+ *  Wolfram's cached `List[Null, SparseArray[...]]` (or directed `List[SparseArray[...], Null]`)
+ *  one, read down to the same comparable shape either way. An edge spec neither form decodes reduces to an empty edge list rather
  *  than failing the whole comparison — a genuine shape mismatch still shows up as a vertex
  *  or edge-count disagreement. */
 function reduceGraph(vertices: MathJSON, edgeSpec: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree {
@@ -264,9 +265,14 @@ function reduceGraph(vertices: MathJSON, edgeSpec: MathJSON, evaluate: (expr: Ma
   let edgeKeys: string[];
   // `fromWolfram` reads Wolfram's `Null` back as OUR `Nothing` (its own reverse spelling,
   // `to-wolfram.ts`'s `SYMBOLS` table: `Nothing: "Null"`) -- never the string `"Null"`.
-  if (items.length === 2 && items[0] === "Nothing" && Array.isArray(items[1]) && items[1][0] === "SparseArray") {
-    const decoded = decodeSparseAdjacency(items[1] as MathJSON) ?? [];
-    edgeKeys = decoded.map(([a, b]) => edgeKey(a, b, false));
+  // The pair is `{directed, undirected}`: `{SparseArray, Null}` or `{Null, SparseArray}`.
+  const isSparse = (item: MathJSON | undefined): boolean => Array.isArray(item) && item[0] === "SparseArray";
+  const isSlot = (item: MathJSON | undefined): boolean => item === "Nothing" || isSparse(item);
+  if (items.length === 2 && isSlot(items[0] as MathJSON) && isSlot(items[1] as MathJSON)) {
+    edgeKeys = [false, true].flatMap((directed) => {
+      const slot = items[directed ? 0 : 1] as MathJSON;
+      return (isSparse(slot) ? (decodeSparseAdjacency(slot) ?? []) : []).map(([a, b]) => edgeKey(a, b, directed));
+    });
   } else {
     edgeKeys = items.flatMap((item) => {
       if (!Array.isArray(item) || item.length !== 3) return [];
