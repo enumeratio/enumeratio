@@ -14,6 +14,7 @@ import { recordDirs } from "@enumeratio/entry/node";
 import { assembleManifest, type PackageIndex } from "../src/assemble.ts";
 import type { Placement } from "../src/hierarchy.ts";
 import { notationSpecifier, type PackageField } from "../src/package-field.ts";
+import { installedLibraries } from "./installed.ts";
 import { packageIndexOf } from "./package-index.ts";
 
 const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
@@ -33,7 +34,8 @@ const workspaceDirs = [
     readdirSync(join(PACKAGES, "symbols", group)).map((name) => join(PACKAGES, "symbols", group, name)),
   ),
 ];
-for (const dir of workspaceDirs) {
+const installed = installedLibraries(workspaceDirs, PACKAGES);
+for (const dir of [...workspaceDirs, ...installed.map((library) => library.dir)]) {
   const file = join(dir, "package.json");
   if (!existsSync(file)) continue;
   const pkg = JSON.parse(readFileSync(file, "utf8")) as { name?: string; enumeratio?: PackageField };
@@ -51,8 +53,14 @@ for (const dir of workspaceDirs) {
     placements[`${name}/${subpath.replace(/^\.\//, "")}`] = placement;
 }
 
-// One per package with records, in the order the records are read, then those with only a notation.
-const withRecords = recordDirs(PACKAGES);
+// One per package with records, in the order the records are read (the workspace's, then those
+// installed), then those with only a notation.
+const withRecords = [
+  ...recordDirs(PACKAGES),
+  ...installed
+    .map(({ name, dir }) => ({ package: name.replace(/^@enumeratio\//, ""), dir: join(dir, "reference") }))
+    .filter(({ dir }) => existsSync(dir)),
+];
 const indexes: PackageIndex[] = [
   ...withRecords.map(({ package: pkg, dir }) => packageIndexOf(pkg, dir, notations.get(pkg))),
   ...[...notations]
