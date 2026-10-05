@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-subsets	Basic		[CollectionTable, [Subsets, 2]]	[CollectionTable, [Subsets, 2]]	held inert: it evaluates to itself, and is drawn by the element
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+subsets	Basic		[CollectionTable, [Subsets, 2]]	[CollectionTable, [Subsets, 2]]	held inert: it evaluates to itself, and is drawn by the element	domain	CollectionTable is held inert here and drawn by the element; Wolfram has no such head, so it returns the call with its argument evaluated.

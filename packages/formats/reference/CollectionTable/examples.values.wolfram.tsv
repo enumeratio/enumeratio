@@ -1,2 +1,2 @@
-id	in	out	tex.in	tex.out
-subsets	CollectionTable[Subsets[Range[2]]]	CollectionTable[Subsets[2]]	\text{CollectionTable}(\text{Subsets}[2])	\text{CollectionTable}(\text{Subsets}[2])
+id	in	out	tex.in	tex.out	verdict
+subsets	CollectionTable[Subsets[Range[2]]]	CollectionTable[{{}, {1}, {2}, {1, 2}}]	\text{CollectionTable}(\text{Subsets}[\text{Range}[2]])	\text{CollectionTable}(\{\{\},\{1\},\{2\},\{1,2\}\})	disagree

@@ -17,6 +17,7 @@
 // (run.ts/runIn) like any other example — no second round trip.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { emit, type MathJSON } from "./emit.ts";
 import type { SymbolicSystem } from "./systems.ts";
 import type { Verdict } from "./compare.ts";
@@ -347,7 +348,9 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
         leavesCall(entry as MathJSON, kept ? ((expected as MathJSON[])[i + 1] as MathJSON) : expected),
       );
   }
-  if (COMBINING.has(call[0])) return false;
+  // Arithmetic over calls is held where an operand's closed call is (`1 + Zeta(3)` as `1 + Zeta(3)`).
+  if (COMBINING.has(call[0]))
+    return call.slice(1).some((operand) => isClosed(operand as MathJSON) && leavesCall(operand as MathJSON, expected));
   // A call over a list threads: it is held where one entry's call is (`BarnesG([a, b])` as `[BarnesG(a), b]`).
   const [, only] = call;
   if (call.length === 2 && Array.isArray(only) && only[0] === "List") {
@@ -369,6 +372,60 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
         (e.length === asked.length &&
           e.slice(1).every((x, i) => sameValue(x as MathJSON, asked[i + 1] as MathJSON))))) ||
       e.slice(1).some((x) => visit(x as MathJSON)));
+  return visit(expected) || holdsAppliedCall(call, expected);
+}
+
+/** Heads that only arrange or bind an answer: a call to one of these is not a function left undone. */
+const STRUCTURAL = new Set([
+  ...COMBINING,
+  ...WRAPPERS,
+  "Function",
+  "Block",
+  "Limits",
+  "Rule",
+  "KeyValuePair",
+  "Nothing",
+]);
+
+/** The heads of the calls in the body of every pure function `expr` holds, which do something (not `STRUCTURAL`). */
+function appliedHeads(expr: MathJSON, found: Set<string> = new Set(), inBody = false): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  if (inBody && !STRUCTURAL.has(expr[0])) found.add(expr[0]);
+  for (const operand of expr.slice(1)) appliedHeads(operand as MathJSON, found, inBody || expr[0] === "Function");
+  return found;
+}
+
+/** Whether `expr` names no free symbol: every bare name is a defined one, a slot, or bound by a
+ * `Function` parameter or an iterator (`Limits`) inside it. A closed call is a value a kernel can compute. */
+function isClosed(expr: MathJSON): boolean {
+  const bound = new Set<string>();
+  const bind = (e: MathJSON): void => {
+    if (!Array.isArray(e) || typeof e[0] !== "string") return;
+    if (e[0] === "Function") for (const name of e.slice(2)) if (typeof name === "string") bound.add(name);
+    if (e[0] === "Limits" && typeof e[1] === "string") bound.add(e[1]);
+    e.slice(1).forEach((operand) => bind(operand as MathJSON));
+  };
+  bind(expr);
+  const free = (e: MathJSON): boolean => {
+    if (typeof e === "string") return !/^'.*'$/s.test(e) && !SLOT.test(e) && !DEFINED_NAMES.has(e) && !bound.has(e);
+    return Array.isArray(e) && e.slice(typeof e[0] === "string" ? 1 : 0).some((operand) => free(operand as MathJSON));
+  };
+  return !free(expr);
+}
+
+/**
+ * Whether `expected` holds, anywhere under its arithmetic, a closed call to a head a function `call`
+ * is given applies (`Normalize(p, f)` is `p / f(p)`, and `f` integrates: ours still has
+ * `p / Integrate(…)`). A closed call is a number the kernel computes, so ours left it undone; one
+ * with a free symbol in it (`Sin(x)`) may be all the answer there is, so it is not read as held.
+ */
+function holdsAppliedCall(call: MathJSON, expected: MathJSON): boolean {
+  const heads = appliedHeads(call);
+  if (heads.size === 0) return false;
+  const visit = (e: MathJSON): boolean =>
+    Array.isArray(e) && typeof e[0] === "string"
+      ? (heads.has(e[0]) && isClosed(e)) || e.slice(1).some((operand) => visit(operand as MathJSON))
+      : false;
   return visit(expected);
 }
 

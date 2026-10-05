@@ -85,6 +85,24 @@ test("a Graph answer compares by vertices + edges, not by Wolfram's cached Spars
   expect(compareTrees(reduce(fewerEdges, evaluateNumbers), reduce(theirs, evaluateNumbers))).toBe("disagree");
 });
 
+// GridGraph(2, 3), Wolfram's FullForm as the scan reads it: numbered with the first dimension
+// fastest, where ours numbers the last fastest. Read through `symbolic` (the exact tree, which
+// reads a leaf as its text) the labelled graphs still compare: same numbering agrees, ours differs.
+test("a SparseArray Graph in FullForm reads through a text evaluator, so a renumbered grid is a readable disagree", () => {
+  const theirs = fromWolfram(
+    'Graph[List[1, 2, 3, 4, 5, 6], List[Null, SparseArray[Automatic, List[6, 6], 0, List[1, List[List[0, 2, 4, 7, 10, 12, 14], List[List[2], List[3], List[1], List[4], List[1], List[4], List[5], List[2], List[3], List[6], List[3], List[6], List[4], List[5]]], Pattern]]], List[Rule[GraphLayout, List["GridEmbedding", Rule["Dimension", List[2, 3]]]]]]',
+  ) as MathJSON;
+  const grid = (...edges: [number, number][]): MathJSON => [
+    "Graph",
+    ["List", 1, 2, 3, 4, 5, 6],
+    ["List", ...edges.map(([a, b]) => ["UndirectedEdge", a, b])],
+  ];
+  const sameNumbering = grid([1, 2], [1, 3], [2, 4], [3, 4], [3, 5], [4, 6], [5, 6]);
+  const lastFastest = grid([1, 4], [1, 2], [2, 5], [2, 3], [3, 6], [4, 5], [5, 6]);
+  expect(compareTrees(reduce(sameNumbering, symbolic), reduce(theirs, symbolic))).toBe("agree");
+  expect(compareTrees(reduce(lastFastest, symbolic), reduce(theirs, symbolic))).toBe("disagree");
+});
+
 // Subgraph(CompleteGraph(4), [1, 2, 3]): Wolfram's answer also carries a layout option list.
 test("a Graph answer's trailing options don't change the graph", () => {
   const evaluateNumbers: (expr: MathJSON) => Leaf = (expr) => (typeof expr === "number" ? expr : symbolic(expr));

@@ -299,7 +299,10 @@ function reduceCycles(cyclesArg: MathJSON, evaluate: (expr: MathJSON) => Leaf): 
  *  or edge-count disagreement. */
 function reduceGraph(vertices: MathJSON, edgeSpec: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree {
   const vertexList = Array.isArray(vertices) && vertices[0] === "List" ? vertices.slice(1) : [];
-  const reducedVertices = vertexList.map((v) => reduce(v as MathJSON, evaluate)).toSorted(byValue);
+  // A whole-number label is the number whichever way `evaluate` reads leaves (`symbolic` would make it
+  // text), like the endpoints a `SparseArray` decodes to.
+  const label = (v: MathJSON): Tree => (typeof v === "number" ? v : reduce(v, evaluate));
+  const reducedVertices = vertexList.map((v) => label(v as MathJSON)).toSorted(byValue);
 
   const items = Array.isArray(edgeSpec) && edgeSpec[0] === "List" ? edgeSpec.slice(1) : [];
   let edgeKeys: string[];
@@ -317,8 +320,8 @@ function reduceGraph(vertices: MathJSON, edgeSpec: MathJSON, evaluate: (expr: Ma
     edgeKeys = items.flatMap((item) => {
       if (!Array.isArray(item) || item.length !== 3) return [];
       if (item[0] !== "UndirectedEdge" && item[0] !== "DirectedEdge") return [];
-      const a = reduce(item[1] as MathJSON, evaluate);
-      const b = reduce(item[2] as MathJSON, evaluate);
+      const a = label(item[1] as MathJSON);
+      const b = label(item[2] as MathJSON);
       return [edgeKey(a, b, item[0] === "DirectedEdge")];
     });
   }
