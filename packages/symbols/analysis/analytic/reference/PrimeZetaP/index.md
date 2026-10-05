@@ -23,3 +23,4 @@ names:
 - Reuses this package's own `Zeta` (already extended to complex arguments) rather than a fresh prime-summation kernel; $\ln\zeta(ks) \to 0$ geometrically as $k$ grows, so the sum settles in a few dozen terms at double precision.
 - The identity only converges for $\operatorname{Re}(s) > 1$; outside that region (including the pole at $s=1$) this declines rather than attempting an analytic continuation it hasn't proven.
 - Checked against `wolframscript`'s `N[PrimeZetaP[s], 17]` at several points, matching to ~15 significant digits.
+- `N(x, d)` past a double's digits runs the same identity on the BigDecimal $\zeta$ kernel for real $s$, to $d$ digits; a complex $s$ stays unevaluated there.

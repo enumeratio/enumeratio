@@ -1,20 +1,20 @@
-id	in	out	tex.in	tex.out	verdict
-matches-hypergeometric0f1-2-0-5-gamma-2	Hypergeometric0F1Regularized[2, 0.5]	1.271723456312137	\, _0\tilde{F}_1(;2;0.5)	1.27172	
-b-1-is-a-pole-of-gamma-but-the-regularized-form	Hypergeometric0F1Regularized[-1, 0.5]	0.1471797367221067	\, _0\tilde{F}_1(;-1;0.5)	0.14718	
-at-the-pole-b-1-under-n	N[Hypergeometric0F1Regularized[-1, 2]]	3.715035560458437	N[\, _0\tilde{F}_1(;-1;2)]	3.71504	
-b-1-5-at-neg-0-7	Hypergeometric0F1Regularized[1.5, -0.7]	0.670794625574135	\, _0\tilde{F}_1(;1.5;-0.7)	0.670795	
-rational-order-7-3-at-2-5	Hypergeometric0F1Regularized[Rational[7, 3], 2.5]	2.1503511509077553	\, _0\tilde{F}_1\left(;\frac{7}{3};2.5\right)	2.15035	
-complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1Regularized[Complex[1, 1], 0.5]]	2.4762701949448696 + 0.1888532956202782*I	N[\, _0\tilde{F}_1(;1+i;0.5)]	2.47627\, +0.188853 i	
-order-2-at-a-complex-argument	N[Hypergeometric0F1Regularized[2, Complex[0.5, 0.5]]]	1.2481756368859287 + 0.2934012962643341*I	N[\, _0\tilde{F}_1(;2;0.5\, +0.5 i)]	1.24818\, +0.293401 i	
-negative-order-neg-0-5-at-0-3	Hypergeometric0F1Regularized[-0.5, 0.3]	-0.0585724021408243	\, _0\tilde{F}_1(;-0.5;0.3)	-0.0585724	
-complex-order-and-argument	N[Hypergeometric0F1Regularized[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]	2.73566529748704 + 25.894454183167486*I	N[\, _0\tilde{F}_1(;-2.5+1.5 i;1.2\, -0.8 i)]	2.73567\, +25.8945 i	
-order-0	Hypergeometric0F1Regularized[0, 0.5]	0.6358617281560685	\, _0\tilde{F}_1(;0;0.5)	0.635862	
-order-neg-2-at-0-7	Hypergeometric0F1Regularized[-2, 0.7]	0.06789905147462626	\, _0\tilde{F}_1(;-2;0.7)	0.0678991	
-order-0-at-a-complex-argument	N[Hypergeometric0F1Regularized[0, Complex[0.3, 0.4]]]	0.2548833430058154 + 0.5234223951841014*I	N[\, _0\tilde{F}_1(;0;0.3\, +0.4 i)]	0.254883\, +0.523422 i	
-order-neg-1-at-a-complex-argument	N[Hypergeometric0F1Regularized[-1, Complex[-0.5, 0.2]]]	0.09427166608970398 - 0.07802491943203788*I	N[\, _0\tilde{F}_1(;-1;-0.5+0.2 i)]	0.0942717\, -0.0780249 i	
-n-hypergeometric0f1regularized-0-neg-48-50	N[Hypergeometric0F1Regularized[0, -48], 50]	-0.75356407978144308380327864211537660841009027837077692848127362590882490312817`50.			disagree
-n-hypergeometric0f1regularized-4-0-25	N[Hypergeometric0F1Regularized[4, 0], 25]	0.16666666666666666666666666666666666667`25.			disagree
-matrixfunction-function	MatrixFunction[Function[Hypergeometric0F1Regularized[Rational[1, 2], Slot[1]]], List[List[Rational[1, 2], 0], List[0, Rational[1, 2]]]]	{{BesselI[-1/2, Sqrt[2]]/2^(1/4), 0}, {0, BesselI[-1/2, Sqrt[2]]/2^(1/4)}}			disagree
-n-neg-1-over-2-times	N[Plus[Times[Rational[-1, 2], Power[Hypergeometric0F1Regularized[Rational[3, 2], Rational[1, 2]], 2]], Power[Hypergeometric0F1Regularized[Rational[1, 2], Rational[1, 2]], 2]]]	0.3183098861837892	N\left[-\frac{1}{2} \, _0\tilde{F}_1\left(;\frac{3}{2};\frac{1}{2}\right){}^2+\, _0\tilde{F}_1\left(;\frac{1}{2};\frac{1}{2}\right){}^2\right]	0.31831	
-n-neg-2-times-hypergeometric0f1regularized-3	N[Plus[Times[-2, Power[Hypergeometric0F1Regularized[Rational[3, 2], 2], 2]], Power[Hypergeometric0F1Regularized[Rational[1, 2], 2], 2]]]	0.31830988618379763	N\left[-2 \, _0\tilde{F}_1\left(;\frac{3}{2};2\right){}^2+\, _0\tilde{F}_1\left(;\frac{1}{2};2\right){}^2\right]	0.31831	
-exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized[-1, 2]	4*Hypergeometric0F1Regularized[3, 2]	\, _0\tilde{F}_1(;-1;2)	4 \, _0\tilde{F}_1(;3;2)	disagree
+id	in	out	shown	tex.in	tex.out	verdict
+matches-hypergeometric0f1-2-0-5-gamma-2	Hypergeometric0F1Regularized[2, 0.5]	1.271723456312137		\, _0\tilde{F}_1(;2;0.5)	1.27172	
+b-1-is-a-pole-of-gamma-but-the-regularized-form	Hypergeometric0F1Regularized[-1, 0.5]	0.1471797367221067		\, _0\tilde{F}_1(;-1;0.5)	0.14718	
+at-the-pole-b-1-under-n	N[Hypergeometric0F1Regularized[-1, 2]]	3.715035560458437		N[\, _0\tilde{F}_1(;-1;2)]	3.71504	
+b-1-5-at-neg-0-7	Hypergeometric0F1Regularized[1.5, -0.7]	0.670794625574135		\, _0\tilde{F}_1(;1.5;-0.7)	0.670795	
+rational-order-7-3-at-2-5	Hypergeometric0F1Regularized[Rational[7, 3], 2.5]	2.1503511509077553		\, _0\tilde{F}_1\left(;\frac{7}{3};2.5\right)	2.15035	
+complex-order-1-plus-i-at-0-5	N[Hypergeometric0F1Regularized[Complex[1, 1], 0.5]]	2.4762701949448696 + 0.1888532956202782*I		N[\, _0\tilde{F}_1(;1+i;0.5)]	2.47627\, +0.188853 i	
+order-2-at-a-complex-argument	N[Hypergeometric0F1Regularized[2, Complex[0.5, 0.5]]]	1.2481756368859287 + 0.2934012962643341*I		N[\, _0\tilde{F}_1(;2;0.5\, +0.5 i)]	1.24818\, +0.293401 i	
+negative-order-neg-0-5-at-0-3	Hypergeometric0F1Regularized[-0.5, 0.3]	-0.0585724021408243		\, _0\tilde{F}_1(;-0.5;0.3)	-0.0585724	
+complex-order-and-argument	N[Hypergeometric0F1Regularized[Complex[-2.5, 1.5], Complex[1.2, -0.8]]]	2.73566529748704 + 25.894454183167486*I		N[\, _0\tilde{F}_1(;-2.5+1.5 i;1.2\, -0.8 i)]	2.73567\, +25.8945 i	
+order-0	Hypergeometric0F1Regularized[0, 0.5]	0.6358617281560685		\, _0\tilde{F}_1(;0;0.5)	0.635862	
+order-neg-2-at-0-7	Hypergeometric0F1Regularized[-2, 0.7]	0.06789905147462626		\, _0\tilde{F}_1(;-2;0.7)	0.0678991	
+order-0-at-a-complex-argument	N[Hypergeometric0F1Regularized[0, Complex[0.3, 0.4]]]	0.2548833430058154 + 0.5234223951841014*I		N[\, _0\tilde{F}_1(;0;0.3\, +0.4 i)]	0.254883\, +0.523422 i	
+order-neg-1-at-a-complex-argument	N[Hypergeometric0F1Regularized[-1, Complex[-0.5, 0.2]]]	0.09427166608970398 - 0.07802491943203788*I		N[\, _0\tilde{F}_1(;-1;-0.5+0.2 i)]	0.0942717\, -0.0780249 i	
+n-hypergeometric0f1regularized-0-neg-48-50	N[Hypergeometric0F1Regularized[0, -48], 50]	-0.75356407978144308380327864211537660841009027837077692848127362590882490312817`50.	-0.75356407978144308380327864211537660841009027837078	N[\, _0\tilde{F}_1(;0;-48),50]	-0.75356407978144308380327864211537660841009027837078	
+n-hypergeometric0f1regularized-4-0-25	N[Hypergeometric0F1Regularized[4, 0], 25]	0.16666666666666666666666666666666666667`25.	0.1666666666666666666666667	N[\, _0\tilde{F}_1(;4;0),25]	0.1666666666666666666666667	
+matrixfunction-function	MatrixFunction[Function[Hypergeometric0F1Regularized[Rational[1, 2], Slot[1]]], List[List[Rational[1, 2], 0], List[0, Rational[1, 2]]]]	{{BesselI[-1/2, Sqrt[2]]/2^(1/4), 0}, {0, BesselI[-1/2, Sqrt[2]]/2^(1/4)}}		\text{MatrixFunction}\left[\, _0\tilde{F}_1\left(;\frac{1}{2};\text{$\#$1}\right)\&,\left( \begin{array}{cc}  \frac{1}{2} & 0 \\  0 & \frac{1}{2} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  \frac{I_{-\frac{1}{2}}\left(\sqrt{2}\right)}{\sqrt[4]{2}} & 0 \\  0 & \frac{I_{-\frac{1}{2}}\left(\sqrt{2}\right)}{\sqrt[4]{2}} \\ \end{array} \right)	disagree
+n-neg-1-over-2-times	N[Plus[Times[Rational[-1, 2], Power[Hypergeometric0F1Regularized[Rational[3, 2], Rational[1, 2]], 2]], Power[Hypergeometric0F1Regularized[Rational[1, 2], Rational[1, 2]], 2]]]	0.3183098861837892		N\left[-\frac{1}{2} \, _0\tilde{F}_1\left(;\frac{3}{2};\frac{1}{2}\right){}^2+\, _0\tilde{F}_1\left(;\frac{1}{2};\frac{1}{2}\right){}^2\right]	0.31831	
+n-neg-2-times-hypergeometric0f1regularized-3	N[Plus[Times[-2, Power[Hypergeometric0F1Regularized[Rational[3, 2], 2], 2]], Power[Hypergeometric0F1Regularized[Rational[1, 2], 2], 2]]]	0.31830988618379763		N\left[-2 \, _0\tilde{F}_1\left(;\frac{3}{2};2\right){}^2+\, _0\tilde{F}_1\left(;\frac{1}{2};2\right){}^2\right]	0.31831	
+exact-arguments-stay-unevaluated-n-gives-the	Hypergeometric0F1Regularized[-1, 2]	4*Hypergeometric0F1Regularized[3, 2]		\, _0\tilde{F}_1(;-1;2)	4 \, _0\tilde{F}_1(;3;2)	disagree

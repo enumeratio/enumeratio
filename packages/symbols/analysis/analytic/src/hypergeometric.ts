@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { BigDecimal, BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
   isFiniteNum,
@@ -12,7 +12,11 @@ import {
   mul,
   scale,
   logGamma,
+  bigRealOperand,
+  bigResult,
+  exceedsDoublePrecision,
 } from "@enumeratio/ce-patches";
+import { pfqRegularizedBig } from "./hypergeometric-big.ts";
 
 // The generalized hypergeometric series pFq(a1,…,ap; b1,…,bq; z) = Σ_{k≥0} ∏(ai)_k / ∏(bj)_k
 // · zᵏ/k!, and its regularized cousin pFq(…)/∏Γ(bj) — Fungrim's frontier heads
@@ -29,6 +33,9 @@ import {
 // itself has a pole (b a non-positive integer) — a naive division would just trade one NaN for
 // another. Dividing by Γ(bj) termwise (via `invGamma`, entire) keeps every term finite and lets
 // the sum answer at those poles by the standard limiting convention (1/Γ(−n) = 0).
+//
+// The double series is what `N()` runs; `N(x, d)` past a double's digits takes the BigDecimal one
+// (hypergeometric-big.ts) for Hypergeometric0F1Regularized and Hypergeometric1F1Regularized.
 //
 // Convergence: p ≤ q (0F1, 1F1Regularized) is entire in z, so those never decline on account of
 // z. p = q + 1 (2F1Regularized, 3F2Regularized) only converges for |z| < 1; z on or outside the
@@ -111,6 +118,25 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
 
 const toCx = (x: BoxedExpression): Cx => cx(x.re, x.im);
 
+/**
+ * pFq(upper; b; z)/Γ(b) at the engine's precision, for the one-lower-parameter heads, when
+ * `N(…, d)` asks for more digits than a double carries. Real operands only: a complex value
+ * would still come back as a pair of doubles, so it declines (undefined) instead.
+ */
+function regularizedPastDouble(
+  ce: ComputeEngine,
+  upper: readonly BoxedExpression[],
+  b: BoxedExpression,
+  z: BoxedExpression,
+): BoxedExpression | undefined {
+  const ua = upper.map((a) => bigRealOperand(ce, a));
+  const bb = bigRealOperand(ce, b);
+  const zz = bigRealOperand(ce, z);
+  if (bb === undefined || zz === undefined || ua.some((a) => a === undefined)) return undefined;
+  const value = pfqRegularizedBig(ua as BigDecimal[], bb, zz, ce.precision);
+  return value === undefined ? undefined : bigResult(ce, value);
+}
+
 /** Shared operand plumbing: unbox to Cx, decline on a non-concrete or z = 0-with-pole operand. */
 function operandsOf(ops: readonly BoxedExpression[]): Cx[] | undefined {
   if (ops.some((o) => o === undefined || !isFiniteNum(o))) return undefined;
@@ -137,6 +163,9 @@ export function declareHypergeometric(ce: ComputeEngine): void {
       const cs = operandsOf(ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [b, z] = cs;
+      // Past a double's digits only the bignum series answers; it declines rather than pad.
+      if (exceedsDoublePrecision(ce, options.numericApproximation))
+        return regularizedPastDouble(ce, [], ops[0], ops[1]);
       const r = pfqRegularizedSeries([], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
@@ -149,6 +178,8 @@ export function declareHypergeometric(ce: ComputeEngine): void {
       const cs = operandsOf(ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a, b, z] = cs;
+      if (exceedsDoublePrecision(ce, options.numericApproximation))
+        return regularizedPastDouble(ce, [ops[0]], ops[1], ops[2]);
       const r = pfqRegularizedSeries([a], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
