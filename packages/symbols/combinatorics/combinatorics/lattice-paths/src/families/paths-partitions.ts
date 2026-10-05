@@ -7,6 +7,7 @@
 // exactly. GrandDyckPaths/RiordanPaths/FinePaths/BallotSequences declare no carrier at all and
 // stay in collections per step 5 rule 4, same as this file's set-partitions-domain families
 // (moved separately, see the set-partitions area commit).
+import { modRank } from "../../../collections/src/families/kernels.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
@@ -65,7 +66,7 @@ export function DelannoyPathUnrank(n: number, rank: number): number[] {
   if (n <= 0) return [];
   const f = delannoyTable(n);
   const total = f[0][0];
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let i = 0,
     j = 0;
@@ -190,7 +191,7 @@ export function DyckPathsByHeightCount(n: number, h: number): number {
 }
 export function DyckPathsByHeightUnrank(n: number, h: number, rank: number): number[] {
   const total = DyckPathsByHeightCount(n, h);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let height = 0;
   let reached = h === 0;
@@ -266,7 +267,7 @@ export function MotzkinPathsByPeaksCount(n: number, k: number): number {
 }
 export function MotzkinPathsByPeaksUnrank(n: number, k: number, rank: number): number[] {
   const total = MotzkinPathsByPeaksCount(n, k);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let h = 0,
     prevUp = false,

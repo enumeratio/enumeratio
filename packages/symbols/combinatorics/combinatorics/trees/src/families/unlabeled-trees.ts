@@ -10,6 +10,7 @@
 // PlaneTree/Dissection, the other two carriers this decision checked against, have no family
 // declared anywhere yet, so there's nothing to wire for them.
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import { floorDiv, modRank } from "../../../collections/src/families/kernels.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 import {
   add,
@@ -335,15 +336,13 @@ export function PhylogeneticTreeCount(n: number): number {
 export function PhylogeneticTreeUnrank(n: number, rank: number): number[] {
   if (n <= 2) return [];
   const total = PhylogeneticTreeCount(n);
-  let rem = total ? ((rank % total) + total) % total : 0;
+  let rem = total ? modRank(rank, total) : 0;
   const digits = Array.from({ length: n - 2 }, () => 0);
   for (let k = n; k >= 3; k--) {
     const base = 2 * k - 3;
     digits[k - 3] = rem % base;
-    rem = Math.floor(rem / base);
+    rem = floorDiv(rem, base);
   }
-  let t: PNode = [1, 2];
-  for (let k = 3; k <= n; k++) t = insertLeaf(t, k, digits[k - 3]);
   return digits;
 }
 export function PhylogeneticTreeRank(digits: number[], n: number): number {
@@ -454,7 +453,8 @@ export const phylogeneticTreesKernel: NumberKernel = {
   rank: (e, [n]) => PhylogeneticTreeRank(e as number[], n),
 };
 
-// No `fast` path here: Epsil is 5-10x faster than the TS kernel, which is wrong near 2^52 (BL-84).
+// No `fast` path here: the TS kernel's rank rebuilds the tree to read each digit back (the independent
+// reading the agreement tests use), which Epsil, reading the digits directly, beats ~10x.
 // PhylogeneticTrees in Epsil: the digits d_3..d_n are a mixed-radix number, digit k of radix
 // 2k − 3, k = n least significant. The TS kernel builds the tree digit by digit, but the digits
 // alone fix the rank, so the definition reads them directly.

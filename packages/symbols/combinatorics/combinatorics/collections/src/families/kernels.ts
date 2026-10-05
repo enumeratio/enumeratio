@@ -6,6 +6,73 @@
 
 export type Permutation = number[]; // 1-indexed one-line notation
 
+// Exact integer helpers for kernels whose ranks and counts run to 2^53. JS `%` is exact on
+// doubles; `/` and `+` on values past 2^52 round, so a quotient is `(a - a % b) / b` and a
+// reduction never adds the modulus to a rank.
+
+/** `rank` reduced into 0..total-1, exactly. */
+export function modRank(rank: number, total: number): number {
+  const r = rank % total;
+  return r < 0 ? r + total : r;
+}
+
+/** floor(a / b) for a >= 0 and b > 0, exact where `Math.floor(a / b)` rounds up near 2^52. */
+export const floorDiv = (a: number, b: number): number => (a - (a % b)) / b;
+
+// Bit kernels read a safe integer as two words, the low 32 bits and the rest: `>>` and `<<` on
+// the whole number would truncate it to 32 bits.
+const TWO32 = 4294967296;
+
+/** The part of `r` above its low 32 bits (exact: the divisor is a power of two). */
+export const highWord = (r: number): number => Math.floor(r / TWO32);
+/** The low 32 bits of `r`, whose high word is `hi`. */
+export const lowWord = (r: number, hi: number): number => r - hi * TWO32;
+/** Bit b of the number whose words are `lo` and `hi`. */
+export const bitOf = (lo: number, hi: number, b: number): number => (b < 32 ? (lo >>> b) & 1 : (hi >>> (b - 32)) & 1);
+/** The number whose low word has bit b set for each b in `bits` (0-based), and the high word's. */
+export function wordsOfBits(bits: Iterable<number>): [number, number] {
+  let lo = 0;
+  let hi = 0;
+  for (const b of bits) {
+    if (b < 32) lo |= 1 << b;
+    else hi |= 1 << (b - 32);
+  }
+  return [lo, hi];
+}
+/** `lo` and `hi` as one number. */
+export const joinWords = (lo: number, hi: number): number => (hi >>> 0) * TWO32 + (lo >>> 0);
+
+/** The binary-reflected Gray code of the number with words `lo`, `hi`, as words. */
+export const grayWords = (lo: number, hi: number): [number, number] => [
+  lo ^ ((lo >>> 1) | (hi << 31)),
+  hi ^ (hi >>> 1),
+];
+
+/** The number whose Gray code has words `lo`, `hi`: bit i is the parity of the code's bits from i up. */
+export function ungrayWords(lo: number, hi: number): [number, number] {
+  let h = hi ^ (hi >>> 1);
+  h ^= h >>> 2;
+  h ^= h >>> 4;
+  h ^= h >>> 8;
+  h ^= h >>> 16;
+  let l = lo ^ (lo >>> 1);
+  l ^= l >>> 2;
+  l ^= l >>> 4;
+  l ^= l >>> 8;
+  l ^= l >>> 16;
+  // Every bit of the low word also sees the parity of the whole high word.
+  return [h & 1 ? ~l : l, h];
+}
+
+/** base^exp by repeated multiplication: exact while the result is a safe integer (`**` is not
+ *  promised exact). Stops once past 2^53, where callers decline anyway. */
+export function ipow(base: number, exp: number): number {
+  if (base === 0 || base === 1) return exp === 0 ? 1 : base;
+  let r = 1;
+  for (let i = 0; i < exp && Math.abs(r) <= Number.MAX_SAFE_INTEGER; i++) r *= base;
+  return r;
+}
+
 /** n!  (exact JS number up to n = 18). SQL twin: factorial(n int). */
 export function Factorial(n: number): number {
   let f = 1;
@@ -17,12 +84,12 @@ export function Factorial(n: number): number {
  *  SQL twin: permutation_unrank_lex(n int, ord bigint). */
 export function PermutationUnrank(n: number, rank: number): Permutation {
   const N = Factorial(n);
-  let rem = N ? ((Math.trunc(rank) % N) + N) % N : 0;
+  let rem = N ? modRank(Math.trunc(rank), N) : 0;
   const avail = Array.from({ length: n }, (_, i) => i + 1);
   const res: number[] = [];
   for (let k = n - 1; k >= 0; k--) {
     const f = Factorial(k);
-    const idx = Math.floor(rem / f);
+    const idx = floorDiv(rem, f);
     rem = rem % f;
     res.push(avail[idx]);
     avail.splice(idx, 1);

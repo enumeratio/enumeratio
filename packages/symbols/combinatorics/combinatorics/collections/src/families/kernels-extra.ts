@@ -2,7 +2,22 @@
 // (enumerate-all: distinct, valid, count = closed form; and Rank∘At = id). Any consistent order is correct for
 // a new collection, so these pick the simplest bijection. PascalCase heads == kernel names.
 
-import { Binomial } from "./kernels-combinatorics.ts";
+import { Binomial, mulDiv } from "./kernels-combinatorics.ts";
+import {
+  Factorial,
+  PermutationRank,
+  PermutationUnrank,
+  bitOf,
+  floorDiv,
+  grayWords,
+  highWord,
+  ipow,
+  joinWords,
+  lowWord,
+  modRank,
+  ungrayWords,
+  wordsOfBits,
+} from "./kernels.ts";
 
 // ─── Subsets(n): the power set of [n]. Order = binary value of the membership mask. ─────────────────────
 export function SubsetCount(n: number): number {
@@ -11,16 +26,17 @@ export function SubsetCount(n: number): number {
 /** rank-th subset of [n]: element i is present iff bit (i-1) of rank is set; ascending. */
 export function SubsetUnrank(n: number, rank: number): number[] {
   const N = SubsetCount(n);
-  const r = N ? ((rank % N) + N) % N : 0;
+  const r = N ? modRank(rank, N) : 0;
+  const hi = highWord(r);
+  const lo = lowWord(r, hi);
   const out: number[] = [];
-  for (let i = 0; i < n; i++) if ((r >> i) & 1) out.push(i + 1);
+  for (let i = 0; i < n; i++) if (bitOf(lo, hi, i)) out.push(i + 1);
   return out;
 }
 /** subset → its mask rank (Σ 2^(x-1)). */
 export function SubsetRank(s: number[]): number {
-  let mask = 0;
-  for (const x of s) mask |= 1 << (x - 1);
-  return mask;
+  const [lo, hi] = wordsOfBits(s.map((x) => x - 1));
+  return joinWords(lo, hi);
 }
 export function IsSubsetOf(s: number[], n: number): boolean {
   if (!Array.isArray(s)) return false;
@@ -40,7 +56,7 @@ export function KSubsetCount(n: number, k: number): number {
 export function KSubsetUnrank(n: number, k: number, rank: number): number[] {
   const total = KSubsetCount(n, k);
   if (total <= 0) return [];
-  let r = ((rank % total) + total) % total;
+  let r = modRank(rank, total);
   const idx: number[] = []; // 0-based descending
   for (let i = k; i >= 1; i--) {
     let c = i - 1;
@@ -65,16 +81,16 @@ export function IsKSubsetOf(s: number[], n: number, k: number): boolean {
 
 // ─── Tuples(n,k): k-tuples over the alphabet [n] (repeats allowed). Order = lexicographic (pos 0 = MSB). ──
 export function TupleCount(n: number, k: number): number {
-  return n ** k;
+  return ipow(n, k);
 }
 /** rank-th k-tuple over [n]: base-n digits, position 0 most significant, entries 1..n. */
 export function TupleUnrank(n: number, k: number, rank: number): number[] {
   const total = TupleCount(n, k);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = Array.from({ length: k }, () => 0);
   for (let i = k - 1; i >= 0; i--) {
     out[i] = (r % n) + 1;
-    r = Math.floor(r / n);
+    r = floorDiv(r, n);
   }
   return out;
 }
@@ -91,7 +107,6 @@ export function IsTupleOf(t: number[], n: number, k: number): boolean {
 }
 
 // ─── more counting primitives ───────────────────────────────────────────────────────────────────────────
-import { Factorial, PermutationUnrank, PermutationRank } from "./kernels.ts";
 
 /** Falling factorial n·(n-1)···(n-k+1) = #k-permutations of [n]. */
 export function FallingFactorial(n: number, k: number): number {
@@ -101,10 +116,12 @@ export function FallingFactorial(n: number, k: number): number {
   return f;
 }
 
-/** CatalanNumber(n) = C(2n,n)/(n+1). */
+/** CatalanNumber(n) = C(2n,n)/(n+1), by C(i+1) = C(i)·2(2i+1)/(i+2): exact while a safe integer. */
 export function CatalanNumber(n: number): number {
   if (n < 0) return 0;
-  return Math.round(Binomial(2 * n, n) / (n + 1));
+  let c = 1;
+  for (let i = 0; i < n; i++) c = mulDiv(c, 2 * (2 * i + 1), i + 2);
+  return c;
 }
 
 // ─── CompositionsIntoKParts(n,k): k POSITIVE parts summing to n. Count C(n-1,k-1) (cut-gap subsets). ─────
@@ -230,12 +247,12 @@ export function KPermutationCount(n: number, k: number): number {
 export function KPermutationUnrank(n: number, k: number, rank: number): number[] {
   const total = FallingFactorial(n, k);
   if (total <= 0) return [];
-  let r = ((rank % total) + total) % total;
+  let r = modRank(rank, total);
   const avail = Array.from({ length: n }, (_, i) => i + 1);
   const res: number[] = [];
   for (let pos = 0; pos < k; pos++) {
     const f = FallingFactorial(n - 1 - pos, k - 1 - pos);
-    const idx = Math.floor(r / f);
+    const idx = floorDiv(r, f);
     r %= f;
     res.push(avail[idx]);
     avail.splice(idx, 1);
@@ -270,8 +287,8 @@ export function SignedPermutationCount(n: number): number {
 export function SignedPermutationUnrank(n: number, rank: number): number[] {
   const nf = Factorial(n);
   const total = SignedPermutationCount(n);
-  const r = total ? ((rank % total) + total) % total : 0;
-  const signMask = Math.floor(r / nf);
+  const r = total ? modRank(rank, total) : 0;
+  const signMask = floorDiv(r, nf);
   const perm = PermutationUnrank(n, r % nf);
   return perm.map((v, i) => ((signMask >> i) & 1 ? -v : v));
 }
@@ -297,20 +314,20 @@ export function IsSignedPermutationOf(signed: number[], n: number): boolean {
 
 // ─── ColoredPermutations(n,k): k^n · n!. Element = [image, colors], colors in 0..k-1. ──────────────────
 export function ColoredPermutationCount(n: number, k: number): number {
-  return k ** n * Factorial(n);
+  return ipow(k, n) * Factorial(n);
 }
 /** rank → [image[], colors[]]; colors is a base-k word of length n, image a permutation of [n]. */
 export function ColoredPermutationUnrank(n: number, k: number, rank: number): [number[], number[]] {
   const nf = Factorial(n);
   const total = ColoredPermutationCount(n, k);
-  let r = total ? ((rank % total) + total) % total : 0;
-  const colorNum = Math.floor(r / nf);
+  let r = total ? modRank(rank, total) : 0;
+  const colorNum = floorDiv(r, nf);
   const perm = PermutationUnrank(n, r % nf);
   const colors: number[] = Array.from({ length: n }, () => 0);
   let c = colorNum;
   for (let i = n - 1; i >= 0; i--) {
     colors[i] = c % k;
-    c = Math.floor(c / k);
+    c = floorDiv(c, k);
   }
   return [perm, colors];
 }
@@ -351,7 +368,7 @@ export function DyckPathCount(n: number): number {
 /** rank-th Dyck path of semilength n, up-before-down order. */
 export function DyckPathUnrank(n: number, rank: number): number[] {
   const total = CatalanNumber(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let h = 0;
   for (let s = 2 * n; s > 0; s--) {
@@ -395,7 +412,7 @@ export function IsDyckPath(path: number[], n: number): boolean {
 export function LabeledTreeCount(n: number): number {
   if (n <= 0) return 0;
   if (n <= 2) return 1;
-  return n ** (n - 2);
+  return ipow(n, n - 2);
 }
 /** Prüfer sequence (length n-2 over [n]) → the tree's edge list, edges as [min,max], caller order.
  *  Exported for LabeledTree's PruferSequence conversion (trees/src/prufer-conversion.ts). */
@@ -506,7 +523,7 @@ export function InvolutionUnrank(n: number, rank: number): number[] {
     }
     r -= fixed;
     const block = telephone(m - 2);
-    const j = Math.floor(r / block);
+    const j = floorDiv(r, block);
     const partner = labels[j];
     result[last] = partner;
     result[partner] = last;
@@ -518,7 +535,7 @@ export function InvolutionUnrank(n: number, rank: number): number[] {
   const total = InvolutionCount(n);
   rec(
     Array.from({ length: n }, (_, i) => i + 1),
-    total ? ((rank % total) + total) % total : 0,
+    total ? modRank(rank, total) : 0,
   );
   return result.slice(1);
 }
@@ -566,7 +583,7 @@ export function MotzkinCount(n: number): number {
 /** rank-th Motzkin path, steps tried U(1) then L(0) then D(-1). */
 export function MotzkinUnrank(n: number, rank: number): number[] {
   const total = MotzkinCount(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let h = 0;
   for (let s = n; s > 0; s--) {
@@ -628,7 +645,7 @@ export function FibonacciWordCount(n: number): number {
 }
 export function FibonacciWordUnrank(n: number, rank: number): number[] {
   const total = FibonacciWordCount(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let last = 0;
   for (let i = 0; i < n; i++) {
@@ -662,18 +679,17 @@ export function IsFibonacciWord(word: number[], n: number): boolean {
 // ─── GrayCodeSubsets(n): the subsets of [n] in binary-reflected Gray-code order (consecutive differ by one). ─
 export function GrayCodeSubsetUnrank(n: number, rank: number): number[] {
   const N = 2 ** n;
-  const r = N ? ((rank % N) + N) % N : 0;
-  const g = r ^ (r >> 1);
+  const r = N ? modRank(rank, N) : 0;
+  const hi = highWord(r);
+  const [gLo, gHi] = grayWords(lowWord(r, hi), hi);
   const out: number[] = [];
-  for (let i = 0; i < n; i++) if ((g >> i) & 1) out.push(i + 1);
+  for (let i = 0; i < n; i++) if (bitOf(gLo, gHi, i)) out.push(i + 1);
   return out;
 }
 export function GrayCodeSubsetRank(s: number[]): number {
-  let g = 0;
-  for (const x of s) g |= 1 << (x - 1);
-  let r = g;
-  for (let shift = 1; shift < 31; shift <<= 1) r ^= r >> shift; // inverse Gray
-  return r;
+  const [gLo, gHi] = wordsOfBits(s.map((x) => x - 1));
+  const [lo, hi] = ungrayWords(gLo, gHi);
+  return joinWords(lo, hi);
 }
 
 // ─── BinaryTrees(n): binary trees with n internal nodes (CatalanNumber). Element nested: leaf 0, node [L,R]. ─────
@@ -684,12 +700,12 @@ export function BinaryTreeCount(n: number): number {
 export function BinaryTreeUnrank(n: number, rank: number): BinTree {
   if (n === 0) return 0;
   const total = CatalanNumber(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   for (let i = 0; i < n; i++) {
     const cl = CatalanNumber(i),
       cr = CatalanNumber(n - 1 - i);
     const block = cl * cr;
-    if (r < block) return [BinaryTreeUnrank(i, Math.floor(r / cr)), BinaryTreeUnrank(n - 1 - i, r % cr)];
+    if (r < block) return [BinaryTreeUnrank(i, floorDiv(r, cr)), BinaryTreeUnrank(n - 1 - i, r % cr)];
     r -= block;
   }
   return 0; // unreachable
@@ -781,7 +797,7 @@ function derangeRec(S: number[], r: number, sigma: Map<number, number>): void {
   const dA = subfactorial(s - 2); // 2-cycle case
   const dB = subfactorial(s - 1); // p not paired back
   const per = dA + dB;
-  const pIdx = Math.floor(r / per);
+  const pIdx = floorDiv(r, per);
   let rem = r % per;
   const p = others[pIdx];
   if (rem < dA) {
@@ -813,7 +829,7 @@ export function DerangementUnrank(n: number, rank: number): number[] {
   const sigma = new Map<number, number>();
   derangeRec(
     Array.from({ length: n }, (_, i) => i + 1),
-    ((rank % total) + total) % total,
+    modRank(rank, total),
     sigma,
   );
   return Array.from({ length: n }, (_, i) => sigma.get(i + 1)!);
@@ -889,7 +905,7 @@ export function PartitionsQ(n: number): number {
 }
 export function DistinctPartitionUnrank(n: number, rank: number): number[] {
   const total = PartitionsQ(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let m = n,
     upper = n;
@@ -1000,7 +1016,7 @@ export function SchroederCount(n: number): number {
 /** rank-th large Schröder path, steps tried U(1) then L(2) then D(-1). */
 export function SchroederUnrank(n: number, rank: number): number[] {
   const total = SchroederCount(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let w = 2 * n,
     h = 0;
@@ -1150,7 +1166,7 @@ function unrankForest(m: number, slots: number, k: number, r: number): KTree[] {
     const cc = karyTreeCount0(s, k),
       rc = cntFill(m - s, slots - 1, k);
     const block = cc * rc;
-    if (r < block) return [unrankKTree(s, k, Math.floor(r / rc)), ...unrankForest(m - s, slots - 1, k, r % rc)];
+    if (r < block) return [unrankKTree(s, k, floorDiv(r, rc)), ...unrankForest(m - s, slots - 1, k, r % rc)];
     r -= block;
   }
   return [];
@@ -1161,7 +1177,7 @@ function unrankKTree(n: number, k: number, r: number): KTree {
 }
 export function KAryTreeUnrank(n: number, k: number, rank: number): KTree {
   const total = KAryTreeCount(n, k);
-  return unrankKTree(n, k, total ? ((rank % total) + total) % total : 0);
+  return unrankKTree(n, k, total ? modRank(rank, total) : 0);
 }
 function rankForest(children: KTree[], k: number): number {
   let r = 0;
@@ -1212,7 +1228,7 @@ export function SurjectionCount(n: number, k: number): number {
 export function SurjectionUnrank(n: number, k: number, rank: number): number[] {
   const total = SurjectionCount(n, k);
   if (total <= 0) return [];
-  let r = ((rank % total) + total) % total;
+  let r = modRank(rank, total);
   const out: number[] = [];
   const used = new Set<number>();
   let missing = k;
@@ -1271,9 +1287,11 @@ export function BinaryStringCount(n: number): number {
 }
 export function BinaryStringUnrank(n: number, rank: number): number[] {
   const N = 2 ** n;
-  const R = N ? ((rank % N) + N) % N : 0;
-  const out: number[] = [];
-  for (let i = 0; i < n; i++) out.push((R >> (n - 1 - i)) & 1);
+  const R = N ? modRank(rank, N) : 0;
+  const hi = highWord(R);
+  const lo = lowWord(R, hi);
+  const out: number[] = Array.from({ length: n }, () => 0);
+  for (let i = 0; i < n; i++) out[i] = bitOf(lo, hi, n - 1 - i);
   return out;
 }
 export function BinaryStringRank(w: number[]): number {
@@ -1340,14 +1358,14 @@ export function PerfectMatchingCount(n: number): number {
 /** rank-th perfect matching of [2n], as a list of [min,max] pairs ordered by least element. */
 export function PerfectMatchingUnrank(n: number, rank: number): number[][] {
   const total = PerfectMatchingCount(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const points: number[] = Array.from({ length: 2 * n }, (_, i) => i + 1);
   const pairs: number[][] = [];
   while (points.length) {
     const p = points.shift()!;
     const L = points.length; // odd
     const block = doubleFactOdd(L - 2); // (L-2)!! completions after this pair (L-2 is odd)
-    const j = Math.floor(r / block);
+    const j = floorDiv(r, block);
     r %= block;
     const q = points[j];
     points.splice(j, 1);
@@ -1405,7 +1423,7 @@ export function PartitionsMaxPartCount(n: number, m: number): number {
 }
 export function PartitionsMaxPartUnrank(n: number, m: number, rank: number): number[] {
   const total = PartitionsMaxPartCount(n, m);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let rem = n,
     cap = m;
@@ -1452,7 +1470,7 @@ export function IsPartitionMaxPart(p: number[], n: number, m: number): boolean {
 // ─── RootedForests(n): rooted forests on [n] via labeled trees on [n+1]. Count (n+1)^(n-1). ─────────────
 // Element = a parent array of length n: parent[i-1] is i's parent, or 0 if i is a tree root.
 export function RootedForestCount(n: number): number {
-  return n <= 0 ? 1 : (n + 1) ** (n - 1);
+  return n <= 0 ? 1 : ipow(n + 1, n - 1);
 }
 export function RootedForestUnrank(n: number, rank: number): number[] {
   if (n === 0) return [];

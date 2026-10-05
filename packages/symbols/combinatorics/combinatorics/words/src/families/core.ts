@@ -5,7 +5,7 @@
 // collections per step 5 rule 4. Defined in Epsil: the tuples of n values over 1..n.
 import { endofunctions } from "../../../collections/src/families/closed-forms.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
-import { IsTupleOf, TupleRank, TupleUnrank } from "../../../collections/src/families/kernels-extra.ts";
+import { IsTupleOf, TupleCount, TupleRank, TupleUnrank } from "../../../collections/src/families/kernels-extra.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 
 export const entries: (NumberKernel | EpsilFamily)[] = [
@@ -14,7 +14,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     params: ["_n"],
     carrier: "Endofunction",
     fast: {
-      count: ([n]) => n ** n,
+      count: ([n]) => TupleCount(n, n),
       unrank: ([n], r) => TupleUnrank(n, n, r),
       rank: (x, [n]) => TupleRank(x as number[], n),
       valid: (x, [n]) => IsTupleOf(x as number[], n, n),
