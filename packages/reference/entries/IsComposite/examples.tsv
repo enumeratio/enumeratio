@@ -1,13 +1,13 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-iscomposite-4			[IsComposite, 4]	True	The smallest composite number		
-iscomposite-13			[IsComposite, 13]	False	A prime is not composite		
-iscomposite-1-plus-10-pow-3-000	Scope		[IsComposite, [Add, 1, [Power, 10, 3000]]]	True	A huge number decided without factoring it		
-iscomposite-list-1-2-3-4-5-6	Scope		[IsComposite, [List, 1, 2, 3, 4, 5, 6]]	[List, False, False, False, True, False, True]	Threads over a list; 1 is neither prime nor composite		
-iscomposite-5	Scope		[IsComposite, 5]	False	Primes are never composite		
-iscomposite-3-plus-i	Scope	triage	[IsComposite, [Complex, 3, 1]]	False		gap	CompositeQ doesn't test Gaussian integers; it defaults to False for any non-rational-integer argument instead of testing compositeness via the Gaussian norm/factorization (N(3+i) = 10 = 2*5 is composite).
-iscomposite-8	Properties		[IsComposite, 8]	True	A power of two beyond 2 is composite		
-iscomposite-12	Properties		[IsComposite, 12]	True	Has the proper divisors 2, 3, 4, 6		
-iscomposite-67	Properties		[IsComposite, 67]	False	A prime just past 64, so not composite		
-iscomposite-28	Properties		[IsComposite, 28]	True	A perfect number, $28 = 2^2\cdot 7$, is composite		
-iscomposite-60	Properties		[IsComposite, 60]	True	Highly divisible, with many proper divisors		
-iscomposite-48-828-125	Properties		[IsComposite, 48828125]	True	A large perfect power, $5^{11}$, caught as composite		
+id	section	role	expr	expected	caption
+iscomposite-4			[IsComposite, 4]	True	The smallest composite number
+iscomposite-13			[IsComposite, 13]	False	A prime is not composite
+iscomposite-1-plus-10-pow-3-000	Scope		[IsComposite, [Add, 1, [Power, 10, 3000]]]	True	A huge number decided without factoring it
+iscomposite-list-1-2-3-4-5-6	Scope		[IsComposite, [List, 1, 2, 3, 4, 5, 6]]	[List, False, False, False, True, False, True]	Threads over a list; 1 is neither prime nor composite
+iscomposite-5	Scope		[IsComposite, 5]	False	Primes are never composite
+iscomposite-3-plus-i	Scope		[IsComposite, [Complex, 3, 1]]	True	
+iscomposite-8	Properties		[IsComposite, 8]	True	A power of two beyond 2 is composite
+iscomposite-12	Properties		[IsComposite, 12]	True	Has the proper divisors 2, 3, 4, 6
+iscomposite-67	Properties		[IsComposite, 67]	False	A prime just past 64, so not composite
+iscomposite-28	Properties		[IsComposite, 28]	True	A perfect number, $28 = 2^2\cdot 7$, is composite
+iscomposite-60	Properties		[IsComposite, 60]	True	Highly divisible, with many proper divisors
+iscomposite-48-828-125	Properties		[IsComposite, 48828125]	True	A large perfect power, $5^{11}$, caught as composite

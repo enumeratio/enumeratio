@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 divides-2-10			[Divides, 2, 10]	True	2 divides 10		
 divides-2-5			[Divides, 2, 5]	False	2 does not divide 5		
 divides-3-6	Scope		[Divides, 3, 6]	True	Exact multiples divide		
@@ -8,4 +8,4 @@ divides-11-918-082	Applications		[Divides, 11, 918082]	True	Alternating digit su
 list-isinteger-5-divides-2-10	Properties		[List, [IsInteger, 5], [Divides, 2, 10]]	[List, True, True]	Predicates evaluate inside a list		
 divides-8-48	Properties		[Divides, 8, 48]	True	$48 = 8\cdot 6$		
 divides-12-25	Properties		[Divides, 12, 25]	False	12 does not divide 25		
-simplify-divides-a-b-times-a-list-a-b-in	Properties	triage	[Simplify, [Divides, a, [Multiply, b, a]], [Element, [List, a, b], Integers]]	[Divides, a, [Multiply, a, b]]		gap	Simplify isn't implemented (same gap as CatalanNumber's row). Reducing Divides(a, a*b) to True under an integer-domain assumption needs assumption-driven simplification.
+simplify-divides-a-b-times-a-list-a-b-in	Properties		[Simplify, [Divides, a, [Multiply, b, a]], [Element, [List, a, b], Integers]]	[Divides, a, [Multiply, a, b]]		unevaluated	Ours leaves Divides(a, a b) as written, since Simplify doesn't use the integer assumption; Wolfram reduces it to True.

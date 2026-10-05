@@ -1,7 +1,7 @@
 id	in	out	verdict
 the-canonical-order	(SR.var("e_1") * SR.var("e_2"))	True	
 noncommutativemultiply-a-b-c-eq	bool((SR.var("a") * SR.var("b") * SR.var("c")) == (SR.var("a") * SR.var("b") * SR.var("c")))		
-list-a-times-b-eq-a-times-b			
+list-a-times-b-eq-a-times-b	[bool((SR.var("a") * SR.var("b")) == (SR.var("a") * SR.var("b"))), bool((SR.var("a") * SR.var("b")) == (SR.var("b") * SR.var("a")))]		
 scalars-the-implied-identity-factor			
 commuting-units-agrees-with-times			
 the-quaternion-product-1-2i-3j-4k-2-i-j-3k-13	((1 + (2 * SR.var("f_1")) + (3 * SR.var("f_2")) + (4 * SR.var("f_1") * SR.var("f_2"))) * (2 + (-SR.var("f_1")) + SR.var("f_2") + (-3 * SR.var("f_1") * SR.var("f_2"))))	False	disagree
@@ -9,7 +9,7 @@ reversing-the-operands-flips-the-sign	(SR.var("e_2") * SR.var("e_1"))	False	disa
 e-1e-2-2-1	(SR.var("e_1") * SR.var("e_2") * SR.var("e_1") * SR.var("e_2"))	e_1^2*e_2^2	inconclusive
 associative-nested-products-flatten	(SR.var("a") * (SR.var("b") * SR.var("c")))	True	
 undeclared-symbols-are-taken-to-commute-so-the	(SR.var("b") * SR.var("a"))	True	
-list-noncommutativemultiply-0-a			
-neg-a-times-c-plus-noncommutativemultiply-a-plus			
+list-noncommutativemultiply-0-a	[(0 * SR.var("a")), (1 * SR.var("a"))]		
+neg-a-times-c-plus-noncommutativemultiply-a-plus	((-(SR.var("a") * SR.var("c"))) + ((SR.var("a") + SR.var("b")) * SR.var("c")))		
 plain-times-declines-both-orders-arrive	(SR.var("e_2") * SR.var("e_1"))	True	
 noncommutativemultiply-a	(SR.var("a"))		
