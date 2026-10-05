@@ -8103,6 +8103,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "HeckeParameter",
+    provenance: "unknown",
+    declared: "enumeratio-hecke",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "HeckeSpecialize",
     provenance: "extension",
     declared: "enumeratio-hecke",

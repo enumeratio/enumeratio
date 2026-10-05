@@ -37,7 +37,7 @@ NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([1, 3, 2]))
   // HeckeT([2, 3, 1]) — length goes up, so no q appears
 
 NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([2, 1, 3]))
-  // q * HeckeT([1, 2, 3]) + (q - 1) * HeckeT([2, 1, 3]) — the quadratic relation
+  // HeckeParameter * HeckeT([1, 2, 3]) + (HeckeParameter - 1) * HeckeT([2, 1, 3]) — the quadratic relation
 
 AlgebraDimension(HeckeAlgebra(4))   // 24 — n!, same basis as Z[S_n]
 ```

@@ -27,8 +27,8 @@ test("length down: the quadratic relation, with q", () => {
   // T_s² = q·T_e + (q−1)·T_s — a genuine linear combination, not a scalar multiple.
   same(times(T(2, 1, 3), T(2, 1, 3)), [
     "Add",
-    ["Multiply", "q", T(1, 2, 3)],
-    ["Multiply", ["Subtract", "q", 1], T(2, 1, 3)],
+    ["Multiply", "HeckeParameter", T(1, 2, 3)],
+    ["Multiply", ["Subtract", "HeckeParameter", 1], T(2, 1, 3)],
   ]);
 });
 

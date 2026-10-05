@@ -15,9 +15,12 @@ import { RESIDUES_CARRIERS } from "@enumeratio/residues";
 import { expect, test } from "vite-plus/test";
 import { declaredNames } from "../src/engine.ts";
 
-/** Free symbols we declare on purpose, with the reason. */
+// Nothing we declare takes a lowercase name: a declared name is a defined symbol, so it stops
+// being available to users as a variable (`declareHecke` once declared `q`, and every example
+// using `q` freely stopped scanning). The only lowercase names left are TYPES, below.
+
+/** Lowercase types declared on purpose, with the reason. */
 const DELIBERATE: Record<string, string> = {
-  q: "the Hecke deformation parameter — every coefficient is a polynomial in it",
   boxes:
     "the structural type of a box expression (https://github.com/enumeratio/enumeratio/wiki/Boxes); a declared type shares the symbol table",
 };
@@ -35,9 +38,10 @@ for (const type of [
 ])
   DELIBERATE[type] = "an algebra family's type, which the algebra protocol dispatches on";
 
-/** The carrier TYPES. compute-engine keeps types and symbols in one table, and the engine's
- *  own convention spells a type lowercase (`integer`, `indexed_collection`), so these are
- *  the one legitimate class of lowercase name — see @enumeratio/structures' carriers.ts.
+/** The carrier TYPES: left lowercase for now, pending a naming decision. compute-engine keeps
+ *  types and symbols in one table and spells its own types lowercase (`integer`,
+ *  `indexed_collection`), so each of these still shadows a user's variable of the same name
+ *  (BL-89 lists them) — see @enumeratio/structures' carriers.ts.
  *  Every package that owns carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4) contributes its own, not just combinatorics. */
 const CARRIER_TYPES = new Set(
   [
@@ -52,7 +56,7 @@ const CARRIER_TYPES = new Set(
 
 const added = declaredNames();
 
-test("declaring our libraries adds heads, not stray symbols", () => {
+test("declaring our libraries adds capitalised heads; lowercase is only the allowlisted types", () => {
   const stray = added
     .filter((name) => !/^[A-Z]/.test(name))
     .filter((name) => DELIBERATE[name] === undefined && !CARRIER_TYPES.has(name));

@@ -19,7 +19,7 @@ issquarefree-3-plus-10-pow-70	SquareFreeQ[Plus[3, Power[10, 70]]]	True	\text{Squ
 issquarefree-2	SquareFreeQ[2]	True	\text{SquareFreeQ}[2]	\text{True}	
 issquarefree-x-pow-2-minus-3	SquareFreeQ[Plus[Power[x, 2], -3]]	True	\text{SquareFreeQ}\left[x^2-3\right]	\text{True}	
 n-1-over-100-000-times-length-filter-range-1-100	N[Times[Rational[1, 100000], Length[Select[Range[1, 100000], SquareFreeQ]]]]	0.60794			disagree
-issquarefree-q	""				
+issquarefree-q	SquareFreeQ[q]	True	\text{SquareFreeQ}[q]	\text{True}	
 n-is-squarefree-exactly-when-mu-n-neq-0-see	(SquareFreeQ[10] == Not[(MoebiusMu[10] == 0)])	True	\text{SquareFreeQ}[10]=(\neg \mu (10)=0)	\text{True}	
 issquarefree-210	SquareFreeQ[210]	True	\text{SquareFreeQ}[210]	\text{True}	
 issquarefree-14	SquareFreeQ[14]	True	\text{SquareFreeQ}[14]	\text{True}	

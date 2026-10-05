@@ -67,7 +67,8 @@ $q \ne 1$.
 
 **Coefficients are exact polynomials in $q$.** They are compute-engine expressions, so
 they stay symbolic and simplify themselves; `HeckeSpecialize(element, q)` substitutes
-and drops whatever vanishes.
+and drops whatever vanishes. In the engine $q$ is the symbol `HeckeParameter`, so a
+plain `q` stays yours to use as a variable.
 
 **Sums compose.** Because a product returns a linear combination, the parser reads sums
 back in — the result of one product is a valid operand for the next, which the tests

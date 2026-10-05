@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+it-is-a-free-symbol			[Expand, [Power, [Add, HeckeParameter, 1], 2]]	[Add, [Power, HeckeParameter, 2], [Multiply, 2, HeckeParameter], 1]	Coefficients are ordinary polynomials in it
