@@ -186,9 +186,16 @@ kernel, the network or hand curation stays committed.
 
 ## CI and deployment
 
-- **Gate** (`ci.yml`, every push and PR): `pnpm -r run build` for the library packages, then
-  `vp check`, the per-package tests (`pnpm -r run test`) and the site build. The dists come
-  first because type-aware lint and the tests resolve siblings through `dist/`.
+- **Gate** (`ci.yml`, every push and PR): the library packages build, then `vp check`, the
+  per-package tests (`pnpm -r run test`) and the site build. The dists come first because
+  type-aware lint and the tests resolve siblings through `dist/`.
+  - `node tools/ci/dist-cache.ts build` is the build everywhere (CI and locally): a package whose
+    files, dependencies and shared config are unchanged restores its gitignored outputs from a
+    content-addressed cache (`$DIST_CACHE_DIR`, else shared by all worktrees of a clone) instead
+    of building. A build's outputs are whatever git ignores under its package, so nothing is listed.
+  - A PR's test shards run only the packages `node tools/ci/affected.ts` selects (changed
+    packages and their dependents); a change to the lockfile, root config, CI or the engine, and
+    every push to main, runs all.
 - **Production** (`enumeratio.dev`) ships from GitHub Pages on merge to `main`. Every build
   also goes up as a Cloudflare Pages preview at `<sha7>.enumeratio.pages.dev`; the PR's
   sticky `<!-- cf-preview -->` comment carries the URL, and review links go below its first
