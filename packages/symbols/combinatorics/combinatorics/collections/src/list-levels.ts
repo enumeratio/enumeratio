@@ -3,7 +3,9 @@ import {
   type Engine,
   type Expr,
   integerAt,
+  isNumber,
   operandsOf,
+  stringAt,
   symbolNameOf,
   widenSignature,
   wrapOperator,
@@ -227,21 +229,33 @@ const overhangWindows = (
 
 // --- FirstPosition ---------------------------------------------------------------------
 
-/** The first position `value` occurs at, searching every level (depth-first, outer-to-inner,
- *  left-to-right) rather than only the top one — Wolfram's `FirstPosition`, which
- *  [[IndexOf]] and [[Position]] don't reach for since they stay at the top level. */
-const firstPositionPath = (expr: Expr, value: Expr, prefix: readonly number[]): number[] | undefined => {
-  const items = operandsOf(expr);
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    const path = [...prefix, i + 1];
-    if (item.isEqual(value) === true) return path;
-    if (item.operator === "List") {
-      const found = firstPositionPath(item, value, path);
-      if (found !== undefined) return found;
+/** Every position `value` occurs at in `expr`, at every level and under any head, in
+ *  Wolfram's order: a node, then its head (position `…0`), then its parts left to right. With
+ *  `first`, stops at the first. `undefined` when a lazy collection runs past the iteration
+ *  budget part-way, rather than answering from a shorter walk. */
+export const positionsOf = (expr: Expr, value: Expr, first = false): number[][] | undefined => {
+  const found: number[][] = [];
+  const walk = (node: Expr, path: readonly number[]): boolean => {
+    if (node.isEqual(value) === true) {
+      found.push([...path]);
+      if (first) return true;
     }
+    if (symbolNameOf(node) !== undefined || stringAt(node) !== undefined || isNumber(node)) return false;
+    if (symbolNameOf(value) === node.operator) {
+      found.push([...path, 0]);
+      if (first) return true;
+    }
+    const parts = collectionElements(node);
+    if (parts === undefined) throw new RangeError("collection past the iteration budget");
+    return parts.some((part, i) => walk(part, [...path, i + 1]));
+  };
+  try {
+    walk(expr, []);
+  } catch (error) {
+    if (error instanceof RangeError) return undefined;
+    throw error;
   }
-  return undefined;
+  return found;
 };
 
 /** Declare the level-aware and structural list heads: Partition's block/overhang forms,
@@ -464,8 +478,10 @@ export function declareListLevelHeads(ce: Engine): void {
   ce.declare("FirstPosition", {
     signature: "(any, any) -> list<integer>",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
-      const found = firstPositionPath(ops[0], ops[1], []);
-      return found === undefined ? ce.box(["List"]) : ce.box(["List", ...found]);
+      if (ops[0] === undefined || ops[1] === undefined) return undefined;
+      const found = positionsOf(ops[0], ops[1], true);
+      if (found === undefined) return undefined;
+      return ce.box(["List", ...(found[0] ?? [])]);
     },
   });
 }

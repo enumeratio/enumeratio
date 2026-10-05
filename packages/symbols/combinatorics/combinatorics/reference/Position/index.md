@@ -18,4 +18,5 @@ names:
 
 - Wolfram's answer where [[IndexOf]] reports only the first occurrence, as a plain index.
 - An empty $List$ when the value isn't present.
-- Each position is wrapped in its own single-element $List$, matching Wolfram's Position — since a position can itself be a multi-level index into a nested collection.
+- Each position is a $List$ of indices, one per level: the search goes into nested collections, so $\{2, 3\}$ is the third part of the second.
+- Heads count as well, at index $0$: `Position({{1}, {2}}, List)` is `{{0}, {1, 0}, {2, 0}}`.

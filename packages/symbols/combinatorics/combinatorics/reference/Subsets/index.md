@@ -7,9 +7,12 @@ signatures:
   - call: Subsets(n)
     description: the $2^n$ subsets of $\{1, …, n\}$.
     library: enumeratio-combinatorics
-    type: (collection<any> | integer, (integer | list<integer>)?) -> indexed_collection<finset> | list<finset | list<any>>
+    type: (collection<any> | expression | integer, (integer | list<integer>)?) -> indexed_collection<finset> | list<finset | list<any>>
   - call: Subsets(collection)
     description: the subsets of any finite collection.
+    library: enumeratio-combinatorics
+  - call: Subsets(f(a, b, …))
+    description: for any other head, its operands are the elements and each subset is built under the same head, as in $Subsets(a + b + c)$.
     library: enumeratio-combinatorics
   - call: Subsets(n, k)
     description: the subsets of $\{1, …, n\}$ of size at most $k$.

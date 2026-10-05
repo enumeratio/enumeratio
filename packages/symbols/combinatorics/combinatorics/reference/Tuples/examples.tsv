@@ -1,4 +1,4 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-2-3			[Count, [Tuples, 2, 3]]	8	$2^3$		
-tuples-2-3-list-1			[At, [Tuples, 2, 3], 1]	[List, 1, 1, 1]			
-thread-tuples-list-1-0-3-neg-gt-integerdigits-30	Applications	triage	[Thread, [KeyValuePair, [Tuples, [List, 1, 0], 3], [IntegerDigits, 30, 2, 8]]]	[KeyValuePair, [Tuples, [List, 1, 0], 3], [IntegerDigits, 30, 2, 8]]		gap	Thread[Rule[Tuples[{1,0},3], IntegerDigits[30,2,8]]] — Tuples[{1,0},3] has 8 elements but IntegerDigits[30,2,8] also has 8, so Thread should distribute Rule across both; ours produces a single KeyValuePair[Tuples[...], IntegerDigits[...]] instead of threading — Thread doesn't recognize Rule as a threadable 2-ary head here (its own List-arity check likely only fires for operands that are already List-headed, and Tuples stays a live call until materialized)
+id	section	role	expr	expected	caption
+2-3			[Count, [Tuples, 2, 3]]	8	$2^3$
+tuples-2-3-list-1			[At, [Tuples, 2, 3], 1]	[List, 1, 1, 1]	
+thread-tuples-list-1-0-3-neg-gt-integerdigits-30	Applications		[Thread, [Rule, [Tuples, [List, 1, 0], 3], [IntegerDigits, 30, 2, 8]]]	[List, [Rule, [List, 1, 1, 1], 0], [Rule, [List, 1, 1, 0], 0], [Rule, [List, 1, 0, 1], 0], [Rule, [List, 1, 0, 0], 1], [Rule, [List, 0, 1, 1], 1], [Rule, [List, 0, 1, 0], 1], [Rule, [List, 0, 0, 1], 1], [Rule, [List, 0, 0, 0], 0]]	
