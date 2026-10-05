@@ -290,6 +290,22 @@ function playgroundSidebar(): SidebarItem[] {
   ];
 }
 
+// Rollup's tree-shaking is most of the bundling time (its path tracking over every call's
+// argument), and across our own modules it removes almost nothing: they are used nearly whole. So
+// they are included whole, unanalysed ("no-treeshake"). Vendor code keeps shaking: skipping it
+// ships unused compute-engine compile code. Generated data keeps shaking too, so unused rows
+// don't ship.
+const INCLUDED_WHOLE = /\/(?:packages|web)\//;
+const SHAKEN = /-data\.ts$|\/generated\/|system-names/;
+const includeWhole = () => ({
+  name: "enumeratio-include-whole",
+  enforce: "post" as const,
+  transform: (_code: string, id: string) =>
+    INCLUDED_WHOLE.test(id) && !SHAKEN.test(id)
+      ? { code: null, map: null, moduleSideEffects: "no-treeshake" }
+      : undefined,
+});
+
 const config = defineConfig({
   // The page map in one shared file, not inlined into every page's HTML.
   metaChunk: true,
@@ -298,7 +314,7 @@ const config = defineConfig({
     // Module workers: a session kernel imports each library as its own chunk, which the
     // default (IIFE) worker bundle can't split.
     // The worker reads every package's notation through `virtual:notation-entries`.
-    worker: { format: "es", plugins: () => [notationEntriesPlugin()] as never },
+    worker: { format: "es", plugins: () => [notationEntriesPlugin(), includeWhole()] as never },
     // Review mode: a dev-server-only REST API over a markdown backlog file, for
     // working through shipped features. `apply: "serve"` on the plugin itself
     // keeps it out of `vitepress build`/`preview`; gating it here too means the
@@ -308,7 +324,7 @@ const config = defineConfig({
     // two structurally-identical but nominally distinct `Plugin` types.
     plugins: (dev
       ? [reviewModePlugin(webDir), referenceDataPlugin(dev), notationEntriesPlugin(), loaderWatchPlugin()]
-      : [referenceDataPlugin(dev), notationEntriesPlugin()]) as never,
+      : [referenceDataPlugin(dev), notationEntriesPlugin(), includeWhole()]) as never,
   },
   title: "enumeratio",
   description:
