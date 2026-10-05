@@ -7,7 +7,7 @@
 // `ExampleAlternatives.vue` imports `@enumeratio/reference` in the browser, and a filesystem
 // loader on the main export would break the site build.
 
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -266,7 +266,7 @@ export function referenceData(
 }
 
 /** Per head, how each crosswalk system's kernel fared on its examples: the crosswalk chips'
- * score, written to src/crosswalk/oracle-agreements.json. */
+ * score, built into src/crosswalk/oracle-agreements-data.ts (scripts/collect-oracle-agreements.ts). */
 export function oracleAgreementsOf(
   data: ReferenceData,
 ): Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> {
@@ -289,14 +289,6 @@ export function oracleAgreementsOf(
     if (rows.length > 0) out[entry.name] = rows;
   }
   return out;
-}
-
-/** Rewrite oracle-agreements.json from the current data (in a checkout: the file is source). */
-export function writeOracleAgreements(data: ReferenceData = referenceData()): void {
-  writeFileSync(
-    join(PACKAGES, "reference/src/crosswalk/oracle-agreements.json"),
-    `${JSON.stringify(oracleAgreementsOf(data), null, 2)}\n`,
-  );
 }
 
 /** Packages whose heads need their own engine (statistics over the carriers): the bare-vs-ours
