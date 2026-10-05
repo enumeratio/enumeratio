@@ -14,3 +14,4 @@ names:
 
 - Continuous everywhere, so HeavisideLambda(±1) = 0 falls out of the formula, no special case.
 - The same function as [[UnitTriangle]] -- Wolfram gives it a second name for the Heaviside/Dirac generalized-function family it belongs to (it is HeavisideTheta convolved with itself).
+- `N(x, d)` past a double's digits keeps the bignum operand and returns $1 - |x|$ in its digits.

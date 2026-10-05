@@ -14,3 +14,4 @@ names:
 
 - Continuous everywhere, including the endpoints -- UnitTriangle(±1) = 0 falls out of the formula itself, no special case needed.
 - The same function as [[HeavisideLambda]]; Wolfram keeps both names for the two contexts (elementary vs. the Heaviside/Dirac generalized-function family) it shows up in.
+- `N(x, d)` past a double's digits keeps the bignum operand and returns $1 - |x|$ in its digits.

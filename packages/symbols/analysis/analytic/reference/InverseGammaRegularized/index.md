@@ -26,3 +26,4 @@ names:
 - $Q(a, 0) = 1$ and $Q(a, \infty) = 0$ hold for any $a$, even a symbolic one, so `InverseGammaRegularized(a, 1) = 0` and `InverseGammaRegularized(a, 0) = \infty` are exact regardless.
 - $Q(1, z) = e^{-z}$ inverts exactly to $-\ln s$, symbolic $s$ included.
 - Otherwise: a safeguarded Newton's method (falls back to bisection whenever a step would leave the bracket) against the forward function `GammaRegularized(a, z)`, whose own accuracy was checked directly against `wolframscript` to 20 digits.
+- `N(x, d)` past a double's digits polishes the double answer with Newton's method on the bignum series for $P(a, z)$, for real $a > 0$ and $0 < s < 1$.

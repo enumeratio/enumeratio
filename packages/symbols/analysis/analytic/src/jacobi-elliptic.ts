@@ -2,6 +2,8 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import {
   type EvalOptions,
+  bigRealOperand,
+  bigResult,
   exceedsDoublePrecision,
   isFiniteNum,
   numberResult,
@@ -22,6 +24,7 @@ import {
   scale,
   sub,
 } from "@enumeratio/ce-patches";
+import { jacobiQuotientBig, jacobiZetaBig } from "./jacobi-big.ts";
 
 // The twelve Jacobi elliptic functions (Glaisher's `pq(u,m)` notation: `sn`, `cn`, `dn`
 // and their nine quotients/reciprocals), `JacobiAmplitude` and `JacobiZN` (Wolfram's
@@ -273,6 +276,10 @@ function argumentTooFarForDouble(ce: ComputeEngine, u: BoxedExpression, m: Boxed
   return false;
 }
 
+/** The `pq` heads with a bignum path so far; the rest still decline past a double, until their
+ * reference rows are settled to match (`more-digits-than-a-double-holds-declines` on JacobiND). */
+const BIGNUM_HEADS: ReadonlySet<string> = new Set(["JacobiCN", "JacobiDN", "JacobiNC"]);
+
 /** Declare one Jacobi `pq` head — its exact table (`exactSCDN`, works even without
  * `N()`/a float operand) first, then the numeric AGM kernel (`sncndn`) once a number is
  * actually wanted. */
@@ -288,8 +295,14 @@ function declarePQ(ce: ComputeEngine, head: string, p: PQLetter, q: PQLetter): v
 
       if (!wantsNumber(ops, options) || !isFiniteNum(u) || !isFiniteNum(m)) return undefined;
       // The AGM kernel below is plain-double: N(…, d) for d past what a double carries
-      // would otherwise silently hand back ~17 correct digits dressed as d of them.
-      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      // would otherwise silently hand back ~17 correct digits dressed as d of them. Real u and
+      // m in (0, 1) have a bignum kernel; everything else declines.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+        const [bu, bm] = [bigRealOperand(ce, u), bigRealOperand(ce, m)];
+        if (!BIGNUM_HEADS.has(head) || bu === undefined || bm === undefined) return undefined;
+        const value = jacobiQuotientBig(bu, bm, p, q, ce.precision);
+        return value === undefined ? undefined : bigResult(ce, value);
+      }
       if (argumentTooFarForDouble(ce, u, m)) return undefined;
       const result = sncndn(cxOf(u), cxOf(m));
       if (result === undefined) return undefined;
@@ -343,8 +356,14 @@ function declareJacobiZN(ce: ComputeEngine): void {
       if (isOneExpr(m)) return finish(ce.function("Tanh", [u]), options);
 
       if (!wantsNumber(ops, options) || !isFiniteNum(u) || !isFiniteNum(m)) return undefined;
-      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       if (m.im !== 0 || m.re < 0 || m.re > 1) return undefined; // decline — see file header
+      // Past a double's digits: the bignum kernel for real u and m in (0, 1), else decline.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+        const [bu, bm] = [bigRealOperand(ce, u), bigRealOperand(ce, m)];
+        if (bu === undefined || bm === undefined) return undefined;
+        const value = jacobiZetaBig(bu, bm, ce.precision);
+        return value === undefined ? undefined : bigResult(ce, value);
+      }
       if (argumentTooFarForDouble(ce, u, m)) return undefined;
 
       // Native EllipticE/EllipticK evaluate at compute-engine's configured (bignum)

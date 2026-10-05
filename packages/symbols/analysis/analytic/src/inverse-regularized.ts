@@ -1,5 +1,17 @@
+// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvalOptions, isFiniteNum, wantsNumber, logGammaReal } from "@enumeratio/ce-patches";
+import {
+  atDigits,
+  bigRealOperand,
+  bigResult,
+  type EvalOptions,
+  exceedsDoublePrecision,
+  isFiniteNum,
+  wantsNumber,
+  logGammaReal,
+} from "@enumeratio/ce-patches";
+import { BigDecimal } from "@enumeratio/engine/unstable";
+import { inverseGamma } from "./hypergeometric-big.ts";
 
 // InverseGammaRegularized(a, s) and InverseBetaRegularized(s, a, b): neither has a closed
 // form in general, so both are solved numerically — a safeguarded Newton's method (falling
@@ -77,6 +89,38 @@ function inverseBetaRegularized(ce: ComputeEngine, a: number, b: number, s: numb
   );
 }
 
+/**
+ * Newton's method on the bignum series for P(a, z) = z^a e^(−z) Σ z^k/Γ(a+k+1), from the double
+ * answer: each step doubles the digits, so a few reach any precision asked. Q = 1 − P loses the
+ * digits of 1/s, which the working precision covers. `undefined` if it does not settle.
+ */
+function inverseGammaRegularizedBig(a: BigDecimal, s: BigDecimal, z0: number, digits: number): BigDecimal | undefined {
+  const working = digits + 15 + Math.max(0, Math.ceil(-s.ln().toNumber() * Math.LOG10E));
+  return atDigits(working, () => {
+    const one = new BigDecimal(1);
+    const tol = new BigDecimal(10).pow(-(working + 2));
+    const settled = new BigDecimal(10).pow(-(digits + 6)); // a step this small is below the digits asked
+    const invGamma = inverseGamma(a.add(1), working); // 1/Γ(a+1)
+    let z = new BigDecimal(z0);
+    for (let iter = 0; iter < 12; iter++) {
+      let term = one;
+      let sum = one;
+      for (let k = 1; k < 100_000; k++) {
+        term = term.mul(z).div(a.add(k)).toPrecision(working);
+        sum = sum.add(term);
+        if (term.lt(tol.mul(sum))) break;
+      }
+      const prefix = z.ln().mul(a).sub(z).exp().mul(invGamma).toPrecision(working);
+      const q = one.sub(prefix.mul(sum));
+      // dQ/dz = −(a/z)·prefix, so the step is z·(Q − s)/(a·prefix) up.
+      const step = q.sub(s).mul(z).div(a.mul(prefix));
+      z = z.add(step).toPrecision(working);
+      if (step.abs().lt(settled.mul(z.abs()))) return z.toPrecision(digits);
+    }
+    return undefined;
+  });
+}
+
 export function declareInverseGammaRegularized(ce: ComputeEngine): void {
   ce.declare("InverseGammaRegularized", {
     signature: "(number, number) -> number",
@@ -93,7 +137,15 @@ export function declareInverseGammaRegularized(ce: ComputeEngine): void {
       }
       if (!wantsNumber(ops, options) || !isFiniteNum(a) || !isFiniteNum(s)) return undefined;
       if (a.im !== 0 || s.im !== 0 || a.re <= 0 || s.re < 0 || s.re > 1) return undefined;
-      return ce.number(inverseGammaRegularized(ce, a.re, s.re));
+      const z0 = inverseGammaRegularized(ce, a.re, s.re);
+      // The double solve is the start; past a double's digits the bignum series finishes it.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+        const [big, bigS] = [bigRealOperand(ce, a), bigRealOperand(ce, s)];
+        if (big === undefined || bigS === undefined) return undefined;
+        const value = inverseGammaRegularizedBig(big, bigS, z0, ce.precision);
+        return value === undefined ? undefined : bigResult(ce, value);
+      }
+      return ce.number(z0);
     },
   });
 }

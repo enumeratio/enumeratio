@@ -21,3 +21,4 @@ names:
 - Real m between 0 and 1 only, inheriting [[JacobiAmplitude]]'s restriction (no verified amplitude transform for m outside that range).
 - Z(0,m) = 0, for any m in range; Z(u,0) = 0, for any u — am(u,0) = u makes E(am,0) = u exactly, canceling the E(0)/K(0)·u = u term.
 - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+- `N(x, d)` past a double's digits runs the AGM amplitude in BigDecimal and takes $E$ and $K$ from the Carlson kernels, for real $u$ and $0 < m < 1$; anything else stays unevaluated there rather than print a double's digits as more.
