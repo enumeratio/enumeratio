@@ -9,7 +9,25 @@
 // needed -- each is a single flat list<integer>, no axis param packed alongside it).
 // PlaneTree/Dissection, the other two carriers this decision checked against, have no family
 // declared anywhere yet, so there's nothing to wire for them.
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import {
+  add,
+  all,
+  and,
+  at,
+  equal,
+  fold,
+  iff,
+  len,
+  less,
+  map,
+  mul,
+  quotient,
+  sub,
+  upTo,
+} from "../../../collections/src/families/tables.ts";
+import { nonCrossingTrees } from "./noncrossing-trees.ts";
 import { Binomial } from "../../../collections/src/families/kernels-combinatorics.ts";
 import { KSubsetUnrank, KSubsetRank } from "../../../collections/src/families/kernels-extra.ts";
 import {
@@ -18,6 +36,8 @@ import {
   KAryTreeRank,
   type KTree,
 } from "../../../collections/src/families/kernels-extra.ts";
+
+type MathJSON = unknown;
 
 // ─── shared: multisets drawn from a countable, weighted alphabet ("children of a node, unordered,
 // each child itself a smaller rooted tree") — the combinatorial core of both unlabelled families
@@ -412,7 +432,62 @@ export function IsNonCrossingTreeOf(e: unknown, n: number): boolean {
   return need === 0 && internal === n;
 }
 
-export const entries: NumberKernel[] = [
+export const nonCrossingTreesKernel: NumberKernel = {
+  head: "NonCrossingTrees",
+  paramCount: 1,
+  kind: "ints",
+  carrier: "NonCrossingTree",
+  count: ([n]) => NonCrossingTreeCount(n),
+  unrank: ([n], r) => NonCrossingTreeUnrank(n, r),
+  valid: (e, [n]) => IsNonCrossingTreeOf(e, n),
+  rank: (e) => NonCrossingTreeRank(e as number[]),
+};
+
+export const phylogeneticTreesKernel: NumberKernel = {
+  head: "PhylogeneticTrees",
+  paramCount: 1,
+  kind: "ints",
+  carrier: "PhylogeneticTree",
+  count: ([n]) => PhylogeneticTreeCount(n),
+  unrank: ([n], r) => PhylogeneticTreeUnrank(n, r),
+  valid: (e, [n]) => IsPhylogeneticTreeOf(e, n),
+  rank: (e, [n]) => PhylogeneticTreeRank(e as number[], n),
+};
+
+// No `fast` path here: Epsil is 5-10x faster than the TS kernel, which is wrong near 2^52 (BL-84).
+// PhylogeneticTrees in Epsil: the digits d_3..d_n are a mixed-radix number, digit k of radix
+// 2k − 3, k = n least significant. The TS kernel builds the tree digit by digit, but the digits
+// alone fix the rank, so the definition reads them directly.
+/** The number of digits, n − 2, none below n = 2. */
+const digitCount: MathJSON = ["Max", sub("_n", 2), 0];
+/** The radix of digit j (1-based, k = j + 2). */
+const radix = (j: MathJSON): MathJSON => add(mul(2, j), 1);
+
+const phylogeneticTrees: EpsilFamily = {
+  head: "PhylogeneticTrees",
+  paramCount: 1,
+  kind: "ints",
+  carrier: "PhylogeneticTree",
+  params: ["_n"],
+  epsil: {
+    count: fold(mul("pc", sub(mul(2, "pk"), 3)), "pc", "pk", 1, upTo(3, "_n")),
+    unrank: map(
+      ["Mod", quotient("_r", fold(mul("pw", radix("pi")), "pw", "pi", 1, upTo(add("pj", 1), digitCount))), radix("pj")],
+      "pj",
+      upTo(1, digitCount),
+    ),
+    rank: fold(add(mul("pr", radix("pd")), at("_x", "pd")), "pr", "pd", 0, upTo(1, digitCount)),
+    valid: iff(
+      equal(len, digitCount),
+      all((j) => and(["LessEqual", 0, at("_x", j)], less(at("_x", j), radix(j))), upTo(1, len), "pv"),
+      "False",
+    ),
+  },
+};
+
+export const entries: (NumberKernel | EpsilFamily)[] = [
+  // Kept TS: ranked by an Euler transform that unranks each child tree recursively and sums over
+  // multisets of children, which a bounded fold can't express without binding the recursion.
   {
     head: "RootedUnlabeledTrees",
     paramCount: 1,
@@ -423,6 +498,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => IsRootedTreeOf(e, n),
     rank: (e) => RootedTreeRank(e as number[]),
   },
+  // Kept TS: the same recursion, rooted at the centroid.
   {
     head: "UnlabeledFreeTrees",
     paramCount: 1,
@@ -433,24 +509,6 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => IsFreeTreeOf(e, n),
     rank: (e) => FreeTreeRank(e as number[]),
   },
-  {
-    head: "PhylogeneticTrees",
-    paramCount: 1,
-    kind: "ints",
-    carrier: "PhylogeneticTree",
-    count: ([n]) => PhylogeneticTreeCount(n),
-    unrank: ([n], r) => PhylogeneticTreeUnrank(n, r),
-    valid: (e, [n]) => IsPhylogeneticTreeOf(e, n),
-    rank: (e, [n]) => PhylogeneticTreeRank(e as number[], n),
-  },
-  {
-    head: "NonCrossingTrees",
-    paramCount: 1,
-    kind: "ints",
-    carrier: "NonCrossingTree",
-    count: ([n]) => NonCrossingTreeCount(n),
-    unrank: ([n], r) => NonCrossingTreeUnrank(n, r),
-    valid: (e, [n]) => IsNonCrossingTreeOf(e, n),
-    rank: (e) => NonCrossingTreeRank(e as number[]),
-  },
+  phylogeneticTrees,
+  { ...nonCrossingTrees, fast: nonCrossingTreesKernel },
 ];

@@ -1,7 +1,8 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/unlabeled-trees.ts";
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 // ─── self-cert: unrank -> valid, rank(unrank(r)) === r, for every rank of every family. ────────────
 const PARAMS: Record<string, number[][]> = {
