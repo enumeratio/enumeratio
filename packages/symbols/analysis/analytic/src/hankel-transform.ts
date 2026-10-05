@@ -1,6 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
-import { dividedByT } from "./transforms.ts";
+import { dividedByT, fractionFactors } from "./transforms.ts";
 
 // HankelTransform(f, r, s[, n]) = ∫_0^∞ f(r) J_n(s r) r dr, matching Wolfram's own
 // normalisation exactly (no extra prefactor — confirmed directly against
@@ -25,6 +25,15 @@ import { dividedByT } from "./transforms.ts";
 //   e^(-a*r)/r        -> 1/sqrt(a^2+s^2)                Re(a) > 0   (DLMF 10.22.49, nu = 0)
 //   e^(-A*r^2)/r      -> sqrt(pi)/(2 sqrt(A)) * e^(-s^2/(8A)) * I_0(s^2/(8A))
 //                                                         A > 0, or A a square (Gradshteyn-Ryzhik 6.618.1, nu = 0)
+//
+// Four more order-0 pairs from the usual tables (Gradshteyn and Ryzhik, Erdélyi's Tables of Integral Transforms), each confirmed
+// against `wolframscript` and a numerical integral:
+//   erfc(k*r)/r            -> erf(s/(2k))/s                  k > 0
+//   E_1(k*r)/r             -> asinh(s/k)/s                   k > 0
+//   (1 - e^(-m*r))/r^2     -> asinh(m/s)                     m > 0
+//   ln(1 + a^2/r^2)        -> 2(1 - |a|s K_1(|a|s))/s^2
+// (the first two by the scaling rule from the k = 1 pair; the third is the Laplace transform of J_0
+// integrated over the decay rate, ∫_0^m da/sqrt(a^2+s^2); the last is ∂/∂a of it, 2a K_0(as) integrated.)
 //
 // Declined: any other function, any other stated order (Wolfram's own closed forms for
 // e^(-a*r)/e^(-a*r^2) at a general order `n` involve `Hypergeometric2F1Regularized` /
@@ -189,6 +198,88 @@ function hankelOverR(
     .evaluate();
 }
 
+/** The scaling `k` of `Erfc(kr)` / `E_1(kr)`, when `expr` is `g(kr)/r` with that `g` and `k > 0`. */
+function scaledOverR(ce: ComputeEngine, expr: BoxedExpression, r: string, head: "Erfc" | "ExpIntegralE") {
+  const g = dividedByT(ce, expr, r);
+  if (g === undefined || g.operator !== head) return undefined;
+  const ops = operandsOf(g);
+  if (head === "ExpIntegralE" && !(ops.length === 2 && ops[0]!.re === 1 && ops[0]!.im === 0)) return undefined;
+  const k = linearCoeffSigned(ce, ops[ops.length - 1]!, r);
+  return k !== undefined && k.isPositive === true ? k : undefined;
+}
+
+/** `(1 - e^(-m r)) / r^2` for m > 0: returns m. */
+function decayDefectOverRSquared(ce: ComputeEngine, expr: BoxedExpression, r: string): BoxedExpression | undefined {
+  const { numer, denom } = fractionFactors(expr);
+  const isR = (f: { base: BoxedExpression }) => isSym(f.base, r);
+  const rFactors = [...numer.filter(isR).map((f) => -f.power), ...denom.filter(isR).map((f) => f.power)];
+  const rest = [...numer.filter((f) => !isR(f)), ...denom.filter((f) => !isR(f))];
+  if (
+    rFactors.length !== 1 ||
+    rFactors[0] !== 2 ||
+    numer.filter((f) => !isR(f)).length !== 1 ||
+    denom.some((f) => !isR(f))
+  ) {
+    return undefined;
+  }
+  const bracket = rest[0]!;
+  if (bracket.power !== 1 || bracket.base.operator !== "Add") return undefined;
+  const terms = operandsOf(bracket.base);
+  const one = terms.find((o) => o.re === 1 && o.im === 0);
+  const decay = terms.find((o) => o !== one);
+  if (terms.length !== 2 || one === undefined || decay === undefined) return undefined;
+  const e = decay.operator === "Negate" ? opAt(decay, 0) : undefined;
+  if (e === undefined || e.operator !== "Power" || !isE(opAt(e, 0))) return undefined;
+  const k = linearCoeffSigned(ce, opAt(e, 1), r);
+  if (k === undefined || k.isNegative !== true) return undefined;
+  return ce.function("Negate", [k]).evaluate();
+}
+
+/** `ln(1 + a^2/r^2)`: returns `a`. */
+function logOnePlusRatio(ce: ComputeEngine, expr: BoxedExpression, r: string): BoxedExpression | undefined {
+  if (expr.operator !== "Ln" || opAt(expr, 0).operator !== "Add") return undefined;
+  const terms = operandsOf(opAt(expr, 0));
+  const one = terms.find((o) => o.re === 1 && o.im === 0);
+  const ratio = terms.find((o) => o !== one);
+  if (terms.length !== 2 || one === undefined || ratio === undefined) return undefined;
+  const { numer, denom } = fractionFactors(ratio);
+  const free = numer.filter((f) => !hasVar(f.base, r));
+  const onlyR = denom.length === 1 && isSym(denom[0]!.base, r) && denom[0]!.power === 2 && numer.length === 1;
+  if (!onlyR || free.length !== 1 || free[0]!.power !== 2) return undefined;
+  return free[0]!.base;
+}
+
+function hankelPairs(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  r: string,
+  s: BoxedExpression,
+): BoxedExpression | undefined {
+  const erfcK = scaledOverR(ce, expr, r, "Erfc");
+  if (erfcK !== undefined) {
+    const half = ce.function("Divide", [s, ce.function("Multiply", [2, erfcK])]);
+    return ce.function("Divide", [ce.function("Erf", [half]), s]).evaluate();
+  }
+  const e1K = scaledOverR(ce, expr, r, "ExpIntegralE");
+  if (e1K !== undefined) {
+    return ce.function("Divide", [ce.function("Arsinh", [ce.function("Divide", [s, e1K])]), s]).evaluate();
+  }
+  const m = decayDefectOverRSquared(ce, expr, r);
+  if (m !== undefined && m.isPositive === true) {
+    return ce.function("Arsinh", [ce.function("Divide", [m, s])]).evaluate();
+  }
+  const a = logOnePlusRatio(ce, expr, r);
+  if (a !== undefined) {
+    const u = ce.function("Multiply", [a.isPositive === true ? a : ce.function("Abs", [a]), s]);
+    const bracket = ce.function("Add", [
+      1,
+      ce.function("Negate", [ce.function("Multiply", [u, ce.function("BesselK", [1, u])])]),
+    ]);
+    return ce.function("Divide", [ce.function("Multiply", [2, bracket]), ce.function("Power", [s, 2])]).evaluate();
+  }
+  return undefined;
+}
+
 export function matchHankel(
   ce: ComputeEngine,
   expr: BoxedExpression,
@@ -199,7 +290,7 @@ export function matchHankel(
   const rName = symbolNameOf(r);
   if (rName === undefined || !hasVar(expr, rName)) return undefined;
   if (order === undefined || (order.re === 0 && order.im === 0)) {
-    return atomicHankelOrder0(ce, expr, rName, s) ?? hankelOverR(ce, expr, rName, s);
+    return atomicHankelOrder0(ce, expr, rName, s) ?? hankelOverR(ce, expr, rName, s) ?? hankelPairs(ce, expr, rName, s);
   }
   if (order.re === 1 && order.im === 0) return atomicHankelOrder1(ce, expr, rName, s);
   // Any other order: only the n-independent `1/r -> 1/s` identity is elementary

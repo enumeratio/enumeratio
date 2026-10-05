@@ -16,7 +16,10 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 // transform integrated from s: logarithms and arctangents), L{t^n ln t}, the inverse of
 // logarithms of linear/quadratic factors (-e^{at}/t, -2cos(at)/t), and the inverse of a
 // rational function whose denominator is a product of quadratics s² ± a² (partial fractions
-// in s²; a squared quadratic by its table entries). Each rule cites its source where it sits.
+// in s²; a squared quadratic by its table entries), |sin at| and |cos at|, Γ(ν, a/t), the
+// separable multivariate transform, and for the inverse a product of fractional powers of s
+// with logarithms, shifts, error functions and incomplete gammas (`inverseFactored`) and the
+// elliptic pairs. Each rule cites its source where it sits.
 //
 // Not covered: the derivative/integration theorems and the second shifting theorem for
 // an opaque f — Wolfram itself only expands these symbolically by leaving
@@ -145,6 +148,11 @@ function atomicLaplace(
     const numer = expr.operator === "Sin" || expr.operator === "Sinh" ? a : s;
     return ce.function("Divide", [numer, denom]).evaluate();
   }
+  if (expr.operator === "Abs" && (opAt(expr, 0).operator === "Sin" || opAt(expr, 0).operator === "Cos")) {
+    return rectifiedWave(ce, opAt(expr, 0), s, tName);
+  }
+  if (expr.operator === "Gamma" && operandsOf(expr).length === 2)
+    return incompleteGammaOfReciprocal(ce, expr, s, tName);
   if (expr.operator === "UnitStep" && operandsOf(expr).length === 1) {
     const a = unitShiftAmount(ce, opAt(expr, 0), tName);
     if (a === undefined || hasVar(a, tName)) return undefined;
@@ -161,6 +169,55 @@ function atomicLaplace(
     return ce.function("Exp", [ce.function("Negate", [ce.function("Multiply", [a, s])])]).evaluate();
   }
   return undefined;
+}
+
+/**
+ * The full-wave rectified sine and cosine, periodic with period π/a (A&S Table 29.3, the
+ * periodic-function theorem ∫_0^T f e^{-st} / (1 - e^{-sT}) worked out):
+ *   L{|sin at|} = a·coth(πs/2a)/(s²+a²),   L{|cos at|} = (s + a·csch(πs/2a))/(s²+a²).
+ * Even in a, so `a` needs no sign, only to be nonzero.
+ */
+function rectifiedWave(
+  ce: ComputeEngine,
+  trig: BoxedExpression,
+  s: BoxedExpression,
+  tName: string,
+): BoxedExpression | undefined {
+  const a = pureLinearCoeff(ce, opAt(trig, 0), tName);
+  if (a === undefined || (a.im === 0 && a.re === 0)) return undefined;
+  const halfPeriodArg = ce.function("Divide", [ce.function("Multiply", [ce.Pi, s]), ce.function("Multiply", [2, a])]);
+  const denom = ce.function("Add", [ce.function("Power", [s, 2]), ce.function("Power", [a, 2])]);
+  const numer =
+    trig.operator === "Sin"
+      ? ce.function("Multiply", [a, ce.function("Coth", [halfPeriodArg])])
+      : ce.function("Add", [s, ce.function("Multiply", [a, ce.function("Csch", [halfPeriodArg])])]);
+  return ce.function("Divide", [numer, denom]).evaluate();
+}
+
+/** L{Γ(ν, a/t)} = 2(as)^{ν/2} K_ν(2√(as))/s for a > 0 (confirmed against wolframscript and a numerical integral). */
+function incompleteGammaOfReciprocal(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  s: BoxedExpression,
+  tName: string,
+): BoxedExpression | undefined {
+  const [nu, arg] = operandsOf(expr) as [BoxedExpression, BoxedExpression];
+  if (hasVar(nu, tName)) return undefined;
+  const { numer, denom } = fractionFactors(arg);
+  if (denom.length !== 1 || !isSym(denom[0]!.base, tName) || denom[0]!.power !== 1) return undefined;
+  if (numer.some((f) => hasVar(f.base, tName))) return undefined;
+  const a =
+    numer.length === 0
+      ? ce.One
+      : ce.function(
+          "Multiply",
+          numer.map((f) => ce.function("Power", [f.base, f.power])),
+        );
+  if (a.isPositive !== true) return undefined;
+  const as = ce.function("Multiply", [a, s]);
+  const bessel = ce.function("BesselK", [nu, ce.function("Multiply", [2, ce.function("Sqrt", [as])])]);
+  const scale = ce.function("Power", [as, ce.function("Divide", [nu, 2])]);
+  return ce.function("Divide", [ce.function("Multiply", [2, scale, bessel]), s]).evaluate();
 }
 
 /** The first shifting theorem: pull an `Exp(±·t)` factor out of a product, transform
@@ -330,6 +387,38 @@ function laplaceLog(
       ce.function("Power", [s, ce.function("Negate", [np1])]),
     ])
     .evaluate();
+}
+
+/**
+ * The multivariate transform of a separable `f` (a sum of products whose every factor is in one
+ * variable): the product of the one-variable transforms, as Wolfram's `LaplaceTransform[f, {t1, t2}, {s1, s2}]`.
+ * A factor in two variables declines.
+ */
+function matchLaplaceSeparable(
+  ce: ComputeEngine,
+  f: BoxedExpression,
+  ts: readonly BoxedExpression[],
+  ss: readonly BoxedExpression[],
+): BoxedExpression | undefined {
+  if (f.operator === "Add") {
+    const parts = operandsOf(f).map((o) => matchLaplaceSeparable(ce, o, ts, ss));
+    return parts.some((p) => p === undefined) ? undefined : ce.function("Add", parts as BoxedExpression[]).evaluate();
+  }
+  const names = ts.map((t) => symbolNameOf(t));
+  if (names.some((n) => n === undefined)) return undefined;
+  const groups: BoxedExpression[][] = names.map(() => []);
+  const constants: BoxedExpression[] = [];
+  for (const factor of productFactors(ce, f)) {
+    const dependent = names.flatMap((n, i) => (hasVar(factor, n as string) ? [i] : []));
+    if (dependent.length > 1) return undefined;
+    (dependent.length === 0 ? constants : groups[dependent[0] as number]!).push(factor);
+  }
+  const images = groups.map((g, i) =>
+    matchLaplace(ce, g.length === 0 ? ce.One : ce.function("Multiply", g), ts[i]!, ss[i]!),
+  );
+  return images.some((x) => x === undefined)
+    ? undefined
+    : ce.function("Multiply", [...constants, ...(images as BoxedExpression[])]).evaluate();
 }
 
 export function matchLaplace(
@@ -651,6 +740,287 @@ function inverseLogarithms(
   return ce.function("Divide", [ce.function("Negate", [ce.function("Add", parts)]), t]).evaluate();
 }
 
+// --- Inverses of a product of fractional powers, shifts and a few special-function factors ---
+
+const realOf = (x: BoxedExpression): number | undefined => (x.im === 0 && Number.isFinite(x.re) ? x.re : undefined);
+
+/** `f` as `base^exp`, through Sqrt, Root and nested powers (`Root(s, 3)^-1` is `s^(-1/3)`); `e^x` stays whole. */
+function powerParts(ce: ComputeEngine, f: BoxedExpression): { base: BoxedExpression; exp: BoxedExpression } {
+  const nest = (base: BoxedExpression, q: BoxedExpression) => {
+    const inner = powerParts(ce, base);
+    return { base: inner.base, exp: inner.exp.isSame(ce.One) ? q : ce.function("Multiply", [inner.exp, q]).evaluate() };
+  };
+  if (f.operator === "Sqrt") return nest(opAt(f, 0), ce.number([1, 2]));
+  if (f.operator === "Divide" && opAt(f, 0).isSame(ce.One)) return nest(opAt(f, 1), ce.NegativeOne);
+  if (f.operator === "Root") return nest(opAt(f, 0), ce.function("Divide", [1, opAt(f, 1)]).evaluate());
+  if (f.operator === "Power" && !isE(opAt(f, 0))) return nest(opAt(f, 0), opAt(f, 1));
+  return { base: f, exp: ce.One };
+}
+
+/** The factors of a product, through Multiply, Divide and Negate (a divisor's factors as reciprocals). */
+function productFactors(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression[] {
+  if (expr.operator === "Multiply") return operandsOf(expr).flatMap((o) => productFactors(ce, o));
+  if (expr.operator === "Negate") return [ce.NegativeOne, ...productFactors(ce, opAt(expr, 0))];
+  if (expr.operator === "Divide") {
+    const divisor = productFactors(ce, opAt(expr, 1)).map((f) => ce.function("Power", [f, -1]));
+    return [...productFactors(ce, opAt(expr, 0)), ...divisor];
+  }
+  return [expr];
+}
+
+interface FactorSet {
+  /** Factors free of s. */
+  readonly coeff: BoxedExpression[];
+  /** Every factor that depends on s, as written, but for the exponential (what a shift or a step rebuilds F from). */
+  readonly rest: BoxedExpression[];
+  /** Total exponent of s. */
+  sExp: BoxedExpression;
+  /** k in a factor e^{ks}. */
+  decay: BoxedExpression;
+  /** (s - a)^m, m a whole number. */
+  readonly poles: { a: BoxedExpression; m: number }[];
+  /** (s - a)^m, m not whole: the factor a shift moves to a bare power of s. */
+  readonly shifted: { a: BoxedExpression }[];
+  /** ln(c s)^k, c > 0. */
+  readonly logs: { c: BoxedExpression; k: number }[];
+  /** Γ(ν, s). */
+  readonly gammas: BoxedExpression[];
+  /** erf(√(a s)). */
+  readonly erfs: BoxedExpression[];
+}
+
+/** F as a `FactorSet`, undefined when some factor of it is none of those. */
+function classifyFactors(ce: ComputeEngine, expr: BoxedExpression, sName: string): FactorSet | undefined {
+  const set: FactorSet = {
+    coeff: [],
+    rest: [],
+    sExp: ce.Zero,
+    decay: ce.Zero,
+    poles: [],
+    shifted: [],
+    logs: [],
+    gammas: [],
+    erfs: [],
+  };
+  for (const f of productFactors(ce, expr)) {
+    if (!hasVar(f, sName)) {
+      set.coeff.push(f);
+      continue;
+    }
+    const { base, exp } = powerParts(ce, f);
+    const n = realOf(exp);
+    const exponential = base.operator === "Power" && isE(opAt(base, 0));
+    if (!exponential) set.rest.push(f);
+    if (isSym(base, sName)) {
+      if (n === undefined) return undefined;
+      set.sExp = ce.function("Add", [set.sExp, exp]).evaluate();
+    } else if (exponential) {
+      const k = pureLinearCoeff(ce, opAt(base, 1), sName);
+      if (k === undefined) return undefined;
+      set.decay = ce.function("Add", [set.decay, ce.function("Multiply", [k, exp])]).evaluate();
+    } else if (base.operator === "Add") {
+      const a = unitShiftAmount(ce, base, sName);
+      if (a === undefined || hasVar(a, sName) || n === undefined) return undefined;
+      if (Number.isInteger(n)) set.poles.push({ a, m: n });
+      else set.shifted.push({ a });
+    } else if (base.operator === "Ln" && n !== undefined && Number.isInteger(n) && n > 0) {
+      const c = pureLinearCoeff(ce, opAt(base, 0), sName);
+      if (c === undefined || c.isPositive !== true) return undefined;
+      set.logs.push({ c, k: n });
+    } else if (base.operator === "Gamma" && operandsOf(base).length === 2 && n === 1) {
+      if (!isSym(opAt(base, 1), sName) || hasVar(opAt(base, 0), sName)) return undefined;
+      set.gammas.push(opAt(base, 0));
+    } else if (base.operator === "Erf" && n === 1 && opAt(base, 0).operator === "Sqrt") {
+      const a = pureLinearCoeff(ce, opAt(opAt(base, 0), 0), sName);
+      if (a === undefined) return undefined;
+      set.erfs.push(a);
+    } else {
+      return undefined;
+    }
+  }
+  return set;
+}
+
+/**
+ * The inverse of a product of the factors `classifyFactors` knows, by rules from the usual
+ * tables (A&S ch. 29, Erdélyi's Tables of Integral Transforms), each confirmed against wolframscript:
+ *   - e^{-cs}·F: the second shifting theorem, f(t-c)·θ(t-c), c > 0;
+ *   - F(s-a) with a √(s-a) in it: the first shifting theorem, e^{at}·f(t), the shift taking
+ *     that factor to √s (once, so a second shift cannot loop);
+ *   - s^{-ν}, non-whole ν > 0: t^{ν-1}/Γ(ν), and with ln(cs)^k, k ≤ 2, its first two derivatives
+ *     in ν (s^{-ν} ln s = L{t^{ν-1}(ψ(ν) - ln t)/Γ(ν)}, DLMF 5.2.2);
+ *   - Γ(ν, s)/s^ν: t^{ν-1}·θ(t-1) (Γ(ν, s) = s^ν L{t^{ν-1}θ(t-1)});
+ *   - erf(√(as))/√s: θ(a-t)/√(πt);
+ *   - 1/((s-a)√s): e^{at}·erf(√(at))/√a, and √s/(s-a) = 1/√s + a/((s-a)√s);
+ *   - ln s/(s-a), a > 0: e^{at}(ln a - Ei(-at)).
+ */
+function inverseFactored(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  sName: string,
+  t: BoxedExpression,
+  allowShift = true,
+): BoxedExpression | undefined {
+  const parts = classifyFactors(ce, expr, sName);
+  const tName = symbolNameOf(t);
+  if (parts === undefined || tName === undefined) return undefined;
+  const times = (...ops: BoxedExpression[]) => ce.function("Multiply", [...parts.coeff, ...ops]).evaluate();
+  const rebuilt = ce.function("Multiply", parts.rest);
+
+  if (!(parts.decay.re === 0 && parts.decay.im === 0)) {
+    const c = ce.function("Negate", [parts.decay]).evaluate();
+    if (c.isPositive !== true || c.operator === "Negate") return undefined;
+    const g = inverseFactored(ce, rebuilt, sName, t, allowShift);
+    if (g === undefined) return undefined;
+    const later = ce.function("Add", [t, ce.function("Negate", [c])]);
+    return times(g.subs({ [tName]: later }), ce.function("HeavisideTheta", [later]));
+  }
+  if (allowShift && parts.shifted.length === 1) {
+    const { a } = parts.shifted[0];
+    const moved = rebuilt.subs({ [sName]: ce.function("Add", [ce.symbol(sName), a]) }).evaluate();
+    const g = inverseFactored(ce, moved, sName, t, false);
+    return g === undefined ? undefined : times(ce.function("Exp", [ce.function("Multiply", [a, t])]), g);
+  }
+  if (parts.shifted.length > 0) return undefined;
+
+  const nu = ce.function("Negate", [parts.sExp]).evaluate();
+  const n = realOf(nu);
+  const power = (v: BoxedExpression) =>
+    ce.function("Divide", [ce.function("Power", [t, ce.function("Add", [v, -1])]), ce.function("Gamma", [v])]);
+  const { poles, logs, gammas, erfs } = parts;
+  const bare = poles.length === 0 && logs.length === 0 && gammas.length === 0 && erfs.length === 0;
+
+  if (bare) {
+    if (n === undefined || n <= 0 || Number.isInteger(n)) return undefined; // whole powers: the table's own
+    return times(power(nu));
+  }
+  if (logs.length === 1 && poles.length === 0 && gammas.length === 0 && erfs.length === 0) {
+    const { c, k } = logs[0];
+    if (k > 2 || n === undefined || n <= 0) return undefined;
+    // ln(cs)^k = (ln c + ln s)^k, so with A = ln c + ψ(ν) - ln t: k = 1 gives A, k = 2 gives A² - ψ'(ν)
+    const a = ce.function("Add", [
+      ce.function("Ln", [c]),
+      ce.function("Digamma", [nu]),
+      ce.function("Negate", [ce.function("Ln", [t])]),
+    ]);
+    if (k === 1) return times(power(nu), a);
+    const trigamma =
+      n === 1 ? ce.function("Divide", [ce.function("Power", [ce.Pi, 2]), 6]) : ce.function("PolyGamma", [1, nu]);
+    return times(power(nu), ce.function("Add", [ce.function("Power", [a, 2]), ce.function("Negate", [trigamma])]));
+  }
+  if (gammas.length === 1 && poles.length === 0 && logs.length === 0 && erfs.length === 0) {
+    if (
+      n === undefined ||
+      !ce
+        .function("Add", [gammas[0], ce.function("Negate", [nu])])
+        .evaluate()
+        .isSame(ce.Zero)
+    )
+      return undefined;
+    return times(
+      ce.function("Power", [t, ce.function("Add", [nu, -1])]),
+      ce.function("HeavisideTheta", [ce.function("Add", [t, -1])]),
+    );
+  }
+  if (erfs.length === 1 && poles.length === 0 && logs.length === 0 && gammas.length === 0) {
+    const a = erfs[0];
+    if (n !== 0.5 || a.isPositive !== true) return undefined;
+    const root = ce.function("Sqrt", [ce.function("Multiply", [ce.Pi, t])]);
+    return times(
+      ce.function("Divide", [
+        ce.function("HeavisideTheta", [ce.function("Add", [a, ce.function("Negate", [t])])]),
+        root,
+      ]),
+    );
+  }
+  if (poles.length === 1 && poles[0].m === -1 && gammas.length === 0 && erfs.length === 0) {
+    const { a } = poles[0];
+    const eat = ce.function("Exp", [ce.function("Multiply", [a, t])]);
+    const erfPart = ce.function("Multiply", [
+      eat,
+      ce.function("Erf", [ce.function("Sqrt", [ce.function("Multiply", [a, t])])]),
+    ]);
+    if (logs.length === 0 && n === 0.5) return times(ce.function("Divide", [erfPart, ce.function("Sqrt", [a])]));
+    if (logs.length === 0 && n === -0.5) {
+      const head = ce.function("Divide", [1, ce.function("Sqrt", [ce.function("Multiply", [ce.Pi, t])])]);
+      return times(ce.function("Add", [head, ce.function("Multiply", [ce.function("Sqrt", [a]), erfPart])]));
+    }
+    const an = realOf(a);
+    if (logs.length === 1 && logs[0].k === 1 && logs[0].c.isSame(ce.One) && n === 0 && an !== undefined && an > 0) {
+      const ei = ce.function("ExpIntegralEi", [ce.function("Negate", [ce.function("Multiply", [a, t])])]);
+      return times(eat, ce.function("Add", [ce.function("Ln", [a]), ce.function("Negate", [ei])]));
+    }
+  }
+  return undefined;
+}
+
+/**
+ * The elliptic-integral images (Erdélyi's tables): with m = a²/s²,
+ *   K(m) - π/2 ↦ (aπ/2)·I₀(at/2)·I₁(at/2),   s(π/2 - E(m)) ↦ (aπ/2t)·I₀(at/2)·I₁(at/2),
+ * from the series K = (π/2)Σ((½)ₙ/n!)² mⁿ, E = (π/2)(1 - Σ((½)ₙ/n!)² mⁿ/(2n-1)) inverted termwise.
+ */
+function inverseElliptic(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  sName: string,
+  t: BoxedExpression,
+): BoxedExpression | undefined {
+  const outer: BoxedExpression[] = [];
+  let sDegree = 0;
+  let sum: BoxedExpression | undefined;
+  for (const f of productFactors(ce, expr)) {
+    const { base, exp } = powerParts(ce, f);
+    if (!hasVar(f, sName)) outer.push(f);
+    else if (isSym(base, sName) && realOf(exp) !== undefined) sDegree += realOf(exp) as number;
+    else if (f.operator === "Add" && sum === undefined) sum = f;
+    else return undefined;
+  }
+  if (sum === undefined) return undefined;
+  let kind: "EllipticK" | "EllipticE" | undefined;
+  let kappa: BoxedExpression = ce.Zero;
+  let arg: BoxedExpression | undefined;
+  const constants: BoxedExpression[] = [];
+  for (const term of operandsOf(sum)) {
+    const split = constantAndCore(ce, term, sName);
+    if (split === undefined) return undefined;
+    if (split.core === undefined) {
+      constants.push(split.c);
+    } else if ((split.core.operator === "EllipticK" || split.core.operator === "EllipticE") && kind === undefined) {
+      kind = split.core.operator;
+      kappa = split.c;
+      arg = opAt(split.core, 0);
+    } else return undefined;
+  }
+  if (kind === undefined || arg === undefined) return undefined;
+  const balance = ce
+    .function("Add", [...constants, ce.function("Multiply", [kappa, ce.number([1, 2]), ce.Pi])])
+    .evaluate();
+  if (!balance.isSame(ce.Zero)) return undefined;
+  const scale: BoxedExpression[] = [];
+  let argDegree = 0;
+  for (const f of productFactors(ce, arg)) {
+    const { base, exp } = powerParts(ce, f);
+    if (!hasVar(f, sName)) scale.push(f);
+    else if (isSym(base, sName) && realOf(exp) !== undefined) argDegree += realOf(exp) as number;
+    else return undefined;
+  }
+  if (argDegree !== -2 || scale.length === 0) return undefined;
+  const squared = ce.function("Multiply", scale).evaluate();
+  const a =
+    squared.operator === "Power" && opAt(squared, 1).re === 2 ? opAt(squared, 0) : ce.function("Sqrt", [squared]);
+  if (kind === "EllipticK" ? sDegree !== 0 : sDegree !== 1) return undefined;
+  const halfAt = ce.function("Multiply", [ce.number([1, 2]), a, t]);
+  const product = ce.function("Multiply", [
+    a,
+    ce.number([1, 2]),
+    ce.Pi,
+    ce.function("BesselI", [0, halfAt]),
+    ce.function("BesselI", [1, halfAt]),
+  ]);
+  const image = kind === "EllipticK" ? product : ce.function("Divide", [ce.function("Negate", [product]), t]);
+  return ce.function("Multiply", [...outer, kappa, image]).evaluate();
+}
+
 function matchInverseLaplace(
   ce: ComputeEngine,
   expr: BoxedExpression,
@@ -661,6 +1031,8 @@ function matchInverseLaplace(
   if (sName === undefined || !hasVar(expr, sName)) return undefined;
   const logarithmic = inverseLogarithms(ce, expr, sName, t);
   if (logarithmic !== undefined) return logarithmic;
+  const special = inverseElliptic(ce, expr, sName, t) ?? inverseFactored(ce, expr, sName, t);
+  if (special !== undefined) return special;
   if (expr.operator === "Add") {
     const parts = operandsOf(expr).map((o) => matchInverseLaplace(ce, o, s, t));
     if (parts.some((p) => p === undefined)) return undefined;
@@ -778,6 +1150,10 @@ export function declareTransforms(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [f, t, s] = ops;
       if (f === undefined || t === undefined || s === undefined) return undefined;
+      if (t.operator === "List" || s.operator === "List") {
+        const [ts, ss] = [operandsOf(t), operandsOf(s)];
+        return t.operator === s.operator && ts.length === ss.length ? matchLaplaceSeparable(ce, f, ts, ss) : undefined;
+      }
       return matchLaplace(ce, f, t, s);
     },
   });

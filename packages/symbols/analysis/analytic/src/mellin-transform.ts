@@ -46,6 +46,10 @@ const isHalf = (x: BoxedExpression): boolean => x.re === 0.5 && x.im === 0;
 /** `expr` as `a*x` (no additive offset) — bare `x` gives `a = 1`. */
 function linearCoeff(ce: ComputeEngine, expr: BoxedExpression, name: string): BoxedExpression | undefined {
   if (isSym(expr, name)) return ce.One;
+  if (expr.operator === "Divide" && !hasVar(opAt(expr, 1), name)) {
+    const inner = linearCoeff(ce, opAt(expr, 0), name);
+    return inner === undefined ? undefined : ce.function("Divide", [inner, opAt(expr, 1)]).evaluate();
+  }
   if (expr.operator === "Negate") {
     const inner = linearCoeff(ce, opAt(expr, 0), name);
     return inner === undefined ? undefined : ce.function("Negate", [inner]).evaluate();
@@ -251,6 +255,13 @@ function isScalePower(expr: BoxedExpression, sName: string): boolean {
   return exponent.operator === "Negate" && isSym(opAt(exponent, 0), sName) && !hasVar(opAt(expr, 0), sName);
 }
 
+/** `Power[a, s]`, a > 0: the scale term of M{f(x/a)} = a^s F(s), the same theorem with the scale inverted. */
+const isInverseScalePower = (expr: BoxedExpression, sName: string): boolean =>
+  expr.operator === "Power" &&
+  isSym(opAt(expr, 1), sName) &&
+  !hasVar(opAt(expr, 0), sName) &&
+  opAt(expr, 0).isPositive === true;
+
 /** Pulls a `Power[b, Negate[s]]` factor out of `expr`'s top-level `Multiply` — or, for a
  * `Divide`, out of its numerator's `Multiply` (where the base pairs above put it,
  * alongside the rest of the numerator; the denominator, e.g. `Gamma(A)`, never carries
@@ -263,11 +274,19 @@ function stripScale(
   const pullFrom = (
     mul: BoxedExpression,
   ): { readonly b: BoxedExpression; readonly rest: BoxedExpression } | undefined => {
+    const scaleOf = (o: BoxedExpression) =>
+      isScalePower(o, sName)
+        ? opAt(o, 0)
+        : isInverseScalePower(o, sName)
+          ? ce.function("Divide", [1, opAt(o, 0)])
+          : undefined;
+    const alone = scaleOf(mul);
+    if (alone !== undefined) return { b: alone, rest: ce.One };
     if (mul.operator !== "Multiply") return undefined;
     const ops = operandsOf(mul);
-    const idx = ops.findIndex((o) => isScalePower(o, sName));
+    const idx = ops.findIndex((o) => scaleOf(o) !== undefined);
     if (idx === -1) return undefined;
-    const b = opAt(ops[idx]!, 0);
+    const b = scaleOf(ops[idx]!)!;
     const others = ops.filter((_, i) => i !== idx);
     const rest = others.length === 1 ? others[0]! : ce.function("Multiply", others);
     return { b, rest };
@@ -317,6 +336,21 @@ function atomicInverseMellin(
   sName: string,
   x: BoxedExpression,
 ): BoxedExpression | undefined {
+  if (
+    expr.operator === "Power" &&
+    opAt(expr, 1).re === 2 &&
+    opAt(expr, 1).im === 0 &&
+    opAt(expr, 0).operator === "Gamma"
+  ) {
+    // Γ(cs)² ↦ (2/c)·K_0(2 x^{1/2c}), c > 0: Γ(s)² ↦ 2K_0(2√x) and F(cs) ↦ (1/c) f(x^{1/c})
+    const c = linearCoeff(ce, opAt(opAt(expr, 0), 0), sName);
+    if (c === undefined || c.isPositive !== true) return undefined;
+    const arg = ce.function("Multiply", [
+      2,
+      ce.function("Power", [x, ce.function("Divide", [1, ce.function("Multiply", [2, c])])]),
+    ]);
+    return ce.function("Multiply", [ce.function("Divide", [2, c]), ce.function("BesselK", [0, arg])]).evaluate();
+  }
   if (expr.operator === "Gamma") {
     const c = sPlusShift(ce, opAt(expr, 0), sName);
     if (c === undefined) return undefined;
@@ -350,6 +384,15 @@ function atomicInverseMellin(
   if (expr.operator === "Divide") {
     const num = opAt(expr, 0);
     const den = opAt(expr, 1);
+    // 1/(s+b): x^b·θ(1-x) (the transform of x^b on (0, 1), Re s > -Re b)
+    if (isOne(num)) {
+      const c = sPlusShift(ce, den, sName);
+      if (c === undefined) return undefined;
+      const step = ce.function("HeavisideTheta", [ce.function("Subtract", [1, x])]);
+      return (
+        c.re === 0 && c.im === 0 ? step : ce.function("Multiply", [ce.function("Power", [x, c]), step])
+      ).evaluate();
+    }
     // (1+x)^{-A}: Divide[Multiply[Gamma[s], Gamma[A - s]], Gamma[A]]
     if (den.operator === "Gamma" && num.operator === "Multiply") {
       const ops = operandsOf(num);

@@ -23,4 +23,5 @@ names:
 
 - Mirrors MellinTransform's nine pairs (each confirmed against `wolframscript`'s own `InverseMellinTransform`), with one exception: $\pi\csc(\pi s)/s$ inverts to $\log(1+1/x)$, NOT $\log(1+x)$ — Wolfram's default inversion contour for this particular $F(s)$ sits in the strip $0<\mathrm{Re}(s)<1$, while $\log(1+x)$'s own forward transform lives in $-1<\mathrm{Re}(s)<0$; the same $F(s)$ genuinely inverts to different $f(x)$ depending on which strip the (otherwise ambiguous) Mellin-Barnes contour sits in, and this matches Wolfram's actual default rather than assuming the round trip is symmetric.
 - The scaling theorem ($F(s)/a^s \to f(ax)$, any provably positive `a`) generalizes every pair; the power shift ($F(s+c)\to x^c f(x)$) is supported only for the $\Gamma(s)\leftrightarrow e^{-x}$ pair (matching the one shifted example the forward table lists, $\Gamma(a+s)\to x^a e^{-x}$) — combining a shift and a scale together is declined (unverified).
-- Declined: anything outside these nine shapes.
+- Beyond the nine: $1/(s+b)\to x^b\,\theta(1-x)$, its scaling $a^s/(s+b)\to(x/a)^b\,\theta(1-x/a)$, and $\Gamma(cs)^2\to(2/c)K_0(2x^{1/2c})$ ($\Gamma(s)^2\to 2K_0(2\sqrt x)$), the last two for a provably positive `a` or `c`.
+- Declined: anything outside these shapes.
