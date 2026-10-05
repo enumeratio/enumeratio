@@ -17,7 +17,7 @@ n-int
 n-neg-2-times-pit-plus-pi-list-positiveinfinity			
 n-crt			
 n-crt-47			
-n-2-pow-1-000-000			
+n-2-pow-1-000-000	nf(power(n(2), n(1000000)))		
 n-pi-pow-10-list-positiveinfinity-5			
 n-pi-pow-10-list-positiveinfinity-1			
 n-1-over-neg-x-plus-exponentiale-times-2x-plus			

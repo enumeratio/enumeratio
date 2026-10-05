@@ -1,4 +1,5 @@
 import { registerNotation } from "@enumeratio/boxes";
+import { exceedsDoublePrecision } from "@enumeratio/ce-patches";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -402,7 +403,9 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     ce,
     ["Subfactorial", 4.5],
     (ops) => inexactNumber(ops[0]),
-    () => (ops) => {
+    () => (ops, options) => {
+      // The complex incomplete Gamma runs in doubles: decline rather than print more digits than it has.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
       const n = ops[0];
       const incomplete = ce.function("Gamma", [add(n, 1), -1]);
       return div(incomplete, ce.symbol("ExponentialE")).N();

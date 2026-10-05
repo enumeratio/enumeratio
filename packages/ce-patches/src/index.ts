@@ -10,6 +10,8 @@ import { oscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
 import { valuesAtZero } from "./patches/values-at-zero.ts";
 import { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
 import { polyLogLargeOrder } from "./patches/polylog-huge-order.ts";
+import { rangeBigBounds } from "./patches/range-big-bounds.ts";
+import { shapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 import { applyPatches, symbols as symbolsOf, type Patch } from "./patch.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -81,6 +83,8 @@ export { nAccuracyGoal, evaluateNAccuracyGoal } from "./patches/n-accuracy-goal.
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
+export { rangeBigBounds, evaluateRangeBigBounds } from "./patches/range-big-bounds.ts";
+export { shapeOfUnknownElements, evaluateShapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
 export { assignFunctionDefinition, canonicalAssignFunctionDefinition } from "./patches/assign-function-definition.ts";
 export { oscillatoryEndpoint, integrateOscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
@@ -193,6 +197,8 @@ export const PATCHES: readonly Patch[] = [
   valuesAtZero,
   inverseTrigRadicals,
   polyLogLargeOrder,
+  rangeBigBounds,
+  shapeOfUnknownElements,
 ];
 
 /** Apply every patch that has not landed upstream yet, to `ce`. Idempotent per engine. */
