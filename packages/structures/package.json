@@ -18,10 +18,11 @@
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
     },
+    "./declares.json": "./dist/declares.json",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack",
+    "build": "vp pack && node ../manifest/scripts/collect-declares.ts .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.147.0",
+    "@enumeratio/manifest": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
@@ -46,6 +48,7 @@
       "ensureAlgebraHeads",
       "ensureOperationHeads"
     ],
-    "late": "declareStructures"
+    "late": "declareStructures",
+    "declares": "./declares.json"
   }
 }

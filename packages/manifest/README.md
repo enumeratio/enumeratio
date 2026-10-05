@@ -9,8 +9,9 @@ the resolver possible (below).
 ## Entry points
 
 - **`.` (`src/index.ts`)** — `SYMBOLS`, `symbolInfo(name)`: every declared head, by name.
-  `PACKAGES` (which package declares what), `DECLARERS` (each package's `declare` function,
-  by name), `canonicalOrder`.
+  `PACKAGES` (what each package requires), `canonicalOrder`, and the resolver:
+  `createResolver(libraries)` reads what each library's build found declaring it
+  (`declares.json`, written by `scripts/collect-declares.ts`).
 - **`./package/*`** — one generated module per package under `src/generated/package/`.
 - **`createResolver` / `Resolver` / `plan` / `packagesFor` / `packagesNeeded` / `namesOf`**
   (`src/resolve.ts`) — given an expression and a `Library` per package (host-supplied: the

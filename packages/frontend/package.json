@@ -21,10 +21,11 @@
     "./reflect": "./dist/reflect.mjs",
     "./symbols": "./dist/symbols.mjs",
     "./vdom": "./dist/vdom.mjs",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./declares.json": "./dist/declares.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/core.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts src/display.ts src/kernel-host.ts src/plot-compile.ts src/prerender.ts && node scripts/build-forms.ts",
+    "build": "vp pack src/index.ts src/core.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts src/display.ts src/kernel-host.ts src/plot-compile.ts src/prerender.ts && node scripts/build-forms.ts && node ../manifest/scripts/collect-declares.ts .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -58,7 +59,8 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
-    "late": "./declare-carriers#declareFrontendCarriers"
+    "late": "./declare-carriers#declareFrontendCarriers",
+    "declares": "./declares.json"
   },
   "generated": [
     "generated/forms.json"

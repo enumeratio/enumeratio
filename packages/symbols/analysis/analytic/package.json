@@ -26,10 +26,11 @@
       "types": "./dist/shader.d.mts",
       "import": "./dist/shader.mjs"
     },
+    "./declares.json": "./dist/declares.json",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node ../../../manifest/scripts/collect-notation.ts . && vp pack",
+    "build": "node ../../../manifest/scripts/collect-notation.ts . && vp pack && node ../../../manifest/scripts/collect-declares.ts .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -46,6 +47,7 @@
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/oracle": "workspace:*",
+    "@enumeratio/structures": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
@@ -59,7 +61,8 @@
     "declare": [
       "declareAnalytic",
       "declareFractals"
-    ]
+    ],
+    "declares": "./declares.json"
   },
   "generated": [
     "src/notation.generated.ts"

@@ -574,6 +574,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../manifest
       '@types/node':
         specifier: ^24
         version: 24.13.4
@@ -663,6 +666,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/engine':
+        specifier: workspace:*
+        version: link:../engine
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../entry
@@ -859,6 +865,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -887,6 +896,9 @@ importers:
       '@enumeratio/hypercomplex':
         specifier: workspace:*
         version: link:../hypercomplex
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -909,6 +921,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -934,6 +949,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -959,6 +977,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -984,6 +1005,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1009,6 +1033,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1034,6 +1061,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1059,6 +1089,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1093,6 +1126,9 @@ importers:
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../../../oracle
+      '@enumeratio/structures':
+        specifier: workspace:*
+        version: link:../../../structures
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1189,6 +1225,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../../../oracle
@@ -1260,6 +1299,9 @@ importers:
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../../../entry
+      '@enumeratio/groupalgebra':
+        specifier: workspace:*
+        version: link:../../algebras/groupalgebra
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1298,9 +1340,15 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/combinatorics':
+        specifier: workspace:*
+        version: link:../combinatorics
       '@enumeratio/entry':
         specifier: workspace:*
         version: link:../../../entry
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1357,6 +1405,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       '@enumeratio/modular':
         specifier: workspace:*
         version: link:../modular
@@ -1388,6 +1439,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.147.0
         version: 0.147.0
+      '@enumeratio/manifest':
+        specifier: workspace:*
+        version: link:../../../manifest
       typescript:
         specifier: ^7.0.2
         version: 7.0.2

@@ -25,7 +25,7 @@ export { NOTATIONS };
 /** The head called `name`, or undefined. */
 export const symbolInfo = (name: string): SymbolInfo | undefined =>
   Object.hasOwn(SYMBOLS, name) ? SYMBOLS[name] : undefined;
-export { CANONICAL, CARRIER_TYPES, DECLARERS } from "./declarers-data.ts";
+export { assembleDeclarers, type DeclarerTables, type LibraryDeclares, NO_DECLARERS } from "./declares.ts";
 export { HIERARCHY, type Layer, PACKAGES, type Placement } from "./hierarchy.ts";
 export {
   type BuiltEngine,

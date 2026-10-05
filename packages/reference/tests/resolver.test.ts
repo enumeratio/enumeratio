@@ -4,17 +4,18 @@
 // standard run checks a few heads across the packages; `DEEP_TESTS=1` checks every one.
 
 import { runCases } from "@enumeratio/evaluation/node";
-import { CANONICAL, CARRIER_TYPES, DECLARERS, packagesNeeded, plan } from "@enumeratio/manifest";
+import { assembleDeclarers, packagesNeeded } from "@enumeratio/manifest";
 import { expect, test } from "vite-plus/test";
-import { canonicalNames, carrierTypes, declarers } from "../scripts/declarers.ts";
 import { LIBRARIES } from "../scripts/engines.ts";
 import { referenceData } from "../src/node.ts";
 
-test("DECLARERS is what declaring each library finds", () => {
-  // Regenerate with `vp node packages/reference/scripts/collect-declarers.ts`.
-  expect(declarers(LIBRARIES, plan)).toEqual(DECLARERS);
-  expect(canonicalNames(LIBRARIES)).toEqual(CANONICAL);
-  expect(carrierTypes(LIBRARIES, plan)).toEqual(CARRIER_TYPES);
+const TABLES = assembleDeclarers(LIBRARIES);
+
+test("every library says what declaring it finds", () => {
+  // Without it the resolver has only the records' overloads to go on.
+  expect(LIBRARIES.filter((library) => library.declares === undefined).map((library) => library.name)).toEqual([]);
+  // A row on a carrier type the package mints waits for something that makes one.
+  expect([...packagesNeeded(["Inverse", "x"], LIBRARIES, undefined, TABLES)]).not.toContain("combinatorics");
 });
 
 // The heads whose overloads live in tables (defineOverload), whatever order declares them, among them.
@@ -66,7 +67,9 @@ test(
     const full = new Map((await runCases(cases, { ...options, setup: setup() })).map((r) => [r.id, r]));
     const groups = new Map<string, typeof cases>();
     for (const h of heads) {
-      const packages = new Set(h.entry.examples.flatMap((e) => [...packagesNeeded(e.expr, LIBRARIES)]));
+      const packages = new Set(
+        h.entry.examples.flatMap((e) => [...packagesNeeded(e.expr, LIBRARIES, undefined, TABLES)]),
+      );
       const key = [...packages].toSorted().join(",");
       groups.set(key, [...(groups.get(key) ?? []), ...cases.filter((c) => c.id.startsWith(`${h.package}/${h.head}/`))]);
     }

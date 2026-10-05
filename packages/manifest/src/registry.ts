@@ -15,7 +15,8 @@ import { type DefinitionAttribute, declarationOf } from "./declaration.ts";
 import type { NotationData } from "./notation-data.ts";
 import { describe, namespaceOf, noteDescription } from "./describe.ts";
 import { SYMBOLS } from "./generated/symbols.ts";
-import { type Library, type Lookup, packagesFor, packagesNeeded, plan } from "./resolve.ts";
+import { assembleDeclarers } from "./declares.ts";
+import { type Library, type Lookup, packagesNeeded, plan } from "./resolve.ts";
 import type { Description } from "./types.ts";
 
 /** What a registry needs of an engine: compute-engine's `declare`, `assign` and `lookupDefinition`. */
@@ -93,16 +94,16 @@ export function manifestRegistry<Engine extends object>(
   lookup?: Lookup,
 ): Registry<Engine> {
   const byNamespace = new Map(libraries.map((l) => [namespaceOf(l.name), l.name]));
+  const tables = assembleDeclarers(libraries);
   return {
     resolve(name) {
       const parts = name.split(".");
       if (parts.length > 2) return undefined;
       const head = parts.at(-1)!;
-      const packages = packagesNeeded([head], libraries, lookup);
+      const packages = packagesNeeded([head], libraries, lookup, tables);
       if (parts.length === 2) {
         const pkg = byNamespace.get(parts[0]!);
-        const declares = pkg !== undefined && (packagesFor([head], lookup).has(pkg) || packages.has(pkg));
-        if (!declares) return undefined;
+        if (pkg === undefined || !packages.has(pkg)) return undefined;
       }
       if (packages.size === 0) return undefined;
       return { head, libraries: plan(packages, libraries).libraries };

@@ -31,10 +31,11 @@
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
     },
+    "./declares.json": "./dist/declares.json",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node scripts/build-generated.ts && vp pack",
+    "build": "node scripts/build-generated.ts && vp pack && node ../../../manifest/scripts/collect-declares.ts .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -52,6 +53,7 @@
     "@enumeratio/boxes": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
+    "@enumeratio/groupalgebra": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/residues": "workspace:*",
     "@enumeratio/structures": "workspace:*",
@@ -70,7 +72,8 @@
       "CombinatorialStat",
       "Tally"
     ],
-    "late": "declareLate"
+    "late": "declareLate",
+    "declares": "./declares.json"
   },
   "generated": [
     "src/statistics/naming-data.ts",
