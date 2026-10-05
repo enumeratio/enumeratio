@@ -689,7 +689,15 @@ export function declareSignals(ce: ComputeEngine): void {
   });
   ce.declare("Rescale", {
     signature: "(real | list<real>, list<real^2>?, list<real^2>?) -> real | list<real>",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateRescale(ce, ops),
+    // Held, so a rational operand stays exact until the one rounding in `N(…, d)`.
+    lazy: true,
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+      const result = evaluateRescale(
+        ce,
+        ops.map((op) => op.evaluate()),
+      );
+      return options.numericApproximation ? result?.N() : result;
+    },
   });
   ce.declare("DiracDelta", {
     signature: "(real, real*) -> number",

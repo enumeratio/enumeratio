@@ -1,6 +1,6 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-discreteshift-one-step			[DiscreteShift, [a, n], n]	[a, [Add, n, 1]]	One-step forward shift			
-discreteshift-sin-neg-2-over-7-times-i-times-pi			[DiscreteShift, [Sin, [Multiply, [Complex, 0, [Rational, -2, 7]], Pi]], [List, [Complex, 0, 1], 10]]	[DiscreteShift, [Multiply, [Complex, 0, 1], [Sinh, [Multiply, [Rational, -2, 7], Pi]]], [List, [Complex, 0, 1], 10]]			convention	both right: Sin(i·(-2π/7)) = i·Sinh(-2π/7), which we leave as Sinh of the negative argument; Wolfram additionally uses Sinh's oddness to pull the sign out (-I·Sinh(2π/7)). Same value, different simplification depth on an odd function's argument sign.
-discreteshift-h-step	Scope		[DiscreteShift, [a, n], [List, n, 2]]	[a, [Add, n, 2]]	The h-step form -- {n, h}, not a third argument			
-discreteshift-floor-k-k	Scope		[DiscreteShift, [Floor, k], k]	[Floor, [Add, k, 1]]				
-discreteshift-round-k-list-k-3	Scope	triage	[DiscreteShift, [Round, k], [List, k, 3]]	[Round, [Add, k, 3]]		wolfram?	unclassified	""
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+discreteshift-one-step			[DiscreteShift, [a, n], n]	[a, [Add, n, 1]]	One-step forward shift		
+discreteshift-sin-neg-2-over-7-times-i-times-pi			[DiscreteShift, [Sin, [Multiply, [Complex, 0, [Rational, -2, 7]], Pi]], [List, [Complex, 0, 1], 10]]	[DiscreteShift, [Multiply, [Complex, 0, 1], [Sinh, [Multiply, [Rational, -2, 7], Pi]]], [List, [Complex, 0, 1], 10]]		convention	both right: Sin(i·(-2π/7)) = i·Sinh(-2π/7), which we leave as Sinh of the negative argument; Wolfram additionally uses Sinh's oddness to pull the sign out (-I·Sinh(2π/7)). Same value, different simplification depth on an odd function's argument sign.
+discreteshift-h-step	Scope		[DiscreteShift, [a, n], [List, n, 2]]	[a, [Add, n, 2]]	The h-step form -- {n, h}, not a third argument		
+discreteshift-floor-k-k	Scope		[DiscreteShift, [Floor, k], k]	[Floor, [Add, k, 1]]			
+discreteshift-round-k-list-k-3	Scope		[DiscreteShift, [Round, k], [List, k, 3]]	[Round, [Add, k, 3]]			
