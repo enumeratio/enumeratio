@@ -89,3 +89,57 @@ test("a held Sum in a list agrees entry by entry, however the iterator is spelle
   expect(verdictOf("wolfram", ["List", sum, -1] as never, answer)).toBe("agree");
   expect(verdictOf("wolfram", ["List", sum, -2] as never, answer)).toBe("disagree");
 });
+
+// A call ours holds is not agreement: the numbers agree only because our engine evaluates the call
+// we left alone. A call only Wolfram holds is different: its `N` is real evidence for our closed form.
+test("a call ours holds never agrees with the value Wolfram computed from it", () => {
+  const eta = ["DirichletEta", ["Rational", 1, 2]];
+  const closedForm = {
+    value: "Times[Plus[1, Times[-1, Power[2, Rational[1, 2]]]], Zeta[Rational[1, 2]]]",
+    numeric: "0.6048986434216304",
+  };
+  // Ours held, Wolfram's closed form.
+  expect(verdictOf("wolfram", eta as never, closedForm, undefined, false, eta as never)).toBe("disagree");
+  // Ours threads a held call over an array; Wolfram's entries are closed forms or numbers.
+  const array = ["DirichletEta", ["List", ["Rational", 1, 2], 2]];
+  const arrayAnswer = {
+    value:
+      "List[Times[Plus[1, Times[-1, Power[2, Rational[1, 2]]]], Zeta[Rational[1, 2]]], Times[Rational[1, 12], Power[Pi, 2]]]",
+    numeric: "List[0.6048986434216304, 0.8224670334241132]",
+  };
+  expect(
+    verdictOf(
+      "wolfram",
+      ["List", eta, ["Multiply", ["Rational", 1, 12], ["Power", "Pi", 2]]] as never,
+      arrayAnswer,
+      undefined,
+      false,
+      array as never,
+    ),
+  ).toBe("disagree");
+  // Wolfram held, ours computed: Wolfram's `N` is the evidence, so a matching closed form agrees.
+  const psi = ["PolyGamma", 1, ["Rational", 1, 4]];
+  const held = { value: "PolyGamma[1, Rational[1, 4]]", numeric: "17.19732915450711" };
+  expect(
+    verdictOf(
+      "wolfram",
+      ["Add", ["Multiply", 8, "CatalanConstant"], ["Power", "Pi", 2]] as never,
+      held,
+      undefined,
+      false,
+      psi as never,
+    ),
+  ).toBe("agree");
+  expect(verdictOf("wolfram", ["Multiply", 8, "CatalanConstant"] as never, held, undefined, false, psi as never)).toBe(
+    "disagree",
+  );
+  // Both hold it, so the numbers may agree.
+  expect(verdictOf("wolfram", psi as never, held, undefined, false, psi as never)).toBe("agree");
+  // Neither holds it.
+  expect(
+    verdictOf("wolfram", ["Rational", 1, 2], { value: "Rational[1, 2]", numeric: "0.5" }, undefined, false, [
+      "Sin",
+      0,
+    ] as never),
+  ).toBe("agree");
+});

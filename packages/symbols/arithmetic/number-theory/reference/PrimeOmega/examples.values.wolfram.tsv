@@ -5,7 +5,7 @@ primeomega-12	PrimeOmega[12]	3	\Omega (12)	3
 threads-element-wise-over-a-list-as-wolfram-s	PrimeOmega[List[4, 12, 24]]	{2, 3, 4}	\Omega (\{4,12,24\})	\{2,3,4\}
 large-integers	PrimeOmega[Factorial[30]]	59	\Omega (30!)	59
 gaussian-integers-5-9i-has-norm-106-2-cdot-53-so	PrimeOmega[Complex[5, 9]]	2	\Omega (5+9 i)	2
-gaussianintegers-true-12-1-i-4-cdot-3	PrimeOmega[12, Rule[enumeratio`Over, GaussianIntegers]]	5	\text{PrimeOmega}[12,\text{GaussianIntegers}\to \text{True}]	5
+gaussianintegers-true-12-1-i-4-cdot-3	PrimeOmega[12, Rule[GaussianIntegers, True]]	5	\text{PrimeOmega}[12,\text{GaussianIntegers}\to \text{True}]	5
 listable-over-a-range	PrimeOmega[Range[20]]	{0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3}	\Omega (\text{Range}[20])	\{0,1,1,2,1,2,1,3,2,2,1,3,1,2,2,4,1,3,1,3\}
 primeomega-28	PrimeOmega[28]	3	\Omega (28)	3
 completely-additive-omega-mn-omega-m-omega-n-for	(PrimeOmega[Times[24, 40]] == Plus[PrimeOmega[24], PrimeOmega[40]])	True	\Omega (24\ 40)=\Omega (24)+\Omega (40)	\text{True}

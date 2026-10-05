@@ -241,6 +241,25 @@ test("a free name that Wolfram reserves goes in our own context, not Wolfram's",
   expect(fromWolfram("Plus[enumeratio`E, 1]")).toEqual(["Add", "E", 1]);
 });
 
+test("an option key and a number set go to Wolfram as its own names", () => {
+  expect(emit(["Graph", ["List", 1, 2], ["KeyValuePair", "EdgeWeight", ["List", 5]]], "wolfram")).toMatchObject({
+    ok: true,
+    source: expect.stringContaining("Rule[EdgeWeight, List[5]]"),
+  });
+  expect(emit(["FindInstance", ["Equal", "x", 4], "x", "Reals"], "wolfram")).toEqual({
+    ok: true,
+    source: "FindInstance[(x == 4), x, Reals]",
+    freeSymbols: ["x"],
+  });
+  // Ours alone: `Over` is translated where Wolfram has the ring as an option, held back where it doesn't.
+  expect(emit(["IsPrime", 5, ["KeyValuePair", "Over", "GaussianIntegers"]], "wolfram")).toMatchObject({
+    source: "PrimeQ[5, Rule[GaussianIntegers, True]]",
+  });
+  expect(emit(["IsPrime", 5, ["KeyValuePair", "Over", "Foo"]], "wolfram")).toMatchObject({
+    source: expect.stringContaining("Rule[enumeratio`Over, Foo]"),
+  });
+});
+
 // Found scanning the newly-emitting free-symbol rows against real kernels (#A-72 phase 2):
 // `_a` (our prefix-underscore named-wildcard convention, `Replace`'s patterns) is bare and
 // unmapped, so it used to fall into the same "free variable" bucket `x` does — but Wolfram's

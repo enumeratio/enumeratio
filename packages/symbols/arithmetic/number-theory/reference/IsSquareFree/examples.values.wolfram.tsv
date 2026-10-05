@@ -6,7 +6,7 @@ every-prime-is-squarefree	SquareFreeQ[17]	True	\text{SquareFreeQ}[17]	\text{True
 issquarefree-20	SquareFreeQ[20]	False	\text{SquareFreeQ}[20]	\text{False}	
 threads-element-wise-over-a-list	SquareFreeQ[List[10, 4, 12]]	SquareFreeQ[{10, 4, 12}]	\text{SquareFreeQ}[\{10,4,12\}]	\text{SquareFreeQ}[\{10,4,12\}]	disagree
 gaussian-integers-3-2i-is-a-gaussian-prime	SquareFreeQ[Complex[3, 2]]	True	\text{SquareFreeQ}[3+2 i]	\text{True}	
-gaussianintegers-true-2-i-1-i-2	SquareFreeQ[2, Rule[enumeratio`Over, GaussianIntegers]]	False	\text{SquareFreeQ}[2,\text{GaussianIntegers}\to \text{True}]	\text{False}	
+gaussianintegers-true-2-i-1-i-2	SquareFreeQ[2, Rule[GaussianIntegers, True]]	False	\text{SquareFreeQ}[2,\text{GaussianIntegers}\to \text{True}]	\text{False}	
 rationals-numerator-and-denominator-are-both	SquareFreeQ[Rational[2, 3]]	True	\text{SquareFreeQ}\left[\frac{2}{3}\right]	\text{True}	
 polynomials-x-2-6x-6-has-no-repeated-factor	SquareFreeQ[Plus[Power[x, 2], Times[6, x], 6]]	True	\text{SquareFreeQ}\left[x^2+6 x+6\right]	\text{True}	
 multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor	SquareFreeQ[Subtract[Power[x, 3], Times[Power[x, 2], y]]]	False	\text{SquareFreeQ}\left[x^3-x^2 y\right]	\text{False}	
