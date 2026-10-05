@@ -32,7 +32,7 @@ lcm-with-a-real-composite-5-squared	LCM[Complex[3, 4], 25]	25	\text{lcm}(3+4 i,2
 lcm-with-a-negative-associate	LCM[Complex[6, 8], Complex[-2, -3]]	34 + 12*I	\text{lcm}(6+8 i,-2-3 i)	34+12 i	
 lcm-of-a-large-norm-gaussian-and-a-real-prime-19	LCM[Complex[123, 456], 19]	2337 + 8664*I	\text{lcm}(123+456 i,19)	2337+8664 i	
 lcm-of-two-composites-sharing-the-prime-above-13	LCM[Complex[6, 8], Complex[9, 6]]	6 + 108*I	\text{lcm}(6+8 i,9+6 i)	6+108 i	
-lcm-of-a-lazy-range-1-10-not-a-materialised-list	LCM[Range[1, 10]]				
+lcm-of-a-lazy-range-1-10-not-a-materialised-list	LCM[Range[1, 10]]	{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}	\text{lcm}(\text{Range}[1,10])	\{1,2,3,4,5,6,7,8,9,10\}	disagree
 the-smallest-number-divisible-by-each-of-1	LCM[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]	2520	\text{lcm}(1,2,3,4,5,6,7,8,9,10)	2520	
 lcm-10-15	LCM[10, 15]	30	\text{lcm}(10,15)	30	
 foldlist-lcm-1-range-2-10	FoldList[LCM, 1, Range[2, 10]]	{1, 2, 6, 12, 60, 60, 420, 840, 2520, 2520}	\text{FoldList}[\text{LCM},1,\text{Range}[2,10]]	\{1,2,6,12,60,60,420,840,2520,2520\}	

@@ -3,7 +3,7 @@ beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15			[DirichletBeta, 1]	[Multiply, [
 beta-2-g-catalan-s-constant			[DirichletBeta, 2]	CatalanConstant			$\beta(2) = G$, Catalan's constant		
 beta-3-pi-3-32			[DirichletBeta, 3]	[Multiply, [Rational, 1, 32], [Power, Pi, 3]]			$\beta(3) = \pi^3/32$		
 numeric-for-a-floating-point-argument-through-4			[DirichletBeta, 2.5]	{num: "0.948622174037054707445"}			Numeric for a floating-point argument — through $4^{-s}(\zeta(s,\tfrac14) - \zeta(s,\tfrac34))$, so it answers to the engine's working precision rather than a double's		
-a-symbolic-argument-stays-symbolic			[DirichletBeta, s]	[DirichletBeta, s]			A symbolic argument stays symbolic		
+a-symbolic-argument-stays-symbolic			[DirichletBeta, s]	[DirichletBeta, s]			A symbolic argument stays symbolic	unevaluated	Ours holds DirichletBeta(s); Wolfram rewrites it as a difference of Hurwitz zeta values, (Zeta[s, 1/4] - Zeta[s, 3/4])/4^s.
 beta-neg-6-e-6-2		test	[DirichletBeta, -6]	[Rational, -61, 2]			$\beta(-6) = E_6/2 = -61/2$		
 n-dirichletbeta-4		test	[N, [DirichletBeta, 4]]	{num: "0.988944551741105336109"}					
 map-dirichletbeta-list-2-3			[Map, DirichletBeta, [List, 2, 3]]	[List, CatalanConstant, [Multiply, [Rational, 1, 32], [Power, Pi, 3]]]					

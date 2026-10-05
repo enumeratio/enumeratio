@@ -1,2 +1,2 @@
-id	in
-x-sub-0-sup-1	SubsuperscriptBox["x", "0", "1"]
+id	in	out	tex.in	tex.out
+x-sub-0-sup-1	SubsuperscriptBox["x", "0", "1"]	SubsuperscriptBox["x", "0", "1"]	\text{SubsuperscriptBox}[\text{x},0,1]	\text{SubsuperscriptBox}[\text{x},0,1]

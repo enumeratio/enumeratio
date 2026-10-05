@@ -4,7 +4,7 @@ id	in	out	tex.in	tex.out	verdict
 the-empty-product-is-1-by-convention	Factorial[0]	1	0!	1	
 10-factorial	Factorial[10]	3628800	10!	3628800	
 threads-element-wise-over-a-list	Factorial[List[1, 2, 3, 4]]	{1, 2, 6, 24}	\{1,2,3,4\}!	\{1,2,6,24\}	
-frac-n-n-1-simplifies-to-n-under-simplify-plain	Simplify[Divide[Factorial[n], Factorial[Subtract[n, 1]]]]				
+frac-n-n-1-simplifies-to-n-under-simplify-plain	Simplify[Divide[Factorial[n], Factorial[Subtract[n, 1]]]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{Simplify}\left[\frac{n!}{(n-1)!}\right]-n\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Simplify}\left[\frac{\frac{7}{3}!}{\left(\frac{7}{3}-1\right)!}\right]-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{Simplify}\left[\frac{\left(-\frac{11}{5}\right)!}{\left(-\frac{11}{5}-1\right)!}\right]--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{Simplify}\left[\frac{\frac{13}{4}!}{\left(\frac{13}{4}-1\right)!}\right]-\frac{13}{4}\right]\right]\right\}\right\},s=\text{Flatten}[s];\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 real-arguments-evaluate-as-gamma-n-1	Factorial[3.5]	11.631728396567448	3.5!	11.6317	
 negative-non-integers-are-defined-too-2-5-gamma	Factorial[-2.5]	2.363271801207355	(-2.5)!	2.36327	
 complex-arguments-1-i-gamma-2-i	Factorial[Complex[1, 1]]	(1 + I)!	(1+i)!	(1+i)!	

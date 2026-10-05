@@ -145,7 +145,14 @@ async function withFile<T>(name: string, program: string, run: (file: string) =>
  * counter to a Module-local `k$nnn` gensym, a name no transpiled source can ever spell, so no
  * batched item's own bare symbol — `i`, `k`, or anything else — can collide with it again. */
 export function wolframBatchCode(sources: readonly string[]): string {
-  const list = sources.map((source) => JSON.stringify(source)).join(", ");
+  // wolframscript reads `-code` byte by byte (`∑` arrives as three Latin-1 characters), so a
+  // non-ASCII character goes in as Wolfram's own escape: `\:2211`, or `\|01f600` past the BMP.
+  const escaped = (source: string): string =>
+    JSON.stringify(source).replace(/\P{ASCII}/gu, (ch) => {
+      const code = ch.codePointAt(0) as number;
+      return code > 0xffff ? `\\|${code.toString(16).padStart(6, "0")}` : `\\:${code.toString(16).padStart(4, "0")}`;
+    });
+  const list = sources.map(escaped).join(", ");
   const stable = `/. TestObject[a_Association] :> TestObject[KeyTake[a, {"Outcome", "Input", "ExpectedOutput", "ActualOutput"}]]`;
   // Held, `Rational[7, 2]` is a call, not the number, and prints as `\text{Rational}[7,2]`;
   // rewritten as the division and sum it stands for, it prints as written.

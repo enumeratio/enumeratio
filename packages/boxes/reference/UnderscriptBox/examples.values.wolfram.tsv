@@ -1,2 +1,2 @@
-id	in
-limit	UnderscriptBox["lim", "n→∞"]
+id	in	out	tex.in	tex.out
+limit	UnderscriptBox["lim", "n→∞"]	UnderscriptBox["lim", "n->Infinity"]	\text{UnderscriptBox}[\text{lim},\text{n$\rightarrow \infty $}]	\text{UnderscriptBox}[\text{lim},\text{n$\rightarrow \infty $}]

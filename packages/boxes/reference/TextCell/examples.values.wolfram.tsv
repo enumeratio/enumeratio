@@ -1,2 +1,2 @@
-id	in
-paragraph	TextCell[TextData[List["Hello", "world"]], "Text"]
+id	in	out	tex.in	tex.out
+paragraph	TextCell[TextData[List["Hello", "world"]], "Text"]	TextCell[TextData[{"Hello", "world"}], "Text"]	\text{TextData}[\{\text{Hello},\text{world}\}]	\text{TextData}[\{\text{Hello},\text{world}\}]

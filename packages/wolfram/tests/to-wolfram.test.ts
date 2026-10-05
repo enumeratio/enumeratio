@@ -352,6 +352,8 @@ test("Random(collection, n) draws with replacement via RandomChoice; a distribut
 test("Subsets(n, spec)/Tuples(n, k) with an integer n draw from Range(n), our carrier-sized overload", () => {
   expect(toWolfram(["Subsets", 4, 2])).toBe("Subsets[Range[4], 2]");
   expect(toWolfram(["Subsets", 4, ["List", 2]])).toBe("Subsets[Range[4], List[2]]");
+  expect(toWolfram(["Subsets", 4])).toBe("Subsets[Range[4]]");
+  expect(toWolfram(["Derivative", "Beta", 0, 1])).toBe("Derivative[0, 1][Beta]");
   expect(toWolfram(["Tuples", 2, 3])).toBe("Tuples[Range[2], 3]");
   // An actual collection is left alone.
   expect(toWolfram(["Subsets", ["List", "a", "b", "c"]])).toBe("Subsets[List[a, b, c]]");

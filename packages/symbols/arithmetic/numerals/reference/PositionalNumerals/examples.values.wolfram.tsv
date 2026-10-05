@@ -1,2 +1,2 @@
-id	in
-base-7-digits	IntegerDigits[100, 7]
+id	in	out	tex.in	tex.out
+base-7-digits	IntegerDigits[100, 7]	{2, 0, 2}	\text{IntegerDigits}[100,7]	\{2,0,2\}

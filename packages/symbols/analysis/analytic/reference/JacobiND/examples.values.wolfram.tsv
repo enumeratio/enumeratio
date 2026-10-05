@@ -4,7 +4,7 @@ m-greater-than-1-via-the-reciprocal-modulus	N[JacobiND[0.3, 1.5]]	1.069333535737
 list-jacobind-z-0-jacobind-z-1	List[JacobiND[z, 0], JacobiND[z, 1]]	{1, Cosh[z]}		\{\text{nd}(z|0),\text{nd}(z|1)\}	\{1,\cosh (z)\}	
 matrixfunction-function-jacobind-neg-1-over-3	MatrixFunction[Function[JacobiND[Times[Complex[0, Rational[-1, 3]], Pi], Slot[1]]], List[List[1, 0], List[0, 1]]]	{{1/2, 0}, {0, 1/2}}		\text{MatrixFunction}\left[\text{nd}((\text{Rational}[-1,3] i) \pi |\text{$\#$1})\&,\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  \frac{1}{2} & 0 \\  0 & \frac{1}{2} \\ \end{array} \right)	
 list-jacobind-0-m-jacobind-1-over-2-times	List[JacobiND[0, m], JacobiND[Times[Rational[1, 2], EllipticK[m]], m], JacobiND[EllipticK[m], m]]	{1, (1 - m)^(-1/4), 1/Sqrt[1 - m]}		\left\{\text{nd}(0|m),\text{nd}\left(\left.\frac{1}{2} K(m)\right|m\right),\text{nd}(K(m)|m)\right\}	\left\{1,\frac{1}{\sqrt[4]{1-m}},\frac{1}{\sqrt{1-m}}\right\}	disagree
-u-0-is-1-for-any-m	JacobiND[0, m]					
+u-0-is-1-for-any-m	JacobiND[0, m]	1		\text{nd}(0|m)	1	
 jacobind-0-1	JacobiND[0, 1]	1		\text{nd}(0|1)	1	
 jacobind-1-over-2-times-i-times-pi-1	JacobiND[Times[Complex[0, Rational[1, 2]], Pi], 1]	0		\text{nd}((\text{Rational}[1,2] i) \pi |1)	0	
 jacobind-3i-times-elliptick-1-plus-elliptick-0-0	JacobiND[Plus[Times[Complex[0, 3], EllipticK[1]], EllipticK[0]], 0]	1		\text{nd}((3 i) K(1)+K(0)|0)	1	
@@ -13,5 +13,5 @@ n-jacobind-1-over-2-times-1-plus-sqrt-2-over-2-1	N[JacobiND[Times[Rational[1, 2]
 n-jacobind-sqrt-2-times-i-neg-1	N[JacobiND[Complex[0, Sqrt[2]], -1]]	-6.889282219354147 + 0.*I		N\left[\text{nd}\left(\left.\sqrt{2} i\right|-1\right)\right]	-6.88928+0. i	
 n-jacobind-2-times-1-plus-sqrt-2-over-2-1-minus	N[JacobiND[Times[2, Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	1.000895313149575		N\left[\text{nd}\left(2 \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	1.0009	
 jacobind-i-times-elliptick-1-plus-elliptick-0-0	JacobiND[Plus[Times[Complex[0, 1], EllipticK[1]], EllipticK[0]], 0]	1		\text{nd}(i K(1)+K(0)|0)	1	
-symbolic-arguments-are-left-unevaluated-rather	JacobiND[u, m]					
+symbolic-arguments-are-left-unevaluated-rather	JacobiND[u, m]	JacobiND[u, m]		\text{nd}(u|m)	\text{nd}(u|m)	
 more-digits-than-a-double-holds-declines	N[JacobiND[3, Rational[1, 3]], 50]	1.03491486901670005309693547863593906841779652785865317418741995307681319006773`50.	1.0349148690167000530969354786359390684177965278587	N\left[\text{nd}\left(3\left|\frac{1}{3}\right.\right),50\right]	1.0349148690167000530969354786359390684177965278587	disagree

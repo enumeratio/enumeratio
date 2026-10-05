@@ -15,21 +15,21 @@ real-complexinfinity	Re[ComplexInfinity]	Indeterminate		\Re(\text{ComplexInfinit
 piecewiseexpand-re-imaginaryunit-times-x-neg-2	PiecewiseExpand[Re[Times[I, x]], Less[-2, x, 2]]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{PiecewiseExpand}[\Re(i x),-2<x<2]-\Re(i x)],10,\text{$\$$Aborted}]]\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\Re\left(i \frac{7}{3}\right),-2<\frac{7}{3}<2\right]-\Re\left(i \frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\Re\left(i \left(-\frac{11}{5}\right)\right),-2<-\frac{11}{5}<2\right]-\Re\left(i \left(-\frac{11}{5}\right)\right)\right]\right],\text{Chop}\left[N\left[\text{PiecewiseExpand}\left[\Re\left(i \frac{13}{4}\right),-2<\frac{13}{4}<2\right]-\Re\left(i \frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 simplify-re-x-x-gt-0	Simplify[Re[x], Greater[x, 0]]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{Simplify}[\Re(x),x>0]-\Re(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{Simplify}\left[\Re\left(\frac{7}{3}\right),\frac{7}{3}>0\right]-\Re\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{Simplify}\left[\Re\left(-\frac{11}{5}\right),-\frac{11}{5}>0\right]-\Re\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{Simplify}\left[\Re\left(\frac{13}{4}\right),\frac{13}{4}>0\right]-\Re\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 re-of-a-symbolic-value-stays-unevaluated	Re[x]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\Re(x)-\Re(x)],10,\text{$\$$Aborted}]]\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\Re\left(\frac{7}{3}\right)-\Re\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\Re\left(-\frac{11}{5}\right)-\Re\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\Re\left(\frac{13}{4}\right)-\Re\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-real-1	Re[1]					
-real-neg-1	Re[-1]					
-real-neg-i	Re[Complex[0, -1]]					
-real-1-plus-i	Re[Complex[1, 1]]					
-real-neg-1-plus-i	Re[Complex[-1, 1]]					
-real-neg-1-minus-i	Re[Complex[-1, -1]]					
-real-1-minus-i	Re[Complex[1, -1]]					
-real-1-plus-sqrt-3-times-i	Re[Plus[1, Complex[0, Sqrt[3]]]]					
-real-neg-1-plus-sqrt-3-times-i	Re[Plus[-1, Complex[0, Sqrt[3]]]]					
+real-1	Re[1]	1		\Re(1)	1	
+real-neg-1	Re[-1]	-1		\Re(-1)	-1	
+real-neg-i	Re[Complex[0, -1]]	0		\Re(-i)	0	
+real-1-plus-i	Re[Complex[1, 1]]	1		\Re(1+i)	1	
+real-neg-1-plus-i	Re[Complex[-1, 1]]	-1		\Re(-1+i)	-1	
+real-neg-1-minus-i	Re[Complex[-1, -1]]	-1		\Re(-1-i)	-1	
+real-1-minus-i	Re[Complex[1, -1]]	1		\Re(1-i)	1	
+real-1-plus-sqrt-3-times-i	Re[Plus[1, Complex[0, Sqrt[3]]]]	1 + Re[Complex[0, Sqrt[3]]]		\Re\left(1+\sqrt{3} i\right)	\Re\left(\text{Complex}\left[0,\sqrt{3}\right]\right)+1	
+real-neg-1-plus-sqrt-3-times-i	Re[Plus[-1, Complex[0, Sqrt[3]]]]	-1 + Re[Complex[0, Sqrt[3]]]		\Re\left(-1+\sqrt{3} i\right)	\Re\left(\text{Complex}\left[0,\sqrt{3}\right]\right)-1	
 list-real-x-times-exponentiale-pow-1-over-5	List[Re[Times[x, Power[E, Times[Complex[0, Rational[1, 5]], Pi]]]], Re[Plus[Times[2, x], Complex[0, 1]]]]	{Re[E^((I/5)*Pi)*x], 2*Re[x]}		\left\{\Re\left(x e^{(\text{Rational}[1,5] i) \pi }\right),\Re(2 x+i)\right\}	\left\{\Re\left(e^{\frac{i \pi }{5}} x\right),2 \Re(x)\right\}	disagree
-real-neg-sqrt-3-minus-i	Re[Plus[Minus[Sqrt[3]], Complex[0, -1]]]					
-real-neg-1-plus-neg-sqrt-3-times-i	Re[Plus[-1, Complex[0, Minus[Sqrt[3]]]]]					
-real-1-plus-neg-sqrt-3-times-i	Re[Plus[1, Complex[0, Minus[Sqrt[3]]]]]					
-real-sqrt-3-minus-i	Re[Plus[Sqrt[3], Complex[0, -1]]]					
-real-2	Re[2]					
+real-neg-sqrt-3-minus-i	Re[Plus[Minus[Sqrt[3]], Complex[0, -1]]]	-Sqrt[3]		\Re\left(-\sqrt{3}-i\right)	-\sqrt{3}	
+real-neg-1-plus-neg-sqrt-3-times-i	Re[Plus[-1, Complex[0, Minus[Sqrt[3]]]]]	-1 + Re[Complex[0, -Sqrt[3]]]		\Re\left(-1-\sqrt{3} i\right)	\Re\left(\text{Complex}\left[0,-\sqrt{3}\right]\right)-1	
+real-1-plus-neg-sqrt-3-times-i	Re[Plus[1, Complex[0, Minus[Sqrt[3]]]]]	1 + Re[Complex[0, -Sqrt[3]]]		\Re\left(1-\sqrt{3} i\right)	\Re\left(\text{Complex}\left[0,-\sqrt{3}\right]\right)+1	
+real-sqrt-3-minus-i	Re[Plus[Sqrt[3], Complex[0, -1]]]	Sqrt[3]		\Re\left(\sqrt{3}-i\right)	\sqrt{3}	
+real-2	Re[2]	2		\Re(2)	2	
 real-i	Re[Complex[0, 1]]	0		\Re(i)	0	
 real-sqrt-3-plus-i	Re[Plus[Sqrt[3], Complex[0, 1]]]	Sqrt[3]		\Re\left(\sqrt{3}+i\right)	\sqrt{3}	
 real-neg-sqrt-3-plus-i	Re[Plus[Minus[Sqrt[3]], Complex[0, 1]]]	-Sqrt[3]		\Re\left(-\sqrt{3}+i\right)	-\sqrt{3}	

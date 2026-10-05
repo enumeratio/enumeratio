@@ -19,7 +19,7 @@ const REVERSE_SYMBOLS: Record<string, string> = Object.fromEntries(Object.entrie
  * read it back as -- an ambiguity `HEADS`'s own comments called out by hand (e.g. "the reverse
  * map keeps GammaLn, first entry wins" for `LogGamma`/`GammaLn`). `HEADS` is generated now
  * (symbol-metadata step 4: `wolfram-names-data.ts`, alphabetical), so "first entry wins" no
- * longer picks a stable side; this table is the explicit version of the same nine calls.
+ * longer picks a stable side; this table is the explicit version of the same calls.
  */
 const REVERSE_PREFERRED: Readonly<Record<string, string>> = {
   List: "List", // not Tuple
@@ -31,6 +31,7 @@ const REVERSE_PREFERRED: Readonly<Record<string, string>> = {
   LogGamma: "GammaLn", // not LogGamma itself -- GammaLn is what LogGamma lowers to
   PolyGamma: "Digamma", // not PolyGamma itself
   MixedRadix: "MixedRadixNumerals", // not MixedRadix itself
+  Re: "Real", // compute-engine canonicalises Re to Real, so an answer holds `Real(x)`
 };
 
 /** Wolfram head → compute-engine head. Reverse of `HEADS`, with `REVERSE_PREFERRED`'s nine
@@ -222,6 +223,10 @@ function applyHead(name: string, args: MathJson[]): MathJson {
   if (name === "Divisible" && args.length === 2) return ["Divides", args[1], args[0]];
   // Digamma is the 1-arg PolyGamma; the 2-arg form is compute-engine's PolyGamma too.
   if (name === "PolyGamma") return [args.length === 1 ? "Digamma" : "PolyGamma", ...args];
+  // The incomplete elliptic integrals are Wolfram's EllipticE/EllipticF with an amplitude (2 arguments)
+  // and EllipticPi with one (3).
+  if ((name === "EllipticE" || name === "EllipticF") && args.length === 2) return [`Incomplete${name}`, ...args];
+  if (name === "EllipticPi" && args.length === 3) return ["IncompleteEllipticPi", ...args];
   // `Function[x, body]` and `Function[{x, y}, body]` put the parameters first; compute-engine's
   // `Function` is `[body, ...params]`. Read the other way, `x` is taken for the body.
   if (name === "Function" && args.length === 2) {

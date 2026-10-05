@@ -1,2 +1,2 @@
-id	in
-x-squared	SuperscriptBox["x", "2"]
+id	in	out	tex.in	tex.out
+x-squared	SuperscriptBox["x", "2"]	SuperscriptBox["x", "2"]	\text{SuperscriptBox}[\text{x},2]	\text{SuperscriptBox}[\text{x},2]

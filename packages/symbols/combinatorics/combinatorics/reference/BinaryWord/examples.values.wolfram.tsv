@@ -1,2 +1,2 @@
-id	in
-of-a-subset	List[2, 3, 5]
+id	in	out	tex.in	tex.out	verdict
+of-a-subset	List[2, 3, 5]	{2, 3, 5}	\{2,3,5\}	\{2,3,5\}	disagree

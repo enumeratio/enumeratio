@@ -29,7 +29,7 @@ the-gap-between-two-temperatures-70-and-95	Abs[Subtract[70, 95]]	25		| 70-95|	25
 the-distance-between-the-points-1-i-and-4-5i-of	Abs[Subtract[Complex[1, 1], Complex[4, 5]]]	5		| (1+i)-(4+5 i)|	5	
 even-function-x-x	(Abs[-8] == Abs[8])	True		| -8| =| 8|	\text{True}	
 triangle-inequality-a-b-le-a-b	LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]	True		| 3-8| \leq | 3| +| -8|	\text{True}	
-z-2-z-bar-z	(Power[Abs[Complex[3, 4]], 2] == Times[Complex[3, 4], Conjugate[Complex[3, 4]]])					
+z-2-z-bar-z	(Power[Abs[Complex[3, 4]], 2] == Times[Complex[3, 4], Conjugate[Complex[3, 4]]])	True		| 3+4 i| ^2=(3+4 i) (3+4 i)^*	\text{True}	
 multiplicative-ab-a-b	(Abs[Times[Complex[1, 2], Complex[3, -1]]] == Times[Abs[Complex[1, 2]], Abs[Complex[3, -1]]])	True		| (1+2 i) (3-i)| =| 1+2 i|  | 3-i|	\text{True}	
 abs-1	Abs[1]	1		| 1|	1	
 abs-neg-1	Abs[-1]	1		| -1|	1	

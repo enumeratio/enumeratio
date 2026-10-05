@@ -8,7 +8,7 @@ fullsimplify-matrixfunction-function	FullSimplify[MatrixFunction[Function[Invers
 n-inversegammaregularized-2-33-over-100-50	N[InverseGammaRegularized[2, Rational[33, 100]], 50]	2.30370814133004905322940813746681831614484883725865081325481229605684425046949`50.			disagree
 q-a-0-1	InverseGammaRegularized[a, 1]	InverseGammaRegularized[a, 1]	Q^{-1}(a,1)	Q^{-1}(a,1)	disagree
 q-a-infty-0	InverseGammaRegularized[a, 0]	InverseGammaRegularized[a, 0]	Q^{-1}(a,0)	Q^{-1}(a,0)	disagree
-order-1-inverts-e-z	InverseGammaRegularized[1, s]				
+order-1-inverts-e-z	InverseGammaRegularized[1, s]	Indeterminate	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[Q^{-1}(1,s)--\log (s)],10,\text{$\$$Aborted}]]\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[Q^{-1}\left(1,\frac{7}{3}\right)--\log \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[Q^{-1}\left(1,-\frac{11}{5}\right)--\log \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[Q^{-1}\left(1,\frac{13}{4}\right)--\log \left(\frac{13}{4}\right)\right]\right]\right\}\right\},s=\text{Flatten}[s];\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{Indeterminate}	inconclusive
 inversegammaregularized-1-0	InverseGammaRegularized[1, 0]	Infinity	Q^{-1}(1,0)	\infty	
 inversegammaregularized-2-0	InverseGammaRegularized[2, 0]	Infinity	Q^{-1}(2,0)	\infty	
 inversegammaregularized-1-1	InverseGammaRegularized[1, 1]	0	Q^{-1}(1,1)	0	
