@@ -65,7 +65,7 @@ export const PROTOCOLS = [
     members: { Coordinates: "(Self) -> list", WithCoordinates: "(Self, list) -> Self" },
   },
   {
-    // Conformed to by a type whose values NAME an algebra (`HeckeAlgebra(3)`), as a Sage
+    // Conformed to by a type whose values NAME an algebra (`HeckeAlgebra(3, q)`), as a Sage
     // parent is: the element-level structure (the product as a ring) comes later.
     name: "FiniteDimensionalAlgebra",
     refines: [],

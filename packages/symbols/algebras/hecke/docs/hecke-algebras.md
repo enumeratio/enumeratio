@@ -24,8 +24,8 @@ lowers the length, $q$ appears.
 
 <Story title="The two cases">
 <template #description>First: ℓ goes up, so the product is a single T. Second: T_s² has ℓ going down, giving the quadratic relation q·T_e + (q−1)·T_s.</template>
-<notatio-cell value="CircleTimes(HeckeT([2, 1, 3]), HeckeT([1, 3, 2]))" />
-<notatio-cell value="CircleTimes(HeckeT([2, 1, 3]), HeckeT([2, 1, 3]))" />
+<notatio-cell value="CircleTimes(HeckeT([2, 1, 3], q), HeckeT([1, 3, 2], q))" />
+<notatio-cell value="CircleTimes(HeckeT([2, 1, 3], q), HeckeT([2, 1, 3], q))" />
 </Story>
 
 The quadratic relation $T_s^2 = q + (q-1)T_s$ — equivalently $(T_s - q)(T_s + 1) = 0$ —
@@ -41,8 +41,8 @@ that for every $w$ in $S_4$.
 
 <Story title="Braid, and commutation">
 <template #description>Both sides of the braid relation, then two distant generators in either order.</template>
-<notatio-cell value="CircleTimes(HeckeT([2, 1, 3]), HeckeT([1, 3, 2]), HeckeT([2, 1, 3]))" />
-<notatio-cell value="CircleTimes(HeckeT([1, 3, 2]), HeckeT([2, 1, 3]), HeckeT([1, 3, 2]))" />
+<notatio-cell value="CircleTimes(HeckeT([2, 1, 3], q), HeckeT([1, 3, 2], q), HeckeT([2, 1, 3], q))" />
+<notatio-cell value="CircleTimes(HeckeT([1, 3, 2], q), HeckeT([2, 1, 3], q), HeckeT([1, 3, 2], q))" />
 </Story>
 
 ## q = 1 is the symmetric group
@@ -53,8 +53,8 @@ for **every** pair — checked exhaustively across $S_2$, $S_3$ and $S_4$.
 
 <Story title="Specialising the parameter">
 <template #description>q·T_e + (q−1)·T_s at q = 1 is just T_e — the group algebra. At q = 2 it stays spread.</template>
-<notatio-cell value="HeckeSpecialize(CircleTimes(HeckeT([2, 1, 3]), HeckeT([2, 1, 3])), 1)" />
-<notatio-cell value="HeckeSpecialize(CircleTimes(HeckeT([2, 1, 3]), HeckeT([2, 1, 3])), 2)" />
+<notatio-cell value="HeckeSpecialize(CircleTimes(HeckeT([2, 1, 3], q), HeckeT([2, 1, 3], q)), 1)" />
+<notatio-cell value="HeckeSpecialize(CircleTimes(HeckeT([2, 1, 3], q), HeckeT([2, 1, 3], q)), 2)" />
 </Story>
 
 So $H_n(1) = \mathbb{Z}S_n$, and the [symmetric group
@@ -67,8 +67,9 @@ $q \ne 1$.
 
 **Coefficients are exact polynomials in $q$.** They are compute-engine expressions, so
 they stay symbolic and simplify themselves; `HeckeSpecialize(element, q)` substitutes
-and drops whatever vanishes. In the engine $q$ is the symbol `HeckeParameter`, so a
-plain `q` stays yours to use as a variable.
+and drops whatever vanishes. The parameter is an argument of every
+head (`HeckeT(w, q)`, `HeckeAlgebra(n, q)`), a symbol or a number of your choosing, and
+elements with different parameters do not multiply.
 
 **Sums compose.** Because a product returns a linear combination, the parser reads sums
 back in — the result of one product is a valid operand for the next, which the tests

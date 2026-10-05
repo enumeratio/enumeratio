@@ -6,61 +6,19 @@
 // of the session. Three libraries did that, so `x`, `y` and `q` were global symbols a user
 // could collide with. Probes now box inside a pushed scope; this is the net.
 
-import { CARRIERS } from "@enumeratio/combinatorics";
-import { FRONTEND_CARRIERS } from "@enumeratio/frontend/declare-carriers";
-import { HYPERCOMPLEX_CARRIERS } from "@enumeratio/hypercomplex";
-import { NUMBER_THEORY_CARRIERS } from "@enumeratio/number-theory";
-import { NUMERALS_CARRIERS } from "@enumeratio/numerals";
-import { RESIDUES_CARRIERS } from "@enumeratio/residues";
 import { expect, test } from "vite-plus/test";
 import { declaredNames } from "../src/engine.ts";
 
-// Nothing we declare takes a lowercase name: a declared name is a defined symbol, so it stops
-// being available to users as a variable (`declareHecke` once declared `q`, and every example
-// using `q` freely stopped scanning). The only lowercase names left are TYPES, below.
-
-/** Lowercase types declared on purpose, with the reason. */
-const DELIBERATE: Record<string, string> = {
-  boxes:
-    "the structural type of a box expression (https://github.com/enumeratio/enumeratio/wiki/Boxes); a declared type shares the symbol table",
-};
-
-/** The types algebras' names carry, which `FiniteDimensionalAlgebra` dispatches on
- *  (https://github.com/enumeratio/enumeratio/wiki/Structures): types, lowercase like the carriers below. */
-for (const type of [
-  "clifford_algebra",
-  "diagram_algebra",
-  "graded_hopf_algebra",
-  "group_algebra",
-  "hecke_algebra",
-  "incidence_algebra",
-  "path_algebra",
-])
-  DELIBERATE[type] = "an algebra family's type, which the algebra protocol dispatches on";
-
-/** The carrier TYPES: left lowercase for now, pending a naming decision. compute-engine keeps
- *  types and symbols in one table and spells its own types lowercase (`integer`,
- *  `indexed_collection`), so each of these still shadows a user's variable of the same name
- *  (BL-89 lists them) — see @enumeratio/structures' carriers.ts.
- *  Every package that owns carriers (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 4) contributes its own, not just combinatorics. */
-const CARRIER_TYPES = new Set(
-  [
-    ...CARRIERS,
-    ...NUMBER_THEORY_CARRIERS,
-    ...RESIDUES_CARRIERS,
-    ...NUMERALS_CARRIERS,
-    ...HYPERCOMPLEX_CARRIERS,
-    ...FRONTEND_CARRIERS,
-  ].map((carrier) => carrier.type),
-);
+// Types are a namespace of their own, disjoint from symbols: their snake_case names
+// (`permutation`, `hecke_algebra`) follow compute-engine's type convention and stay. Every
+// `declareType` of ours passes `mint: false`, because compute-engine's default also binds a
+// value-level constructor under the type's name, and that binding is a symbol a user's
+// variable of the same name would collide with. A lowercase name here is a leak.
 
 const added = declaredNames();
 
-test("declaring our libraries adds capitalised heads; lowercase is only the allowlisted types", () => {
-  const stray = added
-    .filter((name) => !/^[A-Z]/.test(name))
-    .filter((name) => DELIBERATE[name] === undefined && !CARRIER_TYPES.has(name));
-  expect(stray).toEqual([]);
+test("declaring our libraries adds capitalised heads and no types", () => {
+  expect(added.filter((name) => !/^[A-Z]/.test(name))).toEqual([]);
 });
 
 test("the census sees every library, not just the first few", () => {

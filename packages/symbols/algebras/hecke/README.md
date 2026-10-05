@@ -33,13 +33,13 @@ $T$-basis arithmetic without going through compute-engine.
 ## Usage
 
 ```
-NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([1, 3, 2]))
-  // HeckeT([2, 3, 1]) — length goes up, so no q appears
+NonCommutativeMultiply(HeckeT([2, 1, 3], q), HeckeT([1, 3, 2], q))
+  // HeckeT([2, 3, 1], q) — length goes up, so no q appears
 
-NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([2, 1, 3]))
-  // HeckeParameter * HeckeT([1, 2, 3]) + (HeckeParameter - 1) * HeckeT([2, 1, 3]) — the quadratic relation
+NonCommutativeMultiply(HeckeT([2, 1, 3], q), HeckeT([2, 1, 3], q))
+  // q * HeckeT([1, 2, 3], q) + (q - 1) * HeckeT([2, 1, 3], q) — the quadratic relation
 
-AlgebraDimension(HeckeAlgebra(4))   // 24 — n!, same basis as Z[S_n]
+AlgebraDimension(HeckeAlgebra(4, q))   // 24 — n!, same basis as Z[S_n]
 ```
 
 ## Next

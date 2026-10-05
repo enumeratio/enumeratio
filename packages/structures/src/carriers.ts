@@ -91,7 +91,7 @@ export function declareCarriers(
     [...named].some((other) => other !== c.type && c.shape.includes(other));
   const ordered = [...carriers.filter((c) => !refersToCarrier(c)), ...carriers.filter(refersToCarrier)];
 
-  for (const carrier of ordered) ce.declareType(carrier.type, carrier.shape, { mint: true });
+  for (const carrier of ordered) ce.declareType(carrier.type, carrier.shape, { mint: false });
   for (const carrier of ordered) declareConstructor(ce, carrier);
   for (const carrier of ordered)
     registerCarrier(ce, {

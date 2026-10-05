@@ -31,10 +31,10 @@ const DATA = combineNotation(Object.entries(NOTATION_DATA).map(([head, data]) =>
 
 export const HECKE_NOTATION: Notation = {
   ...DATA.traditional,
-  // A word joins bare only while its letters are digits, which a template can't say. The word
-  // is the index, so it writes even carrying a literal list.
-  HeckeT: ([w, ...rest]) => {
-    const index = rest.length === 0 ? oneLine(w) : undefined;
+  // A word joins bare only while its letters are digits, which a template can't say. The
+  // parameter is implied by the algebra, so only the word is written.
+  HeckeT: ([w]) => {
+    const index = oneLine(w);
     return index === undefined ? undefined : subscript("T", index);
   },
 };

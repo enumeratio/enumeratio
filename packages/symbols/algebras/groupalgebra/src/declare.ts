@@ -184,7 +184,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   ce.declare("CyclicGroup", { signature: "(integer) -> expression<CyclicGroup>" });
   ce.declare("DihedralGroup", { signature: "(integer) -> expression<DihedralGroup>" });
   ce.declare("GroupDirectProduct", { signature: `(${groupLike}, ${groupLike}) -> expression<GroupDirectProduct>` });
-  ce.declareType("group_algebra", "expression<GroupAlgebra>", { mint: true });
+  ce.declareType("group_algebra", "expression<GroupAlgebra>", { mint: false });
   ce.declare("GroupAlgebra", { signature: `(${groupLike}) -> group_algebra` });
   ce.declare("GroupBasis", { signature: "(string) -> number" });
 
