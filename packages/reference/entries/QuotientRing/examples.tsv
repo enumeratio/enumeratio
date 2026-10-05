@@ -4,5 +4,5 @@ count-integermodring-12			[Count, [QuotientRing, Integers, 12]]	12
 count-integermodring-5		test	[Count, [QuotientRing, Integers, 5]]	5	
 z-12-z	Scope		[QuotientRing, Integers, 12]	[QuotientRing, Integers, 12]	$\mathbb{Z}/12\mathbb{Z}$
 z-5-z	Scope	test	[QuotientRing, Integers, 5]	[QuotientRing, Integers, 5]	$\mathbb{Z}/5\mathbb{Z}$
-integermod-3-5-in-integermodring-5	Properties		[Element, [IntegerMod, 3, 5], [QuotientRing, Integers, 5]]	True	
-integermod-3-7-not-in-integermodring-5	Properties	test	[Element, [IntegerMod, 3, 7], [QuotientRing, Integers, 5]]	False	different modulus, so it is not a member
+residueclass-3-5-in-integermodring-5	Properties		[Element, [ResidueClass, 3, 5], [QuotientRing, Integers, 5]]	True	
+residueclass-3-7-not-in-integermodring-5	Properties	test	[Element, [ResidueClass, 3, 7], [QuotientRing, Integers, 5]]	False	different modulus, so it is not a member

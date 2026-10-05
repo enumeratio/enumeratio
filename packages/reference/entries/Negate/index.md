@@ -24,16 +24,9 @@ signatures:
       - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Negate(x)
     description: "The additive inverse of x: $-x$."
-    library: enumeratio-residues
-    type: (complex | infinity) -> number
-    overrides: enumeratio-hypercomplex
-    on:
-      - IntegerMod
-  - call: Negate(x)
-    description: "The additive inverse of x: $-x$."
     library: enumeratio-numerals
     type: (complex | infinity) -> number
-    overrides: enumeratio-residues
+    overrides: enumeratio-hypercomplex
     on:
       - AdicNumeral
   - call: Negate(x)

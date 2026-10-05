@@ -23,7 +23,7 @@ const SAMPLE = new Set([
   "Zeta",
   "HypergeometricPFQ",
   "Permutations",
-  "IntegerMod",
+  "ResidueClass",
   "Adele",
   "Quaternion",
   "Floor",

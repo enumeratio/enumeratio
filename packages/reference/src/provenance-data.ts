@@ -8467,6 +8467,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "ResidueClass",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "CarmichaelLambda",
     provenance: "override",
     declared: null,

@@ -157,14 +157,14 @@ These are the same CRT channels the [hypercomplex
 page](../../../algebras/hypercomplex/docs/finite.md) uses to find split units: a residue numeral and a
 spectral sign vector are the same object, read for different purposes.
 
-Each digit is a residue class — an [`IntegerMod`](https://enumeratio.dev/reference/symbol/IntegerMod), an element of
+Each digit is a residue class — a [`ResidueClass`](https://enumeratio.dev/reference/symbol/ResidueClass), an element of
 ℤ/mᵢ that arithmetic stays inside — and reading the numeral back is the Chinese remainder
 theorem applied to those classes.
 
 <Story title="Digits are residue classes">
 <template #description>The channels of 23 as elements of ℤ/3, ℤ/5 and ℤ/7; ChineseRemainder of the classes is 23 again, as a class mod 105.</template>
-<notatio-cell value="IntegerMod(23, 3) * IntegerMod(41, 3)" />
-<notatio-cell value="ChineseRemainder(IntegerMod(2, 3), IntegerMod(3, 5), IntegerMod(2, 7))" />
+<notatio-cell value="ResidueClass(23, 3) * ResidueClass(41, 3)" />
+<notatio-cell value="ChineseRemainder(ResidueClass(2, 3), ResidueClass(3, 5), ResidueClass(2, 7))" />
 </Story>
 
 ## Bijective base 26 is spreadsheet columns

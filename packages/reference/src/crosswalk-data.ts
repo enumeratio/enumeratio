@@ -3516,16 +3516,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "IntegerLength",
   },
   {
-    name: "IntegerMod",
-    oracle: [
-      {
-        system: "sage",
-        call: "Mod($1, $2)",
-        arity: 2,
-      },
-    ],
-  },
-  {
     name: "IntegerPart",
     wolfram: "IntegerPart",
   },
@@ -5534,6 +5524,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Rescale",
     wolfram: "Rescale",
+  },
+  {
+    name: "ResidueClass",
+    oracle: [
+      {
+        system: "sage",
+        call: "Mod($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "Rest",

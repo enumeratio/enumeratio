@@ -1,11 +1,12 @@
 import type { Json, LatexRule } from "@enumeratio/engine";
-import { INTEGER_MOD, QUOTIENT_RING } from "./names.ts";
+import { QUOTIENT_RING, RESIDUE_CLASS } from "./names.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
 // dictionary only at construction, so a host loads
 // these from the package's notation entry (`./notation`) before it builds an engine.
 //
-//   a \pmod{n}             IntegerMod(a, n)
+//   a \pmod{n}             ResidueClass(a, n); written back as compute-engine writes it,
+//                          \overline{a}_{n}
 //   a = b \pmod{n}         Congruent(a, b, n), as `a \equiv b \pmod{n}` already is
 //   a \bmod n              Mod(a, n), untouched: the remainder, an integer
 //   \mathbb{Z}/m\mathbb{Z} QuotientRing(Integers, m) -- CE parses it; written here
@@ -16,12 +17,19 @@ import { INTEGER_MOD, QUOTIENT_RING } from "./names.ts";
 const PMOD_PRECEDENCE = 244;
 const RELATION_PRECEDENCE = 245;
 
+/** The digits of an integer literal, `{num}` for a big one. */
+function integerLiteral(expr: Json | null): string | undefined {
+  if (typeof expr === "number") return Number.isInteger(expr) ? String(expr) : undefined;
+  const num = typeof expr === "object" && expr !== null && "num" in expr ? (expr as { num: unknown }).num : undefined;
+  return typeof num === "string" && /^-?\d+$/.test(num) ? num : undefined;
+}
+
 const operand = (expr: Json, i: number): Json | null =>
   Array.isArray(expr) ? ((expr[i] as Json | undefined) ?? null) : null;
 
 export const RESIDUES_LATEX: readonly LatexRule[] = [
   {
-    name: INTEGER_MOD,
+    name: RESIDUE_CLASS,
     kind: "infix",
     latexTrigger: ["\\pmod"],
     precedence: PMOD_PRECEDENCE,
@@ -32,10 +40,17 @@ export const RESIDUES_LATEX: readonly LatexRule[] = [
       if (Array.isArray(lhs) && lhs[0] === "Equal" && lhs.length === 3) {
         return ["Congruent", lhs[1], lhs[2], n] as Json;
       }
-      return [INTEGER_MOD, lhs, n] as Json;
+      return [RESIDUE_CLASS, lhs, n] as Json;
     },
-    serialize: (serializer, expr) =>
-      `${serializer.wrap(operand(expr, 1), RELATION_PRECEDENCE)}\\pmod{${serializer.serialize(operand(expr, 2))}}`,
+    // An entry by this name replaces compute-engine's writer wholesale: integer literals are
+    // written as it does, and anything else, which it leaves as a call that doesn't read back,
+    // the way it is typed.
+    serialize: (serializer, expr) => {
+      const [k, n] = [integerLiteral(operand(expr, 1)), integerLiteral(operand(expr, 2))];
+      return k !== undefined && n !== undefined && BigInt(n) >= 1n
+        ? `\\overline{${k}}_{${n}}`
+        : `${serializer.wrap(operand(expr, 1), RELATION_PRECEDENCE)}\\pmod{${serializer.serialize(operand(expr, 2))}}`;
+    },
   },
   {
     name: QUOTIENT_RING,
