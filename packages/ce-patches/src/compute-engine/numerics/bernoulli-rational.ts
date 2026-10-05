@@ -88,6 +88,18 @@ export function bernoulliPolyAt(m: number, a: number): number {
   return sum;
 }
 
+/** Bₘ(a + bi) as a double pair: Horner's rule on the exact coefficients C(m,k)·B_{m−k} of zᵏ. */
+export function bernoulliPolyAtComplex(m: number, a: number, b: number): { re: number; im: number } {
+  let re = 0;
+  let im = 0;
+  for (let k = m; k >= 0; k--) {
+    const [bn, bd] = bernoulliRational(m - k);
+    [re, im] = [re * a - im * b, re * b + im * a];
+    re += Number(binom(m, k) * bn) / Number(bd);
+  }
+  return { re, im };
+}
+
 /**
  * The Bernoulli polynomial Bₘ(a) = Σ_{k=0}^{m} C(m,k) B_k a^{m-k}, as a MathJSON
  * expression in the operand `a` (which may itself be symbolic). Zero coefficients

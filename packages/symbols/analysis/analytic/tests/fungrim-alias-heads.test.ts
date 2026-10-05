@@ -21,6 +21,27 @@ test("Fungrim alias heads are declared", () => {
   expect(ce.lookupDefinition("CongruentMod")).toBeDefined();
 });
 
+/** BernoulliB(n, x) delegates to BernoulliPolynomial; a complex or symbolic x must not loop back. */
+test("BernoulliPolynomial at complex and symbolic x", () => {
+  const complex = ["Complex", 1, 1] as never;
+  // B_3(z) = z³ − 3z²/2 + z/2, at z = 1 + i
+  for (const head of ["BernoulliPolynomial", "BernoulliB"]) {
+    const value = ce.box([head, 3, complex] as never).N();
+    expect(value.re).toBeCloseTo(-1.5, 12);
+    expect(value.im).toBeCloseTo(-0.5, 12);
+  }
+  const exact = ce.box(["BernoulliPolynomial", 3, complex] as never).evaluate();
+  expect(exact.re).toBeCloseTo(-1.5, 12);
+  expect(exact.im).toBeCloseTo(-0.5, 12);
+
+  const z = ce.box(["BernoulliPolynomial", 2, "z"] as never).N();
+  expect(z.operator).not.toBe("BernoulliPolynomial");
+  const w = ce.box(["BernoulliPolynomial", 4, ["Complex", -2.5, 0.75]] as never).N();
+  // B_4(z) = z⁴ − 2z³ + z² − 1/30 at z = −5/2 + 3i/4
+  expect(w.re).toBeCloseTo(46.75182291666667, 10);
+  expect(w.im).toBeCloseTo(-73.6875, 10);
+});
+
 /** Verify natives are not redeclared. */
 test("native heads are not redeclared", () => {
   const native = ce.lookupDefinition("Pochhammer");
