@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // A library's `dist/declares.json`: what declaring it finds, into a fresh engine that already
 // holds what it requires (declares.ts). Run by the library's build after `vp pack`, from its
 // directory, so its own dist and those of what it requires are what get declared:
