@@ -22,6 +22,6 @@ sort-list-i-1-plus-i-1-minus-i-2-plus-3i	Sort[List[Complex[0, 1], Complex[1, 1],
 sort-is-idempotent-sorting-an-already-sorted	(Sort[Sort[List[3, 1, 2]]] == Sort[List[3, 1, 2]])	True	\text{Sort}[\text{Sort}[\{3,1,2\}]]=\text{Sort}[\{3,1,2\}]	\text{True}	
 sort-c-at-c-ordering-c-see-ordering-and-at	(Sort[List[3, 1, 2]] == Part[List[3, 1, 2], Ordering[List[3, 1, 2]]])	True	\text{Sort}[\{3,1,2\}]=\{3,1,2\}[[\text{Ordering}[\{3,1,2\}]]]	\text{True}	
 the-result-doesn-t-depend-on-the-input-order	(Sort[Reverse[List[3, 1, 2]]] == Sort[List[3, 1, 2]])	True	\text{Sort}[\text{Reverse}[\{3,1,2\}]]=\text{Sort}[\{3,1,2\}]	\text{True}	
-sort-list	Sort[list]	Sort[list]			disagree
+sort-list	Sort[list]	Sort[list]	\text{Sort}[\text{list}]	\text{Sort}[\text{list}]	
 the-empty-list-sorts-to-itself	Sort[List[]]	{}	\text{Sort}[\{\}]	\{\}	
 sort-list-positiveinfinity-sqrt-2-1-2	Sort[List[Infinity, Sqrt[2], 1, 2, -Infinity, Divide[Sqrt[2], 2]]]	{1, 2, 1/Sqrt[2], Sqrt[2], -Infinity, Infinity}			disagree
