@@ -29,6 +29,8 @@ import {
   operationTypes,
 } from "../collections/src/families/epsil.ts";
 import { allFamilies } from "../collections/src/families/index.ts";
+import { noVerdicts, type Verdicts } from "../src/statistics/generate-compiled.ts";
+import { verdictsFor } from "./verdicts.ts";
 
 interface Entry {
   readonly head: string;
@@ -104,7 +106,7 @@ export function disagreements(ce: Engine, family: EpsilFamily, runs: Partial<Rec
 }
 
 /** Each Epsil family's head, hash and the generated code of the operations that compile. */
-export function compiledFamilies(): Entry[] {
+export function compiledFamilies(verdicts: Verdicts = noVerdicts): Entry[] {
   const ce = bareEngine();
   const out: Entry[] = [];
   for (const family of allFamilies.filter(isEpsilFamily) as EpsilFamily[]) {
@@ -117,7 +119,9 @@ export function compiledFamilies(): Entry[] {
       code[operation] = compiled.code;
       runs[operation] = compiled.run;
     }
-    const interpreted = disagreements(ce, family, runs);
+    const interpreted = verdicts.remember({ params: family.params, epsil: family.epsil, code }, () =>
+      disagreements(ce, family, runs),
+    );
     for (const operation of interpreted) delete code[operation];
     out.push({ head: family.head, hash: familyHash(family), code, interpreted });
   }
@@ -155,9 +159,11 @@ ${body}
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const entries = compiledFamilies();
+  const verdicts = verdictsFor("compile-families");
+  const entries = compiledFamilies(verdicts);
   const target = fileURLToPath(new URL("../collections/src/families/compiled-families.generated.js", import.meta.url));
   writeFileSync(target, render(entries));
+  verdicts.save();
   // Laid out as `vp fmt` lays it out, so a rerun with nothing changed changes nothing.
   execFileSync("vp", ["fmt", target], { stdio: "ignore" });
   const operations = entries.reduce((sum, e) => sum + Object.keys(e.code).length, 0);
