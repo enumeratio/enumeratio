@@ -13,6 +13,6 @@ divisorsum-1-000-function-1-pow-2-1	DivisorSum[1000, Function[Power[Slot[1], 2]]
 divisorsum-15-function-1-pow-4-1	DivisorSum[15, Function[Power[Slot[1], 4]]]	51332	\sum _{\unicode{f80d}|15} \unicode{f80d}^4	51332	
 divisorsum-11-function-1-1-isprime	DivisorSum[11, Function[Slot[1]], PrimeQ]	11	\sum _{\unicode{f80d}|11\land \text{PrimeQ}[\unicode{f80d}]} \unicode{f80d}	11	
 1-has-one-divisor	DivisorSum[1, Function[d, d]]	1	\sum _{\unicode{f80d}|1} \unicode{f80d}	1	
-n-divisorsum-n-function-1-over-1-plus-1-1	N[DivisorSum[n, Function[Divide[1, Plus[Slot[1], 1]]]]]	DivisorSum[n, (1 + #1)^(-1) & ]	N\left[\sum _{\unicode{f80d}|n} \frac{1}{\unicode{f80d}+1}\right]	\sum _{\unicode{f80d}|n} \frac{1}{\unicode{f80d}+1}	disagree
+n-divisorsum-n-function-1-over-1-plus-1-1	N[DivisorSum[n, Function[Divide[1, Plus[Slot[1], 1]]]]]	DivisorSum[n, (1 + #1)^(-1) & ]	N\left[\sum _{\unicode{f80d}|n} \frac{1}{\unicode{f80d}+1}\right]	\sum _{\unicode{f80d}|n} \frac{1}{\unicode{f80d}+1}	
 n-divisorsum-9-function-1-over-1-plus-1-1	N[DivisorSum[9, Function[Divide[1, Plus[Slot[1], 1]]]]]	0.85	N\left[\sum _{\unicode{f80d}|9} \frac{1}{\unicode{f80d}+1}\right]	0.85	
 divisorsum-10-f-g	DivisorSum[10, f, g]	DivisorSum[10, f, g]	\sum _{\unicode{f80d}|10\land g(\unicode{f80d})} f(\unicode{f80d})	\sum _{\unicode{f80d}|10\land g(\unicode{f80d})} f(\unicode{f80d})	

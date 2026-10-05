@@ -13,6 +13,6 @@ divisorsum-1-000-function-1-pow-2-1	Properties		[DivisorSum, 1000, [Function, [B
 divisorsum-15-function-1-pow-4-1	Properties		[DivisorSum, 15, [Function, [Block, [Power, _1, 4]], _1]]	51332	Sum of fourth powers of divisors of 15	Unreadable			
 divisorsum-11-function-1-1-isprime	Properties		[DivisorSum, 11, [Function, [Block, _1], _1], IsPrime]	11	A prime has itself as its only prime divisor	Unreadable			
 1-has-one-divisor	Possible issues		[DivisorSum, 1, [Function, d, d]]	1	1 has one divisor	Unreadable			
-n-divisorsum-n-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]	Stays unevaluated for symbolic $n$, even under N	Unreadable	Unreadable	undefined-form	Both leave the call unevaluated; Wolfram writes it DivisorSum[n, (1 + #1)^(-1) & ].
+n-divisorsum-n-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[DivisorSum, n, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]	Stays unevaluated for symbolic $n$, even under N	Unreadable	Unreadable		
 n-divisorsum-9-function-1-over-1-plus-1-1	Possible issues		[N, [DivisorSum, 9, [Function, [Block, [Divide, 1, [Add, _1, 1]]], _1]]]	[Rational, 17, 20]	With a concrete argument the sum evaluates: $\tfrac12+\tfrac14+\tfrac1{10}$	Unreadable			
 divisorsum-10-f-g	Possible issues		[DivisorSum, 10, f, g]	[DivisorSum, 10, f, g]					
