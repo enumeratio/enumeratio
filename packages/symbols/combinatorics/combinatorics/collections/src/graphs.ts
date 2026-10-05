@@ -160,12 +160,9 @@ export function underlyingAdjacency(model: GraphModel): Map<string, string[]> {
   return adj;
 }
 
-/** Whether the underlying (direction-blind) graph is a single connected piece —
- *  `IsConnectedGraph` and `IsTreeGraph` both mean THIS notion of connected, not
- *  `ConnectedComponents`' strong connectivity: a directed tree (edges pointing away from
- *  a root) is weakly connected but never strongly connected, and Wolfram's `ConnectedGraphQ`
- *  is understood to test weak connectivity regardless of direction (unverified against a
- *  kernel this session — see the report). */
+/** Whether the underlying (direction-blind) graph is one connected piece. `IsTreeGraph` means
+ *  this, not strong connectivity: a directed tree (edges pointing away from a root) is weakly
+ *  connected but never strongly connected. */
 function isWeaklyConnected(model: GraphModel): boolean {
   if (model.order.length === 0) return false;
   const adj = underlyingAdjacency(model);
@@ -284,7 +281,10 @@ function connectedComponents(model: GraphModel): string[][] {
     }
     components.push(component);
   }
-  components.sort((x, y) => y.length - x.length);
+  // Largest first; equal sizes keep the vertex list's order, as Wolfram's do.
+  const rank = new Map(model.order.map((v, i) => [v, i]));
+  const first = (c: string[]): number => Math.min(...c.map((v) => rank.get(v)!));
+  components.sort((x, y) => y.length - x.length || first(x) - first(y));
   return components;
 }
 
@@ -619,7 +619,12 @@ export function declareGraphs(ce: Engine): void {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
-      return g === undefined ? undefined : isWeaklyConnected(g) ? ce.True : ce.False;
+      // Wolfram's ConnectedGraphQ is strong connectivity on a directed graph.
+      return g === undefined
+        ? undefined
+        : g.order.length > 0 && connectedComponents(g).length === 1
+          ? ce.True
+          : ce.False;
     },
   });
 
