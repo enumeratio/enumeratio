@@ -114,9 +114,12 @@ describe("EmpiricalDistribution", () => {
     expect(evalOf(["CDF", ["EmpiricalDistribution", data], 2]).json).toEqual(["Rational", 3, 4]);
   });
 
-  test("Mean/Variance match the data's own (sample, n-1) Mean/Variance", () => {
+  test("Mean matches the data's own; Variance is the population variance, (n-1)/n of the sample's", () => {
+    const n = (data as unknown[]).length - 1;
     expect(evalOf(["Mean", ["EmpiricalDistribution", data]]).json).toEqual(evalOf(["Mean", data]).json);
-    expect(evalOf(["Variance", ["EmpiricalDistribution", data]]).json).toEqual(evalOf(["Variance", data]).json);
+    expect(evalOf(["Variance", ["EmpiricalDistribution", data]]).json).toEqual(
+      evalOf(["Divide", ["Multiply", n - 1, ["Variance", data]], n]).json,
+    );
   });
 });
 

@@ -17,5 +17,5 @@ names:
 ---
 
 - [[PDF]]/[[CDF]] at $x$ are the observed PROPORTIONS — the count of `data` equal to (resp. at most) $x$, divided by its length. Wolfram's own `PDF` is a continuous, kernel-smoothed density; this is a discrete empirical measure instead, a documented divergence.
-- [[Mean]]/[[Variance]] delegate to [[Mean]]/[[Variance]] of `data` itself (sample variance, $n-1$) — the same convention Wolfram's `Variance[EmpiricalDistribution[data]] = Variance[data]` uses.
+- [[Mean]] delegates to [[Mean]] of `data`; [[Variance]] is the population variance (divisor $n$), as in Wolfram, so it is $(n-1)/n$ of `Variance(data)`.
 - [[RandomVariate]] resamples uniformly from `data`, with replacement.
