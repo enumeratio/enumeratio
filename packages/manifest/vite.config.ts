@@ -15,7 +15,7 @@ export default defineConfig({
       "bin/collect-declares": "scripts/collect-declares.ts",
       ...Object.fromEntries(packages.map((f) => [`package/${f.slice(0, -3)}`, `${generated}/${f}`])),
     },
-    dts: { generator: "tsgo" },
+    dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
   lint: {
     options: { typeAware: true, typeCheck: true },

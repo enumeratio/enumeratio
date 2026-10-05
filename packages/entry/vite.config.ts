@@ -4,6 +4,6 @@ export default defineConfig({
   pack: {
     entry: { index: "src/index.ts", schema: "src/schema.ts", node: "src/node.ts" },
     deps: { resolveDepSubpath: true },
-    dts: { generator: "tsgo" },
+    dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
 });

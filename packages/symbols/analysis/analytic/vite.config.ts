@@ -9,7 +9,7 @@ export default defineConfig({
       shader: "src/shader.ts",
     },
     deps: { resolveDepSubpath: true },
-    dts: { generator: "tsgo" },
+    dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
   lint: {
     options: { typeAware: true, typeCheck: true },

@@ -6,4 +6,3 @@ src/crosswalk-data.ts
 src/engine-symbols-data.ts
 src/provenance-data.ts
 golden/oracle/disagreements.md
-scripts/engines.d.ts

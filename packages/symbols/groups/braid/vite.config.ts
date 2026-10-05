@@ -4,7 +4,7 @@ export default defineConfig({
   pack: {
     entry: { index: "src/index.ts", notation: "src/notation.ts" },
     deps: { resolveDepSubpath: true },
-    dts: { generator: "tsgo" },
+    dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
   lint: {
     options: { typeAware: true, typeCheck: true },

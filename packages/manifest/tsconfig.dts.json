@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src", "scripts/collect-notation.ts", "scripts/collect-declares.ts"]
+}
