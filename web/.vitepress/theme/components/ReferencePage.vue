@@ -250,6 +250,10 @@ const targetedExample = computed((): number =>
 );
 // `?tests` shows the examples kept as data (`role: test`) along with the rest.
 const showTests = ref(false);
+// A link to an example that doesn't exist (an id since renamed, or the old `#example-3`).
+const missingExample = computed(
+  () => (targeted.value.startsWith("example/") && targetedExample.value === -1) || /^example-\d+/.test(targeted.value),
+);
 const shown = (ex: { role?: string }, i: number): boolean =>
   // Kept as data, not rendered -- unless a deep link or `?tests` asks for it. A row waiting
   // in triage holds our unsettled answer, so it isn't shown even then.
@@ -417,6 +421,11 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
         ></notatio-collection-table>
       </ClientOnly>
     </section>
+
+    <p v-if="missingExample" class="ref-stub">
+      No example here is called <code>{{ targeted }}</code
+      >; the link may be from before examples were renamed.
+    </p>
 
     <div v-if="grouped.length || testCount" class="ref-examples-head">
       <h2>Examples</h2>
