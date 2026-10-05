@@ -5,9 +5,9 @@ signature: Outer(f, list1, list2)
 summary: "The generalized outer product: f applied to every pair drawn from two lists."
 signatures:
   - call: Outer(f, list1, list2)
-    description: the matrix whose $(i, j)$ entry is $f$ applied to $list1$'s $i$-th and $list2$'s $j$-th element.
+    description: the array (descending to the atoms of nested lists) whose $(i, j)$ entry is $f$ applied to $list1$'s $i$-th and $list2$'s $j$-th element.
     library: enumeratio-combinatorics
-    type: "(function: any, list<any>, list<any>) -> list<list<any>>"
+    type: "(function: any, list<any>, list<any>) -> list<any>"
 names:
   wolframIdentity: true
 ---

@@ -1,4 +1,4 @@
-import { bigRationalAt, type Engine, type Expr, symbolNameOf } from "@enumeratio/engine";
+import { bigRationalAt, type Engine, type Expr, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { SUMMARIES } from "@enumeratio/manifest/package/combinatorics";
 
 // GeneratingFunction / ExponentialGeneratingFunction / FindSequenceFunction / DiscreteRatio
@@ -224,6 +224,66 @@ function egfOrder2(ce: Engine, c: readonly Frac[], initial: readonly Frac[], x: 
   return ce.function("Add", [term1, term2]).evaluate().simplify();
 }
 
+// ─── EGF of a sequence that is a polynomial from some index on ─────────────────────────────
+
+/** The longest finite prefix tried before the sequence must be polynomial, and the number of
+ *  vanishing finite differences that certify the polynomial tail. */
+const MAX_PREFIX = 8;
+const POLYNOMIAL_CONFIRMATIONS = 8;
+
+/** The EGF of a sequence equal to a polynomial `p(n)` for `n ≥ m`, with any values before `m`
+ *  (a shifted `UnitStep`, say). A polynomial in falling-factorial form `Σ c_j n^(j)` has the EGF
+ *  `e^x Σ c_j x^j`; the first `m` terms then differ from `p` by a finite correction. */
+function egfEventuallyPolynomial(ce: Engine, terms: readonly Frac[], x: Expr): Expr | undefined {
+  for (let m = 0; m <= MAX_PREFIX; m++) {
+    const tail = terms.slice(m);
+    const degree = polynomialDegree(tail);
+    if (degree === undefined || tail.length - (degree + 1) < POLYNOMIAL_CONFIRMATIONS) continue;
+
+    // Newton form of p about n = m: p(m + s) = Σ_k Δ^k p(m) · C(s, k), for any integer s.
+    const leading: Frac[] = [];
+    let row = tail.slice(0, degree + 1);
+    for (let k = 0; k <= degree; k++) {
+      leading.push(row[0]!);
+      row = row.slice(1).map((v, i) => fSub(v, row[i]!));
+    }
+    const p = (n: number): Frac => {
+      let total = F0;
+      let binomial = F1; // C(s, k), built up one factor at a time
+      for (let k = 0; k <= degree; k++) {
+        total = fAdd(total, fMul(leading[k]!, binomial));
+        binomial = fDiv(fMul(binomial, frac(BigInt(n - m - k), 1n)), frac(BigInt(k + 1), 1n));
+      }
+      return total;
+    };
+
+    // Σ_j (Δ^j p(0) / j!) x^j
+    let values = Array.from({ length: degree + 1 }, (_, n) => p(n));
+    const coefficients: Frac[] = [];
+    let factorial = 1n;
+    for (let j = 0; j <= degree; j++) {
+      coefficients.push(fDiv(values[0]!, frac(factorial, 1n)));
+      factorial *= BigInt(j + 1);
+      values = values.slice(1).map((v, i) => fSub(v, values[i]!));
+    }
+
+    // the first m terms, where the sequence isn't p: Σ_{n<m} (a_n − p(n)) x^n / n!
+    const prefix: Frac[] = [];
+    let nFactorial = 1n;
+    for (let n = 0; n < m; n++) {
+      if (n > 0) nFactorial *= BigInt(n);
+      prefix.push(fDiv(fSub(terms[n]!, p(n)), frac(nFactorial, 1n)));
+    }
+    return ce
+      .function("Add", [
+        ce.function("Multiply", [ce.function("Exp", [x]), polyExpr(ce, coefficients, x)]),
+        polyExpr(ce, prefix, x),
+      ])
+      .evaluate();
+  }
+  return undefined;
+}
+
 // ─── a small registry of named non-C-finite sequences ──────────────────────────────────────
 
 /** Named sequences whose OGF/EGF is a well-known closed form but which are not C-finite (no
@@ -297,11 +357,20 @@ function generatingFunctionCore(ce: Engine, ops: readonly Expr[], kind: "ordinar
   const recurrence = findRecurrence(terms);
   if (recurrence !== undefined) {
     if (kind === "ordinary") return rationalOgf(ce, recurrence, terms, x);
-    if (recurrence.length === 1) return egfOrder1(ce, recurrence, terms, x);
-    if (recurrence.length === 2) return egfOrder2(ce, recurrence, terms, x);
-    // order ≥ 3: closed-form roots not attempted here.
-    return undefined;
+    const closed =
+      recurrence.length === 1
+        ? egfOrder1(ce, recurrence, terms, x)
+        : recurrence.length === 2
+          ? egfOrder2(ce, recurrence, terms, x)
+          : undefined;
+    if (closed !== undefined) return closed;
   }
+  if (kind === "exponential") {
+    const polynomial = egfEventuallyPolynomial(ce, terms, x);
+    if (polynomial !== undefined) return polynomial;
+  }
+  // order ≥ 3 otherwise: closed-form roots not attempted here.
+  if (recurrence !== undefined) return undefined;
 
   const named = matchNamedSequence(ce, terms);
   if (named !== undefined) {
@@ -331,11 +400,28 @@ function declareExponentialGeneratingFunction(ce: Engine): void {
 
 // ─── DiscreteRatio ──────────────────────────────────────────────────────────────────────────
 
+/** `f(x+1)/f(x)` for the heads whose functional equation gives the ratio in closed form, as
+ *  Wolfram reduces it (`DiscreteRatio[BarnesG[x], x]` is `Gamma[x]`). Only `f(x)` itself. */
+const SHIFT_RATIOS: Readonly<Record<string, (ce: Engine, x: Expr) => Expr>> = {
+  // BarnesG(x+1) = Gamma(x) BarnesG(x)
+  BarnesG: (ce, x) => ce.function("Gamma", [x]),
+  // Hyperfactorial(x) = Π k^k, so the ratio is the next factor
+  Hyperfactorial: (ce, x) => {
+    const next = ce.function("Add", [x, ce.One]);
+    return ce.function("Power", [next, next]);
+  },
+};
+
 function evaluateDiscreteRatio(ce: Engine, ops: readonly Expr[]): Expr | undefined {
   const [f, nExpr] = ops;
   if (f === undefined || nExpr === undefined) return undefined;
   const varName = symbolNameOf(nExpr);
   if (varName === undefined) return undefined;
+  const args = operandsOf(f);
+  const shifted = Object.hasOwn(SHIFT_RATIOS, f.operator) ? SHIFT_RATIOS[f.operator] : undefined;
+  if (shifted !== undefined && args.length === 1 && symbolNameOf(args[0]) === varName) {
+    return shifted(ce, nExpr).evaluate();
+  }
   const fNext = f.subs({ [varName]: ce.function("Add", [nExpr, ce.One]) }).evaluate();
   const ratio = ce.function("Divide", [fNext, f]).evaluate();
   return ratio.simplify();

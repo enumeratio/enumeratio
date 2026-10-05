@@ -3,7 +3,9 @@
 //   IntegerPartitions(n, k)          -- at most k parts
 //   IntegerPartitions(n, {k})        -- exactly k parts
 //   IntegerPartitions(n, All, parts) -- parts drawn only from the given list
-//   SetPartitions(n, k)              -- exactly k blocks (Stirling numbers of the 2nd kind)
+//   IntegerPartitions(n, {kmin, kmax[, step]}) -- a part count in kmin, kmin+step, … ≤ kmax
+//   IntegerPartitions(n, k, parts)   -- at most k parts, drawn from the list (any exact rationals)
+//   SetPartitions(n, k)             -- exactly k blocks (Stirling numbers of the 2nd kind)
 //   Subsets(n, k)                    -- at most k elements
 //   Subsets(n, {k})                  -- exactly k elements
 //   Subsets(n, {kmin, kmax})         -- size in [kmin, kmax]
@@ -24,6 +26,7 @@
 // never a reimplementation. This is the "small extension" the sibling families don't pay
 // for, confined to the one file that needs it.
 import {
+  bigRationalAt,
   type Engine,
   type Expr,
   extendHead,
@@ -69,6 +72,8 @@ interface Resolved<E> {
   unrank(r: number): E;
   valid(e: unknown): boolean;
   encode?: (e: E) => unknown;
+  /** Likewise for reading a member back, for `valid`. */
+  decode?: (b: Boxed) => unknown;
 }
 
 /** Build `CollectionHandlers` that re-resolve the kernel from the call's actual operands
@@ -107,7 +112,7 @@ function polyCollection<E>(
     },
     contains: (c, target) => {
       const res = resolve(opsOf(c));
-      return res === undefined ? false : res.valid(decode(asBoxed(target)));
+      return res === undefined ? false : res.valid((res.decode ?? decode)(asBoxed(target)));
     },
   };
 }
@@ -143,8 +148,9 @@ function resolveIntegerPartitions(ops: readonly Expr[]): Resolved<number[]> | un
 
   if (ops.length === 2) {
     if (second.operator === "List") {
-      // Exactly k parts: PartitionsIntoKParts' own kernel, unchanged.
       const kOps = operandsOf(second);
+      if (kOps.length === 2 || kOps.length === 3) return resolvePartCountRange(n, kOps);
+      // Exactly k parts: PartitionsIntoKParts' own kernel, unchanged.
       if (kOps.length !== 1) return undefined;
       const k = integerAt(kOps[0]);
       if (k === undefined || k < 0) return undefined;
@@ -175,11 +181,15 @@ function resolveIntegerPartitions(ops: readonly Expr[]): Resolved<number[]> | un
     // IntegerPartitions(n, All, parts): parts drawn only from the given list -- the same
     // partsInSet(inSet) DP that OddPartitions/PrimePartitions/… already use (partitions.ts),
     // instantiated on `parts.includes` instead of a fixed predicate.
-    if (symbolNameOf(second) !== "All") return undefined;
     const listArg = ops[2];
     if (listArg === undefined || listArg.operator !== "List") return undefined;
+    if (symbolNameOf(second) !== "All") {
+      const k = integerAt(second);
+      return k === undefined ? undefined : resolveBoundedParts(n, k, listArg);
+    }
     const allowedOps = operandsOf(listArg).map((op) => integerAt(op));
-    if (allowedOps.some((v) => v === undefined)) return undefined;
+    // Without a positive integer every time, there are infinitely many ways (or the DP never ends).
+    if (allowedOps.some((v) => v === undefined || v < 1)) return undefined;
     const allowed = new Set(allowedOps as number[]);
     const kernel = partsInSet((s) => allowed.has(s));
     return {
@@ -191,6 +201,112 @@ function resolveIntegerPartitions(ops: readonly Expr[]): Resolved<number[]> | un
 
   return undefined;
 }
+
+// ─── IntegerPartitions(n, {kmin, kmax[, step]}) and (n, k, parts) ───────────────────────
+// No counting kernel behind these two, so the answers are listed up front (and remembered:
+// `resolve` runs on every access) and the call is held when there would be too many.
+
+const LISTED_CAP = 50_000;
+const listed = new Map<string, number[][] | undefined>();
+function remembered(key: string, build: () => number[][] | undefined): number[][] | undefined {
+  if (!listed.has(key)) {
+    if (listed.size >= 32) listed.delete(listed.keys().next().value!);
+    listed.set(key, build());
+  }
+  return listed.get(key);
+}
+
+const sameList = (a: readonly unknown[], b: readonly unknown[]): boolean =>
+  a.length === b.length && a.every((x, i) => x === b[i]);
+
+const isInfinity = (e: Expr | undefined): boolean =>
+  e !== undefined && (symbolNameOf(e) === "PositiveInfinity" || e.re === Number.POSITIVE_INFINITY);
+
+/** Partitions of `n` into a number of parts in `kmin, kmin+step, …` up to `kmax`, largest first. */
+function resolvePartCountRange(n: number, kOps: readonly Expr[]): Resolved<number[]> | undefined {
+  const kmin = integerAt(kOps[0]);
+  const kmax = isInfinity(kOps[1]) ? n : integerAt(kOps[1]);
+  const step = kOps.length === 3 ? integerAt(kOps[2]) : 1;
+  if (kmin === undefined || kmax === undefined || step === undefined || kmin < 0 || step < 1) return undefined;
+  const ks: number[] = [];
+  for (let k = kmin; k <= Math.min(kmax, n); k += step) ks.push(k);
+  const all = remembered(`range:${n}:${ks.join(",")}`, () => {
+    if (ks.reduce((total, k) => total + KPartPartitionCount(n, k), 0) > LISTED_CAP) return undefined;
+    return ks
+      .flatMap((k) => Array.from({ length: KPartPartitionCount(n, k) }, (_, r) => IntegerPartitionKUnrank(n, k, r)))
+      .toSorted((a, b) => {
+        for (let i = 0; i < Math.min(a.length, b.length); i++) if (a[i] !== b[i]) return b[i]! - a[i]!;
+        return b.length - a.length;
+      });
+  });
+  if (all === undefined) return undefined;
+  return {
+    count: all.length,
+    unrank: (r) => all[r]!,
+    valid: (e) => IsPartitionOf(e as number[], n) && ks.includes((e as number[]).length),
+  };
+}
+
+/** Partitions of `n` into at most `k` parts, each one of `partsList`'s (exact rationals, negatives
+ *  included), ordered the way Wolfram does: the list's last entry ranks first. */
+function resolveBoundedParts(n: number, k: number, partsList: Expr): Resolved<number[]> | undefined {
+  if (k < 0) return undefined;
+  const given = operandsOf(partsList);
+  const rationals = given.map((part) => bigRationalAt(part));
+  if (rationals.some((r) => r === undefined || r[0] === 0n)) return undefined;
+  const ranked = rationals.map((r, i) => ({ r: r!, json: given[i]!.json })).toReversed();
+  if (new Set(ranked.map(({ r }) => `${r[0]}/${r[1]}`)).size !== ranked.length) return undefined;
+  const denominator = ranked.reduce((d, { r }) => (d * r[1]) / gcd(d, r[1]), 1n);
+  const sizes = ranked.map(({ r }) => (r[0] * denominator) / r[1]);
+  const key = `parts:${n}:${k}:${ranked.map(({ r }) => `${r[0]}/${r[1]}`).join(",")}`;
+  const all = remembered(key, () => {
+    const found: number[][] = [];
+    const counts = ranked.map(() => 0);
+    let visited = 0;
+    const place = (i: number, slots: number, remaining: bigint): boolean => {
+      if (++visited > LISTED_CAP * 8) return false;
+      if (i === sizes.length) {
+        if (remaining !== 0n) return true;
+        if (found.length >= LISTED_CAP) return false;
+        found.push(counts.flatMap((count, part) => Array.from({ length: count }, () => part)));
+        return true;
+      }
+      for (let count = slots; count >= 0; count--) {
+        counts[i] = count;
+        if (!place(i + 1, slots - count, remaining - BigInt(count) * sizes[i]!)) return false;
+      }
+      counts[i] = 0;
+      return true;
+    };
+    return place(0, k, BigInt(n) * denominator) ? found : undefined;
+  });
+  if (all === undefined) return undefined;
+  const whole = ranked.every(({ r }) => r[1] === 1n && r[0] > 0n);
+  const keys = ranked.map(({ json }) => JSON.stringify(json));
+  // Positive integers are partitions in the family's own sense, so they answer as its members;
+  // anything else answers as a plain list, read back through the part's position in the ranking.
+  return whole
+    ? {
+        count: all.length,
+        unrank: (r) => all[r]!.map((part) => Number(ranked[part]!.r[0])),
+        valid: (e) =>
+          all.some((a) =>
+            sameList(
+              a.map((part) => Number(ranked[part]!.r[0])),
+              e as number[],
+            ),
+          ),
+      }
+    : {
+        count: all.length,
+        unrank: (r) => all[r]!,
+        valid: (e) => all.some((a) => sameList(a, e as number[])),
+        encode: (e) => ["List", ...e.map((part) => ranked[part]!.json)],
+        decode: (b) => operandsOf(b as unknown as Expr).map((part) => keys.indexOf(JSON.stringify(part.json))),
+      };
+}
+
+const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcd(b, a % b));
 
 // ─── SetPartitions(n) / (n, k) ──────────────────────────────────────────────────────────
 
@@ -362,6 +478,14 @@ export function declareCallForms(ce: Engine): void {
           (b) => asIntList((b as unknown as Expr).operator === "IntegerPartition" ? b.ops![0]! : b),
           resolveIntegerPartitions,
         ),
+  );
+
+  // A shape none of the call forms read holds the call, not the empty collection.
+  wrapOperator(
+    ce,
+    ["IntegerPartitions", 1],
+    (ops) => ops.length > 1 && resolveIntegerPartitions(ops) === undefined,
+    () => () => undefined,
   );
 
   // `any` on the first parameter admits `SetPartitions(list)` / `Subsets(list)` -- an

@@ -35,6 +35,10 @@ const compareByValue = (a: Expr, b: Expr): number => {
 const symbolicMean = (ce: Engine, xs: readonly Expr[]): Expr =>
   ce.function("Multiply", [ce.function("Rational", [1, xs.length]), ce.function("Add", [...xs])]).evaluate();
 
+/** The `n` of `Commonest(c, n)` or `Commonest(c, UpTo(n))` (UpTo just caps at the distinct count). */
+const commonestCount = (spec: Expr | undefined): number | undefined =>
+  spec?.operator === "UpTo" ? integerAt(operandsOf(spec)[0]) : integerAt(spec);
+
 /** Declare the Mean/Median/Commonest/Sort/Take/Fold/Tabulate/Unique overrides. */
 export function declareListStats(ce: Engine): void {
   // Mean(xs) / Median(xs): compute-engine's own reducers call `.re` on every element, which
@@ -77,18 +81,19 @@ export function declareListStats(ce: Engine): void {
     },
   );
 
-  // Commonest(c, n): the n commonest elements, most frequent first, ties broken by first
-  // appearance (a stable sort over the tally, which is itself built in first-appearance
-  // order). Commonest(c) (1-arg, every tied value) is declared in `list-heads.ts`; this only
-  // adds the count argument.
+  // Commonest(c, n) / Commonest(c, UpTo(n)): the n commonest elements, most frequent first, ties
+  // broken by first appearance (a stable sort over the tally, which is itself built in
+  // first-appearance order; Wolfram lists them in first-appearance order instead, a documented
+  // convention). Commonest(c) (1-arg, every tied value) is declared in `list-heads.ts`; this
+  // only adds the count argument.
   widenSignature(ce, "Commonest", "(indexed_collection<T>, integer?) -> list<T> where T");
   wrapOperator(
     ce,
     ["Commonest", 1, 1],
-    (ops) => ops.length === 2 && integerAt(ops[1]) !== undefined,
+    (ops) => ops.length === 2 && commonestCount(ops[1]) !== undefined,
     () => (ops) => {
       const items = operandsOf(ops[0]);
-      const n = integerAt(ops[1])!;
+      const n = commonestCount(ops[1])!;
       const tally: { value: Expr; count: number }[] = [];
       for (const item of items) {
         const existing = tally.find((entry) => entry.value.isEqual(item) === true);
