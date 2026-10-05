@@ -5,12 +5,12 @@
 //
 //   node packages/manifest/scripts/build.ts
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { canonicalOf } from "./declares-of.ts";
-import { recordDirs } from "@enumeratio/entry/node";
+import { packageDirs, recordDirs } from "@enumeratio/entry/node";
 import { assembleManifest, type PackageIndex } from "../src/assemble.ts";
 import type { Placement } from "../src/hierarchy.ts";
 import { notationSpecifier, type PackageField } from "../src/package-field.ts";
@@ -27,12 +27,8 @@ const cmp = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 const notations = new Map<string, string>();
 /** Each package's place in the hierarchy, from its `enumeratio.layer`, `area` and `extends`. */
 const placements: Record<string, Placement> = {};
-const workspaceDirs = [
-  ...readdirSync(PACKAGES).map((name) => join(PACKAGES, name)),
-  ...readdirSync(join(PACKAGES, "symbols")).flatMap((group) =>
-    readdirSync(join(PACKAGES, "symbols", group)).map((name) => join(PACKAGES, "symbols", group, name)),
-  ),
-];
+// The tree's packages, then the libraries installed beside them (a name in the tree wins).
+const workspaceDirs = packageDirs(PACKAGES).map((p) => p.dir);
 for (const dir of workspaceDirs) {
   const file = join(dir, "package.json");
   if (!existsSync(file)) continue;

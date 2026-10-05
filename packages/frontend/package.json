@@ -25,7 +25,7 @@
     "./declares.json": "./dist/declares.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/core.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts src/display.ts src/kernel-host.ts src/plot-compile.ts src/prerender.ts && node scripts/build-forms.ts && node ../manifest/scripts/collect-declares.ts .",
+    "build": "vp pack src/index.ts src/core.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts src/display.ts src/kernel-host.ts src/plot-compile.ts src/prerender.ts && node scripts/build-forms.ts && enumeratio-collect-declares .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

@@ -1,17 +1,8 @@
 [
   { "name": "hopf" },
-  {
-    "name": "hecke",
-    "expectFail": "check: the root's fmt options don't travel with the package, so `vp check` reformats it"
-  },
-  {
-    "name": "incidence",
-    "expectFail": "check: the root's fmt options don't travel with the package, so `vp check` reformats it"
-  },
-  {
-    "name": "quiver",
-    "expectFail": "check: the root's fmt options don't travel with the package, so `vp check` reformats it"
-  },
-  { "name": "braid", "expectFail": "ce-patches is missing from prepare-core.ts's CORE list (BL-120)" },
-  { "name": "modular", "expectFail": "ce-patches is missing from prepare-core.ts's CORE list (BL-120)" }
+  { "name": "hecke" },
+  { "name": "incidence" },
+  { "name": "quiver" },
+  { "name": "braid" },
+  { "name": "modular" }
 ]

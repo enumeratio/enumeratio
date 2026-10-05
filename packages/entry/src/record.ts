@@ -350,9 +350,16 @@ export async function headFiles({
   return files;
 }
 
+/** An installed package's records are its own repository's to change. */
+function assertWritable(dir: string): void {
+  if (dir.split(/[\\/]/).includes("node_modules"))
+    throw new Error(`${dir} is an installed package's: change its records where it lives`);
+}
+
 /** Write a head's folder: every file `headFiles` makes, and nothing else of the record's. A
  * record without `notation` leaves the folder's `notation.json` as it is. */
 export async function writeHead(dir: string, head: string, record: HeadRecord): Promise<void> {
+  assertWritable(dir);
   const folder = join(dir, head);
   mkdirSync(folder, { recursive: true });
   const files = await headFiles(record);
@@ -386,6 +393,7 @@ export async function updateHead(
 
 /** Remove a head's record entirely. */
 export function removeHead(dir: string, head: string): void {
+  assertWritable(dir);
   rmSync(join(dir, head), { recursive: true, force: true });
 }
 

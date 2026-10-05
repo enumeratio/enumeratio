@@ -7,6 +7,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { packageDirs } from "@enumeratio/entry/node";
 import { expect, test } from "vite-plus/test";
 import { HIERARCHY, PACKAGES } from "../src/hierarchy.ts";
 
@@ -33,13 +34,8 @@ interface Workspace {
 }
 
 function workspaces(): Workspace[] {
-  const packages = join(ROOT, "packages");
-  const dirs = [
-    ...readdirSync(packages).map((name) => join(packages, name)),
-    ...readdirSync(join(packages, "symbols")).flatMap((group) =>
-      readdirSync(join(packages, "symbols", group)).map((name) => join(packages, "symbols", group, name)),
-    ),
-  ];
+  // The tree's packages, and the libraries installed beside them.
+  const dirs = packageDirs(join(ROOT, "packages")).map((p) => p.dir);
   return dirs
     .filter((dir) => existsSync(join(dir, "package.json")))
     .map((dir) => {

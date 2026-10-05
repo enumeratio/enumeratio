@@ -9,5 +9,6 @@ export default defineConfig({
   lint: {
     options: { typeAware: true, typeCheck: true },
   },
-  fmt: {},
+  // The root config's width, so `vp check` agrees with it from here and from a repository of its own.
+  fmt: { printWidth: 120 },
 });
