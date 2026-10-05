@@ -37,6 +37,7 @@ import {
   nonCrossingPermutations,
   permutationsAvoiding3,
   separablePermutations,
+  vexillaryPermutations,
 } from "../src/families/restrictions.ts";
 
 const ce = new ComputeEngine();
@@ -99,6 +100,19 @@ function crossing(x: readonly number[]): boolean {
       for (let c = b + 1; c <= x.length; c++)
         for (let d = c + 1; d <= x.length; d++)
           if (cycleOf[a] === cycleOf[c] && cycleOf[b] === cycleOf[d] && cycleOf[a] !== cycleOf[b]) return true;
+  return false;
+}
+
+/** Whether `x` has entries at a < b < c < d in the relative order of `pattern`. */
+function contains4(x: readonly number[], pattern: string): boolean {
+  const want = pattern.split("").map(Number);
+  for (let d = 0; d < x.length; d++)
+    for (let c = 0; c < d; c++)
+      for (let b = 0; b < c; b++)
+        for (let a = 0; a < b; a++) {
+          const vs = [x[a], x[b], x[c], x[d]];
+          if (vs.every((v, i) => vs.filter((u) => u < v).length + 1 === want[i])) return true;
+        }
   return false;
 }
 
@@ -239,6 +253,7 @@ const READINGS: Record<string, Reading> = {
     ...lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !crossing(x)),
     interpretAt: process.env.DEEP_TESTS ? [5] : [4],
   },
+  VexillaryPermutations: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !contains4(x, "2143")),
   SeparablePermutations: {
     ...lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !separates(x)),
     interpretAt: process.env.DEEP_TESTS ? [5] : [3],
@@ -273,6 +288,7 @@ const byHead = new Map(
     ...permutationsAvoiding3,
     separablePermutations,
     nonCrossingPermutations,
+    vexillaryPermutations,
     grassmannianPermutations,
     cograssmannianPermutations,
   ].map((family) => [family.head, family]),

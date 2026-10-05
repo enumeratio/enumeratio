@@ -7,7 +7,7 @@ const entries = kernelsOn(new ComputeEngine(), families.map(liftFamily));
 
 // Certify every permutation-class family: rank(unrank(p, r), p) === r across the whole
 // family, unranked elements are valid members, and count matches the enumeration —
-// same recipe as permutations.test.ts. Baxter, Simple, Smooth and Vexillary filter n!
+// same recipe as permutations.test.ts. Baxter, Simple and Smooth filter n!
 // permutations, so n is kept small enough to stay fast.
 const PARAMS: Record<string, number[][]> = {
   BaxterPermutations: [[0], [1], [2], [3], [4], [5], [6]],
