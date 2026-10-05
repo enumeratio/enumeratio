@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-bold	Basic		[StyleBox, "'x'", [Tuple, FontWeight, "'Bold'"]]	[StyleBox, "'x'", [Tuple, FontWeight, "'Bold'"]]	a box is inert: it evaluates to itself
+id	section	role	expr	expected	caption	notatio.back	notatio.backOut
+bold	Basic		[StyleBox, "'x'", [Tuple, FontWeight, "'Bold'"]]	[StyleBox, "'x'", [Tuple, FontWeight, "'Bold'"]]	a box is inert: it evaluates to itself	[StyleBox, "'x'", [KeyValuePair, FontWeight, "'Bold'"]]	[StyleBox, "'x'", [KeyValuePair, FontWeight, "'Bold'"]]
