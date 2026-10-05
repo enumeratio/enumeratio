@@ -163,7 +163,7 @@ function propositionAgreementSource(theirs: string, ours: string): string {
 const ce = new ComputeEngine();
 
 /** Wrappers that ask the kernel to work on their argument; the call inside is what can be left alone. */
-const WRAPPERS = new Set(["N", "Simplify", "FullSimplify", "Hold", "Evaluate", "Expand", "Factor"]);
+const WRAPPERS = new Set(["N", "Simplify", "FullSimplify", "FunctionExpand", "Hold", "Evaluate", "Expand", "Factor"]);
 /** Heads that only combine values: keeping one is not a function left unevaluated. */
 const COMBINING = new Set([
   "List",
@@ -191,21 +191,36 @@ const canonicalText = (expr: MathJSON): string => {
 };
 
 /**
- * Whether `expected` still holds the call `expr` asks (canonically, so `Times(1/t, f)` and
- * `Divide(f, t)` are one call): ours left it unevaluated. A difference of it against the kernel's
- * own evaluation of the same input is zero by construction, so it can't witness agreement.
+ * Whether `expected` still holds some part of the call `expr` asks (canonically, so `Times(1/t, f)`
+ * and `Divide(f, t)` are one call): ours left it unevaluated, in whole or in part. A difference of
+ * it against the kernel's own evaluation of the same input is zero wherever ours is held, so it
+ * can't witness agreement. A held part is a call to the head under test inside a kernel
+ * transform (`Simplify`, `FunctionExpand`, …) or an entry of a list answer: a list that
+ * holds one entry is not agreement with a list that evaluates all of them.
  */
 export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
   let call = expr;
   while (Array.isArray(call) && WRAPPERS.has(call[0] as string)) call = call[1] as MathJSON;
-  if (!Array.isArray(call) || typeof call[0] !== "string" || COMBINING.has(call[0])) return false;
+  if (!Array.isArray(call) || typeof call[0] !== "string") return false;
+  // A list is held when any entry is: against the entry in the same place if ours is a list of the same length.
+  if (call[0] === "List" || call[0] === "Tuple") {
+    const kept = Array.isArray(expected) && expected[0] === call[0] && expected.length === call.length;
+    return call
+      .slice(1)
+      .some((entry, i) =>
+        leavesCall(entry as MathJSON, kept ? ((expected as MathJSON[])[i + 1] as MathJSON) : expected),
+      );
+  }
+  if (COMBINING.has(call[0])) return false;
   const head = call[0];
   const asked = call;
+  const askedText = canonicalText(asked);
   const visit = (e: MathJSON): boolean =>
     Array.isArray(e) &&
     ((e[0] === head &&
-      e.length === asked.length &&
-      e.slice(1).every((x, i) => sameValue(x as MathJSON, asked[i + 1] as MathJSON))) ||
+      (canonicalText(e) === askedText ||
+        (e.length === asked.length &&
+          e.slice(1).every((x, i) => sameValue(x as MathJSON, asked[i + 1] as MathJSON))))) ||
       e.slice(1).some((x) => visit(x as MathJSON)));
   return visit(expected);
 }
@@ -215,10 +230,22 @@ function sameValue(a: MathJSON, b: MathJSON): boolean {
   if (canonicalText(a) === canonicalText(b)) return true;
   try {
     const [x, y] = [a, b].map((e) => ce.box(e as Parameters<ComputeEngine["box"]>[0]));
-    return x!.isSame(y!) || ce.box(["Subtract", x!, y!]).simplify().is(0);
+    return x!.isSame(y!) || ce.box(["Subtract", x!, y!]).simplify().is(0) || agreeAtPoints(a, b);
   } catch {
     return false;
   }
+}
+
+/** Whether `a` and `b` take the same value at each of a few fixed rational points: for an
+ * argument whose two writings the simplifier won't reduce to one. */
+function agreeAtPoints(a: MathJSON, b: MathJSON): boolean {
+  const names = [...new Set([...ce.box(a as never).unknowns, ...ce.box(b as never).unknowns])];
+  return Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) => {
+    const subs = trialSubstitution(names, trial);
+    const [x, y] = [a, b].map((e) => ce.box(substituteFreeSymbols(e, subs) as never).N());
+    const close = (p: number, q: number) => Number.isFinite(p) && Number.isFinite(q) && Math.abs(p - q) < 1e-9;
+    return close(x!.re, y!.re) && close(x!.im, y!.im);
+  }).every(Boolean);
 }
 
 /**
