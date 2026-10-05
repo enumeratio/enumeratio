@@ -35,13 +35,13 @@ lcm-of-two-composites-sharing-the-prime-above-13	LCM[Complex[6, 8], Complex[9, 6
 lcm-of-a-lazy-range-1-10-not-a-materialised-list	LCM[Range[1, 10]]				
 the-smallest-number-divisible-by-each-of-1	LCM[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]	2520	\text{lcm}(1,2,3,4,5,6,7,8,9,10)	2520	
 lcm-10-15	LCM[10, 15]	30	\text{lcm}(10,15)	30	
-foldlist-lcm-1-range-2-10	FoldList[LCM, 1, Range[2, 10]]	{1, 2, 6, 12, 60, 60, 420, 840, 2520, 2520}			disagree
-ln-lcm-range-1-10	Log[LCM[Range[1, 10]]]	{0, Log[2], Log[3], Log[4], Log[5], Log[6], Log[7], Log[8], Log[9], Log[10]}			disagree
+foldlist-lcm-1-range-2-10	FoldList[LCM, 1, Range[2, 10]]	{1, 2, 6, 12, 60, 60, 420, 840, 2520, 2520}	\text{FoldList}[\text{LCM},1,\text{Range}[2,10]]	\{1,2,6,12,60,60,420,840,2520,2520\}	
+ln-lcm-range-1-10	Log[LCM[Range[1, 10]]]	{0, Log[2], Log[3], Log[4], Log[5], Log[6], Log[7], Log[8], Log[9], Log[10]}	\log (\text{lcm}(\text{Range}[1,10]))	\{0,\log (2),\log (3),\log (4),\log (5),\log (6),\log (7),\log (8),\log (9),\log (10)\}	disagree
 gcd-a-b-cdot-lcm-a-b-ab-see-gcd	(Times[GCD[27, 81], LCM[27, 81]] == Times[27, 81])	True	\gcd (27,81) \text{lcm}(27,81)=27\ 81	\text{True}	
 lcm-27-81	LCM[27, 81]	81	\text{lcm}(27,81)	81	
 lcm-6-11-25-eq-1-650	(LCM[6, 11, 25] == 1650)	True	\text{lcm}(6,11,25)=1650	\text{True}	
 lcm-5-7-2-eq-70	(LCM[5, 7, 2] == 70)	True	\text{lcm}(5,7,2)=70	\text{True}	
-ln-1-over-lcm-range-1-4-times-lcm-range-1-5	Log[Times[Divide[1, LCM[Range[1, 4]]], LCM[Range[1, 5]]]]	Log[{1, 1/2, 1/3, 1/4}*{1, 2, 3, 4, 5}]			disagree
+ln-1-over-lcm-range-1-4-times-lcm-range-1-5	Log[Times[Divide[1, LCM[Range[1, 4]]], LCM[Range[1, 5]]]]	Log[{1, 1/2, 1/3, 1/4}*{1, 2, 3, 4, 5}]	\log \left(\frac{1}{\text{lcm}(\text{Range}[1,4])} \text{lcm}(\text{Range}[1,5])\right)	\log \left(\left\{1,\frac{1}{2},\frac{1}{3},\frac{1}{4}\right\} \{1,2,3,4,5\}\right)	disagree
 a-single-argument-is-returned-unchanged	LCM[5]	5	\text{lcm}(5)	5	
 0-absorbs-the-lcm-with-0-is-0	LCM[0, 5]	0	\text{lcm}(0,5)	0	
 signs-are-discarded-before-computing-the-lcm	LCM[-3, 7]	21	\text{lcm}(-3,7)	21	

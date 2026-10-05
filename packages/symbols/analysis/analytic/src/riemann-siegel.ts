@@ -1,7 +1,13 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
+  type Cx,
+  cexp,
+  cx,
+  exceedsDoublePrecision,
   isRealInt,
+  mul,
+  numberResult,
   wantsNumber,
   logGamma,
   zetaGeneralized,
@@ -15,8 +21,8 @@ import {
 //
 // ϑ(t) = Im ln Γ(¼ + it/2) − (t/2) ln π          (RiemannSiegelTheta)
 // Z(t)  = e^{iϑ(t)} ζ(½ + it)                     (RiemannSiegelZ, real for real t)
-// Both real-t only here — Wolfram extends both off the real line, but the backlog
-// only asks for real t, and neither is needed complex to reach RiemannZetaZero.
+// Z extends to complex t by the same formula, with ϑ(z) = (ln Γ(¼ + iz/2) − ln Γ(¼ − iz/2)) / 2i
+// − (z/2) ln π (Wolfram's); ϑ itself stays real-t only here, nothing needs it complex.
 //
 // ζ(½ + it) is HurwitzZeta/Zeta's own generalized kernel at a = 1, which reduces to
 // the Riemann zeta; every value here is already covered by hurwitz-zeta.ts's own
@@ -33,6 +39,15 @@ function riemannSiegelZ(t: number): number {
   const th = theta(t);
   const z = zetaGeneralized({ re: 0.5, im: t }, { re: 1, im: 0 });
   return Math.cos(th) * z.re - Math.sin(th) * z.im;
+}
+
+/** Z(z) for complex z: e^{iϑ(z)} ζ(½ + iz), with ϑ continued as above. */
+function riemannSiegelZComplex(z: Cx): Cx {
+  const a = logGamma(cx(0.25 - z.im / 2, z.re / 2));
+  const b = logGamma(cx(0.25 + z.im / 2, -z.re / 2));
+  const lnPi = Math.log(Math.PI);
+  const th = cx((a.im - b.im) / 2 - (z.re / 2) * lnPi, -(a.re - b.re) / 2 - (z.im / 2) * lnPi);
+  return mul(cexp(cx(-th.im, th.re)), zetaGeneralized(cx(0.5 - z.im, z.re), cx(1, 0)));
 }
 
 // --- RiemannZetaZero -----------------------------------------------------------------
@@ -109,8 +124,12 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
     signature: "(number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const t = ops[0];
-      if (t === undefined || t.im !== 0 || !Number.isFinite(t.re)) return undefined;
+      if (t === undefined || !Number.isFinite(t.re) || !Number.isFinite(t.im)) return undefined;
       if (!wantsNumber(ops, options)) return undefined;
+      // Plain doubles throughout: past what a double carries, decline rather than dress ~17
+      // correct digits as the d asked for.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      if (t.im !== 0) return numberResult(ce, riemannSiegelZComplex(cx(t.re, t.im)));
       return ce.number(riemannSiegelZ(t.re));
     },
   });
@@ -119,11 +138,12 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
     signature: "(integer) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const k = ops[0];
-      if (k === undefined || !isRealInt(k) || k.re < 1) return undefined;
+      if (k === undefined || !isRealInt(k) || k.re === 0) return undefined;
       if (!wantsNumber(ops, options)) return undefined;
-      const t = riemannZetaZeroT(k.re);
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      const t = riemannZetaZeroT(Math.abs(k.re));
       if (t === undefined) return undefined; // beyond MAX_T; decline rather than guess
-      return inexactComplex(ce, 0.5, t);
+      return inexactComplex(ce, 0.5, k.re < 0 ? -t : t); // ZetaZero(-k) = Conjugate(ZetaZero(k))
     },
   });
 }
