@@ -1,9 +1,8 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine, createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareHypercomplex } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareHypercomplex(ce);
+const ce = createEngine(declareHypercomplex);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 const same = (input: Expr, expected: Expr) =>
@@ -54,7 +53,9 @@ test("a constructor stays inert, and native Dimension is untouched", () => {
   expect(ce.box(["Basis", ["CliffordAlgebra", "p", 2]]).evaluate().operator).toBe("Basis");
   // `Dimension` was deliberately NOT widened to accept an algebra.
   expect(ce.box(["Dimension", ["List", 1, 2, 3]]).evaluate().json).toEqual(
-    new ComputeEngine().box(["Dimension", ["List", 1, 2, 3]]).evaluate().json,
+    bareEngine()
+      .box(["Dimension", ["List", 1, 2, 3]])
+      .evaluate().json,
   );
 });
 

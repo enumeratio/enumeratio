@@ -1,4 +1,3 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -7,6 +6,8 @@ import {
   symbolNameOf,
   widenSignature,
   wrapOperator,
+  type Engine,
+  type Expr,
 } from "@enumeratio/engine";
 import { extendedGcd, factorInteger, isPrime } from "@enumeratio/residues";
 
@@ -15,7 +16,7 @@ import { extendedGcd, factorInteger, isPrime } from "@enumeratio/residues";
 // of rationals, Mod's offset, and ExtendedGCD past two arguments. Each wrapper applies only
 // to what the native handler does not answer, so no result compute-engine already gives changes.
 
-type Ops = readonly BoxedExpression[];
+type Ops = readonly Expr[];
 
 const abs = (n: bigint): bigint => (n < 0n ? -n : n);
 const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? abs(a) : gcd(b, a % b));
@@ -29,7 +30,7 @@ const properRationals = (ops: Ops): (readonly [bigint, bigint])[] | undefined =>
   return rationals.some(([, den]) => den !== 1n) ? rationals : undefined;
 };
 
-export function declareWidened(ce: ComputeEngine): void {
+export function declareWidened(ce: Engine): void {
   // Wolfram's EulerPhi[0] is 0, and EulerPhi[-n] = EulerPhi[n]; compute-engine asks for a
   // positive integer, so both a zero and a negative n need widening past it.
   widenSignature(ce, "Totient", "(number) -> integer", mayBeInteger);

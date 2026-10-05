@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { operandsOf, symbolNameOf, type Engine, type Expr } from "@enumeratio/engine";
 import { declareAlgebra } from "@enumeratio/structures";
 import { containsGenerator, generatorsOf, multiplyMultivectors, toExpression, toMultivector } from "./multivector.ts";
 import { FAMILIES, type Generator, generatorSymbol } from "./units.ts";
@@ -50,7 +49,7 @@ const NAMED: Record<string, { prefix: string; size: number; label: string }> = {
 export const NAMED_ALGEBRAS: readonly string[] = Object.keys(NAMED);
 
 /** A non-negative integer operand, or undefined. */
-const count = (expr: BoxedExpression | undefined): number | undefined =>
+const count = (expr: Expr | undefined): number | undefined =>
   expr !== undefined && expr.im === 0 && Number.isInteger(expr.re) && expr.re >= 0 ? expr.re : undefined;
 
 /**
@@ -66,7 +65,7 @@ const count = (expr: BoxedExpression | undefined): number | undefined =>
  *   `DualNumbers`.
  * - `MulticomplexAlgebra(n)` / `SplitAlgebra(n)` / `DualAlgebra(n)` / `GrassmannAlgebra(n)`.
  */
-export function algebraOf(expr: BoxedExpression): Algebra | undefined {
+export function algebraOf(expr: Expr): Algebra | undefined {
   const name = symbolNameOf(expr);
   const named = name === undefined ? undefined : NAMED[name];
   if (named !== undefined) {
@@ -119,7 +118,7 @@ const ARITHMETIC = new Set([
 ]);
 
 /** Whether an expression is a hypercomplex element or an ordinary scalar. */
-function isScalarLike(expr: BoxedExpression): boolean {
+function isScalarLike(expr: Expr): boolean {
   if (containsGenerator(expr)) return true;
   if (symbolNameOf(expr) !== undefined) return true;
   if (Number.isFinite(expr.re) && Number.isFinite(expr.im)) return true;
@@ -127,8 +126,8 @@ function isScalarLike(expr: BoxedExpression): boolean {
 }
 
 /** Declare the algebra constructors, and make them finite-dimensional algebras. */
-export function declareAlgebras(ce: ComputeEngine): void {
-  const blade = (generators: readonly Generator[]): BoxedExpression => {
+export function declareAlgebras(ce: Engine): void {
+  const blade = (generators: readonly Generator[]): Expr => {
     const units = generators.map((g) => ce.symbol(generatorSymbol(g)));
     if (units.length === 0) return ce.number(1);
     return units.length === 1 ? units[0]! : ce.function("Multiply", units);
@@ -145,7 +144,7 @@ export function declareAlgebras(ce: ComputeEngine): void {
   for (const name of NAMED_ALGEBRAS) ce.declare(name, { type: "clifford_algebra", isConstant: true });
 
   /** Whether every generator occurring in `expr` belongs to `algebra`. */
-  const containsIn = (algebra: Algebra, expr: BoxedExpression): boolean | undefined => {
+  const containsIn = (algebra: Algebra, expr: Expr): boolean | undefined => {
     const mv = toMultivector(ce, expr);
     if (mv === undefined) return undefined; // cannot read it — no opinion
     const occurring = generatorsOf(mv);

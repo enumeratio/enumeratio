@@ -1,8 +1,11 @@
-import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
+import { BigDecimal } from "@enumeratio/engine/unstable";
 import { registerNotation } from "@enumeratio/boxes";
 import {
   bigIntegerAt,
   bigRationalAt,
+  type Engine,
+  type Expr,
   defineOverload,
   integerAt,
   operandsOf,
@@ -59,7 +62,7 @@ import { dedekindSum, linkingWithTrefoil, rademacherPhi, rademacherSymbol, wordS
 // the word is the more natural spelling and it is what the conjugacy classes are made of.
 
 /** `.symbol` lives on compute-engine's narrowed interfaces, not on `Expression`. */
-const symbolAt = (expr: BoxedExpression | undefined): string | undefined => {
+const symbolAt = (expr: Expr | undefined): string | undefined => {
   const name = (expr as { symbol?: unknown } | undefined)?.symbol;
   return typeof name === "string" ? name : undefined;
 };
@@ -71,7 +74,7 @@ const symbolAt = (expr: BoxedExpression | undefined): string | undefined => {
  */
 
 /** Read a matrix: `ModularMatrix(a,b,c,d)`, a nested list, or an LR word. */
-function matrixOf(expr: BoxedExpression | undefined): Matrix | undefined {
+function matrixOf(expr: Expr | undefined): Matrix | undefined {
   if (expr === undefined) return undefined;
   const word = stringAt(expr);
   if (word !== undefined && /^[LR]+$/.test(word)) return wordToMatrix(word);
@@ -94,7 +97,7 @@ function matrixOf(expr: BoxedExpression | undefined): Matrix | undefined {
 }
 
 /** Read an LR word, either as a string or as a matrix that has one. */
-function wordOf(expr: BoxedExpression | undefined): string | undefined {
+function wordOf(expr: Expr | undefined): string | undefined {
   if (expr === undefined) return undefined;
   const direct = stringAt(expr);
   if (direct !== undefined && /^[LR]+$/.test(direct)) return direct;
@@ -102,14 +105,14 @@ function wordOf(expr: BoxedExpression | undefined): string | undefined {
   return m === undefined ? undefined : positiveWord(m);
 }
 
-export function declareModular(ce: ComputeEngine): void {
+export function declareModular(ce: Engine): void {
   registerNotation(ce, MODULAR_NOTATION);
-  const matrixExpression = (m: Matrix): BoxedExpression =>
+  const matrixExpression = (m: Matrix): Expr =>
     ce.function(
       "ModularMatrix",
       m.map((x) => ce.number(x)),
     );
-  const rationalExpression = ([n, d]: readonly [number, number]): BoxedExpression => ce.box(["Rational", n, d]);
+  const rationalExpression = ([n, d]: readonly [number, number]): Expr => ce.box(["Rational", n, d]);
 
   ce.declare("ModularMatrix", {
     signature:
@@ -117,10 +120,10 @@ export function declareModular(ce: ComputeEngine): void {
   });
 
   /** A head taking a matrix (or word) and returning a value. */
-  const aboutMatrix = (head: string, signature: string, answer: (m: Matrix) => BoxedExpression | undefined): void => {
+  const aboutMatrix = (head: string, signature: string, answer: (m: Matrix) => Expr | undefined): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const m = matrixOf(ops[0]);
         return m === undefined ? undefined : answer(m);
       },
@@ -128,10 +131,10 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   /** A head taking an LR word. */
-  const aboutWord = (head: string, signature: string, answer: (word: string) => BoxedExpression | undefined): void => {
+  const aboutWord = (head: string, signature: string, answer: (word: string) => Expr | undefined): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const word = wordOf(ops[0]);
         return word === undefined ? undefined : answer(word);
       },
@@ -144,7 +147,7 @@ export function declareModular(ce: ComputeEngine): void {
   // ModularMatrix or a word; any other pairing is left to the native handler.
 
   /** True for a value our handlers know how to read: `ModularMatrix(...)` or a word. */
-  const isModularOperand = (expr: BoxedExpression): boolean =>
+  const isModularOperand = (expr: Expr): boolean =>
     expr.operator === "ModularMatrix" || /^[LR]+$/.test(stringAt(expr) ?? "");
 
   const matrixType = ce.type("matrix");
@@ -227,7 +230,7 @@ export function declareModular(ce: ComputeEngine): void {
   ce.declare("ModularFromSTWord", {
     signature: "(list<integer>) -> expression<ModularMatrix>",
     evaluate: (ops) => {
-      const exponents = operandsOf(ops[0] as BoxedExpression).map(integerAt);
+      const exponents = operandsOf(ops[0] as Expr).map(integerAt);
       if (!exponents.every((e): e is number => e !== undefined)) return undefined;
       const m = stWordToMatrix({ exponents });
       return m === undefined ? undefined : matrixExpression(m);
@@ -291,12 +294,12 @@ export function declareModular(ce: ComputeEngine): void {
   // ── Convergents, ContinuedFractionK, IsQuadraticIrrational ──────────────────
 
   /** A bigint `[numerator, denominator]`, built the way `Rational` reduces automatically. */
-  const bigRationalExpression = ([n, d]: readonly [bigint, bigint]): BoxedExpression =>
+  const bigRationalExpression = ([n, d]: readonly [bigint, bigint]): Expr =>
     ce.box(["Rational", ce.number(n), ce.number(d)]);
 
   ce.declare("Convergents", {
     signature: "(value, integer?) -> list<number>",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       // A bare list is read as the terms of a continued fraction directly; anything
       // else goes through compute-engine's own `ContinuedFraction` first — exact for a
       // rational, or `n` terms of one for anything it can evaluate numerically.
@@ -320,7 +323,7 @@ export function declareModular(ce: ComputeEngine): void {
   ce.declare("ContinuedFractionK", {
     signature: "(any, any, tuple<symbol, integer, any>) -> number",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [fExpr, gExpr, iterExpr] = ops;
       if (fExpr === undefined || gExpr === undefined || iterExpr?.operator !== "Tuple") {
         return undefined;
@@ -332,7 +335,7 @@ export function declareModular(ce: ComputeEngine): void {
       const infinite = (imaxExpr as { symbol?: unknown } | undefined)?.symbol === "PositiveInfinity";
       const imax = infinite ? undefined : integerAt(imaxExpr);
 
-      const dependsOnVar = (expr: BoxedExpression): boolean =>
+      const dependsOnVar = (expr: Expr): boolean =>
         (expr as { symbol?: unknown }).symbol === varName || operandsOf(expr).some(dependsOnVar);
 
       if (infinite) {
@@ -370,10 +373,10 @@ export function declareModular(ce: ComputeEngine): void {
     readonly radical: number;
     readonly imRadical: number;
   }
-  const radicalOf = (expr: BoxedExpression): ExactRadical | undefined =>
+  const radicalOf = (expr: Expr): ExactRadical | undefined =>
     (expr as { numericValue?: unknown }).numericValue as ExactRadical | undefined;
   /** A folded `rational · √radical`, real and genuinely irrational (`radical` not 1). */
-  const isIrrationalSurd = (expr: BoxedExpression): boolean => {
+  const isIrrationalSurd = (expr: Expr): boolean => {
     const r = radicalOf(expr);
     return r !== undefined && r.im === 0 && r.imRadical === 1 && r.radical > 1 && r.rational[0] !== 0;
   };
@@ -385,7 +388,7 @@ export function declareModular(ce: ComputeEngine): void {
    * else (another algebraic degree, a transcendental constant, an unrecognised shape)
    * reads as `False`, not "unknown" — same as Wolfram's `…Q` predicates.
    */
-  const quadraticIrrational = (expr: BoxedExpression): boolean => {
+  const quadraticIrrational = (expr: Expr): boolean => {
     if (isIrrationalSurd(expr)) return true;
     if (bigRationalAt(expr) !== undefined) return false;
     if (expr.operator === "Negate") return quadraticIrrational(operandsOf(expr)[0]!);
@@ -404,7 +407,7 @@ export function declareModular(ce: ComputeEngine): void {
   };
   ce.declare("IsQuadraticIrrational", {
     signature: "(value) -> boolean",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const x = ops[0];
       return x === undefined ? undefined : ce.symbol(quadraticIrrational(x) ? "True" : "False");
     },
@@ -440,7 +443,7 @@ export function declareModular(ce: ComputeEngine): void {
     readonly d: bigint;
   }
   const bigFrom = (x: number | bigint): bigint => (typeof x === "bigint" ? x : BigInt(x));
-  const quadraticIrrationalParts = (expr: BoxedExpression): QuadraticParts | undefined => {
+  const quadraticIrrationalParts = (expr: Expr): QuadraticParts | undefined => {
     if (isIrrationalSurd(expr)) {
       const r = radicalOf(expr)!;
       return { a: 0n, b: bigFrom(r.rational[0]), c: bigFrom(r.rational[1]), d: BigInt(r.radical) };
@@ -493,11 +496,11 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   /** `GoldenRatio` doesn't unfold under `.evaluate()` — substitute its closed form first. */
-  const unfoldGoldenRatio = (expr: BoxedExpression): BoxedExpression =>
+  const unfoldGoldenRatio = (expr: Expr): Expr =>
     symbolAt(expr) === "GoldenRatio" ? ce.box(["Divide", ["Add", 1, ["Sqrt", 5]], 2]).evaluate() : expr;
 
   /** `n` terms of `pqaExpansion`'s pre+period, cycling the period as needed. */
-  const truncatedPqaTerms = (parts: QuadraticParts, n: number): BoxedExpression => {
+  const truncatedPqaTerms = (parts: QuadraticParts, n: number): Expr => {
     const { pre, period } = pqaExpansion(parts.a, parts.b, parts.c, parts.d);
     const terms: bigint[] = [];
     for (let i = 0; i < n; i++) {
@@ -510,7 +513,7 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   /** The one-arg `[a0, [period]]` (or `[a0, a1, ..., [period]]`) nested shape. */
-  const nestedPqaExpression = (parts: QuadraticParts): BoxedExpression => {
+  const nestedPqaExpression = (parts: QuadraticParts): Expr => {
     const { pre, period } = pqaExpansion(parts.a, parts.b, parts.c, parts.d);
     // A purely periodic expansion (empty pre-period, e.g. the golden ratio) still needs an
     // a0 out front — peel the period's first term off and rotate the rest behind it, so the
@@ -537,7 +540,7 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   /** `n` continued-fraction terms of `expr`, evaluated at `digits` decimal digits. */
-  const termsAtDigits = (expr: BoxedExpression, n: number, digits: number): bigint[] | undefined => {
+  const termsAtDigits = (expr: Expr, n: number, digits: number): bigint[] | undefined => {
     const savedPrecision = ce.precision;
     let bignum: BigDecimal | undefined;
     try {
@@ -573,7 +576,7 @@ export function declareModular(ce: ComputeEngine): void {
    * giving up (`undefined`, so the call stays unevaluated) rather than hand back an
    * uncertified answer.
    */
-  const certifiedTerms = (expr: BoxedExpression, n: number): bigint[] | undefined => {
+  const certifiedTerms = (expr: Expr, n: number): bigint[] | undefined => {
     let guard = 50;
     for (let attempt = 0; attempt < 5; attempt++) {
       const d1 = n * 2 + guard;
@@ -705,7 +708,7 @@ export function declareModular(ce: ComputeEngine): void {
   /** Every closed geodesic whose word has the given length, as a list of class names. */
   ce.declare("ModularClasses", {
     signature: "(integer, boolean?) -> list",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const n = integerAt(ops[0]);
       const primitiveOnly = symbolAt(ops[1]) === "True";
       const classes = n === undefined ? undefined : hyperbolicClasses(n, primitiveOnly);
@@ -748,13 +751,12 @@ export function declareModular(ce: ComputeEngine): void {
 
   // ── indefinite binary quadratic forms ───────────────────────────────────────
 
-  const formExpression = (f: Form): BoxedExpression =>
+  const formExpression = (f: Form): Expr =>
     ce.function("QuadraticForm", [ce.number(f.a), ce.number(f.b), ce.number(f.c)]);
-  const formListExpression = (forms: readonly Form[]): BoxedExpression =>
-    ce.function("List", forms.map(formExpression));
+  const formListExpression = (forms: readonly Form[]): Expr => ce.function("List", forms.map(formExpression));
 
   /** Read `QuadraticForm(a, b, c)`. */
-  const formOf = (expr: BoxedExpression | undefined): Form | undefined => {
+  const formOf = (expr: Expr | undefined): Form | undefined => {
     if (expr === undefined || expr.operator !== "QuadraticForm") return undefined;
     const values = operandsOf(expr).map(integerAt);
     return values.length === 3 && values.every((x): x is number => x !== undefined)
@@ -765,10 +767,10 @@ export function declareModular(ce: ComputeEngine): void {
   ce.declare("QuadraticForm", { signature: "(integer, integer, integer) -> expression<QuadraticForm>" });
 
   /** A head taking a form. */
-  const aboutForm = (head: string, signature: string, answer: (f: Form) => BoxedExpression | undefined): void => {
+  const aboutForm = (head: string, signature: string, answer: (f: Form) => Expr | undefined): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const f = formOf(ops[0]);
         return f === undefined ? undefined : answer(f);
       },
@@ -776,14 +778,10 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   /** A head taking a discriminant. */
-  const aboutDiscriminant = (
-    head: string,
-    signature: string,
-    answer: (d: number) => BoxedExpression | undefined,
-  ): void => {
+  const aboutDiscriminant = (head: string, signature: string, answer: (d: number) => Expr | undefined): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const d = integerAt(ops[0]);
         return d === undefined ? undefined : answer(d);
       },
@@ -835,7 +833,7 @@ export function declareModular(ce: ComputeEngine): void {
 
   ce.declare("FormAction", {
     signature: `(${formType}, ${matrixLike}) -> ${formType}`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const f = formOf(ops[0]);
       const m = matrixOf(ops[1]);
       if (f === undefined || m === undefined) return undefined;
@@ -845,7 +843,7 @@ export function declareModular(ce: ComputeEngine): void {
   });
   ce.declare("EvaluateForm", {
     signature: `(${formType}, integer, integer) -> integer`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const f = formOf(ops[0]);
       const [x, y] = [integerAt(ops[1]), integerAt(ops[2])];
       return f === undefined || x === undefined || y === undefined ? undefined : ce.number(evaluateForm(f, x, y));
@@ -857,7 +855,7 @@ export function declareModular(ce: ComputeEngine): void {
   /** (a/n) for any integers a, n — the full extension of Jacobi/Legendre. Bignum-safe. */
   ce.declare("KroneckerSymbol", {
     signature: "(integer, integer) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [a, n] = [bigIntegerAt(ops[0]), bigIntegerAt(ops[1])];
       return a === undefined || n === undefined ? undefined : ce.number(kroneckerSymbol(a, n));
     },

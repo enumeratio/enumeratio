@@ -40,9 +40,9 @@ functionsurjective-tan-x-x
 functionsingularities-tan-x-x			
 functiondiscontinuities-tan-x-x			
 matrixfunction-function-tan-1-1-list-list-5-over			
+tan-positiveinfinity			
 assuming-m-in-integers-refine-tan-pi-times-m			
 assuming-m-in-integers-fullsimplify-refine-tan			
-tan-positiveinfinity			
 threads-element-wise-over-a-list	[tan(0), tan((S(pi) / 4))]	[0, 1]	
 tan-x-frac-sin-x-cos-x	enumeratio_equal(tan((S(pi) / 4)), (S(sin((S(pi) / 4))) / cos((S(pi) / 4))))	True	
 odd-function-tan-x-tan-x	tan((-(S(pi) / 4)))	-1	

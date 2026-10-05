@@ -2,18 +2,16 @@
 // punchlist): every fast path must agree with a naive reference over a range including the
 // edges Wolfram's conventions care about — n = 0, 1, negative indices, a modulus that
 // divides the value, p = 1 — not just the bench's own three cases.
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
 import { declareNumberTheory } from "../src/declare.ts";
 import { fibonacci, fibonacciMod, lucasL, lucasLMod } from "../src/fast-recurrence.ts";
 
-const ce = new ComputeEngine();
-declareResidues(ce);
-declareNumerals(ce);
-declareNumberTheory(ce);
-const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const ce = createEngine(declareResidues, declareNumerals, declareNumberTheory);
+const run = (expr: unknown): unknown => ce.box(expr as Json).evaluate().json;
 
 function naiveFib(n: bigint): bigint {
   if (n === 0n) return 0n;

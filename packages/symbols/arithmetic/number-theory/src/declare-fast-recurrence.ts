@@ -4,18 +4,17 @@
 // same exact job in O(log n) bigint multiplications. Exact, never approximate; declines
 // (falls through to the native handler) past a documented size rather than pretend a budget
 // it doesn't have.
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, defineOverload } from "@enumeratio/engine";
+import { bigIntegerAt, defineOverload, type Engine, type Expr } from "@enumeratio/engine";
 import { fibonacci, lucasL } from "./fast-recurrence.ts";
 
 /** Above this, F(n)/L(n) would run past ~2M decimal digits — plenty past the bench range
  *  (10^5, 10^6), and still small enough that the fast path stays well under a second. */
 const FAST_RECURRENCE_LIMIT = 10_000_000n;
 
-export function declareFastRecurrence(ce: ComputeEngine): void {
-  const isProfinite = (op: BoxedExpression): boolean => op.operator === "ProfiniteNumber";
+export function declareFastRecurrence(ce: Engine): void {
+  const isProfinite = (op: Expr): boolean => op.operator === "ProfiniteNumber";
 
-  const fitsFastRange = (op: BoxedExpression): bigint | undefined => {
+  const fitsFastRange = (op: Expr): bigint | undefined => {
     if (isProfinite(op)) return undefined;
     const n = bigIntegerAt(op);
     if (n === undefined) return undefined;

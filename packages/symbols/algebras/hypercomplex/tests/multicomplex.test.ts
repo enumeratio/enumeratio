@@ -1,11 +1,10 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareHypercomplex } from "../src/declare.ts";
 import { multiplyBlades } from "../src/multivector.ts";
 import { FAMILIES, type Generator } from "../src/units.ts";
 
-const ce = new ComputeEngine();
-declareHypercomplex(ce);
+const ce = createEngine(declareHypercomplex);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 

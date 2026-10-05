@@ -1,12 +1,14 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
   bigRationalAt,
+  extendHead,
   operandsOf,
   threadOverLists,
   widenSignature,
   wrapOperator,
   type EvaluateOptions,
+  type Engine,
+  type Expr,
 } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { RESIDUES_CARRIERS } from "./carrier-data.ts";
@@ -28,18 +30,17 @@ import { powerModList } from "./roots.ts";
 /** Past this modulus a native handler is not asked to factor it. */
 const NATIVE_FACTORING_LIMIT = 2n ** 64n;
 
-type Native = ((ops: readonly BoxedExpression[], options: EvaluateOptions) => unknown) | undefined;
+type Native = ((ops: readonly Expr[], options: EvaluateOptions) => unknown) | undefined;
 
 /** Did the native handler give an answer, rather than decline (nothing, or the call back)? */
-const answered = (r: unknown, head: string): r is BoxedExpression =>
-  r !== undefined && (r as BoxedExpression).operator !== head;
+const answered = (r: unknown, head: string): r is Expr => r !== undefined && (r as Expr).operator !== head;
 
 /** `ours` answers whatever `native` declines, and `first` calls skip native altogether. */
 function extend(
-  ce: ComputeEngine,
+  ce: Engine,
   head: string,
-  ours: (ops: readonly BoxedExpression[]) => BoxedExpression | undefined,
-  first: (ops: readonly BoxedExpression[]) => boolean = () => false,
+  ours: (ops: readonly Expr[]) => Expr | undefined,
+  first: (ops: readonly Expr[]) => boolean = () => false,
 ): void {
   // Native's lazy heads type-check their own operands in a canonical handler the widened
   // signature doesn't reach; let the signature do it, with the operands evaluated up front.
@@ -57,19 +58,19 @@ function extend(
   );
 }
 
-export function declareResidues(ce: ComputeEngine): void {
+export function declareResidues(ce: Engine): void {
   // This package's own carrier — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
   // constructor, plural type-space name and `Element` membership, all in one call.
   declareCarriers(ce, RESIDUES_CARRIERS);
 
-  const list = (xs: readonly bigint[]): BoxedExpression =>
+  const list = (xs: readonly bigint[]): Expr =>
     ce.function(
       "List",
       xs.map((x) => ce.number(x)),
     );
 
   /** a^(s/r) mod m, as the list of every x with xʳ ≡ aˢ — the heart of both heads below. */
-  const roots = (ops: readonly BoxedExpression[]): bigint[] | undefined => {
+  const roots = (ops: readonly Expr[]): bigint[] | undefined => {
     const a = bigRationalAt(ops[0]);
     const exponent = bigRationalAt(ops[1]);
     const m = bigIntegerAt(ops[2]);
@@ -79,8 +80,8 @@ export function declareResidues(ce: ComputeEngine): void {
 
   // Native takes integers (a rational exponent for the two power heads); a call it would
   // reject on type, say a rational base or a list, reaches ours instead.
-  const mayBeRational = (op: BoxedExpression): boolean => op.isRational !== false;
-  const mayBeInteger = (op: BoxedExpression): boolean => op.isInteger !== false;
+  const mayBeRational = (op: Expr): boolean => op.isRational !== false;
+  const mayBeInteger = (op: Expr): boolean => op.isInteger !== false;
 
   // Wolfram's PowerModList[a, s/r, m]. Threads over lists, as Wolfram's does.
   widenSignature(ce, "PowerModList", "(number, number, number) -> list<number>", mayBeRational);
@@ -142,17 +143,16 @@ export function declareResidues(ce: ComputeEngine): void {
     const found = n === undefined ? undefined : primitiveRootList(n);
     return found === undefined ? undefined : list(found);
   });
-  const primitiveRootList_ = ce.lookupDefinition("PrimitiveRootList");
-  if (primitiveRootList_ !== undefined && "operator" in primitiveRootList_) {
-    (primitiveRootList_.operator as { collection?: unknown }).collection = {
-      count: (c: BoxedExpression) => {
+  extendHead(ce, "PrimitiveRootList", {
+    collection: {
+      count: (c: Expr) => {
         const n = bigIntegerAt(operandsOf(c)[0]);
         const count = n === undefined ? undefined : primitiveRootCount(n);
         return count === undefined || count > BigInt(Number.MAX_SAFE_INTEGER) ? undefined : Number(count);
       },
       isFinite: () => true,
       isLazy: () => true,
-      iterator: (c: BoxedExpression) => {
+      iterator: (c: Expr) => {
         const n = bigIntegerAt(operandsOf(c)[0]);
         const roots = n === undefined ? undefined : primitiveRoots(n);
         return {
@@ -164,15 +164,15 @@ export function declareResidues(ce: ComputeEngine): void {
           },
         };
       },
-      at: (c: BoxedExpression, index: unknown) => {
+      at: (c: Expr, index: unknown) => {
         const n = bigIntegerAt(operandsOf(c)[0]);
         if (n === undefined || typeof index !== "number" || index < 1) return undefined;
         let k = 0;
         for (const g of primitiveRoots(n)) if (++k === index) return ce.number(g);
         return undefined;
       },
-    };
-  }
+    },
+  });
 
   declareIntegerMod(ce);
   declareModExactConstant(ce);

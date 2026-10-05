@@ -26,7 +26,10 @@ top of this one — it has no workspace dependencies of its own.
   `@enumeratio/formats/inputform` re-exports it.
 - **`src/facade.ts`** — what a library imports in place of `@cortex-js/compute-engine`: `Engine`,
   `Expr`, `Json`, `HeadDefinition`, `EvalOptions`, `Type` (aliases of compute-engine's own
-  types), the `isNumber` / `isSymbol` guards, and `box(ce, json)`. The `no-restricted-imports`
+  types), the `isNumber` / `isSymbol` guards, `box(ce, json)`, and the patterns libraries used
+  to reach into compute-engine for (`src/probe.ts`): `isNativeHead` (is it already defined?),
+  `nativeEvaluate` (the current handler, to fall back on) and `withAssumptions` (assume inside
+  a scope that is dropped after). The `no-restricted-imports`
   rule in the root `vite.config.ts` keeps libraries (`packages/symbols`) to it; files still
   importing compute-engine are in `packages/utils/tests/compute-engine-imports.baseline.json`,
   which may only shrink.

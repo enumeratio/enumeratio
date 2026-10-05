@@ -7,4 +7,3 @@ list-numberq-c-numberq-d	List[NumberQ[c], NumberQ[d]]	{False, False}	\{\text{Num
 list-numberq-o-numberq-u	List[NumberQ[o], NumberQ[u]]	{False, False}	\{\text{NumberQ}[o],\text{NumberQ}[u]\}	\{\text{False},\text{False}\}	
 numberq-sqrt-2	NumberQ[Sqrt[2]]	False			disagree
 numberq-positiveinfinity	NumberQ[Infinity]	False			disagree
-ismatrix-m-numberq	MatrixQ[m, NumberQ]				

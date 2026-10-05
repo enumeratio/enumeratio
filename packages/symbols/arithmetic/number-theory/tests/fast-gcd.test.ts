@@ -2,17 +2,15 @@
 // issue #205). Unit coverage of the binary-GCD algorithm itself lives in
 // packages/symbols/arithmetic/residues/tests/gcd.test.ts; this file is the engine wiring,
 // including that Gaussian-integer GCD (declare-gaussian.ts) is untouched.
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareResidues } from "@enumeratio/residues";
 import { declareNumberTheory } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareResidues(ce);
-declareNumerals(ce);
-declareNumberTheory(ce);
-const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const ce = createEngine(declareResidues, declareNumerals, declareNumberTheory);
+const run = (expr: unknown): unknown => ce.box(expr as Json).evaluate().json;
 
 test("GCD of real integers through the engine, including negatives, 0 and a single argument", () => {
   expect(run(["GCD", 12, 18])).toBe(6);
@@ -47,6 +45,6 @@ test("a genuinely Gaussian GCD call is unaffected", () => {
   const c = (re: number, im: number): unknown => ["Complex", re, im];
   // gcd(3+i, 1+3i) in Z[i]: the point isn't the specific associate, just that the call
   // still evaluates as a Gaussian integer, not a real one.
-  const result = ce.box(["GCD", c(3, 1), c(1, 3)] as Parameters<ComputeEngine["box"]>[0]).evaluate();
+  const result = ce.box(["GCD", c(3, 1), c(1, 3)] as Json).evaluate();
   expect(result.operator).toBe("Complex");
 });

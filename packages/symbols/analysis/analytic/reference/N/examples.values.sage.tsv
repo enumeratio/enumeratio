@@ -18,7 +18,6 @@ n-neg-2-times-pit-plus-pi-list-positiveinfinity	N(((-2 * SR.var("pit")) + pi))
 n-crt	N(SR.var("crt"))		
 n-crt-47	N(SR.var("crt"))		
 n-2-pow-1-000-000			
-n-m			
 n-pi-pow-10-list-positiveinfinity-5	N(((pi)^10))		
 n-pi-pow-10-list-positiveinfinity-1	N(((pi)^10))		
 n-1-over-neg-x-plus-exponentiale-times-2x-plus	N(((1 / ((-SR.var("x")) + e)) * ((2 * SR.var("x")) + pi)))		

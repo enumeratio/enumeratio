@@ -1,10 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine, createEngine } from "@enumeratio/engine/testing";
 import { collectMessages, messageLine, symbolNameOf } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals, NUMERAL_ALIASES } from "../src/declare.ts";
 
-const ce = new ComputeEngine();
-declareNumerals(ce);
+const ce = createEngine(declareNumerals);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 const value = (input: Expr) => ce.box(input).evaluate().json;
@@ -12,7 +11,7 @@ const L = (...xs: number[]): Expr => ["List", ...xs];
 
 test("a plain integer base is still compute-engine's own", () => {
   // This package must not change what IntegerDigits already meant.
-  const bare = new ComputeEngine();
+  const bare = bareEngine();
   for (const call of [
     ["IntegerDigits", 10, 2],
     ["IntegerDigits", 255, 16],
@@ -28,9 +27,7 @@ test("padding a fixed radix agrees with the native handler", () => {
   // 5 is 0·3! + 2·2! + 1·1! + 0·0!, and the Lehmer code of the 6th permutation of four
   // things needs one digit per position — see IntegerDigits' factoradic examples for the
   // pinned padded value; here we only cross-check the native (non-system) padded form.
-  expect(value(["IntegerDigits", 10, 2, 8])).toEqual(
-    new ComputeEngine().box(["IntegerDigits", 10, 2, 8]).evaluate().json,
-  );
+  expect(value(["IntegerDigits", 10, 2, 8])).toEqual(bareEngine().box(["IntegerDigits", 10, 2, 8]).evaluate().json);
 });
 
 test("PositionalNumerals agrees with the native fixed-radix handler for b ≥ 2", () => {
@@ -118,6 +115,6 @@ test("DigitSum(n, base, k): the first k digits, or the last |k| when k is negati
   // k big enough is the plain digit sum — see DigitSum's pinned examples for the values.
   expect(value(["DigitSum", 6345354, 10, 7])).toEqual(value(["DigitSum", 6345354, 10]));
   // The two-argument form is untouched.
-  const bare = new ComputeEngine();
+  const bare = bareEngine();
   expect(value(["DigitSum", 58127, 2])).toEqual(bare.box(["DigitSum", 58127, 2]).evaluate().json);
 });

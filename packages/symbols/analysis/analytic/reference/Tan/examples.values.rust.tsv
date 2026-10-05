@@ -40,9 +40,9 @@ functionsurjective-tan-x-x
 functionsingularities-tan-x-x			
 functiondiscontinuities-tan-x-x			
 matrixfunction-function-tan-1-1-list-list-5-over			
+tan-positiveinfinity			
 assuming-m-in-integers-refine-tan-pi-times-m			
 assuming-m-in-integers-fullsimplify-refine-tan			
-tan-positiveinfinity			
 threads-element-wise-over-a-list	tan(list(vec![n(0), (x(std::f64::consts::PI) / n(4))]))	panic: threading: a list where the crate takes a scalar	error
 tan-x-frac-sin-x-cos-x	equal(tan((x(std::f64::consts::PI) / n(4))), (sin((x(std::f64::consts::PI) / n(4))) / cos((x(std::f64::consts::PI) / n(4)))))	true	
 odd-function-tan-x-tan-x	tan((-((x(std::f64::consts::PI) / n(4)))))	-0.9999999999999999	

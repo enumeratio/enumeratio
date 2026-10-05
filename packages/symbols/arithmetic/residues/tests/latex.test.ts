@@ -1,4 +1,6 @@
-import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+// unstable: an engine built with this package's LaTeX dictionary merged in; createEngine takes no dictionary, no LatexRule hook yet
+import type { Json } from "@enumeratio/engine";
+import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
 import { declareResidues } from "../src/declare.ts";
 import { RESIDUES_LATEX } from "../src/latex.ts";
@@ -12,7 +14,7 @@ const ce = new ComputeEngine({
 });
 declareResidues(ce);
 const parse = (tex: string): unknown => ce.parse(tex).json;
-const latex = (expr: unknown): string => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).latex;
+const latex = (expr: unknown): string => ce.box(expr as Json).latex;
 
 test("\\pmod is a class; \\bmod is still the remainder; \\equiv…\\pmod is still a congruence", () => {
   expect(parse("2 \\pmod{5}")).toEqual(["IntegerMod", 2, 5]);

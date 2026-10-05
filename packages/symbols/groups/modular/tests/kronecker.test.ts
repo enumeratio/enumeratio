@@ -1,10 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareModular } from "../src/declare.ts";
 import { kroneckerSymbol } from "../src/kronecker.ts";
 
-const ce = new ComputeEngine();
-declareModular(ce);
+const ce = createEngine(declareModular);
 
 // The a, n ∈ [-10, 10] grid this used to pin against a golden file is now sampled as
 // role: test examples on KroneckerSymbol/examples.tsv, scanned against Wolfram there.

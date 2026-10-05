@@ -1,10 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
 transpose-list-list-a-x-list-b-y-list-c-z	Transpose[List[List[a, x], List[b, y], List[c, z]]]	{{a, b, c}, {x, y, z}}	\left( \begin{array}{cc}  a & x \\  b & y \\  c & z \\ \end{array} \right)^T	\left( \begin{array}{ccc}  a & b & c \\  x & y & z \\ \end{array} \right)	
-transpose-m	Transpose[m]				
-transpose-s	Transpose[s]				
 chop-dot-u-transpose-u	Chop[Dot[u, Transpose[u]]]	Indeterminate			inconclusive
 chop-dot-v-transpose-v	Chop[Dot[v, Transpose[v]]]	Indeterminate			inconclusive
-s-eq-transpose-s	(s == Transpose[s])				
-transpose-s-eq-s	(Transpose[s] == s)				
 conjugate-transpose-m	Conjugate[Transpose[m]]				
 shape-transpose-a-perm	Dimensions[Transpose[a, perm]]	{2}			disagree

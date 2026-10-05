@@ -11,5 +11,5 @@ a-rational-multiple-of-a-surd	QuadraticIrrationalQ[Times[3, Sqrt[2]]]	True	\text
 a-surd-subtracted-from-a-rational	QuadraticIrrationalQ[Subtract[1, Sqrt[3]]]	True	\text{QuadraticIrrationalQ}\left[1-\sqrt{3}\right]	\text{True}
 isquadraticirrational-3-over-2	QuadraticIrrationalQ[Rational[3, 2]]	False	\text{QuadraticIrrationalQ}\left[\frac{3}{2}\right]	\text{False}
 isquadraticirrational-list-sqrt-2-sqrt-3-2	QuadraticIrrationalQ[List[Sqrt[2], Sqrt[3], 2]]	{True, True, False}	\text{QuadraticIrrationalQ}\left[\left\{\sqrt{2},\sqrt{3},2\right\}\right]	\{\text{True},\text{True},\text{False}\}
-isquadraticirrational-s	QuadraticIrrationalQ[s]			
+isquadraticirrational-s	QuadraticIrrationalQ[s]	False	\text{QuadraticIrrationalQ}[s]	\text{False}
 a-rational-is-not-irrational	QuadraticIrrationalQ[Rational[3, 4]]	False	\text{QuadraticIrrationalQ}\left[\frac{3}{4}\right]	\text{False}

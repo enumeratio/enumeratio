@@ -1,5 +1,12 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, defineOverload, integerAt, operandsOf } from "@enumeratio/engine";
+import {
+  bigIntegerAt,
+  bigRationalAt,
+  defineOverload,
+  integerAt,
+  operandsOf,
+  type Engine,
+  type Expr,
+} from "@enumeratio/engine";
 import * as adic from "./adic.ts";
 import type { Adic } from "./adic.ts";
 
@@ -16,19 +23,19 @@ import type { Adic } from "./adic.ts";
 
 export const ADIC = "AdicNumeral";
 
-const bigBase = (expr: BoxedExpression | undefined): bigint | undefined => {
+const bigBase = (expr: Expr | undefined): bigint | undefined => {
   const b = bigIntegerAt(expr);
   return b === undefined || b < 2n ? undefined : b;
 };
 
-const precisionAt = (expr: BoxedExpression | undefined): number | undefined => {
+const precisionAt = (expr: Expr | undefined): number | undefined => {
   if (expr === undefined) return undefined;
   const p = integerAt(expr);
   return p === undefined || p < 1 ? undefined : p;
 };
 
 /** Read an `AdicNumeral(...)` expression, or a rational in the given base. */
-export function adicOf(expr: BoxedExpression, base?: bigint): Adic | undefined {
+export function adicOf(expr: Expr, base?: bigint): Adic | undefined {
   if (expr.operator === ADIC) {
     const [b, x, p] = operandsOf(expr);
     const bb = bigBase(b);
@@ -44,10 +51,10 @@ export function adicOf(expr: BoxedExpression, base?: bigint): Adic | undefined {
   return r === undefined ? undefined : adic.exact(base, r[0], r[1]);
 }
 
-const isAdic = (expr: BoxedExpression): boolean => expr.operator === ADIC;
+const isAdic = (expr: Expr): boolean => expr.operator === ADIC;
 
 /** The base every adic operand shares, or `undefined` if they disagree or none is adic. */
-function sharedBase(ops: readonly BoxedExpression[]): bigint | undefined {
+function sharedBase(ops: readonly Expr[]): bigint | undefined {
   let base: bigint | undefined;
   for (const op of ops) {
     if (!isAdic(op)) continue;
@@ -58,25 +65,25 @@ function sharedBase(ops: readonly BoxedExpression[]): bigint | undefined {
   return base;
 }
 
-export function toExpression(ce: ComputeEngine, x: Adic): BoxedExpression {
+export function toExpression(ce: Engine, x: Adic): Expr {
   const value = ce.number(x.den === 1n ? x.num : [x.num, x.den]);
   const ops = [ce.number(x.base), value];
   if (x.prec !== undefined) ops.push(ce.number(x.prec));
   return ce.function(ADIC, ops);
 }
 
-export function declareAdic(ce: ComputeEngine): void {
+export function declareAdic(ce: Engine): void {
   // Evaluating the constructor normalises: reduces the rational, caps to `prec`, and
   // declines a rational the base cannot expand (1/2 in Z_10).
   ce.declare(ADIC, {
     signature: "(integer, rational | value, integer?) -> value",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const value = adicOf(ce.function(ADIC, ops));
       return value === undefined ? undefined : toExpression(ce, value);
     },
   });
 
-  const lift = (ops: readonly BoxedExpression[]): Adic[] | undefined => {
+  const lift = (ops: readonly Expr[]): Adic[] | undefined => {
     const base = sharedBase(ops);
     if (base === undefined) return undefined;
     const values = ops.map((op) => adicOf(op, base));
@@ -85,7 +92,7 @@ export function declareAdic(ce: ComputeEngine): void {
 
   const fold =
     (step: (x: Adic, y: Adic) => Adic | undefined) =>
-    (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    (ops: readonly Expr[]): Expr | undefined => {
       const values = lift(ops);
       if (values === undefined || values.length === 0) return undefined;
       let acc: Adic | undefined = values[0];
@@ -127,11 +134,11 @@ export function declareAdic(ce: ComputeEngine): void {
   const unary = (
     head: string,
     signature: string,
-    answer: (x: Adic, ops: readonly BoxedExpression[]) => BoxedExpression | undefined,
+    answer: (x: Adic, ops: readonly Expr[]) => Expr | undefined,
   ): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const x = ops[0] === undefined ? undefined : adicOf(ops[0]);
         return x === undefined ? undefined : answer(x, ops);
       },
@@ -182,7 +189,7 @@ export function declareAdic(ce: ComputeEngine): void {
   // allowed when f'(seed) is a unit mod b — that is how the 10-adic idempotents arise.
   ce.declare("HenselLift", {
     signature: "(any, integer, integer, integer?) -> value",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [f, seedExpr, pExpr, precExpr] = ops;
       if (f === undefined) return undefined;
       const seed = bigIntegerAt(seedExpr);
@@ -192,7 +199,7 @@ export function declareAdic(ce: ComputeEngine): void {
       if (seed === undefined || p === undefined || variable === undefined) return undefined;
       const df = ce.box(["D", f.json as never, variable]).evaluate();
       const evaluateAt =
-        (g: BoxedExpression) =>
+        (g: Expr) =>
         (n: bigint): bigint | undefined =>
           bigIntegerAt(g.subs({ [variable]: ce.number(n) }).evaluate());
       const root = adic.henselLift(p, evaluateAt(f), evaluateAt(df), seed, prec);

@@ -1,8 +1,12 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
   bigRationalAt,
+  type Engine,
+  type Expr,
+  extendHead,
   mayBeInteger,
+  type NativeEvaluate,
+  nativeEvaluate,
   operandsOf,
   optionName,
   optionsOf,
@@ -48,7 +52,7 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 // adding a ring later (a `EuclideanDomain`/`UniqueFactorizationMonoid` dispatch through
 // @enumeratio/structures) means widening this table, not this file's call sites.
 
-type Ops = readonly BoxedExpression[];
+type Ops = readonly Expr[];
 
 /** The rings `Over` accepts today — ℤ, the default, and ℤ[i]. */
 type Ring = "Integers" | "GaussianIntegers";
@@ -86,10 +90,9 @@ const floorDiv = (a: bigint, b: bigint): bigint => {
   return r !== 0n && r < 0n !== b < 0n ? q - 1n : q;
 };
 
-export function declareGaussian(ce: ComputeEngine): void {
-  const list = (items: readonly BoxedExpression[]): BoxedExpression => ce.function("List", items);
-  const g = (z: Gaussian | undefined): BoxedExpression | undefined =>
-    z === undefined ? undefined : gaussianExpression(ce, z);
+export function declareGaussian(ce: Engine): void {
+  const list = (items: readonly Expr[]): Expr => ce.function("List", items);
+  const g = (z: Gaussian | undefined): Expr | undefined => (z === undefined ? undefined : gaussianExpression(ce, z));
 
   widenSignature(ce, "Mod", "(number, number) -> number");
   wrapOperator(
@@ -200,9 +203,9 @@ export function declareGaussian(ce: ComputeEngine): void {
   const optionHead = (
     head: string,
     signature: string,
-    native: ((op: BoxedExpression) => boolean) | undefined,
-    answer: (z: Gaussian) => BoxedExpression | undefined,
-    integer?: (n: bigint) => BoxedExpression | undefined,
+    native: ((op: Expr) => boolean) | undefined,
+    answer: (z: Gaussian) => Expr | undefined,
+    integer?: (n: bigint) => Expr | undefined,
   ): void => {
     widenSignature(ce, head, signature, native);
     const definition = ce.lookupDefinition(head);
@@ -213,8 +216,8 @@ export function declareGaussian(ce: ComputeEngine): void {
     if (!flags.broadcastExemptions.includes("tuples")) {
       flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
     }
-    const nativeEvaluate = operator.evaluate;
-    const evaluate: typeof operator.evaluate = (ops, options) => {
+    const fallback = nativeEvaluate(ce, head);
+    const evaluate: NativeEvaluate = (ops, options) => {
       const option = overOption(head, ops);
       if (option === "other" || option.positional !== 1) return undefined;
       // With the tuple exemption the engine no longer threads a list for us.
@@ -223,9 +226,9 @@ export function declareGaussian(ce: ComputeEngine): void {
       }
       const z = gaussianAt(ops[0]);
       if (z !== undefined && (z[1] !== 0n || option.ring === "GaussianIntegers")) return answer(z);
-      return (z !== undefined ? integer?.(z[0]) : undefined) ?? nativeEvaluate?.(ops.slice(0, 1), options);
+      return (z !== undefined ? integer?.(z[0]) : undefined) ?? fallback?.(ops.slice(0, 1), options);
     };
-    operator.evaluate = evaluate;
+    extendHead(ce, head, { evaluate });
   };
 
   optionHead(
@@ -241,7 +244,7 @@ export function declareGaussian(ce: ComputeEngine): void {
   );
   // 0 and ±1 have no prime factorisation; the native handler spells them as Wolfram does.
   const factorsOf = (n: bigint): [bigint, number][] | undefined => (n > 1n || n < -1n ? factorInteger(n) : undefined);
-  const pairs = (factors: readonly (readonly [BoxedExpression, number])[]): BoxedExpression =>
+  const pairs = (factors: readonly (readonly [Expr, number])[]): Expr =>
     list(factors.map(([p, e]) => ce.function("Tuple", [p, ce.number(e)])));
 
   optionHead(
@@ -282,7 +285,7 @@ export function declareGaussian(ce: ComputeEngine): void {
   // PrimeNu, PrimeOmega, MoebiusMu and IsSquareFree already answer plain integers (widened in
   // declare.ts's threadOverLists); only the `Over -> GaussianIntegers` read of a rational
   // integer, and a Gaussian argument off the real line, are new here.
-  const bool = (value: boolean): BoxedExpression => ce.symbol(value ? "True" : "False");
+  const bool = (value: boolean): Expr => ce.symbol(value ? "True" : "False");
 
   optionHead("PrimeNu", "(number, any*) -> integer", undefined, (z) => {
     const count = primeNuGaussian(z);
@@ -315,19 +318,21 @@ export function declareGaussian(ce: ComputeEngine): void {
     if (!flags.broadcastExemptions.includes("tuples")) {
       flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
     }
-    const nativeEvaluate = divisorSigmaOperator.evaluate;
-    divisorSigmaOperator.evaluate = (ops, options) => {
-      const option = overOption("DivisorSigma", ops);
-      if (option !== "other" && option.positional === 2) {
-        const k = bigIntegerAt(ops[0]);
-        const z = gaussianAt(ops[1]);
-        if (k !== undefined && z !== undefined && (z[1] !== 0n || option.ring === "GaussianIntegers")) {
-          const sum = divisorSigmaGaussian(k, z);
-          if (sum !== undefined) return gaussianExpression(ce, sum);
+    const fallback = nativeEvaluate(ce, "DivisorSigma");
+    extendHead(ce, "DivisorSigma", {
+      evaluate: (ops, options) => {
+        const option = overOption("DivisorSigma", ops);
+        if (option !== "other" && option.positional === 2) {
+          const k = bigIntegerAt(ops[0]);
+          const z = gaussianAt(ops[1]);
+          if (k !== undefined && z !== undefined && (z[1] !== 0n || option.ring === "GaussianIntegers")) {
+            const sum = divisorSigmaGaussian(k, z);
+            if (sum !== undefined) return gaussianExpression(ce, sum);
+          }
         }
-      }
-      return nativeEvaluate?.(ops, options);
-    };
+        return fallback?.(ops, options);
+      },
+    });
   }
 }
 
@@ -337,7 +342,7 @@ export function declareGaussian(ce: ComputeEngine): void {
  * operands. Declared after `IntegerExponent` itself (declare.ts), unlike the rest of this
  * module, since the head is ours rather than compute-engine's native one.
  */
-export function declareIntegerExponentGaussian(ce: ComputeEngine): void {
+export function declareIntegerExponentGaussian(ce: Engine): void {
   wrapOperator(
     ce,
     ["IntegerExponent", 1, 1],
@@ -373,7 +378,7 @@ interface GaussianRational {
 
 /** `a+bi` (a, b ∈ ℚ) as a numerator/denominator pair, or `undefined` if either part isn't
  *  an exact rational (a float, a free variable, an irrational constant, …). */
-function numeratorDenominator(ce: ComputeEngine, expr: BoxedExpression | undefined): GaussianRational | undefined {
+function numeratorDenominator(ce: Engine, expr: Expr | undefined): GaussianRational | undefined {
   if (expr === undefined) return undefined;
   let reRat = bigRationalAt(expr);
   let imRat: readonly [bigint, bigint] | undefined = [0n, 1n];
@@ -390,9 +395,9 @@ function numeratorDenominator(ce: ComputeEngine, expr: BoxedExpression | undefin
   return { n: [reN * (d / reD), imN * (d / imD)], d };
 }
 
-function declareGaussianRationalGcdLcm(ce: ComputeEngine): void {
-  const parse = (expr: BoxedExpression): GaussianRational | undefined => numeratorDenominator(ce, expr);
-  const applies = (ops: readonly BoxedExpression[]): boolean => {
+function declareGaussianRationalGcdLcm(ce: Engine): void {
+  const parse = (expr: Expr): GaussianRational | undefined => numeratorDenominator(ce, expr);
+  const applies = (ops: readonly Expr[]): boolean => {
     if (ops.length < 2) return false;
     const parsed = ops.map(parse);
     if (parsed.some((r) => r === undefined)) return false;
@@ -417,8 +422,8 @@ function declareGaussianRationalGcdLcm(ce: ComputeEngine): void {
 }
 
 /** `n/d` as a `Complex(Rational, Rational)`, for when `d` doesn't divide `n` evenly in ℤ[i]. */
-function rationalGaussianExpr(ce: ComputeEngine, n: Gaussian, d: bigint): BoxedExpression {
-  const part = (num: bigint): BoxedExpression =>
+function rationalGaussianExpr(ce: Engine, n: Gaussian, d: bigint): Expr {
+  const part = (num: bigint): Expr =>
     d === 1n ? ce.number(num) : ce.function("Rational", [ce.number(num), ce.number(d)]).evaluate();
   const re = part(n[0]);
   const im = part(n[1]);
