@@ -183,6 +183,13 @@ test("GCD/LCM: a lone List argument broadcasts, it isn't folded", () => {
   expect(run(["LCM", ["CarmichaelLambda", ["List", 3, 8]]])).toEqual(["List", 2, 2]);
 });
 
+test("GCD/LCM: lists of one length thread together; unequal lengths stay held", () => {
+  expect(run(["GCD", ["List", 2, 4], ["List", 6, 8]])).toEqual(["List", 2, 4]);
+  expect(run(["LCM", ["List", 2, 4], ["List", 3, 6]])).toEqual(["List", 6, 12]);
+  expect(run(["GCD", ["List", 4, 6], ["List", 10, 15], 3])).toEqual(["List", 1, 3]);
+  expect(run(["GCD", ["List", 2, 4, 6], ["List", 3, 9]])).toEqual(["GCD", ["List", 2, 4, 6], ["List", 3, 9]]);
+});
+
 // Wolfram farm sweep (A-130): compute-engine's native IsSquareFree answers False once its
 // own factoring gives up on a large cofactor, rather than declining — a density sweep over
 // Range(1, 10000) silently collapsed from ~6079 squarefree integers to 2. Route plain

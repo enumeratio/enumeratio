@@ -9,7 +9,7 @@ signatures:
   - call: ExtendedGCD(a, b, c, …)
     description: $\gcd$ of any number of arguments, together with one Bézout coefficient per argument, folded pairwise from the two-argument case.
     library: enumeratio-number-theory
-    type: (number, number, number*) -> tuple
+    type: (number, number*) -> tuple
     overrides: compute-engine
 seeAlso:
   - GCD

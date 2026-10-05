@@ -48,7 +48,7 @@ a-single-argument-is-returned-unchanged
 with-no-arguments-compute-engine-returns-0-the			
 0-is-absorbed-every-integer-divides-it-so-gcd-0	(Int.gcd 0 5)	5	
 signs-are-discarded-before-computing-the-gcd			
-lists-aren-t-threaded-element-wise-they-re	(Int.gcd [2, 4] [6, 8])	Application type mismatch: The argument	error
+equal-length-lists-thread-element-wise	(Int.gcd [2, 4] [6, 8])	Application type mismatch: The argument	error
 gcd-0-0-0-by-convention	(Int.gcd 0 0)	0	
 symbolic-arguments-stay-unevaluated			
 gcd-neg-3-9	(Int.gcd (-3) 9)		
