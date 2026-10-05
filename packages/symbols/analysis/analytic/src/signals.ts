@@ -1,3 +1,4 @@
+// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf } from "@enumeratio/engine";
 import type { Json } from "@enumeratio/ce-patches";

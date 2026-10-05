@@ -1,3 +1,4 @@
+// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   atDigits,
