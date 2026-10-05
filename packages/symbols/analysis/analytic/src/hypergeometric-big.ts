@@ -58,7 +58,7 @@ function series(upper: readonly BigDecimal[], b: BigDecimal, z: BigDecimal, work
  * truncation matters. (`logGammaBig` stops short of that: its series length is fixed for a
  * double's worth of digits, so it is good to ~30 and no further.)
  */
-function inverseGamma(b: BigDecimal, digits: number): BigDecimal {
+export function inverseGamma(b: BigDecimal, digits: number): BigDecimal {
   const x0 = Math.ceil(0.6 * digits) + 10;
   const n = Math.max(0, x0 - Math.floor(b.toNumber()));
   let shift = big(1);

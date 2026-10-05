@@ -2,7 +2,8 @@ import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/c
 import { bigRationalAt, operandsOf } from "@enumeratio/engine";
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
-import { isFiniteNum } from "@enumeratio/ce-patches";
+import { bigRealOperand, bigResult, exceedsDoublePrecision, isFiniteNum } from "@enumeratio/ce-patches";
+import { BigDecimal } from "@enumeratio/engine/unstable";
 
 // The Wolfram signal / piecewise-waveform family: UnitBox, UnitTriangle, HeavisideTheta,
 // HeavisideLambda, HeavisidePi, Ramp, SawtoothWave, TriangleWave, SquareWave, Rescale,
@@ -379,8 +380,20 @@ function evaluateUnitBox(ce: ComputeEngine, ops: readonly BoxedExpression[]): Bo
   return ce.number(1);
 }
 
-function evaluateTent(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateTent(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  options: EvalOptions,
+): BoxedExpression | undefined {
   if (ops.length !== 1 || ops[0] === undefined) return undefined;
+  // `N(x, d)` hands an inexact operand over at its bignum digits; the tent is 1 - |x| in them.
+  if (
+    (ops[0] as Partial<{ isExact: boolean }>).isExact === false &&
+    exceedsDoublePrecision(ce, options.numericApproximation)
+  ) {
+    const x = bigRealOperand(ce, ops[0]);
+    if (x !== undefined) return x.abs().gte(1) ? ce.Zero : bigResult(ce, BigDecimal.ONE.sub(x.abs()));
+  }
   const v = decide(ops[0]);
   if (v === undefined) return undefined;
   const r = tentDecided(ce, v);
@@ -647,7 +660,7 @@ export function declareSignals(ce: ComputeEngine): void {
   });
   ce.declare("HeavisideLambda", {
     signature: "(real) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateTent(ce, ops),
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateTent(ce, ops, options),
   });
   ce.declare("UnitBox", {
     signature: "(real, real*) -> number",
@@ -655,7 +668,7 @@ export function declareSignals(ce: ComputeEngine): void {
   });
   ce.declare("UnitTriangle", {
     signature: "(real) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateTent(ce, ops),
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateTent(ce, ops, options),
   });
   ce.declare("Ramp", {
     signature: "(real) -> number",

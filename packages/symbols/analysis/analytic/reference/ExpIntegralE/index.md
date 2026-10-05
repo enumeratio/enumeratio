@@ -25,3 +25,4 @@ names:
 - compute-engine has no `ExpIntegralE`; this reduces it entirely to [[Gamma]]'s generalized incomplete form, already extended here for complex operands.
 - Two identities are kept exact ahead of the general formula, which hits a genuine $0 \cdot \infty$ at each: $E_0(z) = e^{-z}/z$ (since $\Gamma(1,z) = e^{-z}$ exactly, symbolic $z$ included), and $E_n(0) = 1/(n-1)$ for $\operatorname{Re}(n) > 1$ — the removable limit the $z^{n-1}$ factor can't see through when $z$ actually is 0.
 - Non-integer order (e.g. $n = 1/2$) works the same way, since the incomplete Gamma it reduces to does.
+- `N(x, d)` past a double's digits sums the convergent series for integer $n \ge 1$ and real $0 < z \le 100$, in enough extra digits to cover its cancellation; other arguments stay unevaluated there.

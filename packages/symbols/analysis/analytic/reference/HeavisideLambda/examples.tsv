@@ -1,10 +1,10 @@
-id	section	role	expr	expected	known	source	caption	triage	wolfram.note
-heavisidelambda-peak			[HeavisideLambda, 0]	1					
-heavisidelambda-endpoint			[HeavisideLambda, 1]	0			Zero at the endpoint		
-heavisidelambda-neg-endpoint			[HeavisideLambda, -1]	0					
-heavisidelambda-outside	Scope		[HeavisideLambda, 2]	0					
-heavisidelambda-1-4	Scope		[HeavisideLambda, [Rational, 1, 4]]	[Rational, 3, 4]			Exact rational input, exact rational output		
-heavisidelambda-1-2	Scope	test	[HeavisideLambda, [Rational, 1, 2]]	[Rational, 1, 2]					
-heavisidelambda-pi-over-4-exact	Scope		[HeavisideLambda, [Divide, Pi, 4]]	[Add, 1, [Multiply, [Rational, -1, 4], Pi]]	[Subtract, 1, [Divide, Pi, 4]]	1 - |v| for |v| = π/4 < 1	An exact irrational input: 1 - |v| stays exact		
-matrixfunction-heavisidelambda-list-list-neg-1-0	Scope		[MatrixFunction, HeavisideLambda, [List, [List, -1, 0], [List, [Rational, -1, 2], [Rational, 1, 2]]]]	[List, [List, 0, 0], [List, [Rational, -1, 6], [Rational, 1, 2]]]			Matrix function of the triangle function, with entries $0$ and $\frac12$		
-n-heavisidelambda-5-over-17-50	Scope	triage	[N, [HeavisideLambda, [Rational, 5, 17]], 50]	0.7058823529411764				gap	our N(head(...), n) for n past double (machine) precision returns only the double-precision digits (confirmed: ours agrees with Wolfram's 50-digit answer through round-off at ~16 significant digits, then stops) — no arbitrary-precision kernel implemented for this special-function family. Real feature gap (a BigDecimal/arbitrary-precision implementation per family), too big for this lane.
+id	section	role	expr	expected	known	source	caption
+heavisidelambda-peak			[HeavisideLambda, 0]	1			
+heavisidelambda-endpoint			[HeavisideLambda, 1]	0			Zero at the endpoint
+heavisidelambda-neg-endpoint			[HeavisideLambda, -1]	0			
+heavisidelambda-outside	Scope		[HeavisideLambda, 2]	0			
+heavisidelambda-1-4	Scope		[HeavisideLambda, [Rational, 1, 4]]	[Rational, 3, 4]			Exact rational input, exact rational output
+heavisidelambda-1-2	Scope	test	[HeavisideLambda, [Rational, 1, 2]]	[Rational, 1, 2]			
+heavisidelambda-pi-over-4-exact	Scope		[HeavisideLambda, [Divide, Pi, 4]]	[Add, 1, [Multiply, [Rational, -1, 4], Pi]]	[Subtract, 1, [Divide, Pi, 4]]	1 - |v| for |v| = π/4 < 1	An exact irrational input: 1 - |v| stays exact
+matrixfunction-heavisidelambda-list-list-neg-1-0	Scope		[MatrixFunction, HeavisideLambda, [List, [List, -1, 0], [List, [Rational, -1, 2], [Rational, 1, 2]]]]	[List, [List, 0, 0], [List, [Rational, -1, 6], [Rational, 1, 2]]]			Matrix function of the triangle function, with entries $0$ and $\frac12$
+n-heavisidelambda-5-over-17-50	Scope		[N, [HeavisideLambda, [Rational, 5, 17]], 50]	{num: "0.70588235294117647058823529411764705882352941176471"}			

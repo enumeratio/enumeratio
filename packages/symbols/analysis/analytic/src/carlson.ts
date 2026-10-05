@@ -1,6 +1,9 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type EvalOptions,
+  bigRealOperand,
+  bigResult,
+  exceedsDoublePrecision,
   isFiniteNum,
   numberResult,
   wantsNumber,
@@ -15,6 +18,8 @@ import {
   scale,
   sub,
 } from "@enumeratio/ce-patches";
+import type { BigDecimal } from "@enumeratio/engine/unstable";
+import { carlsonRCBig, carlsonRDBig, carlsonRFBig, carlsonRGBig, carlsonRJBig } from "./carlson-big.ts";
 
 // Carlson symmetric elliptic integrals RF, RD, RJ, RC, RG (Carlson 1995, "Numerical
 // computation of real or complex elliptic integrals"; DLMF §19.16, §19.36). These are
@@ -309,17 +314,37 @@ export const carlsonRGReal = (x: number, y: number, z: number): number => carlso
 
 // --- compute-engine declarations -----------------------------------------------------
 
+/**
+ * Past a double's digits: the bignum kernel over positive reals, else decline (stay symbolic)
+ * rather than print a double's digits as more. `undefined` when no more digits were asked for.
+ */
+function pastDouble(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  options: EvalOptions,
+  kernel: (args: BigDecimal[], digits: number) => BigDecimal | undefined,
+): { readonly value: BoxedExpression | undefined } | undefined {
+  if (!exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+  const args = ops.map((op) => bigRealOperand(ce, op));
+  if (args.some((a) => a === undefined)) return { value: undefined };
+  const value = kernel(args as BigDecimal[], ce.precision);
+  return { value: value === undefined ? undefined : bigResult(ce, value) };
+}
+
 function evaluate3(
   ce: ComputeEngine,
   ops: readonly BoxedExpression[],
   kernel: (x: Cx, y: Cx, z: Cx) => Cx,
   options: EvalOptions,
+  big: (args: BigDecimal[], digits: number) => BigDecimal | undefined,
 ): BoxedExpression | undefined {
   const [x, y, z] = ops;
   if (x === undefined || y === undefined || z === undefined) return undefined;
   if (!wantsNumber(ops, options) || !isFiniteNum(x) || !isFiniteNum(y) || !isFiniteNum(z)) {
     return undefined;
   }
+  const past = pastDouble(ce, ops, options, big);
+  if (past !== undefined) return past.value;
   return numberResult(ce, kernel(cx(x.re, x.im), cx(y.re, y.im), cx(z.re, z.im)));
 }
 
@@ -335,7 +360,7 @@ export function declareCarlson(ce: ComputeEngine): void {
 
   ce.declare("CarlsonRF", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRF, options),
+    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRF, options, ([x, y, z], d) => carlsonRFBig(x!, y!, z!, d)),
   });
 
   ce.declare("CarlsonRC", {
@@ -344,13 +369,15 @@ export function declareCarlson(ce: ComputeEngine): void {
       const [x, y] = ops;
       if (x === undefined || y === undefined) return undefined;
       if (!wantsNumber(ops, options) || !isFiniteNum(x) || !isFiniteNum(y)) return undefined;
+      const past = pastDouble(ce, ops, options, ([a, b], d) => carlsonRCBig(a!, b!, d));
+      if (past !== undefined) return past.value;
       return numberResult(ce, carlsonRC(cx(x.re, x.im), cx(y.re, y.im)));
     },
   });
 
   ce.declare("CarlsonRD", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRD, options),
+    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRD, options, ([x, y, z], d) => carlsonRDBig(x!, y!, z!, d)),
   });
 
   ce.declare("CarlsonRJ", {
@@ -363,12 +390,14 @@ export function declareCarlson(ce: ComputeEngine): void {
       }
       const [xc, yc, zc, pc] = [cx(x.re, x.im), cx(y.re, y.im), cx(z.re, z.im), cx(p.re, p.im)];
       if (carlsonRJDeclines(xc, yc, zc, pc)) return undefined; // stays symbolic — see there
+      const past = pastDouble(ce, ops, options, ([a, b, c, d], digits) => carlsonRJBig(a!, b!, c!, d!, digits));
+      if (past !== undefined) return past.value;
       return numberResult(ce, carlsonRJ(xc, yc, zc, pc));
     },
   });
 
   ce.declare("CarlsonRG", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRG, options),
+    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRG, options, ([x, y, z], d) => carlsonRGBig(x!, y!, z!, d)),
   });
 }

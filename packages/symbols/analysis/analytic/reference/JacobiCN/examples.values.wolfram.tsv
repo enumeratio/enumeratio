@@ -1,44 +1,44 @@
-id	in	out	tex.in	tex.out	verdict
-a-floating-point-argument-evaluates-directly-to	N[JacobiCN[0.3, 0.5]]	0.9559858618277871	N[\text{cn}(0.3|0.5)]	0.955986	
-cn-1-1-0-9	N[JacobiCN[1.1, 0.9]]	0.5856854147823068	N[\text{cn}(1.1|0.9)]	0.585685	
-cn-0-7-0-2	N[JacobiCN[-0.7, 0.2]]	0.7714576886905151	N[\text{cn}(-0.7|0.2)]	0.771458	
-cn-0-3-0	N[JacobiCN[0.3, 0]]	0.955336489125606	N[\text{cn}(0.3|0)]	0.955336	
-cn-0-3-1	N[JacobiCN[0.3, 1]]	0.9566279119002483	N[\text{cn}(0.3|1)]	0.956628	
-cn-1-2-3	N[JacobiCN[1.2, 3]]	0.8322766624170146	N[\text{cn}(1.2|3)]	0.832277	
-cn-0-9-0-5	N[JacobiCN[0.9, -0.5]]	0.5800418476907171	N[\text{cn}(0.9|-0.5)]	0.580042	
-cn-0-4-0-5i-0-3	N[JacobiCN[Complex[0.4, 0.5], 0.3]]	1.0302570555642738 - 0.20531591740672292*I	N[\text{cn}(0.4\, +0.5 i|0.3)]	1.03026\, -0.205316 i	
-cn-0-4-0-5i-0-3-2	N[JacobiCN[Complex[0.4, -0.5], 0.3]]	1.0302570555642738 + 0.20531591740672292*I	N[\text{cn}(0.4\, -0.5 i|0.3)]	1.03026\, +0.205316 i	
-cn-0-4-0-5i-0-3-3	N[JacobiCN[Complex[-0.4, 0.5], 0.3]]	1.0302570555642738 + 0.20531591740672292*I	N[\text{cn}(-0.4+0.5 i|0.3)]	1.03026\, +0.205316 i	
-cn-0-4-0-5i-0-3-4	N[JacobiCN[Complex[-0.4, -0.5], 0.3]]	1.0302570555642738 - 0.20531591740672292*I	N[\text{cn}(-0.4-0.5 i|0.3)]	1.03026\, -0.205316 i	
-cn-1-1-0-7i-0-3	N[JacobiCN[Complex[1.1, -0.7], 0.3]]	0.5572329487708401 + 0.5707280407647256*I	N[\text{cn}(1.1\, -0.7 i|0.3)]	0.557233\, +0.570728 i	
-cn-1-1i-0-3	N[JacobiCN[Complex[1, 1], 0.3]]	0.701054852177762 - 0.8574509113879211*I	N[\text{cn}(1+i|0.3)]	0.701055\, -0.857451 i	
-cn-0-2-8i-0-4	N[JacobiCN[Complex[0.2, 8], 0.4]]	0.9996419059152134 - 0.04034250210054848*I	N[\text{cn}(0.2\, +8 i|0.4)]	0.999642\, -0.0403425 i	
-cn-0-2-8i-0-4-2	N[JacobiCN[Complex[0.2, -8], 0.4]]	0.9996419059152134 + 0.04034250210054848*I	N[\text{cn}(0.2\, -8 i|0.4)]	0.999642\, +0.0403425 i	
-cn-5-4i-0-6	N[JacobiCN[Complex[5, 4], 0.6]]	0.5485718390719982 - 0.2917376644239183*I	N[\text{cn}(5+4 i|0.6)]	0.548572\, -0.291738 i	
-cn-0-05-1-9753631352924692i-0-3	N[JacobiCN[Complex[0.05, 1.9753631352924692], 0.3]]	14.593774275386192 - 7.308992728292497*I	N[\text{cn}(0.05\, +1.97536 i|0.3)]	14.5938\, -7.30899 i	
-cn-0-05-2-0653631352924693i-0-3	N[JacobiCN[Complex[0.05, 2.0653631352924693], 0.3]]	7.020863651426769 - 35.116511001616594*I	N[\text{cn}(0.05\, +2.06536 i|0.3)]	7.02086\, -35.1165 i	
-cn-0-05-2-074363135292469i-0-3	N[JacobiCN[Complex[0.05, 2.074363135292469], 0.3]]	0.7298826951672125 - 36.506328374772394*I	N[\text{cn}(0.05\, +2.07436 i|0.3)]	0.729883\, -36.5063 i	
-cn-0-05-2-075263135292469i-0-3	N[JacobiCN[Complex[0.05, 2.075263135292469], 0.3]]	0.07301717758492755 - 36.520782417375564*I	N[\text{cn}(0.05\, +2.07526 i|0.3)]	0.0730172\, -36.5208 i	
-cn-0-3-0-2i-1-5	N[JacobiCN[Complex[0.3, 0.2], 1.5]]	0.9718189591992348 - 0.056401382801684684*I	N[\text{cn}(0.3\, +0.2 i|1.5)]	0.971819\, -0.0564014 i	
-cn-0-5-0-3i-3	N[JacobiCN[Complex[0.5, -0.3], 3]]	0.8983707786639181 + 0.09918828017071427*I	N[\text{cn}(0.5\, -0.3 i|3)]	0.898371\, +0.0991883 i	
-cn-0-3-0-2i-0-7	N[JacobiCN[Complex[0.3, 0.2], -0.7]]	0.9758303565524703 - 0.060926219714567215*I	N[\text{cn}(0.3\, +0.2 i|-0.7)]	0.97583\, -0.0609262 i	
-cn-0-5-0-3i-3-2	N[JacobiCN[Complex[0.5, -0.3], -3]]	0.9496291897695314 + 0.19569309737975166*I	N[\text{cn}(0.5\, -0.3 i|-3)]	0.949629\, +0.195693 i	
-m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCN[0.3, 1.5]]	0.9572626990259849	N[\text{cn}(0.3|1.5)]	0.957263	
-m-less-than-0-via-the-imaginary-modulus	N[JacobiCN[0.3, -2]]	0.9526645697911019	N[\text{cn}(0.3|-2)]	0.952665	
-a-complex-argument-u	N[JacobiCN[Complex[0.3, 0.4], 0.5]]	1.0279928720079905 - 0.12377586413675586*I	N[\text{cn}(0.3\, +0.4 i|0.5)]	1.02799\, -0.123776 i	
-matrixfunction-function-jacobicn-neg-1-over-3	MatrixFunction[Function[JacobiCN[Times[Complex[0, Rational[-1, 3]], Pi], Slot[1]]], List[List[1, 0], List[0, 1]]]	{{2, 0}, {0, 2}}	\text{MatrixFunction}\left[\text{cn}((\text{Rational}[-1,3] i) \pi |\text{$\#$1})\&,\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  2 & 0 \\  0 & 2 \\ \end{array} \right)	
-list-jacobicn-z-0-jacobicn-z-1	List[JacobiCN[z, 0], JacobiCN[z, 1]]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\{\text{cn}(z|0),\text{cn}(z|1)\}-\left\{\cos (z),\frac{1}{\cosh (z)}\right\}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\{\text{cn}\left(\left.\frac{7}{3}\right|0\right),\text{cn}\left(\left.\frac{7}{3}\right|1\right)\right\}-\left\{\cos \left(\frac{7}{3}\right),\frac{1}{\cosh \left(\frac{7}{3}\right)}\right\}\right]\right],\text{Chop}\left[N\left[\left\{\text{cn}\left(\left.-\frac{11}{5}\right|0\right),\text{cn}\left(\left.-\frac{11}{5}\right|1\right)\right\}-\left\{\cos \left(-\frac{11}{5}\right),\frac{1}{\cosh \left(-\frac{11}{5}\right)}\right\}\right]\right],\text{Chop}\left[N\left[\left\{\text{cn}\left(\left.\frac{13}{4}\right|0\right),\text{cn}\left(\left.\frac{13}{4}\right|1\right)\right\}-\left\{\cos \left(\frac{13}{4}\right),\frac{1}{\cosh \left(\frac{13}{4}\right)}\right\}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-n-jacobicn-2-1-over-3-50	N[JacobiCN[2, Rational[1, 3]], 50]	-0.21637836906745774174825957960916244242271972424401602331660429192438648475652`50.			disagree
-list-jacobicn-0-m-jacobicn-1-over-2-times	List[JacobiCN[0, m], JacobiCN[Times[Rational[1, 2], EllipticK[m]], m], JacobiCN[EllipticK[m], m]]	{1, (1 - m)^(1/4)/Sqrt[1 + Sqrt[1 - m]], 0}	\left\{\text{cn}(0|m),\text{cn}\left(\left.\frac{1}{2} K(m)\right|m\right),\text{cn}(K(m)|m)\right\}	\left\{1,\frac{\sqrt[4]{1-m}}{\sqrt{\sqrt{1-m}+1}},0\right\}	disagree
-u-0-is-1-for-any-m	JacobiCN[0, m]	1	\text{cn}(0|m)	1	
-m-0-reduces-to-cos-u	JacobiCN[u, 0]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{cn}(u|0)-\cos (u)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{cn}\left(\left.\frac{7}{3}\right|0\right)-\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(\left.-\frac{11}{5}\right|0\right)-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(\left.\frac{13}{4}\right|0\right)-\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-the-quarter-period-u-elliptick-m-is-0	JacobiCN[EllipticK[m], m]	0	\text{cn}(K(m)|m)	0	
-jacobicn-0-0	JacobiCN[0, 0]	1	\text{cn}(0|0)	1	
-jacobicn-1-over-2-times-pi-0	JacobiCN[Times[Rational[1, 2], Pi], 0]	0	\text{cn}\left(\left.\frac{1}{2} \pi \right|0\right)	0	
-jacobicn-0-1	JacobiCN[0, 1]	1	\text{cn}(0|1)	1	
-jacobicn-1-over-2-times-i-times-pi-1	JacobiCN[Times[Complex[0, Rational[1, 2]], Pi], 1]	ComplexInfinity	\text{cn}((\text{Rational}[1,2] i) \pi |1)	\text{ComplexInfinity}	
-n-jacobicn-sqrt-2-over-4-times-i-2	N[JacobiCN[Complex[0, Divide[Sqrt[2], 4]], 2]]	1.068806917319438 + 0.*I	N\left[\text{cn}\left(\left.\frac{\sqrt{2}}{4} i\right|2\right)\right]	1.06881\, +0. i	
-n-jacobicn-1-over-2-times-1-plus-sqrt-2-over-2-1	N[JacobiCN[Times[Rational[1, 2], Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	0.659292746249578	N\left[\text{cn}\left(\frac{1}{2} \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	0.659293	
-n-jacobicn-sqrt-2-times-i-2	N[JacobiCN[Complex[0, Sqrt[2]], 2]]	-6.889282219354171 + 0.*I	N\left[\text{cn}\left(\left.\sqrt{2} i\right|2\right)\right]	-6.88928+0. i	
-n-jacobicn-2-times-1-plus-sqrt-2-over-2-1-minus	N[JacobiCN[Times[2, Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	-0.9691506644900215	N\left[\text{cn}\left(2 \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	-0.969151	
-symbolic-arguments-are-left-unevaluated-rather	JacobiCN[u, m]	JacobiCN[u, m]	\text{cn}(u|m)	\text{cn}(u|m)	
+id	in	out	shown	tex.in	tex.out	verdict
+a-floating-point-argument-evaluates-directly-to	N[JacobiCN[0.3, 0.5]]	0.9559858618277871		N[\text{cn}(0.3|0.5)]	0.955986	
+cn-1-1-0-9	N[JacobiCN[1.1, 0.9]]	0.5856854147823068		N[\text{cn}(1.1|0.9)]	0.585685	
+cn-0-7-0-2	N[JacobiCN[-0.7, 0.2]]	0.7714576886905151		N[\text{cn}(-0.7|0.2)]	0.771458	
+cn-0-3-0	N[JacobiCN[0.3, 0]]	0.955336489125606		N[\text{cn}(0.3|0)]	0.955336	
+cn-0-3-1	N[JacobiCN[0.3, 1]]	0.9566279119002483		N[\text{cn}(0.3|1)]	0.956628	
+cn-1-2-3	N[JacobiCN[1.2, 3]]	0.8322766624170146		N[\text{cn}(1.2|3)]	0.832277	
+cn-0-9-0-5	N[JacobiCN[0.9, -0.5]]	0.5800418476907171		N[\text{cn}(0.9|-0.5)]	0.580042	
+cn-0-4-0-5i-0-3	N[JacobiCN[Complex[0.4, 0.5], 0.3]]	1.0302570555642738 - 0.20531591740672292*I		N[\text{cn}(0.4\, +0.5 i|0.3)]	1.03026\, -0.205316 i	
+cn-0-4-0-5i-0-3-2	N[JacobiCN[Complex[0.4, -0.5], 0.3]]	1.0302570555642738 + 0.20531591740672292*I		N[\text{cn}(0.4\, -0.5 i|0.3)]	1.03026\, +0.205316 i	
+cn-0-4-0-5i-0-3-3	N[JacobiCN[Complex[-0.4, 0.5], 0.3]]	1.0302570555642738 + 0.20531591740672292*I		N[\text{cn}(-0.4+0.5 i|0.3)]	1.03026\, +0.205316 i	
+cn-0-4-0-5i-0-3-4	N[JacobiCN[Complex[-0.4, -0.5], 0.3]]	1.0302570555642738 - 0.20531591740672292*I		N[\text{cn}(-0.4-0.5 i|0.3)]	1.03026\, -0.205316 i	
+cn-1-1-0-7i-0-3	N[JacobiCN[Complex[1.1, -0.7], 0.3]]	0.5572329487708401 + 0.5707280407647256*I		N[\text{cn}(1.1\, -0.7 i|0.3)]	0.557233\, +0.570728 i	
+cn-1-1i-0-3	N[JacobiCN[Complex[1, 1], 0.3]]	0.701054852177762 - 0.8574509113879211*I		N[\text{cn}(1+i|0.3)]	0.701055\, -0.857451 i	
+cn-0-2-8i-0-4	N[JacobiCN[Complex[0.2, 8], 0.4]]	0.9996419059152134 - 0.04034250210054848*I		N[\text{cn}(0.2\, +8 i|0.4)]	0.999642\, -0.0403425 i	
+cn-0-2-8i-0-4-2	N[JacobiCN[Complex[0.2, -8], 0.4]]	0.9996419059152134 + 0.04034250210054848*I		N[\text{cn}(0.2\, -8 i|0.4)]	0.999642\, +0.0403425 i	
+cn-5-4i-0-6	N[JacobiCN[Complex[5, 4], 0.6]]	0.5485718390719982 - 0.2917376644239183*I		N[\text{cn}(5+4 i|0.6)]	0.548572\, -0.291738 i	
+cn-0-05-1-9753631352924692i-0-3	N[JacobiCN[Complex[0.05, 1.9753631352924692], 0.3]]	14.593774275386192 - 7.308992728292497*I		N[\text{cn}(0.05\, +1.97536 i|0.3)]	14.5938\, -7.30899 i	
+cn-0-05-2-0653631352924693i-0-3	N[JacobiCN[Complex[0.05, 2.0653631352924693], 0.3]]	7.020863651426769 - 35.116511001616594*I		N[\text{cn}(0.05\, +2.06536 i|0.3)]	7.02086\, -35.1165 i	
+cn-0-05-2-074363135292469i-0-3	N[JacobiCN[Complex[0.05, 2.074363135292469], 0.3]]	0.7298826951672125 - 36.506328374772394*I		N[\text{cn}(0.05\, +2.07436 i|0.3)]	0.729883\, -36.5063 i	
+cn-0-05-2-075263135292469i-0-3	N[JacobiCN[Complex[0.05, 2.075263135292469], 0.3]]	0.07301717758492755 - 36.520782417375564*I		N[\text{cn}(0.05\, +2.07526 i|0.3)]	0.0730172\, -36.5208 i	
+cn-0-3-0-2i-1-5	N[JacobiCN[Complex[0.3, 0.2], 1.5]]	0.9718189591992348 - 0.056401382801684684*I		N[\text{cn}(0.3\, +0.2 i|1.5)]	0.971819\, -0.0564014 i	
+cn-0-5-0-3i-3	N[JacobiCN[Complex[0.5, -0.3], 3]]	0.8983707786639181 + 0.09918828017071427*I		N[\text{cn}(0.5\, -0.3 i|3)]	0.898371\, +0.0991883 i	
+cn-0-3-0-2i-0-7	N[JacobiCN[Complex[0.3, 0.2], -0.7]]	0.9758303565524703 - 0.060926219714567215*I		N[\text{cn}(0.3\, +0.2 i|-0.7)]	0.97583\, -0.0609262 i	
+cn-0-5-0-3i-3-2	N[JacobiCN[Complex[0.5, -0.3], -3]]	0.9496291897695314 + 0.19569309737975166*I		N[\text{cn}(0.5\, -0.3 i|-3)]	0.949629\, +0.195693 i	
+m-greater-than-1-via-the-reciprocal-modulus	N[JacobiCN[0.3, 1.5]]	0.9572626990259849		N[\text{cn}(0.3|1.5)]	0.957263	
+m-less-than-0-via-the-imaginary-modulus	N[JacobiCN[0.3, -2]]	0.9526645697911019		N[\text{cn}(0.3|-2)]	0.952665	
+a-complex-argument-u	N[JacobiCN[Complex[0.3, 0.4], 0.5]]	1.0279928720079905 - 0.12377586413675586*I		N[\text{cn}(0.3\, +0.4 i|0.5)]	1.02799\, -0.123776 i	
+matrixfunction-function-jacobicn-neg-1-over-3	MatrixFunction[Function[JacobiCN[Times[Complex[0, Rational[-1, 3]], Pi], Slot[1]]], List[List[1, 0], List[0, 1]]]	{{2, 0}, {0, 2}}		\text{MatrixFunction}\left[\text{cn}((\text{Rational}[-1,3] i) \pi |\text{$\#$1})\&,\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  2 & 0 \\  0 & 2 \\ \end{array} \right)	
+list-jacobicn-z-0-jacobicn-z-1	List[JacobiCN[z, 0], JacobiCN[z, 1]]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\{\text{cn}(z|0),\text{cn}(z|1)\}-\left\{\cos (z),\frac{1}{\cosh (z)}\right\}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[\text{AllTrue}[\text{Flatten}[\{d\}],\text{$\#$1}\text{===}0\&],\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\left\{\text{cn}\left(\left.\frac{7}{3}\right|0\right),\text{cn}\left(\left.\frac{7}{3}\right|1\right)\right\}-\left\{\cos \left(\frac{7}{3}\right),\frac{1}{\cosh \left(\frac{7}{3}\right)}\right\}\right]\right],\text{Chop}\left[N\left[\left\{\text{cn}\left(\left.-\frac{11}{5}\right|0\right),\text{cn}\left(\left.-\frac{11}{5}\right|1\right)\right\}-\left\{\cos \left(-\frac{11}{5}\right),\frac{1}{\cosh \left(-\frac{11}{5}\right)}\right\}\right]\right],\text{Chop}\left[N\left[\left\{\text{cn}\left(\left.\frac{13}{4}\right|0\right),\text{cn}\left(\left.\frac{13}{4}\right|1\right)\right\}-\left\{\cos \left(\frac{13}{4}\right),\frac{1}{\cosh \left(\frac{13}{4}\right)}\right\}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+n-jacobicn-2-1-over-3-50	N[JacobiCN[2, Rational[1, 3]], 50]	-0.21637836906745774174825957960916244242271972424401602331660429192438648475652`50.	-0.21637836906745774174825957960916244242271972424402	N\left[\text{cn}\left(2\left|\frac{1}{3}\right.\right),50\right]	-0.21637836906745774174825957960916244242271972424402	
+list-jacobicn-0-m-jacobicn-1-over-2-times	List[JacobiCN[0, m], JacobiCN[Times[Rational[1, 2], EllipticK[m]], m], JacobiCN[EllipticK[m], m]]	{1, (1 - m)^(1/4)/Sqrt[1 + Sqrt[1 - m]], 0}		\left\{\text{cn}(0|m),\text{cn}\left(\left.\frac{1}{2} K(m)\right|m\right),\text{cn}(K(m)|m)\right\}	\left\{1,\frac{\sqrt[4]{1-m}}{\sqrt{\sqrt{1-m}+1}},0\right\}	disagree
+u-0-is-1-for-any-m	JacobiCN[0, m]	1		\text{cn}(0|m)	1	
+m-0-reduces-to-cos-u	JacobiCN[u, 0]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{cn}(u|0)-\cos (u)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{cn}\left(\left.\frac{7}{3}\right|0\right)-\cos \left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(\left.-\frac{11}{5}\right|0\right)-\cos \left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\text{cn}\left(\left.\frac{13}{4}\right|0\right)-\cos \left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+the-quarter-period-u-elliptick-m-is-0	JacobiCN[EllipticK[m], m]	0		\text{cn}(K(m)|m)	0	
+jacobicn-0-0	JacobiCN[0, 0]	1		\text{cn}(0|0)	1	
+jacobicn-1-over-2-times-pi-0	JacobiCN[Times[Rational[1, 2], Pi], 0]	0		\text{cn}\left(\left.\frac{1}{2} \pi \right|0\right)	0	
+jacobicn-0-1	JacobiCN[0, 1]	1		\text{cn}(0|1)	1	
+jacobicn-1-over-2-times-i-times-pi-1	JacobiCN[Times[Complex[0, Rational[1, 2]], Pi], 1]	ComplexInfinity		\text{cn}((\text{Rational}[1,2] i) \pi |1)	\text{ComplexInfinity}	
+n-jacobicn-sqrt-2-over-4-times-i-2	N[JacobiCN[Complex[0, Divide[Sqrt[2], 4]], 2]]	1.068806917319438 + 0.*I		N\left[\text{cn}\left(\left.\frac{\sqrt{2}}{4} i\right|2\right)\right]	1.06881\, +0. i	
+n-jacobicn-1-over-2-times-1-plus-sqrt-2-over-2-1	N[JacobiCN[Times[Rational[1, 2], Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	0.659292746249578		N\left[\text{cn}\left(\frac{1}{2} \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	0.659293	
+n-jacobicn-sqrt-2-times-i-2	N[JacobiCN[Complex[0, Sqrt[2]], 2]]	-6.889282219354171 + 0.*I		N\left[\text{cn}\left(\left.\sqrt{2} i\right|2\right)\right]	-6.88928+0. i	
+n-jacobicn-2-times-1-plus-sqrt-2-over-2-1-minus	N[JacobiCN[Times[2, Plus[1, Divide[Sqrt[2], 2]]], Times[Power[Plus[1, Minus[Divide[Sqrt[2], 2]]], 2], Power[Plus[1, Divide[Sqrt[2], 2]], -2]]]]	-0.9691506644900215		N\left[\text{cn}\left(2 \left(1+\frac{\sqrt{2}}{2}\right)|\frac{\left(1-\frac{\sqrt{2}}{2}\right)^2}{\left(1+\frac{\sqrt{2}}{2}\right)^2}\right)\right]	-0.969151	
+symbolic-arguments-are-left-unevaluated-rather	JacobiCN[u, m]	JacobiCN[u, m]		\text{cn}(u|m)	\text{cn}(u|m)	
