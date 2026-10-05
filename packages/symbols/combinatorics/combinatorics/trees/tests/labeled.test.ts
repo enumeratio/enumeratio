@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/labeled.ts";
 
 // Self-cert LabeledTrees split out of collections/src/families/core.ts (wire-carriers lane
@@ -8,7 +9,7 @@ const PARAMS: Record<string, number[]> = {
   LabeledTrees: [4],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, p] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);
