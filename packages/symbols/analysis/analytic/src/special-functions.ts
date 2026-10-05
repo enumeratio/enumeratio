@@ -25,7 +25,7 @@ const wants = (ops: readonly BoxedExpression[], options: EvalOptions): boolean =
 export function declareSpecialFunctions(ce: ComputeEngine): void {
   ce.declare("HarmonicNumber", {
     signature: "(number, number?) -> number",
-    evaluate: (ops, options) => evaluateHarmonicNumber(ce, ops, wants(ops, options)),
+    evaluate: (ops, options) => evaluateHarmonicNumber(ce, ops, wants(ops, options), options),
   });
 
   ce.declare("ChebyshevT", {
@@ -75,7 +75,7 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
     evaluate: (ops, options) =>
       ops[0] === undefined || ops[1] === undefined
         ? undefined
-        : evaluateFallingFactorial(ce, ops[0], ops[1], wants(ops, options)),
+        : evaluateFallingFactorial(ce, ops[0], ops[1], wants(ops, options), options),
   });
 
   ce.declare("XGCD", {

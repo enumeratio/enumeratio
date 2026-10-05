@@ -1,6 +1,14 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigRationalAt } from "@enumeratio/engine";
-import { type BoxInput, declined, type EvalOptions, isRealInt, type NativeEval } from "@enumeratio/ce-patches";
+import {
+  type BoxInput,
+  declined,
+  type EvalOptions,
+  inDoubles,
+  inDoublesIfComplex,
+  isRealInt,
+  type NativeEval,
+} from "@enumeratio/ce-patches";
 import { gammaExactValue } from "./widened.ts";
 
 // The three-argument generalized incomplete gamma, Wolfram's Gamma[s, z₀, z₁] =
@@ -41,12 +49,13 @@ const rewrite = (
   ce: ComputeEngine,
   head: "Gamma" | "GammaRegularized",
   ops: readonly BoxedExpression[],
-  numeric: boolean,
-): BoxedExpression => {
+  options: EvalOptions,
+): BoxedExpression | undefined => {
   const [s, z0, z1] = ops.map((o) => o.json as unknown as BoxInput);
   const difference: BoxInput = ["Subtract", ["Gamma", s, z0], ["Gamma", s, z1]] as BoxInput;
   const expr = ce.box(head === "Gamma" ? difference : (["Divide", difference, ["Gamma", s]] as BoxInput));
-  return numeric ? expr.N() : expr.evaluate();
+  // A complex operand runs the incomplete Gamma in doubles.
+  return options.numericApproximation ? inDoublesIfComplex(ce, ops, options, () => expr.N()) : expr.evaluate();
 };
 
 /**
@@ -94,15 +103,15 @@ export function evaluateIncompleteGamma(
     // value is complex) is left exactly as vanilla compute-engine leaves it.
     if (head === "GammaRegularized" && (s.im !== 0 || z.im !== 0)) {
       const expr = ce.box(["Divide", ["Gamma", sJson, zJson], ["Gamma", sJson]] as BoxInput);
-      const q = options.numericApproximation ? expr.N() : expr.evaluate();
-      if (!unreduced(q, "Gamma")) return q;
+      const q = options.numericApproximation ? inDoubles(ce, options, () => expr.N()) : expr.evaluate();
+      if (q !== undefined && !unreduced(q, "Gamma")) return q;
     }
     return r;
   }
   if (ops.length > 3) return undefined; // not a form Wolfram has either
-  const r = rewrite(ce, head, ops, options.numericApproximation ?? false);
+  const r = rewrite(ce, head, ops, options);
   // A difference of two calls that did not themselves reduce is no better than the
   // unevaluated call: keep the three-argument form rather than showing the difference.
-  if (unreduced(r, "Gamma")) return undefined;
+  if (r === undefined || unreduced(r, "Gamma")) return undefined;
   return r;
 }
