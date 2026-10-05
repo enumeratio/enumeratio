@@ -3,7 +3,7 @@
 // and near misses. Compiled and interpreted, and past 2^53 where the interpreter's exact
 // integers take over.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, kernelOn } from "../../collections/src/families/epsil.ts";
@@ -34,7 +34,7 @@ import {
   lucasStringsValid,
 } from "../src/families/words.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 // The larger parameter points and the past-2^53 round trips (the interpreter takes minutes over
 // StirlingPermutations there) run nightly.
 const DEEP = process.env.DEEP_TESTS === "1";

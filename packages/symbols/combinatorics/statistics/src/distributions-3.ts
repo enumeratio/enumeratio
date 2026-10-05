@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvaluateOptions, integerAt, operandsOf, wrapOperator } from "@enumeratio/engine";
+import { type Engine, type EvaluateOptions, type Expr, integerAt, operandsOf, wrapOperator } from "@enumeratio/engine";
 import { finish, gammaParams } from "./distributions.ts";
 import { add, div, exp, If, lt, mul, neg, one, pdfOf2, pow, sub, three, two } from "./distributions-2.ts";
 
@@ -31,26 +30,17 @@ import { add, div, exp, If, lt, mul, neg, one, pdfOf2, pow, sub, three, two } fr
 
 // --- shared helpers --------------------------------------------------------------------------
 
-const I = (ce: ComputeEngine) => ce.symbol("ImaginaryUnit");
-const eq = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Equal", [a, b]);
+const I = (ce: Engine) => ce.symbol("ImaginaryUnit");
+const eq = (ce: Engine, a: Expr, b: Expr) => ce.function("Equal", [a, b]);
 
 /** `f(0) = 1` for every transform here (CF/MGF at the origin is always 1) — special-cased
  *  ahead of a formula that would otherwise divide by `t`. */
-const atZeroElse = (
-  ce: ComputeEngine,
-  t: BoxedExpression,
-  formula: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression => finish(If(ce, eq(ce, t, ce.Zero), ce.One, finish(formula, options)), options);
+const atZeroElse = (ce: Engine, t: Expr, formula: Expr, options: EvaluateOptions): Expr =>
+  finish(If(ce, eq(ce, t, ce.Zero), ce.One, finish(formula, options)), options);
 
 // --- CharacteristicFunction(dist, t) = E[e^{i t X}] --------------------------------------------
 
-const cfOf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  t: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const cfOf = (ce: Engine, dist: Expr, t: Expr, options: EvaluateOptions): Expr | undefined => {
   const i = I(ce);
   switch (dist.operator) {
     case "NormalDistribution": {
@@ -177,12 +167,7 @@ const cfOf = (
 // (still elementary, via the Beta function) closed form from its CF, not the naive `i -> 1`
 // substitution of the formula above.
 
-const mgfOf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  t: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const mgfOf = (ce: Engine, dist: Expr, t: Expr, options: EvaluateOptions): Expr | undefined => {
   switch (dist.operator) {
     case "NormalDistribution": {
       const ops = operandsOf(dist);
@@ -286,16 +271,16 @@ const mgfOf = (
   }
 };
 
-function declareTransforms(ce: ComputeEngine): void {
+function declareTransforms(ce: Engine): void {
   ce.declare("CharacteristicFunction", {
     signature: "(distribution, real) -> complex",
-    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
+    evaluate: (ops: readonly Expr[], options: EvaluateOptions) =>
       ops.length === 2 ? cfOf(ce, ops[0], ops[1], options) : undefined,
   });
 
   ce.declare("MomentGeneratingFunction", {
     signature: "(distribution, complex) -> complex",
-    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
+    evaluate: (ops: readonly Expr[], options: EvaluateOptions) =>
       ops.length === 2 ? mgfOf(ce, ops[0], ops[1], options) : undefined,
   });
 }
@@ -304,7 +289,7 @@ function declareTransforms(ce: ComputeEngine): void {
 
 const CDF_GAP_KINDS = new Set(["CauchyDistribution", "StudentTDistribution", "HypergeometricDistribution"]);
 
-const cauchyCdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExpression, options: EvaluateOptions) => {
+const cauchyCdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions) => {
   const params = two(dist);
   if (params === undefined) return undefined;
   const [a, b] = params;
@@ -319,7 +304,7 @@ const cauchyCdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExpression,
 /** `F(x) = 1 - (1/2) I_{nu/(nu+x^2)}(nu/2, 1/2)` for `x >= 0`, `= (1/2) I_{nu/(nu+x^2)}(nu/2,
  *  1/2)` for `x < 0` — the regularized-incomplete-beta form of the Student-t CDF (Abramowitz
  *  & Stegun 26.7.1). Both branches share the same `I_z(nu/2, 1/2)` term. */
-const studentTCdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExpression, options: EvaluateOptions) => {
+const studentTCdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions) => {
   const params = one(dist);
   if (params === undefined) return undefined;
   const [nu] = params;
@@ -337,7 +322,7 @@ const studentTCdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExpressio
  *  `distributions-2.ts`'s own `pdfOf2`), not an approximation. Only answers when `floor(x)`
  *  resolves to a concrete integer; otherwise stays unevaluated rather than build an unbounded
  *  symbolic `Sum`. */
-const hypergeometricCdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExpression, options: EvaluateOptions) => {
+const hypergeometricCdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions) => {
   const params = three(dist);
   if (params === undefined) return undefined;
   const floorX = integerAt(finish(ce.function("Floor", [x]), options));
@@ -346,7 +331,7 @@ const hypergeometricCdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExp
   const [n] = params;
   const nMax = integerAt(n) ?? integerAt(finish(n, options));
   const top = nMax === undefined ? floorX : Math.min(floorX, nMax);
-  const terms: BoxedExpression[] = [];
+  const terms: Expr[] = [];
   for (let k = 0; k <= top; k++) {
     const term = pdfOf2(ce, dist, ce.number(k), options);
     if (term === undefined) return undefined;
@@ -356,7 +341,7 @@ const hypergeometricCdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExp
   return finish(terms.length === 1 ? terms[0] : add(ce, ...terms), options);
 };
 
-function extendCdfGaps(ce: ComputeEngine): void {
+function extendCdfGaps(ce: Engine): void {
   wrapOperator(
     ce,
     ["CDF"],
@@ -380,7 +365,7 @@ function extendCdfGaps(ce: ComputeEngine): void {
 /** `Moment(BernoulliDistribution(p), r) = p` for every `r >= 1`: `X in {0,1}` so `X^r = X`
  *  identically, for any positive `r` (not just the `r <= 2` the generic layer in
  *  `distributions-2.ts` already covers). */
-function extendBernoulliMoment(ce: ComputeEngine): void {
+function extendBernoulliMoment(ce: Engine): void {
   wrapOperator(
     ce,
     ["Moment"],
@@ -400,7 +385,7 @@ function extendBernoulliMoment(ce: ComputeEngine): void {
 /** `Cumulant(PoissonDistribution(lambda), r) = lambda` for every `r >= 1` — every cumulant of
  *  a Poisson distribution equals its rate (a standard identity: `log E[e^{tX}] = lambda(e^t -
  *  1)`, whose Taylor coefficients are all `lambda`). */
-function extendPoissonCumulant(ce: ComputeEngine): void {
+function extendPoissonCumulant(ce: Engine): void {
   wrapOperator(
     ce,
     ["Cumulant"],
@@ -423,7 +408,7 @@ function extendPoissonCumulant(ce: ComputeEngine): void {
  *  `Cumulant` (two named distribution-specific identities beyond order 2) in place. Call
  *  AFTER `declareDistributions` and `declareDistributions2` — every extension here composes
  *  onto operators those two already declared. */
-export function declareDistributions3(ce: ComputeEngine): void {
+export function declareDistributions3(ce: Engine): void {
   declareTransforms(ce);
   extendCdfGaps(ce);
   extendBernoulliMoment(ce);

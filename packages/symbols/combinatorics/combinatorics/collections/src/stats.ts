@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine, Expr } from "@enumeratio/engine";
 import { registerCarrier, registerCollectionCarrier, registerOperation } from "@enumeratio/structures";
 import { type Boxed, intOf } from "./families/types.ts";
 
@@ -6,8 +6,7 @@ import { type Boxed, intOf } from "./families/types.ts";
 // lifted from the sibling @enumeratio library, declared as compute-engine heads
 // that evaluate on a concrete permutation.
 
-const asPerm = (arg: BoxedExpression | undefined): number[] =>
-  ((arg as unknown as Boxed | undefined)?.ops ?? []).map(intOf);
+const asPerm = (arg: Expr | undefined): number[] => ((arg as unknown as Boxed | undefined)?.ops ?? []).map(intOf);
 
 /** Pairs (i, j), i < j, with p[i] > p[j]. */
 export function inversions(p: number[]): number {
@@ -154,21 +153,19 @@ export interface StatsOptions {
 }
 
 /** Declare the permutation-statistic heads on `ce` (each maps a permutation to an integer). */
-export function declareStats(ce: ComputeEngine, options: StatsOptions = {}): void {
+export function declareStats(ce: Engine, options: StatsOptions = {}): void {
   const { permutationType: type, permutationCarrier: carrier = "Permutation" } = options;
   const declare = (head: string, fn: (p: number[]) => number, alsoOnList: boolean): void => {
     const signature =
       type === undefined ? "(list) -> integer" : alsoOnList ? `(${type} | list) -> integer` : `(${type}) -> integer`;
     ce.declare(head, {
       signature,
-      evaluate: (args: readonly BoxedExpression[]) => {
+      evaluate: (args: readonly Expr[]) => {
         const subject = args[0];
         // Unwrap only an actual carrier; the `alsoOnList` arm of the union lets a bare list
         // through untouched.
         const inner =
-          subject?.operator === carrier
-            ? ((subject as unknown as Boxed).ops?.[0] as BoxedExpression | undefined)
-            : subject;
+          subject?.operator === carrier ? ((subject as unknown as Boxed).ops?.[0] as Expr | undefined) : subject;
         return ce.number(fn(asPerm(inner)));
       },
     });
@@ -188,9 +185,7 @@ export function declareStats(ce: ComputeEngine, options: StatsOptions = {}): voi
         ce.number(
           fn(
             asPerm(
-              subject.operator === carrier
-                ? ((subject as unknown as Boxed).ops?.[0] as BoxedExpression | undefined)
-                : subject,
+              subject.operator === carrier ? ((subject as unknown as Boxed).ops?.[0] as Expr | undefined) : subject,
             ),
           ),
         ),

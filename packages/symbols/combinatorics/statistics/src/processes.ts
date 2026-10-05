@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { type Engine, type Expr, extendHead, operandsOf } from "@enumeratio/engine";
 import { normal01, numAt, poissonSample } from "./distributions.ts";
 
 // The Wolfram-frontier random-process heads: `WienerProcess`/`PoissonProcess` (inert process
@@ -40,22 +39,19 @@ const DEFAULT_STEPS = 100;
 
 /** `WienerProcess()` defaults to standard `(mu=0, sigma=1)`; `WienerProcess(mu, sigma)` gives
  *  both. No other arity is a valid call. */
-export const wienerParams = (
-  ce: ComputeEngine,
-  proc: BoxedExpression,
-): [BoxedExpression, BoxedExpression] | undefined => {
+export const wienerParams = (ce: Engine, proc: Expr): [Expr, Expr] | undefined => {
   const ops = operandsOf(proc);
   if (ops.length === 0) return [ce.Zero, ce.One];
   if (ops.length === 2) return [ops[0], ops[1]];
   return undefined;
 };
 
-export const poissonProcessRate = (proc: BoxedExpression): BoxedExpression | undefined => {
+export const poissonProcessRate = (proc: Expr): Expr | undefined => {
   const ops = operandsOf(proc);
   return ops.length === 1 ? ops[0] : undefined;
 };
 
-function declareProcessConstructors(ce: ComputeEngine): void {
+function declareProcessConstructors(ce: Engine): void {
   // Return type `distribution`, not `expression<WienerProcess>` — same reasoning
   // `distributions.ts`'s own constructors document: a bare `expression<Head>` doesn't let
   // this reach `SliceDistribution`'s `any` parameter, but declaring it nominally as a
@@ -68,11 +64,7 @@ function declareProcessConstructors(ce: ComputeEngine): void {
 
 // --- SliceDistribution(proc, t): the ordinary distribution answering proc's slice at t --------
 
-function sliceDistributionOf(
-  ce: ComputeEngine,
-  proc: BoxedExpression,
-  t: BoxedExpression,
-): BoxedExpression | undefined {
+function sliceDistributionOf(ce: Engine, proc: Expr, t: Expr): Expr | undefined {
   switch (proc.operator) {
     case "WienerProcess": {
       const params = wienerParams(ce, proc);
@@ -93,13 +85,13 @@ function sliceDistributionOf(
   }
 }
 
-function declareSliceDistribution(ce: ComputeEngine): void {
+function declareSliceDistribution(ce: Engine): void {
   ce.declare("SliceDistribution", {
     // `proc` stays `any`, not `expression<WienerProcess> | expression<PoissonProcess>`: a
     // process kind this file doesn't know (any other distribution, say) has to stay
     // unevaluated rather than fail boxing outright — see `sliceDistributionOf`'s `default`.
     signature: "(any, any) -> distribution",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       if (ops.length !== 2) return undefined;
       return sliceDistributionOf(ce, ops[0], ops[1])?.evaluate();
     },
@@ -119,7 +111,7 @@ function gridFor(tmin: number, tmax: number, dt: number | undefined): number[] {
   return grid;
 }
 
-function simulatePath(ce: ComputeEngine, proc: BoxedExpression, grid: readonly number[]): number[] | undefined {
+function simulatePath(ce: Engine, proc: Expr, grid: readonly number[]): number[] | undefined {
   switch (proc.operator) {
     case "WienerProcess": {
       const params = wienerParams(ce, proc);
@@ -149,35 +141,34 @@ function simulatePath(ce: ComputeEngine, proc: BoxedExpression, grid: readonly n
   }
 }
 
-function declareRandomFunction(ce: ComputeEngine): void {
+function declareRandomFunction(ce: Engine): void {
   ce.declare("RandomFunction", { signature: "(any, list<real>) random -> any" });
-  const definition = ce.lookupDefinition("RandomFunction");
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) return;
-  operator.evaluate = (ops: readonly BoxedExpression[]) => {
-    if (ops.length !== 2) return undefined;
-    const [proc, spec] = ops;
-    if (spec.operator !== "List") return undefined;
-    const specOps = operandsOf(spec);
-    if (specOps.length !== 2 && specOps.length !== 3) return undefined;
-    const tmin = numAt(specOps[0]);
-    const tmax = numAt(specOps[1]);
-    const dt = specOps.length === 3 ? numAt(specOps[2]) : undefined;
-    if (!(tmax > tmin)) return undefined;
-    const grid = gridFor(tmin, tmax, dt);
-    const xs = simulatePath(ce, proc, grid);
-    if (xs === undefined) return undefined;
-    return ce.function(
-      "List",
-      grid.map((t, i) => ce.function("List", [ce.number(t), ce.number(xs[i])])),
-    );
-  };
+  extendHead(ce, "RandomFunction", {
+    evaluate: (ops: readonly Expr[]) => {
+      if (ops.length !== 2) return undefined;
+      const [proc, spec] = ops;
+      if (spec.operator !== "List") return undefined;
+      const specOps = operandsOf(spec);
+      if (specOps.length !== 2 && specOps.length !== 3) return undefined;
+      const tmin = numAt(specOps[0]);
+      const tmax = numAt(specOps[1]);
+      const dt = specOps.length === 3 ? numAt(specOps[2]) : undefined;
+      if (!(tmax > tmin)) return undefined;
+      const grid = gridFor(tmin, tmax, dt);
+      const xs = simulatePath(ce, proc, grid);
+      if (xs === undefined) return undefined;
+      return ce.function(
+        "List",
+        grid.map((t, i) => ce.function("List", [ce.number(t), ce.number(xs[i])])),
+      );
+    },
+  });
 }
 
 /** Declare the random-process frontier heads on `ce`: `WienerProcess`, `PoissonProcess`,
  *  `SliceDistribution`, `RandomFunction`. Call AFTER `declareDistributions` (needs
  *  `NormalDistribution`/`PoissonDistribution`/`SeedRandom`'s PRNG stream already set up). */
-export function declareProcesses(ce: ComputeEngine): void {
+export function declareProcesses(ce: Engine): void {
   declareProcessConstructors(ce);
   declareSliceDistribution(ce);
   declareRandomFunction(ce);

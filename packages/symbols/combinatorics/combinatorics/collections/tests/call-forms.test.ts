@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCombinatorics } from "../../src/index.ts";
 
@@ -11,7 +11,7 @@ import { declareCombinatorics } from "../../src/index.ts";
 // (`IntegerPartition(...)`, `SetPartition(...)`) once declareCombinatorics mints their
 // carriers -- stripLists unwraps that one-arg carrier wrapper too, not just `List`.
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCombinatorics(ce);
 
 function countOf(expr: unknown): unknown {

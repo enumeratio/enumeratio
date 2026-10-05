@@ -1,5 +1,12 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
+import {
+  type Engine,
+  type Expr,
+  integerAt,
+  operandsOf,
+  symbolNameOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/engine";
 
 // Heads that take or build with a FUNCTION argument (Nest, NestList, FixedPoint, Outer,
 // RecurrenceTable), two heads that generate exact recurrence sequences (LinearRecurrence,
@@ -18,7 +25,7 @@ import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } fro
  *  `nestValue`/`nestListValues` below do, feeding one step's answer into the next, or into
  *  the accumulated `List`) rebuilds from that stale `.json` and reverts it right back to the
  *  unevaluated call. Forcing materialization here is the fix. */
-function materialize(result: BoxedExpression): BoxedExpression {
+function materialize(result: Expr): Expr {
   return result.isLazyCollection ? result.evaluate({ materialization: true }) : result;
 }
 
@@ -27,22 +34,22 @@ function materialize(result: BoxedExpression): BoxedExpression {
  *  single list: `Apply(f, a, b)` is `f(a, b)`, not `f @@ {a, b}`. Works for an undeclared
  *  symbol `f` too (stays an unevaluated call), a `Function` literal, or anything else
  *  `Apply` already knows how to invoke. */
-const applyFn = (ce: ComputeEngine, fn: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
+const applyFn = (ce: Engine, fn: Expr, args: readonly Expr[]): Expr =>
   materialize(ce.function("Apply", [fn, ...args]).evaluate());
 
-function nestValue(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression, n: number): BoxedExpression {
+function nestValue(ce: Engine, fn: Expr, x: Expr, n: number): Expr {
   let current = x;
   for (let i = 0; i < n; i++) current = applyFn(ce, fn, [current]);
   return current;
 }
 
-function nestListValues(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression, n: number): BoxedExpression {
+function nestListValues(ce: Engine, fn: Expr, x: Expr, n: number): Expr {
   // Materialize a lazy seed (e.g. `Range`) before it goes in the list — otherwise the
   // first element stays a `Range` recipe (`.ops` = its bounds) while every later element,
   // built by evaluating `fn`, is a real `List`, and anything reading the whole result
   // (`Transpose`, …) sees a ragged/mixed shape and bails.
   const seed = x.evaluate({ materialization: true });
-  const items: BoxedExpression[] = [seed];
+  const items: Expr[] = [seed];
   let current = seed;
   for (let i = 0; i < n; i++) {
     current = applyFn(ce, fn, [current]);
@@ -68,7 +75,7 @@ const FIXED_POINT_MAX_ITERATIONS = 10_000;
  * fixed point produce — comes back `true` no matter which is actually larger. `BigDecimal`'s
  * own `.cmp` has no such fuzz.
  */
-function withinWorkingPrecision(ce: ComputeEngine, next: BoxedExpression, current: BoxedExpression): boolean {
+function withinWorkingPrecision(ce: Engine, next: Expr, current: Expr): boolean {
   const nextBig = next.bignumRe;
   const currentBig = current.bignumRe;
   if (nextBig === undefined || currentBig === undefined) return false;
@@ -78,7 +85,7 @@ function withinWorkingPrecision(ce: ComputeEngine, next: BoxedExpression, curren
   return delta.cmp(tolerance) <= 0;
 }
 
-function fixedPointValue(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression): BoxedExpression {
+function fixedPointValue(ce: Engine, fn: Expr, x: Expr): Expr {
   let current = x;
   for (let i = 0; i < FIXED_POINT_MAX_ITERATIONS; i++) {
     const next = applyFn(ce, fn, [current]);
@@ -97,16 +104,11 @@ function fixedPointValue(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpress
  *  a_i = c_1 a_{i-1} + … + c_k a_{i-k} for i past the seed) and `init` (a_1 .. a_k). Every
  *  step goes through compute-engine's own Add/Multiply, so an exact rational seed and
  *  kernel stay exact all the way out — never floating point. */
-function linearRecurrenceValues(
-  ce: ComputeEngine,
-  kernel: readonly BoxedExpression[],
-  init: readonly BoxedExpression[],
-  upTo: number,
-): BoxedExpression[] {
-  const seq: BoxedExpression[] = [...init];
+function linearRecurrenceValues(ce: Engine, kernel: readonly Expr[], init: readonly Expr[], upTo: number): Expr[] {
+  const seq: Expr[] = [...init];
   const k = kernel.length;
   for (let i = seq.length; i < upTo; i++) {
-    let term: BoxedExpression = ce.Zero;
+    let term: Expr = ce.Zero;
     for (let j = 0; j < k; j++) {
       const prev = seq[i - 1 - j];
       if (prev === undefined) break;
@@ -118,7 +120,7 @@ function linearRecurrenceValues(
 }
 
 /** Whether `expr` mentions the symbol `name` anywhere in its tree. */
-function mentionsSymbol(expr: BoxedExpression, name: string): boolean {
+function mentionsSymbol(expr: Expr, name: string): boolean {
   if (symbolNameOf(expr) === name) return true;
   return operandsOf(expr).some((op) => mentionsSymbol(op, name));
 }
@@ -131,13 +133,13 @@ function mentionsSymbol(expr: BoxedExpression, name: string): boolean {
  * `ce.box(expr).subs(...).evaluate()`: `a` is never a declared compute-engine head.
  */
 function resolveAt(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
+  ce: Engine,
+  expr: Expr,
   nSym: string,
   nVal: number,
   headName: string,
-  computeAt: (index: number) => BoxedExpression,
-): BoxedExpression {
+  computeAt: (index: number) => Expr,
+): Expr {
   const operands = operandsOf(expr);
   if (expr.operator === headName && operands.length === 1) {
     const indexValue = resolveAt(ce, operands[0], nSym, nVal, headName, computeAt);
@@ -160,10 +162,10 @@ function resolveAt(
 /** Declare the function-taking, recurrence, association and mean heads new to this backlog
  *  wave: Nest, NestList, FixedPoint (extended, not redeclared — see module doc), Outer,
  *  LinearRecurrence, RecurrenceTable, Association, GeometricMean, HarmonicMean. */
-export function declareListFunctional(ce: ComputeEngine): void {
+export function declareListFunctional(ce: Engine): void {
   ce.declare("Nest", {
     signature: "(function: any, x: any, n: integer) -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, x, nOp] = ops;
       const n = integerAt(nOp);
       if (fn === undefined || x === undefined || n === undefined || n < 0) return undefined;
@@ -173,7 +175,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
 
   ce.declare("NestList", {
     signature: "(function: any, x: any, n: integer) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, x, nOp] = ops;
       const n = integerAt(nOp);
       if (fn === undefined || x === undefined || n === undefined || n < 0) return undefined;
@@ -196,7 +198,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
 
   ce.declare("Outer", {
     signature: "(function: any, list<any>, list<any>) -> list<list<any>>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, list1, list2] = ops;
       if (fn === undefined || list1 === undefined || list2 === undefined) return undefined;
       // A bare symbol isn't a list — `operandsOf` returning `[]` for it must not read as an
@@ -211,7 +213,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
 
   ce.declare("LinearRecurrence", {
     signature: "(kernel: list<any>, init: list<any>, n: integer | list<integer>) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const kernel = operandsOf(ops[0]);
       const init = operandsOf(ops[1]);
       const nSpec = ops[2];
@@ -251,7 +253,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
   // practice (a single recurrence order, not a piecewise definition).
   ce.declare("RecurrenceTable", {
     signature: "(eqns: list<any>, a: any, spec: list<any>) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const eqns = operandsOf(ops[0]);
       const headName = symbolNameOf(ops[1]);
       const spec = ops[2];
@@ -264,8 +266,8 @@ export function declareListFunctional(ce: ComputeEngine): void {
       const nMax = integerAt(specOps[2]);
       if (nSym === undefined || nMin === undefined || nMax === undefined) return undefined;
 
-      let general: { indexExpr: BoxedExpression; rhs: BoxedExpression } | undefined;
-      const initial = new Map<number, BoxedExpression>();
+      let general: { indexExpr: Expr; rhs: Expr } | undefined;
+      const initial = new Map<number, Expr>();
       for (const eqn of eqns) {
         if (eqn.operator !== "Equal") return undefined;
         const [lhs, rhs] = operandsOf(eqn);
@@ -291,8 +293,8 @@ export function declareListFunctional(ce: ComputeEngine): void {
         const offset = integerAt(resolveAt(ce, indexExpr, nSym, 0, headName, () => ce.Zero));
         if (offset === undefined) return undefined;
 
-        const memo = new Map<number, BoxedExpression>(initial);
-        const computeAt = (index: number): BoxedExpression => {
+        const memo = new Map<number, Expr>(initial);
+        const computeAt = (index: number): Expr => {
           const cached = memo.get(index);
           if (cached !== undefined) return cached;
           const value = resolveAt(ce, rhs, nSym, index - offset, headName, computeAt);
@@ -300,7 +302,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
           return value;
         };
 
-        const values: BoxedExpression[] = [];
+        const values: Expr[] = [];
         for (let i = nMin; i <= nMax; i++) values.push(computeAt(i));
         return ce.box(["List", ...values]);
       } catch {
@@ -316,10 +318,10 @@ export function declareListFunctional(ce: ComputeEngine): void {
   // are extended for it below, each falling through to its list handling otherwise.
   ce.declare("Association", {
     signature: "(rules: expression<Rule>*) -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression => ce.box(["Association", ...ops]),
+    evaluate: (ops: readonly Expr[]): Expr => ce.box(["Association", ...ops]),
   });
 
-  const isAssociation = (ops: readonly BoxedExpression[]): boolean => ops[0]?.operator === "Association";
+  const isAssociation = (ops: readonly Expr[]): boolean => ops[0]?.operator === "Association";
 
   wrapOperator(
     ce,
@@ -368,8 +370,8 @@ export function declareListFunctional(ce: ComputeEngine): void {
     (ops) => ops.every((op) => op.operator === "Association"),
     () => (ops) => {
       const order: string[] = [];
-      const keyExprs = new Map<string, BoxedExpression>();
-      const values = new Map<string, BoxedExpression>();
+      const keyExprs = new Map<string, Expr>();
+      const values = new Map<string, Expr>();
       for (const assoc of ops) {
         for (const rule of operandsOf(assoc)) {
           const [key, value] = operandsOf(rule);
@@ -411,7 +413,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
 
   ce.declare("GeometricMean", {
     signature: "(collection<any>) -> number",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const items = operandsOf(ops[0]);
       if (items.length === 0) return undefined;
       const product = ce.function("Multiply", items).evaluate();
@@ -421,7 +423,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
 
   ce.declare("HarmonicMean", {
     signature: "(collection<any>) -> number",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const items = operandsOf(ops[0]);
       if (items.length === 0) return undefined;
       const reciprocalSum = ce

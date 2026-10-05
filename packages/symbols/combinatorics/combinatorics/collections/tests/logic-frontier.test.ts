@@ -1,10 +1,9 @@
-import type { BoxedExpression } from "@cortex-js/compute-engine";
-import { ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { type Expr, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCollections } from "../src/library.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCollections(ce);
 const run = (expr: unknown) => ce.box(expr as never).evaluate();
 const runJson = (expr: unknown) => run(expr).json;
@@ -18,7 +17,7 @@ const convert = (expr: unknown, form: string) =>
 // elimination/distribution code the implementation uses to answer itself.
 type Assignment = Readonly<Record<string, boolean>>;
 
-function evalBool(expr: BoxedExpression, assignment: Assignment): boolean {
+function evalBool(expr: Expr, assignment: Assignment): boolean {
   const op = expr.operator;
   const args = () => operandsOf(expr).map((a) => evalBool(a, assignment));
   switch (op) {
@@ -52,7 +51,7 @@ function evalBool(expr: BoxedExpression, assignment: Assignment): boolean {
   }
 }
 
-function freeVars(expr: BoxedExpression, into: Set<string> = new Set()): Set<string> {
+function freeVars(expr: Expr, into: Set<string> = new Set()): Set<string> {
   const op = expr.operator;
   if (
     op === "And" ||
@@ -74,7 +73,7 @@ function freeVars(expr: BoxedExpression, into: Set<string> = new Set()): Set<str
 
 /** Every one of `expr`'s 2^n assignments (n = its free-variable count, capped well under 6
  *  by every fixture below) agrees between the independent oracle and `converted`. */
-function assertTruthTableEquivalent(expr: BoxedExpression, converted: BoxedExpression): void {
+function assertTruthTableEquivalent(expr: Expr, converted: Expr): void {
   const vars = [...freeVars(expr)].toSorted();
   expect(vars.length).toBeLessThanOrEqual(6);
   for (let bits = 0; bits < 1 << vars.length; bits++) {
@@ -126,16 +125,16 @@ test("LogicalExpand agrees with BooleanConvert's default (DNF) form", () => {
 
 // ─── shape assertions: DNF is an Or of Ands, CNF an And of Ors ────────────────────────────
 
-const isLiteral = (e: BoxedExpression): boolean => e.operator !== "And" && e.operator !== "Or";
+const isLiteral = (e: Expr): boolean => e.operator !== "And" && e.operator !== "Or";
 
-function isDisjunctionOfConjunctions(e: BoxedExpression): boolean {
+function isDisjunctionOfConjunctions(e: Expr): boolean {
   if (e.operator !== "Or") return isLiteral(e) || (e.operator === "And" && operandsOf(e).every(isLiteral));
   return operandsOf(e).every(
     (clause) => isLiteral(clause) || (clause.operator === "And" && operandsOf(clause).every(isLiteral)),
   );
 }
 
-function isConjunctionOfDisjunctions(e: BoxedExpression): boolean {
+function isConjunctionOfDisjunctions(e: Expr): boolean {
   if (e.operator !== "And") return isLiteral(e) || (e.operator === "Or" && operandsOf(e).every(isLiteral));
   return operandsOf(e).every(
     (clause) => isLiteral(clause) || (clause.operator === "Or" && operandsOf(clause).every(isLiteral)),

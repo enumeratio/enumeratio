@@ -1,5 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { box, type Engine, type Json, operandsOf } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { beforeEach, describe, expect, test } from "vite-plus/test";
 import { declareDistributions } from "../src/distributions.ts";
 import { declareDistributions2 } from "../src/distributions-2.ts";
@@ -10,14 +10,12 @@ import { declareDistributions2 } from "../src/distributions-2.ts";
 // Mean = Moment(_, 1), Variance = CentralMoment(_, 2), CDF(InverseCDF(_, q)) ≈ q, a discrete
 // PDF summing to 1 over its support, RandomVariate's seeded reproducibility.
 
-let ce: ComputeEngine;
+let ce: Engine;
 beforeEach(() => {
-  ce = new ComputeEngine();
-  declareDistributions(ce);
-  declareDistributions2(ce);
+  ce = createEngine(declareDistributions, declareDistributions2);
 });
 
-const evalOf = (expr: unknown) => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evalOf = (expr: unknown) => box(ce, expr as Json).evaluate();
 const N = (expr: unknown) => evalOf(["N", expr as never]).re;
 
 const CONTINUOUS_DISTS: readonly unknown[] = [

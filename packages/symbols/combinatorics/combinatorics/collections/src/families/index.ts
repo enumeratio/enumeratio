@@ -61,7 +61,7 @@ import { entries as numericClosedForm } from "./numeric-closed-form.ts";
 import { entries as numericRecurrence } from "./numeric-recurrence.ts";
 import { entries as numericDivisor } from "./numeric-divisor.ts";
 import { entries as numericDigitsPrimes } from "./numeric-digits-primes.ts";
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { type AnyFamily, kernelsOn, liftFamily } from "./epsil.ts";
 import type { FamilyKernel } from "./types.ts";
 
@@ -128,7 +128,7 @@ export const allFamilies: readonly AnyFamily[] = [
 ];
 
 /** Every family's kernel on `ce`. */
-export const allKernels = (ce: ComputeEngine): FamilyKernel[] => kernelsOn(ce, allFamilies);
+export const allKernels = (ce: Engine): FamilyKernel[] => kernelsOn(ce, allFamilies);
 
 // The families with NO carrier -- native to collections, not to any combinatorics area. Every
 // other entry above physically lives in, and is now declared by, its own area package; this is

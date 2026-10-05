@@ -5,7 +5,7 @@
 //     has left to learn.
 
 import { appendFileSync } from "node:fs";
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { declareCombinatorics } from "../src/index.ts";
 import { operationOf } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
@@ -19,7 +19,7 @@ import { COMPILED as LATTICE_PATHS_COMPILED } from "../lattice-paths/src/statist
 import { COMPILED as SET_PARTITIONS_COMPILED } from "../set-partitions/src/statistics.compiled.generated.js";
 
 const DEEP = process.env.DEEP_TESTS === "1";
-const ce = new ComputeEngine();
+const ce = bareEngine();
 const list = (values: readonly unknown[]): unknown => ["List", ...values];
 
 /** Each area's own `scripts/compile-definitions.ts` (run by `build`) writes its own table. */
@@ -100,7 +100,7 @@ for (const definition of ALL_STATISTICS.filter((d) => COMPILED_SIGNATURES.has(si
 test.runIf(DEEP)(
   "compiled statistics match the hand-written kernels, and how fast",
   () => {
-    const engine = new ComputeEngine();
+    const engine = bareEngine();
     declareCombinatorics(engine);
     const rows: string[] = [
       "| statistic | n | compiled (ms) | kernel (ms) | ratio |",

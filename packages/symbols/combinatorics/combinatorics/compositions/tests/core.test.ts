@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { kernelOn } from "../../collections/src/families/epsil.ts";
 import { epsilEntries } from "../src/families/core.ts";
 
@@ -13,7 +13,7 @@ const PARAMS: Record<string, number[]> = {
   WeakCompositions: [7, 3],
 };
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 const byHead = new Map(epsilEntries.map((family) => [family.head, kernelOn(ce, family)]));
 
 for (const [head, p] of Object.entries(PARAMS)) {

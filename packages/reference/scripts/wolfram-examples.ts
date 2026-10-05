@@ -96,10 +96,29 @@ export function adaptInput(held: string): Adapted {
   if (userFunctions.size > 0) return fail(`user function ${[...userFunctions].toSorted().join(" ")}`);
   if (unmapped.size > 0) return fail(`unmapped ${[...unmapped].toSorted().join(" ")}`);
   try {
-    return { ok: true, expr: renameConstants(fromWolfram(text)) };
+    return { ok: true, expr: renameConstants(rulesAsRules(fromWolfram(text))) };
   } catch (error) {
     return fail(`parse: ${(error as Error).message}`);
   }
+}
+
+// `fromWolfram` reads Wolfram's `Rule` as `KeyValuePair`, right for an option (`Over -> R`), but
+// the rules a replacement applies are rules: `Replace[x^2, x^2 -> a + b]` is `Replace(x^2, Rule(…))`.
+const REPLACERS = new Set(["Replace", "ReplaceAll", "ReplaceRepeated", "ReplaceList"]);
+const asRule = (node: unknown): unknown =>
+  !Array.isArray(node)
+    ? node
+    : node[0] === "KeyValuePair"
+      ? ["Rule", ...node.slice(1)]
+      : node[0] === "List"
+        ? node.map((x, i) => (i === 0 ? x : asRule(x)))
+        : node;
+function rulesAsRules(expr: unknown): unknown {
+  if (!Array.isArray(expr)) return expr;
+  const walked = expr.map((x, i) => (i === 0 ? x : rulesAsRules(x)));
+  return REPLACERS.has(walked[0] as string) && walked.length >= 3
+    ? walked.map((x, i) => (i === 2 ? asRule(x) : x))
+    : walked;
 }
 
 // A bare `i` or `e` is the imaginary unit or Euler's number to our engine, but Wolfram's `I`

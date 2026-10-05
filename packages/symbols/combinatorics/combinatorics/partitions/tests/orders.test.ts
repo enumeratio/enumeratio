@@ -1,10 +1,10 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { declareStructures } from "@enumeratio/structures";
 import { describe, expect, it } from "vite-plus/test";
 import { declareCombinatoricsCarriers } from "../../src/carriers.ts";
 
 // Integer partitions under dominance: a lattice, not a total order.
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareStructures(ce);
 declareCombinatoricsCarriers(ce);
 

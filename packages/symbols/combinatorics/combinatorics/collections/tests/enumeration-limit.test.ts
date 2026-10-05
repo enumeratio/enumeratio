@@ -3,7 +3,7 @@
 // notebook takes through At, Take and RandomChoice. Counts a plain-number kernel can't carry
 // exactly are unknown to the engine rather than an internal error.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { collectMessages } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { epsilEntries } from "../../permutations/src/families/core.ts";
@@ -12,7 +12,7 @@ import { declareCombinatorics } from "../../src/index.ts";
 
 // A-94: SymmetricGroup and BoxedPlanePartitions carry their own carriers now, so a bare
 // declareCollections(ce) no longer declares them at all -- declareCombinatorics does, typed.
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCombinatorics(ce);
 const symmetricGroup = kernelOn(
   ce,

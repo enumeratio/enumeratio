@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { widenSignature, wrapOperator } from "@enumeratio/engine";
+import { type Engine, type Expr, widenSignature, wrapOperator } from "@enumeratio/engine";
 
 // #113 rounding and clamping widenings: Floor/Ceil to a step, Chop with a tolerance,
 // Clamp with Clip's replacement values, and the empty-call identity elements of Min/Max.
@@ -7,7 +6,7 @@ import { widenSignature, wrapOperator } from "@enumeratio/engine";
 // is editing at the same time.
 
 /** Declare the rounding/clamping widenings on `ce`. */
-export function declareRoundingHeads(ce: ComputeEngine): void {
+export function declareRoundingHeads(ce: Engine): void {
   // Floor(x, step) / Ceil(x, step): round to the nearest multiple of `step` at or below
   // (resp. at or above) x -- step*Floor(x/step). The native 1-argument Floor/Ceil only
   // decides a BARE constant (Floor(Pi)) numerically, not a compound expression like
@@ -45,7 +44,7 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
       const [x, tolerance] = ops;
       const tol = tolerance.N().re;
       if (tol === undefined || !Number.isFinite(tol)) return undefined;
-      const chopPart = (part: BoxedExpression): BoxedExpression => {
+      const chopPart = (part: Expr): Expr => {
         const value = part.N().re;
         return value !== undefined && Number.isFinite(value) && Math.abs(value) < tol ? ce.Zero : part;
       };

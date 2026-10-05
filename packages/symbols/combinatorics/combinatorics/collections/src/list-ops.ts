@@ -1,17 +1,16 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { type Engine, type Expr, operandsOf } from "@enumeratio/engine";
 
 /** Declare simple list manipulation heads: Prepend. */
-export function declareListOps(ce: ComputeEngine): void {
+export function declareListOps(ce: Engine): void {
   ce.declare("Prepend", {
     signature: "(collection<any>, value) -> collection",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const list = ops[0];
       const value = ops[1];
       if (list === undefined || value === undefined) return undefined;
       if (list.operator === "Association") return prependToAssociation(ce, list, value);
       if (list.operator !== "List") return undefined;
-      const listOps = (list as { ops?: readonly BoxedExpression[] }).ops ?? [];
+      const listOps = (list as { ops?: readonly Expr[] }).ops ?? [];
       return ce.box(["List", value, ...listOps]);
     },
   });
@@ -24,11 +23,7 @@ export function declareListOps(ce: ComputeEngine): void {
  * and the new one wins), matching Wolfram — this doesn't merge duplicates WITHIN the new
  * rules themselves, which is also Wolfram's behavior (the last one wins there too).
  */
-function prependToAssociation(
-  ce: ComputeEngine,
-  association: BoxedExpression,
-  addition: BoxedExpression,
-): BoxedExpression {
+function prependToAssociation(ce: Engine, association: Expr, addition: Expr): Expr {
   const newRules = addition.operator === "List" ? operandsOf(addition) : [addition];
   const newKeys = new Set(newRules.map((rule) => JSON.stringify(operandsOf(rule)[0]?.json)));
   const kept = operandsOf(association).filter((rule) => !newKeys.has(JSON.stringify(operandsOf(rule)[0]?.json)));

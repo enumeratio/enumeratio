@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { entries as numericSets } from "../src/families/numeric-sets.ts";
 import { declareCollections } from "../src/library.ts";
@@ -73,7 +73,7 @@ test("SmoothNumbers(7) excludes an 11-smooth-only value", () => {
 
 // --- engine-level: At / Take / Count / Element through the declared CE collection handlers. ---
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCollections(ce);
 
 test("PrimeNumbers is declared as an indexed_collection<integer>", () => {

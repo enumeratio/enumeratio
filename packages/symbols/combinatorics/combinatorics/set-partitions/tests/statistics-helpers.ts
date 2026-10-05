@@ -1,13 +1,13 @@
 // Shared universe, independent readings, and evaluation machinery for the sharded
 // `setpartition-*.test.ts` files. Not itself a test file.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { SET_PARTITION_STATISTICS } from "../src/statistics.ts";
 import { bySignature } from "../../src/statistics/types.ts";
 
-export const ce = new ComputeEngine();
+export const ce = bareEngine();
 export const index = bySignature(SET_PARTITION_STATISTICS);
 
 /** Every set partition of {1..n}, blocks in order of least element. */

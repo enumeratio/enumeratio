@@ -6,7 +6,7 @@
 // subject and an answer that cross between MathJSON and JS exactly; everything else is
 // interpreted.
 
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { definitionHash, fromJs, type MathJSON, runtimeHelpers, toJs } from "@enumeratio/engine/compiled";
 import { COMPILED as PERMUTATIONS_COMPILED } from "../../permutations/src/statistics.compiled.generated.js";
 import { COMPILED as PARTITIONS_COMPILED } from "../../partitions/src/statistics.compiled.generated.js";
@@ -26,7 +26,7 @@ const COMPILED = {
 /** The compiled form of `definition`, as a function of its subject's MathJSON, or undefined
  *  when there is none current. The function answers undefined where it can't answer exactly. */
 export function compiledStatistic(
-  ce: ComputeEngine,
+  ce: Engine,
   definition: Definition,
 ): ((subject: unknown) => MathJSON | undefined) | undefined {
   const entry = COMPILED[signatureOf(definition)];

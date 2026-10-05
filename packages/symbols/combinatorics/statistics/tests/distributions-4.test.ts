@@ -1,4 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { box, type Engine, type Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { beforeEach, describe, expect, test } from "vite-plus/test";
 import { declareDistributions } from "../src/distributions.ts";
 import { declareDistributions2 } from "../src/distributions-2.ts";
@@ -14,16 +15,12 @@ import { declareDistributions4 } from "../src/distributions-4.ts";
 // number), a product's Mean is componentwise the factors' own Mean, an affine transform's
 // Mean/Variance track `a`/`b` exactly, and a Dirichlet's Mean components sum to at most 1.
 
-let ce: ComputeEngine;
+let ce: Engine;
 beforeEach(() => {
-  ce = new ComputeEngine();
-  declareDistributions(ce);
-  declareDistributions2(ce);
-  declareDistributions3(ce);
-  declareDistributions4(ce);
+  ce = createEngine(declareDistributions, declareDistributions2, declareDistributions3, declareDistributions4);
 });
 
-const evalOf = (expr: unknown) => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evalOf = (expr: unknown) => box(ce, expr as Json).evaluate();
 const N = (expr: unknown) => evalOf(["N", expr as never]).re;
 
 describe("TruncatedDistribution: PDF integrates/sums to 1 over its own support", () => {

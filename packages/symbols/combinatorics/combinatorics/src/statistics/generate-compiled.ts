@@ -4,7 +4,8 @@
 // its own `statistics.compiled.generated.js` — see `../../src/statistics/compiled.ts`, which
 // merges every area's table back into one lookup for `compiledStatistic`.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { compileTyped, definitionHash, fromJs, toJs } from "@enumeratio/engine/compiled";
 import { evaluateEpsil } from "@enumeratio/structures";
 import type { Definition } from "./types.ts";
@@ -24,9 +25,9 @@ export interface CompiledDefinition {
 export function compiledDefinitionsFor(
   definitions: readonly Definition[],
   shape: string,
-  subjectsOf: (ce: ComputeEngine, carrier: string) => readonly unknown[],
+  subjectsOf: (ce: Engine, carrier: string) => readonly unknown[],
 ): { compiled: CompiledDefinition[]; disagreed: string[] } {
-  const ce = new ComputeEngine();
+  const ce = bareEngine();
   const subjects = new Map<string, readonly unknown[]>();
   const compiled: CompiledDefinition[] = [];
   const disagreed: string[] = [];
@@ -49,7 +50,7 @@ export function compiledDefinitionsFor(
 /** Whether compiled code gives the interpreter's answer wherever it answers at all (where it
  *  can't answer exactly, the interpreter does at run time anyway). */
 function agrees(
-  ce: ComputeEngine,
+  ce: Engine,
   definition: Definition,
   run: (vars: Record<string, unknown>) => unknown,
   subjects: readonly unknown[],

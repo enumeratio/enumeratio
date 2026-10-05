@@ -3,7 +3,7 @@
 // membership over every word near the family. Compiled and interpreted, and the interpreter checked
 // directly against the definitions too.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import {
@@ -42,7 +42,7 @@ import {
   TupleUnrank,
 } from "../src/families/kernels-extra.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 
 interface Reading {
   readonly params: readonly number[][];

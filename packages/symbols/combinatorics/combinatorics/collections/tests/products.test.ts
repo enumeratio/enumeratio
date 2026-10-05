@@ -1,8 +1,8 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCollections } from "../src/library.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCollections(ce);
 
 /** Numerically substitute an integer for a symbol and evaluate, for cross-checking a

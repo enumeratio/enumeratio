@@ -1,4 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { box, type Engine, type Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { beforeEach, describe, expect, test } from "vite-plus/test";
 import { declareDistributions } from "../src/distributions.ts";
 import { declareDistributions2 } from "../src/distributions-2.ts";
@@ -12,15 +13,12 @@ import { declareDistributions3 } from "../src/distributions-3.ts";
 // and MGF agree under `i t <-> t` substitution, a discrete CDF gap-fill sums correctly, and
 // the Cauchy/StudentT CDF are numerically consistent with their own PDF's integral.
 
-let ce: ComputeEngine;
+let ce: Engine;
 beforeEach(() => {
-  ce = new ComputeEngine();
-  declareDistributions(ce);
-  declareDistributions2(ce);
-  declareDistributions3(ce);
+  ce = createEngine(declareDistributions, declareDistributions2, declareDistributions3);
 });
 
-const evalOf = (expr: unknown) => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evalOf = (expr: unknown) => box(ce, expr as Json).evaluate();
 const N = (expr: unknown) => evalOf(["N", expr as never]).re;
 
 // The distributions this batch declares CharacteristicFunction/MomentGeneratingFunction for

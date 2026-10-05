@@ -1,5 +1,12 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import {
+  type Engine,
+  type Expr,
+  extendHead,
+  integerAt,
+  nativeEvaluate,
+  operandsOf,
+  symbolNameOf,
+} from "@enumeratio/engine";
 import { dependsOn, limitsOf } from "./products.ts";
 
 // Closed forms for ∏_{k=k0}^∞ P(k)/Q(k), a rational function of the index whose
@@ -29,29 +36,25 @@ import { dependsOn, limitsOf } from "./products.ts";
 // landing on a pole, declines rather than guessing.
 
 /** Whether `expr` evaluates to the exact complex value 0. */
-function isZero(expr: BoxedExpression): boolean {
+function isZero(expr: Expr): boolean {
   const v = expr.evaluate();
   return v.re === 0 && v.im === 0;
 }
 
 /** Whether `a` and `b` evaluate to the same exact value. */
-function sameValue(ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression): boolean {
+function sameValue(ce: Engine, a: Expr, b: Expr): boolean {
   return symbolNameOf(ce.function("Equal", [a, b]).evaluate()) === "True";
 }
 
 /** `expr`, flattened one level through `Multiply` (recursively), as a list of factors. */
-function multiplicands(expr: BoxedExpression): BoxedExpression[] {
+function multiplicands(expr: Expr): Expr[] {
   if (expr.operator !== "Multiply") return [expr];
   return operandsOf(expr).flatMap(multiplicands);
 }
 
 /** `term`'s degree and coefficient as a monomial in `sym` -- `undefined` when `term`
  * isn't one (`sym` under a non-integer power, inside a quotient, …). */
-function monomial(
-  ce: ComputeEngine,
-  term: BoxedExpression,
-  sym: string,
-): { degree: number; coefficient: BoxedExpression } | undefined {
+function monomial(ce: Engine, term: Expr, sym: string): { degree: number; coefficient: Expr } | undefined {
   if (symbolNameOf(term) === sym) return { degree: 1, coefficient: ce.One };
   if (term.operator === "Negate") {
     const inner = monomial(ce, operandsOf(term)[0]!, sym);
@@ -86,15 +89,10 @@ function monomial(
 
 /** `expr`'s coefficients as a polynomial in `sym`, indexed by degree up to `maxDegree` --
  * `undefined` when `expr` isn't a polynomial in `sym` of degree ≤ `maxDegree` this way. */
-function polynomialCoefficients(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  sym: string,
-  maxDegree: number,
-): BoxedExpression[] | undefined {
+function polynomialCoefficients(ce: Engine, expr: Expr, sym: string, maxDegree: number): Expr[] | undefined {
   const expanded = ce.function("Expand", [expr]).evaluate();
   const terms = expanded.operator === "Add" ? operandsOf(expanded) : [expanded];
-  const coefficients: BoxedExpression[] = Array.from({ length: maxDegree + 1 }, () => ce.Zero);
+  const coefficients: Expr[] = Array.from({ length: maxDegree + 1 }, () => ce.Zero);
   for (const term of terms) {
     const m = monomial(ce, term, sym);
     if (m === undefined || m.degree > maxDegree) return undefined;
@@ -106,15 +104,11 @@ function polynomialCoefficients(
 /** A polynomial's leading coefficient and roots, from `ce`'s own `Factor` -- every
  * factor must be linear or an irreducible quadratic (solved directly); anything else,
  * including a degree ≥ 3 irreducible factor, declines. */
-function rootsOf(
-  ce: ComputeEngine,
-  poly: BoxedExpression,
-  sym: string,
-): { leading: BoxedExpression; roots: BoxedExpression[] } | undefined {
+function rootsOf(ce: Engine, poly: Expr, sym: string): { leading: Expr; roots: Expr[] } | undefined {
   const expanded = ce.function("Expand", [poly]).evaluate();
   const factored = ce.function("Factor", [expanded]).evaluate();
   let leading = ce.One;
-  const roots: BoxedExpression[] = [];
+  const roots: Expr[] = [];
   for (const factor of multiplicands(factored)) {
     if (!dependsOn(factor, sym)) {
       leading = ce.function("Multiply", [leading, factor]).evaluate();
@@ -158,9 +152,9 @@ function rootsOf(
 
 /** `roots` grouped into `{r, −r}` pairs (one representative per pair) -- `undefined`
  * when some root has no partner, the only shape the Gamma-ratio step below closes. */
-function pairByNegation(ce: ComputeEngine, roots: readonly BoxedExpression[]): BoxedExpression[] | undefined {
+function pairByNegation(ce: Engine, roots: readonly Expr[]): Expr[] | undefined {
   const remaining = [...roots];
-  const representatives: BoxedExpression[] = [];
+  const representatives: Expr[] = [];
   while (remaining.length > 0) {
     const r = remaining.shift()!;
     const negated = ce.function("Negate", [r]).evaluate();
@@ -176,7 +170,7 @@ function pairByNegation(ce: ComputeEngine, roots: readonly BoxedExpression[]): B
  * argument non-negative (parity applied by hand) -- compute-engine doesn't fold e.g.
  * `Sinh(-Pi)` back to `-Sinh(Pi)` once it sits inside a larger sum, so built the naive
  * way the final answer stays an unsimplified tangle of negated hyperbolics. */
-function signedPiTrig(ce: ComputeEngine, kind: "Sin" | "Cos" | "Sinh" | "Cosh", x: BoxedExpression): BoxedExpression {
+function signedPiTrig(ce: Engine, kind: "Sin" | "Cos" | "Sinh" | "Cosh", x: Expr): Expr {
   if (isZero(x)) return kind === "Cos" || kind === "Cosh" ? ce.One : ce.Zero;
   const negative = x.N().re < 0;
   const magnitude = negative ? ce.function("Negate", [x]).evaluate() : x;
@@ -188,7 +182,7 @@ function signedPiTrig(ce: ComputeEngine, kind: "Sin" | "Cos" | "Sinh" | "Cosh", 
 /** sin(π·u) for a general complex `u = p + qi`, via the addition formula -- so a
  * purely (or partly) imaginary `u` comes back as a closed hyperbolic term instead of an
  * un-simplified `Sin` of a complex argument, which compute-engine leaves alone. */
-function sinOfPiTimes(ce: ComputeEngine, u: BoxedExpression): BoxedExpression {
+function sinOfPiTimes(ce: Engine, u: Expr): Expr {
   const p = ce.function("Re", [u]).evaluate();
   const q = ce.function("Im", [u]).evaluate();
   const real = ce.function("Multiply", [signedPiTrig(ce, "Sin", p), signedPiTrig(ce, "Cosh", q)]).evaluate();
@@ -200,7 +194,7 @@ function sinOfPiTimes(ce: ComputeEngine, u: BoxedExpression): BoxedExpression {
  * `{r, −r}` pair whose Gamma arguments are NOT individually integers (those are
  * resolved directly by `gammaProductOfRoots`, below, without pairing) -- `undefined`
  * when the reflection step's `Sqrt`/`Sin` left a discriminant or angle unresolved. */
-function gammaReflectedPair(ce: ComputeEngine, k0: number, r: BoxedExpression): BoxedExpression | undefined {
+function gammaReflectedPair(ce: Engine, k0: number, r: Expr): Expr | undefined {
   const u = ce.function("Subtract", [k0, r]).evaluate();
   // Γ(k0+r) = Γ(1−u + (2k0−1))·… -- recursion down to Γ(1−u), then reflection:
   // Γ(1−u) = Γ(k0+r)/∏_{t=1}^{2k0−1}(t−u), and Γ(u)Γ(1−u) = π/sin(πu), so
@@ -221,13 +215,9 @@ function gammaReflectedPair(ce: ComputeEngine, k0: number, r: BoxedExpression): 
  * have to come in `{r, −r}` pairs). Whatever is left over must pair off by negation
  * (the shape `gammaReflectedPair`'s reflection step closes); `undefined` on a pole, an
  * unpaired leftover root, or a reflection `gammaReflectedPair` can't resolve. */
-function gammaProductOfRoots(
-  ce: ComputeEngine,
-  k0: number,
-  roots: readonly BoxedExpression[],
-): BoxedExpression | undefined {
+function gammaProductOfRoots(ce: Engine, k0: number, roots: readonly Expr[]): Expr | undefined {
   let product = ce.One;
-  const remaining: BoxedExpression[] = [];
+  const remaining: Expr[] = [];
   for (const root of roots) {
     const argument = integerAt(ce.function("Subtract", [k0, root]).evaluate());
     if (argument === undefined) {
@@ -250,12 +240,7 @@ function gammaProductOfRoots(
 /** The closed form of `∏_{k=lo}^∞ body(k)`, for `body` a rational function of `idxName`
  * -- `undefined` when the shape, roots, convergence check, or pairing don't work out
  * (see the module comment); the caller falls back to whatever it already had. */
-function closedFormInfiniteProduct(
-  ce: ComputeEngine,
-  body: BoxedExpression,
-  idxName: string,
-  lo: BoxedExpression,
-): BoxedExpression | undefined {
+function closedFormInfiniteProduct(ce: Engine, body: Expr, idxName: string, lo: Expr): Expr | undefined {
   const k0 = integerAt(lo.evaluate());
   if (k0 === undefined || k0 < 1) return undefined;
 
@@ -284,24 +269,23 @@ function closedFormInfiniteProduct(
   return ce.function("Divide", [finalNumerator, finalDenominator]).evaluate();
 }
 
-export function declareInfiniteProducts(ce: ComputeEngine): void {
-  const definition = ce.lookupDefinition("Product");
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) return;
-  const native = operator.evaluate;
-  operator.evaluate = (ops, options) => {
-    const result = native?.(ops, options);
-    // Compute-engine's own evaluate already answers a `PositiveInfinity`-bound Product
-    // whenever it can (e.g. Σ1/k² and the telescoping Σ(1−1/k²)); only reach for the
-    // Gamma-ratio method below when it leaves the call unanswered -- either `undefined`
-    // (its usual "no change" signal) or an unevaluated `Product` handed back as-is.
-    if (result !== undefined && result.operator !== "Product") return result;
-    if (ops.length !== 2) return result;
-    const limits = limitsOf(ops[1]!);
-    if (limits === undefined) return result;
-    if (limits.hi.re !== Infinity || limits.hi.im !== 0) return result;
-    if (limits.step !== undefined && integerAt(limits.step.evaluate()) !== 1) return result;
-    const closedForm = closedFormInfiniteProduct(ce, ops[0]!, limits.index, limits.lo);
-    return closedForm ?? result;
-  };
+export function declareInfiniteProducts(ce: Engine): void {
+  const native = nativeEvaluate(ce, "Product");
+  extendHead(ce, "Product", {
+    evaluate: (ops, options) => {
+      const result = native?.(ops, options);
+      // Compute-engine's own evaluate already answers a `PositiveInfinity`-bound Product
+      // whenever it can (e.g. Σ1/k² and the telescoping Σ(1−1/k²)); only reach for the
+      // Gamma-ratio method below when it leaves the call unanswered -- either `undefined`
+      // (its usual "no change" signal) or an unevaluated `Product` handed back as-is.
+      if (result !== undefined && result.operator !== "Product") return result;
+      if (ops.length !== 2) return result;
+      const limits = limitsOf(ops[1]!);
+      if (limits === undefined) return result;
+      if (limits.hi.re !== Infinity || limits.hi.im !== 0) return result;
+      if (limits.step !== undefined && integerAt(limits.step.evaluate()) !== 1) return result;
+      const closedForm = closedFormInfiniteProduct(ce, ops[0]!, limits.index, limits.lo);
+      return closedForm ?? result;
+    },
+  });
 }

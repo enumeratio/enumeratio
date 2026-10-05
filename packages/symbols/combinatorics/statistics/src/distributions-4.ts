@@ -1,5 +1,13 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type EvaluateOptions, integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
+import {
+  type Engine,
+  type EvaluateOptions,
+  type Expr,
+  extendHead,
+  integerAt,
+  operandsOf,
+  symbolNameOf,
+  wrapOperator,
+} from "@enumeratio/engine";
 import { bindingOf, finish, mentions, numAt, uniform01 } from "./distributions.ts";
 import { add, div, exp, If, lt, mul, neg, pow, sub } from "./distributions-2.ts";
 
@@ -38,7 +46,7 @@ const DISCRETE_KINDS4 = new Set([
   "HypergeometricDistribution",
 ]);
 
-const isDiscreteKind = (dist: BoxedExpression): boolean => DISCRETE_KINDS4.has(dist.operator);
+const isDiscreteKind = (dist: Expr): boolean => DISCRETE_KINDS4.has(dist.operator);
 
 const KINDS4 = new Set([
   "TruncatedDistribution",
@@ -48,11 +56,11 @@ const KINDS4 = new Set([
   "DirichletDistribution",
 ]);
 
-const pdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExpression) => ce.function("PDF", [dist, x]);
-const cdf = (ce: ComputeEngine, dist: BoxedExpression, x: BoxedExpression) => ce.function("CDF", [dist, x]);
-const mean = (ce: ComputeEngine, dist: BoxedExpression) => ce.function("Mean", [dist]);
-const variance = (ce: ComputeEngine, dist: BoxedExpression) => ce.function("Variance", [dist]);
-const randomVariate = (ce: ComputeEngine, dist: BoxedExpression) => ce.function("RandomVariate", [dist]);
+const pdf = (ce: Engine, dist: Expr, x: Expr) => ce.function("PDF", [dist, x]);
+const cdf = (ce: Engine, dist: Expr, x: Expr) => ce.function("CDF", [dist, x]);
+const mean = (ce: Engine, dist: Expr) => ce.function("Mean", [dist]);
+const variance = (ce: Engine, dist: Expr) => ce.function("Variance", [dist]);
+const randomVariate = (ce: Engine, dist: Expr) => ce.function("RandomVariate", [dist]);
 
 // --- 1. TruncatedDistribution({a, b}, dist) -----------------------------------------------------
 //
@@ -63,12 +71,12 @@ const randomVariate = (ce: ComputeEngine, dist: BoxedExpression) => ce.function(
 // <= x)` either way — only where the truncated PDF is nonzero differs.
 
 interface TruncatedParams {
-  readonly a: BoxedExpression;
-  readonly b: BoxedExpression;
-  readonly inner: BoxedExpression;
+  readonly a: Expr;
+  readonly b: Expr;
+  readonly inner: Expr;
 }
 
-const truncatedParams = (ce: ComputeEngine, dist: BoxedExpression): TruncatedParams | undefined => {
+const truncatedParams = (ce: Engine, dist: Expr): TruncatedParams | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 2 || ops[0].operator !== "List") return undefined;
   const bounds = operandsOf(ops[0]);
@@ -76,7 +84,7 @@ const truncatedParams = (ce: ComputeEngine, dist: BoxedExpression): TruncatedPar
   return { a: bounds[0], b: bounds[1], inner: ops[1] };
 };
 
-const normalParams4 = (ce: ComputeEngine, dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
+const normalParams4 = (ce: Engine, dist: Expr): [Expr, Expr] | undefined => {
   const ops = operandsOf(dist);
   if (ops.length === 0) return [ce.Zero, ce.One];
   if (ops.length === 2) return [ops[0], ops[1]];
@@ -89,13 +97,13 @@ const normalParams4 = (ce: ComputeEngine, dist: BoxedExpression): [BoxedExpressi
  *  identity via the standard normal's own PDF/CDF), Exponential (memoryless-shift identity).
  *  Anything else returns `undefined` — stays unevaluated. */
 const truncatedMean = (
-  ce: ComputeEngine,
-  inner: BoxedExpression,
-  a: BoxedExpression,
-  b: BoxedExpression,
-  z: BoxedExpression,
+  ce: Engine,
+  inner: Expr,
+  a: Expr,
+  b: Expr,
+  z: Expr,
   options: EvaluateOptions,
-): BoxedExpression | undefined => {
+): Expr | undefined => {
   switch (inner.operator) {
     case "UniformDistribution":
       return finish(div(ce, add(ce, a, b), ce.number(2)), options);
@@ -124,12 +132,7 @@ const truncatedMean = (
   }
 };
 
-const truncatedPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const truncatedPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = truncatedParams(ce, dist);
   if (params === undefined) return undefined;
   const { a, b, inner } = params;
@@ -145,12 +148,7 @@ const truncatedPdf = (
   return finish(If(ce, lowerCond, ce.Zero, upperExcluded), options);
 };
 
-const truncatedCdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const truncatedCdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = truncatedParams(ce, dist);
   if (params === undefined) return undefined;
   const { a, b, inner } = params;
@@ -161,11 +159,7 @@ const truncatedCdf = (
   return finish(If(ce, lowerCond, ce.Zero, finish(If(ce, lt(ce, b, x), ce.One, inRange), options)), options);
 };
 
-const truncatedMeanEntry = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const truncatedMeanEntry = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const params = truncatedParams(ce, dist);
   if (params === undefined) return undefined;
   const { a, b, inner } = params;
@@ -176,11 +170,11 @@ const truncatedMeanEntry = (
 // --- 2. MixtureDistribution({w1, ..., wn}, {d1, ..., dn}) ---------------------------------------
 
 interface MixtureParams {
-  readonly weights: readonly BoxedExpression[];
-  readonly dists: readonly BoxedExpression[];
+  readonly weights: readonly Expr[];
+  readonly dists: readonly Expr[];
 }
 
-const mixtureParams = (ce: ComputeEngine, dist: BoxedExpression): MixtureParams | undefined => {
+const mixtureParams = (ce: Engine, dist: Expr): MixtureParams | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 2 || ops[0].operator !== "List" || ops[1].operator !== "List") return undefined;
   const weights = operandsOf(ops[0]);
@@ -189,17 +183,16 @@ const mixtureParams = (ce: ComputeEngine, dist: BoxedExpression): MixtureParams 
   return { weights, dists };
 };
 
-const weightSum = (ce: ComputeEngine, weights: readonly BoxedExpression[]) =>
-  weights.length === 1 ? weights[0] : add(ce, ...weights);
+const weightSum = (ce: Engine, weights: readonly Expr[]) => (weights.length === 1 ? weights[0] : add(ce, ...weights));
 
 /** `sum_i (w_i / sum(w)) * f(d_i)` — the shared reduction `PDF`, `CDF` and `Mean` all use,
  *  parameterised over which per-component operator (`f`) to weight and sum. */
 const weightedSum = (
-  ce: ComputeEngine,
+  ce: Engine,
   params: MixtureParams,
-  perComponent: (d: BoxedExpression) => BoxedExpression,
+  perComponent: (d: Expr) => Expr,
   options: EvaluateOptions,
-): BoxedExpression => {
+): Expr => {
   const { weights, dists } = params;
   const total = weightSum(ce, weights);
   const terms = dists.map((d, i) => mul(ce, div(ce, weights[i], total), perComponent(d)));
@@ -210,7 +203,7 @@ const weightedSum = (
  *  `sum_i w_i Var(d_i) + sum_i w_i (Mean(d_i) - Mean(Y))^2` — exact given each component's own
  *  Mean/Variance (whatever those are, old or new distribution kind, via the generic `Mean`/
  *  `Variance` operators). */
-const mixtureVariance = (ce: ComputeEngine, params: MixtureParams, options: EvaluateOptions): BoxedExpression => {
+const mixtureVariance = (ce: Engine, params: MixtureParams, options: EvaluateOptions): Expr => {
   const { weights, dists } = params;
   const total = weightSum(ce, weights);
   const normW = weights.map((w) => div(ce, w, total));
@@ -224,7 +217,7 @@ const mixtureVariance = (ce: ComputeEngine, params: MixtureParams, options: Eval
  *  then delegate the actual sampling to `RandomVariate` on that component — reusing whatever
  *  per-kind sampler already exists (native, wave 1-3, or another compound distribution)
  *  instead of re-implementing sampling here. */
-const mixtureDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | undefined => {
+const mixtureDraw = (ce: Engine, dist: Expr): Expr | undefined => {
   const params = mixtureParams(ce, dist);
   if (params === undefined) return undefined;
   const { weights, dists } = params;
@@ -251,24 +244,19 @@ const mixtureDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression 
  *  `evaluate` never runs, and returning `undefined` for every other call shape hands back to
  *  compute-engine's own generic canonicalization instead of recursing on the expression this
  *  just built. */
-const productCanonical = (ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-  if (ops.length !== 1 || ops[0].operator !== "List") return undefined;
+const productCanonical = (ce: Engine, ops: readonly Expr[]): Expr | null => {
+  if (ops.length !== 1 || ops[0].operator !== "List") return null;
   const inner = operandsOf(ops[0]);
-  if (inner.length !== 2) return undefined;
+  if (inner.length !== 2) return null;
   const n = integerAt(inner[1]);
-  if (n === undefined || n < 1) return undefined;
+  if (n === undefined || n < 1) return null;
   return ce.function(
     "ProductDistribution",
     Array.from({ length: n }, () => inner[0]),
   );
 };
 
-const productPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const productPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const factors = operandsOf(dist);
   if (x.operator !== "List") return undefined;
   const xs = operandsOf(x);
@@ -277,12 +265,7 @@ const productPdf = (
   return finish(terms.length === 1 ? terms[0] : mul(ce, ...terms), options);
 };
 
-const productCdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const productCdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const factors = operandsOf(dist);
   if (x.operator !== "List") return undefined;
   const xs = operandsOf(x);
@@ -291,7 +274,7 @@ const productCdf = (
   return finish(terms.length === 1 ? terms[0] : mul(ce, ...terms), options);
 };
 
-const productMean = (ce: ComputeEngine, dist: BoxedExpression, options: EvaluateOptions): BoxedExpression =>
+const productMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr =>
   finish(
     ce.function(
       "List",
@@ -300,7 +283,7 @@ const productMean = (ce: ComputeEngine, dist: BoxedExpression, options: Evaluate
     options,
   );
 
-const productVariance = (ce: ComputeEngine, dist: BoxedExpression, options: EvaluateOptions): BoxedExpression =>
+const productVariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr =>
   finish(
     ce.function(
       "List",
@@ -309,7 +292,7 @@ const productVariance = (ce: ComputeEngine, dist: BoxedExpression, options: Eval
     options,
   );
 
-const productDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | undefined => {
+const productDraw = (ce: Engine, dist: Expr): Expr | undefined => {
   const draws = operandsOf(dist).map((f) => randomVariate(ce, f));
   return finish(ce.function("List", draws), undefined);
 };
@@ -317,8 +300,8 @@ const productDraw = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression 
 // --- 4. TransformedDistribution(expr, Distributed(x, dist)) -------------------------------------
 
 interface Affine {
-  readonly a: BoxedExpression;
-  readonly b: BoxedExpression;
+  readonly a: Expr;
+  readonly b: Expr;
 }
 
 /** `expr = a*x + b` — the same linear-decomposition recursion `distributions.ts`'s
@@ -326,7 +309,7 @@ interface Affine {
  *  through `Subtract` and to accept `Multiply` by an affine (not just a bare `x`) subterm.
  *  Anything else (a genuine nonlinearity `expectationOf` doesn't need to handle) returns
  *  `undefined`. */
-const affineOf = (ce: ComputeEngine, expr: BoxedExpression, varName: string): Affine | undefined => {
+const affineOf = (ce: Engine, expr: Expr, varName: string): Affine | undefined => {
   if (!mentions(expr, varName)) return { a: ce.Zero, b: expr };
   if (symbolNameOf(expr) === varName) return { a: ce.One, b: ce.Zero };
   switch (expr.operator) {
@@ -370,14 +353,14 @@ const affineOf = (ce: ComputeEngine, expr: BoxedExpression, varName: string): Af
 type TransformInfo =
   | {
       readonly kind: "affine";
-      readonly a: BoxedExpression;
+      readonly a: Expr;
       readonly aNum: number;
-      readonly b: BoxedExpression;
-      readonly inner: BoxedExpression;
+      readonly b: Expr;
+      readonly inner: Expr;
     }
   | { readonly kind: "chisq1" };
 
-const isStandardNormal = (ce: ComputeEngine, dist: BoxedExpression): boolean => {
+const isStandardNormal = (ce: Engine, dist: Expr): boolean => {
   if (dist.operator !== "NormalDistribution") return false;
   const ops = operandsOf(dist);
   if (ops.length === 0) return true;
@@ -389,11 +372,7 @@ const isStandardNormal = (ce: ComputeEngine, dist: BoxedExpression): boolean => 
  *  `a != 0` (affine change of variable), and `x^2` for `x ~ NormalDistribution(0, 1)` — which
  *  is `ChiSquareDistribution(1)` by definition. Anything else returns `undefined`, so PDF/CDF/
  *  Mean/Variance/RandomVariate all stay unevaluated for it. */
-const transformedInfo = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): TransformInfo | undefined => {
+const transformedInfo = (ce: Engine, dist: Expr, options: EvaluateOptions): TransformInfo | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 2) return undefined;
   const [expr, distributed] = ops;
@@ -416,12 +395,7 @@ const transformedInfo = (
   return { kind: "affine", a, aNum, b: finish(coeffs.b, options), inner };
 };
 
-const transformedPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const transformedPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const info = transformedInfo(ce, dist, options);
   if (info === undefined) return undefined;
   if (info.kind === "chisq1") return finish(pdf(ce, ce.function("ChiSquareDistribution", [ce.One]), x), options);
@@ -430,12 +404,7 @@ const transformedPdf = (
   return finish(div(ce, pdf(ce, inner, invArg), ce.function("Abs", [a])), options);
 };
 
-const transformedCdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const transformedCdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const info = transformedInfo(ce, dist, options);
   if (info === undefined) return undefined;
   if (info.kind === "chisq1") return finish(cdf(ce, ce.function("ChiSquareDistribution", [ce.One]), x), options);
@@ -449,11 +418,7 @@ const transformedCdf = (
   return finish(add(ce, complement, correction), options);
 };
 
-const transformedMean = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const transformedMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const info = transformedInfo(ce, dist, options);
   if (info === undefined) return undefined;
   if (info.kind === "chisq1") return finish(mean(ce, ce.function("ChiSquareDistribution", [ce.One])), options);
@@ -461,11 +426,7 @@ const transformedMean = (
   return finish(add(ce, mul(ce, a, mean(ce, inner)), b), options);
 };
 
-const transformedVariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const transformedVariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const info = transformedInfo(ce, dist, options);
   if (info === undefined) return undefined;
   if (info.kind === "chisq1") return finish(variance(ce, ce.function("ChiSquareDistribution", [ce.One])), options);
@@ -473,11 +434,7 @@ const transformedVariance = (
   return finish(mul(ce, pow(ce, a, ce.number(2)), variance(ce, inner)), options);
 };
 
-const transformedDraw = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const transformedDraw = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const info = transformedInfo(ce, dist, options);
   if (info === undefined) return undefined;
   if (info.kind === "chisq1") return finish(randomVariate(ce, ce.function("ChiSquareDistribution", [ce.One])), options);
@@ -492,12 +449,7 @@ const transformedDraw = (
 // since by the time any of those run, `ops[0]` (a non-lazy operator's operands are evaluated
 // first) is already the reduced factor.
 
-const marginalOf = (
-  ce: ComputeEngine,
-  productDist: BoxedExpression,
-  index: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const marginalOf = (ce: Engine, productDist: Expr, index: Expr, options: EvaluateOptions): Expr | undefined => {
   if (productDist.operator !== "ProductDistribution") return undefined;
   const factors = operandsOf(productDist);
   if (index.operator === "List") {
@@ -520,19 +472,14 @@ const marginalOf = (
 // `DirichletDistribution[{a1, a2, a3}]` return length-2 lists). Documented here since it is
 // easy to expect a length-`k` answer instead.
 
-const dirichletAlphas = (dist: BoxedExpression): readonly BoxedExpression[] | undefined => {
+const dirichletAlphas = (dist: Expr): readonly Expr[] | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 1 || ops[0].operator !== "List") return undefined;
   const alphas = operandsOf(ops[0]);
   return alphas.length >= 2 ? alphas : undefined;
 };
 
-const dirichletPdf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const dirichletPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const alphas = dirichletAlphas(dist);
   if (alphas === undefined || x.operator !== "List") return undefined;
   const xs = operandsOf(x);
@@ -545,11 +492,7 @@ const dirichletPdf = (
   return finish(div(ce, numerator, beta), options);
 };
 
-const dirichletMean = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const dirichletMean = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const alphas = dirichletAlphas(dist);
   if (alphas === undefined) return undefined;
   const alphaSum = alphas.length === 1 ? alphas[0] : add(ce, ...alphas);
@@ -557,11 +500,7 @@ const dirichletMean = (
   return finish(ce.function("List", components), options);
 };
 
-const dirichletVariance = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const dirichletVariance = (ce: Engine, dist: Expr, options: EvaluateOptions): Expr | undefined => {
   const alphas = dirichletAlphas(dist);
   if (alphas === undefined) return undefined;
   const alphaSum = alphas.length === 1 ? alphas[0] : add(ce, ...alphas);
@@ -572,7 +511,7 @@ const dirichletVariance = (
 
 // --- declare constructors ------------------------------------------------------------------
 
-function declareConstructors4(ce: ComputeEngine): void {
+function declareConstructors4(ce: Engine): void {
   ce.declare("TruncatedDistribution", { signature: "(list<real>, distribution) -> distribution" });
   ce.declare("MixtureDistribution", { signature: "(list<real>, list<distribution>) -> distribution" });
   // `(distribution*)`, plus the `({d, n})` sugar `productCanonical` rewrites at construction
@@ -581,17 +520,11 @@ function declareConstructors4(ce: ComputeEngine): void {
   ce.declare("ProductDistribution", {
     signature: "((distribution*) -> distribution) & ((list<any>) -> distribution)",
   });
-  {
-    const definition = ce.lookupDefinition("ProductDistribution");
-    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-    if (operator !== undefined) {
-      (operator as { canonical?: unknown }).canonical = (ops: readonly BoxedExpression[]) => productCanonical(ce, ops);
-    }
-  }
+  extendHead(ce, "ProductDistribution", { canonical: (ops: readonly Expr[]) => productCanonical(ce, ops) });
   ce.declare("TransformedDistribution", { signature: "(any, expression<Distributed>) -> distribution" });
   ce.declare("MarginalDistribution", {
     signature: "(expression<ProductDistribution>, integer | list<integer>) -> distribution",
-    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
+    evaluate: (ops: readonly Expr[], options: EvaluateOptions) =>
       ops.length === 2 ? marginalOf(ce, ops[0], ops[1], options) : undefined,
   });
   ce.declare("DirichletDistribution", { signature: "(list<real>) -> distribution" });
@@ -599,7 +532,7 @@ function declareConstructors4(ce: ComputeEngine): void {
 
 // --- extend PDF/CDF/Mean/Variance/RandomVariate in place, via wrapOperator ----------------------
 
-function extendStats4(ce: ComputeEngine): void {
+function extendStats4(ce: Engine): void {
   wrapOperator(
     ce,
     ["PDF"],
@@ -714,7 +647,7 @@ function extendStats4(ce: ComputeEngine): void {
  *  `DirichletDistribution` — plus extending `PDF`/`CDF`/`Mean`/`Variance`/`RandomVariate` in
  *  place. Call AFTER `declareDistributions`, `declareDistributions2` and `declareDistributions3`
  *  — every case here reaches the inner distribution(s) through those (fully extended) operators. */
-export function declareDistributions4(ce: ComputeEngine): void {
+export function declareDistributions4(ce: Engine): void {
   declareConstructors4(ce);
   extendStats4(ce);
 }

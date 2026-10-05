@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { kSubsets, subsets } from "../src/families/closed-forms.ts";
 import { kernelsOn } from "../src/families/epsil.ts";
@@ -7,7 +7,7 @@ import { entries } from "../src/families/subsets.ts";
 // The subset families against an independent reading: every subset of 1..n, by size and then
 // lex on the ascending members, filtered by the family's condition. The same elements in the same
 // order, rank inverting unrank, and every element a member.
-const ce = new ComputeEngine();
+const ce = bareEngine();
 const kernels = kernelsOn(ce, [
   subsets({ head: "Subsets", params: ["_n"] }),
   kSubsets({ head: "KSubsets", params: ["_n", "_k"] }),

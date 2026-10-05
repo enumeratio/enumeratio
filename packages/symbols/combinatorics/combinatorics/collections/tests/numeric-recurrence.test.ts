@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/numeric-recurrence.ts";
 import { declareCollections } from "../src/library.ts";
@@ -252,7 +252,7 @@ test("SternDiatomicSequence membership is every non-negative integer", () => {
 
 // ─── engine-level: Take / Count / Element through the declared CE collection handlers. ───
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCollections(ce);
 
 test("FibonacciNumbers is declared as an indexed_collection<integer>", () => {

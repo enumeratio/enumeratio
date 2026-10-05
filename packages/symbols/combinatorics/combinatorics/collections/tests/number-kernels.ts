@@ -2,11 +2,11 @@
 // straight from its module: an Epsil family is run on an engine and adapted, a NumberKernel is
 // returned as it is.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { type EpsilFamily, epsilKernelOn } from "../src/families/epsil.ts";
 import type { NumberKernel } from "../src/families/types.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 
 export function asNumbers(family: NumberKernel | EpsilFamily): NumberKernel {
   if (!("epsil" in family)) return family;

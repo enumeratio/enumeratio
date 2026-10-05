@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, optionsOf } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf, optionsOf } from "@enumeratio/engine";
 import { dijkstraDistances, dijkstraPath } from "./graph-weights.ts";
 
 // Graphs (Wolfram frontier: UndirectedEdge/DirectedEdge top the gap list at 756/69 doc
@@ -41,17 +40,17 @@ export interface Edge {
   readonly directed: boolean;
   readonly a: string; // canonical key
   readonly b: string;
-  readonly expr: BoxedExpression; // original UndirectedEdge/DirectedEdge expression
+  readonly expr: Expr; // original UndirectedEdge/DirectedEdge expression
   /** From `EdgeWeight -> {…}` (Wolfram's option form, see `graphOf`), one entry per edge in
    *  `EdgeList` order — `undefined` on every edge when the graph carries no weights at all.
    *  Kept as the original expression (not coerced to a JS number) so an exact weight prints
    *  back exactly; `numericWeight` in `graph-weights.ts` reads it for arithmetic. */
-  readonly weight?: BoxedExpression;
+  readonly weight?: Expr;
 }
 
 export interface GraphModel {
   readonly order: readonly string[]; // vertex keys, first-appearance order
-  readonly label: ReadonlyMap<string, BoxedExpression>; // key -> original vertex expression
+  readonly label: ReadonlyMap<string, Expr>; // key -> original vertex expression
   readonly edges: readonly Edge[];
   /** Whether this graph was built with `EdgeWeight -> {…}` — every edge then has `.weight`
    *  set (never a partial mix). See `graphOf`. */
@@ -61,11 +60,11 @@ export interface GraphModel {
 /** A stable key for a vertex expression — canonical MathJSON, so `1` and `2` never
  *  collide and a repeated vertex (same key) is recognised as the same vertex regardless
  *  of which occurrence built the label. */
-export const vertexKey = (expr: BoxedExpression): string => JSON.stringify(expr.json);
+export const vertexKey = (expr: Expr): string => JSON.stringify(expr.json);
 
 /** Read one `UndirectedEdge(u, v)` / `DirectedEdge(u, v)` expression, or `undefined` if
  *  `expr` is neither. */
-function edgeOf(expr: BoxedExpression): { directed: boolean; a: BoxedExpression; b: BoxedExpression } | undefined {
+function edgeOf(expr: Expr): { directed: boolean; a: Expr; b: Expr } | undefined {
   if (expr.operator !== "UndirectedEdge" && expr.operator !== "DirectedEdge") return undefined;
   const ops = operandsOf(expr);
   if (ops.length !== 2) return undefined;
@@ -84,8 +83,8 @@ function edgeOf(expr: BoxedExpression): { directed: boolean; a: BoxedExpression;
  *
  *  Takes `ce` (every caller already has one, being a `declare(…)` callback) so the option's
  *  value — read off as MathJSON by `optionsOf`, the same `OptionsPattern`-style splitter
- *  `VerificationTest` uses (`@enumeratio/engine`) — can be reboxed into `BoxedExpression`s. */
-export function graphOf(ce: ComputeEngine, expr: BoxedExpression): GraphModel | undefined {
+ *  `VerificationTest` uses (`@enumeratio/engine`) — can be reboxed into `Expr`s. */
+export function graphOf(ce: Engine, expr: Expr): GraphModel | undefined {
   if (expr.operator !== "Graph") return undefined;
   const rawOps = operandsOf(expr);
   const { ops: positional, options } = optionsOf(["Graph", ...rawOps.map((op) => op.json)] as never);
@@ -98,7 +97,7 @@ export function graphOf(ce: ComputeEngine, expr: BoxedExpression): GraphModel | 
   const rawEdges = edgeExprs.map(edgeOf);
   if (rawEdges.some((e) => e === undefined)) return undefined;
 
-  let weights: readonly BoxedExpression[] | undefined;
+  let weights: readonly Expr[] | undefined;
   if (options.EdgeWeight !== undefined) {
     const weightList = ce.box(options.EdgeWeight as never);
     if (weightList.operator !== "List") return undefined;
@@ -108,8 +107,8 @@ export function graphOf(ce: ComputeEngine, expr: BoxedExpression): GraphModel | 
   }
 
   const order: string[] = [];
-  const label = new Map<string, BoxedExpression>();
-  const see = (v: BoxedExpression): void => {
+  const label = new Map<string, Expr>();
+  const see = (v: Expr): void => {
     const key = vertexKey(v);
     if (!label.has(key)) {
       label.set(key, v);
@@ -317,10 +316,9 @@ function bipartiteColoring(model: GraphModel): Map<string, 0 | 1> | undefined {
 
 // ─── encoders ────────────────────────────────────────────────────────────────────────────
 
-export const listOf = (ce: ComputeEngine, items: readonly BoxedExpression[]): BoxedExpression =>
-  ce.function("List", items);
+export const listOf = (ce: Engine, items: readonly Expr[]): Expr => ce.function("List", items);
 
-export const vertexListExpr = (ce: ComputeEngine, model: GraphModel): BoxedExpression =>
+export const vertexListExpr = (ce: Engine, model: GraphModel): Expr =>
   listOf(
     ce,
     model.order.map((k) => model.label.get(k)!),
@@ -328,16 +326,12 @@ export const vertexListExpr = (ce: ComputeEngine, model: GraphModel): BoxedExpre
 
 // ─── named families ─────────────────────────────────────────────────────────────────────
 
-export const undirectedEdgeExpr = (ce: ComputeEngine, a: number, b: number): BoxedExpression =>
+export const undirectedEdgeExpr = (ce: Engine, a: number, b: number): Expr =>
   ce.function("UndirectedEdge", [ce.number(a), ce.number(b)]);
 
 /** `Graph(vertices 1..n, edges)` built from 1-based integer edges — every named family
  *  shares this shape, so they all decode through the same `graphOf`. */
-export function integerGraph(
-  ce: ComputeEngine,
-  n: number,
-  edges: readonly (readonly [number, number])[],
-): BoxedExpression {
+export function integerGraph(ce: Engine, n: number, edges: readonly (readonly [number, number])[]): Expr {
   const vertices = listOf(
     ce,
     Array.from({ length: n }, (_, i) => ce.number(i + 1)),
@@ -349,7 +343,7 @@ export function integerGraph(
   return ce.function("Graph", [vertices, edgeList]);
 }
 
-function completeGraph(ce: ComputeEngine, n: number): BoxedExpression | undefined {
+function completeGraph(ce: Engine, n: number): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 1) return undefined;
   const edges: [number, number][] = [];
   for (let i = 1; i <= n; i++) for (let j = i + 1; j <= n; j++) edges.push([i, j]);
@@ -360,7 +354,7 @@ function completeGraph(ce: ComputeEngine, n: number): BoxedExpression | undefine
  *  vertices, in order) or `PathGraph(n)` — our own convenience extension, the path
  *  1-2-…-n; `PathGraph[3]` is an ERROR in real Wolfram (kernel-verified), so this integer
  *  form has no `to-wolfram` mapping — see `to-wolfram.ts`. */
-function pathGraph(ce: ComputeEngine, spec: BoxedExpression): BoxedExpression | undefined {
+function pathGraph(ce: Engine, spec: Expr): Expr | undefined {
   const n = integerAt(spec);
   if (n !== undefined) {
     if (n < 1) return undefined;
@@ -381,7 +375,7 @@ function pathGraph(ce: ComputeEngine, spec: BoxedExpression): BoxedExpression | 
   return undefined;
 }
 
-function cycleGraph(ce: ComputeEngine, n: number): BoxedExpression | undefined {
+function cycleGraph(ce: Engine, n: number): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 3) return undefined;
   const edges: [number, number][] = [];
   for (let i = 1; i < n; i++) edges.push([i, i + 1]);
@@ -390,7 +384,7 @@ function cycleGraph(ce: ComputeEngine, n: number): BoxedExpression | undefined {
 }
 
 /** `StarGraph(n)`: vertex 1 is the centre, joined to every one of the other `n - 1`. */
-function starGraph(ce: ComputeEngine, n: number): BoxedExpression | undefined {
+function starGraph(ce: Engine, n: number): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 1) return undefined;
   const edges: [number, number][] = [];
   for (let i = 2; i <= n; i++) edges.push([1, i]);
@@ -399,7 +393,7 @@ function starGraph(ce: ComputeEngine, n: number): BoxedExpression | undefined {
 
 /** `GridGraph({d1, d2, …})`: the Cartesian product of paths of those lengths. Vertices are
  *  numbered in row-major (last index fastest) order, 1-based. */
-function gridGraph(ce: ComputeEngine, dims: readonly number[]): BoxedExpression | undefined {
+function gridGraph(ce: Engine, dims: readonly number[]): Expr | undefined {
   if (dims.length === 0 || dims.some((d) => !Number.isSafeInteger(d) || d < 1)) return undefined;
   const n = dims.reduce((a, b) => a * b, 1);
   const strides: number[] = [];
@@ -434,7 +428,7 @@ function gridGraph(ce: ComputeEngine, dims: readonly number[]): BoxedExpression 
 
 /** `HypercubeGraph(n)`: vertices are the 2^n bit-strings 0..2^n-1 (numbered 1-based, vertex
  *  `i` labels bit pattern `i - 1`), edges between patterns differing in exactly one bit. */
-function hypercubeGraph(ce: ComputeEngine, n: number): BoxedExpression | undefined {
+function hypercubeGraph(ce: Engine, n: number): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 0 || n > 20) return undefined; // 20 -> ~1e6 vertices, a sane cap
   const count = 2 ** n;
   const edges: [number, number][] = [];
@@ -452,7 +446,7 @@ function hypercubeGraph(ce: ComputeEngine, n: number): BoxedExpression | undefin
  *  count (kernel-verified: `CompleteKaryTree[3, 2]` has 7 vertices, `CompleteKaryTree[1, 2]`
  *  has 1). Every level is completely filled, so `n = (k^levels - 1)/(k - 1)` vertices,
  *  1-indexed heap layout — vertex `i`'s children are `k(i-1)+2 .. k(i-1)+k+1`. */
-function completeKaryTree(ce: ComputeEngine, levels: number, k: number): BoxedExpression | undefined {
+function completeKaryTree(ce: Engine, levels: number, k: number): Expr | undefined {
   if (!Number.isSafeInteger(levels) || levels < 1 || !Number.isSafeInteger(k) || k < 2) {
     return undefined;
   }
@@ -476,7 +470,7 @@ function completeKaryTree(ce: ComputeEngine, levels: number, k: number): BoxedEx
 
 /** The (undirected, unlabelled) Petersen graph: outer 5-cycle 1..5, inner pentagram
  *  6..10 (step 2), and the 5 spokes i <-> i+5. */
-function petersenGraph(ce: ComputeEngine): BoxedExpression {
+function petersenGraph(ce: Engine): Expr {
   const edges: [number, number][] = [];
   for (let i = 1; i <= 5; i++) edges.push([i, (i % 5) + 1]); // outer cycle
   for (let i = 0; i < 5; i++) edges.push([6 + i, 6 + ((i + 2) % 5)]); // inner pentagram
@@ -486,7 +480,7 @@ function petersenGraph(ce: ComputeEngine): BoxedExpression {
 
 // ─── declare ─────────────────────────────────────────────────────────────────────────────
 
-export function declareGraphs(ce: ComputeEngine): void {
+export function declareGraphs(ce: Engine): void {
   ce.declare("UndirectedEdge", { signature: "(any, any) -> value" });
   ce.declare("DirectedEdge", { signature: "(any, any) -> value" });
   // `any*` (compute-engine won't mix `?` with a variadic tail) covers both the second
@@ -793,7 +787,7 @@ export function declareGraphs(ce: ComputeEngine): void {
 
 /** The induced subgraph of `g` on the vertex keys in `keep`: those vertices, in `g`'s
  *  original order, and every edge with both endpoints kept. */
-export function induced(ce: ComputeEngine, g: GraphModel, keep: ReadonlySet<string>): BoxedExpression {
+export function induced(ce: Engine, g: GraphModel, keep: ReadonlySet<string>): Expr {
   const kept = g.edges.filter((e) => keep.has(e.a) && keep.has(e.b));
   const vertices = listOf(
     ce,

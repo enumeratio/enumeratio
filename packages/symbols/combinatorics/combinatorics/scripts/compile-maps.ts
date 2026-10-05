@@ -11,7 +11,8 @@
 import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { compileTyped, definitionHash, fromJs, toJs } from "@enumeratio/engine/compiled";
 import { CARRIERS } from "../src/carriers.ts";
 import { evaluateDefinition, MAPS } from "../src/maps.ts";
@@ -29,7 +30,7 @@ type Run = (vars: Record<string, unknown>) => unknown;
 /** Whether the compiled body (and guard) give the interpreter's answer on every subject the
  *  compiled code answers at all: the same image, or a decline where the guard declines. */
 function agrees(
-  ce: ComputeEngine,
+  ce: Engine,
   map: (typeof MAPS)[number],
   body: Run,
   guard: Run | undefined,
@@ -56,7 +57,7 @@ function agrees(
 /** Each compilable map's key (`Name@from`), hash and generated code; no code for a map whose
  *  compiled code disagreed with the interpreter. */
 export function compiledMaps(): Entry[] {
-  const ce = new ComputeEngine();
+  const ce = bareEngine();
   const carrierOf = new Map(CARRIERS.map((carrier) => [carrier.type, carrier]));
   const out: Entry[] = [];
   for (const map of MAPS) {

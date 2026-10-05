@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, wrapOperator } from "@enumeratio/engine";
+import { bigRationalAt, type Engine, type Expr, wrapOperator } from "@enumeratio/engine";
 
 // #113 arithmetic-head extensions that don't belong to any single family, and are kept
 // OUT of packages/symbols/analysis/analytic on purpose:
@@ -50,7 +49,7 @@ function exactRationalOfDouble(x: number): [bigint, bigint] {
   return [negative ? -numerator : numerator, denominator];
 }
 
-function declareExactRationalize(ce: ComputeEngine): void {
+function declareExactRationalize(ce: Engine): void {
   wrapOperator(
     ce,
     ["Rationalize", 2],
@@ -81,7 +80,7 @@ function declareExactRationalize(ce: ComputeEngine): void {
  * evaluations agreeing is what "certified" means here. Returns `undefined` (declines,
  * falling through to native) rather than a wrong answer when it can't confirm.
  */
-function certifiedSign(ce: ComputeEngine, x: BoxedExpression): -1 | 0 | 1 | undefined {
+function certifiedSign(ce: Engine, x: Expr): -1 | 0 | 1 | undefined {
   const saved = ce.precision;
   try {
     let digits = Math.max(saved, 30);
@@ -110,7 +109,7 @@ function certifiedSign(ce: ComputeEngine, x: BoxedExpression): -1 | 0 | 1 | unde
   }
 }
 
-function declareExactSign(ce: ComputeEngine): void {
+function declareExactSign(ce: Engine): void {
   wrapOperator(
     ce,
     ["Sign", 1],
@@ -135,7 +134,7 @@ function declareExactSign(ce: ComputeEngine): void {
   );
 }
 
-export function declareArithHeads(ce: ComputeEngine): void {
+export function declareArithHeads(ce: Engine): void {
   declareExactRationalize(ce);
   declareExactSign(ce);
 }

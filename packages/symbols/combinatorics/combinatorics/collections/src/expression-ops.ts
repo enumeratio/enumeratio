@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, symbolNameOf, toInputForm } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf, stringAt, symbolNameOf, toInputForm } from "@enumeratio/engine";
 
 // The Wolfram-frontier expression/pattern/string heads: ToString, MapThread, MatchQ,
 // MapIndexed, StringLength, FreeQ, StringTake, Replace, Through, ToCharacterCode,
@@ -7,7 +6,7 @@ import { integerAt, operandsOf, stringAt, symbolNameOf, toInputForm } from "@enu
 //
 // None of these exist on compute-engine under these names — `Match` and `ReplaceAll` do
 // (probed via `ce.lookupDefinition`), and MatchQ/FreeQ/Replace are built directly on the
-// same pattern-matching primitives those two use (`BoxedExpression.match`/`.subs`) rather
+// same pattern-matching primitives those two use (`Expr.match`/`.subs`) rather
 // than on `Match`/`ReplaceAll` themselves, so every head here is a fresh `ce.declare`.
 //
 // Pattern matching: compute-engine's own wildcard grammar (`PatternMatchOptions`, see
@@ -36,8 +35,7 @@ import { integerAt, operandsOf, stringAt, symbolNameOf, toInputForm } from "@enu
 /** Call a (possibly `Function`-headed) expression as an operator over `args` — same
  *  technique as `list-frontier.ts`'s own `invoke`, duplicated locally per that file's own
  *  precedent (each wave keeps its own copy rather than reaching across files). */
-const invoke = (ce: ComputeEngine, f: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
-  ce.box([f, ...args] as never).evaluate();
+const invoke = (ce: Engine, f: Expr, args: readonly Expr[]): Expr => ce.box([f, ...args] as never).evaluate();
 
 /** Wolfram 1-based position, negative counting from the end, to a positive 1-based index. */
 const normalizePosition = (position: number, length: number): number =>
@@ -45,13 +43,13 @@ const normalizePosition = (position: number, length: number): number =>
 
 /** Whether `expr` matches `pattern` at the top level — the same one-line test `MatchQ` and
  *  `FreeQ` both build on. Exported so later waves (`misc-frontier.ts`'s `DeleteCases`) reuse
- *  this instead of re-deriving it from `BoxedExpression.match`. */
-export function matches(expr: BoxedExpression, pattern: BoxedExpression): boolean {
+ *  this instead of re-deriving it from `Expr.match`. */
+export function matches(expr: Expr, pattern: Expr): boolean {
   return expr.match(pattern) !== null;
 }
 
 /** Whether `expr` matches `pattern` anywhere in its tree (itself, or any subexpression). */
-function containsMatch(expr: BoxedExpression, pattern: BoxedExpression): boolean {
+function containsMatch(expr: Expr, pattern: Expr): boolean {
   if (matches(expr, pattern)) return true;
   return operandsOf(expr).some((op) => containsMatch(op, pattern));
 }
@@ -59,7 +57,7 @@ function containsMatch(expr: BoxedExpression, pattern: BoxedExpression): boolean
 /** A level-spec bound: a plain integer, or `Infinity` for `PositiveInfinity` — which
  *  compute-engine boxes straight to a numeric infinity value (`.isInfinity`), not a symbol,
  *  so `symbolNameOf` alone wouldn't catch it. */
-function levelBound(expr: BoxedExpression): number | undefined {
+function levelBound(expr: Expr): number | undefined {
   if (expr.isInfinity === true && (expr.re ?? 0) > 0) return Number.POSITIVE_INFINITY;
   if (symbolNameOf(expr) === "PositiveInfinity") return Number.POSITIVE_INFINITY;
   return integerAt(expr);
@@ -74,7 +72,7 @@ type LevelSpec = { readonly leaves: true } | { readonly lo: number; readonly hi:
  * negative level is supported (Wolfram's general negative-level-from-the-leaves counting is
  * left undone; only the all-leaves case appears in the reference examples).
  */
-function parseLevelSpec(spec: BoxedExpression): LevelSpec | undefined {
+function parseLevelSpec(spec: Expr): LevelSpec | undefined {
   if (spec.operator === "List") {
     const items = operandsOf(spec).map(levelBound);
     if (items.some((n) => n === undefined)) return undefined;
@@ -100,9 +98,9 @@ function parseLevelSpec(spec: BoxedExpression): LevelSpec | undefined {
  *  itself, so `Level({1, {2, 3}, 4}, 2)` is `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER
  *  its own parts `2, 3`, not before them. Siblings still keep their original left-to-right
  *  order; only each node's position relative to its OWN descendants moves. */
-function levelsInRange(expr: BoxedExpression, lo: number, hi: number): BoxedExpression[] {
-  const results: BoxedExpression[] = [];
-  const walk = (node: BoxedExpression, depth: number): void => {
+function levelsInRange(expr: Expr, lo: number, hi: number): Expr[] {
+  const results: Expr[] = [];
+  const walk = (node: Expr, depth: number): void => {
     if (depth < hi) for (const op of operandsOf(node)) walk(op, depth + 1);
     if (depth >= lo && depth <= hi) results.push(node);
   };
@@ -111,7 +109,7 @@ function levelsInRange(expr: BoxedExpression, lo: number, hi: number): BoxedExpr
 }
 
 /** Every leaf (an operand-free subexpression) of `expr`, Wolfram's `Level[expr, {-1}]`. */
-function leavesOf(expr: BoxedExpression): BoxedExpression[] {
+function leavesOf(expr: Expr): Expr[] {
   const ops = operandsOf(expr);
   if (ops.length === 0) return [expr];
   return ops.flatMap(leavesOf);
@@ -119,7 +117,7 @@ function leavesOf(expr: BoxedExpression): BoxedExpression[] {
 
 /** Read a `ReplacePart` position — a plain (possibly negative) integer, or a `{i, j, …}`
  *  path drilling into nested operands — as a top-down list of 1-based-or-negative indices. */
-function positionPath(expr: BoxedExpression): number[] | undefined {
+function positionPath(expr: Expr): number[] | undefined {
   if (expr.operator === "List") {
     const items = operandsOf(expr).map(integerAt);
     return items.some((n) => n === undefined) ? undefined : (items as number[]);
@@ -130,12 +128,7 @@ function positionPath(expr: BoxedExpression): number[] | undefined {
 
 /** Rebuild `expr` with the operand at `path` replaced by `value`; `undefined` if `path`
  *  doesn't resolve (out of range, or drills into a leaf). */
-function replaceAtPath(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  path: readonly number[],
-  value: BoxedExpression,
-): BoxedExpression | undefined {
+function replaceAtPath(ce: Engine, expr: Expr, path: readonly number[], value: Expr): Expr | undefined {
   const [head, ...rest] = path;
   if (head === undefined) return value;
   const ops = operandsOf(expr);
@@ -150,11 +143,11 @@ function replaceAtPath(
 
 /** Declare the Wolfram-frontier expression, pattern and string heads new to this backlog
  *  wave. See the module doc for what each diverges on. */
-export function declareExpressionOps(ce: ComputeEngine): void {
+export function declareExpressionOps(ce: Engine): void {
   // ToString(expr): Epsil, not Wolfram InputForm — see module doc.
   ce.declare("ToString", {
     signature: "(any) -> string",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       return expr === undefined ? undefined : ce.string(toInputForm(expr.json));
     },
@@ -166,14 +159,14 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // form isn't implemented.
   ce.declare("MapThread", {
     signature: "(function: any, lists: list<any>) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, listsExpr] = ops;
       if (fn === undefined || listsExpr === undefined || listsExpr.operator !== "List") return undefined;
       const rows = operandsOf(listsExpr).map(operandsOf);
       if (rows.length === 0) return ce.box(["List"]);
       const n = rows[0]!.length;
       if (!rows.every((row) => row.length === n)) return undefined;
-      const results: BoxedExpression[] = [];
+      const results: Expr[] = [];
       for (let i = 0; i < n; i++)
         results.push(
           invoke(
@@ -191,7 +184,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // here), not a bare integer.
   ce.declare("MapIndexed", {
     signature: "(function: any, list<any>) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, listExpr] = ops;
       if (fn === undefined || listExpr === undefined) return undefined;
       const items = operandsOf(listExpr);
@@ -211,7 +204,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   ce.declare("Through", {
     signature: "(any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const applyExpr = ops[0];
       if (applyExpr === undefined || applyExpr.operator !== "Apply") return undefined;
       const [headOperand, ...args] = operandsOf(applyExpr);
@@ -223,14 +216,14 @@ export function declareExpressionOps(ce: ComputeEngine): void {
     },
   });
 
-  // MatchQ(expr, pattern): built directly on `BoxedExpression.match` — see module doc for
+  // MatchQ(expr, pattern): built directly on `Expr.match` — see module doc for
   // which Wolfram pattern constructs its wildcard grammar covers. `lazy` so the pattern
   // operand reaches `match` exactly as written (a wildcard symbol like `_a` evaluates to
   // itself anyway, but a compound pattern shouldn't risk canonicalization reordering it).
   ce.declare("MatchQ", {
     signature: "(any, any) -> boolean",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const exprRaw = ops[0];
       const pattern = ops[1];
       if (exprRaw === undefined || pattern === undefined) return undefined;
@@ -243,7 +236,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   ce.declare("FreeQ", {
     signature: "(any, any) -> boolean",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const exprRaw = ops[0];
       const pattern = ops[1];
       if (exprRaw === undefined || pattern === undefined) return undefined;
@@ -261,7 +254,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   ce.declare("Replace", {
     signature: "(any, expression<Rule> | list<expression<Rule>>) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const exprRaw = ops[0];
       const ruleSpec = ops[1];
       if (exprRaw === undefined || ruleSpec === undefined) return undefined;
@@ -284,7 +277,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // ones — harmless here since only values change, never the shape).
   ce.declare("ReplacePart", {
     signature: "(any, expression<Rule> | list<expression<Rule>>) -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [expr, ruleSpec] = ops;
       if (expr === undefined || ruleSpec === undefined) return undefined;
       const rules =
@@ -309,7 +302,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // Level 0 is `expr` itself.
   ce.declare("Level", {
     signature: "(any, any) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [expr, specExpr] = ops;
       if (expr === undefined || specExpr === undefined) return undefined;
       const spec = parseLevelSpec(specExpr);
@@ -325,15 +318,15 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // (`Pick({{a,b},{c,d}}, {{0,0},{1,1}}, 1)` is `{{}, {c,d}}`); mismatched lengths decline.
   ce.declare("Pick", {
     signature: "(list<any>, list<any>, any?) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [listExpr, selExpr, pattExpr] = ops;
       if (listExpr === undefined || selExpr === undefined) return undefined;
       const pattern = pattExpr ?? ce.True;
-      const pick = (list: BoxedExpression, sel: BoxedExpression): BoxedExpression | undefined => {
+      const pick = (list: Expr, sel: Expr): Expr | undefined => {
         const items = operandsOf(list);
         const sels = operandsOf(sel);
         if (items.length !== sels.length) return undefined;
-        const picked: BoxedExpression[] = [];
+        const picked: Expr[] = [];
         for (let i = 0; i < items.length; i++) {
           if (sels[i]!.match(pattern) !== null) picked.push(items[i]!);
           else if (sels[i]!.operator === "List" && items[i]!.operator === "List") {
@@ -352,9 +345,9 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // `Association` (Rule-pair) head as `list-functional.ts` — see module doc.
   ce.declare("AssociationThread", {
     signature: "(collection<any> | expression<Rule>, collection<any>?) -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
-      let keysExpr: BoxedExpression | undefined;
-      let valuesExpr: BoxedExpression | undefined;
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
+      let keysExpr: Expr | undefined;
+      let valuesExpr: Expr | undefined;
       if (ops.length === 1) {
         if (ops[0]?.operator !== "Rule") return undefined;
         [keysExpr, valuesExpr] = operandsOf(ops[0]);
@@ -376,7 +369,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
 
   ce.declare("StringLength", {
     signature: "(string) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const text = stringAt(ops[0]);
       return text === undefined ? undefined : ce.number(Array.from(text).length);
     },
@@ -387,7 +380,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // negative counting from the end.
   ce.declare("StringTake", {
     signature: "(string, integer | list<integer>) -> string",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const text = stringAt(ops[0]);
       const spec = ops[1];
       if (text === undefined || spec === undefined) return undefined;
@@ -416,7 +409,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
 
   ce.declare("ToCharacterCode", {
     signature: "(string) -> list<integer>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const text = stringAt(ops[0]);
       if (text === undefined) return undefined;
       return ce.box(["List", ...Array.from(text).map((ch) => ce.number(ch.codePointAt(0)!))]);
@@ -427,7 +420,7 @@ export function declareExpressionOps(ce: ComputeEngine): void {
   // the string of all of them, in order — the inverse of ToCharacterCode either way.
   ce.declare("FromCharacterCode", {
     signature: "(integer | list<integer>) -> string",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const codesExpr = ops[0];
       if (codesExpr === undefined) return undefined;
       const codes = (codesExpr.operator === "List" ? operandsOf(codesExpr) : [codesExpr]).map(integerAt);

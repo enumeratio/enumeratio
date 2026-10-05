@@ -1,13 +1,14 @@
 // Shared setup for the definitions.test.ts shards (definitions-*.test.ts): the engine, the
 // reference-vs-implementation differential, and the permutation generator each shard's loop
 // runs over.
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { declareStats } from "../src/stats.ts";
 import { DEFINITIONS, PRIMITIVE } from "../src/definitions.ts";
 
 export { DEFINITIONS, PRIMITIVE };
 
-export const ce = new ComputeEngine();
+export const ce = bareEngine();
 declareStats(ce);
 
 /** Every permutation of 1..n, as MathJSON lists. */
@@ -21,6 +22,6 @@ export function permutations(n: number): number[][] {
 
 export const evaluate = (expr: unknown, p: number[]): number =>
   ce
-    .box(expr as Parameters<ComputeEngine["box"]>[0])
+    .box(expr as Parameters<Engine["box"]>[0])
     .subs({ _p: ce.box(["List", ...p]) })
     .evaluate().re;

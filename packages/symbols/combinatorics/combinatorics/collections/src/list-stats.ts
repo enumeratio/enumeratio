@@ -1,5 +1,12 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/engine";
+import {
+  type Engine,
+  type Expr,
+  integerAt,
+  operandsOf,
+  symbolNameOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/engine";
 import { isMatrixLike } from "./list-heads.ts";
 
 // The remaining #113 list/statistics gaps: Mean/Median on data compute-engine's own
@@ -12,13 +19,12 @@ import { isMatrixLike } from "./list-heads.ts";
  *  own Mean/Median reduce numerically. A plain symbol or an exact constant like `Pi` is
  *  `isNumber` but NOT a literal: reducing those calls for `.re` and gets a float approximation
  *  (or `NaN`), not the exact symbolic answer Wolfram gives. */
-const isNumberLiteral = (x: BoxedExpression): boolean =>
-  (x as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true;
+const isNumberLiteral = (x: Expr): boolean => (x as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true;
 
 /** Ascending numeric order via `isLess`; `undefined` if the pair's order isn't decidable
  *  (e.g. two unrelated symbols) — callers only use this once every element is known
  *  comparable (`isNumber === true`). */
-const compareByValue = (a: BoxedExpression, b: BoxedExpression): number => {
+const compareByValue = (a: Expr, b: Expr): number => {
   if (a.isLess(b) === true) return -1;
   if (a.isGreater(b) === true) return 1;
   return 0;
@@ -26,11 +32,11 @@ const compareByValue = (a: BoxedExpression, b: BoxedExpression): number => {
 
 /** $\frac{1}{n}\sum xs$, built and evaluated symbolically rather than reduced to a float —
  *  what carries a plain symbol or an exact constant like `Pi` through exactly. */
-const symbolicMean = (ce: ComputeEngine, xs: readonly BoxedExpression[]): BoxedExpression =>
+const symbolicMean = (ce: Engine, xs: readonly Expr[]): Expr =>
   ce.function("Multiply", [ce.function("Rational", [1, xs.length]), ce.function("Add", [...xs])]).evaluate();
 
 /** Declare the Mean/Median/Commonest/Sort/Take/Fold/Tabulate/Unique overrides. */
-export function declareListStats(ce: ComputeEngine): void {
+export function declareListStats(ce: Engine): void {
   // Mean(xs) / Median(xs): compute-engine's own reducers call `.re` on every element, which
   // gives a numeric approximation for a symbolic constant like Pi (not its exact value) and
   // NaN for a plain symbol. Only a flat list with at least one non-literal element is in
@@ -83,7 +89,7 @@ export function declareListStats(ce: ComputeEngine): void {
     () => (ops) => {
       const items = operandsOf(ops[0]);
       const n = integerAt(ops[1])!;
-      const tally: { value: BoxedExpression; count: number }[] = [];
+      const tally: { value: Expr; count: number }[] = [];
       for (const item of items) {
         const existing = tally.find((entry) => entry.value.isEqual(item) === true);
         if (existing !== undefined) existing.count++;
@@ -134,7 +140,7 @@ export function declareListStats(ce: ComputeEngine): void {
         : undefined;
     const collection = operator?.collection;
     if (operator !== undefined && collection !== undefined) {
-      const rewriteUpTo = (expr: BoxedExpression): BoxedExpression => {
+      const rewriteUpTo = (expr: Expr): Expr => {
         const ops = operandsOf(expr);
         if (ops.length !== 2 || ops[1].operator !== "UpTo") return expr;
         const n = operandsOf(ops[1])[0];
@@ -146,15 +152,14 @@ export function declareListStats(ce: ComputeEngine): void {
       for (const [key, value] of Object.entries(collection)) {
         wrapped[key] =
           typeof value === "function"
-            ? (expr: BoxedExpression, ...rest: unknown[]) =>
-                (value as (...args: unknown[]) => unknown)(rewriteUpTo(expr), ...rest)
+            ? (expr: Expr, ...rest: unknown[]) => (value as (...args: unknown[]) => unknown)(rewriteUpTo(expr), ...rest)
             : value;
       }
       // A source of unknown size (`Count(TwinPrimes) = NaN`) leaves compute-engine's count at
       // Min(n, NaN) = NaN, and materializing a collection of unknown count stops after five
       // elements. The first n exist exactly when the n-th does.
-      const count = wrapped.count as ((expr: BoxedExpression) => number | undefined) | undefined;
-      wrapped.count = (expr: BoxedExpression) => {
+      const count = wrapped.count as ((expr: Expr) => number | undefined) | undefined;
+      wrapped.count = (expr: Expr) => {
         const total = count?.(expr);
         if (total === undefined || !Number.isNaN(total)) return total;
         const [source, spec] = operandsOf(rewriteUpTo(expr));
@@ -179,7 +184,7 @@ export function declareListStats(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined | null;
+                canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined | null;
               };
             }
           ).operator
@@ -215,7 +220,7 @@ export function declareListStats(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined | null;
+                canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined | null;
               };
             }
           ).operator
@@ -224,13 +229,9 @@ export function declareListStats(ce: ComputeEngine): void {
       const nativeCanonical = operator.canonical;
       const nativeOperator = Object.create(operator) as typeof operator;
       nativeOperator.canonical = nativeCanonical;
-      const applyAt = (fn: BoxedExpression, indices: readonly number[]): BoxedExpression =>
+      const applyAt = (fn: Expr, indices: readonly number[]): Expr =>
         ce.function("Apply", [fn, ...indices.map((i) => ce.number(i))]).evaluate();
-      const materialize = (
-        fn: BoxedExpression,
-        dims: readonly number[],
-        prefix: readonly number[] = [],
-      ): BoxedExpression => {
+      const materialize = (fn: Expr, dims: readonly number[], prefix: readonly number[] = []): Expr => {
         if (dims.length === 0) return applyAt(fn, prefix);
         const [d, ...rest] = dims;
         return ce.box(["List", ...Array.from({ length: d }, (_, i) => materialize(fn, rest, [...prefix, i + 1]))]);
@@ -263,7 +264,7 @@ export function declareListStats(ce: ComputeEngine): void {
         return native?.(ops, options);
       }
       const items = operandsOf(ops[0]);
-      const kept: BoxedExpression[] = [];
+      const kept: Expr[] = [];
       for (const item of items) {
         const isDuplicate = kept.some((k) => symbolNameOf(ce.function("Apply", [test, k, item]).evaluate()) === "True");
         if (!isDuplicate) kept.push(item);
