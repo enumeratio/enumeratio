@@ -8,7 +8,7 @@
 
 import { writeFileSync } from "node:fs";
 import * as adic from "../src/adic.ts";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "../../../../oracle/src/bounded.ts"; // the source: a library has no package edge to oracle
 
 const PREC = 12;
 

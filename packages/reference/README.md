@@ -45,10 +45,13 @@ node packages/reference/scripts/oracle-scan.ts --head Foo,Bar # one or a few hea
 
 pnpm --filter @enumeratio/reference run crosswalk:fetch    # fungrim, inventories, wikidata, dlmf
 pnpm --filter @enumeratio/reference run crosswalk:find     # oeis, findstat
-pnpm --filter @enumeratio/reference run crosswalk:collect  # crosswalk:check / :verify / :audit also exist
+pnpm --filter @enumeratio/reference run crosswalk:collect  # crosswalk-data.ts, engine-symbols-data.ts (`build` runs it); :check / :verify / :audit also exist
+node packages/reference/scripts/collect-coverage.ts    # kernel snapshot, committed as src/coverage-data.ts (wolframscript, python3)
 ```
 
-`format-records.ts` fixes a record left in the wrong style or row order after a merge or hand
+The crosswalk, engine-symbol and provenance data are built by `build` (gitignored, never
+committed); `coverage-data.ts`, which says which systems expose each head, is the one committed
+column, because only a kernel can answer it. `format-records.ts` fixes a record left in the wrong style or row order after a merge or hand
 edit — it changes nothing about the data. `oracle-scan.ts` is a work queue, not a gate: read
 its report, classify any new `unclassified` rows, commit the records it writes. See the
 script's own header for what `agree`/`disagree`/`inconclusive`/`unmapped`/`error` mean.

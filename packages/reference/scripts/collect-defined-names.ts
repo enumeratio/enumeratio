@@ -1,4 +1,5 @@
-// Rebuild `@enumeratio/oracle`'s `defined-names-data.ts`: every bare MathJSON symbol that
+// Build `@enumeratio/oracle`'s `defined-names-data.ts` (gitignored; oracle's `build` runs this
+// once every library is built, which is why oracle devDepends on them): every bare MathJSON symbol that
 // appears anywhere in a reference example, for which the fully-declared reference engine
 // (engines.ts's `declaredEngine`) counts as defined (`defined-names.ts`'s `isDefinedName` —
 // more than a bare `ce.lookupDefinition(name) !== undefined`, see its own doc).
@@ -9,7 +10,7 @@
 // stay synchronous and browser-safe, so it can't hold a live ComputeEngine (every symbol
 // package, on every call) — this bakes the answer, for every name this codebase's own data
 // actually uses, into a plain generated Set. A name introduced by future reference data that
-// isn't in this set yet is exactly what the currency test (defined-names.test.ts) catches.
+// isn't in this set yet is exactly what the test (defined-names.test.ts) catches in a stale build.
 //
 //   vp node packages/reference/scripts/collect-defined-names.ts
 
@@ -38,7 +39,7 @@ await writeFormatted(
 // Every bare symbol used anywhere in a reference example for which the fully-declared engine
 // (reference/scripts/engines.ts's declaredEngine) counts as defined — reference/scripts/
 // defined-names.ts's isDefinedName. A name NOT in this set (and not this codebase's own
-// arithmetic/pattern convention) is a free variable to emit.ts. Regenerate with:
+// arithmetic/pattern convention) is a free variable to emit.ts. Rebuild with:
 //
 //   vp node packages/reference/scripts/collect-defined-names.ts
 

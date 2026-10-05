@@ -21,7 +21,7 @@
   "scripts": {
     "test": "vp test",
     "check": "vp check",
-    "build": "vp pack"
+    "build": "node scripts/audit-head-map.ts && vp pack"
   },
   "dependencies": {
     "@enumeratio/adeles": "workspace:*",
@@ -67,5 +67,8 @@
   "enumeratio": {
     "layer": "tooling",
     "extends": []
-  }
+  },
+  "generated": [
+    "src/head-map-audit-data.ts"
+  ]
 }

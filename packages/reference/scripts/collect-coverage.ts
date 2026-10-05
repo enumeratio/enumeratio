@@ -13,7 +13,8 @@
 //   mpmath    the same, over the arbitrary-precision numerics we already validate against.
 //
 // This one DOES need external kernels, so it is never part of `vp test`. It refreshes the
-// coverage columns of `src/provenance-data.ts`; the offline collector leaves them alone.
+// committed snapshot `src/coverage-data.ts`, which collect-provenance.ts folds into the built
+// provenance data.
 //
 //   vp node packages/reference/scripts/collect-coverage.ts
 //
@@ -24,10 +25,9 @@
 
 import { writeFormatted } from "@enumeratio/entry/node";
 import { KernelKilled, runKernel } from "@enumeratio/oracle/bounded";
-import { provenance } from "../src/provenance-data.ts";
-import { renderProvenance } from "./provenance.ts";
+import { referenceEntries } from "../src/node.ts";
 
-const names = provenance.map((record) => record.name);
+const names = referenceEntries().map((entry) => entry.name);
 
 /** Which names Wolfram knows as built-in System` symbols. */
 async function askWolfram(heads: readonly string[]): Promise<Set<string>> {
@@ -87,13 +87,24 @@ const wolfram = await askWolfram(names);
 const { sympy, mpmath } = await askPython(names);
 
 const found = { wolfram, sympy, mpmath };
-const records = provenance.map((record) => ({
-  ...record,
-  elsewhere: Object.entries(found)
-    .filter(([, has]) => has.has(record.name))
-    .map(([system]) => system),
-}));
-await writeFormatted(new URL("../src/provenance-data.ts", import.meta.url), renderProvenance(records));
+const coverage: Record<string, string[]> = {};
+for (const name of names.toSorted()) {
+  const systems = Object.entries(found)
+    .filter(([, has]) => has.has(name))
+    .map(([system]) => system);
+  if (systems.length > 0) coverage[name] = systems;
+}
+await writeFormatted(
+  new URL("../src/coverage-data.ts", import.meta.url),
+  `// External snapshot, committed: which other systems expose a function of each head's name,
+// asked of the kernels by scripts/collect-coverage.ts (wolframscript, SymPy, mpmath). A head
+// absent here has none. scripts/collect-provenance.ts folds it into the built provenance data.
+//
+//   vp node packages/reference/scripts/collect-coverage.ts
+
+export const coverage: Readonly<Record<string, readonly string[]>> = ${JSON.stringify(coverage, null, 2)};
+`,
+);
 
 const report = (label: string, found: Set<string>): string => `${label} ${found.size}/${names.length}`;
 process.stdout.write(`${report("wolfram", wolfram)}  ${report("sympy", sympy)}  ${report("mpmath", mpmath)}\n`);

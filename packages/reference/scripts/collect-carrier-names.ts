@@ -1,4 +1,5 @@
-// Rebuild `@enumeratio/oracle`'s `carrier-names-data.ts`: every carrier constructor name
+// Build `@enumeratio/oracle`'s `carrier-names-data.ts` (gitignored; oracle's `build` runs this
+// after every library is built): every carrier constructor name
 // registered anywhere on the fully-declared reference engine (engines.ts's `declaredEngine`) —
 // `allCarrierNames` reads `@enumeratio/structures`' registry, filled in by every package that
 // calls `declareCarriers` (combinatorics' areas, number-theory, residues, numerals, …).
@@ -28,7 +29,7 @@ await writeFormatted(
 // engines.ts's declaredEngine), via @enumeratio/structures' \`allCarrierNames\`. emit.ts and
 // structural.ts use this to unwrap a carrier constructor call to its contents for an external
 // system, and to compare our own carrier-typed expected values against another system's raw
-// answer. Regenerate with:
+// answer. Rebuild with:
 //
 //   vp node packages/reference/scripts/collect-carrier-names.ts
 
