@@ -70,4 +70,4 @@ psi-1-2-gamma-2-ln-2	psi(0, (1/2))	-euler_gamma - 2*log(2)
 psi-1-2-pi-2-2-in-closed-form	psi(1, (1/2))	1/2*pi^2	
 psi-1-4-pi-2-8g	psi(1, (1/4))	psi(1, 1/4)	inconclusive
 frac-d-dx-psi-n-x-psi-n-1-x	diff(psi(SR.var("n"), SR.var("x")), SR.var("x"))		
-an-exact-integer-argument-is-left-unevaluated	psi(1, 1)	1/6*pi^2	
+an-exact-integer-argument-is-left-unevaluated	psi(1, (5/3))	1/6*pi^2	
