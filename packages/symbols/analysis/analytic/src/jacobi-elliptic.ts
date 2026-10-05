@@ -290,6 +290,9 @@ function declarePQ(ce: ComputeEngine, head: string, p: PQLetter, q: PQLetter): v
       const [u, m] = ops;
       if (u === undefined || m === undefined) return undefined;
 
+      // sn(u, 1) = tanh(u), in its own name rather than the shared-denominator Sinh/Cosh quotient below.
+      if (head === "JacobiSN" && isOneExpr(m) && !isZeroExpr(u)) return finish(ce.function("Tanh", [u]), options);
+
       const exact = exactSCDN(ce, u, m);
       if (exact !== undefined) return finish(ce.function("Divide", [exact[p], exact[q]]), options);
 

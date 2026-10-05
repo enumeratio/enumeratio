@@ -27,10 +27,10 @@ test("m = 0: sn = Sin(u), cn = Cos(u), dn = 1, for symbolic u", () => {
 });
 
 test("m = 1: sn = Tanh(u), cn = dn = Sech(u), for symbolic u", () => {
-  // sn built on Cosh(u) rather than Sech(u) directly (see jacobi-elliptic.ts's exactSCDN):
-  // equal to Tanh(u), but sharing the pq family's one denominator so sc/sd/cs/ds don't
-  // divide two things that both blow up at u = iπ/2 + ikπ.
-  expect(ce.box(["JacobiSN", "u", 1]).evaluate().json).toEqual(["Divide", ["Sinh", "u"], ["Cosh", "u"]]);
+  // sn is Tanh(u) in its own name; cn is built on Cosh(u) rather than Sech(u) directly (see
+  // jacobi-elliptic.ts's exactSCDN) so sc/sd/cs/ds don't divide two things that both blow up
+  // at u = iπ/2 + ikπ.
+  expect(ce.box(["JacobiSN", "u", 1]).evaluate().json).toEqual(["Tanh", "u"]);
   expect(ce.box(["JacobiCN", "u", 1]).evaluate().json).toEqual(["Divide", 1, ["Cosh", "u"]]);
   expect(ce.box(["JacobiCN", "u", 1]).evaluate().json).toEqual(ce.box(["JacobiDN", "u", 1]).evaluate().json);
 });
