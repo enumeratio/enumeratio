@@ -1,4 +1,5 @@
 import {
+  applyFunction,
   collectionElements,
   type Engine,
   type Expr,
@@ -8,7 +9,6 @@ import {
   stringAt,
   symbolNameOf,
 } from "@enumeratio/engine";
-import { applyFunction } from "./apply-function.ts";
 
 // A second wave of Wolfram-frontier heads compute-engine has no answer for: list/array
 // utilities (Thread, MapAt, MovingMap, HankelMatrix), the discrete-math pair
@@ -19,8 +19,6 @@ import { applyFunction } from "./apply-function.ts";
 // list-stats.ts.) Each covers the call forms Wolfram documents most; richer forms (nested
 // MapAt paths, non-English LetterNumber alphabets, totalistic/multi-color
 // CellularAutomaton) are left unevaluated rather than guessed at.
-
-const invoke = applyFunction;
 
 // --- Thread ------------------------------------------------------------------------------------
 
@@ -110,7 +108,7 @@ function declareMapAt(ce: Engine): void {
         expr.operator,
         items.map((item, i) => {
           let value = item;
-          for (let k = times.get(i) ?? 0; k > 0; k--) value = invoke(ce, f, [value]);
+          for (let k = times.get(i) ?? 0; k > 0; k--) value = applyFunction(ce, f, [value]);
           return value;
         }),
       );
@@ -140,7 +138,7 @@ function declareNormalize(ce: Engine): void {
       if (v.operator !== "List") {
         const norm =
           ops[1] !== undefined
-            ? invoke(ce, ops[1], [v])
+            ? applyFunction(ce, ops[1], [v])
             : ce.function("Sqrt", [ce.function("Power", [ce.function("Abs", [v]), ce.number(2)])]).evaluate();
         if (norm.isEqual(ce.Zero) === true) return v;
         return ce.function("Divide", [v, norm]).evaluate();
@@ -149,7 +147,7 @@ function declareNormalize(ce: Engine): void {
       if (items.length === 0) return v;
       const norm =
         ops[1] !== undefined
-          ? invoke(ce, ops[1], [v])
+          ? applyFunction(ce, ops[1], [v])
           : ce
               .function("Sqrt", [
                 ce.function(
@@ -327,7 +325,7 @@ function declareMovingMap(ce: Engine): void {
       const results: Expr[] = [];
       for (let i = 0; i + windowSize <= items.length; i++) {
         const window = items.slice(i, i + windowSize);
-        results.push(invoke(ce, f, [ce.function("List", window)]));
+        results.push(applyFunction(ce, f, [ce.function("List", window)]));
       }
       return ce.function("List", results);
     },

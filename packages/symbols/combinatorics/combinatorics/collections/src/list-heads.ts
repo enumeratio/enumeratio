@@ -1,4 +1,5 @@
 import {
+  applyFunction,
   type Engine,
   type Expr,
   integerAt,
@@ -151,11 +152,6 @@ const arrayRank = (expr: Expr): number => {
   return 1;
 };
 
-/** `fn(i, j)` via compute-engine's `Apply` — see `list-functional.ts`'s `applyFn` doc for
- *  why the arguments go in directly rather than wrapped in a `List`. */
-const apply2 = (ce: Engine, fn: Expr, i: number, j: number): Expr =>
-  ce.function("Apply", [fn, ce.number(i), ce.number(j)]).evaluate();
-
 /** A lazy `Tabulate(f, m, n)` read into an actual `m`×`n` matrix by calling `f(i, j)` at
  *  every 1-based position — `undefined` for any other `Tabulate` arity, or a non-integer
  *  dimension. */
@@ -167,7 +163,7 @@ const materializeTabulate = (ce: Engine, expr: Expr): Expr | undefined => {
   const rows: Expr[] = [];
   for (let i = 1; i <= m; i++) {
     const row: Expr[] = [];
-    for (let j = 1; j <= n; j++) row.push(apply2(ce, fn, i, j));
+    for (let j = 1; j <= n; j++) row.push(applyFunction(ce, fn, [ce.number(i), ce.number(j)]));
     rows.push(ce.box(["List", ...row]));
   }
   return ce.box(["List", ...rows]);

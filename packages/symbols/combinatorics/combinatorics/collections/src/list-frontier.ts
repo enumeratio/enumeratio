@@ -1,4 +1,5 @@
 import {
+  applyFunction,
   collectionElements,
   type Engine,
   ensureRandom,
@@ -9,7 +10,6 @@ import {
   symbolNameOf,
   uniform01,
 } from "@enumeratio/engine";
-import { applyFunction } from "./apply-function.ts";
 
 // Wolfram-frontier list/array heads compute-engine has no answer for at all: Array's
 // n-dimensional index-range construction, Accumulate/FoldList's running folds, Cases's
@@ -17,8 +17,6 @@ import { applyFunction } from "./apply-function.ts";
 // (seeded, for reproducible reference examples) uniform draws, and the three small numeric
 // predicates/queries MachineNumberQ/NumericQ/Precision. See each section for the Wolfram
 // call forms covered and what's left as a documented divergence.
-
-const invoke = applyFunction;
 
 // --- Array ---------------------------------------------------------------------------------
 
@@ -54,7 +52,7 @@ const buildArray = (
 ): Expr => {
   const build = (dimIndex: number, indices: readonly number[]): Expr => {
     if (dimIndex === dims.length)
-      return invoke(
+      return applyFunction(
         ce,
         f,
         indices.map((i) => ce.number(i)),
@@ -73,7 +71,7 @@ const foldListFrom = (ce: Engine, f: Expr, seed: Expr, items: readonly Expr[]): 
   const acc: Expr[] = [seed];
   let current = seed;
   for (const item of items) {
-    current = invoke(ce, f, [current, item]);
+    current = applyFunction(ce, f, [current, item]);
     acc.push(current);
   }
   return ce.function("List", acc);

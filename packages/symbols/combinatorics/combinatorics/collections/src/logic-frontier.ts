@@ -1,4 +1,12 @@
-import { collectionElements, type Engine, type Expr, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
+import {
+  applyFunction,
+  collectionElements,
+  type Engine,
+  type Expr,
+  operandsOf,
+  stringAt,
+  symbolNameOf,
+} from "@enumeratio/engine";
 
 // A fourth wave of Wolfram-frontier heads: boolean normal forms (LogicalExpand,
 // BooleanConvert) and a batch of `Is…` predicates (our naming for Wolfram's `…Q` — see
@@ -20,13 +28,8 @@ import { collectionElements, type Engine, type Expr, operandsOf, stringAt, symbo
 
 const CONNECTIVES = new Set(["And", "Or", "Not", "Implies", "Equivalent", "Xor", "Nand", "Nor"]);
 
-/** Apply a `Function` literal (or symbol naming one) to a single boxed argument — same
- *  calling convention as the number-theory backlog's `applyFn`: box `[fn, arg]` as a call
- *  with `fn` itself as the head. */
-const applyFn = (ce: Engine, fn: Expr, arg: Expr): Expr => ce.box([fn.json, arg.json] as never).evaluate();
-
 const passesTest = (ce: Engine, test: Expr | undefined, arg: Expr): boolean =>
-  test === undefined || symbolNameOf(applyFn(ce, test, arg)) === "True";
+  test === undefined || symbolNameOf(applyFunction(ce, test, [arg])) === "True";
 
 /** Rewrite every `Implies`/`Equivalent`/`Xor`/`Nand`/`Nor` in `expr` down to `And`/`Or`/`Not`
  *  over the same leaves, recursively. Non-boolean subexpressions (plain symbols, `Greater`

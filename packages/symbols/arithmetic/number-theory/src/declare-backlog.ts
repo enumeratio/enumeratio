@@ -1,4 +1,4 @@
-import { bigIntegerAt, operandsOf, symbolNameOf, type Engine, type Expr } from "@enumeratio/engine";
+import { applyFunction, bigIntegerAt, operandsOf, symbolNameOf, type Engine, type Expr } from "@enumeratio/engine";
 import { factorInteger, gcd as gcdBig, isqrt } from "@enumeratio/residues";
 import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
@@ -65,9 +65,6 @@ function divisorsOf(n: bigint): bigint[] | undefined {
   }
   return divisors.toSorted((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 }
-
-/** Apply a `Function` literal (or symbol naming one) to a single boxed argument. */
-const applyFn = (ce: Engine, fn: Expr, arg: Expr): Expr => ce.box([fn.json, arg.json] as never).evaluate();
 
 const isTrue = (expr: Expr): boolean => symbolNameOf(expr) === "True";
 const isFalse = (expr: Expr): boolean => symbolNameOf(expr) === "False";
@@ -279,7 +276,7 @@ export function declareBacklog(ce: Engine): void {
       for (const d of divisors) {
         const dExpr = ce.number(d);
         if (cond !== undefined) {
-          const test = applyFn(ce, cond, dExpr);
+          const test = applyFunction(ce, cond, [dExpr]);
           // Neither True nor False (a free `cond`, e.g. `DivisorSum(10, f, g)`) means we can't
           // tell which divisors pass — declining the whole call, not treating "undetermined"
           // as "excluded", is what kept a free condition from silently reducing to 0 (A-126
@@ -287,7 +284,7 @@ export function declareBacklog(ce: Engine): void {
           if (!isTrue(test) && !isFalse(test)) return undefined;
           if (isFalse(test)) continue;
         }
-        sum = ce.function("Add", [sum, applyFn(ce, f, dExpr)]).evaluate();
+        sum = ce.function("Add", [sum, applyFunction(ce, f, [dExpr])]).evaluate();
       }
       return sum;
     },

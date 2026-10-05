@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { symbolNameOf } from "@enumeratio/engine";
+import { applyFunction, symbolNameOf } from "@enumeratio/engine";
 import { isDiagonal, listOf, rowsOf, squareMatrixError } from "./matrix-exp.ts";
 import { type EvalOptions, wantsNumber } from "@enumeratio/ce-patches";
 
@@ -19,12 +19,6 @@ import { type EvalOptions, wantsNumber } from "@enumeratio/ce-patches";
 // (Parlett recurrence / Schur form) is a numerical-linear-algebra kernel, out of scope for
 // what the backlog's examples need. Those calls stay symbolic (decline, not guess).
 
-/** `f(x)`, for `f` a symbol (`"Sqrt"`, `"f"`, …) or a `Function` literal — both apply the
- * same way once boxed as `[f, x]`. */
-function applyF(ce: ComputeEngine, f: BoxedExpression, x: BoxedExpression): BoxedExpression {
-  return ce.box([f.json, x.json] as unknown as Parameters<ComputeEngine["box"]>[0]).evaluate();
-}
-
 /** f′(x₀), via `D` on `f` applied to a fresh symbol, evaluated there. `applied` is
  * `.evaluate()`d before differentiating — `D` needs the beta-reduced body (`t^2`), not the
  * unevaluated `Apply(f, t)` a `Function` literal boxes as. `x0` substitutes as the boxed
@@ -32,7 +26,7 @@ function applyF(ce: ComputeEngine, f: BoxedExpression, x: BoxedExpression): Boxe
  * round-trip it through a JS number. */
 function derivativeOfFAt(ce: ComputeEngine, f: BoxedExpression, x0: BoxedExpression): BoxedExpression {
   const t = "_matrixFunction_t";
-  const applied = applyF(ce, f, ce.symbol(t));
+  const applied = applyFunction(ce, f, [ce.symbol(t)]);
   const derivative = ce.function("D", [applied, ce.symbol(t)]).evaluate();
   return derivative.subs({ [t]: x0 }).evaluate();
 }
@@ -46,7 +40,7 @@ function diagonalApply(
   const result: BoxedExpression[][] = [];
   for (let i = 0; i < n; i++) {
     result[i] = [];
-    for (let j = 0; j < n; j++) result[i][j] = i === j ? applyF(ce, f, rows[i][j]) : ce.Zero;
+    for (let j = 0; j < n; j++) result[i][j] = i === j ? applyFunction(ce, f, [rows[i][j]]) : ce.Zero;
   }
   return listOf(ce, result);
 }
@@ -67,7 +61,7 @@ function twoByTwoViaEigen(
 
   if (discSq.isSame(0)) {
     const lambda = ce.function("Divide", [trace, 2]).evaluate();
-    const fLambda = applyF(ce, f, lambda);
+    const fLambda = applyFunction(ce, f, [lambda]);
     const fPrime = derivativeOfFAt(ce, f, lambda);
     const entry = (i: number, j: number): BoxedExpression => {
       const iij = i === j ? 1 : 0;
@@ -85,8 +79,8 @@ function twoByTwoViaEigen(
   const disc = ce.function("Sqrt", [discSq]).evaluate();
   const lambda1 = ce.function("Divide", [ce.function("Add", [trace, disc]), 2]).evaluate();
   const lambda2 = ce.function("Divide", [ce.function("Subtract", [trace, disc]), 2]).evaluate();
-  const f1 = applyF(ce, f, lambda1);
-  const f2 = applyF(ce, f, lambda2);
+  const f1 = applyFunction(ce, f, [lambda1]);
+  const f2 = applyFunction(ce, f, [lambda2]);
   const entry = (i: number, j: number): BoxedExpression => {
     const iij = i === j ? 1 : 0;
     const term1 = ce

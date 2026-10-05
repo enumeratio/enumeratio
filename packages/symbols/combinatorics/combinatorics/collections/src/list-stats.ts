@@ -1,4 +1,5 @@
 import {
+  applyFunction,
   type Engine,
   type Expr,
   integerAt,
@@ -235,7 +236,11 @@ export function declareListStats(ce: Engine): void {
       const nativeOperator = Object.create(operator) as typeof operator;
       nativeOperator.canonical = nativeCanonical;
       const applyAt = (fn: Expr, indices: readonly number[]): Expr =>
-        ce.function("Apply", [fn, ...indices.map((i) => ce.number(i))]).evaluate();
+        applyFunction(
+          ce,
+          fn,
+          indices.map((i) => ce.number(i)),
+        );
       const materialize = (fn: Expr, dims: readonly number[], prefix: readonly number[] = []): Expr => {
         if (dims.length === 0) return applyAt(fn, prefix);
         const [d, ...rest] = dims;
@@ -271,7 +276,7 @@ export function declareListStats(ce: Engine): void {
       const items = operandsOf(ops[0]);
       const kept: Expr[] = [];
       for (const item of items) {
-        const isDuplicate = kept.some((k) => symbolNameOf(ce.function("Apply", [test, k, item]).evaluate()) === "True");
+        const isDuplicate = kept.some((k) => symbolNameOf(applyFunction(ce, test, [k, item])) === "True");
         if (!isDuplicate) kept.push(item);
       }
       return ce.box(["List", ...kept]);

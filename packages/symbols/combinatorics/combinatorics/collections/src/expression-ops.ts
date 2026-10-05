@@ -1,5 +1,13 @@
-import { type Engine, type Expr, integerAt, operandsOf, stringAt, symbolNameOf, toInputForm } from "@enumeratio/engine";
-import { applyFunction } from "./apply-function.ts";
+import {
+  applyFunction,
+  type Engine,
+  type Expr,
+  integerAt,
+  operandsOf,
+  stringAt,
+  symbolNameOf,
+  toInputForm,
+} from "@enumeratio/engine";
 
 // The Wolfram-frontier expression/pattern/string heads: ToString, MapThread, MatchQ,
 // MapIndexed, StringLength, FreeQ, StringTake, Replace, Through, ToCharacterCode,
@@ -32,8 +40,6 @@ import { applyFunction } from "./apply-function.ts";
 // `#`/`#1` to compute-engine's `Function`/parameter-symbol representation at parse time (see
 // `https://github.com/enumeratio/enumeratio/wiki/Syntax-and-Formats`), so there is no bare `Slot` head left to give meaning to
 // on this engine — declaring one would just shadow that lowering.
-
-const invoke = applyFunction;
 
 /** Wolfram 1-based position, negative counting from the end, to a positive 1-based index. */
 const normalizePosition = (position: number, length: number): number =>
@@ -170,7 +176,7 @@ export function declareExpressionOps(ce: Engine): void {
       const results: Expr[] = [];
       for (let i = 0; i < n; i++)
         results.push(
-          invoke(
+          applyFunction(
             ce,
             fn,
             rows.map((row) => row[i]!),
@@ -205,7 +211,7 @@ export function declareExpressionOps(ce: Engine): void {
               children.map((c) => c.value),
             )
           : node;
-        const value = inLevels(spec, indices.length, depth) ? invoke(ce, fn, [rebuilt, path(indices)]) : rebuilt;
+        const value = inLevels(spec, indices.length, depth) ? applyFunction(ce, fn, [rebuilt, path(indices)]) : rebuilt;
         return { value, depth };
       };
       return walk(listExpr, []).value;
@@ -230,7 +236,7 @@ export function declareExpressionOps(ce: Engine): void {
       if (headOperand === undefined || (headOperand.operator !== "List" && headOperand.operator !== "Add")) {
         return undefined;
       }
-      const results = operandsOf(headOperand).map((fn) => invoke(ce, fn, args));
+      const results = operandsOf(headOperand).map((fn) => applyFunction(ce, fn, args));
       return ce.box([headOperand.operator, ...results] as never).evaluate();
     },
   });
