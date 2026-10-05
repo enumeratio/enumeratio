@@ -36,5 +36,9 @@
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.147.0"
+  },
+  "enumeratio": {
+    "layer": "tooling",
+    "extends": []
   }
 }

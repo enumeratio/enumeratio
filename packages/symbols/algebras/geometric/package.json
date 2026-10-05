@@ -38,6 +38,11 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "extension",
+    "area": "algebras",
+    "extends": [
+      "hypercomplex"
+    ],
     "group": "algebras",
     "declare": "declareGeometric",
     "declares": "./declares.json"

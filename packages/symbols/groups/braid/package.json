@@ -49,6 +49,11 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "extension",
+    "extends": [
+      "structures",
+      "diagram"
+    ],
     "notation": "./notation",
     "group": "groups",
     "declare": "declareBraid",

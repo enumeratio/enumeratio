@@ -4,7 +4,7 @@
 // groupalgebra can't import us:
 //   Cycles(CycleDecomposition(…))     forgets the fixed points;
 //   CycleDecomposition(Cycles(…), n)  needs n to put them back (as Wolfram's PermutationList(c, n)).
-// combinatorics extends groupalgebra (hierarchy.ts) for this, so `Cycles` is declared first. The
+// combinatorics extends groupalgebra (its `package.json`) for this, so `Cycles` is declared first. The
 // guard is only for a bare host, a package test declaring combinatorics alone.
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";

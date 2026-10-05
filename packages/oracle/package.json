@@ -43,6 +43,10 @@
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
+  "enumeratio": {
+    "layer": "tooling",
+    "extends": []
+  },
   "generated": [
     "src/mappings-data.ts"
   ]

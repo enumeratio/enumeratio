@@ -65,6 +65,13 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "extension",
+    "area": "combinatorics",
+    "extends": [
+      "structures",
+      "residues",
+      "groupalgebra"
+    ],
     "notation": "./notation",
     "group": "combinatorics",
     "declare": "declareCombinatorics",
