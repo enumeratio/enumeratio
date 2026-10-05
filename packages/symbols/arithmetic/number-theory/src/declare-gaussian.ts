@@ -304,6 +304,11 @@ export function declareGaussian(ce: Engine): void {
     return squareFree === undefined ? undefined : bool(squareFree);
   });
 
+  // Neither zero, a unit (norm 1) nor prime; Wolfram's CompositeQ[3 + I] is True, CompositeQ[2 + I] False.
+  optionHead("IsComposite", "(number, any*) -> boolean", undefined, (z) =>
+    bool(z[0] * z[0] + z[1] * z[1] > 1n && !isGaussianPrime(z)),
+  );
+
   // DivisorSigma(k, n, Over -> GaussianIntegers): two positional arguments ahead of the
   // option, so it needs its own wiring rather than `optionHead`'s single-positional one.
   // Widened first so a Complex n, or a trailing option tuple, reach `evaluate` at all.

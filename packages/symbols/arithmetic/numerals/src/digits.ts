@@ -43,11 +43,19 @@ export function integerReverse(n: bigint, base: bigint, width?: number): bigint 
   return fromDigitsBigInt([...digits].toReversed(), base);
 }
 
-/** `NumberExpand`: each digit of n times its place value, carrying n's sign throughout. */
+/**
+ * `NumberExpand`: each digit of n times its place value, carrying n's sign throughout. With a
+ * `width` it has exactly that many terms: zeros after the last when short, and when long the
+ * last term takes the sum of the places it cuts off (NumberExpand(157, 2, 3) is 128, 0, 29).
+ */
 export function numberExpand(n: bigint, base: bigint, width?: number): bigint[] {
   const sign = n < 0n ? -1n : 1n;
-  const digits = padDigits(digitsOfBigInt(n, base), width);
-  return digits.map((d, i) => sign * d * base ** BigInt(digits.length - 1 - i));
+  const digits = digitsOfBigInt(n, base);
+  const terms = digits.map((d, i) => sign * d * base ** BigInt(digits.length - 1 - i));
+  if (width === undefined || width < 1) return terms;
+  if (width >= terms.length) return [...terms, ...Array.from({ length: width - terms.length }, () => 0n)];
+  const rest = terms.slice(width - 1).reduce((sum, term) => sum + term, 0n);
+  return [...terms.slice(0, width - 1), rest];
 }
 
 /** The largest integer `s ≥ 0` with `s*s ≤ n`, for `n ≥ 0`. */

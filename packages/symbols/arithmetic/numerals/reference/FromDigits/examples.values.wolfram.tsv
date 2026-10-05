@@ -35,5 +35,5 @@ two-adjacent-ones-is-not-a-numeral-so-it-denotes
 ostrowski-declines-a-string-past-its-ceiling					
 non-coprime-residues-an-inconsistent-string					
 a-malformed-roman-numeral-declines	FromDigits["IIII", "Roman"]	4	\text{FromDigits}[\text{IIII},\text{Roman}]	4	disagree
-map-fromdigits-list-7-8-9-a-b-c-d	Map[FromDigits, List["7", "8", "9", "A", "B", "C", "D"]]	{7, 8, 9, 10, 11, 12, 13}			disagree
+map-fromdigits-list-7-8-9-a-b-c-d	Map[FromDigits, List["7", "8", "9", "A", "B", "C", "D"]]	{7, 8, 9, 10, 11, 12, 13}	\text{FromDigits}\text{/@}\{7,8,9,\text{A},\text{B},\text{C},\text{D}\}	\{7,8,9,10,11,12,13\}	
 digits-the-base-carry-into-higher-place-values-7	FromDigits[List[7, 11, 0, 0, 0, 122]]	810122	\text{FromDigits}[\{7,11,0,0,0,122\}]	810122	

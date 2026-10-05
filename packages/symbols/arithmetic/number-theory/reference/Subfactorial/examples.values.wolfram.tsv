@@ -1,23 +1,23 @@
-id	in	out	tex.in	tex.out	verdict
-subfactorial-0	Subfactorial[0]	1	\text{Subfactorial}[0]	1	
-a-single-object-can-t-be-deranged	Subfactorial[1]	0	\text{Subfactorial}[1]	0	
-subfactorial-4	Subfactorial[4]	9	\text{Subfactorial}[4]	9	
-subfactorial-5	Subfactorial[5]	44	\text{Subfactorial}[5]	44	
-subfactorial-20	Subfactorial[20]	895014631192902121	\text{Subfactorial}[20]	895014631192902121	
-threads-element-wise-over-a-list-as-wolfram-s	Subfactorial[List[1, 2, 3, 4]]	{0, 1, 2, 9}	\text{Subfactorial}[\{1,2,3,4\}]	\{0,1,2,9\}	
-exact-for-large-n	Subfactorial[48]	4566824330931624695767452273778667071025042534230906772538913	\text{Subfactorial}[48]	4566824330931624695767452273778667071025042534230906772538913	
-real-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[4.5]	19.255831840742534 + 0.15717912296461523*I	\text{Subfactorial}[4.5]	19.2558\, +0.157179 i	
-complex-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[Complex[1.6, 1]]	0.2968304581777118 + 0.28420854725197*I	\text{Subfactorial}[1.6\, +i]	0.29683\, +0.284209 i	
-threads-over-a-matrix-element-wise	Subfactorial[List[List[2, 0], List[0, 2]]]	{{1, 1}, {1, 1}}	\text{Subfactorial}\left[\left( \begin{array}{cc}  2 & 0 \\  0 & 2 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  1 & 1 \\  1 & 1 \\ \end{array} \right)	
-subfactorial-list-5-10-20	Subfactorial[List[5, 10, 20]]	{44, 1334961, 895014631192902121}	\text{Subfactorial}[\{5,10,20\}]	\{44,1334961,895014631192902121\}	
-matrixfunction-function-subfactorial-1-1-list	MatrixFunction[Function[Subfactorial[Slot[1]]], List[List[2, 0], List[0, 2]]]	{{1, 0}, {0, 1}}	\text{MatrixFunction}\left[\text{Subfactorial}[\text{$\#$1}]\&,\left( \begin{array}{cc}  2 & 0 \\  0 & 2 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)	
-n-subfactorial-1-over-3-50	N[Subfactorial[Rational[1, 3]], 50]	0.5816792799981315463082331682395096957869646448820710915572459588765623029198`50.05279996859277 + 0.43850412793578685003530615994275265411075001253862533364436228431339454123972`49.93009006055464*I			disagree
-the-hat-check-problem-the-number-of-ways-6	Subfactorial[6]	265	\text{Subfactorial}[6]	265	
-recurrence-d-n-n-d-n-1-1-n	(Subfactorial[4] == Plus[Times[4, Subfactorial[3]], Power[-1, 4]])	True	\text{Subfactorial}[4]=4 \text{Subfactorial}[3]+(-1)^4	\text{True}	
-d-n-is-frac-n-e-rounded-to-the-nearest-integer	(Subfactorial[10] == Round[Divide[Factorial[10], E]])	True	\text{Subfactorial}[10]=\text{Round}\left[\frac{10!}{e}\right]	\text{True}	
-two-term-recurrence-d-n-1-n-d-n-d-n-1	(Subfactorial[6] == Times[5, Plus[Subfactorial[5], Subfactorial[4]]])	True	\text{Subfactorial}[6]=5 (\text{Subfactorial}[5]+\text{Subfactorial}[4])	\text{True}	
-exponentialgeneratingfunction-subfactorial-n-n-x	ExponentialGeneratingFunction[Subfactorial[n], n, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{ExponentialGeneratingFunction}[\text{Subfactorial}[n],n,x]-\frac{e^{-x}}{-x+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{7}{3}\right],\frac{7}{3},-\frac{11}{5}\right]-\frac{e^{-\left(-\frac{11}{5}\right)}}{-\left(-\frac{11}{5}\right)+1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{13}{4}\right],\frac{13}{4},-\frac{17}{6}\right]-\frac{e^{-\left(-\frac{17}{6}\right)}}{-\left(-\frac{17}{6}\right)+1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{19}{8}\right],\frac{19}{8},-\frac{23}{9}\right]-\frac{e^{-\left(-\frac{23}{9}\right)}}{-\left(-\frac{23}{9}\right)+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
-subfactorial-2	Subfactorial[2]	1	\text{Subfactorial}[2]	1	
-subfactorial-3	Subfactorial[3]	2	\text{Subfactorial}[3]	2	
-a-negative-argument-is-left-unevaluated	Subfactorial[-1]	Subfactorial[-1]	\text{Subfactorial}[-1]	\text{Subfactorial}[-1]	
-148-349-eq-sum-subfactorial-list-1-4-8-3-4-9	(148349 == Total[Subfactorial[List[1, 4, 8, 3, 4, 9]]])	True	148349=\text{Total}[\text{Subfactorial}[\{1,4,8,3,4,9\}]]	\text{True}	
+id	in	out	shown	tex.in	tex.out	verdict
+subfactorial-0	Subfactorial[0]	1		\text{Subfactorial}[0]	1	
+a-single-object-can-t-be-deranged	Subfactorial[1]	0		\text{Subfactorial}[1]	0	
+subfactorial-4	Subfactorial[4]	9		\text{Subfactorial}[4]	9	
+subfactorial-5	Subfactorial[5]	44		\text{Subfactorial}[5]	44	
+subfactorial-20	Subfactorial[20]	895014631192902121		\text{Subfactorial}[20]	895014631192902121	
+threads-element-wise-over-a-list-as-wolfram-s	Subfactorial[List[1, 2, 3, 4]]	{0, 1, 2, 9}		\text{Subfactorial}[\{1,2,3,4\}]	\{0,1,2,9\}	
+exact-for-large-n	Subfactorial[48]	4566824330931624695767452273778667071025042534230906772538913		\text{Subfactorial}[48]	4566824330931624695767452273778667071025042534230906772538913	
+real-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[4.5]	19.255831840742534 + 0.15717912296461523*I		\text{Subfactorial}[4.5]	19.2558\, +0.157179 i	
+complex-arguments-evaluate-as-frac-gamma-n-1-1-e	Subfactorial[Complex[1.6, 1]]	0.2968304581777118 + 0.28420854725197*I		\text{Subfactorial}[1.6\, +i]	0.29683\, +0.284209 i	
+threads-over-a-matrix-element-wise	Subfactorial[List[List[2, 0], List[0, 2]]]	{{1, 1}, {1, 1}}		\text{Subfactorial}\left[\left( \begin{array}{cc}  2 & 0 \\  0 & 2 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  1 & 1 \\  1 & 1 \\ \end{array} \right)	
+subfactorial-list-5-10-20	Subfactorial[List[5, 10, 20]]	{44, 1334961, 895014631192902121}		\text{Subfactorial}[\{5,10,20\}]	\{44,1334961,895014631192902121\}	
+matrixfunction-function-subfactorial-1-1-list	MatrixFunction[Function[Subfactorial[Slot[1]]], List[List[2, 0], List[0, 2]]]	{{1, 0}, {0, 1}}		\text{MatrixFunction}\left[\text{Subfactorial}[\text{$\#$1}]\&,\left( \begin{array}{cc}  2 & 0 \\  0 & 2 \\ \end{array} \right)\right]	\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)	
+n-subfactorial-1-over-3-50	N[Subfactorial[Rational[1, 3]], 50]	0.5816792799981315463082331682395096957869646448820710915572459588765623029198`50.05279996859277 + 0.43850412793578685003530615994275265411075001253862533364436228431339454123972`49.93009006055464*I	0.58167927999813154630823316823950969578696464488207 + 0.43850412793578685003530615994275265411075001253863 I	N\left[\text{Subfactorial}\left[\frac{1}{3}\right],50\right]	0.58167927999813154630823316823950969578696464488207+0.43850412793578685003530615994275265411075001253863 i	disagree
+the-hat-check-problem-the-number-of-ways-6	Subfactorial[6]	265		\text{Subfactorial}[6]	265	
+recurrence-d-n-n-d-n-1-1-n	(Subfactorial[4] == Plus[Times[4, Subfactorial[3]], Power[-1, 4]])	True		\text{Subfactorial}[4]=4 \text{Subfactorial}[3]+(-1)^4	\text{True}	
+d-n-is-frac-n-e-rounded-to-the-nearest-integer	(Subfactorial[10] == Round[Divide[Factorial[10], E]])	True		\text{Subfactorial}[10]=\text{Round}\left[\frac{10!}{e}\right]	\text{True}	
+two-term-recurrence-d-n-1-n-d-n-d-n-1	(Subfactorial[6] == Times[5, Plus[Subfactorial[5], Subfactorial[4]]])	True		\text{Subfactorial}[6]=5 (\text{Subfactorial}[5]+\text{Subfactorial}[4])	\text{True}	
+exponentialgeneratingfunction-subfactorial-n-n-x	ExponentialGeneratingFunction[Subfactorial[n], n, x]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\text{ExponentialGeneratingFunction}[\text{Subfactorial}[n],n,x]-\frac{e^{-x}}{-x+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{7}{3}\right],\frac{7}{3},-\frac{11}{5}\right]-\frac{e^{-\left(-\frac{11}{5}\right)}}{-\left(-\frac{11}{5}\right)+1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{13}{4}\right],\frac{13}{4},-\frac{17}{6}\right]-\frac{e^{-\left(-\frac{17}{6}\right)}}{-\left(-\frac{17}{6}\right)+1}\right]\right],\text{Chop}\left[N\left[\text{ExponentialGeneratingFunction}\left[\text{Subfactorial}\left[\frac{19}{8}\right],\frac{19}{8},-\frac{23}{9}\right]-\frac{e^{-\left(-\frac{23}{9}\right)}}{-\left(-\frac{23}{9}\right)+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+subfactorial-2	Subfactorial[2]	1		\text{Subfactorial}[2]	1	
+subfactorial-3	Subfactorial[3]	2		\text{Subfactorial}[3]	2	
+a-negative-argument-is-left-unevaluated	Subfactorial[-1]	Subfactorial[-1]		\text{Subfactorial}[-1]	\text{Subfactorial}[-1]	
+148-349-eq-sum-subfactorial-list-1-4-8-3-4-9	(148349 == Total[Subfactorial[List[1, 4, 8, 3, 4, 9]]])	True		148349=\text{Total}[\text{Subfactorial}[\{1,4,8,3,4,9\}]]	\text{True}	

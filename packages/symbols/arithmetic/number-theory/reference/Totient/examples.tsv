@@ -1,4 +1,4 @@
-id	section	role	expr	expected	known	source	caption	triage	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	oscar.kind	oscar.note	julia.kind	julia.note
+id	section	role	expr	expected	known	source	caption	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	oscar.kind	oscar.note	julia.kind	julia.note
 totient-12			[Totient, 12]	4													
 totient-36			[Totient, 36]	12													
 totient-1			[Totient, 1]	1													
@@ -32,4 +32,4 @@ totient-13	Properties		[Totient, 13]	12	12	Wolfram MathematicalFunctionData, Eul
 totient-14	Properties		[Totient, 14]	6	6	Wolfram MathematicalFunctionData, EulerPhi	$\varphi(2)\varphi(7)=6$										
 totient-15	Properties		[Totient, 15]	8	8	Wolfram MathematicalFunctionData, EulerPhi	$\varphi(3)\varphi(5)=8$										
 totient-16	Properties		[Totient, 16]	8	8	Wolfram MathematicalFunctionData, EulerPhi	$2^4$ gives $2^3=8$										
-assuming-p-in-primes-r-in-integers-r-gt-0	Properties	triage	[Assuming, [And, [Element, p, Primes], [Element, r, Integers], [Greater, r, 0]], [FunctionExpand, [Totient, [Power, p, r]]]]	[Totient, [Power, p, r]]				gap	Same Assuming/FunctionExpand/FullSimplify gap as CatalanNumber/Divides above: reducing Totient(p^r) to (p-1)*p^(r-1) needs the assumption p in Primes, which we have no channel to carry into the Totient evaluator.								
+assuming-p-in-primes-r-in-integers-r-gt-0	Properties		[Assuming, [And, [Element, p, Primes], [Element, r, Integers], [Greater, r, 0]], [FunctionExpand, [Totient, [Power, p, r]]]]	[Totient, [Power, p, r]]				domain	Ours holds Totient(p^r): reducing it to (p - 1) p^(r - 1) needs p prime, and an Assuming context isn't carried into the evaluator; Wolfram's FunctionExpand reads the assumption and answers (p - 1) p^(r - 1).								

@@ -298,14 +298,17 @@ export function declareNumerals(ce: Engine): void {
     // (IntegerDigits(571, MixedRadix({12, 9, 6})) has 3 digits, not 4) — every other system's
     // width is fixed and its leading zeros are part of the numeral (AdicNumerals' padding).
     const digits = system.leadingPlaceIsOverflow && raw.length > 1 && raw[0] === 0 ? raw.slice(1) : raw;
-    // The third operand pads on the left, as it does natively. It is what makes the
-    // factoradic digits of n line up with the Lehmer code of the n-th permutation of
-    // a FIXED size: the code needs one digit per position, leading zeros included.
+    // The third operand pads on the left, as it does natively, or keeps the last digits when
+    // shorter. It is what makes the factoradic digits of n line up with the Lehmer code of the
+    // n-th permutation of a FIXED size: the code needs one digit per position, leading zeros
+    // included.
     const width = integerAt(ops[2]);
     const padded =
-      width === undefined || width <= digits.length
+      width === undefined || width < 0
         ? digits
-        : [...Array.from({ length: width - digits.length }, () => 0), ...digits];
+        : width <= digits.length
+          ? digits.slice(digits.length - width)
+          : [...Array.from({ length: width - digits.length }, () => 0), ...digits];
     return ce.function(
       "List",
       padded.map((d) => ce.number(d)),
@@ -331,7 +334,8 @@ export function declareNumerals(ce: Engine): void {
   threadOverLists(ce, ["IntegerDigits", "DigitCount", "DigitSum"]);
 
   // Wolfram's FromDigits["1923"] and FromDigits["ff", 16]: the digits as a string, 0-9 then
-  // a-z. Natively the digits have to be a list.
+  // a-z. Natively the digits have to be a list. As for a list, a digit past the base carries
+  // (FromDigits("A") is 10, FromDigits("1G") is 26).
   wrapOperator(
     ce,
     ["FromDigits", ["List", 1, 0], 2],
@@ -341,7 +345,7 @@ export function declareNumerals(ce: Engine): void {
       const text = stringAt(ops[0])!.toLowerCase();
       if (base === undefined || base < 2 || base > 36 || text === "") return undefined;
       const digits = text.split("").map((c) => Number.parseInt(c, 36));
-      if (digits.some((d) => Number.isNaN(d) || d >= base)) return undefined;
+      if (digits.some((d) => Number.isNaN(d))) return undefined;
       return ce.number(digits.reduce((n, d) => n * BigInt(base) + BigInt(d), 0n));
     },
     { min: 1, max: 2 },
