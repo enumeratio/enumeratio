@@ -42,6 +42,7 @@ zeta-2-list-list-1-over-2-0-list-0-3-over-2	[[hurwitz_zeta(2, (1/2)), hurwitz_ze
 zeta-4-5	hurwitz_zeta(4, 5)		
 zeta-list-1-2-3-4	[zeta(1), zeta(2), zeta(3), zeta(4)]		
 matrixfunction-function-zeta-2-1-1-list-list-1			
+complex-s-on-the-critical-line	N(zeta((0.5 + 14*I)))		
 the-probability-that-two-random-positive	bool((1 / zeta(2)) == (6 / ((pi)^2)))	True	
 certified-digits-zeta-3	N(zeta(3))	1.20205690315959	
 zeta-0-1-2	zeta(0)	-1/2	

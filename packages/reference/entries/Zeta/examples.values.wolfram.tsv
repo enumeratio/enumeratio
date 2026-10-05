@@ -42,6 +42,7 @@ zeta-2-list-list-1-over-2-0-list-0-3-over-2	Zeta[2, List[List[Rational[1, 2], 0]
 zeta-4-5	Zeta[4, 5]	-22369/20736 + Pi^4/90		\zeta (4,5)	\frac{\pi ^4}{90}-\frac{22369}{20736}	
 zeta-list-1-2-3-4	Zeta[List[1, 2, 3, 4]]	{ComplexInfinity, Pi^2/6, Zeta[3], Pi^4/90}		\zeta (\{1,2,3,4\})	\left\{\text{ComplexInfinity},\frac{\pi ^2}{6},\zeta (3),\frac{\pi ^4}{90}\right\}	
 matrixfunction-function-zeta-2-1-1-list-list-1	MatrixFunction[Function[Zeta[2, Slot[1]]], List[List[Rational[1, 2], 0], List[0, Rational[3, 2]]]]	{{Pi^2/2, 0}, {0, -4 + Pi^2/2}}		\text{MatrixFunction}\left[\zeta (2,\text{$\#$1})\&,\left( \begin{array}{cc}  \frac{1}{2} & 0 \\  0 & \frac{3}{2} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  \frac{\pi ^2}{2} & 0 \\  0 & \frac{\pi ^2}{2}-4 \\ \end{array} \right)	disagree
+complex-s-on-the-critical-line	N[Zeta[Complex[0.5, 14]]]	0.022241142609994033 - 0.10325812326645277*I		N[\zeta (0.5\, +14 i)]	0.0222411\, -0.103258 i	
 the-probability-that-two-random-positive	(Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])	True		\frac{1}{\zeta (2)}=\frac{6}{\pi ^2}	\text{True}	
 certified-digits-zeta-3	N[Zeta[3], 40]	1.202056903159594285399738161511449990764986292340211366009`40.	1.202056903159594285399738161511449990765	N[\zeta (3),40]	1.202056903159594285399738161511449990765	
 zeta-0-1-2	Zeta[0]	-1/2		\zeta (0)	-\frac{1}{2}	

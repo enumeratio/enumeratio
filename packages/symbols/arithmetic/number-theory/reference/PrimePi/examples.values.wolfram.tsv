@@ -1,31 +1,32 @@
-id	in	out	tex.in	tex.out
-no-primes-are-1	PrimePi[1]	0	\pi (1)	0
-primepi-2	PrimePi[2]	1	\pi (2)	1
-primepi-15	PrimePi[15]	6	\pi (15)	6
-primepi-100	PrimePi[100]	25	\pi (100)	25
-threads-element-wise-over-a-list-as-wolfram-s	PrimePi[List[10, 100]]	{4, 25}	\pi (\{10,100\})	\{4,25\}
-rational-arguments-the-primes-up-to-7-2-are-2	PrimePi[Rational[7, 2]]	2	\pi \left(\frac{7}{2}\right)	2
-real-arguments	PrimePi[15.25]	6	\pi (15.25)	6
-the-primes-below-a-million	PrimePi[1000000]	78498	\pi (1000000)	78498
-listable-threads-over-a-list	PrimePi[List[3, 5, 17, 25]]	{2, 3, 7, 9}	\pi (\{3,5,17,25\})	\{2,3,7,9\}
-nthprime-range-1-primepi-100	Prime[Range[1, PrimePi[100]]]	{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97}	p_{\text{Range}[1,\pi (100)]}	\{2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97\}
-primepi-5-000	PrimePi[5000]	669	\pi (5000)	669
-same-inverse-relation-viewed-from-primepi-s-side	(PrimePi[Prime[50]] == 50)	True	\pi \left(p_{50}\right)=50	\text{True}
-primepi-nthprime-100	PrimePi[Prime[100]]	100	\pi \left(p_{100}\right)	100
-primepi-1-000	PrimePi[1000]	168	\pi (1000)	168
-primepi-3	PrimePi[3]	2	\pi (3)	2
-primepi-4	PrimePi[4]	2	\pi (4)	2
-primepi-5	PrimePi[5]	3	\pi (5)	3
-primepi-6	PrimePi[6]	3	\pi (6)	3
-primepi-7	PrimePi[7]	4	\pi (7)	4
-primepi-8	PrimePi[8]	4	\pi (8)	4
-primepi-9	PrimePi[9]	4	\pi (9)	4
-primepi-10	PrimePi[10]	4	\pi (10)	4
-primepi-11	PrimePi[11]	5	\pi (11)	5
-primepi-12	PrimePi[12]	5	\pi (12)	5
-primepi-13	PrimePi[13]	6	\pi (13)	6
-primepi-14	PrimePi[14]	6	\pi (14)	6
-primepi-16	PrimePi[16]	6	\pi (16)	6
-primepi-17	PrimePi[17]	7	\pi (17)	7
-primepi-18	PrimePi[18]	7	\pi (18)	7
-no-primes-are-a-negative-number	PrimePi[-1]	0	\pi (-1)	0
+id	in	out	tex.in	tex.out	verdict
+no-primes-are-1	PrimePi[1]	0	\pi (1)	0	
+primepi-2	PrimePi[2]	1	\pi (2)	1	
+primepi-15	PrimePi[15]	6	\pi (15)	6	
+primepi-100	PrimePi[100]	25	\pi (100)	25	
+threads-element-wise-over-a-list-as-wolfram-s	PrimePi[List[10, 100]]	{4, 25}	\pi (\{10,100\})	\{4,25\}	
+rational-arguments-the-primes-up-to-7-2-are-2	PrimePi[Rational[7, 2]]	2	\pi \left(\frac{7}{2}\right)	2	
+real-arguments	PrimePi[15.25]	6	\pi (15.25)	6	
+the-primes-below-a-million	PrimePi[1000000]	78498	\pi (1000000)	78498	
+listable-threads-over-a-list	PrimePi[List[3, 5, 17, 25]]	{2, 3, 7, 9}	\pi (\{3,5,17,25\})	\{2,3,7,9\}	
+nthprime-range-1-primepi-100	Prime[Range[1, PrimePi[100]]]	{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97}	p_{\text{Range}[1,\pi (100)]}	\{2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97\}	
+primepi-5-000	PrimePi[5000]	669	\pi (5000)	669	
+same-inverse-relation-viewed-from-primepi-s-side	(PrimePi[Prime[50]] == 50)	True	\pi \left(p_{50}\right)=50	\text{True}	
+primepi-nthprime-100	PrimePi[Prime[100]]	100	\pi \left(p_{100}\right)	100	
+primepi-1-000	PrimePi[1000]	168	\pi (1000)	168	
+primepi-3	PrimePi[3]	2	\pi (3)	2	
+primepi-4	PrimePi[4]	2	\pi (4)	2	
+primepi-5	PrimePi[5]	3	\pi (5)	3	
+primepi-6	PrimePi[6]	3	\pi (6)	3	
+primepi-7	PrimePi[7]	4	\pi (7)	4	
+primepi-8	PrimePi[8]	4	\pi (8)	4	
+primepi-9	PrimePi[9]	4	\pi (9)	4	
+primepi-10	PrimePi[10]	4	\pi (10)	4	
+primepi-11	PrimePi[11]	5	\pi (11)	5	
+primepi-12	PrimePi[12]	5	\pi (12)	5	
+primepi-13	PrimePi[13]	6	\pi (13)	6	
+primepi-14	PrimePi[14]	6	\pi (14)	6	
+primepi-16	PrimePi[16]	6	\pi (16)	6	
+primepi-17	PrimePi[17]	7	\pi (17)	7	
+primepi-18	PrimePi[18]	7	\pi (18)	7	
+no-primes-are-a-negative-number	PrimePi[-1]	0	\pi (-1)	0	
+past-10-12-the-call-stays-symbolic	PrimePi[10000000000000]	346065536839	\pi (10000000000000)	346065536839	disagree

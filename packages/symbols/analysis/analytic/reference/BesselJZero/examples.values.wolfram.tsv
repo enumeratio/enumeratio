@@ -1,10 +1,12 @@
-id	in	out	tex.in	tex.out
-j-3-2-1-4-4934-also-the-first-positive-root-of	N[BesselJZero[Rational[3, 2], 1]]	4.493409457909063	N\left[j_{\frac{3}{2},1}\right]	4.49341
-j-0-1-2-4048	N[BesselJZero[0, 1]]	2.404825557695773	N\left[j_{0,1}\right]	2.40483
-the-third-zero-of-j-0	N[BesselJZero[0, 3]]	8.653727912911013	N\left[j_{0,3}\right]	8.65373
-j-3-2-2	N[BesselJZero[Rational[3, 2], 2]]	7.725251836937707	N\left[j_{\frac{3}{2},2}\right]	7.72525
-j-1-2	N[BesselJZero[1, 2]]	7.015586669815622	N\left[j_{1,2}\right]	7.01559
-j-5-2-1	N[BesselJZero[Rational[5, 2], 1]]	5.763459196894548	N\left[j_{\frac{5}{2},1}\right]	5.76346
-n-list-besseljzero-0-1-besseljzero-0-2	N[List[BesselJZero[0, 1], BesselJZero[0, 2], BesselJZero[0, 3]]]	{2.404825557695773, 5.5200781102863115, 8.653727912911013}	N\left[\left\{j_{0,1},j_{0,2},j_{0,3}\right\}\right]	\{2.40483,5.52008,8.65373\}
-n-1-over-pi-times-besseljzero-1-1	N[Times[Divide[1, Pi], BesselJZero[1, 1]]]	1.2196698912665045	N\left[\frac{1}{\pi } j_{1,1}\right]	1.21967
-tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	Chop[Subtract[Tan[N[BesselJZero[Rational[3, 2], 1]]], N[BesselJZero[Rational[3, 2], 1]]]]	0	\text{Chop}\left[\tan \left(N\left[j_{\frac{3}{2},1}\right]\right)-N\left[j_{\frac{3}{2},1}\right]\right]	0
+id	in	out	shown	tex.in	tex.out
+j-3-2-1-4-4934-also-the-first-positive-root-of	N[BesselJZero[Rational[3, 2], 1]]	4.493409457909063		N\left[j_{\frac{3}{2},1}\right]	4.49341
+j-0-1-2-4048	N[BesselJZero[0, 1]]	2.404825557695773		N\left[j_{0,1}\right]	2.40483
+the-third-zero-of-j-0	N[BesselJZero[0, 3]]	8.653727912911013		N\left[j_{0,3}\right]	8.65373
+j-3-2-2	N[BesselJZero[Rational[3, 2], 2]]	7.725251836937707		N\left[j_{\frac{3}{2},2}\right]	7.72525
+j-1-2	N[BesselJZero[1, 2]]	7.015586669815622		N\left[j_{1,2}\right]	7.01559
+j-5-2-1	N[BesselJZero[Rational[5, 2], 1]]	5.763459196894548		N\left[j_{\frac{5}{2},1}\right]	5.76346
+n-list-besseljzero-0-1-besseljzero-0-2	N[List[BesselJZero[0, 1], BesselJZero[0, 2], BesselJZero[0, 3]]]	{2.404825557695773, 5.5200781102863115, 8.653727912911013}		N\left[\left\{j_{0,1},j_{0,2},j_{0,3}\right\}\right]	\{2.40483,5.52008,8.65373\}
+j-0-1-to-20-digits	N[BesselJZero[0, 1], 20]	2.40482555769577276862281325129800735221`20.	2.4048255576957727686	N\left[j_{0,1},20\right]	2.4048255576957727686
+the-third-zero-of-j-0-to-30-digits	N[BesselJZero[0, 3], 30]	8.6537279129110122169541987126623597716554063031126163307834`30.	8.65372791291101221695419871266	N\left[j_{0,3},30\right]	8.65372791291101221695419871266
+n-1-over-pi-times-besseljzero-1-1	N[Times[Divide[1, Pi], BesselJZero[1, 1]]]	1.2196698912665045		N\left[\frac{1}{\pi } j_{1,1}\right]	1.21967
+tan-j-3-2-1-j-3-2-1-the-sinc-function-s-first	Chop[Subtract[Tan[N[BesselJZero[Rational[3, 2], 1]]], N[BesselJZero[Rational[3, 2], 1]]]]	0		\text{Chop}\left[\tan \left(N\left[j_{\frac{3}{2},1}\right]\right)-N\left[j_{\frac{3}{2},1}\right]\right]	0

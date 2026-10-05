@@ -29,3 +29,4 @@ primepi-16	prime_pi(16)
 primepi-17	prime_pi(17)	
 primepi-18	prime_pi(18)	
 no-primes-are-a-negative-number	prime_pi(-1)	0
+past-10-12-the-call-stays-symbolic	prime_pi(10000000000000)	

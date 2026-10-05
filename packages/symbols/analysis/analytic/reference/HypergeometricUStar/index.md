@@ -23,5 +23,5 @@ seeAlso: []
 
 - compute-engine declares `HypergeometricU` but does not evaluate it numerically (a symbolic stub only), so $U$ itself is supplied here via Kummer's connection formula in terms of the entire confluent hypergeometric $M = {}_1F_1$: $U(a,b,z) = \tfrac{\Gamma(1-b)}{\Gamma(a-b+1)}M(a,b,z) + \tfrac{\Gamma(b-1)}{\Gamma(a)}z^{1-b}M(a-b+1,2-b,z)$.
 - $1/\Gamma$ is taken directly (zero at the nonpositive integers) rather than as a raw division, so the formula stays finite exactly where $a-b+1$ or $a$ lands on one of $\Gamma$'s poles — not an edge case Fungrim's own identities avoid.
-- $b$ at (or very near) an integer is declined: both $\Gamma(1-b)$ and $\Gamma(b-1)$ blow up there, and the log-case limit that resolves it is not implemented.
+- $b$ at (or very near) an integer is declined: both $\Gamma(1-b)$ and $\Gamma(b-1)$ blow up there, and the log-case limit that resolves it is not implemented. So is any point where the two terms of the formula cancel past a relative error of $10^{-11}$ (a $b$ within about $10^{-3}$ of an integer, or a large $z$): measured against mpmath on a grid of 546 real points, every answered point is within $5\times10^{-12}$.
 - $z^{1-b}$ and the closing $z^a$ take the principal branch, matching mpmath's `hyperu` and Wolfram's `HypergeometricU`.

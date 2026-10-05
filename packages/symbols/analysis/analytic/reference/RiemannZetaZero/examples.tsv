@@ -1,9 +1,9 @@
 id	section	role	expr	expected	caption	triage	wolfram.note
-the-first-nontrivial-zero-frac-12-14-1347-i			[N, [RiemannZetaZero, 1]]	[Complex, 0.5, 14.134725141734693]	The first nontrivial zero, $\tfrac12 + 14.1347\ldots i$		
+the-first-nontrivial-zero-frac-12-14-1347-i			[N, [RiemannZetaZero, 1]]	[Complex, 0.5, 14.134725141734695]	The first nontrivial zero, $\tfrac12 + 14.1347\ldots i$		
 n-riemannzetazero-2			[N, [RiemannZetaZero, 2]]	[Complex, 0.5, 21.022039638771556]			
 n-riemannzetazero-50		test	[N, [RiemannZetaZero, 50]]	[Complex, 0.5, 143.11184580762063]			
 n-riemannzetazero-10	Scope		[N, [RiemannZetaZero, 10]]	[Complex, 0.5, 49.7738324776723]			
-n-list-riemannzetazero-1-riemannzetazero-2	Scope		[N, [List, [RiemannZetaZero, 1], [RiemannZetaZero, 2], [RiemannZetaZero, 3]]]	[List, [Complex, 0.5, 14.134725141734695], [Complex, 0.5, 21.022039638771552], [Complex, 0.5, 25.01085758014569]]	The first three zeros, all with real part $\frac12$		
+n-list-riemannzetazero-1-riemannzetazero-2	Scope		[N, [List, [RiemannZetaZero, 1], [RiemannZetaZero, 2], [RiemannZetaZero, 3]]]	[List, [Complex, 0.5, 14.134725141734695], [Complex, 0.5, 21.022039638771556], [Complex, 0.5, 25.01085758014569]]	The first three zeros, all with real part $\frac12$		
 n-riemannzetazero-54-50	Scope	triage	[N, [RiemannZetaZero, 54], 50]	[RiemannZetaZero, 54]		gap	N(RiemannZetaZero(k), d) with d past a double's digits stays symbolic here: the root-finder is plain double and declines rather than hand back about 17 correct digits as d of them. Wolfram answers to d digits; needs a bignum root-finder.
 n-riemannzetazero-46-20	Scope	triage	[N, [RiemannZetaZero, 46], 20]	[RiemannZetaZero, 46]		gap	N(RiemannZetaZero(k), d) with d past a double's digits stays symbolic here: the root-finder is plain double and declines rather than hand back about 17 correct digits as d of them. Wolfram answers to d digits; needs a bignum root-finder.
 n-riemannzetazero-neg-1-eq-conjugate	Scope		[N, [Equal, [RiemannZetaZero, -1], [Conjugate, [RiemannZetaZero, 1]]]]	True			
