@@ -80,3 +80,6 @@ division-by-a-0-modulus-yields-nan-rather-than	(5 % 0)	ZeroDivisionError: intege
 periodicity-with-a-zero-modulus-on-one-side	enumeratio_equal((35 % 13), ((17 + (3 * 5)) % 0))	ZeroDivisionError: integer modulo by zero	error
 rounding-ties-to-even-means-1-and-1-both-appear	[((1 + 2*I) % 2), ((3 + 2*I) % 2)]	[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]	disagree
 a-free-symbol-is-untouched	(Symbol("x") % 2)	Mod(x, 2)	disagree
+an-infinite-dividend-has-no-remainder	(oo % 3)	nan	
+an-infinite-modulus-leaves-the-dividend-whole	(5 % oo)	nan	
+mod-with-complexinfinity-stays-unevaluated	(zoo % 3)	nan	disagree

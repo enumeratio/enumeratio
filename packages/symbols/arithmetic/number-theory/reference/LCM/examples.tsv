@@ -45,3 +45,4 @@ ln-1-over-lcm-range-1-4-times-lcm-range-1-5	Properties	triage	[Ln, [Multiply, [D
 a-single-argument-is-returned-unchanged	Possible issues		[LCM, 5]	5			A single argument is returned unchanged															
 0-absorbs-the-lcm-with-0-is-0	Possible issues		[LCM, 0, 5]	0			0 absorbs: the LCM with 0 is 0															
 signs-are-discarded-before-computing-the-lcm	Possible issues		[LCM, -3, 7]	21			Signs are discarded before computing the LCM															
+lcm-with-an-infinite-argument-stays-unevaluated	Possible issues		[LCM, PositiveInfinity, 6]	[LCM, 6, PositiveInfinity]			An infinite argument has no multiples to take: the call stays unevaluated, as in Wolfram						domain	An infinite argument is not an integer: compute-engine, like Wolfram, leaves the call unevaluated, while SymPy takes lcm(oo, 6) = oo.								

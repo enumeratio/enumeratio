@@ -80,3 +80,6 @@ division-by-a-0-modulus-yields-nan-rather-than	Mod[5, 0]	Indeterminate	(5 \bmod 
 periodicity-with-a-zero-modulus-on-one-side	(Mod[35, 13] == Mod[Plus[17, Times[3, 5]], 0])	9 == Indeterminate	(35 \bmod 13)=((17+3\ 5) \bmod 0)	9=\text{Indeterminate}	disagree
 rounding-ties-to-even-means-1-and-1-both-appear	List[Mod[Complex[1, 2], 2], Mod[Complex[3, 2], 2]]	{1, -1}	\{((1+2 i) \bmod 2),((3+2 i) \bmod 2)\}	\{1,-1\}	
 a-free-symbol-is-untouched	Mod[x, 2]	Mod[x, 2]	(x \bmod 2)	(x \bmod 2)	
+an-infinite-dividend-has-no-remainder	Mod[Infinity, 3]	Indeterminate	(\infty  \bmod 3)	\text{Indeterminate}	
+an-infinite-modulus-leaves-the-dividend-whole	Mod[5, Infinity]	5	(5 \bmod \infty )	5	disagree
+mod-with-complexinfinity-stays-unevaluated	Mod[ComplexInfinity, 3]	Indeterminate	(\text{ComplexInfinity} \bmod 3)	\text{Indeterminate}	disagree

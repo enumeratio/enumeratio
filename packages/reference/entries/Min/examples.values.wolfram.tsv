@@ -20,3 +20,4 @@ infinities-participate-directly-in-the	Min[-Infinity, 3]	-Infinity	\min (-\infty
 multiple-arguments-lists-included-are-flattened	Min[List[3, 1], 0]	0	\min (\{3,1\},0)	0	
 with-no-arguments-it-returns-the-identity	Min[]	Infinity	\min ()	\infty	
 the-min-of-an-empty-list-is-nan	Min[List[]]	Infinity	\min (\{\})	\infty	disagree
+min-with-complexinfinity-stays-unevaluated	Min[ComplexInfinity, 1]	Min[1, ComplexInfinity]	\min (\text{ComplexInfinity},1)	\min (1,\text{ComplexInfinity})	

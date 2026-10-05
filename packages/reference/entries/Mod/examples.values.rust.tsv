@@ -80,3 +80,6 @@ division-by-a-0-modulus-yields-nan-rather-than	mod_floor(n(5), n(0))	panic: atte
 periodicity-with-a-zero-modulus-on-one-side	equal(mod_floor(n(35), n(13)), mod_floor((n(17) + (n(3) * n(5))), n(0)))	panic: attempt to divide by zero	error
 rounding-ties-to-even-means-1-and-1-both-appear			
 a-free-symbol-is-untouched			
+an-infinite-dividend-has-no-remainder			
+an-infinite-modulus-leaves-the-dividend-whole			
+mod-with-complexinfinity-stays-unevaluated			

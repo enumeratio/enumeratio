@@ -52,3 +52,4 @@ lists-aren-t-threaded-element-wise-they-re	[gcd([2, 4], 6), gcd([2, 4], 8)]	Attr
 gcd-0-0-0-by-convention	gcd(0, 0)	0	
 symbolic-arguments-stay-unevaluated	gcd(Symbol("x"), Symbol("y"))	1	inconclusive
 gcd-neg-3-9	gcd(-3, 9)		
+gcd-with-an-infinite-argument-stays-unevaluated	gcd(oo, 6)	1	inconclusive
