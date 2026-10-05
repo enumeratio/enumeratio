@@ -12,6 +12,12 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 // exponent whose sign is unknown — is declined (evaluate returns undefined) rather
 // than guessed.
 //
+// Beyond the table: L{g(t)/t} for a combination of 1, e^{at}, cos/cosh and sin/sinh (the
+// transform integrated from s: logarithms and arctangents), L{t^n ln t}, the inverse of
+// logarithms of linear/quadratic factors (-e^{at}/t, -2cos(at)/t), and the inverse of a
+// rational function whose denominator is a product of quadratics s² ± a² (partial fractions
+// in s²; a squared quadratic by its table entries). Each rule cites its source where it sits.
+//
 // Not covered: the derivative/integration theorems and the second shifting theorem for
 // an opaque f — Wolfram itself only expands these symbolically by leaving
 // LaplaceTransform[f[t],t,s] itself in the answer, which would mean synthesizing that
@@ -121,6 +127,7 @@ function atomicLaplace(
   tName: string,
 ): BoxedExpression | undefined {
   if (isSym(expr, tName)) return ce.function("Power", [s, -2]).evaluate();
+  if (expr.operator === "Ln") return laplaceLog(ce, [expr], s, tName);
   if (expr.operator === "Power" && isSym(opAt(expr, 0), tName)) {
     const n = opAt(expr, 1);
     if (hasVar(n, tName) || !isRealAboveNegOne(n)) return undefined;
@@ -189,6 +196,142 @@ function shiftFactor(
   return undefined;
 }
 
+const isConstOf = (name: string) => (o: BoxedExpression) => !hasVar(o, name);
+
+/** `g` when `expr` is `g/t`, in whichever shape it took (`Divide[g, t]`, or a `1/t` or `t^-1` factor). */
+export function dividedByT(ce: ComputeEngine, expr: BoxedExpression, tName: string): BoxedExpression | undefined {
+  if (expr.operator === "Divide" && isSym(opAt(expr, 1), tName)) return opAt(expr, 0);
+  if (expr.operator !== "Multiply") return undefined;
+  const isReciprocal = (o: BoxedExpression) =>
+    (o.operator === "Power" && isSym(opAt(o, 0), tName) && opAt(o, 1).re === -1 && opAt(o, 1).im === 0) ||
+    (o.operator === "Divide" && opAt(o, 0).re === 1 && isSym(opAt(o, 1), tName));
+  const ops = operandsOf(expr);
+  const idx = ops.findIndex(isReciprocal);
+  if (idx === -1) return undefined;
+  const rest = ops.filter((_, j) => j !== idx);
+  return rest.length === 1 ? rest[0] : ce.function("Multiply", rest);
+}
+
+/** `term` as `c·core` with `c` free of the variable and `core` the one factor that isn't (none for a constant). */
+function constantAndCore(
+  ce: ComputeEngine,
+  term: BoxedExpression,
+  name: string,
+): { c: BoxedExpression; core: BoxedExpression | undefined } | undefined {
+  if (!hasVar(term, name)) return { c: term, core: undefined };
+  if (term.operator === "Negate") {
+    const inner = constantAndCore(ce, opAt(term, 0), name);
+    return inner === undefined ? undefined : { c: ce.function("Negate", [inner.c]).evaluate(), core: inner.core };
+  }
+  if (term.operator === "Multiply") {
+    const ops = operandsOf(term);
+    const consts = ops.filter(isConstOf(name));
+    const rest = ops.filter((o) => hasVar(o, name));
+    if (rest.length !== 1) return undefined;
+    return { c: consts.length === 0 ? ce.One : ce.function("Multiply", consts).evaluate(), core: rest[0] };
+  }
+  return { c: ce.One, core: term };
+}
+
+/**
+ * L{g(t)/t}(s) = ∫_s^∞ L{g}(u) du (division by t; Abramowitz & Stegun §29.2 and Table 29.3),
+ * for `g` a combination of 1, e^{at}, cos(at), cosh(at), sin(at), sinh(at). Termwise the
+ * antiderivatives are
+ *   c       -> -c·ln s              cos(at)  -> -(c/2)·ln(s²+a²)      sin(at)  -> c·arctan(a/s)
+ *   c·e^{at} -> -c·ln(s-a)          cosh(at) -> -(c/2)·ln(s²-a²)      sinh(at) -> (c/2)·ln((s+a)/(s-a))
+ * (so L{sin(at)/t} = arctan(a/s) and L{(e^{at}-e^{bt})/t} = ln((s-b)/(s-a)), for s>0 and
+ * s>max(a, b, |a|) respectively). Every logarithmic term grows like c·ln u, so the integral
+ * converges only when those c sum to zero — exactly g(0) = 0 — and anything else declines.
+ */
+function laplaceOverT(
+  ce: ComputeEngine,
+  g: BoxedExpression,
+  s: BoxedExpression,
+  tName: string,
+): BoxedExpression | undefined {
+  const weights: BoxedExpression[] = [];
+  const logFactors: BoxedExpression[] = [];
+  const closed: BoxedExpression[] = [];
+  const logTerm = (base: BoxedExpression, exponent: BoxedExpression) =>
+    logFactors.push(ce.function("Power", [base, exponent]));
+  const sq = (x: BoxedExpression) => ce.function("Power", [x, 2]);
+  for (const term of g.operator === "Add" ? operandsOf(g) : [g]) {
+    const split = constantAndCore(ce, term, tName);
+    if (split === undefined) return undefined;
+    const { c, core } = split;
+    const negC = ce.function("Negate", [c]);
+    const halfNegC = ce.function("Multiply", [ce.number([-1, 2]), c]);
+    if (core === undefined) {
+      weights.push(c);
+      logTerm(s, negC);
+    } else if (core.operator === "Power" && isE(opAt(core, 0))) {
+      const a = pureLinearCoeff(ce, opAt(core, 1), tName);
+      if (a === undefined) return undefined;
+      weights.push(c);
+      logTerm(ce.function("Add", [s, ce.function("Negate", [a])]), negC);
+    } else if (core.operator === "Cos" || core.operator === "Cosh") {
+      const a = pureLinearCoeff(ce, opAt(core, 0), tName);
+      if (a === undefined) return undefined;
+      weights.push(c);
+      const a2 = core.operator === "Cos" ? sq(a) : ce.function("Negate", [sq(a)]);
+      logTerm(ce.function("Add", [sq(s), a2]), halfNegC);
+    } else if (core.operator === "Sin") {
+      const a = pureLinearCoeff(ce, opAt(core, 0), tName);
+      if (a === undefined) return undefined;
+      closed.push(ce.function("Multiply", [c, ce.function("Arctan", [ce.function("Divide", [a, s])])]));
+    } else if (core.operator === "Sinh") {
+      const a = pureLinearCoeff(ce, opAt(core, 0), tName);
+      if (a === undefined) return undefined;
+      const ratio = ce.function("Divide", [
+        ce.function("Add", [s, a]),
+        ce.function("Add", [s, ce.function("Negate", [a])]),
+      ]);
+      closed.push(ce.function("Multiply", [ce.number([1, 2]), c, ce.function("Ln", [ratio])]));
+    } else {
+      return undefined;
+    }
+  }
+  if (logFactors.length > 0) {
+    const total = ce.function("Add", weights).evaluate();
+    if (total.re !== 0 || total.im !== 0) return undefined; // diverges at t = 0
+    closed.push(ce.function("Ln", [ce.function("Multiply", logFactors)]));
+  }
+  return ce.function("Add", closed).evaluate();
+}
+
+/**
+ * L{t^n·ln t}(s) = Γ(n+1)·(ψ(n+1) - ln s)/s^{n+1}, n > -1: the derivative in n of
+ * L{t^n} = Γ(n+1)/s^{n+1} (A&S Table 29.3, with ψ = Γ'/Γ as in DLMF 5.2.2). n = 0 is
+ * L{ln t} = -(γ + ln s)/s.
+ */
+function laplaceLog(
+  ce: ComputeEngine,
+  factors: readonly BoxedExpression[],
+  s: BoxedExpression,
+  tName: string,
+): BoxedExpression | undefined {
+  const isLogT = (o: BoxedExpression) => o.operator === "Ln" && isSym(opAt(o, 0), tName);
+  const logs = factors.filter(isLogT);
+  const others = factors.filter((o) => !isLogT(o));
+  if (logs.length !== 1 || others.length > 1) return undefined;
+  let n: BoxedExpression = ce.Zero;
+  if (others.length === 1) {
+    const p = others[0];
+    if (isSym(p, tName)) n = ce.One;
+    else if (p.operator === "Power" && isSym(opAt(p, 0), tName) && isRealAboveNegOne(opAt(p, 1))) n = opAt(p, 1);
+    else return undefined;
+  }
+  const np1 = ce.function("Add", [n, ce.One]).evaluate();
+  const bracket = ce.function("Add", [ce.function("Digamma", [np1]), ce.function("Negate", [ce.function("Ln", [s])])]);
+  return ce
+    .function("Multiply", [
+      ce.function("Gamma", [np1]),
+      bracket,
+      ce.function("Power", [s, ce.function("Negate", [np1])]),
+    ])
+    .evaluate();
+}
+
 export function matchLaplace(
   ce: ComputeEngine,
   expr: BoxedExpression,
@@ -198,6 +341,11 @@ export function matchLaplace(
   const tName = symbolNameOf(t);
   if (tName === undefined) return undefined;
   if (!hasVar(expr, tName)) return ce.function("Divide", [expr, s]).evaluate();
+  const g = dividedByT(ce, expr, tName);
+  if (g !== undefined) {
+    const over = laplaceOverT(ce, g, s, tName);
+    if (over !== undefined) return over;
+  }
   if (expr.operator === "Add") {
     const parts = operandsOf(expr).map((o) => matchLaplace(ce, o, t, s));
     if (parts.some((p) => p === undefined)) return undefined;
@@ -215,7 +363,7 @@ export function matchLaplace(
     const core =
       rest.length === 1
         ? (atomicLaplace(ce, rest[0], s, tName) ?? shiftFactor(ce, rest, s, tName, "laplace", recur))
-        : shiftFactor(ce, rest, s, tName, "laplace", recur);
+        : (laplaceLog(ce, rest, s, tName) ?? shiftFactor(ce, rest, s, tName, "laplace", recur));
     if (core === undefined) return undefined;
     return consts.length === 0 ? core : ce.function("Multiply", [...consts, core]).evaluate();
   }
@@ -317,6 +465,192 @@ export function matchFourier(
 
 // --- Inverses: a small dictionary of common images, not a general residue calculus. ----
 
+/** The quadratic factor `s² + k` of a denominator: `k = a²` (trigonometric) or `-a²`
+ * (hyperbolic), with `a` read off directly as in `asQuadraticRatio`, or a numeric `k` either way. */
+interface Quadratic {
+  readonly a: BoxedExpression;
+  readonly trig: boolean;
+  readonly k: BoxedExpression;
+}
+
+function asQuadraticFactor(ce: ComputeEngine, base: BoxedExpression, sName: string): Quadratic | undefined {
+  if (base.operator !== "Add" || operandsOf(base).length !== 2) return undefined;
+  const [d1, d2] = operandsOf(base);
+  const isS2 = (o: BoxedExpression) => o.operator === "Power" && isSym(opAt(o, 0), sName) && opAt(o, 1).re === 2;
+  const k = isS2(d1) ? d2 : isS2(d2) ? d1 : undefined;
+  if (k === undefined || hasVar(k, sName)) return undefined;
+  const squareRoot = (x: BoxedExpression) => (x.operator === "Power" && opAt(x, 1).re === 2 ? opAt(x, 0) : undefined);
+  if (k.operator === "Negate") {
+    const a = squareRoot(opAt(k, 0));
+    return a === undefined ? undefined : { a, trig: false, k };
+  }
+  const a = squareRoot(k);
+  if (a !== undefined) return { a, trig: true, k };
+  if (k.im === 0 && Number.isFinite(k.re) && k.re !== 0) {
+    const root = ce.function("Sqrt", [k.re > 0 ? k : ce.function("Negate", [k])]).evaluate();
+    return { a: root, trig: k.re > 0, k };
+  }
+  return undefined;
+}
+
+export interface Factor {
+  readonly base: BoxedExpression;
+  readonly power: number;
+}
+
+/** `expr` as `numer` over `denom`, each a product of integer powers, through any mix of
+ * Multiply, Divide and negative powers. */
+export function fractionFactors(expr: BoxedExpression): { numer: Factor[]; denom: Factor[] } {
+  const numer: Factor[] = [];
+  const denom: Factor[] = [];
+  const walk = (e: BoxedExpression, inverted: boolean): void => {
+    if (e.operator === "Multiply") return operandsOf(e).forEach((o) => walk(o, inverted));
+    if (e.operator === "Divide") {
+      walk(opAt(e, 0), inverted);
+      return walk(opAt(e, 1), !inverted);
+    }
+    const exponent = e.operator === "Power" ? opAt(e, 1) : undefined;
+    if (exponent !== undefined && exponent.im === 0 && Number.isInteger(exponent.re)) {
+      const flipped = exponent.re < 0 !== inverted;
+      return void (flipped ? denom : numer).push({ base: opAt(e, 0), power: Math.abs(exponent.re) });
+    }
+    (inverted ? denom : numer).push({ base: e, power: 1 });
+  };
+  walk(expr, false);
+  return { numer, denom };
+}
+
+/**
+ * c·sˡ over a product of distinct quadratics `s² + kᵢ`, or over one of them squared, as
+ * sines and cosines (hyperbolic for k < 0). Distinct factors split in partial fractions in
+ * u = s²: with l = 2m or 2m+1, c·sˡ/∏(u+kᵢ) = c·sˡ⁻²ᵐ·ΣAᵢ/(u+kᵢ), Aᵢ = (-kᵢ)ᵐ/∏_{j≠i}(kⱼ-kᵢ),
+ * and 1/(s²+k) ↦ sin(√k t)/√k, s/(s²+k) ↦ cos(√k t) (A&S Table 29.3). The squared factor is
+ * that table's own (s²+a²)⁻² entries, for l = 0..3:
+ *   (sin at - at cos at)/(2a³),  t sin(at)/(2a),  (sin at + at cos at)/(2a),  cos at - (at/2) sin at
+ * and the hyperbolic ones follow under a ↦ ia. A single quadratic to the first power is the
+ * existing entry, so this declines it.
+ */
+function inverseQuadraticRational(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  sName: string,
+  t: BoxedExpression,
+): BoxedExpression | undefined {
+  const { numer, denom } = fractionFactors(expr);
+  let degree = 0;
+  const coefficient: BoxedExpression[] = [];
+  for (const f of numer) {
+    if (!hasVar(f.base, sName)) coefficient.push(ce.function("Power", [f.base, f.power]));
+    else if (isSym(f.base, sName)) degree += f.power;
+    else return undefined;
+  }
+  const quadratics: { q: Quadratic; multiplicity: number }[] = [];
+  for (const f of denom) {
+    if (!hasVar(f.base, sName)) {
+      coefficient.push(ce.function("Power", [f.base, -f.power]));
+      continue;
+    }
+    const q = asQuadraticFactor(ce, f.base, sName);
+    if (q === undefined) return undefined;
+    const same = quadratics.find((entry) => JSON.stringify(entry.q.k.json) === JSON.stringify(q.k.json));
+    if (same === undefined) quadratics.push({ q, multiplicity: f.power });
+    else same.multiplicity += f.power;
+  }
+  const order = quadratics.reduce((sum, entry) => sum + entry.multiplicity, 0);
+  if (quadratics.length === 0 || order < 2 || degree >= 2 * order) return undefined;
+  const c = coefficient.length === 0 ? ce.One : ce.function("Multiply", coefficient);
+  const times = (...ops: (BoxedExpression | number)[]) => ce.function("Multiply", ops);
+  const plus = (...ops: (BoxedExpression | number)[]) => ce.function("Add", ops);
+  const neg = (x: BoxedExpression) => ce.function("Negate", [x]);
+  const pair = (q: Quadratic) => {
+    const at = times(q.a, t);
+    return { at, sin: ce.function(q.trig ? "Sin" : "Sinh", [at]), cos: ce.function(q.trig ? "Cos" : "Cosh", [at]) };
+  };
+
+  if (quadratics.length === 1) {
+    const { q, multiplicity } = quadratics[0];
+    if (multiplicity !== 2) return undefined;
+    const { at, sin, cos } = pair(q);
+    const twoA = times(2, q.a);
+    const sign = q.trig ? 1 : -1; // the a ↦ ia flip of the two odd-in-a² entries
+    const image = [
+      ce.function("Divide", [times(sign, plus(sin, neg(times(at, cos)))), times(2, ce.function("Power", [q.a, 3]))]),
+      ce.function("Divide", [times(t, sin), twoA]),
+      ce.function("Divide", [plus(sin, times(at, cos)), twoA]),
+      plus(cos, times(-sign, ce.number([1, 2]), at, sin)),
+    ][degree];
+    return times(c, image).evaluate();
+  }
+
+  if (quadratics.some((entry) => entry.multiplicity !== 1)) return undefined;
+  const m = Math.floor(degree / 2);
+  const parts = quadratics.map(({ q }, i) => {
+    const gaps = quadratics.filter((_, j) => j !== i).map((other) => plus(other.q.k, neg(q.k)));
+    const { sin, cos } = pair(q);
+    // (-k)^m is (±1)^m a^(2m), which keeps the 1/a of the sine image from surviving as a quotient
+    const sign = q.trig ? (-1) ** m : 1;
+    const odd = degree % 2 === 1;
+    const power = ce.function("Power", [q.a, odd ? 2 * m : 2 * m - 1]);
+    return ce.function("Divide", [times(sign, power, odd ? cos : sin), times(...gaps)]);
+  });
+  return times(c, plus(...parts)).evaluate();
+}
+
+/**
+ * Σ cᵢ·ln(s - aᵢ) + Σ dⱼ·ln(s² + kⱼ), from Ln of a quotient of such factors or a sum of them, with
+ * integer cᵢ, dⱼ: the images of -e^{at}/t and -2cos(√k t)/t (the transform of 1/t integrated
+ * from s, run backwards; A&S Table 29.3's ln((s+a)/(s+b)) and ln((s²+a²)/(s²+b²)) entries), so
+ *   Σ cᵢ ln(s - aᵢ) + Σ dⱼ ln(s² + kⱼ)  ↦  -(Σ cᵢ e^{aᵢ t} + 2 Σ dⱼ cos(√kⱼ t))/t,
+ * hyperbolic for kⱼ < 0. Every logarithm grows like ln s, so a convergent image needs
+ * Σ cᵢ + 2 Σ dⱼ = 0 (the same g(0) = 0 as the forward rule), and anything else declines.
+ */
+function inverseLogarithms(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  sName: string,
+  t: BoxedExpression,
+): BoxedExpression | undefined {
+  const linear: { a: BoxedExpression; c: number }[] = [];
+  const quadratic: { q: Quadratic; d: number }[] = [];
+  const addBase = (base: BoxedExpression, weight: number): boolean => {
+    const a = unitShiftAmount(ce, base, sName);
+    if (a !== undefined && !hasVar(a, sName)) {
+      linear.push({ a, c: weight });
+      return true;
+    }
+    const q = asQuadraticFactor(ce, base, sName);
+    if (q === undefined) return false;
+    quadratic.push({ q, d: weight });
+    return true;
+  };
+  const addLog = (e: BoxedExpression, weight: number): boolean => {
+    if (e.operator === "Add") return operandsOf(e).every((o) => addLog(o, weight));
+    if (e.operator === "Negate") return addLog(opAt(e, 0), -weight);
+    if (e.operator === "Multiply") {
+      const ops = operandsOf(e);
+      const numbers = ops.filter((o) => o.im === 0 && Number.isInteger(o.re));
+      const rest = ops.filter((o) => !numbers.includes(o));
+      if (rest.length !== 1) return false;
+      return addLog(rest[0], weight * numbers.reduce((product, o) => product * o.re, 1));
+    }
+    if (e.operator !== "Ln") return false;
+    const { numer, denom } = fractionFactors(opAt(e, 0));
+    return [...numer.map((f) => [f, 1] as const), ...denom.map((f) => [f, -1] as const)].every(
+      ([f, side]) => hasVar(f.base, sName) && addBase(f.base, weight * side * f.power),
+    );
+  };
+  if (!addLog(expr, 1)) return undefined;
+  const total = linear.reduce((sum, e) => sum + e.c, 0) + 2 * quadratic.reduce((sum, e) => sum + e.d, 0);
+  if (total !== 0) return undefined;
+  const parts = [
+    ...linear.map(({ a, c }) => ce.function("Multiply", [c, ce.function("Exp", [ce.function("Multiply", [a, t])])])),
+    ...quadratic.map(({ q, d }) =>
+      ce.function("Multiply", [2 * d, ce.function(q.trig ? "Cos" : "Cosh", [ce.function("Multiply", [q.a, t])])]),
+    ),
+  ];
+  return ce.function("Divide", [ce.function("Negate", [ce.function("Add", parts)]), t]).evaluate();
+}
+
 function matchInverseLaplace(
   ce: ComputeEngine,
   expr: BoxedExpression,
@@ -325,6 +659,8 @@ function matchInverseLaplace(
 ): BoxedExpression | undefined {
   const sName = symbolNameOf(s);
   if (sName === undefined || !hasVar(expr, sName)) return undefined;
+  const logarithmic = inverseLogarithms(ce, expr, sName, t);
+  if (logarithmic !== undefined) return logarithmic;
   if (expr.operator === "Add") {
     const parts = operandsOf(expr).map((o) => matchInverseLaplace(ce, o, s, t));
     if (parts.some((p) => p === undefined)) return undefined;
@@ -334,6 +670,8 @@ function matchInverseLaplace(
     const inner = matchInverseLaplace(ce, opAt(expr, 0), s, t);
     return inner === undefined ? undefined : ce.function("Negate", [inner]).evaluate();
   }
+  const rational = inverseQuadraticRational(ce, expr, sName, t);
+  if (rational !== undefined) return rational;
   if (expr.operator === "Multiply") {
     const ops = operandsOf(expr);
     const consts = ops.filter((o) => !hasVar(o, sName));
