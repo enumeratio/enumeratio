@@ -250,24 +250,34 @@ export function declareExpressionOps(ce: Engine): void {
   // also be a `List` of rules, tried in order; the first that matches at the top level wins.
   // Built on `.match` + `.subs` rather than compute-engine's own `.replace`, which (probed)
   // silently no-ops on a literal (non-wildcard) match target through the `Rule`-expression
-  // form `evaluate()` sees here.
+  // form `evaluate()` sees here. A list of rule SETS (`{{x -> a}, {x -> b}}`) threads: each
+  // set is tried on its own and the answers come back as a list.
   ce.declare("Replace", {
-    signature: "(any, expression<Rule> | list<expression<Rule>>) -> any",
+    signature: "(any, expression<Rule> | list<expression<Rule>> | list<list<expression<Rule>>>) -> any",
     lazy: true,
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const exprRaw = ops[0];
       const ruleSpec = ops[1];
       if (exprRaw === undefined || ruleSpec === undefined) return undefined;
       const expr = exprRaw.evaluate();
-      const rules = ruleSpec.operator === "List" ? operandsOf(ruleSpec) : [ruleSpec];
-      for (const rule of rules) {
-        if (rule.operator !== "Rule") continue;
-        const [lhs, rhs] = operandsOf(rule);
-        if (lhs === undefined || rhs === undefined) continue;
-        const subst = expr.match(lhs);
-        if (subst !== null) return rhs.subs(subst, { canonical: true }).evaluate();
-      }
-      return expr;
+      const replaceWith = (rules: readonly Expr[]): Expr => {
+        for (const rule of rules) {
+          if (rule.operator !== "Rule") continue;
+          const [lhs, rhs] = operandsOf(rule);
+          if (lhs === undefined || rhs === undefined) continue;
+          const subst = expr.match(lhs);
+          if (subst !== null) return rhs.subs(subst, { canonical: true }).evaluate();
+        }
+        return expr;
+      };
+      if (ruleSpec.operator !== "List") return replaceWith([ruleSpec]);
+      const sets = operandsOf(ruleSpec);
+      if (sets.length > 0 && sets.every((set) => set.operator === "List"))
+        return ce.function(
+          "List",
+          sets.map((set) => replaceWith(operandsOf(set))),
+        );
+      return replaceWith(sets);
     },
   });
 

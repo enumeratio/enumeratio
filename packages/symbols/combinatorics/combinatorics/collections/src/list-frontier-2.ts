@@ -1,4 +1,13 @@
-import { type Engine, type Expr, integerAt, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
+import {
+  collectionElements,
+  type Engine,
+  type Expr,
+  integerAt,
+  isNumber,
+  operandsOf,
+  stringAt,
+  symbolNameOf,
+} from "@enumeratio/engine";
 
 // A second wave of Wolfram-frontier heads compute-engine has no answer for: list/array
 // utilities (Thread, MapAt, MovingMap, HankelMatrix), the discrete-math pair
@@ -29,10 +38,19 @@ function declareThread(ce: Engine): void {
       const headName = ops[1] !== undefined ? symbolNameOf(ops[1]) : "List";
       if (headName === undefined) return undefined;
       const f = expr.operator;
-      const args = operandsOf(expr);
-      const threadAt = args.map((a, i) => (a.operator === headName ? i : -1)).filter((i) => i >= 0);
+      // Each operand is evaluated first, as `f(…)` would be; a lazy ordered collection
+      // (`Tuples(…)`, `Range(…)`) stands for the `List` it evaluates to in Wolfram.
+      const args = operandsOf(expr).map((a) => a.evaluate());
+      const parts = args.map((a) =>
+        a.operator === headName
+          ? operandsOf(a)
+          : headName === "List" && a.isIndexedCollection === true && stringAt(a) === undefined
+            ? collectionElements(a)
+            : undefined,
+      );
+      const threadAt = parts.map((p, i) => (p !== undefined ? i : -1)).filter((i) => i >= 0);
       if (threadAt.length === 0) return expr;
-      const lengths = new Set(threadAt.map((i) => operandsOf(args[i]!).length));
+      const lengths = new Set(threadAt.map((i) => parts[i]!.length));
       if (lengths.size !== 1) return undefined;
       const n = [...lengths][0]!;
       const rows: Expr[] = [];
@@ -40,7 +58,7 @@ function declareThread(ce: Engine): void {
         rows.push(
           ce.function(
             f,
-            args.map((a, i) => (threadAt.includes(i) ? operandsOf(a)[k]! : a)),
+            args.map((a, i) => (threadAt.includes(i) ? parts[i]![k]! : a)),
           ),
         );
       return ce.function(headName, rows);
@@ -331,8 +349,19 @@ function declarePascalBinomial(ce: Engine): void {
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const n = integerAt(ops[0]);
       const m = integerAt(ops[1]);
-      if (n === undefined || m === undefined || m < 0) return undefined;
-      if (m > 200) return undefined; // guard against an unreasonably large product
+      // Two non-integer numbers: the Gamma form `Binomial` already has (a recurrence has nothing to say).
+      if (n === undefined && m === undefined && ops.every((op) => op !== undefined && isNumber(op))) {
+        const gamma = ce.function("Binomial", [ops[0]!, ops[1]!]).evaluate();
+        return isNumber(gamma) ? gamma : undefined;
+      }
+      if (m === undefined || m < 0 || m > 200) return undefined; // 200: a guard on the product
+      // Any other `n` (`x`, `Pi`, `1/2`): the falling factorial `n (n - 1) … (n - m + 1) / m!`.
+      if (n === undefined && ops[0] !== undefined) {
+        const factors = Array.from({ length: m }, (_, i) => ce.function("Subtract", [ops[0]!, ce.number(i)]));
+        const factorial = ce.number(Array.from({ length: m }, (_, i) => BigInt(i + 1)).reduce((a, b) => a * b, 1n));
+        return ce.function("Divide", [ce.function("Multiply", factors), factorial]).evaluate();
+      }
+      if (n === undefined) return undefined;
       return ce.number(pascalBinomial(n, m));
     },
   });

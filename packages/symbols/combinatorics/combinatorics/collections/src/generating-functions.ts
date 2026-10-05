@@ -114,25 +114,34 @@ function berlekampMassey(s: readonly Frac[]): Frac[] | undefined {
     }
     cur = c;
   }
-  // trim trailing zero coefficients (BM can leave the order padded)
-  while (cur.length > 0 && fIsZero(cur[cur.length - 1]!)) cur.pop();
   return cur;
 }
 
+/** Whether `c` reproduces `terms` from index `c.length` on. */
+const reproduces = (c: readonly Frac[], terms: readonly Frac[]): boolean => {
+  for (let i = c.length; i < terms.length; i++) {
+    let t = F0;
+    for (let j = 0; j < c.length; j++) t = fAdd(t, fMul(c[j]!, terms[i - 1 - j]!));
+    if (!fEq(t, terms[i]!)) return false;
+  }
+  return true;
+};
+
 /** BM's recurrence for `terms`, only if certified (`2·order ≤ terms.length`) and it
- *  reproduces every sampled term exactly (a defensive re-check, not just trust in BM). */
+ *  reproduces every sampled term exactly (a defensive re-check, not just trust in BM). BM's
+ *  order can be padded with trailing zeros: the trimmed form is preferred where it still
+ *  holds, but a sequence that starts late (`UnitStep(n - 3)`) needs the padding. */
 function findRecurrence(terms: readonly Frac[]): Frac[] | undefined {
   if (terms.every(fIsZero)) return undefined;
-  const c = berlekampMassey(terms);
-  if (c === undefined || c.length === 0) return undefined;
-  const order = c.length;
-  if (order > MAX_CERTIFIED_ORDER) return undefined;
-  for (let i = order; i < terms.length; i++) {
-    let t = F0;
-    for (let j = 0; j < order; j++) t = fAdd(t, fMul(c[j]!, terms[i - 1 - j]!));
-    if (!fEq(t, terms[i]!)) return undefined;
+  const padded = berlekampMassey(terms);
+  if (padded === undefined) return undefined;
+  const trimmed = [...padded];
+  while (trimmed.length > 0 && fIsZero(trimmed[trimmed.length - 1]!)) trimmed.pop();
+  for (const c of [trimmed, padded]) {
+    if (c.length === 0 || c.length > MAX_CERTIFIED_ORDER) continue;
+    if (reproduces(c, terms)) return c;
   }
-  return c;
+  return undefined;
 }
 
 // ─── rational OGF from a certified recurrence ──────────────────────────────────────────────

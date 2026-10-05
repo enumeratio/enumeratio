@@ -1,8 +1,8 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-standard-range			[PascalBinomial, 5, 2]	10	Agrees with Binomial(5, 2) in the standard range		
-pascalbinomial-negative-n-case-2		test	[PascalBinomial, -1, 4]	1			
-pascalbinomial-10-3			[PascalBinomial, 10, 3]	120	Row $10$ of Pascal's triangle: $\binom{10}{3} = 120$		
-negative-n	Scope		[PascalBinomial, -1, 3]	-1	C(-1, k) = (-1)^k, the standard identity for a negative upper index		
-pascalbinomial-8-4	Scope		[PascalBinomial, 8, 4]	70	The central entry of row $8$, $\binom84 = 70$		
-n-pascalbinomial-7-over-3-1-over-5-20	Scope	triage	[N, [PascalBinomial, [Rational, 7, 3], [Rational, 1, 5]], 20]	[PascalBinomial, {num: "2.3333333333333333333"}, 0.2]		gap	N[PascalBinomial[7/3, 1/5], 20] leaves the expression partly boxed ({"num": ...} leaking into the output) rather than reducing to a 20-digit numeric value — PascalBinomial's N-evaluation at requested precision isn't implemented for non-integer arguments
-matrixfunction-function-pascalbinomial-1-2-1	Scope	triage	[MatrixFunction, [Function, [Block, [PascalBinomial, _1, 2]], _1], [List, [List, [Multiply, [Rational, 5, 6], Pi], 0], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 2], Pi]]]]	[List, [List, [PascalBinomial, [Multiply, [Rational, 5, 6], Pi], 2], 0], [List, [Add, [Multiply, [Rational, -9, 8], [PascalBinomial, [Multiply, [Rational, -1, 2], Pi], 2]], [Multiply, [Rational, 9, 8], [PascalBinomial, [Multiply, [Rational, 5, 6], Pi], 2]]], [PascalBinomial, [Multiply, [Rational, -1, 2], Pi], 2]]]		gap	MatrixFunction[Function[PascalBinomial[#,2]], matrix] needs an eigen-decomposition-based matrix function evaluator; ours applies PascalBinomial entrywise-ish via whatever MatrixFunction's generic fallback does, giving a structurally different (and almost certainly wrong) 2x2 result rather than Wolfram's eigenvalue-based one
+id	section	role	expr	expected	caption	epsil.back
+standard-range			[PascalBinomial, 5, 2]	10	Agrees with Binomial(5, 2) in the standard range	
+pascalbinomial-negative-n-case-2		test	[PascalBinomial, -1, 4]	1		
+pascalbinomial-10-3			[PascalBinomial, 10, 3]	120	Row $10$ of Pascal's triangle: $\binom{10}{3} = 120$	
+negative-n	Scope		[PascalBinomial, -1, 3]	-1	C(-1, k) = (-1)^k, the standard identity for a negative upper index	
+pascalbinomial-8-4	Scope		[PascalBinomial, 8, 4]	70	The central entry of row $8$, $\binom84 = 70$	
+n-pascalbinomial-7-over-3-1-over-5-20	Scope		[N, [PascalBinomial, [Rational, 7, 3], [Rational, 1, 5]], 20]	{num: "1.3331254244650286522"}		
+matrixfunction-function-pascalbinomial-1-2-1	Scope		[MatrixFunction, [Function, [Block, [PascalBinomial, _1, 2]], _1], [List, [List, [Multiply, [Rational, 5, 6], Pi], 0], [List, [Multiply, [Rational, 3, 2], Pi], [Multiply, [Rational, -1, 2], Pi]]]]	[List, [List, [Multiply, [Rational, 5, 72], Pi, [Add, -6, [Multiply, 5, Pi]]], 0], [List, [Add, [Multiply, [Rational, -9, 64], Pi, [Add, 2, Pi]], [Multiply, [Rational, 5, 64], Pi, [Add, -6, [Multiply, 5, Pi]]]], [Multiply, [Rational, 1, 8], Pi, [Add, 2, Pi]]]]		Unreadable

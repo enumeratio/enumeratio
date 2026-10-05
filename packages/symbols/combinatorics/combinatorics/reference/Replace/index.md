@@ -7,9 +7,12 @@ signatures:
   - call: Replace(expr, lhs -> rhs)
     description: rhs (with wildcards substituted) if expr matches lhs at the top level, else expr unchanged
     library: enumeratio-combinatorics
-    type: (any, expression<Rule> | list<expression<Rule>>) -> any
+    type: (any, expression<Rule> | list<expression<Rule>> | list<list<expression<Rule>>>) -> any
   - call: Replace(expr, {rule1, rule2, …})
     description: like the 2-argument form, trying each rule in order and using the first that matches
+    library: enumeratio-combinatorics
+  - call: Replace(expr, {{rules…}, {rules…}})
+    description: each set of rules on its own, the answers as a list
     library: enumeratio-combinatorics
 seeAlso:
   - MatchQ

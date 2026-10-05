@@ -16,5 +16,5 @@ names:
   wolframIdentity: true
 ---
 
-- Unlike [[IndexOf]] and [[Position]], which only look at the top level, FirstPosition descends into nested collections — depth-first, outer to inner, left to right.
+- Unlike [[IndexOf]], which only looks at the top level, FirstPosition descends into nested expressions of any head — depth-first, outer to inner, left to right — and matches heads too, at index $0$: the first $Power$ in $x^2 + y^2$ is at $\{1, 0\}$. It is [[Position]]'s first answer.
 - The empty $List$ when the value isn't found anywhere.

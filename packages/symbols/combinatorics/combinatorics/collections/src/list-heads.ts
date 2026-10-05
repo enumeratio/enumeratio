@@ -8,6 +8,7 @@ import {
   widenSignature,
   wrapOperator,
 } from "@enumeratio/engine";
+import { positionsOf } from "./list-levels.ts";
 
 // The core list/statistics heads compute-engine ships but doesn't fully answer yet —
 // widened arities (First/Last's empty-collection default, Ordering's take-n, Clamp's
@@ -349,6 +350,16 @@ export function declareListHeads(ce: Engine): void {
     () => true,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
+      // An unevaluated call (`VertexOutDegree(g)`) is no collection to union: native boxes it
+      // whole into a one-element `Set`, where Wolfram's union is of the call's own parts, under
+      // its own head.
+      const single = result?.operator === "Set" && operandsOf(result).length === 1 ? operandsOf(result)[0] : undefined;
+      if (ops.length === 1 && single !== undefined && single.isSame(ops[0]) && operandsOf(single).length > 0) {
+        const parts: Expr[] = [];
+        for (const part of operandsOf(single)) if (parts.every((p) => p.isEqual(part) !== true)) parts.push(part);
+        parts.sort(naturalCompare);
+        return ce.function(single.operator, parts);
+      }
       if (result !== undefined && result.operator === "Set") {
         const sorted = [...operandsOf(result)];
         sorted.sort(naturalCompare);
@@ -579,12 +590,19 @@ export function declareListHeads(ce: Engine): void {
     ["Position", 1, 1],
     (ops) => ops[1].operator !== "Function",
     () => (ops) => {
-      const items = operandsOf(ops[0]);
-      const value = ops[1];
-      const positions = items
-        .map((item, i) => (item.isEqual(value) === true ? ce.box(["List", i + 1]) : undefined))
-        .filter((position): position is Expr => position !== undefined);
-      return ce.box(["List", ...positions]);
+      // Every level, heads included, as Wolfram's own Position does.
+      const found = positionsOf(ops[0], ops[1]);
+      return found === undefined
+        ? undefined
+        : ce.function(
+            "List",
+            found.map((path) =>
+              ce.function(
+                "List",
+                path.map((i) => ce.number(i)),
+              ),
+            ),
+          );
     },
     2,
   );

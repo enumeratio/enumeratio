@@ -7,7 +7,10 @@ signatures:
   - call: Tuples(n, k)
     description: the $n^k$ length-$k$ tuples
     library: enumeratio-combinatorics
-    type: (integer<0..>, integer<0..>) -> indexed_collection<list<integer>>
+    type: ((integer<0..>, integer<0..>) -> indexed_collection<list<integer>>) & ((list<any>, integer<0..>) -> list<list<any>>)
+  - call: Tuples(list, k)
+    description: the $\lvert list \rvert^k$ length-$k$ tuples of the list's own elements, as a $List$ (up to a size cap)
+    library: enumeratio-combinatorics
 seeAlso:
   - Subsets
   - Multisets

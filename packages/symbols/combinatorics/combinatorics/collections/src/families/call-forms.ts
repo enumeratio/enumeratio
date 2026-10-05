@@ -32,6 +32,7 @@ import {
   extendHead,
   type HeadPatch,
   integerAt,
+  isNumber,
   operandsOf,
   symbolNameOf,
   widenSignature,
@@ -306,6 +307,9 @@ function resolveBoundedParts(n: number, k: number, partsList: Expr): Resolved<nu
       };
 }
 
+/** The most tuples `Tuples(list, k)` builds eagerly. */
+const MAX_LIST_TUPLES = 100_000;
+
 const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? a : gcd(b, a % b));
 
 // ─── SetPartitions(n) / (n, k) ──────────────────────────────────────────────────────────
@@ -418,12 +422,18 @@ function resolveSubsets(
   ops: readonly Expr[],
   wrapElement: (n: number, idxs: number[]) => unknown,
 ): Resolved<number[]> | undefined {
-  const elements = elementsOf(ops[0]);
+  // `Subsets(f(a, b, c))` for any other head: its operands are the elements, and each subset
+  // is rebuilt under `f` (`Add()` for the empty one), as Wolfram's `Subsets[f[a, b, c]]` does.
+  const listed = elementsOf(ops[0]);
+  const call = ops[0];
+  const operands = listed === undefined && call !== undefined && !isNumber(call) ? operandsOf(call) : [];
+  const elements = listed ?? (operands.length > 0 ? operands : undefined);
   const n = elements !== undefined ? elements.length : integerAt(ops[0]);
   if (n === undefined) return undefined;
+  const subsetHead = listed === undefined ? call?.operator : "List";
   const encode =
     elements !== undefined
-      ? (idxs: number[]) => ["List", ...idxs.map((i) => elements[i - 1]!.json)]
+      ? (idxs: number[]) => [subsetHead, ...idxs.map((i) => elements[i - 1]!.json)]
       : (idxs: number[]) => wrapElement(n, idxs);
 
   if (ops.length <= 1) return resolvedFrom(kernels.all, [n], encode);
@@ -521,8 +531,8 @@ export function declareCallForms(ce: Engine): void {
     ce,
     "Subsets",
     finset === undefined
-      ? "(integer | collection<any>, (integer | list<integer>)?) -> list<list<any>>"
-      : `(integer | collection<any>, (integer | list<integer>)?) -> list<${finset} | list<any>>`,
+      ? "(integer | collection<any> | expression, (integer | list<integer>)?) -> list<list<any>>"
+      : `(integer | collection<any> | expression, (integer | list<integer>)?) -> list<${finset} | list<any>>`,
   );
   const kernels = subsetKernels(ce);
   const wrapSubset = (n: number, idxs: number[]): unknown =>
@@ -556,6 +566,30 @@ export function declareCallForms(ce: Engine): void {
     ["Permutations"],
     (ops) => ops.length === 1 && (integerAt(ops[0]) ?? -1) >= 0,
     () => (ops) => ce.function("SymmetricGroup", [ce.number(integerAt(ops[0])!)]),
+  );
+
+  // `Tuples(list, k)`: the k-tuples of the list's own elements, a plain List as in Wolfram
+  // (the lazy `Tuples(n, k)` over 1..n is untouched). Past the cap the call holds.
+  extendHead(ce, "Tuples", { addSignature: "(list<any>, integer<0..>) -> list<list<any>>" });
+  wrapOperator(
+    ce,
+    ["Tuples"],
+    (ops) => ops.length === 2 && ops[0].operator === "List" && (integerAt(ops[1]) ?? -1) >= 0,
+    () => (ops) => {
+      const items = operandsOf(ops[0]);
+      const k = integerAt(ops[1])!;
+      const total = items.length ** k;
+      if (total > MAX_LIST_TUPLES) return undefined;
+      return ce.function(
+        "List",
+        Array.from({ length: total }, (_, r) =>
+          ce.function(
+            "List",
+            Array.from({ length: k }, (_, i) => items[Math.floor(r / items.length ** (k - 1 - i)) % items.length]!),
+          ),
+        ),
+      );
+    },
   );
 
   // GroupOrder(SymmetricGroup(n)) -> n! is wired from packages/symbols/algebras/groupalgebra/src/declare.ts

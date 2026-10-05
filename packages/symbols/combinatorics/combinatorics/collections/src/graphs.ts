@@ -715,7 +715,12 @@ export function declareGraphs(ce: Engine): void {
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ce, ops[0]);
       if (g === undefined || ops[1] === undefined || ops[1].operator !== "List") return undefined;
-      const keep = new Set(operandsOf(ops[1]).map(vertexKey));
+      const picked = operandsOf(ops[1]);
+      // A list of edges selects the vertices they join: the subgraph induced on those.
+      const isEdge = (e: Expr): boolean => e.operator === "UndirectedEdge" || e.operator === "DirectedEdge";
+      const keep = new Set(
+        (picked.length > 0 && picked.every(isEdge) ? picked.flatMap(operandsOf) : picked).map(vertexKey),
+      );
       return induced(ce, g, keep);
     },
   });

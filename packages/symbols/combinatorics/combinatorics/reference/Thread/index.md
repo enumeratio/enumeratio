@@ -21,5 +21,6 @@ attributes:
 ---
 
 - Operands not headed by h are broadcast unchanged to every threaded call.
+- The operands are evaluated first, and a lazy ordered collection such as $Tuples(…)$ threads as the List it evaluates to. The threaded calls themselves are left as built, not evaluated.
 - Left unevaluated when the h-headed operands don't all share one length.
 - Many arithmetic heads already thread over lists automatically; Thread's value is threading a head that doesn't, such as [[Equal]] or a plain function.
