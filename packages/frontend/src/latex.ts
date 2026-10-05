@@ -64,9 +64,9 @@ const hasDictionary = (node: unknown): boolean => isDict(node) || (Array.isArray
 
 /** `expr.latex`, except that a dictionary anywhere inside is written rather than dropped. */
 export function latexOf(ce: ComputeEngine, expr: BoxedExpression, options?: Record<string, unknown>): string {
+  // `.latex` rounds to the engine's working precision, so `N(Pi, 50)` would show ~21 digits.
+  const written = { digits: "max", ...options };
   const json = expr.json;
-  if (!hasDictionary(json) || ce.latexSyntax === undefined) {
-    return options === undefined ? expr.latex : expr.toLatex(options);
-  }
-  return ce.latexSyntax.serialize(expandDictionaries(json) as MathJsonExpression, options);
+  if (!hasDictionary(json) || ce.latexSyntax === undefined) return expr.toLatex(written);
+  return ce.latexSyntax.serialize(expandDictionaries(json) as MathJsonExpression, written);
 }

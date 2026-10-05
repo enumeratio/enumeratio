@@ -203,6 +203,20 @@ const eulerGamma: Entry = {
   serialize: () => "\\gamma",
 };
 
+/** `\lfloor x\rfloor` for one operand; with a step (`Floor(226, 10)`) the brackets would
+ *  drop it, so it is written as the call. */
+const bracketed = (name: "Floor" | "Ceil", open: string, close: string): Entry => ({
+  ...native(name),
+  name,
+  serialize: (serializer, expr) => {
+    const args = operands(expr);
+    const inner = (x: MathJsonExpression) => serializer.serialize(x);
+    return args.length === 1
+      ? `${open}${/^[A-Za-z]/.test(inner(args[0]!)) ? " " : ""}${inner(args[0]!)}${close}`
+      : `\\mathrm{${name}}${serializer.wrapArguments(expr as MathJsonExpression)}`;
+  },
+});
+
 /** A truth value written as the word, as InputForm spells it; ⊤ and ⊥ are TraditionalForm's
  *  and still read. */
 const truth = (name: "True" | "False", trigger: string): Entry => ({
@@ -250,6 +264,11 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
   operatorname("LCM", "lcm"),
   operatorname("MatrixRank", "rank"),
   operatorname("Erf", "erf"),
+  operatorname("Erfc", "erfc"),
+  // compute-engine writes the Russian `arcctg`.
+  operatorname("Arccot", "arccot"),
+  bracketed("Floor", "\\lfloor", "\\rfloor"),
+  bracketed("Ceil", "\\lceil", "\\rceil"),
   zeta,
   beta,
   betaRoman,

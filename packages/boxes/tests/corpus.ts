@@ -109,7 +109,10 @@ export const CORPUS: Record<string, MathJsonExpression> = {
   "gamma function": ["Gamma", ["Add", "n", 1]],
   "user function": ["f", "x", "y"],
   "user function no args": ["f"],
-  "unknown head": ["Zeta", "s"],
+  "unknown head": ["Frobnicate", "s"],
+  "floor with a step": ["Floor", 226, 10],
+  "product with a reciprocal": ["Multiply", 3, ["Power", ["Add", "s", 9], -1]],
+  "engine heads": ["Add", ["LCM", "a", "b"], ["Zeta", "s"], ["Erf", "x"]],
   "nested calls": ["f", ["g", "x"], ["h", "y", "z"]],
 
   // scripts

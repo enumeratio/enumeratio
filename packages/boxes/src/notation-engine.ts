@@ -66,7 +66,10 @@ const RULES: Notation = {
   GammaLn: named(row(["log", "Γ"]), 1),
   LerchPhi: named("Φ", 3),
   HurwitzZeta: named("ζ", 2),
+  Erf: named("erf", 1),
   Erfc: named("erfc", 1),
+  // `ζ(s)`, and `ζ(s, a)` for the Hurwitz form.
+  Zeta: (args, write) => (args.length === 1 || args.length === 2 ? write.call("ζ", args) : undefined),
   ErfInv: named(superscript("erf", row(["−", "1"])), 1),
   GammaRegularized: named("Q", 2),
   BetaRegularized: subscripted("I", 3),

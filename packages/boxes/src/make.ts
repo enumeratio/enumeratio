@@ -163,8 +163,8 @@ const FUNCTIONS: Record<string, string> = {
   Gamma: "Γ",
   Max: "max",
   Min: "min",
-  Gcd: "gcd",
-  Lcm: "lcm",
+  GCD: "gcd",
+  LCM: "lcm",
   Sign: "sgn",
   Re: "Re",
   Im: "Im",
@@ -248,6 +248,16 @@ function subtracted(node: unknown): unknown {
     return ["Multiply", { num: literal }, ...rest];
   }
   return undefined;
+}
+
+/** What a factor `base^-n` (a negative integer power) divides by -- `base`, or `base^n` --
+ *  else undefined. */
+function denominatorOf(node: unknown): unknown {
+  if (headOf(node) !== "Power") return undefined;
+  const [base, exponent] = opsOf(node);
+  const n = Number(numberOf(exponent));
+  if (!Number.isInteger(n) || n >= 0) return undefined;
+  return n === -1 ? base : ["Power", base, -n];
 }
 
 function makeNumber(digits: string): Made {
@@ -354,6 +364,14 @@ function makeFunction(head: string, ops: unknown[]): Made {
       if (ops.length > 1 && negatedLiteral(ops[0]) === "1") {
         return makeFunction("Negate", [ops.length === 2 ? ops[1] : ["Multiply", ...ops.slice(1)]]);
       }
+      // A factor with a negative integer power goes under the line: `3 (x+1)^-1` is `3/(x+1)`.
+      const under = ops.map(denominatorOf);
+      if (under.some((d) => d !== undefined)) {
+        const above = ops.filter((_, i) => under[i] === undefined);
+        const below = under.filter((d) => d !== undefined);
+        const fold = (parts: unknown[]) => (parts.length === 1 ? parts[0] : ["Multiply", ...parts]);
+        return makeFunction("Divide", [above.length === 0 ? 1 : fold(above), fold(below)]);
+      }
       const factors = ops.map(make);
       const items: Box[] = [];
       let previous: Made | undefined;
@@ -404,10 +422,11 @@ function makeFunction(head: string, ops: unknown[]): Made {
       return atom(fenced("|", [make(ops[0]).box], "|"));
     case "Norm":
       return atom(fenced("‖", [make(ops[0]).box], "‖"));
+    // With a step (`Floor(226, 10)`) the brackets would drop it, so it stays a call.
     case "Floor":
-      return atom(fenced("⌊", [make(ops[0]).box], "⌋"));
+      return ops.length === 1 ? atom(fenced("⌊", [make(ops[0]).box], "⌋")) : makeCall(head, ops);
     case "Ceil":
-      return atom(fenced("⌈", [make(ops[0]).box], "⌉"));
+      return ops.length === 1 ? atom(fenced("⌈", [make(ops[0]).box], "⌉")) : makeCall(head, ops);
     case "Factorial":
       return atom(row([paren(make(ops[0]), ATOM), "!"]));
     case "Factorial2":
