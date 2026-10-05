@@ -8,8 +8,8 @@
 // decides the layout: quotes, spacing, where a long MathJSON value breaks. So a record is
 // exactly what `vp fmt` would make of it.
 
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { join, relative } from "node:path";
 import { format } from "oxfmt";
 import { FORMAT } from "./format.ts";
 import type { ComponentStory, ReferenceEntry } from "./types.ts";
@@ -47,10 +47,10 @@ export async function writeStories(dir: string | URL, name: string, stories: rea
   await writeYaml(path, stories);
 }
 
-/** Where the records live under `packages/`: `<package>/reference/`, a symbol package's
- * `symbols/<group>/<package>/reference/`, and reference's own `entries/` (the engine's heads). */
-export function recordDirs(packagesRoot: string): { package: string; dir: string }[] {
-  // A package may be a symlink (an installed one is, under node_modules/@enumeratio).
+/** The workspace's package directories under `packages/`: `<package>/`, and a symbol package's
+ *  `symbols/<group>/<package>/`. A package may be a symlink (an installed one is, under
+ *  node_modules/@enumeratio). */
+export function workspaceDirs(packagesRoot: string): { package: string; dir: string }[] {
   const subdirs = (dir: string): string[] =>
     existsSync(dir)
       ? readdirSync(dir, { withFileTypes: true })
@@ -58,21 +58,59 @@ export function recordDirs(packagesRoot: string): { package: string; dir: string
           .map((e) => e.name)
           .toSorted()
       : [];
-  const packages = [
-    ...subdirs(packagesRoot).map((pkg) => ({ pkg, dir: join(packagesRoot, pkg) })),
+  return [
+    ...subdirs(packagesRoot).map((pkg) => ({ package: pkg, dir: join(packagesRoot, pkg) })),
     ...subdirs(join(packagesRoot, "symbols")).flatMap((group) =>
       subdirs(join(packagesRoot, "symbols", group)).map((pkg) => ({
-        pkg,
+        package: pkg,
         dir: join(packagesRoot, "symbols", group, pkg),
       })),
     ),
   ];
-  return packages
-    .map(({ pkg, dir }) => ({
-      package: pkg,
-      dir: join(dir, pkg === "reference" ? "entries" : "reference"),
-    }))
-    .filter(({ dir }) => existsSync(dir));
+}
+
+/**
+ * Our libraries the workspace installs from outside it (a release, a registry) rather than
+ * linking: each `@enumeratio` package under a workspace package's `node_modules` that resolves
+ * outside `packagesRoot`, by name. Until each host assembles what it installs
+ * (https://github.com/enumeratio/enumeratio/wiki/Speculative-Per-Package-Repos §4.1), their records are
+ * read as if they were here. Two different installs of one name are an error: a head has one record.
+ */
+export function installedLibraries(packagesRoot: string): { name: string; dir: string }[] {
+  const found = new Map<string, string>();
+  for (const { dir } of workspaceDirs(packagesRoot)) {
+    const scope = join(dir, "node_modules", "@enumeratio");
+    if (!existsSync(scope)) continue;
+    for (const entry of readdirSync(scope)) {
+      const link = join(scope, entry);
+      if (!existsSync(link)) continue; // a link left by a package since renamed
+      const real = realpathSync(link);
+      if (!relative(realpathSync(packagesRoot), real).startsWith("..")) continue; // a workspace package
+      const { name } = JSON.parse(readFileSync(join(real, "package.json"), "utf8")) as { name: string };
+      const seen = found.get(name);
+      if (seen !== undefined && seen !== real) throw new Error(`${name} is installed twice: ${seen} and ${real}`);
+      found.set(name, real);
+    }
+  }
+  return [...found].toSorted(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)).map(([name, dir]) => ({ name, dir }));
+}
+
+/** Where the records live under `packages/`: each workspace package's `reference/`, reference's
+ *  own `entries/` (the engine's heads), and those of our libraries installed from outside the
+ *  workspace, marked `installed`: read them, never write them. */
+export function recordDirs(packagesRoot: string): { package: string; dir: string; installed?: true }[] {
+  const workspace = workspaceDirs(packagesRoot).map(({ package: pkg, dir }) => ({
+    package: pkg,
+    dir: join(dir, pkg === "reference" ? "entries" : "reference"),
+  }));
+  // A checkout's packages/ (its symbol libraries sit in groups); an installed root holds them all already.
+  const checkout = existsSync(join(packagesRoot, "symbols"));
+  const installed = (checkout ? installedLibraries(packagesRoot) : []).map(({ name, dir }) => ({
+    package: name.replace(/^@enumeratio\//, ""),
+    dir: join(dir, "reference"),
+    installed: true as const,
+  }));
+  return [...workspace, ...installed].filter(({ dir }) => existsSync(dir));
 }
 
 /** `value` as a record's text: the writer's structure, laid out by oxfmt. */

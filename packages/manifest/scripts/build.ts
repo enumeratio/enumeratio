@@ -10,11 +10,10 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { canonicalOf } from "./declares-of.ts";
-import { recordDirs } from "@enumeratio/entry/node";
+import { installedLibraries, recordDirs } from "@enumeratio/entry/node";
 import { assembleManifest, type PackageIndex } from "../src/assemble.ts";
 import type { Placement } from "../src/hierarchy.ts";
 import { notationSpecifier, type PackageField } from "../src/package-field.ts";
-import { installedLibraries } from "./installed.ts";
 import { packageIndexOf } from "./package-index.ts";
 
 const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
@@ -34,7 +33,7 @@ const workspaceDirs = [
     readdirSync(join(PACKAGES, "symbols", group)).map((name) => join(PACKAGES, "symbols", group, name)),
   ),
 ];
-const installed = installedLibraries(workspaceDirs, PACKAGES);
+const installed = installedLibraries(PACKAGES);
 for (const dir of [...workspaceDirs, ...installed.map((library) => library.dir)]) {
   const file = join(dir, "package.json");
   if (!existsSync(file)) continue;
@@ -54,13 +53,8 @@ for (const dir of [...workspaceDirs, ...installed.map((library) => library.dir)]
 }
 
 // One per package with records, in the order the records are read (the workspace's, then those
-// installed), then those with only a notation.
-const withRecords = [
-  ...recordDirs(PACKAGES),
-  ...installed
-    .map(({ name, dir }) => ({ package: name.replace(/^@enumeratio\//, ""), dir: join(dir, "reference") }))
-    .filter(({ dir }) => existsSync(dir)),
-];
+// installed from outside it), then those with only a notation.
+const withRecords = recordDirs(PACKAGES);
 const indexes: PackageIndex[] = [
   ...withRecords.map(({ package: pkg, dir }) => packageIndexOf(pkg, dir, notations.get(pkg))),
   ...[...notations]

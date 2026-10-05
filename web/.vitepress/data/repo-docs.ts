@@ -4,7 +4,7 @@
 // markdown reads right on GitHub and on the site. Design docs and the roadmap live on the
 // wiki (https://github.com/enumeratio/enumeratio/wiki), not here.
 
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, realpathSync } from "node:fs";
 import { dirname, join, posix, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -120,9 +120,23 @@ function docPages(dir: string): DocPage[] {
     .toSorted((a, b) => a.order - b.order || a.page.localeCompare(b.page));
 }
 
+/** Our libraries the site installs from outside the workspace (a release), repo-relative: their
+ *  docs are served as a workspace package's are. */
+function installedDirs(): string[] {
+  if (process.env.SITE_FROM_PACKAGES === "1") return [];
+  const scope = join(repoRoot, "web", "node_modules", "@enumeratio");
+  if (!existsSync(scope)) return [];
+  // A workspace package links back into the checkout; an installed one lives in pnpm's store.
+  return readdirSync(scope)
+    .map((name) => join(scope, name))
+    .filter((link) => existsSync(link))
+    .map((link) => relative(repoRoot, realpathSync(link)))
+    .filter((dir) => dir.startsWith("node_modules/"));
+}
+
 export function workspacePackages(): WorkspacePackage[] {
   const found: WorkspacePackage[] = [];
-  for (const dir of packageGlobs.flatMap(expand)) {
+  for (const dir of [...packageGlobs.flatMap(expand), ...installedDirs()]) {
     const manifest = join(repoRoot, dir, "package.json");
     if (!existsSync(manifest)) continue;
     const pkg = JSON.parse(readFileSync(manifest, "utf8")) as {
