@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { dividedByT } from "./transforms.ts";
 
 // HankelTransform(f, r, s[, n]) = ∫_0^∞ f(r) J_n(s r) r dr, matching Wolfram's own
 // normalisation exactly (no extra prefactor — confirmed directly against
@@ -19,6 +20,11 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 // Two further orders Wolfram's own examples state explicitly (verified the same way):
 //   n = 1: e^(-a*r) -> s/(a^2+s^2)^(3/2)                 Re(a) > 0
 //   any n: 1/r -> 1/s (n-independent identity)            n > -1/2
+//
+// Two more order-0 pairs, f(r)/r with a Bessel-function answer:
+//   e^(-a*r)/r        -> 1/sqrt(a^2+s^2)                Re(a) > 0   (DLMF 10.22.49, nu = 0)
+//   e^(-A*r^2)/r      -> sqrt(pi)/(2 sqrt(A)) * e^(-s^2/(8A)) * I_0(s^2/(8A))
+//                                                         A > 0, or A a square (Gradshteyn-Ryzhik 6.618.1, nu = 0)
 //
 // Declined: any other function, any other stated order (Wolfram's own closed forms for
 // e^(-a*r)/e^(-a*r^2) at a general order `n` involve `Hypergeometric2F1Regularized` /
@@ -147,6 +153,42 @@ function atomicHankelOrder1(
   return ce.function("Divide", [s, denom]).evaluate();
 }
 
+/** `g(r)/r` for the two `g` above: the Laplace transform of J_0 (DLMF 10.22.49), and G&R 6.618.1's Gaussian. */
+function hankelOverR(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  r: string,
+  s: BoxedExpression,
+): BoxedExpression | undefined {
+  const g = dividedByT(ce, expr, r);
+  if (g === undefined || g.operator !== "Power" || !isE(opAt(g, 0))) return undefined;
+  const exponent = opAt(g, 1);
+  const k = linearCoeffSigned(ce, exponent, r);
+  if (k !== undefined && k.isNegative === true) {
+    const a = ce.function("Negate", [k]).evaluate();
+    const radicand = ce.function("Add", [ce.function("Power", [a, 2]), ce.function("Power", [s, 2])]);
+    return ce.function("Power", [radicand, ce.number([-1, 2])]).evaluate();
+  }
+  const m = quadraticCoeffSigned(ce, exponent, r);
+  if (m === undefined) return undefined;
+  const bigA = ce.function("Negate", [m]).evaluate();
+  const root =
+    bigA.isPositive === true
+      ? ce.function("Sqrt", [bigA])
+      : bigA.operator === "Power" && opAt(bigA, 1).re === 2
+        ? ce.function("Abs", [opAt(bigA, 0)])
+        : undefined;
+  if (root === undefined) return undefined;
+  const z = ce.function("Divide", [ce.function("Power", [s, 2]), ce.function("Multiply", [8, bigA])]);
+  return ce
+    .function("Multiply", [
+      ce.function("Divide", [ce.function("Sqrt", [ce.Pi]), ce.function("Multiply", [2, root])]),
+      ce.function("Exp", [ce.function("Negate", [z])]),
+      ce.function("BesselI", [0, z]),
+    ])
+    .evaluate();
+}
+
 export function matchHankel(
   ce: ComputeEngine,
   expr: BoxedExpression,
@@ -156,7 +198,9 @@ export function matchHankel(
 ): BoxedExpression | undefined {
   const rName = symbolNameOf(r);
   if (rName === undefined || !hasVar(expr, rName)) return undefined;
-  if (order === undefined || (order.re === 0 && order.im === 0)) return atomicHankelOrder0(ce, expr, rName, s);
+  if (order === undefined || (order.re === 0 && order.im === 0)) {
+    return atomicHankelOrder0(ce, expr, rName, s) ?? hankelOverR(ce, expr, rName, s);
+  }
   if (order.re === 1 && order.im === 0) return atomicHankelOrder1(ce, expr, rName, s);
   // Any other order: only the n-independent `1/r -> 1/s` identity is elementary
   // (needs n > -1/2 for convergence — checked when `order` carries enough sign
