@@ -24,3 +24,4 @@ export {
   unit,
 } from "./hopf.ts";
 export * from "./bases.ts";
+// demo
