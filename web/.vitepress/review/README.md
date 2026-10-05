@@ -54,7 +54,8 @@ already holds belongs there, not here.
 Edits go to localStorage first and flush to the file when the dev server answers, so a stopped
 server doesn't lose them. Off localhost (a `VITE_REVIEW=1` build) there's no file: **Copy
 feedback** puts every item with feedback on the clipboard in the same markdown shape.
-`?review=off` hides review mode in this browser; `?review` brings it back.
+`?review=off` hides review mode in this browser; `?review` brings it back. Production and the Cloudflare previews are built without review mode, so `?review` does
+nothing there; only `vitepress dev` or a `VITE_REVIEW=1` build has it.
 
 ## How feedback gets acted on
 
