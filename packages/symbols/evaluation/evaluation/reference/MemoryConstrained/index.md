@@ -1,11 +1,11 @@
 ---
 name: MemoryConstrained
 domain: Controlling evaluation
-signature: MemoryConstrained(expr, bytes, failexpr)
+signature: MemoryConstrained(expr, bytes[, failexpr])
 summary: Evaluates expr under a memory cap of bytes — real only in the isolated evaluator.
 signatures:
-  - call: MemoryConstrained(expr, bytes, failexpr)
-    description: in-process, stays unevaluated; real only inside evaluateIsolated.
+  - call: MemoryConstrained(expr, bytes[, failexpr])
+    description: in-process, stays unevaluated; real only inside evaluateIsolated. Over the cap it returns failexpr, or $Aborted without one.
     library: enumeratio-evaluation
     type: (any, real<0..>, any?) environment -> any
 names:
