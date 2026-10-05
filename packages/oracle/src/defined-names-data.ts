@@ -191,7 +191,6 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "ConnectedPermutations",
   "ConstGlaisher",
   "Contains",
-  "ContinuationPlaceholder",
   "ContinuedFraction",
   "ContinuedFractionK",
   "Convergents",
