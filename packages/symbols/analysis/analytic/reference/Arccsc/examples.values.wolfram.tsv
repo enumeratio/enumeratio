@@ -18,7 +18,7 @@ arccsc-neg-1	ArcCsc[-1]	-1/2*Pi		\csc ^{-1}(-1)	-\frac{\pi }{2}
 arccsc-neg-sqrt-2-plus-sqrt-6	ArcCsc[Plus[Minus[Sqrt[2]], Sqrt[6]]]	-ArcCsc[Sqrt[2] - Sqrt[6]]		\csc ^{-1}\left(-\sqrt{2}+\sqrt{6}\right)	-\csc ^{-1}\left(\sqrt{2}-\sqrt{6}\right)	
 arccsc-neg-sqrt-6-plus-sqrt-2	ArcCsc[Plus[Minus[Sqrt[6]], Sqrt[2]]]	ArcCsc[Sqrt[2] - Sqrt[6]]		\csc ^{-1}\left(-\sqrt{6}+\sqrt{2}\right)	\csc ^{-1}\left(\sqrt{2}-\sqrt{6}\right)	
 arccsc-2-times-sqrt-1-over-2-plus-sqrt-2	ArcCsc[Times[2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	ArcCsc[2/Sqrt[2 + Sqrt[2]]]		\csc ^{-1}\left(2 \sqrt{\frac{1}{2+\sqrt{2}}}\right)	\csc ^{-1}\left(\frac{2}{\sqrt{2+\sqrt{2}}}\right)	
-arccsc-neg-2-times-sqrt-1-over-2-plus-sqrt-2	ArcCsc[Times[-2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	-ArcCsc[2/Sqrt[2 + Sqrt[2]]]		\csc ^{-1}\left(-2 \sqrt{\frac{1}{2+\sqrt{2}}}\right)	-\csc ^{-1}\left(\frac{2}{\sqrt{2+\sqrt{2}}}\right)	
+arccsc-neg-2-times-sqrt-1-over-2-plus-sqrt-2	ArcCsc[Times[-2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	-ArcCsc[2/Sqrt[2 + Sqrt[2]]]		\csc ^{-1}\left(-2 \sqrt{\frac{1}{2+\sqrt{2}}}\right)	-\csc ^{-1}\left(\frac{2}{\sqrt{2+\sqrt{2}}}\right)	disagree
 arccsc-2-over-3-times-sqrt-3	ArcCsc[Times[Rational[2, 3], Sqrt[3]]]	Pi/3		\csc ^{-1}\left(\frac{2}{3} \sqrt{3}\right)	\frac{\pi }{3}	
 arccsc-neg-2-over-3-times-sqrt-3	ArcCsc[Times[Rational[-2, 3], Sqrt[3]]]	-1/3*Pi		\csc ^{-1}\left(-\frac{2}{3} \sqrt{3}\right)	-\frac{\pi }{3}	
 arccsc-neg-1-plus-sqrt-5	ArcCsc[Plus[-1, Sqrt[5]]]	(3*Pi)/10		\csc ^{-1}\left(-1+\sqrt{5}\right)	\frac{3 \pi }{10}	

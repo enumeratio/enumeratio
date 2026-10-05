@@ -117,6 +117,14 @@ test("a list answer that holds some entries has no identity check, whole or wrap
   expect(leavesCall(["FunctionExpand", poles] as never, partlyHeld as never)).toBe(true);
 });
 
+test("a call over a list is held where an entry's call is", () => {
+  const half = ["Rational", 1, 2];
+  expect(leavesCall(["BarnesG", ["List", half, 1]] as never, ["List", ["BarnesG", half], 1] as never)).toBe(true);
+  expect(leavesCall(["BarnesG", ["List", half, 1]] as never, ["List", ["Sqrt", "Pi"], 1] as never)).toBe(false);
+  // A call that takes the whole list is held whole.
+  expect(leavesCall(["Sort", ["List", 2, 1]] as never, ["Sort", ["List", 2, 1]] as never)).toBe(true);
+});
+
 test("a held call counts however ours spells it", () => {
   // The same integral, held as `Function` and `Limits` rather than as written.
   const integral = ["Simplify", ["Integrate", ["EllipticPi", "n", "m"], "m"]];

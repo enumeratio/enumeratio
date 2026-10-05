@@ -4,7 +4,16 @@
 // mapping for `RademacherSymbol` at arity 1" tells you which row to add next, and a scan
 // that counts those is a work queue rather than a verdict.
 
-import { CONTEXT, HEADS, isSystemName, isWolframHead, SYMBOLS, toWolfram } from "@enumeratio/wolfram";
+import {
+  CONTEXT,
+  HEADS,
+  isSystemName,
+  isWolframHead,
+  NUMBER_SETS,
+  ringOption,
+  SYMBOLS,
+  toWolfram,
+} from "@enumeratio/wolfram";
 import { CARRIER_NAMES, CARRIER_PARAMS } from "./carrier-names-data.ts";
 import { DEFINED_NAMES } from "./defined-names-data.ts";
 import { type Mapping, mappingFor, THREADS_MANUALLY } from "./mappings.ts";
@@ -100,6 +109,9 @@ const PYTHON_FAMILY: readonly System[] = ["sympy", "mpmath", "sage"];
  * strips on the way back. */
 const wolframFree = (name: string): string => (isSystemName(name) ? `${CONTEXT}${name}` : toWolfram(name));
 
+/** Wolfram's spellings of our number sets (`Reals`): a set a call names, never a variable. */
+const NUMBER_SET_NAMES: ReadonlySet<string> = new Set(Object.values(NUMBER_SETS));
+
 /** `expr` as `system`'s source. `extra` maps a library's heads (`mappingsFromBindings`), which an
  *  expression calls by namespace: `MemberCall(ns, "Name", …)` is emitted as `ns.Name(…)`. */
 export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] = []): Emitted {
@@ -144,6 +156,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
           missing.push(`symbol:${node}`);
           return node;
         }
+        // Wolfram's own name for one of our number sets is that set there too.
+        if (system === "wolfram" && NUMBER_SET_NAMES.has(node)) return node;
         // A genuinely unknown lowercase bare symbol is a free variable. A symbolic system can
         // carry it through — Wolfram verbatim (toWolfram passes an unmapped name through
         // unchanged), SymPy and Sage as an explicit symbolic value, since neither
@@ -368,6 +382,24 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       const [x, a, b] = operands;
       if (a === "Nothing" && b === "Nothing") return walk(x!);
       return `List[${(a === "Nothing" ? [x!, b!] : [x!, a!, b!]).map(walk).join(", ")}]`;
+    }
+    // An option key (`Graph(…, EdgeWeight -> w)`) names the option, Wolfram's own where the head is
+    // the same function, so it is not a free variable. `Over` is ours: translated where Wolfram has
+    // the ring as an option, ours alone (contexted) where it doesn't.
+    if (
+      system === "wolfram" &&
+      (head === "Rule" || head === "KeyValuePair") &&
+      operands.length === 2 &&
+      typeof operands[0] === "string" &&
+      isSystemName(operands[0]) &&
+      !DEFINED_NAMES.has(operands[0]) &&
+      !(operands[0] in CONSTANTS) &&
+      !bound.has(operands[0])
+    ) {
+      const [key, value] = operands as [string, MathJSON];
+      const valueSource = walk(value);
+      if (key === "Over") return ringOption(key, valueSource) ?? `Rule[${wolframFree(key)}, ${valueSource}]`;
+      return toWolfram([head, key, valueSource]);
     }
     // Wolfram has a whole transpiler behind it; a signature row here only overrides it.
     // The operands are already Wolfram source, and `toWolfram` passes an unknown bare

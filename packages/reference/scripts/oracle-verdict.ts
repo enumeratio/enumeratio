@@ -11,6 +11,7 @@ import {
   comparePythonStructured,
   compareTrees,
   type Leaf,
+  leavesCall,
   type MathJSON,
   reduce,
   solutionSet,
@@ -118,6 +119,15 @@ function ourDigits(expr: MathJSON): string[] {
   return text === undefined || !/[.eE]/.test(text) ? [] : [significant(text)];
 }
 
+/** Whether Wolfram's own (exact) answer still holds the call asked. */
+const wolframHolds = (call: MathJSON, fullForm: string): boolean => {
+  try {
+    return leavesCall(call, fromWolfram(fullForm) as MathJSON);
+  } catch {
+    return false;
+  }
+};
+
 /** Our side of a Wolfram comparison: Wolfram has no NaN, it spells "no value" `Indeterminate`
  * (emit.ts maps both of ours there), so the two read as one. */
 const wolframLeaf = (expr: MathJSON): Leaf => {
@@ -208,7 +218,13 @@ export function verdictOf(
     // numbers are Wolfram's own `N`, of which only numeric values are read as numbers.
     const prepare = (expr: MathJSON): MathJSON =>
       iteratorsAsLimits(Array.isArray(call) && call[0] === "Solve" ? solutionSet(expr, call) : expr);
-    const ours = reduce(prepare(expected), wolframLeaf);
+    // A call ours holds is not agreement with the value Wolfram computed from it, whatever the numbers
+    // say: ours reads as the call's text, not the number it would evaluate to. A call both sides hold
+    // compares as numbers; one only Wolfram holds is checked against its `N`, evidence for our closed form.
+    const oursHeld = call !== undefined && leavesCall(call, expected) && !wolframHolds(call, theirs);
+    const evaluateOurs = (node: MathJSON): Leaf =>
+      oursHeld && call !== undefined && leavesCall(call, node) ? symbolic(node) : wolframLeaf(node);
+    const ours = reduce(prepare(expected), evaluateOurs);
     const trees = [
       theirTree(theirs, symbolic, prepare),
       result.numeric === undefined ? undefined : theirTree(result.numeric, valuesOnly(leaf), prepare),

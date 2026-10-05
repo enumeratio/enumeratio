@@ -1,13 +1,13 @@
-id	section	role	expr	expected	caption	epsil.back
-n-arcoth-2			[N, [Arcoth, 2]]	{num: "0.5493061443340548457"}		
-a-logarithmic-singularity-at-1	Scope		[Arcoth, 1]	PositiveInfinity	A logarithmic singularity at 1	
-arcoth-positiveinfinity	Scope		[Arcoth, PositiveInfinity]	0		
-a-float-argument-evaluates-directly	Scope		[Arcoth, 3.5]	{num: "0.293893332451059504095"}	A float argument evaluates directly	
-as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	Scope		[TrigToExp, [Arcoth, 2]]	[Multiply, [Rational, 1, 2], [Ln, 3]]	As a logarithm, $\operatorname{arcoth} 2 = \tfrac12\ln\frac{2+1}{2-1} = \tfrac12\ln 3$	
-oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arcoth, [Negate, x]]	[Negate, [Arcoth, x]]	Oddness pulls the sign out of a symbolic argument: $\operatorname{arcoth}(-x) = -\operatorname{arcoth} x$	
-derivative-frac-1-1-x-2	Scope		[D, [Arcoth, x], x]	[Divide, 1, [Add, [Negate, [Power, x, 2]], 1]]	Derivative: $\frac{1}{1 - x^2}$	
-n-arcoth-2-50	Scope		[N, [Arcoth, 2], 50]	{num: "0.54930614433405484569762261846126285232374527891137"}	Fifty digits of a real value beyond the unit interval	
-arcoth-complexinfinity	Scope		[Arcoth, ComplexInfinity]	0	At complex infinity the value is 0	
-arcoth-neg-1	Scope		[Arcoth, -1]	NegativeInfinity	A logarithmic pole at $-1$ gives negative infinity	
-arcoth-list-list-i-neg-i-list-0-neg-i	Scope		[Arcoth, [List, [List, [Complex, 0, 1], [Complex, 0, -1]], [List, 0, [Complex, 0, -1]]]]	[List, [List, [Arcoth, [Complex, 0, 1]], [Arcoth, [Complex, 0, -1]]], [List, [Multiply, [Complex, 0, [Rational, 1, 2]], Pi], [Arcoth, [Complex, 0, -1]]]]		
-matrixfunction-function-arcoth-1-1-list-list-i	Scope		[MatrixFunction, [Function, [Block, [Arcoth, _1]], _1], [List, [List, [Complex, 0, 1], [Complex, 0, -1]], [List, 0, [Complex, 0, -1]]]]	[List, [List, [Arcoth, [Complex, 0, 1]], [Add, [Multiply, [Rational, -1, 2], [Arcoth, [Complex, 0, 1]]], [Multiply, [Rational, 1, 2], [Arcoth, [Complex, 0, -1]]]]], [List, 0, [Arcoth, [Complex, 0, -1]]]]		Unreadable
+id	section	role	expr	expected	caption	epsil.back	wolfram.kind	wolfram.note
+n-arcoth-2			[N, [Arcoth, 2]]	{num: "0.5493061443340548457"}				
+a-logarithmic-singularity-at-1	Scope		[Arcoth, 1]	PositiveInfinity	A logarithmic singularity at 1			
+arcoth-positiveinfinity	Scope		[Arcoth, PositiveInfinity]	0				
+a-float-argument-evaluates-directly	Scope		[Arcoth, 3.5]	{num: "0.293893332451059504095"}	A float argument evaluates directly			
+as-a-logarithm-arcoth-2-frac-12-ln-frac-2-1-2-1	Scope		[TrigToExp, [Arcoth, 2]]	[Multiply, [Rational, 1, 2], [Ln, 3]]	As a logarithm, $\operatorname{arcoth} 2 = \tfrac12\ln\frac{2+1}{2-1} = \tfrac12\ln 3$			
+oddness-pulls-the-sign-out-of-a-symbolic	Scope		[Arcoth, [Negate, x]]	[Negate, [Arcoth, x]]	Oddness pulls the sign out of a symbolic argument: $\operatorname{arcoth}(-x) = -\operatorname{arcoth} x$			
+derivative-frac-1-1-x-2	Scope		[D, [Arcoth, x], x]	[Divide, 1, [Add, [Negate, [Power, x, 2]], 1]]	Derivative: $\frac{1}{1 - x^2}$			
+n-arcoth-2-50	Scope		[N, [Arcoth, 2], 50]	{num: "0.54930614433405484569762261846126285232374527891137"}	Fifty digits of a real value beyond the unit interval			
+arcoth-complexinfinity	Scope		[Arcoth, ComplexInfinity]	0	At complex infinity the value is 0			
+arcoth-neg-1	Scope		[Arcoth, -1]	NegativeInfinity	A logarithmic pole at $-1$ gives negative infinity			
+arcoth-list-list-i-neg-i-list-0-neg-i	Scope		[Arcoth, [List, [List, [Complex, 0, 1], [Complex, 0, -1]], [List, 0, [Complex, 0, -1]]]]	[List, [List, [Arcoth, [Complex, 0, 1]], [Arcoth, [Complex, 0, -1]]], [List, [Multiply, [Complex, 0, [Rational, 1, 2]], Pi], [Arcoth, [Complex, 0, -1]]]]			unevaluated	Ours holds the entries; Wolfram evaluates them to closed forms.
+matrixfunction-function-arcoth-1-1-list-list-i	Scope		[MatrixFunction, [Function, [Block, [Arcoth, _1]], _1], [List, [List, [Complex, 0, 1], [Complex, 0, -1]], [List, 0, [Complex, 0, -1]]]]	[List, [List, [Arcoth, [Complex, 0, 1]], [Add, [Multiply, [Rational, -1, 2], [Arcoth, [Complex, 0, 1]]], [Multiply, [Rational, 1, 2], [Arcoth, [Complex, 0, -1]]]]], [List, 0, [Arcoth, [Complex, 0, -1]]]]		Unreadable		

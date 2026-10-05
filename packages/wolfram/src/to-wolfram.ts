@@ -16,6 +16,15 @@ export type MathJson =
   | { fn: MathJson[] }
   | MathJson[];
 
+/** The number sets, as `Element(x, …)` and assumptions name them: ours → Wolfram's spelling. */
+export const NUMBER_SETS: Record<string, string> = {
+  Integers: "Integers",
+  RationalNumbers: "Rationals",
+  RealNumbers: "Reals",
+  ComplexNumbers: "Complexes",
+  Primes: "Primes",
+};
+
 /** compute-engine symbol constants whose Wolfram spelling differs. Exported so
  * `fromWolfram` can build the reverse mapping from the same source. */
 export const SYMBOLS: Record<string, string> = {
@@ -38,12 +47,7 @@ export const SYMBOLS: Record<string, string> = {
   NegativeInfinity: "-Infinity",
   ComplexInfinity: "ComplexInfinity",
   Nothing: "Null",
-  // The number sets, as `Element(x, …)` and assumptions name them.
-  Integers: "Integers",
-  RationalNumbers: "Rationals",
-  RealNumbers: "Reals",
-  ComplexNumbers: "Complexes",
-  Primes: "Primes",
+  ...NUMBER_SETS,
   // @enumeratio/evaluation's own marker, under Wolfram's `$`-prefixed spelling — compute-engine's
   // symbol grammar rejects a leading `$` (see evaluation/src/declare.ts).
   Aborted: "$Aborted",
@@ -114,6 +118,12 @@ export const FOREIGN: Record<string, string> = {
   // alternative risks handing a kernel oracle a call it doesn't accept.
   PathGraph: "a path graph over an explicit vertex list only -- unlike ours, no bare-integer form",
 };
+
+/** `Over -> R` as Wolfram's own `GaussianIntegers -> True/False`, for the rings it has one for. */
+export const ringOption = (key: MathJson, value: MathJson): string | undefined =>
+  key === "Over" && (value === "GaussianIntegers" || value === "Integers")
+    ? `Rule[GaussianIntegers, ${value === "GaussianIntegers" ? "True" : "False"}]`
+    : undefined;
 
 /** Heads that need a bespoke emission rather than a plain rename. */
 const SPECIAL: Record<string, (args: MathJson[]) => string> = {
@@ -366,10 +376,7 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // other ring to translate yet).
   KeyValuePair: (a) => {
     const [key, value] = a;
-    if (key === "Over" && (value === "GaussianIntegers" || value === "Integers")) {
-      return `Rule[GaussianIntegers, ${value === "GaussianIntegers" ? "True" : "False"}]`;
-    }
-    return `Rule[${toWolfram(key)}, ${toWolfram(value)}]`;
+    return ringOption(key, value) ?? `Rule[${toWolfram(key)}, ${toWolfram(value)}]`;
   },
   // Count(collection) -- no value/predicate, our own collection's cardinality -- is Wolfram's
   // Length, not a bare Count[collection]: Wolfram's Count always needs a pattern argument, so

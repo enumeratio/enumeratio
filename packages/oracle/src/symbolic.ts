@@ -212,6 +212,17 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
       );
   }
   if (COMBINING.has(call[0])) return false;
+  // A call over a list threads: it is held where one entry's call is (`BarnesG([a, b])` as `[BarnesG(a), b]`).
+  const [, only] = call;
+  if (call.length === 2 && Array.isArray(only) && only[0] === "List") {
+    const kept = Array.isArray(expected) && expected[0] === "List" && expected.length === only.length;
+    const threaded = only
+      .slice(1)
+      .some((entry, i) =>
+        leavesCall([call[0], entry] as MathJSON, kept ? ((expected as MathJSON[])[i + 1] as MathJSON) : expected),
+      );
+    if (threaded) return true;
+  }
   const head = call[0];
   const asked = call;
   const askedText = canonicalText(asked);
