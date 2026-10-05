@@ -129,6 +129,9 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
       .slice(1)
       .map((x) => toWolfram(x))
       .join(", ")}]`,
+  // A named slot, `Slot("age")`, is Wolfram's `#age`: the same Slot head, so the transpiler vouches
+  // for it instead of leaving the emitter to treat it as an unknown name (and context it).
+  Slot: (a) => `Slot[${a.map((x) => toWolfram(x)).join(", ")}]`,
   // Derivative(f, n): compute-engine's own order (function first, order second) — same
   // as Wolfram's `Derivative[n][f]`, just swapped.
   Derivative: (a) => `Derivative[${toWolfram(a[1])}][${toWolfram(a[0])}]`,
