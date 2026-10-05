@@ -13,7 +13,14 @@ export {
   type SystemSpec,
   wiredSystems,
 } from "./systems.ts";
-export { interpretSymbolicAgreement, leavesCall, symbolicAgreementSource } from "./symbolic.ts";
+export {
+  alignFunctions,
+  equivalentFunctions,
+  interpretSymbolicAgreement,
+  leavesCall,
+  lookThroughConditions,
+  symbolicAgreementSource,
+} from "./symbolic.ts";
 export {
   asNumber,
   compare,
@@ -26,10 +33,12 @@ export {
   type Verdict,
 } from "./compare.ts";
 export {
+  type Approximate,
   compareTrees,
   isNumericValue,
   type Leaf,
   reduce,
+  scaled,
   solutionSet,
   symbolic,
   type Tree,

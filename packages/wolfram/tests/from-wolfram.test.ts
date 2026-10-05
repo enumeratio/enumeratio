@@ -287,3 +287,15 @@ test("an elliptic integral with an amplitude reads back as the incomplete one", 
   expect(fromWolfram("EllipticPi[n, m]")).toEqual(["EllipticPi", "n", "m"]);
   expect(fromWolfram("EllipticPi[n, p, m]")).toEqual(["IncompleteEllipticPi", "n", "p", "m"]);
 });
+
+test("tags: a precision or accuracy mark is kept on the number when asked for", () => {
+  expect(fromWolfram("9.9006562292958982507`15.95*^301029", { tags: true })).toEqual({
+    num: "9.9006562292958982507e301029",
+    precision: 15.95,
+  });
+  expect(fromWolfram("0``69.3", { tags: true })).toEqual({ num: "0", accuracy: 69.3 });
+  // A machine real carries no mark, and the default drops them all.
+  expect(fromWolfram("1.5`", { tags: true })).toBe(1.5);
+  expect(fromWolfram("0.125`2.")).toBe(0.125);
+  expect(fromWolfram("0``69.3")).toBe(0);
+});

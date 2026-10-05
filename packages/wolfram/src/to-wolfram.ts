@@ -12,7 +12,7 @@ export type MathJson =
   | number
   | string
   | boolean
-  | { num: string }
+  | { num: string; precision?: number; accuracy?: number }
   | { str: string }
   | { sym: string }
   | { fn: MathJson[] }

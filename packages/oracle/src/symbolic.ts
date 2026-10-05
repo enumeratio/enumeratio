@@ -138,6 +138,38 @@ export function discreteVariables(expr: MathJSON, found: Set<string> = stepVaria
   return found;
 }
 
+/** Integral transforms: after the function come the variable it is taken in and the variable of
+ * the result. */
+const TRANSFORMS = new Set([
+  "LaplaceTransform",
+  "InverseLaplaceTransform",
+  "HankelTransform",
+  "MellinTransform",
+  "InverseMellinTransform",
+]);
+
+/** The bare variables a transform call names at `operands[from..to)`. */
+function transformVariables(expr: MathJSON, from: number, to: number, found: Set<string> = new Set()): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (TRANSFORMS.has(head)) {
+    for (const variable of operands.slice(from, to)) {
+      const name = bareName(variable);
+      if (name !== undefined) found.add(name);
+    }
+  }
+  for (const operand of operands) transformVariables(operand, from, to, found);
+  return found;
+}
+
+/** The variables a transform integrates over: bound inside the call, so not a point to sample
+ * (`LaplaceTransform[f, 2, s]` is not a transform at all), and gone from its answer. */
+export const boundVariables = (expr: MathJSON): Set<string> => transformVariables(expr, 1, 2);
+
+/** The variable of a transform's answer: sampled at positive values, since a negative or zero
+ * point is outside the domain the transform is defined on and decides nothing. */
+export const positiveVariables = (expr: MathJSON): Set<string> => transformVariables(expr, 2, 3);
+
 const rationalLiteral = ([n, d]: readonly [number, number]): MathJSON => ["Rational", n, d];
 
 /** `expr` with every occurrence of a name in `subs` replaced by its rational — the head of a
@@ -162,11 +194,16 @@ function trialSubstitution(
   freeSymbols: readonly string[],
   trial: number,
   discrete: ReadonlySet<string> = new Set(),
+  positive: ReadonlySet<string> = new Set(),
 ): ReadonlyMap<string, MathJSON> {
   return new Map(
     freeSymbols.map((name, i) => {
       const at = (i + trial * freeSymbols.length) % RATIONALS.length;
-      return [name, discrete.has(name) ? (INTEGERS[at] as number) : rationalLiteral(RATIONALS[at]!)];
+      const [n, d] = RATIONALS[at] as readonly [number, number];
+      return [
+        name,
+        discrete.has(name) ? (INTEGERS[at] as number) : rationalLiteral([positive.has(name) ? Math.abs(n) : n, d]),
+      ];
     }),
   );
 }
@@ -183,9 +220,11 @@ function trialSources(
   freeSymbols: readonly string[],
   trial: number,
 ): { readonly theirs: string; readonly ours: string; readonly after: string; readonly expanded: boolean } | undefined {
-  const all = trialSubstitution(freeSymbols, trial, discreteVariables(expr));
+  const positive = new Set([...positiveVariables(expr), ...positiveVariables(expected)]);
+  const all = trialSubstitution(freeSymbols, trial, discreteVariables(expr), positive);
   const steps = system === "wolfram" ? stepVariables(expr) : new Set<string>();
-  const subs = new Map([...all].filter(([name]) => !steps.has(name)));
+  const bound = new Set([...boundVariables(expr), ...boundVariables(expected)]);
+  const subs = new Map([...all].filter(([name]) => !steps.has(name) && !bound.has(name)));
   const theirs = emit(substituteFreeSymbols(expr, subs), system);
   const ours = emit(substituteFreeSymbols(expected, subs), system);
   if (!theirs.ok || !ours.ok) return undefined;
@@ -197,7 +236,7 @@ function trialSources(
     ([name, value]) => `${(name as { source: string }).source} -> ${(value as { source: string }).source}`,
   );
   return {
-    theirs: theirs.source,
+    theirs: system === "wolfram" ? withoutConditions(theirs.source) : theirs.source,
     ours: ours.source,
     after: after.length === 0 ? "{}" : `{${after.join(", ")}}`,
     expanded: after.length > 0,
@@ -324,9 +363,47 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
   return visit(expected);
 }
 
+/** `expr` with products and sums flattened and their terms sorted, a quotient a product with a
+ * `-1` power, and `Sqrt`/`Negate`/`Subtract` spelled as those: two writings of one expression that
+ * differ only in the order or grouping of their factors come out as the same text. */
+function orderFree(expr: MathJSON): MathJSON {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return expr;
+  const [head, ...rest] = expr as [string, ...MathJSON[]];
+  const operands = rest.map(orderFree);
+  const sorted = (name: string, terms: readonly MathJSON[], unit: number): MathJSON => {
+    const flat = terms.flatMap((term) =>
+      Array.isArray(term) && term[0] === name ? (term.slice(1) as MathJSON[]) : [term],
+    );
+    const kept = flat
+      .filter((term) => term !== unit)
+      .toSorted((x, y) => JSON.stringify(x).localeCompare(JSON.stringify(y)));
+    return kept.length === 0 ? unit : kept.length === 1 ? (kept[0] as MathJSON) : ([name, ...kept] as MathJSON);
+  };
+  const product = (...terms: MathJSON[]): MathJSON => sorted("Multiply", terms, 1);
+  switch (head) {
+    case "Multiply":
+      return product(...operands);
+    case "Divide":
+      return operands.length === 2 ? product(operands[0] as MathJSON, ["Power", operands[1], -1] as MathJSON) : expr;
+    case "Negate":
+      return operands.length === 1 ? product(-1, operands[0] as MathJSON) : expr;
+    case "Sqrt":
+      return operands.length === 1 ? (["Power", operands[0], ["Rational", 1, 2]] as MathJSON) : expr;
+    case "Subtract":
+      return operands.length === 2
+        ? sorted("Add", [operands[0] as MathJSON, product(-1, operands[1] as MathJSON)], 0)
+        : expr;
+    case "Add":
+      return sorted("Add", operands, 0);
+    default:
+      return [head, ...operands] as MathJSON;
+  }
+}
+
 /** Two arguments that are one expression written differently (`1/t * f` and `f/t`). */
 function sameValue(a: MathJSON, b: MathJSON): boolean {
   if (canonicalText(a) === canonicalText(b)) return true;
+  if (JSON.stringify(orderFree(a)) === JSON.stringify(orderFree(b))) return true;
   try {
     const [x, y] = [a, b].map((e) => ce.box(e as Parameters<ComputeEngine["box"]>[0]));
     return x!.isSame(y!) || ce.box(["Subtract", x!, y!]).simplify().is(0) || agreeAtPoints(a, b);
@@ -338,15 +415,100 @@ function sameValue(a: MathJSON, b: MathJSON): boolean {
 /** Whether `a` and `b` take the same value at each of a few fixed rational points: for an
  * argument whose two writings the simplifier won't reduce to one. */
 function agreeAtPoints(a: MathJSON, b: MathJSON): boolean {
-  const names = [...new Set([...ce.box(a as never).unknowns, ...ce.box(b as never).unknowns])];
+  const bound = new Set([...boundVariables(a), ...boundVariables(b)]);
+  const names = [...new Set([...ce.box(a as never).unknowns, ...ce.box(b as never).unknowns])].filter(
+    (name) => !bound.has(name),
+  );
   const discrete = new Set([...discreteVariables(a), ...discreteVariables(b)]);
+  const positive = new Set([...positiveVariables(a), ...positiveVariables(b)]);
   return Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) => {
-    const subs = trialSubstitution(names, trial, discrete);
+    const subs = trialSubstitution(names, trial, discrete, positive);
     const [x, y] = [a, b].map((e) => ce.box(substituteFreeSymbols(e, subs) as never).N());
     const close = (p: number, q: number) => Number.isFinite(p) && Number.isFinite(q) && Math.abs(p - q) < 1e-9;
     return close(x!.re, y!.re) && close(x!.im, y!.im);
   }).every(Boolean);
 }
+
+const SLOT = /^_(\d*)$/;
+
+/** `expr` with each free occurrence of a name in `names` renamed; a nested `Function` that binds
+ * the name again shadows it. */
+function renameFree(expr: MathJSON, names: ReadonlyMap<string, string>): MathJSON {
+  if (typeof expr === "string") return names.get(expr) ?? expr;
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return expr;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "Function" && operands.length > 0) {
+    const inner = new Map([...names].filter(([name]) => !operands.slice(1).includes(name)));
+    return [head, ...operands.map((operand) => renameFree(operand, inner))] as MathJSON;
+  }
+  return [head, ...operands.map((operand) => renameFree(operand, names))] as MathJSON;
+}
+
+/** A pure function's body with its parameters renamed `Slot_1`, `Slot_2`, … by position — a named
+ * parameter (`Function(body, x)`) and Wolfram's `#1` are then the same symbol — and its arity. The
+ * `Block` that canonicalisation wraps a body in is not part of what the function says. */
+function positional(fn: readonly MathJSON[]): { body: MathJSON; arity: number } | undefined {
+  const [, body, ...params] = fn;
+  if (body === undefined) return undefined;
+  const named = params.filter((p): p is string => typeof p === "string" && !SLOT.test(p));
+  if (named.length !== params.length) return undefined;
+  const slots = new Set<string>();
+  const collect = (e: MathJSON): void => {
+    if (typeof e === "string" && SLOT.test(e)) slots.add(e === "_" ? "_1" : e);
+    else if (Array.isArray(e)) e.slice(1).forEach((x) => collect(x as MathJSON));
+  };
+  collect(body);
+  const names = new Map<string, string>([
+    ...named.map((name, i) => [name, `Slot_${i + 1}`] as const),
+    ...[...slots].map((slot) => [slot, `Slot_${SLOT.exec(slot)![1]}`] as const),
+  ]);
+  if (slots.has("_1")) names.set("_", "Slot_1");
+  const unwrapped = Array.isArray(body) && body[0] === "Block" && body.length === 2 ? (body[1] as MathJSON) : body;
+  return {
+    body: renameFree(unwrapped, names),
+    arity: named.length > 0 ? named.length : Math.max(0, ...[...slots].map((slot) => Number(SLOT.exec(slot)![1]))),
+  };
+}
+
+const isFunction = (e: MathJSON): e is [string, ...MathJSON[]] => Array.isArray(e) && e[0] === "Function";
+
+/** Whether two pure functions are one function written differently: the same arity, and bodies that
+ * are one expression once the bound variables are renamed alike (`x |-> f(x)` and `f[#1] &`). */
+export function equivalentFunctions(a: MathJSON, b: MathJSON): boolean {
+  if (!isFunction(a) || !isFunction(b)) return false;
+  const [x, y] = [positional(a), positional(b)];
+  return x !== undefined && y !== undefined && x.arity === y.arity && sameValue(x.body, y.body);
+}
+
+/**
+ * `theirs` with each pure function that is equivalent to the one in the same place in `ours`
+ * (`equivalentFunctions`) replaced by it, so a comparison that reads a function as its text sees one
+ * function, not two spellings of it. Anything else is left as it was.
+ */
+export function alignFunctions(theirs: MathJSON, ours: MathJSON): MathJSON {
+  if (equivalentFunctions(theirs, ours)) return ours;
+  if (
+    Array.isArray(theirs) &&
+    Array.isArray(ours) &&
+    typeof theirs[0] === "string" &&
+    theirs[0] === ours[0] &&
+    theirs.length === ours.length
+  ) {
+    return [theirs[0], ...theirs.slice(1).map((t, i) => alignFunctions(t as MathJSON, ours[i + 1] as MathJSON))];
+  }
+  return theirs;
+}
+
+/** `ConditionalExpression[value, condition]` as its value: the condition says where the answer
+ * holds (`s >= 0`), not what it is, so the answer is compared without it. */
+export function lookThroughConditions(expr: MathJSON): MathJSON {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return expr;
+  if (expr[0] === "ConditionalExpression" && expr.length === 3) return lookThroughConditions(expr[1] as MathJSON);
+  return [expr[0], ...expr.slice(1).map((operand) => lookThroughConditions(operand as MathJSON))];
+}
+
+/** Wolfram source for `source` with every `ConditionalExpression[value, condition]` replaced by its value. */
+const withoutConditions = (source: string): string => `ReplaceAll[${source}, ConditionalExpression[e_, _] :> e]`;
 
 /**
  * The kernel source for "does `expr` agree with `expected`", for an example whose emitted
@@ -378,8 +540,9 @@ export function symbolicAgreementSource(
   const ours = emit(expected, system);
   if (!theirs.ok || !ours.ok) return undefined;
   if (!(ours.freeSymbols ?? []).some((name) => freeSymbols.includes(name))) return undefined;
-  if (solving) return solveAgreementSource(theirs.source, ours.source);
-  if (equating) return propositionAgreementSource(theirs.source, ours.source);
+  const theirsSource = system === "wolfram" ? withoutConditions(theirs.source) : theirs.source;
+  if (solving) return solveAgreementSource(theirsSource, ours.source);
+  if (equating) return propositionAgreementSource(theirsSource, ours.source);
   const trials = Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) =>
     trialSources(system, expr, expected, freeSymbols, trial),
   );
@@ -404,7 +567,7 @@ export function symbolicAgreementSource(
     // for a list or nested matrix — `AllTrue[…, # === 0 &]` over that is the one check that
     // means "the difference vanishes" in both cases.
     return (
-      `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirs.source}) - (${ours.source})], 10, $Aborted]]}, ` +
+      `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirsSource}) - (${ours.source})], 10, $Aborted]]}, ` +
       `If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {${points.join(", ")}}}, ` +
       `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]`
     );

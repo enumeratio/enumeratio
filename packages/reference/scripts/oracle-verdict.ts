@@ -4,6 +4,8 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
+  alignFunctions,
+  type Approximate,
   CARRIER_NAMES,
   compare,
   compareCombination,
@@ -12,8 +14,10 @@ import {
   compareTrees,
   type Leaf,
   leavesCall,
+  lookThroughConditions,
   type MathJSON,
   reduce,
+  scaled,
   solutionSet,
   symbolic,
   type System,
@@ -45,11 +49,22 @@ export const leaf = (expr: MathJSON): Leaf => {
     if (typeof re === "number" && Number.isFinite(re)) {
       return typeof im === "number" && im !== 0 && Number.isFinite(im) ? { re, im } : re;
     }
+    // A bignum past double range (`9.9e+301029`) keeps its scale rather than reading as its text.
+    const big = bignum(expr);
+    if (big !== undefined) return big;
   } catch {
     // fall through to the textual form
   }
   return symbolic(expr);
 };
+
+/** A real written as `{ num }` that no double holds, as its mantissa and exponent. */
+function bignum(expr: MathJSON): Approximate | undefined {
+  if (typeof expr !== "object" || expr === null || Array.isArray(expr)) return undefined;
+  const text = (expr as { num?: unknown }).num;
+  if (typeof text !== "string" || Number.isFinite(Number(text))) return undefined;
+  return scaled(text);
+}
 
 /** Our side of a TEXT comparison (the Python-family systems): the number, else the JSON. */
 export const show = (expr: MathJSON): string => {
@@ -80,7 +95,8 @@ const theirTree = (
   prepare: (expr: MathJSON) => MathJSON = (expr) => expr,
 ): Tree | undefined => {
   try {
-    return reduce(prepare(fromWolfram(fullForm) as MathJSON), evaluate);
+    // Precision and accuracy marks are kept: an approximate real is compared within what it vouches for.
+    return reduce(prepare(fromWolfram(fullForm, { tags: true }) as MathJSON), evaluate);
   } catch {
     return undefined;
   }
@@ -216,15 +232,21 @@ export function verdictOf(
     // declined (`MatrixRank[{1, 2, 3}]`) comes back as our own answer and agrees. So its
     // exact form is compared as text — an unevaluated form we pinned too — and its
     // numbers are Wolfram's own `N`, of which only numeric values are read as numbers.
-    const prepare = (expr: MathJSON): MathJSON =>
-      iteratorsAsLimits(Array.isArray(call) && call[0] === "Solve" ? solutionSet(expr, call) : expr);
+    // `ConditionalExpression[value, condition]` is its value: the condition is where it holds.
+    const prepareOurs = (expr: MathJSON): MathJSON =>
+      iteratorsAsLimits(
+        lookThroughConditions(Array.isArray(call) && call[0] === "Solve" ? solutionSet(expr, call) : expr),
+      );
+    // A pure function Wolfram writes with slots (`f[#1] &`) is ours with a named parameter, alpha-equivalent.
+    const preparedExpected = prepareOurs(expected);
+    const prepare = (expr: MathJSON): MathJSON => alignFunctions(prepareOurs(expr), preparedExpected);
     // A call ours holds is not agreement with the value Wolfram computed from it, whatever the numbers
     // say: ours reads as the call's text, not the number it would evaluate to. A call both sides hold
     // compares as numbers; one only Wolfram holds is checked against its `N`, evidence for our closed form.
     const oursHeld = call !== undefined && leavesCall(call, expected) && !wolframHolds(call, theirs);
     const evaluateOurs = (node: MathJSON): Leaf =>
       oursHeld && call !== undefined && leavesCall(call, node) ? symbolic(node) : wolframLeaf(node);
-    const ours = reduce(prepare(expected), evaluateOurs);
+    const ours = reduce(preparedExpected, evaluateOurs);
     const trees = [
       theirTree(theirs, symbolic, prepare),
       result.numeric === undefined ? undefined : theirTree(result.numeric, valuesOnly(leaf), prepare),
@@ -236,7 +258,9 @@ export function verdictOf(
     if (verdict === "disagree" && trees.length > 1 && agreeEntrywise(ours, trees, tolerance)) verdict = "agree";
     // The digits Wolfram displays are the answer: it keeps more than it shows, so the value
     // alone is too strict (N[E, 1] holds 2.718 and shows 3.) as well as too loose.
-    if (asksForDigits && result.shown !== undefined) {
+    // A zero known only to an accuracy (`0``69.3`) has no digits to show: it is zero within 10^-69.3.
+    const accuracyZero = /^\s*-?0+\.?0*``/.test(theirs);
+    if (asksForDigits && result.shown !== undefined && !accuracyZero) {
       const same = sameDigits(expected, result.shown);
       if (same !== undefined) verdict = same ? "agree" : "disagree";
     }
