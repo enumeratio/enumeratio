@@ -1,0 +1,3 @@
+id	in
+order-of-a-direct-product	order((enumeratio_direct_product(enumeratio_cyclic(cyclic_group(PermGroup, 2), 2), enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3))).G)
+direct-products-of-abelian-groups-are-abelian	is_abelian((enumeratio_direct_product(enumeratio_cyclic(cyclic_group(PermGroup, 2), 2), enumeratio_cyclic(cyclic_group(PermGroup, 3), 3))).G)

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+two-of-three	Basic		[Combinations, [List, 1, 2, 3], 2]	[List, [List, 1, 2], [List, 1, 3], [List, 2, 3]]	The 2-element combinations of a list

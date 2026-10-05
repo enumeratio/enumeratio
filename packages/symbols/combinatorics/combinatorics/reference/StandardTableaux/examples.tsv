@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+count-standardtableaux-4	Basic		[Count, [StandardTableaux, 4]]	10	$Count(StandardTableaux(4)) = 10$
+first-element-of-standardtableaux-4	Basic		[At, [StandardTableaux, 4], 1]	[StandardTableau, [List, [List, 1, 2, 3, 4]]]	The first element in enumeration order: the single row

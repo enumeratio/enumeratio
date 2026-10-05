@@ -1,0 +1,3 @@
+id	in
+numerator-3-4	((3/4)).numerator()
+numerator-of-an-integer	(5).numerator()

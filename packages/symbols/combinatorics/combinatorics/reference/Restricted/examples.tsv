@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	epsil.back
+restricted-multiples-of-three	Basic		[Restricted, [Range, 1, 10], [Function, [Equal, [Mod, n, 3], 0], n]]	[List, 3, 6, 9]	The multiples of 3 up to 10	Unreadable

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+two-blocks-to-one	Basic		[PartitionMobius, [Diagram, [List, [List, 1], [List, -1]]], [Diagram, [List, [List, 1, -1]]]]	-1	$\mu = -1$ on the two-block interval
+three-blocks-to-one	Basic		[PartitionMobius, [Diagram, [List, [List, 1, -1], [List, 2], [List, -2]]], [Diagram, [List, [List, 1, 2, -1, -2]]]]	2	$\mu(\hat 0, \hat 1) = (-1)^{k-1}(k-1)!$ for $k = 3$ blocks

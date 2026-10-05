@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+argument-i	Basic		[Argument, [Complex, 0, 1]]	[Multiply, [Rational, 1, 2], Pi]	$\arg(i) = \pi/2$
+argument-1-plus-i	Basic		[Argument, [Complex, 1, 1]]	[Multiply, [Rational, 1, 4], Pi]	

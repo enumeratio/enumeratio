@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+dimension-for-2-strands	Basic		[AlgebraDimension, [RookAlgebra, 2]]	7	The number of partial permutation matrices on 2 points
+dimension-for-3-strands	Basic		[AlgebraDimension, [RookAlgebra, 3]]	34	

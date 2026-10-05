@@ -1,0 +1,3 @@
+id	in
+a-cyclic-group	is_abelian((enumeratio_cyclic(cyclic_group(PermGroup, 6), 6)).G)
+a-dihedral-group	is_abelian((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3)).G)

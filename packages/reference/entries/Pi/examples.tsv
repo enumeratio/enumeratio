@@ -1,0 +1,3 @@
+id	section	role	expr	expected	known	tolerance	source	caption
+sin-of-pi	Basic		[Sin, Pi]	0				$\sin\pi = 0$
+pi-to-20-digits	Basic		[N, Pi, 20]	{num: "3.1415926535897932385"}	{num: "3.141592653589793238462643"}	1e-18	mpmath 1.3.0 pi	To 20 digits

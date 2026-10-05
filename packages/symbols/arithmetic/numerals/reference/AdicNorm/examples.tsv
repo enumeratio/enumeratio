@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+adicnorm-adicnumeral-5-75	Basic		[AdicNorm, [AdicNumeral, 5, 75]]	[Rational, 1, 25]	$75 = 5^2 \cdot 3$, so its 5-adic norm is $5^{-2}$
+adicnorm-adicnumeral-2-12	Basic		[AdicNorm, [AdicNumeral, 2, 12]]	[Rational, 1, 4]	$12 = 2^2 \cdot 3$, so its 2-adic norm is $2^{-2}$

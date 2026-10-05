@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+one-line-word	Basic		[Permutation, [List, 2, 3, 1]]	[Permutation, [List, 2, 3, 1]]	A permutation as its one-line word, held as written

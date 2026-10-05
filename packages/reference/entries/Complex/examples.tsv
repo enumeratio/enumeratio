@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+complex-sum	Basic		[Add, [Complex, 1, 2], [Complex, 3, -1]]	[Complex, 4, 1]	$(1 + 2i) + (3 - i) = 4 + i$

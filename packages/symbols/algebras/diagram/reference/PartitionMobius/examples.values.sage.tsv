@@ -1,0 +1,3 @@
+id	in
+two-blocks-to-one	enumeratio_partition_mobius(enumeratio_diagram([[1], [-1]]), enumeratio_diagram([[1, -1]]))
+three-blocks-to-one	enumeratio_partition_mobius(enumeratio_diagram([[1, -1], [2], [-2]]), enumeratio_diagram([[1, 2, -1, -2]]))

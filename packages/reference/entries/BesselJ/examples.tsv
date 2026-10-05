@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	tolerance	source
+besselj-0-1	Basic		[N, [BesselJ, 0, 1]]	0.7651976865579666	{num: "0.7651976865579665514497175"}	1e-13	mpmath 1.3.0 besselj

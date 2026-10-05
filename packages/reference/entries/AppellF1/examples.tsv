@@ -1,0 +1,3 @@
+id	section	role	expr	expected	known	tolerance	source	caption
+appellf1-at-the-origin	Basic		[AppellF1, 1, 1, 1, 2, 0, 0]	1				Every Appell series is $1$ at the origin
+appellf1-numeric	Basic		[N, [AppellF1, 1, 1, 1, 2, 0.1, 0.2], 15]	1.17783035656383	{num: "1.177830356563834545387941"}	1e-13	mpmath 1.3.0 appellf1	

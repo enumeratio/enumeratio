@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+geometricproduct-generator-squared	Basic		[GeometricProduct, e_1, e_1]	1	Unlike the wedge, the geometric product of a generator with itself does not vanish

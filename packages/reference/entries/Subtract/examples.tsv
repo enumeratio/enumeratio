@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+subtract-5-3	Basic		[Subtract, 5, 3]	2
+x-minus-x	Basic		[Subtract, x, x]	0

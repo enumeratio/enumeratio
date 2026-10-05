@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+two-generators	Basic		[Wedge, e_1, e_2]	[Multiply, e_1, e_2]	
+the-wedge-is-anticommutative	Basic		[Wedge, e_2, e_1]	[Negate, [Multiply, e_1, e_2]]	
+three-generators	Basic		[Wedge, e_1, e_2, e_3]	[Multiply, e_1, e_2, e_3]	The trivector

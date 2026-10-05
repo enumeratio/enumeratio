@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+count-of-the-power-set	Basic		[Count, [PowerSet, [Set, 1, 2, 3]]]	8	A 3-element set has $2^3$ subsets

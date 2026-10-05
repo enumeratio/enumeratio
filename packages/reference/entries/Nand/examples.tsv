@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+nand-true-true	Basic		[Nand, True, True]	False
+nand-true-false	Basic		[Nand, True, False]	True

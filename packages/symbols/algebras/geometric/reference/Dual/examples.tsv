@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+dual-vector-in-cl-3	Basic		[Dual, e_1, [CliffordAlgebra, 3, 0]]	[Multiply, e_2, e_3]	The dual of a vector in 3D is the bivector on the other two generators
+dual-bivector-in-cl-3	Basic		[Dual, [Multiply, e_1, e_2], [CliffordAlgebra, 3, 0]]	e_3	

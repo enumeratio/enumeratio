@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+dimension-of-the-group-algebra-of-d-4	Basic		[AlgebraDimension, [GroupAlgebra, [DihedralGroup, 4]]]	8	The dimension of $k[G]$ is $|G|$; $|D_4| = 8$

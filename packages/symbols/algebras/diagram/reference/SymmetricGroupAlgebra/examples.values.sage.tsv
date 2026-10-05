@@ -1,0 +1,2 @@
+id	in
+dimension-for-3-points	(SymmetricGroupAlgebra(QQ, 3)).dimension()

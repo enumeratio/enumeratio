@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+three-is-an-integer	Basic		[Element, 3, Integers]	True
+one-half-is-not-an-integer	Basic		[Element, [Rational, 1, 2], Integers]	False

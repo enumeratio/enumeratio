@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	epsil.back
+2-5-7-equiv-1-mod-6	Basic		[GroupProduct, [CyclicGroup, 6], [GroupBasis, [String, "2"]], [GroupBasis, [String, "5"]]]	[GroupBasis, "'1'"]	$2 + 5 = 7 \equiv 1$	[GroupProduct, [CyclicGroup, 6], [GroupBasis, [String, "''", 2]], [GroupBasis, [String, "''", 5]]]

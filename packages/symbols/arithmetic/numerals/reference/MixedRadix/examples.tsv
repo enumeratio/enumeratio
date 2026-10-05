@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+hours-minutes-seconds	Basic		[IntegerDigits, 3661, [MixedRadix, [List, 24, 60, 60]]]	[List, 1, 1, 1]	3661 seconds is 1 hour, 1 minute, 1 second
+leading-places-are-zero	Basic		[IntegerDigits, 100, [MixedRadix, [List, 24, 60, 60]]]	[List, 0, 1, 40]	100 seconds is 0 hours, 1 minute, 40 seconds

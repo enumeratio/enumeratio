@@ -1,0 +1,3 @@
+id	in
+a-lone-reflection-is-not-central	enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), EnumeratioBasis("s0"))
+everything-is-central-in-an-abelian-group	enumeratio_is_central(enumeratio_cyclic(cyclic_group(PermGroup, 4), 4), EnumeratioBasis("1"))

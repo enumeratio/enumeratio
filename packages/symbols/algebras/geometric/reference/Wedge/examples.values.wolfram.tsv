@@ -1,0 +1,4 @@
+id	in
+two-generators	Wedge[Subscript[e, 1], Subscript[e, 2]]
+the-wedge-is-anticommutative	Wedge[Subscript[e, 2], Subscript[e, 1]]
+three-generators	Wedge[Subscript[e, 1], Subscript[e, 2], Subscript[e, 3]]

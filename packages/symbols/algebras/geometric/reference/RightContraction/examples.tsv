@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+rightcontraction-bivector-by-vector	Basic		[RightContraction, [Multiply, e_1, e_2], e_2]	e_1	Contracting $e_2$ out of $e_1e_2$ on the right leaves $e_1$

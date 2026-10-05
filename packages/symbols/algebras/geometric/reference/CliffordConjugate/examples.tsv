@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+cliffordconjugate-mixed	Basic		[CliffordConjugate, [Add, 1, e_1, [Multiply, e_1, e_2]]]	[Add, [Negate, [Multiply, e_1, e_2]], [Negate, e_1], 1]	Grades 1 and 2 flip sign; the scalar stays
