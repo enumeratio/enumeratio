@@ -1,8 +1,8 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-shape-list-list-list-list-a-b	Scope		[Shape, [List, [List, [List, [List, a, b]]]]]	[Tuple, 1, 1, 1, 2]	Four nested levels, with length 2 innermost			
-shape-1	Properties		[Shape, 1]	[Tuple]	A scalar has an empty shape			
-shape-list-1-2	Properties		[Shape, [List, 1, 2]]	[Tuple, 2]	A flat list has a one-entry shape, its length			
-shape-list-list-1-2	Properties		[Shape, [List, [List, 1, 2]]]	[Tuple, 1, 2]	A one-row matrix has shape $(1, 2)$			
-length-shape-list-list-a-b-list-c-d-eq-rank-list	Properties		[Equal, [Length, [Shape, [List, [List, a, b], [List, c, d]]]], [Rank, [List, [List, a, b], [List, c, d]]]]	True	The length of the shape is the tensor's rank			
-shape-array-a-list-2-1-4-3	Properties	triage	[Shape, [Array, a, [List, 2, 1, 4, 3]]]	[Tuple]		gap		Ours gives an empty Shape: Array(a, {2, 1, 4, 3}) evaluates to the nested list of a(i, j, k, l), and a nested list of applications of an unknown function has no shape here (a list of Sin(1), Sin(2) does). Wolfram's Dimensions gives {2, 1, 4, 3}.
-shape-sqrt-2	Possible issues		[Shape, [Sqrt, 2]]	[Tuple]			convention	Wolfram's Dimensions reads Sqrt[2], that is Power[2, 1/2], as an array of its two arguments ({2}); ours takes a scalar to have an empty shape.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+shape-list-list-list-list-a-b	Scope		[Shape, [List, [List, [List, [List, a, b]]]]]	[Tuple, 1, 1, 1, 2]	Four nested levels, with length 2 innermost		
+shape-1	Properties		[Shape, 1]	[Tuple]	A scalar has an empty shape		
+shape-list-1-2	Properties		[Shape, [List, 1, 2]]	[Tuple, 2]	A flat list has a one-entry shape, its length		
+shape-list-list-1-2	Properties		[Shape, [List, [List, 1, 2]]]	[Tuple, 1, 2]	A one-row matrix has shape $(1, 2)$		
+length-shape-list-list-a-b-list-c-d-eq-rank-list	Properties		[Equal, [Length, [Shape, [List, [List, a, b], [List, c, d]]]], [Rank, [List, [List, a, b], [List, c, d]]]]	True	The length of the shape is the tensor's rank		
+shape-array-a-list-2-1-4-3	Properties		[Shape, [Array, a, [List, 2, 1, 4, 3]]]	[Tuple, 2, 1, 4, 3]			
+shape-sqrt-2	Possible issues		[Shape, [Sqrt, 2]]	[Tuple]		convention	Wolfram's Dimensions reads Sqrt[2], that is Power[2, 1/2], as an array of its two arguments ({2}); ours takes a scalar to have an empty shape.

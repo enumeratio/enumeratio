@@ -12,6 +12,8 @@ import {
   inverseTrigRadicals,
   polyLogLargeOrder,
   iteratorUpperBound,
+  rangeBigBounds,
+  shapeOfUnknownElements,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { ANALYTIC_NOTATION } from "./notation.ts";
@@ -177,6 +179,8 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, solveDeclines);
   applyPatch(ce, takeDropNegativeCount);
   applyPatch(ce, iteratorUpperBound);
+  applyPatch(ce, rangeBigBounds);
+  applyPatch(ce, shapeOfUnknownElements);
   applyPatch(ce, nAccuracyGoal);
   applyPatch(ce, oscillatoryEndpoint);
 
