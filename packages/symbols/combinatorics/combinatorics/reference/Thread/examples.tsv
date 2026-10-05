@@ -1,10 +1,10 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-equal-over-lists			[Thread, [Equal, [List, 1, 2, 3], [List, 1, 5, 3]]]	[List, [Equal, 1, 1], [Equal, 2, 5], [Equal, 3, 3]]			
-thread-list-a-b-c-eq-list-x-y-z			[Thread, [Equal, [List, a, b, c], [List, x, y, z]]]	[List, [Equal, a, x], [Equal, b, y], [Equal, c, z]]	Turns an equation between lists into elementwise equations		
-thread-ln-x-eq-y-equal			[Thread, [Ln, [Equal, x, y]], Equal]	[Equal, [Ln, x], [Ln, y]]	Threading over Equal pushes the function inside both sides		
-scalar-broadcast	Scope		[Thread, [Equal, [List, 1, 2, 3], 1]]	[List, [Equal, 1, 1], [Equal, 2, 1], [Equal, 3, 1]]	A non-list operand is broadcast to every threaded call		
-custom-head	Scope		[Thread, [f, [g, 1, 2], [g, 3, 4]], g]	[g, [f, 1, 3], [f, 2, 4]]	A second argument threads over a head other than List		
-thread-list-list-a-b-c-0	Applications		[Thread, [List, [List, a, b, c], 0]]	[List, [List, a, 0], [List, b, 0], [List, c, 0]]	A scalar is paired with each element of the list		
-thread-list-a-b-c-neg-gt-list-1-2-3	Applications		[Thread, [KeyValuePair, [List, a, b, c], [List, 1, 2, 3]]]	[List, [Tuple, a, 1], [Tuple, b, 2], [Tuple, c, 3]]	Rules between lists become a list of pairs		
-thread-list-list-a-b-c-list-x-y-z	Properties		[Thread, [List, [List, a, b, c], [List, x, y, z]]]	[List, [List, a, x], [List, b, y], [List, c, z]]	Lists of equal length pair up elementwise, like a transpose		
-thread-d-list-x-x-times-y-x-times-z-list-x-y-z	Possible issues	triage	[Thread, [D, [List, x, [Multiply, x, y], [Multiply, x, z]], [List, x, y, z]]]	[List, [D, [Function, [Block, x], x], x], [D, [Multiply, x, y], y], [D, [Multiply, x, z], z]]		gap	Thread leaves its threaded calls unevaluated, so D(x, x) stays a call (boxed as D of a Function) where Wolfram's evaluates to 1.
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+equal-over-lists			[Thread, [Equal, [List, 1, 2, 3], [List, 1, 5, 3]]]	[List, [Equal, 1, 1], [Equal, 2, 5], [Equal, 3, 3]]				
+thread-list-a-b-c-eq-list-x-y-z			[Thread, [Equal, [List, a, b, c], [List, x, y, z]]]	[List, [Equal, a, x], [Equal, b, y], [Equal, c, z]]	Turns an equation between lists into elementwise equations			
+thread-ln-x-eq-y-equal			[Thread, [Ln, [Equal, x, y]], Equal]	[Equal, [Ln, x], [Ln, y]]	Threading over Equal pushes the function inside both sides			
+scalar-broadcast	Scope		[Thread, [Equal, [List, 1, 2, 3], 1]]	[List, [Equal, 1, 1], [Equal, 2, 1], [Equal, 3, 1]]	A non-list operand is broadcast to every threaded call			
+custom-head	Scope		[Thread, [f, [g, 1, 2], [g, 3, 4]], g]	[g, [f, 1, 3], [f, 2, 4]]	A second argument threads over a head other than List			
+thread-list-list-a-b-c-0	Applications		[Thread, [List, [List, a, b, c], 0]]	[List, [List, a, 0], [List, b, 0], [List, c, 0]]	A scalar is paired with each element of the list			
+thread-list-a-b-c-neg-gt-list-1-2-3	Applications		[Thread, [KeyValuePair, [List, a, b, c], [List, 1, 2, 3]]]	[List, [Tuple, a, 1], [Tuple, b, 2], [Tuple, c, 3]]	Rules between lists become a list of pairs		shape	Wolfram threads to rules ({a -> 1, b -> 2, c -> 3}) where ours gives pairs ({a, 1}, {b, 2}, {c, 3}): the same pairs in a different structure. The scan's difference check can't subtract a rule from a pair, so it can't decide this row.
+thread-list-list-a-b-c-list-x-y-z	Properties		[Thread, [List, [List, a, b, c], [List, x, y, z]]]	[List, [List, a, x], [List, b, y], [List, c, z]]	Lists of equal length pair up elementwise, like a transpose			
+thread-d-list-x-x-times-y-x-times-z-list-x-y-z	Possible issues	triage	[Thread, [D, [List, x, [Multiply, x, y], [Multiply, x, z]], [List, x, y, z]]]	[List, [D, [Function, [Block, x], x], x], [D, [Multiply, x, y], y], [D, [Multiply, x, z], z]]		gap		Thread leaves its threaded calls unevaluated, so D(x, x) stays a call (boxed as D of a Function) where Wolfram's evaluates to 1.

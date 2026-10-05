@@ -169,6 +169,30 @@ test("a held call counts however ours spells it", () => {
   expect(leavesCall(["Simplify", laplace(sinh)] as never, laplace(["Sinh", "t"]) as never)).toBe(false);
 });
 
+test("a closed call left held under arithmetic is held, a symbolic one is not", () => {
+  const poly = ["Add", 1, "x", ["Power", "x", 2]];
+  const asked = ["Normalize", poly, ["Function", ["Integrate", ["Power", "_1", 2], ["Limits", "x", -1, 1]]]];
+  const norm = ["Integrate", ["Function", ["Block", ["Power", poly, 2]], "x"], ["Limits", "x", -1, 1]];
+  const held = ["Divide", poly, norm];
+  expect(leavesCall(asked as never, held as never)).toBe(true);
+  expect(symbolicAgreementSource("wolfram", asked as never, held as never, ["x"])).toBeUndefined();
+  // The integral evaluated: nothing left to hold.
+  expect(leavesCall(asked as never, ["Divide", poly, ["Rational", 1, 2]] as never)).toBe(false);
+  // Arithmetic over a closed call: held where the call is, however it sits in the sum.
+  const sum = ["Add", ["Integrate", ["Sin", "x"], ["Limits", "x", 0, 1]], 1];
+  expect(
+    leavesCall(
+      sum as never,
+      ["Add", ["Integrate", ["Function", ["Sin", "x"], "x"], ["Limits", "x", 0, 1]], 1] as never,
+    ),
+  ).toBe(true);
+  expect(leavesCall(sum as never, ["Subtract", 2, ["Cos", 1]] as never)).toBe(false);
+  // A literal argument that is still there is not a call left undone.
+  expect(leavesCall(["Re", ["Root", -17, 4]] as never, ["Divide", ["Root", -17, 4], 2] as never)).toBe(false);
+  // `Sin(x)` has a free symbol: it can be all the answer there is.
+  expect(leavesCall(["Add", ["Sin", "x"], ["Sin", "x"]] as never, ["Multiply", 2, ["Sin", "x"]] as never)).toBe(false);
+});
+
 test("a step variable is sampled at integers, and substituted after the call is read", () => {
   const delta = ["DifferenceDelta", ["QFactorial", "k", "q"], "k"];
   const next = ["Subtract", ["QFactorial", ["Add", "k", 1], "q"], ["QFactorial", "k", "q"]];
