@@ -155,7 +155,8 @@ export function normalizeInputForm(json: MathJsonExpression): MathJsonExpression
 
 /** Print `json` as InputForm: Epsil you could type back in. */
 export function toInputForm(json: MathJsonExpression): string {
-  return serializeEpsil(normalizeInputForm(json));
+  // PascalCase heads and options track the AST (MathJSON); the parser takes either spelling.
+  return serializeEpsil(normalizeInputForm(json), { libraryNames: "mathjson" });
 }
 
 /** `BINDERS` is exported for the tests, which assert the unwrapping round-trips. */

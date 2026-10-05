@@ -137,7 +137,11 @@ export const inputFormOf = (json: MathJsonExpression): string => toInputForm(jso
 
 /** `json` as one line of InputForm (a closed TreeForm node's arguments). */
 export const oneLine = (json: MathJsonExpression): string =>
-  serializeEpsil(normalizeInputForm(json), { margin: Number.POSITIVE_INFINITY, softMargin: Number.POSITIVE_INFINITY });
+  serializeEpsil(normalizeInputForm(json), {
+    margin: Number.POSITIVE_INFINITY,
+    softMargin: Number.POSITIVE_INFINITY,
+    libraryNames: "mathjson",
+  });
 
 // Code forms whose source comes from a compute-engine compilation TARGET (via
 // `target.compileToSource`). The map is `form -> target export name`; held as a
