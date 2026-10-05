@@ -1,4 +1,4 @@
-id	in	out	tex.in	tex.out	verdict
-pairs-keys-with-values-two-argument-form	AssociationThread[List[a, b], List[1, 2]]	<|a -> 1, b -> 2|>	\text{AssociationThread}[\{a,b\},\{1,2\}]	\unicode{f113}a\to 1,b\to 2\unicode{f114}	disagree
-accepts-the-one-argument-rule-keys-values-form	AssociationThread[Rule[List[a, b], List[1, 2]]]	<|a -> 1, b -> 2|>	\text{AssociationThread}[\{a,b\}\to \{1,2\}]	\unicode{f113}a\to 1,b\to 2\unicode{f114}	disagree
-length-on-the-result-agrees-with-association	Length[AssociationThread[List[a, b, c], List[1, 2, 3]]]	3	\text{Length}[\text{AssociationThread}[\{a,b,c\},\{1,2,3\}]]	3	
+id	in	out	tex.in	tex.out
+pairs-keys-with-values-two-argument-form	AssociationThread[List[a, b], List[1, 2]]	<|a -> 1, b -> 2|>	\text{AssociationThread}[\{a,b\},\{1,2\}]	\unicode{f113}a\to 1,b\to 2\unicode{f114}
+accepts-the-one-argument-rule-keys-values-form	AssociationThread[Rule[List[a, b], List[1, 2]]]	<|a -> 1, b -> 2|>	\text{AssociationThread}[\{a,b\}\to \{1,2\}]	\unicode{f113}a\to 1,b\to 2\unicode{f114}
+length-on-the-result-agrees-with-association	Length[AssociationThread[List[a, b, c], List[1, 2, 3]]]	3	\text{Length}[\text{AssociationThread}[\{a,b,c\},\{1,2,3\}]]	3

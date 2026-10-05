@@ -5,7 +5,7 @@
 
 import type { AnyFamily, EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
-import { cell, lets, rowTable } from "../../../collections/src/families/tables.ts";
+import { and, cell, equal, iff, lets, mul, rowTable } from "../../../collections/src/families/tables.ts";
 import {
   Factorial,
   IsPermutationOf,
@@ -258,44 +258,33 @@ const colouredPermutations: EpsilFamily = {
 // Restrictions of the symmetric group, in its lex order: the k-th member is the k-th
 // permutation of n, in lex order, that the restriction contains. Each is defined by how many
 // of its members start with a given prefix (`permutationRestriction`): `prefix` holds n slots,
-// the first `filled` set, the rest 0.
+// the first `filled` set, the rest 0; `taken` and `pstate` are the opt-in lists of
+// `PermutationRestriction`.
 
 const pre = (q: MathJSON): MathJSON => at("prefix", q);
 const filledSlots = upTo(1, "filled");
 
 /**
- * Following the prefix from slot s: the cycle's length when it returns to s, as −length; −(n + 1)
- * when it runs into an unfilled slot first; and with `leaderOnly`, −(n + 2) when it meets a slot
- * smaller than s, so that a cycle is counted once, at its least point.
+ * The prefix's cycle structure, as a list: head[x] (slots 1..n) is where the path ending at x
+ * starts, tail[x] (slots n + 1..2n) where the path starting at x ends, then the number of cycles
+ * closed. Placing v at slot j joins the path ending at j to the one starting at v, or closes a
+ * cycle when that is the same path.
  */
-const walk = (s: string, leaderOnly = false): MathJSON =>
-  fold(
+const closedCycles = at("pstate", add(mul(2, "_n"), 1));
+const cycleState = {
+  init: ["Join", map("cy_h", "cy_h", upTo(1, "_n")), map("cy_t", "cy_t", upTo(1, "_n")), ["List", 0]],
+  step: lets(
     [
-      "If",
-      ["LessEqual", `w_${s}`, 0],
-      `w_${s}`,
-      [
-        "If",
-        ["Equal", `w_${s}`, s],
-        ["Negate", `k_${s}`],
-        [
-          "If",
-          ["Greater", `w_${s}`, "filled"],
-          ["Negate", add("_n", 1)],
-          leaderOnly ? ["If", ["Less", `w_${s}`, s], ["Negate", add("_n", 2)], pre(`w_${s}`)] : pre(`w_${s}`),
-        ],
-      ],
+      ["cy_s", at("pstate", "slot"), "integer"],
+      ["cy_e", at("pstate", add("_n", "value")), "integer"],
     ],
-    `w_${s}`,
-    `k_${s}`,
-    pre(s),
-    upTo(1, "_n"),
-  );
-/** `body` over the result of the walk from s, bound once: read twice, it would walk twice. */
-const walked = (s: string, leaderOnly: boolean, body: (w: string) => MathJSON): MathJSON =>
-  lets([[`wk_${s}`, walk(s, leaderOnly), "integer"]], body(`wk_${s}`));
-/** Whether the walk from s came back to s, closing a cycle. */
-const closes = (result: MathJSON): MathJSON => ["And", ["Less", result, 0], ["GreaterEqual", result, ["Negate", "_n"]]];
+    iff(
+      equal("cy_s", "value"),
+      ["ReplaceAt", "pstate", add(mul(2, "_n"), 1), add(closedCycles, 1)],
+      ["ReplaceAt", ["ReplaceAt", "pstate", add("_n", "cy_s"), "cy_e"], "cy_e", "cy_s"],
+    ),
+  ),
+};
 
 /** The permutations of n that are a single n-cycle, (n − 1)! of them for n ≥ 1. A prefix
  *  extends to one unless it already closes a cycle; its paths (one per label nothing maps to
@@ -305,23 +294,15 @@ const cyclicPermutations: EpsilFamily = permutationRestriction({
   carrier: "Permutation",
   paramCount: 1,
   params: ["_n"],
-  completions: [
-    "If",
+  state: cycleState,
+  completions: iff(
     ["Less", "_n", 1],
     0,
-    [
-      "If",
-      fold(
-        ["Or", "short", walked("cs", false, (w) => ["And", closes(w), ["Less", ["Negate", w], "_n"]])],
-        "short",
-        "cs",
-        "False",
-        filledSlots,
-      ),
-      0,
-      ["If", ["Equal", "filled", "_n"], 1, ["Factorial", sub(sub("_n", "filled"), 1)]],
-    ],
-  ],
+    iff(["Greater", closedCycles, 0], iff(and(equal("filled", "_n"), equal(closedCycles, 1)), 1, 0), [
+      "Factorial",
+      sub(sub("_n", "filled"), 1),
+    ]),
+  ),
 });
 
 /** The permutations of n with exactly k cycles, c(n, k) of them (unsigned Stirling numbers of
@@ -349,25 +330,10 @@ export const kCyclePermutations: EpsilFamily = permutationRestriction({
       ],
     ),
   ],
+  state: cycleState,
   completions: lets(
     [
-      [
-        "left",
-        sub(
-          "_k",
-          fold(
-            add(
-              "q",
-              walked("ks", true, (w) => ["If", closes(w), 1, 0]),
-            ),
-            "q",
-            "ks",
-            0,
-            filledSlots,
-          ),
-        ),
-        "integer",
-      ],
+      ["left", sub("_k", closedCycles), "integer"],
       ["open", sub("_n", "filled"), "integer"],
     ],
     ["If", ["Or", ["Less", "left", 0], ["Greater", "left", "open"]], 0, stirling("open", "left")],
@@ -381,6 +347,7 @@ const derangements: EpsilFamily = permutationRestriction({
   carrier: "Permutation",
   paramCount: 1,
   params: ["_n"],
+  taken: true,
   completions: [
     "If",
     all((q) => ["NotEqual", pre(q), q], filledSlots, "dq"),
@@ -389,12 +356,7 @@ const derangements: EpsilFamily = permutationRestriction({
         [
           "m",
           fold(
-            add("dm", [
-              "If",
-              fold(["Or", "taken", ["Equal", pre("dt"), "dp"]], "taken", "dt", "False", filledSlots),
-              0,
-              1,
-            ]),
+            add("dm", ["If", ["NotEqual", at("taken", "dp"), 0], 0, 1]),
             "dm",
             "dp",
             0,
