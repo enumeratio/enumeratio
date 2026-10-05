@@ -1,27 +1,19 @@
 import type { Patch } from "../patch.ts";
-import { quotientRingOverIntegers } from "../compute-engine/library/sets.ts";
+import { quotientRingExactCount } from "../compute-engine/library/sets.ts";
 
-// See sets.ts: `QuotientRing(Integers, m)` is inert -- no count, no elements, no membership --
-// and is typed `set<integer>`, though its elements are residue classes.
+// See sets.ts: native ℤ/mℤ (ResidueClass elements, #399) counts through a double, so past
+// 2^53 `Count` stays unevaluated.
 export const quotientRingCollection: Patch = {
   id: "quotient-ring-collection",
   issue: "https://github.com/cortex-js/compute-engine/issues/399",
-  lands:
-    "QuotientRing(Integers, m) is the finite collection of its m residue classes, typed without claiming they are integers",
+  lands: "Count(QuotientRing(Integers, m)) is the exact integer m past 2^53",
   files: ["src/compute-engine/library/sets.ts"],
-  heads: ["QuotientRing"],
+  heads: ["Count"],
 
-  fixed: (ce) => {
-    const ring = ce.box(["QuotientRing", "Integers", 5]);
-    return ring.isCollection && ring.count === 5 && !ring.type.matches("set<integer>");
-  },
+  fixed: (ce) =>
+    ce.box(["Count", ["QuotientRing", "Integers", ce.number(2n ** 61n - 1n).json]]).evaluate().operator !== "Count",
 
-  apply: (ce) => quotientRingOverIntegers(ce),
+  apply: (ce) => quotientRingExactCount(ce),
 };
 
-export {
-  integerQuotientModulus,
-  quotientRingOverIntegers,
-  type ResidueClasses,
-  setResidueClasses,
-} from "../compute-engine/library/sets.ts";
+export { integerQuotientModulus, quotientRingExactCount } from "../compute-engine/library/sets.ts";

@@ -1,7 +1,7 @@
 id	in	out	shown	tex.in	tex.out	verdict
 arcosh-infinity-is-infinity-not-infinity-the	ArcCosh[-Infinity]	Infinity		\cosh ^{-1}(-\infty )	\infty	disagree
 n-arcosh-5-50	N[ArcCosh[5], 50]	2.29243166956117768780078731134801543162186824001571024760501644483134785572386`50.	2.2924316695611776878007873113480154316218682400157	N\left[\cosh ^{-1}(5),50\right]	2.2924316695611776878007873113480154316218682400157	
-arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	ArcCosh[List[List[1, Divide[Sqrt[2], 2]], List[0, Minus[Divide[Sqrt[2], 2]]]]]	{{0, (I/4)*Pi}, {(I/2)*Pi, ((3*I)/4)*Pi}}		\cosh ^{-1}\left(\left( \begin{array}{cc}  1 & \frac{\sqrt{2}}{2} \\  0 & -\frac{\sqrt{2}}{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  0 & \frac{i \pi }{4} \\  \frac{i \pi }{2} & \frac{3 i \pi }{4} \\ \end{array} \right)	disagree
+arcosh-list-list-1-sqrt-2-over-2-list-0-neg-sqrt	ArcCosh[List[List[1, Divide[Sqrt[2], 2]], List[0, Minus[Divide[Sqrt[2], 2]]]]]	{{0, (I/4)*Pi}, {(I/2)*Pi, ((3*I)/4)*Pi}}		\cosh ^{-1}\left(\left( \begin{array}{cc}  1 & \frac{\sqrt{2}}{2} \\  0 & -\frac{\sqrt{2}}{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  0 & \frac{i \pi }{4} \\  \frac{i \pi }{2} & \frac{3 i \pi }{4} \\ \end{array} \right)	
 arcosh-positiveinfinity	ArcCosh[Infinity]	Infinity		\cosh ^{-1}(\infty )	\infty	
 arcosh-1	ArcCosh[1]	0		\cosh ^{-1}(1)	0	
 integrate-arcosh-x-x-0-1	Integrate[ArcCosh[x], List[x, 0, 1]]	I		\int_0^1 \cosh ^{-1}(x) \, dx	i	

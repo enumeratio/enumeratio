@@ -4,7 +4,7 @@ an-empty-product-is-1			[Pochhammer, 2, 0]	1	An empty product is 1
 1-5-equals-5			[Pochhammer, 1, 5]	120	(1)_5 equals 5!
 pochhammer-3-4			[Pochhammer, 3, 4]	360	
 10-11-12-13-14-15			[Pochhammer, 10, 6]	3603600	10 × 11 × 12 × 13 × 14 × 15
-at-pochhammer-3-2		test	[N, [Pochhammer, 3, 2]]	12	
+at-pochhammer-3-2		test	[N, [Pochhammer, 3, 2]]	{num: "12.0"}	
 threads-element-wise-over-a-list-as-wolfram-s			[Pochhammer, [List, 2, 3, 4], 2]	[List, 6, 12, 20]	Threads element-wise over a list, as Wolfram's Listable heads do
 a-symbolic-base-with-integer-order-expands-to			[Pochhammer, n, 5]	[Multiply, n, [Add, n, 1], [Add, n, 2], [Add, n, 3], [Add, n, 4]]	A symbolic base with integer order expands to the product
 a-negative-order-expands-to-the-reciprocal			[Pochhammer, n, -5]	[Divide, 1, [Multiply, [Add, n, -1], [Add, n, -2], [Add, n, -3], [Add, n, -4], [Add, n, -5]]]	A negative order expands to the reciprocal falling product

@@ -5,11 +5,12 @@ import {
   defineOverload,
   emit,
   operandsOf,
+  symbolNameOf,
   wrapOperator,
   type Engine,
   type Expr,
 } from "@enumeratio/engine";
-import { applyPatch, quotientRingCollection, setResidueClasses } from "@enumeratio/ce-patches";
+import { applyPatch, quotientRingCollection } from "@enumeratio/ce-patches";
 import { gcd, mod } from "./arith.ts";
 import { INTEGER_MOD, INTEGER_MOD_RING, QUOTIENT_RING } from "./names.ts";
 import * as Z from "./integer-mod.ts";
@@ -96,15 +97,21 @@ export function declareIntegerMod(ce: Engine): void {
     },
   });
 
-  // ℤ/m is compute-engine's QuotientRing(Integers, m), which the quotient-ring-collection patch
-  // makes the collection of its IntegerMod classes. IntegerModRing(m), the old spelling,
-  // evaluates to it.
+  // ℤ/m is compute-engine's QuotientRing(Integers, m); the patch makes Count exact past 2^53.
+  // IntegerModRing(m), the old spelling, evaluates to it.
   applyPatch(ce, quotientRingCollection);
-  setResidueClasses(ce, {
-    element: (engine, k, m) => integerModExpression(engine, { residue: k, modulus: m }),
-    modulusOf: (x) => integerModOf(x)?.modulus,
-    type: "value",
-  });
+  // An IntegerMod is in ℤ/m iff its modulus is m; native Element only knows ResidueClass.
+  const ringModulus = (op: Expr | undefined): bigint | undefined =>
+    op?.operator === QUOTIENT_RING && symbolNameOf(operandsOf(op)[0]) === "Integers"
+      ? bigIntegerAt(operandsOf(op)[1])
+      : undefined;
+  wrapOperator(
+    ce,
+    ["Element", [INTEGER_MOD, 0, 1], [QUOTIENT_RING, "Integers", 1]],
+    (ops) => integerModOf(ops[0]) !== undefined && ringModulus(ops[1]) !== undefined,
+    () => (ops) => ce.symbol(integerModOf(ops[0])!.modulus === ringModulus(ops[1]) ? "True" : "False"),
+    2,
+  );
   ce.declare(INTEGER_MOD_RING, {
     description: SUMMARIES.IntegerModRing,
     signature: "(integer) -> set",

@@ -6,7 +6,7 @@ mangoldtlambda-9		test	[MangoldtLambda, 9]	[Ln, 3]
 mangoldtlambda-25			[MangoldtLambda, 25]	[Ln, 5]			A prime power $5^2$ gives $\ln 5$	
 numerically-ln-3	Scope		[N, [MangoldtLambda, 9]]	1.0986122886681098			Numerically, $\ln3$	
 listable	Scope		[MangoldtLambda, [List, 2, 4, 6, 25]]	[List, [Ln, 2], [Ln, 2], 0, [Ln, 5]]			Listable	
-n-of-a-zero-result-is-still-0	Scope	test	[N, [MangoldtLambda, 6]]	0			N of a zero result is still 0	
+n-of-a-zero-result-is-still-0	Scope	test	[N, [MangoldtLambda, 6]]	{num: "0.0"}			N of a zero result is still 0	
 mangoldtlambda-125	Scope		[MangoldtLambda, 125]	[Ln, 5]			Any power of 5 gives the same $\ln 5$	
 mangoldtlambda-7-pow-300	Scope		[MangoldtLambda, [Power, 7, 300]]	[Ln, 7]			Huge prime powers are recognised without factoring	
 mangoldtlambda-list-2-6-9-8-15	Scope		[MangoldtLambda, [List, 2, 6, 9, 8, 15]]	[List, [Ln, 2], 0, [Ln, 3], [Ln, 2], 0]			Threads over a list; non-prime-powers give $0$	

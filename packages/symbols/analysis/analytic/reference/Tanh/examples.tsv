@@ -1,5 +1,5 @@
 id	section	role	expr	expected	known	source	caption	epsil.back	fullform.in	fullform.out
-n-forces-the-numeric-result-that-plain			[N, [Tanh, 0]]	0			N(...) forces the numeric result that plain evaluation withholds			
+n-forces-the-numeric-result-that-plain			[N, [Tanh, 0]]	{num: "0.0"}			N(...) forces the numeric result that plain evaluation withholds			
 n-tanh-1			[N, [Tanh, 1]]	{num: "0.761594155955764888119"}						
 stays-symbolic-even-at-0-same-as-sinh-and-cosh			[Tanh, 0]	0			Exact at 0, as [[Sinh]] and [[Cosh]] are			
 a-float-argument-evaluates-directly-no-n-needed			[Tanh, 2.2]	{num: "0.975743130031451520414"}			A float argument evaluates directly, no N(...) needed			

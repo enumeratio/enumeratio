@@ -1,9 +1,9 @@
 id	section	role	expr	expected	caption	triage	fullform.in	fullform.out	wolfram.note
 frac-2-4-1-2-3-1-2-2-1-2-1-35			[QBinomial, 4, 2, 2]	35	$\frac{(2^4-1)(2^3-1)}{(2^2-1)(2-1)} = 35$		QBinomial(4, 2, 2)	35	
-qbinomial-4-2-2		test	[N, [QBinomial, 4, 2, 2]]	35					
-qbinomial-6-3-1		test	[N, [QBinomial, 6, 3, 1]]	20					
-qbinomial-5-2-3		test	[N, [QBinomial, 5, 2, 3]]	1210					
-qbinomial-8-3-2		test	[N, [QBinomial, 8, 3, 2]]	97155					
+qbinomial-4-2-2		test	[N, [QBinomial, 4, 2, 2]]	{num: "35.0"}					
+qbinomial-6-3-1		test	[N, [QBinomial, 6, 3, 1]]	{num: "20.0"}					
+qbinomial-5-2-3		test	[N, [QBinomial, 5, 2, 3]]	{num: "1210.0"}					
+qbinomial-8-3-2		test	[N, [QBinomial, 8, 3, 2]]	{num: "97155.0"}					
 a-polynomial-in-q-whose-coefficients-count	Scope		[Expand, [QBinomial, 4, 2, q]]	[Add, [Power, q, 4], [Power, q, 3], [Multiply, 2, [Power, q, 2]], q, 1]	A polynomial in q whose coefficients count partitions in a 2 × 2 box				
 n-qbinomial-15-over-17-5-1-50	Scope	triage	[N, [QBinomial, [Rational, 15, 17], 5, 1], 50]	[QBinomial, [Rational, 15, 17], 5, 1]		gap			QBinomial takes integer n and m only, so a rational n stays unevaluated; at q = 1 Wolfram answers Binomial(15/17, 5) numerically.
 n-qbinomial-23-over-47-5-minus-i-2	Scope	triage	[N, [QBinomial, [Rational, 23, 47], [Complex, 5, -1], 2]]	[QBinomial, [Rational, 23, 47], [Complex, 5, -1], 2]		gap			QBinomial takes integer n and m only, so a rational n and complex m stay unevaluated; Wolfram evaluates it through the q-Gamma function, here at q = 2.

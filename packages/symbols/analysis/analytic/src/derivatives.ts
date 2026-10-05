@@ -144,11 +144,19 @@ export function declareDerivatives(ce: ComputeEngine): void {
   const d = operatorOf(ce, "D");
   if (d !== undefined) {
     const native: NativeEval = d.evaluate;
+    // Evaluating a head with no partial reaches `D` again from inside compute-engine's
+    // `Derivative`, which would re-evaluate without end: only the outermost call iterates.
+    let iterating = false;
     d.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
       const result = native?.(ops, options);
-      if (result === undefined) return undefined;
-      const again = result.evaluate(options);
-      return again.isSame(result) ? result : again;
+      if (result === undefined || iterating) return result;
+      iterating = true;
+      try {
+        const again = result.evaluate(options);
+        return again.isSame(result) ? result : again;
+      } finally {
+        iterating = false;
+      }
     };
   }
 }

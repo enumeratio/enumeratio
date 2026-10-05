@@ -139,17 +139,11 @@ export function resolves(ce: ComputeEngine, expr: MathJSON): boolean {
   }
 }
 
-// `N(x, d)` leaves `ce.precision` at d, and later results depend on it (a bare `N(Pi, 30)`
-// prints 34 digits unless the engine already sits at 30). Restore it so each comparison
-// starts from the same engine whatever ran before it.
 const evaluated = (ce: ComputeEngine, expr: MathJSON): MathJSON => {
-  const precision = ce.precision;
   try {
     return ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json as MathJSON;
   } catch (error) {
     return ["EvaluationThrew", String(error)];
-  } finally {
-    ce.precision = precision;
   }
 };
 

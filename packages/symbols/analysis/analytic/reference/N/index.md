@@ -9,7 +9,7 @@ signatures:
   - call: N(x, d)
     description: x to exactly d significant digits, the last one correctly rounded.
     library: "@enumeratio/analytic"
-    type: (any, integer?) -> unknown
+    type: (any, (integer | list<number>)?) -> unknown
     overrides: compute-engine
 seeAlso:
   - Round

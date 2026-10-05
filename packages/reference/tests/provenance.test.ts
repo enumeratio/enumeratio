@@ -228,8 +228,6 @@ const OVERRIDDEN = [
   "Divisors",
   "Dot",
   "Element",
-  // EllipticE(0) = π/2 (ce-patches values-at-zero).
-  "EllipticE",
   // Not itself overridden -- Wolfram's documented identities compare our heads
   // (Fibonacci(2, -x) == -Fibonacci(2, x)); Equal is the corpus expression's outer head.
   "Equal",
@@ -283,9 +281,6 @@ const OVERRIDDEN = [
   // Not itself overridden -- Wolfram's CarmichaelLambda/LCM identity lists two of our
   // heads' answers in a bare List, the same reason Add is here.
   "List",
-  // Not itself overridden -- ListFrom(QuotientRing(Integers, 3)) walks the collection the
-  // quotient-ring-collection patch gives QuotientRing.
-  "ListFrom",
   "Ln",
   "Log10",
   "Log2",
