@@ -21,6 +21,6 @@ names:
 
 - Idempotent: sorting an already-sorted collection changes nothing.
 - $Sort(c) = At(c, Ordering(c))$. See [[Ordering]] and [[At]].
-- Orders numbers numerically, strings lexicographically, and symbols alphabetically by name.
+- Orders numbers numerically, strings in Wolfram's order (letters compare ignoring case, lowercase before uppercase on a tie, numbers before strings), and symbols alphabetically by name.
 - The comparator form `Sort(list, p)` takes a predicate `p` reporting whether a pair is already in order.
 - Works on the operands of any expression, not just a collection's elements.

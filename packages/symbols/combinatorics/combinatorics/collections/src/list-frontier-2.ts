@@ -278,10 +278,20 @@ function declareFactorialPower(ce: Engine): void {
  *  `i+j-1 ≤ n`, else `r(i+j-n)`). */
 function declareHankelMatrix(ce: Engine): void {
   ce.declare("HankelMatrix", {
-    signature: "(collection<any>, collection<any>?) -> list<list<any>>",
+    signature: "(integer | collection<any>, collection<any>?) -> list<list<any>>",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const c = ops[0];
       if (c === undefined) return undefined;
+      // HankelMatrix(n): the n×n matrix whose first column is 1, 2, …, n.
+      const size = integerAt(c);
+      if (size !== undefined && ops.length === 1) {
+        if (size < 0) return undefined;
+        const first = ce.function(
+          "List",
+          Array.from({ length: size }, (_, i) => ce.number(i + 1)),
+        );
+        return ce.function("HankelMatrix", [first]).evaluate();
+      }
       const col = operandsOf(c);
       const n = col.length;
       if (n === 0) return ce.function("List", []);
@@ -337,9 +347,8 @@ function declareMovingMap(ce: Engine): void {
 /** `PascalBinomial[n, m]`: the binomial coefficient, extended to a negative `n` the way
  *  Pascal's recurrence `P(n, m) = P(n-1, m-1) + P(n-1, m)` requires — the standard
  *  "generalized" binomial coefficient `n(n-1)…(n-m+1) / m!`, which satisfies that recurrence
- *  for every integer `n` (not just `n ≥ m ≥ 0`) as long as `m ≥ 0`. A negative `m` is left
- *  unevaluated: Wolfram's extension there is a documented divergence we haven't cross-checked
- *  against a kernel this session, so it's left as a gap rather than guessed at. */
+ *  for every integer `n` (not just `n ≥ m ≥ 0`) as long as `m ≥ 0`. A negative `m` over an
+ *  integer `n` is 0, as in Wolfram. */
 function pascalBinomial(n: number, m: number): number {
   let result = 1;
   for (let i = 0; i < m; i++) result = (result * (n - i)) / (i + 1);
@@ -357,6 +366,7 @@ function declarePascalBinomial(ce: Engine): void {
         const gamma = ce.function("Binomial", [ops[0]!, ops[1]!]).evaluate();
         return isNumber(gamma) ? gamma : undefined;
       }
+      if (m !== undefined && m < 0 && n !== undefined) return ce.Zero; // Wolfram: no terms below m = 0
       if (m === undefined || m < 0 || m > 200) return undefined; // 200: a guard on the product
       // Any other `n` (`x`, `Pi`, `1/2`): the falling factorial `n (n - 1) … (n - m + 1) / m!`.
       if (n === undefined && ops[0] !== undefined) {

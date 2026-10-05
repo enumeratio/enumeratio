@@ -413,6 +413,29 @@ export function declareListFunctional(ce: Engine): void {
     1,
   );
 
+  // Total(list): the sum of the elements; a matrix totals column by column, as Wolfram's does.
+  ce.declare("Total", {
+    signature: "(collection<any>) -> any",
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
+      const list = ops[0];
+      if (list === undefined || list.operator !== "List") return undefined;
+      const items = operandsOf(list);
+      const rows = items.every((item) => item.operator === "List") ? items.map(operandsOf) : undefined;
+      if (rows !== undefined && rows.length > 0 && rows.every((row) => row.length === rows[0]!.length)) {
+        const columns = rows[0]!.map((_, j) =>
+          ce
+            .function(
+              "Add",
+              rows.map((row) => row[j]!),
+            )
+            .evaluate(),
+        );
+        return ce.function("List", columns);
+      }
+      return ce.function("Add", items as Expr[]).evaluate();
+    },
+  });
+
   ce.declare("GeometricMean", {
     signature: "(collection<any>) -> number",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {

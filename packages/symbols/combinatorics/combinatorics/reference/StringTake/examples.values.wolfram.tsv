@@ -3,6 +3,7 @@ string-take-s-n-takes-the-first-n-characters	StringTake["hello world", 5]	"\"hel
 stringtake-abcdefghijklm-6	StringTake["abcdefghijklm", 6]	"\"abcdef\""	\text{StringTake}[\text{abcdefghijklm},6]	\text{abcdef}
 stringtake-abcdefghijklm-neg-4	StringTake["abcdefghijklm", -4]	"\"jklm\""	\text{StringTake}[\text{abcdefghijklm},-4]	\text{jklm}
 stringtake-abcdefghijklm-list-5-10	StringTake["abcdefghijklm", List[5, 10]]	"\"efghij\""	\text{StringTake}[\text{abcdefghijklm},\{5,10\}]	\text{efghij}
+taking-more-characters-than-it-has	StringTake["hi", 5]	StringTake["hi", 5]	\text{StringTake}[\text{hi},5]	\text{StringTake}[\text{hi},5]
 string-take-s-negative-n-takes-last-n-chars	StringTake["hello world", -5]	"\"world\""	\text{StringTake}[\text{hello world},-5]	\text{world}
 string-take-s-n-takes-the-nth-character-alone	StringTake["hello", List[2]]	"\"e\""	\text{StringTake}[\text{hello},\{2\}]	\text{e}
 string-take-s-m-n-takes-an-inclusive-range	StringTake["hello world", List[1, 5]]	"\"hello\""	\text{StringTake}[\text{hello world},\{1,5\}]	\text{hello}

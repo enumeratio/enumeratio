@@ -1130,6 +1130,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "ToBoxes",
     "ToCharacterCode",
     "ToString",
+    "Total",
     "TriangleWave",
     "TrigFactor",
     "Tuples",

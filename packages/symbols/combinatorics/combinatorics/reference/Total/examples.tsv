@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+total-of-a-list			[Total, [List, 1, 2, 3]]	6	
+total-of-a-matrix-is-columnwise			[Total, [List, [List, 1, 2], [List, 3, 4]]]	[List, 4, 6]	A matrix totals column by column
+total-of-symbols			[Total, [List, a, b, c]]	[Add, a, b, c]	

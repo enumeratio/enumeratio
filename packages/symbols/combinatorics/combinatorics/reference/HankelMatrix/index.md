@@ -7,7 +7,7 @@ signatures:
   - call: HankelMatrix(c)
     description: the n×n Hankel matrix with first column and first row c, zero-padded past c's reach
     library: enumeratio-combinatorics
-    type: (collection<any>, collection<any>?) -> list<list<any>>
+    type: (collection<any> | integer, collection<any>?) -> list<list<any>>
   - call: HankelMatrix(c, r)
     description: the n×m Hankel matrix (n = Length(c), m = Length(r)) with r as the last row
     library: enumeratio-combinatorics

@@ -3,6 +3,7 @@ string-take-s-n-takes-the-first-n-characters			[StringTake, [String, hello world
 stringtake-abcdefghijklm-6			[StringTake, "'abcdefghijklm'", 6]	"'abcdef'"	The first six characters	
 stringtake-abcdefghijklm-neg-4			[StringTake, "'abcdefghijklm'", -4]	"'jklm'"	A negative count takes from the end	
 stringtake-abcdefghijklm-list-5-10			[StringTake, "'abcdefghijklm'", [List, 5, 10]]	"'efghij'"	A pair gives an inclusive range of positions	
+taking-more-characters-than-it-has			[StringTake, "'hi'", 5]	[StringTake, "'hi'", 5]	The string is shorter than 5, so the call stays unevaluated, as in Wolfram	
 string-take-s-negative-n-takes-last-n-chars	Scope		[StringTake, [String, hello world], -5]	"'world'"		[StringTake, "'hello world'", -5]
 string-take-s-n-takes-the-nth-character-alone	Scope		[StringTake, [String, hello], [List, 2]]	"'e'"		[StringTake, [String, "''", hello], [List, 2]]
 string-take-s-m-n-takes-an-inclusive-range	Scope		[StringTake, [String, hello world], [List, 1, 5]]	"'hello'"		[StringTake, "'hello world'", [List, 1, 5]]
