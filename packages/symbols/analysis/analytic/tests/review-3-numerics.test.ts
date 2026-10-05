@@ -98,3 +98,8 @@ test("FullSimplify keeps e^x and recognizes e^LogGamma", () => {
       .evaluate().json,
   ).toEqual(["Gamma", "x"]);
 });
+
+test("PolyGamma at a positive integer has its zeta closed form", () => {
+  expect(ce.box(["PolyGamma", 1, 1]).evaluate().json).toEqual(["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]]);
+  expect(N(["PolyGamma", 1, 2]).re).toBeCloseTo(0.6449340668482264, 15);
+});

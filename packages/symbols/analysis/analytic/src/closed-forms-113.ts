@@ -22,6 +22,10 @@ const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
 // the transcript); each wrapper is a pre-check in front of the existing numeric
 // kernel, which still answers N() and every case the closed form doesn't cover.
 
+/** Highest order and shift for the ψ⁽ⁿ⁾(m) closed form. */
+const POLYGAMMA_MAX_ORDER = 40n;
+const POLYGAMMA_MAX_SHIFT = 32n;
+
 const gcd = (a: bigint, b: bigint): bigint => (b === 0n ? (a < 0n ? -a : a) : gcd(b, a % b));
 const gcdNum = (a: number, b: number): number => (b === 0 ? a : gcdNum(b, a % b));
 
@@ -39,6 +43,35 @@ const intNode = (ce: ComputeEngine, v: bigint): BoxedExpression => ce.number(v);
 const ratNode = (ce: ComputeEngine, [n, d]: Rational): BoxedExpression => (d === 1n ? ce.number(n) : ce.number([n, d]));
 
 export function declareClosedForms113(ce: ComputeEngine): void {
+  // ψ⁽ⁿ⁾(m) = (−1)ⁿ⁺¹ n! (ζ(n+1) − Σ_{k<m} k^(−n−1)) at a positive integer m and order
+  // n ≥ 1 (DLMF 5.15.2, 5.15.1): ψ'(1) = π²/6 and ψ'(2) = π²/6 − 1 as in Wolfram. Capped
+  // at `POLYGAMMA_MAX_ORDER` and `POLYGAMMA_MAX_SHIFT` so the sum stays short.
+  wrapOperator(
+    ce,
+    ["PolyGamma", 1, 1],
+    (ops) => {
+      const [n, m] = [bigIntegerAt(ops[0]), bigIntegerAt(ops[1])];
+      return (
+        n !== undefined &&
+        m !== undefined &&
+        n >= 1n &&
+        n <= POLYGAMMA_MAX_ORDER &&
+        m >= 1n &&
+        m <= POLYGAMMA_MAX_SHIFT &&
+        (ops[1] as { isExact?: boolean }).isExact !== false
+      );
+    },
+    () => (ops, options) => {
+      const [n, m] = [bigIntegerAt(ops[0])!, Number(bigIntegerAt(ops[1])!)];
+      const s = ce.number(n + 1n);
+      const tail = Array.from({ length: m - 1 }, (_, i) => ce.function("Power", [i + 1, ce.function("Negate", [s])]));
+      const bracket = ce.function("Subtract", [ce.function("Zeta", [s]), ce.function("Add", [ce.Zero, ...tail])]);
+      const sign = n % 2n === 0n ? -1n : 1n;
+      return finish(ce.function("Multiply", [ce.number(sign * factorial(n)), bracket]), options);
+    },
+    2,
+  );
+
   // GammaLn(n) = ln((n−1)!) at a positive integer n, matching Wolfram's bare
   // LogGamma[5] = Log[24] (wolframscript-checked) — GammaLn's own signature is the
   // principal log, no branch ambiguity for a positive real. Threading (broadcastable,
