@@ -108,7 +108,7 @@ const allFamilies: readonly FamilyKernel[] = [
     ...standardTableauPairsEntries,
     ...tableauxPlanePlanePartitionsEntries,
   ].map(numberKernel),
-  ...graphsCoreEntries.map(numberKernel),
+  ...kernelsOn(new ComputeEngine(), graphsCoreEntries.map(liftFamily)),
   ...kernelsOn(new ComputeEngine(), collectionsEntries),
 ];
 
