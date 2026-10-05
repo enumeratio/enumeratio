@@ -5,10 +5,11 @@
 // module (only its `entries` export is public). Pure rank/unrank kernels over plain JS
 // numbers/arrays, same contract as every other family (types.ts).
 import { triStrings } from "./closed-forms.ts";
+import { modRank } from "./kernels.ts";
 import type { EpsilFamily } from "./epsil.ts";
 import type { NumberKernel } from "./types.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
+const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 function arraysEqual(a: number[], b: number[]): boolean {
   if (a.length !== b.length) return false;

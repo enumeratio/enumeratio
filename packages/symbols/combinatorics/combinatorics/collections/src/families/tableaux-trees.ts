@@ -30,11 +30,11 @@ import {
   upTo,
   cell,
 } from "./tables.ts";
-import { Factorial, PermutationUnrank, PermutationRank } from "./kernels.ts";
+import { Factorial, PermutationUnrank, PermutationRank, floorDiv, modRank } from "./kernels.ts";
 import { PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank } from "./kernels-combinatorics.ts";
 import { SubsetCount, SubsetUnrank, SubsetRank } from "./kernels-extra.ts";
 
-const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
+const normRank = (r: number, total: number): number => (total > 0 ? modRank(Math.trunc(r), total) : 0);
 
 // ─── RecursiveTrees(n): increasing trees on [n] — rooted at 1, every root-to-leaf path increasing
 // (parent[i] < i for i>=2). Count (n-1)!. Element = parent array (parent[0]=0 sentinel for the
@@ -51,7 +51,7 @@ export function RecursiveTreeUnrank(n: number, rank: number): number[] {
   for (let i = n; i >= 2; i--) {
     const base = i - 1;
     parent[i - 1] = (rem % base) + 1;
-    rem = Math.floor(rem / base);
+    rem = floorDiv(rem, base);
   }
   return parent;
 }

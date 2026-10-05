@@ -12,6 +12,7 @@
 import type { NumberKernel } from "./types.ts";
 import type { EpsilFamily } from "./epsil.ts";
 import { latticePaths } from "./closed-forms.ts";
+import { floorDiv, modRank } from "./kernels.ts";
 import { quotient } from "./tables.ts";
 import { dyckPaths } from "../../../lattice-paths/src/families/core.ts";
 import { completionsOf, completionsTable, type Step, walkFamily } from "../../../lattice-paths/src/families/walks.ts";
@@ -64,7 +65,7 @@ function RiordanPathCount(n: number): number {
 /** rank-th Riordan path, steps tried U(1) then L(0, only if h>0) then D(-1). */
 function RiordanPathUnrank(n: number, rank: number): number[] {
   const total = RiordanPathCount(n);
-  let r = total ? ((rank % total) + total) % total : 0;
+  let r = total ? modRank(rank, total) : 0;
   const out: number[] = [];
   let h = 0;
   for (let s = n; s > 0; s--) {
@@ -149,7 +150,7 @@ function finePathUnrankFrom(remaining: number, r: number): number[] {
     rem -= block;
   }
   const restCount = fineCount(remaining - m);
-  const innerRank = Math.floor(rem / restCount);
+  const innerRank = floorDiv(rem, restCount);
   const restRank = rem % restCount;
   const inner = DyckPathUnrank(m - 1, innerRank);
   const rest = finePathUnrankFrom(remaining - m, restRank);
@@ -157,7 +158,7 @@ function finePathUnrankFrom(remaining: number, r: number): number[] {
 }
 function FinePathUnrank(n: number, rank: number): number[] {
   const total = FinePathCount(n);
-  const r = total ? ((rank % total) + total) % total : 0;
+  const r = total ? modRank(rank, total) : 0;
   return finePathUnrankFrom(n, r);
 }
 function finePathRankFrom(path: number[], remaining: number): number {
