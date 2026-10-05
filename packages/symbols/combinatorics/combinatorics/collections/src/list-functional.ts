@@ -1,4 +1,5 @@
 import {
+  applyFunction,
   type Engine,
   type Expr,
   integerAt,
@@ -29,17 +30,13 @@ function materialize(result: Expr): Expr {
   return result.isLazyCollection ? result.evaluate({ materialization: true }) : result;
 }
 
-/** `f(args...)`, via compute-engine's own `Apply` head — which, unlike Wolfram's `Apply`,
- *  treats every trailing operand as its own positional argument rather than unpacking a
- *  single list: `Apply(f, a, b)` is `f(a, b)`, not `f @@ {a, b}`. Works for an undeclared
- *  symbol `f` too (stays an unevaluated call), a `Function` literal, or anything else
- *  `Apply` already knows how to invoke. */
-const applyFn = (ce: Engine, fn: Expr, args: readonly Expr[]): Expr =>
-  materialize(ce.function("Apply", [fn, ...args]).evaluate());
+/** `fn(args...)`, materialized: a lazy-collection result would revert to its unevaluated call
+ *  when fed back in as an operand (see `materialize`). */
+const callFn = (ce: Engine, fn: Expr, args: readonly Expr[]): Expr => materialize(applyFunction(ce, fn, args));
 
 function nestValue(ce: Engine, fn: Expr, x: Expr, n: number): Expr {
   let current = x;
-  for (let i = 0; i < n; i++) current = applyFn(ce, fn, [current]);
+  for (let i = 0; i < n; i++) current = callFn(ce, fn, [current]);
   return current;
 }
 
@@ -52,7 +49,7 @@ function nestListValues(ce: Engine, fn: Expr, x: Expr, n: number): Expr {
   const items: Expr[] = [seed];
   let current = seed;
   for (let i = 0; i < n; i++) {
-    current = applyFn(ce, fn, [current]);
+    current = callFn(ce, fn, [current]);
     items.push(current);
   }
   return ce.box(["List", ...items]);
@@ -88,7 +85,7 @@ function withinWorkingPrecision(ce: Engine, next: Expr, current: Expr): boolean 
 function fixedPointValue(ce: Engine, fn: Expr, x: Expr): Expr {
   let current = x;
   for (let i = 0; i < FIXED_POINT_MAX_ITERATIONS; i++) {
-    const next = applyFn(ce, fn, [current]);
+    const next = callFn(ce, fn, [current]);
     // Wolfram's own stopping rule: two successive iterates read the SAME (`SameQ`), not
     // merely numerically equal — structural equality, which is exact for an exact value
     // (an integer sequence that has truly settled) and otherwise essentially never fires
@@ -211,7 +208,7 @@ export function declareListFunctional(ce: Engine): void {
           ? ce.box(["List", ...operandsOf(a).map((x) => outer(x, b))])
           : b.operator === "List"
             ? ce.box(["List", ...operandsOf(b).map((y) => outer(a, y))])
-            : applyFn(ce, fn, [a, b]);
+            : callFn(ce, fn, [a, b]);
       return outer(list1, list2);
     },
   });

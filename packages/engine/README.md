@@ -8,6 +8,9 @@ top of this one — it has no workspace dependencies of its own.
 - **`.` (`src/index.ts`)** — `operandsOf`, `symbolNameOf`, `integerAt`, `bigIntegerAt`,
   `stringAt`: read `.ops` / `.symbol` / `.re` / `.numericValue` off a `BoxedExpression`
   through one checked accessor apiece rather than casting the union at every call site.
+- **`src/apply-function.ts`** — `applyFunction(ce, f, args)`: the one way a head calls a user
+  function. A `Function` literal binds its arguments whole (Wolfram's semantics, slot-only
+  bodies included), where compute-engine's own call maps an untyped lambda over a list argument.
 - **`src/options.ts`** — Wolfram-style trailing option rules (`PlotRange -> (-1, 1)`):
   `OptionsPattern` semantics, leftmost setting wins, read and written without rewriting the
   expression to hold them.

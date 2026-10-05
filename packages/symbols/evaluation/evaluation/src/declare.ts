@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { CancellationError } from "@cortex-js/compute-engine";
 import {
+  applyFunction,
   DeadlineExceededError,
   defineMessages,
   emit,
@@ -130,12 +131,8 @@ function declareVerificationTest(ce: ComputeEngine): void {
         sameTestExpr === undefined
           ? undefined
           : (actual: BoxedExpression, expectedValue: BoxedExpression): boolean => {
-              // compute-engine's `Apply(f, a, b)` treats each trailing operand as its own
-              // positional argument — unlike Wolfram's `f @@ {a, b}` — so the two values go
-              // in directly rather than wrapped in a `List` (which `Apply` would instead pass
-              // through as a single argument).
-              const applied = ce.function("Apply", [sameTestExpr, actual, expectedValue]);
-              return symbolNameOf(applied.evaluate()) === "True";
+              const applied = applyFunction(ce, sameTestExpr, [actual, expectedValue]);
+              return symbolNameOf(applied) === "True";
             };
 
       const result = verificationTest(ce, {

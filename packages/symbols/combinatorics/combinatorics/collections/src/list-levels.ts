@@ -1,4 +1,5 @@
 import {
+  applyFunction,
   collectionElements,
   type Engine,
   type Expr,
@@ -16,10 +17,6 @@ import {
 // depth, dimension-permuting level lists and any-head nesting, Count/All/Any's level
 // arguments, Part(At) of a non-collection expression, and a new FirstPosition head for
 // nested search (compute-engine's own IndexOf/Position only look at the top level).
-
-/** `fn(x)` via compute-engine's own `Apply` — see `list-functional.ts`'s `applyFn` for why
- *  the argument goes in directly rather than wrapped in a `List`. */
-const applyFn = (ce: Engine, fn: Expr, arg: Expr): Expr => ce.function("Apply", [fn, arg]).evaluate();
 
 /** A 1-based, possibly-negative index resolved against `length` — the same convention `At`
  *  uses elsewhere; kept local rather than exported to avoid widening list-heads.ts's surface. */
@@ -51,7 +48,7 @@ const elementsUpToLevel = (expr: Expr, maxLevel: number): readonly Expr[] => {
  *  or a `Function` predicate, same two forms `Count` already accepts at the top level. */
 const countMatches = (ce: Engine, elements: readonly Expr[], test: Expr): number => {
   if (test.operator === "Function") {
-    return elements.filter((e) => symbolNameOf(applyFn(ce, test, e)) === "True").length;
+    return elements.filter((e) => symbolNameOf(applyFunction(ce, test, [e])) === "True").length;
   }
   return elements.filter((e) => e.isEqual(test) === true).length;
 };

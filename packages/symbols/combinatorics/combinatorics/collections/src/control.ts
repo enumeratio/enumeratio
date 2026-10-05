@@ -1,5 +1,13 @@
-import { defineMessages, emit, type Engine, type Expr, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
-import { applyFunction } from "./apply-function.ts";
+import {
+  applyFunction,
+  defineMessages,
+  emit,
+  type Engine,
+  type Expr,
+  integerAt,
+  operandsOf,
+  symbolNameOf,
+} from "@enumeratio/engine";
 
 // Wolfram-frontier scoping/control heads: With, Module, Reap/Sow, Do, Switch, NestWhile(List),
 // While, FixedPointList, Throw/Catch, Echo, AbsoluteTiming, Attributes/SetAttributes, AppendTo.
@@ -41,8 +49,6 @@ import { applyFunction } from "./apply-function.ts";
 // Wolfram's own `{x = 1, y = 2}` (curly braces are `List` in Wolfram, an unrelated
 // collision with LaTeX's `\{...\}`, which compute-engine's LaTeX parser reads as the SET
 // head -- irrelevant here since every example below is raw MathJSON, never parsed text).
-
-const applyFn = applyFunction;
 
 const isTrue = (expr: Expr): boolean => symbolNameOf(expr) === "True";
 
@@ -425,8 +431,8 @@ function declareNestWhile(ce: Engine): void {
       const history: Expr[] = [x0.evaluate()];
       for (let steps = 0; steps < maxSteps; steps++) {
         // The test waits until `m` values exist, so `f` runs `m - 1` times first.
-        if (history.length >= m && !isTrue(applyFn(ce, test, window(history, m)))) break;
-        history.push(applyFn(ce, fn, [history[history.length - 1]!]));
+        if (history.length >= m && !isTrue(applyFunction(ce, test, window(history, m)))) break;
+        history.push(applyFunction(ce, fn, [history[history.length - 1]!]));
       }
       return history[history.length - 1]!;
     },
@@ -444,8 +450,8 @@ function declareNestWhileList(ce: Engine): void {
       if (fn === undefined || x0 === undefined || test === undefined) return undefined;
       const history: Expr[] = [x0.evaluate()];
       for (let steps = 0; steps < MAX_ITERATIONS; steps++) {
-        if (!isTrue(applyFn(ce, test, [history[history.length - 1]!]))) break;
-        history.push(applyFn(ce, fn, [history[history.length - 1]!]));
+        if (!isTrue(applyFunction(ce, test, [history[history.length - 1]!]))) break;
+        history.push(applyFunction(ce, fn, [history[history.length - 1]!]));
       }
       return ce.box(["List", ...history]);
     },
@@ -467,7 +473,7 @@ function declareFixedPointList(ce: Engine): void {
       let current = x0.evaluate();
       const history: Expr[] = [current];
       for (let i = 0; i < MAX_ITERATIONS; i++) {
-        const next = applyFn(ce, fn, [current]);
+        const next = applyFunction(ce, fn, [current]);
         history.push(next);
         if (next.isSame(current)) break;
         current = next;
@@ -508,7 +514,7 @@ function declareEcho(ce: Engine): void {
       if (value === undefined) return undefined;
       const label = ops[1];
       const f = ops[2];
-      const printed = f !== undefined ? applyFn(ce, f, [value]) : value;
+      const printed = f !== undefined ? applyFunction(ce, f, [value]) : value;
       if (label !== undefined) emit(ce, "Echo", "labeled", [label, printed]);
       else emit(ce, "Echo", "printed", [printed]);
       return value;

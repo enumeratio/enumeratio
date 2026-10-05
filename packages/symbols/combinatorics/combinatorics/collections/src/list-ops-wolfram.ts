@@ -1,4 +1,5 @@
 import {
+  applyFunction,
   collectionElements,
   type Engine,
   type Expr,
@@ -19,14 +20,6 @@ import {
 // so we attach on top — `wrapOperator`'s `applies` check runs outermost-first, and our
 // handlers never call through to the layer below for the UpTo case at all, so which native
 // evaluate is captured underneath them doesn't matter.
-
-/**
- * Call a (possibly `Function`-headed) expression as an operator over `args`. `ce.box`'s
- * input type wants a symbol name in head position; a boxed `Function(...)` works fine there
- * at runtime (compute-engine dispatches on whatever it finds), so the cast is just working
- * around a type that's narrower than the runtime accepts.
- */
-const invoke = (ce: Engine, f: Expr, args: readonly Expr[]): Expr => ce.box([f, ...args] as never).evaluate();
 
 /** Ascending order: numeric/orderable via `isLess`/`isGreater`, lexicographic for strings. */
 const naturalCompare = (a: Expr, b: Expr): number => {
@@ -307,7 +300,7 @@ export function declareListOpsWolfram(ce: Engine): void {
       const sameGroup =
         test === undefined
           ? (a: Expr, b: Expr) => a.isEqual(b) === true
-          : (a: Expr, b: Expr) => symbolNameOf(invoke(ce, test, [a, b])) === "True";
+          : (a: Expr, b: Expr) => symbolNameOf(applyFunction(ce, test, [a, b])) === "True";
       const groups = groupBy(items, sameGroup);
       return ce.box(["List", ...groups.map((group) => ce.box(["List", ...group]))]);
     },
@@ -323,7 +316,7 @@ export function declareListOpsWolfram(ce: Engine): void {
       if (items === undefined) return undefined;
       const groups: { key: Expr; members: Expr[] }[] = [];
       for (const item of items) {
-        const key = invoke(ce, f, [item]);
+        const key = applyFunction(ce, f, [item]);
         const group = groups.find((g) => g.key.isEqual(key) === true);
         if (group !== undefined) group.members.push(item);
         else groups.push({ key, members: [item] });
@@ -342,7 +335,7 @@ export function declareListOpsWolfram(ce: Engine): void {
       const same =
         test === undefined
           ? (a: Expr, b: Expr) => a.isEqual(b) === true
-          : (a: Expr, b: Expr) => symbolNameOf(invoke(ce, test, [a, b])) === "True";
+          : (a: Expr, b: Expr) => symbolNameOf(applyFunction(ce, test, [a, b])) === "True";
       const runs = splitRuns(items, same);
       return ce.box(["List", ...runs.map((run) => ce.box(["List", ...run]))]);
     },
@@ -356,7 +349,7 @@ export function declareListOpsWolfram(ce: Engine): void {
       if (items === undefined) return undefined;
       const f = ops[1];
       if (f === undefined) return undefined;
-      const keys = items.map((item) => invoke(ce, f, [item]));
+      const keys = items.map((item) => applyFunction(ce, f, [item]));
       const runs: Expr[][] = [];
       const keyRuns: Expr[] = [];
       items.forEach((item, i) => {
@@ -380,7 +373,7 @@ export function declareListOpsWolfram(ce: Engine): void {
       if (f === undefined || (ops[0] !== undefined && symbolNameOf(ops[0]) !== undefined)) return undefined;
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
-      const keyed = items.map((item, index) => ({ item, key: invoke(ce, f, [item]), index }));
+      const keyed = items.map((item, index) => ({ item, key: applyFunction(ce, f, [item]), index }));
       keyed.sort((a, b) => naturalCompare(a.key, b.key) || a.index - b.index);
       return ce.box(["List", ...keyed.map((entry) => entry.item)]);
     },
