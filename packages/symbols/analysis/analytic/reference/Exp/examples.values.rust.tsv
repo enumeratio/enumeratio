@@ -33,8 +33,6 @@ functionanalytic-exp-x-x
 functionmonotonicity-exp-x-x			
 functioninjective-exp-x-x			
 functionsurjective-exp-x-x			
-assuming-n-in-integers-refine-exp-2-times-pi			
-assuming-n-in-integers-refine-exp-2-times-pi-2			
 functionsign-exp-x-x			
 functionsingularities-exp-x-x			
 functiondiscontinuities-exp-x-x			
@@ -42,6 +40,8 @@ functionconvexity-exp-x-x
 n-exponentiale-pow-8-over-5-50	nf(power(x(std::f64::consts::E), rational(n(8), n(5))))		
 exponentiale-pow-9-over-2-times-i-times-pi			
 exptotrig-exponentiale-pow-1-over-5-times-i			
+assuming-n-in-integers-refine-exp-2-times-pi			
+assuming-n-in-integers-refine-exp-2-times-pi-2			
 threads-element-wise-over-a-list	exp(list(vec![n(0), n(1)]))	panic: threading: a list where the crate takes a scalar	error
 inverse-of-ln-e-ln-x-x	equal(exp(ln(n(5))), n(5))	true	
 e-a-e-b-e-a-b	equal((exp(n(2)) * exp(n(3))), exp(n(5)))	true	

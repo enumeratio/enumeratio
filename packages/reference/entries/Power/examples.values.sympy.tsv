@@ -4,7 +4,6 @@ power-2-complexinfinity-is-indeterminate-same	(S(2)**zoo)
 power-half-complexinfinity-is-indeterminate	(S(Rational(1, 2))**zoo)
 power-x-complexinfinity-is-left-unevaluated	(S(Symbol("x"))**zoo)
 n-248-832-over-1-419-857-50	N(Rational(248832, 1419857), 30)
-n-2-pow-i	N((S(2)**(0 + 1*I)), 30)
 2-pow-list-1-2-3	enumeratio_broadcast(lambda _a0, _a1: (S(_a0)**_a1), 2, [1, 2, 3])
 interval-1-over-3-2-pow-3	
 2-pow-list-list-1-over-2-neg-1-list-neg-5-over-3	enumeratio_broadcast(lambda _a0, _a1: (S(_a0)**_a1), 2, [[Rational(1, 2), -1], [Rational(-5, 3), Rational(1, 2)]])
@@ -12,5 +11,6 @@ fullsimplify-functioncontinuous-list-x-pow-n-x
 d-x-pow-n-x	diff((S(Symbol("x"))**Symbol("n")), Symbol("x"))
 root-neg-1-3	
 fullsimplify-matrixfunction-function-2-pow-1-1	
+n-2-pow-i	N((S(2)**(0 + 1*I)), 30)
 power-1-complexinfinity-is-indeterminate	(S(1)**zoo)
 power-e-complexinfinity-is-indeterminate-exp	(S(E)**zoo)

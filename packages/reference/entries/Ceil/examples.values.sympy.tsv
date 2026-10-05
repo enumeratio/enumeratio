@@ -29,7 +29,6 @@ piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2
 generatingfunction-ceil-n-4-n-x			
 ceil-1	ceiling(1)		
 ceil-neg-1	ceiling(-1)		
-ceil-i	ceiling((0 + 1*I))		
 ceil-neg-i	ceiling((0 + -1*I))		
 ceil-23-over-10	ceiling(Rational(23, 10))		
 ceil-neg-3	ceiling(-3)		
@@ -38,6 +37,7 @@ ceil-neg-pi	ceiling((-pi))
 ceil-neg-27-over-10	ceiling(Rational(-27, 10))		
 ceil-negativeinfinity	ceiling(-oo)		
 ceil-23-over-10-plus-neg-i-times-exponentiale	ceiling((Rational(23, 10) + ((0 + -1*I) * E)))		
+ceil-i	ceiling((0 + 1*I))		
 a-zero-divisor-inside-ceil	ceiling((S(16) / 0))	zoo	
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceiling(-3.7)	-3	
 nan-propagates-rather-than-erroring	ceiling(nan)	nan	

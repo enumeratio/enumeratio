@@ -17,19 +17,19 @@ simplify-re-x-x-gt-0	Scope		[Simplify, [Re, x], [Greater, x, 0]]	[Real, x]
 re-of-a-symbolic-value-stays-unevaluated	Properties		[Re, x]	[Real, x]			Re of a symbolic value stays unevaluated	Re(x)	Real(x)		
 real-1	Properties		[Real, 1]	1	1	Wolfram MathematicalFunctionData, Re	A real number is its own real part				
 real-neg-1	Properties		[Real, -1]	-1	-1	Wolfram MathematicalFunctionData, Re	Negative reals are unchanged				
-real-i	Properties		[Real, [Complex, 0, 1]]	0	0	Wolfram MathematicalFunctionData, Re	A pure imaginary number has real part 0				
 real-neg-i	Properties		[Real, [Complex, 0, -1]]	0	0	Wolfram MathematicalFunctionData, Re	Likewise for $-i$				
 real-1-plus-i	Properties		[Real, [Complex, 1, 1]]	1	1	Wolfram MathematicalFunctionData, Re	Only the real part of $1+i$ remains				
 real-neg-1-plus-i	Properties		[Real, [Complex, -1, 1]]	-1	-1	Wolfram MathematicalFunctionData, Re	The sign of the real part is kept: $-1$				
 real-neg-1-minus-i	Properties		[Real, [Complex, -1, -1]]	-1	-1	Wolfram MathematicalFunctionData, Re	Both imaginary signs give $-1$ here				
 real-1-minus-i	Properties		[Real, [Complex, 1, -1]]	1	1	Wolfram MathematicalFunctionData, Re	Flipping the imaginary sign leaves the real part alone				
-real-sqrt-3-plus-i	Properties		[Real, [Add, [Sqrt, 3], [Complex, 0, 1]]]	[Sqrt, 3]	[Sqrt, 3]	Wolfram MathematicalFunctionData, Re	An irrational real part is kept exactly				
 real-1-plus-sqrt-3-times-i	Properties		[Real, [Add, 1, [Complex, 0, [Sqrt, 3]]]]	1	1	Wolfram MathematicalFunctionData, Re	The imaginary $\sqrt3 i$ drops out, leaving 1				
 real-neg-1-plus-sqrt-3-times-i	Properties		[Real, [Add, -1, [Complex, 0, [Sqrt, 3]]]]	-1	-1	Wolfram MathematicalFunctionData, Re	Real part $-1$ from $-1+\sqrt3 i$				
-real-neg-sqrt-3-plus-i	Properties		[Real, [Add, [Negate, [Sqrt, 3]], [Complex, 0, 1]]]	[Negate, [Sqrt, 3]]	[Negate, [Sqrt, 3]]	Wolfram MathematicalFunctionData, Re	Negative irrational real part, $-\sqrt3$				
 list-real-x-times-exponentiale-pow-1-over-5	Properties		[List, [Real, [Multiply, x, [Power, ExponentialE, [Multiply, [Complex, 0, [Rational, 1, 5]], Pi]]]], [Real, [Add, [Multiply, 2, x], [Complex, 0, 1]]]]	[List, [Real, [Multiply, x, [Add, [Rational, 1, 4], [Divide, [Sqrt, 5], 4], [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]]]]], [Real, [Add, [Multiply, 2, x], [Complex, 0, 1]]]]						shape	Both leave Re of a symbolic x unevaluated; ours writes e^(i Pi/5) in radicals and Wolfram keeps it exponential, so its symbolic check cannot prove the two equal.
 real-neg-sqrt-3-minus-i	Properties		[Real, [Add, [Negate, [Sqrt, 3]], [Complex, 0, -1]]]	[Negate, [Sqrt, 3]]	[Negate, [Sqrt, 3]]	Wolfram MathematicalFunctionData, Re	The imaginary part does not affect $-\sqrt3$				
 real-neg-1-plus-neg-sqrt-3-times-i	Properties		[Real, [Add, -1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	-1	-1	Wolfram MathematicalFunctionData, Re	Real part of a point at angle $240^\circ$ is $-1$				
 real-1-plus-neg-sqrt-3-times-i	Properties		[Real, [Add, 1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	1	1	Wolfram MathematicalFunctionData, Re	A point at angle $-60^\circ$ has real part 1				
 real-sqrt-3-minus-i	Properties		[Real, [Add, [Sqrt, 3], [Complex, 0, -1]]]	[Sqrt, 3]	[Sqrt, 3]	Wolfram MathematicalFunctionData, Re	Real part $\sqrt3$ from $\sqrt3 - i$				
 real-2	Properties		[Real, 2]	2	2	Wolfram MathematicalFunctionData, Re	A real integer is returned as is				
+real-i	Properties		[Real, [Complex, 0, 1]]	0	0	Wolfram MathematicalFunctionData, Re					
+real-sqrt-3-plus-i	Properties		[Real, [Add, [Sqrt, 3], [Complex, 0, 1]]]	[Sqrt, 3]	[Sqrt, 3]	Wolfram MathematicalFunctionData, Re					
+real-neg-sqrt-3-plus-i	Properties		[Real, [Add, [Negate, [Sqrt, 3]], [Complex, 0, 1]]]	[Negate, [Sqrt, 3]]	[Negate, [Sqrt, 3]]	Wolfram MathematicalFunctionData, Re					
