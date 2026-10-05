@@ -34,7 +34,9 @@ import {
   connectedPermutations,
   grassmannianPermutations,
   kDescentPermutations,
+  nonCrossingPermutations,
   permutationsAvoiding3,
+  separablePermutations,
 } from "../src/families/restrictions.ts";
 
 const ce = new ComputeEngine();
@@ -47,6 +49,8 @@ interface Reading {
   readonly valid: (x: never, p: number[]) => boolean;
   /** Candidates for membership: members and near misses. */
   readonly near: (p: number[]) => unknown[];
+  /** Params for the interpreter check, where the second-last take it minutes. */
+  readonly interpretAt?: number[];
 }
 
 const factorial = (n: number): number => (n <= 1 ? 1 : n * factorial(n - 1));
@@ -82,6 +86,31 @@ function contains(x: readonly number[], pattern: string): boolean {
     for (let j = 0; j < k; j++)
       for (let i = 0; i < j; i++)
         if (agrees(x[i], x[j], a, b) && agrees(x[j], x[k], b, c) && agrees(x[i], x[k], a, c)) return true;
+  return false;
+}
+
+/** Whether two of `x`'s cycles cross: a < b < c < d with a, c in one and b, d in another. */
+function crossing(x: readonly number[]): boolean {
+  const cycleOf: number[] = [];
+  for (let s = 1; s <= x.length; s++)
+    if (cycleOf[s] === undefined) for (let v = s; cycleOf[v] === undefined; v = x[v - 1]) cycleOf[v] = s;
+  for (let a = 1; a <= x.length; a++)
+    for (let b = a + 1; b <= x.length; b++)
+      for (let c = b + 1; c <= x.length; c++)
+        for (let d = c + 1; d <= x.length; d++)
+          if (cycleOf[a] === cycleOf[c] && cycleOf[b] === cycleOf[d] && cycleOf[a] !== cycleOf[b]) return true;
+  return false;
+}
+
+/** Whether `x` has entries at a < b < c < d reading 2413 or 3142. */
+function separates(x: readonly number[]): boolean {
+  for (let d = 0; d < x.length; d++)
+    for (let c = 0; c < d; c++)
+      for (let b = 0; b < c; b++)
+        for (let a = 0; a < b; a++) {
+          const [w, y, z, v] = [x[a], x[b], x[c], x[d]];
+          if ((z < w && w < v && v < y) || (y < v && v < w && w < z)) return true;
+        }
   return false;
 }
 
@@ -205,6 +234,15 @@ const READINGS: Record<string, Reading> = {
       lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !contains(x, pattern)),
     ]),
   ),
+  // Interpreted, a window table of either takes seconds per completion count past n = 4.
+  NonCrossingPermutations: {
+    ...lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !crossing(x)),
+    interpretAt: process.env.DEEP_TESTS ? [5] : [4],
+  },
+  SeparablePermutations: {
+    ...lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !separates(x)),
+    interpretAt: process.env.DEEP_TESTS ? [5] : [3],
+  },
   ColoredPermutations: {
     params: [
       [0, 0],
@@ -233,6 +271,8 @@ const byHead = new Map(
     connectedPermutations,
     kDescentPermutations,
     ...permutationsAvoiding3,
+    separablePermutations,
+    nonCrossingPermutations,
     grassmannianPermutations,
     cograssmannianPermutations,
   ].map((family) => [family.head, family]),
@@ -269,7 +309,7 @@ const list = (xs: unknown[]): unknown => ["List", ...xs.map((x) => (Array.isArra
 test("the interpreter agrees with compiled code", () => {
   for (const [head, reading] of Object.entries(READINGS)) {
     const family = byHead.get(head)!;
-    const p = reading.params.at(-2)!;
+    const p = reading.interpretAt ?? reading.params.at(-2)!;
     const bind = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
     const total = reading.count(p);
     expect(interpreted(family, "count", bind)).toBe(total);

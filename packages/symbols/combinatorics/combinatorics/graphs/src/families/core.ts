@@ -6,7 +6,7 @@
 // one belongs in its area). `carrierParams: 1` prefixes `n` onto the carrier's Tuple argument
 // alongside the edge list (`Tournament(n, edges)`); `m` (LabeledGraphsByEdges' second param)
 // stays out of the carrier, same as `Composition`'s own axis/param split.
-import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import { Binomial } from "../../../collections/src/families/kernels-combinatorics.ts";
 import {
   SubsetCount,
@@ -19,6 +19,7 @@ import {
   TupleUnrank,
   TupleRank,
 } from "../../../collections/src/families/kernels-extra.ts";
+import { labeledGraphs, labeledGraphsByEdges, tournaments } from "./epsil.ts";
 
 // ─── edge indexing shared by LabeledGraphs/LabeledGraphsByEdges/Tournaments: the C(n,2) unordered
 // pairs of [n] in lexicographic order, so "which edges are present/oriented" reduces to an
@@ -118,38 +119,34 @@ export function IsTournamentOf(e: unknown, n: number): boolean {
   return true;
 }
 
-export const entries: NumberKernel[] = [
+// The TS kernels above are the `fast` path of each Epsil family (./epsil.ts): same order, and
+// faster than the compiled definitions while the fiber's count is a safe integer.
+export const entries: EpsilFamily[] = [
   {
-    head: "Tournaments",
-    paramCount: 1,
-    kind: "blocks",
-    carrier: "Tournament",
-    carrierParams: 1,
-    count: ([n]) => TournamentCount(n),
-    unrank: ([n], r) => TournamentUnrank(n, r),
-    valid: (e, [n]) => IsTournamentOf(e, n),
-    rank: (e, [n]) => TournamentRank(e as number[][], n),
+    ...tournaments,
+    fast: {
+      count: ([n]) => TournamentCount(n),
+      unrank: ([n], r) => TournamentUnrank(n, r),
+      rank: (e, [n]) => TournamentRank(e as number[][], n),
+      valid: (e, [n]) => IsTournamentOf(e, n),
+    },
   },
   {
-    head: "LabeledGraphs",
-    paramCount: 1,
-    kind: "blocks",
-    carrier: "LabeledGraph",
-    carrierParams: 1,
-    count: ([n]) => LabeledGraphCount(n),
-    unrank: ([n], r) => LabeledGraphUnrank(n, r),
-    valid: (e, [n]) => IsLabeledGraphOf(e, n),
-    rank: (e, [n]) => LabeledGraphRank(e as number[][], n),
+    ...labeledGraphs,
+    fast: {
+      count: ([n]) => LabeledGraphCount(n),
+      unrank: ([n], r) => LabeledGraphUnrank(n, r),
+      rank: (e, [n]) => LabeledGraphRank(e as number[][], n),
+      valid: (e, [n]) => IsLabeledGraphOf(e, n),
+    },
   },
   {
-    head: "LabeledGraphsByEdges",
-    paramCount: 2,
-    kind: "blocks",
-    carrier: "LabeledGraph",
-    carrierParams: 1,
-    count: ([n, m]) => LabeledGraphByEdgesCount(n, m),
-    unrank: ([n, m], r) => LabeledGraphByEdgesUnrank(n, m, r),
-    valid: (e, [n, m]) => IsLabeledGraphByEdgesOf(e, n, m),
-    rank: (e, [n]) => LabeledGraphByEdgesRank(e as number[][], n),
+    ...labeledGraphsByEdges,
+    fast: {
+      count: ([n, m]) => LabeledGraphByEdgesCount(n, m),
+      unrank: ([n, m], r) => LabeledGraphByEdgesUnrank(n, m, r),
+      rank: (e, [n]) => LabeledGraphByEdgesRank(e as number[][], n),
+      valid: (e, [n, m]) => IsLabeledGraphByEdgesOf(e, n, m),
+    },
   },
 ];

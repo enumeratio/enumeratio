@@ -1,4 +1,6 @@
+import { ComputeEngine } from "@enumeratio/engine/unstable"; // unstable: a kernel test builds its own engine
 import { expect, test } from "vite-plus/test";
+import { kernelOn } from "../../collections/src/families/epsil.ts";
 import { entries } from "../src/families/core.ts";
 
 // Self-cert Tournaments/LabeledGraphs/LabeledGraphsByEdges split out of
@@ -14,7 +16,8 @@ const PARAMS: Record<string, number[][]> = {
   ],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const ce = new ComputeEngine();
+const byHead = new Map(entries.map((e) => [e.head, kernelOn(ce, e)]));
 
 for (const [head, paramSets] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);
@@ -22,11 +25,11 @@ for (const [head, paramSets] of Object.entries(PARAMS)) {
   if (!entry) continue;
   for (const p of paramSets) {
     test(`${head}(${p.join(", ")}) round-trips`, () => {
-      const total = entry.count(p);
+      const total = Number(entry.count(p));
       for (let r = 0; r < total; r++) {
-        const element = entry.unrank(p, r);
+        const element = entry.unrank(p, BigInt(r));
         expect(entry.valid(element, p)).toBe(true);
-        expect(entry.rank(element, p)).toBe(r);
+        expect(entry.rank(element, p)).toBe(BigInt(r));
       }
     });
   }
@@ -35,15 +38,15 @@ for (const [head, paramSets] of Object.entries(PARAMS)) {
 test("Tournaments(n) = LabeledGraphs(n) = 2^C(n,2)", () => {
   const t = byHead.get("Tournaments")!;
   const g = byHead.get("LabeledGraphs")!;
-  expect([1, 2, 3, 4].map((n) => t.count([n]))).toEqual([1, 2, 8, 64]);
-  expect([1, 2, 3, 4].map((n) => g.count([n]))).toEqual([1, 2, 8, 64]);
+  expect([1, 2, 3, 4].map((n) => t.count([n]))).toEqual([1n, 2n, 8n, 64n]);
+  expect([1, 2, 3, 4].map((n) => g.count([n]))).toEqual([1n, 2n, 8n, 64n]);
 });
 
 // Golden first-few elements (rank 0 in each family), pinned as plain data — never a snapshot.
 test("golden: rank-0 elements of each family at a fixed size", () => {
   const golden: Record<string, unknown> = {
-    Tournaments: byHead.get("Tournaments")!.unrank([3], 0),
-    LabeledGraphs: byHead.get("LabeledGraphs")!.unrank([3], 0),
+    Tournaments: byHead.get("Tournaments")!.unrank([3], 0n),
+    LabeledGraphs: byHead.get("LabeledGraphs")!.unrank([3], 0n),
   };
   expect(golden).toEqual({
     Tournaments: [

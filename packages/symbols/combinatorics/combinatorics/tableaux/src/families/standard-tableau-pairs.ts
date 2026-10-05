@@ -13,6 +13,8 @@ import { IsStandardTableauOf } from "../../../collections/src/families/tableaux-
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
+// Stays TS: the element is nested (no compiled type, so Epsil would only be interpreted), and RSK is
+// insertion with bumping over lists of lists.
 // ═══ StandardTableauPairs(size) — the RSK codomain: pairs (P,Q) of same-shape SYT, n cells ═══
 // RSK is a bijection permutations(n) ↔ {(P,Q)}, so count = n! (exact, closed-form) and unrank/rank ride
 // straight on PermutationUnrank/Rank (kernels.ts) through forward/inverse RSK insertion. Element: `[P, Q]`

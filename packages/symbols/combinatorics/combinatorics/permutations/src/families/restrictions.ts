@@ -43,6 +43,16 @@ const sum = (body: (i: string) => MathJSON, i: string, from: MathJSON, to: MathJ
 const count = (condition: (i: string) => MathJSON, i: string, from: MathJSON, to: MathJSON): MathJSON =>
   sum((x) => iff(condition(x), 1, 0), i, from, to);
 const used = (v: MathJSON): MathJSON => ["NotEqual", at("taken", v), 0];
+/** The list of `body` over `variable` = from..to, filled in place: the interpreter keeps a `Map`
+ *  lazy, so a mapped list read by `At` many times is recomputed each time. */
+const tabulate = (body: MathJSON, variable: string, from: MathJSON, to: MathJSON): MathJSON =>
+  fold(
+    ["ReplaceAt", `${variable}_l`, add(sub(variable, from), 1), body],
+    `${variable}_l`,
+    variable,
+    map(0, `${variable}_z`, upTo(from, to)),
+    upTo(from, to),
+  );
 /** Free values below (or above) the prefix's last entry. */
 const freeBelow = count((v) => ["And", ["Less", v, last], ["Not", used(v)]], "fb", 1, n);
 const freeAbove = count((v) => ["And", ["Greater", v, last], ["Not", used(v)]], "fa", 1, n);
@@ -385,6 +395,400 @@ function permutationsAvoiding(pattern: string): EpsilFamily {
 
 export const permutationsAvoiding3 = ["123", "132", "213", "231", "312", "321"].map(permutationsAvoiding);
 
+// Separable: Av(2413, 3142), built from 1 by direct (⊕) and skew (⊖) sums, counted by the large
+// Schröder numbers. Completions follow the decomposition over a window of values [lo, lo + s − 1]
+// and the prefix entries still to place, from slot j + 1 on: K(j, lo, s) counts the separable
+// arrangements of the window starting with them, K⊕ and K⊖ those that are a ⊕ (or ⊖) sum. In a
+// ⊕ sum the first component takes the lowest values. When the remaining prefix opens with a run
+// on exactly the lowest c₀ values, that run is the first component (c₀ is the shortest such run,
+// so the run is ⊕-indecomposable) and the rest is K of the window above it. Otherwise the first
+// component takes the whole remaining prefix and some c values, a ⊖ sum, times the separable
+// arrangements of the s − c values left. ⊖ is the mirror image. With no prefix left, a window of
+// s ≥ 2 values is ⊕ or ⊖ in half its sep(s) arrangements each. Any pattern inside a run is one
+// the prefix already avoids, since every occurrence in it ends at its last entry.
+const sep = (size: MathJSON): MathJSON => iff(equal(size, 0), 1, at("schroder", size));
+/** S(0..n − 1) by S(k) = ((6k − 3) S(k − 1) − (k − 2) S(k − 2)) / (k + 1), from S(0) = 1, S(1) = 2. */
+const schroderTable = fold(
+  [
+    "Append",
+    "sq",
+    quotient(sub(mul(sub(mul(6, "sk"), 3), at("sq", "sk")), mul(sub("sk", 2), at("sq", sub("sk", 1)))), add("sk", 1)),
+  ],
+  "sq",
+  "sk",
+  ["List", 1, 2],
+  upTo(2, sub(n, 1)),
+);
+/** A cell's column: start j (0 ≤ j < filled), window bottom lo, and ⊕ (1) or ⊖ (2). */
+const sepColumn = (j: MathJSON, lo: MathJSON, kind: MathJSON): MathJSON =>
+  add(mul(2, add(mul(add(n, 1), j), sub(lo, 1))), sub(kind, 1));
+/** Whether the prefix from slot j + 1 fits a window of s values from lo. */
+const sepFits = (j: MathJSON, lo: MathJSON, s: MathJSON): MathJSON =>
+  and(
+    less(j, "filled"),
+    ["LessEqual", sub("filled", j), s],
+    ["LessEqual", add(lo, s, -1), n],
+    ["GreaterEqual", at("smin", add(j, 1)), lo],
+    ["LessEqual", at("smax", add(j, 1)), add(lo, s, -1)],
+  );
+type Read = (s: MathJSON, column: MathJSON) => MathJSON;
+const sepAll = (read: Read, j: MathJSON, lo: MathJSON, s: MathJSON): MathJSON =>
+  iff(
+    equal(j, "filled"),
+    sep(s),
+    iff(sepFits(j, lo, s), add(iff(equal(s, 1), 1, 0), read(s, sepColumn(j, lo, 1)), read(s, sepColumn(j, lo, 2))), 0),
+  );
+/** K⊕ (or K⊖) at (j, lo, s), reading smaller windows. */
+function sepSum(read: Read, plus: boolean, j: string, lo: string, s: string): MathJSON {
+  const hi = add(lo, s, -1);
+  const rem = sub("filled", j);
+  const run = fold(
+    iff(
+      ["NotEqual", at("sr", 1), 0],
+      "sr",
+      lets(
+        [
+          ["srm", ["Min", at("sr", 2), pre(add(j, "sc"))], "integer"],
+          ["srx", ["Max", at("sr", 3), pre(add(j, "sc"))], "integer"],
+        ],
+        [
+          "List",
+          iff(
+            plus
+              ? and(equal("srm", lo), equal("srx", add(lo, "sc", -1)))
+              : and(equal("srx", hi), equal("srm", sub(add(hi, 1), "sc"))),
+            "sc",
+            0,
+          ),
+          "srm",
+          "srx",
+        ],
+      ),
+    ),
+    "sr",
+    "sc",
+    ["List", 0, add(n, 1), 0],
+    upTo(1, rem),
+  );
+  return lets(
+    [["sc0", at(run, 1), "integer"]],
+    iff(
+      ["Greater", "sc0", 0],
+      iff(less("sc0", s), sepAll(read, add(j, "sc0"), plus ? add(lo, "sc0") : lo, sub(s, "sc0")), 0),
+      sum(
+        (c) => mul(read(c, sepColumn(j, plus ? lo : sub(add(hi, 1), c), plus ? 2 : 1)), sep(sub(s, c))),
+        "ss",
+        add(rem, 1),
+        sub(s, 1),
+      ),
+    ),
+  );
+}
+const sepWidth = mul(2, "filled", add(n, 1));
+const sepTable = rowTable(
+  "st",
+  add(n, 1),
+  "sw",
+  () => 0,
+  (prev, s, c) =>
+    lets(
+      [
+        ["stq", quotient(c, 2), "integer"],
+        ["stj", quotient("stq", add(n, 1)), "integer"],
+        ["stl", add(["Mod", "stq", add(n, 1)], 1), "integer"],
+      ],
+      iff(
+        sepFits("stj", "stl", s),
+        iff(equal(["Mod", c, 2], 0), sepSum(prev, true, "stj", "stl", s), sepSum(prev, false, "stj", "stl", s)),
+        0,
+      ),
+    ),
+);
+/** Whether entries at a < b < c < d read as 2413 or 3142. */
+const separates = (w: MathJSON, x: MathJSON, y: MathJSON, z: MathJSON): MathJSON => [
+  "Or",
+  and(less(y, w), less(w, z), less(z, x)),
+  and(less(x, z), less(z, w), less(w, y)),
+];
+/** Whether some a < b < c < d (d given) in `list` read as 2413 or 3142. */
+const separatesBefore = (list: string, d: MathJSON, tag: string): MathJSON =>
+  fold(
+    [
+      "Or",
+      `${tag}c_`,
+      fold(
+        [
+          "Or",
+          `${tag}b_`,
+          fold(
+            ["Or", `${tag}a_`, separates(at(list, `${tag}a`), at(list, `${tag}b`), at(list, `${tag}c`), at(list, d))],
+            `${tag}a_`,
+            `${tag}a`,
+            "False",
+            upTo(1, sub(`${tag}b`, 1)),
+          ),
+        ],
+        `${tag}b_`,
+        `${tag}b`,
+        "False",
+        upTo(1, sub(`${tag}c`, 1)),
+      ),
+    ],
+    `${tag}c_`,
+    `${tag}c`,
+    "False",
+    upTo(1, sub(d, 1)),
+  );
+/** Suffix extremes of the prefix: entry j + 1 the min (or max) over slots j + 1..filled. */
+const suffixOf = (op: string, tag: string): MathJSON =>
+  tabulate(
+    fold(
+      [op, `${tag}e`, pre(`${tag}q`)],
+      `${tag}e`,
+      `${tag}q`,
+      op === "Min" ? add(n, 1) : 0,
+      upTo(`${tag}j`, "filled"),
+    ),
+    `${tag}j`,
+    1,
+    ["Max", "filled", 1],
+  );
+
+const separablePermutations: EpsilFamily = permutationRestriction({
+  head: "SeparablePermutations",
+  carrier: "Permutation",
+  paramCount: 1,
+  params: [n],
+  declared: polynomial(),
+  tables: ["schroder", schroderTable],
+  predicate: ["Not", fold(["Or", "sd_", separatesBefore("_x", "sd", "sx")], "sd_", "sd", "False", upTo(1, n))],
+  completions: iff(
+    equal("filled", 0),
+    sep(n),
+    iff(
+      separatesBefore("prefix", "filled", "sp"),
+      0,
+      lets(
+        [
+          ["smin", suffixOf("Min", "sn"), "list<integer>"],
+          ["smax", suffixOf("Max", "sm"), "list<integer>"],
+          ["sw", sepWidth, "integer"],
+          ["stable", sepTable, "list<integer>"],
+        ],
+        sepAll((s, column) => at("stable", add(mul(s, "sw"), column, 1)), 0, 1, n),
+      ),
+    ),
+  ),
+});
+
+// Non-crossing: the cycles, read as blocks of a set partition, don't cross. The prefix's edges
+// i → prefix(i) split 1..n into components: closed cycles, and paths (an untouched value is one)
+// each ending at a value past `filled`. A completion is a non-crossing partition whose blocks are
+// unions of components, a block of M paths closing into (M − 1)! cycles, a closed cycle a block on
+// its own. A range [i, j] is closed when no component leaves it; F(i, j) counts its completions,
+// split on the block B of i (its least value): each gap between B's values, and the range past
+// its greatest, must be closed and counted by F, which makes B a union of components and keeps it
+// from crossing. B is i's cycle where i is a cycle's least value; otherwise D(v, M) chains B's
+// values up to v, M the paths among them (one per path, at its least value).
+const ncCode = (a: MathJSON): MathJSON => at("ncc", a);
+const ncCycle = (a: MathJSON): MathJSON => equal(["Mod", ncCode(a), 2], 1);
+const ncLow = (a: MathJSON): MathJSON => at("nclo", a);
+const ncHigh = (a: MathJSON): MathJSON => at("nchi", a);
+/** F at [a, b]: 1 when empty, 0 unless closed. Rows of `ncf` run i = n down to 1. */
+const ncGet = (a: MathJSON, b: MathJSON): MathJSON =>
+  iff(
+    ["Greater", a, b],
+    1,
+    iff(equal(at("ncl", add(mul(sub(a, 1), n), b)), 1), at("ncf", add(mul(sub(n, a), n), b)), 0),
+  );
+/** Each value's component, walking forward until a value past `filled` ends its path or the walk
+ *  returns: twice the path's end, or twice the cycle's least value plus 1. */
+const ncCodes = tabulate(
+  lets(
+    [
+      [
+        "ncw",
+        fold(
+          iff(
+            ["NotEqual", at("ncs", 2), 0],
+            "ncs",
+            iff(
+              ["Greater", at("ncs", 1), "filled"],
+              ["List", at("ncs", 1), 1, at("ncs", 3)],
+              lets(
+                [["ncy", pre(at("ncs", 1)), "integer"]],
+                iff(
+                  equal("ncy", "nca"),
+                  ["List", at("ncs", 1), 2, at("ncs", 3)],
+                  ["List", "ncy", 0, ["Min", at("ncs", 3), "ncy"]],
+                ),
+              ),
+            ),
+          ),
+          "ncs",
+          "nck",
+          ["List", "nca", 0, "nca"],
+          upTo(1, n),
+        ),
+        "list<integer>",
+      ],
+    ],
+    iff(equal(at("ncw", 2), 2), add(mul(2, at("ncw", 3)), 1), mul(2, at("ncw", 1))),
+  ),
+  "nca",
+  1,
+  n,
+);
+const ncExtreme = (op: string, tag: string): MathJSON =>
+  tabulate(
+    fold(
+      [op, `${tag}e`, iff(equal(ncCode(`${tag}b`), ncCode(`${tag}a`)), `${tag}b`, op === "Min" ? add(n, 1) : 0)],
+      `${tag}e`,
+      `${tag}b`,
+      op === "Min" ? add(n, 1) : 0,
+      upTo(1, n),
+    ),
+    `${tag}a`,
+    1,
+    n,
+  );
+/** 1 where [a, b] is closed, flat by (a − 1) n + b; 1 when a > b. */
+const ncClosed = tabulate(
+  lets(
+    [
+      ["nqa", add(quotient("nqi", n), 1), "integer"],
+      ["nqb", add(["Mod", "nqi", n], 1), "integer"],
+    ],
+    iff(
+      ["Greater", "nqa", "nqb"],
+      1,
+      iff(
+        fold(
+          and("nqok", ["GreaterEqual", ncLow("nqx"), "nqa"], ["LessEqual", ncHigh("nqx"), "nqb"]),
+          "nqok",
+          "nqx",
+          "True",
+          upTo("nqa", "nqb"),
+        ),
+        1,
+        0,
+      ),
+    ),
+  ),
+  "nqi",
+  0,
+  sub(mul(n, n), 1),
+);
+/** D for blocks from i: row t for v = i + t, column M. */
+const ncChains = (i: MathJSON): MathJSON =>
+  rowTable(
+    "nd",
+    add(sub(n, i), 1),
+    add(n, 1),
+    (c) => iff(and(equal(c, 1), ["Not", ncCycle(i)]), 1, 0),
+    (prev, t, c) =>
+      lets(
+        [
+          ["ndv", add(i, t), "integer"],
+          ["ndm", sub(c, iff(equal(ncLow("ndv"), "ndv"), 1, 0)), "integer"],
+        ],
+        iff(
+          ["Or", ncCycle("ndv"), less("ndm", 0)],
+          0,
+          sum((u) => mul(prev(u, "ndm"), ncGet(add(i, u, 1), sub("ndv", 1))), "ndu", 0, sub(t, 1)),
+        ),
+      ),
+  );
+/** F(i, j) for a cycle's least value i: its gaps, then the range past it. */
+const ncCycleBlock = (i: MathJSON, j: MathJSON): MathJSON =>
+  lets(
+    [
+      [
+        "ncg",
+        fold(
+          iff(
+            equal(ncCode("ncx"), ncCode(i)),
+            ["List", mul(at("ncg_", 1), ncGet(add(at("ncg_", 2), 1), sub("ncx", 1))), "ncx"],
+            "ncg_",
+          ),
+          "ncg_",
+          "ncx",
+          ["List", 1, i],
+          upTo(add(i, 1), ncHigh(i)),
+        ),
+        "list<integer>",
+      ],
+    ],
+    mul(at("ncg", 1), ncGet(add(ncHigh(i), 1), j)),
+  );
+const ncRows = fold(
+  lets(
+    [
+      ["nci", sub(n, "nck2"), "integer"],
+      ["ncd", ncChains("nci"), "list<integer>"],
+    ],
+    [
+      "Join",
+      "ncf",
+      tabulate(
+        iff(
+          ["Or", less("ncj", "nci"), equal(at("ncl", add(mul(sub("nci", 1), n), "ncj")), 0)],
+          0,
+          iff(
+            ncCycle("nci"),
+            ncCycleBlock("nci", "ncj"),
+            sum(
+              (t) =>
+                mul(
+                  ncGet(add("nci", t, 1), "ncj"),
+                  sum((m) => mul(at("ncd", add(mul(t, add(n, 1)), m, 1)), ["Factorial", sub(m, 1)]), "ncm", 1, n),
+                ),
+              "nct",
+              0,
+              sub("ncj", "nci"),
+            ),
+          ),
+        ),
+        "ncj",
+        1,
+        n,
+      ),
+    ],
+  ),
+  "ncf",
+  "nck2",
+  ["List"],
+  upTo(0, sub(n, 1)),
+);
+
+const nonCrossingPermutations: EpsilFamily = permutationRestriction({
+  head: "NonCrossingPermutations",
+  carrier: "Permutation",
+  paramCount: 1,
+  params: [n],
+  declared: polynomial(),
+  completions: iff(
+    equal(n, 0),
+    1,
+    lets(
+      [
+        ["ncc", ncCodes, "list<integer>"],
+        ["nclo", ncExtreme("Min", "nl"), "list<integer>"],
+        ["nchi", ncExtreme("Max", "nh"), "list<integer>"],
+        ["ncl", ncClosed, "list<integer>"],
+        ["ncf", ncRows, "list<integer>"],
+      ],
+      ncGet(1, n),
+    ),
+  ),
+});
+
 export const grassmannianPermutations = atMostOneTurn("GrassmannianPermutations", false);
 export const cograssmannianPermutations = atMostOneTurn("CograssmannianPermutations", true);
-export { alternatingPermutations, connectedPermutations, kDescentPermutations };
+export {
+  alternatingPermutations,
+  connectedPermutations,
+  kDescentPermutations,
+  nonCrossingPermutations,
+  separablePermutations,
+};
