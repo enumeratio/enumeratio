@@ -29,7 +29,6 @@ piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2
 generatingfunction-ceil-n-4-n-x			
 ceil-1	ceil(n(1))		
 ceil-neg-1	ceil(n(-1))		
-ceil-i			
 ceil-neg-i			
 ceil-23-over-10	ceil(rational(n(23), n(10)))		
 ceil-neg-3	ceil(n(-3))		
@@ -38,6 +37,7 @@ ceil-neg-pi	ceil((-(x(std::f64::consts::PI))))
 ceil-neg-27-over-10	ceil(rational(n(-27), n(10)))		
 ceil-negativeinfinity			
 ceil-23-over-10-plus-neg-i-times-exponentiale			
+ceil-i			
 a-zero-divisor-inside-ceil	ceil((n(16) / n(0)))	panic: denominator == 0	error
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceil(x(-3.7))	-3.0	
 nan-propagates-rather-than-erroring			

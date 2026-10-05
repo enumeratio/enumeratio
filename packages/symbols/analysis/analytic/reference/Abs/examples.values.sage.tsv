@@ -18,12 +18,12 @@ an-interval-maps-to-the-interval-of-absolute
 an-interval-straddling-0-maps-to-0-the-larger		
 decides-the-sign-of-an-exact-numeric-expression	abs((sqrt(2) - 2))	abs(sqrt(2) - 2)
 a-complex-radicand-inside-the-subtraction	abs((sqrt(-10) - 2))	abs(sqrt(-10) - 2)
-n-abs-pi-plus-i-times-catalan-25		
 fullsimplify-matrixfunction-abs-list-list-1-over		
 abs-positiveinfinity	abs(oo)	
+complexexpand-abs-x		
+n-abs-pi-plus-i-times-catalanconstant-25		
 abs-positiveinfinity-times-i	abs((oo * (0 + 1*I)))	
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2		
-complexexpand-abs-x		
 complexexpand-abs-x-plus-i-times-y		
 the-gap-between-two-temperatures-70-and-95	abs((70 - 95))	25
 the-distance-between-the-points-1-i-and-4-5i-of	abs(((1 + 1*I) - (4 + 5*I)))	5
@@ -37,10 +37,8 @@ abs-neg-i	abs((0 + -1*I))
 abs-neg-1-plus-i	abs((-1 + 1*I))	
 abs-neg-1-minus-i	abs((-1 + -1*I))	
 abs-1-minus-i	abs((1 + -1*I))	
-abs-sqrt-3-plus-i	abs((sqrt(3) + (0 + 1*I)))	
 abs-1-plus-sqrt-3-times-i	abs((1 + (0 + sqrt(3)*I)))	
 abs-neg-1-plus-sqrt-3-times-i	abs((-1 + (0 + sqrt(3)*I)))	
-abs-neg-sqrt-3-plus-i	abs(((-sqrt(3)) + (0 + 1*I)))	
 abs-neg-sqrt-3-minus-i	abs(((-sqrt(3)) + (0 + -1*I)))	
 abs-neg-1-plus-neg-sqrt-3-times-i	abs((-1 + (0 + (-sqrt(3))*I)))	
 abs-1-plus-neg-sqrt-3-times-i	abs((1 + (0 + (-sqrt(3))*I)))	
@@ -48,4 +46,6 @@ abs-sqrt-3-minus-i	abs((sqrt(3) + (0 + -1*I)))
 abs-2	abs(2)	
 abs-1-over-2-pow-2	((abs((1/2)))^2)	
 abs-2-pow-2	((abs(2))^2)	
+abs-sqrt-3-plus-i	abs((sqrt(3) + (0 + 1*I)))	
+abs-neg-sqrt-3-plus-i	abs(((-sqrt(3)) + (0 + 1*I)))	
 doesn-t-factor-constants-out-of-a-symbolic	abs((-3 * SR.var("x")))	True

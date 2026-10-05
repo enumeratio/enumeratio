@@ -41,6 +41,17 @@ test("Wolfram's variables i and e stay variables, not the imaginary unit and Eul
   });
 });
 
+test("a replacement's rules are rules, not key-value pairs", () => {
+  expect(adaptInput("HoldComplete[Replace[Power[x, 2], Rule[Power[x, 2], Plus[a, b]]]]")).toEqual({
+    ok: true,
+    expr: ["Replace", ["Power", "x", 2], ["Rule", ["Power", "x", 2], ["Add", "a", "b"]]],
+  });
+  expect(adaptInput("HoldComplete[Replace[x, List[List[Rule[x, 1]], List[Rule[y, 2]]]]]")).toEqual({
+    ok: true,
+    expr: ["Replace", "x", ["List", ["List", ["Rule", "x", 1]], ["List", ["Rule", "y", 2]]]],
+  });
+});
+
 test("mentions finds a head applied anywhere, or a constant on its own", () => {
   expect(mentions(["N", ["Zeta", 3]], "Zeta")).toBe(true);
   expect(mentions(["Add", "Pi", 1], "Pi")).toBe(true);

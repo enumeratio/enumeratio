@@ -29,7 +29,6 @@ piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2	PiecewiseExpand[Ceiling[Power[x, 2]], L
 generatingfunction-ceil-n-4-n-x	GeneratingFunction[Ceiling[n, 4], n, x]	True	\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\mathcal{G}_n[\text{Ceiling}[n,4]](x)-\frac{4 x}{x^5-x^4-x+1}\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\mathcal{G}_{\frac{7}{3}}\left[\text{Ceiling}\left[\frac{7}{3},4\right]\right]\left(-\frac{11}{5}\right)-\frac{4 \left(-\frac{11}{5}\right)}{\left(-\frac{11}{5}\right)^5-\left(-\frac{11}{5}\right)^4--\frac{11}{5}+1}\right]\right],\text{Chop}\left[N\left[\mathcal{G}_{\frac{13}{4}}\left[\text{Ceiling}\left[\frac{13}{4},4\right]\right]\left(-\frac{17}{6}\right)-\frac{4 \left(-\frac{17}{6}\right)}{\left(-\frac{17}{6}\right)^5-\left(-\frac{17}{6}\right)^4--\frac{17}{6}+1}\right]\right],\text{Chop}\left[N\left[\mathcal{G}_{\frac{19}{8}}\left[\text{Ceiling}\left[\frac{19}{8},4\right]\right]\left(-\frac{23}{9}\right)-\frac{4 \left(-\frac{23}{9}\right)}{\left(-\frac{23}{9}\right)^5-\left(-\frac{23}{9}\right)^4--\frac{23}{9}+1}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 ceil-1	Ceiling[1]	1	\lceil 1\rceil	1	
 ceil-neg-1	Ceiling[-1]	-1	\lceil -1\rceil	-1	
-ceil-i	Ceiling[Complex[0, 1]]	I	\lceil i\rceil	i	
 ceil-neg-i	Ceiling[Complex[0, -1]]	-I	\lceil -i\rceil	-i	
 ceil-23-over-10	Ceiling[Rational[23, 10]]	3	\left\lceil \frac{23}{10}\right\rceil	3	
 ceil-neg-3	Ceiling[-3]	-3	\lceil -3\rceil	-3	
@@ -38,6 +37,7 @@ ceil-neg-pi	Ceiling[Minus[Pi]]	-3	\lceil -\pi \rceil	-3
 ceil-neg-27-over-10	Ceiling[Rational[-27, 10]]	-2	\left\lceil -\frac{27}{10}\right\rceil	-2	
 ceil-negativeinfinity	Ceiling[-Infinity]	-Infinity	\lceil -\infty \rceil	-\infty	
 ceil-23-over-10-plus-neg-i-times-exponentiale	Ceiling[Plus[Rational[23, 10], Times[Complex[0, -1], E]]]	3 - 2*I	\left\lceil \frac{23}{10}-i e\right\rceil	3-2 i	
+ceil-i	Ceiling[Complex[0, 1]]	I	\lceil i\rceil	i	
 a-zero-divisor-inside-ceil	Ceiling[Divide[16, 0]]	ComplexInfinity	\left\lceil \frac{16}{0}\right\rceil	\text{ComplexInfinity}	disagree
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Ceiling[-3.7]	-3	\lceil -3.7\rceil	-3	
 nan-propagates-rather-than-erroring	Ceiling[Indeterminate]	Indeterminate	\lceil \text{Indeterminate}\rceil	\text{Indeterminate}	disagree
