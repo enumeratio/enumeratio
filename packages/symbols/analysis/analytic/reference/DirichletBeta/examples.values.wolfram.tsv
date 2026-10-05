@@ -6,13 +6,13 @@ numeric-for-a-floating-point-argument-through-4	DirichletBeta[2.5]	0.94862217403
 a-symbolic-argument-stays-symbolic	DirichletBeta[s]					
 beta-neg-6-e-6-2	DirichletBeta[-6]	-61/2		\beta (-6)	-\frac{61}{2}	
 n-dirichletbeta-4	N[DirichletBeta[4]]	0.9889445517411053		N[\beta (4)]	0.988945	
-map-dirichletbeta-list-2-3	Map[DirichletBeta, List[2, 3]]	{Catalan, Pi^3/32}				disagree
+map-dirichletbeta-list-2-3	Map[DirichletBeta, List[2, 3]]	{Catalan, Pi^3/32}		\text{DirichletBeta}\text{/@}\{2,3\}	\left\{C,\frac{\pi ^3}{32}\right\}	
 complex-arguments-here-on-the-critical-line	DirichletBeta[Complex[0.5, 14]]	1.5371154384403178 + 1.3434514268677575*I		\beta (0.5\, +14 i)	1.53712\, +1.34345 i	
 threads-elementwise-over-an-array	DirichletBeta[List[List[1, -1], List[-1, 1]]]	{{Pi/4, 0}, {0, Pi/4}}		\beta \left(\left( \begin{array}{cc}  1 & -1 \\  -1 & 1 \\ \end{array} \right)\right)	\left( \begin{array}{cc}  \frac{\pi }{4} & 0 \\  0 & \frac{\pi }{4} \\ \end{array} \right)	
 beta-s-to-1-as-s-to-infty	DirichletBeta[Infinity]	1		\beta (\infty )	1	
 uncertainty-propagation-beta-2-pm-0-01-g-pm-0	DirichletBeta[Around[2, 0.01]]	Around[0.9159655941772189, 0.0008158073611659278]		\beta (2\pm 0.010)	0.9160\pm 0.0008	disagree
 to-exactly-40-significant-digits-not-yet-85-come	N[DirichletBeta[2], 40]	0.9159655941772190150546035149323841107741484088881303605709`40.	0.9159655941772190150546035149323841107741	N[\beta (2),40]	0.9159655941772190150546035149323841107741	
-fullsimplify-matrixfunction-dirichletbeta-list	FullSimplify[MatrixFunction[DirichletBeta, List[List[1, -1], List[-1, 1]]]]	{{(1 + 2*Catalan)/4, (1 - 2*Catalan)/4}, {(1 - 2*Catalan)/4, (1 + 2*Catalan)/4}}				disagree
+fullsimplify-matrixfunction-dirichletbeta-list	FullSimplify[MatrixFunction[DirichletBeta, List[List[1, -1], List[-1, 1]]]]	{{(1 + 2*Catalan)/4, (1 - 2*Catalan)/4}, {(1 - 2*Catalan)/4, (1 + 2*Catalan)/4}}		\text{FullSimplify}\left[\text{MatrixFunction}\left[\text{DirichletBeta},\left( \begin{array}{cc}  1 & -1 \\  -1 & 1 \\ \end{array} \right)\right]\right]	\left( \begin{array}{cc}  \frac{1}{4} (2 C+1) & \frac{1}{4} (1-2 C) \\  \frac{1}{4} (1-2 C) & \frac{1}{4} (2 C+1) \\ \end{array} \right)	
 beta-7-61-pi-7-184320-the-61-is-the-euler-number	DirichletBeta[7]	(61*Pi^7)/184320		\beta (7)	\frac{61 \pi ^7}{184320}	
 beta-2k-e-2k-2-and-beta-2k-1-0	DirichletBeta[List[0, -1, -2, -3, -4]]	{1/2, 0, -1/2, 0, 5/2}		\beta (\{0,-1,-2,-3,-4\})	\left\{\frac{1}{2},0,-\frac{1}{2},0,\frac{5}{2}\right\}	
 beta-5-5-pi-5-1536	DirichletBeta[5]	(5*Pi^5)/1536		\beta (5)	\frac{5 \pi ^5}{1536}	

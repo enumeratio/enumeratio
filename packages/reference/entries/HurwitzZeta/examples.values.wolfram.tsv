@@ -28,7 +28,7 @@ pole-at-s-1-for-symbolic-a	HurwitzZeta[1, a]	ComplexInfinity		\zeta (1,a)	\text{
 pole-at-a-neg-2-re-s-positive	N[HurwitzZeta[2, -2]]	ComplexInfinity		N[\zeta (2,-2)]	\text{ComplexInfinity}	
 pole-at-a-neg-1-inexact-s	N[HurwitzZeta[0.158, -1]]	ComplexInfinity		N[\zeta (0.158,-1)]	\text{ComplexInfinity}	
 pole-at-a-0-re-s-positive	N[HurwitzZeta[3, 0]]	ComplexInfinity		N[\zeta (3,0)]	\text{ComplexInfinity}	
-re-s-0-a-neg-1-is-indeterminate	N[HurwitzZeta[Complex[0, -1], -1]]	Indeterminate		N[\zeta (-i,-1)]	\text{Indeterminate}	disagree
+re-s-0-a-neg-1-is-indeterminate	N[HurwitzZeta[Complex[0, -1], -1]]	Indeterminate		N[\zeta (-i,-1)]	\text{Indeterminate}	
 re-s-positive-complex-s-is-a-pole	N[HurwitzZeta[Complex[2, 1], 0]]	ComplexInfinity		N[\zeta (2+i,0)]	\text{ComplexInfinity}	
 n-hurwitzzeta-2-1	N[HurwitzZeta[2, 1]]	1.6449340668482262		N[\zeta (2,1)]	1.64493	
 n-hurwitzzeta-2-2	N[HurwitzZeta[2, 2]]	0.6449340668482262		N[\zeta (2,2)]	0.644934	
@@ -213,6 +213,6 @@ hurwitzzeta-2-9	HurwitzZeta[2, 9]	-1077749/705600 + Pi^2/6		\zeta (2,9)	\frac{\p
 hurwitzzeta-2-10	HurwitzZeta[2, 10]	-9778141/6350400 + Pi^2/6		\zeta (2,10)	\frac{\pi ^2}{6}-\frac{9778141}{6350400}	
 hurwitzzeta-4-1	HurwitzZeta[4, 1]	Pi^4/90		\zeta (4,1)	\frac{\pi ^4}{90}	
 zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the	HurwitzZeta[-3, Rational[7, 3]]	HurwitzZeta[-3, 7/3]		\zeta \left(-3,\frac{7}{3}\right)	\zeta \left(-3,\frac{7}{3}\right)	
-re-s-0-a-0-is-indeterminate	N[HurwitzZeta[Complex[0, -1], 0]]	Indeterminate		N[\zeta (-i,0)]	\text{Indeterminate}	disagree
+re-s-0-a-0-is-indeterminate	N[HurwitzZeta[Complex[0, -1], 0]]	Indeterminate		N[\zeta (-i,0)]	\text{Indeterminate}	
 re-s-negative-a-drops-the-term-cleanly	N[HurwitzZeta[Complex[-1.5, 0.5], -2]]	-4.632252692594822 - 17.64247080748051*I		N[\zeta (-1.5+0.5 i,-2)]	-4.63225-17.6425 i	
 hurwitzzeta-2-neg-2	HurwitzZeta[2, -2]	ComplexInfinity		\zeta (2,-2)	\text{ComplexInfinity}	
