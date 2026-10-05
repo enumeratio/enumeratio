@@ -15,9 +15,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Lint/typecheck + the docs build, once; the dist is the artifact `preview` deploys.
-  build:
-    name: check + site build
+  # Lint/typecheck and the web unit tests. Runs beside the site build, not before it; `build` below
+  # fans the two back in under the required check name.
+  check:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -35,12 +35,48 @@ jobs:
           PR_BODY: ${{ github.event.pull_request.body }}
         run: node .github/scripts/example-ids.ts
       - run: pnpm --filter @enumeratio/web run test
+
+  # The docs build; its dist is the artifact `preview` deploys. Skipped when `changes` finds nothing
+  # the site reads (a PR to root docs, say); `preview` is then skipped too.
+  site:
+    needs: changes
+    if: needs.changes.outputs.site == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
       - run: pnpm --filter @enumeratio/web run build
       - uses: actions/upload-artifact@v4
         with:
           name: site-dist
           path: web/.vitepress/dist
           retention-days: 3
+
+  # Branch protection names the required check `check + site build`; the work is in `check` and `site`.
+  # A skipped `site` passes, but only when `changes` itself succeeded.
+  build:
+    name: check + site build
+    needs: [changes, check, site]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - env:
+          CHANGES: ${{ needs.changes.result }}
+          CHECK: ${{ needs.check.result }}
+          SITE: ${{ needs.site.result }}
+        run: |
+          if [ "$CHANGES" != "success" ] || [ "$CHECK" != "success" ]; then
+            echo "changes: $CHANGES, check: $CHECK"
+            exit 1
+          fi
+          if [ "$SITE" != "success" ] && [ "$SITE" != "skipped" ]; then
+            echo "site build: $SITE"
+            exit 1
+          fi
+          [ "$SITE" = "skipped" ] && echo "::notice::nothing the site reads changed — site build skipped"
+          exit 0
 
   # Which packages a PR can affect (tools/ci/affected.ts): each changed package and what depends on
   # it. Anything that can move every package (lockfile, root config, CI, the engine) selects them
@@ -51,6 +87,7 @@ jobs:
     timeout-minutes: 5
     outputs:
       matrix: ${{ steps.select.outputs.matrix }}
+      site: ${{ steps.select.outputs.site }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -117,13 +154,13 @@ jobs:
           exit 0
 
   # Every build of every commit goes up as a Cloudflare Pages preview at <sha7>.enumeratio.pages.dev — PR pushes
-  # and main alike (production is GitHub Pages, pages.yml). Direct upload of the artifact `build` made: no second
+  # and main alike (production is GitHub Pages, pages.yml). Direct upload of the artifact `site` made: no second
   # site build, no CF build minutes. Same-repo only — fork PRs have no secrets. `--branch` is CF's one alias slot,
   # so it carries the sha; the commit message carries the PR number for preview-cleanup.yml to match on.
   preview:
     name: preview (Cloudflare Pages)
-    needs: build
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    needs: site
+    if: needs.site.result == 'success' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
