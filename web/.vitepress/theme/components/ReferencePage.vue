@@ -13,7 +13,25 @@ const props = defineProps<{
   name: string;
   entry?: ReferenceEntry;
   prerendered?: readonly (Prerendered | null | undefined)[];
+  /** The manifest's typed call forms, each with the package that declares it. */
+  overloads?: readonly Overload[];
 }>();
+
+interface Overload {
+  package: string;
+  type?: string;
+  overrides?: string;
+  on?: readonly string[];
+  symbols?: readonly string[];
+  types?: readonly string[];
+}
+
+// Where an overload applies, when it applies to less than every call.
+const scopeOf = (o: Overload): string | undefined => {
+  const parts = [o.on?.length ? `on ${o.on.join(", ")}` : "", o.types?.length ? `on ${o.types.join(", ")}` : ""];
+  if (o.symbols?.length) parts.push(`for symbols ${o.symbols.join(", ")}`);
+  return parts.filter(Boolean).join("; ") || undefined;
+};
 
 // Each example answered at build (data/prerender.ts): its typeset HTML shows from the first
 // paint, and the cell takes the answer instead of asking its kernel. The HTML gives way to the
@@ -64,6 +82,19 @@ const forSignature = (signature: { arity?: number; call: string }): ResolvedRefe
       identity: r.identity.replace(/\$(\d+)/g, (_m, k: string) => params[Number(k) - 1] ?? "_"),
     }));
 };
+
+// Several packages contribute the same call form; it is listed once, under its most
+// descriptive text.
+const GENERIC_SIGNATURE = /^(a constant, )?as compute-engine declares it$/;
+const signatures = computed(() => {
+  const byCall = new Map<string, NonNullable<ReferenceEntry["signatures"]>[number]>();
+  for (const sig of entry.value?.signatures ?? []) {
+    const seen = byCall.get(sig.call);
+    if (seen === undefined || (GENERIC_SIGNATURE.test(seen.description) && !GENERIC_SIGNATURE.test(sig.description)))
+      byCall.set(sig.call, sig);
+  }
+  return [...byCall.values()];
+});
 
 // notatio-out takes the MathJSON expression as a JSON string.
 const toJson = (expr: unknown): string => JSON.stringify(expr);
@@ -195,6 +226,7 @@ const followFragment = async (): Promise<void> => {
 };
 watch(fragment, () => void followFragment());
 onMounted(() => {
+  showTests.value = new URLSearchParams(location.search).has("tests");
   readLive();
   if (live.value) void nextTick(() => liveCell.value?.scrollIntoView({ block: "center" }));
   void followFragment();
@@ -216,10 +248,19 @@ const targetedExample = computed((): number =>
     ? (entry.value?.examples ?? []).findIndex((ex) => anchorOf(ex) === targeted.value)
     : -1,
 );
+// `?tests` shows the examples kept as data (`role: test`) along with the rest.
+const showTests = ref(false);
 const shown = (ex: { role?: string }, i: number): boolean =>
-  // Kept as data, not rendered -- unless a deep link asks for it. A row waiting in triage
-  // holds our unsettled answer, so it isn't shown even then.
-  ex.role !== "triage" && (ex.role !== "test" || i === targetedExample.value);
+  // Kept as data, not rendered -- unless a deep link or `?tests` asks for it. A row waiting
+  // in triage holds our unsettled answer, so it isn't shown even then.
+  ex.role !== "triage" && (ex.role !== "test" || showTests.value || i === targetedExample.value);
+const toggleTests = (): void => {
+  showTests.value = !showTests.value;
+  const url = new URL(location.href);
+  if (showTests.value) url.searchParams.set("tests", "");
+  else url.searchParams.delete("tests");
+  history.replaceState(history.state, "", url);
+};
 const casesOf = (key: string): number[] => membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
 const cycle = (key: string, cases: readonly number[], step: number): void => {
   const was = entry.value!.examples[cases[activeCase[key] ?? 0]!]!;
@@ -272,7 +313,7 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
   <div v-if="entry" class="reference-entry">
     <p v-if="entry.stub === 'engine'" class="ref-stub">
       Generated from the engine's own definition: compute-engine's symbol, which we neither extend nor document by hand.
-      No examples yet — the crosswalk is the reason it has a page.
+      <template v-if="!entry.examples.length">No examples yet — the crosswalk is the reason it has a page.</template>
     </p>
     <p v-else-if="entry.stub === 'carrier'" class="ref-stub">
       A carrier domain from <a href="/reference/domains/">the domains catalogue</a>; the signature is its storage shape.
@@ -283,8 +324,8 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 
     <Crosswalk :references="headwide" />
 
-    <div v-if="entry.signatures?.length" id="signatures" class="ref-signatures">
-      <div v-for="(sig, i) in entry.signatures" :key="i" class="ref-signature">
+    <div v-if="signatures.length" id="signatures" class="ref-signatures">
+      <div v-for="(sig, i) in signatures" :key="i" class="ref-signature">
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
         <code v-html="callHtml(sig.call)"></code>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
@@ -296,6 +337,33 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
       <code v-html="callHtml(entry.signature)"></code>
     </p>
+
+    <details v-if="overloads?.length" id="typed-signatures" class="ref-typed" open>
+      <summary>Typed signatures</summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Package</th>
+            <th>Applies</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(o, i) in overloads" :key="i">
+            <td>
+              <code>{{ o.type ?? "untyped" }}</code>
+            </td>
+            <td>
+              <code>{{ o.package }}</code>
+              <span v-if="o.overrides" class="ref-typed-note"
+                >replaces <code>{{ o.overrides }}</code></span
+              >
+            </td>
+            <td>{{ scopeOf(o) ?? "always" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
 
     <section v-if="live" id="live" ref="liveCell" class="ref-live">
       <h2>Live</h2>
@@ -347,11 +415,12 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       </ClientOnly>
     </section>
 
-    <div v-if="grouped.length" class="ref-examples-head">
+    <div v-if="grouped.length || testCount" class="ref-examples-head">
       <h2>Examples</h2>
-      <span v-if="testCount" class="ref-hidden-count"
-        >{{ testCount }} more kept as data, checked against the oracles</span
-      >
+      <span v-if="testCount" class="ref-hidden-count">
+        {{ testCount }} more kept as data, checked against the oracles
+        <button @click="toggleTests">{{ showTests ? "hide" : "show" }}</button>
+      </span>
       <span class="ref-view">
         <button v-if="grouped.length > 1" @click="sectionsOpen = !sectionsOpen">
           {{ sectionsOpen ? "close all" : "open all" }}
@@ -540,6 +609,24 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 .ref-sig-desc {
   margin-left: 0.5rem;
   color: var(--vp-c-text-2);
+}
+.ref-typed {
+  margin: 0.75rem 0;
+}
+.ref-typed summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+}
+.ref-typed table {
+  display: table;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+.ref-typed-note {
+  margin-left: 0.5rem;
+  color: var(--vp-c-text-3);
 }
 .ref-details {
   margin: 1rem 0;
