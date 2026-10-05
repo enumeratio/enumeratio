@@ -1,2 +1,2 @@
-id	in
-tex-island	FormBox["x^2", enumeratio`TeXForm]
+id	in	out	tex.in	tex.out
+tex-island	FormBox["x^2", TeXForm]	FormBox["x^2", TeXForm]	\text{FormBox}[\text{x${}^{\wedge}$2},\text{TeXForm}]	\text{FormBox}[\text{x${}^{\wedge}$2},\text{TeXForm}]

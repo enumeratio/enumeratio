@@ -117,7 +117,20 @@ const allCases: Case[] = scannedEntries.flatMap((entry) =>
       expected: example.expected as MathJSON,
     })),
 );
-const cases: Case[] = allCases.filter(
+// A row named by `--ids` is scanned whatever its role (a triage or aspirational row included), so
+// a fix can be checked against it; `--accept` still never settles it (the scan only writes the record).
+const named: Case[] = scannedEntries.flatMap((entry) =>
+  entry.examples
+    .filter((example) => !isSettled(example) && idFilter?.has(`${entry.name}/${example.id}`))
+    .map((example) => ({
+      id: `${entry.name}/${example.id}`,
+      head: entry.name,
+      key: example.id,
+      expr: example.expr as MathJSON,
+      expected: example.expected as MathJSON,
+    })),
+);
+const cases: Case[] = [...allCases, ...named].filter(
   (item) =>
     (headFilter === undefined || headFilter.has(item.head)) && (idFilter === undefined || idFilter.has(item.id)),
 );
@@ -312,6 +325,7 @@ for (const system of systems) {
     // A row in triage isn't scanned but keeps the run it was triaged on.
     const current = new Set([
       ...allCases.filter((c) => c.head === head).map((c) => c.key),
+      ...ofHead.map((c) => c.key),
       ...(inTriage.get(head) ?? []),
     ]);
     const put = (id: string, row: SystemImplementation | undefined): void => {

@@ -35,7 +35,7 @@ to-40-significant-digits-every-one-correctly	N[Gamma[Rational[1, 3]], 40]	2.6789
 gamma-neg-infty-indeterminate	Gamma[-Infinity]	Indeterminate		\Gamma (-\infty )	\text{Indeterminate}	
 gamma-complex-infinity-indeterminate	Gamma[ComplexInfinity]	ComplexInfinity		\Gamma (\text{ComplexInfinity})	\text{ComplexInfinity}	disagree
 gamma-i-infty-0	Limit[Gamma[Times[I, t]], Rule[t, Infinity]]	0		\underset{t\to \infty }{\text{lim}}\Gamma (i t)	0	disagree
-gamma-directed-infinity-i	Gamma[enumeratio`DirectedInfinity[I]]	Gamma[enumeratio`DirectedInfinity[I]]		\Gamma (\text{enumeratio$\grave{ }$DirectedInfinity}(i))	\Gamma (\text{enumeratio$\grave{ }$DirectedInfinity}(i))	
+gamma-directed-infinity-i	Gamma[DirectedInfinity[I]]	0		\Gamma (i \infty )	0	disagree
 gamma-threads-over-the-infinities	Map[Gamma, List[Infinity, -Infinity, ComplexInfinity]]	{Infinity, Indeterminate, ComplexInfinity}		\text{Gamma}\text{/@}\{\infty ,-\infty ,\text{ComplexInfinity}\}	\{\infty ,\text{Indeterminate},\text{ComplexInfinity}\}	disagree
 the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2	(Divide[Power[Pi, 2], Gamma[3]] == Divide[Power[Pi, 2], 2])	True		\frac{\pi ^2}{\Gamma (3)}=\frac{\pi ^2}{2}	\text{True}	
 extends-the-factorial-gamma-n-1-n-so-gamma-6-5	(Gamma[6] == Factorial[5])	True		\Gamma (6)=5!	\text{True}	

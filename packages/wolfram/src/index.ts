@@ -7,6 +7,7 @@ export {
   FOREIGN,
   HEADS,
   isWolframHead,
+  isWolframOwnName,
   NUMBER_SETS,
   ringOption,
   STRUCTURAL,

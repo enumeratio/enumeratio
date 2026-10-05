@@ -266,6 +266,12 @@ test("Midpoint's two points travel as Wolfram's list of two", () => {
   expect(fromWolfram("Midpoint[List[List[1, 1], List[2, 3]]]")).toEqual(["Midpoint", ["List", 1, 1], ["List", 2, 3]]);
 });
 
+test("a named character reads back as the character", () => {
+  expect(fromWolfram('"\\[Limit]\\[Alpha]a"')).toBe("'\uf438\u03b1a'");
+  // A name the table lacks stays as the kernel wrote it.
+  expect(fromWolfram('"\\[NoSuchName]"')).toBe("'\\[NoSuchName]'");
+});
+
 test("a Function of slot parameters is Wolfram's anonymous one", () => {
   expect(toWolfram(["Function", ["Block", ["Power", "_1", 2]], "_1"])).toBe("Function[Power[Slot[1], 2]]");
 });

@@ -46,6 +46,20 @@ const STRUCTURED_HEADS = new Set([
   "Not",
 ]);
 
+/** Heads of an answer that states something rather than computes a value: compared as statements. */
+const PROPOSITIONS = new Set([
+  "Equal",
+  "NotEqual",
+  "Less",
+  "LessEqual",
+  "Greater",
+  "GreaterEqual",
+  "Inequality",
+  "And",
+  "Or",
+  "Not",
+]);
+
 /**
  * Whether `expr`'s value is a structure "is the difference zero" can't meaningfully ask about.
  * A bare `STRUCTURED_HEADS` call always is. A `List`/`Tuple` is NOT, on its own (BL-25): a list
@@ -75,7 +89,54 @@ const RATIONALS: readonly (readonly [number, number])[] = [
   [-23, 9],
 ];
 
+/** Where a variable over the integers is sampled: distinct, none of 0, 1 or -1. */
+const INTEGERS: readonly number[] = [3, 5, 4, 7, 6, 8];
+
 const NUMBER_OF_TRIALS = 3;
+
+/** Heads that take their second operand's variable as a step over the integers. */
+const DISCRETE_STEPS = new Set(["DifferenceDelta", "DiscreteRatio"]);
+
+const bareName = (e: MathJSON | undefined): string | undefined =>
+  typeof e === "string" && !/^'.*'$/s.test(e) ? e : undefined;
+
+/** A step call by its definition, for a kernel that holds `DifferenceDelta[f[k], k]` symbolic and
+ * would read the call at a number as nothing: `f(k + 1) - f(k)`, `f(k + 1) / f(k)`. */
+const STEP_DEFINITIONS =
+  "{DifferenceDelta[g_, v_Symbol] :> (g /. v -> v + 1) - g, DiscreteRatio[g_, v_Symbol] :> (g /. v -> v + 1)/g}";
+
+/** The variables `expr` steps by one: the second operand of a `DifferenceDelta` or `DiscreteRatio`. */
+export function stepVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (DISCRETE_STEPS.has(head)) {
+    for (const step of operands.slice(1)) {
+      const name = bareName(Array.isArray(step) && (step[0] === "List" || step[0] === "Tuple") ? step[1] : step);
+      if (name !== undefined) found.add(name);
+    }
+  }
+  for (const operand of operands) stepVariables(operand, found);
+  return found;
+}
+
+/** The variables of `expr` that range over the integers: a step variable, and a `Sum`/`Product`
+ * index with any bare bound it names. Wolfram's q-functions and `BetaRegularized` have no value at
+ * a rational step, so sampling one there decides nothing. */
+export function discreteVariables(expr: MathJSON, found: Set<string> = stepVariables(expr)): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "Sum" || head === "Product") {
+    for (const range of operands.slice(1)) {
+      if (!Array.isArray(range) || !["List", "Tuple", "Limits"].includes(range[0] as string)) continue;
+      for (const bound of range.slice(1)) {
+        const name = bareName(bound as MathJSON);
+        if (name !== undefined) found.add(name);
+      }
+    }
+  }
+  for (const operand of operands) discreteVariables(operand, found);
+  return found;
+}
 
 const rationalLiteral = ([n, d]: readonly [number, number]): MathJSON => ["Rational", n, d];
 
@@ -97,29 +158,50 @@ function substituteFreeSymbols(expr: MathJSON, subs: ReadonlyMap<string, MathJSO
 /** `freeSymbols`, each bound to a distinct rational for trial `n` (0, 1, 2, …) — cycling
  * through `RATIONALS` with a per-trial offset so the same symbol gets a different value each
  * time, and two different symbols in the same trial never get the same value either. */
-function trialSubstitution(freeSymbols: readonly string[], trial: number): ReadonlyMap<string, MathJSON> {
+function trialSubstitution(
+  freeSymbols: readonly string[],
+  trial: number,
+  discrete: ReadonlySet<string> = new Set(),
+): ReadonlyMap<string, MathJSON> {
   return new Map(
-    freeSymbols.map((name, i) => [
-      name,
-      rationalLiteral(RATIONALS[(i + trial * freeSymbols.length) % RATIONALS.length]!),
-    ]),
+    freeSymbols.map((name, i) => {
+      const at = (i + trial * freeSymbols.length) % RATIONALS.length;
+      return [name, discrete.has(name) ? (INTEGERS[at] as number) : rationalLiteral(RATIONALS[at]!)];
+    }),
   );
 }
 
 /** One trial's pair of emitted sources (theirs, ours), or `undefined` when the substituted
  * expression no longer emits for `system` (an unrelated mapping gap, not this mechanism's
- * problem — the trial is just skipped, not the whole check). */
+ * problem — the trial is just skipped, not the whole check). For Wolfram a step variable is
+ * not substituted into the call (`DifferenceDelta[f[k], k]` needs its `k`): `after` is what to
+ * replace in the evaluated difference instead, as Wolfram rules. */
 function trialSources(
   system: SymbolicSystem,
   expr: MathJSON,
   expected: MathJSON,
   freeSymbols: readonly string[],
   trial: number,
-): { readonly theirs: string; readonly ours: string } | undefined {
-  const subs = trialSubstitution(freeSymbols, trial);
+): { readonly theirs: string; readonly ours: string; readonly after: string; readonly expanded: boolean } | undefined {
+  const all = trialSubstitution(freeSymbols, trial, discreteVariables(expr));
+  const steps = system === "wolfram" ? stepVariables(expr) : new Set<string>();
+  const subs = new Map([...all].filter(([name]) => !steps.has(name)));
   const theirs = emit(substituteFreeSymbols(expr, subs), system);
   const ours = emit(substituteFreeSymbols(expected, subs), system);
-  return theirs.ok && ours.ok ? { theirs: theirs.source, ours: ours.source } : undefined;
+  if (!theirs.ok || !ours.ok) return undefined;
+  const rules = [...all]
+    .filter(([name]) => steps.has(name))
+    .map(([name, value]) => [emit(name, system), emit(value, system)] as const);
+  if (rules.some(([name, value]) => !name.ok || !value.ok)) return undefined;
+  const after = rules.map(
+    ([name, value]) => `${(name as { source: string }).source} -> ${(value as { source: string }).source}`,
+  );
+  return {
+    theirs: theirs.source,
+    ours: ours.source,
+    after: after.length === 0 ? "{}" : `{${after.join(", ")}}`,
+    expanded: after.length > 0,
+  };
 }
 
 /**
@@ -155,7 +237,13 @@ function propositionAgreementSource(theirs: string, ours: string): string {
     `zero[t[[1]] - t[[2]] - (o[[1]] - o[[2]])] || zero[t[[1]] - t[[2]] + (o[[1]] - o[[2]])]; ` +
     `agree[t_, o_] /; MatchQ[t, _Less | _LessEqual | _Greater | _GreaterEqual] && Head[t] === Head[o] && ` +
     `Length[t] == 2 && Length[o] == 2 := zero[t[[1]] - o[[1]]] && zero[t[[2]] - o[[2]]]; ` +
-    `agree[_, _] := Indeterminate; ` +
+    // Any other pair of statements (an `Or`, `x > 0` against `0 < x`): equivalent when the kernel can show it.
+    `agree[t_, o_] := Module[{v = Select[Union[Cases[{t, o}, _Symbol, {-1}]], Context[#] =!= "System\`" &], r}, ` +
+    `r = Quiet[TimeConstrained[FullSimplify[Equivalent[t, o]], 10, $Aborted]]; ` +
+    `If[r === True || r === False, r, ` +
+    `r = Quiet[TimeConstrained[If[v === {}, Resolve[Equivalent[t, o], Reals], ` +
+    `Resolve[ForAll[Evaluate[v], Equivalent[t, o]], Reals]], 20, $Aborted]]; ` +
+    `If[r === True || r === False, r, Indeterminate]]]; ` +
     `agree[${theirs}, ${ours}]]`
   );
 }
@@ -251,8 +339,9 @@ function sameValue(a: MathJSON, b: MathJSON): boolean {
  * argument whose two writings the simplifier won't reduce to one. */
 function agreeAtPoints(a: MathJSON, b: MathJSON): boolean {
   const names = [...new Set([...ce.box(a as never).unknowns, ...ce.box(b as never).unknowns])];
+  const discrete = new Set([...discreteVariables(a), ...discreteVariables(b)]);
   return Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) => {
-    const subs = trialSubstitution(names, trial);
+    const subs = trialSubstitution(names, trial, discrete);
     const [x, y] = [a, b].map((e) => ce.box(substituteFreeSymbols(e, subs) as never).N());
     const close = (p: number, q: number) => Number.isFinite(p) && Number.isFinite(q) && Math.abs(p - q) < 1e-9;
     return close(x!.re, y!.re) && close(x!.im, y!.im);
@@ -283,8 +372,7 @@ export function symbolicAgreementSource(
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
   if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;
-  const equating =
-    system === "wolfram" && Array.isArray(expected) && (expected[0] === "Equal" || expected[0] === "And");
+  const equating = system === "wolfram" && Array.isArray(expected) && PROPOSITIONS.has(expected[0] as string);
   if (!solving && !equating && (isStructured(expr) || isStructured(expected))) return undefined;
   const theirs = emit(expr, system);
   const ours = emit(expected, system);
@@ -296,7 +384,14 @@ export function symbolicAgreementSource(
     trialSources(system, expr, expected, freeSymbols, trial),
   );
   if (system === "wolfram") {
-    const points = trials.map((t) => (t === undefined ? "Indeterminate" : `Chop[N[(${t.theirs}) - (${t.ours})]]`));
+    const points = trials.map((t) => {
+      if (t === undefined) return "Indeterminate";
+      const difference = `(${t.theirs}) - (${t.ours})`;
+      // A step call is read by its definition at a point; the cancellation in a difference of
+      // near-equal values (a q-function, `BetaRegularized` at a negative argument) needs more than a double.
+      if (t.expanded) return `Chop[N[((${difference}) //. ${STEP_DEFINITIONS}) /. ${t.after}, 30], 10^-12]`;
+      return `Chop[N[${difference}]]`;
+    });
     // FullSimplify can run away on an identity it won't reduce; TimeConstrained caps it at
     // 10s and reports $Aborted rather than eating the item's whole 30s budget (run.ts,
     // ITEM_SECONDS) — an aborted simplification isn't `0` either, so it falls straight
@@ -311,7 +406,7 @@ export function symbolicAgreementSource(
     return (
       `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirs.source}) - (${ours.source})], 10, $Aborted]]}, ` +
       `If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {${points.join(", ")}}}, ` +
-      `If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]`
+      `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]`
     );
   }
   const points = trials.map((t) => (t === undefined ? "None" : `(${t.theirs}, ${t.ours})`));
