@@ -106,6 +106,12 @@ async function answer(entry: ReferenceEntry): Promise<(Prerendered | undefined)[
       continue;
     }
     const value = evaluates ? ex.expected : ex.expr;
+    // An error answer is the cell's to show, with its message: typeset here it reads as its
+    // payload (`Sin(ComplexInfinity)` giving `~oo`).
+    if (Array.isArray(value) && value[0] === "Error") {
+      out.push(undefined);
+      continue;
+    }
     try {
       await ensure(["List", ex.expr, value]);
       out.push(prerender(ce, { text: JSON.stringify(ex.expr), format: "mathjson" }, ex.expr, value, typeset));
