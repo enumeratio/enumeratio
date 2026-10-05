@@ -8,7 +8,7 @@ const cells = [
   { source: "", format: "epsil" },
 ];
 
-test("a notebook for Jupyter is code cells, each answer an output with TeX and text", () => {
+test("a notebook is code cells, each answer an output with TeX and text", () => {
   const nb = toIpynb(cells, { title: "Sums" }) as { nbformat: number; nbformat_minor: number; cells: any[] };
   expect([nb.nbformat, nb.nbformat_minor]).toEqual([4, 5]);
   expect(nb.cells.map((c) => c.cell_type)).toEqual(["markdown", "code", "code", "code"]);
@@ -29,10 +29,4 @@ test("a notebook for Jupyter is code cells, each answer an output with TeX and t
   });
   // A cell still waiting on its answer has no output yet.
   expect(nb.cells[3]).toMatchObject({ execution_count: null, outputs: [] });
-});
-
-test("a notebook for GitHub is Markdown: the source fenced, the answer as display math", () => {
-  const nb = toIpynb(cells, { preset: "github" }) as { cells: any[] };
-  expect(nb.cells.map((c) => c.cell_type)).toEqual(["markdown", "markdown", "markdown"]);
-  expect(nb.cells[1].source.join("")).toBe("```epsil\nSqrt(a^2 + 1)\n```\n\n$$\n\\sqrt{26}\n$$");
 });

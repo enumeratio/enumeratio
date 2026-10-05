@@ -291,7 +291,7 @@ notatio-notebook { display: block; }
   align-items: flex-start;
   z-index: 1;
 }
-.nb-reset, .nb-export > summary, .nb-export-menu > button {
+.nb-reset, .nb-export {
   padding: 0.1rem 0.5rem;
   border: 1px solid var(--vp-c-divider, #e2e2e2);
   border-radius: 4px;
@@ -300,19 +300,7 @@ notatio-notebook { display: block; }
   font-size: 0.75rem;
   cursor: pointer;
 }
-.nb-export { position: relative; }
-.nb-export > summary { list-style: none; }
-.nb-export > summary::-webkit-details-marker { display: none; }
-.nb-export-menu {
-  position: absolute;
-  top: calc(100% + 0.2rem);
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-.nb-export-menu > button { text-align: left; white-space: nowrap; }
-.nb-export-menu > button:hover, .nb-export > summary:hover,
+.nb-export:hover,
 .nb-reset:hover { color: var(--vp-c-text-1, #222); border-color: var(--vp-c-text-3, #aaa); }
 /* <notatio-code>: a small source box with a language tag. */
 notatio-code { display: inline-block; vertical-align: middle; max-width: 100%; }

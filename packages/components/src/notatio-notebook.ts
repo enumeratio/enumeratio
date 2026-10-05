@@ -3,7 +3,7 @@ import { keyed } from "lit/directives/keyed.js";
 import { repeat } from "lit/directives/repeat.js";
 import "./notatio-cell.ts";
 import "./notatio-dynamic-module.ts";
-import { type IpynbPreset, referencesOrdinal, toIpynb } from "@enumeratio/frontend/core";
+import { referencesOrdinal, toIpynb } from "@enumeratio/frontend/core";
 import {
   browserStore,
   type CellAnswer,
@@ -217,18 +217,18 @@ export class NotatioNotebook extends LitElement {
   }
 
   /** The notebook as a Jupyter notebook file, for the reader to save. */
-  #export(preset: IpynbPreset): void {
+  #export(): void {
     const cells = this._cells.map(({ id, value }) => {
       const answer = this.#answers.get(id);
       return { source: value, format: this.#format, ...(answer?.source === value ? { output: answer } : {}) };
     });
     const title = document.title.split("|")[0]?.trim() || "Notebook";
-    const blob = new Blob([JSON.stringify(toIpynb(cells, { preset, title }), null, 1)], {
+    const blob = new Blob([JSON.stringify(toIpynb(cells, { title }), null, 1)], {
       type: "application/x-ipynb+json",
     });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `${title.replace(/[^\w-]+/g, "-").toLowerCase()}${preset === "github" ? "-github" : ""}.ipynb`;
+    link.download = `${title.replace(/[^\w-]+/g, "-").toLowerCase()}.ipynb`;
     link.click();
     URL.revokeObjectURL(link.href);
   }
@@ -321,13 +321,9 @@ export class NotatioNotebook extends LitElement {
               </button>`
             : ""
         }
-        <details class="nb-export">
-          <summary title="Save as a Jupyter notebook">Export</summary>
-          <span class="nb-export-menu">
-            <button @click=${() => this.#export("jupyter")}>Jupyter (.ipynb)</button>
-            <button @click=${() => this.#export("github")}>GitHub (.ipynb)</button>
-          </span>
-        </details>
+        <button class="nb-export" title="Save as a Jupyter notebook (.ipynb)" @click=${() => this.#export()}>
+          Export
+        </button>
       </span>
       ${keyed(
         this._generation,

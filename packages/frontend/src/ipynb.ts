@@ -1,6 +1,7 @@
 // A notebook as a Jupyter notebook (nbformat 4.5), for a reader to save and open elsewhere.
-// There's no Jupyter kernel for Epsil, so the file is for reading: Jupyter (and VS Code)
-// show the cells with their answers, and the GitHub preset writes what GitHub renders.
+// There's no Jupyter kernel for Epsil, so the file is for reading. Code cells with `text/latex`
+// answers render as a notebook (In/Out, typeset answers) on GitHub as well as in Jupyter and
+// VS Code; GitHub's view of Markdown cells prints a code fence's language as a line of code.
 
 /** A cell's answer, in the forms a notebook file can carry. */
 export interface IpynbOutput {
@@ -18,17 +19,7 @@ export interface IpynbCell {
   readonly output?: IpynbOutput;
 }
 
-/**
- * Who reads the file.
- * - `jupyter`: code cells with their answers as outputs (`text/latex`, `text/plain`), for
- *   Jupyter, JupyterLab and VS Code.
- * - `github`: Markdown cells, the source in a fenced block and the answer as `$$…$$` math,
- *   since GitHub's notebook view renders Markdown math but not every output type.
- */
-export type IpynbPreset = "jupyter" | "github";
-
 export interface IpynbOptions {
-  readonly preset?: IpynbPreset;
   /** A heading for the notebook's first cell. */
   readonly title?: string;
 }
@@ -64,23 +55,9 @@ function codeCell(cell: IpynbCell, n: number): Record<string, unknown> {
   };
 }
 
-function markdownCell(cell: IpynbCell, n: number): Record<string, unknown> {
-  const fence = cell.format === "latex" ? "latex" : "epsil";
-  const answer = cell.output === undefined || cell.output.latex === "" ? "" : `\n\n$$\n${cell.output.latex}\n$$`;
-  return {
-    cell_type: "markdown",
-    id: `cell-${n}`,
-    metadata: { notatio: { format: cell.format } },
-    source: lines(`\`\`\`${fence}\n${cell.source}\n\`\`\`${answer}`),
-  };
-}
-
 /** `cells` as a Jupyter notebook: the JSON object an `.ipynb` file holds. */
 export function toIpynb(cells: readonly IpynbCell[], options: IpynbOptions = {}): Record<string, unknown> {
-  const preset = options.preset ?? "jupyter";
-  const body = cells
-    .filter((cell) => cell.source.trim() !== "")
-    .map((cell, i) => (preset === "github" ? markdownCell(cell, i + 1) : codeCell(cell, i + 1)));
+  const body = cells.filter((cell) => cell.source.trim() !== "").map((cell, i) => codeCell(cell, i + 1));
   const title =
     options.title === undefined
       ? []
