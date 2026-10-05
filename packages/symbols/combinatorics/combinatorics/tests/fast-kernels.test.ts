@@ -17,11 +17,13 @@ import {
 } from "../collections/src/families/epsil.ts";
 import { allFamilies } from "../collections/src/families/index.ts";
 import {
+  Binomial,
   CompositionCount,
   CompositionFromMask,
   CompositionRank,
 } from "../collections/src/families/kernels-combinatorics.ts";
 import {
+  CatalanNumber,
   CyclicPermutationCount,
   CyclicPermutationRank,
   CyclicPermutationUnrank,
@@ -31,61 +33,108 @@ import {
   InvolutionCount,
   InvolutionRank,
   InvolutionUnrank,
+  GrayCodeSubsetRank,
+  GrayCodeSubsetUnrank,
   KSubsetCount,
   KSubsetRank,
   KSubsetUnrank,
   SubsetCount,
   SubsetRank,
   SubsetUnrank,
+  TupleRank,
+  TupleUnrank,
 } from "../collections/src/families/kernels-extra.ts";
+import { floorDiv, ipow, modRank, PermutationRank, PermutationUnrank } from "../collections/src/families/kernels.ts";
 import type { Element } from "../collections/src/families/types.ts";
+import { PhylogeneticTreeUnrank } from "../trees/src/families/unlabeled-trees.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
 const ce = bareEngine();
 const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
-// How far params are scanned for the edge of the fast path; Epsil is slow on long elements.
-const SCAN = DEEP ? 44 : 32;
+// How far each axis is scanned for the edge of the fast path.
+const SCAN = 90;
 
 const fastFamilies = allFamilies.filter(isEpsilFamily).filter((family) => family.fast !== undefined);
 
-/** The params to try: small ones, and the edge where the fast path stops answering. */
-function paramGrid(family: EpsilFamily): number[][] {
-  const fast = family.fast!;
-  const safe = (p: number[]): boolean => {
-    try {
-      return fast.count(p) <= Number(FAST_LIMIT);
-    } catch {
-      return false;
-    }
-  };
-  const small = DEEP ? [0, 1, 2, 3, 4, 5, 6, 8, 10, 13] : [0, 1, 2, 3, 5, 8];
-  if (family.paramCount === 1) {
-    // The largest n the fast path answers, found by scanning up.
-    let edge = 0;
-    for (let n = 0; n <= SCAN; n++) if (safe([n])) edge = n;
-    return [...new Set([...small, edge - 1, edge])].filter((n) => n >= 0 && safe([n])).map((n) => [n]);
+/** The fiber the family's fast kernel counts at `p`, when that is a safe integer. */
+function countOf(family: EpsilFamily, p: number[]): bigint | undefined {
+  try {
+    const total = family.fast!.count(p);
+    return Number.isSafeInteger(total) ? BigInt(total) : undefined;
+  } catch {
+    return undefined;
   }
-  const grid = small.flatMap((a) => small.map((b) => [a, b])).filter(safe);
-  // The edge along each axis, from a few fixed values on the other.
-  for (const fixed of [1, 2, 3, 5]) {
-    let a = 0;
-    let b = 0;
-    for (let n = 0; n <= SCAN; n++) {
-      if (safe([fixed, n])) b = n;
-      if (safe([n, fixed])) a = n;
-    }
-    if (safe([fixed, b])) grid.push([fixed, b]);
-    if (safe([a, fixed])) grid.push([a, fixed]);
-  }
-  return grid;
 }
 
-/** Ranks of a fiber of `total`: all when small, else spread evenly with both ends. */
+/** Walking `at(x)` for x = 0, 1, …: the last x whose fiber is a safe integer, and the first one
+ *  after it whose fiber is not (past 2^53). None when the walk ends before the fiber passes 2^32,
+ *  as along an axis where the other param keeps it small. */
+function edgeAlong(
+  family: EpsilFamily,
+  at: (x: number) => number[],
+): { below: number[]; above?: number[] } | undefined {
+  let below: number[] | undefined;
+  for (let x = 0; x <= SCAN; x++) {
+    const p = at(x);
+    if (countOf(family, p) !== undefined) below = p;
+    else if (below !== undefined) return { below, above: p };
+  }
+  return below !== undefined && countOf(family, below)! > 2n ** 32n ? { below } : undefined;
+}
+
+const grids = new Map<string, { grid: number[][]; above: number[][] }>();
+
+/** The params to try: small ones, and the edges where the fast path stops answering: params whose
+ *  fiber is the last at most 2^53 along an axis (`grid`), and the first past it (`above`). Epsil
+ *  is slow on long elements, so the standard run takes the edge with the smallest params. */
+function paramGrid(family: EpsilFamily): { grid: number[][]; above: number[][] } {
+  const cached = grids.get(family.head);
+  if (cached !== undefined) return cached;
+  const small = DEEP ? [0, 1, 2, 3, 4, 5, 6, 8, 10, 13] : [0, 1, 2, 3, 5, 8];
+  const walks: ((x: number) => number[])[] = [];
+  if (family.paramCount === 1) walks.push((n) => [n]);
+  else
+    for (const fixed of [1, 2, 3, 5, 8, 16, 32])
+      walks.push(
+        (n) => [fixed, n],
+        (n) => [n, fixed],
+      );
+  const size = (p: number[]): number => p.reduce((sum, x) => sum + x, 0);
+  const edges = walks
+    .map((at) => edgeAlong(family, at))
+    .filter((edge) => edge !== undefined)
+    .toSorted((a, b) => size(a.below) - size(b.below))
+    .slice(0, DEEP ? 4 : 1);
+  const grid: number[][] =
+    family.paramCount === 1 ? small.map((n) => [n]) : small.flatMap((a) => small.map((b) => [a, b]));
+  const above: number[][] = [];
+  for (const edge of edges) {
+    grid.push(edge.below);
+    if (edge.above !== undefined) above.push(edge.above);
+  }
+  const unique = (list: number[][]): number[][] => [...new Map(list.map((p) => [p.join(","), p])).values()];
+  const found = { grid: unique(grid).filter((p) => countOf(family, p) !== undefined), above: unique(above) };
+  grids.set(family.head, found);
+  return found;
+}
+
+// A fixed pseudo-random stream, so a failure repeats.
+let seed = 0x2545f4914f6cdd1dn;
+function random(below: bigint): bigint {
+  seed = (seed * 6364136223846793005n + 1442695040888963407n) % 2n ** 64n;
+  return (seed >> 11n) % below;
+}
+
+/** Ranks of a fiber of `total`: all when small, else both ends, the middle and pseudo-random ones. */
 function ranksOf(total: bigint): bigint[] {
-  const all = DEEP ? 120n : 24n;
-  if (total <= all) return Array.from({ length: Number(total) }, (_, i) => BigInt(i));
-  const spread = DEEP ? 120n : 16n;
-  return Array.from({ length: Number(spread) }, (_, i) => (BigInt(i) * (total - 1n)) / (spread - 1n));
+  if (total <= (DEEP ? 120n : 24n)) return Array.from({ length: Number(total) }, (_, i) => BigInt(i));
+  const ranks = new Set<bigint>([0n, 1n, total - 2n, total - 1n, total / 2n]);
+  for (let i = 0; i < (DEEP ? 24 : 3); i++) ranks.add(random(total));
+  if (DEEP) {
+    for (const r of [2n, total - 3n, total / 3n]) ranks.add(r);
+    for (let i = 1n; i < 12n; i++) ranks.add((i * (total - 1n)) / 12n);
+  }
+  return [...ranks].toSorted((a, b) => (a < b ? -1 : 1));
 }
 
 const clone = (e: Element): Element => (Array.isArray(e) ? (e.map(clone) as Element) : e);
@@ -138,7 +187,7 @@ for (const family of fastFamilies) {
     const fast = kernelOn(ce, family);
     const epsil = epsilKernelOn(ce, family);
     let rejected = 0;
-    for (const p of paramGrid(family)) {
+    for (const p of paramGrid(family).grid) {
       const where = labelled(family, p);
       const total = epsil.count(p);
       expect([where, fast.count(p)]).toEqual([where, total]);
@@ -163,6 +212,57 @@ for (const family of fastFamilies) {
     }
     // The near misses must include some the family rejects, or membership went unchecked.
     expect(rejected).toBeGreaterThan(0);
+  });
+}
+
+test("the fast path answers up to 2^53 members, and not a member more", () => {
+  expect(FAST_LIMIT).toBe(MAX_SAFE);
+});
+
+// Just past 2^53 members the fast path is asked its count and nothing else: the kernel answers
+// from Epsil, as it does with the fast path turned off.
+// Past 2^53 Epsil is the interpreter, seconds a call on some families: the standard run asks the
+// ones where it is quick.
+const QUICK_PAST_LIMIT = new Set([
+  "SymmetricGroup",
+  "KPermutations",
+  "SignedPermutations",
+  "ColoredPermutations",
+  "GrayCodeSubsets",
+  "Tuples",
+  "Words",
+  "Endofunctions",
+  "BinaryStrings",
+  "BinaryWords",
+  "GrayCodes",
+  "BinaryTreeParentArrays",
+]);
+for (const family of fastFamilies.filter((f) => DEEP || QUICK_PAST_LIMIT.has(f.head))) {
+  test(`${family.head}: a fiber past 2^53 is answered by Epsil`, () => {
+    const above = paramGrid(family).above;
+    // Some families (a fixed small axis) never reach 2^53 within the scan.
+    if (above.length === 0) return;
+    const p = above[0];
+    const { family: spy, calls } = spied(family, family.fast!);
+    const kernel = kernelOn(ce, spy);
+    const epsil = epsilKernelOn(ce, family);
+    const where = labelled(family, p);
+    const total = epsil.count(p);
+    expect([where, kernel.count(p)]).toEqual([where, total]);
+    expect(typeof total === "bigint" && total > MAX_SAFE).toBe(true);
+    const outcome = (run: () => unknown): unknown => {
+      try {
+        return run();
+      } catch (error) {
+        return String(error);
+      }
+    };
+    for (const r of [0n, (total as bigint) - 1n]) {
+      const element = outcome(() => epsil.unrank(p, r));
+      expect([where, r, outcome(() => kernel.unrank(p, r))]).toEqual([where, r, element]);
+      if (typeof element !== "string") expect([where, r, kernel.rank(element as Element, p)]).toEqual([where, r, r]);
+    }
+    expect(new Set(calls)).toEqual(new Set(["count"]));
   });
 }
 
@@ -339,4 +439,262 @@ test("a rank outside the fiber is left to Epsil", () => {
   };
   expect(answer()).toEqual(outside());
   expect(calls).not.toContain("unrank");
+});
+
+// ── Exactness near 2^53, against readings in BigInt ───────────────────────────────────────────
+// Each case below was wrong while the fast path answered up to 2^53 on 32-bit or rounding
+// arithmetic: a rank plus the count past 2^53, `Math.floor(a / b)` past 2^52, a 32-bit shift.
+
+const byHead = (head: string): EpsilFamily => fastFamilies.find((family) => family.head === head)!;
+const kernelFor = (head: string) => kernelOn(ce, byHead(head));
+
+const bigFactorial = (n: number): bigint => (n <= 1 ? 1n : BigInt(n) * bigFactorial(n - 1));
+
+/** The permutation of 1..n at lex rank `r`, by Lehmer decode. */
+function lexPermutation(n: number, r: bigint): number[] {
+  const available = Array.from({ length: n }, (_, i) => i + 1);
+  const out: number[] = [];
+  let rest = r;
+  for (let k = n - 1; k >= 0; k--) {
+    const f = bigFactorial(k);
+    out.push(available.splice(Number(rest / f), 1)[0]);
+    rest %= f;
+  }
+  return out;
+}
+
+/** The k digits of `r` in base n, the first most significant, each plus `offset`. */
+function digitsOf(r: bigint, n: number, k: number, offset: number): number[] {
+  const out = Array.from({ length: k }, () => 0);
+  let rest = r;
+  for (let i = k - 1; i >= 0; i--) {
+    out[i] = Number(rest % BigInt(n)) + offset;
+    rest /= BigInt(n);
+  }
+  return out;
+}
+
+/** The 1-based positions of the set bits of `m`, ascending. */
+const bitPositions = (m: bigint, n: number): number[] =>
+  Array.from({ length: n }, (_, i) => i + 1).filter((i) => ((m >> BigInt(i - 1)) & 1n) === 1n);
+
+/** Ranks that straddle the edges of 32 bits, then run to the end of a fiber of `total`. */
+const edgeRanks = (total: bigint): bigint[] =>
+  [
+    ...new Set([
+      0n,
+      1n,
+      2n ** 31n - 1n,
+      2n ** 31n,
+      2n ** 32n + 5n,
+      2n ** 40n + 12345n,
+      total / 2n,
+      total - 2n,
+      total - 1n,
+    ]),
+  ]
+    .filter((r) => r < total)
+    .toSorted((a, b) => (a < b ? -1 : 1));
+
+test("SymmetricGroup(18): ranks past 2^53 − 1 − n! no longer wrap", () => {
+  const kernel = kernelFor("SymmetricGroup");
+  const total = bigFactorial(18);
+  expect(kernel.count([18])).toBe(total);
+  for (const r of [
+    2987774396006399n,
+    total - 1n,
+    total - 2n,
+    total / 2n,
+    2n ** 31n,
+    ...Array.from({ length: 6 }, () => random(total)),
+  ]) {
+    const expected = lexPermutation(18, r);
+    expect(PermutationUnrank(18, Number(r))).toEqual(expected);
+    const element = kernel.unrank([18], r);
+    expect([r, element]).toEqual([r, expected]);
+    expect(kernel.rank(element, [18])).toBe(r);
+    expect(PermutationRank(expected)).toBe(Number(r));
+  }
+});
+
+test("Tuples(3, 33) and Words(33, 3): the last tuples are not rounded down a place", () => {
+  const total = 3n ** 33n;
+  for (const [head, p] of [
+    ["Tuples", [3, 33]],
+    ["Words", [33, 3]],
+  ] as const) {
+    const kernel = kernelFor(head);
+    expect(kernel.count([...p])).toBe(total);
+    for (const r of [...edgeRanks(total), ...Array.from({ length: 6 }, () => random(total))]) {
+      const expected = digitsOf(r, 3, 33, 1);
+      expect(TupleUnrank(3, 33, Number(r))).toEqual(expected);
+      const element = kernel.unrank([...p], r);
+      expect([head, r, element]).toEqual([head, r, expected]);
+      expect(kernel.rank(element, [...p])).toBe(r);
+      expect(TupleRank(expected, 3)).toBe(Number(r));
+    }
+  }
+});
+
+test("Tuples(39, 10): a quotient that rounds up at the last rank", () => {
+  const kernel = kernelFor("Tuples");
+  const total = 39n ** 10n;
+  const r = total - 1n;
+  expect(kernel.unrank([39, 10], r)).toEqual(Array.from({ length: 10 }, () => 39));
+  expect(
+    kernel.rank(
+      Array.from({ length: 10 }, () => 39),
+      [39, 10],
+    ),
+  ).toBe(r);
+});
+
+test("Surjections(53, 2): all but the two constant words, in lex order", () => {
+  const kernel = kernelFor("Surjections");
+  const total = 2n ** 53n - 2n;
+  expect(kernel.count([53, 2])).toBe(total);
+  for (const r of [...edgeRanks(total), ...Array.from({ length: 6 }, () => random(total))]) {
+    // The word is r + 1 in binary (1 for a 0 bit, 2 for a 1 bit): the two constants are skipped.
+    const expected = digitsOf(r + 1n, 2, 53, 1);
+    const element = kernel.unrank([53, 2], r);
+    expect([r, element]).toEqual([r, expected]);
+    expect(kernel.rank(element, [53, 2])).toBe(r);
+  }
+});
+
+test("GrayCodeSubsets(51): the Gray code of a rank past 2^31", () => {
+  const kernel = kernelFor("GrayCodeSubsets");
+  const total = 2n ** 51n;
+  expect(kernel.count([51])).toBe(total);
+  for (const r of [
+    ...edgeRanks(total),
+    2n ** 32n - 1n,
+    2n ** 33n,
+    2n ** 50n,
+    ...Array.from({ length: 6 }, () => random(total)),
+  ]) {
+    const expected = bitPositions(r ^ (r >> 1n), 51);
+    expect(GrayCodeSubsetUnrank(51, Number(r))).toEqual(expected);
+    const element = kernel.unrank([51], r);
+    expect([r, element]).toEqual([r, expected]);
+    expect(kernel.rank(element, [51])).toBe(r);
+    expect(GrayCodeSubsetRank(expected)).toBe(Number(r));
+  }
+});
+
+test("GrayCodes(40), BinaryStrings(52), BinaryPalindromes(70), BinaryWords(45): bits past the 32nd", () => {
+  const cases: [string, number[], bigint, (r: bigint) => number[]][] = [
+    ["GrayCodes", [40], 2n ** 40n, (r) => digitsOf(r ^ (r >> 1n), 2, 40, 0)],
+    ["BinaryStrings", [52], 2n ** 52n, (r) => digitsOf(r, 2, 52, 0)],
+    ["BinaryWords", [45], 2n ** 45n, (r) => digitsOf(r, 2, 45, 0)],
+    ["BinaryPalindromes", [70], 2n ** 35n, (r) => [...digitsOf(r, 2, 35, 0), ...digitsOf(r, 2, 35, 0).toReversed()]],
+  ];
+  for (const [head, p, total, reading] of cases) {
+    const kernel = kernelFor(head);
+    expect(kernel.count(p)).toBe(total);
+    for (const r of [...edgeRanks(total), 2n ** 32n - 1n, ...Array.from({ length: 4 }, () => random(total))].filter(
+      (r) => r < total,
+    )) {
+      const element = kernel.unrank(p, r);
+      expect([head, r, element]).toEqual([head, r, reading(r)]);
+      expect([head, r, kernel.rank(element, p)]).toEqual([head, r, r]);
+    }
+  }
+});
+
+test("Subsets and LabeledGraphs: a mask past 2^31 is not truncated to 32 bits", () => {
+  const total = 2n ** 52n;
+  for (const r of [...edgeRanks(total), 2n ** 32n - 1n, 2n ** 51n, ...Array.from({ length: 6 }, () => random(total))]) {
+    const expected = bitPositions(r, 52);
+    expect(SubsetUnrank(52, Number(r))).toEqual(expected);
+    expect(SubsetRank(expected)).toBe(Number(r));
+  }
+  // LabeledGraphs(9): edge k of K_9 (pairs in lex order) is present when bit k of the rank is set.
+  const pairs: number[][] = [];
+  for (let u = 1; u < 9; u++) for (let v = u + 1; v <= 9; v++) pairs.push([u, v]);
+  const kernel = kernelFor("LabeledGraphs");
+  expect(kernel.count([9])).toBe(2n ** 36n);
+  for (const r of [...edgeRanks(2n ** 36n), ...Array.from({ length: 6 }, () => random(2n ** 36n))]) {
+    const expected = bitPositions(r, 36).map((i) => pairs[i - 1]);
+    const element = kernel.unrank([9], r);
+    expect([r, element]).toEqual([r, expected]);
+    expect(kernel.rank(element, [9])).toBe(r);
+  }
+});
+
+test("PhylogeneticTreeUnrank(16, 2819674067578180): a digit quotient that rounds up near 2^52", () => {
+  // Digits d_3..d_n of radix 2k − 3, k = n least significant.
+  const digits = (n: number, r: bigint): number[] => {
+    const out = Array.from({ length: n - 2 }, () => 0);
+    let rest = r;
+    for (let k = n; k >= 3; k--) {
+      out[k - 3] = Number(rest % BigInt(2 * k - 3));
+      rest /= BigInt(2 * k - 3);
+    }
+    return out;
+  };
+  const family = allFamilies.filter(isEpsilFamily).find((f) => f.head === "PhylogeneticTrees")!;
+  const epsil = epsilKernelOn(ce, family);
+  const total = epsil.count([16]) as bigint;
+  let product = 1n;
+  for (let k = 3; k <= 16; k++) product *= BigInt(2 * k - 3);
+  expect(total).toBe(product);
+  for (const r of [2819674067578180n, total - 1n, total / 2n, ...Array.from({ length: 6 }, () => random(total))]) {
+    const expected = digits(16, r);
+    expect([r, PhylogeneticTreeUnrank(16, Number(r))]).toEqual([r, expected]);
+    expect([r, epsil.unrank([16], r)]).toEqual([r, expected]);
+  }
+});
+
+test("Binomial and CatalanNumber are exact up to 2^53", () => {
+  const exact = (n: number, k: number): bigint => {
+    let c = 1n;
+    for (let i = 0; i < k; i++) c = (c * BigInt(n - i)) / BigInt(i + 1);
+    return c;
+  };
+  const check = (n: number, k: number): void => {
+    const want = exact(n, k);
+    const got = Binomial(n, k);
+    if (want <= MAX_SAFE) expect([n, k, got]).toEqual([n, k, Number(want)]);
+    else expect([n, k, got > Number(MAX_SAFE)]).toEqual([n, k, true]);
+  };
+  for (let n = 0; n <= 100; n++) for (let k = 0; k <= n; k++) check(n, k);
+  // Wide rows with a small k: the partial products pass 2^53 before the answer does.
+  for (const [n, k] of [
+    [1275, 6],
+    [3000, 5],
+    [100000, 3],
+    [50, 25],
+    [56, 28],
+    [60, 30],
+  ])
+    check(n, k);
+  expect(Binomial(1275, 6)).toBe(Number(exact(1275, 6)));
+  for (let n = 0; n <= 40; n++) {
+    const want = exact(2 * n, n) / BigInt(n + 1);
+    if (want <= MAX_SAFE) expect([n, CatalanNumber(n)]).toEqual([n, Number(want)]);
+    else expect([n, CatalanNumber(n) > Number(MAX_SAFE)]).toEqual([n, true]);
+  }
+});
+
+test("floorDiv, modRank and ipow are exact on safe integers", () => {
+  for (let i = 0; i < 400; i++) {
+    const a = random(MAX_SAFE + 1n);
+    const b = 1n + random(i % 2 === 0 ? 100n : 2n ** 40n);
+    expect([a, b, floorDiv(Number(a), Number(b))]).toEqual([a, b, Number(a / b)]);
+    expect([a, b, modRank(Number(a), Number(b))]).toEqual([a, b, Number(a % b)]);
+    if (a % b !== 0n) expect([a, b, modRank(-Number(a), Number(b))]).toEqual([a, b, Number(b - (a % b))]);
+  }
+  for (const [base, exp] of [
+    [3, 33],
+    [5, 22],
+    [7, 18],
+    [10, 15],
+    [39, 10],
+    [2, 52],
+    [6, 20],
+  ])
+    expect([base, exp, ipow(base, exp)]).toEqual([base, exp, Number(BigInt(base) ** BigInt(exp))]);
+  expect(ipow(2, 1e9)).toBeGreaterThan(Number(MAX_SAFE));
+  expect(ipow(1, 1e9)).toBe(1);
 });

@@ -111,11 +111,10 @@ export const familyHash = (family: EpsilFamily): string =>
 const isInteger = (value: unknown): value is number => Number.isSafeInteger(value);
 const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
 
-/** A fast path answers only for a fiber of at most this many members. Its kernels are plain JS:
- *  some use 32-bit operators (`>>`, `<<`), and the ones built on `%` add the count to a rank
- *  before reducing it, so past about 2^31 they are wrong (SymmetricGroup(18), Tuples(3, 33)) well
- *  before a double stops counting exactly. */
-export const FAST_LIMIT = 2n ** 31n;
+/** A fast path answers only for a fiber of at most this many members, the most a double counts
+ *  exactly. Its kernels are plain JS, written exact up to it: bits read as two 32-bit words, no
+ *  rank plus count, no float quotient, no product that passes 2^53 on the way to a smaller answer. */
+export const FAST_LIMIT = MAX_SAFE;
 
 /** Whether `value` is a plain-JS element of this shape, every entry an exact integer. */
 function wellFormed(kind: FamilyShape["kind"], value: unknown): boolean {
