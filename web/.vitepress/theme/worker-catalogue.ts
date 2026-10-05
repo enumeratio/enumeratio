@@ -30,6 +30,7 @@ import modularDeclares from "@enumeratio/modular/declares.json" with { type: "js
 import numberTheoryDeclares from "@enumeratio/number-theory/declares.json" with { type: "json" };
 import adelesDeclares from "@enumeratio/adeles/declares.json" with { type: "json" };
 import braidDeclares from "@enumeratio/braid/declares.json" with { type: "json" };
+import statisticsDeclares from "@enumeratio/statistics/declares.json" with { type: "json" };
 
 const combinatorics = async (ce: ComputeEngine): Promise<void> => {
   const { CARRIERS, declareCombinatorics, declareMaps } = await import("@enumeratio/combinatorics");
@@ -151,5 +152,19 @@ export const CATALOGUE: readonly Library<ComputeEngine>[] = [
     name: "braid",
     declares: braidDeclares as LibraryDeclares,
     declare: async (ce) => (await import("@enumeratio/braid")).declareBraid(ce),
+  },
+  {
+    name: "statistics",
+    declares: statisticsDeclares as LibraryDeclares,
+    declare: async (ce) => {
+      const stats = await import("@enumeratio/statistics");
+      stats.declareDistributions(ce);
+      stats.declareDistributions2(ce);
+      stats.declareDistributions3(ce);
+      stats.declareDistributions4(ce);
+      stats.declareDistributions5(ce);
+      stats.declareDistributions6(ce);
+      stats.declareProcesses(ce);
+    },
   },
 ];

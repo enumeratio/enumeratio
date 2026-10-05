@@ -41,6 +41,15 @@ import { declareModular } from "@enumeratio/modular";
 import { declareNumberTheory } from "@enumeratio/number-theory";
 import { declareNumerals } from "@enumeratio/numerals";
 import { declareQuiver } from "@enumeratio/quiver";
+import {
+  declareDistributions,
+  declareDistributions2,
+  declareDistributions3,
+  declareDistributions4,
+  declareDistributions5,
+  declareDistributions6,
+  declareProcesses,
+} from "@enumeratio/statistics";
 import { declareResidues } from "@enumeratio/residues";
 import { applyEngineLibraries } from "./engine-libraries.ts";
 
@@ -72,4 +81,11 @@ export function configure(ce: ComputeEngine): void {
     declareAdeles,
     declareBraid,
   });
+  declareDistributions(ce);
+  declareDistributions2(ce);
+  declareDistributions3(ce);
+  declareDistributions4(ce);
+  declareDistributions5(ce);
+  declareDistributions6(ce);
+  declareProcesses(ce);
 }
