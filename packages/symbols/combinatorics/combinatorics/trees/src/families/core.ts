@@ -6,7 +6,9 @@
 // BinaryTree's own shape (`integer | list<any>`, https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible,
 // #401), since both families' elements already are (kind "nested": KTree = 0 | KTree[], OrdTree
 // = OrdTree[]). The generic kernel math stays in collections/src/families/kernels*.ts.
+import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import { binaryTreeParentArrays } from "./binary-tree-parents.ts";
 import {
   BinaryTreeCount,
   BinaryTreeUnrank,
@@ -28,7 +30,25 @@ import {
   type OrdTree,
 } from "../../../collections/src/families/kernels-extra.ts";
 
-export const entries: NumberKernel[] = [
+export const binaryTreeParentArraysKernel: NumberKernel = {
+  declared: {
+    carrier: "BinaryTreeParentArray",
+    params: [{ name: "n", role: "axis", min: 0 }],
+    cost: { count: "closed", unrank: "polynomial", rank: "polynomial", valid: "polynomial" },
+  },
+  head: "BinaryTreeParentArrays",
+  paramCount: 1,
+  kind: "ints",
+  carrier: "BinaryTreeParentArray",
+  count: ([n]) => BinaryTreeCount(n),
+  unrank: ([n], r) => BinaryTreeParentArray(BinaryTreeUnrank(n, r)),
+  valid: (e, [n]) => IsBinaryTreeParentArray(e, n),
+  rank: (e) => BinaryTreeRank(BinaryTreeOfParentArray(e as number[]) ?? 0),
+};
+
+// The nested families stay TS kernels: a nested element has no compiled type, so an Epsil
+// definition would only be interpreted, and recursing over the tree is what the kernels do natively.
+export const entries: (NumberKernel | EpsilFamily)[] = [
   {
     head: "BinaryTrees",
     paramCount: 1,
@@ -39,21 +59,7 @@ export const entries: NumberKernel[] = [
     valid: (e, [n]) => IsBinaryTree(e, n),
     rank: (e) => BinaryTreeRank(e as BinTree),
   },
-  {
-    declared: {
-      carrier: "BinaryTreeParentArray",
-      params: [{ name: "n", role: "axis", min: 0 }],
-      cost: { count: "closed", unrank: "polynomial", rank: "polynomial", valid: "polynomial" },
-    },
-    head: "BinaryTreeParentArrays",
-    paramCount: 1,
-    kind: "ints",
-    carrier: "BinaryTreeParentArray",
-    count: ([n]) => BinaryTreeCount(n),
-    unrank: ([n], r) => BinaryTreeParentArray(BinaryTreeUnrank(n, r)),
-    valid: (e, [n]) => IsBinaryTreeParentArray(e, n),
-    rank: (e) => BinaryTreeRank(BinaryTreeOfParentArray(e as number[]) ?? 0),
-  },
+  { ...binaryTreeParentArrays, fast: binaryTreeParentArraysKernel },
   {
     head: "FullKAryTrees",
     paramCount: 2,

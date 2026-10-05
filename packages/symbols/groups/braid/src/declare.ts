@@ -1,7 +1,6 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import { registerNotation } from "@enumeratio/boxes";
-import { integerAt, operandsOf, stringAt } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf, stringAt } from "@enumeratio/engine";
+import { compileExpression } from "@enumeratio/engine/compiled";
 import {
   alexanderPolynomial,
   type Braid,
@@ -44,14 +43,14 @@ import { lorenzBraid, lorenzPermutation, tripNumber } from "./lorenz.ts";
 // Knot polynomials come back as ordinary expressions in `t`, not as coefficient lists, so
 // they can be added, factored and evaluated like anything else.
 
-const integerListOf = (expr: BoxedExpression | undefined): number[] | undefined => {
+const integerListOf = (expr: Expr | undefined): number[] | undefined => {
   if (expr === undefined || expr.operator !== "List") return undefined;
   const values = operandsOf(expr).map(integerAt);
   return values.every((x): x is number => x !== undefined) ? values : undefined;
 };
 
 /** Read `Braid(strands, [...])`, a `TorusBraid`, or a modular word's Lorenz braid. */
-function braidOf(expr: BoxedExpression | undefined): Braid | undefined {
+function braidOf(expr: Expr | undefined): Braid | undefined {
   if (expr === undefined) return undefined;
   const word = stringAt(expr);
   if (word !== undefined && /^[LR]+$/.test(word)) return lorenzBraid(word);
@@ -68,7 +67,7 @@ function braidOf(expr: BoxedExpression | undefined): Braid | undefined {
  * modular word. A head that wants an invariant of a knot takes any of these, and picks
  * its route from what the knot turned out to carry.
  */
-function knotOf(expr: BoxedExpression | undefined): Knot | undefined {
+function knotOf(expr: Expr | undefined): Knot | undefined {
   if (expr?.operator === "TorusKnot") {
     const ops = operandsOf(expr);
     const [p, q] = [integerAt(ops[0]), integerAt(ops[1])];
@@ -89,9 +88,9 @@ function knotOf(expr: BoxedExpression | undefined): Knot | undefined {
   return b === undefined ? undefined : { braid: b };
 }
 
-export function declareBraid(ce: ComputeEngine): void {
+export function declareBraid(ce: Engine): void {
   registerNotation(ce, BRAID_NOTATION);
-  const braidExpression = (b: Braid): BoxedExpression =>
+  const braidExpression = (b: Braid): Expr =>
     ce.function("Braid", [
       ce.number(b.strands),
       ce.function(
@@ -100,14 +99,14 @@ export function declareBraid(ce: ComputeEngine): void {
       ),
     ]);
 
-  const listExpression = (values: readonly number[]): BoxedExpression =>
+  const listExpression = (values: readonly number[]): Expr =>
     ce.function(
       "List",
       values.map((x) => ce.number(x)),
     );
 
   /** A Laurent polynomial as an ordinary expression, so it behaves like algebra. */
-  const polynomialIn = (variable: string, p: Laurent): BoxedExpression => {
+  const polynomialIn = (variable: string, p: Laurent): Expr => {
     const trimmed = trim(p);
     if (trimmed.coefficients.length === 0) return ce.number(0);
     const terms = trimmed.coefficients
@@ -123,9 +122,9 @@ export function declareBraid(ce: ComputeEngine): void {
         if (powerPart === undefined) return ce.number(coefficient);
         return coefficient === 1 ? powerPart : ce.function("Multiply", [ce.number(coefficient), powerPart]);
       });
-    return terms.length === 1 ? (terms[0] as BoxedExpression) : ce.function("Add", terms);
+    return terms.length === 1 ? (terms[0] as Expr) : ce.function("Add", terms);
   };
-  const polynomialExpression = (p: Laurent): BoxedExpression => polynomialIn("t", p);
+  const polynomialExpression = (p: Laurent): Expr => polynomialIn("t", p);
 
   ce.declare("Braid", { signature: "(integer, list<integer>?) -> expression<Braid>" });
 
@@ -139,10 +138,10 @@ export function declareBraid(ce: ComputeEngine): void {
     "expression<TorusKnot> | expression<TwistKnot> | expression<PretzelKnot> | expression<FigureEightKnot> | expression<Braid> | string";
 
   /** A head taking a braid and returning a value. */
-  const aboutBraid = (head: string, signature: string, answer: (b: Braid) => BoxedExpression | undefined): void => {
+  const aboutBraid = (head: string, signature: string, answer: (b: Braid) => Expr | undefined): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const b = braidOf(ops[0]);
         return b === undefined ? undefined : answer(b);
       },
@@ -150,10 +149,10 @@ export function declareBraid(ce: ComputeEngine): void {
   };
 
   /** A head taking an LR word. */
-  const aboutWord = (head: string, signature: string, answer: (word: string) => BoxedExpression | undefined): void => {
+  const aboutWord = (head: string, signature: string, answer: (word: string) => Expr | undefined): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const word = stringAt(ops[0]);
         return word === undefined || !/^[LR]+$/.test(word) ? undefined : answer(word);
       },
@@ -161,10 +160,10 @@ export function declareBraid(ce: ComputeEngine): void {
   };
 
   /** A head taking a knot, however that knot was named. */
-  const aboutKnot = (head: string, signature: string, answer: (k: Knot) => BoxedExpression | undefined): void => {
+  const aboutKnot = (head: string, signature: string, answer: (k: Knot) => Expr | undefined): void => {
     ce.declare(head, {
       signature,
-      evaluate: (ops: readonly BoxedExpression[]) => {
+      evaluate: (ops: readonly Expr[]) => {
         const k = knotOf(ops[0]);
         return k === undefined ? undefined : answer(k);
       },
@@ -175,7 +174,7 @@ export function declareBraid(ce: ComputeEngine): void {
 
   ce.declare("BraidProduct", {
     signature: `(${braidLike}, ${braidLike}) -> expression<Braid>`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [a, b] = [braidOf(ops[0]), braidOf(ops[1])];
       if (a === undefined || b === undefined) return undefined;
       const product = compose(a, b);
@@ -185,7 +184,7 @@ export function declareBraid(ce: ComputeEngine): void {
   aboutBraid("BraidInverse", `(${braidLike}) -> expression<Braid>`, (b) => braidExpression(invert(b)));
   ce.declare("BraidPower", {
     signature: `(${braidLike}, integer) -> expression<Braid>`,
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const b = braidOf(ops[0]);
       const k = integerAt(ops[1]);
       if (b === undefined || k === undefined) return undefined;
@@ -263,7 +262,7 @@ export function declareBraid(ce: ComputeEngine): void {
   /** (σ₁ ⋯ σ_{p−1})^q in B_p, whose closure is the torus link T(p, q). */
   ce.declare("TorusBraid", {
     signature: "(integer, integer) -> expression<Braid>",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const [p, q] = [integerAt(ops[0]), integerAt(ops[1])];
       if (p === undefined || q === undefined) return undefined;
       const b = torusBraid(p, q);
@@ -284,7 +283,7 @@ export function declareBraid(ce: ComputeEngine): void {
   /** The unique positive braid realising a permutation, with no pair crossing twice. */
   ce.declare("PositivePermutationBraid", {
     signature: "(list<integer>) -> expression<Braid>",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const values = integerListOf(ops[0]);
       if (values === undefined) return undefined;
       const b = positivePermutationBraid(values.map((x) => x - 1));
@@ -348,7 +347,7 @@ export function declareBraid(ce: ComputeEngine): void {
     evaluate: (ops) => {
       const closed = knotOf(ops[0])?.closed;
       if (closed?.kind !== "torus") return undefined;
-      const samples = Number.isFinite(ops[1]?.re) ? (ops[1] as BoxedExpression).re : 600;
+      const samples = Number.isFinite(ops[1]?.re) ? (ops[1] as Expr).re : 600;
       return pointList(torusKnotCurve(closed.torus.p, closed.torus.q, samples));
     },
   });
@@ -358,7 +357,7 @@ export function declareBraid(ce: ComputeEngine): void {
   // compiler has no lowering for (special functions reaching for the analytic runtime)
   // falls back to symbolic evaluation, correct but slow.
   const samplers = new Map<string, (t: number) => number>();
-  const sampler = (e: BoxedExpression): ((t: number) => number) => {
+  const sampler = (e: Expr): ((t: number) => number) => {
     // Keyed on the expression, since a slider re-evaluates the same coordinates every
     // frame and compiling costs more than the whole sampling loop.
     const key = e.canonical.toString();
@@ -370,23 +369,15 @@ export function declareBraid(ce: ComputeEngine): void {
     return fn;
   };
 
-  const build = (e: BoxedExpression): ((t: number) => number) => {
-    try {
-      const r = new JavaScriptTarget().compile(e.canonical) as {
-        success?: boolean;
-        run?: (scope: Record<string, unknown>) => unknown;
+  const build = (e: Expr): ((t: number) => number) => {
+    const run = compileExpression(e);
+    if (run !== undefined) {
+      const scope: Record<string, unknown> = {};
+      return (t) => {
+        scope.t = t;
+        const v = run(scope);
+        return typeof v === "number" ? v : Number.NaN;
       };
-      if (r?.success && typeof r.run === "function") {
-        const run = r.run;
-        const scope: Record<string, unknown> = {};
-        return (t) => {
-          scope.t = t;
-          const v = run(scope);
-          return typeof v === "number" ? v : Number.NaN;
-        };
-      }
-    } catch {
-      /* fall through to symbolic sampling */
     }
     return (t) => {
       const v = e.subs({ t: ce.number(t) }).N().re;
@@ -403,11 +394,8 @@ export function declareBraid(ce: ComputeEngine): void {
     evaluate: (ops) => {
       const [x, y, z] = ops;
       if (!x || !y || !z) return undefined;
-      const span = Number.isFinite(ops[3]?.re) ? (ops[3] as BoxedExpression).re : 2 * Math.PI;
-      const samples = Math.max(
-        24,
-        Math.min(4000, Math.round(Number.isFinite(ops[4]?.re) ? (ops[4] as BoxedExpression).re : 600)),
-      );
+      const span = Number.isFinite(ops[3]?.re) ? (ops[3] as Expr).re : 2 * Math.PI;
+      const samples = Math.max(24, Math.min(4000, Math.round(Number.isFinite(ops[4]?.re) ? (ops[4] as Expr).re : 600)));
       const [fx, fy, fz] = [x, y, z].map(sampler);
       const points: Point3[] = [];
       for (let i = 0; i < samples; i++) {
@@ -422,7 +410,7 @@ export function declareBraid(ce: ComputeEngine): void {
   ce.declare("LorenzCurve", {
     signature: "(integer?) -> list",
     evaluate: (ops) => {
-      const steps = Number.isFinite(ops[0]?.re) ? (ops[0] as BoxedExpression).re : 5000;
+      const steps = Number.isFinite(ops[0]?.re) ? (ops[0] as Expr).re : 5000;
       return pointList(lorenzCurve({ steps }));
     },
   });

@@ -8,8 +8,7 @@
 //
 // So each constructor gets a trigger of its own, and a MathLive macro so an editor shows it.
 
-import type { MathJsonExpression } from "@cortex-js/compute-engine";
-import type { LatexDictionaryEntry, Parser, Serializer } from "@cortex-js/compute-engine/latex-syntax";
+import type { Json, LatexReader, LatexRule, LatexWriter } from "@enumeratio/engine";
 import type { Carrier } from "@enumeratio/structures";
 
 /** A carrier constructor's command, its type in camel case: `\permutation`, `\integerPartition`. */
@@ -25,7 +24,7 @@ const spread = (carrier: Carrier): "List" | "Tuple" | undefined =>
   carrier.shape.startsWith("list<") ? "List" : carrier.shape.startsWith("tuple<") ? "Tuple" : undefined;
 
 /** One entry per carrier: writes `\trigger(…)` and reads it back into the constructor. */
-export function carrierLatex(carriers: readonly Carrier[]): Partial<LatexDictionaryEntry>[] {
+export function carrierLatex(carriers: readonly Carrier[]): LatexRule[] {
   return carriers.map((carrier) => {
     const trigger = triggerFor(carrier);
     const head = spread(carrier);
@@ -33,14 +32,14 @@ export function carrierLatex(carriers: readonly Carrier[]): Partial<LatexDiction
       kind: "function" as const,
       name: carrier.name,
       latexTrigger: trigger,
-      serialize: (serializer: Serializer, expr: MathJsonExpression): string => {
-        const ops = Array.isArray(expr) ? (expr.slice(1) as MathJsonExpression[]) : [];
+      serialize: (serializer: LatexWriter, expr: Json): string => {
+        const ops = Array.isArray(expr) ? (expr.slice(1) as Json[]) : [];
         const [op] = ops;
         const args =
           ops.length !== 1
             ? undefined
             : head !== undefined && Array.isArray(op) && op[0] === head
-              ? (op.slice(1) as MathJsonExpression[])
+              ? (op.slice(1) as Json[])
               : head === undefined
                 ? [op!]
                 : undefined;
@@ -49,7 +48,7 @@ export function carrierLatex(carriers: readonly Carrier[]): Partial<LatexDiction
           return `\\operatorname{${carrier.name}}(${ops.map((x) => serializer.serialize(x)).join(", ")})`;
         return `${trigger}(${args.map((x) => serializer.serialize(x)).join(", ")})`;
       },
-      parse: (parser: Parser): MathJsonExpression | null => {
+      parse: (parser: LatexReader): Json | null => {
         const args = parser.parseArguments("enclosure");
         if (args === null) return null;
         if (head !== undefined) return [carrier.name, [head, ...args]];

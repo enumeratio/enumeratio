@@ -1,51 +1,51 @@
-id	in	out
-abs-neg-5	Abs(-5)	5
-abs-5	Abs(5)	5
-0-is-the-only-value-with-x-0	Abs(0)	0
-abs-neg-7-over-2	Abs(Rational(-7, 2))	7/2
-the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	Abs((3 + 4*I))	5
-threads-element-wise-over-a-list	[Abs(-1), Abs(2), Abs(-3)]	[1, 2, 3]
-abs-neg-2p5	Abs(-2.5)	2.50000000000000
-the-modulus-of-a-complex-number-with-approximate	Abs((1.4 + 2.3*I))	2.69258240356725
-threads-over-a-matrix-entry-by-entry	[[Abs(Rational(1, 2)), Abs(-1)], [Abs(Rational(-5, 3)), Abs(Rational(1, 2))]]	[[1/2, 1], [5/3, 1/2]]
-exact-numeric-constants	Abs((-pi))	pi
-an-exact-complex-number-gives-an-exact-radical	Abs((1 + 1*I))	sqrt(2)
-abs-imaginaryunit	Abs(I)	1
-e-i-pi-3-lies-on-the-unit-circle	Abs(exp((I * (S(pi) / 3))))	1
-abs-negativeinfinity	Abs(-oo)	
-complex-infinity-has-infinite-magnitude-in-every	Abs(zoo)	
-an-interval-maps-to-the-interval-of-absolute		
-an-interval-straddling-0-maps-to-0-the-larger		
-decides-the-sign-of-an-exact-numeric-expression	Abs((sqrt(2) - 2))	2 - sqrt(2)
-a-complex-radicand-inside-the-subtraction	Abs((sqrt(-10) - 2))	sqrt(14)
-fullsimplify-matrixfunction-abs-list-list-1-over		
-abs-positiveinfinity	Abs(oo)	
-complexexpand-abs-x		
-n-abs-pi-plus-i-times-catalanconstant-25		
-abs-positiveinfinity-times-i	Abs((oo * (0 + 1*I)))	
-piecewiseexpand-abs-imaginaryunit-times-x-neg-2		
-complexexpand-abs-x-plus-i-times-y		
-the-gap-between-two-temperatures-70-and-95	Abs((70 - 95))	25
-the-distance-between-the-points-1-i-and-4-5i-of	Abs(((1 + 1*I) - (4 + 5*I)))	5
-even-function-x-x	enumeratio_equal(Abs(-8), Abs(8))	True
-triangle-inequality-a-b-le-a-b		
-z-2-z-bar-z		
-multiplicative-ab-a-b	enumeratio_equal(Abs(((1 + 2*I) * (3 + -1*I))), (Abs((1 + 2*I)) * Abs((3 + -1*I))))	True
-abs-1	Abs(1)	
-abs-neg-1	Abs(-1)	
-abs-neg-i	Abs((0 + -1*I))	
-abs-neg-1-plus-i	Abs((-1 + 1*I))	
-abs-neg-1-minus-i	Abs((-1 + -1*I))	
-abs-1-minus-i	Abs((1 + -1*I))	
-abs-1-plus-sqrt-3-times-i	Abs((1 + (0 + sqrt(3)*I)))	
-abs-neg-1-plus-sqrt-3-times-i	Abs((-1 + (0 + sqrt(3)*I)))	
-abs-neg-sqrt-3-minus-i	Abs(((-sqrt(3)) + (0 + -1*I)))	
-abs-neg-1-plus-neg-sqrt-3-times-i	Abs((-1 + (0 + (-sqrt(3))*I)))	
-abs-1-plus-neg-sqrt-3-times-i	Abs((1 + (0 + (-sqrt(3))*I)))	
-abs-sqrt-3-minus-i	Abs((sqrt(3) + (0 + -1*I)))	
-abs-2	Abs(2)	
-abs-1-over-2-pow-2	(S(Abs(Rational(1, 2)))**2)	
-abs-2-pow-2	(S(Abs(2))**2)	
-abs-sqrt-3-plus-i	Abs((sqrt(3) + (0 + 1*I)))	
-abs-neg-sqrt-3-plus-i	Abs(((-sqrt(3)) + (0 + 1*I)))	
-doesn-t-factor-constants-out-of-a-symbolic	Abs((-3 * Symbol("x")))	True
+id	in	out	verdict
+abs-neg-5	Abs(-5)	5	
+abs-5	Abs(5)	5	
+0-is-the-only-value-with-x-0	Abs(0)	0	
+abs-neg-7-over-2	Abs(Rational(-7, 2))	7/2	
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	Abs((3 + 4*I))	5	
+threads-element-wise-over-a-list	[Abs(-1), Abs(2), Abs(-3)]	[1, 2, 3]	
+abs-neg-2p5	Abs(-2.5)	2.50000000000000	
+the-modulus-of-a-complex-number-with-approximate	Abs((1.4 + 2.3*I))	2.69258240356725	
+threads-over-a-matrix-entry-by-entry	[[Abs(Rational(1, 2)), Abs(-1)], [Abs(Rational(-5, 3)), Abs(Rational(1, 2))]]	[[1/2, 1], [5/3, 1/2]]	
+exact-numeric-constants	Abs((-pi))	pi	
+an-exact-complex-number-gives-an-exact-radical	Abs((1 + 1*I))	sqrt(2)	
+abs-imaginaryunit	Abs(I)	1	
+e-i-pi-3-lies-on-the-unit-circle	Abs(exp((I * (S(pi) / 3))))	1	
+abs-negativeinfinity	Abs(-oo)		
+complex-infinity-has-infinite-magnitude-in-every	Abs(zoo)		
+an-interval-maps-to-the-interval-of-absolute			
+an-interval-straddling-0-maps-to-0-the-larger			
+decides-the-sign-of-an-exact-numeric-expression	Abs((sqrt(2) - 2))	2 - sqrt(2)	
+a-complex-radicand-inside-the-subtraction	Abs((sqrt(-10) - 2))	sqrt(14)	
+n-abs-pi-plus-i-times-catalan-25			
+fullsimplify-matrixfunction-abs-list-list-1-over			
+abs-positiveinfinity	Abs(oo)		
+abs-positiveinfinity-times-i	Abs((oo * (0 + 1*I)))		
+piecewiseexpand-abs-imaginaryunit-times-x-neg-2			
+complexexpand-abs-x			
+complexexpand-abs-x-plus-i-times-y			
+the-gap-between-two-temperatures-70-and-95	Abs((70 - 95))	25	
+the-distance-between-the-points-1-i-and-4-5i-of	Abs(((1 + 1*I) - (4 + 5*I)))	5	
+even-function-x-x	enumeratio_equal(Abs(-8), Abs(8))	True	
+triangle-inequality-a-b-le-a-b			
+z-2-z-bar-z			
+multiplicative-ab-a-b	enumeratio_equal(Abs(((1 + 2*I) * (3 + -1*I))), (Abs((1 + 2*I)) * Abs((3 + -1*I))))	True	
+abs-1	Abs(1)		
+abs-neg-1	Abs(-1)		
+abs-neg-i	Abs((0 + -1*I))		
+abs-neg-1-plus-i	Abs((-1 + 1*I))		
+abs-neg-1-minus-i	Abs((-1 + -1*I))		
+abs-1-minus-i	Abs((1 + -1*I))		
+abs-sqrt-3-plus-i	Abs((sqrt(3) + (0 + 1*I)))		
+abs-1-plus-sqrt-3-times-i	Abs((1 + (0 + sqrt(3)*I)))		
+abs-neg-1-plus-sqrt-3-times-i	Abs((-1 + (0 + sqrt(3)*I)))		
+abs-neg-sqrt-3-plus-i	Abs(((-sqrt(3)) + (0 + 1*I)))		
+abs-neg-sqrt-3-minus-i	Abs(((-sqrt(3)) + (0 + -1*I)))		
+abs-neg-1-plus-neg-sqrt-3-times-i	Abs((-1 + (0 + (-sqrt(3))*I)))		
+abs-1-plus-neg-sqrt-3-times-i	Abs((1 + (0 + (-sqrt(3))*I)))		
+abs-sqrt-3-minus-i	Abs((sqrt(3) + (0 + -1*I)))		
+abs-2	Abs(2)		
+abs-1-over-2-pow-2	(S(Abs(Rational(1, 2)))**2)		
+abs-2-pow-2	(S(Abs(2))**2)		
+doesn-t-factor-constants-out-of-a-symbolic	Abs((-3 * Symbol("x")))	3*Abs(x)	disagree

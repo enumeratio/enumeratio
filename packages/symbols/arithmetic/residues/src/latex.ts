@@ -1,5 +1,4 @@
-import type { MathJsonExpression } from "@cortex-js/compute-engine";
-import type { LatexDictionaryEntry, Parser } from "@cortex-js/compute-engine/latex-syntax";
+import type { Json, LatexRule } from "@enumeratio/engine";
 import { INTEGER_MOD, QUOTIENT_RING } from "./names.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
@@ -17,23 +16,23 @@ import { INTEGER_MOD, QUOTIENT_RING } from "./names.ts";
 const PMOD_PRECEDENCE = 244;
 const RELATION_PRECEDENCE = 245;
 
-const operand = (expr: MathJsonExpression, i: number): MathJsonExpression | null =>
-  Array.isArray(expr) ? ((expr[i] as MathJsonExpression | undefined) ?? null) : null;
+const operand = (expr: Json, i: number): Json | null =>
+  Array.isArray(expr) ? ((expr[i] as Json | undefined) ?? null) : null;
 
-export const RESIDUES_LATEX: readonly Partial<LatexDictionaryEntry>[] = [
+export const RESIDUES_LATEX: readonly LatexRule[] = [
   {
     name: INTEGER_MOD,
     kind: "infix",
     latexTrigger: ["\\pmod"],
     precedence: PMOD_PRECEDENCE,
-    parse: (parser: Parser, lhs: MathJsonExpression) => {
+    parse: (parser, lhs) => {
       const n = parser.parseGroup() ?? parser.parseToken();
       if (n === null) return null;
       // `x = 2 \pmod{5}` is how congruence is written on paper.
       if (Array.isArray(lhs) && lhs[0] === "Equal" && lhs.length === 3) {
-        return ["Congruent", lhs[1], lhs[2], n] as MathJsonExpression;
+        return ["Congruent", lhs[1], lhs[2], n] as Json;
       }
-      return [INTEGER_MOD, lhs, n] as MathJsonExpression;
+      return [INTEGER_MOD, lhs, n] as Json;
     },
     serialize: (serializer, expr) =>
       `${serializer.wrap(operand(expr, 1), RELATION_PRECEDENCE)}\\pmod{${serializer.serialize(operand(expr, 2))}}`,

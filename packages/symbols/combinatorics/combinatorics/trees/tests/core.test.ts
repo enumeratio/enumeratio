@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import { entries } from "../src/families/core.ts";
 
 // Self-cert the trees-area families split out of collections/src/families/core.ts --
@@ -12,7 +13,7 @@ const PARAMS: Record<string, number[]> = {
   OrderedTrees: [4],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, p] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

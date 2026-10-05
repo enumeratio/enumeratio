@@ -1,10 +1,10 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-rewrites-the-whole-expr-matches-top-level			[Replace, [Add, x, 1], [Rule, [Add, _a, 1], [Multiply, _a, 100]]]	[Multiply, 100, x]				
-replace-x-pow-2-rule-x-pow-2-a-plus-b			[Replace, [Power, x, 2], [Rule, [Power, x, 2], [Add, a, b]]]	[Add, a, b]				
-replace-1-plus-x-pow-2-rule-x-pow-2-a-plus-b			[Replace, [Add, 1, [Power, x, 2]], [Rule, [Power, x, 2], [Add, a, b]]]	[Add, [Power, x, 2], 1]				
-replace-x-list-list-rule-x-a-list-rule-x-b		triage	[Replace, x, [List, [List, [Rule, x, a]], [List, [Rule, x, b]]]]	x		gap	unclassified	A list of rule lists replaces once per list: Wolfram gives {a, b}; we return x unchanged.
-tries-a-list-of-rules-in-order	Scope		[Replace, b, [List, [Rule, a, 1], [Rule, b, 2]]]	2				
-replace-x-list-rule-y-2-rule-z-3	Scope		[Replace, x, [List, [Rule, y, 2], [Rule, z, 3]]]	x				
-replace-x-list	Properties		[Replace, x, [List]]	x	An empty rule list does nothing			
-replace-x-list-list-rule-x-1-list-rule-y-2	Properties	triage	[Replace, x, [List, [List, [Rule, x, 1]], [List, [Rule, y, 2]]]]	x		gap	unclassified	A list of rule lists replaces once per list: Wolfram gives {1, x}; we return x unchanged.
-leaves-expr-untouched-when-only-subexpr-matches	Possible issues		[Replace, [List, [Add, x, 1]], [Rule, [Add, _a, 1], [Multiply, _a, 100]]]	[List, [Add, x, 1]]	unlike ReplaceAll, a match one level down doesn't count			
+id	section	role	expr	expected	caption	triage	wolfram.note
+rewrites-the-whole-expr-matches-top-level			[Replace, [Add, x, 1], [Rule, [Add, _a, 1], [Multiply, _a, 100]]]	[Multiply, 100, x]			
+replace-1-plus-x-pow-2-x-pow-2-neg-gt-a-plus-b			[Replace, [Add, 1, [Power, x, 2]], [Rule, [Power, x, 2], [Add, a, b]]]	[Add, [Power, x, 2], 1]	Only the whole expression is tried, so $x^2$ inside the sum is not replaced		
+replace-x-pow-2-x-pow-2-neg-gt-a-plus-b			[Replace, [Power, x, 2], [Rule, [Power, x, 2], [Add, a, b]]]	[Add, a, b]			
+replace-x-list-list-x-neg-gt-a-list-x-neg-gt-b		triage	[Replace, x, [List, [List, [Rule, x, a]], [List, [Rule, x, b]]]]	x		gap	Replace[x, {{rules...}, {rules...}}] with a list of rule-sets threads over the outer list in Wolfram, applying each rule-set separately and returning a list of results ({a,b} here). We don't implement that multi-way branching form -- Replace just returns x unevaluated.
+tries-a-list-of-rules-in-order	Scope		[Replace, b, [List, [Rule, a, 1], [Rule, b, 2]]]	2			
+replace-x-list-y-neg-gt-2-z-neg-gt-3	Scope		[Replace, x, [List, [Rule, y, 2], [Rule, z, 3]]]	x	No rule matches, so the expression is unchanged		
+replace-x-list	Properties		[Replace, x, [List]]	x	An empty rule list does nothing		
+replace-x-list-list-x-neg-gt-1-list-y-neg-gt-2	Properties	triage	[Replace, x, [List, [List, [Rule, x, 1]], [List, [Rule, y, 2]]]]	x		gap	Same missing feature as the other Replace row: Wolfram threads over the two rule-sets ({1, x} -- first matches, second doesn't), we return x unevaluated.
+leaves-expr-untouched-when-only-subexpr-matches	Possible issues		[Replace, [List, [Add, x, 1]], [Rule, [Add, _a, 1], [Multiply, _a, 100]]]	[List, [Add, x, 1]]	unlike ReplaceAll, a match one level down doesn't count		

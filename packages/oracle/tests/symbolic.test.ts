@@ -90,3 +90,14 @@ test("interpretSymbolicAgreement reads True/False/anything-else as agree/disagre
   expect(interpretSymbolicAgreement("None")).toBe("inconclusive");
   expect(interpretSymbolicAgreement("Indeterminate")).toBe("inconclusive");
 });
+
+test("an unevaluated call has no identity check: the difference of a call from itself is trivially zero", () => {
+  const call = ["LaplaceTransform", ["Multiply", ["Divide", 1, "t"], ["Sin", "t"]], "t", "s"];
+  // Canonicalised arguments, as the pinned value of a call we leave alone is written.
+  const left = ["LaplaceTransform", ["Divide", ["Sin", "t"], "t"], "t", "s"];
+  expect(symbolicAgreementSource("wolfram", call, left, ["s", "t"])).toBeUndefined();
+  expect(symbolicAgreementSource("wolfram", ["Simplify", call], left, ["s", "t"])).toBeUndefined();
+  expect(symbolicAgreementSource("wolfram", ["Floor", "x"], ["Floor", "x"], ["x"])).toBeUndefined();
+  // An evaluated answer still gets the identity check.
+  expect(symbolicAgreementSource("wolfram", ["Sin", ["Negate", "x"]], ["Negate", ["Sin", "x"]], ["x"])).toBeDefined();
+});

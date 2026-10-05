@@ -1,14 +1,14 @@
-id	section	role	expr	expected	caption	wolfram.note
-iseven-4			[IsEven, 4]	True		
-iseven-3			[IsEven, 3]	False		
-zero-is-even			[IsEven, 0]	True	Zero is even	
-negative-integers-count-too			[IsEven, -4]	True	Negative integers count too	
-iseven-8			[IsEven, 8]	True	An even integer gives True	
-a-non-integer-is-not-even	Scope		[IsEven, 2.5]	False	A non-integer is not even	
-big-integers	Scope		[IsEven, [Power, 2, 100]]	True	Big integers	
-iseven-10-factorial	Scope		[IsEven, [Factorial, 10]]	True		
-threads-element-wise-over-a-list	Scope		[IsEven, [List, 1, 2, 3]]	[List, False, True, False]	Threads element-wise over a list	EvenQ tests its argument as a whole: $\mathrm{EvenQ}[\{1, 2, 3\}]$ is False.
-select-the-even-numbers-up-to-10	Applications		[Filter, [Range, 10], IsEven]	[List, 2, 4, 6, 8, 10]	Select the even numbers up to 10	
-every-integer-is-exactly-one-of-odd-and-even-see	Properties		[Xor, [IsOdd, 12], [IsEven, 12]]	True	Every integer is exactly one of odd and even. See [[IsOdd]]	
-iseven-12	Properties		[IsEven, 12]	True	Divisible by 2, so even	
-a-symbol-stays-undecided-rather-than-false	Possible issues		[IsEven, x]	[IsEven, x]	A symbol stays undecided rather than False	
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+iseven-4			[IsEven, 4]	True			
+iseven-3			[IsEven, 3]	False			
+zero-is-even			[IsEven, 0]	True	Zero is even		
+negative-integers-count-too			[IsEven, -4]	True	Negative integers count too		
+iseven-8			[IsEven, 8]	True	An even integer gives True		
+a-non-integer-is-not-even	Scope		[IsEven, 2.5]	False	A non-integer is not even		
+big-integers	Scope		[IsEven, [Power, 2, 100]]	True	Big integers		
+iseven-10-factorial	Scope		[IsEven, [Factorial, 10]]	True			
+threads-element-wise-over-a-list	Scope		[IsEven, [List, 1, 2, 3]]	[List, False, True, False]	Threads element-wise over a list		EvenQ tests its argument as a whole: $\mathrm{EvenQ}[\{1, 2, 3\}]$ is False.
+select-the-even-numbers-up-to-10	Applications		[Filter, [Range, 10], IsEven]	[List, 2, 4, 6, 8, 10]	Select the even numbers up to 10		
+every-integer-is-exactly-one-of-odd-and-even-see	Properties		[Xor, [IsOdd, 12], [IsEven, 12]]	True	Every integer is exactly one of odd and even. See [[IsOdd]]		
+iseven-12	Properties		[IsEven, 12]	True	Divisible by 2, so even		
+a-symbol-stays-undecided-rather-than-false	Possible issues		[IsEven, x]	[IsEven, x]	A symbol stays undecided rather than False	unevaluated	We leave the call unevaluated; Wolfram answers False.

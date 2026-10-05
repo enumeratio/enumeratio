@@ -120,6 +120,11 @@ test("special forms: anonymous functions use slots", () => {
   expect(toWolfram(["Function", ["Power", "_", 2]])).toBe("Function[Power[Slot[1], 2]]");
 });
 
+test("a named slot is Wolfram's own Slot, vouched for", () => {
+  expect(toWolfram(["Slot", "'age'"])).toBe('Slot["age"]');
+  expect(isWolframHead("Slot")).toBe(true);
+});
+
 test("DigitSum is Wolfram's own head, third argument included", () => {
   expect(toWolfram(["DigitSum", 58127, 2])).toBe("DigitSum[58127, 2]");
   // DigitSum[n, b, k] sums the FIRST k digits: 18 here. Total[IntegerDigits[n, b, k]] would

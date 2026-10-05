@@ -50,5 +50,5 @@ with-no-arguments-compute-engine-returns-0-the
 signs-are-discarded-before-computing-the-gcd			
 lists-aren-t-threaded-element-wise-they-re	[gcd([2, 4], 6), gcd([2, 4], 8)]	AttributeError: 'int' object has no attribute 'is_commutative'	error
 gcd-0-0-0-by-convention	gcd(0, 0)	0	
-symbolic-arguments-stay-unevaluated	gcd(Symbol("x"), Symbol("y"))	True	
+symbolic-arguments-stay-unevaluated	gcd(Symbol("x"), Symbol("y"))	1	inconclusive
 gcd-neg-3-9	gcd(-3, 9)		

@@ -10,7 +10,7 @@ g-1-1	BarnesG[1]	1		G(1)	1
 g-2-1	BarnesG[2]	1		G(2)	1	
 g-4-2	BarnesG[4]	2		G(4)	2	
 g-6-288	BarnesG[6]	288		G(6)	288	
-barnesg-of-a-symbol-stays-symbolic	BarnesG[z]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[G(z)-G(z)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[G\left(\frac{7}{3}\right)-G\left(\frac{7}{3}\right)\right]\right],\text{Chop}\left[N\left[G\left(-\frac{11}{5}\right)-G\left(-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[G\left(\frac{13}{4}\right)-G\left(\frac{13}{4}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+barnesg-of-a-symbol-stays-symbolic	BarnesG[z]	BarnesG[z]		G(z)	G(z)	
 n-barnesg-5-over-2	N[BarnesG[Rational[5, 2]]]	0.9475739010838258		N\left[G\left(\frac{5}{2}\right)\right]	0.947574	
 complex-arguments	BarnesG[Complex[1.3, 1]]	1.444613935050247 - 0.2985488252115478*I		G(1.3\, +i)	1.44461\, -0.298549 i	
 negative-non-integer-arguments-between-the-zeros	BarnesG[-2.5]	0.07617297965686119		G(-2.5)	0.076173	

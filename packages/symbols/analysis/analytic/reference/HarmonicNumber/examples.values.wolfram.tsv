@@ -11,7 +11,7 @@ h-0-3-the-empty-sum-at-a-nonzero-order	HarmonicNumber[0, 3]	0		H_0^{(3)}	0
 h-0-2-the-empty-sum-at-order-2	HarmonicNumber[0, 2]	0		H_0^{(2)}	0	
 no-sum-below-n-0-one-argument-form	HarmonicNumber[-1]	ComplexInfinity		H_{-1}	\text{ComplexInfinity}	
 no-sum-below-n-0-two-argument-form	HarmonicNumber[-2, 3]	ComplexInfinity		H_{-2}^{(3)}	\text{ComplexInfinity}	
-symbolic-n-one-argument-form-stays-symbolic	HarmonicNumber[n]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[H_n-H_n\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[H_{\frac{7}{3}}-H_{\frac{7}{3}}\right]\right],\text{Chop}\left[N\left[H_{-\frac{11}{5}}-H_{-\frac{11}{5}}\right]\right],\text{Chop}\left[N\left[H_{\frac{13}{4}}-H_{\frac{13}{4}}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+symbolic-n-one-argument-form-stays-symbolic	HarmonicNumber[n]	HarmonicNumber[n]		H_n	H_n	
 n-harmonicnumber-0p5	N[HarmonicNumber[0.5]]	0.6137056388801094		N\left[H_{0.5}\right]	0.613706	
 n-harmonicnumber-complex-3-plus-2i	N[HarmonicNumber[Complex[3, 2]]]	1.9725764110447406 + 0.5169611287960764*I		N\left[H_{3+2 i}\right]	1.97258\, +0.516961 i	
 n-harmonicnumber-1-over-2-order-2	N[HarmonicNumber[Rational[1, 2], 2]]	0.7101318663035471		N\left[H_{\frac{1}{2}}^{(2)}\right]	0.710132	

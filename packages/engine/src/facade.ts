@@ -18,6 +18,8 @@ export type Expr = BoxedExpression;
 export type Json = MathJsonExpression;
 /** A head's definition, as `ce.declare` takes it. */
 export type HeadDefinition = OperatorDefinition;
+/** A head's `compile` field: how it lowers to a target (`ctx.language`), or `undefined` to leave it to the default. */
+export type CompileHandler = NonNullable<HeadDefinition["compile"]>;
 /** compute-engine's type language (`"integer"`, `"(number) -> number"`, ...). */
 export type Type = CeType;
 

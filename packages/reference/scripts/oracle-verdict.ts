@@ -21,7 +21,7 @@ import {
   valuesOnly,
 } from "@enumeratio/oracle";
 import { fromWolfram } from "@enumeratio/wolfram";
-import { MAX_MEASURED_TOLERANCE } from "../src/known.ts";
+import { measuredTolerance } from "../src/known.ts";
 
 const ce = new ComputeEngine();
 
@@ -143,11 +143,8 @@ export function sameDigits(expected: MathJSON, shown: string): boolean | undefin
 export function measured(expected: MathJSON): { value: MathJSON; tolerance?: number } | undefined {
   if (!Array.isArray(expected) || expected[0] !== "Measurement" || expected.length !== 3) return undefined;
   const value = expected[1] as MathJSON;
-  const [v, error] = [leaf(value), leaf(expected[2] as MathJSON)];
-  const size = typeof v === "number" ? Math.abs(v) : typeof v === "object" ? Math.hypot(v.re, v.im) : Number.NaN;
-  if (typeof error !== "number" || !(error >= 0) || Number.isNaN(size)) return { value };
-  const relative = error / Math.max(1, size);
-  return relative <= MAX_MEASURED_TOLERANCE ? { value, tolerance: relative } : { value };
+  const tolerance = measuredTolerance(expected);
+  return tolerance === undefined ? { value } : { value, tolerance };
 }
 
 export function verdictOf(

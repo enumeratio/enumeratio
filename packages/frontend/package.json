@@ -59,6 +59,10 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "presentation",
+    "extends": [
+      "structures"
+    ],
     "late": "./declare-carriers#declareFrontendCarriers",
     "declares": "./declares.json"
   },

@@ -13,7 +13,7 @@ export {
   type SystemSpec,
   wiredSystems,
 } from "./systems.ts";
-export { interpretSymbolicAgreement, symbolicAgreementSource } from "./symbolic.ts";
+export { interpretSymbolicAgreement, leavesCall, symbolicAgreementSource } from "./symbolic.ts";
 export {
   asNumber,
   compare,

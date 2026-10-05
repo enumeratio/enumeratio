@@ -72,6 +72,10 @@
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.147.0"
   },
+  "enumeratio": {
+    "layer": "tooling",
+    "extends": []
+  },
   "generated": [
     "src/crosswalk/catalog-references-data.ts",
     "src/crosswalk/curated-data.ts"

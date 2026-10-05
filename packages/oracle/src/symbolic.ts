@@ -16,6 +16,7 @@
 // One self-contained kernel source, evaluated inside the ordinary per-system batch
 // (run.ts/runIn) like any other example — no second round trip.
 
+import { ComputeEngine } from "@cortex-js/compute-engine";
 import { emit, type MathJSON } from "./emit.ts";
 import type { SymbolicSystem } from "./systems.ts";
 import type { Verdict } from "./compare.ts";
@@ -159,6 +160,67 @@ function propositionAgreementSource(theirs: string, ours: string): string {
   );
 }
 
+const ce = new ComputeEngine();
+
+/** Wrappers that ask the kernel to work on their argument; the call inside is what can be left alone. */
+const WRAPPERS = new Set(["N", "Simplify", "FullSimplify", "Hold", "Evaluate", "Expand", "Factor"]);
+/** Heads that only combine values: keeping one is not a function left unevaluated. */
+const COMBINING = new Set([
+  "List",
+  "Add",
+  "Multiply",
+  "Power",
+  "Divide",
+  "Rational",
+  "Negate",
+  "Subtract",
+  "Sqrt",
+  "Tuple",
+  "Set",
+  "Equal",
+  "Complex",
+  "Pair",
+]);
+
+const canonicalText = (expr: MathJSON): string => {
+  try {
+    return JSON.stringify(ce.box(expr as Parameters<ComputeEngine["box"]>[0]).json);
+  } catch {
+    return JSON.stringify(expr);
+  }
+};
+
+/**
+ * Whether `expected` still holds the call `expr` asks (canonically, so `Times(1/t, f)` and
+ * `Divide(f, t)` are one call): ours left it unevaluated. A difference of it against the kernel's
+ * own evaluation of the same input is zero by construction, so it can't witness agreement.
+ */
+export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
+  let call = expr;
+  while (Array.isArray(call) && WRAPPERS.has(call[0] as string)) call = call[1] as MathJSON;
+  if (!Array.isArray(call) || typeof call[0] !== "string" || COMBINING.has(call[0])) return false;
+  const head = call[0];
+  const asked = call;
+  const visit = (e: MathJSON): boolean =>
+    Array.isArray(e) &&
+    ((e[0] === head &&
+      e.length === asked.length &&
+      e.slice(1).every((x, i) => sameValue(x as MathJSON, asked[i + 1] as MathJSON))) ||
+      e.slice(1).some((x) => visit(x as MathJSON)));
+  return visit(expected);
+}
+
+/** Two arguments that are one expression written differently (`1/t * f` and `f/t`). */
+function sameValue(a: MathJSON, b: MathJSON): boolean {
+  if (canonicalText(a) === canonicalText(b)) return true;
+  try {
+    const [x, y] = [a, b].map((e) => ce.box(e as Parameters<ComputeEngine["box"]>[0]));
+    return x!.isSame(y!) || ce.box(["Subtract", x!, y!]).simplify().is(0);
+  } catch {
+    return false;
+  }
+}
+
 /**
  * The kernel source for "does `expr` agree with `expected`", for an example whose emitted
  * form carries a free symbol. `undefined` when either side doesn't emit for `system`, OR when
@@ -178,6 +240,8 @@ export function symbolicAgreementSource(
   expected: MathJSON,
   freeSymbols: readonly string[],
 ): string | undefined {
+  // Ours left the call unevaluated: the identity holds trivially, so the plain verdict decides.
+  if (leavesCall(expr, expected)) return undefined;
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
   if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;

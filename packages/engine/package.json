@@ -25,6 +25,10 @@
       "types": "./dist/unstable.d.mts",
       "import": "./dist/unstable.mjs"
     },
+    "./unstable/latex-syntax": {
+      "types": "./dist/unstable-latex-syntax.d.mts",
+      "import": "./dist/unstable-latex-syntax.mjs"
+    },
     "./package.json": "./package.json"
   },
   "scripts": {
@@ -41,5 +45,9 @@
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.147.0"
+  },
+  "enumeratio": {
+    "layer": "infra",
+    "extends": []
   }
 }

@@ -42,6 +42,10 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "base",
+    "extends": [
+      "boxes"
+    ],
     "notation": "./notation",
     "declare": [
       "ensureProtocols",

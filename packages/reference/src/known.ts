@@ -36,13 +36,15 @@ export const comparable = (json: unknown): boolean => !Number.isNaN(ce.box(json 
 
 /** The widest error bar, relative above magnitude 1, a measured `expected`
  * (`Measurement(value, error)`, a numeric integral) is read at. Past it (a Monte Carlo
- * ±0.018) the measurement is too rough to stand for the value. Shared with the oracle scan. */
-export const MAX_MEASURED_TOLERANCE = 1e-6;
+ * ±0.018) the measurement is too rough to stand for the value. */
+const MAX_MEASURED_TOLERANCE = 1e-6;
 /** A few units in the last place of a double, relative above magnitude 1. */
 const DOUBLE_ROUNDING = 4 * Number.EPSILON;
 
 /** The tolerance a measured `expected` needs to be tight, or `undefined` for one that isn't
- * measured or is too rough (`MAX_MEASURED_TOLERANCE`). */
+ * measured or is too rough (`MAX_MEASURED_TOLERANCE`). The one rule for the known-check and
+ * the oracle scan: the bar rounds up to a power of ten, so a quadrature's `8.3e-12` reads at
+ * 1e-11 on both and an answer one of them accepts the other can't reject. */
 export function measuredTolerance(expected: unknown): number | undefined {
   if (!Array.isArray(expected) || expected[0] !== "Measurement") return undefined;
   const [value, error] = (expected as unknown[]).slice(1).map((x) => ce.box(x as never).N());

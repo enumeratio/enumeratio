@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Rebuild a package's `src/notation.generated.ts` from each head's `reference/<Head>/notation.json`,
 // so its `./notation` entry carries the data without reading the records at run time. Run by the
 // package's `build`:

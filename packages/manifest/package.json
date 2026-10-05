@@ -4,6 +4,10 @@
   "private": true,
   "description": "Every symbol head we know -- its packages, overloads and their types, parameter names, attributes and summary -- assembled at build time from the reference records and a bare compute-engine.",
   "license": "WTFPL",
+  "bin": {
+    "enumeratio-collect-declares": "./dist/bin/collect-declares.mjs",
+    "enumeratio-collect-notation": "./dist/bin/collect-notation.mjs"
+  },
   "files": [
     "dist"
   ],
@@ -29,12 +33,12 @@
     "check": "vp check"
   },
   "dependencies": {
+    "@enumeratio/engine": "workspace:*",
+    "@enumeratio/entry": "workspace:*",
     "semver": "catalog:"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.147.0",
-    "@enumeratio/engine": "workspace:*",
-    "@enumeratio/entry": "workspace:*",
     "@types/node": "^24",
     "@types/semver": "catalog:",
     "typescript": "^7.0.2",
@@ -43,5 +47,9 @@
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "^0.147.0"
+  },
+  "enumeratio": {
+    "layer": "infra",
+    "extends": []
   }
 }

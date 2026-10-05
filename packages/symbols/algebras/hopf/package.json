@@ -46,6 +46,11 @@
     "@cortex-js/compute-engine": "^0.147.0"
   },
   "enumeratio": {
+    "layer": "extension",
+    "area": "algebras",
+    "extends": [
+      "structures"
+    ],
     "notation": "./notation",
     "group": "algebras",
     "declare": "declareHopf",

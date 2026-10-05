@@ -184,6 +184,28 @@ export function evaluateHurwitz(
   return undefined; // stay symbolic
 }
 
+/** The most terms `Zeta(s, −n)` sums exactly: each adds a rational with a growing denominator. */
+const MAX_EXACT_SHIFT = 64;
+
+/**
+ * Zeta(s, −n) = ζ(s) + Σ_{j=1}^n j^(−s) for an integer s ≥ 2 and n ≥ 1: the (k+a)=0 slot is
+ * dropped and the terms before it are |k+a|^(−s), so Zeta(2, −1) = 1 + π²/6 as in Wolfram
+ * (which leaves ζ(3, −2) unevaluated, though N gives the same sum). Undefined past the cap, so
+ * a long sum stays symbolic.
+ */
+export function zetaAtNonpositiveShift(
+  ce: ComputeEngine,
+  s: BoxedExpression,
+  a: BoxedExpression,
+): BoxedExpression | undefined {
+  if (!isRealInt(s) || s.re < 2 || a.im !== 0 || !Number.isInteger(a.re) || a.re >= 0 || -a.re > MAX_EXACT_SHIFT)
+    return undefined;
+  const sJson = s.json as unknown as Json;
+  const terms: Json[] = [["Zeta", sJson]];
+  for (let j = 1; j <= -a.re; j++) terms.push(["Power", j, ["Negate", sJson]]);
+  return ce.box(["Add", ...terms] as never).evaluate();
+}
+
 export function evaluateZeta(
   ce: ComputeEngine,
   ops: readonly BoxedExpression[],
@@ -203,6 +225,12 @@ export function evaluateZeta(
   if (a.re === 0 && a.im === 0) {
     const expr = ce.box(["Zeta", s.json as unknown as never]);
     return numeric ? expr.N() : expr.evaluate();
+  }
+
+  // Exact only: the numeric kernels below answer a number.
+  if (!numeric) {
+    const shifted = zetaAtNonpositiveShift(ce, s, a);
+    if (shifted !== undefined) return shifted;
   }
 
   // a concrete with Re(a) ≤ 0: generalized-zeta convention, numeric only.
@@ -379,6 +407,20 @@ export function evaluateZetaAtZero(ce: ComputeEngine): void {
       const value = ce.box(["Subtract", ["Rational", 1, 2], ops[1]!.json as never]);
       return options.numericApproximation ? value.N() : value.evaluate();
     },
+    2,
+  );
+}
+
+/** Exact Zeta(s, −n) for an integer s ≥ 2 (`zetaAtNonpositiveShift`), which native leaves
+ * unevaluated; a numeric request still reaches the native kernel. */
+export function evaluateZetaAtNonpositiveShift(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["Zeta"],
+    (ops) => ops.length === 2,
+    (native) => (ops, options) =>
+      (!options.numericApproximation ? zetaAtNonpositiveShift(ce, ops[0]!, ops[1]!) : undefined) ??
+      native?.(ops, options),
     2,
   );
 }

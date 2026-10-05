@@ -87,7 +87,7 @@ n-sin-1-pow-2	N[Power[Sin[1], 2]]	0.7080734182735712		N\left[\sin ^2(1)\right]	0
 n-sin-1-over-2-plus-1-over-2-times-pi-pow-2	N[Power[Sin[Plus[Rational[1, 2], Times[Rational[1, 2], Pi]]], 2]]	0.7701511529340699		N\left[\sin ^2\left(\frac{1}{2}+\frac{1}{2} \pi \right)\right]	0.770151	
 1-radian-isn-t-a-recognized-special-angle-so	Sin[1]	Sin[1]		\sin (1)	\sin (1)	
 sin-2-a-generic-argument-stays-symbolic	Sin[2]	Sin[2]		\sin (2)	\sin (2)	
-sin-x-plus-y-stays-symbolic	Sin[Plus[x, y]]	True		\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\sin (x+y)-\sin (x+y)],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\sin \left(\frac{7}{3}-\frac{11}{5}\right)-\sin \left(\frac{7}{3}-\frac{11}{5}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(\frac{13}{4}-\frac{17}{6}\right)-\sin \left(\frac{13}{4}-\frac{17}{6}\right)\right]\right],\text{Chop}\left[N\left[\sin \left(\frac{19}{8}-\frac{23}{9}\right)-\sin \left(\frac{19}{8}-\frac{23}{9}\right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
+sin-x-plus-y-stays-symbolic	Sin[Plus[x, y]]	Sin[x + y]		\sin (x+y)	\sin (x+y)	
 pi-15-has-a-radical-form-but-like-wolfram-s	Sin[Divide[Pi, 15]]	Sin[Pi/15]		\sin \left(\frac{\pi }{15}\right)	\sin \left(\frac{\pi }{15}\right)	
 a-huge-exact-argument-is-reduced-modulo-2-pi	N[Sin[Power[10, 20]]]	-0.6452512852657808		N\left[\sin \left(10^{20}\right)\right]	-0.645251	
 an-even-huger-argument-11-38	N[Sin[Power[11, 38]]]	-0.7172457893515806		N\left[\sin \left(11^{38}\right)\right]	-0.717246	disagree
