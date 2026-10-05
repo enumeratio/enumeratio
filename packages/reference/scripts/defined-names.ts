@@ -32,9 +32,9 @@ export function symbolsIn(expr: MathJSON, into: Set<string>): void {
 // a replaced first one), so checking for that entry ANYWHERE in the log, not just first, is
 // still exactly "was this one ever a bare auto-declare".
 //
-// Used THROUGH the engine, not by guessing at a type: `declareHecke`'s own `q` (its q-series
+// Used THROUGH the engine, not by guessing at a type: `declareHecke`'s own `HeckeParameter` (its
 // deformation parameter) has no such entry — a real `ce.declare` call, not auto-declare — so
-// under this rule it counts as genuinely defined, unlike `m`/`s`/`A`/`C`. A domain (`Primes`,
+// under this rule it counts as genuinely defined, unlike `m`/`s`/`q`/`A`/`C`. A domain (`Primes`,
 // `GaussianIntegers`) or a real constant (`NaN`, `ImaginaryUnit`) has no auto-declared entry
 // either, for the same reason: both were actually declared, just not by auto-declare.
 export function isDefinedName(ce: ComputeEngine, name: string): boolean {

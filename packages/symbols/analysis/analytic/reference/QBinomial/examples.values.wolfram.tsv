@@ -4,7 +4,7 @@ qbinomial-4-2-2	N[QBinomial[4, 2, 2]]	35.	N\left[\binom{4}{2}_2\right]	35.
 qbinomial-6-3-1	N[QBinomial[6, 3, 1]]	20.	N\left[\binom{6}{3}_1\right]	20.	
 qbinomial-5-2-3	N[QBinomial[5, 2, 3]]	1210.	N\left[\binom{5}{2}_3\right]	1210.	
 qbinomial-8-3-2	N[QBinomial[8, 3, 2]]	97155.	N\left[\binom{8}{3}_2\right]	97155.	
-a-polynomial-in-q-whose-coefficients-count					
+a-polynomial-in-q-whose-coefficients-count	Expand[QBinomial[4, 2, q]]				
 n-qbinomial-15-over-17-5-1-50	N[QBinomial[Rational[15, 17], 5, 1], 50]	0.00638303716501027920417337802327980916388058797470449488927406069766180678758`50.			disagree
 n-qbinomial-23-over-47-5-minus-i-2	N[QBinomial[Rational[23, 47], Complex[5, -1], 2]]	-0.00007180162183878611 - 0.00006572425975527427*I			disagree
 the-number-of-2-dimensional-subspaces-of-f-3-5	QBinomial[5, 2, 3]	1210	\binom{5}{2}_3	1210	
