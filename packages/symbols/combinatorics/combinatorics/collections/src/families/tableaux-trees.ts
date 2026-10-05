@@ -10,6 +10,26 @@
 // three now carry "Tournament"/"LabeledGraph". PruferSequences moved to
 // trees/src/families/prufer-sequences.ts (§4 step 5): it now carries "PruferSequence".
 import type { NumberKernel } from "./types.ts";
+import type { EpsilFamily } from "./epsil.ts";
+import {
+  add,
+  all,
+  and,
+  at,
+  equal,
+  fold,
+  iff,
+  len,
+  less,
+  lets,
+  map,
+  mul,
+  quotient,
+  rowTable,
+  sub,
+  upTo,
+  cell,
+} from "./tables.ts";
 import { Factorial, PermutationUnrank, PermutationRank } from "./kernels.ts";
 import { PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank } from "./kernels-combinatorics.ts";
 import { SubsetCount, SubsetUnrank, SubsetRank } from "./kernels-extra.ts";
@@ -317,21 +337,209 @@ export function IsSytTwoRowOf(e: unknown, n: number): boolean {
   return true;
 }
 
+type MathJSON = unknown;
+
+const between = (x: MathJSON, low: MathJSON, high: MathJSON): MathJSON =>
+  and(["LessEqual", low, x], ["LessEqual", x, high]);
+const lengthOf = (list: MathJSON): MathJSON => ["Length", list];
+
+// ─── RecursiveTrees: the parent array read as a mixed-radix number, digit i (base i − 1) the
+// parent less one; entry n is the least significant. Entry i's place value is the product of the
+// bases after it, Π_{j > i} (j − 1).
+const placeValue = (i: MathJSON): MathJSON => fold(mul("rw", sub("rj", 1)), "rw", "rj", 1, upTo(add(i, 1), "_n"));
+
+const recursiveTrees: EpsilFamily = {
+  head: "RecursiveTrees",
+  carrier: "RootedLabeledTree",
+  paramCount: 1,
+  kind: "ints",
+  params: ["_n"],
+  fast: {
+    count: ([n]) => RecursiveTreeCount(n),
+    unrank: ([n], r) => RecursiveTreeUnrank(n, r),
+    rank: (e, [n]) => RecursiveTreeRank(e as number[], n),
+    valid: (e, [n]) => IsRecursiveTreeOf(e, n),
+  },
+  epsil: {
+    count: fold(mul("cp", "cj"), "cp", "cj", 1, upTo(1, sub("_n", 1))),
+    unrank: map(
+      iff(equal("i", 1), 0, add(["Mod", quotient("_r", placeValue("i")), sub("i", 1)], 1)),
+      "i",
+      upTo(1, "_n"),
+    ),
+    rank: fold(add(mul("acc", sub("i", 1)), sub(at("_x", "i"), 1)), "acc", "i", 0, upTo(2, "_n")),
+    valid: and(
+      equal(len, "_n"),
+      iff(
+        equal("_n", 0),
+        "True",
+        and(
+          equal(at("_x", 1), 0),
+          all((i) => between(at("_x", i), 1, sub(i, 1)), upTo(2, "_n"), "i"),
+        ),
+      ),
+    ),
+  },
+};
+
+// ─── SytHookShape: the arm is the subset of 2..n whose bit (v − 2) of the rank is set, the leg the
+// rest, both ascending: rows [1, arm…] then one row per leg value.
+const armBit = (v: MathJSON): MathJSON => ["Mod", quotient("_r", ["Power", 2, sub(v, 2)]), 2];
+const hookShape: EpsilFamily = {
+  head: "SytHookShape",
+  carrier: "StandardTableau",
+  paramCount: 1,
+  kind: "blocks",
+  params: ["_n"],
+  fast: {
+    count: ([n]) => SytHookShapeCount(n),
+    unrank: ([n], r) => SytHookShapeUnrank(n, r),
+    rank: (e, [n]) => SytHookShapeRank(e as number[][], n),
+    valid: (e, [n]) => IsSytHookShapeOf(e, n),
+  },
+  epsil: {
+    count: iff(less("_n", 1), 1, ["Power", 2, sub("_n", 1)]),
+    unrank: iff(
+      less("_n", 1),
+      ["List"],
+      [
+        "Join",
+        ["List", ["Join", ["List", 1], ["Filter", upTo(2, "_n"), ["Function", equal(armBit("a"), 1), "a"]]]],
+        map(["List", "l"], "l", ["Filter", upTo(2, "_n"), ["Function", equal(armBit("b"), 0), "b"]]),
+      ],
+    ),
+    rank: iff(
+      less("_n", 1),
+      0,
+      lets(
+        [["hr", at("_x", 1), "list<integer>"]],
+        fold(add("acc", ["Power", 2, sub(at("hr", "j"), 2)]), "acc", "j", 0, upTo(2, lengthOf("hr"))),
+      ),
+    ),
+    // The leg entry of row i, read through a typed binding of the row.
+    valid: (() => {
+      const leg = (i: MathJSON, tag: string): MathJSON =>
+        lets([[`lg_${tag}`, at("_x", i), "list<integer>"]], at(`lg_${tag}`, 1));
+      return iff(
+        equal(len, 0),
+        equal("_n", 0),
+        lets(
+          [["hr", at("_x", 1), "list<integer>"]],
+          and(
+            equal(add(lengthOf("hr"), sub(len, 1)), "_n"),
+            ["GreaterEqual", lengthOf("hr"), 1],
+            all((j) => between(at("hr", j), 1, "_n"), upTo(1, lengthOf("hr")), "j"),
+            all((j) => ["Less", at("hr", sub(j, 1)), at("hr", j)], upTo(2, lengthOf("hr")), "k"),
+            all(
+              (i) =>
+                lets(
+                  [["lr", at("_x", i), "list<integer>"]],
+                  and(
+                    equal(lengthOf("lr"), 1),
+                    between(at("lr", 1), 1, "_n"),
+                    ["Less", iff(equal(i, 2), at("hr", 1), leg(sub(i, 1), "p")), at("lr", 1)],
+                    all((j) => ["NotEqual", at("hr", j), at("lr", 1)], upTo(1, lengthOf("hr")), "m"),
+                  ),
+                ),
+              upTo(2, len),
+              "i",
+            ),
+          ),
+        ),
+      );
+    })(),
+  },
+};
+
+// ─── SytTwoRow: i goes in row 1 (+1) or row 2 (−1) from 1 to n, the height never below 0, row 1
+// tried first. B(s, h) is the ways to place the s places left from height h: B(s − 1, h + 1) with
+// row 1, then B(s − 1, h − 1) with row 2 when h > 0.
+const ballot = cell("_tables", add("_n", 1));
+const twoRowTable = rowTable(
+  "sy",
+  add("_n", 1),
+  add("_n", 1),
+  () => 1,
+  (prev, s, h) =>
+    add(
+      iff(less(add(h, 1), add("_n", 1)), prev(sub(s, 1), add(h, 1)), 0),
+      iff(["Greater", h, 0], prev(sub(s, 1), sub(h, 1)), 0),
+    ),
+);
+const twoRow = (head: string): EpsilFamily => {
+  const state = "ts";
+  const step = lets(
+    [["tu", ballot(sub("_n", "ti"), add(at(state, 2), 1)), "integer"]],
+    iff(
+      less(at(state, 1), "tu"),
+      ["Join", ["List", at(state, 1), add(at(state, 2), 1)], ["Drop", state, 2], ["List", 1]],
+      ["Join", ["List", sub(at(state, 1), "tu"), sub(at(state, 2), 1)], ["Drop", state, 2], ["List", 2]],
+    ),
+  );
+  const rows = (which: number): MathJSON => ["Filter", upTo(1, "_n"), ["Function", equal(at("tw", "w"), which), "w"]];
+  // Rank: the state [rank, height]; a place in row 2 adds the ways row 1 would have had.
+  const rowOne = at("_x", 1);
+  const inFirst = fold(["Or", "mo", equal(at(rowOne, "mj"), "ri")], "mo", "mj", "False", upTo(1, lengthOf(rowOne)));
+  const rankStep = iff(
+    inFirst,
+    ["List", at("rs", 1), add(at("rs", 2), 1)],
+    ["List", add(at("rs", 1), ballot(sub("_n", "ri"), add(at("rs", 2), 1))), sub(at("rs", 2), 1)],
+  );
+  const increasing = (row: MathJSON, tag: string): MathJSON =>
+    all((j) => ["Less", at(row, sub(j, 1)), at(row, j)], upTo(2, lengthOf(row)), tag);
+  return {
+    head,
+    carrier: "StandardTableau",
+    paramCount: 1,
+    kind: "blocks",
+    params: ["_n"],
+    elementType: "tuple<list<integer>, list<integer>>",
+    // The interpreter takes seconds to build the table at n = 59, past 2^53.
+    declinePastDoubles: true,
+    // No `fast`: the TS kernel rebuilds its completions on every call, twice as slow as the
+    // table from n = 20.
+    epsil: {
+      count: ballot("_n", 0),
+      tables: twoRowTable,
+      unrank: lets(
+        [["tw", ["Drop", fold(step, state, "ti", ["List", "_r", 0], upTo(1, "_n")), 2], "list<integer>"]],
+        ["List", rows(1), rows(2)],
+      ),
+      rank: at(fold(rankStep, "rs", "ri", ["List", 0, 0], upTo(1, "_n")), 1),
+      // The rows are read straight off `_x` (a tuple, so each `At` is typed): bound names make
+      // the interpreter leave these `At`s unevaluated.
+      valid: (() => {
+        const [ta, tb] = [at("_x", 1), at("_x", 2)];
+        return and(
+          equal(len, 2),
+          equal(add(lengthOf(ta), lengthOf(tb)), "_n"),
+          ["GreaterEqual", lengthOf(ta), lengthOf(tb)],
+          all((j) => between(at(ta, j), 1, "_n"), upTo(1, lengthOf(ta)), "ja"),
+          all((j) => between(at(tb, j), 1, "_n"), upTo(1, lengthOf(tb)), "jb"),
+          increasing(ta, "ka"),
+          increasing(tb, "kb"),
+          all((j) => ["Less", at(ta, j), at(tb, j)], upTo(1, lengthOf(tb)), "jc"),
+          all(
+            (j) => all((k) => ["NotEqual", at(ta, j), at(tb, k)], upTo(1, lengthOf(tb)), "kd"),
+            upTo(1, lengthOf(ta)),
+            "je",
+          ),
+        );
+      })(),
+    },
+  };
+};
+
+// IncreasingBinaryTrees and StandardTableaux stay TS kernels: the first is a nested element (no
+// compiled type) built by Cartesian-tree recursion, the second sums hook lengths over every shape
+// of n and removes corners recursively.
+//
 // Kept separate from `entriesAfterNonDecreasingParkingFunctions` below only so
 // collections/src/families/index.ts can splice `wordsTableauxTreesEntries` (ParkingFunctions,
 // NonDecreasingParkingFunctions) back in at the exact interior position it held before the words-
 // area move — §4 step 5.
-export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
-  {
-    head: "RecursiveTrees",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => RecursiveTreeCount(n),
-    unrank: ([n], r) => RecursiveTreeUnrank(n, r),
-    valid: (e, [n]) => IsRecursiveTreeOf(e, n),
-    rank: (e, [n]) => RecursiveTreeRank(e as number[], n),
-    carrier: "RootedLabeledTree",
-  },
+export const entriesAfterNonDecreasingParkingFunctions: (NumberKernel | EpsilFamily)[] = [
+  recursiveTrees,
   {
     head: "IncreasingBinaryTrees",
     paramCount: 1,
@@ -352,35 +560,8 @@ export const entriesAfterNonDecreasingParkingFunctions: NumberKernel[] = [
     rank: (e, [n]) => StandardTableauxRank(e as number[][], n),
     carrier: "StandardTableau",
   },
-  {
-    head: "SytHookShape",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => SytHookShapeCount(n),
-    unrank: ([n], r) => SytHookShapeUnrank(n, r),
-    valid: (e, [n]) => IsSytHookShapeOf(e, n),
-    rank: (e, [n]) => SytHookShapeRank(e as number[][], n),
-    carrier: "StandardTableau",
-  },
-  {
-    head: "SytTwoRow",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => SytTwoRowCount(n),
-    unrank: ([n], r) => SytTwoRowUnrank(n, r),
-    valid: (e, [n]) => IsSytTwoRowOf(e, n),
-    rank: (e, [n]) => SytTwoRowRank(e as number[][], n),
-    carrier: "StandardTableau",
-  },
-  {
-    // The transpose of SytTwoRow: swap "row" for "column" throughout — same sequences, same DP.
-    head: "SytTwoColumn",
-    paramCount: 1,
-    kind: "blocks",
-    count: ([n]) => SytTwoRowCount(n),
-    unrank: ([n], r) => SytTwoRowUnrank(n, r),
-    valid: (e, [n]) => IsSytTwoRowOf(e, n),
-    rank: (e, [n]) => SytTwoRowRank(e as number[][], n),
-    carrier: "StandardTableau",
-  },
+  hookShape,
+  twoRow("SytTwoRow"),
+  // The TS kernel reads the transpose as the very same pair of rows as SytTwoRow.
+  twoRow("SytTwoColumn"),
 ];

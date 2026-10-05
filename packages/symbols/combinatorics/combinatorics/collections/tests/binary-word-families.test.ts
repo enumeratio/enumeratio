@@ -1,5 +1,6 @@
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/binary-word-families.ts";
+import { asNumbers } from "./number-kernels.ts";
 
 // Self-cert every family: rank(unrank(p, r), p) === r across the whole family, unranked
 // elements are valid members, and every element is distinct — same recipe as words.test.ts.
@@ -11,7 +12,7 @@ const PARAMS: Record<string, number[][]> = {
   PrimitiveBinaryStrings: [[1], [2], [3], [4], [5], [6], [7], [8]],
 };
 
-const byHead = new Map(entries.map((e) => [e.head, e]));
+const byHead = new Map(entries.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, paramsList] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

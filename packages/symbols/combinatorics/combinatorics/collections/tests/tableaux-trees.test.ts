@@ -1,6 +1,7 @@
 import { expect, test } from "vite-plus/test";
 import { entriesAfterNonDecreasingParkingFunctions } from "../src/families/tableaux-trees.ts";
 import { InvolutionCount } from "../src/families/kernels-extra.ts";
+import { asNumbers } from "./number-kernels.ts";
 
 // Self-cert every tableaux-trees.ts family: for every rank r in [0, count), unrank produces a
 // valid element and rank(unrank(r)) === r. Sizes kept small so counts stay well under ~5000.
@@ -18,7 +19,7 @@ const PARAMS: Record<string, number[][]> = {
   SytTwoColumn: [[1], [5], [6]],
 };
 
-const byHead = new Map(entriesAfterNonDecreasingParkingFunctions.map((e) => [e.head, e]));
+const byHead = new Map(entriesAfterNonDecreasingParkingFunctions.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, paramSets] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

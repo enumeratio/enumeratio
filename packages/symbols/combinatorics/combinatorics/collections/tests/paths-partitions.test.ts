@@ -2,6 +2,7 @@ import { expect, test } from "vite-plus/test";
 import { check, checkFamily, random } from "../scripts/properties.ts";
 import { entriesBeforeDyckPathsByHeight } from "../src/families/paths-partitions.ts";
 import { numberKernel } from "../src/families/types.ts";
+import { asNumbers } from "./number-kernels.ts";
 
 // Self-cert every family in this module (mirrors tests/subsets.test.ts): for every rank r in
 // [0, count), valid(unrank(p, r), p) === true AND rank(unrank(p, r), p) === r. Params are kept
@@ -19,7 +20,7 @@ const PARAMS: Record<string, number[]> = {
   BallotSequences: [6],
 };
 
-const byHead = new Map(entriesBeforeDyckPathsByHeight.map((e) => [e.head, e]));
+const byHead = new Map(entriesBeforeDyckPathsByHeight.map((e) => [e.head, asNumbers(e)]));
 
 for (const [head, p] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

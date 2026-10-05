@@ -1,13 +1,19 @@
-// The originally hand-authored collections, expressed as NumberKernel[] over the certified kernel library
-// (./kernels*.ts). Same registration mechanism as the other families — no special-casing in library.ts.
-import { binaryStrings, grayCodeSubsets, kSubsets, latticePaths, multisets, subsets, tuples } from "./closed-forms.ts";
+// The originally hand-authored collections: Epsil definitions (./closed-forms.ts), each with its TS
+// kernel over the certified kernel library (./kernels*.ts) as a `fast` path where it lists the same
+// members in the same order.
+import {
+  binaryStrings,
+  fibonacciWords,
+  grayCodeSubsets,
+  kSubsets,
+  latticePaths,
+  multisets,
+  subsets,
+  tuples,
+} from "./closed-forms.ts";
 import type { EpsilFamily } from "./epsil.ts";
 import type { NumberKernel } from "./types.ts";
 import {
-  FibonacciWordCount,
-  FibonacciWordUnrank,
-  FibonacciWordRank,
-  IsFibonacciWord,
   GrayCodeSubsetRank,
   GrayCodeSubsetUnrank,
   IsLatticePathOf,
@@ -29,28 +35,6 @@ import {
   BinaryStringRank,
   BinaryStringUnrank,
 } from "./kernels-extra.ts";
-
-// helper to cut boilerplate for the flat (number[]) shape; casts the unknown element once here,
-// same pattern subsets.ts uses at each call site.
-const ints = (
-  head: string,
-  paramCount: 1 | 2,
-  count: (p: number[]) => number,
-  unrank: (p: number[], r: number) => number[],
-  valid: (e: number[], p: number[]) => boolean,
-  rank: (e: number[], p: number[]) => number,
-  // Carrier options, when this family's elements are typed.
-  carrierOptions?: { carrier: string; carrierParams?: number },
-): NumberKernel => ({
-  head,
-  paramCount,
-  kind: "ints",
-  count,
-  unrank,
-  valid: (e, p) => valid(e as number[], p),
-  rank: (e, p) => rank(e as number[], p),
-  ...carrierOptions,
-});
 
 // Closed-form families, defined in Epsil (./closed-forms.ts).
 const subsetsFamily = subsets({ head: "Subsets", params: ["_n"], carrier: "Finset", carrierParams: 1 });
@@ -148,15 +132,10 @@ export const entriesBeforeDyckPaths: (NumberKernel | EpsilFamily)[] = [
 // MotzkinPaths/SchroederPaths moved to lattice-paths/src/families/core.ts (wire-carriers lane
 // A-90): both now carry "MotzkinPath"/"SchroederPath". FibonacciWords declares no carrier and
 // stays here per step 5 rule 4.
-export const entriesBeforeSetPartitions: NumberKernel[] = [
-  ints(
-    "FibonacciWords",
-    1,
-    ([n]) => FibonacciWordCount(n),
-    ([n], r) => FibonacciWordUnrank(n, r),
-    (a, [n]) => IsFibonacciWord(a, n),
-    (a) => FibonacciWordRank(a),
-  ),
+export const entriesBeforeSetPartitions: EpsilFamily[] = [
+  // The TS kernel (kernels-extra.ts) is no fast path: it recounts completions without a table,
+  // exponential in n.
+  fibonacciWords({ head: "FibonacciWords", params: ["_n"] }),
 ];
 
 // SetPartitions/SetPartitionsIntoKBlocks/SetCompositions/PerfectMatchings moved to
