@@ -1,0 +1,14 @@
+{
+  "id": "2026-10-05T10-44Z-9dd89fc",
+  "sha": "9dd89fc0d22891d03aeaa7dea23ba661280ec6df",
+  "date": "2026-10-05T10:44:19.392Z",
+  "trigger": "oscar-weekly",
+  "url": "https://github.com/enumeratio/enumeratio/actions/runs/37296752066",
+  "job": "oscar-weekly",
+  "suite": "deep",
+  "systems": [
+    "oscar",
+    "ts"
+  ],
+  "machine": "sha256:1e46169e56009535"
+}
