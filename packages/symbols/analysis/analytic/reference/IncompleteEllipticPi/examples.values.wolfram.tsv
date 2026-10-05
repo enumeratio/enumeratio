@@ -16,6 +16,6 @@ a-complex-amplitude-phi-where-native-ellipticpi	N[EllipticPi[0.2, Complex[1.2, 0
 all-three-arguments-complex-matches-mpmath-s	N[EllipticPi[Complex[1.17, 0.45], Complex[1.17, 0.45], Complex[1.17, 0.45]]]	0.34301406182773675 + 1.0786856693549958*I	N[\Pi (1.17\, +0.45 i;1.17\, +0.45 i|1.17\, +0.45 i)]	0.343014\, +1.07869 i	
 characteristic-n-1	N[EllipticPi[0.3, 1.1, 0.4]]	1.3238008150474934	N[\Pi (0.3;1.1|0.4)]	1.3238	
 n-0-reduces-to-the-incomplete-elliptic-integral	N[EllipticPi[0, 0.4, 0.3]]	0.40316499194713923	N[\Pi (0;0.4|0.3)]	0.403165	
-symbolic-arguments-are-left-unevaluated-rather	EllipticPi[n, phi, m]				
+symbolic-arguments-are-left-unevaluated-rather	EllipticPi[n, phi, m]	EllipticPi[n, phi, m]	\Pi (n;\phi |m)	\Pi (n;\phi |m)	
 n-0-phi-arccsc-0-m-0	EllipticPi[0, ArcCsc[0], 0]	ComplexInfinity	\Pi \left(0;\left.\csc ^{-1}(0)\right|0\right)	\text{ComplexInfinity}	disagree
 n-0-phi-pi-plus-arccsc-0-m-0	EllipticPi[0, Plus[Pi, ArcCsc[0]], 0]	ComplexInfinity	\Pi \left(0;\left.\pi +\csc ^{-1}(0)\right|0\right)	\text{ComplexInfinity}	disagree

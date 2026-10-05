@@ -1,2 +1,2 @@
-id	in
-one-half	FractionBox["1", "2"]
+id	in	out	tex.in	tex.out
+one-half	FractionBox["1", "2"]	FractionBox["1", "2"]	\text{FractionBox}[1,2]	\text{FractionBox}[1,2]

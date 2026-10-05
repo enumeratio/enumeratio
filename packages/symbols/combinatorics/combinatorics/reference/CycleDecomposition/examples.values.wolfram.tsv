@@ -1,7 +1,7 @@
-id	in	out	tex.in	tex.out
-from-a-permutation	PermutationCycles[List[2, 3, 1, 4]]	Cycles[{{1, 2, 3}}]	\text{PermutationCycles}[\{2,3,1,4\}]	\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\ \end{array} \right)\right]
-back-to-the-permutation	PermutationList[Cycles[List[List[1, 3], List[2]]]]	{3, 2, 1}	\text{PermutationList}[\text{Cycles}[\{\{1,3\},\{2\}\}]]	\{3,2,1\}
-a-statistic-through-the-permutation				
-from-cycles	CycleDecomposition[Cycles[List[List[2, 3]]], 4]			
-a-cycle-from-any-point	CycleDecomposition[Cycles[List[List[3, 1, 2]]], 4]			
-to-cycles	Cycles[List[List[1], List[2, 3], List[4]]]			
+id	in	out	tex.in	tex.out	verdict
+from-a-permutation	PermutationCycles[List[2, 3, 1, 4]]	Cycles[{{1, 2, 3}}]	\text{PermutationCycles}[\{2,3,1,4\}]	\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\ \end{array} \right)\right]	
+back-to-the-permutation	PermutationList[Cycles[List[List[1, 3], List[2]]]]	{3, 2, 1}	\text{PermutationList}[\text{Cycles}[\{\{1,3\},\{2\}\}]]	\{3,2,1\}	
+a-statistic-through-the-permutation					
+from-cycles	CycleDecomposition[Cycles[List[List[2, 3]]], 4]	CycleDecomposition[Cycles[{{2, 3}}], 4]	\text{CycleDecomposition}\left(\text{Cycles}\left[\left( \begin{array}{cc}  2 & 3 \\ \end{array} \right)\right],4\right)	\text{CycleDecomposition}\left(\text{Cycles}\left[\left( \begin{array}{cc}  2 & 3 \\ \end{array} \right)\right],4\right)	disagree
+a-cycle-from-any-point	CycleDecomposition[Cycles[List[List[3, 1, 2]]], 4]	CycleDecomposition[Cycles[{{1, 2, 3}}], 4]	\text{CycleDecomposition}\left(\text{Cycles}\left[\left( \begin{array}{ccc}  3 & 1 & 2 \\ \end{array} \right)\right],4\right)	\text{CycleDecomposition}\left(\text{Cycles}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\ \end{array} \right)\right],4\right)	disagree
+to-cycles	Cycles[List[List[1], List[2, 3], List[4]]]	Cycles[{{2, 3}}]	\text{Cycles}[\{\{1\},\{2,3\},\{4\}\}]	\text{Cycles}\left[\left( \begin{array}{cc}  2 & 3 \\ \end{array} \right)\right]	

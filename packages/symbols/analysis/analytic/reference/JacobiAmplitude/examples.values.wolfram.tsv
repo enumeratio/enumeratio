@@ -5,7 +5,7 @@ am-0-7-0-2	N[JacobiAmplitude[-0.7, 0.2]]	-0.6896673935732983	N[\text{am}(-0.7|0.
 am-1-1i-0-3	N[JacobiAmplitude[Complex[1, 1], 0.3]]	1.049001435160329 + 0.8736241430409095*I	N[\text{am}(1+i|0.3)]	1.049\, +0.873624 i	
 am-0-1-5i-0-4	N[JacobiAmplitude[Complex[0.1, 5], 0.4]]	3.0022268824380447 - 1.2148782180960316*I	N[\text{am}(0.1\, +5 i|0.4)]	3.00223\, -1.21488 i	
 a-wider-argument-u-past-the-first-quarter	N[JacobiAmplitude[2.5, 0.3]]	2.2472505509540945	N[\text{am}(2.5|0.3)]	2.24725	
-u-0-is-0-for-any-m	JacobiAmplitude[0, m]				
+u-0-is-0-for-any-m	JacobiAmplitude[0, m]	0	\text{am}(0|m)	0	
 m-0-reduces-to-u	JacobiAmplitude[u, 0]	True	\text{Module}\left[\{d=\text{Quiet}[\text{TimeConstrained}[\text{FullSimplify}[\text{am}(u|0)-u],10,\text{$\$$Aborted}]]\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\text{am}\left(\left.\frac{7}{3}\right|0\right)-\frac{7}{3}\right]\right],\text{Chop}\left[N\left[\text{am}\left(\left.-\frac{11}{5}\right|0\right)--\frac{11}{5}\right]\right],\text{Chop}\left[N\left[\text{am}\left(\left.\frac{13}{4}\right|0\right)-\frac{13}{4}\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 m-outside-0-1-is-declined	N[JacobiAmplitude[0.3, 1.5]]	0.2934117634264391	N[\text{am}(0.3|1.5)]	0.293412	disagree
-symbolic-arguments-are-left-unevaluated-rather	JacobiAmplitude[u, m]				
+symbolic-arguments-are-left-unevaluated-rather	JacobiAmplitude[u, m]	JacobiAmplitude[u, m]	\text{am}(u|m)	\text{am}(u|m)	

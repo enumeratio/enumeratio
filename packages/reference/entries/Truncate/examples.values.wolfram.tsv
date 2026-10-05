@@ -1,5 +1,5 @@
-id	in
-truncate-7-over-2	IntegerPart[Rational[7, 2]]
-truncate-neg-7-over-2	IntegerPart[Rational[-7, 2]]
-truncate-neg-3p7	IntegerPart[-3.7]
-truncate-big-rational	IntegerPart[Divide[15511210043330985983999999, Factorial[24]]]
+id	in	out	tex.in	tex.out
+truncate-7-over-2	IntegerPart[Rational[7, 2]]	3	\text{IntegerPart}\left[\frac{7}{2}\right]	3
+truncate-neg-7-over-2	IntegerPart[Rational[-7, 2]]	-3	\text{IntegerPart}\left[-\frac{7}{2}\right]	-3
+truncate-neg-3p7	IntegerPart[-3.7]	-3	\text{IntegerPart}[-3.7]	-3
+truncate-big-rational	IntegerPart[Divide[15511210043330985983999999, Factorial[24]]]	24	\text{IntegerPart}\left[\frac{15511210043330985983999999}{24!}\right]	24

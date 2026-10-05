@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-of-a-subset	Basic		[BinaryWord, [Finset, [Tuple, 5, [List, 2, 3, 5]]]]	[BinaryWord, [List, 0, 1, 1, 0, 1]]	A subset of $\{1, \dots, 5\}$ as its characteristic word
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+of-a-subset	Basic		[BinaryWord, [Finset, [Tuple, 5, [List, 2, 3, 5]]]]	[BinaryWord, [List, 0, 1, 1, 0, 1]]	A subset of $\{1, \dots, 5\}$ as its characteristic word	domain	Neither BinaryWord nor Finset has a Wolfram counterpart; the source unwraps each carrier to its contents, so Wolfram only echoes the subset.

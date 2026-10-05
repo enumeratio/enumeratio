@@ -1,2 +1,2 @@
-id	in
-hat	OverscriptBox["x", "^"]
+id	in	out	tex.in	tex.out
+hat	OverscriptBox["x", "^"]	OverscriptBox["x", "^"]	\text{OverscriptBox}[\text{x},{}^{\wedge}]	\text{OverscriptBox}[\text{x},{}^{\wedge}]

@@ -1,2 +1,2 @@
-id	in
-inert	ErrorBox["x"]
+id	in	out	tex.in	tex.out
+inert	ErrorBox["x"]	ErrorBox["x"]	\text{ErrorBox}[\text{x}]	\text{ErrorBox}[\text{x}]

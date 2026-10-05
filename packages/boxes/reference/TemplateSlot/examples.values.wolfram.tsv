@@ -1,2 +1,2 @@
-id	in
-hole	TemplateSlot["n"]
+id	in	out	tex.in	tex.out
+hole	TemplateSlot["n"]	TemplateSlot["n"]	\text{TemplateSlot}[\text{n}]	\text{TemplateSlot}[\text{n}]

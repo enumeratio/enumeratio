@@ -1,9 +1,9 @@
-id	section	role	expr	expected	known	tolerance	source	caption	wolfram.note
-the-median-of-beta-2-3			[InverseBetaRegularized, 0.5, 2, 3]	0.3857275681323895	{num: "0.3857275681323897"}	1e-9	Wolfram 15.0.0 InverseBetaRegularized	The median of Beta(2, 3)	
-inversebetaregularized-0p3-2p5-1p5			[InverseBetaRegularized, 0.3, 2.5, 1.5]	0.5094974124283413	{num: "0.5094974124283412"}	1e-9	Wolfram 15.0.0 InverseBetaRegularized		
-i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2			[InverseBetaRegularized, 0.25, 2, 1]	0.5				$I_x(2, 1) = x^2$, so the inverse at $1/4$ is $1/2$	
-iinv-0-7-4-2		test	[InverseBetaRegularized, 0.7, 4, 2]	0.7819730842367751	{num: "0.7819730842367751"}	1e-9	Wolfram 15.0.0 InverseBetaRegularized		
-i-x-1-1-x-is-its-own-inverse	Properties		[InverseBetaRegularized, s, 1, 1]	s				$I_x(1, 1) = x$ is its own inverse	Same as ErfInv: the fixed substitution points fall outside InverseBetaRegularized's well-behaved domain, so neither FullSimplify nor the numeric fallback cleanly decides it.
-i-x-a-1-x-a-inverts-to-s-1-a	Properties		[InverseBetaRegularized, s, a, 1]	[Power, s, [Divide, 1, a]]				$I_x(a, 1) = x^a$ inverts to $s^{1/a}$	Same as ErfInv: the fixed substitution points fall outside InverseBetaRegularized's well-behaved domain, so neither FullSimplify nor the numeric fallback cleanly decides it.
-inversebetaregularized-0-2-3	Properties		[InverseBetaRegularized, 0, 2, 3]	0					
-inversebetaregularized-1-2-3	Properties		[InverseBetaRegularized, 1, 2, 3]	1					
+id	section	role	expr	expected	known	tolerance	source	caption	wolfram.kind	wolfram.note
+the-median-of-beta-2-3			[InverseBetaRegularized, 0.5, 2, 3]	0.3857275681323895	{num: "0.3857275681323897"}	1e-9	Wolfram 15.0.0 InverseBetaRegularized	The median of Beta(2, 3)		
+inversebetaregularized-0p3-2p5-1p5			[InverseBetaRegularized, 0.3, 2.5, 1.5]	0.5094974124283413	{num: "0.5094974124283412"}	1e-9	Wolfram 15.0.0 InverseBetaRegularized			
+i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2			[InverseBetaRegularized, 0.25, 2, 1]	0.5				$I_x(2, 1) = x^2$, so the inverse at $1/4$ is $1/2$		
+iinv-0-7-4-2		test	[InverseBetaRegularized, 0.7, 4, 2]	0.7819730842367751	{num: "0.7819730842367751"}	1e-9	Wolfram 15.0.0 InverseBetaRegularized			
+i-x-1-1-x-is-its-own-inverse	Properties		[InverseBetaRegularized, s, 1, 1]	s				$I_x(1, 1) = x$ is its own inverse	domain	The fixed substitution points fall outside InverseBetaRegularized's domain, so neither FullSimplify nor the numeric fallback decides the identity.
+i-x-a-1-x-a-inverts-to-s-1-a	Properties		[InverseBetaRegularized, s, a, 1]	[Power, s, [Divide, 1, a]]				$I_x(a, 1) = x^a$ inverts to $s^{1/a}$	domain	The fixed substitution points fall outside InverseBetaRegularized's domain, so neither FullSimplify nor the numeric fallback decides the identity.
+inversebetaregularized-0-2-3	Properties		[InverseBetaRegularized, 0, 2, 3]	0						
+inversebetaregularized-1-2-3	Properties		[InverseBetaRegularized, 1, 2, 3]	1						

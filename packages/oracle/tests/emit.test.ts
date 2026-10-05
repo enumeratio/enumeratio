@@ -334,6 +334,13 @@ test("an undefined head used as a call emits as an unevaluated Wolfram function,
   expect(emit(["Primes", "x"], "wolfram").ok).toBe(false);
 });
 
+test("a declared number with no value (HeckeParameter) is a free symbol", () => {
+  expect(emit(["Add", "HeckeParameter", 1], "wolfram")).toMatchObject({
+    ok: true,
+    freeSymbols: ["HeckeParameter"],
+  });
+});
+
 test("a String of a bare name emits as a string literal, not a free symbol", () => {
   expect(emit(["GroupBasis", ["String", "s0"]], "oscar")).toEqual({
     ok: true,

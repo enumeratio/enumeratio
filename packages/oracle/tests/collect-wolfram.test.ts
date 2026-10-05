@@ -39,3 +39,10 @@ test("the batch loop's counter is Module-scoped and never named `i` -- a batched
   expect(outsideStrings).not.toMatch(/\{i, 1,/);
   expect(outsideStrings).not.toMatch(/"<<", i,/);
 });
+
+// wolframscript reads `-code` as bytes, so a literal `∑` would reach the kernel as three characters.
+test("a non-ASCII character goes to the kernel as a Wolfram escape", () => {
+  const code = wolframBatchCode(['StringLength["∑😀"]']);
+  expect(code).toContain("\\:2211\\|01f600");
+  expect(code).not.toMatch(/\P{ASCII}/u);
+});

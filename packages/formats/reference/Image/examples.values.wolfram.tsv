@@ -1,2 +1,2 @@
-id	in
-data-uri	enumeratio`Image["data:image/png;base64,AAA"]
+id	in	out	tex.in	tex.out
+data-uri	enumeratio`Image["data:image/png;base64,AAA"]	enumeratio`Image["data:image/png;base64,AAA"]	\text{enumeratio$\grave{ }$Image}(\text{data:image/png;base64,AAA})	\text{enumeratio$\grave{ }$Image}(\text{data:image/png;base64,AAA})

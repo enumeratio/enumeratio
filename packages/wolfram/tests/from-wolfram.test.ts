@@ -275,3 +275,15 @@ test("a named character reads back as the character", () => {
 test("a Function of slot parameters is Wolfram's anonymous one", () => {
   expect(toWolfram(["Function", ["Block", ["Power", "_1", 2]], "_1"])).toBe("Function[Power[Slot[1], 2]]");
 });
+
+test("Re reads back as Real, the name compute-engine canonicalises it to", () => {
+  expect(fromWolfram("Re[x]")).toEqual(["Real", "x"]);
+});
+
+test("an elliptic integral with an amplitude reads back as the incomplete one", () => {
+  expect(fromWolfram("EllipticE[m]")).toEqual(["EllipticE", "m"]);
+  expect(fromWolfram("EllipticE[p, m]")).toEqual(["IncompleteEllipticE", "p", "m"]);
+  expect(fromWolfram("EllipticF[p, m]")).toEqual(["IncompleteEllipticF", "p", "m"]);
+  expect(fromWolfram("EllipticPi[n, m]")).toEqual(["EllipticPi", "n", "m"]);
+  expect(fromWolfram("EllipticPi[n, p, m]")).toEqual(["IncompleteEllipticPi", "n", "p", "m"]);
+});

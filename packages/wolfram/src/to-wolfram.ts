@@ -164,8 +164,13 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // for it instead of leaving the emitter to treat it as an unknown name (and context it).
   Slot: (a) => `Slot[${a.map((x) => toWolfram(x)).join(", ")}]`,
   // Derivative(f, n): compute-engine's own order (function first, order second) — same
-  // as Wolfram's `Derivative[n][f]`, just swapped.
-  Derivative: (a) => `Derivative[${toWolfram(a[1])}][${toWolfram(a[0])}]`,
+  // as Wolfram's `Derivative[n][f]`, just swapped; a partial `Derivative(f, 0, 1)` is
+  // `Derivative[0, 1][f]`.
+  Derivative: (a) =>
+    `Derivative[${a
+      .slice(1)
+      .map((x) => toWolfram(x))
+      .join(", ")}][${toWolfram(a[0])}]`,
   // LambertW(z) / LambertW(z, k) is compute-engine's own order (branch index second, checked
   // directly: `LambertW(-0.14, -1)` is the k = -1 branch); Wolfram's `ProductLog` puts the
   // branch first: `ProductLog[z]` / `ProductLog[k, z]`.
@@ -456,8 +461,8 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // first `n` naturals rather than an explicit collection -- Wolfram's Subsets/Tuples take
   // only an actual collection, so a bare integer first argument becomes `Range[n]`.
   Subsets: (a) =>
-    a.length >= 2 && isIntegerLiteral(a[0])
-      ? `Subsets[Range[${toWolfram(a[0])}], ${toWolfram(a[1])}]`
+    a.length >= 1 && isIntegerLiteral(a[0])
+      ? `Subsets[${[`Range[${toWolfram(a[0])}]`, ...a.slice(1).map((x) => toWolfram(x))].join(", ")}]`
       : call("Subsets", a),
   Tuples: (a) =>
     a.length === 2 && isIntegerLiteral(a[0])

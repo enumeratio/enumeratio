@@ -1,2 +1,2 @@
-id	in
-sum	UnderoverscriptBox["∑", "n=1", "10"]
+id	in	out	tex.in	tex.out
+sum	UnderoverscriptBox["∑", "n=1", "10"]	UnderoverscriptBox["\[Sum]", "n=1", "10"]	\text{UnderoverscriptBox}[\sum ,\text{n=1},10]	\text{UnderoverscriptBox}[\sum ,\text{n=1},10]

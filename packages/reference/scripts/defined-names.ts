@@ -32,17 +32,29 @@ export function symbolsIn(expr: MathJSON, into: Set<string>): void {
 // a replaced first one), so checking for that entry ANYWHERE in the log, not just first, is
 // still exactly "was this one ever a bare auto-declare".
 //
-// Used THROUGH the engine, not by guessing at a type: `declareHecke`'s own `HeckeParameter` (its
-// deformation parameter) has no such entry — a real `ce.declare` call, not auto-declare — so
-// under this rule it counts as genuinely defined, unlike `m`/`s`/`q`/`A`/`C`. A domain (`Primes`,
-// `GaussianIntegers`) or a real constant (`NaN`, `ImaginaryUnit`) has no auto-declared entry
-// either, for the same reason: both were actually declared, just not by auto-declare.
+// Used THROUGH the engine, not by guessing at a type: a domain (`Primes`, `GaussianIntegers`) or
+// a real constant (`NaN`, `ImaginaryUnit`) has no auto-declared entry, because both were actually
+// declared, just not by auto-declare.
+//
+// A declared number with no value that is not a constant is still a free variable, only a
+// reserved one: `HeckeParameter` (the deformation parameter) is a polynomial variable until
+// `HeckeSpecialize` gives it a value, so an external system reads it as an unknown too.
 export function isDefinedName(ce: ComputeEngine, name: string): boolean {
   const def = ce.lookupDefinition(name) as unknown as
-    | { operator?: unknown; value?: { _typeProvenance?: readonly { readonly kind?: string }[] } }
+    | {
+        operator?: unknown;
+        value?: {
+          isConstant?: boolean;
+          value?: unknown;
+          type?: { matches?: (type: string) => boolean };
+          _typeProvenance?: readonly { readonly kind?: string }[];
+        };
+      }
     | undefined;
   if (def === undefined) return false;
   if ("operator" in def) return true;
   const provenance = def.value?._typeProvenance;
-  return !(provenance?.some((entry) => entry.kind === "auto-declared") ?? false);
+  if (provenance?.some((entry) => entry.kind === "auto-declared") ?? false) return false;
+  const { isConstant, value, type } = def.value ?? {};
+  return isConstant === true || value !== undefined || type?.matches?.("number") !== true;
 }

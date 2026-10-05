@@ -1,2 +1,2 @@
-id	in
-x-sub-1	SubscriptBox["x", "1"]
+id	in	out	tex.in	tex.out
+x-sub-1	SubscriptBox["x", "1"]	SubscriptBox["x", "1"]	\text{SubscriptBox}[\text{x},1]	\text{SubscriptBox}[\text{x},1]

@@ -1,2 +1,2 @@
-id	in
-range	Knob[x, List[0, 10]]
+id	in	out	tex.in	tex.out
+range	Knob[x, List[0, 10]]	Knob[x, {0, 10}]	\text{Knob}(x,\{0,10\})	\text{Knob}(x,\{0,10\})

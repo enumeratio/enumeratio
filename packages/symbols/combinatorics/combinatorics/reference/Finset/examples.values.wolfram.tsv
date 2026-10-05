@@ -1,2 +1,2 @@
-id	in
-from-its-characteristic-word	List[0, 1, 1, 0, 1]
+id	in	out	tex.in	tex.out	verdict
+from-its-characteristic-word	List[0, 1, 1, 0, 1]	{0, 1, 1, 0, 1}	\{0,1,1,0,1\}	\{0,1,1,0,1\}	disagree

@@ -1,2 +1,2 @@
-id	in
-cube-root	RadicalBox["x", "3"]
+id	in	out	tex.in	tex.out
+cube-root	RadicalBox["x", "3"]	RadicalBox["x", "3"]	\text{RadicalBox}[\text{x},3]	\text{RadicalBox}[\text{x},3]
