@@ -1,8 +1,8 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCollections } from "../src/library.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCollections(ce);
 
 /** Evaluates and, for a lazy collection (e.g. `Take`'s own protocol-backed result), forces

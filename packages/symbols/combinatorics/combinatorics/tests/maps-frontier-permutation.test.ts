@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import {
   ALL_STATISTICS,
@@ -20,7 +20,7 @@ import {
 const domainTypes = Object.fromEntries(CARRIERS.map((c) => [c.name, c.type]));
 const constructorFor = Object.fromEntries(CARRIERS.map((c) => [c.type, c.name]));
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCombinatoricsCarriers(ce);
 // KrewerasComplement's guard reads CycleCount, so statistics has to be declared before
 // maps — the same order map.test.ts uses.

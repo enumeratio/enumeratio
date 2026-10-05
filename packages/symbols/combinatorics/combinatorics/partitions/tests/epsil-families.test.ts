@@ -4,7 +4,7 @@
 // every near-miss word. Compiled and interpreted, and the interpreter checked directly against
 // the definitions too.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
@@ -16,7 +16,7 @@ import {
 } from "../../collections/src/families/kernels-extra.ts";
 import { epsilEntries } from "../src/families/core.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 
 interface Reading {
   readonly params: readonly number[][];

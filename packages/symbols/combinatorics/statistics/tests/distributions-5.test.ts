@@ -1,4 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { box, type Engine, type Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { beforeEach, describe, expect, test } from "vite-plus/test";
 import { declareDistributions } from "../src/distributions.ts";
 import { declareDistributions2 } from "../src/distributions-2.ts";
@@ -13,17 +14,18 @@ import { declareDistributions5 } from "../src/distributions-5.ts";
 // exact Mean/Variance, NProbability of a bound matches the exact CDF, P(A|B)*P(B) = P(A,B),
 // and a handful of scope-boundary cases (unsupported shapes staying unevaluated).
 
-let ce: ComputeEngine;
+let ce: Engine;
 beforeEach(() => {
-  ce = new ComputeEngine();
-  declareDistributions(ce);
-  declareDistributions2(ce);
-  declareDistributions3(ce);
-  declareDistributions4(ce);
-  declareDistributions5(ce);
+  ce = createEngine(
+    declareDistributions,
+    declareDistributions2,
+    declareDistributions3,
+    declareDistributions4,
+    declareDistributions5,
+  );
 });
 
-const evalOf = (expr: unknown) => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evalOf = (expr: unknown) => box(ce, expr as Json).evaluate();
 const N = (expr: unknown) => evalOf(["N", expr as never]).re;
 
 describe("NExpectation agrees with the exact Mean/Variance it would delegate to", () => {

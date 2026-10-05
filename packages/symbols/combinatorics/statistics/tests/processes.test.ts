@@ -1,5 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { box, type Engine, type Json, operandsOf } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { beforeEach, describe, expect, test } from "vite-plus/test";
 import { declareDistributions } from "../src/distributions.ts";
 import { declareDistributions2 } from "../src/distributions-2.ts";
@@ -16,18 +16,19 @@ import { declareProcesses } from "../src/processes.ts";
 // nondecreasing-integer invariant, and the Wiener path's increment statistics converging to
 // the theoretical mean/variance over a long seeded path.
 
-let ce: ComputeEngine;
+let ce: Engine;
 beforeEach(() => {
-  ce = new ComputeEngine();
-  declareDistributions(ce);
-  declareDistributions2(ce);
-  declareDistributions3(ce);
-  declareDistributions4(ce);
-  declareDistributions5(ce);
-  declareProcesses(ce);
+  ce = createEngine(
+    declareDistributions,
+    declareDistributions2,
+    declareDistributions3,
+    declareDistributions4,
+    declareDistributions5,
+    declareProcesses,
+  );
 });
 
-const evalOf = (expr: unknown) => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evalOf = (expr: unknown) => box(ce, expr as Json).evaluate();
 
 // A path drawn under `[SeedRandom, seed]` then reset back to the default seed afterward —
 // same "reseed, extract, reseed back to default" idiom `reference/RandomFunction/examples.tsv`

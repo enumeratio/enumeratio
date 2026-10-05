@@ -2,7 +2,7 @@
 // compiled-families.generated.js); operations whose compiled code disagrees with the
 // interpreter are left interpreted.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
 import { epsilEntries } from "../permutations/src/families/core.ts";
@@ -15,5 +15,5 @@ test("the build compiled families", () => {
 test("compiled code that disagrees with the interpreter is left interpreted", () => {
   const family = epsilEntries.find((f) => f.head === "SymmetricGroup")!;
   const wrong = { count: () => 0, unrank: () => [1], rank: () => 0, valid: () => true };
-  expect(disagreements(new ComputeEngine(), family, wrong)).toEqual(["count", "unrank", "rank", "valid"]);
+  expect(disagreements(bareEngine(), family, wrong)).toEqual(["count", "unrank", "rank", "valid"]);
 });

@@ -1,13 +1,13 @@
 // Shared universe, independent readings, and evaluation machinery for the sharded
 // `permutation-*.test.ts` files. Not itself a test file.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { PERMUTATION_STATISTICS } from "../src/statistics.ts";
 import { bySignature } from "../../src/statistics/types.ts";
 
-export const ce = new ComputeEngine();
+export const ce = bareEngine();
 export const index = bySignature(PERMUTATION_STATISTICS);
 
 /** Every permutation of 1..n. */

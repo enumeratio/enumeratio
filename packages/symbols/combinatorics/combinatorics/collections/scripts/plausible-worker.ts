@@ -2,13 +2,13 @@
 // family whose declaration understates its cost costs a restart, not the run.
 
 import { parentPort } from "node:worker_threads";
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { allKernels } from "../src/families/index.ts";
 import { type RunOptions, runFamily } from "./run-family.ts";
 
 const port = parentPort;
 if (port === null) throw new Error("plausible-worker runs inside a worker");
-const kernels = allKernels(new ComputeEngine());
+const kernels = allKernels(bareEngine());
 
 port.on("message", ({ head, options }: { head: string; options: RunOptions }) => {
   const family = kernels.find((f) => f.head === head);

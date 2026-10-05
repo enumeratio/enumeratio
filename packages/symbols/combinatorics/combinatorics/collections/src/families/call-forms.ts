@@ -23,8 +23,17 @@
 // and routes to the SAME rank/unrank/valid kernels the fixed-arity heads already use --
 // never a reimplementation. This is the "small extension" the sibling families don't pay
 // for, confined to the one file that needs it.
-import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf, widenSignature } from "@enumeratio/engine";
+import {
+  type Engine,
+  type Expr,
+  extendHead,
+  type HeadPatch,
+  integerAt,
+  operandsOf,
+  symbolNameOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/engine";
 import { carrierTypeForName } from "@enumeratio/structures";
 import {
   BellB,
@@ -44,8 +53,10 @@ import { kSubsets, subsets, subsetsOfSizeAtMost } from "./closed-forms.ts";
 import { kernelOn } from "./epsil.ts";
 import { asBlockList, asIntList, type Boxed, blocksMJ, type FamilyKernel, listMJ } from "./types.ts";
 
-type BoxInput = Parameters<ComputeEngine["box"]>[0];
-const asBoxed = (c: BoxedExpression): Boxed => c as unknown as Boxed;
+type CollectionHandlers = NonNullable<HeadPatch["collection"]>;
+
+type BoxInput = Parameters<Engine["box"]>[0];
+const asBoxed = (c: Expr): Boxed => c as unknown as Boxed;
 
 /** A fully-resolved call: closed over its params, ready to count/unrank/validate.
  *  `encode`, when present, overrides the family-wide MathJSON encoder for this one
@@ -64,14 +75,13 @@ interface Resolved<E> {
  *  on every access -- `resolve` returns `undefined` for a shape none of the call forms
  *  recognise, which reads as the empty collection rather than throwing. */
 function polyCollection<E>(
-  ce: ComputeEngine,
+  ce: Engine,
   encode: (e: E) => unknown,
   decode: (b: Boxed) => unknown,
-  resolve: (ops: readonly BoxedExpression[]) => Resolved<E> | undefined,
+  resolve: (ops: readonly Expr[]) => Resolved<E> | undefined,
 ): CollectionHandlers {
-  const opsOf = (c: BoxedExpression) => operandsOf(c);
-  const element = (res: Resolved<E>, i: number): BoxedExpression =>
-    ce.box((res.encode ?? encode)(res.unrank(i)) as BoxInput);
+  const opsOf = (c: Expr) => operandsOf(c);
+  const element = (res: Resolved<E>, i: number): Expr => ce.box((res.encode ?? encode)(res.unrank(i)) as BoxInput);
   return {
     count: (c) => resolve(opsOf(c))?.count ?? 0,
     isFinite: () => true,
@@ -116,7 +126,7 @@ function isValidAtMostKParts(e: unknown, n: number, k: number): boolean {
   return sum === n;
 }
 
-function resolveIntegerPartitions(ops: readonly BoxedExpression[]): Resolved<number[]> | undefined {
+function resolveIntegerPartitions(ops: readonly Expr[]): Resolved<number[]> | undefined {
   const n = integerAt(ops[0]);
   if (n === undefined) return undefined;
 
@@ -189,7 +199,7 @@ function resolveIntegerPartitions(ops: readonly BoxedExpression[]): Resolved<num
  *  anything that isn't a finite collection at all (an integer n, a free symbol, …), which
  *  is what lets the caller fall through to the plain integer-n family form. `.isCollection`
  *  is false for a bare number, so this never mistakes `Subsets(4)` for a 1-collection call. */
-function elementsOf(expr: BoxedExpression | undefined): readonly BoxedExpression[] | undefined {
+function elementsOf(expr: Expr | undefined): readonly Expr[] | undefined {
   if (expr === undefined || expr.isCollection !== true) return undefined;
   if (expr.isFiniteCollection === false) return undefined;
   return [...expr.each()];
@@ -198,7 +208,7 @@ function elementsOf(expr: BoxedExpression | undefined): readonly BoxedExpression
 /** `SetPartitions(list)`: the same RGS unranking as `SetPartitions(n)` over the list's
  *  positions 1..n, with each position printed as the list's own element there instead of
  *  the bare position -- `encode` overrides `blocksMJ` for this one resolution. */
-function resolveSetPartitionsOfList(elements: readonly BoxedExpression[]): Resolved<number[][]> {
+function resolveSetPartitionsOfList(elements: readonly Expr[]): Resolved<number[][]> {
   const n = elements.length;
   return {
     count: BellB(n),
@@ -208,7 +218,7 @@ function resolveSetPartitionsOfList(elements: readonly BoxedExpression[]): Resol
   };
 }
 
-function resolveSetPartitions(ops: readonly BoxedExpression[]): Resolved<number[][]> | undefined {
+function resolveSetPartitions(ops: readonly Expr[]): Resolved<number[][]> | undefined {
   if (ops.length === 1) {
     const elements = elementsOf(ops[0]);
     if (elements !== undefined) return resolveSetPartitionsOfList(elements);
@@ -246,7 +256,7 @@ interface SubsetKernels {
   readonly atMost: FamilyKernel;
 }
 
-const subsetKernels = (ce: ComputeEngine): SubsetKernels => ({
+const subsetKernels = (ce: Engine): SubsetKernels => ({
   all: kernelOn(ce, subsets({ head: "Subsets", params: ["_n"] })),
   ofSize: kernelOn(ce, kSubsets({ head: "KSubsets", params: ["_n", "_k"] })),
   atMost: kernelOn(ce, subsetsOfSizeAtMost({ head: "SubsetsOfSizeAtMost", params: ["_n", "_k"] })),
@@ -289,7 +299,7 @@ function sizesInRange(kmin: number, kmax: number, step: number): number[] {
  *  elements, and stay unwrapped: they are the original list's values, not a Finset's 1..n. */
 function resolveSubsets(
   kernels: SubsetKernels,
-  ops: readonly BoxedExpression[],
+  ops: readonly Expr[],
   wrapElement: (n: number, idxs: number[]) => unknown,
 ): Resolved<number[]> | undefined {
   const elements = elementsOf(ops[0]);
@@ -325,18 +335,11 @@ function resolveSubsets(
 
 // ─── wiring ─────────────────────────────────────────────────────────────────────────────
 
-function operatorOf(ce: ComputeEngine, name: string) {
-  const definition = ce.lookupDefinition(name);
-  return definition !== undefined && "operator" in definition ? definition.operator : undefined;
-}
-
-/** Replace `head`'s `collection` handlers in place -- a no-op if `head` isn't declared on
- *  `ce` (e.g. a test engine that only runs declareFamilies, or GroupOrder's owning package
+/** Replace `head`'s `collection` handlers -- a no-op if `head` isn't declared on `ce`
+ *  (e.g. a test engine that only runs declareFamilies, or GroupOrder's owning package
  *  not being loaded), matching widenSignature's own quiet no-op in that case. */
-function setCollection(ce: ComputeEngine, head: string, handlers: CollectionHandlers): void {
-  const operator = operatorOf(ce, head);
-  if (operator === undefined) return;
-  (operator as { collection: CollectionHandlers }).collection = handlers;
+function setCollection(ce: Engine, head: string, handlers: CollectionHandlers): void {
+  extendHead(ce, head, { collection: handlers });
 }
 
 /** Declare the widened call forms. Call AFTER declareFamilies (IntegerPartitions,
@@ -344,7 +347,7 @@ function setCollection(ce: ComputeEngine, head: string, handlers: CollectionHand
  *  widened head's carrier type, when it has one, is read back from `ce`'s own registry
  *  (`carrierTypeForName`) rather than passed in -- self-contained per head, since
  *  IntegerPartitions/SetPartitions/Subsets are each declared, and typed, before this runs. */
-export function declareCallForms(ce: ComputeEngine): void {
+export function declareCallForms(ce: Engine): void {
   // Typed by its carrier when it has one: `IntegerPartition([3, 1])`, as the plain family is.
   const partition = carrierTypeForName(ce, "IntegerPartition");
   widenSignature(ce, "IntegerPartitions", `(integer, any?, any?) -> list<${partition ?? "list<integer>"}>`);
@@ -356,7 +359,7 @@ export function declareCallForms(ce: ComputeEngine): void {
       : polyCollection(
           ce,
           (e: number[]) => ["IntegerPartition", listMJ(e)],
-          (b) => asIntList((b as unknown as BoxedExpression).operator === "IntegerPartition" ? b.ops![0]! : b),
+          (b) => asIntList((b as unknown as Expr).operator === "IntegerPartition" ? b.ops![0]! : b),
           resolveIntegerPartitions,
         ),
   );
@@ -382,7 +385,7 @@ export function declareCallForms(ce: ComputeEngine): void {
       : polyCollection(
           ce,
           (blocks: number[][]) => ["SetPartition", blocksMJ(blocks)],
-          (b) => asBlockList((b as unknown as BoxedExpression).operator === "SetPartition" ? b.ops![0]! : b),
+          (b) => asBlockList((b as unknown as Expr).operator === "SetPartition" ? b.ops![0]! : b),
           resolveSetPartitions,
         ),
   );
@@ -408,7 +411,7 @@ export function declareCallForms(ce: ComputeEngine): void {
       listMJ,
       (b) =>
         asIntList(
-          (finset !== undefined && (b as unknown as BoxedExpression).operator === "Finset"
+          (finset !== undefined && (b as unknown as Expr).operator === "Finset"
             ? (b.ops![0]!.ops![b.ops![0]!.ops!.length - 1]! as Boxed)
             : b) as never,
         ),
@@ -420,19 +423,16 @@ export function declareCallForms(ce: ComputeEngine): void {
   // compute-engine's own `Permutations` takes a collection (the permutations of a given
   // list), so this is one more arm beside it, not a replacement: an integer is never a
   // collection, and the native arms still answer everything else.
-  const permutations = operatorOf(ce, "Permutations");
-  if (permutations !== undefined) {
-    const native = permutations.evaluate;
-    const signature = `${permutations.signature as unknown as string}`;
-    const permutationType = carrierTypeForName(ce, "Permutation");
-    (permutations as { signature: unknown }).signature = ce.type(
-      `${signature} & ((integer<0..>) -> indexed_collection<${permutationType ?? "list<integer>"}>)`,
-    );
-    permutations.evaluate = (ops, options) => {
-      const n = ops.length === 1 ? integerAt(ops[0]) : undefined;
-      return n !== undefined && n >= 0 ? ce.function("SymmetricGroup", [ce.number(n)]) : native?.(ops, options);
-    };
-  }
+  const permutationType = carrierTypeForName(ce, "Permutation");
+  extendHead(ce, "Permutations", {
+    addSignature: `(integer<0..>) -> indexed_collection<${permutationType ?? "list<integer>"}>`,
+  });
+  wrapOperator(
+    ce,
+    ["Permutations"],
+    (ops) => ops.length === 1 && (integerAt(ops[0]) ?? -1) >= 0,
+    () => (ops) => ce.function("SymmetricGroup", [ce.number(integerAt(ops[0])!)]),
+  );
 
   // GroupOrder(SymmetricGroup(n)) -> n! is wired from packages/symbols/algebras/groupalgebra/src/declare.ts
   // (the package that declares GroupOrder), not here: this module and groupalgebra declare

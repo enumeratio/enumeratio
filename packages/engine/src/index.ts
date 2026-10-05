@@ -196,7 +196,7 @@ export {
 } from "./facade.ts";
 export { latexEntries, type LatexReader, type LatexRule, type LatexWriter } from "./latex.ts";
 export { type HeadPatch, isExtension } from "./extend.ts";
-export { isNativeHead, nativeEvaluate, withAssumptions } from "./probe.ts";
+export { isNativeHead, nativeCanonical, nativeEvaluate, withAssumptions } from "./probe.ts";
 export { extendHead };
 
 export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "./options.ts";

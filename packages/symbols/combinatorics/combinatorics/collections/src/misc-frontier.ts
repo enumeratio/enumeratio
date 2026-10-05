@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt, wrapOperator } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf, stringAt, wrapOperator } from "@enumeratio/engine";
 import { matches } from "./expression-ops.ts";
 import { integerGraph } from "./graphs.ts";
 import { rngFor } from "./list-frontier.ts";
@@ -33,10 +32,10 @@ const normalizePosition = (position: number, length: number): number =>
  *  below), zero elsewhere. The result is `Length(list) + |k|` square — Wolfram's own
  *  convention, kernel-checked: `DiagonalMatrix[{1, 2}, 1]` is a 3×3 matrix with `1, 2` on the
  *  super-diagonal, not a 2×2 one. */
-function diagonalMatrix(ce: ComputeEngine, list: readonly BoxedExpression[], k: number): BoxedExpression {
+function diagonalMatrix(ce: Engine, list: readonly Expr[], k: number): Expr {
   const n = list.length;
   const size = n + Math.abs(k);
-  const rows: BoxedExpression[][] = Array.from({ length: size }, () => Array.from({ length: size }, () => ce.Zero));
+  const rows: Expr[][] = Array.from({ length: size }, () => Array.from({ length: size }, () => ce.Zero));
   for (let m = 0; m < n; m++) {
     const row = k >= 0 ? m : m + Math.abs(k);
     const col = k >= 0 ? m + k : m;
@@ -53,11 +52,11 @@ function diagonalMatrix(ce: ComputeEngine, list: readonly BoxedExpression[], k: 
  *  float) — Wolfram's own default. The rectangular form takes its dimensions as a `{m, n}`
  *  LIST, not two bare arguments — kernel-checked: Wolfram's `HilbertMatrix` has no 2-argument
  *  form at all, only `HilbertMatrix[n]` and `HilbertMatrix[{m, n}]`. */
-function hilbertMatrix(ce: ComputeEngine, m: number, n: number): BoxedExpression | undefined {
+function hilbertMatrix(ce: Engine, m: number, n: number): Expr | undefined {
   if (!Number.isSafeInteger(m) || !Number.isSafeInteger(n) || m < 1 || n < 1) return undefined;
-  const rows: BoxedExpression[][] = [];
+  const rows: Expr[][] = [];
   for (let i = 1; i <= m; i++) {
-    const row: BoxedExpression[] = [];
+    const row: Expr[] = [];
     for (let j = 1; j <= n; j++) row.push(ce.number([1, i + j - 1]));
     rows.push(row);
   }
@@ -71,7 +70,7 @@ function hilbertMatrix(ce: ComputeEngine, m: number, n: number): BoxedExpression
 
 /** Navigate `path` (top-down, Wolfram 1-based-or-negative indices) into `expr`'s nested
  *  operands, `undefined` if any step is out of range or drills into a leaf. */
-function atPath(expr: BoxedExpression, path: readonly number[]): BoxedExpression | undefined {
+function atPath(expr: Expr, path: readonly number[]): Expr | undefined {
   let node = expr;
   for (const step of path) {
     const ops = operandsOf(node);
@@ -85,7 +84,7 @@ function atPath(expr: BoxedExpression, path: readonly number[]): BoxedExpression
 
 /** Read an `Extract` position specification as a top-down path of 1-based-or-negative
  *  indices — a bare integer is a one-step path, a `List` of integers a multi-step one. */
-function pathOf(expr: BoxedExpression): number[] | undefined {
+function pathOf(expr: Expr): number[] | undefined {
   if (expr.operator === "List") {
     const items = operandsOf(expr).map(integerAt);
     return items.some((n) => n === undefined) ? undefined : (items as number[]);
@@ -97,17 +96,17 @@ function pathOf(expr: BoxedExpression): number[] | undefined {
 /** Whether `pos` is Wolfram's "list of paths" shape (`{{i1}, {i2}, …}`, every element a
  *  `List`) rather than a single path (`{i1, i2, …}`, elements are plain integers). An empty
  *  `pos` reads as a single (trivial, zero-step) path — `Extract(expr, {})` is `expr`. */
-const isListOfPaths = (pos: BoxedExpression): boolean =>
+const isListOfPaths = (pos: Expr): boolean =>
   pos.operator === "List" && operandsOf(pos).length > 0 && operandsOf(pos).every((op) => op.operator === "List");
 
 /** `Extract(expr, pos)`: the part of `expr` at position `pos`, or (`pos` a `{{path1},
  *  {path2}, …}`) the LIST of parts at each of several positions — Wolfram's own
  *  single-path-vs-list-of-paths disambiguation: `pos` is one path unless every one of its
  *  own elements is itself a `List`. Same 1-based/negative indexing as `At`/`Part`. */
-function declareExtract(ce: ComputeEngine): void {
+function declareExtract(ce: Engine): void {
   ce.declare("Extract", {
     signature: "(any, any) -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [expr, pos] = ops;
       if (expr === undefined || pos === undefined) return undefined;
       if (isListOfPaths(pos)) {
@@ -115,7 +114,7 @@ function declareExtract(ce: ComputeEngine): void {
         if (paths.some((p) => p === undefined)) return undefined;
         const parts = paths.map((p) => atPath(expr, p!));
         if (parts.some((part) => part === undefined)) return undefined;
-        return ce.function("List", parts as BoxedExpression[]);
+        return ce.function("List", parts as Expr[]);
       }
       const path = pathOf(pos);
       return path === undefined ? undefined : atPath(expr, path);
@@ -130,11 +129,11 @@ function declareExtract(ce: ComputeEngine): void {
  *  `matches` primitive as `MatchQ`/`FreeQ` (`expression-ops.ts`) rather than a fresh copy of
  *  it. Only the 2-argument form; Wolfram's optional `levelspec`/`n` (a level to search below
  *  the top, and a cap on how many to delete) aren't implemented. */
-function declareDeleteCases(ce: ComputeEngine): void {
+function declareDeleteCases(ce: Engine): void {
   ce.declare("DeleteCases", {
     signature: "(any, any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const listExpr = ops[0]?.evaluate();
       const pattern = ops[1];
       if (listExpr === undefined || pattern === undefined) return undefined;
@@ -150,11 +149,11 @@ function declareDeleteCases(ce: ComputeEngine): void {
  *  `Association` (see `list-functional.ts` for the Rule-pair `Association` this reads) —
  *  `At(assoc, Key(k))` is the key lookup. Wolfram's OTHER reading of `Key` — as a
  *  standalone operator, `Key(k)(assoc)` — isn't implemented; document as a divergence. */
-function declareKey(ce: ComputeEngine): void {
+function declareKey(ce: Engine): void {
   ce.declare("Key", {
     signature: "(any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const k = ops[0];
       return k === undefined ? undefined : ce.function("Key", [k]);
     },
@@ -183,10 +182,10 @@ function declareKey(ce: ComputeEngine): void {
  *  to the second, inclusive, by Unicode code point — the string form reads each endpoint's
  *  own code point (`Array.from(text)[0]`, so an astral character stays one code point, same
  *  convention as `ToCharacterCode`/`StringLength` in `expression-ops.ts`). */
-function declareCharacterRange(ce: ComputeEngine): void {
+function declareCharacterRange(ce: Engine): void {
   ce.declare("CharacterRange", {
     signature: "(string | integer, string | integer) -> list<string>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [a, b] = ops;
       if (a === undefined || b === undefined) return undefined;
       let lo: number | undefined;
@@ -201,7 +200,7 @@ function declareCharacterRange(ce: ComputeEngine): void {
         hi = integerAt(b);
       }
       if (lo === undefined || hi === undefined || lo > hi) return undefined;
-      const chars: BoxedExpression[] = [];
+      const chars: Expr[] = [];
       for (let cp = lo; cp <= hi; cp++) chars.push(ce.string(String.fromCodePoint(cp)));
       return ce.function("List", chars);
     },
@@ -215,10 +214,10 @@ function declareCharacterRange(ce: ComputeEngine): void {
  *  NOT `NumberQ` (kernel-checked: `NumberQ[Pi]` is `False`, `NumberQ[N[Pi]]` is `True`).
  *  Read via `.numericValue`, which is set on a literal's own boxed-number interface and
  *  unset on a symbol (Pi, GoldenRatio, …) even though `.isNumber` is `true` for both. */
-function declareNumberQ(ce: ComputeEngine): void {
+function declareNumberQ(ce: Engine): void {
   ce.declare("NumberQ", {
     signature: "(any) -> boolean",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const x = ops[0];
       if (x === undefined) return undefined;
       const numericValue = (x as { numericValue?: unknown }).numericValue;
@@ -231,15 +230,15 @@ function declareNumberQ(ce: ComputeEngine): void {
 
 /** `ReIm(z) = {Re(z), Im(z)}`, threading over a `List` the way Wolfram's `Listable` ReIm
  *  does — `ReIm({z1, z2})` is `{ReIm(z1), ReIm(z2)}`, not a single flat pair. */
-function declareReIm(ce: ComputeEngine): void {
-  const reIm = (z: BoxedExpression): BoxedExpression =>
+function declareReIm(ce: Engine): void {
+  const reIm = (z: Expr): Expr =>
     z.operator === "List"
       ? ce.function("List", operandsOf(z).map(reIm))
       : ce.function("List", [ce.function("Re", [z]).evaluate(), ce.function("Im", [z]).evaluate()]);
 
   ce.declare("ReIm", {
     signature: "(number | list<any>) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const z = ops[0];
       return z === undefined ? undefined : reIm(z);
     },
@@ -253,14 +252,14 @@ function declareReIm(ce: ComputeEngine): void {
  *  `RandomComplex({zmin, zmax})`: uniform over the rectangle with those corners. Draws from
  *  the SAME seeded stream as `RandomInteger`/`RandomGraph` (`rngFor`, `list-frontier.ts`),
  *  not Wolfram's own generator — same divergence those heads already document. */
-function declareRandomComplex(ce: ComputeEngine): void {
+function declareRandomComplex(ce: Engine): void {
   const cornersOf = (
-    zmax: BoxedExpression | undefined,
-    zmin: BoxedExpression | undefined,
+    zmax: Expr | undefined,
+    zmin: Expr | undefined,
   ): readonly [number, number, number, number] | undefined => {
     if (zmax === undefined) return [0, 1, 0, 1];
-    const re = (e: BoxedExpression): number | undefined => (typeof e.re === "number" ? e.re : undefined);
-    const im = (e: BoxedExpression): number | undefined => (typeof e.im === "number" ? e.im : undefined);
+    const re = (e: Expr): number | undefined => (typeof e.re === "number" ? e.re : undefined);
+    const im = (e: Expr): number | undefined => (typeof e.im === "number" ? e.im : undefined);
     const zminRe = zmin === undefined ? 0 : re(zmin);
     const zminIm = zmin === undefined ? 0 : im(zmin);
     const zmaxRe = re(zmax);
@@ -273,7 +272,7 @@ function declareRandomComplex(ce: ComputeEngine): void {
 
   ce.declare("RandomComplex", {
     signature: "(any?) random -> any",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const spec = ops[0];
       const corners =
         spec === undefined
@@ -301,7 +300,7 @@ function declareRandomComplex(ce: ComputeEngine): void {
  *  specific tree sized by vertex count, not level count, and the last level need not be
  *  full. Reuses `integerGraph` (graphs.ts) for the same `Graph(vertices, edges)` shape every
  *  other named-family constructor there builds. */
-function karyTree(ce: ComputeEngine, n: number, k: number): BoxedExpression | undefined {
+function karyTree(ce: Engine, n: number, k: number): Expr | undefined {
   if (!Number.isSafeInteger(n) || n < 1 || !Number.isSafeInteger(k) || k < 1) return undefined;
   const edges: [number, number][] = [];
   for (let i = 2; i <= n; i++) {
@@ -311,10 +310,10 @@ function karyTree(ce: ComputeEngine, n: number, k: number): BoxedExpression | un
   return integerGraph(ce, n, edges);
 }
 
-function declareKaryTree(ce: ComputeEngine): void {
+function declareKaryTree(ce: Engine): void {
   ce.declare("KaryTree", {
     signature: "(integer, integer?) -> value",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const n = ops[0] === undefined ? undefined : integerAt(ops[0]);
       const k = ops[1] === undefined ? 2 : integerAt(ops[1]);
       return n === undefined || k === undefined ? undefined : karyTree(ce, n, k);
@@ -327,10 +326,10 @@ function declareKaryTree(ce: ComputeEngine): void {
 /** Declare this wave's heads: DiagonalMatrix, HilbertMatrix, Extract, DeleteCases, Key,
  *  CharacterRange, NumberQ, ReIm, RandomComplex, KaryTree. See the module doc for what's out
  *  of scope (WeightedAdjacencyMatrix, BooleanConvert) and why. */
-export function declareMiscFrontier(ce: ComputeEngine): void {
+export function declareMiscFrontier(ce: Engine): void {
   ce.declare("DiagonalMatrix", {
     signature: "(list<any>, integer?) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const listExpr = ops[0];
       if (listExpr === undefined || listExpr.operator !== "List") return undefined;
       const k = ops[1] === undefined ? 0 : integerAt(ops[1]);
@@ -341,7 +340,7 @@ export function declareMiscFrontier(ce: ComputeEngine): void {
 
   ce.declare("HilbertMatrix", {
     signature: "(integer | list<integer>) -> list<any>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       // Exactly one argument — the declared signature already rejects a 2-argument call at
       // BOX time, before this ever runs (Wolfram's rectangular form takes its dimensions as
       // a single {m, n} LIST, see hilbertMatrix's doc comment, not a bare 2-argument call).

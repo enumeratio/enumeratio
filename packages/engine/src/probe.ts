@@ -21,6 +21,16 @@ export const nativeEvaluate = (ce: Engine, name: string): Operator["evaluate"] =
 };
 
 /**
+ * The `canonical` handler the engine currently holds for the operator `name`, to call as a
+ * fallback from a replacement (`extendHead`'s `canonical`); `undefined` when there is none.
+ * Same capture rule as `nativeEvaluate`.
+ */
+export const nativeCanonical = (ce: Engine, name: string): Operator["canonical"] => {
+  const definition = ce.lookupDefinition(name);
+  return definition !== undefined && "operator" in definition ? definition.operator.canonical : undefined;
+};
+
+/**
  * Run `fn` with `assumptions` assumed, in a scope of its own that is dropped afterwards,
  * whether `fn` returns or throws. Safe inside another evaluation, unlike `ce.checkpoint()`.
  */

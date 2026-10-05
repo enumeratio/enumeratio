@@ -1,11 +1,11 @@
 // A subset of 1..n and its characteristic word: the conversions invert each other, and the
 // bitmask order of subsets is BinaryWords(n) read through Finset(word).
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, declareCombinatorics, declareMaps } from "../src/index.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCombinatorics(ce);
 declareMaps(ce, Object.fromEntries(CARRIERS.map((c) => [c.type, c.name])));
 const json = (expr: unknown): unknown => ce.box(expr as never).evaluate().json;

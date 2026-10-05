@@ -1,7 +1,7 @@
 // Partitions' own declare (https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5, A-94):
 // its carriers (dominance order included, since it needs `integer_partition` declared), then the
 // families they type. `declareCombinatorics` calls this alongside the other nine areas'.
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
 import { numberKernel } from "../../collections/src/families/types.ts";
@@ -11,7 +11,7 @@ import { coreEntries, coreEpsilFamilies, partitionsEntries, tableauxPlaneEntries
 import { declareCarrierOrders } from "./orders.ts";
 import { PARTITION_STATISTICS } from "./statistics.ts";
 
-export function declarePartitions(ce: ComputeEngine): void {
+export function declarePartitions(ce: Engine): void {
   declareCarriers(ce, PARTITIONS_CARRIERS, { plurals: false });
   declareCarrierOrders(ce);
   // coreEntries then coreEpsilFamilies (not the other way) keeps core.ts's catalogue order:

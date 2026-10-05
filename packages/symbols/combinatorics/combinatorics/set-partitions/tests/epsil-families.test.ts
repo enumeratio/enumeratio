@@ -3,7 +3,7 @@
 // membership over every near miss. Compiled and interpreted, and the interpreter checked
 // directly against the definitions too.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, elementJson, epsilKernelOn } from "../../collections/src/families/epsil.ts";
@@ -37,7 +37,7 @@ import { entries, surjectionsEntries } from "../src/families/core.ts";
 import { entries as matchingEntries, readings as matchingReadings } from "../src/families/matchings.ts";
 import { entries as wordEntries, isRestrictedGrowthStringOf } from "../src/families/paths-partitions.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 
 interface Reading {
   readonly params: readonly number[][];

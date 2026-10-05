@@ -1,6 +1,7 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   collectionElements,
+  type Engine,
+  type Expr,
   integerAt,
   operandsOf,
   symbolNameOf,
@@ -16,8 +17,7 @@ import {
 
 /** `fn(x)` via compute-engine's own `Apply` — see `list-functional.ts`'s `applyFn` for why
  *  the argument goes in directly rather than wrapped in a `List`. */
-const applyFn = (ce: ComputeEngine, fn: BoxedExpression, arg: BoxedExpression): BoxedExpression =>
-  ce.function("Apply", [fn, arg]).evaluate();
+const applyFn = (ce: Engine, fn: Expr, arg: Expr): Expr => ce.function("Apply", [fn, arg]).evaluate();
 
 /** A 1-based, possibly-negative index resolved against `length` — the same convention `At`
  *  uses elsewhere; kept local rather than exported to avoid widening list-heads.ts's surface. */
@@ -30,7 +30,7 @@ const resolveIndex1Based = (index: number, length: number): number | undefined =
 /** The elements of `expr` at exactly Wolfram level `level` (level 0 is `expr` itself, level
  *  1 its direct operands, level 2 their operands, and so on) — descending only through
  *  `List` nodes, since anything else has no further "parts" to speak of at this level. */
-const elementsAtExactLevel = (expr: BoxedExpression, level: number): readonly BoxedExpression[] => {
+const elementsAtExactLevel = (expr: Expr, level: number): readonly Expr[] => {
   if (level === 0) return [expr];
   if (expr.operator !== "List") return [];
   const items = operandsOf(expr);
@@ -39,15 +39,15 @@ const elementsAtExactLevel = (expr: BoxedExpression, level: number): readonly Bo
 
 /** The elements of `expr` at every level from 1 through `maxLevel` — Wolfram's shorthand
  *  for a bare integer level spec, as opposed to `{n}` (level `n` only). */
-const elementsUpToLevel = (expr: BoxedExpression, maxLevel: number): readonly BoxedExpression[] => {
-  const acc: BoxedExpression[] = [];
+const elementsUpToLevel = (expr: Expr, maxLevel: number): readonly Expr[] => {
+  const acc: Expr[] = [];
   for (let level = 1; level <= maxLevel; level++) acc.push(...elementsAtExactLevel(expr, level));
   return acc;
 };
 
 /** How many of `elements` match `test` — a plain value (exact equality, [[Count]]'s default)
  *  or a `Function` predicate, same two forms `Count` already accepts at the top level. */
-const countMatches = (ce: ComputeEngine, elements: readonly BoxedExpression[], test: BoxedExpression): number => {
+const countMatches = (ce: Engine, elements: readonly Expr[], test: Expr): number => {
   if (test.operator === "Function") {
     return elements.filter((e) => symbolNameOf(applyFn(ce, test, e)) === "True").length;
   }
@@ -57,7 +57,7 @@ const countMatches = (ce: ComputeEngine, elements: readonly BoxedExpression[], t
 /** A bare integer level spec (levels 1..n) or a single-element `List` (level n only), or
  *  `undefined` if `spec` is neither. */
 type LevelSpec = { readonly kind: "upTo" | "exact"; readonly n: number };
-const levelSpecOf = (spec: BoxedExpression): LevelSpec | undefined => {
+const levelSpecOf = (spec: Expr): LevelSpec | undefined => {
   const n = integerAt(spec);
   if (n !== undefined) return { kind: "upTo", n };
   if (spec.operator === "List" && operandsOf(spec).length === 1) {
@@ -66,16 +66,16 @@ const levelSpecOf = (spec: BoxedExpression): LevelSpec | undefined => {
   }
   return undefined;
 };
-const elementsAtLevelSpec = (expr: BoxedExpression, spec: LevelSpec): readonly BoxedExpression[] =>
+const elementsAtLevelSpec = (expr: Expr, spec: LevelSpec): readonly Expr[] =>
   spec.kind === "upTo" ? elementsUpToLevel(expr, spec.n) : elementsAtExactLevel(expr, spec.n);
 
 /** The rectangular shape of a nested `List` — the length at each level, stopping at the
  *  first level that isn't itself a uniform `List` of `List`s. Only as many dimensions as
  *  the caller asks for are ever read (`Partition`'s block form truncates to its `sizes`
  *  length), so a ragged deeper level never matters. */
-const shapeOf = (list: BoxedExpression): number[] => {
+const shapeOf = (list: Expr): number[] => {
   const dims: number[] = [];
-  let cur: BoxedExpression = list;
+  let cur: Expr = list;
   for (;;) {
     if (cur.operator !== "List") break;
     const items = operandsOf(cur);
@@ -87,7 +87,7 @@ const shapeOf = (list: BoxedExpression): number[] => {
 };
 
 /** The element of a nested `List` at a full multi-dimensional (0-based) index. */
-const elementAt = (list: BoxedExpression, indices: readonly number[]): BoxedExpression => {
+const elementAt = (list: Expr, indices: readonly number[]): Expr => {
   let cur = list;
   for (const index of indices) cur = operandsOf(cur)[index];
   return cur;
@@ -97,10 +97,10 @@ const elementAt = (list: BoxedExpression, indices: readonly number[]): BoxedExpr
 
 /** `Flatten(f(a, f(b, f(c))))`: splice in the operands of any nested call to the SAME head,
  *  not just `List` — compute-engine's Flatten is List-only. */
-const flattenSameHead = (ce: ComputeEngine, expr: BoxedExpression): BoxedExpression => {
+const flattenSameHead = (ce: Engine, expr: Expr): Expr => {
   const head = expr.operator;
-  const flat: BoxedExpression[] = [];
-  const visit = (e: BoxedExpression): void => {
+  const flat: Expr[] = [];
+  const visit = (e: Expr): void => {
     if (e.operator === head) operandsOf(e).forEach(visit);
     else flat.push(e);
   };
@@ -112,7 +112,7 @@ const flattenSameHead = (ce: ComputeEngine, expr: BoxedExpression): BoxedExpress
  *  `1..rank` regroups the array's dimensions — e.g. `{{2}, {1}}` transposes a matrix.
  *  Output dimension `k` reads from input dimension `perm[k]`, so index `k` of the output
  *  maps back to slot `perm[k] - 1` of the input's index vector. */
-const permutationOf = (levels: BoxedExpression, rank: number): number[] | undefined => {
+const permutationOf = (levels: Expr, rank: number): number[] | undefined => {
   if (levels.operator !== "List") return undefined;
   const specs = operandsOf(levels);
   if (specs.length !== rank) return undefined;
@@ -124,10 +124,10 @@ const permutationOf = (levels: BoxedExpression, rank: number): number[] | undefi
   return new Set(asNumbers).size === rank ? asNumbers : undefined;
 };
 
-const permuteDimensions = (ce: ComputeEngine, list: BoxedExpression, perm: readonly number[]): BoxedExpression => {
+const permuteDimensions = (ce: Engine, list: Expr, perm: readonly number[]): Expr => {
   const dims = shapeOf(list);
   const outDims = perm.map((p) => dims[p - 1]);
-  const build = (dimIndex: number, outIndex: readonly number[]): BoxedExpression => {
+  const build = (dimIndex: number, outIndex: readonly number[]): Expr => {
     if (dimIndex === perm.length) {
       const inIndex: number[] = new Array(perm.length).fill(0);
       perm.forEach((p, k) => {
@@ -135,7 +135,7 @@ const permuteDimensions = (ce: ComputeEngine, list: BoxedExpression, perm: reado
       });
       return elementAt(list, inIndex);
     }
-    const items: BoxedExpression[] = [];
+    const items: Expr[] = [];
     for (let i = 0; i < outDims[dimIndex]; i++) items.push(build(dimIndex + 1, [...outIndex, i]));
     return ce.function("List", items);
   };
@@ -153,12 +153,7 @@ const windowStarts = (dimLength: number, size: number, offset: number): number[]
   return starts;
 };
 
-const extractBlock = (
-  node: BoxedExpression,
-  ce: ComputeEngine,
-  starts: readonly number[],
-  sizes: readonly number[],
-): BoxedExpression => {
+const extractBlock = (node: Expr, ce: Engine, starts: readonly number[], sizes: readonly number[]): Expr => {
   if (starts.length === 0) return node;
   const [s0, ...restStarts] = starts;
   const [n0, ...restSizes] = sizes;
@@ -169,15 +164,10 @@ const extractBlock = (
   );
 };
 
-const partitionBlocks = (
-  ce: ComputeEngine,
-  list: BoxedExpression,
-  sizes: readonly number[],
-  offsets: readonly number[],
-): BoxedExpression => {
+const partitionBlocks = (ce: Engine, list: Expr, sizes: readonly number[], offsets: readonly number[]): Expr => {
   const dims = shapeOf(list);
   const startsPerDim = sizes.map((size, i) => windowStarts(dims[i], size, offsets[i]));
-  const build = (dimIndex: number, prefix: readonly number[]): BoxedExpression => {
+  const build = (dimIndex: number, prefix: readonly number[]): Expr => {
     if (dimIndex === sizes.length) return extractBlock(list, ce, prefix, sizes);
     return ce.function(
       "List",
@@ -201,14 +191,14 @@ const mathMod = (a: number, m: number): number => ((a % m) + m) % m;
  *  where the first window starts relative to `list`'s first element; `kR` pins where the
  *  last window ends relative to `list`'s last element — see `sublistIndex`. */
 const overhangWindows = (
-  ce: ComputeEngine,
-  items: readonly BoxedExpression[],
+  ce: Engine,
+  items: readonly Expr[],
   n: number,
   d: number,
   kL: number,
   kR: number,
-  pad: BoxedExpression | undefined,
-): BoxedExpression => {
+  pad: Expr | undefined,
+): Expr => {
   const len = items.length;
   const firstStart = 2 - sublistIndex(kL, n);
   const lastStart = len - sublistIndex(kR, n) + 1;
@@ -217,15 +207,15 @@ const overhangWindows = (
   // By example, both overhangs read the SAME formula `pad[(index - 1) mod m]`: it's the
   // pattern's phase as if it extended `items`' own 1-based indexing in both directions.
   const padList = pad !== undefined && pad.operator === "List" ? operandsOf(pad) : undefined;
-  const valueAt = (index: number): BoxedExpression | undefined => {
+  const valueAt = (index: number): Expr | undefined => {
     if (index >= 1 && index <= len) return items[index - 1];
     if (padList !== undefined) return padList.length === 0 ? undefined : padList[mathMod(index - 1, padList.length)];
     if (pad !== undefined) return pad;
     return items[mathMod(index - 1, len)];
   };
-  const windows: BoxedExpression[] = [];
+  const windows: Expr[] = [];
   for (let start = firstStart; start <= lastStart; start += d) {
-    const window: BoxedExpression[] = [];
+    const window: Expr[] = [];
     for (let k = 0; k < n; k++) {
       const value = valueAt(start + k);
       if (value !== undefined) window.push(value);
@@ -240,11 +230,7 @@ const overhangWindows = (
 /** The first position `value` occurs at, searching every level (depth-first, outer-to-inner,
  *  left-to-right) rather than only the top one — Wolfram's `FirstPosition`, which
  *  [[IndexOf]] and [[Position]] don't reach for since they stay at the top level. */
-const firstPositionPath = (
-  expr: BoxedExpression,
-  value: BoxedExpression,
-  prefix: readonly number[],
-): number[] | undefined => {
+const firstPositionPath = (expr: Expr, value: Expr, prefix: readonly number[]): number[] | undefined => {
   const items = operandsOf(expr);
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
@@ -261,7 +247,7 @@ const firstPositionPath = (
 /** Declare the level-aware and structural list heads: Partition's block/overhang forms,
  *  Flatten's infinite depth / dimension permutation / any-head nesting, Count/All/Any's
  *  level arguments, At(Part) of any expression, and the new FirstPosition head. */
-export function declareListLevelHeads(ce: ComputeEngine): void {
+export function declareListLevelHeads(ce: Engine): void {
   // Partition(list, {n1, n2, …}, offset): a list of sizes cuts a rank-k array into
   // rectangular blocks, `offset` either a shared scalar or a per-dimension list.
   widenSignature(ce, "Partition", "(any, any, any?, any?, any?) -> any");
@@ -290,7 +276,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
   // Partition(list, n, d, {kL, kR}, pad?): wraparound (no pad) or padded overhangs — see
   // `overhangWindows`. The offset may also be a single integer `k`, shorthand for `{k, k}`
   // — the same overhang on both ends.
-  const overhangKs = (op: BoxedExpression): readonly [number, number] | undefined => {
+  const overhangKs = (op: Expr): readonly [number, number] | undefined => {
     const scalar = integerAt(op);
     if (scalar !== undefined) return [scalar, scalar];
     if (op.operator !== "List" || operandsOf(op).length !== 2) return undefined;
@@ -372,7 +358,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
+                canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined;
               };
             }
           ).operator
@@ -405,7 +391,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
+                canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined;
               };
             }
           ).operator
@@ -440,7 +426,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
+                canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined;
               };
             }
           ).operator
@@ -477,7 +463,7 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
   // list stands in, echoing Position's own answer for an absent value.
   ce.declare("FirstPosition", {
     signature: "(any, any) -> list<integer>",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const found = firstPositionPath(ops[0], ops[1], []);
       return found === undefined ? ce.box(["List"]) : ce.box(["List", ...found]);
     },

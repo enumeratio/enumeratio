@@ -9,7 +9,7 @@
 // claimed the name here. `declareCarrierPlurals`/`declareCarrierElement` mint that later,
 // called directly by each host at its own position in its own declare order.
 
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import { type Carrier, declareCarriers } from "@enumeratio/structures";
 import { CARRIERS } from "./carrier-list.ts";
 import { declareCarrierOrders } from "../partitions/src/orders.ts";
@@ -20,7 +20,7 @@ export { CARRIERS, LEFTOVER_CARRIERS } from "./carrier-list.ts";
  * Declare every combinatorics carrier and its constructor on `ce`, via `@enumeratio/structures`'
  * generic `declareCarriers` — see the file comment for why `{ plurals: false }`.
  */
-export function declareCombinatoricsCarriers(ce: ComputeEngine, carriers: readonly Carrier[] = CARRIERS): void {
+export function declareCombinatoricsCarriers(ce: Engine, carriers: readonly Carrier[] = CARRIERS): void {
   declareCarriers(ce, carriers, { plurals: false });
   // Partitions' dominance order needs the carrier declared first; combinatorics-specific, so
   // it stays a call here rather than in the generic structures machinery.

@@ -1,9 +1,9 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { kernelsOn, liftFamily } from "../../collections/src/families/epsil.ts";
 import { entries as families } from "../src/families/permutation-classes.ts";
 
-const entries = kernelsOn(new ComputeEngine(), families.map(liftFamily));
+const entries = kernelsOn(bareEngine(), families.map(liftFamily));
 
 // Certify every permutation-class family: rank(unrank(p, r), p) === r across the whole
 // family, unranked elements are valid members, and count matches the enumeration —

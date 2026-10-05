@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf } from "@enumeratio/engine";
+import { type Engine, type Expr, integerAt, operandsOf } from "@enumeratio/engine";
 import { conform } from "@enumeratio/structures";
 
 // Carriers' orders (https://github.com/enumeratio/enumeratio/wiki/Structures): what makes `Min`, `Max` and `Clamp` work on them.
@@ -9,7 +8,7 @@ import { conform } from "@enumeratio/structures";
 // so `Min` is the meet: the partial sums' pointwise minimum, differenced back into parts
 // (Brylawski). Partitions of different n are not in the same lattice and have no meet.
 
-const partsOf = (p: BoxedExpression): number[] | undefined => {
+const partsOf = (p: Expr): number[] | undefined => {
   const parts = operandsOf(operandsOf(p)[0]).map(integerAt);
   return parts.every((x): x is number => x !== undefined) ? parts : undefined;
 };
@@ -28,7 +27,7 @@ const conjugate = (parts: readonly number[]): number[] =>
   Array.from({ length: parts[0] ?? 0 }, (_, j) => parts.filter((x) => x > j).length);
 
 /** Both partitions' partial sums, padded to one length; undefined unless both partition one n. */
-function sums(a: BoxedExpression, b: BoxedExpression): [number[], number[]] | undefined {
+function sums(a: Expr, b: Expr): [number[], number[]] | undefined {
   const [x, y] = [partsOf(a), partsOf(b)];
   if (x === undefined || y === undefined) return undefined;
   const length = Math.max(x.length, y.length);
@@ -42,7 +41,7 @@ const meet = (x: readonly number[], y: readonly number[]): number[] | undefined 
   return s[length - 1] === t[length - 1] ? fromPartialSums(s.map((v, i) => Math.min(v, t[i]!))) : undefined;
 };
 
-export function declareCarrierOrders(ce: ComputeEngine): void {
+export function declareCarrierOrders(ce: Engine): void {
   const partition = (parts: readonly number[] | undefined) =>
     parts === undefined
       ? undefined

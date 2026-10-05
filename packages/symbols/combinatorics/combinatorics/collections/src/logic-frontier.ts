@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
+import { type Engine, type Expr, operandsOf, stringAt, symbolNameOf } from "@enumeratio/engine";
 
 // A fourth wave of Wolfram-frontier heads: boolean normal forms (LogicalExpand,
 // BooleanConvert) and a batch of `Is…` predicates (our naming for Wolfram's `…Q` — see
@@ -24,16 +23,15 @@ const CONNECTIVES = new Set(["And", "Or", "Not", "Implies", "Equivalent", "Xor",
 /** Apply a `Function` literal (or symbol naming one) to a single boxed argument — same
  *  calling convention as the number-theory backlog's `applyFn`: box `[fn, arg]` as a call
  *  with `fn` itself as the head. */
-const applyFn = (ce: ComputeEngine, fn: BoxedExpression, arg: BoxedExpression): BoxedExpression =>
-  ce.box([fn.json, arg.json] as never).evaluate();
+const applyFn = (ce: Engine, fn: Expr, arg: Expr): Expr => ce.box([fn.json, arg.json] as never).evaluate();
 
-const passesTest = (ce: ComputeEngine, test: BoxedExpression | undefined, arg: BoxedExpression): boolean =>
+const passesTest = (ce: Engine, test: Expr | undefined, arg: Expr): boolean =>
   test === undefined || symbolNameOf(applyFn(ce, test, arg)) === "True";
 
 /** Rewrite every `Implies`/`Equivalent`/`Xor`/`Nand`/`Nor` in `expr` down to `And`/`Or`/`Not`
  *  over the same leaves, recursively. Non-boolean subexpressions (plain symbols, `Greater`
  *  comparisons, predicate calls, …) are left alone as opaque literals. */
-export function eliminateConnectives(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+export function eliminateConnectives(ce: Engine, expr: Expr): Expr {
   const op = expr.operator;
   if (!CONNECTIVES.has(op)) return expr;
   const args = operandsOf(expr).map((a) => eliminateConnectives(ce, a));
@@ -66,7 +64,7 @@ export function eliminateConnectives(ce: ComputeEngine, expr: BoxedExpression): 
       // a=c), each pair rewritten as (a∧b)∨(¬a∧¬b). compute-engine's own `Equivalent` is
       // capped at 2 operands (a 3rd errors at box time) as of 0.134, so the n-ary branch
       // here is forward-looking rather than reachable through a boxed `Equivalent` today.
-      const pairs: BoxedExpression[] = [];
+      const pairs: Expr[] = [];
       for (let i = 0; i < args.length - 1; i++) {
         const a = args[i]!;
         const b = args[i + 1]!;
@@ -86,7 +84,7 @@ export function eliminateConnectives(ce: ComputeEngine, expr: BoxedExpression): 
 
 /** Push `Not` down to the leaves (De Morgan), collapsing double negation — `expr` must
  *  already be past `eliminateConnectives` (only `And`/`Or`/`Not` connectives left). */
-function pushNegations(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+function pushNegations(ce: Engine, expr: Expr): Expr {
   const op = expr.operator;
   if (op === "Not") {
     const inner = operandsOf(expr)[0]!;
@@ -111,19 +109,18 @@ function pushNegations(ce: ComputeEngine, expr: BoxedExpression): BoxedExpressio
   return expr;
 }
 
-const toBooleanNnfTree = (ce: ComputeEngine, expr: BoxedExpression): BoxedExpression =>
-  pushNegations(ce, eliminateConnectives(ce, expr));
+const toBooleanNnfTree = (ce: Engine, expr: Expr): Expr => pushNegations(ce, eliminateConnectives(ce, expr));
 
 // --- canonical (deterministic) ordering ----------------------------------------------------
 
 /** A stable sort/dedup key for a literal or subexpression — its MathJSON, serialized. Two
  *  structurally-equal boxed expressions always produce the same key, which is all
  *  determinism needs here (no claim of a "canonical" MathJSON beyond that). */
-const exprKey = (expr: BoxedExpression): string => JSON.stringify(expr.json);
+const exprKey = (expr: Expr): string => JSON.stringify(expr.json);
 
 /** Sort and dedupe the direct operands of an `And`/`Or`, recursively — used for `"NNF"`,
  *  which (unlike DNF/CNF) doesn't otherwise get a canonicalization pass. */
-function canonicalizeAndOr(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+function canonicalizeAndOr(ce: Engine, expr: Expr): Expr {
   const op = expr.operator;
   if (op === "And" || op === "Or") {
     const args = operandsOf(expr).map((a) => canonicalizeAndOr(ce, a));
@@ -134,8 +131,8 @@ function canonicalizeAndOr(ce: ComputeEngine, expr: BoxedExpression): BoxedExpre
   return expr;
 }
 
-function dedupeSorted(exprs: readonly BoxedExpression[]): BoxedExpression[] {
-  const seen = new Map<string, BoxedExpression>();
+function dedupeSorted(exprs: readonly Expr[]): Expr[] {
+  const seen = new Map<string, Expr>();
   for (const e of exprs) seen.set(exprKey(e), e);
   const uniq = [...seen.values()];
   uniq.sort((a, b) => exprKey(a).localeCompare(exprKey(b)));
@@ -148,10 +145,10 @@ function dedupeSorted(exprs: readonly BoxedExpression[]): BoxedExpression[] {
 interface Literal {
   readonly neg: boolean;
   readonly atomKey: string;
-  readonly expr: BoxedExpression;
+  readonly expr: Expr;
 }
 
-const toLiteral = (expr: BoxedExpression): Literal =>
+const toLiteral = (expr: Expr): Literal =>
   expr.operator === "Not"
     ? { neg: true, atomKey: exprKey(operandsOf(expr)[0]!), expr }
     : { neg: false, atomKey: exprKey(expr), expr };
@@ -180,14 +177,14 @@ function dedupeLiterals(literals: readonly Literal[]): Literal[] {
  *  `splitOp` over `joinOp` — `splitOp = "Or", joinOp = "And"` builds DNF terms (an `Or` of
  *  `And`s becomes a list of AND-clauses already; an `And` of `Or`s is distributed via the
  *  cartesian product below); swapping the two ops builds CNF instead. */
-function toClauses(expr: BoxedExpression, splitOp: "And" | "Or", joinOp: "And" | "Or"): BoxedExpression[][] {
+function toClauses(expr: Expr, splitOp: "And" | "Or", joinOp: "And" | "Or"): Expr[][] {
   const op = expr.operator;
   if (op === splitOp) return operandsOf(expr).flatMap((a) => toClauses(a, splitOp, joinOp));
   if (op === joinOp) {
     const subs = operandsOf(expr).map((a) => toClauses(a, splitOp, joinOp));
-    let acc: BoxedExpression[][] = [[]];
+    let acc: Expr[][] = [[]];
     for (const s of subs) {
-      const next: BoxedExpression[][] = [];
+      const next: Expr[][] = [];
       for (const partial of acc) for (const clause of s) next.push([...partial, ...clause]);
       acc = next;
     }
@@ -202,12 +199,12 @@ function toClauses(expr: BoxedExpression, splitOp: "And" | "Or", joinOp: "And" |
  *  literals within a clause and clauses against each other, then sort both levels for a
  *  deterministic result. `emptyValue` is what's left when every clause was dropped. */
 function buildNormalForm(
-  ce: ComputeEngine,
-  rawClauses: readonly BoxedExpression[][],
+  ce: Engine,
+  rawClauses: readonly Expr[][],
   outerOp: "And" | "Or",
   innerOp: "And" | "Or",
   emptyValue: "True" | "False",
-): BoxedExpression {
+): Expr {
   const clauses = rawClauses.map((c) => dedupeLiterals(c.map(toLiteral))).filter((c) => !hasComplementaryPair(c));
   const clauseKey = (c: readonly Literal[]) => c.map(literalSortKey).join(",");
   const uniqueClauses = [...new Map(clauses.map((c) => [clauseKey(c), c])).values()];
@@ -221,13 +218,13 @@ function buildNormalForm(
 }
 
 /** `expr` in disjunction-of-conjunctions form (an `Or` of `And`s, or simpler). */
-export function normalizeToDnf(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+export function normalizeToDnf(ce: Engine, expr: Expr): Expr {
   const nnf = toBooleanNnfTree(ce, expr);
   return buildNormalForm(ce, toClauses(nnf, "Or", "And"), "Or", "And", "False");
 }
 
 /** `expr` in conjunction-of-disjunctions form (an `And` of `Or`s, or simpler). */
-export function normalizeToCnf(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+export function normalizeToCnf(ce: Engine, expr: Expr): Expr {
   const nnf = toBooleanNnfTree(ce, expr);
   return buildNormalForm(ce, toClauses(nnf, "And", "Or"), "And", "Or", "True");
 }
@@ -235,17 +232,17 @@ export function normalizeToCnf(ce: ComputeEngine, expr: BoxedExpression): BoxedE
 /** `expr` with `Implies`/`Equivalent`/`Xor`/`Nand`/`Nor` eliminated and `Not` pushed to the
  *  leaves, but NOT distributed — `And`/`Or` keep their original nesting shape, only
  *  canonically sorted/deduped at each level. */
-export function normalizeToNnf(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+export function normalizeToNnf(ce: Engine, expr: Expr): Expr {
   return canonicalizeAndOr(ce, toBooleanNnfTree(ce, expr));
 }
 
 // --- LogicalExpand / BooleanConvert --------------------------------------------------------
 
-function declareLogicalExpand(ce: ComputeEngine): void {
+function declareLogicalExpand(ce: Engine): void {
   ce.declare("LogicalExpand", {
     signature: "(any) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       return expr === undefined ? undefined : normalizeToDnf(ce, expr);
     },
@@ -258,11 +255,11 @@ function declareLogicalExpand(ce: ComputeEngine): void {
 // BooleanConvert.yaml for the divergence note).
 const BOOLEAN_CONVERT_FORMS = new Set(["DNF", "CNF", "NNF"]);
 
-function declareBooleanConvert(ce: ComputeEngine): void {
+function declareBooleanConvert(ce: Engine): void {
   ce.declare("BooleanConvert", {
     signature: "(any, string?) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       if (expr === undefined) return undefined;
       const form = ops.length > 1 ? stringAt(ops[1]) : "DNF";
@@ -279,10 +276,10 @@ function declareBooleanConvert(ce: ComputeEngine): void {
 /** `IsTrue(expr)`: `True` only when `expr` EVALUATES to the literal symbol `True` — anything
  *  else (an unevaluated symbolic expression, `False`, a number, …) is `False`, never a third
  *  "unknown" outcome. Matches Wolfram's `TrueQ`. */
-function declareIsTrue(ce: ComputeEngine): void {
+function declareIsTrue(ce: Engine): void {
   ce.declare("IsTrue", {
     signature: "(any) -> boolean",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       return expr === undefined ? undefined : ce.symbol(symbolNameOf(expr.evaluate()) === "True" ? "True" : "False");
     },
@@ -295,11 +292,11 @@ function declareIsTrue(ce: ComputeEngine): void {
  *  `isInteger` check on the evaluated expression) — `False` for anything else, including a
  *  free symbol or an expression compute-engine can't classify, same "no third outcome"
  *  convention as `IsPrime`. */
-function declareIsInteger(ce: ComputeEngine): void {
+function declareIsInteger(ce: Engine): void {
   ce.declare("IsInteger", {
     signature: "(any) -> boolean",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const x = ops[0];
       return x === undefined ? undefined : ce.symbol(x.evaluate().isInteger === true ? "True" : "False");
     },
@@ -308,15 +305,15 @@ function declareIsInteger(ce: ComputeEngine): void {
 
 // --- VectorQ / MatrixQ / ArrayQ -------------------------------------------------------------
 
-const isListExpr = (expr: BoxedExpression): boolean => expr.operator === "List";
+const isListExpr = (expr: Expr): boolean => expr.operator === "List";
 
 /** `IsVector(list)` / `IsVector(list, test)`: `list` is a `List` none of whose elements are
  *  themselves `List`s (rank exactly 1 — a nested list is a matrix, not a vector), and (if
  *  given) `test` holds of every element. */
-function declareIsVector(ce: ComputeEngine): void {
+function declareIsVector(ce: Engine): void {
   ce.declare("IsVector", {
     signature: "(any, function?) -> boolean",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       if (expr === undefined) return undefined;
       if (!isListExpr(expr)) return ce.symbol("False");
@@ -330,10 +327,10 @@ function declareIsVector(ce: ComputeEngine): void {
 /** `IsMatrix(m)` / `IsMatrix(m, test)`: `m` is a non-empty `List` of `List` rows, all the
  *  same length, no row itself containing a `List` (rank exactly 2), and (if given) `test`
  *  holds of every entry. */
-function declareIsMatrix(ce: ComputeEngine): void {
+function declareIsMatrix(ce: Engine): void {
   ce.declare("IsMatrix", {
     signature: "(any, function?) -> boolean",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       if (expr === undefined) return undefined;
       if (!isListExpr(expr)) return ce.symbol("False");
@@ -353,7 +350,7 @@ function declareIsMatrix(ce: ComputeEngine): void {
 
 /** The shape of `expr` as a list of per-level lengths, `undefined` if it isn't rectangular
  *  (a ragged nesting) — a `List` leaf (no further `List` inside) has shape `[]`. */
-function arrayShape(expr: BoxedExpression): number[] | undefined {
+function arrayShape(expr: Expr): number[] | undefined {
   if (expr.operator !== "List") return [];
   const elements = operandsOf(expr);
   if (elements.length === 0) return [0];
@@ -366,16 +363,16 @@ function arrayShape(expr: BoxedExpression): number[] | undefined {
   return [elements.length, ...first];
 }
 
-function arrayLeaves(expr: BoxedExpression): BoxedExpression[] {
+function arrayLeaves(expr: Expr): Expr[] {
   return expr.operator === "List" ? operandsOf(expr).flatMap(arrayLeaves) : [expr];
 }
 
 /** `IsArray(t)` / `IsArray(t, test)`: `t` is a `List` with a uniform (non-ragged) shape at
  *  every depth — any rank ≥ 1 — and (if given) `test` holds of every leaf. */
-function declareIsArray(ce: ComputeEngine): void {
+function declareIsArray(ce: Engine): void {
   ce.declare("IsArray", {
     signature: "(any, function?) -> boolean",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const expr = ops[0];
       if (expr === undefined) return undefined;
       if (!isListExpr(expr)) return ce.symbol("False");
@@ -418,11 +415,11 @@ function isMersennePrimeExponent(p: number): boolean {
   return s === 0n;
 }
 
-function declareIsMersennePrimeExponent(ce: ComputeEngine): void {
+function declareIsMersennePrimeExponent(ce: Engine): void {
   ce.declare("IsMersennePrimeExponent", {
     signature: "(integer) -> boolean",
     broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const n = ops[0];
       if (n === undefined || !n.isInteger) return undefined;
       const p = Number(n.re ?? Number.NaN);
@@ -438,9 +435,7 @@ function declareIsMersennePrimeExponent(ce: ComputeEngine): void {
 
 /** A single `Interval` bound, unwrapped from `Open(...)` (default closed) and read as a
  *  double — exact enough for membership, which only ever needs a comparison. */
-function intervalBound(
-  bound: BoxedExpression | undefined,
-): { readonly value: number; readonly open: boolean } | undefined {
+function intervalBound(bound: Expr | undefined): { readonly value: number; readonly open: boolean } | undefined {
   if (bound === undefined) return undefined;
   const open = bound.operator === "Open";
   const raw = open ? operandsOf(bound)[0] : bound;
@@ -452,10 +447,10 @@ function intervalBound(
 /** `IsIntervalMember(Interval(lo, hi), x)`: whether `x` falls within the interval, honoring
  *  `Open(...)` on either bound (default closed). Only a single `Interval(lo, hi)` — Wolfram's
  *  union-of-intervals form `Interval({a, b}, {c, d}, …)` isn't handled. */
-function declareIsIntervalMember(ce: ComputeEngine): void {
+function declareIsIntervalMember(ce: Engine): void {
   ce.declare("IsIntervalMember", {
     signature: "(any, any) -> boolean",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [interval, x] = ops;
       if (interval === undefined || x === undefined || interval.operator !== "Interval") return undefined;
       const [loRaw, hiRaw] = operandsOf(interval);
@@ -472,7 +467,7 @@ function declareIsIntervalMember(ce: ComputeEngine): void {
 
 /** Declare the fourth Wolfram-frontier wave: boolean normal forms and the `Is…` predicates
  *  above. See the module doc for what's out of scope and why. */
-export function declareLogicFrontier(ce: ComputeEngine): void {
+export function declareLogicFrontier(ce: Engine): void {
   declareLogicalExpand(ce);
   declareBooleanConvert(ce);
   declareIsTrue(ce);

@@ -4,7 +4,7 @@
 // which each area's own `declareFamilies` call now guarantees by reading the carrier back off
 // `ce`'s registry instead (see collections/src/families/declare.ts). This sweeps every area's
 // entries, not just the handful `declare-combinatorics.test.ts` spot-checks.
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { declareCombinatorics } from "../src/index.ts";
 import { numberKernel } from "../collections/src/families/types.ts";
@@ -62,20 +62,20 @@ import {
 // own declare.ts does (permutations' Epsil families get their kernels on an engine;
 // collectionsEntries are FamilyKernel already) -- see each `declare<Area>` for the grouping this mirrors.
 const allFamilies: readonly FamilyKernel[] = [
-  ...kernelsOn(new ComputeEngine(), permutationsCoreFamilies),
-  ...kernelsOn(new ComputeEngine(), [...permutationsEntries, ...permutationClassesEntries].map(liftFamily)),
-  ...kernelsOn(new ComputeEngine(), partitionsCoreEpsilFamilies),
+  ...kernelsOn(bareEngine(), permutationsCoreFamilies),
+  ...kernelsOn(bareEngine(), [...permutationsEntries, ...permutationClassesEntries].map(liftFamily)),
+  ...kernelsOn(bareEngine(), partitionsCoreEpsilFamilies),
   ...[...partitionsCoreEntries, ...partitionsEntries, ...partitionsTableauxPlaneEntries].map(numberKernel),
-  ...kernelsOn(new ComputeEngine(), compositionsCoreFamilies),
+  ...kernelsOn(bareEngine(), compositionsCoreFamilies),
   ...compositionsEntries.map(numberKernel),
   ...kernelsOn(
-    new ComputeEngine(),
+    bareEngine(),
     [...wordsCoreEntries, ...wordsEntries, ...wordsBinaryWordFamiliesEntries, ...wordsTableauxTreesEntries].map(
       liftFamily,
     ),
   ),
   ...kernelsOn(
-    new ComputeEngine(),
+    bareEngine(),
     [
       ...latticePathsCoreEntries,
       ...latticePathsPathsPartitionsBeforeDyckPathsByHeightEntries,
@@ -83,7 +83,7 @@ const allFamilies: readonly FamilyKernel[] = [
     ].map(liftFamily),
   ),
   ...kernelsOn(
-    new ComputeEngine(),
+    bareEngine(),
     [
       ...treesLabeledEntries,
       ...treesRootedForestsEntries,
@@ -93,7 +93,7 @@ const allFamilies: readonly FamilyKernel[] = [
     ].map(liftFamily),
   ),
   ...kernelsOn(
-    new ComputeEngine(),
+    bareEngine(),
     [
       ...setPartitionsSurjectionsEntries,
       ...setPartitionsCoreEntries,
@@ -108,8 +108,8 @@ const allFamilies: readonly FamilyKernel[] = [
     ...standardTableauPairsEntries,
     ...tableauxPlanePlanePartitionsEntries,
   ].map(numberKernel),
-  ...kernelsOn(new ComputeEngine(), graphsCoreEntries.map(liftFamily)),
-  ...kernelsOn(new ComputeEngine(), collectionsEntries),
+  ...kernelsOn(bareEngine(), graphsCoreEntries.map(liftFamily)),
+  ...kernelsOn(bareEngine(), collectionsEntries),
 ];
 
 const carrierFamilies = allFamilies.filter((f) => f.carrier !== undefined);
@@ -161,7 +161,7 @@ function smallestNonEmptyParams(family: FamilyKernel): number[] | undefined {
 // caller reaches an element through -- unranking (`At`), `Random`, and plain iteration -- has to
 // answer with the carrier's own type, not just the one this file used to spot-check.
 test("every carrier-bearing family yields its carrier's type through At, Random and iteration", () => {
-  const ce = new ComputeEngine();
+  const ce = bareEngine();
   declareCombinatorics(ce);
   const skipped: string[] = [];
   for (const family of carrierFamilies) {

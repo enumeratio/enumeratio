@@ -1,5 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigRationalAt, symbolNameOf } from "@enumeratio/engine";
+import { bigRationalAt, type Engine, type Expr, symbolNameOf } from "@enumeratio/engine";
 import { SUMMARIES } from "@enumeratio/manifest/package/combinatorics";
 
 // GeneratingFunction / ExponentialGeneratingFunction / FindSequenceFunction / DiscreteRatio
@@ -55,13 +54,13 @@ const fNeg = (a: Frac): Frac => [-a[0], a[1]];
 const fIsZero = (a: Frac): boolean => a[0] === 0n;
 const fEq = (a: Frac, b: Frac): boolean => a[0] === b[0] && a[1] === b[1];
 
-const fracToExpr = (ce: ComputeEngine, f: Frac): BoxedExpression => ce.number([f[0], f[1]]);
+const fracToExpr = (ce: Engine, f: Frac): Expr => ce.number([f[0], f[1]]);
 
 // ─── sampling ───────────────────────────────────────────────────────────────────────────────
 
 /** `expr` with `varName` bound to the integer `k`, evaluated to an exact rational — or
  *  `undefined` if it isn't one (irrational, unevaluated, non-numeric, …). */
-function sampleAt(ce: ComputeEngine, expr: BoxedExpression, varName: string, k: number): Frac | undefined {
+function sampleAt(ce: Engine, expr: Expr, varName: string, k: number): Frac | undefined {
   const value = expr.subs({ [varName]: ce.number(k) }).evaluate();
   const r = bigRationalAt(value);
   return r === undefined ? undefined : frac(r[0], r[1]);
@@ -69,13 +68,7 @@ function sampleAt(ce: ComputeEngine, expr: BoxedExpression, varName: string, k: 
 
 /** The first `count` exact terms of `expr(varName)` for `varName = start..start+count-1`, or
  *  `undefined` the moment one isn't an exact rational. */
-function sampleTerms(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  varName: string,
-  count: number,
-  start = 0,
-): Frac[] | undefined {
+function sampleTerms(ce: Engine, expr: Expr, varName: string, count: number, start = 0): Frac[] | undefined {
   const terms: Frac[] = [];
   for (let k = start; k < start + count; k++) {
     const term = sampleAt(ce, expr, varName, k);
@@ -159,8 +152,8 @@ function numeratorFrom(coeffs: readonly Frac[], initial: readonly Frac[]): Frac[
   return p;
 }
 
-function polyExpr(ce: ComputeEngine, coeffs: readonly Frac[], x: BoxedExpression): BoxedExpression {
-  const terms: BoxedExpression[] = [];
+function polyExpr(ce: Engine, coeffs: readonly Frac[], x: Expr): Expr {
+  const terms: Expr[] = [];
   for (let i = 0; i < coeffs.length; i++) {
     const c = coeffs[i]!;
     if (fIsZero(c)) continue;
@@ -172,12 +165,7 @@ function polyExpr(ce: ComputeEngine, coeffs: readonly Frac[], x: BoxedExpression
 
 /** The rational OGF `P(x)/Q(x)` for a sequence with certified recurrence `c` and initial
  *  terms `initial` (must have length ≥ `c.length`). */
-function rationalOgf(
-  ce: ComputeEngine,
-  c: readonly Frac[],
-  initial: readonly Frac[],
-  x: BoxedExpression,
-): BoxedExpression {
+function rationalOgf(ce: Engine, c: readonly Frac[], initial: readonly Frac[], x: Expr): Expr {
   const qCoeffs: Frac[] = [F1, ...c.map(fNeg)];
   const pCoeffs = numeratorFrom(c, initial);
   const p = polyExpr(ce, pCoeffs, x);
@@ -188,12 +176,7 @@ function rationalOgf(
 // ─── order ≤ 2 exponential generating function from a certified recurrence ─────────────────
 
 /** `A·exp(r·x)` for an order-1 recurrence `a_n = c[0]·a_{n-1}`, `a_0 = initial[0]`. */
-function egfOrder1(
-  ce: ComputeEngine,
-  c: readonly Frac[],
-  initial: readonly Frac[],
-  x: BoxedExpression,
-): BoxedExpression {
+function egfOrder1(ce: Engine, c: readonly Frac[], initial: readonly Frac[], x: Expr): Expr {
   const r = fracToExpr(ce, c[0]!);
   const a0 = fracToExpr(ce, initial[0]!);
   const exp = ce.function("Exp", [ce.function("Multiply", [r, x])]);
@@ -204,12 +187,7 @@ function egfOrder1(
  *  `A1·exp(r1 x) + A2·exp(r2 x)`; a repeated root `r`: `(A + B·r·x)·exp(r x)`. Roots come out
  *  of the compute-engine's own `Sqrt`/arithmetic, so an irrational discriminant (Fibonacci's
  *  √5) stays exact and symbolic rather than being hand-simplified here. */
-function egfOrder2(
-  ce: ComputeEngine,
-  c: readonly Frac[],
-  initial: readonly Frac[],
-  x: BoxedExpression,
-): BoxedExpression | undefined {
+function egfOrder2(ce: Engine, c: readonly Frac[], initial: readonly Frac[], x: Expr): Expr | undefined {
   const [c0, c1] = c as [Frac, Frac];
   const [a0, a1] = initial as [Frac, Frac];
   const c0x = fracToExpr(ce, c0);
@@ -253,8 +231,8 @@ function egfOrder2(
  *  direct value comparison against the compute-engine's own native. */
 interface NamedSequence {
   readonly nativeHead: string; // a unary CE head: nativeHead(k) gives the k-th term
-  readonly ogf?: (ce: ComputeEngine, x: BoxedExpression) => BoxedExpression;
-  readonly egf?: (ce: ComputeEngine, x: BoxedExpression) => BoxedExpression;
+  readonly ogf?: (ce: Engine, x: Expr) => Expr;
+  readonly egf?: (ce: Engine, x: Expr) => Expr;
 }
 
 const NAMED_SEQUENCES: readonly NamedSequence[] = [
@@ -292,7 +270,7 @@ const NAMED_SEQUENCES: readonly NamedSequence[] = [
   },
 ];
 
-function matchNamedSequence(ce: ComputeEngine, terms: readonly Frac[]): NamedSequence | undefined {
+function matchNamedSequence(ce: Engine, terms: readonly Frac[]): NamedSequence | undefined {
   outer: for (const candidate of NAMED_SEQUENCES) {
     for (let k = 0; k < terms.length; k++) {
       const native = ce.function(candidate.nativeHead, [ce.number(k)]).evaluate();
@@ -306,11 +284,7 @@ function matchNamedSequence(ce: ComputeEngine, terms: readonly Frac[]): NamedSeq
 
 // ─── GeneratingFunction / ExponentialGeneratingFunction ────────────────────────────────────
 
-function generatingFunctionCore(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-  kind: "ordinary" | "exponential",
-): BoxedExpression | undefined {
+function generatingFunctionCore(ce: Engine, ops: readonly Expr[], kind: "ordinary" | "exponential"): Expr | undefined {
   const [expr, nExpr, xExpr] = ops;
   if (expr === undefined || nExpr === undefined || xExpr === undefined) return undefined;
   const varName = symbolNameOf(nExpr);
@@ -337,27 +311,27 @@ function generatingFunctionCore(
   return undefined; // no closed form found: stay symbolic, same as Wolfram in this case
 }
 
-function declareGeneratingFunction(ce: ComputeEngine): void {
+function declareGeneratingFunction(ce: Engine): void {
   ce.declare("GeneratingFunction", {
     description: SUMMARIES.GeneratingFunction,
     signature: "(any, symbol, symbol) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => generatingFunctionCore(ce, ops, "ordinary"),
+    evaluate: (ops: readonly Expr[]) => generatingFunctionCore(ce, ops, "ordinary"),
   });
 }
 
-function declareExponentialGeneratingFunction(ce: ComputeEngine): void {
+function declareExponentialGeneratingFunction(ce: Engine): void {
   ce.declare("ExponentialGeneratingFunction", {
     description: SUMMARIES.ExponentialGeneratingFunction,
     signature: "(any, symbol, symbol) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => generatingFunctionCore(ce, ops, "exponential"),
+    evaluate: (ops: readonly Expr[]) => generatingFunctionCore(ce, ops, "exponential"),
   });
 }
 
 // ─── DiscreteRatio ──────────────────────────────────────────────────────────────────────────
 
-function evaluateDiscreteRatio(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateDiscreteRatio(ce: Engine, ops: readonly Expr[]): Expr | undefined {
   const [f, nExpr] = ops;
   if (f === undefined || nExpr === undefined) return undefined;
   const varName = symbolNameOf(nExpr);
@@ -367,12 +341,12 @@ function evaluateDiscreteRatio(ce: ComputeEngine, ops: readonly BoxedExpression[
   return ratio.simplify();
 }
 
-function declareDiscreteRatio(ce: ComputeEngine): void {
+function declareDiscreteRatio(ce: Engine): void {
   ce.declare("DiscreteRatio", {
     description: SUMMARIES.DiscreteRatio,
     signature: "(any, symbol) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateDiscreteRatio(ce, ops),
+    evaluate: (ops: readonly Expr[]) => evaluateDiscreteRatio(ce, ops),
   });
 }
 
@@ -380,7 +354,7 @@ function declareDiscreteRatio(ce: ComputeEngine): void {
 // Same shape as DiscreteRatio (Wolfram frontier), subtraction instead of division: the
 // forward-difference operator Δf(n) = f(n+1) - f(n).
 
-function evaluateDifferenceDelta(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function evaluateDifferenceDelta(ce: Engine, ops: readonly Expr[]): Expr | undefined {
   const [f, nExpr] = ops;
   if (f === undefined || nExpr === undefined) return undefined;
   const varName = symbolNameOf(nExpr);
@@ -390,21 +364,21 @@ function evaluateDifferenceDelta(ce: ComputeEngine, ops: readonly BoxedExpressio
   return delta.simplify();
 }
 
-function declareDifferenceDelta(ce: ComputeEngine): void {
+function declareDifferenceDelta(ce: Engine): void {
   ce.declare("DifferenceDelta", {
     description: SUMMARIES.DifferenceDelta,
     signature: "(any, symbol) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateDifferenceDelta(ce, ops),
+    evaluate: (ops: readonly Expr[]) => evaluateDifferenceDelta(ce, ops),
   });
 }
 
 // ─── FindSequenceFunction ───────────────────────────────────────────────────────────────────
 
 /** The list's elements as exact fractions, or `undefined` if any isn't one. */
-function listTerms(ce: ComputeEngine, list: BoxedExpression): Frac[] | undefined {
+function listTerms(ce: Engine, list: Expr): Frac[] | undefined {
   const evaluated = list.evaluate();
-  const ops = (evaluated as { ops?: readonly BoxedExpression[] }).ops;
+  const ops = (evaluated as { ops?: readonly Expr[] }).ops;
   if (evaluated.operator !== "List" || !Array.isArray(ops)) return undefined;
   const terms: Frac[] = [];
   for (const op of ops) {
@@ -418,7 +392,7 @@ function listTerms(ce: ComputeEngine, list: BoxedExpression): Frac[] | undefined
 /** The degree-`d` polynomial in `n` interpolating `(0, terms[0]), …, (d, terms[d])`
  *  (Lagrange, exact), given the `(d+1)`-th finite difference of `terms` is (numerically)
  *  zero — i.e. `terms` really is a polynomial sequence of degree `d`. */
-function lagrangePoly(ce: ComputeEngine, terms: readonly Frac[], degree: number, n: BoxedExpression): BoxedExpression {
+function lagrangePoly(ce: Engine, terms: readonly Frac[], degree: number, n: Expr): Expr {
   // Newton's forward-difference form: p(n) = Σ_{k=0}^{d} Δ^k[0] · C(n, k), which stays exact
   // over ℚ and needs only the first `degree + 1` samples.
   const diffs: Frac[][] = [terms.slice(0, degree + 1)];
@@ -427,7 +401,7 @@ function lagrangePoly(ce: ComputeEngine, terms: readonly Frac[], degree: number,
     diffs.push(prev.slice(0, -1).map((v, i) => fSub(prev[i + 1]!, v)));
   }
   const leading = diffs.map((row) => row[0]!); // Δ^k[0] for k = 0..degree
-  const terms_: BoxedExpression[] = [];
+  const terms_: Expr[] = [];
   for (let k = 0; k <= degree; k++) {
     const coeff = leading[k]!;
     if (fIsZero(coeff)) continue;
@@ -450,7 +424,7 @@ function polynomialDegree(terms: readonly Frac[]): number | undefined {
   return undefined;
 }
 
-function findSequenceFunctionCore(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+function findSequenceFunctionCore(ce: Engine, ops: readonly Expr[]): Expr | undefined {
   const [listExpr, nExpr] = ops;
   if (listExpr === undefined || nExpr === undefined) return undefined;
   const n = nExpr.evaluate();
@@ -503,16 +477,16 @@ function findSequenceFunctionCore(ce: ComputeEngine, ops: readonly BoxedExpressi
   return undefined; // no closed form recognised: stay symbolic
 }
 
-function declareFindSequenceFunction(ce: ComputeEngine): void {
+function declareFindSequenceFunction(ce: Engine): void {
   ce.declare("FindSequenceFunction", {
     description: SUMMARIES.FindSequenceFunction,
     signature: "(list<any>, symbol) -> any",
     lazy: true,
-    evaluate: (ops: readonly BoxedExpression[]) => findSequenceFunctionCore(ce, ops),
+    evaluate: (ops: readonly Expr[]) => findSequenceFunctionCore(ce, ops),
   });
 }
 
-export function declareGeneratingFunctions(ce: ComputeEngine): void {
+export function declareGeneratingFunctions(ce: Engine): void {
   declareGeneratingFunction(ce);
   declareExponentialGeneratingFunction(ce);
   declareFindSequenceFunction(ce);

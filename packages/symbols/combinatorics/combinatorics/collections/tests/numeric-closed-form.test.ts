@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/numeric-closed-form.ts";
 import { entries as numericSets } from "../src/families/numeric-sets.ts";
@@ -278,7 +278,7 @@ test("PolygonalNumbers(4) agrees with SquareNumbers (numeric-sets.ts)", () => {
 // declare.ts's `intOf` caps membership checks to (see the file header in
 // numeric-closed-form.ts). Take/Element cases now live as examples (CubeNumbers,
 // TriangularNumbers, PowersOfTwo, FactorialNumbers, PolygonalNumbers, AllOnes). ─────────────
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCollections(ce);
 
 test("TriangularNumbers is declared as an indexed_collection<integer>", () => {

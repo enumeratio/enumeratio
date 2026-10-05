@@ -3,7 +3,7 @@
 // word near the family. Compiled and interpreted, and past 2^53 where the interpreter's exact
 // integers take over.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
@@ -39,7 +39,7 @@ import {
   separablePermutations,
 } from "../src/families/restrictions.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 
 interface Reading {
   readonly params: readonly number[][];

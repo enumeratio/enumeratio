@@ -3,7 +3,7 @@
 // family is held to them here: over a sampled grid of params, the fast kernel and the kernel
 // built from Epsil alone agree on count, unrank, rank and valid (members and near misses).
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
 import {
@@ -41,7 +41,7 @@ import {
 import type { Element } from "../collections/src/families/types.ts";
 
 const DEEP = process.env.DEEP_TESTS === "1";
-const ce = new ComputeEngine();
+const ce = bareEngine();
 const MAX_SAFE = BigInt(Number.MAX_SAFE_INTEGER);
 // How far params are scanned for the edge of the fast path; Epsil is slow on long elements.
 const SCAN = DEEP ? 44 : 32;

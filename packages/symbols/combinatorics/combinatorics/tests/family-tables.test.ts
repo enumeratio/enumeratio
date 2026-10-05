@@ -1,7 +1,7 @@
 // A family's `tables` are computed once per distinct params and read by every call: from a
 // small bounded cache per kernel, as doubles for compiled code and exact for the interpreter.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { COMPILED_FAMILIES } from "../collections/src/families/compiled-families.generated.js";
 import {
@@ -15,7 +15,7 @@ import { allFamilies } from "../collections/src/families/index.ts";
 import { epsilEntries as compositions } from "../compositions/src/families/core.ts";
 import { disagreements } from "../scripts/compile-families.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 const family = compositions.find((f) => f.head === "CompositionsIntoKParts")!;
 
 function counting(size?: number) {

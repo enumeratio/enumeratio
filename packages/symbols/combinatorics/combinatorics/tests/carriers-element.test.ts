@@ -3,13 +3,14 @@
 // DIFFERENT carrier, unevaluated for anything else (a bare symbol, a value with no
 // declared carrier at all).
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { type Carrier, declareCarrierElement, declareCarrierPlurals } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, declareCombinatoricsCarriers } from "../src/carriers.ts";
 
-const engine = (): ComputeEngine => {
-  const ce = new ComputeEngine();
+const engine = (): Engine => {
+  const ce = bareEngine();
   declareCombinatoricsCarriers(ce);
   // No collections declared in this package's own tests, so every plural is free to mint.
   declareCarrierPlurals(ce, CARRIERS);

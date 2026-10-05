@@ -1,4 +1,5 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { box, type Engine, type Json } from "@enumeratio/engine";
+import { createEngine } from "@enumeratio/engine/testing";
 import { beforeEach, describe, expect, test } from "vite-plus/test";
 import { declareDistributions } from "../src/distributions.ts";
 import { declareDistributions2 } from "../src/distributions-2.ts";
@@ -15,18 +16,19 @@ import { declareDistributions6 } from "../src/distributions-6.ts";
 // Multinormal-with-diagonal-Sigma factoring into independent Normals, and the conjugate
 // mixture matching its NegativeBinomial/Beta-Binomial closed form.
 
-let ce: ComputeEngine;
+let ce: Engine;
 beforeEach(() => {
-  ce = new ComputeEngine();
-  declareDistributions(ce);
-  declareDistributions2(ce);
-  declareDistributions3(ce);
-  declareDistributions4(ce);
-  declareDistributions5(ce);
-  declareDistributions6(ce);
+  ce = createEngine(
+    declareDistributions,
+    declareDistributions2,
+    declareDistributions3,
+    declareDistributions4,
+    declareDistributions5,
+    declareDistributions6,
+  );
 });
 
-const evalOf = (expr: unknown) => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate();
+const evalOf = (expr: unknown) => box(ce, expr as Json).evaluate();
 const N = (expr: unknown) => evalOf(["N", expr as never]).re;
 
 describe("MultinomialDistribution", () => {

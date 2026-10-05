@@ -1,5 +1,12 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { collectionElements, integerAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
+import {
+  collectionElements,
+  type Engine,
+  type Expr,
+  integerAt,
+  operandsOf,
+  symbolNameOf,
+  wrapOperator,
+} from "@enumeratio/engine";
 
 // A second wave of Wolfram list heads compute-engine doesn't have at all (Riffle, Gather,
 // GatherBy, Split, SplitBy, SortBy, PadLeft, PadRight, NoneTrue), plus two heads that exist
@@ -19,11 +26,10 @@ import { collectionElements, integerAt, operandsOf, symbolNameOf, wrapOperator }
  * at runtime (compute-engine dispatches on whatever it finds), so the cast is just working
  * around a type that's narrower than the runtime accepts.
  */
-const invoke = (ce: ComputeEngine, f: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
-  ce.box([f, ...args] as never).evaluate();
+const invoke = (ce: Engine, f: Expr, args: readonly Expr[]): Expr => ce.box([f, ...args] as never).evaluate();
 
 /** Ascending order: numeric/orderable via `isLess`/`isGreater`, lexicographic for strings. */
-const naturalCompare = (a: BoxedExpression, b: BoxedExpression): number => {
+const naturalCompare = (a: Expr, b: Expr): number => {
   if (a.isLess(b) === true) return -1;
   if (a.isGreater(b) === true) return 1;
   return 0;
@@ -38,7 +44,7 @@ const normalizePosition = (position: number, length: number): number =>
   position < 0 ? length + position + 1 : position;
 
 /** The integer indices (1-based) a `Span(i, j, step?)` selects out of a `length`-long list. */
-const spanIndices = (span: BoxedExpression, length: number): number[] | undefined => {
+const spanIndices = (span: Expr, length: number): number[] | undefined => {
   const [i, j, s] = operandsOf(span);
   const from = integerAt(i);
   const to = integerAt(j);
@@ -58,11 +64,7 @@ const spanIndices = (span: BoxedExpression, length: number): number[] | undefine
  * remaining specs are applied recursively to EACH of them — which is exactly how nested
  * `Span`s cut a submatrix out of a matrix of matrices).
  */
-const partWithSpecs = (
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  specs: readonly BoxedExpression[],
-): BoxedExpression | undefined => {
+const partWithSpecs = (ce: Engine, expr: Expr, specs: readonly Expr[]): Expr | undefined => {
   if (specs.length === 0) return expr;
   const [spec, ...rest] = specs;
   const items = collectionElements(expr);
@@ -70,13 +72,11 @@ const partWithSpecs = (
   if (spec.operator === "Span") {
     const indices = spanIndices(spec, items.length);
     if (indices === undefined) return undefined;
-    const selected = indices
-      .map((k) => items[k - 1])
-      .filter((element): element is BoxedExpression => element !== undefined);
+    const selected = indices.map((k) => items[k - 1]).filter((element): element is Expr => element !== undefined);
     if (rest.length === 0) return ce.box(["List", ...selected]);
     const drilled = selected
       .map((element) => partWithSpecs(ce, element, rest))
-      .filter((element): element is BoxedExpression => element !== undefined);
+      .filter((element): element is Expr => element !== undefined);
     return ce.box(["List", ...drilled]);
   }
   const index = integerAt(spec);
@@ -92,13 +92,9 @@ const partWithSpecs = (
  * (`Riffle({1..10}, -{1..10})` ends in `-10`; `Riffle({1..9}, {x, y})`, `xs` too short to
  * reach that far, ends on `9` with no trailing separator). Confirmed against both shapes by
  * example — Wolfram's own docs state the cycling but not this asymmetry at the tail. */
-const riffleList = (
-  ce: ComputeEngine,
-  items: readonly BoxedExpression[],
-  xs: readonly BoxedExpression[],
-): BoxedExpression | undefined => {
+const riffleList = (ce: Engine, items: readonly Expr[], xs: readonly Expr[]): Expr | undefined => {
   if (xs.length === 0) return undefined;
-  const result: BoxedExpression[] = [];
+  const result: Expr[] = [];
   items.forEach((item, i) => {
     result.push(item);
     const isLast = i === items.length - 1;
@@ -109,12 +105,12 @@ const riffleList = (
 
 /** `Riffle(list, x, n)`, and the scalar-`x` 2-arg form: a separator every `n` elements. */
 const rifflePeriodic = (
-  ce: ComputeEngine,
-  items: readonly BoxedExpression[],
-  nextSeparator: (index: number) => BoxedExpression | undefined,
+  ce: Engine,
+  items: readonly Expr[],
+  nextSeparator: (index: number) => Expr | undefined,
   groupSize: number,
-): BoxedExpression => {
-  const result: BoxedExpression[] = [];
+): Expr => {
+  const result: Expr[] = [];
   let i = 0;
   let separatorIndex = 0;
   while (i < items.length) {
@@ -130,11 +126,8 @@ const rifflePeriodic = (
 };
 
 /** Tally elements into first-appearance-ordered groups by a caller-supplied equivalence. */
-const groupBy = (
-  items: readonly BoxedExpression[],
-  sameGroup: (representative: BoxedExpression, candidate: BoxedExpression) => boolean,
-): BoxedExpression[][] => {
-  const groups: BoxedExpression[][] = [];
+const groupBy = (items: readonly Expr[], sameGroup: (representative: Expr, candidate: Expr) => boolean): Expr[][] => {
+  const groups: Expr[][] = [];
   for (const item of items) {
     const group = groups.find((g) => sameGroup(g[0], item));
     if (group !== undefined) group.push(item);
@@ -144,11 +137,8 @@ const groupBy = (
 };
 
 /** Split into runs on which adjacent elements agree, per `same(prev, current)`. */
-const splitRuns = (
-  items: readonly BoxedExpression[],
-  same: (prev: BoxedExpression, current: BoxedExpression) => boolean,
-): BoxedExpression[][] => {
-  const runs: BoxedExpression[][] = [];
+const splitRuns = (items: readonly Expr[], same: (prev: Expr, current: Expr) => boolean): Expr[][] => {
+  const runs: Expr[][] = [];
   for (const item of items) {
     const current = runs[runs.length - 1];
     if (current !== undefined && same(current[current.length - 1], item)) current.push(item);
@@ -158,11 +148,7 @@ const splitRuns = (
 };
 
 /** `PadLeft`/`PadRight`'s ragged-matrix form: pad every row to the widest row's length. */
-const padRagged = (
-  ce: ComputeEngine,
-  rows: readonly BoxedExpression[],
-  side: "left" | "right",
-): BoxedExpression | undefined => {
+const padRagged = (ce: Engine, rows: readonly Expr[], side: "left" | "right"): Expr | undefined => {
   if (rows.length === 0 || !rows.every((row) => row.operator === "List")) return undefined;
   const width = Math.max(...rows.map((row) => operandsOf(row).length));
   const padded = rows.map((row) => {
@@ -176,12 +162,12 @@ const padRagged = (
 /** `PadLeft`/`PadRight(list, n, x?)`: pad to length `n` (`fillAt(i)` gives the `i`-th
  *  filler element, `i` counting outward from the list), or truncate to the nearer `n`. */
 const padTo = (
-  ce: ComputeEngine,
-  items: readonly BoxedExpression[],
+  ce: Engine,
+  items: readonly Expr[],
   n: number,
-  fillAt: (i: number) => BoxedExpression,
+  fillAt: (i: number) => Expr,
   side: "left" | "right",
-): BoxedExpression => {
+): Expr => {
   if (n >= items.length) {
     const filler = Array.from({ length: n - items.length }, (_, i) => fillAt(i));
     return ce.box(["List", ...(side === "left" ? [...filler, ...items] : [...items, ...filler])]);
@@ -204,13 +190,13 @@ const mathMod = (a: number, m: number): number => ((a % m) + m) % m;
  * instead — i.e. the element immediately before the boundary is `pad[m - 1]`, the LAST
  * pattern element, one whole pass short of restarting at `pad[0]`.
  */
-const cyclicFillAt = (pad: readonly BoxedExpression[], side: "left" | "right", listLength: number) => {
+const cyclicFillAt = (pad: readonly Expr[], side: "left" | "right", listLength: number) => {
   const m = pad.length;
-  return (i: number): BoxedExpression => pad[side === "left" ? mathMod(i - 1, m) : mathMod(listLength + i, m)];
+  return (i: number): Expr => pad[side === "left" ? mathMod(i - 1, m) : mathMod(listLength + i, m)];
 };
 
 /** Declare Riffle, Span, UpTo, Gather, GatherBy, Split, SplitBy, SortBy, PadLeft, PadRight, NoneTrue. */
-export function declareListOpsWolfram(ce: ComputeEngine): void {
+export function declareListOpsWolfram(ce: Engine): void {
   // Span(i, j, step?): a part-spec, never evaluated on its own — At/Part below read it.
   ce.declare("Span", { signature: "(integer, integer, integer?) -> unknown" });
   // UpTo(n): a count-spec meaning "at most n" — Take/Partition/Ordering below read it.
@@ -253,7 +239,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
       if (n === undefined || n <= 0) return undefined;
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
-      const chunks: BoxedExpression[] = [];
+      const chunks: Expr[] = [];
       for (let i = 0; i < items.length; i += n) {
         chunks.push(ce.box(["List", ...items.slice(i, i + n)]));
       }
@@ -281,7 +267,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // elements. See `riffleZip` and `rifflePeriodic` for the two shapes' semantics.
   ce.declare("Riffle", {
     signature: "(list<any>, any, integer?) -> collection",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const list = ops[0];
       const x = ops[1];
       if (list === undefined || x === undefined) return undefined;
@@ -310,7 +296,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // order, elements within a group in their original relative order.
   ce.declare("Gather", {
     signature: "(indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       // A free `data` isn't `isCollection`, so `collectionElements` falls back to
       // `operandsOf`, which reads `[]` off it same as an empty `List` — must not read as
       // "empty collection" (`List()`); same trap as `Accumulate` (list-frontier.ts).
@@ -320,8 +306,8 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
       const test = ops[1];
       const sameGroup =
         test === undefined
-          ? (a: BoxedExpression, b: BoxedExpression) => a.isEqual(b) === true
-          : (a: BoxedExpression, b: BoxedExpression) => symbolNameOf(invoke(ce, test, [a, b])) === "True";
+          ? (a: Expr, b: Expr) => a.isEqual(b) === true
+          : (a: Expr, b: Expr) => symbolNameOf(invoke(ce, test, [a, b])) === "True";
       const groups = groupBy(items, sameGroup);
       return ce.box(["List", ...groups.map((group) => ce.box(["List", ...group]))]);
     },
@@ -330,12 +316,12 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // GatherBy(list, f): group by the value of f(element), same ordering rules as Gather.
   ce.declare("GatherBy", {
     signature: "(indexed_collection<T>, (T) any -> any) -> list<list<T>> where T",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const f = ops[1];
       if (f === undefined || (ops[0] !== undefined && symbolNameOf(ops[0]) !== undefined)) return undefined;
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
-      const groups: { key: BoxedExpression; members: BoxedExpression[] }[] = [];
+      const groups: { key: Expr; members: Expr[] }[] = [];
       for (const item of items) {
         const key = invoke(ce, f, [item]);
         const group = groups.find((g) => g.key.isEqual(key) === true);
@@ -349,14 +335,14 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // Split(list, test?): runs of adjacent elements the test (default equality) agrees on.
   ce.declare("Split", {
     signature: "(indexed_collection<T>, ((T, T) any -> boolean)?) -> list<list<T>> where T",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
       const test = ops[1];
       const same =
         test === undefined
-          ? (a: BoxedExpression, b: BoxedExpression) => a.isEqual(b) === true
-          : (a: BoxedExpression, b: BoxedExpression) => symbolNameOf(invoke(ce, test, [a, b])) === "True";
+          ? (a: Expr, b: Expr) => a.isEqual(b) === true
+          : (a: Expr, b: Expr) => symbolNameOf(invoke(ce, test, [a, b])) === "True";
       const runs = splitRuns(items, same);
       return ce.box(["List", ...runs.map((run) => ce.box(["List", ...run]))]);
     },
@@ -365,14 +351,14 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // SplitBy(list, f): runs on which f(element) is constant.
   ce.declare("SplitBy", {
     signature: "(indexed_collection<T>, (T) any -> any) -> list<list<T>> where T",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
       const f = ops[1];
       if (f === undefined) return undefined;
       const keys = items.map((item) => invoke(ce, f, [item]));
-      const runs: BoxedExpression[][] = [];
-      const keyRuns: BoxedExpression[] = [];
+      const runs: Expr[][] = [];
+      const keyRuns: Expr[] = [];
       items.forEach((item, i) => {
         const lastKey = keyRuns[keyRuns.length - 1];
         if (lastKey !== undefined && lastKey.isEqual(keys[i]) === true) {
@@ -389,7 +375,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // SortBy(collection, f): sorted by the value of f on each element, stable on ties.
   ce.declare("SortBy", {
     signature: "(collection<T>, (T) any -> any) -> collection<T> where T",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const f = ops[1];
       if (f === undefined || (ops[0] !== undefined && symbolNameOf(ops[0]) !== undefined)) return undefined;
       const items = collectionElements(ops[0]);
@@ -408,7 +394,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   ] as const) {
     ce.declare(name, {
       signature: "(list<any>, integer?, any?) -> collection",
-      evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+      evaluate: (ops: readonly Expr[]): Expr | undefined => {
         const list = ops[0];
         if (list === undefined || list.operator !== "List") return undefined;
         const items = operandsOf(list);
@@ -438,7 +424,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   // compute-engine already declares (as does All, its NoneTrue-adjacent AllTrue).
   ce.declare("NoneTrue", {
     signature: "(indexed_collection<T>, (T) any -> boolean) -> boolean where T",
-    evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    evaluate: (ops: readonly Expr[]): Expr | undefined => {
       if (ops[0] === undefined || ops[1] === undefined) return undefined;
       const any = ce.box(["Any", ops[0], ops[1]]).evaluate();
       const verdict = symbolNameOf(any);

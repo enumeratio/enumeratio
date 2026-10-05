@@ -1,13 +1,19 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   addRandomArm,
-  uniform01 as engineUniform01,
+  type Engine,
   type EvaluateOptions,
+  type Expr,
+  extendHead,
   integerAt,
+  isNativeHead,
+  nativeCanonical,
+  nativeEvaluate,
   operandsOf,
   registerSampler,
   seedRandom,
   symbolNameOf,
+  uniform01 as engineUniform01,
+  widenSignature,
 } from "@enumeratio/engine";
 
 // The Wolfram-frontier distribution heads: Distributed, RandomVariate, EmpiricalDistribution,
@@ -37,19 +43,18 @@ import {
 /** Exported for `distributions-2.ts`, which extends the same PDF/CDF/Mean/Variance/
  *  RandomVariate operators for a second wave of distribution kinds and reuses this file's
  *  numeric core rather than duplicating it. */
-export const finish = (expr: BoxedExpression, options: EvaluateOptions | undefined): BoxedExpression =>
+export const finish = (expr: Expr, options: EvaluateOptions | undefined): Expr =>
   options?.numericApproximation ? expr.N() : expr.evaluate();
 
 /** Whether `expr`'s JSON mentions the symbol `name` — the same substring test
  *  `generalized-special.ts`'s `stillMentions` uses for a head, applied to a bound variable. */
 /** Exported for `distributions-4.ts`'s affine-transform detection (`TransformedDistribution`),
  *  which needs the same "does this subexpression involve the bound variable" test. */
-export const mentions = (expr: BoxedExpression, name: string): boolean =>
-  JSON.stringify(expr.json).includes(`"${name}"`);
+export const mentions = (expr: Expr, name: string): boolean => JSON.stringify(expr.json).includes(`"${name}"`);
 
-const isConstantOf = (expr: BoxedExpression, varName: string): boolean => !mentions(expr, varName);
+const isConstantOf = (expr: Expr, varName: string): boolean => !mentions(expr, varName);
 
-export const list2 = (ce: ComputeEngine, expr: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
+export const list2 = (ce: Engine, expr: Expr): [Expr, Expr] | undefined => {
   if (expr.operator !== "List") return undefined;
   const ops = operandsOf(expr);
   return ops.length === 2 ? [ops[0], ops[1]] : undefined;
@@ -59,7 +64,7 @@ export const list2 = (ce: ComputeEngine, expr: BoxedExpression): [BoxedExpressio
 
 const DISCRETE_KINDS = new Set(["PoissonDistribution", "BinomialDistribution", "EmpiricalDistribution"]);
 
-const isDistribution = (expr: BoxedExpression | undefined): boolean =>
+const isDistribution = (expr: Expr | undefined): boolean =>
   expr !== undefined &&
   [
     "NormalDistribution",
@@ -79,16 +84,13 @@ const OWN_KINDS = new Set(["BetaDistribution", "GammaDistribution", "BinormalDis
 
 // --- parameter extraction ---------------------------------------------------------------------
 
-export const betaParams = (dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
+export const betaParams = (dist: Expr): [Expr, Expr] | undefined => {
   const ops = operandsOf(dist);
   return ops.length === 2 ? [ops[0], ops[1]] : undefined;
 };
 
 /** GammaDistribution(shape) defaults scale to 1; GammaDistribution(shape, scale) both given. */
-export const gammaParams = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-): [BoxedExpression, BoxedExpression] | undefined => {
+export const gammaParams = (ce: Engine, dist: Expr): [Expr, Expr] | undefined => {
   const ops = operandsOf(dist);
   if (ops.length === 1) return [ops[0], ce.One];
   if (ops.length === 2) return [ops[0], ops[1]];
@@ -96,17 +98,17 @@ export const gammaParams = (
 };
 
 interface Binormal {
-  readonly mu1: BoxedExpression;
-  readonly mu2: BoxedExpression;
-  readonly sigma1: BoxedExpression;
-  readonly sigma2: BoxedExpression;
-  readonly rho: BoxedExpression;
+  readonly mu1: Expr;
+  readonly mu2: Expr;
+  readonly sigma1: Expr;
+  readonly sigma2: Expr;
+  readonly rho: Expr;
 }
 
 /** The three call forms Wolfram's BinormalDistribution takes: `(rho)`, `({s1,s2}, rho)`, and
  *  `({mu1,mu2}, {s1,s2}, rho)` — parsed lazily rather than normalized at construction, since
  *  none of the three shapes is more canonical than the others. */
-const binormalParams = (ce: ComputeEngine, dist: BoxedExpression): Binormal | undefined => {
+const binormalParams = (ce: Engine, dist: Expr): Binormal | undefined => {
   const ops = operandsOf(dist);
   if (ops.length === 1) {
     return { mu1: ce.Zero, mu2: ce.Zero, sigma1: ce.One, sigma2: ce.One, rho: ops[0] };
@@ -125,7 +127,7 @@ const binormalParams = (ce: ComputeEngine, dist: BoxedExpression): Binormal | un
   return undefined;
 };
 
-const empiricalData = (dist: BoxedExpression): readonly BoxedExpression[] | undefined => {
+const empiricalData = (dist: Expr): readonly Expr[] | undefined => {
   const ops = operandsOf(dist);
   if (ops.length !== 1 || ops[0].operator !== "List") return undefined;
   return operandsOf(ops[0]);
@@ -140,43 +142,29 @@ const empiricalData = (dist: BoxedExpression): readonly BoxedExpression[] | unde
  * to the two-argument form here, at the constructor, fixes PDF/CDF/Mean/Variance for free —
  * their own native handlers are untouched and already correct once they see two reals.
  */
-function extendUniformDistribution(ce: ComputeEngine): void {
-  const definition = ce.lookupDefinition("UniformDistribution");
-  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator === undefined) return;
-  (operator as { signature: unknown }).signature = ce.type(
-    "((list<real> | real)?, real?) -> expression<UniformDistribution>",
-  );
+function extendUniformDistribution(ce: Engine): void {
+  widenSignature(ce, "UniformDistribution", "((list<real> | real)?, real?) -> expression<UniformDistribution>");
   // A pass-through `evaluate` never runs for this constructor — same gotcha `list-stats.ts`
   // hit with Take/Tabulate (both answered through a protocol other than `evaluate`): the
   // fix there, and here, is `canonical`, which DOES get called for every construction.
-  const nativeCanonical = (
-    operator as {
-      canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined | null;
-    }
-  ).canonical;
-  const nativeOperator = Object.create(operator) as typeof operator;
-  (nativeOperator as { canonical?: unknown }).canonical = nativeCanonical;
-  (operator as { canonical?: unknown }).canonical = (ops: readonly BoxedExpression[], options: unknown) => {
-    if (ops.length === 0) return ce.function("UniformDistribution", [ce.Zero, ce.One]).canonical;
-    if (ops.length === 1 && ops[0].operator === "List") {
-      const bounds = list2(ce, ops[0]);
-      if (bounds !== undefined) {
-        return ce.function("UniformDistribution", [...bounds]).canonical;
+  const nativeCanon = nativeCanonical(ce, "UniformDistribution");
+  extendHead(ce, "UniformDistribution", {
+    canonical: (ops: readonly Expr[], options) => {
+      if (ops.length === 0) return ce.function("UniformDistribution", [ce.Zero, ce.One]).canonical;
+      if (ops.length === 1 && ops[0].operator === "List") {
+        const bounds = list2(ce, ops[0]);
+        if (bounds !== undefined) {
+          return ce.function("UniformDistribution", [...bounds]).canonical;
+        }
       }
-    }
-    return nativeCanonical?.call(nativeOperator, ops, options);
-  };
+      return nativeCanon?.(ops, options) ?? null;
+    },
+  });
 }
 
 // --- PDF ---------------------------------------------------------------------------------------
 
-const pdfOf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const pdfOf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   switch (dist.operator) {
     case "BetaDistribution": {
       const params = betaParams(dist);
@@ -247,12 +235,7 @@ const pdfOf = (
 
 // --- CDF -----------------------------------------------------------------------------------
 
-const cdfOf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  x: BoxedExpression,
-  options: EvaluateOptions,
-): BoxedExpression | undefined => {
+const cdfOf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   switch (dist.operator) {
     case "BetaDistribution": {
       const params = betaParams(dist);
@@ -301,7 +284,7 @@ const cdfOf = (
 
 // --- Mean / Variance -------------------------------------------------------------------------
 
-const meanOf = (ce: ComputeEngine, dist: BoxedExpression, options?: EvaluateOptions): BoxedExpression | undefined => {
+const meanOf = (ce: Engine, dist: Expr, options?: EvaluateOptions): Expr | undefined => {
   switch (dist.operator) {
     case "BetaDistribution": {
       const params = betaParams(dist);
@@ -330,11 +313,7 @@ const meanOf = (ce: ComputeEngine, dist: BoxedExpression, options?: EvaluateOpti
   }
 };
 
-const varianceOf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options?: EvaluateOptions,
-): BoxedExpression | undefined => {
+const varianceOf = (ce: Engine, dist: Expr, options?: EvaluateOptions): Expr | undefined => {
   switch (dist.operator) {
     case "BetaDistribution": {
       const params = betaParams(dist);
@@ -379,33 +358,27 @@ const varianceOf = (
 
 /** Extend PDF/CDF/Mean/Variance in place with a branch for each distribution kind this file
  *  adds, ahead of whatever native (or collections' list/matrix) handler runs otherwise. */
-function extendDistributionStats(ce: ComputeEngine): void {
+function extendDistributionStats(ce: Engine): void {
   const attach = (
     name: "PDF" | "CDF" | "Mean" | "Variance",
-    handler: (ops: readonly BoxedExpression[], options: EvaluateOptions) => BoxedExpression | undefined,
+    handler: (ops: readonly Expr[], options: EvaluateOptions) => Expr | undefined,
     arity: number,
   ): void => {
-    const definition = ce.lookupDefinition(name);
-    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-    if (operator === undefined) return;
-    const native = operator.evaluate;
-    operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
-      if (ops.length !== arity || !OWN_KINDS.has(ops[0]?.operator ?? "")) return native?.(ops, options);
-      return handler(ops, options) ?? native?.(ops, options);
-    };
+    const native = nativeEvaluate(ce, name);
+    extendHead(ce, name, {
+      evaluate: (ops: readonly Expr[], options: EvaluateOptions) => {
+        if (ops.length !== arity || !OWN_KINDS.has(ops[0]?.operator ?? "")) return native?.(ops, options);
+        return handler(ops, options) ?? native?.(ops, options);
+      },
+    });
   };
 
   // Widen PDF/CDF's second parameter to also take a point (`list<real>`), the shape
   // `BinormalDistribution`'s PDF needs — native only typed a scalar, since every native
   // distribution is univariate.
   for (const name of ["PDF", "CDF"] as const) {
-    const definition = ce.lookupDefinition(name);
-    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-    if (operator === undefined) continue;
     const returnType = name === "PDF" ? "nan | real<0..>" : "nan | real<0..1>";
-    (operator as { signature: unknown }).signature = ce.type(
-      `(distribution, real | signed_infinity | list<real>) -> ${returnType}`,
-    );
+    widenSignature(ce, name, `(distribution, real | signed_infinity | list<real>) -> ${returnType}`);
   }
 
   attach("PDF", (ops, options) => pdfOf(ce, ops[0], ops[1], options), 2);
@@ -418,12 +391,12 @@ function extendDistributionStats(ce: ComputeEngine): void {
 
 export interface Binding {
   readonly varName: string;
-  readonly dist: BoxedExpression;
+  readonly dist: Expr;
 }
 
 /** Exported for `distributions-4.ts`'s `TransformedDistribution`, which needs the same
  *  `Distributed(x, dist)` parse this file already does for `Expectation`/`Probability`. */
-export const bindingOf = (expr: BoxedExpression): Binding | undefined => {
+export const bindingOf = (expr: Expr): Binding | undefined => {
   if (expr.operator !== "Distributed") return undefined;
   const ops = operandsOf(expr);
   if (ops.length !== 2) return undefined;
@@ -437,12 +410,12 @@ export const bindingOf = (expr: BoxedExpression): Binding | undefined => {
  *  constant` by linearity. Anything else stays unevaluated — no numeric approximation unless
  *  `N` is applied. */
 const expectationOf = (
-  ce: ComputeEngine,
-  f: BoxedExpression,
+  ce: Engine,
+  f: Expr,
   varName: string,
-  dist: BoxedExpression,
+  dist: Expr,
   options: EvaluateOptions,
-): BoxedExpression | undefined => {
+): Expr | undefined => {
   if (isConstantOf(f, varName)) return finish(f, options);
   if (symbolNameOf(f) === varName) {
     return meanOf(ce, dist, options) ?? finish(ce.function("Mean", [dist]), options);
@@ -461,7 +434,7 @@ const expectationOf = (
   if (f.operator === "Add") {
     const parts = operandsOf(f).map((term) => expectationOf(ce, term, varName, dist, options));
     if (parts.some((p) => p === undefined)) return undefined;
-    return finish(ce.function("Add", parts as BoxedExpression[]), options);
+    return finish(ce.function("Add", parts as Expr[]), options);
   }
   if (f.operator === "Multiply") {
     const ops = operandsOf(f);
@@ -486,20 +459,20 @@ const expectationOf = (
  *  `Greater`/`GreaterEqual` need no separate case — compute-engine's own canonicalization
  *  rewrites `x > k` to `Less(k, x)` before this ever sees it. */
 const probabilityOf = (
-  ce: ComputeEngine,
-  cond: BoxedExpression,
+  ce: Engine,
+  cond: Expr,
   varName: string,
-  dist: BoxedExpression,
+  dist: Expr,
   options: EvaluateOptions,
-): BoxedExpression | undefined => {
+): Expr | undefined => {
   const discrete = DISCRETE_KINDS.has(dist.operator) || OWN_KINDS.has(dist.operator);
-  const cdf = (k: BoxedExpression) => cdfOf(ce, dist, k, options) ?? finish(ce.function("CDF", [dist, k]), options);
-  const pdf = (k: BoxedExpression) => pdfOf(ce, dist, k, options) ?? finish(ce.function("PDF", [dist, k]), options);
+  const cdf = (k: Expr) => cdfOf(ce, dist, k, options) ?? finish(ce.function("CDF", [dist, k]), options);
+  const pdf = (k: Expr) => pdfOf(ce, dist, k, options) ?? finish(ce.function("PDF", [dist, k]), options);
 
   // P(X <= k)
-  const le = (k: BoxedExpression): BoxedExpression | undefined => cdf(k);
+  const le = (k: Expr): Expr | undefined => cdf(k);
   // P(X < k) = P(X <= k) - P(X = k), the latter only nonzero for a discrete distribution.
-  const lt = (k: BoxedExpression): BoxedExpression | undefined => {
+  const lt = (k: Expr): Expr | undefined => {
     const F = cdf(k);
     if (F === undefined) return undefined;
     if (!discrete) return F;
@@ -507,13 +480,13 @@ const probabilityOf = (
     return p === undefined ? undefined : finish(ce.function("Subtract", [F, p]), options);
   };
 
-  const asBound = (a: BoxedExpression, b: BoxedExpression): { k: BoxedExpression; varOnLeft: boolean } | undefined => {
+  const asBound = (a: Expr, b: Expr): { k: Expr; varOnLeft: boolean } | undefined => {
     if (symbolNameOf(a) === varName && isConstantOf(b, varName)) return { k: b, varOnLeft: true };
     if (symbolNameOf(b) === varName && isConstantOf(a, varName)) return { k: a, varOnLeft: false };
     return undefined;
   };
 
-  const simple = (op: "Less" | "LessEqual", a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
+  const simple = (op: "Less" | "LessEqual", a: Expr, b: Expr): Expr | undefined => {
     const bound = asBound(a, b);
     if (bound === undefined) return undefined;
     const { k, varOnLeft } = bound;
@@ -555,9 +528,7 @@ const probabilityOf = (
       if (bound1 === undefined || bound2 === undefined) return undefined;
       // Whichever relation puts the constant on the left is the lower bound; the other, upper.
       const [lo, hi] =
-        asBound(...(operandsOf(bound1) as [BoxedExpression, BoxedExpression]))?.varOnLeft === false
-          ? [bound1, bound2]
-          : [bound2, bound1];
+        asBound(...(operandsOf(bound1) as [Expr, Expr]))?.varOnLeft === false ? [bound1, bound2] : [bound2, bound1];
       const loOps = operandsOf(lo);
       const hiOps = operandsOf(hi);
       const a = loOps[0];
@@ -573,7 +544,7 @@ const probabilityOf = (
   }
 };
 
-function declareRelations(ce: ComputeEngine): void {
+function declareRelations(ce: Engine): void {
   // `any`, not `symbol`, for the bound-variable parameter: compute-engine's type inference
   // PINS a `symbol`-typed parameter's actual type onto that symbol GLOBALLY, in the engine's
   // lexical scope — the same gotcha `declare.ts`'s `applyDefinition` documents for its own
@@ -584,7 +555,7 @@ function declareRelations(ce: ComputeEngine): void {
 
   ce.declare("Expectation", {
     signature: "(any, expression<Distributed>) -> real",
-    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+    evaluate: (ops: readonly Expr[], options: EvaluateOptions) => {
       if (ops.length !== 2) return undefined;
       const binding = bindingOf(ops[1]);
       if (binding === undefined) return undefined;
@@ -594,7 +565,7 @@ function declareRelations(ce: ComputeEngine): void {
 
   ce.declare("Probability", {
     signature: "(any, expression<Distributed>) -> real",
-    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+    evaluate: (ops: readonly Expr[], options: EvaluateOptions) => {
       if (ops.length !== 2) return undefined;
       const binding = bindingOf(ops[1]);
       if (binding === undefined) return undefined;
@@ -610,33 +581,32 @@ function declareRelations(ce: ComputeEngine): void {
 // them all. A distribution is one more domain `Random` samples: this file registers the
 // sampler and the overload, and `RandomVariate` is its Wolfram spelling.
 
-export const uniform01 = (ce: ComputeEngine): number => engineUniform01(ce);
+export const uniform01 = (ce: Engine): number => engineUniform01(ce);
 
 /** `SeedRandom`, declared here only when nothing else (collections) already has. */
-function wireSeedRandom(ce: ComputeEngine): void {
-  const definition = ce.lookupDefinition("SeedRandom");
-  if (definition !== undefined && "operator" in definition) return;
+function wireSeedRandom(ce: Engine): void {
+  if (isNativeHead(ce, "SeedRandom")) return;
   ce.declare("SeedRandom", {
     signature: "(integer?) state -> any",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       seedRandom(ce, ops[0] === undefined ? undefined : (integerAt(ops[0]) ?? undefined));
       return ce.symbol("Nothing");
     },
   });
 }
 
-export const normal01 = (ce: ComputeEngine): number => {
+export const normal01 = (ce: Engine): number => {
   // Box-Muller.
   const u1 = Math.max(uniform01(ce), Number.EPSILON);
   const u2 = uniform01(ce);
   return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
 };
 
-const uniformSample = (ce: ComputeEngine, min: number, max: number): number => min + (max - min) * uniform01(ce);
+const uniformSample = (ce: Engine, min: number, max: number): number => min + (max - min) * uniform01(ce);
 
 /** Exported for `processes.ts`'s `PoissonProcess` path simulation, which reuses this same
  *  draw rather than re-deriving Knuth's algorithm. */
-export const poissonSample = (ce: ComputeEngine, lambda: number): number => {
+export const poissonSample = (ce: Engine, lambda: number): number => {
   // Knuth's algorithm — a standard inverse-transform-flavored method, fine at the (small to
   // moderate) rates a reference example or a statistical check draws.
   const L = Math.exp(-lambda);
@@ -649,7 +619,7 @@ export const poissonSample = (ce: ComputeEngine, lambda: number): number => {
   return k - 1;
 };
 
-const binomialSample = (ce: ComputeEngine, n: number, p: number): number => {
+const binomialSample = (ce: Engine, n: number, p: number): number => {
   let count = 0;
   for (let i = 0; i < n; i++) if (uniform01(ce) < p) count++;
   return count;
@@ -657,7 +627,7 @@ const binomialSample = (ce: ComputeEngine, n: number, p: number): number => {
 
 /** Marsaglia–Tsang, `shape >= 1`; `shape < 1` boosts via `Gamma(shape+1)` scaled by `U^(1/shape)`
  *  (the standard trick — see Marsaglia & Tsang 2000, §"shape < 1"). */
-export const gammaSample = (ce: ComputeEngine, shape: number, scale: number): number => {
+export const gammaSample = (ce: Engine, shape: number, scale: number): number => {
   if (shape < 1) {
     const boosted = gammaSample(ce, shape + 1, 1);
     return boosted * uniform01(ce) ** (1 / shape) * scale;
@@ -677,14 +647,14 @@ export const gammaSample = (ce: ComputeEngine, shape: number, scale: number): nu
   }
 };
 
-const betaSample = (ce: ComputeEngine, a: number, b: number): number => {
+const betaSample = (ce: Engine, a: number, b: number): number => {
   const x = gammaSample(ce, a, 1);
   const y = gammaSample(ce, b, 1);
   return x / (x + y);
 };
 
 const binormalSample = (
-  ce: ComputeEngine,
+  ce: Engine,
   mu1: number,
   mu2: number,
   sigma1: number,
@@ -698,11 +668,11 @@ const binormalSample = (
   return [x1, x2];
 };
 
-export const numAt = (expr: BoxedExpression): number => expr.N().re;
+export const numAt = (expr: Expr): number => expr.N().re;
 
 /** One draw from `dist`, or `undefined` if its shape/kind isn't one this file (or
  *  compute-engine's own Normal/Uniform/Poisson/Binomial params) samples. */
-const drawOne = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | undefined => {
+const drawOne = (ce: Engine, dist: Expr): Expr | undefined => {
   const ops = operandsOf(dist);
   switch (dist.operator) {
     case "NormalDistribution": {
@@ -756,7 +726,7 @@ const drawOne = (ce: ComputeEngine, dist: BoxedExpression): BoxedExpression | un
   }
 };
 
-function declareRandomVariate(ce: ComputeEngine): void {
+function declareRandomVariate(ce: Engine): void {
   wireSeedRandom(ce);
 
   registerSampler(ce, (domain) => (isDistribution(domain) ? drawOne(ce, domain) : undefined));
@@ -765,7 +735,7 @@ function declareRandomVariate(ce: ComputeEngine): void {
   // `RandomVariate(dist, n)` is `Random(dist, n)`.
   ce.declare("RandomVariate", {
     signature: "(any, integer<0..>?) random -> any",
-    evaluate: (ops: readonly BoxedExpression[]) => {
+    evaluate: (ops: readonly Expr[]) => {
       const dist = ops[0];
       if (dist === undefined || !isDistribution(dist)) return undefined;
       return ce.function("Random", [...ops]).evaluate();
@@ -775,7 +745,7 @@ function declareRandomVariate(ce: ComputeEngine): void {
 
 // --- constructors for the distribution kinds this file adds ------------------------------------
 
-function declareDistributionConstructors(ce: ComputeEngine): void {
+function declareDistributionConstructors(ce: Engine): void {
   // Return type `distribution` (not `expression<BetaDistribution>`): compute-engine's own
   // PDF/CDF/Mean/Variance type their first parameter as the nominal `distribution` type, and
   // only the head names it declares natively (Normal/Uniform/Poisson/Binomial/…) are known
@@ -789,21 +759,15 @@ function declareDistributionConstructors(ce: ComputeEngine): void {
   ce.declare("GammaDistribution", {
     signature: "(real<0..>, real<0..>?) -> distribution",
   });
-  // `canonical` isn't one of `ce.declare`'s own options (a held constructor's `evaluate`
-  // never runs — same `list-stats.ts` Take/Tabulate gotcha `extendUniformDistribution`
-  // above hits), so it's attached in place, right after declaring. Only the one-argument
+  // `canonical`, not `evaluate`: a held constructor's `evaluate` never runs — same
+  // `list-stats.ts` Take/Tabulate gotcha `extendUniformDistribution` above hits. Only the one-argument
   // default gets a custom rule — returning `undefined` for every other shape (the
   // two-argument call) hands back to compute-engine's own generic canonicalization instead
   // of re-entering this hook, which is what avoids recursing forever on the very expression
   // this just built.
-  {
-    const definition = ce.lookupDefinition("GammaDistribution");
-    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
-    if (operator !== undefined) {
-      (operator as { canonical?: unknown }).canonical = (ops: readonly BoxedExpression[]) =>
-        ops.length === 1 ? ce.function("GammaDistribution", [ops[0], ce.One]) : undefined;
-    }
-  }
+  extendHead(ce, "GammaDistribution", {
+    canonical: (ops: readonly Expr[]) => (ops.length === 1 ? ce.function("GammaDistribution", [ops[0], ce.One]) : null),
+  });
 
   ce.declare("BinormalDistribution", {
     // Wolfram's three call forms: `(rho)`, `({s1,s2}, rho)`, `({mu1,mu2}, {s1,s2}, rho)` —
@@ -822,7 +786,7 @@ function declareDistributionConstructors(ce: ComputeEngine): void {
  *  `Expectation`, `Probability` — plus extending PDF/CDF/Mean/Variance and (a call-shape fix)
  *  UniformDistribution in place. NormalDistribution/PoissonDistribution/BinomialDistribution
  *  need no changes: compute-engine's native PDF/CDF/Mean/Variance already answer them. */
-export function declareDistributions(ce: ComputeEngine): void {
+export function declareDistributions(ce: Engine): void {
   extendUniformDistribution(ce);
   declareDistributionConstructors(ce);
   extendDistributionStats(ce);

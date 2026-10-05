@@ -1,11 +1,11 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { declareStructures } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { CARRIERS, declareCombinatorics, declareMaps, MAPS } from "../src/index.ts";
 
 // Set partitions and restricted growth strings: one structure, two carriers, joined by an order
 // isomorphism, so what one defines the other reaches.
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareStructures(ce);
 // The combinatorial statistics are declared inside `declareCombinatorics` itself now (step 6b).
 declareCombinatorics(ce);

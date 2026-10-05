@@ -6,7 +6,7 @@
 // lists of them), the interpreter answers instead. tests/compiled-maps.test.ts holds the two to
 // the same answers.
 
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { Engine } from "@enumeratio/engine";
 import {
   compileTyped,
   definitionHash,
@@ -39,7 +39,7 @@ export interface GeneratedMap {
  *  `cache: false` computes afresh, as a test comparing the two paths must. `undefined` declines
  *  (the guard failed). */
 export function fastDefinition(options: {
-  ce: ComputeEngine;
+  ce: Engine;
   body: unknown;
   guard?: unknown;
   from?: string;

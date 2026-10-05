@@ -3,7 +3,7 @@
 // over every small value of its source carrier and a few values that aren't the carrier's,
 // which both must decline.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import {
   BinaryTreeOfParentArray,
@@ -107,7 +107,7 @@ const SUBJECTS: Record<string, unknown[]> = {
   ],
 };
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 
 for (const [key, reference] of Object.entries(REFERENCE)) {
   const map = MAPS.find((m) => `${m.name} from ${m.from}` === key);

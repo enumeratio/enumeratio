@@ -1,10 +1,10 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { DYCK_STATISTICS } from "../src/statistics.ts";
 import { bySignature } from "../../src/statistics/types.ts";
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 const index = bySignature(DYCK_STATISTICS);
 
 /** Every Dyck word of semilength n, as 1 = up and 0 = down. */

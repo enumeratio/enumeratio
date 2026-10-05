@@ -1,4 +1,4 @@
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/families/numeric-digits-primes.ts";
 import { entries as numericSets } from "../src/families/numeric-sets.ts";
@@ -377,7 +377,7 @@ test("Count is +oo for every known-infinite family here", () => {
 
 // ─── engine-level: Take / Element through the declared CE collection handlers. ───
 
-const ce = new ComputeEngine();
+const ce = bareEngine();
 declareCollections(ce);
 
 // Take/Element cases now live as examples (TwinPrimes, SmithNumbers, NarcissisticNumbers,
