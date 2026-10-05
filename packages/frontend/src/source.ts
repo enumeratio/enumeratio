@@ -1,5 +1,6 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { parseExpression } from "@enumeratio/formats/expression";
+import { assignLatex } from "./latex.ts";
 
 // The seam between what an author writes and what MathLive edits. Every editable
 // element reads Epsil by default and hands the editor LaTeX; this is the one place
@@ -34,7 +35,7 @@ export function toEditorLatex(engine: ComputeEngine, source: string, options: Ed
   });
   if (errors.length) return { latex: "", errors };
   try {
-    return { latex: engine.box(json, { form: "raw" }).latex, errors: [] };
+    return { latex: assignLatex(engine.box(json, { form: "raw" }).latex), errors: [] };
   } catch (err) {
     return { latex: "", errors: [err instanceof Error ? err.message : String(err)] };
   }

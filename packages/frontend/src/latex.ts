@@ -4,6 +4,9 @@ import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-synta
 // LaTeX for compute-engine heads that have none of their own; the shared engine always
 // carries these (engine.ts). Display only -- nothing here needs to parse back.
 
+/** compute-engine writes `Assign` as `\\coloneq` (`:-`); `:=` is `\\coloneqq`. */
+export const assignLatex = (latex: string): string => latex.replace(/\\coloneq(?!q)/g, "\\coloneqq");
+
 const operands = (expr: MathJsonExpression | null): MathJsonExpression[] =>
   Array.isArray(expr) ? (expr.slice(1) as MathJsonExpression[]) : [];
 

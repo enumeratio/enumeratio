@@ -6,6 +6,7 @@ import { openPlaybackMenu } from "./playback-menu.ts";
 import { latexForField, pastedFrom } from "./clipboard.ts";
 import { ensureStyles } from "./styles.ts";
 import {
+  assignLatex,
   inferRange,
   isIntegerKnob,
   type Loop,
@@ -104,13 +105,13 @@ const PROMPT = "value";
  * unwrapped again into expression plus head, which is also how a saved one is restored.
  *
  * With `bind` (and optionally `type`) the field is *pinned*: it shows a declaration
- * like `p \in \mathbb{Z} \coloneq 3` where only the value is editable. The
+ * like `p \in \mathbb{Z} \coloneqq 3` where only the value is editable. The
  * declaration is not text the reader could delete -- it is a read-only field with one
  * `\placeholder[value]{}` hole, so the caret cannot leave the value at all.
  *
- * The asserted type is shown, not parsed: `p \in \mathbb{Z} \coloneq 3` reads as a
+ * The asserted type is shown, not parsed: `p \in \mathbb{Z} \coloneqq 3` reads as a
  * declaration but parses as `Element(p, Assign(Integers, 3))`, binding the assignment
- * to the domain instead of to `p`. So `value` stays the plain `p \coloneq 3` that
+ * to the domain instead of to `p`. So `value` stays the plain `p \coloneqq 3` that
  * everything downstream already understands, and the type travels beside it as
  * structure. Enforcing it is a separate job, done by whoever declares the symbol.
  *
@@ -139,7 +140,7 @@ export class NotatioIn extends LitElement {
      */
     head: { type: String, reflect: true },
     /**
-     * Pin this field to a binding: the symbol name and its `\coloneq` become fixed
+     * Pin this field to a binding: the symbol name and its `\coloneqq` become fixed
      * chrome, and only the value can be edited.
      */
     bind: { type: String },
@@ -278,7 +279,7 @@ export class NotatioIn extends LitElement {
   /** Write a swept value into the binding, as if it had been typed. */
   #write(v: number): void {
     const { step } = this.#span;
-    this.value = `${symbolLatex(this.bind)}\\coloneq ${numberLatex(v, step)}`;
+    this.value = `${symbolLatex(this.bind)}\\coloneqq ${numberLatex(v, step)}`;
     this.#emit();
   }
 
@@ -345,7 +346,7 @@ export class NotatioIn extends LitElement {
 
   /**
    * What the field reports: the expression as written, or written inside the head. A
-   * binding keeps its `\coloneq` outside the wrapper -- it is the value the head is
+   * binding keeps its `\coloneqq` outside the wrapper -- it is the value the head is
    * asked about, not the assignment.
    */
   get #emitted(): string {
@@ -370,14 +371,14 @@ export class NotatioIn extends LitElement {
     const inner = field?.getPromptValue?.(PROMPT, "latex");
     if (inner === undefined) return undefined;
     this.#written = this.#template(inner);
-    return `${symbolLatex(this.bind)}\\coloneq ${inner}`.trim();
+    return `${symbolLatex(this.bind)}\\coloneqq ${inner}`.trim();
   }
 
-  /** The pinned part: `p \in \mathbb{Z} \coloneq`, up to but not including the value. */
+  /** The pinned part: `p \in \mathbb{Z} \coloneqq`, up to but not including the value. */
   get #declaration(): string {
     const domain = this.domain.trim() ? ` \\in ${typeLatex(this.domain.trim())}` : "";
-    // An explicit thin space: MathLive sets `\coloneq` tight against the domain.
-    return `${symbolLatex(this.bind)}${domain}\\;\\coloneq `;
+    // An explicit thin space: MathLive sets `\coloneqq` tight against the domain.
+    return `${symbolLatex(this.bind)}${domain}\\;\\coloneqq `;
   }
 
   /** The field's full LaTeX: the pinned declaration around one editable hole. */
@@ -500,7 +501,7 @@ export class NotatioIn extends LitElement {
     });
     if (errors.length > 0) return undefined;
     try {
-      return engine.box(json, { form: "raw" }).latex;
+      return assignLatex(engine.box(json, { form: "raw" }).latex);
     } catch {
       return undefined;
     }
