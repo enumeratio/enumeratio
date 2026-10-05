@@ -296,6 +296,8 @@ function declareMovingMap(ce: Engine): void {
       const list = ops[1]?.evaluate();
       const w = ops[2] !== undefined ? integerAt(ops[2].evaluate()) : undefined;
       if (f === undefined || list === undefined || w === undefined || w < 0) return undefined;
+      // A free symbol isn't an empty list: hold the call (see `Accumulate`'s note in list-frontier.ts).
+      if (symbolNameOf(list) !== undefined) return undefined;
       const items = operandsOf(list);
       const windowSize = w + 1;
       if (windowSize > items.length) return ce.function("List", []);

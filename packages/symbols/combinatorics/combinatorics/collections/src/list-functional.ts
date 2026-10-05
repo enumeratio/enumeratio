@@ -197,7 +197,7 @@ export function declareListFunctional(ce: Engine): void {
   );
 
   ce.declare("Outer", {
-    signature: "(function: any, list<any>, list<any>) -> list<list<any>>",
+    signature: "(function: any, list<any>, list<any>) -> list<any>",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const [fn, list1, list2] = ops;
       if (fn === undefined || list1 === undefined || list2 === undefined) return undefined;
@@ -205,9 +205,14 @@ export function declareListFunctional(ce: Engine): void {
       // empty one (see `Accumulate`'s note in list-frontier.ts): `Outer(f, s1, s2)` for free
       // `s1`/`s2` stays unevaluated instead of answering `List()`.
       if (symbolNameOf(list1) !== undefined || symbolNameOf(list2) !== undefined) return undefined;
-      const rows2 = operandsOf(list2);
-      const rows = operandsOf(list1).map((a) => ce.box(["List", ...rows2.map((b) => applyFn(ce, fn, [a, b]))]));
-      return ce.box(["List", ...rows]);
+      // Down to the atoms of both, first operand's indices first: two matrices give a rank-4 array.
+      const outer = (a: Expr, b: Expr): Expr =>
+        a.operator === "List"
+          ? ce.box(["List", ...operandsOf(a).map((x) => outer(x, b))])
+          : b.operator === "List"
+            ? ce.box(["List", ...operandsOf(b).map((y) => outer(a, y))])
+            : applyFn(ce, fn, [a, b]);
+      return outer(list1, list2);
     },
   });
 
