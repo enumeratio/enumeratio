@@ -664,6 +664,42 @@ export function meromorphicOf(rec: Recognized): boolean {
   }
 }
 
+/** Entire functions of an entire argument. */
+const ENTIRE_HEADS = new Set(["Exp", "Sin", "Cos", "Sinh", "Cosh"]);
+/** Each is entire / entire, so meromorphic wherever its argument is entire. */
+const RATIO_HEADS = new Set(["Tan", "Cot", "Sec", "Csc", "Tanh", "Coth", "Sech", "Csch"]);
+
+/**
+ * Whether `expr` is entire, or meromorphic, in `x`, by closure: sums, products and integer
+ * powers of entire functions are entire; a quotient (or negative power) of meromorphic ones is
+ * meromorphic; and `Sin`, `Exp`, … of an entire argument is entire, `Tan`, `Sec`, … meromorphic.
+ * `undefined` where the closure says nothing (a branch point, an essential singularity such as
+ * `Exp(1/x)`, an unlisted head).
+ */
+function meromorphicClass(expr: BoxedExpression, x: string): "entire" | "meromorphic" | undefined {
+  if (isSym(expr, x) || (isNumberLiteral(expr) && expr.im === 0)) return "entire";
+  const ops = operandsOf(expr);
+  const classes = ops.map((op) => meromorphicClass(op, x));
+  if (classes.some((c) => c === undefined)) return undefined;
+  const allEntire = classes.every((c) => c === "entire");
+  const op = expr.operator;
+  if (op === "Add" || op === "Subtract" || op === "Negate" || op === "Multiply")
+    return allEntire ? "entire" : "meromorphic";
+  if (op === "Divide" && ops.length === 2) return ops[1]!.is(0) ? undefined : "meromorphic";
+  if (op === "Power" && ops.length === 2) {
+    const [base, exponent] = ops as [BoxedExpression, BoxedExpression];
+    // `Exp(a)` canonicalizes to `Power(E, a)`.
+    if (symbolNameOf(base) === "ExponentialE" && classes[1] === "entire") return "entire";
+    if (!isNumberLiteral(exponent) || exponent.im !== 0 || !Number.isInteger(exponent.re)) return undefined;
+    return exponent.re >= 0 && classes[0] === "entire" ? "entire" : "meromorphic";
+  }
+  if (ops.length === 1 && classes[0] === "entire") {
+    if (ENTIRE_HEADS.has(op)) return "entire";
+    if (RATIO_HEADS.has(op)) return "meromorphic";
+  }
+  return undefined;
+}
+
 // ---- period -------------------------------------------------------------------------
 
 /** `0` = provably non-periodic. `undefined` = decline. */
@@ -962,7 +998,18 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
   declareUnary(ce, "FunctionSingularities", (ce_, rec, x) => singularitiesOf(ce_, rec, x));
   declareUnary(ce, "FunctionDiscontinuities", (ce_, rec, x) => discontinuitiesOf(ce_, rec, x));
   declareUnary(ce, "FunctionAnalytic", (ce_, rec) => ce_.symbol(analyticOf(rec) ? "True" : "False"));
-  declareUnary(ce, "FunctionMeromorphic", (ce_, rec) => ce_.symbol(meromorphicOf(rec) ? "True" : "False"));
+  ce.declare("FunctionMeromorphic", {
+    signature: "(expression, symbol) -> expression",
+    lazy: true,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const [expr, xExpr] = ops;
+      const x = xExpr === undefined ? undefined : symbolNameOf(xExpr);
+      if (expr === undefined || x === undefined || hasForeignSymbol(expr, x) || !containsVar(expr, x)) return undefined;
+      const rec = recognize(expr, x);
+      if (rec !== undefined) return ce.symbol(meromorphicOf(rec) ? "True" : "False");
+      return meromorphicClass(expr, x) === undefined ? undefined : ce.symbol("True");
+    },
+  });
   declareUnary(ce, "FunctionPeriod", (ce_, rec) => periodOf(ce_, rec));
 
   ce.declare("FunctionContinuous", {

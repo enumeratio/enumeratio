@@ -12,15 +12,17 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 //  - a concrete complex number (including `ImaginaryUnit`, whose value is 0+1i) is atomic;
 //  - `Add` and `Multiply` combine child `{re, im}` pairs the way complex addition and
 //    multiplication do (`Negate` and integer `Power` fall out of those two);
-//  - `Sin(a+bi) = sin(a)cosh(b) + i·cos(a)sinh(b)`, `Exp(a+bi) = e^a cos(b) + i·e^a sin(b)`
-//    (`Exp` canonicalizes to `Power(E, ·)`, so that's what's actually matched), and
-//    `Abs(a+bi) = sqrt(a²+b²)` are the transcendental identities the backlog's examples need;
+//  - `Sin`, `Cos`, `Sinh` and `Cosh` of `a+bi` by the angle-addition formulas,
+//    `Exp(a+bi) = e^a cos(b) + i·e^a sin(b)` (`Exp` canonicalizes to `Power(E, ·)`, so that's
+//    what's actually matched), `z^w = e^(w·Ln z)` for a concrete complex or negative `z`, and
+//    `Abs(a+bi) = sqrt(a²+b²)`; `Real`/`Imaginary` of a split are its halves, a `List` splits
+//    entry by entry;
 //  - anything else is assumed real (`{re: expr, im: 0}`) — the same default Wolfram's own
 //    `ComplexExpand` takes for a symbol with no declared domain.
 //
-// Only these heads are covered; `Cos`, the hyperbolic functions, and general non-integer
-// powers of a complex argument have no rule here and fall through to "assumed real", which is
-// wrong for them specifically — out of scope beyond what the backlog examples exercise.
+// Only these heads are covered; the other elementary functions of a complex argument (`Tan`,
+// `Tanh`, `Ln`, …) have no rule here and fall through to "assumed real", which is wrong for them
+// specifically.
 
 interface RealImaginary {
   readonly re: BoxedExpression;
@@ -99,6 +101,39 @@ function splitRI(ce: ComputeEngine, e: BoxedExpression): RealImaginary {
       im: mul(ce, ce.function("Cos", [a]).evaluate(), ce.function("Sinh", [b]).evaluate()),
     };
   }
+  // cos(a+bi) = cos(a)cosh(b) − i·sin(a)sinh(b); cosh(a+bi) = cosh(a)cos(b) + i·sinh(a)sin(b);
+  // sinh(a+bi) = sinh(a)cos(b) + i·cosh(a)sin(b).
+  if ((e.operator === "Cos" || e.operator === "Cosh" || e.operator === "Sinh") && ops.length > 0) {
+    const { re: a, im: b } = splitRI(ce, ops[0]);
+    const f = (name: string, x: BoxedExpression) => ce.function(name, [x]).evaluate();
+    if (e.operator === "Cos")
+      return {
+        re: mul(ce, f("Cos", a), f("Cosh", b)),
+        im: ce.function("Negate", [mul(ce, f("Sin", a), f("Sinh", b))]).evaluate(),
+      };
+    if (e.operator === "Cosh")
+      return { re: mul(ce, f("Cosh", a), f("Cos", b)), im: mul(ce, f("Sinh", a), f("Sin", b)) };
+    return { re: mul(ce, f("Sinh", a), f("Cos", b)), im: mul(ce, f("Cosh", a), f("Sin", b)) };
+  }
+  // z^w = e^(w·Ln z) for a concrete base that is not a positive real (`I^x` is e^(iπx/2)): positive
+  // real bases are real already, and are left to the "assumed real" default below.
+  if (
+    e.operator === "Power" &&
+    ops.length === 2 &&
+    Number.isFinite(ops[0].re) &&
+    Number.isFinite(ops[0].im) &&
+    (ops[0].im !== 0 || ops[0].re < 0) &&
+    !ops[0].isSame(ce.E) &&
+    !(ops[1].im === 0 && Number.isInteger(ops[1].re))
+  ) {
+    const logarithm = ce.function("Ln", [ops[0]]).evaluate();
+    return splitRI(ce, ce.function("Power", [ce.E, ce.function("Multiply", [ops[1], logarithm])]));
+  }
+  // The real or imaginary part of z is the matching half of z's split, itself real.
+  if ((e.operator === "Real" || e.operator === "Imaginary") && ops.length === 1) {
+    const part = splitRI(ce, ops[0]);
+    return { re: e.operator === "Real" ? part.re : part.im, im: ce.Zero };
+  }
   if (e.operator === "Abs" && ops.length > 0) {
     const { re: a, im: b } = splitRI(ce, ops[0]);
     return {
@@ -116,6 +151,13 @@ export function evaluateComplexExpand(ce: ComputeEngine, ops: readonly BoxedExpr
   // radical form a numeric Exp/Sin/etc. reduced to on its own) has nothing left to split —
   // splitRI's `.re`/`.im` numeric round trip would just lose exactness on an irrational one.
   if (operandsOf(expr).length === 0) return expr;
+  // A list expands entry by entry.
+  if (expr.operator === "List") {
+    return ce.function(
+      "List",
+      operandsOf(expr).map((entry) => evaluateComplexExpand(ce, [entry]) ?? entry),
+    );
+  }
   const { re, im } = splitRI(ce, expr);
   if (im.isSame(0)) return re;
   return ce.function("Add", [re, ce.function("Multiply", [ce.symbol("ImaginaryUnit"), im])]).evaluate();

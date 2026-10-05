@@ -18,8 +18,10 @@ signatures:
     arity: 3
 names:
   wolframIdentity: true
+attributes:
+  - HoldAll
 ---
 
 - A bare scalar with no range to rescale against -- Rescale(x) where x is not a list -- has no sensible reading and stays unevaluated.
 - Rescale(x, {min, max}) is Rescale(x, {min, max}, {0, 1}) with the target range left implicit.
-- Exact rational input and bounds give an exact rational result.
+- Exact rational input and bounds give an exact rational result, which `N(…, d)` rounds once, so every digit asked for is right.

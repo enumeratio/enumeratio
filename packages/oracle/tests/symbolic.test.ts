@@ -21,10 +21,18 @@ const expected = ["Multiply", 2, "x"];
 // Their side is read through any ConditionalExpression before the difference is taken.
 const through = (source: string): string => `ReplaceAll[${source}, ConditionalExpression[e_, _] :> e]`;
 
+// A difference that is a pure O-term (`O[x]^5`) at the order of Wolfram's series is zero.
+const equalSeries = (theirs: string): string =>
+  `pureO = MatchQ[#, SeriesData[_, _, {}, _, _, _]] &; ` +
+  `If[AllTrue[Flatten[{d}], # === 0 &] || (AnyTrue[Flatten[{d}], pureO] && ` +
+  `(bound = Min[Append[Map[Function[t, t[[5]]/t[[6]]], ` +
+  `Cases[Quiet[TimeConstrained[${theirs}, 10, $Aborted]], _SeriesData, {0, Infinity}]], Infinity]]; ` +
+  `AllTrue[Flatten[{d}], # === 0 || (pureO[#] && #[[5]]/#[[6]] >= bound) &])), `;
+
 test("wolfram: FullSimplify of the difference, with 3 fixed-rational trials as a fallback", () => {
   expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBe(
-    `Module[{d = Quiet[TimeConstrained[FullSimplify[(${through("Plus[x, x]")}) - (Times[2, x])], 10, $Aborted]]}, ` +
-      `If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {Chop[N[(${through("Plus[Rational[7, 3], Rational[7, 3]]")}) - (Times[2, Rational[7, 3]])]], ` +
+    `Module[{d = Quiet[TimeConstrained[FullSimplify[(${through("Plus[x, x]")}) - (Times[2, x])], 10, $Aborted]], pureO, bound}, ` +
+      `${equalSeries(through("Plus[x, x]"))}True, Module[{s = {Chop[N[(${through("Plus[Rational[7, 3], Rational[7, 3]]")}) - (Times[2, Rational[7, 3]])]], ` +
       `Chop[N[(${through("Plus[Rational[-11, 5], Rational[-11, 5]]")}) - (Times[2, Rational[-11, 5]])]], ` +
       `Chop[N[(${through("Plus[Rational[13, 4], Rational[13, 4]]")}) - (Times[2, Rational[13, 4]])]]}}, ` +
       "s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]",
@@ -170,6 +178,39 @@ test("a step variable is sampled at integers, and substituted after the call is 
   // `k` stays the call's own variable inside it, and is a whole number only afterwards.
   expect(source).toContain("DifferenceDelta[QFactorial[k, Rational[");
   expect(source).toMatch(/\/\. \{k -> \d+\}/);
+});
+
+test("DiscreteShift steps its variable like the other step heads", () => {
+  const shift = ["DiscreteShift", ["Round", "k"], ["List", "k", 3]];
+  expect(stepVariables(shift as never)).toEqual(new Set(["k"]));
+  const source = symbolicAgreementSource("wolfram", shift as never, ["Round", ["Add", "k", 3]] as never, [
+    "k",
+  ]) as string;
+  expect(source).toContain("DiscreteShift[Round[k], List[k, 3]]");
+  expect(source).toMatch(/\/\. \{k -> \d+\}/);
+});
+
+test("a function mapped over a list is held where its body is held at an entry", () => {
+  const mapped = (entries: unknown[]) => [
+    "Map",
+    ["Function", ["Block", ["FunctionConvexity", "_1", ["List", "x", "y"]]], "_1"],
+    ["List", ...entries],
+  ];
+  const squares = [
+    ["Power", "x", 2],
+    ["Add", ["Power", "x", 2], ["Power", "y", 2]],
+  ];
+  const held = ["List", ...squares.map((entry) => ["FunctionConvexity", entry, ["List", "x", "y"]])];
+  expect(leavesCall(mapped(squares) as never, held as never)).toBe(true);
+  expect(leavesCall(mapped(squares) as never, ["List", 1, 1] as never)).toBe(false);
+});
+
+test("alignFunctions: an expression spelled another way is ours when both are one canonical form", () => {
+  const ours = ["DiscreteDelta", ["Add", ["Sqrt", 2], ["Negate", "x"]]];
+  const theirs = ["DiscreteDelta", ["Add", ["Power", 2, ["Rational", 1, 2]], ["Multiply", -1, "x"]]];
+  expect(alignFunctions(theirs as never, ours as never)).toEqual(ours);
+  const other = ["DiscreteDelta", ["Add", ["Sqrt", 3], ["Negate", "x"]]];
+  expect(alignFunctions(other as never, ours as never)).toEqual(other);
 });
 
 test("a relation answer is compared as a statement, not by its spelling", () => {

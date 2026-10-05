@@ -1,12 +1,12 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-falling-factorial-5-3-60			[FallingFactorial, 5, 3]	60	$5 \cdot 4 \cdot 3 = 60$		
-fallingfactorial-10-2			[FallingFactorial, 10, 2]	90	$10\cdot 9 = 90$		
-fallingfactorial-x-8			[FallingFactorial, x, 8]	[Multiply, [Negate, x], [Add, [Negate, x], 1], [Add, [Negate, x], 2], [Add, [Negate, x], 3], [Add, [Negate, x], 4], [Add, [Negate, x], 5], [Add, [Negate, x], 6], [Add, [Negate, x], 7]]	A symbolic base expands into a product of 8 factors, written with $-x$		
-falling-factorial-3-5-0	Scope		[FallingFactorial, 3, 5]	0	A factor of $0$ appears once $n$ exceeds $x$		
-falling-factorial-half-2-neg-1-4	Scope		[FallingFactorial, [Rational, 1, 2], 2]	[Rational, -1, 4]	$\tfrac12 \cdot (-\tfrac12) = -\tfrac14$		
-fallingfactorial-4-2	Scope		[FallingFactorial, 4, 2]	12	$4\cdot 3 = 12$		
-functionexpand-fallingfactorial-x-4	Scope		[FunctionExpand, [FallingFactorial, x, 4]]	[Multiply, [Negate, x], [Add, [Negate, x], 1], [Add, [Negate, x], 2], [Add, [Negate, x], 3]]	FunctionExpand writes the symbolic product out		
-fallingfactorial-n-0	Scope		[FallingFactorial, n, 0]	1	Zero factors give the empty product 1		
-fallingfactorial-x-plus-bigo-x-pow-5-10	Scope	triage	[FallingFactorial, [Add, x, [Power, [BigO, x], 5]], 10]	[Multiply, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 1], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 2], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 3], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 4], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 5], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 6], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 7], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 8], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 9]]		compare	Both sides agree: Wolfram evaluates our product form to the same series, -362880 x + 1026576 x^2 - 1172700 x^3 + 723680 x^4 + O[x]^5 (=== True). The scan's identity check sees the difference O[x]^5, not 0, and falls through to sampling, which gives Indeterminate.
-fallingfactorial-10-3	Applications		[FallingFactorial, 10, 3]	720	$10\cdot 9\cdot 8 = 720$, the number of ordered picks of 3 from 10		
-differencedelta-fallingfactorial-x-n-x	Properties		[DifferenceDelta, [FallingFactorial, x, n], x]	[Add, [Negate, [FallingFactorial, x, n]], [FallingFactorial, [Add, x, 1], n]]	The forward difference of $x^{\underline n}$ is $n\,x^{\underline{n-1}}$, written as a difference		
+id	section	role	expr	expected	caption
+falling-factorial-5-3-60			[FallingFactorial, 5, 3]	60	$5 \cdot 4 \cdot 3 = 60$
+fallingfactorial-10-2			[FallingFactorial, 10, 2]	90	$10\cdot 9 = 90$
+fallingfactorial-x-8			[FallingFactorial, x, 8]	[Multiply, [Negate, x], [Add, [Negate, x], 1], [Add, [Negate, x], 2], [Add, [Negate, x], 3], [Add, [Negate, x], 4], [Add, [Negate, x], 5], [Add, [Negate, x], 6], [Add, [Negate, x], 7]]	A symbolic base expands into a product of 8 factors, written with $-x$
+falling-factorial-3-5-0	Scope		[FallingFactorial, 3, 5]	0	A factor of $0$ appears once $n$ exceeds $x$
+falling-factorial-half-2-neg-1-4	Scope		[FallingFactorial, [Rational, 1, 2], 2]	[Rational, -1, 4]	$\tfrac12 \cdot (-\tfrac12) = -\tfrac14$
+fallingfactorial-4-2	Scope		[FallingFactorial, 4, 2]	12	$4\cdot 3 = 12$
+functionexpand-fallingfactorial-x-4	Scope		[FunctionExpand, [FallingFactorial, x, 4]]	[Multiply, [Negate, x], [Add, [Negate, x], 1], [Add, [Negate, x], 2], [Add, [Negate, x], 3]]	FunctionExpand writes the symbolic product out
+fallingfactorial-n-0	Scope		[FallingFactorial, n, 0]	1	Zero factors give the empty product 1
+fallingfactorial-x-plus-bigo-x-pow-5-10	Scope		[FallingFactorial, [Add, x, [Power, [BigO, x], 5]], 10]	[Multiply, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 1], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 2], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 3], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 4], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 5], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 6], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 7], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 8], [Add, [Add, [Negate, x], [Negate, [Power, [BigO, x], 5]]], 9]]	
+fallingfactorial-10-3	Applications		[FallingFactorial, 10, 3]	720	$10\cdot 9\cdot 8 = 720$, the number of ordered picks of 3 from 10
+differencedelta-fallingfactorial-x-n-x	Properties		[DifferenceDelta, [FallingFactorial, x, n], x]	[Add, [Negate, [FallingFactorial, x, n]], [FallingFactorial, [Add, x, 1], n]]	The forward difference of $x^{\underline n}$ is $n\,x^{\underline{n-1}}$, written as a difference

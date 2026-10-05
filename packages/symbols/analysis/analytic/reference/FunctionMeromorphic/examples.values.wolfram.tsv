@@ -1,9 +1,9 @@
-id	in	out	tex.in	tex.out	verdict
-a-rational-function-is-meromorphic	FunctionMeromorphic[Divide[1, x], x]	True	\text{FunctionMeromorphic}\left[\frac{1}{x},x\right]	\text{True}	
-tangent-is-a-ratio-of-entire-functions	FunctionMeromorphic[Tan[x], x]	True	\text{FunctionMeromorphic}[\tan (x),x]	\text{True}	
-a-branch-point-is-not-a-pole	FunctionMeromorphic[Log[x], x]	False	\text{FunctionMeromorphic}[\log (x),x]	\text{False}	
-polynomials-are-meromorphic	FunctionMeromorphic[Power[x, 2], x]	True	\text{FunctionMeromorphic}\left[x^2,x\right]	\text{True}	
-functionmeromorphic-sqrt-z-z	FunctionMeromorphic[Sqrt[z], z]	False	\text{FunctionMeromorphic}\left[\sqrt{z},z\right]	\text{False}	
-functionmeromorphic-ln-z-z	FunctionMeromorphic[Log[z], z]	False	\text{FunctionMeromorphic}[\log (z),z]	\text{False}	
-list-functionmeromorphic-x-times-x-pow-2-plus-1	List[FunctionMeromorphic[Times[x, Power[Plus[Power[x, 2], 1], -1]], x], FunctionMeromorphic[Times[Plus[Power[x, 2], 1], Power[Plus[Power[x, 2], -1], -1]], x], FunctionMeromorphic[Plus[Power[x, 3], Times[-1, Times[2, Power[x, 2]]], Times[-1, Times[5, x]], 6], x]]	{True, True, True}			disagree
-list-functionmeromorphic-tan-x-x	List[FunctionMeromorphic[Tan[x], x], FunctionMeromorphic[Sec[x], x], FunctionMeromorphic[Sech[x], x]]	{True, True, True}			disagree
+id	in	out	tex.in	tex.out
+a-rational-function-is-meromorphic	FunctionMeromorphic[Divide[1, x], x]	True	\text{FunctionMeromorphic}\left[\frac{1}{x},x\right]	\text{True}
+tangent-is-a-ratio-of-entire-functions	FunctionMeromorphic[Tan[x], x]	True	\text{FunctionMeromorphic}[\tan (x),x]	\text{True}
+a-branch-point-is-not-a-pole	FunctionMeromorphic[Log[x], x]	False	\text{FunctionMeromorphic}[\log (x),x]	\text{False}
+polynomials-are-meromorphic	FunctionMeromorphic[Power[x, 2], x]	True	\text{FunctionMeromorphic}\left[x^2,x\right]	\text{True}
+functionmeromorphic-sqrt-z-z	FunctionMeromorphic[Sqrt[z], z]	False	\text{FunctionMeromorphic}\left[\sqrt{z},z\right]	\text{False}
+functionmeromorphic-ln-z-z	FunctionMeromorphic[Log[z], z]	False	\text{FunctionMeromorphic}[\log (z),z]	\text{False}
+list-functionmeromorphic-x-times-x-pow-2-plus-1	List[FunctionMeromorphic[Times[x, Power[Plus[Power[x, 2], 1], -1]], x], FunctionMeromorphic[Times[Plus[Power[x, 2], 1], Power[Plus[Power[x, 2], -1], -1]], x], FunctionMeromorphic[Plus[Power[x, 3], Times[-1, Times[2, Power[x, 2]]], Times[-1, Times[5, x]], 6], x]]	{True, True, True}	\left\{\text{FunctionMeromorphic}\left[\frac{x}{x^2+1},x\right],\text{FunctionMeromorphic}\left[\frac{x^2+1}{x^2-1},x\right],\text{FunctionMeromorphic}\left[x^3-2 x^2-5 x+6,x\right]\right\}	\{\text{True},\text{True},\text{True}\}
+list-functionmeromorphic-tan-x-x	List[FunctionMeromorphic[Tan[x], x], FunctionMeromorphic[Sec[x], x], FunctionMeromorphic[Sech[x], x]]	{True, True, True}	\{\text{FunctionMeromorphic}[\tan (x),x],\text{FunctionMeromorphic}[\sec (x),x],\text{FunctionMeromorphic}[\text{sech}(x),x]\}	\{\text{True},\text{True},\text{True}\}

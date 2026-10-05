@@ -95,15 +95,16 @@ const INTEGERS: readonly number[] = [3, 5, 4, 7, 6, 8];
 const NUMBER_OF_TRIALS = 3;
 
 /** Heads that take their second operand's variable as a step over the integers. */
-const DISCRETE_STEPS = new Set(["DifferenceDelta", "DiscreteRatio"]);
+const DISCRETE_STEPS = new Set(["DifferenceDelta", "DiscreteRatio", "DiscreteShift"]);
 
 const bareName = (e: MathJSON | undefined): string | undefined =>
   typeof e === "string" && !/^'.*'$/s.test(e) ? e : undefined;
 
 /** A step call by its definition, for a kernel that holds `DifferenceDelta[f[k], k]` symbolic and
- * would read the call at a number as nothing: `f(k + 1) - f(k)`, `f(k + 1) / f(k)`. */
+ * would read the call at a number as nothing: `f(k + 1) - f(k)`, `f(k + 1) / f(k)`, `f(k + h)`. */
 const STEP_DEFINITIONS =
-  "{DifferenceDelta[g_, v_Symbol] :> (g /. v -> v + 1) - g, DiscreteRatio[g_, v_Symbol] :> (g /. v -> v + 1)/g}";
+  "{DifferenceDelta[g_, v_Symbol] :> (g /. v -> v + 1) - g, DiscreteRatio[g_, v_Symbol] :> (g /. v -> v + 1)/g, " +
+  "DiscreteShift[g_, {v_Symbol, h_}] :> (g /. v -> v + h), DiscreteShift[g_, v_Symbol] :> (g /. v -> v + 1)}";
 
 /** The variables `expr` steps by one: the second operand of a `DifferenceDelta` or `DiscreteRatio`. */
 export function stepVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
@@ -329,6 +330,14 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
   let call = expr;
   while (Array.isArray(call) && WRAPPERS.has(call[0] as string)) call = call[1] as MathJSON;
   if (!Array.isArray(call) || typeof call[0] !== "string") return false;
+  // A pure function mapped over a list is its body at each entry, a list of calls.
+  if (call[0] === "Map" && call.length === 3 && isFunction(call[1] as MathJSON)) {
+    const entries = call[2];
+    if (Array.isArray(entries) && entries[0] === "List") {
+      const mapped = entries.slice(1).map((entry) => applyFunction(call[1] as MathJSON[], entry as MathJSON));
+      if (mapped.every((body) => body !== undefined)) return leavesCall(["List", ...mapped] as MathJSON, expected);
+    }
+  }
   // A list is held when any entry is: against the entry in the same place if ours is a list of the same length.
   if (call[0] === "List" || call[0] === "Tuple") {
     const kept = Array.isArray(expected) && expected[0] === call[0] && expected.length === call.length;
@@ -472,6 +481,20 @@ function positional(fn: readonly MathJSON[]): { body: MathJSON; arity: number } 
 
 const isFunction = (e: MathJSON): e is [string, ...MathJSON[]] => Array.isArray(e) && e[0] === "Function";
 
+/** A pure function's body at `argument`, its parameter or slot (`_1`) replaced; `undefined` for a
+ * function of several parameters. */
+function applyFunction(fn: readonly MathJSON[], argument: MathJSON): MathJSON | undefined {
+  const [, body, ...parameters] = fn;
+  if (body === undefined || parameters.length > 1) return undefined;
+  const unwrapped = Array.isArray(body) && body[0] === "Block" && body.length === 2 ? (body[1] as MathJSON) : body;
+  const names = new Map<string, MathJSON>([
+    ["_", argument],
+    ["_1", argument],
+  ]);
+  if (typeof parameters[0] === "string") names.set(parameters[0], argument);
+  return substituteFreeSymbols(unwrapped, names);
+}
+
 /** Whether two pure functions are one function written differently: the same arity, and bodies that
  * are one expression once the bound variables are renamed alike (`x |-> f(x)` and `f[#1] &`). */
 export function equivalentFunctions(a: MathJSON, b: MathJSON): boolean {
@@ -487,6 +510,8 @@ export function equivalentFunctions(a: MathJSON, b: MathJSON): boolean {
  */
 export function alignFunctions(theirs: MathJSON, ours: MathJSON): MathJSON {
   if (equivalentFunctions(theirs, ours)) return ours;
+  // One expression spelled two ways (`Sqrt(2)` and `Power(2, 1/2)`) is one canonical form.
+  if (Array.isArray(theirs) && canonicalText(theirs) === canonicalText(ours)) return ours;
   if (
     Array.isArray(theirs) &&
     Array.isArray(ours) &&
@@ -566,9 +591,17 @@ export function symbolicAgreementSource(
     // same for both shapes: `{0}` for a scalar, the fully-flattened elementwise differences
     // for a list or nested matrix — `AllTrue[…, # === 0 &]` over that is the one check that
     // means "the difference vanishes" in both cases.
+    //
+    // Two truncated series that agree below their order differ by a pure O-term (`O[x]^5`), which is
+    // zero at that order: it counts when it is no coarser than the series Wolfram answered.
     return (
-      `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirsSource}) - (${ours.source})], 10, $Aborted]]}, ` +
-      `If[AllTrue[Flatten[{d}], # === 0 &], True, Module[{s = {${points.join(", ")}}}, ` +
+      `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirsSource}) - (${ours.source})], 10, $Aborted]], pureO, bound}, ` +
+      `pureO = MatchQ[#, SeriesData[_, _, {}, _, _, _]] &; ` +
+      `If[AllTrue[Flatten[{d}], # === 0 &] || (AnyTrue[Flatten[{d}], pureO] && ` +
+      `(bound = Min[Append[Map[Function[t, t[[5]]/t[[6]]], ` +
+      `Cases[Quiet[TimeConstrained[${theirsSource}, 10, $Aborted]], _SeriesData, {0, Infinity}]], Infinity]]; ` +
+      `AllTrue[Flatten[{d}], # === 0 || (pureO[#] && #[[5]]/#[[6]] >= bound) &])), ` +
+      `True, Module[{s = {${points.join(", ")}}}, ` +
       `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]`
     );
   }

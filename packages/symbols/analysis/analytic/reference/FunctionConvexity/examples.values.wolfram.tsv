@@ -2,6 +2,6 @@ id	in	out	tex.in	tex.out	verdict
 a-parabola-is-convex	FunctionConvexity[Power[x, 2], x]	1	\text{FunctionConvexity}\left[x^2,x\right]	1	
 a-cubic-has-an-inflection-point	FunctionConvexity[Power[x, 3], x]	Indeterminate	\text{FunctionConvexity}\left[x^3,x\right]	\text{Indeterminate}	disagree
 exp-is-always-convex	FunctionConvexity[Exp[x], x]	1	\text{FunctionConvexity}[\exp (x),x]	1	
-map-function-functionconvexity-1-list-x-y-1-list	Map[Function[FunctionConvexity[Slot[1], List[x, y]]], List[Power[x, 2], Plus[Power[x, 2], Power[y, 2]]]]	{1, 1}			disagree
+map-function-functionconvexity-1-list-x-y-1-list	Map[Function[FunctionConvexity[Slot[1], List[x, y]]], List[Power[x, 2], Plus[Power[x, 2], Power[y, 2]]]]	{1, 1}	(\text{FunctionConvexity}[\text{$\#$1},\{x,y\}]\&)\text{/@}\left\{x^2,x^2+y^2\right\}	\{1,1\}	disagree
 functionconvexity-x-pow-2-minus-1-x	FunctionConvexity[Plus[Power[x, 2], -1], x]	1	\text{FunctionConvexity}\left[x^2-1,x\right]	1	
 a-restricted-domain-answers-indeterminate	FunctionConvexity[Divide[1, x], x]	Indeterminate	\text{FunctionConvexity}\left[\frac{1}{x},x\right]	\text{Indeterminate}	disagree

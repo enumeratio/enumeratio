@@ -2,5 +2,5 @@ id	in	out	tex.in	tex.out	verdict
 a-cubic-is-increasing-everywhere	FunctionMonotonicity[Power[x, 3], x]	1	\text{FunctionMonotonicity}\left[x^3,x\right]	1	
 a-parabola-is-not-globally-monotonic	FunctionMonotonicity[Power[x, 2], x]	Indeterminate	\text{FunctionMonotonicity}\left[x^2,x\right]	\text{Indeterminate}	disagree
 exp-of-an-affine-argument-is-always-monotonic	FunctionMonotonicity[Exp[x], x]	1	\text{FunctionMonotonicity}[\exp (x),x]	1	
-map-function-functionmonotonicity-1-x-1-list	Map[Function[FunctionMonotonicity[Slot[1], x]], List[Plus[Ramp[x], 1], Plus[x, Ramp[x]]]]	{1, 1}			disagree
+map-function-functionmonotonicity-1-x-1-list	Map[Function[FunctionMonotonicity[Slot[1], x]], List[Plus[Ramp[x], 1], Plus[x, Ramp[x]]]]	{1, 1}	(\text{FunctionMonotonicity}[\text{$\#$1},x]\&)\text{/@}\{\text{Ramp}[x]+1,x+\text{Ramp}[x]\}	\{1,1\}	disagree
 a-restricted-domain-answers-indeterminate	FunctionMonotonicity[Sqrt[x], x]	Indeterminate	\text{FunctionMonotonicity}\left[\sqrt{x},x\right]	\text{Indeterminate}	disagree
