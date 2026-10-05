@@ -295,3 +295,15 @@ function oddsUpTo(n: number): number[] {
   for (let v = 1; v <= n; v += 2) out.push(v);
   return out;
 }
+
+test("Count past 2^53 is exact for Subsets and Permutations of a collection", () => {
+  const count = (expr: unknown) => ce.box(["Count", expr] as never).evaluate().json;
+  expect(count(["Subsets", ["Range", 60]])).toEqual({ num: "1152921504606846976" });
+  expect(count(["Permutations", ["Range", 23]])).toEqual({ num: "25852016738884976640000" });
+  expect(count(["Subsets", 60, ["List", 30]])).toEqual({ num: "118264581564861424" });
+});
+
+test("Count holds where a plain-number kernel would round", () => {
+  const held = ce.box(["Count", ["SetPartitions", 30]] as never).evaluate();
+  expect(held.operator).toBe("Count");
+});

@@ -143,3 +143,13 @@ test("SmoothNumbers(k) below 2 is just {1}, finite", () => {
   }
   expect(ce.box(["Count", ["SmoothNumbers", 1]]).evaluate().re).toBe(1);
 });
+
+test("At(Primes, n) reads PrimeNumbers; a negative index has no n-th prime", () => {
+  expect(ce.box(["At", "Primes", 5]).evaluate().re).toBe(11);
+  expect(ce.box(["At", "Primes", -1]).evaluate().toString()).not.toBe("11");
+});
+
+test("At past the end of a finite table is held, never NaN", () => {
+  expect(ce.box(["At", "GiugaNumbers", 9]).evaluate().json).toEqual(["At", "GiugaNumbers", 9]);
+  expect(ce.box(["At", "PerfectNumbers", 9]).evaluate().json).toEqual(["At", "PerfectNumbers", 9]);
+});
