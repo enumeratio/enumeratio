@@ -17,4 +17,4 @@ different-moduli-do-not-combine	Possible issues		[Add, [ResidueClass, 2, 4], [Re
 2-is-not-a-unit-mod-4-and-the-message-says-so	Possible issues		[Divide, 1, [ResidueClass, 2, 4]]	[Divide, 1, [ResidueClass, 2, 4]]	2 is not a unit mod 4, and the message says so				
 odd-mod-4-and-even-mod-6-at-once-no-such-class	Possible issues		[ChineseRemainder, [ResidueClass, 1, 4], [ResidueClass, 2, 6]]	[ChineseRemainder, [ResidueClass, 1, 4], [ResidueClass, 2, 6]]	odd mod 4 and even mod 6 at once: no such class				
 a-non-unit-denominator-mod-4-stays-unevaluated	Possible issues	test	[ResidueClass, [Rational, 1, 2], 4]	[ResidueClass, [Rational, 1, 2], 4]					
-power-with-negative-exponent-of-a-non-unit	Possible issues	test	[Power, [ResidueClass, 2, 4], -1]	[Divide, 1, [ResidueClass, 2, 4]]	2 is not a unit mod 4, so the negative power stays as a `Divide`	Power(ResidueClass(2, 4), -1)	Divide(1, ResidueClass(2, 4))		
+power-with-negative-exponent-of-a-non-unit	Possible issues	test	[Power, [ResidueClass, 2, 4], -1]	[Power, [ResidueClass, 2, 4], -1]	2 is not a unit mod 4, so the negative power stays as written	Power(ResidueClass(2, 4), -1)	Power(ResidueClass(2, 4), -1)		
