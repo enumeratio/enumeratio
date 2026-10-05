@@ -13,6 +13,12 @@ export {
   primitiveRootList,
   primitiveRoots,
 } from "./logs.ts";
-export * as integerMod from "./integer-mod.ts";
-export type { IntegerMod } from "./integer-mod.ts";
-export { INTEGER_MOD, INTEGER_MOD_RING, integerModExpression, integerModOf } from "./integer-mod-declare.ts";
+export * as residueClass from "./residue-class.ts";
+export type { Residue } from "./residue-class.ts";
+export {
+  INTEGER_MOD,
+  INTEGER_MOD_RING,
+  RESIDUE_CLASS,
+  residueClassExpression,
+  residueClassOf,
+} from "./residue-class-declare.ts";

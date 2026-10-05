@@ -90,7 +90,7 @@ const VANILLA: MathJSON[] = [
   ["IntegerDigits", 0, 2],
   ["FromDigits", ["List", 1, 0, 1], 2],
   ["FromDigits", ["List", 2, 5, 5], 10],
-  // Residues, which also take IntegerMod classes.
+  // Residues, which also take ResidueClass classes.
   ["ChineseRemainder", ["List", 3, 4], ["List", 4, 5]],
   ["ChineseRemainder", ["List", 1, 2], ["List", 6, 10]],
   ["PowerMod", 3, -1, 7],
@@ -300,6 +300,7 @@ const OVERRIDDEN = [
   "ModularInverse",
   "MoebiusMu",
   "Multinomial",
+  "MultiplicativeOrder",
   "Multiply",
   // Our N rounds to the requested digits; a bare `N(Pi, 30)` prints 34.
   "N",

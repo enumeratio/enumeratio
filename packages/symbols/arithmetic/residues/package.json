@@ -2,7 +2,7 @@
   "name": "@enumeratio/residues",
   "version": "0.0.0",
   "private": true,
-  "description": "Modular arithmetic for @cortex-js/compute-engine: residues, CRT, factoring, every r-th root of a residue (PowerModList), discrete logarithms, primitive roots, and IntegerMod — an element of Z/m as a value — all over bigints.",
+  "description": "Modular arithmetic for @cortex-js/compute-engine: residues, CRT, factoring, every r-th root of a residue (PowerModList), discrete logarithms, primitive roots, and ResidueClass — an element of Z/m as a value — all over bigints.",
   "license": "WTFPL",
   "files": [
     "dist",

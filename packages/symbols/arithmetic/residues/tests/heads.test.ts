@@ -1,5 +1,5 @@
 import { createEngine } from "@enumeratio/engine/testing";
-import { bigIntegerAt, operandsOf } from "@enumeratio/engine";
+import { bigIntegerAt, operandsOf, type Json } from "@enumeratio/engine";
 import { expect, test } from "vite-plus/test";
 import { declareResidues } from "../src/declare.ts";
 
@@ -31,4 +31,21 @@ test("ℤ/m is QuotientRing(Integers, m), and IntegerModRing(m) is its alias", (
   expect(ring.count).toBe(6);
   expect(ce.box(["IntegerModRing", 6]).evaluate().json).toEqual(["QuotientRing", "Integers", 6]);
   expect(ce.box(["Count", ["IntegerModRing", 6]]).evaluate().json).toBe(6);
+});
+
+test("IntegerMod is the old spelling of compute-engine's ResidueClass", () => {
+  expect(ce.box(["IntegerMod", 10, 7]).json).toEqual(["ResidueClass", 3, 7]);
+  expect(ce.box(["Add", ["IntegerMod", 5, 7], 3]).evaluate().json).toEqual(["ResidueClass", 1, 7]);
+  expect(ce.box(["Element", ["IntegerMod", 3, 7], ["IntegerModRing", 7]]).evaluate().json).toBe("True");
+});
+
+test("classes of two moduli stay as written; ChineseRemainder is the way across", () => {
+  const mixed: Json = ["Add", ["ResidueClass", 2, 4], ["ResidueClass", 1, 6]];
+  expect(ce.box(mixed).evaluate().json).toEqual(mixed);
+  expect(ce.box(["ChineseRemainder", ["ResidueClass", 1, 4], ["ResidueClass", 3, 6]]).evaluate().json).toEqual([
+    "ResidueClass",
+    9,
+    12,
+  ]);
+  expect(ce.box(["MultiplicativeOrder", ["ResidueClass", 2, 7]]).evaluate().json).toBe(3);
 });

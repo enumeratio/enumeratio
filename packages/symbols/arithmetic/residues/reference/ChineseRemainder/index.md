@@ -11,12 +11,12 @@ signatures:
     library: enumeratio-residues
     type: (value+) -> value
     overrides: compute-engine
-  - call: ChineseRemainder(IntegerMod(r1, m1), IntegerMod(r2, m2), …)
-    description: the [[IntegerMod]] class mod $\operatorname{lcm}(m_i)$ that reduces to each
+  - call: ChineseRemainder(ResidueClass(r1, m1), ResidueClass(r2, m2), …)
+    description: the [[ResidueClass]] class mod $\operatorname{lcm}(m_i)$ that reduces to each
     library: enumeratio-residues
 seeAlso:
   - Mod
-  - IntegerMod
+  - ResidueClass
   - FromDigits
 references:
   - system: wikipedia

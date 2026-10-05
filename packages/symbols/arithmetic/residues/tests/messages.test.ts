@@ -11,21 +11,25 @@ const run = (expr: unknown): [unknown, string[]] => {
   return [value.json, messages.map(messageLine)];
 };
 
-const NINV = "IntegerMod::ninv: 2 is not a unit mod 4; gcd(2, 4) = 2.";
+const NINV = "ResidueClass::ninv: 2 is not a unit mod 4; gcd(2, 4) = 2.";
 
 test("a non-unit divisor declines, and says why", () => {
-  expect(run(["Divide", 1, ["IntegerMod", 2, 4]])).toEqual([["Divide", 1, ["IntegerMod", 2, 4]], [NINV]]);
-  expect(run(["Divide", ["IntegerMod", 1, 4], ["IntegerMod", 6, 8]])[1]).toEqual([NINV]);
-  expect(run(["Power", ["IntegerMod", 2, 4], -3])[1]).toEqual([NINV]);
+  expect(run(["Divide", 1, ["IntegerMod", 2, 4]])).toEqual([["Divide", 1, ["ResidueClass", 2, 4]], [NINV]]);
+  expect(run(["Power", ["ResidueClass", 2, 4], -3])[1]).toEqual([NINV]);
   expect(run(["IntegerMod", ["Rational", 1, 2], 4])[1]).toEqual([NINV]);
+  // Classes of two moduli do not combine, and say nothing about it.
+  expect(run(["Divide", ["ResidueClass", 1, 4], ["ResidueClass", 6, 8]])).toEqual([
+    ["Divide", ["ResidueClass", 1, 4], ["ResidueClass", 6, 8]],
+    [],
+  ]);
   // A unit is quiet.
-  expect(run(["Divide", 1, ["IntegerMod", 3, 4]])).toEqual([["IntegerMod", 3, 4], []]);
+  expect(run(["Divide", 1, ["ResidueClass", 3, 4]])).toEqual([["ResidueClass", 3, 4], []]);
 });
 
 test("an inconsistent Chinese remainder names the clashing pair, in either form", () => {
   const nsol =
     "ChineseRemainder::nsol: No integer is 1 mod 4 and 2 mod 6: gcd(4, 6) = 2 does not divide their difference.";
-  expect(run(["ChineseRemainder", ["IntegerMod", 1, 4], ["IntegerMod", 2, 6]])[1]).toEqual([nsol]);
+  expect(run(["ChineseRemainder", ["ResidueClass", 1, 4], ["ResidueClass", 2, 6]])[1]).toEqual([nsol]);
   expect(run(["ChineseRemainder", ["List", 1, 2], ["List", 4, 6]])).toEqual([
     ["ChineseRemainder", ["List", 1, 2], ["List", 4, 6]],
     [nsol],
@@ -34,5 +38,5 @@ test("an inconsistent Chinese remainder names the clashing pair, in either form"
 });
 
 test("a class of a class is read in the smaller ring", () => {
-  expect(run(["IntegerMod", ["IntegerMod", 5, 6], 3])).toEqual([["IntegerMod", 2, 3], []]);
+  expect(run(["ResidueClass", ["ResidueClass", 5, 6], 3])).toEqual([["ResidueClass", 2, 3], []]);
 });

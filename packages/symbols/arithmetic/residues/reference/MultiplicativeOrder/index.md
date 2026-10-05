@@ -8,7 +8,7 @@ signatures:
     description: smallest positive $k$ with $a^k\equiv1\pmod n$.
   - call: MultiplicativeOrder(a, n, {r1, r2, …})
     description: smallest positive $k$ with $a^k \equiv r_i \pmod n$ for some $i$ — a discrete logarithm
-  - call: MultiplicativeOrder(IntegerMod(a, n))
+  - call: MultiplicativeOrder(ResidueClass(a, n))
     description: the order of a unit of $\mathbb{Z}/n$
     library: enumeratio-residues
     type: (value, integer?, list<integer>?) -> integer

@@ -12,7 +12,7 @@ import { expect, test } from "vite-plus/test";
 import { declaredEngine, LIBRARIES } from "../scripts/engines.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 
-const SAMPLE = new Set(["HurwitzZeta", "Binomial", "Permutations", "IntegerMod", "Quaternion", "Floor", "Fibonacci"]);
+const SAMPLE = new Set(["HurwitzZeta", "Binomial", "Permutations", "ResidueClass", "Quaternion", "Floor", "Fibonacci"]);
 const deep = process.env.DEEP_TESTS === "1";
 const PER_HEAD = deep ? Infinity : 12;
 

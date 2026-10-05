@@ -28,7 +28,7 @@ signatures:
     type: (complex | infinity, (complex | infinity)+) -> number
     overrides: enumeratio-hypercomplex
     on:
-      - IntegerMod
+      - ResidueClass
   - call: Divide(complex | infinity, (complex | infinity)+) -> number
     description: Quotient of a numerator and one or more denominators.
     library: enumeratio-numerals

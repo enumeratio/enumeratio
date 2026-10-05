@@ -41,7 +41,7 @@ test("a kernel over the site's catalogue answers as the site's engine does, decl
   expect(cycles.declared).not.toContain("analytic");
   expect(cycles.json).toEqual(eager.box(["PermutationCycles", ["List", 2, 1, 3]] as never).evaluate().json);
   for (const json of [
-    ["Add", ["IntegerMod", 3, 5], 4],
+    ["Add", ["ResidueClass", 3, 5], 4],
     ["Multiply", "i_1", "i_1"],
   ]) {
     const lazy = await kernel.evaluate({ json });

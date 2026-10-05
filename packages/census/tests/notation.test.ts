@@ -80,7 +80,7 @@ test("no head is written by two packages' entries", () => {
 
 /** Triggers a package takes over from the host's own dictionary, deliberately. */
 const OVERRIDES: Record<string, string> = {
-  "infix \\pmod": "residues: `a \\pmod{n}` is the class IntegerMod(a, n), not compute-engine's Mod",
+  "infix \\pmod": "residues: `a \\pmod{n}` is the class ResidueClass(a, n), not compute-engine's Mod",
 };
 
 test("a package claims a trigger the host's dictionary has only where it means to replace it", () => {
@@ -115,6 +115,15 @@ function scoped<T>(ce: ComputeEngine, f: () => T): T {
 const { heads } = referenceData(recordsRoot(import.meta.dirname));
 const text = (value: unknown): string => JSON.stringify(value);
 
+/** `c^-1` as `1/c`: compute-engine keeps what holds a residue class as written, so a negative
+ *  power is written `\frac{1}{c}` and reads back as a quotient — the same value, another tree. */
+const quotient = (json: unknown): unknown =>
+  Array.isArray(json)
+    ? json[0] === "Power" && json[2] === -1 && json.length === 3
+      ? ["Divide", 1, quotient(json[1])]
+      : json.map(quotient)
+    : json;
+
 test("StandardForm round trip: each head with a LaTeX entry writes what reads back", () => {
   const ce = engine(NOTATION.latex);
   const named = new Set(NOTATION.latex.map((e) => e.name).filter((n) => n !== undefined));
@@ -124,7 +133,7 @@ test("StandardForm round trip: each head with a LaTeX entry writes what reads ba
       scoped(ce, () => {
         const before = ce.box(example.expr as never);
         const after = ce.parse(before.latex);
-        if (text(after.json) !== text(before.json))
+        if (text(quotient(after.json)) !== text(quotient(before.json)))
           failures.push(`${h.head} example/${example.id}: ${before.latex} reads as ${text(after.json)}`);
       });
   expect(failures).toEqual([]);

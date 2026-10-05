@@ -378,7 +378,7 @@ export class NotatioOut extends LitElement {
   declare _code: Partial<Record<CodeForm, string>>;
   declare _status: Status;
   declare _detail: string;
-  /** What the heads that declined to evaluate said about it (`IntegerMod::ninv`, …). */
+  /** What the heads that declined to evaluate said about it (`ResidueClass::ninv`, …). */
   declare _messages: readonly Message[];
   /** TreeForm nodes currently open, keyed by path (`"0.1"` is the second child of the first). */
   declare _expanded: ReadonlySet<string>;

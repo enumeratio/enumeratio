@@ -12,7 +12,7 @@ import {
 } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { RESIDUES_CARRIERS } from "./carrier-data.ts";
-import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
+import { declareResidueClass, residueClassOf } from "./residue-class-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
 import { powerModList } from "./roots.ts";
@@ -117,10 +117,10 @@ export function declareResidues(ce: Engine): void {
   );
 
   // MultiplicativeOrder[k, n, {r₁, …}]: the least m > 0 with kᵐ ≡ some rᵢ — a discrete log —
-  // is native; the order of a unit of ℤ/m, MultiplicativeOrder(IntegerMod(k, n)), is ours.
+  // is native; the order of a unit of ℤ/m, MultiplicativeOrder(ResidueClass(k, n)), is ours.
   widenSignature(ce, "MultiplicativeOrder", "(value, integer?, list<integer>?) -> integer", mayBeInteger);
   extend(ce, "MultiplicativeOrder", (ops) => {
-    const unit = ops.length === 1 ? integerModOf(ops[0]) : undefined;
+    const unit = ops.length === 1 ? residueClassOf(ops[0]) : undefined;
     const k = unit?.residue ?? bigIntegerAt(ops[0]);
     const n = unit?.modulus ?? bigIntegerAt(ops[1]);
     if (k === undefined || n === undefined) return undefined;
@@ -174,6 +174,6 @@ export function declareResidues(ce: Engine): void {
     },
   });
 
-  declareIntegerMod(ce);
+  declareResidueClass(ce);
   declareModExactConstant(ce);
 }

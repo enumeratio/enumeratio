@@ -24,16 +24,9 @@ signatures:
       - ^(?:i|j|epsilon|e|f|theta|epsilonSymbol|varepsilon|thetaSymbol|vartheta)_\d+$
   - call: Add(value+) -> value
     description: Sum of two or more values.
-    library: enumeratio-residues
-    type: (value+) -> value
-    overrides: enumeratio-hypercomplex
-    on:
-      - IntegerMod
-  - call: Add(value+) -> value
-    description: Sum of two or more values.
     library: enumeratio-numerals
     type: (value+) -> value
-    overrides: enumeratio-residues
+    overrides: enumeratio-hypercomplex
     on:
       - AdicNumeral
   - call: Add(value+) -> value
