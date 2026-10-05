@@ -1,7 +1,7 @@
 id	in	out	tex.in	tex.out	verdict
 prints-a-list-as-notatio-source	ToString[List[1, 2, 3]]	"\"{1, 2, 3}\""	\text{ToString}[\{1,2,3\}]	\text{$\{$1, 2, 3$\}$}	disagree
-tostring-x-pow-2	ToString[Power[x, 2]]	"\" 2\\nx\""			disagree
+tostring-x-pow-2	ToString[Power[x, 2]]	"\" 2\\nx\""	\text{ToString}\left[x^2\right]	\text{ 2$\backslash $nx}	disagree
 prints-an-arithmetic-expression	ToString[Plus[x, 1]]	"\"1 + x\""	\text{ToString}[x+1]	\text{1 + x}	disagree
-tostring-exponentiale-pow-x	ToString[Power[E, x]]	"\" x\\nE\""			disagree
-tostring-cos-x-plus-cos-y	ToString[Plus[Cos[x], Cos[y]]]	"\"Cos[x] + Cos[y]\""			disagree
+tostring-exponentiale-pow-x	ToString[Power[E, x]]	"\" x\\nE\""	\text{ToString}\left[e^x\right]	\text{ x$\backslash $nE}	disagree
+tostring-cos-x-plus-cos-y	ToString[Plus[Cos[x], Cos[y]]]	"\"Cos[x] + Cos[y]\""	\text{ToString}[\cos (x)+\cos (y)]	\text{Cos[x] + Cos[y]}	disagree
 tostring-kappa	ToString[kappa]	"\"kappa\""	\text{ToString}[\kappa ]	\text{kappa}	

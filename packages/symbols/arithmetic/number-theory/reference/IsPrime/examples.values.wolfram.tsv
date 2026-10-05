@@ -52,9 +52,9 @@ isprime-list-7-11	PrimeQ[List[7, 11]]	{True, True}	\text{PrimeQ}[\{7,11\}]	\{\te
 isprime-list-5-7-2	PrimeQ[List[5, 7, 2]]	{True, True, True}	\text{PrimeQ}[\{5,7,2\}]	\{\text{True},\text{True},\text{True}\}	
 isprime-19	PrimeQ[19]	True	\text{PrimeQ}[19]	\text{True}	
 divisorsum-19-function-1-1-isprime	DivisorSum[19, Function[Slot[1]], PrimeQ]	19	\sum _{\unicode{f80d}|19\land \text{PrimeQ}[\unicode{f80d}]} \unicode{f80d}	19	
-filter-divisors-625-isprime	Select[Divisors[625], PrimeQ]	{5}			
-filter-divisors-2-434-500-isprime	Select[Divisors[2434500], PrimeQ]	{2, 3, 5, 541}			
-filter-divisors-65-isprime	Select[Divisors[65], PrimeQ]	{5, 13}			
+filter-divisors-625-isprime	Select[Divisors[625], PrimeQ]	{5}	\text{Select}[\text{Divisors}[625],\text{PrimeQ}]	\{5\}	
+filter-divisors-2-434-500-isprime	Select[Divisors[2434500], PrimeQ]	{2, 3, 5, 541}	\text{Select}[\text{Divisors}[2434500],\text{PrimeQ}]	\{2,3,5,541\}	
+filter-divisors-65-isprime	Select[Divisors[65], PrimeQ]	{5, 13}	\text{Select}[\text{Divisors}[65],\text{PrimeQ}]	\{5,13\}	
 non-integers-are-not-prime	PrimeQ[Rational[1, 2]]	False	\text{PrimeQ}\left[\frac{1}{2}\right]	\text{False}	
 another-non-integer-3-halves	PrimeQ[Rational[3, 2]]	False	\text{PrimeQ}\left[\frac{3}{2}\right]	\text{False}	
 a-symbol-stays-unevaluated	PrimeQ[x]	False	\text{PrimeQ}[x]	\text{False}	disagree

@@ -1,9 +1,9 @@
-id	section	role	expr	expected	caption	triage	epsil.back
-c5-is-not-bipartite			[IsBipartiteGraph, [CycleGraph, 5]]	False	An odd cycle is never bipartite		
-c6-is-bipartite			[IsBipartiteGraph, [CycleGraph, 6]]	True	An even cycle is bipartite		
-cyclegraph-3	Scope		[CycleGraph, 3]	[Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1]]]	The 3-cycle is a triangle		
-map-function-vertexeccentricity-cyclegraph-5-1-1	Applications		[Map, [Function, [Block, [VertexEccentricity, [CycleGraph, 5], _1]], _1], [VertexList, [CycleGraph, 5]]]	[List, 2, 2, 2, 2, 2]	On a 5-cycle the farthest vertex is 2 steps away		Unreadable
-isacyclicgraph-cyclegraph-5	Properties		[IsAcyclicGraph, [CycleGraph, 5]]	False	A cycle graph contains a cycle, so not acyclic		
-vertexdegree-cyclegraph-7	Properties		[VertexDegree, [CycleGraph, 7]]	[List, 2, 2, 2, 2, 2, 2, 2]	Every vertex has degree 2		
-cyclegraph-4	Properties		[CycleGraph, 4]	[Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4], [UndirectedEdge, 4, 1]]]	Four vertices joined in a ring		
-ispathgraph-cyclegraph-5	Properties	triage	[IsPathGraph, [CycleGraph, 5]]	False		ours?	
+id	section	role	expr	expected	caption	epsil.back	wolfram.kind	wolfram.note
+c5-is-not-bipartite			[IsBipartiteGraph, [CycleGraph, 5]]	False	An odd cycle is never bipartite			
+c6-is-bipartite			[IsBipartiteGraph, [CycleGraph, 6]]	True	An even cycle is bipartite			
+cyclegraph-3	Scope		[CycleGraph, 3]	[Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 1]]]	The 3-cycle is a triangle			
+map-function-vertexeccentricity-cyclegraph-5-1-1	Applications		[Map, [Function, [Block, [VertexEccentricity, [CycleGraph, 5], _1]], _1], [VertexList, [CycleGraph, 5]]]	[List, 2, 2, 2, 2, 2]	On a 5-cycle the farthest vertex is 2 steps away	Unreadable		
+isacyclicgraph-cyclegraph-5	Properties		[IsAcyclicGraph, [CycleGraph, 5]]	False	A cycle graph contains a cycle, so not acyclic			
+vertexdegree-cyclegraph-7	Properties		[VertexDegree, [CycleGraph, 7]]	[List, 2, 2, 2, 2, 2, 2, 2]	Every vertex has degree 2			
+cyclegraph-4	Properties		[CycleGraph, 4]	[Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4], [UndirectedEdge, 4, 1]]]	Four vertices joined in a ring			
+ispathgraph-cyclegraph-5	Properties		[IsPathGraph, [CycleGraph, 5]]	False			convention	Wolfram's PathGraphQ counts a cycle as a path graph (connected, every vertex of degree at most 2); ours means a simple path, so a cycle isn't one.
