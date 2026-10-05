@@ -5,7 +5,7 @@
 import { DEFINITIONS } from "@enumeratio/analytic/definitions";
 import { isWrittenHead } from "@enumeratio/entry/node";
 import { expect, test } from "vite-plus/test";
-import AGREEMENTS from "../src/crosswalk/oracle-agreements.json" with { type: "json" };
+import { ORACLE_AGREEMENTS } from "../src/crosswalk/oracle-agreements-data.ts";
 import { loadReferenceData, oracleAgreementsOf, PACKAGES, referenceData } from "../src/node.ts";
 
 const loaded = loadReferenceData(PACKAGES);
@@ -30,9 +30,10 @@ test("reference bindings match analytic's DEFINITIONS", () => {
         expect(impl.expr, entry.name).toEqual(DEFINITIONS[entry.name as keyof typeof DEFINITIONS]);
 });
 
-test("oracle-agreements.json is current", () => {
+// Built (gitignored) by the package's `build`; this checks that the build ran against these records.
+test("the built oracle-agreements-data.ts tallies the current records", () => {
   expect(
-    AGREEMENTS,
-    "regenerate: node -e 'import(\"./packages/reference/src/node.ts\").then((m) => m.writeOracleAgreements())'",
+    ORACLE_AGREEMENTS,
+    "rebuild: pnpm --filter @enumeratio/reference run build (or node packages/reference/scripts/collect-oracle-agreements.ts)",
   ).toEqual(oracleAgreementsOf(referenceData()));
 });

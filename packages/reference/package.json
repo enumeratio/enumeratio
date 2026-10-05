@@ -21,7 +21,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "node scripts/collect-catalog-references.ts && node scripts/collect-curated.ts && node scripts/oracle-scan.ts --digest && vp pack",
+    "build": "node scripts/collect-catalog-references.ts && node scripts/collect-curated.ts && node scripts/collect-oracle-agreements.ts && node scripts/oracle-scan.ts --digest && vp pack",
     "test": "vp test",
     "check": "vp check",
     "crosswalk:collect": "node scripts/collect-crosswalk.ts",
@@ -78,6 +78,7 @@
   },
   "generated": [
     "src/crosswalk/catalog-references-data.ts",
-    "src/crosswalk/curated-data.ts"
+    "src/crosswalk/curated-data.ts",
+    "src/crosswalk/oracle-agreements-data.ts"
   ]
 }

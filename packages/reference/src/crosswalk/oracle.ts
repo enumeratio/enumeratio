@@ -10,7 +10,7 @@
 // The scan needs a kernel, so it is not a gate; a head with no scanned example simply gets
 // no mark. The classification of each disagreement lives on its row in the record.
 
-import AGREEMENTS from "./oracle-agreements.json" with { type: "json" };
+import { ORACLE_AGREEMENTS } from "./oracle-agreements-data.ts";
 import type { CrosswalkSystem } from "./sources.ts";
 
 /** How a head's examples fared in one system's kernel. */
@@ -23,7 +23,6 @@ export interface OracleAgreement {
 }
 
 /** Every system that has run this head's examples, with how they came out. Tallied from the
- * records by `oracleAgreementsOf` (node.ts) into oracle-agreements.json, which the scan
- * rewrites and a test keeps fresh -- so the browser never loads the examples to count them. */
-export const oracleAgreements = (head: string): OracleAgreement[] =>
-  ((AGREEMENTS as Record<string, OracleAgreement[]>)[head] ?? []).slice();
+ * records by `oracleAgreementsOf` (node.ts) into oracle-agreements-data.ts at build, so the
+ * browser never loads the examples to count them. */
+export const oracleAgreements = (head: string): OracleAgreement[] => (ORACLE_AGREEMENTS[head] ?? []).slice();

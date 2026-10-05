@@ -1,5 +1,6 @@
 # Written by `build`; never committed.
 src/crosswalk/catalog-references-data.ts
 src/crosswalk/curated-data.ts
+src/crosswalk/oracle-agreements-data.ts
 golden/oracle/disagreements.md
 scripts/engines.d.ts
