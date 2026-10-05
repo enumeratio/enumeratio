@@ -1,5 +1,5 @@
 id	section	role	expr	expected	known	source	caption	epsil.back	epsil.backOut	fullform.in	fullform.out	wolfram.kind	wolfram.note
-n-forces-the-numeric-result-that-plain			[N, [Cosh, 0]]	1			N(...) forces the numeric result that plain evaluation withholds						
+n-forces-the-numeric-result-that-plain			[N, [Cosh, 0]]	{num: "1.0"}			N(...) forces the numeric result that plain evaluation withholds						
 n-cosh-1			[N, [Cosh, 1]]	{num: "1.54308063481524377848"}									
 stays-symbolic-even-at-0-same-as-sinh-wrap-in-n			[Cosh, 0]	1			Exact at 0, as [[Cos]] is						
 a-float-argument-evaluates-directly-no-n-needed			[Cosh, 1.2]	{num: "1.81065556732437479309"}			A float argument evaluates directly, no N(...) needed						

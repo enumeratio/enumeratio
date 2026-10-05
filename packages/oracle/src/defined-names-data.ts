@@ -935,6 +935,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "ReplaceAll",
   "ReplacePart",
   "Rescale",
+  "ResidueClass",
   "ResidueNumerals",
   "ResidueSystem",
   "Rest",

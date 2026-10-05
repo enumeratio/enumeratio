@@ -1,6 +1,6 @@
 id	section	role	expr	expected	known	tolerance	source	caption
 rf-1-2-3		test	[N, [CarlsonRF, 1, 2, 3]]	0.7269459354689083	{num: "0.7269459354689082"}	1e-12	mpmath 1.3.0 elliprf	
-rf-1-1-1		test	[N, [CarlsonRF, 1, 1, 1]]	1	{num: "1"}	1e-12	mpmath 1.3.0 elliprf	
+rf-1-1-1		test	[N, [CarlsonRF, 1, 1, 1]]	{num: "1.0"}	{num: "1"}	1e-12	mpmath 1.3.0 elliprf	
 rf-2-2-2		test	[N, [CarlsonRF, 2, 2, 2]]	0.7071067811865476	{num: "0.7071067811865476"}	1e-12	mpmath 1.3.0 elliprf	
 rf-0-1-2		test	[N, [CarlsonRF, 0, 1, 2]]	1.3110287771460603	{num: "1.3110287771460598"}	1e-12	mpmath 1.3.0 elliprf	
 rf-0-2-3		test	[N, [CarlsonRF, 0, 2, 3]]	1.0010773804561062	{num: "1.0010773804561062"}	1e-12	mpmath 1.3.0 elliprf	

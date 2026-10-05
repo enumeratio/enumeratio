@@ -18,15 +18,14 @@ test("a dictionary literal spells out as its entries", () => {
   ]);
 });
 
-test("a Dictionary is written as its entries, not the empty string", () => {
+test("a Dictionary is written as its entries", () => {
   const dict = ce.box([
     "Dictionary",
     ["KeyValuePair", { str: "Width" }, 2],
     ["KeyValuePair", { str: "Bijective" }, "False"],
   ]);
-  expect(dict.latex).toBe("");
-  expect(latexOf(ce, dict)).toBe(
-    String.raw`\left\lbrace \text{Width}\to 2,\;\text{Bijective}\to \mathrm{False}\right\rbrace`,
-  );
+  const written = String.raw`\left\lbrace \text{Width}\to 2,\;\text{Bijective}\to \mathrm{False}\right\rbrace`;
+  expect(dict.latex).toBe(written);
+  expect(latexOf(ce, dict)).toBe(written);
   expect(latexOf(ce, ce.box(["Add", "x", 1]))).toBe("x+1");
 });

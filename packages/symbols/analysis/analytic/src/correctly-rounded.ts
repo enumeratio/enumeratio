@@ -127,6 +127,20 @@ function certifiedRounding(ce: ComputeEngine, x: BoxedExpression, d: number): Bo
   return undefined;
 }
 
+/** `json` with each whole number a number literal or a list holds written as a float, as
+ * compute-engine's `N` answers (`N(2, 30)` is `2.0`); the method `.N()` keeps integers exact.
+ * Symbolic structure keeps its coefficients. */
+function inexact(json: unknown): unknown {
+  if (typeof json === "number") return Number.isInteger(json) ? { num: `${json}.0` } : json;
+  if (typeof json === "object" && json !== null && !Array.isArray(json)) {
+    const num = (json as { num?: unknown }).num;
+    return typeof num === "string" && /^-?\d+$/.test(num) ? { num: `${num}.0` } : json;
+  }
+  return Array.isArray(json) && (json[0] === "List" || json[0] === "Tuple")
+    ? [json[0], ...json.slice(1).map(inexact)]
+    : json;
+}
+
 /** `x` to `d` digits by Ziv's loop, or `undefined` when the loop can't vouch for them because
  * more digits are asked for than a double holds and a head in it answers with one. Leaves
  * `ce.precision` changed; the caller restores it. */
@@ -153,7 +167,7 @@ function correctlyRounded(ce: ComputeEngine, x: BoxedExpression, d: number): Box
     agreed = next === answer;
     answer = next;
   }
-  const result = ce.box(JSON.parse(answer) as never);
+  const result = ce.box(inexact(JSON.parse(answer)) as never);
   refinements.set(result, finest);
   return result;
 }

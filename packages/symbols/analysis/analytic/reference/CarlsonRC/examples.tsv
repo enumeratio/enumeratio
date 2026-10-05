@@ -1,6 +1,6 @@
 id	section	role	expr	expected	known	tolerance	source	wolfram.kind	wolfram.note
 rc-1-4		test	[N, [CarlsonRC, 1, 4]]	0.6045997880780727	{num: "0.6045997880780726"}	1e-12	mpmath 1.3.0 elliprc		
-rc-1-1		test	[N, [CarlsonRC, 1, 1]]	1	{num: "1"}	1e-12	mpmath 1.3.0 elliprc		
+rc-1-1		test	[N, [CarlsonRC, 1, 1]]	{num: "1.0"}	{num: "1"}	1e-12	mpmath 1.3.0 elliprc		
 rc-3-2		test	[N, [CarlsonRC, 3, 2]]	0.6584789484624086	{num: "0.6584789484624084"}	1e-12	mpmath 1.3.0 elliprc		
 rc-1-2i-3		test	[N, [CarlsonRC, [Complex, 1, 2], 3]]	[Complex, 0.6128536899156413, -0.10481507789285571]	[Complex, 0.6128536899156409, -0.1048150778928556]	1e-12	mpmath 1.3.0 elliprc		
 rc-0-1i-0-1i		test	[N, [CarlsonRC, [Complex, 0, 1], [Complex, 0, -1]]]	[Complex, 1.2260849569072199, 0.3447113698876769]	[Complex, 1.2260849569072199, 0.3447113698876768]	1e-12	mpmath 1.3.0 elliprc		

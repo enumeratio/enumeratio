@@ -424,20 +424,3 @@ export function evaluateZetaAtNonpositiveShift(ce: ComputeEngine): void {
     2,
   );
 }
-
-/** Complete elliptic integrals at an exact parameter m = 0, which stay unevaluated:
- * K(0) = E(0) = π/2 (DLMF 19.6.1). A float 0 is left to the native numeric kernel. */
-export function evaluateCompleteEllipticAtZero(ce: ComputeEngine): void {
-  for (const head of ["EllipticK", "EllipticE"] as const) {
-    wrapOperator(
-      ce,
-      [head],
-      (ops) => ops[0]?.json === 0,
-      () => (_ops, options) => {
-        const value = ce.box(["Multiply", ["Rational", 1, 2], "Pi"]);
-        return options.numericApproximation ? value.N() : value.evaluate();
-      },
-      1,
-    );
-  }
-}

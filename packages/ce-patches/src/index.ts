@@ -3,12 +3,8 @@ import { lerchPhiPatch } from "./patches/lerch-phi.ts";
 import { solveDeclines } from "./patches/solve-declines.ts";
 import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
-import { nAccuracyGoal } from "./patches/n-accuracy-goal.ts";
-import { assignFunctionDefinition } from "./patches/assign-function-definition.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
-import { oscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
 import { valuesAtZero } from "./patches/values-at-zero.ts";
-import { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
 import { polyLogLargeOrder } from "./patches/polylog-huge-order.ts";
 import { rangeBigBounds } from "./patches/range-big-bounds.ts";
 import { shapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
@@ -79,26 +75,20 @@ export {
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./compute-engine/numerics/barnes-g.ts";
 export { barnesGBig, barnesGBall, pi as barnesGPi } from "./compute-engine/numerics/barnes-g-big.ts";
 export { logGamma, logGammaReal, logGammaBig } from "./compute-engine/numerics/log-gamma.ts";
-export { nAccuracyGoal, evaluateNAccuracyGoal } from "./patches/n-accuracy-goal.ts";
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 export { rangeBigBounds, evaluateRangeBigBounds } from "./patches/range-big-bounds.ts";
 export { shapeOfUnknownElements, evaluateShapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
-export { assignFunctionDefinition, canonicalAssignFunctionDefinition } from "./patches/assign-function-definition.ts";
-export { oscillatoryEndpoint, integrateOscillatoryEndpoint } from "./patches/oscillatory-endpoint.ts";
 export {
   quotientRingCollection,
-  quotientRingOverIntegers,
+  quotientRingExactCount,
   integerQuotientModulus,
-  setResidueClasses,
-  type ResidueClasses,
 } from "./patches/quotient-ring-collection.ts";
 export { valuesAtZero } from "./patches/values-at-zero.ts";
 export { polyLogLargeOrder, evaluatePolyLogHugeOrder } from "./patches/polylog-huge-order.ts";
 export { polyLogHugeOrder, NATIVE_MAX_ORDER } from "./compute-engine/library/special-functions.ts";
-export { inverseTrigRadicals } from "./patches/inverse-trig-radicals.ts";
 export { clausen } from "./compute-engine/numerics/clausen.ts";
 export { stieltjesGamma, stieltjesGammaReal, STIELTJES_MAX_ORDER } from "./compute-engine/numerics/stieltjes.ts";
 export { stieltjesGammaBall, stieltjesGammaBig } from "./compute-engine/numerics/stieltjes-big.ts";
@@ -194,12 +184,8 @@ export const PATCHES: readonly Patch[] = [
   solveDeclines,
   takeDropNegativeCount,
   iteratorUpperBound,
-  nAccuracyGoal,
-  assignFunctionDefinition,
   quotientRingCollection,
-  oscillatoryEndpoint,
   valuesAtZero,
-  inverseTrigRadicals,
   polyLogLargeOrder,
   rangeBigBounds,
   shapeOfUnknownElements,

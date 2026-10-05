@@ -1,5 +1,5 @@
 id	section	role	expr	expected	known	tolerance	source	caption	epsil.backOut	wolfram.kind	wolfram.note
-j-i-1			[N, [KleinInvariantJ, [Complex, 0, 1]]]	1	{num: "1"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	$J(i) = 1$			
+j-i-1			[N, [KleinInvariantJ, [Complex, 0, 1]]]	{num: "1.0"}	{num: "1"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	$J(i) = 1$			
 j-2i-66-3-1728-1331-8			[N, [KleinInvariantJ, [Complex, 0, 2]]]	166.375	{num: "166.375"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	$J(2i) = 66^3/1728 = 1331/8$			
 j-1-2i-modular-invariance-with-2i		test	[N, [KleinInvariantJ, [Complex, 1, 2]]]	166.375	{num: "166.375"}	1e-8	Wolfram 15.0.0 KleinInvariantJ	Modular invariance — the same value as $J(2i)$			
 exact-at-the-elliptic-point-i	Scope		[KleinInvariantJ, [Complex, 0, 1]]	1				Exact at the elliptic point $i$			

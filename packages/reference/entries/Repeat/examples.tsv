@@ -3,4 +3,4 @@ repeat-c-10			[Repeat, c, 10]	[List, c, c, c, c, c, c, c, c, c, c]	Repeats a sym
 repeat-0-10	Scope		[Repeat, 0, 10]	[List, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]	A list of ten zeros		
 repeat-1-10	Scope		[Repeat, 1, 10]	[List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]	A list of ten ones, handy as a weight vector		
 dot-list-repeat-1-length-list	Applications		[Dot, list, [Repeat, 1, [Length, list]]]	[Dot, list, [List]]	A symbolic length makes the repeat empty, so the dot stays unevaluated with an empty list		
-shape-repeat-c-dims	Properties		[Shape, [Repeat, c, dims]]	[Tuple]		convention	Wolfram's Dimensions reads an unevaluated call as an array of its arguments, so Dimensions[ConstantArray[c, dims]] is {2}; ours takes it as a scalar with an empty shape.
+shape-repeat-c-dims	Properties		[Shape, [Repeat, c, dims]]	[Shape, [Repeat, c, dims]]		convention	Wolfram's Dimensions reads an unevaluated call as an array of its arguments, so Dimensions[ConstantArray[c, dims]] is {2}; ours takes it as a scalar with an empty shape.

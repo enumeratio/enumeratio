@@ -10,7 +10,6 @@ import {
   symbolNameOf,
   withDeadline,
 } from "@enumeratio/engine";
-import { applyPatch, assignFunctionDefinition } from "@enumeratio/ce-patches";
 import { SUMMARIES } from "@enumeratio/manifest/package/evaluation";
 import { declareAbout } from "./about.ts";
 import type { Outcome, TestResult } from "./verification-test.ts";
@@ -99,8 +98,6 @@ export function declareEvaluation(ce: ComputeEngine): void {
 
   declareVerificationTest(ce);
   declareAbout(ce);
-  // A cell's `f(x) := body` (Epsil) defines `f`, as the LaTeX `f(x)\coloneq body` does.
-  applyPatch(ce, assignFunctionDefinition);
 }
 
 function declareVerificationTest(ce: ComputeEngine): void {

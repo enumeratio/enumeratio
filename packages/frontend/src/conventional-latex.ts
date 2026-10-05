@@ -172,22 +172,6 @@ const add: Entry = {
   serialize: (serializer, expr) => native("Add").serialize(serializer, ["Add", ...operands(expr).map(unitFactors)]),
 };
 
-/** Inside a matrix compute-engine writes a square-root base inline (`2^{1/2}`) and then stacks the
- *  power's own exponent on it, `2^{1/2}^{1+x}`: a double superscript, which TeX rejects. Such a
- *  power is written with its base bracketed and its exponent whole. */
-const DOUBLE_SUPERSCRIPT = /\^\{[^{}]*\}\^\{/;
-const BRACKET_ANY_OPERATOR = 900;
-const power: Entry = {
-  ...native("Power"),
-  name: "Power",
-  serialize: (serializer, expr) => {
-    const out = native("Power").serialize(serializer, expr);
-    if (!DOUBLE_SUPERSCRIPT.test(out)) return out;
-    const [base, exponent] = operands(expr);
-    return `${serializer.wrap(base ?? null, BRACKET_ANY_OPERATOR)}^{${serializer.serialize(exponent ?? null)}}`;
-  },
-};
-
 /** A string atom as one escaped `\\text{…}`. compute-engine writes a bare string atom unescaped
  *  and without consulting the dictionary (`\\text{#}` is a TeX error), and hands `String`'s
  *  operands over unquoted, like symbols. So a writer that needs portable TeX wraps each string
@@ -270,7 +254,6 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
   beta,
   betaRoman,
   square,
-  power,
   escapedText,
   eulerGamma,
   signOut("Divide"),

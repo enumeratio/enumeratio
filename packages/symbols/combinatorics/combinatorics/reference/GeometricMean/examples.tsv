@@ -8,7 +8,7 @@ an-exact-irrational-result	Scope		[GeometricMean, [List, 2, 3]]	[Sqrt, 6]	An exa
 sqrt-3-6	Scope		[GeometricMean, [List, 1, 2, 3]]	[Root, 6, 3]	$\sqrt[3]{6}$
 symbolic-data	Scope		[GeometricMean, [List, a, b]]	[Sqrt, [Multiply, a, b]]	Symbolic data
 geometricmean-list-1-2-3-4	Scope		[GeometricMean, [List, 1, 2, 3, 4]]	[Root, 24, 4]	Exact integers keep an exact radical, $\sqrt[4]{24}$
-geometricmean-n-list-1-2-3-4-30	Scope		[GeometricMean, [N, [List, 1, 2, 3, 4], 30]]	[Root, 24, 4]	High-precision inputs still give the exact radical here
+geometricmean-n-list-1-2-3-4-30	Scope		[GeometricMean, [N, [List, 1, 2, 3, 4], 30]]	{num: "2.21336383940064318482"}	A 30-digit numeric list gives a 30-digit result
 geometricmean-list-pi-exponentiale-2	Scope		[GeometricMean, [List, Pi, ExponentialE, 2]]	[Root, [Multiply, 2, ExponentialE, Pi], 3]	
 powerexpand-ln-geometricmean-list-a-b-c-d	Properties		[PowerExpand, [Ln, [GeometricMean, [List, a, b, c, d]]]]	[Multiply, [Rational, 1, 4], [Add, [Ln, a], [Ln, b], [Ln, c], [Ln, d]]]	The log of a geometric mean is the arithmetic mean of the logs
 powerexpand-1-over-ln-geometricmean-list-a-b-c-d	Properties		[PowerExpand, [Divide, 1, [Ln, [GeometricMean, [List, a, b, c, d]]]]]	[Divide, 4, [Add, [Ln, a], [Ln, b], [Ln, c], [Ln, d]]]	The same identity read through a reciprocal

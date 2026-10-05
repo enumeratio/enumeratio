@@ -7,8 +7,8 @@ commonest-list-b-a-c-2-a-b-1-2-4			[Commonest, [List, b, a, c, 2, a, b, 1, 2], 4
 commonest-list-b-a-c-2-a-b-1-2-upto-6			[Commonest, [List, b, a, c, 2, a, b, 1, 2], [UpTo, 6]]	[List, b, a, 2, c, 1]		convention	Same values as Wolfram, in ours' most-frequent-first order (b, a, 2, c, 1) against its first-appearance order (b, a, c, 2, 1); two lists in a different order read as inconclusive to the scan.
 all-distinct-all-tie	Scope		[Commonest, [List, 1, 2, 3]]	[List, 1, 2, 3]	All distinct: all tie		
 the-n-commonest-most-frequent-first	Scope		[Commonest, [List, 1, 2, 2, 3, 3, 3, 4], 2]	[List, 3, 2]	The $n$ commonest, most frequent first	convention	compute-engine orders the n commonest elements strictly most-frequent-first (3 before 2); the scanned Wolfram result came back as {2, 3} for this list — a secondary-ordering difference in Commonest's tie/output convention.
-commonest-n-list-1-2-2-3-3-3-4	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4]]]	[List, 3]	Numeric input still picks the most frequent value, 3		
-commonest-n-list-1-2-2-3-3-3-4-30	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4], 30]]	[List, 3]	Higher-precision numeric input gives the same mode		
+commonest-n-list-1-2-2-3-3-3-4	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4]]]	[List, {num: "3.0"}]	Numeric input still picks the most frequent value, 3		
+commonest-n-list-1-2-2-3-3-3-4-30	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4], 30]]	[List, {num: "3.0"}]	Higher-precision numeric input gives the same mode		
 commonest-data	Scope		[Commonest, data]	[Commonest, data]			
 commonest-list-a-exponentiale-sin-y-exponentiale	Scope		[Commonest, [List, a, ExponentialE, [Sin, y], ExponentialE, a, 7]]	[List, a, ExponentialE]			
 commonest-heights	Applications		[Commonest, heights]	[Commonest, heights]			
