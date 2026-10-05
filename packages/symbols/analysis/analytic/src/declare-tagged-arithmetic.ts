@@ -12,6 +12,7 @@ import { registerTaggedHeads } from "./tagged-arithmetic.ts";
 // files used before) each re-evaluate every operand before checking anything, so Add alone
 // would pay for that three times over on EVERY Add in the engine, tagged or not.
 export function declareTaggedArithmetic(ce: ComputeEngine): void {
+  declareIntervalType(ce);
   declareCenteredInterval(ce); // declares the CenteredInterval head itself
   declareAround(ce);
   const interval = intervalResolvers(ce);
@@ -81,4 +82,17 @@ export function declareTaggedArithmetic(ce: ComputeEngine): void {
     around,
     expCombine,
   );
+}
+
+/**
+ * compute-engine types `Interval(a, b)` as `set<real>`, and its numeric functions refuse an
+ * operand disjoint from `number` with an `incompatible-type` error before their handlers run.
+ * An interval is a set and also the enclosure of a real number, which is how its arithmetic
+ * treats it, so its type claims neither: `any` passes numeric functions and set operations alike.
+ */
+function declareIntervalType(ce: ComputeEngine): void {
+  const definition = ce.lookupDefinition("Interval");
+  if (definition === undefined || !("operator" in definition)) return;
+  const type = ce.type("any");
+  (definition.operator as { type?: unknown }).type = () => type;
 }

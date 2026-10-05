@@ -3,11 +3,11 @@ the-cubic			[ChebyshevT, 3, x]	[Add, [Multiply, 4, [Power, x, 3]], [Multiply, -3
 the-quartic			[ChebyshevT, 4, x]	[Add, [Multiply, 8, [Power, x, 4]], [Multiply, -8, [Power, x, 2]], 1]			$T_4(x) = 8x^4 - 8x^2 + 1$			
 at-an-integer			[ChebyshevT, 5, 2]	362			At an integer the value is exact			
 at-a-real			[ChebyshevT, 5, 0.7]	-0.6708799999999998			At a floating-point $x$			
-at-t0-0-7		test	[N, [ChebyshevT, 0, 0.7]]	1						
+at-t0-0-7		test	[N, [ChebyshevT, 0, 0.7]]	{num: "1.0"}						
 at-t1-0-7		test	[N, [ChebyshevT, 1, 0.7]]	0.7						
 at-t2-0-7		test	[N, [ChebyshevT, 2, 0.7]]	-0.02000000000000013						
 at-t5-0-7		test	[N, [ChebyshevT, 5, 0.7]]	-0.6708799999999998						
-at-t5-2		test	[N, [ChebyshevT, 5, 2]]	362						
+at-t5-2		test	[N, [ChebyshevT, 5, 2]]	{num: "362.0"}						
 at-t-5-0-7		test	[N, [ChebyshevT, -5, 0.7]]	-0.6708799999999998						
 at-t4-2-3i		test	[N, [ChebyshevT, 4, [Complex, 2, 3]]]	[Complex, {num: "-911.0"}, {num: "-1056.0"}]						
 chebyshevt-2-3			[ChebyshevT, 2, 3]	17			Evaluates at an integer: $T_2(3) = 2\cdot9 - 1$			

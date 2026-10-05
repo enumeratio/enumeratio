@@ -1,13 +1,13 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { Patch } from "../patch.ts";
-import { integrateExpandsPolynomials } from "../compute-engine/library/calculus.ts";
+import { integrateExpandsPolynomials } from "../compute-engine/library/integrate-polynomials.ts";
 
-// See calculus.ts: `Integrate` leaves a power of a polynomial past linear unevaluated
+// See integrate-polynomials.ts: `Integrate` leaves a power of a polynomial past linear unevaluated
 // (`∫₋₁¹ (1 + x + x²)² dx`); the call is retried on the integrand's expansion.
 export const integratePolynomialPowers: Patch = {
   id: "integrate-polynomial-powers",
   lands: "Integrate expands a polynomial integrand it can't integrate as written",
-  files: ["src/compute-engine/library/calculus.ts"],
+  files: ["src/compute-engine/library/integrate-polynomials.ts"],
   heads: ["Integrate"],
 
   fixed: () => {
@@ -23,4 +23,4 @@ export const integratePolynomialPowers: Patch = {
   apply: (ce) => integrateExpandsPolynomials(ce),
 };
 
-export { integrateExpandsPolynomials } from "../compute-engine/library/calculus.ts";
+export { integrateExpandsPolynomials } from "../compute-engine/library/integrate-polynomials.ts";

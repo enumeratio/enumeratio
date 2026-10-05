@@ -130,11 +130,9 @@ for (const json of UNCHANGED) {
 
 test("a power whose base is written as an inline root keeps a single superscript", () => {
   const power = ["Power", 2, ["Multiply", ["Rational", 1, 2], ["Add", 1, "x"]]];
-  // As a matrix entry's factor compute-engine writes the base inline, 2^{1/2}.
   const entry = ["List", ["List", ["Multiply", ["Rational", 1, 2], power]]];
-  expect(bare.box(entry as never, { form: "raw" }).latex).toContain("2^{1/2}^{1+x}");
   expect(ce.box(entry as never, { form: "raw" }).latex).not.toMatch(/\^\{[^{}]*\}\^\{/);
-  expect(ce.box(power as never, { form: "raw" }).latex).toBe(bare.box(power as never, { form: "raw" }).latex);
+  expect(ce.box(entry as never, { form: "raw" }).latex).toBe(bare.box(entry as never, { form: "raw" }).latex);
 });
 
 test("a string's TeX specials are escaped once wrapped for it", () => {

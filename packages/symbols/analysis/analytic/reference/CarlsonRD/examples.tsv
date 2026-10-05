@@ -1,6 +1,6 @@
 id	section	role	expr	expected	known	tolerance	source
 rd-1-2-3		test	[N, [CarlsonRD, 1, 2, 3]]	0.2904602810289906	{num: "0.29046028102899063"}	1e-11	mpmath 1.3.0 elliprd
-rd-1-1-1		test	[N, [CarlsonRD, 1, 1, 1]]	1	{num: "1"}	1e-11	mpmath 1.3.0 elliprd
+rd-1-1-1		test	[N, [CarlsonRD, 1, 1, 1]]	{num: "1.0"}	{num: "1"}	1e-11	mpmath 1.3.0 elliprd
 rd-2-2-2		test	[N, [CarlsonRD, 2, 2, 2]]	0.3535533905932738	{num: "0.3535533905932738"}	1e-11	mpmath 1.3.0 elliprd
 rd-0-1-2		test	[N, [CarlsonRD, 0, 1, 2]]	1.0679379896673955	{num: "1.0679379896673957"}	1e-11	mpmath 1.3.0 elliprd
 rd-0-2-3		test	[N, [CarlsonRD, 0, 2, 3]]	0.525853445105089	{num: "0.5258534451050891"}	1e-11	mpmath 1.3.0 elliprd

@@ -45,3 +45,4 @@ ln-1-over-lcm-range-1-4-times-lcm-range-1-5
 a-single-argument-is-returned-unchanged			
 0-absorbs-the-lcm-with-0-is-0	lcm(ZZ(0), ZZ(5))	0	
 signs-are-discarded-before-computing-the-lcm	lcm(ZZ(-3), ZZ(7))	21	
+lcm-with-an-infinite-argument-stays-unevaluated			

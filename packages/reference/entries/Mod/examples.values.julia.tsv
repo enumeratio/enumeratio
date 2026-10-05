@@ -80,3 +80,6 @@ division-by-a-0-modulus-yields-nan-rather-than	mod(5, 0)	DivideError: integer di
 periodicity-with-a-zero-modulus-on-one-side	(mod(35, 13) == mod((17 + (3 * 5)), 0))		
 rounding-ties-to-even-means-1-and-1-both-appear	[mod(complex(1, 2), 2), mod(complex(3, 2), 2)]	MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met	error
 a-free-symbol-is-untouched			
+an-infinite-dividend-has-no-remainder			
+an-infinite-modulus-leaves-the-dividend-whole			
+mod-with-complexinfinity-stays-unevaluated			

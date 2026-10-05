@@ -8,7 +8,7 @@ unsorted-data-is-sorted-first-the-middle-pair-3	Scope		[Median, [List, 3, 1, 4, 
 exact-rationals	Scope		[Median, [List, [Rational, 1, 2], [Rational, 1, 3], [Rational, 1, 6]]]	[Rational, 1, 3]	Exact rationals		
 exact-constants-are-ordered-by-value-putting-e	Scope		[Median, [List, Pi, ExponentialE, 2]]	ExponentialE	Exact constants are ordered by value, putting $e$ in the middle	median([pi, exponentialE, 2])	Median(List(Pi, ExponentialE, 2))
 the-median-of-a-lazy-range-of-even-length-is-the	Scope		[Median, [Range, 1, 100]]	[Rational, 101, 2]	The median of a lazy [[Range]] of even length is the mean of the middle two		
-median-n-list-1-2-3-4-30	Scope		[Median, [N, [List, 1, 2, 3, 4], 30]]	[Rational, 5, 2]	High-precision input gives an exact middle value		
+median-n-list-1-2-3-4-30	Scope		[Median, [N, [List, 1, 2, 3, 4], 30]]	2.5	The median of a 30-digit numeric list is a float		
 median-list-list-list-3-7-list-2-1-list-list-5	Scope		[Median, [List, [List, [List, 3, 7], [List, 2, 1]], [List, [List, 5, 19], [List, 12, 4]]]]	[List, [List, 4, 13], [List, 7, [Rational, 5, 2]]]	Columnwise over a three-dimensional array of data		
 the-same-outlier-laden-data-as-in-mean-s-example	Applications		[Median, [List, -100, 1, 1, 1, 1, 20]]	1	The same outlier-laden data as in [[Mean]]'s example: the median of 1 barely moves, unlike the mean's $-\frac{38}{3}$		
 median-list-1-5-2-6-10-100-000-5-4	Applications		[Median, [List, 1, 5, 2, 6, 10, 100000, 5, 4]]	5	Robust to the outlier $100000$, unlike the mean		

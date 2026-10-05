@@ -38,16 +38,6 @@ const KNOWN: Readonly<Record<string, string>> = {
   VerificationTest: "timing fields differ run to run",
 };
 
-// Digits beyond a double's differ with the precision an earlier case in the same worker left
-// behind (the `N(x, d)` leak), not with what's declared: compare numbers to 15 digits.
-const rounded = (x: unknown): unknown => {
-  if (Array.isArray(x)) return x.map(rounded);
-  if (x !== null && typeof x === "object" && typeof (x as { num?: unknown }).num === "string")
-    return Number((x as { num: string }).num).toPrecision(15);
-  if (typeof x === "number") return x.toPrecision(15);
-  return x;
-};
-
 const OWN_ENGINE = new Set(["statistics", "domains"]);
 const deep = process.env.DEEP_TESTS === "1";
 const heads = referenceData().heads.filter(
@@ -77,7 +67,7 @@ test(
     for (const [key, group] of groups) {
       for (const r of await runCases(group, { ...options, setup: setup(`?packages=${key}`) })) {
         const f = full.get(r.id)!;
-        if (r.outcome !== f.outcome || JSON.stringify(rounded(r.value)) !== JSON.stringify(rounded(f.value)))
+        if (r.outcome !== f.outcome || JSON.stringify(r.value) !== JSON.stringify(f.value))
           differ.push(`${r.id} [${key}]`);
       }
     }

@@ -14,7 +14,7 @@ n-poly	Scope		[N, poly]	poly	A plain symbol is unchanged
 n-x-pow-3-over-2	Scope		[N, [Power, x, [Rational, 3, 2]]]	[Power, x, 1.5]	Symbolic powers get a float exponent																	
 n-pi-pow-x	Scope		[N, [Power, Pi, x]]	[Power, {num: "3.141592653589793238462643"}, x]	A float coefficient inside a symbolic expression																	
 n-int	Scope		[N, int]	int	A symbol stays symbolic																	
-n-neg-2-times-pit-plus-pi-list-positiveinfinity	Scope		[N, [Add, [Multiply, -2, pit], Pi], [List, PositiveInfinity, 20]]	[Add, [Multiply, -2, pit], {num: "3.141592653589793238462643"}]	A numeric constant is turned into a float within a symbolic expression																	
+n-neg-2-times-pit-plus-pi-list-positiveinfinity	Scope		[N, [Add, [Multiply, -2, pit], Pi], [List, PositiveInfinity, 20]]	[Add, [Multiply, -2, pit], {num: "3.14159265358979323846"}]	A numeric constant is turned into a float within a symbolic expression																	
 n-crt	Scope		[N, crt]	crt	Another symbol is unchanged																	
 n-crt-47	Scope		[N, crt, 47]	crt	Even with a precision it is left alone																	
 n-2-pow-1-000-000	Scope		[N, [Power, 2, 1000000]]	{num: "9.9006562292958982507e+301029"}																		
@@ -27,7 +27,7 @@ n-exponentiale-pow-x-plus-pi	Scope		[N, [Power, ExponentialE, [Add, x, Pi]]]	[Po
 n-k	Scope		[N, k]	k																		
 n-1-minus-goldenratio-plus-1-over-goldenratio-20	Properties		[N, [Add, 1, [Negate, GoldenRatio], [Divide, 1, GoldenRatio]], 20]	{num: "-2.0e-340"}																		
 n-1-minus-goldenratio-plus-1-over-goldenratio	Properties		[N, [Add, 1, [Negate, GoldenRatio], [Divide, 1, GoldenRatio]], [List, PositiveInfinity, 20]]	{num: "0.0"}																		
-n-exponentiale-pow-100-list-positiveinfinity-neg	Properties		[N, [Power, ExponentialE, 100], [List, PositiveInfinity, -10]]	{num: "2.68811714181613544841e+43"}					precision	An accuracy goal of -10 needs about 33 digits of E^100; we print 21, Wolfram prints more than it was asked for. The digits we print are all Wolfram's.												
+n-exponentiale-pow-100-list-positiveinfinity-neg	Properties		[N, [Power, ExponentialE, 100], [List, PositiveInfinity, -10]]	{num: "2.688117141816135448412625551580014e+43"}					precision	An accuracy goal of -10 needs about 33 digits of E^100; we print 21, Wolfram prints more than it was asked for. The digits we print are all Wolfram's.												
 n-10-000-000-000-times-neg-exponentiale-pow-999	Properties		[N, [Multiply, 10000000000, [Add, [Negate, [Power, ExponentialE, [Rational, 999999999999, 10000000000]]], [Power, ExponentialE, 100]]], [List, PositiveInfinity, 20]]	{num: "2.688117141681729591326298974395630530648558808379370953675983977e+43"}					precision	An accuracy goal of 20 on a number near 10^43 needs 64 significant digits, which we print; Wolfram prints the 60 its significance arithmetic vouches for. Its 60 digits are the first 60 of ours.												
 n-exponentiale-pow-sin-1-000	Properties		[N, [Power, ExponentialE, [Sin, 1000]]]	{num: "2.28617368581217110223"}																		
 n-exponentiale-pow-sin-1-000-47	Properties		[N, [Power, ExponentialE, [Sin, 1000]], 47]	{num: "2.286173685812171102225890854533061221871278512"}																		

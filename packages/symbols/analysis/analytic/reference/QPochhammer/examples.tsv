@@ -1,10 +1,10 @@
 id	section	role	expr	expected	known	source	caption	epsil.back
 1-2-1-6-1-18-85			[QPochhammer, 2, 3, 3]	-85			$(1-2)(1-6)(1-18) = -85$	
 exact-rational-arithmetic-no-n-needed			[QPochhammer, [Rational, 1, 2], [Rational, 1, 2], 3]	[Rational, 21, 64]			Exact rational arithmetic, no `N()` needed	
-qpochhammer-2-3-3		test	[N, [QPochhammer, 2, 3, 3]]	-85				
+qpochhammer-2-3-3		test	[N, [QPochhammer, 2, 3, 3]]	{num: "-85.0"}				
 qpochhammer-1-2-1-2-3		test	[N, [QPochhammer, [Rational, 1, 2], [Rational, 1, 2], 3]]	0.328125				
-qpochhammer-3-2-4		test	[N, [QPochhammer, 3, 2, 4]]	2530				
-qpochhammer-1-3-2		test	[N, [QPochhammer, -1, 3, 2]]	8				
+qpochhammer-3-2-4		test	[N, [QPochhammer, 3, 2, 4]]	{num: "2530.0"}				
+qpochhammer-1-3-2		test	[N, [QPochhammer, -1, 3, 2]]	{num: "8.0"}				
 the-infinite-product-euler-s-function-at-q-frac	Scope		[QPochhammer, 0.5, 0.5, PositiveInfinity]	0.2887880950866024			The infinite product, Euler's function at $q = \tfrac12$	
 qpochhammer-3-5-9	Scope		[QPochhammer, 3, 5, 9]	{num: "-175258163137268414822846915072"}			$(3;5)_9$ as an exact integer, a product of nine factors $1-3\cdot5^k$	
 functionexpand-qpochhammer-a-2-1	Scope		[FunctionExpand, [QPochhammer, a, 2, 1]]	[Add, [Negate, a], 1]			With one factor, $(a;2)_1 = 1-a$	

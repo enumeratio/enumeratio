@@ -2,11 +2,11 @@ id	section	role	expr	expected	known	source	caption	epsil.back	wolfram.kind	wolfr
 the-quadratic			[ChebyshevU, 2, x]	[Add, [Multiply, 4, [Power, x, 2]], -1]			$U_2(x) = 4x^2 - 1$			
 the-cubic			[ChebyshevU, 3, x]	[Add, [Multiply, 8, [Power, x, 3]], [Multiply, -4, x]]			$U_3(x) = 8x^3 - 4x$			
 at-a-real			[ChebyshevU, 5, 0.7]	-1.39776			At a floating-point $x$			
-at-u0-0-7		test	[N, [ChebyshevU, 0, 0.7]]	1						
+at-u0-0-7		test	[N, [ChebyshevU, 0, 0.7]]	{num: "1.0"}						
 at-u1-0-7		test	[N, [ChebyshevU, 1, 0.7]]	1.4						
 at-u5-0-7		test	[N, [ChebyshevU, 5, 0.7]]	-1.39776						
-at-u-1-0-7		test	[N, [ChebyshevU, -1, 0.7]]	0						
-at-u-2-0-7		test	[N, [ChebyshevU, -2, 0.7]]	-1						
+at-u-1-0-7		test	[N, [ChebyshevU, -1, 0.7]]	{num: "0.0"}						
+at-u-2-0-7		test	[N, [ChebyshevU, -2, 0.7]]	{num: "-1.0"}						
 at-u-5-0-7		test	[N, [ChebyshevU, -5, 0.7]]	0.05600000000000027						
 at-u4-2-3i		test	[N, [ChebyshevU, 4, [Complex, 2, 3]]]	[Complex, {num: "-1843.0"}, {num: "-2064.0"}]						
 chebyshevu-2-3			[ChebyshevU, 2, 3]	35			Evaluates at an integer: $U_2(3) = 4\cdot9 - 1$			

@@ -80,3 +80,6 @@ division-by-a-0-modulus-yields-nan-rather-than	(5 % 0)	ZeroDivisionError: Intege
 periodicity-with-a-zero-modulus-on-one-side	bool((35 % 13) == ((17 + (3 * 5)) % 0))	ZeroDivisionError: Integer modulo by zero	error
 rounding-ties-to-even-means-1-and-1-both-appear	[((1 + 2*I) % 2), ((3 + 2*I) % 2)]	TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*	error
 a-free-symbol-is-untouched	(SR.var("x") % 2)	TypeError: unsupported operand parent(s) for %: 'Symbolic Ring' and 'Symbolic Ring'	error
+an-infinite-dividend-has-no-remainder	(oo % 3)		
+an-infinite-modulus-leaves-the-dividend-whole	(5 % oo)		
+mod-with-complexinfinity-stays-unevaluated	(unsigned_infinity % 3)		

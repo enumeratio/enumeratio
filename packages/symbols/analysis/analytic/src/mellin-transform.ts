@@ -64,6 +64,10 @@ function linearCoeff(ce: ComputeEngine, expr: BoxedExpression, name: string): Bo
   return undefined;
 }
 
+/** The scale factor `a^(-s)`, left out when `a` is 1: a symbolic `s` of no known type keeps `1^(-s)`. */
+const scalePower = (ce: ComputeEngine, a: BoxedExpression, s: BoxedExpression): BoxedExpression =>
+  a.isSame(1) ? ce.One : ce.function("Power", [a, ce.function("Negate", [s])]);
+
 /** `expr` as `b*x^2` (any sign of `b`, `Negate` handled the same way `linearCoeff` does)
  * — the Gaussian's exponent shape (no scaling helper reuse: the argument is quadratic,
  * not linear). */
@@ -125,19 +129,14 @@ function atomicMellin(
     const k = linearCoeff(ce, exponent, x);
     if (k !== undefined && k.isNegative === true) {
       const a = ce.function("Negate", [k]).evaluate();
-      return ce
-        .function("Multiply", [ce.function("Gamma", [s]), ce.function("Power", [a, ce.function("Negate", [s])])])
-        .evaluate();
+      return ce.function("Multiply", [ce.function("Gamma", [s]), scalePower(ce, a, s)]).evaluate();
     }
     const m = quadraticCoeffSigned(ce, exponent, x);
     if (m !== undefined && m.isNegative === true) {
       const b = ce.function("Negate", [m]).evaluate();
       const halfS = ce.function("Divide", [s, 2]);
       return ce
-        .function("Multiply", [
-          ce.function("Divide", [ce.function("Gamma", [halfS]), 2]),
-          ce.function("Power", [b, ce.function("Negate", [halfS])]),
-        ])
+        .function("Multiply", [ce.function("Divide", [ce.function("Gamma", [halfS]), 2]), scalePower(ce, b, halfS)])
         .evaluate();
     }
     return undefined;
@@ -156,11 +155,7 @@ function atomicMellin(
     const a = linearCoeff(ce, y, x);
     if (a === undefined || a.isPositive !== true) return undefined;
     return ce
-      .function("Multiply", [
-        ce.function("Power", [a, ce.function("Negate", [s])]),
-        ce.Pi,
-        ce.function("Csc", [ce.function("Multiply", [ce.Pi, s])]),
-      ])
+      .function("Multiply", [scalePower(ce, a, s), ce.Pi, ce.function("Csc", [ce.function("Multiply", [ce.Pi, s])])])
       .evaluate();
   }
   if (expr.operator === "Power") {
@@ -176,7 +171,7 @@ function atomicMellin(
     if (bigA === undefined || hasVar(bigA, x)) return undefined;
     return ce
       .function("Multiply", [
-        ce.function("Power", [a, ce.function("Negate", [s])]),
+        scalePower(ce, a, s),
         ce.function("Divide", [
           ce.function("Multiply", [
             ce.function("Gamma", [ce.function("Subtract", [bigA, s])]),
@@ -192,9 +187,7 @@ function atomicMellin(
     if (a === undefined || a.isPositive !== true) return undefined;
     const halfPiS = ce.function("Multiply", [ce.Pi, ce.function("Divide", [s, 2])]);
     const trig = ce.function(expr.operator, [halfPiS]);
-    return ce
-      .function("Multiply", [ce.function("Power", [a, ce.function("Negate", [s])]), ce.function("Gamma", [s]), trig])
-      .evaluate();
+    return ce.function("Multiply", [scalePower(ce, a, s), ce.function("Gamma", [s]), trig]).evaluate();
   }
   if (expr.operator === "Ln") {
     const y = asOnePlus(opAt(expr, 0));
@@ -203,7 +196,7 @@ function atomicMellin(
     if (a === undefined || a.isPositive !== true) return undefined;
     return ce
       .function("Multiply", [
-        ce.function("Power", [a, ce.function("Negate", [s])]),
+        scalePower(ce, a, s),
         ce.Pi,
         ce.function("Divide", [ce.function("Csc", [ce.function("Multiply", [ce.Pi, s])]), s]),
       ])

@@ -8,7 +8,7 @@ symbolic-data-gives-an-exact-symbolic-mean-frac	Scope		[Mean, [List, a, b, c, d]
 exact-constants-give-an-exact-mean-frac-2-e-pi-3	Scope		[Mean, [List, Pi, ExponentialE, 2]]	[Multiply, [Rational, 1, 3], [Add, 2, ExponentialE, Pi]]	Exact constants give an exact mean $\frac{2+e+\pi}{3}$, not a numeric approximation	mean([pi, exponentialE, 2])	Mean(List(Pi, ExponentialE, 2))		
 of-a-matrix-of-symbols-the-exact-mean-of-each	Scope		[Mean, [List, [List, a, u], [List, b, v], [List, c, w]]]	[List, [Multiply, [Rational, 1, 3], [Add, a, b, c]], [Multiply, [Rational, 1, 3], [Add, u, v, w]]]	Of a matrix of symbols, the exact mean of each column				
 the-mean-of-a-lazy-range-exactly	Scope		[Mean, [Range, 1, 100]]	[Rational, 101, 2]	The mean of a lazy [[Range]], exactly				
-mean-n-list-1-2-3-4-30	Scope		[Mean, [N, [List, 1, 2, 3, 4], 30]]	[Rational, 5, 2]	The mean of high-precision input comes back as an exact rational				
+mean-n-list-1-2-3-4-30	Scope		[Mean, [N, [List, 1, 2, 3, 4], 30]]	2.5	The mean of a 30-digit numeric list is a float				
 n-mean-ts	Scope		[N, [Mean, ts]]	[Mean, ts]	Stays symbolic for an unknown data list				
 mean-binomialdistribution-n-p	Scope		[Mean, [BinomialDistribution, n, p]]	[Multiply, n, p]	The mean of the binomial distribution is $np$				
 mean-probabilitydistribution-sqrt-2-times-1-over	Scope		[Mean, [ProbabilityDistribution, [Multiply, [Sqrt, 2], [Divide, 1, Pi], [Divide, 1, [Add, [Power, [Add, x, -2], 4], 1]]], [List, x, NegativeInfinity, PositiveInfinity]]]	[Mean, [ProbabilityDistribution, [Divide, [Sqrt, 2], [Add, [Multiply, Pi, [Power, [Add, x, -2], 4]], Pi]], [List, x, NegativeInfinity, PositiveInfinity]]]	For a custom density, the integral is not evaluated and the mean stays symbolic				

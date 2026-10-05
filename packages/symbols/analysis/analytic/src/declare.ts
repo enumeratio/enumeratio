@@ -4,14 +4,11 @@ import { threadOverLists, widenSignature, wrapOperator } from "@enumeratio/engin
 import {
   applyPatch,
   lerchPhiPatch,
-  nAccuracyGoal,
   integratePolynomialPowers,
-  oscillatoryEndpoint,
   solveDeclines,
   solveDomains,
   takeDropNegativeCount,
   valuesAtZero,
-  inverseTrigRadicals,
   polyLogLargeOrder,
   iteratorUpperBound,
   rangeBigBounds,
@@ -184,15 +181,12 @@ export function declareAnalytic(ce: ComputeEngine): void {
   applyPatch(ce, iteratorUpperBound);
   applyPatch(ce, rangeBigBounds);
   applyPatch(ce, shapeOfUnknownElements);
-  applyPatch(ce, nAccuracyGoal);
-  applyPatch(ce, oscillatoryEndpoint);
   applyPatch(ce, integratePolynomialPowers);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);
   declareElliptic(ce);
   applyPatch(ce, valuesAtZero);
-  applyPatch(ce, inverseTrigRadicals);
   applyPatch(ce, polyLogLargeOrder);
   declareModular(ce);
   declareDerivatives(ce);

@@ -52,3 +52,4 @@ lists-aren-t-threaded-element-wise-they-re	Possible issues		[GCD, [List, 2, 4], 
 gcd-0-0-0-by-convention	Possible issues		[GCD, 0, 0]	0	$\gcd(0,0)=0$ by convention														
 symbolic-arguments-stay-unevaluated	Possible issues		[GCD, x, y]	[GCD, x, y]	Symbolic arguments stay unevaluated					unevaluated	We leave the call unevaluated; SymPy answers 1.								
 gcd-neg-3-9	Possible issues		[GCD, -3, 9]	3	The result is never negative														
+gcd-with-an-infinite-argument-stays-unevaluated	Possible issues		[GCD, PositiveInfinity, 6]	[GCD, 6, PositiveInfinity]	An infinite argument has no divisors to take: the call stays unevaluated, as in Wolfram					domain	An infinite argument is not an integer: compute-engine, like Wolfram, leaves the call unevaluated, while SymPy takes gcd(oo, 6) = 1.								

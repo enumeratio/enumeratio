@@ -19,3 +19,4 @@ idempotent-max-x-x-x	Max[x, x]	True	\text{Module}\left[\{d=\text{Quiet}[\text{Ti
 with-no-arguments-compute-engine-returns-nan	Max[]	-Infinity	\max ()	-\infty	disagree
 nan-poisons-the-result-overriding-every-other	Max[Indeterminate, 3]	Indeterminate	\max (\text{Indeterminate},3)	\text{Indeterminate}	
 the-max-of-an-empty-list-is-nan-too	Max[List[]]	-Infinity	\max (\{\})	-\infty	disagree
+max-with-complexinfinity-stays-unevaluated	Max[ComplexInfinity, 1]	Max[1, ComplexInfinity]	\max (\text{ComplexInfinity},1)	\max (1,\text{ComplexInfinity})	

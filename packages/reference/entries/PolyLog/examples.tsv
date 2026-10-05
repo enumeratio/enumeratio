@@ -73,9 +73,9 @@ polylog-rim-theta-2p4-s-1-z		test	[N, [PolyLog, 1, [Complex, -0.7373937155412454
 polylog-rim-theta-2p4-s-1p5-z		test	[N, [PolyLog, 1.5, [Complex, -0.7373937155412454, 0.675463180551151]]]	[Complex, -0.6594860880900733, 0.4403355254247001]															
 order-one-half-at-1-is-zeta-one-half		test	[N, [PolyLog, [Rational, 1, 2], 1]]	-1.4603545088095868								precision	mpmath confirms Zeta(1/2) = ours; Wolfram's automatic evaluator answers ComplexInfinity at PolyLog[s,1] even under N[], apparently applying its s=1 pole rule too broadly.						
 n-polylog-30-neg-4		test	[N, [PolyLog, 30, -4]]	-3.999999985099149															
-n-polylog-250-neg-4-a-large-order-past-z-1		test	[N, [PolyLog, 250, -4]]	-4															
-n-polylog-250-4-a-large-order-on-the-cut		test	[N, [PolyLog, 250, 4]]	4															
-n-polylog-2500000-4-a-huge-order-returns		test	[N, [PolyLog, 2500000, 4]]	4								resource	Wolfram's PolyLog at order 2500000 does not finish inside the scan's per-item time cap; ours returns 4, as mpmath does.						
+n-polylog-250-neg-4-a-large-order-past-z-1		test	[N, [PolyLog, 250, -4]]	{num: "-4.0"}															
+n-polylog-250-4-a-large-order-on-the-cut		test	[N, [PolyLog, 250, 4]]	{num: "4.0"}															
+n-polylog-2500000-4-a-huge-order-returns		test	[N, [PolyLog, 2500000, 4]]	{num: "4.0"}								resource	Wolfram's PolyLog at order 2500000 does not finish inside the scan's per-item time cap; ours returns 4, as mpmath does.						
 n-polylog-40p5-2-plus-3i-a-large-complex-point		test	[N, [PolyLog, 40.5, [Complex, 2, 3]]]	[Complex, 1.999999999996784, 3.000000000007717]								precision	Wolfram's machine-precision PolyLog loses every digit here and answers about -1.3e63 - 1.2e63 i (N[..., 30] gives up at $MaxExtraPrecision); ours matches mpmath, 2 + 3i plus a tiny correction.						
 threads-over-a-list-of-arguments	Scope		[PolyLog, 2, [List, 0.5, 0.25]]	[List, 0.5822405264650125, 0.2676526390827325]				Threads over a list of arguments						threading	compute-engine's PolyLog is Listable and threads over the list; Sage's takes scalars only.	threading	compute-engine's PolyLog threads over (or pools) the list; SymPy's takes scalars.	threading	compute-engine's PolyLog threads over the list; mpmath's takes scalars.
 a-non-integer-order-past-z-1-is-left-unevaluated	Scope		[PolyLog, 2.5, 2]	[Complex, 2.7896603323827778, -1.363803700539351]				A non-integer order continues past $|z| = 1$ to a complex value, as Wolfram does: $\mathrm{Li}_{5/2}(2) \approx 2.78966 - 1.36380i$											

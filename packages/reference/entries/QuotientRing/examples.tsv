@@ -1,5 +1,5 @@
 id	section	role	expr	expected	caption
-listfrom-integermodring-3			[ListFrom, [QuotientRing, Integers, 3]]	[List, [IntegerMod, 0, 3], [IntegerMod, 1, 3], [IntegerMod, 2, 3]]	
+listfrom-integermodring-3			[ListFrom, [QuotientRing, Integers, 3]]	[List, [ResidueClass, 0, 3], [ResidueClass, 1, 3], [ResidueClass, 2, 3]]	
 count-integermodring-12			[Count, [QuotientRing, Integers, 12]]	12	
 count-integermodring-5		test	[Count, [QuotientRing, Integers, 5]]	5	
 z-12-z	Scope		[QuotientRing, Integers, 12]	[QuotientRing, Integers, 12]	$\mathbb{Z}/12\mathbb{Z}$
