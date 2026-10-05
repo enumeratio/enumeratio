@@ -1,6 +1,8 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { lerchPhiPatch } from "./patches/lerch-phi.ts";
 import { solveDeclines } from "./patches/solve-declines.ts";
+import { solveDomains } from "./patches/solve-domains.ts";
+import { integratePolynomialPowers } from "./patches/integrate-polynomial-powers.ts";
 import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 import { quotientRingCollection } from "./patches/quotient-ring-collection.ts";
@@ -76,6 +78,8 @@ export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./compute-engi
 export { barnesGBig, barnesGBall, pi as barnesGPi } from "./compute-engine/numerics/barnes-g-big.ts";
 export { logGamma, logGammaReal, logGammaBig } from "./compute-engine/numerics/log-gamma.ts";
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
+export { solveDomains, evaluateSolveDomains } from "./patches/solve-domains.ts";
+export { integratePolynomialPowers, integrateExpandsPolynomials } from "./patches/integrate-polynomial-powers.ts";
 export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 export { rangeBigBounds, evaluateRangeBigBounds } from "./patches/range-big-bounds.ts";
@@ -182,9 +186,11 @@ export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./compute-engine/c
 export const PATCHES: readonly Patch[] = [
   lerchPhiPatch,
   solveDeclines,
+  solveDomains,
   takeDropNegativeCount,
   iteratorUpperBound,
   quotientRingCollection,
+  integratePolynomialPowers,
   valuesAtZero,
   polyLogLargeOrder,
   rangeBigBounds,

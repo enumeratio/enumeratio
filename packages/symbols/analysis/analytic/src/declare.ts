@@ -4,7 +4,9 @@ import { threadOverLists, widenSignature, wrapOperator } from "@enumeratio/engin
 import {
   applyPatch,
   lerchPhiPatch,
+  integratePolynomialPowers,
   solveDeclines,
+  solveDomains,
   takeDropNegativeCount,
   valuesAtZero,
   polyLogLargeOrder,
@@ -174,10 +176,12 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareWidened(ce);
 
   applyPatch(ce, solveDeclines);
+  applyPatch(ce, solveDomains);
   applyPatch(ce, takeDropNegativeCount);
   applyPatch(ce, iteratorUpperBound);
   applyPatch(ce, rangeBigBounds);
   applyPatch(ce, shapeOfUnknownElements);
+  applyPatch(ce, integratePolynomialPowers);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);
