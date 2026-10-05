@@ -36,6 +36,12 @@ function freshSymbol(expr: BoxedExpression, base: string): string {
   for (let i = 2; ; i++) if (!used.has(`${base}${i}`)) return `${base}${i}`;
 }
 
+/** The bound variable's name: the first of `t s u v` that is neither the outer `varName` nor free in `expr`. */
+function boundVariableName(expr: BoxedExpression, varName: string): string {
+  const taken = new Set([varName, ...expr.freeVariables]);
+  return ["t", "s", "u", "v"].find((name) => !taken.has(name)) ?? freshSymbol(expr, "t");
+}
+
 const isExactNumber = (x: BoxedExpression): boolean => isNumber(x) && x.isExact;
 const isZeroExpr = (x: BoxedExpression): boolean => isExactNumber(x) && x.re === 0 && x.im === 0;
 
@@ -277,7 +283,7 @@ export function declareDifferentialRoot(ce: ComputeEngine): void {
       const [expr, varExpr] = ops;
       if (expr === undefined || varExpr === undefined || !isSymbol(varExpr)) return undefined;
       const varName = varExpr.symbol!;
-      const boundVar = freshSymbol(expr, "x");
+      const boundVar = boundVariableName(expr, varName);
       const renamed = boundVar === varName ? expr : expr.subs({ [varName]: boundVar } as never);
       const ode = reduceOde(ce, renamed, boundVar);
       if (ode === undefined) return undefined;
