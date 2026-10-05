@@ -869,6 +869,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "CompleteGraph",
     "CompleteKaryTree",
     "ComplexExpand",
+    "Compose",
     "ConnectedComponents",
     "ContinuedFractionK",
     "Convergents",

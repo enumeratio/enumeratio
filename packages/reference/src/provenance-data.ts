@@ -10841,7 +10841,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Compose",
-    provenance: "unknown",
+    provenance: "extension",
     declared: "enumeratio-combinatorics",
     wolframAlias: "Composition",
     elsewhere: ["wolfram", "sympy"],

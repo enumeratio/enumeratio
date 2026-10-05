@@ -18,4 +18,5 @@ attributes:
 ---
 
 - Searches the WHOLE tree, not just the top level — that's the difference from [[MatchQ]], which only checks expr itself.
+- An Association's keys are not parts: only its values are searched.
 - Uses the same wildcard grammar as [[MatchQ]] — see its reference entry for what's supported.

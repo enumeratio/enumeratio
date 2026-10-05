@@ -10,4 +10,4 @@ without-a-predicate-tests-the-elements	AnyTrue[List[False, True]]	AnyTrue[{False
 a-level-argument-tests-the-elements-at-depth-2	AnyTrue[List[List[1, 2], List[3, -4]], Function[Less[Slot[1], 0]], 2]	True	\text{AnyTrue}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & -4 \\ \end{array} \right),\text{$\#$1}<0\&,2\right]	\text{True}	
 always-false-on-an-empty-list	AnyTrue[List[], EvenQ]	False	\text{AnyTrue}[\{\},\text{EvenQ}]	\text{False}	
 some-element-passes-exactly-when-not-every	(AnyTrue[List[1, 3, 5], EvenQ] == Not[AllTrue[List[1, 3, 5], OddQ]])	True	\text{AnyTrue}[\{1,3,5\},\text{EvenQ}]=(\neg \text{AllTrue}[\{1,3,5\},\text{OddQ}])	\text{True}	
-map-logicalexpand-list-any-list-x-y-z-f	Map[LogicalExpand, List[AnyTrue[List[x, y, z], f], Not[NoneTrue[List[x, y, z], f]]]]	{f[x] || f[y] || f[z], f[x] || f[y] || f[z]}			disagree
+map-logicalexpand-list-any-list-x-y-z-f	Map[LogicalExpand, List[AnyTrue[List[x, y, z], f], Not[NoneTrue[List[x, y, z], f]]]]	{f[x] || f[y] || f[z], f[x] || f[y] || f[z]}	\text{LogicalExpand}\text{/@}\{\text{AnyTrue}[\{x,y,z\},f],\neg \text{NoneTrue}[\{x,y,z\},f]\}	\{f(x)\lor f(y)\lor f(z),f(x)\lor f(y)\lor f(z)\}	disagree

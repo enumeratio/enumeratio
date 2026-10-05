@@ -1,4 +1,5 @@
 import { defineMessages, emit, type Engine, type Expr, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { applyFunction } from "./apply-function.ts";
 
 // Wolfram-frontier scoping/control heads: With, Module, Reap/Sow, Do, Switch, NestWhile(List),
 // While, FixedPointList, Throw/Catch, Echo, AbsoluteTiming, Attributes/SetAttributes, AppendTo.
@@ -41,10 +42,7 @@ import { defineMessages, emit, type Engine, type Expr, integerAt, operandsOf, sy
 // collision with LaTeX's `\{...\}`, which compute-engine's LaTeX parser reads as the SET
 // head -- irrelevant here since every example below is raw MathJSON, never parsed text).
 
-/** Call a (possibly `Function`-headed) expression as an operator over `args` -- same
- *  technique as `list-functional.ts`'s own `applyFn`, duplicated locally per house style
- *  (see `list-frontier-2.ts`'s `invoke`). */
-const applyFn = (ce: Engine, fn: Expr, args: readonly Expr[]): Expr => ce.function("Apply", [fn, ...args]).evaluate();
+const applyFn = applyFunction;
 
 const isTrue = (expr: Expr): boolean => symbolNameOf(expr) === "True";
 
@@ -426,8 +424,8 @@ function declareNestWhile(ce: Engine): void {
       }
       const history: Expr[] = [x0.evaluate()];
       for (let steps = 0; steps < maxSteps; steps++) {
-        const testArgs = window(history, m);
-        if (!isTrue(applyFn(ce, test, testArgs))) break;
+        // The test waits until `m` values exist, so `f` runs `m - 1` times first.
+        if (history.length >= m && !isTrue(applyFn(ce, test, window(history, m)))) break;
         history.push(applyFn(ce, fn, [history[history.length - 1]!]));
       }
       return history[history.length - 1]!;
@@ -658,6 +656,8 @@ function declareAppendTo(ce: Engine): void {
       const name = symExpr !== undefined ? symbolNameOf(symExpr) : undefined;
       if (name === undefined || elemExpr === undefined) return undefined;
       const current = ce.box(name).evaluate();
+      // No value yet: stays unevaluated, rather than assigning `s := Append(s, elem)`.
+      if (symbolNameOf(current) === name) return undefined;
       const appended = ce.function("Append", [current, elemExpr.evaluate()]).evaluate();
       ce.assign(name, appended);
       return appended;

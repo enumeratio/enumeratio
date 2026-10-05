@@ -28,5 +28,5 @@ names:
 ---
 
 - Wolfram's own POST-ORDER: a node's children (recursively) come before the node itself, so `Level({1, {2, 3}, 4}, 2)` is `{1, 2, 3, {2, 3}, 4}` — `{2, 3}` printed AFTER its own parts, not before them. Siblings keep their original order; only each node's position relative to its OWN descendants moves.
-- Only `{-1}` (and bare `-1`) is supported among negative levels — Wolfram's general negative-level-from-the-leaves counting (`{-2}`, `{-3, -1}`, …) is left undone.
+- A negative level counts depth from the leaves (an atom has depth 1, any other expression 1 more than its deepest part): `{-1}` is the leaves, `{-2}` the expressions one step above them, and bare `-1` every proper subexpression.
 - No 4th-argument predicate form, and no Heads option.

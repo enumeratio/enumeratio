@@ -18,5 +18,6 @@ names:
   wolframIdentity: true
 ---
 
+- A dense list (no rules) is its own dense form: `SparseArray({1, 2, 3})` is `{1, 2, 3}`.
 - Each rule is $pos \to value$: $pos$ is a plain integer for a vector, or a list of integers for a matrix or higher-rank array.
 - No distinct sparse storage type is kept — the result densifies immediately into an ordinary nested list, so `Normal` of it is unchanged, and it is not practical for arrays too large to materialise.
