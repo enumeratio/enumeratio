@@ -16,7 +16,7 @@ import {
 } from "./hecke.ts";
 import { HECKE_NOTATION } from "./notation.ts";
 
-// Wiring H_n(q) to compute-engine. Two things are new here relative to the earlier
+// Wiring H_n(q) to compute-engine, with q written `HeckeParameter`. Two things are new here relative to the earlier
 // algebra libraries:
 //
 //  1. A product of two basis elements is a LINEAR COMBINATION, not one basis element
@@ -27,8 +27,8 @@ import { HECKE_NOTATION } from "./notation.ts";
 //     factored or expanded as the engine sees fit, and substituting q = 1 is just
 //     `Subs`.
 
-/** The deformation parameter. Free, so H_n(q) lives over ℤ[q] until you pick a q. */
-const PARAMETER = "q";
+/** The deformation parameter q. Spelled out and capitalised: a declared lowercase name would take `q` away from users as a variable. */
+const PARAMETER = "HeckeParameter";
 
 /** `HeckeAlgebra(n)` → n. */
 function algebraSize(expr: BoxedExpression): number | undefined {
@@ -52,7 +52,7 @@ function basisPermutation(expr: BoxedExpression): Permutation | undefined {
 
 export function declareHecke(ce: ComputeEngine): void {
   registerNotation(ce, HECKE_NOTATION);
-  // `q` becomes a session-wide free symbol, because every coefficient this package
+  // `HeckeParameter` becomes a session-wide free symbol, because every coefficient this package
   // produces is a polynomial in it and those outlive any scope we could push. Declaring
   // it explicitly says so; `ce.symbol` would bind it anyway, just silently and untyped.
   if (!ce.lookupDefinition(PARAMETER)) ce.declare(PARAMETER, "number");

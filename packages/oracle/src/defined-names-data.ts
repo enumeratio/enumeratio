@@ -444,6 +444,7 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "HeavisideTheta",
   "HeckeAlgebra",
   "HeckeIdentity",
+  "HeckeParameter",
   "HeckeSpecialize",
   "HeckeT",
   "Height",
@@ -1163,5 +1164,4 @@ export const DEFINED_NAMES: ReadonlySet<string> = new Set([
   "ZigzagCompositions",
   "e",
   "i",
-  "q",
 ]);
