@@ -6,6 +6,7 @@ threads-element-wise-over-a-list	(([1, 2, 3, 4, 5] : ℤ) % 3)	Type mismatch	err
 mod-7-3	((7 : ℤ) % 3)		
 5-mod-3	((5 : ℤ) % 3)		
 1-plus-4-mod-3	(1 + ((4 : ℤ) % 3))		
+integermod-keeps-the-modulus			
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	((((5 : ℚ) / 2) : ℤ) % 2)		

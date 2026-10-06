@@ -6,6 +6,7 @@ threads-element-wise-over-a-list			[Mod, [List, 1, 2, 3, 4, 5], 3]	[List, 1, 2, 
 mod-7-3		test	[Mod, 7, 3]	1																				
 5-mod-3			[Mod, 5, 3]	2			The remainder of 5 divided by 3																	
 1-plus-4-mod-3			[Add, 1, [Mod, 4, 3]]	2			Mod binds tighter than addition, so this is $1 + (4 \bmod 3)$																	
+integermod-keeps-the-modulus			[IntegerMod, 17, 5]	[IntegerMod, 2, 5]			Sage's `Mod(17, 5)` is a residue class, [[IntegerMod]]; `Mod(17, 5)` here is the remainder 2, a plain integer						convention	Sage prints the element as a bare integer; its parent ring, Z/n, is not part of the answer, and the value agrees.										
 a-third-argument-offsets-the-range-the-result	Scope		[Mod, 17, 5, 1]	2			A third argument offsets the range: the result lies in $[d, d + n)$, here $[1, 6)$		[Mod, [Mod, 17, 5], 1]															
 with-offset-1-the-residues-run-1-2-3-rather-than	Scope		[Mod, 5, 3, 1]	2			With offset 1 the residues run $1, 2, 3$ rather than $0, 1, 2$		[Mod, [Mod, 5, 3], 1]															
 rationals-are-reduced-exactly	Scope		[Mod, [Rational, 5, 2], 2]	[Rational, 1, 2]			Rationals are reduced exactly						domain	compute-engine's Mod extends to rational arguments; Sage's % over the residue ring Mod(0, 2) has no multiplicative inverse and raises a ZeroDivisionError.									domain	The Rust adapter takes integers here; compute-engine's Mod extends past them.

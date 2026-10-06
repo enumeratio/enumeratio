@@ -6,6 +6,7 @@ threads-element-wise-over-a-list	mod([1, 2, 3, 4, 5], 3)	MethodError: no method 
 mod-7-3	mod(7, 3)	1	
 5-mod-3	mod(5, 3)		
 1-plus-4-mod-3	(1 + mod(4, 3))		
+integermod-keeps-the-modulus			
 a-third-argument-offsets-the-range-the-result			
 with-offset-1-the-residues-run-1-2-3-rather-than			
 rationals-are-reduced-exactly	mod((5 // 2), 2)	0.5	
