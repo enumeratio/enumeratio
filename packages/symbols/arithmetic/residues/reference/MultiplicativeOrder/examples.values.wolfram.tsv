@@ -17,6 +17,7 @@ divides-multiplicativeorder-5-12-totient-12	Divisible[EulerPhi[12], Multiplicati
 multiplicativeorder-5-3	MultiplicativeOrder[5, 3]	2	\text{ord}_3(5)	2	
 multiplicativeorder-neg-5-3	MultiplicativeOrder[-5, 3]	1	\text{ord}_3(-5)	1	
 multiplicativeorder-5-7-list-4	MultiplicativeOrder[5, 7, List[4]]	2	\text{MultiplicativeOrder}[5,7,\{4\}]	2	
+multiplicativeorder-primitiveroot-109-109-eq	(MultiplicativeOrder[PrimitiveRoot[109], 109] == EulerPhi[109])	True	\text{ord}_{109}(\text{PrimitiveRoot}[109])=\phi (109)	\text{True}	
 no-order-exists-when-gcd-a-n-neq-1-here-gcd-10	MultiplicativeOrder[10, 22]	MultiplicativeOrder[10, 22]	\text{ord}_{22}(10)	\text{ord}_{22}(10)	
 3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4	MultiplicativeOrder[2, 7, List[3]]	MultiplicativeOrder[2, 7, {3}]	\text{MultiplicativeOrder}[2,7,\{3\}]	\text{MultiplicativeOrder}[2,7,\{3\}]	
 multiplicativeorder-10-21	MultiplicativeOrder[10, 21]	6	\text{ord}_{21}(10)	6	

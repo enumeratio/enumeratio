@@ -299,3 +299,47 @@ test("tags: a precision or accuracy mark is kept on the number when asked for", 
   expect(fromWolfram("0.125`2.")).toBe(0.125);
   expect(fromWolfram("0``69.3")).toBe(0);
 });
+
+test("Series and the SeriesData it answers with", () => {
+  expect(fromWolfram("Series[Exp[x], List[x, 0, 3]]")).toEqual(["Series", ["Exp", "x"], "x", 0, 3]);
+  expect(fromWolfram("SeriesData[x, 0, List[1, 1, Rational[1, 2], Rational[1, 6]], 0, 4, 1]")).toEqual([
+    "Add",
+    1,
+    "x",
+    ["Multiply", ["Rational", 1, 2], ["Power", "x", 2]],
+    ["Multiply", ["Rational", 1, 6], ["Power", "x", 3]],
+    ["BigO", ["Power", "x", 4]],
+  ]);
+  // A Puiseux series about a shifted point: x0 enters the base, den the exponents.
+  expect(fromWolfram("SeriesData[x, 1, List[2], 1, 3, 2]")).toEqual([
+    "Add",
+    ["Multiply", 2, ["Power", ["Subtract", "x", 1], ["Rational", 1, 2]]],
+    ["BigO", ["Power", ["Subtract", "x", 1], ["Rational", 3, 2]]],
+  ]);
+});
+
+test("Derivative[n][f][x] is the nth derivative of f applied to x", () => {
+  expect(fromWolfram("Derivative[2][f]")).toEqual(["Derivative", "f", 2]);
+  expect(fromWolfram("Derivative[2][f][x]")).toEqual(["Apply", ["Derivative", "f", 2], "x"]);
+  expect(fromWolfram("f[x][y]")).toEqual(["Apply", ["f", "x"], "y"]);
+});
+
+test("names Wolfram spells for something ours spells differently", () => {
+  expect(fromWolfram("Reduce[Greater[x, 0], x]")).toEqual(["ReduceConditions", ["Greater", "x", 0], "x"]);
+  expect(fromWolfram("Root[f, 1]")).toEqual(["PolynomialRoot", "f", 1]);
+  expect(fromWolfram("PartitionsP[10]")).toEqual(["Count", ["IntegerPartitions", 10]]);
+  expect(fromWolfram("Signature[List[2, 1, 3]]")).toEqual(["Sign", ["Permutation", ["List", 2, 1, 3]]]);
+  expect(fromWolfram("ProductLog[-1, z]")).toEqual(["LambertW", "z", -1]);
+  expect(fromWolfram("UnsameQ[a, b]")).toEqual(["Not", ["Same", "a", "b"]]);
+  expect(fromWolfram("Insert[xs, y, 2]")).toEqual(["Insert", "xs", 2, "y"]);
+  expect(fromWolfram("Residue[f, List[z, 0]]")).toEqual(["Residue", "f", "z", 0]);
+});
+
+test("Modulus -> p is working over the integers mod p", () => {
+  expect(fromWolfram("Modulus -> 5")).toEqual(["KeyValuePair", "Over", ["QuotientRing", "Integers", 5]]);
+});
+
+test("the positive-real domains are the intervals they are", () => {
+  expect(fromWolfram("PositiveReals")).toEqual(["Interval", ["Open", 0], "PositiveInfinity"]);
+  expect(fromWolfram("NonPositiveReals")).toEqual(["Interval", "NegativeInfinity", 0]);
+});

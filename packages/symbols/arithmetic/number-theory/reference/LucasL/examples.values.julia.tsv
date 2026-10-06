@@ -3,6 +3,7 @@ lucasl-0	Combinatorics.lucasnum(0)	2
 lucasl-1	Combinatorics.lucasnum(1)	1	
 lucasl-5	Combinatorics.lucasnum(5)	11	
 lucasl-10	Combinatorics.lucasnum(10)	123	
+series-lucasl-1-over-2-x-x-0-5			
 exact-at-any-size	Combinatorics.lucasnum(100)	792070839848372253127	
 an-odd-negative-index-flips-the-sign-l-11-l-11	Combinatorics.lucasnum(-11)	DomainError with -11: n must be nonnegative	error
 a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	Combinatorics.lucasnum(2.3333333333333335)	MethodError: no method matching lucasnum(::Float64) The function `lucasnum` exists, but no method is	error

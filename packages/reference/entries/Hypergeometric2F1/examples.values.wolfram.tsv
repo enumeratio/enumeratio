@@ -1,0 +1,3 @@
+id	in
+2f1-at-0	Hypergeometric2F1[1, 1, 2, 0]
+2f1-1-1-2-half	N[Hypergeometric2F1[1, 1, 2, Rational[1, 2]], 20]

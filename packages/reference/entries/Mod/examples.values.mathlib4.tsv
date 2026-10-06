@@ -77,6 +77,8 @@ pi-mod-exponentiale
 1-plus-neg-1-plus-nthprime-2-factorial-mod			
 2-minus-jacobisymbol-2-3-mod-3			
 1-plus-neg-1-plus-nthprime-3-factorial-mod			
+2pi-mod-exponentiale			
+neg-pi-mod-2			
 division-by-a-0-modulus-yields-nan-rather-than	((5 : ℤ) % 0)	5	inconclusive
 periodicity-with-a-zero-modulus-on-one-side	(decide (((35 : ℤ) % 13) = (((17 + (3 * 5)) : ℤ) % 0)))		
 rounding-ties-to-even-means-1-and-1-both-appear			

@@ -280,6 +280,10 @@ test("an option key and a number set go to Wolfram as its own names", () => {
   expect(emit(["IsPrime", 5, ["KeyValuePair", "Over", "Foo"]], "wolfram")).toMatchObject({
     source: expect.stringContaining("Rule[enumeratio`Over, Foo]"),
   });
+  // Working over the integers mod p is Wolfram's `Modulus -> p`.
+  expect(emit(["IsPrime", 5, ["KeyValuePair", "Over", ["QuotientRing", "Integers", 7]]], "wolfram")).toMatchObject({
+    source: "PrimeQ[5, Rule[Modulus, 7]]",
+  });
 });
 
 // Found scanning the newly-emitting free-symbol rows against real kernels (#A-72 phase 2):

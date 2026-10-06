@@ -1,7 +1,8 @@
-id	section	role	expr	expected	caption	epsil.back	wolfram.note
-3-4-5			[Normalize, [List, 3, 4]]	[List, [Rational, 3, 5], [Rational, 4, 5]]	The 3-4-5 triangle's direction vector, normalized to unit length		
-normalize-list-1-5-1			[Normalize, [List, 1, 5, 1]]	[List, [Divide, [Sqrt, 3], 9], [Multiply, [Rational, 5, 9], [Sqrt, 3]], [Divide, [Sqrt, 3], 9]]	Divides by the Euclidean norm $\sqrt{27} = 3\sqrt3$, keeping exact radicals		
-zero-vector	Scope		[Normalize, [List, 0, 0]]	[List, 0, 0]	The zero vector has no direction, so it is left unchanged		
-normalize-list-x-y-f	Scope		[Normalize, [List, x, y], f]	[List, [Divide, x, [f, [List, x, y]]], [Divide, y, [f, [List, x, y]]]]			
-normalize-list-x-y	Scope		[Normalize, [List, x, y]]	[List, [Divide, x, [Sqrt, [Add, [Power, [Abs, x], 2], [Power, [Abs, y], 2]]]], [Divide, y, [Sqrt, [Add, [Power, [Abs, x], 2], [Power, [Abs, y], 2]]]]]			
-normalize-1-plus-x-plus-x-pow-2-function	Scope		[Normalize, [Add, 1, x, [Power, x, 2]], [Function, [Integrate, [Power, _1, 2], [Limits, x, -1, 1]]]]	[Multiply, [Rational, 5, 22], [Add, [Power, x, 2], x, 1]]		Unreadable	Normalize by an integral norm: $p / \int_{-1}^{1} p^2\,dx$ with $p = 1 + x + x^2$
+id	section	role	expr	expected	caption	triage	epsil.back	wolfram.kind	wolfram.note
+3-4-5			[Normalize, [List, 3, 4]]	[List, [Rational, 3, 5], [Rational, 4, 5]]	The 3-4-5 triangle's direction vector, normalized to unit length				
+normalize-list-1-5-1			[Normalize, [List, 1, 5, 1]]	[List, [Divide, [Sqrt, 3], 9], [Multiply, [Rational, 5, 9], [Sqrt, 3]], [Divide, [Sqrt, 3], 9]]	Divides by the Euclidean norm $\sqrt{27} = 3\sqrt3$, keeping exact radicals				
+zero-vector	Scope		[Normalize, [List, 0, 0]]	[List, 0, 0]	The zero vector has no direction, so it is left unchanged				
+normalize-list-x-y-f	Scope		[Normalize, [List, x, y], f]	[List, [Divide, x, [f, [List, x, y]]], [Divide, y, [f, [List, x, y]]]]					
+normalize-list-x-y	Scope		[Normalize, [List, x, y]]	[List, [Divide, x, [Sqrt, [Add, [Power, [Abs, x], 2], [Power, [Abs, y], 2]]]], [Divide, y, [Sqrt, [Add, [Power, [Abs, x], 2], [Power, [Abs, y], 2]]]]]					
+normalize-1-plus-x-plus-x-pow-2-function	Scope		[Normalize, [Add, 1, x, [Power, x, 2]], [Function, [Integrate, [Power, _1, 2], [Limits, x, -1, 1]]]]	[Multiply, [Rational, 5, 22], [Add, [Power, x, 2], x, 1]]			Unreadable		Normalize by an integral norm: $p / \int_{-1}^{1} p^2\,dx$ with $p = 1 + x + x^2$
+normalize-list-list-1-2-list-4-5-norm	Scope	triage	[Normalize, [List, [List, 1, 2], [List, 4, 5]], Norm]	[List, [List, [Divide, [Sqrt, 46], 46], [Divide, [Sqrt, 46], 23]], [List, [Multiply, [Rational, 2, 23], [Sqrt, 46]], [Multiply, [Rational, 5, 46], [Sqrt, 46]]]]		gap		unclassified	Normalize with a norm function differs from Wolfram's normalisation of the matrix.

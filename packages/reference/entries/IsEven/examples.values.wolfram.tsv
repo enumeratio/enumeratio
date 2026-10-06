@@ -9,6 +9,6 @@ big-integers	EvenQ[Power[2, 100]]	True	\text{EvenQ}\left[2^{100}\right]	\text{Tr
 iseven-10-factorial	EvenQ[Factorial[10]]	True	\text{EvenQ}[10!]	\text{True}	
 threads-element-wise-over-a-list	EvenQ[List[1, 2, 3]]	{False, True, False}	\text{EvenQ}[\{1,2,3\}]	\{\text{False},\text{True},\text{False}\}	
 select-the-even-numbers-up-to-10	Select[Range[10], EvenQ]	{2, 4, 6, 8, 10}	\text{Select}[\text{Range}[10],\text{EvenQ}]	\{2,4,6,8,10\}	
-every-integer-is-exactly-one-of-odd-and-even-see					
+every-integer-is-exactly-one-of-odd-and-even-see	Xor[OddQ[12], EvenQ[12]]				
 iseven-12	EvenQ[12]	True	\text{EvenQ}[12]	\text{True}	
 a-symbol-stays-undecided-rather-than-false	EvenQ[x]	False	\text{EvenQ}[x]	\text{False}	disagree

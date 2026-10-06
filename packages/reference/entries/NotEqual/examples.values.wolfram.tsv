@@ -5,4 +5,6 @@ id	in	out	tex.in	tex.out
 abc-factorial-eq-abc	Unequal["abc", "ABC"]	True	\text{abc}\neq \text{ABC}	\text{True}
 pi-pow-exponentiale-factorial-eq-exponentiale	Unequal[Power[Pi, E], Power[E, Pi]]	True	\pi ^e\neq e^{\pi }	\text{True}
 list-a-b-c-factorial-eq-list-d-k	Unequal[List[a, b, c], List[d, k]]	True	\{a,b,c\}\neq \{d,k\}	\text{True}
+1-factorial-eq-1-plus-128-times-10-pow-neg-16	Unequal[1, Plus[1, Times[128, Power[10, -16]]]]	True	1\neq 1+\frac{128}{10^{16}}	\text{True}
+1-factorial-eq-1-plus-256-times-10-pow-neg-16	Unequal[1, Plus[1, Times[256, Power[10, -16]]]]	True	1\neq 1+\frac{256}{10^{16}}	\text{True}
 list-x-factorial-eq-x-x-factorial-eq-y-sqrt-2	List[Unequal[x, x], Unequal[x, y], Unequal[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]], Unequal[Pi, N[Pi]]]	{False, x != y, False, False}	\left\{x\neq x,x\neq y,\sqrt{2}+\sqrt{3}\neq \sqrt{5+2 \sqrt{6}},\pi \neq N[\pi ]\right\}	\{\text{False},x\neq y,\text{False},\text{False}\}

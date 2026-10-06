@@ -6,6 +6,7 @@ exact-for-large-n	stirling_number2(50, 2)	562949953421311
 threads-element-wise-over-a-list-as-wolfram-s	[stirling_number2(2, 2), stirling_number2(4, 2), stirling_number2(6, 2)]	[1, 7, 31]	
 the-ways-to-split-10-distinct-items-among-3	stirling_number2(10, 3)	9330	
 stirling-n-range-1-n			
+sum-stirling-6-k-times-apply-derivative-f-k			
 one-block-means-one-partition-s-n-1-1	stirling_number2(5, 1)	1	
 singletons-only-s-n-n-1	stirling_number2(5, 5)	1	
 row-sums-give-the-bell-numbers			

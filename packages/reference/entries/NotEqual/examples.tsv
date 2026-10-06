@@ -5,4 +5,6 @@ id	section	role	expr	expected	caption
 abc-factorial-eq-abc	Scope		[NotEqual, "'abc'", "'ABC'"]	True	Strings compare case-sensitively
 pi-pow-exponentiale-factorial-eq-exponentiale	Scope		[NotEqual, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True	
 list-a-b-c-factorial-eq-list-d-k	Scope		[NotEqual, [List, a, b, c], [List, d, k]]	True	
+1-factorial-eq-1-plus-128-times-10-pow-neg-16	Scope		[NotEqual, 1, [Add, 1, [Multiply, 128, [Power, 10, -16]]]]	True	
+1-factorial-eq-1-plus-256-times-10-pow-neg-16	Scope		[NotEqual, 1, [Add, 1, [Multiply, 256, [Power, 10, -16]]]]	True	
 list-x-factorial-eq-x-x-factorial-eq-y-sqrt-2	Properties		[List, [NotEqual, x, x], [NotEqual, x, y], [NotEqual, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]], [NotEqual, Pi, [N, Pi]]]	[List, False, [NotEqual, x, y], False, False]	Decides what it can: $\sqrt2 + \sqrt3 = \sqrt{5 + 2\sqrt6}$; $x \ne y$ stays open

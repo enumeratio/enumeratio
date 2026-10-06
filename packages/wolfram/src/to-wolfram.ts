@@ -141,10 +141,18 @@ export const FOREIGN: Record<string, string> = {
 };
 
 /** `Over -> R` as Wolfram's own `GaussianIntegers -> True/False`, for the rings it has one for. */
-export const ringOption = (key: MathJson, value: MathJson): string | undefined =>
-  key === "Over" && (value === "GaussianIntegers" || value === "Integers")
-    ? `Rule[GaussianIntegers, ${value === "GaussianIntegers" ? "True" : "False"}]`
-    : undefined;
+export const ringOption = (key: MathJson, value: MathJson): string | undefined => {
+  if (key !== "Over") return undefined;
+  if (value === "GaussianIntegers" || value === "Integers")
+    return `Rule[GaussianIntegers, ${value === "GaussianIntegers" ? "True" : "False"}]`;
+  // `Over -> QuotientRing(Integers, p)` is Wolfram's `Modulus -> p`, in either of the forms a
+  // value arrives in (raw MathJSON, or the source `emit` already walked it to).
+  const parts = typeof value === "string" ? /^QuotientRing\[Integers, ([\s\S]+)\]$/.exec(value) : undefined;
+  if (parts) return `Rule[Modulus, ${parts[1]}]`;
+  if (Array.isArray(value) && value[0] === "QuotientRing" && value[1] === "Integers" && value.length === 3)
+    return `Rule[Modulus, ${toWolfram(value[2]!)}]`;
+  return undefined;
+};
 
 /** Heads that need a bespoke emission rather than a plain rename. */
 const SPECIAL: Record<string, (args: MathJson[]) => string> = {
@@ -215,7 +223,25 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // 3-ary fold call reaches here — a 2-ary or n-ary `Reduce` (Wolfram's own signature) falls
   // through to the generic pass-through below unchanged.
   Reduce: (a) =>
-    a.length === 3 ? `Fold[${toWolfram(a[1])}, ${toWolfram(a[2])}, ${toWolfram(a[0])}]` : call("Reduce", a),
+    a.length === 3
+      ? `Fold[${toWolfram(a[1])}, ${toWolfram(a[2])}, ${toWolfram(a[0])}]`
+      : a.length === 2
+        ? `Fold[${toWolfram(a[1])}, ${toWolfram(a[0])}]`
+        : call(`${CONTEXT}Reduce`, a),
+  // Wolfram's `Reduce` (equations and inequalities to a condition) is ours as `ReduceConditions`;
+  // `Reduce` itself is the fold above.
+  ReduceConditions: (a) => call("Reduce", a),
+  // `Root[p, k]`, the k-th root object of a polynomial, is `PolynomialRoot(p, k)`; `Root` is the nth root.
+  PolynomialRoot: (a) => call("Root", a),
+  // Series(f, x, x0, n) is Wolfram's `Series[f, {x, x0, n}]`; a shorter form leaves the order
+  // to our default, which Wolfram has no spelling for.
+  Series: (a) =>
+    a.length === 4 ? `Series[${toWolfram(a[0])}, ${call("List", a.slice(1))}]` : call(`${CONTEXT}Series`, a),
+  // Residue(f, z, z0) is `Residue[f, {z, z0}]`.
+  Residue: (a) => (a.length === 3 ? `Residue[${toWolfram(a[0])}, ${call("List", a.slice(1))}]` : call("Residue", a)),
+  // Insert(list, index, x) puts the position before the element, Wolfram's `Insert[list, x, n]` after it.
+  Insert: (a) =>
+    a.length === 3 ? `Insert[${toWolfram(a[0])}, ${toWolfram(a[2])}, ${toWolfram(a[1])}]` : call("Insert", a),
   // Round(x, n) rounds to n decimal places; Wolfram's second argument is a step
   // to round to a multiple of, so n digits is the step 10^-n.
   Round: (a) =>
@@ -415,7 +441,13 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // `Function` -- is already exact-equality, which is what a bare rename gives correctly, so
   // only the `Function`-literal predicate form is rewritten.
   Count: (a) => {
-    if (a.length === 1) return `Length[${toWolfram(a[0])}]`;
+    if (a.length === 1) {
+      // Count(IntegerPartitions(n)) is the partition number, not the length of a list of them.
+      const parts = headArgs(a[0]);
+      if (parts?.head === "IntegerPartitions" && parts.args.length === 1)
+        return `PartitionsP[${toWolfram(parts.args[0])}]`;
+      return `Length[${toWolfram(a[0])}]`;
+    }
     if (a.length === 2) {
       const parts = headArgs(a[1]);
       if (parts?.head === "Function") {

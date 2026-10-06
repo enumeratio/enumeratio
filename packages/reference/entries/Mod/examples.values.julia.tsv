@@ -77,6 +77,8 @@ pi-mod-exponentiale
 1-plus-neg-1-plus-nthprime-2-factorial-mod			
 2-minus-jacobisymbol-2-3-mod-3			
 1-plus-neg-1-plus-nthprime-3-factorial-mod			
+2pi-mod-exponentiale			
+neg-pi-mod-2			
 division-by-a-0-modulus-yields-nan-rather-than	mod(5, 0)	DivideError: integer division error	error
 periodicity-with-a-zero-modulus-on-one-side	(mod(35, 13) == mod((17 + (3 * 5)), 0))		
 rounding-ties-to-even-means-1-and-1-both-appear	[mod(complex(1, 2), 2), mod(complex(3, 2), 2)]	MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met	error

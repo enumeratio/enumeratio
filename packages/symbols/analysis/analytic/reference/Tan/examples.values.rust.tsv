@@ -11,6 +11,8 @@ a-huge-3-200-argument	nf(tan(power(n(3), n(200))))
 a-huge-neg-7-60-argument	nf(tan((-(power(n(7), n(60))))))		
 a-huge-10-80-plus-1-over-3-argument	nf(tan(((power(n(10), n(80)) + n(1)) / n(3))))		
 tan-100-under-n	nf(tan(n(100)))		
+series-tan-x-x-0-10			
+series-tan-x-x-1-over-2-times-pi-5			
 n-of-an-exact-argument-gives-an-arbitrary	nf(tan(rational(n(6), n(5))))	2.5721516221263188	
 evaluates-at-a-complex-argument			
 threads-element-wise-over-a-matrix	tan(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), x(std::f64::consts::PI)]), list(vec![(x(std::f64::consts::PI) / n(3)), (-(x(std::f64::consts::PI)))])]))	panic: threading: a list where the crate takes a scalar	error

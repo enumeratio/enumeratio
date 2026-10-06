@@ -1,6 +1,16 @@
-id	section	role	expr	expected	caption	epsil.back
-filter-list-1-neg-1-2-neg-2-3-function-0-lt-1-1	Scope		[Filter, [List, 1, -1, 2, -2, 3], [Function, [Block, [Less, 0, _1]], _1]]	[List, 1, 2, 3]	A pure function as a test keeps the positives	Unreadable
-array-function-1-pow-2-plus-1-1-10	Scope		[Array, [Function, [Block, [Add, [Power, _1, 2], 1]], _1], 10]	[List, 2, 5, 10, 17, 26, 37, 50, 65, 82, 101]	Tabulates $n^2+1$ using a pure function	Unreadable
-sort-list-list-a-2-list-c-1-list-d-3-function-1	Scope		[Sort, [List, [List, a, 2], [List, c, 1], [List, d, 3]], [Function, [Block, [Less, [At, _1, 2], [At, _2, 2]]], _1, _2]]	[List, [List, c, 1], [List, a, 2], [List, d, 3]]	A two-argument function orders pairs by second component	Unreadable
-map-function-17-list-1-2-3	Properties		[Map, [Function, [Block, 17]], [List, 1, 2, 3]]	[List, 17, 17, 17]	A function with no slots ignores its argument	Unreadable
-array-function-1-pow-2-1-10	Properties		[Array, [Function, [Block, [Power, _1, 2]], _1], 10]	[List, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]	Tabulates the first ten squares	Unreadable
+id	section	role	expr	expected	caption	triage	epsil.back	epsil.backOut	wolfram.kind	wolfram.note
+apply-function-u-plus-3-u-x			[Apply, [Function, [Block, [Add, u, 3]], u], x]	[Add, x, 3]			Unreadable			
+apply-function-1-plus-3-1-x			[Apply, [Function, [Block, [Add, _1, 3]], _1], x]	[Add, x, 3]			Unreadable			
+apply-function-v-pow-4-plus-u-pow-2-u-v-x-y			[Apply, [Function, [Block, [Add, [Power, v, 4], [Power, u, 2]]], u, v], x, y]	[Add, [Power, y, 4], [Power, x, 2]]			Unreadable			
+apply-function-2-pow-4-plus-1-pow-2-1-2-x-y			[Apply, [Function, [Block, [Add, [Power, _2, 4], [Power, _1, 2]]], _1, _2], x, y]	[Add, [Power, y, 4], [Power, x, 2]]			Unreadable			
+filter-list-1-neg-1-2-neg-2-3-function-0-lt-1-1	Scope		[Filter, [List, 1, -1, 2, -2, 3], [Function, [Block, [Less, 0, _1]], _1]]	[List, 1, 2, 3]	A pure function as a test keeps the positives		Unreadable			
+array-function-1-pow-2-plus-1-1-10	Scope		[Array, [Function, [Block, [Add, [Power, _1, 2], 1]], _1], 10]	[List, 2, 5, 10, 17, 26, 37, 50, 65, 82, 101]	Tabulates $n^2+1$ using a pure function		Unreadable			
+sort-list-list-a-2-list-c-1-list-d-3-function-1	Scope		[Sort, [List, [List, a, 2], [List, c, 1], [List, d, 3]], [Function, [Block, [Less, [At, _1, 2], [At, _2, 2]]], _1, _2]]	[List, [List, c, 1], [List, a, 2], [List, d, 3]]	A two-argument function orders pairs by second component		Unreadable			
+derivative-function-x-pow-2-x-1	Scope		[Derivative, [Function, [Block, [Power, x, 2]], x], 1]	[Function, [Block, [Multiply, 2, x]], x]			Unreadable	Unreadable		
+map-function-17-list-1-2-3	Properties		[Map, [Function, [Block, 17]], [List, 1, 2, 3]]	[List, 17, 17, 17]	A function with no slots ignores its argument		Unreadable			
+array-function-1-pow-2-1-10	Properties		[Array, [Function, [Block, [Power, _1, 2]], _1], 10]	[List, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]	Tabulates the first ten squares		Unreadable			
+replaceall-function-p-plus-1-rule-p-q	Properties	triage	[ReplaceAll, [Function, [Add, p, _1]], [Rule, p, q]]	[Function, [Block, [Add, _1, q]], _1]		gap			unclassified	The expansions differ beyond the remainder order.
+apply-apply-function-function-x-pow-y-y-x-x-y	Properties		[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, x, y]], y]], x], x], y]	[Power, x, y]			Unreadable			
+apply-apply-function-function-y-pow-x-x-y-x-y	Properties	triage	[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, y, x]], x]], y], x], y]	[Power, y, y]		gap			unclassified	The expansions differ beyond the remainder order.
+apply-apply-function-function-x-pow-x-x-x-x-y	Properties		[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, x, x]], x]], x], x], y]	[Power, y, y]			Unreadable			
+apply-apply-function-function-x-pow-y-y-x-a-b	Properties		[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, x, y]], y]], x], a], b]	[Power, a, b]			Unreadable			

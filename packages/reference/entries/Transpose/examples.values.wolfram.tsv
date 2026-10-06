@@ -2,5 +2,6 @@ id	in	out	tex.in	tex.out	verdict
 transpose-list-list-a-x-list-b-y-list-c-z	Transpose[List[List[a, x], List[b, y], List[c, z]]]	{{a, b, c}, {x, y, z}}	\left( \begin{array}{cc}  a & x \\  b & y \\  c & z \\ \end{array} \right)^T	\left( \begin{array}{ccc}  a & b & c \\  x & y & z \\ \end{array} \right)	
 chop-dot-u-transpose-u	Chop[Dot[u, Transpose[u]]]	u . Transpose[u]	\text{Chop}\left[u.u^T\right]	u.u^T	disagree
 chop-dot-v-transpose-v	Chop[Dot[v, Transpose[v]]]	v . Transpose[v]	\text{Chop}\left[v.v^T\right]	v.v^T	disagree
+chop-dot-q-transpose-q	Chop[Dot[q, Transpose[q]]]	q . Transpose[q]	\text{Chop}\left[q.q^T\right]	q.q^T	disagree
 conjugate-transpose-m	Conjugate[Transpose[m]]	Conjugate[Transpose[m]]	\left(m^T\right)^*	\left(m^T\right)^*	
 shape-transpose-a-perm	Dimensions[Transpose[a, perm]]	{2}	\text{Dimensions}\left[a^{T:\text{perm}}\right]	\{2\}	disagree

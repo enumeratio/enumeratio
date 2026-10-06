@@ -11,3 +11,4 @@ fullsimplify-4-times-sin-x-times-cos-x-plus-4	Scope		[FullSimplify, [Add, [Multi
 fullsimplify-1-minus-i-times-exponentiale-pow-i	Scope		[FullSimplify, [Add, [Multiply, [Complex, 1, -1], [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]]], [Multiply, [Complex, 1, 1], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]]]]	[Add, [Multiply, 2, [Sin, x]], [Multiply, 2, [Cos, x]]]	
 assuming-re-x-gt-0-fullsimplify-exponentiale-pow	Scope		[Assuming, [Greater, [Re, x], 0], [FullSimplify, [Power, ExponentialE, [GammaLn, x]]]]	[Gamma, x]	
 a-bare-exp-is-left-alone	Scope		[FullSimplify, [Exp, x]]	[Power, ExponentialE, x]	ExpToTrig is kept only where it shortens the expression: $e^x$ is no simpler as $\cosh x+\sinh x$
+assuming-real-x-gt-0-fullsimplify-exponentiale	Scope		[Assuming, [Greater, [Real, x], 0], [FullSimplify, [Power, ExponentialE, [GammaLn, x]]]]	[Gamma, x]	

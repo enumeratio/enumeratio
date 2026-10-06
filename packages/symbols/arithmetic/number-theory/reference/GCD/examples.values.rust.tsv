@@ -35,6 +35,7 @@ gcd-with-a-negative-associate
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19			
 gcd-of-two-composites-sharing-the-prime-above-13			
 gcd-of-two-10000-bit-integers	equal(gcd((power(n(2), n(10000)) - n(1)), (power(n(2), n(6000)) - n(1))), (power(n(2), n(2000)) - n(1)))		
+reduceconditions-gcd-a-pow-2-minus-1-12-lt-gcd-a			
 reduce-12-18-to-lowest-terms-by-dividing-out-the	(n(12) / gcd(n(12), n(18)))	2	
 gcd-14-105	gcd(n(14), n(105))		
 gcd-24-12	gcd(n(24), n(12))		

@@ -1,3 +1,4 @@
 id	in	out	tex.in	tex.out
 sum-k-pow-2-k-nothing-10	Sum[Power[k, 2], List[k, 10]]	385	\sum _k^{10} k^2	385
 sum-k-pow-neg-6-k-1-positiveinfinity	Sum[Power[k, -6], List[k, 1, Infinity]]	Pi^6/945	\sum _{k=1}^{\infty } \frac{1}{k^6}	\frac{\pi ^6}{945}
+sum-k-pow-neg-2-k-1-positiveinfinity	Sum[Power[k, -2], List[k, 1, Infinity]]	Pi^2/6	\sum _{k=1}^{\infty } \frac{1}{k^2}	\frac{\pi ^2}{6}

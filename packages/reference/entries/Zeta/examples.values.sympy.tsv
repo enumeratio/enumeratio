@@ -19,6 +19,9 @@ zeta-3-neg-1-adds-one-to-zeta-3	zeta(3, -1)	nan	inconclusive
 zeta-3-neg-2-sums-shifted-terms	zeta(3, -2)	nan	inconclusive
 zeta-4-neg-3-sums-shifted-terms	zeta(4, -3)	nan	inconclusive
 n-zeta-3-neg-3-matches-the-exact-sum	N(zeta(3, -3), 30)	nan	inconclusive
+fullsimplify-normal-series-zeta-x-x-0-2			
+normal-series-zeta-x-x-positiveinfinity-6			
+normal-series-zeta-x-x-1-2			
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N(zeta((0.5 + 14*I)), 30)	0.0222411426099935888300862529832 - 0.103258123266450063670873760202*I	
 two-argument-zeta-s-a-via-enumeratio-analytic	zeta(2, 1)	pi**2/6	
 zeta-2-2-zeta-2-1-pi-2-6-1	zeta(2, 2)	-1 + pi**2/6	

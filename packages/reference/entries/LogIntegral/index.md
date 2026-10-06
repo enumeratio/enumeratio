@@ -7,4 +7,6 @@ signatures:
   - call: LogIntegral(complex | infinity) -> number
     description: as compute-engine declares it
 stub: engine
+names:
+  wolframIdentity: true
 ---

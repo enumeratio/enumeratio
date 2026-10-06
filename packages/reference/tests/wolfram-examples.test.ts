@@ -21,7 +21,8 @@ test("an input that wouldn't mean the same here is refused, with why", () => {
   expect(reason("HoldComplete[Zeta[\\[FormalN]]]")).toBe("named character");
   expect(reason("HoldComplete[f[Zeta[2]]]")).toBe("user function f");
   expect(reason("HoldComplete[Plus[F[x], Series[Zeta[x], List[x, 0, 2]]]]")).toBe("user function F");
-  expect(reason("HoldComplete[Normal[Series[Zeta[x], List[x, 0, 2]]]]")).toBe("unmapped Normal Series");
+  expect(reason("HoldComplete[Comap[List[Zeta, Gamma], 2]]")).toBe("unmapped Comap");
+  expect(reason("HoldComplete[Normal[Series[Zeta[x], List[x, 0, 2]]]]")).toBeUndefined();
   expect(reason("HoldComplete[$Aborted]")).toBe("effect $Aborted");
 });
 

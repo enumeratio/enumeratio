@@ -1,8 +1,7 @@
 <script setup lang="ts">
-// Dev-only review sidebar, mounted on every docs page through the theme Layout (see
-// web/.vitepress/theme/Layout.vue) -- never built into production (gated by
-// `import.meta.env.DEV` at the Layout call site, matching the old ReviewMode.vue's
-// pattern). Content -- list, filters, detail, status buttons, autosaving feedback --
+// Review sidebar, mounted on every docs page through the theme Layout (see
+// web/.vitepress/theme/Layout.vue) only while review mode is on (`?review`, see
+// review/mode.ts); always open then, with no toggle button. Content -- list, filters, detail, status buttons, autosaving feedback --
 // is the same backlog UI ReviewMode.vue had; what changed is the right-hand side:
 // selecting an item now navigates the SITE ITSELF (VitePress's router) instead of
 // framing it in an iframe. See web/.vitepress/review/link.ts for the link rewrite.
@@ -12,7 +11,7 @@ import { getEntry } from "../../data/reference.ts";
 import type { BacklogItem, ItemStatus } from "../../review/backlog.ts";
 import { resolveReviewLink, splitHash } from "../../review/link.ts";
 import { exampleIdFromAnchor, lookForText, symbolNameFromPath } from "../../review/look-for.ts";
-import { reviewModeOn, toggleReviewMode } from "../review/mode.ts";
+import { reviewModeOn, setReviewMode } from "../review/mode.ts";
 import { area, prField, prNumber, useReviewStore } from "../review/store.ts";
 
 // Reviewed is a checkbox; needs work is a flag, and setting either clears the other.
@@ -150,7 +149,7 @@ async function onDocumentClick(e: MouseEvent): Promise<void> {
 
 onMounted(() => {
   store.init();
-  if (new URLSearchParams(location.search).has("review")) store.isOpen.value = true;
+  store.isOpen.value = true;
   window.addEventListener("keydown", onKeydown);
   window.addEventListener("mousemove", onMouseMove);
   window.addEventListener("mouseup", stopResize);
@@ -165,17 +164,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <button
-    class="review-toggle"
-    :class="{ 'is-open': store.isOpen.value }"
-    :title="store.isOpen.value ? 'Close review panel' : 'Open review panel'"
-    :style="store.isOpen.value ? { right: `calc(${panelWidth}px + 1rem)` } : undefined"
-    @click="store.isOpen.value = !store.isOpen.value"
-  >
-    ☰ Review
-  </button>
-
-  <aside v-if="store.isOpen.value" class="review-panel" :style="{ width: panelWidth + 'px' }">
+  <aside class="review-panel" :style="{ width: panelWidth + 'px' }">
     <div class="review-splitter" @mousedown="startResize"></div>
     <div v-if="!store.loaded.value" class="review-state">Loading backlog…</div>
     <div v-else-if="store.loadError.value" class="review-state review-state-error">
@@ -188,7 +177,7 @@ onBeforeUnmount(() => {
     <template v-else>
       <header class="review-header">
         <div class="review-path" :title="store.path.value">{{ store.path.value }}</div>
-        <button class="review-close" title="Close" @click="store.isOpen.value = false">×</button>
+        <button class="review-close" title="Exit review mode" @click="setReviewMode(false)">×</button>
       </header>
       <div class="review-toolbar">
         <button class="review-copy" @click="store.copyFeedback">
@@ -200,16 +189,13 @@ onBeforeUnmount(() => {
                 : "Copy feedback"
           }}
         </button>
-        <button class="review-mode-toggle" title="Turn review mode off" @click="toggleReviewMode()">
-          Review mode: on
-        </button>
       </div>
       <details class="review-help">
         <summary>Help</summary>
         <p>
-          Review mode exists under <code>vitepress dev</code> (or a build made with <code>VITE_REVIEW=1</code>), where
-          it's on by default. <code>?review=off</code> turns it off for this browser, and <code>?review</code> back on.
-          The panel starts collapsed.
+          Review mode exists under <code>vitepress dev</code> (or a build made with <code>VITE_REVIEW=1</code>), and is
+          on only after <code>?review</code> in the URL, for this tab. <code>×</code> or <code>?review=off</code>
+          leaves it.
         </p>
         <p>
           Alt + Cmd-click (macOS) or Alt + Ctrl-click (elsewhere) on any anchored element -- an example, a heading, an
@@ -335,25 +321,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.review-toggle {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 1001;
-  background: var(--vp-c-brand-1);
-  color: var(--vp-c-white, #fff);
-  border: none;
-  border-radius: 999px;
-  padding: 0.5rem 0.9rem;
-  font-size: 0.8rem;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-}
-.review-toggle.is-open {
-  background: var(--vp-c-bg-soft);
-  color: var(--vp-c-text-1);
-  border: 1px solid var(--vp-c-divider);
-}
 .review-panel {
   position: fixed;
   top: 0;

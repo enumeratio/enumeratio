@@ -147,10 +147,10 @@ test("special forms lowered to a Wolfram expression with no head of its own", ()
 test("Reduce(collection, f, x0) — our fold, not Wolfram's equation solver — maps to Fold", () => {
   expect(toWolfram(["Reduce", ["List", "a", "b", "c", "d"], "List", "x"])).toBe("Fold[List, x, List[a, b, c, d]]");
 });
-// Wolfram's own Reduce (a system list, `isWolframHead`) still passes through at any OTHER
-// arity — the SPECIAL case only intercepts the exact 3-ary fold shape.
-test("Reduce at another arity is left as Wolfram's own Reduce", () => {
-  expect(toWolfram(["Reduce", ["Equal", "x", 1]])).toBe("Reduce[Equal[x, 1]]");
+// Wolfram's own Reduce is `ReduceConditions` here, so a fold-shaped head at another arity is not it.
+test("Reduce at another arity is not Wolfram's Reduce", () => {
+  expect(toWolfram(["Reduce", ["Equal", "x", 1]])).toBe("enumeratio`Reduce[Equal[x, 1]]");
+  expect(toWolfram(["Reduce", ["List", 1, 2], "Max"])).toBe("Fold[Max, List[1, 2]]");
 });
 
 // A-126 head survey, #495: `Sign` is overloaded over `complex | permutation` — a `Permutation`
@@ -384,4 +384,23 @@ test("Solve(eqs, x, y) lists its unknowns; a list or a single unknown is left as
 
 test("ClosenessCentrality(g, v) selects one vertex via Part, Wolfram having no 2-argument form", () => {
   expect(toWolfram(["ClosenessCentrality", ["StarGraph", 5], 1])).toBe("Part[ClosenessCentrality[StarGraph[5]], 1]");
+});
+
+test("shapes Wolfram spells differently: Series, Residue, Insert, ReduceConditions, PolynomialRoot", () => {
+  expect(toWolfram(["Series", ["Exp", "x"], "x", 0, 3])).toBe("Series[Exp[x], List[x, 0, 3]]");
+  expect(toWolfram(["Residue", "f", "z", 0])).toBe("Residue[f, List[z, 0]]");
+  expect(toWolfram(["Insert", "xs", 2, "y"])).toBe("Insert[xs, y, 2]");
+  expect(toWolfram(["ReduceConditions", ["Greater", "x", 0], "x"])).toBe("Reduce[Greater[x, 0], x]");
+  expect(toWolfram(["PolynomialRoot", "p", 1])).toBe("Root[p, 1]");
+  // The fold keeps the fold; a call shaped for Wolfram's own Reduce no longer reaches it.
+  expect(toWolfram(["Reduce", "xs", "f", 0])).toBe("Fold[f, 0, xs]");
+});
+
+test("the partition number is Count(IntegerPartitions(n))", () => {
+  expect(toWolfram(["Count", ["IntegerPartitions", 10]])).toBe("PartitionsP[10]");
+  expect(toWolfram(["Count", ["IntegerPartitions", 10, 3]])).toBe("Length[IntegerPartitions[10, 3]]");
+});
+
+test("Over -> QuotientRing(Integers, p) is Modulus -> p", () => {
+  expect(toWolfram(["KeyValuePair", "Over", ["QuotientRing", "Integers", 7]])).toBe("Rule[Modulus, 7]");
 });

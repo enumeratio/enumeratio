@@ -3,6 +3,7 @@ lucasl-0	lucas_number2(0, 1, -1)	2
 lucasl-1	lucas_number2(1, 1, -1)	1	
 lucasl-5	lucas_number2(5, 1, -1)	11	
 lucasl-10	lucas_number2(10, 1, -1)	123	
+series-lucasl-1-over-2-x-x-0-5			
 exact-at-any-size	lucas_number2(100, 1, -1)	792070839848372253127	
 an-odd-negative-index-flips-the-sign-l-11-l-11	lucas_number2(-11, 1, -1)	-199	
 a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	lucas_number2(2.3333333333333335, 1, -1)	TypeError: Attempt to coerce non-integral RealNumber to Integer	error

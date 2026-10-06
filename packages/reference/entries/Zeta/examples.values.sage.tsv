@@ -19,6 +19,9 @@ zeta-3-neg-1-adds-one-to-zeta-3	hurwitz_zeta(3, -1)
 zeta-3-neg-2-sums-shifted-terms	hurwitz_zeta(3, -2)		
 zeta-4-neg-3-sums-shifted-terms	hurwitz_zeta(4, -3)		
 n-zeta-3-neg-3-matches-the-exact-sum	N(hurwitz_zeta(3, -3))		
+fullsimplify-normal-series-zeta-x-x-0-2			
+normal-series-zeta-x-x-positiveinfinity-6			
+normal-series-zeta-x-x-1-2			
 on-the-critical-line-zeta-1-2-14i-0-02224-0	N(zeta((0.5 + 14*I)))	0.0222411426099936 - 0.103258123266450*I	
 two-argument-zeta-s-a-via-enumeratio-analytic	hurwitz_zeta(2, 1)	1/6*pi^2	
 zeta-2-2-zeta-2-1-pi-2-6-1	hurwitz_zeta(2, 2)	1/6*pi^2 - 1	

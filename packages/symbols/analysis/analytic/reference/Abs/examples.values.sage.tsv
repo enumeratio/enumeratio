@@ -25,6 +25,7 @@ abs-positiveinfinity-times-i	abs((oo * (0 + 1*I)))
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2		
 complexexpand-abs-x		
 complexexpand-abs-x-plus-i-times-y		
+apply-derivative-abs-1-x		
 the-gap-between-two-temperatures-70-and-95	abs((70 - 95))	25
 the-distance-between-the-points-1-i-and-4-5i-of	abs(((1 + 1*I) - (4 + 5*I)))	5
 even-function-x-x	bool(abs(-8) == abs(8))	True

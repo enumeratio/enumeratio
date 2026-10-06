@@ -25,6 +25,7 @@ abs-positiveinfinity-times-i
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2			
 complexexpand-abs-x			
 complexexpand-abs-x-plus-i-times-y			
+apply-derivative-abs-1-x			
 the-gap-between-two-temperatures-70-and-95	abs((n(70) - n(95)))	25	
 the-distance-between-the-points-1-i-and-4-5i-of			
 even-function-x-x	equal(abs(n(-8)), abs(n(8)))	true	

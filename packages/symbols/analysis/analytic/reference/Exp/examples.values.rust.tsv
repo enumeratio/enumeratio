@@ -3,6 +3,7 @@ exp-0	exp(n(0))	1.0
 stays-the-exact-constant-rather-than	exp(n(1))	2.718281828459045	
 compute-engine-represents-exp-x-as-e-x-once-the			
 a-machine-precision-argument-evaluates	exp(x(3.4))	29.96410004739701	
+series-exponentiale-pow-x-x-0-10			
 broadcasts-element-wise-giving-begin-pmatrix-1-e	exp(list(vec![list(vec![n(0), n(1)]), list(vec![n(1), n(0)])]))	panic: threading: a list where the crate takes a scalar	error
 arbitrary-precision-via-n	nf(exp(rational(n(8), n(5))))	4.953032424395115	
 evaluates-at-a-complex-argument			

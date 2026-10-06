@@ -10,6 +10,7 @@ the-primes-below-a-million	prime_pi(1000000)	78498
 listable-threads-over-a-list	[prime_pi(3), prime_pi(5), prime_pi(17), prime_pi(25)]	[2, 3, 7, 9]
 primepi-10-11	prime_pi(100000000000)	
 primepi-10-12	prime_pi(1000000000000)	
+primepi-1-plus-10-pow-17		
 nthprime-range-1-primepi-100		
 primepi-5-000	prime_pi(5000)	
 same-inverse-relation-viewed-from-primepi-s-side		

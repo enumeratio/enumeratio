@@ -12,6 +12,7 @@ a-huge-3-200-argument	nf(cos(power(n(3), n(200))))
 a-huge-neg-7-60-argument	nf(cos((-(power(n(7), n(60))))))		
 a-huge-10-80-plus-1-over-3-argument	nf(cos(((power(n(10), n(80)) + n(1)) / n(3))))		
 cos-2-5	cos(x(2.5))		
+series-cos-x-x-0-10			
 n-of-an-exact-argument-gives-an-arbitrary	nf(cos(rational(n(6), n(5))))	0.3623577544766736	
 evaluates-at-a-complex-argument			
 threads-element-wise-over-a-matrix	cos(list(vec![list(vec![(n(5) * (x(std::f64::consts::PI) / n(6))), n(0)]), list(vec![(n(3) * (x(std::f64::consts::PI) / n(2))), (-((x(std::f64::consts::PI) / n(2))))])]))	panic: threading: a list where the crate takes a scalar	error

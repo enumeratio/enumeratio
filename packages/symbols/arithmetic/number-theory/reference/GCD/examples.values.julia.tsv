@@ -35,6 +35,7 @@ gcd-with-a-negative-associate	gcd(ZZ(complex(6, 8)), ZZ(complex(-2, -3)))
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19	gcd(ZZ(complex(123, 456)), ZZ(19))		
 gcd-of-two-composites-sharing-the-prime-above-13	gcd(ZZ(complex(6, 8)), ZZ(complex(9, 6)))		
 gcd-of-two-10000-bit-integers	(gcd(ZZ(((big(2)^10000) - 1)), ZZ(((big(2)^6000) - 1))) == ((big(2)^2000) - 1))		
+reduceconditions-gcd-a-pow-2-minus-1-12-lt-gcd-a			
 reduce-12-18-to-lowest-terms-by-dividing-out-the	(12 // gcd(ZZ(12), ZZ(18)))	2.0	
 gcd-14-105	gcd(ZZ(14), ZZ(105))		
 gcd-24-12	gcd(ZZ(24), ZZ(12))		

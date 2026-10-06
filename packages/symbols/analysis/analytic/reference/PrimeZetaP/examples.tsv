@@ -1,7 +1,8 @@
-id	section	role	expr	expected	known	tolerance	source	caption	triage	wolfram.note
-sum-p-1-p-2			[N, [PrimeZetaP, 2]]	0.4522474200410655	{num: "0.4522474200410655"}	1e-9	Wolfram 15.0.0 PrimeZetaP	$\sum_p 1/p^2$		
-n-primezetap-3			[N, [PrimeZetaP, 3]]	0.17476263929944355	{num: "0.17476263929944352"}	1e-9	Wolfram 15.0.0 PrimeZetaP			
-n-primezetap-4		test	[N, [PrimeZetaP, 4]]	0.07699313976424685	{num: "0.07699313976424685"}	1e-9	Wolfram 15.0.0 PrimeZetaP			
-n-primezetap-2-50			[N, [PrimeZetaP, 2], 50]	{num: "0.45224742004106549850654336483224793417323134323989"}						
-primezetap-2p5	Scope		[PrimeZetaP, 2.5]	0.273680737993234	{num: "0.2736807379932342"}	1e-9	Wolfram 15.0.0 PrimeZetaP			
-n-primezetap-4-over-11-50	Scope	triage	[N, [PrimeZetaP, [Rational, 4, 11]], 50]	[PrimeZetaP, {num: "0.36363636363636363636363636363636363636363636363636"}]					gap	the Moebius/zeta identity only converges for Re(s) > 1, so s = 4/11 stays unevaluated; Wolfram continues it with principal logarithms (imaginary part pi/2 here).
+id	section	role	expr	expected	known	tolerance	source	caption	triage	epsil.back	wolfram.note
+sum-p-1-p-2			[N, [PrimeZetaP, 2]]	0.4522474200410655	{num: "0.4522474200410655"}	1e-9	Wolfram 15.0.0 PrimeZetaP	$\sum_p 1/p^2$			
+n-primezetap-3			[N, [PrimeZetaP, 3]]	0.17476263929944355	{num: "0.17476263929944352"}	1e-9	Wolfram 15.0.0 PrimeZetaP				
+n-primezetap-4		test	[N, [PrimeZetaP, 4]]	0.07699313976424685	{num: "0.07699313976424685"}	1e-9	Wolfram 15.0.0 PrimeZetaP				
+n-primezetap-2-50			[N, [PrimeZetaP, 2], 50]	{num: "0.45224742004106549850654336483224793417323134323989"}							
+primezetap-2p5	Scope		[PrimeZetaP, 2.5]	0.273680737993234	{num: "0.2736807379932342"}	1e-9	Wolfram 15.0.0 PrimeZetaP				
+n-primezetap-4-over-11-50	Scope	triage	[N, [PrimeZetaP, [Rational, 4, 11]], 50]	[PrimeZetaP, {num: "0.36363636363636363636363636363636363636363636363636"}]					gap		the Moebius/zeta identity only converges for Re(s) > 1, so s = 4/11 stays unevaluated; Wolfram continues it with principal logarithms (imaginary part pi/2 here).
+replaceall-eulergamma-plus-primezetap-1-plus	Applications		[ReplaceAll, [Add, EulerGamma, [PrimeZetaP, [Add, 1, [Power, ExponentialE, [Multiply, -1, n]]]], [Multiply, -1, n]], [List, [Rule, n, 20]]]	[Add, -20, EulerGamma, [PrimeZetaP, [Add, 1, [Power, ExponentialE, -20]]]]						[ReplaceAll, [Subtract, [Add, EulerGamma, [PrimeZetaP, [Add, 1, [Power, ExponentialE, [Negate, n]]]]], n], [List, [Rule, n, 20]]]	

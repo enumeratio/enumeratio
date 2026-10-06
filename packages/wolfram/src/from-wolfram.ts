@@ -11,6 +11,15 @@ import { CONTEXT, HEADS, type MathJson, SYMBOLS } from "./to-wolfram.ts";
 /** Strip the context off a name `toWolfram` qualified to keep it out of `System``. */
 const unqualify = (name: string): string => (name.startsWith(CONTEXT) ? name.slice(CONTEXT.length) : name);
 
+/** Wolfram's domains that are restrictions of `RealNumbers`, read as the interval they are: ours has no
+ * head for them. Read-only; an interval does not print back as one of these. */
+export const READ_SYMBOLS: Readonly<Record<string, MathJson>> = {
+  PositiveReals: ["Interval", ["Open", 0], "PositiveInfinity"],
+  NonNegativeReals: ["Interval", 0, "PositiveInfinity"],
+  NegativeReals: ["Interval", "NegativeInfinity", ["Open", 0]],
+  NonPositiveReals: ["Interval", "NegativeInfinity", 0],
+};
+
 /** Wolfram spelling → compute-engine symbol constant. Reverse of `SYMBOLS`. */
 const REVERSE_SYMBOLS: Record<string, string> = Object.fromEntries(Object.entries(SYMBOLS).map(([ce, wl]) => [wl, ce]));
 
@@ -191,13 +200,27 @@ function parseSymbolOrCall(): MathJson {
     pos++;
     const args = parseArgs("]");
     expect("]");
-    return applyHead(name, args);
+    // `Derivative[n][f]` is one head applied to `f`; any further `[x]` applies the result.
+    let applied: MathJson;
+    if (name === "Derivative" && peek() === "[") {
+      pos++;
+      const operand = parseArgs("]");
+      expect("]");
+      applied = ["Derivative", ...operand, ...args];
+    } else applied = applyHead(name, args);
+    while (peek() === "[") {
+      pos++;
+      const more = parseArgs("]");
+      expect("]");
+      applied = ["Apply", applied, ...more];
+    }
+    return applied;
   }
   // Truth values round-trip as the MathJSON symbol strings "True"/"False", matching how
   // this codebase writes them elsewhere (option values, etc.) — not JS booleans.
   if (name === "True") return "True";
   if (name === "False") return "False";
-  return REVERSE_SYMBOLS[name] ?? REVERSE_HEADS[name] ?? unqualify(name);
+  return READ_SYMBOLS[name] ?? REVERSE_SYMBOLS[name] ?? REVERSE_HEADS[name] ?? unqualify(name);
 }
 
 function parseArgs(closer: string): MathJson[] {
@@ -212,6 +235,83 @@ function parseArgs(closer: string): MathJson[] {
     skipWs();
   }
   return args;
+}
+
+const gcd = (a: number, b: number): number => (b === 0 ? Math.abs(a) : gcd(b, a % b));
+/** `p/q` as a MathJSON number. */
+const ratio = (p: number, q: number): MathJson => {
+  const d = gcd(p, q) || 1;
+  return q / d === 1 ? p / d : ["Rational", p / d, q / d];
+};
+
+/**
+ * `SeriesData[x, x0, {a0, a1, …}, nmin, nmax, den]`, the kernel's series object: the terms
+ * `a_k (x - x0)^((nmin + k)/den)` and `O((x - x0)^(nmax/den))`, as the sum our `Series` answers with.
+ */
+function seriesData(args: MathJson[]): MathJson | undefined {
+  const [x, x0, coefficients, nmin, nmax, den] = args;
+  if (!isList(coefficients) || typeof nmin !== "number" || typeof nmax !== "number" || typeof den !== "number")
+    return undefined;
+  const base: MathJson = x0 === 0 ? x! : ["Subtract", x!, x0!];
+  const power = (p: number): MathJson => (p === 0 ? 1 : p === den ? base : ["Power", base, ratio(p, den)]);
+  const terms: MathJson[] = [];
+  coefficients.slice(1).forEach((a, k) => {
+    if (a === 0) return;
+    const p = power(nmin + k);
+    terms.push(p === 1 ? a : a === 1 ? p : ["Multiply", a, p]);
+  });
+  terms.push(["BigO", power(nmax)]);
+  return terms.length === 1 ? terms[0]! : ["Add", ...terms];
+}
+
+/** Wolfram names read by call shape, or into a head ours spells differently: `undefined` if none. */
+function applyNamed(name: string, args: MathJson[]): MathJson | undefined {
+  switch (name) {
+    // `Series[f, {x, x0, n}]`.
+    case "Series": {
+      const it = args[1];
+      return args.length === 2 && isList(it) && it.length === 4
+        ? ["Series", args[0]!, it[1]!, it[2]!, it[3]!]
+        : undefined;
+    }
+    case "SeriesData":
+      return seriesData(args);
+    // `Residue[f, {z, z0}]`.
+    case "Residue": {
+      const it = args[1];
+      return args.length === 2 && isList(it) && it.length === 3 ? ["Residue", args[0]!, it[1]!, it[2]!] : undefined;
+    }
+    // `Insert[list, x, n]` puts the element before the position.
+    case "Insert":
+      return args.length === 3 ? ["Insert", args[0]!, args[2]!, args[1]!] : undefined;
+    // `UnsameQ` is every pair distinct.
+    case "UnsameQ": {
+      const pairs = args.flatMap((a, i) => args.slice(i + 1).map((b) => ["Not", ["Same", a, b]] as MathJson));
+      return pairs.length === 1 ? pairs[0] : pairs.length > 1 ? ["And", ...pairs] : "True";
+    }
+    // Wolfram's equation and inequality `Reduce`; ours is the fold.
+    case "Reduce":
+      return ["ReduceConditions", ...args];
+    // `Root[p, k]` is a polynomial's root object; ours is the nth root.
+    case "Root":
+      return ["PolynomialRoot", ...args];
+    // The partition number is a count.
+    case "PartitionsP":
+      return args.length === 1 ? ["Count", ["IntegerPartitions", args[0]!]] : undefined;
+    // `Signature[perm]` is the sign of a permutation.
+    case "Signature":
+      return args.length === 1 && isList(args[0]) ? ["Sign", ["Permutation", args[0]]] : undefined;
+    // `ProductLog[k, z]` puts the branch first.
+    case "ProductLog":
+      return args.length === 2 ? ["LambertW", args[1]!, args[0]!] : undefined;
+    // `Modulus -> p` is working over the integers mod `p`.
+    case "Rule":
+      return args.length === 2 && args[0] === "Modulus"
+        ? ["KeyValuePair", "Over", ["QuotientRing", "Integers", args[1]!]]
+        : undefined;
+    default:
+      return undefined;
+  }
 }
 
 const isList = (node: MathJson): node is MathJson[] => Array.isArray(node) && node[0] === "List";
@@ -230,6 +330,8 @@ const isPlain = (node: MathJson): node is string | number =>
  * the Wolfram expression they were lowered to. Those directions are lossy by
  * construction and aren't reconstructed. */
 function applyHead(name: string, args: MathJson[]): MathJson {
+  const named = applyNamed(name, args);
+  if (named !== undefined) return named;
   if (name === "Log" && args.length === 1) return ["Ln", args[0]];
   if (name === "Log" && args.length === 2) return ["Log", args[1], args[0]];
   // Divisible(n, m) is "n is divisible by m"; our Divides(a, b) is "a divides b" —

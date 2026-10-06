@@ -22,3 +22,4 @@ partitionsq-14	PartitionsQ[14]	22	q(14)	22
 partitionsq-15	PartitionsQ[15]	27	q(15)	27
 partitionsq-16	PartitionsQ[16]	32	q(16)	32
 partitionsq-17	PartitionsQ[17]	38	q(17)	38
+partitionsq-neg-expand-exponentiale-plus-1-pow-2	PartitionsQ[Plus[Minus[Expand[Power[Plus[E, 1], 2]]], 12, Power[Plus[1, E], 2]]]	PartitionsQ[11 - 2*E - E^2 + (1 + E)^2]	q\left(-\text{Expand}\left[(e+1)^2\right]+12+(1+e)^2\right)	q\left(11-2 e-e^2+(1+e)^2\right)

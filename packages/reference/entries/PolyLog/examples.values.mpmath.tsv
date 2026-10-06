@@ -77,6 +77,7 @@ n-polylog-250-neg-4-a-large-order-past-z-1	(polylog(250, -4))	-4.0
 n-polylog-250-4-a-large-order-on-the-cut	(polylog(250, 4))	(4.0 - 1.019863859497598374311260677e-454j)	
 n-polylog-2500000-4-a-huge-order-returns	(polylog(2500000, 4))	(3.99999999999999999999999999971 - 1.91009646958618531905136366582e-14554472j)	
 n-polylog-40p5-2-plus-3i-a-large-complex-point	(polylog(40.5, mpc(2, 3)))	(1.99999999999678444846009173589 + 3.00000000000771731888027005127j)	
+normal-series-polylog-2-x-x-positiveinfinity-6			
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	TypeError: cannot create mpf from [0.5, 0.25]	error
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	(2.78966033238277714404754430876 - 1.36380370053935279437171941141j)	
 complex-order-and-argument	polylog(mpc(0.2, 1), mpc(0.5, -0.5))	(0.0703265205505160488207107039144 - 0.563293262539874483087247237706j)	
@@ -102,6 +103,7 @@ polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, (mpf(1)/2)), polylog
 polylog-1-0	polylog(1, 0)		
 d-polylog-n-z-z			
 matrixfunction-function-polylog-2-1-1-list-list			
+fullsimplify-series-polylog-n-x-x-x0-2			
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	-1.46035450880958681288949915252	
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852261324757813215	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063438189164323275	

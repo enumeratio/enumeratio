@@ -1,3 +1,4 @@
-id	section	role	expr	expected	caption	epsil.back
-sum-one-to-five			[List, [Assign, total, 0], [Do, [Assign, total, [Add, total, k]], [List, k, 1, 5]], total]	[List, 0, 15]	sum 1 through 5 with a named loop variable	Unreadable
-repeat-with-no-loop-variable			[List, [Assign, count, 0], [Do, [Assign, count, [Add, count, 1]], 4], count]	[List, 0, 4]	Do(body, n) repeats with no loop variable	Unreadable
+id	section	role	expr	expected	caption	triage	epsil.back	wolfram.kind	wolfram.note
+sum-one-to-five			[List, [Assign, total, 0], [Do, [Assign, total, [Add, total, k]], [List, k, 1, 5]], total]	[List, 0, 15]	sum 1 through 5 with a named loop variable		Unreadable		
+repeat-with-no-loop-variable			[List, [Assign, count, 0], [Do, [Assign, count, [Add, count, 1]], 4], count]	[List, 0, 4]	Do(body, n) repeats with no loop variable		Unreadable		
+reap-do-if-isprime-2-pow-n-minus-1-sow-n-list-n	Applications	triage	[At, [Reap, [Do, [If, [IsPrime, [Add, [Power, 2, n], -1]], [Sow, n]], [List, n, 100]]], 2, 1]	[At, [List, [List, [List, 2, 3, 5, 7, 13, 17, 19, 31, 61, 89]]], 2, 1]		gap		unclassified	Reap/Sow answers a nested list that Part leaves unevaluated here.

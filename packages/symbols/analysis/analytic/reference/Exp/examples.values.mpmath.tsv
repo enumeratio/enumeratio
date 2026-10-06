@@ -3,6 +3,7 @@ exp-0	exp(0)	1.0
 stays-the-exact-constant-rather-than	exp(1)	2.71828182845904523536028747135	
 compute-engine-represents-exp-x-as-e-x-once-the			
 a-machine-precision-argument-evaluates	exp(3.4)	29.9641000473970106868160502504	
+series-exponentiale-pow-x-x-0-10			
 broadcasts-element-wise-giving-begin-pmatrix-1-e	[[exp(0), exp(1)], [exp(1), exp(0)]]	[[mpf('1.0'), mpf('2.71828182845904523536028747135281')], [mpf('2.71828182845904523536028747135281'), mpf('1.0')]]	
 arbitrary-precision-via-n	(exp((mpf(8)/5)))	4.95303242439511480365428635642	
 evaluates-at-a-complex-argument	exp(mpc(2.5, 1))	(6.58222957819277298437932116841 + 10.251215190529403439318317104j)	

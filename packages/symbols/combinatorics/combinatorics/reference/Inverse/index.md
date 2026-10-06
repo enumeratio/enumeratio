@@ -29,6 +29,8 @@ signatures:
       - permutation
 laws:
   - involution
+names:
+  wolframIdentity: true
 ---
 
 - Takes a `Permutation` and returns a `Permutation` — a typed map, so a wrong carrier is a type error rather than a wrong answer.

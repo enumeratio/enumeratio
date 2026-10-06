@@ -7,6 +7,8 @@ signatures:
   - call: Hypergeometric1F1(complex | infinity, complex | infinity, complex | infinity) -> number
     description: as compute-engine declares it
 stub: engine
+names:
+  wolframIdentity: true
 ---
 
 Kummer's confluent hypergeometric function $M(a,b,z) = {}_1F_1(a;b;z) = \sum_{k\ge0} (a)_k/(b)_k \cdot z^k/k!$ (DLMF 13.2.2) is entire in $z$ for every $a, b$ — the confluence of [[Hypergeometric2F1]]'s regular singular points at $1$ and $\infty$ into one irregular singular point at $\infty$, taking $z \to z/b$ and $b \to \infty$ in ${}_2F_1(a,b;c;z/b)$. It solves Kummer's equation $z w'' + (b-z) w' - a w = 0$; $U(a,b,z)$ (see [[HypergeometricU]]) is the equation's other standard solution. It is compute-engine's own native head, declared for real and complex $z$.

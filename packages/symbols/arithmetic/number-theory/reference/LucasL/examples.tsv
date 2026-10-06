@@ -1,41 +1,42 @@
-id	section	role	expr	expected	known	source	caption	epsil.back	epsil.backOut	sage.kind	sage.note	sympy.kind	sympy.note	julia.kind	julia.note
-lucasl-0			[LucasL, 0]	2											
-lucasl-1			[LucasL, 1]	1											
-lucasl-5			[LucasL, 5]	11											
-lucasl-10			[LucasL, 10]	123											
-exact-at-any-size	Scope		[LucasL, 100]	{num: "792070839848372253127"}			Exact at any size								
-an-odd-negative-index-flips-the-sign-l-11-l-11	Scope		[LucasL, -11]	-199			An odd negative index flips the sign: $L_{-11} = -L_{11}$							domain	Combinatorics.jl's lucasnum declines a negative index; ours extends via LucasL(-n) = (-1)^n LucasL(n).
-a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	Scope		[LucasL, 2.3333333333333335]	3.2362118794916213			A real index uses $L_\nu = \varphi^\nu + \cos(\pi\nu)\,\varphi^{-\nu}$			domain	compute-engine extends LucasL to a real index through phi^nu and cos(pi*nu), as with Fibonacci; Sage's lucas_number2() requires an integer and raises a TypeError coercing the real.	domain	SymPy's lucas takes integers and stays symbolic; compute-engine continues L_ν to real ν.	domain	Combinatorics.jl's lucasnum is Int-only; ours extends LucasL to a real index ν through φ^ν and cos(πν), as with Fibonacci.
-the-two-argument-lucas-polynomial-l-7-x-from-l-n	Scope		[LucasL, 7, x]	[Add, [Power, x, 7], [Multiply, 7, [Power, x, 5]], [Multiply, 14, [Power, x, 3]], [Multiply, 7, x]]			The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$								
-the-lucas-polynomial-at-x-1-is-the-lucas-number	Scope		[LucasL, 143, 1]	{num: "767772505664398093937756525279"}			The Lucas polynomial at $x = 1$ is the Lucas number: $L_{143}(1) = L_{143}$								
-special-value-of-the-lucas-polynomial-l-1-0-0	Scope		[LucasL, 1, 0]	0			Special value of the Lucas polynomial: $L_1(0) = 0$								
-special-value-of-the-lucas-polynomial-l-0-0-2	Scope		[LucasL, 0, 0]	2			Special value of the Lucas polynomial: $L_0(0) = 2$								
-l-2-x-x-2-2-threads-element-wise-over-a-matrix	Scope		[LucasL, 2, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]	[List, [List, [Rational, 9, 4], 3], [List, 2, [Rational, 9, 4]]]			$L_2(x) = x^2 + 2$ threads element-wise over a matrix argument								
-threads-element-wise-over-a-list-as-wolfram-s	Scope		[LucasL, [List, 1, 2, 3, 4]]	[List, 1, 3, 4, 7]			Threads element-wise over a list, as Wolfram's Listable heads do								
-n-lucasl-11-over-3-50	Scope		[N, [LucasL, [Rational, 11, 3]], 50]	{num: "5.9239626529619554101356978621940126287519855422362"}			Lucas numbers extend to rational index; 50-digit evaluation								
-n-lucasl-1-plus-1-over-2-times-i	Scope		[N, [LucasL, [Complex, 1, [Rational, 1, 2]]]]	[Complex, {num: "0.0653384254708234243203598624240550770502518609531034"}, {num: "0.7550949201072339727429814197152154241011792851560602"}]			Complex index gives a complex value		[Add, {num: "0.0653384254708234243203598624240550770502518609531034"}, [Multiply, {num: "0.7550949201072339727429814197152154241011792851560602"}, i]]						
-lucasl-1-neg-x-eq-neg-lucasl-1-x	Scope		[Equal, [LucasL, 1, [Negate, x]], [Negate, [LucasL, 1, x]]]	True			The Lucas polynomial of odd index is an odd function of $x$								
-lucasl-2-neg-x-eq-lucasl-2-x	Scope		[Equal, [LucasL, 2, [Negate, x]], [LucasL, 2, x]]	True			Even index gives an even polynomial in $x$								
-lucasl-list-1-2-3-4-5	Scope		[LucasL, [List, 1, 2, 3, 4, 5]]	[List, 1, 3, 4, 7, 11]			Threads over a list of indices								
-generatingfunction-lucasl-n-n-x	Scope		[GeneratingFunction, [LucasL, n], n, x]	[Divide, [Add, [Negate, x], 2], [Add, [Negate, [Power, x, 2]], [Negate, x], 1]]			Generating function $\frac{2-x}{1-x-x^2}$								
-lucasl-1-conjugate-z-eq-conjugate-lucasl-1-z	Scope		[Equal, [LucasL, 1, [Conjugate, z]], [Conjugate, [LucasL, 1, z]]]	True			Real coefficients, so it commutes with complex conjugation								
-fullsimplify-matrixfunction-function-lucasl-2-1	Scope		[FullSimplify, [MatrixFunction, [Function, [Block, [LucasL, 2, _1]], _1], [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]]	[List, [List, [Rational, 9, 4], -1], [List, 0, [Rational, 9, 4]]]			Applied to a matrix as a function, here $x^2+2$ on an upper triangular matrix	Unreadable							
-consecutive-ratios-l-n-1-l-n-converge-to-the	Applications		[Divide, [LucasL, 15], [LucasL, 14]]	[Rational, 1364, 843]			Consecutive ratios $L_{n+1}/L_n$ converge to the golden ratio too. See [[Fibonacci]]								
-nestwhile-function-1-plus-1-1-function-lucasl-1	Applications		[NestWhile, [Function, [Add, _1, 1]], 1, [Function, [LessEqual, [LucasL, _1], [Power, 10, 6]]]]	29			First index whose Lucas number exceeds $10^6$	Unreadable							
-l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	Properties		[Subtract, [Power, [LucasL, 10], 2], [Multiply, 5, [Power, [Fibonacci, 10], 2]]]	4			$L_n^2 - 5F_n^2 = 4(-1)^n$, here at $n = 10$. See [[Fibonacci]]								
-l-n-f-n-1-f-n-1-here-at-n-6	Properties		[Equal, [LucasL, 6], [Add, [Fibonacci, 5], [Fibonacci, 7]]]	True			$L_n = F_{n-1} + F_{n+1}$, here at $n = 6$								
-conversely-f-n-frac-l-n-1-l-n-1-5	Properties		[Equal, [Fibonacci, 6], [Divide, [Add, [LucasL, 5], [LucasL, 7]], 5]]	True			Conversely $F_n = \dfrac{L_{n-1} + L_{n+1}}{5}$								
-a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	Properties		[Subtract, [Multiply, [LucasL, 4], [LucasL, 6]], [Power, [LucasL, 5], 2]]	5			A Cassini-style identity $L_{n-1}L_{n+1} - L_n^2 = 5(-1)^{n+1}$, here at $n = 5$								
-negative-indices-are-supported-via-l-n-1-n-l-n	Properties		[LucasL, -1]	-1			Negative indices are supported via $L_{-n} = (-1)^n L_n$							domain	compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only.
-lucasl-2	Properties		[LucasL, 2]	3	3	Wolfram MathematicalFunctionData, LucasL	$L_2=1+2$								
-lucasl-3	Properties		[LucasL, 3]	4	4	Wolfram MathematicalFunctionData, LucasL	Each term is the sum of the previous two								
-lucasl-4	Properties		[LucasL, 4]	7	7	Wolfram MathematicalFunctionData, LucasL	$L_4=3+4$								
-lucasl-6	Properties		[LucasL, 6]	18	18	Wolfram MathematicalFunctionData, LucasL	$L_6=7+11$								
-lucasl-7	Properties		[LucasL, 7]	29	29	Wolfram MathematicalFunctionData, LucasL	$L_7=11+18$								
-lucasl-8	Properties		[LucasL, 8]	47	47	Wolfram MathematicalFunctionData, LucasL	Lucas numbers grow by about the golden ratio each step								
-lucasl-9	Properties		[LucasL, 9]	76	76	Wolfram MathematicalFunctionData, LucasL	$L_9=29+47$								
-sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-2	Properties		[Sum, [Multiply, [Divide, 1, [LucasL, k]], [Divide, 1, [LucasL, [Add, k, 2]]], [Power, -1, k]], [Limits, k, 1, 2]]	[Rational, -17, 84]	[Rational, -17, 84]	Wolfram MathematicalFunctionData, LucasL, FunctionalEquations									
-neg-lucasl-1-times-lucasl-3-plus-lucasl-2-pow-2	Properties		[Add, [Negate, [Multiply, [LucasL, 1], [LucasL, 3]]], [Power, [LucasL, 2], 2]]	5	5	Wolfram MathematicalFunctionData, LucasL, FunctionalEquations									
-sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-3	Properties		[Sum, [Multiply, [Divide, 1, [LucasL, k]], [Divide, 1, [LucasL, [Add, k, 2]]], [Power, -1, k]], [Limits, k, 1, 3]]	[Rational, -52, 231]	[Rational, -52, 231]	Wolfram MathematicalFunctionData, LucasL, FunctionalEquations									
-n-neg-lucasl-neg-1-over-2-times-lucasl-3-over-2	Properties		[N, [Add, [Negate, [Multiply, [LucasL, [Rational, -1, 2]], [LucasL, [Rational, 3, 2]]]], [Power, [LucasL, [Rational, 1, 2]], 2]]]	{num: "-3.9379369099134090424e-21"}	0	Wolfram MathematicalFunctionData, LucasL, FunctionalEquations									
-l-30-already-tops-1-8-million-growing-at-the	Neat examples		[LucasL, 30]	1860498			$L_{30}$ already tops 1.8 million, growing at the same rate as [[Fibonacci]]								
+id	section	role	expr	expected	known	source	caption	triage	epsil.back	epsil.backOut	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	julia.kind	julia.note
+lucasl-0			[LucasL, 0]	2														
+lucasl-1			[LucasL, 1]	1														
+lucasl-5			[LucasL, 5]	11														
+lucasl-10			[LucasL, 10]	123														
+series-lucasl-1-over-2-x-x-0-5		triage	[Series, [LucasL, [Rational, 1, 2], x], x, 0, 5]	[Add, [Multiply, [Rational, 1, 120], [Apply, [Derivative, LucasL, 0, 5], [Rational, 1, 2], 0], [Power, x, 5]], [Multiply, [Rational, 1, 24], [Apply, [Derivative, LucasL, 0, 4], [Rational, 1, 2], 0], [Power, x, 4]], [Multiply, [Rational, 1, 6], [Apply, [Derivative, LucasL, 0, 3], [Rational, 1, 2], 0], [Power, x, 3]], [Multiply, [Rational, 1, 2], [Apply, [Derivative, LucasL, 0, 2], [Rational, 1, 2], 0], [Power, x, 2]], [Multiply, x, [Apply, [Derivative, LucasL, 0, 1], [Rational, 1, 2], 0]], [BigO, [Power, x, 6]], [LucasL, [Rational, 1, 2], 0]]				gap			unclassified	The series is left unevaluated or its coefficients stay symbolic Derivative terms; Wolfram evaluates them.						
+exact-at-any-size	Scope		[LucasL, 100]	{num: "792070839848372253127"}			Exact at any size											
+an-odd-negative-index-flips-the-sign-l-11-l-11	Scope		[LucasL, -11]	-199			An odd negative index flips the sign: $L_{-11} = -L_{11}$										domain	Combinatorics.jl's lucasnum declines a negative index; ours extends via LucasL(-n) = (-1)^n LucasL(n).
+a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	Scope		[LucasL, 2.3333333333333335]	3.2362118794916213			A real index uses $L_\nu = \varphi^\nu + \cos(\pi\nu)\,\varphi^{-\nu}$						domain	compute-engine extends LucasL to a real index through phi^nu and cos(pi*nu), as with Fibonacci; Sage's lucas_number2() requires an integer and raises a TypeError coercing the real.	domain	SymPy's lucas takes integers and stays symbolic; compute-engine continues L_ν to real ν.	domain	Combinatorics.jl's lucasnum is Int-only; ours extends LucasL to a real index ν through φ^ν and cos(πν), as with Fibonacci.
+the-two-argument-lucas-polynomial-l-7-x-from-l-n	Scope		[LucasL, 7, x]	[Add, [Power, x, 7], [Multiply, 7, [Power, x, 5]], [Multiply, 14, [Power, x, 3]], [Multiply, 7, x]]			The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$											
+the-lucas-polynomial-at-x-1-is-the-lucas-number	Scope		[LucasL, 143, 1]	{num: "767772505664398093937756525279"}			The Lucas polynomial at $x = 1$ is the Lucas number: $L_{143}(1) = L_{143}$											
+special-value-of-the-lucas-polynomial-l-1-0-0	Scope		[LucasL, 1, 0]	0			Special value of the Lucas polynomial: $L_1(0) = 0$											
+special-value-of-the-lucas-polynomial-l-0-0-2	Scope		[LucasL, 0, 0]	2			Special value of the Lucas polynomial: $L_0(0) = 2$											
+l-2-x-x-2-2-threads-element-wise-over-a-matrix	Scope		[LucasL, 2, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]	[List, [List, [Rational, 9, 4], 3], [List, 2, [Rational, 9, 4]]]			$L_2(x) = x^2 + 2$ threads element-wise over a matrix argument											
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[LucasL, [List, 1, 2, 3, 4]]	[List, 1, 3, 4, 7]			Threads element-wise over a list, as Wolfram's Listable heads do											
+n-lucasl-11-over-3-50	Scope		[N, [LucasL, [Rational, 11, 3]], 50]	{num: "5.9239626529619554101356978621940126287519855422362"}			Lucas numbers extend to rational index; 50-digit evaluation											
+n-lucasl-1-plus-1-over-2-times-i	Scope		[N, [LucasL, [Complex, 1, [Rational, 1, 2]]]]	[Complex, {num: "0.0653384254708234243203598624240550770502518609531034"}, {num: "0.7550949201072339727429814197152154241011792851560602"}]			Complex index gives a complex value			[Add, {num: "0.0653384254708234243203598624240550770502518609531034"}, [Multiply, {num: "0.7550949201072339727429814197152154241011792851560602"}, i]]								
+lucasl-1-neg-x-eq-neg-lucasl-1-x	Scope		[Equal, [LucasL, 1, [Negate, x]], [Negate, [LucasL, 1, x]]]	True			The Lucas polynomial of odd index is an odd function of $x$											
+lucasl-2-neg-x-eq-lucasl-2-x	Scope		[Equal, [LucasL, 2, [Negate, x]], [LucasL, 2, x]]	True			Even index gives an even polynomial in $x$											
+lucasl-list-1-2-3-4-5	Scope		[LucasL, [List, 1, 2, 3, 4, 5]]	[List, 1, 3, 4, 7, 11]			Threads over a list of indices											
+generatingfunction-lucasl-n-n-x	Scope		[GeneratingFunction, [LucasL, n], n, x]	[Divide, [Add, [Negate, x], 2], [Add, [Negate, [Power, x, 2]], [Negate, x], 1]]			Generating function $\frac{2-x}{1-x-x^2}$											
+lucasl-1-conjugate-z-eq-conjugate-lucasl-1-z	Scope		[Equal, [LucasL, 1, [Conjugate, z]], [Conjugate, [LucasL, 1, z]]]	True			Real coefficients, so it commutes with complex conjugation											
+fullsimplify-matrixfunction-function-lucasl-2-1	Scope		[FullSimplify, [MatrixFunction, [Function, [Block, [LucasL, 2, _1]], _1], [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]]	[List, [List, [Rational, 9, 4], -1], [List, 0, [Rational, 9, 4]]]			Applied to a matrix as a function, here $x^2+2$ on an upper triangular matrix		Unreadable									
+consecutive-ratios-l-n-1-l-n-converge-to-the	Applications		[Divide, [LucasL, 15], [LucasL, 14]]	[Rational, 1364, 843]			Consecutive ratios $L_{n+1}/L_n$ converge to the golden ratio too. See [[Fibonacci]]											
+nestwhile-function-1-plus-1-1-function-lucasl-1	Applications		[NestWhile, [Function, [Add, _1, 1]], 1, [Function, [LessEqual, [LucasL, _1], [Power, 10, 6]]]]	29			First index whose Lucas number exceeds $10^6$		Unreadable									
+l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci	Properties		[Subtract, [Power, [LucasL, 10], 2], [Multiply, 5, [Power, [Fibonacci, 10], 2]]]	4			$L_n^2 - 5F_n^2 = 4(-1)^n$, here at $n = 10$. See [[Fibonacci]]											
+l-n-f-n-1-f-n-1-here-at-n-6	Properties		[Equal, [LucasL, 6], [Add, [Fibonacci, 5], [Fibonacci, 7]]]	True			$L_n = F_{n-1} + F_{n+1}$, here at $n = 6$											
+conversely-f-n-frac-l-n-1-l-n-1-5	Properties		[Equal, [Fibonacci, 6], [Divide, [Add, [LucasL, 5], [LucasL, 7]], 5]]	True			Conversely $F_n = \dfrac{L_{n-1} + L_{n+1}}{5}$											
+a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n	Properties		[Subtract, [Multiply, [LucasL, 4], [LucasL, 6]], [Power, [LucasL, 5], 2]]	5			A Cassini-style identity $L_{n-1}L_{n+1} - L_n^2 = 5(-1)^{n+1}$, here at $n = 5$											
+negative-indices-are-supported-via-l-n-1-n-l-n	Properties		[LucasL, -1]	-1			Negative indices are supported via $L_{-n} = (-1)^n L_n$										domain	compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only.
+lucasl-2	Properties		[LucasL, 2]	3	3	Wolfram MathematicalFunctionData, LucasL	$L_2=1+2$											
+lucasl-3	Properties		[LucasL, 3]	4	4	Wolfram MathematicalFunctionData, LucasL	Each term is the sum of the previous two											
+lucasl-4	Properties		[LucasL, 4]	7	7	Wolfram MathematicalFunctionData, LucasL	$L_4=3+4$											
+lucasl-6	Properties		[LucasL, 6]	18	18	Wolfram MathematicalFunctionData, LucasL	$L_6=7+11$											
+lucasl-7	Properties		[LucasL, 7]	29	29	Wolfram MathematicalFunctionData, LucasL	$L_7=11+18$											
+lucasl-8	Properties		[LucasL, 8]	47	47	Wolfram MathematicalFunctionData, LucasL	Lucas numbers grow by about the golden ratio each step											
+lucasl-9	Properties		[LucasL, 9]	76	76	Wolfram MathematicalFunctionData, LucasL	$L_9=29+47$											
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-2	Properties		[Sum, [Multiply, [Divide, 1, [LucasL, k]], [Divide, 1, [LucasL, [Add, k, 2]]], [Power, -1, k]], [Limits, k, 1, 2]]	[Rational, -17, 84]	[Rational, -17, 84]	Wolfram MathematicalFunctionData, LucasL, FunctionalEquations												
+neg-lucasl-1-times-lucasl-3-plus-lucasl-2-pow-2	Properties		[Add, [Negate, [Multiply, [LucasL, 1], [LucasL, 3]]], [Power, [LucasL, 2], 2]]	5	5	Wolfram MathematicalFunctionData, LucasL, FunctionalEquations												
+sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-3	Properties		[Sum, [Multiply, [Divide, 1, [LucasL, k]], [Divide, 1, [LucasL, [Add, k, 2]]], [Power, -1, k]], [Limits, k, 1, 3]]	[Rational, -52, 231]	[Rational, -52, 231]	Wolfram MathematicalFunctionData, LucasL, FunctionalEquations												
+n-neg-lucasl-neg-1-over-2-times-lucasl-3-over-2	Properties		[N, [Add, [Negate, [Multiply, [LucasL, [Rational, -1, 2]], [LucasL, [Rational, 3, 2]]]], [Power, [LucasL, [Rational, 1, 2]], 2]]]	{num: "-3.9379369099134090424e-21"}	0	Wolfram MathematicalFunctionData, LucasL, FunctionalEquations												
+l-30-already-tops-1-8-million-growing-at-the	Neat examples		[LucasL, 30]	1860498			$L_{30}$ already tops 1.8 million, growing at the same rate as [[Fibonacci]]											

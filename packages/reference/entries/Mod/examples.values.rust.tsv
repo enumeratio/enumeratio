@@ -77,6 +77,8 @@ pi-mod-exponentiale	mod_floor(x(std::f64::consts::PI), x(std::f64::consts::E))
 1-plus-neg-1-plus-nthprime-2-factorial-mod			
 2-minus-jacobisymbol-2-3-mod-3			
 1-plus-neg-1-plus-nthprime-3-factorial-mod			
+2pi-mod-exponentiale	mod_floor((n(2) * x(std::f64::consts::PI)), x(std::f64::consts::E))		
+neg-pi-mod-2	mod_floor((-(x(std::f64::consts::PI))), n(2))		
 division-by-a-0-modulus-yields-nan-rather-than	mod_floor(n(5), n(0))	panic: attempt to divide by zero	error
 periodicity-with-a-zero-modulus-on-one-side	equal(mod_floor(n(35), n(13)), mod_floor((n(17) + (n(3) * n(5))), n(0)))	panic: attempt to divide by zero	error
 rounding-ties-to-even-means-1-and-1-both-appear			

@@ -1,6 +1,16 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 discreteshift-one-step			[DiscreteShift, [a, n], n]	[a, [Add, n, 1]]	One-step forward shift		
 discreteshift-sin-neg-2-over-7-times-i-times-pi			[DiscreteShift, [Sin, [Multiply, [Complex, 0, [Rational, -2, 7]], Pi]], [List, [Complex, 0, 1], 10]]	[DiscreteShift, [Multiply, [Complex, 0, 1], [Sinh, [Multiply, [Rational, -2, 7], Pi]]], [List, [Complex, 0, 1], 10]]		convention	both right: Sin(i·(-2π/7)) = i·Sinh(-2π/7), which we leave as Sinh of the negative argument; Wolfram additionally uses Sinh's oddness to pull the sign out (-I·Sinh(2π/7)). Same value, different simplification depth on an odd function's argument sign.
+discreteshift-sin-2-over-7-times-pi-times-k-pow			[DiscreteShift, [Sin, [Multiply, [Rational, 2, 7], Pi, [Power, k, 3]]], [List, k, 10]]	[Sin, [Multiply, [Rational, 2, 7], Pi, [Power, [Add, k, 10], 3]]]			
+discreteshift-fibonacci-k-list-k-5			[DiscreteShift, [Fibonacci, k], [List, k, 5]]	[Fibonacci, [Add, k, 5]]			
+discreteshift-k-factorial-list-k-5			[DiscreteShift, [Factorial, k], [List, k, 5]]	[Factorial, [Add, k, 5]]			
+discreteshift-apply-derivative-f-k-x-k			[DiscreteShift, [Apply, [Derivative, f, k], x], k]	[Apply, [Derivative, f, [Add, k, 1]], x]			
 discreteshift-h-step	Scope		[DiscreteShift, [a, n], [List, n, 2]]	[a, [Add, n, 2]]	The h-step form -- {n, h}, not a third argument		
 discreteshift-floor-k-k	Scope		[DiscreteShift, [Floor, k], k]	[Floor, [Add, k, 1]]			
 discreteshift-round-k-list-k-3	Scope		[DiscreteShift, [Round, k], [List, k, 3]]	[Round, [Add, k, 3]]			
+discreteshift-2-pow-k-k	Scope		[DiscreteShift, [Power, 2, k], k]	[Power, 2, [Add, k, 1]]			
+discreteshift-k-pow-4-plus-11-times-k-pow-3-plus	Scope		[DiscreteShift, [Add, [Power, k, 4], [Multiply, 11, [Power, k, 3]], [Multiply, 20, [Power, k, 2]]], [List, k, 3]]	[Add, [Power, [Add, k, 3], 4], [Multiply, 11, [Power, [Add, k, 3], 3]], [Multiply, 20, [Power, [Add, k, 3], 2]]]			
+discreteshift-1-over-k-minus-7-times-k-pow-2	Scope		[DiscreteShift, [Multiply, [Divide, 1, [Add, k, -7]], [Add, [Power, k, 2], 5]], k]	[Divide, [Add, [Power, [Add, k, 1], 2], 5], [Add, k, -6]]			
+discreteshift-fractionalpart-k-k	Scope		[DiscreteShift, [FractionalPart, k], k]	[FractionalPart, [Add, k, 1]]			
+discreteshift-gamma-k-list-k-3	Scope		[DiscreteShift, [Gamma, k], [List, k, 3]]	[Gamma, [Add, k, 3]]			
+discreteshift-catalannumber-k-list-k-3	Scope		[DiscreteShift, [CatalanNumber, k], [List, k, 3]]	[CatalanNumber, [Add, k, 3]]			

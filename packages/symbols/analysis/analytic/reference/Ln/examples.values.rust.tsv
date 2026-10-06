@@ -4,6 +4,7 @@ ln-exponentiale	ln(x(std::f64::consts::E))	1.0
 ln-0	ln(n(0))	NegativeInfinity	
 a-machine-precision-argument-evaluates	ln(x(1.5))	0.4054651081081644	
 a-machine-precision-negative-argument	ln(x(-4.705))	NaN	disagree
+series-ln-x-plus-1-x-0-10			
 ln-1-i-pi-the-principal-value-past-the-branch	ln(n(-1))	NaN	disagree
 n-for-a-decimal-value	nf(ln(n(1000)))	6.907755278982137	
 arbitrary-precision-via-n	nf(ln(rational(n(5), n(2))))	0.9162907318741551	
@@ -40,6 +41,8 @@ functionsurjective-ln-x-x
 d-ln-z-z			
 d-ln-ln-x-x			
 ln-exponentiale-pow-n			
+series-ln-x-x-1-4			
+series-ln-x-x-neg-2-3			
 inverse-of-exp-ln-e-x-x	equal(ln(exp(n(5))), n(5))	true	
 product-rule-ln-ab-ln-a-ln-b	equal((ln(n(2)) + ln(n(3))), ln(n(6)))	true	
 powerexpand-splits-a-logarithm-of-a-product			
