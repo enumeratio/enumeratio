@@ -16,7 +16,7 @@ import {
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { ANALYTIC_NOTATION } from "./notation.ts";
-import { declareWidened } from "./widened.ts";
+import { declareInverseOutsideDomain, declareWidened } from "./widened.ts";
 import { declareBetaContinuation } from "./beta-continuation.ts";
 import { declareComplexArguments } from "./complex-arguments.ts";
 import { declareDobinski } from "./dobinski.ts";
@@ -176,6 +176,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   // over it: Erf([0, 1]) is [0, Erf(1)].
   threadOverLists(ce, ["Binomial", "Pochhammer", "BernoulliB", "Erf", "Erfc", "ErfInv", "BetaRegularized"]);
   declareWidened(ce);
+  declareInverseOutsideDomain(ce);
 
   applyPatch(ce, solveDeclines);
   applyPatch(ce, solveDomains);

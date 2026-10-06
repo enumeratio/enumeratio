@@ -15,16 +15,16 @@ import { operandsOf } from "@enumeratio/engine";
 // The reverse compositions (Arcsin(Sin x), Ln(Exp x), etc.) are NOT identities over C -- Sin,
 // Cosh, Tanh and Exp aren't injective -- and are deliberately left alone.
 //
-// Why this hooks `canonical`, not `evaluate` (the usual `wrapOperator` seam), for all three:
+// Why this hooks `canonical`, not `evaluate` (the usual `wrapOperator` seam), for all of them:
 //
-// - Sin needs it. Unlike Arccos/Arctan/Arsinh, this package's own `Arcsin` past [-1, 1]
-//   reduces EAGERLY to its closed log form (widened.ts, matching compute-engine's own
+// - Sin needs it, and so do Cos, Sec, Csc, Coth and Sech. Unlike Arctan/Arsinh, this package's own
+//   inverse heads past their real domain (Arcsin, Arccos, Arcsec, ...) reduce EAGERLY to its closed log form (widened.ts, matching compute-engine's own
 //   N(Arcsin(x)) branch -- see Arcsin.yaml's documented divergence from Wolfram, which leaves
 //   ArcSin[5] unevaluated). By the time a non-lazy `Sin`'s `evaluate` would run, compute-engine
 //   has already evaluated that argument -- confirmed by logging `ops[0]` inside a
 //   `wrapOperator` wrapper on `Sin`, which sees the reduced log form, not `Arcsin`, for
 //   `Sin(Arcsin(5))`. `wrapOperator` can't reach this case: patching `evaluate` is too late.
-// - Cosh/Tanh don't strictly need it -- `Arcosh`/`Artanh` don't reduce on their own, so a
+// - Cosh/Tanh don't strictly need it -- an `Arcosh`/`Artanh` literal stays a node, so a
 //   `wrapOperator` on `evaluate` sees a literal `Arcosh`/`Artanh` node just fine. But `.N()`
 //   turned out not to route through that patched `evaluate` at all for these two (it takes
 //   some other, more direct numeric path for Cosh/Tanh specifically): N(Cosh(Arcosh(3i))) came
@@ -59,6 +59,11 @@ function foldInverseComposition(ce: ComputeEngine, head: string, inverse: string
 
 export function declareInverseCompositions(ce: ComputeEngine): void {
   foldInverseComposition(ce, "Sin", "Arcsin");
+  foldInverseComposition(ce, "Cos", "Arccos");
+  foldInverseComposition(ce, "Sec", "Arcsec");
+  foldInverseComposition(ce, "Csc", "Arccsc");
+  foldInverseComposition(ce, "Coth", "Arcoth");
+  foldInverseComposition(ce, "Sech", "Arsech");
   foldInverseComposition(ce, "Cosh", "Arcosh");
   foldInverseComposition(ce, "Tanh", "Artanh");
 }

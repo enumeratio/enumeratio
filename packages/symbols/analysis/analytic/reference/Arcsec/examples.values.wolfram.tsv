@@ -13,6 +13,8 @@ arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	ArcSec[List[List[Sqrt[2], Minus[Sq
 arcsec-2-over-3-times-sqrt-3	ArcSec[Times[Rational[2, 3], Sqrt[3]]]	Pi/6		\sec ^{-1}\left(\frac{2}{3} \sqrt{3}\right)	\frac{\pi }{6}	
 arcsec-complexinfinity	ArcSec[ComplexInfinity]	Pi/2		\sec ^{-1}(\text{ComplexInfinity})	\frac{\pi }{2}	
 matrixfunction-function-arcsec-1-1-list-list	MatrixFunction[Function[ArcSec[Slot[1]]], List[List[Sqrt[2], Minus[Sqrt[2]]], List[0, Minus[Sqrt[2]]]]]	{{Pi/4, Pi/4}, {0, (3*Pi)/4}}		\text{MatrixFunction}\left[\sec ^{-1}(\text{$\#$1})\&,\left( \begin{array}{cc}  \sqrt{2} & -\sqrt{2} \\  0 & -\sqrt{2} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  \frac{\pi }{4} & \frac{\pi }{4} \\  0 & \frac{3 \pi }{4} \\ \end{array} \right)	
+arcsec-1-over-2	ArcSec[Rational[1, 2]]	ArcSec[1/2]		\sec ^{-1}\left(\frac{1}{2}\right)	\sec ^{-1}\left(\frac{1}{2}\right)	
+arcsec-neg-1-over-2	ArcSec[Rational[-1, 2]]	ArcSec[-1/2]		\sec ^{-1}\left(-\frac{1}{2}\right)	\sec ^{-1}\left(-\frac{1}{2}\right)	
 undoes-sec-sec-arcsec-x-x	(Sec[ArcSec[2]] == 2)	True		\sec \left(\sec ^{-1}(2)\right)=2	\text{True}	
 arcsec-neg-sqrt-2-plus-sqrt-6	ArcSec[Plus[Minus[Sqrt[2]], Sqrt[6]]]	ArcSec[-Sqrt[2] + Sqrt[6]]		\sec ^{-1}\left(-\sqrt{2}+\sqrt{6}\right)	\sec ^{-1}\left(\sqrt{6}-\sqrt{2}\right)	
 arcsec-neg-sqrt-6-plus-sqrt-2	ArcSec[Plus[Minus[Sqrt[6]], Sqrt[2]]]	ArcSec[Sqrt[2] - Sqrt[6]]		\sec ^{-1}\left(-\sqrt{6}+\sqrt{2}\right)	\sec ^{-1}\left(\sqrt{2}-\sqrt{6}\right)	
