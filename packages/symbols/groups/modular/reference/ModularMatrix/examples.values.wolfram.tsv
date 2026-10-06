@@ -3,8 +3,8 @@ the-group-product
 no-division-needed-at-determinant-1					
 t-5					
 words-multiply-their-matrices	Dot["L", "R"]	"\"L\" . \"R\""	\text{L}.\text{R}	\text{L}.\text{R}	disagree
-the-inverse-of-a-word					
-r-3					
+the-inverse-of-a-word	Inverse["L"]				
+r-3	MatrixPower["R", 3]				
 negative-powers-are-powers-of-the-inverse					
-a-plain-integer-matrix-goes-to-compute-engine-s					
+a-plain-integer-matrix-goes-to-compute-engine-s	MatrixPower[List[List[1, 1], List[1, 0]], 10]				
 the-zeroth-power-is-the-identity					

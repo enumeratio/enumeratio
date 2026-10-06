@@ -8,3 +8,6 @@ interval-0-1-plus-interval-neg-1-1
 list-list-a-b-list-c-d-plus-list-list-1-2-list-3	enumeratio_broadcast(lambda _a0, _a1: (_a0 + _a1), [[SR.var("a"), SR.var("b")], [SR.var("c"), SR.var("d")]], [[1, 2], [3, 4]])
 length-a-plus-b-plus-c-plus-d	(len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d"))) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), '__len__') else (len((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")).operands()) if hasattr((SR.var("a") + SR.var("b") + SR.var("c") + SR.var("d")), 'operands') else 0))
 foldlist-add-0-list-a-b-c	
+replaceall-a-plus-b-plus-c-plus-d-rule-a-plus-d	
+apply-f-plus-g-x	
+through-apply-f-plus-g-x	

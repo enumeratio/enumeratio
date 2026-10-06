@@ -29,6 +29,8 @@ references:
     identity: LambertW-Function
   - system: dlmf
     identity: "4.13"
+names:
+  wolfram: ProductLog
 ---
 
 - Differs from Wolfram: the branch is the second argument, $\mathrm{LambertW}(z, k)$, in compute-engine's order. Wolfram's `ProductLog[k, z]` and Sage's `lambert_w(k, z)` take $(k, z)$; mpmath's `lambertw(z, k)` takes $(z, k)$, like ours. Keep this order in mind when pasting a call across systems: the same branch $W_{-1}(-0.2) \approx -2.5426$ is `LambertW(-0.2, -1)` here, `ProductLog[-1, -0.2]` in Wolfram, `lambert_w(-1, -0.2)` in Sage and `lambertw(-0.2, -1)` in mpmath. Swapped, `ProductLog[-0.2, -1]` is an error in Wolfram (the branch must be an integer), and `LambertW(-1, -0.2)` declines here. The Wolfram transpiler reverses the arguments at the boundary.

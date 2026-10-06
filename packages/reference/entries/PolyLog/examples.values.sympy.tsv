@@ -77,6 +77,7 @@ n-polylog-250-neg-4-a-large-order-past-z-1	N(polylog(250, -4), 30)
 n-polylog-250-4-a-large-order-on-the-cut	N(polylog(250, 4), 30)		
 n-polylog-2500000-4-a-huge-order-returns	N(polylog(2500000, 4), 30)		
 n-polylog-40p5-2-plus-3i-a-large-complex-point	N(polylog(40.5, (2 + 3*I)), 30)		
+normal-series-polylog-2-x-x-positiveinfinity-6			
 threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	AttributeError: 'list' object has no attribute 'is_number'	error
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	polylog(2.5, 2)	
 complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	
@@ -102,6 +103,7 @@ polylog-2-list-list-1-over-2-0-list-0-1-over-2	[[polylog(2, Rational(1, 2)), pol
 polylog-1-0	polylog(1, 0)		
 d-polylog-n-z-z	diff(polylog(Symbol("n"), Symbol("z")), Symbol("z"))		
 matrixfunction-function-polylog-2-1-1-list-list			
+fullsimplify-series-polylog-n-x-x-x0-2			
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	-1.46035450880959	
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	

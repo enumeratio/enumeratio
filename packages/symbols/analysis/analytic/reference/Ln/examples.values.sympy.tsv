@@ -4,6 +4,7 @@ ln-exponentiale	log(E)	1
 ln-0	log(0)	zoo	disagree
 a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164	
 a-machine-precision-negative-argument	log(-4.705)	1.54862577303734 + I*pi	
+series-ln-x-plus-1-x-0-10			
 ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	I*pi	
 n-for-a-decimal-value	N(log(1000), 30)	6.90775527898213705205397436405	
 arbitrary-precision-via-n	N(log(Rational(5, 2)), 30)	0.916290731874155065183527211768	
@@ -40,6 +41,8 @@ functionsurjective-ln-x-x
 d-ln-z-z	diff(log(Symbol("z")), Symbol("z"))		
 d-ln-ln-x-x	diff(log(log(Symbol("x"))), Symbol("x"))		
 ln-exponentiale-pow-n	log((S(E)**Symbol("n")))		
+series-ln-x-x-1-4			
+series-ln-x-x-neg-2-3			
 inverse-of-exp-ln-e-x-x	enumeratio_equal(log(exp(5)), 5)	True	
 product-rule-ln-ab-ln-a-ln-b	enumeratio_equal((log(2) + log(3)), log(6))	True	
 powerexpand-splits-a-logarithm-of-a-product			

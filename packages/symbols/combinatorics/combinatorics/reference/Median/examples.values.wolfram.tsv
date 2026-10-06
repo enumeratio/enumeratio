@@ -1,17 +1,18 @@
-id	in	out	shown	tex.in	tex.out
-median-list-1-2-3-4-5	Median[List[1, 2, 3, 4, 5]]	3		\text{Median}[\{1,2,3,4,5\}]	3
-median-list-1-2-3-4	Median[List[1, 2, 3, 4]]	5/2		\text{Median}[\{1,2,3,4\}]	\frac{5}{2}
-median-list-1-2-3-4-5-6-7	Median[List[1, 2, 3, 4, 5, 6, 7]]	4		\text{Median}[\{1,2,3,4,5,6,7\}]	4
-median-list-1-2-3-4-5-6-7-8	Median[List[1, 2, 3, 4, 5, 6, 7, 8]]	9/2		\text{Median}[\{1,2,3,4,5,6,7,8\}]	\frac{9}{2}
-given-a-matrix-median-is-column-wise	Median[List[List[1, 11, 3], List[4, 6, 7]]]	{5/2, 17/2, 5}		\text{Median}\left[\left( \begin{array}{ccc}  1 & 11 & 3 \\  4 & 6 & 7 \\ \end{array} \right)\right]	\left\{\frac{5}{2},\frac{17}{2},5\right\}
-unsorted-data-is-sorted-first-the-middle-pair-3	Median[List[3, 1, 4, 1, 5, 9, 2, 6]]	7/2		\text{Median}[\{3,1,4,1,5,9,2,6\}]	\frac{7}{2}
-exact-rationals	Median[List[Rational[1, 2], Rational[1, 3], Rational[1, 6]]]	1/3		\text{Median}\left[\left\{\frac{1}{2},\frac{1}{3},\frac{1}{6}\right\}\right]	\frac{1}{3}
-exact-constants-are-ordered-by-value-putting-e	Median[List[Pi, E, 2]]	E		\text{Median}[\{\pi ,e,2\}]	e
-the-median-of-a-lazy-range-of-even-length-is-the	Median[Range[1, 100]]	101/2		\text{Median}[\text{Range}[1,100]]	\frac{101}{2}
-median-n-list-1-2-3-4-30	Median[N[List[1, 2, 3, 4], 30]]	2.5`30.	2.50000000000000000000000000000	\text{Median}[N[\{1,2,3,4\},30]]	2.50000000000000000000000000000
-median-list-list-list-3-7-list-2-1-list-list-5	Median[List[List[List[3, 7], List[2, 1]], List[List[5, 19], List[12, 4]]]]	{{4, 13}, {7, 5/2}}		\text{Median}\left[\left( \begin{array}{cc}  \{3,7\} & \{2,1\} \\  \{5,19\} & \{12,4\} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  4 & 13 \\  7 & \frac{5}{2} \\ \end{array} \right)
-the-same-outlier-laden-data-as-in-mean-s-example	Median[List[-100, 1, 1, 1, 1, 20]]	1		\text{Median}[\{-100,1,1,1,1,20\}]	1
-median-list-1-5-2-6-10-100-000-5-4	Median[List[1, 5, 2, 6, 10, 100000, 5, 4]]	5		\text{Median}[\{1,5,2,6,10,100000,5,4\}]	5
-for-an-odd-length-list-the-median-is-the-middle	(Median[List[5, 3, 1, 4, 2]] == Part[Sort[List[5, 3, 1, 4, 2]], 3])	True		\text{Median}[\{5,3,1,4,2\}]=\text{Sort}[\{5,3,1,4,2\}][[3]]	\text{True}
-n-median-list-1-2-3-4-4-3-1-1	N[Median[List[1, 2, 3, 4, 4, 3, 1, 1]]]	2.5		N[\text{Median}[\{1,2,3,4,4,3,1,1\}]]	2.5
-median-list-1-2-3-4-4-3-1-1	Median[List[1, 2, 3, 4, 4, 3, 1, 1]]	5/2		\text{Median}[\{1,2,3,4,4,3,1,1\}]	\frac{5}{2}
+id	in	out	shown	tex.in	tex.out	verdict
+median-list-1-2-3-4-5	Median[List[1, 2, 3, 4, 5]]	3		\text{Median}[\{1,2,3,4,5\}]	3	
+median-list-1-2-3-4	Median[List[1, 2, 3, 4]]	5/2		\text{Median}[\{1,2,3,4\}]	\frac{5}{2}	
+median-list-1-2-3-4-5-6-7	Median[List[1, 2, 3, 4, 5, 6, 7]]	4		\text{Median}[\{1,2,3,4,5,6,7\}]	4	
+median-list-1-2-3-4-5-6-7-8	Median[List[1, 2, 3, 4, 5, 6, 7, 8]]	9/2		\text{Median}[\{1,2,3,4,5,6,7,8\}]	\frac{9}{2}	
+given-a-matrix-median-is-column-wise	Median[List[List[1, 11, 3], List[4, 6, 7]]]	{5/2, 17/2, 5}		\text{Median}\left[\left( \begin{array}{ccc}  1 & 11 & 3 \\  4 & 6 & 7 \\ \end{array} \right)\right]	\left\{\frac{5}{2},\frac{17}{2},5\right\}	
+unsorted-data-is-sorted-first-the-middle-pair-3	Median[List[3, 1, 4, 1, 5, 9, 2, 6]]	7/2		\text{Median}[\{3,1,4,1,5,9,2,6\}]	\frac{7}{2}	
+exact-rationals	Median[List[Rational[1, 2], Rational[1, 3], Rational[1, 6]]]	1/3		\text{Median}\left[\left\{\frac{1}{2},\frac{1}{3},\frac{1}{6}\right\}\right]	\frac{1}{3}	
+exact-constants-are-ordered-by-value-putting-e	Median[List[Pi, E, 2]]	E		\text{Median}[\{\pi ,e,2\}]	e	
+the-median-of-a-lazy-range-of-even-length-is-the	Median[Range[1, 100]]	101/2		\text{Median}[\text{Range}[1,100]]	\frac{101}{2}	
+median-n-list-1-2-3-4-30	Median[N[List[1, 2, 3, 4], 30]]	2.5`30.	2.50000000000000000000000000000	\text{Median}[N[\{1,2,3,4\},30]]	2.50000000000000000000000000000	
+median-list-list-list-3-7-list-2-1-list-list-5	Median[List[List[List[3, 7], List[2, 1]], List[List[5, 19], List[12, 4]]]]	{{4, 13}, {7, 5/2}}		\text{Median}\left[\left( \begin{array}{cc}  \{3,7\} & \{2,1\} \\  \{5,19\} & \{12,4\} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  4 & 13 \\  7 & \frac{5}{2} \\ \end{array} \right)	
+median-apply-poissonprocess-3-4	Median[PoissonProcess[3][4]]	12		\text{Median}[\text{PoissonProcess}[3][4]]	12	disagree
+the-same-outlier-laden-data-as-in-mean-s-example	Median[List[-100, 1, 1, 1, 1, 20]]	1		\text{Median}[\{-100,1,1,1,1,20\}]	1	
+median-list-1-5-2-6-10-100-000-5-4	Median[List[1, 5, 2, 6, 10, 100000, 5, 4]]	5		\text{Median}[\{1,5,2,6,10,100000,5,4\}]	5	
+for-an-odd-length-list-the-median-is-the-middle	(Median[List[5, 3, 1, 4, 2]] == Part[Sort[List[5, 3, 1, 4, 2]], 3])	True		\text{Median}[\{5,3,1,4,2\}]=\text{Sort}[\{5,3,1,4,2\}][[3]]	\text{True}	
+n-median-list-1-2-3-4-4-3-1-1	N[Median[List[1, 2, 3, 4, 4, 3, 1, 1]]]	2.5		N[\text{Median}[\{1,2,3,4,4,3,1,1\}]]	2.5	
+median-list-1-2-3-4-4-3-1-1	Median[List[1, 2, 3, 4, 4, 3, 1, 1]]	5/2		\text{Median}[\{1,2,3,4,4,3,1,1\}]	\frac{5}{2}	

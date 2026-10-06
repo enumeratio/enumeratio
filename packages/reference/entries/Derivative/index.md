@@ -13,4 +13,6 @@ attributes:
   - HoldAll
 seeAlso:
   - D
+names:
+  wolframIdentity: true
 ---

@@ -21,6 +21,8 @@ references:
 statOn:
   - GaussianInteger
   - Multicomplex
+names:
+  wolframIdentity: true
 ---
 
 - Computed through the tower $A = B[x]/(x^2-\varepsilon)$: for $z = u + xv$, $N(z) = N_B(u^2 - \varepsilon v^2)$, bottoming out at a scalar

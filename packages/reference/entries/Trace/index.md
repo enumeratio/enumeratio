@@ -14,4 +14,6 @@ catalog:
 stub: engine
 statOn:
   - PlanePartition
+names:
+  wolfram: Tr
 ---

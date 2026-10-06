@@ -165,3 +165,10 @@ test("a call by namespace writes its qualified name, not MemberCall", () => {
   );
   expect(latex(["MemberCall", ["Field", "a", "'b'"], "'C'", "x"])).toBe("\\operatorname{a.b.C}(x)");
 });
+
+test("a derivative brackets an operand that binds looser than the prime", () => {
+  const latex = (json: unknown): string => ce.box(json as never, { form: "raw" }).latex;
+  expect(latex(["Derivative", ["Function", ["Block", ["Power", "x", 2]], "x"]])).toBe("(x\\mapsto x^2)^{\\prime}");
+  expect(latex(["Derivative", ["Power", "x", 2]])).toBe("(x^2)^{\\prime}");
+  expect(latex(["Derivative", "f", 2])).toBe("f^{\\doubleprime}");
+});

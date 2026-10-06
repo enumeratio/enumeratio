@@ -4,6 +4,7 @@ ln-exponentiale	log(e)	1.0
 ln-0	log(0)	-inf
 a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164381978013115464
 a-machine-precision-negative-argument	log(-4.705)	(1.54862577303734297246018360519 + 3.14159265358979323846264338328j)
+series-ln-x-plus-1-x-0-10		
 ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	(0.0 + 3.14159265358979323846264338328j)
 n-for-a-decimal-value	(log(1000))	6.90775527898213705205397436405
 arbitrary-precision-via-n	(log((mpf(5)/2)))	0.916290731874155065183527211768
@@ -40,6 +41,8 @@ functionsurjective-ln-x-x
 d-ln-z-z		
 d-ln-ln-x-x		
 ln-exponentiale-pow-n		
+series-ln-x-x-1-4		
+series-ln-x-x-neg-2-3		
 inverse-of-exp-ln-e-x-x	almosteq(log(exp(5)), 5, 1e-20)	True
 product-rule-ln-ab-ln-a-ln-b	almosteq((log(2) + log(3)), log(6), 1e-20)	True
 powerexpand-splits-a-logarithm-of-a-product		

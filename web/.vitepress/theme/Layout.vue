@@ -6,7 +6,7 @@
 // it pulls in -- store.ts, the backlog sources) out of what a normal prod visitor's
 // browser fetches: `v-if="reviewModeOn"` starts `false` for every page load (see
 // mode.ts), so `defineAsyncComponent`'s loader is never invoked unless the flag flips
-// true, which only happens from `?review` or the panel's own toggle. Rollup still
+// true, which only happens from `?review`. Rollup still
 // emits the chunk into `dist/` -- that's fine, it's just never requested by default.
 import DefaultTheme from "vitepress/theme";
 import { useRouter } from "vitepress";

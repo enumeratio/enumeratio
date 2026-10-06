@@ -1,4 +1,5 @@
 id	section	role	expr	expected	caption
 fareysequence-5			[FareySequence, 5]	[List, 0, [Rational, 1, 5], [Rational, 1, 4], [Rational, 1, 3], [Rational, 2, 5], [Rational, 1, 2], [Rational, 3, 5], [Rational, 2, 3], [Rational, 3, 4], [Rational, 4, 5], 1]	All reduced fractions in $[0,1]$ with denominator at most 5, in order
 fareysequence-3	Scope		[FareySequence, 3]	[List, 0, [Rational, 1, 3], [Rational, 1, 2], [Rational, 2, 3], 1]	A shorter sequence, ending at 0 and 1
+map-denominator-fareysequence-12	Applications		[Map, Denominator, [FareySequence, 12]]	[List, 1, 12, 11, 10, 9, 8, 7, 6, 11, 5, 9, 4, 11, 7, 10, 3, 11, 8, 5, 12, 7, 9, 11, 2, 11, 9, 7, 12, 5, 8, 11, 3, 10, 7, 11, 4, 9, 5, 11, 6, 7, 8, 9, 10, 11, 12, 1]	
 fareysequence-50-list-500	Properties		[At, [FareySequence, 50], 500]	[Rational, 29, 45]	Index into a long sequence for a single term

@@ -1,7 +1,12 @@
-id	section	role	expr	expected	caption
-throw-aborts-to-the-nearest-catch			[Catch, [Throw, abandoned]]	abandoned	Throw aborts evaluation, Catch recovers the value
-a-tag-mismatch-propagates-past-a-catch	Scope		[Catch, [Catch, [Throw, deep, x], y], x]	deep	a tag mismatch propagates past a non-matching Catch to one that matches
-catch-list-a-throw-b-c	Scope		[Catch, [List, a, [Throw, b], c]]	b	The thrown value escapes the list and is returned directly
-catch-list-throw-a-throw-b-throw-c	Scope		[Catch, [List, [Throw, a], [Throw, b], [Throw, c]]]	a	Evaluation stops at the first Throw, so only $a$ comes back
-catch-throw-a-u-u	Scope		[Catch, [Throw, a, u], u]	a	A tagged throw is caught by a Catch with the matching tag
-catch-list-catch-list-a-throw-b-c-d-k	Scope		[Catch, [List, [Catch, [List, a, [Throw, b], c]], d, k]]	[List, b, d, k]	An inner Catch absorbs the throw, and the outer evaluation continues
+id	section	role	expr	expected	caption	triage	epsil.back	wolfram.kind	wolfram.note
+throw-aborts-to-the-nearest-catch			[Catch, [Throw, abandoned]]	abandoned	Throw aborts evaluation, Catch recovers the value				
+catch-do-if-k-factorial-gt-10-pow-10-throw-k			[Catch, [Do, [If, [Greater, [Factorial, k], [Power, 10, 10]], [Throw, k]], [List, k, 100]]]	14			Unreadable		
+a-tag-mismatch-propagates-past-a-catch	Scope		[Catch, [Catch, [Throw, deep, x], y], x]	deep	a tag mismatch propagates past a non-matching Catch to one that matches				
+catch-list-a-throw-b-c	Scope		[Catch, [List, a, [Throw, b], c]]	b	The thrown value escapes the list and is returned directly				
+catch-list-throw-a-throw-b-throw-c	Scope		[Catch, [List, [Throw, a], [Throw, b], [Throw, c]]]	a	Evaluation stops at the first Throw, so only $a$ comes back				
+catch-throw-a-u-u	Scope		[Catch, [Throw, a, u], u]	a	A tagged throw is caught by a Catch with the matching tag				
+catch-list-catch-list-a-throw-b-c-d-k	Scope		[Catch, [List, [Catch, [List, a, [Throw, b], c]], d, k]]	[List, b, d, k]	An inner Catch absorbs the throw, and the outer evaluation continues				
+catch-do-if-isprime-k-throw-k-list-k-10-pow-10	Applications	triage	[Catch, [Do, [If, [IsPrime, k], [Throw, k]], [List, k, [Power, 10, 10], [Add, [Power, 10, 10], 1000]]]]	[Do, [If, [IsPrime, k], [Throw, k]], [List, k, [Power, 10, 10], [Add, [Power, 10, 10], 1000]]]		gap		unclassified	Catch/Throw is not evaluated here; Wolfram's kernel died on the search.
+catch-do-if-17-pow-k-mod-19-eq-1-throw-k-list-k	Applications		[Catch, [Do, [If, [Equal, [Mod, [Power, 17, k], 19], 1], [Throw, k]], [List, k, 19]]]	9			Unreadable		
+catch-nestlist-function-throw-1-if-1-gt-1-000	Applications		[Catch, [NestList, [Function, [If, [Greater, _1, 1000], [Throw, _1], [Add, [Power, _1, 2], 1]]], 2, 6]]	458330			Unreadable		
+catch-nestlist-function-throw-1-if-1-gt-1-000-2	Possible issues		[Catch, [NestList, [Function, [If, [Greater, _1, 1000], [Throw, _1], [Add, [Power, _1, 2], 1]]], 1, 7]]	458330			Unreadable		

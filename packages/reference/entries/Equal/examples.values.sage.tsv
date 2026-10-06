@@ -8,3 +8,4 @@ list-1-2-eq-list-1-2	bool([1, 2] == [1, 2])
 n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	bool(N(pi) == (pi * (1 + (256 * ((10)^-20)))))
 list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	[bool(SR.var("x") == SR.var("x")), bool(SR.var("x") == SR.var("y")), bool((sqrt(2) + sqrt(3)) == sqrt((5 + (2 * sqrt(6))))), bool(pi == N(pi))]
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	
+fullsimplify-p-q-eq-q-p	

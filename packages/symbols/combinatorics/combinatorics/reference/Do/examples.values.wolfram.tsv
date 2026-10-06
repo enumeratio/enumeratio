@@ -1,0 +1,4 @@
+id	in	out	tex.in	tex.out	verdict
+sum-one-to-five					
+repeat-with-no-loop-variable					
+reap-do-if-isprime-2-pow-n-minus-1-sow-n-list-n	Part[Reap[Do[If[PrimeQ[Plus[Power[2, n], -1]], Sow[n]], List[n, 100]]], 2, 1]	{2, 3, 5, 7, 13, 17, 19, 31, 61, 89}	\text{Reap}\left[\text{Do}\left[\text{If}\left[\text{PrimeQ}\left[2^n-1\right],\text{Sow}[n]\right],\{n,100\}\right]\right][[2,1]]	\{2,3,5,7,13,17,19,31,61,89\}	disagree

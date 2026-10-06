@@ -3,6 +3,7 @@ exp-0	exp(0)	1
 stays-the-exact-constant-rather-than	exp(1)	E	
 compute-engine-represents-exp-x-as-e-x-once-the	exp(Symbol("x"))	True	
 a-machine-precision-argument-evaluates	exp(3.4)	29.9641000473970	
+series-exponentiale-pow-x-x-0-10			
 broadcasts-element-wise-giving-begin-pmatrix-1-e	[[exp(0), exp(1)], [exp(1), exp(0)]]	[[1, E], [E, 1]]	
 arbitrary-precision-via-n	N(exp(Rational(8, 5)), 30)	4.95303242439511480365428635642	
 evaluates-at-a-complex-argument	exp((2.5 + 1*I))	12.1824939607035*exp(I)	

@@ -15,4 +15,5 @@ arsech-neg-2	ArcSech[-2]	((2*I)/3)*Pi		\text{sech}^{-1}(-2)	\frac{2 i \pi }{3}
 arsech-neg-1-over-2	ArcSech[Rational[-1, 2]]	ArcSech[-1/2]		\text{sech}^{-1}\left(-\frac{1}{2}\right)	\text{sech}^{-1}\left(-\frac{1}{2}\right)	
 arsech-2-times-sqrt-1-over-2-plus-sqrt-2	ArcSech[Times[2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	ArcSech[2/Sqrt[2 + Sqrt[2]]]		\text{sech}^{-1}\left(2 \sqrt{\frac{1}{2+\sqrt{2}}}\right)	\text{sech}^{-1}\left(\frac{2}{\sqrt{2+\sqrt{2}}}\right)	
 arsech-neg-2-times-sqrt-1-over-2-plus-sqrt-2	ArcSech[Times[-2, Sqrt[Divide[1, Plus[2, Sqrt[2]]]]]]	ArcSech[-2/Sqrt[2 + Sqrt[2]]]		\text{sech}^{-1}\left(-2 \sqrt{\frac{1}{2+\sqrt{2}}}\right)	\text{sech}^{-1}\left(-\frac{2}{\sqrt{2+\sqrt{2}}}\right)	
+arsech-neg-1	ArcSech[-1]	I*Pi		\text{sech}^{-1}(-1)	i \pi	
 arsech-complexinfinity-is-indeterminate-by	ArcSech[ComplexInfinity]	Indeterminate		\text{sech}^{-1}(\text{ComplexInfinity})	\text{Indeterminate}	disagree

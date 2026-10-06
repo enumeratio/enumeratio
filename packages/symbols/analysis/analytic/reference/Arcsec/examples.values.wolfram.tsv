@@ -24,3 +24,7 @@ arcsec-neg-2-over-3-times-sqrt-3	ArcSec[Times[Rational[-2, 3], Sqrt[3]]]	(5*Pi)/
 arcsec-neg-1-plus-sqrt-5	ArcSec[Plus[-1, Sqrt[5]]]	Pi/5		\sec ^{-1}\left(-1+\sqrt{5}\right)	\frac{\pi }{5}	
 arcsec-1-minus-sqrt-5	ArcSec[Plus[1, Minus[Sqrt[5]]]]	(4*Pi)/5		\sec ^{-1}\left(1-\sqrt{5}\right)	\frac{4 \pi }{5}	
 arcsec-neg-sqrt-2	ArcSec[Minus[Sqrt[2]]]	(3*Pi)/4		\sec ^{-1}\left(-\sqrt{2}\right)	\frac{3 \pi }{4}	
+arcsec-sqrt-2-plus-neg-2-over-5-times-sqrt-5	ArcSec[Sqrt[Plus[2, Times[Rational[-2, 5], Sqrt[5]]]]]	ArcSec[Sqrt[2 - 2/Sqrt[5]]]		\sec ^{-1}\left(\sqrt{2-\frac{2}{5} \sqrt{5}}\right)	\sec ^{-1}\left(\sqrt{2-\frac{2}{\sqrt{5}}}\right)	
+arcsec-neg-sqrt-2-plus-neg-2-over-5-times-sqrt-5	ArcSec[Minus[Sqrt[Plus[2, Times[Rational[-2, 5], Sqrt[5]]]]]]	ArcSec[-Sqrt[2 - 2/Sqrt[5]]]		\sec ^{-1}\left(-\sqrt{2-\frac{2}{5} \sqrt{5}}\right)	\sec ^{-1}\left(-\sqrt{2-\frac{2}{\sqrt{5}}}\right)	
+arcsec-sqrt-2-plus-2-over-5-times-sqrt-5	ArcSec[Sqrt[Plus[2, Times[Rational[2, 5], Sqrt[5]]]]]	ArcSec[Sqrt[2 + 2/Sqrt[5]]]		\sec ^{-1}\left(\sqrt{2+\frac{2}{5} \sqrt{5}}\right)	\sec ^{-1}\left(\sqrt{2+\frac{2}{\sqrt{5}}}\right)	
+arcsec-neg-sqrt-2-plus-2-over-5-times-sqrt-5	ArcSec[Minus[Sqrt[Plus[2, Times[Rational[2, 5], Sqrt[5]]]]]]	ArcSec[-Sqrt[2 + 2/Sqrt[5]]]		\sec ^{-1}\left(-\sqrt{2+\frac{2}{5} \sqrt{5}}\right)	\sec ^{-1}\left(-\sqrt{2+\frac{2}{\sqrt{5}}}\right)	

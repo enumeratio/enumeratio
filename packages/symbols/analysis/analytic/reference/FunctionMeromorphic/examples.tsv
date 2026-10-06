@@ -7,3 +7,6 @@ functionmeromorphic-sqrt-z-z	Scope		[FunctionMeromorphic, [Sqrt, z], z]	False			
 functionmeromorphic-ln-z-z	Applications		[FunctionMeromorphic, [Ln, z], z]	False			The logarithm has a branch cut, so is not meromorphic
 list-functionmeromorphic-x-times-x-pow-2-plus-1	Applications		[List, [FunctionMeromorphic, [Multiply, x, [Power, [Add, [Power, x, 2], 1], -1]], x], [FunctionMeromorphic, [Multiply, [Add, [Power, x, 2], 1], [Power, [Add, [Power, x, 2], -1], -1]], x], [FunctionMeromorphic, [Add, [Power, x, 3], [Multiply, -1, [Multiply, 2, [Power, x, 2]]], [Multiply, -1, [Multiply, 5, x]], 6], x]]	[List, True, True, True]			
 list-functionmeromorphic-tan-x-x	Applications		[List, [FunctionMeromorphic, [Tan, x], x], [FunctionMeromorphic, [Sec, x], x], [FunctionMeromorphic, [Sech, x], x]]	[List, True, True, True]			
+functionmeromorphic-tan-z-plus-sin-z-z	Applications		[FunctionMeromorphic, [Add, [Tan, z], [Sin, z]], z]	True			
+functionmeromorphic-cot-z-minus-z-pow-2-times-z	Applications		[FunctionMeromorphic, [Add, [Cot, z], [Multiply, -1, [Multiply, [Power, z, 2], [Power, [Add, z, 1], -1]]]], z]	True			
+functionmeromorphic-z-pow-3-times-z-pow-2-plus-1	Applications		[FunctionMeromorphic, [Multiply, [Multiply, [Power, z, 3], [Power, [Add, [Power, z, 2], 1], -1]], [Tanh, z]], z]	True			

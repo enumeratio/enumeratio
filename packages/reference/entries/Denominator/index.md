@@ -28,4 +28,6 @@ bindings:
       on: 2026-09-28
 attributes:
   - HoldAll
+names:
+  wolframIdentity: true
 ---

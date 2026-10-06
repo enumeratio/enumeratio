@@ -1,0 +1,6 @@
+id	in
+3-2-4-2-the-gaussian-norm	Norm[Plus[3, Times[4, Subscript[i, 1]]]]
+the-4-times-4-multiplication-determinant	Norm[Plus[1, Times[2, Subscript[i, 1]], Times[3, Subscript[i, 1], Subscript[i, 2]]]]
+split-units-give-a-2-b-2-which-is-indefinite	Norm[Plus[3, Times[4, Subscript[j, 1]]]]
+a-zero-divisor	Norm[Plus[1, Times[Subscript[i, 1], Subscript[i, 2]]]]
+each-factor-has-norm-2-over-c-1-but-4-over-c-2	Norm[Times[Plus[1, Subscript[i, 1]], Plus[1, Subscript[i, 2]]]]

@@ -2,5 +2,6 @@ id	in
 2-times-list-x-y-z	enumeratio_broadcast(lambda _a0, _a1: (_a0 * _a1), 2, [Symbol("x"), Symbol("y"), Symbol("z")])
 list-list-a-b-list-c-d-times-list-x-y	enumeratio_broadcast(lambda _a0, _a1: (_a0 * _a1), [[Symbol("a"), Symbol("b")], [Symbol("c"), Symbol("d")]], [Symbol("x"), Symbol("y")])
 interval-neg-1-2-times-interval-2-3	
+replaceall-a-times-b-times-c-times-d-rule-a	
 neg-noncommutativemultiply-b-a-plus	
 product-1-over-k-plus-2-times-k-plus-1-k-1-n	

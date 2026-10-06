@@ -22,3 +22,4 @@ partitionsq-14	Properties		[PartitionsQ, 14]	22	22	Wolfram MathematicalFunctionD
 partitionsq-15	Properties		[PartitionsQ, 15]	27	27	Wolfram MathematicalFunctionData, PartitionsQ	The value 27
 partitionsq-16	Properties		[PartitionsQ, 16]	32	32	Wolfram MathematicalFunctionData, PartitionsQ	The value 32
 partitionsq-17	Properties		[PartitionsQ, 17]	38	38	Wolfram MathematicalFunctionData, PartitionsQ	The value 38
+partitionsq-neg-expand-exponentiale-plus-1-pow-2	Possible issues		[PartitionsQ, [Add, [Negate, [Expand, [Power, [Add, ExponentialE, 1], 2]]], 12, [Power, [Add, 1, ExponentialE], 2]]]	[PartitionsQ, [Add, 11, [Multiply, -2, ExponentialE], [Negate, [Power, ExponentialE, 2]], [Power, [Add, 1, ExponentialE], 2]]]			

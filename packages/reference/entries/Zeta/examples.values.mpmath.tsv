@@ -19,6 +19,9 @@ zeta-3-neg-1-adds-one-to-zeta-3	zeta(3, -1)	ZeroDivisionError: 	error
 zeta-3-neg-2-sums-shifted-terms	zeta(3, -2)	ZeroDivisionError: 	error
 zeta-4-neg-3-sums-shifted-terms	zeta(4, -3)	ZeroDivisionError: 	error
 n-zeta-3-neg-3-matches-the-exact-sum	(zeta(3, -3))	ZeroDivisionError: 	error
+fullsimplify-normal-series-zeta-x-x-0-2			
+normal-series-zeta-x-x-positiveinfinity-6			
+normal-series-zeta-x-x-1-2			
 on-the-critical-line-zeta-1-2-14i-0-02224-0	(zeta(mpc(0.5, 14)))	(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)	
 two-argument-zeta-s-a-via-enumeratio-analytic	zeta(2, 1)	1.64493406684822643647241516665	
 zeta-2-2-zeta-2-1-pi-2-6-1	zeta(2, 2)	0.644934066848226436472415166646	

@@ -11,4 +11,6 @@ signatures:
     overrides: compute-engine
 seeAlso:
   - ModularMatrix
+names:
+  wolframIdentity: true
 ---

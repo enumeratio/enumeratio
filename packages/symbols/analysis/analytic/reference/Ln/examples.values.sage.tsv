@@ -4,6 +4,7 @@ ln-exponentiale	log(e)	1
 ln-0	log(0)	-Infinity	disagree
 a-machine-precision-argument-evaluates	log(1.5)	0.405465108108164	
 a-machine-precision-negative-argument	log(-4.705)	1.54862577303734 + 3.14159265358979*I	
+series-ln-x-plus-1-x-0-10			
 ln-1-i-pi-the-principal-value-past-the-branch	log(-1)	I*pi	
 n-for-a-decimal-value	N(log(1000))	6.90775527898214	
 arbitrary-precision-via-n	N(log((5/2)))	0.916290731874155	
@@ -40,6 +41,8 @@ functionsurjective-ln-x-x
 d-ln-z-z	diff(log(SR.var("z")), SR.var("z"))		
 d-ln-ln-x-x	diff(log(log(SR.var("x"))), SR.var("x"))		
 ln-exponentiale-pow-n	log(((e)^SR.var("n")))		
+series-ln-x-x-1-4			
+series-ln-x-x-neg-2-3			
 inverse-of-exp-ln-e-x-x	bool(log(exp(5)) == 5)	True	
 product-rule-ln-ab-ln-a-ln-b	bool((log(2) + log(3)) == log(6))	False	disagree
 powerexpand-splits-a-logarithm-of-a-product			

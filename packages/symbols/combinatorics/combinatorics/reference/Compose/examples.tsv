@@ -1,2 +1,8 @@
-id	section	role	expr	expected
-apply-compose-f-g-h-list-x-y-z	Scope		[Apply, [Compose, f, g, h], [List, x, y, z]]	[f, [g, [h, [List, x, y, z]]]]
+id	section	role	expr	expected	epsil.back	epsil.backOut	wolfram.kind	wolfram.note
+apply-compose-f-g-h-x			[Apply, [Compose, f, g, h], x]	[f, [g, [h, x]]]				
+apply-compose-f-g-h-list-x-y-z	Scope		[Apply, [Compose, f, g, h], [List, x, y, z]]	[f, [g, [h, [List, x, y, z]]]]				
+compose-f-identity-g	Scope		[Compose, f, Identity, g]	[Function, [Block, [ComposeApply, [List, f, Identity, g], _composed]], [Typed, _composed, "'any | list<any>'"]]		Unreadable	shape	Wolfram drops Identity from a composition; ours keeps every factor.
+apply-compose-array-function-f-1-1-10-x	Applications		[Apply, [Compose, [Array, [Function, [Block, f__1], _1], 10]], x]	[Apply, [Compose, [List, f__1, f__1, f__1, f__1, f__1, f__1, f__1, f__1, f__1, f__1]], x]	Unreadable			
+compose-f	Properties		[Compose, f]	[Function, [Block, [ComposeApply, [List, f], _composed]], [Typed, _composed, "'any | list<any>'"]]		Unreadable	shape	A one-factor composition is the factor itself there; ours is a Function over the list of factors.
+apply-compose-f-g-x	Properties		[Apply, [Compose, f, g], x]	[f, [g, x]]				
+apply-compose-f-f-f-x	Properties		[Apply, [Compose, f, f, f], x]	[f, [f, [f, x]]]				

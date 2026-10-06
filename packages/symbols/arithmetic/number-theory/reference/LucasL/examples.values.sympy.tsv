@@ -3,6 +3,7 @@ lucasl-0	lucas(0)	2
 lucasl-1	lucas(1)	1	
 lucasl-5	lucas(5)	11	
 lucasl-10	lucas(10)	123	
+series-lucasl-1-over-2-x-x-0-5			
 exact-at-any-size	lucas(100)	792070839848372253127	
 an-odd-negative-index-flips-the-sign-l-11-l-11	lucas(-11)	-199	
 a-real-index-uses-l-nu-varphi-nu-cos-pi-nu	lucas(2.3333333333333335)	lucas(2.33333333333333)	inconclusive

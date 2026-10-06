@@ -1,9 +1,9 @@
 // Review mode's on/off switch. It exists only under `vitepress dev`, or in a build made
-// with `VITE_REVIEW=1`; prod and the CF previews never show it. Where it exists it's on
-// by default, and `?review=off` / `?review` turn it off and on again for this browser
-// (a persistent localStorage flag). This module is small and localStorage-only, so it's
-// fine to keep in the main bundle -- it's what Layout.vue reads to decide whether to even
-// render the (lazy-loaded, see components/ReviewPanel.vue) panel at all.
+// with `VITE_REVIEW=1`; prod and the CF previews never have it. Where it exists it is off
+// until the URL has `?review` (or lands on `/review`); once entered it stays on for this
+// tab (sessionStorage) until `?review=off` or the panel's exit button. This module is small,
+// so it's fine in the main bundle -- Layout.vue reads it to decide whether to render the
+// (lazy-loaded, see components/ReviewPanel.vue) panel at all.
 import { ref } from "vue";
 
 const KEY = "review-mode";
@@ -11,20 +11,18 @@ const KEY = "review-mode";
 /** Build-time: false in a prod build, so the panel's chunk is never even requested there. */
 export const REVIEW_AVAILABLE: boolean = import.meta.env.DEV || import.meta.env["VITE_REVIEW"] === "1";
 
-function readStored(): boolean | undefined {
+function readStored(): boolean {
   try {
-    const v = localStorage.getItem(KEY);
-    if (v === "1") return true;
-    if (v === "0") return false;
+    return sessionStorage.getItem(KEY) === "1";
   } catch {
-    // ignore
+    return false;
   }
-  return undefined;
 }
 
 function persist(on: boolean): void {
   try {
-    localStorage.setItem(KEY, on ? "1" : "0");
+    if (on) sessionStorage.setItem(KEY, "1");
+    else sessionStorage.removeItem(KEY);
   } catch {
     // ignore
   }
@@ -39,11 +37,12 @@ function computeInitial(): boolean {
     persist(on);
     return on;
   }
-  return readStored() ?? true;
+  if (/^\/review(\.html|\/)?$/.test(location.pathname)) return true;
+  return readStored();
 }
 
 /** Module-level singleton -- one flag for the whole client session, read by
- * Layout.vue (gates rendering the panel) and by ReviewPanel.vue (its own toggle).
+ * Layout.vue (gates rendering the panel) and by ReviewPanel.vue (its exit button).
  * Starts `false` (matching what SSR/the build's prerender pass sees, since there's
  * no `window` there) and is set for real in `initReviewMode()`, which Layout.vue
  * calls from `onMounted` -- after hydration, so the panel never causes a mismatch. */
@@ -57,10 +56,6 @@ export function setReviewMode(on: boolean): void {
   if (!REVIEW_AVAILABLE) return;
   persist(on);
   reviewModeOn.value = on;
-}
-
-export function toggleReviewMode(): void {
-  setReviewMode(!reviewModeOn.value);
 }
 
 export function isLocalhost(): boolean {

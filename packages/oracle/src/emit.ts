@@ -400,6 +400,15 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
       !bound.has(operands[0])
     ) {
       const [key, value] = operands as [string, MathJSON];
+      // `Over -> QuotientRing(Integers, p)` is `Modulus -> p`: the ring itself has no Wolfram value.
+      if (
+        key === "Over" &&
+        isCall(value) &&
+        value[0] === "QuotientRing" &&
+        value[1] === "Integers" &&
+        value.length === 3
+      )
+        return `Rule[Modulus, ${walk(value[2]!)}]`;
       const valueSource = walk(value);
       if (key === "Over") return ringOption(key, valueSource) ?? `Rule[${wolframFree(key)}, ${valueSource}]`;
       return toWolfram([head, key, valueSource]);

@@ -2,7 +2,7 @@
 // it can't be. An input is kept only when every Wolfram name in it is one we map back to a
 // head or symbol of ours, so the example means here what it meant there.
 
-import { fromWolfram, isSystemName, REVERSE_HEADS, SYMBOLS } from "@enumeratio/wolfram";
+import { fromWolfram, isSystemName, READ_SYMBOLS, REVERSE_HEADS, SYMBOLS } from "@enumeratio/wolfram";
 
 /** Wolfram's documentation sections, as our page's (`null`: not an example we'd show). */
 export const SECTION: Readonly<Record<string, string | null>> = {
@@ -36,8 +36,15 @@ const STRUCTURAL = new Set([
   "Mod",
   "Apply",
   "DirectedInfinity",
+  "SeriesData",
+  "UnsameQ",
+  "Reduce",
+  "Root",
+  "PartitionsP",
+  "Signature",
+  "Modulus",
 ]);
-const MAPPED_SYMBOLS = new Set(Object.values(SYMBOLS));
+const MAPPED_SYMBOLS = new Set([...Object.values(SYMBOLS), ...Object.keys(READ_SYMBOLS)]);
 
 /** Mapped, but not an example: state, timing, output history, randomness, I/O. */
 const EFFECTS = new Set([

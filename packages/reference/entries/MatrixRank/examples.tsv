@@ -6,6 +6,7 @@ non-square-matrices-too			[MatrixRank, [List, [List, 1, 2, 3], [List, 2, 4, 6]]]
 matrixrank-list-list-0-0-list-0-0			[MatrixRank, [List, [List, 0, 0], [List, 0, 0]]]	0						
 a-matrix-of-pairwise-distinct-symbols-has-full			[MatrixRank, [List, [List, a, b], [List, c, d]]]	2	A matrix of pairwise-distinct symbols has full rank -- its determinant, as a polynomial in independent indeterminates, can never be identically zero					
 matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0			[MatrixRank, [List, [List, 0, 5, 2, 4, 4], [List, 2, 5, 0, 4, 0], [List, 5, 1, 5, 4, 5]]]	3	Three rows, rank 3 despite the zeros					
+matrixrank-list-list-a-b-c-list-d-m-f-list-g-h-k			[MatrixRank, [List, [List, a, b, c], [List, d, m, f], [List, g, h, k]]]	3						
 approximate-entries	Scope		[MatrixRank, [List, [List, 1, 2.5], [List, 3.5, 4]]]	2	Approximate entries					
 complex-entries-the-second-row-is-i-times-the	Scope		[MatrixRank, [List, [List, 1, ImaginaryUnit], [List, ImaginaryUnit, -1]]]	1	Complex entries: the second row is $i$ times the first					
 exact-numeric-entries	Scope		[MatrixRank, [List, [List, Pi, ExponentialE], [List, [Multiply, 2, Pi], [Multiply, 2, ExponentialE]]]]	1	Exact numeric entries	MatrixRank([[Pi, ExponentialE], [2Pi, 2 * ExponentialE]])		MatrixRank(List(List(Pi, ExponentialE), List(Multiply(2, Pi), Multiply(2, ExponentialE))))		
@@ -15,6 +16,7 @@ matrixrank-identitymatrix-5	Scope		[MatrixRank, [IdentityMatrix, 5]]	5
 a-3-times-3-matrix-of-pairwise-distinct-symbols	Scope		[MatrixRank, [List, [List, p, q, r], [List, s, t, u], [List, v, w, x]]]	3	A $3\times3$ matrix of pairwise-distinct symbols is full rank — the determinant, as a polynomial in independent indeterminates, can't be identically zero.					
 matrixrank-list-list-a-b-list-2a-2b	Scope		[MatrixRank, [List, [List, a, b], [List, [Multiply, 2, a], [Multiply, 2, b]]]]	1	Symbolic rows that are proportional have rank 1					
 matrixrank-hilbertmatrix-3	Scope		[MatrixRank, [HilbertMatrix, 3]]	3	The Hilbert matrix is invertible, so full rank					
+matrixrank-identitymatrix-3	Scope		[MatrixRank, [IdentityMatrix, 3]]	3						
 the-4-4-hilbert-matrix-is-badly-conditioned-but	Applications		[MatrixRank, [Tabulate, [Function, [Divide, 1, [Subtract, [Add, _1, _2], 1]]], 4, 4]]	4	The 4×4 Hilbert matrix is badly conditioned but invertible		Unreadable			
 row-rank-equals-column-rank	Properties		[Equal, [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]], [MatrixRank, [Transpose, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]]]	True	Row rank equals column rank					
 rank-nullity-the-rank-plus-the-dimension-of-the	Properties		[Add, [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]], [Length, [Kernel, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]]]	3	Rank–nullity: the rank plus the dimension of the null space is the number of columns					

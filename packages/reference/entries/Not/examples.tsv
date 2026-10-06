@@ -1,3 +1,5 @@
-id	section	role	expr	expected	caption
-booleanconvert-factorial-a-b	Properties		[BooleanConvert, [Not, [And, a, b]]]	[Or, [Not, a], [Not, b]]	De Morgan: the negated AND becomes an OR of negations
-booleanconvert-factorial-a-b-c	Properties		[BooleanConvert, [Not, [Or, a, b, c]]]	[And, [Not, a], [Not, b], [Not, c]]	De Morgan: the negated OR becomes an AND of negations
+id	section	role	expr	expected	caption	triage	wolfram.note
+integrate-boole-factorial-4-times-x-pow-4-minus	Applications	triage	[Integrate, [Function, [Block, [Boole, [Not, [LessEqual, [Add, [Multiply, 4, [Power, x, 4]], [Multiply, -4, [Power, x, 2]], [Power, y, 2]], 0]]]], x, y], [Limits, x, -1, 1], [Limits, y, -1, 1]]	[Integrate, [Function, [Block, [Integrate, [Function, [Block, [Boole, [Not, [LessEqual, [Add, [Multiply, 4, [Power, x, 4]], [Multiply, -4, [Power, x, 2]], [Power, y, 2]], 0]]]], x, y], [Limits, y, -1, 1]]], x], [Limits, x, -1, 1]]		gap	Our answer is still the unevaluated integral; the agreement is the check evaluating both sides numerically.
+booleanconvert-factorial-a-b	Properties		[BooleanConvert, [Not, [And, a, b]]]	[Or, [Not, a], [Not, b]]	De Morgan: the negated AND becomes an OR of negations		
+booleanconvert-factorial-a-b-c	Properties		[BooleanConvert, [Not, [Or, a, b, c]]]	[And, [Not, a], [Not, b], [Not, c]]	De Morgan: the negated OR becomes an AND of negations		
+booleanconvert-factorial-implies-a-b	Properties		[BooleanConvert, [Not, [Implies, a, b]]]	[And, a, [Not, b]]			

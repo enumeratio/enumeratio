@@ -6,15 +6,17 @@ non-square-matrices-too	MatrixRank[List[List[1, 2, 3], List[2, 4, 6]]]	1	\text{M
 matrixrank-list-list-0-0-list-0-0	MatrixRank[List[List[0, 0], List[0, 0]]]	0	\text{MatrixRank}\left[\left( \begin{array}{cc}  0 & 0 \\  0 & 0 \\ \end{array} \right)\right]	0	
 a-matrix-of-pairwise-distinct-symbols-has-full	MatrixRank[List[List[a, b], List[c, d]]]	2	\text{MatrixRank}\left[\left( \begin{array}{cc}  a & b \\  c & d \\ \end{array} \right)\right]	2	
 matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0	MatrixRank[List[List[0, 5, 2, 4, 4], List[2, 5, 0, 4, 0], List[5, 1, 5, 4, 5]]]	3	\text{MatrixRank}\left[\left( \begin{array}{ccccc}  0 & 5 & 2 & 4 & 4 \\  2 & 5 & 0 & 4 & 0 \\  5 & 1 & 5 & 4 & 5 \\ \end{array} \right)\right]	3	
+matrixrank-list-list-a-b-c-list-d-m-f-list-g-h-k	MatrixRank[List[List[a, b, c], List[d, m, f], List[g, h, k]]]	3	\text{MatrixRank}\left[\left( \begin{array}{ccc}  a & b & c \\  d & m & f \\  g & h & k \\ \end{array} \right)\right]	3	
 approximate-entries	MatrixRank[List[List[1, 2.5], List[3.5, 4]]]	2	\text{MatrixRank}\left[\left( \begin{array}{cc}  1 & 2.5 \\  3.5 & 4 \\ \end{array} \right)\right]	2	
 complex-entries-the-second-row-is-i-times-the	MatrixRank[List[List[1, I], List[I, -1]]]	1	\text{MatrixRank}\left[\left( \begin{array}{cc}  1 & i \\  i & -1 \\ \end{array} \right)\right]	1	
 exact-numeric-entries	MatrixRank[List[List[Pi, E], List[Times[2, Pi], Times[2, E]]]]	1	\text{MatrixRank}\left[\left( \begin{array}{cc}  \pi  & e \\  2 \pi  & 2 e \\ \end{array} \right)\right]	1	
 the-second-row-is-sqrt-2-times-the-first	MatrixRank[List[List[Sqrt[2], 1], List[2, Sqrt[2]]]]	1	\text{MatrixRank}\left[\left( \begin{array}{cc}  \sqrt{2} & 1 \\  2 & \sqrt{2} \\ \end{array} \right)\right]	1	
 a-3-4-matrix-with-one-dependent-row	MatrixRank[List[List[1, 2, 3, 4], List[2, 4, 6, 8], List[1, 0, 1, 0]]]	2	\text{MatrixRank}\left[\left( \begin{array}{cccc}  1 & 2 & 3 & 4 \\  2 & 4 & 6 & 8 \\  1 & 0 & 1 & 0 \\ \end{array} \right)\right]	2	
-matrixrank-identitymatrix-5					
+matrixrank-identitymatrix-5	MatrixRank[IdentityMatrix[5]]				
 a-3-times-3-matrix-of-pairwise-distinct-symbols	MatrixRank[List[List[p, q, r], List[s, t, u], List[v, w, x]]]	3	\text{MatrixRank}\left[\left( \begin{array}{ccc}  p & q & r \\  s & t & u \\  v & w & x \\ \end{array} \right)\right]	3	
 matrixrank-list-list-a-b-list-2a-2b	MatrixRank[List[List[a, b], List[Times[2, a], Times[2, b]]]]	1	\text{MatrixRank}\left[\left( \begin{array}{cc}  a & b \\  2 a & 2 b \\ \end{array} \right)\right]	1	
 matrixrank-hilbertmatrix-3	MatrixRank[HilbertMatrix[3]]	3	\text{MatrixRank}[\text{HilbertMatrix}[3]]	3	
+matrixrank-identitymatrix-3	MatrixRank[IdentityMatrix[3]]	3	\text{MatrixRank}[\text{IdentityMatrix}[3]]	3	
 the-4-4-hilbert-matrix-is-badly-conditioned-but	MatrixRank[Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[4, 4]]]	4	\text{MatrixRank}\left[\text{Array}\left[\frac{1}{(\text{$\#$1}+\text{$\#$2})-1}\&,\{4,4\}\right]\right]	4	
 row-rank-equals-column-rank	(MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]] == MatrixRank[Transpose[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]])	True	\text{MatrixRank}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)\right]=\text{MatrixRank}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)^T\right]	\text{True}	
 rank-nullity-the-rank-plus-the-dimension-of-the					

@@ -173,6 +173,7 @@ n-hurwitzzeta-neg-0p5-plus-i-1-plus-i	N(hurwitz_zeta((-0.5 + 1*I), (1 + 1*I)))	1
 n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	N(hurwitz_zeta((-0.5 + 1*I), (2 + -0.5*I)))	-0.746153397257610 + 0.249257816033080*I	
 n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	N(hurwitz_zeta((-0.5 + 1*I), -0.5))	-10.3541255703876 + 12.6883763809253*I	
 n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	N(hurwitz_zeta((-0.5 + 1*I), -1.5))	0.825049555351030 + 38.7318693646864*I	
+normal-series-hurwitzzeta-2-x-x-positiveinfinity			
 a-positive-integer-a-peels-off-the-first-terms	hurwitz_zeta(7, 5)	zeta(7) - 36130315/35831808	
 complex-a	N(hurwitz_zeta(2.3, (8 + 1*I)))	0.0544700827321307 - 0.00944851533647025*I	
 listable-threads-over-a-list-of-orders	hurwitz_zeta([2, 3, 4], 0.5)	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error
@@ -189,6 +190,7 @@ hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	[[hurwitz_zeta(-1, (1/2)), hurwi
 functionexpand-hurwitzzeta-neg-2-a			
 functionexpand-hurwitzzeta-0-a			
 fullsimplify-matrixfunction-function-hurwitzzeta			
+series-hurwitzzeta-s-a-a-0-3			
 certified-digits-zeta-1-2-1-3	N(hurwitz_zeta((1/2), (1/3)))	-0.118083327934222	
 zeta-0-a-frac-12-a-exact-and-symbolic-in-a	hurwitz_zeta(0, SR.var("a"))	True	
 zeta-1-a-b-2-a-2-frac-1-12-6a-2-6a-1	hurwitz_zeta(-1, SR.var("a"))	True	

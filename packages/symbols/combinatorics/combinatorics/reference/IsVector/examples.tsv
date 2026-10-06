@@ -10,4 +10,5 @@ a-test-function-failing-on-one-element	Scope		[IsVector, [List, 2, 3, 6], IsEven
 isvector-range-1-10-ismachinenumber	Scope		[IsVector, [Range, 1, 10], IsMachineNumber]	False	The optional test must hold for every entry; exact integers fail it			
 isvector-range-1-10-isinteger	Scope		[IsVector, [Range, 1, 10], IsInteger]	True				
 isvector-n-range-1-10-ismachinenumber	Scope	triage	[IsVector, [N, [Range, 1, 10]], IsMachineNumber]	False		gap		N leaves a lazy Range(1, 10) unchanged, so its elements stay exact integers, which IsMachineNumber rejects; Wolfram's N[Range[1, 10]] is a list of machine reals.
+isvector-list-1-pi-sin-1-sqrt-2-function	Scope		[IsVector, [List, 1, Pi, [Sin, 1], [Sqrt, 2]], [Function, [Block, [And, [IsNumeric, _1], [Equal, [Imaginary, _1], 0]]], _1]]	True			Unreadable	
 list-isvector-vec-isvector-expr	Properties		[List, [IsVector, vec], [IsVector, expr]]	[List, False, False]	Undefined symbols are not known to be vectors			

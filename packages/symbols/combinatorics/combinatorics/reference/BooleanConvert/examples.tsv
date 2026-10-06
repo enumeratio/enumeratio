@@ -1,8 +1,10 @@
 id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 default-form-is-dnf			[BooleanConvert, [And, p, [Or, b, r]]]	[Or, [And, b, p], [And, p, r]]			
+booleanconvert-equivalent-x-y-z			[BooleanConvert, [Equivalent, x, y, z]]	[Or, [And, x, y, z], [And, [Not, x], [Not, y], [Not, z]]]			
 cnf-distributes-or-over-and	Scope		[BooleanConvert, [Or, p, [And, b, r]], "'CNF'"]	[And, [Or, b, p], [Or, p, r]]			
 nnf-pushes-not-to-the-leaves-not-distributed	Scope		[BooleanConvert, [Implies, p, b], "'NNF'"]	[Or, b, [Not, p]]			
 a-tautological-clause-drops-out-of-cnf	Scope		[BooleanConvert, [Or, p, [Not, p]], "'CNF'"]	True			
 an-unimplemented-form-stays-unevaluated	Scope		[BooleanConvert, p, "'ESOP'"]	[BooleanConvert, p, "'ESOP'"]		unevaluated	We leave the call unevaluated; Wolfram answers p.
 booleanconvert-f	Scope		[BooleanConvert, f]	f	A bare symbol is already in normal form		
 booleanconvert-f-cnf	Scope		[BooleanConvert, f, "'CNF'"]	f	A lone symbol is its own CNF		
+booleanconvert-xor-a-b-c-d	Neat examples		[BooleanConvert, [Xor, a, b, c, d]]	[Or, [And, a, b, c, [Not, d]], [And, a, b, d, [Not, c]], [And, a, c, d, [Not, b]], [And, a, [Not, b], [Not, c], [Not, d]], [And, b, c, d, [Not, a]], [And, b, [Not, a], [Not, c], [Not, d]], [And, c, [Not, a], [Not, b], [Not, d]], [And, d, [Not, a], [Not, b], [Not, c]]]			

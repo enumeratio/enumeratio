@@ -60,7 +60,7 @@ export function createReviewStore(source: BacklogSource = pickSource()) {
   const loaded = ref(false);
   const loadError = ref("");
 
-  // Collapsed on every page load; `/review` and `?review` open it explicitly.
+  // The panel only mounts in review mode, and opens with it.
   const isOpen = ref(false);
   const selectedId = ref<string | null>(readLocal(SELECTED_KEY));
   watch(selectedId, (v) => writeLocal(SELECTED_KEY, v));

@@ -11,6 +11,8 @@ a-huge-3-200-argument	(tan(((3)**200)))
 a-huge-neg-7-60-argument	(tan((-((7)**60))))	
 a-huge-10-80-plus-1-over-3-argument		
 tan-100-under-n	(tan(100))	
+series-tan-x-x-0-10		
+series-tan-x-x-1-over-2-times-pi-5		
 n-of-an-exact-argument-gives-an-arbitrary	(tan((mpf(6)/5)))	2.57215162212631893540999423603
 evaluates-at-a-complex-argument	tan(mpc(2.5, 1))	(-0.237013830916270580522716158056 + 0.896437917127861752050952735755j)
 threads-element-wise-over-a-matrix		

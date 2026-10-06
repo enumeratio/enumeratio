@@ -25,6 +25,7 @@ n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	Scope		[N, [Add, 1, [Negate, [Sqrt
 n-k-25	Scope		[N, k, 25]	k																		
 n-exponentiale-pow-x-plus-pi	Scope		[N, [Power, ExponentialE, [Add, x, Pi]]]	[Power, {num: "2.71828182845904523536"}, [Add, x, {num: "3.141592653589793238462643"}]]																		
 n-k	Scope		[N, k]	k																		
+n-1-000-factorial	Scope		[N, [Factorial, 1000]]	{num: "4.02387260077093773544e+2567"}																		
 n-1-minus-goldenratio-plus-1-over-goldenratio-20	Properties		[N, [Add, 1, [Negate, GoldenRatio], [Divide, 1, GoldenRatio]], 20]	{num: "-2.0e-340"}																		
 n-1-minus-goldenratio-plus-1-over-goldenratio	Properties		[N, [Add, 1, [Negate, GoldenRatio], [Divide, 1, GoldenRatio]], [List, PositiveInfinity, 20]]	{num: "0.0"}																		
 n-exponentiale-pow-100-list-positiveinfinity-neg	Properties		[N, [Power, ExponentialE, 100], [List, PositiveInfinity, -10]]	{num: "2.688117141816135448412625551580014e+43"}					precision	An accuracy goal of -10 needs about 33 digits of E^100; we print 21, Wolfram prints more than it was asked for. The digits we print are all Wolfram's.												

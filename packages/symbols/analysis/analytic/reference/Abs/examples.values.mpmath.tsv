@@ -25,6 +25,7 @@ abs-positiveinfinity-times-i	fabs((inf * mpc(0, 1)))
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2		
 complexexpand-abs-x		
 complexexpand-abs-x-plus-i-times-y		
+apply-derivative-abs-1-x		
 the-gap-between-two-temperatures-70-and-95	fabs((70 - 95))	25.0
 the-distance-between-the-points-1-i-and-4-5i-of	fabs((mpc(1, 1) - mpc(4, 5)))	5.0
 even-function-x-x	almosteq(fabs(-8), fabs(8), 1e-20)	True

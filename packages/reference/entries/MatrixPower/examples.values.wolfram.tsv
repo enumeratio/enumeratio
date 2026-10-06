@@ -1,0 +1,5 @@
+id	in
+of-a-matrix	MatrixPower[List[List[1, 1], List[1, 0]], 10]
+of-a-word	MatrixPower["LR", 2]
+of-a-modular-matrix	
+negative-power	

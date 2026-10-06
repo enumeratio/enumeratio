@@ -8,3 +8,4 @@ list-1-2-eq-list-1-2	([1, 2] == [1, 2])
 n-pi-20-eq-pi-times-1-plus-256-times-10-pow-neg	
 list-x-eq-x-x-eq-y-sqrt-2-plus-sqrt-3-eq-sqrt-5	
 solve-a-times-x-pow-2-plus-b-times-x-plus-c-eq-0	
+fullsimplify-p-q-eq-q-p	

@@ -33,6 +33,7 @@ lcm-with-a-negative-associate	lcm(ZZ(complex(6, 8)), ZZ(complex(-2, -3)))
 lcm-of-a-large-norm-gaussian-and-a-real-prime-19	lcm(ZZ(complex(123, 456)), ZZ(19))		
 lcm-of-two-composites-sharing-the-prime-above-13	lcm(ZZ(complex(6, 8)), ZZ(complex(9, 6)))		
 lcm-of-a-lazy-range-1-10-not-a-materialised-list			
+reduceconditions-lcm-a-3-lt-3a-neg-10-lt-a-lt-10			
 the-smallest-number-divisible-by-each-of-1			
 lcm-10-15	lcm(ZZ(10), ZZ(15))		
 foldlist-lcm-1-range-2-10			
