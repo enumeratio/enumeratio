@@ -24,7 +24,7 @@
 // at the cost of a much heavier dependency for no extra coverage. We call mpmath directly.
 
 import { writeFormatted } from "@enumeratio/entry/node";
-import { KernelKilled, runKernel } from "@enumeratio/oracle/bounded";
+import { KernelKilled, runKernel } from "@enumeratio/utils/bounded";
 import { referenceEntries } from "../src/node.ts";
 
 const names = referenceEntries().map((entry) => entry.name);

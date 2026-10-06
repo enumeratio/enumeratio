@@ -35,7 +35,8 @@
     "@enumeratio/catalog": "workspace:*",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/entry": "workspace:*",
-    "@enumeratio/oracle": "workspace:*"
+    "@enumeratio/oracle": "workspace:*",
+    "@enumeratio/utils": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.148.0",

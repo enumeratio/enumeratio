@@ -10,7 +10,7 @@
 //   node scripts/collect-zeta-goldens.ts
 
 import { writeFileSync } from "node:fs";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "@enumeratio/utils/bounded";
 import { BigDecimal } from "@cortex-js/compute-engine";
 import { bigCx, hurwitzZeta, hurwitzZetaBig } from "@enumeratio/ce-patches";
 

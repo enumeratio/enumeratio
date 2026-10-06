@@ -7,7 +7,7 @@
 import { type ChildProcess, spawn, spawnSync } from "node:child_process";
 import { type AddressInfo, createServer } from "node:net";
 import { createInterface } from "node:readline";
-import { groupRssMb, memoryCapMb } from "@enumeratio/oracle/bounded";
+import { groupRssMb, memoryCapMb } from "@enumeratio/utils/bounded";
 import { agrees } from "./agree.ts";
 import { PROTOCOL, QUIT } from "./protocol.ts";
 import { HARNESSES } from "./registry.ts";

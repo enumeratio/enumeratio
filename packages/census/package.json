@@ -56,6 +56,7 @@
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/oracle": "workspace:*",
     "@enumeratio/reference": "workspace:*",
+    "@enumeratio/utils": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
     "@types/node": "^24",
     "typescript": "^7.0.2",

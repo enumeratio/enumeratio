@@ -7,7 +7,7 @@
 //   node scripts/collect-precise-zeta-goldens.ts
 
 import { writeFileSync } from "node:fs";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "@enumeratio/utils/bounded";
 
 type Rational = [number, number];
 

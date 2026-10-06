@@ -12,7 +12,7 @@
 // Extension heads with no Wolfram equivalent (our collections/statistics) stay
 // symbolic in Wolfram and are reported separately as "wl-unsupported", not failures.
 
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "@enumeratio/utils/bounded";
 import { toWolfram } from "@enumeratio/wolfram";
 import { isSettled } from "@enumeratio/entry";
 import { referenceEntries } from "../src/node.ts";

@@ -48,6 +48,7 @@
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/structures": "workspace:*",
+    "@enumeratio/utils": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

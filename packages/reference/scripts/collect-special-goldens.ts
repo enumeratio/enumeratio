@@ -30,7 +30,7 @@
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { applyAllPatches, character, eulerPhi } from "@enumeratio/ce-patches";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "@enumeratio/utils/bounded";
 
 const ce = new ComputeEngine();
 applyAllPatches(ce);
