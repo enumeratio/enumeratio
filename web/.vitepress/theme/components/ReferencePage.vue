@@ -6,6 +6,7 @@ import { data as components } from "../../data/components.data.ts";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import { fragment, setFragment } from "../fragment.ts";
 import { renderBlock, renderInline, renderProse } from "../../prose.ts";
+import AboutPanel from "./AboutPanel.vue";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
@@ -518,6 +519,8 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
         <p v-if="ex.source" class="ref-known">Known value · {{ ex.source }}</p>
       </div>
     </details>
+
+    <AboutPanel :name="name" />
 
     <section v-if="entry.primitive || entry.bindings?.length" id="implementation">
       <h2>Implementation</h2>
