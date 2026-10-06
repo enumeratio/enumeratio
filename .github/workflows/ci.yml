@@ -154,7 +154,7 @@ jobs:
           exit 0
 
   # Every build of every commit goes up as a Cloudflare Pages preview at <sha7>.enumeratio.pages.dev — PR pushes
-  # and main alike (production is GitHub Pages, pages.yml). Direct upload of the artifact `site` made: no second
+  # and main alike — and a push to main also deploys as production (enumeratio.dev). Direct upload of the artifact `site` made: no second
   # site build, no CF build minutes. Same-repo only — fork PRs have no secrets. `--branch` is CF's one alias slot,
   # so it carries the sha; the commit message carries the PR number for preview-cleanup.yml to match on.
   preview:
@@ -190,6 +190,18 @@ jobs:
             pages deploy dist
             --project-name=enumeratio
             --branch=${{ steps.meta.outputs.sha7 }}
+            --commit-hash=${{ steps.meta.outputs.sha }}
+            --commit-message=${{ steps.meta.outputs.stamp }}
+      - name: Production (main)
+        if: steps.meta.outputs.deploy == 'true' && github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >
+            pages deploy dist
+            --project-name=enumeratio
+            --branch=main
             --commit-hash=${{ steps.meta.outputs.sha }}
             --commit-message=${{ steps.meta.outputs.stamp }}
       - name: Preview URL

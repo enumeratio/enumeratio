@@ -1,3 +1,7 @@
 # Vendor files carry their version in the URL (web/.vitepress/vendor.ts), so they never change.
 /vendor/*
   Cache-Control: public, max-age=31536000, immutable
+
+# Built assets carry a content hash in their names.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
