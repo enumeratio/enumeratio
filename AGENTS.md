@@ -209,7 +209,7 @@ kernel, the network or hand curation stays committed.
   - A PR's test shards run only the packages `node tools/ci/affected.ts` selects (changed
     packages and their dependents); a change to the lockfile, root config, CI or the engine, and
     every push to main, runs all.
-- **Production** (`enumeratio.dev`) ships from GitHub Pages on merge to `main`. Every build
+- **Production** (`enumeratio.dev`) ships from Cloudflare Pages on merge to `main`. Every build
   also goes up as a Cloudflare Pages preview at `<sha7>.enumeratio.pages.dev`; the PR's
   sticky `<!-- cf-preview -->` comment carries the URL, and review links go below its first
   two lines, which each push rewrites.
