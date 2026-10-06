@@ -65,7 +65,7 @@ Here <code>_n</code> is the ground-set size of a <code>subset</code> glyph — t
 same control machinery, a different representation.
 </template>
 <notatio-manipulate v-pre params="{ {n, 4}, 1, 8, 1}">
-<notatio-figure kind="subset" value="[1,3]" n="_n" />
+<notatio-glyph kind="subset" value="[1,3]" n="_n" />
 </notatio-manipulate>
 </Story>
 
@@ -79,7 +79,7 @@ One slider feeds two children at once — the plot's frequency and a glyph marki
 </template>
 <notatio-manipulate v-pre params="{ {k, 3}, 1, 6, 1}">
 <notatio-plot value="Sin(_k * x)" domain="-6.283,6.283" grid />
-<notatio-figure kind="subset" value="[_k]" n="6" />
+<notatio-glyph kind="subset" value="[_k]" n="6" />
 </notatio-manipulate>
 </Story>
 

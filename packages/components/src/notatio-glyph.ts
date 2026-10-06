@@ -31,16 +31,16 @@ function parseList(value: string): number[] {
 }
 
 /**
- * `<Figure kind="permutation" value="[3,1,2]">` -- renders a
+ * `<Glyph kind="permutation" value="[3,1,2]">` -- renders a
  * combinatorial element as an inline SVG glyph. `kind` is one of permutation,
  * partition, composition, subset, dyck, tree (preorder child-count word),
  * binary-tree (preorder shape word, 1 = internal); `value` is the element as an
  * integer list. `subset` also reads `n` (the ground-set size). Pass a ready-made `svg`
  * string instead to render it verbatim (the generic escape hatch).
  */
-export class NotatioFigure extends LitElement {
+export class NotatioGlyph extends LitElement {
   // `kind` is reflected so CSS can size a kind differently — a VitePress host binds
-  // these as PROPERTIES, not attributes, so without it `notatio-figure[kind=…]` never
+  // these as PROPERTIES, not attributes, so without it `notatio-glyph[kind=…]` never
   // matches.
   static properties = {
     /** Which glyph to draw: `permutation`, `partition`, `composition`, `subset` or `dyck`. */
@@ -86,6 +86,6 @@ export class NotatioFigure extends LitElement {
   }
 }
 
-if (!customElements.get("notatio-figure")) {
-  customElements.define("notatio-figure", NotatioFigure);
+if (!customElements.get("notatio-glyph")) {
+  customElements.define("notatio-glyph", NotatioGlyph);
 }

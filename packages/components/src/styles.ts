@@ -18,9 +18,9 @@ notatio-out[display] {
 }
 
 /* Glyphs are inline, sized to the line; the SVG carries a viewBox, no width. */
-notatio-figure { display: inline-block; vertical-align: middle; line-height: 0; }
-notatio-figure svg { height: 2.5em; width: auto; max-width: 100%; overflow: visible; }
-notatio-figure[kind="diagram"] svg { height: 3.6em; }
+notatio-glyph { display: inline-block; vertical-align: middle; line-height: 0; }
+notatio-glyph svg { height: 2.5em; width: auto; max-width: 100%; overflow: visible; }
+notatio-glyph[kind="diagram"] svg { height: 3.6em; }
 
 /* Plots are block figures sized to a max width; the viewBox drives the ratio. */
 notatio-plot, notatio-plot-3d { display: block; line-height: 0; }

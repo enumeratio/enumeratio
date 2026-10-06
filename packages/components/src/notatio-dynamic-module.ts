@@ -97,7 +97,7 @@ const STOP_GRACE_MS = 300;
  *   A <Knob name="n" value="4" min="1" max="8" step="1" />-element set has
  *   <Dynamic value="2^_n" /> subsets<When test="_n > 5">, which is
  *   already more than you want to list</When>.
- *   <Figure kind="subset" value="[1,3]" n="_n" />
+ *   <Glyph kind="subset" value="[1,3]" n="_n" />
  * </DynamicModule>
  * ```
  *

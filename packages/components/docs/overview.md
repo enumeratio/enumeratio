@@ -20,7 +20,7 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Output](/docs/components/out) — `<notatio-out>`, typeset read-only rendering + display forms
 - [Cell](/docs/components/cell) — `<notatio-cell>`, a notebook In/Out pair
 - [Verification](/docs/components/verification) — `<notatio-test-result-object>`, `VerificationTest`'s outcome as a badge over an In/Out pair
-- [Figure (glyphs)](/docs/combinatorics/figure) — `<notatio-figure>`, combinatorial pictorial forms
+- [Glyph](/docs/combinatorics/glyph) — `<notatio-glyph>`, combinatorial pictorial forms
 - [Plot](/reference/component/Plot) — function plots of one variable; stories moved to its component reference page
 - [Plot 3D](/reference/component/Plot3D) — bivariate surfaces, projected and shaded in plain SVG; stories moved to its component reference page
 - [Contour Plot](/reference/component/ContourPlot) — contour lines / filled bands of a bivariate function (or a pre-sampled grid) via marching squares; stories moved to its component reference page
@@ -91,7 +91,7 @@ localStorage["notatio:debug"] = "plot3d"; // or "plot*", or "*"
 A single expression can be shown many ways. Following Wolfram's `*Form` symbols,
 each way is a named **representation** you can request explicitly. The textual
 forms ship on `<notatio-out>` (the In/Out menu); the visual forms live in
-`<notatio-figure>` and the plot components.
+`<notatio-glyph>` and the plot components.
 
 | Representation           | Kind       | Status  | Wolfram analogue                                                                                                                |
 | ------------------------ | ---------- | ------- | ------------------------------------------------------------------------------------------------------------------------------- |

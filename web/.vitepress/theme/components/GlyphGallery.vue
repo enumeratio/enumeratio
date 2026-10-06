@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // The full combinatorial-glyph vocabulary, one family per row -- a visual index
-// of the `<notatio-figure>` representations. Each item is the element itself, so
+// of the `<notatio-glyph>` representations. Each item is the element itself, so
 // this doubles as an integration check of the glyph renderers in the browser.
 const families: Array<{
   kind: string;
@@ -65,7 +65,7 @@ const families: Array<{
         <h4>{{ fam.title }}</h4>
         <div class="strip">
           <figure v-for="(it, i) in fam.items" :key="i">
-            <notatio-figure :kind="fam.kind" :value="JSON.stringify(it.value)" :n="it.n" />
+            <notatio-glyph :kind="fam.kind" :value="JSON.stringify(it.value)" :n="it.n" />
             <figcaption>{{ it.cap }}</figcaption>
           </figure>
         </div>

@@ -60,7 +60,7 @@ Press ▶ and watch the order: the last element climbs slowest. That is
 <strong>colex</strong> — subsets are ordered by their largest element first.
 </template>
 <notatio-manipulate v-pre params="{ {r, 1}, 1, 56, 1}">
-<notatio-figure kind="subset" value="At(KSubsets(8,3), _r)" n="8" />
+<notatio-glyph kind="subset" value="At(KSubsets(8,3), _r)" n="8" />
 </notatio-manipulate>
 </Story>
 
@@ -76,8 +76,8 @@ wrap around while the permutations are still going. Wrapping is the point: an in
 taken modulo the count.
 </template>
 <notatio-manipulate v-pre params="{ {r, 1}, 1, 24, 1}">
-<notatio-figure kind="permutation" value="At(SymmetricGroup(4), _r)" />
-<notatio-figure kind="dyck" value="At(DyckPaths(4), _r)" />
+<notatio-glyph kind="permutation" value="At(SymmetricGroup(4), _r)" />
+<notatio-glyph kind="dyck" value="At(DyckPaths(4), _r)" />
 </notatio-manipulate>
 </Story>
 
@@ -116,5 +116,5 @@ $n$-th k-subset. [Numeral systems](../../../arithmetic/numerals/docs/numeral-sys
 
 Every family here is catalogued, with its order and its counting sequence, in the
 [symbol reference](https://enumeratio.dev/reference/symbol/). The glyphs are
-[`<Figure>`](https://enumeratio.dev/reference/component/Figure) and the slider is
+[`<Glyph>`](https://enumeratio.dev/reference/component/Glyph) and the slider is
 [`<Manipulate>`](https://enumeratio.dev/reference/component/Manipulate).

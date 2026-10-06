@@ -82,7 +82,7 @@ const DOUBLE_TAP_MS = 400;
  *
  * ```html
  * <Knob name="k" value="1" min="1" max="24">
- *   <Figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
+ *   <Glyph kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
  * </Knob>
  * ```
  *

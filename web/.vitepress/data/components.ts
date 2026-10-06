@@ -29,10 +29,10 @@ export const srcDir = join(
   "src",
 );
 // The pages that demo components live in the package docs of the library each one belongs
-// to: the interface in components, a polytope in polytope, combinatorial figures in
+// to: the interface in components, a polytope in polytope, combinatorial glyphs in
 // combinatorics. Other pages (guides) mention elements without being their demo.
 const DEMO_PAGES = (slug: string, page: string): boolean =>
-  slug === "components" || slug === "polytope" || (slug === "combinatorics" && page === "figure");
+  slug === "components" || slug === "polytope" || (slug === "combinatorics" && page === "glyph");
 
 /** Map each tag to the doc page that demos it, so the pages can link out. */
 function demoPages(): Map<string, string> {

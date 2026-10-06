@@ -45,7 +45,7 @@ const DEFINE_WAIT_MS = 2000;
  * ```html
  * <Manipulate params="{n, 1, 8, 1}">
  *   <Plot value="Sin(_n * x)" />
- *   <Figure kind="subset" value="[1]" n="_n" />
+ *   <Glyph kind="subset" value="[1]" n="_n" />
  * </Manipulate>
  * ```
  *

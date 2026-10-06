@@ -35,7 +35,7 @@ Two ideas are lifted wholesale.
 **`*Form` symbols.** A single expression can be shown many ways, and each way is a
 _named representation you can ask for_ rather than a mode the renderer happens to
 be in. `StandardForm`, `TraditionalForm`, `FullForm`, `TeXForm` ship on
-`<notatio-out>`; the pictorial ones live in `<notatio-figure>` and the plots.
+`<notatio-out>`; the pictorial ones live in `<notatio-glyph>` and the plots.
 The [components overview](/docs/components/overview) tracks the whole table.
 
 <Story
