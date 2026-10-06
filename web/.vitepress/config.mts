@@ -16,6 +16,7 @@ import { writeServiceWorker } from "./host/service-worker.ts";
 import { referenceDataPlugin } from "./reference-data.ts";
 import { CATALOGUE } from "./theme/worker-catalogue.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
+import { vendorExternals, vendorHref, writeVendor } from "./vendor.ts";
 
 // Resolve every @enumeratio/* import (bare and subpaths) to its source, so the docs
 // site reads sibling packages directly and never depends on a prior `vp pack` of
@@ -321,7 +322,9 @@ const config = defineConfig({
     // Module workers: a session kernel imports each library as its own chunk, which the
     // default (IIFE) worker bundle can't split.
     // The worker reads every package's notation through `virtual:notation-entries`.
-    worker: { format: "es", plugins: () => [notationEntriesPlugin(), includeWhole()] as never },
+    worker: { format: "es", plugins: () => [vendorExternals(), notationEntriesPlugin(), includeWhole()] as never },
+    // The SSR build imports vendor code from node_modules (client and worker bundles use /vendor/ URLs).
+    ssr: { external: ["@cortex-js/compute-engine", "katex", "mathlive"] },
     // Review mode: a dev-server-only REST API over a markdown backlog file, for
     // working through shipped features. `apply: "serve"` on the plugin itself
     // keeps it out of `vitepress build`/`preview`; gating it here too means the
@@ -331,7 +334,7 @@ const config = defineConfig({
     // two structurally-identical but nominally distinct `Plugin` types.
     plugins: (dev
       ? [reviewModePlugin(webDir), referenceDataPlugin(dev), notationEntriesPlugin(), loaderWatchPlugin()]
-      : [referenceDataPlugin(dev), notationEntriesPlugin(), includeWhole()]) as never,
+      : [vendorExternals(), referenceDataPlugin(dev), notationEntriesPlugin(), includeWhole()]) as never,
   },
   title: "enumeratio",
   description:
@@ -344,6 +347,8 @@ const config = defineConfig({
   // (the raw markdown H1 is `{{ $params.name }}`, which VitePress can't read).
   buildEnd: (site: { outDir: string }) => {
     writeRedirects(site.outDir);
+    // Before the service worker, which caches them.
+    writeVendor(site.outDir);
     // The host: a service worker that caches the kernel's libraries on install (host/).
     writeServiceWorker(site.outDir, { libraries: CATALOGUE.map((library) => library.name) });
   },
@@ -369,9 +374,12 @@ const config = defineConfig({
   transformHead(ctx: { siteConfig: { outDir: string }; pageData: { relativePath: string } }) {
     const tags = pageTags(ctx.pageData.relativePath);
     if (tags.size === 0) return [];
-    return chunksIn(ctx.siteConfig.outDir)
-      .filter((asset) => preloads(asset, tags))
-      .map((href) => ["link", { rel: "modulepreload", href }] as [string, Record<string, string>]);
+    // A cell typesets with KaTeX, a vendor file, not a chunk.
+    const katex = tags.has("notatio-cell") ? vendorHref("katex") : undefined;
+    return [
+      ...chunksIn(ctx.siteConfig.outDir).filter((asset) => preloads(asset, tags)),
+      ...(katex === undefined ? [] : [katex]),
+    ].map((href) => ["link", { rel: "modulepreload", href }] as [string, Record<string, string>]);
   },
 
   // `$latex$` / `$$latex$$` typeset by KaTeX at build (notatio-math.ts), as cells are at runtime;

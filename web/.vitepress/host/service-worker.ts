@@ -41,6 +41,17 @@ export function closure(dir: string, roots: readonly string[]): string[] {
   return [...seen].toSorted();
 }
 
+const VENDOR_ON_DEMAND = /^\/vendor\/mathlive@/;
+
+/** The vendor files (`../vendor.ts`) under `outDir`, as URLs; the editor's is fetched when one opens. */
+function vendorFiles(outDir: string, dir = "vendor"): string[] {
+  const path = resolve(outDir, dir);
+  if (!existsSync(path)) return [];
+  return readdirSync(path, { withFileTypes: true })
+    .flatMap((entry) => (entry.isDirectory() ? vendorFiles(outDir, `${dir}/${entry.name}`) : [`/${dir}/${entry.name}`]))
+    .filter((url) => !VENDOR_ON_DEMAND.test(url));
+}
+
 /** The files the service worker caches on install, as the URLs pages load them by. */
 export function precacheList(outDir: string): string[] {
   const assets = resolve(outDir, "assets");
@@ -56,7 +67,7 @@ export function precacheList(outDir: string): string[] {
   const shell = top
     .filter((f) => /^app\.[\w-]+\.js$/.test(f) || /^style\.[\w-]+\.css$/.test(f) || f.endsWith(".woff2"))
     .map((f) => `/assets/${f}`);
-  return [...new Set([...worker, ...page, ...shell])].toSorted();
+  return [...new Set([...worker, ...page, ...shell, ...vendorFiles(outDir)])].toSorted();
 }
 
 /** Write `outDir/sw.js`, holding `configuration`, and return how many files it caches. */
