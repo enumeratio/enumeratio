@@ -60,6 +60,26 @@ test("a slot naming a parameter takes its place, the children filling the rest",
   expect(placed('<F a="1">x y z</F>').errors).toEqual(["markup: <F> has more arguments than its parameters (a, b, c)"]);
 });
 
+test("a child named for an option its parent declares is that option", () => {
+  const optionsOf = (head: string) => ({ Show: ["PlotLabel", "Axes"], LatticeTiles: ["ColorRules"] })[head];
+  const opt = (text: string) => readMarkupText(text, { parseText: parseExpression, optionsOf }).json;
+  expect(opt('<Show><Disk/><PlotLabel>"Primes"</PlotLabel><Axes/></Show>')).toEqual([
+    "Show",
+    "Disk",
+    ["KeyValuePair", "PlotLabel", "'Primes'"],
+    ["KeyValuePair", "Axes", "True"],
+  ]);
+  expect(
+    opt("<LatticeTiles>R<ColorRules><Rule>IsPrime Teal</Rule><Rule>IsUnit White</Rule></ColorRules></LatticeTiles>"),
+  ).toEqual([
+    "LatticeTiles",
+    "R",
+    ["KeyValuePair", "ColorRules", ["List", ["Rule", "IsPrime", "Teal"], ["Rule", "IsUnit", "White"]]],
+  ]);
+  // Undeclared, it is an argument like any other element.
+  expect(opt("<Plot><PlotLabel>x</PlotLabel></Plot>")).toEqual(["Plot", ["PlotLabel", "x"]]);
+});
+
 test("value holds the arguments, or with ToExpression the whole expression, as Epsil", () => {
   expect(read('<Binomial value="n, 2" />').json).toEqual(["Binomial", "n", 2]);
   expect(read('<ToExpression value="Sin(k * x)" />').json).toEqual(["Sin", ["Multiply", "k", "x"]]);

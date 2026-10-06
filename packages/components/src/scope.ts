@@ -25,8 +25,11 @@ const idOf = (el: Element): number => {
   return id;
 };
 
-/** The explicit scopes: an element under one of these belongs to it, not to the page. */
-const OWNERS = "notatio-dynamic-module, notatio-manipulate";
+/**
+ * The explicit scopes: an element under one of these belongs to it, not to the page. A figure
+ * binds its caption's controls to its own parameters, so the page must not fill its `value`.
+ */
+const OWNERS = "notatio-dynamic-module, notatio-manipulate, notatio-show";
 
 export class Scope {
   #engine: ComputeEngine | undefined;

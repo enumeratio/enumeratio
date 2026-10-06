@@ -13,6 +13,9 @@
 // - any other attribute is a named slot, spelled as the option or parameter is: a trailing
 //   `KeyValuePair`, or the parameter's position where the caller's `paramsOf` names it;
 //   alone, it is `True`;
+// - a child element named for an option the caller's `optionsOf` says its parent declares is
+//   that option, its children the value (`<Show><PlotLabel>"Primes"</PlotLabel></Show>`), several
+//   of them a list, none of them `True`;
 // - `value`, the one reserved attribute, holds the arguments as Epsil in place of children,
 //   and `<ToExpression value="…" />` a whole expression.
 //
@@ -49,6 +52,8 @@ export interface ReadOptions {
   readonly parseText?: ParseText;
   /** Place a slot that names a parameter into that parameter's position. */
   readonly paramsOf?: ParamsOf;
+  /** The options a head declares: a child element named for one is that option, not an argument. */
+  readonly optionsOf?: (head: string) => readonly string[] | undefined;
 }
 
 export interface ReadResult {
@@ -249,10 +254,17 @@ function read(node: MarkupNode, options: ReadOptions, errors: string[]): Json {
   const slots: Json[] = named.map(([name, v]) => ["KeyValuePair", name, v]);
 
   const args: Json[] = [];
+  const declared = options.optionsOf?.(tag);
   for (const child of node.children) {
     if (typeof child === "string") args.push(...tokenize(child, errors));
     else if ("json" in child) {
       if (child.json !== undefined) args.push(child.json);
+    } else if (declared?.includes(child.tag)) {
+      const v = read(child, options, errors);
+      const values = Array.isArray(v) ? v.slice(1) : [];
+      const value = values.length === 0 ? "True" : values.length === 1 ? values[0] : ["List", ...values];
+      named.push([child.tag, value]);
+      slots.push(["KeyValuePair", child.tag, value]);
     } else {
       const arg = read(child, options, errors);
       if (arg !== undefined) args.push(arg);

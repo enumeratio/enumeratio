@@ -18,6 +18,7 @@ import {
   parseNumeric,
   resolvePalette,
   type Vec2,
+  wheelZooms,
 } from "@enumeratio/frontend/core";
 import {
   type FramePlacement,
@@ -113,7 +114,8 @@ const trimNumber = (x: number): string => String(Math.round(x * 1000) / 1000);
  * (default: the grid step), then back, by `band-mode` (`reflect`, the default; `wrap`; `clamp`).
  *
  * The caption and legend each take a placement — `below`, `above`, `left`, `right`, a corner
- * (`top-left` …) to overlay the plot, or `none`. Drag to pan, scroll to zoom; zooming out stops
+ * (`top-left` …) to overlay the plot, or `none`. Drag to pan; scroll to zoom once clicked, or
+ * ⌘/Ctrl+scroll; zooming out stops
  * at `max-cells` points, with an offer of more up to a hard ceiling.
  *
  * ```html
@@ -631,6 +633,7 @@ export class NotatioLatticePlot extends LitElement {
   }
 
   #onWheel = (e: WheelEvent): void => {
+    if (!this.#canvas || !wheelZooms(e, this.#canvas)) return;
     e.preventDefault();
     this.#zoom(Math.exp(e.deltaY * 0.0015), e.clientX, e.clientY);
   };

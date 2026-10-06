@@ -91,6 +91,7 @@ function svgOf(expr: BoxedExpression): string | undefined {
  * symbol evaluates to itself.
  */
 export const GRAPHICS_HEADS: readonly string[] = [
+  "Show",
   "Plot",
   "ParametricPlot",
   "Plot3D",
@@ -160,6 +161,29 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "Rectangle",
   "Text",
 ];
+
+/**
+ * The options a graphics head declares. An argument `Name -> v` is an option of its head exactly
+ * when `Name` is listed for that head; any other rule is an argument, so a layer's
+ * `ColorRules -> [IsPrime -> Teal]` keeps `IsPrime -> Teal` as a rule. The markup reader reads a
+ * child element named for one of these as that option (`<Show><PlotLabel>…</PlotLabel></Show>`).
+ * Wolfram's names where Wolfram has the option; `ColorMixing`, `Selection` and `GestureHandling`
+ * are ours.
+ */
+export const GRAPHICS_OPTIONS: Readonly<Record<string, readonly string[]>> = {
+  Show: [
+    "AspectRatio",
+    "Axes",
+    "AxesStyle",
+    "Ticks",
+    "GridLines",
+    "GridLinesStyle",
+    "PlotLabel",
+    "Selection",
+    "GestureHandling",
+  ],
+  LatticeTiles: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+};
 
 /**
  * The engine's own `Histogram(data, bins)` computes the bins and rejects a lone argument at

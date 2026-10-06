@@ -14,14 +14,15 @@ export type ProsePart =
   | { kind: "knob"; name: string; options: Record<string, string> }
   | { kind: "dynamic"; value: string; options: Record<string, string> };
 
-/** `axis=y play` -> { axis: "y", play: "" }: a bare word is a boolean attribute. */
+/**
+ * `axis=y play` -> { axis: "y", play: "" }: a bare word is a boolean attribute. A value with
+ * spaces is quoted, `choices='A -> a|B -> b'`, in either quote the surrounding attribute
+ * doesn't use.
+ */
 export function parseHoleOptions(raw: string): Record<string, string> {
   const options: Record<string, string> = {};
-  for (const token of raw.trim().split(/\s+/)) {
-    if (!token) continue;
-    const eq = token.indexOf("=");
-    if (eq < 0) options[token] = "";
-    else options[token.slice(0, eq)] = token.slice(eq + 1);
+  for (const [, key, value] of raw.matchAll(/([^\s=]+)(?:=("[^"]*"|'[^']*'|\S*))?/g)) {
+    options[key!] = value === undefined ? "" : /^(["']).*\1$/s.test(value) ? value.slice(1, -1) : value;
   }
   return options;
 }

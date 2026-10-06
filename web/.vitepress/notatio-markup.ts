@@ -5,7 +5,7 @@
 // its own. A tag that is a head but also a Vue component (`<Symbol>`, VitePress's `<Content>`)
 // stays the component. Markup that doesn't read fails the build.
 
-import { GRAPHICS_HEADS } from "@enumeratio/formats";
+import { GRAPHICS_HEADS, GRAPHICS_OPTIONS } from "@enumeratio/formats";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { readMarkupText } from "@enumeratio/formats/markup";
 import { SYMBOLS } from "@enumeratio/manifest";
@@ -99,7 +99,11 @@ const paramsOf = (head: string): readonly string[] | undefined => SYMBOLS[head]?
 
 /** Markup text as MathJSON, or an error naming the page. */
 export function readPageMarkup(text: string, page?: string): unknown {
-  const { json, errors } = readMarkupText(text, { parseText: (epsil) => parseExpression(epsil), paramsOf });
+  const { json, errors } = readMarkupText(text, {
+    parseText: (epsil) => parseExpression(epsil),
+    paramsOf,
+    optionsOf: (head) => GRAPHICS_OPTIONS[head],
+  });
   if (errors.length > 0 || json === undefined) {
     throw new Error(`${page ?? "a page"}: ${errors.join("; ") || "markup: nothing read"} in ${text}`);
   }

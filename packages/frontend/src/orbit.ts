@@ -1,4 +1,4 @@
-// Drag to rotate, modifier-scroll to zoom, double-click to reset.
+// Drag to rotate, scroll to zoom (by `gestures.ts`), double-click to reset.
 //
 // Every 3-D figure wants the same gesture, and until now each one carried its own copy of it.
 // The copies had already drifted — one guarded against a non-primary button and one did not,
@@ -8,6 +8,8 @@
 // It is not a Lit `ReactiveController`: what makes the figure redraw is assigning to the host's
 // own reactive `azimuth` / `elevation` / `zoom`, so there is nothing for a controller lifecycle
 // to do, and staying a plain object keeps it testable without a host at all.
+
+import { engage, WHEEL_HINT, wheelZooms } from "./gestures.ts";
 
 /** The camera state an orbit turns. */
 export interface OrbitView {
@@ -76,6 +78,7 @@ export class Orbit {
 
   readonly onPointerDown = (e: PointerEvent): void => {
     if (e.button !== 0) return;
+    engage(e);
     this.#drag = { id: e.pointerId, x: e.clientX, y: e.clientY };
     this.#travel = 0;
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -96,10 +99,9 @@ export class Orbit {
     if (this.#drag?.id === e.pointerId) this.#drag = null;
   };
 
-  /** Plain wheel keeps scrolling the page; a modifier — or a trackpad pinch, which browsers
-   *  report as ctrl+wheel — zooms the figure instead. */
+  /** Zoom by `gestures.ts`: when the figure is engaged, or with ⌘/Ctrl (a pinch). */
   readonly onWheel = (e: WheelEvent): void => {
-    if (!e.ctrlKey && !e.metaKey) return;
+    if (!wheelZooms(e, e.currentTarget as Element)) return;
     e.preventDefault();
     this.host.zoom = Math.max(0.25, Math.min(4, this.view.zoom * Math.exp(-e.deltaY * 0.005)));
   };
@@ -113,4 +115,4 @@ export class Orbit {
 }
 
 /** The one-line explanation of the gesture, for a `title`. */
-export const ORBIT_HINT = "drag to rotate · ctrl/⌘+scroll to zoom · double-click to reset";
+export const ORBIT_HINT = `drag to rotate · ${WHEEL_HINT} · double-click to reset`;

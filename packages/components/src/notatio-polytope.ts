@@ -164,6 +164,7 @@ export class NotatioPolytope extends LitElement {
       @pointerup=${this.#orbit.onPointerUp}
       @pointercancel=${this.#orbit.onPointerUp}
       @wheel=${this.#orbit.onWheel}
+      tabindex="0"
       @dblclick=${this.#orbit.onDblClick}
       @click=${(event: MouseEvent) => {
         this.#onClick(event);

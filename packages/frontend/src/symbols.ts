@@ -458,6 +458,13 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     options: FIELD_OPTIONS,
   },
   {
+    // `Show(layer, …, options)`: the layers stay one expression, which the element reads; its
+    // options lower to attributes (`Caption` to `caption`) like any plot's.
+    head: "Show",
+    tag: "notatio-show",
+    attributes: (ops) => ({ value: epsil(["Show", ...ops] as Json) }),
+  },
+  {
     head: "ComplexPlot",
     tag: "notatio-complex-plot",
     attributes: (ops) => {

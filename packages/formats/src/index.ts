@@ -37,6 +37,7 @@ export {
   declareGraphics,
   declareHistogram,
   GRAPHICS_HEADS,
+  GRAPHICS_OPTIONS,
   imageUri,
   type Rasterizer,
   setRasterizer,

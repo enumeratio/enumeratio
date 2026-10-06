@@ -175,6 +175,18 @@ export interface QuadraticLattice {
   gridLabel(axis: 0 | 1, k: number): string;
   readonly highlightModes: readonly { id: string; label: string }[];
   related(mode: string, selected: Vec2, i: number, j: number): boolean;
+  /** Classify point (i, j) now, for a figure that draws only what is known. */
+  prepare(i: number, j: number): void;
+  /** What a figure's queries may test of a point, and what each means. */
+  readonly properties: readonly { readonly name: string; readonly description: string }[];
+  /** Whether point (i, j) has a property; undefined while it isn't known. */
+  has(i: number, j: number, property: string): boolean | undefined;
+  /** Values a gradient may read of a point. */
+  readonly values: readonly { readonly name: string; readonly description: string }[];
+  value(i: number, j: number, name: string): number | undefined;
+  /** Relations a point may stand in to a selected one. */
+  readonly relations: readonly { readonly name: string; readonly description: string }[];
+  relatedTo(relation: string, selected: Vec2, i: number, j: number): boolean;
   describe(i: number, j: number): { title: string; rows: (readonly [string, string])[] };
   /** Facts about the ring as a whole, for a heading. */
   summary(): (readonly [string, string])[];
@@ -383,8 +395,9 @@ export function quadraticLattice(
       [1, 0],
       [0, 1],
     ],
+    // ω stands for the generator on its axis (i for ℤ[i]); the caption says what it is.
     gridLabel: (axis, k) =>
-      axis === 0 ? minus(k) : `${k === 1 ? "" : k === -1 ? "−" : minus(k)}${hexagonal ? "ω" : sqrtText(R.d)}`,
+      axis === 0 ? minus(k) : `${k === 1 ? "" : k === -1 ? "−" : minus(k)}${R.d === -1n ? "i" : "ω"}`,
     highlightModes: [
       { id: "factors", label: "irreducible factors" },
       { id: "multiples", label: "multiples" },
@@ -394,6 +407,77 @@ export function quadraticLattice(
       if (mode === "multiples") return divides(selected, [i, j]);
       if (mode === "associates") return associates(selected, [i, j]);
       if (mode === "factors") {
+        const code = classified(i, j);
+        return (code === CELL.prime || code === CELL.irreducible) && divides([i, j], selected);
+      }
+      return false;
+    },
+    properties: [
+      { name: "IsPrime", description: "a prime element: (α) is a prime ideal" },
+      { name: "IsIrreducible", description: "no factorization into two non-units; every prime is irreducible" },
+      { name: "IsComposite", description: "a product of two non-units" },
+      { name: "IsUnit", description: "norm ±1" },
+      { name: "IsZero", description: "zero" },
+      { name: "Unknown", description: "not yet classified" },
+      { name: "Splits", description: "a prime over a rational prime p that splits: (p) = 𝔭𝔭′" },
+      {
+        name: "Inert",
+        description: "a prime over a rational prime p that stays prime: the element is p, up to a unit",
+      },
+      { name: "Ramified", description: "a prime over a rational prime p that ramifies: (p) = 𝔭²" },
+    ],
+    prepare: (i, j) => void classified(i, j),
+    has(i, j, property) {
+      if (!cache.has(key(i, j)) && property !== "Unknown") return undefined;
+      const code = classified(i, j);
+      switch (property) {
+        case "IsPrime":
+          return code === CELL.prime;
+        case "IsIrreducible":
+          return code === CELL.prime || code === CELL.irreducible;
+        case "IsComposite":
+          return code === CELL.composite;
+        case "IsUnit":
+          return code === CELL.unit;
+        case "IsZero":
+          return code === CELL.zero;
+        case "Unknown":
+          return code === CELL.unknown;
+        case "Splits":
+        case "Inert":
+        case "Ramified": {
+          if (code !== CELL.prime) return false;
+          const splitting = this.colorings[1]!.code(i, j);
+          return (
+            splitting ===
+            (property === "Splits" ? SPLITTING.split : property === "Inert" ? SPLITTING.inert : SPLITTING.ramified)
+          );
+        }
+      }
+      return false;
+    },
+    values: [
+      { name: "Norm", description: "N(α), which is negative for some elements of a real field" },
+      { name: "X", description: "the coefficient of 1" },
+      { name: "Y", description: "the coefficient of ω" },
+    ],
+    value(i, j, name) {
+      if (name === "Norm") return normOf(i, j);
+      if (name === "X") return i;
+      if (name === "Y") return j;
+      return undefined;
+    },
+    relations: [
+      { name: "Associates", description: "the selection times a unit" },
+      { name: "Divides", description: "a divisor of the selection" },
+      { name: "IrreducibleFactors", description: "an irreducible divisor of the selection" },
+      { name: "Multiples", description: "a multiple of the selection" },
+    ],
+    relatedTo(relation, selected, i, j) {
+      if (relation === "Associates") return associates(selected, [i, j]);
+      if (relation === "Multiples") return divides(selected, [i, j]);
+      if (relation === "Divides") return normOf(i, j) !== 0 && divides([i, j], selected);
+      if (relation === "IrreducibleFactors") {
         const code = classified(i, j);
         return (code === CELL.prime || code === CELL.irreducible) && divides([i, j], selected);
       }
