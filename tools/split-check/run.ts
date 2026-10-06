@@ -165,8 +165,8 @@ const slug = (name: string): string => name.replace(/^@/, "").replace("/", "-");
 
 function pack(result: Result): void {
   for (const pkg of deps) {
-    const dist = join(pkg.dir, "dist");
-    if (!existsSync(dist))
+    // A package with no build script (config) ships its sources.
+    if (pkg.manifest.scripts?.build !== undefined && !existsSync(join(pkg.dir, "dist")))
       result.findings.push(`${pkg.manifest.name} is not built (no dist/): pnpm --filter ${targetName}^... run build`);
   }
   if (result.findings.length > 0) return;

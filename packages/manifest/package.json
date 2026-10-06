@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.148.0",
+    "@enumeratio/config": "workspace:*",
     "@types/node": "^24",
     "@types/semver": "catalog:",
     "typescript": "^7.0.2",

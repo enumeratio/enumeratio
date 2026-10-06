@@ -1,5 +1,6 @@
 import { existsSync, readdirSync } from "node:fs";
 import { defineConfig } from "vite-plus";
+import { fmt, lint } from "@enumeratio/config";
 
 // One entry per package module scripts/build.ts wrote, so each is its own `./package/<name>`.
 const generated = "src/generated/package";
@@ -17,8 +18,6 @@ export default defineConfig({
     },
     dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
-  lint: {
-    options: { typeAware: true, typeCheck: true },
-  },
-  fmt: {},
+  lint,
+  fmt,
 });

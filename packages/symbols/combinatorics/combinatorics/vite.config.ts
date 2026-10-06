@@ -1,4 +1,5 @@
 import { defineConfig } from "vite-plus";
+import { fmt, lint } from "@enumeratio/config";
 
 export default defineConfig({
   pack: {
@@ -14,10 +15,8 @@ export default defineConfig({
     // exports are managed by hand in package.json
     exports: false,
   },
-  lint: {
-    options: { typeAware: true, typeCheck: true },
-  },
-  fmt: {},
+  lint,
+  fmt,
   // the map/tableau suites' exhaustive checks (RSK over S5, etc.) set the floor;
   // collections' permutation-class round-trips fit well inside it.
   test: { testTimeout: 300_000 },

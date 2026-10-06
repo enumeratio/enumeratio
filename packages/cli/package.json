@@ -53,6 +53,7 @@
     "@enumeratio/structures": "workspace:*"
   },
   "devDependencies": {
+    "@enumeratio/config": "workspace:*",
     "@types/node": "^24",
     "tsx": "^4.19.2",
     "typescript": "^7.0.2",

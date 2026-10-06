@@ -1,4 +1,5 @@
 import { defineConfig } from "vite-plus";
+import { fmt, lint } from "@enumeratio/config";
 
 export default defineConfig({
   pack: {
@@ -6,10 +7,8 @@ export default defineConfig({
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
-  lint: {
-    options: { typeAware: true, typeCheck: true },
-  },
-  fmt: {},
+  lint,
+  fmt,
   test: {
     // The registry is built from src/patches/*.ts, so a test run writes it first.
     globalSetup: ["scripts/global-setup.ts"],

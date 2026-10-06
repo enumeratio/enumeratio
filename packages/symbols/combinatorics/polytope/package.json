@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.148.0",
+    "@enumeratio/config": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",

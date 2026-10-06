@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.148.0",
+    "@enumeratio/config": "workspace:*",
     "@playwright/test": "^1.55.0",
     "vitepress": "2.0.0-alpha.20",
     "vue": "^3.5.42"

@@ -1,4 +1,5 @@
 import { defineConfig } from "vite-plus";
+import { fmt, lint } from "@enumeratio/config";
 
 export default defineConfig({
   pack: {
@@ -11,10 +12,8 @@ export default defineConfig({
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
-  lint: {
-    options: { typeAware: true, typeCheck: true },
-  },
-  fmt: {},
+  lint,
+  fmt,
   // the definition-agreement sweeps run well past vitest's 5s on a loaded 2-core runner
   test: { testTimeout: 60_000 },
 });

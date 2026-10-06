@@ -43,6 +43,7 @@
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/ce-patches": "workspace:*",
     "@enumeratio/combinatorics": "workspace:*",
+    "@enumeratio/config": "workspace:*",
     "@enumeratio/diagram": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
