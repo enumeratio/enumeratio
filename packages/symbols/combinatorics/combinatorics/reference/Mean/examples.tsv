@@ -5,7 +5,7 @@ mean-list-1p21-3p4-2p15-4-1p55			[Mean, [List, 1.21, 3.4, 2.15, 4, 1.55]]	2.462
 given-a-matrix-mean-is-column-wise	Scope		[Mean, [List, [List, 1, 10], [List, 2, 20], [List, 3, 30]]]	[List, 2, 20]	Given a matrix, Mean is column-wise				
 exact-rationals-give-an-exact-mean	Scope		[Mean, [List, [Rational, 1, 2], [Rational, 1, 3], [Rational, 1, 6]]]	[Rational, 1, 3]	Exact rationals give an exact mean				
 symbolic-data-gives-an-exact-symbolic-mean-frac	Scope		[Mean, [List, a, b, c, d]]	[Multiply, [Rational, 1, 4], [Add, a, b, c, d]]	Symbolic data gives an exact symbolic mean: $\frac{a+b+c+d}{4}$				
-exact-constants-give-an-exact-mean-frac-2-e-pi-3	Scope		[Mean, [List, Pi, ExponentialE, 2]]	[Multiply, [Rational, 1, 3], [Add, 2, ExponentialE, Pi]]	Exact constants give an exact mean $\frac{2+e+\pi}{3}$, not a numeric approximation	mean([pi, exponentialE, 2])	Mean(List(Pi, ExponentialE, 2))		
+exact-constants-give-an-exact-mean-frac-2-e-pi-3	Scope		[Mean, [List, Pi, ExponentialE, 2]]	[Multiply, [Rational, 1, 3], [Add, 2, ExponentialE, Pi]]	Exact constants give an exact mean $\frac{2+e+\pi}{3}$, not a numeric approximation	Mean([Pi, ExponentialE, 2])	Mean(List(Pi, ExponentialE, 2))		
 of-a-matrix-of-symbols-the-exact-mean-of-each	Scope		[Mean, [List, [List, a, u], [List, b, v], [List, c, w]]]	[List, [Multiply, [Rational, 1, 3], [Add, a, b, c]], [Multiply, [Rational, 1, 3], [Add, u, v, w]]]	Of a matrix of symbols, the exact mean of each column				
 the-mean-of-a-lazy-range-exactly	Scope		[Mean, [Range, 1, 100]]	[Rational, 101, 2]	The mean of a lazy [[Range]], exactly				
 mean-n-list-1-2-3-4-30	Scope		[Mean, [N, [List, 1, 2, 3, 4], 30]]	2.5	The mean of a 30-digit numeric list is a float				

@@ -71,12 +71,16 @@ function subtracted(node: unknown): MathJsonExpression | undefined {
 
 /** `Add(a, -b, …)` prints as `a - b - …`; anything that still adds stays in the `Add`. */
 function foldSubtraction(ops: MathJsonExpression[]): MathJsonExpression {
-  let left = ops[0];
+  // Runs of additions stay one n-ary `Add`, which the formatter wraps at the `+`s; a
+  // nested pair per term wraps mid-term.
+  const sum = (terms: MathJsonExpression[]): MathJsonExpression =>
+    terms.length === 1 ? terms[0]! : (["Add", ...terms] as MathJsonExpression);
+  let terms = [ops[0]!];
   for (const op of ops.slice(1)) {
     const term = subtracted(op);
-    left = term === undefined ? ["Add", left, op] : ["Subtract", left, term];
+    terms = term === undefined ? [...terms, op] : [["Subtract", sum(terms), term] as MathJsonExpression];
   }
-  return left;
+  return sum(terms);
 }
 
 /**
@@ -155,7 +159,8 @@ export function normalizeInputForm(json: MathJsonExpression): MathJsonExpression
 
 /** Print `json` as InputForm: Epsil you could type back in. */
 export function toInputForm(json: MathJsonExpression): string {
-  return serializeEpsil(normalizeInputForm(json));
+  // PascalCase heads and options track the AST (MathJSON); the parser takes either spelling.
+  return serializeEpsil(normalizeInputForm(json), { libraryNames: "mathjson" });
 }
 
 /** `BINDERS` is exported for the tests, which assert the unwrapping round-trips. */

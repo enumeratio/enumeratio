@@ -8,7 +8,7 @@ a-matrix-of-pairwise-distinct-symbols-has-full			[MatrixRank, [List, [List, a, b
 matrixrank-list-list-0-5-2-4-4-list-2-5-0-4-0			[MatrixRank, [List, [List, 0, 5, 2, 4, 4], [List, 2, 5, 0, 4, 0], [List, 5, 1, 5, 4, 5]]]	3	Three rows, rank 3 despite the zeros					
 approximate-entries	Scope		[MatrixRank, [List, [List, 1, 2.5], [List, 3.5, 4]]]	2	Approximate entries					
 complex-entries-the-second-row-is-i-times-the	Scope		[MatrixRank, [List, [List, 1, ImaginaryUnit], [List, ImaginaryUnit, -1]]]	1	Complex entries: the second row is $i$ times the first					
-exact-numeric-entries	Scope		[MatrixRank, [List, [List, Pi, ExponentialE], [List, [Multiply, 2, Pi], [Multiply, 2, ExponentialE]]]]	1	Exact numeric entries	matrixRank([[pi, exponentialE], [2Pi, 2 * exponentialE]])		MatrixRank(List(List(Pi, ExponentialE), List(Multiply(2, Pi), Multiply(2, ExponentialE))))		
+exact-numeric-entries	Scope		[MatrixRank, [List, [List, Pi, ExponentialE], [List, [Multiply, 2, Pi], [Multiply, 2, ExponentialE]]]]	1	Exact numeric entries	MatrixRank([[Pi, ExponentialE], [2Pi, 2 * ExponentialE]])		MatrixRank(List(List(Pi, ExponentialE), List(Multiply(2, Pi), Multiply(2, ExponentialE))))		
 the-second-row-is-sqrt-2-times-the-first	Scope		[MatrixRank, [List, [List, [Sqrt, 2], 1], [List, 2, [Sqrt, 2]]]]	1	The second row is $\sqrt{2}$ times the first					
 a-3-4-matrix-with-one-dependent-row	Scope		[MatrixRank, [List, [List, 1, 2, 3, 4], [List, 2, 4, 6, 8], [List, 1, 0, 1, 0]]]	2	A 3×4 matrix with one dependent row					
 matrixrank-identitymatrix-5	Scope		[MatrixRank, [IdentityMatrix, 5]]	5						

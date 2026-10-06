@@ -9,7 +9,7 @@ signatures:
     library: enumeratio-combinatorics
     type: (any, any?) -> any
   - call: Reap(expr, tag)
-    description: Like $Reap(expr)$, but the second element holds only the group whose tag matches $tag$ exactly (or several groups, one per entry, for $Reap(expr, \{tag1, tag2, ...\})$) — a requested tag nothing was sown under comes back as $\{\}$.
+    description: Like $Reap(expr)$, but the second element is the list of groups whose tag matches $tag$ exactly. With a list of tags it holds one such list per tag, so a tag nothing was sown under gives $\{\}$ in its place. $Sow(e, \{tag1, tag2\})$ sows under each of its tags.
     library: enumeratio-combinatorics
 seeAlso:
   - Sow

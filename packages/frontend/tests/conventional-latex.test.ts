@@ -34,6 +34,9 @@ const FIXED: { json: unknown[]; parses: string[] }[] = [
   { json: ["LCM", 4, 6], parses: ["\\operatorname{lcm}(4,6)", "\\mathrm{lcm}(4,6)"] },
   { json: ["MatrixRank", "A"], parses: ["\\operatorname{rank}(A)"] },
   { json: ["Erf", "x"], parses: ["\\operatorname{erf}(x)"] },
+  { json: ["Erfc", "x"], parses: ["\\operatorname{erfc}(x)"] },
+  { json: ["Arccot", "x"], parses: ["\\operatorname{arccot}(x)"] },
+  { json: ["Floor", "x"], parses: ["\\lfloor x\\rfloor"] },
   { json: ["Zeta", 3], parses: ["\\zeta(3)", "\\Zeta(3)"] },
   { json: ["Beta", 2, 3], parses: ["\\mathrm{B}(2,3)", "\\Beta(2,3)"] },
 ];
@@ -56,6 +59,15 @@ for (const { json, parses } of FIXED) {
     });
   }
 }
+
+// A step would be lost between the brackets; `form: "raw"` skips the one-argument signature.
+test("Floor and Ceil with a step keep it", () => {
+  for (const head of ["Floor", "Ceil"]) {
+    const latex = ce.box([head, 226, 10] as never, { form: "raw" }).latex;
+    record(`step ${head}`, latex);
+    expect(latex).toContain("10");
+  }
+});
 
 test("Lcm/Gcd naming: the native heads are all-caps (LCM/GCD), not TitleCase", () => {
   // See packages/symbols/combinatorics/statistics/src/permutation.ts — the

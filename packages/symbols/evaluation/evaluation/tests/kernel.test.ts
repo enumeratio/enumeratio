@@ -222,3 +222,12 @@ test("a published library's definition can build on the catalogue's heads", asyn
   // Declared in the install check's engine and in the kernel's.
   expect(log).toEqual(["doubling", "doubling"]);
 });
+
+test("a call rejected for its arguments stays unevaluated, with a message saying why", async () => {
+  const kernel = createKernel(new ComputeEngine(), catalogue([]));
+  const answer = await kernel.evaluate({ json: ["Double", ["Rational", 1, 2], "x"] });
+  expect(answer.ok).toBe(true);
+  // Only the one-argument signature exists, so the second argument is the rejected one.
+  expect(answer.json).toEqual(["Double", ["Rational", 1, 2], "x"]);
+  expect(answer.messages).toMatchObject([{ head: "Double", code: "argx" }]);
+});

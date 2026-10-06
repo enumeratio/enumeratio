@@ -426,8 +426,20 @@
     "mathml": "<mrow><mi>f</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mo>)</mo></mrow></mrow>"
   },
   "unknown head": {
-    "json": ["Zeta", "s"],
-    "mathml": "<mrow><mi>Zeta</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow>"
+    "json": ["Frobnicate", "s"],
+    "mathml": "<mrow><mi>Frobnicate</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow>"
+  },
+  "floor with a step": {
+    "json": ["Floor", 226, 10],
+    "mathml": "<mrow><mi>Floor</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mn>226</mn><mo>,</mo><mn>10</mn><mo>)</mo></mrow></mrow>"
+  },
+  "product with a reciprocal": {
+    "json": ["Multiply", 3, ["Power", ["Add", "s", 9], -1]],
+    "mathml": "<mfrac><mn>3</mn><mrow><mi>s</mi><mo>+</mo><mn>9</mn></mrow></mfrac>"
+  },
+  "engine heads": {
+    "json": ["Add", ["LCM", "a", "b"], ["Zeta", "s"], ["Erf", "x"]],
+    "mathml": "<mrow><mrow><mi>lcm</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>)</mo></mrow></mrow><mo>+</mo><mrow><mi>ζ</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow><mo>+</mo><mrow><mi>erf</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mrow>"
   },
   "nested calls": {
     "json": ["f", ["g", "x"], ["h", "y", "z"]],

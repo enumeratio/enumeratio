@@ -44,3 +44,7 @@ test("DisplayForm and RawBoxes typeset as their boxes", () => {
   expect(ce.box(["DisplayForm", ["SuperscriptBox", { str: "x" }, { str: "2" }]]).latex).toBe("x^2");
   expect(makeBoxes(["Add", 1, ["RawBoxes", ["SqrtBox", { str: "y" }]]])).toEqual(row(["1", "+", sqrt("y")]));
 });
+
+test("DisplayForm typesets the boxes ToBoxes gives, options and string leaves included", () => {
+  expect(ce.box(["DisplayForm", ["ToBoxes", ["Binomial", "n", "k"]]]).evaluate().latex).toBe("\\binom{n}{k}");
+});

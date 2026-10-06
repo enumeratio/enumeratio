@@ -1,6 +1,6 @@
 id	section	role	expr	expected	known	known.gap	tolerance	source	caption	epsil.in	fullform.in	fullform.out	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	rust.kind	rust.note
 ln-1			[Ln, 1]	0							Ln(1)	0								
-ln-exponentiale			[Ln, ExponentialE]	1						ln(exponentialE)	Ln(ExponentialE)									
+ln-exponentiale			[Ln, ExponentialE]	1						Ln(ExponentialE)	Ln(ExponentialE)									
 ln-0			[Ln, 0]	NegativeInfinity											shape	Both mean the same signed infinity; our symbol prints as 'NegativeInfinity', Sage's log(0) prints as '-Infinity' -- a spelling mismatch the text comparator can't bridge.	undefined-form	A pole or undefined value: compute-engine answers NegativeInfinity, SymPy gives zoo.		
 a-machine-precision-argument-evaluates			[Ln, 1.5]	{num: "0.405465108108164381978"}					A machine-precision argument evaluates numerically											
 a-machine-precision-negative-argument		test	[Ln, -4.705]	[Complex, {num: "1.54862577303734295736"}, 3.141592653589793]					A machine-precision negative argument stays complex										domain	Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
@@ -11,12 +11,12 @@ evaluates-at-a-complex-argument	Scope		[Ln, [Complex, 2.5, 1]]	[Complex, {num: "
 a-negative-float-gives-the-principal-complex	Scope		[Ln, -2.5]	[Complex, {num: "0.916290731874155065184"}, 3.141592653589793]					A negative float gives the principal complex value										domain	Rust's f64 functions are real-only and give NaN; compute-engine gives the principal complex value (or keeps it exact).
 threads-element-wise-over-a-list	Scope		[Ln, [List, 1, 2.1, 3.1, 4.1]]	[List, 0, {num: "0.741937344729377312483"}, {num: "1.13140211149110056191"}, {num: "1.41098697371026211985"}]					Threads element-wise over a list										threading	compute-engine's Ln is Listable and threads over the list; the Rust crates take scalars only.
 an-integer-power-is-pulled-out-ln-1000-3-ln-10	Scope		[Ln, 1000]	[Multiply, 3, [Ln, 10]]					An integer power is pulled out: $\ln 1000 = 3\ln 10$					Wolfram leaves Log[1000] as is.						
-ln-exponentiale-pow-3	Scope		[Ln, [Power, ExponentialE, 3]]	3						ln(exponentialE ^ 3)	Ln(Power(ExponentialE, 3))									
+ln-exponentiale-pow-3	Scope		[Ln, [Power, ExponentialE, 3]]	3						Ln(ExponentialE ^ 3)	Ln(Power(ExponentialE, 3))									
 ln-positiveinfinity	Scope		[Ln, PositiveInfinity]	PositiveInfinity																
 ln-z-to-infty-and-its-real-part-goes-to-infty-ln	Scope		[Ln, ComplexInfinity]	PositiveInfinity					$|\ln z| \to \infty$ and its real part goes to $+\infty$: $\ln(\tilde\infty) = +\infty$											
 ln-i-i-pi-2-exactly	Scope		[Ln, ImaginaryUnit]	[Multiply, [Complex, 0, [Rational, 1, 2]], Pi]					$\ln i = i\pi/2$ exactly											
 a-unit-fraction-becomes-a-negated-logarithm-ln	Scope		[Ln, [Rational, 1, 2]]	[Negate, [Ln, 2]]					A unit fraction becomes a negated logarithm: $\ln\tfrac12 = -\ln 2$											
-interval-arithmetic-ln-is-increasing-so-ln-frac	Scope		[Ln, [Interval, [Rational, 1, 3], ExponentialE]]	[Interval, [Negate, [Ln, 3]], 1]					Interval arithmetic: $\ln$ is increasing, so $\ln[\tfrac13, e]$ is the interval of the endpoint values -- $\ln(1/3)$ folds to $-\ln 3$ (see the unit-fraction example above)	ln(interval(1 / 3, exponentialE))	Ln(Interval(Rational(1, 3), ExponentialE))									
+interval-arithmetic-ln-is-increasing-so-ln-frac	Scope		[Ln, [Interval, [Rational, 1, 3], ExponentialE]]	[Interval, [Negate, [Ln, 3]], 1]					Interval arithmetic: $\ln$ is increasing, so $\ln[\tfrac13, e]$ is the interval of the endpoint values -- $\ln(1/3)$ folds to $-\ln 3$ (see the unit-fraction example above)	Ln(Interval(1 / 3, ExponentialE))	Ln(Interval(Rational(1, 3), ExponentialE))									
 uncertainty-propagation-ln-2-pm-0-01-approx-0	Scope		[Ln, [Around, 2, 0.01]]	[Around, 0.6931471805599453, 0.005]					Uncertainty propagation: $\ln(2 \pm 0.01) \approx 0.693 \pm 0.005$											
 ln-exp-x	Scope		[Ln, [Exp, x]]	x																
 derivative-1-x	Scope		[D, [Ln, x], x]	[Divide, 1, x]					Derivative: $1/x$											
@@ -39,7 +39,7 @@ functioninjective-ln-x-x	Scope		[FunctionInjective, [Ln, x], x]	True					Strictl
 functionsurjective-ln-x-x	Scope		[FunctionSurjective, [Ln, x], x]	True					Onto the real line											
 d-ln-z-z	Scope		[D, [Ln, z], z]	[Divide, 1, z]					Derivative $\frac1z$											
 d-ln-ln-x-x	Scope		[D, [Ln, [Ln, x]], x]	[Divide, 1, [Multiply, x, [Ln, x]]]					Chain rule: $\frac{d}{dx}\ln\ln x = \frac{1}{x\ln x}$											
-ln-exponentiale-pow-n	Scope		[Ln, [Power, ExponentialE, n]]	n					Ln undoes the exponential: $\ln e^n = n$	ln(exponentialE ^ n)	Ln(Power(ExponentialE, n))									
+ln-exponentiale-pow-n	Scope		[Ln, [Power, ExponentialE, n]]	n					Ln undoes the exponential: $\ln e^n = n$	Ln(ExponentialE ^ n)	Ln(Power(ExponentialE, n))									
 inverse-of-exp-ln-e-x-x	Properties		[Equal, [Ln, [Exp, 5]], 5]	True					Inverse of [[Exp]]: $\ln(e^x) = x$											
 product-rule-ln-ab-ln-a-ln-b	Properties		[Equal, [Add, [Ln, 2], [Ln, 3]], [Ln, 6]]	True					Product rule: $\ln(ab) = \ln a + \ln b$						convention	True mathematically; Sage's bool(a==b) on unevaluated symbolic logs doesn't invoke a log-identity simplification by default and reports False rather than attempting the proof.				
 powerexpand-splits-a-logarithm-of-a-product	Properties		[PowerExpand, [Ln, [Multiply, x, y]]]	[Add, [Ln, x], [Ln, y]]					[[PowerExpand]] splits a logarithm of a product, assuming positive factors											

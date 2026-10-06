@@ -632,10 +632,37 @@
     "ascii": "f()"
   },
   "unknown head": {
-    "boxes": ["RowBox", ["Zeta", "⁡", ["RowBox", ["(", "s", ")"]]]],
-    "latex": "\\operatorname{Zeta}(s)",
-    "text": "Zeta(s)",
-    "ascii": "Zeta(s)"
+    "boxes": ["RowBox", ["Frobnicate", "⁡", ["RowBox", ["(", "s", ")"]]]],
+    "latex": "\\operatorname{Frobnicate}(s)",
+    "text": "Frobnicate(s)",
+    "ascii": "Frobnicate(s)"
+  },
+  "floor with a step": {
+    "boxes": ["RowBox", ["Floor", "⁡", ["RowBox", ["(", "226", ",", "10", ")"]]]],
+    "latex": "\\operatorname{Floor}(226,10)",
+    "text": "Floor(226, 10)",
+    "ascii": "Floor(226, 10)"
+  },
+  "product with a reciprocal": {
+    "boxes": ["FractionBox", "3", ["RowBox", ["s", "+", "9"]]],
+    "latex": "\\frac{3}{s+9}",
+    "text": "3/(s + 9)",
+    "ascii": "3/(s + 9)"
+  },
+  "engine heads": {
+    "boxes": [
+      "RowBox",
+      [
+        ["RowBox", ["lcm", "⁡", ["RowBox", ["(", "a", ",", "b", ")"]]]],
+        "+",
+        ["RowBox", ["ζ", "⁡", ["RowBox", ["(", "s", ")"]]]],
+        "+",
+        ["RowBox", ["erf", "⁡", ["RowBox", ["(", "x", ")"]]]]
+      ]
+    ],
+    "latex": "\\operatorname{lcm}(a,b)+\\zeta(s)+\\operatorname{erf}(x)",
+    "text": "lcm(a, b) + ζ(s) + erf(x)",
+    "ascii": "lcm(a, b) + zeta(s) + erf(x)"
   },
   "nested calls": {
     "boxes": [

@@ -33,3 +33,4 @@ names:
 - Co-function with [[Arccos]]: $\arcsin(x) + \arccos(x) = \pi/2$.
 - Undoes [[Sin]] on its principal branch: $\sin(\arcsin(x)) = x$ for $x \in [-1, 1]$.
 - Past $[-1, 1]$, a rational $x$ reduces to the exact closed form $\operatorname{sign}(x)\left(\frac{\pi}{2} - i\ln(|x|+\sqrt{x^2-1})\right)$ (`@enumeratio/analytic`) -- the same branch compute-engine's own N(Arcsin(x)) already takes.
+- Differs from Wolfram: $Arcsin(2)$ reduces to its closed form $\pi/2 - i\ln(2+\sqrt3)$; Wolfram keeps `ArcSin[2]` until asked for a numeric value.
