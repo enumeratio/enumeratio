@@ -50,3 +50,21 @@ test("typed arithmetic evaluates in the ring", () => {
   expect(run("(2 \\pmod{5})^{3}")).toEqual(["ResidueClass", 3, 5]);
   expect(run("3 \\pmod{4} + 3 \\pmod{4}")).toEqual(["ResidueClass", 2, 4]);
 });
+
+test("IntegerMod is written (a mod n), fenced whole, and reads back", () => {
+  expect(latex(["IntegerMod", 3, 7])).toBe(String.raw`(3\;\mathrm{mod}\;7)`);
+  expect(latex(["Add", ["IntegerMod", 3, 7], ["IntegerMod", 2, 7]])).toBe(
+    String.raw`(3\;\mathrm{mod}\;7)+(2\;\mathrm{mod}\;7)`,
+  );
+  for (const expr of [
+    ["IntegerMod", 3, 7],
+    ["IntegerMod", ["Add", "a", 1], ["Add", "n", 1]],
+    ["Add", ["IntegerMod", 3, 7], ["IntegerMod", 2, 7]],
+    ["Multiply", 3, ["IntegerMod", "a", 7]],
+    ["Power", ["IntegerMod", 3, 7], "k"],
+    ["Multiply", ["IntegerMod", 7, 12], ["IntegerMod", 5, 8]],
+  ]) {
+    expect(parse(latex(expr)), latex(expr)).toEqual(expr);
+  }
+  expect(parse(String.raw`7 \bmod 3`)).toEqual(["Mod", 7, 3]);
+});

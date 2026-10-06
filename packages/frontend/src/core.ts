@@ -14,6 +14,7 @@ export * from "./debug.ts";
 export * from "./densityplot.ts";
 export * from "./glyphs.ts";
 export * from "./graph.ts";
+export * from "./ipynb.ts";
 export * from "./heads.ts";
 export * from "./highlight.ts";
 export * from "./listplot3d.ts";

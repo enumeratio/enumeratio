@@ -26,6 +26,7 @@ signatures:
     overrides: enumeratio-analytic
 seeAlso:
   - PowerMod
+  - IntegerMod
 references:
   - system: wikipedia
     identity: Modulo
@@ -76,3 +77,4 @@ bindings:
 - Periodic: $a\bmod n=(a+kn)\bmod n$ for any integer $k$.
 - compute-engine returns NaN for a zero modulus rather than leaving the call unevaluated.
 - A third argument $d$ offsets the range to $[d, d+b)$, as Wolfram's Mod[a, b, d] does.
+- Sage's `Mod(a, m)` builds a residue class, which is [[IntegerMod]] here (`IntegerMod(a, m)` keeps its modulus); `Mod(a, m)` is the remainder, a plain number, as in Wolfram. Sage's `a % m` is this head.

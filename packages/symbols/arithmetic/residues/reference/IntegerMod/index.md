@@ -40,4 +40,5 @@ attributes:
 - Equality and `!=` compare in the common ring too, so `IntegerMod(2, 4) == IntegerMod(0, 2)` is `True`
 - Moduli with $\gcd = 1$ have no ring but the trivial one, which Sage rejects; the call stays as written. Dividing by a class that is not a unit in the common ring stays unevaluated too, with a `ResidueClass::ninv` message
 - A `ResidueClass` next to an `IntegerMod` never combines: pick one head, as the two behaviours differ, and the sum stays as written
-- Written as a call; `a \pmod{n}` reads as [[ResidueClass]]
+- [[Mod]] and `IntegerMod` differ: `Mod(17, 5)` is the remainder $2$, a plain number, while `IntegerMod(17, 5)` is the class $2 \bmod 5$ and keeps its modulus. Sage's `Mod(a, m)` builds a class, so it is `IntegerMod(a, m)` here, and compute-engine's `Mod` follows Wolfram's
+- Written and read as $(a\;\mathrm{mod}\;m)$, fenced whole so sums and products of classes stay unambiguous. `a \pmod{n}` reads as [[ResidueClass]] and `a \bmod n` as [[Mod]], so type this form or the call to get an `IntegerMod`

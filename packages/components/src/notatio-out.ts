@@ -317,6 +317,10 @@ export class NotatioOut extends LitElement {
     /** This answer computed ahead of time (`@enumeratio/frontend/prerender`): rendered as it is,
      *  with no kernel call. */
     prerendered: { attribute: false },
+    /** A remembered answer, typeset (a notebook's, from its last visit): shown until this
+     *  Out's own answer arrives, which then replaces it. */
+    provisional: { attribute: false },
+    _answered: { state: true },
     _markup: { state: true },
     _visual: { state: true },
     _traditional: { state: true },
@@ -356,6 +360,9 @@ export class NotatioOut extends LitElement {
   declare busy: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
   declare prerendered: Prerendered | undefined;
+  declare provisional: string | undefined;
+  // Whether this Out has an answer of its own, which the provisional one gives way to.
+  declare _answered: boolean;
   declare _markup: string;
   /**
    * The picture, when the result is a head that draws: markup for the head's component
@@ -405,6 +412,7 @@ export class NotatioOut extends LitElement {
     this.plot = false;
     this.labelMenu = false;
     this.busy = false;
+    this._answered = false;
     this._markup = "";
     this._visual = "";
     this._traditional = "";
@@ -468,6 +476,7 @@ export class NotatioOut extends LitElement {
       void this.#recompute();
     }
     if (changed.has("env") && changed.get("env") !== undefined) this.#visualize();
+
     // Escape stops a running Worker-evaluator call (`stop()`) -- only listened for
     // while actually busy, and only matters when there is something to abort.
     if (changed.has("busy")) {
@@ -732,6 +741,8 @@ export class NotatioOut extends LitElement {
       this.#name = undefined;
       this.#plot = undefined;
     }
+    // An Out that has no value yet (its cell still reading the input) answers nothing.
+    if (this.value !== "") this._answered = true;
     // Let containers (e.g. a reference cell) react to the assertion outcome.
     this.dispatchEvent(
       new CustomEvent("notatio-assert", {
@@ -751,6 +762,9 @@ export class NotatioOut extends LitElement {
         detail: {
           latex: this._latex,
           json: this._json,
+          inputform: this._input,
+          asciimath: this._ascii,
+          markup: this._markup,
           n: this.#historyN,
           name: this.#name,
           plot: this.#plot,
@@ -1158,6 +1172,12 @@ export class NotatioOut extends LitElement {
   }
 
   #content(): unknown {
+    // A remembered answer stands in until this one's own arrives.
+    // Typeset already (by this page's own typesetter, on an earlier visit), so it shows before
+    // anything loads.
+    if (this.provisional && !this._answered) {
+      return html`<span class="notatio-provisional">${unsafeHTML(this.provisional)}</span>`;
+    }
     // Nothing to show yet: say so, rather than an empty row.
     if (this.busy && !this._markup && !this._visual) {
       // Only a Worker evaluation can actually be interrupted (`stop()`) -- a local

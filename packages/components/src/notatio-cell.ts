@@ -193,6 +193,8 @@ export class NotatioCell extends LitElement {
     /** This cell answered ahead of time (`@enumeratio/frontend/prerender`): shown, without asking
      *  the kernel, until the input is edited. */
     prerendered: { attribute: false },
+    /** Property only: a remembered answer, typeset, shown in the Out until its own arrives. */
+    provisional: { attribute: false },
     /**
      * Property only: a driver (a worksheet's slider) sets this to override what the Out
      * evaluates, in `format`'s syntax, WITHOUT touching `value`/the editor field -- so a
@@ -229,6 +231,7 @@ export class NotatioCell extends LitElement {
   declare pending: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
   declare prerendered: Prerendered | undefined;
+  declare provisional: string | undefined;
   declare liveValue: string | undefined;
   /** The editor currently shown -- starts at `inForm`, changed live via the In menu. */
   declare _editForm: EditForm;
@@ -733,6 +736,7 @@ export class NotatioCell extends LitElement {
       ?plot=${this.plot}
       .resolveHead=${this.resolveHead}
       .prerendered=${this.dirty ? undefined : this.prerendered}
+      .provisional=${this.dirty ? undefined : this.provisional}
       @notatio-result=${this.#onResult}
     ></notatio-out>`;
   }

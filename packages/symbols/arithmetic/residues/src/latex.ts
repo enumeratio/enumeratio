@@ -1,5 +1,5 @@
 import type { Json, LatexRule } from "@enumeratio/engine";
-import { QUOTIENT_RING, RESIDUE_CLASS } from "./names.ts";
+import { INTEGER_MOD, QUOTIENT_RING, RESIDUE_CLASS } from "./names.ts";
 
 // Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
 // dictionary only at construction, so a host loads
@@ -8,6 +8,7 @@ import { QUOTIENT_RING, RESIDUE_CLASS } from "./names.ts";
 //   a \pmod{n}             ResidueClass(a, n); written back as compute-engine writes it,
 //                          \overline{a}_{n}
 //   a = b \pmod{n}         Congruent(a, b, n), as `a \equiv b \pmod{n}` already is
+//   IntegerMod(a, n)       (a \mathrm{mod} n), read back; `\pmod` is ResidueClass
 //   a \bmod n              Mod(a, n), untouched: the remainder, an integer
 //   \mathbb{Z}/m\mathbb{Z} QuotientRing(Integers, m) -- CE parses it; written here
 //
@@ -16,6 +17,8 @@ import { QUOTIENT_RING, RESIDUE_CLASS } from "./names.ts";
 // `\pmod` through the separate prefix entry, which this leaves alone.
 const PMOD_PRECEDENCE = 244;
 const RELATION_PRECEDENCE = 245;
+// Above Multiply (390), so compute-engine adds no fence to the one this writes; any higher and a parenthesised left operand stops reading as the left.
+const FENCED_PRECEDENCE = 400;
 
 /** The digits of an integer literal, `{num}` for a big one. */
 function integerLiteral(expr: Json | null): string | undefined {
@@ -50,6 +53,27 @@ export const RESIDUES_LATEX: readonly LatexRule[] = [
       return k !== undefined && n !== undefined && BigInt(n) >= 1n
         ? `\\overline{${k}}_{${n}}`
         : `${serializer.wrap(operand(expr, 1), RELATION_PRECEDENCE)}\\pmod{${serializer.serialize(operand(expr, 2))}}`;
+    },
+  },
+  {
+    name: INTEGER_MOD,
+    // `(3 mod 7)`, fenced whole so a sum, product or power of classes
+    // (`(3 mod 7) + (2 mod 7)`) never reads as one modulus over several terms. `\mathrm{mod}`
+    // keeps it apart from `\bmod` (Mod, the remainder) and `\pmod` (ResidueClass).
+    kind: "infix",
+    latexTrigger: ["\\mathrm", "<{>", "m", "o", "d", "<}>", "\\;"],
+    precedence: FENCED_PRECEDENCE,
+    parse: (parser, lhs) => {
+      const n = parser.parseGroup() ?? parser.parseArguments("enclosure")?.[0] ?? parser.parseToken();
+      return n === null ? null : ([INTEGER_MOD, lhs, n] as Json);
+    },
+    serialize: (serializer, expr) => {
+      // A multi-digit literal is grouped so the modulus reads back as one token.
+      const side = (i: number): string => {
+        const digits = integerLiteral(operand(expr, i));
+        return digits !== undefined && digits.length > 1 ? `{${digits}}` : serializer.wrapShort(operand(expr, i));
+      };
+      return String.raw`(${side(1)}\;\mathrm{mod}\;${side(2)})`;
     },
   },
   {

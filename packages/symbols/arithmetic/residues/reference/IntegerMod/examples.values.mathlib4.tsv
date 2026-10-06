@@ -1,0 +1,29 @@
+id	in
+integermod-10-7	
+adding-two-classes-mod-7	
+adding-a-plain-integer-to-a-class	
+inverse-of-3-mod-7	
+sum-of-classes-mod-4-and-mod-6	
+product-of-classes-mod-4-and-mod-6	
+difference-of-classes-mod-4-and-mod-6	
+quotient-of-classes-mod-6-and-mod-3	
+a-plain-integer-keeps-the-class-modulus	
+three-moduli-meet-in-their-gcd	
+equal-where-they-agree-in-the-common-ring	
+unequal-where-they-disagree-in-the-common-ring	
+a-product-of-classes-mod-7	
+a-plain-integer-is-absorbed	
+dividing-by-a-unit-mod-7	
+a-large-power-reduces-mod-13	
+a-large-power-reduces-mod-7	
+a-chain-reduces-step-by-step	
+a-product-of-three-classes-mod-9	
+a-product-of-classes-mod-12-and-mod-8	
+a-plain-integer-reduces-in-the-class-ring	
+equal-across-moduli-mod-6-and-mod-3	
+mod-is-the-remainder-integermod-is-the-class	((17 : ℤ) % 5)
+chineseremainder-integermod-2-3-and-3-5	
+coprime-moduli-have-no-common-ring	
+2-mod-4-over-1-mod-6-has-no-inverse	
+integermod-and-residueclass-do-not-mix	
+residueclass-declines-the-same-mixed-sum	
