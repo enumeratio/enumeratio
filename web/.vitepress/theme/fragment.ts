@@ -121,7 +121,7 @@ export function installFragment(router: Router): void {
   window.addEventListener("hashchange", () => sync(true));
   window.addEventListener("popstate", () => sync(true));
   // `router.go` to the same page with a new hash fires no hashchange; chain, don't replace.
-  const after = router.onAfterRouteChange ?? router.onAfterRouteChanged;
+  const after = router.onAfterRouteChange;
   router.onAfterRouteChange = async (href: string) => {
     await after?.(href);
     sync(true);

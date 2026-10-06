@@ -315,8 +315,6 @@ const includeWhole = () => ({
 });
 
 const config = defineConfig({
-  // The page map in one shared file, not inlined into every page's HTML.
-  metaChunk: true,
   vite: {
     resolve: { alias: srcAliases },
     // Module workers: a session kernel imports each library as its own chunk, which the
