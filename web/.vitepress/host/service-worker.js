@@ -59,7 +59,7 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-/** A hashed asset never changes: a cache answers (this build's, or the one before it), and the
+/** A hashed asset (or a vendor file, its version in the path) never changes: a cache answers (this build's, or the one before it), and the
  *  network fills what it lacks. */
 async function asset(request) {
   const cache = await caches.open(ASSETS);
@@ -89,7 +89,7 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-  if (url.pathname.startsWith("/assets/")) event.respondWith(asset(request));
+  if (url.pathname.startsWith("/assets/") || url.pathname.startsWith("/vendor/")) event.respondWith(asset(request));
   else if (request.mode === "navigate") event.respondWith(page(request));
 });
 
