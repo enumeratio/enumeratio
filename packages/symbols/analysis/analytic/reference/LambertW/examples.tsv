@@ -10,4 +10,4 @@ the-branch-point-1-e	Scope		[LambertW, [Negate, [Divide, 1, ExponentialE]]]	-1		
 ln-2-cdot-e-ln-2-frac-ln-2-2	Scope		[LambertW, [Negate, [Divide, [Ln, 2], 2]]]	[Negate, [Ln, 2]]				$-\ln 2 \cdot e^{-\ln 2} = -\tfrac{\ln 2}{2}$		
 a-branch-other-than-0-or-1-checked-against-n	Scope		[N, [LambertW, -0.14, -3]]	[Complex, -4.645279174278859, -13.812745325218817]	[Complex, -4.645279174278859, -13.812745325218817]	1e-9	Wolfram 15.0.0 ProductLog	A branch other than 0 or -1, checked against `N[ProductLog[-3, -0.14], 16]`		
 the-branch-k-1-written-in-compute-engine-s-z-k	Scope		[N, [LambertW, 1, 1]]	[Complex, -1.5339133197935744, 4.375185153061898]				The branch $k = 1$, written in compute-engine's $(z, k)$ order — Wolfram's `ProductLog[1, 1]`		
-the-real-branch-k-1-on-1-e-z-0	Scope		[N, [LambertW, -0.2, -1]]	{num: "-2.54264135777352642429"}				The real branch $k = -1$ on $-1/e < z < 0$		
+the-real-branch-k-1-on-1-e-z-0	Scope		[N, [LambertW, -0.2, -1]]	{num: "-2.54264135777352642429"}				The real branch $k = -1$ on $-1/e < z < 0$, written $(z, k)$ as here; Wolfram's `ProductLog[-1, -0.2]` and mpmath's `lambertw(-0.2, -1)` give the same value		

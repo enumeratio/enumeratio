@@ -7,7 +7,7 @@ import { availableParallelism } from "node:os";
 import { Worker } from "node:worker_threads";
 import { createPool } from "./pool.ts";
 
-/** MathJSON for `declareEvaluation`'s `Aborted` symbol (Wolfram's `$Aborted` — see declare.ts). */
+/** MathJSON for `declareEvaluation`'s `Aborted` symbol (Wolfram's `$Aborted`, written only at the Wolfram boundary — see declare.ts). */
 const ABORTED = "Aborted";
 
 /**
@@ -112,7 +112,7 @@ export interface EvaluatorPool {
   evaluate(json: unknown, options?: EvaluateIsolatedOptions): Promise<unknown>;
   /** Like `evaluate`, but keeps a real evaluation error (`outcome: "Error"`, with `reason`)
    * distinct from a timeout/memory abort (`outcome: "Aborted"`) instead of collapsing both
-   * to `$Aborted` — what `runCases` (./run-cases.ts) needs to report each case honestly. */
+   * to `Aborted` — what `runCases` (./run-cases.ts) needs to report each case honestly. */
   evaluateDetailed(json: unknown, options?: EvaluateIsolatedOptions): Promise<EvaluateDetail>;
   /** Terminates every idle worker and drops the wait queue. */
   close(): void;
@@ -262,10 +262,10 @@ function getDefaultPool(): EvaluatorPool {
 /**
  * Runs one evaluation of `json` under the given time/memory caps, on a lazily-created
  * default pool (see `createEvaluatorPool`) so repeat calls reuse workers rather than
- * spawning a fresh one each time. Resolves to `$Aborted` (as MathJSON) rather than
+ * spawning a fresh one each time. Resolves to `Aborted` (as MathJSON) rather than
  * rejecting when the worker times out, runs out of memory, or otherwise fails — an
  * isolated evaluation is run precisely because the input is not trusted to behave, so a
- * caller should not have to distinguish "the answer is $Aborted" from "the call itself
+ * caller should not have to distinguish "the answer is Aborted" from "the call itself
  * failed".
  */
 export function evaluateIsolated(json: unknown, options: EvaluateIsolatedOptions = {}): Promise<unknown> {

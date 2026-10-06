@@ -16,6 +16,7 @@ an-exact-argument-rounds-to-an-exact-rational	Scope		[Round, [Sqrt, 2], 4]	[Rati
 evaluates-at-an-exact-constant-round-pi-3	Scope		[Round, Pi]	3				Evaluates at an exact constant: $\mathrm{Round}(\pi) = 3$				
 100e-approx-271-83-rounds-to-272	Scope		[Round, [Multiply, 100, ExponentialE]]	272				$100e \approx 271.83$ rounds to 272	Round(100 * ExponentialE)	Round(Multiply(100, ExponentialE))		
 rounds-the-real-and-imaginary-parts-separately	Scope		[Round, [Complex, 5.37, -1.3]]	[Complex, 5, -1]				Rounds the real and imaginary parts separately				
+round-226-10	Scope		[Round, 226, 10]	226				The second argument counts decimal places, so ten places leaves 226 alone; Wolfram's `Round[226, 10]` rounds to the multiple of 10 and gives 230				Wolfram reads the second argument as a step, so Round[226, 10] is 230.
 rounding-a-price-to-the-nearest-cent-19-995	Applications		[Round, 19.995, 2]	20				Rounding a price to the nearest cent: 19.995 rounds up to 20				
 a-negative-second-argument-rounds-to-the-nearest	Properties		[Equal, [Round, 1234, -2], 1200]	True				A negative second argument rounds to the nearest power of ten instead -- here, the nearest hundred				Wolfram reads the second argument as a step to round to a multiple of, so $\mathrm{Round}[1234, -2] = 1234$.
 rounding-to-0-decimal-places-matches-the-1	Properties		[Equal, [Round, 3.14159, 0], [Round, 3.14159]]	True				Rounding to 0 decimal places matches the 1-argument form				Wolfram treats the step literally, so $\mathrm{Round}[3.14159, 0]$ is $\mathrm{Indeterminate}$.

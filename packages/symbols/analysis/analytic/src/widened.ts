@@ -5,7 +5,8 @@ import { bigIntegerAt, bigRationalAt, mayBeInteger, widenSignature, wrapOperator
 // and the native handler leaves unevaluated or rejects: Binomial, Beta and CatalanNumber at
 // half-integers, n!! at negative odd n, and the Bernoulli polynomial BernoulliB(n, x). Each
 // wrapper applies only to what the native handler does not answer, so no result
-// compute-engine already gives changes. Declared by `declareAnalytic`.
+// compute-engine already gives changes. Declared by `declareAnalytic`. The inverse trigonometric
+// and hyperbolic heads past their real domain are widened the same way, at the end of the file.
 
 type Ops = readonly BoxedExpression[];
 export type Rational = readonly [bigint, bigint];
@@ -237,33 +238,90 @@ export function declareWidened(ce: ComputeEngine): void {
     },
     1,
   );
+}
 
-  // Arcsin(x) past the real domain [−1, 1]: sign(x)·(π/2 − i·ln(|x| + √(x² − 1))), the
-  // branch compute-engine's own N(Arcsin(x)) already takes (checked against Wolfram's
-  // documented continuation). Exact at a rational |x| > 1; Arccos is not touched here, as
-  // no reference example calls for it.
-  wrapOperator(
-    ce,
-    ["Arcsin", 1],
-    (ops) => {
-      const q = bigRationalAt(ops[0]);
-      return q !== undefined && (q[0] > q[1] || q[0] < -q[1]);
-    },
-    () => (ops, options) => {
-      const [p, q] = bigRationalAt(ops[0])!;
-      const negative = p < 0n;
-      const absP = negative ? -p : p;
-      const magnitude = ce.function("Add", [
-        ce.number([absP, q]),
-        ce.function("Sqrt", [ce.number([absP * absP - q * q, q * q])]),
-      ]);
-      const principal = ce.function("Subtract", [
-        ce.function("Divide", ["Pi", 2]),
-        ce.function("Multiply", ["ImaginaryUnit", ce.function("Ln", [magnitude])]),
-      ]);
-      const expr = negative ? ce.function("Negate", [principal]) : principal;
-      return options.numericApproximation ? expr.N() : expr.evaluate();
-    },
-    1,
+// The inverse trigonometric and hyperbolic heads at a rational real argument outside their
+// real domain, reduced to the exact closed form of the principal value. Every head of the
+// family answers the same way, and the same number N() gives (checked against mpmath's
+// asin/acos/acosh/atanh/acoth/asec/acsc/asech and Wolfram's N[...]):
+//
+//   Arcsin  x, |x| > 1       sign(x) (π/2 − i·L(|x|))
+//   Arccos  x > 1            i·L(x);        x < −1:  π − i·L(|x|)
+//   Arcosh  x < −1           L(|x|) + iπ;   |x| < 1:  i·Arccos(x)
+//   Artanh  |x| > 1          sign(x) (½ ln((|x|+1)/(|x|−1)) − iπ/2)
+//   Arcoth  0 < |x| < 1      sign(x) (½ ln((1+|x|)/(1−|x|)) − iπ/2)
+//   Arcsec  0 < |x| < 1      Arccos(1/x)
+//   Arccsc  0 < |x| < 1      Arcsin(1/x)
+//   Arsech  x < 0            Arcosh(1/x)
+//
+// with L(t) = ln(t + √(t² − 1)) = arcosh t. Wolfram leaves these exact calls unevaluated and
+// gives the same value from N[...]. Arsinh, Arctan, Arccot and Arcsch have no real argument
+// outside their domain. A float or an N() already takes the same branch natively.
+
+export function declareInverseOutsideDomain(ce: ComputeEngine): void {
+  const rational = (ops: readonly BoxedExpression[]): Rational | undefined => bigRationalAt(ops[0]);
+  const fn = (name: string, ...args: unknown[]): BoxedExpression => ce.function(name, args as never);
+  const abs = ([p, q]: Rational): Rational => [p < 0n ? -p : p, q];
+  const num = ([p, q]: Rational): BoxedExpression => ce.number([p, q]);
+  const reciprocal = ([p, q]: Rational): BoxedExpression => num(p < 0n ? [-q, -p] : [q, p]);
+  const half = (e: BoxedExpression): BoxedExpression => fn("Divide", e, 2);
+  const imaginary = (e: BoxedExpression): BoxedExpression => fn("Multiply", "ImaginaryUnit", e);
+
+  /** L(t) for a rational t > 1. */
+  const arcoshOf = ([p, q]: Rational): BoxedExpression =>
+    fn("Ln", fn("Add", num([p, q]), fn("Sqrt", num([p * p - q * q, q * q]))));
+  /** ½ ln((a+b)/(a−b)) for the rational t = a/b > 1, the real part of Artanh(t). */
+  const artanhOf = ([p, q]: Rational): BoxedExpression => half(fn("Ln", num([p + q, p - q])));
+  const signed = (x: Rational, e: BoxedExpression): BoxedExpression => (x[0] < 0n ? fn("Negate", e) : e);
+  const finish = (e: BoxedExpression, numeric: boolean | undefined): BoxedExpression =>
+    numeric ? e.N() : e.evaluate();
+  const outside = (x: Rational): boolean => abs(x)[0] > x[1]; // |x| > 1
+  const inside = (x: Rational): boolean => x[0] !== 0n && abs(x)[0] < x[1]; // 0 < |x| < 1
+
+  const wrap = (head: string, applies: (x: Rational) => boolean, build: (x: Rational) => BoxedExpression): void =>
+    wrapOperator(
+      ce,
+      [head, 1],
+      (ops) => {
+        const x = rational(ops);
+        return x !== undefined && applies(x);
+      },
+      () => (ops, options) => finish(build(rational(ops)!), options.numericApproximation),
+      1,
+    );
+
+  const principalArcsin = (x: Rational): BoxedExpression =>
+    signed(x, fn("Subtract", fn("Divide", "Pi", 2), imaginary(arcoshOf(abs(x)))));
+
+  wrap("Arcsin", outside, principalArcsin);
+  wrap("Arccos", outside, (x) =>
+    x[0] > 0n ? imaginary(arcoshOf(x)) : fn("Subtract", "Pi", imaginary(arcoshOf(abs(x)))),
+  );
+  wrap(
+    "Arcosh",
+    (x) => x[0] < 0n && outside(x),
+    (x) => fn("Add", arcoshOf(abs(x)), fn("Multiply", "ImaginaryUnit", "Pi")),
+  );
+  wrap("Artanh", outside, (x) =>
+    signed(x, fn("Subtract", artanhOf(abs(x)), fn("Divide", fn("Multiply", "ImaginaryUnit", "Pi"), 2))),
+  );
+  wrap("Arcoth", inside, (x) => {
+    const [p, q] = abs(x);
+    return signed(
+      x,
+      fn("Subtract", half(fn("Ln", num([q + p, q - p]))), fn("Divide", fn("Multiply", "ImaginaryUnit", "Pi"), 2)),
+    );
+  });
+  wrap("Arcsec", inside, (x) => fn("Arccos", reciprocal(x)));
+  wrap("Arccsc", inside, (x) => fn("Arcsin", reciprocal(x)));
+  wrap(
+    "Arcosh",
+    (x) => abs(x)[0] < x[1],
+    (x) => imaginary(fn("Arccos", num(x))),
+  );
+  wrap(
+    "Arsech",
+    (x) => x[0] < 0n,
+    (x) => fn("Arcosh", reciprocal(x)),
   );
 }

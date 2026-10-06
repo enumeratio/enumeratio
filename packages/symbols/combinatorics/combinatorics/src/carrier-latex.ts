@@ -4,9 +4,12 @@
 //
 //   2\,3\,1                parses as the number 231
 //   (1\,2\,3)              parses as 123: LaTeX parentheses group, they aren't cycles
-//   \permutation(2, 3, 1)  parses as the permutation
+//   \permutation([2, 3, 1])  parses as the permutation
 //
 // So each constructor gets a trigger of its own, and a MathLive macro so an editor shows it.
+// A list-shaped constructor takes its list, as the constructor does (`Permutation([2, 3, 1])`),
+// so it is written with the list inside the parentheses, never as a variadic-looking call;
+// the variadic spelling `\permutation(2, 3, 1)` is still read.
 
 import type { Json, LatexReader, LatexRule, LatexWriter } from "@enumeratio/engine";
 import type { Carrier } from "@enumeratio/structures";
@@ -38,19 +41,28 @@ export function carrierLatex(carriers: readonly Carrier[]): LatexRule[] {
         const args =
           ops.length !== 1
             ? undefined
-            : head !== undefined && Array.isArray(op) && op[0] === head
-              ? (op.slice(1) as Json[])
-              : head === undefined
-                ? [op!]
-                : undefined;
+            : head === "List" && Array.isArray(op) && op[0] === head
+              ? [op]
+              : head === "Tuple" && Array.isArray(op) && op[0] === head
+                ? (op.slice(1) as Json[])
+                : head === undefined
+                  ? [op!]
+                  : undefined;
         // Not the shape this trigger reads back (`Permutation(x)`): written as any call is.
         if (args === undefined)
           return `\\operatorname{${carrier.name}}(${ops.map((x) => serializer.serialize(x)).join(", ")})`;
-        return `${trigger}(${args.map((x) => serializer.serialize(x)).join(", ")})`;
+        const write = (x: Json): string =>
+          head === "List" && Array.isArray(x) && x[0] === "List"
+            ? `[${(x.slice(1) as Json[]).map(write).join(", ")}]`
+            : serializer.serialize(x);
+        return `${trigger}(${args.map(write).join(", ")})`;
       },
       parse: (parser: LatexReader): Json | null => {
         const args = parser.parseArguments("enclosure");
         if (args === null) return null;
+        // The list itself, or (the variadic spelling) its elements.
+        if (head === "List" && args.length === 1 && Array.isArray(args[0]) && args[0][0] === head)
+          return [carrier.name, args[0]];
         if (head !== undefined) return [carrier.name, [head, ...args]];
         return args.length === 1 ? [carrier.name, args[0]!] : null;
       },

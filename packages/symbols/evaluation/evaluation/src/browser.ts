@@ -88,7 +88,7 @@ export interface EvaluateInWorkerOptions {
   readonly memoryBytes?: number;
   /** Module URL whose `configure(ce)` declares the libraries the host engine has. */
   readonly setup?: string;
-  /** Aborting also terminates the worker, resolving `$Aborted` — same as a timeout. */
+  /** Aborting also terminates the worker, resolving `Aborted` — same as a timeout. */
   readonly signal?: AbortSignal;
   /** How often to poll memory, in ms, when `memoryBytes` is set. Default 200. */
   readonly memoryPollMs?: number;
@@ -141,10 +141,10 @@ export async function probeMemoryBytes(): Promise<number | undefined> {
 
 /**
  * Runs one evaluation of `json` in a fresh dedicated `Worker`, under the given
- * time/memory caps. Resolves to `$Aborted` (as MathJSON) rather than rejecting when the
+ * time/memory caps. Resolves to `Aborted` (as MathJSON) rather than rejecting when the
  * worker times out, is memory-terminated, errors, or the caller's `signal` fires — same
  * contract as `./node`'s `evaluateIsolated`: a caller should not have to distinguish
- * "the answer is $Aborted" from "the call itself failed".
+ * "the answer is Aborted" from "the call itself failed".
  *
  * Routed through the shared default pool, unless the caller injects `createWorker` or
  * `measureMemory` (as the tests do): that asks for control of this one call's worker, so it

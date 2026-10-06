@@ -13,6 +13,8 @@ list-arccsc-neg-sqrt-2-arccsc-neg-2-over-3-times	List[ArcCsc[Minus[Sqrt[2]]], Ar
 arccsc-complexinfinity	ArcCsc[ComplexInfinity]	0		\csc ^{-1}(\text{ComplexInfinity})	0	
 arccsc-list-1-neg-1-0	ArcCsc[List[1, -1, 0]]	{Pi/2, -1/2*Pi, ComplexInfinity}		\csc ^{-1}(\{1,-1,0\})	\left\{\frac{\pi }{2},-\frac{\pi }{2},\text{ComplexInfinity}\right\}	
 matrixfunction-function-arccsc-1-1-list-list	MatrixFunction[Function[ArcCsc[Slot[1]]], List[List[Sqrt[2], Minus[Sqrt[2]]], List[0, Minus[Sqrt[2]]]]]	{{Pi/4, -1/4*Pi}, {0, -1/4*Pi}}		\text{MatrixFunction}\left[\csc ^{-1}(\text{$\#$1})\&,\left( \begin{array}{cc}  \sqrt{2} & -\sqrt{2} \\  0 & -\sqrt{2} \\ \end{array} \right)\right]	\left( \begin{array}{cc}  \frac{\pi }{4} & -\frac{\pi }{4} \\  0 & -\frac{\pi }{4} \\ \end{array} \right)	
+arccsc-1-over-2	ArcCsc[Rational[1, 2]]	ArcCsc[1/2]		\csc ^{-1}\left(\frac{1}{2}\right)	\csc ^{-1}\left(\frac{1}{2}\right)	
+arccsc-neg-1-over-2	ArcCsc[Rational[-1, 2]]	-ArcCsc[1/2]		\csc ^{-1}\left(-\frac{1}{2}\right)	-\csc ^{-1}\left(\frac{1}{2}\right)	
 undoes-csc-csc-arccsc-x-x	(Csc[ArcCsc[2]] == 2)	True		\csc \left(\csc ^{-1}(2)\right)=2	\text{True}	
 arccsc-neg-1	ArcCsc[-1]	-1/2*Pi		\csc ^{-1}(-1)	-\frac{\pi }{2}	
 arccsc-neg-sqrt-2-plus-sqrt-6	ArcCsc[Plus[Minus[Sqrt[2]], Sqrt[6]]]	-ArcCsc[Sqrt[2] - Sqrt[6]]		\csc ^{-1}\left(-\sqrt{2}+\sqrt{6}\right)	-\csc ^{-1}\left(\sqrt{2}-\sqrt{6}\right)	

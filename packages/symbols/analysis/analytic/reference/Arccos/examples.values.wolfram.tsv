@@ -20,6 +20,8 @@ arccos-infinity-is-a-directed-infinity-along-the	ArcCos[Infinity]	DirectedInfini
 arccos-infinity-is-the-opposite-directed	ArcCos[-Infinity]	DirectedInfinity[-I]		\cos ^{-1}(-\infty )	(-i) \infty	disagree
 n-arccos-1-over-3-50	N[ArcCos[Rational[1, 3]], 50]	1.23095941734077468213492917824798737571034000935509483905554833366399231447826`50.	1.2309594173407746821349291782479873757103400093551	N\left[\cos ^{-1}\left(\frac{1}{3}\right),50\right]	1.2309594173407746821349291782479873757103400093551	
 integrate-arccos-x-x-neg-1-1	Integrate[ArcCos[x], List[x, -1, 1]]	Pi		\int_{-1}^1 \cos ^{-1}(x) \, dx	\pi	
+outside-1-1-reduces-to-the-exact-closed-form	ArcCos[2]	ArcCos[2]		\cos ^{-1}(2)	\cos ^{-1}(2)	
+arccos-neg-2	ArcCos[-2]	ArcCos[-2]		\cos ^{-1}(-2)	\cos ^{-1}(-2)	
 cos-arccos-x-x-on-the-principal-branch	(Cos[ArcCos[Rational[1, 2]]] == Rational[1, 2])	True		\cos \left(\cos ^{-1}\left(\frac{1}{2}\right)\right)=\frac{1}{2}	\text{True}	
 reflection-arccos-x-pi-arccos-x	ArcCos[Minus[x]]	True		\text{Module}\left[\left\{d=\text{Quiet}\left[\text{TimeConstrained}\left[\text{FullSimplify}\left[\cos ^{-1}(-x)-\left(-\cos ^{-1}(x)+\pi \right)\right],10,\text{$\$$Aborted}\right]\right]\right\},\text{If}\left[d\text{===}0,\text{True},\text{Module}\left[\left\{s=\left\{\text{Chop}\left[N\left[\cos ^{-1}\left(-\frac{7}{3}\right)-\left(-\cos ^{-1}\left(\frac{7}{3}\right)+\pi \right)\right]\right],\text{Chop}\left[N\left[\cos ^{-1}\left(-\left(-\frac{11}{5}\right)\right)-\left(-\cos ^{-1}\left(-\frac{11}{5}\right)+\pi \right)\right]\right],\text{Chop}\left[N\left[\cos ^{-1}\left(-\frac{13}{4}\right)-\left(-\cos ^{-1}\left(\frac{13}{4}\right)+\pi \right)\right]\right]\right\}\right\},\text{If}[\text{AllTrue}[s,\text{NumericQ}],\text{AllTrue}[s,\text{$\#$1}=0\&],\text{Indeterminate}]\right]\right]\right]	\text{True}	
 arccos-sqrt-2-over-4-times-neg-1-plus-sqrt-3	ArcCos[Times[Divide[Sqrt[2], 4], Plus[-1, Sqrt[3]]]]	(5*Pi)/12		\cos ^{-1}\left(\frac{\sqrt{2}}{4} \left(-1+\sqrt{3}\right)\right)	\frac{5 \pi }{12}	
@@ -35,5 +37,4 @@ arccos-sqrt-2-over-2	ArcCos[Divide[Sqrt[2], 2]]	Pi/4		\cos ^{-1}\left(\frac{\sqr
 arccos-1-over-4-times-neg-1-minus-sqrt-5	ArcCos[Times[Rational[1, 4], Plus[-1, Minus[Sqrt[5]]]]]	ArcCos[(-1 - Sqrt[5])/4]		\cos ^{-1}\left(\frac{1}{4} \left(-1-\sqrt{5}\right)\right)	\cos ^{-1}\left(\frac{1}{4} \left(-1-\sqrt{5}\right)\right)	
 arccos-neg-sqrt-3-over-2	ArcCos[Minus[Divide[Sqrt[3], 2]]]	(5*Pi)/6		\cos ^{-1}\left(-\frac{\sqrt{3}}{2}\right)	\frac{5 \pi }{6}	
 arccos-1-over-2-times-sqrt-2-plus-sqrt-2	ArcCos[Times[Rational[1, 2], Sqrt[Plus[2, Sqrt[2]]]]]	ArcCos[Sqrt[2 + Sqrt[2]]/2]		\cos ^{-1}\left(\frac{1}{2} \sqrt{2+\sqrt{2}}\right)	\cos ^{-1}\left(\frac{\sqrt{2+\sqrt{2}}}{2}\right)	
-outside-1-1-this-stays-symbolic-same-as-arcsin-n	ArcCos[2]	ArcCos[2]		\cos ^{-1}(2)	\cos ^{-1}(2)	
 arccos-complexinfinity-is-complexinfinity	ArcCos[ComplexInfinity]	ComplexInfinity		\cos ^{-1}(\text{ComplexInfinity})	\text{ComplexInfinity}	disagree
