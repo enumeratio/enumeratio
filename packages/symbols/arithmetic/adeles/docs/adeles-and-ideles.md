@@ -55,7 +55,7 @@ glues back.
 
 ## Profinite rationals
 
-$\hat{\mathbb{Q}} = \hat{\mathbb{Z}} \otimes \mathbb{Q}$ allows rational values and
+$\hat{\mathbb{Q}} = \hat{\mathbb{Z}} ⊗ \mathbb{Q}$ allows rational values and
 rational moduli: $\tfrac12 \bmod \tfrac{97}{5}$ is a perfectly good element. It is
 integral when some $d$ clears it into $\hat{\mathbb{Z}}$, and `Numerator` and
 `Denominator` split it that way.
@@ -73,7 +73,7 @@ $F_n \bmod M$ is periodic in $n$, so it depends only on $n$ modulo the period. R
 other way round (Lenstra, [_Profinite Fibonacci numbers_](http://www.nieuwarchief.nl/serie5/pdf/naw5-2005-06-4-297.pdf)):
 knowing $n$ modulo $N$ pins $F_n$ down modulo every $M$ whose Pisano period divides $N$ —
 the largest is $\gcd(F_N, F_{N+1} - 1)$. So `Fibonacci` is a continuous function
-$\hat{\mathbb{Z}} \to \hat{\mathbb{Z}}$, and so is `LucasL`.
+$\hat{\mathbb{Z}} → \hat{\mathbb{Z}}$, and so is `LucasL`.
 
 <Story title="Fibonacci on ℤ̂">
 <template #description>The Pisano period of 11 is 10, so n ≡ 3 mod 10 fixes Fₙ ≡ 2 mod 11 and Lₙ ≡ 4 mod 11.</template>
@@ -84,7 +84,7 @@ $\hat{\mathbb{Z}} \to \hat{\mathbb{Z}}$, and so is `LucasL`.
 
 A function on $\hat{\mathbb{Z}}$ has a graph in $\hat{\mathbb{Z}}^2$, and Hertogh draws it
 by laying $\hat{\mathbb{Z}}$ along the unit interval by its factorial digits,
-$\varphi(\alpha) = \sum_i d_i/(i+1)!$ — residue classes mod $k!$ become consecutive
+$\varphi(α) = \sum_i d_i/(i+1)!$ — residue classes mod $k!$ become consecutive
 cells. `ProfinitePlot(f, x, k)` fills a cell when $f$ maps its column class into its row
 class. Lenstra's theorem that $F_n = n$ has exactly the solutions $n = 0, 1, 5$ and two
 more in $\hat{\mathbb{Z}}$ shows up where the graph crosses the diagonal.
@@ -99,7 +99,7 @@ more in $\hat{\mathbb{Z}}$ shows up where the graph crosses the diagonal.
 
 An [adèle](https://en.wikipedia.org/wiki/Adele_ring) of $\mathbb{Q}$ adds the one place
 the profinite part leaves out — the real numbers — so
-$\mathbb{A}_\mathbb{Q} = \mathbb{R} \times \hat{\mathbb{Q}}$. `Adele(r, z)` is the pair;
+$\mathbb{A}_\mathbb{Q} = \mathbb{R} × \hat{\mathbb{Q}}$. `Adele(r, z)` is the pair;
 a rational sits on the diagonal, `Adele(q)` being $q$ at every place, and arithmetic is
 componentwise.
 
@@ -137,8 +137,8 @@ only divisibility, and at 2 even an unknown unit is odd.
 
 ## Strong approximation
 
-Every $M \in \mathrm{GL}_n(\hat{\mathbb{Q}})$ factors as $M = B A$ with
-$B \in \mathrm{GL}_n(\hat{\mathbb{Z}})$ and $A \in \mathrm{GL}_n^+(\mathbb{Q})$ — the
+Every $M ∈ \mathrm{GL}_n(\hat{\mathbb{Q}})$ factors as $M = B A$ with
+$B ∈ \mathrm{GL}_n(\hat{\mathbb{Z}})$ and $A ∈ \mathrm{GL}_n^+(\mathbb{Q})$ — the
 matrix form of "$\hat{\mathbb{Q}}^* = \hat{\mathbb{Z}}^* \cdot \mathbb{Q}_{>0}$", and the
 step Hertogh's algorithms for Shimura reciprocity rest on. `ProfiniteDecomposition(m)`
 finds $A$ from the Hermite normal form of the lattice $M$'s rows span, and gives back

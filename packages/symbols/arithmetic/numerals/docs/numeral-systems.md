@@ -118,13 +118,13 @@ has exactly one representation
 
 $$N \;=\; b_1 q_0 + b_2 q_1 + \cdots + b_m q_{m-1},$$
 
-subject to $0 \le b_1 < a_1$, $0 \le b_k \le a_k$, and — the rule that does the real work —
+subject to $0 ≤ b_1 < a_1$, $0 ≤ b_k ≤ a_k$, and — the rule that does the real work —
 $b_{k-1} = 0$ whenever $b_k$ reaches its ceiling $a_k$.
 
 That last condition is what forbids a carry, and it is the general shape of "no two
 adjacent ones". Feed it the all-ones continued fraction, which is
 $\varphi = [1; 1, 1, 1, \ldots]$, and the $q_k$ are the Fibonacci numbers and the ceiling
-rule collapses to Zeckendorf's. So **Zeckendorf is the $\alpha = \varphi$ case** — and the
+rule collapses to Zeckendorf's. So **Zeckendorf is the $α = \varphi$ case** — and the
 package checks the two against each other rather than taking that on trust.
 
 <Story title="A continued fraction as a numeral system">

@@ -42,6 +42,6 @@ MoebiusFunction(BooleanLattice(3), [], [1, 2, 3])   // -1 — inclusion–exclus
 
 ## Next
 
-The guide's central fact is $\zeta * \mu = \delta$, checked as a matrix identity on
-every poset here — that identity is what forces $\mu$'s recursive definition and what
+The guide's central fact is $ζ * μ = δ$, checked as a matrix identity on
+every poset here — that identity is what forces $μ$'s recursive definition and what
 Möbius inversion rests on.

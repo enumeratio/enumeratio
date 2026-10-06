@@ -3,6 +3,7 @@
 
 import { type Box, type BoxNode, isNode, optionsOfBox, tokenClass } from "../box.ts";
 import { texSource } from "./markdown.ts";
+import { isUnicodeTeX } from "./unicode-tex.ts";
 
 const COMMANDS: Record<string, string> = {
   "−": "-",
@@ -136,6 +137,7 @@ export const setMathSymbols = (text: string): string => text.replace(new RegExp(
 const escapeText = escapeTeXText;
 
 function token(s: string): string {
+  if (isUnicodeTeX(s)) return s;
   const command = COMMANDS[s];
   if (command !== undefined) return command;
   // A pattern name (`_a`, `__rest`, `_1_2`): its underscores are literal.
@@ -181,7 +183,7 @@ function joined(parts: readonly string[]): string {
   let out = "";
   for (const part of parts) {
     if (part === "") continue;
-    if (/\\[A-Za-z]+$/.test(out) && /^[A-Za-z]/.test(part)) out += " ";
+    if (/\\[A-Za-z]+$/.test(out) && /^\p{L}/u.test(part)) out += " ";
     out += part;
   }
   return out;

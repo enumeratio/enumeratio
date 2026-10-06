@@ -6,8 +6,8 @@ const tex = (json: unknown, notation = {}): string => toLatex(makeBoxes(json as 
 
 test("compute-engine's heads have their traditional notation", () => {
   expect(tex(["Add", ["Fibonacci", "n"], 1])).toBe(tex(["Add", ["Subscript", "F", "n"], 1]));
-  expect(tex(["MoebiusMu", 6])).toBe("\\mu(6)");
-  expect(tex(["PolyGamma", 1, "z"])).toContain("\\psi^{(1)}");
+  expect(tex(["MoebiusMu", 6])).toBe("μ(6)");
+  expect(tex(["PolyGamma", 1, "z"])).toContain("ψ^{(1)}");
   expect(tex(["Stirling", 5, 2])).toContain("5");
 });
 

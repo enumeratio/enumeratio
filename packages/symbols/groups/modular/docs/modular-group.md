@@ -1,8 +1,8 @@
 # The Modular Group
 
 The [modular group](https://en.wikipedia.org/wiki/Modular_group) $\mathrm{PSL}(2,\mathbb{Z})$
-is the group of $2\times2$ integer matrices of determinant $1$, taken up to overall sign. It
-acts on the upper half-plane by Möbius transformations $z \mapsto \frac{az+b}{cz+d}$, and the
+is the group of $2×2$ integer matrices of determinant $1$, taken up to overall sign. It
+acts on the upper half-plane by Möbius transformations $z ↦ \frac{az+b}{cz+d}$, and the
 quotient is the **modular surface** — the object that continued fractions, binary quadratic
 forms, the Farey tree and the $j$-invariant are all secretly about.
 
@@ -25,7 +25,7 @@ S = \begin{pmatrix} 0 & -1 \\ 1 & 0\end{pmatrix},
 T = \begin{pmatrix} 1 & 1 \\ 0 & 1\end{pmatrix},
 $$
 
-with $S$ the inversion $z \mapsto -1/z$ and $T$ the translation $z \mapsto z+1$. In
+with $S$ the inversion $z ↦ -1/z$ and $T$ the translation $z ↦ z+1$. In
 $\mathrm{PSL}$, $S$ has order $2$ and $U = ST$ has order $3$; those two are the free factors.
 
 But there are three useful alphabets, and they name the same elements:
@@ -45,8 +45,8 @@ But there are three useful alphabets, and they name the same elements:
 </Story>
 
 Why the peel never needs a search is worth a sentence: $R^{-1}M$ subtracts row 2 from row 1 and
-$L^{-1}M$ subtracts row 1 from row 2, so $R$ comes off when $a \ge c$ and $b \ge d$, and $L$ when
-$c \ge a$ and $d \ge b$. Both conditions at once would force $a=c$ and $b=d$, hence determinant
+$L^{-1}M$ subtracts row 1 from row 2, so $R$ comes off when $a ≥ c$ and $b ≥ d$, and $L$ when
+$c ≥ a$ and $d ≥ b$. Both conditions at once would force $a=c$ and $b=d$, hence determinant
 $0$ — impossible. There is never a choice to make.
 
 The trace sorts elements into three kinds, and the trichotomy is the whole geometry: elliptic
@@ -100,7 +100,7 @@ And a hyperbolic conjugacy class is a closed geodesic on the modular surface. So
 
 That is a closed form, $\frac{1}{n}\sum_{d \mid n} \varphi(d)\,2^{n/d} - 2$, and the _primitive_
 geodesics — those not a repeat of a shorter one — are counted by the aperiodic necklaces, the
-Lyndon words: $\frac{1}{n}\sum_{d \mid n} \mu(d)\,2^{n/d}$.
+Lyndon words: $\frac{1}{n}\sum_{d \mid n} μ(d)\,2^{n/d}$.
 
 <Story title="Every geodesic of a given length">
 <template #description>Named by the least rotation, which is the canonical name of a necklace.</template>
@@ -111,7 +111,7 @@ Lyndon words: $\frac{1}{n}\sum_{d \mid n} \mu(d)\,2^{n/d}$.
 </Story>
 
 The word length is the geodesic's _symbolic_ period — how many times it crosses the fundamental
-domain. Its _geometric_ length is $\ell = 2\,\mathrm{arccosh}(|\mathrm{tr}|/2)$, so the trace is
+domain. Its _geometric_ length is $ℓ = 2\,\mathrm{arccosh}(|\mathrm{tr}|/2)$, so the trace is
 the real weight, and the two orderings do not agree: $LLLR$ and $LRLR$ have the same word length
 but traces $5$ and $7$. The shortest closed geodesic on the modular surface is $LR$, with trace
 $3$; its fixed point is the golden ratio.
@@ -123,13 +123,13 @@ that they are the same ones.
 
 A [binary quadratic form](https://en.wikipedia.org/wiki/Binary_quadratic_form) is
 $ax^2 + bxy + cy^2$, carried by its triple $(a,b,c)$, with discriminant $D = b^2 - 4ac$. The
-modular group acts on forms by substituting $(x,y) \mapsto (px+qy,\; rx+sy)$, the
+modular group acts on forms by substituting $(x,y) ↦ (px+qy,\; rx+sy)$, the
 discriminant is invariant, and the orbits are the **classes** — the objects class numbers
 count.
 
 When $D > 0$ and is not a perfect square the form is **indefinite**, and the thing that
 makes it belong here happens: a class does not contain one distinguished reduced form but a
-whole **cycle** of them. Step round that cycle with $\rho$ and you are running the continued
+whole **cycle** of them. Step round that cycle with $ρ$ and you are running the continued
 fraction of the form's root; it closes because that expansion is periodic. So
 
 > a class of indefinite forms $=$ a cycle of reduced forms $=$ a periodic continued fraction
@@ -160,8 +160,8 @@ has an $LR$ word like any other.
 <notatio-cell value="ModularWord(FormAutomorph(QuadraticForm(1, 1, -1)))" />
 </Story>
 
-That the $\rho$-cycles really are the equivalence classes is the load-bearing claim, and it
-is checked against an oracle that never mentions $\rho$: given two forms, a transforming
+That the $ρ$-cycles really are the equivalence classes is the load-bearing claim, and it
+is checked against an oracle that never mentions $ρ$: given two forms, a transforming
 matrix must have a first column $(p,r)$ with $f(p,r) = a'$, and along the resulting family
 the middle coefficient moves in steps of exactly $2a'$ — so the matrix is **solved for**
 rather than searched, and the check is exact.
@@ -172,14 +172,14 @@ Now the geometry. The **modular flow** is the geodesic flow on the unit tangent 
 modular surface, and its closed orbits are exactly the hyperbolic conjugacy classes above. The
 striking fact is what that unit tangent bundle _is_:
 
-$$\mathrm{SL}(2,\mathbb{Z}) \backslash \mathrm{SL}(2,\mathbb{R}) \;\cong\; S^3 \setminus \text{trefoil}.$$
+$$\mathrm{SL}(2,\mathbb{Z}) \backslash \mathrm{SL}(2,\mathbb{R}) \;≅\; S^3 ∖ \text{trefoil}.$$
 
 The space the flow lives in is the complement of a trefoil knot in the $3$-sphere. So every
 closed orbit is a closed curve in that complement — a **modular knot**. Étienne Ghys proved that
 these are precisely the **Lorenz knots**, the periodic orbits of the Lorenz attractor, and that
 their linking number with the missing trefoil has a completely elementary description:
 
-$$\mathrm{lk}(k_\gamma, \text{trefoil}) \;=\; \Psi(\gamma) \;=\; \#R - \#L .$$
+$$\mathrm{lk}(k_γ, \text{trefoil}) \;=\; Ψ(γ) \;=\; \#R - \#L .$$
 
 Count the letters. That is the linking number.
 
@@ -197,18 +197,18 @@ Counting letters is one description of that linking number. The other comes from
 and looks nothing like it. **Rademacher's function** is
 
 $$
-\Phi\begin{pmatrix} a & b \\ c & d\end{pmatrix} = \frac{a+d}{c} - 12\,\mathrm{sign}(c)\,s(d,|c|),
-\qquad c \ne 0,
+Φ\begin{pmatrix} a & b \\ c & d\end{pmatrix} = \frac{a+d}{c} - 12\,\mathrm{sign}(c)\,s(d,|c|),
+\qquad c ≠ 0,
 $$
 
 where $s(h,k) = \sum_{j=1}^{k-1} \left(\!\left(\tfrac{j}{k}\right)\!\right)\left(\!\left(\tfrac{hj}{k}\right)\!\right)$
 is a [Dedekind sum](https://en.wikipedia.org/wiki/Dedekind_sum) — the same sum that appears in the
 transformation law of the Dedekind eta function and in the exact formula for the partition
-numbers. The **Rademacher symbol** corrects $\Phi$ into a class function:
+numbers. The **Rademacher symbol** corrects $Φ$ into a class function:
 
-$$\Psi(M) = \Phi(M) - 3\,\mathrm{sign}\big(c(a+d)\big).$$
+$$Ψ(M) = Φ(M) - 3\,\mathrm{sign}\big(c(a+d)\big).$$
 
-Nothing in that formula mentions words. That $\Psi$ equals $\#R - \#L$ on every hyperbolic
+Nothing in that formula mentions words. That $Ψ$ equals $\#R - \#L$ on every hyperbolic
 element is the theorem, and it is what the package's tests check — one side by brute-force
 Dedekind sums over the matrix, the other by counting letters in a string.
 
@@ -230,14 +230,14 @@ which is an independent enough statement to catch any slip in the sawtooth.
 ## Things worth knowing
 
 - **The sign in $\mathrm{PSL}$ is real.** Rebuilding a matrix from its $S/T$ word can hand back
-  $-M$. That is not a bug; it is the $\pm I$ the group quotients out, and every comparison here
+  $-M$. That is not a bug; it is the $± I$ the group quotients out, and every comparison here
   is up to that sign.
 - **A word has to turn both ways.** All-$L$ and all-$R$ words are parabolic — they fix a cusp
   rather than a geodesic — which is why the necklace count is always two short of the full one.
 - **Word length is not geodesic length.** The symbolic period counts crossings of the fundamental
   domain; the trace measures the actual length. Sorting geodesics by one does not sort them by
   the other.
-- **$\Phi$ is a quasimorphism, not a homomorphism.** It is only _almost_ additive, and it is only
+- **$Φ$ is a quasimorphism, not a homomorphism.** It is only _almost_ additive, and it is only
   after the $\mathrm{sign}$ correction that it becomes an invariant of the closed orbit. Rotating
   a positive word cannot show the difference — the correction is constant on the positive cone —
   but conjugating by $S$ does.

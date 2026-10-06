@@ -4,10 +4,10 @@
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
 import { compileNotation } from "@enumeratio/boxes";
-import { displayDictionary } from "@enumeratio/frontend/display";
+import { displayDictionary, displayLatexSyntax } from "@enumeratio/frontend/display";
 import type { NotationData } from "@enumeratio/manifest";
 import { recordsRoot, referenceData } from "@enumeratio/reference/node";
 import { expect, test } from "vite-plus/test";
@@ -95,7 +95,7 @@ test("a package claims a trigger the host's dictionary has only where it means t
 // declared (`f(x)` is a call only when `f` is a function).
 const engine = (extra: readonly Entry[]): ComputeEngine => {
   const ce = new ComputeEngine({
-    latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, extra) as never[] }),
+    latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, extra),
   });
   for (const declare of DECLARATIONS) declare(ce);
   return ce;

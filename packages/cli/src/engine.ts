@@ -4,12 +4,12 @@
 // No Node builtins, no file I/O, no rendering — the graphic side of :plot/:glyph
 // is returned as structured data and drawn by whichever adapter runs the core.
 
-import { type BoxedExpression, ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { type BoxedExpression, ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, registerNotation } from "@enumeratio/boxes";
 import { CARRIERS, declareCombinatorics, declareMaps } from "@enumeratio/combinatorics";
 import { declareCarrierElement, declareCarrierPlurals } from "@enumeratio/structures";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
-import { displayDictionary } from "@enumeratio/frontend/display";
+import { displayLatexSyntax } from "@enumeratio/frontend/display";
 import { NOTATION_ENTRIES } from "./notation.ts";
 import {
   declareDistributions,
@@ -214,7 +214,7 @@ export class Session {
 
   constructor(defaults: SessionDefaults = {}) {
     this.ce = new ComputeEngine({
-      latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, NOTATION.latex) as never[] }),
+      latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, NOTATION.latex),
     });
     registerNotation(this.ce, NOTATION.traditional);
     // Carriers, the families typed by them, the plural type-spaces and Element, and the maps

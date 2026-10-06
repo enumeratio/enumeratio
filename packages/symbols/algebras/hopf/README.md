@@ -3,7 +3,7 @@
 Combinatorial Hopf algebra extensions for compute-engine: NSym and QSym on compositions,
 with product, coproduct and antipode. Every other algebra in this section has a product
 and nothing else; a Hopf algebra also has a coproduct, and the two must satisfy
-$\Delta(x \cdot y) = \Delta(x) \cdot \Delta(y)$ — the identity the whole package is tested
+$Δ(x \cdot y) = Δ(x) \cdot Δ(y)$ — the identity the whole package is tested
 against. See [the guide](docs/hopf-algebras.md).
 
 ## Declaring
@@ -21,10 +21,10 @@ declareHopf(ce);
 Both are indexed by compositions (ordered lists of positive parts) and dual to each
 other:
 
-|          | basis      | product       | coproduct                                  |
-| -------- | ---------- | ------------- | ------------------------------------------ |
-| **NSym** | $H_\alpha$ | concatenation | deconcatenation, extended multiplicatively |
-| **QSym** | $M_\alpha$ | quasi-shuffle | deconcatenation                            |
+|          | basis | product       | coproduct                                  |
+| -------- | ----- | ------------- | ------------------------------------------ |
+| **NSym** | $H_α$ | concatenation | deconcatenation, extended multiplicatively |
+| **QSym** | $M_α$ | quasi-shuffle | deconcatenation                            |
 
 ## Heads
 
