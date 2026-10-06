@@ -1,0 +1,25 @@
+{
+  "name": "@enumeratio/config",
+  "version": "0.0.0",
+  "description": "The formatter and linter settings every enumeratio package checks against, so `vp check` agrees inside the monorepo and in a repository of its own.",
+  "license": "WTFPL",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "enumeratio": {
+    "layer": "tooling",
+    "extends": []
+  }
+}

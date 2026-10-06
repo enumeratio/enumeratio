@@ -1,4 +1,5 @@
-// The repo's formatter settings, in one place: the root vite.config.ts reads them for `vp fmt`,
-// and the record writer (node.ts) hands them to oxfmt, so the two can't disagree.
+// The record writer's formatter settings (node.ts, record.ts hand them to oxfmt). They equal
+// `fmt` in @enumeratio/config (tests/format.test.ts), which `vp fmt` uses; entry is infra and
+// can't depend on that tooling package, so the width is held in both.
 
 export const FORMAT = { printWidth: 120 } as const;

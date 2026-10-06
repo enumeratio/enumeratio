@@ -1,8 +1,7 @@
 import { defineConfig } from "vite-plus";
+import { fmt, lint } from "@enumeratio/config";
 
 export default defineConfig({
-  lint: {
-    options: { typeAware: true, typeCheck: true },
-  },
-  fmt: {},
+  lint,
+  fmt,
 });

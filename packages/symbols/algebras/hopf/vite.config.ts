@@ -1,4 +1,5 @@
 import { defineConfig } from "vite-plus";
+import { fmt, lint } from "@enumeratio/config";
 
 export default defineConfig({
   pack: {
@@ -6,11 +7,8 @@ export default defineConfig({
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
-  lint: {
-    options: { typeAware: true, typeCheck: true },
-  },
-  // The root config's width, so `vp check` agrees with it from here and from a repository of its own.
-  fmt: { printWidth: 120 },
+  lint,
+  fmt,
   // Exhaustive tests: the basis suites run every composition of n up to 7, and both
   // sides of the refinement lattice for each.
   test: { testTimeout: 60_000 },

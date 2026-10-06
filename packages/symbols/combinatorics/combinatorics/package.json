@@ -51,6 +51,7 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.148.0",
     "@enumeratio/boxes": "workspace:*",
+    "@enumeratio/config": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/entry": "workspace:*",
     "@enumeratio/groupalgebra": "workspace:*",

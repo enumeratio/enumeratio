@@ -12,6 +12,7 @@
     "cpu-prof": "node src/cpu-prof.ts"
   },
   "devDependencies": {
+    "@enumeratio/config": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "^7.0.2",
     "vite": "catalog:",

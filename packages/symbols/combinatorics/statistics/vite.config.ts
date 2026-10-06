@@ -1,14 +1,13 @@
 import { defineConfig } from "vite-plus";
+import { fmt, lint } from "@enumeratio/config";
 
 export default defineConfig({
   pack: {
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
-  lint: {
-    options: { typeAware: true, typeCheck: true },
-  },
-  fmt: {},
+  lint,
+  fmt,
   // Exhaustive tests: every statistic is checked over every permutation of 1..6,
   // partition of 0..8, set partition of 1..6 and Dyck path of semilength 0..5. The
   // set-partition crossing/nesting sweeps take ~70s each here and over two minutes on a
