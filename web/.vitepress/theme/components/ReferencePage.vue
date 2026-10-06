@@ -99,6 +99,9 @@ const signatures = computed(() => {
 // notatio-out takes the MathJSON expression as a JSON string.
 const toJson = (expr: unknown): string => JSON.stringify(expr);
 
+// `About(Head)` asked on opening, so a page loads no kernel for it until a reader wants it.
+const aboutOpen = ref(false);
+
 // Record prose is markdown: `$…$` typeset from its TeX by KaTeX, `[[Head]]` a link to its page.
 // A page doesn't link to itself.
 const link = (name: string): string | undefined =>
@@ -519,6 +522,18 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
       </div>
     </details>
 
+    <details id="about" class="ref-about" @toggle="aboutOpen = ($event.target as HTMLDetailsElement).open">
+      <summary>About</summary>
+      <ClientOnly>
+        <notatio-cell
+          v-if="aboutOpen"
+          format="mathjson"
+          :value="toJson(['About', name])"
+          :resolveHead.prop="resolveHead"
+        ></notatio-cell>
+      </ClientOnly>
+    </details>
+
     <section v-if="entry.primitive || entry.bindings?.length" id="implementation">
       <h2>Implementation</h2>
       <p v-if="entry.primitive" class="ref-primitive">
@@ -585,6 +600,15 @@ const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex
 }
 .ref-open:hover {
   color: var(--vp-c-brand-1);
+}
+.ref-about {
+  margin: 1rem 0;
+}
+.ref-about summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
 }
 .ref-live h2 {
   margin: 0 0 0.5rem;
