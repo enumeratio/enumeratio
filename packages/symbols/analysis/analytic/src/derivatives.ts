@@ -2,6 +2,7 @@ import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/c
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 import { wrapOperator } from "@enumeratio/engine";
+import { ORDER_RESOLVERS } from "./derivative-orders.ts";
 
 // Symbolic derivatives for the analytic heads.
 //
@@ -43,7 +44,8 @@ const shiftInS = (head: string, leading: readonly string[]): Partial => ({
 /**
  * The derivative table, keyed by head then by ∂-order vector. A head absent here (or an order
  * vector it has no entry for — ∂ₛζ(s, a), say) keeps compute-engine's inert `Derivative` form,
- * which is the honest answer when no closed form exists.
+ * which is the honest answer when no closed form exists. Heads whose every-order partial is a
+ * rule (derivative-orders.ts) are consulted after it.
  */
 const DERIVATIVES: Readonly<Record<string, Readonly<Record<Orders, Partial>>>> = {
   HurwitzZeta: { "0,1": shiftInS("HurwitzZeta", []) },
@@ -123,13 +125,9 @@ function operatorOf(ce: ComputeEngine, name: string) {
 export function declareDerivatives(ce: ComputeEngine): void {
   const partialOf = (ops: readonly BoxedExpression[]): Partial | undefined => {
     const f = ops[0];
-    const table = f !== undefined && isSymbol(f) ? DERIVATIVES[f.symbol] : undefined;
-    return table?.[
-      ops
-        .slice(1)
-        .map((order) => order.re)
-        .join()
-    ];
+    if (f === undefined || !isSymbol(f)) return undefined;
+    const orders = ops.slice(1).map((order) => order.re);
+    return DERIVATIVES[f.symbol]?.[orders.join()] ?? ORDER_RESOLVERS[f.symbol]?.(orders);
   };
   wrapOperator(
     ce,

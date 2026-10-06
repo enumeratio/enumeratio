@@ -105,3 +105,20 @@ export function pfqRegularizedBig(
   }
   return undefined;
 }
+
+/**
+ * pFq(upper; b; z) itself: the regularized sum times Γ(b), so a pole of Γ (b a non-positive
+ * integer, where pFq is undefined) declines.
+ */
+export function pfqBig(
+  upper: readonly BigDecimal[],
+  b: BigDecimal,
+  z: BigDecimal,
+  digits: number,
+): BigDecimal | undefined {
+  if (b.isInteger() && b.lte(0)) return undefined;
+  const working = digits + GUARD;
+  const regularized = pfqRegularizedBig(upper, b, z, working);
+  if (regularized === undefined) return undefined;
+  return atDigits(working, () => regularized.div(inverseGamma(b, working)).toPrecision(digits));
+}

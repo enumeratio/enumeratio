@@ -84,6 +84,9 @@ export function declareExpIntegralE(ce: ComputeEngine): void {
         return wantsNumber(ops, options) ? expr.N() : expr.evaluate();
       }
 
+      // E_n(z) ~ Γ(1−n)·z^(n−1) (a logarithm at n = 1) diverges at z = 0 for Re(n) ≤ 1.
+      if (z.re === 0 && z.im === 0 && n.im === 0 && n.re <= 1) return ce.symbol("ComplexInfinity");
+
       if (!wantsNumber(ops, options) || !isFiniteNum(n) || !isFiniteNum(z)) return undefined;
       if (z.re === 0 && z.im === 0) return undefined; // pole/undefined for other n — decline
 

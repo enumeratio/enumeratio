@@ -335,6 +335,9 @@ const OVERRIDDEN = [
   "Root",
   "Round",
   "Sec",
+  // Not itself overridden -- the Series of ExpIntegralE(1, x) at 0 stays held (E1(0) is infinite
+  // here), where a bare engine builds a Taylor expansion around an unevaluated E1(0).
+  "Series",
   "SetMinus",
   "Sign",
   "Simplify",
