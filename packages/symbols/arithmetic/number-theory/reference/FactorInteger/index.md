@@ -9,7 +9,12 @@ signatures:
   - call: FactorInteger(n, Over -> GaussianIntegers)
     description: 'the factorisation in $\mathbb{Z}[i]$: a unit first when it is not 1, then first-quadrant primes; a complex $n$ is always factored there'
     library: enumeratio-number-theory
-    type: (number, any*) -> list
+    type: (number | quadratic_integer, any*) -> list
+    overrides: compute-engine
+  - call: FactorInteger(n, Over -> QuadraticIntegers(d))
+    description: the prime factorisation of $n$ in the ring of integers of $\mathbb{Q}(\sqrt d)$, where that ring factors uniquely
+    library: enumeratio-number-theory
+    type: (number | quadratic_integer, any*) -> list
     overrides: compute-engine
 seeAlso:
   - NthPrime

@@ -20,6 +20,10 @@ made in prose, it links back.
 - [**Fractals**](/explore/fractals/) — the Mandelbrot and Julia sets of $z \mapsto z^2 + c$,
   coloured by the $n$-th iterate itself rather than an escape count, with $n$ and $c$ on
   dials.
+- [**Quadratic primes**](/explore/quadratic-primes/) — the primes of every ring of
+  quadratic integers on a lattice, field after field.
+- [**Complex bases**](/explore/complex-bases/) — numbers written in a Gaussian or Eisenstein
+  base, every numeral a tile: the twindragon, the Gosper island, and systems of your own.
 
 ## How these are built
 

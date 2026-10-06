@@ -262,6 +262,8 @@ function exploreSidebar(): SidebarItem[] {
         { text: "The Lerch transcendent", link: "/explore/lerchphi/" },
         { text: "The polylog and the polygamma", link: "/explore/polylog/" },
         { text: "Fractals", link: "/explore/fractals/" },
+        { text: "Quadratic primes", link: "/explore/quadratic-primes/" },
+        { text: "Complex bases", link: "/explore/complex-bases/" },
       ],
     },
   ];

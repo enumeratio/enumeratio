@@ -60,11 +60,11 @@ test("log scale gaps out non-positive samples", () => {
   expect(count(s, "polyline")).toBe(1); // one segment, the positive part
 });
 
-test("several series overlay, each in its own colour", () => {
+test("several series overlay, each in its own color", () => {
   const s = linePlotSvg([{ points: sample(Math.sin, -3, 3) }, { points: sample(Math.cos, -3, 3) }]);
   expect(count(s, "polyline")).toBe(2);
-  expect(s).toContain("--notatio-accent"); // series 1
-  expect(s).toContain("--notatio-series-2"); // series 2
+  expect(s).toContain('stroke="#4e79a7"'); // series 1: tableau10's first color
+  expect(s).toContain('stroke="#f28e2c"'); // series 2: its second
 });
 
 test("points style draws a dot per finite sample instead of a line", () => {
@@ -206,18 +206,20 @@ test("adaptiveParam keeps t-order and refines a curved arc more than a straight 
   expect([...xs].toSorted((a, b) => a - b)).not.toEqual(xs);
 });
 
-test("colorBy draws per-segment coloured strokes along a ramp", () => {
+test("colorBy draws per-segment colored strokes along a ramp", () => {
   const pts = sample(Math.sin, -3, 3, 20);
   const plain = linePlotSvg(pts);
   const ramped = linePlotSvg(pts, { colorBy: "y" });
   // Plain: one polyline. Ramped: one short polyline per adjacent pair.
   expect(count(plain, "polyline")).toBe(1);
   expect(count(ramped, "polyline")).toBe(19); // n-1 segments
-  expect(ramped).toContain("color-mix"); // ramp colours
+  // Segments differ in color along the gradient; the plain curve is one series color.
+  expect(new Set(ramped.match(/<polyline[^>]*stroke="(#[0-9a-f]{6})"/g)).size).toBeGreaterThan(5);
 });
 
 test("colorBy tints points mode too", () => {
   const s = linePlotSvg([{ points: sample((x) => x, 0, 4, 5), style: "points" }], { colorBy: "x" });
   expect(count(s, "circle")).toBe(5);
-  expect(s).toContain("color-mix");
+  expect(s).toContain('fill="#440154"'); // the gradient's first stop, at the lowest x
+  expect(s).toContain('fill="#fde725"'); // and its last, at the highest
 });

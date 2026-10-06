@@ -107,14 +107,14 @@ test("the domain attribute is four ordered numbers", () => {
 test("the SVG paints one hue-filled face per cell", () => {
   const s = sampleComplexSurface(fn("z"), { samples: 4 });
   const svg = complexSurfaceSvg(s, { axes: false });
-  const faces = svg.match(/<polygon[^>]*fill="hsl\(/g) ?? [];
+  const faces = svg.match(/<polygon[^>]*fill="#/g) ?? [];
   expect(faces.length).toBe(3 * 3);
   // z itself: arg on the positive real axis is hue 0 -- red -- and the face just
   // above the axis on the right leans that way.
   expect(svg).toContain('viewBox="0 0 360 260"');
 });
 
-test("a GPU value buffer colours the same way as the CPU sampler", () => {
+test("a GPU value buffer colors the same way as the CPU sampler", () => {
   const f = fn("z^2");
   const { xs, ys } = complexGrid({ domain: [-1, 1, -1, 1], samples: 3 });
   const values = new Float32Array(xs.length * ys.length * 2);

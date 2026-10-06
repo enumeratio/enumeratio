@@ -39,7 +39,8 @@
     "@enumeratio/formats": "workspace:*",
     "@enumeratio/manifest": "workspace:*",
     "@enumeratio/polytope": "workspace:*",
-    "@enumeratio/structures": "workspace:*"
+    "@enumeratio/structures": "workspace:*",
+    "d3-scale-chromatic": "catalog:"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.148.0",
@@ -50,6 +51,7 @@
     "@enumeratio/oracle": "workspace:*",
     "@enumeratio/reference": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
+    "@types/d3-scale-chromatic": "catalog:",
     "@types/node": "catalog:",
     "@webgpu/types": "^0.1.60",
     "typescript": "^7.0.2",

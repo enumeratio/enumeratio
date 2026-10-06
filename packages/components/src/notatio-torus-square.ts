@@ -12,6 +12,10 @@ import { type Clock, pageClock, torusSquareSvg } from "@enumeratio/frontend/core
  * knot beside it show the SAME parameter at the same moment -- one pause anywhere on the page
  * stops both. Set `at` to pin it to a phase instead, which is what a figure in a printed
  * argument wants.
+ *
+ * The two circle factors are told apart by color: the first two colors of the `discrete`
+ * scheme (default `tableau10`), the same two on the square's axes, the dials and the edge
+ * arrows.
  */
 export class NotatioTorusSquare extends LitElement {
   static properties = {
@@ -24,6 +28,8 @@ export class NotatioTorusSquare extends LitElement {
     clock: { type: String },
     dials: { type: String },
     label: { type: String },
+    /** The discrete scheme whose first two colors mark the two circle factors: `tableau10`, `set1`, `glasbey`, …. */
+    discrete: { type: String },
     _phase: { state: true },
   };
 
@@ -33,6 +39,7 @@ export class NotatioTorusSquare extends LitElement {
   declare clock: string;
   declare dials: string;
   declare label: string;
+  declare discrete: string;
   declare _phase: number;
 
   #clock: Clock = pageClock();
@@ -46,6 +53,7 @@ export class NotatioTorusSquare extends LitElement {
     this.clock = "true";
     this.dials = "true";
     this.label = "";
+    this.discrete = "tableau10";
     this._phase = 0;
     ensureStyles();
   }
@@ -79,6 +87,7 @@ export class NotatioTorusSquare extends LitElement {
       phase: this.#shownPhase,
       dials: this.dials !== "false",
       title: this.label || undefined,
+      discrete: this.discrete,
     });
     return html`<span class="notatio-torus-square-box">${unsafeHTML(svg)}</span>`;
   }

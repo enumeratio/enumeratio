@@ -6,27 +6,16 @@
 // value); this file starts where that leaves off.
 
 import { niceTicks } from "./plot.ts";
+import { categoryColors, type ColorOptions, plotPalette, rampColor } from "./plot-color.ts";
 
 /** The members of the `Chart` family, by the attribute `type` that picks one. */
 export type ChartType = "list" | "listline" | "bar" | "histogram" | "pie" | "box" | "array" | "discrete";
 
 export const isNumber = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
-const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
 const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
 const BG = "var(--notatio-bg, var(--vp-c-bg, #ffffff))";
-// Same series ramp as plot.ts / plot3d.ts, kept in sync by eye (each module
-// stays dependency-free rather than sharing a constants module).
-const SERIES = [
-  ACCENT,
-  "var(--notatio-series-2, #2f7ed8)",
-  "var(--notatio-series-3, #2ca02c)",
-  "var(--notatio-series-4, #d62728)",
-  "var(--notatio-series-5, #9467bd)",
-  "var(--notatio-series-6, #8c564b)",
-];
-
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
 const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -38,8 +27,12 @@ function label(x: number): string {
   return abs >= 1000 || abs < 0.01 ? x.toExponential(1) : String(Math.round(x * 100) / 100);
 }
 
-/** Common frame options every chart shares. */
-export interface ChartOptions {
+/**
+ * Common frame options every chart shares. Color: categories (a pie's wedges, a box per
+ * series, a bar chart's one series) take the discrete scheme; values (an array plot's cells)
+ * take the gradient.
+ */
+export interface ChartOptions extends ColorOptions {
   width?: number;
   height?: number;
   /** A title centred above the frame (PlotLabel). */
@@ -87,6 +80,7 @@ export function barChartSvg(values: readonly number[], opts: BarChartOptions = {
   lo -= pad;
   hi += pad;
 
+  const [color] = categoryColors(plotPalette(opts), 1);
   const plotW = W - mL - mR;
   const plotH = H - mT - mB;
   const n = values.length;
@@ -102,7 +96,7 @@ export function barChartSvg(values: readonly number[], opts: BarChartOptions = {
       const w = bw * (1 - gap);
       const y = Math.min(yAt(v), zeroY);
       const h = Math.abs(yAt(v) - zeroY);
-      return `<rect x="${n2(x)}" y="${n2(y)}" width="${n2(w)}" height="${n2(h)}" fill="${SERIES[0]}"/>`;
+      return `<rect x="${n2(x)}" y="${n2(y)}" width="${n2(w)}" height="${n2(h)}" fill="${color}"/>`;
     })
     .join("");
 
@@ -165,6 +159,7 @@ export function histogramSvg(values: readonly number[], opts: HistogramOptions =
   }
   const maxCount = Math.max(1, ...counts);
 
+  const [color] = categoryColors(plotPalette(opts), 1);
   const plotW = W - mL - mR;
   const plotH = H - mT - mB;
   const bw = plotW / bins;
@@ -175,7 +170,7 @@ export function histogramSvg(values: readonly number[], opts: HistogramOptions =
       const x = mL + i * bw;
       const y = yAt(c);
       const h = mT + plotH - y;
-      return `<rect x="${n2(x + 0.5)}" y="${n2(y)}" width="${n2(Math.max(0, bw - 1))}" height="${n2(h)}" fill="${SERIES[0]}"/>`;
+      return `<rect x="${n2(x + 0.5)}" y="${n2(y)}" width="${n2(Math.max(0, bw - 1))}" height="${n2(h)}" fill="${color}"/>`;
     })
     .join("");
 
@@ -206,6 +201,7 @@ export function pieChartSvg(values: readonly number[], opts: PieChartOptions = {
   const total = entries.reduce((a, e) => a + e.v, 0);
   if (entries.length === 0 || total <= 0 || r <= 0) return frame(W, H, titleSvg(W, opts.title), "pie chart");
 
+  const colors = categoryColors(plotPalette(opts), values.length);
   const arcPoint = (angle: number): [number, number] => [cx + r * Math.sin(angle), cy - r * Math.cos(angle)];
 
   let acc = 0;
@@ -217,7 +213,7 @@ export function pieChartSvg(values: readonly number[], opts: PieChartOptions = {
       const large = end - start > Math.PI ? 1 : 0;
       const [x1, y1] = arcPoint(start);
       const [x2, y2] = arcPoint(end);
-      const color = SERIES[e.i % SERIES.length];
+      const color = colors[e.i]!;
       // A full circle (one entry) can't be drawn as a single arc; split it.
       if (end - start >= 2 * Math.PI - 1e-9) {
         return `<circle cx="${n2(cx)}" cy="${n2(cy)}" r="${n2(r)}" fill="${color}"/>`;
@@ -232,7 +228,7 @@ export function pieChartSvg(values: readonly number[], opts: PieChartOptions = {
     const y = mT + 4 + 13 * k;
     const text = labels[e.i] ?? label(e.v);
     legend +=
-      `<rect x="${n2(cx + r + 14)}" y="${n2(y - 7)}" width="8" height="8" fill="${SERIES[e.i % SERIES.length]}"/>` +
+      `<rect x="${n2(cx + r + 14)}" y="${n2(y - 7)}" width="8" height="8" fill="${colors[e.i]}"/>` +
       `<text x="${n2(cx + r + 26)}" y="${n2(y)}" font-size="9" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.85">${esc(text)}</text>`;
   });
 
@@ -303,6 +299,7 @@ export function boxWhiskerChartSvg(series: readonly (readonly number[])[], opts:
   const plotH = H - mT - mB;
   const n = series.length;
   const cw = plotW / n;
+  const colors = categoryColors(plotPalette(opts), n);
   const yAt = (v: number): number => mT + ((hi - v) / (hi - lo)) * plotH;
 
   const boxes = summaries
@@ -310,7 +307,7 @@ export function boxWhiskerChartSvg(series: readonly (readonly number[])[], opts:
       if (!s) return "";
       const cx = mL + i * cw + cw / 2;
       const bw = Math.min(cw * 0.5, 36);
-      const color = SERIES[i % SERIES.length];
+      const color = colors[i]!;
       const whisker = `<line x1="${n2(cx)}" y1="${n2(yAt(s.min))}" x2="${n2(cx)}" y2="${n2(yAt(s.max))}" stroke="${color}" stroke-width="1"/>`;
       const cap = (v: number): string =>
         `<line x1="${n2(cx - bw / 4)}" y1="${n2(yAt(v))}" x2="${n2(cx + bw / 4)}" y2="${n2(yAt(v))}" stroke="${color}" stroke-width="1"/>`;
@@ -353,7 +350,7 @@ const ARRAY_MAX_H = 340;
  * follows rows/cols, as Wolfram's AspectRatio does), up to a square frame; past that the
  * grid narrows and centres. An explicit `height` stretches cells to fill the frame instead.
  * A 0/1 matrix is drawn two-tone -- 0 background, 1 foreground, like Wolfram's white/black;
- * anything else maps value -> a blue-to-accent ramp.
+ * anything else maps value -> the gradient.
  */
 export function arrayPlotSvg(matrix: readonly (readonly number[])[], opts: ArrayPlotOptions = {}): string {
   const W = opts.width ?? 340;
@@ -385,10 +382,10 @@ export function arrayPlotSvg(matrix: readonly (readonly number[])[], opts: Array
   const x0 = (W - plotW) / 2;
   const plotH = ch * rows;
 
+  const palette = plotPalette(opts);
   const fill = binary
     ? (v: number): string => (v === 1 ? FG : BG)
-    : (v: number): string =>
-        `color-mix(in srgb, ${ACCENT} ${n2(Math.max(0, Math.min(1, (v - lo) / span)) * 100)}%, ${SERIES[1]})`;
+    : (v: number): string => rampColor(palette, (v - lo) / span);
 
   const cells = matrix
     .flatMap((row, j) =>
@@ -433,6 +430,7 @@ export function discretePlotSvg(values: readonly number[], opts: DiscretePlotOpt
   lo -= pad;
   hi += pad;
 
+  const [color] = categoryColors(plotPalette(opts), 1);
   const plotW = W - mL - mR;
   const plotH = H - mT - mB;
   const n = values.length;
@@ -446,8 +444,8 @@ export function discretePlotSvg(values: readonly number[], opts: DiscretePlotOpt
       const x = xAt(i);
       const y = yAt(v);
       return (
-        `<line x1="${n2(x)}" y1="${n2(zeroY)}" x2="${n2(x)}" y2="${n2(y)}" stroke="${SERIES[0]}" stroke-width="1.5"/>` +
-        `<circle cx="${n2(x)}" cy="${n2(y)}" r="2.5" fill="${SERIES[0]}"/>`
+        `<line x1="${n2(x)}" y1="${n2(zeroY)}" x2="${n2(x)}" y2="${n2(y)}" stroke="${color}" stroke-width="1.5"/>` +
+        `<circle cx="${n2(x)}" cy="${n2(y)}" r="2.5" fill="${color}"/>`
       );
     })
     .join("");

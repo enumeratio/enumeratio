@@ -1,6 +1,9 @@
 import { expect, test } from "vite-plus/test";
 import { gridFromPoints, heightShade, mesh3dSvg, scatter3dSvg } from "../src/listplot3d.ts";
+import { gradientNamed, sampleGradient } from "../src/palettes.ts";
 import type { Point3 } from "../src/project3d.ts";
+
+const viridis = (t: number): string => sampleGradient(gradientNamed("viridis"), t);
 
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
 /** The projected coordinates of every drawn marker, in document order. */
@@ -17,9 +20,9 @@ const P = (x: number, y: number, z: number): Point3 => ({ x, y, z });
 // heightShade
 // ---------------------------------------------------------------------------
 
-test("the height ramp runs from a washed-out low to a saturated high", () => {
-  expect(heightShade(0)).toContain("22%");
-  expect(heightShade(1)).toContain("82%");
+test("the height ramp runs along the gradient, viridis by default", () => {
+  expect(heightShade(0)).toBe("#440154");
+  expect(heightShade(1)).toBe("#fde725");
   // Out-of-range and non-finite heights clamp rather than extrapolate.
   expect(heightShade(9)).toBe(heightShade(1));
   expect(heightShade(Number.NaN)).toBe(heightShade(0));
@@ -137,8 +140,8 @@ test("a quad's corners are exactly the projected samples", () => {
     { ...flat, axes: false },
   );
   expect(s).toContain('points="74,236 286,165.33 286,24 74,94.67"');
-  // Mean height ½ → 22 + 60·½ = 52% of the accent.
-  expect(s).toContain("52%");
+  // Mean height ½: the middle of the gradient.
+  expect(s).toContain(viridis(0.5));
 });
 
 test("quads are painted back-to-front", () => {
@@ -172,7 +175,7 @@ test("a flat grid still renders, shaded from the middle of the ramp", () => {
   ];
   const s = mesh3dSvg(grid, { axes: false });
   expect(count(s, "polygon")).toBe(1);
-  expect(s).toContain("52%");
+  expect(s).toContain(viridis(0.5));
 });
 
 test("wireframe draws unfilled outlines", () => {

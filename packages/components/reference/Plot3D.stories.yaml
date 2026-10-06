@@ -108,3 +108,16 @@
   category: GPU evaluation
   notes: The grid (here 100×100) is computed in a compute shader, then drawn through the same SVG surface. Needs a WebGPU browser; otherwise it renders on the CPU.
   expr: [Plot3D, [Multiply, [Sin, x], [Cos, y]], [Tuple, x, -3.14, 3.14], [Tuple, y, -3.14, 3.14], [Tuple, Gpu, 100]]
+- id: surface-on-the-magma-gradient
+  caption: A surface on the magma gradient
+  category: Color
+  notes: A lone surface takes the gradient by height (`viridis` by default); `ColorFunction -> "Magma"` is Wolfram's spelling of the `gradient` attribute. Several surfaces take one color each from the `Discrete` scheme instead.
+  expr:
+    [
+      Plot3D,
+      [Multiply, [Sin, x], [Cos, y]],
+      [Tuple, x, -3, 3],
+      [Tuple, y, -3, 3],
+      [Tuple, ColorFunction, "'Magma'"],
+      [Tuple, ColorLegend, True],
+    ]

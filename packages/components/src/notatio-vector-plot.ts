@@ -46,7 +46,8 @@ const log = debug("vectorplot");
  * `<VectorPlot u="-y" v="x" xrange="-2,2" yrange="-2,2">` -- a planar
  * vector field (Wolfram's `VectorPlot`): `u`/`v` are the two components in
  * Epsil, or `field="-y, x"` gives both at once. Arrows sit on an `n`×`n` grid
- * of cell centres, their length and colour scaling with |F|.
+ * of cell centers, their length scaling with |F| and their color taking it on
+ * the `gradient` (default `viridis`; `reverse` runs it the other way).
  *
  * `type="stream"` switches to `StreamPlot`: streamlines traced from the same
  * grid by fixed-step RK4 on the normalised field -- deterministic, so the same
@@ -82,6 +83,10 @@ export class NotatioVectorPlot extends LitElement {
     yLabel: { type: String, attribute: "y-label" },
     /** Caption drawn above the figure. */
     label: { type: String },
+    /** The gradient the arrows or streamlines take by magnitude, |F| (`viridis`, `magma`, `turbo`, …). */
+    gradient: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     /** Values for a surrounding Manipulate's wildcards, set by the host. */
     bindings: { attribute: false },
     _svg: { state: true },
@@ -101,6 +106,8 @@ export class NotatioVectorPlot extends LitElement {
   declare xLabel: string;
   declare yLabel: string;
   declare label: string;
+  declare gradient: string;
+  declare reverse: boolean;
   declare bindings: Record<string, number> | undefined;
   declare _svg: string;
 
@@ -120,6 +127,8 @@ export class NotatioVectorPlot extends LitElement {
     this.xLabel = "";
     this.yLabel = "";
     this.label = "";
+    this.gradient = "viridis";
+    this.reverse = false;
     this._svg = "";
     ensureStyles();
   }
@@ -144,6 +153,8 @@ export class NotatioVectorPlot extends LitElement {
       changed.has("xLabel") ||
       changed.has("yLabel") ||
       changed.has("label") ||
+      changed.has("gradient") ||
+      changed.has("reverse") ||
       changed.has("bindings")
     ) {
       void this.#recompute();
@@ -209,6 +220,8 @@ export class NotatioVectorPlot extends LitElement {
         xLabel: this.xLabel || undefined,
         yLabel: this.yLabel || undefined,
         title: this.label || undefined,
+        gradient: this.gradient,
+        reverse: this.reverse,
       });
     } catch (error) {
       log("could not plot", pair, error);

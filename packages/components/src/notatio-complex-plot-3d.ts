@@ -41,8 +41,9 @@ async function engineFunction(json: unknown, variable: string): Promise<ComplexF
 
 /**
  * `<ComplexPlot3D value="1/(z^2 + 1)">` -- Wolfram's `ComplexPlot3D`: |f(z)|
- * as a surface over the complex plane, each face coloured by arg f(z) on the same hue
- * wheel `<ComplexPlot>` paints. A pole is a spike that rises to `max-height`
+ * as a surface over the complex plane, each face colored by arg f(z) on the same
+ * gradient `<ComplexPlot>` paints (`gradient`, default `phase`, the hue wheel; `reverse`
+ * turns it round). A pole is a spike that rises to `max-height`
  * with every hue winding round it; a zero is a dimple the hues wind round the other way.
  *
  * `value` is **Epsil**; LaTeX is accepted inside a `$…$` island. Sampled in a WebGPU
@@ -87,6 +88,10 @@ export class NotatioComplexPlot3D extends LitElement {
     zoom: { type: Number },
     /** Caption drawn above the surface. */
     label: { type: String },
+    /** The gradient the argument is colored with: `phase` (the hue wheel, the default), `sinebow`, `turbo`, …. */
+    gradient: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     _svg: { state: true },
     _dense: { state: true },
     _status: { state: true },
@@ -105,6 +110,8 @@ export class NotatioComplexPlot3D extends LitElement {
   declare elevation: number;
   declare zoom: number;
   declare label: string;
+  declare gradient: string;
+  declare reverse: boolean;
   declare _svg: string;
   declare _dense: boolean;
   declare _status: string;
@@ -129,6 +136,8 @@ export class NotatioComplexPlot3D extends LitElement {
     this.elevation = 25;
     this.zoom = 1;
     this.label = "";
+    this.gradient = "phase";
+    this.reverse = false;
     this._svg = "";
     this._dense = false;
     this._status = "";
@@ -161,6 +170,8 @@ export class NotatioComplexPlot3D extends LitElement {
       changed.has("zoom") ||
       changed.has("axes") ||
       changed.has("label") ||
+      changed.has("gradient") ||
+      changed.has("reverse") ||
       changed.has("_hover")
     ) {
       this.#draw();
@@ -224,6 +235,8 @@ export class NotatioComplexPlot3D extends LitElement {
       elevation: this.elevation,
       zoom: this.zoom,
       title: this.label || undefined,
+      gradient: this.gradient,
+      reverse: this.reverse,
       hover: this._hover,
     });
     if (this._dense) {
@@ -259,7 +272,7 @@ export class NotatioComplexPlot3D extends LitElement {
     drawSurfaceScene(ctx, scene, this.#paintColors());
   }
 
-  /** The theme's colours, resolved: a canvas cannot read the CSS variables the SVG uses. */
+  /** The theme's colors, resolved: a canvas cannot read the CSS variables the SVG uses. */
   #paintColors(): SurfacePaint {
     const style = getComputedStyle(this);
     const read = (names: string[], fallback: string): string => {

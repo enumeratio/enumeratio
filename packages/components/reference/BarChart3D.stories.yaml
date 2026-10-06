@@ -35,3 +35,8 @@
   category: Bars
   notes: zrange pins the height scale so several charts can be compared; axes="false" drops the projected axis box.
   expr: [BarChart3D, [List, [List, 1, 2], [List, 2, 3]], [Tuple, ZRange, "'0,10'"], [Tuple, Axes, "'false'"]]
+- id: bars-on-the-cividis-gradient
+  caption: Bars on the cividis gradient
+  category: Color
+  notes: Bars take their height on the gradient; the sides are the same color, darkened.
+  expr: [BarChart3D, [List, [List, 1, 2, 3], [List, 2, 4, 1]], [Tuple, ColorFunction, "'Cividis'"]]

@@ -4,9 +4,10 @@
 // curve into separate polyline segments rather than drawing a spurious jump.
 // Axes can be turned off (Wolfram's Axes) and either axis can carry a scaling
 // function (Wolfram's ScalingFunctions -- log, sqrt, …). Several series overlay
-// in distinct colours; a series can draw as points (ListPlot) instead of a
+// in distinct colors; a series can draw as points (ListPlot) instead of a
 // line; a parametric curve is just a series whose points aren't x-sorted.
 
+import { categoryColors, type ColorOptions, plotPalette, rampColor } from "./plot-color.ts";
 import { type Primitive, primitivesSvg } from "./primitives.ts";
 import { isLinear, scale } from "./scales.ts";
 
@@ -14,15 +15,6 @@ const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
 const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
 const BG = "var(--notatio-bg, var(--vp-c-bg, #ffffff))";
-// Series colours: the accent first, then themeable fallbacks (Wolfram-ish 97).
-const SERIES = [
-  ACCENT,
-  "var(--notatio-series-2, #2f7ed8)",
-  "var(--notatio-series-3, #2ca02c)",
-  "var(--notatio-series-4, #d62728)",
-  "var(--notatio-series-5, #9467bd)",
-  "var(--notatio-series-6, #8c564b)",
-];
 
 export interface PlotPoint {
   x: number;
@@ -169,7 +161,7 @@ export interface PlotSeries {
   label?: string;
 }
 
-export interface PlotOptions {
+export interface PlotOptions extends ColorOptions {
   width?: number;
   height?: number;
   /** Marks drawn over the curves in data coordinates (Wolfram's `Epilog`). */
@@ -200,8 +192,9 @@ export interface PlotOptions {
   /** A title centred above the frame (PlotLabel). */
   title?: string;
   /**
-   * Recolour a line (or points) series along a blue→accent ramp by position
+   * Recolor a line (or points) series along the gradient by position
    * (Wolfram's ColorFunction) -- `"y"` by height, `"x"` by horizontal position.
+   * Series otherwise take the discrete scheme, one color each.
    */
   colorBy?: "x" | "y";
 }
@@ -378,17 +371,20 @@ export function linePlot(input: readonly PlotPoint[] | readonly PlotSeries[], op
   const poly = (seg: ReadonlyArray<readonly [number, number]>): string =>
     seg.map(([x, y]) => `${n2(x)},${n2(y)}`).join(" ");
 
-  // ColorFunction ramp: normalize a pixel position to [0,1] and mix blue→accent.
+  // Series take the discrete scheme; ColorFunction takes the gradient.
+  const palette = plotPalette(opts);
+  const seriesColors = categoryColors(palette, series.length);
+
+  // ColorFunction ramp: normalize a pixel position to [0,1] along the gradient.
   const plotH = H - mT - mB;
   const rampAt = (px: number, py: number): number =>
     opts.colorBy === "x" ? (px - mL) / (plotW || 1) : (H - mB - py) / (plotH || 1);
-  const ramp = (t: number): string =>
-    `color-mix(in srgb, ${ACCENT} ${n2(Math.max(0, Math.min(1, t)) * 100)}%, ${SERIES[1]})`;
+  const ramp = (t: number): string => rampColor(palette, t);
 
   let fills = "";
   const curves = series
     .map((s, k) => {
-      const color = SERIES[k % SERIES.length];
+      const color = seriesColors[k]!;
       if (s.style === "points")
         return s.points
           .filter(visible)
@@ -408,8 +404,8 @@ export function linePlot(input: readonly PlotPoint[] | readonly PlotSeries[], op
               `<polygon points="${n2(seg[0][0])},${n2(yZeroPx)} ${poly(seg)} ${n2(seg.at(-1)![0])},${n2(yZeroPx)}" fill="${color}" fill-opacity="0.12" stroke="none"/>`,
           )
           .join("");
-      // ColorFunction: draw each adjacent pair as its own segment, coloured by
-      // the pair's midpoint. Otherwise one polyline in the series colour.
+      // ColorFunction: draw each adjacent pair as its own segment, colored by
+      // the pair's midpoint. Otherwise one polyline in the series color.
       if (opts.colorBy)
         return segs
           .flatMap((seg) =>
@@ -464,7 +460,7 @@ export function linePlot(input: readonly PlotPoint[] | readonly PlotSeries[], op
   // Legend: a small stacked key of the labelled series, top-right.
   let legend = "";
   if (opts.legend) {
-    const named = series.map((s, k) => ({ label: s.label, color: SERIES[k % SERIES.length] })).filter((s) => s.label);
+    const named = series.map((s, k) => ({ label: s.label, color: seriesColors[k]! })).filter((s) => s.label);
     named.forEach((s, k) => {
       const y = mT + 6 + 13 * k;
       legend +=
@@ -485,7 +481,7 @@ export function linePlot(input: readonly PlotPoint[] | readonly PlotSeries[], op
           if (!visible(p)) continue;
           if (!best || Math.abs(X.fwd(p.x) - hx) < Math.abs(X.fwd(best.x) - hx)) best = p;
         }
-        return best ? { p: best, color: SERIES[k % SERIES.length], label: s.label } : undefined;
+        return best ? { p: best, color: seriesColors[k]!, label: s.label } : undefined;
       })
       .filter((h) => h !== undefined);
     if (hits.length > 0) {

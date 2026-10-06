@@ -1188,6 +1188,368 @@ notatio-worksheet {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- Figure frame: stage, caption and legend, each placed beside or over it --------- */
+.notatio-frame {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0;
+}
+.notatio-frame-middle {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.notatio-frame-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.notatio-frame-left,
+.notatio-frame-right {
+  flex: 0 0 auto;
+  max-width: 16rem;
+  overflow: auto;
+  padding: 0.6rem 0.8rem;
+}
+.notatio-frame-left { border-right: 1px solid var(--vp-c-divider, #ddd); }
+.notatio-frame-right { border-left: 1px solid var(--vp-c-divider, #ddd); }
+.notatio-frame-above,
+.notatio-frame-below {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.5rem 0.8rem;
+}
+.notatio-frame-above { border-bottom: 1px solid var(--vp-c-divider, #ddd); }
+.notatio-frame-below { border-top: 1px solid var(--vp-c-divider, #ddd); }
+.notatio-frame-top-left,
+.notatio-frame-top-right,
+.notatio-frame-bottom-left,
+.notatio-frame-bottom-right {
+  position: absolute;
+  max-width: min(24rem, calc(100% - 1.2rem));
+  max-height: calc(100% - 1.2rem);
+  overflow: auto;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--vp-c-bg, #fff) 88%, transparent);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.notatio-frame-top-left { top: 0.6rem; left: 0.6rem; }
+.notatio-frame-top-right { top: 0.6rem; right: 0.6rem; }
+.notatio-frame-bottom-left { bottom: 0.6rem; left: 0.6rem; }
+.notatio-frame-bottom-right { bottom: 0.6rem; right: 0.6rem; }
+.notatio-frame-caption {
+  margin: 0;
+  color: var(--vp-c-text-1, #222);
+  line-height: 1.5;
+}
+.notatio-frame-caption dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.7rem;
+  margin: 0.35rem 0 0;
+}
+.notatio-frame-caption dt { color: var(--vp-c-text-3, #888); }
+.notatio-frame-caption dd { margin: 0; overflow-wrap: anywhere; }
+.notatio-caption-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.notatio-caption-head > span:last-child { display: inline-flex; gap: 0.3rem; }
+.notatio-frame-toggle,
+.notatio-caption-head button {
+  border: 1px solid var(--vp-c-divider, #ddd);
+  background: var(--vp-c-bg, #fff);
+  color: var(--vp-c-text-2, #555);
+  font: inherit;
+  line-height: 1;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* A choice inside caption prose reads as a word, underlined to say it can change. */
+.notatio-inline-choice {
+  appearance: none;
+  border: none;
+  border-bottom: 1px dashed currentColor;
+  background: transparent;
+  color: var(--vp-c-brand-1, #3451b2);
+  font: inherit;
+  font-weight: 600;
+  padding: 0 0.1rem;
+  cursor: pointer;
+}
+
+/* --- Legends --------------------------------------------------------------------------- */
+.notatio-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--vp-c-text-2, #555);
+}
+.notatio-legend.is-vertical {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.notatio-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+}
+.notatio-legend li > i {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 3px;
+  box-sizing: border-box;
+  flex: none;
+}
+.notatio-legend-gradient {
+  display: grid !important;
+  grid-template-columns: auto 8rem;
+  grid-template-areas: "label bar" ". ticks";
+  gap: 0.1rem 0.5rem;
+}
+.notatio-legend.is-vertical .notatio-legend-gradient {
+  grid-template-columns: 1fr;
+  grid-template-areas: "label" "bar" "ticks";
+}
+.notatio-legend-gradient .notatio-legend-label { grid-area: label; }
+.notatio-legend-bar { grid-area: bar; height: 0.8em; border-radius: 3px; align-self: center; }
+.notatio-legend-ticks {
+  grid-area: ticks;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85em;
+  color: var(--vp-c-text-3, #888);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Gradient control: a swatch, and a panel of presets ------------------------------ */
+.notatio-gradient { position: relative; display: inline-block; }
+.notatio-gradient-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.notatio-gradient i {
+  display: inline-block;
+  width: 3.2em;
+  height: 0.9em;
+  border-radius: 3px;
+}
+.notatio-gradient-panel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 0.3rem);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 15rem;
+  padding: 0.6rem;
+  border: 1px solid var(--vp-c-divider, #ddd);
+  border-radius: 8px;
+  background: var(--vp-c-bg, #fff);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+}
+.notatio-gradient-list {
+  display: grid;
+  gap: 0.2rem;
+  max-height: 16rem;
+  overflow: auto;
+}
+.notatio-gradient-list button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: left;
+  border: 1px solid transparent !important;
+}
+.notatio-gradient-list button.is-selected { border-color: var(--vp-c-brand-1, #3451b2) !important; }
+.notatio-gradient-list small { color: var(--vp-c-text-3, #888); }
+.notatio-gradient-panel label { display: flex; align-items: center; gap: 0.4rem; }
+.notatio-gradient-panel input[type="number"] { width: 5em; }
+
+/* --- Tooltips: [data-tip] shows its text on hover and keyboard focus, at once ------- */
+[data-tip] {
+  position: relative;
+}
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  content: attr(data-tip);
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.35rem);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  background: var(--vp-c-text-1, #222);
+  color: var(--vp-c-bg, #fff);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.3;
+  white-space: pre;
+  pointer-events: none;
+}
+
+/* --- Palette picker: one menu for a plot's gradient and category colors ------------- */
+.notatio-palette { position: relative; display: inline-block; }
+.notatio-palette-button { display: inline-flex; align-items: center; gap: 0.45rem; }
+.notatio-palette-swatch { display: inline-flex; align-items: center; gap: 0.2rem; }
+.notatio-palette-bar { display: inline-block; width: 3.2em; height: 0.9em; border-radius: 3px; }
+.notatio-palette-dot { display: inline-block; width: 0.75em; height: 0.75em; border-radius: 50%; }
+.notatio-palette-panel {
+  position: absolute;
+  z-index: 25;
+  top: calc(100% + 0.3rem);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: min(22rem, 90vw);
+  max-height: min(34rem, 75vh);
+  overflow: auto;
+  padding: 0.7rem;
+  border: 1px solid var(--vp-c-divider, #ddd);
+  border-radius: 8px;
+  background: var(--vp-c-bg, #fff);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+}
+.notatio-palette-panel section { display: flex; flex-direction: column; gap: 0.35rem; }
+.notatio-palette-panel h4 { margin: 0; font-size: 0.8rem; color: var(--vp-c-text-1, #222); }
+.notatio-palette-panel h4 small { font-weight: 400; color: var(--vp-c-text-3, #888); }
+.notatio-palette-list { display: grid; gap: 0.15rem; }
+.notatio-palette-list button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: left;
+  border: 1px solid transparent !important;
+}
+.notatio-palette-panel .is-selected { border-color: var(--vp-c-brand-1, #3451b2) !important; }
+.notatio-palette-gradients { display: grid; grid-template-columns: repeat(auto-fill, minmax(3.6rem, 1fr)); gap: 0.25rem; }
+.notatio-palette-gradients button { padding: 0.2rem !important; border: 1px solid transparent !important; }
+.notatio-palette-gradients i { display: block; height: 0.9em; border-radius: 3px; }
+.notatio-palette-panel label { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+.notatio-palette-panel input[type="number"] { width: 5em; }
+
+/* --- Lattice plot ----------------------------------------------------------------------- */
+notatio-lattice-plot {
+  display: flex;
+  flex-direction: column;
+}
+.notatio-lattice {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 1.25rem 0;
+  border: 1px solid var(--vp-c-divider, #ddd);
+  border-radius: 10px;
+  /* Visible, so the color menu and tooltips can reach past the plot's edge. */
+  overflow: visible;
+  background: var(--vp-c-bg-soft, #f6f6f7);
+  font-size: 0.8rem;
+}
+.notatio-lattice-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.45rem 0.8rem;
+  border-bottom: 1px solid var(--vp-c-divider, #ddd);
+  color: var(--vp-c-text-2, #555);
+}
+.notatio-lattice-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.9rem;
+}
+.notatio-lattice-toolbar button,
+.notatio-lattice-toolbar select,
+.notatio-lattice-toolbar input[type="number"],
+.notatio-lattice-toolbar input[type="text"],
+.notatio-lattice-limit button {
+  border: 1px solid var(--vp-c-divider, #ddd);
+  background: var(--vp-c-bg, #fff);
+  color: var(--vp-c-text-1, #222);
+  font: inherit;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}
+.notatio-lattice-toolbar button { cursor: pointer; }
+.notatio-lattice-toolbar input[type="number"] { width: 4.5em; }
+.notatio-lattice-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.notatio-lattice-code { flex: 1 1 20rem; }
+.notatio-lattice-code input { flex: 1 1 auto; min-width: 10rem; font-family: var(--notatio-mono, ui-monospace, monospace); }
+.notatio-lattice-sweep {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.notatio-lattice-sweep strong,
+.notatio-lattice-title {
+  min-width: 5.5em;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--vp-c-text-1, #222);
+}
+.notatio-lattice .notatio-frame-stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: grab;
+  outline: none;
+}
+.notatio-lattice .notatio-frame-stage canvas:active { cursor: grabbing; }
+.notatio-lattice .notatio-frame-stage canvas:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--vp-c-brand-1, #3451b2);
+}
+.notatio-lattice-limit {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--vp-c-bg, #fff) 88%, transparent);
+  color: var(--vp-c-text-2, #555);
+}
+.notatio-lattice-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  color: #cbd5e1;
+}
+.is-full-window .notatio-lattice {
+  margin: 0;
+  border-radius: 0;
+}
+
 /* --- Reactive prose, after Tangle ------------------------------------------------
    The controls sit INSIDE a sentence, so everything here is inline and must not
    disturb the line: no padding that changes the leading, no border that reserves

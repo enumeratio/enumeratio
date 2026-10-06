@@ -13,23 +13,22 @@ import {
   titleSvg,
   unitScale,
 } from "./project3d.ts";
+import { type Gradient, sampleGradient } from "./palettes.ts";
+import { type ColorOptions, gradientOf } from "./plot-color.ts";
 
-const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
-const BG = "var(--notatio-bg, var(--vp-c-bg, #ffffff))";
 const EDGE = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
-/** Height shading: the accent mixed into the page background, so a tall cell
- * reads as saturated and a low one as washed out, in either theme. */
-export function heightShade(t: number): string {
-  const k = Math.max(0, Math.min(1, Number.isFinite(t) ? t : 0));
-  return `color-mix(in srgb, ${ACCENT} ${n2(22 + 60 * k)}%, ${BG})`;
+/** Height coloring: the gradient at height `t` in [0, 1] (default `viridis`). */
+export function heightShade(t: number, gradient: Gradient = gradientOf()): string {
+  return sampleGradient(gradient, Number.isFinite(t) ? t : 0);
 }
 
 type Grid = readonly (readonly number[])[];
 
-export interface List3dOptions extends CameraOptions {
+/** Color: markers and cells take the gradient by height (`viridis` unless told otherwise). */
+export interface List3dOptions extends CameraOptions, ColorOptions {
   /** Draw the projected axis box behind the data (default true). */
   axes?: boolean;
   /** Sample coordinates along each axis; default the sample indices. */
@@ -129,6 +128,7 @@ export function scatter3dSvg(points: readonly Point3[], opts: Scatter3dOptions =
   const near = unitScale(dLo, dHi);
   placed.sort((a, b) => a.p.depth - b.p.depth);
 
+  const gradient = gradientOf(opts);
   const size = opts.size ?? 3.2;
   const cue = Math.max(0, Math.min(1, opts.depthCue ?? 0.45));
   const markers = placed
@@ -136,7 +136,7 @@ export function scatter3dSvg(points: readonly Point3[], opts: Scatter3dOptions =
       const k = 1 - cue * (1 - near(p.depth));
       return (
         `<circle cx="${n2(p.x)}" cy="${n2(p.y)}" r="${n2(size * k)}"` +
-        ` fill="${heightShade(t)}" fill-opacity="${n2(k)}" stroke="${EDGE}" stroke-width="0.5"/>`
+        ` fill="${heightShade(t, gradient)}" fill-opacity="${n2(k)}" stroke="${EDGE}" stroke-width="0.5"/>`
       );
     })
     .join("");
@@ -162,6 +162,7 @@ export function mesh3dSvg(grid: Grid, opts: Mesh3dOptions = {}): string {
 
   const [zlo, zhi] = opts.zRange ? opts.zRange : extent(grid.flat());
   const sz = unitScale(zlo, zhi);
+  const gradient = gradientOf(opts);
   const px = (i: number): number => (nx > 1 ? i / (nx - 1) : 0.5);
   const py = (j: number): number => (ny > 1 ? j / (ny - 1) : 0.5);
 
@@ -193,8 +194,8 @@ export function mesh3dSvg(grid: Grid, opts: Mesh3dOptions = {}): string {
   const mesh = quads
     .map((q) =>
       opts.wireframe
-        ? `<polygon points="${q.points}" fill="none" stroke="${ACCENT}" stroke-width="0.7" stroke-linejoin="round" opacity="0.8"/>`
-        : `<polygon points="${q.points}" fill="${heightShade(q.t)}" stroke="${EDGE}" stroke-width="0.5" stroke-linejoin="round"/>`,
+        ? `<polygon points="${q.points}" fill="none" stroke="${heightShade(q.t, gradient)}" stroke-width="0.7" stroke-linejoin="round" opacity="0.8"/>`
+        : `<polygon points="${q.points}" fill="${heightShade(q.t, gradient)}" stroke="${EDGE}" stroke-width="0.5" stroke-linejoin="round"/>`,
     )
     .join("");
 

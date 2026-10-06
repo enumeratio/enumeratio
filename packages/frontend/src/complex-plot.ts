@@ -1,9 +1,17 @@
 /// <reference types="@webgpu/types" />
 import { zetaWGSL } from "@enumeratio/analytic/shader";
 import { type ComplexWGSL, MAX_SLOTS } from "@enumeratio/ce-patches/wgsl-complex";
+import {
+  DEFAULT_PHASE_GRADIENT,
+  type Gradient,
+  gradientNamed,
+  hexToRgb,
+  rgbToOklab,
+  sampleGradient,
+} from "./palettes.ts";
 
 // WebGPU domain-coloring of a complex-valued expression: one fragment-shader
-// invocation per pixel, hue = arg, brightness = a compressed log-magnitude.
+// invocation per pixel, color = arg on a gradient, brightness = a compressed log-magnitude.
 //
 // Internal to the element -- deliberately not re-exported from the package index, since
 // its signatures name types from `@enumeratio/analytic` and pulling those into the
@@ -15,7 +23,10 @@ import { type ComplexWGSL, MAX_SLOTS } from "@enumeratio/ce-patches/wgsl-complex
 // re-upload 256 bytes instead of rebuilding a shader module. `setExpression` returns
 // whether it had to rebuild, which is also what makes a frame-rate readout honest.
 
-/** Colouring from (direction, ln|value|) — see `clogPolar` / `polygammaLog`. */
+/** Most stops a gradient carries into the shader; a longer one is resampled to this many. */
+export const MAX_STOPS = 16;
+
+/** Coloring from (direction, ln|value|) — see `clogPolar` / `polygammaLog`. */
 const HOST = /* wgsl */ `
 struct Prm {
   center : vec2f,
@@ -24,13 +35,38 @@ struct Prm {
   mask   : f32,
   _pad   : vec2f,
   p      : array<vec4f, ${MAX_SLOTS}>,
+  // The gradient: each stop is its color (sRGB, or OKLab) and its position; ramp is
+  // (stop count, 1 when the stops blend in OKLab, 1 when the gradient wraps, unused).
+  stops  : array<vec4f, ${MAX_STOPS}>,
+  ramp   : vec4f,
 };
 @group(0) @binding(0) var<uniform> prm : Prm;
 
-fn hsv2rgb(h: f32, s: f32, v: f32) -> vec3f {
-  let k = vec3f(5.0, 3.0, 1.0);
-  let q = abs(fract(vec3f(h) + k / 6.0) * 6.0 - 3.0);
-  return v * mix(vec3f(1.0), clamp(q - 1.0, vec3f(0.0), vec3f(1.0)), s);
+fn oklab2rgb(c: vec3f) -> vec3f {
+  let l = c.x + 0.3963377774 * c.y + 0.2158037573 * c.z;
+  let m = c.x - 0.1055613458 * c.y - 0.0638541728 * c.z;
+  let s = c.x - 0.0894841775 * c.y - 1.291485548 * c.z;
+  let lin = max(vec3f(
+    4.0767416621 * l * l * l - 3.3077115913 * m * m * m + 0.2309699292 * s * s * s,
+    -1.2684380046 * l * l * l + 2.6097574011 * m * m * m - 0.3413193965 * s * s * s,
+    -0.0041960863 * l * l * l - 0.7034186147 * m * m * m + 1.707614701 * s * s * s), vec3f(0.0));
+  let gamma = select(1.055 * pow(lin, vec3f(1.0 / 2.4)) - 0.055, 12.92 * lin, lin <= vec3f(0.0031308));
+  return clamp(gamma, vec3f(0.0), vec3f(1.0));
+}
+
+// The gradient at t, blended between its two neighboring stops as palettes.ts does.
+fn gradient(t0: f32) -> vec3f {
+  let n = u32(prm.ramp.x);
+  var t = clamp(t0, 0.0, 1.0);
+  if (prm.ramp.z > 0.5) { t = fract(t0); }
+  var k = 1u;
+  while (k < n - 1u && prm.stops[k].w < t) { k = k + 1u; }
+  let a = prm.stops[k - 1u];
+  let b = prm.stops[k];
+  let f = clamp((t - a.w) / max(b.w - a.w, 1e-6), 0.0, 1.0);
+  let c = mix(a.xyz, b.xyz, f);
+  if (prm.ramp.y > 0.5) { return oklab2rgb(c); }
+  return clamp(c, vec3f(0.0), vec3f(1.0));
 }
 @vertex fn vs(@builtin(vertex_index) i: u32) -> @builtin(position) vec4f {
   var q = array<vec2f, 3>(vec2f(-1.0, -3.0), vec2f(-1.0, 1.0), vec2f(3.0, 1.0));
@@ -51,21 +87,47 @@ fn hsv2rgb(h: f32, s: f32, v: f32) -> vec3f {
   let logMag = polar.z;
   if (!(logMag < 1e30)) { return vec4f(1.0, 1.0, 1.0, 1.0); } // a pole
   if (!(logMag > -1e30)) { return vec4f(0.0, 0.0, 0.0, 1.0); } // a zero
-  let hue = atan2(polar.y, polar.x) * 0.15915494 + 0.5;
+  // arg/2π along the gradient: on the phase wheel, red on the positive reals, as ComplexPlot3D.
+  let hue = fract(atan2(polar.y, polar.x) * 0.15915494);
   let bands = fract(logMag * 1.442695); // log2|v|
   let base = 1.0 / (1.0 + exp(-logMag)); // = |v| / (1 + |v|)
   let val = clamp(mix(base * 0.9, 1.0, 0.22 * bands), 0.0, 1.0);
   let sat = mix(1.0, 0.82, 0.18 * bands);
-  return vec4f(pow(hsv2rgb(hue, sat, val), vec3f(0.9)), 1.0);
+  return vec4f(pow(val * mix(vec3f(1.0), gradient(hue), sat), vec3f(0.9)), 1.0);
 }
 `;
 
-/** The complete domain-colouring shader for a complex-valued WGSL expression `code`. */
+/** The complete domain-coloring shader for a complex-valued WGSL expression `code`. */
 export const portraitShader = (code: string): string => `${zetaWGSL}\n${HOST.replace("VALUE", `clogPolar(${code})`)}`;
 
 /** Bytes before the literal slots: center, res, extent, mask, pad. */
 const SLOTS_OFFSET = 32;
-const UNIFORM_SIZE = SLOTS_OFFSET + MAX_SLOTS * 16;
+const STOPS_OFFSET = SLOTS_OFFSET + MAX_SLOTS * 16;
+const RAMP_OFFSET = STOPS_OFFSET + MAX_STOPS * 16;
+const UNIFORM_SIZE = RAMP_OFFSET + 16;
+
+/**
+ * A gradient as the shader reads it: `MAX_STOPS` stops of (color, position), then
+ * (count, OKLab, cyclic, unused). Stops blend in the gradient's own space, so an OKLab
+ * gradient's stops are uploaded as OKLab and the shader converts the blend back.
+ */
+export function gradientUniform(g: Gradient): Float32Array {
+  const stops =
+    g.stops.length <= MAX_STOPS
+      ? g.stops
+      : Array.from({ length: MAX_STOPS }, (_, k) => ({
+          at: k / (MAX_STOPS - 1),
+          color: sampleGradient(g, k / (MAX_STOPS - 1)),
+        }));
+  const oklab = g.space === "oklab" && g.stops.length <= MAX_STOPS;
+  const out = new Float32Array(MAX_STOPS * 4 + 4);
+  stops.forEach(({ at, color }, k) => {
+    const rgb = hexToRgb(color);
+    out.set([...(oklab ? rgbToOklab(rgb) : rgb), at], k * 4);
+  });
+  out.set([stops.length, oklab ? 1 : 0, g.cyclic ? 1 : 0, 0], MAX_STOPS * 4);
+  return out;
+}
 
 export interface ComplexPlotView {
   center: [number, number];
@@ -123,6 +185,7 @@ export class ComplexPlotRenderer {
   #bind: GPUBindGroup | undefined;
   #literals: readonly (readonly [number, number])[] = [];
   #buf = new ArrayBuffer(UNIFORM_SIZE);
+  #gradient: Gradient | undefined;
 
   constructor(device: GPUDevice, canvas: HTMLCanvasElement) {
     this.#device = device;
@@ -133,6 +196,7 @@ export class ComplexPlotRenderer {
       size: UNIFORM_SIZE,
       usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
     });
+    this.setGradient(gradientNamed(DEFAULT_PHASE_GRADIENT));
   }
 
   /**
@@ -161,6 +225,14 @@ export class ComplexPlotRenderer {
     this.#pipelines.set(e.shape, pipeline);
     this.#use(pipeline);
     return "rebuilt";
+  }
+
+  /** The gradient the argument is colored with; takes effect on the next frame. */
+  setGradient(g: Gradient): void {
+    if (g === this.#gradient) return;
+    this.#gradient = g;
+    const u = gradientUniform(g);
+    new Float32Array(this.#buf, STOPS_OFFSET, u.length).set(u);
   }
 
   #use(pipeline: GPURenderPipeline): void {

@@ -101,7 +101,8 @@ test("surfacesSvg overlays several grids, cells depth-sorted across all", () => 
   const s = surfacesSvg([g1, g2], { axes: false });
   expect(count(s, "polygon")).toBe(2 * 9); // both surfaces' cells
   expect(s).toContain('fill-opacity="0.85"'); // overlays get transparency
-  expect(s).toContain("--notatio-series-2"); // second surface's colour
+  expect(s).toContain("#4e79a7"); // the first surface's discrete color
+  expect(s).toContain("#f28e2c"); // and the second's
 });
 
 test("a single grid via surfacesSvg matches surfaceSvg", () => {

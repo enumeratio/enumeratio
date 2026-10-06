@@ -19,9 +19,14 @@ Each guide is a page of the package it introduces, in that package's `docs/`; th
 - [**Numeral systems**](/docs/numerals/numeral-systems) — one base slot, nine systems: factoradic,
   Zeckendorf, balanced, negative, bijective, mixed, primorial, combinatorial and
   residue — two of which are the unranking maps above in disguise.
+  - [Complex bases](/docs/complex-numerals/complex-bases) — a Gaussian or Eisenstein base,
+    one digit per residue class, and the fractal tiles its numerals make.
 - [**Adèles and idèles**](/docs/adeles/adeles-and-ideles) — numbers known modulo m as values: profinite
   integers and rationals, the adèle ring and idèle group of ℚ, profinite Fibonacci
   numbers and strong approximation, after Hertogh's Sage package.
+- [**Quadratic integers**](/docs/number-theory/quadratic-integers) — the rings
+  $\mathcal{O}_d$ beyond the Gaussian integers on a lattice: norms, primes, and the
+  irreducibles that are not prime where the class number exceeds 1.
 
 ## Algebras
 

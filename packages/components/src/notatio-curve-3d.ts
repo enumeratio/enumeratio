@@ -22,10 +22,11 @@ import {
  * `LorenzCurve`) are ordinary heads anyone can call.
  *
  * A knot is only legible if you can see which strand passes in front, so the curve is
- * drawn as depth-sorted arcs, each cased in the background colour: the nearer strand
- * erases the farther where they meet. Hue runs along the parameter, so a strand can be
- * followed through a crossing. Drag rotates, ctrl/⌘ + wheel zooms, double-click resets —
- * the same gestures `<Plot3D>` uses.
+ * drawn as depth-sorted arcs, each cased in the background color: the nearer strand
+ * erases the farther where they meet. Color runs along the parameter on the `gradient`
+ * (default `sinebow`, a cyclic rainbow, so a closed knot has no seam where it closes;
+ * `reverse` turns it round), so a strand can be followed through a crossing. Drag rotates,
+ * ctrl/⌘ + wheel zooms, double-click resets — the same gestures `<Plot3D>` uses.
  */
 export class NotatioCurve3D extends LitElement {
   static properties = {
@@ -49,6 +50,10 @@ export class NotatioCurve3D extends LitElement {
     torus: { type: String },
     /** Caption drawn above the curve. */
     label: { type: String },
+    /** The gradient the curve takes along its parameter: `sinebow` (a cyclic rainbow), `turbo`, `viridis`, `phase`, …. */
+    gradient: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     at: { type: Number },
     clock: { type: String },
     _svg: { state: true },
@@ -63,6 +68,8 @@ export class NotatioCurve3D extends LitElement {
   declare open: boolean;
   declare torus: string;
   declare label: string;
+  declare gradient: string;
+  declare reverse: boolean;
   declare at: number;
   declare clock: string;
   declare _svg: string;
@@ -89,6 +96,8 @@ export class NotatioCurve3D extends LitElement {
     this.open = false;
     this.torus = "";
     this.label = "";
+    this.gradient = "sinebow";
+    this.reverse = false;
     this.at = Number.NaN;
     this.clock = "false";
     this._svg = "";
@@ -144,7 +153,14 @@ export class NotatioCurve3D extends LitElement {
       return;
     }
     // A turn of the camera re-projects the points it already has; nothing is resampled.
-    if (changed.has("azimuth") || changed.has("elevation") || changed.has("zoom")) this.#draw();
+    if (
+      changed.has("azimuth") ||
+      changed.has("elevation") ||
+      changed.has("zoom") ||
+      changed.has("gradient") ||
+      changed.has("reverse")
+    )
+      this.#draw();
   }
 
   /** Evaluate the expression and read a list of points out of the result. */
@@ -192,6 +208,8 @@ export class NotatioCurve3D extends LitElement {
       azimuth: view.azimuth,
       elevation: view.elevation,
       zoom: view.zoom,
+      gradient: this.gradient,
+      reverse: this.reverse,
       // A trajectory is not a loop: joining its ends draws a chord no solution takes.
       closed: !this.open,
       torus: this.#torus(),

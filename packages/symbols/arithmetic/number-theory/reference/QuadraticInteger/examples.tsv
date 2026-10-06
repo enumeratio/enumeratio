@@ -1,0 +1,5 @@
+id	section	role	expr	expected	caption
+carrier-names-its-ring			[IsPrime, [QuadraticInteger, -5, 1, 1]]	False	1 + √−5 is irreducible but not prime
+eisenstein-unit-is-not-prime			[IsPrime, [QuadraticInteger, -3, 0, 1]]	False	ω = (−1 + √−3)/2 is a unit
+four-in-z-omega-minus-7			[FactorInteger, [QuadraticInteger, -7, 4, 0]]	[List, [Tuple, [Add, [Rational, -1, 2], [Multiply, [Rational, 1, 2], [Sqrt, -7]]], 2], [Tuple, [Add, [Rational, 1, 2], [Multiply, [Rational, 1, 2], [Sqrt, -7]]], 2]]	2 splits in ℤ[ω], ω = (−1 + √−7)/2
+gaussian-by-carrier	Scope		[IsPrime, [QuadraticInteger, -1, 2, 1]]	True	QuadraticInteger(-1, x, y) is x + yi

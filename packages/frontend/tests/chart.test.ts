@@ -186,7 +186,10 @@ test("a 0/1 array plot is two-tone: background for 0, foreground for 1", () => {
   expect(s).not.toContain("color-mix");
   expect(s.split("var(--notatio-fg").length - 1).toBe(2);
   expect(s.split("var(--notatio-bg").length - 1).toBe(2);
-  expect(arrayPlotSvg([[0, 2]])).toContain("color-mix");
+  // Anything else takes the gradient: viridis's first and last colors at the extremes.
+  const ramped = arrayPlotSvg([[0, 2]]);
+  expect(ramped).toContain("#440154");
+  expect(ramped).toContain("#fde725");
 });
 
 // ---------------------------------------------------------------------------

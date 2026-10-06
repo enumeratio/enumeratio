@@ -36,6 +36,17 @@ import {
   quotient,
 } from "./gaussian.ts";
 import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
+import { quadraticAt, quadraticCarrierAt, quadraticExpression } from "./boxed-quadratic.ts";
+import {
+  classify,
+  factorElement,
+  isUnit as isQuadraticUnit,
+  mul as quadraticMul,
+  normalize as quadraticNormalize,
+  type QuadraticElement,
+  type QuadraticRing,
+  quadraticRing,
+} from "./quadratic.ts";
 
 // compute-engine's integer heads, carried into ℤ[i] the way Wolfram carries them: a Gaussian
 // argument switches Mod, Quotient, GCD, LCM, ExtendedGCD and ModularInverse over on its own,
@@ -54,8 +65,11 @@ import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
 type Ops = readonly Expr[];
 
-/** The rings `Over` accepts today — ℤ, the default, and ℤ[i]. */
-type Ring = "Integers" | "GaussianIntegers";
+/**
+ * The rings `Over` accepts — ℤ, the default, ℤ[i], and `QuadraticIntegers(d)`, the ring of
+ * integers of ℚ(√d). `QuadraticIntegers(-1)` is ℤ[i], answered with the Gaussian conventions.
+ */
+type Ring = "Integers" | "GaussianIntegers" | QuadraticRing;
 
 const RINGS: Readonly<Record<string, Ring>> = { Integers: "Integers", GaussianIntegers: "GaussianIntegers" };
 
@@ -78,10 +92,25 @@ function overOption(head: string, ops: Ops): { positional: number; ring: Ring } 
   const names = Object.keys(split.options);
   if (names.some((name) => name !== "Over")) return "other";
   const raw = split.options.Over;
-  const ring = raw === undefined ? "Integers" : RINGS[optionName(raw) ?? ""];
+  const ring = raw === undefined ? "Integers" : (RINGS[optionName(raw) ?? ""] ?? quadraticOver(raw));
   if (ring === undefined) return "other";
   return { positional: split.ops.length, ring };
 }
+
+/** `QuadraticIntegers(d)` as a ring; ℤ[i] by its Gaussian name. */
+function quadraticOver(raw: unknown): Ring | undefined {
+  if (!Array.isArray(raw) || raw[0] !== "QuadraticIntegers" || raw.length !== 2) return undefined;
+  const d = typeof raw[1] === "number" && Number.isSafeInteger(raw[1]) ? BigInt(raw[1]) : undefined;
+  const R = d === undefined ? undefined : quadraticRing(d);
+  if (R === undefined) return undefined;
+  return R.d === -1n ? "GaussianIntegers" : R;
+}
+
+/**
+ * How an option head answers over a quadratic ring other than ℤ[i]: from the element's ideal
+ * factorisation, or — for the heads that need prime elements — only where O_K is a UFD.
+ */
+type QuadraticAnswer = (R: QuadraticRing, a: QuadraticElement) => Expr | undefined;
 
 /** ⌊a/b⌋ for bigints, b ≠ 0. */
 const floorDiv = (a: bigint, b: bigint): bigint => {
@@ -206,8 +235,10 @@ export function declareGaussian(ce: Engine): void {
     native: ((op: Expr) => boolean) | undefined,
     answer: (z: Gaussian) => Expr | undefined,
     integer?: (n: bigint) => Expr | undefined,
+    quadratic?: QuadraticAnswer,
   ): void => {
     widenSignature(ce, head, signature, native);
+    if (quadratic) widenSignature(ce, head, signature.replace(/^\(number/, "(quadratic_integer"));
     const definition = ce.lookupDefinition(head);
     const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
     if (operator === undefined) return;
@@ -224,12 +255,30 @@ export function declareGaussian(ce: Engine): void {
       if (ops[0]?.operator === "List") {
         return list(operandsOf(ops[0]).map((item) => evaluate!([item, ...ops.slice(1)], options)!));
       }
-      const z = gaussianAt(ops[0]);
-      if (z !== undefined && (z[1] !== 0n || option.ring === "GaussianIntegers")) return answer(z);
+      // A carrier names its own ring; otherwise `Over` does.
+      const carried = quadraticCarrierAt(ops[0]);
+      const ring = carried?.[0] ?? (typeof option.ring === "object" ? option.ring : undefined);
+      if (ring !== undefined && ring.d !== -1n) {
+        const a = carried?.[1] ?? quadraticAt(ring, ops[0]);
+        return a === undefined ? undefined : quadratic?.(ring, a);
+      }
+      const z = carried?.[1] ?? gaussianAt(ops[0]);
+      if (z !== undefined && (z[1] !== 0n || option.ring === "GaussianIntegers" || carried)) return answer(z);
       return (z !== undefined ? integer?.(z[0]) : undefined) ?? fallback?.(ops.slice(0, 1), options);
     };
     extendHead(ce, head, { evaluate });
   };
+
+  // Over a quadratic ring: primality and irreducibility from the ideal factorisation, in any
+  // O_K; the factorisation heads only where O_K is a UFD, the one case with prime factors to list.
+  const truth = (value: boolean | undefined): Expr | undefined =>
+    value === undefined ? undefined : ce.symbol(value ? "True" : "False");
+  const quadraticKind = (R: QuadraticRing, a: QuadraticElement) => classify(R, a);
+  const quadraticPrimes = (R: QuadraticRing, a: QuadraticElement) => {
+    const factors = factorElement(R, a);
+    return factors?.filter(([p]) => !isQuadraticUnit(R, p));
+  };
+  const q = (R: QuadraticRing, a: QuadraticElement): Expr => quadraticExpression(ce, R, a);
 
   optionHead(
     "IsPrime",
@@ -241,6 +290,10 @@ export function declareGaussian(ce: Engine): void {
     // an undefined corner we override rather than diverge on, matching Wolfram. Positive n
     // falls through (returns undefined) to the native handler, unchanged.
     (n) => (n < 0n ? ce.symbol(isPrime(-n) ? "True" : "False") : undefined),
+    (R, a) => {
+      const kind = quadraticKind(R, a);
+      return kind === undefined ? undefined : truth(kind === "prime");
+    },
   );
   // 0 and ±1 have no prime factorisation; the native handler spells them as Wolfram does.
   const factorsOf = (n: bigint): [bigint, number][] | undefined => (n > 1n || n < -1n ? factorInteger(n) : undefined);
@@ -261,6 +314,10 @@ export function declareGaussian(ce: Engine): void {
       const sign: [bigint, number][] = n < 0n ? [[-1n, 1]] : [];
       return pairs([...sign, ...factors].map(([p, e]) => [ce.number(p), e]));
     },
+    (R, a) => {
+      const factors = factorElement(R, a);
+      return factors === undefined ? undefined : pairs(factors.map(([p, e]) => [q(R, p), e]));
+    },
   );
   optionHead(
     "Divisors",
@@ -280,6 +337,27 @@ export function declareGaussian(ce: Engine): void {
       divisors.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
       return list(divisors.map((d) => ce.number(d)));
     },
+    (R, a) => {
+      // Normalised divisors, ascending by |norm|: every product of the prime powers.
+      const primes = quadraticPrimes(R, a);
+      if (primes === undefined) return undefined;
+      let divisors: QuadraticElement[] = [[1n, 0n]];
+      for (const [p, e] of primes) {
+        divisors = divisors.flatMap((d) => {
+          const out: QuadraticElement[] = [d];
+          for (let k = 1; k <= e; k++) out.push(quadraticMul(R, out[k - 1]!, p));
+          return out;
+        });
+      }
+      const size = ([x, y]: QuadraticElement): bigint => {
+        const n = x * x + R.s * x * y - R.r * y * y;
+        return n < 0n ? -n : n;
+      };
+      const sorted = divisors
+        .map((d) => quadraticNormalize(R, d)[0])
+        .toSorted((u, v) => (size(u) < size(v) ? -1 : size(u) > size(v) ? 1 : u[0] < v[0] ? -1 : u[0] > v[0] ? 1 : 0));
+      return list(sorted.map((d) => q(R, d)));
+    },
   );
 
   // PrimeNu, PrimeOmega, MoebiusMu and IsSquareFree already answer plain integers (widened in
@@ -287,26 +365,77 @@ export function declareGaussian(ce: Engine): void {
   // integer, and a Gaussian argument off the real line, are new here.
   const bool = (value: boolean): Expr => ce.symbol(value ? "True" : "False");
 
-  optionHead("PrimeNu", "(number, any*) -> integer", undefined, (z) => {
-    const count = primeNuGaussian(z);
-    return count === undefined ? undefined : ce.number(count);
-  });
-  optionHead("PrimeOmega", "(number, any*) -> integer", undefined, (z) => {
-    const count = primeOmegaGaussian(z);
-    return count === undefined ? undefined : ce.number(count);
-  });
-  optionHead("MoebiusMu", "(number, any*) -> integer", undefined, (z) => {
-    const mu = moebiusMuGaussian(z);
-    return mu === undefined ? undefined : ce.number(mu);
-  });
-  optionHead("IsSquareFree", "(number, any*) -> boolean", undefined, (z) => {
-    const squareFree = isSquareFreeGaussian(z);
-    return squareFree === undefined ? undefined : bool(squareFree);
-  });
+  optionHead(
+    "PrimeNu",
+    "(number, any*) -> integer",
+    undefined,
+    (z) => {
+      const count = primeNuGaussian(z);
+      return count === undefined ? undefined : ce.number(count);
+    },
+    undefined,
+    (R, a) => {
+      const primes = quadraticPrimes(R, a);
+      return primes === undefined ? undefined : ce.number(primes.length);
+    },
+  );
+  optionHead(
+    "PrimeOmega",
+    "(number, any*) -> integer",
+    undefined,
+    (z) => {
+      const count = primeOmegaGaussian(z);
+      return count === undefined ? undefined : ce.number(count);
+    },
+    undefined,
+    (R, a) => {
+      const primes = quadraticPrimes(R, a);
+      return primes === undefined ? undefined : ce.number(primes.reduce((total, [, e]) => total + e, 0));
+    },
+  );
+  optionHead(
+    "MoebiusMu",
+    "(number, any*) -> integer",
+    undefined,
+    (z) => {
+      const mu = moebiusMuGaussian(z);
+      return mu === undefined ? undefined : ce.number(mu);
+    },
+    undefined,
+    (R, a) => {
+      const primes = quadraticPrimes(R, a);
+      if (primes === undefined) return undefined;
+      return ce.number(primes.some(([, e]) => e > 1) ? 0 : primes.length % 2 === 0 ? 1 : -1);
+    },
+  );
+  optionHead(
+    "IsSquareFree",
+    "(number, any*) -> boolean",
+    undefined,
+    (z) => {
+      const squareFree = isSquareFreeGaussian(z);
+      return squareFree === undefined ? undefined : bool(squareFree);
+    },
+    undefined,
+    (R, a) => {
+      const primes = quadraticPrimes(R, a);
+      return primes === undefined ? undefined : bool(primes.every(([, e]) => e === 1));
+    },
+  );
 
   // Neither zero, a unit (norm 1) nor prime; Wolfram's CompositeQ[3 + I] is True, CompositeQ[2 + I] False.
-  optionHead("IsComposite", "(number, any*) -> boolean", undefined, (z) =>
-    bool(z[0] * z[0] + z[1] * z[1] > 1n && !isGaussianPrime(z)),
+  // Over a ring without unique factorisation an irreducible is not composite either: it has
+  // no proper factorisation, prime or not.
+  optionHead(
+    "IsComposite",
+    "(number, any*) -> boolean",
+    undefined,
+    (z) => bool(z[0] * z[0] + z[1] * z[1] > 1n && !isGaussianPrime(z)),
+    undefined,
+    (R, a) => {
+      const kind = quadraticKind(R, a);
+      return kind === undefined ? undefined : truth(kind === "composite");
+    },
   );
 
   // DivisorSigma(k, n, Over -> GaussianIntegers): two positional arguments ahead of the
