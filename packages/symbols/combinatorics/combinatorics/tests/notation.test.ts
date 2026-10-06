@@ -28,9 +28,16 @@ test("conventional notation doesn't read back on its own", () => {
 test("a permutation writes its trigger, and reads back", () => {
   for (const p of [1, 2, 3, 4].flatMap(permutations)) {
     const expr = ["Permutation", ["List", ...p]];
-    expect(latex(expr), `[${p.join(", ")}]`).toBe(`\\permutation(${p.join(", ")})`);
+    expect(latex(expr), `[${p.join(", ")}]`).toBe(`\\permutation([${p.join(", ")}])`);
     expect(parse(latex(expr)), `[${p.join(", ")}]`).toEqual(expr);
   }
+});
+
+test("the variadic spelling is still read, and the list is what's written", () => {
+  expect(parse("\\permutation(2, 3, 1)")).toEqual(["Permutation", ["List", 2, 3, 1]]);
+  expect(latex(["CycleDecomposition", ["List", ["List", 1, 2], ["List", 3]]])).toBe(
+    "\\cycleDecomposition([[1, 2], [3]])",
+  );
 });
 
 test("list, nested-list and tuple shapes read back", () => {

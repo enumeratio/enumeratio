@@ -1,5 +1,5 @@
 // @enumeratio/combinatorics' notation: each carrier's constructor in StandardForm,
-// `\permutation(2, 3, 1)` both ways, and the MathLive macros that show those commands.
+// `\permutation([2, 3, 1])` both ways, and the MathLive macros that show those commands.
 
 import type { PackageNotation } from "@enumeratio/boxes";
 import { carrierLatex, carrierMacros } from "./carrier-latex.ts";

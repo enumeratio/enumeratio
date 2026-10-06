@@ -21,7 +21,7 @@ position in its own declare order (see the file comment for why).
   `declareStats`; `./collections/src` and `./collections/sampleable` for the source and the
   sampler used by property tests.
 - **`carriers.ts`** — `CARRIERS`, `declareCombinatoricsCarriers`, `LEFTOVER_CARRIERS`.
-- **`./notation`** — the carrier constructors' StandardForm, `\permutation(2, 3, 1)` both
+- **`./notation`** — the carrier constructors' StandardForm, `\permutation([2, 3, 1])` both
   ways, and MathLive macros for those commands; a host loads it before it builds an engine.
 - **`maps.ts`** — `MAPS`, `declareMaps`, `evaluateDefinition`; `frontier-maps.ts` tracks the
   ones not yet defined (`UNDEFINED_MAPS`).
