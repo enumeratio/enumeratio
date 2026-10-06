@@ -8,7 +8,7 @@ import type { ComputeEngine, MathJsonExpression } from "@cortex-js/compute-engin
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
 import { type Box, form, makeBoxes, notationOf } from "@enumeratio/boxes";
 import { BOXES_LATEX } from "@enumeratio/boxes/render";
-import { CONVENTIONAL_LATEX } from "./conventional-latex.ts";
+import { CONVENTIONAL_LATEX, DisplayLatexSyntax, probeLanded } from "./conventional-latex.ts";
 import { mergeLatex } from "./engine.ts";
 import { latexOf, NOTATIO_LATEX } from "./latex.ts";
 
@@ -21,8 +21,14 @@ type Entry = Partial<LatexDictionaryEntry>;
 /** The LaTeX dictionary a kernel's engine writes with: `base` (compute-engine's), ours (with
  *  boxes' DisplayForm and RawBoxes, which typeset through the serialisers), then `extra` (the
  *  packages' notation), as the page engine merges them. */
-export const displayDictionary = (base: readonly Entry[], extra: readonly Entry[] = []): Entry[] =>
-  mergeLatex(base, [...NOTATIO_LATEX, ...CONVENTIONAL_LATEX, ...BOXES_LATEX, ...extra]);
+export const displayDictionary = (base: readonly Entry[], extra: readonly Entry[] = []): Entry[] => {
+  probeLanded();
+  return mergeLatex(base, [...NOTATIO_LATEX, ...CONVENTIONAL_LATEX, ...BOXES_LATEX, ...extra]);
+};
+
+/** `displayDictionary` as a syntax, which also writes the Unicode list's symbols as Unicode. */
+export const displayLatexSyntax = (base: readonly Entry[], extra: readonly Entry[] = []): DisplayLatexSyntax =>
+  new DisplayLatexSyntax({ dictionary: displayDictionary(base, extra) as never[] });
 
 const isList = (json: unknown): boolean => Array.isArray(json) && json[0] === "List";
 

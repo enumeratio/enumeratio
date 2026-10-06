@@ -15,9 +15,9 @@
 // Vite bundles them into the worker, each library a chunk of its own -- no runtime
 // `import()` of a URL the build never emitted.
 import { startSessionWorker } from "@enumeratio/evaluation/session-worker-core";
-import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, registerNotation } from "@enumeratio/boxes";
-import { displayDictionary } from "@enumeratio/frontend/display";
+import { displayLatexSyntax } from "@enumeratio/frontend/display";
 import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import NOTATION_ENTRIES from "virtual:notation-entries";
 import { libraryRegistry, registerLibraryNotation } from "./libraries.ts";
@@ -35,7 +35,7 @@ startSessionWorker(undefined, {
   notation: registerLibraryNotation,
   createEngine: () => {
     const ce = new ComputeEngine({
-      latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, notation.latex) }),
+      latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, notation.latex),
     });
     registerNotation(ce, notation.traditional);
     return ce;

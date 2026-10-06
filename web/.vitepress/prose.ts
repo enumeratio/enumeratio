@@ -4,7 +4,7 @@
 // and in the browser.
 
 import { type Box } from "@enumeratio/boxes";
-import { readInlineMarkdown, readMarkdown, toHtml } from "@enumeratio/boxes/render";
+import { katexStrict, readInlineMarkdown, readMarkdown, toHtml } from "@enumeratio/boxes/render";
 import katex from "katex";
 
 const typeset = new Map<string, string>();
@@ -14,7 +14,12 @@ export function tex(latex: string, display: boolean): string {
   const key = `${display ? "D" : "I"}${latex}`;
   let html = typeset.get(key);
   if (html === undefined) {
-    html = katex.renderToString(latex, { displayMode: display, throwOnError: false, output: "htmlAndMathml" });
+    html = katex.renderToString(latex, {
+      displayMode: display,
+      throwOnError: false,
+      output: "htmlAndMathml",
+      strict: katexStrict(),
+    });
     typeset.set(key, html);
   }
   return html;

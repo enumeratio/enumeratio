@@ -35,11 +35,11 @@ number; [`Idele`](https://enumeratio.dev/reference/symbol/Idele) is a unit of th
 ring, principal everywhere except a named finite set of primes.
 
 **Matrices.** [`ProfiniteDecomposition`](https://enumeratio.dev/reference/symbol/ProfiniteDecomposition)
-factors $m \in GL_n(\hat{\mathbb{Q}})$ as $b \cdot a$ with $b \in GL_n(\hat{\mathbb{Z}})$
-and $a \in GL_n^+(\mathbb{Q})$ upper triangular.
+factors $m ∈ GL_n(\hat{\mathbb{Q}})$ as $b \cdot a$ with $b ∈ GL_n(\hat{\mathbb{Z}})$
+and $a ∈ GL_n^+(\mathbb{Q})$ upper triangular.
 
 **Visualization.** [`ProfinitePlot`](https://enumeratio.dev/reference/symbol/ProfinitePlot)
-draws a profinite function $\hat{\mathbb{Z}} \to \hat{\mathbb{Z}}$ as an `ArrayPlot`,
+draws a profinite function $\hat{\mathbb{Z}} → \hat{\mathbb{Z}}$ as an `ArrayPlot`,
 residue classes laid out by factorial digits.
 
 ## See also

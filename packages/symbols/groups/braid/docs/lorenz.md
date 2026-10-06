@@ -7,12 +7,12 @@ order: 3
 In 1963 Edward Lorenz cut a weather model down to three equations:
 
 $$
-\dot x = \sigma(y - x), \qquad
-\dot y = x(\rho - z) - y, \qquad
-\dot z = xy - \beta z,
+\dot x = σ(y - x), \qquad
+\dot y = x(ρ - z) - y, \qquad
+\dot z = xy - β z,
 $$
 
-with $\sigma = 10$, $\rho = 28$, $\beta = 8/3$. Trajectories never settle and never
+with $σ = 10$, $ρ = 28$, $β = 8/3$. Trajectories never settle and never
 repeat, winding around two lobes and swapping between them unpredictably — the first
 strange attractor, and the origin of the phrase _butterfly effect_.
 
@@ -74,10 +74,10 @@ knot is amphichiral and a positive braid closure never is.
 Now the surprise. Take the space of lattices in the plane with unit-area fundamental
 domain. Each lattice $L$ has two classical invariants,
 
-$$ g_2(L) = 60!!\sum_{\omega \in L \setminus 0}!! \omega^{-4}, \qquad
-g_3(L) = 140\!\!\sum_{\omega \in L \setminus 0}\!\! \omega^{-6},$$
+$$ g_2(L) = 60!!\sum_{ω ∈ L ∖ 0}!! ω^{-4}, \qquad
+g_3(L) = 140\!\!\sum_{ω ∈ L ∖ 0}\!\! ω^{-6},$$
 
-and the discriminant $\Delta = g_2^3 - 27 g_3^2$ vanishes exactly where the lattice
+and the discriminant $Δ = g_2^3 - 27 g_3^2$ vanishes exactly where the lattice
 degenerates. The set where it vanishes, inside the three-sphere of normalised lattices,
 is a **trefoil** — so the space of genuine lattices is a trefoil complement, which is to
 say the unit tangent bundle of [the modular surface](../../modular/docs/modular-group.md).
@@ -131,7 +131,7 @@ them further.
 
 ## Things worth knowing
 
-- **Every torus knot is a Lorenz knot.** $(\sigma_1 \cdots \sigma_{p-1})^q$ is positive,
+- **Every torus knot is a Lorenz knot.** $(σ_1 \cdots σ_{p-1})^q$ is positive,
   and the template realises every positive braid of that shape — see
   [torus knots](torus-knots.md).
 - **Lorenz knots are fibred**, with genus fixed by the braid, because a positive braid

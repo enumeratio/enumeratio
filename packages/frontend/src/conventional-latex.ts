@@ -8,9 +8,9 @@
 // The shared engine carries these via its configureLatex list (engine.ts); engines built
 // elsewhere pass `conventionalLatexDictionary()`.
 
-import { LATEX_DICTIONARY, type MathJsonExpression } from "@cortex-js/compute-engine";
+import { LATEX_DICTIONARY, LatexSyntax, type MathJsonExpression } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry, Serializer } from "@cortex-js/compute-engine/latex-syntax";
-import { escapeTeXText } from "@enumeratio/boxes/render";
+import { commandTeX, escapeTeXText, markLanded, UNICODE_TEX, unicodeTeX } from "@enumeratio/boxes/render";
 
 type Entry = Partial<LatexDictionaryEntry>;
 
@@ -233,7 +233,7 @@ const PRIME_PRECEDENCE = 810;
 /** `Derivative(f, n)` as a prime, with the operand bracketed when it binds looser than the
  *  prime: `(x\mapsto x^2)'`, `(x^2)'`. Bare, the prime lands on the function body or on a
  *  power's exponent, a double superscript. Several orders keep the native `f^{(a, b)}`.
- *  Upstream: https://github.com/cortex-js/compute-engine/issues/345#issuecomment-6022735477 */
+ *  Upstream: https://github.com/cortex-js/compute-engine/issues/420 */
 const derivative: Entry = {
   ...native("Derivative"),
   name: "Derivative",
@@ -309,6 +309,32 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
   derivative,
 ];
 
+let probed = false;
+
+/** Marks the `landed` Unicode symbols that this compute-engine parses as their command (the
+ *  blackboard sets, once it ships them), which are written as Unicode from then on. */
+export function probeLanded(): void {
+  if (probed) return;
+  probed = true;
+  const syntax = new LatexSyntax();
+  const read = (tex: string) => JSON.stringify(syntax.parse(tex));
+  markLanded(
+    UNICODE_TEX.filter((s) => s.landed && read(`x\\in ${s.char}`) === read(`x\\in ${s.command}`)).map((s) => s.char),
+  );
+}
+
+/** A `LatexSyntax` that writes the Unicode list's symbols as Unicode, whichever route wrote
+ *  them (a head's entry, a symbol's name, a template), and reads them as their commands. */
+export class DisplayLatexSyntax extends LatexSyntax {
+  override serialize(...args: Parameters<LatexSyntax["serialize"]>): string {
+    return unicodeTeX(super.serialize(...args));
+  }
+
+  override parse(latex: string, options?: Parameters<LatexSyntax["parse"]>[1]): ReturnType<LatexSyntax["parse"]> {
+    return super.parse(commandTeX(latex), options);
+  }
+}
+
 /**
  * `LATEX_DICTIONARY` with the default entries for `CONVENTIONAL_LATEX`'s names
  * dropped, and the conventional ones appended in their place. Two entries for the
@@ -316,6 +342,7 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
  * the later entry still wins — but the default is removed first to build clean).
  */
 export function conventionalLatexDictionary(): readonly Entry[] {
+  probeLanded();
   const entries = CONVENTIONAL_LATEX;
   const names = new Set(entries.map((e) => e.name));
   const base = LATEX_DICTIONARY.filter((entry) => {

@@ -7,7 +7,13 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { type Box, makeBoxes } from "@enumeratio/boxes";
-import { type MathMLOptions, parseMathML, toLatex, toMathML as boxesToMathML } from "@enumeratio/boxes/render";
+import {
+  commandTeX,
+  type MathMLOptions,
+  parseMathML,
+  toLatex,
+  toMathML as boxesToMathML,
+} from "@enumeratio/boxes/render";
 
 export type { MathMLOptions };
 
@@ -15,9 +21,9 @@ export type { MathMLOptions };
 export const toMathML = (json: MathJsonExpression, options: MathMLOptions = {}): string =>
   boxesToMathML(makeBoxes(json), options);
 
-/** Boxes read as an expression: through their LaTeX, for now. */
+/** Boxes read as an expression: through their LaTeX, for now, as commands (any engine reads them). */
 export const boxesToExpression = (boxes: Box, ce: ComputeEngine): MathJsonExpression =>
-  ce.parse(toLatex(boxes)).json as MathJsonExpression;
+  ce.parse(commandTeX(toLatex(boxes))).json as MathJsonExpression;
 
 /** Read presentation MathML as an expression. */
 export const fromMathML = (xml: string, ce: ComputeEngine): MathJsonExpression =>

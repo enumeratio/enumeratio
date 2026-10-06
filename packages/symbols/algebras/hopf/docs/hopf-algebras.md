@@ -5,7 +5,7 @@ Everything else in this section is an **algebra**: a product, and nothing else. 
 which takes one element to a sum of tensor pairs and pulls objects apart where the
 product puts them together. The two are not independent — they must satisfy
 
-$$\Delta(x \cdot y) = \Delta(x) \cdot \Delta(y)$$
+$$Δ(x \cdot y) = Δ(x) \cdot Δ(y)$$
 
 in the tensor square. That compatibility is the whole point of the structure, and it is
 also the best test available, because the product and the coproduct are written
@@ -14,10 +14,10 @@ separately and the identity relates them.
 Two such algebras live here, both indexed by **compositions** (ordered lists of positive
 parts), and dual to each other:
 
-|                                                | basis      | product           | coproduct                                                               |
-| ---------------------------------------------- | ---------- | ----------------- | ----------------------------------------------------------------------- |
-| **NSym** — non-commutative symmetric functions | $H_\alpha$ | **concatenation** | $\Delta(H_n) = \sum_{i+j=n} H_i \otimes H_j$, extended multiplicatively |
-| **QSym** — quasi-symmetric functions           | $M_\alpha$ | **quasi-shuffle** | **deconcatenation**                                                     |
+|                                                | basis | product           | coproduct                                                    |
+| ---------------------------------------------- | ----- | ----------------- | ------------------------------------------------------------ |
+| **NSym** — non-commutative symmetric functions | $H_α$ | **concatenation** | $Δ(H_n) = \sum_{i+j=n} H_i ⊗ H_j$, extended multiplicatively |
+| **QSym** — quasi-symmetric functions           | $M_α$ | **quasi-shuffle** | **deconcatenation**                                          |
 
 The graded piece of degree $n$ has one basis element per composition of $n$, so both have
 dimension $2^{n-1}$ — a count enumeratio already keeps.
@@ -67,8 +67,8 @@ what make these bialgebras rather than an algebra and an unrelated map.
 ## The antipode
 
 A Hopf algebra has one more piece: an antipode $S$ with
-$m(S \otimes \mathrm{id})\Delta = \eta\varepsilon$. On a graded connected algebra that
-axiom _determines_ $S$ by a recursion — split off the two trivial terms of $\Delta$ and
+$m(S ⊗ \mathrm{id})Δ = η\varepsilon$. On a graded connected algebra that
+axiom _determines_ $S$ by a recursion — split off the two trivial terms of $Δ$ and
 
 $$S(x) = -x - \sum S(x')\,x''$$
 
@@ -99,10 +99,10 @@ partial sums. Refining a composition adds elements to that set and coarsening re
 so the compositions of $n$ form a Boolean lattice — and the bases the subject is actually
 written in come from summing over that lattice and inverting.
 
-|          | definition                                                 | inverse                                                                                    |
-| -------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| **NSym** | $H_\alpha = \sum_{\beta \text{ coarsens } \alpha} R_\beta$ | $R_\alpha = \sum_{\beta \text{ coarsens } \alpha} (-1)^{\ell(\alpha)-\ell(\beta)} H_\beta$ |
-| **QSym** | $F_\alpha = \sum_{\beta \text{ refines } \alpha} M_\beta$  | $M_\alpha = \sum_{\beta \text{ refines } \alpha} (-1)^{\ell(\beta)-\ell(\alpha)} F_\beta$  |
+|          | definition                               | inverse                                                   |
+| -------- | ---------------------------------------- | --------------------------------------------------------- |
+| **NSym** | $H_α = \sum_{β \text{ coarsens } α} R_β$ | $R_α = \sum_{β \text{ coarsens } α} (-1)^{ℓ(α)-ℓ(β)} H_β$ |
+| **QSym** | $F_α = \sum_{β \text{ refines } α} M_β$  | $M_α = \sum_{β \text{ refines } α} (-1)^{ℓ(β)-ℓ(α)} F_β$  |
 
 Those signed sums are **Möbius inversion** over the Boolean lattice, whose Möbius function
 is $(-1)^{|\text{difference}|}$ — the same inversion
@@ -114,7 +114,7 @@ slip. NSym and QSym are **dual**, with $H$ dual to $M$ and $R$ dual to $F$. So d
 the best test available here:
 
 $$
-\langle R_\alpha, F_\beta \rangle = \delta_{\alpha\beta},
+\langle R_α, F_β \rangle = δ_{α β},
 $$
 
 and since the two transition matrices are written down separately, nothing forces them to
@@ -137,20 +137,20 @@ changes is how simple the answers are.
 The **ribbon product** has a two-term closed form:
 
 $$
-R_\alpha \cdot R_\beta = R_{\alpha \cdot \beta} + R_{\alpha \triangleright \beta},
+R_α \cdot R_β = R_{α \cdot β} + R_{α \triangleright β},
 $$
 
-where $\alpha \cdot \beta$ is concatenation and $\alpha \triangleright \beta$ is
-_near-concatenation_ — join the two, adding $\alpha$'s last part to $\beta$'s first. That
+where $α \cdot β$ is concatenation and $α \triangleright β$ is
+_near-concatenation_ — join the two, adding $α$'s last part to $β$'s first. That
 second operation has no meaning in the $H$ basis at all.
 
 The **ribbon antipode** is a single signed basis element:
 
 $$
-S(R_\alpha) = (-1)^{|\alpha|} R_{\alpha^{*}},
+S(R_α) = (-1)^{|α|} R_{α^{*}},
 $$
 
-for $\alpha^{*}$ the conjugate composition — the transpose of the ribbon's skew shape. In
+for $α^{*}$ the conjugate composition — the transpose of the ribbon's skew shape. In
 the $H$ basis the same antipode is an alternating sum over every coarsening, so this is
 about as clear a demonstration of what a good basis is for as the subject offers.
 
@@ -162,10 +162,10 @@ about as clear a demonstration of what a good basis is for as the subject offers
 <notatio-cell value="ConjugateComposition([2, 1])" />
 </Story>
 
-Which involution $\alpha \mapsto \alpha^{*}$ is depends on a convention that is easy to get
+Which involution $α ↦ α^{*}$ is depends on a convention that is easy to get
 backwards — at $n = 3$ both $(2,1)$ and $(1,2)$ are self-conjugate under the right one and
 swap under the wrong one. It is settled here by the antipode rather than by taste: only one
-of the two candidate maps makes $S(R_\alpha)$ a single term at all.
+of the two candidate maps makes $S(R_α)$ a single term at all.
 
 ## Things worth knowing
 
@@ -173,8 +173,8 @@ of the two candidate maps makes $S(R_\alpha)$ a single term at all.
 already the shared ordered product across the algebra libraries, and overloading it for
 a genuine tensor pair would be a conflation.
 
-**The two algebras share an index set but are not the same algebra.** Mixing $H_\alpha$
-and $M_\alpha$ in one product is refused rather than silently coerced, and containment
+**The two algebras share an index set but are not the same algebra.** Mixing $H_α$
+and $M_α$ in one product is refused rather than silently coerced, and containment
 distinguishes them.
 
 **A sum of mixed degrees has no degree**, so `HopfDegree` leaves that call standing.

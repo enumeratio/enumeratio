@@ -7,10 +7,11 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
+import { katexStrict } from "@enumeratio/boxes/render";
 import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
-import { displayDictionary } from "@enumeratio/frontend/display";
+import { displayLatexSyntax } from "@enumeratio/frontend/display";
 import { type Prerendered, prerender } from "@enumeratio/frontend/prerender";
 import { createResolver, NOTATIONS } from "@enumeratio/manifest";
 import type { ReferenceEntry } from "@enumeratio/reference";
@@ -42,7 +43,7 @@ export function fillPrerendered(html: string, page: string): string {
 
 /** TeX as the page's `<notatio-out>` typesets it (`@enumeratio/components`' `loadMarkup`). */
 export const typeset = (latex: string): string =>
-  katex.renderToString(portableTeX(latex), { throwOnError: false, output: "htmlAndMathml" });
+  katex.renderToString(portableTeX(latex), { throwOnError: false, output: "htmlAndMathml", strict: katexStrict() });
 
 /** An engine as the site's worker kernel makes one: its dictionary and every package's notation. */
 export async function makeEngine(): Promise<ComputeEngine> {
@@ -55,7 +56,7 @@ export async function makeEngine(): Promise<ComputeEngine> {
   // `typeset` expands them, as the page's `configureMacros` does.
   registerTeXMacros(notation.macros);
   const ce = new ComputeEngine({
-    latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, notation.latex) }),
+    latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, notation.latex),
   });
   registerNotation(ce, notation.traditional);
   return ce;

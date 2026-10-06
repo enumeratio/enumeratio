@@ -44,4 +44,4 @@ Element(Diagram([[1, 2, -1], [3, -3], [-2]]), PartitionAlgebra(3))   // True
 
 The guide covers which subalgebra corresponds to which restriction on admitted diagrams
 (planar, non-crossing, fixed-point-free, …) and how a closed loop contributes the loop
-parameter $\delta$ on multiplication.
+parameter $δ$ on multiplication.

@@ -12,7 +12,7 @@
 // tests/forms.test.ts fails when a printer or transpiler no longer produces what's pinned.
 
 import { isDeepStrictEqual } from "node:util";
-import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
+import { ComputeEngine } from "@cortex-js/compute-engine";
 import { parseEpsil } from "@cortex-js/compute-engine/epsil";
 import {
   type ExampleImplementations,
@@ -27,7 +27,7 @@ import { markupOf, readMarkupText, stripMetadata } from "@enumeratio/formats/mar
 import { parseExpression } from "@enumeratio/formats/expression";
 import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
 import { emit, SYSTEMS, type System } from "@enumeratio/oracle";
-import { conventionalLatexDictionary, withStringsWrapped } from "../src/conventional-latex.ts";
+import { conventionalLatexDictionary, DisplayLatexSyntax, withStringsWrapped } from "../src/conventional-latex.ts";
 import { mergeLatex } from "../src/engine.ts";
 import { combineNotation, makeBoxes, notationOf } from "@enumeratio/boxes";
 import { toLatex } from "@enumeratio/boxes/render";
@@ -38,7 +38,9 @@ const PACKAGES = combineNotation(await packageNotations());
 registerTeXMacros(PACKAGES.macros);
 
 const ce = new ComputeEngine({
-  latexSyntax: new LatexSyntax({ dictionary: mergeLatex(conventionalLatexDictionary(), PACKAGES.latex) as never[] }),
+  latexSyntax: new DisplayLatexSyntax({
+    dictionary: mergeLatex(conventionalLatexDictionary(), PACKAGES.latex) as never[],
+  }),
 });
 
 // TraditionalForm: every package's notation, as the engine that declares them all registers it.

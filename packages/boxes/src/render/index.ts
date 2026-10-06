@@ -3,6 +3,16 @@
 // symbol packages build their notation on.
 
 export { escapeTeXText, setMathSymbols, toLatex } from "./latex.ts";
+export {
+  commandTeX,
+  isUnicodeTeX,
+  katexStrict,
+  markLanded,
+  UNICODE_TEX,
+  unicodeSymbols,
+  unicodeTeX,
+  type UnicodeSymbol,
+} from "./unicode-tex.ts";
 export { BOXES_LATEX } from "./latex-entries.ts";
 export { MATHJSON_MIME, type MathMLOptions, MathMLSyntaxError, parseMathML, toMathML } from "./mathml.ts";
 export { toAscii, toText } from "./text.ts";

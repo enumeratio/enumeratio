@@ -190,6 +190,10 @@ kernel, the network or hand curation stays committed.
   `fast` path**, same order, answering while the fiber has at most `FAST_LIMIT` members.
   `tests/fast-kernels.test.ts` holds the two together; a TS kernel that lists members in another
   order gets no `fast`.
+- **LaTeX we write uses Unicode where every consumer reads it** (`ω`, `≤`), from one list,
+  `UNICODE_TEX` in `packages/boxes/src/render/unicode-tex.ts`; our syntax (`DisplayLatexSyntax`)
+  writes and reads it. Add a symbol there only when KaTeX (strict), compute-engine and MathLive read
+  it as the command; `packages/components/tests/unicode-tex.test.ts` checks that.
 - **Comments** state the current rule in the present tense, short and next to the code:
   - cite the formula (DLMF 25.11.1);
   - give the case that breaks without the code;

@@ -2,7 +2,7 @@
 
 A [diagram algebra](https://en.wikipedia.org/wiki/Brauer_algebra) is an algebra whose
 basis you can _draw_. An element of the [partition
-algebra](https://en.wikipedia.org/wiki/Partition_algebra) $P_n(\delta)$ is a set
+algebra](https://en.wikipedia.org/wiki/Partition_algebra) $P_n(δ)$ is a set
 partition of $2n$ points — a top row $1…n$ and a bottom row $1'…n'$ — pictured as two
 rows of dots with each block joined up:
 
@@ -17,7 +17,7 @@ Multiplication is geometric, and it is the whole subject: **stack $a$ above $b$,
 $a$'s bottom row to $b$'s top row, read off which outer points are now connected, and
 throw the middle away.** A block that ends up living entirely in the discarded middle
 was a closed loop, and each closed loop contributes a factor of the **loop parameter**
-$\delta$. So the algebra is defined over $\mathbb{Z}[\delta]$, and $\delta$ stays a
+$δ$. So the algebra is defined over $\mathbb{Z}[δ]$, and $δ$ stays a
 symbol here unless you give it a value.
 
 ## The lattice of subalgebras
@@ -64,7 +64,7 @@ top row and negative on the bottom. The Temperley–Lieb generator $e_1$ is the 
 it joins the two top points to each other and the two bottom points to each other.
 
 Stack $e_1$ on itself and the middle closes a loop — which is exactly the relation
-$e_1^2 = \delta e_1$, the defining relation of the Temperley–Lieb algebra.
+$e_1^2 = δ e_1$, the defining relation of the Temperley–Lieb algebra.
 
 <Story title="e₁² = δe₁">
 <template #description>The cup-cap squared: one closed loop, so one factor of δ.</template>
@@ -113,20 +113,20 @@ admit only blocks of size two.
 
 ## The orbit basis
 
-The diagram basis $d_\lambda$ is the obvious one — one element per set partition — but it is
+The diagram basis $d_λ$ is the obvious one — one element per set partition — but it is
 not the one the partition algebra's representation theory is written in. That is the
-**orbit basis** $x_\lambda$, and the difference is a quantifier:
+**orbit basis** $x_λ$, and the difference is a quantifier:
 
-> $d_\lambda$ asks for those points to be connected.
-> $x_\lambda$ asks for them to be connected **and nothing else**.
+> $d_λ$ asks for those points to be connected.
+> $x_λ$ asks for them to be connected **and nothing else**.
 
 So a diagram is the union of the orbits that refine it, and the two bases are related by
 summing over the partition lattice and inverting:
 
 $$
-d_\lambda = \sum_{\mu \succeq \lambda} x_\mu,
+d_λ = \sum_{μ \succeq λ} x_μ,
 \qquad
-x_\lambda = \sum_{\mu \succeq \lambda} \mu_\Pi(\lambda, \mu)\, d_\mu .
+x_λ = \sum_{μ \succeq λ} μ_Π(λ, μ)\, d_μ .
 $$
 
 <Story title="A quantifier, as a change of basis">
@@ -140,14 +140,14 @@ $$
 The Möbius function is the **partition lattice's**, not the Boolean one's:
 
 $$
-\mu_\Pi(\lambda, \mu) = \prod_{B \in \mu} (-1)^{k_B - 1} (k_B - 1)!,
+μ_Π(λ, μ) = \prod_{B ∈ μ} (-1)^{k_B - 1} (k_B - 1)!,
 $$
 
-with $k_B$ the number of $\lambda$-blocks inside the block $B$. That is worth setting beside
+with $k_B$ the number of $λ$-blocks inside the block $B$. That is worth setting beside
 the [Hopf-algebra bases](https://enumeratio.dev/docs/hopf/hopf-algebras), which come from the same kind of inversion over
 the **Boolean** lattice, where the Möbius function is only a sign. The factorials here are
 the difference between merging any set of blocks and merging only adjacent ones — and they
-are checked against the recursion $\sum_{\lambda \le \nu \le \mu} \mu_\Pi(\lambda,\nu) = 0$
+are checked against the recursion $\sum_{λ ≤ ν ≤ μ} μ_Π(λ,ν) = 0$
 rather than taken on faith.
 
 <Story title="Möbius over the partition lattice">
@@ -158,16 +158,16 @@ rather than taken on faith.
 </Story>
 
 What the orbit basis buys is a statement that has no clean form in the diagram basis at
-all: the map onto the centraliser algebra of the symmetric group acting on $V^{\otimes n}$
-kills $x_\lambda$ exactly when $\lambda$ has more blocks than $\delta$. Specialising the
+all: the map onto the centraliser algebra of the symmetric group acting on $V^{⊗ n}$
+kills $x_λ$ exactly when $λ$ has more blocks than $δ$. Specialising the
 loop parameter to an integer therefore just deletes basis elements — which is why the
 subject is written in $x$.
 
 ## Things worth knowing
 
 **The loop parameter is a free symbol.** These algebras are defined over
-$\mathbb{Z}[\delta]$, so a product returns a $\delta$-power times a diagram and leaves
-$\delta$ alone. Substitute a value when you want one — at $\delta = 1$ the Brauer
+$\mathbb{Z}[δ]$, so a product returns a $δ$-power times a diagram and leaves
+$δ$ alone. Substitute a value when you want one — at $δ = 1$ the Brauer
 algebra degenerates, and the interesting representation theory lives at special values.
 
 **A diagram must partition all $2n$ points.** `Diagram([[1,-1],[2]])` is missing $-2$,

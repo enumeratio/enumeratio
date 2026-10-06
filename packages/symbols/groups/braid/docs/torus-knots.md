@@ -9,8 +9,8 @@ Take a doughnut and a loop drawn on its surface: going round the hole $p$ times 
 going through it $q$ times gives the **torus knot** $T(p, q)$.
 
 $$
-t \mapsto \bigl((2 + \cos qt)\cos pt,\; (2 + \cos qt)\sin pt,\; -\sin qt\bigr),
-\qquad t \in [0, 2\pi).
+t ↦ \bigl((2 + \cos qt)\cos pt,\; (2 + \cos qt)\sin pt,\; -\sin qt\bigr),
+\qquad t ∈ [0, 2π).
 $$
 
 The $\cos pt$ and $\sin pt$ carry it round the axis $p$ times; the $\cos qt$ and
@@ -65,7 +65,7 @@ came from, so the equation and the shorthand give the same picture.
 
 ## The square picture
 
-A torus is two circles multiplied together, $S^1 \times S^1$ — so it is a square with
+A torus is two circles multiplied together, $S^1 × S^1$ — so it is a square with
 opposite edges glued. On that square, $T(p,q)$ is nothing but a **straight line of slope
 $q/p$**, wrapping round each time it leaves an edge. Everything below follows from
 staring at that line.
@@ -170,7 +170,7 @@ $p$ and $q$ is reflecting the line in the diagonal.
 </ClientOnly>
 </Story>
 
-Past that, the family is rigid: for coprime $p > q \ge 2$, distinct pairs give **distinct
+Past that, the family is rigid: for coprime $p > q ≥ 2$, distinct pairs give **distinct
 knots**. The proof is a van Kampen argument on the knot group, whose presentation
 $\langle a, b \mid a^p = b^q \rangle$ remembers $p$ and $q$ and nothing else.
 
@@ -185,9 +185,9 @@ $\langle a, b \mid a^p = b^q \rangle$ remembers $p$ and $q$ and nothing else.
 
 A torus knot is the closure of a braid you can write down without thinking:
 
-$$T(p, q) = \text{closure of } (\sigma_1 \sigma_2 \cdots \sigma_{p-1})^q.$$
+$$T(p, q) = \text{closure of } (σ_1 σ_2 \cdots σ_{p-1})^q.$$
 
-Take $p$ strands, cycle them all once — that is the $\sigma_1 \cdots \sigma_{p-1}$ — and
+Take $p$ strands, cycle them all once — that is the $σ_1 \cdots σ_{p-1}$ — and
 repeat $q$ times. The $p$ strands are the $p$ times round the axis, and the $q$ repeats
 are the $q$ times through the hole.
 
@@ -221,6 +221,6 @@ The Jones polynomials of T(7,3) and T(5,4) differ, which is one way to see the k
 ## What this connects to
 
 Every torus knot is a **Lorenz knot** — a periodic orbit of the flow on the next page —
-because $(\sigma_1 \cdots \sigma_{p-1})^q$ is a positive braid, and positive braids are
+because $(σ_1 \cdots σ_{p-1})^q$ is a positive braid, and positive braids are
 exactly what the Lorenz template produces. The trefoil is the first of both families, and
 it is also the knot whose complement is [the modular surface](../../modular/docs/modular-group.md).

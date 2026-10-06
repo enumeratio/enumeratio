@@ -7,7 +7,7 @@ order: 2
 Positional notation writes a number as digits that stop on the left and may run forever
 on the right: $1/3 = 0.333\ldots$. Turn that around — digits that stop on the **right**
 and run forever on the **left** — and the same long division gives
-$1/3 = \ldots 6667$, because $\ldots 6667 \times 3 = \ldots 0001$. Those are the
+$1/3 = \ldots 6667$, because $\ldots 6667 × 3 = \ldots 0001$. Those are the
 [$b$-adic numbers](https://en.wikipedia.org/wiki/P-adic_number): the completion of the
 rationals under the rule that _divisible by a high power of $b$ means small_.
 
@@ -74,7 +74,7 @@ independently**, which is the modular inverse.
 
 The base decides which rationals are integers. In $\mathbb{Z}_{10}$, $1/3$ is an integer
 and $1/2$ is not — there is no $10$-adic digit string that 2 multiplies to $\ldots 0001$,
-since $2 \times$ anything ends in an even digit. Same in $\mathbb{Z}_2$: $1/3$ is the
+since $2 ×$ anything ends in an even digit. Same in $\mathbb{Z}_2$: $1/3$ is the
 alternating $\ldots 10101011$, and $1/2$ has no expansion at all.
 
 <Story title="Which rationals are integers">
@@ -105,7 +105,7 @@ _small_ $5$-adically, at $1/25$ from zero.
 A composite base gives a ring instead, and a strange one. $\mathbb{Z}_{10}$ contains two
 numbers $e, f$ with $e^2 = e$, $f^2 = f$, $e + f = 1$, and $e \cdot f = 0$ — neither of
 them is $0$ or $1$. They come from Hensel lifting $x^2 = x$ from its roots $5$ and $6$
-mod $10$, and they are the reason $\mathbb{Z}_{10} \cong \mathbb{Z}_2 \times \mathbb{Z}_5$:
+mod $10$, and they are the reason $\mathbb{Z}_{10} ≅ \mathbb{Z}_2 × \mathbb{Z}_5$:
 one idempotent is $(0, 1)$ and the other $(1, 0)$. This is the residue system's
 "independent channels" again, at infinite precision. A residue system with moduli
 $2^k, 5^k$ is the $10$-adic truncation with its two factors pulled apart.
@@ -123,8 +123,8 @@ $2^k, 5^k$ is the $10$-adic truncation with its two factors pulled apart.
 
 Hensel's lemma is Newton's method run in $\mathbb{Z}_p$: a simple root mod $p$ lifts to a
 root mod every $p^k$, doubling its correct digits each step. So $\sqrt{2}$ exists in
-$\mathbb{Z}_7$ (since $3^2 = 9 \equiv 2$), $\sqrt{-7}$ exists in $\mathbb{Z}_2$ (since
-$-7 \equiv 1 \pmod 8$), and $\sqrt{3}$ does not exist in $\mathbb{Z}_7$ at all. These
+$\mathbb{Z}_7$ (since $3^2 = 9 ≡ 2$), $\sqrt{-7}$ exists in $\mathbb{Z}_2$ (since
+$-7 ≡ 1 \pmod 8$), and $\sqrt{3}$ does not exist in $\mathbb{Z}_7$ at all. These
 values are known only to a precision, and print with their `O`-term; arithmetic with them
 carries the precision along.
 
@@ -141,21 +141,21 @@ carries the precision along.
 
 | on…                             | positional base $b$          | residue system $[m_1, \ldots]$                 | $b$-adic                                                                     |
 | ------------------------------- | ---------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------- |
-| $n \ge 0$                       | digits of $n$                | $n \bmod m_i$, each channel                    | **the same digits**, padded to the cut                                       |
+| $n ≥ 0$                         | digits of $n$                | $n \bmod m_i$, each channel                    | **the same digits**, padded to the cut                                       |
 | $n < 0$                         | a sign                       | wraps: $n \bmod m_i$                           | infinitely many leading $b-1$: $-1 = \ldots 999$                             |
 | $1/3$                           | recurs to the right          | $3^{-1} \bmod m_i$, if it exists               | recurs to the left: $\ldots 6667$; an **integer**                            |
 | $1/2$ in base 10                | $0.5$                        | $2^{-1} \bmod m_i$, if $m_i$ odd               | **does not exist** in $\mathbb{Z}_{10}$                                      |
 | $1/25$ in base 5                | $0.04$                       | needs $\gcd(25, m_i) = 1$                      | $0.01$: digits past the point, $\mathbb{Q}_5$                                |
 | $\sqrt{2}$ in base 7            | irrational, no finite string | a residue mod each $m_i$, no coherence         | a genuine element of $\mathbb{Z}_7$, by Hensel                               |
-| $e^2 = e$, $e \ne 0, 1$         | none                         | $(1, 0)$ and $(0, 1)$ across channels          | $\ldots 890625$ and $\ldots 109376$ in $\mathbb{Z}_{10}$; none for prime $b$ |
+| $e^2 = e$, $e ≠ 0, 1$           | none                         | $(1, 0)$ and $(0, 1)$ across channels          | $\ldots 890625$ and $\ldots 109376$ in $\mathbb{Z}_{10}$; none for prime $b$ |
 | "close to zero"                 | small absolute value         | —                                              | divisible by a high power of $b$                                             |
 | moduli $p_i^{k}$, $\prod = b^k$ | —                            | **is** the $b$-adic truncation, split by prime | reads back mod each $p_i^k$                                                  |
 
 The last row is the one to keep. A residue system whose moduli are the prime-power
 factors of $b^k$ carries exactly the information of the last $k$ $b$-adic digits — the
-Chinese remainder theorem is the isomorphism $\mathbb{Z}/b^k \cong \prod \mathbb{Z}/p_i^{k}$,
-and letting $k \to \infty$ is what turns the residue system's independent channels into
-$\mathbb{Z}_b \cong \prod \mathbb{Z}_{p_i}$.
+Chinese remainder theorem is the isomorphism $\mathbb{Z}/b^k ≅ \prod \mathbb{Z}/p_i^{k}$,
+and letting $k → ∞$ is what turns the residue system's independent channels into
+$\mathbb{Z}_b ≅ \prod \mathbb{Z}_{p_i}$.
 
 ## Things worth knowing
 
@@ -174,4 +174,4 @@ familiar way round with the infinite end marked by an ellipsis.
 
 **Pinned against Sage.** Expansions, valuations, square roots and products are checked
 against Sage's `Zp`/`Qp` for prime bases; Sage has no composite bases, so those are pinned
-by their algebra — the idempotents, the zero divisor, $1/3 \times 3 = 1$.
+by their algebra — the idempotents, the zero divisor, $1/3 × 3 = 1$.

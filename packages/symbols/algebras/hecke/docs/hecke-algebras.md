@@ -10,7 +10,7 @@ parameter $q$.
 
 The whole algebra is one rule, applied one simple reflection at a time:
 
-$$T_s \cdot T_w = \begin{cases} T_{sw} & \ell(sw) > \ell(w) \\ q\,T_{sw} + (q-1)\,T_w & \ell(sw) < \ell(w)\end{cases}$$
+$$T_s \cdot T_w = \begin{cases} T_{sw} & ℓ(sw) > ℓ(w) \\ q\,T_{sw} + (q-1)\,T_w & ℓ(sw) < ℓ(w)\end{cases}$$
 
 The second line is the deformation, and it is the only place $q$ enters. Note what it
 does: a product of two basis elements is a **linear combination**, not one basis element
@@ -30,7 +30,7 @@ lowers the length, $q$ appears.
 
 The quadratic relation $T_s^2 = q + (q-1)T_s$ — equivalently $(T_s - q)(T_s + 1) = 0$ —
 is what replaces $s^2 = 1$ in the Coxeter group. At $q = 1$ the two roots collide back
-onto $\pm 1$ and you recover an involution.
+onto $± 1$ and you recover an involution.
 
 ## The braid relations survive the deformation
 
@@ -61,7 +61,7 @@ So $H_n(1) = \mathbb{Z}S_n$, and the [symmetric group
 algebra](../../diagram/docs/diagram-algebras.md) reached as a diagram algebra is the same object by
 another route. Everything interesting — Kazhdan–Lusztig bases, the Jones polynomial via
 the Temperley–Lieb quotient, the representation theory at roots of unity — lives at
-$q \ne 1$.
+$q ≠ 1$.
 
 ## Things worth knowing
 

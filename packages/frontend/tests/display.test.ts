@@ -1,12 +1,11 @@
-import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { indexed, makeBoxes, registerNotation } from "@enumeratio/boxes";
 import { toLatex } from "@enumeratio/boxes/render";
 import { expect, test } from "vite-plus/test";
-import { displayBoxes, displayDictionary } from "../src/display.ts";
+import { displayBoxes, displayLatexSyntax } from "../src/display.ts";
 import { latexOf } from "../src/latex.ts";
 
-const engine = (): ComputeEngine =>
-  new ComputeEngine({ latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY) }) });
+const engine = (): ComputeEngine => new ComputeEngine({ latexSyntax: displayLatexSyntax(LATEX_DICTIONARY) });
 
 test("a kernel's display writes what the page engine would", () => {
   const ce = engine();

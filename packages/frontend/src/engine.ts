@@ -87,13 +87,13 @@ export function configureResolver(r: EngineResolver): void {
 function createEngine(): Promise<ComputeEngine> {
   return (bare ??= (async () => {
     await (globalThis as EngineGate).__notatioEngineSetup?.().catch(() => {});
-    const [{ ComputeEngine, LatexSyntax, LATEX_DICTIONARY }, { displayDictionary }] = await Promise.all([
+    const [{ ComputeEngine, LATEX_DICTIONARY }, { displayLatexSyntax }] = await Promise.all([
       import("@cortex-js/compute-engine"),
       import("./display.ts"),
     ]);
     // The kernel's dictionary, so the page writes and reads LaTeX as a kernel does.
     engine = new ComputeEngine({
-      latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, latexEntries) }),
+      latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, latexEntries),
     });
     for (const fn of configurators) fn(engine);
     return engine;

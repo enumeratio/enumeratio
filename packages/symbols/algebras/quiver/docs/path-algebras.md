@@ -32,8 +32,8 @@ is no answer" is a _structural_ fact about the input rather than a missing featu
 
 ## Aₙ's path algebra is a chain's incidence algebra
 
-The linear quiver $1 \to 2 \to \ldots \to n$ has exactly one path from $i$ to $j$ when
-$i \le j$, and none otherwise. So its paths are the **intervals of a chain**, and $kA_n$
+The linear quiver $1 → 2 → \ldots → n$ has exactly one path from $i$ to $j$ when
+$i ≤ j$, and none otherwise. So its paths are the **intervals of a chain**, and $kA_n$
 is the [incidence algebra](../../incidence/docs/incidence-algebras.md) of `Chain(n)` — same dimension
 $\binom{n+1}{2}$, same product, two libraries describing one object from different
 directions.
@@ -45,7 +45,7 @@ directions.
 </Story>
 
 The path count is verified a second way in the tests, against powers of the adjacency
-matrix: paths of length $\ell$ are the entries of $A^\ell$, and an acyclic quiver on $n$
+matrix: paths of length $ℓ$ are the entries of $A^ℓ$, and an acyclic quiver on $n$
 vertices has none longer than $n-1$. Enumeration and linear algebra agree.
 
 ## Composition, and zero

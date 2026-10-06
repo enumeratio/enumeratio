@@ -38,7 +38,7 @@ FactorInteger(360)         // [[2, 3], [3, 2], [5, 1]]
 - [`PowerMod`](https://enumeratio.dev/reference/symbol/PowerMod) — modular exponentiation, widened to a rational exponent `s/r` (the least r-th root) and a rational base
 - [`PowerModList`](https://enumeratio.dev/reference/symbol/PowerModList) — every r-th root of $a^s$ mod $m$
 - [`MultiplicativeOrder`](https://enumeratio.dev/reference/symbol/MultiplicativeOrder) — the order of $a$ mod $n$, widened to a discrete log against a target list
-- [`PrimitiveRootList`](https://enumeratio.dev/reference/symbol/PrimitiveRootList) — the primitive roots of a cyclic $(\mathbb{Z}/n)^\times$
+- [`PrimitiveRootList`](https://enumeratio.dev/reference/symbol/PrimitiveRootList) — the primitive roots of a cyclic $(\mathbb{Z}/n)^×$
 
 Also declared without a reference page yet: `discreteLog`, `primitiveRoots`,
 `primitiveRootCount`, `unitsMod`, and `rootsInCyclicGroup` (baby-step giant-step over a generic

@@ -15,11 +15,11 @@
 // gives (`enginePlan`), so a new library is in once it is a dependency.
 
 import { readFileSync } from "node:fs";
-import { ComputeEngine, LATEX_DICTIONARY, LatexSyntax } from "@cortex-js/compute-engine";
+import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
 import { declareAnalytic } from "@enumeratio/analytic";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog";
-import { displayDictionary } from "@enumeratio/frontend/display";
+import { displayLatexSyntax } from "@enumeratio/frontend/display";
 import {
   buildEngine,
   dependedLibraries,
@@ -122,7 +122,7 @@ export const fullEngine = (): ComputeEngine =>
     include: EXTRAS,
     engine: () => {
       const ce = new ComputeEngine({
-        latexSyntax: new LatexSyntax({ dictionary: displayDictionary(LATEX_DICTIONARY, NOTATION.latex) as never[] }),
+        latexSyntax: displayLatexSyntax(LATEX_DICTIONARY, NOTATION.latex),
       });
       registerNotation(ce, NOTATION.traditional);
       return ce;
