@@ -29,4 +29,4 @@ names:
 
 - Defined in terms of [[Exp]]: $\cosh(x) = \frac{e^x + e^{-x}}{2}$.
 - Even function: $\cosh(-x) = \cosh(x)$.
-- Same fold-only-with-N(...) behavior as [[Sinh]]: plain evaluation leaves Cosh symbolic even at $x = 0$.
+- Exact at $x = 0$ as [[Cos]] is: $\cosh(0) = 1$; a floating-point argument, or N(...), gives a numeric result.

@@ -20,7 +20,7 @@ digitsum-0-10-neg-3	Properties		[DigitSum, 0, 10, -3]	0	Zero has digit sum zero
 digitsum-2-147-2	Properties		[DigitSum, 2147, 2]	5	In base 2 the digit sum counts the ones
 digitsum-2-147	Properties		[DigitSum, 2147]	14	Base 10 digit sum of 2147
 digitsum-1-over-9-times-neg-1-plus-10-pow-17	Properties		[DigitSum, [Multiply, [Rational, 1, 9], [Add, -1, [Power, 10, 17]]]]	17	The repunit of 17 ones sums to $17$
-digitsum-123-456-10-7	Properties		[DigitSum, 123456, 10, 7]	21	A length argument pads with zeros, leaving the sum unchanged
+digitsum-123-456-10-7	Properties		[DigitSum, 123456, 10, 7]	21	A third argument at or above the digit count gives the plain sum
 digitsum-263-5	Properties		[DigitSum, 263, 5]	7	$263=2023_5$, so the digits add to $7$
 digitsum-integerreverse-263-5-5	Properties		[DigitSum, [IntegerReverse, 263, 5], 5]	7	Reversing the digits does not change the sum
 digitsum-neg-3-134	Properties		[DigitSum, -3134]	11	Negative inputs use the absolute value

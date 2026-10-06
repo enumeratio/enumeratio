@@ -29,4 +29,4 @@ names:
 
 - Defined in terms of [[Exp]]: $\sinh(x) = \frac{e^x - e^{-x}}{2}$.
 - Odd function: $\sinh(-x) = -\sinh(x)$.
-- Unlike [[Sin]] and [[Cos]], compute-engine has no table of exact hyperbolic special values -- plain evaluation leaves Sinh symbolic even at $x = 0$; a floating-point argument, or N(...), still produces a numeric result.
+- Exact at $x = 0$ as [[Sin]] is: $\sinh(0) = 0$; a floating-point argument, or N(...), gives a numeric result.
