@@ -1,6 +1,8 @@
 // Runs the `- expect:` claims in the review backlog through the engine.
 //
 //   node packages/reference/scripts/review-check.ts [--file <REVIEW.md>] [--item <id>] [--tick] [--suggest]
+//   node packages/reference/scripts/review-check.ts --export [path]   write the claims to review-claims.tsv
+//   node packages/reference/scripts/review-check.ts --claims [path]   check that file (the nightly job)
 //
 // An item carries one or more `- expect: <Epsil> => <Epsil>` bullets (the left side is
 // evaluated, and so is the right; they pass when equal, numerics to a relative 1e-9) or
@@ -121,13 +123,41 @@ function reviewFile(arg?: string): string {
   return resolve(common, "lanes", "REVIEW.md");
 }
 
+/** The checked-in claims file: `<item id>\t<input> => <expected>` rows, one per claim. */
+const CLAIMS = new URL("../review-claims.tsv", import.meta.url).pathname;
+
+function itemsFromClaims(path: string): BacklogItem[] {
+  const byId = new Map<string, BacklogItem>();
+  for (const line of readFileSync(path, "utf8").split("\n")) {
+    const [id, claim] = line.split("\t");
+    if (!id || !claim) continue;
+    const item = byId.get(id) ?? { id, status: "open", bullets: [], feedback: "" };
+    item.bullets.push({ key: "expect", value: claim });
+    byId.set(id, item);
+  }
+  return [...byId.values()];
+}
+
 function main(argv: string[]): number {
   const flag = (name: string) => argv.includes(name);
   const value = (name: string) => (argv.includes(name) ? argv[argv.indexOf(name) + 1] : undefined);
-  const file = reviewFile(value("--file"));
-  let raw = readFileSync(file, "utf8");
   const only = value("--item");
-  const items = parseBacklog(raw).items.filter((i) => !only || i.id === only);
+  // --claims runs the checked-in file (what the nightly job does); otherwise the backlog is read.
+  const claims = flag("--claims") ? (value("--claims") ?? CLAIMS) : undefined;
+  const file = claims ? "" : reviewFile(value("--file"));
+  let raw = claims ? "" : readFileSync(file, "utf8");
+  const all = claims ? itemsFromClaims(claims) : parseBacklog(raw).items;
+  const items = all.filter((i) => !only || i.id === only);
+
+  // --export writes every item's claims to the checked-in file, so the nightly job can run them.
+  if (flag("--export")) {
+    const rows = all.flatMap((i) =>
+      parseExpects(i).map((e) => `${i.id}\t${e.input} ${e.tolerance < 1e-10 ? "~>" : "=>"} ${e.expected}`),
+    );
+    writeFileSync(value("--export") ?? CLAIMS, `${rows.join("\n")}\n`);
+    console.log(`${rows.length} claims written`);
+    return 0;
+  }
 
   if (flag("--suggest")) {
     for (const item of items) {
