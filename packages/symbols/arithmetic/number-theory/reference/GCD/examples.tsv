@@ -34,6 +34,7 @@ gcd-with-a-real-composite-5-squared	Scope	test	[GCD, [Complex, 3, 4], 25]	[Compl
 gcd-with-a-negative-associate	Scope	test	[GCD, [Complex, 6, 8], [Complex, -2, -3]]	1	gcd with a negative associate												
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19	Scope	test	[GCD, [Complex, 123, 456], 19]	1	gcd of a large-norm Gaussian and a real prime, 19												
 gcd-of-two-composites-sharing-the-prime-above-13	Scope	test	[GCD, [Complex, 6, 8], [Complex, 9, 6]]	1	gcd of two composites sharing the prime above 13												
+gcd-of-two-10000-bit-integers	Scope	test	[Equal, [GCD, [Subtract, [Power, 2, 10000], 1], [Subtract, [Power, 2, 6000], 1]], [Subtract, [Power, 2, 2000], 1]]	True	$\gcd(2^{10000}-1, 2^{6000}-1) = 2^{\gcd(10000,6000)}-1$, exact on 10000-bit operands												
 reduce-12-18-to-lowest-terms-by-dividing-out-the	Applications		[Divide, 12, [GCD, 12, 18]]	2	Reduce $12/18$ to lowest terms by dividing out the GCD												
 gcd-14-105	Applications		[GCD, 14, 105]	7	Greatest common divisor of two integers												
 gcd-24-12	Applications		[GCD, 24, 12]	12	When one divides the other, the gcd is the smaller												

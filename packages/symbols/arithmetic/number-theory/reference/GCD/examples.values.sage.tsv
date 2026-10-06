@@ -34,6 +34,7 @@ gcd-with-a-real-composite-5-squared	gcd((3 + 4*I), 25)
 gcd-with-a-negative-associate	gcd((6 + 8*I), (-2 + -3*I))		
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19	gcd((123 + 456*I), 19)		
 gcd-of-two-composites-sharing-the-prime-above-13	gcd((6 + 8*I), (9 + 6*I))		
+gcd-of-two-10000-bit-integers	bool(gcd((((2)^10000) - 1), (((2)^6000) - 1)) == (((2)^2000) - 1))		
 reduce-12-18-to-lowest-terms-by-dividing-out-the	(12 / gcd(12, 18))	2	
 gcd-14-105	gcd(14, 105)		
 gcd-24-12	gcd(24, 12)		

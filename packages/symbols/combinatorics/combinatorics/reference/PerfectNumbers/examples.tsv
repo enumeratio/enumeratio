@@ -1,2 +1,3 @@
 id	section	role	expr	expected
 the-first-7-terms		test	[Take, PerfectNumbers, 7]	[List, 6, 28, 496, 8128, 33550336, 8589869056, 137438691328]
+at-reads-the-table		test	[At, PerfectNumbers, 4]	8128

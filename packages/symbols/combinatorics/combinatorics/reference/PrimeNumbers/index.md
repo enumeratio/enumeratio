@@ -40,4 +40,4 @@ unbounded: true
 - A lazy indexed collection: $Count(PrimeNumbers) = +\infty$, and $At(PrimeNumbers, k)$ unranks the $k$-th prime without ever sieving a full prefix -- $At(PrimeNumbers, 5) = 11$.
 - OEIS A000040.
 - Membership goes through [[Element]]: $Element(11, PrimeNumbers)$ is true, $Element(9, PrimeNumbers)$ is false.
-- Called `Primes` until that name went back to compute-engine's own constant, the `set<integer>` of [[Primes]]: a value can't be extended, so the two couldn't share it.
+- Distinct from [[Primes]], compute-engine's own `set<integer>` constant: a value can't be extended, so the two don't share one name.

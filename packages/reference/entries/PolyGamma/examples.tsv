@@ -62,6 +62,7 @@ to-30-significant-digits-every-one-correctly	Scope		[N, [PolyGamma, 1, [Rational
 to-25-significant-digits-not-yet-only-the-first	Scope		[N, [PolyGamma, 3, 5], 25]	{num: "0.02142782819275507502194811"}	To 25 significant digits, every one of them right								
 trigamma-at-1-is-pi-squared-over-6	Scope		[PolyGamma, 1, 1]	[Multiply, [Rational, 1, 6], [Power, Pi, 2]]	$\psi'(1)=\zeta(2)=\pi^2/6$								
 trigamma-at-2-is-pi-squared-over-6-minus-1	Scope		[PolyGamma, 1, 2]	[Add, -1, [Multiply, [Rational, 1, 6], [Power, Pi, 2]]]	$\psi'(2)=\pi^2/6-1$, by the shift $\psi^{(n)}(m)=(-1)^{n+1}n!\,(\zeta(n+1)-\sum_{k<m}k^{-n-1})$								
+digamma-of-0-7	Scope		[PolyGamma, 0.7]	{num: "-1.22002355369793461475"}	One argument is the digamma: $\psi(0.7)$ evaluates directly								
 psi-1-i-0-46300-0-79423-i-complex-argument-from	Applications		[N, [PolyGamma, 1, [Complex, 1, 1]]]	[Complex, 0.46300009662276376, -0.794233542759319]	$\psi'(1+i) = 0.46300\ldots - 0.79423\ldots i$ — complex argument, from `@enumeratio/analytic`								
 psi-1-2-pi-2-2	Properties		[Equal, [PolyGamma, 1, [Rational, 1, 2]], [Divide, [Power, Pi, 2], 2]]	True	$\psi'(1/2) = \pi^2/2$								
 recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2	Properties		[Equal, [Subtract, [PolyGamma, 1, 1], [PolyGamma, 1, 2]], 1]	True	Recurrence at $m = 1$, $z = 1$: $\psi'(z) - \psi'(z+1) = z^{-2}$								

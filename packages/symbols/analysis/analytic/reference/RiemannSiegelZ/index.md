@@ -26,6 +26,6 @@ names:
   wolframIdentity: true
 ---
 
-- Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/symbols/analysis/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.
+- Reuses [[RiemannSiegelTheta]] and the generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]] at $a=1$); only the phase rotation onto the real line is added.
 - Real $t$ only; numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]].
 - The sign of $Z$ on the real line is what [[RiemannZetaZero]]'s zero-finder scans for.

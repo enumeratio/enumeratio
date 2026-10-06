@@ -1,7 +1,7 @@
 id	in	out	shown	tex.in	tex.out	verdict
-n-forces-the-numeric-result-that-plain	N[Cosh[0]]	1.		N[\cosh (0)]	1.	
+n-cosh-0	N[Cosh[0]]	1.		N[\cosh (0)]	1.	
 n-cosh-1	N[Cosh[1]]	1.5430806348152437		N[\cosh (1)]	1.54308	
-stays-symbolic-even-at-0-same-as-sinh-wrap-in-n	Cosh[0]	1		\cosh (0)	1	
+cosh-0	Cosh[0]	1		\cosh (0)	1	
 a-float-argument-evaluates-directly-no-n-needed	Cosh[1.2]	1.8106555673243747		\cosh (1.2)	1.81066	
 arbitrary-precision-via-n	N[Cosh[Rational[6, 5]]]	1.8106555673243747		N\left[\cosh \left(\frac{6}{5}\right)\right]	1.81066	
 evaluates-at-a-complex-argument	Cosh[Complex[2.5, 1]]	3.3132901461132245 + 5.091071522949698*I		\cosh (2.5\, +i)	3.31329\, +5.09107 i	

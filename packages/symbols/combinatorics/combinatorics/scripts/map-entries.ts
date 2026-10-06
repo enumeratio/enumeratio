@@ -125,7 +125,7 @@ const frontierEntryFor = (map: (typeof UNDEFINED_MAPS)[number]): ReferenceEntry 
     details: [
       `Would take a \`${carrier(map.from)}\` to a \`${carrier(map.to)}\`.`,
       `On the map frontier: ${map.why}`,
-      "Listed in `UNDEFINED_MAPS` (@enumeratio/combinatorics) with that reason — a claim to be justified, not a place to put anything inconvenient.",
+      "Declared undefined for that reason.",
     ],
     examples: withIds(examples),
   };

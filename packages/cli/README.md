@@ -37,8 +37,8 @@ starting with `\`) is **not** accepted in Epsil — use a `$…$` island or `:la
 ## Output forms
 
 `:form <name>` switches how results print; `:forms` lists them with the current
-one marked. The default `inputform` form is InputForm — re-typeable Epsil, the same
-syntax you type. The same expression renders as TeX, Wolfram, or compilable source:
+one marked. A command line such as `:form` does not consume an `In[n]` number. The same
+expression renders as InputForm, TeX, Wolfram, or compilable source:
 
 ```text
 In[1]:= x^2 + 1
@@ -54,8 +54,16 @@ In[4]:= x^2 + 1
 Out[4]= (_.x * _.x) + 1
 ```
 
-Forms: `inputform` (Epsil), `tex`, `mathjson`, `wolfram`, `epsil`, `numpy`, `glsl`,
-`wgsl`, `js`. The code forms (`numpy`/`glsl`/`wgsl`/`js`) are real compute-engine
+Forms: `inputform` (the default), `tex`, `mathjson`, `wolfram`, `epsil`, `outputform`,
+`asciimath`, `mathml`, `numpy`, `glsl`, `wgsl`, `js`. Aliases: `standardform` is `inputform`,
+`text` is `outputform`, `wl`/`fullform` are `wolfram`, `texform`/`latex` are `tex`,
+`py`/`python` are `numpy`.
+
+`inputform` and `epsil` both print Epsil, but `inputform` is what you would retype: it prints
+PascalCase heads and option names, and normalises the tree (`x - 2` for `x + -2`). `epsil` is
+the raw serialisation of the tree, with compute-engine's camelCase library names.
+
+The code forms (`numpy`/`glsl`/`wgsl`/`js`) are real compute-engine
 compilation targets — they only apply to numeric/function expressions.
 
 ## History and variables

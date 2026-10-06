@@ -34,6 +34,7 @@ gcd-with-a-real-composite-5-squared	GCD[Complex[3, 4], 25]	3 + 4*I	\gcd (3+4 i,2
 gcd-with-a-negative-associate	GCD[Complex[6, 8], Complex[-2, -3]]	1	\gcd (6+8 i,-2-3 i)	1
 gcd-of-a-large-norm-gaussian-and-a-real-prime-19	GCD[Complex[123, 456], 19]	1	\gcd (123+456 i,19)	1
 gcd-of-two-composites-sharing-the-prime-above-13	GCD[Complex[6, 8], Complex[9, 6]]	1	\gcd (6+8 i,9+6 i)	1
+gcd-of-two-10000-bit-integers	(GCD[Subtract[Power[2, 10000], 1], Subtract[Power[2, 6000], 1]] == Subtract[Power[2, 2000], 1])	True	\gcd \left(2^{10000}-1,2^{6000}-1\right)=2^{2000}-1	\text{True}
 reduce-12-18-to-lowest-terms-by-dividing-out-the	Divide[12, GCD[12, 18]]	2	\frac{12}{\gcd (12,18)}	2
 gcd-14-105	GCD[14, 105]	7	\gcd (14,105)	7
 gcd-24-12	GCD[24, 12]	12	\gcd (24,12)	12
