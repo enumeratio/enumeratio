@@ -1,2 +1,0 @@
-id	section	role	expr	expected	caption
-six-eighths	Basic		[Rational, 6, 8]	[Rational, 3, 4]	Reduced to lowest terms

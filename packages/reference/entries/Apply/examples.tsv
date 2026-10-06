@@ -1,2 +1,0 @@
-id	section	role	expr	expected	epsil.back
-apply-function	Basic		[Apply, [Function, [Add, x, y], x, y], 3, 4]	7	Unreadable

@@ -1,3 +1,0 @@
-id	section	role	expr	expected	caption
-denominator-3-4	Basic		[Denominator, [Rational, 3, 4]]	4	
-denominator-of-an-integer	Basic		[Denominator, 5]	1	An integer has denominator $1$

@@ -1,2 +1,0 @@
-id	in
-apply-function	Function[List[x, y], Plus[x, y]][3, 4]

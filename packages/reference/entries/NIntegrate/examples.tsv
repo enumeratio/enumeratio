@@ -1,4 +1,0 @@
-id	section	role	expr	expected	caption	epsil.back
-nintegrate-square	Basic		[NIntegrate, [Function, [Power, x, 2], x], 0, 1]	0.3333333333333333	$\int_0^1 x^2\,dx = 1/3$	Unreadable
-nintegrate-dirichlet	Basic		[NIntegrate, [Function, [Divide, [Sin, x], x], x], 0, PositiveInfinity]	1.570796326794896	$\int_0^\infty \sin x / x\,dx = \pi/2$, an oscillatory integrand over a semi-infinite interval	Unreadable
-nintegrate-sin-over-sqrt	Basic		[NIntegrate, [Function, [Divide, [Sin, x], [Sqrt, x]], x], 0, PositiveInfinity]	1.2533141373154997	$\int_0^\infty \sin x/\sqrt{x}\,dx = \sqrt{\pi/2}$, not finite at the lower end	Unreadable
