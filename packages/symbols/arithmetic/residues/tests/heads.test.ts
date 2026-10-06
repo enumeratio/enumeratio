@@ -33,10 +33,49 @@ test("ℤ/m is QuotientRing(Integers, m), and IntegerModRing(m) is its alias", (
   expect(ce.box(["Count", ["IntegerModRing", 6]]).evaluate().json).toBe(6);
 });
 
-test("IntegerMod is the old spelling of compute-engine's ResidueClass", () => {
-  expect(ce.box(["IntegerMod", 10, 7]).json).toEqual(["ResidueClass", 3, 7]);
-  expect(ce.box(["Add", ["IntegerMod", 5, 7], 3]).evaluate().json).toEqual(["ResidueClass", 1, 7]);
+test("IntegerMod is ResidueClass's arithmetic over one ring", () => {
+  expect(ce.box(["IntegerMod", 10, 7]).json).toEqual(["IntegerMod", 3, 7]);
+  expect(ce.box(["Add", ["IntegerMod", 5, 7], 3]).evaluate().json).toEqual(["IntegerMod", 1, 7]);
+  expect(ce.box(["Power", ["IntegerMod", 3, 7], -1]).evaluate().json).toEqual(["IntegerMod", 5, 7]);
   expect(ce.box(["Element", ["IntegerMod", 3, 7], ["IntegerModRing", 7]]).evaluate().json).toBe("True");
+  expect(ce.box(["ChineseRemainder", ["IntegerMod", 2, 3], ["IntegerMod", 3, 5]]).evaluate().json).toEqual([
+    "IntegerMod",
+    8,
+    15,
+  ]);
+});
+
+// Values from Sage 10.9: Mod(2, 4) + Mod(1, 6) is 1 in Z/2, and so on.
+test("IntegerMod classes of different moduli combine in Z/gcd, as in Sage", () => {
+  const run = (expr: Json): Json => ce.box(expr).evaluate().json;
+  const a: Json = ["IntegerMod", 2, 4];
+  const b: Json = ["IntegerMod", 1, 6];
+  expect(run(["Add", a, b])).toEqual(["IntegerMod", 1, 2]);
+  expect(run(["Multiply", a, b])).toEqual(["IntegerMod", 0, 2]);
+  expect(run(["Subtract", a, b])).toEqual(["IntegerMod", 1, 2]);
+  expect(run(["Multiply", a, 5])).toEqual(a);
+  expect(run(["Divide", ["IntegerMod", 1, 3], ["IntegerMod", 2, 6]])).toEqual(["IntegerMod", 2, 3]);
+  expect(run(["Add", ["IntegerMod", 4, 8], ["IntegerMod", 3, 12], ["IntegerMod", 1, 4]])).toEqual(["IntegerMod", 0, 4]);
+  expect(run(["Equal", a, ["IntegerMod", 0, 2]])).toBe("True");
+  expect(run(["Equal", a, b])).toBe("False");
+  expect(run(["Equal", a, 6])).toBe("True");
+  expect(run(["NotEqual", a, b])).toBe("True");
+});
+
+test("IntegerMod declines what Sage rejects, and never mixes with ResidueClass", () => {
+  const stays = (expr: Json): void => expect(ce.box(expr).evaluate().json).toEqual(ce.box(expr).json);
+  stays(["Add", ["IntegerMod", 3, 4], ["IntegerMod", 5, 7]]); // gcd 1: no common ring
+  stays(["Divide", ["IntegerMod", 1, 6], ["IntegerMod", 2, 4]]); // 0 in Z/2 is no unit
+  stays(["Power", ["IntegerMod", 2, 4], -1]);
+  stays(["Add", ["IntegerMod", 2, 4], ["ResidueClass", 1, 6]]);
+  stays(["Equal", ["IntegerMod", 2, 4], ["IntegerMod", 1, 3]]);
+  // The strict head is unchanged.
+  stays(["Add", ["ResidueClass", 2, 4], ["ResidueClass", 1, 6]]);
+});
+
+test("IntegerMod keeps its operands exact under N", () => {
+  expect(ce.box(["IntegerMod", ["Rational", 1, 2], 4]).N().json).toEqual(["IntegerMod", ["Rational", 1, 2], 4]);
+  expect(ce.box(["Add", ["IntegerMod", 2, 4], ["IntegerMod", 1, 6]]).N().json).toEqual(["IntegerMod", 1, 2]);
 });
 
 test("classes of two moduli stay as written; ChineseRemainder is the way across", () => {

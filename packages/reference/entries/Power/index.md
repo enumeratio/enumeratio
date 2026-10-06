@@ -28,6 +28,7 @@ signatures:
     type: (complex | infinity, complex | signed_infinity) -> number
     overrides: enumeratio-hypercomplex
     on:
+      - IntegerMod
       - ResidueClass
   - call: Power(complex | infinity, complex | signed_infinity) -> number
     description: "Exponentiation: raise a base to a power."

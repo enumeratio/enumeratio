@@ -21,7 +21,6 @@ import { SUMMARIES } from "@enumeratio/manifest/package/residues";
 // `QuotientRing(Integers, m)` and `\overline{k}_{m}` are all native. Classes of two moduli never
 // combine. What is added here:
 //
-//   IntegerMod(a, m)           the old spelling, a ResidueClass
 //   ResidueClass(ResidueClass(a, m), n)   for n | m: the same class, read in the smaller ring
 //   ChineseRemainder(ResidueClass(r₁, m₁), …)   the class mod lcm(mᵢ)
 //   a `ninv` message when a non-unit stops an inverse; `a \pmod{m}` is in latex.ts
@@ -77,15 +76,6 @@ export function declareResidueClass(ce: Engine): void {
     }
     return undefined;
   };
-
-  // The old spelling reads as the class as it is canonicalised, so every rule of the native
-  // arithmetic that looks for a class sees one.
-  ce.declare(INTEGER_MOD, {
-    description: SUMMARIES.IntegerMod,
-    signature: "(any, any) -> value",
-    canonical: (ops: readonly Expr[], { engine }: { engine: Engine }) => engine.function(RESIDUE_CLASS, ops),
-    evaluate: (ops: readonly Expr[]) => ce.function(RESIDUE_CLASS, ops),
-  });
 
   // ResidueClass(ResidueClass(a, m), n) for n | m -- what `a \pmod{m} \pmod{n}` parses to --
   // is the same class in the smaller ring. A rational with no inverse says why it declines.

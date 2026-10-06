@@ -32,7 +32,8 @@ FactorInteger(360)         // [[2, 3], [3, 2], [5, 1]]
 **Modular arithmetic**
 
 - [`ChineseRemainder`](https://enumeratio.dev/reference/symbol/ChineseRemainder) — CRT, also over [`ResidueClass`](https://enumeratio.dev/reference/symbol/ResidueClass) classes
-- [`ResidueClass`](https://enumeratio.dev/reference/symbol/ResidueClass) — compute-engine's element of $\mathbb{Z}/m$, after Sage's `Mod(a, m)`: arithmetic stays inside one ring, and classes of different moduli never combine; `IntegerMod` is its old spelling
+- [`ResidueClass`](https://enumeratio.dev/reference/symbol/ResidueClass) — compute-engine's element of $\mathbb{Z}/m$, after Sage's `Mod(a, m)`: arithmetic stays inside one ring, and classes of different moduli never combine
+- [`IntegerMod`](https://enumeratio.dev/reference/symbol/IntegerMod) — the same class with Sage's coercion: classes of different moduli combine in $\mathbb{Z}/\gcd(m, n)$
 - [`QuotientRing`](https://enumeratio.dev/reference/symbol/QuotientRing)`(Integers, m)` — compute-engine's $\mathbb{Z}/m\mathbb{Z}$, made the collection of its `ResidueClass` classes (`IntegerModRing(m)` is its old spelling)
 - [`PowerMod`](https://enumeratio.dev/reference/symbol/PowerMod) — modular exponentiation, widened to a rational exponent `s/r` (the least r-th root) and a rational base
 - [`PowerModList`](https://enumeratio.dev/reference/symbol/PowerModList) — every r-th root of $a^s$ mod $m$

@@ -10,11 +10,18 @@ signatures:
     description: Equality comparison (equal to).
     library: enumeratio-adeles
     type: (any, any) -> boolean
-    overrides: compute-engine
+    overrides: enumeratio-residues
     on:
       - Adele
       - Idele
       - ProfiniteNumber
+  - call: Equal(any, any) -> boolean
+    description: Equality comparison (equal to).
+    library: enumeratio-residues
+    type: (any, any) -> boolean
+    overrides: compute-engine
+    on:
+      - IntegerMod
 names:
   wolframIdentity: true
 stub: engine
