@@ -33,8 +33,9 @@ An item may carry `- expect: <Epsil> => <Epsil>` bullets: `node packages/referen
 sides in the reference engine and compares them (numbers to 1e-9 relative, `~>` for two ulps (4e-16), lists
 elementwise, `=> unevaluated` for a decline). `--item <id>` runs one; `--suggest` mines candidates from
 `check:` prose; `--tick` ticks items marked `- auto: true` whose expects all pass (values-only items, nothing
-visual). `node packages/reference/scripts/review-add.ts <expects.tsv>` inserts bullets in bulk. A claim a reference example
-already holds belongs there, not here.
+visual). `node packages/reference/scripts/review-add.ts <expects.tsv>` inserts bullets in bulk. `--export` writes every claim to the checked-in `packages/reference/review-claims.tsv`, which the
+nightly workflow's `review claims` job runs with `--claims`; re-export after adding claims. A claim a
+reference example already holds belongs there, not here.
 
 ## Reviewing
 

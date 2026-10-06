@@ -55,6 +55,19 @@ jobs:
       # Every declaration order of the packages that extend one head (BL-13).
       - run: pnpm --filter @enumeratio/census exec vp test run tests/declaration-order.test.ts
 
+  # The review backlog's machine-checkable claims (`expect:` bullets exported to
+  # packages/reference/review-claims.tsv), evaluated against the current engine. A claim that stops
+  # holding fails the job and the nightly-fixup routine files it. Visual review items are not here.
+  review-claims:
+    name: review claims
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm --filter @enumeratio/reference exec node scripts/review-check.ts --claims
+
   # A real browser against a real dev server, checking every component story renders (the
   # custom element upgrades, draws something, no console errors) -- see web/tests/stories.
   # Slower and flakier than the PR gate's checks, so it lives here instead: advisory, never
