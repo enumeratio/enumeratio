@@ -10,11 +10,18 @@ signatures:
     description: Inequality comparison (not equal to).
     library: enumeratio-adeles
     type: (any, any) -> boolean
-    overrides: compute-engine
+    overrides: enumeratio-residues
     on:
       - Adele
       - Idele
       - ProfiniteNumber
+  - call: NotEqual(any, any) -> boolean
+    description: Inequality comparison (not equal to).
+    library: enumeratio-residues
+    type: (any, any) -> boolean
+    overrides: compute-engine
+    on:
+      - IntegerMod
 names:
   wolfram: Unequal
 stub: engine

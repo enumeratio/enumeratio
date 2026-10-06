@@ -2,9 +2,7 @@
 name: ResidueClass
 domain: Modular arithmetic
 signature: ResidueClass(k, n)
-summary: $k \bmod n$ as a VALUE — an element of $\mathbb{Z}/n\mathbb{Z}$ that arithmetic stays inside, after Sage's `Mod(a, m)`. compute-engine's head; formerly our `IntegerMod`.
-formerly:
-  - IntegerMod
+summary: "$k \\bmod n$ as a VALUE — an element of $\\mathbb{Z}/n\\mathbb{Z}$ that arithmetic stays inside, after Sage's `Mod(a, m)`. compute-engine's head, strict about moduli: [[IntegerMod]] is its Sage-flavoured sibling."
 signatures:
   - call: ResidueClass(k, n)
     description: the residue class of $k$, normalised into $[0, n)$
@@ -42,9 +40,9 @@ attributes:
 
 - [[Mod]] answers an integer; `ResidueClass` IS the class, so `+`, `·`, `/` and powers of it are computed in $\mathbb{Z}/n\mathbb{Z}$ — a negative power inverts, and dividing by a non-unit leaves the call standing
 - A bare integer or rational next to a class is read in the same ring
-- Classes of different moduli never combine: the sum stays as written, so $x + y - y = x$ holds. Sage's coercion to $\mathbb{Z}/\gcd(m, n)$ is not followed
+- Classes of different moduli never combine: the sum stays as written, so $x + y - y = x$ holds. Sage's coercion to $\mathbb{Z}/\gcd(m, n)$ is not followed; [[IntegerMod]] follows it
 - [[ChineseRemainder]] of classes is the class mod $\operatorname{lcm}$ that reduces to each, and [[MultiplicativeOrder]] of a unit is its order
 - The elements of [[QuotientRing]](Integers, n), $\mathbb{Z}/n\mathbb{Z}$
 - Written $\overline{k}_{n}$; `a \pmod{n}` is read as a class too, `a \bmod n` is still [[Mod]], and `a \equiv b \pmod{n}` is still a congruence
 - A call that declines — dividing by a non-unit — stays unevaluated with a `ResidueClass::ninv` message, after Wolfram's `PowerMod::ninv`
-- [[IntegerMod]], the head's old name, is an alias that reads as `ResidueClass`
+- [[IntegerMod]], the head's old name, is now the Sage-flavoured sibling: the same arithmetic, with classes of different moduli combined in $\mathbb{Z}/\gcd(m, n)$

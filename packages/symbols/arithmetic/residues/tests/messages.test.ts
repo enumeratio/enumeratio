@@ -14,7 +14,8 @@ const run = (expr: unknown): [unknown, string[]] => {
 const NINV = "ResidueClass::ninv: 2 is not a unit mod 4; gcd(2, 4) = 2.";
 
 test("a non-unit divisor declines, and says why", () => {
-  expect(run(["Divide", 1, ["IntegerMod", 2, 4]])).toEqual([["Divide", 1, ["ResidueClass", 2, 4]], [NINV]]);
+  expect(run(["Divide", 1, ["ResidueClass", 2, 4]])).toEqual([["Divide", 1, ["ResidueClass", 2, 4]], [NINV]]);
+  expect(run(["Divide", 1, ["IntegerMod", 2, 4]])).toEqual([["Divide", 1, ["IntegerMod", 2, 4]], [NINV]]);
   expect(run(["Power", ["ResidueClass", 2, 4], -3])[1]).toEqual([NINV]);
   expect(run(["IntegerMod", ["Rational", 1, 2], 4])[1]).toEqual([NINV]);
   // Classes of two moduli do not combine, and say nothing about it.

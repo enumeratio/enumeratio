@@ -28,7 +28,7 @@ signatures:
     description: Product of two or more values.
     library: enumeratio-numerals
     type: (number*) -> number
-    overrides: enumeratio-hypercomplex
+    overrides: enumeratio-residues
     on:
       - AdicNumeral
   - call: Multiply(number*) -> number
@@ -40,6 +40,13 @@ signatures:
       - Adele
       - Idele
       - ProfiniteNumber
+  - call: Multiply(number*) -> number
+    description: Product of two or more values.
+    library: enumeratio-residues
+    type: (number*) -> number
+    overrides: enumeratio-hypercomplex
+    on:
+      - IntegerMod
 names:
   wikidataConfirmed: true
   wolfram: Times

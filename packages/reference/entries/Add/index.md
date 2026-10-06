@@ -26,7 +26,7 @@ signatures:
     description: Sum of two or more values.
     library: enumeratio-numerals
     type: (value+) -> value
-    overrides: enumeratio-hypercomplex
+    overrides: enumeratio-residues
     on:
       - AdicNumeral
   - call: Add(value+) -> value
@@ -37,6 +37,13 @@ signatures:
     on:
       - Adele
       - ProfiniteNumber
+  - call: Add(value+) -> value
+    description: Sum of two or more values.
+    library: enumeratio-residues
+    type: (value+) -> value
+    overrides: enumeratio-hypercomplex
+    on:
+      - IntegerMod
 names:
   wolfram: Plus
 stub: engine

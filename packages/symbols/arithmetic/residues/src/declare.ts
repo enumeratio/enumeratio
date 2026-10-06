@@ -12,6 +12,7 @@ import {
 } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { RESIDUES_CARRIERS } from "./carrier-data.ts";
+import { declareIntegerMod } from "./integer-mod.ts";
 import { declareResidueClass, residueClassOf } from "./residue-class-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
@@ -175,5 +176,6 @@ export function declareResidues(ce: Engine): void {
   });
 
   declareResidueClass(ce);
+  declareIntegerMod(ce);
   declareModExactConstant(ce);
 }
