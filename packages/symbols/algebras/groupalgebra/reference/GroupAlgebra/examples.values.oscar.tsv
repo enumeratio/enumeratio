@@ -1,0 +1,2 @@
+id	in
+dimension-of-the-group-algebra-of-d-4	dim((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 4), 4)).A)

@@ -1,0 +1,3 @@
+id	section	role	expr	expected
+nor-false-false	Basic		[Nor, False, False]	True
+nor-true-false	Basic		[Nor, True, False]	False

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+dimension-for-3-points	Basic		[AlgebraDimension, [SymmetricGroupAlgebra, 3]]	6	$3! = 6$

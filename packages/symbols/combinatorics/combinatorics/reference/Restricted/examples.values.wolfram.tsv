@@ -1,0 +1,2 @@
+id	in
+restricted-multiples-of-three	enumeratio`Restricted[Range[1, 10], Function[n, (Mod[n, 3] == 0)]]

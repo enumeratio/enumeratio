@@ -1,0 +1,3 @@
+id	section	role	expr	expected	known	tolerance	source
+li-at-0	Basic		[LogIntegral, 0]	0			
+li-2	Basic		[N, [LogIntegral, 2]]	1.0451637801174927	{num: "1.045163780117492784844589"}	1e-13	mpmath 1.3.0 li

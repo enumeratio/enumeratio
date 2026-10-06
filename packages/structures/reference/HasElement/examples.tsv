@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+haselement-clifford-blade	Basic		[HasElement, [CliffordAlgebra, 2, 0], [Multiply, e_1, e_2]]	True	
+haselement-foreign-generator	Basic		[HasElement, [CliffordAlgebra, 2, 0], e_3]	False	$e_3$ is not a generator of $\mathrm{Cl}(2,0)$

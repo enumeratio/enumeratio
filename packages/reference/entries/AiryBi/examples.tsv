@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	tolerance	source	caption
+bi-0	Basic		[N, [AiryBi, 0]]	0.6149266274460007	{num: "0.6149266274460007351509224"}	1e-13	mpmath 1.3.0 airybi	$\mathrm{Bi}(0) = \sqrt{3}\,\mathrm{Ai}(0)$ numerically

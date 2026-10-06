@@ -1,0 +1,2 @@
+id	in
+2-5-7-equiv-1-mod-6	enumeratio_product(enumeratio_cyclic(cyclic_group(PermGroup, 6), 6), EnumeratioBasis("2"), EnumeratioBasis("5"))

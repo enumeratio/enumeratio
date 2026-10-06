@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+text-concatenation	Basic		[Text, "'a'", 1]	"'a1'"	Joins its arguments as text

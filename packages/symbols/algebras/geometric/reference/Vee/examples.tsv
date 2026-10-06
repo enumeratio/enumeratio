@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+two-vectors-in-the-plane	Basic		[Vee, e_1, e_2, [CliffordAlgebra, 2]]	1	The regressive product of two vectors in the plane is a scalar

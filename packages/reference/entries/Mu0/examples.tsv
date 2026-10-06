@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+mu0	Basic		Mu0	[Quantity, 0.00000125663706212, [Divide, N, [Power, A, 2]]]	The vacuum permeability, with its unit

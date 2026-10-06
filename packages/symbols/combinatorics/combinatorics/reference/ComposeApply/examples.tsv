@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+composeapply-reverse-sort	Basic		[ComposeApply, [List, Reverse, Sort], [List, 3, 1, 2]]	[List, 3, 2, 1]	Sort first, then reverse: the steps apply right to left

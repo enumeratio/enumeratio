@@ -1,0 +1,3 @@
+id	in
+dimension-for-2-strands	dim(EnumeratioDiagramAlgebra(:rook, 2))
+dimension-for-3-strands	dim(EnumeratioDiagramAlgebra(:rook, 3))

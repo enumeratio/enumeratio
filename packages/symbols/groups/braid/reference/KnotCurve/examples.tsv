@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+knotcurve-sample-count	Basic		[Length, [KnotCurve, [TorusKnot, 2, 3], 50]]	50	The trefoil, sampled at 50 points
+knotcurve-start	Basic		[First, [KnotCurve, [TorusKnot, 2, 3], 40]]	[List, 3, 0, 0]	The curve starts on the outer circle of the torus

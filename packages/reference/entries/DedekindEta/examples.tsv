@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	tolerance	source	caption
+eta-at-i	Basic		[N, [DedekindEta, [Complex, 0, 1]], 15]	0.768225422326057	{num: "0.7682254223260566590025942"}	1e-13	mpmath 1.3.0 eta	$\eta(i) = \Gamma(1/4) / (2\pi^{3/4})$ numerically

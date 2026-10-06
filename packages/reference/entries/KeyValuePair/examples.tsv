@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+key-value-pair	Basic		[KeyValuePair, "'a'", 1]	[Tuple, "'a'", 1]	A key and its value, as a pair

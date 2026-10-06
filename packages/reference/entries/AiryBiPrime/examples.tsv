@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	tolerance	source	caption
+bip-0	Basic		[N, [AiryBiPrime, 0]]	0.4482883573538264	{num: "0.4482883573538263579148237"}	1e-13	mpmath 1.3.0 airybi	The derivative of [[AiryBi]] at $0$

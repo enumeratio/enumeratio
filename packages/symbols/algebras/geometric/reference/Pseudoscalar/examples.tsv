@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+pseudoscalar-cl-3	Basic		[Pseudoscalar, [CliffordAlgebra, 3, 0]]	[Multiply, e_1, e_2, e_3]	The top blade of $\mathrm{Cl}(3,0)$

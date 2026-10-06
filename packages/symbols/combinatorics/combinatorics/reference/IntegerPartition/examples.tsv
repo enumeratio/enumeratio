@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+parts	Basic		[IntegerPartition, [List, 3, 2, 1]]	[IntegerPartition, [List, 3, 2, 1]]	The partition $3+2+1$ of 6, as its parts in decreasing order

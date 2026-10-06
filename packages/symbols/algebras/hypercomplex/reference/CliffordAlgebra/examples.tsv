@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+signature-of-cl-3	Basic		[AlgebraSignature, [CliffordAlgebra, 3]]	[List, 1, 1, 1]	
+dimension-of-cl-3	Basic		[AlgebraDimension, [CliffordAlgebra, 3]]	8	$2^3$

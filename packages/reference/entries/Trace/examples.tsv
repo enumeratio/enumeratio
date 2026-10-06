@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+trace-of-a-matrix	Basic		[Trace, [List, [List, 1, 2], [List, 3, 4]]]	5	The sum of the diagonal

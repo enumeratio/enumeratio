@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+leftcontraction-vector-into-bivector	Basic		[LeftContraction, e_1, [Multiply, e_1, e_2]]	e_2	Contracting $e_1$ out of $e_1e_2$ leaves $e_2$

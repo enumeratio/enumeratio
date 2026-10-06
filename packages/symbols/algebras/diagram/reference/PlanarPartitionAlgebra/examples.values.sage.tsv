@@ -1,0 +1,2 @@
+id	in
+dimension-for-3-strands	(PlanarAlgebra(3, enumeratio_delta, enumeratio_ring)).dimension()

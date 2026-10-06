@@ -1,0 +1,3 @@
+id	section	role	expr	expected	epsil.back
+a-lone-reflection-is-not-central	Basic		[IsCentral, [DihedralGroup, 3], [GroupBasis, [String, s0]]]	False	[IsCentral, [DihedralGroup, 3], [GroupBasis, [String, "''", s0]]]
+everything-is-central-in-an-abelian-group	Basic		[IsCentral, [CyclicGroup, 4], [GroupBasis, [String, "1"]]]	True	[IsCentral, [CyclicGroup, 4], [GroupBasis, [String, "''", 1]]]

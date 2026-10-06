@@ -19,6 +19,7 @@ const MACROS: readonly (readonly [RegExp, string | ((...args: string[]) => strin
   [/\\degree(?![a-zA-Z])/g, "^{\\circ}"],
   // Neither amsmath nor KaTeX defines a hyperbolic cosecant.
   [/\\csch(?![a-zA-Z])/g, "\\operatorname{csch}"],
+  [/\\tr(?![a-zA-Z])/g, "\\operatorname{tr}"],
   [/\\lparen(?![a-zA-Z])/g, "("],
   [/\\rparen(?![a-zA-Z])/g, ")"],
   [/\\doubleprime(?![a-zA-Z])/g, "\\prime\\prime"],

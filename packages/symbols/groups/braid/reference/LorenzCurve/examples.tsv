@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+lorenzcurve-sample-count	Basic		[Length, [LorenzCurve, 100]]	100	The settling stretch is discarded, so the requested number of points remains

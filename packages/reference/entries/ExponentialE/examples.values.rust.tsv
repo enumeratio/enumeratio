@@ -1,0 +1,3 @@
+id	in
+ln-of-e	ln(x(std::f64::consts::E))
+e-to-20-digits	nf(x(std::f64::consts::E))

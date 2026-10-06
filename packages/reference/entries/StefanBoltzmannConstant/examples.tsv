@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+stefan-boltzmann-constant	Basic		StefanBoltzmannConstant	[Quantity, 5.670374419e-8, [Divide, W, [Multiply, [Power, m, 2], [Power, K, 4]]]]	With its unit

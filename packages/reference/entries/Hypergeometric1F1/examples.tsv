@@ -1,0 +1,3 @@
+id	section	role	expr	expected	known	tolerance	source	caption
+1f1-at-0	Basic		[Hypergeometric1F1, 1, 1, 0]	1				The series is $1$ at the origin
+1f1-1-2-1	Basic		[N, [Hypergeometric1F1, 1, 2, 1], 20]	{num: "1.7182818284590452354"}	{num: "1.718281828459045235360287"}	1e-18	mpmath 1.3.0 hyp1f1	${}_1F_1(1; 2; 1) = e - 1$

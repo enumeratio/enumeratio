@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+dihedral-group-of-the-square	Basic		[GroupCentreDimension, [DihedralGroup, 4]]	5	The number of conjugacy classes of $D_4$
+abelian-groups-are-their-own-centre	Basic		[GroupCentreDimension, [CyclicGroup, 5]]	5	In an abelian group every element is its own class

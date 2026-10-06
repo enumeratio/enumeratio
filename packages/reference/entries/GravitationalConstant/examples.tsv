@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+gravitational-constant	Basic		GravitationalConstant	[Quantity, 6.6743e-11, [Divide, [Power, m, 3], [Multiply, kg, [Power, s, 2]]]]	With its unit

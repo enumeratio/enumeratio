@@ -1,0 +1,2 @@
+id	section	role	expr	expected	known	tolerance	source	caption
+euler-gamma-to-20-digits	Basic		[N, EulerGamma, 20]	{num: "0.57721566490153286061"}	{num: "0.5772156649015328606065121"}	1e-18	mpmath 1.3.0 euler	To 20 digits

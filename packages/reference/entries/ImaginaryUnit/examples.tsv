@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+i-squared	Basic		[Square, ImaginaryUnit]	-1	$i^2 = -1$

@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+a-cyclic-group	Basic		[GroupIsAbelian, [CyclicGroup, 6]]	True	
+a-dihedral-group	Basic		[GroupIsAbelian, [DihedralGroup, 3]]	False	$D_3$ is not abelian

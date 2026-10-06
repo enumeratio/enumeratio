@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+partitions-of-5	Basic		[NPartition, 5]	7	The number of partitions of $5$
+partitions-of-10	Basic		[NPartition, 10]	42	

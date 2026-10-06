@@ -1,0 +1,3 @@
+id	in
+sin-of-pi	sin(x(std::f64::consts::PI))
+pi-to-20-digits	nf(x(std::f64::consts::PI))

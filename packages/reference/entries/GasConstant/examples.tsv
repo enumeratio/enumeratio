@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+gas-constant	Basic		GasConstant	[Quantity, 8.314462618, [Divide, J, [Multiply, mol, K]]]	With its unit

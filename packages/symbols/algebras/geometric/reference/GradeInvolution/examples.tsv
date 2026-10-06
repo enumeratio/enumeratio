@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+gradeinvolution-vector-plus-bivector	Basic		[GradeInvolution, [Add, e_1, [Multiply, e_1, e_2]]]	[Add, [Multiply, e_1, e_2], [Negate, e_1]]	Odd grades change sign; even grades stay

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+dimension-for-3-strands	Basic		[AlgebraDimension, [PlanarPartitionAlgebra, 3]]	132	The Catalan number $C_6$
