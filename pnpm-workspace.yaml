@@ -18,8 +18,8 @@ catalog:
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@0.3.1
   vite-plus: 0.3.1
-# NOTE: no global `vite@*` override. VitePress (web/) needs vanilla Vite;
-# forcing every transitive vite to vite-plus-core (Rolldown) breaks it. Library
+# NOTE: no global `vite@*` override. VitePress (web/) brings its own Vite (VitePress 2: Vite 8, on
+# Rolldown); forcing every transitive vite to vite-plus-core is untested there. Library
 # packages opt into vite-plus explicitly via `vite: catalog:`.
 peerDependencyRules:
   allowAny:
