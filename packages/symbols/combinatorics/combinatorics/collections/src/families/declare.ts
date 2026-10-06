@@ -101,9 +101,12 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
     return Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
   };
   // Undefined where the kernel declines past 2^53 (`needsBigint`): unknown, not an error.
+  // A NaN element is a table's end (`GiugaNumbers`): no such element, never a NaN one.
   const element = (p: number[], rank: bigint): Expr | undefined => {
     try {
-      return ce.box(encode(p, family.unrank(p, rank)) as BoxInput);
+      const value = family.unrank(p, rank);
+      if (typeof value === "number" && Number.isNaN(value)) return undefined;
+      return ce.box(encode(p, value) as BoxInput);
     } catch (error) {
       if (needsBigint(error)) return undefined;
       throw error;

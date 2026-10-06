@@ -227,3 +227,21 @@ test("AssociationThread accepts the one-argument Rule(keys, values) form", () =>
 test("Length on an AssociationThread result agrees with Association", () => {
   expect(run(["Length", ["AssociationThread", ["List", "a", "b", "c"], ["List", 1, 2, 3]]])).toEqual(3);
 });
+
+// A blank this grammar can't read holds the call rather than matching as a plain symbol.
+test("Replace, MatchQ and FreeQ hold on head-restricted and trailing-underscore blanks", () => {
+  const typed = ["Rule", ["f", "_Integer"], "y"];
+  expect(run(["Replace", ["f", "a"], typed])).toEqual(["Replace", ["f", "a"], typed]);
+  expect(run(["MatchQ", ["f", 1], ["f", "_Integer"]])).toEqual(["MatchQ", ["f", 1], ["f", "_Integer"]]);
+  expect(run(["Replace", ["f", 1], ["Rule", ["f", "x_"], ["g", "x"]]])).toEqual([
+    "Replace",
+    ["f", 1],
+    ["Rule", ["f", "x_"], ["g", "x"]],
+  ]);
+  expect(run(["Replace", ["f", 1], ["Rule", ["f", "_x"], ["g", "_x"]]])).toEqual(["g", 1]);
+});
+
+test("StringTake holds when asked for more characters than the string has", () => {
+  expect(run(["StringTake", "'hi'", 5])).toEqual(["StringTake", "'hi'", 5]);
+  expect(run(["StringTake", "'hi'", -5])).toEqual(["StringTake", "'hi'", -5]);
+});

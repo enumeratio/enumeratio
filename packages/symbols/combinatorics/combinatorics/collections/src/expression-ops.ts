@@ -45,6 +45,15 @@ import {
 const normalizePosition = (position: number, length: number): number =>
   position < 0 ? length + position + 1 : position;
 
+/** Whether `pattern` holds a blank this grammar can't read: a head-restricted blank
+ *  (`_Integer`) or Wolfram's trailing-underscore name (`x_`, `x_Integer`). Matching one as
+ *  an ordinary symbol would answer wrongly, so the heads that match patterns hold the call. */
+function hasUnsupportedBlank(pattern: Expr): boolean {
+  const name = symbolNameOf(pattern);
+  if (name !== undefined) return /^_{1,3}[A-Z]/.test(name) || /^[^_]\w*_/.test(name);
+  return operandsOf(pattern).some(hasUnsupportedBlank);
+}
+
 /** Whether `expr` matches `pattern` at the top level — the same one-line test `MatchQ` and
  *  `FreeQ` both build on. Exported so later waves (`misc-frontier.ts`'s `DeleteCases`) reuse
  *  this instead of re-deriving it from `Expr.match`. */
@@ -251,7 +260,7 @@ export function declareExpressionOps(ce: Engine): void {
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const exprRaw = ops[0];
       const pattern = ops[1];
-      if (exprRaw === undefined || pattern === undefined) return undefined;
+      if (exprRaw === undefined || pattern === undefined || hasUnsupportedBlank(pattern)) return undefined;
       return matches(exprRaw.evaluate(), pattern) ? ce.True : ce.False;
     },
   });
@@ -264,7 +273,7 @@ export function declareExpressionOps(ce: Engine): void {
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const exprRaw = ops[0];
       const pattern = ops[1];
-      if (exprRaw === undefined || pattern === undefined) return undefined;
+      if (exprRaw === undefined || pattern === undefined || hasUnsupportedBlank(pattern)) return undefined;
       return containsMatch(exprRaw.evaluate(), pattern) ? ce.False : ce.True;
     },
   });
@@ -284,6 +293,12 @@ export function declareExpressionOps(ce: Engine): void {
       const exprRaw = ops[0];
       const ruleSpec = ops[1];
       if (exprRaw === undefined || ruleSpec === undefined) return undefined;
+      const lefts = (
+        ruleSpec.operator === "List"
+          ? operandsOf(ruleSpec).flatMap((r) => (r.operator === "List" ? operandsOf(r) : [r]))
+          : [ruleSpec]
+      ).map((rule) => operandsOf(rule)[0]);
+      if (lefts.some((lhs) => lhs !== undefined && hasUnsupportedBlank(lhs))) return undefined;
       const expr = exprRaw.evaluate();
       const replaceWith = (rules: readonly Expr[]): Expr => {
         for (const rule of rules) {
@@ -436,8 +451,9 @@ export function declareExpressionOps(ce: Engine): void {
       }
       const n = integerAt(spec);
       if (n === undefined) return undefined;
-      if (n >= 0) return ce.string(chars.slice(0, Math.min(n, len)).join(""));
-      return ce.string(chars.slice(Math.max(len + n, 0)).join(""));
+      // More characters than the string has: held, as Wolfram does.
+      if (Math.abs(n) > len) return undefined;
+      return ce.string(n >= 0 ? chars.slice(0, n).join("") : chars.slice(len + n).join(""));
     },
   });
 

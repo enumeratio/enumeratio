@@ -315,9 +315,9 @@ test("a head's examples run in another kernel score its chip there", () => {
   expect(binomial?.verified?.by).toBe("examples");
   expect(binomial?.verified?.count).toBeGreaterThan(5);
   // A head whose examples parted company with the kernel says so rather than hiding it.
-  const gcd = crosswalkFor(
-    "GCD",
-    entries.find((e) => e.name === "GCD"),
+  const lcm = crosswalkFor(
+    "LCM",
+    entries.find((e) => e.name === "LCM"),
   ).find((r) => r.system === "wolfram");
-  expect(gcd?.verified?.disagree).toBe(1);
+  expect(lcm?.verified?.disagree).toBe(3);
 });

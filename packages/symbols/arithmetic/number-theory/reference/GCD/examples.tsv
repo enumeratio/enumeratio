@@ -1,55 +1,55 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	mathlib4.kind	mathlib4.note	oscar.kind	oscar.note	julia.kind	julia.note	rust.kind	rust.note
-gcd-12-18			[GCD, 12, 18]	6															
-gcd-24-36			[GCD, 24, 36]	12															
-gcd-is-variadic-it-accepts-any-number-of			[GCD, 20, 30, 45]	5	GCD is variadic: it accepts any number of arguments														
-gcd-2-6-10			[GCD, 2, 6, 10]	2															
-over-the-rationals-the-gcd-of-the-numerators	Scope		[GCD, [Rational, 1, 3], [Rational, 2, 5], [Rational, 3, 7]]	[Rational, 1, 105]	Over the rationals: the gcd of the numerators over the lcm of the denominators														
-gaussian-integers-the-associate-in-the-first	Scope		[GCD, [Complex, 3, 1], [Complex, 1, 3]]	[Complex, 1, 1]	Gaussian integers: the associate in the first quadrant			domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.					domain	A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.	domain	A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.		
-gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i	Scope		[GCD, [Complex, -3, 2], [Complex, 10, 15]]	[Complex, 2, 3]	Gaussian integers: $-3+2i=i(2+3i)$ and $10+15i=5(2+3i)$			domain	compute-engine computes the Gaussian gcd directly; Sage's gcd() doesn't understand Gaussian integers and falls back to the trivial answer 1 in the Symbolic Ring.					domain	Oscar's ZZ wrapper is rational integers only, no Gaussian integers; compute-engine computes the Gaussian gcd directly.	domain	Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian gcd directly.		
-gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2	Scope		[GCD, [Complex, 5, [Rational, 10, 3]], [Complex, [Rational, 3, 2], 1]]	[Complex, [Rational, 1, 2], [Rational, 1, 3]]	Gaussian rationals: $\gcd(15+10i,\,3+2i)/\operatorname{lcm}(3,2)$			domain	compute-engine computes the Gaussian gcd for Gaussian-rational arguments too; Sage's gcd() doesn't understand Gaussian integers and falls back to the trivial answer 1 in the Symbolic Ring.					domain	Oscar's ZZ wrapper is rational integers only, no Gaussian integers; compute-engine computes the Gaussian gcd for a Gaussian-rational argument too.	domain	Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian gcd for a Gaussian-rational argument too.		
-big-integers-gcd-20-10-100-3-7-exact-past-where	Scope		[GCD, [Factorial, 20], [Add, [Power, 10, 100], 3]]	7	Big integers: $\gcd(20!,\,10^{100}+3)=7$, exact past where a double rounds													domain	The Rust adapter takes integers here; compute-engine's GCD extends past them.
-listable-a-single-list-argument-threads-element	Scope		[GCD, 12, [List, 3, 7, 40]]	[List, 3, 1, 4]	Listable: a single list argument threads element-wise against the rest							threading	compute-engine's GCD pools the elements of list arguments; Mathlib's Int.gcd takes scalars only.	threading	compute-engine's GCD is Listable and threads over the list; Oscar's gcd takes scalars only.			threading	compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars only.
-gcd-with-a-unit-is-always-1	Scope	test	[GCD, [Complex, 3, 4], 1]	1	gcd with a unit is always 1														
-gcd-with-i-a-unit-is-1	Scope	test	[GCD, [Complex, 3, 4], [Complex, 0, 1]]	1	gcd with $i$, a unit, is 1														
-gcd-with-0-is-the-other-argument-normalised	Scope	test	[GCD, 0, [Complex, -4, 3]]	[Complex, 3, 4]	gcd with 0 is the other argument, normalised														
-gcd-of-0-and-0-is-0	Scope	test	[GCD, 0, 0]	0	gcd of 0 and 0 is 0														
-two-gaussian-primes-above-5-are-coprime	Scope	test	[GCD, [Complex, 2, 1], [Complex, 2, -1]]	1	two Gaussian primes above 5 are coprime														
-a-gaussian-prime-and-a-real-prime-3-mod-4-are	Scope	test	[GCD, [Complex, 2, 1], 3]	1	a Gaussian prime and a real prime, 3 mod 4, are coprime														
-gcd-recovers-a-shared-prime-norm-5	Scope	test	[GCD, [Complex, 4, 2], [Complex, 3, 4]]	[Complex, 2, 1]	gcd recovers a shared prime, norm 5														
-an-associate-pair-has-gcd-equal-to-their-common	Scope	test	[GCD, [Complex, 3, 4], [Complex, -4, 3]]	[Complex, 3, 4]	an associate pair has gcd equal to their common normalisation														
-another-associate-pair-by-1	Scope	test	[GCD, [Complex, 3, 4], [Complex, -3, -4]]	[Complex, 3, 4]	another associate pair, by $-1$														
-two-unrelated-composites-of-norm-25-share-no	Scope	test	[GCD, [Complex, 3, 4], [Complex, 4, 3]]	1	two unrelated composites of norm 25 share no factor														
-gcd-with-a-negative-real-prime	Scope	test	[GCD, [Complex, 3, 4], -7]	1	gcd with a negative real prime														
-gcd-of-two-large-norm-gaussians	Scope	test	[GCD, [Complex, 123, 456], [Complex, 1000, 1]]	1	gcd of two large-norm Gaussians														
-gcd-past-2-53-in-both-parts	Scope	test	[GCD, [Complex, {num: "100000000000000000001"}, {num: "9007199254740993"}], [Complex, 4, 1]]	1	gcd past $2^{53}$ in both parts														
-a-real-split-prime-and-its-gaussian-factor	Scope	test	[GCD, 5, [Complex, 2, 1]]	[Complex, 2, 1]	a real split prime and its Gaussian factor														
-gcd-of-two-real-composites-plain-integer-case	Scope	test	[GCD, 4, 9]	1	gcd of two real composites, plain-integer case														
-gcd-with-a-negative-real-composite	Scope	test	[GCD, -15, [Complex, 5, 5]]	5	gcd with a negative real composite														
-gcd-with-an-associate-times-1	Scope	test	[GCD, [Complex, 8, 2], [Complex, -3, -4]]	1	gcd with an associate, times $-1$														
-gcd-with-an-associate-times-i	Scope	test	[GCD, [Complex, 8, 2], [Complex, 4, -3]]	1	gcd with an associate, times $-i$														
-two-primes-above-13-are-coprime	Scope	test	[GCD, [Complex, 3, 2], [Complex, 2, 3]]	1	two primes above 13 are coprime														
-gcd-recovers-a-shared-prime-above-13	Scope	test	[GCD, [Complex, 6, 8], [Complex, 3, 2]]	1	gcd recovers a shared prime above 13														
-gcd-with-a-real-prime-s-associate-by-the-unit-i	Scope	test	[GCD, [Complex, 3, 4], [Complex, 0, 7]]	1	gcd with a real prime's associate by the unit $i$														
-gcd-with-a-real-composite-5-squared	Scope	test	[GCD, [Complex, 3, 4], 25]	[Complex, 3, 4]	gcd with a real composite, 5 squared														
-gcd-with-a-negative-associate	Scope	test	[GCD, [Complex, 6, 8], [Complex, -2, -3]]	1	gcd with a negative associate														
-gcd-of-a-large-norm-gaussian-and-a-real-prime-19	Scope	test	[GCD, [Complex, 123, 456], 19]	1	gcd of a large-norm Gaussian and a real prime, 19														
-gcd-of-two-composites-sharing-the-prime-above-13	Scope	test	[GCD, [Complex, 6, 8], [Complex, 9, 6]]	1	gcd of two composites sharing the prime above 13														
-reduce-12-18-to-lowest-terms-by-dividing-out-the	Applications		[Divide, 12, [GCD, 12, 18]]	2	Reduce $12/18$ to lowest terms by dividing out the GCD														
-gcd-14-105	Applications		[GCD, 14, 105]	7	Greatest common divisor of two integers														
-gcd-24-12	Applications		[GCD, 24, 12]	12	When one divides the other, the gcd is the smaller														
-gcd-6-21	Applications		[GCD, 6, 21]	3	Shared factor 3														
-gcd-6-3-mod-3-eq-0	Applications		[Equal, [Mod, [GCD, 6, 3], 3], 0]	True	The gcd of 6 and 3 is itself divisible by 3														
-commutative-gcd-a-b-gcd-b-a	Properties		[Equal, [GCD, 12, 18], [GCD, 18, 12]]	True	Commutative: $\gcd(a,b)=\gcd(b,a)$														
-gcd-a-b-cdot-lcm-a-b-ab-see-lcm	Properties		[Equal, [Multiply, [GCD, 12, 18], [LCM, 12, 18]], [Multiply, 12, 18]]	True	$\gcd(a,b)\cdot\mathrm{lcm}(a,b)=ab$. See [[LCM]]														
-gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	Properties		[GCD, [Fibonacci, 12], [Fibonacci, 18]]	8	$\gcd(F_m,F_n)=F_{\gcd(m,n)}$: here $F_6=8$. See [[Fibonacci]]														
-gcd-7-11-29	Properties		[GCD, 7, 11, 29]	1	Takes any number of arguments; distinct primes give 1														
-gcd-5-6-eq-1	Properties		[Equal, [GCD, 5, 6], 1]	True	Coprime integers have gcd 1														
-a-single-argument-is-returned-unchanged	Possible issues		[GCD, 4]	4	A single argument is returned unchanged														
-with-no-arguments-compute-engine-returns-0-the	Possible issues		[GCD]	0	With no arguments compute-engine returns 0, the identity element														
-0-is-absorbed-every-integer-divides-it-so-gcd-0	Possible issues		[GCD, 0, 5]	5	0 is absorbed: every integer divides it, so $\gcd(0,n)=n$														
-signs-are-discarded-before-computing-the-gcd	Possible issues		[GCD, -12, 9, 57]	3	Signs are discarded before computing the GCD														
-lists-aren-t-threaded-element-wise-they-re	Possible issues		[GCD, [List, 2, 4], [List, 6, 8]]	2	Lists aren't threaded element-wise; they're flattened into extra arguments, so this equals $\gcd(2,4,6,8)$	convention	Wolfram's GCD is Listable and threads element-wise ({gcd(2,6), gcd(4,8)}); compute-engine flattens the lists into arguments, gcd(2,4,6,8).	threading	compute-engine's GCD pools the elements of list arguments; Sage's gcd takes scalars only.	threading	compute-engine's GCD threads over (or pools) the list; SymPy's takes scalars.	threading	compute-engine's GCD pools the elements of list arguments; Mathlib's gcd takes scalars only.	threading	compute-engine's GCD pools the elements of list arguments; Oscar's gcd takes scalars only.	threading	compute-engine's GCD pools the elements of list arguments; Nemo/Combinatorics.jl's gcd takes scalars only.	threading	compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars.
-gcd-0-0-0-by-convention	Possible issues		[GCD, 0, 0]	0	$\gcd(0,0)=0$ by convention														
-symbolic-arguments-stay-unevaluated	Possible issues		[GCD, x, y]	[GCD, x, y]	Symbolic arguments stay unevaluated					unevaluated	We leave the call unevaluated; SymPy answers 1.								
-gcd-neg-3-9	Possible issues		[GCD, -3, 9]	3	The result is never negative														
-gcd-with-an-infinite-argument-stays-unevaluated	Possible issues		[GCD, PositiveInfinity, 6]	[GCD, 6, PositiveInfinity]	An infinite argument has no divisors to take: the call stays unevaluated, as in Wolfram					domain	An infinite argument is not an integer: compute-engine, like Wolfram, leaves the call unevaluated, while SymPy takes gcd(oo, 6) = 1.								
+id	section	role	expr	expected	caption	sage.kind	sage.note	sympy.kind	sympy.note	mathlib4.kind	mathlib4.note	oscar.kind	oscar.note	julia.kind	julia.note	rust.kind	rust.note
+gcd-12-18			[GCD, 12, 18]	6													
+gcd-24-36			[GCD, 24, 36]	12													
+gcd-is-variadic-it-accepts-any-number-of			[GCD, 20, 30, 45]	5	GCD is variadic: it accepts any number of arguments												
+gcd-2-6-10			[GCD, 2, 6, 10]	2													
+over-the-rationals-the-gcd-of-the-numerators	Scope		[GCD, [Rational, 1, 3], [Rational, 2, 5], [Rational, 3, 7]]	[Rational, 1, 105]	Over the rationals: the gcd of the numerators over the lcm of the denominators												
+gaussian-integers-the-associate-in-the-first	Scope		[GCD, [Complex, 3, 1], [Complex, 1, 3]]	[Complex, 1, 1]	Gaussian integers: the associate in the first quadrant	domain	A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.					domain	A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.	domain	A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.		
+gaussian-integers-3-2i-i-2-3i-and-10-15i-5-2-3i	Scope		[GCD, [Complex, -3, 2], [Complex, 10, 15]]	[Complex, 2, 3]	Gaussian integers: $-3+2i=i(2+3i)$ and $10+15i=5(2+3i)$	domain	compute-engine computes the Gaussian gcd directly; Sage's gcd() doesn't understand Gaussian integers and falls back to the trivial answer 1 in the Symbolic Ring.					domain	Oscar's ZZ wrapper is rational integers only, no Gaussian integers; compute-engine computes the Gaussian gcd directly.	domain	Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian gcd directly.		
+gaussian-rationals-gcd-15-10i-3-2i-lcm-3-2	Scope		[GCD, [Complex, 5, [Rational, 10, 3]], [Complex, [Rational, 3, 2], 1]]	[Complex, [Rational, 1, 2], [Rational, 1, 3]]	Gaussian rationals: $\gcd(15+10i,\,3+2i)/\operatorname{lcm}(3,2)$	domain	compute-engine computes the Gaussian gcd for Gaussian-rational arguments too; Sage's gcd() doesn't understand Gaussian integers and falls back to the trivial answer 1 in the Symbolic Ring.					domain	Oscar's ZZ wrapper is rational integers only, no Gaussian integers; compute-engine computes the Gaussian gcd for a Gaussian-rational argument too.	domain	Nemo's ZZ is rational integers only, no Gaussian integers; ours computes the Gaussian gcd for a Gaussian-rational argument too.		
+big-integers-gcd-20-10-100-3-7-exact-past-where	Scope		[GCD, [Factorial, 20], [Add, [Power, 10, 100], 3]]	7	Big integers: $\gcd(20!,\,10^{100}+3)=7$, exact past where a double rounds											domain	The Rust adapter takes integers here; compute-engine's GCD extends past them.
+listable-a-single-list-argument-threads-element	Scope		[GCD, 12, [List, 3, 7, 40]]	[List, 3, 1, 4]	Listable: a single list argument threads element-wise against the rest					threading	compute-engine's GCD pools the elements of list arguments; Mathlib's Int.gcd takes scalars only.	threading	compute-engine's GCD is Listable and threads over the list; Oscar's gcd takes scalars only.			threading	compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars only.
+gcd-with-a-unit-is-always-1	Scope	test	[GCD, [Complex, 3, 4], 1]	1	gcd with a unit is always 1												
+gcd-with-i-a-unit-is-1	Scope	test	[GCD, [Complex, 3, 4], [Complex, 0, 1]]	1	gcd with $i$, a unit, is 1												
+gcd-with-0-is-the-other-argument-normalised	Scope	test	[GCD, 0, [Complex, -4, 3]]	[Complex, 3, 4]	gcd with 0 is the other argument, normalised												
+gcd-of-0-and-0-is-0	Scope	test	[GCD, 0, 0]	0	gcd of 0 and 0 is 0												
+two-gaussian-primes-above-5-are-coprime	Scope	test	[GCD, [Complex, 2, 1], [Complex, 2, -1]]	1	two Gaussian primes above 5 are coprime												
+a-gaussian-prime-and-a-real-prime-3-mod-4-are	Scope	test	[GCD, [Complex, 2, 1], 3]	1	a Gaussian prime and a real prime, 3 mod 4, are coprime												
+gcd-recovers-a-shared-prime-norm-5	Scope	test	[GCD, [Complex, 4, 2], [Complex, 3, 4]]	[Complex, 2, 1]	gcd recovers a shared prime, norm 5												
+an-associate-pair-has-gcd-equal-to-their-common	Scope	test	[GCD, [Complex, 3, 4], [Complex, -4, 3]]	[Complex, 3, 4]	an associate pair has gcd equal to their common normalisation												
+another-associate-pair-by-1	Scope	test	[GCD, [Complex, 3, 4], [Complex, -3, -4]]	[Complex, 3, 4]	another associate pair, by $-1$												
+two-unrelated-composites-of-norm-25-share-no	Scope	test	[GCD, [Complex, 3, 4], [Complex, 4, 3]]	1	two unrelated composites of norm 25 share no factor												
+gcd-with-a-negative-real-prime	Scope	test	[GCD, [Complex, 3, 4], -7]	1	gcd with a negative real prime												
+gcd-of-two-large-norm-gaussians	Scope	test	[GCD, [Complex, 123, 456], [Complex, 1000, 1]]	1	gcd of two large-norm Gaussians												
+gcd-past-2-53-in-both-parts	Scope	test	[GCD, [Complex, {num: "100000000000000000001"}, {num: "9007199254740993"}], [Complex, 4, 1]]	1	gcd past $2^{53}$ in both parts												
+a-real-split-prime-and-its-gaussian-factor	Scope	test	[GCD, 5, [Complex, 2, 1]]	[Complex, 2, 1]	a real split prime and its Gaussian factor												
+gcd-of-two-real-composites-plain-integer-case	Scope	test	[GCD, 4, 9]	1	gcd of two real composites, plain-integer case												
+gcd-with-a-negative-real-composite	Scope	test	[GCD, -15, [Complex, 5, 5]]	5	gcd with a negative real composite												
+gcd-with-an-associate-times-1	Scope	test	[GCD, [Complex, 8, 2], [Complex, -3, -4]]	1	gcd with an associate, times $-1$												
+gcd-with-an-associate-times-i	Scope	test	[GCD, [Complex, 8, 2], [Complex, 4, -3]]	1	gcd with an associate, times $-i$												
+two-primes-above-13-are-coprime	Scope	test	[GCD, [Complex, 3, 2], [Complex, 2, 3]]	1	two primes above 13 are coprime												
+gcd-recovers-a-shared-prime-above-13	Scope	test	[GCD, [Complex, 6, 8], [Complex, 3, 2]]	1	gcd recovers a shared prime above 13												
+gcd-with-a-real-prime-s-associate-by-the-unit-i	Scope	test	[GCD, [Complex, 3, 4], [Complex, 0, 7]]	1	gcd with a real prime's associate by the unit $i$												
+gcd-with-a-real-composite-5-squared	Scope	test	[GCD, [Complex, 3, 4], 25]	[Complex, 3, 4]	gcd with a real composite, 5 squared												
+gcd-with-a-negative-associate	Scope	test	[GCD, [Complex, 6, 8], [Complex, -2, -3]]	1	gcd with a negative associate												
+gcd-of-a-large-norm-gaussian-and-a-real-prime-19	Scope	test	[GCD, [Complex, 123, 456], 19]	1	gcd of a large-norm Gaussian and a real prime, 19												
+gcd-of-two-composites-sharing-the-prime-above-13	Scope	test	[GCD, [Complex, 6, 8], [Complex, 9, 6]]	1	gcd of two composites sharing the prime above 13												
+reduce-12-18-to-lowest-terms-by-dividing-out-the	Applications		[Divide, 12, [GCD, 12, 18]]	2	Reduce $12/18$ to lowest terms by dividing out the GCD												
+gcd-14-105	Applications		[GCD, 14, 105]	7	Greatest common divisor of two integers												
+gcd-24-12	Applications		[GCD, 24, 12]	12	When one divides the other, the gcd is the smaller												
+gcd-6-21	Applications		[GCD, 6, 21]	3	Shared factor 3												
+gcd-6-3-mod-3-eq-0	Applications		[Equal, [Mod, [GCD, 6, 3], 3], 0]	True	The gcd of 6 and 3 is itself divisible by 3												
+commutative-gcd-a-b-gcd-b-a	Properties		[Equal, [GCD, 12, 18], [GCD, 18, 12]]	True	Commutative: $\gcd(a,b)=\gcd(b,a)$												
+gcd-a-b-cdot-lcm-a-b-ab-see-lcm	Properties		[Equal, [Multiply, [GCD, 12, 18], [LCM, 12, 18]], [Multiply, 12, 18]]	True	$\gcd(a,b)\cdot\mathrm{lcm}(a,b)=ab$. See [[LCM]]												
+gcd-f-m-f-n-f-gcd-m-n-here-f-6-8-see-fibonacci	Properties		[GCD, [Fibonacci, 12], [Fibonacci, 18]]	8	$\gcd(F_m,F_n)=F_{\gcd(m,n)}$: here $F_6=8$. See [[Fibonacci]]												
+gcd-7-11-29	Properties		[GCD, 7, 11, 29]	1	Takes any number of arguments; distinct primes give 1												
+gcd-5-6-eq-1	Properties		[Equal, [GCD, 5, 6], 1]	True	Coprime integers have gcd 1												
+a-single-argument-is-returned-unchanged	Possible issues		[GCD, 4]	4	A single argument is returned unchanged												
+with-no-arguments-compute-engine-returns-0-the	Possible issues		[GCD]	0	With no arguments compute-engine returns 0, the identity element												
+0-is-absorbed-every-integer-divides-it-so-gcd-0	Possible issues		[GCD, 0, 5]	5	0 is absorbed: every integer divides it, so $\gcd(0,n)=n$												
+signs-are-discarded-before-computing-the-gcd	Possible issues		[GCD, -12, 9, 57]	3	Signs are discarded before computing the GCD												
+equal-length-lists-thread-element-wise	Possible issues		[GCD, [List, 2, 4], [List, 6, 8]]	[List, 2, 4]	Lists of one length thread element-wise, as in Wolfram: $\{\gcd(2,6),\gcd(4,8)\}$	threading	compute-engine's GCD threads over list arguments; Sage's gcd takes scalars only.	threading	compute-engine's GCD threads over the list; SymPy's takes scalars.	threading	compute-engine's GCD threads over list arguments; Mathlib's gcd takes scalars only.	threading	compute-engine's GCD threads over list arguments; Oscar's gcd takes scalars only.	threading	compute-engine's GCD threads over list arguments; Nemo/Combinatorics.jl's gcd takes scalars only.	threading	compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars.
+gcd-0-0-0-by-convention	Possible issues		[GCD, 0, 0]	0	$\gcd(0,0)=0$ by convention												
+symbolic-arguments-stay-unevaluated	Possible issues		[GCD, x, y]	[GCD, x, y]	Symbolic arguments stay unevaluated			unevaluated	We leave the call unevaluated; SymPy answers 1.								
+gcd-neg-3-9	Possible issues		[GCD, -3, 9]	3	The result is never negative												
+gcd-with-an-infinite-argument-stays-unevaluated	Possible issues		[GCD, PositiveInfinity, 6]	[GCD, 6, PositiveInfinity]	An infinite argument has no divisors to take: the call stays unevaluated, as in Wolfram			domain	An infinite argument is not an integer: compute-engine, like Wolfram, leaves the call unevaluated, while SymPy takes gcd(oo, 6) = 1.								

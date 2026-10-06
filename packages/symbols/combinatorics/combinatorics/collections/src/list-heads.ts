@@ -3,6 +3,7 @@ import {
   type Engine,
   type Expr,
   integerAt,
+  isNumber,
   operandsOf,
   stringAt,
   symbolNameOf,
@@ -28,7 +29,26 @@ import { positionsOf } from "./list-levels.ts";
 /** Largest Range SetMinus lists out as a set. */
 const SET_MINUS_RANGE_MAX = 100_000;
 
+/** Wolfram's string order: letters compare ignoring case, and on a tie lowercase comes first
+ *  (`cat`, `Cat`, `catfish`, `fish`). */
+const stringCompare = (a: string, b: string): number => {
+  const la = a.toLowerCase();
+  const lb = b.toLowerCase();
+  if (la !== lb) return la < lb ? -1 : 1;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) return a[i] === la[i] ? -1 : 1;
+  }
+  return 0;
+};
+
+/** A string literal, not a symbol (whose `stringAt` is its name). */
+const isText = (e: Expr): boolean => typeof (e as { string?: unknown }).string === "string";
+
 const naturalCompare = (a: Expr, b: Expr): number => {
+  if (isText(a) && isText(b)) return stringCompare(stringAt(a)!, stringAt(b)!);
+  // Numbers sort before strings.
+  if (isText(a) && isNumber(b)) return 1;
+  if (isText(b) && isNumber(a)) return -1;
   const as = stringAt(a);
   const bs = stringAt(b);
   if (as !== undefined && bs !== undefined) return as < bs ? -1 : as > bs ? 1 : 0;
@@ -294,15 +314,17 @@ export function declareListHeads(ce: Engine): void {
   );
 
   // Sort(strings): compute-engine's Sort only orders numbers, leaving a list of strings
-  // untouched — a bug, not a deliberate scope limit. Numeric and comparator-form Sort are
-  // untouched; only a plain, non-empty list of strings is affected.
+  // untouched. Numeric and comparator-form Sort are untouched; only a plain list of strings
+  // (numbers allowed, sorting first) is affected.
   wrapOperator(
     ce,
     ["Sort", 1],
     (ops) =>
       ops[0].operator === "List" &&
       operandsOf(ops[0]).length > 0 &&
-      operandsOf(ops[0]).every((element) => stringAt(element) !== undefined),
+      (operandsOf(ops[0]).every((element) => stringAt(element) !== undefined) ||
+        (operandsOf(ops[0]).some(isText) &&
+          operandsOf(ops[0]).every((element) => isText(element) || isNumber(element)))),
     () => (ops) => {
       const sorted = [...operandsOf(ops[0])];
       sorted.sort(naturalCompare);
@@ -413,6 +435,68 @@ export function declareListHeads(ce: Engine): void {
     () => (ops) => ce.symbol(ops[0].operator),
     2,
   );
+
+  // At(Primes, n): the set `Primes` has no order of its own, and compute-engine's `At` folds
+  // it to NaN while canonicalizing. Its n-th element is PrimeNumbers' (no change where
+  // PrimeNumbers isn't declared).
+  {
+    const definition = ce.lookupDefinition("At");
+    const operator =
+      definition !== undefined && "operator" in definition
+        ? (
+            definition as {
+              operator: { canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined | null };
+            }
+          ).operator
+        : undefined;
+    if (operator !== undefined) {
+      const nativeCanonical = operator.canonical;
+      const nativeOperator = Object.create(operator) as typeof operator;
+      nativeOperator.canonical = nativeCanonical;
+      operator.canonical = (ops, options) => {
+        const reroute =
+          symbolNameOf(ops[0]) === "Primes" &&
+          (integerAt(ops[1]) ?? 0) > 0 &&
+          ce.lookupDefinition("PrimeNumbers") !== undefined;
+        return nativeCanonical?.call(
+          nativeOperator,
+          reroute ? [ce.symbol("PrimeNumbers"), ...ops.slice(1)] : ops,
+          options,
+        );
+      };
+    }
+  }
+
+  // At(Primes, n): the set `Primes` has no order of its own, and compute-engine's `At` folds
+  // it to NaN while canonicalizing. Its n-th element is PrimeNumbers' (no change where
+  // PrimeNumbers isn't declared).
+  {
+    const definition = ce.lookupDefinition("At");
+    const operator =
+      definition !== undefined && "operator" in definition
+        ? (
+            definition as {
+              operator: { canonical?: (ops: readonly Expr[], options: unknown) => Expr | undefined | null };
+            }
+          ).operator
+        : undefined;
+    if (operator !== undefined) {
+      const nativeCanonical = operator.canonical;
+      const nativeOperator = Object.create(operator) as typeof operator;
+      nativeOperator.canonical = nativeCanonical;
+      operator.canonical = (ops, options) => {
+        const reroute =
+          symbolNameOf(ops[0]) === "Primes" &&
+          (integerAt(ops[1]) ?? 0) > 0 &&
+          ce.lookupDefinition("PrimeNumbers") !== undefined;
+        return nativeCanonical?.call(
+          nativeOperator,
+          reroute ? [ce.symbol("PrimeNumbers"), ...ops.slice(1)] : ops,
+          options,
+        );
+      };
+    }
+  }
 
   // At(c, Span(start, end, step?)): a Wolfram `start;;end;;step` slice — compute-engine has
   // no `Span`. Resolved to an explicit 1-based index list (negative bounds count from the

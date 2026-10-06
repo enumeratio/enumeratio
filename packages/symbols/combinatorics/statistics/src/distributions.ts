@@ -347,9 +347,10 @@ const varianceOf = (ce: Engine, dist: Expr, options?: EvaluateOptions): Expr | u
     case "EmpiricalDistribution": {
       const data = empiricalData(dist);
       if (data === undefined) return undefined;
-      // Sample variance (n-1), matching compute-engine's own list Variance — and Wolfram's
-      // own convention that Variance(EmpiricalDistribution(data)) = Variance(data).
-      return finish(ce.function("Variance", [ce.function("List", [...data])]), options);
+      // Population variance: the distribution's own second central moment, (n-1)/n of the sample variance.
+      if (data.length < 2) return undefined;
+      const sample = ce.function("Variance", [ce.function("List", [...data])]);
+      return finish(ce.function("Multiply", [ce.number([data.length - 1, data.length]), sample]), options);
     }
     default:
       return undefined;

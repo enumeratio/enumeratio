@@ -1,4 +1,5 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-petersen-is-connected			[IsConnectedGraph, [PetersenGraph]]	True			
-two-disjoint-edges-are-not-connected			[IsConnectedGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]]]	False			
-weakly-connected-despite-two-scc			[IsConnectedGraph, [Graph, [List, 1, 2, 3], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1], [DirectedEdge, 2, 3]]]]	True	One weakly-connected piece, even though ConnectedComponents finds two	convention	compute-engine's IsConnectedGraph tests weak connectivity for a directed graph (true here, despite two SCCs); Wolfram's scanned ConnectedGraphQ answered False for the same graph.
+id	section	role	expr	expected	caption
+petersen-is-connected			[IsConnectedGraph, [PetersenGraph]]	True	
+two-disjoint-edges-are-not-connected			[IsConnectedGraph, [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]]]	False	
+strongly-connected-needs-a-way-back			[IsConnectedGraph, [Graph, [List, 1, 2, 3], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1], [DirectedEdge, 2, 3]]]]	False	1 reaches 3 but 3 cannot get back: one weak piece, not strongly connected
+a-directed-cycle-is-connected			[IsConnectedGraph, [Graph, [List, 1, 2, 3], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 3], [DirectedEdge, 3, 1]]]]	True	

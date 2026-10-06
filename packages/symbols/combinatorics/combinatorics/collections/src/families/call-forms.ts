@@ -70,6 +70,8 @@ const asBoxed = (c: Expr): Boxed => c as unknown as Boxed;
  *  rather than as the bare integer. */
 interface Resolved<E> {
   readonly count: number;
+  /** The count as an exact integer, when `count` (a double) is past 2^53 and rounds it. */
+  readonly exact?: bigint;
   unrank(r: number): E;
   valid(e: unknown): boolean;
   encode?: (e: E) => unknown;
@@ -89,7 +91,11 @@ function polyCollection<E>(
   const opsOf = (c: Expr) => operandsOf(c);
   const element = (res: Resolved<E>, i: number): Expr => ce.box((res.encode ?? encode)(res.unrank(i)) as BoxInput);
   return {
-    count: (c) => resolve(opsOf(c))?.count ?? 0,
+    // A double past 2^53 is rounded: unknown to the engine, never a wrong count.
+    count: (c) => {
+      const total = resolve(opsOf(c))?.count ?? 0;
+      return total > Number.MAX_SAFE_INTEGER ? undefined : total;
+    },
     isFinite: () => true,
     isLazy: () => true,
     isEnumerable: () => true,
@@ -382,9 +388,14 @@ const subsetKernels = (ce: Engine): SubsetKernels => ({
   atMost: kernelOn(ce, subsetsOfSizeAtMost({ head: "SubsetsOfSizeAtMost", params: ["_n", "_k"] })),
 });
 
+/** A kernel count as `Resolved.exact`: a bigint is exact, a plain number only below 2^53. */
+const exactOf = (total: bigint | number): { exact?: bigint } =>
+  typeof total === "bigint" ? { exact: total } : Number.isSafeInteger(total) ? { exact: BigInt(total) } : {};
+
 /** A kernel at `p` as a call form's resolution. */
 const resolvedFrom = (kernel: FamilyKernel, p: number[], encode?: (e: number[]) => unknown): Resolved<number[]> => ({
   count: Number(kernel.count(p)),
+  ...exactOf(kernel.count(p)),
   unrank: (r) => kernel.unrank(p, BigInt(r)) as number[],
   valid: (e) => kernel.valid(e, p),
   ...(encode === undefined ? {} : { encode }),
@@ -393,8 +404,12 @@ const resolvedFrom = (kernel: FamilyKernel, p: number[], encode?: (e: number[]) 
 /** Subsets of {1,…,n} whose size lands in `sizes`: the size blocks in turn, each lex. */
 function subsetsInSizes(kernels: SubsetKernels, n: number, sizes: readonly number[]): Resolved<number[]> {
   const blocks = sizes.map((k) => [k, Number(kernels.ofSize.count([n, k]))] as const);
+  const exacts = sizes.map((k) => kernels.ofSize.count([n, k]));
   return {
     count: blocks.reduce((total, [, c]) => total + c, 0),
+    ...(exacts.every((c) => typeof c === "bigint" || Number.isSafeInteger(c))
+      ? { exact: exacts.reduce<bigint>((total, c) => total + BigInt(c), 0n) }
+      : {}),
     unrank: (r) => {
       let left = r;
       for (const [k, c] of blocks) {
@@ -566,6 +581,36 @@ export function declareCallForms(ce: Engine): void {
     ["Permutations"],
     (ops) => ops.length === 1 && (integerAt(ops[0]) ?? -1) >= 0,
     () => (ops) => ce.function("SymmetricGroup", [ce.number(integerAt(ops[0])!)]),
+  );
+
+  // Count past 2^53 is an exact integer, never a rounded double: the collection handlers
+  // above decline there, and these two forms know the exact count.
+  const BIG = BigInt(Number.MAX_SAFE_INTEGER);
+  const exactSubsets = (call: Expr): bigint | undefined => {
+    const exact = resolveSubsets(kernels, operandsOf(call), wrapSubset)?.exact;
+    return exact !== undefined && exact > BIG ? exact : undefined;
+  };
+  // Permutations of a list of distinct elements (or a Range): n!.
+  const exactPermutations = (call: Expr): bigint | undefined => {
+    const arg = operandsOf(call)[0];
+    if (arg === undefined || operandsOf(call).length !== 1) return undefined;
+    const items = arg.operator === "List" ? operandsOf(arg) : undefined;
+    const n = items?.length ?? (arg.operator === "Range" ? arg.count : undefined);
+    if (typeof n !== "number" || !Number.isSafeInteger(n) || n < 19 || n > 10_000) return undefined;
+    if (items !== undefined && new Set(items.map((item) => JSON.stringify(item.json))).size !== n) return undefined;
+    let total = 1n;
+    for (let i = 2n; i <= BigInt(n); i++) total *= i;
+    return total;
+  };
+  wrapOperator(
+    ce,
+    ["Count", 1],
+    (ops) =>
+      ops.length === 1 &&
+      ((ops[0].operator === "Subsets" && exactSubsets(ops[0]) !== undefined) ||
+        (ops[0].operator === "Permutations" && exactPermutations(ops[0]) !== undefined)),
+    () => (ops) => ce.number(ops[0].operator === "Subsets" ? exactSubsets(ops[0])! : exactPermutations(ops[0])!),
+    1,
   );
 
   // `Tuples(list, k)`: the k-tuples of the list's own elements, a plain List as in Wolfram

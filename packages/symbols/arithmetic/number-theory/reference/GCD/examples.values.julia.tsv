@@ -48,7 +48,7 @@ a-single-argument-is-returned-unchanged
 with-no-arguments-compute-engine-returns-0-the			
 0-is-absorbed-every-integer-divides-it-so-gcd-0	gcd(ZZ(0), ZZ(5))	5	
 signs-are-discarded-before-computing-the-gcd			
-lists-aren-t-threaded-element-wise-they-re	[gcd(ZZ([2, 4]), ZZ(6)), gcd(ZZ([2, 4]), ZZ(8))]	MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but 	error
+equal-length-lists-thread-element-wise	[gcd(ZZ([2, 4]), ZZ(6)), gcd(ZZ([2, 4]), ZZ(8))]	MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but 	error
 gcd-0-0-0-by-convention	gcd(ZZ(0), ZZ(0))	0	
 symbolic-arguments-stay-unevaluated			
 gcd-neg-3-9	gcd(ZZ(-3), ZZ(9))		

@@ -79,3 +79,13 @@ test("Append(x, k) for a free x stays the call", () => {
   expect(run(["Append", "x", "k"])).toEqual(["Append", "x", "k"]);
   expect(run(["Append", ["f", 1], "k"])).toEqual(["f", 1, "k"]);
 });
+
+test("Sort orders strings as Wolfram does: case-insensitive, lowercase first on a tie", () => {
+  const strings = (...s: string[]) => ["List", ...s.map((x) => `'${x}'`)];
+  expect(run(["Sort", strings("cat", "fish", "catfish", "Cat")])).toEqual(strings("cat", "Cat", "catfish", "fish"));
+  expect(run(["Sort", strings("b", "A", "a", "B")])).toEqual(strings("a", "A", "b", "B"));
+});
+
+test("Sort puts numbers before strings", () => {
+  expect(run(["Sort", ["List", "'b'", 1, "'a'", 2]])).toEqual(["List", 1, 2, "'a'", "'b'"]);
+});

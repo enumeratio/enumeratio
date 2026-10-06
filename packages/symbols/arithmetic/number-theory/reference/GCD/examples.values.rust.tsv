@@ -48,7 +48,7 @@ a-single-argument-is-returned-unchanged
 with-no-arguments-compute-engine-returns-0-the			
 0-is-absorbed-every-integer-divides-it-so-gcd-0	gcd(n(0), n(5))	5	
 signs-are-discarded-before-computing-the-gcd			
-lists-aren-t-threaded-element-wise-they-re	gcd(list(vec![n(2), n(4)]), list(vec![n(6), n(8)]))	panic: threading: a list where the crate takes a scalar	error
+equal-length-lists-thread-element-wise	gcd(list(vec![n(2), n(4)]), list(vec![n(6), n(8)]))	panic: threading: a list where the crate takes a scalar	error
 gcd-0-0-0-by-convention	gcd(n(0), n(0))	0	
 symbolic-arguments-stay-unevaluated			
 gcd-neg-3-9	gcd(n(-3), n(9))		

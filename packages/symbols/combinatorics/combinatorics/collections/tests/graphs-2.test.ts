@@ -303,3 +303,13 @@ test("RandomGraph({n, m}) is deterministic under SeedRandom and has exactly n ve
 test("RandomGraph rejects more edges than C(n,2) allows", () => {
   expect(run(["RandomGraph", ["List", 3, 10]])).toEqual(["RandomGraph", ["List", 3, 10]]);
 });
+
+test("IsConnectedGraph on a directed graph means strongly connected, as Wolfram's ConnectedGraphQ", () => {
+  expect(run(["IsConnectedGraph", graphV([1, 2], [D(1, 2)])])).toBe("False");
+  expect(run(["IsConnectedGraph", graphV([1, 2, 3], [D(1, 2), D(2, 3), D(3, 1)])])).toBe("True");
+  expect(run(["IsConnectedGraph", graphV([1, 2], [U(1, 2)])])).toBe("True");
+});
+
+test("ConnectedComponents keeps the vertex order among equal-size components", () => {
+  expect(run(["ConnectedComponents", graphV([1, 2, 3], [])])).toEqual(["List", ["List", 1], ["List", 2], ["List", 3]]);
+});

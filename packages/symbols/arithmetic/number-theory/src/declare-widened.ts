@@ -296,28 +296,28 @@ export function declareWidened(ce: Engine): void {
     1,
   );
 
-  // Wolfram's Listable GCD/LCM broadcasts a single list argument against the rest, held
-  // fixed: GCD(12, {3,7,40}) is {3,1,4}. `threadOverLists` doesn't fit — it only widens a
-  // head that otherwise rejects or ignores a list, and GCD/LCM already answer one by
-  // flattening it into more arguments (kept, elsewhere, as a documented divergence); this
-  // only takes over the one-list-argument shape, which nothing else already answers. The
-  // broadcast also fires with nothing else to hold fixed — GCD/LCM of a single number is
-  // that number, so GCD({3,7,40}) alone is {3,7,40}, not the GCD of the list's elements.
+  // Wolfram's Listable GCD/LCM threads: list arguments of one length run element-wise with the
+  // scalars held fixed, GCD(12, {3,7,40}) is {3,1,4} and GCD({2,4}, {6,8}) is {2,4}. Lists of
+  // unequal length stay unevaluated. A lone number is itself, so GCD({3,7,40}) is {3,7,40}.
+  const threadLength = (ops: readonly Expr[]): number | undefined => {
+    const lengths = new Set(ops.filter((op) => op.operator === "List").map((op) => operandsOf(op).length));
+    return lengths.size === 1 ? [...lengths][0] : undefined;
+  };
   for (const head of ["GCD", "LCM"] as const) {
     wrapOperator(
       ce,
       [head, 1, 1],
-      (ops) => ops.filter((op) => op.operator === "List").length === 1,
+      (ops) => ops.some((op) => op.operator === "List"),
       () => (ops) => {
-        const index = ops.findIndex((op) => op.operator === "List");
-        const items = operandsOf(ops[index]!);
+        const length = threadLength(ops);
+        if (length === undefined) return undefined;
         return ce.function(
           "List",
-          items.map((item) =>
+          Array.from({ length }, (_, i) =>
             ce
               .function(
                 head,
-                ops.map((op, i) => (i === index ? item : op)),
+                ops.map((op) => (op.operator === "List" ? operandsOf(op)[i]! : op)),
               )
               .evaluate(),
           ),
@@ -377,13 +377,21 @@ export function declareWidened(ce: Engine): void {
   // ours' flat `Tuple(g, x₁, …, xₙ)` shape, the same divergence from Wolfram's nested one the
   // two-argument case already documents. Gaussian integers stay declare-gaussian.ts's: this
   // only fires when every operand reads as a plain bigint.
-  widenSignature(ce, "ExtendedGCD", "(number, number, number*) -> tuple");
+  // One argument is its own gcd (ExtendedGCD(12) = (12, 1)); all zeros take zero coefficients.
+  widenSignature(ce, "ExtendedGCD", "(number, number*) -> tuple");
   wrapOperator(
     ce,
     ["ExtendedGCD", 1, 1, 1],
-    (ops) => ops.every((op) => bigIntegerAt(op) !== undefined),
+    (ops) =>
+      ops.every((op) => bigIntegerAt(op) !== undefined) &&
+      (ops.length !== 2 || ops.every((op) => bigIntegerAt(op) === 0n)),
     () => (ops) => {
       const values = ops.map((op) => bigIntegerAt(op)!);
+      if (values.length > 1 && values.every((v) => v === 0n))
+        return ce.function(
+          "Tuple",
+          [0, ...values.map(() => 0)].map((n) => ce.number(n)),
+        );
       let g = values[0]!;
       let coefficients = [1n];
       for (const value of values.slice(1)) {
@@ -396,6 +404,6 @@ export function declareWidened(ce: Engine): void {
         [g, ...coefficients].map((n) => ce.number(n)),
       );
     },
-    { min: 3 },
+    { min: 1 },
   );
 }

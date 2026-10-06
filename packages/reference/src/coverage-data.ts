@@ -569,6 +569,7 @@ export const coverage: Readonly<Record<string, readonly string[]>> = {
   Toggler: ["wolfram"],
   TogglerBar: ["wolfram"],
   Totient: ["sympy"],
+  Total: ["wolfram"],
   Trace: ["wolfram", "sympy"],
   Transpose: ["wolfram", "sympy"],
   TreeGraph: ["wolfram"],

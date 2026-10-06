@@ -2,10 +2,10 @@
 name: IsConnectedGraph
 domain: Collections
 signature: IsConnectedGraph(g)
-summary: Whether a [[Graph]] is connected — a single component, ignoring edge direction.
+summary: Whether a [[Graph]] is connected — a single component; strongly connected when it has directed edges.
 signatures:
   - call: IsConnectedGraph(g)
-    description: true iff the underlying (direction-blind) graph is one piece (false for a graph with no vertices).
+    description: true iff the graph is one component, respecting edge direction (false for a graph with no vertices).
     library: enumeratio-combinatorics
     type: (value) -> boolean
 seeAlso:
@@ -16,4 +16,4 @@ names:
 ---
 
 - Wolfram calls this `ConnectedGraphQ`; this library uses the `Is…` spelling everywhere.
-- Tests WEAK connectivity, unlike [[ConnectedComponents]] (which respects direction): a directed 2-cycle plus a downstream vertex is one weakly-connected piece even though it has two strongly-connected components — see [[ConnectedComponents]]'s own example.
+- Respects direction, as Wolfram's `ConnectedGraphQ` does: a directed graph is connected only when it is strongly connected, so a single directed edge is not. [[IsTreeGraph]] still reads the underlying undirected graph.

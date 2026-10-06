@@ -1,4 +1,4 @@
-import { type Engine, type Expr, integerAt, operandsOf } from "@enumeratio/engine";
+import { defineMessages, emit, type Engine, type Expr, integerAt, operandsOf } from "@enumeratio/engine";
 import { allPairsWeightedDistances, weightedAdjacencyMatrixExpr } from "./graph-weights.ts";
 import { degrees, directedAdjacency, type GraphModel, graphOf, integerGraph, listOf, vertexKey } from "./graphs.ts";
 import { rngFor } from "./list-frontier.ts";
@@ -766,6 +766,9 @@ export function declareGraphs2(ce: Engine): void {
     },
   });
 
+  defineMessages(ce, "IsIsomorphicGraph", {
+    toobig: "graphs of more than `1` vertices are not tested; the call stays unevaluated.",
+  });
   ce.declare("IsIsomorphicGraph", {
     signature: "(value, value) -> boolean",
     evaluate: (ops) => {
@@ -773,6 +776,7 @@ export function declareGraphs2(ce: Engine): void {
       const g2 = ops[1] === undefined ? undefined : graphOf(ce, ops[1]);
       if (g1 === undefined || g2 === undefined) return undefined;
       const result = areIsomorphic(g1, g2);
+      if (result === undefined) emit(ce, "IsIsomorphicGraph", "toobig", [ce.number(ISOMORPHISM_VERTEX_LIMIT)]);
       return result === undefined ? undefined : result ? ce.True : ce.False;
     },
   });

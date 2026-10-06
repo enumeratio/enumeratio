@@ -7,6 +7,8 @@ count-of-twinprimes-is-nan
 count-of-narcissisticnumbers-is-the-exact-88				
 count-of-squarefreenumbers-is-infinite				
 count-of-perfectnumbers-is-nan				
+subsets-of-a-60-element-range-exactly	Length[Subsets[Range[60]]]			
+permutations-of-a-23-element-range-exactly				
 the-value-can-itself-be-a-list	Count[List[List[1, 2], List[1, 2], 3], List[1, 2]]	2	\text{Count}[\{\{1,2\},\{1,2\},3\},\{1,2\}]	2
 a-predicate-counts-the-elements-satisfying-it	Count[List[1, 2, 3, 4], PatternTest[Blank[], Function[Greater[Slot[1], 2]]]]	2	\text{Count}[\{1,2,3,4\},\_?(\text{$\#$1}>2\&)]	2
 only-top-level-elements-are-compared-by-default	Count[List[List[a, a, b], b, List[a, b, a]], b]	1	\text{Count}[\{\{a,a,b\},b,\{a,b,a\}\},b]	1
