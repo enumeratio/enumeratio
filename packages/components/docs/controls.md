@@ -1,3 +1,7 @@
+---
+order: 9
+---
+
 # Controls
 
 Wolfram's [`Control`](https://reference.wolfram.com/language/ref/Control.html) family,

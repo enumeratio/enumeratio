@@ -106,6 +106,21 @@ const moved: [string, string][] = [
   ["/guide/braid/", "/docs/braid/knots-and-braids"],
   ["/cli/", "/docs/cli/"],
   ["/reference/components/", "/reference/component/"],
+  ...[
+    "cell",
+    "in",
+    "out",
+    "notebook",
+    "worksheet",
+    "manipulate",
+    "controls",
+    "environments",
+    "terminal",
+    "verification",
+  ].map((page): [string, string] => [`/playground/${page}`, `/docs/components/${page}`]),
+  ["/playground/figure", "/docs/combinatorics/figure"],
+  ["/playground/polytope", "/docs/polytope/polytope"],
+  ["/playground/", "/docs/components/overview"],
   ["/packages/", "/docs/"],
   ...workspacePackages().map((p): [string, string] => [`/packages/${p.slug}`, docRoute(p.slug)]),
 ];
@@ -174,6 +189,7 @@ function learnSidebar(): SidebarItem[] {
         },
       ],
     },
+    ...inspirationsSidebar().map((group) => ({ ...group, collapsed: true })),
     {
       text: "Packages",
       collapsed: true,
@@ -251,41 +267,11 @@ function exploreSidebar(): SidebarItem[] {
   ];
 }
 
-function playgroundSidebar(): SidebarItem[] {
+function inspirationsSidebar(): SidebarItem[] {
   return [
-    {
-      text: "The sheets",
-      items: [
-        { text: "Overview", link: "/playground/" },
-        { text: "Worksheet", link: "/playground/worksheet" },
-        { text: "Notebook", link: "/playground/notebook" },
-        { text: "Manipulate", link: "/playground/manipulate" },
-        { text: "Controls", link: "/playground/controls" },
-        { text: "Environments", link: "/playground/environments" },
-        { text: "Terminal", link: "/playground/terminal" },
-      ],
-    },
-    {
-      text: "Cells",
-      items: [
-        { text: "Input", link: "/playground/in" },
-        { text: "Output", link: "/playground/out" },
-        { text: "Cell", link: "/playground/cell" },
-        { text: "Verification", link: "/playground/verification" },
-      ],
-    },
-    {
-      text: "Pictures",
-      items: [
-        { text: "Figure (glyphs)", link: "/playground/figure" },
-        { text: "Polytope", link: "/playground/polytope" },
-        { text: "Plots and charts", link: "/reference/component/" },
-      ],
-    },
     {
       text: "Inspirations",
       link: "/playground/inspirations/",
-      collapsed: true,
       items: [
         { text: "Compute Engine", link: "/playground/inspirations/compute-engine" },
         { text: "Wolfram Language", link: "/playground/inspirations/wolfram" },
@@ -400,8 +386,8 @@ const config = defineConfig({
   },
   themeConfig: {
     // One sidebar per section (matched by path prefix), not one list of everything:
-    // Learn (guides and package docs), Reference (lookup), Explore (dials), Sheets (the tools),
-    // and Playground (the interface parts, one page each).
+    // Learn (guides, package docs and the inspirations), Reference (lookup), Explore (dials)
+    // and Sheets (the tools).
     nav: [
       { text: "Learn", link: "/docs/", activeMatch: "^/(docs|guide)/" },
       { text: "Reference", link: "/reference/", activeMatch: "^/reference/" },
@@ -415,14 +401,13 @@ const config = defineConfig({
           { text: "Command line", link: "/docs/cli/" },
         ],
       },
-      { text: "Playground", link: "/playground/", activeMatch: "^/playground/" },
     ],
     sidebar: {
       "/guide/": learnSidebar(),
       "/docs/": learnSidebar(),
       "/reference/": referenceSidebar(),
       "/explore/": exploreSidebar(),
-      "/playground/": playgroundSidebar(),
+      "/playground/": learnSidebar(),
     },
     socialLinks: [{ icon: "github", link: "https://github.com/enumeratio/enumeratio" }],
   },

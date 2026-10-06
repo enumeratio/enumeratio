@@ -1,3 +1,7 @@
+---
+order: 2
+---
+
 # Notebook
 
 `<notatio-notebook>` — a session that sits on top of the input/output components
@@ -29,7 +33,7 @@ its answers typeset. A notebook with `transient` (`Transient -> True`) keeps not
 
 - Grouping into folders; convert a cell into full-width block markup (a comment,
   prose, …), lifted out of the numbering, double-click to edit.
-- This element is the [worksheet](/playground/worksheet) without its screen, and is set to
+- This element is the [worksheet](/docs/components/worksheet) without its screen, and is set to
   fold into it: `Notebook` is the Wolfram symbol for a transcript, and that is what the
   [notebook](/notebook/) route will hold. See `https://github.com/enumeratio/enumeratio/wiki/Notebooks`.
 - A real terminal REPL running the `@enumeratio/cli` logic lives separately, under

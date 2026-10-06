@@ -36,7 +36,7 @@ Two ideas are lifted wholesale.
 _named representation you can ask for_ rather than a mode the renderer happens to
 be in. `StandardForm`, `TraditionalForm`, `FullForm`, `TeXForm` ship on
 `<notatio-out>`; the pictorial ones live in `<notatio-figure>` and the plots.
-The [playground overview](/playground/) tracks the whole table.
+The [components overview](/docs/components/overview) tracks the whole table.
 
 <Story
   title="TraditionalForm, FullForm, TeXForm — one expression">
@@ -49,7 +49,7 @@ Open the In/Out menu. Each entry is a representation, requested by name.
 **`Manipulate`.** A parameterised expression with a control per parameter, where
 the control spec is part of the expression rather than part of the UI:
 `{a, 0, 5}`, `{ {a, 2}, 0, 5, 0.5}`, `{k, {2, 3, 5, 7}}`. We parse Wolfram's own
-tuple syntax, and [the Manipulate page](/playground/manipulate) is that idea more
+tuple syntax, and [the Manipulate page](/docs/components/manipulate) is that idea more
 or less intact — including the play button, which is `Manipulate`'s own looping
 animation.
 

@@ -1,7 +1,11 @@
+---
+order: 3
+---
+
 # Worksheet
 
 A set of named expressions and a shared view of what they draw, rendered by
-`<notatio-worksheet>`. It is the [reactive notebook](/playground/notebook) with two
+`<notatio-worksheet>`. It is the [reactive notebook](/docs/components/notebook) with two
 additions, and both fall out of the cells rather than being configured:
 
 - a cell that **binds a plain number** gets a slider — a knob is just a binding you can
@@ -132,7 +136,7 @@ is read back as a centre and a distance.
   drawn at all.
 - **No history, no ordinals.** Every cell is defined by its name and recomputed from its
   dependencies, so cells can be reordered freely — the same schedule as
-  [`<notatio-notebook>`](/playground/notebook), which is this without the screen. A
+  [`<notatio-notebook>`](/docs/components/notebook), which is this without the screen. A
   transcript you can refer back to by `Out(n)` is the [notebook](/notebook/), still to come.
 - **Bindings are scoped to the sheet.** Two sheets on a page, both using `x`, do not see
   each other — and neither sees the variables the surrounding prose uses.

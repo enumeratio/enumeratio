@@ -1,3 +1,7 @@
+---
+order: 7
+---
+
 # Verification
 
 `VerificationTest(input, expected, …)` — `@enumeratio/evaluation`'s reference-example

@@ -1,3 +1,7 @@
+---
+order: 11
+---
+
 # Terminal
 
 `<notatio-terminal>` — the real `@enumeratio/cli` evaluation core in a browser terminal.
