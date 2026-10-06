@@ -518,3 +518,12 @@ test("a library's heads emit through its own mappings, called by namespace", () 
     missing: ["fig.Star/1"],
   });
 });
+
+test("BigO emits to Wolfram with the exponent outside O", () => {
+  expect(emit(["BigO", ["Power", "x", 8]], "wolfram")).toMatchObject({ ok: true, source: "Power[O[x], 8]" });
+  expect(emit(["BigO", "x"], "wolfram")).toMatchObject({ ok: true, source: "O[x]" });
+  expect(emit(["Add", 1, ["BigO", ["Power", ["Add", "x", -1], 3]]], "wolfram")).toMatchObject({
+    ok: true,
+    source: "Plus[1, Power[O[Plus[x, -1]], 3]]",
+  });
+});

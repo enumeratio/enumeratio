@@ -3,7 +3,7 @@ n-cosh-0			[N, [Cosh, 0]]	{num: "1.0"}			N(...) gives the numeric value
 n-cosh-1			[N, [Cosh, 1]]	{num: "1.54308063481524377848"}								
 cosh-0			[Cosh, 0]	1			Exact at 0, as [[Cos]] is					
 a-float-argument-evaluates-directly-no-n-needed			[Cosh, 1.2]	{num: "1.81065556732437479309"}			A float argument evaluates directly, no N(...) needed					
-series-cosh-x-x-0-10			[Series, [Cosh, x], x, 0, 10]	[Add, [Multiply, [Rational, 1, 3628800], [Power, x, 10]], [Multiply, [Rational, 1, 40320], [Power, x, 8]], [Multiply, [Rational, 1, 720], [Power, x, 6]], [Multiply, [Rational, 1, 24], [Power, x, 4]], [Multiply, [Rational, 1, 2], [Power, x, 2]], [BigO, [Power, x, 12]], 1]							convention	We give the remainder at its true order, the next nonzero term; Wolfram's is the requested order plus one. The polynomial parts are equal.
+series-cosh-x-x-0-10			[Series, [Cosh, x], x, 0, 10]	[Add, [Multiply, [Rational, 1, 3628800], [Power, x, 10]], [Multiply, [Rational, 1, 40320], [Power, x, 8]], [Multiply, [Rational, 1, 720], [Power, x, 6]], [Multiply, [Rational, 1, 24], [Power, x, 4]], [Multiply, [Rational, 1, 2], [Power, x, 2]], [BigO, [Power, x, 12]], 1]								
 arbitrary-precision-via-n	Scope		[N, [Cosh, [Rational, 6, 5]]]	{num: "1.81065556732437479309"}			Arbitrary precision via N(...)					
 evaluates-at-a-complex-argument	Scope		[Cosh, [Complex, 2.5, 1]]	[Complex, 3.3132901461132245, 5.091071522949698]			Evaluates at a complex argument					
 cosh-i-pi-cos-pi-1	Scope		[Cosh, [Multiply, ImaginaryUnit, Pi]]	-1			$\cosh(i\pi) = \cos\pi = -1$					
