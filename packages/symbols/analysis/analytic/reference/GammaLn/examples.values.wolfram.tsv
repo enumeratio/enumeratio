@@ -8,6 +8,7 @@ a-huge-inexact-argument-should-still-evaluate	LogGamma[1.0*^1000]	2.301585092994
 threads-over-a-list-and-the-integer-points	LogGamma[List[1, 2, 3]]	{0, 0, Log[2]}		\text{log$\Gamma $}(\{1,2,3\})	\{0,0,\log (2)\}	
 uncertainty-propagation-through-ln-gamma-with	LogGamma[Around[1.2, 0.01]]	Around[-0.08537409000331585, 0.002890398965921883]		\text{log$\Gamma $}(1.200\pm 0.010)	-0.0854\pm 0.0029	disagree
 to-30-significant-digits-not-yet-the-last-digit	N[LogGamma[Rational[1, 3]], 30]	0.9854206469277670691871740369779613917359212255016524526685`30.	0.985420646927767069187174036978	N\left[\text{log$\Gamma $}\left(\frac{1}{3}\right),30\right]	0.985420646927767069187174036978	
+gammaln-neg-0-5-is-the-real-log-magnitude	LogGamma[-0.5]	1.2655121234846454 - 3.141592653589793*I		\text{log$\Gamma $}(-0.5)	1.26551\, -3.14159 i	disagree
 used-to-get-ln-n-for-large-n-without-overflowing	(LogGamma[11] == Log[Factorial[10]])	True		\text{log$\Gamma $}(11)=\log (10!)	\text{True}	
 defined-as-ln-gamma-z-here-at-z-5	(LogGamma[5] == Log[Gamma[5]])	True		\text{log$\Gamma $}(5)=\log (\Gamma (5))	\text{True}	
 gammaln-1-ln-gamma-1-ln-1-0	(LogGamma[1] == 0)	True		\text{log$\Gamma $}(1)=0	\text{True}	
