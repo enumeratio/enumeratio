@@ -60,6 +60,21 @@ const naturalCompare = (a: Expr, b: Expr): number => {
   return 0;
 };
 
+/** `naturalCompare`, with lists ordered as Wolfram's canonical order does: shorter first, then
+ *  element by element (`{1, 2}`, `{2, 1}`, `{1, 2, 3}`). */
+const canonicalCompare = (a: Expr, b: Expr): number => {
+  if (a.operator === "List" && b.operator === "List") {
+    const [as, bs] = [operandsOf(a), operandsOf(b)];
+    if (as.length !== bs.length) return as.length - bs.length;
+    for (let i = 0; i < as.length; i++) {
+      const c = canonicalCompare(as[i], bs[i]);
+      if (c !== 0) return c;
+    }
+    return 0;
+  }
+  return naturalCompare(a, b);
+};
+
 /** The full permutation of 1-based indices that sorts `items` ascending by `naturalCompare`,
  *  ties broken in favor of earlier position (a stable sort). */
 const fullOrdering = (items: readonly Expr[]): number[] => {
@@ -354,7 +369,8 @@ export function declareListHeads(ce: Engine): void {
     1,
   );
 
-  // Union(...): Wolfram's Union sorts; compute-engine keeps first-seen order. Variadic —
+  // Union(...): Wolfram's Union sorts and keeps the argument's head (list in, list out); compute-engine
+  // keeps first-seen order and returns a set. Variadic —
   // any non-empty call is in scope, so the guard is a floor, not an exact count.
   //
   // compute-engine's own native declines eagerly past `MAX_SIZE_EAGER_COLLECTION` (100)
@@ -362,6 +378,7 @@ export function declareListHeads(ce: Engine): void {
   // operand here is already a materialized, finite `List`, so there's nothing unbounded to
   // guard against; falls back to computing the union directly rather than inheriting a
   // cap Wolfram itself doesn't have.
+  widenSignature(ce, "Union", "(any+) -> collection");
   wrapOperator(
     ce,
     ["Union", 1],
@@ -375,23 +392,27 @@ export function declareListHeads(ce: Engine): void {
       if (ops.length === 1 && single !== undefined && single.isSame(ops[0]) && operandsOf(single).length > 0) {
         const parts: Expr[] = [];
         for (const part of operandsOf(single)) if (parts.every((p) => p.isEqual(part) !== true)) parts.push(part);
-        parts.sort(naturalCompare);
+        parts.sort(canonicalCompare);
         return ce.function(single.operator, parts);
       }
-      if (result !== undefined && result.operator === "Set") {
-        const sorted = [...operandsOf(result)];
-        sorted.sort(naturalCompare);
-        return ce.box(["Set", ...sorted]);
-      }
-      if (!ops.every((op) => op.operator === "List")) return result;
-      const elements: Expr[] = [];
-      for (const op of ops) {
-        for (const element of operandsOf(op)) {
-          if (elements.every((e) => e.isEqual(element) !== true)) elements.push(element);
+      // Lists in, sorted de-duplicated list out (Wolfram); any set in, a set out.
+      if (ops.every((op) => op.operator === "List")) {
+        const elements: Expr[] = [];
+        for (const op of ops) {
+          for (const element of operandsOf(op)) {
+            if (elements.every((e) => e.isEqual(element) !== true)) elements.push(element);
+          }
         }
+        elements.sort(canonicalCompare);
+        return ce.box(["List", ...elements]);
       }
-      elements.sort(naturalCompare);
-      return ce.box(["Set", ...elements]);
+      // A call that only evaluates to a list (`Union(Partition(…))`): native de-duplicates in first-seen order.
+      if (result !== undefined && (result.operator === "Set" || result.operator === "List")) {
+        const sorted = [...operandsOf(result)];
+        sorted.sort(canonicalCompare);
+        return ce.box([result.operator, ...sorted]);
+      }
+      return result;
     },
     { min: 1 },
   );

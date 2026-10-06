@@ -39,5 +39,6 @@ unbounded: true
 ---
 
 - A lazy indexed collection: $Count(FibonacciNumbers) = +\infty$, and $At(FibonacciNumbers, k)$ unranks the term via a memoised linear recurrence -- $At(FibonacciNumbers, 1) = F_0 = 0$ (`At` is 1-indexed; rank 0 is $F_0$).
+- The collection is indexed from 1, so $At(FibonacciNumbers, k) = Fibonacci(k - 1)$: $At(FibonacciNumbers, 11) = Fibonacci(10) = 55$. The function $Fibonacci(n)$ is also defined at negative $n$ (negafibonacci, $F_{-n} = (-1)^{n+1} F_n$; $Fibonacci(-5) = 5$), which the collection, starting at $F_0$, does not reach.
 - OEIS A000045, starting exactly at its offset-0 term: $0, 1, 1, 2, 3, 5, 8, …$.
 - Membership goes through [[Element]]: $Element(21, FibonacciNumbers)$ is true, $Element(10, FibonacciNumbers)$ is false. $F_1 = F_2 = 1$ repeats, so the sequence is non-decreasing rather than strictly increasing.

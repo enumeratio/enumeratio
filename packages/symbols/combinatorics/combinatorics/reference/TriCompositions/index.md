@@ -11,7 +11,7 @@ signatures:
 seeAlso:
   - IntegerCompositions
   - TetraCompositions
-  - KBoundedCompositions
+  - PartSizeBoundedCompositions
 references:
   - system: oeis
     identity: A000073

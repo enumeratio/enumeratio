@@ -194,12 +194,12 @@ export const RESTRICTIONS: readonly Restriction[] = [
     ],
     summary: "Alternating compositions (parts go up-down-up…).",
   },
-  // KBoundedCompositions(n, k) is skipped — a Restriction is `(integer) -> collection`, one
-  // size parameter; k isn't expressible in that shape.
+  // PartSizeBoundedCompositions(n, k) and PartCountBoundedCompositions(n, k) are skipped — a Restriction is
+  // `(integer) -> collection`, one size parameter; k isn't expressible in that shape.
 
   // ── partitions — an IntegerPartition is also a plain list<integer>, so the same per-part
   // predicates over `_raw` apply directly. LargestPartPartitions(n, m) is skipped for the same
-  // reason as KBoundedCompositions: m isn't expressible as a Restriction's single size parameter.
+  // reason as the bounded compositions: m isn't expressible as a Restriction's single size parameter.
   {
     name: "OddPartitions",
     implementedBy: "collections",

@@ -34,7 +34,7 @@ import {
   connectedPermutations,
   grassmannianPermutations,
   kDescentPermutations,
-  nonCrossingPermutations,
+  nonCrossingCycleSupportPermutations,
   permutationsAvoiding3,
   separablePermutations,
   vexillaryPermutations,
@@ -249,7 +249,7 @@ const READINGS: Record<string, Reading> = {
     ]),
   ),
   // Interpreted, a window table of either takes seconds per completion count past n = 4.
-  NonCrossingPermutations: {
+  NonCrossingCycleSupportPermutations: {
     ...lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !crossing(x)),
     interpretAt: process.env.DEEP_TESTS ? [5] : [4],
   },
@@ -287,7 +287,7 @@ const byHead = new Map(
     kDescentPermutations,
     ...permutationsAvoiding3,
     separablePermutations,
-    nonCrossingPermutations,
+    nonCrossingCycleSupportPermutations,
     vexillaryPermutations,
     grassmannianPermutations,
     cograssmannianPermutations,

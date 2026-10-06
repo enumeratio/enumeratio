@@ -6,7 +6,7 @@
 // each with its own small DP or bijection.
 //
 // n = 0 always has exactly one (empty) composition, matching IntegerCompositions(0) in ./core.ts.
-import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
 
 // helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
 const ints = (
@@ -25,6 +25,16 @@ const ints = (
   valid: (e, p) => valid(e as number[], p),
   rank: (e, p) => rank(e as number[], p),
 });
+
+/** What Plausible reads: counting and indexing run a DP table, polynomial in n and k. */
+const boundedDeclared: Declared = {
+  carrier: "Composition",
+  params: [
+    { name: "size", role: "axis", min: 0 },
+    { name: "k", role: "param", min: 0 },
+  ],
+  cost: { count: "polynomial", unrank: "polynomial", rank: "polynomial", valid: "polynomial" },
+};
 
 const sum = (parts: readonly number[]): number => parts.reduce((a, b) => a + b, 0);
 const isPositiveIntArray = (e: unknown): e is number[] =>
@@ -95,14 +105,51 @@ const triangularComp = partsInSet(isTriangular);
 const primeComp = partsInSet(isPrimeSmall);
 const anyComp = partsInSet(() => true); // the unrestricted family; only used as the palindrome bijection's half
 
-const kBoundedCache = new Map<number, ReturnType<typeof partsInSet>>();
-function kBounded(k: number) {
-  let b = kBoundedCache.get(k);
+const partSizeBoundedCache = new Map<number, ReturnType<typeof partsInSet>>();
+function partSizeBounded(k: number) {
+  let b = partSizeBoundedCache.get(k);
   if (!b) {
     b = partsInSet((s) => s <= k);
-    kBoundedCache.set(k, b);
+    partSizeBoundedCache.set(k, b);
   }
   return b;
+}
+
+// ─── PartCountBoundedCompositions(n, k): at most k parts. count(m, j) = compositions of m into at most
+// j parts = Σ_s count(m − s, j − 1), with count(0, ·) = 1 (the empty composition) and count(m > 0, 0) = 0.
+// unrank/rank walk the same recurrence in ascending first part: lexicographic order.
+const partCountMemo = new Map<string, number>();
+function partCountCount(m: number, j: number): number {
+  if (m === 0) return 1;
+  if (j === 0) return 0;
+  const key = `${m},${j}`;
+  const cached = partCountMemo.get(key);
+  if (cached !== undefined) return cached;
+  let total = 0;
+  for (let s = 1; s <= m; s++) total += partCountCount(m - s, j - 1);
+  partCountMemo.set(key, total);
+  return total;
+}
+function partCountUnrank(m: number, j: number, r: number): number[] {
+  if (m === 0) return [];
+  let rr = r;
+  for (let s = 1; s <= m; s++) {
+    const c = partCountCount(m - s, j - 1);
+    if (rr < c) return [s, ...partCountUnrank(m - s, j - 1, rr)];
+    rr -= c;
+  }
+  throw new Error("PartCountBoundedCompositions: rank out of range");
+}
+function partCountRank(parts: readonly number[], k: number): number {
+  let r = 0;
+  let m = sum(parts);
+  let j = k;
+  for (const s of parts) {
+    for (let t = 1; t < s; t++) r += partCountCount(m - t, j - 1);
+    m -= s;
+    j -= 1;
+  }
+  return r;
 }
 
 // ─── CarlitzCompositions(n): no two equal ADJACENT parts. DP over (remaining, previous part), ──
@@ -383,14 +430,28 @@ const restricted: NumberKernel[] = [
     (a, [n]) => primeComp.valid(a, n),
     (a) => primeComp.rank(a),
   ),
-  ints(
-    "KBoundedCompositions",
-    2,
-    ([n, k]) => kBounded(k).count(n),
-    ([n, k], r) => kBounded(k).unrank(n, r),
-    (a, [n, k]) => kBounded(k).valid(a, n),
-    (a, [, k]) => kBounded(k).rank(a),
-  ),
+  {
+    ...ints(
+      "PartSizeBoundedCompositions",
+      2,
+      ([n, k]) => partSizeBounded(k).count(n),
+      ([n, k], r) => partSizeBounded(k).unrank(n, r),
+      (a, [n, k]) => partSizeBounded(k).valid(a, n),
+      (a, [, k]) => partSizeBounded(k).rank(a),
+    ),
+    declared: boundedDeclared,
+  },
+  {
+    ...ints(
+      "PartCountBoundedCompositions",
+      2,
+      ([n, k]) => partCountCount(n, k),
+      ([n, k], r) => partCountUnrank(n, k, r),
+      (a, [n, k]) => isPositiveIntArray(a) && sum(a) === n && a.length <= k,
+      (a, [, k]) => partCountRank(a, k),
+    ),
+    declared: boundedDeclared,
+  },
 
   // ── constraints beyond per-part membership ──
   ints(

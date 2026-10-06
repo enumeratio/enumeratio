@@ -1,5 +1,6 @@
 [
   "AchillesNumbers",
+  "AdjacentTranspositionInvolutions",
   "ArithmeticNumbers",
   "Arrangements",
   "AutomorphicNumbers",
@@ -9,7 +10,6 @@
   "BinaryTrees",
   "BinaryWords",
   "BinaryWordsByWeight",
-  "BooleanPermutations",
   "CarlitzCompositions",
   "CarmichaelNumbers",
   "CenteredHexagonalNumbers",
@@ -53,7 +53,6 @@
   "IntegerCompositions",
   "IntegerPartitions",
   "Involutions",
-  "KBoundedCompositions",
   "KCyclePermutations",
   "KInversionPermutations",
   "KPermutations",

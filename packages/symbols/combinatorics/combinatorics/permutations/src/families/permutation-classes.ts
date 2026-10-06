@@ -15,7 +15,7 @@ import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
   cograssmannianPermutations,
   grassmannianPermutations,
-  nonCrossingPermutations,
+  nonCrossingCycleSupportPermutations,
   separablePermutations,
   vexillaryPermutations,
 } from "./restrictions.ts";
@@ -136,7 +136,7 @@ function baxterCount(n: number): number {
 }
 const baxterClass = makeBruteForceClass((p) => isBaxterPermutation(p), baxterCount);
 
-// ─── BooleanPermutations(n): "no non-adjacent inversion" — every inversion (i<j, perm[i]>perm[j]) has
+// ─── AdjacentTranspositionInvolutions(n): "no non-adjacent inversion" — every inversion (i<j, perm[i]>perm[j]) has
 // j=i+1. Such a permutation is exactly a product of pairwise-non-adjacent adjacent transpositions
 // (i,i+1) applied to the identity (two adjacent transpositions that were themselves adjacent wouldn't
 // commute and would create a longer-range inversion) — a bijection with independent sets of the path
@@ -174,14 +174,66 @@ function booleanRank(perm: readonly number[]): number {
   return FibonacciWordRank(word);
 }
 
-// ─── NonCrossingPermutations(n): cycles forming a non-crossing partition, by completion counts
+// ─── NonCrossingCycleSupportPermutations(n): cycles forming a non-crossing partition, by completion counts
 // (./restrictions.ts).
+
+// ─── BooleanPermutations(n): Tenner's Boolean permutations, Av(321, 3412) — the permutations whose
+// principal Bruhat ideal is a Boolean lattice, A001519: F(2n − 1) (1, 1, 2, 5, 13, 34, …). Enumerated by
+// filtering all n! permutations, like Baxter; the count is closed.
+function isBooleanPermutationOfTenner(perm: readonly number[]): boolean {
+  return !containsAnyPattern3(perm, ["321"]) && !containsAnyPattern4(perm, ["3412"]);
+}
+function booleanTennerCount(n: number): number {
+  if (n === 0) return 1;
+  let [a, b] = [0, 1]; // F(0), F(1)
+  for (let i = 1; i < 2 * n - 1; i++) [a, b] = [b, a + b];
+  return b; // F(2n − 1)
+}
+const booleanTennerClass = makeBruteForceClass((p) => isBooleanPermutationOfTenner(p), booleanTennerCount);
+
+// ─── NonCrossingPermutations(n): the permutations below the long cycle c = (1 2 … n) in absolute order
+// (Biane, Kreweras): ℓ_T(π) + ℓ_T(π⁻¹c) = ℓ_T(c) = n − 1, with ℓ_T = n − cycles. Each is a non-crossing
+// partition with every block an increasing cycle; Catalan(n). Filtered from all n! permutations.
+function cycleCountOf(perm: readonly number[]): number {
+  const seen = new Array<boolean>(perm.length).fill(false);
+  let cycles = 0;
+  for (let i = 0; i < perm.length; i++) {
+    if (seen[i]) continue;
+    cycles++;
+    for (let j = i; !seen[j]; j = perm[j] - 1) seen[j] = true;
+  }
+  return cycles;
+}
+function isBelowLongCycle(perm: readonly number[]): boolean {
+  const n = perm.length;
+  if (n === 0) return true;
+  const inverse = new Array<number>(n);
+  for (let i = 0; i < n; i++) inverse[perm[i] - 1] = i + 1;
+  // π⁻¹c: i ↦ π⁻¹(i + 1 mod n)
+  const rest = Array.from({ length: n }, (_, i) => inverse[(i + 1) % n]);
+  return cycleCountOf(perm) + cycleCountOf(rest) === n + 1;
+}
+const nonCrossingClass = makeBruteForceClass(isBelowLongCycle, (n) => catalanNumber(n));
+function catalanNumber(n: number): number {
+  return Math.round(binomial(2 * n, n) / (n + 1));
+}
 
 // ─── length-4 vincular-free (classical) pattern helpers shared by Separable/Smooth/Vexillary. ────────
 function patternOf4(a: number, b: number, c: number, d: number): string {
   const sorted = [a, b, c, d];
   sorted.sort((x, y) => x - y);
   return [a, b, c, d].map((v) => sorted.indexOf(v) + 1).join("");
+}
+function containsAnyPattern3(perm: readonly number[], patterns: readonly string[]): boolean {
+  const n = perm.length;
+  for (let i = 0; i < n; i++)
+    for (let j = i + 1; j < n; j++)
+      for (let k = j + 1; k < n; k++) {
+        const [a, b, c] = [perm[i], perm[j], perm[k]];
+        const pattern = `${1 + (b < a ? 1 : 0) + (c < a ? 1 : 0)}${1 + (a < b ? 1 : 0) + (c < b ? 1 : 0)}${1 + (a < c ? 1 : 0) + (b < c ? 1 : 0)}`;
+        if (patterns.includes(pattern)) return true;
+      }
+  return false;
 }
 function containsAnyPattern4(perm: readonly number[], patterns: readonly string[]): boolean {
   const n = perm.length;
@@ -223,6 +275,30 @@ const smoothClass = makeBruteForceClass((p) => !containsAnyPattern4(p, ["3412", 
 export const entries: (NumberKernel | EpsilFamily)[] = [
   {
     ...ints(
+      "BooleanPermutations",
+      1,
+      ([n]) => booleanTennerClass.count(n),
+      ([n], r) => booleanTennerClass.unrank(n, r),
+      (a, [n]) => booleanTennerClass.valid(a, n),
+      (a) => booleanTennerClass.rank(a),
+    ),
+    declared: booleanTennerClass.declared,
+    carrier: "Permutation",
+  },
+  {
+    ...ints(
+      "NonCrossingPermutations",
+      1,
+      ([n]) => nonCrossingClass.count(n),
+      ([n], r) => nonCrossingClass.unrank(n, r),
+      (a, [n]) => nonCrossingClass.valid(a, n),
+      (a) => nonCrossingClass.rank(a),
+    ),
+    declared: nonCrossingClass.declared,
+    carrier: "Permutation",
+  },
+  {
+    ...ints(
       "BaxterPermutations",
       1,
       ([n]) => baxterClass.count(n),
@@ -235,7 +311,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
   },
   {
     ...ints(
-      "BooleanPermutations",
+      "AdjacentTranspositionInvolutions",
       1,
       ([n]) => booleanCount(n),
       ([n], r) => booleanUnrank(n, r),
@@ -246,7 +322,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
   },
   grassmannianPermutations,
   cograssmannianPermutations,
-  nonCrossingPermutations,
+  nonCrossingCycleSupportPermutations,
   separablePermutations,
   {
     ...ints(
