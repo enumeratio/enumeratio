@@ -761,8 +761,8 @@ const ncRows = fold(
   upTo(0, sub(n, 1)),
 );
 
-const nonCrossingPermutations: EpsilFamily = permutationRestriction({
-  head: "NonCrossingPermutations",
+const nonCrossingCycleSupportPermutations: EpsilFamily = permutationRestriction({
+  head: "NonCrossingCycleSupportPermutations",
   carrier: "Permutation",
   paramCount: 1,
   params: [n],
@@ -1083,7 +1083,7 @@ export {
   alternatingPermutations,
   connectedPermutations,
   kDescentPermutations,
-  nonCrossingPermutations,
+  nonCrossingCycleSupportPermutations,
   separablePermutations,
   vexillaryPermutations,
 };

@@ -10,7 +10,7 @@ signatures:
     type: (integer<0..>) -> indexed_collection<composition>
 seeAlso:
   - IntegerCompositions
-  - KBoundedCompositions
+  - PartSizeBoundedCompositions
 references:
   - system: oeis
     identity: A000045

@@ -1,0 +1,16 @@
+id	section	role	expr	expected	caption
+count-partcountboundedcompositions-6-2	Basic		[Count, [PartCountBoundedCompositions, 6, 2]]	6	$Count(PartCountBoundedCompositions(6, 2)) = 6$: $[6]$ and the five two-part splits
+first-of-partcountboundedcompositions-6-2	Basic		[At, [PartCountBoundedCompositions, 6, 2], 1]	[Composition, [List, 1, 5]]	The first element in enumeration order
+elements-partcountboundedcompositions-4-2		test	[Take, [PartCountBoundedCompositions, 4, 2], 4]	[List, [Composition, [List, 1, 3]], [Composition, [List, 2, 2]], [Composition, [List, 3, 1]], [Composition, [List, 4]]]	
+elements-partcountboundedcompositions-5-3		test	[Take, [PartCountBoundedCompositions, 5, 3], 11]	[List, [Composition, [List, 1, 1, 3]], [Composition, [List, 1, 2, 2]], [Composition, [List, 1, 3, 1]], [Composition, [List, 1, 4]], [Composition, [List, 2, 1, 2]], [Composition, [List, 2, 2, 1]], [Composition, [List, 2, 3]], [Composition, [List, 3, 1, 1]], [Composition, [List, 3, 2]], [Composition, [List, 4, 1]], [Composition, [List, 5]]]	
+count-partcountboundedcompositions-1-2-row		test	[Count, [PartCountBoundedCompositions, 1, 2]]	1	
+count-partcountboundedcompositions-2-2-row		test	[Count, [PartCountBoundedCompositions, 2, 2]]	2	
+count-partcountboundedcompositions-3-2-row		test	[Count, [PartCountBoundedCompositions, 3, 2]]	3	
+count-partcountboundedcompositions-4-2-row		test	[Count, [PartCountBoundedCompositions, 4, 2]]	4	
+count-partcountboundedcompositions-5-2-row		test	[Count, [PartCountBoundedCompositions, 5, 2]]	5	
+count-partcountboundedcompositions-1-3-row		test	[Count, [PartCountBoundedCompositions, 1, 3]]	1	
+count-partcountboundedcompositions-2-3-row		test	[Count, [PartCountBoundedCompositions, 2, 3]]	2	
+count-partcountboundedcompositions-3-3-row		test	[Count, [PartCountBoundedCompositions, 3, 3]]	4	
+count-partcountboundedcompositions-4-3-row		test	[Count, [PartCountBoundedCompositions, 4, 3]]	7	
+count-partcountboundedcompositions-5-3-row		test	[Count, [PartCountBoundedCompositions, 5, 3]]	11	
+count-partcountboundedcompositions-6-3-row		test	[Count, [PartCountBoundedCompositions, 6, 3]]	16	

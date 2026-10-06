@@ -11,10 +11,12 @@ const entries = kernelsOn(bareEngine(), families.map(liftFamily));
 // permutations, so n is kept small enough to stay fast.
 const PARAMS: Record<string, number[][]> = {
   BaxterPermutations: [[0], [1], [2], [3], [4], [5], [6]],
+  AdjacentTranspositionInvolutions: [[0], [1], [2], [3], [4], [5], [6], [7]],
   BooleanPermutations: [[0], [1], [2], [3], [4], [5], [6], [7]],
   GrassmannianPermutations: [[0], [1], [2], [3], [4], [5], [6]],
   CograssmannianPermutations: [[0], [1], [2], [3], [4], [5], [6]],
-  NonCrossingPermutations: [[0], [1], [2], [3], [4], [5], [6]],
+  NonCrossingCycleSupportPermutations: [[0], [1], [2], [3], [4], [5], [6]],
+  NonCrossingPermutations: [[0], [1], [2], [3], [4], [5], [6], [7]],
   SeparablePermutations: [[0], [1], [2], [3], [4], [5], [6]],
   SimplePermutations: [[0], [1], [2], [3], [4], [5], [6]],
   SmoothPermutations: [[0], [1], [2], [3], [4], [5], [6]],
@@ -45,10 +47,39 @@ test("BaxterPermutations count = Baxter numbers (A001181)", () => {
     1, 1, 2, 6, 22, 92, 422, 2074, 10754,
   ]);
 });
-test("BooleanPermutations count = Fibonacci F(n+1) (A000045)", () => {
-  expect(countsOf("BooleanPermutations", [[0], [1], [2], [3], [4], [5], [6], [7], [8]])).toEqual([
+test("AdjacentTranspositionInvolutions count = Fibonacci F(n+1) (A000045)", () => {
+  expect(countsOf("AdjacentTranspositionInvolutions", [[0], [1], [2], [3], [4], [5], [6], [7], [8]])).toEqual([
     1, 1, 2, 3, 5, 8, 13, 21, 34,
   ]);
+});
+test("BooleanPermutations count = F(2n - 1) (A001519), and agrees with Av(321, 3412)", () => {
+  expect(countsOf("BooleanPermutations", [[0], [1], [2], [3], [4], [5], [6], [7], [8]])).toEqual([
+    1, 1, 2, 5, 13, 34, 89, 233, 610,
+  ]);
+  // Contains the adjacent-transposition products: every one of them avoids 321 and 3412.
+  for (let n = 0; n <= 7; n++) {
+    const boolean = new Set(
+      Array.from({ length: Number(byHead.BooleanPermutations.count([n])) }, (_, r) =>
+        String(byHead.BooleanPermutations.unrank([n], BigInt(r))),
+      ),
+    );
+    for (let r = 0n; r < byHead.AdjacentTranspositionInvolutions.count([n]); r++) {
+      expect(boolean.has(String(byHead.AdjacentTranspositionInvolutions.unrank([n], r)))).toBe(true);
+    }
+  }
+});
+test("NonCrossingPermutations count = Catalan (A000108), the increasing-cycle subset of the cycle-support family", () => {
+  expect(countsOf("NonCrossingPermutations", [[0], [1], [2], [3], [4], [5], [6], [7]])).toEqual([
+    1, 1, 2, 5, 14, 42, 132, 429,
+  ]);
+  // Every standard noncrossing permutation has noncrossing cycle support.
+  for (let n = 0; n <= 6; n++) {
+    for (let r = 0n; r < byHead.NonCrossingPermutations.count([n]); r++) {
+      expect(byHead.NonCrossingCycleSupportPermutations.valid(byHead.NonCrossingPermutations.unrank([n], r), [n])).toBe(
+        true,
+      );
+    }
+  }
 });
 test("Grassmannian/CograssmannianPermutations count = 2^n - n (A000325)", () => {
   const ps = [[0], [1], [2], [3], [4], [5], [6], [7]];
@@ -56,8 +87,8 @@ test("Grassmannian/CograssmannianPermutations count = 2^n - n (A000325)", () => 
   expect(countsOf("GrassmannianPermutations", ps)).toEqual(expected);
   expect(countsOf("CograssmannianPermutations", ps)).toEqual(expected);
 });
-test("NonCrossingPermutations count matches the noncrossing-partition recurrence", () => {
-  expect(countsOf("NonCrossingPermutations", [[0], [1], [2], [3], [4], [5], [6], [7]])).toEqual([
+test("NonCrossingCycleSupportPermutations count matches the noncrossing-partition recurrence", () => {
+  expect(countsOf("NonCrossingCycleSupportPermutations", [[0], [1], [2], [3], [4], [5], [6], [7]])).toEqual([
     1, 1, 2, 6, 23, 105, 553, 3311,
   ]);
 });

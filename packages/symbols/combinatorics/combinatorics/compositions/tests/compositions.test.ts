@@ -16,7 +16,8 @@ const PARAMS: Record<string, number[][]> = {
   CarlitzCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   PalindromicCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   ZigzagCompositions: Array.from({ length: 11 }, (_, n) => [n]),
-  KBoundedCompositions: [1, 2, 3, 4].flatMap((k) => Array.from({ length: 9 }, (_, n) => [n, k])),
+  PartSizeBoundedCompositions: [1, 2, 3, 4].flatMap((k) => Array.from({ length: 9 }, (_, n) => [n, k])),
+  PartCountBoundedCompositions: [1, 2, 3, 4].flatMap((k) => Array.from({ length: 9 }, (_, n) => [n, k])),
 };
 
 for (const entry of entries) {
@@ -101,11 +102,18 @@ for (let n = 0; n <= 12; n++) {
     });
   }
   for (const k of [1, 2, 3, 4]) {
-    test(`KBoundedCompositions(${n}, ${k}) matches an independent brute-force predicate`, () => {
-      const entry = byHead.KBoundedCompositions;
+    test(`PartSizeBoundedCompositions(${n}, ${k}) matches an independent brute-force predicate`, () => {
+      const entry = byHead.PartSizeBoundedCompositions;
       const total = entry.count([n, k]);
       const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, k], r) as number[]);
       expect(asSet(kernelElements)).toEqual(asSet(all.filter((p) => p.every((x) => x <= k))));
+      expect(kernelElements.length).toBe(total);
+    });
+    test(`PartCountBoundedCompositions(${n}, ${k}) matches an independent brute-force predicate`, () => {
+      const entry = byHead.PartCountBoundedCompositions;
+      const total = entry.count([n, k]);
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, k], r) as number[]);
+      expect(asSet(kernelElements)).toEqual(asSet(all.filter((p) => p.length <= k)));
       expect(kernelElements.length).toBe(total);
     });
   }
@@ -148,33 +156,39 @@ test("PalindromicCompositions count = A016116 (2^floor(n/2))", () => {
 test("ZigzagCompositions count = A025047", () => {
   expect(countsOf("ZigzagCompositions", range(13))).toEqual([1, 1, 1, 3, 4, 7, 12, 19, 29, 48, 75, 118, 186]);
 });
-test("KBoundedCompositions row k = generalized k-nacci", () => {
+test("PartSizeBoundedCompositions row k = generalized k-nacci", () => {
   // k=1: only the all-ones composition, one per n.
   expect(
     countsOf(
-      "KBoundedCompositions",
+      "PartSizeBoundedCompositions",
       Array.from({ length: 8 }, (_, n) => [n, 1]),
     ),
   ).toEqual([1, 1, 1, 1, 1, 1, 1, 1]);
   // k=2: same recurrence as FibonacciCompositions (parts 1..2 IS parts in {1,2}).
   expect(
     countsOf(
-      "KBoundedCompositions",
+      "PartSizeBoundedCompositions",
       Array.from({ length: 8 }, (_, n) => [n, 2]),
     ),
   ).toEqual(countsOf("FibonacciCompositions", range(8)));
   // k=3: same recurrence as TriCompositions.
   expect(
     countsOf(
-      "KBoundedCompositions",
+      "PartSizeBoundedCompositions",
       Array.from({ length: 8 }, (_, n) => [n, 3]),
     ),
   ).toEqual(countsOf("TriCompositions", range(8)));
   // k=4: same recurrence as TetraCompositions.
   expect(
     countsOf(
-      "KBoundedCompositions",
+      "PartSizeBoundedCompositions",
       Array.from({ length: 8 }, (_, n) => [n, 4]),
     ),
   ).toEqual(countsOf("TetraCompositions", range(8)));
+});
+
+test("PartCountBoundedCompositions is cumulative C(n - 1, j - 1) over j <= k", () => {
+  // n = 6: at most 1, 2, 3 parts = 1, 6, 16 (Sage max_length), and every part count is the whole at k = n.
+  expect([1, 2, 3].map((k) => byHead.PartCountBoundedCompositions.count([6, k]))).toEqual([1, 6, 16]);
+  expect(byHead.PartCountBoundedCompositions.count([6, 6])).toBe(32);
 });
