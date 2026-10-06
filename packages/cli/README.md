@@ -150,7 +150,7 @@ the reduction and hands back the expression whole. In the REPL, `:env <name>` do
 same for every result until `:env auto`. The expression can ask for a reading itself with
 a trailing rule — `Static -> "Pin"`, `Static -> "Sample"`, or `Static -> 3` for a sample
 count. The same rewrite runs on the site, where printing a page turns its sliders into
-grids: see [the Environments playground](https://enumeratio.dev/playground/environments) and
+grids: see [the Environments playground](https://enumeratio.dev/docs/components/environments) and
 `https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments`.
 
 ## Command line

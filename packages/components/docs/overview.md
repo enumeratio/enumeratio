@@ -1,4 +1,9 @@
-# Playground
+---
+order: 1
+title: Components, one at a time
+---
+
+# Components, one at a time
 
 notatio, one piece at a time: a storybook for the `@enumeratio/frontend` web
 components — the notebook, the input and output, the plots, glyphs, tables and prose
@@ -10,12 +15,12 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 
 ## Components
 
-- [Notebook](/playground/notebook) — `<notatio-notebook>`, a scoped session
-- [Input](/playground/in) — `<notatio-in>`, the live math editor (and its read-only mode)
-- [Output](/playground/out) — `<notatio-out>`, typeset read-only rendering + display forms
-- [Cell](/playground/cell) — `<notatio-cell>`, a notebook In/Out pair
-- [Verification](/playground/verification) — `<notatio-test-result-object>`, `VerificationTest`'s outcome as a badge over an In/Out pair
-- [Figure (glyphs)](/playground/figure) — `<notatio-figure>`, combinatorial pictorial forms
+- [Notebook](/docs/components/notebook) — `<notatio-notebook>`, a scoped session
+- [Input](/docs/components/in) — `<notatio-in>`, the live math editor (and its read-only mode)
+- [Output](/docs/components/out) — `<notatio-out>`, typeset read-only rendering + display forms
+- [Cell](/docs/components/cell) — `<notatio-cell>`, a notebook In/Out pair
+- [Verification](/docs/components/verification) — `<notatio-test-result-object>`, `VerificationTest`'s outcome as a badge over an In/Out pair
+- [Figure (glyphs)](/docs/combinatorics/figure) — `<notatio-figure>`, combinatorial pictorial forms
 - [Plot](/reference/component/Plot) — function plots of one variable; stories moved to its component reference page
 - [Plot 3D](/reference/component/Plot3D) — bivariate surfaces, projected and shaded in plain SVG; stories moved to its component reference page
 - [Contour Plot](/reference/component/ContourPlot) — contour lines / filled bands of a bivariate function (or a pre-sampled grid) via marching squares; stories moved to its component reference page
@@ -29,10 +34,10 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Complex Plot](/reference/component/ComplexPlot) — domain-colouring of a complex expression, one WebGPU invocation per pixel; stories moved to its component reference page
 - [Complex Plot 3D](/reference/component/ComplexPlot3D) — |f(z)| as a surface over the plane, faces coloured by arg f(z); stories moved to its component reference page
 - [Collection table](/reference/component/CollectionTable) — a paged table over a lazy indexed collection, with statistics as columns; stories moved to its component reference page
-- [Worksheet](/playground/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells
-- [Manipulate](/playground/manipulate) — `<notatio-manipulate>`, Wolfram-style controls bound to named wildcards in any slotted content
-- [Terminal](/playground/terminal) — `<notatio-terminal>`, the real CLI eval core in a browser terminal, as a session or one `notatio <expr>` at a time
-- [Polytope](/playground/polytope) — `<notatio-polytope>`, a polytope's face poset, where every mark is a clickable face (no symbol head yet)
+- [Worksheet](/docs/components/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells
+- [Manipulate](/docs/components/manipulate) — `<notatio-manipulate>`, Wolfram-style controls bound to named wildcards in any slotted content
+- [Terminal](/docs/components/terminal) — `<notatio-terminal>`, the real CLI eval core in a browser terminal, as a session or one `notatio <expr>` at a time
+- [Polytope](/docs/polytope/polytope) — `<notatio-polytope>`, a polytope's face poset, where every mark is a clickable face (no symbol head yet)
 - [Tangle](/playground/inspirations/tangle) — `<notatio-dynamic-module>` and the inline controls (`<notatio-knob>`, `<notatio-toggler>`, `<notatio-dynamic>`, `<notatio-when>`): reactive prose
 
 ## Inspirations
@@ -67,7 +72,7 @@ for the MathLive field that edits it; `in-form="latex"` hands the field LaTeX as
 written, for the rare thing Epsil cannot yet say. A cell's `value` is written in the
 syntax its own `format` names (`epsil` by default, or `latex`, `mathjson`, `wolfram`);
 its `in-form` is a different thing again — which editor shows it (see
-[Cell](/playground/cell)). Two components keep LaTeX as their own form: `<notatio-in>`
+[Cell](/docs/components/cell)). Two components keep LaTeX as their own form: `<notatio-in>`
 _is_ the math field, so its `value` is the field's LaTeX, and `<notatio-out>` renders a
 given encoding rather than taking authored input, so it keeps its `format` attribute
 (`latex` by default; `mathjson` and `epsil` too).

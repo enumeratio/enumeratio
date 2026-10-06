@@ -1,3 +1,7 @@
+---
+order: 6
+---
+
 # Cell
 
 `<notatio-cell>` — a notebook-style In/Out pair: an editable input with its

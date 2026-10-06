@@ -3,7 +3,7 @@
 Every symbol that draws — a plot, a chart, a control, a layout — as a custom element, named
 for its symbol (`BarChart3D` is `<notatio-bar-chart-3d>`), its attributes read straight out
 of the element source, so these tables cannot drift from the code. Import
-`@enumeratio/components` for the registration. The [playground](/playground/) shows
+`@enumeratio/components` for the registration. The [playground](/docs/components/overview) shows
 each one working; this reference is for reading the dials.
 
 ## Expressions are written in Epsil

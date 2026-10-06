@@ -30,7 +30,7 @@ and on GitHub.
 - [**Worksheet**](/worksheet/) and [**notebook**](/notebook/) — the two kinds of sheet.
   [**Command line**](/docs/cli/): the same evaluation in a terminal, also live in the
   browser as a [REPL](/docs/cli/repl) and a [command line](/docs/cli/command-line).
-- [**Playground**](/playground/) — every notatio component on its own page.
+- [**Playground**](/docs/components/overview) — every notatio component on its own page.
 
 How the packages fit together, and which side of the enumeratio/notatio line each sits on,
 is on the wiki's [Packages](https://github.com/enumeratio/enumeratio/wiki/Packages) page.

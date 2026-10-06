@@ -48,7 +48,7 @@ import "@enumeratio/components";
 
 - [`/reference/component/`](https://enumeratio.dev/reference/component/) — every element's props, generated from
   these sources so the reference can't drift from the code.
-- [`/playground/`](https://enumeratio.dev/playground/) — each component demoed live; `reference/*.stories.yaml`
+- [Components, one at a time](https://enumeratio.dev/docs/components/overview) — each component demoed live; `reference/*.stories.yaml`
   in this package back those pages.
 - [`frontend`](../frontend/README.md) — the symbol map, the vdom, and the Vue/React wrappers.
 - [Components and Symbols](https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols) — the design

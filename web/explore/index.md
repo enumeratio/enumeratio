@@ -27,4 +27,4 @@ Every dial on these pages is a `<notatio-manipulate>` wrapped around a plotting
 component, with the swept constants written as named wildcards (`_s`, `_a`) in the
 expression itself. Nothing here is bespoke: the same components are documented in the
 [component reference](/reference/component/) and exercised one at a time in the
-[playground](/playground/). If a page here suggests a rig you want, you can build it.
+[playground](/docs/components/overview). If a page here suggests a rig you want, you can build it.

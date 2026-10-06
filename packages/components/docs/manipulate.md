@@ -1,3 +1,7 @@
+---
+order: 8
+---
+
 # Manipulate
 
 A generic, Wolfram-style [`Manipulate`](https://reference.wolfram.com/language/ref/Manipulate.html),

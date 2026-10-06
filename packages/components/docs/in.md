@@ -1,3 +1,7 @@
+---
+order: 4
+---
+
 # Input
 
 `<notatio-in>` — a MathLive-backed math editor. It emits `notatio-change`

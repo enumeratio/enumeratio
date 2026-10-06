@@ -1,12 +1,12 @@
 // The component reference: the attribute tables `@enumeratio/frontend/reflect` reads out
-// of the element sources, plus which playground page exercises each component.
+// of the element sources, plus which doc page demos each component.
 
-import { readdirSync, readFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import { type ComponentDoc as Reflected, collectComponents as reflect, headOfTag } from "@enumeratio/frontend/reflect";
 import { DRAWING_SYMBOLS } from "@enumeratio/frontend/symbols";
+import { docRoute, repoRoot, workspacePackages } from "./repo-docs.ts";
 
 export type { AttributeDoc } from "@enumeratio/frontend/reflect";
 
@@ -19,41 +19,36 @@ export interface ComponentDoc extends Reflected {
   /** The heads drawn by this element (symbols.ts's head-to-tag map), read here so a page
    *  needn't load the symbol table to link a head to its component. */
   heads: readonly string[];
-  /** The playground page that exercises this component, when there is one. */
+  /** The doc page that demos this component, when there is one. */
   playground?: string;
 }
 
-const here = dirname(fileURLToPath(import.meta.url));
 // The element sources the package ships: the reference is read out of them.
 export const srcDir = join(
   dirname(createRequire(import.meta.url).resolve("@enumeratio/components/package.json")),
   "src",
 );
-const playgroundDir = resolve(here, "../../playground");
+// The pages that demo components live in the package docs of the library each one belongs
+// to: the interface in components, a polytope in polytope, combinatorial figures in
+// combinatorics. Other pages (guides) mention elements without being their demo.
+const DEMO_PAGES = (slug: string, page: string): boolean =>
+  slug === "components" || slug === "polytope" || (slug === "combinatorics" && page === "figure");
 
-/** Every markdown page under the playground, as a path relative to it. */
-function playgroundFiles(dir = playgroundDir, prefix = ""): string[] {
-  const found: string[] = [];
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (entry.isDirectory()) found.push(...playgroundFiles(join(dir, entry.name), `${prefix}${entry.name}/`));
-    else if (entry.name.endsWith(".md")) found.push(prefix + entry.name);
-  }
-  return found;
-}
-
-/** Map each tag to the playground page that uses it, so the pages can link out. */
-function playgroundPages(): Map<string, string> {
+/** Map each tag to the doc page that demos it, so the pages can link out. */
+function demoPages(): Map<string, string> {
   const pages = new Map<string, string>();
-  // A page named for the component wins; an index page, which mentions many of them,
+  // A page named for the component wins; an overview page, which mentions many of them,
   // is the last resort.
-  const files = playgroundFiles().toSorted((a, b) => Number(a.endsWith("index.md")) - Number(b.endsWith("index.md")));
-  for (const file of files) {
-    const text = readFileSync(join(playgroundDir, file), "utf8");
-    const slug = file.replace(/(?:\/?index)?\.md$/, "");
-    const leaf = slug.slice(slug.lastIndexOf("/") + 1);
+  const found = workspacePackages().flatMap((pkg) =>
+    pkg.pages.filter((d) => DEMO_PAGES(pkg.slug, d.page)).map((d) => ({ pkg, d })),
+  );
+  found.sort((a, b) => Number(a.d.page === "overview") - Number(b.d.page === "overview"));
+  for (const { pkg, d } of found) {
+    const text = readFileSync(join(repoRoot, d.file), "utf8");
+    const leaf = d.page.slice(d.page.lastIndexOf("/") + 1);
     for (const m of text.matchAll(/<(notatio-[a-z0-9-]+)[\s/>]/g)) {
       const named = m[1] === `notatio-${leaf}`;
-      if (named || !pages.has(m[1])) pages.set(m[1], `/playground/${slug}`);
+      if (named || !pages.has(m[1])) pages.set(m[1], docRoute(pkg.slug, d.page));
     }
   }
   return pages;
@@ -61,7 +56,7 @@ function playgroundPages(): Map<string, string> {
 
 /** Re-read every element module. Called per build (and per change, in dev). */
 export function collectComponents(): ComponentDoc[] {
-  const playgrounds = playgroundPages();
+  const playgrounds = demoPages();
   return reflect(srcDir).map((c) => ({
     ...c,
     name: headOfTag(c.tag),

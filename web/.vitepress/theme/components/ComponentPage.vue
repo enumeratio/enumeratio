@@ -34,7 +34,7 @@ const propertyOnly = computed(() => component.value?.attributes.filter((a) => a.
     <p v-for="(p, i) in paragraphs" :key="i" v-html="p" />
 
     <p class="meta">
-      <a v-if="component.playground" :href="component.playground">Stories in the playground</a>
+      <a v-if="component.playground" :href="component.playground">Demos</a>
       <span v-if="component.playground" class="sep">·</span>
       <code>{{ component.source }}</code>
       <template v-if="heads.length > 0">

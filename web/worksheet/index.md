@@ -22,7 +22,7 @@ the wiki's [Notebooks](https://github.com/enumeratio/enumeratio/wiki/Notebooks) 
 </ClientOnly>
 
 Everything evaluates here, in the page. For what a cell can say, see the
-[worksheet stories](/playground/worksheet); for the heads it can call, the
+[worksheet stories](/docs/components/worksheet); for the heads it can call, the
 [symbol reference](/reference/symbol/). Looking for `In[n]`/`Out[n]` and prose between
 the cells? That is the [notebook](/notebook/).
 
