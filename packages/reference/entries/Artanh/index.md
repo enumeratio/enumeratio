@@ -9,7 +9,7 @@ signatures:
   - call: Artanh(complex | signed_infinity | ~oo) -> Indeterminate | number | signed_infinity
     description: Inverse hyperbolic tangent (area hyperbolic tangent).
     library: enumeratio-analytic
-    type: (complex | signed_infinity | ~oo) -> number
+    type: (complex | signed_infinity) -> number
     overrides: compute-engine
 names:
   fungrim: Atanh
