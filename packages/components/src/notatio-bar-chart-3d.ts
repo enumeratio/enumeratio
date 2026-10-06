@@ -47,6 +47,9 @@ function toLabels(raw: string): string[] | undefined {
  *
  * The view is fixed by `azimuth` / `elevation`, so the figure is a pure
  * function of its attributes and renders identically under SSR.
+ *
+ * Bars are colored by height on the `gradient` (default `viridis`; `reverse` runs it the
+ * other way); the sides are the same color, darkened.
  */
 export class NotatioBarChart3D extends LitElement {
   static properties = {
@@ -61,6 +64,10 @@ export class NotatioBarChart3D extends LitElement {
     rowLabels: { type: String, attribute: "row-labels" },
     colLabels: { type: String, attribute: "col-labels" },
     label: { type: String },
+    /** The gradient the bars take by height (`viridis`, `magma`, `turbo`, …). */
+    gradient: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     _svg: { state: true },
   };
 
@@ -74,6 +81,8 @@ export class NotatioBarChart3D extends LitElement {
   declare rowLabels: string;
   declare colLabels: string;
   declare label: string;
+  declare gradient: string;
+  declare reverse: boolean;
   declare _svg: string;
 
   constructor() {
@@ -87,6 +96,8 @@ export class NotatioBarChart3D extends LitElement {
     this.rowLabels = "";
     this.colLabels = "";
     this.label = "";
+    this.gradient = "viridis";
+    this.reverse = false;
     this._svg = "";
     ensureStyles();
   }
@@ -106,7 +117,9 @@ export class NotatioBarChart3D extends LitElement {
       changed.has("zrange") ||
       changed.has("rowLabels") ||
       changed.has("colLabels") ||
-      changed.has("label")
+      changed.has("label") ||
+      changed.has("gradient") ||
+      changed.has("reverse")
     ) {
       this.#recompute();
     }
@@ -133,6 +146,8 @@ export class NotatioBarChart3D extends LitElement {
       rowLabels: toLabels(this.rowLabels),
       colLabels: toLabels(this.colLabels),
       title: this.label || undefined,
+      gradient: this.gradient,
+      reverse: this.reverse,
     });
   }
 

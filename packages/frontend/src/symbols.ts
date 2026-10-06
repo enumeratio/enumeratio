@@ -1,6 +1,7 @@
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
+import { GRADIENTS } from "./palettes.ts";
 import type { ScaleName } from "./scales.ts";
 
 // A symbol and its component are the same thing seen from two ends
@@ -213,11 +214,12 @@ function twoVariables(
 const dataOnly = (ops: readonly Json[]): Record<string, string> => (ops[0] === undefined ? {} : { data: json(ops[0]) });
 
 /** A family member: the family tag with the member's attribute fixed. */
-const chart = (head: string, type: string): VisualSymbol => ({
+const chart = (head: string, type: string, options?: VisualSymbol["options"]): VisualSymbol => ({
   head,
   tag: "notatio-chart",
   fixed: { type },
   attributes: dataOnly,
+  ...(options && { options }),
 });
 
 const graph = (head: string, type: string): VisualSymbol => ({
@@ -267,6 +269,38 @@ function controlName(node: Json): string | undefined {
 const AXES_LABEL_OPTIONS = { XLabel: "x-label", YLabel: "y-label" };
 
 /**
+ * `ColorFunction -> "Viridis"` (or `ColorData("Viridis")`): the gradient the color of a
+ * continuous value is drawn from, as the component's `gradient`. Only a name that is one
+ * of our own gradients (`GRADIENTS`, any case) lowers; Wolfram's other schemes ("Rainbow",
+ * "TemperatureMap", …) have no exact counterpart here, and are left out rather than
+ * approximated, as is anything that is not a name (a pure function, `Automatic`).
+ */
+const gradientName = (value: Json): string | undefined => {
+  const named = headOf(value) === "ColorData" ? opsOf(value)[0] : value;
+  const wanted = (strOf(named) ?? symOf(named))?.toLowerCase();
+  return GRADIENTS.find((g) => g.name === wanted)?.name;
+};
+
+const colorFunction = (value: Json): Record<string, string> => {
+  const gradient = gradientName(value);
+  return gradient === undefined ? {} : { gradient };
+};
+
+/**
+ * `Plot`'s `ColorFunction`: `"x"` / `"y"` colors the curve by that coordinate (`color-by`),
+ * and a gradient name colors it by x -- Wolfram's own default -- along that gradient.
+ */
+const plotColorFunction = (value: Json): Record<string, string> => {
+  const axis = (strOf(value) ?? symOf(value))?.toLowerCase();
+  if (axis === "x" || axis === "y") return { "color-by": axis };
+  const gradient = gradientName(value);
+  return gradient === undefined ? {} : { "color-by": "x", gradient };
+};
+
+/** The 2-D field plots' options: the axis captions, and the gradient their values are drawn from. */
+const FIELD_OPTIONS = { ...AXES_LABEL_OPTIONS, ColorFunction: colorFunction };
+
+/**
  * A Wolfram scaling-function name (`"Log"`, `"Log10"`, `"Log2"`, `"Sqrt"`, `"Linear"`,
  * `"None"`) as our own lowercase `ScaleName` -- `scales.ts`'s vocabulary is already just
  * the lowercased Wolfram spelling, `None` aside (Wolfram's way of saying no scaling).
@@ -310,7 +344,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       // `Filling -> True` / `ColorFunction -> "y"`: genuine Wolfram `Plot` options with
       // no kebab-cased match on the component's own attribute names (`fill`, `color-by`).
       Filling: "fill",
-      ColorFunction: "color-by",
+      ColorFunction: plotColorFunction,
       // `PlotPoints -> 240`: Wolfram's name for the initial sample count before adaptive
       // refinement -- the component calls the same thing `samples`.
       PlotPoints: "samples",
@@ -355,7 +389,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       }),
     // `PlotLabel -> "…"`: same idea as `Plot`'s, but this component's caption attribute
     // is `label`, not the two-word kebab `optionAttribute` would default to.
-    options: { PlotLabel: "label" },
+    options: { PlotLabel: "label", ColorFunction: colorFunction },
   },
   {
     head: "ContourPlot",
@@ -368,7 +402,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
         xrange: "xrange",
         yrange: "yrange",
       }),
-    options: AXES_LABEL_OPTIONS,
+    options: FIELD_OPTIONS,
   },
   {
     // `ListContourPlot(grid)`: a pre-sampled grid contoured directly, no expression or
@@ -376,6 +410,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     head: "ListContourPlot",
     tag: "notatio-contour-plot",
     attributes: dataOnly,
+    options: { ColorFunction: colorFunction },
   },
   {
     head: "DensityPlot",
@@ -388,13 +423,14 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
         xrange: "xrange",
         yrange: "yrange",
       }),
-    options: AXES_LABEL_OPTIONS,
+    options: FIELD_OPTIONS,
   },
   {
     // `ListDensityPlot(grid)`: a pre-sampled grid shaded directly -- see `ListContourPlot`.
     head: "ListDensityPlot",
     tag: "notatio-density-plot",
     attributes: dataOnly,
+    options: { ColorFunction: colorFunction },
   },
   {
     head: "PolarPlot",
@@ -412,14 +448,14 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     head: "VectorPlot",
     tag: "notatio-vector-plot",
     attributes: (ops) => vectorField(ops),
-    options: AXES_LABEL_OPTIONS,
+    options: FIELD_OPTIONS,
   },
   {
     head: "StreamPlot",
     tag: "notatio-vector-plot",
     fixed: { type: "stream" },
     attributes: (ops) => vectorField(ops),
-    options: AXES_LABEL_OPTIONS,
+    options: FIELD_OPTIONS,
   },
   {
     head: "ComplexPlot",
@@ -431,6 +467,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       if (variable) out.var = variable;
       return out;
     },
+    options: { ColorFunction: colorFunction },
   },
   {
     // `ComplexPlot3D(f, (z, a + b i, c + d i))`: the iterator's corners are complex, and
@@ -448,6 +485,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       if (lo && hi) out.domain = `${lo[0]},${hi[0]},${lo[1]},${hi[1]}`;
       return out;
     },
+    options: { ColorFunction: colorFunction },
   },
   chart("ListPlot", "list"),
   chart("ListLinePlot", "listline"),
@@ -455,7 +493,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   chart("Histogram", "histogram"),
   chart("PieChart", "pie"),
   chart("BoxWhiskerChart", "box"),
-  chart("ArrayPlot", "array"),
+  chart("ArrayPlot", "array", { ColorFunction: colorFunction }),
   chart("DiscretePlot", "discrete"),
   {
     // The family head: no `type`, so the component chooses from the data -- unless a
@@ -468,9 +506,10 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       if (type) out.type = type;
       return out;
     },
+    options: { ColorFunction: colorFunction },
   },
-  { head: "ListPlot3D", tag: "notatio-list-plot-3d", attributes: dataOnly },
-  { head: "BarChart3D", tag: "notatio-bar-chart-3d", attributes: dataOnly },
+  { head: "ListPlot3D", tag: "notatio-list-plot-3d", attributes: dataOnly, options: { ColorFunction: colorFunction } },
+  { head: "BarChart3D", tag: "notatio-bar-chart-3d", attributes: dataOnly, options: { ColorFunction: colorFunction } },
   graph("GraphPlot", "graph"),
   graph("TreeGraph", "tree"),
   graph("LayeredGraphPlot", "layered"),
@@ -653,7 +692,7 @@ const planar = (head: string, tag: string): VisualSymbol => ({
   },
 });
 
-/** A control that binds a value with no range to speak of: a checkbox, a colour, a field. */
+/** A control that binds a value with no range to speak of: a checkbox, a color, a field. */
 const simple = (head: string, tag: string): VisualSymbol => ({
   head,
   tag,

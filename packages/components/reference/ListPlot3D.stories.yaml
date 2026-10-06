@@ -111,3 +111,7 @@
       ],
       [Tuple, N, 3],
     ]
+- id: heights-on-the-cool-gradient
+  caption: Heights on the cool gradient
+  category: Color
+  expr: [ListPlot3D, [List, [List, 0, 1, 2], [List, 1, 3, 1], [List, 2, 1, 0]], [Tuple, ColorFunction, "'Cool'"]]

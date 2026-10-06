@@ -9,7 +9,7 @@ signatures:
   - call: MoebiusMu(n)
     description: "The Möbius function: 0 if n has a squared prime factor, else (-1)^(number of prime factors)."
     library: enumeratio-number-theory
-    type: (number, any*) -> integer
+    type: (number | quadratic_integer, any*) -> integer
     overrides: compute-engine
 seeAlso:
   - FactorInteger

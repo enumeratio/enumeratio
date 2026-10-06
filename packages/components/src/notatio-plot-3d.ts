@@ -34,6 +34,11 @@ const log = debug("plot3d");
  * `params` adds Manipulate-style sliders whose values fill the matching named
  * wildcards (`_k`) in `value` and re-sample live, e.g. `params="{k, 1, 4}"` over
  * `value="Sin(_k * x) * Cos(_k * y)"`.
+ *
+ * Color is explicit. A lone surface takes the `gradient` by height (default `viridis`;
+ * `reverse` runs it the other way). Several surfaces are told apart instead: each takes one
+ * color of the `discrete` scheme (default `tableau10`), washed toward the page by its lower
+ * faces.
  */
 export class NotatioPlot3D extends LitElement {
   static properties = {
@@ -65,7 +70,13 @@ export class NotatioPlot3D extends LitElement {
     zoom: { type: Number },
     /** Caption drawn above the surface. */
     label: { type: String },
-    /** Anything but `"false"` draws the height-colour ramp beside the surface. */
+    /** The gradient a lone surface takes by height (`viridis`, `magma`, `turbo`, …); several surfaces take `discrete` colors instead. */
+    gradient: { type: String },
+    /** The discrete scheme that colors each surface when there are several: `tableau10`, `set1`, `glasbey`, …. */
+    discrete: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
+    /** Anything but `"false"` draws the height-color ramp beside the surface. */
     colorLegend: { type: String, attribute: "color-legend" },
     /** Anything but `"false"` auto-rotates the view; the ⟳ button toggles it. */
     spin: { type: String },
@@ -96,6 +107,9 @@ export class NotatioPlot3D extends LitElement {
   declare elevation: number;
   declare zoom: number;
   declare label: string;
+  declare gradient: string;
+  declare discrete: string;
+  declare reverse: boolean;
   declare colorLegend: string;
   declare spin: string;
   declare gpu: string;
@@ -147,6 +161,9 @@ export class NotatioPlot3D extends LitElement {
     this.elevation = 15;
     this.zoom = 1;
     this.label = "";
+    this.gradient = "viridis";
+    this.discrete = "tableau10";
+    this.reverse = false;
     this.colorLegend = "false";
     this.spin = "false";
     this.gpu = "false";
@@ -211,6 +228,9 @@ export class NotatioPlot3D extends LitElement {
       changed.has("elevation") ||
       changed.has("zoom") ||
       changed.has("label") ||
+      changed.has("gradient") ||
+      changed.has("discrete") ||
+      changed.has("reverse") ||
       changed.has("colorLegend") ||
       changed.has("_hover")
     ) {
@@ -309,6 +329,9 @@ export class NotatioPlot3D extends LitElement {
       elevation: this.elevation,
       zoom: this.zoom,
       title: this.label || undefined,
+      gradient: this.gradient,
+      discrete: this.discrete,
+      reverse: this.reverse,
       colorLegend: this.colorLegend !== "false" && this.colorLegend !== undefined,
       hover: this._hover,
     };

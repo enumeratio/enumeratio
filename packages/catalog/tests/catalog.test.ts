@@ -19,9 +19,9 @@ test("the catalog is the measured shape, folded to names", () => {
   // Stats and maps are folded from (collection, stat) rows to NAMES with overload sets.
   // If these move, https://github.com/enumeratio/enumeratio/wiki/Namespaces §1 is stale — that is the point of pinning them.
   expect(COLLECTIONS.length).toBe(288);
-  expect(CARRIERS.length).toBe(92);
+  expect(CARRIERS.length).toBe(93);
   expect(STATS.length).toBe(242);
-  expect(MAPS.length).toBe(85);
+  expect(MAPS.length).toBe(86);
 });
 
 test("a stat is one name defined on several carriers", () => {

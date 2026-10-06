@@ -84,6 +84,10 @@ function toMatrix(data: unknown): number[][] {
  * `data` (and `labels`) are JSON, parsed defensively -- an empty/invalid value
  * renders nothing rather than throwing. `label` is a title (Wolfram's
  * `PlotLabel`); `bins` overrides the histogram's automatic bin count.
+ *
+ * Color is explicit. Categories (a pie's wedges, a box per series, a bar chart's one series)
+ * take the `discrete` scheme, default `tableau10`; an `array` plot's cells take the `gradient`
+ * by value, default `viridis`, reversed by `reverse`.
  */
 export class NotatioChart extends LitElement {
   static properties = {
@@ -100,6 +104,12 @@ export class NotatioChart extends LitElement {
     bins: { type: Number },
     /** Caption drawn above the chart. */
     label: { type: String },
+    /** The gradient an `array` plot's cells take by value (`viridis`, `magma`, `turbo`, …). */
+    gradient: { type: String },
+    /** The discrete scheme that colors a series, a pie's wedges or a box each: `tableau10`, `set1`, `glasbey`, …. */
+    discrete: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
   };
 
   declare type: ChartType | "auto";
@@ -107,6 +117,9 @@ export class NotatioChart extends LitElement {
   declare labels: string;
   declare bins: number | undefined;
   declare label: string;
+  declare gradient: string;
+  declare discrete: string;
+  declare reverse: boolean;
 
   constructor() {
     super();
@@ -115,6 +128,9 @@ export class NotatioChart extends LitElement {
     this.labels = "";
     this.bins = undefined;
     this.label = "";
+    this.gradient = "viridis";
+    this.discrete = "tableau10";
+    this.reverse = false;
     ensureStyles();
   }
 
@@ -124,7 +140,14 @@ export class NotatioChart extends LitElement {
 
   protected override shouldUpdate(changed: PropertyValues): boolean {
     return (
-      changed.has("type") || changed.has("data") || changed.has("labels") || changed.has("bins") || changed.has("label")
+      changed.has("type") ||
+      changed.has("data") ||
+      changed.has("labels") ||
+      changed.has("bins") ||
+      changed.has("label") ||
+      changed.has("gradient") ||
+      changed.has("discrete") ||
+      changed.has("reverse")
     );
   }
 
@@ -133,26 +156,27 @@ export class NotatioChart extends LitElement {
     const labelsList = parseJson(this.labels);
     const labels = Array.isArray(labelsList) ? labelsList.map(String) : undefined;
     const title = this.label || undefined;
+    const color = { gradient: this.gradient, discrete: this.discrete, reverse: this.reverse };
     const points = toPoints(data);
     const type =
       this.type && this.type !== "auto" ? this.type : chooseChartType(data, { labels: labels !== undefined });
     switch (type) {
       case "list":
-        return linePlotSvg([{ points, style: "points" }], { title });
+        return linePlotSvg([{ points, style: "points" }], { title, ...color });
       case "listline":
-        return linePlotSvg([{ points, style: "line" }], { title });
+        return linePlotSvg([{ points, style: "line" }], { title, ...color });
       case "bar":
-        return barChartSvg(toValues(data), { labels, title });
+        return barChartSvg(toValues(data), { labels, title, ...color });
       case "histogram":
-        return histogramSvg(toValues(data), { bins: this.bins, title });
+        return histogramSvg(toValues(data), { bins: this.bins, title, ...color });
       case "pie":
-        return pieChartSvg(toValues(data), { labels, title });
+        return pieChartSvg(toValues(data), { labels, title, ...color });
       case "box":
-        return boxWhiskerChartSvg(toSeries(data), { labels, title });
+        return boxWhiskerChartSvg(toSeries(data), { labels, title, ...color });
       case "array":
-        return arrayPlotSvg(toMatrix(data), { title });
+        return arrayPlotSvg(toMatrix(data), { title, ...color });
       case "discrete":
-        return discretePlotSvg(toValues(data), { title });
+        return discretePlotSvg(toValues(data), { title, ...color });
       default:
         return "";
     }

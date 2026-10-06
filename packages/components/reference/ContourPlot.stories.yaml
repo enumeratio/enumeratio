@@ -64,3 +64,16 @@
   category: List contours
   notes: "`ListContourPlot` contours a pre-sampled grid directly -- no expression evaluation, so it's the natural fit for numerical data."
   expr: [ListContourPlot, [List, [List, 0, 1, 2, 3], [List, 1, 2, 3, 4], [List, 2, 3, 4, 5], [List, 3, 4, 5, 6]]]
+- id: bands-on-the-turbo-gradient
+  caption: Bands on the turbo gradient
+  category: Color
+  notes: Lines and filled bands take their color by level from the gradient (`viridis` by default).
+  expr:
+    [
+      ContourPlot,
+      [Add, [Power, x, 2], [Power, y, 2]],
+      [Tuple, x, -3, 3],
+      [Tuple, y, -3, 3],
+      [Tuple, Filled, True],
+      [Tuple, ColorFunction, "'Turbo'"],
+    ]

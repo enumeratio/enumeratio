@@ -760,6 +760,8 @@ const NOVEL = [
   "QSymF",
   "QSymM",
   "QuadraticForm",
+  "QuadraticInteger",
+  "QuadraticIntegers",
   "Quiver",
   "QuiverCompose",
   "QuiverIsAcyclic",

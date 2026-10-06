@@ -4,11 +4,10 @@
 // modes are pure and deterministic (fixed sample grid, fixed-step RK4, no
 // randomness), so SSR and the browser render byte-identical output.
 
-const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
+import { type ColorOptions, plotPalette, rampColor } from "./plot-color.ts";
+
 const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
-// Cool end of the magnitude ramp, matching contour.ts's filled bands.
-const RAMP_LO = "var(--notatio-series-2, #2f7ed8)";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
@@ -189,7 +188,7 @@ export function streamline(
   return [...back.toReversed(), { x: sx, y: sy }, ...fwd];
 }
 
-export interface VectorPlotOptions {
+export interface VectorPlotOptions extends ColorOptions {
   width?: number;
   height?: number;
   /** Arrow grid (`vector`) or streamline seed grid (`stream`) resolution. */
@@ -214,14 +213,10 @@ function titleSvg(w: number, title: string | undefined): string {
     : "";
 }
 
-/** Magnitude ramp: cool at |F| = 0, accent at the field's maximum. */
-const ramp = (t: number): string =>
-  `color-mix(in srgb, ${ACCENT} ${n2(Math.max(0, Math.min(1, t)) * 100)}%, ${RAMP_LO})`;
-
 /**
  * Render `field` over `[x0, x1] × [y0, y1]` as a grid of arrows (Wolfram's
  * `VectorPlot`) or as streamlines seeded on that grid (`StreamPlot`). Arrow
- * length and colour both scale with |F|; streamlines are coloured by their
+ * length and color both scale with |F|; streamlines are colored by their
  * mean |F|. A pure function of its inputs -- same field, same SVG.
  */
 export function vectorPlotSvg(
@@ -248,6 +243,9 @@ export function vectorPlotSvg(
   const sy = (y: number): number => mT + ((y1 - y) / (y1 - y0)) * plotH;
 
   const n = Math.max(2, Math.min(40, Math.round(opts.n ?? (kind === "stream" ? 9 : 14))));
+  // Magnitude on the gradient: its first stop at |F| = 0, its last at the field's maximum.
+  const palette = plotPalette(opts);
+  const ramp = (t: number): string => rampColor(palette, t);
   const samples = sampleField(field, x0, x1, y0, y1, n, n);
   const maxMag = samples.reduce((m, s) => Math.max(m, s.mag), 0);
 

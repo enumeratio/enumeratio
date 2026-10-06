@@ -44,3 +44,8 @@
       [Tuple, XLabel, "'x'"],
       [Tuple, YLabel, "'y'"],
     ]
+- id: magnitude-on-the-inferno-gradient
+  caption: Magnitude on the inferno gradient
+  category: Color
+  notes: Arrows (and streamlines) take |F| on the gradient, `viridis` by default.
+  expr: [VectorPlot, [Tuple, [Negate, y], x], [Tuple, x, -2, 2], [Tuple, y, -2, 2], [Tuple, ColorFunction, "'Inferno'"]]

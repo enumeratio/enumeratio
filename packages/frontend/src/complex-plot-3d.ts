@@ -1,8 +1,10 @@
 import type { Complex, ComplexFunction } from "./complex-eval.ts";
+import { DEFAULT_PHASE_GRADIENT, type Gradient, sampleGradient } from "./palettes.ts";
+import { gradientOf } from "./plot-color.ts";
 import { type Surface3dOptions, type SurfaceScene, surfaceScene, surfaceSceneSvg } from "./plot3d.ts";
 
 // Wolfram's `ComplexPlot3D`: |f(z)| as a surface over the complex plane, each face
-// coloured by arg f(z) -- the same hue wheel `notatio-complex-plot` paints, lifted into
+// colored by arg f(z) -- the same hue wheel `notatio-complex-plot` paints, lifted into
 // the third dimension. The portrait runs on the GPU one pixel at a time; a surface is a
 // few thousand samples, cheap enough to take on the CPU: this samples a complex function
 // (`complex-eval.ts`'s, or the GPU's grid) into a height grid and a hue grid. Pure: no
@@ -107,21 +109,18 @@ export function sampleComplexSurface(f: ComplexFunction, opts: ComplexSurfaceOpt
   return complexSurfaceOf(values, xs, ys, opts.maxHeight);
 }
 
-// --- colouring ------------------------------------------------------------------------
+// --- coloring ------------------------------------------------------------------------
 
-/** One string per degree, so a face costs a lookup rather than a format. */
-const HUES = Array.from({ length: 360 }, (_, deg) => `hsl(${deg} 75% 55%)`);
-
-/** The face colour for a hue in [0, 1): the same wheel the portrait paints. A face with
- * no argument (a pole hit exactly) is a neutral grey -- concrete, so it paints on a
- * canvas too. */
-export const hueColor = (t: number): string =>
-  Number.isFinite(t) ? HUES[Math.round((((t % 1) + 1) % 1) * 360) % 360] : "hsl(0 0% 55%)";
+/** The face color for an argument in [0, 1): the same gradient the portrait paints (the
+ * `phase` wheel unless told otherwise). A face with no argument (a pole hit exactly) is a
+ * neutral gray -- concrete, so it paints on a canvas too. */
+export const hueColor = (t: number, gradient: Gradient = gradientOf({}, DEFAULT_PHASE_GRADIENT)): string =>
+  Number.isFinite(t) ? sampleGradient(gradient, t) : "hsl(0 0% 55%)";
 
 /**
  * The hue of a face from its four corners. Arg jumps by 2π across the negative real
  * axis, so a plain mean of the corners' hues would paint every cell straddling the cut
- * with the colour opposite to both sides; averaging the unit vectors instead lands
+ * with the color opposite to both sides; averaging the unit vectors instead lands
  * between them, whichever way round they came.
  */
 export function faceHue(corners: readonly number[]): number {
@@ -147,9 +146,13 @@ export interface ComplexSurfaceSvgOptions extends Omit<Surface3dOptions, "xs" | 
  */
 export const CANVAS_THRESHOLD = 80;
 
-/** The surface as a scene: heights from the grid, each face coloured by its corners' hues. */
+/**
+ * The surface as a scene: heights from the grid, each face colored by its corners' hues.
+ * The color is the argument on the gradient: `phase` unless `gradient` says otherwise.
+ */
 export function complexSurfaceScene(surface: ComplexSurface, opts: ComplexSurfaceSvgOptions = {}): SurfaceScene {
   const { heights, hues, xs, ys } = surface;
+  const gradient = gradientOf(opts, DEFAULT_PHASE_GRADIENT);
   const nx = xs.length;
   // The circular mean of the corners' hues, per face, with the unit vectors taken once
   // per vertex: a dense grid asks for this tens of thousands of times a frame.
@@ -177,9 +180,9 @@ export function complexSurfaceScene(surface: ComplexSurface, opts: ComplexSurfac
       const d = a + nx;
       const x = cx[a] + cx[b] + cx[c] + cx[d];
       const y = cy[a] + cy[b] + cy[c] + cy[d];
-      if (x === 0 && y === 0) return hueColor(Number.NaN);
+      if (x === 0 && y === 0) return hueColor(Number.NaN, gradient);
       const t = Math.atan2(y, x) / (2 * Math.PI);
-      return hueColor(t < 0 ? t + 1 : t);
+      return hueColor(t < 0 ? t + 1 : t, gradient);
     },
   });
 }

@@ -85,6 +85,14 @@ const CORPUS = [
   // (`Epilog`) is a slotted child, the rest are attributes.
   "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))",
   'Plot(Sin(x), (x, 0, 10), [PlotLabel -> "sine", GridLines -> True], PlotLabel -> "no")',
+  // Colors: `ColorFunction` names one of our gradients (any case, or `ColorData`); `"x"`/`"y"`
+  // is `Plot`'s `color-by`; a Wolfram scheme we don't have is dropped; the rest are plain options.
+  'Plot(Sin(x), (x, 0, 10), ColorFunction -> "y")',
+  'Plot(Sin(x), (x, 0, 10), ColorFunction -> "Magma", Reverse -> True)',
+  'Plot([Sin(x), Cos(x)], (x, 0, 10), Discrete -> "set1")',
+  'DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> ColorData("Turbo"))',
+  'DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> "Rainbow")',
+  'ArrayPlot([[1, 0], [0, 2]], ColorFunction -> "cividis")',
   'Slider(k, (0, 5), Appearance -> "Labeled")',
   // TestResultObject (@enumeratio/evaluation's VerificationTest): a Success with an
   // actual output, a Failure that also carries the expected value, and an Error/Aborted

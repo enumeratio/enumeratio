@@ -9,7 +9,12 @@ signatures:
   - call: IsPrime(n, Over -> GaussianIntegers)
     description: tests whether $n$ is prime in $\mathbb{Z}[i]$; a complex $n$ is always tested there
     library: enumeratio-number-theory
-    type: (number, any*) -> boolean
+    type: (number | quadratic_integer, any*) -> boolean
+    overrides: compute-engine
+  - call: IsPrime(n, Over -> QuadraticIntegers(d))
+    description: tests whether $n$ is prime in the ring of integers of $\mathbb{Q}(\sqrt d)$, where an irreducible need not be prime
+    library: enumeratio-number-theory
+    type: (number | quadratic_integer, any*) -> boolean
     overrides: compute-engine
 seeAlso:
   - FactorInteger

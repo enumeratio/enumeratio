@@ -11,6 +11,8 @@
 // and the two circles themselves, each with the same travelling point shown as an angle. Watch
 // the point and the two windings come apart — one dial turns p times while the other turns q.
 
+import { categoryColors, type ColorOptions, plotPalette } from "./plot-color.ts";
+
 const n2 = (v: number): string => (Math.round(v * 100) / 100).toString();
 const esc = (s: string): string =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -18,10 +20,6 @@ const esc = (s: string): string =>
 const INK = "var(--notatio-fg, currentColor)";
 const FAINT = "var(--vp-c-divider, #ddd)";
 const ACCENT = "var(--notatio-accent, #b8860b)";
-/** The two circle factors keep the same two colours everywhere in the figure: the square's
- *  axes, the dials, and the edge arrows. The colours ARE the argument. */
-const HOLE = "hsl(205 70% 45%)";
-const TUBE = "hsl(340 65% 50%)";
 
 /** A segment of the line, in square coordinates — both ends within `[0, 1]`. */
 export interface Strand {
@@ -65,7 +63,12 @@ export const atPhase = (p: number, q: number, phase: number): [number, number] =
   return [p * t - Math.floor(p * t), q * t - Math.floor(q * t)];
 };
 
-export interface TorusSquareOptions {
+/**
+ * The two circle factors are categories: the first two colors of the discrete scheme
+ * (`tableau10` unless `discrete` says otherwise), the same two everywhere in the figure --
+ * the square's axes, the dials, and the edge arrows. The colors ARE the argument.
+ */
+export interface TorusSquareOptions extends Pick<ColorOptions, "discrete"> {
   readonly width?: number;
   readonly height?: number;
   /** Where the travelling point sits, in `[0, 1)`. Omit for a figure with no point on it. */
@@ -82,11 +85,11 @@ function dial(
   r: number,
   turns: number,
   phase: number | undefined,
-  colour: string,
+  color: string,
   caption: string,
 ): string {
   const parts = [
-    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${colour}" stroke-width="1.5" stroke-opacity="0.55"/>`,
+    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="1.5" stroke-opacity="0.55"/>`,
   ];
   if (phase !== undefined) {
     // `turns` full revolutions over one cycle — this is where the winding number becomes
@@ -95,12 +98,12 @@ function dial(
     const x = cx + r * Math.cos(angle);
     const y = cy + r * Math.sin(angle);
     parts.push(
-      `<line x1="${cx}" y1="${cy}" x2="${n2(x)}" y2="${n2(y)}" stroke="${colour}" stroke-width="1.2" stroke-opacity="0.5"/>`,
-      `<circle cx="${n2(x)}" cy="${n2(y)}" r="4" fill="${colour}"/>`,
+      `<line x1="${cx}" y1="${cy}" x2="${n2(x)}" y2="${n2(y)}" stroke="${color}" stroke-width="1.2" stroke-opacity="0.5"/>`,
+      `<circle cx="${n2(x)}" cy="${n2(y)}" r="4" fill="${color}"/>`,
     );
   }
   parts.push(
-    `<text x="${cx}" y="${cy + r + 14}" text-anchor="middle" font-size="9" fill="${colour}">${esc(caption)}</text>`,
+    `<text x="${cx}" y="${cy + r + 14}" text-anchor="middle" font-size="9" fill="${color}">${esc(caption)}</text>`,
   );
   return parts.join("");
 }
@@ -110,6 +113,9 @@ export function torusSquareSvg(p: number, q: number, options: TorusSquareOptions
   const W = options.width ?? 360;
   const H = options.height ?? 260;
   const showDials = options.dials !== false;
+  const colors = categoryColors(plotPalette(options), 2);
+  const hole = colors[0]!;
+  const tube = colors[1]!;
   const side = Math.min(H - 74, showDials ? W - 150 : W - 60);
   const left = showDials ? 34 : (W - side) / 2;
   const top = 34;
@@ -124,16 +130,16 @@ export function torusSquareSvg(p: number, q: number, options: TorusSquareOptions
 
   // The gluing, as arrowheads on the edges: a single chevron on the pair that is identified one
   // way and a double one on the other, which is how this square is drawn everywhere.
-  const chevron = (x: number, y: number, rotate: number, colour: string, twice: boolean): string =>
-    `<g transform="translate(${n2(x)} ${n2(y)}) rotate(${rotate})" stroke="${colour}" stroke-width="1.6" fill="none" stroke-linecap="round">` +
+  const chevron = (x: number, y: number, rotate: number, color: string, twice: boolean): string =>
+    `<g transform="translate(${n2(x)} ${n2(y)}) rotate(${rotate})" stroke="${color}" stroke-width="1.6" fill="none" stroke-linecap="round">` +
     `<path d="M-4 -4L0 0L-4 4"/>${twice ? `<path d="M-9 -4L-5 0L-9 4"/>` : ""}</g>`;
   const mid = left + side / 2;
   const middleY = top + side / 2;
   parts.push(
-    chevron(mid, top, 0, HOLE, false),
-    chevron(mid, top + side, 0, HOLE, false),
-    chevron(left, middleY, 90, TUBE, true),
-    chevron(left + side, middleY, 90, TUBE, true),
+    chevron(mid, top, 0, hole, false),
+    chevron(mid, top + side, 0, hole, false),
+    chevron(left, middleY, 90, tube, true),
+    chevron(left + side, middleY, 90, tube, true),
   );
 
   for (const strand of strands(p, q))
@@ -148,23 +154,23 @@ export function torusSquareSvg(p: number, q: number, options: TorusSquareOptions
     // Guide lines down to the axes: they are what ties the point on the square to the two
     // angles beside it.
     parts.push(
-      `<line x1="${n2(sx(u))}" y1="${n2(sy(v))}" x2="${n2(sx(u))}" y2="${n2(sy(0))}" stroke="${HOLE}" stroke-width="1" stroke-dasharray="2 2" stroke-opacity="0.7"/>`,
-      `<line x1="${n2(sx(u))}" y1="${n2(sy(v))}" x2="${n2(sx(0))}" y2="${n2(sy(v))}" stroke="${TUBE}" stroke-width="1" stroke-dasharray="2 2" stroke-opacity="0.7"/>`,
+      `<line x1="${n2(sx(u))}" y1="${n2(sy(v))}" x2="${n2(sx(u))}" y2="${n2(sy(0))}" stroke="${hole}" stroke-width="1" stroke-dasharray="2 2" stroke-opacity="0.7"/>`,
+      `<line x1="${n2(sx(u))}" y1="${n2(sy(v))}" x2="${n2(sx(0))}" y2="${n2(sy(v))}" stroke="${tube}" stroke-width="1" stroke-dasharray="2 2" stroke-opacity="0.7"/>`,
       `<circle cx="${n2(sx(u))}" cy="${n2(sy(v))}" r="5.5" fill="var(--notatio-bg, #fff)"/>`,
       `<circle class="notatio-square-marker" cx="${n2(sx(u))}" cy="${n2(sy(v))}" r="4" fill="${ACCENT}"/>`,
     );
   }
 
   parts.push(
-    `<text x="${mid}" y="${top + side + 20}" text-anchor="middle" font-size="9" fill="${HOLE}">round the hole ×${p}</text>`,
-    `<text x="${left - 8}" y="${middleY}" text-anchor="middle" font-size="9" fill="${TUBE}" transform="rotate(-90 ${left - 8} ${middleY})">round the tube ×${q}</text>`,
+    `<text x="${mid}" y="${top + side + 20}" text-anchor="middle" font-size="9" fill="${hole}">round the hole ×${p}</text>`,
+    `<text x="${left - 8}" y="${middleY}" text-anchor="middle" font-size="9" fill="${tube}" transform="rotate(-90 ${left - 8} ${middleY})">round the tube ×${q}</text>`,
   );
 
   if (showDials) {
     const cx = W - 56;
     parts.push(
-      dial(cx, top + 34, 28, p, options.phase, HOLE, `×${p}`),
-      dial(cx, top + 120, 28, q, options.phase, TUBE, `×${q}`),
+      dial(cx, top + 34, 28, p, options.phase, hole, `×${p}`),
+      dial(cx, top + 120, 28, q, options.phase, tube, `×${q}`),
     );
   }
 

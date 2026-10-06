@@ -29,8 +29,8 @@ function toMatrix(data: unknown): number[][] | undefined {
 /**
  * `<DensityPlot expr="\sin(x)\cos(y)" xrange="-3,3" yrange="-3,3">` --
  * a bivariate function as a heatmap (Wolfram's `DensityPlot`): the expression
- * is sampled on an `n`×`n` grid and each sample is shaded on a sequential
- * ramp. `legend` adds a colour bar; `zrange` pins the colour scale so several
+ * is sampled on an `n`×`n` grid and each sample is colored by value on the
+ * `gradient` (default `viridis`; `reverse` runs it the other way). `legend` adds a color bar; `zrange` pins the color scale so several
  * plots can share one. `data` (a JSON 2-D array) shades a pre-sampled grid
  * directly (`ListDensityPlot`).
  */
@@ -46,11 +46,11 @@ export class NotatioDensityPlot extends LitElement {
     xrange: { type: String },
     /** The y sampling range, as `lo,hi`. */
     yrange: { type: String },
-    /** Clamp the colour ramp, as `lo,hi`; empty fits the sampled values. */
+    /** Clamp the color ramp, as `lo,hi`; empty fits the sampled values. */
     zrange: { type: String },
     /** Grid resolution per side. */
     n: { type: Number },
-    /** Anything but `"false"` draws the colour ramp beside the plot. */
+    /** Anything but `"false"` draws the color ramp beside the plot. */
     legend: { type: String },
     /** `"false"` hides the axes. */
     axes: { type: String },
@@ -60,6 +60,10 @@ export class NotatioDensityPlot extends LitElement {
     yLabel: { type: String, attribute: "y-label" },
     /** Caption drawn above the figure. */
     label: { type: String },
+    /** The gradient the cells take by value (`viridis`, `magma`, `turbo`, …). */
+    gradient: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     /** A pre-sampled grid as a JSON matrix, plotted instead of `expr`. */
     data: { type: String },
     /** Values for the expression's wildcard slots (`_a`), set by a surrounding Manipulate. */
@@ -79,6 +83,8 @@ export class NotatioDensityPlot extends LitElement {
   declare xLabel: string;
   declare yLabel: string;
   declare label: string;
+  declare gradient: string;
+  declare reverse: boolean;
   declare data: string;
   declare bindings: Record<string, number> | undefined;
   declare _svg: string;
@@ -97,6 +103,8 @@ export class NotatioDensityPlot extends LitElement {
     this.xLabel = "";
     this.yLabel = "";
     this.label = "";
+    this.gradient = "viridis";
+    this.reverse = false;
     this.data = "";
     this._svg = "";
     ensureStyles();
@@ -120,6 +128,8 @@ export class NotatioDensityPlot extends LitElement {
       changed.has("xLabel") ||
       changed.has("yLabel") ||
       changed.has("label") ||
+      changed.has("gradient") ||
+      changed.has("reverse") ||
       changed.has("data") ||
       changed.has("bindings")
     ) {
@@ -141,6 +151,8 @@ export class NotatioDensityPlot extends LitElement {
       xLabel: this.xLabel || undefined,
       yLabel: this.yLabel || undefined,
       title: this.label || undefined,
+      gradient: this.gradient,
+      reverse: this.reverse,
     };
 
     // ListDensityPlot: a pre-sampled matrix, no expression involved.

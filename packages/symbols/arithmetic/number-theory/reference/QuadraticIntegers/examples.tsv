@@ -1,0 +1,8 @@
+id	section	role	expr	expected	caption
+two-is-not-prime-in-z-sqrt-5			[IsPrime, 2, [KeyValuePair, Over, [QuadraticIntegers, -5]]]	False	2 is irreducible in ℤ[√−5] but not prime: it divides (1 + √−5)(1 − √−5) without dividing either
+two-is-not-composite-either			[IsComposite, 2, [KeyValuePair, Over, [QuadraticIntegers, -5]]]	False	nor composite: it has no proper factorization
+one-plus-sqrt-minus-5			[IsPrime, [Add, 1, [Sqrt, -5]], [KeyValuePair, Over, [QuadraticIntegers, -5]]]	False	
+no-unique-factorization-of-6			[FactorInteger, 6, [KeyValuePair, Over, [QuadraticIntegers, -5]]]	[FactorInteger, 6, [Tuple, Over, [QuadraticIntegers, -5]]]	6 = 2 · 3 = (1 + √−5)(1 − √−5): no prime factorization to give
+seven-splits-in-z-sqrt-2			[FactorInteger, 7, [KeyValuePair, Over, [QuadraticIntegers, 2]]]	[List, [Tuple, [Add, 1, [Multiply, 2, [Sqrt, 2]]], 1], [Tuple, [Add, -1, [Multiply, 2, [Sqrt, 2]]], 1]]	7 = (1 + 2√2)(−1 + 2√2) in ℤ[√2]
+eisenstein-seven	Scope		[FactorInteger, 7, [KeyValuePair, Over, [QuadraticIntegers, -3]]]	[List, [Tuple, [Add, [Rational, 1, 2], [Multiply, [Rational, -1, 2], [Sqrt, -3]]], 1], [Tuple, [Add, 2, [Sqrt, -3]], 1], [Tuple, [Add, [Rational, 5, 2], [Multiply, [Rational, 1, 2], [Sqrt, -3]]], 1]]	7 splits in the Eisenstein integers; the unit comes first
+minus-one-is-gaussian	Scope		[FactorInteger, 5, [KeyValuePair, Over, [QuadraticIntegers, -1]]]	[List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 2], 1], [Tuple, [Complex, 2, 1], 1]]	QuadraticIntegers(-1) is GaussianIntegers

@@ -29,9 +29,9 @@ test("a non-finite value stays non-finite", () => {
   expect(Number.isNaN(normalize(Number.NaN, 0, 1))).toBe(true);
 });
 
-test("densityColor interpolates between the two ramp ends", () => {
-  expect(densityColor(0)).toContain("0%");
-  expect(densityColor(1)).toContain("100%");
+test("densityColor runs along the gradient, viridis by default", () => {
+  expect(densityColor(0)).toBe("#440154");
+  expect(densityColor(1)).toBe("#fde725");
   // Out-of-range values are clamped, not extrapolated.
   expect(densityColor(4)).toBe(densityColor(1));
 });
@@ -75,7 +75,7 @@ test("the axis frame and its range labels appear by default", () => {
   expect(count(without, "text")).toBe(0);
 });
 
-test("legend adds a colour bar with min/max labels", () => {
+test("legend adds a color bar with min/max labels", () => {
   const { grid, xs, ys } = rampGrid(3);
   const s = densitySvg(grid, xs, ys, { axes: false, legend: true });
   // 9 cells + 16 bar bands + the bar's outline.
@@ -84,7 +84,7 @@ test("legend adds a colour bar with min/max labels", () => {
   expect(s).toContain(">0<");
 });
 
-test("zRange pins the colour scale instead of using the sampled extremes", () => {
+test("zRange pins the color scale instead of using the sampled extremes", () => {
   const { grid, xs, ys } = rampGrid(3);
   const auto = densitySvg(grid, xs, ys, { axes: false });
   const pinned = densitySvg(grid, xs, ys, { axes: false, zRange: [-10, 10] });

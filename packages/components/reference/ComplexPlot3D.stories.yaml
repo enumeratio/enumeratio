@@ -72,3 +72,14 @@
   category: As an expression
   notes: "The head is the component: an evaluated `ComplexPlot3D(f, (z, a + b i, c + d i))` draws itself, the iterator's complex corners becoming the `domain` -- the same picture as the first story, written the other way."
   expr: [ComplexPlot3D, [Divide, 1, [Add, [Power, z, 2], 1]], [Tuple, z, [Complex, -2, -2], [Complex, 2, 2]]]
+- id: argument-on-the-sinebow-gradient
+  caption: The argument on the sinebow gradient
+  category: Color
+  notes: Faces take arg f(z) on the gradient; `phase`, the hue wheel, by default.
+  expr:
+    [
+      ComplexPlot3D,
+      [Divide, 1, [Add, [Power, z, 2], 1]],
+      [Tuple, z, [Complex, -2, -2], [Complex, 2, 2]],
+      [Tuple, ColorFunction, "'Sinebow'"],
+    ]

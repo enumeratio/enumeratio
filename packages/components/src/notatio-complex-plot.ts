@@ -7,14 +7,17 @@ import {
   ComplexPlotRenderer,
   type ComplexPlotView,
   getComplexPlotDevice,
+  gradientOf,
   parseNumeric,
   zoomAbout,
 } from "@enumeratio/frontend/core";
 
 /**
- * `<ComplexPlot value="PolyLog(2, z)">` -- domain-colouring of a complex-valued
- * expression over the complex plane, one GPU invocation per pixel: hue is the
- * argument, brightness a compressed log-magnitude, poles white and zeros black.
+ * `<ComplexPlot value="PolyLog(2, z)">` -- domain-coloring of a complex-valued
+ * expression over the complex plane, one GPU invocation per pixel: color is the
+ * argument on a `gradient` (default `phase`, the hue wheel; any cyclic one such as
+ * `sinebow` has no seam at the negative real axis; `reverse` turns it round), brightness a
+ * compressed log-magnitude, poles white and zeros black.
  *
  * Any expression the complex emitter can lower works, so this replaces a hand-written
  * shader per function. Under `<Manipulate>` every constant becomes an axis:
@@ -37,7 +40,7 @@ import {
  */
 export class NotatioComplexPlot extends LitElement {
   static properties = {
-    /** The complex-valued expression to colour, in Epsil. */
+    /** The complex-valued expression to color, in Epsil. */
     value: { type: String },
     bindings: { attribute: false },
     /** The complex variable; defaults to `z`. */
@@ -48,6 +51,10 @@ export class NotatioComplexPlot extends LitElement {
     extent: { type: Number },
     /** Dim everything outside this radius; 0 masks nothing. */
     mask: { type: Number },
+    /** The gradient the argument is colored with: `phase` (the hue wheel), `sinebow`, `turbo`, `viridis`, …. */
+    gradient: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     /** Canvas height in pixels. */
     height: { type: Number },
     /** Show a frame-rate readout. */
@@ -64,6 +71,8 @@ export class NotatioComplexPlot extends LitElement {
   declare center: string;
   declare extent: number;
   declare mask: number;
+  declare gradient: string;
+  declare reverse: boolean;
   declare height: number;
   declare fps: boolean;
   /** Drop the frame and caption, for a pane that already has its own context. */
@@ -89,6 +98,8 @@ export class NotatioComplexPlot extends LitElement {
     this.center = "0,0";
     this.extent = 2.4;
     this.mask = 0;
+    this.gradient = "phase";
+    this.reverse = false;
     this.height = 460;
     this.fps = false;
     this.bare = false;
@@ -115,6 +126,7 @@ export class NotatioComplexPlot extends LitElement {
       return;
     }
     this.#renderer = new ComplexPlotRenderer(device, canvas);
+    this.#renderer.setGradient(gradientOf(this, "phase"));
     this.#readView();
     this.#home = {
       center: [...this.#view.center],
@@ -209,6 +221,10 @@ export class NotatioComplexPlot extends LitElement {
 
   protected override updated(changed: PropertyValues): void {
     if (changed.has("value") || changed.has("var") || changed.has("bindings")) void this.#compile();
+    if (changed.has("gradient") || changed.has("reverse")) {
+      this.#renderer?.setGradient(gradientOf(this, "phase"));
+      this.#draw();
+    }
     if (changed.has("center") || changed.has("extent") || changed.has("mask")) {
       this.#readView();
       this.#draw();
@@ -288,7 +304,7 @@ export class NotatioComplexPlot extends LitElement {
         this.bare
           ? ""
           : html`<div class="notatio-complex-plot-foot">
-              <span>hue = arg · brightness = |value| · poles white, zeros black · drag to pan · scroll to zoom</span>
+              <span>color = arg · brightness = |value| · poles white, zeros black · drag to pan · scroll to zoom</span>
               <button type="button" @click=${this.resetView}>⟲ reset</button>
               ${this.fps && this._fps ? html`<span class="notatio-complex-plot-fps">${this._fps} fps</span>` : null}
             </div>`

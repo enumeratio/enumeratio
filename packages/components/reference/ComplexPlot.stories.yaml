@@ -46,3 +46,9 @@
       [Tuple, m, 1, 12, 1],
       [Tuple, c, -4, 1, 0.1],
     ]
+- id: sinebow-instead-of-the-phase-wheel
+  caption: The sinebow gradient instead of the phase wheel
+  category: Color
+  notes: Color is the argument on a gradient -- `phase` (the hue wheel) by default. `sinebow` is cyclic too, so it has no seam where the argument wraps at the negative real axis.
+  expr:
+    [ComplexPlot, [Divide, [Subtract, z, 1], [Add, [Power, z, 2], [Add, z, 1]]], z, [Tuple, ColorFunction, "'Sinebow'"]]

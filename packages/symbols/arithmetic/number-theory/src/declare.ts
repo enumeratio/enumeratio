@@ -46,6 +46,13 @@ export function declareNumberTheory(ce: Engine): void {
   // `GaussianIntegers` as `set<gaussian_integer>` right away no longer breaks anything reading
   // it as a bare option tag.
   declareCarriers(ce, NUMBER_THEORY_CARRIERS);
+  // QuadraticInteger(d, x, y) spelled out, beside the carrier's packed QuadraticInteger((d, x, y)).
+  widenSignature(ce, "QuadraticInteger", "(integer, integer, integer) -> quadratic_integer");
+  // A ring for `Over`, one per d; held, as a carrier's plural is.
+  ce.declare("QuadraticIntegers", {
+    description: SUMMARIES.QuadraticIntegers,
+    signature: "(integer) -> set<quadratic_integer>",
+  });
 
   declareGaussian(ce);
   declareGaussianRationalGcdLcm(ce);

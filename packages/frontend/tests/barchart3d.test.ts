@@ -1,5 +1,8 @@
 import { expect, test } from "vite-plus/test";
 import { barChart3dSvg, barShade } from "../src/barchart3d.ts";
+import { gradientNamed, sampleGradient } from "../src/palettes.ts";
+
+const viridis = (t: number): string => sampleGradient(gradientNamed("viridis"), t);
 
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
 const polys = (s: string): string[] => [...s.matchAll(/<polygon points="([^"]+)"/g)].map(([, p]) => p);
@@ -12,10 +15,10 @@ const flat = { azimuth: 0, elevation: 0 } as const;
 // barShade
 // ---------------------------------------------------------------------------
 
-test("the top face is brighter than a side at the same height", () => {
-  expect(barShade(1, 1)).toContain("82%");
-  expect(barShade(1, 0.72)).toContain("59.04%");
-  expect(barShade(0, 1)).toContain("24%");
+test("the top face is the gradient's color; a side is the same, darkened", () => {
+  expect(barShade(1, 1)).toBe("#fde725");
+  expect(barShade(1, 0.72)).toBe("color-mix(in srgb, #fde725 72%, black)");
+  expect(barShade(0, 1)).toBe("#440154");
 });
 
 test("shading clamps rather than extrapolating", () => {
@@ -77,9 +80,9 @@ test("gap insets each bar inside its cell", () => {
 
 test("heights are shaded relative to the tallest bar", () => {
   const s = barChart3dSvg([[1, 2]], { axes: false });
-  // The short bar sits at half height (ramp 53%), the tall one at the top (82%).
-  expect(s).toContain("53%");
-  expect(s).toContain("82%");
+  // The short bar sits at half height on the gradient, the tall one at the top.
+  expect(s).toContain(viridis(0.5));
+  expect(s).toContain(viridis(1));
 });
 
 test("zRange pins the height scale instead of using the data's own", () => {
@@ -139,7 +142,7 @@ test("a flat matrix draws every bar at the same height", () => {
     { axes: false },
   );
   expect(count(s, "polygon")).toBe(12);
-  expect(s).toContain("82%");
+  expect(s).toContain(viridis(1));
 });
 
 test("a title renders centred above the figure", () => {

@@ -46,3 +46,17 @@
       [List, [List, 0, 1, 2, 3], [List, 1, 2, 3, 4], [List, 2, 3, 4, 5], [List, 3, 4, 5, 6]],
       [Tuple, Legend, True],
     ]
+- id: reversed-plasma
+  caption: Reversed plasma
+  category: Color
+  notes: '`ColorFunction -> "Plasma"` picks the gradient and `Reverse -> True` runs it from its last color to its first. A Wolfram scheme this library has no exact counterpart for (`"Rainbow"`) is ignored rather than approximated.'
+  expr:
+    [
+      DensityPlot,
+      [Multiply, [Sin, x], [Cos, y]],
+      [Tuple, x, 0, 6],
+      [Tuple, y, 0, 6],
+      [Tuple, ColorFunction, "'Plasma'"],
+      [Tuple, Reverse, True],
+      [Tuple, Legend, True],
+    ]

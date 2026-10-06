@@ -108,6 +108,9 @@ async function plotPreview(spec: MarkupSpec): Promise<string | undefined> {
     xLabel: a["x-label"] || undefined,
     yLabel: a["y-label"] || undefined,
     title: a["label"] || undefined,
+    gradient: a["gradient"],
+    discrete: a["discrete"],
+    reverse: on(a["reverse"]),
   });
   return `<span class="notatio-plot-box">${svg}</span>`;
 }

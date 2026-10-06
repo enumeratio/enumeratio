@@ -91,6 +91,10 @@ number is negating each digit**.
 <notatio-cell value="IntegerDigits(-5, 2)" />
 </Story>
 
+A negative base is one step toward a complex one. Base $-1 + i$ with digits $0$ and $1$ writes
+every Gaussian integer without a sign, and its numerals tile the twindragon. That system has its
+own guide, [Complex bases](../../complex-numerals/docs/complex-bases.md).
+
 ## A forbidden pattern instead of a bound
 
 Zeckendorf's theorem: every positive integer is a sum of non-consecutive Fibonacci

@@ -33,8 +33,9 @@ function toMatrix(data: unknown): number[][] | undefined {
  * the two free variables) and iso-lines are extracted at several levels via
  * marching squares. `levels` accepts either a level count or an explicit JSON
  * array of level values; omitted, ~8 evenly spaced levels are chosen between
- * the sampled min and max. `filled` shades the bands between levels with a
- * sequential ramp instead of drawing lines. `data` (a JSON 2-D array) plots a
+ * the sampled min and max. `filled` shades the bands between levels instead of
+ * drawing lines. Lines and bands take their color by level from the `gradient`
+ * (default `viridis`; `reverse` runs it the other way). `data` (a JSON 2-D array) plots a
  * pre-sampled grid directly, skipping expression evaluation (ListContourPlot).
  */
 export class NotatioContourPlot extends LitElement {
@@ -63,6 +64,10 @@ export class NotatioContourPlot extends LitElement {
     yLabel: { type: String, attribute: "y-label" },
     /** Caption drawn above the figure. */
     label: { type: String },
+    /** The gradient the levels take, as lines or as filled bands (`viridis`, `magma`, `turbo`, …). */
+    gradient: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     /** A pre-sampled grid as a JSON matrix, plotted instead of `expr`. */
     data: { type: String },
     /** Values for the expression's other free names, from a surrounding Manipulate. */
@@ -82,6 +87,8 @@ export class NotatioContourPlot extends LitElement {
   declare xLabel: string;
   declare yLabel: string;
   declare label: string;
+  declare gradient: string;
+  declare reverse: boolean;
   declare data: string;
   declare bindings: Record<string, number> | undefined;
   declare _svg: string;
@@ -100,6 +107,8 @@ export class NotatioContourPlot extends LitElement {
     this.xLabel = "";
     this.yLabel = "";
     this.label = "";
+    this.gradient = "viridis";
+    this.reverse = false;
     this.data = "";
     this._svg = "";
     ensureStyles();
@@ -124,6 +133,8 @@ export class NotatioContourPlot extends LitElement {
       changed.has("xLabel") ||
       changed.has("yLabel") ||
       changed.has("label") ||
+      changed.has("gradient") ||
+      changed.has("reverse") ||
       changed.has("bindings")
     ) {
       void this.#recompute();
@@ -154,6 +165,8 @@ export class NotatioContourPlot extends LitElement {
       xLabel: this.xLabel || undefined,
       yLabel: this.yLabel || undefined,
       title: this.label || undefined,
+      gradient: this.gradient,
+      reverse: this.reverse,
       ...this.#levels(),
     };
 

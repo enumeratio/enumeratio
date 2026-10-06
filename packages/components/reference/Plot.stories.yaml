@@ -43,7 +43,7 @@
   expr: [Plot, [Sin, x], [Tuple, x, 0, 6.283], [Tuple, Mode, "'points'"], [Tuple, PlotPoints, 40]]
 - id: grid-fill-legend-labels
   caption: Grid, fill, legend, labels
-  category: Chrome & colour
+  category: Chrome & color
   notes: The `Plot`-style chrome, all opt-in -- light gridlines, a filled area to the zero axis, a legend keyed to the series, an axis label, a forced `PlotRange`, and a `PlotLabel` title.
   expr:
     [
@@ -59,12 +59,12 @@
     ]
 - id: color-by-value
   caption: Colour by value (ColorFunction)
-  category: Chrome & colour
+  category: Chrome & color
   notes: '`ColorFunction -> "y"` ramps the stroke from blue (low) to accent (high) by height; `"x"` ramps left-to-right.'
   expr: [Plot, [Sin, x], [Tuple, x, -6.283, 6.283], [Tuple, ColorFunction, "'y'"]]
 - id: axes-off
   caption: Axes off (bare curve)
-  category: Chrome & colour
+  category: Chrome & color
   expr: [Plot, [Sin, x], [Tuple, x, -6.283, 6.283], [Tuple, Axes, "'false'"]]
 - id: two-parameters
   caption: Two parameters
@@ -136,3 +136,21 @@
       [Plot, [Sin, [Multiply, k, x]], [Tuple, x, -6.283, 6.283], [Tuple, GridLines, True]],
       [Tuple, k, [List, 1, 2, 3, 5]],
     ]
+- id: colored-by-height-on-a-gradient
+  caption: Colored by height on a gradient
+  category: Chrome & color
+  notes: '`ColorFunction -> "y"` colors the curve along y; `Gradient` picks which one (default `viridis`), and `Reverse` runs it the other way. Several series take the `Discrete` scheme instead: here `Set1`, not the default `tableau10`.'
+  expr:
+    [
+      Plot,
+      [Sin, x],
+      [Tuple, x, -6.283, 6.283],
+      [Tuple, ColorFunction, "'y'"],
+      [Tuple, Gradient, "'magma'"],
+      [Tuple, Reverse, True],
+    ]
+- id: series-in-a-discrete-scheme
+  caption: Series in another discrete scheme
+  category: Chrome & color
+  expr:
+    [Plot, [List, [Sin, x], [Cos, x]], [Tuple, x, -6.283, 6.283], [Tuple, Discrete, "'set1'"], [Tuple, Legend, True]]

@@ -5,20 +5,13 @@
 // Axes (a boxed frame with range labels) follow Wolfram's Axes; each axis can
 // carry a scaling function (ScalingFunctions).
 
+import { categoryColors, type ColorOptions, plotPalette, rampColor } from "./plot-color.ts";
 import { scale } from "./scales.ts";
 
 const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
 const BG = "var(--notatio-bg, var(--vp-c-bg, #ffffff))";
 const EDGE = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
-// Base colours for overlaid surfaces; the first is the accent (single-surface).
-const SURF = [
-  ACCENT,
-  "var(--notatio-series-2, #2f7ed8)",
-  "var(--notatio-series-3, #2ca02c)",
-  "var(--notatio-series-4, #d62728)",
-];
-
 type Grid = readonly (readonly number[])[];
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
@@ -30,7 +23,11 @@ const label = (v: number): string => {
   return abs >= 1000 || abs < 0.01 ? v.toExponential(1) : String(Math.round(v * 100) / 100);
 };
 
-export interface Surface3dOptions {
+/**
+ * Color: one surface takes the gradient by height; several take one discrete color each,
+ * shaded by height into the page background.
+ */
+export interface Surface3dOptions extends ColorOptions {
   width?: number;
   height?: number;
   /** Sample coordinates along each axis (length nx / ny); default 0…1. */
@@ -56,7 +53,7 @@ export interface Surface3dOptions {
    * its (x, y, z). */
   hover?: readonly [number, number];
   /** A fill per face, given its cell and normalised mean height; default the
-   * height-shaded accent. */
+   * height gradient (a lone surface) or each surface's shaded color. */
   fill?: (face: { i: number; j: number; t: number; surface: number }) => string;
   /** Width of the mesh lines between faces (default 0.5); a dense grid wants less. */
   edgeWidth?: number;
@@ -138,8 +135,8 @@ const EMPTY = (W: number, H: number): SurfaceScene => ({
 });
 
 /**
- * Render a height grid as an oblique-projected surface. Quads are filled with a
- * height-shaded accent and drawn back-to-front so nearer cells overlay farther
+ * Render a height grid as an oblique-projected surface. Quads are filled along the
+ * height gradient and drawn back-to-front so nearer cells overlay farther
  * ones. Cells touching a non-finite sample are skipped (a hole in the surface).
  */
 export function surfaceSvg(grid: Grid, opts: Surface3dOptions = {}): string {
@@ -147,7 +144,7 @@ export function surfaceSvg(grid: Grid, opts: Surface3dOptions = {}): string {
 }
 
 /** As `surfaceSvg`, but paints several grids on a shared z-scale, each in its
- * own colour, with cells depth-sorted across all surfaces so they interleave
+ * own color, with cells depth-sorted across all surfaces so they interleave
  * correctly. All grids must share the sample coordinates (`xs` / `ys`). */
 export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {}): string {
   return surfaceSceneSvg(surfaceScene(grids, opts));
@@ -273,8 +270,16 @@ export function surfaceScene(grids: readonly Grid[], opts: Surface3dOptions = {}
   }
   const order = Uint32Array.from(faceAt.keys()).toSorted((p, q) => depth[p] - depth[q]);
 
+  // A lone surface is a height field: its color is the gradient. Several are told apart by
+  // color, so each keeps its own, washed toward the page by its lower faces.
+  const palette = plotPalette(opts);
+  const surfaceColors = categoryColors(palette, grids.length);
   const shade = (base: string, t: number): string => `color-mix(in srgb, ${base} ${n2(22 + 60 * t)}%, ${BG})`;
-  const fill = opts.fill ?? ((c) => shade(SURF[c.surface % SURF.length], c.t));
+  const fill =
+    opts.fill ??
+    (grids.length === 1
+      ? (c: { t: number }) => rampColor(palette, c.t)
+      : (c: { surface: number; t: number }) => shade(surfaceColors[c.surface]!, c.t));
   const count = order.length;
   const corners = new Float64Array(count * 8);
   const fills: string[] = [];
@@ -302,7 +307,7 @@ export function surfaceScene(grids: readonly Grid[], opts: Surface3dOptions = {}
     });
   }
 
-  // A height color-scale key: swatches matching the surface shading, from zmax
+  // A height color-scale key: swatches matching the surface colors, from zmax
   // (top) down to zmin, labelled with the raw z range.
   let legend: SurfaceScene["legend"];
   if (opts.colorLegend) {
@@ -319,7 +324,7 @@ export function surfaceScene(grids: readonly Grid[], opts: Surface3dOptions = {}
       swatches: Array.from({ length: steps }, (_, k) => ({
         y: top + (bh * k) / steps,
         h: bh / steps + 0.5,
-        fill: shade(ACCENT, 1 - k / steps),
+        fill: grids.length === 1 ? rampColor(palette, 1 - k / steps) : shade(surfaceColors[0]!, 1 - k / steps),
       })),
       labels: [
         { y: top + 4, text: label(Z.inv(zmax)) },
@@ -435,7 +440,7 @@ export function surfaceSceneSvg(scene: SurfaceScene): string {
   return frame(axesSvg + surface + legend + titleSvg + readout);
 }
 
-/** Concrete colours for a canvas, which cannot read CSS variables. */
+/** Concrete colors for a canvas, which cannot read CSS variables. */
 export interface SurfacePaint {
   readonly fg: string;
   readonly bg: string;
@@ -447,8 +452,8 @@ export interface SurfacePaint {
  * Paint the scene on a 2-D canvas, in the scene's own units -- the caller scales the
  * context for the canvas size and the device pixel ratio. Twenty-five thousand faces as
  * DOM polygons is a second of parsing and layout on every turn of the view; as canvas
- * fills it is a few milliseconds. Face fills must be concrete colours here: the default
- * accent shading is a `color-mix` over CSS variables and will not paint.
+ * fills it is a few milliseconds. Face fills must be concrete colors here: the shading of several
+ * surfaces is a `color-mix` over CSS variables and will not paint.
  */
 export function drawSurfaceScene(ctx: CanvasRenderingContext2D, scene: SurfaceScene, paint: SurfacePaint): void {
   const { width: W, height: H } = scene;
@@ -554,6 +559,7 @@ export function drawSurfaceScene(ctx: CanvasRenderingContext2D, scene: SurfaceSc
 export type Triple = readonly [number, number, number];
 
 export interface Curve3dOptions extends Surface3dOptions {
+  // `gradient` colors the curve along its parameter (default `sinebow`).
   /** Stroke width of the curve itself, in viewBox units. */
   stroke?: number;
   /** Close the curve back to its first point (a knot is a loop). */
@@ -590,7 +596,7 @@ function bounds(points: readonly Triple[]): [number, number][] {
  * Render a parametric curve in space.
  *
  * Segments are drawn back to front, each one laid down twice: a thick stroke in the
- * background colour, then the curve itself. That casing is what makes a crossing read
+ * background color, then the curve itself. That casing is what makes a crossing read
  * as a crossing — the nearer strand erases the farther one where they meet, which is
  * exactly the over/under information a knot diagram is *for*. Without it a knot is an
  * unreadable tangle of lines.
@@ -617,6 +623,8 @@ export function curve3dSvg(points: readonly Triple[], opts: Curve3dOptions = {})
     (p[2] - mid[2]) / span + 0.5,
   ];
 
+  // A knot is a loop, so the default is a cyclic gradient: no seam where it closes.
+  const palette = plotPalette(opts, "sinebow");
   const project = projector(W, H, opts.azimuth ?? 45, opts.elevation ?? 15, opts.zoom ?? 1);
   const screen = loop.map((p) => {
     const u = unit(p);
@@ -697,10 +705,9 @@ export function curve3dSvg(points: readonly Triple[], opts: Curve3dOptions = {})
         `<path d="${path(inset)}" stroke="var(--notatio-bg, #fff)" stroke-width="${(stroke * 3).toFixed(2)}" stroke-linecap="butt" stroke-linejoin="round" fill="none"/>`,
       );
     }
-    // Hue runs along the parameter, so you can follow a strand through a crossing.
-    const hue = Math.round(run.t * 300);
+    // Color runs along the parameter, so you can follow a strand through a crossing.
     parts.push(
-      `<path d="${path(run.pts)}" stroke="hsl(${hue} 70% 45%)" stroke-width="${stroke.toFixed(2)}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+      `<path d="${path(run.pts)}" stroke="${rampColor(palette, run.t)}" stroke-width="${stroke.toFixed(2)}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
     );
   }
   if (opts.marker !== undefined && Number.isFinite(opts.marker)) {

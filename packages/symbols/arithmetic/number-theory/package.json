@@ -6,6 +6,7 @@
   "license": "WTFPL",
   "files": [
     "dist",
+    "docs",
     "reference"
   ],
   "type": "module",
@@ -17,6 +18,10 @@
     "./notation": {
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
+    },
+    "./lattice": {
+      "types": "./dist/lattice.d.mts",
+      "import": "./dist/lattice.mjs"
     },
     "./declares.json": "./dist/declares.json",
     "./package.json": "./package.json"

@@ -44,6 +44,8 @@ function toMatrix(data: unknown): number[][] | undefined {
  * The view is fixed by `azimuth` / `elevation` (no interaction), keeping the
  * whole pipeline a pure function of the attributes -- it renders identically
  * under SSR and in the browser.
+ *
+ * Height is colored on the `gradient` (default `viridis`; `reverse` runs it the other way).
  */
 export class NotatioListPlot3D extends LitElement {
   static properties = {
@@ -59,6 +61,10 @@ export class NotatioListPlot3D extends LitElement {
     axes: { type: String },
     zrange: { type: String },
     label: { type: String },
+    /** The gradient the points or cells take by height (`viridis`, `magma`, `turbo`, …). */
+    gradient: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     _svg: { state: true },
   };
 
@@ -74,6 +80,8 @@ export class NotatioListPlot3D extends LitElement {
   declare axes: string;
   declare zrange: string;
   declare label: string;
+  declare gradient: string;
+  declare reverse: boolean;
   declare _svg: string;
 
   constructor() {
@@ -90,6 +98,8 @@ export class NotatioListPlot3D extends LitElement {
     this.axes = "true";
     this.zrange = "";
     this.label = "";
+    this.gradient = "viridis";
+    this.reverse = false;
     this._svg = "";
     ensureStyles();
   }
@@ -111,7 +121,9 @@ export class NotatioListPlot3D extends LitElement {
       changed.has("wireframe") ||
       changed.has("axes") ||
       changed.has("zrange") ||
-      changed.has("label")
+      changed.has("label") ||
+      changed.has("gradient") ||
+      changed.has("reverse")
     ) {
       this.#recompute();
     }
@@ -130,6 +142,8 @@ export class NotatioListPlot3D extends LitElement {
       axes: this.axes !== "false",
       zRange: this.#zRange(),
       title: this.label || undefined,
+      gradient: this.gradient,
+      reverse: this.reverse,
     };
     const parsed = parseJson(this.data);
     const points = toPoints(parsed);

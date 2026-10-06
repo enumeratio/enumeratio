@@ -9,7 +9,7 @@ signatures:
   - call: Divisors(n, Over -> GaussianIntegers)
     description: the first-quadrant divisors in $\mathbb{Z}[i]$, by real part then imaginary
     library: enumeratio-number-theory
-    type: (number, any*) -> list
+    type: (number | quadratic_integer, any*) -> list
     overrides: compute-engine
 seeAlso:
   - FactorInteger

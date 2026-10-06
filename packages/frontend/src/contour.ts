@@ -6,12 +6,10 @@
 // row-major convention as plot3d.ts's height grids.
 
 import { niceTicks } from "./plot.ts";
+import { type ColorOptions, plotPalette, rampColor } from "./plot-color.ts";
 
-const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
 const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
-// Same ramp base as chart.ts's ArrayPlot heatmap, for filled bands.
-const RAMP_LO = "var(--notatio-series-2, #2f7ed8)";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
@@ -183,7 +181,8 @@ export function autoLevels(min: number, max: number, count = 8): number[] {
   return Array.from({ length: n }, (_, k) => min + step * (k + 1));
 }
 
-export interface ContourOptions {
+/** Color: filled bands and iso-lines take the gradient by level (`viridis` unless told otherwise). */
+export interface ContourOptions extends ColorOptions {
   width?: number;
   height?: number;
   /** Draw the axis frame with range labels (default true). */
@@ -192,7 +191,7 @@ export interface ContourOptions {
   levels?: readonly number[];
   /** Auto level count, used when `levels` isn't given (default 8). */
   count?: number;
-  /** Shade the bands between levels with a sequential ramp (default: line contours). */
+  /** Shade the bands between levels along the gradient (default: line contours). */
   filled?: boolean;
   xLabel?: string;
   yLabel?: string;
@@ -246,11 +245,11 @@ export function contourSvg(
   const sx = (x: number): number => mL + ((x - xlo) / (xhi - xlo || 1)) * plotW;
   const syT = (y: number): number => mT + ((yhi - y) / (yhi - ylo || 1)) * plotH;
 
+  const palette = plotPalette(opts);
   let bands = "";
   if (opts.filled && zmax > zmin) {
     const numBands = levels.length + 1;
-    const ramp = (t: number): string =>
-      `color-mix(in srgb, ${ACCENT} ${n2(Math.max(0, Math.min(1, t)) * 100)}%, ${RAMP_LO})`;
+    const ramp = (t: number): string => rampColor(palette, t);
     const cw = plotW / (nx - 1);
     const ch = plotH / (ny - 1);
     for (let j = 0; j < ny - 1; j++) {
@@ -275,7 +274,7 @@ export function contourSvg(
       const segs = marchingSquares(grid, xs.slice(0, nx), ys.slice(0, ny), lv);
       if (segs.length === 0) continue;
       const d = segs.map(([a, b]) => `M${n2(sx(a.x))},${n2(syT(a.y))} L${n2(sx(b.x))},${n2(syT(b.y))}`).join(" ");
-      lines += `<path d="${d}" fill="none" stroke="${ACCENT}" stroke-width="1.3" stroke-linecap="round" opacity="0.85"/>`;
+      lines += `<path d="${d}" fill="none" stroke="${rampColor(palette, (lv - zmin) / (zmax - zmin || 1))}" stroke-width="1.3" stroke-linecap="round" opacity="0.85"/>`;
     }
   }
 

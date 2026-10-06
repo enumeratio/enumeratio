@@ -1,13 +1,13 @@
 // Pure density-plot geometry: a sampled grid in, a heatmap SVG out. Shares
 // contour.ts's `grid[j][i]` row-major convention (z at the i-th x, j-th y
-// sample) so the two can be driven from the same sampling code. Colours come
-// from a sequential ramp between two theme custom properties, so the plot
-// reads correctly in light and dark.
+// sample) so the two can be driven from the same sampling code. Cells take their color
+// from the palette's gradient (`viridis` unless told otherwise).
 
-const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
+import { type ColorOptions, gradientOf } from "./plot-color.ts";
+import { type Gradient, sampleGradient } from "./palettes.ts";
+
 const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
-const RAMP_LO = "var(--notatio-series-2, #2f7ed8)";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
@@ -32,19 +32,19 @@ export function normalize(v: number, min: number, max: number): number {
   return Math.max(0, Math.min(1, (v - min) / (max - min)));
 }
 
-/** The sequential ramp: cool at t = 0, accent at t = 1. */
-export function densityColor(t: number): string {
-  return `color-mix(in srgb, ${ACCENT} ${n2(Math.max(0, Math.min(1, t)) * 100)}%, ${RAMP_LO})`;
+/** The color at position `t` in [0, 1] on a gradient (default `viridis`). */
+export function densityColor(t: number, gradient: Gradient = gradientOf()): string {
+  return sampleGradient(gradient, t);
 }
 
-export interface DensityOptions {
+export interface DensityOptions extends ColorOptions {
   width?: number;
   height?: number;
   /** Draw the axis frame with range labels (default true). */
   axes?: boolean;
-  /** Draw a vertical colour bar with min/max labels (default false). */
+  /** Draw a vertical color bar with min/max labels (default false). */
   legend?: boolean;
-  /** Explicit colour-scale bounds; otherwise the sampled min/max. */
+  /** Explicit color-scale bounds; otherwise the sampled min/max. */
   zRange?: readonly [number, number];
   xLabel?: string;
   yLabel?: string;
@@ -88,6 +88,7 @@ export function densitySvg(
   const zmin = opts.zRange ? opts.zRange[0] : Math.min(...flat);
   const zmax = opts.zRange ? opts.zRange[1] : Math.max(...flat);
 
+  const gradient = gradientOf(opts);
   const plotW = W - mL - mR;
   const plotH = H - mT - mB;
   const cw = plotW / nx;
@@ -105,7 +106,7 @@ export function densitySvg(
       if (!Number.isFinite(t)) continue;
       const x = mL + (xUp ? i : nx - 1 - i) * cw;
       const y = mT + (yUp ? ny - 1 - j : j) * ch;
-      cells += `<rect x="${n2(x)}" y="${n2(y)}" width="${n2(cw + 0.4)}" height="${n2(ch + 0.4)}" fill="${densityColor(t)}"/>`;
+      cells += `<rect x="${n2(x)}" y="${n2(y)}" width="${n2(cw + 0.4)}" height="${n2(ch + 0.4)}" fill="${densityColor(t, gradient)}"/>`;
     }
   }
 
@@ -130,8 +131,8 @@ export function densitySvg(
       chrome += `<text x="${n2(mL + 4)}" y="${n2(mT + 10)}" text-anchor="start" font-size="10" font-style="italic" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.75">${esc(opts.yLabel)}</text>`;
   }
 
-  // A discrete colour bar (16 bands) -- gradients need a defs id and add
-  // nothing here, where the ramp is already quantised by the cell grid.
+  // A color bar of 16 bands -- a gradient needs a defs id and adds nothing here,
+  // where the color is already quantised by the cell grid.
   if (opts.legend) {
     const bx = mL + plotW + 8;
     const bw = 10;
@@ -139,7 +140,7 @@ export function densitySvg(
     const bh = plotH / bands;
     for (let k = 0; k < bands; k++) {
       const t = (bands - 1 - k) / (bands - 1);
-      chrome += `<rect x="${n2(bx)}" y="${n2(mT + k * bh)}" width="${bw}" height="${n2(bh + 0.4)}" fill="${densityColor(t)}"/>`;
+      chrome += `<rect x="${n2(bx)}" y="${n2(mT + k * bh)}" width="${bw}" height="${n2(bh + 0.4)}" fill="${densityColor(t, gradient)}"/>`;
     }
     chrome += `<rect x="${n2(bx)}" y="${n2(mT)}" width="${bw}" height="${n2(plotH)}" fill="none" stroke="${AXIS}" stroke-width="1" opacity="0.5"/>`;
     const t = (x: number, y: number, s: string): string =>

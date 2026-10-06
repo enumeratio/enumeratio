@@ -84,6 +84,14 @@ export const NUMBER_THEORY_CARRIERS: readonly Carrier[] = [
     id: "pythagorean_triple",
     plural: "PythagoreanTriples",
   },
+  // No plural: QuadraticIntegers is a function of d, declared in declare.ts, not a set symbol.
+  {
+    name: "QuadraticInteger",
+    type: "quadratic_integer",
+    shape: "tuple<integer, integer, integer>",
+    id: "quadratic_integer",
+    carrierParams: 1,
+  },
   {
     name: "SquareDecomposition",
     type: "square_decomposition",

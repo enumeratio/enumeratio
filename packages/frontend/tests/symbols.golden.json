@@ -973,6 +973,82 @@
     },
     "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" label=\"sine\" grid=\"true\"></notatio-plot>"
   },
+  "Plot(Sin(x), (x, 0, 10), ColorFunction -> \"y\")": {
+    "rendering": {
+      "tag": "notatio-plot",
+      "attributes": {
+        "value": "sin(x)",
+        "var": "x",
+        "domain": "0,10",
+        "color-by": "y"
+      }
+    },
+    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" color-by=\"y\"></notatio-plot>"
+  },
+  "Plot(Sin(x), (x, 0, 10), ColorFunction -> \"Magma\", Reverse -> True)": {
+    "rendering": {
+      "tag": "notatio-plot",
+      "attributes": {
+        "value": "sin(x)",
+        "var": "x",
+        "domain": "0,10",
+        "color-by": "x",
+        "gradient": "magma",
+        "reverse": "true"
+      }
+    },
+    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" color-by=\"x\" gradient=\"magma\" reverse=\"true\"></notatio-plot>"
+  },
+  "Plot([Sin(x), Cos(x)], (x, 0, 10), Discrete -> \"set1\")": {
+    "rendering": {
+      "tag": "notatio-plot",
+      "attributes": {
+        "value": "[sin(x), cos(x)]",
+        "var": "x",
+        "domain": "0,10",
+        "discrete": "set1"
+      }
+    },
+    "markup": "<notatio-plot value=\"[sin(x), cos(x)]\" var=\"x\" domain=\"0,10\" discrete=\"set1\"></notatio-plot>"
+  },
+  "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> ColorData(\"Turbo\"))": {
+    "rendering": {
+      "tag": "notatio-density-plot",
+      "attributes": {
+        "expr": "sin(x) * cos(y)",
+        "xvar": "x",
+        "xrange": "0,6",
+        "yvar": "y",
+        "yrange": "0,6",
+        "gradient": "turbo"
+      }
+    },
+    "markup": "<notatio-density-plot expr=\"sin(x) * cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\" gradient=\"turbo\"></notatio-density-plot>"
+  },
+  "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> \"Rainbow\")": {
+    "rendering": {
+      "tag": "notatio-density-plot",
+      "attributes": {
+        "expr": "sin(x) * cos(y)",
+        "xvar": "x",
+        "xrange": "0,6",
+        "yvar": "y",
+        "yrange": "0,6"
+      }
+    },
+    "markup": "<notatio-density-plot expr=\"sin(x) * cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\"></notatio-density-plot>"
+  },
+  "ArrayPlot([[1, 0], [0, 2]], ColorFunction -> \"cividis\")": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "array",
+        "data": "[[1,0],[0,2]]",
+        "gradient": "cividis"
+      }
+    },
+    "markup": "<notatio-chart type=\"array\" data=\"[[1,0],[0,2]]\" gradient=\"cividis\"></notatio-chart>"
+  },
   "Slider(k, (0, 5), Appearance -> \"Labeled\")": {
     "rendering": {
       "tag": "notatio-dynamic-module",

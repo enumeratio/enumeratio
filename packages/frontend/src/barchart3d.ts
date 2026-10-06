@@ -13,9 +13,9 @@ import {
   titleSvg,
   unitScale,
 } from "./project3d.ts";
+import { type Gradient, sampleGradient } from "./palettes.ts";
+import { type ColorOptions, gradientOf } from "./plot-color.ts";
 
-const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
-const BG = "var(--notatio-bg, var(--vp-c-bg, #ffffff))";
 const EDGE = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
 
@@ -26,16 +26,17 @@ const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;"
 type Matrix = readonly (readonly number[])[];
 
 /**
- * Face shading: the accent mixed into the background by height, then darkened
- * for the sides so the three visible faces of a bar read as distinct without
- * needing a light model. `face` is 1 for the top, lower for a side.
+ * Face shading: the gradient's color at height `t`, darkened toward black for the sides
+ * so the three visible faces of a bar read as distinct without needing a light model.
+ * `face` is 1 for the top, lower for a side.
  */
-export function barShade(t: number, face: number): string {
-  const k = Math.max(0, Math.min(1, Number.isFinite(t) ? t : 0));
-  return `color-mix(in srgb, ${ACCENT} ${n2((24 + 58 * k) * face)}%, ${BG})`;
+export function barShade(t: number, face: number, gradient: Gradient = gradientOf()): string {
+  const top = sampleGradient(gradient, Number.isFinite(t) ? t : 0);
+  return face >= 1 ? top : `color-mix(in srgb, ${top} ${n2(face * 100)}%, black)`;
 }
 
-export interface BarChart3dOptions extends CameraOptions {
+/** Color: bars take the gradient by height (`viridis` unless told otherwise). */
+export interface BarChart3dOptions extends CameraOptions, ColorOptions {
   /** Draw the projected axis box behind the bars (default true). */
   axes?: boolean;
   /** Gap between neighbouring bars, as a fraction of a cell (0…0.9, default 0.2). */
@@ -78,6 +79,7 @@ export function barChart3dSvg(matrix: Matrix, opts: BarChart3dOptions = {}): str
   const zhi = opts.zRange ? opts.zRange[1] : Math.max(...flat);
   const sz = unitScale(zlo, zhi === zlo ? zlo + 1 : zhi);
 
+  const gradient = gradientOf(opts);
   const gap = Math.max(0, Math.min(0.9, opts.gap ?? 0.2));
   const cw = 1 / nx;
   const ch = 1 / ny;
@@ -128,8 +130,9 @@ export function barChart3dSvg(matrix: Matrix, opts: BarChart3dOptions = {}): str
 
       const barDepth = centreDepth(lo);
       // Sides first, top last: the top can never be occluded by its own bar.
-      for (const s of visible) faces.push({ depth: barDepth - 0.001, points: poly(s), fill: barShade(t, 0.72) });
-      faces.push({ depth: barDepth, points: poly(hi), fill: barShade(t, 1) });
+      for (const s of visible)
+        faces.push({ depth: barDepth - 0.001, points: poly(s), fill: barShade(t, 0.72, gradient) });
+      faces.push({ depth: barDepth, points: poly(hi), fill: barShade(t, 1, gradient) });
     }
   }
   faces.sort((a, b) => a.depth - b.depth);

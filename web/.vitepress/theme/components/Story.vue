@@ -8,9 +8,13 @@
 // back out as markup -- so the components are authored once and the source cannot
 // drift from what is rendered. Bound props print as their values.
 import { Comment, computed, Fragment, getCurrentInstance, ref, Text, type VNode, useSlots } from "vue";
+import { useFullWindow } from "../composables/useFullWindow.ts";
+import FullWindowButton from "./FullWindowButton.vue";
 
 const props = defineProps<{ title?: string; id?: string }>();
 const slots = useSlots();
+const root = ref<HTMLElement | null>(null);
+const fullWindow = useFullWindow(root);
 // The theme's registered components, so a globally registered (async-wrapped) one prints
 // under the name the author wrote rather than the wrapper's.
 const registered = getCurrentInstance()?.appContext.components ?? {};
@@ -120,7 +124,14 @@ const live = computed((): string => {
 </script>
 
 <template>
-  <div class="story" :id="slug || undefined">
+  <div
+    ref="root"
+    class="story"
+    :class="{ 'is-full-window': fullWindow.active.value }"
+    :style="fullWindow.style.value"
+    :id="slug || undefined"
+  >
+    <FullWindowButton :active="fullWindow.active.value" :label="fullWindow.label.value" @toggle="fullWindow.toggle" />
     <div v-if="title || $slots.description" class="story-head">
       <h3 v-if="title" class="story-title">
         <a v-if="slug" :href="`#${slug}`" class="story-anchor" aria-hidden="true">#</a>{{ title }}
@@ -155,6 +166,7 @@ const live = computed((): string => {
 
 <style scoped>
 .story {
+  position: relative;
   margin: 1.25rem 0;
   border: 1px solid var(--vp-c-divider);
   border-radius: 10px;
@@ -162,7 +174,7 @@ const live = computed((): string => {
   background: var(--vp-c-bg);
 }
 .story-head {
-  padding: 0.7rem 1rem 0;
+  padding: 0.7rem 2.5rem 0 1rem;
 }
 .story-title {
   margin: 0;
@@ -265,5 +277,29 @@ const live = computed((): string => {
   font-family: var(--vp-font-family-mono);
   font-size: 0.8rem;
   color: var(--vp-c-text-1);
+}
+/* Full window: the canvas covers the browser window; its content fills it. */
+.story.is-full-window .story-head,
+.story.is-full-window .story-code {
+  display: none;
+}
+.story.is-full-window .story-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--vp-z-index-sidebar) + 10);
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  overflow: auto;
+  background: var(--vp-c-bg);
+}
+.story.is-full-window .story-canvas > :deep(*),
+.story.is-full-window .story-live > :deep(*) {
+  flex: 1 1 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 </style>

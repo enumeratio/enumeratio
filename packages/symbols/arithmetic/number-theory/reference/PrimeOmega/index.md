@@ -9,7 +9,7 @@ signatures:
   - call: PrimeOmega(n)
     description: The number of prime factors of n, counted with multiplicity.
     library: enumeratio-number-theory
-    type: (number, any*) -> integer
+    type: (number | quadratic_integer, any*) -> integer
     overrides: compute-engine
 seeAlso:
   - PrimeNu

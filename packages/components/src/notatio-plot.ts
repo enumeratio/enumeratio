@@ -44,6 +44,10 @@ const log = debug("plot");
  * re-sample live, e.g. `params="{a, 1, 5}; {b, 0, 6.28}"` over
  * `value="Sin(_a * x + _b)"`. The bare symbol left after the slots are filled is
  * the plot variable.
+ *
+ * Color is explicit. Each series takes one color of the `discrete` scheme (default
+ * `tableau10`); `color-by` instead colors a curve along `x` or `y` on the `gradient`
+ * (default `viridis`), reversed by `reverse`. Axes and text follow the page theme.
  */
 export class NotatioPlot extends LitElement {
   static properties = {
@@ -85,8 +89,14 @@ export class NotatioPlot extends LitElement {
     yLabel: { type: String, attribute: "y-label" },
     /** Caption drawn above the plot. */
     label: { type: String },
-    /** `x` or `y` colours the curve along that coordinate rather than by series. */
+    /** `x` or `y` colors the curve along that coordinate, on `gradient`, rather than by series. */
     colorBy: { type: String, attribute: "color-by" },
+    /** The gradient `color-by` colors along (`viridis`, `magma`, `turbo`, …; see `palettes.ts`). */
+    gradient: { type: String },
+    /** The discrete scheme that colors the series, one color each: `tableau10`, `set1`, `glasbey`, …. */
+    discrete: { type: String },
+    /** Run the gradient from its last color to its first. */
+    reverse: { type: Boolean },
     /** Manipulate-style controls, e.g. `{a, 1, 5}`, filling the `_a` wildcards in `value`. */
     params: { type: String },
     bindings: { attribute: false },
@@ -117,6 +127,9 @@ export class NotatioPlot extends LitElement {
   declare yLabel: string;
   declare label: string;
   declare colorBy: string;
+  declare gradient: string;
+  declare discrete: string;
+  declare reverse: boolean;
   declare params: string;
   /** Wildcard values (`_a` → 2) from a surrounding Manipulate: sampled into the same code. */
   declare bindings: Record<string, number> | undefined;
@@ -173,6 +186,9 @@ export class NotatioPlot extends LitElement {
     this.yLabel = "";
     this.label = "";
     this.colorBy = "";
+    this.gradient = "viridis";
+    this.discrete = "tableau10";
+    this.reverse = false;
     this.params = "";
     this.loop = "";
     this._svg = "";
@@ -212,7 +228,10 @@ export class NotatioPlot extends LitElement {
       changed.has("xLabel") ||
       changed.has("yLabel") ||
       changed.has("label") ||
-      changed.has("colorBy")
+      changed.has("colorBy") ||
+      changed.has("gradient") ||
+      changed.has("discrete") ||
+      changed.has("reverse")
     ) {
       // These only affect drawing, not the sampled data.
       this.#draw();
@@ -285,6 +304,9 @@ export class NotatioPlot extends LitElement {
       yLabel: this.yLabel || undefined,
       title: this.label || undefined,
       colorBy: this.colorBy === "x" ? "x" : this.colorBy === "y" ? "y" : undefined,
+      gradient: this.gradient,
+      discrete: this.discrete,
+      reverse: this.reverse,
       epilog: this.#marks(this.epilog),
       prolog: this.#marks(this.prolog),
     });
