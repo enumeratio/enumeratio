@@ -1,2 +1,4 @@
 id	section	role	expr	expected
 the-first-4-terms		test	[Take, GiugaNumbers, 4]	[List, 30, 858, 1722, 66198]
+at-reads-the-table		test	[At, GiugaNumbers, 2]	858
+at-past-the-table-stays-unevaluated		test	[At, GiugaNumbers, 10]	[At, GiugaNumbers, 10]
