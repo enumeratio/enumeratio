@@ -12,7 +12,7 @@
 //   UPDATE_LOGGAMMA_GOLDEN=1 node scripts/collect-loggamma-goldens.ts
 
 import { writeFileSync } from "node:fs";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "@enumeratio/utils/bounded";
 
 if (process.env.UPDATE_LOGGAMMA_GOLDEN !== "1") {
   console.error("refusing to rewrite the golden without UPDATE_LOGGAMMA_GOLDEN=1");

@@ -13,7 +13,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { type Bounds, memoryCapMb, runBounded } from "./bounded.ts";
+import { type Bounds, memoryCapMb, runBounded } from "@enumeratio/utils/bounded";
 import type { System } from "./systems.ts";
 /** Sources per kernel process. */
 const BATCH = 40;

@@ -1,7 +1,11 @@
 # @enumeratio/utils
 
-Home of the repo-wide guard tests. Nothing imports it yet: `src/` still holds only the
-starter's placeholder export, kept so `vp pack` has an entry.
+Home of the repo-wide guard tests, and a leaf of small Node helpers the tooling packages (and
+the golden-collecting scripts of libraries) share without reaching into each other's source.
+
+- `./bounded` (`src/bounded.ts`): `runBounded`/`runKernel`/`KernelKilled`/`memoryCapMb`/
+  `groupRssMb`: run an external kernel under a resident-memory ceiling, since macOS has no
+  per-process cap.
 
 - `tests/no-snapshots.test.ts`: no test under `packages/` calls `toMatchSnapshot` or
   `toMatchInlineSnapshot`. Tests assert against committed golden JSON instead, regenerated

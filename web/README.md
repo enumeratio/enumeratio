@@ -8,5 +8,5 @@ benchmark and review pages.
 vp run dev   # from the repo root; serves this site
 ```
 
-Merges to `main` deploy to GitHub Pages (`.github/workflows/pages.yml`; `public/CNAME` names the
-domain), and every build also gets a Cloudflare Pages preview — see AGENTS.md, "CI and deployment".
+Merges to `main` deploy to Cloudflare Pages, and every build also gets a preview there — see AGENTS.md,
+"CI and deployment".

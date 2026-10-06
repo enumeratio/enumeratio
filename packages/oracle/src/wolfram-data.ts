@@ -5,7 +5,7 @@
 // entity, and expressions come back as held FullForm, never evaluated, so an example's input is
 // what the documentation typed.
 
-import { runBounded } from "./bounded.ts";
+import { runBounded } from "@enumeratio/utils/bounded";
 
 export type WolframDataSource = "language" | "function" | "relation" | "formula";
 

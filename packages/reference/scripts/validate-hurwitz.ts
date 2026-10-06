@@ -10,7 +10,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { applyAllPatches } from "@enumeratio/ce-patches";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "@enumeratio/utils/bounded";
 
 const ce = new ComputeEngine();
 applyAllPatches(ce);

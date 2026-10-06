@@ -11,7 +11,7 @@
 //   node packages/reference/scripts/collect-wolfram-vocabulary.ts
 
 import { writeFileSync } from "node:fs";
-import { runKernel } from "@enumeratio/oracle/bounded";
+import { runKernel } from "@enumeratio/utils/bounded";
 
 const code = [
   'names = Names["System`*"];',

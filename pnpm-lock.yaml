@@ -160,6 +160,9 @@ importers:
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../oracle
+      '@enumeratio/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.148.0
@@ -333,6 +336,9 @@ importers:
       '@enumeratio/reference':
         specifier: workspace:*
         version: link:../reference
+      '@enumeratio/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@enumeratio/wolfram':
         specifier: workspace:*
         version: link:../wolfram
@@ -690,6 +696,9 @@ importers:
 
   packages/oracle:
     dependencies:
+      '@enumeratio/utils':
+        specifier: workspace:*
+        version: link:../utils
       '@enumeratio/wolfram':
         specifier: workspace:*
         version: link:../wolfram
@@ -833,6 +842,9 @@ importers:
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../oracle
+      '@enumeratio/utils':
+        specifier: workspace:*
+        version: link:../utils
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.148.0
@@ -1198,6 +1210,9 @@ importers:
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../../../structures
+      '@enumeratio/utils':
+        specifier: workspace:*
+        version: link:../../../utils
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -1297,6 +1312,9 @@ importers:
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../../../manifest
+      '@enumeratio/utils':
+        specifier: workspace:*
+        version: link:../../../utils
       typescript:
         specifier: ^7.0.2
         version: 7.0.2

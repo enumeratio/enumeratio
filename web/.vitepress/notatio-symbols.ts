@@ -38,8 +38,13 @@ function markSymbols(state: CoreState): void {
   for (const token of state.tokens) {
     const children = (token as unknown as { children?: Token[] }).children;
     if (!children) continue;
+    // A code span already inside a link stays code: a nested <a> is split by the HTML parser, so the
+    // server's DOM no longer matches the client's vdom and the page fails to hydrate.
+    let inLink = 0;
     for (const child of children) {
-      if (child.type !== "code_inline") continue;
+      if (child.type === "link_open") inLink++;
+      else if (child.type === "link_close") inLink--;
+      if (inLink > 0 || child.type !== "code_inline") continue;
       if (!LINKABLE.has(child.content.trim())) continue;
       child.type = "notatio_symbol";
     }

@@ -18,10 +18,7 @@ emitter reuses.
   `interpretSymbolicAgreement` (does a symbolic difference vanish, for `wolfram`/`sympy`/
   `sage`), `DIVERGENCE_KINDS`/`Divergence` (the classification an unresolved disagreement
   needs before a scan can pass).
-- **`./bounded` (`src/bounded.ts`)** — `runBounded`/`runKernel`/`KernelKilled`/`memoryCapMb`:
-  run an external kernel under a resident-memory ceiling, since macOS has no per-process cap.
-  A separate entry so a caller that only needs the watchdog doesn't pull in the mapping
-  tables.
+- **`runBounded`/`runKernel`** — re-exported from `@enumeratio/utils/bounded`, where the memory watchdog lives so libraries' golden scripts can use it without an edge to oracle.
 - **`julia/`, `oscar/`, `lean/`, `python/`, `rust/`** — each wired system's project files
   (`Project.toml`/`Manifest.toml`, `lakefile.toml`, `requirements.txt`, `Cargo.toml`) and, for
   Rust, the batch-runner source. `kernels.json` pins the exact external version a scan ran
@@ -39,7 +36,7 @@ node packages/oracle/scripts/setup.ts julia      # just one
 ```
 
 Installs are the heaviest thing the oracles do (Oscar precompiles dozens of packages,
-mathlib's cache unpacks gigabytes) and never run in parallel — see `bounded.ts` and
+mathlib's cache unpacks gigabytes) and never run in parallel — see `utils/src/bounded.ts` and
 `ORACLE_MEMORY_MB` for the watchdog's ceiling.
 
 Running an actual scan is [`reference`](../reference/README.md)'s `scripts/oracle-scan.ts`, not anything
