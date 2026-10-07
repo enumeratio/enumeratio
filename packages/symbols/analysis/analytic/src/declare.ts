@@ -1,12 +1,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
 import { threadOverLists, widenSignature, wrapOperator } from "@enumeratio/engine";
-import {
-  applyNativeHeadPatches,
-  applyPatch,
-  lerchPhiPatch,
-  valuesAtZero,
-} from "@enumeratio/ce-patches";
+import { applyNativeHeadPatches, applyPatch, lerchPhiPatch, valuesAtZero } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { ANALYTIC_NOTATION } from "./notation.ts";
 import { declareInverseOutsideDomain, declareWidened } from "./widened.ts";
