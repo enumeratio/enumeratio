@@ -185,6 +185,7 @@ export const GRAPHICS_OPTIONS: Readonly<Record<string, readonly string[]>> = {
   ],
   LatticeTiles: ["ColorRules", "ColorMixing", "BoundaryStyle"],
   ArrayPlot: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+  StrandDiagram: ["ColorRules", "ColorMixing", "BoundaryStyle"],
   Locator: ["LocatorAutoCreate", "Appearance"],
 };
 

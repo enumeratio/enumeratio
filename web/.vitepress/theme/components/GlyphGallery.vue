@@ -9,7 +9,7 @@ const families: Array<{
 }> = [
   {
     kind: "permutation",
-    title: "permutation — S₃ (matrix glyph: dot per row at image[i])",
+    title: "permutation — S₃ (strand diagram: i on the in row joined to image(i) on the out row)",
     items: [
       [1, 2, 3],
       [1, 3, 2],

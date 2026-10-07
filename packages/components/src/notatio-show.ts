@@ -15,10 +15,12 @@ import {
   drawTiles,
   type GestureHandling,
   edgeOf,
+  fitView,
   GRADIENTS,
   gestureHandlingOf,
   gradientCss,
   gradientNamed,
+  hitAt,
   latticeCoordinates,
   type LatticeView,
   type LineStyle,
@@ -31,6 +33,10 @@ import {
   rulesOf,
   type SchemeColor,
   splitOptions,
+  STRAND_DEFAULT_BOUNDARY_STYLE,
+  STRAND_DEFAULT_COLOR_RULES,
+  strandLayer,
+  strandModelOf,
   type TileLayer,
   type Vec2,
   wheelZooms,
@@ -65,6 +71,8 @@ const FRAME_BUDGET = 12;
 const INDEXED_SHOWN = 8;
 /** A locator's radius, in CSS pixels. */
 const LOCATOR_RADIUS = 7;
+/** How near (CSS px) a pointer must be to pick a figure's mark or link. */
+const HIT_REACH = 12;
 /** Pointer travel (CSS px) below which a press is a click, not a drag. */
 const SLOP = 4;
 const DEFAULT_GROUND = "dusk";
@@ -102,13 +110,15 @@ function bind(json: Json, params: ReadonlyMap<string, Json>): Json {
 interface ShowSpec {
   /** Draggable points, Wolfram's `Locator`: each one a variable's point, or its list of points. */
   readonly locators: readonly LocatorSpec[];
-  /** The tiled layer: `LatticeTiles(ring)` or `ArrayPlot(table)`, its data. */
-  readonly tiles?: { readonly head: "LatticeTiles" | "ArrayPlot"; readonly data: Json };
+  /** The tiled layer: `LatticeTiles(ring)`, `ArrayPlot(table)` or `StrandDiagram(diagram)`, its data. */
+  readonly tiles?: { readonly head: "LatticeTiles" | "ArrayPlot" | "StrandDiagram"; readonly data: Json };
   readonly colorRules: readonly ColorRule[];
   readonly boundaryRules: readonly BoundaryRule[];
   readonly colorMixing: ColorMixing;
   /** Rules whose test or style didn't read. */
   readonly unread: number;
+  /** The layer's own rules stand in for ones the author left out; the legend doesn't list them. */
+  readonly defaulted: { readonly colors: boolean; readonly edges: boolean };
   /** `auto`: `GridLines -> Automatic`, whose step is the layer's own grid when it has one. */
   readonly grid?: { readonly step: readonly [number, number]; readonly auto: boolean; readonly style: LineStyle };
   readonly axes?: { readonly style: LineStyle; readonly ticks: boolean };
@@ -211,6 +221,7 @@ function specOf(json: Json): ShowSpec {
   let boundaryRules: BoundaryRule[] = [];
   let colorMixing: ColorMixing = "First";
   let unread = 0;
+  let defaulted = { colors: false, edges: false };
   const locators: LocatorSpec[] = [];
   for (const layer of positional) {
     const head = headOf(layer);
@@ -227,11 +238,21 @@ function specOf(json: Json): ShowSpec {
       });
       continue;
     }
-    if (head !== "LatticeTiles" && head !== "ArrayPlot") continue;
+    if (head !== "LatticeTiles" && head !== "ArrayPlot" && head !== "StrandDiagram") continue;
     const split = splitOptions(layer, declared(head));
     tiles = { head, data: split.positional[0] };
-    const colors = rulesOf(split.options.get("ColorRules"), colorRuleOf);
-    const edges = rulesOf(split.options.get("BoundaryStyle"), boundaryRuleOf);
+    // A strand diagram has no look without rules: its own stand in for any the author leaves out.
+    const own = head === "StrandDiagram";
+    const [colorsGiven, edgesGiven] = [split.options.has("ColorRules"), split.options.has("BoundaryStyle")];
+    defaulted = { colors: own && !colorsGiven, edges: own && !edgesGiven };
+    const colors = rulesOf(
+      own && !colorsGiven ? STRAND_DEFAULT_COLOR_RULES : split.options.get("ColorRules"),
+      colorRuleOf,
+    );
+    const edges = rulesOf(
+      own && !edgesGiven ? STRAND_DEFAULT_BOUNDARY_STYLE : split.options.get("BoundaryStyle"),
+      boundaryRuleOf,
+    );
     colorRules = colors.rules;
     boundaryRules = edges.rules;
     colorMixing = colorMixingOf(split.options.get("ColorMixing"));
@@ -264,6 +285,7 @@ function specOf(json: Json): ShowSpec {
     boundaryRules,
     colorMixing,
     unread,
+    defaulted,
     ...(grid ? { grid } : {}),
     ...(axes ? { axes } : {}),
     aspect: options.get("AspectRatio") === "Automatic" ? "True" : "Uniform",
@@ -429,6 +451,11 @@ export class NotatioShow extends LitElement {
     return this.#showOptions;
   }
 
+  /** A fixed frame is fitted to its layer: no pan, no zoom. */
+  get #fixed(): boolean {
+    return this.#layer?.view === "fixed";
+  }
+
   get #gestures(): GestureHandling {
     return gestureHandlingOf(stringOf(this.#options.get("GestureHandling")));
   }
@@ -590,7 +617,7 @@ export class NotatioShow extends LitElement {
   }
 
   #clamp(): void {
-    if (!this.#layer) return;
+    if (!this.#layer || this.#fixed) return;
     const { bounds } = this.#layer;
     // Points anywhere: no lattice range to keep to, only a sane zoom.
     if (this.#layer.points) {
@@ -619,7 +646,7 @@ export class NotatioShow extends LitElement {
       c.width = this.#w;
       c.height = this.#h;
     }
-    if (this.#layer?.bounds && !this.#moved) this.#view = this.#home(this.#layer);
+    if (this.#layer && (this.#fixed || (this.#layer.bounds && !this.#moved))) this.#view = this.#home(this.#layer);
     this.#clamp();
     this.#drawNow();
   }
@@ -698,6 +725,17 @@ export class NotatioShow extends LitElement {
       if (d < best) [best, at] = [d, n];
     }
     return [at, 0];
+  }
+
+  /**
+   * What a plane point picks: one element, as above; for a figure layer, the address or link
+   * within a finger's reach of it (a link picks all its members), or nothing.
+   */
+  #hitsAt(plane: Vec2): readonly Vec2[] {
+    const layer = this.#layer!;
+    if (!layer.place) return [this.#elementAt(plane)];
+    const dpr = this.#w / (this.#canvases[0]?.clientWidth || this.#w);
+    return hitAt(layer, plane, (HIT_REACH * dpr * 2 * this.#view.extent) / this.#h);
   }
 
   /** A locator's place for a plane point: the nearest lattice point, or anywhere off the lattice. */
@@ -825,23 +863,37 @@ export class NotatioShow extends LitElement {
     );
   }
 
-  /** Select a point: alone, or — with shift or ⌘ — added to (or taken from) the selection. */
-  #select(point: Vec2, extend: boolean): void {
-    if (!point.every(Number.isFinite)) return;
-    const key = (p: Vec2) => `${p[0]},${p[1]}`;
-    const has = this._selection.some((p) => key(p) === key(point));
+  /**
+   * Select what a click picked: alone, or — with shift or ⌘ — added to (or taken from) the
+   * selection. A link picks all its members, which toggle together.
+   */
+  #select(points: readonly Vec2[], extend: boolean): void {
     if (!this.#selectionName && !this.#options.has("Selection")) return;
     const bounds = this.#layer?.bounds;
-    if (
-      bounds &&
-      (point[0] < bounds.i[0] || point[0] > bounds.i[1] || point[1] < bounds.j[0] || point[1] > bounds.j[1])
-    )
+    const picked = points.filter(
+      (p) =>
+        p.every(Number.isFinite) &&
+        !(bounds && (p[0] < bounds.i[0] || p[0] > bounds.i[1] || p[1] < bounds.j[0] || p[1] > bounds.j[1])),
+    );
+    const key = (p: Vec2) => `${p[0]},${p[1]}`;
+    if (picked.length === 0) {
+      // A click on nothing clears a figure's selection.
+      if (!extend && this.#layer?.place && this._selection.length > 0) {
+        this._selection = [];
+        this.#publishSelection();
+        this.#draw();
+      }
       return;
+    }
+    const chosen = new Set(this._selection.map(key));
+    const all = picked.every((p) => chosen.has(key(p)));
     if (extend)
-      this._selection = has ? this._selection.filter((p) => key(p) !== key(point)) : [...this._selection, point];
-    else this._selection = has && this._selection.length === 1 ? [] : [point];
+      this._selection = all
+        ? this._selection.filter((p) => !picked.some((q) => key(q) === key(p)))
+        : [...this._selection, ...picked.filter((p) => !chosen.has(key(p)))];
+    else this._selection = all && this._selection.length === picked.length ? [] : [...picked];
     // Selecting a point asks for it in full, whatever the frame's budget left undone.
-    if (!this.#layer?.known(point[0], point[1])) this.#layer?.prepare(point[0], point[1]);
+    for (const [i, j] of picked) if (!this.#layer?.known(i, j)) this.#layer?.prepare(i, j);
     this.#publishSelection();
     this.#draw();
   }
@@ -857,7 +909,7 @@ export class NotatioShow extends LitElement {
     let dragged = false;
     canvas.setPointerCapture(e.pointerId);
     const move = (m: PointerEvent): void => {
-      if (!dragged && Math.hypot(m.clientX - x0, m.clientY - y0) < SLOP) return;
+      if (this.#fixed || (!dragged && Math.hypot(m.clientX - x0, m.clientY - y0) < SLOP)) return;
       dragged = true;
       this.#moved = true;
       const scale = (2 * this.#view.extent) / r.height;
@@ -874,7 +926,7 @@ export class NotatioShow extends LitElement {
       canvas.removeEventListener("pointerup", up);
       canvas.removeEventListener("pointercancel", up);
       if (!dragged)
-        this.#select(this.#elementAt(this.#planeAt(u.clientX, u.clientY)), u.shiftKey || u.metaKey || u.ctrlKey);
+        this.#select(this.#hitsAt(this.#planeAt(u.clientX, u.clientY)), u.shiftKey || u.metaKey || u.ctrlKey);
     };
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up);
@@ -887,8 +939,12 @@ export class NotatioShow extends LitElement {
   #onHover = (e: PointerEvent): void => {
     const layer = this.#layer;
     if (!layer || e.buttons !== 0) return;
-    const [i, j] = this.#elementAt(this.#planeAt(e.clientX, e.clientY));
-    if (!Number.isFinite(i) || !Number.isFinite(j)) return;
+    const [i, j] = this.#hitsAt(this.#planeAt(e.clientX, e.clientY))[0] ?? [Number.NaN, Number.NaN];
+    if (!Number.isFinite(i) || !Number.isFinite(j)) {
+      this._tip = undefined;
+      this.#tipKey = "";
+      return;
+    }
     const { bounds } = layer;
     const outside = bounds && (i < bounds.i[0] || i > bounds.i[1] || j < bounds.j[0] || j > bounds.j[1]);
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
@@ -913,7 +969,7 @@ export class NotatioShow extends LitElement {
 
   #onWheel = (e: WheelEvent): void => {
     const canvas = e.currentTarget as HTMLCanvasElement;
-    if (!wheelZooms(e, canvas, this.#gestures) || !this.#layer) return;
+    if (this.#fixed || !wheelZooms(e, canvas, this.#gestures) || !this.#layer) return;
     e.preventDefault();
     this.#moved = true;
     const anchor = this.#planeAt(e.clientX, e.clientY);
@@ -943,6 +999,7 @@ export class NotatioShow extends LitElement {
   /** Back to the frame the layer chose. */
   /** Where a layer starts: a finite one fitted whole to the canvas, else the layer's own home. */
   #home(layer: ShowLayer): LatticeView {
+    if (layer.view === "fixed") return fitView(layer, this.#w / this.#h);
     if (!layer.bounds) return layer.home?.() ?? { center: [0, 0], extent: 20 };
     const { i, j } = layer.bounds;
     const [b0, b1] = layer.basis;
@@ -970,8 +1027,8 @@ export class NotatioShow extends LitElement {
   }
 
   #legendTemplate(vertical: boolean): unknown {
-    const colors = this.#colorRules;
-    const edges = this._spec?.boundaryRules ?? [];
+    const colors = this._spec?.defaulted.colors ? [] : this.#colorRules;
+    const edges = this._spec?.defaulted.edges ? [] : (this._spec?.boundaryRules ?? []);
     if (colors.length + edges.length === 0) return undefined;
     return html`<ul class=${`notatio-legend notatio-show-legend ${vertical ? "is-vertical" : ""}`}>
       ${colors.map((rule, k) => (typeof rule.paint === "string" ? this.#swatch(rule, rule.paint, k) : this.#bar(rule, rule.paint, k)))}
@@ -1068,7 +1125,10 @@ export class NotatioShow extends LitElement {
   protected override render(): unknown {
     const ground = resolvePalette({ palette: this.ground });
     const legendAt: FramePlacement = placementOf(this.legendAt, "right");
-    const stage = html`<div class="notatio-show-layers" style=${`background:${ground.background}`}>
+    const stage = html`<div
+        class=${`notatio-show-layers${this.#fixed ? " is-fixed" : ""}`}
+        style=${`background:${ground.background}`}
+      >
         ${["tiles", "lines", "axes"].map(
           (name) =>
             html`<canvas
@@ -1151,7 +1211,12 @@ function modulusOf(ring: Json): number {
  * `GaussianIntegers` or `EisensteinIntegers`; `ArrayPlot` of `MultiplicationTable(QuotientRing(Integers, n))`.
  */
 async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): Promise<ShowLayer | string> {
-  if (tiles === undefined) return "Show needs a layer: LatticeTiles(ring, …) or ArrayPlot(table, …).";
+  if (tiles === undefined)
+    return "Show needs a layer: LatticeTiles(ring, …), ArrayPlot(table, …) or StrandDiagram(diagram, …).";
+  if (tiles.head === "StrandDiagram") {
+    const model = strandModelOf(tiles.data);
+    return typeof model === "string" ? model : strandLayer(model);
+  }
   if (tiles.head === "ArrayPlot") {
     // `MultiplicationTable(ring, ElementOrder -> ChineseRemainder)`: how rows and columns list the ring.
     const table = splitOptions(tiles.data, new Set(["ElementOrder"]));
