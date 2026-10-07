@@ -23,6 +23,7 @@ const LiveInput = defineAsyncComponent(() => import("./components/LiveInput.vue"
 const Playground = defineAsyncComponent(() => import("./components/Playground.vue"));
 const ReferenceIndex = defineAsyncComponent(() => import("./components/ReferenceIndex.vue"));
 const ReferenceCatalog = defineAsyncComponent(() => import("./components/ReferenceCatalog.vue"));
+const FieldPage = defineAsyncComponent(() => import("./components/FieldPage.vue"));
 const ReferencePage = defineAsyncComponent(() => import("./components/ReferencePage.vue"));
 const Story = defineAsyncComponent(() => import("./components/Story.vue"));
 const CliReference = defineAsyncComponent(() => import("./components/CliReference.vue"));
@@ -41,6 +42,7 @@ export default {
     app.component("Playground", Playground);
     app.component("ElementsDemo", ElementsDemo);
     app.component("ReferencePage", ReferencePage);
+    app.component("FieldPage", FieldPage);
     app.component("ReferenceIndex", ReferenceIndex);
     app.component("ReferenceCatalog", ReferenceCatalog);
     app.component("Story", Story);

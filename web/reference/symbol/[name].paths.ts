@@ -1,6 +1,7 @@
 import { describeNow } from "@enumeratio/manifest";
 import type { ReferenceEntry } from "@enumeratio/reference";
 import { entries } from "../../.vitepress/data/reference-node.ts";
+import { fieldsOf } from "../../.vitepress/data/carrier-fields.ts";
 import { prerenderExamples } from "../../.vitepress/data/prerender.ts";
 
 /** Longest other-system output a page carries; a longer one (a million-element list) is cut. */
@@ -41,6 +42,7 @@ export default {
           name: entry.name,
           entry: clampOutputs(entry),
           prerendered: await prerenderExamples(entry),
+          fields: fieldsOf(entry.name),
           overloads: describeNow(entry.name).overloads ?? [],
         },
       });
