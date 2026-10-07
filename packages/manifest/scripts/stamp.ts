@@ -3,6 +3,7 @@
 // other roots it names, the lockfile and compute-engine's version. It is kept in
 // node_modules/.cache, so a fresh checkout (or a deleted output) always runs the step.
 
+import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import {
   cpSync,
@@ -11,11 +12,14 @@ import {
   readdirSync,
   readFileSync,
   realpathSync,
+  renameSync,
+  rmSync,
   statSync,
+  utimesSync,
   writeFileSync,
 } from "node:fs";
 import { createRequire } from "node:module";
-import { dirname, join, relative } from "node:path";
+import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 
 const SCOPE = "@enumeratio/";
 const SKIPPED = new Set(["node_modules", "dist", ".git"]);
@@ -98,6 +102,50 @@ export function hashInputs({ dir, roots: own = [dir], skip = () => false }: Step
   return hash.digest("hex");
 }
 
+/**
+ * The directory tools/ci/dist-cache.ts keeps its tarballs in (`$DIST_CACHE_DIR`, else the
+ * clone's shared git directory). A step's outputs are kept there too, under the hash of its
+ * inputs, so a fresh worktree restores them instead of running a step that takes minutes.
+ */
+function sharedDir(repo: string): string | undefined {
+  const set = process.env.DIST_CACHE_DIR;
+  if (set) return isAbsolute(set) ? set : resolve(repo, set);
+  try {
+    const common = execFileSync("git", ["rev-parse", "--git-common-dir"], { cwd: repo, encoding: "utf8" }).trim();
+    return join(resolve(repo, common), "dist-cache");
+  } catch {
+    return undefined; // not a git checkout: no shared store
+  }
+}
+
+/** The step's outputs, tarred relative to the repository root, under its input hash. */
+function sharedStep(dir: string, name: string, hash: string, outputs: readonly string[]) {
+  const lock = lockfileOf(dir);
+  const store = lock === "" ? undefined : sharedDir(dirname(lock));
+  if (store === undefined) return undefined;
+  const repo = dirname(lock);
+  const inside = outputs.map((o) => relative(repo, o));
+  if (inside.some((p) => p.startsWith(".."))) return undefined;
+  const id = createHash("sha256").update(`${name}\0${hash}`).digest("hex").slice(0, 32);
+  const tar = join(store, `step-${id}.tar`);
+  return {
+    restore(): boolean {
+      if (!existsSync(tar)) return false;
+      for (const o of outputs) rmSync(o, { recursive: true, force: true });
+      if (spawnSync("tar", ["-xf", tar, "-C", repo]).status !== 0) return false;
+      const now = new Date();
+      utimesSync(tar, now, now);
+      return outputs.every((o) => existsSync(o));
+    },
+    save(): void {
+      mkdirSync(store, { recursive: true });
+      const tmp = join(store, `.tmp-${process.pid}-step-${id}.tar`);
+      if (spawnSync("tar", ["-cf", tmp, "-C", repo, ...inside]).status === 0) renameSync(tmp, tar);
+      else rmSync(tmp, { force: true });
+    },
+  };
+}
+
 const cacheFile = (dir: string, name: string): string => join(dir, "node_modules", ".cache", "enumeratio", name);
 
 /** Steps that share one `inputs` object share one hash, taken when the first of them starts. */
@@ -127,11 +175,14 @@ export async function cached(
       return false;
     }
   }
-  await run();
+  const shared = sharedStep(inputs.dir, name, hash, outputs);
+  const fromShared = shared?.restore() === true;
+  if (!fromShared) await run();
   mkdirSync(dirname(file), { recursive: true });
   if (restore) outputs.forEach((o, i) => cpSync(o, copy(i), { recursive: true }));
   writeFileSync(file, hash);
-  return true;
+  if (!fromShared) shared?.save();
+  return !fromShared;
 }
 
 export interface Verdicts {
