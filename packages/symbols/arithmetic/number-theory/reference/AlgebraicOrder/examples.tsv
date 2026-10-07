@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+z-sqrt-minus-3			[AlgebraicOrder, [Sqrt, -3]]	[QuadraticOrder, -12]	$\mathbb{Z}[\sqrt{-3}]$, of conductor 2
+z-cube-root-of-2-is-maximal			[AlgebraicOrder, [Root, 2, 3]]	[AlgebraicOrder, [Root, 2, 3]]	$\mathbb{Z}[\sqrt[3]{2}]$ is all of $\mathcal{O}_K$, but keeps its name
+three-in-z-theta			[IsPrime, 3, [KeyValuePair, Over, [AlgebraicOrder, [PolynomialRoot, [Add, [Power, x, 3], [Negate, [Power, x, 2]], [Multiply, -2, x], -8], 1]]]]	True	3 does not divide the index 2, so it is prime in $\mathbb{Z}[\theta]$ as in $\mathcal{O}_K$

@@ -1,0 +1,4 @@
+id	in	out	tex.in	tex.out
+dedekind-cubic	NumberFieldDiscriminant[Root[Plus[Power[x, 3], Minus[Power[x, 2]], Times[-2, x], -8], 1]]	-503	\text{NumberFieldDiscriminant}\left[\text{Root}\left[x^3-x^2-2 x-8,1\right]\right]	-503
+cube-root-of-19	NumberFieldDiscriminant[Power[19, Divide[1, 3]]]	-1083	\text{NumberFieldDiscriminant}\left[19^{\frac{1}{3}}\right]	-1083
+rationals	NumberFieldDiscriminant[3]	1	\text{NumberFieldDiscriminant}[3]	1
