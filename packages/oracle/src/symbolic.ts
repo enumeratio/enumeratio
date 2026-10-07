@@ -394,6 +394,36 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
   return visit(expected) || holdsAppliedCall(call, expected);
 }
 
+/** Heads whose job is to rewrite their argument's form. */
+const FORM_TRANSFORMS = new Set(["FunctionExpand", "Simplify", "ComplexExpand", "PiecewiseExpand"]);
+
+const listEntries = (e: MathJSON): readonly MathJSON[] | undefined =>
+  Array.isArray(e) && e[0] === "List" ? (e.slice(1) as MathJSON[]) : undefined;
+
+/** The form `expr` asks to be rewritten, as the pieces a rewrite may leave alone: the whole, and a list's entries. */
+const rewriteTargets = (expr: MathJSON): MathJSON[] | undefined => {
+  if (!Array.isArray(expr) || !FORM_TRANSFORMS.has(expr[0] as string) || expr.length < 2) return undefined;
+  const form = expr[1] as MathJSON;
+  // An atom has nothing to rewrite.
+  return [form, ...(listEntries(form) ?? [])].filter(Array.isArray);
+};
+
+/** Whether `node` is `expr`'s form, or one entry of it, written back unchanged. */
+export function echoedPart(expr: MathJSON, node: MathJSON): boolean {
+  const text = canonicalText(node);
+  return rewriteTargets(expr)?.some((target) => canonicalText(target) === text) === true;
+}
+
+/**
+ * Whether `expr` asks a form to be rewritten and `expected` hands it back, or an entry of it,
+ * unchanged: a rewrite ours has not made. It agrees by value with whatever the kernel rewrites
+ * it to, which hides the missing rewrite, so it is not agreement unless the kernel leaves the
+ * form alone too.
+ */
+export function echoesInput(expr: MathJSON, expected: MathJSON): boolean {
+  return echoedPart(expr, expected) || (listEntries(expected)?.some((entry) => echoedPart(expr, entry)) ?? false);
+}
+
 /** Heads that only arrange or bind an answer: a call to one of these is not a function left undone. */
 const STRUCTURAL = new Set([
   ...COMBINING,
@@ -631,7 +661,7 @@ export function symbolicAgreementSource(
   freeSymbols: readonly string[],
 ): string | undefined {
   // Ours left the call unevaluated: the identity holds trivially, so the plain verdict decides.
-  if (leavesCall(expr, expected)) return undefined;
+  if (leavesCall(expr, expected) || echoesInput(expr, expected)) return undefined;
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
   if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;

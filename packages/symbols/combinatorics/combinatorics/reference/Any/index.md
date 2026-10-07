@@ -9,9 +9,13 @@ signatures:
   - call: Any(xs, predicate, level)
     description: the elements at exactly `level` tested instead of the top-level ones.
     library: enumeratio-combinatorics
+    type: "(collection<T>, predicate: ((T) any -> boolean)?) -> boolean where T"
+    overrides: compute-engine
 seeAlso:
   - All
   - NoneTrue
 names:
   wolfram: AnyTrue
+attributes:
+  - HoldAll
 ---

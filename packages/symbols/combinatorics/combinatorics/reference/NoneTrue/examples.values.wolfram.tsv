@@ -6,4 +6,6 @@ nonetrue-list-1-3-5-7-9-iseven	NoneTrue[List[1, 3, 5, 7, 9], EvenQ]	True	\text{N
 nonetrue-list-12-16-x-8-14-y-function-1-lt-10-1	NoneTrue[List[12, 16, x, 8, 14, y], Function[Less[Slot[1], 10]]]	False	\text{NoneTrue}[\{12,16,x,8,14,y\},\text{$\#$1}<10\&]	\text{False}
 nonetrue-list-12-16-x-14-y-function-istrue-1-lt	NoneTrue[List[12, 16, x, 14, y], Function[TrueQ[Less[Slot[1], 10]]]]	True	\text{NoneTrue}[\{12,16,x,14,y\},\text{TrueQ}[\text{$\#$1}<10]\&]	\text{True}
 vacuously-true-on-an-empty-list	NoneTrue[List[], EvenQ]	True	\text{NoneTrue}[\{\},\text{EvenQ}]	\text{True}
+an-undecided-predicate-gives-the-nor	NoneTrue[List[a, b], f]	Nor[f[a], f[b]]	\text{NoneTrue}[\{a,b\},f]	f(a)\bar{\vee}f(b)
+a-true-element-settles-it	NoneTrue[List[a, 4], EvenQ]	False	\text{NoneTrue}[\{a,4\},\text{EvenQ}]	\text{False}
 the-negation-of-any	(NoneTrue[List[4, 6, 9], PrimeQ] == Not[AnyTrue[List[4, 6, 9], PrimeQ]])	True	\text{NoneTrue}[\{4,6,9\},\text{PrimeQ}]=(\neg \text{AnyTrue}[\{4,6,9\},\text{PrimeQ}])	\text{True}

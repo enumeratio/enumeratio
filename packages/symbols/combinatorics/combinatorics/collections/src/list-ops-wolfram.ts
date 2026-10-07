@@ -8,6 +8,7 @@ import {
   symbolNameOf,
   wrapOperator,
 } from "@enumeratio/engine";
+import { canonicalCompare } from "./list-heads.ts";
 
 // A second wave of Wolfram list heads compute-engine doesn't have at all (Riffle, Gather,
 // GatherBy, Split, SplitBy, SortBy, PadLeft, PadRight, NoneTrue), plus two heads that exist
@@ -20,13 +21,6 @@ import {
 // so we attach on top — `wrapOperator`'s `applies` check runs outermost-first, and our
 // handlers never call through to the layer below for the UpTo case at all, so which native
 // evaluate is captured underneath them doesn't matter.
-
-/** Ascending order: numeric/orderable via `isLess`/`isGreater`, lexicographic for strings. */
-const naturalCompare = (a: Expr, b: Expr): number => {
-  if (a.isLess(b) === true) return -1;
-  if (a.isGreater(b) === true) return 1;
-  return 0;
-};
 
 /**
  * Normalize a Wolfram-style 1-based position (negative counts from the end, -1 = last) to a
@@ -365,19 +359,54 @@ export function declareListOpsWolfram(ce: Engine): void {
     },
   });
 
-  // SortBy(collection, f): sorted by the value of f on each element, stable on ties.
+  // SortBy(collection, f): ordered by the value of f on each element, equal values in the
+  // elements' canonical order, so it is not stable. SortBy(collection, {f1, f2, …}) orders by
+  // each key in turn and leaves what they all tie on in input order: the stable form.
   ce.declare("SortBy", {
-    signature: "(collection<T>, (T) any -> any) -> collection<T> where T",
+    signature: "(collection<T>, any) -> collection<T> where T",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       const f = ops[1];
       if (f === undefined || (ops[0] !== undefined && symbolNameOf(ops[0]) !== undefined)) return undefined;
       const items = collectionElements(ops[0]);
       if (items === undefined) return undefined;
-      const keyed = items.map((item, index) => ({ item, key: applyFunction(ce, f, [item]), index }));
-      keyed.sort((a, b) => naturalCompare(a.key, b.key) || a.index - b.index);
+      const stable = f.operator === "List";
+      const keyFunctions = stable ? operandsOf(f) : [f];
+      const keyed = items.map((item, index) => ({
+        item,
+        keys: keyFunctions.map((fn) => applyFunction(ce, fn, [item])),
+        index,
+      }));
+      keyed.sort((a, b) => {
+        for (let k = 0; k < keyFunctions.length; k++) {
+          const order = canonicalCompare(a.keys[k]!, b.keys[k]!);
+          if (order !== 0) return order;
+        }
+        return stable ? a.index - b.index : canonicalCompare(a.item, b.item) || a.index - b.index;
+      });
       return ce.box(["List", ...keyed.map((entry) => entry.item)]);
     },
   });
+
+  // Sort(list, p): a goes before b when p(a, b) is True and p(b, a) is not. Elements p holds
+  // both ways keep their input order (p is non-strict, like <=); elements it holds neither way
+  // come out in reverse input order (p strict, like <), as Wolfram's Sort does.
+  wrapOperator(
+    ce,
+    ["Sort", 1, 1],
+    (ops) => ops.length === 2 && ops[0].operator === "List",
+    () => (ops) => {
+      const holds = (a: Expr, b: Expr): boolean =>
+        symbolNameOf(applyFunction(ce, ops[1], [a, b]).evaluate()) === "True";
+      const indexed = operandsOf(ops[0]).map((item, index) => ({ item, index }));
+      indexed.sort((a, b) => {
+        const [forward, backward] = [holds(a.item, b.item), holds(b.item, a.item)];
+        if (forward !== backward) return forward ? -1 : 1;
+        return forward ? a.index - b.index : b.index - a.index;
+      });
+      return ce.box(["List", ...indexed.map((entry) => entry.item)]);
+    },
+    2,
+  );
 
   // PadLeft/PadRight(list, n?, x?): pad to length n with x (default 0), truncating from the
   // padding side when n is shorter; with no n, pad a ragged matrix to a rectangular one.
@@ -413,15 +442,57 @@ export function declareListOpsWolfram(ce: Engine): void {
     });
   }
 
-  // NoneTrue(xs, predicate): no element satisfies predicate — the negation of Any, which
-  // compute-engine already declares (as does All, its NoneTrue-adjacent AllTrue).
+  // Any/All/NoneTrue(xs, predicate): the predicate at each element decides True or False, or
+  // stays symbolic. A symbolic one gives the disjunction (Any), conjunction (All) or Nor
+  // (NoneTrue) of the elements still undecided, as Wolfram's AnyTrue/AllTrue/NoneTrue do:
+  // a True settles Any (a False settles All) whatever else is open, and decided ones drop out.
+  const settle = (
+    ops: readonly Expr[],
+    settling: "True" | "False",
+  ): { settled: true } | { settled: false; open: Expr[] } | undefined => {
+    const items = collectionElements(ops[0]);
+    if (items === undefined) return undefined;
+    const open: Expr[] = [];
+    for (const item of items) {
+      const verdict = applyFunction(ce, ops[1], [item]).evaluate();
+      const name = symbolNameOf(verdict);
+      if (name === settling) return { settled: true };
+      if (name !== (settling === "True" ? "False" : "True")) open.push(verdict);
+    }
+    return { settled: false, open };
+  };
+  const connective = (head: "Or" | "And" | "Nor", open: readonly Expr[]): Expr =>
+    head === "Nor" && open.length === 1 ? ce.function("Not", [...open]) : ce.function(head, [...open]).evaluate();
+
+  for (const [head, settling, joined, empty] of [
+    ["Any", "True", "Or", ce.False],
+    ["All", "False", "And", ce.True],
+  ] as const) {
+    wrapOperator(
+      ce,
+      [head, 1, 1],
+      (ops) => ops.length === 2 && collectionElements(ops[0]) !== undefined,
+      (native) => (ops, options) => {
+        const decided = native?.(ops, options);
+        if (decided !== undefined && ["True", "False"].includes(symbolNameOf(decided) ?? "")) return decided;
+        const result = settle(ops, settling);
+        if (result === undefined) return decided;
+        if (result.settled) return settling === "True" ? ce.True : ce.False;
+        return result.open.length === 0 ? empty : connective(joined, result.open);
+      },
+      2,
+    );
+  }
+
+  // NoneTrue(xs, predicate): no element satisfies predicate.
   ce.declare("NoneTrue", {
     signature: "(indexed_collection<T>, (T) any -> boolean) -> boolean where T",
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
       if (ops[0] === undefined || ops[1] === undefined) return undefined;
-      const any = ce.box(["Any", ops[0], ops[1]]).evaluate();
-      const verdict = symbolNameOf(any);
-      return verdict === "True" ? ce.False : verdict === "False" ? ce.True : undefined;
+      const result = settle(ops, "True");
+      if (result === undefined) return undefined;
+      if (result.settled) return ce.False;
+      return result.open.length === 0 ? ce.True : connective("Nor", result.open);
     },
   });
 }

@@ -12,6 +12,8 @@ import {
   compareCombinations,
   comparePythonStructured,
   compareTrees,
+  echoedPart,
+  echoesInput,
   type Leaf,
   leavesCall,
   lookThroughConditions,
@@ -244,8 +246,13 @@ export function verdictOf(
     // say: ours reads as the call's text, not the number it would evaluate to. A call both sides hold
     // compares as numbers; one only Wolfram holds is checked against its `N`, evidence for our closed form.
     const oursHeld = call !== undefined && leavesCall(call, expected) && !wolframHolds(call, theirs);
+    // A rewrite ours has not made reads as its text too: by value it matches what Wolfram rewrote it to.
+    const oursEchoes = call !== undefined && echoesInput(call, expected);
     const evaluateOurs = (node: MathJSON): Leaf =>
-      oursHeld && call !== undefined && leavesCall(call, node) ? symbolic(node) : wolframLeaf(node);
+      (oursHeld && call !== undefined && leavesCall(call, node)) ||
+      (oursEchoes && call !== undefined && echoedPart(call, node))
+        ? symbolic(node)
+        : wolframLeaf(node);
     const ours = reduce(preparedExpected, evaluateOurs);
     const trees = [
       theirTree(theirs, symbolic, prepare),

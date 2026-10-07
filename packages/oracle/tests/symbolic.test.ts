@@ -3,6 +3,7 @@ import {
   alignFunctions,
   boundVariables,
   derivativeVariables,
+  echoesInput,
   discreteVariables,
   interpretSymbolicAgreement,
   leavesCall,
@@ -323,4 +324,18 @@ test("a derivative's variable is not sampled at a number, which SymPy cannot dif
     ["x"],
   );
   expect(source).not.toContain("Rational(7, 3)");
+});
+
+test("a form-transforming head that hands its input back is a rewrite not made", () => {
+  const input = ["Sqrt", ["Negate", ["Power", "x", 2]]];
+  expect(echoesInput(["FunctionExpand", input] as never, input as never)).toBe(true);
+  expect(
+    echoesInput(
+      ["FunctionExpand", ["List", input, ["Ln", "y"]]] as never,
+      ["List", input, ["Multiply", 2, "y"]] as never,
+    ),
+  ).toBe(true);
+  expect(echoesInput(["FunctionExpand", input] as never, ["Multiply", "x", "i"] as never)).toBe(false);
+  expect(echoesInput(["Simplify", "x"] as never, "x" as never)).toBe(false);
+  expect(echoesInput(["Sin", input] as never, input as never)).toBe(false);
 });
