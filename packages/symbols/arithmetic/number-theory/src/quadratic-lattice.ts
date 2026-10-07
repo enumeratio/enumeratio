@@ -51,8 +51,16 @@ const KIND_CODE: Record<QuadraticKind, number> = CELL;
  */
 export type QuadraticScale = "uniform" | "geometric";
 
+/**
+ * Where the elements are drawn: on their lattice, or, for a real field, at their logarithmic
+ * embedding (log|σ₁(α)|, log|σ₂(α)|). There the units lie on the antidiagonal, evenly spaced by
+ * the regulator, and the elements of norm ±n on the line x + y = log n.
+ */
+export type QuadraticEmbedding = "lattice" | "logarithmic";
+
 export interface QuadraticLatticeOptions {
   readonly scale?: QuadraticScale;
+  readonly embedding?: QuadraticEmbedding;
   /** An order's discriminant f²·D_K instead of the field's: `QuadraticOrder(D)`'s lattice. */
   readonly discriminant?: number | bigint;
 }
@@ -183,11 +191,17 @@ export interface QuadraticLattice {
   describe(i: number, j: number): { title: string; rows: (readonly [string, string])[] };
   /** Facts about the ring as a whole, for a heading. */
   summary(): (readonly [string, string])[];
+  /** In the logarithmic embedding: where i + jω sits, the points there are, and their range. */
+  place?(i: number, j: number): readonly number[];
+  addresses?(): readonly Vec2[];
+  mark?(i: number, j: number): { readonly head: "Disk"; readonly radius: number };
+  readonly bounds?: { readonly i: Vec2; readonly j: Vec2 };
 }
 
 /**
  * The lattice of O_K for ℚ(√n), or with `discriminant` of the order of that discriminant;
- * undefined when n is a square, or the discriminant isn't one.
+ * undefined when n is a square, or the discriminant isn't one, or the logarithmic embedding is
+ * asked of an imaginary field.
  */
 export function quadraticLattice(
   n: number | bigint,
@@ -195,7 +209,7 @@ export function quadraticLattice(
 ): QuadraticLattice | undefined {
   const R =
     options.discriminant === undefined ? quadraticRing(BigInt(n)) : quadraticOrder(BigInt(options.discriminant));
-  if (R === undefined) return undefined;
+  if (R === undefined || (options.embedding === "logarithmic" && R.discriminant < 0n)) return undefined;
   const ring = R;
   const [s, r] = [Number(R.s), Number(R.r)];
   const D = Number(R.discriminant);
@@ -346,20 +360,25 @@ export function quadraticLattice(
     return primeInfo(m).kind === 2 ? SPLITTING.ramified : SPLITTING.split;
   };
 
-  return {
+  const lattice: QuadraticLattice = {
     ring: R,
     title: R.conductor === 1n ? `ℚ(${sqrtText(R.d)})` : ringText(R),
     basis,
     maxIndex,
     known: (i, j) => cache.has(key(i, j)),
     // 1 and ω: a square grid for ℤ[√d], a rhombic one when ω = (−1 + √d)/2 tips up and to the left.
+    // An even s makes the lattice square whatever ω is (ℤ[√−3]'s ω = −1 + √−3): its grid runs
+    // along ω − s/2 = √(D/4) instead, at lattice coordinates (−s/2, 1).
     grid: [
       [1, 0],
-      [0, 1],
+      [hexagonal ? 0 : -s / 2, 1],
     ],
-    // ω stands for the generator on its axis (i for ℤ[i]); the caption says what it is.
+    // ω stands for the generator on its axis (i for ℤ[i], the root when the grid follows it); the
+    // caption says what it is.
     gridLabel: (axis, k) =>
-      axis === 0 ? minus(k) : `${k === 1 ? "" : k === -1 ? "−" : minus(k)}${R.d === -1n ? "i" : "ω"}`,
+      axis === 0
+        ? minus(k)
+        : `${k === 1 ? "" : k === -1 ? "−" : minus(k)}${R.d === -1n ? "i" : hexagonal || s === 0 ? "ω" : rootOf(R)}`,
     properties: [
       { name: "IsPrime", description: "a prime element: (α) is a prime ideal" },
       { name: "IsIrreducible", description: "no factorization into two non-units; every prime is irreducible" },
@@ -477,6 +496,62 @@ export function quadraticLattice(
         ["class number", group === undefined ? "too large to enumerate" : String(group.order)],
         ["units", units],
       ];
+    },
+  };
+  return options.embedding === "logarithmic" ? logarithmic(lattice, s, r) : lattice;
+}
+
+/** The logarithmic embedding draws the elements i + jω with |i|, |j| ≤ LOG_BOX and |N| ≤ LOG_NORMS. */
+const LOG_BOX = 120;
+const LOG_NORMS = 200;
+/** A mark's radius, in units of log|σ|. */
+const LOG_MARK = 0.045;
+
+/**
+ * `lattice`'s elements at (log|σ₁|, log|σ₂|), σ₁,₂(ω) = (s ± √D)/2 with D = s² + 4r > 0. Only small
+ * norms: each lies on its line x + y = log|N|, and the large ones would fill the quadrant.
+ */
+function logarithmic(lattice: QuadraticLattice, s: number, r: number): QuadraticLattice {
+  const root = Math.sqrt(s * s + 4 * r);
+  const [w1, w2] = [(s + root) / 2, (s - root) / 2];
+  const place = (i: number, j: number): Vec2 => [Math.log(Math.abs(i + j * w1)), Math.log(Math.abs(i + j * w2))];
+  const addresses: Vec2[] = [];
+  for (let i = -LOG_BOX; i <= LOG_BOX; i++)
+    for (let j = -LOG_BOX; j <= LOG_BOX; j++) {
+      const n = Math.abs(i * i + s * i * j - r * j * j);
+      if (n !== 0 && n <= LOG_NORMS) addresses.push([i, j]);
+    }
+  // A figure's marks are drawn all at once, not dripped in: each is classified when first asked.
+  const ready = (i: number, j: number): void => {
+    if (!lattice.known(i, j)) lattice.prepare(i, j);
+  };
+  return {
+    ...lattice,
+    title: `${lattice.title}, logarithmically`,
+    // The frame is the plane of (log|σ₁|, log|σ₂|) itself, not the lattice's.
+    basis: [
+      [1, 0],
+      [0, 1],
+    ],
+    known: () => true,
+    has(i, j, property) {
+      ready(i, j);
+      return lattice.has(i, j, property);
+    },
+    value(i, j, name) {
+      ready(i, j);
+      return lattice.value(i, j, name);
+    },
+    place,
+    addresses: () => addresses,
+    mark: () => ({ head: "Disk", radius: LOG_MARK }),
+    bounds: { i: [-LOG_BOX, LOG_BOX], j: [-LOG_BOX, LOG_BOX] },
+    // log|σ₁| and log|σ₂| on the axes; a grid line every unit of each.
+    gridLabel: (_, k) => minus(k),
+    describe(i, j) {
+      const d = lattice.describe(i, j);
+      const [x, y] = place(i, j);
+      return { ...d, rows: [...d.rows, ["log |σ₁|, log |σ₂|", `${minus(+x.toFixed(3))}, ${minus(+y.toFixed(3))}`]] };
     },
   };
 }

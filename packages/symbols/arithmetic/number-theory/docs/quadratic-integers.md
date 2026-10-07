@@ -143,6 +143,49 @@ gold when it stays inert, red when it ramifies. A prime $p$ either splits into t
 $p$ itself, norm $p^2$) or ramifies (it divides the discriminant). The Kronecker symbol
 $\left(\frac{D}{p}\right)$ decides which.
 
+## The logarithmic embedding
+
+A real field has two real embeddings, $\sigma_1$ and $\sigma_2$, sending $\sqrt d$ to
+$\pm\sqrt d$. Plot each element at $(\log|\sigma_1(\alpha)|, \log|\sigma_2(\alpha)|)$ and the
+multiplicative structure turns additive. The norm is $\sigma_1\sigma_2$, so the elements of norm
+$\pm n$ lie on the line $x + y = \log n$, and the units lie on the antidiagonal. Multiplying by
+the fundamental unit $\varepsilon$ is a translation along it, by $(\log\varepsilon, -\log\varepsilon)$:
+every norm line repeats with period the **regulator** $\log\varepsilon$.
+
+<Story title="ℚ(√5), logarithmically">
+<Show GridLines="[1, 1]" Axes ImageSize="[Automatic, 440]">
+  <LatticeTiles
+    Embedding="Logarithmic"
+    ColorRules='[IsUnit -> White, IsPrime -> ColorData(["Dusk", [0, 4], "Reflected"])(Log(Abs(Norm))), IsZero -> White]'
+  >
+    <QuadraticIntegers>5</QuadraticIntegers>
+  </LatticeTiles>
+</Show>
+</Story>
+
+The units march down the antidiagonal at steps of $\log\varphi \approx 0.48$, $\varphi$ the
+golden ratio. Each prime's associates do the same on its own line. Only the elements of norm up
+to 200 are drawn, from a finite box of the lattice, so the lines thin out toward their ends.
+
+## Orders
+
+$\mathcal{O}_d$ is the largest of the rings in $\mathbb{Q}(\sqrt d)$. The others are its
+**orders** $\mathbb{Z} + f\mathcal{O}_d$, named by their discriminant $f^2 D_K$:
+`QuadraticOrder(-12)` is $\mathbb{Z}[\sqrt{-3}]$, of conductor 2 in the Eisenstein integers.
+It has the square lattice of $\sqrt{-3}$, and loses unique factorization at 2: the purple
+tiles are irreducible but not prime.
+
+<Story title="ℤ[√−3], the order of conductor 2">
+<Show GridLines="[10, 10]" Axes ImageSize="[Automatic, 440]">
+  <LatticeTiles
+    ColorRules="[IsIrreducible && !IsPrime -> Purple, Splits -> Teal, Inert -> Gold, Ramified -> Red, IsUnit -> White]"
+    BoundaryStyle="[IsZero -> White]"
+  >
+    <QuadraticOrder>-12</QuadraticOrder>
+  </LatticeTiles>
+</Show>
+</Story>
+
 ## Sweeping fields
 
 The [quadratic primes explorer](https://enumeratio.dev/explore/quadratic-primes/) has the
