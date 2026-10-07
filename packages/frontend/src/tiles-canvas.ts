@@ -1,6 +1,7 @@
 // Drawing a tile layer onto a canvas: each element styled by its rules (`graphics-rules.ts`),
 // faces batched by the color they mix to, edges stroked inside one another in rule order, and
-// new elements computed only within a frame's budget, centre outwards.
+// new elements computed only within a frame's budget, centre outwards. A layer that places its own
+// marks (`place`) is drawn as a finite figure instead: marks at its addresses, then its links.
 
 import {
   type BoundaryRule,
@@ -12,10 +13,50 @@ import {
 } from "./graphics-rules.ts";
 import { latticeCoordinates, latticePoint, type LatticeView, type Vec2, visibleRange, voronoiCell } from "./lattice.ts";
 
+/** An address in a frame: a pair of integers, `(i, j)` for a lattice, `(slot, level)` for strands. */
+export type Address = readonly [i: number, j: number];
+
+/** A point of a frame's space, of any dimension; a 2-D frame reads the first two. */
+export type FramePoint = readonly number[];
+
+/**
+ * What a mark draws, in Wolfram's graphics heads, in the frame's coordinates. A `Disk` sits at its
+ * address's `place` unless it names a `center`; a `Text` likewise at `at`.
+ */
+export type GraphicsPrimitive =
+  | { readonly head: "Disk"; readonly radius: number; readonly center?: FramePoint }
+  | { readonly head: "Line"; readonly points: readonly FramePoint[] }
+  | { readonly head: "Polygon"; readonly points: readonly FramePoint[] }
+  | { readonly head: "Text"; readonly text: string; readonly size: number; readonly at?: FramePoint };
+
+/**
+ * How a frame is looked at: `plane` pans and zooms over a lattice; `fixed` is fitted to its layer
+ * whole, with no pan or zoom beyond the fit.
+ */
+export type ViewKind = "plane" | "fixed";
+
 /** What a tile layer answers about its elements, for rules. */
 export interface TileLayer {
   readonly basis: readonly [Vec2, Vec2];
   readonly maxIndex: number;
+  /** The frame's view; `plane` when absent. */
+  readonly view?: ViewKind;
+  /**
+   * Where address (i, j) sits in the frame's space. Absent: the lattice's own `latticePoint`, and
+   * the layer's tiles are the basis's cells. Present, the layer is a figure over its `bounds`:
+   * marks at the places of the addresses in them, then its links.
+   */
+  place?(i: number, j: number): FramePoint;
+  /** What address (i, j) draws, at its place; a small disk when absent. */
+  mark?(i: number, j: number): GraphicsPrimitive;
+  /**
+   * The links of the figure, each a tuple of the addresses it joins (Wolfram's `Graph` edges, a
+   * `GraphicsComplex`'s lines), drawn after the marks and styled by `BoundaryStyle` through their
+   * members' properties. A hit on a link selects its members.
+   */
+  links?(): readonly (readonly Address[])[];
+  /** The curve a link takes (a `Line`, or a `Polygon` for a hyperedge); a line through its members' places when absent. */
+  linkMark?(link: readonly Address[]): GraphicsPrimitive;
   /**
    * A layer of points anywhere in the plane, not of a lattice: each one's position, element (n, 0)
    * the n-th. Its tiles take the basis's cell shape, centred on the points.
@@ -62,6 +103,7 @@ export function drawTiles(
   view: LatticeView,
   options: TileDrawOptions,
 ): boolean {
+  if (layer.place) return drawMarks(ctx, width, height, layer, view, options);
   const pixels = height / (2 * view.extent);
   const toScreen = (p: Vec2): Vec2 => [
     (p[0] - view.center[0]) * pixels + width / 2,
@@ -168,6 +210,12 @@ export function drawTiles(
     }
   }
 
+  paintBatches(ctx, fills, edges);
+  return complete;
+}
+
+/** Fill each color's path, then stroke each edge's. */
+function paintBatches(ctx: CanvasRenderingContext2D, fills: Map<string, Path2D>, edges: Map<string, Path2D>): void {
   ctx.save();
   for (const [color, path] of fills) {
     ctx.fillStyle = color;
@@ -182,7 +230,204 @@ export function drawTiles(
     ctx.stroke(path);
   }
   ctx.restore();
-  return complete;
+}
+
+// ── Figures: layers that place their own marks ────────────────────────────────────────────
+
+const xy = (p: FramePoint): Vec2 => [p[0] ?? 0, p[1] ?? 0];
+
+/** Every address of a figure layer: its `bounds`, row by row. */
+export function addressesOf(layer: TileLayer): Address[] {
+  const { i, j } = layer.bounds ?? { i: [0, 0], j: [0, 0] };
+  const out: Address[] = [];
+  for (let b = j[0]; b <= j[1]; b++) for (let a = i[0]; a <= i[1]; a++) out.push([a, b]);
+  return out;
+}
+
+/** Where an address is, in 2-D: a figure layer's `place`, else the lattice point. */
+export const placeOf = (layer: TileLayer, i: number, j: number): Vec2 =>
+  layer.place ? xy(layer.place(i, j)) : latticePoint(layer.basis, i, j);
+
+/** What a link draws: its layer's curve, or a line through its members. */
+const linkPrimitive = (layer: TileLayer, link: readonly Address[]): GraphicsPrimitive =>
+  layer.linkMark?.(link) ?? { head: "Line", points: link.map(([i, j]) => placeOf(layer, i, j)) };
+
+/** The view that fits a figure layer whole, with a margin, for a canvas of the given aspect (w / h). */
+export function fitView(layer: TileLayer, aspect: number, margin = 0.6): LatticeView {
+  const points: Vec2[] = addressesOf(layer).map(([i, j]) => placeOf(layer, i, j));
+  for (const link of layer.links?.() ?? []) {
+    const p = linkPrimitive(layer, link);
+    if (p.head === "Line" || p.head === "Polygon") points.push(...p.points.map(xy));
+  }
+  if (points.length === 0) return { center: [0, 0], extent: 1 };
+  const xs = points.map((p) => p[0]);
+  const ys = points.map((p) => p[1]);
+  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  return {
+    center: [(x0 + x1) / 2, (y0 + y1) / 2],
+    extent: Math.max((y1 - y0) / 2 + margin, ((x1 - x0) / 2 + margin) / aspect),
+  };
+}
+
+/** The distance from `p` to the segment `a`–`b`. */
+function segmentDistance(p: Vec2, a: Vec2, b: Vec2): number {
+  const [dx, dy] = [b[0] - a[0], b[1] - a[1]];
+  const len = dx * dx + dy * dy;
+  const t = len === 0 ? 0 : Math.min(1, Math.max(0, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / len));
+  return Math.hypot(p[0] - (a[0] + t * dx), p[1] - (a[1] + t * dy));
+}
+
+/**
+ * What a point of a figure's frame hits, within `reach` of it: the nearest address, else the
+ * members of the nearest link; none when nothing is near.
+ */
+export function hitAt(layer: TileLayer, at: Vec2, reach: number): Address[] {
+  let best: Address | undefined;
+  let nearest = reach;
+  for (const [i, j] of addressesOf(layer)) {
+    const p = placeOf(layer, i, j);
+    const d = Math.hypot(p[0] - at[0], p[1] - at[1]);
+    if (d <= nearest) [best, nearest] = [[i, j], d];
+  }
+  if (best) return [best];
+  let link: readonly Address[] = [];
+  nearest = reach;
+  for (const members of layer.links?.() ?? []) {
+    const prim = linkPrimitive(layer, members);
+    if (prim.head !== "Line" && prim.head !== "Polygon") continue;
+    const pts = prim.points.map(xy);
+    const closed = prim.head === "Polygon";
+    for (let k = 0; k < (closed ? pts.length : pts.length - 1); k++) {
+      const d = segmentDistance(at, pts[k]!, pts[(k + 1) % pts.length]!);
+      if (d <= nearest) [link, nearest] = [members, d];
+    }
+  }
+  return [...link];
+}
+
+/** Add a primitive to a path, in screen coordinates; `inset` pulls a disk's rim in, for nested edges. */
+function addPrimitive(
+  path: Path2D,
+  p: GraphicsPrimitive,
+  place: Vec2,
+  toScreen: (v: Vec2) => Vec2,
+  pixels: number,
+  inset = 0,
+): void {
+  if (p.head === "Disk") {
+    const [x, y] = toScreen(p.center ? xy(p.center) : place);
+    const r = Math.max(0.5, p.radius * pixels - inset);
+    path.moveTo(x + r, y);
+    path.arc(x, y, r, 0, 2 * Math.PI);
+  } else if (p.head === "Line" || p.head === "Polygon") {
+    p.points.forEach((q, k) => {
+      const [x, y] = toScreen(xy(q));
+      if (k === 0) path.moveTo(x, y);
+      else path.lineTo(x, y);
+    });
+    if (p.head === "Polygon") path.closePath();
+  }
+}
+
+/**
+ * Draw a figure layer: a mark at each address, styled as a tile is (color by `ColorRules`, edges
+ * by `BoundaryStyle`), then the links, each a curve stroked by the edges its members' properties
+ * match. A link has a property, relation or selection when any of its members does.
+ */
+function drawMarks(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  layer: TileLayer,
+  view: LatticeView,
+  options: TileDrawOptions,
+): boolean {
+  const pixels = height / (2 * view.extent);
+  const toScreen = (p: Vec2): Vec2 => [
+    (p[0] - view.center[0]) * pixels + width / 2,
+    height / 2 - (p[1] - view.center[1]) * pixels,
+  ];
+  const dpr = dprOf();
+  const readers = new Map<unknown, ValueReader | undefined>();
+  const readerFor = (json: unknown): ValueReader | undefined => {
+    if (!readers.has(json)) readers.set(json, valueOf(json));
+    return readers.get(json);
+  };
+  const selected = new Set(options.selection.map(([i, j]) => `${i},${j}`));
+  const factsOf = (members: readonly Address[]): ElementFacts => ({
+    has: (p) => members.some(([i, j]) => layer.has(i, j, p) ?? false),
+    related: (r) => members.some(([i, j]) => options.selection.some((s) => layer.relatedTo(r, s, i, j))),
+    selected: members.some(([i, j]) => selected.has(`${i},${j}`)),
+  });
+
+  const fills = new Map<string, Path2D>();
+  const edges = new Map<string, Path2D>();
+  const pathIn = (paths: Map<string, Path2D>, key: string): Path2D => {
+    let path = paths.get(key);
+    if (path === undefined) paths.set(key, (path = new Path2D()));
+    return path;
+  };
+  const labels: { at: Vec2; text: string; size: number; color: string }[] = [];
+
+  for (const [i, j] of addressesOf(layer)) {
+    const style = styleElement(
+      options.colorRules,
+      options.boundaryRules,
+      options.colorMixing,
+      factsOf([[i, j]]),
+      (json) => readerFor(json)?.((name) => layer.value(i, j, name)),
+      options.phase,
+    );
+    const at = placeOf(layer, i, j);
+    const mark: GraphicsPrimitive = layer.mark?.(i, j) ?? { head: "Disk", radius: 0.12 };
+    if (mark.head === "Text") {
+      if (style.color) labels.push({ at: xy(mark.at ?? at), text: mark.text, size: mark.size, color: style.color });
+      continue;
+    }
+    if (style.color) addPrimitive(pathIn(fills, style.color), mark, at, toScreen, pixels);
+    let inset = 0;
+    for (const e of style.edges) {
+      const w = e.width * dpr;
+      const key = `${e.color}|${w}|${e.opacity}|${e.dashing.join(",")}`;
+      addPrimitive(pathIn(edges, key), mark, at, toScreen, pixels, inset + w / 2);
+      inset += w;
+    }
+  }
+  paintBatches(ctx, fills, edges);
+
+  ctx.save();
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  for (const l of labels) {
+    const [x, y] = toScreen(l.at);
+    ctx.font = `${Math.round(l.size * pixels)}px system-ui, sans-serif`;
+    ctx.fillStyle = l.color;
+    ctx.fillText(l.text, x, y);
+  }
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+  for (const link of layer.links?.() ?? []) {
+    const style = styleElement([], options.boundaryRules, "First", factsOf(link), () => undefined, 0);
+    const prim = linkPrimitive(layer, link);
+    if (style.edges.length === 0 || (prim.head !== "Line" && prim.head !== "Polygon")) continue;
+    const path = new Path2D();
+    addPrimitive(path, prim, [0, 0], toScreen, pixels);
+    if (prim.head === "Polygon") {
+      ctx.globalAlpha = 0.16 * style.edges[0]!.opacity;
+      ctx.fillStyle = style.edges[0]!.color;
+      ctx.fill(path);
+    }
+    // The first rule on top: strokes run last to first.
+    for (const e of style.edges.toReversed()) {
+      ctx.strokeStyle = e.color;
+      ctx.lineWidth = e.width * dpr;
+      ctx.globalAlpha = e.opacity;
+      ctx.setLineDash(e.dashing.map((d) => d * dpr));
+      ctx.stroke(path);
+    }
+  }
+  ctx.restore();
+  return true;
 }
 
 export interface LineStyle {

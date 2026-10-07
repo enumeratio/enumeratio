@@ -102,6 +102,21 @@ diagram and a permutation, but not planar, so it is not Temperley–Lieb.
 <notatio-cell value="Diagram([[1, 2], [-1, -2], [3, -3]]) in SymmetricGroupAlgebra(3)" />
 </Story>
 
+A diagram is also a `Show` of a `StrandDiagram`: its points are addresses (a slot and a
+level, the in side at level 0), its strands are blocks, and a click picks them. Click a
+strand and the strands that cross it light up red, and the strand itself gold; shift-click
+to pick several.
+
+<Story title="Click a strand">
+<template #description>Crosses(Selected) lights the strands crossing the pick; SameBlock(Selected) the block it is in. The cup and cap on the right cross nothing.</template>
+<Show Variables="[_s -> Variable(Automatic, [])]" Selection="_s" ImageSize="[Automatic, 240]">
+  <StrandDiagram
+    ColorRules='[Crosses(Selected) -> Red, SameBlock(Selected) -> Gold, True -> Gray]'
+    BoundaryStyle='[Crosses(Selected) -> Directive(Red, AbsoluteThickness(3)), SameBlock(Selected) -> Directive(Gold, AbsoluteThickness(3)), True -> Directive(Teal, AbsoluteThickness(1.8))]'
+  ><Diagram><List><List>1 -3</List><List>2 -1</List><List>3 -2</List><List>4 5</List><List>-4 -5</List></List></Diagram></StrandDiagram>
+</Show>
+</Story>
+
 A block of three points is a partition diagram and nothing smaller — Brauer and below
 admit only blocks of size two.
 

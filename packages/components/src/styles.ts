@@ -21,6 +21,10 @@ notatio-out[display] {
 notatio-figure { display: inline-block; vertical-align: middle; line-height: 0; }
 notatio-figure svg { height: 2.5em; width: auto; max-width: 100%; overflow: visible; }
 notatio-figure[kind="diagram"] svg { height: 3.6em; }
+/* A strand kind is a Show, sized by its element and drawn without the card. */
+notatio-figure > notatio-show { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; }
+notatio-figure .notatio-show { margin: 0; border: 0; background: none; }
+notatio-figure .notatio-show-layers { background: none !important; }
 
 /* Plots are block figures sized to a max width; the viewBox drives the ratio. */
 notatio-plot, notatio-plot-3d { display: block; line-height: 0; }
@@ -1525,6 +1529,8 @@ notatio-show {
 .notatio-show-tip dd { margin: 0; font-variant-numeric: tabular-nums; }
 .notatio-show-layers canvas:last-child { touch-action: none; cursor: grab; }
 .notatio-show-layers canvas:last-child:active { cursor: grabbing; }
+/* A fixed frame is fitted, not panned: the page scrolls over it. */
+.notatio-show-layers.is-fixed canvas:last-child { touch-action: auto; cursor: pointer; }
 .notatio-show-layers canvas:last-child:focus {
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
 }
