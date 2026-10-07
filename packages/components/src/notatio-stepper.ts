@@ -1,27 +1,15 @@
+import { type Domain, randomInteger, stepInteger } from "@enumeratio/frontend/core";
 import { html, LitElement, nothing } from "lit";
 import { defineControl, emitControl } from "./define.ts";
 import { ensureStyles } from "./styles.ts";
 
-/** Integers a stepper may land on: every one, or only those a named rule admits. */
-const SKIPS: Readonly<Record<string, (n: number) => boolean>> = {
-  /** d for a quadratic field ℚ(√d): squarefree, and neither 0 nor 1. */
-  squarefree: (n) => {
-    if (n === 0 || n === 1) return false;
-    const m = Math.abs(n);
-    for (let k = 2; k * k <= m; k++) if (m % (k * k) === 0) return false;
-    return true;
-  },
-  nonzero: (n) => n !== 0,
-};
-
-/** Draws a random value takes before it settles for the current one. */
-const RANDOM_TRIES = 200;
+type Integers = Extract<Domain, { kind: "integers" }>;
 
 /**
- * `<notatio-stepper name="d" value="-5" skip="squarefree" random="400">` -- an integer in a
- * sentence, with ◀ ▶ to step to the next value the `skip` rule admits and, given `random`, a
- * die for a random one with |n| ≤ that bound. A tangle-style control: it reads as the number,
- * and binds `_d` like any other.
+ * `<notatio-stepper name="d" value="-5" min="-400" max="400" random>` -- an integer in a
+ * sentence, with ◀ ▶ to step to the next value its domain admits and, with `random`, a die for
+ * a random one. A tangle-style control: it reads as the number, and binds `_d` like any other.
+ * A `StringTemplate` hole sets `domain` from the variable's declaration, `Where` included.
  */
 export class NotatioStepper extends LitElement {
   static properties = {
@@ -29,27 +17,27 @@ export class NotatioStepper extends LitElement {
     value: { type: Number, reflect: true },
     min: { type: Number },
     max: { type: Number },
-    /** A rule the values keep to: `squarefree`, `nonzero`, or none. */
-    skip: { type: String },
-    /** Offer a random value with |n| at most this; 0 offers none. */
-    random: { type: Number },
+    /** Offer a random value from the domain. */
+    random: { type: Boolean },
+    /** The integers it may land on, as a declaration gives them; `min` and `max` otherwise. */
+    domain: { attribute: false },
   };
 
   declare name: string;
   declare value: number;
   declare min: number;
   declare max: number;
-  declare skip: string;
-  declare random: number;
+  declare random: boolean;
+  declare domain: Integers | undefined;
 
   constructor() {
     super();
     this.name = "";
     this.value = 0;
-    this.min = Number.NEGATIVE_INFINITY;
-    this.max = Number.POSITIVE_INFINITY;
-    this.skip = "";
-    this.random = 0;
+    this.min = -100;
+    this.max = 100;
+    this.random = false;
+    this.domain = undefined;
     ensureStyles();
   }
 
@@ -61,8 +49,8 @@ export class NotatioStepper extends LitElement {
     return Number(this.value);
   }
 
-  #admits(n: number): boolean {
-    return n >= Number(this.min) && n <= Number(this.max) && (SKIPS[this.skip]?.(n) ?? true);
+  get #domain(): Integers {
+    return this.domain ?? { kind: "integers", min: Number(this.min), max: Number(this.max) };
   }
 
   #set(n: number): void {
@@ -71,20 +59,12 @@ export class NotatioStepper extends LitElement {
     emitControl(this, { name: this.name, value: n });
   }
 
-  /** The next admitted value from the current one in a direction; the current one when there is none nearby. */
   step(direction: 1 | -1): void {
-    for (let n = Number(this.value) + direction, k = 0; k < 10_000; n += direction, k++) {
-      if (n < Number(this.min) || n > Number(this.max)) return;
-      if (this.#admits(n)) return this.#set(n);
-    }
+    this.#set(stepInteger(this.#domain, Number(this.value), direction));
   }
 
   roll(): void {
-    const bound = Math.max(1, Number(this.random));
-    for (let k = 0; k < RANDOM_TRIES; k++) {
-      const n = Math.round((Math.random() * 2 - 1) * bound);
-      if (this.#admits(n) && n !== Number(this.value)) return this.#set(n);
-    }
+    this.#set(randomInteger(this.#domain, Number(this.value)));
   }
 
   #onKey = (e: KeyboardEvent): void => {
@@ -96,6 +76,7 @@ export class NotatioStepper extends LitElement {
 
   protected override render(): unknown {
     const v = Number(this.value);
+    const { min, max } = this.#domain;
     return html`<span
       class="notatio-stepper"
       role="spinbutton"
@@ -108,12 +89,12 @@ export class NotatioStepper extends LitElement {
         ◀</button
       ><span class="notatio-stepper-value">${v < 0 ? `−${-v}` : v}</span
       ><button type="button" tabindex="-1" aria-label="Next" data-tip="Next" @click=${() => this.step(1)}>▶</button>${
-        Number(this.random) > 0
+        this.random
           ? html`<button
               type="button"
               tabindex="-1"
               aria-label="Random"
-              data-tip=${`A random one, |${this.name}| ≤ ${this.random}`}
+              data-tip=${`A random one, ${min} to ${max}`}
               @click=${() => this.roll()}
             >
               ⚄

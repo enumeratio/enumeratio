@@ -23,6 +23,7 @@ export * from "./orbit.ts";
 export * from "./gestures.ts";
 export * from "./graphics-rules.ts";
 export * from "./tiles-canvas.ts";
+export * from "./variables.ts";
 export * from "./lattice.ts";
 export * from "./palettes.ts";
 export * from "./plot-color.ts";

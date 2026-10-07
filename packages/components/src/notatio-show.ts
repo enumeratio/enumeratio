@@ -1,6 +1,4 @@
-import katex from "katex";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import {
   BAND_MODES,
   type BandMode,
@@ -11,7 +9,6 @@ import {
   type ColorRule,
   colorMixingOf,
   colorRuleOf,
-  type ControlChange,
   clampLatticeView,
   drawAxisLabels,
   drawLatticeLines,
@@ -28,8 +25,6 @@ import {
   nearestLatticePoint,
   paddingName,
   plainJson,
-  parseProse,
-  type ProsePart,
   resolvePalette,
   reverseGradient,
   rulesOf,
@@ -42,8 +37,6 @@ import {
 import { GRAPHICS_OPTIONS } from "@enumeratio/formats";
 import { emitControl } from "./define.ts";
 import { type FramePlacement, figureFrame, isVertical, placementOf } from "./figure-frame.ts";
-import "./notatio-stepper.ts";
-import "./notatio-toggler.ts";
 import { ensureStyles } from "./styles.ts";
 
 type Json = unknown;
@@ -79,8 +72,6 @@ async function readStructure(text: string): Promise<Json> {
 }
 
 const argsOf = (json: Json): Json[] => (Array.isArray(json) ? json.slice(1) : []);
-const isRule = (json: Json): boolean =>
-  ["Rule", "KeyValuePair", "Tuple"].includes(headOf(json) ?? "") && argsOf(json).length === 2;
 /** The options `head` declares, as a set. */
 const declared = (head: string): ReadonlySet<string> => new Set(GRAPHICS_OPTIONS[head] ?? []);
 const stringOf = (json: Json): string | undefined =>
@@ -182,13 +173,11 @@ interface Override {
  * - `GridLines -> 10` (every 10 units of the frame, which for a hexagonal ring is rhombic),
  *   `GridLinesStyle`, `Axes -> True`, `AxesStyle`, `Ticks -> None`, and
  *   `AspectRatio -> Automatic` for true scale.
- * - `Parameters -> [d -> -5, highlight -> Associates]` declares what the caption's holes bind;
- *   the expression reads each as `_d`.
- * - `Caption -> "Primes of $\mathbb{Q}(\sqrt{d})$ {d | stepper skip=squarefree random=400} …"`:
- *   prose whose holes are controls (`stepper`, or `choices='A -> a|B -> b'` for a word that cycles).
+ * - Its wildcards (`_d`) are the variables of the scope it sits in: the nearest element declaring
+ *   `Variables`, whose controls (a `StringTemplate` caption's holes, say) move them.
  * - The legend is made from the rules and is how their colors change: a swatch opens a color, a
  *   bar the color schemes, `↺` the scheme's padding past its ends, `⇄` reverses it.
- * - `Selection -> s`: shift/⌘-click selects several; the element publishes them as the binding
+ * - `Selection -> _s`: shift/⌘-click selects several; the element writes them to the variable
  *   `_s` (a list of lattice points), and showing them is up to the page.
  * - `GestureHandling -> "cooperative"` (the default), `"greedy"` or `"none"`: whether the wheel
  *   zooms when the plot isn't engaged.
@@ -204,14 +193,13 @@ export class NotatioShow extends LitElement {
     /** The ground the layers draw on: one of the palettes' grounds. */
     ground: { type: String },
     /** Options as attributes, as `Show` written in markup lowers them; each one Epsil. */
-    caption: { type: String },
-    parameters: { type: String },
     selection: { type: String },
     aspectRatio: { type: String, attribute: "aspect-ratio" },
     gestureHandling: { type: String, attribute: "gesture-handling" },
-    /** Where the caption and legend go: `below`, `right`, a corner to overlay, `none`. */
-    captionAt: { type: String, attribute: "caption-at", reflect: true },
+    /** Where the legend goes: `below`, `right`, a corner to overlay, `none`. */
     legendAt: { type: String, attribute: "legend-at", reflect: true },
+    /** The values of the variables its wildcards name, by wildcard (`_d`), set by its scope. */
+    bindings: { attribute: false },
     _spec: { state: true },
     _params: { state: true },
     _status: { state: true },
@@ -223,13 +211,11 @@ export class NotatioShow extends LitElement {
   declare value: string;
   declare height: number;
   declare ground: string;
-  declare caption: string;
-  declare parameters: string;
   declare selection: string;
   declare aspectRatio: string;
   declare gestureHandling: string;
-  declare captionAt: string;
   declare legendAt: string;
+  declare bindings: Readonly<Record<string, Json>> | undefined;
   declare _spec: ShowSpec | undefined;
   declare _params: ReadonlyMap<string, Json>;
   declare _status: string;
@@ -250,20 +236,17 @@ export class NotatioShow extends LitElement {
   #queued = false;
   #ro: ResizeObserver | undefined;
   #build = 0;
-  #tex = new Map<string, string>();
 
   constructor() {
     super();
     this.value = "";
     this.height = 480;
     this.ground = DEFAULT_GROUND;
-    this.caption = "";
-    this.parameters = "";
     this.selection = "";
     this.aspectRatio = "";
     this.gestureHandling = "";
-    this.captionAt = "below";
     this.legendAt = "right";
+    this.bindings = undefined;
     this._spec = undefined;
     this._params = new Map();
     this._status = "";
@@ -285,8 +268,9 @@ export class NotatioShow extends LitElement {
 
   protected override async updated(changed: PropertyValues): Promise<void> {
     this.#adoptCanvases();
-    const options = ["value", "caption", "parameters", "selection", "aspectRatio", "gestureHandling"];
+    const options = ["value", "selection", "aspectRatio", "gestureHandling"];
     if (options.some((k) => changed.has(k))) await this.#read();
+    else if (changed.has("bindings")) await this.#bind();
     this.#draw();
   }
 
@@ -308,9 +292,10 @@ export class NotatioShow extends LitElement {
     return gestureHandlingOf(stringOf(this.#options.get("GestureHandling")));
   }
 
+  /** The variable the selection is written to: `Selection -> _s` names `s`. */
   get #selectionName(): string | undefined {
     const s = this.#options.get("Selection");
-    return typeof s === "string" && !s.startsWith("'") ? s : undefined;
+    return typeof s === "string" && /^_?[A-Za-z]\w*$/.test(s) ? s.replace(/^_/, "") : undefined;
   }
 
   /** Read `value`, take the declared parameters' starting values, and build. */
@@ -325,37 +310,44 @@ export class NotatioShow extends LitElement {
     this.#source = json;
     const options = splitOptions(json, declared("Show")).options;
     const attributes: [string, string][] = [
-      ["Caption", this.caption],
-      ["Parameters", this.parameters],
       ["Selection", this.selection],
       ["AspectRatio", this.aspectRatio],
       ["GestureHandling", this.gestureHandling],
     ];
     for (const [name, text] of attributes) {
       if (!text) continue;
-      // A caption is prose; the others are expressions.
-      options.set(
-        name,
-        name === "Caption" ? `'${text.replace(/^"([\s\S]*)"$/, "$1")}'` : ((await readStructure(text)) ?? text),
-      );
+      options.set(name, (await readStructure(text)) ?? text);
     }
     if (build !== this.#build) return;
     this.#showOptions = options;
-    // A parameter keeps the value its control moved it to while it stays declared; re-reading
-    // for another attribute (the aspect ratio, say) must not put `d` back to its start.
+    await this.#bind();
+  }
+
+  /** Take the scope's values for the wildcards, the selection's among them, and rebuild. */
+  async #bind(): Promise<void> {
     const params = new Map<string, Json>();
-    for (const rule of argsOf(this.#options.get("Parameters"))) {
-      if (!isRule(rule)) continue;
-      const name = String(argsOf(rule)[0]);
-      params.set(name, this._params.has(name) ? this._params.get(name) : argsOf(rule)[1]);
+    for (const [wildcard, value] of Object.entries(this.bindings ?? {})) params.set(wildcard.replace(/^_/, ""), value);
+    const selected = this.#selectionName === undefined ? undefined : params.get(this.#selectionName);
+    if (Array.isArray(selected) && selected[0] === "List") {
+      const points = selected
+        .slice(1)
+        .flatMap((p) => (Array.isArray(p) && p.length === 3 ? [[Number(p[1]), Number(p[2])] as Vec2] : []));
+      if (JSON.stringify(points) !== JSON.stringify(this._selection)) this._selection = points;
     }
     this._params = params;
     await this.#rebuild();
   }
 
-  /** Bind the parameters, read the spec, and load the ring's layer when the ring changed. */
+  /** Bind the variables, read the spec, and load the ring's layer when the ring changed. */
   async #rebuild(): Promise<void> {
-    const spec = specOf(bind(this.#source, this._params));
+    if (this.#source === undefined) return;
+    const bound = bind(this.#source, this._params);
+    // A wildcard its scope hasn't filled yet: wait for it rather than report a missing ring.
+    if (JSON.stringify(bound).includes('"_')) {
+      this._status = "";
+      return;
+    }
+    const spec = specOf(bound);
     const ring = spec.ring;
     const key = JSON.stringify([ring, spec.aspect]);
     if (key !== this.#layerKey) {
@@ -569,77 +561,6 @@ export class NotatioShow extends LitElement {
     this.#drawNow();
   };
 
-  /** A caption control moved: rebind its parameter and rebuild, keeping the change here. */
-  #onControl = (e: Event): void => {
-    const detail = (e as CustomEvent<ControlChange>).detail;
-    if (!detail || !this._params.has(detail.name)) return;
-    e.stopPropagation();
-    const params = new Map(this._params);
-    params.set(detail.name, detail.value);
-    this._params = params;
-    void this.#rebuild();
-  };
-
-  // ── Caption and legend ──────────────────────────────────────────────────────────────
-
-  #texOf(latex: string): unknown {
-    let markup = this.#tex.get(latex);
-    if (markup === undefined) {
-      markup = katex.renderToString(latex, { throwOnError: false });
-      this.#tex.set(latex, markup);
-    }
-    return unsafeHTML(markup);
-  }
-
-  #captionPart(part: ProsePart): unknown {
-    switch (part.kind) {
-      case "text":
-        return part.text;
-      case "tex":
-        return this.#texOf(this.#substitute(part.latex));
-      case "dynamic":
-        return this.#substitute(part.value);
-      case "knob": {
-        const o = part.options;
-        const value = this._params.get(part.name);
-        if ("stepper" in o) {
-          return html`<notatio-stepper
-            name=${part.name}
-            .value=${numberOf(value, 0)}
-            skip=${o.skip ?? ""}
-            random=${o.random ?? "0"}
-          ></notatio-stepper>`;
-        }
-        if (o.choices) {
-          return html`<notatio-toggler
-            name=${part.name}
-            values=${o.choices}
-            .value=${String(stringOf(value) ?? value)}
-          ></notatio-toggler>`;
-        }
-        return String(stringOf(value) ?? value);
-      }
-    }
-    return nothing;
-  }
-
-  /** Parameters read inside a `$…$` island or a readout: `d` → its value. */
-  #substitute(text: string): string {
-    let out = text;
-    for (const [name, value] of this._params)
-      out = out.replace(new RegExp(`(?<![\\\\\\w])${name}(?!\\w)`, "g"), String(stringOf(value) ?? value));
-    return out;
-  }
-
-  #captionTemplate(): unknown {
-    const text = stringOf(this.#options.get("Caption"));
-    if (!text) return undefined;
-    const parts = parseProse(text, new Set(this._params.keys()));
-    return html`<p class="notatio-show-caption" @notatio-control-change=${this.#onControl}>
-      ${parts.map((p) => this.#captionPart(p))}
-    </p>`;
-  }
-
   #setOverride(k: number, change: Override): void {
     const next = new Map(this._overrides);
     next.set(k, { ...next.get(k), ...change });
@@ -726,7 +647,6 @@ export class NotatioShow extends LitElement {
   protected override render(): unknown {
     const ground = resolvePalette({ palette: this.ground });
     const legendAt: FramePlacement = placementOf(this.legendAt, "right");
-    const captionAt: FramePlacement = placementOf(this.captionAt, "below");
     const stage = html`<div class="notatio-show-layers" style=${`background:${ground.background}`}>
         ${["tiles", "lines", "axes"].map(
           (name) =>
@@ -745,9 +665,8 @@ export class NotatioShow extends LitElement {
       ${figureFrame({
         stage,
         stageStyle: `min-height:${Number(this.height) || 480}px`,
-        caption: this.#captionTemplate(),
         legend: this.#legendTemplate(isVertical(legendAt)),
-        captionAt,
+        captionAt: "none",
         legendAt,
       })}
     </div>`;

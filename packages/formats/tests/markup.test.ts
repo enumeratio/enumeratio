@@ -80,6 +80,13 @@ test("a child named for an option its parent declares is that option", () => {
   expect(opt("<Plot><PlotLabel>x</PlotLabel></Plot>")).toEqual(["Plot", ["PlotLabel", "x"]]);
 });
 
+test("a StringTemplate's text is its template, as written", () => {
+  expect(read("<StringTemplate>Primes of $\\sqrt{_d}$, d = {_d}.</StringTemplate>").json).toEqual([
+    "StringTemplate",
+    "'Primes of $\\sqrt{_d}$, d = {_d}.'",
+  ]);
+});
+
 test("value holds the arguments, or with ToExpression the whole expression, as Epsil", () => {
   expect(read('<Binomial value="n, 2" />').json).toEqual(["Binomial", "n", 2]);
   expect(read('<ToExpression value="Sin(k * x)" />').json).toEqual(["Sin", ["Multiply", "k", "x"]]);

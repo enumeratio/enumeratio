@@ -97,6 +97,8 @@ const CORPUS = [
   // TestResultObject (@enumeratio/evaluation's VerificationTest): a Success with an
   // actual output, a Failure that also carries the expected value, and an Error/Aborted
   // that has no ActualOutput to show.
+  // A plot labeled by prose over the variables its label declares: the label a child.
+  'Labeled(Show(LatticeTiles(QuadraticIntegers(_d), ColorRules -> [IsPrime -> Teal]), Selection -> _s), StringTemplate("d = {_d}"), Bottom, Variables -> [_d -> -5, _s -> []])',
   'TestResultObject(KeyValuePair("Outcome", "Success"), KeyValuePair("Input", 1 + 1), KeyValuePair("ActualOutput", 2), KeyValuePair("AbsoluteTimeUsed", 0))',
   'TestResultObject(KeyValuePair("Outcome", "Failure"), KeyValuePair("Input", 1 + 1), KeyValuePair("ExpectedOutput", 3), KeyValuePair("ActualOutput", 2), KeyValuePair("AbsoluteTimeUsed", 0), KeyValuePair("TestID", "adds"))',
   'TestResultObject(KeyValuePair("Outcome", "Aborted"), KeyValuePair("Input", FactorInteger(n)), KeyValuePair("ExpectedOutput", Missing), KeyValuePair("AbsoluteTimeUsed", 0.05))',

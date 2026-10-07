@@ -35,6 +35,7 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-lattice-plot": () => import("./notatio-lattice-plot.ts"),
   "notatio-show": () => import("./notatio-show.ts"),
   "notatio-stepper": () => import("./notatio-stepper.ts"),
+  "notatio-string-template": () => import("./notatio-string-template.ts"),
   "notatio-gradient": () => import("./notatio-gradient.ts"),
   "notatio-palette": () => import("./notatio-palette.ts"),
   "notatio-manipulate": () => import("./notatio-manipulate.ts"),

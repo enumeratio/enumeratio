@@ -22,7 +22,7 @@ import "./notatio-knob.ts";
 import "./notatio-toggler.ts";
 import "./notatio-when.ts";
 import { ReactiveModule } from "./reactive-module.ts";
-import { Scope } from "./scope.ts";
+import { registerScope, Scope } from "./scope.ts";
 import { ensureStyles } from "./styles.ts";
 
 /** `tracked-symbols="all"` or a comma list -- `symbols.ts`'s `TrackedSymbols` lowering. */
@@ -330,6 +330,7 @@ export class NotatioDynamicModule extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
+    registerScope(this, this.#scope);
     this.addEventListener(CONTROL_EVENT, this.#scope.onControl);
     this.addEventListener("notatio-change", this.#onCellChange as EventListener);
   }

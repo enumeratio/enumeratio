@@ -16,6 +16,33 @@ type Json = ReturnType<typeof parseExpression>["json"];
 /** `list`: the slot holds an argument list (a generic element's `value`), not one expression. */
 export type Template = { el: Element; json: Json; list?: true } & ({ attr: string } | { prop: string });
 
+/**
+ * A `value` template on an element that reads its wildcards' values itself (a plot sampling
+ * code its kernel compiled, a `Show` whose rules the engine must not canonicalize): it gets
+ * `bindings` and keeps its `value` as written.
+ */
+export const takesBindings = (t: Template): boolean =>
+  ("attr" in t ? t.attr : t.prop) === "value" &&
+  ((
+    customElements.get(t.el.localName) as { elementProperties?: Map<PropertyKey, unknown> } | undefined
+  )?.elementProperties?.has("bindings") ??
+    false);
+
+/** How long a scope waits for its templates' elements to be defined (they load on use). */
+const DEFINE_WAIT_MS = 2000;
+
+/** Wait (a while) for the classes of `templates`' elements: whether one takes bindings is its class's to say. */
+export async function whenTemplatesDefined(templates: readonly Template[]): Promise<void> {
+  const pending = [...new Set(templates.map((t) => t.el.localName))].filter(
+    (tag) => tag.includes("-") && customElements.get(tag) === undefined,
+  );
+  if (pending.length === 0) return;
+  await Promise.race([
+    Promise.all(pending.map((tag) => customElements.whenDefined(tag))),
+    new Promise((resolve) => setTimeout(resolve, DEFINE_WAIT_MS)),
+  ]);
+}
+
 /** A generic element's `value` is its arguments, `n, 2`: a template there is read as `[n, 2]`. */
 const holdsArguments = (el: Element, slot: string): boolean =>
   slot === "value" && el.hasAttribute("data-notatio-generic");
@@ -32,6 +59,7 @@ export function captureTemplates(
   names: ReadonlySet<string>,
   engine: ComputeEngine,
   skip?: Element | ((el: Element) => boolean),
+  includeRoot = false,
 ): Template[] {
   const skipped =
     skip === undefined
@@ -47,16 +75,18 @@ export function captureTemplates(
     return wildcards.some((w) => names.has(w.slice(1))) ? json : undefined;
   };
   const templates: Template[] = [];
-  for (const el of root.querySelectorAll("*")) {
+  for (const el of includeRoot ? [root, ...root.querySelectorAll("*")] : root.querySelectorAll("*")) {
     if (skipped(el)) continue;
     for (const attr of el.getAttributeNames()) {
+      // A scope's declarations name its wildcards; they are not a template over them.
+      if (attr === "variables") continue;
       const list = holdsArguments(el, attr);
       const json = slotted(el.getAttribute(attr) ?? "", list);
       if (json !== undefined) templates.push({ el, attr, json, ...(list ? { list: true as const } : {}) });
     }
     if (el.tagName.includes("-")) {
       const props = (el.constructor as { properties?: Record<string, unknown> }).properties;
-      for (const prop of props ? Object.keys(props) : []) {
+      for (const prop of props ? Object.keys(props).filter((p) => p !== "variables") : []) {
         const v = (el as unknown as Record<string, unknown>)[prop];
         const list = holdsArguments(el, prop);
         const json = typeof v === "string" ? slotted(v, list) : undefined;

@@ -899,18 +899,29 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   },
   layout("Panel", "notatio-panel"),
   {
-    // `Labeled(body, label, Bottom)`: Wolfram's third argument places the label.
+    // `Labeled(body, label, Bottom)`: Wolfram's third argument places the label. A label that
+    // is text is an attribute; one that is an expression (a `StringTemplate`) is a child after
+    // the body.
     head: "Labeled",
     tag: "notatio-labeled",
     attributes: (ops): Record<string, string> => {
       const out: Record<string, string> = {};
       const label = ops[1];
-      if (label !== undefined) out.label = strOf(label) ?? epsil(label);
+      const text =
+        label === undefined ? undefined : (strOf(label) ?? (headOf(label) === undefined ? epsil(label) : undefined));
+      if (text !== undefined) out.label = text;
       const position = LABEL_POSITIONS[symOf(ops[2]) ?? ""];
       if (position !== undefined) out.position = position;
       return out;
     },
-    children: (ops) => (ops[0] === undefined ? [] : [ops[0]]),
+    children: (ops) => [ops[0], headOf(ops[1]) === undefined ? undefined : ops[1]].filter((op) => op !== undefined),
+  },
+  {
+    // `StringTemplate("… {_d} …")`: Wolfram's template, with Epsil holes over the variables of
+    // the scope it sits in.
+    head: "StringTemplate",
+    tag: "notatio-string-template",
+    attributes: (ops) => ({ template: strOf(ops[0]) ?? "" }),
   },
 ];
 

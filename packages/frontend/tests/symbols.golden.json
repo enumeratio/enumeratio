@@ -1067,6 +1067,31 @@
     },
     "markup": "<notatio-dynamic-module><notatio-slider name=\"k\" min=\"0\" max=\"5\" appearance=\"Labeled\"></notatio-slider></notatio-dynamic-module>"
   },
+  "Labeled(Show(LatticeTiles(QuadraticIntegers(_d), ColorRules -> [IsPrime -> Teal]), Selection -> _s), StringTemplate(\"d = {_d}\"), Bottom, Variables -> [_d -> -5, _s -> []])": {
+    "rendering": {
+      "tag": "notatio-labeled",
+      "attributes": {
+        "position": "below",
+        "variables": "[_d -> -5, _s -> []]"
+      },
+      "children": [
+        {
+          "tag": "notatio-show",
+          "attributes": {
+            "value": "Show(LatticeTiles(QuadraticIntegers(_d), ColorRules -> [isPrime -> Teal]))",
+            "selection": "_s"
+          }
+        },
+        {
+          "tag": "notatio-string-template",
+          "attributes": {
+            "template": "d = {_d}"
+          }
+        }
+      ]
+    },
+    "markup": "<notatio-labeled position=\"below\" variables=\"[_d -> -5, _s -> []]\"><notatio-show value=\"Show(LatticeTiles(QuadraticIntegers(_d), ColorRules -> [isPrime -> Teal]))\" selection=\"_s\"></notatio-show><notatio-string-template template=\"d = {_d}\"></notatio-string-template></notatio-labeled>"
+  },
   "TestResultObject(KeyValuePair(\"Outcome\", \"Success\"), KeyValuePair(\"Input\", 1 + 1), KeyValuePair(\"ActualOutput\", 2), KeyValuePair(\"AbsoluteTimeUsed\", 0))": {
     "rendering": {
       "tag": "notatio-test-result-object",

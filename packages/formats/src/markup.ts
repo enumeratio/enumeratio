@@ -16,6 +16,7 @@
 // - a child element named for an option the caller's `optionsOf` says its parent declares is
 //   that option, its children the value (`<Show><PlotLabel>"Primes"</PlotLabel></Show>`), several
 //   of them a list, none of them `True`;
+// - `<StringTemplate>` holds prose: its text, as written, is the template string;
 // - `value`, the one reserved attribute, holds the arguments as Epsil in place of children,
 //   and `<ToExpression value="…" />` a whole expression.
 //
@@ -252,6 +253,14 @@ function read(node: MarkupNode, options: ReadOptions, errors: string[]): Json {
     } else errors.push(`markup: <${tag}> has "${name}", which isn't a slot name`);
   }
   const slots: Json[] = named.map(([name, v]) => ["KeyValuePair", name, v]);
+
+  if (tag === "StringTemplate" && value === undefined) {
+    const text = node.children
+      .map((c) => (typeof c === "string" ? c : ""))
+      .join("")
+      .trim();
+    return ["StringTemplate", `'${text.replace(/\s+/g, " ")}'`, ...slots];
+  }
 
   const args: Json[] = [];
   const declared = options.optionsOf?.(tag);
