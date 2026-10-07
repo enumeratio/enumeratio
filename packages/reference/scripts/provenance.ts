@@ -282,9 +282,28 @@ export interface HeadRecord {
    * That question is `elsewhere`, and only a kernel can answer it.
    */
   readonly wolframAlias: string | null;
-  /** External systems that have a function of this name, from the committed `coverage-data.ts`. */
+  /**
+   * External systems that have this function, from the committed `coverage-data.ts`, plus
+   * "wolfram" when the transpiler renames it to a System symbol.
+   */
   readonly elsewhere: readonly string[];
 }
+
+/**
+ * The kernels are asked by our name, so a head Wolfram spells differently (`IsCoprime` →
+ * `CoprimeQ`) is missing from `coverage`; the transpiler's rename says Wolfram has it. A
+ * context-qualified target (``Combinatorica`…``) is a package, not a built-in, and doesn't count.
+ */
+const elsewhereOf = (
+  name: string,
+  wolframHeads: Readonly<Record<string, string>>,
+  coverage: Readonly<Record<string, readonly string[]>>,
+): readonly string[] => {
+  const known = coverage[name] ?? [];
+  const alias = wolframHeads[name];
+  if (alias === undefined || alias.includes("`") || known.includes("wolfram")) return known;
+  return ["wolfram", ...known];
+};
 
 /**
  * The built ledger. The Wolfram column is REFLECTED from the transpiler's own head map
@@ -305,7 +324,7 @@ export const collect = (
     provenance: row.provenance,
     declared: row.declared ?? null,
     wolframAlias: wolframHeads[row.name] ?? null,
-    elsewhere: coverage[row.name] ?? [],
+    elsewhere: elsewhereOf(row.name, wolframHeads, coverage),
   }));
 
 /** `src/provenance-data.ts` as written. */
@@ -315,7 +334,7 @@ export const renderProvenance = (
 //
 // Where each documented head comes from, and whether an external system has a function of
 // the same meaning. Written by the package's build, never committed; the \`elsewhere\` column
-// is folded in from the committed coverage-data.ts. Rebuild with:
+// is folded in from the committed coverage-data.ts and the Wolfram transpiler's renames. Rebuild with:
 //
 //   vp node packages/reference/scripts/collect-provenance.ts
 //
@@ -333,7 +352,7 @@ export interface HeadRecord {
   readonly declared: string | null;
   /** The Wolfram symbol this head is RENAMED to, or null when the name passes through. */
   readonly wolframAlias: string | null;
-  /** External systems that have a function of this name — "wolfram", "sympy", "mpmath". */
+  /** External systems that have this function — "wolfram", "sympy", "mpmath". */
   readonly elsewhere: readonly string[];
 }
 
