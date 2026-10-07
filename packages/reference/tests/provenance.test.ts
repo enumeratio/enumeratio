@@ -12,7 +12,8 @@ import type { MathJSON, ReferenceEntry } from "../src/types.ts";
 
 // One shared pair for the whole file — `divergences`/`provenanceLedger` isolate each
 // example's own free symbols as they go (see `isolateFreeSymbols`'s comment in
-// provenance.ts), so reusing one engine across the whole catalogue here is safe.
+// provenance.ts), so reusing one engine across the whole catalogue here is safe. `classify`
+// stops at a head's first diverging example, so the whole ledger takes seconds, not minutes.
 const bare = new ComputeEngine();
 const ours = declaredEngine();
 const ledger = provenanceLedger(bare, ours, entries);
