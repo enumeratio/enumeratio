@@ -154,6 +154,15 @@ useLibraryParams(
 
 type SidebarItem = { text: string; link?: string; items?: SidebarItem[]; collapsed?: boolean };
 
+/** The components' demos, one page each, in the order their docs give. */
+function componentsSidebar(): SidebarItem {
+  const pages = workspacePackages().find((p) => p.slug === "components")?.pages ?? [];
+  return {
+    text: "The components",
+    items: pages.map((d) => ({ text: d.title, link: docRoute("components", d.page) })),
+  };
+}
+
 function learnSidebar(): SidebarItem[] {
   return [
     {
@@ -189,6 +198,7 @@ function learnSidebar(): SidebarItem[] {
         },
       ],
     },
+    componentsSidebar(),
     ...inspirationsSidebar().map((group) => ({ ...group, collapsed: true })),
     {
       text: "Packages",
