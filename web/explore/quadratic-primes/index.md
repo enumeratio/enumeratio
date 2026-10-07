@@ -1,10 +1,13 @@
 # Quadratic Primes
 
-The primes of every ring of quadratic integers $\mathcal{O}_d$, one field at a time. The
+The primes of every ring of quadratic integers $\mathcal{O}_d$, one field at a time, or of its
+order $\mathbb{Z}[\sqrt d]$; a real field's can be drawn at their logarithmic embedding. The
 [guide](/docs/number-theory/quadratic-integers) explains what the colors mean.
 
 <Labeled Variables='[
-    _d -> Variable(Integers, -5, Where -> IsSquareFree && !IsSquare, Range -> [-400, 400]),
+    _d -> Variable(Integers, -5, Where -> !IsSquare, Range -> [-400, 400]),
+    _R -> [Labeled(AlgebraicIntegers, "its ring of integers"), Labeled(AlgebraicOrder, "ℤ[√d]")],
+    _e -> [Labeled(Lattice, "on the lattice"), Labeled(Logarithmic, "logarithmically")],
     _h -> [
       Labeled(Associates, "associates"),
       Labeled(IrreducibleFactors, "irreducible factors"),
@@ -20,6 +23,7 @@ ImageSize="[Automatic, 560]"
 >
 
     <LatticeTiles
+      Embedding="_e"
 
       ColorRules='[
         IsPrime -> ColorData(["Dusk", [0, 10], "Reflected"])(Sqrt(Abs(Norm))),
@@ -29,11 +33,11 @@ ImageSize="[Automatic, 560]"
       ColorMixing='"Screen"'
       BoundaryStyle='[IsZero -> White, Unknown -> Gray, Selected -> Directive(White, AbsoluteThickness(2.5))]'
     >
-      <QuadraticIntegers>_d</QuadraticIntegers>
+      <ToExpression value="_R(Sqrt(_d))" />
     </LatticeTiles>
 
   </Show>
-  <StringTemplate>Primes of $\mathbb{Q}(\sqrt{_d})$, d = {_d}, by norm; selecting an element lights its {_h}. Shift-click to select several; Esc clears.</StringTemplate>
+  <StringTemplate>The primes of {_R} in $\mathbb{Q}(\sqrt{_d})$, d = {_d}, by norm, drawn {_e}; selecting an element lights its {_h}. Shift-click to select several; Esc clears.</StringTemplate>
   <Bottom/>
 </Labeled>
 

@@ -111,7 +111,12 @@ interface ShowSpec {
   /** Draggable points, Wolfram's `Locator`: each one a variable's point, or its list of points. */
   readonly locators: readonly LocatorSpec[];
   /** The tiled layer: `LatticeTiles(ring)`, `ArrayPlot(table)` or a figure frame (`StrandDiagram`, `CellDiagram`, …), its data. */
-  readonly tiles?: { readonly head: "LatticeTiles" | "ArrayPlot" | FigureHead; readonly data: Json };
+  readonly tiles?: {
+    readonly head: "LatticeTiles" | "ArrayPlot" | FigureHead;
+    readonly data: Json;
+    /** `Embedding -> "Logarithmic"`: a real field's elements at (log|σ₁|, log|σ₂|). */
+    readonly embedding?: string;
+  };
   readonly colorRules: readonly ColorRule[];
   readonly boundaryRules: readonly BoundaryRule[];
   readonly colorMixing: ColorMixing;
@@ -241,7 +246,12 @@ function specOf(json: Json): ShowSpec {
     const figure = FIGURE_HEADS.find((h) => h === head);
     if (head === undefined || (head !== "LatticeTiles" && head !== "ArrayPlot" && !figure)) continue;
     const split = splitOptions(layer, declared(head));
-    tiles = { head: head as NonNullable<ShowSpec["tiles"]>["head"], data: split.positional[0] };
+    const embedding = stringOf(split.options.get("Embedding"));
+    tiles = {
+      head: head as NonNullable<ShowSpec["tiles"]>["head"],
+      data: split.positional[0],
+      ...(embedding ? { embedding } : {}),
+    };
     // A figure frame has no look without rules: its own stand in for any the author leaves out.
     const own = figure ? FIGURE_DEFAULTS[figure] : undefined;
     const [colorsGiven, edgesGiven] = [split.options.has("ColorRules"), split.options.has("BoundaryStyle")];
@@ -615,7 +625,7 @@ export class NotatioShow extends LitElement {
     if (!this.#layer || this.#fixed) return;
     const { bounds } = this.#layer;
     // Points anywhere: no lattice range to keep to, only a sane zoom.
-    if (this.#layer.points) {
+    if (this.#layer.points || this.#layer.place) {
       this.#view = { center: this.#view.center, extent: Math.min(Math.max(this.#view.extent, 0.5), 1e6) };
       return;
     }
@@ -995,7 +1005,7 @@ export class NotatioShow extends LitElement {
   /** Back to the frame the layer chose. */
   /** Where a layer starts: a finite one fitted whole to the canvas, else the layer's own home. */
   #home(layer: ShowLayer): LatticeView {
-    if (layer.view === "fixed") return fitView(layer, this.#w / this.#h);
+    if (layer.view === "fixed" || layer.place) return fitView(layer, this.#w / this.#h);
     if (!layer.bounds) return layer.home?.() ?? { center: [0, 0], extent: 20 };
     const { i, j } = layer.bounds;
     const [b0, b1] = layer.basis;
@@ -1203,6 +1213,20 @@ function modulusOf(ring: Json): number {
 }
 
 /**
+ * `AlgebraicIntegers(Sqrt(n))` and `AlgebraicOrder(Sqrt(n))` as the quadratic rings they are:
+ * `QuadraticIntegers(n)` and ℤ[√n], `QuadraticOrder(4n)`. Read here, unevaluated, since a Show's
+ * layers are held.
+ */
+function quadraticRingOf(ring: Json): Json {
+  const [root] = argsOf(ring);
+  if (headOf(root) !== "Sqrt") return ring;
+  const n = numberOf(argsOf(root)[0], Number.NaN);
+  if (headOf(ring) === "AlgebraicIntegers") return ["QuadraticIntegers", n];
+  if (headOf(ring) === "AlgebraicOrder") return ["QuadraticOrder", 4 * n];
+  return ring;
+}
+
+/**
  * A tiled layer's tiles, loaded on first use: `LatticeTiles` of `QuadraticIntegers(d)`,
  * `GaussianIntegers` or `EisensteinIntegers`; `ArrayPlot` of `MultiplicationTable(QuotientRing(Integers, n))`.
  */
@@ -1225,7 +1249,9 @@ async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): P
     const { radixExpansions } = await import("@enumeratio/complex-numerals/lattice");
     return radixExpansions(settings);
   }
-  const ring = tiles.data;
+  const ring = quadraticRingOf(tiles.data);
+  // QuadraticOrder(D) by its discriminant; the rest by d.
+  const order = headOf(ring) === "QuadraticOrder" ? numberOf(argsOf(ring)[0], Number.NaN) : undefined;
   const d =
     ring === "GaussianIntegers"
       ? -1
@@ -1233,12 +1259,21 @@ async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): P
         ? -3
         : headOf(ring) === "QuadraticIntegers"
           ? numberOf(argsOf(ring)[0], Number.NaN)
-          : Number.NaN;
+          : (order ?? Number.NaN);
   if (!Number.isInteger(d))
-    return "LatticeTiles needs a ring: QuadraticIntegers(d), GaussianIntegers or EisensteinIntegers.";
+    return "LatticeTiles needs a ring: QuadraticIntegers(d), QuadraticOrder(D), GaussianIntegers or EisensteinIntegers.";
+  const logarithmic = tiles.embedding === "Logarithmic";
   const { quadraticLattice } = await import("@enumeratio/number-theory/lattice");
-  const layer = quadraticLattice(d, { scale: aspect === "True" ? "geometric" : "uniform" });
-  return layer ?? `ℚ(√${d}) is not a quadratic field: ${d} is a square.`;
+  const layer = quadraticLattice(d, {
+    scale: aspect === "True" ? "geometric" : "uniform",
+    ...(order === undefined ? {} : { discriminant: order }),
+    ...(logarithmic ? { embedding: "logarithmic" as const } : {}),
+  });
+  if (layer) return layer;
+  if (logarithmic && d < 0) return "The logarithmic embedding is a real field's: an imaginary one has a single |σ|.";
+  return order === undefined
+    ? `ℚ(√${d}) is not a quadratic field: ${d} is a square.`
+    : `${d} is no quadratic discriminant: one is 0 or 1 mod 4, and not a square.`;
 }
 
 if (!customElements.get("notatio-show")) customElements.define("notatio-show", NotatioShow);

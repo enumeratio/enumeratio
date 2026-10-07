@@ -96,3 +96,33 @@ describe("an order's lattice", () => {
     expect(Object.fromEntries(layer.summary()).conductor).toBe("2");
   });
 });
+
+describe("the logarithmic embedding", () => {
+  it("puts each element on its norm's line, x + y = log|N|, the units on the antidiagonal", () => {
+    for (const d of [2, 5, 229]) {
+      const layer = quadraticLattice(d, { embedding: "logarithmic" })!;
+      for (const [i, j] of layer.addresses!()) {
+        const [x, y] = layer.place!(i, j);
+        const N = Number(layer.value(i, j, "Norm"));
+        expect(x! + y!).toBeCloseTo(Math.log(Math.abs(N)), 9);
+      }
+      // 1 + √2's powers, φ's: the units, stepping down the antidiagonal by the regulator.
+      const unit = layer.addresses!().find(([i, j]) => j !== 0 && layer.has(i, j, "IsUnit"))!;
+      const [x] = layer.place!(...unit);
+      expect(Math.abs(x!)).toBeGreaterThan(0.4);
+    }
+  });
+
+  it("is a real field's: an imaginary one has no second |σ|", () => {
+    expect(quadraticLattice(-5, { embedding: "logarithmic" })).toBeUndefined();
+  });
+
+  it("runs an order's grid along its root when the lattice is square", () => {
+    const layer = quadraticLattice(0, { discriminant: -12 })!;
+    expect(layer.grid).toEqual([
+      [1, 0],
+      [1, 1],
+    ]);
+    expect(layer.gridLabel(1, 2)).toBe("2√−3");
+  });
+});
