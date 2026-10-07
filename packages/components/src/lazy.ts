@@ -3,8 +3,8 @@
 // cell's also installs the page scope (its controls bind through it). A `notatio-*` tag no
 // module claims is a generic element (`generic.ts`), and an element written structurally
 // (its arguments as children) brings the lowering that reads them (`structure.ts`).
-// `tests/lazy.test.ts` holds this table to the main entry's, and the modules a page of cells
-// or plots loads to no engine.
+// `tests/lazy.test.ts` holds this table to every tag the package defines, and the modules a page
+// of cells or plots loads to no engine.
 
 export { configureMacros } from "./mathlive.ts";
 
@@ -39,6 +39,8 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-palette": () => import("./notatio-palette.ts"),
   "notatio-manipulate": () => import("./notatio-manipulate.ts"),
   "notatio-dynamic-module": () => import("./notatio-dynamic-module.ts"),
+  "notatio-dynamic": () => import("./notatio-dynamic.ts"),
+  "notatio-when": () => import("./notatio-when.ts"),
   "notatio-slider": () => import("./notatio-slider.ts"),
   "notatio-vertical-slider": () => import("./notatio-vertical-slider.ts"),
   "notatio-animator": () => import("./notatio-animator.ts"),
@@ -46,6 +48,8 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-setter-bar": () => import("./notatio-setter-bar.ts"),
   "notatio-radio-button-bar": () => import("./notatio-radio-button-bar.ts"),
   "notatio-toggler-bar": () => import("./notatio-toggler-bar.ts"),
+  "notatio-toggler": () => import("./notatio-toggler.ts"),
+  "notatio-knob": () => import("./notatio-knob.ts"),
   "notatio-popup-menu": () => import("./notatio-popup-menu.ts"),
   "notatio-list-picker": () => import("./notatio-list-picker.ts"),
   "notatio-checkbox": () => import("./notatio-checkbox.ts"),
