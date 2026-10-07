@@ -438,6 +438,9 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * EisensteinG (EisensteinE, up to normalisation). KeiperLiLambda has no known equivalent anywhere.
  */
 const NOVEL = [
+  "AlgebraicIntegers",
+  "AlgebraicOrder",
+  "PolynomialRoot",
   "Adele",
   "AdicDigits",
   "AdicExpansion",
@@ -903,6 +906,9 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "Accumulate",
     "AdjacencyGraph",
     "AdjacencyMatrix",
+    "AlgebraicIntegerQ",
+    "AlgebraicNumberNorm",
+    "AlgebraicNumberTrace",
     "AlternatingGroup",
     "AppendTo",
     "Around",
@@ -1101,6 +1107,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "MersennePrimeExponent",
     "Midpoint",
     "MinValue",
+    "MinimalPolynomial",
     "Minimize",
     "MixedRadix",
     "ModularLambda",
@@ -1119,6 +1126,9 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "NorlundB",
     "Normalize",
     "NumberExpand",
+    "NumberFieldDiscriminant",
+    "NumberFieldIntegralBasis",
+    "NumberFieldSignature",
     "NumberQ",
     "Outer",
     "OverscriptBox",

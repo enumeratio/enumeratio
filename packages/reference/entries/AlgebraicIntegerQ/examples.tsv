@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+eisenstein-half-is-integral			[AlgebraicIntegerQ, [Divide, [Add, 1, [Sqrt, -3]], 2]]	True	$(1 + \sqrt{-3})/2$ is integral: $-3 \equiv 1 \pmod 4$
+half-of-one-plus-sqrt-minus-5-is-not			[AlgebraicIntegerQ, [Divide, [Add, 1, [Sqrt, -5]], 2]]	False	but $(1 + \sqrt{-5})/2$ is not: $-5 \not\equiv 1 \pmod 4$
+a-third-of-the-cube-root-trace			[AlgebraicIntegerQ, [Divide, [Add, 1, [Root, 19, 3], [Power, 19, [Rational, 2, 3]]], 3]]	True	$(1 + \sqrt[3]{19} + \sqrt[3]{19}^2)/3$ is integral, since $19 \equiv 1 \pmod 9$

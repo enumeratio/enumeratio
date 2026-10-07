@@ -1,0 +1,6 @@
+id	section	role	expr	expected	caption
+gaussian-integers			[AlgebraicIntegers, ImaginaryUnit]	GaussianIntegers	$\mathbb{Z}[i]$, already named
+golden-ratio-ring			[AlgebraicIntegers, GoldenRatio]	[QuadraticIntegers, 5]	$\mathbb{Z}[\varphi]$ is the ring of integers of $\mathbb{Q}(\sqrt 5)$
+three-is-inert-in-dedekinds-field			[IsPrime, 3, [KeyValuePair, Over, [AlgebraicIntegers, [PolynomialRoot, [Add, [Power, x, 3], [Negate, [Power, x, 2]], [Multiply, -2, x], -8], 1]]]]	True	$x^3 - x^2 - 2x - 8$ is irreducible mod 3, so 3 stays prime
+two-splits-completely-in-dedekinds-field			[IsPrime, 2, [KeyValuePair, Over, [AlgebraicIntegers, [PolynomialRoot, [Add, [Power, x, 3], [Negate, [Power, x, 2]], [Multiply, -2, x], -8], 1]]]]	False	2 splits into three primes of norm 2, which is why no $\mathbb{Z}[\alpha]$ is all of $\mathcal{O}_K$
+one-plus-cube-root-of-2-is-prime			[IsPrime, [Add, 1, [Root, 2, 3]], [KeyValuePair, Over, [AlgebraicIntegers, [Root, 2, 3]]]]	True	its norm is 3, a prime: $(1 + \sqrt[3]{2})$ is a prime ideal of degree 1

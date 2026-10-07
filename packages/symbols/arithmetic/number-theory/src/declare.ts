@@ -18,6 +18,7 @@ import { valuation } from "@enumeratio/residues";
 import { declareCarriers } from "@enumeratio/structures";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { NUMBER_THEORY_CARRIERS } from "./carrier-data.ts";
+import { declareAlgebraic } from "./declare-algebraic.ts";
 import { declareBacklog } from "./declare-backlog.ts";
 import { declareFastFactorial } from "./declare-fast-factorial.ts";
 import { declareFastGcd } from "./declare-fast-gcd.ts";
@@ -55,6 +56,7 @@ export function declareNumberTheory(ce: Engine): void {
   });
 
   declareGaussian(ce);
+  declareAlgebraic(ce);
   declareGaussianRationalGcdLcm(ce);
   declareWidened(ce);
   declareBacklog(ce);

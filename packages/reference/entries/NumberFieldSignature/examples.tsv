@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+cube-root-of-2			[NumberFieldSignature, [Root, 2, 3]]	[List, 1, 1]	one real cube root of 2, and a complex pair
+totally-real-quintic			[NumberFieldSignature, [PolynomialRoot, [Add, [Power, x, 5], [Multiply, -5, [Power, x, 3]], [Multiply, 4, x], -1], 1]]	[List, 5, 0]	all five roots real
