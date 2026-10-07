@@ -14,7 +14,7 @@ threads-element-wise-over-a-list	[log(1), log(2.1), log(3.1), log(4.1)]	[0, 0.74
 an-integer-power-is-pulled-out-ln-1000-3-ln-10	log(1000)	log(1000)	
 ln-exponentiale-pow-3	log((S(E)**3))	3	
 ln-positiveinfinity	log(oo)		
-ln-z-to-infty-and-its-real-part-goes-to-infty-ln	log(zoo)		
+ln-z-to-infty-and-its-real-part-goes-to-infty-ln	log(zoo)	zoo	disagree
 ln-i-i-pi-2-exactly	log(I)	I*pi/2	
 a-unit-fraction-becomes-a-negated-logarithm-ln	log(Rational(1, 2))	-log(2)	
 interval-arithmetic-ln-is-increasing-so-ln-frac			
@@ -30,7 +30,7 @@ an-integer-power-negative-argument	log(-2)	log(2) + I*pi
 n-of-a-negative-integer-argument	N(log(-2), 30)	0.693147180559945309417232121458 + 3.14159265358979323846264338328*I	
 ln-neg-6	log(-6)	log(6) + I*pi	
 n-of-a-negative-rational-argument	N(log(Rational(-1, 2)), 30)	-0.693147180559945309417232121458 + 3.14159265358979323846264338328*I	
-ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)		
+ln-infinity-is-infinity-ln-x-ln-x-i-pi-and-the	log(-oo)	oo	disagree
 n-ln-5-over-2-50	N(log(Rational(5, 2)), 30)		
 functiondomain-ln-x-x			
 functionrange-ln-x-x-y			

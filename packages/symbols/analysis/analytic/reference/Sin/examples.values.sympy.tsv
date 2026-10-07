@@ -29,7 +29,7 @@ sin-i-pi-2-i-sinh-pi-2-exactly	sin((I * (S(pi) / 2)))	I*sinh(pi/2)
 n-decimalizes-sin-i-pi-2-not-just-the-exact-form	N(sin((I * (S(pi) / 2))), 30)	2.30129890230729487346304002343*I	
 interval-arithmetic-the-image-of-pi-6-pi-6-is			
 the-image-of-the-whole-real-line-is-1-1			
-wolfram-answers-sin-infty-with-the-range-of-its	sin(oo)		
+wolfram-answers-sin-infty-with-the-range-of-its	sin(oo)	AccumBounds(-1, 1)	disagree
 uncertainty-propagation-sin-2-pm-0-01-approx-0			
 an-imaginary-argument-rewrites-to-sinh-sin-ix-i	sin((I * Symbol("x")))	I*sinh(x)	disagree
 oddness-pulls-the-sign-out-of-a-symbolic	sin((-Symbol("x")))	True	
@@ -91,6 +91,6 @@ sin-x-plus-y-stays-symbolic	sin((Symbol("x") + Symbol("y")))	sin(x + y)	disagree
 pi-15-has-a-radical-form-but-like-wolfram-s	sin((S(pi) / 15))	sqrt(3)*(1/4 - sqrt(5)/4)/2 + sqrt(sqrt(5)/8 + 5/8)/2	
 a-huge-exact-argument-is-reduced-modulo-2-pi	N(sin((S(10)**20)), 30)	-0.645251285265780844205811711313	
 an-even-huger-argument-11-38	N(sin((S(11)**38)), 30)	0.867534193184863032081750429728	
-sin-complexinfinity-is-indeterminate-off-the	sin(zoo)		
+sin-complexinfinity-is-indeterminate-off-the	sin(zoo)	nan	disagree
 the-special-angle-table-reaches-past-30-45-60	sin((S(pi) / 5))	sqrt(5/8 - sqrt(5)/8)	
 functionexpand-gives-the-nested-radical-form			

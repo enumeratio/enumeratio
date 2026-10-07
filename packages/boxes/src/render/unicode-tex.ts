@@ -3,10 +3,13 @@
 // `katexUnknown` below), compute-engine's parser (ours reads the rest through `commandTeX`),
 // and MathLive (same MathML as the command). Left out, with the reason:
 //   ε ϵ φ     compute-engine reads `ε` as `\epsilon` and `\varepsilon` as `ϵ`'s symbol
+//             (https://github.com/cortex-js/compute-engine/issues/420#issuecomment-6025278929)
 //   √ ∛ ∑ ∏ ∫ MathLive sets the Unicode apart from the command (no radical bar, no limits)
+//             (https://github.com/arnog/mathlive/issues/3100)
 //   ′ ″ ² ₂   MathLive's MathML differs from `^{\prime}`, `^2`, `_2`
+//             (https://github.com/arnog/mathlive/issues/3100)
 //   ·         KaTeX spaces a middle dot as punctuation, not as `\cdot`'s operator
-//   ← ∝ ∇ ∄   compute-engine reads no command for them either
+//   ← ∝ ∇ ∄   compute-engine reads no command for them either (https://github.com/cortex-js/compute-engine/issues/420#issuecomment-6025278929)
 
 export interface UnicodeSymbol {
   readonly char: string;
@@ -35,7 +38,7 @@ export const UNICODE_TEX: readonly UnicodeSymbol[] = [
   ...zip("×±∓⊗⊕∪∩÷∘∖∧∨¬∂", "times pm mp otimes oplus cup cap div circ setminus land lor lnot partial"),
   ...zip("∞ℓℵℏ", "infty ell aleph hbar"),
   { char: "∅", command: "\\emptyset", katexUnknown: true },
-  // compute-engine 0.148 reads these as strings.
+  // compute-engine 0.148 reads these as strings (https://github.com/cortex-js/compute-engine/issues/420#issuecomment-6025278929).
   ...Object.entries(BLACKBOARD).map(([char, letter]): UnicodeSymbol => ({
     char,
     command: `\\mathbb{${letter}}`,

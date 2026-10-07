@@ -1,43 +1,43 @@
-id	section	role	expr	expected	known	source	caption	epsil.in	fullform.in	fullform.out	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note	rust.kind	rust.note
-ceil-7-over-2			[Ceil, [Rational, 7, 2]]	4																
-ceil-3p2			[Ceil, 3.2]	4																
-ceil-3p7		test	[Ceil, 3.7]	4																
-integers-pass-through-unchanged			[Ceil, 5]	5			Integers pass through unchanged													
-threads-element-wise-over-a-list			[Ceil, [List, 1.2, -1.2, 3.7]]	[List, 2, -1, 4]			Threads element-wise over a list						threading	compute-engine's Ceil is Listable and threads over the list; Sage's takes scalars only.	threading	compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.	threading	compute-engine's Ceil threads over the list; mpmath's takes scalars.	threading	compute-engine's Ceil is Listable and threads over the list; the Rust crates take scalars.
-ceil-2p4			[Ceil, 2.4]	3																
-ceil-2p6			[Ceil, 2.6]	3																
-idempotent-lceil-lceil-x-rceil-rceil		test	[Ceil, [Ceil, x]]	[Ceil, x]			Idempotent: $\lceil\lceil x \rceil\rceil = \lceil x \rceil$													
-stays-symbolic	Scope		[Ceil, x]	[Ceil, x]			Stays symbolic								undefined-form	Both leave the call unevaluated; SymPy writes it ceiling(x).				
-exact-radicals-are-decided-numerically	Scope		[Ceil, [Sqrt, 50]]	8			Exact radicals are decided numerically													
-evaluates-at-an-exact-constant-lceil-pi-rceil-4	Scope		[Ceil, Pi]	4			Evaluates at an exact constant: $\lceil\pi\rceil = 4$													
-a-second-argument-rounds-up-to-a-multiple-of-it	Scope		[Ceil, 226, 10]	230			A second argument rounds up to a multiple of it -- the next multiple of 10 above 226													
-the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	Scope		[Ceil, -10.3, 3.5]	{num: "-7.0"}			...the step needn't be an integer: $3.5 \cdot \lceil -10.3/3.5 \rceil = -7$													
-nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	Scope		[Ceil, [Subtract, [Multiply, 2, Pi], ExponentialE], [Rational, 5, 4]]	[Rational, 15, 4]			...nor rational: $2\pi - e \approx 3.57$ rounds up to the multiple $15/4$ of $5/4$	Ceil(2Pi - ExponentialE, 5 / 4)	Ceil(Subtract(Multiply(2, Pi), ExponentialE), Rational(5, 4))											
-rounds-the-real-and-imaginary-parts-up	Scope		[Ceil, [Complex, 5.37, -1.3]]	[Complex, 6, -1]			Rounds the real and imaginary parts up separately						unevaluated	compute-engine evaluates Ceil on a complex float, rounding the real and imaginary parts up; Sage's ceil() leaves the complex argument unevaluated, printing it back symbolically.						
-ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	Scope		[Ceil, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, 1, -1], [List, 0, 0]]			Threads entrywise over a matrix													
-matrixfunction-ceil-list-list-1-over-2-neg-1	Scope		[MatrixFunction, Ceil, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, 1, -1], [List, 0, 0]]			As a matrix function it agrees with entrywise ceil on a triangular matrix													
-ceil-0	Scope		[Ceil, 0]	0			An integer is its own ceiling													
-ceil-positiveinfinity	Scope		[Ceil, PositiveInfinity]	PositiveInfinity			Infinity passes through													
-piecewiseexpand-ceil-x-2-0-lt-x-lt-4	Scope		[PiecewiseExpand, [Ceil, x, 2], [Less, 0, x, 4]]	[Ceil, x, 2]			Two-argument ceil to a multiple of 2 is not expanded into pieces													
-d-ceil-x-x	Scope		[D, [Ceil, x], x]	0							convention	Ours gives 0, the derivative away from the jumps; Wolfram returns a Piecewise that is 0 only where x < Ceiling[x] and Indeterminate at the integers, where Ceiling jumps.								
-how-many-5-seat-vans-are-needed-to-carry-17	Applications		[Ceil, [Divide, 17, 5]]	4			How many 5-seat vans are needed to carry 17 people													
-ten-bits-are-enough-to-number-1000-items-lceil	Applications		[Ceil, [Log, 1000, 2]]	10			Ten bits are enough to number 1000 items, $\lceil \log_2 1000 \rceil$													
-lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	Properties		[Equal, [Ceil, [Rational, 7, 2]], [Add, [Floor, [Rational, 7, 2]], 1]]	True			$\lceil x \rceil = \lfloor x \rfloor + 1$ for non-integer x. See [[Floor]]													
-floor-and-ceil-agree-exactly-on-integers	Properties		[Equal, [Ceil, 5], [Floor, 5]]	True			Floor and Ceil agree exactly on integers													
-ceil-16-3	Properties		[Ceil, 16, 3]	18			Smallest multiple of 3 that is at least 16													
-piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2	Properties		[PiecewiseExpand, [Ceil, [Power, x, 2]], [Less, 0, x, 2]]	[Ceil, [Power, x, 2]]			No piecewise form is produced for $\lceil x^2\rceil$													
-generatingfunction-ceil-n-4-n-x	Properties		[GeneratingFunction, [Ceil, n, 4], n, x]	[Divide, [Multiply, 4, x], [Add, [Power, x, 5], [Negate, [Power, x, 4]], [Negate, x], 1]]			Rational generating function of the round-up-to-4 sequence													
-ceil-1	Properties		[Ceil, 1]	1	1	Wolfram MathematicalFunctionData, Ceiling	Integers are fixed points													
-ceil-neg-1	Properties		[Ceil, -1]	-1	-1	Wolfram MathematicalFunctionData, Ceiling	A negative integer is unchanged													
-ceil-neg-i	Properties		[Ceil, [Complex, 0, -1]]	[Complex, 0, -1]	[Complex, 0, -1]	Wolfram MathematicalFunctionData, Ceiling	The imaginary part $-1$ is already an integer													
-ceil-23-over-10	Properties		[Ceil, [Rational, 23, 10]]	3	3	Wolfram MathematicalFunctionData, Ceiling	Rounds up: $\lceil 2.3\rceil = 3$													
-ceil-neg-3	Properties		[Ceil, -3]	-3	-3	Wolfram MathematicalFunctionData, Ceiling	Negative integers are fixed													
-piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1	Properties		[PiecewiseExpand, [Ceil, [Add, x, [Multiply, 1, [Power, 3, -1]], [Power, [Ceil, [Add, 1, [Multiply, -1, [Multiply, x, [Power, 2, -1]]]]], 3]]], [And, [Element, x, RealNumbers], [Less, -1, x, 1]]]	[Ceil, [Add, x, [Power, [Ceil, [Add, [Multiply, [Rational, -1, 2], x], 1]], 3], [Rational, 1, 3]]]			Nested ceilings are normalised but not split into pieces													
-ceil-neg-pi	Properties		[Ceil, [Negate, Pi]]	-3	-3	Wolfram MathematicalFunctionData, Ceiling	Rounds toward $+\infty$: $\lceil -\pi\rceil = -3$													
-ceil-neg-27-over-10	Properties		[Ceil, [Rational, -27, 10]]	-2	-2	Wolfram MathematicalFunctionData, Ceiling	Negative rationals round up toward zero													
-ceil-negativeinfinity	Properties		[Ceil, NegativeInfinity]	NegativeInfinity	NegativeInfinity	Wolfram MathematicalFunctionData, Ceiling	Negative infinity passes through													
-ceil-23-over-10-plus-neg-i-times-exponentiale	Properties		[Ceil, [Add, [Rational, 23, 10], [Multiply, [Complex, 0, -1], ExponentialE]]]	[Complex, 3, -2]	[Complex, 3, -2]	Wolfram MathematicalFunctionData, Ceiling	Complex input: each part rounds up, $3-2i$	Ceil(23 / 10 + -i * ExponentialE)	Ceil(Add(Rational(23, 10), Multiply(Complex(0, -1), ExponentialE)))											
-ceil-i	Properties		[Ceil, [Complex, 0, 1]]	[Complex, 0, 1]	[Complex, 0, 1]	Wolfram MathematicalFunctionData, Ceiling														
-a-zero-divisor-inside-ceil	Possible issues	test	[Ceil, [Divide, 16, 0]]	[Ceil, ComplexInfinity]			A division by zero inside Ceil leaves Ceil(ComplexInfinity), which is not a boxable argument		Ceil(Divide(16, 0))	Ceil(ComplexInfinity)	convention	Wolfram answers ComplexInfinity; ours leaves Ceil(~oo) unevaluated, since a rounding of ~oo is a type error. compute-engine keeps one complex infinity, ~oo, and no directed one (cortex-js/compute-engine#401), so ours follows its model.	undefined-form	Both decline: compute-engine answers Ceil(ComplexInfinity), and Sage's exact rational division raises a ZeroDivisionError before Ceil is even applied.					undefined-form	Both decline: compute-engine answers "ComplexInfinity", and Rust's exact division panics on the zero denominator before Ceil is even applied.
-rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Possible issues		[Ceil, -3.7]	-3			Rounds toward $+\infty$, not toward 0: ceil(-3.7) is -3, not -4													
-nan-propagates-rather-than-erroring	Possible issues		[Ceil, NaN]	NaN			NaN propagates rather than erroring					Both decline: compute-engine's NaN is the float can't-decide spelling (CE 0.141); Wolfram has no NaN and answers Indeterminate for the same input.								
+id	section	role	expr	expected	known	source	caption	epsil.in	fullform.in	fullform.out	wolfram.kind	wolfram.note	sage.kind	sage.note	sympy.kind	sympy.note	mpmath.note	rust.kind	rust.note
+ceil-7-over-2			[Ceil, [Rational, 7, 2]]	4															
+ceil-3p2			[Ceil, 3.2]	4															
+ceil-3p7		test	[Ceil, 3.7]	4															
+integers-pass-through-unchanged			[Ceil, 5]	5			Integers pass through unchanged												
+threads-element-wise-over-a-list			[Ceil, [List, 1.2, -1.2, 3.7]]	[List, 2, -1, 4]			Threads element-wise over a list						threading	compute-engine's Ceil is Listable and threads over the list; Sage's takes scalars only.		compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.	compute-engine's Ceil threads over the list; mpmath's takes scalars.	threading	compute-engine's Ceil is Listable and threads over the list; the Rust crates take scalars.
+ceil-2p4			[Ceil, 2.4]	3															
+ceil-2p6			[Ceil, 2.6]	3															
+idempotent-lceil-lceil-x-rceil-rceil		test	[Ceil, [Ceil, x]]	[Ceil, x]			Idempotent: $\lceil\lceil x \rceil\rceil = \lceil x \rceil$												
+stays-symbolic	Scope		[Ceil, x]	[Ceil, x]			Stays symbolic								undefined-form	Both leave the call unevaluated; SymPy writes it ceiling(x).			
+exact-radicals-are-decided-numerically	Scope		[Ceil, [Sqrt, 50]]	8			Exact radicals are decided numerically												
+evaluates-at-an-exact-constant-lceil-pi-rceil-4	Scope		[Ceil, Pi]	4			Evaluates at an exact constant: $\lceil\pi\rceil = 4$												
+a-second-argument-rounds-up-to-a-multiple-of-it	Scope		[Ceil, 226, 10]	230			A second argument rounds up to a multiple of it -- the next multiple of 10 above 226												
+the-step-needn-t-be-an-integer-3-5-cdot-lceil-10	Scope		[Ceil, -10.3, 3.5]	{num: "-7.0"}			...the step needn't be an integer: $3.5 \cdot \lceil -10.3/3.5 \rceil = -7$												
+nor-rational-2-pi-e-approx-3-57-rounds-up-to-the	Scope		[Ceil, [Subtract, [Multiply, 2, Pi], ExponentialE], [Rational, 5, 4]]	[Rational, 15, 4]			...nor rational: $2\pi - e \approx 3.57$ rounds up to the multiple $15/4$ of $5/4$	Ceil(2Pi - ExponentialE, 5 / 4)	Ceil(Subtract(Multiply(2, Pi), ExponentialE), Rational(5, 4))										
+rounds-the-real-and-imaginary-parts-up	Scope		[Ceil, [Complex, 5.37, -1.3]]	[Complex, 6, -1]			Rounds the real and imaginary parts up separately						unevaluated	compute-engine evaluates Ceil on a complex float, rounding the real and imaginary parts up; Sage's ceil() leaves the complex argument unevaluated, printing it back symbolically.					
+ceil-list-list-1-over-2-neg-1-list-0-neg-1-over	Scope		[Ceil, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, 1, -1], [List, 0, 0]]			Threads entrywise over a matrix												
+matrixfunction-ceil-list-list-1-over-2-neg-1	Scope		[MatrixFunction, Ceil, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, 1, -1], [List, 0, 0]]			As a matrix function it agrees with entrywise ceil on a triangular matrix												
+ceil-0	Scope		[Ceil, 0]	0			An integer is its own ceiling												
+ceil-positiveinfinity	Scope		[Ceil, PositiveInfinity]	PositiveInfinity			Infinity passes through												
+piecewiseexpand-ceil-x-2-0-lt-x-lt-4	Scope		[PiecewiseExpand, [Ceil, x, 2], [Less, 0, x, 4]]	[Ceil, x, 2]			Two-argument ceil to a multiple of 2 is not expanded into pieces												
+d-ceil-x-x	Scope		[D, [Ceil, x], x]	0							convention	Ours gives 0, the derivative away from the jumps; Wolfram returns a Piecewise that is 0 only where x < Ceiling[x] and Indeterminate at the integers, where Ceiling jumps.			domain	Ours differentiates Ceil as locally constant, 0 away from the jumps; SymPy leaves the Derivative unevaluated.			
+how-many-5-seat-vans-are-needed-to-carry-17	Applications		[Ceil, [Divide, 17, 5]]	4			How many 5-seat vans are needed to carry 17 people												
+ten-bits-are-enough-to-number-1000-items-lceil	Applications		[Ceil, [Log, 1000, 2]]	10			Ten bits are enough to number 1000 items, $\lceil \log_2 1000 \rceil$												
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	Properties		[Equal, [Ceil, [Rational, 7, 2]], [Add, [Floor, [Rational, 7, 2]], 1]]	True			$\lceil x \rceil = \lfloor x \rfloor + 1$ for non-integer x. See [[Floor]]												
+floor-and-ceil-agree-exactly-on-integers	Properties		[Equal, [Ceil, 5], [Floor, 5]]	True			Floor and Ceil agree exactly on integers												
+ceil-16-3	Properties		[Ceil, 16, 3]	18			Smallest multiple of 3 that is at least 16												
+piecewiseexpand-ceil-x-pow-2-0-lt-x-lt-2	Properties		[PiecewiseExpand, [Ceil, [Power, x, 2]], [Less, 0, x, 2]]	[Ceil, [Power, x, 2]]			No piecewise form is produced for $\lceil x^2\rceil$												
+generatingfunction-ceil-n-4-n-x	Properties		[GeneratingFunction, [Ceil, n, 4], n, x]	[Divide, [Multiply, 4, x], [Add, [Power, x, 5], [Negate, [Power, x, 4]], [Negate, x], 1]]			Rational generating function of the round-up-to-4 sequence												
+ceil-1	Properties		[Ceil, 1]	1	1	Wolfram MathematicalFunctionData, Ceiling	Integers are fixed points												
+ceil-neg-1	Properties		[Ceil, -1]	-1	-1	Wolfram MathematicalFunctionData, Ceiling	A negative integer is unchanged												
+ceil-neg-i	Properties		[Ceil, [Complex, 0, -1]]	[Complex, 0, -1]	[Complex, 0, -1]	Wolfram MathematicalFunctionData, Ceiling	The imaginary part $-1$ is already an integer												
+ceil-23-over-10	Properties		[Ceil, [Rational, 23, 10]]	3	3	Wolfram MathematicalFunctionData, Ceiling	Rounds up: $\lceil 2.3\rceil = 3$												
+ceil-neg-3	Properties		[Ceil, -3]	-3	-3	Wolfram MathematicalFunctionData, Ceiling	Negative integers are fixed												
+piecewiseexpand-ceil-x-plus-1-times-3-pow-neg-1	Properties		[PiecewiseExpand, [Ceil, [Add, x, [Multiply, 1, [Power, 3, -1]], [Power, [Ceil, [Add, 1, [Multiply, -1, [Multiply, x, [Power, 2, -1]]]]], 3]]], [And, [Element, x, RealNumbers], [Less, -1, x, 1]]]	[Ceil, [Add, x, [Power, [Ceil, [Add, [Multiply, [Rational, -1, 2], x], 1]], 3], [Rational, 1, 3]]]			Nested ceilings are normalised but not split into pieces												
+ceil-neg-pi	Properties		[Ceil, [Negate, Pi]]	-3	-3	Wolfram MathematicalFunctionData, Ceiling	Rounds toward $+\infty$: $\lceil -\pi\rceil = -3$												
+ceil-neg-27-over-10	Properties		[Ceil, [Rational, -27, 10]]	-2	-2	Wolfram MathematicalFunctionData, Ceiling	Negative rationals round up toward zero												
+ceil-negativeinfinity	Properties		[Ceil, NegativeInfinity]	NegativeInfinity	NegativeInfinity	Wolfram MathematicalFunctionData, Ceiling	Negative infinity passes through												
+ceil-23-over-10-plus-neg-i-times-exponentiale	Properties		[Ceil, [Add, [Rational, 23, 10], [Multiply, [Complex, 0, -1], ExponentialE]]]	[Complex, 3, -2]	[Complex, 3, -2]	Wolfram MathematicalFunctionData, Ceiling	Complex input: each part rounds up, $3-2i$	Ceil(23 / 10 + -i * ExponentialE)	Ceil(Add(Rational(23, 10), Multiply(Complex(0, -1), ExponentialE)))										
+ceil-i	Properties		[Ceil, [Complex, 0, 1]]	[Complex, 0, 1]	[Complex, 0, 1]	Wolfram MathematicalFunctionData, Ceiling													
+a-zero-divisor-inside-ceil	Possible issues	test	[Ceil, [Divide, 16, 0]]	[Ceil, ComplexInfinity]			A division by zero inside Ceil leaves Ceil(ComplexInfinity), which is not a boxable argument		Ceil(Divide(16, 0))	Ceil(ComplexInfinity)	convention	Wolfram answers ComplexInfinity; ours leaves Ceil(~oo) unevaluated, since a rounding of ~oo is a type error. compute-engine keeps one complex infinity, ~oo, and no directed one (cortex-js/compute-engine#401), so ours follows its model.	undefined-form	Both decline: compute-engine answers Ceil(ComplexInfinity), and Sage's exact rational division raises a ZeroDivisionError before Ceil is even applied.	convention	SymPy answers ComplexInfinity; ours leaves the rounding of ~oo unevaluated, since it is a type error. compute-engine keeps one complex infinity, ~oo, and no directed one (cortex-js/compute-engine#401).		undefined-form	Both decline: compute-engine answers "ComplexInfinity", and Rust's exact division panics on the zero denominator before Ceil is even applied.
+rounds-toward-infty-not-toward-0-ceil-3-7-is-3	Possible issues		[Ceil, -3.7]	-3			Rounds toward $+\infty$, not toward 0: ceil(-3.7) is -3, not -4												
+nan-propagates-rather-than-erroring	Possible issues		[Ceil, NaN]	NaN			NaN propagates rather than erroring					Both decline: compute-engine's NaN is the float can't-decide spelling (CE 0.141); Wolfram has no NaN and answers Indeterminate for the same input.							

@@ -16,16 +16,16 @@ isprime-neg-1-is-false	isprime(-1)	False
 isprime-neg-4-is-false	isprime(-4)	False	
 isprime-neg-2-is-true	isprime(-2)	False	disagree
 a-unit-is-not-prime	isprime(1)		
-i-a-unit-is-not-prime	isprime((0 + 1*I))		
+i-a-unit-is-not-prime	isprime((0 + 1*I))	ValueError: I is not an integer	error
 0-is-not-prime	isprime(0)		
-the-ramified-prime-above-2	isprime((1 + 1*I))		
-a-prime-above-5	isprime((2 + 1*I))		
-the-other-prime-above-5	isprime((2 + -1*I))		
-a-prime-above-13	isprime((3 + 2*I))		
-a-composite-of-norm-25	isprime((3 + 4*I))		
-an-associate-of-a-composite-is-still-composite	isprime((-3 + -4*I))		
-a-real-prime-s-associate-by-the-unit-i-is-still	isprime((0 + 7*I))		
-a-large-norm-composite	isprime((123 + 456*I))		
+the-ramified-prime-above-2	isprime((1 + 1*I))	ValueError: 1 + I is not an integer	error
+a-prime-above-5	isprime((2 + 1*I))	ValueError: 2 + I is not an integer	error
+the-other-prime-above-5	isprime((2 + -1*I))	ValueError: 2 - I is not an integer	error
+a-prime-above-13	isprime((3 + 2*I))	ValueError: 3 + 2*I is not an integer	error
+a-composite-of-norm-25	isprime((3 + 4*I))	ValueError: 3 + 4*I is not an integer	error
+an-associate-of-a-composite-is-still-composite	isprime((-3 + -4*I))	ValueError: -3 - 4*I is not an integer	error
+a-real-prime-s-associate-by-the-unit-i-is-still	isprime((0 + 7*I))	ValueError: 7*I is not an integer	error
+a-large-norm-composite	isprime((123 + 456*I))	ValueError: 123 + 456*I is not an integer	error
 3-3-mod-4-stays-prime-in-z-i			
 7-3-mod-4-stays-prime-in-z-i			
 19-3-mod-4-stays-prime-in-z-i			
@@ -48,8 +48,8 @@ isprime-17	isprime(17)
 isprime-12	isprime(12)		
 isprime-23	isprime(23)		
 isprime-24	isprime(24)		
-isprime-list-7-11	isprime([7, 11])		
-isprime-list-5-7-2	isprime([5, 7, 2])		
+isprime-list-7-11	isprime([7, 11])	ValueError: [7, 11] is not an integer	error
+isprime-list-5-7-2	isprime([5, 7, 2])	ValueError: [5, 7, 2] is not an integer	error
 isprime-19	isprime(19)		
 divisorsum-19-function-1-1-isprime			
 filter-divisors-625-isprime			

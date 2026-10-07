@@ -2,17 +2,11 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
 import { threadOverLists, widenSignature, wrapOperator } from "@enumeratio/engine";
 import {
+  applyNativeHeadPatches,
   applyPatch,
   lerchPhiPatch,
-  integratePolynomialPowers,
-  solveDeclines,
-  solveDomains,
-  takeDropNegativeCount,
   valuesAtZero,
   polyLogLargeOrder,
-  iteratorUpperBound,
-  rangeBigBounds,
-  shapeOfUnknownElements,
 } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { ANALYTIC_NOTATION } from "./notation.ts";
@@ -178,13 +172,8 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareWidened(ce);
   declareInverseOutsideDomain(ce);
 
-  applyPatch(ce, solveDeclines);
-  applyPatch(ce, solveDomains);
-  applyPatch(ce, takeDropNegativeCount);
-  applyPatch(ce, iteratorUpperBound);
-  applyPatch(ce, rangeBigBounds);
-  applyPatch(ce, shapeOfUnknownElements);
-  applyPatch(ce, integratePolynomialPowers);
+  // Minimize and the special functions lean on these; an engine declaring analytic alone has them too.
+  applyNativeHeadPatches(ce);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);

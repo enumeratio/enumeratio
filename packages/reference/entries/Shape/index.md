@@ -11,6 +11,11 @@ signatures:
     library: enumeratio-analytic
     type: (value) -> tuple
     overrides: compute-engine
+  - call: Shape(value) -> tuple
+    description: Return the shape tuple of an expression.
+    library: enumeratio-evaluation
+    type: (value) -> tuple
+    overrides: compute-engine
 names:
   wolfram: Dimensions
 stub: engine

@@ -16,16 +16,16 @@ isprime-neg-1-is-false	Scope	test	[IsPrime, -1]	False	$-1$ is not prime								d
 isprime-neg-4-is-false	Scope	test	[IsPrime, -4]	False									domain	Mathlib's Nat.Prime is defined over ℕ only, so it can't take a negative argument; compute-engine's IsPrime answers the rest.					domain	primal takes non-negative machine-size integers; compute-engine's IsPrime answers the rest.
 isprime-neg-2-is-true	Scope	test	[IsPrime, -2]	True	$-2$ is prime: its associate 2 is				convention	compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates; Sage's is_prime() only accepts positive primes and answers False.	convention	compute-engine, like Wolfram's PrimeQ, calls -2 prime, an associate of 2; SymPy's isprime takes only positive primes.	domain	compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates; Mathlib's Nat.Prime is defined over ℕ only, so it can't take a negative argument.	convention	compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates; Oscar's is_prime only accepts non-negative integers.	convention	compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates; Nemo's is_prime only accepts non-negative integers.	domain	primal takes non-negative machine-size integers; compute-engine's IsPrime answers the rest.
 a-unit-is-not-prime	Scope	test	[IsPrime, 1]	False	a unit is not prime															
-i-a-unit-is-not-prime	Scope	test	[IsPrime, [Complex, 0, 1]]	False	$i$, a unit, is not prime															
+i-a-unit-is-not-prime	Scope	test	[IsPrime, [Complex, 0, 1]]	False	$i$, a unit, is not prime						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
 0-is-not-prime	Scope	test	[IsPrime, 0]	False	0 is not prime															
-the-ramified-prime-above-2	Scope	test	[IsPrime, [Complex, 1, 1]]	True	the ramified prime above 2															
-a-prime-above-5	Scope	test	[IsPrime, [Complex, 2, 1]]	True	a prime above 5															
-the-other-prime-above-5	Scope	test	[IsPrime, [Complex, 2, -1]]	True	the other prime above 5															
-a-prime-above-13	Scope	test	[IsPrime, [Complex, 3, 2]]	True	a prime above 13															
-a-composite-of-norm-25	Scope	test	[IsPrime, [Complex, 3, 4]]	False	a composite of norm 25															
-an-associate-of-a-composite-is-still-composite	Scope	test	[IsPrime, [Complex, -3, -4]]	False	an associate of a composite is still composite															
-a-real-prime-s-associate-by-the-unit-i-is-still	Scope	test	[IsPrime, [Complex, 0, 7]]	True	a real prime's associate by the unit $i$ is still prime															
-a-large-norm-composite	Scope	test	[IsPrime, [Complex, 123, 456]]	False	a large-norm composite															
+the-ramified-prime-above-2	Scope	test	[IsPrime, [Complex, 1, 1]]	True	the ramified prime above 2						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
+a-prime-above-5	Scope	test	[IsPrime, [Complex, 2, 1]]	True	a prime above 5						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
+the-other-prime-above-5	Scope	test	[IsPrime, [Complex, 2, -1]]	True	the other prime above 5						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
+a-prime-above-13	Scope	test	[IsPrime, [Complex, 3, 2]]	True	a prime above 13						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
+a-composite-of-norm-25	Scope	test	[IsPrime, [Complex, 3, 4]]	False	a composite of norm 25						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
+an-associate-of-a-composite-is-still-composite	Scope	test	[IsPrime, [Complex, -3, -4]]	False	an associate of a composite is still composite						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
+a-real-prime-s-associate-by-the-unit-i-is-still	Scope	test	[IsPrime, [Complex, 0, 7]]	True	a real prime's associate by the unit $i$ is still prime						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
+a-large-norm-composite	Scope	test	[IsPrime, [Complex, 123, 456]]	False	a large-norm composite						domain	SymPy's isprime takes integers and raises on a Gaussian one; ours decides primality in Z[i].								
 3-3-mod-4-stays-prime-in-z-i	Scope	test	[IsPrime, 3, [KeyValuePair, Over, GaussianIntegers]]	True	3, 3 mod 4, stays prime in $\mathbb{Z}[i]$															
 7-3-mod-4-stays-prime-in-z-i	Scope	test	[IsPrime, 7, [KeyValuePair, Over, GaussianIntegers]]	True	7, 3 mod 4, stays prime in $\mathbb{Z}[i]$															
 19-3-mod-4-stays-prime-in-z-i	Scope	test	[IsPrime, 19, [KeyValuePair, Over, GaussianIntegers]]	True	19, 3 mod 4, stays prime in $\mathbb{Z}[i]$															
@@ -48,8 +48,8 @@ isprime-17	Properties		[IsPrime, 17]	True	17, a Fermat prime $2^4+1$
 isprime-12	Properties		[IsPrime, 12]	False	Composite: $2^2\cdot 3$															
 isprime-23	Properties		[IsPrime, 23]	True	23, the ninth prime															
 isprime-24	Properties		[IsPrime, 24]	False	Composite: $2^3\cdot 3$															
-isprime-list-7-11	Properties		[IsPrime, [List, 7, 11]]	[List, True, True]	Threads over a list															
-isprime-list-5-7-2	Properties		[IsPrime, [List, 5, 7, 2]]	[List, True, True, True]	Threads over a list; 2 is the even prime															
+isprime-list-7-11	Properties		[IsPrime, [List, 7, 11]]	[List, True, True]	Threads over a list						threading	compute-engine's IsPrime threads over the list; SymPy's isprime takes one integer.								
+isprime-list-5-7-2	Properties		[IsPrime, [List, 5, 7, 2]]	[List, True, True, True]	Threads over a list; 2 is the even prime						threading	compute-engine's IsPrime threads over the list; SymPy's isprime takes one integer.								
 isprime-19	Properties		[IsPrime, 19]	True	19, the eighth prime															
 divisorsum-19-function-1-1-isprime	Properties		[DivisorSum, 19, [Function, [Block, _1], _1], IsPrime]	19	A prime is its own only prime divisor	Unreadable														
 filter-divisors-625-isprime	Properties		[Filter, [Divisors, 625], IsPrime]	[List, 5]																

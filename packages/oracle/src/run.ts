@@ -512,6 +512,11 @@ def enumeratio_broadcast(f, *args):
 `;
 
 const PY_VALUE = `
+import sys
+# An exact power like 2**1000000 prints in full: the default 4300-digit cap on int-to-str raises.
+if hasattr(sys, "set_int_max_str_digits"):
+    sys.set_int_max_str_digits(0)
+
 def enumeratio_value(x):
     if isinstance(x, list):
         return "[" + ", ".join(enumeratio_value(e) for e in x) + "]"

@@ -172,6 +172,21 @@ export const boundVariables = (expr: MathJSON): Set<string> => transformVariable
  * point is outside the domain the transform is defined on and decides nothing. */
 export const positiveVariables = (expr: MathJSON): Set<string> => transformVariables(expr, 2, 3);
 
+/** The variables a derivative is taken in (`D(f, x)`, `D(f, [x, 2])`): differentiating at a number
+ * raises in SymPy and Sage, so the answer is compared in the variable instead of at a sample. */
+export function derivativeVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "D") {
+    for (const spec of operands.slice(1)) {
+      const name = bareName(Array.isArray(spec) && (spec[0] === "List" || spec[0] === "Tuple") ? spec[1] : spec);
+      if (name !== undefined) found.add(name);
+    }
+  }
+  for (const operand of operands) derivativeVariables(operand, found);
+  return found;
+}
+
 const rationalLiteral = ([n, d]: readonly [number, number]): MathJSON => ["Rational", n, d];
 
 /** `expr` with every occurrence of a name in `subs` replaced by its rational — the head of a
@@ -225,7 +240,11 @@ function trialSources(
   const positive = new Set([...positiveVariables(expr), ...positiveVariables(expected)]);
   const all = trialSubstitution(freeSymbols, trial, discreteVariables(expr), positive);
   const steps = system === "wolfram" ? stepVariables(expr) : new Set<string>();
-  const bound = new Set([...boundVariables(expr), ...boundVariables(expected)]);
+  const bound = new Set([
+    ...boundVariables(expr),
+    ...boundVariables(expected),
+    ...(system === "wolfram" ? [] : derivativeVariables(expr)),
+  ]);
   const subs = new Map([...all].filter(([name]) => !steps.has(name) && !bound.has(name)));
   const theirs = emit(substituteFreeSymbols(expr, subs), system);
   const ours = emit(substituteFreeSymbols(expected, subs), system);

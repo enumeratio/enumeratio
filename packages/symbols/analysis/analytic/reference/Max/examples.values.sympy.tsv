@@ -17,6 +17,6 @@ commutative-order-doesn-t-matter	enumeratio_equal(enumeratio_max(3, 7), enumerat
 multiple-list-arguments-are-flattened-into-one	enumeratio_equal(enumeratio_max([3, 1, 4], [9, 2]), 9)	True	
 idempotent-max-x-x-x	enumeratio_max(Symbol("x"), Symbol("x"))	True	
 with-no-arguments-compute-engine-returns-nan	enumeratio_max()	-oo	disagree
-nan-poisons-the-result-overriding-every-other	enumeratio_max(nan, 3)		
+nan-poisons-the-result-overriding-every-other	enumeratio_max(nan, 3)	ValueError: The argument 'nan' is not comparable.	error
 the-max-of-an-empty-list-is-nan-too	enumeratio_max([])	-oo	disagree
 max-with-complexinfinity-stays-unevaluated	enumeratio_max(zoo, 1)	ValueError: The argument 'zoo' is not comparable.	error

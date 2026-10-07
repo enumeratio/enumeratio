@@ -1,35 +1,35 @@
-id	section	role	expr	expected	known	source	caption	triage	wolfram.kind	wolfram.note	rust.kind	rust.note
-no-primes-are-1			[PrimePi, 1]	0			No primes are ≤ 1					
-primepi-2			[PrimePi, 2]	1								
-primepi-15			[PrimePi, 15]	6								
-primepi-100			[PrimePi, 100]	25								
-threads-element-wise-over-a-list-as-wolfram-s	Scope		[PrimePi, [List, 10, 100]]	[List, 4, 25]			Threads element-wise over a list, as Wolfram's Listable heads do				threading	compute-engine's PrimePi is Listable and threads over the list; the Rust crate takes scalars only.
-rational-arguments-the-primes-up-to-7-2-are-2	Scope		[PrimePi, [Rational, 7, 2]]	2			Rational arguments: the primes up to $7/2$ are 2 and 3				domain	The Rust adapter takes integers here; compute-engine's PrimePi extends past them.
-real-arguments	Scope		[PrimePi, 15.25]	6			Real arguments				domain	The Rust adapter takes integers here; compute-engine's PrimePi extends past them.
-the-primes-below-a-million	Scope		[PrimePi, 1000000]	78498			The primes below a million					
-listable-threads-over-a-list	Scope		[PrimePi, [List, 3, 5, 17, 25]]	[List, 2, 3, 7, 9]			Listable: threads over a list				threading	compute-engine's PrimePi is Listable and threads over the list; the Rust crates take scalars only.
-primepi-10-11	Scope		[PrimePi, 100000000000]	4118054813			Exact at $10^{11}$					
-primepi-10-12	Scope	test	[PrimePi, 1000000000000]	37607912018			Exact at $10^{12}$, the last size answered					
-primepi-1-plus-10-pow-17	Scope	triage	[PrimePi, [Add, 1, [Power, 10, 17]]]	[PrimePi, {num: "100000000000000001"}]				gap	unclassified	PrimePi past 10^15 is not computed here.		
-nthprime-range-1-primepi-100	Applications		[NthPrime, [Range, 1, [PrimePi, 100]]]	[List, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]			The 25 primes below 100, via the count					
-primepi-5-000	Applications		[PrimePi, 5000]	669			669 primes up to 5000					
-same-inverse-relation-viewed-from-primepi-s-side	Properties		[Equal, [PrimePi, [NthPrime, 50]], 50]	True			Same inverse relation viewed from PrimePi's side. See [[NthPrime]]					
-primepi-nthprime-100	Properties		[PrimePi, [NthPrime, 100]]	100			Counting up to the 100th prime returns 100					
-primepi-1-000	Properties		[PrimePi, 1000]	168			168 primes below a thousand					
-primepi-3	Properties	test	[PrimePi, 3]	2	2	Wolfram MathematicalFunctionData, PrimePi	Counts 2 and 3					
-primepi-4	Properties	test	[PrimePi, 4]	2	2	Wolfram MathematicalFunctionData, PrimePi	No new prime at 4					
-primepi-5	Properties	test	[PrimePi, 5]	3	3	Wolfram MathematicalFunctionData, PrimePi	5 is the third prime					
-primepi-6	Properties	test	[PrimePi, 6]	3	3	Wolfram MathematicalFunctionData, PrimePi	Flat across composites					
-primepi-7	Properties	test	[PrimePi, 7]	4	4	Wolfram MathematicalFunctionData, PrimePi	Steps up at each prime					
-primepi-8	Properties	test	[PrimePi, 8]	4	4	Wolfram MathematicalFunctionData, PrimePi	No change from 7					
-primepi-9	Properties	test	[PrimePi, 9]	4	4	Wolfram MathematicalFunctionData, PrimePi	Still 4 at 9					
-primepi-10	Properties		[PrimePi, 10]	4	4	Wolfram MathematicalFunctionData, PrimePi	Still 4: the primes up to 10 are 2, 3, 5, 7					
-primepi-11	Properties	test	[PrimePi, 11]	5	5	Wolfram MathematicalFunctionData, PrimePi	Jumps to 5 at the prime 11					
-primepi-12	Properties	test	[PrimePi, 12]	5	5	Wolfram MathematicalFunctionData, PrimePi	Constant on gaps					
-primepi-13	Properties	test	[PrimePi, 13]	6	6	Wolfram MathematicalFunctionData, PrimePi	Jumps to 6 at 13					
-primepi-14	Properties	test	[PrimePi, 14]	6	6	Wolfram MathematicalFunctionData, PrimePi	Unchanged between primes					
-primepi-16	Properties	test	[PrimePi, 16]	6	6	Wolfram MathematicalFunctionData, PrimePi	A plateau from 13 to 16					
-primepi-17	Properties	test	[PrimePi, 17]	7	7	Wolfram MathematicalFunctionData, PrimePi	Jumps to 7 at 17					
-primepi-18	Properties	test	[PrimePi, 18]	7	7	Wolfram MathematicalFunctionData, PrimePi	Remains 7 until 19					
-no-primes-are-a-negative-number	Possible issues		[PrimePi, -1]	0			No primes are ≤ a negative number				domain	primal takes non-negative machine-size integers; compute-engine's PrimePi answers the rest.
-past-10-12-the-call-stays-symbolic	Possible issues		[PrimePi, 10000000000000]	[PrimePi, 10000000000000]			Past $10^{12}$ the exact tiers decline, so the call stays unevaluated at once instead of counting natively until an iteration cap		unevaluated	Wolfram counts it (346065536839); ours declines past 10^12, the limit of the Lucy_Hedgehog tier.		
+id	section	role	expr	expected	known	source	caption	triage	wolfram.kind	wolfram.note	sympy.kind	sympy.note	rust.kind	rust.note
+no-primes-are-1			[PrimePi, 1]	0			No primes are ≤ 1							
+primepi-2			[PrimePi, 2]	1										
+primepi-15			[PrimePi, 15]	6										
+primepi-100			[PrimePi, 100]	25										
+threads-element-wise-over-a-list-as-wolfram-s	Scope		[PrimePi, [List, 10, 100]]	[List, 4, 25]			Threads element-wise over a list, as Wolfram's Listable heads do						threading	compute-engine's PrimePi is Listable and threads over the list; the Rust crate takes scalars only.
+rational-arguments-the-primes-up-to-7-2-are-2	Scope		[PrimePi, [Rational, 7, 2]]	2			Rational arguments: the primes up to $7/2$ are 2 and 3						domain	The Rust adapter takes integers here; compute-engine's PrimePi extends past them.
+real-arguments	Scope		[PrimePi, 15.25]	6			Real arguments						domain	The Rust adapter takes integers here; compute-engine's PrimePi extends past them.
+the-primes-below-a-million	Scope		[PrimePi, 1000000]	78498			The primes below a million							
+listable-threads-over-a-list	Scope		[PrimePi, [List, 3, 5, 17, 25]]	[List, 2, 3, 7, 9]			Listable: threads over a list						threading	compute-engine's PrimePi is Listable and threads over the list; the Rust crates take scalars only.
+primepi-10-11	Scope		[PrimePi, 100000000000]	4118054813			Exact at $10^{11}$							
+primepi-10-12	Scope	test	[PrimePi, 1000000000000]	37607912018			Exact at $10^{12}$, the last size answered							
+primepi-1-plus-10-pow-17	Scope	triage	[PrimePi, [Add, 1, [Power, 10, 17]]]	[PrimePi, {num: "100000000000000001"}]				gap	unclassified	PrimePi past 10^15 is not computed here.				
+nthprime-range-1-primepi-100	Applications		[NthPrime, [Range, 1, [PrimePi, 100]]]	[List, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]			The 25 primes below 100, via the count							
+primepi-5-000	Applications		[PrimePi, 5000]	669			669 primes up to 5000							
+same-inverse-relation-viewed-from-primepi-s-side	Properties		[Equal, [PrimePi, [NthPrime, 50]], 50]	True			Same inverse relation viewed from PrimePi's side. See [[NthPrime]]							
+primepi-nthprime-100	Properties		[PrimePi, [NthPrime, 100]]	100			Counting up to the 100th prime returns 100							
+primepi-1-000	Properties		[PrimePi, 1000]	168			168 primes below a thousand							
+primepi-3	Properties	test	[PrimePi, 3]	2	2	Wolfram MathematicalFunctionData, PrimePi	Counts 2 and 3							
+primepi-4	Properties	test	[PrimePi, 4]	2	2	Wolfram MathematicalFunctionData, PrimePi	No new prime at 4							
+primepi-5	Properties	test	[PrimePi, 5]	3	3	Wolfram MathematicalFunctionData, PrimePi	5 is the third prime							
+primepi-6	Properties	test	[PrimePi, 6]	3	3	Wolfram MathematicalFunctionData, PrimePi	Flat across composites							
+primepi-7	Properties	test	[PrimePi, 7]	4	4	Wolfram MathematicalFunctionData, PrimePi	Steps up at each prime							
+primepi-8	Properties	test	[PrimePi, 8]	4	4	Wolfram MathematicalFunctionData, PrimePi	No change from 7							
+primepi-9	Properties	test	[PrimePi, 9]	4	4	Wolfram MathematicalFunctionData, PrimePi	Still 4 at 9							
+primepi-10	Properties		[PrimePi, 10]	4	4	Wolfram MathematicalFunctionData, PrimePi	Still 4: the primes up to 10 are 2, 3, 5, 7							
+primepi-11	Properties	test	[PrimePi, 11]	5	5	Wolfram MathematicalFunctionData, PrimePi	Jumps to 5 at the prime 11							
+primepi-12	Properties	test	[PrimePi, 12]	5	5	Wolfram MathematicalFunctionData, PrimePi	Constant on gaps							
+primepi-13	Properties	test	[PrimePi, 13]	6	6	Wolfram MathematicalFunctionData, PrimePi	Jumps to 6 at 13							
+primepi-14	Properties	test	[PrimePi, 14]	6	6	Wolfram MathematicalFunctionData, PrimePi	Unchanged between primes							
+primepi-16	Properties	test	[PrimePi, 16]	6	6	Wolfram MathematicalFunctionData, PrimePi	A plateau from 13 to 16							
+primepi-17	Properties	test	[PrimePi, 17]	7	7	Wolfram MathematicalFunctionData, PrimePi	Jumps to 7 at 17							
+primepi-18	Properties	test	[PrimePi, 18]	7	7	Wolfram MathematicalFunctionData, PrimePi	Remains 7 until 19							
+no-primes-are-a-negative-number	Possible issues		[PrimePi, -1]	0			No primes are ≤ a negative number						domain	primal takes non-negative machine-size integers; compute-engine's PrimePi answers the rest.
+past-10-12-the-call-stays-symbolic	Possible issues		[PrimePi, 10000000000000]	[PrimePi, 10000000000000]			Past $10^{12}$ the exact tiers decline, so the call stays unevaluated at once instead of counting natively until an iteration cap		unevaluated	Wolfram counts it (346065536839); ours declines past 10^12, the limit of the Lucy_Hedgehog tier.	resource	SymPy's primepi hit the scan's 30 s cap at 10^13; ours declines past 10^12.		

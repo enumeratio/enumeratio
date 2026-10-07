@@ -24,7 +24,7 @@ cos-3-pi-5-frac-1-sqrt-5-4	cos((Rational(3, 5) * pi))	1/4 - sqrt(5)/4
 reduced-into-the-first-quadrant-by-symmetry	cos((Rational(11, 6) * pi))	sqrt(3)/2	
 interval-arithmetic-the-image-of-pi-3-pi-2-is-0			
 uncertainty-propagation-cos-2-pm-0-01-approx-0			
-cos-infty-should-be-the-oscillation-range-1-1	cos(oo)		
+cos-infty-should-be-the-oscillation-range-1-1	cos(oo)	AccumBounds(-1, 1)	disagree
 an-imaginary-argument-rewrites-to-cosh-cos-ix	cos((I * Symbol("x")))	cosh(x)	disagree
 evenness-drops-the-sign-of-a-symbolic-argument	cos((-Symbol("x")))	True	
 cos-arccos-x-x-for-every-x			
@@ -71,5 +71,5 @@ n-cos-1-over-2-plus-1-over-2-times-pi-pow-2	N((S(cos((Rational(1, 2) + (Rational
 n-i-times-sin-1-over-2-plus-cos-1-over-2-pow-3	N((S((((0 + 1*I) * sin(Rational(1, 2))) + cos(Rational(1, 2))))**3), 30)		
 as-with-sin-a-non-special-numeric-argument-stays	cos(2)	cos(2)	
 pi-24-is-past-the-automatic-special-angle-table	cos((Rational(1, 24) * pi))	sqrt(1/2 - sqrt(2)/4)/2 + sqrt(3)*sqrt(sqrt(2)/4 + 1/2)/2	
-cos-complexinfinity-is-indeterminate-for-the	cos(zoo)		
+cos-complexinfinity-is-indeterminate-for-the	cos(zoo)	nan	disagree
 cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden	cos((S(pi) / 5))	1/4 + sqrt(5)/4	

@@ -2,6 +2,7 @@ import { expect, test } from "vite-plus/test";
 import {
   alignFunctions,
   boundVariables,
+  derivativeVariables,
   discreteVariables,
   interpretSymbolicAgreement,
   leavesCall,
@@ -311,4 +312,15 @@ test("a transform's result variable is sampled at positive values, and the one i
   expect(source).not.toMatch(/Rational\[-\d+, \d+\]/);
   // The integration variable stays the call's own: with `t` a number it would be no transform at all.
   expect(source).toContain("LaplaceTransform[Divide[1, Sqrt[t]], t, Rational[7, 3]]");
+});
+
+test("a derivative's variable is not sampled at a number, which SymPy cannot differentiate at", () => {
+  expect([...derivativeVariables(["D", ["Power", "x", 3], ["List", "x", 2]] as never)]).toEqual(["x"]);
+  const source = symbolicAgreementSource(
+    "sympy",
+    ["D", ["Power", "x", 3], "x"] as never,
+    ["Multiply", 3, ["Power", "x", 2]] as never,
+    ["x"],
+  );
+  expect(source).not.toContain("Rational(7, 3)");
 });

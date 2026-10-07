@@ -19,7 +19,7 @@ n-crt	N(Symbol("crt"), 30)
 n-crt-47	N(Symbol("crt"), 30)		
 n-2-pow-1-000-000	N((S(2)**1000000), 30)		
 n-pi-pow-10-list-positiveinfinity-5	N((S(pi)**10), 30)		
-n-pi-pow-10-list-positiveinfinity-1	N((S(pi)**10), 30)		
+n-pi-pow-10-list-positiveinfinity-1	N((S(pi)**10), 30)	93648.0474760830209737166901849	disagree
 n-1-over-neg-x-plus-exponentiale-times-2x-plus	N(((S(1) / ((-Symbol("x")) + E)) * ((2 * Symbol("x")) + pi)), 30)		
 n-1-minus-sqrt-1-minus-exponentiale-pow-neg-1	N((1 + (-sqrt((1 + (-(S(E)**-1000)))))), 30)		
 n-k-25	N(Symbol("k"), 30)		

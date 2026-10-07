@@ -83,7 +83,7 @@ export function compare(ours: string, theirs: string, tolerance = 1e-9): Verdict
   return normalise(ours) === normalise(theirs) ? "agree" : "disagree";
 }
 
-/** A Python literal — nested lists/tuples of numbers and booleans — parsed into a `Tree`
+/** A Python literal — nested lists/tuples of numbers, booleans and strings — parsed into a `Tree`
  * (structural.ts), or `undefined` if `text` isn't one. Tuples and lists both become plain
  * arrays: Sage's `[(2, 2), (3, 1)]` (a list of tuples, from `list(factor(n))`) lines up
  * element-wise against our `[["Tuple",2,2],["Tuple",3,1]]` once both are just arrays. */
@@ -138,6 +138,12 @@ export function parsePython(text: string): Tree | undefined {
         return FAIL;
       }
       return items;
+    }
+    // A string, as MathJSON writes one: its text in single quotes.
+    const quoted = /^(?:'([^'\\]*)'|"([^"\\]*)")/.exec(s.slice(i));
+    if (quoted !== null) {
+      i += quoted[0].length;
+      return `'${quoted[1] ?? quoted[2]}'`;
     }
     if (s.startsWith("True", i)) {
       i += 4;
