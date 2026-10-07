@@ -310,6 +310,9 @@ const OVERRIDDEN = [
   "N",
   "NextPrime",
   "Norm",
+  // Not itself overridden -- the Normal of the Series of Zeta at 1 carries our StieltjesGamma
+  // terms, where a bare engine stops at the Laurent constant.
+  "Normal",
   "NthPrime",
   "Ordering",
   "Partition",
