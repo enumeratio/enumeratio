@@ -17,6 +17,7 @@ export const VUE_COMPONENTS: ReadonlySet<string> = new Set([
   // web/.vitepress/theme/index.mts (held to it by notatio-markup.test.ts)
   "Playground",
   "ElementsDemo",
+  "FieldPage",
   "ReferencePage",
   "ReferenceIndex",
   "ReferenceCatalog",
