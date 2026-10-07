@@ -21,7 +21,7 @@ notatio-out[display] {
 notatio-figure { display: inline-block; vertical-align: middle; line-height: 0; }
 notatio-figure svg { height: 2.5em; width: auto; max-width: 100%; overflow: visible; }
 notatio-figure[kind="diagram"] svg { height: 3.6em; }
-/* A strand kind is a Show, sized by its element and drawn without the card. */
+/* A kind lowered to a frame is a Show, sized by its element and drawn without the card. */
 notatio-figure > notatio-show { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; }
 notatio-figure .notatio-show { margin: 0; border: 0; background: none; }
 notatio-figure .notatio-show-layers { background: none !important; }

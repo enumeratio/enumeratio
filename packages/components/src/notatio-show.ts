@@ -15,6 +15,10 @@ import {
   drawTiles,
   type GestureHandling,
   edgeOf,
+  FIGURE_DEFAULTS,
+  FIGURE_HEADS,
+  type FigureHead,
+  figureLayerOf,
   fitView,
   GRADIENTS,
   gestureHandlingOf,
@@ -33,10 +37,6 @@ import {
   rulesOf,
   type SchemeColor,
   splitOptions,
-  STRAND_DEFAULT_BOUNDARY_STYLE,
-  STRAND_DEFAULT_COLOR_RULES,
-  strandLayer,
-  strandModelOf,
   type TileLayer,
   type Vec2,
   wheelZooms,
@@ -110,8 +110,8 @@ function bind(json: Json, params: ReadonlyMap<string, Json>): Json {
 interface ShowSpec {
   /** Draggable points, Wolfram's `Locator`: each one a variable's point, or its list of points. */
   readonly locators: readonly LocatorSpec[];
-  /** The tiled layer: `LatticeTiles(ring)`, `ArrayPlot(table)` or `StrandDiagram(diagram)`, its data. */
-  readonly tiles?: { readonly head: "LatticeTiles" | "ArrayPlot" | "StrandDiagram"; readonly data: Json };
+  /** The tiled layer: `LatticeTiles(ring)`, `ArrayPlot(table)` or a figure frame (`StrandDiagram`, `CellDiagram`, …), its data. */
+  readonly tiles?: { readonly head: "LatticeTiles" | "ArrayPlot" | FigureHead; readonly data: Json };
   readonly colorRules: readonly ColorRule[];
   readonly boundaryRules: readonly BoundaryRule[];
   readonly colorMixing: ColorMixing;
@@ -238,21 +238,16 @@ function specOf(json: Json): ShowSpec {
       });
       continue;
     }
-    if (head !== "LatticeTiles" && head !== "ArrayPlot" && head !== "StrandDiagram") continue;
+    const figure = FIGURE_HEADS.find((h) => h === head);
+    if (head === undefined || (head !== "LatticeTiles" && head !== "ArrayPlot" && !figure)) continue;
     const split = splitOptions(layer, declared(head));
-    tiles = { head, data: split.positional[0] };
-    // A strand diagram has no look without rules: its own stand in for any the author leaves out.
-    const own = head === "StrandDiagram";
+    tiles = { head: head as NonNullable<ShowSpec["tiles"]>["head"], data: split.positional[0] };
+    // A figure frame has no look without rules: its own stand in for any the author leaves out.
+    const own = figure ? FIGURE_DEFAULTS[figure] : undefined;
     const [colorsGiven, edgesGiven] = [split.options.has("ColorRules"), split.options.has("BoundaryStyle")];
-    defaulted = { colors: own && !colorsGiven, edges: own && !edgesGiven };
-    const colors = rulesOf(
-      own && !colorsGiven ? STRAND_DEFAULT_COLOR_RULES : split.options.get("ColorRules"),
-      colorRuleOf,
-    );
-    const edges = rulesOf(
-      own && !edgesGiven ? STRAND_DEFAULT_BOUNDARY_STYLE : split.options.get("BoundaryStyle"),
-      boundaryRuleOf,
-    );
+    defaulted = { colors: !!own && !colorsGiven, edges: !!own && !edgesGiven };
+    const colors = rulesOf(own && !colorsGiven ? own.colors : split.options.get("ColorRules"), colorRuleOf);
+    const edges = rulesOf(own && !edgesGiven ? own.edges : split.options.get("BoundaryStyle"), boundaryRuleOf);
     colorRules = colors.rules;
     boundaryRules = edges.rules;
     colorMixing = colorMixingOf(split.options.get("ColorMixing"));
@@ -672,6 +667,7 @@ export class NotatioShow extends LitElement {
       boundaryRules: spec.boundaryRules,
       colorMixing: spec.colorMixing,
       selection: this._selection,
+      ink: resolvePalette({ palette: this.ground }).foreground,
       fill: 0.86,
       phase: 0,
       budgetMs: FRAME_BUDGET,
@@ -1212,11 +1208,8 @@ function modulusOf(ring: Json): number {
  */
 async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): Promise<ShowLayer | string> {
   if (tiles === undefined)
-    return "Show needs a layer: LatticeTiles(ring, …), ArrayPlot(table, …) or StrandDiagram(diagram, …).";
-  if (tiles.head === "StrandDiagram") {
-    const model = strandModelOf(tiles.data);
-    return typeof model === "string" ? model : strandLayer(model);
-  }
+    return "Show needs a layer: LatticeTiles(ring, …), ArrayPlot(table, …), StrandDiagram(diagram, …), CellDiagram(cells, …), TreeDiagram(tree, …) or PathDiagram(path, …).";
+  if (tiles.head !== "LatticeTiles" && tiles.head !== "ArrayPlot") return figureLayerOf(tiles.head, tiles.data);
   if (tiles.head === "ArrayPlot") {
     // `MultiplicationTable(ring, ElementOrder -> ChineseRemainder)`: how rows and columns list the ring.
     const table = splitOptions(tiles.data, new Set(["ElementOrder"]));

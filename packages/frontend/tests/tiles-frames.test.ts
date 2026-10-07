@@ -109,11 +109,11 @@ describe("a figure layer", () => {
   });
 
   it("is fitted whole, with room, for a fixed view", () => {
-    // x spans 0 … 6, y spans 0 … 9: the height binds.
+    // Places span x 0 … 6, y 0 … 9; the marks' radius 0.4 widens that: the height binds.
     const { center, extent } = fitView(toy, 2, 0.5);
     expect(center).toEqual([3, 4.5]);
-    expect(extent).toBe(5);
-    expect(fitView(toy, 0.5, 0.5).extent).toBe(7);
+    expect(extent).toBeCloseTo(5.4);
+    expect(fitView(toy, 0.5, 0.5).extent).toBeCloseTo(7.8);
   });
 
   it("is hit at an address, else at a link, else nowhere", () => {
