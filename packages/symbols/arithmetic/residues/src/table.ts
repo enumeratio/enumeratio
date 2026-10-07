@@ -1,5 +1,5 @@
-// ℤ/n's multiplication table as a layer to draw: cell (i, j) holds i·j mod n, row i going down
-// and column j across, and answers what a `Show`'s rules ask of it — properties of its value
+// ℤ/n's multiplication table as a layer to draw: cell (i, j) holds aᵢ·aⱼ mod n, row i going down
+// and column j across, the elements aᵢ in natural order or by their Chinese remainders, and answers what a `Show`'s rules ask of it — properties of its value
 // (`IsUnit`, `IsIdempotent`, `IsSquare`), values (`Value`, `Row`, `Column`, `Difference`, `Order`)
 // and relations to a selected cell (`SameValue`, `SquareRoots`, `Associates`, `Multiples`).
 //
@@ -52,6 +52,30 @@ export const TABLE_RELATIONS = [
   "Multiples",
 ] as const;
 
+/**
+ * How a table lists ℤ/n's elements along its rows and columns: `Natural` (0, 1, …, n − 1), or
+ * `ChineseRemainder`, by their residues modulo each prime power of n, smallest first, so the
+ * table falls into blocks: ℤ/15's is ℤ/3's table with ℤ/5's in each cell.
+ */
+export type ElementOrder = "Natural" | "ChineseRemainder";
+
+/** n's prime powers, smallest prime first. */
+function primePowers(n: number): number[] {
+  const out: number[] = [];
+  let m = n;
+  for (let p = 2; p * p <= m; p++) {
+    if (m % p !== 0) continue;
+    let q = 1;
+    while (m % p === 0) {
+      m /= p;
+      q *= p;
+    }
+    out.push(q);
+  }
+  if (m > 1) out.push(m);
+  return out;
+}
+
 export interface ResidueTable {
   readonly title: string;
   readonly modulus: number;
@@ -60,6 +84,10 @@ export interface ResidueTable {
   /** The cells there are: rows and columns 0 … n − 1. */
   readonly bounds: { readonly i: Vec2; readonly j: Vec2 };
   readonly grid: readonly [Vec2, Vec2];
+  /** The grid `GridLines -> Automatic` draws: around the Chinese remainder blocks, when listed by them. */
+  readonly autoGrid?: readonly [number, number];
+  /** Grid lines run between cells, half a cell off the lattice of their centers. */
+  readonly gridOffset: readonly [number, number];
   gridLabel(axis: 0 | 1, k: number): string;
   home(): { center: Vec2; extent: number };
   known(i: number, j: number): boolean;
@@ -72,11 +100,18 @@ export interface ResidueTable {
 }
 
 /** ℤ/n's multiplication table; undefined for a modulus below 2 or past `MAX_MODULUS`. */
-export function multiplicationTable(n: number): ResidueTable | undefined {
+export function multiplicationTable(n: number, listing: ElementOrder = "Natural"): ResidueTable | undefined {
   if (!Number.isInteger(n) || n < 2 || n > MAX_MODULUS) return undefined;
   const rad = radical(n);
+  const powers = primePowers(n);
+  const elements = [...Array(n).keys()];
+  if (listing === "ChineseRemainder")
+    elements.sort((a, b) => {
+      for (const q of powers) if (a % q !== b % q) return (a % q) - (b % q);
+      return 0;
+    });
   const inside = (i: number, j: number): boolean => i >= 0 && j >= 0 && i < n && j < n;
-  const valueAt = (i: number, j: number): number => (i * j) % n;
+  const valueAt = (i: number, j: number): number => (elements[i]! * elements[j]!) % n;
 
   // Facts about each residue, computed once a residue is first asked about.
   const squares = new Uint8Array(n);
@@ -144,7 +179,11 @@ export function multiplicationTable(n: number): ResidueTable | undefined {
       [1, 0],
       [0, 1],
     ],
-    gridLabel: (_axis, k) => String(k),
+    ...(listing === "ChineseRemainder" && powers.length > 1
+      ? { autoGrid: [n / powers[0]!, n / powers[0]!] as const }
+      : {}),
+    gridOffset: [-0.5, -0.5],
+    gridLabel: (_axis, k) => (k >= 0 && k < n ? String(elements[k]) : ""),
     home: () => ({ center: [(n - 1) / 2, -(n - 1) / 2], extent: (n / 2) * 1.04 }),
     known: () => true,
     prepare: () => {},
@@ -155,11 +194,11 @@ export function multiplicationTable(n: number): ResidueTable | undefined {
         case "Value":
           return valueAt(i, j);
         case "Row":
-          return i;
+          return elements[i];
         case "Column":
-          return j;
+          return elements[j];
         case "Difference":
-          return (((j - i) % n) + n) % n;
+          return (((elements[j]! - elements[i]!) % n) + n) % n;
         case "Order":
           return order(valueAt(i, j));
         case "Modulus":
@@ -174,7 +213,7 @@ export function multiplicationTable(n: number): ResidueTable | undefined {
         case "SameValue":
           return v === s;
         case "SquareRoots":
-          return i === j && (i * i) % n === s;
+          return i === j && v === s;
         case "SameRow":
           return i === si;
         case "SameColumn":
@@ -193,7 +232,7 @@ export function multiplicationTable(n: number): ResidueTable | undefined {
       ["units", String([...Array(n).keys()].filter((v) => gcd(v, n) === 1).length)],
     ],
     describe: (i, j) => ({
-      title: `${i} · ${j} ≡ ${valueAt(i, j)} (mod ${n})`,
+      title: `${elements[i]} · ${elements[j]} ≡ ${valueAt(i, j)} (mod ${n})`,
       rows: [
         ["unit", String(gcd(valueAt(i, j), n) === 1)],
         ["order", String(order(valueAt(i, j)) || "—")],

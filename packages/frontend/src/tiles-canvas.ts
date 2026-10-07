@@ -188,6 +188,8 @@ export function drawLatticeLines(
   step: GridStep,
   style: LineStyle,
   origin = false,
+  /** Where the lines are anchored, in lattice coordinates: half a cell for a table, between its cells. */
+  offset: Vec2 = [0, 0],
 ): void {
   const pixels = height / (2 * view.extent);
   const toScreen = (p: Vec2): Vec2 => [
@@ -215,11 +217,12 @@ export function drawLatticeLines(
     const [from, to] = origin
       ? [0, 0]
       : [
-          Math.ceil(Math.min((c - reach) / spacing, (c + reach) / spacing)),
-          Math.floor(Math.max((c - reach) / spacing, (c + reach) / spacing)),
+          Math.ceil(Math.min((c - reach) / spacing, (c + reach) / spacing)) - 1,
+          Math.floor(Math.max((c - reach) / spacing, (c + reach) / spacing)) + 1,
         ];
+    const shift = latticePoint(basis, offset[0], offset[1]);
     for (let k = from; k <= to; k++) {
-      const base: Vec2 = [stepVec[0] * k, stepVec[1] * k];
+      const base: Vec2 = [stepVec[0] * k + shift[0], stepVec[1] * k + shift[1]];
       const t = (view.center[0] - base[0]) * unit[0] + (view.center[1] - base[1]) * unit[1];
       const foot: Vec2 = [base[0] + unit[0] * t, base[1] + unit[1] * t];
       const a = toScreen([foot[0] - unit[0] * reach, foot[1] - unit[1] * reach]);

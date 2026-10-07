@@ -43,6 +43,10 @@ type Json = unknown;
 
 /** A layer of tiles as Show draws it: the tiles, plus its frame and how to label it. */
 interface ShowLayer extends TileLayer {
+  /** The grid `GridLines -> Automatic` draws, when the layer has one of its own. */
+  readonly autoGrid?: readonly [number, number];
+  /** Where its grid lines are anchored, in lattice coordinates: between a table's cells. */
+  readonly gridOffset?: Vec2;
   readonly title: string;
   readonly grid: readonly [Vec2, Vec2];
   gridLabel(axis: 0 | 1, k: number): string;
@@ -96,7 +100,8 @@ interface ShowSpec {
   readonly colorMixing: ColorMixing;
   /** Rules whose test or style didn't read. */
   readonly unread: number;
-  readonly grid?: { readonly step: readonly [number, number]; readonly style: LineStyle };
+  /** `auto`: `GridLines -> Automatic`, whose step is the layer's own grid when it has one. */
+  readonly grid?: { readonly step: readonly [number, number]; readonly auto: boolean; readonly style: LineStyle };
   readonly axes?: { readonly style: LineStyle; readonly ticks: boolean };
   readonly aspect: "Uniform" | "True";
 }
@@ -136,7 +141,11 @@ function specOf(json: Json): ShowSpec {
     headOf(gridLines) === "List" ? argsOf(gridLines) : gridLines === "Automatic" ? [gridLines, gridLines] : [];
   const step = specs.slice(0, 2).map((g) => (g === "Automatic" ? GRID_STEP : numberOf(g, 0))) as [number, number];
   const grid = step.some((k) => k > 0)
-    ? { step, style: lineStyleOf(options.get("GridLinesStyle"), { color: "#ffffff", width: 1, opacity: 0.16 }) }
+    ? {
+        step,
+        auto: gridLines === "Automatic",
+        style: lineStyleOf(options.get("GridLinesStyle"), { color: "#ffffff", width: 1, opacity: 0.16 }),
+      }
     : undefined;
   const axes =
     options.get("Axes") === "True"
@@ -447,8 +456,20 @@ export class NotatioShow extends LitElement {
       phase: 0,
       budgetMs: FRAME_BUDGET,
     });
-    if (spec.grid)
-      drawLatticeLines(lines, this.#w, this.#h, layer.basis, layer.grid, this.#view, spec.grid.step, spec.grid.style);
+    const gridStep = spec.grid?.auto ? (layer.autoGrid ?? spec.grid.step) : spec.grid?.step;
+    if (spec.grid && gridStep)
+      drawLatticeLines(
+        lines,
+        this.#w,
+        this.#h,
+        layer.basis,
+        layer.grid,
+        this.#view,
+        gridStep,
+        spec.grid.style,
+        false,
+        layer.gridOffset,
+      );
     if (spec.axes) {
       const ground = resolvePalette({ palette: this.ground });
       const style = { ...spec.axes.style, color: spec.axes.style.color || ground.foreground };
@@ -461,7 +482,7 @@ export class NotatioShow extends LitElement {
           layer.basis,
           layer.grid,
           this.#view,
-          spec.grid?.step ?? [GRID_STEP, GRID_STEP],
+          gridStep ?? [GRID_STEP, GRID_STEP],
           (axis, k) => layer.gridLabel(axis, k),
           { color: style.color, halo: ground.background, opacity: Math.min(1, style.opacity + 0.3) },
         );
@@ -747,10 +768,13 @@ function modulusOf(ring: Json): number {
 async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): Promise<ShowLayer | string> {
   if (tiles === undefined) return "Show needs a layer: LatticeTiles(ring, …) or ArrayPlot(table, …).";
   if (tiles.head === "ArrayPlot") {
-    const n = headOf(tiles.data) === "MultiplicationTable" ? modulusOf(argsOf(tiles.data)[0]) : Number.NaN;
+    // `MultiplicationTable(ring, ElementOrder -> ChineseRemainder)`: how rows and columns list the ring.
+    const table = splitOptions(tiles.data, new Set(["ElementOrder"]));
+    const n = headOf(tiles.data) === "MultiplicationTable" ? modulusOf(table.positional[0]) : Number.NaN;
     if (!Number.isInteger(n)) return "ArrayPlot needs a table: MultiplicationTable(QuotientRing(Integers, n)).";
+    const order = stringOf(table.options.get("ElementOrder")) === "ChineseRemainder" ? "ChineseRemainder" : "Natural";
     const { multiplicationTable } = await import("@enumeratio/residues/table");
-    return multiplicationTable(n) ?? `ℤ/${n} is too large to tabulate, or not a ring with a table.`;
+    return multiplicationTable(n, order) ?? `ℤ/${n} is too large to tabulate, or not a ring with a table.`;
   }
   const ring = tiles.data;
   const d =
