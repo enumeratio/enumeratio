@@ -1,6 +1,11 @@
+// unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { wrapOperator } from "@enumeratio/engine";
+import type { BigDecimal } from "@enumeratio/engine/unstable";
 import {
   type EvalOptions,
+  bigRealOperand,
+  bigResult,
   exceedsDoublePrecision,
   isFiniteNum,
   numberResult,
@@ -16,6 +21,7 @@ import {
   inexactComplex,
 } from "@enumeratio/ce-patches";
 import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
+import { ellipticPiBig, incompleteEllipticEBig } from "./elliptic-pi-big.ts";
 
 // The incomplete Legendre elliptic integrals, and one precision fix for the native
 // complete one. compute-engine already declares EllipticE/EllipticF/EllipticK/EllipticPi
@@ -191,7 +197,43 @@ function declareIncompleteEllipticPi(ce: ComputeEngine): void {
   });
 }
 
+/**
+ * Native `EllipticPi(n, m)` / `EllipticPi(n, φ, m)` and `EllipticE(φ, m)` answer N(…, d) past a
+ * double with a double's worth of figures. For real operands the Carlson kernels have a bignum
+ * twin (elliptic-pi-big.ts); anything they decline goes back to native unchanged.
+ */
+function declareEllipticPrecision(ce: ComputeEngine): void {
+  wrapOperator(
+    ce,
+    ["EllipticE", 0.5, 0.3],
+    (ops) => ops.length === 2 && ops.every((op) => isFiniteNum(op) && op.im === 0),
+    (native) => (ops, options) => {
+      if (!wantsNumber(ops, options) || !exceedsDoublePrecision(ce, options.numericApproximation))
+        return native?.(ops, options);
+      const [phi, m] = ops.map((op) => bigRealOperand(ce, op));
+      const value = phi === undefined || m === undefined ? undefined : incompleteEllipticEBig(phi, m, ce.precision);
+      return value === undefined ? native?.(ops, options) : bigResult(ce, value);
+    },
+  );
+  wrapOperator(
+    ce,
+    ["EllipticPi", 0.5, 0.3],
+    (ops) => (ops.length === 2 || ops.length === 3) && ops.every((op) => isFiniteNum(op) && op.im === 0),
+    (native) => (ops, options) => {
+      if (!wantsNumber(ops, options) || !exceedsDoublePrecision(ce, options.numericApproximation))
+        return native?.(ops, options);
+      const reals = ops.map((op) => bigRealOperand(ce, op));
+      if (reals.some((r) => r === undefined)) return native?.(ops, options);
+      const [n, ...rest] = reals as [BigDecimal, ...BigDecimal[]];
+      const [phi, m] = rest.length === 2 ? rest : [undefined, rest[0]!];
+      const value = ellipticPiBig(n, phi, m!, ce.precision);
+      return value === undefined ? native?.(ops, options) : bigResult(ce, value);
+    },
+  );
+}
+
 export function declareElliptic(ce: ComputeEngine): void {
+  declareEllipticPrecision(ce);
   declareIncompleteF(ce);
   declareIncompleteE(ce);
   declareIncompleteEllipticPi(ce);

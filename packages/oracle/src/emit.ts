@@ -222,6 +222,14 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
 
   const walkCall = (head: string, operands: readonly MathJSON[]): string => {
     const qualified = head === "MemberCall" ? qualifiedName(operands) : undefined;
+    // BigO(x^n) is `O[x]^n` in Wolfram, the exponent outside `O`; `O[x^n]` is rejected there
+    // (SeriesData::sdatv). The generic walk below would hand `toWolfram` an already-printed operand.
+    if (system === "wolfram" && head === "BigO" && operands.length === 1) {
+      const inner = operands[0]!;
+      if (isCall(inner) && inner[0] === "Power" && inner.length === 3)
+        return `Power[O[${walk(inner[1]!)}], ${walk(inner[2]!)}]`;
+      return `O[${walk(inner)}]`;
+    }
     if (qualified !== undefined && mappingFor(qualified, operands.length - 2, extra) !== undefined)
       return walkCall(qualified, operands.slice(2));
     // A head of a library `extra` maps, with no mapping of its own here: unmapped, not a free

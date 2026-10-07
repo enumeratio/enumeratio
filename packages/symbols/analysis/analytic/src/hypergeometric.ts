@@ -16,7 +16,7 @@ import {
   bigResult,
   exceedsDoublePrecision,
 } from "@enumeratio/ce-patches";
-import { pfqRegularizedBig } from "./hypergeometric-big.ts";
+import { pfqBig, pfqRegularizedBig } from "./hypergeometric-big.ts";
 
 // The generalized hypergeometric series pFq(a1,…,ap; b1,…,bq; z) = Σ_{k≥0} ∏(ai)_k / ∏(bj)_k
 // · zᵏ/k!, and its regularized cousin pFq(…)/∏Γ(bj) — Fungrim's frontier heads
@@ -168,9 +168,18 @@ export function declareHypergeometric(ce: ComputeEngine): void {
   ce.declare("Hypergeometric0F1", {
     signature: "(number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+      // ₀F₁(b; 0) = 1 for any b that isn't a pole (a symbolic b included).
+      const [b0, z0] = ops;
+      if (z0?.re === 0 && z0.im === 0 && b0 !== undefined && !(b0.re <= 0 && Number.isInteger(b0.re))) return ce.One;
       const cs = operandsOf(ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [b, z] = cs;
+      // Past a double's digits only the bignum series answers; it declines rather than pad.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+        const [bb, zz] = [bigRealOperand(ce, ops[0]!), bigRealOperand(ce, ops[1]!)];
+        const value = bb === undefined || zz === undefined ? undefined : pfqBig([], bb, zz, ce.precision);
+        return value === undefined ? undefined : bigResult(ce, value);
+      }
       const r = pfqSeries([], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
