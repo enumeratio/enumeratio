@@ -7,20 +7,17 @@ signatures:
   - call: Floor(x)
     description: the greatest integer $\le x$, $\lfloor x \rfloor$.
   - call: Floor(x, step)
-    description: the greatest multiple of `step` at or below x, $\mathrm{step}\cdot\lfloor x/\mathrm{step}\rfloor$.
-    library: enumeratio-combinatorics
-    type: (number, number?) -> number
-    overrides: enumeratio-analytic
+    description: the greatest multiple of `step` at or below x.
   - call: Floor(x)
     description: 'The greatest integer less than or equal to x: $\lfloor x \rfloor$.'
     library: enumeratio-analytic
-    type: (real | signed_infinity) -> integer | signed_infinity
+    type: "(x: real | signed_infinity, step: real?) -> real | signed_infinity"
     overrides: compute-engine
   - call: Floor(x)
     description: in a floor ring (Mathlib's), the greatest integer at or below x; in a floor order, the greatest tick at or below x; in a product order, coordinate by coordinate, so a complex number's real and imaginary parts are floored separately.
     library: enumeratio-structures
     type: (any, any?) -> any
-    overrides: enumeratio-combinatorics
+    overrides: enumeratio-analytic
 seeAlso:
   - Ceil
   - Round
@@ -61,4 +58,4 @@ bindings:
 - $\lfloor -x \rfloor = -\lceil x \rceil$.
 - Threads element-wise over a list.
 - A second argument floors to the nearest multiple of it -- the step needn't be an integer.
-- The second argument is a step, a multiple to floor to, as in Wolfram's `Floor[x, a]`: $\mathrm{Floor}(226, 10) = 220$. [[Round]]'s second argument is not: it counts decimal places, so $\mathrm{Round}(226, -1) = 230$ here where Wolfram writes `Round[226, 10]`. Round also breaks ties away from zero where Wolfram rounds them to even (see [[Round]]).
+- The second argument is a step, a multiple to floor to, as in Wolfram's `Floor[x, a]`: $\mathrm{Floor}(226, 10) = 220$. [[Round]]'s second argument is a step too. Round breaks ties away from zero where Wolfram rounds them to even (see [[Round]]).

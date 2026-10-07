@@ -73,19 +73,11 @@ export { logGamma, logGammaReal, logGammaBig } from "./compute-engine/numerics/l
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { solveDomains, evaluateSolveDomains } from "./patches/solve-domains.ts";
 export { integratePolynomialPowers, integrateExpandsPolynomials } from "./patches/integrate-polynomial-powers.ts";
-export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 export { rangeBigBounds, evaluateRangeBigBounds } from "./patches/range-big-bounds.ts";
 export { shapeOfUnknownElements, evaluateShapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
-export {
-  quotientRingCollection,
-  quotientRingExactCount,
-  integerQuotientModulus,
-} from "./patches/quotient-ring-collection.ts";
 export { valuesAtZero } from "./patches/values-at-zero.ts";
-export { polyLogLargeOrder, evaluatePolyLogHugeOrder } from "./patches/polylog-huge-order.ts";
-export { polyLogHugeOrder, NATIVE_MAX_ORDER } from "./compute-engine/library/special-functions.ts";
 export { clausen } from "./compute-engine/numerics/clausen.ts";
 export { stieltjesGamma, stieltjesGammaReal, STIELTJES_MAX_ORDER } from "./compute-engine/numerics/stieltjes.ts";
 export { stieltjesGammaBall, stieltjesGammaBig } from "./compute-engine/numerics/stieltjes-big.ts";

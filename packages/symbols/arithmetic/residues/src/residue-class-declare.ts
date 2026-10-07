@@ -9,7 +9,6 @@ import {
   type Engine,
   type Expr,
 } from "@enumeratio/engine";
-import { applyPatch, quotientRingCollection } from "@enumeratio/ce-patches";
 import { gcd, mod } from "./arith.ts";
 import { INTEGER_MOD, INTEGER_MOD_RING, QUOTIENT_RING, RESIDUE_CLASS } from "./names.ts";
 import * as Z from "./residue-class.ts";
@@ -100,9 +99,8 @@ export function declareResidueClass(ce: Engine): void {
     2,
   );
 
-  // ℤ/m is compute-engine's QuotientRing(Integers, m); the patch makes Count exact past 2^53.
+  // ℤ/m is compute-engine's QuotientRing(Integers, m).
   // IntegerModRing(m), the old spelling, evaluates to it.
-  applyPatch(ce, quotientRingCollection);
   ce.declare(INTEGER_MOD_RING, {
     description: SUMMARIES.IntegerModRing,
     signature: "(integer) -> set",

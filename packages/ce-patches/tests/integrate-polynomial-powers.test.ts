@@ -36,9 +36,9 @@ test("an indefinite integral of a power of a quadratic is its antiderivative", (
 
 test("an integrand with no polynomial form is left to the native handler", () => {
   expect(integrate(power(["Add", power("x", 2), 1], ["Rational", 1, 2]), ["Limits", "x", 0, 1])).toEqual([
-    "Add",
-    ["Divide", ["Sqrt", 2], 2],
-    ["Multiply", ["Rational", 1, 2], ["Arsinh", 1]],
+    "Multiply",
+    ["Rational", 1, 2],
+    ["Add", ["Sqrt", 2], ["Arsinh", 1]],
   ]);
 });
 

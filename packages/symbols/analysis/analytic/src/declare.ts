@@ -7,9 +7,7 @@ import {
   integratePolynomialPowers,
   solveDeclines,
   solveDomains,
-  takeDropNegativeCount,
   valuesAtZero,
-  polyLogLargeOrder,
   iteratorUpperBound,
   rangeBigBounds,
   shapeOfUnknownElements,
@@ -180,7 +178,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
 
   applyPatch(ce, solveDeclines);
   applyPatch(ce, solveDomains);
-  applyPatch(ce, takeDropNegativeCount);
   applyPatch(ce, iteratorUpperBound);
   applyPatch(ce, rangeBigBounds);
   applyPatch(ce, shapeOfUnknownElements);
@@ -190,7 +187,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareCarlson(ce);
   declareElliptic(ce);
   applyPatch(ce, valuesAtZero);
-  applyPatch(ce, polyLogLargeOrder);
   declareModular(ce);
   declareDerivatives(ce);
   declareBesselJZero(ce);

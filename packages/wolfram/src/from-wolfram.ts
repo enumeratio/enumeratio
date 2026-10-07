@@ -325,9 +325,8 @@ const isPlain = (node: MathJson): node is string | number =>
  * `Log[b, z]` reverses compute-engine's arg-swap back to `["Log", z, b]`; the 1-arg
  * form `Log[x]` is natural log, compute-engine `["Ln", x]`. Not invertible: the 1-arg
  * base-10 `Log(x)` serialises to `Log[10, x]`, which parses back as an explicit base.
- * Likewise `Round[x, step]` reads as a step, not digits; `Union[{…}]` as a Union, not
- * a `Set`; and `Root`, `Square`, `Mode`, `IndexOf`, `Degrees` come back as
- * the Wolfram expression they were lowered to. Those directions are lossy by
+ * Likewise `Union[{…}]` reads as a Union, not a `Set`; and `Root`, `Square`, `Mode`,
+ * `IndexOf`, `Degrees` come back as the Wolfram expression they were lowered to. Those directions are lossy by
  * construction and aren't reconstructed. */
 function applyHead(name: string, args: MathJson[]): MathJson {
   const named = applyNamed(name, args);

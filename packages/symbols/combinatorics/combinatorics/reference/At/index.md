@@ -13,7 +13,7 @@ signatures:
   - call: At(collection, Span(i, j, step))
     description: a contiguous (or stepped) slice selected by a [[Span]], negative step included.
     library: enumeratio-combinatorics
-    type: "(value: any, index: (boolean | indexed_collection<any> | number | string)+) -> unknown"
+    type: "(value: any, index: (boolean | character | indexed_collection<any> | number | string)+) -> unknown"
     overrides: compute-engine
   - call: At(matrix, rows, columns)
     description: the submatrix at the given rows and columns; `rows` (or `columns`) as `All` takes every row (or column).

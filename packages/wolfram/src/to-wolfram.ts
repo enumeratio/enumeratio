@@ -242,12 +242,6 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // Insert(list, index, x) puts the position before the element, Wolfram's `Insert[list, x, n]` after it.
   Insert: (a) =>
     a.length === 3 ? `Insert[${toWolfram(a[0])}, ${toWolfram(a[2])}, ${toWolfram(a[1])}]` : call("Insert", a),
-  // Round(x, n) rounds to n decimal places; Wolfram's second argument is a step
-  // to round to a multiple of, so n digits is the step 10^-n.
-  Round: (a) =>
-    a.length === 2
-      ? `Round[${toWolfram(a[0])}, Power[10, ${typeof a[1] === "number" ? toWolfram(-a[1]) : `Minus[${toWolfram(a[1])}]`}]]`
-      : call("Round", a),
   // Wolfram has no set type; `Union` of one list is the sorted, deduplicated list,
   // which is the closest thing to a canonical set — and what `Intersection` et al
   // return, so set identities still compare Equal.
