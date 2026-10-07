@@ -41,9 +41,12 @@ export interface TileDrawOptions {
   readonly fill: number;
   /** Shifts every scheme by this many bands, to animate it. */
   readonly phase: number;
-  /** Stop classifying new points once this many ms have passed; the caller draws again. */
+  /** Stop classifying new points once this many ms have gone to classifying; the caller draws again. */
   readonly budgetMs: number;
 }
+
+/** Points every frame classifies whatever the budget says, so a slow classifier still gets on. */
+const MIN_PREPARED = 64;
 
 /** Tiles narrower than this many device pixels are drawn as squares, with no edges. */
 const TINY_TILE = 3;
@@ -109,17 +112,23 @@ export function drawTiles(
     (a, b) => Math.abs(a - centre[1]) - Math.abs(b - centre[1]),
   );
   const margin = 2 * half + 2;
-  const deadline = performance.now() + options.budgetMs;
+  // The budget is classifying's alone: drawing the points already known takes its own time, and
+  // counting it would leave a zoomed-out view with no time to learn anything new.
+  let spent = 0;
+  let prepared = 0;
   let complete = true;
 
   const visit = (i: number, j: number, x: number, y: number): void => {
     if (x < -margin || x > width + margin || y < -margin || y > height + margin) return;
     if (!layer.known(i, j)) {
-      if (performance.now() > deadline) {
+      if (spent > options.budgetMs && prepared >= MIN_PREPARED) {
         complete = false;
         return;
       }
+      const start = performance.now();
       layer.prepare(i, j);
+      spent += performance.now() - start;
+      prepared++;
     }
     const facts: ElementFacts = {
       has: (p) => layer.has(i, j, p) ?? false,
