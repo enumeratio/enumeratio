@@ -122,3 +122,31 @@ export function pfqBig(
   if (regularized === undefined) return undefined;
   return atDigits(working, () => regularized.div(inverseGamma(b, working)).toPrecision(digits));
 }
+
+/** Below this z the Pfaff map z/(z−1) lands nearer 0 than z does by enough to be worth taking. */
+const PFAFF_BELOW = -0.5;
+
+/**
+ * 2F1(a, b; c; z)/Γ(c) for real z < 1, to `digits` digits. The series settles at the rate |z|ᵏ, so
+ * a z below `PFAFF_BELOW` is brought into (0, 1) by Pfaff's transformation (DLMF 15.8.1; both
+ * sides stay entire in c, so it holds at the poles of Γ(c) too):
+ *   2F1(a, b; c; z)/Γ(c) = (1−z)⁻ᵃ · 2F1(a, c−b; c; z/(z−1))/Γ(c).
+ * z ≥ 1 is on or past the branch point and declines, as does a series that doesn't settle.
+ */
+export function hypergeometric2F1RegularizedBig(
+  a: BigDecimal,
+  b: BigDecimal,
+  c: BigDecimal,
+  z: BigDecimal,
+  digits: number,
+): BigDecimal | undefined {
+  if (!z.isFinite() || !z.lt(1)) return undefined;
+  if (z.gte(PFAFF_BELOW)) return pfqRegularizedBig([a, b], c, z, digits);
+  const working = digits + GUARD;
+  return atDigits(working, () => {
+    const w = z.div(z.sub(1));
+    const core = pfqRegularizedBig([a, c.sub(b)], c, w, working);
+    if (core === undefined) return undefined;
+    return core.mul(a.mul(big(1).sub(z).ln()).neg().exp()).toPrecision(digits);
+  });
+}

@@ -76,3 +76,54 @@ export function incompleteEllipticEBig(phi: BigDecimal, m: BigDecimal, digits: n
   });
   return value?.toPrecision(digits);
 }
+
+/** A complex value as its parts. */
+export interface BigComplex {
+  readonly re: BigDecimal;
+  readonly im: BigDecimal;
+}
+
+/**
+ * R_F(x, y, z) for x, z ≥ 0 and any real y, at the caller's working precision. For y < 0 the
+ * integral runs through the branch point t = −y: with p = −y, A = x + p and C = z + p,
+ *   Re R_F = R_F(0, A, C),   Im R_F = −R_F(1/p, x/(pA), z/(pC)) / √(AC)
+ * (the part on (0, p) turned into an R_F by t = p − 1/w; the sign is that of the principal root
+ * of the negative factor, the side Wolfram's F(φ | m) takes for m sin²φ > 1).
+ */
+function rfAcrossBranch(x: BigDecimal, y: BigDecimal, z: BigDecimal, working: number): BigComplex | undefined {
+  if (!y.isNegative()) {
+    const re = carlsonRFBig(x, y, z, working);
+    return re === undefined ? undefined : { re, im: big(0) };
+  }
+  const p = y.neg();
+  const [a, c] = [x.add(p), z.add(p)];
+  const re = carlsonRFBig(big(0), a, c, working);
+  const im = carlsonRFBig(big(1).div(p), x.div(p.mul(a)), z.div(p.mul(c)), working);
+  return re === undefined || im === undefined ? undefined : { re, im: im.div(a.mul(c).sqrt()).neg() };
+}
+
+/**
+ * F(φ, m) = s·R_F(c², 1−m s², 1) on [−π/2, π/2] (DLMF 19.25.5), shifted into that range by
+ * F(φ+kπ, m) = F(φ, m) + 2k·K(m) with K(m) = R_F(0, 1−m, 1); to `digits` digits. m > 1 makes
+ * it complex once m sin²φ > 1 (and K(m) always), which `rfAcrossBranch` carries. Undefined where
+ * R_F declines (m = 1 at φ = π/2 + kπ, a pole).
+ */
+export function incompleteEllipticFBig(phi: BigDecimal, m: BigDecimal, digits: number): BigComplex | undefined {
+  if (!phi.isFinite() || !m.isFinite()) return undefined;
+  const working = digits + GUARD;
+  const value = atDigits(working, (): BigComplex | undefined => {
+    const one = big(1);
+    const k = phi.div(BigDecimal.PI).round();
+    const s = phi.sub(k.mul(BigDecimal.PI)).sin();
+    const s2 = s.mul(s);
+    const c2 = one.sub(s2);
+    const base = rfAcrossBranch(c2.isNegative() ? big(0) : c2, one.sub(m.mul(s2)), one, working);
+    if (base === undefined) return undefined;
+    const scaled = { re: s.mul(base.re), im: s.mul(base.im) };
+    if (k.isZero()) return scaled;
+    const whole = rfAcrossBranch(big(0), one.sub(m), one, working);
+    if (whole === undefined) return undefined;
+    return { re: whole.re.mul(k).mul(2).add(scaled.re), im: whole.im.mul(k).mul(2).add(scaled.im) };
+  });
+  return value === undefined ? undefined : { re: value.re.toPrecision(digits), im: value.im.toPrecision(digits) };
+}

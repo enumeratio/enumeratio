@@ -27,5 +27,5 @@ names:
 ---
 
 - Reuses [[RiemannSiegelTheta]] and the generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]] at $a=1$); only the phase rotation onto the real line is added.
-- Real $t$ only; numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]].
+- Numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]]. `N(…, d)` past a double's digits runs the bignum Hurwitz zeta and log-gamma kernels (real or complex $t$, $|t|$ up to a few hundred thousand), carrying each part to $d$ digits.
 - The sign of $Z$ on the real line is what [[RiemannZetaZero]]'s zero-finder scans for.
