@@ -9,7 +9,9 @@ import {
   leavesCall,
   lookThroughConditions,
   positiveVariables,
+  seriesVariables,
   stepVariables,
+  SYMBOLIC_SECONDS,
   symbolicAgreementSource,
 } from "../src/symbolic.ts";
 
@@ -338,4 +340,64 @@ test("a form-transforming head that hands its input back is a rewrite not made",
   expect(echoesInput(["FunctionExpand", input] as never, ["Multiply", "x", "i"] as never)).toBe(false);
   expect(echoesInput(["Simplify", "x"] as never, "x" as never)).toBe(false);
   expect(echoesInput(["Sin", input] as never, input as never)).toBe(false);
+});
+
+test("a series' expansion variable stays the call's own, sampled only in the polynomial it gives", () => {
+  const series = ["Series", ["Sin", "x"], "x", "x0", 3];
+  expect([...seriesVariables(series as never)]).toEqual(["x"]);
+  // The list form names its variable first; the center and order are values.
+  expect([...seriesVariables(["Series", ["Sin", "x"], ["List", "x", "x0", 3]] as never)]).toEqual(["x"]);
+  expect(seriesVariables(["Add", "x", "x0"] as never).size).toBe(0);
+  const taylor = ["Add", ["Multiply", "x", ["Cos", "x0"]], ["Sin", "x0"]];
+  const source = symbolicAgreementSource("wolfram", ["Normal", series] as never, taylor as never, [
+    "x",
+    "x0",
+  ]) as string;
+  // Only `x0` is a number inside the call: with `x` one it is no series at all (Series::ivar).
+  expect(source).toContain("Series[Sin[x], List[x, Rational[-11, 5], 3]]");
+  expect(source).not.toMatch(/Series\[Sin\[Rational/);
+  expect(source).not.toMatch(/List\[Rational/);
+  // `x` is a number in what the call evaluates to, once it is a polynomial and not a `SeriesData`.
+  expect(source).toMatch(/Normal\[\(.*\) - \(.*\)\] \/\. \{x -> Rational\[-?\d+, \d+\]\}, 30\]/s);
+});
+
+test("a series ours holds is a call left undone, through the Normal that asks for its polynomial", () => {
+  const series = ["Series", ["Erfc", "x"], "x", "PositiveInfinity", 1];
+  // The kernel evaluates ours too, so a difference from its own polynomial of it would vanish.
+  expect(symbolicAgreementSource("wolfram", ["Normal", series] as never, series as never, ["x"])).toBe("Indeterminate");
+  expect(symbolicAgreementSource("wolfram", ["Simplify", ["Normal", series]] as never, series as never, ["x"])).toBe(
+    "Indeterminate",
+  );
+  // Ours expanded it: checked.
+  expect(
+    symbolicAgreementSource("wolfram", ["Normal", series] as never, ["Divide", 1, "x"] as never, ["x"]),
+  ).toBeDefined();
+});
+
+test("a simplifier around a series is left to the symbolic check, not run at every trial", () => {
+  const asked = ["FullSimplify", ["Normal", ["Series", ["Sin", "x"], "x", "x0", 3]]];
+  const taylor = ["Add", ["Multiply", "x", ["Cos", "x0"]], ["Sin", "x0"]];
+  const source = symbolicAgreementSource("wolfram", asked as never, taylor as never, ["x", "x0"]) as string;
+  const [symbolic, trials] = source.split("True, Module[{s = ") as [string, string];
+  expect(symbolic).toContain("FullSimplify[Normal[Series[");
+  expect(trials).not.toContain("FullSimplify");
+  expect(trials).toContain("Normal[Series[Sin[x]");
+});
+
+test("the simplifier's time cap is an option, ten seconds by default", () => {
+  expect(SYMBOLIC_SECONDS).toBe(10);
+  const cap = (seconds?: number) =>
+    symbolicAgreementSource("wolfram", expr as never, expected as never, ["x"], seconds) as string;
+  expect(cap()).toBe(cap(10));
+  expect(cap(75)).toContain("(Times[2, x])], 75, $Aborted]");
+  expect(cap(75)).not.toContain("10, $Aborted");
+  // A proposition and a `Solve` read it too.
+  const solved = symbolicAgreementSource(
+    "wolfram",
+    ["Solve", ["Equal", "x", "a"], "x"] as never,
+    ["List", "a"] as never,
+    ["a", "x"],
+    75,
+  );
+  expect(solved).toContain("FullSimplify[v - w], 75, $Aborted");
 });

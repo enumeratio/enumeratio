@@ -24,6 +24,7 @@
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 //   vp node packages/reference/scripts/oracle-scan.ts --head Foo,Bar,Baz     # several heads, one kernel process
 //   vp node packages/reference/scripts/oracle-scan.ts --ids Foo/a,Bar/b     # only these example ids
+//   vp node packages/reference/scripts/oracle-scan.ts --ids Foo/a --cap-symbolic 60 --cap-item 120  # longer caps (seconds)
 //   vp node packages/reference/scripts/oracle-scan.ts --new-only            # skip rows already answered per system
 //   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
 //   vp node packages/reference/scripts/oracle-scan.ts --root ../my-library --accept  # a library: its records, the targets it tracks
@@ -36,9 +37,11 @@ import {
   emit,
   interpretSymbolicAgreement,
   isSymbolicSystem,
+  ITEM_SECONDS,
   type MathJSON,
   runIn,
   runKernel,
+  SYMBOLIC_SECONDS,
   symbolicAgreementSource,
   SYSTEMS,
   type System,
@@ -77,12 +80,25 @@ const idsIndex = args.indexOf("--ids");
 // a head — the free-symbol pass is the reason this exists: touching every mapped head's
 // examples would drag in disagreements this lane has nothing to do with.
 const idFilter = idsIndex >= 0 ? new Set((args[idsIndex + 1] ?? "").split(",")) : undefined;
+// Seconds a kernel may spend simplifying one difference (`--cap-symbolic`) and evaluating one item
+// (`--cap-item`, which also bounds the former: raise both for a slow symbolic series).
+const seconds = (flag: string, fallback: number): number => {
+  const at = args.indexOf(flag);
+  if (at < 0) return fallback;
+  const value = Number(args[at + 1]);
+  if (!(value > 0)) throw new Error(`${flag} takes a positive number of seconds`);
+  return value;
+};
+const capSymbolic = seconds("--cap-symbolic", SYMBOLIC_SECONDS);
+const capItem = seconds("--cap-item", ITEM_SECONDS);
 const rootIndex = args.indexOf("--root");
 // A published library instead of this repository: its records, and of the wired systems only the
 // targets its `enumeratio.mappings` names (library-records.ts). Writes only its records.
 const library = rootIndex >= 0 ? libraryRecords(args[rootIndex + 1] ?? ".") : undefined;
 const requested = args.filter(
-  (argument, index) => !argument.startsWith("-") && !["--head", "--ids", "--root"].includes(args[index - 1] ?? ""),
+  (argument, index) =>
+    !argument.startsWith("-") &&
+    !["--head", "--ids", "--root", "--cap-symbolic", "--cap-item"].includes(args[index - 1] ?? ""),
 );
 // `--digest` scans nothing: it rebuilds `disagreements.md` from the records (`build` runs it).
 const digestOnly = args.includes("--digest");
@@ -208,14 +224,14 @@ for (const system of systems) {
   const sources = runnable.map((row, index) => {
     const freeSymbols = row.out.ok ? row.out.freeSymbols : undefined;
     if (freeSymbols !== undefined && freeSymbols.length > 0 && isSymbolicSystem(system)) {
-      const agreement = symbolicAgreementSource(system, row.item.expr, row.item.expected, freeSymbols);
+      const agreement = symbolicAgreementSource(system, row.item.expr, row.item.expected, freeSymbols, capSymbolic);
       if (agreement !== undefined) return agreement;
     }
     return plainSources[index] as string;
   });
   const symbolicMode = runnable.map((_row, index) => sources[index] !== plainSources[index]);
   process.stderr.write(`${system}: ${runnable.length}/${casesForSystem.length} emit — running…\n`);
-  const results = await runIn(system, sources);
+  const results = await runIn(system, sources, { itemSeconds: capItem });
 
   const outcomes: Outcome[] = [];
   const missing: Record<string, number> = {};

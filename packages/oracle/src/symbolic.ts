@@ -95,6 +95,9 @@ const INTEGERS: readonly number[] = [3, 5, 4, 7, 6, 8];
 
 const NUMBER_OF_TRIALS = 3;
 
+/** Seconds the kernel may spend simplifying a difference before the numeric trials take over. */
+export const SYMBOLIC_SECONDS = 10;
+
 /** Heads that take their second operand's variable as a step over the integers. */
 const DISCRETE_STEPS = new Set(["DifferenceDelta", "DiscreteRatio", "DiscreteShift"]);
 
@@ -187,6 +190,24 @@ export function derivativeVariables(expr: MathJSON, found: Set<string> = new Set
   return found;
 }
 
+/** The expansion variables of `Series(f, x, x0, n)` (or `Series(f, [x, x0, n])`): bound inside the
+ * call, so never a point to sample there (`Series[f, {7/3, x0, n}]` is Series::ivar). */
+export function seriesVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "Series") {
+    for (const spec of operands.slice(1)) {
+      const first = Array.isArray(spec) && (spec[0] === "List" || spec[0] === "Tuple") ? spec[1] : spec;
+      const name = bareName(first as MathJSON);
+      if (name !== undefined) found.add(name);
+      // The bare form names only its first operand; the rest are center and order.
+      if (!Array.isArray(spec)) break;
+    }
+  }
+  for (const operand of operands) seriesVariables(operand, found);
+  return found;
+}
+
 const rationalLiteral = ([n, d]: readonly [number, number]): MathJSON => ["Rational", n, d];
 
 /** `expr` with every occurrence of a name in `subs` replaced by its rational — the head of a
@@ -225,32 +246,55 @@ function trialSubstitution(
   );
 }
 
+/** `expr` with the `Simplify`/`FullSimplify` calls around it taken off. */
+function withoutSimplifiers(expr: MathJSON): MathJSON {
+  return Array.isArray(expr) && (expr[0] === "Simplify" || expr[0] === "FullSimplify") && expr.length === 2
+    ? withoutSimplifiers(expr[1] as MathJSON)
+    : expr;
+}
+
 /** One trial's pair of emitted sources (theirs, ours), or `undefined` when the substituted
  * expression no longer emits for `system` (an unrelated mapping gap, not this mechanism's
- * problem — the trial is just skipped, not the whole check). For Wolfram a step variable is
- * not substituted into the call (`DifferenceDelta[f[k], k]` needs its `k`): `after` is what to
- * replace in the evaluated difference instead, as Wolfram rules. */
+ * problem — the trial is just skipped, not the whole check). For Wolfram a step variable or a
+ * series variable is not substituted into the call (`DifferenceDelta[f[k], k]` and
+ * `Series[f, {x, x0, n}]` need their variable): `after` is what to replace in the evaluated
+ * difference instead, as Wolfram rules. `stepped` and `series` say which of the two is held. */
 function trialSources(
   system: SymbolicSystem,
   expr: MathJSON,
   expected: MathJSON,
   freeSymbols: readonly string[],
   trial: number,
-): { readonly theirs: string; readonly ours: string; readonly after: string; readonly expanded: boolean } | undefined {
+):
+  | {
+      readonly theirs: string;
+      readonly ours: string;
+      readonly after: string;
+      readonly stepped: boolean;
+      readonly series: boolean;
+    }
+  | undefined {
   const positive = new Set([...positiveVariables(expr), ...positiveVariables(expected)]);
   const all = trialSubstitution(freeSymbols, trial, discreteVariables(expr), positive);
   const steps = system === "wolfram" ? stepVariables(expr) : new Set<string>();
+  // Only Wolfram maps `Series`; a variable it expands in stays the call's own, as a step variable does.
+  const series =
+    system === "wolfram" ? new Set([...seriesVariables(expr), ...seriesVariables(expected)]) : new Set<string>();
+  const held = new Set([...steps, ...series]);
   const bound = new Set([
     ...boundVariables(expr),
     ...boundVariables(expected),
     ...(system === "wolfram" ? [] : derivativeVariables(expr)),
   ]);
-  const subs = new Map([...all].filter(([name]) => !steps.has(name) && !bound.has(name)));
-  const theirs = emit(substituteFreeSymbols(expr, subs), system);
+  const subs = new Map([...all].filter(([name]) => !held.has(name) && !bound.has(name)));
+  // A series is sampled as a polynomial, so the simplifier around it has nothing to do: on a
+  // symbolic-coefficient series it only runs out the clock (`FullSimplify[Normal[Series[…]]]`).
+  const asked = series.size > 0 ? withoutSimplifiers(expr) : expr;
+  const theirs = emit(substituteFreeSymbols(asked, subs), system);
   const ours = emit(substituteFreeSymbols(expected, subs), system);
   if (!theirs.ok || !ours.ok) return undefined;
   const rules = [...all]
-    .filter(([name]) => steps.has(name))
+    .filter(([name]) => held.has(name))
     .map(([name, value]) => [emit(name, system), emit(value, system)] as const);
   if (rules.some(([name, value]) => !name.ok || !value.ok)) return undefined;
   const after = rules.map(
@@ -260,7 +304,8 @@ function trialSources(
     theirs: system === "wolfram" ? withoutConditions(theirs.source) : theirs.source,
     ours: ours.source,
     after: after.length === 0 ? "{}" : `{${after.join(", ")}}`,
-    expanded: after.length > 0,
+    stepped: [...all.keys()].some((name) => steps.has(name)),
+    series: series.size > 0,
   };
 }
 
@@ -270,10 +315,10 @@ function trialSources(
  * "the difference is zero" is asked of each value against its counterpart rather than of
  * the lists. A reply that is not a list of rule lists (Solve declined) is a disagreement.
  */
-function solveAgreementSource(theirs: string, ours: string): string {
+function solveAgreementSource(theirs: string, ours: string, cap: number): string {
   return (
     `Module[{r = Quiet[TimeConstrained[${theirs}, 20, $Aborted]], o = ${ours}, t, same}, ` +
-    `same[v_, w_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[v - w], 10, $Aborted]]}], # === 0 &]; ` +
+    `same[v_, w_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[v - w], ${cap}, $Aborted]]}], # === 0 &]; ` +
     `If[!MatchQ[r, {{___Rule}...}], False, ` +
     `t = Replace[Values /@ r, {v_} :> v, {1}]; ` +
     `Length[t] == Length[o] && AllTrue[o, Function[v, AnyTrue[t, same[v, #] &]]] && ` +
@@ -288,10 +333,10 @@ function solveAgreementSource(theirs: string, ours: string): string {
  * side (`Cos[x] + I Sin[x]` against `I Sin[x] + Cos[x]`) is not a disagreement. A reply of a
  * different shape (`True`, a bare value) is not decided here.
  */
-function propositionAgreementSource(theirs: string, ours: string): string {
+function propositionAgreementSource(theirs: string, ours: string, cap: number): string {
   return (
     `Module[{zero, agree}, ` +
-    `zero[e_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], 10, $Aborted]]}], # === 0 &]; ` +
+    `zero[e_] := AllTrue[Flatten[{Quiet[TimeConstrained[FullSimplify[e], ${cap}, $Aborted]]}], # === 0 &]; ` +
     `agree[t_And, o_And] /; Length[t] == Length[o] := And @@ MapThread[agree, {List @@ t, List @@ o}]; ` +
     `agree[t_Equal, o_Equal] /; Length[t] == 2 && Length[o] == 2 := ` +
     `zero[t[[1]] - t[[2]] - (o[[1]] - o[[2]])] || zero[t[[1]] - t[[2]] + (o[[1]] - o[[2]])]; ` +
@@ -299,7 +344,7 @@ function propositionAgreementSource(theirs: string, ours: string): string {
     `Length[t] == 2 && Length[o] == 2 := zero[t[[1]] - o[[1]]] && zero[t[[2]] - o[[2]]]; ` +
     // Any other pair of statements (an `Or`, `x > 0` against `0 < x`): equivalent when the kernel can show it.
     `agree[t_, o_] := Module[{v = Select[Union[Cases[{t, o}, _Symbol, {-1}]], Context[#] =!= "System\`" &], r}, ` +
-    `r = Quiet[TimeConstrained[FullSimplify[Equivalent[t, o]], 10, $Aborted]]; ` +
+    `r = Quiet[TimeConstrained[FullSimplify[Equivalent[t, o]], ${cap}, $Aborted]]; ` +
     `If[r === True || r === False, r, ` +
     `r = Quiet[TimeConstrained[If[v === {}, Resolve[Equivalent[t, o], Reals], ` +
     `Resolve[ForAll[Evaluate[v], Equivalent[t, o]], Reals]], 20, $Aborted]]; ` +
@@ -424,6 +469,15 @@ export function echoesInput(expr: MathJSON, expected: MathJSON): boolean {
   return echoedPart(expr, expected) || (listEntries(expected)?.some((entry) => echoedPart(expr, entry)) ?? false);
 }
 
+/** `expr` with a `Normal` of a series, under any wrappers, read as the series itself: a series ours
+ * holds is the call left undone, though the kernel's polynomial of it is not the series. */
+function seriesOfNormal(expr: MathJSON): MathJSON {
+  if (!Array.isArray(expr) || expr.length !== 2) return expr;
+  const [head, operand] = expr;
+  if (head === "Normal" && Array.isArray(operand) && operand[0] === "Series") return operand;
+  return WRAPPERS.has(head as string) ? ([head, seriesOfNormal(operand as MathJSON)] as MathJSON) : expr;
+}
+
 /** Heads that only arrange or bind an answer: a call to one of these is not a function left undone. */
 const STRUCTURAL = new Set([
   ...COMBINING,
@@ -530,7 +584,7 @@ function sameValue(a: MathJSON, b: MathJSON): boolean {
 /** Whether `a` and `b` take the same value at each of a few fixed rational points: for an
  * argument whose two writings the simplifier won't reduce to one. */
 function agreeAtPoints(a: MathJSON, b: MathJSON): boolean {
-  const bound = new Set([...boundVariables(a), ...boundVariables(b)]);
+  const bound = new Set([...boundVariables(a), ...boundVariables(b), ...seriesVariables(a), ...seriesVariables(b)]);
   const names = [...new Set([...ce.box(a as never).unknowns, ...ce.box(b as never).unknowns])].filter(
     (name) => !bound.has(name),
   );
@@ -659,9 +713,14 @@ export function symbolicAgreementSource(
   expr: MathJSON,
   expected: MathJSON,
   freeSymbols: readonly string[],
+  /** Seconds the kernel may simplify a difference (`SYMBOLIC_SECONDS`). */
+  symbolicSeconds: number = SYMBOLIC_SECONDS,
 ): string | undefined {
   // Ours left the call unevaluated: the identity holds trivially, so the plain verdict decides.
   if (leavesCall(expr, expected) || echoesInput(expr, expected)) return undefined;
+  // A series ours holds is no polynomial to check: the kernel evaluates ours too, so any difference
+  // from its own `Normal` of it would be zero. Undecided, not agreed.
+  if (system === "wolfram" && leavesCall(seriesOfNormal(expr), expected)) return "Indeterminate";
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
   if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;
@@ -672,8 +731,8 @@ export function symbolicAgreementSource(
   if (!theirs.ok || !ours.ok) return undefined;
   if (!(ours.freeSymbols ?? []).some((name) => freeSymbols.includes(name))) return undefined;
   const theirsSource = system === "wolfram" ? withoutConditions(theirs.source) : theirs.source;
-  if (solving) return solveAgreementSource(theirsSource, ours.source);
-  if (equating) return propositionAgreementSource(theirsSource, ours.source);
+  if (solving) return solveAgreementSource(theirsSource, ours.source, symbolicSeconds);
+  if (equating) return propositionAgreementSource(theirsSource, ours.source, symbolicSeconds);
   const trials = Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) =>
     trialSources(system, expr, expected, freeSymbols, trial),
   );
@@ -683,11 +742,15 @@ export function symbolicAgreementSource(
       const difference = `(${t.theirs}) - (${t.ours})`;
       // A step call is read by its definition at a point; the cancellation in a difference of
       // near-equal values (a q-function, `BetaRegularized` at a negative argument) needs more than a double.
-      if (t.expanded) return `Chop[N[((${difference}) //. ${STEP_DEFINITIONS}) /. ${t.after}, 30], 10^-12]`;
+      // A series is read as its polynomial (`Normal`) so its variable can be sampled, which a
+      // `SeriesData` would not survive; a truncation is not a difference, so the O-term goes.
+      const read = t.stepped ? `((${difference}) //. ${STEP_DEFINITIONS})` : `(${difference})`;
+      if (t.series) return `Chop[N[Normal[${read}] /. ${t.after}, 30], 10^-12]`;
+      if (t.stepped) return `Chop[N[${read} /. ${t.after}, 30], 10^-12]`;
       return `Chop[N[${difference}]]`;
     });
     // FullSimplify can run away on an identity it won't reduce; TimeConstrained caps it at
-    // 10s and reports $Aborted rather than eating the item's whole 30s budget (run.ts,
+    // `symbolicSeconds` and reports $Aborted rather than eating the item's whole budget (run.ts,
     // ITEM_SECONDS) — an aborted simplification isn't `0` either, so it falls straight
     // through to the substitution trials, same as any other non-zero result.
     //
@@ -701,11 +764,11 @@ export function symbolicAgreementSource(
     // Two truncated series that agree below their order differ by a pure O-term (`O[x]^5`), which is
     // zero at that order: it counts when it is no coarser than the series Wolfram answered.
     return (
-      `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirsSource}) - (${ours.source})], 10, $Aborted]], pureO, bound}, ` +
+      `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirsSource}) - (${ours.source})], ${symbolicSeconds}, $Aborted]], pureO, bound}, ` +
       `pureO = MatchQ[#, SeriesData[_, _, {}, _, _, _]] &; ` +
       `If[AllTrue[Flatten[{d}], # === 0 &] || (AnyTrue[Flatten[{d}], pureO] && ` +
       `(bound = Min[Append[Map[Function[t, t[[5]]/t[[6]]], ` +
-      `Cases[Quiet[TimeConstrained[${theirsSource}, 10, $Aborted]], _SeriesData, {0, Infinity}]], Infinity]]; ` +
+      `Cases[Quiet[TimeConstrained[${theirsSource}, ${symbolicSeconds}, $Aborted]], _SeriesData, {0, Infinity}]], Infinity]]; ` +
       `AllTrue[Flatten[{d}], # === 0 || (pureO[#] && #[[5]]/#[[6]] >= bound) &])), ` +
       `True, Module[{s = {${points.join(", ")}}}, ` +
       `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]`
