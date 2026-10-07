@@ -1,0 +1,5 @@
+id	in
+two-is-not-prime-in-z-sqrt-minus-3	PrimeQ[2, Rule[enumeratio`Over, QuadraticOrder[-12]]]
+two-is-prime-in-z-omega	
+no-unique-factorization-of-4	FactorInteger[4, Rule[enumeratio`Over, QuadraticOrder[-12]]]
+seven-is-prime-in-z-sqrt-8	PrimeQ[7, Rule[enumeratio`Over, QuadraticOrder[32]]]

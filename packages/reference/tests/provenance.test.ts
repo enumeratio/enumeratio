@@ -792,6 +792,7 @@ const NOVEL = [
   "QuadraticForm",
   "QuadraticInteger",
   "QuadraticIntegers",
+  "QuadraticOrder",
   "Quiver",
   "QuiverCompose",
   "QuiverIsAcyclic",

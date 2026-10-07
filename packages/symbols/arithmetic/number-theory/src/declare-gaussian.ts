@@ -45,6 +45,7 @@ import {
   normalize as quadraticNormalize,
   type QuadraticElement,
   type QuadraticRing,
+  quadraticOrder,
   quadraticRing,
 } from "./quadratic.ts";
 
@@ -97,13 +98,14 @@ function overOption(head: string, ops: Ops): { positional: number; ring: Ring } 
   return { positional: split.ops.length, ring };
 }
 
-/** `QuadraticIntegers(d)` as a ring; ℤ[i] by its Gaussian name. */
+/** `QuadraticIntegers(d)` or `QuadraticOrder(D)` as a ring; ℤ[i] by its Gaussian name. */
 function quadraticOver(raw: unknown): Ring | undefined {
-  if (!Array.isArray(raw) || raw[0] !== "QuadraticIntegers" || raw.length !== 2) return undefined;
-  const d = typeof raw[1] === "number" && Number.isSafeInteger(raw[1]) ? BigInt(raw[1]) : undefined;
-  const R = d === undefined ? undefined : quadraticRing(d);
+  if (!Array.isArray(raw) || (raw[0] !== "QuadraticIntegers" && raw[0] !== "QuadraticOrder") || raw.length !== 2)
+    return undefined;
+  const n = typeof raw[1] === "number" && Number.isSafeInteger(raw[1]) ? BigInt(raw[1]) : undefined;
+  const R = n === undefined ? undefined : raw[0] === "QuadraticOrder" ? quadraticOrder(n) : quadraticRing(n);
   if (R === undefined) return undefined;
-  return R.d === -1n ? "GaussianIntegers" : R;
+  return R.discriminant === -4n ? "GaussianIntegers" : R;
 }
 
 /**
@@ -255,11 +257,11 @@ export function declareGaussian(ce: Engine): void {
       if (ops[0]?.operator === "List") {
         return list(operandsOf(ops[0]).map((item) => evaluate!([item, ...ops.slice(1)], options)!));
       }
-      // A carrier names its own ring; otherwise `Over` does.
+      // `Over` names the ring, an order of a carrier's field included; otherwise the carrier does.
       const carried = quadraticCarrierAt(ops[0]);
-      const ring = carried?.[0] ?? (typeof option.ring === "object" ? option.ring : undefined);
+      const ring = (typeof option.ring === "object" ? option.ring : undefined) ?? carried?.[0];
       if (ring !== undefined && ring.d !== -1n) {
-        const a = carried?.[1] ?? quadraticAt(ring, ops[0]);
+        const a = quadraticAt(ring, ops[0]);
         return a === undefined ? undefined : quadratic?.(ring, a);
       }
       const z = carried?.[1] ?? gaussianAt(ops[0]);
