@@ -1,7 +1,10 @@
-id	section	role	expr	expected	caption
-only-3-1			[Descents, [List, 3, 1, 2]]	1	only $3 > 1$
-every-step-falls			[Descents, [List, 3, 2, 1]]	2	every step falls
-the-one-line-word-312			[Descents, [Permutation, [List, 3, 1, 2]]]	1	the one-line word $312$
-the-one-line-word-312-as-a-plain-list			[Descents, [List, 3, 1, 2]]	1	the one-line word $312$, as a plain list
-the-one-line-word-2413			[Descents, [Permutation, [List, 2, 4, 1, 3]]]	1	the one-line word $2413$
-descents-and-ascents-partition-the-n-1-steps	Properties		[Equal, [Add, [Descents, [List, 3, 1, 2]], [Ascents, [List, 3, 1, 2]]], 2]	True	descents and ascents partition the $n - 1$ steps
+id	section	role	expr	expected	known	source	caption
+only-3-1			[Descents, [List, 3, 1, 2]]	1			only $3 > 1$
+every-step-falls			[Descents, [List, 3, 2, 1]]	2			every step falls
+the-one-line-word-312			[Descents, [Permutation, [List, 3, 1, 2]]]	1			the one-line word $312$
+the-one-line-word-312-as-a-plain-list			[Descents, [List, 3, 1, 2]]	1			the one-line word $312$, as a plain list
+the-one-line-word-2413			[Descents, [Permutation, [List, 2, 4, 1, 3]]]	1			the one-line word $2413$
+descents-and-ascents-partition-the-n-1-steps	Properties		[Equal, [Add, [Descents, [List, 3, 1, 2]], [Ascents, [List, 3, 1, 2]]], 2]	True			descents and ascents partition the $n - 1$ steps
+findstat-st000021-1	Properties		[CombinatorialStat, [Permutation, [List, 1]], "'Descents'"]	0	0	FindStat St000021	FindStat's value for [1]
+findstat-st000021-2	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'Descents'"]	0	0	FindStat St000021	FindStat's value for [1,2]
+findstat-st000021-3	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'Descents'"]	1	1	FindStat St000021	FindStat's value for [2,1]

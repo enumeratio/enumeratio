@@ -1,3 +1,6 @@
-id	section	role	expr	expected	caption
-the-partition-4-2-1-of-7			[PartsAtLeastTwo, [IntegerPartition, [List, 4, 2, 1]]]	2	the partition $4 + 2 + 1$ of $7$
-the-partition-3-3-1-of-7			[PartsAtLeastTwo, [IntegerPartition, [List, 3, 3, 1]]]	2	the partition $3 + 3 + 1$ of $7$
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[PartsAtLeastTwo, [IntegerPartition, [List, 4, 2, 1]]]	2			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[PartsAtLeastTwo, [IntegerPartition, [List, 3, 3, 1]]]	2			the partition $3 + 3 + 1$ of $7$
+findstat-st001280-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 1]], "'PartsAtLeastTwo'"]	0	0	FindStat St001280	FindStat's value for [1]
+findstat-st001280-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'PartsAtLeastTwo'"]	1	1	FindStat St001280	FindStat's value for [2]
+findstat-st001280-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'PartsAtLeastTwo'"]	1	1	FindStat St001280	FindStat's value for [3]

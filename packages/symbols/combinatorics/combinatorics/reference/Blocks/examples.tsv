@@ -1,3 +1,6 @@
-id	section	role	expr	expected	caption
-the-partition-1-3-mid-2			[Blocks, [SetPartition, [List, [List, 1, 3], [List, 2]]]]	2	the partition $\{1,3\} \mid \{2\}$
-the-partition-1-mid-2-4-mid-3			[Blocks, [SetPartition, [List, [List, 1], [List, 2, 4], [List, 3]]]]	3	the partition $\{1\} \mid \{2,4\} \mid \{3\}$
+id	section	role	expr	expected	known	source	caption
+the-partition-1-3-mid-2			[Blocks, [SetPartition, [List, [List, 1, 3], [List, 2]]]]	2			the partition $\{1,3\} \mid \{2\}$
+the-partition-1-mid-2-4-mid-3			[Blocks, [SetPartition, [List, [List, 1], [List, 2, 4], [List, 3]]]]	3			the partition $\{1\} \mid \{2,4\} \mid \{3\}$
+findstat-st000105-1	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1]]], "'Blocks'"]	1	1	FindStat St000105	FindStat's value for {{1}}
+findstat-st000105-2	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1, 2]]], "'Blocks'"]	1	1	FindStat St000105	FindStat's value for {{1,2}}
+findstat-st000105-3	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1, 2, 3]]], "'Blocks'"]	1	1	FindStat St000105	FindStat's value for {{1,2,3}}

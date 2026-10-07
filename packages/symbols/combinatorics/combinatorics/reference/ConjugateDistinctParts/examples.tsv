@@ -1,3 +1,6 @@
-id	section	role	expr	expected	caption
-the-partition-4-2-1-of-7			[ConjugateDistinctParts, [IntegerPartition, [List, 4, 2, 1]]]	3	the partition $4 + 2 + 1$ of $7$
-the-partition-3-3-1-of-7			[ConjugateDistinctParts, [IntegerPartition, [List, 3, 3, 1]]]	2	the partition $3 + 3 + 1$ of $7$
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[ConjugateDistinctParts, [IntegerPartition, [List, 4, 2, 1]]]	3			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[ConjugateDistinctParts, [IntegerPartition, [List, 3, 3, 1]]]	2			the partition $3 + 3 + 1$ of $7$
+findstat-st000159-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 1]], "'ConjugateDistinctParts'"]	1	1	FindStat St000159	FindStat's value for [1]
+findstat-st000159-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'ConjugateDistinctParts'"]	1	1	FindStat St000159	FindStat's value for [2]
+findstat-st000159-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'ConjugateDistinctParts'"]	1	1	FindStat St000159	FindStat's value for [3]

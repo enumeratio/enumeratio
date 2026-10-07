@@ -1,4 +1,7 @@
-id	section	role	expr	expected	caption
-the-one-line-word-312			[LastDescent, [Permutation, [List, 3, 1, 2]]]	1	the one-line word $312$
-the-one-line-word-312-as-a-plain-list			[LastDescent, [List, 3, 1, 2]]	1	the one-line word $312$, as a plain list
-the-one-line-word-2413			[LastDescent, [Permutation, [List, 2, 4, 1, 3]]]	2	the one-line word $2413$
+id	section	role	expr	expected	known	source	caption
+the-one-line-word-312			[LastDescent, [Permutation, [List, 3, 1, 2]]]	1			the one-line word $312$
+the-one-line-word-312-as-a-plain-list			[LastDescent, [List, 3, 1, 2]]	1			the one-line word $312$, as a plain list
+the-one-line-word-2413			[LastDescent, [Permutation, [List, 2, 4, 1, 3]]]	2			the one-line word $2413$
+findstat-st000653-1	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'LastDescent'"]	0	0	FindStat St000653	FindStat's value for [1,2]
+findstat-st000653-2	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'LastDescent'"]	1	1	FindStat St000653	FindStat's value for [2,1]
+findstat-st000653-3	Properties		[CombinatorialStat, [Permutation, [List, 1, 2, 3]], "'LastDescent'"]	0	0	FindStat St000653	FindStat's value for [1,2,3]
