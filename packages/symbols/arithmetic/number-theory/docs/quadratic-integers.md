@@ -186,6 +186,9 @@ tiles are irreducible but not prime.
 </Show>
 </Story>
 
+Higher degrees, and orders in general, are in
+[Orders and Algebraic Integers](algebraic-integers.md).
+
 ## Sweeping fields
 
 The [quadratic primes explorer](https://enumeratio.dev/explore/quadratic-primes/) has the
