@@ -28,6 +28,7 @@ export {
   echoesInput,
   leavesCall,
   lookThroughConditions,
+  notNumeric,
   SYMBOLIC_SECONDS,
   symbolicAgreementSource,
 } from "./symbolic.ts";

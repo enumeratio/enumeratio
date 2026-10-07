@@ -9,5 +9,5 @@ list-list-a-b-list-c-d-plus-list-list-1-2-list-3	Scope		[Add, [List, [List, a, b
 length-a-plus-b-plus-c-plus-d	Properties		[Length, [Add, a, b, c, d]]	4	A sum is flat: four terms, one Add of length 4				
 foldlist-add-0-list-a-b-c	Properties		[FoldList, Add, 0, [List, a, b, c]]	[List, 0, a, [Add, a, b], [Add, a, b, c]]	Folding Add gives the running partial sums				
 replaceall-a-plus-b-plus-c-plus-d-rule-a-plus-d	Properties		[ReplaceAll, [Add, a, b, c, d], [Rule, [Add, a, d], x]]	[Add, a, b, c, d]			[ReplaceAll, [Add, [Add, [Add, a, b], c], d], [Rule, [Add, a, d], x]]		
-apply-f-plus-g-x	Properties	triage	[Apply, [Add, f, g], x]	[Function, [Block, [Add, _1, x]], _1]		gap		unclassified	The expansions differ beyond the remainder order.
+apply-f-plus-g-x	Properties	triage	[Apply, [Add, f, g], x]	[Function, [Block, [Add, _1, x]], _1]		gap		unclassified	Wolfram keeps (f + g)[x] held, a sum is not a function; ours reads the call as the pure function x + #1 &.
 through-apply-f-plus-g-x	Properties		[Through, [Apply, [Add, f, g], x]]	[Add, [g, x], [f, x]]					

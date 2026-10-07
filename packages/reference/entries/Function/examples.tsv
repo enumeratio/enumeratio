@@ -9,8 +9,8 @@ sort-list-list-a-2-list-c-1-list-d-3-function-1	Scope		[Sort, [List, [List, a, 2
 derivative-function-x-pow-2-x-1	Scope		[Derivative, [Function, [Block, [Power, x, 2]], x], 1]	[Function, [Block, [Multiply, 2, x]], x]			Unreadable	Unreadable		
 map-function-17-list-1-2-3	Properties		[Map, [Function, [Block, 17]], [List, 1, 2, 3]]	[List, 17, 17, 17]	A function with no slots ignores its argument		Unreadable			
 array-function-1-pow-2-1-10	Properties		[Array, [Function, [Block, [Power, _1, 2]], _1], 10]	[List, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]	Tabulates the first ten squares		Unreadable			
-replaceall-function-p-plus-1-rule-p-q	Properties	triage	[ReplaceAll, [Function, [Add, p, _1]], [Rule, p, q]]	[Function, [Block, [Add, _1, q]], _1]		gap			unclassified	The expansions differ beyond the remainder order.
+replaceall-function-p-plus-1-rule-p-q	Properties		[ReplaceAll, [Function, [Add, p, _1]], [Rule, p, q]]	[Function, [Block, [Add, _1, q]], _1]			Unreadable	Unreadable		
 apply-apply-function-function-x-pow-y-y-x-x-y	Properties		[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, x, y]], y]], x], x], y]	[Power, x, y]			Unreadable			
-apply-apply-function-function-y-pow-x-x-y-x-y	Properties	triage	[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, y, x]], x]], y], x], y]	[Power, y, y]		gap			unclassified	The expansions differ beyond the remainder order.
+apply-apply-function-function-y-pow-x-x-y-x-y	Properties	triage	[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, y, x]], x]], y], x], y]	[Power, y, y]		gap			unclassified	Ours lets the argument x be captured by the inner function's own x, y^y; Wolfram renames the bound variable and answers x^y.
 apply-apply-function-function-x-pow-x-x-x-x-y	Properties		[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, x, x]], x]], x], x], y]	[Power, y, y]			Unreadable			
 apply-apply-function-function-x-pow-y-y-x-a-b	Properties		[Apply, [Apply, [Function, [Block, [Function, [Block, [Power, x, y]], y]], x], a], b]	[Power, a, b]			Unreadable			

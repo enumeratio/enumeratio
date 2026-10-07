@@ -8,6 +8,7 @@ import {
   interpretSymbolicAgreement,
   leavesCall,
   lookThroughConditions,
+  notNumeric,
   positiveVariables,
   seriesVariables,
   stepVariables,
@@ -33,13 +34,18 @@ const equalSeries = (theirs: string): string =>
   `Cases[Quiet[TimeConstrained[${theirs}, 10, $Aborted]], _SeriesData, {0, Infinity}]], Infinity]]; ` +
   `AllTrue[Flatten[{d}], # === 0 || (pureO[#] && #[[5]]/#[[6]] >= bound) &])), `;
 
+// What the check says when its samples are not numbers: a structure is no value to sample, anything else is undecided.
+const structural = (theirs: string, ours: string): string =>
+  `Module[{v = Quiet[Check[TimeConstrained[{${theirs}, ${ours}}, 10, $Aborted], $Failed]]}, ` +
+  "If[v === $Failed || !FreeQ[v, _Function | _Rule | _RuleDelayed | _Unevaluated], NotNumeric, Indeterminate]]";
+
 test("wolfram: FullSimplify of the difference, with 3 fixed-rational trials as a fallback", () => {
   expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBe(
     `Module[{d = Quiet[TimeConstrained[FullSimplify[(${through("Plus[x, x]")}) - (Times[2, x])], 10, $Aborted]], pureO, bound}, ` +
       `${equalSeries(through("Plus[x, x]"))}True, Module[{s = {Chop[N[(${through("Plus[Rational[7, 3], Rational[7, 3]]")}) - (Times[2, Rational[7, 3]])]], ` +
       `Chop[N[(${through("Plus[Rational[-11, 5], Rational[-11, 5]]")}) - (Times[2, Rational[-11, 5]])]], ` +
       `Chop[N[(${through("Plus[Rational[13, 4], Rational[13, 4]]")}) - (Times[2, Rational[13, 4]])]]}}, ` +
-      "s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]",
+      `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], ${structural(through("Plus[x, x]"), "Times[2, x]")}]]]]`,
   );
 });
 
@@ -107,6 +113,20 @@ test("undefined when `expected` doesn't depend on any of `expr`'s free symbols",
   expect(symbolicAgreementSource("wolfram", ["Add", "x", "x"], 0, ["x"])).toBeUndefined();
   // Both sides free in the SAME symbol still goes through the agreement check.
   expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBeDefined();
+});
+
+test("samples that are not numbers say so for a structure, and decide nothing for a series", () => {
+  const apply = ["Apply", ["Add", "f", "g"], "x"];
+  const function_ = ["Function", ["Block", ["Add", "_1", "x"]]];
+  const asked = symbolicAgreementSource("wolfram", apply as never, function_ as never, ["f", "g", "x"]);
+  expect(asked).toMatch(/NotNumeric, Indeterminate\]+$/);
+  expect(notNumeric("NotNumeric\n")).toBe(true);
+  expect(notNumeric("Indeterminate")).toBe(false);
+  // A series' samples decide nothing, whatever the answer is.
+  const series = ["Series", ["Sin", ["Multiply", "a", "x"]], ["List", "x", 0, 3]];
+  const held = symbolicAgreementSource("wolfram", series as never, ["Multiply", "a", "x"] as never, ["a", "x"]);
+  expect(held).toMatch(/Indeterminate\]\]\]\]$/);
+  expect(held).not.toContain("NotNumeric");
 });
 
 test("interpretSymbolicAgreement reads True/False/anything-else as agree/disagree/inconclusive", () => {
@@ -267,6 +287,23 @@ test("lookThroughConditions: a ConditionalExpression is its value", () => {
 test("a Wolfram answer is read through ConditionalExpression before the difference is taken", () => {
   const source = symbolicAgreementSource("wolfram", ["Divide", 1, "s"], ["Divide", 1, "s"], ["s"]) as string;
   expect(source).toContain("ConditionalExpression[e_, _] :> e");
+});
+
+test("a call the kernel evaluates, kept in another form, is held: nested where the kernel computes it", () => {
+  const integrand = ["Boole", ["Less", ["Add", ["Power", "x", 2], ["Power", "y", 2]], 1]];
+  const limits = (variable: string) => ["Limits", variable, "NegativeInfinity", "PositiveInfinity"];
+  const asked = ["Integrate", ["Function", ["Block", integrand], "x", "y"], limits("x"), limits("y")];
+  const nested = [
+    "Integrate",
+    ["Function", ["Block", ["Integrate", ["Function", ["Block", integrand], "x", "y"], limits("y")]], "x"],
+    limits("x"),
+  ];
+  expect(leavesCall(asked as never, nested as never)).toBe(true);
+  expect(symbolicAgreementSource("wolfram", asked as never, nested as never, ["x", "y"])).toBeUndefined();
+  // Evaluated, or only a different head left in the answer: nothing is held.
+  expect(leavesCall(asked as never, ["Subtract", "Pi", 1] as never)).toBe(false);
+  expect(leavesCall(["Sin", "x"] as never, ["Integrate", ["Cos", "x"], "x"] as never)).toBe(false);
+  expect(leavesCall(["Sum", "k", ["Limits", "k", 1, 3]] as never, ["Sin", 6] as never)).toBe(false);
 });
 
 test("leavesCall: a held call is held however its factors are ordered or grouped", () => {

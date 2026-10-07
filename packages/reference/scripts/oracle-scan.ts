@@ -39,6 +39,7 @@ import {
   isSymbolicSystem,
   ITEM_SECONDS,
   type MathJSON,
+  notNumeric,
   runIn,
   runKernel,
   SYMBOLIC_SECONDS,
@@ -232,6 +233,21 @@ for (const system of systems) {
   const symbolicMode = runnable.map((_row, index) => sources[index] !== plainSources[index]);
   process.stderr.write(`${system}: ${runnable.length}/${casesForSystem.length} emit — running…\n`);
   const results = await runIn(system, sources, { itemSeconds: capItem });
+  // An answer that isn't a number to sample (a function, a held call) is judged as any other row is.
+  const unsampled = runnable.flatMap((_row, index) =>
+    symbolicMode[index] && notNumeric((results[index] as { value?: string }).value ?? "") ? [index] : [],
+  );
+  if (unsampled.length > 0) {
+    const plain = await runIn(
+      system,
+      unsampled.map((index) => plainSources[index] as string),
+      { itemSeconds: capItem },
+    );
+    for (const [at, index] of unsampled.entries()) {
+      results[index] = plain[at] as (typeof results)[number];
+      symbolicMode[index] = false;
+    }
+  }
 
   const outcomes: Outcome[] = [];
   const missing: Record<string, number> = {};
