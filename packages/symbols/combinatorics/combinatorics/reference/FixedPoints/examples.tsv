@@ -1,6 +1,9 @@
-id	section	role	expr	expected	caption
-only-1-is-fixed			[FixedPoints, [Permutation, [List, 1, 3, 2]]]	1	only $1$ is fixed
-the-identity-fixes-all			[FixedPoints, [Permutation, [List, 1, 2, 3]]]	3	the identity fixes all
-the-one-line-word-312			[FixedPoints, [Permutation, [List, 3, 1, 2]]]	0	the one-line word $312$
-the-one-line-word-2413			[FixedPoints, [Permutation, [List, 2, 4, 1, 3]]]	0	the one-line word $2413$
-a-derangement-fixes-nothing	Properties		[FixedPoints, [Permutation, [List, 2, 3, 1]]]	0	a derangement fixes nothing
+id	section	role	expr	expected	known	source	caption
+only-1-is-fixed			[FixedPoints, [Permutation, [List, 1, 3, 2]]]	1			only $1$ is fixed
+the-identity-fixes-all			[FixedPoints, [Permutation, [List, 1, 2, 3]]]	3			the identity fixes all
+the-one-line-word-312			[FixedPoints, [Permutation, [List, 3, 1, 2]]]	0			the one-line word $312$
+the-one-line-word-2413			[FixedPoints, [Permutation, [List, 2, 4, 1, 3]]]	0			the one-line word $2413$
+a-derangement-fixes-nothing	Properties		[FixedPoints, [Permutation, [List, 2, 3, 1]]]	0			a derangement fixes nothing
+findstat-st000022-1	Properties		[CombinatorialStat, [Permutation, [List, 1]], "'FixedPoints'"]	1	1	FindStat St000022	FindStat's value for [1]
+findstat-st000022-2	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'FixedPoints'"]	2	2	FindStat St000022	FindStat's value for [1,2]
+findstat-st000022-3	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'FixedPoints'"]	0	0	FindStat St000022	FindStat's value for [2,1]

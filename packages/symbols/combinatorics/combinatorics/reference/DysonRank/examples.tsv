@@ -1,3 +1,6 @@
-id	section	role	expr	expected	caption
-the-partition-4-2-1-of-7			[DysonRank, [IntegerPartition, [List, 4, 2, 1]]]	1	the partition $4 + 2 + 1$ of $7$
-the-partition-3-3-1-of-7			[DysonRank, [IntegerPartition, [List, 3, 3, 1]]]	0	the partition $3 + 3 + 1$ of $7$
+id	section	role	expr	expected	known	source	caption
+the-partition-4-2-1-of-7			[DysonRank, [IntegerPartition, [List, 4, 2, 1]]]	1			the partition $4 + 2 + 1$ of $7$
+the-partition-3-3-1-of-7			[DysonRank, [IntegerPartition, [List, 3, 3, 1]]]	0			the partition $3 + 3 + 1$ of $7$
+findstat-st000145-1	Properties		[CombinatorialStat, [IntegerPartition, [List, 1]], "'DysonRank'"]	0	0	FindStat St000145	FindStat's value for [1]
+findstat-st000145-2	Properties		[CombinatorialStat, [IntegerPartition, [List, 2]], "'DysonRank'"]	1	1	FindStat St000145	FindStat's value for [2]
+findstat-st000145-3	Properties		[CombinatorialStat, [IntegerPartition, [List, 3]], "'DysonRank'"]	2	2	FindStat St000145	FindStat's value for [3]

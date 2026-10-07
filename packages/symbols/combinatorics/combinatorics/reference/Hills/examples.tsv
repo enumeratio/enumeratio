@@ -1,3 +1,6 @@
-id	section	role	expr	expected	caption
-the-step-word-uuddud			[Hills, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	1	the step word $UUDDUD$
-the-step-word-uduudd			[Hills, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	1	the step word $UDUUDD$
+id	section	role	expr	expected	known	source	caption
+the-step-word-uuddud			[Hills, [DyckPath, [List, 1, 1, 0, 0, 1, 0]]]	1			the step word $UUDDUD$
+the-step-word-uduudd			[Hills, [DyckPath, [List, 1, 0, 1, 1, 0, 0]]]	1			the step word $UDUUDD$
+findstat-st000674-1	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0]], "'Hills'"]	2	2	FindStat St000674	FindStat's value for [1,0,1,0]
+findstat-st000674-2	Properties		[CombinatorialStat, [DyckPath, [List, 1, 1, 0, 0]], "'Hills'"]	0	0	FindStat St000674	FindStat's value for [1,1,0,0]
+findstat-st000674-3	Properties		[CombinatorialStat, [DyckPath, [List, 1, 0, 1, 0, 1, 0]], "'Hills'"]	3	3	FindStat St000674	FindStat's value for [1,0,1,0,1,0]

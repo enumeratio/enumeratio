@@ -1,6 +1,9 @@
-id	section	role	expr	expected	caption
-only-1-2			[Ascents, [List, 3, 1, 2]]	1	only $1 < 2$
-the-identity-ascends-throughout			[Ascents, [List, 1, 2, 3]]	2	the identity ascends throughout
-the-one-line-word-312			[Ascents, [Permutation, [List, 3, 1, 2]]]	1	the one-line word $312$
-the-one-line-word-312-as-a-plain-list			[Ascents, [List, 3, 1, 2]]	1	the one-line word $312$, as a plain list
-the-one-line-word-2413			[Ascents, [Permutation, [List, 2, 4, 1, 3]]]	2	the one-line word $2413$
+id	section	role	expr	expected	known	source	caption
+only-1-2			[Ascents, [List, 3, 1, 2]]	1			only $1 < 2$
+the-identity-ascends-throughout			[Ascents, [List, 1, 2, 3]]	2			the identity ascends throughout
+the-one-line-word-312			[Ascents, [Permutation, [List, 3, 1, 2]]]	1			the one-line word $312$
+the-one-line-word-312-as-a-plain-list			[Ascents, [List, 3, 1, 2]]	1			the one-line word $312$, as a plain list
+the-one-line-word-2413			[Ascents, [Permutation, [List, 2, 4, 1, 3]]]	2			the one-line word $2413$
+findstat-st000245-1	Properties		[CombinatorialStat, [Permutation, [List, 1]], "'Ascents'"]	0	0	FindStat St000245	FindStat's value for [1]
+findstat-st000245-2	Properties		[CombinatorialStat, [Permutation, [List, 1, 2]], "'Ascents'"]	1	1	FindStat St000245	FindStat's value for [1,2]
+findstat-st000245-3	Properties		[CombinatorialStat, [Permutation, [List, 2, 1]], "'Ascents'"]	0	0	FindStat St000245	FindStat's value for [2,1]

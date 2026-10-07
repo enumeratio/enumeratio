@@ -36,6 +36,9 @@ sign-neg-1-plus-i	sign(mpc(-1, 1))
 sign-neg-1-minus-i	sign(mpc(-1, -1))		
 sign-1-minus-i	sign(mpc(1, -1))		
 sign-2	sign(2)		
+findstat-st000037-1			
+findstat-st000037-2			
+findstat-st000037-3			
 nan-propagates-rather-than-being-treated-as-0	sign(nan)		
 sign-complexinfinity-is-indeterminate-no			
 unit-circle-check-on-a-float-argument	almosteq(fabs(sign(mpc(-0.07244062047889377, -0.9973727269705307))), 1, 1e-20)	True	
