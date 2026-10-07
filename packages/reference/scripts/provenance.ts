@@ -248,12 +248,18 @@ export function classify(bare: ComputeEngine, ours: ComputeEngine, entry: Refere
 export function divergingHeads(bare: ComputeEngine, ours: ComputeEngine, corpus: readonly MathJSON[]): string[] {
   const heads = new Set<string>();
   for (const divergence of divergences(bare, ours, corpus)) {
-    // `N(f(…))` diverges because f does; N only asks for the number.
-    let e = divergence.expression;
-    while (isCall(e) && e[0] === "N" && e.length === 2) e = e[1] as MathJSON;
-    if (isCall(e)) heads.add(e[0] as string);
+    const head = headOf(divergence.expression);
+    if (head !== undefined) heads.add(head);
   }
   return [...heads].toSorted();
+}
+
+/** The head an expression is attributed to: the one at its top, through `N(f(…))`, which diverges
+ * because f does (N only asks for the number). Undefined for an atom. */
+export function headOf(expression: MathJSON): string | undefined {
+  let e = expression;
+  while (isCall(e) && e[0] === "N" && e.length === 2) e = e[1] as MathJSON;
+  return isCall(e) ? (e[0] as string) : undefined;
 }
 
 /**
