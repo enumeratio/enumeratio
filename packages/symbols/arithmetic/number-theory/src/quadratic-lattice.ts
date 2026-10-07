@@ -341,6 +341,25 @@ export function quadraticLattice(
     [CELL.unknown]: "not decided",
   };
 
+  // An element's kind is its conjugate's and its associates': conjugation is an automorphism, and
+  // a unit multiple factors as it does. So one classification fills in all of them: ±1, ±i in
+  // ℤ[i], the six roots of unity in ℤ[ω], ±ε^±1 in a real field.
+  const unitsAsDoubles: Vec2[] = (
+    R.d < 0n
+      ? rootsOfUnity(R)
+      : (() => {
+          const eps = fundamentalUnit(R)!;
+          const inverse = divideExact(R, ONE, eps)!;
+          return [ONE, eps, inverse].flatMap((u) => [u, [-u[0], -u[1]] as QuadraticElement]);
+        })()
+  ).map(([x, y]) => [Number(x), Number(y)] as Vec2);
+  const times = (a: Vec2, b: Vec2): Vec2 => [
+    a[0] * b[0] + r * a[1] * b[1],
+    a[0] * b[1] + a[1] * b[0] + s * a[1] * b[1],
+  ];
+  const relatives = (i: number, j: number): Vec2[] =>
+    [[i, j] as Vec2, [i + s * j, -j] as Vec2].flatMap((p) => unitsAsDoubles.map((u) => times(p, u)));
+
   const classified = (i: number, j: number): number => {
     const k = key(i, j);
     let code = cache.get(k);
@@ -348,6 +367,12 @@ export function quadraticLattice(
       if (cache.size > CACHE_LIMIT) cache.clear();
       code = classifyFast(i, j);
       cache.set(k, code);
+      if (code !== CELL.unknown) {
+        for (const [x, y] of relatives(i, j)) {
+          if (Math.abs(x) <= maxIndex && Math.abs(y) <= maxIndex && Number.isSafeInteger(x) && Number.isSafeInteger(y))
+            cache.set(key(x, y), code);
+        }
+      }
     }
     return code;
   };

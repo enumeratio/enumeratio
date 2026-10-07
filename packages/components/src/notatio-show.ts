@@ -352,7 +352,8 @@ export class NotatioShow extends LitElement {
     _selection: { state: true },
     _overrides: { state: true },
     _drawn: { state: true },
-    _tip: { state: true },
+    _info: { state: true },
+    _edgeColors: { state: true },
   };
 
   declare value: string;
@@ -370,17 +371,10 @@ export class NotatioShow extends LitElement {
   declare _selection: readonly Vec2[];
   declare _overrides: ReadonlyMap<number, Override>;
   declare _drawn: number;
-  /** What the layer says of the tile under the pointer, and where to show it. */
-  declare _tip:
-    | {
-        x: number;
-        y: number;
-        flip: boolean;
-        above: boolean;
-        title: string;
-        rows: readonly (readonly [string, string])[];
-      }
-    | undefined;
+  /** What the layer says of the tile under the pointer, for the strip under the plot. */
+  declare _info: { title: string; rows: readonly (readonly [string, string])[] } | undefined;
+  /** The legend's changes to the edges' colors, by rule. */
+  declare _edgeColors: ReadonlyMap<number, string>;
 
   #source: Json;
   /** The options: those written in `value`, then those given as attributes. */
@@ -420,7 +414,8 @@ export class NotatioShow extends LitElement {
     this._selection = [];
     this._overrides = new Map();
     this._drawn = 0;
-    this._tip = undefined;
+    this._info = undefined;
+    this._edgeColors = new Map();
     ensureStyles();
   }
 
@@ -481,6 +476,7 @@ export class NotatioShow extends LitElement {
       return;
     }
     this.#source = json;
+    prefetchLayers(json);
     this.#writes = writesOf(json);
     const options = splitOptions(json, declared("Show")).options;
     const attributes: [string, string][] = [
@@ -607,6 +603,14 @@ export class NotatioShow extends LitElement {
     return false;
   }
 
+  /** The edge rules with the legend's colors applied. */
+  get #boundaryRules(): BoundaryRule[] {
+    return (this._spec?.boundaryRules ?? []).map((rule, k) => {
+      const color = this._edgeColors.get(k);
+      return color ? { ...rule, color } : rule;
+    });
+  }
+
   /** The color rules with the legend's overrides applied. */
   get #colorRules(): ColorRule[] {
     return (this._spec?.colorRules ?? []).map((rule, k) => {
@@ -674,7 +678,7 @@ export class NotatioShow extends LitElement {
     tiles.canvas.style.mixBlendMode = CANVAS_BLEND[spec.colorMixing];
     const complete = drawTiles(tiles, this.#w, this.#h, layer, this.#view, {
       colorRules: this.#colorRules,
-      boundaryRules: spec.boundaryRules,
+      boundaryRules: this.#boundaryRules,
       colorMixing: spec.colorMixing,
       selection: this._selection,
       ink: resolvePalette({ palette: this.ground }).foreground,
@@ -939,38 +943,32 @@ export class NotatioShow extends LitElement {
     canvas.addEventListener("pointercancel", up);
   };
 
-  #tipKey = "";
+  #infoKey = "";
 
-  /** Wolfram's `Tooltip`, for every tile: what the layer says of the one under the pointer. */
+  /** What the layer says of the tile under the pointer, in the strip under the plot. */
   #onHover = (e: PointerEvent): void => {
     const layer = this.#layer;
     if (!layer || e.buttons !== 0) return;
     const [i, j] = this.#hitsAt(this.#planeAt(e.clientX, e.clientY))[0] ?? [Number.NaN, Number.NaN];
-    if (!Number.isFinite(i) || !Number.isFinite(j)) {
-      this._tip = undefined;
-      this.#tipKey = "";
+    const { bounds } = layer;
+    const outside =
+      !Number.isFinite(i) ||
+      !Number.isFinite(j) ||
+      (bounds && (i < bounds.i[0] || i > bounds.i[1] || j < bounds.j[0] || j > bounds.j[1]));
+    if (outside) {
+      this.#onLeave();
       return;
     }
-    const { bounds } = layer;
-    const outside = bounds && (i < bounds.i[0] || i > bounds.i[1] || j < bounds.j[0] || j > bounds.j[1]);
-    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    const [x, y] = [e.clientX - r.left, e.clientY - r.top];
-    // On the side with room: left of the pointer in the plot's right half.
-    const [flip, above] = [x > r.width / 2, y > r.height / 2];
     const key = `${i},${j}`;
-    if (outside) {
-      this._tip = undefined;
-      this.#tipKey = "";
-    } else if (key !== this.#tipKey) {
-      this.#tipKey = key;
-      if (!layer.known(i, j)) layer.prepare(i, j);
-      this._tip = { x, y, flip, above, ...layer.describe(i, j) };
-    } else if (this._tip) this._tip = { ...this._tip, x, y, flip, above };
+    if (key === this.#infoKey) return;
+    this.#infoKey = key;
+    if (!layer.known(i, j)) layer.prepare(i, j);
+    this._info = layer.describe(i, j);
   };
 
   #onLeave = (): void => {
-    this._tip = undefined;
-    this.#tipKey = "";
+    this._info = undefined;
+    this.#infoKey = "";
   };
 
   #onWheel = (e: WheelEvent): void => {
@@ -1034,20 +1032,11 @@ export class NotatioShow extends LitElement {
 
   #legendTemplate(vertical: boolean): unknown {
     const colors = this._spec?.defaulted.colors ? [] : this.#colorRules;
-    const edges = this._spec?.defaulted.edges ? [] : (this._spec?.boundaryRules ?? []);
+    const edges = this._spec?.defaulted.edges ? [] : this.#boundaryRules;
     if (colors.length + edges.length === 0) return undefined;
     return html`<ul class=${`notatio-legend notatio-show-legend ${vertical ? "is-vertical" : ""}`}>
-      ${colors.map((rule, k) => (typeof rule.paint === "string" ? this.#swatch(rule, rule.paint, k) : this.#bar(rule, rule.paint, k)))}
-      ${edges.map(
-        (rule) => html`<li>
-          <span class="notatio-show-swatch">
-            <i
-              style=${`box-shadow: inset 0 0 0 ${Math.max(1.5, rule.width)}px ${rule.color}; opacity:${rule.opacity}`}
-            ></i>
-          </span>
-          <span class="notatio-legend-label">${rule.label}</span>
-        </li>`,
-      )}
+      ${colors.map((rule, k) => (typeof rule.paint === "string" ? this.#swatch(rule, rule.paint, k) : this.#scheme(rule, rule.paint, k)))}
+      ${edges.map((rule, k) => this.#edge(rule, k))}
     </ul>`;
   }
 
@@ -1067,40 +1056,59 @@ export class NotatioShow extends LitElement {
     </li>`;
   }
 
-  /** An indexed scheme's first colors, numbered: what value k paints. */
-  #indexed(rule: ColorRule, colors: readonly string[]): unknown {
-    return html`<li class="notatio-legend-gradient">
+  /** An edge rule's swatch, its outline the edge's color, which opens a color picker. */
+  #edge(rule: BoundaryRule, k: number): unknown {
+    return html`<li>
+      <label class="notatio-show-swatch" data-tip="Choose the edge color">
+        <i style=${`box-shadow: inset 0 0 0 ${Math.max(1.5, rule.width)}px ${rule.color}; opacity:${rule.opacity}`}></i>
+        <input
+          type="color"
+          .value=${rule.color}
+          aria-label=${`${rule.label} edge color`}
+          @input=${(e: Event) => {
+            this._edgeColors = new Map(this._edgeColors).set(k, (e.target as HTMLInputElement).value);
+            this.#draw();
+          }}
+        />
+      </label>
       <span class="notatio-legend-label">${rule.label}</span>
-      <span class="notatio-show-indexed">
-        ${colors.slice(0, INDEXED_SHOWN).map((c, n) => html`<span><i style=${`background:${c}`}></i>${n}</span>`)}
-      </span>
     </li>`;
   }
 
-  /** A scheme rule's bar, which opens the schemes, with its padding and a reverse. */
-  #bar(rule: ColorRule, scheme: SchemeColor, k: number): unknown {
+  /** An indexed scheme's first colors, numbered: what value k paints. */
+  #indexed(rule: ColorRule, colors: readonly string[]): unknown {
+    return html`<li class="notatio-show-indexed">
+      <span class="notatio-legend-label">${rule.label}</span>
+      ${colors.slice(0, INDEXED_SHOWN).map((c, n) => html`<span><i style=${`background:${c}`}></i>${n}</span>`)}
+    </li>`;
+  }
+
+  /**
+   * A scheme rule: a swatch like a color's, the gradient drawn across it at an angle, which opens
+   * the schemes; where the band falls, and the padding and reverse, beside it on hover.
+   */
+  #scheme(rule: ColorRule, scheme: SchemeColor, k: number): unknown {
     if (scheme.indexed) return this.#indexed(rule, scheme.indexed);
     const { mode, band, offset } = scheme;
     const at = (k: number): string => String(+(offset + k * band).toPrecision(6));
-    const ticks =
+    const ends =
       mode === "reflect"
-        ? [`${at(0)}, ${at(2)}, …`, `${at(1)}, ${at(3)}, …`]
+        ? `${at(0)}, ${at(2)}, … to ${at(1)}, ${at(3)}, …`
         : mode === "wrap"
-          ? [`${at(0)}, ${at(1)}, …`, ""]
-          : [`${at(0)} and below`, `${at(1)} and past`];
+          ? `from ${at(0)}, again every ${at(1)}`
+          : `${at(0)} and below to ${at(1)} and past`;
     const next = BAND_MODES[(BAND_MODES.indexOf(mode) + 1) % BAND_MODES.length]!;
-    return html`<li class="notatio-legend-gradient">
-      <span class="notatio-legend-label">${rule.label}</span>
-      <label class="notatio-show-gradient" data-tip="Choose the color scheme">
-        <span class="notatio-legend-bar" style=${`background:${gradientCss(scheme.gradient)}`}></span>
+    return html`<li class="notatio-show-scheme">
+      <label class="notatio-show-swatch" data-tip=${`${scheme.gradient.label}: ${ends}`}>
+        <i style=${`background:${gradientCss(scheme.gradient, "135deg")}`}></i>
         <select
-          aria-label="Color scheme"
+          aria-label=${`${rule.label} color scheme`}
           @change=${(e: Event) => this.#setOverride(k, { gradient: (e.target as HTMLSelectElement).value })}
         >
           ${GRADIENTS.map((g) => html`<option value=${g.name} ?selected=${g.name === scheme.gradient.name}>${g.label}</option>`)}
         </select>
       </label>
-      <span class="notatio-legend-ticks">${ticks.map((t) => html`<span>${t}</span>`)}</span>
+      <span class="notatio-legend-label">${rule.label}</span>
       <span class="notatio-show-ends">
         <button
           type="button"
@@ -1118,6 +1126,22 @@ export class NotatioShow extends LitElement {
         </button>
       </span>
     </li>`;
+  }
+
+  /**
+   * The strip under the plot: what the layer says of the tile under the pointer, else of the one
+   * selected, else of the layer as a whole.
+   */
+  #infoTemplate(): unknown {
+    const layer = this.#layer;
+    if (!layer) return undefined;
+    const [only] = this._selection.length === 1 ? this._selection : [];
+    const info =
+      this._info ?? (only ? layer.describe(only[0], only[1]) : { title: layer.title, rows: layer.summary() });
+    return html`<p class="notatio-show-info" aria-live="polite">
+      <strong>${info.title}</strong>
+      ${info.rows.map(([k, v]) => html`<span><span class="notatio-show-info-key">${k}</span> ${v}</span>`)}
+    </p>`;
   }
 
   /** `ImageSize -> [Automatic, h]` (or `[w, h]`), in the expression or as an attribute, gives the height. */
@@ -1148,27 +1172,6 @@ export class NotatioShow extends LitElement {
               @keydown=${name === "axes" ? this.#onKey : nothing}
             ></canvas>`,
         )}
-        ${
-          this._tip
-            ? html`<div
-                class=${`notatio-show-tip${this._tip.flip ? " is-flipped" : ""}${this._tip.above ? " is-above" : ""}`}
-                style=${`left:${this._tip.x}px;top:${this._tip.y}px`}
-              >
-                <strong>${this._tip.title}</strong>
-                ${
-                  this._tip.rows.length
-                    ? html`<dl>
-                        ${this._tip.rows.map(
-                          ([k, v]) =>
-                            html`<dt>${k}</dt>
-                              <dd>${v}</dd>`,
-                        )}
-                      </dl>`
-                    : nothing
-                }
-              </div>`
-            : nothing
-        }
       </div>
       ${this._status ? html`<p class="notatio-show-status">${this._status}</p>` : nothing}`;
     return html`<div class="notatio-show">
@@ -1176,7 +1179,8 @@ export class NotatioShow extends LitElement {
         stage,
         stageStyle: `min-height:${this.#height}px`,
         legend: this.#legendTemplate(isVertical(legendAt)),
-        captionAt: "none",
+        caption: this.#infoTemplate(),
+        captionAt: "below",
         legendAt,
       })}
     </div>`;
@@ -1210,6 +1214,21 @@ function modulusOf(ring: Json): number {
   if (headOf(ring) === "QuotientRing" && argsOf(ring)[0] === "Integers") return numberOf(argsOf(ring)[1], Number.NaN);
   if (headOf(ring) === "IntegerModRing") return numberOf(argsOf(ring)[0], Number.NaN);
   return Number.NaN;
+}
+
+/**
+ * Start loading the modules `json`'s layers draw with, before its scope has bound them: the
+ * scope waits on the engine, and the layer's module is a chain of imports of its own.
+ */
+function prefetchLayers(json: Json): void {
+  for (const layer of argsOf(json)) {
+    const head = headOf(layer);
+    const data = argsOf(layer)[0];
+    if (head === "ArrayPlot") void import("@enumeratio/residues/table");
+    else if (head === "LatticeTiles" && headOf(data) === "RadixExpansions")
+      void import("@enumeratio/complex-numerals/lattice");
+    else if (head === "LatticeTiles") void import("@enumeratio/number-theory/lattice");
+  }
 }
 
 /**
