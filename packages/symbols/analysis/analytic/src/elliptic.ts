@@ -21,7 +21,7 @@ import {
   inexactComplex,
 } from "@enumeratio/ce-patches";
 import { carlsonRF, carlsonRJ, carlsonRJDeclines } from "./carlson.ts";
-import { ellipticPiBig, incompleteEllipticEBig } from "./elliptic-pi-big.ts";
+import { ellipticPiBig, incompleteEllipticEBig, incompleteEllipticFBig } from "./elliptic-pi-big.ts";
 
 // The incomplete Legendre elliptic integrals, and one precision fix for the native
 // complete one. compute-engine already declares EllipticE/EllipticF/EllipticK/EllipticPi
@@ -198,7 +198,7 @@ function declareIncompleteEllipticPi(ce: ComputeEngine): void {
 }
 
 /**
- * Native `EllipticPi(n, m)` / `EllipticPi(n, φ, m)` and `EllipticE(φ, m)` answer N(…, d) past a
+ * Native `EllipticPi(n, m)` / `EllipticPi(n, φ, m)`, `EllipticE(φ, m)` and `EllipticF(φ, m)` answer N(…, d) past a
  * double with a double's worth of figures. For real operands the Carlson kernels have a bignum
  * twin (elliptic-pi-big.ts); anything they decline goes back to native unchanged.
  */
@@ -213,6 +213,21 @@ function declareEllipticPrecision(ce: ComputeEngine): void {
       const [phi, m] = ops.map((op) => bigRealOperand(ce, op));
       const value = phi === undefined || m === undefined ? undefined : incompleteEllipticEBig(phi, m, ce.precision);
       return value === undefined ? native?.(ops, options) : bigResult(ce, value);
+    },
+  );
+  wrapOperator(
+    ce,
+    ["EllipticF", 0.5, 0.3],
+    (ops) => ops.length === 2 && ops.every((op) => isFiniteNum(op) && op.im === 0),
+    (native) => (ops, options) => {
+      if (!wantsNumber(ops, options) || !exceedsDoublePrecision(ce, options.numericApproximation))
+        return native?.(ops, options);
+      const [phi, m] = ops.map((op) => bigRealOperand(ce, op));
+      const value = phi === undefined || m === undefined ? undefined : incompleteEllipticFBig(phi, m, ce.precision);
+      if (value === undefined) return native?.(ops, options);
+      return value.im.isZero()
+        ? bigResult(ce, value.re)
+        : ce.function("Complex", [bigResult(ce, value.re), bigResult(ce, value.im)]);
     },
   );
   wrapOperator(

@@ -29,3 +29,4 @@ names:
 - $t_k$ is found by scanning [[RiemannSiegelZ]] for sign changes along the real line from $t \approx 0$, counting crossings as it goes, then bisecting the bracket once the $k$-th crossing turns up. This counts crossings directly rather than bracketing between Gram points, so it isn't exposed to a Gram's-law failure (the first is at Gram index 126) the way a Gram-point method would be.
 - Supported range: $k$ such that $t_k \le 2000$ — comfortably past the first 1000 zeros, and well beyond every example here. Above that the call is left symbolic rather than guess further out with an unvalidated scan; $k < 1$ is likewise left symbolic, and a non-integer $k$ is a type error.
 - Numeric only (`N()` or an inexact operand) — the real part is always exactly $\tfrac12$; the search cost is in the imaginary part.
+- `N(…, d)` past a double's digits refines the double zero by Newton's method on the bignum [[RiemannSiegelZ]].

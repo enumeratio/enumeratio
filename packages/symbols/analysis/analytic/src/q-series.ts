@@ -1,5 +1,11 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { extendHead } from "@enumeratio/engine";
 import {
+  atDigits,
+  bigRealOperand,
+  bigResult,
+  DOUBLE_DIGITS,
+  exceedsDoublePrecision,
   abs,
   cx,
   mul,
@@ -10,6 +16,7 @@ import {
   numberResult,
   wantsNumber,
 } from "@enumeratio/ce-patches";
+import { qFactorialBig } from "./q-factorial-big.ts";
 
 // The q-series heads: QPochhammer(a, q, n), QFactorial(n, q), QBinomial(n, k, q).
 // Wolfram names all three; compute-engine has none of them (`ce.lookupDefinition`
@@ -23,6 +30,9 @@ import {
 // rather than [n]_q! / ([k]_q! [n-k]_q!): that quotient is exact numerically, but for
 // symbolic q it's a division `Expand` alone won't cancel down to a polynomial. The
 // recurrence only ever adds and multiplies, so it never needs to.
+//
+// QFactorial at a non-integer real n has no finite product; it is the q-Gamma function, which
+// `qFactorialBig` evaluates for N(…) (real q > 0). Integer n stays the exact product above.
 //
 // Only the infinite q-Pochhammer product (n = PositiveInfinity) forces a numeric
 // limit — it has no exact closed form in general, so it's numeric-only and requires
@@ -118,14 +128,36 @@ export function declareQSeries(ce: ComputeEngine): void {
   // tree to expand. An `evaluate`-only handler never fires there — `Expand` reads its
   // operand's canonical form without forcing `.evaluate()` on it first, so a custom
   // head with only `evaluate` would come back opaque (confirmed: adding `evaluate`
-  // alongside `canonical` here is a no-op, see the QPochhammer comment above).
+  // alongside `canonical` in one declare is a no-op, see the QPochhammer comment above;
+  // QFactorial's fractional-n `evaluate` is attached afterwards, with `extendHead`).
   ce.declare("QFactorial", {
-    signature: "(integer, complex) -> number",
+    signature: "(real, complex) -> number",
     canonical: (ops: readonly BoxedExpression[]) => {
       const n = ops[0];
       const q = ops[1];
-      if (n === undefined || q === undefined || !isRealInt(n) || n.re < 0) return null;
-      return qFactorialExpr(ce, n.re, q);
+      if (n === undefined || q === undefined) return null;
+      if (isRealInt(n) && n.re >= 0) return qFactorialExpr(ce, n.re, q);
+      // A numeric non-integer n is a held call that is canonical, so `evaluate` below can reach it.
+      return isFiniteNum(n) && !isRealInt(n) ? ce._fn("QFactorial", [n.canonical, q.canonical]) : null;
+    },
+  });
+
+  // Canonical handles the integer n; the numeric q-Gamma continuation is an evaluate on top of it.
+  extendHead(ce, "QFactorial", {
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+      const [n, q] = ops;
+      if (n === undefined || q === undefined || !wantsNumber(ops, options)) return undefined;
+      if (n.im !== 0 || q.im !== 0 || !Number.isFinite(n.re) || !Number.isFinite(q.re)) return undefined;
+      // Past a double's digits at the engine's; at a double's, a double's worth, boxed as a double.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+        const [bn, bq] = [bigRealOperand(ce, n), bigRealOperand(ce, q)];
+        const value = bn === undefined || bq === undefined ? undefined : qFactorialBig(bn, bq, ce.precision);
+        return value === undefined ? undefined : bigResult(ce, value);
+      }
+      const value = atDigits(DOUBLE_DIGITS + 5, () =>
+        qFactorialBig(ce.bignum(n.re), ce.bignum(q.re), DOUBLE_DIGITS + 5),
+      );
+      return value === undefined ? undefined : ce.number(value.toNumber());
     },
   });
 

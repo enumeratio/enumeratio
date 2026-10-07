@@ -1,6 +1,9 @@
 import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import {
   atDigits,
+  bigRealOperand,
+  bigResult,
+  DOUBLE_DIGITS,
   bigCx,
   hurwitzZetaBig,
   logGammaBig,
@@ -17,6 +20,7 @@ import {
   zetaGeneralized,
   inexactComplex,
 } from "@enumeratio/ce-patches";
+import { riemannSiegelZBig, riemannSiegelZComplexBig, riemannZetaZeroBig } from "./riemann-siegel-big.ts";
 
 // RiemannSiegelTheta(t), RiemannSiegelZ(t), and RiemannZetaZero(k) — reusing the
 // existing log-gamma continuation (loggamma.ts) and generalized zeta kernel
@@ -143,6 +147,28 @@ export function refineZeroBig(t: number): number | undefined {
   });
 }
 
+/** Z(t) at the engine's precision, for N(…, d) past a double's digits. */
+function riemannSiegelZPastDouble(ce: ComputeEngine, t: BoxedExpression): BoxedExpression | undefined {
+  if (ce.precision <= DOUBLE_DIGITS) return undefined;
+  const im = t.bignumIm ?? ce.bignum(t.im);
+  if (im.isZero()) {
+    const x = bigRealOperand(ce, t);
+    const value = x === undefined ? undefined : riemannSiegelZBig(x, ce.precision);
+    return value === undefined ? undefined : bigResult(ce, value);
+  }
+  const value = riemannSiegelZComplexBig(t.bignumRe ?? ce.bignum(t.re), im, ce.precision);
+  if (value === undefined) return undefined;
+  return ce.function("Complex", [bigResult(ce, value.re), bigResult(ce, value.im)]);
+}
+
+/** ½ + i·t_k at the engine's precision from the double zero `seed`; ZetaZero(−k) is the conjugate. */
+function zetaZeroPastDouble(ce: ComputeEngine, k: number, seed: number): BoxedExpression | undefined {
+  if (ce.precision <= DOUBLE_DIGITS) return undefined;
+  const root = riemannZetaZeroBig(refineZeroBig(seed) ?? seed, ce.precision);
+  if (root === undefined) return undefined;
+  return ce.function("Complex", [bigResult(ce, bigCx(0.5).re), bigResult(ce, k < 0 ? root.neg() : root)]);
+}
+
 export function declareRiemannSiegel(ce: ComputeEngine): void {
   ce.declare("RiemannSiegelTheta", {
     signature: "(number) -> number",
@@ -161,9 +187,9 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
       const t = ops[0];
       if (t === undefined || !Number.isFinite(t.re) || !Number.isFinite(t.im)) return undefined;
       if (!wantsNumber(ops, options)) return undefined;
-      // Plain doubles throughout: past what a double carries, decline rather than dress ~17
-      // correct digits as the d asked for.
-      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      // Past what a double carries only the bignum kernel answers; it declines rather than dress
+      // ~17 correct digits as the d asked for.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return riemannSiegelZPastDouble(ce, t);
       if (t.im !== 0) return numberResult(ce, riemannSiegelZComplex(cx(t.re, t.im)));
       return ce.number(riemannSiegelZ(t.re));
     },
@@ -175,9 +201,10 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
       const k = ops[0];
       if (k === undefined || !isRealInt(k) || k.re === 0) return undefined;
       if (!wantsNumber(ops, options)) return undefined;
-      if (exceedsDoublePrecision(ce, options.numericApproximation)) return undefined;
+      const pastDouble = exceedsDoublePrecision(ce, options.numericApproximation);
       const t = riemannZetaZeroT(Math.abs(k.re));
       if (t === undefined) return undefined; // beyond MAX_T; decline rather than guess
+      if (pastDouble) return zetaZeroPastDouble(ce, k.re, t);
       const root = refineZeroBig(t) ?? t;
       return inexactComplex(ce, 0.5, k.re < 0 ? -root : root); // ZetaZero(-k) = Conjugate(ZetaZero(k))
     },

@@ -37,9 +37,11 @@ test("RiemannSiegelZ continues to complex t (Wolfram: -0.5893 - 0.1041i at 4 + i
   expect(z.im).toBeCloseTo(-0.1041331674965732, 12);
 });
 
-test("the double-only kernels decline an explicit digit count past a double's", () => {
-  expect(ce.box(["N", ["RiemannSiegelZ", ["Rational", 5, 4]], 30]).evaluate().operator).toBe("RiemannSiegelZ");
-  expect(ce.box(["N", ["RiemannZetaZero", 2], 30]).evaluate().operator).toBe("RiemannZetaZero");
+test("an explicit digit count past a double's runs the bignum kernels (big-digits-batch-2.test.ts)", () => {
+  expect(ce.box(["N", ["RiemannSiegelZ", ["Rational", 5, 4]], 30]).evaluate().json).toEqual({
+    num: "-0.650818895379208837126984179609",
+  });
+  expect(ce.box(["N", ["RiemannZetaZero", 2], 30]).evaluate().operator).toBe("Complex");
 });
 
 test("RiemannZetaZero rejects a non-integer k as a type error, per its declared signature", () => {
