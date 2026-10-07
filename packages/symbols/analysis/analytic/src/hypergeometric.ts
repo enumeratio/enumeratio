@@ -16,7 +16,12 @@ import {
   bigResult,
   exceedsDoublePrecision,
 } from "@enumeratio/ce-patches";
-import { hypergeometric2F1RegularizedBig, pfqBig, pfqRegularizedBig } from "./hypergeometric-big.ts";
+import {
+  hypergeometric2F1RegularizedBig,
+  hypergeometric3F2RegularizedBig,
+  pfqBig,
+  pfqRegularizedBig,
+} from "./hypergeometric-big.ts";
 
 // The generalized hypergeometric series pFq(a1,…,ap; b1,…,bq; z) = Σ_{k≥0} ∏(ai)_k / ∏(bj)_k
 // · zᵏ/k!, and its regularized cousin pFq(…)/∏Γ(bj) — Fungrim's frontier heads
@@ -35,8 +40,9 @@ import { hypergeometric2F1RegularizedBig, pfqBig, pfqRegularizedBig } from "./hy
 // the sum answer at those poles by the standard limiting convention (1/Γ(−n) = 0).
 //
 // The double series is what `N()` runs; `N(x, d)` past a double's digits takes the BigDecimal one
-// (hypergeometric-big.ts) for Hypergeometric0F1Regularized and Hypergeometric1F1Regularized, and,
-// for real z < 1 (Pfaff's transformation brings z < −½ into the unit disc), Hypergeometric2F1Regularized.
+// (hypergeometric-big.ts) for Hypergeometric0F1Regularized and Hypergeometric1F1Regularized, for
+// real z < 1 (Pfaff's transformation brings z < −½ into the unit disc) Hypergeometric2F1Regularized,
+// and for real |z| < 1 Hypergeometric3F2Regularized.
 //
 // Convergence: p ≤ q (0F1, 1F1Regularized) is entire in z, so those never decline on account of
 // z. p = q + 1 (2F1Regularized, 3F2Regularized) only converges for |z| < 1; z on or outside the
@@ -154,7 +160,7 @@ function regularizedPastDouble(
   const bb = bigRealOperand(ce, b);
   const zz = bigRealOperand(ce, z);
   if (bb === undefined || zz === undefined || ua.some((a) => a === undefined)) return undefined;
-  const value = pfqRegularizedBig(ua as BigDecimal[], bb, zz, ce.precision);
+  const value = pfqRegularizedBig(ua as BigDecimal[], [bb], zz, ce.precision);
   return value === undefined ? undefined : bigResult(ce, value);
 }
 
@@ -163,6 +169,15 @@ function regularized2F1PastDouble(ce: ComputeEngine, ops: readonly BoxedExpressi
   const [a, b, c, z] = ops.map((op) => bigRealOperand(ce, op));
   if (a === undefined || b === undefined || c === undefined || z === undefined) return undefined;
   const value = hypergeometric2F1RegularizedBig(a, b, c, z, ce.precision);
+  return value === undefined ? undefined : bigResult(ce, value);
+}
+
+/** 3F2(a₁, a₂, a₃; b₁, b₂; z)/(Γ(b₁)Γ(b₂)) at the engine's precision for real operands and |z| < 1. */
+function regularized3F2PastDouble(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  const [a1, a2, a3, b1, b2, z] = ops.map((op) => bigRealOperand(ce, op));
+  if (a1 === undefined || a2 === undefined || a3 === undefined) return undefined;
+  if (b1 === undefined || b2 === undefined || z === undefined) return undefined;
+  const value = hypergeometric3F2RegularizedBig([a1, a2, a3], [b1, b2], z, ce.precision);
   return value === undefined ? undefined : bigResult(ce, value);
 }
 
@@ -260,6 +275,8 @@ export function declareHypergeometric(ce: ComputeEngine): void {
       const cs = operandsOf(ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a1, a2, a3, b1, b2, z] = cs;
+      // Past a double's digits only the bignum series answers (real operands, |z| < 1).
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return regularized3F2PastDouble(ce, ops);
       if (mag(z) >= 1) return undefined;
       const r = pfqRegularizedSeries([a1, a2, a3], [b1, b2], z);
       return r === undefined ? undefined : numberResult(ce, r);

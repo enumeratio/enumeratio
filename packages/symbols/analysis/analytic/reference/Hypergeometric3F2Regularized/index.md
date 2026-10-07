@@ -23,5 +23,5 @@ seeAlso:
 ---
 
 - compute-engine has no `Hypergeometric3F2` at all, regularized or otherwise. Computed directly by the $1/\Gamma$-per-term series ($p = q + 1$ here), finite at either $b_1$ or $b_2$ a nonpositive integer.
-- The series only converges for $|z| < 1$; outside the unit disc this stays symbolic. Fungrim's own identities for this head (e.g. the Chebyshev derivative formulas, fungrim:6582c4 / fungrim:e1797b) are unconstrained in their own argument, so not every instance evaluates.
+- The series only converges for $|z| < 1$; outside the unit disc this stays symbolic. `N(…, d)` past a double's digits runs a bignum series for real arguments with $|z| < 1$ (the cancellation at negative $z$ is paid for in extra working digits), and stays symbolic rather than padding a double where it can't settle: a complex $z$, $|z| \ge 1$, or $z$ so near the rim that the series outruns its term budget. Fungrim's own identities for this head (e.g. the Chebyshev derivative formulas, fungrim:6582c4 / fungrim:e1797b) are unconstrained in their own argument, so not every instance evaluates.
 - Wolfram has no dedicated 3,2 head; it maps to the generic `HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z]`.
