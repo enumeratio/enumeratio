@@ -349,8 +349,9 @@ const config = defineConfig({
     // The host: a service worker that caches the kernel's libraries on install (host/).
     writeServiceWorker(site.outDir, { libraries: CATALOGUE.map((library) => library.name) });
   },
-  transformPageData(pageData: { params?: { name?: string }; title?: string }) {
-    if (pageData.params?.name) pageData.title = pageData.params.name;
+  transformPageData(pageData: { params?: { name?: string; title?: string }; title?: string }) {
+    if (pageData.params?.title) pageData.title = pageData.params.title;
+    else if (pageData.params?.name) pageData.title = pageData.params.name;
   },
   // A reference page's examples, and any page's own cells and plots, rendered at build
   // (data/prerender.ts, data/prerender-markup.ts) into their placeholders.

@@ -35,7 +35,7 @@ const byName = (a: CatalogRow, b: CatalogRow): number =>
 export const statisticsRows: readonly CatalogRow[] = [...ALL_STATISTICS]
   .map((d) => ({
     name: d.head,
-    href: symbol(d.head),
+    href: `/reference/statistic/${d.on}/${d.head}`,
     badges: [d.on],
     summary: d.summary,
     note: d.note,
@@ -52,7 +52,7 @@ const carrierName = (type: string): string => CARRIERS.find((c) => c.type === ty
 export const mapsRows: readonly CatalogRow[] = [
   ...MAPS.map((m) => ({
     name: m.name,
-    href: symbol(m.name),
+    href: `/reference/map/${carrierName(m.from)}/${m.name}`,
     badges: [`${m.from} → ${m.to}`],
     summary: m.summary,
     note: m.note,
