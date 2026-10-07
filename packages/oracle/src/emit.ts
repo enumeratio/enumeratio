@@ -113,6 +113,37 @@ const wolframFree = (name: string): string => (isSystemName(name) ? `${CONTEXT}$
 /** Wolfram's spellings of our number sets (`Reals`): a set a call names, never a variable. */
 const NUMBER_SET_NAMES: ReadonlySet<string> = new Set(Object.values(NUMBER_SETS));
 
+/** A symbol that can be a series variable: not one of the named constants. */
+const isVariable = (node: MathJSON): node is string => typeof node === "string" && !(node in CONSTANTS);
+
+/** `x^-n` as `n`: the order of a series at infinity. */
+const magnitude = (exponent: MathJSON): MathJSON | undefined => {
+  if (typeof exponent === "number") return exponent < 0 ? -exponent : undefined;
+  if (isCall(exponent) && exponent[0] === "Rational" && typeof exponent[1] === "number" && exponent[1] < 0)
+    return ["Rational", -exponent[1], exponent[2]!];
+  return undefined;
+};
+
+/**
+ * `BigO` in Wolfram, which writes the exponent outside `O` and takes a bare variable and its
+ * center: BigO(x^n) is `O[x]^n`, BigO((x - a)^n) is `O[x, a]^n`, BigO(x^-n) is `O[x, Infinity]^n`.
+ * `O[x^n]` and `O[x - a]` are rejected there (SeriesData::sdatv).
+ */
+function bigO(operand: MathJSON, walk: (node: MathJSON) => string): string {
+  const power = isCall(operand) && operand[0] === "Power" && operand.length === 3;
+  const base = power ? operand[1]! : operand;
+  const exponent = power ? operand[2]! : undefined;
+  const inverse = typeof base === "string" && exponent !== undefined ? magnitude(exponent) : undefined;
+  if (inverse !== undefined) return `Power[O[${walk(base)}, Infinity], ${walk(inverse)}]`;
+  const variables = isCall(base) && base[0] === "Add" ? base.slice(1).filter(isVariable) : [];
+  let order = `O[${walk(base)}]`;
+  if (isCall(base) && variables.length === 1) {
+    const rest = base.slice(1).filter((term) => term !== variables[0]);
+    order = `O[${walk(variables[0]!)}, ${walk(["Negate", rest.length === 1 ? rest[0]! : ["Add", ...rest]])}]`;
+  }
+  return exponent === undefined ? order : `Power[${order}, ${walk(exponent)}]`;
+}
+
 /** `expr` as `system`'s source. `extra` maps a library's heads (`mappingsFromBindings`), which an
  *  expression calls by namespace: `MemberCall(ns, "Name", …)` is emitted as `ns.Name(…)`. */
 export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] = []): Emitted {
@@ -222,14 +253,8 @@ export function emit(expr: MathJSON, system: System, extra: readonly Mapping[] =
 
   const walkCall = (head: string, operands: readonly MathJSON[]): string => {
     const qualified = head === "MemberCall" ? qualifiedName(operands) : undefined;
-    // BigO(x^n) is `O[x]^n` in Wolfram, the exponent outside `O`; `O[x^n]` is rejected there
-    // (SeriesData::sdatv). The generic walk below would hand `toWolfram` an already-printed operand.
-    if (system === "wolfram" && head === "BigO" && operands.length === 1) {
-      const inner = operands[0]!;
-      if (isCall(inner) && inner[0] === "Power" && inner.length === 3)
-        return `Power[O[${walk(inner[1]!)}], ${walk(inner[2]!)}]`;
-      return `O[${walk(inner)}]`;
-    }
+    // The generic walk below would hand `toWolfram` an already-printed operand.
+    if (system === "wolfram" && head === "BigO" && operands.length === 1) return bigO(operands[0]!, walk);
     if (qualified !== undefined && mappingFor(qualified, operands.length - 2, extra) !== undefined)
       return walkCall(qualified, operands.slice(2));
     // A head of a library `extra` maps, with no mapping of its own here: unmapped, not a free

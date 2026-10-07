@@ -55,6 +55,8 @@ jobs:
       - run: pnpm --filter @enumeratio/reference exec vp test run tests/resolver.test.ts
       # Every sampled head's examples, read back from markup and evaluated through the registry.
       - run: pnpm --filter @enumeratio/reference exec vp test run tests/markup-registry.test.ts
+      # Every example through a bare and a declared engine: the exact list of heads we override.
+      - run: pnpm --filter @enumeratio/reference exec vp test run tests/provenance.test.ts
       # Every declaration order of the packages that extend one head (BL-13).
       - run: pnpm --filter @enumeratio/census exec vp test run tests/declaration-order.test.ts
 
