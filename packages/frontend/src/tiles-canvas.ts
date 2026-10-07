@@ -16,6 +16,8 @@ import { latticeCoordinates, latticePoint, type LatticeView, type Vec2, visibleR
 export interface TileLayer {
   readonly basis: readonly [Vec2, Vec2];
   readonly maxIndex: number;
+  /** The index ranges a finite layer has (a table's rows and columns); ±maxIndex otherwise. */
+  readonly bounds?: { readonly i: Vec2; readonly j: Vec2 };
   /** Whether point (i, j) is classified already, so drawing it costs nothing. */
   known(i: number, j: number): boolean;
   /** Classify point (i, j) now. */
@@ -94,8 +96,9 @@ export function drawTiles(
   const selected = new Set(options.selection.map(([i, j]) => `${i},${j}`));
   const range = visibleRange(layer.basis, view, width / height);
   const limit = layer.maxIndex;
-  const [i0, i1] = [Math.max(range.i[0], -limit), Math.min(range.i[1], limit)];
-  const [j0, j1] = [Math.max(range.j[0], -limit), Math.min(range.j[1], limit)];
+  const { i: bi, j: bj } = layer.bounds ?? { i: [-limit, limit], j: [-limit, limit] };
+  const [i0, i1] = [Math.max(range.i[0], bi[0]), Math.min(range.i[1], bi[1])];
+  const [j0, j1] = [Math.max(range.j[0], bj[0]), Math.min(range.j[1], bj[1])];
   const centre = latticeCoordinates(layer.basis, view.center).map(Math.round) as [number, number];
   const rows = Array.from({ length: Math.max(0, j1 - j0 + 1) }, (_, k) => j0 + k).toSorted(
     (a, b) => Math.abs(a - centre[1]) - Math.abs(b - centre[1]),

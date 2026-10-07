@@ -41,8 +41,8 @@ import { ensureStyles } from "./styles.ts";
 
 type Json = unknown;
 
-/** A ring's lattice as `LatticeTiles` draws it: the tiles' layer, plus its frame and how to label it. */
-interface RingLayer extends TileLayer {
+/** A layer of tiles as Show draws it: the tiles, plus its frame and how to label it. */
+interface ShowLayer extends TileLayer {
   readonly title: string;
   readonly grid: readonly [Vec2, Vec2];
   gridLabel(axis: 0 | 1, k: number): string;
@@ -89,7 +89,8 @@ function bind(json: Json, params: ReadonlyMap<string, Json>): Json {
 
 /** What a `Show` says, read once its parameters are bound. */
 interface ShowSpec {
-  readonly ring?: Json;
+  /** The tiled layer: `LatticeTiles(ring)` or `ArrayPlot(table)`, its data. */
+  readonly tiles?: { readonly head: "LatticeTiles" | "ArrayPlot"; readonly data: Json };
   readonly colorRules: readonly ColorRule[];
   readonly boundaryRules: readonly BoundaryRule[];
   readonly colorMixing: ColorMixing;
@@ -111,20 +112,21 @@ const lineStyleOf = (json: Json, fallback: LineStyle): LineStyle => {
 
 function specOf(json: Json): ShowSpec {
   const { positional, options } = splitOptions(json, declared("Show"));
-  let ring: Json;
+  let tiles: ShowSpec["tiles"];
   let colorRules: ColorRule[] = [];
   let boundaryRules: BoundaryRule[] = [];
   let colorMixing: ColorMixing = "First";
   let unread = 0;
   for (const layer of positional) {
-    if (headOf(layer) !== "LatticeTiles") continue;
-    const tiles = splitOptions(layer, declared("LatticeTiles"));
-    ring = tiles.positional[0];
-    const colors = rulesOf(tiles.options.get("ColorRules"), colorRuleOf);
-    const edges = rulesOf(tiles.options.get("BoundaryStyle"), boundaryRuleOf);
+    const head = headOf(layer);
+    if (head !== "LatticeTiles" && head !== "ArrayPlot") continue;
+    const split = splitOptions(layer, declared(head));
+    tiles = { head, data: split.positional[0] };
+    const colors = rulesOf(split.options.get("ColorRules"), colorRuleOf);
+    const edges = rulesOf(split.options.get("BoundaryStyle"), boundaryRuleOf);
     colorRules = colors.rules;
     boundaryRules = edges.rules;
-    colorMixing = colorMixingOf(tiles.options.get("ColorMixing"));
+    colorMixing = colorMixingOf(split.options.get("ColorMixing"));
     unread = colors.unread + edges.unread;
   }
   // `GridLines -> n` (ours) draws a line every n units of the frame; `Automatic` every GRID_STEP.
@@ -142,7 +144,7 @@ function specOf(json: Json): ShowSpec {
         }
       : undefined;
   return {
-    ring,
+    ...(tiles ? { tiles } : {}),
     colorRules,
     boundaryRules,
     colorMixing,
@@ -226,11 +228,13 @@ export class NotatioShow extends LitElement {
   #source: Json;
   /** The options: those written in `value`, then those given as attributes. */
   #showOptions = new Map<string, Json>();
-  #layer: RingLayer | undefined;
+  #layer: ShowLayer | undefined;
   #layerKey = "";
   #canvases: HTMLCanvasElement[] = [];
   #view: LatticeView = { center: [0, 0], extent: 20 };
   #framed = false;
+  /** Whether the reader has panned or zoomed, so a resize keeps their view rather than refitting. */
+  #moved = false;
   #w = 2;
   #h = 2;
   #queued = false;
@@ -348,10 +352,9 @@ export class NotatioShow extends LitElement {
       return;
     }
     const spec = specOf(bound);
-    const ring = spec.ring;
-    const key = JSON.stringify([ring, spec.aspect]);
+    const key = JSON.stringify([spec.tiles, spec.aspect]);
     if (key !== this.#layerKey) {
-      const layer = await layerFor(ring, spec.aspect);
+      const layer = await layerFor(spec.tiles, spec.aspect);
       if (typeof layer === "string") {
         this._status = layer;
         return;
@@ -359,9 +362,12 @@ export class NotatioShow extends LitElement {
       this.#layer = layer;
       this.#layerKey = key;
       this._selection = [];
-      if (!this.#framed) {
-        this.#view = layer.home?.() ?? { center: [0, 0], extent: 20 };
+      // A finite layer is framed whole whenever it changes (a new n is a new table); an
+      // unbounded one once, so stepping the ring keeps the reader where they were.
+      if (!this.#framed || layer.bounds) {
+        this.#view = this.#home(layer);
         this.#framed = true;
+        this.#moved = false;
       }
     }
     this._status = spec.unread > 0 ? `${spec.unread} of the layer's rules didn't read.` : "";
@@ -386,6 +392,11 @@ export class NotatioShow extends LitElement {
 
   #clamp(): void {
     if (!this.#layer) return;
+    const { bounds } = this.#layer;
+    if (bounds) {
+      this.#view = clampToBounds(this.#layer.basis, bounds, this.#view, this.#w / this.#h);
+      return;
+    }
     this.#view = clampLatticeView(
       { basis: this.#layer.basis, maxIndex: this.#layer.maxIndex },
       this.#view,
@@ -404,6 +415,7 @@ export class NotatioShow extends LitElement {
       c.width = this.#w;
       c.height = this.#h;
     }
+    if (this.#layer?.bounds && !this.#moved) this.#view = this.#home(this.#layer);
     this.#clamp();
     this.#drawNow();
   }
@@ -481,6 +493,12 @@ export class NotatioShow extends LitElement {
     const key = (p: Vec2) => `${p[0]},${p[1]}`;
     const has = this._selection.some((p) => key(p) === key(point));
     if (!this.#selectionName && !this.#options.has("Selection")) return;
+    const bounds = this.#layer?.bounds;
+    if (
+      bounds &&
+      (point[0] < bounds.i[0] || point[0] > bounds.i[1] || point[1] < bounds.j[0] || point[1] > bounds.j[1])
+    )
+      return;
     if (extend)
       this._selection = has ? this._selection.filter((p) => key(p) !== key(point)) : [...this._selection, point];
     else this._selection = has && this._selection.length === 1 ? [] : [point];
@@ -502,6 +520,7 @@ export class NotatioShow extends LitElement {
     const move = (m: PointerEvent): void => {
       if (!dragged && Math.hypot(m.clientX - x0, m.clientY - y0) < SLOP) return;
       dragged = true;
+      this.#moved = true;
       const scale = (2 * this.#view.extent) / r.height;
       this.#view = {
         center: [this.#view.center[0] - (m.clientX - px) * scale, this.#view.center[1] + (m.clientY - py) * scale],
@@ -530,6 +549,7 @@ export class NotatioShow extends LitElement {
     const canvas = e.currentTarget as HTMLCanvasElement;
     if (!wheelZooms(e, canvas, this.#gestures) || !this.#layer) return;
     e.preventDefault();
+    this.#moved = true;
     const anchor = this.#planeAt(e.clientX, e.clientY);
     const before = this.#view.extent;
     const ceiling = maxExtentFor(this.#layer.basis, this.#w / this.#h, MAX_POINTS);
@@ -555,8 +575,23 @@ export class NotatioShow extends LitElement {
   };
 
   /** Back to the frame the layer chose. */
+  /** Where a layer starts: a finite one fitted whole to the canvas, else the layer's own home. */
+  #home(layer: ShowLayer): LatticeView {
+    if (!layer.bounds) return layer.home?.() ?? { center: [0, 0], extent: 20 };
+    const { i, j } = layer.bounds;
+    const [b0, b1] = layer.basis;
+    const xs = [i[0], i[1]].flatMap((a) => [j[0], j[1]].map((b) => a * b0[0] + b * b1[0]));
+    const ys = [i[0], i[1]].flatMap((a) => [j[0], j[1]].map((b) => a * b0[1] + b * b1[1]));
+    const [w, h] = [Math.max(...xs) - Math.min(...xs) + 1, Math.max(...ys) - Math.min(...ys) + 1];
+    return {
+      center: [(Math.max(...xs) + Math.min(...xs)) / 2, (Math.max(...ys) + Math.min(...ys)) / 2],
+      extent: (Math.max(h, w / (this.#w / this.#h)) / 2) * 1.02,
+    };
+  }
+
   resetView = (): void => {
-    this.#view = this.#layer?.home?.() ?? { center: [0, 0], extent: 20 };
+    this.#moved = false;
+    this.#view = this.#layer ? this.#home(this.#layer) : { center: [0, 0], extent: 20 };
     this.#clamp();
     this.#drawNow();
   };
@@ -673,8 +708,48 @@ export class NotatioShow extends LitElement {
   }
 }
 
-/** The layer for a ring, loaded on first use: `QuadraticIntegers(d)`, `GaussianIntegers`. */
-async function layerFor(ring: Json, aspect: "Uniform" | "True"): Promise<RingLayer | string> {
+/**
+ * Keep a view on a finite layer: no wider than the whole layer with a margin (nor than the point
+ * budget), its center within the layer's rectangle.
+ */
+function clampToBounds(
+  basis: readonly [Vec2, Vec2],
+  bounds: { readonly i: Vec2; readonly j: Vec2 },
+  view: LatticeView,
+  aspect: number,
+): LatticeView {
+  const corners = [bounds.i[0], bounds.i[1]].flatMap((i) =>
+    [bounds.j[0], bounds.j[1]].map((j) => [i * basis[0][0] + j * basis[1][0], i * basis[0][1] + j * basis[1][1]]),
+  );
+  const [xs, ys] = [corners.map((c) => c[0]!), corners.map((c) => c[1]!)];
+  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const whole = Math.max((y1 - y0) / 2, (x1 - x0) / (2 * aspect)) * 1.1 + 1;
+  const unit = Math.sqrt(Math.abs(basis[0][0] * basis[1][1] - basis[0][1] * basis[1][0]));
+  const extent = Math.min(Math.max(view.extent, 1.5 * unit), whole, maxExtentFor(basis, aspect, MAX_POINTS));
+  const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
+  return { center: [clamp(view.center[0], x0, x1), clamp(view.center[1], y0, y1)], extent };
+}
+
+/** The modulus of `QuotientRing(Integers, n)` (or its old spelling `IntegerModRing(n)`). */
+function modulusOf(ring: Json): number {
+  if (headOf(ring) === "QuotientRing" && argsOf(ring)[0] === "Integers") return numberOf(argsOf(ring)[1], Number.NaN);
+  if (headOf(ring) === "IntegerModRing") return numberOf(argsOf(ring)[0], Number.NaN);
+  return Number.NaN;
+}
+
+/**
+ * A tiled layer's tiles, loaded on first use: `LatticeTiles` of `QuadraticIntegers(d)`,
+ * `GaussianIntegers` or `EisensteinIntegers`; `ArrayPlot` of `MultiplicationTable(QuotientRing(Integers, n))`.
+ */
+async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): Promise<ShowLayer | string> {
+  if (tiles === undefined) return "Show needs a layer: LatticeTiles(ring, …) or ArrayPlot(table, …).";
+  if (tiles.head === "ArrayPlot") {
+    const n = headOf(tiles.data) === "MultiplicationTable" ? modulusOf(argsOf(tiles.data)[0]) : Number.NaN;
+    if (!Number.isInteger(n)) return "ArrayPlot needs a table: MultiplicationTable(QuotientRing(Integers, n)).";
+    const { multiplicationTable } = await import("@enumeratio/residues/table");
+    return multiplicationTable(n) ?? `ℤ/${n} is too large to tabulate, or not a ring with a table.`;
+  }
+  const ring = tiles.data;
   const d =
     ring === "GaussianIntegers"
       ? -1

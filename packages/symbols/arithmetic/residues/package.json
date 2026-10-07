@@ -18,6 +18,10 @@
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
     },
+    "./table": {
+      "types": "./dist/table.d.mts",
+      "import": "./dist/table.mjs"
+    },
     "./declares.json": "./dist/declares.json",
     "./package.json": "./package.json"
   },

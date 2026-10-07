@@ -183,6 +183,7 @@ export const GRAPHICS_OPTIONS: Readonly<Record<string, readonly string[]>> = {
     "GestureHandling",
   ],
   LatticeTiles: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+  ArrayPlot: ["ColorRules", "ColorMixing", "BoundaryStyle"],
 };
 
 /**
