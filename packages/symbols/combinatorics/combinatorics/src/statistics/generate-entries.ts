@@ -20,7 +20,48 @@ import type { GeneratedEntries } from "@enumeratio/entry/node";
 import { captionId, dedupeId } from "@enumeratio/entry";
 import { type Engine, isNativeHead } from "@enumeratio/engine";
 import { bareEngine } from "@enumeratio/engine/testing";
+import { readFileSync } from "node:fs";
+import { findstat } from "../../findstat/src/findstat-data.ts";
+import { readObject } from "../../findstat/src/objects.ts";
 import { bySignature, type Definition, type FrontierEntry } from "./types.ts";
+
+/** FindStat's statistics: each id's few smallest (object, value) rows (`collect-findstat-data.ts`). */
+const FINDSTAT = (
+  JSON.parse(readFileSync(new URL("../../findstat/data/statistics.json", import.meta.url), "utf8")) as {
+    items: Record<string, { sample: [string, number][] }>;
+  }
+).items;
+/** How many of FindStat's rows a head's page holds as examples. */
+const FINDSTAT_ROWS = 3;
+
+/**
+ * FindStat's own values for a statistic of ours it has matched by value, as examples held to
+ * them: `expected` and `known` are FindStat's, so `tests/entries.test.ts` fails when ours differs.
+ * Written as `CombinatorialStat(x, "Name")`, which dispatches by carrier where a bare head is
+ * typed for one.
+ */
+function findstatExamples(definition: Definition): ReferenceExample[] {
+  const match = findstat.find((m) => m.head === definition.head && m.on === definition.on);
+  const id = match?.findstat[0];
+  const sample = id === undefined ? undefined : FINDSTAT[id]?.sample;
+  if (sample === undefined || id === undefined) return [];
+  const rows: ReferenceExample[] = [];
+  for (const [object, value] of sample) {
+    if (/^(\[\]|\{\})$/.test(object)) continue;
+    const subject = readObject(definition.on, object);
+    if (subject === undefined || rows.length === FINDSTAT_ROWS) continue;
+    rows.push({
+      id: `findstat-${id.toLowerCase()}-${rows.length + 1}`,
+      expr: ["CombinatorialStat", subject, `'${definition.head}'`],
+      expected: value,
+      known: value,
+      source: `FindStat ${id}`,
+      caption: `FindStat's value for ${object}`,
+      category: "Properties",
+    });
+  }
+  return rows;
+}
 
 type MathJSONIn = string | number | readonly MathJSONIn[];
 
@@ -222,7 +263,7 @@ export function areaStatisticsEntries(options: AreaEntriesOptions): {
       signature: `${definition.head}(${subjectName})`,
       summary: definition.summary,
       details,
-      examples: withIds(examplesFor(definition)),
+      examples: [...withIds(examplesFor(definition)), ...findstatExamples(definition)],
     };
   };
 

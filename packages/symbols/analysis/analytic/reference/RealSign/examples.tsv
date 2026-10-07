@@ -1,11 +1,11 @@
-id	section	role	expr	expected	caption
-realsign-neg-3			[RealSign, -3]	-1	
-realsign-0			[RealSign, 0]	0	
-realsign-2p5			[RealSign, 2.5]	1	
-realsign-2			[RealSign, 2]	1	A positive number has sign 1
-threads-element-wise-over-a-list	Scope		[RealSign, [List, -2, 0, 5]]	[List, -1, 0, 1]	Threads element-wise over a list
-decides-the-sign-of-an-exact-numeric-expression	Scope		[RealSign, [Subtract, [Sqrt, 2], 2]]	-1	Decides the sign of an exact numeric expression
-realsign-list-list-1-over-2-neg-1-list-0-neg-1	Scope		[RealSign, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, 1, -1], [List, 0, -1]]	Entrywise sign of a matrix
-matrixfunction-realsign-list-list-1-over-2-neg-1	Scope		[MatrixFunction, RealSign, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, 1, -2], [List, 0, -1]]	As a matrix function it acts on eigenvalues, which changes the off-diagonal to $-2$
-piecewiseexpand-realsign-x	Scope		[PiecewiseExpand, [RealSign, x]]	[RealSign, x]	The symbol stays, as the sign depends on $x$
-realsign-list-3-neg-5-2-plus-5i	Properties		[RealSign, [List, 3, -5, [Complex, 2, 5]]]	[List, 1, -1, [RealSign, [Complex, 2, 5]]]	Real entries evaluate; the complex entry is left, since RealSign is real-only
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+realsign-neg-3			[RealSign, -3]	-1			
+realsign-0			[RealSign, 0]	0			
+realsign-2p5			[RealSign, 2.5]	1			
+realsign-2			[RealSign, 2]	1	A positive number has sign 1		
+threads-element-wise-over-a-list	Scope		[RealSign, [List, -2, 0, 5]]	[List, -1, 0, 1]	Threads element-wise over a list		
+decides-the-sign-of-an-exact-numeric-expression	Scope		[RealSign, [Subtract, [Sqrt, 2], 2]]	-1	Decides the sign of an exact numeric expression		
+realsign-list-list-1-over-2-neg-1-list-0-neg-1	Scope		[RealSign, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, 1, -1], [List, 0, -1]]	Entrywise sign of a matrix		
+matrixfunction-realsign-list-list-1-over-2-neg-1	Scope		[MatrixFunction, RealSign, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, 1, -2], [List, 0, -1]]	As a matrix function it acts on eigenvalues, which changes the off-diagonal to $-2$		
+piecewiseexpand-realsign-x	Scope		[PiecewiseExpand, [RealSign, x]]	[RealSign, x]	The symbol stays, as the sign depends on $x$	unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
+realsign-list-3-neg-5-2-plus-5i	Properties		[RealSign, [List, 3, -5, [Complex, 2, 5]]]	[List, 1, -1, [RealSign, [Complex, 2, 5]]]	Real entries evaluate; the complex entry is left, since RealSign is real-only		

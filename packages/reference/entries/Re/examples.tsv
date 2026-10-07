@@ -12,8 +12,8 @@ real-0	Scope		[Real, 0]	0
 real-positiveinfinity	Scope		[Real, PositiveInfinity]	PositiveInfinity							
 real-positiveinfinity-times-i	Scope		[Real, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	Indeterminate						convention	Wolfram keeps the direction (I Infinity), so Re[I Infinity] is 0; ours reads i*Infinity as ~oo, which has no real part. compute-engine keeps one complex infinity, ~oo, and no directed one (cortex-js/compute-engine#401), so ours follows its model.
 real-complexinfinity	Scope		[Real, ComplexInfinity]	Indeterminate							
-piecewiseexpand-re-imaginaryunit-times-x-neg-2	Scope		[PiecewiseExpand, [Re, [Multiply, ImaginaryUnit, x]], [Less, -2, x, 2]]	[Real, [Multiply, [Complex, 0, 1], x]]							
-simplify-re-x-x-gt-0	Scope		[Simplify, [Re, x], [Greater, x, 0]]	[Real, x]							
+piecewiseexpand-re-imaginaryunit-times-x-neg-2	Scope		[PiecewiseExpand, [Re, [Multiply, ImaginaryUnit, x]], [Less, -2, x, 2]]	[Real, [Multiply, [Complex, 0, 1], x]]						unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
+simplify-re-x-x-gt-0	Scope		[Simplify, [Re, x], [Greater, x, 0]]	[Real, x]						unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
 re-of-a-symbolic-value-stays-unevaluated	Properties		[Re, x]	[Real, x]			Re of a symbolic value stays unevaluated	Re(x)	Real(x)		
 real-1	Properties		[Real, 1]	1	1	Wolfram MathematicalFunctionData, Re	A real number is its own real part				
 real-neg-1	Properties		[Real, -1]	-1	-1	Wolfram MathematicalFunctionData, Re	Negative reals are unchanged				
