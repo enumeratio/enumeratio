@@ -252,7 +252,7 @@ export const DEFAULT_GRADIENT = "viridis";
 export const DEFAULT_PHASE_GRADIENT = "phase";
 
 /** A scheme's name as an expression writes it, PascalCase as Wolfram's are: `Dusk`, `Viridis`. */
-export const schemeName = (g: Gradient): string => g.name.charAt(0).toUpperCase() + g.name.slice(1);
+export const schemeName = (g: { readonly name: string }): string => g.name.charAt(0).toUpperCase() + g.name.slice(1);
 
 /** The gradient a name spells, as written in an expression (`Dusk`) or internally (`dusk`). */
 export const gradientNamed = (name: string | undefined): Gradient =>

@@ -8,6 +8,7 @@ import {
   mixColors,
   paintOf,
   propertiesOf,
+  schemeColor,
   splitOptions,
   styleElement,
   testOf,
@@ -76,6 +77,10 @@ describe("colors and edges", () => {
       scheme("'Dusk'")!.gradient.stops.at(-1)!.color,
     );
     expect(paintOf(["Apply", ["ColorData", ["List", "'Dusk'", "'Sideways'"]], "Norm"])).toBeUndefined();
+    // An indexed scheme: value k is its k-th color, cyclically.
+    const tableau = scheme("'Tableau10'")!;
+    expect(tableau.indexed).toHaveLength(10);
+    expect(schemeColor(tableau, 12)).toBe(tableau.indexed![2]);
   });
 
   it("read an edge from a color or a Directive", () => {
@@ -146,5 +151,7 @@ describe("values", () => {
     expect(valueOf(["Add", "X", ["Multiply", 2, "Y"]])!((n) => ({ X: 1, Y: 3 })[n])).toBe(7);
     expect(v(() => undefined)).toBeUndefined();
     expect(valueOf(["Zeta", "Norm"])).toBeUndefined();
+    // A value named with arguments is asked for by its name.
+    expect(valueOf(["Digit", 2])!((n) => (n === "Digit(2)" ? 5 : undefined))).toBe(5);
   });
 });

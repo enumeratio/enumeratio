@@ -11,7 +11,17 @@
 
 import type { Vec2 } from "./lattice.ts";
 import type { BandMode, Gradient } from "./palettes.ts";
-import { bandPosition, gradientNamed, hexToRgb, reverseGradient, rgbToHex, sampleGradient } from "./palettes.ts";
+import {
+  bandPosition,
+  DISCRETE_SCHEMES,
+  glasbey,
+  gradientNamed,
+  hexToRgb,
+  reverseGradient,
+  rgbToHex,
+  sampleGradient,
+  schemeName,
+} from "./palettes.ts";
 
 /** Where a frame looks: its center, half-height, and the y-scale `AspectRatio -> Automatic` binds. */
 export interface FrameView {
@@ -189,9 +199,23 @@ export interface SchemeColor {
   /** The range's width: one pass of the scheme. */
   readonly band: number;
   readonly mode: BandMode;
+  /** An indexed scheme's colors (Wolfram's `ColorData(97)` kind): value k is the k-th, cyclically. */
+  readonly indexed?: readonly string[];
 }
 
 export type Paint = string | SchemeColor;
+
+/** Colors a generated (Glasbey) indexed scheme holds before it repeats. */
+const INDEXED_COUNT = 32;
+
+/** An indexed scheme by name, PascalCase (`Glasbey`, `Tableau10`); undefined for a gradient's name. */
+function indexedNamed(name: string | undefined): readonly string[] | undefined {
+  const scheme = DISCRETE_SCHEMES.find((d) => schemeName(d) === name || d.name === name);
+  if (!scheme) return undefined;
+  if (scheme.colors !== "glasbey") return scheme.colors;
+  return (generated ??= glasbey(INDEXED_COUNT, ["#000000", "#ffffff"], true));
+}
+let generated: string[] | undefined;
 
 /**
  * `ColorData(spec)(value)`, Wolfram's color function applied to a value the layer computes:
@@ -206,6 +230,7 @@ export function schemeOf(json: Json): SchemeColor | undefined {
   if (headOf(fn) !== "ColorData" || value === undefined) return undefined;
   const [spec] = argsOf(fn);
   const parts = headOf(spec) === "List" ? argsOf(spec) : [spec];
+  const indexed = indexedNamed(stringOf(parts[0]));
   let gradient = gradientNamed(stringOf(parts[0]));
   let [offset, band] = [0, 1];
   let mode: BandMode | undefined;
@@ -218,7 +243,14 @@ export function schemeOf(json: Json): SchemeColor | undefined {
       if (Number.isFinite(lo) && Number.isFinite(hi) && hi! > lo!) [offset, band] = [lo!, hi! - lo!];
     } else return undefined;
   }
-  return { gradient, value, offset, band, mode: mode ?? (gradient.cyclic ? "wrap" : "clamp") };
+  return {
+    gradient,
+    value,
+    offset,
+    band,
+    mode: mode ?? (gradient.cyclic ? "wrap" : "clamp"),
+    ...(indexed ? { indexed } : {}),
+  };
 }
 
 /** A paint and its opacity from a color, a scheme, or `Opacity(a, either)`. */
@@ -272,7 +304,10 @@ const testAndStyle = (json: Json): [Json, Json, Test] | undefined => {
 export function colorRuleOf(json: Json): ColorRule | undefined {
   const parts = testAndStyle(json);
   const p = parts && paintOf(parts[1]);
-  return parts && p && { when: parts[0], test: parts[2], label: testText(parts[0]), ...p };
+  // A scheme every element takes (`True -> ColorData(…)(Address)`) is named by what it reads.
+  const label =
+    parts && p && (parts[0] === "True" && typeof p.paint !== "string" ? testText(p.paint.value) : testText(parts[0]));
+  return parts && p && { when: parts[0], test: parts[2], label: label!, ...p };
 }
 
 /** Edge widths Wolfram names. */
@@ -361,6 +396,11 @@ export function valueOf(json: Json): ValueReader | undefined {
   if (typeof json === "number") return () => json;
   if (typeof json === "string") return (base) => base(json);
   const head = headOf(json);
+  // A value the layer names with arguments, `Digit(2)`: asked for by its name, `Digit(2)`.
+  if (head !== undefined && !(head in UNARY) && !(head in FOLDS) && argsOf(json).every((a) => typeof a === "number")) {
+    const name = `${head}(${argsOf(json).join(", ")})`;
+    return (base) => base(name);
+  }
   const parts = argsOf(json).map(valueOf);
   if (head === undefined || parts.some((p) => p === undefined)) return undefined;
   const ps = parts as ValueReader[];
@@ -406,7 +446,9 @@ export const CANVAS_BLEND: Readonly<Record<ColorMixing, string>> = {
 
 /** The color a scheme gives a value. */
 export const schemeColor = (paint: SchemeColor, value: number, phase = 0): string =>
-  sampleGradient(paint.gradient, bandPosition(value - paint.offset + phase * paint.band, paint.band, paint.mode));
+  paint.indexed
+    ? paint.indexed[((Math.round(value) % paint.indexed.length) + paint.indexed.length) % paint.indexed.length]!
+    : sampleGradient(paint.gradient, bandPosition(value - paint.offset + phase * paint.band, paint.band, paint.mode));
 
 type Layer = readonly [color: string, alpha: number];
 

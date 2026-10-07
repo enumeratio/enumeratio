@@ -1,4 +1,4 @@
-import { fillTex, parseProse, type ProsePart, type VariableSpec } from "@enumeratio/frontend/core";
+import { fillTex, parseProse, pointWords, type ProsePart, type VariableSpec } from "@enumeratio/frontend/core";
 import katex from "katex";
 import { html, LitElement, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -10,8 +10,13 @@ import { ensureStyles } from "./styles.ts";
 
 type Json = unknown;
 
-/** A value as the words a sentence shows: a choice's label, a number, a name. */
-function wordsOf(spec: VariableSpec | undefined, value: Json): string {
+/** A value as the words a sentence shows: a choice's label, a ring's point, a number, a name. */
+function wordsOf(spec: VariableSpec | undefined, value: Json, ringOf: (ring: Json) => Json = (r) => r): string {
+  if (spec?.domain.kind === "points") {
+    const ring = ringOf(spec.domain.ring);
+    const points = Array.isArray(value) && value[0] === "List" ? value.slice(1) : [value];
+    return points.map((p) => pointWords(ring, p)).join(", ");
+  }
   if (spec?.domain.kind === "choices") {
     const k = spec.domain.values.findIndex((v) => JSON.stringify(v) === JSON.stringify(value));
     if (k >= 0) return spec.domain.labels[k]!;
@@ -21,9 +26,23 @@ function wordsOf(spec: VariableSpec | undefined, value: Json): string {
   return JSON.stringify(value);
 }
 
-/** A value as TeX, for a hole in a `$…$` island. */
-const texOf = (spec: VariableSpec | undefined, value: Json): string =>
-  typeof value === "number" ? String(value) : `\\text{${wordsOf(spec, value)}}`;
+/** A value as TeX, for a hole in a `$…$` island: a number or a ring's point as math, the rest as text. */
+function texOf(spec: VariableSpec | undefined, value: Json, ringOf: (ring: Json) => Json): string {
+  if (typeof value === "number") return String(value);
+  const words = wordsOf(spec, value, ringOf);
+  return spec?.domain.kind === "points" ? words.replace(/−/g, "-").replace(/ω/g, "\\omega ") : `\\text{${words}}`;
+}
+
+/** A setter hole, Wolfram's `Setter(_e, value, "label")`: a link that sets the variable to the value. */
+const SETTER = /^Setter\(\s*_([A-Za-z]\w*)\s*,\s*(.+?)\s*,\s*"([^"]*)"\s*\)$/s;
+
+/** A setter's value as MathJSON: a quoted string, a number, or a name. */
+function setterValue(text: string): Json {
+  const quoted = /^"(.*)"$/s.exec(text);
+  if (quoted) return `'${quoted[1]}'`;
+  const n = Number(text);
+  return Number.isFinite(n) ? n : text;
+}
 
 /** A toggler entry for a choice: `value -> label`, the value as Epsil spells it. */
 const entryOf = (value: Json, label: string): string =>
@@ -40,6 +59,7 @@ const entryOf = (value: Json, label: string): string =>
  *   `{_d | knob}` or `{_d | toggler}` picks another.
  * - Any other hole, `{N(_d^2)}`, is a readout, refilled as the variables move.
  * - In a `$…$` island, `_d` or `_{name}` standing alone (`\sqrt{_d}`) is the variable's value.
+ * - `{Setter(_e, "twindragon", "the twindragon")}` (Wolfram's `Setter`) is a link that sets `_e`.
  */
 export class NotatioStringTemplate extends LitElement {
   static properties = {
@@ -84,13 +104,18 @@ export class NotatioStringTemplate extends LitElement {
     this.#unsubscribe = undefined;
   }
 
+  /** A ring the declarations name, or the value of the variable that holds it (`_r`). */
+  #ringOf = (ring: Json): Json =>
+    typeof ring === "string" && ring.startsWith("_") ? this.#scope?.values.get(ring.slice(1)) : ring;
+
   #spec(name: string): VariableSpec | undefined {
     return this.#scope?.declarations.find((s) => s.name === name);
   }
 
   #texOf(latex: string): unknown {
     const values = new Map<string, string>();
-    for (const [name, value] of this.#scope?.values ?? []) values.set(name, texOf(this.#spec(name), value));
+    for (const [name, value] of this.#scope?.values ?? [])
+      values.set(name, texOf(this.#spec(name), value, this.#ringOf));
     const filled = fillTex(latex, values);
     let markup = this.#tex.get(filled);
     if (markup === undefined) {
@@ -140,7 +165,7 @@ export class NotatioStringTemplate extends LitElement {
         ></notatio-toggler>`;
       }
     }
-    return wordsOf(spec, value);
+    return wordsOf(spec, value, this.#ringOf);
   }
 
   #part(part: ProsePart): unknown {
@@ -151,8 +176,22 @@ export class NotatioStringTemplate extends LitElement {
         return this.#texOf(part.latex);
       case "knob":
         return this.#control(part.name.replace(/^_/, ""), part.options);
-      case "dynamic":
+      case "dynamic": {
+        const setter = SETTER.exec(part.value.trim());
+        if (setter) {
+          const [, name, value, label] = setter;
+          return html`<a
+            href="#"
+            class="notatio-setter"
+            @click=${(e: Event) => {
+              e.preventDefault();
+              this.#scope?.set(name!, setterValue(value!) as never);
+            }}
+            >${label}</a
+          >`;
+        }
         return html`<notatio-dynamic value=${part.value}></notatio-dynamic>`;
+      }
     }
     return nothing;
   }

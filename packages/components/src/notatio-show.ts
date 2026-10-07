@@ -36,6 +36,7 @@ import {
 } from "@enumeratio/frontend/core";
 import { GRAPHICS_OPTIONS } from "@enumeratio/formats";
 import { emitControl } from "./define.ts";
+import { scopeOf } from "./scope.ts";
 import { type FramePlacement, figureFrame, isVertical, placementOf } from "./figure-frame.ts";
 import { ensureStyles } from "./styles.ts";
 
@@ -59,6 +60,10 @@ interface ShowLayer extends TileLayer {
 const MAX_POINTS = 120_000;
 /** Milliseconds a frame spends classifying new points before it draws what it has. */
 const FRAME_BUDGET = 12;
+/** Colors of an indexed scheme the legend shows: the first few values, enough to read it by. */
+const INDEXED_SHOWN = 8;
+/** A locator's radius, in CSS pixels. */
+const LOCATOR_RADIUS = 7;
 /** Pointer travel (CSS px) below which a press is a click, not a drag. */
 const SLOP = 4;
 const DEFAULT_GROUND = "dusk";
@@ -81,6 +86,7 @@ const declared = (head: string): ReadonlySet<string> => new Set(GRAPHICS_OPTIONS
 const stringOf = (json: Json): string | undefined =>
   typeof json === "string" ? json.replace(/^'([\s\S]*)'$/, "$1") : (json as { str?: string } | undefined)?.str;
 const numberOf = (json: Json, fallback: number): number => {
+  if (headOf(json) === "Negate") return -numberOf(argsOf(json)[0], -fallback);
   const n = typeof json === "number" ? json : Number(stringOf(json));
   return Number.isFinite(n) ? n : fallback;
 };
@@ -93,6 +99,8 @@ function bind(json: Json, params: ReadonlyMap<string, Json>): Json {
 
 /** What a `Show` says, read once its parameters are bound. */
 interface ShowSpec {
+  /** Draggable points, Wolfram's `Locator`: each one a variable's point, or its list of points. */
+  readonly locators: readonly LocatorSpec[];
   /** The tiled layer: `LatticeTiles(ring)` or `ArrayPlot(table)`, its data. */
   readonly tiles?: { readonly head: "LatticeTiles" | "ArrayPlot"; readonly data: Json };
   readonly colorRules: readonly ColorRule[];
@@ -104,6 +112,73 @@ interface ShowSpec {
   readonly grid?: { readonly step: readonly [number, number]; readonly auto: boolean; readonly style: LineStyle };
   readonly axes?: { readonly style: LineStyle; readonly ticks: boolean };
   readonly aspect: "Uniform" | "True";
+}
+
+/** A `Locator(_v)`: the points it puts where `_v` says, and how they move. */
+interface LocatorSpec {
+  readonly points: readonly Vec2[];
+  /** The variable holds a list of points, not one. */
+  readonly list: boolean;
+  /** Wolfram's `LocatorAutoCreate`: ⌥-click adds a point, or takes one away. */
+  readonly autoCreate: boolean;
+  readonly label: string;
+}
+
+/** A point `(a, b)` in the frame's coordinates. */
+const pointOf = (json: Json): Vec2 | undefined =>
+  headOf(json) === "Tuple" && argsOf(json).length === 2
+    ? [numberOf(argsOf(json)[0], Number.NaN), numberOf(argsOf(json)[1], Number.NaN)]
+    : undefined;
+const pointsOf = (json: Json): Vec2[] =>
+  (headOf(json) === "List" ? argsOf(json) : [json]).flatMap((p) => {
+    const v = pointOf(p);
+    return v && v.every(Number.isFinite) ? [v] : [];
+  });
+const tuple = ([a, b]: Vec2): Json => ["Tuple", a, b];
+
+/** The variables a Show writes: each Locator's, and a `RadixExpansions`' arguments and example. */
+interface Writes {
+  readonly locators: readonly (string | undefined)[];
+  readonly radix?: {
+    readonly ring?: string;
+    readonly base?: string;
+    readonly digits?: string;
+    readonly places?: string;
+    readonly example?: string;
+  };
+}
+
+/** A wildcard's variable name: `_b` names `b`. */
+const wildcardOf = (json: Json): string | undefined =>
+  typeof json === "string" && /^_[A-Za-z]\w*$/.test(json) ? json.slice(1) : undefined;
+
+/** What a Show's expression, unbound, writes back to its variables. */
+function writesOf(json: Json): Writes {
+  const locators: (string | undefined)[] = [];
+  let radix: Writes["radix"];
+  for (const layer of splitOptions(json, declared("Show")).positional) {
+    if (headOf(layer) === "Locator") locators.push(wildcardOf(argsOf(layer)[0]));
+    const data =
+      headOf(layer) === "LatticeTiles" ? splitOptions(layer, declared("LatticeTiles")).positional[0] : undefined;
+    if (headOf(data) === "RadixExpansions") {
+      const { positional, options } = splitOptions(data, new Set(["Example"]));
+      const [ring, base, digits, places] = positional.map(wildcardOf);
+      radix = { ring, base, digits, places, example: wildcardOf(options.get("Example")) };
+    }
+  }
+  return { locators, ...(radix ? { radix } : {}) };
+}
+
+/** Rings `RadixExpansions` draws on, and their systems. */
+const RADIX_SYSTEMS: Readonly<Record<string, "i" | "ω">> = { GaussianIntegers: "i", EisensteinIntegers: "ω" };
+
+/** `RadixExpansions(ring, base, digits, places)`, bound, as the layer's settings. */
+function radixSettingsOf(data: Json) {
+  const [ring, base, digits, places] = splitOptions(data, new Set(["Example"])).positional;
+  const system = typeof ring === "string" ? RADIX_SYSTEMS[ring] : undefined;
+  const b = pointOf(base);
+  if (!system || !b) return undefined;
+  return { system, base: b, digits: pointsOf(digits), places: numberOf(places, 8) };
 }
 
 /** Grid lines every this many units of the frame, for `GridLines -> Automatic`. */
@@ -122,8 +197,22 @@ function specOf(json: Json): ShowSpec {
   let boundaryRules: BoundaryRule[] = [];
   let colorMixing: ColorMixing = "First";
   let unread = 0;
+  const locators: LocatorSpec[] = [];
   for (const layer of positional) {
     const head = headOf(layer);
+    if (head === "Locator") {
+      const {
+        positional: [at],
+        options: o,
+      } = splitOptions(layer, declared("Locator"));
+      locators.push({
+        points: pointsOf(at),
+        list: headOf(at) === "List",
+        autoCreate: o.get("LocatorAutoCreate") === "True",
+        label: stringOf(o.get("Appearance")) ?? "",
+      });
+      continue;
+    }
     if (head !== "LatticeTiles" && head !== "ArrayPlot") continue;
     const split = splitOptions(layer, declared(head));
     tiles = { head, data: split.positional[0] };
@@ -155,6 +244,7 @@ function specOf(json: Json): ShowSpec {
         }
       : undefined;
   return {
+    locators,
     ...(tiles ? { tiles } : {}),
     colorRules,
     boundaryRules,
@@ -255,6 +345,11 @@ export class NotatioShow extends LitElement {
   /** The options: those written in `value`, then those given as attributes. */
   #showOptions = new Map<string, Json>();
   #layer: ShowLayer | undefined;
+  #writes: Writes = { locators: [] };
+  /** The example the radix layer last followed, so a new one is told from an edit. */
+  #example: string | undefined;
+  /** Frame the next layer afresh: a newly chosen example is somewhere else entirely. */
+  #reframe = false;
   #layerKey = "";
   #canvases: HTMLCanvasElement[] = [];
   #view: LatticeView = { center: [0, 0], extent: 20 };
@@ -340,6 +435,7 @@ export class NotatioShow extends LitElement {
       return;
     }
     this.#source = json;
+    this.#writes = writesOf(json);
     const options = splitOptions(json, declared("Show")).options;
     const attributes: [string, string][] = [
       ["Selection", this.selection],
@@ -384,6 +480,7 @@ export class NotatioShow extends LitElement {
       return;
     }
     const spec = specOf(bound);
+    if (await this.#followExample(spec)) return;
     const key = JSON.stringify([spec.tiles, spec.aspect]);
     if (key !== this.#layerKey) {
       const layer = await layerFor(spec.tiles, spec.aspect);
@@ -398,7 +495,8 @@ export class NotatioShow extends LitElement {
       this.#adoptBoundSelection();
       // A finite layer is framed whole whenever it changes (a new n is a new table); an
       // unbounded one once, so stepping the ring keeps the reader where they were.
-      if (!this.#framed || layer.bounds) {
+      if (!this.#framed || layer.bounds || this.#reframe) {
+        this.#reframe = false;
         this.#view = this.#home(layer);
         this.#framed = true;
         this.#moved = false;
@@ -408,6 +506,42 @@ export class NotatioShow extends LitElement {
     this._spec = spec;
     this.#clamp();
     this.#draw();
+  }
+
+  /**
+   * Keep a radix layer and its `Example -> _e` in step: a newly chosen example writes its ring,
+   * base, digits and places; an edit to those writes the example they now are (`Custom` when
+   * none). True when it wrote, so the rebuild waits for the variables to come back.
+   */
+  async #followExample(spec: ShowSpec): Promise<boolean> {
+    const names = this.#writes.radix;
+    const settings =
+      spec.tiles && headOf(spec.tiles.data) === "RadixExpansions" ? radixSettingsOf(spec.tiles.data) : undefined;
+    if (!names?.example || !settings) return false;
+    const { exampleOf, exampleSettings } = await import("@enumeratio/complex-numerals/lattice");
+    const chosen = stringOf(this._params.get(names.example));
+    const scope = scopeOf(this);
+    if (chosen !== this.#example) {
+      this.#example = chosen;
+      const target = chosen && chosen !== "Custom" ? exampleSettings(chosen) : undefined;
+      if (!target || (exampleOf(target) === exampleOf(settings) && JSON.stringify(target) === JSON.stringify(settings)))
+        return false;
+      const ring = Object.keys(RADIX_SYSTEMS).find((r) => RADIX_SYSTEMS[r] === target.system)!;
+      const writes: [string, Json][] = [];
+      if (names.ring) writes.push([names.ring, ring]);
+      if (names.base) writes.push([names.base, tuple(target.base)]);
+      if (names.digits) writes.push([names.digits, ["List", ...target.digits.map(tuple)]]);
+      if (names.places) writes.push([names.places, target.places]);
+      this.#reframe = writes.length > 0;
+      scope?.setMany(writes as never);
+      return writes.length > 0;
+    }
+    const now = exampleOf(settings);
+    if (now !== chosen) {
+      this.#example = now;
+      scope?.set(names.example, `'${now}'` as never);
+    }
+    return false;
   }
 
   /** The color rules with the legend's overrides applied. */
@@ -510,8 +644,105 @@ export class NotatioShow extends LitElement {
           { color: style.color, halo: ground.background, opacity: Math.min(1, style.opacity + 0.3) },
         );
     }
+    this.#drawLocators(axes, spec);
     if (!complete) this.#draw();
   };
+
+  /** Where a point in the frame's coordinates falls on the canvas, in device pixels. */
+  #screenOf([i, j]: Vec2): Vec2 {
+    const [b0, b1] = this.#layer!.basis;
+    const [x, y] = [i * b0[0] + j * b1[0], i * b0[1] + j * b1[1]];
+    const pixels = this.#h / (2 * this.#view.extent);
+    return [(x - this.#view.center[0]) * pixels + this.#w / 2, this.#h / 2 - (y - this.#view.center[1]) * pixels];
+  }
+
+  #drawLocators(ctx: CanvasRenderingContext2D, spec: ShowSpec): void {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    ctx.save();
+    ctx.lineWidth = 2 * dpr;
+    ctx.font = `${Math.round(12 * dpr)}px system-ui, sans-serif`;
+    for (const locator of spec.locators)
+      for (const p of locator.points) {
+        const [x, y] = this.#screenOf(p);
+        ctx.beginPath();
+        ctx.arc(x, y, LOCATOR_RADIUS * dpr, 0, 2 * Math.PI);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+        ctx.fill();
+        ctx.strokeStyle = "#ffffff";
+        ctx.stroke();
+        if (locator.label) {
+          ctx.fillStyle = "#ffffff";
+          ctx.fillText(locator.label, x + (LOCATOR_RADIUS + 3) * dpr, y - (LOCATOR_RADIUS + 3) * dpr);
+        }
+      }
+    ctx.restore();
+  }
+
+  /** The locator point under a pointer, within reach of a finger: [locator, point]. */
+  #locatorAt(clientX: number, clientY: number): [number, number] | undefined {
+    const spec = this._spec;
+    const canvas = this.#canvases[0];
+    if (!spec || !canvas || !this.#layer) return undefined;
+    const r = canvas.getBoundingClientRect();
+    const dpr = this.#w / r.width;
+    const [px, py] = [(clientX - r.left) * dpr, (clientY - r.top) * dpr];
+    for (let k = spec.locators.length - 1; k >= 0; k--)
+      for (let n = spec.locators[k]!.points.length - 1; n >= 0; n--) {
+        const [x, y] = this.#screenOf(spec.locators[k]!.points[n]!);
+        if (Math.hypot(x - px, y - py) <= (LOCATOR_RADIUS + 4) * dpr) return [k, n];
+      }
+    return undefined;
+  }
+
+  /** Write a locator's points to its variable. */
+  #moveLocator(k: number, points: readonly Vec2[]): void {
+    const name = this.#writes.locators[k];
+    const locator = this._spec?.locators[k];
+    if (!name || !locator) return;
+    scopeOf(this)?.set(name, (locator.list ? ["List", ...points.map(tuple)] : tuple(points[0]!)) as never);
+  }
+
+  /**
+   * A press on a locator drags it, snapped to the lattice; with ⌥ and `LocatorAutoCreate` it
+   * takes the point away, or on empty ground adds one. True when the press was the locators'.
+   */
+  #pressLocator(e: PointerEvent, canvas: HTMLCanvasElement): boolean {
+    const spec = this._spec;
+    const layer = this.#layer;
+    if (!spec || !layer) return false;
+    const hit = this.#locatorAt(e.clientX, e.clientY);
+    if (e.altKey) {
+      const k = hit?.[0] ?? spec.locators.findIndex((l) => l.autoCreate);
+      const locator = spec.locators[k];
+      if (!locator?.autoCreate) return false;
+      const points = hit
+        ? locator.points.filter((_, n) => n !== hit[1])
+        : [...locator.points, nearestLatticePoint(layer.basis, this.#planeAt(e.clientX, e.clientY))];
+      this.#moveLocator(k, points);
+      return true;
+    }
+    if (!hit) return false;
+    const [k, n] = hit;
+    canvas.setPointerCapture(e.pointerId);
+    let last = spec.locators[k]!.points[n]!;
+    const move = (m: PointerEvent): void => {
+      const to = nearestLatticePoint(layer.basis, this.#planeAt(m.clientX, m.clientY));
+      if (to[0] === last[0] && to[1] === last[1]) return;
+      last = to;
+      const points = [...(this._spec?.locators[k]?.points ?? [])];
+      points[n] = to;
+      this.#moveLocator(k, points);
+    };
+    const up = (): void => {
+      canvas.removeEventListener("pointermove", move);
+      canvas.removeEventListener("pointerup", up);
+      canvas.removeEventListener("pointercancel", up);
+    };
+    canvas.addEventListener("pointermove", move);
+    canvas.addEventListener("pointerup", up);
+    canvas.addEventListener("pointercancel", up);
+    return true;
+  }
 
   // ── Interaction ─────────────────────────────────────────────────────────────────────
 
@@ -558,6 +789,7 @@ export class NotatioShow extends LitElement {
     const canvas = e.currentTarget as HTMLCanvasElement;
     if (!this.#layer) return;
     canvas.focus({ preventScroll: true });
+    if (this.#pressLocator(e, canvas)) return;
     const r = canvas.getBoundingClientRect();
     const [x0, y0] = [e.clientX, e.clientY];
     let [px, py] = [x0, y0];
@@ -713,8 +945,19 @@ export class NotatioShow extends LitElement {
     </li>`;
   }
 
+  /** An indexed scheme's first colors, numbered: what value k paints. */
+  #indexed(rule: ColorRule, colors: readonly string[]): unknown {
+    return html`<li class="notatio-legend-gradient">
+      <span class="notatio-legend-label">${rule.label}</span>
+      <span class="notatio-show-indexed">
+        ${colors.slice(0, INDEXED_SHOWN).map((c, n) => html`<span><i style=${`background:${c}`}></i>${n}</span>`)}
+      </span>
+    </li>`;
+  }
+
   /** A scheme rule's bar, which opens the schemes, with its padding and a reverse. */
   #bar(rule: ColorRule, scheme: SchemeColor, k: number): unknown {
+    if (scheme.indexed) return this.#indexed(rule, scheme.indexed);
     const { mode, band, offset } = scheme;
     const at = (k: number): string => String(+(offset + k * band).toPrecision(6));
     const ticks =
@@ -858,6 +1101,12 @@ async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): P
     const order = stringOf(table.options.get("ElementOrder")) === "ChineseRemainder" ? "ChineseRemainder" : "Natural";
     const { multiplicationTable } = await import("@enumeratio/residues/table");
     return multiplicationTable(n, order) ?? `ℤ/${n} is too large to tabulate, or not a ring with a table.`;
+  }
+  if (headOf(tiles.data) === "RadixExpansions") {
+    const settings = radixSettingsOf(tiles.data);
+    if (!settings) return "RadixExpansions needs a ring (GaussianIntegers or EisensteinIntegers) and a base.";
+    const { radixExpansions } = await import("@enumeratio/complex-numerals/lattice");
+    return radixExpansions(settings);
   }
   const ring = tiles.data;
   const d =

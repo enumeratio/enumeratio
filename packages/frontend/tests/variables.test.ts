@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vite-plus/test";
-import { fillTex, variablesOf, randomInteger, stepInteger } from "../src/variables.ts";
+import {
+  fillTex,
+  pointWords,
+  randomInteger,
+  registerDomain,
+  resolveNamedDomains,
+  stepInteger,
+  variablesOf,
+} from "../src/variables.ts";
 
 const kv = (k: string, v: unknown) => ["KeyValuePair", k, v];
 
@@ -50,5 +58,38 @@ describe("TeX holes", () => {
     expect(fillTex("\\mathbb{Q}(\\sqrt{_d})", values)).toBe("\\mathbb{Q}(\\sqrt{{-5}})");
     expect(fillTex("_{name} + a_d", values)).toBe("{x} + a_d");
     expect(fillTex("_q", values)).toBe("_q");
+  });
+});
+
+describe("ring points and named domains", () => {
+  it("write a ring's lattice points as the ring does", () => {
+    expect(pointWords("GaussianIntegers", ["Tuple", -1, 1])).toBe("−1 + i");
+    expect(pointWords("EisensteinIntegers", ["Tuple", 2, -1])).toBe("2 − ω");
+    expect(pointWords("GaussianIntegers", ["Tuple", 0, -2])).toBe("−2i");
+    expect(pointWords("Somewhere", ["Tuple", 1, 2])).toBe("(1, 2)");
+  });
+
+  it("take a ring, or another variable's, as the domain of points", () => {
+    const [b, c] = variablesOf([
+      "List",
+      kv("_b", ["Variable", "_r", ["Tuple", -1, 1]]),
+      kv("_c", ["Variable", "GaussianIntegers", ["List", ["Tuple", 1, 0]]]),
+    ]);
+    expect(b!.domain).toEqual({ kind: "points", ring: "_r" });
+    expect(b!.start).toEqual(["Tuple", -1, 1]);
+    expect(c!.domain).toEqual({ kind: "points", ring: "GaussianIntegers" });
+  });
+
+  it("resolve a named domain to the choices its library supplies", async () => {
+    registerDomain("Examples", async () => [
+      ["'a'", "the first"],
+      ["'b'", "the second"],
+    ]);
+    const [e, f] = await resolveNamedDomains(
+      variablesOf(["List", kv("_e", ["Variable", "Examples", "'b'"]), kv("_f", ["Variable", "Unheard", 1])]),
+    );
+    expect(e!.domain).toEqual({ kind: "choices", values: ["'a'", "'b'"], labels: ["the first", "the second"] });
+    expect(e!.start).toBe("'b'");
+    expect(f!.domain.kind).toBe("any");
   });
 });

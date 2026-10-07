@@ -978,10 +978,12 @@ const ALL_SYMBOLS: readonly VisualSymbol[] = [...VISUAL_SYMBOLS, ...CONTROL_SYMB
 const BY_HEAD = new Map(ALL_SYMBOLS.map((s) => [s.head, s]));
 
 /**
- * Heads that hold their contents as source: a `Cell`'s input is what it evaluates itself,
- * so the page neither binds the controls inside it nor rewrites or pins them.
+ * Heads that hold their contents as source: a `Cell`'s input is what it evaluates itself, and a
+ * `Show`'s layers are read by its element as written (its `Locator(_b)` is a handle on `_b`,
+ * not a control declaring it), so the page neither binds the controls inside them nor rewrites
+ * or pins them.
  */
-export const HELD_HEADS: ReadonlySet<string> = new Set(["Cell"]);
+export const HELD_HEADS: ReadonlySet<string> = new Set(["Cell", "Show"]);
 
 /** The variables the controls in an expression bind. */
 export function controlNames(expr: Json, into = new Set<string>()): Set<string> {

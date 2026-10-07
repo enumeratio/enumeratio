@@ -17,3 +17,11 @@ export {
   type Value,
 } from "./radix.ts";
 export { type RadixLattice, radixLattice, type RadixLatticeOptions } from "./radix-lattice.ts";
+export {
+  EXAMPLE_CHOICES,
+  exampleOf,
+  exampleSettings,
+  type RadixLayer,
+  type RadixLayerSettings,
+  radixExpansions,
+} from "./radix-layer.ts";

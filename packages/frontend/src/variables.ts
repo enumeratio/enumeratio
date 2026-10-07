@@ -27,7 +27,54 @@ export type Domain =
   | { readonly kind: "reals"; readonly min: number; readonly max: number; readonly step: number }
   | { readonly kind: "choices"; readonly values: readonly Json[]; readonly labels: readonly string[] }
   | { readonly kind: "booleans" }
+  /**
+   * Lattice points of a ring, one `(a, b)` or a list of them: `GaussianIntegers`'s a + bi,
+   * `EisensteinIntegers`'s a + bω. The ring may be another variable's value (`_r`).
+   */
+  | { readonly kind: "points"; readonly ring: Json }
+  /** Choices a library supplies by name (`ComplexBases`), resolved by `resolveNamedDomains`. */
+  | { readonly kind: "named"; readonly name: string }
   | { readonly kind: "any" };
+
+/** Rings whose lattice points a variable may range over, and the unit each writes its points with. */
+export const POINT_RINGS: Readonly<Record<string, string>> = { GaussianIntegers: "i", EisensteinIntegers: "ω" };
+
+/** A lattice point as its ring writes it: `−1 + i`, `2ω`, `3`; `(a, b)` for an unknown ring. */
+export function pointWords(ring: Json, point: Json): string {
+  const coords = Array.isArray(point) && point[0] === "Tuple" ? point.slice(1) : undefined;
+  const [a, b] = (coords ?? []).map((c) => numberOf(c));
+  if (a === undefined || b === undefined) return JSON.stringify(point);
+  const unit = typeof ring === "string" ? POINT_RINGS[ring] : undefined;
+  const signed = (x: number): string => (x < 0 ? `−${-x}` : String(x));
+  if (unit === undefined) return `(${signed(a)}, ${signed(b)})`;
+  if (b === 0) return signed(a);
+  const term = `${b === 1 ? "" : b === -1 ? "−" : signed(b)}${unit}`;
+  return a === 0 ? term : `${signed(a)} ${b < 0 ? "−" : "+"} ${term.replace(/^−/, "")}`;
+}
+
+/** Loaders of the choices a library supplies for a named domain: `[value, label]` pairs. */
+const NAMED = new Map<string, () => Promise<readonly (readonly [Json, string])[]>>();
+
+/** Supply the choices of a named domain (`ComplexBases`), loaded when a declaration first names it. */
+export function registerDomain(name: string, load: () => Promise<readonly (readonly [Json, string])[]>): void {
+  NAMED.set(name, load);
+}
+
+/** Each named domain among `specs` as the choices its library supplies; unknown names stay as they are. */
+export async function resolveNamedDomains(specs: readonly VariableSpec[]): Promise<VariableSpec[]> {
+  return Promise.all(
+    specs.map(async (spec) => {
+      if (spec.domain.kind !== "named") return spec;
+      const load = NAMED.get(spec.domain.name);
+      if (!load) return { ...spec, domain: { kind: "any" } as const };
+      const choices = await load();
+      return {
+        ...spec,
+        domain: { kind: "choices", values: choices.map(([v]) => v), labels: choices.map(([, l]) => l) },
+      };
+    }),
+  );
+}
 
 export interface VariableSpec {
   /** The name, without its wildcard's `_`. */
@@ -39,8 +86,17 @@ export interface VariableSpec {
 const headOf = (json: Json): string | undefined =>
   Array.isArray(json) && typeof json[0] === "string" ? json[0] : undefined;
 const argsOf = (json: Json): Json[] => (Array.isArray(json) ? json.slice(1) : []);
-const isRule = (json: Json): boolean =>
-  ["Rule", "KeyValuePair", "Tuple"].includes(headOf(json) ?? "") && argsOf(json).length === 2;
+/**
+ * `Name -> value`: a `Rule` or `KeyValuePair`, or the `Tuple` compute-engine makes of one, which is a
+ * rule only when it names something (`(Range, [1, 2])`), never a point (`(-1, 1)`).
+ */
+const isRule = (json: Json): boolean => {
+  const head = headOf(json);
+  if (argsOf(json).length !== 2) return false;
+  if (head === "Rule" || head === "KeyValuePair") return true;
+  const key = argsOf(json)[0];
+  return head === "Tuple" && typeof key === "string" && /^[A-Z_]/.test(key);
+};
 const stringOf = (json: Json): string | undefined =>
   typeof json === "string" && /^'.*'$/s.test(json) ? json.slice(1, -1) : undefined;
 
@@ -120,6 +176,16 @@ function domainOf(json: Json, start: Json, options: ReadonlyMap<string, Json>): 
   }
   if (json === "Booleans" || (json === undefined && (start === "True" || start === "False")))
     return { kind: "booleans" };
+  // A ring's points, the ring named or another variable's (`_r`).
+  if ((typeof json === "string" && json in POINT_RINGS) || (typeof json === "string" && /^_[A-Za-z]\w*$/.test(json)))
+    return { kind: "points", ring: json };
+  // Any other name is a domain a library supplies.
+  if (
+    typeof json === "string" &&
+    /^[A-Z]\w*$/.test(json) &&
+    !["Integers", "Reals", "Booleans", "Automatic"].includes(json)
+  )
+    return { kind: "named", name: json };
   if (headOf(json) === "List" && argsOf(json).length > 0) {
     const choices = argsOf(json).map(choiceOf);
     return { kind: "choices", values: choices.map(([v]) => v), labels: choices.map(([, l]) => l) };

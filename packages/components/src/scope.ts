@@ -13,7 +13,9 @@ import {
   type VariableSpec,
   variablesOf,
   plainJson,
+  resolveNamedDomains,
 } from "@enumeratio/frontend/core";
+import "./domains.ts";
 import type { Template } from "./bindings.ts";
 import { CONTROL_TAGS, type ControlElement, controlSelector } from "./define.ts";
 import { ensureFor, loadBareEngine } from "./mathlive.ts";
@@ -86,7 +88,12 @@ export class Scope {
 
   /** Set a variable as a control would. */
   set(name: string, value: MathJsonExpression): void {
-    this.#values.set(name, value);
+    this.setMany([[name, value]]);
+  }
+
+  /** Set several variables at once, so nothing reads them half-changed. */
+  setMany(entries: Iterable<readonly [string, MathJsonExpression]>): void {
+    for (const [name, value] of entries) this.#values.set(name, plainJson(value) as MathJsonExpression);
     this.#apply();
   }
 
@@ -164,7 +171,7 @@ export class Scope {
     const { parseExpression } = await import("@enumeratio/formats/expression");
     const { json, errors } = parseExpression(text);
     if (errors.length > 0) log("variables don't parse: %s", errors.join("; "));
-    this.#declarations = errors.length > 0 ? [] : variablesOf(plainJson(json));
+    this.#declarations = errors.length > 0 ? [] : await resolveNamedDomains(variablesOf(plainJson(json)));
     for (const spec of this.#declarations)
       if (!this.#values.has(spec.name)) this.#values.set(spec.name, seedOf(spec.start));
   }
@@ -177,7 +184,9 @@ export class Scope {
   #read(el: Element): void {
     const control = el as Partial<ControlElement>;
     if (!control.name || control.binding === undefined) return;
-    this.#values.set(control.name, control.binding);
+    // A declared variable starts where its declaration says; its control was drawn from that.
+    if (this.#values.has(control.name) && this.#declarations.some((d) => d.name === control.name)) return;
+    this.#values.set(control.name, plainJson(control.binding) as MathJsonExpression);
   }
 
   /** A control moved: take its value, if it is ours, and refill. */
@@ -185,7 +194,8 @@ export class Scope {
     const { name, value } = (event as CustomEvent<ControlChange>).detail;
     const from = event.target as Element | null;
     if (!name || !from || !this.owns(from)) return;
-    this.#values.set(name, value);
+    // One form for every value (`'a'`, never `{str: "a"}`), so a choice compares with its declaration.
+    this.#values.set(name, plainJson(value) as MathJsonExpression);
     if (this.trace) log("%s := %o", name, value);
     this.#apply();
   };
