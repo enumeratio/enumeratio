@@ -5,7 +5,8 @@
 //   node tools/ci/dist-cache.ts build [name…]   build the named packages (full or bare names) and what they read (default: all but web)
 //   node tools/ci/dist-cache.ts keys  [name…]   print each build unit's key
 //
-// A unit is a package, or a set of packages that depend on each other in a cycle (built together).
+// A unit is a package, or a set of packages that depend on each other in a cycle (built together,
+// one member at a time in declared-dependency order; units run in parallel, up to $BUILD_JOBS).
 // Its key hashes the files of its packages (tracked, plus untracked and not ignored: never the
 // gitignored build outputs), the keys of the units it reads, and the inputs every build shares.
 // What it saves is every gitignored file under its packages' directories, so generated data
@@ -123,6 +124,28 @@ function units(pkgs: Map<string, Pkg>, names: Set<string>): Map<string, Unit> {
   return out;
 }
 
+/**
+ * A unit's members, each after the members it declares a dependency on (dependencies and
+ * devDependencies). A build script reaching into a sibling's sources by path orders nothing, so
+ * the declared graph decides; ties, and any declared cycle, resolve by name.
+ */
+function buildOrder(members: Pkg[]): Pkg[] {
+  const byName = new Map(members.map((m) => [m.name, m]));
+  const seen = new Set<string>();
+  const out: Pkg[] = [];
+  const visit = (m: Pkg): void => {
+    if (seen.has(m.name)) return;
+    seen.add(m.name);
+    for (const d of [...m.declared].toSorted()) {
+      const dep = byName.get(d);
+      if (dep !== undefined) visit(dep);
+    }
+    out.push(m);
+  };
+  for (const m of members.toSorted((a, b) => a.name.localeCompare(b.name))) visit(m);
+  return out;
+}
+
 function computeKeys(all: Map<string, Pkg>, unitMap: Map<string, Unit>): Map<string, string> {
   const files = hashFiles();
   const shared = createHash("sha1");
@@ -226,7 +249,7 @@ async function build(requested: string[]): Promise<void> {
 
   const done = new Set<string>();
   const running = new Map<string, Promise<void>>();
-  const jobs = Number(process.env.DIST_CACHE_JOBS ?? Math.min(4, availableParallelism()));
+  const jobs = Number(process.env.DIST_CACHE_JOBS ?? process.env.BUILD_JOBS ?? Math.min(4, availableParallelism()));
   let hits = 0;
   let misses = 0;
   const started = Date.now();
@@ -245,14 +268,16 @@ async function build(requested: string[]): Promise<void> {
     }
     const buildable = unit.members.filter((m) => m.buildScript !== undefined);
     if (buildable.length > 0) {
-      const filters = buildable.flatMap((m) => ["--filter", m.name]);
-      try {
-        await run("pnpm", ["-r", ...filters, "run", "build"]);
-      } catch (e) {
-        console.error(
-          `::group::${label} build failed\n${(e as { output?: string }).output ?? String(e)}\n::endgroup::`,
-        );
-        throw e;
+      // One at a time: a member's build clears and rewrites its dist while a sibling's reads it.
+      for (const m of buildOrder(buildable)) {
+        try {
+          await run("pnpm", ["--filter", m.name, "run", "build"]);
+        } catch (e) {
+          console.error(
+            `::group::${m.name} build failed\n${(e as { output?: string }).output ?? String(e)}\n::endgroup::`,
+          );
+          throw e;
+        }
       }
     }
     const outputs = outputsOf(unit);
