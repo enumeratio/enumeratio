@@ -1,6 +1,7 @@
-// O_K as a lattice for `<notatio-lattice-plot>`: the point (i, j) is i + jω, painted by whether it
-// is prime, irreducible but not prime, a unit, zero or composite. It has the shape of
-// @enumeratio/frontend's `LatticeLayer` without importing it — a library does not import the
+// O_K as a layer for `Show`'s `LatticeTiles`: the point (i, j) is i + jω, and it answers what a
+// Show's rules ask of it — whether it is prime, irreducible but not prime, a unit, zero or
+// composite, how the prime below it splits, its norm, and how it relates to a selected point. It
+// has the shape of a Show layer without importing it — a library does not import the
 // presentation layer.
 //
 // Classifying a screenful of points is the hot path, so it runs on doubles: the norm's factors by
@@ -147,34 +148,26 @@ interface PrimeInfo {
   readonly classes: readonly number[];
 }
 
-interface Category {
-  readonly code: number;
-  readonly label: string;
-  readonly paint: "gradient" | "discrete" | "foreground" | "muted" | "none";
-  readonly style?: "fill" | "outline" | "dashed";
-}
-
-interface Coloring {
-  readonly id: string;
-  readonly label: string;
-  readonly categories: readonly Category[];
-  code(i: number, j: number): number | undefined;
-  value?(i: number, j: number): number;
-  readonly valueLabel?: string;
-}
-
 export interface QuadraticLattice {
   readonly ring: QuadraticRing;
   readonly title: string;
   readonly basis: readonly [Vec2, Vec2];
   readonly maxIndex: number;
-  readonly colorings: readonly Coloring[];
   known(i: number, j: number): boolean;
-  label(i: number, j: number): string | undefined;
   readonly grid: readonly [Vec2, Vec2];
   gridLabel(axis: 0 | 1, k: number): string;
-  readonly highlightModes: readonly { id: string; label: string }[];
-  related(mode: string, selected: Vec2, i: number, j: number): boolean;
+  /** Classify point (i, j) now, for a figure that draws only what is known. */
+  prepare(i: number, j: number): void;
+  /** What a figure's queries may test of a point, and what each means. */
+  readonly properties: readonly { readonly name: string; readonly description: string }[];
+  /** Whether point (i, j) has a property; undefined while it isn't known. */
+  has(i: number, j: number, property: string): boolean | undefined;
+  /** Values a gradient may read of a point. */
+  readonly values: readonly { readonly name: string; readonly description: string }[];
+  value(i: number, j: number, name: string): number | undefined;
+  /** Relations a point may stand in to a selected one. */
+  readonly relations: readonly { readonly name: string; readonly description: string }[];
+  relatedTo(relation: string, selected: Vec2, i: number, j: number): boolean;
   describe(i: number, j: number): { title: string; rows: (readonly [string, string])[] };
   /** Facts about the ring as a whole, for a heading. */
   summary(): (readonly [string, string])[];
@@ -328,72 +321,94 @@ export function quadraticLattice(
     }
     return code;
   };
-  const normValue = (i: number, j: number): number => Math.sqrt(Math.abs(normOf(i, j)));
   const SPLITTING = { split: 10, inert: 11, ramified: 12 } as const;
+  /** How the rational prime p below a prime (i, j) splits: its norm is ±p (split, ramified) or p² (inert). */
+  const splittingOf = (i: number, j: number): number => {
+    const m = Math.abs(normOf(i, j));
+    const p = Math.round(Math.sqrt(m));
+    if (p * p === m && primeInfo(p).kind === 0) return SPLITTING.inert;
+    return primeInfo(m).kind === 2 ? SPLITTING.ramified : SPLITTING.split;
+  };
 
   return {
     ring: R,
     title: `ℚ(${sqrtText(R.d)})`,
     basis,
     maxIndex,
-    colorings: [
-      {
-        id: "kind",
-        label: "primes by norm",
-        categories: [
-          { code: CELL.prime, label: "prime", paint: "gradient" },
-          { code: CELL.irreducible, label: "irreducible, not prime", paint: "discrete" },
-          { code: CELL.unit, label: "unit", paint: "discrete" },
-          { code: CELL.zero, label: "zero", paint: "discrete", style: "outline" },
-          { code: CELL.composite, label: "composite", paint: "none" },
-          { code: CELL.unknown, label: "not decided", paint: "muted", style: "dashed" },
-        ],
-        code: classified,
-        value: normValue,
-        valueLabel: "√|N|",
-      },
-      {
-        id: "splitting",
-        label: "primes by how p splits",
-        categories: [
-          { code: SPLITTING.split, label: "p splits", paint: "discrete" },
-          { code: SPLITTING.inert, label: "p is inert", paint: "discrete" },
-          { code: SPLITTING.ramified, label: "p ramifies", paint: "discrete" },
-          { code: CELL.irreducible, label: "irreducible, not prime", paint: "discrete" },
-          { code: CELL.unit, label: "unit", paint: "discrete" },
-          { code: CELL.zero, label: "zero", paint: "discrete", style: "outline" },
-          { code: CELL.composite, label: "composite", paint: "none" },
-          { code: CELL.unknown, label: "not decided", paint: "muted", style: "dashed" },
-        ],
-        code(i, j) {
-          const code = classified(i, j);
-          if (code !== CELL.prime) return code;
-          const m = Math.abs(normOf(i, j));
-          const p = Math.round(Math.sqrt(m));
-          // A prime's norm is ±p (split or ramified) or p² (inert).
-          if (p * p === m && primeInfo(p).kind === 0) return SPLITTING.inert;
-          return primeInfo(m).kind === 2 ? SPLITTING.ramified : SPLITTING.split;
-        },
-      },
-    ],
-    label: (i, j) => elementText(R, [BigInt(i), BigInt(j)]),
     known: (i, j) => cache.has(key(i, j)),
     // 1 and ω: a square grid for ℤ[√d], a rhombic one when ω = (−1 + √d)/2 tips up and to the left.
     grid: [
       [1, 0],
       [0, 1],
     ],
+    // ω stands for the generator on its axis (i for ℤ[i]); the caption says what it is.
     gridLabel: (axis, k) =>
-      axis === 0 ? minus(k) : `${k === 1 ? "" : k === -1 ? "−" : minus(k)}${hexagonal ? "ω" : sqrtText(R.d)}`,
-    highlightModes: [
-      { id: "factors", label: "irreducible factors" },
-      { id: "multiples", label: "multiples" },
-      { id: "associates", label: "associates" },
+      axis === 0 ? minus(k) : `${k === 1 ? "" : k === -1 ? "−" : minus(k)}${R.d === -1n ? "i" : "ω"}`,
+    properties: [
+      { name: "IsPrime", description: "a prime element: (α) is a prime ideal" },
+      { name: "IsIrreducible", description: "no factorization into two non-units; every prime is irreducible" },
+      { name: "IsComposite", description: "a product of two non-units" },
+      { name: "IsUnit", description: "norm ±1" },
+      { name: "IsZero", description: "zero" },
+      { name: "Unknown", description: "not yet classified" },
+      { name: "Splits", description: "a prime over a rational prime p that splits: (p) = 𝔭𝔭′" },
+      {
+        name: "Inert",
+        description: "a prime over a rational prime p that stays prime: the element is p, up to a unit",
+      },
+      { name: "Ramified", description: "a prime over a rational prime p that ramifies: (p) = 𝔭²" },
     ],
-    related(mode, selected, i, j) {
-      if (mode === "multiples") return divides(selected, [i, j]);
-      if (mode === "associates") return associates(selected, [i, j]);
-      if (mode === "factors") {
+    prepare: (i, j) => void classified(i, j),
+    has(i, j, property) {
+      if (!cache.has(key(i, j)) && property !== "Unknown") return undefined;
+      const code = classified(i, j);
+      switch (property) {
+        case "IsPrime":
+          return code === CELL.prime;
+        case "IsIrreducible":
+          return code === CELL.prime || code === CELL.irreducible;
+        case "IsComposite":
+          return code === CELL.composite;
+        case "IsUnit":
+          return code === CELL.unit;
+        case "IsZero":
+          return code === CELL.zero;
+        case "Unknown":
+          return code === CELL.unknown;
+        case "Splits":
+        case "Inert":
+        case "Ramified": {
+          if (code !== CELL.prime) return false;
+          return (
+            splittingOf(i, j) ===
+            (property === "Splits" ? SPLITTING.split : property === "Inert" ? SPLITTING.inert : SPLITTING.ramified)
+          );
+        }
+      }
+      return false;
+    },
+    values: [
+      { name: "Norm", description: "N(α), which is negative for some elements of a real field" },
+      { name: "X", description: "the coefficient of 1" },
+      { name: "Y", description: "the coefficient of ω" },
+    ],
+    value(i, j, name) {
+      if (name === "Norm") return normOf(i, j);
+      if (name === "X") return i;
+      if (name === "Y") return j;
+      return undefined;
+    },
+    relations: [
+      { name: "Associates", description: "the selection times a unit" },
+      { name: "Divides", description: "a divisor of the selection" },
+      { name: "IrreducibleFactors", description: "an irreducible divisor of the selection" },
+      { name: "Multiples", description: "a multiple of the selection" },
+    ],
+    relatedTo(relation, selected, i, j) {
+      if (relation === "Associates") return associates(selected, [i, j]);
+      if (relation === "Multiples") return divides(selected, [i, j]);
+      if (relation === "Divides") return normOf(i, j) !== 0 && divides([i, j], selected);
+      if (relation === "IrreducibleFactors") {
         const code = classified(i, j);
         return (code === CELL.prime || code === CELL.irreducible) && divides([i, j], selected);
       }
@@ -435,7 +450,6 @@ export function quadraticLattice(
         const [w] = normalize(R, a);
         rows.push(["normal form", elementText(R, w)]);
       }
-      rows.push(["epsil", `QuadraticInteger(${R.d}, ${i}, ${j})`]);
       return { title: elementText(R, a), rows };
     },
     summary() {

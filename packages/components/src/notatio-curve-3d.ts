@@ -235,6 +235,7 @@ export class NotatioCurve3D extends LitElement {
         @pointerup=${this.#orbit.onPointerUp}
         @pointercancel=${this.#orbit.onPointerUp}
         @wheel=${this.#orbit.onWheel}
+        tabindex="0"
         @dblclick=${this.#orbit.onDblClick}
         >${this._error ? html`<span class="notatio-error">${this._error}</span>` : unsafeHTML(this._svg)}</span
       >

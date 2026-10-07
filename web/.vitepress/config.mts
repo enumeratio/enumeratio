@@ -274,6 +274,7 @@ function exploreSidebar(): SidebarItem[] {
         { text: "Fractals", link: "/explore/fractals/" },
         { text: "Quadratic primes", link: "/explore/quadratic-primes/" },
         { text: "Complex bases", link: "/explore/complex-bases/" },
+        { text: "Multiplication mod n", link: "/explore/multiplication-mod-n/" },
       ],
     },
   ];

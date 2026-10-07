@@ -7,9 +7,9 @@ lattice. When the digits hold one number from each residue class mod $\beta$, th
 all different, and together they tile a fractal: base $-1 + i$ with digits $0$ and $1$ draws the
 twindragon.
 
-The package draws these systems through `<notatio-lattice-plot layer="radix">`. Its `./lattice`
-entry is plain TypeScript with no engine. It holds the arithmetic, the settings sentences, a
-handful of notable systems with their sources, and the favorites viewers sent to
+A page draws these systems as a `Show` layer, `LatticeTiles(RadixExpansions(ring, base, digits,
+places))`. Its `./lattice` entry is plain TypeScript with no engine. It holds the arithmetic, the
+layer, a handful of notable systems with their sources, and the favorites viewers sent to
 [TheGrayCuber's imaginary-bases page](https://thegraycuber.com/imaginary_bases/). No heads are
 declared yet.
 

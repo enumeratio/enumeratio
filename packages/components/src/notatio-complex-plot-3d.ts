@@ -328,6 +328,7 @@ export class NotatioComplexPlot3D extends LitElement {
         @pointerleave=${this.#onPointerLeave}
         @dblclick=${this.#orbit.onDblClick}
         @wheel=${this.#orbit.onWheel}
+        tabindex="0"
         title=${ORBIT_HINT}
         >${this._dense ? html`<canvas role="img" aria-label="surface plot"></canvas>` : unsafeHTML(this._svg)}</span
       >${

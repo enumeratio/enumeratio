@@ -9,6 +9,8 @@ import {
   getComplexPlotDevice,
   gradientOf,
   parseNumeric,
+  WHEEL_HINT,
+  wheelZooms,
   zoomAbout,
 } from "@enumeratio/frontend/core";
 
@@ -33,7 +35,8 @@ import {
  * interpolate between slider steps and still hold frame.
  *
  * `mask` dims everything outside that radius, for a series whose disk of convergence
- * is part of the story (the polylog's |z| < 1). Drag to pan, scroll to zoom.
+ * is part of the story (the polylog's |z| < 1). Drag to pan; scroll to zoom once clicked, or
+ * ⌘/Ctrl+scroll.
  *
  * Framing is manipulable too: `extent="_e"` takes a wildcard directly, and `center`
  * accepts the Epsil list form `[_c, 0]` as well as a bare `re,im`.
@@ -276,8 +279,9 @@ export class NotatioComplexPlot extends LitElement {
    * aiming at.
    */
   #onWheel = (e: WheelEvent): void => {
-    e.preventDefault();
     const canvas = this.#canvas;
+    if (!canvas || !wheelZooms(e, canvas)) return;
+    e.preventDefault();
     if (!canvas) return;
     const r = canvas.getBoundingClientRect();
     // Pointer position in [-0.5, 0.5] of the viewport, y up.
@@ -295,7 +299,7 @@ export class NotatioComplexPlot extends LitElement {
     // under every pane it is just noise.
     return html`<div class="notatio-complex-plot ${this.bare ? "notatio-complex-plot-bare" : ""}">
       <div class="notatio-complex-plot-stage" style=${`height:${this.height}px`}>
-        <canvas @pointerdown=${this.#onPointerDown} @wheel=${this.#onWheel}></canvas>
+        <canvas tabindex="0" @pointerdown=${this.#onPointerDown} @wheel=${this.#onWheel}></canvas>
         ${this._status ? html`<p class="notatio-complex-plot-status">${this._status}</p>` : null}
       </div>
       ${
@@ -304,7 +308,7 @@ export class NotatioComplexPlot extends LitElement {
         this.bare
           ? ""
           : html`<div class="notatio-complex-plot-foot">
-              <span>color = arg · brightness = |value| · poles white, zeros black · drag to pan · scroll to zoom</span>
+              <span>color = arg · brightness = |value| · poles white, zeros black · drag to pan · ${WHEEL_HINT}</span>
               <button type="button" @click=${this.resetView}>⟲ reset</button>
               ${this.fps && this._fps ? html`<span class="notatio-complex-plot-fps">${this._fps} fps</span>` : null}
             </div>`

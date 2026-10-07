@@ -42,6 +42,12 @@ export interface VisualSymbol {
    * `PlotLabel` is the plot's `label`, `AxesLabel` is two attributes. A string names
    * the attribute; a function returns the attributes.
    */
+  /**
+   * The element reads its options from its own expression, as written (`Show`): they stay in what
+   * `attributes` is given rather than lowering to attributes, all but `Variables`, which declares
+   * a scope and so must be an attribute the page's scopes can see.
+   */
+  readonly holdsOptions?: true;
   readonly options?: Readonly<Record<string, string | ((value: MathJsonExpression) => Record<string, string>)>>;
   /** For a control: the shape of what it binds, which is how `reduce` reads it statically. */
   readonly control?: ControlKind;
@@ -456,6 +462,14 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     fixed: { type: "stream" },
     attributes: (ops) => vectorField(ops),
     options: FIELD_OPTIONS,
+  },
+  {
+    // `Show(layer, …, options)`: the layers stay one expression, which the element reads; its
+    // options lower to attributes (`Caption` to `caption`) like any plot's.
+    head: "Show",
+    tag: "notatio-show",
+    holdsOptions: true,
+    attributes: (ops) => ({ value: epsil(["Show", ...ops] as Json) }),
   },
   {
     head: "ComplexPlot",
@@ -892,18 +906,29 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   },
   layout("Panel", "notatio-panel"),
   {
-    // `Labeled(body, label, Bottom)`: Wolfram's third argument places the label.
+    // `Labeled(body, label, Bottom)`: Wolfram's third argument places the label. A label that
+    // is text is an attribute; one that is an expression (a `StringTemplate`) is a child after
+    // the body.
     head: "Labeled",
     tag: "notatio-labeled",
     attributes: (ops): Record<string, string> => {
       const out: Record<string, string> = {};
       const label = ops[1];
-      if (label !== undefined) out.label = strOf(label) ?? epsil(label);
+      const text =
+        label === undefined ? undefined : (strOf(label) ?? (headOf(label) === undefined ? epsil(label) : undefined));
+      if (text !== undefined) out.label = text;
       const position = LABEL_POSITIONS[symOf(ops[2]) ?? ""];
       if (position !== undefined) out.position = position;
       return out;
     },
-    children: (ops) => (ops[0] === undefined ? [] : [ops[0]]),
+    children: (ops) => [ops[0], headOf(ops[1]) === undefined ? undefined : ops[1]].filter((op) => op !== undefined),
+  },
+  {
+    // `StringTemplate("… {_d} …")`: Wolfram's template, with Epsil holes over the variables of
+    // the scope it sits in.
+    head: "StringTemplate",
+    tag: "notatio-string-template",
+    attributes: (ops) => ({ template: strOf(ops[0]) ?? "" }),
   },
 ];
 
@@ -953,10 +978,12 @@ const ALL_SYMBOLS: readonly VisualSymbol[] = [...VISUAL_SYMBOLS, ...CONTROL_SYMB
 const BY_HEAD = new Map(ALL_SYMBOLS.map((s) => [s.head, s]));
 
 /**
- * Heads that hold their contents as source: a `Cell`'s input is what it evaluates itself,
- * so the page neither binds the controls inside it nor rewrites or pins them.
+ * Heads that hold their contents as source: a `Cell`'s input is what it evaluates itself, and a
+ * `Show`'s layers are read by its element as written (its `Locator(_b)` is a handle on `_b`,
+ * not a control declaring it), so the page neither binds the controls inside them nor rewrites
+ * or pins them.
  */
-export const HELD_HEADS: ReadonlySet<string> = new Set(["Cell"]);
+export const HELD_HEADS: ReadonlySet<string> = new Set(["Cell", "Show"]);
 
 /** The variables the controls in an expression bind. */
 export function controlNames(expr: Json, into = new Set<string>()): Set<string> {
@@ -1043,8 +1070,16 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   }
   // The trailing rules are options, Wolfram's way; the rest are the positional operands.
   const { ops, options } = optionsOf(expr);
-  const lowered = lowerOptions(symbol, options);
-  const attributes = { ...symbol.fixed, ...symbol.attributes(ops), ...lowered.attributes };
+  const lowered = lowerOptions(
+    symbol,
+    symbol.holdsOptions ? Object.fromEntries(Object.entries(options).filter(([k]) => k === "Variables")) : options,
+  );
+  const held = symbol.holdsOptions
+    ? Object.entries(options)
+        .filter(([k]) => k !== "Variables")
+        .map(([k, v]) => ["KeyValuePair", k, v] as MathJsonExpression)
+    : [];
+  const attributes = { ...symbol.fixed, ...symbol.attributes([...ops, ...held]), ...lowered.attributes };
   const children = [
     ...(symbol.children?.(ops).map(
       (c) =>

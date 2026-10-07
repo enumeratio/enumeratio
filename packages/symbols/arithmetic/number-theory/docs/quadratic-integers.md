@@ -17,8 +17,9 @@ $\omega = e^{2\pi i/3}$ is a cube root of unity. A $d$ with square factors names
 squarefree part, so $\mathbb{Q}(\sqrt 8) = \mathbb{Q}(\sqrt 2)$.
 
 Each element is a point of a lattice, and the lattice is where the arithmetic is easiest to
-see. Every plot on this page is the same component, `<notatio-lattice-plot>`. Drag to pan,
-scroll to zoom, and click a tile to read its factorization.
+see. Every plot on this page is a `Show` of one `LatticeTiles` layer, its tiles colored by
+`ColorRules`. Drag to pan; click the plot, then scroll to zoom (or ⌘/Ctrl-scroll); hover a tile to
+read its factorization.
 
 ## The norm
 
@@ -33,18 +34,21 @@ A factorization of $\alpha$ therefore gives a factorization of $N(\alpha)$. So a
 whose norm is a rational prime cannot factor. The units are the elements of norm $\pm 1$.
 
 <Story title="Gaussian primes, colored by norm">
-<ClientOnly>
-<notatio-lattice-plot ring="GaussianIntegers" palette="dusk" grid="10" height="440" />
-</ClientOnly>
+<Show GridLines="[10, 10]" Axes ImageSize="[Automatic, 440]">
+  <LatticeTiles
+    ColorRules='[IsPrime -> ColorData(["Dusk", [0, 10], "Reflected"])(Sqrt(Abs(Norm))), IsUnit -> White]'
+    BoundaryStyle="[IsZero -> White]"
+  >GaussianIntegers</LatticeTiles>
+</Show>
 </Story>
 
 A prime's color comes from its norm, through a band. The gradient runs from its first color at
 $\sqrt{|N|} = 0$ to its last at $\sqrt{|N|} = 10$, back to its first at $20$, and so on. The band
 is the grid step, so the colors turn at the grid's own spacing; the legend says where. A band is
-a choice of presentation, not of mathematics: open the gradient control to change it, or have the
-gradient wrap or stop instead of reflecting back. For $\mathbb{Z}[i]$, $\sqrt{|N|}$ is the
-distance from 0, so the bands are rings. Toggling **true scale** makes no difference here,
-because $\mathbb{Z}[i]$ is already square.
+a choice of presentation, not of mathematics: pick another scheme from the legend's bar, or have
+it wrap or stop (↺) instead of reflecting back. For $\mathbb{Z}[i]$, $\sqrt{|N|}$ is the
+distance from 0, so the bands are rings. True scale (`AspectRatio -> Automatic`) makes no
+difference here, because $\mathbb{Z}[i]$ is already square.
 
 ## Square and hexagonal
 
@@ -53,14 +57,17 @@ each element owns a hexagon. The Eisenstein integers tile the plane with regular
 and their primes have six-fold symmetry because there are six units.
 
 <Story title="Eisenstein primes">
-<ClientOnly>
-<notatio-lattice-plot ring="EisensteinIntegers" palette="viridis" grid="10" height="440" />
-</ClientOnly>
+<Show GridLines="[10, 10]" Axes ImageSize="[Automatic, 440]">
+  <LatticeTiles
+    ColorRules='[IsPrime -> ColorData(["Viridis", [0, 10], "Reflected"])(Sqrt(Abs(Norm))), IsUnit -> White]'
+    BoundaryStyle="[IsZero -> White]"
+  >EisensteinIntegers</LatticeTiles>
+</Show>
 </Story>
 
 By default the plot measures the non-real axis in units of $\omega$'s own height. Every ring
 then gets square or regular-hexagonal tiles, and fields can be compared side by side.
-**True scale** draws $x + y\sqrt d$ at $(x, y\sqrt{|d|})$ instead. For $d < 0$ that is the
+True scale, `AspectRatio -> Automatic`, draws $x + y\sqrt d$ at $(x, y\sqrt{|d|})$ instead. For $d < 0$ that is the
 complex plane itself, so the lattice lines up with a complex plot of the same view.
 
 ## When factorization is not unique
@@ -85,16 +92,25 @@ $$
 None of these is principal. The elements $2$, $3$ and $1 \pm \sqrt{-5}$ are four different
 ways of grouping them into principal products.
 
-The plot paints irreducibles that are not prime in a color of their own, taken from the
-discrete scheme. The default scheme is generated to sit far from every color of the gradient,
-so an irreducible never reads as a prime of some norm. Click $6$ to see both
-factorizations and its ideals. With **highlight** set to _irreducible factors_, every
-irreducible divisor of the selection lights up, from both factorizations at once.
+The plot paints irreducibles that are not prime teal, a color that sits apart from every color
+of the gradient, so an irreducible never reads as a prime of some norm. $6$ is selected, and every
+irreducible divisor of the selection lights up, from both factorizations at once; hover it to
+read both factorizations and its ideals. Shift-click to select more.
 
 <Story title="ℤ[√−5]: primes by norm, and irreducibles that are not prime">
-<ClientOnly>
-<notatio-lattice-plot ring="QuadraticIntegers(-5)" palette="dusk" grid="10" height="440" selected="6,0" />
-</ClientOnly>
+<Show Variables="[_s -> Variable(Automatic, [(6, 0)])]" Selection="_s" GridLines="[10, 10]" Axes ImageSize="[Automatic, 440]">
+  <LatticeTiles
+    ColorRules='[
+      IsPrime -> ColorData(["Dusk", [0, 10], "Reflected"])(Sqrt(Abs(Norm))),
+      IsIrreducible && !IsPrime -> Teal,
+      IsUnit -> White,
+      IrreducibleFactors(Selected) -> Opacity(0.4, White)]'
+    ColorMixing='"Screen"'
+    BoundaryStyle="[IsZero -> White, Selected -> Directive(White, AbsoluteThickness(2.5))]"
+  >
+    <QuadraticIntegers>-5</QuadraticIntegers>
+  </LatticeTiles>
+</Show>
 </Story>
 
 How badly unique factorization fails is measured by the **class group**, the ideals modulo
@@ -112,13 +128,18 @@ $\omega$. A prime's associates run off along the hyperbolas $N = \pm p$, so the 
 arrange themselves along those curves.
 
 <Story title="ℚ(√229): a real field with class number 3">
-<ClientOnly>
-<notatio-lattice-plot ring="229" palette="magma" grid="10" height="440" color-by="splitting" />
-</ClientOnly>
+<Show GridLines="[10, 10]" Axes ImageSize="[Automatic, 440]">
+  <LatticeTiles
+    ColorRules="[Splits -> Teal, Inert -> Gold, Ramified -> Red, IsIrreducible && !IsPrime -> Purple, IsUnit -> White]"
+    BoundaryStyle="[IsZero -> White]"
+  >
+    <QuadraticIntegers>229</QuadraticIntegers>
+  </LatticeTiles>
+</Show>
 </Story>
 
-Colored **by how p splits**, each prime takes the color of the rational prime $p$ below it.
-A prime $p$ either splits into two conjugate ideals (norm $\pm p$), stays inert (the prime is
+Each prime is colored by how the rational prime $p$ below it splits: teal when it splits,
+gold when it stays inert, red when it ramifies. A prime $p$ either splits into two conjugate ideals (norm $\pm p$), stays inert (the prime is
 $p$ itself, norm $p^2$) or ramifies (it divides the discriminant). The Kronecker symbol
 $\left(\frac{D}{p}\right)$ decides which.
 

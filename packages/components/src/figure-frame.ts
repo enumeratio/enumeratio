@@ -78,32 +78,3 @@ export function figureFrame(parts: FrameParts): TemplateResult {
     ${slot("below")}
   </figure>`;
 }
-
-/** One legend entry: a swatch (a color, an outline, a gradient with its scale) and a label. */
-export interface LegendEntry {
-  readonly label: string;
-  readonly color?: string;
-  readonly style?: "fill" | "outline" | "dashed";
-  /** A gradient swatch: its CSS, and tick labels spread evenly along it. */
-  readonly gradient?: { readonly css: string; readonly ticks: readonly string[] };
-}
-
-export function legendTemplate(entries: readonly LegendEntry[], vertical: boolean, more = 0): TemplateResult {
-  return html`<ul class=${`notatio-legend ${vertical ? "is-vertical" : ""}`}>
-    ${entries.map((e) => {
-      if (e.gradient) {
-        return html`<li class="notatio-legend-gradient">
-          <span class="notatio-legend-label">${e.label}</span>
-          <span class="notatio-legend-bar" style=${`background:${e.gradient.css}`}></span>
-          <span class="notatio-legend-ticks">${e.gradient.ticks.map((t) => html`<span>${t}</span>`)}</span>
-        </li>`;
-      }
-      const swatch =
-        e.style === "outline" || e.style === "dashed"
-          ? `border: 2px ${e.style === "dashed" ? "dashed" : "solid"} ${e.color}; background: transparent`
-          : `background: ${e.color}`;
-      return html`<li><i style=${swatch}></i><span class="notatio-legend-label">${e.label}</span></li>`;
-    })}
-    ${more > 0 ? html`<li class="notatio-legend-more">and ${more} more</li>` : nothing}
-  </ul>`;
-}
