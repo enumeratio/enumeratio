@@ -137,6 +137,7 @@ test("where a kernel declines, N(…, d) stays symbolic rather than printing a d
   expect(n(["Hypergeometric2F1Regularized", 1, 1, 2, 1.5], 30).operator).toBe("Hypergeometric2F1Regularized");
   expect(n(["QFactorial", ["Rational", 1, 3], -2], 30).operator).toBe("QFactorial");
   expect(n(["RiemannSiegelZ", ["Power", 10, 6]], 20).operator).toBe("RiemannSiegelZ");
+  expect(riemannSiegelZComplexBig(d(30000), d("-1e-30"), 20)).toBeUndefined();
 });
 
 test("QFactorial at a fractional n answers at a double's digits too, and stays held when exact", () => {

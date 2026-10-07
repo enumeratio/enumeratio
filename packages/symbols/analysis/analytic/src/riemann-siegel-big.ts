@@ -28,7 +28,9 @@ const GUARD = 12;
 const MAX_WORKING = 1200;
 const MAX_PASSES = 6;
 /** The Euler–Maclaurin sum costs a term per unit of |t|/2π or so: ~1 s at 10⁵, and not worth more. */
-const MAX_ARGUMENT = 250_000;
+const MAX_ARGUMENT = 100_000;
+/** A complex argument re-runs at several working precisions to resolve its smaller part: ~4 s at 10⁵. */
+const MAX_COMPLEX_ARGUMENT = 20_000;
 /** Digits kept past those asked for, so a part right at the limit is not trusted. */
 const SPARE = 4;
 
@@ -148,7 +150,8 @@ export function riemannSiegelZBig(t: BigDecimal, digits: number): BigDecimal | u
 
 /** Z(x + iy) to `digits` significant digits in each part; a part that is exactly zero stays so. */
 export function riemannSiegelZComplexBig(x: BigDecimal, y: BigDecimal, digits: number): BigCx | undefined {
-  if (!x.isFinite() || !y.isFinite() || x.abs().gt(MAX_ARGUMENT) || y.abs().gt(MAX_ARGUMENT)) return undefined;
+  if (!x.isFinite() || !y.isFinite() || x.abs().gt(MAX_COMPLEX_ARGUMENT) || y.abs().gt(MAX_COMPLEX_ARGUMENT))
+    return undefined;
   const values = resolved(
     (working) => {
       const z = complexZ(x, y, working);
