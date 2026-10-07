@@ -4,6 +4,7 @@ import {
   plainJson,
   pointWords,
   type ProsePart,
+  randomValue,
   type VariableSpec,
 } from "@enumeratio/frontend/core";
 import katex from "katex";
@@ -137,7 +138,30 @@ export class NotatioStringTemplate extends LitElement {
     return unsafeHTML(markup);
   }
 
+  /** A die beside a control: a random value of the variable's domain. */
+  #die(name: string): unknown {
+    const spec = this.#spec(name);
+    if (!spec || spec.domain.kind === "integers") return nothing;
+    return html`<button
+      type="button"
+      class="notatio-die"
+      aria-label=${`A random ${name}`}
+      data-tip="A random one"
+      @click=${() => {
+        const value = randomValue(spec, this.#scope?.values.get(name));
+        if (value !== undefined) this.#scope?.set(name, value as never);
+      }}
+    >
+      ⚄
+    </button>`;
+  }
+
   #control(name: string, options: Readonly<Record<string, string>>): unknown {
+    // `{_d | random}`: the variable's control with a die beside it.
+    if ("random" in options && !("stepper" in options)) {
+      const { random: _, ...rest } = options;
+      return html`${this.#control(name, rest)}${this.#die(name)}`;
+    }
     const spec = this.#spec(name);
     const value = this.#scope?.values.get(name);
     const domain = spec?.domain;

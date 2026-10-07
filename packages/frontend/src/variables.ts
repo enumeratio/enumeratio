@@ -31,7 +31,7 @@ export type Domain =
    * Lattice points of a ring, one `(a, b)` or a list of them: `GaussianIntegers`'s a + bi,
    * `EisensteinIntegers`'s a + bω. The ring may be another variable's value (`_r`).
    */
-  | { readonly kind: "points"; readonly ring: Json }
+  | { readonly kind: "points"; readonly ring: Json; readonly min?: number; readonly max?: number }
   /** Choices a library supplies by name (`ComplexBases`), resolved by `resolveNamedDomains`. */
   | { readonly kind: "named"; readonly name: string }
   | { readonly kind: "any" };
@@ -178,7 +178,7 @@ function domainOf(json: Json, start: Json, options: ReadonlyMap<string, Json>): 
     return { kind: "booleans" };
   // A ring's points, the ring named or another variable's (`_r`).
   if ((typeof json === "string" && json in POINT_RINGS) || (typeof json === "string" && /^_[A-Za-z]\w*$/.test(json)))
-    return { kind: "points", ring: json };
+    return { kind: "points", ring: json, ...(lo !== undefined && hi !== undefined ? { min: lo, max: hi } : {}) };
   // Any other name is a domain a library supplies.
   if (
     typeof json === "string" &&
@@ -249,6 +249,37 @@ export function randomInteger(domain: Extract<Domain, { kind: "integers" }>, n: 
     if (m !== n && (domain.where?.(m) ?? true)) return m;
   }
   return n;
+}
+
+/** Reach of a ring point's coordinates a random draw takes when its declaration gives no `Range`. */
+const POINT_REACH = 4;
+
+/**
+ * A random value of a variable's domain, other than `current` where it can be: an integer it
+ * admits, a real in its range, a choice, a boolean, or a ring point with coordinates in its
+ * `Range` (a list of points draws nothing). Undefined when the domain has nothing to draw from.
+ */
+export function randomValue(spec: VariableSpec, current: Json, random = Math.random): Json {
+  const d = spec.domain;
+  switch (d.kind) {
+    case "integers":
+      return randomInteger(d, numberOf(current) ?? 0, random);
+    case "reals":
+      return d.min + random() * (d.max - d.min);
+    case "booleans":
+      return current === "True" ? "False" : "True";
+    case "choices": {
+      const others = d.values.filter((v) => JSON.stringify(v) !== JSON.stringify(current));
+      return others.length > 0 ? others[Math.floor(random() * others.length)] : undefined;
+    }
+    case "points": {
+      if (headOf(current) === "List") return undefined;
+      const [lo, hi] = [d.min ?? -POINT_REACH, d.max ?? POINT_REACH];
+      const draw = (): number => lo + Math.floor(random() * (hi - lo + 1));
+      return ["Tuple", draw(), draw()];
+    }
+  }
+  return undefined;
 }
 
 /**

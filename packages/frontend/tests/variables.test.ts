@@ -3,6 +3,7 @@ import {
   fillTex,
   pointWords,
   randomInteger,
+  randomValue,
   registerDomain,
   resolveNamedDomains,
   stepInteger,
@@ -91,5 +92,27 @@ describe("ring points and named domains", () => {
     expect(e!.domain).toEqual({ kind: "choices", values: ["'a'", "'b'"], labels: ["the first", "the second"] });
     expect(e!.start).toBe("'b'");
     expect(f!.domain.kind).toBe("any");
+  });
+});
+
+describe("random draws", () => {
+  it("draw from any domain: choices, booleans, reals, ring points in their range", () => {
+    const [h, k, x, b, ds] = variablesOf([
+      "List",
+      kv("_h", ["List", "A", "B", "C"]),
+      kv("_k", "True"),
+      kv("_x", ["Variable", "Reals", 0.5, kv("Range", ["List", 0, 1])]),
+      kv("_b", ["Variable", "GaussianIntegers", ["Tuple", 0, 1], kv("Range", ["List", -2, 2])]),
+      kv("_ds", ["Variable", "GaussianIntegers", ["List", ["Tuple", 1, 0]]]),
+    ]);
+    for (let n = 0; n < 20; n++) {
+      expect(["B", "C"]).toContain(randomValue(h!, "A"));
+      const r = randomValue(x!, 0.5) as number;
+      expect(r >= 0 && r <= 1).toBe(true);
+      const p = randomValue(b!, ["Tuple", 0, 1]) as number[];
+      expect(p.slice(1).every((c) => c >= -2 && c <= 2)).toBe(true);
+    }
+    expect(randomValue(k!, "True")).toBe("False");
+    expect(randomValue(ds!, ["List", ["Tuple", 1, 0]])).toBeUndefined();
   });
 });

@@ -1540,6 +1540,7 @@ notatio-show {
 .notatio-show-gradient .notatio-legend-bar { display: block; }
 .notatio-show-gradient select { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 .notatio-show-ends { display: inline-flex; gap: 0.25rem; }
+.notatio-die { border: none; background: transparent; padding: 0 0.15rem; color: var(--vp-c-brand-1, #3451b2); font: inherit; cursor: pointer; }
 .notatio-settings { display: flex; gap: 0.3rem; margin-top: 0.35rem; }
 .notatio-settings input {
   flex: 1;

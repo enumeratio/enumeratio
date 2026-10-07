@@ -26,7 +26,7 @@ every numeral a different point.
 <Locator Appearance='"β"'>_b</Locator>
 <Locator LocatorAutoCreate>_ds</Locator>
 </Show>
-<StringTemplate>Base $\beta = _b$ on {_r}, digits 0, {_ds}, kept {_k} ({Setter(_k, True, "snap back to the lattice")}): every numeral of at most {_L} places, colored by where its digits put it: {_e}. Selecting a tile lights every numeral with the same last digit. Start from {Setter(_e, "twindragon", "the twindragon")}, {Setter(_e, "katai-szabo", "base −2 + i")}, {Setter(_e, "quater-imaginary", "the quater-imaginary base")} or {Setter(_e, "Random", "a random one")}. Copy the settings to keep a system, or paste some in: {InputField(Variables)}</StringTemplate>
+<StringTemplate>Base $\beta$ = {_b | random} on {_r}, digits 0, {_ds}, kept {_k} ({Setter(_k, True, "snap back to the lattice")}): every numeral of at most {_L} places, colored by where its digits put it: {_e}. Selecting a tile lights every numeral with the same last digit. Start from {Setter(_e, "twindragon", "the twindragon")}, {Setter(_e, "katai-szabo", "base −2 + i")}, {Setter(_e, "quater-imaginary", "the quater-imaginary base")} or {Setter(_e, "Random", "a random one")}. Copy the settings to keep a system, or paste some in: {InputField(Variables)}</StringTemplate>
 <Bottom/>
 </Labeled>
 
