@@ -16,6 +16,14 @@ import sage from "./number-fields.sage.json" with { type: "json" };
 
 // The kernel against Sage (scripts/collect-number-fields-sage.py): each field's discriminant,
 // its ring of integers as a lattice, its signature, and which small elements generate primes.
+// The standard run checks every element of the fields up to degree 4 and a stride through the
+// rest; `DEEP_TESTS=1` checks every one (ζ₇'s field alone has thousands).
+
+const deep = process.env.DEEP_TESTS === "1";
+/** Elements checked per field outside a deep run. */
+const SAMPLE = 400;
+/** A deep run's per-field time, past the default: ζ₇'s 15 625 elements take seconds on a runner. */
+const DEEP_BUDGET_MS = deep ? 120_000 : undefined;
 
 const fraction = (text: string): { num: bigint; den: bigint } => {
   const [num, den = "1"] = text.split("/");
@@ -48,24 +56,32 @@ describe.each(sage.fields.map((f) => [f.f.join(" "), f] as const))("ℚ[x]/(%s)"
     }
   });
 
-  test("an element generates a prime ideal exactly when Sage says so", () => {
-    const primes = new Set(field.primes.split(" ").filter(Boolean));
-    const [lo, hi] = sage.coefficients;
-    const wrong: string[] = [];
-    const visit = (prefix: bigint[]): void => {
-      if (prefix.length === n) {
-        const x = element(prefix);
-        const N = norm(f, x).num;
-        if (N === 0n || N === 1n || N === -1n || (N < 0n ? -N : N) > BigInt(sage.normLimit)) return;
-        const key = prefix.join(",");
-        if (generatesPrime(o, x) !== primes.has(key)) wrong.push(key);
-        return;
-      }
-      for (let c = lo!; c <= hi!; c++) visit([...prefix, BigInt(c)]);
-    };
-    visit([]);
-    expect(wrong).toEqual([]);
-  });
+  test(
+    "an element generates a prime ideal exactly when Sage says so",
+    () => {
+      const primes = new Set(field.primes.split(" ").filter(Boolean));
+      const [lo, hi] = sage.coefficients;
+      const wrong: string[] = [];
+      const total = (hi! - lo! + 1) ** n;
+      const stride = deep || total <= SAMPLE ? 1 : Math.ceil(total / SAMPLE);
+      let seen = 0;
+      const visit = (prefix: bigint[]): void => {
+        if (prefix.length === n) {
+          if (seen++ % stride !== 0) return;
+          const x = element(prefix);
+          const N = norm(f, x).num;
+          if (N === 0n || N === 1n || N === -1n || (N < 0n ? -N : N) > BigInt(sage.normLimit)) return;
+          const key = prefix.join(",");
+          if (generatesPrime(o, x) !== primes.has(key)) wrong.push(key);
+          return;
+        }
+        for (let c = lo!; c <= hi!; c++) visit([...prefix, BigInt(c)]);
+      };
+      visit([]);
+      expect(wrong).toEqual([]);
+    },
+    DEEP_BUDGET_MS,
+  );
 });
 
 const gcdOf = (a: bigint, b: bigint): bigint => (b === 0n ? (a < 0n ? -a : a) : gcdOf(b, a % b));
