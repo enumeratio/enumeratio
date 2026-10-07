@@ -17,11 +17,11 @@ import { type Bounds, memoryCapMb, runBounded } from "@enumeratio/utils/bounded"
 import type { System } from "./systems.ts";
 /** Sources per kernel process. */
 const BATCH = 40;
-/** Seconds one item may run before it counts as an error. */
-const ITEM_SECONDS = 30;
-/** Seconds a Python kernel may print nothing before the supervisor kills it. SIGALRM only
- * lands between bytecodes, so a C-level call (a huge integer power) outlives ITEM_SECONDS. */
-const PYTHON_STALL_SECONDS = 2 * ITEM_SECONDS;
+/** Seconds one item may run before it counts as an error, unless a run says otherwise (`RunOptions`). */
+export const ITEM_SECONDS = 30;
+/** Seconds a Python kernel may print nothing before the supervisor kills it: twice the item cap.
+ * SIGALRM only lands between bytecodes, so a C-level call (a huge integer power) outlives the cap. */
+const stallSeconds = (itemSeconds: number): number => 2 * itemSeconds;
 /** Resident bytes a kernel may reach before the item it is on counts as an error. */
 const MAX_BYTES = 1024 ** 3;
 
@@ -144,7 +144,7 @@ async function withFile<T>(name: string, program: string, run: (file: string) =>
  * symbol — corrupting that one item's output. `Module[{k}, Do[..., {k, 1, n}]]` renames the
  * counter to a Module-local `k$nnn` gensym, a name no transpiled source can ever spell, so no
  * batched item's own bare symbol — `i`, `k`, or anything else — can collide with it again. */
-export function wolframBatchCode(sources: readonly string[]): string {
+export function wolframBatchCode(sources: readonly string[], itemSeconds: number = ITEM_SECONDS): string {
   // wolframscript reads `-code` byte by byte (`∑` arrives as three Latin-1 characters), so a
   // non-ASCII character goes in as Wolfram's own escape: `\:2211`, or `\|01f600` past the BMP.
   const escaped = (source: string): string =>
@@ -157,11 +157,13 @@ export function wolframBatchCode(sources: readonly string[]): string {
   // Held, `Rational[7, 2]` is a call, not the number, and prints as `\text{Rational}[7,2]`;
   // rewritten as the division and sum it stands for, it prints as written.
   const tex = `tex[x_] := StringReplace[ToString[Quiet[TeXForm[x]]], "\\n" -> " "]; atoms = {Rational -> Divide, Complex[0, 1] :> I, Complex[a_, 1] :> a + I, Complex[0, b_] :> b I, Complex[a_, b_] :> a + b I};`;
-  return `${tex} Module[{k}, Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[k]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", k, ">>", ToString[FullForm[v]]]; Print["<<", k, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", k, "|>>", ToString[InputForm[v]]]; If[NumberQ[Precision[v]], Print["<<", k, "~>>", ToString[NumberForm[v, ExponentFunction -> (Null &)]]]]; Print["<<", k, "^>>", tex[ToExpression[{${list}}[[k]], InputForm, HoldForm] /. atoms]]; Print["<<", k, "$>>", tex[v]]], {k, 1, ${sources.length}}]]`;
+  return `${tex} Module[{k}, Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[k]]], ${itemSeconds}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", k, ">>", ToString[FullForm[v]]]; Print["<<", k, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${itemSeconds}, v]]]]]; Print["<<", k, "|>>", ToString[InputForm[v]]]; If[NumberQ[Precision[v]], Print["<<", k, "~>>", ToString[NumberForm[v, ExponentFunction -> (Null &)]]]]; Print["<<", k, "^>>", tex[ToExpression[{${list}}[[k]], InputForm, HoldForm] /. atoms]]; Print["<<", k, "$>>", tex[v]]], {k, 1, ${sources.length}}]]`;
 }
 
-async function runWolfram(sources: readonly string[]): Promise<Result[]> {
-  const run = await transcript("wolframscript", ["-code", wolframBatchCode(sources)], { timeoutMs: 600_000 });
+async function runWolfram(sources: readonly string[], itemSeconds: number): Promise<Result[]> {
+  const run = await transcript("wolframscript", ["-code", wolframBatchCode(sources, itemSeconds)], {
+    timeoutMs: Math.max(600_000, itemSeconds * 20_000),
+  });
   return "out" in run ? collectWolfram(run.out, sources.length) : failAll(sources.length, run.reason);
 }
 
@@ -181,6 +183,7 @@ export function pythonBatchCode(
   preamble: string,
   evalExpr: (src: string, ns: string) => string = (src, ns) => `eval(${src}, ${ns})`,
   valueOf?: string,
+  itemSeconds: number = ITEM_SECONDS,
 ): string {
   // With `valueOf`, the value line is that helper's rendering (compared) and a second
   // `|`-marked line carries the kernel's own form (displayed), as for Wolfram.
@@ -194,11 +197,11 @@ _enumeratio_base_ns = dict(globals())
 import json, signal, sys
 print("<<0>>", flush=True)
 def _timeout(signum, frame):
-    raise TimeoutError("over ${ITEM_SECONDS}s")
+    raise TimeoutError("over ${itemSeconds}s")
 signal.signal(signal.SIGALRM, _timeout)
 _enumeratio_sources = json.loads(${JSON.stringify(JSON.stringify(sources))})
 for _enumeratio_i, _enumeratio_src in enumerate(_enumeratio_sources):
-    signal.alarm(${ITEM_SECONDS})
+    signal.alarm(${itemSeconds})
     _enumeratio_ns = dict(_enumeratio_base_ns)
     try:
         ${print}
@@ -221,13 +224,14 @@ async function runPython(
   args: readonly string[] = ["-c"],
   evalExpr?: (src: string, ns: string) => string,
   valueOf?: string,
+  itemSeconds: number = ITEM_SECONDS,
 ): Promise<Result[]> {
-  const program = pythonBatchCode(sources, preamble, evalExpr, valueOf);
+  const program = pythonBatchCode(sources, preamble, evalExpr, valueOf, itemSeconds);
   const run = await transcript("python3", [
     "-c",
     SUPERVISOR,
     String(MAX_BYTES),
-    String(PYTHON_STALL_SECONDS),
+    String(stallSeconds(itemSeconds)),
     binary,
     ...args,
     program,
@@ -245,7 +249,8 @@ async function runJulia(
   project: string,
   using: string,
   /** A Julia file of helpers the environment's emit templates call. */
-  preamble?: string,
+  preamble: string | undefined,
+  itemSeconds: number,
 ): Promise<Result[]> {
   // A JSON string is a Julia string literal once `$` stops interpolating.
   const list = sources.map((source) => JSON.stringify(source).replace(/\$/g, "\\$")).join(",\n");
@@ -264,7 +269,7 @@ end
   // memory (below the watchdog's cap), naming a runaway on its own rather than losing the
   // batch; `<<0>>` starts the clock once the packages have loaded.
   const limit = Math.floor(memoryCapMb() * 0.9) * 2 ** 20;
-  const stall = String(2 * ITEM_SECONDS);
+  const stall = String(stallSeconds(itemSeconds));
   const run = await withFile("batch.jl", program, (file) =>
     transcript("python3", ["-c", SUPERVISOR, String(limit), stall, "julia", ...juliaFlags(project), file]),
   );
@@ -849,6 +854,8 @@ export function preludeFor(system: System): Prelude {
 export interface RunOptions {
   /** Epoch ms after which the items not yet started are answered `TimeoutError`, not run. */
   readonly deadline?: number;
+  /** Seconds one item may run before it counts as an error (default `ITEM_SECONDS`). */
+  readonly itemSeconds?: number;
 }
 
 /** Seconds between progress lines on stderr, so a stalled lane is visible in a CI log. */
@@ -865,7 +872,7 @@ export async function runIn(system: System, sources: readonly string[], options:
       while (results.length < sources.length) results.push(spent);
       break;
     }
-    const batch = await runBatch(system, sources.slice(start, start + BATCH));
+    const batch = await runBatch(system, sources.slice(start, start + BATCH), options.itemSeconds ?? ITEM_SECONDS);
     // A kernel that died mid-batch leaves "no output" after the item that killed it.
     const lost = batch.findIndex((r) => "error" in r && r.error === "no output");
     // Nothing came back at all: count the first item as the culprit and move past it.
@@ -880,10 +887,10 @@ export async function runIn(system: System, sources: readonly string[], options:
   return results;
 }
 
-function runBatch(system: System, sources: readonly string[]): Promise<Result[]> {
+function runBatch(system: System, sources: readonly string[], itemSeconds: number): Promise<Result[]> {
   switch (system) {
     case "wolfram":
-      return runWolfram(sources);
+      return runWolfram(sources, itemSeconds);
     case "sympy":
       return runPython(
         sources,
@@ -892,6 +899,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
         ["-c"],
         undefined,
         "enumeratio_value",
+        itemSeconds,
       );
     case "mpmath":
       return runPython(
@@ -901,6 +909,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
         ["-c"],
         undefined,
         "enumeratio_value",
+        itemSeconds,
       );
     case "sage":
       // `sage -c` takes one program string, like python3 -c. `locals=<per-item ns>` is what
@@ -914,11 +923,12 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
         ["-c"],
         (src, ns) => `sage_eval(${src}, locals=${ns})`,
         "enumeratio_value",
+        itemSeconds,
       );
     case "oscar":
-      return runJulia(sources, "oscar", "Oscar", join(local("oscar"), "preamble.jl"));
+      return runJulia(sources, "oscar", "Oscar", join(local("oscar"), "preamble.jl"), itemSeconds);
     case "julia":
-      return runJulia(sources, "julia", "Nemo, Combinatorics");
+      return runJulia(sources, "julia", "Nemo, Combinatorics", undefined, itemSeconds);
     case "mathlib4":
       return runLean(sources);
     case "rust":

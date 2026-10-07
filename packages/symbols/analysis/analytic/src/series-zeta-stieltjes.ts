@@ -3,8 +3,9 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 
 // ζ(s) = 1/(s−1) + Σ_{k≥0} (−1)^k γ_k (s−1)^k / k!. compute-engine's `Series` knows the residue
 // and γ_0 = EulerGamma and stops there (the higher γ_k are not in its pole table), so the
-// expansion at 1 ends in O(s−1). This continues it with the StieltjesGamma terms, reusing the
-// native result's own (s−1) and remainder so the variable binding is the one it already carries.
+// expansion at 1 ends in O(s−1) (https://github.com/cortex-js/compute-engine/issues/421).
+// This continues it with the StieltjesGamma terms, reusing the native result's own (s−1) and
+// remainder so the variable binding is the one it already carries.
 // Self-disabling: once the native result reaches past the constant, the remainder is no longer
 // O(s−1) and the result passes through.
 

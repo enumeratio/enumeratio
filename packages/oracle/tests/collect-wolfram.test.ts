@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { collectWolfram, wolframBatchCode } from "../src/run.ts";
+import { collectWolfram, ITEM_SECONDS, wolframBatchCode } from "../src/run.ts";
 
 // The Wolfram lane's transcript, one marked line per form: the value, its N, its InputForm,
 // the TeX pair, and for an arbitrary-precision value the digits Wolfram displays.
@@ -45,4 +45,11 @@ test("a non-ASCII character goes to the kernel as a Wolfram escape", () => {
   const code = wolframBatchCode(['StringLength["∑😀"]']);
   expect(code).toContain("\\:2211\\|01f600");
   expect(code).not.toMatch(/\P{ASCII}/u);
+});
+
+test("the per-item time cap is thirty seconds unless a run names another", () => {
+  expect(wolframBatchCode(["1"])).toContain("TimeConstrained[ToExpression[");
+  expect(wolframBatchCode(["1"])).toContain(`, ${ITEM_SECONDS}, $Aborted]`);
+  expect(wolframBatchCode(["1"], 120)).toContain(", 120, $Aborted]");
+  expect(wolframBatchCode(["1"], 120)).not.toContain(`, ${ITEM_SECONDS}, $Aborted]`);
 });
