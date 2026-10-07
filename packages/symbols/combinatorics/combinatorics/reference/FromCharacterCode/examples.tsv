@@ -1,9 +1,9 @@
-id	section	role	expr	expected	caption	triage	epsil.back	wolfram.note
-from-character-code-of-a-single-code-point			[FromCharacterCode, 65]	"'A'"				
-fromcharactercode-list-97-98-99			[FromCharacterCode, [List, 97, 98, 99]]	"'abc'"	A list of codes becomes a string, one character per code			
-inverts-tocharactercode	Scope		[FromCharacterCode, [ToCharacterCode, [String, hello]]]	"'hello'"			[FromCharacterCode, [ToCharacterCode, [String, "''", hello]]]	
-round-trips-a-non-ascii-string-emoji-astral	Scope		[FromCharacterCode, [ToCharacterCode, [String, a😀b→c]]]	"'a😀b→c'"	round-trips an emoji (astral) and an arrow (BMP) through code points		[FromCharacterCode, [ToCharacterCode, "'a😀b→c'"]]	
-fromcharactercode-97	Scope		[FromCharacterCode, 97]	"'a'"	A single code gives a one-character string			
-fromcharactercode-list-61-726-62-520-62-521-62	Scope	triage	[FromCharacterCode, [List, 61726, 62520, 62521, 62522, 63309, 63310, 63311, 63373, 63374, 63375, 63418, 63419, 63420, 63421, 63422, 63423, 63440, 63511, 63512, 63513, 63514, 63515, 63516, 63517]]	"''"		compare		The same characters: Wolfram's InputForm prints each private-use character as a named-character escape (\[Limit], \[GothicCapitalD], ...) or the glyph it stands for (E, I, TAB, SPC, DEL), none of which the comparison reads back, so two equal strings come back inconclusive.
-fromcharactercode-list-128-512-128-513-128-514	Scope		[FromCharacterCode, [List, 128512, 128513, 128514, 128515, 128516, 128517, 128518, 128519]]	"'😀😁😂😃😄😅😆😇'"				
-fromcharactercode-list-128-105-127-997-8-205-127	Properties		[FromCharacterCode, [List, 128105, 127997, 8205, 127891]]	"'👩🏽‍🎓'"				
+id	section	role	expr	expected	caption	epsil.back
+from-character-code-of-a-single-code-point			[FromCharacterCode, 65]	"'A'"		
+fromcharactercode-list-97-98-99			[FromCharacterCode, [List, 97, 98, 99]]	"'abc'"	A list of codes becomes a string, one character per code	
+inverts-tocharactercode	Scope		[FromCharacterCode, [ToCharacterCode, [String, hello]]]	"'hello'"		[FromCharacterCode, [ToCharacterCode, [String, "''", hello]]]
+round-trips-a-non-ascii-string-emoji-astral	Scope		[FromCharacterCode, [ToCharacterCode, [String, a😀b→c]]]	"'a😀b→c'"	round-trips an emoji (astral) and an arrow (BMP) through code points	[FromCharacterCode, [ToCharacterCode, "'a😀b→c'"]]
+fromcharactercode-97	Scope		[FromCharacterCode, 97]	"'a'"	A single code gives a one-character string	
+fromcharactercode-list-61-726-62-520-62-521-62	Scope		[FromCharacterCode, [List, 61726, 62520, 62521, 62522, 63309, 63310, 63311, 63373, 63374, 63375, 63418, 63419, 63420, 63421, 63422, 63423, 63440, 63511, 63512, 63513, 63514, 63515, 63516, 63517]]	"''"		
+fromcharactercode-list-128-512-128-513-128-514	Scope		[FromCharacterCode, [List, 128512, 128513, 128514, 128515, 128516, 128517, 128518, 128519]]	"'😀😁😂😃😄😅😆😇'"		
+fromcharactercode-list-128-105-127-997-8-205-127	Properties		[FromCharacterCode, [List, 128105, 127997, 8205, 127891]]	"'👩🏽‍🎓'"		

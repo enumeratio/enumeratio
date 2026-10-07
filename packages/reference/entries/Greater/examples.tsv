@@ -1,8 +1,8 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-0-lt-1			[Less, 0, 1]	True	Comparison of integers		
-4-over-3-lt-3-over-2	Scope		[Less, [Rational, 4, 3], [Rational, 3, 2]]	True	Exact rationals compare without rounding		
-1-minus-128-times-10-pow-neg-16-lt-1	Scope		[Less, [Add, 1, [Multiply, -128, [Power, 10, -16]]], 1]	True	A tiny offset is still seen as below 1		
-1-minus-256-times-10-pow-neg-16-lt-1	Scope		[Less, [Add, 1, [Multiply, -256, [Power, 10, -16]]], 1]	True	A doubled offset is likewise below 1		
-pi-pow-exponentiale-lt-exponentiale-pow-pi	Scope		[Less, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True			
-refine-sqrt-x-pow-2-x-gt-0	Properties		[Refine, [Sqrt, [Power, x, 2]], [Greater, x, 0]]	x	Positivity of $x$ lets $\sqrt{x^2}$ simplify to $x$		
-integrate-boole-1-lt-x-pow-2-plus-y-pow-2-lt-2	Properties	triage	[Integrate, [Function, [Block, [Multiply, [Boole, [Less, 1, [Add, [Power, x, 2], [Power, y, 2]], 2]], [Power, x, 2]]], x, y], [Limits, x, NegativeInfinity, PositiveInfinity], [Limits, y, NegativeInfinity, PositiveInfinity]]	[Integrate, [Function, [Block, [Integrate, [Function, [Block, [Multiply, [Boole, [Less, 1, [Add, [Power, x, 2], [Power, y, 2]], 2]], [Power, x, 2]]], x, y], [Limits, y, NegativeInfinity, PositiveInfinity]]], x], [Limits, x, NegativeInfinity, PositiveInfinity]]		gap	Our answer is still the unevaluated integral; the agreement is the check evaluating both sides numerically.
+id	section	role	expr	expected	caption	epsil.backOut	wolfram.kind	wolfram.note
+0-lt-1			[Less, 0, 1]	True	Comparison of integers			
+4-over-3-lt-3-over-2	Scope		[Less, [Rational, 4, 3], [Rational, 3, 2]]	True	Exact rationals compare without rounding			
+1-minus-128-times-10-pow-neg-16-lt-1	Scope		[Less, [Add, 1, [Multiply, -128, [Power, 10, -16]]], 1]	True	A tiny offset is still seen as below 1			
+1-minus-256-times-10-pow-neg-16-lt-1	Scope		[Less, [Add, 1, [Multiply, -256, [Power, 10, -16]]], 1]	True	A doubled offset is likewise below 1			
+pi-pow-exponentiale-lt-exponentiale-pow-pi	Scope		[Less, [Power, Pi, ExponentialE], [Power, ExponentialE, Pi]]	True				
+refine-sqrt-x-pow-2-x-gt-0	Properties		[Refine, [Sqrt, [Power, x, 2]], [Greater, x, 0]]	x	Positivity of $x$ lets $\sqrt{x^2}$ simplify to $x$			
+integrate-boole-1-lt-x-pow-2-plus-y-pow-2-lt-2	Properties		[Integrate, [Function, [Block, [Multiply, [Boole, [Less, 1, [Add, [Power, x, 2], [Power, y, 2]], 2]], [Power, x, 2]]], x, y], [Limits, x, NegativeInfinity, PositiveInfinity], [Limits, y, NegativeInfinity, PositiveInfinity]]	[Integrate, [Function, [Block, [Integrate, [Function, [Block, [Multiply, [Boole, [Less, 1, [Add, [Power, x, 2], [Power, y, 2]], 2]], [Power, x, 2]]], x, y], [Limits, y, NegativeInfinity, PositiveInfinity]]], x], [Limits, x, NegativeInfinity, PositiveInfinity]]		[Integrate, [Integrate, [Multiply, [Boole, [Less, 1, [Add, [Power, x, 2], [Power, y, 2]], 2]], [Power, x, 2]], [Tuple, y, NegativeInfinity, PositiveInfinity]], [Tuple, x, NegativeInfinity, PositiveInfinity]]	unevaluated	Ours leaves the Boole integral unevaluated; Wolfram integrates the region and answers 3 Pi/4.
