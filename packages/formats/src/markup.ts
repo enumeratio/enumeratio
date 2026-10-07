@@ -460,3 +460,4 @@ export function markupOf(expr: Json, { width = 80 }: { width?: number } = {}): s
   }
   return print(json, 0, width).text;
 }
+export { prettyEpsil, sourceMarkupOf } from "./pretty.ts";
