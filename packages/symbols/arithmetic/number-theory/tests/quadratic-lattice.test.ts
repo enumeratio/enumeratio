@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import { type QuadraticLattice, quadraticLattice } from "../src/quadratic-lattice.ts";
-import { classify, quadraticRing } from "../src/quadratic.ts";
+import { classify, quadraticOrder, quadraticRing } from "../src/quadratic.ts";
 
 /** What the layer says (i, j) is, in the kernel's words: `prime`, `irreducible`, …, or undefined. */
 function kindOf(layer: QuadraticLattice, i: number, j: number): string | undefined {
@@ -74,5 +74,25 @@ describe("quadratic lattice properties, for a figure's queries", () => {
     gaussian.prepare(1, 1);
     expect(gaussian.relatedTo("IrreducibleFactors", [2, 0], 1, 1)).toBe(true);
     expect(gaussian.relatedTo("Multiples", [1, 1], 2, 0)).toBe(true);
+  });
+});
+
+describe("an order's lattice", () => {
+  it("classifies on doubles as the exact kernel does, at the conductor's primes included", () => {
+    for (const D of [-12, -36, -63, 20, 32, 72]) {
+      const layer = quadraticLattice(0, { discriminant: D })!;
+      const R = quadraticOrder(BigInt(D))!;
+      for (let i = -8; i <= 8; i++) {
+        for (let j = -8; j <= 8; j++) {
+          expect([D, i, j, kindOf(layer, i, j)]).toEqual([D, i, j, classify(R, [BigInt(i), BigInt(j)])]);
+        }
+      }
+    }
+  });
+
+  it("is titled by its ring, and says its conductor", () => {
+    const layer = quadraticLattice(0, { discriminant: -12 })!;
+    expect(layer.title).toBe("ℤ[√−3]");
+    expect(Object.fromEntries(layer.summary()).conductor).toBe("2");
   });
 });

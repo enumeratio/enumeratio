@@ -53,6 +53,11 @@ export function declareNumberTheory(ce: Engine): void {
     description: SUMMARIES.QuadraticIntegers,
     signature: "(integer) -> set<quadratic_integer>",
   });
+  // The order of discriminant D, also for `Over`; QuadraticOrder(D_K) is QuadraticIntegers(d).
+  ce.declare("QuadraticOrder", {
+    description: SUMMARIES.QuadraticOrder,
+    signature: "(integer) -> set<quadratic_integer>",
+  });
 
   declareGaussian(ce);
   declareGaussianRationalGcdLcm(ce);

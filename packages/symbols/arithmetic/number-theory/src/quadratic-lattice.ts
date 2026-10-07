@@ -27,6 +27,8 @@ import {
   type QuadraticElement,
   type QuadraticKind,
   type QuadraticRing,
+  meetsConductor,
+  quadraticOrder,
   quadraticRing,
   rootsOfUnity,
   splitsPrincipally,
@@ -51,6 +53,8 @@ export type QuadraticScale = "uniform" | "geometric";
 
 export interface QuadraticLatticeOptions {
   readonly scale?: QuadraticScale;
+  /** An order's discriminant f²·D_K instead of the field's: `QuadraticOrder(D)`'s lattice. */
+  readonly discriminant?: number | bigint;
 }
 
 /** Past this |N|, products of doubles can lose digits; the norm stays under 2⁵⁰. */
@@ -113,17 +117,24 @@ function surdSum(a: bigint, b: bigint, root: string): string {
   return `${minus(a)} ${b < 0n ? "−" : "+"} ${term}`;
 }
 
-/** x + yω written over √d: x + y√d, or (X + Y√d)/2 when ω = (−1 + √d)/2 and X, Y are odd. */
+/**
+ * The surd an order's elements are written over: √(D/4) when s is even (ω = s/2 + √(D/4): √d
+ * for ℤ[√d], √8 for ℤ[√8]), √D when s is odd (ω = (s + √D)/2).
+ */
+const rootOf = (R: QuadraticRing): string =>
+  R.s % 2n === 0n ? sqrtText(R.discriminant / 4n) : sqrtText(R.discriminant);
+
+/** x + yω written over its surd: x + y√8 in ℤ[√8], or (X + Y√D)/2 when s is odd and X, Y are. */
 export function elementText(R: QuadraticRing, [x, y]: QuadraticElement): string {
-  const root = sqrtText(R.d);
-  if (R.s === 0n) return surdSum(x, y, root);
+  const root = rootOf(R);
+  if (R.s % 2n === 0n) return surdSum(x + (R.s / 2n) * y, y, root);
   const X = 2n * x + R.s * y;
   return y % 2n === 0n ? surdSum(X / 2n, y / 2n, root) : `(${surdSum(X, y, root)})/2`;
 }
 
-/** The ring's name as text: ℤ[i], ℤ[√−5], ℤ[ω] with ω = (−1 + √−3)/2. */
+/** The order's name as text: ℤ[i], ℤ[√−5], ℤ[√8], or ℤ[ω] with ω = (−1 + √−3)/2. */
 export function ringText(R: QuadraticRing): string {
-  return R.s === 0n ? `ℤ[${sqrtText(R.d)}]` : `ℤ[ω], ω = (−1 + ${sqrtText(R.d)})/2`;
+  return R.s % 2n === 0n ? `ℤ[${rootOf(R)}]` : `ℤ[ω], ω = (${minus(R.s)} + ${rootOf(R)})/2`;
 }
 
 /** A prime ideal as text: (p) when inert, else (p, a + √d), which is (p, ω − c). */
@@ -134,10 +145,11 @@ export function idealText(R: QuadraticRing, P: PrimeIdeal): string {
     const m = ((a % p) + p) % p;
     return m > p / 2n ? m - p : m;
   };
-  if (R.s !== 0n && p === 2n) return `(2, ${elementText(R, [-P.c!, 1n])})`;
-  // For odd p, (p, ω − c) = (p, 2ω − 2c) and 2ω − 2c = (s − 2c) + √d.
-  const a = R.s !== 0n ? symmetric(R.s - 2n * P.c!) : symmetric(-P.c!);
-  return `(${p}, ${surdSum(a, 1n, sqrtText(R.d))})`;
+  // ω − c = (s/2 − c) + √(D/4) when s is even.
+  if (R.s % 2n === 0n) return `(${p}, ${surdSum(symmetric(R.s / 2n - P.c!), 1n, rootOf(R))})`;
+  if (p === 2n) return `(2, ${elementText(R, [-P.c!, 1n])})`;
+  // For odd p, (p, ω − c) = (p, 2ω − 2c) and 2ω − 2c = (s − 2c) + √D.
+  return `(${p}, ${surdSum(symmetric(R.s - 2n * P.c!), 1n, rootOf(R))})`;
 }
 
 interface PrimeInfo {
@@ -173,18 +185,24 @@ export interface QuadraticLattice {
   summary(): (readonly [string, string])[];
 }
 
-/** The lattice of O_K for ℚ(√n), or undefined when n is a square. */
+/**
+ * The lattice of O_K for ℚ(√n), or with `discriminant` of the order of that discriminant;
+ * undefined when n is a square, or the discriminant isn't one.
+ */
 export function quadraticLattice(
   n: number | bigint,
   options: QuadraticLatticeOptions = {},
 ): QuadraticLattice | undefined {
-  const R = quadraticRing(BigInt(n));
+  const R =
+    options.discriminant === undefined ? quadraticRing(BigInt(n)) : quadraticOrder(BigInt(options.discriminant));
   if (R === undefined) return undefined;
   const ring = R;
   const [s, r] = [Number(R.s), Number(R.r)];
   const D = Number(R.discriminant);
   const group = classGroup(R);
-  const hexagonal = s !== 0;
+  // ω = s/2 + √(D/4) for an even s, a square lattice; ω = (s + √D)/2 for an odd one, a centered,
+  // hexagonal one.
+  const hexagonal = s % 2 !== 0;
 
   const basis: readonly [Vec2, Vec2] =
     options.scale === "geometric"
@@ -192,15 +210,10 @@ export function quadraticLattice(
           [1, 0],
           [s / 2, Math.sqrt(Math.abs(D)) / 2],
         ]
-      : hexagonal
-        ? [
-            [1, 0],
-            [-0.5, Math.sqrt(3) / 2],
-          ]
-        : [
-            [1, 0],
-            [0, 1],
-          ];
+      : [
+          [1, 0],
+          [s / 2, hexagonal ? Math.sqrt(3) / 2 : 1],
+        ];
   // |N(i + jω)| ≤ (|i| + |j|)²·(1 + |s| + |r|) stays under NORM_LIMIT.
   const maxIndex = Math.floor(Math.sqrt(NORM_LIMIT / (1 + Math.abs(s) + Math.abs(r))) / 2);
 
@@ -226,6 +239,7 @@ export function quadraticLattice(
   const modP = (a: number, p: number): number => ((a % p) + p) % p;
 
   const normOf = (i: number, j: number): number => i * i + s * i * j - r * j * j;
+  const conductor = Number(R.conductor);
 
   function classifyFast(i: number, j: number): number {
     const n = normOf(i, j);
@@ -233,7 +247,9 @@ export function quadraticLattice(
     const m = Math.abs(n);
     if (m === 1) return CELL.unit;
     const factors = m < NORM_LIMIT ? factorSmall(m) : undefined;
-    if (factors === undefined) {
+    // Past the doubles, or at a prime of the conductor where the ideal theory below doesn't
+    // hold: the exact kernel.
+    if (factors === undefined || (conductor > 1 && factors.some(([p]) => conductor % p === 0))) {
       const kind = classify(ring, [BigInt(i), BigInt(j)]);
       return kind === undefined ? CELL.unknown : KIND_CODE[kind];
     }
@@ -332,7 +348,7 @@ export function quadraticLattice(
 
   return {
     ring: R,
-    title: `ℚ(${sqrtText(R.d)})`,
+    title: R.conductor === 1n ? `ℚ(${sqrtText(R.d)})` : ringText(R),
     basis,
     maxIndex,
     known: (i, j) => cache.has(key(i, j)),
@@ -423,7 +439,7 @@ export function quadraticLattice(
         ["kind", kindLabel[code]!],
       ];
       if (n !== 0n && !isUnit(R, a)) {
-        const ufd = group?.order === 1;
+        const ufd = group?.order === 1 && R.conductor === 1n;
         const primesOf = ufd ? factorElement(R, a) : undefined;
         if (primesOf !== undefined) {
           rows.push([
@@ -443,7 +459,8 @@ export function quadraticLattice(
             rows.push([ways.length > 1 ? "factorization" : "irreducibles", shown.join(" · ")]);
           }
         }
-        const ideals = idealFactorization(R, a);
+        // At a prime of the conductor the ideals aren't invertible, and (a) has no such factorization.
+        const ideals = meetsConductor(R, a) ? undefined : idealFactorization(R, a);
         if (ideals !== undefined && !ufd) {
           rows.push(["ideals", ideals.map(([P, e]) => `${idealText(R, P)}${superscript(e)}`).join(" ")]);
         }
@@ -455,6 +472,7 @@ export function quadraticLattice(
     summary() {
       return [
         ["ring", ringText(R)],
+        ...(R.conductor > 1n ? ([["conductor", String(R.conductor)]] as [string, string][]) : []),
         ["discriminant", minus(R.discriminant)],
         ["class number", group === undefined ? "too large to enumerate" : String(group.order)],
         ["units", units],

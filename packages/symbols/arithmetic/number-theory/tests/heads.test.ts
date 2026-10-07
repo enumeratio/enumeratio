@@ -115,3 +115,25 @@ test("DivisorSigma with a non-integer rational k: exact radical sum, cross-check
     .N().re;
   expect(n).toBeCloseTo(bruteForce, 10);
 });
+
+test("Over -> QuadraticOrder(D): primality in a non-maximal order, its elements written as the field's", () => {
+  const over = (D: number) => ["KeyValuePair", "Over", ["QuadraticOrder", D]];
+  // 2 is prime in ℤ[ω] but not in ℤ[√−3], where it divides (1 + √−3)(1 − √−3) = 4.
+  expect(run(["IsPrime", 2, ["KeyValuePair", "Over", ["QuadraticIntegers", -3]]])).toBe("True");
+  expect(run(["IsPrime", 2, over(-12)])).toBe("False");
+  expect(run(["IsComposite", 2, over(-12)])).toBe("False");
+  // 1 + √−3 is in ℤ[√−3] (its ω-coordinate is 2), irreducible there, and not prime.
+  expect(run(["IsPrime", ["Add", 1, ["Sqrt", -3]], over(-12)])).toBe("False");
+  // (1 + √−3)/2 is not in the order at all: no answer.
+  const half = run(["IsPrime", ["Multiply", ["Rational", 1, 2], ["Add", 1, ["Sqrt", -3]]], over(-12)]);
+  expect(Array.isArray(half) && half[0]).toBe("IsPrime");
+  // No unique factorization in an order of conductor > 1.
+  expect(run(["FactorInteger", 4, over(-12)])).toEqual([
+    "FactorInteger",
+    4,
+    ["Tuple", "Over", ["QuadraticOrder", -12]],
+  ]);
+  expect(run(["IsPrime", 7, over(32)])).toBe("False");
+  // The field's own discriminant is its ring of integers: -4 is ℤ[i].
+  expect(run(["IsPrime", ["Complex", 1, 1], over(-4)])).toBe("True");
+});
