@@ -15,7 +15,7 @@ signatures:
     description: matches counted down to `level` (levels 1 through `level`), or — with `level` written as $\{level\}$ — at that level only.
     library: enumeratio-combinatorics
     type: (collection<any>, any?) -> infinity | integer
-    overrides: enumeratio-residues
+    overrides: compute-engine
 seeAlso:
   - Length
   - IndexOf

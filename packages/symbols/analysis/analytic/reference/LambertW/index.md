@@ -7,7 +7,7 @@ signatures:
   - call: LambertW(z)
     description: the principal branch $W_0(z)$ — native, extended with exact values.
     library: "@enumeratio/analytic"
-    type: (complex | infinity, number?) -> number
+    type: "(z: complex | infinity, branch: integer?) -> number"
     overrides: compute-engine
   - call: LambertW(z, k)
     description: the $k$-th branch $W_k(z)$, by Halley's iteration from the standard log-log seed (Corless et al. 1996). $k=0$ and $k=-1$ stay on compute-engine's own native handler.

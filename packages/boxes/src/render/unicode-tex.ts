@@ -38,7 +38,7 @@ export const UNICODE_TEX: readonly UnicodeSymbol[] = [
   ...zip("×±∓⊗⊕∪∩÷∘∖∧∨¬∂", "times pm mp otimes oplus cup cap div circ setminus land lor lnot partial"),
   ...zip("∞ℓℵℏ", "infty ell aleph hbar"),
   { char: "∅", command: "\\emptyset", katexUnknown: true },
-  // compute-engine 0.148 reads these as strings (https://github.com/cortex-js/compute-engine/issues/420#issuecomment-6025278929).
+  // compute-engine 0.149 reads ℕ ℤ ℚ ℝ ℂ natively; ℍ and ℙ still parse as strings (https://github.com/cortex-js/compute-engine/issues/420#issuecomment-6025278929).
   ...Object.entries(BLACKBOARD).map(([char, letter]): UnicodeSymbol => ({
     char,
     command: `\\mathbb{${letter}}`,

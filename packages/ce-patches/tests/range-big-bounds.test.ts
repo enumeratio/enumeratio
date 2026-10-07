@@ -27,7 +27,7 @@ test("count, element access and a step are exact", () => {
 });
 
 test("a step against the direction, or a zero step, gives an empty range", () => {
-  const count = (step: number): number | undefined =>
+  const count = (step: number): number | bigint | undefined =>
     ce.box(["Range", ["Add", 5, ["Power", 2, 225]], ["Power", 2, 225], step]).evaluate().count;
   expect(count(1)).toBe(0);
   expect(count(0)).toBe(0);

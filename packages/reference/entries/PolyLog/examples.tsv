@@ -40,7 +40,7 @@ n-polylog-neg-1-neg-0p5		test	[N, [PolyLog, -1, -0.5]]	{num: "-0.222222222222222
 n-polylog-neg-1-0p25		test	[N, [PolyLog, -1, 0.25]]	{num: "0.444444444444444444445"}															
 n-polylog-neg-1-0p9		test	[N, [PolyLog, -1, 0.9]]	{num: "90.0"}															
 n-polylog-neg-1-1-over-3		test	[N, [PolyLog, -1, [Rational, 1, 3]]]	{num: "0.74999999999999999999925"}															
-n-polylog-neg-1-0p4-plus-0p3i		test	[N, [PolyLog, -1, [Complex, 0.4, 0.3]]]	[Complex, 1.9136e-16, 1.1111111111111114]															
+n-polylog-neg-1-0p4-plus-0p3i		test	[N, [PolyLog, -1, [Complex, 0.4, 0.3]]]	[Complex, 0, 1.1111111111111114]															
 n-polylog-2-plus-i-0p5		test	[N, [PolyLog, [Complex, 2, 1], 0.5]]	[Complex, 0.5548535453533205, -0.05804956179169715]															
 n-polylog-2-plus-i-neg-0p5		test	[N, [PolyLog, [Complex, 2, 1], -0.5]]	[Complex, -0.4575315460755852, -0.03047101966980711]															
 n-polylog-2-plus-i-0p25		test	[N, [PolyLog, [Complex, 2, 1], 0.25]]	[Complex, 0.26285018302723623, -0.011816971919302564]															

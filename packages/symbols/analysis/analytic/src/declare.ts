@@ -1,13 +1,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { registerNotation } from "@enumeratio/boxes";
 import { threadOverLists, widenSignature, wrapOperator } from "@enumeratio/engine";
-import {
-  applyNativeHeadPatches,
-  applyPatch,
-  lerchPhiPatch,
-  valuesAtZero,
-  polyLogLargeOrder,
-} from "@enumeratio/ce-patches";
+import { applyNativeHeadPatches, applyPatch, lerchPhiPatch, valuesAtZero } from "@enumeratio/ce-patches";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { ANALYTIC_NOTATION } from "./notation.ts";
 import { declareInverseOutsideDomain, declareWidened } from "./widened.ts";
@@ -180,7 +174,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareCarlson(ce);
   declareElliptic(ce);
   applyPatch(ce, valuesAtZero);
-  applyPatch(ce, polyLogLargeOrder);
   declareModular(ce);
   declareDerivatives(ce);
   declareBesselJZero(ce);

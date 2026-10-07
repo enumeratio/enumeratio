@@ -3,14 +3,11 @@ import { bigIntegerAt, operandsOf } from "@enumeratio/engine";
 
 type OperatorDefinition = NonNullable<BoxedExpression["operatorDefinition"]>;
 
-// cortex-js/compute-engine: `Range`'s collection handlers (`count`, `iterator`, `at`) read the
-// bounds and step through `range()`, which returns doubles, so a bound past 2^53 rounds and the
-// run collapses: `Range(2^225, 2^225 + 5)` counts `floor((hi - lo) / 1) + 1` over two equal
-// doubles, one element, and materialises as the single float 5.39e67. Wolfram's `Range` is exact
-// on integers of any size. Fixed here by counting and stepping in bigints when every operand is
-// an exact integer and one is past the safe-integer range; any other range keeps the native
-// handlers. `count` is still a double (a count past 2^53 can't be anything else), `at` takes a
-// double index, and the elements are exact.
+// cortex-js/compute-engine: `Range`'s `count` is exact since 0.149, but its `iterator` and `at` still
+// step through doubles, so a bound past 2^53 rounds: `Range(2^225, 2^225 + 5)` materialises as
+// six copies of the float 5.39e67. Wolfram's `Range` is exact on integers of any size. Fixed
+// here by stepping in bigints when every operand is an exact integer and one is past the
+// safe-integer range; any other range keeps the native handlers. `at` takes a double index.
 
 type Bounds = readonly [lower: bigint, upper: bigint, step: bigint];
 
@@ -46,18 +43,13 @@ function bigCount([lower, upper, step]: Bounds): bigint {
   return span === 0n || span < 0n === step < 0n ? span / step + 1n : 0n;
 }
 
-/** Patch `Range`'s `count`, `iterator` and `at` to be exact on integer bounds past 2^53. */
+/** Patch `Range`'s `iterator` and `at` to be exact on integer bounds past 2^53. */
 export function evaluateRangeBigBounds(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("Range");
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const collection = operator?.collection as OperatorDefinition["collection"];
   if (collection === undefined) return;
-  const { count: nativeCount, iterator: nativeIterator, at: nativeAt } = collection;
-
-  collection.count = (expr) => {
-    const bounds = bigBounds(expr);
-    return bounds === undefined ? nativeCount?.(expr) : Number(bigCount(bounds));
-  };
+  const { iterator: nativeIterator, at: nativeAt } = collection;
 
   collection.iterator = (expr) => {
     const bounds = bigBounds(expr);

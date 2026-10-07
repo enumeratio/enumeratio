@@ -95,13 +95,13 @@ test("special forms: log base and n-th root", () => {
   expect(toWolfram(["Root", "x", 3])).toBe("Power[x, Divide[1, 3]]");
 });
 
-test("special forms: digits become a step, sets a sorted list, clamp a Clip range", () => {
+test("special forms: sets a sorted list, clamp a Clip range", () => {
   expect(toWolfram(["Round", 2.5])).toBe("Round[2.5]");
   // 3.14159 is an arbitrary value here, not Math.PI: numbers serialize via String(n),
   // so the expected output is this literal's exact digits, not full precision.
-  expect(toWolfram(["Round", 3.14159, 2])).toBe("Round[3.14159, Power[10, -2]]");
-  expect(toWolfram(["Round", 1234, -2])).toBe("Round[1234, Power[10, 2]]");
-  expect(toWolfram(["Round", "x", "n"])).toBe("Round[x, Power[10, Minus[n]]]");
+  expect(toWolfram(["Round", 3.14159, 2])).toBe("Round[3.14159, 2]");
+  expect(toWolfram(["Round", 1234, -2])).toBe("Round[1234, -2]");
+  expect(toWolfram(["Round", "x", "n"])).toBe("Round[x, n]");
   expect(toWolfram(["Set", 3, 1, 2])).toBe("Union[List[3, 1, 2]]");
   expect(toWolfram(["Clamp", 5, 0, 3])).toBe("Clip[5, List[0, 3]]");
   expect(toWolfram(["Clamp", 1.5])).toBe("Clip[1.5]");

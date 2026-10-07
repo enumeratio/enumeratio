@@ -354,12 +354,14 @@ const survivors = (mode: TailMode, tails: MathJSON, j: MathJSON): MathJSON =>
 const tailUnrankStep = (mode: TailMode): MathJSON =>
   lets(
     [
-      ["tr", at("ts", 1), "integer"],
-      ["tb", at("ts", 2), "integer"],
-      ["ta", at("ts", 3), "integer"],
+      // The fold's state is untyped, so Take/Drop of it types as `list | string`, which the compiler rejects.
+      ["tu", "ts", "list<integer>"],
+      ["tr", at("tu", 1), "integer"],
+      ["tb", at("tu", 2), "integer"],
+      ["ta", at("tu", 3), "integer"],
       ["tt", sub(add("_n", 1), "ti"), "integer"],
-      ["tl", ["Take", ["Drop", "ts", 3], "ta"], "list<integer>"],
-      ["tw", ["Drop", "ts", add(3, "ta")], "list<integer>"],
+      ["tl", ["Take", ["Drop", "tu", 3], "ta"], "list<integer>"],
+      ["tw", ["Drop", "tu", add(3, "ta")], "list<integer>"],
       ["to", F(sub("tt", 1), add("ta", 1)), "integer"],
     ],
     iff(

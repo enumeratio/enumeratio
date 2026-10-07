@@ -227,28 +227,6 @@ const truth = (name: "True" | "False", trigger: string): Entry => ({
   serialize: () => `\\mathrm{${name}}`,
 });
 
-/** Precedence of the postfix prime (compute-engine's `'` entry). */
-const PRIME_PRECEDENCE = 810;
-
-/** `Derivative(f, n)` as a prime, with the operand bracketed when it binds looser than the
- *  prime: `(x\mapsto x^2)'`, `(x^2)'`. Bare, the prime lands on the function body or on a
- *  power's exponent, a double superscript. Several orders keep the native `f^{(a, b)}`.
- *  Upstream: https://github.com/cortex-js/compute-engine/issues/420 */
-const derivative: Entry = {
-  ...native("Derivative"),
-  name: "Derivative",
-  serialize: (serializer, expr) => {
-    const [f, ...orders] = operands(expr);
-    const operand = serializer.wrap(f ?? null, PRIME_PRECEDENCE);
-    if (orders.length > 1) return `${operand}^{(${orders.map((o) => serializer.serialize(o)).join(", ")})}`;
-    const order = orders[0] ?? 1;
-    if (order === 1) return `${operand}^{\\prime}`;
-    if (order === 2) return `${operand}^{\\doubleprime}`;
-    if (order === 3) return `${operand}^{\\tripleprime}`;
-    return `${operand}^{(${serializer.serialize(order)})}`;
-  },
-};
-
 /** The overrides, one per native head that needed one. */
 /** A name in a namespace, `a.b.c`, from its `Field` chain; undefined if a part isn't a name. */
 function dotted(json: MathJsonExpression | undefined): string | undefined {
@@ -306,7 +284,6 @@ export const CONVENTIONAL_LATEX: readonly Entry[] = [
   logBase("Log2", 2),
   logBase("Log10", 10),
   logBase("Lb", 2),
-  derivative,
 ];
 
 let probed = false;
