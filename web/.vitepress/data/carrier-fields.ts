@@ -5,7 +5,7 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { ALL_STATISTICS, CARRIERS, MAPS, UNDEFINED_MAPS } from "@enumeratio/combinatorics";
+import { ALL_STATISTICS, CARRIERS, findstatMaps, MAPS, UNDEFINED_MAPS } from "@enumeratio/combinatorics";
 import { allFamilies } from "@enumeratio/combinatorics/collections";
 import { crosswalkForMap, crosswalkForStatistic } from "@enumeratio/reference";
 import { repoRoot } from "./repo-docs.ts";
@@ -133,6 +133,16 @@ const statisticFields: Field[] = ALL_STATISTICS.map((d) => ({
   href: statisticHref(d.on, d.head),
 }));
 
+/** A map's FindStat refs: the crosswalk's, and those matched by value (`find-findstat-maps.ts`). */
+function mapRefs(name: string, from: string): FindStatRef[] {
+  const refs = idsOf(crosswalkForMap(name, from));
+  const have = new Set(refs.map((r) => r.id));
+  const matched = (findstatMaps.find((m) => m.name === name && m.from === from)?.findstat ?? []).filter(
+    (id) => !have.has(id),
+  );
+  return [...refs, ...matched.map((id) => findStatRef(id, `https://www.findstat.org/${id}`))];
+}
+
 const mapFields: Field[] = [
   ...MAPS.map((m): Field => ({
     kind: "map",
@@ -142,7 +152,7 @@ const mapFields: Field[] = [
     summary: m.summary,
     note: m.note,
     laws: (m.laws ?? []).map((law) => (typeof law === "string" ? law : Object.keys(law)[0]!)),
-    findstat: idsOf(crosswalkForMap(m.name, carrierName(m.from))),
+    findstat: mapRefs(m.name, carrierName(m.from)),
     href: mapHref(carrierName(m.from), m.name),
   })),
   ...UNDEFINED_MAPS.map((m): Field => ({
@@ -152,7 +162,7 @@ const mapFields: Field[] = [
     to: carrierName(m.to),
     summary: m.why,
     laws: [],
-    findstat: idsOf(crosswalkForMap(m.name, carrierName(m.from))),
+    findstat: mapRefs(m.name, carrierName(m.from)),
     frontier: true,
     href: mapHref(carrierName(m.from), m.name),
   })),
