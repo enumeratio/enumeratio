@@ -1541,6 +1541,18 @@ notatio-show {
 .notatio-show-gradient .notatio-legend-bar { display: block; }
 .notatio-show-gradient select { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 .notatio-show-ends { display: inline-flex; gap: 0.25rem; }
+.notatio-settings { display: flex; gap: 0.3rem; margin-top: 0.35rem; }
+.notatio-settings input {
+  flex: 1;
+  min-width: 0;
+  font: 0.8rem var(--vp-font-family-mono, ui-monospace, monospace);
+  padding: 0.2rem 0.4rem;
+  border: 1px solid var(--vp-c-divider, #ccc);
+  border-radius: 4px;
+  background: var(--vp-c-bg-soft, transparent);
+  color: inherit;
+}
+.notatio-settings button { border: none; background: transparent; color: var(--vp-c-brand-1, #3451b2); cursor: pointer; }
 .notatio-show-indexed { grid-area: bar; display: flex; flex-wrap: wrap; gap: 0.15rem 0.5rem; font-size: 0.85em; }
 .notatio-show-indexed span { display: inline-flex; align-items: center; gap: 0.25rem; }
 .notatio-show-indexed i { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; }

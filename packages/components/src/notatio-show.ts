@@ -19,6 +19,7 @@ import {
   gestureHandlingOf,
   gradientCss,
   gradientNamed,
+  latticeCoordinates,
   type LatticeView,
   type LineStyle,
   maxExtentFor,
@@ -145,6 +146,7 @@ interface Writes {
     readonly digits?: string;
     readonly places?: string;
     readonly example?: string;
+    readonly onLattice?: string;
   };
 }
 
@@ -161,24 +163,36 @@ function writesOf(json: Json): Writes {
     const data =
       headOf(layer) === "LatticeTiles" ? splitOptions(layer, declared("LatticeTiles")).positional[0] : undefined;
     if (headOf(data) === "RadixExpansions") {
-      const { positional, options } = splitOptions(data, new Set(["Example"]));
+      const { positional, options } = splitOptions(data, RADIX_OPTIONS);
       const [ring, base, digits, places] = positional.map(wildcardOf);
-      radix = { ring, base, digits, places, example: wildcardOf(options.get("Example")) };
+      radix = {
+        ring,
+        base,
+        digits,
+        places,
+        example: wildcardOf(options.get("Example")),
+        onLattice: wildcardOf(options.get("OnLattice")),
+      };
     }
   }
   return { locators, ...(radix ? { radix } : {}) };
 }
+
+/** `RadixExpansions`' options: the example it follows, and whether it keeps to the lattice. */
+const RADIX_OPTIONS: ReadonlySet<string> = new Set(["Example", "OnLattice"]);
 
 /** Rings `RadixExpansions` draws on, and their systems. */
 const RADIX_SYSTEMS: Readonly<Record<string, "i" | "ω">> = { GaussianIntegers: "i", EisensteinIntegers: "ω" };
 
 /** `RadixExpansions(ring, base, digits, places)`, bound, as the layer's settings. */
 function radixSettingsOf(data: Json) {
-  const [ring, base, digits, places] = splitOptions(data, new Set(["Example"])).positional;
+  const { positional, options } = splitOptions(data, RADIX_OPTIONS);
+  const [ring, base, digits, places] = positional;
   const system = typeof ring === "string" ? RADIX_SYSTEMS[ring] : undefined;
   const b = pointOf(base);
   if (!system || !b) return undefined;
-  return { system, base: b, digits: pointsOf(digits), places: numberOf(places, 8) };
+  const onLattice = options.get("OnLattice") !== "False";
+  return { system, base: b, digits: pointsOf(digits), places: numberOf(places, 8), onLattice };
 }
 
 /** Grid lines every this many units of the frame, for `GridLines -> Automatic`. */
@@ -521,17 +535,34 @@ export class NotatioShow extends LitElement {
     const { exampleOf, exampleSettings } = await import("@enumeratio/complex-numerals/lattice");
     const chosen = stringOf(this._params.get(names.example));
     const scope = scopeOf(this);
+    // Back onto the lattice: the base and digits go to their nearest lattice points, 0 and
+    // repeats dropped.
+    const round = ([a, b]: Vec2): Vec2 => [Math.round(a), Math.round(b)];
+    const offGrid = (v: Vec2): boolean => !Number.isInteger(v[0]) || !Number.isInteger(v[1]);
+    if (settings.onLattice && (offGrid(settings.base) || settings.digits.some(offGrid))) {
+      const digits = settings.digits
+        .map(round)
+        .filter(
+          (d, k, all) => (d[0] !== 0 || d[1] !== 0) && all.findIndex((e) => e[0] === d[0] && e[1] === d[1]) === k,
+        );
+      const writes: [string, Json][] = [];
+      if (names.base) writes.push([names.base, tuple(round(settings.base))]);
+      if (names.digits) writes.push([names.digits, ["List", ...digits.map(tuple)]]);
+      scope?.setMany(writes as never);
+      return writes.length > 0;
+    }
     if (chosen !== this.#example) {
       this.#example = chosen;
       const target = chosen && chosen !== "Custom" ? exampleSettings(chosen) : undefined;
-      if (!target || (exampleOf(target) === exampleOf(settings) && JSON.stringify(target) === JSON.stringify(settings)))
-        return false;
+      if (!target || JSON.stringify(target) === JSON.stringify({ ...settings, onLattice: true })) return false;
       const ring = Object.keys(RADIX_SYSTEMS).find((r) => RADIX_SYSTEMS[r] === target.system)!;
       const writes: [string, Json][] = [];
       if (names.ring) writes.push([names.ring, ring]);
       if (names.base) writes.push([names.base, tuple(target.base)]);
       if (names.digits) writes.push([names.digits, ["List", ...target.digits.map(tuple)]]);
       if (names.places) writes.push([names.places, target.places]);
+      // Every example is a lattice's.
+      if (names.onLattice && !settings.onLattice) writes.push([names.onLattice, "True"]);
       this.#reframe = writes.length > 0;
       scope?.setMany(writes as never);
       return writes.length > 0;
@@ -561,6 +592,11 @@ export class NotatioShow extends LitElement {
   #clamp(): void {
     if (!this.#layer) return;
     const { bounds } = this.#layer;
+    // Points anywhere: no lattice range to keep to, only a sane zoom.
+    if (this.#layer.points) {
+      this.#view = { center: this.#view.center, extent: Math.min(Math.max(this.#view.extent, 0.5), 1e6) };
+      return;
+    }
     if (bounds) {
       this.#view = clampToBounds(this.#layer.basis, bounds, this.#view, this.#w / this.#h);
       return;
@@ -648,6 +684,30 @@ export class NotatioShow extends LitElement {
     if (!complete) this.#draw();
   };
 
+  /**
+   * The element under a plane point: the nearest lattice point, or for a layer of points the
+   * nearest of them, (n, 0).
+   */
+  #elementAt(plane: Vec2): Vec2 {
+    const layer = this.#layer!;
+    const points = layer.points?.();
+    if (!points) return nearestLatticePoint(layer.basis, plane);
+    let [best, at] = [Infinity, 0];
+    for (let n = 0; n < points.length; n++) {
+      const d = Math.hypot(points[n]![0] - plane[0], points[n]![1] - plane[1]);
+      if (d < best) [best, at] = [d, n];
+    }
+    return [at, 0];
+  }
+
+  /** A locator's place for a plane point: the nearest lattice point, or anywhere off the lattice. */
+  #locatorPlace(plane: Vec2): Vec2 {
+    const layer = this.#layer!;
+    if (!layer.points) return nearestLatticePoint(layer.basis, plane);
+    const [a, b] = latticeCoordinates(layer.basis, plane);
+    return [Math.round(a * 100) / 100, Math.round(b * 100) / 100];
+  }
+
   /** Where a point in the frame's coordinates falls on the canvas, in device pixels. */
   #screenOf([i, j]: Vec2): Vec2 {
     const [b0, b1] = this.#layer!.basis;
@@ -717,7 +777,7 @@ export class NotatioShow extends LitElement {
       if (!locator?.autoCreate) return false;
       const points = hit
         ? locator.points.filter((_, n) => n !== hit[1])
-        : [...locator.points, nearestLatticePoint(layer.basis, this.#planeAt(e.clientX, e.clientY))];
+        : [...locator.points, this.#locatorPlace(this.#planeAt(e.clientX, e.clientY))];
       this.#moveLocator(k, points);
       return true;
     }
@@ -726,7 +786,7 @@ export class NotatioShow extends LitElement {
     canvas.setPointerCapture(e.pointerId);
     let last = spec.locators[k]!.points[n]!;
     const move = (m: PointerEvent): void => {
-      const to = nearestLatticePoint(layer.basis, this.#planeAt(m.clientX, m.clientY));
+      const to = this.#locatorPlace(this.#planeAt(m.clientX, m.clientY));
       if (to[0] === last[0] && to[1] === last[1]) return;
       last = to;
       const points = [...(this._spec?.locators[k]?.points ?? [])];
@@ -813,10 +873,7 @@ export class NotatioShow extends LitElement {
       canvas.removeEventListener("pointerup", up);
       canvas.removeEventListener("pointercancel", up);
       if (!dragged)
-        this.#select(
-          nearestLatticePoint(this.#layer!.basis, this.#planeAt(u.clientX, u.clientY)),
-          u.shiftKey || u.metaKey || u.ctrlKey,
-        );
+        this.#select(this.#elementAt(this.#planeAt(u.clientX, u.clientY)), u.shiftKey || u.metaKey || u.ctrlKey);
     };
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up);
@@ -829,7 +886,7 @@ export class NotatioShow extends LitElement {
   #onHover = (e: PointerEvent): void => {
     const layer = this.#layer;
     if (!layer || e.buttons !== 0) return;
-    const [i, j] = nearestLatticePoint(layer.basis, this.#planeAt(e.clientX, e.clientY));
+    const [i, j] = this.#elementAt(this.#planeAt(e.clientX, e.clientY));
     const { bounds } = layer;
     const outside = bounds && (i < bounds.i[0] || i > bounds.i[1] || j < bounds.j[0] || j > bounds.j[1]);
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();

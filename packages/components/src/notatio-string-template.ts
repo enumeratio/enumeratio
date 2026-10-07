@@ -1,4 +1,11 @@
-import { fillTex, parseProse, pointWords, type ProsePart, type VariableSpec } from "@enumeratio/frontend/core";
+import {
+  fillTex,
+  parseProse,
+  plainJson,
+  pointWords,
+  type ProsePart,
+  type VariableSpec,
+} from "@enumeratio/frontend/core";
 import katex from "katex";
 import { html, LitElement, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -36,6 +43,9 @@ function texOf(spec: VariableSpec | undefined, value: Json, ringOf: (ring: Json)
 /** A setter hole, Wolfram's `Setter(_e, value, "label")`: a link that sets the variable to the value. */
 const SETTER = /^Setter\(\s*_([A-Za-z]\w*)\s*,\s*(.+?)\s*,\s*"([^"]*)"\s*\)$/s;
 
+/** `{InputField(Variables)}`: the scope's variables as one editable, copyable sentence. */
+const SETTINGS = /^InputField\(\s*Variables\s*\)$/;
+
 /** A setter's value as MathJSON: a quoted string, a number, or a name. */
 function setterValue(text: string): Json {
   const quoted = /^"(.*)"$/s.exec(text);
@@ -60,6 +70,8 @@ const entryOf = (value: Json, label: string): string =>
  * - Any other hole, `{N(_d^2)}`, is a readout, refilled as the variables move.
  * - In a `$…$` island, `_d` or `_{name}` standing alone (`\sqrt{_d}`) is the variable's value.
  * - `{Setter(_e, "twindragon", "the twindragon")}` (Wolfram's `Setter`) is a link that sets `_e`.
+ * - `{InputField(Variables)}` (Wolfram's `InputField`) holds every declared variable as one
+ *   sentence of Epsil, to copy and keep, or to paste back and load.
  */
 export class NotatioStringTemplate extends LitElement {
   static properties = {
@@ -168,6 +180,61 @@ export class NotatioStringTemplate extends LitElement {
     return wordsOf(spec, value, this.#ringOf);
   }
 
+  #settingsText = "";
+
+  /** The declared variables as Epsil, `[_r -> GaussianIntegers, _b -> (-1, 1), …]`. */
+  async #settingsOf(): Promise<string> {
+    const { serializeExpression } = await import("@enumeratio/formats/expression");
+    const scope = this.#scope;
+    if (!scope) return "";
+    const rules = scope.declarations.map((d) => ["KeyValuePair", `_${d.name}`, scope.values.get(d.name) ?? "Nothing"]);
+    return serializeExpression(["List", ...rules] as never)
+      .replace(/\s+/g, " ")
+      .replace(/\[ /g, "[")
+      .replace(/,? \]/g, "]");
+  }
+
+  /** Set every variable a pasted sentence names; a sentence that doesn't read changes nothing. */
+  async #applySettings(text: string): Promise<void> {
+    const { parseExpression } = await import("@enumeratio/formats/expression");
+    const { json, errors } = parseExpression(text);
+    if (errors.length > 0) return;
+    const plain = plainJson(json) as unknown[];
+    const rules = Array.isArray(plain) && plain[0] === "List" ? plain.slice(1) : [];
+    const entries: [string, unknown][] = [];
+    for (const rule of rules) {
+      if (!Array.isArray(rule) || rule.length !== 3 || typeof rule[1] !== "string" || !rule[1].startsWith("_"))
+        continue;
+      entries.push([rule[1].slice(1), rule[2]]);
+    }
+    if (entries.length > 0) this.#scope?.setMany(entries as never);
+  }
+
+  #settings(): unknown {
+    void this.#settingsOf().then((text) => {
+      if (text !== this.#settingsText) {
+        this.#settingsText = text;
+        this.requestUpdate();
+      }
+    });
+    return html`<span class="notatio-settings">
+      <input
+        type="text"
+        spellcheck="false"
+        aria-label="Settings"
+        .value=${this.#settingsText}
+        @change=${(e: Event) => void this.#applySettings((e.target as HTMLInputElement).value)}
+      /><button
+        type="button"
+        data-tip="Copy these settings"
+        aria-label="Copy these settings"
+        @click=${() => void navigator.clipboard?.writeText(this.#settingsText)}
+      >
+        ⧉
+      </button>
+    </span>`;
+  }
+
   #part(part: ProsePart): unknown {
     switch (part.kind) {
       case "text":
@@ -177,6 +244,7 @@ export class NotatioStringTemplate extends LitElement {
       case "knob":
         return this.#control(part.name.replace(/^_/, ""), part.options);
       case "dynamic": {
+        if (SETTINGS.test(part.value.trim())) return this.#settings();
         const setter = SETTER.exec(part.value.trim());
         if (setter) {
           const [, name, value, label] = setter;

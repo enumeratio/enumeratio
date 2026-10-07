@@ -16,6 +16,11 @@ import { latticeCoordinates, latticePoint, type LatticeView, type Vec2, visibleR
 export interface TileLayer {
   readonly basis: readonly [Vec2, Vec2];
   readonly maxIndex: number;
+  /**
+   * A layer of points anywhere in the plane, not of a lattice: each one's position, element (n, 0)
+   * the n-th. Its tiles take the basis's cell shape, centred on the points.
+   */
+  points?(): readonly Vec2[];
   /** The index ranges a finite layer has (a table's rows and columns); ±maxIndex otherwise. */
   readonly bounds?: { readonly i: Vec2; readonly j: Vec2 };
   /** Whether point (i, j) is classified already, so drawing it costs nothing. */
@@ -107,37 +112,49 @@ export function drawTiles(
   const deadline = performance.now() + options.budgetMs;
   let complete = true;
 
-  for (const j of rows) {
-    for (let i = i0; i <= i1; i++) {
-      const [x, y] = toScreen(latticePoint(layer.basis, i, j));
-      if (x < -margin || x > width + margin || y < -margin || y > height + margin) continue;
-      if (!layer.known(i, j)) {
-        if (performance.now() > deadline) {
-          complete = false;
-          continue;
-        }
-        layer.prepare(i, j);
+  const visit = (i: number, j: number, x: number, y: number): void => {
+    if (x < -margin || x > width + margin || y < -margin || y > height + margin) return;
+    if (!layer.known(i, j)) {
+      if (performance.now() > deadline) {
+        complete = false;
+        return;
       }
-      const facts: ElementFacts = {
-        has: (p) => layer.has(i, j, p) ?? false,
-        related: (r) => options.selection.some((s) => layer.relatedTo(r, s, i, j)),
-        selected: selected.has(`${i},${j}`),
-      };
-      const style = styleElement(
-        options.colorRules,
-        options.boundaryRules,
-        options.colorMixing,
-        facts,
-        (json) => readerFor(json)?.((name) => layer.value(i, j, name)),
-        options.phase,
-      );
-      if (style.color) tile(pathIn(fills, style.color), x, y);
-      if (tiny) continue;
-      let inset = 0;
-      for (const e of style.edges) {
-        const w = e.width * dprOf();
-        tile(pathIn(edges, `${e.color}|${w}|${e.opacity}|${e.dashing.join(",")}`), x, y, inset + w / 2);
-        inset += w;
+      layer.prepare(i, j);
+    }
+    const facts: ElementFacts = {
+      has: (p) => layer.has(i, j, p) ?? false,
+      related: (r) => options.selection.some((s) => layer.relatedTo(r, s, i, j)),
+      selected: selected.has(`${i},${j}`),
+    };
+    const style = styleElement(
+      options.colorRules,
+      options.boundaryRules,
+      options.colorMixing,
+      facts,
+      (json) => readerFor(json)?.((name) => layer.value(i, j, name)),
+      options.phase,
+    );
+    if (style.color) tile(pathIn(fills, style.color), x, y);
+    if (tiny) return;
+    let inset = 0;
+    for (const e of style.edges) {
+      const w = e.width * dprOf();
+      tile(pathIn(edges, `${e.color}|${w}|${e.opacity}|${e.dashing.join(",")}`), x, y, inset + w / 2);
+      inset += w;
+    }
+  };
+
+  const points = layer.points?.();
+  if (points) {
+    for (let n = 0; n < points.length; n++) {
+      const [x, y] = toScreen(points[n]!);
+      visit(n, 0, x, y);
+    }
+  } else {
+    for (const j of rows) {
+      for (let i = i0; i <= i1; i++) {
+        const [x, y] = toScreen(latticePoint(layer.basis, i, j));
+        visit(i, j, x, y);
       }
     }
   }
