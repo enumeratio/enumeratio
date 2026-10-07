@@ -392,21 +392,21 @@ function starGraph(ce: Engine, n: number): Expr | undefined {
 }
 
 /** `GridGraph({d1, d2, …})`: the Cartesian product of paths of those lengths. Vertices are
- *  numbered in row-major (last index fastest) order, 1-based. */
+ *  numbered 1-based with the first index varying fastest, as Wolfram does. */
 function gridGraph(ce: Engine, dims: readonly number[]): Expr | undefined {
   if (dims.length === 0 || dims.some((d) => !Number.isSafeInteger(d) || d < 1)) return undefined;
   const n = dims.reduce((a, b) => a * b, 1);
   const strides: number[] = [];
   let s = 1;
-  for (let i = dims.length - 1; i >= 0; i--) {
-    strides[i] = s;
-    s *= dims[i]!;
+  for (const d of dims) {
+    strides.push(s);
+    s *= d;
   }
   const indexOf = (coord: readonly number[]): number => 1 + coord.reduce((acc, c, i) => acc + c * strides[i]!, 0);
   const edges: [number, number][] = [];
   const coord = Array.from({ length: dims.length }, () => 0);
   const advance = (): boolean => {
-    for (let i = dims.length - 1; i >= 0; i--) {
+    for (let i = 0; i < dims.length; i++) {
       coord[i]!++;
       if (coord[i]! < dims[i]!) return true;
       coord[i] = 0;

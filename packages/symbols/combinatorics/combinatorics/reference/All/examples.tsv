@@ -10,4 +10,6 @@ all-list-2-6-x-4-y-function-istrue-1-lt-10-1			[All, [List, 2, 6, x, 4, y], [Fun
 one-definite-failure-decides-the-answer-even	Scope		[All, [List, 1, x], IsEven]	False	One definite failure decides the answer, even beside a symbolic element					
 without-a-predicate-tests-the-elements	Scope		[All, [List, True, True]]	True	Without a predicate, tests the elements themselves				convention	All(list) defaults to testing each element is truthy; Wolfram's AllTrue requires an explicit test and leaves AllTrue[list] (no test) unevaluated.
 a-level-argument-tests-the-elements-at-depth-2	Scope		[All, [List, [List, 1, 2], [List, 3, 4]], [Function, [Greater, _1, 0]], 2]	True	A level argument tests the elements at depth 2 of a nested list	Unreadable	All(List(List(1, 2), List(3, 4)), Function(Greater(_1, 0)), 2)	True		
+an-undecided-predicate-gives-the-conjunction	Scope		[All, [List, a, b], f]	[And, [f, a], [f, b]]	An undecided predicate gives the conjunction of its values, as Wolfram's AllTrue does					
+a-false-element-settles-it	Scope		[All, [List, a, 3], IsEven]	False	One False settles it, whatever else is undecided					
 vacuously-true-on-an-empty-list	Properties		[All, [List], IsEven]	True	Vacuously true on an empty list					

@@ -62,7 +62,7 @@ const naturalCompare = (a: Expr, b: Expr): number => {
 
 /** `naturalCompare`, with lists ordered as Wolfram's canonical order does: shorter first, then
  *  element by element (`{1, 2}`, `{2, 1}`, `{1, 2, 3}`). */
-const canonicalCompare = (a: Expr, b: Expr): number => {
+export const canonicalCompare = (a: Expr, b: Expr): number => {
   if (a.operator === "List" && b.operator === "List") {
     const [as, bs] = [operandsOf(a), operandsOf(b)];
     if (as.length !== bs.length) return as.length - bs.length;

@@ -6,4 +6,6 @@ nonetrue-list-1-3-5-7-9-iseven			[NoneTrue, [List, 1, 3, 5, 7, 9], IsEven]	True	
 nonetrue-list-12-16-x-8-14-y-function-1-lt-10-1			[NoneTrue, [List, 12, 16, x, 8, 14, y], [Function, [Block, [Less, _1, 10]], _1]]	False	Symbolic entries leave the test undecided, while $8<10$ already settles it	Unreadable
 nonetrue-list-12-16-x-14-y-function-istrue-1-lt			[NoneTrue, [List, 12, 16, x, 14, y], [Function, [Block, [IsTrue, [Less, _1, 10]]], _1]]	True	Wrapping with IsTrue makes undecided tests count as not true	Unreadable
 vacuously-true-on-an-empty-list	Scope		[NoneTrue, [List], IsEven]	True	Vacuously true on an empty list	
+an-undecided-predicate-gives-the-nor	Scope		[NoneTrue, [List, a, b], f]	[Nor, [f, a], [f, b]]	An undecided predicate gives the Nor of its values, as Wolfram does	
+a-true-element-settles-it	Scope		[NoneTrue, [List, a, 4], IsEven]	False	One True settles it, whatever else is undecided	
 the-negation-of-any	Properties		[Equal, [NoneTrue, [List, 4, 6, 9], IsPrime], [Not, [Any, [List, 4, 6, 9], IsPrime]]]	True	The negation of [[Any]]	
