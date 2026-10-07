@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
-import { lowerFigure, strandLayer, strandModelOf } from "../src/strand-frame.ts";
+import { lowerFigure } from "../src/figure-frames.ts";
+import { strandLayer, strandModelOf } from "../src/strand-frame.ts";
 
 const list = (...xs: unknown[]) => ["List", ...xs];
 const layerOf = (json: unknown) => {
@@ -194,7 +195,7 @@ describe("Figure lowered", () => {
   });
 
   it("leaves other kinds, and values that aren't one, to the SVG", () => {
-    expect(lowerFigure("tableau", [3, 1])).toBeUndefined();
+    expect(lowerFigure("nonsense", [3, 1])).toBeUndefined();
     expect(lowerFigure("diagram", [0, 0, 1])).toBeUndefined();
     expect(lowerFigure("permutation", [1, 1])).toBeUndefined();
     expect(lowerFigure("permutation", [])).toBeUndefined();

@@ -449,7 +449,7 @@ const blocksOf = (rgs: readonly number[]): number[][] => {
  * integer list (a permutation's one-line image, a restricted-growth string for a set partition, or
  * one over 2n points for a diagram), and the box is sized to the figure. Undefined for any other kind.
  */
-export function lowerFigure(
+export function lowerStrandFigure(
   kind: string,
   value: readonly number[],
 ): { readonly show: string; readonly width: number; readonly height: number } | undefined {

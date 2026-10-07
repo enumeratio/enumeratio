@@ -38,9 +38,11 @@ function parseList(value: string): number[] {
  * integer list. `subset` also reads `n` (the ground-set size). Pass a ready-made `svg`
  * string instead to render it verbatim (the generic escape hatch).
  *
- * The strand kinds (`permutation`, `set-partition`, `diagram`) stand for a `Show` of a
- * `StrandDiagram` and draw as one, its default rules the figure's look; the others draw as SVG
- * (`renderGlyph`, which the terminal and CLI keep using).
+ * Every kind stands for a `Show` of a frame layer and draws as one, its default rules the
+ * figure's look: `StrandDiagram` (permutation, set-partition, diagram),
+ * `CellDiagram` (partition, tableau, composition, subset), `TreeDiagram` (tree, binary-tree) and
+ * `PathDiagram` (dyck, lattice). `svg`, or a value no frame reads, draws as SVG (`renderGlyph`,
+ * which the terminal and CLI keep using).
  */
 export class NotatioFigure extends LitElement {
   // `kind` is reflected so CSS can size a kind differently — a VitePress host binds
@@ -86,7 +88,7 @@ export class NotatioFigure extends LitElement {
   }
 
   protected override render(): unknown {
-    const lowered = this.svg ? undefined : lowerFigure(this.kind, parseList(this.value));
+    const lowered = this.svg ? undefined : lowerFigure(this.kind, parseList(this.value), { n: this.n });
     if (lowered) {
       void import("./notatio-show.ts");
       return html`<notatio-show

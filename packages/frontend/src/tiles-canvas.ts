@@ -35,6 +35,14 @@ export type GraphicsPrimitive =
  */
 export type ViewKind = "plane" | "fixed";
 
+/** Text over a mark: `size` in frame units, `opacity` of the ink, `at` where it sits if not at the mark's place. */
+export interface FigureLabel {
+  readonly text: string;
+  readonly size: number;
+  readonly opacity?: number;
+  readonly at?: FramePoint;
+}
+
 /** What a tile layer answers about its elements, for rules. */
 export interface TileLayer {
   readonly basis: readonly [Vec2, Vec2];
@@ -49,6 +57,13 @@ export interface TileLayer {
   place?(i: number, j: number): FramePoint;
   /** What address (i, j) draws, at its place; a small disk when absent. */
   mark?(i: number, j: number): GraphicsPrimitive;
+  /**
+   * The addresses a figure has when they are not the whole rectangle of `bounds` (a ragged
+   * diagram, the nodes of a tree). Absent: every address in `bounds`.
+   */
+  addresses?(): readonly Address[];
+  /** A caption for address (i, j), drawn in the frame's ink over its mark. */
+  label?(i: number, j: number): FigureLabel | undefined;
   /**
    * The links of the figure, each a tuple of the addresses it joins (Wolfram's `Graph` edges, a
    * `GraphicsComplex`'s lines), drawn after the marks and styled by `BoundaryStyle` through their
@@ -78,6 +93,8 @@ export interface TileDrawOptions {
   readonly boundaryRules: readonly BoundaryRule[];
   readonly colorMixing: ColorMixing;
   readonly selection: readonly Vec2[];
+  /** The color labels are drawn in; gray when absent. */
+  readonly ink?: string;
   /** Fraction of a cell its tile fills. */
   readonly fill: number;
   /** Shifts every scheme by this many bands, to animate it. */
@@ -238,6 +255,7 @@ const xy = (p: FramePoint): Vec2 => [p[0] ?? 0, p[1] ?? 0];
 
 /** Every address of a figure layer: its `bounds`, row by row. */
 export function addressesOf(layer: TileLayer): Address[] {
+  if (layer.addresses) return [...layer.addresses()];
   const { i, j } = layer.bounds ?? { i: [0, 0], j: [0, 0] };
   const out: Address[] = [];
   for (let b = j[0]; b <= j[1]; b++) for (let a = i[0]; a <= i[1]; a++) out.push([a, b]);
@@ -252,21 +270,50 @@ export const placeOf = (layer: TileLayer, i: number, j: number): Vec2 =>
 const linkPrimitive = (layer: TileLayer, link: readonly Address[]): GraphicsPrimitive =>
   layer.linkMark?.(link) ?? { head: "Line", points: link.map(([i, j]) => placeOf(layer, i, j)) };
 
-/** The view that fits a figure layer whole, with a margin, for a canvas of the given aspect (w / h). */
-export function fitView(layer: TileLayer, aspect: number, margin = 0.6): LatticeView {
-  const points: Vec2[] = addressesOf(layer).map(([i, j]) => placeOf(layer, i, j));
-  for (const link of layer.links?.() ?? []) {
-    const p = linkPrimitive(layer, link);
-    if (p.head === "Line" || p.head === "Polygon") points.push(...p.points.map(xy));
+/** The points that bound a primitive: a disk's rim, a line's or polygon's vertices. */
+function extentOf(p: GraphicsPrimitive, place: Vec2): Vec2[] {
+  if (p.head === "Disk") {
+    const [x, y] = p.center ? xy(p.center) : place;
+    return [
+      [x - p.radius, y - p.radius],
+      [x + p.radius, y + p.radius],
+    ];
   }
-  if (points.length === 0) return { center: [0, 0], extent: 1 };
+  return p.head === "Line" || p.head === "Polygon" ? p.points.map(xy) : [place];
+}
+
+/** The box a figure layer fills, marks and links included: [x0, x1, y0, y1]. */
+export function frameBounds(layer: TileLayer): readonly [number, number, number, number] | undefined {
+  const points: Vec2[] = [];
+  for (const [i, j] of addressesOf(layer))
+    points.push(...extentOf(layer.mark?.(i, j) ?? { head: "Disk", radius: 0 }, placeOf(layer, i, j)));
+  for (const link of layer.links?.() ?? []) points.push(...extentOf(linkPrimitive(layer, link), [0, 0]));
+  if (points.length === 0) return undefined;
   const xs = points.map((p) => p[0]);
   const ys = points.map((p) => p[1]);
-  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  return [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+}
+
+/** The view that fits a figure layer whole, with a margin, for a canvas of the given aspect (w / h). */
+export function fitView(layer: TileLayer, aspect: number, margin = 0.6): LatticeView {
+  const box = frameBounds(layer);
+  if (!box) return { center: [0, 0], extent: 1 };
+  const [x0, x1, y0, y1] = box;
   return {
     center: [(x0 + x1) / 2, (y0 + y1) / 2],
     extent: Math.max((y1 - y0) / 2 + margin, ((x1 - x0) / 2 + margin) / aspect),
   };
+}
+
+/** Whether `p` is inside a polygon (even-odd rule). */
+function inside(p: Vec2, poly: readonly Vec2[]): boolean {
+  let hit = false;
+  for (let a = 0, b = poly.length - 1; a < poly.length; b = a++) {
+    const [pa, pb] = [poly[a]!, poly[b]!];
+    if (pa[1] > p[1] !== pb[1] > p[1] && p[0] < ((pb[0] - pa[0]) * (p[1] - pa[1])) / (pb[1] - pa[1]) + pa[0])
+      hit = !hit;
+  }
+  return hit;
 }
 
 /** The distance from `p` to the segment `a`–`b`. */
@@ -285,6 +332,9 @@ export function hitAt(layer: TileLayer, at: Vec2, reach: number): Address[] {
   let best: Address | undefined;
   let nearest = reach;
   for (const [i, j] of addressesOf(layer)) {
+    // A polygon mark is hit anywhere inside it, not only near its place.
+    const mark = layer.mark?.(i, j);
+    if (mark?.head === "Polygon" && inside(at, mark.points.map(xy))) return [[i, j]];
     const p = placeOf(layer, i, j);
     const d = Math.hypot(p[0] - at[0], p[1] - at[1]);
     if (d <= nearest) [best, nearest] = [[i, j], d];
@@ -368,6 +418,7 @@ function drawMarks(
     return path;
   };
   const labels: { at: Vec2; text: string; size: number; color: string }[] = [];
+  const captions: { at: Vec2; text: string; size: number; opacity: number }[] = [];
 
   for (const [i, j] of addressesOf(layer)) {
     const style = styleElement(
@@ -380,6 +431,14 @@ function drawMarks(
     );
     const at = placeOf(layer, i, j);
     const mark: GraphicsPrimitive = layer.mark?.(i, j) ?? { head: "Disk", radius: 0.12 };
+    const caption = layer.label?.(i, j);
+    if (caption)
+      captions.push({
+        at: xy(caption.at ?? at),
+        text: caption.text,
+        size: caption.size,
+        opacity: caption.opacity ?? 1,
+      });
     if (mark.head === "Text") {
       if (style.color) labels.push({ at: xy(mark.at ?? at), text: mark.text, size: mark.size, color: style.color });
       continue;
@@ -404,6 +463,14 @@ function drawMarks(
     ctx.fillStyle = l.color;
     ctx.fillText(l.text, x, y);
   }
+  for (const c of captions) {
+    const [x, y] = toScreen(c.at);
+    ctx.font = `${Math.round(c.size * pixels)}px system-ui, sans-serif`;
+    ctx.fillStyle = options.ink ?? "#8a8a99";
+    ctx.globalAlpha = c.opacity;
+    ctx.fillText(c.text, x, y);
+  }
+  ctx.globalAlpha = 1;
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
   for (const link of layer.links?.() ?? []) {

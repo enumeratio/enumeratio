@@ -186,6 +186,9 @@ export const GRAPHICS_OPTIONS: Readonly<Record<string, readonly string[]>> = {
   LatticeTiles: ["ColorRules", "ColorMixing", "BoundaryStyle"],
   ArrayPlot: ["ColorRules", "ColorMixing", "BoundaryStyle"],
   StrandDiagram: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+  CellDiagram: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+  TreeDiagram: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+  PathDiagram: ["ColorRules", "ColorMixing", "BoundaryStyle"],
   Locator: ["LocatorAutoCreate", "Appearance"],
 };
 
