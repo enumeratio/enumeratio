@@ -469,7 +469,11 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     head: "Show",
     tag: "notatio-show",
     holdsOptions: true,
-    attributes: (ops) => ({ value: epsil(["Show", ...ops] as Json) }),
+    // The height it will take, so the page lays out before the element is defined.
+    attributes: (ops) => ({
+      value: epsil(["Show", ...ops] as Json),
+      style: `display:block;min-height:${showHeight(ops)}px`,
+    }),
   },
   {
     head: "ComplexPlot",
@@ -1092,6 +1096,16 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   ];
   return children.length === 0 ? { tag: symbol.tag, attributes } : { tag: symbol.tag, attributes, children };
 }
+
+/** `ImageSize -> [w, h]`'s h among `Show`'s held options, else the element's default height. */
+function showHeight(ops: readonly Json[]): number {
+  const size = ops.find((op) => headOf(op) === "KeyValuePair" && symOf(opsOf(op)[0]) === "ImageSize");
+  const h = numOf(tupleOf(opsOf(size)[1])?.[1]);
+  return h !== undefined && h > 0 ? h : SHOW_HEIGHT;
+}
+
+/** `<notatio-show>`'s height when `ImageSize` doesn't give one. */
+const SHOW_HEIGHT = 480;
 
 /** Escape a value for a double-quoted HTML attribute. */
 const attr = (value: string): string => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");

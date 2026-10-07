@@ -96,17 +96,21 @@ const html = (): string => print(slots.default?.() ?? []).join("\n");
 
 /**
  * The expressions a page wrote as markup: the build replaces each with the element showing its
- * value (`<notatio-out format="mathjson" value="…">`), which is no source to read, so the
- * story prints the expression again instead, as notatio markup or as Epsil.
+ * value (`<notatio-out format="mathjson" value="…">`, or the picture's own element, which keeps
+ * the expression in `data-mathjson`), which is no source to read, so the story prints the
+ * expression again instead, as notatio markup or as Epsil.
  */
 function expressions(nodes: VNode[]): unknown[] {
   const found: unknown[] = [];
   for (const node of nodes) {
     if (node.type === Comment || node.type === Text) continue;
-    const props = node.props as { format?: string; value?: string } | null;
-    if (tagOf(node) === "notatio-out" && props?.format === "mathjson" && typeof props.value === "string") {
+    const props = node.props as { format?: string; value?: string; "data-mathjson"?: string } | null;
+    const json =
+      props?.["data-mathjson"] ??
+      (tagOf(node) === "notatio-out" && props?.format === "mathjson" ? props.value : undefined);
+    if (typeof json === "string") {
       try {
-        found.push(JSON.parse(props.value));
+        found.push(JSON.parse(json));
         continue;
       } catch {
         // Not JSON after all: printed as the element it is.
