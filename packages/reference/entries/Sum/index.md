@@ -10,6 +10,11 @@ signatures:
     description: "`Sum(f, [a, b])` computes the sum of `f` from `a` to `b`; `Sum(L)` sums the elements of a collection `L`"
     library: enumeratio-analytic
     type: (any, tuple*) -> number
+    overrides: enumeratio-evaluation
+  - call: Sum(any, tuple*) -> number
+    description: "`Sum(f, [a, b])` computes the sum of `f` from `a` to `b`; `Sum(L)` sums the elements of a collection `L`"
+    library: enumeratio-evaluation
+    type: (any, tuple*) -> number
     overrides: compute-engine
 names:
   wolframIdentity: true

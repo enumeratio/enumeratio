@@ -268,6 +268,7 @@ describe("comparison past the double range and of exact rationals", () => {
   });
   test("a SymPy list of rationals parses", () => {
     expect(parsePython("[1/6, -1/30, 1/42]")).toEqual([1 / 6, -1 / 30, 1 / 42]);
+    expect(parsePython("('a', 1)")).toEqual(["'a'", 1]);
   });
 });
 

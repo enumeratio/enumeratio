@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { CancellationError } from "@cortex-js/compute-engine";
+import { applyNativeHeadPatches } from "@enumeratio/ce-patches";
 import {
   applyFunction,
   DeadlineExceededError,
@@ -32,6 +33,10 @@ const msOf = (seconds: number): number => Math.max(0, seconds * 1000);
 
 export function declareEvaluation(ce: ComputeEngine): void {
   ce.declare(ABORTED, "symbol");
+
+  // Fixes to compute-engine's own heads (Take, Drop, Solve, Range, …), so every engine has them
+  // whichever libraries it declares.
+  applyNativeHeadPatches(ce);
 
   // TimeConstrained(expr, t, failexpr?) — held: `expr` and `failexpr` only evaluate once
   // we know which of them is wanted. `ops` are raw and possibly non-canonical (the

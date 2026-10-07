@@ -55,6 +55,10 @@
     "notation": "./notation",
     "group": "algebras",
     "declare": "declareHypercomplex",
+    "names": [
+      "CircleTimes",
+      "GeometricProduct"
+    ],
     "declares": "./declares.json"
   }
 }

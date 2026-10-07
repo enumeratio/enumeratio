@@ -78,7 +78,7 @@ n-polylog-250-4-a-large-order-on-the-cut	N(polylog(250, 4), 30)
 n-polylog-2500000-4-a-huge-order-returns	N(polylog(2500000, 4), 30)		
 n-polylog-40p5-2-plus-3i-a-large-complex-point	N(polylog(40.5, (2 + 3*I)), 30)		
 normal-series-polylog-2-x-x-positiveinfinity-6			
-threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	AttributeError: 'list' object has no attribute 'is_number'	error
+threads-over-a-list-of-arguments	[polylog(2, 0.5), polylog(2, 0.25)]	[polylog(2, 0.5), polylog(2, 0.25)]	
 a-non-integer-order-past-z-1-is-left-unevaluated	polylog(2.5, 2)	polylog(2.5, 2)	
 complex-order-and-argument	polylog((0.2 + 1*I), (0.5 + -0.5*I))	0.0703265205505161 - 0.563293262539874*I	
 past-z-1-the-continuation-is-complex	polylog(2, 2.5)	polylog(2, 2.5)	

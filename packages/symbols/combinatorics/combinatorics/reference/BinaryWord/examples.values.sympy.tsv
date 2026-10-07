@@ -1,2 +1,2 @@
-id	in
-of-a-subset	[2, 3, 5]
+id	in	out	verdict
+of-a-subset	[2, 3, 5]	[2, 3, 5]	disagree

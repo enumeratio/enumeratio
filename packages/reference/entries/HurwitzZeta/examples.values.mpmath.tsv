@@ -217,4 +217,4 @@ hurwitzzeta-4-1	zeta(4, 1)
 zeta-3-7-3-b-4-7-3-4-7813-3240-exact-via-the	zeta(-3, (mpf(7)/3))	-2.41141975308641975308641975309	
 re-s-0-a-0-is-indeterminate	(zeta(mpc(0, -1), 0))	(1.00330022368532410287421711421 + 0.418155449141321676689274239843j)	disagree
 re-s-negative-a-drops-the-term-cleanly	(zeta(mpc(-1.5, 0.5), -2))	(nan + nanj)	disagree
-hurwitzzeta-2-neg-2	zeta(2, -2)		
+hurwitzzeta-2-neg-2	zeta(2, -2)	ZeroDivisionError: 	error
