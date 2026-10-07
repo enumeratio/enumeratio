@@ -23,7 +23,7 @@ differencedelta-fallingfactorial-a-k-times	Scope		[DifferenceDelta, [Multiply, [
 differencedelta-gammaregularized-k-z-k	Scope		[DifferenceDelta, [GammaRegularized, k, z], k]	[Add, [Negate, [GammaRegularized, k, z]], [GammaRegularized, [Add, k, 1], z]]				
 differencedelta-betaregularized-z-k-j-k	Scope		[DifferenceDelta, [BetaRegularized, z, k, j], k]	[Add, [Negate, [BetaRegularized, z, k, j]], [BetaRegularized, z, [Add, k, 1], j]]				
 differencedelta-betaregularized-z-k-j-j	Scope		[DifferenceDelta, [BetaRegularized, z, k, j], j]	[Add, [Negate, [BetaRegularized, z, k, j]], [BetaRegularized, z, k, [Add, j, 1]]]				
-differencedelta-qfactorial-k-q-k	Scope		[DifferenceDelta, [QFactorial, k, q], k]	[Subtract, [QFactorial, [Add, k, 1], q], [QFactorial, k, q]]				
+differencedelta-qfactorial-k-q-k	Scope		[DifferenceDelta, [QFactorial, k, q], k]	[Add, [Negate, [QFactorial, k, q]], [QFactorial, [Add, k, 1], q]]				
 differencedelta-qpochhammer-5-q-k-k	Scope		[DifferenceDelta, [QPochhammer, 5, q, k], k]	[Add, [Negate, [QPochhammer, 5, q, k]], [QPochhammer, 5, q, [Add, k, 1]]]				
-differencedelta-qbinomial-k-m-q-k	Scope		[DifferenceDelta, [QBinomial, k, m, q], k]	[Subtract, [QBinomial, [Add, k, 1], m, q], [QBinomial, k, m, q]]			convention	Wolfram's closed form for the DifferenceDelta of QBinomial departs from its own literal difference at negative q and non-integer m (a branch of q^m); ours is the literal difference, and the two agree at integer points.
-differencedelta-qbinomial-n-k-q-k	Scope		[DifferenceDelta, [QBinomial, n, k, q], k]	[Subtract, [QBinomial, n, [Add, k, 1], q], [QBinomial, n, k, q]]				
+differencedelta-qbinomial-k-m-q-k	Scope		[DifferenceDelta, [QBinomial, k, m, q], k]	[Add, [Negate, [QBinomial, k, m, q]], [QBinomial, [Add, k, 1], m, q]]			convention	Wolfram's closed form for the DifferenceDelta of QBinomial departs from its own literal difference at negative q and non-integer m (a branch of q^m); ours is the literal difference, and the two agree at integer points.
+differencedelta-qbinomial-n-k-q-k	Scope		[DifferenceDelta, [QBinomial, n, k, q], k]	[Add, [Negate, [QBinomial, n, k, q]], [QBinomial, n, [Add, k, 1], q]]				

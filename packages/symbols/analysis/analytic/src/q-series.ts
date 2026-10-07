@@ -137,8 +137,9 @@ export function declareQSeries(ce: ComputeEngine): void {
       const q = ops[1];
       if (n === undefined || q === undefined) return null;
       if (isRealInt(n) && n.re >= 0) return qFactorialExpr(ce, n.re, q);
-      // A numeric non-integer n is a held call that is canonical, so `evaluate` below can reach it.
-      return isFiniteNum(n) && !isRealInt(n) ? ce._fn("QFactorial", [n.canonical, q.canonical]) : null;
+      // Any other n (non-integer, negative, symbolic) is a held canonical call: `evaluate` below
+      // can reach it, and a symbolic k no longer leaves the call non-canonical.
+      return ce._fn("QFactorial", [n.canonical, q.canonical]);
     },
   });
 
@@ -162,14 +163,15 @@ export function declareQSeries(ce: ComputeEngine): void {
   });
 
   ce.declare("QBinomial", {
-    signature: "(integer, integer, complex) -> number",
+    signature: "(complex, complex, complex) -> number",
     canonical: (ops: readonly BoxedExpression[]) => {
       const n = ops[0];
       const k = ops[1];
       const q = ops[2];
       if (n === undefined || k === undefined || q === undefined) return null;
-      if (!isRealInt(n) || n.re < 0 || !isRealInt(k)) return null;
-      return qBinomialExpr(ce, n.re, k.re, q);
+      if (isRealInt(n) && n.re >= 0 && isRealInt(k)) return qBinomialExpr(ce, n.re, k.re, q);
+      // Held but canonical for any other (n, k): symbolic, non-integer or negative.
+      return ce._fn("QBinomial", [n.canonical, k.canonical, q.canonical]);
     },
   });
 }
