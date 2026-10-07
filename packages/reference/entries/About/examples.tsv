@@ -1,6 +1,6 @@
 id	section	role	expr	expected	caption	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out
 sin-description			[At, [About, Sin], "'description'"]	"'Sine of an angle.'"	A native head, as compute-engine describes it	About(Sin)["description"]	"\"Sine of an angle.\""	\mathrm{About}(\sin)[\text{'description'}]	\text{Sine of an angle.}	\operatorname{At}(\operatorname{About}(\operatorname{Sin}),\text{“description”})	\text{“Sine of an angle.”}	At(About(Sin), "description")	"\"Sine of an angle.\""	<At><About>Sin</About> "description"</At>	<ToExpression>"Sine of an angle."</ToExpression>
 major-index-documented			[At, [About, MajorIndex], "'documented'"]	[List, "'combinatorics'"]	One of ours, with the packages that document it										
-floor-overloads			[Count, [At, [About, Floor], "'overloads'"]]	4	Every package's overload of Floor, whether or not they are declared										
+floor-overloads			[Count, [At, [About, Floor], "'overloads'"]]	3	Every package's overload of Floor, whether or not they are declared										
 floor-signature			[At, [About, Floor], "'signature'"]	"'(any, any?) -> any'"	The signature Floor is declared with once every package is in: the overload no other replaces										
 qualified-namespace			[At, [About, [Field, Combinatorics, "'MajorIndex'"]], "'namespace'"]	"'Combinatorics'"	A namespaced name is described, never declared										

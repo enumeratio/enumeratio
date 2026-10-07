@@ -7,6 +7,7 @@
 // The snippet is printed from the body itself -- the default slot's vnodes, written
 // back out as markup -- so the components are authored once and the source cannot
 // drift from what is rendered. Bound props print as their values.
+import { prettyEpsil, sourceMarkupOf } from "@enumeratio/formats/markup";
 import { Comment, computed, Fragment, getCurrentInstance, ref, Text, type VNode, useSlots } from "vue";
 import { useFullWindow } from "../composables/useFullWindow.ts";
 import FullWindowButton from "./FullWindowButton.vue";
@@ -91,19 +92,68 @@ function print(nodes: VNode[], depth = 0): string[] {
 }
 
 /** The body as source, printed fresh each render so it follows what is shown. */
-const source = (): string => print(slots.default?.() ?? []).join("\n");
+const html = (): string => print(slots.default?.() ?? []).join("\n");
+
+/**
+ * The expressions a page wrote as markup: the build replaces each with the element showing its
+ * value (`<notatio-out format="mathjson" value="…">`, or the picture's own element, which keeps
+ * the expression in `data-mathjson`), which is no source to read, so the story prints the
+ * expression again instead, as notatio markup or as Epsil.
+ */
+function expressions(nodes: VNode[]): unknown[] {
+  const found: unknown[] = [];
+  for (const node of nodes) {
+    if (node.type === Comment || node.type === Text) continue;
+    const props = node.props as { format?: string; value?: string; "data-mathjson"?: string } | null;
+    const json =
+      props?.["data-mathjson"] ??
+      (tagOf(node) === "notatio-out" && props?.format === "mathjson" ? props.value : undefined);
+    if (typeof json === "string") {
+      try {
+        found.push(JSON.parse(json));
+        continue;
+      } catch {
+        // Not JSON after all: printed as the element it is.
+      }
+    }
+    found.push(...expressions(childrenOf(node)));
+  }
+  return found;
+}
+
+/** The ways the source prints: notatio markup and Epsil for a body written as markup, and HTML always. */
+type SourceForm = "notatio" | "epsil" | "html";
+const FORM_LABELS: Readonly<Record<SourceForm, string>> = { notatio: "notatio", epsil: "Epsil", html: "HTML" };
+const SOURCE_WIDTH = 96;
+const written = (): unknown[] => expressions(slots.default?.() ?? []);
+const forms = (): SourceForm[] => (written().length > 0 ? ["notatio", "epsil", "html"] : ["html"]);
+const chosen = ref<SourceForm | undefined>();
+const form = (): SourceForm => (chosen.value && forms().includes(chosen.value) ? chosen.value : forms()[0]!);
+const source = (): string => {
+  const exprs = written();
+  if (form() === "notatio") return exprs.map((e) => sourceMarkupOf(e, { width: SOURCE_WIDTH })).join("\n\n");
+  if (form() === "epsil") return exprs.map((e) => prettyEpsil(e, { width: SOURCE_WIDTH })).join("\n\n");
+  return html();
+};
+const copied = ref(false);
+const copy = (): void => {
+  void navigator.clipboard?.writeText(source()).then(() => {
+    copied.value = true;
+    setTimeout(() => (copied.value = false), 1200);
+  });
+};
 
 // The source is editable when it is plain markup: custom elements re-render from HTML, a Vue
 // component (a capitalised tag) would not. An edited story renders the edit instead of the
 // body and stops asserting -- `expect` described the original.
-const editable = (): boolean => !/<[A-Z]/.test(source());
+const editable = (): boolean => form() === "html" && !/<[A-Z]/.test(html());
 const edited = ref<string | undefined>();
 let timer: ReturnType<typeof setTimeout> | undefined;
 const onEdit = (event: Event): void => {
   const text = (event.target as HTMLTextAreaElement).value;
   clearTimeout(timer);
   timer = setTimeout(() => {
-    edited.value = text === source() ? undefined : text;
+    edited.value = text === html() ? undefined : text;
   }, 400);
 };
 const reset = (): void => {
@@ -148,6 +198,18 @@ const live = computed((): string => {
     <details v-if="$slots.default" class="story-code">
       <summary>
         source<template v-if="editable()"> · editable</template>
+        <span v-if="forms().length > 1" class="story-forms">
+          <button
+            v-for="f in forms()"
+            :key="f"
+            type="button"
+            :class="{ 'is-chosen': f === form() }"
+            @click.prevent="chosen = f"
+          >
+            {{ FORM_LABELS[f] }}
+          </button>
+        </span>
+        <button type="button" class="story-copy" @click.prevent="copy">{{ copied ? "copied" : "copy" }}</button>
         <button v-if="edited !== undefined" class="story-reset" @click.prevent="reset">edited · reset</button>
       </summary>
       <textarea
@@ -165,6 +227,27 @@ const live = computed((): string => {
 </template>
 
 <style scoped>
+.story-forms {
+  display: inline-flex;
+  gap: 0.15rem;
+  margin-left: 0.6rem;
+}
+.story-forms button,
+.story-copy {
+  border: none;
+  background: transparent;
+  padding: 0 0.3rem;
+  font: inherit;
+  color: var(--vp-c-text-3);
+  cursor: pointer;
+}
+.story-forms button.is-chosen {
+  color: var(--vp-c-brand-1);
+  font-weight: 600;
+}
+.story-copy {
+  margin-left: 0.4rem;
+}
 .story {
   position: relative;
   margin: 1.25rem 0;

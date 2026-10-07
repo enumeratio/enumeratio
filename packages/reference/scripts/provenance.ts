@@ -19,7 +19,6 @@
 // behaviour survives — and this file is what holds us to it.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { NATIVE_MAX_ORDER } from "@enumeratio/ce-patches";
 import type { MathJSON, ReferenceEntry } from "../src/types.ts";
 
 export type Provenance = "compute-engine" | "extension" | "override" | "unknown";
@@ -148,15 +147,6 @@ const evaluated = (ce: ComputeEngine, expr: MathJSON): MathJSON => {
   }
 };
 
-/** A bare compute-engine never returns from `N(PolyLog(s, z))` at |z| > 1 and a huge order
- * (O(s²) bignum work, and no time limit interrupts it), so the comparison does not ask it. */
-const bareHangs = (expr: MathJSON): boolean => {
-  const call = findCall(expr, "PolyLog");
-  if (call === undefined || !isCall(call)) return false;
-  const [order, z] = [call[1], call[2]];
-  return typeof order === "number" && typeof z === "number" && order > NATIVE_MAX_ORDER && Math.abs(z) > 1;
-};
-
 /**
  * Whether a bare engine understands every operator in an expression. Only those expressions
  * can be compared across the two engines — one mentioning a head we invented would
@@ -190,9 +180,7 @@ export function divergences(
   const out: Divergence[] = [];
   for (const expression of corpus) {
     if (!bareUnderstands(bare, expression)) continue;
-    const before = bareHangs(expression)
-      ? ["NativeNeverReturns"]
-      : isolateFreeSymbols(bare, expression, () => evaluated(bare, expression));
+    const before = isolateFreeSymbols(bare, expression, () => evaluated(bare, expression));
     const after = isolateFreeSymbols(ours, expression, () => evaluated(ours, expression));
     if (JSON.stringify(before) !== JSON.stringify(after)) {
       out.push({ expression, bare: before, ours: after });

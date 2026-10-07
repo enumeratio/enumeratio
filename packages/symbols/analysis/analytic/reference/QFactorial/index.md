@@ -7,7 +7,7 @@ signatures:
   - call: QFactorial(n, q)
     description: the q-factorial $[n]_q!$.
     library: "@enumeratio/analytic"
-    type: (integer, complex) -> number
+    type: (real, complex) -> number
 primitive: kernel
 bindings:
   - origin: native
@@ -29,3 +29,4 @@ names:
 
 - Built as a product of q-integers $[k]_q$, each a sum of $k$ powers of $q$ — exact boxed arithmetic throughout, so it reduces to a number for numeric $q$ (rational stays rational) and to a genuine polynomial in $q$ that `Expand` can open up for symbolic $q$.
 - At $q = 1$, $[k]_1 = k$ termwise (no division, so no $q \to 1$ limit to take), reducing exactly to $n!$.
+- A non-integer $n$ is the q-Gamma function, $[n]_q! = \Gamma_q(n+1)$, which `N()` evaluates for real $q > 0$ through the infinite products $(q;q)_\infty / \big((q^{n+1};q)_\infty (1-q)^n\big)$ (for $q > 1$ reflected by $[n]_q! = q^{n(n-1)/2}[n]_{1/q}!$, and $\Gamma(n+1)$ at $q = 1$). A negative integer $n$ is a pole, and $q \le 0$ stays symbolic.

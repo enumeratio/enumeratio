@@ -1,0 +1,4 @@
+id	section	role	expr	expected	caption
+fundamental-unit-of-q-sqrt-2			[AlgebraicNumberNorm, [Add, 1, [Sqrt, 2]]]	-1	$(1 + \sqrt 2)(1 - \sqrt 2) = -1$: a unit
+cube-root-of-2			[AlgebraicNumberNorm, [Root, 2, 3]]	2	the three cube roots of 2 multiply to 2
+a-rational-is-its-own-norm			[AlgebraicNumberNorm, 3]	3	in $\mathbb{Q}$ itself

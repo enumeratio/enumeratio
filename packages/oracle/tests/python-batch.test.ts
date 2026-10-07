@@ -41,6 +41,13 @@ test("the default and Sage evaluators run against the per-item namespace, not `g
   expect(sage).not.toContain("locals=globals()");
 });
 
+test("the per-item alarm is thirty seconds unless a run names another", () => {
+  expect(pythonBatchCode(["1"], "")).toContain("signal.alarm(30)");
+  const longer = pythonBatchCode(["1"], "", undefined, undefined, 120);
+  expect(longer).toContain("signal.alarm(120)");
+  expect(longer).toContain("over 120s");
+});
+
 // A live run confirms behavior a shape assertion can't: run once with the offending item
 // (`i`, or an assignment) at different batch positions and check neighboring items are
 // unaffected. That needs an actual python3/sympy/mpmath process, so it's a manual check

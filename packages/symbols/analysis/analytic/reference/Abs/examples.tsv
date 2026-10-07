@@ -25,7 +25,7 @@ abs-positiveinfinity-times-i	Scope		[Abs, [Multiply, PositiveInfinity, [Complex,
 piecewiseexpand-abs-imaginaryunit-times-x-neg-2	Scope		[PiecewiseExpand, [Abs, [Multiply, ImaginaryUnit, x]], [Less, -2, x, 2]]	[Abs, [Multiply, [Complex, 0, 1], x]]			With the assumption on $x$, the call still stays unexpanded												unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).						
 complexexpand-abs-x	Scope		[ComplexExpand, [Abs, x]]	[Sqrt, [Power, x, 2]]			Treating $x$ as real, $|x| = \sqrt{x^2}$																			
 complexexpand-abs-x-plus-i-times-y	Scope		[ComplexExpand, [Abs, [Add, x, [Multiply, [Complex, 0, 1], y]]]]	[Sqrt, [Add, [Power, x, 2], [Power, y, 2]]]			Real and imaginary parts give $|x+iy| = \sqrt{x^2+y^2}$																			
-apply-derivative-abs-1-x	Scope	triage	[Apply, [Derivative, Abs, 1], x]	[Sign, x]				gap											unclassified	The expansions differ beyond the remainder order.						
+apply-derivative-abs-1-x	Scope	triage	[Apply, [Derivative, Abs, 1], x]	[Sign, x]				gap											unclassified	Wolfram keeps Derivative[1][Abs][x] held; ours evaluates it to Sign(x).						
 the-gap-between-two-temperatures-70-and-95	Applications		[Abs, [Subtract, 70, 95]]	25			The gap between two temperatures, 70° and 95°, regardless of which is higher																			
 the-distance-between-the-points-1-i-and-4-5i-of	Applications		[Abs, [Subtract, [Complex, 1, 1], [Complex, 4, 5]]]	5			The distance between the points $1+i$ and $4+5i$ of the complex plane																			
 even-function-x-x	Properties		[Equal, [Abs, -8], [Abs, 8]]	True			Even function: $|-x| = |x|$																			

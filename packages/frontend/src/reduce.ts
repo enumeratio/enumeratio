@@ -11,7 +11,7 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf, withOptions } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
-import { can, type Environment, type Reading } from "./environment.ts";
+import { can, ENVIRONMENTS, type Environment, type Reading } from "./environment.ts";
 import {
   CONTROL_HEADS,
   type ControlKind,
@@ -19,6 +19,8 @@ import {
   headOf,
   numOf,
   opsOf,
+  type Rendering,
+  renderingOf,
   strOf,
   symOf,
   tupleOf,
@@ -413,4 +415,29 @@ function surfaces(node: Json, env: Environment): Json {
 export function reduce(expr: Json, env: Environment): Json {
   const controlled = can.drive(env) ? expr : staticControls(expr, env);
   return surfaces(controlled, env);
+}
+
+/** Heads that only arrange their operands: what they hold draws as written when each operand does. */
+const ARRANGING = new Set(["List", "Rule", "KeyValuePair"]);
+
+/** Every head in `expr` draws (or holds its contents), so evaluating it would change nothing. */
+function asWritten(expr: Json): boolean {
+  const head = headOf(expr);
+  // A `Variable` is held, and so are the declarations `Variables -> …` gives the scope.
+  if (head === undefined || HELD_HEADS.has(head) || head === "Variable") return true;
+  if ((head === "Rule" || head === "KeyValuePair") && symOf(opsOf(expr)[0]) === "Variables") return true;
+  if (visualSymbol(head) === undefined && !ARRANGING.has(head)) return false;
+  return opsOf(expr).every(asWritten);
+}
+
+/**
+ * The picture `expr` is, when it draws as written: nothing in it evaluates, and no environment
+ * that can drive a control rewrites it. A build writes this element in place of an evaluating
+ * Out, so the picture needs no kernel; `undefined` when it isn't a picture as written.
+ */
+export function drawnAsWritten(expr: Json): Rendering | undefined {
+  if (headOf(expr) === undefined || !asWritten(expr)) return undefined;
+  const written = JSON.stringify(expr);
+  for (const env of ENVIRONMENTS) if (can.drive(env) && JSON.stringify(reduce(expr, env)) !== written) return undefined;
+  return renderingOf(expr);
 }

@@ -16,7 +16,7 @@ test("?Name: the kind, summary, signature and page", async () => {
 
 test("??Name adds every overload, parameters, packages and FindStat ids", () => {
   const { text } = repl.eval("??Floor");
-  expect(text).toMatch(/structures +\(any, any\?\) -> any +\(replaces combinatorics\)/);
+  expect(text).toMatch(/structures +\(any, any\?\) -> any +\(replaces analytic\)/);
   expect(text).toContain("params     x");
   expect(repl.eval("??MajorIndex").text).toContain("St000004 on Permutation");
 });

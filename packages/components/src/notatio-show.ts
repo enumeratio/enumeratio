@@ -15,10 +15,16 @@ import {
   drawTiles,
   type GestureHandling,
   edgeOf,
+  FIGURE_DEFAULTS,
+  FIGURE_HEADS,
+  type FigureHead,
+  figureLayerOf,
+  fitView,
   GRADIENTS,
   gestureHandlingOf,
   gradientCss,
   gradientNamed,
+  hitAt,
   latticeCoordinates,
   type LatticeView,
   type LineStyle,
@@ -65,6 +71,8 @@ const FRAME_BUDGET = 12;
 const INDEXED_SHOWN = 8;
 /** A locator's radius, in CSS pixels. */
 const LOCATOR_RADIUS = 7;
+/** How near (CSS px) a pointer must be to pick a figure's mark or link. */
+const HIT_REACH = 12;
 /** Pointer travel (CSS px) below which a press is a click, not a drag. */
 const SLOP = 4;
 const DEFAULT_GROUND = "dusk";
@@ -102,13 +110,20 @@ function bind(json: Json, params: ReadonlyMap<string, Json>): Json {
 interface ShowSpec {
   /** Draggable points, Wolfram's `Locator`: each one a variable's point, or its list of points. */
   readonly locators: readonly LocatorSpec[];
-  /** The tiled layer: `LatticeTiles(ring)` or `ArrayPlot(table)`, its data. */
-  readonly tiles?: { readonly head: "LatticeTiles" | "ArrayPlot"; readonly data: Json };
+  /** The tiled layer: `LatticeTiles(ring)`, `ArrayPlot(table)` or a figure frame (`StrandDiagram`, `CellDiagram`, …), its data. */
+  readonly tiles?: {
+    readonly head: "LatticeTiles" | "ArrayPlot" | FigureHead;
+    readonly data: Json;
+    /** `Embedding -> "Logarithmic"`: a real field's elements at (log|σ₁|, log|σ₂|). */
+    readonly embedding?: string;
+  };
   readonly colorRules: readonly ColorRule[];
   readonly boundaryRules: readonly BoundaryRule[];
   readonly colorMixing: ColorMixing;
   /** Rules whose test or style didn't read. */
   readonly unread: number;
+  /** The layer's own rules stand in for ones the author left out; the legend doesn't list them. */
+  readonly defaulted: { readonly colors: boolean; readonly edges: boolean };
   /** `auto`: `GridLines -> Automatic`, whose step is the layer's own grid when it has one. */
   readonly grid?: { readonly step: readonly [number, number]; readonly auto: boolean; readonly style: LineStyle };
   readonly axes?: { readonly style: LineStyle; readonly ticks: boolean };
@@ -211,6 +226,7 @@ function specOf(json: Json): ShowSpec {
   let boundaryRules: BoundaryRule[] = [];
   let colorMixing: ColorMixing = "First";
   let unread = 0;
+  let defaulted = { colors: false, edges: false };
   const locators: LocatorSpec[] = [];
   for (const layer of positional) {
     const head = headOf(layer);
@@ -227,11 +243,21 @@ function specOf(json: Json): ShowSpec {
       });
       continue;
     }
-    if (head !== "LatticeTiles" && head !== "ArrayPlot") continue;
+    const figure = FIGURE_HEADS.find((h) => h === head);
+    if (head === undefined || (head !== "LatticeTiles" && head !== "ArrayPlot" && !figure)) continue;
     const split = splitOptions(layer, declared(head));
-    tiles = { head, data: split.positional[0] };
-    const colors = rulesOf(split.options.get("ColorRules"), colorRuleOf);
-    const edges = rulesOf(split.options.get("BoundaryStyle"), boundaryRuleOf);
+    const embedding = stringOf(split.options.get("Embedding"));
+    tiles = {
+      head: head as NonNullable<ShowSpec["tiles"]>["head"],
+      data: split.positional[0],
+      ...(embedding ? { embedding } : {}),
+    };
+    // A figure frame has no look without rules: its own stand in for any the author leaves out.
+    const own = figure ? FIGURE_DEFAULTS[figure] : undefined;
+    const [colorsGiven, edgesGiven] = [split.options.has("ColorRules"), split.options.has("BoundaryStyle")];
+    defaulted = { colors: !!own && !colorsGiven, edges: !!own && !edgesGiven };
+    const colors = rulesOf(own && !colorsGiven ? own.colors : split.options.get("ColorRules"), colorRuleOf);
+    const edges = rulesOf(own && !edgesGiven ? own.edges : split.options.get("BoundaryStyle"), boundaryRuleOf);
     colorRules = colors.rules;
     boundaryRules = edges.rules;
     colorMixing = colorMixingOf(split.options.get("ColorMixing"));
@@ -264,6 +290,7 @@ function specOf(json: Json): ShowSpec {
     boundaryRules,
     colorMixing,
     unread,
+    defaulted,
     ...(grid ? { grid } : {}),
     ...(axes ? { axes } : {}),
     aspect: options.get("AspectRatio") === "Automatic" ? "True" : "Uniform",
@@ -325,7 +352,8 @@ export class NotatioShow extends LitElement {
     _selection: { state: true },
     _overrides: { state: true },
     _drawn: { state: true },
-    _tip: { state: true },
+    _info: { state: true },
+    _edgeColors: { state: true },
   };
 
   declare value: string;
@@ -343,17 +371,10 @@ export class NotatioShow extends LitElement {
   declare _selection: readonly Vec2[];
   declare _overrides: ReadonlyMap<number, Override>;
   declare _drawn: number;
-  /** What the layer says of the tile under the pointer, and where to show it. */
-  declare _tip:
-    | {
-        x: number;
-        y: number;
-        flip: boolean;
-        above: boolean;
-        title: string;
-        rows: readonly (readonly [string, string])[];
-      }
-    | undefined;
+  /** What the layer says of the tile under the pointer, for the strip under the plot. */
+  declare _info: { title: string; rows: readonly (readonly [string, string])[] } | undefined;
+  /** The legend's changes to the edges' colors, by rule. */
+  declare _edgeColors: ReadonlyMap<number, string>;
 
   #source: Json;
   /** The options: those written in `value`, then those given as attributes. */
@@ -393,7 +414,8 @@ export class NotatioShow extends LitElement {
     this._selection = [];
     this._overrides = new Map();
     this._drawn = 0;
-    this._tip = undefined;
+    this._info = undefined;
+    this._edgeColors = new Map();
     ensureStyles();
   }
 
@@ -429,6 +451,11 @@ export class NotatioShow extends LitElement {
     return this.#showOptions;
   }
 
+  /** A fixed frame is fitted to its layer: no pan, no zoom. */
+  get #fixed(): boolean {
+    return this.#layer?.view === "fixed";
+  }
+
   get #gestures(): GestureHandling {
     return gestureHandlingOf(stringOf(this.#options.get("GestureHandling")));
   }
@@ -449,6 +476,7 @@ export class NotatioShow extends LitElement {
       return;
     }
     this.#source = json;
+    prefetchLayers(json);
     this.#writes = writesOf(json);
     const options = splitOptions(json, declared("Show")).options;
     const attributes: [string, string][] = [
@@ -575,6 +603,14 @@ export class NotatioShow extends LitElement {
     return false;
   }
 
+  /** The edge rules with the legend's colors applied. */
+  get #boundaryRules(): BoundaryRule[] {
+    return (this._spec?.boundaryRules ?? []).map((rule, k) => {
+      const color = this._edgeColors.get(k);
+      return color ? { ...rule, color } : rule;
+    });
+  }
+
   /** The color rules with the legend's overrides applied. */
   get #colorRules(): ColorRule[] {
     return (this._spec?.colorRules ?? []).map((rule, k) => {
@@ -590,10 +626,10 @@ export class NotatioShow extends LitElement {
   }
 
   #clamp(): void {
-    if (!this.#layer) return;
+    if (!this.#layer || this.#fixed) return;
     const { bounds } = this.#layer;
     // Points anywhere: no lattice range to keep to, only a sane zoom.
-    if (this.#layer.points) {
+    if (this.#layer.points || this.#layer.place) {
       this.#view = { center: this.#view.center, extent: Math.min(Math.max(this.#view.extent, 0.5), 1e6) };
       return;
     }
@@ -619,7 +655,7 @@ export class NotatioShow extends LitElement {
       c.width = this.#w;
       c.height = this.#h;
     }
-    if (this.#layer?.bounds && !this.#moved) this.#view = this.#home(this.#layer);
+    if (this.#layer && (this.#fixed || (this.#layer.bounds && !this.#moved))) this.#view = this.#home(this.#layer);
     this.#clamp();
     this.#drawNow();
   }
@@ -642,9 +678,10 @@ export class NotatioShow extends LitElement {
     tiles.canvas.style.mixBlendMode = CANVAS_BLEND[spec.colorMixing];
     const complete = drawTiles(tiles, this.#w, this.#h, layer, this.#view, {
       colorRules: this.#colorRules,
-      boundaryRules: spec.boundaryRules,
+      boundaryRules: this.#boundaryRules,
       colorMixing: spec.colorMixing,
       selection: this._selection,
+      ink: resolvePalette({ palette: this.ground }).foreground,
       fill: 0.86,
       phase: 0,
       budgetMs: FRAME_BUDGET,
@@ -698,6 +735,17 @@ export class NotatioShow extends LitElement {
       if (d < best) [best, at] = [d, n];
     }
     return [at, 0];
+  }
+
+  /**
+   * What a plane point picks: one element, as above; for a figure layer, the address or link
+   * within a finger's reach of it (a link picks all its members), or nothing.
+   */
+  #hitsAt(plane: Vec2): readonly Vec2[] {
+    const layer = this.#layer!;
+    if (!layer.place) return [this.#elementAt(plane)];
+    const dpr = this.#w / (this.#canvases[0]?.clientWidth || this.#w);
+    return hitAt(layer, plane, (HIT_REACH * dpr * 2 * this.#view.extent) / this.#h);
   }
 
   /** A locator's place for a plane point: the nearest lattice point, or anywhere off the lattice. */
@@ -825,23 +873,37 @@ export class NotatioShow extends LitElement {
     );
   }
 
-  /** Select a point: alone, or — with shift or ⌘ — added to (or taken from) the selection. */
-  #select(point: Vec2, extend: boolean): void {
-    if (!point.every(Number.isFinite)) return;
-    const key = (p: Vec2) => `${p[0]},${p[1]}`;
-    const has = this._selection.some((p) => key(p) === key(point));
+  /**
+   * Select what a click picked: alone, or — with shift or ⌘ — added to (or taken from) the
+   * selection. A link picks all its members, which toggle together.
+   */
+  #select(points: readonly Vec2[], extend: boolean): void {
     if (!this.#selectionName && !this.#options.has("Selection")) return;
     const bounds = this.#layer?.bounds;
-    if (
-      bounds &&
-      (point[0] < bounds.i[0] || point[0] > bounds.i[1] || point[1] < bounds.j[0] || point[1] > bounds.j[1])
-    )
+    const picked = points.filter(
+      (p) =>
+        p.every(Number.isFinite) &&
+        !(bounds && (p[0] < bounds.i[0] || p[0] > bounds.i[1] || p[1] < bounds.j[0] || p[1] > bounds.j[1])),
+    );
+    const key = (p: Vec2) => `${p[0]},${p[1]}`;
+    if (picked.length === 0) {
+      // A click on nothing clears a figure's selection.
+      if (!extend && this.#layer?.place && this._selection.length > 0) {
+        this._selection = [];
+        this.#publishSelection();
+        this.#draw();
+      }
       return;
+    }
+    const chosen = new Set(this._selection.map(key));
+    const all = picked.every((p) => chosen.has(key(p)));
     if (extend)
-      this._selection = has ? this._selection.filter((p) => key(p) !== key(point)) : [...this._selection, point];
-    else this._selection = has && this._selection.length === 1 ? [] : [point];
+      this._selection = all
+        ? this._selection.filter((p) => !picked.some((q) => key(q) === key(p)))
+        : [...this._selection, ...picked.filter((p) => !chosen.has(key(p)))];
+    else this._selection = all && this._selection.length === picked.length ? [] : [...picked];
     // Selecting a point asks for it in full, whatever the frame's budget left undone.
-    if (!this.#layer?.known(point[0], point[1])) this.#layer?.prepare(point[0], point[1]);
+    for (const [i, j] of picked) if (!this.#layer?.known(i, j)) this.#layer?.prepare(i, j);
     this.#publishSelection();
     this.#draw();
   }
@@ -857,7 +919,7 @@ export class NotatioShow extends LitElement {
     let dragged = false;
     canvas.setPointerCapture(e.pointerId);
     const move = (m: PointerEvent): void => {
-      if (!dragged && Math.hypot(m.clientX - x0, m.clientY - y0) < SLOP) return;
+      if (this.#fixed || (!dragged && Math.hypot(m.clientX - x0, m.clientY - y0) < SLOP)) return;
       dragged = true;
       this.#moved = true;
       const scale = (2 * this.#view.extent) / r.height;
@@ -874,46 +936,44 @@ export class NotatioShow extends LitElement {
       canvas.removeEventListener("pointerup", up);
       canvas.removeEventListener("pointercancel", up);
       if (!dragged)
-        this.#select(this.#elementAt(this.#planeAt(u.clientX, u.clientY)), u.shiftKey || u.metaKey || u.ctrlKey);
+        this.#select(this.#hitsAt(this.#planeAt(u.clientX, u.clientY)), u.shiftKey || u.metaKey || u.ctrlKey);
     };
     canvas.addEventListener("pointermove", move);
     canvas.addEventListener("pointerup", up);
     canvas.addEventListener("pointercancel", up);
   };
 
-  #tipKey = "";
+  #infoKey = "";
 
-  /** Wolfram's `Tooltip`, for every tile: what the layer says of the one under the pointer. */
+  /** What the layer says of the tile under the pointer, in the strip under the plot. */
   #onHover = (e: PointerEvent): void => {
     const layer = this.#layer;
     if (!layer || e.buttons !== 0) return;
-    const [i, j] = this.#elementAt(this.#planeAt(e.clientX, e.clientY));
-    if (!Number.isFinite(i) || !Number.isFinite(j)) return;
+    const [i, j] = this.#hitsAt(this.#planeAt(e.clientX, e.clientY))[0] ?? [Number.NaN, Number.NaN];
     const { bounds } = layer;
-    const outside = bounds && (i < bounds.i[0] || i > bounds.i[1] || j < bounds.j[0] || j > bounds.j[1]);
-    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    const [x, y] = [e.clientX - r.left, e.clientY - r.top];
-    // On the side with room: left of the pointer in the plot's right half.
-    const [flip, above] = [x > r.width / 2, y > r.height / 2];
-    const key = `${i},${j}`;
+    const outside =
+      !Number.isFinite(i) ||
+      !Number.isFinite(j) ||
+      (bounds && (i < bounds.i[0] || i > bounds.i[1] || j < bounds.j[0] || j > bounds.j[1]));
     if (outside) {
-      this._tip = undefined;
-      this.#tipKey = "";
-    } else if (key !== this.#tipKey) {
-      this.#tipKey = key;
-      if (!layer.known(i, j)) layer.prepare(i, j);
-      this._tip = { x, y, flip, above, ...layer.describe(i, j) };
-    } else if (this._tip) this._tip = { ...this._tip, x, y, flip, above };
+      this.#onLeave();
+      return;
+    }
+    const key = `${i},${j}`;
+    if (key === this.#infoKey) return;
+    this.#infoKey = key;
+    if (!layer.known(i, j)) layer.prepare(i, j);
+    this._info = layer.describe(i, j);
   };
 
   #onLeave = (): void => {
-    this._tip = undefined;
-    this.#tipKey = "";
+    this._info = undefined;
+    this.#infoKey = "";
   };
 
   #onWheel = (e: WheelEvent): void => {
     const canvas = e.currentTarget as HTMLCanvasElement;
-    if (!wheelZooms(e, canvas, this.#gestures) || !this.#layer) return;
+    if (this.#fixed || !wheelZooms(e, canvas, this.#gestures) || !this.#layer) return;
     e.preventDefault();
     this.#moved = true;
     const anchor = this.#planeAt(e.clientX, e.clientY);
@@ -943,6 +1003,7 @@ export class NotatioShow extends LitElement {
   /** Back to the frame the layer chose. */
   /** Where a layer starts: a finite one fitted whole to the canvas, else the layer's own home. */
   #home(layer: ShowLayer): LatticeView {
+    if (layer.view === "fixed" || layer.place) return fitView(layer, this.#w / this.#h);
     if (!layer.bounds) return layer.home?.() ?? { center: [0, 0], extent: 20 };
     const { i, j } = layer.bounds;
     const [b0, b1] = layer.basis;
@@ -970,21 +1031,12 @@ export class NotatioShow extends LitElement {
   }
 
   #legendTemplate(vertical: boolean): unknown {
-    const colors = this.#colorRules;
-    const edges = this._spec?.boundaryRules ?? [];
+    const colors = this._spec?.defaulted.colors ? [] : this.#colorRules;
+    const edges = this._spec?.defaulted.edges ? [] : this.#boundaryRules;
     if (colors.length + edges.length === 0) return undefined;
     return html`<ul class=${`notatio-legend notatio-show-legend ${vertical ? "is-vertical" : ""}`}>
-      ${colors.map((rule, k) => (typeof rule.paint === "string" ? this.#swatch(rule, rule.paint, k) : this.#bar(rule, rule.paint, k)))}
-      ${edges.map(
-        (rule) => html`<li>
-          <span class="notatio-show-swatch">
-            <i
-              style=${`box-shadow: inset 0 0 0 ${Math.max(1.5, rule.width)}px ${rule.color}; opacity:${rule.opacity}`}
-            ></i>
-          </span>
-          <span class="notatio-legend-label">${rule.label}</span>
-        </li>`,
-      )}
+      ${colors.map((rule, k) => (typeof rule.paint === "string" ? this.#swatch(rule, rule.paint, k) : this.#scheme(rule, rule.paint, k)))}
+      ${edges.map((rule, k) => this.#edge(rule, k))}
     </ul>`;
   }
 
@@ -1004,40 +1056,59 @@ export class NotatioShow extends LitElement {
     </li>`;
   }
 
-  /** An indexed scheme's first colors, numbered: what value k paints. */
-  #indexed(rule: ColorRule, colors: readonly string[]): unknown {
-    return html`<li class="notatio-legend-gradient">
+  /** An edge rule's swatch, its outline the edge's color, which opens a color picker. */
+  #edge(rule: BoundaryRule, k: number): unknown {
+    return html`<li>
+      <label class="notatio-show-swatch" data-tip="Choose the edge color">
+        <i style=${`box-shadow: inset 0 0 0 ${Math.max(1.5, rule.width)}px ${rule.color}; opacity:${rule.opacity}`}></i>
+        <input
+          type="color"
+          .value=${rule.color}
+          aria-label=${`${rule.label} edge color`}
+          @input=${(e: Event) => {
+            this._edgeColors = new Map(this._edgeColors).set(k, (e.target as HTMLInputElement).value);
+            this.#draw();
+          }}
+        />
+      </label>
       <span class="notatio-legend-label">${rule.label}</span>
-      <span class="notatio-show-indexed">
-        ${colors.slice(0, INDEXED_SHOWN).map((c, n) => html`<span><i style=${`background:${c}`}></i>${n}</span>`)}
-      </span>
     </li>`;
   }
 
-  /** A scheme rule's bar, which opens the schemes, with its padding and a reverse. */
-  #bar(rule: ColorRule, scheme: SchemeColor, k: number): unknown {
+  /** An indexed scheme's first colors, numbered: what value k paints. */
+  #indexed(rule: ColorRule, colors: readonly string[]): unknown {
+    return html`<li class="notatio-show-indexed">
+      <span class="notatio-legend-label">${rule.label}</span>
+      ${colors.slice(0, INDEXED_SHOWN).map((c, n) => html`<span><i style=${`background:${c}`}></i>${n}</span>`)}
+    </li>`;
+  }
+
+  /**
+   * A scheme rule: a swatch like a color's, the gradient drawn across it at an angle, which opens
+   * the schemes; where the band falls, and the padding and reverse, beside it on hover.
+   */
+  #scheme(rule: ColorRule, scheme: SchemeColor, k: number): unknown {
     if (scheme.indexed) return this.#indexed(rule, scheme.indexed);
     const { mode, band, offset } = scheme;
     const at = (k: number): string => String(+(offset + k * band).toPrecision(6));
-    const ticks =
+    const ends =
       mode === "reflect"
-        ? [`${at(0)}, ${at(2)}, …`, `${at(1)}, ${at(3)}, …`]
+        ? `${at(0)}, ${at(2)}, … to ${at(1)}, ${at(3)}, …`
         : mode === "wrap"
-          ? [`${at(0)}, ${at(1)}, …`, ""]
-          : [`${at(0)} and below`, `${at(1)} and past`];
+          ? `from ${at(0)}, again every ${at(1)}`
+          : `${at(0)} and below to ${at(1)} and past`;
     const next = BAND_MODES[(BAND_MODES.indexOf(mode) + 1) % BAND_MODES.length]!;
-    return html`<li class="notatio-legend-gradient">
-      <span class="notatio-legend-label">${rule.label}</span>
-      <label class="notatio-show-gradient" data-tip="Choose the color scheme">
-        <span class="notatio-legend-bar" style=${`background:${gradientCss(scheme.gradient)}`}></span>
+    return html`<li class="notatio-show-scheme">
+      <label class="notatio-show-swatch" data-tip=${`${scheme.gradient.label}: ${ends}`}>
+        <i style=${`background:${gradientCss(scheme.gradient, "135deg")}`}></i>
         <select
-          aria-label="Color scheme"
+          aria-label=${`${rule.label} color scheme`}
           @change=${(e: Event) => this.#setOverride(k, { gradient: (e.target as HTMLSelectElement).value })}
         >
           ${GRADIENTS.map((g) => html`<option value=${g.name} ?selected=${g.name === scheme.gradient.name}>${g.label}</option>`)}
         </select>
       </label>
-      <span class="notatio-legend-ticks">${ticks.map((t) => html`<span>${t}</span>`)}</span>
+      <span class="notatio-legend-label">${rule.label}</span>
       <span class="notatio-show-ends">
         <button
           type="button"
@@ -1057,6 +1128,22 @@ export class NotatioShow extends LitElement {
     </li>`;
   }
 
+  /**
+   * The strip under the plot: what the layer says of the tile under the pointer, else of the one
+   * selected, else of the layer as a whole.
+   */
+  #infoTemplate(): unknown {
+    const layer = this.#layer;
+    if (!layer) return undefined;
+    const [only] = this._selection.length === 1 ? this._selection : [];
+    const info =
+      this._info ?? (only ? layer.describe(only[0], only[1]) : { title: layer.title, rows: layer.summary() });
+    return html`<p class="notatio-show-info" aria-live="polite">
+      <strong>${info.title}</strong>
+      ${info.rows.map(([k, v]) => html`<span><span class="notatio-show-info-key">${k}</span> ${v}</span>`)}
+    </p>`;
+  }
+
   /** `ImageSize -> [Automatic, h]` (or `[w, h]`), in the expression or as an attribute, gives the height. */
   get #height(): number {
     const size = this.#options.get("ImageSize");
@@ -1068,7 +1155,10 @@ export class NotatioShow extends LitElement {
   protected override render(): unknown {
     const ground = resolvePalette({ palette: this.ground });
     const legendAt: FramePlacement = placementOf(this.legendAt, "right");
-    const stage = html`<div class="notatio-show-layers" style=${`background:${ground.background}`}>
+    const stage = html`<div
+        class=${`notatio-show-layers${this.#fixed ? " is-fixed" : ""}`}
+        style=${`background:${ground.background}`}
+      >
         ${["tiles", "lines", "axes"].map(
           (name) =>
             html`<canvas
@@ -1082,27 +1172,6 @@ export class NotatioShow extends LitElement {
               @keydown=${name === "axes" ? this.#onKey : nothing}
             ></canvas>`,
         )}
-        ${
-          this._tip
-            ? html`<div
-                class=${`notatio-show-tip${this._tip.flip ? " is-flipped" : ""}${this._tip.above ? " is-above" : ""}`}
-                style=${`left:${this._tip.x}px;top:${this._tip.y}px`}
-              >
-                <strong>${this._tip.title}</strong>
-                ${
-                  this._tip.rows.length
-                    ? html`<dl>
-                        ${this._tip.rows.map(
-                          ([k, v]) =>
-                            html`<dt>${k}</dt>
-                              <dd>${v}</dd>`,
-                        )}
-                      </dl>`
-                    : nothing
-                }
-              </div>`
-            : nothing
-        }
       </div>
       ${this._status ? html`<p class="notatio-show-status">${this._status}</p>` : nothing}`;
     return html`<div class="notatio-show">
@@ -1110,7 +1179,8 @@ export class NotatioShow extends LitElement {
         stage,
         stageStyle: `min-height:${this.#height}px`,
         legend: this.#legendTemplate(isVertical(legendAt)),
-        captionAt: "none",
+        caption: this.#infoTemplate(),
+        captionAt: "below",
         legendAt,
       })}
     </div>`;
@@ -1147,11 +1217,42 @@ function modulusOf(ring: Json): number {
 }
 
 /**
+ * Start loading the modules `json`'s layers draw with, before its scope has bound them: the
+ * scope waits on the engine, and the layer's module is a chain of imports of its own.
+ */
+function prefetchLayers(json: Json): void {
+  for (const layer of argsOf(json)) {
+    const head = headOf(layer);
+    const data = argsOf(layer)[0];
+    if (head === "ArrayPlot") void import("@enumeratio/residues/table");
+    else if (head === "LatticeTiles" && headOf(data) === "RadixExpansions")
+      void import("@enumeratio/complex-numerals/lattice");
+    else if (head === "LatticeTiles") void import("@enumeratio/number-theory/lattice");
+  }
+}
+
+/**
+ * `AlgebraicIntegers(Sqrt(n))` and `AlgebraicOrder(Sqrt(n))` as the quadratic rings they are:
+ * `QuadraticIntegers(n)` and ℤ[√n], `QuadraticOrder(4n)`. Read here, unevaluated, since a Show's
+ * layers are held.
+ */
+function quadraticRingOf(ring: Json): Json {
+  const [root] = argsOf(ring);
+  if (headOf(root) !== "Sqrt") return ring;
+  const n = numberOf(argsOf(root)[0], Number.NaN);
+  if (headOf(ring) === "AlgebraicIntegers") return ["QuadraticIntegers", n];
+  if (headOf(ring) === "AlgebraicOrder") return ["QuadraticOrder", 4 * n];
+  return ring;
+}
+
+/**
  * A tiled layer's tiles, loaded on first use: `LatticeTiles` of `QuadraticIntegers(d)`,
  * `GaussianIntegers` or `EisensteinIntegers`; `ArrayPlot` of `MultiplicationTable(QuotientRing(Integers, n))`.
  */
 async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): Promise<ShowLayer | string> {
-  if (tiles === undefined) return "Show needs a layer: LatticeTiles(ring, …) or ArrayPlot(table, …).";
+  if (tiles === undefined)
+    return "Show needs a layer: LatticeTiles(ring, …), ArrayPlot(table, …), StrandDiagram(diagram, …), CellDiagram(cells, …), TreeDiagram(tree, …) or PathDiagram(path, …).";
+  if (tiles.head !== "LatticeTiles" && tiles.head !== "ArrayPlot") return figureLayerOf(tiles.head, tiles.data);
   if (tiles.head === "ArrayPlot") {
     // `MultiplicationTable(ring, ElementOrder -> ChineseRemainder)`: how rows and columns list the ring.
     const table = splitOptions(tiles.data, new Set(["ElementOrder"]));
@@ -1167,7 +1268,9 @@ async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): P
     const { radixExpansions } = await import("@enumeratio/complex-numerals/lattice");
     return radixExpansions(settings);
   }
-  const ring = tiles.data;
+  const ring = quadraticRingOf(tiles.data);
+  // QuadraticOrder(D) by its discriminant; the rest by d.
+  const order = headOf(ring) === "QuadraticOrder" ? numberOf(argsOf(ring)[0], Number.NaN) : undefined;
   const d =
     ring === "GaussianIntegers"
       ? -1
@@ -1175,12 +1278,21 @@ async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): P
         ? -3
         : headOf(ring) === "QuadraticIntegers"
           ? numberOf(argsOf(ring)[0], Number.NaN)
-          : Number.NaN;
+          : (order ?? Number.NaN);
   if (!Number.isInteger(d))
-    return "LatticeTiles needs a ring: QuadraticIntegers(d), GaussianIntegers or EisensteinIntegers.";
+    return "LatticeTiles needs a ring: QuadraticIntegers(d), QuadraticOrder(D), GaussianIntegers or EisensteinIntegers.";
+  const logarithmic = tiles.embedding === "Logarithmic";
   const { quadraticLattice } = await import("@enumeratio/number-theory/lattice");
-  const layer = quadraticLattice(d, { scale: aspect === "True" ? "geometric" : "uniform" });
-  return layer ?? `ℚ(√${d}) is not a quadratic field: ${d} is a square.`;
+  const layer = quadraticLattice(d, {
+    scale: aspect === "True" ? "geometric" : "uniform",
+    ...(order === undefined ? {} : { discriminant: order }),
+    ...(logarithmic ? { embedding: "logarithmic" as const } : {}),
+  });
+  if (layer) return layer;
+  if (logarithmic && d < 0) return "The logarithmic embedding is a real field's: an imaginary one has a single |σ|.";
+  return order === undefined
+    ? `ℚ(√${d}) is not a quadratic field: ${d} is a square.`
+    : `${d} is no quadratic discriminant: one is 0 or 1 mod 4, and not a square.`;
 }
 
 if (!customElements.get("notatio-show")) customElements.define("notatio-show", NotatioShow);

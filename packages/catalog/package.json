@@ -30,7 +30,7 @@
     "@enumeratio/engine": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.148.0",
+    "@cortex-js/compute-engine": "^0.149.0",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/config": "workspace:*",
     "@enumeratio/engine": "workspace:*",
@@ -41,7 +41,7 @@
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.148.0"
+    "@cortex-js/compute-engine": "^0.149.0"
   },
   "enumeratio": {
     "layer": "tooling",

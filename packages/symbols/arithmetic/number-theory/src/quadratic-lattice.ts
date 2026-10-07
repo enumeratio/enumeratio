@@ -27,6 +27,8 @@ import {
   type QuadraticElement,
   type QuadraticKind,
   type QuadraticRing,
+  meetsConductor,
+  quadraticOrder,
   quadraticRing,
   rootsOfUnity,
   splitsPrincipally,
@@ -49,8 +51,18 @@ const KIND_CODE: Record<QuadraticKind, number> = CELL;
  */
 export type QuadraticScale = "uniform" | "geometric";
 
+/**
+ * Where the elements are drawn: on their lattice, or, for a real field, at their logarithmic
+ * embedding (log|σ₁(α)|, log|σ₂(α)|). There the units lie on the antidiagonal, evenly spaced by
+ * the regulator, and the elements of norm ±n on the line x + y = log n.
+ */
+export type QuadraticEmbedding = "lattice" | "logarithmic";
+
 export interface QuadraticLatticeOptions {
   readonly scale?: QuadraticScale;
+  readonly embedding?: QuadraticEmbedding;
+  /** An order's discriminant f²·D_K instead of the field's: `QuadraticOrder(D)`'s lattice. */
+  readonly discriminant?: number | bigint;
 }
 
 /** Past this |N|, products of doubles can lose digits; the norm stays under 2⁵⁰. */
@@ -113,17 +125,24 @@ function surdSum(a: bigint, b: bigint, root: string): string {
   return `${minus(a)} ${b < 0n ? "−" : "+"} ${term}`;
 }
 
-/** x + yω written over √d: x + y√d, or (X + Y√d)/2 when ω = (−1 + √d)/2 and X, Y are odd. */
+/**
+ * The surd an order's elements are written over: √(D/4) when s is even (ω = s/2 + √(D/4): √d
+ * for ℤ[√d], √8 for ℤ[√8]), √D when s is odd (ω = (s + √D)/2).
+ */
+const rootOf = (R: QuadraticRing): string =>
+  R.s % 2n === 0n ? sqrtText(R.discriminant / 4n) : sqrtText(R.discriminant);
+
+/** x + yω written over its surd: x + y√8 in ℤ[√8], or (X + Y√D)/2 when s is odd and X, Y are. */
 export function elementText(R: QuadraticRing, [x, y]: QuadraticElement): string {
-  const root = sqrtText(R.d);
-  if (R.s === 0n) return surdSum(x, y, root);
+  const root = rootOf(R);
+  if (R.s % 2n === 0n) return surdSum(x + (R.s / 2n) * y, y, root);
   const X = 2n * x + R.s * y;
   return y % 2n === 0n ? surdSum(X / 2n, y / 2n, root) : `(${surdSum(X, y, root)})/2`;
 }
 
-/** The ring's name as text: ℤ[i], ℤ[√−5], ℤ[ω] with ω = (−1 + √−3)/2. */
+/** The order's name as text: ℤ[i], ℤ[√−5], ℤ[√8], or ℤ[ω] with ω = (−1 + √−3)/2. */
 export function ringText(R: QuadraticRing): string {
-  return R.s === 0n ? `ℤ[${sqrtText(R.d)}]` : `ℤ[ω], ω = (−1 + ${sqrtText(R.d)})/2`;
+  return R.s % 2n === 0n ? `ℤ[${rootOf(R)}]` : `ℤ[ω], ω = (${minus(R.s)} + ${rootOf(R)})/2`;
 }
 
 /** A prime ideal as text: (p) when inert, else (p, a + √d), which is (p, ω − c). */
@@ -134,10 +153,11 @@ export function idealText(R: QuadraticRing, P: PrimeIdeal): string {
     const m = ((a % p) + p) % p;
     return m > p / 2n ? m - p : m;
   };
-  if (R.s !== 0n && p === 2n) return `(2, ${elementText(R, [-P.c!, 1n])})`;
-  // For odd p, (p, ω − c) = (p, 2ω − 2c) and 2ω − 2c = (s − 2c) + √d.
-  const a = R.s !== 0n ? symmetric(R.s - 2n * P.c!) : symmetric(-P.c!);
-  return `(${p}, ${surdSum(a, 1n, sqrtText(R.d))})`;
+  // ω − c = (s/2 − c) + √(D/4) when s is even.
+  if (R.s % 2n === 0n) return `(${p}, ${surdSum(symmetric(R.s / 2n - P.c!), 1n, rootOf(R))})`;
+  if (p === 2n) return `(2, ${elementText(R, [-P.c!, 1n])})`;
+  // For odd p, (p, ω − c) = (p, 2ω − 2c) and 2ω − 2c = (s − 2c) + √D.
+  return `(${p}, ${surdSum(symmetric(R.s - 2n * P.c!), 1n, rootOf(R))})`;
 }
 
 interface PrimeInfo {
@@ -171,20 +191,32 @@ export interface QuadraticLattice {
   describe(i: number, j: number): { title: string; rows: (readonly [string, string])[] };
   /** Facts about the ring as a whole, for a heading. */
   summary(): (readonly [string, string])[];
+  /** In the logarithmic embedding: where i + jω sits, the points there are, and their range. */
+  place?(i: number, j: number): readonly number[];
+  addresses?(): readonly Vec2[];
+  mark?(i: number, j: number): { readonly head: "Disk"; readonly radius: number };
+  readonly bounds?: { readonly i: Vec2; readonly j: Vec2 };
 }
 
-/** The lattice of O_K for ℚ(√n), or undefined when n is a square. */
+/**
+ * The lattice of O_K for ℚ(√n), or with `discriminant` of the order of that discriminant;
+ * undefined when n is a square, or the discriminant isn't one, or the logarithmic embedding is
+ * asked of an imaginary field.
+ */
 export function quadraticLattice(
   n: number | bigint,
   options: QuadraticLatticeOptions = {},
 ): QuadraticLattice | undefined {
-  const R = quadraticRing(BigInt(n));
-  if (R === undefined) return undefined;
+  const R =
+    options.discriminant === undefined ? quadraticRing(BigInt(n)) : quadraticOrder(BigInt(options.discriminant));
+  if (R === undefined || (options.embedding === "logarithmic" && R.discriminant < 0n)) return undefined;
   const ring = R;
   const [s, r] = [Number(R.s), Number(R.r)];
   const D = Number(R.discriminant);
   const group = classGroup(R);
-  const hexagonal = s !== 0;
+  // ω = s/2 + √(D/4) for an even s, a square lattice; ω = (s + √D)/2 for an odd one, a centered,
+  // hexagonal one.
+  const hexagonal = s % 2 !== 0;
 
   const basis: readonly [Vec2, Vec2] =
     options.scale === "geometric"
@@ -192,15 +224,10 @@ export function quadraticLattice(
           [1, 0],
           [s / 2, Math.sqrt(Math.abs(D)) / 2],
         ]
-      : hexagonal
-        ? [
-            [1, 0],
-            [-0.5, Math.sqrt(3) / 2],
-          ]
-        : [
-            [1, 0],
-            [0, 1],
-          ];
+      : [
+          [1, 0],
+          [s / 2, hexagonal ? Math.sqrt(3) / 2 : 1],
+        ];
   // |N(i + jω)| ≤ (|i| + |j|)²·(1 + |s| + |r|) stays under NORM_LIMIT.
   const maxIndex = Math.floor(Math.sqrt(NORM_LIMIT / (1 + Math.abs(s) + Math.abs(r))) / 2);
 
@@ -226,6 +253,7 @@ export function quadraticLattice(
   const modP = (a: number, p: number): number => ((a % p) + p) % p;
 
   const normOf = (i: number, j: number): number => i * i + s * i * j - r * j * j;
+  const conductor = Number(R.conductor);
 
   function classifyFast(i: number, j: number): number {
     const n = normOf(i, j);
@@ -233,7 +261,9 @@ export function quadraticLattice(
     const m = Math.abs(n);
     if (m === 1) return CELL.unit;
     const factors = m < NORM_LIMIT ? factorSmall(m) : undefined;
-    if (factors === undefined) {
+    // Past the doubles, or at a prime of the conductor where the ideal theory below doesn't
+    // hold: the exact kernel.
+    if (factors === undefined || (conductor > 1 && factors.some(([p]) => conductor % p === 0))) {
       const kind = classify(ring, [BigInt(i), BigInt(j)]);
       return kind === undefined ? CELL.unknown : KIND_CODE[kind];
     }
@@ -311,6 +341,25 @@ export function quadraticLattice(
     [CELL.unknown]: "not decided",
   };
 
+  // An element's kind is its conjugate's and its associates': conjugation is an automorphism, and
+  // a unit multiple factors as it does. So one classification fills in all of them: ±1, ±i in
+  // ℤ[i], the six roots of unity in ℤ[ω], ±ε^±1 in a real field.
+  const unitsAsDoubles: Vec2[] = (
+    R.d < 0n
+      ? rootsOfUnity(R)
+      : (() => {
+          const eps = fundamentalUnit(R)!;
+          const inverse = divideExact(R, ONE, eps)!;
+          return [ONE, eps, inverse].flatMap((u) => [u, [-u[0], -u[1]] as QuadraticElement]);
+        })()
+  ).map(([x, y]) => [Number(x), Number(y)] as Vec2);
+  const times = (a: Vec2, b: Vec2): Vec2 => [
+    a[0] * b[0] + r * a[1] * b[1],
+    a[0] * b[1] + a[1] * b[0] + s * a[1] * b[1],
+  ];
+  const relatives = (i: number, j: number): Vec2[] =>
+    [[i, j] as Vec2, [i + s * j, -j] as Vec2].flatMap((p) => unitsAsDoubles.map((u) => times(p, u)));
+
   const classified = (i: number, j: number): number => {
     const k = key(i, j);
     let code = cache.get(k);
@@ -318,6 +367,12 @@ export function quadraticLattice(
       if (cache.size > CACHE_LIMIT) cache.clear();
       code = classifyFast(i, j);
       cache.set(k, code);
+      if (code !== CELL.unknown) {
+        for (const [x, y] of relatives(i, j)) {
+          if (Math.abs(x) <= maxIndex && Math.abs(y) <= maxIndex && Number.isSafeInteger(x) && Number.isSafeInteger(y))
+            cache.set(key(x, y), code);
+        }
+      }
     }
     return code;
   };
@@ -330,20 +385,25 @@ export function quadraticLattice(
     return primeInfo(m).kind === 2 ? SPLITTING.ramified : SPLITTING.split;
   };
 
-  return {
+  const lattice: QuadraticLattice = {
     ring: R,
-    title: `ℚ(${sqrtText(R.d)})`,
+    title: R.conductor === 1n ? `ℚ(${sqrtText(R.d)})` : ringText(R),
     basis,
     maxIndex,
     known: (i, j) => cache.has(key(i, j)),
     // 1 and ω: a square grid for ℤ[√d], a rhombic one when ω = (−1 + √d)/2 tips up and to the left.
+    // An even s makes the lattice square whatever ω is (ℤ[√−3]'s ω = −1 + √−3): its grid runs
+    // along ω − s/2 = √(D/4) instead, at lattice coordinates (−s/2, 1).
     grid: [
       [1, 0],
-      [0, 1],
+      [hexagonal ? 0 : -s / 2, 1],
     ],
-    // ω stands for the generator on its axis (i for ℤ[i]); the caption says what it is.
+    // ω stands for the generator on its axis (i for ℤ[i], the root when the grid follows it); the
+    // caption says what it is.
     gridLabel: (axis, k) =>
-      axis === 0 ? minus(k) : `${k === 1 ? "" : k === -1 ? "−" : minus(k)}${R.d === -1n ? "i" : "ω"}`,
+      axis === 0
+        ? minus(k)
+        : `${k === 1 ? "" : k === -1 ? "−" : minus(k)}${R.d === -1n ? "i" : hexagonal || s === 0 ? "ω" : rootOf(R)}`,
     properties: [
       { name: "IsPrime", description: "a prime element: (α) is a prime ideal" },
       { name: "IsIrreducible", description: "no factorization into two non-units; every prime is irreducible" },
@@ -423,7 +483,7 @@ export function quadraticLattice(
         ["kind", kindLabel[code]!],
       ];
       if (n !== 0n && !isUnit(R, a)) {
-        const ufd = group?.order === 1;
+        const ufd = group?.order === 1 && R.conductor === 1n;
         const primesOf = ufd ? factorElement(R, a) : undefined;
         if (primesOf !== undefined) {
           rows.push([
@@ -443,7 +503,8 @@ export function quadraticLattice(
             rows.push([ways.length > 1 ? "factorization" : "irreducibles", shown.join(" · ")]);
           }
         }
-        const ideals = idealFactorization(R, a);
+        // At a prime of the conductor the ideals aren't invertible, and (a) has no such factorization.
+        const ideals = meetsConductor(R, a) ? undefined : idealFactorization(R, a);
         if (ideals !== undefined && !ufd) {
           rows.push(["ideals", ideals.map(([P, e]) => `${idealText(R, P)}${superscript(e)}`).join(" ")]);
         }
@@ -455,10 +516,67 @@ export function quadraticLattice(
     summary() {
       return [
         ["ring", ringText(R)],
+        ...(R.conductor > 1n ? ([["conductor", String(R.conductor)]] as [string, string][]) : []),
         ["discriminant", minus(R.discriminant)],
         ["class number", group === undefined ? "too large to enumerate" : String(group.order)],
         ["units", units],
       ];
+    },
+  };
+  return options.embedding === "logarithmic" ? logarithmic(lattice, s, r) : lattice;
+}
+
+/** The logarithmic embedding draws the elements i + jω with |i|, |j| ≤ LOG_BOX and |N| ≤ LOG_NORMS. */
+const LOG_BOX = 120;
+const LOG_NORMS = 200;
+/** A mark's radius, in units of log|σ|. */
+const LOG_MARK = 0.045;
+
+/**
+ * `lattice`'s elements at (log|σ₁|, log|σ₂|), σ₁,₂(ω) = (s ± √D)/2 with D = s² + 4r > 0. Only small
+ * norms: each lies on its line x + y = log|N|, and the large ones would fill the quadrant.
+ */
+function logarithmic(lattice: QuadraticLattice, s: number, r: number): QuadraticLattice {
+  const root = Math.sqrt(s * s + 4 * r);
+  const [w1, w2] = [(s + root) / 2, (s - root) / 2];
+  const place = (i: number, j: number): Vec2 => [Math.log(Math.abs(i + j * w1)), Math.log(Math.abs(i + j * w2))];
+  const addresses: Vec2[] = [];
+  for (let i = -LOG_BOX; i <= LOG_BOX; i++)
+    for (let j = -LOG_BOX; j <= LOG_BOX; j++) {
+      const n = Math.abs(i * i + s * i * j - r * j * j);
+      if (n !== 0 && n <= LOG_NORMS) addresses.push([i, j]);
+    }
+  // A figure's marks are drawn all at once, not dripped in: each is classified when first asked.
+  const ready = (i: number, j: number): void => {
+    if (!lattice.known(i, j)) lattice.prepare(i, j);
+  };
+  return {
+    ...lattice,
+    title: `${lattice.title}, logarithmically`,
+    // The frame is the plane of (log|σ₁|, log|σ₂|) itself, not the lattice's.
+    basis: [
+      [1, 0],
+      [0, 1],
+    ],
+    known: () => true,
+    has(i, j, property) {
+      ready(i, j);
+      return lattice.has(i, j, property);
+    },
+    value(i, j, name) {
+      ready(i, j);
+      return lattice.value(i, j, name);
+    },
+    place,
+    addresses: () => addresses,
+    mark: () => ({ head: "Disk", radius: LOG_MARK }),
+    bounds: { i: [-LOG_BOX, LOG_BOX], j: [-LOG_BOX, LOG_BOX] },
+    // log|σ₁| and log|σ₂| on the axes; a grid line every unit of each.
+    gridLabel: (_, k) => minus(k),
+    describe(i, j) {
+      const d = lattice.describe(i, j);
+      const [x, y] = place(i, j);
+      return { ...d, rows: [...d.rows, ["log |σ₁|, log |σ₂|", `${minus(+x.toFixed(3))}, ${minus(+y.toFixed(3))}`]] };
     },
   };
 }

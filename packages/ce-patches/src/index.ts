@@ -6,7 +6,6 @@ import { rangeBigBounds } from "./patches/range-big-bounds.ts";
 import { shapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 import { solveDeclines } from "./patches/solve-declines.ts";
 import { solveDomains } from "./patches/solve-domains.ts";
-import { takeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 import { PATCHES } from "./patches/registry-data.ts";
 
 export type { LibraryRecord, Patch } from "./patch.ts";
@@ -80,19 +79,11 @@ export { logGamma, logGammaReal, logGammaBig } from "./compute-engine/numerics/l
 export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.ts";
 export { solveDomains, evaluateSolveDomains } from "./patches/solve-domains.ts";
 export { integratePolynomialPowers, integrateExpandsPolynomials } from "./patches/integrate-polynomial-powers.ts";
-export { takeDropNegativeCount, evaluateTakeDropNegativeCount } from "./patches/take-drop-negative-count.ts";
 export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
 export { rangeBigBounds, evaluateRangeBigBounds } from "./patches/range-big-bounds.ts";
 export { shapeOfUnknownElements, evaluateShapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
-export {
-  quotientRingCollection,
-  quotientRingExactCount,
-  integerQuotientModulus,
-} from "./patches/quotient-ring-collection.ts";
 export { valuesAtZero } from "./patches/values-at-zero.ts";
-export { polyLogLargeOrder, evaluatePolyLogHugeOrder } from "./patches/polylog-huge-order.ts";
-export { polyLogHugeOrder, NATIVE_MAX_ORDER } from "./compute-engine/library/special-functions.ts";
 export { clausen } from "./compute-engine/numerics/clausen.ts";
 export { stieltjesGamma, stieltjesGammaReal, STIELTJES_MAX_ORDER } from "./compute-engine/numerics/stieltjes.ts";
 export { stieltjesGammaBall, stieltjesGammaBig } from "./compute-engine/numerics/stieltjes-big.ts";
@@ -200,7 +191,6 @@ export function applyNativeHeadPatches(ce: ComputeEngine): void {
   for (const patch of [
     solveDeclines,
     solveDomains,
-    takeDropNegativeCount,
     iteratorUpperBound,
     rangeBigBounds,
     shapeOfUnknownElements,
@@ -208,3 +198,4 @@ export function applyNativeHeadPatches(ce: ComputeEngine): void {
   ])
     applyPatch(ce, patch);
 }
+export { algebraicNumbers, numberField, readAlgebraic } from "./patches/algebraic-numbers.ts";

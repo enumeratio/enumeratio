@@ -18,6 +18,7 @@ import { valuation } from "@enumeratio/residues";
 import { declareCarriers } from "@enumeratio/structures";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { NUMBER_THEORY_CARRIERS } from "./carrier-data.ts";
+import { declareAlgebraic } from "./declare-algebraic.ts";
 import { declareBacklog } from "./declare-backlog.ts";
 import { declareFastFactorial } from "./declare-fast-factorial.ts";
 import { declareFastGcd } from "./declare-fast-gcd.ts";
@@ -53,8 +54,14 @@ export function declareNumberTheory(ce: Engine): void {
     description: SUMMARIES.QuadraticIntegers,
     signature: "(integer) -> set<quadratic_integer>",
   });
+  // The order of discriminant D, also for `Over`; QuadraticOrder(D_K) is QuadraticIntegers(d).
+  ce.declare("QuadraticOrder", {
+    description: SUMMARIES.QuadraticOrder,
+    signature: "(integer) -> set<quadratic_integer>",
+  });
 
   declareGaussian(ce);
+  declareAlgebraic(ce);
   declareGaussianRationalGcdLcm(ce);
   declareWidened(ce);
   declareBacklog(ce);

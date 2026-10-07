@@ -8,8 +8,11 @@ import {
   interpretSymbolicAgreement,
   leavesCall,
   lookThroughConditions,
+  notNumeric,
   positiveVariables,
+  seriesVariables,
   stepVariables,
+  SYMBOLIC_SECONDS,
   symbolicAgreementSource,
 } from "../src/symbolic.ts";
 
@@ -31,13 +34,18 @@ const equalSeries = (theirs: string): string =>
   `Cases[Quiet[TimeConstrained[${theirs}, 10, $Aborted]], _SeriesData, {0, Infinity}]], Infinity]]; ` +
   `AllTrue[Flatten[{d}], # === 0 || (pureO[#] && #[[5]]/#[[6]] >= bound) &])), `;
 
+// What the check says when its samples are not numbers: a structure is no value to sample, anything else is undecided.
+const structural = (theirs: string, ours: string): string =>
+  `Module[{v = Quiet[Check[TimeConstrained[{${theirs}, ${ours}}, 10, $Aborted], $Failed]]}, ` +
+  "If[v === $Failed || !FreeQ[v, _Function | _Rule | _RuleDelayed | _Unevaluated], NotNumeric, Indeterminate]]";
+
 test("wolfram: FullSimplify of the difference, with 3 fixed-rational trials as a fallback", () => {
   expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBe(
     `Module[{d = Quiet[TimeConstrained[FullSimplify[(${through("Plus[x, x]")}) - (Times[2, x])], 10, $Aborted]], pureO, bound}, ` +
       `${equalSeries(through("Plus[x, x]"))}True, Module[{s = {Chop[N[(${through("Plus[Rational[7, 3], Rational[7, 3]]")}) - (Times[2, Rational[7, 3]])]], ` +
       `Chop[N[(${through("Plus[Rational[-11, 5], Rational[-11, 5]]")}) - (Times[2, Rational[-11, 5]])]], ` +
       `Chop[N[(${through("Plus[Rational[13, 4], Rational[13, 4]]")}) - (Times[2, Rational[13, 4]])]]}}, ` +
-      "s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]",
+      `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], ${structural(through("Plus[x, x]"), "Times[2, x]")}]]]]`,
   );
 });
 
@@ -105,6 +113,20 @@ test("undefined when `expected` doesn't depend on any of `expr`'s free symbols",
   expect(symbolicAgreementSource("wolfram", ["Add", "x", "x"], 0, ["x"])).toBeUndefined();
   // Both sides free in the SAME symbol still goes through the agreement check.
   expect(symbolicAgreementSource("wolfram", expr, expected, ["x"])).toBeDefined();
+});
+
+test("samples that are not numbers say so for a structure, and decide nothing for a series", () => {
+  const apply = ["Apply", ["Add", "f", "g"], "x"];
+  const function_ = ["Function", ["Block", ["Add", "_1", "x"]]];
+  const asked = symbolicAgreementSource("wolfram", apply as never, function_ as never, ["f", "g", "x"]);
+  expect(asked).toMatch(/NotNumeric, Indeterminate\]+$/);
+  expect(notNumeric("NotNumeric\n")).toBe(true);
+  expect(notNumeric("Indeterminate")).toBe(false);
+  // A series' samples decide nothing, whatever the answer is.
+  const series = ["Series", ["Sin", ["Multiply", "a", "x"]], ["List", "x", 0, 3]];
+  const held = symbolicAgreementSource("wolfram", series as never, ["Multiply", "a", "x"] as never, ["a", "x"]);
+  expect(held).toMatch(/Indeterminate\]\]\]\]$/);
+  expect(held).not.toContain("NotNumeric");
 });
 
 test("interpretSymbolicAgreement reads True/False/anything-else as agree/disagree/inconclusive", () => {
@@ -267,6 +289,23 @@ test("a Wolfram answer is read through ConditionalExpression before the differen
   expect(source).toContain("ConditionalExpression[e_, _] :> e");
 });
 
+test("a call the kernel evaluates, kept in another form, is held: nested where the kernel computes it", () => {
+  const integrand = ["Boole", ["Less", ["Add", ["Power", "x", 2], ["Power", "y", 2]], 1]];
+  const limits = (variable: string) => ["Limits", variable, "NegativeInfinity", "PositiveInfinity"];
+  const asked = ["Integrate", ["Function", ["Block", integrand], "x", "y"], limits("x"), limits("y")];
+  const nested = [
+    "Integrate",
+    ["Function", ["Block", ["Integrate", ["Function", ["Block", integrand], "x", "y"], limits("y")]], "x"],
+    limits("x"),
+  ];
+  expect(leavesCall(asked as never, nested as never)).toBe(true);
+  expect(symbolicAgreementSource("wolfram", asked as never, nested as never, ["x", "y"])).toBeUndefined();
+  // Evaluated, or only a different head left in the answer: nothing is held.
+  expect(leavesCall(asked as never, ["Subtract", "Pi", 1] as never)).toBe(false);
+  expect(leavesCall(["Sin", "x"] as never, ["Integrate", ["Cos", "x"], "x"] as never)).toBe(false);
+  expect(leavesCall(["Sum", "k", ["Limits", "k", 1, 3]] as never, ["Sin", 6] as never)).toBe(false);
+});
+
 test("leavesCall: a held call is held however its factors are ordered or grouped", () => {
   const call = [
     "LaplaceTransform",
@@ -338,4 +377,64 @@ test("a form-transforming head that hands its input back is a rewrite not made",
   expect(echoesInput(["FunctionExpand", input] as never, ["Multiply", "x", "i"] as never)).toBe(false);
   expect(echoesInput(["Simplify", "x"] as never, "x" as never)).toBe(false);
   expect(echoesInput(["Sin", input] as never, input as never)).toBe(false);
+});
+
+test("a series' expansion variable stays the call's own, sampled only in the polynomial it gives", () => {
+  const series = ["Series", ["Sin", "x"], "x", "x0", 3];
+  expect([...seriesVariables(series as never)]).toEqual(["x"]);
+  // The list form names its variable first; the center and order are values.
+  expect([...seriesVariables(["Series", ["Sin", "x"], ["List", "x", "x0", 3]] as never)]).toEqual(["x"]);
+  expect(seriesVariables(["Add", "x", "x0"] as never).size).toBe(0);
+  const taylor = ["Add", ["Multiply", "x", ["Cos", "x0"]], ["Sin", "x0"]];
+  const source = symbolicAgreementSource("wolfram", ["Normal", series] as never, taylor as never, [
+    "x",
+    "x0",
+  ]) as string;
+  // Only `x0` is a number inside the call: with `x` one it is no series at all (Series::ivar).
+  expect(source).toContain("Series[Sin[x], List[x, Rational[-11, 5], 3]]");
+  expect(source).not.toMatch(/Series\[Sin\[Rational/);
+  expect(source).not.toMatch(/List\[Rational/);
+  // `x` is a number in what the call evaluates to, once it is a polynomial and not a `SeriesData`.
+  expect(source).toMatch(/Normal\[\(.*\) - \(.*\)\] \/\. \{x -> Rational\[-?\d+, \d+\]\}, 30\]/s);
+});
+
+test("a series ours holds is a call left undone, through the Normal that asks for its polynomial", () => {
+  const series = ["Series", ["Erfc", "x"], "x", "PositiveInfinity", 1];
+  // The kernel evaluates ours too, so a difference from its own polynomial of it would vanish.
+  expect(symbolicAgreementSource("wolfram", ["Normal", series] as never, series as never, ["x"])).toBe("Indeterminate");
+  expect(symbolicAgreementSource("wolfram", ["Simplify", ["Normal", series]] as never, series as never, ["x"])).toBe(
+    "Indeterminate",
+  );
+  // Ours expanded it: checked.
+  expect(
+    symbolicAgreementSource("wolfram", ["Normal", series] as never, ["Divide", 1, "x"] as never, ["x"]),
+  ).toBeDefined();
+});
+
+test("a simplifier around a series is left to the symbolic check, not run at every trial", () => {
+  const asked = ["FullSimplify", ["Normal", ["Series", ["Sin", "x"], "x", "x0", 3]]];
+  const taylor = ["Add", ["Multiply", "x", ["Cos", "x0"]], ["Sin", "x0"]];
+  const source = symbolicAgreementSource("wolfram", asked as never, taylor as never, ["x", "x0"]) as string;
+  const [symbolic, trials] = source.split("True, Module[{s = ") as [string, string];
+  expect(symbolic).toContain("FullSimplify[Normal[Series[");
+  expect(trials).not.toContain("FullSimplify");
+  expect(trials).toContain("Normal[Series[Sin[x]");
+});
+
+test("the simplifier's time cap is an option, ten seconds by default", () => {
+  expect(SYMBOLIC_SECONDS).toBe(10);
+  const cap = (seconds?: number) =>
+    symbolicAgreementSource("wolfram", expr as never, expected as never, ["x"], seconds) as string;
+  expect(cap()).toBe(cap(10));
+  expect(cap(75)).toContain("(Times[2, x])], 75, $Aborted]");
+  expect(cap(75)).not.toContain("10, $Aborted");
+  // A proposition and a `Solve` read it too.
+  const solved = symbolicAgreementSource(
+    "wolfram",
+    ["Solve", ["Equal", "x", "a"], "x"] as never,
+    ["List", "a"] as never,
+    ["a", "x"],
+    75,
+  );
+  expect(solved).toContain("FullSimplify[v - w], 75, $Aborted");
 });

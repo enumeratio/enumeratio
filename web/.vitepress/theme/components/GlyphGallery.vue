@@ -9,7 +9,7 @@ const families: Array<{
 }> = [
   {
     kind: "permutation",
-    title: "permutation — S₃ (matrix glyph: dot per row at image[i])",
+    title: "permutation — S₃ (strand diagram: i on the in row joined to image(i) on the out row)",
     items: [
       [1, 2, 3],
       [1, 3, 2],
@@ -21,7 +21,7 @@ const families: Array<{
   },
   {
     kind: "partition",
-    title: "partition — p(5) (Ferrers / Young diagram)",
+    title: "partition — p(5) (CellDiagram: a cell at each (row, column), rows as long as the parts)",
     items: [[5], [4, 1], [3, 2], [3, 1, 1], [2, 2, 1], [2, 1, 1, 1], [1, 1, 1, 1, 1]].map((p) => ({
       value: p,
       cap: p.join("+"),
@@ -29,7 +29,7 @@ const families: Array<{
   },
   {
     kind: "composition",
-    title: "composition — of 4 (divided bar, width ∝ n)",
+    title: "composition — of 4 (CellDiagram: one cell per part, width ∝ its value)",
     items: [[4], [3, 1], [1, 3], [2, 2], [2, 1, 1], [1, 1, 1, 1]].map((c) => ({
       value: c,
       cap: c.join("+"),
@@ -37,7 +37,7 @@ const families: Array<{
   },
   {
     kind: "subset",
-    title: "subset — of {1..4} (membership cells)",
+    title: "subset — of {1..4} (CellDiagram: a cell per element, members Filled)",
     items: [[], [1], [2, 4], [1, 2, 3], [1, 2, 3, 4]].map((s) => ({
       value: s,
       cap: `{${s.join(",")}}`,
@@ -46,7 +46,7 @@ const families: Array<{
   },
   {
     kind: "dyck",
-    title: "Dyck path — semilength 3 (mountain range, Catalan 5)",
+    title: "Dyck path — semilength 3 (PathDiagram: points at (step, height), steps as links; Catalan 5)",
     items: [
       [1, 0, 1, 0, 1, 0],
       [1, 0, 1, 1, 0, 0],
@@ -54,6 +54,40 @@ const families: Array<{
       [1, 1, 0, 1, 0, 0],
       [1, 1, 1, 0, 0, 0],
     ].map((d) => ({ value: d, cap: d.join("") })),
+  },
+  {
+    kind: "tableau",
+    title: "tableau — shapes of 4 (CellDiagram: superstandard filling, an Entry per cell)",
+    items: [[4], [3, 1], [2, 2], [2, 1, 1], [1, 1, 1, 1]].map((p) => ({ value: p, cap: p.join("+") })),
+  },
+  {
+    kind: "lattice",
+    title: "lattice path — 2 east, 2 north (PathDiagram: points at (x, y) on the grid)",
+    items: [
+      [0, 0, 1, 1],
+      [0, 1, 0, 1],
+      [0, 1, 1, 0],
+      [1, 0, 0, 1],
+      [1, 0, 1, 0],
+      [1, 1, 0, 0],
+    ].map((p) => ({ value: p, cap: p.join("") })),
+  },
+  {
+    kind: "binary-tree",
+    title: "binary tree — 2 internal nodes (TreeDiagram: nodes at (depth, order), parent edges as links)",
+    items: [
+      [1, 1, 0, 0, 0],
+      [1, 0, 1, 0, 0],
+    ].map((t) => ({ value: t, cap: t.join("") })),
+  },
+  {
+    kind: "tree",
+    title: "plane tree — preorder child counts (TreeDiagram)",
+    items: [
+      [2, 0, 1, 0],
+      [3, 0, 2, 0, 0, 1, 0],
+      [1, 1, 1, 0],
+    ].map((t) => ({ value: t, cap: t.join("") })),
   },
 ];
 </script>

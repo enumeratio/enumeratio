@@ -3,11 +3,13 @@
 // prose is read at build, its named slots placed by the head's parameters, and shown as its
 // value: an evaluated `<notatio-out>`, inline in a sentence, or displayed when it has lines of
 // its own. A tag that is a head but also a Vue component (`<Symbol>`, VitePress's `<Content>`)
-// stays the component. Markup that doesn't read fails the build.
+// stays the component. Markup that doesn't read fails the build. Markup that draws as written
+// (a `Show`, the layout around it) is its element already, so it paints with no kernel.
 
 import { GRAPHICS_HEADS, GRAPHICS_OPTIONS } from "@enumeratio/formats";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { readMarkupText } from "@enumeratio/formats/markup";
+import { drawnAsWritten, markupOf } from "@enumeratio/frontend";
 import { SYMBOLS } from "@enumeratio/manifest";
 
 /** The components a page can use by a PascalCase tag: the theme's, VitePress's and Vue's. */
@@ -119,12 +121,20 @@ const attribute = (text: string): string =>
     .replace(/\{/g, "&#123;")
     .replace(/\}/g, "&#125;");
 
+// A line break as an entity: a blank line would end the HTML block markdown-it reads it as.
+const block = (html: string): string => html.replace(/\{/g, "&#123;").replace(/\}/g, "&#125;").replace(/\n/g, "&#10;");
+
 /**
- * The element that shows `json`'s value. Inline, in a `<span>`: VitePress takes a line that
- * starts with any other tag as a block, which would end the sentence.
+ * The element that shows `json`'s value: its own element when it draws as written (keeping
+ * `json` in `data-mathjson`, for a story's source), else an evaluating Out. Inline, in a `<span>`: VitePress takes a line that starts with any other tag
+ * as a block, which would end the sentence.
  */
 export function outOf(json: unknown, display: boolean): string {
-  const out = `<notatio-out format="mathjson" evaluate ${display ? "display" : "inline"} value="${attribute(JSON.stringify(json))}"></notatio-out>`;
+  const drawn = drawnAsWritten(json as never);
+  const out =
+    drawn !== undefined
+      ? block(markupOf({ ...drawn, attributes: { ...drawn.attributes, "data-mathjson": JSON.stringify(json) } }))
+      : `<notatio-out format="mathjson" evaluate ${display ? "display" : "inline"} value="${attribute(JSON.stringify(json))}"></notatio-out>`;
   return display ? out : `<span>${out}</span>`;
 }
 

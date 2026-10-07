@@ -7,20 +7,17 @@ signatures:
   - call: Ceil(x)
     description: the least integer $\ge x$, $\lceil x \rceil$.
   - call: Ceil(x, step)
-    description: the least multiple of `step` at or above x, $\mathrm{step}\cdot\lceil x/\mathrm{step}\rceil$.
-    library: enumeratio-combinatorics
-    type: (number, number?) -> number
-    overrides: enumeratio-analytic
+    description: the least multiple of `step` at or above x.
   - call: Ceil(x)
     description: 'The least integer greater than or equal to x: $\lceil x \rceil$.'
     library: enumeratio-analytic
-    type: (real | signed_infinity) -> integer | signed_infinity
+    type: "(x: real | signed_infinity, step: real?) -> real | signed_infinity"
     overrides: compute-engine
   - call: Ceil(x)
     description: in a floor ring (Mathlib's), the least integer at or above x; in a floor order, the least tick at or above x; in a product order, coordinate by coordinate, so a complex number's real and imaginary parts are rounded up separately.
     library: enumeratio-structures
     type: (any, any?) -> any
-    overrides: enumeratio-combinatorics
+    overrides: enumeratio-analytic
 seeAlso:
   - Floor
   - Round
@@ -61,4 +58,4 @@ bindings:
 - Agrees with [[Floor]] exactly on integers.
 - Threads element-wise over a list.
 - A second argument rounds up to the nearest multiple of it -- the step needn't be an integer.
-- The second argument is a step, a multiple to ceil to, as in Wolfram's `Ceiling[x, a]`: $\mathrm{Ceil}(226, 10) = 230$. [[Round]]'s second argument is not: it counts decimal places, so $\mathrm{Round}(226, -1) = 230$ here where Wolfram writes `Round[226, 10]`. Round also breaks ties away from zero where Wolfram rounds them to even (see [[Round]]).
+- The second argument is a step, a multiple to ceil to, as in Wolfram's `Ceiling[x, a]`: $\mathrm{Ceil}(226, 10) = 230$. [[Round]]'s second argument is a step too. Round breaks ties away from zero where Wolfram rounds them to even (see [[Round]]).

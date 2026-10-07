@@ -21,6 +21,10 @@ notatio-out[display] {
 notatio-figure { display: inline-block; vertical-align: middle; line-height: 0; }
 notatio-figure svg { height: 2.5em; width: auto; max-width: 100%; overflow: visible; }
 notatio-figure[kind="diagram"] svg { height: 3.6em; }
+/* A kind lowered to a frame is a Show, sized by its element and drawn without the card. */
+notatio-figure > notatio-show { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; }
+notatio-figure .notatio-show { margin: 0; border: 0; background: none; }
+notatio-figure .notatio-show-layers { background: none !important; }
 
 /* Plots are block figures sized to a max width; the viewBox drives the ratio. */
 notatio-plot, notatio-plot-3d { display: block; line-height: 0; }
@@ -1499,32 +1503,26 @@ notatio-show {
 /* Layers over the first add light: unknown (transparent) is the identity. */
 .notatio-show-layers canvas + canvas { mix-blend-mode: screen; }
 .notatio-show-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: #cbd5e1; }
-/* A tile's tooltip: beside the pointer, never under it, and never in the way of the next move. */
-.notatio-show-tip {
-  position: absolute;
-  transform: translate(12px, 12px);
-  pointer-events: none;
-  width: max-content;
-  /* At most the half of the plot it opens into. */
-  max-width: min(24rem, calc(50% - 16px));
-  text-align: start;
-  padding: 0.35rem 0.55rem;
-  border-radius: 6px;
-  background: color-mix(in srgb, #0b0b16 88%, transparent);
-  color: #e2e8f0;
+/* What the layer says of the tile under the pointer, the selection or the whole: one strip under
+   the plot, two lines tall so the page doesn't jump as it changes. */
+.notatio-show-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.1rem 0.9rem;
+  margin: 0.35rem 0 0;
+  min-height: 2.8em;
   font-size: 0.8rem;
   line-height: 1.4;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.35);
-  z-index: 2;
+  color: var(--vp-c-text-2, #555);
+  font-variant-numeric: tabular-nums;
 }
-.notatio-show-tip.is-flipped { transform: translate(calc(-100% - 12px), 12px); }
-.notatio-show-tip.is-above { transform: translate(12px, calc(-100% - 12px)); }
-.notatio-show-tip.is-flipped.is-above { transform: translate(calc(-100% - 12px), calc(-100% - 12px)); }
-.notatio-show-tip dl { display: grid; grid-template-columns: auto 1fr; gap: 0 0.6rem; margin: 0.2rem 0 0; }
-.notatio-show-tip dt { color: #94a3b8; }
-.notatio-show-tip dd { margin: 0; font-variant-numeric: tabular-nums; }
+.notatio-show-info strong { color: var(--vp-c-text-1, inherit); font-weight: 600; }
+.notatio-show-info-key { color: var(--vp-c-text-3, #888); }
 .notatio-show-layers canvas:last-child { touch-action: none; cursor: grab; }
 .notatio-show-layers canvas:last-child:active { cursor: grabbing; }
+/* A fixed frame is fitted, not panned: the page scrolls over it. */
+.notatio-show-layers.is-fixed canvas:last-child { touch-action: auto; cursor: pointer; }
 .notatio-show-layers canvas:last-child:focus {
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
 }
@@ -1536,10 +1534,14 @@ notatio-show {
   opacity: 0;
   cursor: pointer;
 }
-.notatio-show-gradient { grid-area: bar; position: relative; display: block; cursor: pointer; }
-.notatio-show-gradient .notatio-legend-bar { display: block; }
-.notatio-show-gradient select { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.notatio-show-ends { display: inline-flex; gap: 0.25rem; }
+/* The legend stays out of the way: small, every rule one square swatch, a scheme's gradient across
+   its square; a scheme's padding and reverse show on hover or focus. */
+.notatio-show-legend { font-size: 0.8rem; gap: 0.2rem 0.8rem; }
+.notatio-show-legend .notatio-show-swatch > i { width: 0.95em; height: 0.95em; }
+.notatio-show-legend .notatio-show-swatch select { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.notatio-show-ends { display: inline-flex; gap: 0.1rem; opacity: 0; transition: opacity 0.15s; }
+.notatio-show-scheme:hover .notatio-show-ends,
+.notatio-show-scheme:focus-within .notatio-show-ends { opacity: 1; }
 .notatio-die { border: none; background: transparent; padding: 0 0.15rem; color: var(--vp-c-brand-1, #3451b2); font: inherit; cursor: pointer; }
 .notatio-settings { display: flex; gap: 0.3rem; margin-top: 0.35rem; }
 .notatio-settings input {
@@ -1553,7 +1555,7 @@ notatio-show {
   color: inherit;
 }
 .notatio-settings button { border: none; background: transparent; color: var(--vp-c-brand-1, #3451b2); cursor: pointer; }
-.notatio-show-indexed { grid-area: bar; display: flex; flex-wrap: wrap; gap: 0.15rem 0.5rem; font-size: 0.85em; }
+.notatio-show-indexed { display: flex; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
 .notatio-show-indexed span { display: inline-flex; align-items: center; gap: 0.25rem; }
 .notatio-show-indexed i { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; }
 .notatio-show-ends button,
