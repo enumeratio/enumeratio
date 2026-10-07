@@ -19,6 +19,7 @@ test("options ride after a bar; a bare word is a boolean attribute", () => {
     { kind: "dynamic", value: "N(_a)", options: { digits: "4" } },
   ]);
   expect(parseHoleOptions("  play  sensitivity=4 ")).toEqual({ play: "", sensitivity: "4" });
+  expect(parseHoleOptions("choices='A -> a|B -> b c' stepper")).toEqual({ choices: "A -> a|B -> b c", stepper: "" });
 });
 
 test("dollar islands are typeset and braces inside them are not holes", () => {

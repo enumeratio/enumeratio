@@ -1,52 +1,52 @@
-id	section	role	expr	expected	known	source	caption	triage	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out	wolfram.kind	wolfram.note	sympy.kind	sympy.note	rust.kind	rust.note
-abs-neg-5			[Abs, -5]	5					Abs(-5)	5	\vert-5\vert	5	|-5|	5	Abs(-5)	5	<Abs>-5</Abs>	<ToExpression>5</ToExpression>						
-abs-5			[Abs, 5]	5																				
-0-is-the-only-value-with-x-0			[Abs, 0]	0			0 is the only value with $|x| = 0$																	
-abs-neg-7-over-2			[Abs, [Rational, -7, 2]]	[Rational, 7, 2]																				
-the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4			[Abs, [Complex, 3, 4]]	5			The modulus of a complex number: $|3+4i| = \sqrt{3^2+4^2}$																	
-threads-element-wise-over-a-list			[Abs, [List, -1, 2, -3]]	[List, 1, 2, 3]			Threads element-wise over a list																threading	compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars.
-abs-neg-2p5			[Abs, -2.5]	2.5																				
-the-modulus-of-a-complex-number-with-approximate			[Abs, [Complex, 1.4, 2.3]]	{num: "2.69258240356725201563"}			The modulus of a complex number with approximate parts																	
-threads-over-a-matrix-entry-by-entry	Scope		[Abs, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]	[List, [List, [Rational, 1, 2], 1], [List, [Rational, 5, 3], [Rational, 1, 2]]]			Threads over a matrix, entry by entry																threading	compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars only.
-exact-numeric-constants	Scope		[Abs, [Negate, Pi]]	Pi			Exact numeric constants																	
-an-exact-complex-number-gives-an-exact-radical	Scope		[Abs, [Complex, 1, 1]]	[Sqrt, 2]			An exact complex number gives an exact radical																	
-abs-imaginaryunit	Scope		[Abs, ImaginaryUnit]	1																				
-e-i-pi-3-lies-on-the-unit-circle	Scope		[Abs, [Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 3]]]]	1			$e^{i\pi/3}$ lies on the unit circle																	
-abs-negativeinfinity	Scope		[Abs, NegativeInfinity]	PositiveInfinity																				
-complex-infinity-has-infinite-magnitude-in-every	Scope		[Abs, ComplexInfinity]	PositiveInfinity			Complex infinity has infinite magnitude in every direction																	
-an-interval-maps-to-the-interval-of-absolute	Scope		[Abs, [Interval, -3, 5]]	[Interval, 0, 5]			An [[Interval]] maps to the interval of absolute values, $[0, 5]$																	
-an-interval-straddling-0-maps-to-0-the-larger	Scope	test	[Abs, [Interval, -3, 2]]	[Interval, 0, 3]			An [[Interval]] straddling $0$ maps to $[0, \max(|{-3}|, |2|)] = [0, 3]$																	
-decides-the-sign-of-an-exact-numeric-expression	Scope		[Abs, [Subtract, [Sqrt, 2], 2]]	[Add, 2, [Negate, [Sqrt, 2]]]			Decides the sign of an exact numeric expression and gives $2-\sqrt{2}$																	
-a-complex-radicand-inside-the-subtraction	Scope	test	[Abs, [Subtract, [Sqrt, -10], 2]]	[Sqrt, 14]			$|\sqrt{-10} - 2| = |{-2 + i\sqrt{10}}| = \sqrt{4+10} = \sqrt{14}$																domain	Rust's f64 sqrt inside is real-only and gives NaN, which poisons the whole expression; compute-engine decides the sign symbolically and gives an exact Sqrt.
-n-abs-pi-plus-i-times-catalan-25	Scope		[N, [Abs, [Add, Pi, [Multiply, [Complex, 0, 1], CatalanConstant]]], 25]	{num: "3.272399329361528960349014"}			Twenty-five digits of the modulus of a complex constant																	
-fullsimplify-matrixfunction-abs-list-list-1-over	Scope		[FullSimplify, [MatrixFunction, Abs, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]]	[List, [List, [Divide, [Sqrt, 15], 3], [Negate, [Divide, [Sqrt, 15], 10]]], [List, [Negate, [Divide, [Sqrt, 15], 6]], [Divide, [Sqrt, 15], 3]]]			Applied to a matrix as a matrix function, not entry by entry																	
-abs-positiveinfinity	Scope		[Abs, PositiveInfinity]	PositiveInfinity			The modulus of an infinite real is infinite																	
-abs-positiveinfinity-times-i	Scope		[Abs, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	PositiveInfinity			A directed infinity still has infinite modulus																	
-piecewiseexpand-abs-imaginaryunit-times-x-neg-2	Scope		[PiecewiseExpand, [Abs, [Multiply, ImaginaryUnit, x]], [Less, -2, x, 2]]	[Abs, [Multiply, [Complex, 0, 1], x]]			With the assumption on $x$, the call still stays unexpanded																	
-complexexpand-abs-x	Scope		[ComplexExpand, [Abs, x]]	[Sqrt, [Power, x, 2]]			Treating $x$ as real, $|x| = \sqrt{x^2}$																	
-complexexpand-abs-x-plus-i-times-y	Scope		[ComplexExpand, [Abs, [Add, x, [Multiply, [Complex, 0, 1], y]]]]	[Sqrt, [Add, [Power, x, 2], [Power, y, 2]]]			Real and imaginary parts give $|x+iy| = \sqrt{x^2+y^2}$																	
-apply-derivative-abs-1-x	Scope	triage	[Apply, [Derivative, Abs, 1], x]	[Sign, x]				gap											unclassified	The expansions differ beyond the remainder order.				
-the-gap-between-two-temperatures-70-and-95	Applications		[Abs, [Subtract, 70, 95]]	25			The gap between two temperatures, 70° and 95°, regardless of which is higher																	
-the-distance-between-the-points-1-i-and-4-5i-of	Applications		[Abs, [Subtract, [Complex, 1, 1], [Complex, 4, 5]]]	5			The distance between the points $1+i$ and $4+5i$ of the complex plane																	
-even-function-x-x	Properties		[Equal, [Abs, -8], [Abs, 8]]	True			Even function: $|-x| = |x|$																	
-triangle-inequality-a-b-le-a-b	Properties		[LessEqual, [Abs, [Add, 3, -8]], [Add, [Abs, 3], [Abs, -8]]]	True			Triangle inequality: $|a+b| \le |a| + |b|$																	
-z-2-z-bar-z	Properties		[Equal, [Power, [Abs, [Complex, 3, 4]], 2], [Multiply, [Complex, 3, 4], [Conjugate, [Complex, 3, 4]]]]	True			$|z|^2 = z\bar{z}$																	
-multiplicative-ab-a-b	Properties		[Equal, [Abs, [Multiply, [Complex, 1, 2], [Complex, 3, -1]]], [Multiply, [Abs, [Complex, 1, 2]], [Abs, [Complex, 3, -1]]]]	True			Multiplicative: $|ab| = |a|\,|b|$																	
-abs-1	Properties		[Abs, 1]	1	1	Wolfram MathematicalFunctionData, Abs	A positive real is its own modulus																	
-abs-neg-1	Properties		[Abs, -1]	1	1	Wolfram MathematicalFunctionData, Abs	A negative real flips sign																	
-abs-neg-i	Properties		[Abs, [Complex, 0, -1]]	1	1	Wolfram MathematicalFunctionData, Abs	A pure imaginary unit has modulus 1																	
-abs-neg-1-plus-i	Properties		[Abs, [Complex, -1, 1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	The Gaussian integer $-1+i$ has modulus $\sqrt2$																	
-abs-neg-1-minus-i	Properties		[Abs, [Complex, -1, -1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	Same modulus in the third quadrant																	
-abs-1-minus-i	Properties		[Abs, [Complex, 1, -1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	Same modulus in the fourth quadrant																	
-abs-sqrt-3-plus-i	Properties		[Abs, [Add, [Sqrt, 3], [Complex, 0, 1]]]	2	2	Wolfram MathematicalFunctionData, Abs	The $30^\circ$ right triangle gives exact modulus 2																	
-abs-1-plus-sqrt-3-times-i	Properties		[Abs, [Add, 1, [Complex, 0, [Sqrt, 3]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Swapping the legs still gives 2																	
-abs-neg-1-plus-sqrt-3-times-i	Properties		[Abs, [Add, -1, [Complex, 0, [Sqrt, 3]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Second quadrant, still 2																	
-abs-neg-sqrt-3-plus-i	Properties		[Abs, [Add, [Negate, [Sqrt, 3]], [Complex, 0, 1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Second quadrant with the legs swapped																	
-abs-neg-sqrt-3-minus-i	Properties		[Abs, [Add, [Negate, [Sqrt, 3]], [Complex, 0, -1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Third quadrant, still 2																	
-abs-neg-1-plus-neg-sqrt-3-times-i	Properties		[Abs, [Add, -1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Written with nested negations, still exactly 2																	
-abs-1-plus-neg-sqrt-3-times-i	Properties		[Abs, [Add, 1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Fourth quadrant with a negated imaginary part, still 2																	
-abs-sqrt-3-minus-i	Properties		[Abs, [Add, [Sqrt, 3], [Complex, 0, -1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Fourth quadrant with the legs swapped																	
-abs-2	Properties		[Abs, 2]	2	2	Wolfram MathematicalFunctionData, Abs	A positive integer is its own modulus																	
-abs-1-over-2-pow-2	Properties		[Power, [Abs, [Rational, 1, 2]], 2]	[Rational, 1, 4]	[Rational, 1, 4]	Wolfram MathematicalFunctionData, Abs, Absolute square																		
-abs-2-pow-2	Properties		[Power, [Abs, 2], 2]	4	4	Wolfram MathematicalFunctionData, Abs, Absolute square																		
-doesn-t-factor-constants-out-of-a-symbolic	Possible issues		[Abs, [Multiply, -3, x]]	[Abs, [Multiply, -3, x]]			Doesn't factor constants out of a symbolic argument: $|-3x|$ stays as written rather than reducing to $3|x|$												unevaluated	We leave the call unevaluated; Wolfram answers 3*Abs[x].	unevaluated	We leave the call unevaluated; SymPy answers 3*Abs(x).		
+id	section	role	expr	expected	known	source	caption	triage	epsil.in	epsil.out	tex.in	tex.out	traditional.in	traditional.out	fullform.in	fullform.out	notatio.in	notatio.out	wolfram.kind	wolfram.note	sympy.kind	sympy.note	mpmath.kind	mpmath.note	rust.kind	rust.note
+abs-neg-5			[Abs, -5]	5					Abs(-5)	5	\vert-5\vert	5	|-5|	5	Abs(-5)	5	<Abs>-5</Abs>	<ToExpression>5</ToExpression>								
+abs-5			[Abs, 5]	5																						
+0-is-the-only-value-with-x-0			[Abs, 0]	0			0 is the only value with $|x| = 0$																			
+abs-neg-7-over-2			[Abs, [Rational, -7, 2]]	[Rational, 7, 2]																						
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4			[Abs, [Complex, 3, 4]]	5			The modulus of a complex number: $|3+4i| = \sqrt{3^2+4^2}$																			
+threads-element-wise-over-a-list			[Abs, [List, -1, 2, -3]]	[List, 1, 2, 3]			Threads element-wise over a list																		threading	compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars.
+abs-neg-2p5			[Abs, -2.5]	2.5																						
+the-modulus-of-a-complex-number-with-approximate			[Abs, [Complex, 1.4, 2.3]]	{num: "2.69258240356725201563"}			The modulus of a complex number with approximate parts																			
+threads-over-a-matrix-entry-by-entry	Scope		[Abs, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]	[List, [List, [Rational, 1, 2], 1], [List, [Rational, 5, 3], [Rational, 1, 2]]]			Threads over a matrix, entry by entry																		threading	compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars only.
+exact-numeric-constants	Scope		[Abs, [Negate, Pi]]	Pi			Exact numeric constants																			
+an-exact-complex-number-gives-an-exact-radical	Scope		[Abs, [Complex, 1, 1]]	[Sqrt, 2]			An exact complex number gives an exact radical																			
+abs-imaginaryunit	Scope		[Abs, ImaginaryUnit]	1																						
+e-i-pi-3-lies-on-the-unit-circle	Scope		[Abs, [Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 3]]]]	1			$e^{i\pi/3}$ lies on the unit circle																			
+abs-negativeinfinity	Scope		[Abs, NegativeInfinity]	PositiveInfinity																						
+complex-infinity-has-infinite-magnitude-in-every	Scope		[Abs, ComplexInfinity]	PositiveInfinity			Complex infinity has infinite magnitude in every direction																			
+an-interval-maps-to-the-interval-of-absolute	Scope		[Abs, [Interval, -3, 5]]	[Interval, 0, 5]			An [[Interval]] maps to the interval of absolute values, $[0, 5]$																			
+an-interval-straddling-0-maps-to-0-the-larger	Scope	test	[Abs, [Interval, -3, 2]]	[Interval, 0, 3]			An [[Interval]] straddling $0$ maps to $[0, \max(|{-3}|, |2|)] = [0, 3]$																			
+decides-the-sign-of-an-exact-numeric-expression	Scope		[Abs, [Subtract, [Sqrt, 2], 2]]	[Add, 2, [Negate, [Sqrt, 2]]]			Decides the sign of an exact numeric expression and gives $2-\sqrt{2}$																			
+a-complex-radicand-inside-the-subtraction	Scope	test	[Abs, [Subtract, [Sqrt, -10], 2]]	[Sqrt, 14]			$|\sqrt{-10} - 2| = |{-2 + i\sqrt{10}}| = \sqrt{4+10} = \sqrt{14}$																		domain	Rust's f64 sqrt inside is real-only and gives NaN, which poisons the whole expression; compute-engine decides the sign symbolically and gives an exact Sqrt.
+n-abs-pi-plus-i-times-catalan-25	Scope		[N, [Abs, [Add, Pi, [Multiply, [Complex, 0, 1], CatalanConstant]]], 25]	{num: "3.272399329361528960349014"}			Twenty-five digits of the modulus of a complex constant																			
+fullsimplify-matrixfunction-abs-list-list-1-over	Scope		[FullSimplify, [MatrixFunction, Abs, [List, [List, [Rational, 1, 2], -1], [List, [Rational, -5, 3], [Rational, 1, 2]]]]]	[List, [List, [Divide, [Sqrt, 15], 3], [Negate, [Divide, [Sqrt, 15], 10]]], [List, [Negate, [Divide, [Sqrt, 15], 6]], [Divide, [Sqrt, 15], 3]]]			Applied to a matrix as a matrix function, not entry by entry																			
+abs-positiveinfinity	Scope		[Abs, PositiveInfinity]	PositiveInfinity			The modulus of an infinite real is infinite																			
+abs-positiveinfinity-times-i	Scope		[Abs, [Multiply, PositiveInfinity, [Complex, 0, 1]]]	PositiveInfinity			A directed infinity still has infinite modulus																convention	mpmath multiplies a directed infinity by i and keeps the direction (or gives nan); ours is a type error at boxing. compute-engine keeps one complex infinity, ~oo, and no directed one (cortex-js/compute-engine#401).		
+piecewiseexpand-abs-imaginaryunit-times-x-neg-2	Scope		[PiecewiseExpand, [Abs, [Multiply, ImaginaryUnit, x]], [Less, -2, x, 2]]	[Abs, [Multiply, [Complex, 0, 1], x]]			With the assumption on $x$, the call still stays unexpanded												unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).						
+complexexpand-abs-x	Scope		[ComplexExpand, [Abs, x]]	[Sqrt, [Power, x, 2]]			Treating $x$ as real, $|x| = \sqrt{x^2}$																			
+complexexpand-abs-x-plus-i-times-y	Scope		[ComplexExpand, [Abs, [Add, x, [Multiply, [Complex, 0, 1], y]]]]	[Sqrt, [Add, [Power, x, 2], [Power, y, 2]]]			Real and imaginary parts give $|x+iy| = \sqrt{x^2+y^2}$																			
+apply-derivative-abs-1-x	Scope	triage	[Apply, [Derivative, Abs, 1], x]	[Sign, x]				gap											unclassified	The expansions differ beyond the remainder order.						
+the-gap-between-two-temperatures-70-and-95	Applications		[Abs, [Subtract, 70, 95]]	25			The gap between two temperatures, 70° and 95°, regardless of which is higher																			
+the-distance-between-the-points-1-i-and-4-5i-of	Applications		[Abs, [Subtract, [Complex, 1, 1], [Complex, 4, 5]]]	5			The distance between the points $1+i$ and $4+5i$ of the complex plane																			
+even-function-x-x	Properties		[Equal, [Abs, -8], [Abs, 8]]	True			Even function: $|-x| = |x|$																			
+triangle-inequality-a-b-le-a-b	Properties		[LessEqual, [Abs, [Add, 3, -8]], [Add, [Abs, 3], [Abs, -8]]]	True			Triangle inequality: $|a+b| \le |a| + |b|$																			
+z-2-z-bar-z	Properties		[Equal, [Power, [Abs, [Complex, 3, 4]], 2], [Multiply, [Complex, 3, 4], [Conjugate, [Complex, 3, 4]]]]	True			$|z|^2 = z\bar{z}$																			
+multiplicative-ab-a-b	Properties		[Equal, [Abs, [Multiply, [Complex, 1, 2], [Complex, 3, -1]]], [Multiply, [Abs, [Complex, 1, 2]], [Abs, [Complex, 3, -1]]]]	True			Multiplicative: $|ab| = |a|\,|b|$																			
+abs-1	Properties		[Abs, 1]	1	1	Wolfram MathematicalFunctionData, Abs	A positive real is its own modulus																			
+abs-neg-1	Properties		[Abs, -1]	1	1	Wolfram MathematicalFunctionData, Abs	A negative real flips sign																			
+abs-neg-i	Properties		[Abs, [Complex, 0, -1]]	1	1	Wolfram MathematicalFunctionData, Abs	A pure imaginary unit has modulus 1																			
+abs-neg-1-plus-i	Properties		[Abs, [Complex, -1, 1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	The Gaussian integer $-1+i$ has modulus $\sqrt2$																			
+abs-neg-1-minus-i	Properties		[Abs, [Complex, -1, -1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	Same modulus in the third quadrant																			
+abs-1-minus-i	Properties		[Abs, [Complex, 1, -1]]	[Sqrt, 2]	[Sqrt, 2]	Wolfram MathematicalFunctionData, Abs	Same modulus in the fourth quadrant																			
+abs-sqrt-3-plus-i	Properties		[Abs, [Add, [Sqrt, 3], [Complex, 0, 1]]]	2	2	Wolfram MathematicalFunctionData, Abs	The $30^\circ$ right triangle gives exact modulus 2																			
+abs-1-plus-sqrt-3-times-i	Properties		[Abs, [Add, 1, [Complex, 0, [Sqrt, 3]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Swapping the legs still gives 2																			
+abs-neg-1-plus-sqrt-3-times-i	Properties		[Abs, [Add, -1, [Complex, 0, [Sqrt, 3]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Second quadrant, still 2																			
+abs-neg-sqrt-3-plus-i	Properties		[Abs, [Add, [Negate, [Sqrt, 3]], [Complex, 0, 1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Second quadrant with the legs swapped																			
+abs-neg-sqrt-3-minus-i	Properties		[Abs, [Add, [Negate, [Sqrt, 3]], [Complex, 0, -1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Third quadrant, still 2																			
+abs-neg-1-plus-neg-sqrt-3-times-i	Properties		[Abs, [Add, -1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Written with nested negations, still exactly 2																			
+abs-1-plus-neg-sqrt-3-times-i	Properties		[Abs, [Add, 1, [Complex, 0, [Negate, [Sqrt, 3]]]]]	2	2	Wolfram MathematicalFunctionData, Abs	Fourth quadrant with a negated imaginary part, still 2																			
+abs-sqrt-3-minus-i	Properties		[Abs, [Add, [Sqrt, 3], [Complex, 0, -1]]]	2	2	Wolfram MathematicalFunctionData, Abs	Fourth quadrant with the legs swapped																			
+abs-2	Properties		[Abs, 2]	2	2	Wolfram MathematicalFunctionData, Abs	A positive integer is its own modulus																			
+abs-1-over-2-pow-2	Properties		[Power, [Abs, [Rational, 1, 2]], 2]	[Rational, 1, 4]	[Rational, 1, 4]	Wolfram MathematicalFunctionData, Abs, Absolute square																				
+abs-2-pow-2	Properties		[Power, [Abs, 2], 2]	4	4	Wolfram MathematicalFunctionData, Abs, Absolute square																				
+doesn-t-factor-constants-out-of-a-symbolic	Possible issues		[Abs, [Multiply, -3, x]]	[Abs, [Multiply, -3, x]]			Doesn't factor constants out of a symbolic argument: $|-3x|$ stays as written rather than reducing to $3|x|$												unevaluated	We leave the call unevaluated; Wolfram answers 3*Abs[x].	unevaluated	We leave the call unevaluated; SymPy answers 3*Abs(x).				

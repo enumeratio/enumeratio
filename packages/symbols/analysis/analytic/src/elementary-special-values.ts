@@ -51,6 +51,28 @@ function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
   }
 }
 
+/**
+ * Coth and Csch at i*k*pi (k a nonzero integer) are poles: sinh(i*k*pi) = 0. Folding them to
+ * ComplexInfinity, as Cot and Csc already do at k*pi, is what tells `Series` to take its
+ * Laurent path rather than expand with infinite Taylor coefficients. Only the poles fold;
+ * the finite values (Coth(i*pi/3) = -i/sqrt 3) stay as they were.
+ */
+function declareHyperbolicPoles(ce: ComputeEngine): void {
+  for (const head of ["Coth", "Csch"] as const) {
+    wrapOperator(
+      ce,
+      [head, 1],
+      (ops) => {
+        const [arg] = ops;
+        if (arg === undefined || !hasImaginaryFactor(arg)) return false;
+        return ce.function("Divide", [realPartOf(ce, arg), "Pi"]).evaluate().isInteger === true;
+      },
+      () => () => ce.symbol("ComplexInfinity"),
+      1,
+    );
+  }
+}
+
 /** Ln(i) = i*pi/2, the principal value. */
 function declareLnImaginaryUnit(ce: ComputeEngine): void {
   wrapOperator(
@@ -109,6 +131,7 @@ function declareReciprocalInversePoles(ce: ComputeEngine): void {
 
 export function declareElementarySpecialValues(ce: ComputeEngine): void {
   declareHyperbolicAtImaginary(ce);
+  declareHyperbolicPoles(ce);
   declareLnImaginaryUnit(ce);
   declareArccotTable(ce);
   declareReciprocalInversePoles(ce);

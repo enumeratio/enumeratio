@@ -502,6 +502,9 @@ importers:
       '@enumeratio/polytope':
         specifier: workspace:*
         version: link:../symbols/combinatorics/polytope
+      '@enumeratio/residues':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/residues
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../structures

@@ -1,52 +1,52 @@
-id	in	out
-abs-neg-5	fabs(-5)	5.0
-abs-5	fabs(5)	5.0
-0-is-the-only-value-with-x-0	fabs(0)	0.0
-abs-neg-7-over-2	fabs((mpf(-7)/2))	3.5
-the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	fabs(mpc(3, 4))	5.0
-threads-element-wise-over-a-list	[fabs(-1), fabs(2), fabs(-3)]	[mpf('1.0'), mpf('2.0'), mpf('3.0')]
-abs-neg-2p5	fabs(-2.5)	2.5
-the-modulus-of-a-complex-number-with-approximate	fabs(mpc(1.4, 2.3))	2.69258240356725181770864483644
-threads-over-a-matrix-entry-by-entry	[[fabs((mpf(1)/2)), fabs(-1)], [fabs((mpf(-5)/3)), fabs((mpf(1)/2))]]	[[mpf('0.5'), mpf('1.0')], [mpf('1.66666666666666666666666666666673'), mpf('0.5')]]
-exact-numeric-constants	fabs((-pi))	3.14159265358979323846264338328
-an-exact-complex-number-gives-an-exact-radical	fabs(mpc(1, 1))	1.41421356237309504880168872421
-abs-imaginaryunit	fabs(mpc(0,1))	1.0
-e-i-pi-3-lies-on-the-unit-circle		
-abs-negativeinfinity	fabs(-inf)	
-complex-infinity-has-infinite-magnitude-in-every		
-an-interval-maps-to-the-interval-of-absolute		
-an-interval-straddling-0-maps-to-0-the-larger		
-decides-the-sign-of-an-exact-numeric-expression	fabs((sqrt(2) - 2))	0.58578643762690495119831127579
-a-complex-radicand-inside-the-subtraction	fabs((sqrt(-10) - 2))	3.74165738677394138558374873232
-n-abs-pi-plus-i-times-catalan-25		
-fullsimplify-matrixfunction-abs-list-list-1-over		
-abs-positiveinfinity	fabs(inf)	
-abs-positiveinfinity-times-i	fabs((inf * mpc(0, 1)))	
-piecewiseexpand-abs-imaginaryunit-times-x-neg-2		
-complexexpand-abs-x		
-complexexpand-abs-x-plus-i-times-y		
-apply-derivative-abs-1-x		
-the-gap-between-two-temperatures-70-and-95	fabs((70 - 95))	25.0
-the-distance-between-the-points-1-i-and-4-5i-of	fabs((mpc(1, 1) - mpc(4, 5)))	5.0
-even-function-x-x	almosteq(fabs(-8), fabs(8), 1e-20)	True
-triangle-inequality-a-b-le-a-b		
-z-2-z-bar-z		
-multiplicative-ab-a-b	almosteq(fabs((mpc(1, 2) * mpc(3, -1))), (fabs(mpc(1, 2)) * fabs(mpc(3, -1))), 1e-20)	True
-abs-1	fabs(1)	
-abs-neg-1	fabs(-1)	
-abs-neg-i	fabs(mpc(0, -1))	
-abs-neg-1-plus-i	fabs(mpc(-1, 1))	
-abs-neg-1-minus-i	fabs(mpc(-1, -1))	
-abs-1-minus-i	fabs(mpc(1, -1))	
-abs-sqrt-3-plus-i	fabs((sqrt(3) + mpc(0, 1)))	
-abs-1-plus-sqrt-3-times-i	fabs((1 + mpc(0, sqrt(3))))	
-abs-neg-1-plus-sqrt-3-times-i	fabs((-1 + mpc(0, sqrt(3))))	
-abs-neg-sqrt-3-plus-i	fabs(((-sqrt(3)) + mpc(0, 1)))	
-abs-neg-sqrt-3-minus-i	fabs(((-sqrt(3)) + mpc(0, -1)))	
-abs-neg-1-plus-neg-sqrt-3-times-i	fabs((-1 + mpc(0, (-sqrt(3)))))	
-abs-1-plus-neg-sqrt-3-times-i	fabs((1 + mpc(0, (-sqrt(3)))))	
-abs-sqrt-3-minus-i	fabs((sqrt(3) + mpc(0, -1)))	
-abs-2	fabs(2)	
-abs-1-over-2-pow-2	((fabs((mpf(1)/2)))**2)	
-abs-2-pow-2	((fabs(2))**2)	
-doesn-t-factor-constants-out-of-a-symbolic		
+id	in	out	verdict
+abs-neg-5	fabs(-5)	5.0	
+abs-5	fabs(5)	5.0	
+0-is-the-only-value-with-x-0	fabs(0)	0.0	
+abs-neg-7-over-2	fabs((mpf(-7)/2))	3.5	
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	fabs(mpc(3, 4))	5.0	
+threads-element-wise-over-a-list	[fabs(-1), fabs(2), fabs(-3)]	[mpf('1.0'), mpf('2.0'), mpf('3.0')]	
+abs-neg-2p5	fabs(-2.5)	2.5	
+the-modulus-of-a-complex-number-with-approximate	fabs(mpc(1.4, 2.3))	2.69258240356725181770864483644	
+threads-over-a-matrix-entry-by-entry	[[fabs((mpf(1)/2)), fabs(-1)], [fabs((mpf(-5)/3)), fabs((mpf(1)/2))]]	[[mpf('0.5'), mpf('1.0')], [mpf('1.66666666666666666666666666666673'), mpf('0.5')]]	
+exact-numeric-constants	fabs((-pi))	3.14159265358979323846264338328	
+an-exact-complex-number-gives-an-exact-radical	fabs(mpc(1, 1))	1.41421356237309504880168872421	
+abs-imaginaryunit	fabs(mpc(0,1))	1.0	
+e-i-pi-3-lies-on-the-unit-circle			
+abs-negativeinfinity	fabs(-inf)		
+complex-infinity-has-infinite-magnitude-in-every			
+an-interval-maps-to-the-interval-of-absolute			
+an-interval-straddling-0-maps-to-0-the-larger			
+decides-the-sign-of-an-exact-numeric-expression	fabs((sqrt(2) - 2))	0.58578643762690495119831127579	
+a-complex-radicand-inside-the-subtraction	fabs((sqrt(-10) - 2))	3.74165738677394138558374873232	
+n-abs-pi-plus-i-times-catalan-25			
+fullsimplify-matrixfunction-abs-list-list-1-over			
+abs-positiveinfinity	fabs(inf)		
+abs-positiveinfinity-times-i	fabs((inf * mpc(0, 1)))	nan	disagree
+piecewiseexpand-abs-imaginaryunit-times-x-neg-2			
+complexexpand-abs-x			
+complexexpand-abs-x-plus-i-times-y			
+apply-derivative-abs-1-x			
+the-gap-between-two-temperatures-70-and-95	fabs((70 - 95))	25.0	
+the-distance-between-the-points-1-i-and-4-5i-of	fabs((mpc(1, 1) - mpc(4, 5)))	5.0	
+even-function-x-x	almosteq(fabs(-8), fabs(8), 1e-20)	True	
+triangle-inequality-a-b-le-a-b			
+z-2-z-bar-z			
+multiplicative-ab-a-b	almosteq(fabs((mpc(1, 2) * mpc(3, -1))), (fabs(mpc(1, 2)) * fabs(mpc(3, -1))), 1e-20)	True	
+abs-1	fabs(1)		
+abs-neg-1	fabs(-1)		
+abs-neg-i	fabs(mpc(0, -1))		
+abs-neg-1-plus-i	fabs(mpc(-1, 1))		
+abs-neg-1-minus-i	fabs(mpc(-1, -1))		
+abs-1-minus-i	fabs(mpc(1, -1))		
+abs-sqrt-3-plus-i	fabs((sqrt(3) + mpc(0, 1)))		
+abs-1-plus-sqrt-3-times-i	fabs((1 + mpc(0, sqrt(3))))		
+abs-neg-1-plus-sqrt-3-times-i	fabs((-1 + mpc(0, sqrt(3))))		
+abs-neg-sqrt-3-plus-i	fabs(((-sqrt(3)) + mpc(0, 1)))		
+abs-neg-sqrt-3-minus-i	fabs(((-sqrt(3)) + mpc(0, -1)))		
+abs-neg-1-plus-neg-sqrt-3-times-i	fabs((-1 + mpc(0, (-sqrt(3)))))		
+abs-1-plus-neg-sqrt-3-times-i	fabs((1 + mpc(0, (-sqrt(3)))))		
+abs-sqrt-3-minus-i	fabs((sqrt(3) + mpc(0, -1)))		
+abs-2	fabs(2)		
+abs-1-over-2-pow-2	((fabs((mpf(1)/2)))**2)		
+abs-2-pow-2	((fabs(2))**2)		
+doesn-t-factor-constants-out-of-a-symbolic			

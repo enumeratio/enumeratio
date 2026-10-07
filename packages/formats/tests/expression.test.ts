@@ -1,6 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { collectWildcards, parseExpression, serializeExpression } from "../src/expression.ts";
+import { stripMetadata } from "../src/markup.ts";
 
 const ce = new ComputeEngine();
 const parseLatex = (tex: string) => ce.parse(tex).json;
@@ -26,6 +27,17 @@ test("filling slots re-serializes as Epsil and round-trips", () => {
   // A numeric slot body evaluates to a number.
   const n = parseExpression("_n * 20");
   expect(serializeExpression(ce.box(n.json).subs({ _n: 4 }).evaluate().json)).toBe("80");
+});
+
+test("a rule's key reads back as the name Epsil spelled, as any other symbol does", () => {
+  const { json } = parseExpression("[isPrime -> Teal, Inert && !isPrime -> Gold, x -> 1, PlotRange -> All]");
+  expect(stripMetadata(json)).toEqual([
+    "List",
+    ["KeyValuePair", "IsPrime", "Teal"],
+    ["KeyValuePair", ["And", "Inert", ["Not", "IsPrime"]], "Gold"],
+    ["KeyValuePair", "x", 1],
+    ["KeyValuePair", "PlotRange", "All"],
+  ]);
 });
 
 test("statements and effects are rejected", () => {

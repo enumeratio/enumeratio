@@ -16,6 +16,11 @@ signatures:
     library: enumeratio-analytic
     type: (any, any*) -> list
     overrides: compute-engine
+  - call: Solve(equation, unknown?)
+    description: The list of solutions of an equation, or a system of equations, for its unknown(s).
+    library: enumeratio-evaluation
+    type: (any, any*) -> list
+    overrides: compute-engine
 seeAlso:
   - Root
   - D

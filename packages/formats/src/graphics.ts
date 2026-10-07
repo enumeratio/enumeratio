@@ -91,6 +91,7 @@ function svgOf(expr: BoxedExpression): string | undefined {
  * symbol evaluates to itself.
  */
 export const GRAPHICS_HEADS: readonly string[] = [
+  "Show",
   "Plot",
   "ParametricPlot",
   "Plot3D",
@@ -162,6 +163,32 @@ export const GRAPHICS_HEADS: readonly string[] = [
 ];
 
 /**
+ * The options a graphics head declares. An argument `Name -> v` is an option of its head exactly
+ * when `Name` is listed for that head; any other rule is an argument, so a layer's
+ * `ColorRules -> [IsPrime -> Teal]` keeps `IsPrime -> Teal` as a rule. The markup reader reads a
+ * child element named for one of these as that option (`<Show><PlotLabel>…</PlotLabel></Show>`).
+ * Wolfram's names where Wolfram has the option; `ColorMixing`, `Selection` and `GestureHandling`
+ * are ours.
+ */
+export const GRAPHICS_OPTIONS: Readonly<Record<string, readonly string[]>> = {
+  Show: [
+    "AspectRatio",
+    "Axes",
+    "AxesStyle",
+    "Ticks",
+    "GridLines",
+    "GridLinesStyle",
+    "PlotLabel",
+    "Selection",
+    "GestureHandling",
+    "ImageSize",
+  ],
+  LatticeTiles: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+  ArrayPlot: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+  Locator: ["LocatorAutoCreate", "Appearance"],
+};
+
+/**
  * The engine's own `Histogram(data, bins)` computes the bins and rejects a lone argument at
  * the signature. Wolfram's one-argument `Histogram[data]` is the picture; widen the slot so it
  * holds, and hand two arguments straight back to the native handler. The signature otherwise
@@ -177,14 +204,25 @@ export function declareHistogram(ce: ComputeEngine): void {
   );
 }
 
+/** Graphics heads whose arguments are held as written, not canonicalised: see `declareGraphics`. */
+const HELD_GRAPHICS: ReadonlySet<string> = new Set(["Show", "Variable"]);
+
 export function declareGraphics(ce: ComputeEngine): void {
   // Inert: no `evaluate`, so the expression stays what it says, while its arguments
   // are canonicalised as usual -- an iterator typed as `(x, 0, 10)` in LaTeX arrives as a
   // `Tuple`, not a `Delimiter`, and a free parameter stays a free symbol. A head the
   // engine already knows (its own `Histogram`) is handled below rather than redeclared.
   for (const head of GRAPHICS_HEADS) {
-    if (ce.lookupDefinition(head)) continue;
+    if (ce.lookupDefinition(head) || HELD_GRAPHICS.has(head)) continue;
     ce.declare(head, { signature: "(any*) -> any" });
+  }
+
+  // A `Show`'s layers are a spec its element reads as written: `IsPrime -> Teal` in a layer's
+  // `ColorRules` names a property, which canonicalising would read as compute-engine's own
+  // `IsPrime` applied to nothing. A `Variable(…)` declaration is held for the same reason
+  // (`Where -> IsSquareFree && !IsSquare` names tests, not booleans).
+  for (const head of HELD_GRAPHICS) {
+    if (!ce.lookupDefinition(head)) ce.declare(head, { signature: "(any*) -> any", lazy: true });
   }
 
   declareHistogram(ce);

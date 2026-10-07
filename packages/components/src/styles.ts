@@ -1309,7 +1309,8 @@ notatio-worksheet {
   gap: 0.4rem;
   margin: 0;
 }
-.notatio-legend li > i {
+.notatio-legend li > i,
+.notatio-show-swatch > i {
   display: inline-block;
   width: 1.1em;
   height: 1.1em;
@@ -1385,6 +1386,14 @@ notatio-worksheet {
 .notatio-gradient-panel label { display: flex; align-items: center; gap: 0.4rem; }
 .notatio-gradient-panel input[type="number"] { width: 5em; }
 
+/* --- Engaged plots: focused, the wheel zooms them (gestures.ts); the ring says so -------- */
+.notatio-plot-box:focus,
+.notatio-polytope-box:focus,
+.notatio-complex-plot-stage canvas:focus {
+  outline: 2px solid color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
+  outline-offset: -2px;
+}
+
 /* --- Tooltips: [data-tip] shows its text on hover and keyboard focus, at once ------- */
 [data-tip] {
   position: relative;
@@ -1449,12 +1458,21 @@ notatio-worksheet {
 .notatio-palette-panel label { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
 .notatio-palette-panel input[type="number"] { width: 5em; }
 
-/* --- Lattice plot ----------------------------------------------------------------------- */
-notatio-lattice-plot {
+/* --- Figure: layers in one frame, each a canvas, blended with screen ------------------ */
+/* A plot takes its container's width, in a flex row (a story's canvas) as in a block, and so
+   does the output element a page's markup wraps it in. */
+notatio-out:has(> notatio-show, > notatio-labeled > notatio-show) {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+notatio-show {
   display: flex;
   flex-direction: column;
+  flex: 1 1 100%;
+  min-width: 0;
+  width: 100%;
 }
-.notatio-lattice {
+.notatio-show {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -1462,93 +1480,102 @@ notatio-lattice-plot {
   margin: 1.25rem 0;
   border: 1px solid var(--vp-c-divider, #ddd);
   border-radius: 10px;
-  /* Visible, so the color menu and tooltips can reach past the plot's edge. */
-  overflow: visible;
   background: var(--vp-c-bg-soft, #f6f6f7);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
-.notatio-lattice-toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.45rem 0.8rem;
-  border-bottom: 1px solid var(--vp-c-divider, #ddd);
-  color: var(--vp-c-text-2, #555);
+.notatio-show-layers {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
-.notatio-lattice-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem 0.9rem;
-}
-.notatio-lattice-toolbar button,
-.notatio-lattice-toolbar select,
-.notatio-lattice-toolbar input[type="number"],
-.notatio-lattice-toolbar input[type="text"],
-.notatio-lattice-limit button {
-  border: 1px solid var(--vp-c-divider, #ddd);
-  background: var(--vp-c-bg, #fff);
-  color: var(--vp-c-text-1, #222);
-  font: inherit;
-  padding: 0.15rem 0.5rem;
-  border-radius: 6px;
-}
-.notatio-lattice-toolbar button { cursor: pointer; }
-.notatio-lattice-toolbar input[type="number"] { width: 4.5em; }
-.notatio-lattice-field {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-.notatio-lattice-code { flex: 1 1 20rem; }
-.notatio-lattice-code input { flex: 1 1 auto; min-width: 10rem; font-family: var(--notatio-mono, ui-monospace, monospace); }
-.notatio-lattice-sweep {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-.notatio-lattice-sweep strong,
-.notatio-lattice-title {
-  min-width: 5.5em;
-  text-align: center;
-  font-size: 0.95rem;
-  color: var(--vp-c-text-1, #222);
-}
-.notatio-lattice .notatio-frame-stage canvas {
+.notatio-show-layers canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   display: block;
-  touch-action: none;
-  cursor: grab;
   outline: none;
 }
-.notatio-lattice .notatio-frame-stage canvas:active { cursor: grabbing; }
-.notatio-lattice .notatio-frame-stage canvas:focus-visible {
-  box-shadow: inset 0 0 0 2px var(--vp-c-brand-1, #3451b2);
-}
-.notatio-lattice-limit {
+/* Layers over the first add light: unknown (transparent) is the identity. */
+.notatio-show-layers canvas + canvas { mix-blend-mode: screen; }
+.notatio-show-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: #cbd5e1; }
+/* A tile's tooltip: beside the pointer, never under it, and never in the way of the next move. */
+.notatio-show-tip {
   position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--vp-c-bg, #fff) 88%, transparent);
-  color: var(--vp-c-text-2, #555);
+  transform: translate(12px, 12px);
+  pointer-events: none;
+  width: max-content;
+  /* At most the half of the plot it opens into. */
+  max-width: min(24rem, calc(50% - 16px));
+  text-align: start;
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, #0b0b16 88%, transparent);
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.35);
+  z-index: 2;
 }
-.notatio-lattice-status {
+.notatio-show-tip.is-flipped { transform: translate(calc(-100% - 12px), 12px); }
+.notatio-show-tip.is-above { transform: translate(12px, calc(-100% - 12px)); }
+.notatio-show-tip.is-flipped.is-above { transform: translate(calc(-100% - 12px), calc(-100% - 12px)); }
+.notatio-show-tip dl { display: grid; grid-template-columns: auto 1fr; gap: 0 0.6rem; margin: 0.2rem 0 0; }
+.notatio-show-tip dt { color: #94a3b8; }
+.notatio-show-tip dd { margin: 0; font-variant-numeric: tabular-nums; }
+.notatio-show-layers canvas:last-child { touch-action: none; cursor: grab; }
+.notatio-show-layers canvas:last-child:active { cursor: grabbing; }
+.notatio-show-layers canvas:last-child:focus {
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
+}
+.notatio-show-caption { margin: 0; line-height: 1.7; }
+.notatio-show-legend .notatio-show-swatch { position: relative; display: inline-flex; cursor: pointer; }
+.notatio-show-legend .notatio-show-swatch input[type="color"] {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  margin: 0;
-  color: #cbd5e1;
+  opacity: 0;
+  cursor: pointer;
 }
-.is-full-window .notatio-lattice {
-  margin: 0;
-  border-radius: 0;
+.notatio-show-gradient { grid-area: bar; position: relative; display: block; cursor: pointer; }
+.notatio-show-gradient .notatio-legend-bar { display: block; }
+.notatio-show-gradient select { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.notatio-show-ends { display: inline-flex; gap: 0.25rem; }
+.notatio-die { border: none; background: transparent; padding: 0 0.15rem; color: var(--vp-c-brand-1, #3451b2); font: inherit; cursor: pointer; }
+.notatio-settings { display: flex; gap: 0.3rem; margin-top: 0.35rem; }
+.notatio-settings input {
+  flex: 1;
+  min-width: 0;
+  font: 0.8rem var(--vp-font-family-mono, ui-monospace, monospace);
+  padding: 0.2rem 0.4rem;
+  border: 1px solid var(--vp-c-divider, #ccc);
+  border-radius: 4px;
+  background: var(--vp-c-bg-soft, transparent);
+  color: inherit;
 }
+.notatio-settings button { border: none; background: transparent; color: var(--vp-c-brand-1, #3451b2); cursor: pointer; }
+.notatio-show-indexed { grid-area: bar; display: flex; flex-wrap: wrap; gap: 0.15rem 0.5rem; font-size: 0.85em; }
+.notatio-show-indexed span { display: inline-flex; align-items: center; gap: 0.25rem; }
+.notatio-show-indexed i { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; }
+.notatio-show-ends button,
+.notatio-stepper button {
+  border: none;
+  background: transparent;
+  color: var(--vp-c-brand-1, #3451b2);
+  font: inherit;
+  padding: 0 0.15rem;
+  cursor: pointer;
+}
+
+/* --- Stepper: an integer in a sentence, stepped in place ------------------------------- */
+.notatio-stepper {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.05rem;
+  border-bottom: 1px dashed var(--vp-c-brand-1, #3451b2);
+  outline: none;
+}
+.notatio-stepper:focus-visible { box-shadow: 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 40%, transparent); border-radius: 3px; }
+.notatio-stepper-value { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--vp-c-brand-1, #3451b2); }
 
 /* --- Reactive prose, after Tangle ------------------------------------------------
    The controls sit INSIDE a sentence, so everything here is inline and must not
@@ -2020,6 +2047,11 @@ notatio-labeled { display: inline-flex; align-items: center; gap: 0.4em; vertica
 notatio-labeled[position="before"] .notatio-label { order: -1; }
 notatio-labeled[position="above"],
 notatio-labeled[position="below"] { flex-direction: column; align-items: flex-start; gap: 0.15em; }
+/* A plot with a caption: the plot takes the width, the caption reads as a paragraph under it. */
+notatio-labeled:has(> notatio-show) { display: flex; gap: 0.5rem; }
+notatio-labeled > notatio-show { align-self: stretch; }
+notatio-labeled:has(> notatio-show) { text-align: start; }
+notatio-labeled:has(> notatio-show) > notatio-string-template { display: block; line-height: 1.7; }
 notatio-labeled[position="above"] .notatio-label { order: -1; }
 .notatio-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }
 

@@ -24,6 +24,8 @@ export {
   alignFunctions,
   equivalentFunctions,
   interpretSymbolicAgreement,
+  echoedPart,
+  echoesInput,
   leavesCall,
   lookThroughConditions,
   symbolicAgreementSource,

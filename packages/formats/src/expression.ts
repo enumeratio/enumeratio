@@ -136,12 +136,26 @@ function exactDecimals(json: MathJsonExpression, src: string): void {
 }
 
 /**
+ * Resolve the keys of rules (`isPrime -> Teal`, `isIrreducible && !isPrime -> Teal`) as
+ * `resolveLibraryNames` resolves everything else: it leaves a rule's key as written, so a name
+ * Epsil spells in lowercase (`isPrime`, how `IsPrime` prints) would read back as another name.
+ */
+function resolveRuleKeys(json: MathJsonExpression, src: string, ce: ComputeEngine): void {
+  walk(json, (n) => {
+    const fn = Array.isArray(n) ? n : (n as { fn?: unknown[] })?.fn;
+    if (!Array.isArray(fn) || headOf(n) !== "KeyValuePair" || fn[1] === undefined) return;
+    if (typeof fn[1] === "object") resolveLibraryNames(fn[1] as MathJsonExpression, src, ce);
+  });
+}
+
+/**
  * Parse one Epsil expression. Returns the MathJSON, its slot wildcards, and any
  * diagnostics — an Epsil parse error, or a statement/effect head. Never throws.
  */
 export function parseExpression(src: string, options?: ParseExpressionOptions): ParseExpressionResult {
   const [json, diagnostics] = parseEpsil(src, undefined, options);
   resolveLibraryNames(json, src, options?.ce ?? libraryEngine());
+  resolveRuleKeys(json, src, options?.ce ?? libraryEngine());
   exactDecimals(json, src);
   const found: ExpressionDiagnostic[] = diagnostics
     .filter((d) => d.severity === "error")

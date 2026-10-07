@@ -2,7 +2,7 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
+import { applyTemplates, captureTemplates, type Template, takesBindings, whenTemplatesDefined } from "./bindings.ts";
 import { controlsTemplate } from "./manipulate-ui.ts";
 import { ensureFor, loadBareEngine, loadMarkup } from "./mathlive.ts";
 import "./notatio-dynamic.ts";
@@ -21,17 +21,6 @@ import {
   type ProsePart,
 } from "@enumeratio/frontend/core";
 import { SliderPlayback } from "./sweep.ts";
-
-/** A `value` template on an element that samples its own code with wildcard values. */
-const takesBindings = (t: Template): boolean =>
-  ("attr" in t ? t.attr : t.prop) === "value" &&
-  ((
-    customElements.get(t.el.localName) as { elementProperties?: Map<PropertyKey, unknown> } | undefined
-  )?.elementProperties?.has("bindings") ??
-    false);
-
-/** How long a Manipulate waits for its templates' elements to be defined (they load on use). */
-const DEFINE_WAIT_MS = 2000;
 
 /**
  * `<Manipulate params="{a, 1, 5}">` -- a generic Wolfram-style
@@ -192,16 +181,7 @@ export class NotatioManipulate extends LitElement {
     const slot = (t: Template): string => ("attr" in t ? `@${t.attr}` : t.prop);
     const fresh = found.filter((t) => !this.#templates.some((o) => o.el === t.el && slot(o) === slot(t)));
     this.#templates = more ? [...this.#templates, ...fresh] : found;
-    // Whether an element takes bindings is its class's to say, so wait for the classes.
-    const pending = [...new Set(this.#templates.map((t) => t.el.localName))].filter(
-      (tag) => tag.includes("-") && customElements.get(tag) === undefined,
-    );
-    if (pending.length > 0) {
-      await Promise.race([
-        Promise.all(pending.map((tag) => customElements.whenDefined(tag))),
-        new Promise((resolve) => setTimeout(resolve, DEFINE_WAIT_MS)),
-      ]);
-    }
+    await whenTemplatesDefined(this.#templates);
     // The libraries the templates name, before any is filled and evaluated.
     await ensureFor(engine, ["List", ...this.#templates.map((t) => t.json)]);
   }

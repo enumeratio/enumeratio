@@ -18,18 +18,29 @@ most twelve places. Each tile is one numeral, colored by its digit in the twelft
 splits the dragon into the two halves it is made of.
 
 <Story title="Base −1 + i, digits 0 and 1">
-<ClientOnly>
-<notatio-lattice-plot id="bases" layer="radix" example="twindragon" height="520" />
-</ClientOnly>
+<Labeled Variables='[
+    _e -> Variable(ComplexBases, "twindragon"),
+    _r -> [Labeled(GaussianIntegers, "ℤ[i]"), Labeled(EisensteinIntegers, "ℤ[ω]")],
+    _b -> Variable(_r, (-1, 1)),
+    _ds -> Variable(_r, [(1, 0)]),
+    _L -> Variable(Integers, 12, Range -> [1, 14])]'>
+  <Show ImageSize="[Automatic, 520]">
+    <LatticeTiles
+      ColorRules='[True -> ColorData("Tableau10")(Digit(_L))]'
+      BoundaryStyle="[IsDigit -> White, Overlaps -> Directive(Red, AbsoluteThickness(1.5))]"
+    >
+      <RadixExpansions Example="_e">_r _b _ds _L</RadixExpansions>
+    </LatticeTiles>
+    <Locator Appearance='"β"'>_b</Locator>
+    <Locator LocatorAutoCreate>_ds</Locator>
+  </Show>
+  <StringTemplate>Base $\beta = _b$, digits 0, {_ds}, at most {_L} places, colored by the digit in the last place: {_e}. Try {Setter(_e, "twindragon", "the twindragon")}, {Setter(_e, "quater-imaginary", "Knuth's quater-imaginary base")}, {Setter(_e, "katai-szabo", "base −2 + i")}, {Setter(_e, "gosper-island", "the Gosper island")}, {Setter(_e, "eisenstein-three", "base −1 + ω")} or {Setter(_e, "square", "a plain square")}.</StringTemplate>
+  <Bottom/>
+</Labeled>
 </Story>
 
-Try the other notable systems, in the caption's menu or right here:
-<a href="#bases" data-lattice-target="bases" data-lattice-control="example" data-lattice-value="twindragon">the twindragon</a>,
-<a href="#bases" data-lattice-target="bases" data-lattice-control="example" data-lattice-value="quater-imaginary">Knuth's quater-imaginary base</a>,
-<a href="#bases" data-lattice-target="bases" data-lattice-control="example" data-lattice-value="katai-szabo">base −2 + i</a>,
-<a href="#bases" data-lattice-target="bases" data-lattice-control="example" data-lattice-value="gosper-island">the Gosper island</a>,
-<a href="#bases" data-lattice-target="bases" data-lattice-control="example" data-lattice-value="eisenstein-three">base −1 + ω</a> and
-<a href="#bases" data-lattice-target="bases" data-lattice-control="example" data-lattice-value="square">a plain square</a>.
+Every system in the caption's menu, notable and favorite, draws the same way. Drag $\beta$ or a
+digit to change the system, and ⌥-click to add a digit or take one away.
 
 ## One digit per residue class
 

@@ -3,7 +3,7 @@ ceil-7-over-2	ceiling(Rational(7, 2))	4
 ceil-3p2	ceiling(3.2)	4	
 ceil-3p7	ceiling(3.7)	4	
 integers-pass-through-unchanged	ceiling(5)	5	
-threads-element-wise-over-a-list	[ceiling(1.2), ceiling(-1.2), ceiling(3.7)]	AttributeError: 'list' object has no attribute 'is_Number'	error
+threads-element-wise-over-a-list	[ceiling(1.2), ceiling(-1.2), ceiling(3.7)]	[2, -1, 4]	
 ceil-2p4	ceiling(2.4)	3	
 ceil-2p6	ceiling(2.6)	3	
 idempotent-lceil-lceil-x-rceil-rceil	ceiling(ceiling(Symbol("x")))	True	
@@ -19,7 +19,7 @@ matrixfunction-ceil-list-list-1-over-2-neg-1
 ceil-0	ceiling(0)		
 ceil-positiveinfinity	ceiling(oo)		
 piecewiseexpand-ceil-x-2-0-lt-x-lt-4			
-d-ceil-x-x	diff(ceiling(Symbol("x")), Symbol("x"))		
+d-ceil-x-x	diff(ceiling(Symbol("x")), Symbol("x"))	Derivative(ceiling(x), x)	inconclusive
 how-many-5-seat-vans-are-needed-to-carry-17	ceiling((S(17) / 5))	4	
 ten-bits-are-enough-to-number-1000-items-lceil			
 lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer	enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))	True	
@@ -38,6 +38,6 @@ ceil-neg-27-over-10	ceiling(Rational(-27, 10))
 ceil-negativeinfinity	ceiling(-oo)		
 ceil-23-over-10-plus-neg-i-times-exponentiale	ceiling((Rational(23, 10) + ((0 + -1*I) * E)))		
 ceil-i	ceiling((0 + 1*I))		
-a-zero-divisor-inside-ceil	ceiling((S(16) / 0))	zoo	
+a-zero-divisor-inside-ceil	ceiling((S(16) / 0))	zoo	disagree
 rounds-toward-infty-not-toward-0-ceil-3-7-is-3	ceiling(-3.7)	-3	
 nan-propagates-rather-than-erroring	ceiling(nan)	nan	

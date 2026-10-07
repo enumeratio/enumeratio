@@ -34,6 +34,7 @@
     "@enumeratio/frontend": "workspace:*",
     "@enumeratio/number-theory": "workspace:*",
     "@enumeratio/polytope": "workspace:*",
+    "@enumeratio/residues": "workspace:*",
     "@enumeratio/structures": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
     "@xterm/addon-fit": "0.10.0",

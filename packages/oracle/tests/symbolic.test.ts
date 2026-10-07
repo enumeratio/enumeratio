@@ -2,6 +2,8 @@ import { expect, test } from "vite-plus/test";
 import {
   alignFunctions,
   boundVariables,
+  derivativeVariables,
+  echoesInput,
   discreteVariables,
   interpretSymbolicAgreement,
   leavesCall,
@@ -311,4 +313,29 @@ test("a transform's result variable is sampled at positive values, and the one i
   expect(source).not.toMatch(/Rational\[-\d+, \d+\]/);
   // The integration variable stays the call's own: with `t` a number it would be no transform at all.
   expect(source).toContain("LaplaceTransform[Divide[1, Sqrt[t]], t, Rational[7, 3]]");
+});
+
+test("a derivative's variable is not sampled at a number, which SymPy cannot differentiate at", () => {
+  expect([...derivativeVariables(["D", ["Power", "x", 3], ["List", "x", 2]] as never)]).toEqual(["x"]);
+  const source = symbolicAgreementSource(
+    "sympy",
+    ["D", ["Power", "x", 3], "x"] as never,
+    ["Multiply", 3, ["Power", "x", 2]] as never,
+    ["x"],
+  );
+  expect(source).not.toContain("Rational(7, 3)");
+});
+
+test("a form-transforming head that hands its input back is a rewrite not made", () => {
+  const input = ["Sqrt", ["Negate", ["Power", "x", 2]]];
+  expect(echoesInput(["FunctionExpand", input] as never, input as never)).toBe(true);
+  expect(
+    echoesInput(
+      ["FunctionExpand", ["List", input, ["Ln", "y"]]] as never,
+      ["List", input, ["Multiply", 2, "y"]] as never,
+    ),
+  ).toBe(true);
+  expect(echoesInput(["FunctionExpand", input] as never, ["Multiply", "x", "i"] as never)).toBe(false);
+  expect(echoesInput(["Simplify", "x"] as never, "x" as never)).toBe(false);
+  expect(echoesInput(["Sin", input] as never, input as never)).toBe(false);
 });

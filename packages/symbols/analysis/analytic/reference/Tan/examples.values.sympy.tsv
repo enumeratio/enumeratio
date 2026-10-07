@@ -29,7 +29,7 @@ oddness-pulls-the-sign-out-of-a-symbolic	tan((-Symbol("x")))	True
 tan-arctan-x-x-for-every-x			
 tan-arctan-2-2-for-every-x			
 tan-arcsin-x-frac-x-sqrt-1-x-2			
-derivative-sec-2-x	diff(tan(Symbol("x")), Symbol("x"))		
+derivative-sec-2-x	diff(tan(Symbol("x")), Symbol("x"))	tan(x)**2 + 1	disagree
 antiderivative-ln-sec-x			
 taylor-series-about-0			
 to-30-significant-digits-every-one-correctly	N(tan(1), 30)	1.55740772465490223050697480746	
@@ -42,7 +42,7 @@ functionsurjective-tan-x-x
 functionsingularities-tan-x-x			
 functiondiscontinuities-tan-x-x			
 matrixfunction-function-tan-1-1-list-list-5-over			
-tan-positiveinfinity	tan(oo)		
+tan-positiveinfinity	tan(oo)	AccumBounds(-oo, oo)	disagree
 assuming-m-in-integers-refine-tan-pi-times-m			
 assuming-m-in-integers-fullsimplify-refine-tan			
 threads-element-wise-over-a-list	[tan(0), tan((S(pi) / 4))]	[0, 1]	
@@ -61,4 +61,4 @@ a-pole-cos-pi-2-0-so-the-ratio-blows-up	tan((S(pi) / 2))	zoo
 same-rule-as-sin-and-cos-a-non-special-numeric	tan(1)	tan(1)	
 a-pole-at-negative-pi-over-2-too	tan((S(pi) / -2))	zoo	
 a-pole-reached-through-periodicity-unreduced	tan(((S(pi) / -2) + pi))	zoo	
-tan-complexinfinity-is-indeterminate-poles-recur	tan(zoo)		
+tan-complexinfinity-is-indeterminate-poles-recur	tan(zoo)	nan	disagree

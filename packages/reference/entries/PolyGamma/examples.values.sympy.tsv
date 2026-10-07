@@ -69,6 +69,6 @@ recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2	enumeratio_equal((polygamma(1, 1) - poly
 psi-0-1-gamma-polygamma-0-z-routes-through	polygamma(0, 1)	-EulerGamma	
 psi-1-2-gamma-2-ln-2	polygamma(0, Rational(1, 2))	-2*log(2) - EulerGamma	
 psi-1-2-pi-2-2-in-closed-form	polygamma(1, Rational(1, 2))	pi**2/2	
-psi-1-4-pi-2-8g	polygamma(1, Rational(1, 4))	polygamma(1, 1/4)	inconclusive
+psi-1-4-pi-2-8g	polygamma(1, Rational(1, 4))	polygamma(1, 1/4)	
 frac-d-dx-psi-n-x-psi-n-1-x	diff(polygamma(Symbol("n"), Symbol("x")), Symbol("x"))		
 an-exact-integer-argument-is-left-unevaluated	polygamma(1, Rational(5, 3))	pi**2/6	

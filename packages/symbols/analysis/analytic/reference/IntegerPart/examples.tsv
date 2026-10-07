@@ -1,26 +1,26 @@
-id	section	role	expr	expected	known	source	caption	epsil.back
-integerpart-2p4			[IntegerPart, 2.4]	2				
-truncates-toward-0-unlike-floor			[IntegerPart, -2.4]	-2			Truncates toward 0, unlike [[Floor]]	
-integerpart-7-over-2			[IntegerPart, [Rational, 7, 2]]	3				
-integerpart-neg-7-over-2			[IntegerPart, [Rational, -7, 2]]	-3				
-exact-numeric-arguments-stay-exact	Scope		[IntegerPart, Pi]	3			Exact numeric arguments stay exact	
-threads-element-wise-over-a-list	Scope		[IntegerPart, [List, 2.5, -2.5]]	[List, 2, -2]			Threads element-wise over a list	
-complex-numbers-real-and-imaginary-parts	Scope		[IntegerPart, [Complex, 2.5, 3.7]]	[Complex, 2, 3]			Complex numbers: real and imaginary parts truncated separately	
-integerpart-neg-5-over-4	Scope		[IntegerPart, [Rational, -5, 4]]	-1			The integer part truncates toward zero: $-\frac54\to-1$	
-integerpart-0	Scope		[IntegerPart, 0]	0			Zero is its own integer part	
-piecewiseexpand-integerpart-x-0-lt-x-lt-4	Scope		[PiecewiseExpand, [IntegerPart, x], [Less, 0, x, 4]]	[IntegerPart, x]			No piecewise form is produced for a bounded domain	
-integerpart-exponentiale-plus-pi	Scope		[IntegerPart, [Add, ExponentialE, Pi]]	5				
-x-integerpart-x-fractionalpart-x	Properties		[Equal, [Add, [IntegerPart, [Rational, -7, 2]], [FractionalPart, [Rational, -7, 2]]], [Rational, -7, 2]]	True			$x = \mathrm{IntegerPart}(x) + \mathrm{FractionalPart}(x)$	
-piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	Properties		[PiecewiseExpand, [IntegerPart, [Add, [Power, x, 2], [Sqrt, x]]], [Less, 0, x, 2]]	[IntegerPart, [Add, [Power, x, 2], [Sqrt, x]]]			The same with a mixed expression: no piecewise rewriting	
-integerpart-1	Properties		[IntegerPart, 1]	1	1	Wolfram MathematicalFunctionData, IntegerPart	An integer is its own integer part	
-integerpart-neg-1	Properties		[IntegerPart, -1]	-1	-1	Wolfram MathematicalFunctionData, IntegerPart	$-1$ is unchanged	
-integerpart-23-over-10	Properties		[IntegerPart, [Rational, 23, 10]]	2	2	Wolfram MathematicalFunctionData, IntegerPart	Truncates $2.3$ to 2	
-integerpart-neg-3	Properties		[IntegerPart, -3]	-3	-3	Wolfram MathematicalFunctionData, IntegerPart	A negative integer is unchanged	
-integerpart-neg-pi	Properties		[IntegerPart, [Negate, Pi]]	-3	-3	Wolfram MathematicalFunctionData, IntegerPart	Truncation toward zero gives $-3$ for $-\pi$	
-integerpart-neg-27-over-10	Properties		[IntegerPart, [Rational, -27, 10]]	-2	-2	Wolfram MathematicalFunctionData, IntegerPart	Negative values round up toward zero: $-2.7\to-2$	
-simplify-integerpart-x-plus-1-minus-integerpart	Properties		[Simplify, [Add, [IntegerPart, [Add, x, 1]], [Multiply, -1, [IntegerPart, x]]], [GreaterEqual, x, 0]]	[Add, [Negate, [IntegerPart, x]], [IntegerPart, [Add, x, 1]]]			Simplify cannot reduce $\lfloor x\rfloor$ difference even with $x\ge0$	[Simplify, [Subtract, [IntegerPart, [Add, x, 1]], [IntegerPart, x]], [GreaterEqual, x, 0]]
-piecewiseexpand-integerpart-x-plus-1-times-3-pow	Properties		[PiecewiseExpand, [IntegerPart, [Add, x, [Multiply, 1, [Power, 3, -1]], [Power, [IntegerPart, [Add, 1, [Multiply, -1, [Multiply, x, [Power, 2, -1]]]]], 3]]], [And, [Element, x, RealNumbers], [Less, -2, x, 3]]]	[IntegerPart, [Add, x, [Power, [IntegerPart, [Add, [Multiply, [Rational, -1, 2], x], 1]], 3], [Rational, 1, 3]]]			A nested integer part is rewritten with the terms reordered	
-integerpart-i	Properties		[IntegerPart, [Complex, 0, 1]]	[Complex, 0, 1]	[Complex, 0, 1]	Wolfram MathematicalFunctionData, IntegerPart		
-integerpart-neg-i	Properties		[IntegerPart, [Complex, 0, -1]]	[Complex, 0, -1]	[Complex, 0, -1]	Wolfram MathematicalFunctionData, IntegerPart		
-integerpart-23-over-10-plus-neg-i-times	Properties		[IntegerPart, [Add, [Rational, 23, 10], [Multiply, [Complex, 0, -1], ExponentialE]]]	[Complex, 2, -2]	[Complex, 2, -2]	Wolfram MathematicalFunctionData, IntegerPart		
-integerpart-1-plus-2pi-minus-1-plus-pi-pow-2	Possible issues		[IntegerPart, [Add, 1, [Multiply, 2, Pi], [Negate, [Power, [Add, 1, Pi], 2]], [Power, Pi, 2]]]	0			An expression that is exactly 0 gives 0	
+id	section	role	expr	expected	known	source	caption	epsil.back	wolfram.kind	wolfram.note
+integerpart-2p4			[IntegerPart, 2.4]	2						
+truncates-toward-0-unlike-floor			[IntegerPart, -2.4]	-2			Truncates toward 0, unlike [[Floor]]			
+integerpart-7-over-2			[IntegerPart, [Rational, 7, 2]]	3						
+integerpart-neg-7-over-2			[IntegerPart, [Rational, -7, 2]]	-3						
+exact-numeric-arguments-stay-exact	Scope		[IntegerPart, Pi]	3			Exact numeric arguments stay exact			
+threads-element-wise-over-a-list	Scope		[IntegerPart, [List, 2.5, -2.5]]	[List, 2, -2]			Threads element-wise over a list			
+complex-numbers-real-and-imaginary-parts	Scope		[IntegerPart, [Complex, 2.5, 3.7]]	[Complex, 2, 3]			Complex numbers: real and imaginary parts truncated separately			
+integerpart-neg-5-over-4	Scope		[IntegerPart, [Rational, -5, 4]]	-1			The integer part truncates toward zero: $-\frac54\to-1$			
+integerpart-0	Scope		[IntegerPart, 0]	0			Zero is its own integer part			
+piecewiseexpand-integerpart-x-0-lt-x-lt-4	Scope		[PiecewiseExpand, [IntegerPart, x], [Less, 0, x, 4]]	[IntegerPart, x]			No piecewise form is produced for a bounded domain		unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
+integerpart-exponentiale-plus-pi	Scope		[IntegerPart, [Add, ExponentialE, Pi]]	5						
+x-integerpart-x-fractionalpart-x	Properties		[Equal, [Add, [IntegerPart, [Rational, -7, 2]], [FractionalPart, [Rational, -7, 2]]], [Rational, -7, 2]]	True			$x = \mathrm{IntegerPart}(x) + \mathrm{FractionalPart}(x)$			
+piecewiseexpand-integerpart-x-pow-2-plus-sqrt-x	Properties		[PiecewiseExpand, [IntegerPart, [Add, [Power, x, 2], [Sqrt, x]]], [Less, 0, x, 2]]	[IntegerPart, [Add, [Power, x, 2], [Sqrt, x]]]			The same with a mixed expression: no piecewise rewriting		unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
+integerpart-1	Properties		[IntegerPart, 1]	1	1	Wolfram MathematicalFunctionData, IntegerPart	An integer is its own integer part			
+integerpart-neg-1	Properties		[IntegerPart, -1]	-1	-1	Wolfram MathematicalFunctionData, IntegerPart	$-1$ is unchanged			
+integerpart-23-over-10	Properties		[IntegerPart, [Rational, 23, 10]]	2	2	Wolfram MathematicalFunctionData, IntegerPart	Truncates $2.3$ to 2			
+integerpart-neg-3	Properties		[IntegerPart, -3]	-3	-3	Wolfram MathematicalFunctionData, IntegerPart	A negative integer is unchanged			
+integerpart-neg-pi	Properties		[IntegerPart, [Negate, Pi]]	-3	-3	Wolfram MathematicalFunctionData, IntegerPart	Truncation toward zero gives $-3$ for $-\pi$			
+integerpart-neg-27-over-10	Properties		[IntegerPart, [Rational, -27, 10]]	-2	-2	Wolfram MathematicalFunctionData, IntegerPart	Negative values round up toward zero: $-2.7\to-2$			
+simplify-integerpart-x-plus-1-minus-integerpart	Properties		[Simplify, [Add, [IntegerPart, [Add, x, 1]], [Multiply, -1, [IntegerPart, x]]], [GreaterEqual, x, 0]]	[Add, [Negate, [IntegerPart, x]], [IntegerPart, [Add, x, 1]]]			Simplify cannot reduce $\lfloor x\rfloor$ difference even with $x\ge0$	[Simplify, [Subtract, [IntegerPart, [Add, x, 1]], [IntegerPart, x]], [GreaterEqual, x, 0]]	unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
+piecewiseexpand-integerpart-x-plus-1-times-3-pow	Properties		[PiecewiseExpand, [IntegerPart, [Add, x, [Multiply, 1, [Power, 3, -1]], [Power, [IntegerPart, [Add, 1, [Multiply, -1, [Multiply, x, [Power, 2, -1]]]]], 3]]], [And, [Element, x, RealNumbers], [Less, -2, x, 3]]]	[IntegerPart, [Add, x, [Power, [IntegerPart, [Add, [Multiply, [Rational, -1, 2], x], 1]], 3], [Rational, 1, 3]]]			A nested integer part is rewritten with the terms reordered		unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
+integerpart-i	Properties		[IntegerPart, [Complex, 0, 1]]	[Complex, 0, 1]	[Complex, 0, 1]	Wolfram MathematicalFunctionData, IntegerPart				
+integerpart-neg-i	Properties		[IntegerPart, [Complex, 0, -1]]	[Complex, 0, -1]	[Complex, 0, -1]	Wolfram MathematicalFunctionData, IntegerPart				
+integerpart-23-over-10-plus-neg-i-times	Properties		[IntegerPart, [Add, [Rational, 23, 10], [Multiply, [Complex, 0, -1], ExponentialE]]]	[Complex, 2, -2]	[Complex, 2, -2]	Wolfram MathematicalFunctionData, IntegerPart				
+integerpart-1-plus-2pi-minus-1-plus-pi-pow-2	Possible issues		[IntegerPart, [Add, 1, [Multiply, 2, Pi], [Negate, [Power, [Add, 1, Pi], 2]], [Power, Pi, 2]]]	0			An expression that is exactly 0 gives 0			

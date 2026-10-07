@@ -2,7 +2,7 @@ id	section	role	expr	expected	known	source	caption	triage	wolfram.kind	wolfram.n
 unitbox-inside-the-box			[UnitBox, 0]	1			Inside the box			
 unitbox-boundary-1-2			[UnitBox, [Rational, 1, 2]]	1			The boundary is closed			
 unitbox-boundary-neg-1-2			[UnitBox, [Rational, -1, 2]]	1			The boundary is closed			
-piecewiseexpand-unitbox-x			[PiecewiseExpand, [UnitBox, x]]	[UnitBox, x]			The symbolic form is already expanded			
+piecewiseexpand-unitbox-x			[PiecewiseExpand, [UnitBox, x]]	[UnitBox, x]			The symbolic form is already expanded		unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
 unitbox-outside-the-box	Scope		[UnitBox, 1]	0			Outside the box			
 unitbox-product-of-two-boxes	Scope		[UnitBox, 0, 0]	1			Two arguments -- the product of their unit boxes			
 unitbox-product-second-at-its-boundary	Scope	test	[UnitBox, 0, [Rational, 1, 2]]	1						
@@ -11,7 +11,7 @@ unitbox-sqrt2-over-4-inside-exact	Scope		[UnitBox, [Divide, [Sqrt, 2], 4]]	1	1	â
 unitbox-neg-1	Scope		[UnitBox, -1]	0			Zero outside the support			
 unitbox-1-over-4	Scope		[UnitBox, [Rational, 1, 4]]	1			One inside $|x|<\frac12$			
 fullsimplify-matrixfunction-unitbox-list-list-1	Scope		[FullSimplify, [MatrixFunction, UnitBox, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 3]]]]]	[List, [List, 1, 0], [List, 0, 1]]			A matrix function with eigenvalues $\frac12$ and $\frac13$, giving the identity			
-piecewiseexpand-unitbox-x-0-lt-x-lt-2	Scope		[PiecewiseExpand, [UnitBox, x], [Less, 0, x, 2]]	[UnitBox, x]			With a bounded domain, nothing to rewrite			
+piecewiseexpand-unitbox-x-0-lt-x-lt-2	Scope		[PiecewiseExpand, [UnitBox, x], [Less, 0, x, 2]]	[UnitBox, x]			With a bounded domain, nothing to rewrite		unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
 apply-derivative-unitbox-2-x-eq-eq-apply	Scope	triage	[Same, [Apply, [Derivative, UnitBox, 2], x], [Apply, [Derivative, UnitBox, 3], x]]	False				gap	unclassified	Derivatives of UnitBox of different order are judged different here.
 unitbox-derivative-away-from-the-jump	Properties		[D, [UnitBox, x], x]	[Piecewise, [List, [List, Indeterminate, [Or, [Equal, x, [Rational, 1, 2]], [Equal, x, [Rational, -1, 2]]]]], 0]			0 away from the jump, undefined exactly at the boundary			
 unitbox-2	Properties		[UnitBox, 2]	0	0	Wolfram MathematicalFunctionData, UnitBox	Zero outside the box at 2			

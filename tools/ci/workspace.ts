@@ -12,6 +12,8 @@ export interface Pkg {
   readonly buildScript: string | undefined;
   /** Workspace names this package's build and tests read: declared, then implicit. */
   readonly deps: ReadonlySet<string>;
+  /** Just the names its `package.json` declares (any field), which never form a cycle on their own. */
+  readonly declared: ReadonlySet<string>;
 }
 
 export const root = resolve(import.meta.dirname, "../..");
@@ -79,6 +81,8 @@ export function loadWorkspace(): Map<string, Pkg> {
       manifest.optionalDependencies,
     ])
       for (const dep of Object.keys(field ?? {})) if (names.has(dep)) deps.add(dep);
+    const declared = new Set(deps);
+    declared.delete(manifest.name);
     // `node ../manifest/scripts/x.ts .` reads a sibling's source without declaring it.
     const build = manifest.scripts?.build;
     for (const m of (build ?? "").matchAll(/((?:\.\.\/)+)([\w-]+)\//g)) {
@@ -87,7 +91,7 @@ export function loadWorkspace(): Map<string, Pkg> {
       if (hit !== undefined) deps.add(hit);
     }
     deps.delete(manifest.name);
-    pkgs.set(manifest.name, { name: manifest.name, dir, buildScript: build, deps });
+    pkgs.set(manifest.name, { name: manifest.name, dir, buildScript: build, deps, declared });
   }
   return pkgs;
 }

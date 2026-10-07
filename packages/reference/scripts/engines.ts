@@ -56,7 +56,8 @@ const late = (
   late: declare,
   requires,
 });
-const EXTRAS = [
+/** The host-supplied libraries: declared into an engine whatever resolves, once what they need is there. */
+export const EXTRAS = [
   late("restricted", declareRestricted, ["combinatorics"]),
   late("compose", declareCompose, ["restricted"]),
   late("histogram", declareHistogram, []),

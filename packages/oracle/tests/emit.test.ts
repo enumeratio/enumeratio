@@ -519,11 +519,21 @@ test("a library's heads emit through its own mappings, called by namespace", () 
   });
 });
 
-test("BigO emits to Wolfram with the exponent outside O", () => {
+test("BigO emits to Wolfram with the exponent outside O, and the center in it", () => {
   expect(emit(["BigO", ["Power", "x", 8]], "wolfram")).toMatchObject({ ok: true, source: "Power[O[x], 8]" });
   expect(emit(["BigO", "x"], "wolfram")).toMatchObject({ ok: true, source: "O[x]" });
+  // `O[x - a]` is rejected (SeriesData::sdatv): the center is O's second argument.
   expect(emit(["Add", 1, ["BigO", ["Power", ["Add", "x", -1], 3]]], "wolfram")).toMatchObject({
     ok: true,
-    source: "Plus[1, Power[O[Plus[x, -1]], 3]]",
+    source: "Plus[1, Power[O[x, Minus[-1]], 3]]",
+  });
+  expect(emit(["BigO", ["Power", ["Add", "x", "Pi"], 3]], "wolfram")).toMatchObject({
+    ok: true,
+    source: "Power[O[x, Minus[Pi]], 3]",
+  });
+  // At infinity, BigO(x^-n) is O[x, Infinity]^n.
+  expect(emit(["BigO", ["Power", "x", -7]], "wolfram")).toMatchObject({
+    ok: true,
+    source: "Power[O[x, Infinity], 7]",
   });
 });

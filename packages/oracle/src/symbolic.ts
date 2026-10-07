@@ -172,6 +172,21 @@ export const boundVariables = (expr: MathJSON): Set<string> => transformVariable
  * point is outside the domain the transform is defined on and decides nothing. */
 export const positiveVariables = (expr: MathJSON): Set<string> => transformVariables(expr, 2, 3);
 
+/** The variables a derivative is taken in (`D(f, x)`, `D(f, [x, 2])`): differentiating at a number
+ * raises in SymPy and Sage, so the answer is compared in the variable instead of at a sample. */
+export function derivativeVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "D") {
+    for (const spec of operands.slice(1)) {
+      const name = bareName(Array.isArray(spec) && (spec[0] === "List" || spec[0] === "Tuple") ? spec[1] : spec);
+      if (name !== undefined) found.add(name);
+    }
+  }
+  for (const operand of operands) derivativeVariables(operand, found);
+  return found;
+}
+
 const rationalLiteral = ([n, d]: readonly [number, number]): MathJSON => ["Rational", n, d];
 
 /** `expr` with every occurrence of a name in `subs` replaced by its rational — the head of a
@@ -225,7 +240,11 @@ function trialSources(
   const positive = new Set([...positiveVariables(expr), ...positiveVariables(expected)]);
   const all = trialSubstitution(freeSymbols, trial, discreteVariables(expr), positive);
   const steps = system === "wolfram" ? stepVariables(expr) : new Set<string>();
-  const bound = new Set([...boundVariables(expr), ...boundVariables(expected)]);
+  const bound = new Set([
+    ...boundVariables(expr),
+    ...boundVariables(expected),
+    ...(system === "wolfram" ? [] : derivativeVariables(expr)),
+  ]);
   const subs = new Map([...all].filter(([name]) => !steps.has(name) && !bound.has(name)));
   const theirs = emit(substituteFreeSymbols(expr, subs), system);
   const ours = emit(substituteFreeSymbols(expected, subs), system);
@@ -373,6 +392,36 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
           e.slice(1).every((x, i) => sameValue(x as MathJSON, asked[i + 1] as MathJSON))))) ||
       e.slice(1).some((x) => visit(x as MathJSON)));
   return visit(expected) || holdsAppliedCall(call, expected);
+}
+
+/** Heads whose job is to rewrite their argument's form. */
+const FORM_TRANSFORMS = new Set(["FunctionExpand", "Simplify", "ComplexExpand", "PiecewiseExpand"]);
+
+const listEntries = (e: MathJSON): readonly MathJSON[] | undefined =>
+  Array.isArray(e) && e[0] === "List" ? (e.slice(1) as MathJSON[]) : undefined;
+
+/** The form `expr` asks to be rewritten, as the pieces a rewrite may leave alone: the whole, and a list's entries. */
+const rewriteTargets = (expr: MathJSON): MathJSON[] | undefined => {
+  if (!Array.isArray(expr) || !FORM_TRANSFORMS.has(expr[0] as string) || expr.length < 2) return undefined;
+  const form = expr[1] as MathJSON;
+  // An atom has nothing to rewrite.
+  return [form, ...(listEntries(form) ?? [])].filter(Array.isArray);
+};
+
+/** Whether `node` is `expr`'s form, or one entry of it, written back unchanged. */
+export function echoedPart(expr: MathJSON, node: MathJSON): boolean {
+  const text = canonicalText(node);
+  return rewriteTargets(expr)?.some((target) => canonicalText(target) === text) === true;
+}
+
+/**
+ * Whether `expr` asks a form to be rewritten and `expected` hands it back, or an entry of it,
+ * unchanged: a rewrite ours has not made. It agrees by value with whatever the kernel rewrites
+ * it to, which hides the missing rewrite, so it is not agreement unless the kernel leaves the
+ * form alone too.
+ */
+export function echoesInput(expr: MathJSON, expected: MathJSON): boolean {
+  return echoedPart(expr, expected) || (listEntries(expected)?.some((entry) => echoedPart(expr, entry)) ?? false);
 }
 
 /** Heads that only arrange or bind an answer: a call to one of these is not a function left undone. */
@@ -612,7 +661,7 @@ export function symbolicAgreementSource(
   freeSymbols: readonly string[],
 ): string | undefined {
   // Ours left the call unevaluated: the identity holds trivially, so the plain verdict decides.
-  if (leavesCall(expr, expected)) return undefined;
+  if (leavesCall(expr, expected) || echoesInput(expr, expected)) return undefined;
   const solving = system === "wolfram" && Array.isArray(expr) && expr[0] === "Solve";
   // A declined `Solve` (ours stays the call) has no solutions to compare as sets.
   if (solving && Array.isArray(expected) && expected[0] === "Solve") return undefined;

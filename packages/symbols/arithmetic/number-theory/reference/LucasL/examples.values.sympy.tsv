@@ -13,8 +13,8 @@ special-value-of-the-lucas-polynomial-l-1-0-0
 special-value-of-the-lucas-polynomial-l-0-0-2			
 l-2-x-x-2-2-threads-element-wise-over-a-matrix			
 threads-element-wise-over-a-list-as-wolfram-s	[lucas(1), lucas(2), lucas(3), lucas(4)]	[1, 3, 4, 7]	
-n-lucasl-11-over-3-50	N(lucas(Rational(11, 3)), 30)		
-n-lucasl-1-plus-1-over-2-times-i	N(lucas((1 + Rational(1, 2)*I)), 30)		
+n-lucasl-11-over-3-50	N(lucas(Rational(11, 3)), 30)	lucas(11/3)	inconclusive
+n-lucasl-1-plus-1-over-2-times-i	N(lucas((1 + Rational(1, 2)*I)), 30)	lucas(1 + I/2)	disagree
 lucasl-1-neg-x-eq-neg-lucasl-1-x			
 lucasl-2-neg-x-eq-lucasl-2-x			
 lucasl-list-1-2-3-4-5	[lucas(1), lucas(2), lucas(3), lucas(4), lucas(5)]		
@@ -38,5 +38,5 @@ lucasl-9	lucas(9)
 sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-2			
 neg-lucasl-1-times-lucasl-3-plus-lucasl-2-pow-2	((-(lucas(1) * lucas(3))) + (S(lucas(2))**2))		
 sum-1-over-lucasl-k-times-1-over-lucasl-k-plus-3			
-n-neg-lucasl-neg-1-over-2-times-lucasl-3-over-2	N(((-(lucas(Rational(-1, 2)) * lucas(Rational(3, 2)))) + (S(lucas(Rational(1, 2)))**2)), 30)		
+n-neg-lucasl-neg-1-over-2-times-lucasl-3-over-2	N(((-(lucas(Rational(-1, 2)) * lucas(Rational(3, 2)))) + (S(lucas(Rational(1, 2)))**2)), 30)	-lucas(-1/2)*lucas(3/2) + lucas(1/2)**2	inconclusive
 l-30-already-tops-1-8-million-growing-at-the	lucas(30)	1860498	

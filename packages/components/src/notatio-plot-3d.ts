@@ -419,6 +419,7 @@ export class NotatioPlot3D extends LitElement {
         @pointerleave=${this.#onPointerLeave}
         @dblclick=${this.#orbit.onDblClick}
         @wheel=${this.#orbit.onWheel}
+        tabindex="0"
         title=${ORBIT_HINT}
         >${unsafeHTML(this._svg)}</span
       >${this.#toolbar()}${this.#controlsView()}`;
