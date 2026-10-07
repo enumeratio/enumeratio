@@ -2102,6 +2102,7 @@ notatio-labeled[position="below"] { flex-direction: column; align-items: flex-st
 /* A plot with a caption: the plot takes the width, the caption reads as a paragraph under it. */
 notatio-labeled:has(> notatio-show) { display: flex; gap: 0.5rem; }
 notatio-labeled > notatio-show { align-self: stretch; }
+notatio-labeled:has(> notatio-show) { text-align: start; }
 notatio-labeled:has(> notatio-show) > notatio-string-template { display: block; line-height: 1.7; }
 notatio-labeled[position="above"] .notatio-label { order: -1; }
 .notatio-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }

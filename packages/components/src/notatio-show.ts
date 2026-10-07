@@ -203,6 +203,8 @@ export class NotatioShow extends LitElement {
     value: { type: String },
     /** Height of the plot, in CSS pixels. */
     height: { type: Number },
+    /** Wolfram's `ImageSize`, as `Show` written in markup lowers it: `[Automatic, h]` sets the height. */
+    imageSize: { type: String, attribute: "image-size" },
     /** The ground the layers draw on: one of the palettes' grounds. */
     ground: { type: String },
     /** Options as attributes, as `Show` written in markup lowers them; each one Epsil. */
@@ -223,6 +225,7 @@ export class NotatioShow extends LitElement {
 
   declare value: string;
   declare height: number;
+  declare imageSize: string;
   declare ground: string;
   declare selection: string;
   declare aspectRatio: string;
@@ -256,6 +259,7 @@ export class NotatioShow extends LitElement {
     super();
     this.value = "";
     this.height = 480;
+    this.imageSize = "";
     this.ground = DEFAULT_GROUND;
     this.selection = "";
     this.aspectRatio = "";
@@ -703,6 +707,12 @@ export class NotatioShow extends LitElement {
     </li>`;
   }
 
+  /** `ImageSize -> [Automatic, h]` (or `[w, h]`) gives the height; `height` otherwise. */
+  get #height(): number {
+    const sized = /^\[\s*[^,\]]+,\s*(\d+(?:\.\d+)?)\s*\]$/.exec(this.imageSize.trim());
+    return Number(sized?.[1]) || Number(this.height) || 480;
+  }
+
   protected override render(): unknown {
     const ground = resolvePalette({ palette: this.ground });
     const legendAt: FramePlacement = placementOf(this.legendAt, "right");
@@ -723,7 +733,7 @@ export class NotatioShow extends LitElement {
     return html`<div class="notatio-show">
       ${figureFrame({
         stage,
-        stageStyle: `min-height:${Number(this.height) || 480}px`,
+        stageStyle: `min-height:${this.#height}px`,
         legend: this.#legendTemplate(isVertical(legendAt)),
         captionAt: "none",
         legendAt,

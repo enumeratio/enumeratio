@@ -6,10 +6,7 @@ Latin square, the idempotents mark how $n$ splits by the Chinese remainder theor
 square roots of each residue sit on the diagonal. A $1$ in the cell $(x, x - k)$ says
 $x(x - k) = 1$: $x$ is a root of $x^2 - kx - 1$, a metallic mean of $\mathbb{Z}/n$.
 
-<div>
-<notatio-labeled
-  position="below"
-  variables='[
+<Labeled Variables='[
     _n -> Variable(Integers, 24, Range -> [2, 400]),
     _o -> [Labeled(Natural, "in order"), Labeled(ChineseRemainder, "by their Chinese remainders")],
     _h -> [
@@ -17,24 +14,24 @@ $x(x - k) = 1$: $x$ is a root of $x^2 - kx - 1$, a metallic mean of $\mathbb{Z}/
       Labeled(SquareRoots, "square roots"),
       Labeled(Associates, "associates"),
       Labeled(Multiples, "multiples")],
-    _s -> []]'
->
-<notatio-show
-  height="600"
-  value='Show(
-    ArrayPlot(MultiplicationTable(QuotientRing(Integers, _n), ElementOrder -> _o),
-      ColorRules -> [
+    _s -> []]'>
+<Show GridLines="Automatic" Selection="_s" ImageSize="[Automatic, 600]">
+<ArrayPlot
+      ColorRules='[
         IsOne -> White,
         IsUnit -> ColorData(["Dusk", [1, 12]])(Order),
         IsIdempotent && !IsZero -> Gold,
         IsNilpotent && !IsZero -> Red,
         IsZeroDivisor -> Opacity(0.25, Teal),
-        _h(Selected) -> Opacity(0.4, White)],
-      ColorMixing -> "Screen",
-      BoundaryStyle -> [Selected -> Directive(White, AbsoluteThickness(2))]),
-    GridLines -> Automatic,
-    Selection -> _s)'
-></notatio-show>
-<notatio-string-template>Multiplication in $\mathbb{Z}/_n$, n = {_n}, its elements listed {_o}: units by their multiplicative order, the one white, idempotents gold, nilpotents red, other zero divisors faint. Selecting a cell lights its {_h}; shift-click to select several.</notatio-string-template>
-</notatio-labeled>
-</div>
+        _h(Selected) -> Opacity(0.4, White)]'
+      ColorMixing='"Screen"'
+      BoundaryStyle="[Selected -> Directive(White, AbsoluteThickness(2))]"
+    >
+<MultiplicationTable ElementOrder="_o">
+<QuotientRing>Integers _n</QuotientRing>
+</MultiplicationTable>
+</ArrayPlot>
+</Show>
+<StringTemplate>Multiplication in $\mathbb{Z}/_n$, n = {_n}, its elements listed {_o}: units by their multiplicative order, the one white, idempotents gold, nilpotents red, other zero divisors faint. Selecting a cell lights its {_h}; shift-click to select several.</StringTemplate>
+<Bottom/>
+</Labeled>

@@ -181,6 +181,7 @@ export const GRAPHICS_OPTIONS: Readonly<Record<string, readonly string[]>> = {
     "PlotLabel",
     "Selection",
     "GestureHandling",
+    "ImageSize",
   ],
   LatticeTiles: ["ColorRules", "ColorMixing", "BoundaryStyle"],
   ArrayPlot: ["ColorRules", "ColorMixing", "BoundaryStyle"],
@@ -202,14 +203,25 @@ export function declareHistogram(ce: ComputeEngine): void {
   );
 }
 
+/** Graphics heads whose arguments are held as written, not canonicalised: see `declareGraphics`. */
+const HELD_GRAPHICS: ReadonlySet<string> = new Set(["Show", "Variable"]);
+
 export function declareGraphics(ce: ComputeEngine): void {
   // Inert: no `evaluate`, so the expression stays what it says, while its arguments
   // are canonicalised as usual -- an iterator typed as `(x, 0, 10)` in LaTeX arrives as a
   // `Tuple`, not a `Delimiter`, and a free parameter stays a free symbol. A head the
   // engine already knows (its own `Histogram`) is handled below rather than redeclared.
   for (const head of GRAPHICS_HEADS) {
-    if (ce.lookupDefinition(head)) continue;
+    if (ce.lookupDefinition(head) || HELD_GRAPHICS.has(head)) continue;
     ce.declare(head, { signature: "(any*) -> any" });
+  }
+
+  // A `Show`'s layers are a spec its element reads as written: `IsPrime -> Teal` in a layer's
+  // `ColorRules` names a property, which canonicalising would read as compute-engine's own
+  // `IsPrime` applied to nothing. A `Variable(…)` declaration is held for the same reason
+  // (`Where -> IsSquareFree && !IsSquare` names tests, not booleans).
+  for (const head of HELD_GRAPHICS) {
+    if (!ce.lookupDefinition(head)) ce.declare(head, { signature: "(any*) -> any", lazy: true });
   }
 
   declareHistogram(ce);
