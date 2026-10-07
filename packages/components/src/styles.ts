@@ -1460,9 +1460,18 @@ notatio-worksheet {
 .notatio-palette-panel input[type="number"] { width: 5em; }
 
 /* --- Figure: layers in one frame, each a canvas, blended with screen ------------------ */
+/* A plot takes its container's width, in a flex row (a story's canvas) as in a block, and so
+   does the output element a page's markup wraps it in. */
+notatio-out:has(> notatio-show, > notatio-labeled > notatio-show) {
+  flex: 1 1 100%;
+  min-width: 0;
+}
 notatio-show {
   display: flex;
   flex-direction: column;
+  flex: 1 1 100%;
+  min-width: 0;
+  width: 100%;
 }
 .notatio-show {
   display: flex;
@@ -1490,6 +1499,31 @@ notatio-show {
 }
 /* Layers over the first add light: unknown (transparent) is the identity. */
 .notatio-show-layers canvas + canvas { mix-blend-mode: screen; }
+.notatio-show-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: #cbd5e1; }
+/* A tile's tooltip: beside the pointer, never under it, and never in the way of the next move. */
+.notatio-show-tip {
+  position: absolute;
+  transform: translate(12px, 12px);
+  pointer-events: none;
+  width: max-content;
+  /* At most the half of the plot it opens into. */
+  max-width: min(24rem, calc(50% - 16px));
+  text-align: start;
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, #0b0b16 88%, transparent);
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.35);
+  z-index: 2;
+}
+.notatio-show-tip.is-flipped { transform: translate(calc(-100% - 12px), 12px); }
+.notatio-show-tip.is-above { transform: translate(12px, calc(-100% - 12px)); }
+.notatio-show-tip.is-flipped.is-above { transform: translate(calc(-100% - 12px), calc(-100% - 12px)); }
+.notatio-show-tip dl { display: grid; grid-template-columns: auto 1fr; gap: 0 0.6rem; margin: 0.2rem 0 0; }
+.notatio-show-tip dt { color: #94a3b8; }
+.notatio-show-tip dd { margin: 0; font-variant-numeric: tabular-nums; }
 .notatio-show-layers canvas:last-child { touch-action: none; cursor: grab; }
 .notatio-show-layers canvas:last-child:active { cursor: grabbing; }
 .notatio-show-layers canvas:last-child:focus {

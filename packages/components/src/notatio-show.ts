@@ -221,6 +221,7 @@ export class NotatioShow extends LitElement {
     _selection: { state: true },
     _overrides: { state: true },
     _drawn: { state: true },
+    _tip: { state: true },
   };
 
   declare value: string;
@@ -238,6 +239,17 @@ export class NotatioShow extends LitElement {
   declare _selection: readonly Vec2[];
   declare _overrides: ReadonlyMap<number, Override>;
   declare _drawn: number;
+  /** What the layer says of the tile under the pointer, and where to show it. */
+  declare _tip:
+    | {
+        x: number;
+        y: number;
+        flip: boolean;
+        above: boolean;
+        title: string;
+        rows: readonly (readonly [string, string])[];
+      }
+    | undefined;
 
   #source: Json;
   /** The options: those written in `value`, then those given as attributes. */
@@ -272,6 +284,7 @@ export class NotatioShow extends LitElement {
     this._selection = [];
     this._overrides = new Map();
     this._drawn = 0;
+    this._tip = undefined;
     ensureStyles();
   }
 
@@ -346,15 +359,19 @@ export class NotatioShow extends LitElement {
   async #bind(): Promise<void> {
     const params = new Map<string, Json>();
     for (const [wildcard, value] of Object.entries(this.bindings ?? {})) params.set(wildcard.replace(/^_/, ""), value);
-    const selected = this.#selectionName === undefined ? undefined : params.get(this.#selectionName);
-    if (Array.isArray(selected) && selected[0] === "List") {
-      const points = selected
-        .slice(1)
-        .flatMap((p) => (Array.isArray(p) && p.length === 3 ? [[Number(p[1]), Number(p[2])] as Vec2] : []));
-      if (JSON.stringify(points) !== JSON.stringify(this._selection)) this._selection = points;
-    }
     this._params = params;
+    this.#adoptBoundSelection();
     await this.#rebuild();
+  }
+
+  /** Select what the selection's variable holds, when it holds a list of points. */
+  #adoptBoundSelection(): void {
+    const selected = this.#selectionName === undefined ? undefined : this._params.get(this.#selectionName);
+    if (!Array.isArray(selected) || selected[0] !== "List") return;
+    const points = selected
+      .slice(1)
+      .flatMap((p) => (Array.isArray(p) && p.length === 3 ? [[Number(p[1]), Number(p[2])] as Vec2] : []));
+    if (JSON.stringify(points) !== JSON.stringify(this._selection)) this._selection = points;
   }
 
   /** Bind the variables, read the spec, and load the ring's layer when the ring changed. */
@@ -376,7 +393,9 @@ export class NotatioShow extends LitElement {
       }
       this.#layer = layer;
       this.#layerKey = key;
+      // A new layer's points are other points: start from what the variable holds, if anything.
       this._selection = [];
+      this.#adoptBoundSelection();
       // A finite layer is framed whole whenever it changes (a new n is a new table); an
       // unbounded one once, so stepping the ring keeps the reader where they were.
       if (!this.#framed || layer.bounds) {
@@ -572,6 +591,35 @@ export class NotatioShow extends LitElement {
     canvas.addEventListener("pointercancel", up);
   };
 
+  #tipKey = "";
+
+  /** Wolfram's `Tooltip`, for every tile: what the layer says of the one under the pointer. */
+  #onHover = (e: PointerEvent): void => {
+    const layer = this.#layer;
+    if (!layer || e.buttons !== 0) return;
+    const [i, j] = nearestLatticePoint(layer.basis, this.#planeAt(e.clientX, e.clientY));
+    const { bounds } = layer;
+    const outside = bounds && (i < bounds.i[0] || i > bounds.i[1] || j < bounds.j[0] || j > bounds.j[1]);
+    const r = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const [x, y] = [e.clientX - r.left, e.clientY - r.top];
+    // On the side with room: left of the pointer in the plot's right half.
+    const [flip, above] = [x > r.width / 2, y > r.height / 2];
+    const key = `${i},${j}`;
+    if (outside) {
+      this._tip = undefined;
+      this.#tipKey = "";
+    } else if (key !== this.#tipKey) {
+      this.#tipKey = key;
+      if (!layer.known(i, j)) layer.prepare(i, j);
+      this._tip = { x, y, flip, above, ...layer.describe(i, j) };
+    } else if (this._tip) this._tip = { ...this._tip, x, y, flip, above };
+  };
+
+  #onLeave = (): void => {
+    this._tip = undefined;
+    this.#tipKey = "";
+  };
+
   #onWheel = (e: WheelEvent): void => {
     const canvas = e.currentTarget as HTMLCanvasElement;
     if (!wheelZooms(e, canvas, this.#gestures) || !this.#layer) return;
@@ -707,10 +755,12 @@ export class NotatioShow extends LitElement {
     </li>`;
   }
 
-  /** `ImageSize -> [Automatic, h]` (or `[w, h]`) gives the height; `height` otherwise. */
+  /** `ImageSize -> [Automatic, h]` (or `[w, h]`), in the expression or as an attribute, gives the height. */
   get #height(): number {
+    const size = this.#options.get("ImageSize");
+    const h = Array.isArray(size) && size[0] === "List" ? Number(size[2]) : Number.NaN;
     const sized = /^\[\s*[^,\]]+,\s*(\d+(?:\.\d+)?)\s*\]$/.exec(this.imageSize.trim());
-    return Number(sized?.[1]) || Number(this.height) || 480;
+    return (Number.isFinite(h) && h > 0 ? h : 0) || Number(sized?.[1]) || Number(this.height) || 480;
   }
 
   protected override render(): unknown {
@@ -724,12 +774,35 @@ export class NotatioShow extends LitElement {
               tabindex=${name === "axes" ? "0" : "-1"}
               aria-label=${name === "axes" ? `Plot: ${this.#layer?.title ?? ""}` : nothing}
               @pointerdown=${name === "axes" ? this.#onPointerDown : nothing}
+              @pointermove=${name === "axes" ? this.#onHover : nothing}
+              @pointerleave=${name === "axes" ? this.#onLeave : nothing}
               @wheel=${name === "axes" ? this.#onWheel : nothing}
               @keydown=${name === "axes" ? this.#onKey : nothing}
             ></canvas>`,
         )}
+        ${
+          this._tip
+            ? html`<div
+                class=${`notatio-show-tip${this._tip.flip ? " is-flipped" : ""}${this._tip.above ? " is-above" : ""}`}
+                style=${`left:${this._tip.x}px;top:${this._tip.y}px`}
+              >
+                <strong>${this._tip.title}</strong>
+                ${
+                  this._tip.rows.length
+                    ? html`<dl>
+                        ${this._tip.rows.map(
+                          ([k, v]) =>
+                            html`<dt>${k}</dt>
+                              <dd>${v}</dd>`,
+                        )}
+                      </dl>`
+                    : nothing
+                }
+              </div>`
+            : nothing
+        }
       </div>
-      ${this._status ? html`<p class="notatio-lattice-status">${this._status}</p>` : nothing}`;
+      ${this._status ? html`<p class="notatio-show-status">${this._status}</p>` : nothing}`;
     return html`<div class="notatio-show">
       ${figureFrame({
         stage,

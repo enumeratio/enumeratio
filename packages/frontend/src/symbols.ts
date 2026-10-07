@@ -42,6 +42,12 @@ export interface VisualSymbol {
    * `PlotLabel` is the plot's `label`, `AxesLabel` is two attributes. A string names
    * the attribute; a function returns the attributes.
    */
+  /**
+   * The element reads its options from its own expression, as written (`Show`): they stay in what
+   * `attributes` is given rather than lowering to attributes, all but `Variables`, which declares
+   * a scope and so must be an attribute the page's scopes can see.
+   */
+  readonly holdsOptions?: true;
   readonly options?: Readonly<Record<string, string | ((value: MathJsonExpression) => Record<string, string>)>>;
   /** For a control: the shape of what it binds, which is how `reduce` reads it statically. */
   readonly control?: ControlKind;
@@ -462,6 +468,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     // options lower to attributes (`Caption` to `caption`) like any plot's.
     head: "Show",
     tag: "notatio-show",
+    holdsOptions: true,
     attributes: (ops) => ({ value: epsil(["Show", ...ops] as Json) }),
   },
   {
@@ -1061,8 +1068,16 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   }
   // The trailing rules are options, Wolfram's way; the rest are the positional operands.
   const { ops, options } = optionsOf(expr);
-  const lowered = lowerOptions(symbol, options);
-  const attributes = { ...symbol.fixed, ...symbol.attributes(ops), ...lowered.attributes };
+  const lowered = lowerOptions(
+    symbol,
+    symbol.holdsOptions ? Object.fromEntries(Object.entries(options).filter(([k]) => k === "Variables")) : options,
+  );
+  const held = symbol.holdsOptions
+    ? Object.entries(options)
+        .filter(([k]) => k !== "Variables")
+        .map(([k, v]) => ["KeyValuePair", k, v] as MathJsonExpression)
+    : [];
+  const attributes = { ...symbol.fixed, ...symbol.attributes([...ops, ...held]), ...lowered.attributes };
   const children = [
     ...(symbol.children?.(ops).map(
       (c) =>

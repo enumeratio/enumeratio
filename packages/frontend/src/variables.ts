@@ -9,7 +9,8 @@
 //     _s -> []]
 //
 // A declaration's value is a starting value (its domain inferred), a domain (`Integers`,
-// `Reals`, `Booleans`), a list of choices, or `Variable(domain, start, …)` when it needs more.
+// `Reals`, `Booleans`), a list of choices, or `Variable(domain, start, …)` when it needs more;
+// `Variable(Automatic, [(6, 0)])` starts a variable at a list without making it choices.
 
 /** MathJSON, loosely: declarations are read from it without the engine's types. */
 type Json = unknown;
@@ -134,7 +135,11 @@ export function variableOf(name: string, json: Json): VariableSpec {
     const args = argsOf(json);
     const options = new Map(args.filter(isRule).map((r) => [String(argsOf(r)[0]), argsOf(r)[1]] as const));
     const [domain, start] = args.filter((a) => !isRule(a));
-    const d = domainOf(domain, start, options);
+    // `Automatic`: no domain of its own, so it is what the start says (a list start is a value, not choices).
+    const d =
+      domain === "Automatic" && headOf(start) === "List"
+        ? ({ kind: "any" } as const)
+        : domainOf(domain === "Automatic" ? undefined : domain, start, options);
     return { name, domain: d, start: start ?? (d.kind === "choices" ? d.values[0] : START[d.kind]) };
   }
   if (json === "Integers" || json === "Reals" || json === "Booleans") {

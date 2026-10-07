@@ -5,7 +5,7 @@ const kv = (k: string, v: unknown) => ["KeyValuePair", k, v];
 
 describe("variables", () => {
   it("read a start, a domain, choices, or a Variable", () => {
-    const [d, h, s, r] = variablesOf([
+    const [d, h, s, r, t] = variablesOf([
       "List",
       kv("_d", [
         "Variable",
@@ -17,12 +17,14 @@ describe("variables", () => {
       kv("_h", ["List", ["Labeled", "Associates", "'associates'"], "Multiples"]),
       kv("_s", ["List"]),
       kv("_r", 0.5),
+      kv("_t", ["Variable", "Automatic", ["List", ["Tuple", 6, 0]]]),
     ]);
     expect(d!.start).toEqual(["Negate", 5]);
     expect(d!.domain.kind === "integers" && [d!.domain.min, d!.domain.max]).toEqual([-400, 400]);
     expect(h).toMatchObject({ name: "h", start: "Associates", domain: { labels: ["associates", "Multiples"] } });
     expect(s).toMatchObject({ name: "s", domain: { kind: "any" } });
     expect(r!.domain.kind).toBe("reals");
+    expect(t).toMatchObject({ domain: { kind: "any" }, start: ["List", ["Tuple", 6, 0]] });
   });
 
   it("step and draw only integers the domain admits", () => {

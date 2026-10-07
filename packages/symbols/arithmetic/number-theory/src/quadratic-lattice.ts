@@ -519,7 +519,6 @@ export function quadraticLattice(
         const [w] = normalize(R, a);
         rows.push(["normal form", elementText(R, w)]);
       }
-      rows.push(["epsil", `QuadraticInteger(${R.d}, ${i}, ${j})`]);
       return { title: elementText(R, a), rows };
     },
     summary() {
