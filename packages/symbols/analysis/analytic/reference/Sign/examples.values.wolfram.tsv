@@ -36,6 +36,9 @@ sign-neg-1-plus-i	Sign[Complex[-1, 1]]	(-1 + I)/Sqrt[2]		\text{sgn}(-1+i)	-\frac
 sign-neg-1-minus-i	Sign[Complex[-1, -1]]	(-1 - I)/Sqrt[2]		\text{sgn}(-1-i)	-\frac{1+i}{\sqrt{2}}	
 sign-1-minus-i	Sign[Complex[1, -1]]	(1 - I)/Sqrt[2]		\text{sgn}(1-i)	\frac{1-i}{\sqrt{2}}	
 sign-2	Sign[2]	1		\text{sgn}(2)	1	
+findstat-st000037-1						
+findstat-st000037-2						
+findstat-st000037-3						
 nan-propagates-rather-than-being-treated-as-0	Sign[Indeterminate]	Indeterminate		\text{sgn}(\text{Indeterminate})	\text{Indeterminate}	
 sign-complexinfinity-is-indeterminate-no	Sign[ComplexInfinity]	Indeterminate		\text{sgn}(\text{ComplexInfinity})	\text{Indeterminate}	disagree
 unit-circle-check-on-a-float-argument	(Abs[Sign[Complex[-0.07244062047889377, -0.9973727269705307]]] == 1)	True		| \text{sgn}(-0.0724406-0.997373 i)| =1	\text{True}	

@@ -1,0 +1,4377 @@
+{
+  "source": "https://www.findstat.org",
+  "note": "FindStat, the combinatorial statistic finder; each entry is its own page there.",
+  "items": {
+    "Mp00001": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Semistandard tableaux",
+      "title": "to semistandard tableau via monotone triangles",
+      "properties": ["Injection", "Graded map"],
+      "description": "The semistandard tableau corresponding the monotone triangle of an alternating sign matrix.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[0,1],[1,0]]", "[[1,2],[2]]"],
+        ["[[1,0],[0,1]]", "[[1,1],[2]]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[[1,2,3],[2,3],[3]]"]
+      ]
+    },
+    "Mp00002": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Permutations",
+      "title": "to left key permutation",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the permutation of the left key of an alternating sign matrix.",
+      "sample": [
+        ["[[1]]", "[1]"],
+        ["[[0,1],[1,0]]", "[2,1]"],
+        ["[[1,0],[0,1]]", "[1,2]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[3,2,1]"]
+      ]
+    },
+    "Mp00003": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Alternating sign matrices",
+      "title": "rotate counterclockwise",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the counterclockwise quarter turn rotation of an alternating sign matrix.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[0,1],[1,0]]", "[[1,0],[0,1]]"],
+        ["[[1,0],[0,1]]", "[[0,1],[1,0]]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[[1,0,0],[0,1,0],[0,0,1]]"]
+      ]
+    },
+    "Mp00004": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Alternating sign matrices",
+      "title": "rotate clockwise",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the clockwise quarter turn rotation of an alternating sign matrix.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[0,1],[1,0]]", "[[1,0],[0,1]]"],
+        ["[[1,0],[0,1]]", "[[0,1],[1,0]]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[[1,0,0],[0,1,0],[0,0,1]]"]
+      ]
+    },
+    "Mp00005": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Alternating sign matrices",
+      "title": "transpose",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The transpose of an alternating sign matrix.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[0,1],[1,0]]", "[[0,1],[1,0]]"],
+        ["[[1,0],[0,1]]", "[[1,0],[0,1]]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[[0,0,1],[0,1,0],[1,0,0]]"]
+      ]
+    },
+    "Mp00006": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Alternating sign matrices",
+      "title": "gyration",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The gyration of an alternating sign matrix.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[0,1],[1,0]]", "[[1,0],[0,1]]"],
+        ["[[1,0],[0,1]]", "[[0,1],[1,0]]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[[0,1,0],[1,-1,1],[0,1,0]]"]
+      ]
+    },
+    "Mp00007": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Dyck paths",
+      "title": "to Dyck path",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The Dyck path determined by the last diagonal of the monotone triangle of an alternating sign matrix.",
+      "sample": [
+        ["[[1]]", "[1,0]"],
+        ["[[0,1],[1,0]]", "[1,1,0,0]"],
+        ["[[1,0],[0,1]]", "[1,0,1,0]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00008": {
+      "domain": "Binary trees",
+      "codomain": "Ordered trees",
+      "title": "to complete tree",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the same tree seen as an ordered tree. By default, leaves are transformed into actual nodes.",
+      "sample": [
+        ["[.,.]", "[[],[]]"],
+        ["[.,[.,.]]", "[[],[[],[]]]"],
+        ["[[.,.],.]", "[[[],[]],[]]"],
+        ["[.,[.,[.,.]]]", "[[],[[],[[],[]]]]"]
+      ]
+    },
+    "Mp00009": {
+      "domain": "Binary trees",
+      "codomain": "Binary trees",
+      "title": "left rotate",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the result of left rotation applied to a binary tree.",
+      "sample": [
+        ["[.,.]", "[.,.]"],
+        ["[.,[.,.]]", "[[.,.],.]"],
+        ["[[.,.],.]", "[.,[.,.]]"],
+        ["[.,[.,[.,.]]]", "[[.,.],[.,.]]"]
+      ]
+    },
+    "Mp00010": {
+      "domain": "Binary trees",
+      "codomain": "Ordered trees",
+      "title": "to ordered tree: left child = left brother",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return an ordered tree of size $n+1$ by the following recursive rule:",
+      "sample": [
+        ["[.,.]", "[[]]"],
+        ["[.,[.,.]]", "[[[]]]"],
+        ["[[.,.],.]", "[[],[]]"],
+        ["[.,[.,[.,.]]]", "[[[[]]]]"]
+      ]
+    },
+    "Mp00011": {
+      "domain": "Binary trees",
+      "codomain": "Graphs",
+      "title": "to graph",
+      "properties": ["Graded map"],
+      "description": "Return the undirected graph obtained from the tree nodes and edges, with leaves being ignored.",
+      "sample": [
+        ["[.,.]", "([],1)"],
+        ["[.,[.,.]]", "([(0,1)],2)"],
+        ["[[.,.],.]", "([(0,1)],2)"],
+        ["[.,[.,[.,.]]]", "([(0,2),(1,2)],3)"]
+      ]
+    },
+    "Mp00012": {
+      "domain": "Binary trees",
+      "codomain": "Dyck paths",
+      "title": "to Dyck path: up step, left tree, down step, right tree",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the associated Dyck path, using the bijection ''1L0R''.",
+      "sample": [
+        ["[.,.]", "[1,0]"],
+        ["[.,[.,.]]", "[1,0,1,0]"],
+        ["[[.,.],.]", "[1,1,0,0]"],
+        ["[.,[.,[.,.]]]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00013": {
+      "domain": "Binary trees",
+      "codomain": "Posets",
+      "title": "to poset",
+      "properties": ["Graded map"],
+      "description": "Return the poset obtained by interpreting the tree as a Hasse diagram.",
+      "sample": [
+        ["[.,.]", "([],1)"],
+        ["[.,[.,.]]", "([(0,1)],2)"],
+        ["[[.,.],.]", "([(0,1)],2)"],
+        ["[.,[.,[.,.]]]", "([(0,2),(2,1)],3)"]
+      ]
+    },
+    "Mp00014": {
+      "domain": "Binary trees",
+      "codomain": "Permutations",
+      "title": "to 132-avoiding permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return a 132-avoiding permutation corresponding to a binary tree.",
+      "sample": [
+        ["[.,.]", "[1]"],
+        ["[.,[.,.]]", "[2,1]"],
+        ["[[.,.],.]", "[1,2]"],
+        ["[.,[.,[.,.]]]", "[3,2,1]"]
+      ]
+    },
+    "Mp00015": {
+      "domain": "Binary trees",
+      "codomain": "Ordered trees",
+      "title": "to ordered tree: right child = right brother",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return an ordered tree of size $n+1$ by the following recursive rule:",
+      "sample": [
+        ["[.,.]", "[[]]"],
+        ["[.,[.,.]]", "[[],[]]"],
+        ["[[.,.],.]", "[[[]]]"],
+        ["[.,[.,[.,.]]]", "[[],[],[]]"]
+      ]
+    },
+    "Mp00016": {
+      "domain": "Binary trees",
+      "codomain": "Binary trees",
+      "title": "left-right symmetry",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the left-right symmetrized tree of a binary tree.",
+      "sample": [
+        ["[.,.]", "[.,.]"],
+        ["[.,[.,.]]", "[[.,.],.]"],
+        ["[[.,.],.]", "[.,[.,.]]"],
+        ["[.,[.,[.,.]]]", "[[[.,.],.],.]"]
+      ]
+    },
+    "Mp00017": {
+      "domain": "Binary trees",
+      "codomain": "Permutations",
+      "title": "to 312-avoiding permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return a 312-avoiding permutation corresponding to a binary tree.",
+      "sample": [
+        ["[.,.]", "[1]"],
+        ["[.,[.,.]]", "[2,1]"],
+        ["[[.,.],.]", "[1,2]"],
+        ["[.,[.,[.,.]]]", "[3,2,1]"]
+      ]
+    },
+    "Mp00018": {
+      "domain": "Binary trees",
+      "codomain": "Binary trees",
+      "title": "left border symmetry",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the tree where a symmetry has been applied recursively on all left borders. If a tree is made of three trees $T_1, T_2, T_3$ on its left border, it becomes $T_3, T_2, T_1$ where same symmetry has been applied to $T_1, T_2, T_3$.",
+      "sample": [
+        ["[.,.]", "[.,.]"],
+        ["[.,[.,.]]", "[.,[.,.]]"],
+        ["[[.,.],.]", "[[.,.],.]"],
+        ["[.,[.,[.,.]]]", "[.,[.,[.,.]]]"]
+      ]
+    },
+    "Mp00019": {
+      "domain": "Binary trees",
+      "codomain": "Binary trees",
+      "title": "right rotate",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the result of right rotation applied to a binary tree.",
+      "sample": [
+        ["[.,.]", "[.,.]"],
+        ["[.,[.,.]]", "[[.,.],.]"],
+        ["[[.,.],.]", "[.,[.,.]]"],
+        ["[.,[.,[.,.]]]", "[[.,[.,.]],.]"]
+      ]
+    },
+    "Mp00020": {
+      "domain": "Binary trees",
+      "codomain": "Dyck paths",
+      "title": "to Tamari-corresponding Dyck path",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the Dyck path associated with a binary tree in consistency with the Tamari order on Dyck words and binary trees.",
+      "sample": [
+        ["[.,.]", "[1,0]"],
+        ["[.,[.,.]]", "[1,1,0,0]"],
+        ["[[.,.],.]", "[1,0,1,0]"],
+        ["[.,[.,[.,.]]]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00021": {
+      "domain": "Cores",
+      "codomain": "Integer partitions",
+      "title": "to bounded partition",
+      "properties": ["Graded map", "Bijection"],
+      "description": "The (k-1)-bounded partition of a k-core.",
+      "sample": [
+        ["([2],3)", "[2]"],
+        ["([2],4)", "[2]"],
+        ["([2],5)", "[2]"],
+        ["([2],6)", "[2]"]
+      ]
+    },
+    "Mp00022": {
+      "domain": "Cores",
+      "codomain": "Integer partitions",
+      "title": "to partition",
+      "properties": ["Surjection"],
+      "description": "Considers a core as a partition.",
+      "sample": [
+        ["([2],3)", "[2]"],
+        ["([2],4)", "[2]"],
+        ["([2],5)", "[2]"],
+        ["([2],6)", "[2]"]
+      ]
+    },
+    "Mp00023": {
+      "domain": "Dyck paths",
+      "codomain": "Permutations",
+      "title": "to non-crossing permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Sends a Dyck path $D$ with valley at positions $\\{(i_1,j_1),\\ldots,(i_k,j_k)\\}$ to the unique non-crossing permutation $\\pi$ having descents $\\{i_1,\\ldots,i_k\\}$ and whose inverse has descents $\\{j_1,\\ldots,j_k\\}$.",
+      "sample": [
+        ["[1,0]", "[1]"],
+        ["[1,0,1,0]", "[1,2]"],
+        ["[1,1,0,0]", "[2,1]"],
+        ["[1,0,1,0,1,0]", "[1,2,3]"]
+      ]
+    },
+    "Mp00024": {
+      "domain": "Dyck paths",
+      "codomain": "Permutations",
+      "title": "to 321-avoiding permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Sends a Dyck path to a 321-avoiding permutation.",
+      "sample": [
+        ["[1,0]", "[1]"],
+        ["[1,0,1,0]", "[2,1]"],
+        ["[1,1,0,0]", "[1,2]"],
+        ["[1,0,1,0,1,0]", "[2,1,3]"]
+      ]
+    },
+    "Mp00025": {
+      "domain": "Dyck paths",
+      "codomain": "Permutations",
+      "title": "to 132-avoiding permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Sends a Dyck path to a 132-avoiding permutation.",
+      "sample": [
+        ["[1,0]", "[1]"],
+        ["[1,0,1,0]", "[2,1]"],
+        ["[1,1,0,0]", "[1,2]"],
+        ["[1,0,1,0,1,0]", "[3,2,1]"]
+      ]
+    },
+    "Mp00026": {
+      "domain": "Dyck paths",
+      "codomain": "Ordered trees",
+      "title": "to ordered tree",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Sends a Dyck path to the ordered tree encoding the heights of the path.",
+      "sample": [
+        ["[1,0]", "[[]]"],
+        ["[1,0,1,0]", "[[],[]]"],
+        ["[1,1,0,0]", "[[[]]]"],
+        ["[1,0,1,0,1,0]", "[[],[],[]]"]
+      ]
+    },
+    "Mp00027": {
+      "domain": "Dyck paths",
+      "codomain": "Integer partitions",
+      "title": "to partition",
+      "properties": ["Injection"],
+      "description": "The cut-out partition of a Dyck path.",
+      "sample": [
+        ["[1,0]", "[]"],
+        ["[1,0,1,0]", "[1]"],
+        ["[1,1,0,0]", "[]"],
+        ["[1,0,1,0,1,0]", "[2,1]"]
+      ]
+    },
+    "Mp00028": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "reverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The reversal of a Dyck path.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,0,1,0]"],
+        ["[1,1,0,0]", "[1,1,0,0]"],
+        ["[1,0,1,0,1,0]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00029": {
+      "domain": "Dyck paths",
+      "codomain": "Binary trees",
+      "title": "to binary tree: left tree, up step, right tree, down step",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the binary tree corresponding to the Dyck path under the transformation left tree - up step - right tree - down step.",
+      "sample": [
+        ["[1,0]", "[.,.]"],
+        ["[1,0,1,0]", "[[.,.],.]"],
+        ["[1,1,0,0]", "[.,[.,.]]"],
+        ["[1,0,1,0,1,0]", "[[[.,.],.],.]"]
+      ]
+    },
+    "Mp00030": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "zeta map",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The zeta map on Dyck paths.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00031": {
+      "domain": "Dyck paths",
+      "codomain": "Permutations",
+      "title": "to 312-avoiding permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Sends a Dyck path to the 312-avoiding permutation according to Bandlow-Killpatrick.",
+      "sample": [
+        ["[1,0]", "[1]"],
+        ["[1,0,1,0]", "[1,2]"],
+        ["[1,1,0,0]", "[2,1]"],
+        ["[1,0,1,0,1,0]", "[1,2,3]"]
+      ]
+    },
+    "Mp00032": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "inverse zeta map",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse zeta map on Dyck paths.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00033": {
+      "domain": "Dyck paths",
+      "codomain": "Standard tableaux",
+      "title": "to two-row standard tableau",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return a standard tableau of shape $(n,n)$ where $n$ is the semilength of the Dyck path.",
+      "sample": [
+        ["[1,0]", "[[1],[2]]"],
+        ["[1,0,1,0]", "[[1,3],[2,4]]"],
+        ["[1,1,0,0]", "[[1,2],[3,4]]"],
+        ["[1,0,1,0,1,0]", "[[1,3,5],[2,4,6]]"]
+      ]
+    },
+    "Mp00034": {
+      "domain": "Dyck paths",
+      "codomain": "Binary trees",
+      "title": "to binary tree: up step, left tree, down step, right tree",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the binary tree corresponding to the Dyck path under the transformation up step - left tree - down step - right tree.",
+      "sample": [
+        ["[1,0]", "[.,.]"],
+        ["[1,0,1,0]", "[.,[.,.]]"],
+        ["[1,1,0,0]", "[[.,.],.]"],
+        ["[1,0,1,0,1,0]", "[.,[.,[.,.]]]"]
+      ]
+    },
+    "Mp00035": {
+      "domain": "Dyck paths",
+      "codomain": "Alternating sign matrices",
+      "title": "to alternating sign matrix",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the Dyck path as an alternating sign matrix.",
+      "sample": [
+        ["[1,0]", "[[1]]"],
+        ["[1,0,1,0]", "[[1,0],[0,1]]"],
+        ["[1,1,0,0]", "[[0,1],[1,0]]"],
+        ["[1,0,1,0,1,0]", "[[1,0,0],[0,1,0],[0,0,1]]"]
+      ]
+    },
+    "Mp00036": {
+      "domain": "Gelfand-Tsetlin patterns",
+      "codomain": "Semistandard tableaux",
+      "title": "to semistandard tableau",
+      "properties": ["Surjection"],
+      "description": "Return the Gelfand-Tsetlin pattern as a semistandard Young tableau.",
+      "sample": [
+        ["[[1,0],[0]]", "[[2]]"],
+        ["[[1,0],[1]]", "[[1]]"],
+        ["[[1,1],[1]]", "[[1],[2]]"],
+        ["[[2,0],[0]]", "[[2,2]]"]
+      ]
+    },
+    "Mp00037": {
+      "domain": "Graphs",
+      "codomain": "Integer partitions",
+      "title": "to partition of connected components",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the partition of the sizes of the connected components of the graph.",
+      "sample": [
+        ["([],1)", "[1]"],
+        ["([],2)", "[1,1]"],
+        ["([],3)", "[1,1,1]"],
+        ["([],4)", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00038": {
+      "domain": "Integer compositions",
+      "codomain": "Integer compositions",
+      "title": "reverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the reversal of a composition.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[2]"],
+        ["[3]", "[3]"],
+        ["[4]", "[4]"]
+      ]
+    },
+    "Mp00039": {
+      "domain": "Integer compositions",
+      "codomain": "Integer compositions",
+      "title": "complement",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The complement of a composition.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1,1]"],
+        ["[3]", "[1,1,1]"],
+        ["[4]", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00040": {
+      "domain": "Integer compositions",
+      "codomain": "Integer partitions",
+      "title": "to partition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a composition to the partition obtained by sorting the entries.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[2]"],
+        ["[3]", "[3]"],
+        ["[4]", "[4]"]
+      ]
+    },
+    "Mp00041": {
+      "domain": "Integer compositions",
+      "codomain": "Integer compositions",
+      "title": "conjugate",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The conjugate of a composition.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1,1]"],
+        ["[3]", "[1,1,1]"],
+        ["[4]", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00042": {
+      "domain": "Integer partitions",
+      "codomain": "Standard tableaux",
+      "title": "initial tableau",
+      "properties": ["Injection", "Graded map"],
+      "description": "Sends an integer partition to the standard tableau obtained by filling the numbers $1$ through $n$ row by row.",
+      "sample": [
+        ["[1]", "[[1]]"],
+        ["[2]", "[[1,2]]"],
+        ["[3]", "[[1,2,3]]"],
+        ["[4]", "[[1,2,3,4]]"]
+      ]
+    },
+    "Mp00043": {
+      "domain": "Integer partitions",
+      "codomain": "Dyck paths",
+      "title": "to Dyck path",
+      "properties": ["Injection"],
+      "description": "Sends a partition to the shortest Dyck path tracing the shape of its Ferrers diagram.",
+      "sample": [
+        ["[1]", "[1,0,1,0]"],
+        ["[2]", "[1,1,0,0,1,0]"],
+        ["[3]", "[1,1,1,0,0,0,1,0]"],
+        ["[4]", "[1,1,1,1,0,0,0,0,1,0]"]
+      ]
+    },
+    "Mp00044": {
+      "domain": "Integer partitions",
+      "codomain": "Integer partitions",
+      "title": "conjugate",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the conjugate partition of the partition.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1,1]"],
+        ["[3]", "[1,1,1]"],
+        ["[4]", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00045": {
+      "domain": "Integer partitions",
+      "codomain": "Standard tableaux",
+      "title": "reading tableau",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the RSK recording tableau of the reading word of the (standard) tableau $T$ labeled down (in English convention) each column to the shape of a partition.",
+      "sample": [
+        ["[1]", "[[1]]"],
+        ["[2]", "[[1,2]]"],
+        ["[3]", "[[1,2,3]]"],
+        ["[4]", "[[1,2,3,4]]"]
+      ]
+    },
+    "Mp00046": {
+      "domain": "Ordered trees",
+      "codomain": "Graphs",
+      "title": "to graph",
+      "properties": ["Graded map"],
+      "description": "Return the undirected graph obtained from the tree nodes and edges.",
+      "sample": [
+        ["[]", "([],1)"],
+        ["[[]]", "([(0,1)],2)"],
+        ["[[[]]]", "([(0,2),(1,2)],3)"],
+        ["[[],[]]", "([(0,2),(1,2)],3)"]
+      ]
+    },
+    "Mp00047": {
+      "domain": "Ordered trees",
+      "codomain": "Posets",
+      "title": "to poset",
+      "properties": ["Graded map"],
+      "description": "Return the poset obtained by interpreting the tree as the Hasse diagram of a graph.",
+      "sample": [
+        ["[]", "([],1)"],
+        ["[[]]", "([(0,1)],2)"],
+        ["[[[]]]", "([(0,2),(2,1)],3)"],
+        ["[[],[]]", "([(0,2),(1,2)],3)"]
+      ]
+    },
+    "Mp00048": {
+      "domain": "Ordered trees",
+      "codomain": "Ordered trees",
+      "title": "left-right symmetry",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the left-right symmetrized tree of an ordered tree.",
+      "sample": [
+        ["[]", "[]"],
+        ["[[]]", "[[]]"],
+        ["[[[]]]", "[[[]]]"],
+        ["[[],[]]", "[[],[]]"]
+      ]
+    },
+    "Mp00049": {
+      "domain": "Ordered trees",
+      "codomain": "Binary trees",
+      "title": "to binary tree: left brother = left child",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a binary tree of size $n-1$ (where $n$ is the size of $t$, and where $t$ is an ordered tree) by the following recursive rule:",
+      "sample": [
+        ["[]", "."],
+        ["[[]]", "[.,.]"],
+        ["[[[]]]", "[.,[.,.]]"],
+        ["[[],[]]", "[[.,.],.]"]
+      ]
+    },
+    "Mp00050": {
+      "domain": "Ordered trees",
+      "codomain": "Binary trees",
+      "title": "to binary tree: right brother = right child",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a binary tree of size $n-1$ (where $n$ is the size of an ordered tree $t$) obtained from $t$ by the following recursive rule:",
+      "sample": [
+        ["[]", "."],
+        ["[[]]", "[.,.]"],
+        ["[[[]]]", "[[.,.],.]"],
+        ["[[],[]]", "[.,[.,.]]"]
+      ]
+    },
+    "Mp00051": {
+      "domain": "Ordered trees",
+      "codomain": "Dyck paths",
+      "title": "to Dyck path",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the Dyck path of the corresponding ordered tree induced by the recurrence of the Catalan numbers, see [[wikipedia:Catalan_number]].",
+      "sample": [
+        ["[]", "[]"],
+        ["[[]]", "[1,0]"],
+        ["[[[]]]", "[1,1,0,0]"],
+        ["[[],[]]", "[1,0,1,0]"]
+      ]
+    },
+    "Mp00052": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "to non-decreasing parking function",
+      "properties": ["Idempotent", "Graded map"],
+      "description": "Return the non-decreasing parking function which underlies the parking function.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[1,2]"]
+      ]
+    },
+    "Mp00053": {
+      "domain": "Parking functions",
+      "codomain": "Permutations",
+      "title": "to car permutation",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Maps a parking function to the permutation of cars that correspond to that parking function.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,2]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00054": {
+      "domain": "Parking functions",
+      "codomain": "Integer compositions",
+      "title": "to inverse des composition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the descents composition of the inverse of the diagonal reading word of a parking function.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[1,1]"],
+        ["[2,1]", "[2]"]
+      ]
+    },
+    "Mp00055": {
+      "domain": "Parking functions",
+      "codomain": "Permutations",
+      "title": "to labelling permutation",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Returns the labelling of the support Dyck path of the parking function.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,2]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00056": {
+      "domain": "Parking functions",
+      "codomain": "Dyck paths",
+      "title": "to Dyck path",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a parking function to its support Dyck word.",
+      "sample": [
+        ["[1]", "[1,0]"],
+        ["[1,1]", "[1,1,0,0]"],
+        ["[1,2]", "[1,0,1,0]"],
+        ["[2,1]", "[1,0,1,0]"]
+      ]
+    },
+    "Mp00057": {
+      "domain": "Parking functions",
+      "codomain": "Integer compositions",
+      "title": "to touch composition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a parking function to the composition of its labelled Dyck path.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[2]"],
+        ["[1,2]", "[1,1]"],
+        ["[2,1]", "[1,1]"]
+      ]
+    },
+    "Mp00058": {
+      "domain": "Perfect matchings",
+      "codomain": "Permutations",
+      "title": "to permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Returns the fixed point free involution whose transpositions are the pairs in the perfect matching.",
+      "sample": [
+        ["[(1,2)]", "[2,1]"],
+        ["[(1,2),(3,4)]", "[2,1,4,3]"],
+        ["[(1,3),(2,4)]", "[3,4,1,2]"],
+        ["[(1,4),(2,3)]", "[4,3,2,1]"]
+      ]
+    },
+    "Mp00059": {
+      "domain": "Permutations",
+      "codomain": "Standard tableaux",
+      "title": "Robinson-Schensted insertion tableau",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a permutation to its Robinson-Schensted insertion tableau.",
+      "sample": [
+        ["[1]", "[[1]]"],
+        ["[1,2]", "[[1,2]]"],
+        ["[2,1]", "[[1],[2]]"],
+        ["[1,2,3]", "[[1,2,3]]"]
+      ]
+    },
+    "Mp00060": {
+      "domain": "Permutations",
+      "codomain": "Integer partitions",
+      "title": "Robinson-Schensted tableau shape",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a permutation to its Robinson-Schensted tableau shape.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2]"],
+        ["[2,1]", "[1,1]"],
+        ["[1,2,3]", "[3]"]
+      ]
+    },
+    "Mp00061": {
+      "domain": "Permutations",
+      "codomain": "Binary trees",
+      "title": "to increasing tree",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a permutation to its associated increasing tree.",
+      "sample": [
+        ["[1]", "[.,.]"],
+        ["[1,2]", "[.,[.,.]]"],
+        ["[2,1]", "[[.,.],.]"],
+        ["[1,2,3]", "[.,[.,[.,.]]]"]
+      ]
+    },
+    "Mp00062": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Lehmer-code to major-code bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Sends a permutation to the unique permutation such that the Lehmer code is sent to the major code.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00063": {
+      "domain": "Permutations",
+      "codomain": "Alternating sign matrices",
+      "title": "to alternating sign matrix",
+      "properties": ["Injection", "Graded map"],
+      "description": "Maps a permutation to its permutation matrix as an alternating sign matrix.",
+      "sample": [
+        ["[1]", "[[1]]"],
+        ["[1,2]", "[[1,0],[0,1]]"],
+        ["[2,1]", "[[0,1],[1,0]]"],
+        ["[1,2,3]", "[[1,0,0],[0,1,0],[0,0,1]]"]
+      ]
+    },
+    "Mp00064": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "reverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Sends a permutation to its reverse.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[3,2,1]"]
+      ]
+    },
+    "Mp00065": {
+      "domain": "Permutations",
+      "codomain": "Posets",
+      "title": "permutation poset",
+      "properties": ["Graded map"],
+      "description": "Sends a permutation to its permutation poset.",
+      "sample": [
+        ["[1]", "([],1)"],
+        ["[1,2]", "([(0,1)],2)"],
+        ["[2,1]", "([],2)"],
+        ["[1,2,3]", "([(0,2),(2,1)],3)"]
+      ]
+    },
+    "Mp00066": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "inverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Sends a permutation to its inverse.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00067": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Foata bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Sends a permutation to its image under the Foata bijection.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00068": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Simion-Schmidt map",
+      "properties": ["Idempotent", "Graded map"],
+      "description": "The Simion-Schmidt map sends any permutation to a $123$-avoiding permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,3,2]"]
+      ]
+    },
+    "Mp00069": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "complement",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Sents a permutation to its complement.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[3,2,1]"]
+      ]
+    },
+    "Mp00070": {
+      "domain": "Permutations",
+      "codomain": "Standard tableaux",
+      "title": "Robinson-Schensted recording tableau",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a permutation to its Robinson-Schensted recording tableau.",
+      "sample": [
+        ["[1]", "[[1]]"],
+        ["[1,2]", "[[1,2]]"],
+        ["[2,1]", "[[1],[2]]"],
+        ["[1,2,3]", "[[1,2,3]]"]
+      ]
+    },
+    "Mp00071": {
+      "domain": "Permutations",
+      "codomain": "Integer compositions",
+      "title": "descent composition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The descent composition of a permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2]"],
+        ["[2,1]", "[1,1]"],
+        ["[1,2,3]", "[3]"]
+      ]
+    },
+    "Mp00072": {
+      "domain": "Permutations",
+      "codomain": "Binary trees",
+      "title": "binary search tree: left to right",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the shape of the binary search tree of the permutation as a non labelled binary tree.",
+      "sample": [
+        ["[1]", "[.,.]"],
+        ["[1,2]", "[.,[.,.]]"],
+        ["[2,1]", "[[.,.],.]"],
+        ["[1,2,3]", "[.,[.,[.,.]]]"]
+      ]
+    },
+    "Mp00073": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "major-index to inversion-number bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the permutation whose Lehmer code equals the major code of the preimage.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00074": {
+      "domain": "Posets",
+      "codomain": "Graphs",
+      "title": "to graph",
+      "properties": ["Graded map"],
+      "description": "Returns the Hasse diagram of the poset as an undirected graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00075": {
+      "domain": "Semistandard tableaux",
+      "codomain": "Permutations",
+      "title": "reading word permutation",
+      "properties": ["Graded map"],
+      "description": "Return the permutation obtained by reading the entries of the tableau row by row, starting with the bottommost row (in English notation).",
+      "sample": [
+        ["[[1,2]]", "[1,2]"],
+        ["[[1,3]]", "[1,2]"],
+        ["[[1,4]]", "[1,2]"],
+        ["[[1,5]]", "[1,2]"]
+      ]
+    },
+    "Mp00076": {
+      "domain": "Semistandard tableaux",
+      "codomain": "Gelfand-Tsetlin patterns",
+      "title": "to Gelfand-Tsetlin pattern",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the Gelfand-Tsetlin pattern corresponding to the semistandard tableau.",
+      "sample": [
+        ["[[1,2]]", "[[2,0],[1]]"],
+        ["[[1,3]]", "[[2,0,0],[1,0],[1]]"],
+        ["[[1,4]]", "[[2,0,0,0],[1,0,0],[1,0],[1]]"],
+        ["[[1,5]]", "[[2,0,0,0,0],[1,0,0,0],[1,0,0],[1,0],[1]]"]
+      ]
+    },
+    "Mp00077": {
+      "domain": "Semistandard tableaux",
+      "codomain": "Integer partitions",
+      "title": "shape",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the shape of a tableau.",
+      "sample": [
+        ["[[1,2]]", "[2]"],
+        ["[[1,3]]", "[2]"],
+        ["[[1,4]]", "[2]"],
+        ["[[1,5]]", "[2]"]
+      ]
+    },
+    "Mp00078": {
+      "domain": "Gelfand-Tsetlin patterns",
+      "codomain": "Gelfand-Tsetlin patterns",
+      "title": "Schuetzenberger involution",
+      "properties": ["Graded map", "Involution"],
+      "description": "Applies the Schuetzenberger involution to a Gelfand-Tsetlin pattern.",
+      "sample": [
+        ["[[1,0],[0]]", "[[1,0],[1]]"],
+        ["[[1,0],[1]]", "[[1,0],[0]]"],
+        ["[[1,1],[1]]", "[[1,1],[1]]"],
+        ["[[2,0],[0]]", "[[2,0],[2]]"]
+      ]
+    },
+    "Mp00079": {
+      "domain": "Set partitions",
+      "codomain": "Integer partitions",
+      "title": "shape",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a set partition to the integer partition obtained by the sizes of the blocks.",
+      "sample": [
+        ["{{1}}", "[1]"],
+        ["{{1,2}}", "[2]"],
+        ["{{1,2,3}}", "[3]"],
+        ["{{1},{2}}", "[1,1]"]
+      ]
+    },
+    "Mp00080": {
+      "domain": "Set partitions",
+      "codomain": "Permutations",
+      "title": "to permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Sends the set partition to the permutation obtained by considering the blocks as increasing cycles.",
+      "sample": [
+        ["{{1}}", "[1]"],
+        ["{{1,2}}", "[2,1]"],
+        ["{{1,2,3}}", "[2,3,1]"],
+        ["{{1},{2}}", "[1,2]"]
+      ]
+    },
+    "Mp00081": {
+      "domain": "Standard tableaux",
+      "codomain": "Permutations",
+      "title": "reading word permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the permutation obtained by reading the entries of the tableau row by row, starting with the bottom-most row in English notation.",
+      "sample": [
+        ["[[1]]", "[1]"],
+        ["[[1,2]]", "[1,2]"],
+        ["[[1,2,3]]", "[1,2,3]"],
+        ["[[1],[2]]", "[2,1]"]
+      ]
+    },
+    "Mp00082": {
+      "domain": "Standard tableaux",
+      "codomain": "Gelfand-Tsetlin patterns",
+      "title": "to Gelfand-Tsetlin pattern",
+      "properties": ["Injection", "Graded map"],
+      "description": "Sends a tableau to its corresponding [[GelfandTsetlinPatterns|Gelfand-Tsetlin pattern]].",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[1,2]]", "[[2,0],[1]]"],
+        ["[[1,2,3]]", "[[3,0,0],[2,0],[1]]"],
+        ["[[1],[2]]", "[[1,1],[1]]"]
+      ]
+    },
+    "Mp00083": {
+      "domain": "Standard tableaux",
+      "codomain": "Integer partitions",
+      "title": "shape",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a tableau to its shape.",
+      "sample": [
+        ["[[1]]", "[1]"],
+        ["[[1,2]]", "[2]"],
+        ["[[1,2,3]]", "[3]"],
+        ["[[1],[2]]", "[1,1]"]
+      ]
+    },
+    "Mp00084": {
+      "domain": "Standard tableaux",
+      "codomain": "Standard tableaux",
+      "title": "conjugate",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Sends a standard tableau to its conjugate tableau.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[1,2]]", "[[1],[2]]"],
+        ["[[1,2,3]]", "[[1],[2],[3]]"],
+        ["[[1],[2]]", "[[1,2]]"]
+      ]
+    },
+    "Mp00085": {
+      "domain": "Standard tableaux",
+      "codomain": "Standard tableaux",
+      "title": "Schützenberger involution",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Sends a standard tableau to the standard tableau obtained via the Schützenberger involution.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[1,2]]", "[[1,2]]"],
+        ["[[1,2,3]]", "[[1,2,3]]"],
+        ["[[1],[2]]", "[[1],[2]]"]
+      ]
+    },
+    "Mp00086": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "first fundamental transformation",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the permutation whose cycles are the subsequences between successive left to right maxima.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00087": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "inverse first fundamental transformation",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Let $\\sigma = (i_{11}\\cdots i_{1k_1})\\cdots(i_{\\ell 1}\\cdots i_{\\ell k_\\ell})$ be a permutation given by cycle notation such that every cycle starts with its maximal entry, and all cycles are ordered increasingly by these maximal entries.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00088": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Kreweras complement",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Sends the permutation $\\pi \\in \\mathfrak{S}_n$ to the permutation $\\pi^{-1}c$ where $c = (1,\\ldots,n)$ is the long cycle.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[2,3,1]"]
+      ]
+    },
+    "Mp00089": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Inverse Kreweras complement",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Sends the permutation $\\pi \\in \\mathfrak{S}_n$ to the permutation $c\\pi^{-1}$ where $c = (1,\\ldots,n)$ is the long cycle.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[2,3,1]"]
+      ]
+    },
+    "Mp00090": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "cycle-as-one-line notation",
+      "properties": ["Graded map"],
+      "description": "Return the permutation obtained by concatenating the cycles of a permutation, each written with minimal element first, sorted by minimal element.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00091": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "rotate increasing",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The rotation of the set partition obtained by adding 1 to each entry different from the largest, and replacing the largest entry with 1.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00092": {
+      "domain": "Perfect matchings",
+      "codomain": "Set partitions",
+      "title": "to set partition",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the set partition corresponding to the perfect matching.",
+      "sample": [
+        ["[(1,2)]", "{{1,2}}"],
+        ["[(1,2),(3,4)]", "{{1,2},{3,4}}"],
+        ["[(1,3),(2,4)]", "{{1,3},{2,4}}"],
+        ["[(1,4),(2,3)]", "{{1,4},{2,3}}"]
+      ]
+    },
+    "Mp00093": {
+      "domain": "Dyck paths",
+      "codomain": "Binary words",
+      "title": "to binary word",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the Dyck word as binary word.",
+      "sample": [
+        ["[1,0]", "10"],
+        ["[1,0,1,0]", "1010"],
+        ["[1,1,0,0]", "1100"],
+        ["[1,0,1,0,1,0]", "101010"]
+      ]
+    },
+    "Mp00094": {
+      "domain": "Integer compositions",
+      "codomain": "Binary words",
+      "title": "to binary word",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the composition as a binary word, treating ones as separators.",
+      "sample": [
+        ["[1]", "1"],
+        ["[2]", "10"],
+        ["[3]", "100"],
+        ["[4]", "1000"]
+      ]
+    },
+    "Mp00095": {
+      "domain": "Integer partitions",
+      "codomain": "Binary words",
+      "title": "to binary word",
+      "properties": ["Injection"],
+      "description": "Return the partition as binary word, by traversing its shape from the first row to the last row, down steps as 1 and left steps as 0.",
+      "sample": [
+        ["[1]", "10"],
+        ["[2]", "100"],
+        ["[3]", "1000"],
+        ["[4]", "10000"]
+      ]
+    },
+    "Mp00096": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "Foata bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Foata bijection $\\phi$ is a bijection on the set of words of given content (by a slight generalization of Section 2 in [1]).",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "00"],
+        ["01", "01"]
+      ]
+    },
+    "Mp00097": {
+      "domain": "Binary words",
+      "codomain": "Integer compositions",
+      "title": "delta morphism",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Applies the delta morphism to a binary word.",
+      "sample": [
+        ["0", "[1]"],
+        ["1", "[1]"],
+        ["00", "[2]"],
+        ["01", "[1,1]"]
+      ]
+    },
+    "Mp00098": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Perfect matchings",
+      "title": "link pattern",
+      "properties": ["Graded map"],
+      "description": "Sends an alternating sign matrix to the link pattern of the corresponding fully packed loop configuration.",
+      "sample": [
+        ["[[1]]", "[(1,2)]"],
+        ["[[0,1],[1,0]]", "[(1,2),(3,4)]"],
+        ["[[1,0],[0,1]]", "[(1,4),(2,3)]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[(1,4),(2,3),(5,6)]"]
+      ]
+    },
+    "Mp00099": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "bounce path",
+      "properties": ["Idempotent", "Graded map"],
+      "description": "Sends a Dyck path $D$ of length $2n$ to its bounce path.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,0,1,0]"],
+        ["[1,1,0,0]", "[1,1,0,0]"],
+        ["[1,0,1,0,1,0]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00100": {
+      "domain": "Dyck paths",
+      "codomain": "Integer compositions",
+      "title": "touch composition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Sends a Dyck path to its touch composition given by the composition of lengths of its touch points.",
+      "sample": [
+        ["[1,0]", "[1]"],
+        ["[1,0,1,0]", "[1,1]"],
+        ["[1,1,0,0]", "[2]"],
+        ["[1,0,1,0,1,0]", "[1,1,1]"]
+      ]
+    },
+    "Mp00101": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "decomposition reverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "This map is recursively defined as follows.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00102": {
+      "domain": "Dyck paths",
+      "codomain": "Integer compositions",
+      "title": "rise composition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Send a Dyck path to the composition of sizes of its rises.",
+      "sample": [
+        ["[1,0]", "[1]"],
+        ["[1,0,1,0]", "[1,1]"],
+        ["[1,1,0,0]", "[2]"],
+        ["[1,0,1,0,1,0]", "[1,1,1]"]
+      ]
+    },
+    "Mp00103": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "peeling map",
+      "properties": ["Graded map"],
+      "description": "Send a Dyck path to its peeled Dyck path.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,0,1,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00104": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "reverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the reversal of a binary word.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "00"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00105": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "complement",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Send a binary word to the word obtained by interchanging the two letters.",
+      "sample": [
+        ["0", "1"],
+        ["1", "0"],
+        ["00", "11"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00106": {
+      "domain": "Standard tableaux",
+      "codomain": "Standard tableaux",
+      "title": "catabolism",
+      "properties": ["Graded map"],
+      "description": "Remove the first row of the standard tableau and insert it back using column Schensted insertion, starting with the largest number.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[1,2]]", "[[1,2]]"],
+        ["[[1,2,3]]", "[[1,2,3]]"],
+        ["[[1],[2]]", "[[1,2]]"]
+      ]
+    },
+    "Mp00107": {
+      "domain": "Semistandard tableaux",
+      "codomain": "Semistandard tableaux",
+      "title": "catabolism",
+      "properties": ["Graded map"],
+      "description": "Remove the first row of the semistandard tableau and insert it back using column Schensted insertion, starting with the largest number.",
+      "sample": [
+        ["[[1,2]]", "[[1,2]]"],
+        ["[[1,3]]", "[[1,3]]"],
+        ["[[1,4]]", "[[1,4]]"],
+        ["[[1,5]]", "[[1,5]]"]
+      ]
+    },
+    "Mp00108": {
+      "domain": "Permutations",
+      "codomain": "Integer partitions",
+      "title": "cycle type",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The cycle type of a permutation as a partition.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,1]"],
+        ["[2,1]", "[2]"],
+        ["[1,2,3]", "[1,1,1]"]
+      ]
+    },
+    "Mp00109": {
+      "domain": "Permutations",
+      "codomain": "Binary words",
+      "title": "descent word",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The descent positions of a permutation as a binary word.\nFor a permutation $\\pi$ of $n$ letters and each $1\\leq i\\leq n-1$ such that $\\pi(i) > \\pi(i+1)$ we set $w_i=1$, otherwise $w_i=0$.",
+      "sample": [
+        ["[1]", ""],
+        ["[1,2]", "0"],
+        ["[2,1]", "1"],
+        ["[1,2,3]", "00"]
+      ]
+    },
+    "Mp00110": {
+      "domain": "Posets",
+      "codomain": "Integer partitions",
+      "title": "Greene-Kleitman invariant",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The Greene-Kleitman invariant of a poset.",
+      "sample": [
+        ["([],1)", "[1]"],
+        ["([],2)", "[1,1]"],
+        ["([],3)", "[1,1,1]"],
+        ["([],4)", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00111": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "complement",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The complement of a graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([(0,1)],2)"],
+        ["([],3)", "([(0,1),(0,2),(1,2)],3)"],
+        ["([],4)", "([(0,1),(0,2),(0,3),(1,2),(1,3),(2,3)],4)"]
+      ]
+    },
+    "Mp00112": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "complement",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The complement of a set partition obtained by replacing $i$ with $n+1-i$.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00113": {
+      "domain": "Perfect matchings",
+      "codomain": "Perfect matchings",
+      "title": "reverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The reverse of a perfect matching of $\\{1,2,...,n\\}$.",
+      "sample": [
+        ["[(1,2)]", "[(1,2)]"],
+        ["[(1,2),(3,4)]", "[(1,2),(3,4)]"],
+        ["[(1,3),(2,4)]", "[(1,3),(2,4)]"],
+        ["[(1,4),(2,3)]", "[(1,4),(2,3)]"]
+      ]
+    },
+    "Mp00114": {
+      "domain": "Permutations",
+      "codomain": "Binary words",
+      "title": "connectivity set",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The connectivity set of a permutation as a binary word.",
+      "sample": [
+        ["[1]", ""],
+        ["[1,2]", "1"],
+        ["[2,1]", "0"],
+        ["[1,2,3]", "11"]
+      ]
+    },
+    "Mp00115": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "Kasraoui-Zeng",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The Kasraoui-Zeng involution.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00116": {
+      "domain": "Perfect matchings",
+      "codomain": "Perfect matchings",
+      "title": "Kasraoui-Zeng",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The Kasraoui-Zeng involution for perfect matchings.",
+      "sample": [
+        ["[(1,2)]", "[(1,2)]"],
+        ["[(1,2),(3,4)]", "[(1,2),(3,4)]"],
+        ["[(1,3),(2,4)]", "[(1,4),(2,3)]"],
+        ["[(1,4),(2,3)]", "[(1,3),(2,4)]"]
+      ]
+    },
+    "Mp00117": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "Ore closure",
+      "properties": ["Idempotent", "Graded map"],
+      "description": "The Ore closure of a graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00118": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "swap returns and last descent",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return a Dyck path with number of returns and length of the last descent interchanged.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00119": {
+      "domain": "Dyck paths",
+      "codomain": "Permutations",
+      "title": "to 321-avoiding permutation (Krattenthaler)",
+      "properties": ["Injection", "Graded map"],
+      "description": "Krattenthaler's bijection to 321-avoiding permutations.",
+      "sample": [
+        ["[1,0]", "[1]"],
+        ["[1,0,1,0]", "[1,2]"],
+        ["[1,1,0,0]", "[2,1]"],
+        ["[1,0,1,0,1,0]", "[1,2,3]"]
+      ]
+    },
+    "Mp00120": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "Lalanne-Kreweras involution",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The Lalanne-Kreweras involution on Dyck paths.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00121": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "Cori-Le Borgne involution",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The Cori-Le Borgne involution on Dyck paths.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,0,1,0]"],
+        ["[1,1,0,0]", "[1,1,0,0]"],
+        ["[1,0,1,0,1,0]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00122": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "Elizalde-Deutsch bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Elizalde-Deutsch bijection on Dyck paths.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,0,0,1,0]"]
+      ]
+    },
+    "Mp00123": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "Barnabei-Castronuovo involution",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The Barnabei-Castronuovo Schützenberger involution on Dyck paths.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,0,1,0]"],
+        ["[1,1,0,0]", "[1,1,0,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,0,1,0,0]"]
+      ]
+    },
+    "Mp00124": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "Adin-Bagno-Roichman transformation",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Adin-Bagno-Roichman transformation of a Dyck path.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,0,1,0]"],
+        ["[1,1,0,0]", "[1,1,0,0]"],
+        ["[1,0,1,0,1,0]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00125": {
+      "domain": "Posets",
+      "codomain": "Posets",
+      "title": "dual poset",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The dual of a poset.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00126": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "cactus evacuation",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The cactus evacuation of a permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00127": {
+      "domain": "Permutations",
+      "codomain": "Dyck paths",
+      "title": "left-to-right-maxima to Dyck path",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The left-to-right maxima of a permutation as a Dyck path.",
+      "sample": [
+        ["[1]", "[1,0]"],
+        ["[1,2]", "[1,0,1,0]"],
+        ["[2,1]", "[1,1,0,0]"],
+        ["[1,2,3]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00128": {
+      "domain": "Set partitions",
+      "codomain": "Integer compositions",
+      "title": "to composition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The integer composition of block sizes of a set partition.",
+      "sample": [
+        ["{{1}}", "[1]"],
+        ["{{1,2}}", "[2]"],
+        ["{{1,2,3}}", "[3]"],
+        ["{{1},{2}}", "[1,1]"]
+      ]
+    },
+    "Mp00129": {
+      "domain": "Dyck paths",
+      "codomain": "Permutations",
+      "title": "to 321-avoiding permutation (Billey-Jockusch-Stanley)",
+      "properties": ["Injection", "Graded map"],
+      "description": "The Billey-Jockusch-Stanley bijection to 321-avoiding permutations.",
+      "sample": [
+        ["[1,0]", "[1]"],
+        ["[1,0,1,0]", "[2,1]"],
+        ["[1,1,0,0]", "[1,2]"],
+        ["[1,0,1,0,1,0]", "[2,3,1]"]
+      ]
+    },
+    "Mp00130": {
+      "domain": "Permutations",
+      "codomain": "Binary words",
+      "title": "descent tops",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The descent tops of a permutation as a binary word.\nSince 1 is never a descent top, it is omitted and the first letter of the word corresponds to the element 2.",
+      "sample": [
+        ["[1]", ""],
+        ["[1,2]", "0"],
+        ["[2,1]", "1"],
+        ["[1,2,3]", "00"]
+      ]
+    },
+    "Mp00131": {
+      "domain": "Permutations",
+      "codomain": "Binary words",
+      "title": "descent bottoms",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The descent bottoms of a permutation as a binary word.",
+      "sample": [
+        ["[1]", ""],
+        ["[1,2]", "0"],
+        ["[2,1]", "1"],
+        ["[1,2,3]", "00"]
+      ]
+    },
+    "Mp00132": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "switch returns and last double rise",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "An alternative to the Adin-Bagno-Roichman transformation of a Dyck path.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,0,1,0]"],
+        ["[1,1,0,0]", "[1,1,0,0]"],
+        ["[1,0,1,0,1,0]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00133": {
+      "domain": "Integer compositions",
+      "codomain": "Integer compositions",
+      "title": "delta morphism",
+      "properties": ["Surjection"],
+      "description": "Apply the delta morphism to an integer composition.\nThe delta morphism of a composition $C$ is the compositions composed of the lengths of consecutive runs of the same integer in $C$.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1]"],
+        ["[3]", "[1]"],
+        ["[4]", "[1]"]
+      ]
+    },
+    "Mp00134": {
+      "domain": "Standard tableaux",
+      "codomain": "Binary words",
+      "title": "descent word",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The descent word of a standard Young tableau.",
+      "sample": [
+        ["[[1]]", ""],
+        ["[[1,2]]", "0"],
+        ["[[1,2,3]]", "00"],
+        ["[[1],[2]]", "1"]
+      ]
+    },
+    "Mp00135": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "rotate front-to-back",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The rotation of a binary word, first letter last.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "00"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00136": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "rotate back-to-front",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The rotation of a binary word, last letter first.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "00"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00137": {
+      "domain": "Dyck paths",
+      "codomain": "Alternating sign matrices",
+      "title": "to symmetric ASM",
+      "properties": ["Injection", "Graded map"],
+      "description": "The diagonally symmetric alternating sign matrix corresponding to a Dyck path.",
+      "sample": [
+        ["[1,0]", "[[1]]"],
+        ["[1,0,1,0]", "[[1,0],[0,1]]"],
+        ["[1,1,0,0]", "[[0,1],[1,0]]"],
+        ["[1,0,1,0,1,0]", "[[1,0,0],[0,1,0],[0,0,1]]"]
+      ]
+    },
+    "Mp00138": {
+      "domain": "Dyck paths",
+      "codomain": "Set partitions",
+      "title": "to noncrossing partition",
+      "properties": ["Injection", "Graded map"],
+      "description": "Biane's map to noncrossing set partitions.",
+      "sample": [
+        ["[1,0]", "{{1}}"],
+        ["[1,0,1,0]", "{{1},{2}}"],
+        ["[1,1,0,0]", "{{1,2}}"],
+        ["[1,0,1,0,1,0]", "{{1},{2},{3}}"]
+      ]
+    },
+    "Mp00139": {
+      "domain": "Ordered trees",
+      "codomain": "Binary trees",
+      "title": "Zeilberger's Strahler bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Zeilberger's Strahler bijection between ordered and binary trees.",
+      "sample": [
+        ["[]", "."],
+        ["[[]]", "[.,.]"],
+        ["[[[]]]", "[[.,.],.]"],
+        ["[[],[]]", "[.,[.,.]]"]
+      ]
+    },
+    "Mp00140": {
+      "domain": "Dyck paths",
+      "codomain": "Binary trees",
+      "title": "logarithmic height to pruning number",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Francon's map from Dyck paths to binary trees.",
+      "sample": [
+        ["[1,0]", "[.,.]"],
+        ["[1,0,1,0]", "[.,[.,.]]"],
+        ["[1,1,0,0]", "[[.,.],.]"],
+        ["[1,0,1,0,1,0]", "[.,[.,[.,.]]]"]
+      ]
+    },
+    "Mp00141": {
+      "domain": "Binary trees",
+      "codomain": "Dyck paths",
+      "title": "pruning number to logarithmic height",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Francon's map from binary trees to Dyck paths.",
+      "sample": [
+        ["[.,.]", "[1,0]"],
+        ["[.,[.,.]]", "[1,0,1,0]"],
+        ["[[.,.],.]", "[1,1,0,0]"],
+        ["[.,[.,[.,.]]]", "[1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00142": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "promotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The promotion of the two-row standard Young tableau of a Dyck path.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,0,1,0,0]"]
+      ]
+    },
+    "Mp00143": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "inverse promotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse promotion of a Dyck path.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,0,1,0,0]"]
+      ]
+    },
+    "Mp00144": {
+      "domain": "Perfect matchings",
+      "codomain": "Perfect matchings",
+      "title": "rotation",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The rotation of a perfect matching.",
+      "sample": [
+        ["[(1,2)]", "[(1,2)]"],
+        ["[(1,2),(3,4)]", "[(1,4),(2,3)]"],
+        ["[(1,3),(2,4)]", "[(1,3),(2,4)]"],
+        ["[(1,4),(2,3)]", "[(1,2),(3,4)]"]
+      ]
+    },
+    "Mp00145": {
+      "domain": "Perfect matchings",
+      "codomain": "Perfect matchings",
+      "title": "inverse rotation",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse rotation of a perfect matching.",
+      "sample": [
+        ["[(1,2)]", "[(1,2)]"],
+        ["[(1,2),(3,4)]", "[(1,4),(2,3)]"],
+        ["[(1,3),(2,4)]", "[(1,3),(2,4)]"],
+        ["[(1,4),(2,3)]", "[(1,2),(3,4)]"]
+      ]
+    },
+    "Mp00146": {
+      "domain": "Dyck paths",
+      "codomain": "Perfect matchings",
+      "title": "to tunnel matching",
+      "properties": ["Injection", "Graded map"],
+      "description": "Sends a Dyck path of semilength n to the noncrossing perfect matching given by matching an up-step with the corresponding down-step.",
+      "sample": [
+        ["[1,0]", "[(1,2)]"],
+        ["[1,0,1,0]", "[(1,2),(3,4)]"],
+        ["[1,1,0,0]", "[(1,4),(2,3)]"],
+        ["[1,0,1,0,1,0]", "[(1,2),(3,4),(5,6)]"]
+      ]
+    },
+    "Mp00147": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "square",
+      "properties": ["Graded map"],
+      "description": "The square of a graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00148": {
+      "domain": "Finite Cartan types",
+      "codomain": "Posets",
+      "title": "to root poset",
+      "properties": ["Injection"],
+      "description": "The root poset of a finite Cartan type.",
+      "sample": [
+        ["['A',1]", "([],1)"],
+        ["['A',2]", "([(0,2),(1,2)],3)"],
+        ["['A',3]", "([(0,4),(1,3),(2,3),(2,4),(3,5),(4,5)],6)"],
+        ["['A',4]", "([(0,8),(1,7),(2,7),(2,9),(3,8),(3,9),(5,4),(6,4),(7,5),(8,6),(9,5),(9,6)],10)"]
+      ]
+    },
+    "Mp00149": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Lehmer code rotation",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Sends a permutation $\\pi$ to the unique permutation $\\tau$ (of the same length) such that every entry in the [[Permutations|Lehmer code]] of $\\tau$ is cyclically one larger than the Lehmer code of $\\pi$.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[2,3,1]"]
+      ]
+    },
+    "Mp00150": {
+      "domain": "Perfect matchings",
+      "codomain": "Dyck paths",
+      "title": "to Dyck path",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The Dyck path corresponding to the opener-closer sequence of the perfect matching.",
+      "sample": [
+        ["[(1,2)]", "[1,0]"],
+        ["[(1,2),(3,4)]", "[1,0,1,0]"],
+        ["[(1,3),(2,4)]", "[1,1,0,0]"],
+        ["[(1,4),(2,3)]", "[1,1,0,0]"]
+      ]
+    },
+    "Mp00151": {
+      "domain": "Permutations",
+      "codomain": "Set partitions",
+      "title": "to cycle type",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Let $\\pi=c_1\\dots c_r$ a permutation of size $n$ decomposed in its cyclic parts. The associated set partition of $[n]$ then is $S=S_1\\cup\\dots\\cup S_r$ such that $S_i$ is the set of integers in the cycle $c_i$.",
+      "sample": [
+        ["[1]", "{{1}}"],
+        ["[1,2]", "{{1},{2}}"],
+        ["[2,1]", "{{1,2}}"],
+        ["[1,2,3]", "{{1},{2},{3}}"]
+      ]
+    },
+    "Mp00152": {
+      "domain": "Graphs",
+      "codomain": "Integer compositions",
+      "title": "Laplacian multiplicities",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The composition of multiplicities of the Laplacian eigenvalues.",
+      "sample": [
+        ["([],1)", "[1]"],
+        ["([],2)", "[2]"],
+        ["([],3)", "[3]"],
+        ["([],4)", "[4]"]
+      ]
+    },
+    "Mp00153": {
+      "domain": "Standard tableaux",
+      "codomain": "Standard tableaux",
+      "title": "inverse promotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse promotion of a standard Young tableau.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[1,2]]", "[[1,2]]"],
+        ["[[1,2,3]]", "[[1,2,3]]"],
+        ["[[1],[2]]", "[[1],[2]]"]
+      ]
+    },
+    "Mp00154": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "core",
+      "properties": ["Idempotent"],
+      "description": "The core of a graph.",
+      "sample": [
+        ["([],0)", "([],0)"],
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],1)"],
+        ["([],3)", "([],1)"]
+      ]
+    },
+    "Mp00155": {
+      "domain": "Standard tableaux",
+      "codomain": "Standard tableaux",
+      "title": "promotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The promotion of a standard Young tableau.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[1,2]]", "[[1,2]]"],
+        ["[[1,2,3]]", "[[1,2,3]]"],
+        ["[[1],[2]]", "[[1],[2]]"]
+      ]
+    },
+    "Mp00156": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "line graph",
+      "properties": [],
+      "description": "The line graph of a graph.",
+      "sample": [
+        ["([],1)", "([],0)"],
+        ["([],2)", "([],0)"],
+        ["([],3)", "([],0)"],
+        ["([],4)", "([],0)"]
+      ]
+    },
+    "Mp00157": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "connected complement",
+      "properties": ["Graded map", "Involution"],
+      "description": "The componentwise connected complement of a graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00158": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "alternating inverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Sends a binary word $w_1\\cdots w_m$ to the binary word $v_1 \\cdots v_m$ with $v_i = w_i$ if $i$ is odd and $v_i = 1 - w_i$ if $i$ is even.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "01"],
+        ["01", "00"]
+      ]
+    },
+    "Mp00159": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Demazure product with inverse",
+      "properties": ["Graded map"],
+      "description": "This map sends a permutation $\\pi$ to $\\pi^{-1} \\star \\pi$ where $\\star$ denotes the Demazure product on permutations.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00160": {
+      "domain": "Permutations",
+      "codomain": "Graphs",
+      "title": "graph of inversions",
+      "properties": ["Graded map"],
+      "description": "The graph of inversions of a permutation.",
+      "sample": [
+        ["[1]", "([],1)"],
+        ["[1,2]", "([],2)"],
+        ["[2,1]", "([(0,1)],2)"],
+        ["[1,2,3]", "([],3)"]
+      ]
+    },
+    "Mp00161": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "reverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The reversal of a signed permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[-1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"]
+      ]
+    },
+    "Mp00162": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "inverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The inverse of a signed permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[-1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00163": {
+      "domain": "Signed permutations",
+      "codomain": "Permutations",
+      "title": "permutation",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The permutation obtained by forgetting the colours.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00164": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "Chen Deng Du Stanley Yan",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "A map that swaps the crossing number and the nesting number of a set partition.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00165": {
+      "domain": "Perfect matchings",
+      "codomain": "Perfect matchings",
+      "title": "Chen Deng Du Stanley Yan",
+      "properties": ["Graded map", "Involution"],
+      "description": "A map that swaps the crossing number and the nesting number of a perfect matching.",
+      "sample": [
+        ["[(1,2)]", "[(1,2)]"],
+        ["[(1,2),(3,4)]", "[(1,2),(3,4)]"],
+        ["[(1,3),(2,4)]", "[(1,4),(2,3)]"],
+        ["[(1,4),(2,3)]", "[(1,3),(2,4)]"]
+      ]
+    },
+    "Mp00166": {
+      "domain": "Signed permutations",
+      "codomain": "Integer partitions",
+      "title": "even cycle type",
+      "properties": ["Surjection"],
+      "description": "The partition corresponding to the even cycles.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[]"],
+        ["[1,2]", "[1,1]"],
+        ["[2,1]", "[2]"]
+      ]
+    },
+    "Mp00167": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "inverse Kreweras complement",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse Kreweras complement of a signed permutation.",
+      "sample": [
+        ["[1]", "[-1]"],
+        ["[-1]", "[1]"],
+        ["[1,2]", "[2,-1]"],
+        ["[2,1]", "[1,-2]"]
+      ]
+    },
+    "Mp00168": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "Kreweras complement",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Kreweras complement of a signed permutation.",
+      "sample": [
+        ["[1]", "[-1]"],
+        ["[-1]", "[1]"],
+        ["[1,2]", "[2,-1]"],
+        ["[2,1]", "[-1,2]"]
+      ]
+    },
+    "Mp00169": {
+      "domain": "Signed permutations",
+      "codomain": "Integer partitions",
+      "title": "odd cycle type",
+      "properties": ["Surjection"],
+      "description": "The partition corresponding to the odd cycles.",
+      "sample": [
+        ["[1]", "[]"],
+        ["[-1]", "[1]"],
+        ["[1,2]", "[]"],
+        ["[2,1]", "[]"]
+      ]
+    },
+    "Mp00170": {
+      "domain": "Permutations",
+      "codomain": "Signed permutations",
+      "title": "to signed permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "The signed permutation with all signs positive.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00171": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "intertwining number to dual major index",
+      "properties": ["Bijection", "Graded map"],
+      "description": "A bijection sending the intertwining number of a set partition to its dual major index.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00172": {
+      "domain": "Integer compositions",
+      "codomain": "Integer compositions",
+      "title": "rotate back to front",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The back to front rotation of an integer composition.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[2]"],
+        ["[3]", "[3]"],
+        ["[4]", "[4]"]
+      ]
+    },
+    "Mp00173": {
+      "domain": "Integer compositions",
+      "codomain": "Integer compositions",
+      "title": "rotate front to back",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The front to back rotation of the entries of an integer composition.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[2]"],
+        ["[3]", "[3]"],
+        ["[4]", "[4]"]
+      ]
+    },
+    "Mp00174": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "dual major index to intertwining number",
+      "properties": ["Bijection", "Graded map"],
+      "description": "A bijection sending the dual major index of a set partition to its intertwining number.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00175": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "inverse Foata bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse of Foata's bijection.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00176": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "rotate decreasing",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The rotation of the set partition obtained by subtracting 1 from each entry different from 1, and replacing 1 with the largest entry.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00177": {
+      "domain": "Plane partitions",
+      "codomain": "Plane partitions",
+      "title": "transpose",
+      "properties": ["Graded map", "Involution"],
+      "description": "The transpose of a plane partition.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[2]]", "[[2]]"],
+        ["[[3]]", "[[3]]"],
+        ["[[4]]", "[[4]]"]
+      ]
+    },
+    "Mp00178": {
+      "domain": "Binary words",
+      "codomain": "Integer compositions",
+      "title": "to composition",
+      "properties": ["Injection", "Graded map"],
+      "description": "The composition corresponding to a binary word.",
+      "sample": [
+        ["0", "[2]"],
+        ["1", "[1,1]"],
+        ["00", "[3]"],
+        ["01", "[2,1]"]
+      ]
+    },
+    "Mp00179": {
+      "domain": "Integer partitions",
+      "codomain": "Skew partitions",
+      "title": "to skew partition",
+      "properties": ["Injection", "Graded map"],
+      "description": "The partition regarded as a skew partition.",
+      "sample": [
+        ["[1]", "[[1],[]]"],
+        ["[2]", "[[2],[]]"],
+        ["[3]", "[[3],[]]"],
+        ["[4]", "[[4],[]]"]
+      ]
+    },
+    "Mp00180": {
+      "domain": "Integer compositions",
+      "codomain": "Skew partitions",
+      "title": "to ribbon",
+      "properties": ["Injection", "Graded map"],
+      "description": "The ribbon shape corresponding to an integer composition.",
+      "sample": [
+        ["[1]", "[[1],[]]"],
+        ["[2]", "[[2],[]]"],
+        ["[3]", "[[3],[]]"],
+        ["[4]", "[[4],[]]"]
+      ]
+    },
+    "Mp00181": {
+      "domain": "Skew partitions",
+      "codomain": "Integer compositions",
+      "title": "row lengths",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The sequence of row lengths from top to bottom.",
+      "sample": [
+        ["[[1],[]]", "[1]"],
+        ["[[2],[]]", "[2]"],
+        ["[[3],[]]", "[3]"],
+        ["[[4],[]]", "[4]"]
+      ]
+    },
+    "Mp00182": {
+      "domain": "Skew partitions",
+      "codomain": "Integer partitions",
+      "title": "outer shape",
+      "properties": ["Surjection"],
+      "description": "The outer shape of the skew partition.",
+      "sample": [
+        ["[[1],[]]", "[1]"],
+        ["[[2],[]]", "[2]"],
+        ["[[3],[]]", "[3]"],
+        ["[[4],[]]", "[4]"]
+      ]
+    },
+    "Mp00183": {
+      "domain": "Skew partitions",
+      "codomain": "Integer partitions",
+      "title": "inner shape",
+      "properties": ["Surjection"],
+      "description": "The inner shape of a skew partition.",
+      "sample": [
+        ["[[1],[]]", "[]"],
+        ["[[2],[]]", "[]"],
+        ["[[3],[]]", "[]"],
+        ["[[4],[]]", "[]"]
+      ]
+    },
+    "Mp00184": {
+      "domain": "Integer compositions",
+      "codomain": "Graphs",
+      "title": "to threshold graph",
+      "properties": ["Injection", "Graded map"],
+      "description": "The threshold graph corresponding to the composition.",
+      "sample": [
+        ["[1]", "([],1)"],
+        ["[2]", "([],2)"],
+        ["[3]", "([],3)"],
+        ["[4]", "([],4)"]
+      ]
+    },
+    "Mp00185": {
+      "domain": "Skew partitions",
+      "codomain": "Posets",
+      "title": "cell poset",
+      "properties": ["Graded map"],
+      "description": "The Young diagram of a skew partition regarded as a poset.",
+      "sample": [
+        ["[[1],[]]", "([],1)"],
+        ["[[2],[]]", "([(0,1)],2)"],
+        ["[[3],[]]", "([(0,2),(2,1)],3)"],
+        ["[[4],[]]", "([(0,3),(2,1),(3,2)],4)"]
+      ]
+    },
+    "Mp00186": {
+      "domain": "Skew partitions",
+      "codomain": "Integer partitions",
+      "title": "dominating partition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The dominating partition in the Schur expansion.",
+      "sample": [
+        ["[[1],[]]", "[1]"],
+        ["[[2],[]]", "[2]"],
+        ["[[3],[]]", "[3]"],
+        ["[[4],[]]", "[4]"]
+      ]
+    },
+    "Mp00187": {
+      "domain": "Skew partitions",
+      "codomain": "Skew partitions",
+      "title": "conjugate",
+      "properties": ["Bijection", "Involution"],
+      "description": "The conjugate of the skew partition.",
+      "sample": [
+        ["[[1],[]]", "[[1],[]]"],
+        ["[[2],[]]", "[[1,1],[]]"],
+        ["[[3],[]]", "[[1,1,1],[]]"],
+        ["[[4],[]]", "[[1,1,1,1],[]]"]
+      ]
+    },
+    "Mp00188": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "complement",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The complement of a signed permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[-1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"]
+      ]
+    },
+    "Mp00189": {
+      "domain": "Skew partitions",
+      "codomain": "Skew partitions",
+      "title": "rotate",
+      "properties": ["Graded map", "Involution"],
+      "description": "The rotation of a skew partition.",
+      "sample": [
+        ["[[1],[]]", "[[1],[]]"],
+        ["[[2],[]]", "[[2],[]]"],
+        ["[[3],[]]", "[[3],[]]"],
+        ["[[4],[]]", "[[4],[]]"]
+      ]
+    },
+    "Mp00190": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "Foata-Han",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Foata-Han bijection for signed permutations.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[-1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[-2,1]"]
+      ]
+    },
+    "Mp00191": {
+      "domain": "Lattices",
+      "codomain": "Lattices",
+      "title": "dual",
+      "properties": ["Graded map", "Involution"],
+      "description": "Return the dual lattice.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([(0,1)],2)", "([(0,1)],2)"],
+        ["([(0,2),(2,1)],3)", "([(0,2),(2,1)],3)"],
+        ["([(0,3),(2,1),(3,2)],4)", "([(0,3),(2,1),(3,2)],4)"]
+      ]
+    },
+    "Mp00192": {
+      "domain": "Skew partitions",
+      "codomain": "Lattices",
+      "title": "dominating sublattice",
+      "properties": [],
+      "description": "Return the sublattice of the dominance order induced by the support of the expansion of the skew Schur function into Schur functions.",
+      "sample": [
+        ["[[1],[]]", "([],1)"],
+        ["[[2],[]]", "([],1)"],
+        ["[[3],[]]", "([],1)"],
+        ["[[4],[]]", "([],1)"]
+      ]
+    },
+    "Mp00193": {
+      "domain": "Lattices",
+      "codomain": "Posets",
+      "title": "to poset",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the poset corresponding to the lattice.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([(0,1)],2)", "([(0,1)],2)"],
+        ["([(0,2),(2,1)],3)", "([(0,2),(2,1)],3)"],
+        ["([(0,3),(2,1),(3,2)],4)", "([(0,3),(2,1),(3,2)],4)"]
+      ]
+    },
+    "Mp00194": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "Foata-Han inverse",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse of the Foata-Han bijection for signed permutations.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[-1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[-2,1]"]
+      ]
+    },
+    "Mp00195": {
+      "domain": "Posets",
+      "codomain": "Lattices",
+      "title": "order ideals",
+      "properties": [],
+      "description": "The lattice of order ideals of a poset.",
+      "sample": [
+        ["([],1)", "([(0,1)],2)"],
+        ["([],2)", "([(0,1),(0,2),(1,3),(2,3)],4)"],
+        ["([],3)", "([(0,1),(0,2),(0,3),(1,5),(1,6),(2,4),(2,6),(3,4),(3,5),(4,7),(5,7),(6,7)],8)"],
+        [
+          "([],4)",
+          "([(0,1),(0,2),(0,3),(0,4),(1,8),(1,9),(1,10),(2,6),(2,7),(2,10),(3,5),(3,7),(3,9),(4,5),(4,6),(4,8),(5,11),(5,14),(6,11),(6,12),(7,11),(7,13),(8,12),(8,14),(9,13),(9,14),(10,12),(10,13),(11,15),(12,15),(13,15),(14,15)],16)"
+        ]
+      ]
+    },
+    "Mp00196": {
+      "domain": "Lattices",
+      "codomain": "Lattices",
+      "title": "The modular quotient of a lattice.",
+      "properties": ["Idempotent"],
+      "description": "The modular quotient of a lattice.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([(0,1)],2)", "([(0,1)],2)"],
+        ["([(0,2),(2,1)],3)", "([(0,2),(2,1)],3)"],
+        ["([(0,3),(2,1),(3,2)],4)", "([(0,3),(2,1),(3,2)],4)"]
+      ]
+    },
+    "Mp00197": {
+      "domain": "Lattices",
+      "codomain": "Lattices",
+      "title": "lattice of congruences",
+      "properties": [],
+      "description": "The lattice of congruences of a lattice.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([(0,1)],2)", "([(0,1)],2)"],
+        ["([(0,2),(2,1)],3)", "([(0,1),(0,2),(1,3),(2,3)],4)"],
+        ["([(0,3),(2,1),(3,2)],4)", "([(0,1),(0,2),(0,3),(1,5),(1,6),(2,4),(2,6),(3,4),(3,5),(4,7),(5,7),(6,7)],8)"]
+      ]
+    },
+    "Mp00198": {
+      "domain": "Posets",
+      "codomain": "Graphs",
+      "title": "incomparability graph",
+      "properties": ["Graded map"],
+      "description": "The incomparability graph of a poset.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([(0,1)],2)"],
+        ["([],3)", "([(0,1),(0,2),(1,2)],3)"],
+        ["([],4)", "([(0,1),(0,2),(0,3),(1,2),(1,3),(2,3)],4)"]
+      ]
+    },
+    "Mp00199": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "prime Dyck path",
+      "properties": ["Injection", "Graded map"],
+      "description": "Return the Dyck path obtained by adding an initial up and a final down step.",
+      "sample": [
+        ["[1,0]", "[1,1,0,0]"],
+        ["[1,0,1,0]", "[1,1,0,1,0,0]"],
+        ["[1,1,0,0]", "[1,1,1,0,0,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,0,1,0,1,0,0]"]
+      ]
+    },
+    "Mp00200": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "twist",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the binary word with first letter inverted.",
+      "sample": [
+        ["0", "1"],
+        ["1", "0"],
+        ["00", "10"],
+        ["01", "11"]
+      ]
+    },
+    "Mp00201": {
+      "domain": "Dyck paths",
+      "codomain": "Permutations",
+      "title": "Ringel",
+      "properties": ["Injection", "Graded map"],
+      "description": "The Ringel permutation of the LNakayama algebra corresponding to a Dyck path.",
+      "sample": [
+        ["[1,0]", "[2,1]"],
+        ["[1,0,1,0]", "[3,1,2]"],
+        ["[1,1,0,0]", "[2,3,1]"],
+        ["[1,0,1,0,1,0]", "[4,1,2,3]"]
+      ]
+    },
+    "Mp00202": {
+      "domain": "Integer partitions",
+      "codomain": "Integer partitions",
+      "title": "first row removal",
+      "properties": ["Surjection"],
+      "description": "Removes the first entry of an integer partition",
+      "sample": [
+        ["[1]", "[]"],
+        ["[2]", "[]"],
+        ["[3]", "[]"],
+        ["[4]", "[]"]
+      ]
+    },
+    "Mp00203": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "cone",
+      "properties": ["Injection", "Graded map"],
+      "description": "The cone of a graph.",
+      "sample": [
+        ["([],1)", "([(0,1)],2)"],
+        ["([],2)", "([(0,2),(1,2)],3)"],
+        ["([],3)", "([(0,3),(1,3),(2,3)],4)"],
+        ["([],4)", "([(0,4),(1,4),(2,4),(3,4)],5)"]
+      ]
+    },
+    "Mp00204": {
+      "domain": "Permutations",
+      "codomain": "Integer partitions",
+      "title": "LLPS",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The Lewis-Lyu-Pylyavskyy-Sen shape of a permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,1]"],
+        ["[2,1]", "[2]"],
+        ["[1,2,3]", "[1,1,1]"]
+      ]
+    },
+    "Mp00205": {
+      "domain": "Posets",
+      "codomain": "Lattices",
+      "title": "maximal antichains",
+      "properties": [],
+      "description": "The lattice of maximal antichains in a poset.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],1)"],
+        ["([],3)", "([],1)"],
+        ["([],4)", "([],1)"]
+      ]
+    },
+    "Mp00206": {
+      "domain": "Posets",
+      "codomain": "Lattices",
+      "title": "antichains of maximal size",
+      "properties": [],
+      "description": "The lattice of antichains of maximal size in a poset.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],1)"],
+        ["([],3)", "([],1)"],
+        ["([],4)", "([],1)"]
+      ]
+    },
+    "Mp00207": {
+      "domain": "Standard tableaux",
+      "codomain": "Integer compositions",
+      "title": "horizontal strip sizes",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The composition of horizontal strip sizes.",
+      "sample": [
+        ["[[1]]", "[1]"],
+        ["[[1,2]]", "[2]"],
+        ["[[1,2,3]]", "[3]"],
+        ["[[1],[2]]", "[1,1]"]
+      ]
+    },
+    "Mp00208": {
+      "domain": "Permutations",
+      "codomain": "Lattices",
+      "title": "lattice of intervals",
+      "properties": [],
+      "description": "The lattice of intervals of a permutation.",
+      "sample": [
+        ["[1]", "([(0,1)],2)"],
+        ["[1,2]", "([(0,1),(0,2),(1,3),(2,3)],4)"],
+        ["[2,1]", "([(0,1),(0,2),(1,3),(2,3)],4)"],
+        ["[1,2,3]", "([(0,1),(0,2),(0,3),(1,5),(2,4),(3,4),(3,5),(4,6),(5,6)],7)"]
+      ]
+    },
+    "Mp00209": {
+      "domain": "Permutations",
+      "codomain": "Posets",
+      "title": "pattern poset",
+      "properties": [],
+      "description": "The pattern poset of a permutation.",
+      "sample": [
+        ["[1]", "([],1)"],
+        ["[1,2]", "([(0,1)],2)"],
+        ["[2,1]", "([(0,1)],2)"],
+        ["[1,2,3]", "([(0,2),(2,1)],3)"]
+      ]
+    },
+    "Mp00210": {
+      "domain": "Gelfand-Tsetlin patterns",
+      "codomain": "Gelfand-Tsetlin patterns",
+      "title": "promotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The promotion of a Gelfand-Tsetlin pattern.",
+      "sample": [
+        ["[[1,0],[0]]", "[[1,0],[1]]"],
+        ["[[1,0],[1]]", "[[1,0],[0]]"],
+        ["[[1,1],[1]]", "[[1,1],[1]]"],
+        ["[[2,0],[0]]", "[[2,0],[2]]"]
+      ]
+    },
+    "Mp00211": {
+      "domain": "Gelfand-Tsetlin patterns",
+      "codomain": "Gelfand-Tsetlin patterns",
+      "title": "inverse promotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse promotion of a Gelfand-Tsetlin pattern.",
+      "sample": [
+        ["[[1,0],[0]]", "[[1,0],[1]]"],
+        ["[[1,0],[1]]", "[[1,0],[0]]"],
+        ["[[1,1],[1]]", "[[1,1],[1]]"],
+        ["[[2,0],[0]]", "[[2,0],[2]]"]
+      ]
+    },
+    "Mp00212": {
+      "domain": "Gelfand-Tsetlin patterns",
+      "codomain": "Gelfand-Tsetlin patterns",
+      "title": "inverse cycle",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse cycle action on a Gelfand-Tsetlin pattern.",
+      "sample": [
+        ["[[1,0],[0]]", "[[1,0],[1]]"],
+        ["[[1,0],[1]]", "[[1,0],[0]]"],
+        ["[[1,1],[1]]", "[[1,1],[1]]"],
+        ["[[2,0],[0]]", "[[2,0],[2]]"]
+      ]
+    },
+    "Mp00213": {
+      "domain": "Gelfand-Tsetlin patterns",
+      "codomain": "Gelfand-Tsetlin patterns",
+      "title": "cycle",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The cycle action on a Gelfand-Tsetlin pattern.",
+      "sample": [
+        ["[[1,0],[0]]", "[[1,0],[1]]"],
+        ["[[1,0],[1]]", "[[1,0],[0]]"],
+        ["[[1,1],[1]]", "[[1,1],[1]]"],
+        ["[[2,0],[0]]", "[[2,0],[2]]"]
+      ]
+    },
+    "Mp00214": {
+      "domain": "Semistandard tableaux",
+      "codomain": "Posets",
+      "title": "subcrystal",
+      "properties": [],
+      "description": "The underlying poset of the subcrystal obtained by applying the raising operators to a semistandard tableau.",
+      "sample": [
+        ["[[1,2]]", "([(0,1)],2)"],
+        ["[[1,3]]", "([(0,2),(2,1)],3)"],
+        ["[[1,4]]", "([(0,3),(2,1),(3,2)],4)"],
+        ["[[1,5]]", "([(0,4),(2,3),(3,1),(4,2)],5)"]
+      ]
+    },
+    "Mp00215": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "Wachs-White",
+      "properties": ["Bijection", "Graded map"],
+      "description": "A transformation of set partitions due to Wachs and White.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00216": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "inverse Wachs-White",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse of a transformation of set partitions due to Wachs and White.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00217": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "Wachs-White-rho ",
+      "properties": ["Bijection", "Graded map"],
+      "description": "A transformation of set partitions due to Wachs and White.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00218": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "inverse Wachs-White-rho",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse of a transformation of set partitions due to Wachs and White.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00219": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "inverse Yip",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse of a transformation of set partitions due to Yip.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00220": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "Yip",
+      "properties": ["Bijection", "Graded map"],
+      "description": "A transformation of set partitions due to Yip.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,2,3}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00221": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "conjugate",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The conjugate of a set partition.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1},{2}}"],
+        ["{{1,2,3}}", "{{1},{2},{3}}"],
+        ["{{1},{2}}", "{{1,2}}"]
+      ]
+    },
+    "Mp00222": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "peaks-to-valleys",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the path that has a valley wherever the original path has a peak of height at least one.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00223": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "runsort",
+      "properties": ["Idempotent", "Graded map"],
+      "description": "The permutation obtained by sorting the increasing runs lexicographically.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00224": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "runsort",
+      "properties": ["Idempotent", "Graded map"],
+      "description": "The word obtained by sorting the weakly increasing runs lexicographically.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "00"],
+        ["01", "01"]
+      ]
+    },
+    "Mp00225": {
+      "domain": "Semistandard tableaux",
+      "codomain": "Integer partitions",
+      "title": "weight",
+      "properties": ["Surjection"],
+      "description": "The weight of a semistandard tableau as an integer partition.",
+      "sample": [
+        ["[[1,2]]", "[1,1]"],
+        ["[[1,3]]", "[1,1]"],
+        ["[[1,4]]", "[1,1]"],
+        ["[[1,5]]", "[1,1]"]
+      ]
+    },
+    "Mp00226": {
+      "domain": "Standard tableaux",
+      "codomain": "Standard tableaux",
+      "title": "row-to-column-descents",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a standard tableau whose column descent set equals the row descent set of the original tableau.",
+      "sample": [
+        ["[[1]]", "[[1]]"],
+        ["[[1,2]]", "[[1,2]]"],
+        ["[[1,2,3]]", "[[1,2,3]]"],
+        ["[[1],[2]]", "[[1],[2]]"]
+      ]
+    },
+    "Mp00227": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "Delest-Viennot-inverse",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the Dyck path obtained by applying the inverse of Delest-Viennot's bijection to the corresponding parallelogram polyomino.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00228": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "reflect parallelogram polyomino",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Reflect the corresponding parallelogram polyomino, such that the first column becomes the first row.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,0,1,0,0]"]
+      ]
+    },
+    "Mp00229": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "Delest-Viennot",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the Dyck path corresponding to the parallelogram polyomino obtained by applying Delest-Viennot's bijection.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,0,1,0,0]"]
+      ]
+    },
+    "Mp00230": {
+      "domain": "Integer partitions",
+      "codomain": "Dyck paths",
+      "title": "parallelogram polyomino",
+      "properties": ["Injection"],
+      "description": "Return the Dyck path corresponding to the partition interpreted as a parallogram polyomino.",
+      "sample": [
+        ["[1]", "[1,0]"],
+        ["[2]", "[1,0,1,0]"],
+        ["[3]", "[1,0,1,0,1,0]"],
+        ["[4]", "[1,0,1,0,1,0,1,0]"]
+      ]
+    },
+    "Mp00231": {
+      "domain": "Integer compositions",
+      "codomain": "Dyck paths",
+      "title": "bounce path",
+      "properties": ["Injection", "Graded map"],
+      "description": "The bounce path determined by an integer composition.",
+      "sample": [
+        ["[1]", "[1,0]"],
+        ["[2]", "[1,1,0,0]"],
+        ["[3]", "[1,1,1,0,0,0]"],
+        ["[4]", "[1,1,1,1,0,0,0,0]"]
+      ]
+    },
+    "Mp00232": {
+      "domain": "Dyck paths",
+      "codomain": "Posets",
+      "title": "parallelogram poset",
+      "properties": [],
+      "description": "The cell poset of the parallelogram polyomino corresponding to the Dyck path.",
+      "sample": [
+        ["[1,0]", "([],1)"],
+        ["[1,0,1,0]", "([(0,1)],2)"],
+        ["[1,1,0,0]", "([(0,1)],2)"],
+        ["[1,0,1,0,1,0]", "([(0,2),(2,1)],3)"]
+      ]
+    },
+    "Mp00233": {
+      "domain": "Dyck paths",
+      "codomain": "Skew partitions",
+      "title": "skew partition",
+      "properties": ["Injection"],
+      "description": "The parallelogram polyomino corresponding to a Dyck path, interpreted as a skew partition.",
+      "sample": [
+        ["[1,0]", "[[1],[]]"],
+        ["[1,0,1,0]", "[[1,1],[]]"],
+        ["[1,1,0,0]", "[[2],[]]"],
+        ["[1,0,1,0,1,0]", "[[1,1,1],[]]"]
+      ]
+    },
+    "Mp00234": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "valleys-to-peaks",
+      "properties": ["Graded map"],
+      "description": "Return the binary word with every valley replaced by a peak.",
+      "sample": [
+        ["0", "1"],
+        ["1", "1"],
+        ["00", "01"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00235": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "descent views to invisible inversion bottoms",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a permutation whose multiset of invisible inversion bottoms is the multiset of descent views of the given permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00236": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Clarke-Steingrimsson-Zeng inverse",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse of the Clarke-Steingrimsson-Zeng map, sending excedances to descents.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00237": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "descent views to invisible inversion bottoms",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a permutation whose multiset of invisible inversion bottoms is the multiset of descent views of the given permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00238": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Clarke-Steingrimsson-Zeng",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Clarke-Steingrimsson-Zeng map sending descents to excedances.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00239": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Corteel",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Corteel's map interchanging the number of crossings and the number of nestings of a permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00240": {
+      "domain": "Permutations",
+      "codomain": "Set partitions",
+      "title": "weak exceedance partition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The set partition induced by the weak exceedances of a permutation.",
+      "sample": [
+        ["[1]", "{{1}}"],
+        ["[1,2]", "{{1},{2}}"],
+        ["[2,1]", "{{1,2}}"],
+        ["[1,2,3]", "{{1},{2},{3}}"]
+      ]
+    },
+    "Mp00241": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "invert Laguerre heap",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The permutation obtained by inverting the corresponding Laguerre heap, according to Viennot.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00242": {
+      "domain": "Dyck paths",
+      "codomain": "Posets",
+      "title": "Hessenberg poset",
+      "properties": ["Injection", "Graded map"],
+      "description": "The Hessenberg poset of a Dyck path.",
+      "sample": [
+        ["[1,0]", "([],1)"],
+        ["[1,0,1,0]", "([(0,1)],2)"],
+        ["[1,1,0,0]", "([],2)"],
+        ["[1,0,1,0,1,0]", "([(0,2),(2,1)],3)"]
+      ]
+    },
+    "Mp00243": {
+      "domain": "Graphs",
+      "codomain": "Posets",
+      "title": "weak duplicate order",
+      "properties": [],
+      "description": "The weak duplicate order of the de-duplicate of a graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],1)"],
+        ["([],3)", "([],1)"],
+        ["([],4)", "([],1)"]
+      ]
+    },
+    "Mp00244": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "bar",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the signed permutation with all signs reversed.",
+      "sample": [
+        ["[1]", "[-1]"],
+        ["[-1]", "[1]"],
+        ["[1,2]", "[-1,-2]"],
+        ["[2,1]", "[-2,-1]"]
+      ]
+    },
+    "Mp00245": {
+      "domain": "Signed permutations",
+      "codomain": "Permutations",
+      "title": "standardize",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the standardization of the signed permutation, where 1 is the smallest and -1 the largest element.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00246": {
+      "domain": "Ordered trees",
+      "codomain": "Ordered trees",
+      "title": "rotate",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The rotation of an ordered tree.",
+      "sample": [
+        ["[]", "[]"],
+        ["[[]]", "[[]]"],
+        ["[[[]]]", "[[[]]]"],
+        ["[[],[]]", "[[],[]]"]
+      ]
+    },
+    "Mp00247": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "de-duplicate",
+      "properties": ["Idempotent"],
+      "description": "The de-duplicate of a graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],1)"],
+        ["([],3)", "([],1)"],
+        ["([],4)", "([],1)"]
+      ]
+    },
+    "Mp00248": {
+      "domain": "Permutations",
+      "codomain": "Integer compositions",
+      "title": "DEX composition",
+      "properties": ["Graded map"],
+      "description": "The DEX composition of a permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2]"],
+        ["[2,1]", "[2]"],
+        ["[1,2,3]", "[3]"]
+      ]
+    },
+    "Mp00249": {
+      "domain": "Set partitions",
+      "codomain": "Set partitions",
+      "title": "Callan switch",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Switch the first closer and the minimum of the smallest closer and the second element of the block containing 1 in a set partition.",
+      "sample": [
+        ["{{1}}", "{{1}}"],
+        ["{{1,2}}", "{{1,2}}"],
+        ["{{1,2,3}}", "{{1,3},{2}}"],
+        ["{{1},{2}}", "{{1},{2}}"]
+      ]
+    },
+    "Mp00250": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "clique graph",
+      "properties": [],
+      "description": "The clique graph of a graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00251": {
+      "domain": "Graphs",
+      "codomain": "Integer partitions",
+      "title": "clique sizes",
+      "properties": [],
+      "description": "The integer partition of the sizes of the maximal cliques of a graph.",
+      "sample": [
+        ["([],1)", "[1]"],
+        ["([],2)", "[1,1]"],
+        ["([],3)", "[1,1,1]"],
+        ["([],4)", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00252": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "restriction",
+      "properties": ["Surjection"],
+      "description": "The permutation obtained by removing the largest letter.",
+      "sample": [
+        ["[1]", "[]"],
+        ["[1,2]", "[1]"],
+        ["[2,1]", "[1]"],
+        ["[1,2,3]", "[1,2]"]
+      ]
+    },
+    "Mp00253": {
+      "domain": "Decorated permutations",
+      "codomain": "Permutations",
+      "title": "permutation",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The underlying permutation of the decorated permutation.",
+      "sample": [
+        ["[+]", "[1]"],
+        ["[-]", "[1]"],
+        ["[+,+]", "[1,2]"],
+        ["[+,-]", "[1,2]"]
+      ]
+    },
+    "Mp00254": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Inverse fireworks map",
+      "properties": ["Idempotent"],
+      "description": "Sends a permutation to an inverse fireworks permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00255": {
+      "domain": "Decorated permutations",
+      "codomain": "Permutations",
+      "title": "lower permutation",
+      "properties": ["Graded map"],
+      "description": "The lower bound in the Grassmann interval corresponding to the decorated permutation.",
+      "sample": [
+        ["[+]", "[1]"],
+        ["[-]", "[1]"],
+        ["[+,+]", "[1,2]"],
+        ["[+,-]", "[1,2]"]
+      ]
+    },
+    "Mp00256": {
+      "domain": "Decorated permutations",
+      "codomain": "Permutations",
+      "title": "upper permutation",
+      "properties": ["Graded map"],
+      "description": "The upper bound in the Grassmann interval corresponding to the decorated permutation.",
+      "sample": [
+        ["[+]", "[1]"],
+        ["[-]", "[1]"],
+        ["[+,+]", "[1,2]"],
+        ["[+,-]", "[1,2]"]
+      ]
+    },
+    "Mp00257": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Alexandersson Kebede",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Sends a permutation to a permutation and it preserves the set of right-to-left minima.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00258": {
+      "domain": "Set partitions",
+      "codomain": "Standard tableaux",
+      "title": "Standard tableau associated to a set partition",
+      "properties": ["Surjection"],
+      "description": "Sends a set partition to the associated standard tableau.",
+      "sample": [
+        ["{{1}}", "[[1]]"],
+        ["{{1,2}}", "[[1,2]]"],
+        ["{{1,2,3}}", "[[1,2,3]]"],
+        ["{{1},{2}}", "[[1],[2]]"]
+      ]
+    },
+    "Mp00259": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "vertex addition",
+      "properties": ["Injection", "Graded map"],
+      "description": "Adds a disconnected vertex to a graph.",
+      "sample": [
+        ["([],1)", "([],2)"],
+        ["([],2)", "([],3)"],
+        ["([],3)", "([],4)"],
+        ["([],4)", "([],5)"]
+      ]
+    },
+    "Mp00260": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "Demazure product with inverse",
+      "properties": ["Graded map"],
+      "description": "This map sends a permutation $\\pi$ to $\\pi^{-1} \\star \\pi$ where $\\star$ denotes the Demazure product on signed permutations.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[-1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00261": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "Burrows-Wheeler",
+      "properties": ["Graded map"],
+      "description": "The Burrows-Wheeler transform of a binary word.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "00"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00262": {
+      "domain": "Binary words",
+      "codomain": "Posets",
+      "title": "poset of factors",
+      "properties": [],
+      "description": "The poset of factors of a binary word.",
+      "sample": [
+        ["0", "([(0,1)],2)"],
+        ["1", "([(0,1)],2)"],
+        ["00", "([(0,2),(2,1)],3)"],
+        ["01", "([(0,1),(0,2),(1,3),(2,3)],4)"]
+      ]
+    },
+    "Mp00263": {
+      "domain": "Lattices",
+      "codomain": "Posets",
+      "title": "join irreducibles",
+      "properties": [],
+      "description": "The poset of join irreducibles of a lattice.",
+      "sample": [
+        ["([],1)", "([],0)"],
+        ["([(0,1)],2)", "([],1)"],
+        ["([(0,2),(2,1)],3)", "([(0,1)],2)"],
+        ["([(0,3),(2,1),(3,2)],4)", "([(0,2),(2,1)],3)"]
+      ]
+    },
+    "Mp00264": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "delete endpoints",
+      "properties": ["Idempotent"],
+      "description": "Sends a graph to a maximal subgraph with no endpoints.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00265": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "conjugation by long cycle",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Sends the permutation $\\pi \\in \\mathfrak{S}_n$ to the permutation $c^{-1}\\pi c$ where $c = (1,\\ldots,n)$ is the long cycle.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00266": {
+      "domain": "Graphs",
+      "codomain": "Lattices",
+      "title": "connected vertex partitions",
+      "properties": [],
+      "description": "Sends a graph to the lattice of its connected vertex partitions.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],1)"],
+        ["([],3)", "([],1)"],
+        ["([],4)", "([],1)"]
+      ]
+    },
+    "Mp00267": {
+      "domain": "Signed permutations",
+      "codomain": "Binary words",
+      "title": "signs",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The binary word recording the signs of a signed permutation.",
+      "sample": [
+        ["[1]", "0"],
+        ["[-1]", "1"],
+        ["[1,2]", "00"],
+        ["[2,1]", "00"]
+      ]
+    },
+    "Mp00268": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "zeros to flag zeros",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a binary word of the same length, such that the number of occurrences of $10$ in the word obtained by prepending the reverse of the complement equals the number of $0$s in the original word.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "10"],
+        ["01", "00"]
+      ]
+    },
+    "Mp00269": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "flag zeros to zeros",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a binary word of the same length, such that the number of zeros equals the number of occurrences of $10$ in the word obtained from the original word by prepending the reverse of the complement.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "01"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00270": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "negatives to flag negatives",
+      "properties": ["Bijection", "Graded map"],
+      "description": "A map sending the number of negative entries to the number of flag negative entries.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[-1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00271": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "flag negatives to negatives",
+      "properties": ["Bijection", "Graded map"],
+      "description": "A map sending the number of flag negative entries to the number of negative entries.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[-1]", "[-1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00272": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "Gray next",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The next element in the Gray code for binary words.",
+      "sample": [
+        ["0", "1"],
+        ["1", "0"],
+        ["00", "10"],
+        ["01", "00"]
+      ]
+    },
+    "Mp00273": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "Gray previous",
+      "properties": ["Bijection"],
+      "description": "The previous element in the Gray code for binary words.",
+      "sample": [
+        ["0", "1"],
+        ["1", "0"],
+        ["00", "01"],
+        ["01", "11"]
+      ]
+    },
+    "Mp00274": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "block-cut tree",
+      "properties": [],
+      "description": "Sends a graph to its block-cut tree.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00275": {
+      "domain": "Graphs",
+      "codomain": "Integer partitions",
+      "title": "to edge-partition of connected components",
+      "properties": ["Surjection"],
+      "description": "Sends a graph to the partition recording the number of edges in its connected components.",
+      "sample": [
+        ["([],1)", "[]"],
+        ["([],2)", "[]"],
+        ["([],3)", "[]"],
+        ["([],4)", "[]"]
+      ]
+    },
+    "Mp00276": {
+      "domain": "Graphs",
+      "codomain": "Integer partitions",
+      "title": "to edge-partition of biconnected components",
+      "properties": [],
+      "description": "Sends a graph to the partition recording the number of edges in its biconnected components.",
+      "sample": [
+        ["([],1)", "[]"],
+        ["([],2)", "[]"],
+        ["([],3)", "[]"],
+        ["([],4)", "[]"]
+      ]
+    },
+    "Mp00277": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "catalanization",
+      "properties": ["Graded map"],
+      "description": "The catalanization of a permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00278": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "rowmotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the rowmotion of the binary word, regarded as an order ideal in the product of two chains.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "00"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00279": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Backward Rotation",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Rotates a permutation by moving the first entry last.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[2,3,1]"]
+      ]
+    },
+    "Mp00280": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "path rowmotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the rowmotion of the binary word, regarded as a lattice path.",
+      "sample": [
+        ["0", "1"],
+        ["1", "0"],
+        ["00", "01"],
+        ["01", "10"]
+      ]
+    },
+    "Mp00281": {
+      "domain": "Signed permutations",
+      "codomain": "Signed permutations",
+      "title": "rowmotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The rowmotion of a signed permutation with respect to the sorting order.",
+      "sample": [
+        ["[1]", "[-1]"],
+        ["[-1]", "[1]"],
+        ["[1,2]", "[-2,1]"],
+        ["[2,1]", "[1,-2]"]
+      ]
+    },
+    "Mp00282": {
+      "domain": "Posets",
+      "codomain": "Lattices",
+      "title": "Dedekind-MacNeille completion",
+      "properties": [],
+      "description": "Return the smallest lattice containing the poset.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([(0,1),(0,2),(1,3),(2,3)],4)"],
+        ["([],3)", "([(0,1),(0,2),(0,3),(1,4),(2,4),(3,4)],5)"],
+        ["([],4)", "([(0,1),(0,2),(0,3),(0,4),(1,5),(2,5),(3,5),(4,5)],6)"]
+      ]
+    },
+    "Mp00283": {
+      "domain": "Perfect matchings",
+      "codomain": "Permutations",
+      "title": "non-nesting-exceedence permutation",
+      "properties": ["Injection", "Graded map"],
+      "description": "The fixed-point-free permutation with deficiencies given by the perfect matching, no alignments and no inversions between exceedences.",
+      "sample": [
+        ["[(1,2)]", "[2,1]"],
+        ["[(1,2),(3,4)]", "[2,1,4,3]"],
+        ["[(1,3),(2,4)]", "[3,4,1,2]"],
+        ["[(1,4),(2,3)]", "[3,4,2,1]"]
+      ]
+    },
+    "Mp00284": {
+      "domain": "Standard tableaux",
+      "codomain": "Set partitions",
+      "title": "rows",
+      "properties": ["Injection", "Graded map"],
+      "description": "The set partition whose blocks are the rows of the tableau.",
+      "sample": [
+        ["[[1]]", "{{1}}"],
+        ["[[1,2]]", "{{1,2}}"],
+        ["[[1,2,3]]", "{{1,2,3}}"],
+        ["[[1],[2]]", "{{1},{2}}"]
+      ]
+    },
+    "Mp00285": {
+      "domain": "Ordered set partitions",
+      "codomain": "Set partitions",
+      "title": "to set partition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the underlying set partition",
+      "sample": [
+        ["[{1}]", "{{1}}"],
+        ["[{1,2}]", "{{1,2}}"],
+        ["[{1,2,3}]", "{{1,2,3}}"],
+        ["[{1},{2}]", "{{1},{2}}"]
+      ]
+    },
+    "Mp00286": {
+      "domain": "Ordered set partitions",
+      "codomain": "Permutations",
+      "title": "to permutation",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the permutation obtained by concatenating the blocks sorted into increasing order.",
+      "sample": [
+        ["[{1}]", "[1]"],
+        ["[{1,2}]", "[1,2]"],
+        ["[{1,2,3}]", "[1,2,3]"],
+        ["[{1},{2}]", "[1,2]"]
+      ]
+    },
+    "Mp00287": {
+      "domain": "Ordered set partitions",
+      "codomain": "Integer compositions",
+      "title": "to composition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the sizes of the blocks as a composition.",
+      "sample": [
+        ["[{1}]", "[1]"],
+        ["[{1,2}]", "[2]"],
+        ["[{1,2,3}]", "[3]"],
+        ["[{1},{2}]", "[1,1]"]
+      ]
+    },
+    "Mp00288": {
+      "domain": "Ordered set partitions",
+      "codomain": "Ordered set partitions",
+      "title": "reverse",
+      "properties": ["Graded map", "Involution"],
+      "description": "Reverse the order of the blocks of the ordered set partition.",
+      "sample": [
+        ["[{1}]", "[{1}]"],
+        ["[{1,2}]", "[{1,2}]"],
+        ["[{1,2,3}]", "[{1,2,3}]"],
+        ["[{1},{2}]", "[{2},{1}]"]
+      ]
+    },
+    "Mp00289": {
+      "domain": "Ordered set partitions",
+      "codomain": "Ordered set partitions",
+      "title": "complement",
+      "properties": ["Graded map", "Involution"],
+      "description": "Return the ordered set partition obtained by complementing each entry.",
+      "sample": [
+        ["[{1}]", "[{1}]"],
+        ["[{1,2}]", "[{1,2}]"],
+        ["[{1,2,3}]", "[{1,2,3}]"],
+        ["[{1},{2}]", "[{2},{1}]"]
+      ]
+    },
+    "Mp00290": {
+      "domain": "Parking functions",
+      "codomain": "Ordered set partitions",
+      "title": "to ordered set partition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "Return the ordered set partition whose blocks are the labels of the runs of the labelled Dyck path.",
+      "sample": [
+        ["[1]", "[{1}]"],
+        ["[1,1]", "[{1,2}]"],
+        ["[1,2]", "[{1},{2}]"],
+        ["[2,1]", "[{2},{1}]"]
+      ]
+    },
+    "Mp00291": {
+      "domain": "Ordered set partitions",
+      "codomain": "Ordered set partitions",
+      "title": "rotate back to front",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the ordered set partition obtained by moving the last block to the beginning.",
+      "sample": [
+        ["[{1}]", "[{1}]"],
+        ["[{1,2}]", "[{1,2}]"],
+        ["[{1,2,3}]", "[{1,2,3}]"],
+        ["[{1},{2}]", "[{2},{1}]"]
+      ]
+    },
+    "Mp00292": {
+      "domain": "Ordered set partitions",
+      "codomain": "Ordered set partitions",
+      "title": "rotate front to back",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the ordered set partition obtained by moving the first block to the end.",
+      "sample": [
+        ["[{1}]", "[{1}]"],
+        ["[{1,2}]", "[{1,2}]"],
+        ["[{1,2,3}]", "[{1,2,3}]"],
+        ["[{1},{2}]", "[{2},{1}]"]
+      ]
+    },
+    "Mp00293": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "rotate front-to-back",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Rotate a parking function by moving the first entry to the last position.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"]
+      ]
+    },
+    "Mp00294": {
+      "domain": "Standard tableaux",
+      "codomain": "Integer compositions",
+      "title": "peak composition",
+      "properties": ["Graded map"],
+      "description": "The composition corresponding to the peak set of a standard tableau.",
+      "sample": [
+        ["[[1]]", "[1]"],
+        ["[[1,2]]", "[2]"],
+        ["[[1,2,3]]", "[3]"],
+        ["[[1],[2]]", "[2]"]
+      ]
+    },
+    "Mp00295": {
+      "domain": "Standard tableaux",
+      "codomain": "Integer compositions",
+      "title": "valley composition",
+      "properties": ["Graded map"],
+      "description": "The composition corresponding to the valley set of a standard tableau.",
+      "sample": [
+        ["[[1]]", "[1]"],
+        ["[[1,2]]", "[2]"],
+        ["[[1,2,3]]", "[3]"],
+        ["[[1],[2]]", "[2]"]
+      ]
+    },
+    "Mp00296": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "Knuth-Krattenthaler",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The map that sends the Dyck path to a 321-avoiding permutation, then applies the Robinson-Schensted correspondence and finally interprets the first row of the insertion tableau and the second row of the recording tableau as up steps.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00297": {
+      "domain": "Parking functions",
+      "codomain": "Ordered trees",
+      "title": "ordered tree",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The ordered tree associated with the parking function by Pollak.",
+      "sample": [
+        ["[1]", "[[]]"],
+        ["[1,1]", "[[],[]]"],
+        ["[1,2]", "[[[]]]"],
+        ["[2,1]", "[[[]]]"]
+      ]
+    },
+    "Mp00298": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "repeats to leading",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The unique parking function obtained by computing successive differences to obtain a Prüfer code, then prepending 0 and cyclically shifting.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00299": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "ones to leading",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The unique parking function obtained by applying the Foata-Riordan map to obtain a Prüfer code, then prepending 0 and cyclically shifting.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00300": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "leading to ones",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The unique parking function obtained by subtracting the first entry from all others to obtain a Prüfer code and then applying the inverse of the Foata-Riordan map.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00301": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "leading to repeats",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The unique parking function obtained by prepending 0 and shifting the cumulative sums of a Prüfer code, then cyclically shifting.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00302": {
+      "domain": "Parking functions",
+      "codomain": "Semistandard tableaux",
+      "title": "insertion tableau",
+      "properties": ["Graded map"],
+      "description": "The insertion tableau obtained by applying RSK to the parking function regarded as a word.",
+      "sample": [
+        ["[1]", "[[1]]"],
+        ["[1,1]", "[[1,1]]"],
+        ["[1,2]", "[[1,2]]"],
+        ["[2,1]", "[[1],[2]]"]
+      ]
+    },
+    "Mp00303": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "complement",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "The complement of a parking function.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"]
+      ]
+    },
+    "Mp00304": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "rotate back-to-front",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Rotate a parking function by moving the last entry to the first position.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"]
+      ]
+    },
+    "Mp00305": {
+      "domain": "Permutations",
+      "codomain": "Parking functions",
+      "title": "parking function",
+      "properties": ["Injection", "Graded map"],
+      "description": "Interpret the permutation as a parking function.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00306": {
+      "domain": "Posets",
+      "codomain": "Integer partitions",
+      "title": "rowmotion cycle type",
+      "properties": [],
+      "description": "The cycle type of rowmotion on the order ideals of a poset.",
+      "sample": [
+        ["([],1)", "[2]"],
+        ["([],2)", "[2,2]"],
+        ["([],3)", "[2,2,2,2]"],
+        ["([],4)", "[2,2,2,2,2,2,2,2]"]
+      ]
+    },
+    "Mp00307": {
+      "domain": "Posets",
+      "codomain": "Integer partitions",
+      "title": "promotion cycle type",
+      "properties": [],
+      "description": "The cycle type of promotion on the linear extensions of a poset.",
+      "sample": [
+        ["([],1)", "[1]"],
+        ["([],2)", "[2]"],
+        ["([],3)", "[3,3]"],
+        ["([],4)", "[4,4,4,4,4,4]"]
+      ]
+    },
+    "Mp00308": {
+      "domain": "Integer partitions",
+      "codomain": "Integer partitions",
+      "title": "Bulgarian solitaire",
+      "properties": ["Graded map"],
+      "description": "A move in Bulgarian solitaire.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1,1]"],
+        ["[3]", "[2,1]"],
+        ["[4]", "[3,1]"]
+      ]
+    },
+    "Mp00309": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "inverse toric promotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Toric promotion of a permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[3,2,1]"]
+      ]
+    },
+    "Mp00310": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "toric promotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Toric promotion of a permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[3,2,1]"]
+      ]
+    },
+    "Mp00311": {
+      "domain": "Plane partitions",
+      "codomain": "Integer partitions",
+      "title": "to partition",
+      "properties": ["Graded map"],
+      "description": "The underlying integer partition of a plane partition.",
+      "sample": [
+        ["[[1]]", "[1]"],
+        ["[[2]]", "[2]"],
+        ["[[3]]", "[3]"],
+        ["[[4]]", "[4]"]
+      ]
+    },
+    "Mp00312": {
+      "domain": "Integer partitions",
+      "codomain": "Integer partitions",
+      "title": "Glaisher-Franklin",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Glaisher-Franklin bijection on integer partitions.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1,1]"],
+        ["[3]", "[3]"],
+        ["[4]", "[2,2]"]
+      ]
+    },
+    "Mp00313": {
+      "domain": "Integer partitions",
+      "codomain": "Integer partitions",
+      "title": "Glaisher-Franklin inverse",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Glaisher-Franklin bijection on integer partitions.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1,1]"],
+        ["[3]", "[3]"],
+        ["[4]", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00314": {
+      "domain": "Integer compositions",
+      "codomain": "Integer compositions",
+      "title": "Foata bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The Foata bijection for compositions.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[2]"],
+        ["[3]", "[3]"],
+        ["[4]", "[4]"]
+      ]
+    },
+    "Mp00315": {
+      "domain": "Integer compositions",
+      "codomain": "Integer compositions",
+      "title": "inverse Foata bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse of Foata's bijection.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[2]"],
+        ["[3]", "[3]"],
+        ["[4]", "[4]"]
+      ]
+    },
+    "Mp00316": {
+      "domain": "Binary words",
+      "codomain": "Binary words",
+      "title": "inverse Foata bijection",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The inverse of Foata's bijection.",
+      "sample": [
+        ["0", "0"],
+        ["1", "1"],
+        ["00", "00"],
+        ["01", "01"]
+      ]
+    },
+    "Mp00317": {
+      "domain": "Integer partitions",
+      "codomain": "Binary words",
+      "title": "odd parts",
+      "properties": ["Surjection"],
+      "description": "Return the binary word indicating which parts of the partition are odd.",
+      "sample": [
+        ["[1]", "1"],
+        ["[2]", "0"],
+        ["[3]", "1"],
+        ["[4]", "0"]
+      ]
+    },
+    "Mp00318": {
+      "domain": "Graphs",
+      "codomain": "Graphs",
+      "title": "dual on components",
+      "properties": ["Involution"],
+      "description": "The dual of the 3-connected planar components of a graph.",
+      "sample": [
+        ["([],1)", "([],1)"],
+        ["([],2)", "([],2)"],
+        ["([],3)", "([],3)"],
+        ["([],4)", "([],4)"]
+      ]
+    },
+    "Mp00319": {
+      "domain": "Parking functions",
+      "codomain": "Integer compositions",
+      "title": "to composition",
+      "properties": ["Injection"],
+      "description": "Return the parking function interpreted as an integer composition.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"]
+      ]
+    },
+    "Mp00320": {
+      "domain": "Parking functions",
+      "codomain": "Parking functions",
+      "title": "reverse",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return the reversal of a parking function.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,1]", "[1,1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"]
+      ]
+    },
+    "Mp00321": {
+      "domain": "Integer partitions",
+      "codomain": "Integer partitions",
+      "title": "2-conjugate",
+      "properties": ["Bijection", "Graded map", "Involution"],
+      "description": "Return a partition with the same number of odd parts and number of even parts interchanged with the number of cells with zero leg and odd arm length.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[2]"],
+        ["[3]", "[2,1]"],
+        ["[4]", "[2,2]"]
+      ]
+    },
+    "Mp00322": {
+      "domain": "Integer partitions",
+      "codomain": "Integer partitions",
+      "title": "Loehr-Warrington",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a partition whose diagonal inversion number is the length of the preimage.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1,1]"],
+        ["[3]", "[1,1,1]"],
+        ["[4]", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00323": {
+      "domain": "Integer partitions",
+      "codomain": "Integer partitions",
+      "title": "Loehr-Warrington inverse",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return a partition whose length is the diagonal inversion number of the preimage.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[2]", "[1,1]"],
+        ["[3]", "[2,1]"],
+        ["[4]", "[2,2]"]
+      ]
+    },
+    "Mp00324": {
+      "domain": "Graphs",
+      "codomain": "Integer compositions",
+      "title": "chromatic difference sequence",
+      "properties": ["Graded map"],
+      "description": "The chromatic difference sequence of a graph.",
+      "sample": [
+        ["([],1)", "[1]"],
+        ["([],2)", "[2]"],
+        ["([],3)", "[3]"],
+        ["([],4)", "[4]"]
+      ]
+    },
+    "Mp00325": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "ones to leading",
+      "properties": ["Bijection", "Graded map"],
+      "description": "The unique permutation obtained by applying the Foata-Riordan map to obtain a Prüfer code, then prepending zero and cyclically shifting.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00326": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "weak order rowmotion",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the reversal of the permutation obtained by inverting the corresponding Laguerre heap.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[2,1]"],
+        ["[2,1]", "[1,2]"],
+        ["[1,2,3]", "[3,2,1]"]
+      ]
+    },
+    "Mp00327": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "inverse Kreweras complement",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Return the inverse of the Kreweras complement of a Dyck path, regarded as a noncrossing set partition.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00328": {
+      "domain": "Ordered trees",
+      "codomain": "Ordered trees",
+      "title": "DeBruijn-Morselt plane tree automorphism",
+      "properties": ["Bijection", "Graded map"],
+      "description": "This automorphism on the set of plane trees with a given number of vertices is the combination of the two \"canonical\" bijections between plane trees and binary trees, using either the left or right branches. In [3] Shapiro essentially attributes this automorphism to DeBruijn and Morselt [1], hence the name I chose. Shapiro shows in that paper that for a large subset of plane trees (those correspo…",
+      "sample": [
+        ["[]", "[]"],
+        ["[[]]", "[[]]"],
+        ["[[[]]]", "[[],[]]"],
+        ["[[],[]]", "[[[]]]"]
+      ]
+    },
+    "Mp00329": {
+      "domain": "Permutations",
+      "codomain": "Permutations",
+      "title": "Tanimoto",
+      "properties": ["Bijection"],
+      "description": "Add 1 to every entry of the permutation (n becomes 1 instead of n+1), except that when n appears at the front or the back of the permutation, instead remove it and place 1 at the other end of the permutation.",
+      "sample": [
+        ["[1]", "[1]"],
+        ["[1,2]", "[1,2]"],
+        ["[2,1]", "[2,1]"],
+        ["[1,2,3]", "[1,2,3]"]
+      ]
+    },
+    "Mp00330": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "rotate triangulation clockwise",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Rotate the associated triangulation clockwise.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,0,1,0,0]"]
+      ]
+    },
+    "Mp00331": {
+      "domain": "Dyck paths",
+      "codomain": "Dyck paths",
+      "title": "rotate triangulation counterclockwise",
+      "properties": ["Bijection", "Graded map"],
+      "description": "Rotate the associated triangulation counterclockwise.",
+      "sample": [
+        ["[1,0]", "[1,0]"],
+        ["[1,0,1,0]", "[1,1,0,0]"],
+        ["[1,1,0,0]", "[1,0,1,0]"],
+        ["[1,0,1,0,1,0]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00332": {
+      "domain": "Posets",
+      "codomain": "Integer partitions",
+      "title": "Jordan block partition",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The partition given by the sizes of the Jordan blocks of the zeta matrix.",
+      "sample": [
+        ["([],1)", "[1]"],
+        ["([],2)", "[1,1]"],
+        ["([],3)", "[1,1,1]"],
+        ["([],4)", "[1,1,1,1]"]
+      ]
+    },
+    "Mp00333": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Dyck paths",
+      "title": "link pattern",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The Dyck path corresponding to the link pattern of the alternating sign matrix interpreted as a fully packed loop configuration.",
+      "sample": [
+        ["[[1]]", "[1,0]"],
+        ["[[0,1],[1,0]]", "[1,0,1,0]"],
+        ["[[1,0],[0,1]]", "[1,1,0,0]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[1,1,0,0,1,0]"]
+      ]
+    },
+    "Mp00334": {
+      "domain": "Alternating sign matrices",
+      "codomain": "Dyck paths",
+      "title": "diagonal height",
+      "properties": ["Surjection", "Graded map"],
+      "description": "The Dyck path obtained by interpreting the diagonal and off-diagonal entries of the height function of the alternating sign matrix as a sequence of heights.",
+      "sample": [
+        ["[[1]]", "[1,0]"],
+        ["[[0,1],[1,0]]", "[1,1,0,0]"],
+        ["[[1,0],[0,1]]", "[1,0,1,0]"],
+        ["[[0,0,1],[0,1,0],[1,0,0]]", "[1,1,1,0,0,0]"]
+      ]
+    },
+    "Mp00335": {
+      "domain": "Lattices",
+      "codomain": "Graphs",
+      "title": "zero-divisor graph",
+      "properties": [],
+      "description": "The zero divisor graph of a lattice.",
+      "sample": [
+        ["([],1)", "([],0)"],
+        ["([(0,1)],2)", "([],0)"],
+        ["([(0,2),(2,1)],3)", "([],0)"],
+        ["([(0,3),(2,1),(3,2)],4)", "([],0)"]
+      ]
+    },
+    "Mp00336": {
+      "domain": "Binary words",
+      "codomain": "Permutations",
+      "title": "standard permutation",
+      "properties": ["Graded map"],
+      "description": "Return the standardization of a binary word.",
+      "sample": [
+        ["0", "[1]"],
+        ["1", "[1]"],
+        ["00", "[1,2]"],
+        ["01", "[1,2]"]
+      ]
+    }
+  }
+}

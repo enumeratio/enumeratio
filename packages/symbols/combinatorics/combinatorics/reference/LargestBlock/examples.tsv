@@ -1,3 +1,6 @@
-id	section	role	expr	expected	caption
-the-partition-1-3-mid-2			[LargestBlock, [SetPartition, [List, [List, 1, 3], [List, 2]]]]	2	the partition $\{1,3\} \mid \{2\}$
-the-partition-1-mid-2-4-mid-3			[LargestBlock, [SetPartition, [List, [List, 1], [List, 2, 4], [List, 3]]]]	2	the partition $\{1\} \mid \{2,4\} \mid \{3\}$
+id	section	role	expr	expected	known	source	caption
+the-partition-1-3-mid-2			[LargestBlock, [SetPartition, [List, [List, 1, 3], [List, 2]]]]	2			the partition $\{1,3\} \mid \{2\}$
+the-partition-1-mid-2-4-mid-3			[LargestBlock, [SetPartition, [List, [List, 1], [List, 2, 4], [List, 3]]]]	2			the partition $\{1\} \mid \{2,4\} \mid \{3\}$
+findstat-st001062-1	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1, 2]]], "'LargestBlock'"]	2	2	FindStat St001062	FindStat's value for {{1,2}}
+findstat-st001062-2	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1, 2, 3]]], "'LargestBlock'"]	3	3	FindStat St001062	FindStat's value for {{1,2,3}}
+findstat-st001062-3	Properties		[CombinatorialStat, [SetPartition, [List, [List, 1], [List, 2]]], "'LargestBlock'"]	1	1	FindStat St001062	FindStat's value for {{1},{2}}
