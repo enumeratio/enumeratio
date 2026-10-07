@@ -20,7 +20,7 @@ The primes of every ring of quadratic integers $\mathcal{O}_d$, one field at a t
   value='Show(
     LatticeTiles(QuadraticIntegers(_d),
       ColorRules -> [
-        IsPrime -> ColorData("dusk", Sqrt(Abs(Norm)), Band -> 10),
+        IsPrime -> ColorData(["Dusk", [0, 10], "Reflected"])(Sqrt(Abs(Norm))),
         IsIrreducible && !IsPrime -> Teal,
         IsUnit -> White,
         _h(Selected) -> Opacity(0.35, White)],
@@ -29,7 +29,7 @@ The primes of every ring of quadratic integers $\mathcal{O}_d$, one field at a t
         IsZero -> White,
         Unknown -> Gray,
         Selected -> Directive(White, AbsoluteThickness(2.5))]),
-    GridLines -> 10,
+    GridLines -> [10, 10],
     Axes -> True,
     Selection -> _s)'
 ></notatio-show>

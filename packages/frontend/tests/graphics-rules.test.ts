@@ -59,16 +59,23 @@ describe("colors and edges", () => {
     expect(colorOf("Mauve")).toBeUndefined();
   });
 
-  it("read Opacity around a color or a scheme, and a scheme's band and padding", () => {
+  it("read Opacity around a color or a scheme, and ColorData's range, reversal and padding", () => {
     expect(paintOf(["Opacity", 0.5, "Teal"])).toEqual({ paint: "#3ddbd9", opacity: 0.5 });
-    const s = paintOf([
-      "ColorData",
-      "'dusk'",
-      "Norm",
-      ["KeyValuePair", "Band", 20],
-      ["KeyValuePair", "Padding", "'Periodic'"],
-    ])!;
-    expect(typeof s.paint === "object" && [s.paint.band, s.paint.mode]).toEqual([20, "wrap"]);
+    const scheme = (spec: unknown) => {
+      const p = paintOf(["Apply", ["ColorData", spec], "Norm"])!.paint;
+      return typeof p === "object" ? p : undefined;
+    };
+    expect(scheme(["List", "'Dusk'", ["List", 10, 30], "'Periodic'"])).toMatchObject({
+      offset: 10,
+      band: 20,
+      mode: "wrap",
+    });
+    // Without a padding it clamps, as Wolfram's does.
+    expect(scheme("'Dusk'")).toMatchObject({ offset: 0, band: 1, mode: "clamp" });
+    expect(scheme(["List", "'Dusk'", "'Reverse'"])!.gradient.stops[0]!.color).toBe(
+      scheme("'Dusk'")!.gradient.stops.at(-1)!.color,
+    );
+    expect(paintOf(["Apply", ["ColorData", ["List", "'Dusk'", "'Sideways'"]], "Norm"])).toBeUndefined();
   });
 
   it("read an edge from a color or a Directive", () => {

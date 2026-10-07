@@ -134,6 +134,7 @@ export function plainJson(json: Json): Json {
 }
 
 const numberOf = (json: Json, fallback: number): number => {
+  if (headOf(json) === "Negate") return -numberOf(argsOf(json)[0], -fallback);
   const n = typeof json === "number" ? json : typeof json === "string" ? Number(json) : Number.NaN;
   return Number.isFinite(n) ? n : fallback;
 };
@@ -178,11 +179,14 @@ export function colorOf(json: Json): string | undefined {
 export const PADDINGS: Readonly<Record<string, BandMode>> = { Reflected: "reflect", Periodic: "wrap", Fixed: "clamp" };
 export const paddingName = (mode: BandMode): string => Object.keys(PADDINGS).find((k) => PADDINGS[k] === mode)!;
 
-/** A color scheme read at a value the layer computes per element, its band stated. */
+/** A color scheme read at a value the layer computes per element, its range stated. */
 export interface SchemeColor {
   readonly gradient: Gradient;
   /** The value, over the layer's published values: `Sqrt(Abs(Norm))`. */
   readonly value: Json;
+  /** Where the range starts: the value the scheme's first color is at. */
+  readonly offset: number;
+  /** The range's width: one pass of the scheme. */
   readonly band: number;
   readonly mode: BandMode;
 }
@@ -190,20 +194,31 @@ export interface SchemeColor {
 export type Paint = string | SchemeColor;
 
 /**
- * `ColorData("dusk", value, Band -> 10, Padding -> "Reflected", Reverse -> True)`: the scheme at
- * `value`, one pass of it per `Band`, and Wolfram's padding past the ends. (Wolfram's `ColorData`
- * takes only the scheme; the value and band are ours.)
+ * `ColorData(spec)(value)`, Wolfram's color function applied to a value the layer computes:
+ * `spec` is a scheme's name (`"Dusk"`), or a list of it with a range (`["Dusk", [0, 10]]`, the
+ * scheme stretched over it), `"Reverse"`, and (ours) Wolfram's padding past the range's ends,
+ * `"Reflected"`, `"Periodic"` or `"Fixed"`. Without one it clamps, as Wolfram's does, and a cyclic
+ * scheme wraps.
  */
 export function schemeOf(json: Json): SchemeColor | undefined {
-  if (headOf(json) !== "ColorData") return undefined;
-  const { positional, options } = splitOptions(json, new Set(["Band", "Padding", "Reverse"]));
-  const [name, value] = positional;
-  if (value === undefined) return undefined;
-  let gradient = gradientNamed(stringOf(name));
-  if (options.get("Reverse") === "True") gradient = reverseGradient(gradient);
-  const padding = PADDINGS[stringOf(options.get("Padding")) ?? ""];
-  const mode: BandMode = padding ?? (gradient.cyclic ? "wrap" : "reflect");
-  return { gradient, value, band: numberOf(options.get("Band"), 10), mode };
+  if (headOf(json) !== "Apply") return undefined;
+  const [fn, value] = argsOf(json);
+  if (headOf(fn) !== "ColorData" || value === undefined) return undefined;
+  const [spec] = argsOf(fn);
+  const parts = headOf(spec) === "List" ? argsOf(spec) : [spec];
+  let gradient = gradientNamed(stringOf(parts[0]));
+  let [offset, band] = [0, 1];
+  let mode: BandMode | undefined;
+  for (const part of parts.slice(1)) {
+    const word = stringOf(part);
+    if (word === "Reverse") gradient = reverseGradient(gradient);
+    else if (word !== undefined && word in PADDINGS) mode = PADDINGS[word];
+    else if (headOf(part) === "List") {
+      const [lo, hi] = argsOf(part).map((v) => numberOf(v, Number.NaN));
+      if (Number.isFinite(lo) && Number.isFinite(hi) && hi! > lo!) [offset, band] = [lo!, hi! - lo!];
+    } else return undefined;
+  }
+  return { gradient, value, offset, band, mode: mode ?? (gradient.cyclic ? "wrap" : "clamp") };
 }
 
 /** A paint and its opacity from a color, a scheme, or `Opacity(a, either)`. */
@@ -391,7 +406,7 @@ export const CANVAS_BLEND: Readonly<Record<ColorMixing, string>> = {
 
 /** The color a scheme gives a value. */
 export const schemeColor = (paint: SchemeColor, value: number, phase = 0): string =>
-  sampleGradient(paint.gradient, bandPosition(value + phase * paint.band, paint.band, paint.mode));
+  sampleGradient(paint.gradient, bandPosition(value - paint.offset + phase * paint.band, paint.band, paint.mode));
 
 type Layer = readonly [color: string, alpha: number];
 

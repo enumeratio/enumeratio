@@ -24,7 +24,7 @@ $x(x - k) = 1$: $x$ is a root of $x^2 - kx - 1$, a metallic mean of $\mathbb{Z}/
     ArrayPlot(MultiplicationTable(QuotientRing(Integers, _n)),
       ColorRules -> [
         IsOne -> White,
-        IsUnit -> ColorData("dusk", Order, Band -> 12),
+        IsUnit -> ColorData(["Dusk", [1, 12]])(Order),
         IsIdempotent && !IsZero -> Gold,
         IsNilpotent && !IsZero -> Red,
         IsZeroDivisor -> Opacity(0.25, Teal),

@@ -169,6 +169,10 @@ export interface LineStyle {
 /** Device pixels per CSS pixel, capped as the canvases are. */
 const dprOf = (): number => Math.min(globalThis.devicePixelRatio || 1, 2);
 
+/** A step per generator, or one for both; 0 draws none along that generator. */
+export type GridStep = number | readonly [number, number];
+const stepAlong = (step: GridStep, axis: 0 | 1): number => (typeof step === "number" ? step : step[axis]);
+
 /**
  * The lines of a coarser lattice: through every `step`-th multiple of each generator (given in
  * lattice coordinates), parallel to the other. With `origin`, only the two lines through 0 (the
@@ -181,7 +185,7 @@ export function drawLatticeLines(
   basis: readonly [Vec2, Vec2],
   generators: readonly [Vec2, Vec2],
   view: LatticeView,
-  step: number,
+  step: GridStep,
   style: LineStyle,
   origin = false,
 ): void {
@@ -202,7 +206,9 @@ export function drawLatticeLines(
     const along = g[1 - axis]!;
     const unit: Vec2 = [along[0] / Math.hypot(...along), along[1] / Math.hypot(...along)];
     const normal: Vec2 = [-unit[1], unit[0]];
-    const stepVec: Vec2 = [g[axis]![0] * step, g[axis]![1] * step];
+    const every = origin ? 1 : stepAlong(step, axis);
+    if (!(every > 0)) continue;
+    const stepVec: Vec2 = [g[axis]![0] * every, g[axis]![1] * every];
     const spacing = stepVec[0] * normal[0] + stepVec[1] * normal[1];
     if (!origin && Math.abs(spacing) * pixels < 6) continue;
     const c = view.center[0] * normal[0] + view.center[1] * normal[1];
@@ -240,7 +246,7 @@ export function drawAxisLabels(
   basis: readonly [Vec2, Vec2],
   generators: readonly [Vec2, Vec2],
   view: LatticeView,
-  step: number,
+  step: GridStep,
   label: (axis: 0 | 1, k: number) => string,
   style: { readonly color: string; readonly halo: string; readonly opacity: number },
 ): void {
@@ -260,14 +266,16 @@ export function drawAxisLabels(
   ctx.globalAlpha = style.opacity;
   for (const axis of [0, 1] as const) {
     const v = g[axis]!;
-    const room = Math.hypot(...v) * step * pixels;
+    const along = stepAlong(step, axis);
+    if (!(along > 0)) continue;
+    const room = Math.hypot(...v) * along * pixels;
     const stride = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000].find((n) => n * room >= LABEL_ROOM * dpr) ?? 1000;
-    const kMax = Math.ceil((reach + Math.hypot(...view.center)) / (Math.hypot(...v) * step));
+    const kMax = Math.ceil((reach + Math.hypot(...view.center)) / (Math.hypot(...v) * along));
     for (let k = -kMax; k <= kMax; k++) {
       if (k === 0 || k % stride !== 0) continue;
-      const [x, y] = toScreen([v[0] * step * k, v[1] * step * k]);
+      const [x, y] = toScreen([v[0] * along * k, v[1] * along * k]);
       if (x < 0 || x > width || y < 0 || y > height) continue;
-      const text = label(axis, k * step);
+      const text = label(axis, k * along);
       ctx.lineWidth = 3 * dpr;
       ctx.strokeStyle = style.halo;
       ctx.strokeText(text, x, y);

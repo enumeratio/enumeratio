@@ -96,7 +96,7 @@ interface ShowSpec {
   readonly colorMixing: ColorMixing;
   /** Rules whose test or style didn't read. */
   readonly unread: number;
-  readonly grid?: { readonly step: number; readonly style: LineStyle };
+  readonly grid?: { readonly step: readonly [number, number]; readonly style: LineStyle };
   readonly axes?: { readonly style: LineStyle; readonly ticks: boolean };
   readonly aspect: "Uniform" | "True";
 }
@@ -129,13 +129,15 @@ function specOf(json: Json): ShowSpec {
     colorMixing = colorMixingOf(split.options.get("ColorMixing"));
     unread = colors.unread + edges.unread;
   }
-  // `GridLines -> n` (ours) draws a line every n units of the frame; `Automatic` every GRID_STEP.
+  // `GridLines -> [x, y]`: a line every x units along the frame's first axis and every y along
+  // its second (a lattice frame's are 1 and ω), `None` or 0 for none; `Automatic` every GRID_STEP.
   const gridLines = options.get("GridLines");
-  const step = gridLines === "Automatic" ? GRID_STEP : numberOf(gridLines, 0);
-  const grid =
-    step > 0
-      ? { step, style: lineStyleOf(options.get("GridLinesStyle"), { color: "#ffffff", width: 1, opacity: 0.16 }) }
-      : undefined;
+  const specs =
+    headOf(gridLines) === "List" ? argsOf(gridLines) : gridLines === "Automatic" ? [gridLines, gridLines] : [];
+  const step = specs.slice(0, 2).map((g) => (g === "Automatic" ? GRID_STEP : numberOf(g, 0))) as [number, number];
+  const grid = step.some((k) => k > 0)
+    ? { step, style: lineStyleOf(options.get("GridLinesStyle"), { color: "#ffffff", width: 1, opacity: 0.16 }) }
+    : undefined;
   const axes =
     options.get("Axes") === "True"
       ? {
@@ -172,7 +174,7 @@ interface Override {
  * order-free `"Screen"`, `"Add"` and `"Multiply"`), and `BoundaryStyle -> [test -> directive, …]`
  * draws their edges, nested in rule order.
  *
- * - `GridLines -> 10` (every 10 units of the frame, which for a hexagonal ring is rhombic),
+ * - `GridLines -> [10, 10]` (every 10 units along each axis of the frame: rhombic for a hexagonal ring),
  *   `GridLinesStyle`, `Axes -> True`, `AxesStyle`, `Ticks -> None`, and
  *   `AspectRatio -> Automatic` for true scale.
  * - Its wildcards (`_d`) are the variables of the scope it sits in: the nearest element declaring
@@ -459,7 +461,7 @@ export class NotatioShow extends LitElement {
           layer.basis,
           layer.grid,
           this.#view,
-          spec.grid?.step ?? GRID_STEP,
+          spec.grid?.step ?? [GRID_STEP, GRID_STEP],
           (axis, k) => layer.gridLabel(axis, k),
           { color: style.color, halo: ground.background, opacity: Math.min(1, style.opacity + 0.3) },
         );
@@ -640,13 +642,14 @@ export class NotatioShow extends LitElement {
 
   /** A scheme rule's bar, which opens the schemes, with its padding and a reverse. */
   #bar(rule: ColorRule, scheme: SchemeColor, k: number): unknown {
-    const { mode, band } = scheme;
+    const { mode, band, offset } = scheme;
+    const at = (k: number): string => String(+(offset + k * band).toPrecision(6));
     const ticks =
       mode === "reflect"
-        ? [`0, ${2 * band}, …`, `${band}, ${3 * band}, …`]
+        ? [`${at(0)}, ${at(2)}, …`, `${at(1)}, ${at(3)}, …`]
         : mode === "wrap"
-          ? [`0, ${band}, …`, ""]
-          : ["0", `${band} and past`];
+          ? [`${at(0)}, ${at(1)}, …`, ""]
+          : [`${at(0)} and below`, `${at(1)} and past`];
     const next = BAND_MODES[(BAND_MODES.indexOf(mode) + 1) % BAND_MODES.length]!;
     return html`<li class="notatio-legend-gradient">
       <span class="notatio-legend-label">${rule.label}</span>
