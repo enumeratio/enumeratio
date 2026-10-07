@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import { FAVORITES, NOTABLE } from "../src/examples.ts";
-import { radixLattice } from "../src/radix-lattice.ts";
+import { exampleOf, exampleSettings, radixExpansions, randomSettings } from "../src/radix-layer.ts";
 import {
   expansions,
   formatSettings,
@@ -68,31 +68,31 @@ describe("notable systems", () => {
 });
 
 describe("radix layer", () => {
-  it("draws the twindragon locked, and the same count unlocked", () => {
-    const locked = radixLattice({ example: "twindragon" });
-    expect(locked.kind).toBe("lattice");
-    expect(locked.points().length).toBe(2 ** 12);
-    locked.setControl("locked", "false");
-    expect(locked.kind).toBe("points");
-    expect(locked.points().length).toBe(2 ** 12);
+  it("draws the twindragon on the lattice, and the same numerals off it", () => {
+    const twindragon = exampleSettings("twindragon")!;
+    const on = radixExpansions(twindragon);
+    expect("points" in on).toBe(false);
+    expect(on.value(0, 0, "Places")).toBe(0);
+    expect(on.has(1, 0, "IsDigit")).toBe(true);
+    const off = radixExpansions({ ...twindragon, onLattice: false });
+    expect(off.points!().length).toBe(2 ** 12);
+    // Off the lattice, element (n, 0) is the n-th numeral: n = 3 is 11, so 1 + β.
+    expect(off.describe(3, 0).title).toBe("i");
   });
 
-  it("names the example it shows, and 'custom' once edited", () => {
-    const layer = radixLattice({ example: "gosper-island" });
-    const choice = () =>
-      layer
-        .caption()
-        .find((p): p is { choice: string; value: string; options: never } => typeof p === "object" && "choice" in p)!;
-    expect(choice().value).toBe("gosper-island");
-    layer.setControl("add", "");
-    expect(choice().value).toBe("custom");
-    layer.setControl("example", "twindragon");
-    expect(choice().value).toBe("twindragon");
+  it("names the example its settings are, and 'Custom' once edited", () => {
+    const gosper = exampleSettings("gosper-island")!;
+    expect(exampleOf(gosper)).toBe("gosper-island");
+    expect(exampleOf({ ...gosper, digits: gosper.digits.slice(1) })).toBe("Custom");
+    expect(exampleOf({ ...gosper, onLattice: false })).toBe("Custom");
   });
 
-  it("keeps max length within the point budget as digits are added", () => {
-    const layer = radixLattice({ example: "twindragon" });
-    for (let k = 0; k < 6; k++) layer.setControl("add", "");
-    expect(layer.points().length).toBeLessThanOrEqual(RADIX_LIMIT);
+  it("draws random systems with one digit per residue class, within the point budget", () => {
+    for (let k = 0; k < 10; k++) {
+      const s = randomSettings();
+      const layer = radixExpansions(s);
+      expect(layer.has(0, 0, "Overlaps")).toBe(false);
+      expect((s.digits.length + 1) ** s.places).toBeLessThanOrEqual(RADIX_LIMIT);
+    }
   });
 });

@@ -1,21 +1,23 @@
 import { describe, expect, it } from "vite-plus/test";
-import { CELL, quadraticLattice } from "../src/quadratic-lattice.ts";
+import { type QuadraticLattice, quadraticLattice } from "../src/quadratic-lattice.ts";
 import { classify, quadraticRing } from "../src/quadratic.ts";
 
-const CODES = {
-  composite: CELL.composite,
-  prime: CELL.prime,
-  irreducible: CELL.irreducible,
-  unit: CELL.unit,
-  zero: CELL.zero,
-};
+/** What the layer says (i, j) is, in the kernel's words: `prime`, `irreducible`, …, or undefined. */
+function kindOf(layer: QuadraticLattice, i: number, j: number): string | undefined {
+  layer.prepare(i, j);
+  if (layer.has(i, j, "Unknown")) return undefined;
+  if (layer.has(i, j, "IsZero")) return "zero";
+  if (layer.has(i, j, "IsUnit")) return "unit";
+  if (layer.has(i, j, "IsPrime")) return "prime";
+  if (layer.has(i, j, "IsIrreducible")) return "irreducible";
+  return "composite";
+}
 
 describe("quadratic lattice layer", () => {
   it("classifies on doubles as the bigint kernel does", () => {
     for (const d of [-1, -3, -5, -14, -23, 2, 10, 79, 82]) {
       const layer = quadraticLattice(d)!;
       const R = quadraticRing(BigInt(d))!;
-      const kind = layer.colorings[0]!;
       // A window near the origin, and one far out where norms pass 2³².
       for (const [ci, cj] of [
         [0, 0],
@@ -24,7 +26,7 @@ describe("quadratic lattice layer", () => {
         for (let i = ci - 6; i <= ci + 6; i++) {
           for (let j = cj - 6; j <= cj + 6; j++) {
             const exact = classify(R, [BigInt(i), BigInt(j)]);
-            expect([d, i, j, kind.code(i, j)]).toEqual([d, i, j, exact === undefined ? CELL.unknown : CODES[exact]]);
+            expect([d, i, j, kindOf(layer, i, j)]).toEqual([d, i, j, exact]);
           }
         }
       }
@@ -48,7 +50,7 @@ describe("quadratic lattice properties, for a figure's queries", () => {
       const R = quadraticRing(BigInt(d))!;
       for (let i = -5; i <= 5; i++) {
         for (let j = -5; j <= 5; j++) {
-          layer.colorings[0]!.code(i, j);
+          layer.prepare(i, j);
           const kind = classify(R, [BigInt(i), BigInt(j)]);
           expect([d, i, j, layer.has(i, j, "IsPrime")]).toEqual([d, i, j, kind === "prime"]);
           expect(layer.has(i, j, "IsIrreducible")).toBe(kind === "prime" || kind === "irreducible");
@@ -69,7 +71,7 @@ describe("quadratic lattice properties, for a figure's queries", () => {
     ];
     for (const [i, j] of associates) expect(gaussian.relatedTo("Associates", [1, 1], i!, j!)).toBe(true);
     expect(gaussian.relatedTo("Associates", [1, 1], 2, 0)).toBe(false);
-    gaussian.colorings[0]!.code(1, 1);
+    gaussian.prepare(1, 1);
     expect(gaussian.relatedTo("IrreducibleFactors", [2, 0], 1, 1)).toBe(true);
     expect(gaussian.relatedTo("Multiples", [1, 1], 2, 0)).toBe(true);
   });

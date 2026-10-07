@@ -827,6 +827,7 @@ export class NotatioShow extends LitElement {
 
   /** Select a point: alone, or — with shift or ⌘ — added to (or taken from) the selection. */
   #select(point: Vec2, extend: boolean): void {
+    if (!point.every(Number.isFinite)) return;
     const key = (p: Vec2) => `${p[0]},${p[1]}`;
     const has = this._selection.some((p) => key(p) === key(point));
     if (!this.#selectionName && !this.#options.has("Selection")) return;
@@ -887,6 +888,7 @@ export class NotatioShow extends LitElement {
     const layer = this.#layer;
     if (!layer || e.buttons !== 0) return;
     const [i, j] = this.#elementAt(this.#planeAt(e.clientX, e.clientY));
+    if (!Number.isFinite(i) || !Number.isFinite(j)) return;
     const { bounds } = layer;
     const outside = bounds && (i < bounds.i[0] || i > bounds.i[1] || j < bounds.j[0] || j > bounds.j[1]);
     const r = (e.currentTarget as HTMLElement).getBoundingClientRect();

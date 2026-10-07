@@ -1389,8 +1389,7 @@ notatio-worksheet {
 /* --- Engaged plots: focused, the wheel zooms them (gestures.ts); the ring says so -------- */
 .notatio-plot-box:focus,
 .notatio-polytope-box:focus,
-.notatio-complex-plot-stage canvas:focus,
-.notatio-lattice .notatio-frame-stage canvas:focus {
+.notatio-complex-plot-stage canvas:focus {
   outline: 2px solid color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
   outline-offset: -2px;
 }
@@ -1576,107 +1575,6 @@ notatio-show {
 }
 .notatio-stepper:focus-visible { box-shadow: 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 40%, transparent); border-radius: 3px; }
 .notatio-stepper-value { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--vp-c-brand-1, #3451b2); }
-
-/* --- Lattice plot ----------------------------------------------------------------------- */
-notatio-lattice-plot {
-  display: flex;
-  flex-direction: column;
-}
-.notatio-lattice {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-height: 0;
-  margin: 1.25rem 0;
-  border: 1px solid var(--vp-c-divider, #ddd);
-  border-radius: 10px;
-  /* Visible, so the color menu and tooltips can reach past the plot's edge. */
-  overflow: visible;
-  background: var(--vp-c-bg-soft, #f6f6f7);
-  font-size: 0.8rem;
-}
-.notatio-lattice-toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 0.45rem 0.8rem;
-  border-bottom: 1px solid var(--vp-c-divider, #ddd);
-  color: var(--vp-c-text-2, #555);
-}
-.notatio-lattice-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem 0.9rem;
-}
-.notatio-lattice-toolbar button,
-.notatio-lattice-toolbar select,
-.notatio-lattice-toolbar input[type="number"],
-.notatio-lattice-toolbar input[type="text"],
-.notatio-lattice-limit button {
-  border: 1px solid var(--vp-c-divider, #ddd);
-  background: var(--vp-c-bg, #fff);
-  color: var(--vp-c-text-1, #222);
-  font: inherit;
-  padding: 0.15rem 0.5rem;
-  border-radius: 6px;
-}
-.notatio-lattice-toolbar button { cursor: pointer; }
-.notatio-lattice-toolbar input[type="number"] { width: 4.5em; }
-.notatio-lattice-field {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-.notatio-lattice-code { flex: 1 1 20rem; }
-.notatio-lattice-code input { flex: 1 1 auto; min-width: 10rem; font-family: var(--notatio-mono, ui-monospace, monospace); }
-.notatio-lattice-sweep {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-.notatio-lattice-sweep strong,
-.notatio-lattice-title {
-  min-width: 5.5em;
-  text-align: center;
-  font-size: 0.95rem;
-  color: var(--vp-c-text-1, #222);
-}
-.notatio-lattice .notatio-frame-stage canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  touch-action: none;
-  cursor: grab;
-  outline: none;
-}
-.notatio-lattice .notatio-frame-stage canvas:active { cursor: grabbing; }
-.notatio-lattice .notatio-frame-stage canvas:focus-visible {
-  box-shadow: inset 0 0 0 2px var(--vp-c-brand-1, #3451b2);
-}
-.notatio-lattice-limit {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--vp-c-bg, #fff) 88%, transparent);
-  color: var(--vp-c-text-2, #555);
-}
-.notatio-lattice-status {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  margin: 0;
-  color: #cbd5e1;
-}
-.is-full-window .notatio-lattice {
-  margin: 0;
-  border-radius: 0;
-}
 
 /* --- Reactive prose, after Tangle ------------------------------------------------
    The controls sit INSIDE a sentence, so everything here is inline and must not
