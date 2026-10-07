@@ -95,6 +95,18 @@ const INTEGERS: readonly number[] = [3, 5, 4, 7, 6, 8];
 
 const NUMBER_OF_TRIALS = 3;
 
+/** What the check prints when its samples are not numbers because an answer is no value to sample (a
+ * function, a rule, a call the kernel declined): the plain comparison decides instead. */
+export const NOT_NUMERIC = "NotNumeric";
+
+const SERIES_HEADS = new Set(["Series", "SeriesData", "BigO"]);
+
+/** Whether `expr` asks for or holds a series. */
+const involvesSeries = (expr: MathJSON): boolean =>
+  Array.isArray(expr) &&
+  typeof expr[0] === "string" &&
+  (SERIES_HEADS.has(expr[0]) || expr.slice(1).some((operand) => involvesSeries(operand as MathJSON)));
+
 /** Seconds the kernel may spend simplifying a difference before the numeric trials take over. */
 export const SYMBOLIC_SECONDS = 10;
 
@@ -436,7 +448,7 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
         (e.length === asked.length &&
           e.slice(1).every((x, i) => sameValue(x as MathJSON, asked[i + 1] as MathJSON))))) ||
       e.slice(1).some((x) => visit(x as MathJSON)));
-  return visit(expected) || holdsAppliedCall(call, expected);
+  return visit(expected) || holdsAppliedCall(call, expected) || holdsKernelCall(call, expected);
 }
 
 /** Heads whose job is to rewrite their argument's form. */
@@ -476,6 +488,26 @@ function seriesOfNormal(expr: MathJSON): MathJSON {
   const [head, operand] = expr;
   if (head === "Normal" && Array.isArray(operand) && operand[0] === "Series") return operand;
   return WRAPPERS.has(head as string) ? ([head, seriesOfNormal(operand as MathJSON)] as MathJSON) : expr;
+}
+
+/** Heads whose call the kernel evaluates but ours may keep held, in whatever form. */
+const KERNEL_CALLS = new Set(["Integrate", "Sum", "Product", "Limit", "Solve"]);
+
+/**
+ * Whether `call` asks for one of the `KERNEL_CALLS` and `expected` still holds a call to it, not
+ * the one asked (ours nests `Integrate(Integrate(…))` where the kernel computes the integral). The
+ * kernel evaluates ours too, so the difference from its own answer is zero whatever the answer is.
+ */
+function holdsKernelCall(call: MathJSON, expected: MathJSON): boolean {
+  const heads = (e: MathJSON, found: Set<string> = new Set()): Set<string> => {
+    if (Array.isArray(e) && typeof e[0] === "string") {
+      if (KERNEL_CALLS.has(e[0])) found.add(e[0]);
+      e.slice(1).forEach((operand) => heads(operand as MathJSON, found));
+    }
+    return found;
+  };
+  const asked = heads(call);
+  return asked.size > 0 && [...heads(expected)].some((head) => asked.has(head));
 }
 
 /** Heads that only arrange or bind an answer: a call to one of these is not a function left undone. */
@@ -736,6 +768,13 @@ export function symbolicAgreementSource(
   const trials = Array.from({ length: NUMBER_OF_TRIALS }, (_, trial) =>
     trialSources(system, expr, expected, freeSymbols, trial),
   );
+  // Samples that are not numbers leave it undecided, unless an answer is no value to sample: a function or
+  // a rule, or a call the kernel declined with a message. Not a series, which stays undecided.
+  const unsampled =
+    [expr, expected].some(involvesSeries) || trials.some((t) => t?.stepped)
+      ? "Indeterminate"
+      : `Module[{v = Quiet[Check[TimeConstrained[{${theirsSource}, ${ours.source}}, ${symbolicSeconds}, $Aborted], $Failed]]}, ` +
+        `If[v === $Failed || !FreeQ[v, _Function | _Rule | _RuleDelayed | _Unevaluated], ${NOT_NUMERIC}, Indeterminate]]`;
   if (system === "wolfram") {
     const points = trials.map((t) => {
       if (t === undefined) return "Indeterminate";
@@ -771,12 +810,16 @@ export function symbolicAgreementSource(
       `Cases[Quiet[TimeConstrained[${theirsSource}, ${symbolicSeconds}, $Aborted]], _SeriesData, {0, Infinity}]], Infinity]]; ` +
       `AllTrue[Flatten[{d}], # === 0 || (pureO[#] && #[[5]]/#[[6]] >= bound) &])), ` +
       `True, Module[{s = {${points.join(", ")}}}, ` +
-      `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], Indeterminate]]]]`
+      `s = Flatten[s]; If[AllTrue[s, NumericQ], AllTrue[s, # == 0 &], ${unsampled}]]]]`
     );
   }
   const points = trials.map((t) => (t === undefined ? "None" : `(${t.theirs}, ${t.ours})`));
   return `enumeratio_symbolic_agree(${theirs.source}, ${ours.source}, [${points.join(", ")}])`;
 }
+
+/** Whether `text`, a symbolic check's printed answer, says it could not sample the answers as numbers
+ * (`NOT_NUMERIC`): the plain comparison should decide instead. */
+export const notNumeric = (text: string): boolean => text.trim() === NOT_NUMERIC;
 
 /** `symbolicAgreementSource`'s printed answer, read back as a verdict: `True`/`False` from
  * either lane, or `Indeterminate`/`None` when neither the simplifier nor the substitution
