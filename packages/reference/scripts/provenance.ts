@@ -38,6 +38,7 @@ export interface HeadProvenance {
   readonly declared: string | undefined;
   /** Whether the computed answer agrees with the claim. */
   readonly agrees: boolean;
+  /** The first divergence found, for an override; empty otherwise. */
   readonly divergences: readonly Divergence[];
 }
 
@@ -179,7 +180,13 @@ export const bareUnderstands = (bare: ComputeEngine, expr: MathJSON): boolean =>
  * variables can survive to change how the NEXT one, or a different corpus reusing the same
  * engines, gets evaluated.
  */
-export function divergences(bare: ComputeEngine, ours: ComputeEngine, corpus: readonly MathJSON[]): Divergence[] {
+export function divergences(
+  bare: ComputeEngine,
+  ours: ComputeEngine,
+  corpus: readonly MathJSON[],
+  /** Stop at the first divergence: enough to know THAT a corpus diverges, and far cheaper. */
+  { first = false }: { first?: boolean } = {},
+): Divergence[] {
   const out: Divergence[] = [];
   for (const expression of corpus) {
     if (!bareUnderstands(bare, expression)) continue;
@@ -189,6 +196,7 @@ export function divergences(bare: ComputeEngine, ours: ComputeEngine, corpus: re
     const after = isolateFreeSymbols(ours, expression, () => evaluated(ours, expression));
     if (JSON.stringify(before) !== JSON.stringify(after)) {
       out.push({ expression, bare: before, ours: after });
+      if (first) break;
     }
   }
   return out;
@@ -225,7 +233,8 @@ export function classify(bare: ComputeEngine, ours: ComputeEngine, entry: Refere
     };
   }
   // Native. Does declaring our libraries change what it answers?
-  const changed = divergences(bare, ours, calls);
+  // One diverging example makes it an override; only a head that never diverges pays for them all.
+  const changed = divergences(bare, ours, calls, { first: true });
   const provenance = changed.length > 0 ? "override" : "compute-engine";
   return {
     name: entry.name,
