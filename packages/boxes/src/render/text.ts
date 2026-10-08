@@ -124,6 +124,8 @@ class Writer {
         return `{${box[1].map((r) => `{${r.map((b) => this.write(b)).join(", ")}}`).join(", ")}}`;
       case "StyleBox":
       case "FrameBox":
+      case "PanelBox":
+      case "PaneBox":
       case "TagBox":
       case "InterpretationBox":
       case "ErrorBox":

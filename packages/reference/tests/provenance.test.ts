@@ -1138,6 +1138,8 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "OverscriptBox",
     "PadLeft",
     "PadRight",
+    "PaneBox",
+    "PanelBox",
     "PartitionsQ",
     "PascalBinomial",
     "PathGraph",

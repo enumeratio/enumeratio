@@ -1449,7 +1449,7 @@ notatio-worksheet {
 /* --- Figure: layers in one frame, each a canvas, blended with screen ------------------ */
 /* A plot takes its container's width, in a flex row (a story's canvas) as in a block, and so
    does the output element a page's markup wraps it in. */
-notatio-out:has(> notatio-show, > notatio-labeled > notatio-show) {
+notatio-out:has(> notatio-show, > [data-head="Labeled"] > notatio-show) {
   flex: 1 1 100%;
   min-width: 0;
 }
@@ -2019,11 +2019,23 @@ notatio-locator { display: contents; }
 notatio-out.notatio-generic-out { display: inline; }
 notatio-out.notatio-generic-out > * { display: inline; }
 
-/* --- layout: Row, Column, Grid, Panel, Labeled ---------------------------------- */
-notatio-row { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.6em; vertical-align: middle; }
-notatio-column { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 0.5em; vertical-align: top; }
-notatio-grid { display: inline-grid; gap: 0.4em 0.8em; align-items: center; vertical-align: top; }
-notatio-panel {
+/* --- layout boxes: Row, Column, Grid, Panel, Labeled ------------------------------------
+   Plain DOM from the box renderer (box-render.ts): data-box is the box, data-head the
+   head the author wrote. A Labeled is a one-row or two-row grid; the renderer puts the
+   label's cell where it goes, so no ordering is needed here. */
+[data-box="RowBox"] { display: contents; }
+[data-box="GridBox"] { display: inline-grid; gap: 0.4em 0.8em; align-items: center; vertical-align: top; }
+[data-head="Row"] { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.6em; vertical-align: middle; }
+[data-head="Column"] { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 0.5em; vertical-align: top; }
+[data-head="Column"], [data-head="Labeled"] { grid-template-columns: none; }
+[data-box="GridBox"][data-frame] { border: 1px solid var(--vp-c-divider, #e2e2e3); }
+[data-box="GridBox"][data-dividers] {
+  gap: 1px;
+  background: var(--vp-c-divider, #e2e2e3);
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+}
+[data-box="GridBox"][data-dividers] > * { background: var(--vp-c-bg, #fff); padding: 0.2em 0.4em; }
+[data-box="PanelBox"] {
   display: inline-block;
   padding: 0.6em 0.9em;
   border: 1px solid var(--vp-c-divider, #e2e2e3);
@@ -2031,16 +2043,15 @@ notatio-panel {
   background: var(--vp-c-bg-soft, #f6f6f7);
   vertical-align: top;
 }
-notatio-labeled { display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; }
-notatio-labeled[position="before"] .notatio-label { order: -1; }
-notatio-labeled[position="above"],
-notatio-labeled[position="below"] { flex-direction: column; align-items: flex-start; gap: 0.15em; }
+[data-box="FrameBox"] { display: inline-block; padding: 0.15em 0.3em; border: 1px solid currentColor; vertical-align: middle; }
+[data-box="PaneBox"] { display: inline-block; overflow: hidden; vertical-align: top; }
+[data-box="PaneBox"][data-scrollbars] { overflow: auto; }
+[data-head="Labeled"] { display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; }
+[data-head="Labeled"][data-rows="2"] { flex-direction: column; align-items: flex-start; gap: 0.15em; }
 /* A plot with a caption: the plot takes the width, the caption reads as a paragraph under it. */
-notatio-labeled:has(> notatio-show) { display: flex; gap: 0.5rem; }
-notatio-labeled > notatio-show { align-self: stretch; }
-notatio-labeled:has(> notatio-show) { text-align: start; }
-notatio-labeled:has(> notatio-show) > notatio-string-template { display: block; line-height: 1.7; }
-notatio-labeled[position="above"] .notatio-label { order: -1; }
+[data-head="Labeled"]:has(> notatio-show) { display: flex; gap: 0.5rem; text-align: start; }
+[data-head="Labeled"] > notatio-show { align-self: stretch; }
+[data-head="Labeled"]:has(> notatio-show) > notatio-string-template { display: block; line-height: 1.7; }
 .notatio-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }
 
 /* A prose control panel: a paragraph like the ones around it, set off only by

@@ -24,6 +24,8 @@ export type BoxNode =
   | readonly ["GridBox", readonly (readonly Box[])[], Options?]
   | readonly ["StyleBox", Box, Options]
   | readonly ["FrameBox", Box, Options?]
+  | readonly ["PanelBox", Box, Options?]
+  | readonly ["PaneBox", Box, Options?]
   | readonly ["TagBox", Box, string, Options?]
   | readonly ["InterpretationBox", Box, MathJsonExpression, Options?]
   | readonly ["ErrorBox", Box]
@@ -66,6 +68,8 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   GridBox: 1,
   StyleBox: 1,
   FrameBox: 1,
+  PanelBox: 1,
+  PaneBox: 1,
   TagBox: 2,
   InterpretationBox: 2,
   ErrorBox: 1,
@@ -121,6 +125,8 @@ export const grid = (rows: readonly (readonly Box[])[], options?: Options): Box 
   ["GridBox", ...withOptions([rows] as const, options)] as Box;
 export const style = (box: Box, options: Options): Box => ["StyleBox", box, options];
 export const frame = (box: Box, options?: Options): Box => ["FrameBox", ...withOptions([box] as const, options)] as Box;
+export const panel = (box: Box, options?: Options): Box => ["PanelBox", ...withOptions([box] as const, options)] as Box;
+export const pane = (box: Box, options?: Options): Box => ["PaneBox", ...withOptions([box] as const, options)] as Box;
 export const tag = (box: Box, name: string): Box => ["TagBox", box, name];
 export const interpretation = (box: Box, expr: MathJsonExpression): Box => ["InterpretationBox", box, expr];
 export const error = (box: Box): Box => ["ErrorBox", box];

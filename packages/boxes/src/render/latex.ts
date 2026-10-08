@@ -244,7 +244,10 @@ function writeNode(box: BoxNode): string {
       return s;
     }
     case "FrameBox":
+    case "PanelBox":
       return `\\boxed{${write(box[1])}}`;
+    case "PaneBox":
+      return write(box[1]);
     case "TagBox":
     case "InterpretationBox":
       return write(box[1]);

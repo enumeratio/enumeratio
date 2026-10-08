@@ -17,3 +17,5 @@ names:
 
 - Rows are lists of boxes, as in Wolfram's `GridBox[{{…}, …}]`.
 - MathML's `mtable`.
+- Layout reads `ColumnAlignments`, `ColumnSpacings`, `RowSpacings`, `GridBoxFrame` and `GridBoxDividers`; a cell that is `SpanFromLeft` (or `SpanFromAbove`) continues the cell beside (above) it.
+- `Column`, `Grid` and `Labeled` lower to a `GridBox` in a `TagBox` that names the head.

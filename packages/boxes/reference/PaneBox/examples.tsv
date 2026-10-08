@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[PaneBox, "'x'", [Tuple, ImageSize, 200]]	[PaneBox, "'x'", [Tuple, ImageSize, 200]]	a box is inert: it evaluates to itself

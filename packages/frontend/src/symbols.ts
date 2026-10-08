@@ -1,7 +1,9 @@
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import { LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
 import { FRAME_HEIGHT, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
+import { renderBox } from "./box-render.ts";
 import { plainJson } from "./graphics-rules.ts";
 import { GRADIENTS } from "./palettes.ts";
 import type { ScaleName } from "./scales.ts";
@@ -829,21 +831,6 @@ export const CONTROL_HEADS = new Set(CONTROL_SYMBOLS.filter((c) => c.head !== "D
 
 // --- layout ---------------------------------------------------------------------------
 
-/** A layout head's operands render as its children; a list is spread. */
-const layout = (head: string, tag: string): VisualSymbol => ({
-  head,
-  tag,
-  attributes: () => ({}),
-  children: (ops) => (ops.length === 1 ? (tupleOf(ops[0]) ?? [ops[0]]) : [...ops]),
-});
-
-const LABEL_POSITIONS: Readonly<Record<string, string>> = {
-  Top: "above",
-  Bottom: "below",
-  Left: "before",
-  Right: "after",
-};
-
 /** A form's name as the cell's `in-form` / `out-form` take it: `TeXForm` is `tex`. */
 const FORM_IDS: Readonly<Record<string, string>> = {
   StandardForm: "standard",
@@ -948,38 +935,6 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
         expect: JSON.stringify(value, (key, v: unknown) => (key === "sourceOffsets" ? undefined : v)),
       }),
     },
-  },
-  layout("Row", "notatio-row"),
-  layout("Column", "notatio-column"),
-  {
-    // `Grid([[a, b], [c, d]])`: the rows' lengths give the columns, the cells the children.
-    head: "Grid",
-    tag: "notatio-grid",
-    attributes: (ops) => {
-      const rows = tupleOf(ops[0]) ?? [];
-      const width = Math.max(1, ...rows.map((r) => tupleOf(r)?.length ?? 1));
-      return { columns: String(width) };
-    },
-    children: (ops) => (tupleOf(ops[0]) ?? []).flatMap((r) => tupleOf(r) ?? [r]),
-  },
-  layout("Panel", "notatio-panel"),
-  {
-    // `Labeled(body, label, Bottom)`: Wolfram's third argument places the label. A label that
-    // is text is an attribute; one that is an expression (a `StringTemplate`) is a child after
-    // the body.
-    head: "Labeled",
-    tag: "notatio-labeled",
-    attributes: (ops): Record<string, string> => {
-      const out: Record<string, string> = {};
-      const label = ops[1];
-      const text =
-        label === undefined ? undefined : (strOf(label) ?? (headOf(label) === undefined ? epsil(label) : undefined));
-      if (text !== undefined) out.label = text;
-      const position = LABEL_POSITIONS[symOf(ops[2]) ?? ""];
-      if (position !== undefined) out.position = position;
-      return out;
-    },
-    children: (ops) => [ops[0], headOf(ops[1]) === undefined ? undefined : ops[1]].filter((op) => op !== undefined),
   },
   {
     // `StringTemplate("… {_d} …")`: Wolfram's template, with Epsil holes over the variables of
@@ -1122,6 +1077,11 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   // A string in a layout is a run of text, not a thing to typeset.
   const text = strOf(expr);
   if (text !== undefined && inScope) return { tag: "span", attributes: {}, text };
+  if (head !== undefined && LAYOUT_HEADS.has(head))
+    return layoutRendering(
+      expr,
+      (node) => render(node, true) ?? { tag: "notatio-dynamic", attributes: { value: epsil(node) } },
+    );
   const found = head === undefined ? undefined : BY_HEAD.get(head);
   const symbol = found?.when?.(opsOf(expr)) === false ? undefined : found;
   if (symbol === undefined) {
@@ -1150,6 +1110,40 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
     ...lowered.children,
   ];
   return children.length === 0 ? { tag: symbol.tag, attributes } : { tag: symbol.tag, attributes, children };
+}
+
+/**
+ * `Row`, `Column`, `Grid`, `Panel` and `Labeled` are boxes, not elements: `makeBoxes` writes
+ * them, and what an entry is (a control, a plot, a readout of an expression) is a hole the
+ * boxes leave for the page to fill with that entry's own rendering (`fill`).
+ */
+export function layoutRendering(expr: Json, fill: (entry: Json) => Rendering): Rendering {
+  const holes: Record<string, Rendering> = {};
+  const box = makeBoxes(
+    expr as never,
+    {},
+    {
+      leaf: (node) => {
+        const head = headOf(node);
+        if (head !== undefined && LAYOUT_HEADS.has(head)) return undefined;
+        const name = String(Object.keys(holes).length);
+        holes[name] = fill(node);
+        return slot(name);
+      },
+    },
+  );
+  // An option the boxes don't take (`Variables`, which declares a scope) is the root's attribute, as for any head.
+  const rest = Object.fromEntries(
+    Object.entries(optionsOf(expr).options).filter(([name]) => !LAYOUT_OPTIONS.has(name)),
+  );
+  const drawn = renderBox(box, holes);
+  if (Object.keys(rest).length === 0) return drawn;
+  const lowered = lowerOptions(undefined, rest);
+  return {
+    ...drawn,
+    attributes: { ...drawn.attributes, ...lowered.attributes },
+    children: [...(drawn.children ?? []), ...lowered.children],
+  };
 }
 
 /** `ImageSize -> [w, h]`'s h among `Show`'s held options, else the element's default height. */

@@ -25,6 +25,7 @@ import {
 } from "./box.ts";
 import { fromMathJson } from "./json.ts";
 import { ENGINE_NOTATION } from "./notation-engine.ts";
+import { LAYOUT_NOTATION } from "./notation-layout.ts";
 import type { Notation, Writer } from "./notation.ts";
 
 // Binding strength, loosest to tightest. A node binding at `ATOM` never needs parens.
@@ -605,7 +606,12 @@ function makeFunction(head: string, ops: unknown[]): Made {
   }
 }
 
+/** What a host draws itself: boxes for a sub-expression (a figure, a readout), or undefined to write it. */
+let hostLeaf: ((json: MathJsonExpression) => Box | undefined) | undefined;
+
 function make(node: unknown): Made {
+  const drawn = hostLeaf?.(node as MathJsonExpression);
+  if (drawn !== undefined) return atom(drawn);
   const head = headOf(node);
   if (head !== undefined) return makeFunction(head, opsOf(node));
 
@@ -622,12 +628,22 @@ function make(node: unknown): Made {
 
 /** `json`'s traditional notation, as boxes: compute-engine's heads as this package writes them,
  *  every other head as `notation` (its packages', `notationOf(engine)`) says, or as a call. */
-export function makeBoxes(json: MathJsonExpression, extra: Notation = {}): Box {
-  const outer = notation;
-  notation = { ...ENGINE_NOTATION, ...extra };
+export function makeBoxes(json: MathJsonExpression, extra: Notation = {}, options: MakeOptions = {}): Box {
+  const outer = [notation, hostLeaf] as const;
+  notation = { ...ENGINE_NOTATION, ...LAYOUT_NOTATION, ...extra };
+  hostLeaf = options.leaf;
   try {
     return make(json).box;
   } finally {
-    notation = outer;
+    [notation, hostLeaf] = outer;
   }
+}
+
+export interface MakeOptions {
+  /**
+   * Consulted for every sub-expression first: the boxes the host draws it as (a figure's
+   * `GraphicsBox`, a hole for a control), or undefined to write it as usual. A layout's
+   * entries are where it matters: the formatters write each through it.
+   */
+  readonly leaf?: (json: MathJsonExpression) => Box | undefined;
 }

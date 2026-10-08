@@ -2,9 +2,11 @@
 // notation extends. The serialisers are presentation, at `@enumeratio/boxes/render`.
 
 export * from "./box.ts";
+export * from "./layout.ts";
 export { BOXES_TYPE, declareBoxes } from "./declare.ts";
 export { BoxFormError, fromMathJson, toMathJson } from "./json.ts";
-export { APPLY_FUNCTION, INVISIBLE_TIMES, makeBoxes } from "./make.ts";
+export { APPLY_FUNCTION, INVISIBLE_TIMES, type MakeOptions, makeBoxes } from "./make.ts";
+export { LAYOUT_HEADS, LAYOUT_NOTATION, LAYOUT_OPTIONS } from "./notation-layout.ts";
 export {
   combineNotation,
   fence,

@@ -11,6 +11,7 @@ import {
   error,
   fraction,
   frame,
+  panel,
   grid,
   interpretation,
   type Options,
@@ -118,7 +119,10 @@ function writeNode(box: BoxNode): string {
     case "StyleBox":
       return element("mstyle", write(box[1]), styleAttrs(box[2]));
     case "FrameBox":
-      return element("mrow", write(box[1]), { "data-box": "FrameBox", style: FRAME_STYLE });
+    case "PanelBox":
+      return element("mrow", write(box[1]), { "data-box": box[0], style: FRAME_STYLE });
+    case "PaneBox":
+      return write(box[1]);
     case "TagBox":
       return element("semantics", write(box[1]) + element("annotation", escape(box[2]), { encoding: TAG_ENCODING }));
     case "InterpretationBox":
@@ -294,6 +298,7 @@ function read(el: XmlElement): Box {
     case "math":
     case "mrow":
       if (el.attrs["data-box"] === "FrameBox") return frame(inferred(el));
+      if (el.attrs["data-box"] === "PanelBox") return panel(inferred(el));
       return el.name === "math" ? inferred(el) : row(elements(el).map(read));
     case "mi":
     case "mn":
