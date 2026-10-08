@@ -171,17 +171,24 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
       };
     },
     // `index` is an ordinality (1-based, negative from the end); the rank is index − 1.
+    // One past 2^53 arrives as its decimal digits, which a number cannot carry.
     at: (c, index) => {
-      if (typeof index !== "number" || !Number.isSafeInteger(index)) return undefined;
+      const ordinal =
+        typeof index === "number" && Number.isSafeInteger(index)
+          ? BigInt(index)
+          : typeof index === "string" && /^-?\d+$/.test(index)
+            ? BigInt(index)
+            : undefined;
+      if (ordinal === undefined) return undefined;
       const p = params(c);
       if (tooBig(p, ["count", "unrank"])) return undefined;
       const total = countAt(p);
       if (total === undefined) return undefined;
       if (typeof total !== "bigint") {
         // No last element to count back from when the count is ∞ or unknown.
-        return index < 1 ? undefined : element(p, BigInt(index - 1));
+        return ordinal < 1n ? undefined : element(p, ordinal - 1n);
       }
-      const i = index < 0 ? total + BigInt(index) + 1n : BigInt(index);
+      const i = ordinal < 0n ? total + ordinal + 1n : ordinal;
       return i < 1n || i > total ? undefined : element(p, i - 1n);
     },
     contains: (c, target) => family.valid(decode(asBoxed(target)), params(c)),

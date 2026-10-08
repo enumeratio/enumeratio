@@ -26,6 +26,9 @@ export type BoxNode =
   | readonly ["FrameBox", Box, Options?]
   | readonly ["PanelBox", Box, Options?]
   | readonly ["PaneBox", Box, Options?]
+  // A scrolling grid over a row source held as an expression (`RowSource(…)`); the rows
+  // reach it by range, never as operands (https://github.com/enumeratio/enumeratio/wiki/Speculative-Lazy-Grid).
+  | readonly ["TableViewBox", MathJsonExpression, Options?]
   | readonly ["TagBox", Box, string, Options?]
   | readonly ["InterpretationBox", Box, MathJsonExpression, Options?]
   | readonly ["ErrorBox", Box]
@@ -70,6 +73,7 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   FrameBox: 1,
   PanelBox: 1,
   PaneBox: 1,
+  TableViewBox: 1,
   TagBox: 2,
   InterpretationBox: 2,
   ErrorBox: 1,
@@ -127,6 +131,8 @@ export const style = (box: Box, options: Options): Box => ["StyleBox", box, opti
 export const frame = (box: Box, options?: Options): Box => ["FrameBox", ...withOptions([box] as const, options)] as Box;
 export const panel = (box: Box, options?: Options): Box => ["PanelBox", ...withOptions([box] as const, options)] as Box;
 export const pane = (box: Box, options?: Options): Box => ["PaneBox", ...withOptions([box] as const, options)] as Box;
+export const tableView = (source: MathJsonExpression, options?: Options): Box =>
+  ["TableViewBox", ...withOptions([source] as const, options)] as Box;
 export const tag = (box: Box, name: string): Box => ["TagBox", box, name];
 export const interpretation = (box: Box, expr: MathJsonExpression): Box => ["InterpretationBox", box, expr];
 export const error = (box: Box): Box => ["ErrorBox", box];
@@ -200,6 +206,8 @@ export function isBox(value: unknown): value is Box {
       return isBox(args[0]) && typeof args[1] === "string";
     case "InterpretationBox":
       return isBox(args[0]) && args[1] !== undefined;
+    case "TableViewBox":
+      return args[0] !== undefined;
     default:
       return args.every(isBox);
   }

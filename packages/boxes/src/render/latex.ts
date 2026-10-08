@@ -262,6 +262,8 @@ function writeNode(box: BoxNode): string {
     case "PolyhedronBox":
     case "InsetBox":
       return "\\text{-Graphics-}";
+    case "TableViewBox":
+      return "\\text{-TableView-}";
     case "ButtonBox":
     case "TextCell":
       return write(box[1]);

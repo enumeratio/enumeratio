@@ -22,6 +22,9 @@ inline math in prose.
 - `readMarkdown`/`toMarkdown`, `texSource`, `closeDollar` (`/render`) — a small Markdown-as-prose-boxes
   pass: a `$…$` island held as `FormBox(tex, "TeXForm")`, `${…}` holes found by scanning
   running text and TeX alike.
+- `RowSource`, `RowCount`, `RowBatch`, `pinnedPage` — what a `TableViewBox` asks of its rows: a count
+  that is exact, a lower bound or infinite, rows by range as boxes, and the first page a static
+  environment draws with a `Skeleton` row for the rest.
 - `declareBoxes` — declares the box heads (`RowBox`, `FractionBox`, `SuperscriptBox`, …)
   as compute-engine heads, typed and described from this package's own
   `reference/<Head>/` records; an evaluated box is itself.

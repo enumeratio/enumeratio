@@ -33,7 +33,7 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [GraphPlot](/reference/component/GraphPlot) — graph & hierarchical layouts (tree, graph, layered graph, dendrogram); stories moved to its component reference page
 - [Complex Plot](/reference/component/ComplexPlot) — domain-colouring of a complex expression, one WebGPU invocation per pixel; stories moved to its component reference page
 - [Complex Plot 3D](/reference/component/ComplexPlot3D) — |f(z)| as a surface over the plane, faces coloured by arg f(z); stories moved to its component reference page
-- [Collection table](/reference/component/CollectionTable) — a paged table over a lazy indexed collection, with statistics as columns; stories moved to its component reference page
+- [Collection table](/reference/component/CollectionTable) — a scrolling table over a lazy collection (massive, unknown-sized or infinite), with statistics as columns; stories moved to its component reference page
 - [Worksheet](/docs/components/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells
 - [Manipulate](/docs/components/manipulate) — `<notatio-manipulate>`, Wolfram-style controls bound to named wildcards in any slotted content
 - [Terminal](/docs/components/terminal) — `<notatio-terminal>`, the real CLI eval core in a browser terminal, as a session or one `notatio <expr>` at a time

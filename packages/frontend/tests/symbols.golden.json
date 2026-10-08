@@ -783,9 +783,8 @@
       "attributes": {},
       "children": [
         {
-          "tag": "div",
+          "tag": "row-box",
           "attributes": {
-            "data-box": "RowBox",
             "data-head": "Row"
           },
           "children": [
@@ -808,7 +807,7 @@
         }
       ]
     },
-    "markup": "<notatio-dynamic-module><div data-box=\"RowBox\" data-head=\"Row\"><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></div></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><row-box data-head=\"Row\"><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></row-box></notatio-dynamic-module>"
   },
   "Column([Slider(k, (0, 5)), \"so\", k^2])": {
     "rendering": {
@@ -816,9 +815,8 @@
       "attributes": {},
       "children": [
         {
-          "tag": "div",
+          "tag": "grid-box",
           "attributes": {
-            "data-box": "GridBox",
             "data-head": "Column"
           },
           "children": [
@@ -845,7 +843,7 @@
         }
       ]
     },
-    "markup": "<notatio-dynamic-module><div data-box=\"GridBox\" data-head=\"Column\"><notatio-slider name=\"k\" min=\"0\" max=\"5\"></notatio-slider><span>so</span><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></div></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><grid-box data-head=\"Column\"><notatio-slider name=\"k\" min=\"0\" max=\"5\"></notatio-slider><span>so</span><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></grid-box></notatio-dynamic-module>"
   },
   "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
     "rendering": {
@@ -853,9 +851,8 @@
       "attributes": {},
       "children": [
         {
-          "tag": "div",
+          "tag": "grid-box",
           "attributes": {
-            "data-box": "GridBox",
             "data-head": "Grid",
             "style": "grid-template-columns: repeat(2, auto)"
           },
@@ -892,7 +889,7 @@
         }
       ]
     },
-    "markup": "<notatio-dynamic-module><div data-box=\"GridBox\" data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><notatio-slider name=\"a\" min=\"0\" max=\"1\"></notatio-slider><notatio-slider name=\"b\" min=\"0\" max=\"1\"></notatio-slider><notatio-dynamic value=\"_a + _b\"></notatio-dynamic><notatio-dynamic value=\"_a * _b\"></notatio-dynamic></div></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><notatio-slider name=\"a\" min=\"0\" max=\"1\"></notatio-slider><notatio-slider name=\"b\" min=\"0\" max=\"1\"></notatio-slider><notatio-dynamic value=\"_a + _b\"></notatio-dynamic><notatio-dynamic value=\"_a * _b\"></notatio-dynamic></grid-box></notatio-dynamic-module>"
   },
   "Panel(Labeled(Checkbox(on), \"on?\"))": {
     "rendering": {
@@ -900,16 +897,14 @@
       "attributes": {},
       "children": [
         {
-          "tag": "div",
+          "tag": "panel-box",
           "attributes": {
-            "data-box": "PanelBox",
             "data-head": "Panel"
           },
           "children": [
             {
-              "tag": "div",
+              "tag": "grid-box",
               "attributes": {
-                "data-box": "GridBox",
                 "data-head": "Labeled"
               },
               "children": [
@@ -932,7 +927,7 @@
         }
       ]
     },
-    "markup": "<notatio-dynamic-module><div data-box=\"PanelBox\" data-head=\"Panel\"><div data-box=\"GridBox\" data-head=\"Labeled\"><notatio-checkbox name=\"on\"></notatio-checkbox><span class=\"notatio-label\">on?</span></div></div></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><notatio-checkbox name=\"on\"></notatio-checkbox><span class=\"notatio-label\">on?</span></grid-box></panel-box></notatio-dynamic-module>"
   },
   "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "rendering": {
@@ -940,9 +935,8 @@
       "attributes": {},
       "children": [
         {
-          "tag": "div",
+          "tag": "row-box",
           "attributes": {
-            "data-box": "RowBox",
             "data-head": "Row"
           },
           "children": [
@@ -967,7 +961,7 @@
         }
       ]
     },
-    "markup": "<notatio-dynamic-module><div data-box=\"RowBox\" data-head=\"Row\"><notatio-plot value=\"sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></div></notatio-dynamic-module>"
+    "markup": "<notatio-dynamic-module><row-box data-head=\"Row\"><notatio-plot value=\"sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></row-box></notatio-dynamic-module>"
   },
   "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))": {
     "rendering": {
@@ -1091,9 +1085,8 @@
   },
   "Labeled(Show(LatticeTiles(QuadraticIntegers(_d), ColorRules -> [IsPrime -> Teal]), Selection -> _s), StringTemplate(\"d = {_d}\"), Bottom, Variables -> [_d -> -5, _s -> []])": {
     "rendering": {
-      "tag": "div",
+      "tag": "grid-box",
       "attributes": {
-        "data-box": "GridBox",
         "data-head": "Labeled",
         "data-rows": "2",
         "variables": "[_d -> -5, _s -> []]"
@@ -1114,7 +1107,7 @@
         }
       ]
     },
-    "markup": "<div data-box=\"GridBox\" data-head=\"Labeled\" data-rows=\"2\" variables=\"[_d -> -5, _s -> []]\"><notatio-show value=\"Show(\n      LatticeTiles(QuadraticIntegers(_d), ColorRules -> [isPrime -> Teal]),\n      Selection -> _s,\n    )\" style=\"display:block;min-height:480px\"></notatio-show><notatio-string-template template=\"d = {_d}\"></notatio-string-template></div>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\" variables=\"[_d -> -5, _s -> []]\"><notatio-show value=\"Show(\n      LatticeTiles(QuadraticIntegers(_d), ColorRules -> [isPrime -> Teal]),\n      Selection -> _s,\n    )\" style=\"display:block;min-height:480px\"></notatio-show><notatio-string-template template=\"d = {_d}\"></notatio-string-template></grid-box>"
   },
   "TestResultObject(KeyValuePair(\"Outcome\", \"Success\"), KeyValuePair(\"Input\", 1 + 1), KeyValuePair(\"ActualOutput\", 2), KeyValuePair(\"AbsoluteTimeUsed\", 0))": {
     "rendering": {

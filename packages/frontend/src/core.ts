@@ -9,6 +9,8 @@ export * from "./barchart3d.ts";
 export * from "./chart.ts";
 export * from "./clock.ts";
 export * from "./collection-table.ts";
+export * from "./row-spec.ts";
+export * from "./table-view.ts";
 export * from "./contour.ts";
 export * from "./debug.ts";
 export * from "./densityplot.ts";

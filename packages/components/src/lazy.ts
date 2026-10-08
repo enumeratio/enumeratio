@@ -6,6 +6,8 @@
 // `tests/lazy.test.ts` holds this table to every tag the package defines, and the modules a page
 // of cells or plots loads to no engine.
 
+import { defineBoxElements, INTERACTIVE_BOX_TAGS } from "./box-elements.ts";
+
 export { configureMacros } from "./mathlive.ts";
 
 const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
@@ -57,6 +59,7 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-input-field": () => import("./notatio-input-field.ts"),
   "notatio-terminal": () => import("./notatio-terminal.ts"),
   "notatio-collection-table": () => import("./notatio-collection-table.ts"),
+  "table-view-box": () => import("./table-view-box.ts"),
   "notatio-test-result-object": () => import("./notatio-test-result-object.ts"),
 };
 
@@ -80,7 +83,7 @@ let generics: Promise<typeof import("./generic.ts")> | undefined;
 /** Load what `el` needs, when it's an element not defined yet. */
 function define(el: Element): void {
   const tag = el.localName;
-  if (!tag.startsWith("notatio-") || customElements.get(tag) !== undefined) return;
+  if (!(tag.startsWith("notatio-") || INTERACTIVE_BOX_TAGS.has(tag)) || customElements.get(tag) !== undefined) return;
   if (!CELL.has(tag) && !scoped) {
     scoped = true;
     void import("./scope.ts").then((m) => m.pageScope());
@@ -110,6 +113,7 @@ let watching = false;
 export function defineOnUse(): void {
   if (watching || typeof document === "undefined") return;
   watching = true;
+  defineBoxElements();
   defineUsed(document);
   const observer = new MutationObserver((records) => {
     if (everything !== undefined) {

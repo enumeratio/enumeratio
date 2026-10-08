@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+held			[TableViewBox, [RowSource, [Range, 1, 5]]]	[TableViewBox, [RowSource, [Range, 1, 5]]]	the source is held, not enumerated

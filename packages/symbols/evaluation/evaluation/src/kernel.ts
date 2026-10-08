@@ -98,12 +98,25 @@ export interface KernelOptions {
   readonly libraries?: Registry<ComputeEngine>;
   /** A library definition's notation, registered under the head it's declared as. */
   readonly notation?: (ce: ComputeEngine, head: string, data: NotationData) => void;
+  /**
+   * A row source's calls (https://github.com/enumeratio/enumeratio/wiki/Speculative-Lazy-Grid): register, ask for a range,
+   * release. They run beside the evaluation queue, not in it, so a scroll's range is never
+   * stuck behind a cell; `signal` fires when the caller aborts the request.
+   */
+  readonly rows?: (
+    ce: ComputeEngine,
+    request: unknown,
+    signal: AbortSignal,
+    read: (source: KernelSource) => Promise<unknown>,
+  ) => Promise<unknown>;
 }
 
 export interface Kernel {
   readonly ce: ComputeEngine;
   /** Parses, declares what the input needs, then evaluates it under `timeMs` (cooperatively). */
   evaluate(request: KernelRequest): Promise<KernelResult>;
+  /** `source` as MathJSON with the libraries it names declared, and nothing evaluated. */
+  read(source: KernelSource): Promise<unknown>;
 }
 
 const failed = (error: unknown, prefix = ""): KernelResult => ({
@@ -272,9 +285,23 @@ export function createKernel(
     }
   };
 
+  const readOnly = async (source: KernelSource): Promise<unknown> => {
+    if (options.parse === undefined) throw new Error("this kernel reads MathJSON only");
+    let input = options.parse(ce, source, false);
+    const resolved = await resolver.ensure(ce, input);
+    // A reader resolves names against what's declared, so text is read again once what it named is.
+    if (resolved.declared.length > 0) input = options.parse(ce, source, false);
+    return (await withLibraries(input)).input;
+  };
+
   let queue: Promise<unknown> = Promise.resolve();
   return {
     ce,
+    read(source) {
+      const result = queue.then(() => readOnly(source));
+      queue = result.catch(() => undefined);
+      return result;
+    },
     evaluate(request) {
       const result = queue.then(() => run(request));
       queue = result.catch(() => undefined);

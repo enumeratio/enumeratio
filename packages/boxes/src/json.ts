@@ -41,6 +41,7 @@ export function toMathJson(box: Box): Json {
       return /^[A-Za-z][A-Za-z0-9]*$/.test(arg as string) ? (arg as string) : { str: arg as string };
     if (head === "TextCell" && i === 1) return { str: arg as string };
     if (head === "InterpretationBox" && i === 1) return arg as Json;
+    if (head === "TableViewBox") return arg as Json;
     return toMathJson(arg as Box);
   });
   const rules = Object.entries(optionsOfBox(box as BoxNode)).map(
@@ -130,6 +131,7 @@ export function fromMathJson(json: Json): Box {
       return symbolOf(op) ?? stringOf(op) ?? fail(`${head} takes a name`, op);
     if (head === "TextCell" && i === 1) return stringOf(op) ?? fail("TextCell takes a style name", op);
     if (head === "InterpretationBox" && i === 1) return op;
+    if (head === "TableViewBox") return op;
     return fromMathJson(op);
   });
   const options: Record<string, OptionValue> = {};

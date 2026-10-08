@@ -2,6 +2,11 @@
 // a consumer that wants the components has the whole of notatio from one import.
 export * from "@enumeratio/frontend";
 
+// Every box primitive is a tag; the ones without behavior are empty elements.
+import { defineBoxElements } from "./box-elements.ts";
+if (typeof document !== "undefined") defineBoxElements();
+export { defineBoxElements, INTERACTIVE_BOX_TAGS, PLAIN_BOX_TAGS } from "./box-elements.ts";
+
 // The page is a scope: controls and readouts with no `<notatio-dynamic-module>` around them
 // bind through it. Installed once, client side.
 import { pageScope } from "./scope.ts";
@@ -53,6 +58,7 @@ import "./notatio-input-field.ts";
 import "./notatio-code.ts";
 import "./notatio-terminal.ts";
 import "./notatio-collection-table.ts";
+import "./table-view-box.ts";
 import "./notatio-test-result-object.ts";
 
 import type { NotatioCell } from "./notatio-cell.ts";

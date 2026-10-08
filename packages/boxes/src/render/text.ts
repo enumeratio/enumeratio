@@ -148,6 +148,8 @@ class Writer {
       case "PolyhedronBox":
       case "InsetBox":
         return "-Graphics-";
+      case "TableViewBox":
+        return "-TableView-";
       default:
         throw new Error("unreachable: BoxNode's tags are exhaustive above");
     }

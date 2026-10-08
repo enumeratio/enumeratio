@@ -42,6 +42,8 @@ export function declareBoxes(ce: ComputeEngine): void {
   // `ToBoxes` evaluates its argument first; `MakeBoxes` holds it (the notation of what was written).
   ce.declare("ToBoxes", { ...recorded("ToBoxes"), evaluate: ([expr]) => boxesOf(expr) });
   ce.declare("MakeBoxes", { ...recorded("MakeBoxes"), evaluate: ([expr]) => boxesOf(expr) });
+  // Held: the handle a `TableViewBox` carries, which the kernel it is registered with answers.
+  ce.declare("RowSource", recorded("RowSource"));
   // Both stay as written: whoever draws them draws their boxes (`makeBoxes`, `BOXES_LATEX`).
   ce.declare("DisplayForm", recorded("DisplayForm"));
   ce.declare("RawBoxes", recorded("RawBoxes"));

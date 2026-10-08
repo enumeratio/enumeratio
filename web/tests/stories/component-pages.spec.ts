@@ -20,20 +20,23 @@ const srcDir = fileURLToPath(new URL("./src/", import.meta.resolve("@enumeratio/
 const tagByName = new Map(collectComponents(srcDir).map((c) => [headOfTag(c.tag), c.tag]));
 
 // What "drew something" means, per tag -- most of these elements paint plain SVG into light
-// DOM (`createRenderRoot` returns `this`); `notatio-collection-table` draws a data table
+// DOM (`createRenderRoot` returns `this`); `notatio-collection-table` draws a `<table-view-box>`
 // instead (zero, one or many per-row glyph SVGs, depending on the story's `glyph`), so its
-// check is its own -- an actual DATA row, not just any `tbody tr` (the "no rows" / "scanning…"
-// placeholder is a `tr` too), and no `.nct-error` (a count or parse the table couldn't
-// resolve). `td.nct-elt` is the element column, present only on a real data row -- unlike a
-// bare `tbody tr`, which the "no rows" / "scanning…" placeholder row satisfies too.
+// check is its own -- an actual DATA row (a row that is not `aria-busy`, which a placeholder
+// row is until its block arrives), and no `.nct-error` or `.tvb-error` (a count or parse the
+// table couldn't resolve). The table asks the kernel for its rows, so they may take a moment.
 // `notatio-complex-plot` is WebGPU-only, painting into a `<canvas>` rather than SVG, and
 // reports its own "needs WebGPU" status in light DOM when no adapter is available -- a real
 // condition in a headless/sandboxed runner, not a bug, so that case is *skipped* (with a
 // reason) rather than failed. A tag with no entry here falls back to "at least one <svg>".
 const RENDER_CHECKS: Readonly<Record<string, (el: Locator) => Promise<void>>> = {
   "notatio-collection-table": async (el) => {
-    await expect(el.locator("table.nct-table tbody td.nct-elt").first()).toBeVisible();
-    await expect(el.locator(".nct-error")).toHaveCount(0);
+    await expect(el.locator("table-view-box .tvb-row[role=row]:not([aria-busy]):not(.tvb-header)").first()).toBeVisible(
+      {
+        timeout: 30_000,
+      },
+    );
+    await expect(el.locator(".nct-error, .tvb-error")).toHaveCount(0);
   },
   "notatio-complex-plot": async (el) => {
     const status = el.locator(".notatio-complex-plot-status");
