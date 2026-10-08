@@ -76,7 +76,8 @@ export function openKernelSession(setup?: string): BrowserSession | undefined {
   return openSession({
     setup: setup ?? (globalThis as WorkerSetupGate).__notatioWorkerSetup,
     createWorker: factories.createWorker,
-    createSharedWorker: factories.createSharedWorker,
+    // Chrome for Android has no SharedWorker: the dedicated worker from the same entry instead.
+    createSharedWorker: typeof SharedWorker === "undefined" ? undefined : factories.createSharedWorker,
   });
 }
 
@@ -90,7 +91,14 @@ export function pageKernel(
   sessionId: string = PAGE_SESSION,
 ): ((request: RemoteRequest, options?: { signal?: AbortSignal }) => Promise<RemoteAnswer>) | undefined {
   if (pageUnavailable) return undefined;
-  if (page === undefined) page = openKernelSession() ?? null;
+  if (page === undefined) {
+    try {
+      page = openKernelSession() ?? null;
+    } catch {
+      // The host's factory threw: no worker can start on this page, so cells run locally.
+      page = null;
+    }
+  }
   const session = page;
   if (session === null) return undefined;
   return async (request, options = {}) => {
