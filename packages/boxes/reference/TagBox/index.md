@@ -7,7 +7,7 @@ signatures:
   - call: TagBox(box, tag)
     description: Boxes labelled with a tag saying how to read them back as an expression.
     library: enumeratio-boxes
-    type: (boxes, symbol | string, expression*) -> boxes
+    type: (boxes, string | symbol, expression*) -> boxes
 seeAlso:
   - InterpretationBox
 names:

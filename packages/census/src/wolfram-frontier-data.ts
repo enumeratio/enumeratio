@@ -109,10 +109,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 84,
   },
   {
-    head: "InsetBox",
-    uses: 80,
-  },
-  {
     head: "DiscretePlot3D",
     uses: 77,
   },
@@ -209,10 +205,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 41,
   },
   {
-    head: "GraphicsBox",
-    uses: 41,
-  },
-  {
     head: "HoldForm",
     uses: 41,
   },
@@ -231,10 +223,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "TimeSeries",
     uses: 37,
-  },
-  {
-    head: "LineBox",
-    uses: 34,
   },
   {
     head: "InputForm",
@@ -271,10 +259,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "MomentConvert",
     uses: 28,
-  },
-  {
-    head: "PolygonBox",
-    uses: 26,
   },
   {
     head: "Animate",
@@ -954,10 +938,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "DateHistogram",
-    uses: 7,
-  },
-  {
-    head: "DiskBox",
     uses: 7,
   },
   {
