@@ -337,9 +337,11 @@ interface Override {
  *   `_s` (a list of lattice points), and showing them is up to the page.
  * - `PolytopeFaces(Permutahedron(4))` is a polytope's faces under a camera, several sharing one
  *   frame; `ViewPoint`, `ViewVertical`, `ViewAngle`, `ViewCenter`, `SphericalRegion -> True` and
- *   `Magnification` aim it (only a camera frame reads them). Drag to orbit; wheel or pinch to zoom.
- * - `GestureHandling -> "cooperative"` (the default), `"greedy"` or `"none"`: whether the wheel
- *   zooms when the plot isn't engaged.
+ *   `Magnification` aim it (only a camera frame reads them). Drag to orbit; ⌘/Ctrl + wheel or pinch
+ *   to zoom.
+ * - `GestureHandling -> "cooperative"` (the default), `"greedy"` or `"none"`: `greedy` makes every
+ *   wheel zoom, `none` none; the default leaves a plain wheel to the page, except on a full-window
+ *   figure.
  *
  * Drag to pan; Esc clears the selection; `0` resets the view.
  */

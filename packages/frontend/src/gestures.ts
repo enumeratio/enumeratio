@@ -2,9 +2,9 @@
 // `gestureHandling`, Mapbox's `cooperativeGestures`). It decides only whether a wheel goes to the
 // plot or the page; how the plot then moves (orbit, turntable, pan and zoom) is its camera's own.
 //
-//   cooperative  the default: the page scrolls unless the plot is engaged — focused (a click or
-//                tab into it) or filling the window — or ⌘/Ctrl is held, which is also how
-//                browsers report a trackpad pinch;
+//   cooperative  the default: a plain wheel scrolls the page; ⌘/Ctrl zooms the plot (also how
+//                browsers report a trackpad pinch), and so does a plain wheel on a figure filling
+//                the window, which has no page behind it to scroll;
 //   greedy       every wheel over the plot is the plot's;
 //   none         the plot never takes the wheel.
 
@@ -21,16 +21,13 @@ export function wheelZooms(
 ): boolean {
   if (handling === "none") return false;
   if (handling === "greedy" || e.ctrlKey || e.metaKey) return true;
-  if (!host) return false;
-  const active = host.ownerDocument?.activeElement;
-  if (active && (active === host || host.contains(active))) return true;
-  return host.closest(".is-full-window") !== null;
+  return host?.closest(".is-full-window") != null;
 }
 
-/** Engage a plot on pointer down: focus its surface, so the wheel zooms it until focus leaves. */
+/** Focus a plot on pointer down, for its keys and focus ring; the wheel does not depend on it. */
 export function engage(e: PointerEvent): void {
   (e.currentTarget as HTMLElement | null)?.focus?.({ preventScroll: true });
 }
 
 /** The gesture, for a tooltip. */
-export const WHEEL_HINT = "click, then scroll to zoom · or ⌘/Ctrl+scroll";
+export const WHEEL_HINT = "⌘/Ctrl + scroll to zoom";

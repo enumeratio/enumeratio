@@ -1,4 +1,4 @@
-// Drag to rotate, scroll to zoom (by `gestures.ts`), double-click to reset.
+// Drag to rotate, ⌘/Ctrl + scroll to zoom (by `gestures.ts`), double-click to reset.
 //
 // Every 3-D figure wants the same gesture, and until now each one carried its own copy of it.
 // The copies had already drifted — one guarded against a non-primary button and one did not,
@@ -99,7 +99,7 @@ export class Orbit {
     if (this.#drag?.id === e.pointerId) this.#drag = null;
   };
 
-  /** Zoom by `gestures.ts`: when the figure is engaged, or with ⌘/Ctrl (a pinch). */
+  /** Zoom by `gestures.ts`: with ⌘/Ctrl (a pinch), or on a full-window figure. */
   readonly onWheel = (e: WheelEvent): void => {
     if (!wheelZooms(e, e.currentTarget as Element)) return;
     e.preventDefault();

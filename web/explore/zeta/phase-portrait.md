@@ -13,7 +13,7 @@ Every pixel below runs the same Euler–Maclaurin kernel as the CPU path —
 `@enumeratio/analytic`'s exported `zetaWGSL`, evaluated per pixel, per frame, on the GPU,
 through the general [`<notatio-complex-plot>`](/reference/component/ComplexPlot) element. Both conventions
 are drawn at once from the same $s$, so the difference between them is a glance rather
-than a toggle. Drag to pan, scroll to zoom; hit ▶ to sweep $\operatorname{Im}(s)$ up the
+than a toggle. Drag to pan, ⌘/Ctrl + scroll to zoom; hit ▶ to sweep $\operatorname{Im}(s)$ up the
 critical strip.
 
 <Story

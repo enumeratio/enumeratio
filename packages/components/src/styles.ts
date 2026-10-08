@@ -1379,7 +1379,7 @@ notatio-worksheet {
 .notatio-gradient-panel label { display: flex; align-items: center; gap: 0.4rem; }
 .notatio-gradient-panel input[type="number"] { width: 5em; }
 
-/* --- Engaged plots: focused, the wheel zooms them (gestures.ts); the ring says so -------- */
+/* --- Focused plots: a ring marks the focus, which the wheel no longer depends on -------- */
 .notatio-plot-box:focus,
 .notatio-complex-plot-stage canvas:focus {
   outline: 2px solid color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);

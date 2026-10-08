@@ -18,7 +18,7 @@ squarefree part, so $\mathbb{Q}(\sqrt 8) = \mathbb{Q}(\sqrt 2)$.
 
 Each element is a point of a lattice, and the lattice is where the arithmetic is easiest to
 see. Every plot on this page is a `Show` of one `LatticeTiles` layer, its tiles colored by
-`ColorRules`. Drag to pan; click the plot, then scroll to zoom (or ⌘/Ctrl-scroll); hover a tile to
+`ColorRules`. Drag to pan; ⌘/Ctrl-scroll to zoom; hover a tile to
 read its factorization.
 
 ## The norm
