@@ -1373,25 +1373,40 @@ const wildcarded = (json: Json): boolean => JSON.stringify(json ?? null).include
 
 /**
  * `bound`, with a figure layer's data evaluated where its source was written over the scope's
- * variables: `StrandDiagram(At(Permutations(4), _k))` draws the k-th permutation, which binding
- * alone leaves as the call. Data written whole stays as written, and needs no engine.
+ * variables. A value the frame draws keeps its head and has its arguments evaluated:
+ * `Subset([1, 3], _n)` is a subset, though compute-engine reads it as a predicate and evaluates
+ * it to `False`. Data the frame can't draw that way is evaluated whole: `At(Permutations(4), _k)`
+ * is the k-th permutation. Data written whole stays as written, and needs no engine.
  */
 async function evaluatedFigure(source: ShowSpec, bound: ShowSpec): Promise<ShowSpec> {
   const tiles = bound.tiles;
   if (!tiles || tiles.head === "LatticeTiles" || tiles.head === "ArrayPlot") return bound;
+  const head = tiles.head;
   const written = source.tiles;
   const evaluate = async (json: Json): Promise<Json> => {
     const ce = await loadEngineFor(json);
     return plainJson(ce.box(json as never).evaluate().json);
   };
+  /** `value` (bound from `writtenValue`), drawn as `draws` reads it. */
+  const evaluated = async (value: Json, writtenValue: Json, draws: (json: Json) => boolean): Promise<Json> => {
+    if (!wildcarded(writtenValue)) return value;
+    const valueHead = headOf(value);
+    if (valueHead !== undefined && !valueHead.startsWith("_")) {
+      const writtenArgs = argsOf(writtenValue);
+      const args = await Promise.all(argsOf(value).map((arg, k) => (wildcarded(writtenArgs[k]) ? evaluate(arg) : arg)));
+      const kept: Json = [valueHead, ...args];
+      if (draws(kept)) return kept;
+    }
+    return evaluate(value);
+  };
+  const drawn = (json: Json): boolean => typeof figureLayerOf(head, json) !== "string";
   if (tiles.layers) {
     const layers = await Promise.all(
-      tiles.layers.map((layer, k) => (wildcarded(written?.layers?.[k]) ? evaluate(layer) : layer)),
+      tiles.layers.map((layer, k) => evaluated(layer, written?.layers?.[k], (json) => drawn(["List", json]))),
     );
     return { ...bound, tiles: { ...tiles, layers } };
   }
-  if (!wildcarded(written?.data)) return bound;
-  return { ...bound, tiles: { ...tiles, data: await evaluate(tiles.data) } };
+  return { ...bound, tiles: { ...tiles, data: await evaluated(tiles.data, written?.data, drawn) } };
 }
 
 /**
