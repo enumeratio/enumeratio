@@ -22,3 +22,4 @@ names:
 - Real m between 0 and 1 only — unlike the pq family, no parameter transform for m outside [0,1] has been verified for the amplitude itself, so this head declines there.
 - am(0,m) = 0, for any m in range; am(u,0) = u, for any u.
 - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+- Derivatives of every order in $u$ and in $m$ are closed forms in sn, cn, dn and the Jacobi epsilon $\mathcal{E}(u,m)=Z(u,m)+u\,E(m)/K(m)$ (DLMF 22.13): `D`, `Series` in $u$ at $0$ or at a symbolic point, and `Series` in $m$ at $m=0$ all give concrete coefficients. The $m$-derivatives evaluate numerically for real $u$ and $m$ between 0 and 1.

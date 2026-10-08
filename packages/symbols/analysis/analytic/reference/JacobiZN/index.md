@@ -22,3 +22,4 @@ names:
 - Z(0,m) = 0, for any m in range; Z(u,0) = 0, for any u — am(u,0) = u makes E(am,0) = u exactly, canceling the E(0)/K(0)·u = u term.
 - Numeric only — a symbolic argument (outside the exact table above) stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
 - `N(x, d)` past a double's digits runs the AGM amplitude in BigDecimal and takes $E$ and $K$ from the Carlson kernels, for real $u$ and $0 < m < 1$; anything else stays unevaluated there rather than print a double's digits as more.
+- Derivatives of every order in $u$ and in $m$ are closed forms in sn, cn, dn and the Jacobi epsilon $\mathcal{E}(u,m)=Z(u,m)+u\,E(m)/K(m)$ (DLMF 22.13): `D`, `Series` in $u$ at $0$ or at a symbolic point, and `Series` in $m$ at $m=0$ all give concrete coefficients. The $m$-derivatives evaluate numerically for real $u$ and $m$ between 0 and 1.
