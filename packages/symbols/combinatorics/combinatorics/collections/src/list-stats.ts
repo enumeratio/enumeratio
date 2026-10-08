@@ -82,11 +82,9 @@ export function declareListStats(ce: Engine): void {
     },
   );
 
-  // Commonest(c, n) / Commonest(c, UpTo(n)): the n commonest elements, most frequent first, ties
-  // broken by first appearance (a stable sort over the tally, which is itself built in
-  // first-appearance order; Wolfram lists them in first-appearance order instead, a documented
-  // convention). Commonest(c) (1-arg, every tied value) is declared in `list-heads.ts`; this
-  // only adds the count argument.
+  // Commonest(c, n) / Commonest(c, UpTo(n)): the n commonest elements, ties broken by first
+  // appearance, listed in first-appearance order as Wolfram does. Commonest(c) (1-arg, every
+  // tied value) is declared in `list-heads.ts`; this only adds the count argument.
   widenSignature(ce, "Commonest", "(indexed_collection<T>, integer?) -> list<T> where T");
   wrapOperator(
     ce,
@@ -101,9 +99,8 @@ export function declareListStats(ce: Engine): void {
         if (existing !== undefined) existing.count++;
         else tally.push({ value: item, count: 1 });
       }
-      const ranked = [...tally];
-      ranked.sort((a, b) => b.count - a.count);
-      return ce.box(["List", ...ranked.slice(0, n).map((entry) => entry.value)]);
+      const chosen = new Set(tally.toSorted((a, b) => b.count - a.count).slice(0, n));
+      return ce.box(["List", ...tally.filter((entry) => chosen.has(entry)).map((entry) => entry.value)]);
     },
   );
 

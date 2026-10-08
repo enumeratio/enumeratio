@@ -53,10 +53,12 @@ function declareThread(ce: Engine): void {
       const rows: Expr[] = [];
       for (let k = 0; k < n; k++)
         rows.push(
-          ce.function(
-            f,
-            args.map((a, i) => (threadAt.includes(i) ? parts[i]![k]! : a)),
-          ),
+          ce
+            .function(
+              f,
+              args.map((a, i) => (threadAt.includes(i) ? parts[i]![k]! : a)),
+            )
+            .evaluate(),
         );
       return ce.function(headName, rows);
     },
