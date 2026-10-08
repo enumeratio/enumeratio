@@ -31,6 +31,13 @@ const DECLARES: Readonly<Record<string, readonly Declare[]>> = {
 
 const engines = new Map<string, Engine>();
 
+/** `configure(ce)` for `runCases`'s `setup`: declares every own-engine package's libraries into
+ * the worker's engine. One engine serves them all, so the packages' heads must not overlap;
+ * with one own-engine package that holds trivially. */
+export function configure(ce: Engine): void {
+  for (const declares of Object.values(DECLARES)) for (const declare of declares) declare(ce);
+}
+
 /** `expr` evaluated in `pkg`'s own engine, which is built on first use. An `Error` (the package
  * doesn't take the call) leaves `expr` as it is. */
 export function evaluateOwn(pkg: string, expr: MathJSON): MathJSON {
