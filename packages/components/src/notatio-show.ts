@@ -29,6 +29,7 @@ import {
   hitAt,
   latticeCoordinates,
   type LatticeView,
+  loadEngineFor,
   type LineStyle,
   maxExtentFor,
   nearestLatticePoint,
@@ -420,6 +421,7 @@ export class NotatioShow extends LitElement {
   #queued = false;
   #ro: ResizeObserver | undefined;
   #build = 0;
+  #rebuilds = 0;
 
   constructor() {
     super();
@@ -560,7 +562,10 @@ export class NotatioShow extends LitElement {
       this._status = "";
       return;
     }
-    const spec = specOf(bound);
+    const rebuild = ++this.#rebuilds;
+    const spec = await evaluatedFigure(specOf(this.#source), specOf(bound));
+    // A later binding started its own rebuild while this one evaluated: that one draws.
+    if (rebuild !== this.#rebuilds) return;
     if (await this.#followExample(spec)) return;
     const key = JSON.stringify([spec.tiles, spec.aspect]);
     if (key !== this.#layerKey) {
@@ -1362,6 +1367,31 @@ function prefetchLayers(json: Json): void {
       void import("@enumeratio/complex-numerals/lattice");
     else if (head === "LatticeTiles") void import("@enumeratio/number-theory/lattice");
   }
+}
+
+const wildcarded = (json: Json): boolean => JSON.stringify(json ?? null).includes('"_');
+
+/**
+ * `bound`, with a figure layer's data evaluated where its source was written over the scope's
+ * variables: `StrandDiagram(At(Permutations(4), _k))` draws the k-th permutation, which binding
+ * alone leaves as the call. Data written whole stays as written, and needs no engine.
+ */
+async function evaluatedFigure(source: ShowSpec, bound: ShowSpec): Promise<ShowSpec> {
+  const tiles = bound.tiles;
+  if (!tiles || tiles.head === "LatticeTiles" || tiles.head === "ArrayPlot") return bound;
+  const written = source.tiles;
+  const evaluate = async (json: Json): Promise<Json> => {
+    const ce = await loadEngineFor(json);
+    return plainJson(ce.box(json as never).evaluate().json);
+  };
+  if (tiles.layers) {
+    const layers = await Promise.all(
+      tiles.layers.map((layer, k) => (wildcarded(written?.layers?.[k]) ? evaluate(layer) : layer)),
+    );
+    return { ...bound, tiles: { ...tiles, layers } };
+  }
+  if (!wildcarded(written?.data)) return bound;
+  return { ...bound, tiles: { ...tiles, data: await evaluate(tiles.data) } };
 }
 
 /**
