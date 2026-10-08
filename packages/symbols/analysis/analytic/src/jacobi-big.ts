@@ -19,7 +19,9 @@ const log10 = (x: BigDecimal): number => x.abs().ln().toNumber() / Math.LN10;
 
 /** am(u, m) at the current working precision. */
 function amplitude(u: BigDecimal, m: BigDecimal): BigDecimal | undefined {
-  const tol = big(10).pow(-BigDecimal.precision);
+  // Rounding to the working precision leaves c with noise of a unit or two in the last place, so
+  // asking for c ≤ 10^-precision·a can stall (m = 0.999 at 50 digits); the guard digits cover the slack.
+  const tol = big(10).pow(-(BigDecimal.precision - 3));
   let a = big(1);
   let b = round(big(1).sub(m).sqrt());
   let c = round(m.sqrt());

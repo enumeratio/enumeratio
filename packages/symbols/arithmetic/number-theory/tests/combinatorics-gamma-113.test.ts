@@ -88,12 +88,6 @@ test("Multinomial through Gamma reduces to Binomial's Gamma form at two real par
   expect(run(["Multinomial", a, b]).re).toBeCloseTo(run(["Binomial", a + b, a]).re!, 6);
 });
 
-// The complex incomplete Gamma behind a fractional Subfactorial runs in doubles, so a request
-// for more digits than a double has declines instead of printing digits that are wrong.
-test("Subfactorial of a fraction declines past double precision", () => {
-  expect(run(["N", ["Subfactorial", ["Rational", 1, 3]], 50]).operator).toBe("Subfactorial");
-});
-
 // #113 §7 follow-up: Binomial(n, n) -> 1, Multinomial() -> 1, and Pochhammer at a
 // rational order through Gamma, exactly. (Pinned as reference examples instead of here,
 // except the Pochhammer case below, which this package's engine answers differently from

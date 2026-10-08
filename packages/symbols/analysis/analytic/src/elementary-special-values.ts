@@ -33,12 +33,18 @@ const hasImaginaryFactor = (op: BoxedExpression): boolean =>
 const realPartOf = (ce: ComputeEngine, op: BoxedExpression): BoxedExpression =>
   ce.function("Divide", [op, "ImaginaryUnit"]).evaluate();
 
-/** Sinh(i*t) = i*sin(t), Cosh(i*t) = cos(t), Tanh(i*t) = i*tan(t). */
+/**
+ * Sinh(i*t) = i*sin(t), Cosh(i*t) = cos(t), Tanh(i*t) = i*tan(t), and their reciprocals
+ * Csch(i*t) = -i*csc(t), Sech(i*t) = sec(t), Coth(i*t) = -i*cot(t).
+ */
 function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
   const rewrites: Record<string, (t: BoxedExpression) => BoxedExpression> = {
     Sinh: (t) => ce.function("Multiply", ["ImaginaryUnit", ce.function("Sin", [t])]),
     Cosh: (t) => ce.function("Cos", [t]),
     Tanh: (t) => ce.function("Multiply", ["ImaginaryUnit", ce.function("Tan", [t])]),
+    Csch: (t) => ce.function("Negate", [ce.function("Multiply", ["ImaginaryUnit", ce.function("Csc", [t])])]),
+    Sech: (t) => ce.function("Sec", [t]),
+    Coth: (t) => ce.function("Negate", [ce.function("Multiply", ["ImaginaryUnit", ce.function("Cot", [t])])]),
   };
   for (const [head, rewrite] of Object.entries(rewrites)) {
     wrapOperator(
@@ -52,10 +58,10 @@ function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
 }
 
 /**
- * Coth and Csch at i*k*pi (k a nonzero integer) are poles: sinh(i*k*pi) = 0. Folding them to
+ * Coth and Csch at i*k*pi (k an integer) are poles: sinh(i*k*pi) = 0. Folding them straight to
  * ComplexInfinity, as Cot and Csc already do at k*pi, is what tells `Series` to take its
- * Laurent path rather than expand with infinite Taylor coefficients. Only the poles fold;
- * the finite values (Coth(i*pi/3) = -i/sqrt 3) stay as they were.
+ * Laurent path rather than expand with infinite Taylor coefficients, and keeps the pole from
+ * being multiplied by -i on the way through Cot/Csc.
  */
 function declareHyperbolicPoles(ce: ComputeEngine): void {
   for (const head of ["Coth", "Csch"] as const) {

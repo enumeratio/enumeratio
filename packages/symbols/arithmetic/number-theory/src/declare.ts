@@ -1,5 +1,11 @@
 import { registerNotation } from "@enumeratio/boxes";
-import { doublesForFloats, inDoubles, inDoublesIfComplex } from "@enumeratio/ce-patches";
+import {
+  bigRealOperand,
+  doublesForFloats,
+  exceedsDoublePrecision,
+  inDoubles,
+  inDoublesIfComplex,
+} from "@enumeratio/ce-patches";
 import {
   bigIntegerAt,
   bigRationalAt,
@@ -31,6 +37,7 @@ import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
 import { hermiteDecomposition } from "./hermite.ts";
 import { NUMBER_THEORY_NOTATION } from "./notation.ts";
 import { rationalReconstruction } from "./reconstruct.ts";
+import { boxComplex, subfactorialBig } from "./subfactorial-big.ts";
 import { SUMMARIES } from "@enumeratio/manifest/package/number-theory";
 
 // Number theory past ℤ/m, on top of @enumeratio/residues (declare that first): PowerMod and
@@ -431,8 +438,14 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     ["Subfactorial", 4.5],
     (ops) => inexactNumber(ops[0]),
     () => (ops, options) => {
-      // The complex incomplete Gamma runs in doubles, so even a real n is a double's worth.
       const n = ops[0];
+      // The complex incomplete Gamma runs in doubles; a real n past a double's digits has its own series.
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) {
+        const big = bigRealOperand(ce, n);
+        if (big === undefined) return undefined;
+        const value = subfactorialBig(ce, big, ce.precision);
+        return value === undefined ? undefined : boxComplex(ce, value.re, value.im);
+      }
       return inDoubles(ce, options, () => div(ce.function("Gamma", [add(n, 1), -1]), ce.symbol("ExponentialE")).N());
     },
     1,

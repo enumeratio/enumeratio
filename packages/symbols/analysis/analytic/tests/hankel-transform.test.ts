@@ -49,3 +49,35 @@ test("HankelTransform: declines an unsupported order for e^(-ar^2)", () => {
     2,
   ]);
 });
+
+test("HankelTransform: sin(ar)/r and cos(ar)/r jump at s = a", () => {
+  const trigOverR = (head: string, a: unknown, s: unknown) =>
+    ce.box(["HankelTransform", ["Divide", [head, ["Multiply", a, "r"]], "r"], "r", s] as never).evaluate();
+  const value = (x: ReturnType<typeof trigOverR>) => x.N().re;
+  // Verified against NIntegrate (Method -> "Oscillatory") and an Abel-damped mpmath integral.
+  expect(value(trigOverR("Sin", 1, ["Rational", 1, 3]))).toBeCloseTo(3 / (2 * Math.SQRT2), 12);
+  expect(value(trigOverR("Sin", 3, 1))).toBeCloseTo(1 / (2 * Math.SQRT2), 12);
+  expect(value(trigOverR("Sin", -3, 1))).toBeCloseTo(-1 / (2 * Math.SQRT2), 12);
+  expect(trigOverR("Sin", 1, 2).json).toBe(0);
+  expect(value(trigOverR("Cos", 1, 3))).toBeCloseTo(1 / (2 * Math.SQRT2), 12);
+  expect(trigOverR("Cos", 1, ["Rational", 1, 3]).json).toBe(0);
+  // s = a diverges: the call is held, as Wolfram holds it.
+  expect(trigOverR("Sin", 2, 2).operator).toBe("HankelTransform");
+  expect(trigOverR("Cos", 2, 2).operator).toBe("HankelTransform");
+});
+
+test("HankelTransform: a symbolic s leaves a Piecewise that settles once s is known", () => {
+  const symbolic = ce.box(["HankelTransform", ["Divide", ["Sin", "r"], "r"], "r", "s"] as never).evaluate();
+  expect(symbolic.operator).toBe("Piecewise");
+  expect(
+    symbolic
+      .subs({ s: ce.number([1, 3]) })
+      .evaluate()
+      .N().re,
+  ).toBeCloseTo(3 / (2 * Math.SQRT2), 12);
+  expect(symbolic.subs({ s: ce.number(2) }).evaluate().json).toBe(0);
+  // An unknown-sign a, and any order but 0, are declined.
+  const held = (expr: unknown) => ce.box(expr as never).evaluate().operator;
+  expect(held(["HankelTransform", ["Divide", ["Sin", ["Multiply", "b", "r"]], "r"], "r", "s"])).toBe("HankelTransform");
+  expect(held(["HankelTransform", ["Divide", ["Sin", "r"], "r"], "r", ["Rational", 1, 3], 1])).toBe("HankelTransform");
+});

@@ -29,3 +29,4 @@ names:
 - Also satisfies the two-term recurrence $D_{n+1} = n\,(D_n + D_{n-1})$.
 - The classic hat-check problem: $D_n$ counts the ways n people can have their hats returned so nobody gets their own.
 - compute-engine leaves negative arguments unevaluated rather than extending Subfactorial analytically.
+- A real, non-integer n continues as $D_n = \Gamma(n+1, -1)/e$, complex-valued; `N(x, d)` past a double's digits sums $\Gamma(a) - e^{i\pi a}\sum_{k\ge 0} 1/(k!\,(a+k))$ with $a = n+1$ (DLMF 8.7.1).
