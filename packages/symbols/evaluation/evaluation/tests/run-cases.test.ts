@@ -157,6 +157,19 @@ function fakeHangingWorker(): NodeWorkerLike {
   };
 }
 
+test("a case's inferred free-symbol types don't reach the next case on the same worker", async () => {
+  // One worker, so the second case is sure to run on the engine the first one typed.
+  // `m + 1` types `m` a number; a later `Transpose(m)` would then collapse to `m`.
+  const results = await runCases(
+    [
+      { id: "types-m", input: ["Add", "m", 1] },
+      { id: "fresh-m", input: ["Transpose", "m"] },
+    ],
+    { concurrency: 1 },
+  );
+  expect(results[1]).toMatchObject({ id: "fresh-m", outcome: "Evaluated", value: ["Transpose", "m"] });
+});
+
 test("a hard-killed case (no cooperative answer) reports outcome Aborted, not a value of Aborted", async () => {
   // Every worker this pool creates hangs (including the replacement after the kill), so
   // only the one case is run here -- ./pool.test.ts already covers a killed worker being

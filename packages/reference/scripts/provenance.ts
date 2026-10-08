@@ -19,6 +19,7 @@
 // behaviour survives — and this file is what holds us to it.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { isolateFreeSymbols } from "@enumeratio/evaluation";
 import type { MathJSON, ReferenceEntry } from "../src/types.ts";
 
 export type Provenance = "compute-engine" | "extension" | "override" | "unknown";
@@ -51,23 +52,6 @@ export function operatorsIn(expr: MathJSON, into = new Set<string>()): Set<strin
   return into;
 }
 
-/** Every symbol NAME appearing anywhere in an expression, head or leaf alike — the
- * candidates `isolateFreeSymbols` (below) has to consider. Walks EVERY array element, not
- * just a string head's operands: `Through`'s own examples call `[[Add, f, g], x]` — an
- * expression APPLIED to `x` whose own "head" (`[Add, f, g]`) is itself a compound, not a
- * plain operator name, so `isCall`/`operatorsIn`'s stricter walk (which stops at a non-string
- * position 0) never reaches the `f`/`g` inside it. Missing that is exactly how `Through`
- * left `f` typed `number` for every later example that mentions it. */
-function symbolsIn(expr: MathJSON, into = new Set<string>()): Set<string> {
-  if (typeof expr === "string") {
-    into.add(expr);
-    return into;
-  }
-  if (!Array.isArray(expr)) return into;
-  for (const item of expr) symbolsIn(item as MathJSON, into);
-  return into;
-}
-
 /** The first subexpression whose operator is `name`, if any. */
 export function findCall(expr: MathJSON, name: string): MathJSON | undefined {
   if (!isCall(expr)) return undefined;
@@ -79,51 +63,6 @@ export function findCall(expr: MathJSON, name: string): MathJSON | undefined {
   return undefined;
 }
 
-/**
- * Run `body()` in a scope where touching `expr` — boxing it, evaluating it, either one —
- * can't leave a FREE symbol's inferred type behind for the next expression to see. Boxing
- * alone (no `evaluate()` needed) already types a bare `x` in `Sqrt(x^2)` as `number`; a
- * value like `f` used as `Unique([3, 3, 3], f)`'s comparator gets typed `function` the same
- * way. A later, unrelated expression that also mentions `x` or `f` (a different catalogue
- * entry's example, say) then answers differently depending on what touched this engine
- * before it — `Or(x, True, z)` short-circuits to `True` while `x` is untyped, but THROWS an
- * incompatible-type error once something else has typed it first.
- *
- * `pushScope()`/`popScope()` undoes a `:=`/`Module`-style BINDING, but not this: a symbol's
- * inferred TYPE survives popping the scope it was inferred in (measured, not assumed — see
- * the reference test this guards). `ce.forget()` doesn't touch it either. The only thing
- * that resets it is `ce.declare(name, "unknown")`, so: snapshot which of `expr`'s symbols
- * are still untyped ("unknown") BEFORE running, and re-declare any of THOSE back to
- * "unknown" afterward — never a symbol that came in already meaning something (a real head
- * like `Sqrt`, a constant like `Pi`), since forcing one of those to "unknown" would corrupt
- * the engine for every example after it, not fix anything.
- */
-function isolateFreeSymbols<T>(ce: ComputeEngine, expr: MathJSON, body: () => T): T {
-  const isUnknown = (name: string): boolean => {
-    try {
-      return ce.box(name as Parameters<ComputeEngine["box"]>[0]).type.toString() === "unknown";
-    } catch {
-      return false;
-    }
-  };
-  const free = [...symbolsIn(expr)].filter(isUnknown);
-  ce.pushScope();
-  try {
-    return body();
-  } finally {
-    ce.popScope();
-    for (const name of free) {
-      if (!isUnknown(name)) {
-        try {
-          ce.declare(name, "unknown");
-        } catch {
-          // Not every string is declarable (a pattern variable like `_a`, say) — best effort.
-        }
-      }
-    }
-  }
-}
-
 /** Whether an engine has a definition for the operator at the top of this call. Boxing
  * `expr` to find out can itself type a free symbol in it (see `isolateFreeSymbols`), so
  * this checks under the same protection rather than leaving that to every caller. */
@@ -131,7 +70,6 @@ export function resolves(ce: ComputeEngine, expr: MathJSON): boolean {
   try {
     return isolateFreeSymbols(
       ce,
-      expr,
       () => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).operatorDefinition !== undefined,
     );
   } catch {
@@ -166,9 +104,9 @@ export const bareUnderstands = (bare: ComputeEngine, expr: MathJSON): boolean =>
  * Every corpus here is evaluated on ONE shared `bare`/`ours` pair (cheap — a fresh
  * `declaredEngine()` per example, or even per catalogue entry, costs real time over a
  * catalogue this size). `isolateFreeSymbols` is what makes that safe: each expression's own
- * free symbols are reset the instant it's done, so nothing about one expression's free
- * variables can survive to change how the NEXT one, or a different corpus reusing the same
- * engines, gets evaluated.
+ * free symbols die with its scope, so nothing about one expression's free variables can
+ * survive to change how the NEXT one, or a different corpus reusing the same engines, gets
+ * evaluated.
  */
 export function divergences(
   bare: ComputeEngine,
@@ -180,8 +118,8 @@ export function divergences(
   const out: Divergence[] = [];
   for (const expression of corpus) {
     if (!bareUnderstands(bare, expression)) continue;
-    const before = isolateFreeSymbols(bare, expression, () => evaluated(bare, expression));
-    const after = isolateFreeSymbols(ours, expression, () => evaluated(ours, expression));
+    const before = isolateFreeSymbols(bare, () => evaluated(bare, expression));
+    const after = isolateFreeSymbols(ours, () => evaluated(ours, expression));
     if (JSON.stringify(before) !== JSON.stringify(after)) {
       out.push({ expression, bare: before, ours: after });
       if (first) break;

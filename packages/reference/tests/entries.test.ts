@@ -109,11 +109,34 @@ const id = (entryName: string, exampleId: string): string => `${entryName}/${exa
 // "Aborted" instead of hanging the whole suite.
 // A row in triage (`role: triage`) holds our current answer, not a claim: it isn't run, and
 // shows as a skipped test until a lane settles it.
-const cases = entries.flatMap((entry) =>
+const inOrder = entries.flatMap((entry) =>
   entry.examples
     .filter((example) => example.role !== "triage")
     .map((example) => ({ id: id(entry.name, example.id), input: example.expr })),
 );
+
+// `CASE_ORDER_SEED=<n>` runs the cases in a seeded random order. No case's answer may depend
+// on which ran before it on the same worker, so every seed must pass the same tests.
+const seed = process.env.CASE_ORDER_SEED;
+const cases = seed === undefined ? inOrder : shuffled(inOrder, Number(seed));
+
+/** `items` in a random order fixed by `seed` (mulberry32 driving a Fisher-Yates shuffle). */
+function shuffled<T>(items: readonly T[], seed: number): T[] {
+  let state = seed >>> 0;
+  const next = (): number => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 2 ** 32;
+  };
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(next() * (i + 1));
+    [out[i], out[j]] = [out[j]!, out[i]!];
+  }
+  return out;
+}
 const results = await runCases(cases, {
   setup,
   timeMs: TIME_MS,
