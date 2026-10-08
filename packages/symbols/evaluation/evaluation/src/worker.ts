@@ -8,7 +8,8 @@
 // (see `@enumeratio/reference`'s `entries.test.ts`, which does exactly that). Only the
 // DECLARATIONS survive across calls: each call still runs in its own `pushScope()`/
 // `popScope()` (`handle` below), so a `:=` or other binding one caller makes is gone before
-// the next caller on this same (reused) worker ever sees it. A session that wants bindings
+// the next caller on this same (reused) worker ever sees it, and the types a call infers for
+// its free symbols are reset too (`isolateFreeSymbols`). A session that wants bindings
 // to PERSIST across calls uses `./session-worker.ts` instead. A worker that gets hard-killed
 // is destroyed outright and the pool spawns a fresh process for the next call, so there is
 // never a stale cache to worry about — this only ever caches within one worker's own life.
@@ -17,6 +18,7 @@ import { parentPort } from "node:worker_threads";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { evaluateCooperatively } from "./cooperative-evaluate.ts";
 import { declareEvaluation } from "./declare.ts";
+import { isolateFreeSymbols } from "./isolate.ts";
 
 interface WorkerRequest {
   readonly id: number;
@@ -67,19 +69,13 @@ async function handle(request: WorkerRequest): Promise<void> {
   const ce = await engineFor(setup);
   parentPort?.postMessage({ id, kind: "started" } satisfies WorkerResponse);
   // A fresh scope for THIS call only: any `:=`/`Assign` (or other binding) it makes lands
-  // here, never in the engine's shared base scope where `engineFor`'s declarations live —
-  // popped in `finally` whether the call succeeds, fails, or is cooperatively aborted, so
-  // the next call on this (reused) worker starts clean regardless of how this one ended.
-  ce.pushScope();
-  try {
-    parentPort?.postMessage({
-      id,
-      kind: "result",
-      ...evaluateCooperatively(ce, json, timeMs, materialize),
-    } satisfies WorkerResponse);
-  } finally {
-    ce.popScope();
-  }
+  // there, never in the engine's shared base scope where `engineFor`'s declarations live,
+  // and the types it infers for free symbols are undone too (see `isolateFreeSymbols`).
+  // Both are restored in a `finally` whether the call succeeds, fails, or is cooperatively
+  // aborted, so the next call on this (reused) worker starts clean regardless of how this
+  // one ended.
+  const answer = isolateFreeSymbols(ce, () => evaluateCooperatively(ce, json, timeMs, materialize));
+  parentPort?.postMessage({ id, kind: "result", ...answer } satisfies WorkerResponse);
 }
 
 parentPort?.on("message", (request: WorkerRequest) => {
