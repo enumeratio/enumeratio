@@ -616,7 +616,12 @@ const ncCodes = tabulate(
               ["Greater", at("ncs", 1), "filled"],
               ["List", at("ncs", 1), 1, at("ncs", 3)],
               lets(
-                [["ncy", pre(at("ncs", 1)), "integer"]],
+                // `ncq` is typed so the lookup's index doesn't depend on the accumulator's own type
+                // (compute-engine 0.150+ then can't prove `ncs` isn't text and won't compile).
+                [
+                  ["ncq", at("ncs", 1), "integer"],
+                  ["ncy", pre("ncq"), "integer"],
+                ],
                 iff(
                   equal("ncy", "nca"),
                   ["List", at("ncs", 1), 2, at("ncs", 3)],
