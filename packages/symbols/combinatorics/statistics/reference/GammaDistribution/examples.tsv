@@ -4,4 +4,4 @@ gamma-cdf-exact			[CDF, [GammaDistribution, 2, 2], 3]	[Add, 1, [Divide, -5, [Mul
 gamma-mean-exact			[Mean, [GammaDistribution, 2, 2]]	4	
 gamma-variance-exact			[Variance, [GammaDistribution, 2, 2]]	8	
 gamma-distribution-one-argument-defaults-scale	Scope		[GammaDistribution, 2]	[GammaDistribution, 2, 1]	
-gamma-cdf-clamps-below-support	Possible issues		[N, [CDF, [GammaDistribution, 2, 2], -1]]	0	
+gamma-cdf-clamps-below-support	Possible issues		[N, [CDF, [GammaDistribution, 2, 2], -1]]	{num: "0.0"}	
