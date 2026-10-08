@@ -53,14 +53,7 @@ export function openRowsClient(): RowsClient {
   };
 
   const ask = async (request: RowsRequest, signal?: AbortSignal): Promise<RowsReply> => {
-    // A page with no SharedWorker constructor cannot open the kernel at all: it runs the rows itself.
-    let kernel: ReturnType<typeof pageKernel>;
-    try {
-      kernel = onPage ? undefined : pageKernel();
-    } catch {
-      kernel = undefined;
-      onPage = true;
-    }
+    const kernel = onPage ? undefined : pageKernel();
     if (kernel !== undefined) {
       try {
         const answer = await kernel({ rows: request }, signal === undefined ? {} : { signal });

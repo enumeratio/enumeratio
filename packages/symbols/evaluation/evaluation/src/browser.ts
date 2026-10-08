@@ -522,8 +522,15 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
     port.postMessage({ setup });
   }
 
-  if (sharedFactory !== undefined) {
-    const shared = sharedFactory(url, { name, type: "module" });
+  // A throwing factory (no `SharedWorker` global, a CSP refusing it) is a definite failure:
+  // the dedicated worker starts at once, with no spawn timeout to wait out.
+  let shared: SharedWorkerLike | undefined;
+  try {
+    shared = sharedFactory?.(url, { name, type: "module" });
+  } catch {
+    shared = undefined;
+  }
+  if (shared !== undefined) {
     port = shared.port;
     attachDispatcher(port);
     port.start?.();

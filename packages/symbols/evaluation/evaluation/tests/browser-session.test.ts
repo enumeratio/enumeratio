@@ -332,3 +332,27 @@ test("a rows call carries its request, and aborting it tells the worker to stop"
   expect(fake.posted.at(-1)).toEqual({ abort: sent.id });
   session.close();
 });
+
+test("a createSharedWorker that throws is a definite failure: the dedicated worker takes over at once", async () => {
+  // No SharedWorker constructor on this page (Chrome for Android): the factory throws
+  // synchronously, and the call goes to a dedicated worker with no spawn wait to sit out.
+  const workers: ReturnType<typeof fakeWorker>[] = [];
+  const session = openSession({
+    spawnTimeoutMs: 60_000,
+    createSharedWorker: () => {
+      throw new ReferenceError("SharedWorker is not defined");
+    },
+    createWorker: () => {
+      const fake = fakeWorker();
+      workers.push(fake);
+      return fake.worker;
+    },
+  });
+
+  const answer = session.evaluate(["Add", 1, 1]);
+  expect(workers).toHaveLength(1);
+  workers[0]!.respond({ id: 0, kind: "result", ok: true, json: 2 });
+  await expect(answer).resolves.toEqual({ value: 2, reset: false });
+
+  session.close();
+});

@@ -73,10 +73,19 @@ type WorkerFactoriesGate = {
 export function openKernelSession(setup?: string): BrowserSession | undefined {
   const factories = (globalThis as WorkerFactoriesGate).__notatioWorkerFactories;
   if (factories === undefined) return undefined;
+  return openHostSession(setup ?? (globalThis as WorkerSetupGate).__notatioWorkerSetup, factories);
+}
+
+/** A session on the host's worker factories. Without a `SharedWorker` constructor (Chrome for
+ *  Android) the shared factory is skipped, so the dedicated worker from the same entry opens. */
+export function openHostSession(
+  setup: string | undefined,
+  factories: { readonly createWorker?: WorkerFactory; readonly createSharedWorker?: SharedWorkerFactory } = {},
+): BrowserSession {
   return openSession({
-    setup: setup ?? (globalThis as WorkerSetupGate).__notatioWorkerSetup,
+    setup,
     createWorker: factories.createWorker,
-    createSharedWorker: factories.createSharedWorker,
+    createSharedWorker: typeof SharedWorker === "undefined" ? undefined : factories.createSharedWorker,
   });
 }
 
@@ -90,7 +99,14 @@ export function pageKernel(
   sessionId: string = PAGE_SESSION,
 ): ((request: RemoteRequest, options?: { signal?: AbortSignal }) => Promise<RemoteAnswer>) | undefined {
   if (pageUnavailable) return undefined;
-  if (page === undefined) page = openKernelSession() ?? null;
+  if (page === undefined) {
+    try {
+      page = openKernelSession() ?? null;
+    } catch {
+      // The host's factory threw: no worker can start on this page, so cells run locally.
+      page = null;
+    }
+  }
   const session = page;
   if (session === null) return undefined;
   return async (request, options = {}) => {
