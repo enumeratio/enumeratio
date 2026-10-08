@@ -10,8 +10,31 @@ export const headOf = (json: Json): string | undefined =>
   Array.isArray(json) && typeof json[0] === "string" ? json[0] : undefined;
 export const argsOf = (json: Json): Json[] => (Array.isArray(json) ? json.slice(1) : []);
 
-/** An integer, written as a number or a numeric string. */
+/**
+ * `head(head(x))` as `head(x)`: a constructor around a value that already carries its head, as
+ * a family's `At` yields (`Permutation(Permutation([…]))`).
+ */
+export function unwrapped(json: Json): Json {
+  let inner = json;
+  while (headOf(inner) !== undefined && headOf(argsOf(inner)[0]) === headOf(inner)) inner = argsOf(inner)[0];
+  return inner;
+}
+
+/** A subset's carrier, `Finset(Tuple(n, members))`, as a family's `At` yields it: its size and members. */
+export function carrierOf(json: Json): { readonly n: number; readonly members: Json } | undefined {
+  const tuple = headOf(json) === "Finset" ? argsOf(json)[0] : undefined;
+  if (headOf(tuple) !== "Tuple") return undefined;
+  const [n, members] = argsOf(tuple);
+  const size = intOf(n);
+  return size === undefined ? undefined : { n: size, members };
+}
+
+/** An integer, written as a number, a numeric string or `Negate(n)`. */
 export function intOf(json: Json): number | undefined {
+  if (headOf(json) === "Negate") {
+    const v = intOf(argsOf(json)[0]);
+    return v === undefined ? undefined : -v;
+  }
   const n =
     typeof json === "number" ? json : typeof json === "string" && json.trim() !== "" ? Number(json) : Number.NaN;
   return Number.isInteger(n) ? n : undefined;

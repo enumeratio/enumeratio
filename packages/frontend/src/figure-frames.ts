@@ -1,14 +1,13 @@
-// `Figure`, lowered: each glyph kind that has a frame becomes the `Show` it stands for, and each
-// frame head has the rules that make a bare layer look like the glyph it replaces.
+// A combinatorial value draws as the `Show` of its frame layer, with the frame's default rules.
+// Each value head reads its layer in its frame's model (strand-frame.ts, cell-frame.ts,
+// tree-frame.ts, path-frame.ts); the glyph kinds of glyphs.ts lower to the same `Show`s.
 //
-//   permutation, set-partition, diagram       Show(StrandDiagram(…))   strand-frame.ts
-//   partition, tableau, composition, subset   Show(CellDiagram(…))     cell-frame.ts
-//   tree, binary-tree                         Show(TreeDiagram(…))     tree-frame.ts
-//   dyck, lattice                             Show(PathDiagram(…))     path-frame.ts
+// A polytope is no glyph: `PolytopeFaces` (polytope-frame.ts) is a `Show` layer of its own.
 
 import { cellLayer, cellModelOf } from "./cell-frame.ts";
 import type { FigureLayer, Json } from "./frame-json.ts";
 import { pathLayer, pathModelOf } from "./path-frame.ts";
+import { polytopeLayer, polytopeModelOf } from "./polytope-frame.ts";
 import {
   lowerStrandFigure,
   STRAND_DEFAULT_BOUNDARY_STYLE,
@@ -20,11 +19,41 @@ import { frameBounds } from "./tiles-canvas.ts";
 import { treeLayer, treeModelOf } from "./tree-frame.ts";
 
 /** The layer heads `Show` reads that are figure frames. */
-export const FIGURE_HEADS = ["StrandDiagram", "CellDiagram", "TreeDiagram", "PathDiagram"] as const;
+export const FIGURE_HEADS = ["StrandDiagram", "CellDiagram", "TreeDiagram", "PathDiagram", "PolytopeFaces"] as const;
 export type FigureHead = (typeof FIGURE_HEADS)[number];
 
-/** The layer a frame head and its data make, or why it can't. */
+/** The frame each combinatorial value draws in: `Show(frame(value))` is its default picture. */
+export const VALUE_FRAMES = {
+  Permutation: "StrandDiagram",
+  SetPartition: "StrandDiagram",
+  Diagram: "StrandDiagram",
+  IntegerPartition: "CellDiagram",
+  StandardTableau: "CellDiagram",
+  Composition: "CellDiagram",
+  Subset: "CellDiagram",
+  PlaneTree: "TreeDiagram",
+  BinaryTree: "TreeDiagram",
+  DyckPath: "PathDiagram",
+  LatticePath: "PathDiagram",
+} as const satisfies Readonly<Record<string, FigureHead>>;
+
+/** The `ImageSize` height, in px, of a value's default picture, by its frame. */
+export const FRAME_HEIGHT: Readonly<Record<Exclude<FigureHead, "PolytopeFaces">, number>> = {
+  StrandDiagram: 140,
+  CellDiagram: 160,
+  TreeDiagram: 200,
+  PathDiagram: 160,
+};
+
+/**
+ * The layer a frame head and its data make, or why it can't. `PolytopeFaces` takes the list of
+ * its layers' expressions, `["List", PolytopeFaces(…), …]`: those of a `Show` share one frame.
+ */
 export function figureLayerOf(head: FigureHead, data: Json): FigureLayer | string {
+  if (head === "PolytopeFaces") {
+    const model = polytopeModelOf(Array.isArray(data) && data[0] === "List" ? data.slice(1) : [data]);
+    return typeof model === "string" ? model : polytopeLayer(model);
+  }
   const model =
     head === "StrandDiagram"
       ? strandModelOf(data)
@@ -48,9 +77,32 @@ const edge = (color: string, width: number, ...more: Json[]): Json => [
   ["AbsoluteThickness", width],
   ...more,
 ];
+const rule = (test: Json, style: Json): Json => ["Rule", test, style];
+
+/** The ink of a polytope's lines and points, light enough for the dark ground. */
+const POLYTOPE_INK = "#c4c4d0";
+
+const picked = (test: Json): Json => ["And", "Selected", test];
+
+/**
+ * What a `PolytopeFaces` draws when the author gives no rules: lines and points in ink, 2-faces
+ * washed, a pick in the accent (a solid's boundary only when picked).
+ */
+const POLYTOPE_DEFAULTS = {
+  colors: [
+    "List",
+    rule(picked("Dimension2"), ["Opacity", 0.35, ACCENT]),
+    rule(picked("Interior"), ["Opacity", 0.12, ACCENT]),
+    rule(picked(["Not", "Interior"]), ACCENT),
+    rule("Dimension2", ["Opacity", 0.1, POLYTOPE_INK]),
+    rule(["Not", "Interior"], POLYTOPE_INK),
+  ] as Json,
+  edges: ["List", rule(picked(["Not", "Interior"]), edge(ACCENT, 2))] as Json,
+};
 
 /** What a frame draws when the author gives no rules: the look of the glyph it stands in for. */
 export const FIGURE_DEFAULTS: Readonly<Record<FigureHead, { readonly colors: Json; readonly edges: Json }>> = {
+  PolytopeFaces: POLYTOPE_DEFAULTS,
   StrandDiagram: { colors: STRAND_DEFAULT_COLOR_RULES, edges: STRAND_DEFAULT_BOUNDARY_STYLE },
   CellDiagram: {
     colors: [
@@ -117,26 +169,26 @@ function expressionOf(
 ): { head: FigureHead; layer: Json; options?: string } | undefined {
   switch (kind) {
     case "partition":
-      return { head: "CellDiagram", layer: ["IntegerPartition", list(value)] };
+      return { head: VALUE_FRAMES.IntegerPartition, layer: ["IntegerPartition", list(value)] };
     case "tableau": {
       // The superstandard filling: 1 … n in reading order.
       let next = 1;
       const rows = value.map((p) => list(Array.from({ length: p }, () => next++)));
-      return { head: "CellDiagram", layer: ["StandardTableau", list(rows)] };
+      return { head: VALUE_FRAMES.StandardTableau, layer: ["StandardTableau", list(rows)] };
     }
     case "composition":
-      return { head: "CellDiagram", layer: ["Composition", list(value)] };
+      return { head: VALUE_FRAMES.Composition, layer: ["Composition", list(value)] };
     case "subset":
-      return { head: "CellDiagram", layer: ["Subset", list(value), n ?? Math.max(1, ...value)] };
+      return { head: VALUE_FRAMES.Subset, layer: ["Subset", list(value), n ?? Math.max(1, ...value)] };
     case "tree":
-      return { head: "TreeDiagram", layer: ["PlaneTree", list(value)] };
+      return { head: VALUE_FRAMES.PlaneTree, layer: ["PlaneTree", list(value)] };
     case "binary-tree":
-      return { head: "TreeDiagram", layer: ["PlaneTree", list(value.map((b) => (b ? 2 : 0)))] };
+      return { head: VALUE_FRAMES.PlaneTree, layer: ["PlaneTree", list(value.map((b) => (b ? 2 : 0)))] };
     case "dyck":
-      return { head: "PathDiagram", layer: ["DyckPath", list(value)] };
+      return { head: VALUE_FRAMES.DyckPath, layer: ["DyckPath", list(value)] };
     case "lattice":
       return {
-        head: "PathDiagram",
+        head: VALUE_FRAMES.LatticePath,
         layer: ["LatticePath", list(value)],
         options: "GridLines -> [1, 1], GridLinesStyle -> Directive(Gray, AbsoluteThickness(1), Opacity(0.35))",
       };
@@ -151,7 +203,7 @@ function print(json: Json): string {
   return head === "List" ? `[${args.map(print).join(", ")}]` : `${head}(${args.map(print).join(", ")})`;
 }
 
-/** What `Figure(kind, value)` stands for: its `Show`, and the box that fits it. Undefined where the SVG draws it. */
+/** A glyph kind's picture as the `Show` of its value, and the box that fits it. Undefined where the SVG draws it. */
 export function lowerFigure(
   kind: string,
   value: readonly number[],

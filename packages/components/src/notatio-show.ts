@@ -5,6 +5,8 @@ import {
   type BoundaryRule,
   boundaryRuleOf,
   CANVAS_BLEND,
+  type CameraState,
+  cameraSpecOf,
   type ColorMixing,
   type ColorRule,
   colorMixingOf,
@@ -27,9 +29,11 @@ import {
   hitAt,
   latticeCoordinates,
   type LatticeView,
+  loadEngineFor,
   type LineStyle,
   maxExtentFor,
   nearestLatticePoint,
+  orbited,
   paddingName,
   plainJson,
   resolvePalette,
@@ -37,9 +41,11 @@ import {
   rulesOf,
   type SchemeColor,
   splitOptions,
+  throughCamera,
   type TileLayer,
   type Vec2,
   wheelZooms,
+  zoomed,
 } from "@enumeratio/frontend/core";
 import { GRAPHICS_OPTIONS } from "@enumeratio/formats";
 import { emitControl } from "./define.ts";
@@ -114,6 +120,8 @@ interface ShowSpec {
   readonly tiles?: {
     readonly head: "LatticeTiles" | "ArrayPlot" | FigureHead;
     readonly data: Json;
+    /** `PolytopeFaces` layers share a frame: all of them, whole, in order. */
+    readonly layers?: readonly Json[];
     /** `Embedding -> "Logarithmic"`: a real field's elements at (log|σ₁|, log|σ₂|). */
     readonly embedding?: string;
   };
@@ -247,11 +255,16 @@ function specOf(json: Json): ShowSpec {
     if (head === undefined || (head !== "LatticeTiles" && head !== "ArrayPlot" && !figure)) continue;
     const split = splitOptions(layer, declared(head));
     const embedding = stringOf(split.options.get("Embedding"));
+    const sharing = figure === "PolytopeFaces" && tiles?.head === "PolytopeFaces";
+    const layers = figure === "PolytopeFaces" ? [...(tiles?.layers ?? []), layer] : undefined;
     tiles = {
       head: head as NonNullable<ShowSpec["tiles"]>["head"],
       data: split.positional[0],
+      ...(layers ? { layers } : {}),
       ...(embedding ? { embedding } : {}),
     };
+    // Layers sharing a frame share its rules: the first to give any.
+    if (sharing && !split.options.has("ColorRules") && !split.options.has("BoundaryStyle")) continue;
     // A figure frame has no look without rules: its own stand in for any the author leaves out.
     const own = figure ? FIGURE_DEFAULTS[figure] : undefined;
     const [colorsGiven, edgesGiven] = [split.options.has("ColorRules"), split.options.has("BoundaryStyle")];
@@ -323,8 +336,13 @@ interface Override {
  *   bar the color schemes, `↺` the scheme's padding past its ends, `⇄` reverses it.
  * - `Selection -> _s`: shift/⌘-click selects several; the element writes them to the variable
  *   `_s` (a list of lattice points), and showing them is up to the page.
- * - `GestureHandling -> "cooperative"` (the default), `"greedy"` or `"none"`: whether the wheel
- *   zooms when the plot isn't engaged.
+ * - `PolytopeFaces(Permutahedron(4))` is a polytope's faces under a camera, several sharing one
+ *   frame; `ViewPoint`, `ViewVertical`, `ViewAngle`, `ViewCenter`, `SphericalRegion -> True` and
+ *   `Magnification` aim it (only a camera frame reads them). Drag to orbit; ⌘/Ctrl + wheel or pinch
+ *   to zoom.
+ * - `GestureHandling -> "cooperative"` (the default), `"greedy"` or `"none"`: `greedy` makes every
+ *   wheel zoom, `none` none; the default leaves a plain wheel to the page, except on a full-window
+ *   figure.
  *
  * Drag to pan; Esc clears the selection; `0` resets the view.
  */
@@ -386,6 +404,13 @@ export class NotatioShow extends LitElement {
   /** Frame the next layer afresh: a newly chosen example is somewhere else entirely. */
   #reframe = false;
   #layerKey = "";
+  /** A camera frame: where the reader has moved the viewer to, until the camera options change. */
+  #writtenSelection = "";
+  #camera: CameraState | undefined;
+  #cameraKey = "";
+  /** The layer as drawn: a camera frame's, projected through the camera. */
+  #shown: ShowLayer | undefined;
+  #touches = new Map<number, Vec2>();
   #canvases: HTMLCanvasElement[] = [];
   #view: LatticeView = { center: [0, 0], extent: 20 };
   #framed = false;
@@ -396,6 +421,7 @@ export class NotatioShow extends LitElement {
   #queued = false;
   #ro: ResizeObserver | undefined;
   #build = 0;
+  #rebuilds = 0;
 
   constructor() {
     super();
@@ -451,9 +477,13 @@ export class NotatioShow extends LitElement {
     return this.#showOptions;
   }
 
-  /** A fixed frame is fitted to its layer: no pan, no zoom. */
+  /** A fixed frame is fitted to its layer: no pan, no zoom. A camera frame is too, in the plane. */
   get #fixed(): boolean {
-    return this.#layer?.view === "fixed";
+    return this.#layer?.view === "fixed" || this.#isCamera;
+  }
+
+  get #isCamera(): boolean {
+    return this.#layer?.view === "camera";
   }
 
   get #gestures(): GestureHandling {
@@ -490,6 +520,10 @@ export class NotatioShow extends LitElement {
     }
     if (build !== this.#build) return;
     this.#showOptions = options;
+    const cameraKey = JSON.stringify(
+      ["ViewPoint", "ViewVertical", "ViewAngle", "ViewCenter", "Magnification"].map((k) => options.get(k)),
+    );
+    if (cameraKey !== this.#cameraKey) [this.#cameraKey, this.#camera] = [cameraKey, undefined];
     await this.#bind();
   }
 
@@ -504,7 +538,14 @@ export class NotatioShow extends LitElement {
 
   /** Select what the selection's variable holds, when it holds a list of points. */
   #adoptBoundSelection(): void {
-    const selected = this.#selectionName === undefined ? undefined : this._params.get(this.#selectionName);
+    let selected = this.#selectionName === undefined ? undefined : this._params.get(this.#selectionName);
+    // A list written out is the starting selection, taken once per reading.
+    const written = this.#options.get("Selection");
+    if (this.#selectionName === undefined && headOf(written) === "List") {
+      const key = JSON.stringify(written);
+      if (key === this.#writtenSelection) return;
+      [this.#writtenSelection, selected] = [key, written];
+    }
     if (!Array.isArray(selected) || selected[0] !== "List") return;
     const points = selected
       .slice(1)
@@ -521,7 +562,10 @@ export class NotatioShow extends LitElement {
       this._status = "";
       return;
     }
-    const spec = specOf(bound);
+    const rebuild = ++this.#rebuilds;
+    const spec = await evaluatedFigure(specOf(this.#source), specOf(bound));
+    // A later binding started its own rebuild while this one evaluated: that one draws.
+    if (rebuild !== this.#rebuilds) return;
     if (await this.#followExample(spec)) return;
     const key = JSON.stringify([spec.tiles, spec.aspect]);
     if (key !== this.#layerKey) {
@@ -534,6 +578,7 @@ export class NotatioShow extends LitElement {
       this.#layerKey = key;
       // A new layer's points are other points: start from what the variable holds, if anything.
       this._selection = [];
+      this.#writtenSelection = "";
       this.#adoptBoundSelection();
       // A finite layer is framed whole whenever it changes (a new n is a new table); an
       // unbounded one once, so stepping the ring keeps the reader where they were.
@@ -546,6 +591,7 @@ export class NotatioShow extends LitElement {
     }
     this._status = spec.unread > 0 ? `${spec.unread} of the layer's rules didn't read.` : "";
     this._spec = spec;
+    this.#aim();
     this.#clamp();
     this.#draw();
   }
@@ -645,6 +691,81 @@ export class NotatioShow extends LitElement {
     );
   }
 
+  /** The camera frame's state, from its options until the reader moves it. */
+  #cameraState(): CameraState {
+    return (this.#camera ??= { viewPoint: cameraSpecOf(this.#options).viewPoint, zoom: 1 });
+  }
+
+  /** Project a camera frame's layer through the camera, and fit the view to it. */
+  #aim(): void {
+    const layer = this.#layer;
+    if (layer?.view !== "camera") {
+      this.#shown = undefined;
+      return;
+    }
+    const { layer: shown, view } = throughCamera(
+      layer,
+      cameraSpecOf(this.#options),
+      this.#cameraState(),
+      this.#w / this.#h,
+    );
+    this.#shown = shown as ShowLayer;
+    this.#view = view;
+  }
+
+  /** Move the viewer by a drag of dx, dy CSS pixels, or by a zoom factor. */
+  #moveCamera(change: { drag?: Vec2; zoom?: number }): void {
+    const state = this.#cameraState();
+    const spec = cameraSpecOf(this.#options);
+    this.#camera = {
+      viewPoint: change.drag
+        ? orbited(state.viewPoint, spec.viewVertical, change.drag[0], change.drag[1])
+        : state.viewPoint,
+      zoom: change.zoom ? zoomed(state.zoom * change.zoom) : state.zoom,
+    };
+    this.#moved = true;
+    this.#aim();
+    this.#drawNow();
+  }
+
+  /** A press on a camera frame: a drag orbits, two fingers pinch, a click picks. */
+  #pressCamera(e: PointerEvent, canvas: HTMLCanvasElement): void {
+    this.#touches.set(e.pointerId, [e.clientX, e.clientY]);
+    canvas.setPointerCapture(e.pointerId);
+    const [x0, y0] = [e.clientX, e.clientY];
+    let dragged = false;
+    const move = (m: PointerEvent): void => {
+      const before = this.#touches.get(m.pointerId);
+      if (!before) return;
+      const other = [...this.#touches].find(([id]) => id !== m.pointerId)?.[1];
+      if (other) {
+        const [was, now] = [
+          Math.hypot(before[0] - other[0], before[1] - other[1]),
+          Math.hypot(m.clientX - other[0], m.clientY - other[1]),
+        ];
+        dragged = true;
+        this.#touches.set(m.pointerId, [m.clientX, m.clientY]);
+        if (was > 0) this.#moveCamera({ zoom: now / was });
+        return;
+      }
+      if (!dragged && Math.hypot(m.clientX - x0, m.clientY - y0) < SLOP) return;
+      dragged = true;
+      this.#touches.set(m.pointerId, [m.clientX, m.clientY]);
+      this.#moveCamera({ drag: [m.clientX - before[0], m.clientY - before[1]] });
+    };
+    const up = (u: PointerEvent): void => {
+      this.#touches.delete(u.pointerId);
+      canvas.removeEventListener("pointermove", move);
+      canvas.removeEventListener("pointerup", up);
+      canvas.removeEventListener("pointercancel", up);
+      if (!dragged && this.#touches.size === 0)
+        this.#select(this.#hitsAt(this.#planeAt(u.clientX, u.clientY)), u.shiftKey || u.metaKey || u.ctrlKey);
+    };
+    canvas.addEventListener("pointermove", move);
+    canvas.addEventListener("pointerup", up);
+    canvas.addEventListener("pointercancel", up);
+  }
+
   #resize(): void {
     const first = this.#canvases[0];
     if (!first) return;
@@ -670,7 +791,7 @@ export class NotatioShow extends LitElement {
 
   #drawNow = (): void => {
     this.#queued = false;
-    const layer = this.#layer;
+    const layer = this.#shown ?? this.#layer;
     const spec = this._spec;
     const [tiles, lines, axes] = this.#canvases.map((c) => c.getContext("2d"));
     if (!layer || !spec || !tiles || !lines || !axes) return;
@@ -687,7 +808,9 @@ export class NotatioShow extends LitElement {
       budgetMs: FRAME_BUDGET,
     });
     const gridStep = spec.grid?.auto ? (layer.autoGrid ?? spec.grid.step) : spec.grid?.step;
-    if (spec.grid && gridStep)
+    // A camera frame has no lattice to ruled lines or axes over.
+    const flat = layer.view !== "camera";
+    if (flat && spec.grid && gridStep)
       drawLatticeLines(
         lines,
         this.#w,
@@ -700,7 +823,7 @@ export class NotatioShow extends LitElement {
         false,
         layer.gridOffset,
       );
-    if (spec.axes) {
+    if (flat && spec.axes) {
       const ground = resolvePalette({ palette: this.ground });
       const style = { ...spec.axes.style, color: spec.axes.style.color || ground.foreground };
       drawLatticeLines(axes, this.#w, this.#h, layer.basis, layer.grid, this.#view, 1, style, true);
@@ -742,7 +865,7 @@ export class NotatioShow extends LitElement {
    * within a finger's reach of it (a link picks all its members), or nothing.
    */
   #hitsAt(plane: Vec2): readonly Vec2[] {
-    const layer = this.#layer!;
+    const layer = this.#shown ?? this.#layer!;
     if (!layer.place) return [this.#elementAt(plane)];
     const dpr = this.#w / (this.#canvases[0]?.clientWidth || this.#w);
     return hitAt(layer, plane, (HIT_REACH * dpr * 2 * this.#view.extent) / this.#h);
@@ -913,6 +1036,10 @@ export class NotatioShow extends LitElement {
     if (!this.#layer) return;
     canvas.focus({ preventScroll: true });
     if (this.#pressLocator(e, canvas)) return;
+    if (this.#isCamera) {
+      this.#pressCamera(e, canvas);
+      return;
+    }
     const r = canvas.getBoundingClientRect();
     const [x0, y0] = [e.clientX, e.clientY];
     let [px, py] = [x0, y0];
@@ -973,6 +1100,12 @@ export class NotatioShow extends LitElement {
 
   #onWheel = (e: WheelEvent): void => {
     const canvas = e.currentTarget as HTMLCanvasElement;
+    if (this.#isCamera) {
+      if (!wheelZooms(e, canvas, this.#gestures)) return;
+      e.preventDefault();
+      this.#moveCamera({ zoom: Math.exp(-e.deltaY * 0.005) });
+      return;
+    }
     if (this.#fixed || !wheelZooms(e, canvas, this.#gestures) || !this.#layer) return;
     e.preventDefault();
     this.#moved = true;
@@ -1003,6 +1136,10 @@ export class NotatioShow extends LitElement {
   /** Back to the frame the layer chose. */
   /** Where a layer starts: a finite one fitted whole to the canvas, else the layer's own home. */
   #home(layer: ShowLayer): LatticeView {
+    if (layer.view === "camera") {
+      this.#aim();
+      return this.#view;
+    }
     if (layer.view === "fixed" || layer.place) return fitView(layer, this.#w / this.#h);
     if (!layer.bounds) return layer.home?.() ?? { center: [0, 0], extent: 20 };
     const { i, j } = layer.bounds;
@@ -1018,6 +1155,7 @@ export class NotatioShow extends LitElement {
 
   resetView = (): void => {
     this.#moved = false;
+    this.#camera = undefined;
     this.#view = this.#layer ? this.#home(this.#layer) : { center: [0, 0], extent: 20 };
     this.#clamp();
     this.#drawNow();
@@ -1156,7 +1294,7 @@ export class NotatioShow extends LitElement {
     const ground = resolvePalette({ palette: this.ground });
     const legendAt: FramePlacement = placementOf(this.legendAt, "right");
     const stage = html`<div
-        class=${`notatio-show-layers${this.#fixed ? " is-fixed" : ""}`}
+        class=${`notatio-show-layers${this.#fixed ? " is-fixed" : ""}${this.#isCamera ? " is-camera" : ""}`}
         style=${`background:${ground.background}`}
       >
         ${["tiles", "lines", "axes"].map(
@@ -1231,6 +1369,46 @@ function prefetchLayers(json: Json): void {
   }
 }
 
+const wildcarded = (json: Json): boolean => JSON.stringify(json ?? null).includes('"_');
+
+/**
+ * `bound`, with a figure layer's data evaluated where its source was written over the scope's
+ * variables. A value the frame draws keeps its head and has its arguments evaluated:
+ * `Subset([1, 3], _n)` is a subset, though compute-engine reads it as a predicate and evaluates
+ * it to `False`. Data the frame can't draw that way is evaluated whole: `At(Permutations(4), _k)`
+ * is the k-th permutation. Data written whole stays as written, and needs no engine.
+ */
+async function evaluatedFigure(source: ShowSpec, bound: ShowSpec): Promise<ShowSpec> {
+  const tiles = bound.tiles;
+  if (!tiles || tiles.head === "LatticeTiles" || tiles.head === "ArrayPlot") return bound;
+  const head = tiles.head;
+  const written = source.tiles;
+  const evaluate = async (json: Json): Promise<Json> => {
+    const ce = await loadEngineFor(json);
+    return plainJson(ce.box(json as never).evaluate().json);
+  };
+  /** `value` (bound from `writtenValue`), drawn as `draws` reads it. */
+  const evaluated = async (value: Json, writtenValue: Json, draws: (json: Json) => boolean): Promise<Json> => {
+    if (!wildcarded(writtenValue)) return value;
+    const valueHead = headOf(value);
+    if (valueHead !== undefined && !valueHead.startsWith("_")) {
+      const writtenArgs = argsOf(writtenValue);
+      const args = await Promise.all(argsOf(value).map((arg, k) => (wildcarded(writtenArgs[k]) ? evaluate(arg) : arg)));
+      const kept: Json = [valueHead, ...args];
+      if (draws(kept)) return kept;
+    }
+    return evaluate(value);
+  };
+  const drawn = (json: Json): boolean => typeof figureLayerOf(head, json) !== "string";
+  if (tiles.layers) {
+    const layers = await Promise.all(
+      tiles.layers.map((layer, k) => evaluated(layer, written?.layers?.[k], (json) => drawn(["List", json]))),
+    );
+    return { ...bound, tiles: { ...tiles, layers } };
+  }
+  return { ...bound, tiles: { ...tiles, data: await evaluated(tiles.data, written?.data, drawn) } };
+}
+
 /**
  * `AlgebraicIntegers(Sqrt(n))` and `AlgebraicOrder(Sqrt(n))` as the quadratic rings they are:
  * `QuadraticIntegers(n)` and ℤ[√n], `QuadraticOrder(4n)`. Read here, unevaluated, since a Show's
@@ -1251,8 +1429,9 @@ function quadraticRingOf(ring: Json): Json {
  */
 async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): Promise<ShowLayer | string> {
   if (tiles === undefined)
-    return "Show needs a layer: LatticeTiles(ring, …), ArrayPlot(table, …), StrandDiagram(diagram, …), CellDiagram(cells, …), TreeDiagram(tree, …) or PathDiagram(path, …).";
-  if (tiles.head !== "LatticeTiles" && tiles.head !== "ArrayPlot") return figureLayerOf(tiles.head, tiles.data);
+    return "Show needs a layer: LatticeTiles(ring, …), ArrayPlot(table, …), StrandDiagram(diagram, …), CellDiagram(cells, …), TreeDiagram(tree, …), PathDiagram(path, …) or PolytopeFaces(polytope, …).";
+  if (tiles.head !== "LatticeTiles" && tiles.head !== "ArrayPlot")
+    return figureLayerOf(tiles.head, tiles.layers ? ["List", ...tiles.layers] : tiles.data);
   if (tiles.head === "ArrayPlot") {
     // `MultiplicationTable(ring, ElementOrder -> ChineseRemainder)`: how rows and columns list the ring.
     const table = splitOptions(tiles.data, new Set(["ElementOrder"]));

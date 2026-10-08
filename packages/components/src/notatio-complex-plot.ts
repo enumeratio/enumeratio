@@ -35,8 +35,7 @@ import {
  * interpolate between slider steps and still hold frame.
  *
  * `mask` dims everything outside that radius, for a series whose disk of convergence
- * is part of the story (the polylog's |z| < 1). Drag to pan; scroll to zoom once clicked, or
- * ⌘/Ctrl+scroll.
+ * is part of the story (the polylog's |z| < 1). Drag to pan; ⌘/Ctrl + scroll to zoom.
  *
  * Framing is manipulable too: `extent="_e"` takes a wildcard directly, and `center`
  * accepts the Epsil list form `[_c, 0]` as well as a bare `re,im`.

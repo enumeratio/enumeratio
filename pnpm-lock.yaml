@@ -648,6 +648,9 @@ importers:
       '@enumeratio/boxes':
         specifier: workspace:*
         version: link:../boxes
+      '@enumeratio/braid':
+        specifier: workspace:*
+        version: link:../symbols/groups/braid
       '@enumeratio/ce-patches':
         specifier: workspace:*
         version: link:../ce-patches
@@ -676,9 +679,6 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.150.0
         version: 0.150.0
-      '@enumeratio/braid':
-        specifier: workspace:*
-        version: link:../symbols/groups/braid
       '@enumeratio/combinatorics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/combinatorics
@@ -980,6 +980,9 @@ importers:
       '@enumeratio/residues':
         specifier: workspace:*
         version: link:../symbols/arithmetic/residues
+      '@enumeratio/statistics':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/statistics
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../structures

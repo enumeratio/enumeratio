@@ -1,6 +1,8 @@
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { optionsOf } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
+import { FRAME_HEIGHT, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
+import { plainJson } from "./graphics-rules.ts";
 import { GRADIENTS } from "./palettes.ts";
 import type { ScaleName } from "./scales.ts";
 
@@ -48,6 +50,8 @@ export interface VisualSymbol {
    * a scope and so must be an attribute the page's scopes can see.
    */
   readonly holdsOptions?: true;
+  /** Whether the symbol draws these operands; where it does not, the head typesets as it did. */
+  readonly when?: (ops: readonly MathJsonExpression[]) => boolean;
   readonly options?: Readonly<Record<string, string | ((value: MathJsonExpression) => Record<string, string>)>>;
   /** For a control: the shape of what it binds, which is how `reduce` reads it statically. */
   readonly control?: ControlKind;
@@ -475,6 +479,56 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       style: `display:block;min-height:${showHeight(ops)}px`,
     }),
   },
+  // A polytope displays as its faces under a camera, as Wolfram's `Polyhedron` displays as
+  // `Graphics3D`: `Permutahedron(4)` is `Show(PolytopeFaces(Permutahedron(4)))`.
+  ...["Permutahedron", "Simplex", "CrossPolytope", "Hypercube", "Associahedron"].map((head): VisualSymbol => ({
+    head,
+    tag: "notatio-show",
+    attributes: (ops) => ({
+      value: epsil([
+        "Show",
+        ["PolytopeFaces", [head, ...ops]],
+        ["KeyValuePair", "Selection", ["List"]],
+        ["KeyValuePair", "SphericalRegion", "True"],
+        ["KeyValuePair", "ImageSize", ["List", "Automatic", 320]],
+      ] as Json),
+      style: "display:block;min-height:320px",
+    }),
+  })),
+  // A braid displays as its strand diagram, a level per generator: `Braid(3, [1, -2])` is
+  // `Show(StrandDiagram(Braid(3, [1, -2])))`, its strands picked by a click.
+  {
+    head: "Braid",
+    tag: "notatio-show",
+    attributes: (ops) => {
+      const generators = headOf(ops[1]) === "List" ? opsOf(ops[1]).length : 0;
+      const height = Math.min(480, Math.max(160, 60 + 32 * generators));
+      return {
+        value: epsil([
+          "Show",
+          ["StrandDiagram", ["Braid", ...ops]],
+          ["KeyValuePair", "Selection", ["List"]],
+          ["KeyValuePair", "ImageSize", ["List", "Automatic", height]],
+        ] as Json),
+        style: `display:block;min-height:${height}px`,
+      };
+    },
+  },
+  // A combinatorial value draws as the `Show` of its frame layer, with the frame's default rules:
+  // `Permutation([3, 1, 2])` is `Show(StrandDiagram(Permutation([3, 1, 2])))`.
+  ...Object.entries(VALUE_FRAMES).map(([head, frame]): VisualSymbol => ({
+    head,
+    tag: "notatio-show",
+    when: (ops) => typeof figureLayerOf(frame, plainJson([head, ...ops])) !== "string",
+    attributes: (ops) => ({
+      value: epsil([
+        "Show",
+        [frame, [head, ...ops]],
+        ["KeyValuePair", "ImageSize", ["List", "Automatic", FRAME_HEIGHT[frame]]],
+      ] as Json),
+      style: `display:block;min-height:${FRAME_HEIGHT[frame]}px`,
+    }),
+  })),
   {
     head: "ComplexPlot",
     tag: "notatio-complex-plot",
@@ -1068,7 +1122,8 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   // A string in a layout is a run of text, not a thing to typeset.
   const text = strOf(expr);
   if (text !== undefined && inScope) return { tag: "span", attributes: {}, text };
-  const symbol = head === undefined ? undefined : BY_HEAD.get(head);
+  const found = head === undefined ? undefined : BY_HEAD.get(head);
+  const symbol = found?.when?.(opsOf(expr)) === false ? undefined : found;
   if (symbol === undefined) {
     return inScope ? { tag: "notatio-dynamic", attributes: { value: epsil(expr) } } : undefined;
   }

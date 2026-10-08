@@ -39,7 +39,7 @@ import "@enumeratio/components";
   on change.
 - **Other** — `<notatio-code>`, `<notatio-terminal>` (a real terminal emulator running
   `@enumeratio/cli`'s logic), `<notatio-collection-table>`, `<notatio-clock>`,
-  `<notatio-torus-square>`, `<notatio-polytope>`, `<notatio-curve-3d>`.
+  `<notatio-torus-square>`, `<notatio-curve-3d>`.
 
 `./define.ts`'s `defineControl` is how a new control registers its tag and joins
 `CONTROL_TAGS`, the set a scope's `querySelectorAll` reads.

@@ -1,14 +1,14 @@
-id	section	role	expr	expected	caption
-implies-becomes-or-not			[LogicalExpand, [Implies, p, b]]	[Or, b, [Not, p]]	
-logicalexpand-p-factorial-q-r			[LogicalExpand, [And, p, [Not, [Or, q, r]]]]	[And, p, [Not, q], [Not, r]]	
-distributes-and-over-or	Scope		[LogicalExpand, [And, p, [Or, b, r]]]	[Or, [And, b, p], [And, p, r]]	
-xor-eliminated-into-dnf	Scope		[LogicalExpand, [Xor, p, b]]	[Or, [And, b, [Not, p]], [And, p, [Not, b]]]	
-a-contradictory-term-drops-out	Scope		[LogicalExpand, [And, p, [Not, p]]]	False	
-logicalexpand-a-factorial-a	Scope		[LogicalExpand, [Or, a, [Not, a]]]	[Or, a, [Not, a]]	The law of excluded middle is not simplified
-logicalexpand-a-factorial-a-2	Scope		[LogicalExpand, [And, a, [Not, a]]]	False	A contradiction collapses to False
-logicalexpand-x-eq-a-y-eq-b-x-eq-a-y-eq-b	Scope		[LogicalExpand, [Or, [And, [Equal, x, a], [Equal, y, b]], [Equal, x, a], [Equal, y, b]]]	[Or, [Equal, x, a], [And, [Equal, x, a], [Equal, y, b]], [Equal, y, b]]	Equations are kept as atoms; the terms are only reordered
-logicalexpand-a-b-factorial-c-d-k	Scope		[LogicalExpand, [And, [Or, a, b], [Not, [Or, c, d, k]]]]	[Or, [And, a, [Not, c], [Not, d], [Not, k]], [And, b, [Not, c], [Not, d], [Not, k]]]	
-logicalexpand-xor-p-q-r	Scope		[LogicalExpand, [Xor, p, q, r]]	[Or, [And, p, q, r], [And, p, [Not, q], [Not, r]], [And, q, [Not, p], [Not, r]], [And, r, [Not, p], [Not, q]]]	
-logicalexpand-t	Applications		[LogicalExpand, t]	t	A symbol is already expanded
-logicalexpand-factorial-a-b	Properties		[LogicalExpand, [Not, [Or, a, b]]]	[And, [Not, a], [Not, b]]	De Morgan: the negation of an Or is the And of negations
-logicalexpand-factorial-a-b-2	Properties		[LogicalExpand, [Not, [And, a, b]]]	[Or, [Not, a], [Not, b]]	De Morgan the other way: negated And becomes Or of negations
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+implies-becomes-or-not			[LogicalExpand, [Implies, p, b]]	[Or, b, [Not, p]]			
+logicalexpand-p-factorial-q-r			[LogicalExpand, [And, p, [Not, [Or, q, r]]]]	[And, p, [Not, q], [Not, r]]			
+distributes-and-over-or	Scope		[LogicalExpand, [And, p, [Or, b, r]]]	[Or, [And, b, p], [And, p, r]]			
+xor-eliminated-into-dnf	Scope		[LogicalExpand, [Xor, p, b]]	[Or, [And, b, [Not, p]], [And, p, [Not, b]]]			
+a-contradictory-term-drops-out	Scope		[LogicalExpand, [And, p, [Not, p]]]	False			
+logicalexpand-a-factorial-a	Scope		[LogicalExpand, [Or, a, [Not, a]]]	[Or, a, [Not, a]]	The law of excluded middle is not simplified	unevaluated	ours returns the input; Wolfram rewrites it to True
+logicalexpand-a-factorial-a-2	Scope		[LogicalExpand, [And, a, [Not, a]]]	False	A contradiction collapses to False		
+logicalexpand-x-eq-a-y-eq-b-x-eq-a-y-eq-b	Scope		[LogicalExpand, [Or, [And, [Equal, x, a], [Equal, y, b]], [Equal, x, a], [Equal, y, b]]]	[Or, [Equal, x, a], [And, [Equal, x, a], [Equal, y, b]], [Equal, y, b]]	Equations are kept as atoms; the terms are only reordered		
+logicalexpand-a-b-factorial-c-d-k	Scope		[LogicalExpand, [And, [Or, a, b], [Not, [Or, c, d, k]]]]	[Or, [And, a, [Not, c], [Not, d], [Not, k]], [And, b, [Not, c], [Not, d], [Not, k]]]			
+logicalexpand-xor-p-q-r	Scope		[LogicalExpand, [Xor, p, q, r]]	[Or, [And, p, q, r], [And, p, [Not, q], [Not, r]], [And, q, [Not, p], [Not, r]], [And, r, [Not, p], [Not, q]]]			
+logicalexpand-t	Applications		[LogicalExpand, t]	t	A symbol is already expanded		
+logicalexpand-factorial-a-b	Properties		[LogicalExpand, [Not, [Or, a, b]]]	[And, [Not, a], [Not, b]]	De Morgan: the negation of an Or is the And of negations		
+logicalexpand-factorial-a-b-2	Properties		[LogicalExpand, [Not, [And, a, b]]]	[Or, [Not, a], [Not, b]]	De Morgan the other way: negated And becomes Or of negations		

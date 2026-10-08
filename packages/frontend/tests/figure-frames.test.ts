@@ -95,6 +95,27 @@ describe("the cell frame", () => {
     expect([1, 2, 3, 4, 5].map((k) => layer.has(1, k, "IsFilled"))).toEqual([true, false, true, false, false]);
   });
 
+  it("reads a subset's carrier as its Subset, its size from the tuple", () => {
+    const carrier = cells(["Finset", ["Tuple", 5, list(1, 3)]]);
+    const subset = cells(["Subset", list(1, 3), 5]);
+    expect(addressesOf(carrier)).toEqual(addressesOf(subset));
+    expect([1, 2, 3, 4, 5].map((k) => carrier.has(1, k, "IsFilled"))).toEqual([true, false, true, false, false]);
+    expect(figureLayerOf("CellDiagram", ["Finset", list(1, 3)])).toMatch(/Finset needs its carrier/);
+  });
+
+  it("reads a value wrapped in its own head, as a family's At writes it", () => {
+    const wrapped = cells(["IntegerPartition", ["IntegerPartition", list(3, 1)]]);
+    expect(addressesOf(wrapped)).toEqual(addressesOf(partition(3, 1)));
+    expect(figureLayerOf("StrandDiagram", ["Permutation", ["Permutation", list(3, 1, 2)]])).not.toBeTypeOf("string");
+    expect(figureLayerOf("PathDiagram", ["DyckPath", ["DyckPath", list(1, 0, 1, 0)]])).not.toBeTypeOf("string");
+    expect(figureLayerOf("TreeDiagram", ["PlaneTree", ["PlaneTree", list(2, 0, 0)]])).not.toBeTypeOf("string");
+  });
+
+  it("reads a subset's carrier as the argument of Subset too", () => {
+    const inner = cells(["Subset", ["Finset", ["Tuple", 5, list(1, 3)]]]);
+    expect(addressesOf(inner)).toEqual(addressesOf(cells(["Subset", list(1, 3), 5])));
+  });
+
   it("names what it cannot read", () => {
     expect(figureLayerOf("CellDiagram", ["IntegerPartition", list(1, 3)])).toMatch(/largest first/);
     expect(figureLayerOf("CellDiagram", ["Gizmo"])).toMatch(/CellDiagram needs/);

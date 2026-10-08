@@ -19,6 +19,10 @@
       "types": "./dist/notation.d.mts",
       "import": "./dist/notation.mjs"
     },
+    "./words": {
+      "types": "./dist/words.d.mts",
+      "import": "./dist/words.mjs"
+    },
     "./declares.json": "./dist/declares.json",
     "./package.json": "./package.json"
   },

@@ -214,6 +214,9 @@ const OVERRIDDEN = [
   "ChineseRemainder",
   "Chop",
   "Clamp",
+  // Hypercomplex widens its argument to `value`, so Conjugate(Transpose(m)) of an unevaluated
+  // Transpose holds, where a bare engine rejects it as an incompatible type.
+  "Conjugate",
   "ContinuedFraction",
   "Cos",
   "Cosh",
@@ -1246,10 +1249,10 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
 // Regression for the free-symbol leak `isolateFreeSymbols` (provenance.ts) guards against:
 // `Sqrt(x^2)` types its free symbol `x` as `number`; `Or(x, True, z)` short-circuits to
 // `True` while `x` is untyped, but THROWS an incompatible-type error once something else
-// has typed `x` first on the SAME engine — measured directly in `.scratch` while building
-// this fix; `pushScope()`/`popScope()` alone does not undo the typing, only redeclaring the
-// symbol does. Two entries whose examples hit exactly this, sharing one engine pair — the
-// normal way `provenanceLedger`/`collect` run the whole catalogue.
+// has typed `x` first on the SAME engine. A free symbol boxed outside any scope keeps its
+// type; `isolateFreeSymbols` runs each example in a scope of its own. Two entries whose
+// examples hit exactly this, sharing one engine pair — the normal way
+// `provenanceLedger`/`collect` run the whole catalogue.
 const typesXAsNumber: ReferenceEntry = {
   name: "Sqrt",
   domain: "arithmetic",

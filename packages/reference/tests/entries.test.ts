@@ -2,22 +2,23 @@
 // @enumeratio/analytic (CI runs tests before builds).
 import { runCases } from "@enumeratio/evaluation/node";
 import { expect, test } from "vite-plus/test";
-import { referenceData } from "../src/node.ts";
+import { OWN_ENGINE, referenceData } from "../src/node.ts";
 
-// Every head the reference engine declares, from every package's YAML. A head two packages
-// document runs once per copy, named `<package>: <Head>`; statistics and domains run under
-// their own engines, in their own packages' tests.
-// So do the heads that read the carriers' tables, which need the carriers.
-const OWN_ENGINE = new Set(["statistics", "domains"]);
+// Every head the reference engine declares, from every package's YAML, and every OWN_ENGINE
+// package's heads (statistics), each run in its own engine (`scripts/own-engines.ts`) as a second
+// batch through the same runner. A head two packages document runs once per copy, named
+// `<package>: <Head>`. The heads that read the carriers' tables, which need the carriers, are in
+// neither batch.
 const ON_CARRIERS = new Set(["CombinatorialStat", "CombinatorialMap"]);
 const { heads } = referenceData();
-const loaded = heads.filter((h) => !OWN_ENGINE.has(h.package) && !ON_CARRIERS.has(h.head));
-const copies = new Map<string, number>();
-for (const h of loaded) copies.set(h.head, (copies.get(h.head) ?? 0) + 1);
-const entries = loaded.map((h) => ({
-  ...h.entry,
-  name: copies.get(h.head)! > 1 ? `${h.package}: ${h.head}` : h.head,
-}));
+type Head = (typeof heads)[number];
+const named = (group: readonly Head[]) => {
+  const copies = new Map<string, number>();
+  for (const h of group) copies.set(h.head, (copies.get(h.head) ?? 0) + 1);
+  return group.map((h) => ({ ...h.entry, name: copies.get(h.head)! > 1 ? `${h.package}: ${h.head}` : h.head }));
+};
+const entries = named(heads.filter((h) => !OWN_ENGINE.has(h.package) && !ON_CARRIERS.has(h.head)));
+const ownEntries = named(heads.filter((h) => OWN_ENGINE.has(h.package)));
 
 /** A `{num}` literal's digit string, or `undefined` for anything else. */
 const numOf = (x: unknown): string | undefined =>
@@ -87,10 +88,12 @@ const masked = (node: unknown, keys: ReadonlySet<string>): unknown => {
   return node.map((child) => masked(child, keys));
 };
 
-// `@enumeratio/evaluation/node`'s `runCases` `setup` module — declares every library the
-// reference engine declares (see scripts/engines.ts's own comment on why it's not
-// `DECLARATIONS` verbatim: the worker's engine already has `@enumeratio/evaluation`).
-const setup = new URL("../scripts/engines.ts", import.meta.url).href;
+// `@enumeratio/evaluation/node`'s `runCases` `setup` modules: the reference engine's (declares
+// every library the reference engine declares; see scripts/engines.ts's own comment on why it's
+// not `DECLARATIONS` verbatim: the worker's engine already has `@enumeratio/evaluation`), and the
+// own engines' (scripts/own-engines.ts).
+const referenceSetup = new URL("../scripts/engines.ts", import.meta.url).href;
+const ownSetup = new URL("../scripts/own-engines.ts", import.meta.url).href;
 
 /** Per-example caps: generous for a real reference example, tight enough that a runaway
  * one fails fast instead of hanging the suite or eating the machine's memory (this box
@@ -103,58 +106,86 @@ const CONCURRENCY = 3;
 
 const id = (entryName: string, exampleId: string): string => `${entryName}/${exampleId}`;
 
+// `CASE_ORDER_SEED=<n>` runs the cases in a seeded random order. No case's answer may depend
+// on which ran before it on the same worker, so every seed must pass the same tests.
+const seed = process.env.CASE_ORDER_SEED;
+
+/** `items` in a random order fixed by `seed` (mulberry32 driving a Fisher-Yates shuffle). */
+function shuffled<T>(items: readonly T[], seed: number): T[] {
+  let state = seed >>> 0;
+  const next = (): number => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 2 ** 32;
+  };
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(next() * (i + 1));
+    [out[i], out[j]] = [out[j]!, out[i]!];
+  }
+  return out;
+}
 // Re-evaluate every documented example, each in its own worker with its own time/memory
 // cap, and pin it to `expected`. A change in compute-engine's behaviour (or a bad example)
 // fails here instead of shipping a wrong reference page; a runaway example fails as
 // "Aborted" instead of hanging the whole suite.
 // A row in triage (`role: triage`) holds our current answer, not a claim: it isn't run, and
 // shows as a skipped test until a lane settles it.
-const cases = entries.flatMap((entry) =>
-  entry.examples
-    .filter((example) => example.role !== "triage")
-    .map((example) => ({ id: id(entry.name, example.id), input: example.expr })),
-);
-const results = await runCases(cases, {
-  setup,
-  timeMs: TIME_MS,
-  memoryBytes: MEMORY_BYTES,
-  // A lazy collection's `expected` is its elements, not the call.
-  materialize: true,
-  concurrency: CONCURRENCY,
-});
-const resultById = new Map(results.map((result) => [result.id, result]));
+/** Runs `group`'s rows in `setup`'s engine, then registers a test for each. */
+async function runGroup(group: ReturnType<typeof named>, setup: string): Promise<void> {
+  const inOrder = group.flatMap((entry) =>
+    entry.examples
+      .filter((example) => example.role !== "triage")
+      .map((example) => ({ id: id(entry.name, example.id), input: example.expr })),
+  );
+  const cases = seed === undefined ? inOrder : shuffled(inOrder, Number(seed));
+  const results = await runCases(cases, {
+    setup,
+    timeMs: TIME_MS,
+    memoryBytes: MEMORY_BYTES,
+    // A lazy collection's `expected` is its elements, not the call.
+    materialize: true,
+    concurrency: CONCURRENCY,
+  });
+  const resultById = new Map(results.map((result) => [result.id, result]));
 
-for (const entry of entries) {
-  for (const example of entry.examples) {
-    if (example.role === "triage") {
-      test.skip(`${entry.name} example/${example.id} (triage: ${example.triage ?? "unbucketed"})`, () => {});
-      continue;
+  for (const entry of group) {
+    for (const example of entry.examples) {
+      if (example.role === "triage") {
+        test.skip(`${entry.name} example/${example.id} (triage: ${example.triage ?? "unbucketed"})`, () => {});
+        continue;
+      }
+      const aspirational = example.role === "aspirational";
+      test(`${entry.name} example/${example.id}${aspirational ? " (gap)" : ""}`, () => {
+        const result = resultById.get(id(entry.name, example.id));
+        if (result === undefined) {
+          throw new Error(`runCases: no result for ${entry.name} example/${example.id}`);
+        }
+        if (result.outcome === "Error") {
+          throw new Error(`evaluation raised: ${result.reason}`);
+        }
+        if (result.outcome === "Aborted") {
+          throw new Error(`exceeded the ${TIME_MS}ms/${MEMORY_BYTES}-byte cap — tighten the example or raise the cap`);
+        }
+
+        const volatile = new Set(example.volatile ?? []);
+        const output = masked(result.value, volatile);
+        const expected = masked(example.expected, volatile);
+        // Matching means the same thing either way: equal up to `settled`'s tolerance.
+        const matched = settled(output, expected, asksForDigits(example.expr));
+        if (aspirational) {
+          // A documented capability gap: CE should NOT yet match the borrowed
+          // target. If this starts matching, promote it (drop `role: aspirational`).
+          expect(matched).not.toEqual(expected);
+        } else {
+          expect(matched).toEqual(expected);
+        }
+      });
     }
-    const aspirational = example.role === "aspirational";
-    test(`${entry.name} example/${example.id}${aspirational ? " (gap)" : ""}`, () => {
-      const result = resultById.get(id(entry.name, example.id));
-      if (result === undefined) {
-        throw new Error(`runCases: no result for ${entry.name} example/${example.id}`);
-      }
-      if (result.outcome === "Error") {
-        throw new Error(`evaluation raised: ${result.reason}`);
-      }
-      if (result.outcome === "Aborted") {
-        throw new Error(`exceeded the ${TIME_MS}ms/${MEMORY_BYTES}-byte cap — tighten the example or raise the cap`);
-      }
-
-      const volatile = new Set(example.volatile ?? []);
-      const output = masked(result.value, volatile);
-      const expected = masked(example.expected, volatile);
-      // Matching means the same thing either way: equal up to `settled`'s tolerance.
-      const matched = settled(output, expected, asksForDigits(example.expr));
-      if (aspirational) {
-        // A documented capability gap: CE should NOT yet match the borrowed
-        // target. If this starts matching, promote it (drop `role: aspirational`).
-        expect(matched).not.toEqual(expected);
-      } else {
-        expect(matched).toEqual(expected);
-      }
-    });
   }
 }
+
+await runGroup(entries, referenceSetup);
+await runGroup(ownEntries, ownSetup);

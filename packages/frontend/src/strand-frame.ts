@@ -3,43 +3,36 @@
 // derived. A strand is not an address but a block, a set of addresses, drawn as a curve between
 // its cells. A permutation (two levels, every block through), a set partition (one level) and the
 // diagram algebras' diagrams (two rows of n) are all this frame; so is `Compose(a, b)`, a stack
-// of levels whose glued middle row is where closed loops live.
+// of levels whose glued middle row is where closed loops live. A braid word is the same frame with
+// a level per generator: its strands are blocks running from the in row to the out row, and the
+// generator σᵢ^±1 at level k crosses the strands at slots i and i+1 on their way to level k + 1.
+// The braid may be a literal `Braid(n, word)`, a call that names one (`TorusBraid(3, 2)`), or a
+// `Compose` of braids, which keeps the letters. `BraidClosure(braid)` adds the arcs that join each
+// out slot to its in slot round the right side; its blocks are then the link's components, so
+// `SameStrand` follows a component through the closure.
 //
 // Properties a layer publishes for rules: IsIn, IsOut, IsThrough (= IsPropagating), IsCap, IsCup,
-// IsSingleton, IsLoop, IsCrossing. Values: Slot, Level, Sign, Block, Size, Image, Crossings.
-// Relations to the selection: SameBlock (= SameStrand), Crosses, Adjacent, Image, Above, Below.
+// IsSingleton, IsLoop, IsCrossing (the block crosses another), and for a braid IsOver and IsUnder
+// (the cell's strand passes over or under at its level's generator).
+// Values: Slot, Level, Sign, Block, Size, Image, Crossings (other blocks crossed), and for a braid
+// Exponent (±1 at a generator's two cells).
+// Relations to the selection: SameBlock (= SameStrand), Crosses (a strand that crosses the
+// selected one), Adjacent, Image, Above, Below.
 
 import type { Vec2 } from "./lattice.ts";
 import type { Address, FramePoint, GraphicsPrimitive, TileLayer } from "./tiles-canvas.ts";
+import { braidValueOf } from "./braid-values.ts";
+import { argsOf, headOf, intsOf, type Json, unwrapped } from "./frame-json.ts";
 import { fitView } from "./tiles-canvas.ts";
-
-type Json = unknown;
-
-const headOf = (json: Json): string | undefined =>
-  Array.isArray(json) && typeof json[0] === "string" ? json[0] : undefined;
-const argsOf = (json: Json): Json[] => (Array.isArray(json) ? json.slice(1) : []);
-
-/** An integer, written as a number or `Negate(n)`. */
-function intOf(json: Json): number | undefined {
-  if (headOf(json) === "Negate") {
-    const v = intOf(argsOf(json)[0]);
-    return v === undefined ? undefined : -v;
-  }
-  const n =
-    typeof json === "number" ? json : typeof json === "string" && json.trim() !== "" ? Number(json) : Number.NaN;
-  return Number.isInteger(n) ? n : undefined;
-}
-
-const intsOf = (json: Json): number[] | undefined => {
-  if (headOf(json) !== "List") return undefined;
-  const xs = argsOf(json).map(intOf);
-  return xs.every((x) => x !== undefined) ? (xs as number[]) : undefined;
-};
 
 /** A strand's stretch: the cells it joins, and the lower level of the rows it lies between. */
 interface Piece {
   readonly cells: readonly Address[];
   readonly low: number;
+  /** A braid strand passing under another at its crossing: drawn with a gap. */
+  readonly under?: boolean;
+  /** A closure arc, from the out side round to the in side. */
+  readonly closing?: boolean;
 }
 
 /** What a strand diagram is: a grid of slots by levels, and the pieces of strand over it. */
@@ -47,6 +40,13 @@ export interface StrandModel {
   readonly slots: number;
   readonly levels: number;
   readonly pieces: readonly Piece[];
+  /**
+   * A braid's word (letters ±i for σᵢ^±1): level k is generator k, the last level the out side.
+   * A level without a crossing (the identity's one) is 0.
+   */
+  readonly word?: readonly number[];
+  /** A braid closed up: arcs join each out slot to the in slot, so a block is a link component. */
+  readonly closed?: boolean;
 }
 
 /** Top row first, left to right: the order a block reads in. */
@@ -122,22 +122,87 @@ function diagramModel(blocks: readonly (readonly number[])[]): StrandModel | str
   );
 }
 
+/** The most pieces a braid draws: strands times generators. */
+const MAX_BRAID_PIECES = 2000;
+
+/** `Braid(3, [1, -2])`: a level per generator, each strand running up to the next level, two of them swapping. */
+function braidModel(strands: number, word: readonly number[]): StrandModel | string {
+  if (!Number.isInteger(strands) || strands < 1 || strands > 64) return "Braid needs 1 … 64 strands.";
+  if (!word.every((g) => g !== 0 && Math.abs(g) < strands))
+    return `A braid on ${strands} strands has letters ±1 … ±${strands - 1}.`;
+  const bands = Math.max(1, word.length);
+  if (strands * bands > MAX_BRAID_PIECES) return "That braid is too long to draw.";
+  const pieces: Piece[] = [];
+  for (let k = 0; k < bands; k++) {
+    const g = word[k];
+    const i = Math.abs(g ?? 0);
+    for (let s = 1; s <= strands; s++) {
+      const to = g !== undefined && s === i ? i + 1 : g !== undefined && s === i + 1 ? i : s;
+      // σᵢ passes the strand from slot i over the one from i + 1; σᵢ⁻¹ the other way.
+      const under = to !== s && (s === i) === g! < 0;
+      pieces.push({
+        ...piece(
+          [
+            [s, k],
+            [to, k + 1],
+          ],
+          k,
+        ),
+        ...(under ? { under } : {}),
+      });
+    }
+  }
+  return { slots: strands, levels: bands + 1, pieces, word: word.length === 0 ? [0] : word };
+}
+
+/** A braid with arcs from each out slot round the right side to its in slot: its closure. */
+function closed(model: StrandModel): StrandModel | string {
+  if (!model.word) return "A closure needs a braid.";
+  const top = model.levels - 1;
+  const arcs = Array.from({ length: model.slots }, (_, k): Piece => ({
+    ...piece(
+      [
+        [k + 1, top],
+        [k + 1, 0],
+      ],
+      -1,
+    ),
+    closing: true,
+  }));
+  return { ...model, pieces: [...model.pieces, ...arcs], closed: true };
+}
+
 /** `a` stacked above `b`, a's bottom row glued to b's top: the picture a product is defined by. */
 export function compose(a: StrandModel, b: StrandModel): StrandModel | string {
   if (a.levels < 2 || b.levels < 2) return "Compose needs diagrams with an in side and an out side.";
   if (a.slots !== b.slots) return "Compose needs diagrams on the same number of strands.";
+  if (a.closed || b.closed) return "A closure is of a composition: BraidClosure(Compose(…)).";
   const lift = b.levels - 1;
-  const raised = a.pieces.map((p) => ({ cells: p.cells.map(([s, l]) => [s, l + lift] as const), low: p.low + lift }));
-  return { slots: a.slots, levels: a.levels + lift, pieces: [...b.pieces, ...raised] };
+  const raised = a.pieces.map((p) => ({
+    ...p,
+    cells: p.cells.map(([s, l]) => [s, l + lift] as const),
+    low: p.low + lift,
+  }));
+  // Two braids keep their letters, b's levels below a's; a diagram among them has no word.
+  const word = a.word && b.word ? [...b.word, ...a.word] : undefined;
+  return { slots: a.slots, levels: a.levels + lift, pieces: [...b.pieces, ...raised], ...(word ? { word } : {}) };
 }
 
 /** The model an expression names: `Permutation`, `SetPartition`, `Diagram`, or a `Compose` of them. */
-export function strandModelOf(json: Json): StrandModel | string {
+export function strandModelOf(node: Json): StrandModel | string {
+  const json = unwrapped(node);
   const head = headOf(json);
   const [arg] = argsOf(json);
   if (head === "Permutation") {
     const image = intsOf(arg);
     return image ? permutationModel(image) : "Permutation needs a list: Permutation([3, 1, 2]).";
+  }
+  // `Braid(n, word)`, or a call that names one (`TorusBraid(3, 2)`).
+  const named = braidValueOf(json);
+  if (named !== undefined) return typeof named === "string" ? named : braidModel(named.strands, named.word);
+  if (head === "BraidClosure") {
+    const braid = strandModelOf(arg);
+    return typeof braid === "string" ? braid : closed(braid);
   }
   const blocks = argsOf(arg).map(intsOf);
   const listed = headOf(arg) === "List" && blocks.every((b) => b !== undefined);
@@ -158,8 +223,17 @@ export function strandModelOf(json: Json): StrandModel | string {
     }
     return acc;
   }
-  return "StrandDiagram needs Permutation(…), SetPartition(…), Diagram(…) or Compose(…).";
+  return "StrandDiagram needs Permutation(…), SetPartition(…), Diagram(…), Braid(…), BraidClosure(…) or Compose(…).";
 }
+
+const SUBSCRIPTS = "₀₁₂₃₄₅₆₇₈₉";
+
+/** A word's letter as the generator it names: 2 is σ₂, -2 is σ₂⁻¹. */
+const letterText = (g: number): string =>
+  `σ${String(Math.abs(g))
+    .split("")
+    .map((d) => SUBSCRIPTS[Number(d)])
+    .join("")}${g < 0 ? "⁻¹" : ""}`;
 
 // ── The layer ────────────────────────────────────────────────────────────────────────────
 
@@ -168,7 +242,11 @@ const GAP = 1.6;
 /** How far the arcs within a row bow into the frame, as a fraction of a level gap. */
 const BOW = 0.42;
 const DISK = 0.11;
+/** A braid's cells are larger, so the color of a crossing shows inside the strand's own stroke. */
+const BRAID_DISK = 0.2;
 const STEPS = 16;
+/** Half the share of an under-strand's length left blank at its crossing. */
+const UNDER_GAP = 0.12;
 
 /** A strand layer as `Show` reads it: the tile contract, and its own title, grid and descriptions. */
 export interface StrandLayer extends TileLayer {
@@ -178,6 +256,34 @@ export interface StrandLayer extends TileLayer {
   gridLabel(axis: 0 | 1, k: number): string;
   summary(): readonly (readonly [string, string])[];
   describe(i: number, j: number): { title: string; rows: readonly (readonly [string, string])[] };
+}
+
+/** How far the closure arc of the outermost strand stands off the diagram, per strand, in slot spacings. */
+const CLOSE_STEP = 0.5;
+/** The radius of a closure arc's corners; at most half `CLOSE_STEP`, so the innermost arc still turns. */
+const CLOSE_CORNER = 0.25;
+
+/**
+ * The closure arc of slot `s`: up from the out side, round the right of the diagram and back in
+ * from below. The arcs nest, slot 1's outermost, so none crosses another or the braid.
+ */
+function closingArc(s: number, slots: number, top: number): FramePoint[] {
+  const reach = CLOSE_STEP * (slots - s + 1);
+  const [x, high, low] = [slots + reach, top * GAP + reach, -reach];
+  const c = CLOSE_CORNER;
+  const corner = (cx: number, cy: number, from: number, to: number): FramePoint[] =>
+    Array.from({ length: STEPS / 2 + 1 }, (_, k) => {
+      const angle = ((from + ((to - from) * k) / (STEPS / 2)) * Math.PI) / 180;
+      return [cx + c * Math.cos(angle), cy + c * Math.sin(angle)];
+    });
+  return [
+    [s, top * GAP],
+    ...corner(s + c, high - c, 180, 90),
+    ...corner(x - c, high - c, 90, 0),
+    ...corner(x - c, low + c, 0, -90),
+    ...corner(s + c, low + c, -90, -180),
+    [s, 0],
+  ];
 }
 
 /** The curve between two cells, sampled: an S between rows, an arc bowing into the rows' frame within one. */
@@ -242,22 +348,34 @@ export function strandLayer(model: StrandModel): StrandLayer {
     }
   const blockOf = (s: number, l: number): number => ids.get(find(index(s, l)))!;
 
-  // Crossings: pieces of one strip cross when their ends interleave around the strip's cycle.
+  // Crossings: pieces of one strip cross when their ends interleave around the strip's cycle; a
+  // block crosses the blocks whose pieces cross its own.
   const cycle = (p: Piece, [s, l]: Address): number => (levels === 1 || l === p.low + 1 ? s : 2 * slots + 1 - s);
   const keys = pieces.map((p) => p.cells.map((c) => cycle(p, c)));
-  const crossing = pieces.map((_, a) =>
-    pieces.flatMap((q, b) => (a !== b && q.low === pieces[a]!.low && interleaved(keys[a]!, keys[b]!) ? [b] : [])),
-  );
-  const piecesAt = new Map<number, number[]>();
-  pieces.forEach((p, k) => {
-    for (const [s, l] of p.cells) piecesAt.set(index(s, l), [...(piecesAt.get(index(s, l)) ?? []), k]);
-  });
-  const crossings = (s: number, l: number): number =>
-    (piecesAt.get(index(s, l)) ?? []).reduce((n, k) => n + crossing[k]!.length, 0);
+  const strips = new Map<number, number[]>();
+  pieces.forEach((p, k) => strips.set(p.low, [...(strips.get(p.low) ?? []), k]));
+  const crossed = new Map<number, Set<number>>();
+  for (const strip of strips.values())
+    for (const [n, a] of strip.entries())
+      for (const b of strip.slice(n + 1)) {
+        const [x, y] = [blockOf(...pieces[a]!.cells[0]!), blockOf(...pieces[b]!.cells[0]!)];
+        if (x === y || !interleaved(keys[a]!, keys[b]!)) continue;
+        crossed.set(x, (crossed.get(x) ?? new Set()).add(y));
+        crossed.set(y, (crossed.get(y) ?? new Set()).add(x));
+      }
+  const crossings = (s: number, l: number): number => crossed.get(blockOf(s, l))?.size ?? 0;
   const crosses = (s: number, l: number, t: number, m: number): boolean =>
-    (piecesAt.get(index(s, l)) ?? []).some((a) =>
-      (piecesAt.get(index(t, m)) ?? []).some((b) => crossing[a]!.includes(b)),
-    );
+    crossed.get(blockOf(s, l))?.has(blockOf(t, m)) ?? false;
+
+  // A braid's generator at a level, as the letter of the word, when the cell is one of its two strands.
+  const { word, closed: isClosed } = model;
+  const letters = word?.filter((g) => g !== 0) ?? [];
+  const letterAt = (s: number, l: number): number | undefined => {
+    const g = word?.[l];
+    return g !== undefined && g !== 0 && (s === Math.abs(g) || s === Math.abs(g) + 1) ? g : undefined;
+  };
+  // σᵢ passes the strand from slot i over; σᵢ⁻¹ the strand from slot i + 1.
+  const overAt = (s: number, l: number, g: number): boolean => (s === Math.abs(g)) === g > 0;
 
   // What a block is, by the sides it touches.
   const shape = (s: number, l: number) => {
@@ -301,12 +419,12 @@ export function strandLayer(model: StrandModel): StrandLayer {
   const label = ([s, l]: Address): string => (levels === 1 || l === top ? `${s}` : l === 0 ? `-${s}` : `${s}@${l}`);
 
   const links = pieces.map((p) => p.cells).filter((c) => c.length > 1);
-  const lowOf = new Map(pieces.map((p) => [p.cells, p.low] as const));
+  const pieceOf = new Map(pieces.map((p) => [p.cells, p] as const));
 
   const normal = (name: string): string => name.replace(/^Is(?=[A-Z])/, "").toLowerCase();
 
   return {
-    title: `Strand diagram on ${slots} ${slots === 1 ? "strand" : "strands"}`,
+    title: `${isClosed ? "Closed braid" : word ? "Braid" : "Strand diagram"} on ${slots} ${slots === 1 ? "strand" : "strands"}`,
     model,
     view: "fixed",
     basis: [
@@ -321,14 +439,19 @@ export function strandLayer(model: StrandModel): StrandLayer {
     ],
     gridLabel: (_axis, k) => String(k),
     place: (s, l) => [s, l * GAP],
-    mark: (): GraphicsPrimitive => ({ head: "Disk", radius: DISK }),
+    mark: (): GraphicsPrimitive => ({ head: "Disk", radius: word ? BRAID_DISK : DISK }),
     links: () => links,
     linkMark: (link): GraphicsPrimitive => {
-      const low = lowOf.get(link as readonly Address[]) ?? 0;
+      const piece = pieceOf.get(link as readonly Address[]);
+      if (piece?.closing) return { head: "Line", points: closingArc(link[0]![0], slots, top) };
       const curve: FramePoint[] = [];
       for (let k = 1; k < link.length; k++)
-        curve.push(...between(link[k - 1]!, link[k]!, low, levels === 1).slice(k > 1 ? 1 : 0));
-      return { head: "Line", points: curve };
+        curve.push(...between(link[k - 1]!, link[k]!, piece?.low ?? 0, levels === 1).slice(k > 1 ? 1 : 0));
+      // The strand passing under leaves a gap around the crossing, at the middle of its S.
+      if (!piece?.under) return { head: "Line", points: curve };
+      const gap = curve.map((_, k) => Math.abs(k / (curve.length - 1) - 0.5) < UNDER_GAP);
+      const kept = curve.filter((_, k) => !gap[k]);
+      return { head: "Line", points: kept, breaks: [gap.indexOf(true)] };
     },
     known: () => true,
     prepare: () => {},
@@ -353,6 +476,12 @@ export function strandLayer(model: StrandModel): StrandLayer {
           return b.singleton;
         case "crossing":
           return crossings(s, l) > 0;
+        case "over":
+        case "under": {
+          if (!word) return undefined;
+          const g = letterAt(s, l);
+          return g !== undefined && overAt(s, l, g) === (normal(name) === "over");
+        }
         case "unknown":
           return false;
       }
@@ -375,6 +504,10 @@ export function strandLayer(model: StrandModel): StrandLayer {
           return imageOf(s, l);
         case "crossings":
           return crossings(s, l);
+        case "exponent": {
+          const g = letterAt(s, l);
+          return g === undefined ? undefined : Math.sign(g);
+        }
       }
       return undefined;
     },
@@ -400,20 +533,33 @@ export function strandLayer(model: StrandModel): StrandLayer {
       }
       return false;
     },
-    summary: () => [
-      ["strands", String(slots)],
-      ["levels", String(levels)],
-      ["blocks", String(members.size)],
-    ],
+    summary: () =>
+      word
+        ? [
+            ["strands", String(slots)],
+            ["crossings", String(letters.length)],
+            // A closure's blocks are its link's components.
+            ...(isClosed ? [["components", String(members.size)] as const] : []),
+          ]
+        : [
+            ["strands", String(slots)],
+            ["levels", String(levels)],
+            ["blocks", String(members.size)],
+          ],
     describe: (s, l) => {
-      const rows: [string, string][] = [
-        ["size", String(shape(s, l).cells.length)],
-        ["kind", kindOf(s, l)],
-      ];
-      const image = imageOf(s, l);
-      if (image !== undefined) rows.push(["image", String(image)]);
+      const rows: [string, string][] = [["size", String(shape(s, l).cells.length)]];
+      if (isClosed) rows.push(["component", `${blockOf(s, l) + 1} of ${members.size}`]);
+      else {
+        rows.push(["kind", kindOf(s, l)]);
+        const image = imageOf(s, l);
+        if (image !== undefined) rows.push(["image", String(image)]);
+      }
       rows.push(["crossings", String(crossings(s, l))]);
-      return { title: `{${shape(s, l).cells.map(label).join(", ")}}`, rows };
+      if (!word) return { title: `{${shape(s, l).cells.map(label).join(", ")}}`, rows };
+      const g = letterAt(s, l);
+      if (g !== undefined) rows.push(["generator", `${letterText(g)}, ${overAt(s, l, g) ? "over" : "under"}`]);
+      const text = letters.length === 0 ? "identity" : letters.map(letterText).join(" ");
+      return { title: isClosed ? `closure of ${text}` : text, rows };
     },
   };
 }
@@ -445,7 +591,7 @@ const blocksOf = (rgs: readonly number[]): number[][] => {
 };
 
 /**
- * `Figure(kind, value)` for the strand kinds, as the `Show` it stands for: `value` is the glyph's
+ * The strand glyph kinds (`permutation`, `set-partition`, `diagram`) as the `Show` they draw as: `value` is the glyph's
  * integer list (a permutation's one-line image, a restricted-growth string for a set partition, or
  * one over 2n points for a diagram), and the box is sized to the figure. Undefined for any other kind.
  */

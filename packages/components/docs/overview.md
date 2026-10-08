@@ -20,7 +20,7 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Output](/docs/components/out) — `<notatio-out>`, typeset read-only rendering + display forms
 - [Cell](/docs/components/cell) — `<notatio-cell>`, a notebook In/Out pair
 - [Verification](/docs/components/verification) — `<notatio-test-result-object>`, `VerificationTest`'s outcome as a badge over an In/Out pair
-- [Figure (glyphs)](/docs/combinatorics/figure) — `<notatio-figure>`, combinatorial pictorial forms
+- [Figure (glyphs)](/docs/combinatorics/figure) — combinatorial values as pictures, a `Show` of their frame layer
 - [Plot](/reference/component/Plot) — function plots of one variable; stories moved to its component reference page
 - [Plot 3D](/reference/component/Plot3D) — bivariate surfaces, projected and shaded in plain SVG; stories moved to its component reference page
 - [Contour Plot](/reference/component/ContourPlot) — contour lines / filled bands of a bivariate function (or a pre-sampled grid) via marching squares; stories moved to its component reference page
@@ -37,7 +37,7 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Worksheet](/docs/components/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells
 - [Manipulate](/docs/components/manipulate) — `<notatio-manipulate>`, Wolfram-style controls bound to named wildcards in any slotted content
 - [Terminal](/docs/components/terminal) — `<notatio-terminal>`, the real CLI eval core in a browser terminal, as a session or one `notatio <expr>` at a time
-- [Polytope](/docs/polytope/polytope) — `<notatio-polytope>`, a polytope's face poset, where every mark is a clickable face (no symbol head yet)
+- [Polytope](/docs/polytope/polytope) — `PolytopeFaces`, a polytope's face poset in a `Show`, where every mark is a clickable face under an orbiting camera
 - [Tangle](/playground/inspirations/tangle) — `<notatio-dynamic-module>` and the inline controls (`<notatio-knob>`, `<notatio-toggler>`, `<notatio-dynamic>`, `<notatio-when>`): reactive prose
 
 ## Inspirations
@@ -91,7 +91,7 @@ localStorage["notatio:debug"] = "plot3d"; // or "plot*", or "*"
 A single expression can be shown many ways. Following Wolfram's `*Form` symbols,
 each way is a named **representation** you can request explicitly. The textual
 forms ship on `<notatio-out>` (the In/Out menu); the visual forms live in
-`<notatio-figure>` and the plot components.
+`<notatio-show>` (a value's frame layer, and the plots) and the plot components.
 
 | Representation           | Kind       | Status  | Wolfram analogue                                                                                                                |
 | ------------------------ | ---------- | ------- | ------------------------------------------------------------------------------------------------------------------------------- |

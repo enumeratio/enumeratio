@@ -109,6 +109,13 @@ test("GridGraph({m, n}): m*n vertices, m(n-1)+n(m-1) edges", () => {
   expect(run(["EdgeCount", ["GridGraph", ["List", m, n]]])).toBe(m * (n - 1) + n * (m - 1));
 });
 
+// Vertices are numbered with the first index varying fastest, as Wolfram's EdgeList gives.
+test("GridGraph({2, 3}) numbers vertices with the first index varying fastest", () => {
+  expect(run(["GridGraph", ["List", 2, 3]])).toEqual(
+    graphV([1, 2, 3, 4, 5, 6], [U(1, 2), U(1, 3), U(2, 4), U(3, 4), U(3, 5), U(4, 6), U(5, 6)]),
+  );
+});
+
 test("HypercubeGraph(k): 2^k vertices, k*2^(k-1) edges, every degree k", () => {
   for (const k of [0, 1, 2, 3, 4]) {
     expect(run(["VertexCount", ["HypercubeGraph", k]])).toBe(2 ** k);

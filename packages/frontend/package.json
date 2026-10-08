@@ -33,6 +33,7 @@
   "dependencies": {
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/boxes": "workspace:*",
+    "@enumeratio/braid": "workspace:*",
     "@enumeratio/ce-patches": "workspace:*",
     "@enumeratio/engine": "workspace:*",
     "@enumeratio/evaluation": "workspace:*",
@@ -44,7 +45,6 @@
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.150.0",
-    "@enumeratio/braid": "workspace:*",
     "@enumeratio/combinatorics": "workspace:*",
     "@enumeratio/config": "workspace:*",
     "@enumeratio/entry": "workspace:*",

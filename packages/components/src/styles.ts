@@ -17,14 +17,10 @@ notatio-out[display] {
   overflow-y: hidden;
 }
 
-/* Glyphs are inline, sized to the line; the SVG carries a viewBox, no width. */
-notatio-figure { display: inline-block; vertical-align: middle; line-height: 0; }
-notatio-figure svg { height: 2.5em; width: auto; max-width: 100%; overflow: visible; }
-notatio-figure[kind="diagram"] svg { height: 3.6em; }
-/* A kind lowered to a frame is a Show, sized by its element and drawn without the card. */
-notatio-figure > notatio-show { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; }
-notatio-figure .notatio-show { margin: 0; border: 0; background: none; }
-notatio-figure .notatio-show-layers { background: none !important; }
+/* A picture inline in prose: a Show drawn without its card, sized to the line. */
+notatio-show.inline-figure { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; margin: 0; border: 0; background: none; }
+notatio-show.inline-figure .notatio-show { margin: 0; border: 0; background: none; }
+notatio-show.inline-figure .notatio-show-layers { background: none !important; }
 
 /* Plots are block figures sized to a max width; the viewBox drives the ratio. */
 notatio-plot, notatio-plot-3d { display: block; line-height: 0; }
@@ -72,17 +68,6 @@ notatio-list-plot-3d svg { width: 360px; max-width: 100%; height: auto; overflow
 notatio-bar-chart-3d { display: block; line-height: 0; }
 notatio-bar-chart-3d .notatio-bar-chart-3d-box { display: inline-block; max-width: 100%; }
 notatio-bar-chart-3d svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
-
-/* A polytope's face poset. Every mark is a face and every face is clickable, so the marks
-   need a pointer; the hover tint is the only feedback before a click lands. */
-notatio-polytope { display: block; line-height: 0; }
-notatio-polytope .notatio-polytope-box { display: inline-block; max-width: 100%; }
-notatio-polytope svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
-notatio-polytope .notatio-polytope-box { cursor: grab; touch-action: none; user-select: none; }
-notatio-polytope .notatio-polytope-box:active { cursor: grabbing; }
-notatio-polytope polygon[data-face]:hover { fill-opacity: 0.25; }
-notatio-polytope line[data-face]:hover { stroke-width: 2.5; }
-notatio-polytope circle[data-face]:hover { r: 3.5; }
 
 /* Graph & hierarchical layouts (TreePlot, GraphPlot, LayeredGraphPlot, Dendrogram). */
 notatio-graph-plot { display: block; line-height: 0; }
@@ -1390,9 +1375,8 @@ notatio-worksheet {
 .notatio-gradient-panel label { display: flex; align-items: center; gap: 0.4rem; }
 .notatio-gradient-panel input[type="number"] { width: 5em; }
 
-/* --- Engaged plots: focused, the wheel zooms them (gestures.ts); the ring says so -------- */
+/* --- Focused plots: a ring marks the focus, which the wheel no longer depends on -------- */
 .notatio-plot-box:focus,
-.notatio-polytope-box:focus,
 .notatio-complex-plot-stage canvas:focus {
   outline: 2px solid color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
   outline-offset: -2px;
@@ -1523,6 +1507,8 @@ notatio-show {
 .notatio-show-layers canvas:last-child:active { cursor: grabbing; }
 /* A fixed frame is fitted, not panned: the page scrolls over it. */
 .notatio-show-layers.is-fixed canvas:last-child { touch-action: auto; cursor: pointer; }
+/* A camera frame is orbited: the drag is the plot's. */
+.notatio-show-layers.is-camera canvas:last-child { touch-action: none; cursor: grab; }
 .notatio-show-layers canvas:last-child:focus {
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
 }

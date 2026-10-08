@@ -51,6 +51,58 @@ $σ_1^2$ closes to the Hopf link, which has two.
 <notatio-cell value="BraidIsKnot(TorusBraid(2, 4))" />
 </Story>
 
+A braid draws as its strand diagram: a level per letter, read from the bottom up, with the
+strand that goes under broken at the crossing. Every cell is a strand at a level, so a click
+picks one, and `SameStrand(Selected)` follows it through every level. A crossing's two
+cells carry an `Exponent`, $+1$ for $σ_i$ and $-1$ for $σ_i^{-1}$, which `IsOver` and
+`IsUnder` split into the strand that passes over and the one that passes under.
+
+<Story title="Follow a strand, and read the crossings">
+<template #description>Click a strand: SameStrand(Selected) lights it end to end and Crosses(Selected) the strands it crosses. The dots at each crossing are colored by Exponent, the sign of the letter.</template>
+<Show Variables="[_s -> Variable(Automatic, [])]" Selection="_s" ImageSize="[Automatic, 420]">
+  <StrandDiagram
+    ColorRules='[Selected -> White, True -> ColorData(["Viridis", [-1, 1]])(Exponent), True -> Opacity(0.5, Gray)]'
+    BoundaryStyle='[SameStrand(Selected) -> Directive(Gold, AbsoluteThickness(4)), Crosses(Selected) -> Directive(Red, AbsoluteThickness(2.5)), True -> Directive(Teal, AbsoluteThickness(1.8))]'
+  ><Braid>4 <List>1 2 -3 2 1 -2 3 -1</List></Braid></StrandDiagram>
+</Show>
+</Story>
+
+`BraidClosure` draws the closing arcs: each out slot joins the in slot below it, round the
+right side. A strand that comes back at a different slot is still part of the same component,
+so `SameStrand(Selected)` follows a component through the closure. $σ_1^3$ closes to the
+trefoil, one component whichever strand you click.
+
+<Story title="The trefoil, closed">
+<template #description>Click a strand: the whole knot lights, since σ₁³ sends slot 1 to slot 2 and back.</template>
+<Show Variables="[_s -> Variable(Automatic, [])]" Selection="_s" ImageSize="[Automatic, 360]">
+  <StrandDiagram
+    ColorRules='[Selected -> White, True -> Opacity(0.5, Gray)]'
+    BoundaryStyle='[SameStrand(Selected) -> Directive(Gold, AbsoluteThickness(4)), True -> Directive(Teal, AbsoluteThickness(1.8))]'
+  ><BraidClosure><Braid>2 <List>1 1 1</List></Braid></BraidClosure></StrandDiagram>
+</Show>
+</Story>
+
+The braid may be named rather than written out: `TorusBraid(3, 3)` is $(σ_1σ_2)^3$, which
+returns every strand to its own slot, so its closure is the three-component link $T(3,3)$.
+Clicking lights one component at a time.
+
+<Story title="A torus braid, closed">
+<template #description>StrandDiagram takes any braid-valued head. T(3,3) is three linked circles: SameStrand(Selected) lights one.</template>
+<Show Variables="[_s -> Variable(Automatic, [])]" Selection="_s" ImageSize="[Automatic, 420]">
+  <StrandDiagram
+    ColorRules='[Selected -> White, True -> Opacity(0.5, Gray)]'
+    BoundaryStyle='[SameStrand(Selected) -> Directive(Gold, AbsoluteThickness(4)), Crosses(Selected) -> Directive(Red, AbsoluteThickness(2.5)), True -> Directive(Teal, AbsoluteThickness(1.8))]'
+  ><BraidClosure><TorusBraid>3 3</TorusBraid></BraidClosure></StrandDiagram>
+</Show>
+</Story>
+
+A `Braid` value shows the same way anywhere it is the result, without the rules.
+
+<Story title="The same braid, as a value">
+<notatio-cell value="TorusBraid(3, 2)" />
+<notatio-cell value="BraidInverse(Braid(3, [1, -2]))" />
+</Story>
+
 For a **positive** braid — no negative letters — Bennequin's theorem says Seifert's
 algorithm on the diagram is already optimal, so the genus of the closure is
 $g = (c - s + 1)/2$ for $c$ crossings on $s$ strands. Positivity is doing real work there;

@@ -47,6 +47,22 @@ test("Commonest agrees with a brute-force tally, for every subset of 1..5 repeat
   }
 });
 
+// Commonest(c, n): the n commonest by frequency, ties by first appearance, listed in first-appearance order.
+test("Commonest(c, n) lists its n commonest in first-appearance order", () => {
+  expect(run(["Commonest", ["List", 1, 2, 2, 3, 3, 3, 4], 2])).toEqual(["List", 2, 3]);
+  expect(run(["Commonest", ["List", "b", "a", "c", 2, "a", "b", 1, 2], 4])).toEqual(["List", "b", "a", "c", 2]);
+  expect(run(["Commonest", ["List", "b", "a", "c", 2, "a", "b", 1, 2], ["UpTo", 6]])).toEqual([
+    "List",
+    "b",
+    "a",
+    "c",
+    2,
+    1,
+  ]);
+  expect(run(["Commonest", ["List", 5, 1, 1, 5, 2, 2, 3, 3, 4, 4], 3])).toEqual(["List", 5, 1, 2]);
+  expect(run(["Commonest", ["List", 3, 2, 1, 1, 2, 3, 3], 2])).toEqual(["List", 3, 2]);
+});
+
 // A free symbol has no `.ops` and its `.operator` is the pseudo-head `"Symbol"` — neither
 // reads as "an empty/matching collection" (A-126 farm scan; see list-frontier.ts's
 // Accumulate note for the general shape of the bug).

@@ -9,7 +9,18 @@
 // Arm, Leg, Entry, Part. Relations to the selection: SameRow, SameColumn, SameContent, Hook (the
 // hook of the selected cell), Adjacent.
 
-import { argsOf, type FigureLayer, headOf, intOf, intsOf, type Json, normal, UNIT_BASIS } from "./frame-json.ts";
+import {
+  argsOf,
+  carrierOf,
+  type FigureLayer,
+  headOf,
+  intOf,
+  intsOf,
+  type Json,
+  normal,
+  UNIT_BASIS,
+  unwrapped,
+} from "./frame-json.ts";
 import type { Address, FramePoint, GraphicsPrimitive } from "./tiles-canvas.ts";
 
 interface Cell {
@@ -98,7 +109,8 @@ function subsetModel(members: readonly number[], n: number): CellModel | string 
 }
 
 /** The model an expression names: `IntegerPartition`, `StandardTableau`, `Composition` or `Subset`. */
-export function cellModelOf(json: Json): CellModel | string {
+export function cellModelOf(node: Json): CellModel | string {
+  const json = unwrapped(node);
   const head = headOf(json);
   const [arg, size] = argsOf(json);
   if (head === "IntegerPartition") {
@@ -115,12 +127,16 @@ export function cellModelOf(json: Json): CellModel | string {
       ? tableauModel(rows as number[][])
       : "A tableau needs its rows: StandardTableau([[1, 2], [3]]).";
   }
-  if (head === "Subset") {
-    const members = intsOf(arg);
+  if (head === "Subset" || head === "Finset") {
+    // A subset as its carrier, `Finset(Tuple(n, members))`, bare or as `Subset`'s argument.
+    const carrier = carrierOf(head === "Finset" ? json : arg);
+    if (head === "Finset" && carrier === undefined) return "Finset needs its carrier: Finset(Tuple(5, [1, 3])).";
+    const members = intsOf(carrier ? carrier.members : arg);
     if (!members) return "Subset needs a list: Subset([1, 3], 5).";
-    return subsetModel(members, size === undefined ? Math.max(1, ...members) : (intOf(size) ?? Number.NaN));
+    const n = carrier ? carrier.n : size === undefined ? Math.max(1, ...members) : intOf(size);
+    return subsetModel(members, n ?? Number.NaN);
   }
-  return "CellDiagram needs IntegerPartition(…), StandardTableau(…), Composition(…) or Subset(…).";
+  return "CellDiagram needs IntegerPartition(…), StandardTableau(…), Composition(…), Subset(…) or Finset(…).";
 }
 
 /** Side of a cell's square, in cell widths: the rest is the gap between neighbors. */

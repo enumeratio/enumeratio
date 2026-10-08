@@ -9,7 +9,7 @@ signatures:
     library: enumeratio-combinatorics
     type: (indexed_collection<T>, integer?) -> list<T> where T
   - call: Commonest(collection, n)
-    description: the $n$ commonest elements, most frequent first, ties broken by first appearance.
+    description: the $n$ commonest elements, ties broken by first appearance, listed in order of first appearance.
     library: enumeratio-combinatorics
 seeAlso:
   - Mode

@@ -2,12 +2,12 @@ id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
 unittriangle-peak			[UnitTriangle, 0]	1	The peak		
 unittriangle-endpoint			[UnitTriangle, 1]	0	Zero at the endpoint		
 unittriangle-neg-endpoint			[UnitTriangle, -1]	0			
-piecewiseexpand-unittriangle-x			[PiecewiseExpand, [UnitTriangle, x]]	[UnitTriangle, x]	The symbolic form is unchanged	unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
+piecewiseexpand-unittriangle-x			[PiecewiseExpand, [UnitTriangle, x]]	[Piecewise, [List, [List, [Add, [Negate, x], 1], [LessEqual, 0, x, 1]], [List, [Add, x, 1], [And, [LessEqual, -1, x], [Less, x, 0]]]], 0]	[[UnitTriangle]] as a two-branch [[Piecewise]]		
 unittriangle-outside	Scope		[UnitTriangle, 2]	0	Zero past the endpoints		
 unittriangle-1-3	Scope		[UnitTriangle, [Rational, 1, 3]]	[Rational, 2, 3]	Exact rational input, exact rational output		
 unittriangle-1-2	Scope	test	[UnitTriangle, [Rational, 1, 2]]	[Rational, 1, 2]			
 unittriangle-1-over-4	Scope		[UnitTriangle, [Rational, 1, 4]]	[Rational, 3, 4]	$1-|x|=\frac34$ at $x=\frac14$		
-piecewiseexpand-unittriangle-x-0-lt-x-lt-2	Scope		[PiecewiseExpand, [UnitTriangle, x], [Less, 0, x, 2]]	[UnitTriangle, x]	Nothing to expand on a bounded domain	unevaluated	Ours returns the input as written; Wolfram rewrites it. A missing rewrite, which agreed by value until a form-transforming head's unchanged answer stopped counting as agreement (BL-111).
+piecewiseexpand-unittriangle-x-0-lt-x-lt-2	Scope		[PiecewiseExpand, [UnitTriangle, x], [Less, 0, x, 2]]	[Piecewise, [List, [List, [Add, [Negate, x], 1], [LessEqual, 0, x, 1]]], 0]	The triangle is written in full, whatever the domain		
 n-unittriangle-neg-1-over-7-50	Scope		[N, [UnitTriangle, [Rational, -1, 7]], 50]	{num: "0.85714285714285714285714285714285714285714285714286"}			
 normal-series-unittriangle-x-x-0-3	Scope		[Normal, [Series, [UnitTriangle, x], x, 0, 3]]	[Add, [Multiply, [Rational, 1, 6], [Apply, [Derivative, UnitTriangle, 3], 0], [Power, x, 3]], [Multiply, [Rational, 1, 2], [Apply, [Derivative, UnitTriangle, 2], 0], [Power, x, 2]], [Multiply, x, [Apply, [Derivative, UnitTriangle, 1], 0]], 1]		domain	x = 0 is a kink: ours is a Taylor expansion with symbolic Derivative coefficients, where Wolfram gives the one-sided Piecewise.
 unittriangle-same-as-heavisidelambda	Properties		[Equal, [UnitTriangle, [Rational, 1, 4]], [HeavisideLambda, [Rational, 1, 4]]]	True	The same function as [[HeavisideLambda]]		

@@ -102,6 +102,7 @@ describe("the logarithmic embedding", () => {
     for (const d of [2, 5, 229]) {
       const layer = quadraticLattice(d, { embedding: "logarithmic" })!;
       for (const [i, j] of layer.addresses!()) {
+        layer.prepare(i, j);
         const [x, y] = layer.place!(i, j);
         const N = Number(layer.value(i, j, "Norm"));
         expect(x! + y!).toBeCloseTo(Math.log(Math.abs(N)), 9);

@@ -24,3 +24,10 @@ test("CellularAutomaton rule 73 flips its background each generation", () => {
     ["List", 1, 0, 1, 1, 1, 1, 1, 0, 1],
   ]);
 });
+
+// Thread evaluates each threaded call, as Wolfram does: Thread[Unevaluated[D(...)]] gives {1, x}.
+test("Thread evaluates its threaded calls", () => {
+  expect(run(["Thread", ["Equal", ["List", 1, 2, 3], ["List", 1, 5, 3]]])).toEqual(["List", "True", "False", "True"]);
+  expect(run(["Thread", ["Equal", ["List", 1, 2, 3], 1]])).toEqual(["List", "True", "False", "False"]);
+  expect(run(["Thread", ["D", ["List", "x", ["Multiply", "x", "y"]], ["List", "x", "y"]]])).toEqual(["List", 1, "x"]);
+});
