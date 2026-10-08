@@ -171,8 +171,8 @@ importers:
         version: link:../utils
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../config
@@ -196,8 +196,8 @@ importers:
         version: link:../manifest
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../config
@@ -218,8 +218,8 @@ importers:
         version: link:../engine
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/combinatorics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/combinatorics
@@ -249,8 +249,8 @@ importers:
         version: link:../engine
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../config
@@ -343,8 +343,8 @@ importers:
         version: link:../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../config
@@ -379,8 +379,8 @@ importers:
   packages/cli:
     dependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../symbols/analysis/analytic
@@ -528,8 +528,8 @@ importers:
         version: 0.110.0
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/combinatorics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/combinatorics
@@ -557,8 +557,8 @@ importers:
   packages/engine:
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../config
@@ -622,8 +622,8 @@ importers:
         version: 3.1.1
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../manifest
@@ -677,8 +677,8 @@ importers:
         version: 3.1.0
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/combinatorics':
         specifier: workspace:*
         version: link:../symbols/combinatorics/combinatorics
@@ -729,8 +729,8 @@ importers:
         version: 7.8.5
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../config
@@ -760,8 +760,8 @@ importers:
         version: link:../wolfram
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/adeles':
         specifier: workspace:*
         version: link:../symbols/arithmetic/adeles
@@ -909,8 +909,8 @@ importers:
         version: link:../utils
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/adeles':
         specifier: workspace:*
         version: link:../symbols/arithmetic/adeles
@@ -1015,8 +1015,8 @@ importers:
         version: link:../engine
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../config
@@ -1046,8 +1046,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1077,8 +1077,8 @@ importers:
         version: link:../hypercomplex
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1108,8 +1108,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1139,8 +1139,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1170,8 +1170,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1201,8 +1201,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1232,8 +1232,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1263,8 +1263,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1294,8 +1294,8 @@ importers:
         version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1340,8 +1340,8 @@ importers:
         version: link:../residues
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1399,8 +1399,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1430,8 +1430,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1470,8 +1470,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1507,8 +1507,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1535,8 +1535,8 @@ importers:
         version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1557,8 +1557,8 @@ importers:
         version: link:../../../engine
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/combinatorics':
         specifier: workspace:*
         version: link:../combinatorics
@@ -1594,8 +1594,8 @@ importers:
         version: link:../../../manifest
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1628,8 +1628,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1665,8 +1665,8 @@ importers:
         version: link:../../../structures
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../../../config
@@ -1822,8 +1822,8 @@ importers:
         version: 0.16.47
     devDependencies:
       '@cortex-js/compute-engine':
-        specifier: ^0.150.0
-        version: 0.150.0
+        specifier: ^0.151.0
+        version: 0.151.0
       '@enumeratio/config':
         specifier: workspace:*
         version: link:../packages/config
@@ -1873,8 +1873,8 @@ packages:
   '@blazediff/core@1.9.1':
     resolution: {integrity: sha512-ehg3jIkYKulZh+8om/O25vkvSsXXwC+skXmyA87FFx6A/45eqOkZsBltMw/TVteb0mloiGT8oGRTcjRAz66zaA==}
 
-  '@cortex-js/compute-engine@0.150.0':
-    resolution: {integrity: sha512-9+a3/ja1RcL/BllL7wMH5KeEMUm2rlHgcsk2XwTUAFSWW9kAh3ye72VdTbSUseBgQew+nR5vNZkde6xctZ7/qA==}
+  '@cortex-js/compute-engine@0.151.0':
+    resolution: {integrity: sha512-fE1ZQJ6rxUGdHTJ6Aqb1DxGHJiSLsZvqJWYkP6DCL2IRqpEgtd77xp2RD6/kRjhj1dBZIzSm8dw9WNnEvxKCGw==}
     engines: {node: '>=22.3.0', npm: '>=10.5.0'}
     hasBin: true
 
@@ -4091,7 +4091,7 @@ snapshots:
 
   '@blazediff/core@1.9.1': {}
 
-  '@cortex-js/compute-engine@0.150.0':
+  '@cortex-js/compute-engine@0.151.0':
     dependencies:
       '@arnog/colors': 0.7.0
       complex.js: 2.4.3

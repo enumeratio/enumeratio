@@ -38,7 +38,7 @@
     "semver": "catalog:"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.150.0",
+    "@cortex-js/compute-engine": "^0.151.0",
     "@enumeratio/config": "workspace:*",
     "@types/node": "^24",
     "@types/semver": "catalog:",
@@ -47,7 +47,7 @@
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.150.0"
+    "@cortex-js/compute-engine": "^0.151.0"
   },
   "enumeratio": {
     "layer": "infra",
