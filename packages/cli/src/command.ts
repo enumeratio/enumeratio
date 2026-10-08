@@ -10,6 +10,7 @@ import { can, type Environment, ENVIRONMENTS, environmentNamed, PIPE } from "@en
 import { evaluateReadouts, reduce } from "@enumeratio/frontend";
 import { completionScript, type Shell, SHELLS, SUBCOMMANDS } from "./completion.ts";
 import { formatsTable } from "./core.ts";
+import { figureText } from "./figure.ts";
 import {
   type Form,
   FORM_LABEL,
@@ -32,6 +33,8 @@ Usage:
   notatio eval [options] <expr>  same, explicit
   notatio convert [options] <expr>
                                  re-render <expr> in another form without evaluating
+  notatio show [options] <expr>  draw <expr> as a figure on character cells (a Permutation as
+                                 its strands, a DyckPath as its path); other results print as eval
   echo <expr> | notatio          read the expression from stdin (or pass "-")
   notatio                        (a TTY, no expr) start the interactive REPL
   notatio forms | formats        list the output forms | the format registry
@@ -170,6 +173,21 @@ export function formatsJson(): Record<string, unknown>[] {
   }));
 }
 
+/** What only the host knows: whether its terminal takes color. */
+export interface HostOptions {
+  color?: boolean;
+}
+
+/** The result of `input` drawn as a figure, if it is one; an input that fails is left to eval to report. */
+function figureOf(input: string, defaults: SessionDefaults, host: HostOptions): string | undefined {
+  try {
+    const { expr } = new Session(defaults).evaluate(input);
+    return figureText(expr.json as never, { color: host.color });
+  } catch {
+    return undefined;
+  }
+}
+
 export interface CommandResult {
   stdout: string;
   stderr: string;
@@ -244,7 +262,12 @@ function parseArgs(argv: readonly string[]): ParsedArgs | CommandResult {
  * Parse argv (already sliced past `node bin`) and run once. `stdin` is the
  * piped input, if any; `defaults` come from the host (a config file).
  */
-export function runCommand(argv: readonly string[], stdin?: string, defaults: SessionDefaults = {}): CommandResult {
+export function runCommand(
+  argv: readonly string[],
+  stdin?: string,
+  defaults: SessionDefaults = {},
+  host: HostOptions = {},
+): CommandResult {
   const parsed = parseArgs(argv);
   if ("code" in parsed) return parsed;
 
@@ -263,13 +286,19 @@ export function runCommand(argv: readonly string[], stdin?: string, defaults: Se
       return usageError("serve needs a Node host (run the notatio bin)");
     case "eval":
     case "convert":
-      return evaluate(parsed, stdin, defaults);
+    case "show":
+      return evaluate(parsed, stdin, defaults, host);
     default:
       throw new Error("unreachable: subcommand is exhaustive above");
   }
 }
 
-function evaluate(p: ParsedArgs, stdin: string | undefined, defaults: SessionDefaults): CommandResult {
+function evaluate(
+  p: ParsedArgs,
+  stdin: string | undefined,
+  defaults: SessionDefaults,
+  host: HostOptions,
+): CommandResult {
   const expr = p.stdin ? stdin?.trim() : (p.expr ?? p.positional[0] ?? stdin?.trim());
   if (!expr) return usageError(USAGE.trimEnd());
 
@@ -297,6 +326,15 @@ function evaluate(p: ParsedArgs, stdin: string | undefined, defaults: SessionDef
     precision = Number(p.precision);
     if (!Number.isInteger(precision) || precision < 1)
       return usageError(`--precision expects a positive integer, got ${p.precision}`);
+  }
+
+  if (p.subcommand === "show") {
+    const drawn = figureOf(
+      expr,
+      { ...defaults, syntax: syntax ?? defaults.syntax, precision: precision ?? defaults.precision },
+      host,
+    );
+    if (drawn !== undefined) return ok(`${drawn}\n`);
   }
 
   const res = evaluateCommand(

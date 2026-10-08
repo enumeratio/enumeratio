@@ -7,6 +7,7 @@ import { optionsOf } from "@enumeratio/formats";
 import { headOf, numOf, opsOf, strOf, symOf, tupleOf } from "@enumeratio/frontend";
 import { textPlot } from "@enumeratio/frontend";
 import type { PlotPoint, Session } from "./engine.ts";
+import { figureText } from "./figure.ts";
 
 type Json = Parameters<typeof headOf>[0];
 
@@ -43,7 +44,7 @@ export function samplePlot(session: Session, json: Json): PlotPoint[] | undefine
 }
 
 /**
- * The result as text: a plot drawn on cells, else the session's rendering. A plot a
+ * The result as text: a plot or a figure drawn on cells, else the session's rendering. A plot a
  * pipe pinned comes back `Labeled` with its caption, and keeps it under the cells.
  */
 export function textOf(session: Session, json: Json, width = 60, height = 12): string {
@@ -55,5 +56,7 @@ export function textOf(session: Session, json: Json, width = 60, height = 12): s
   }
   const points = samplePlot(session, json);
   if (points !== undefined) return textPlot(points, { width, height, marks: plotOf(json)?.marks });
+  const figure = figureText(json, { width });
+  if (figure !== undefined) return figure;
   return session.render(session.ce.box(json as never).evaluate());
 }

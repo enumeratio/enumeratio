@@ -250,6 +250,15 @@ function writeNode(box: BoxNode): string {
       return write(box[1]);
     case "ErrorBox":
       return `\\textcolor{red}{${write(box[1])}}`;
+    // A drawing has no TeX; it reads as Wolfram prints it.
+    case "GraphicsBox":
+    case "GraphicsComplexBox":
+    case "DiskBox":
+    case "LineBox":
+    case "PolygonBox":
+    case "PolyhedronBox":
+    case "InsetBox":
+      return "\\text{-Graphics-}";
     case "ButtonBox":
     case "TextCell":
       return write(box[1]);

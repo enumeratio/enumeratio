@@ -27,6 +27,16 @@ export type BoxNode =
   | readonly ["TagBox", Box, string, Options?]
   | readonly ["InterpretationBox", Box, MathJsonExpression, Options?]
   | readonly ["ErrorBox", Box]
+  // Graphics (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives). A primitive's
+  // geometry is its options, in the frame's coordinates; a mark is `TagBox`ed with its address,
+  // a link with its members.
+  | readonly ["GraphicsBox", Box, Options?]
+  | readonly ["GraphicsComplexBox", Box, Options?]
+  | readonly ["DiskBox", Options?]
+  | readonly ["LineBox", Options?]
+  | readonly ["PolygonBox", Options?]
+  | readonly ["PolyhedronBox", Options?]
+  | readonly ["InsetBox", Box, Options?]
   // Prose (https://github.com/enumeratio/enumeratio/wiki/Speculative-Prose-Pipeline). Inside `TextData` a leaf is text, not a token.
   | readonly ["TextCell", Box, string, Options?]
   | readonly ["TextData", readonly Box[]]
@@ -59,6 +69,13 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   TagBox: 2,
   InterpretationBox: 2,
   ErrorBox: 1,
+  GraphicsBox: 1,
+  GraphicsComplexBox: 1,
+  DiskBox: 0,
+  LineBox: 0,
+  PolygonBox: 0,
+  PolyhedronBox: 0,
+  InsetBox: 1,
   TextCell: 2,
   TextData: 1,
   ButtonBox: 1,
@@ -107,6 +124,16 @@ export const frame = (box: Box, options?: Options): Box => ["FrameBox", ...withO
 export const tag = (box: Box, name: string): Box => ["TagBox", box, name];
 export const interpretation = (box: Box, expr: MathJsonExpression): Box => ["InterpretationBox", box, expr];
 export const error = (box: Box): Box => ["ErrorBox", box];
+export const graphics = (content: Box, options?: Options): Box =>
+  ["GraphicsBox", ...withOptions([content] as const, options)] as Box;
+export const graphicsComplex = (content: Box, options?: Options): Box =>
+  ["GraphicsComplexBox", ...withOptions([content] as const, options)] as Box;
+export const disk = (options?: Options): Box => ["DiskBox", ...withOptions([] as const, options)] as Box;
+export const line = (options?: Options): Box => ["LineBox", ...withOptions([] as const, options)] as Box;
+export const polygon = (options?: Options): Box => ["PolygonBox", ...withOptions([] as const, options)] as Box;
+export const polyhedron = (options?: Options): Box => ["PolyhedronBox", ...withOptions([] as const, options)] as Box;
+export const inset = (content: Box, options?: Options): Box =>
+  ["InsetBox", ...withOptions([content] as const, options)] as Box;
 export const textCell = (content: Box, cellStyle: string, options?: Options): Box =>
   ["TextCell", ...withOptions([content, cellStyle] as const, options)] as Box;
 export const textData = (items: readonly Box[]): Box => ["TextData", items];

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[DiskBox, [Tuple, Radius, 1]]	[DiskBox, [Tuple, Radius, 1]]	a box is inert: it evaluates to itself

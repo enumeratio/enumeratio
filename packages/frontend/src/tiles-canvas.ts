@@ -1,13 +1,16 @@
-// Drawing a tile layer onto a canvas: each element styled by its rules (`graphics-rules.ts`),
-// faces batched by the color they mix to, edges stroked inside one another in rule order, and
-// new elements computed only within a frame's budget, centre outwards. A layer that places its own
-// marks (`place`) is drawn as a finite figure instead: marks at its addresses, then its links.
+// A tile layer as a display list and as canvas output. `displayListOf` is pure: it walks the
+// layer's elements within a frame's budget, centre outwards, and styles each by its rules
+// (`graphics-rules.ts`). `paint` is the web canvas drawer of that list: faces batched by the color
+// they mix to, edges stroked inside one another in rule order. A layer that places its own marks
+// (`place`) lists a finite figure instead: marks at its addresses, then its links.
 
 import {
   type BoundaryRule,
   type ColorMixing,
   type ColorRule,
+  type Edge,
   type ElementFacts,
+  type ElementStyle,
   styleElement,
   valueOf,
 } from "./graphics-rules.ts";
@@ -123,55 +126,81 @@ const TINY_TILE = 3;
 
 type ValueReader = (base: (name: string) => number | undefined) => number | undefined;
 
-/** Draw a tile layer; whether every visible point was drawn. Clears nothing: layers stack. */
-export function drawTiles(
-  ctx: CanvasRenderingContext2D,
+/** A tile of a lattice layer: where it is, in the frame's space, and what its rules make of it. */
+export interface TileItem {
+  readonly at: Vec2;
+  readonly style: ElementStyle;
+}
+
+/** A figure's mark: its address, its place, what it draws there and what its rules make of it. */
+export interface MarkItem {
+  readonly address: Address;
+  readonly at: Vec2;
+  readonly mark: GraphicsPrimitive;
+  readonly style: ElementStyle;
+  readonly selected: boolean;
+  /** The caption the layer gives this address, drawn over the mark. */
+  readonly caption?: { readonly at: Vec2; readonly text: string; readonly size: number; readonly opacity: number };
+}
+
+/** A figure's link: the addresses it joins, the curve it takes and the edges its members' rules give it. */
+export interface LinkItem {
+  readonly members: readonly Address[];
+  readonly mark: GraphicsPrimitive;
+  readonly edges: readonly Edge[];
+}
+
+/**
+ * What a layer draws at a view, resolved: every visible element with its style, in drawing order.
+ * Plain data, so a canvas, a `GraphicsBox` and a terminal draw it with no layer code. `complete` is
+ * false while elements are left to classify (the budget ran out); the caller asks again.
+ */
+export type DisplayList =
+  | {
+      readonly kind: "tiles";
+      readonly basis: readonly [Vec2, Vec2];
+      readonly tiles: readonly TileItem[];
+      readonly complete: boolean;
+    }
+  | {
+      readonly kind: "marks";
+      readonly view: ViewKind | undefined;
+      readonly marks: readonly MarkItem[];
+      readonly links: readonly LinkItem[];
+      readonly complete: boolean;
+    };
+
+/** Reads a gradient's value off one element, once per gradient rather than per point. */
+function readerCache(): (json: unknown) => ValueReader | undefined {
+  const readers = new Map<unknown, ValueReader | undefined>();
+  return (json) => {
+    if (!readers.has(json)) readers.set(json, valueOf(json));
+    return readers.get(json);
+  };
+}
+
+/**
+ * The display list of a layer at a view, pure of any canvas: new elements are classified only
+ * within `options.budgetMs`, centre outwards, and `complete` says whether every visible one was.
+ * A layer that places its own marks (`place`) lists them and its links instead of tiles.
+ */
+export function displayListOf(
+  layer: TileLayer,
   width: number,
   height: number,
-  layer: TileLayer,
   view: LatticeView,
   options: TileDrawOptions,
-): boolean {
-  if (layer.place) return drawMarks(ctx, width, height, layer, view, options);
+): DisplayList {
+  if (layer.place) return marksOf(layer, options);
   const pixels = height / (2 * view.extent);
   const toScreen = (p: Vec2): Vec2 => [
     (p[0] - view.center[0]) * pixels + width / 2,
     height / 2 - (p[1] - view.center[1]) * pixels,
   ];
   const area = Math.abs(layer.basis[0][0] * layer.basis[1][1] - layer.basis[0][1] * layer.basis[1][0]);
-  const size = Math.sqrt(area) * pixels;
-  const tiny = size < TINY_TILE;
-  const half = (size * options.fill) / 2;
-  const shape = voronoiCell(layer.basis).map(
-    ([x, y]) => [x * pixels * options.fill, -y * pixels * options.fill] as Vec2,
-  );
-  const tile = (path: Path2D, x: number, y: number, inset = 0): void => {
-    if (tiny) {
-      path.rect(x - half, y - half, 2 * half, 2 * half);
-      return;
-    }
-    // Shrink the cell toward its centre by `inset` device pixels, for nested edges.
-    const k = half > 0 ? Math.max(0, 1 - inset / half) : 1;
-    path.moveTo(x + shape[0]![0] * k, y + shape[0]![1] * k);
-    for (let n = 1; n < shape.length; n++) path.lineTo(x + shape[n]![0] * k, y + shape[n]![1] * k);
-    path.closePath();
-  };
-
-  // Value readers once per gradient, not per point.
-  const readers = new Map<unknown, ValueReader | undefined>();
-  const readerFor = (json: unknown): ValueReader | undefined => {
-    if (!readers.has(json)) readers.set(json, valueOf(json));
-    return readers.get(json);
-  };
-
-  const fills = new Map<string, Path2D>();
-  const edges = new Map<string, Path2D>();
-  const pathIn = (paths: Map<string, Path2D>, key: string): Path2D => {
-    let path = paths.get(key);
-    if (path === undefined) paths.set(key, (path = new Path2D()));
-    return path;
-  };
-
+  const half = (Math.sqrt(area) * pixels * options.fill) / 2;
+  const readerFor = readerCache();
+  const tiles: TileItem[] = [];
   const selected = new Set(options.selection.map(([i, j]) => `${i},${j}`));
   const range = visibleRange(layer.basis, view, width / height);
   const limit = layer.maxIndex;
@@ -189,7 +218,8 @@ export function drawTiles(
   let prepared = 0;
   let complete = true;
 
-  const visit = (i: number, j: number, x: number, y: number): void => {
+  const visit = (i: number, j: number, p: Vec2): void => {
+    const [x, y] = toScreen(p);
     if (x < -margin || x > width + margin || y < -margin || y > height + margin) return;
     if (!layer.known(i, j)) {
       if (spent > options.budgetMs && prepared >= MIN_PREPARED) {
@@ -202,7 +232,7 @@ export function drawTiles(
       prepared++;
     }
     const facts: ElementFacts = {
-      has: (p) => layer.has(i, j, p) ?? false,
+      has: (property) => layer.has(i, j, property) ?? false,
       related: (r) => options.selection.some((s) => layer.relatedTo(r, s, i, j)),
       selected: selected.has(`${i},${j}`),
     };
@@ -214,33 +244,86 @@ export function drawTiles(
       (json) => readerFor(json)?.((name) => layer.value(i, j, name)),
       options.phase,
     );
+    tiles.push({ at: p, style });
+  };
+
+  const points = layer.points?.();
+  if (points) {
+    for (let n = 0; n < points.length; n++) visit(n, 0, points[n]!);
+  } else {
+    for (const j of rows) for (let i = i0; i <= i1; i++) visit(i, j, latticePoint(layer.basis, i, j));
+  }
+  return { kind: "tiles", basis: layer.basis, tiles, complete };
+}
+
+/** Paint a display list. Clears nothing: layers stack. */
+export function paint(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  list: DisplayList,
+  view: LatticeView,
+  options: Pick<TileDrawOptions, "fill" | "ink">,
+): void {
+  if (list.kind === "marks") return paintMarks(ctx, width, height, list, view, options);
+  const pixels = height / (2 * view.extent);
+  const toScreen = (p: Vec2): Vec2 => [
+    (p[0] - view.center[0]) * pixels + width / 2,
+    height / 2 - (p[1] - view.center[1]) * pixels,
+  ];
+  const area = Math.abs(list.basis[0][0] * list.basis[1][1] - list.basis[0][1] * list.basis[1][0]);
+  const size = Math.sqrt(area) * pixels;
+  const tiny = size < TINY_TILE;
+  const half = (size * options.fill) / 2;
+  const shape = voronoiCell(list.basis).map(
+    ([x, y]) => [x * pixels * options.fill, -y * pixels * options.fill] as Vec2,
+  );
+  const tile = (path: Path2D, x: number, y: number, inset = 0): void => {
+    if (tiny) {
+      path.rect(x - half, y - half, 2 * half, 2 * half);
+      return;
+    }
+    // Shrink the cell toward its centre by `inset` device pixels, for nested edges.
+    const k = half > 0 ? Math.max(0, 1 - inset / half) : 1;
+    path.moveTo(x + shape[0]![0] * k, y + shape[0]![1] * k);
+    for (let n = 1; n < shape.length; n++) path.lineTo(x + shape[n]![0] * k, y + shape[n]![1] * k);
+    path.closePath();
+  };
+  const fills = new Map<string, Path2D>();
+  const edges = new Map<string, Path2D>();
+  for (const { at, style } of list.tiles) {
+    const [x, y] = toScreen(at);
     if (style.color) tile(pathIn(fills, style.color), x, y);
-    if (tiny) return;
+    if (tiny) continue;
     let inset = 0;
     for (const e of style.edges) {
       const w = e.width * dprOf();
       tile(pathIn(edges, `${e.color}|${w}|${e.opacity}|${e.dashing.join(",")}`), x, y, inset + w / 2);
       inset += w;
     }
-  };
-
-  const points = layer.points?.();
-  if (points) {
-    for (let n = 0; n < points.length; n++) {
-      const [x, y] = toScreen(points[n]!);
-      visit(n, 0, x, y);
-    }
-  } else {
-    for (const j of rows) {
-      for (let i = i0; i <= i1; i++) {
-        const [x, y] = toScreen(latticePoint(layer.basis, i, j));
-        visit(i, j, x, y);
-      }
-    }
   }
-
   paintBatches(ctx, fills, edges);
-  return complete;
+}
+
+/** Draw a tile layer; whether every visible point was drawn. Clears nothing: layers stack. */
+export function drawTiles(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  layer: TileLayer,
+  view: LatticeView,
+  options: TileDrawOptions,
+): boolean {
+  const list = displayListOf(layer, width, height, view, options);
+  paint(ctx, width, height, list, view, options);
+  return list.complete;
+}
+
+/** The path for a batch key, made on first use. */
+function pathIn(paths: Map<string, Path2D>, key: string): Path2D {
+  let path = paths.get(key);
+  if (path === undefined) paths.set(key, (path = new Path2D()));
+  return path;
 }
 
 /** Fill each color's path, then stroke each edge's. */
@@ -440,51 +523,21 @@ function addPrimitive(
 }
 
 /**
- * Draw a figure layer: a mark at each address, styled as a tile is (color by `ColorRules`, edges
- * by `BoundaryStyle`), then the links, each a curve stroked by the edges its members' properties
+ * The marks of a figure layer: a mark at each address, styled as a tile is (color by `ColorRules`,
+ * edges by `BoundaryStyle`), then its links, each a curve with the edges its members' properties
  * match. A link has a property, relation or selection when any of its members does.
  */
-function drawMarks(
-  ctx: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-  layer: TileLayer,
-  view: LatticeView,
-  options: TileDrawOptions,
-): boolean {
-  const pixels = height / (2 * view.extent);
-  const toScreen = (p: Vec2): Vec2 => [
-    (p[0] - view.center[0]) * pixels + width / 2,
-    height / 2 - (p[1] - view.center[1]) * pixels,
-  ];
-  const dpr = dprOf();
-  const readers = new Map<unknown, ValueReader | undefined>();
-  const readerFor = (json: unknown): ValueReader | undefined => {
-    if (!readers.has(json)) readers.set(json, valueOf(json));
-    return readers.get(json);
-  };
+function marksOf(layer: TileLayer, options: TileDrawOptions): DisplayList {
+  const readerFor = readerCache();
   const selected = new Set(options.selection.map(([i, j]) => `${i},${j}`));
   const factsOf = (members: readonly Address[]): ElementFacts => ({
     has: (p) => members.some(([i, j]) => layer.has(i, j, p) ?? false),
     related: (r) => members.some(([i, j]) => options.selection.some((s) => layer.relatedTo(r, s, i, j))),
     selected: members.some(([i, j]) => selected.has(`${i},${j}`)),
   });
-
-  const fills = new Map<string, Path2D>();
-  const edges = new Map<string, Path2D>();
-  const pathIn = (paths: Map<string, Path2D>, key: string): Path2D => {
-    let path = paths.get(key);
-    if (path === undefined) paths.set(key, (path = new Path2D()));
-    return path;
-  };
-  const labels: { at: Vec2; text: string; size: number; color: string }[] = [];
-  const captions: { at: Vec2; text: string; size: number; opacity: number }[] = [];
-
-  // A camera frame's marks overlap, so each is painted in the order the layer lists them (far to
-  // near); the rest are batched by color.
-  const ordered = layer.view === "camera";
-  // Classifying is the budget's alone, as in `drawTiles`: an address not yet known is skipped
-  // for this frame once the budget is spent, and the caller draws again.
+  const marks: MarkItem[] = [];
+  // Classifying is the budget's alone, as in `displayListOf`'s tiles: an address not yet known is
+  // skipped for this frame once the budget is spent, and the caller asks again.
   let spent = 0;
   let prepared = 0;
   let complete = true;
@@ -510,15 +563,54 @@ function drawMarks(
       options.phase,
     );
     const at = placeOf(layer, i, j);
-    const mark: GraphicsPrimitive = layer.mark?.(i, j) ?? { head: "Disk", radius: 0.12 };
     const caption = layer.label?.(i, j, facts.selected);
-    if (caption)
-      captions.push({
-        at: xy(caption.at ?? at),
-        text: caption.text,
-        size: caption.size,
-        opacity: caption.opacity ?? 1,
-      });
+    marks.push({
+      address: [i, j],
+      at,
+      mark: layer.mark?.(i, j) ?? { head: "Disk", radius: 0.12 },
+      style,
+      selected: facts.selected,
+      ...(caption && {
+        caption: { at: xy(caption.at ?? at), text: caption.text, size: caption.size, opacity: caption.opacity ?? 1 },
+      }),
+    });
+  }
+
+  const links: LinkItem[] = [];
+  for (const members of layer.links?.() ?? []) {
+    const style = styleElement([], options.boundaryRules, "First", factsOf(members), () => undefined, 0);
+    const mark = linkPrimitive(layer, members);
+    if (style.edges.length === 0 || (mark.head !== "Line" && mark.head !== "Polygon")) continue;
+    links.push({ members, mark, edges: style.edges });
+  }
+  return { kind: "marks", view: layer.view, marks, links, complete };
+}
+
+/** Paint a figure's display list: marks batched by color, then labels, captions and links. */
+function paintMarks(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  list: Extract<DisplayList, { kind: "marks" }>,
+  view: LatticeView,
+  options: Pick<TileDrawOptions, "ink">,
+): void {
+  const pixels = height / (2 * view.extent);
+  const toScreen = (p: Vec2): Vec2 => [
+    (p[0] - view.center[0]) * pixels + width / 2,
+    height / 2 - (p[1] - view.center[1]) * pixels,
+  ];
+  const dpr = dprOf();
+  const fills = new Map<string, Path2D>();
+  const edges = new Map<string, Path2D>();
+  const labels: { at: Vec2; text: string; size: number; color: string }[] = [];
+  const captions: { at: Vec2; text: string; size: number; opacity: number }[] = [];
+
+  // A camera frame's marks overlap, so each is painted in the order the layer lists them (far to
+  // near); the rest are batched by color.
+  const ordered = list.view === "camera";
+  for (const { at, mark, style, caption } of list.marks) {
+    if (caption) captions.push(caption);
     if (mark.head === "Text") {
       if (style.color) labels.push({ at: xy(mark.at ?? at), text: mark.text, size: mark.size, color: style.color });
       continue;
@@ -561,19 +653,16 @@ function drawMarks(
   ctx.globalAlpha = 1;
   ctx.lineJoin = "round";
   ctx.lineCap = "round";
-  for (const link of layer.links?.() ?? []) {
-    const style = styleElement([], options.boundaryRules, "First", factsOf(link), () => undefined, 0);
-    const prim = linkPrimitive(layer, link);
-    if (style.edges.length === 0 || (prim.head !== "Line" && prim.head !== "Polygon")) continue;
+  for (const { mark, edges: linkEdges } of list.links) {
     const path = new Path2D();
-    addPrimitive(path, prim, [0, 0], toScreen, pixels);
-    if (prim.head === "Polygon") {
-      ctx.globalAlpha = 0.16 * style.edges[0]!.opacity;
-      ctx.fillStyle = style.edges[0]!.color;
+    addPrimitive(path, mark, [0, 0], toScreen, pixels);
+    if (mark.head === "Polygon") {
+      ctx.globalAlpha = 0.16 * linkEdges[0]!.opacity;
+      ctx.fillStyle = linkEdges[0]!.color;
       ctx.fill(path);
     }
     // The first rule on top: strokes run last to first.
-    for (const e of style.edges.toReversed()) {
+    for (const e of linkEdges.toReversed()) {
       ctx.strokeStyle = e.color;
       ctx.lineWidth = e.width * dpr;
       ctx.globalAlpha = e.opacity;
@@ -582,7 +671,6 @@ function drawMarks(
     }
   }
   ctx.restore();
-  return complete;
 }
 
 export interface LineStyle {

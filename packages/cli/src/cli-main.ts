@@ -45,7 +45,8 @@ export function main(argv: readonly string[] = process.argv.slice(2)): void {
       stdin = undefined;
     }
   }
-  const { stdout, stderr, code } = runCommand(argv, stdin, defaults);
+  const color = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;
+  const { stdout, stderr, code } = runCommand(argv, stdin, defaults, { color });
   if (stdout) process.stdout.write(stdout);
   if (stderr) process.stderr.write(stderr);
   process.exit(code);

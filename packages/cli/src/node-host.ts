@@ -6,6 +6,7 @@
 import { fileFormat, isImageFormat, isImageValue, readFormat, writeFormat } from "@enumeratio/formats/node";
 import { type CommandHandler, type Graphic, type LineOutput, Repl } from "./core.ts";
 import type { SessionDefaults } from "./engine.ts";
+import { figureText } from "./figure.ts";
 import { graphicLabel, graphicToSvg, inlineImage, writeSvg } from "./node-graphics.ts";
 import { samplePlot } from "./textual.ts";
 import { textPlot } from "@enumeratio/frontend";
@@ -30,7 +31,10 @@ export class NodeHost {
   eval(line: string): HostOutput {
     const out = this.repl.eval(line);
     const graphic = out.graphic ?? this.plotResult(out);
-    if (!graphic) return { text: out.text, exit: out.exit, clear: out.clear };
+    if (!graphic) {
+      const figure = this.figureResult(out);
+      return { text: figure === undefined ? out.text : `${out.text}\n${figure}`, exit: out.exit, clear: out.clear };
+    }
     const svg = graphicToSvg(graphic);
     this.lastSvg = svg;
     const label = graphicLabel(graphic);
@@ -51,6 +55,14 @@ export class NodeHost {
     if (!last || !out.text.includes(`Out[${last.n}]`)) return undefined;
     const points = samplePlot(this.repl.session, last.expr.json as never);
     return points === undefined ? undefined : { kind: "plot", expr: last.input, points };
+  }
+
+  /** A value that draws as a figure (`Permutation([3, 1, 2])`) is drawn under its `Out` line. */
+  private figureResult(out: LineOutput): string | undefined {
+    if (out.exit || out.clear) return undefined;
+    const last = this.repl.session.history.at(-1);
+    if (!last || !out.text.includes(`Out[${last.n}]`)) return undefined;
+    return figureText(last.expr.json as never, { color: this.repl.color });
   }
 
   private commands(): Record<string, CommandHandler> {

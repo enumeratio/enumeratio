@@ -138,6 +138,14 @@ class Writer {
       case "TemplateSlot":
       case "TemplateExpression":
         return `\${${box[1]}}`;
+      case "GraphicsBox":
+      case "GraphicsComplexBox":
+      case "DiskBox":
+      case "LineBox":
+      case "PolygonBox":
+      case "PolyhedronBox":
+      case "InsetBox":
+        return "-Graphics-";
       default:
         throw new Error("unreachable: BoxNode's tags are exhaustive above");
     }

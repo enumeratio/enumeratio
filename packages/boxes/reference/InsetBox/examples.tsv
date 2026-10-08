@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[InsetBox, "'x'", [Tuple, Size, 1]]	[InsetBox, "'x'", [Tuple, Size, 1]]	a box is inert: it evaluates to itself

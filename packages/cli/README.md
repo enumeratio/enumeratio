@@ -119,6 +119,23 @@ it; the Node CLI writes an SVG to a temp file (and shows it inline on iTerm2 /
 kitty). Try `:glyph partition [5,3,3,1]` or `:plot Sin(x)` in the
 [live REPL](https://enumeratio.dev/docs/cli/repl).
 
+### Figures in the terminal
+
+A value that draws as a figure (a `Permutation` as strands, a `PlaneTree`, a `DyckPath`, an
+`IntegerPartition` or `StandardTableau` as cells) is drawn on character cells: braille for curves
+and `●` for points, box-drawing for rectangles. Typing the value at the prompt draws it under its
+`Out` line; `notatio show <expr>` draws it from the command line, and prints any other result as
+`eval` does. Marks keep their rules' colors where the terminal has color.
+
+```text
+$ notatio show 'StandardTableau([[1, 2, 4], [3]])'
+┌───┬───┬───┐
+│ 1 │ 2 │ 4 │
+├───┼───┴───┘
+│ 3 │
+└───┘
+```
+
 ## Environments
 
 A result can carry controls — a `Slider`, a `Toggler`, a whole `Manipulate`. What
