@@ -201,3 +201,55 @@ describe("Figure lowered", () => {
     expect(lowerFigure("permutation", [])).toBeUndefined();
   });
 });
+
+describe("a braid", () => {
+  // σ₁ σ₂⁻¹ σ₁ on three strands.
+  const word = [1, -2, 1];
+  const layer = layerOf(["Braid", 3, list(...word)]);
+
+  it("is a level per generator and an out side", () => {
+    expect(layer.bounds).toEqual({ i: [1, 3], j: [0, 3] });
+    expect(layer.value(1, 3, "Sign")).toBe(1);
+    expect(layer.describe(1, 0).title).toBe("σ₁ σ₂⁻¹ σ₁");
+  });
+
+  it("follows a strand through every level", () => {
+    // From slot 1: 1, 2, 3, 3 (σ₁ moves it to 2, σ₂⁻¹ to 3, σ₁ leaves it).
+    const along = [0, 1, 2, 3].map((l) => [1, 2, 3].filter((s) => layer.relatedTo("SameStrand", [1, 0], s, l)));
+    expect(along).toEqual([[1], [2], [3], [3]]);
+    expect(layer.value(1, 0, "Image")).toBe(3);
+  });
+
+  it("has a generator's two strands over and under, by the letter's sign", () => {
+    // σ₁: slot 1 over; σ₂⁻¹: slot 3 over, slot 2 under.
+    expect([1, 2, 3].map((s) => layer.has(s, 0, "IsOver"))).toEqual([true, false, false]);
+    expect([1, 2, 3].map((s) => layer.has(s, 0, "IsUnder"))).toEqual([false, true, false]);
+    expect([1, 2, 3].map((s) => [layer.has(s, 1, "IsOver"), layer.has(s, 1, "IsUnder")])).toEqual([
+      [false, false],
+      [false, true],
+      [true, false],
+    ]);
+    expect([1, 2, 3].map((s) => layer.value(s, 1, "Exponent"))).toEqual([undefined, -1, -1]);
+    expect(layer.value(1, 0, "Exponent")).toBe(1);
+    expect(layer.has(1, 3, "IsOver")).toBe(false);
+  });
+
+  it("crosses the strands it passes over or under", () => {
+    expect(layer.relatedTo("Crosses", [1, 0], 2, 0)).toBe(true);
+    expect(layer.relatedTo("Crosses", [1, 0], 1, 0)).toBe(false);
+    const hopf = layerOf(["Braid", 3, list(1, 1)]);
+    expect([1, 2, 3].map((s) => hopf.value(s, 0, "Crossings"))).toEqual([1, 1, 0]);
+  });
+
+  it("breaks the under strand where it crosses", () => {
+    const strand = (s: number) => layer.linkMark!(layer.links!().find((m) => m.some(([a, b]) => a === s && b === 0))!);
+    expect(strand(1)).not.toHaveProperty("breaks");
+    expect(strand(2)).toMatchObject({ head: "Line", breaks: [expect.any(Number)] });
+  });
+
+  it("draws the identity as straight strands, and declines bad words", () => {
+    expect(layerOf(["Braid", 2]).describe(1, 0).title).toBe("identity");
+    expect(strandModelOf(["Braid", 2, list(2)])).toMatch(/letters/);
+    expect(strandModelOf(["Braid", 0, list()])).toMatch(/strands/);
+  });
+});
