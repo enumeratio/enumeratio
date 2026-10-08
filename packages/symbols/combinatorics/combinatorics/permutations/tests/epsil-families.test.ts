@@ -248,10 +248,10 @@ const READINGS: Record<string, Reading> = {
       lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !contains(x, pattern)),
     ]),
   ),
-  // Interpreted, a window table of either takes seconds per completion count past n = 4.
+  // Seconds per element past n = 4, so the standard run checks one size and DEEP_TESTS the sweep.
   NonCrossingCycleSupportPermutations: {
-    ...lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !crossing(x)),
-    interpretAt: process.env.DEEP_TESTS ? [5] : [4],
+    ...lexRestriction(process.env.DEEP_TESTS ? [[0], [1], [2], [3], [4], [5], [6]] : [[3]], (x) => !crossing(x)),
+    interpretAt: process.env.DEEP_TESTS ? [5] : [3],
   },
   VexillaryPermutations: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !contains4(x, "2143")),
   SeparablePermutations: {

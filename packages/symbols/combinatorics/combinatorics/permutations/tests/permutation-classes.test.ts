@@ -15,7 +15,7 @@ const PARAMS: Record<string, number[][]> = {
   BooleanPermutations: [[0], [1], [2], [3], [4], [5], [6], [7]],
   GrassmannianPermutations: [[0], [1], [2], [3], [4], [5], [6]],
   CograssmannianPermutations: [[0], [1], [2], [3], [4], [5], [6]],
-  NonCrossingCycleSupportPermutations: [[0], [1], [2], [3], [4], [5], [6]],
+  NonCrossingCycleSupportPermutations: process.env.DEEP_TESTS ? [[0], [1], [2], [3], [4], [5], [6]] : [[3]],
   NonCrossingPermutations: [[0], [1], [2], [3], [4], [5], [6], [7]],
   SeparablePermutations: [[0], [1], [2], [3], [4], [5], [6]],
   SimplePermutations: [[0], [1], [2], [3], [4], [5], [6]],

@@ -183,7 +183,7 @@ export function symbols(): readonly string[] {
   return symbolsOf(PATCHES);
 }
 
-/** Fixes to compute-engine's own heads (Take, Drop, Solve, iterators, shape, integrals) that
+/** Fixes to compute-engine's own heads (Solve, iterators, shape, integrals) that
  *  every engine needs, whichever libraries it declares; applying them again is a no-op. */
 export function applyNativeHeadPatches(ce: ComputeEngine): void {
   for (const patch of [
