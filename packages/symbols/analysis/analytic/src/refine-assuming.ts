@@ -42,6 +42,16 @@ function withAssumptions<T>(ce: ComputeEngine, conds: readonly BoxedExpression[]
   }
 }
 
+/** A finite lazy collection (`Map(f, list)`) would run once the scope has closed, without the
+ * assumptions; materialize it here. */
+function evaluateInScope(body: BoxedExpression): BoxedExpression {
+  const result = body.evaluate();
+  const count = result.isCollection ? (result as { count?: unknown }).count : undefined;
+  return result.operator !== "List" && typeof count === "number" && Number.isFinite(count)
+    ? result.evaluate({ materialization: true })
+    : result;
+}
+
 function declareAssuming(ce: ComputeEngine): void {
   ce.declare("Assuming", {
     signature: "(expression, expression) -> expression",
@@ -49,7 +59,7 @@ function declareAssuming(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [cond, body] = ops;
       if (!cond || !body) return undefined;
-      return withAssumptions(ce, flattenConditions(cond), () => body.evaluate());
+      return withAssumptions(ce, flattenConditions(cond), () => evaluateInScope(body));
     },
   });
 }

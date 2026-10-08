@@ -1,5 +1,6 @@
-import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
+import { isNumber, isSymbol, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
+import { expandStep, STEP_HEADS } from "./piecewise-rewrites.ts";
 
 // Piecewise({{v1, c1}, {v2, c2}, ...}, default) — Wolfram's conditional-value head. The
 // conditions are tried in order; the value returned is the first one that's `True`,
@@ -7,12 +8,12 @@ import { operandsOf } from "@enumeratio/engine";
 // can't know whether THIS one is really first, so the call declines rather than guess).
 // `default` is 0 when omitted, matching Wolfram.
 //
-// PiecewiseExpand(expr, assumptions?) — rewrites Abs, Sign, UnitStep, Clip, and 2-argument
-// Max/Min into Piecewise, recursively. Each rewrite only fires once the rewritten
-// argument(s) are known real (Wolfram's own PiecewiseExpand[Abs[x]] likewise declines
-// without a real assumption on `x` — Abs isn't piecewise-comparable over the complex
-// plane). `assumptions` is scoped exactly like Refine/Assuming: pushed for the rewrite and
-// popped after, so it never leaks. Without an explicit `assumptions` argument, whatever the
+// PiecewiseExpand(expr, assumptions?) — rewrites Abs, Sign and the step heads
+// (piecewise-rewrites.ts) into Piecewise, recursively. Abs and Sign fire once their
+// argument is known real (Wolfram's own PiecewiseExpand[Abs[x]] likewise declines without a
+// real assumption on `x` — Abs isn't piecewise-comparable over the complex plane); the step
+// heads need no assumption on their arguments, as in Wolfram. `assumptions` is scoped
+// exactly like Refine/Assuming: pushed for the rewrite and popped after, so it never leaks. Without an explicit `assumptions` argument, whatever the
 // caller already has assumed (via `ce.assume`/`Assuming`) is what's consulted — same as
 // Wolfram reading `$Assumptions`.
 
@@ -55,14 +56,14 @@ function isKnownReal(ce: ComputeEngine, v: BoxedExpression): boolean {
   return ce.ask(["Element", v.json, "RealNumbers"] as never).length > 0;
 }
 
-function expandOne(ce: ComputeEngine, e: BoxedExpression): BoxedExpression | undefined {
+function expandOne(ce: ComputeEngine, e: BoxedExpression, allReal: boolean): BoxedExpression | undefined {
   const op = e.operator;
   const ops = operandsOf(e);
-  if (op === "Abs" && ops.length === 1 && isKnownReal(ce, ops[0])) {
+  if (op === "Abs" && ops.length === 1 && (allReal || isKnownReal(ce, ops[0]))) {
     const v = ops[0];
     return ce.box(["Piecewise", ["List", ["List", ["Negate", v.json], ["Less", v.json, 0]]], v.json] as never);
   }
-  if (op === "Sign" && ops.length === 1 && isKnownReal(ce, ops[0])) {
+  if (op === "Sign" && ops.length === 1 && (allReal || isKnownReal(ce, ops[0]))) {
     const v = ops[0];
     return ce.box([
       "Piecewise",
@@ -70,33 +71,27 @@ function expandOne(ce: ComputeEngine, e: BoxedExpression): BoxedExpression | und
       0,
     ] as never);
   }
-  if (op === "UnitStep" && ops.length === 1 && isKnownReal(ce, ops[0])) {
-    const v = ops[0];
-    return ce.box(["Piecewise", ["List", ["List", 1, ["GreaterEqual", v.json, 0]]], 0] as never);
+  if (op === "Argument" && ops.length === 1 && (allReal || isKnownReal(ce, ops[0]))) {
+    return ce.box(["Piecewise", ["List", ["List", "Pi", ["Less", ops[0].json, 0]]], 0] as never);
   }
-  if (op === "Clip" && ops.length === 2 && ops[1].operator === "List" && isKnownReal(ce, ops[0])) {
-    const v = ops[0];
-    const [lo, hi] = operandsOf(ops[1]);
-    if (!lo || !hi) return undefined;
-    return ce.box([
-      "Piecewise",
-      ["List", ["List", lo.json, ["Less", v.json, lo.json]], ["List", hi.json, ["Greater", v.json, hi.json]]],
-      v.json,
-    ] as never);
-  }
-  if ((op === "Max" || op === "Min") && ops.length === 2 && ops.every((o) => isKnownReal(ce, o))) {
-    const [a, b] = ops;
-    const cmp = op === "Max" ? "GreaterEqual" : "LessEqual";
-    return ce.box(["Piecewise", ["List", ["List", a.json, [cmp, a.json, b.json]]], b.json] as never);
-  }
-  return undefined;
+  return STEP_HEADS.has(op) ? expandStep(ce, e) : undefined;
 }
 
+// A relation holds a Piecewise only as a boolean combination; that rewrite is not made here.
+const RELATIONS = new Set(["Less", "LessEqual", "Greater", "GreaterEqual", "Equal", "NotEqual", "Inequality"]);
+
+const holdsPiecewise = (e: BoxedExpression): boolean =>
+  e.operator === "Piecewise" || operandsOf(e).some(holdsPiecewise);
+
 /** Recursively rewrite every eligible subexpression, innermost first. */
-function expand(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+function expand(ce: ComputeEngine, e: BoxedExpression, allReal: boolean): BoxedExpression {
   const ops = operandsOf(e);
-  const rebuilt = ops.length > 0 ? ce.box([e.operator, ...ops.map((o) => expand(ce, o).json)] as never) : e;
-  return expandOne(ce, rebuilt) ?? rebuilt;
+  if (ops.length === 0 || RELATIONS.has(e.operator)) return e;
+  const inner = ops.map((o) => expand(ce, o, allReal));
+  // A step head over an argument that expanded has no flat Piecewise of its own here: it stays as written.
+  if (STEP_HEADS.has(e.operator) && inner.some(holdsPiecewise)) return e;
+  const rebuilt = ce.box([e.operator, ...inner.map((o) => o.json)] as never);
+  return expandOne(ce, rebuilt, allReal) ?? rebuilt;
 }
 
 export function declarePiecewiseExpand(ce: ComputeEngine): void {
@@ -106,7 +101,9 @@ export function declarePiecewiseExpand(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [expr, assumptions] = ops;
       if (!expr) return undefined;
-      if (!assumptions) return expand(ce, expr.evaluate());
+      if (!assumptions) return expand(ce, expr.evaluate(), false);
+      // `RealNumbers` as the assumption is Wolfram's `Reals`: every variable is real.
+      if (isSymbol(assumptions) && assumptions.symbol === "RealNumbers") return expand(ce, expr.evaluate(), true);
       ce.pushScope();
       try {
         for (const c of assumptions.operator === "And" || assumptions.operator === "List"
@@ -114,7 +111,7 @@ export function declarePiecewiseExpand(ce: ComputeEngine): void {
           : [assumptions]) {
           ce.assume(c);
         }
-        return expand(ce, expr.evaluate());
+        return expand(ce, expr.evaluate(), false);
       } finally {
         ce.popScope();
       }
