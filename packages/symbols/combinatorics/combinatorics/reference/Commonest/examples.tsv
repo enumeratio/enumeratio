@@ -6,7 +6,7 @@ a-single-most-frequent-element-still-comes-back			[Commonest, [List, 1, 2, 2, 3,
 commonest-list-b-a-c-2-a-b-1-2-4			[Commonest, [List, b, a, c, 2, a, b, 1, 2], 4]	[List, b, a, c, 2]	
 commonest-list-b-a-c-2-a-b-1-2-upto-6			[Commonest, [List, b, a, c, 2, a, b, 1, 2], [UpTo, 6]]	[List, b, a, c, 2, 1]	
 all-distinct-all-tie	Scope		[Commonest, [List, 1, 2, 3]]	[List, 1, 2, 3]	All distinct: all tie
-the-n-commonest-most-frequent-first	Scope		[Commonest, [List, 1, 2, 2, 3, 3, 3, 4], 2]	[List, 2, 3]	The $n$ commonest, ties broken by first appearance
+the-n-commonest-in-first-appearance-order	Scope		[Commonest, [List, 1, 2, 2, 3, 3, 3, 4], 2]	[List, 2, 3]	The $n$ commonest, ties broken by first appearance
 commonest-n-list-1-2-2-3-3-3-4	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4]]]	[List, {num: "3.0"}]	Numeric input still picks the most frequent value, 3
 commonest-n-list-1-2-2-3-3-3-4-30	Scope		[Commonest, [N, [List, 1, 2, 2, 3, 3, 3, 4], 30]]	[List, {num: "3.0"}]	Higher-precision numeric input gives the same mode
 commonest-data	Scope		[Commonest, data]	[Commonest, data]	
