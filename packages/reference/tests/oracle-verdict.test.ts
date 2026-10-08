@@ -144,6 +144,26 @@ test("a call ours holds never agrees with the value Wolfram computed from it", (
   ).toBe("agree");
 });
 
+// A form transformer that hands its input back agrees by value with whatever the kernel rewrites it to,
+// which hides the missing rewrite: only the kernel handing the input back too is agreement.
+test("a form transformer that returns its input agrees only when Wolfram does too", () => {
+  const sum = ["Add", ["Divide", 1, "x"], ["Divide", 1, "y"]];
+  const together = ["Together", sum] as never;
+  const rewritten = { value: "Times[Power[x, -1], Power[y, -1], Plus[x, y]]" };
+  const unchanged = { value: "Plus[Power[x, -1], Power[y, -1]]" };
+  // Ours returns the input, Wolfram rewrote it.
+  expect(verdictOf("wolfram", sum as never, rewritten, undefined, false, together)).toBe("disagree");
+  // Both return it.
+  expect(verdictOf("wolfram", sum as never, unchanged, undefined, false, together)).toBe("agree");
+  // The same holds for a transformer mapped over a list under `Assuming`.
+  const entries = ["List", ["Mod", "k", "m"], ["Quotient", "k", "m"]];
+  const mapped = ["Assuming", ["Less", 0, "k"], ["Map", "PiecewiseExpand", entries]] as never;
+  const piecewise = {
+    value: "List[Piecewise[List[List[k, Less[k, m]]], Plus[k, Times[-1, m]]], Piecewise[List[List[0, Less[k, m]]], 1]]",
+  };
+  expect(verdictOf("wolfram", entries as never, piecewise, undefined, false, mapped)).toBe("disagree");
+});
+
 test("a Wolfram real is compared within the precision it is tagged with, even past double range", () => {
   const huge = "9.9006562292958982506979236163019032507`15.95*^301029";
   const answer = { value: huge, numeric: huge };

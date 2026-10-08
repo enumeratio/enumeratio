@@ -379,6 +379,28 @@ test("a form-transforming head that hands its input back is a rewrite not made",
   expect(echoesInput(["Sin", input] as never, input as never)).toBe(false);
 });
 
+test("every form transformer's unchanged answer is a rewrite not made, wherever the call sits", () => {
+  const form = ["Add", ["Power", "x", 2], ["Multiply", 2, "x"], 1];
+  for (const head of ["FullSimplify", "Expand", "ExpToTrig", "TrigToExp", "Together", "Apart", "Factor", "Refine"])
+    expect(echoesInput([head, form] as never, form as never)).toBe(true);
+  // Under `Assuming`, and mapped over a list of forms.
+  const assuming = ["Assuming", ["Greater", "x", 0], ["FullSimplify", form]];
+  expect(echoesInput(assuming as never, form as never)).toBe(true);
+  const entries = ["List", ["Mod", "k", "m"], ["Quotient", "k", "m"]];
+  const mapped = ["Assuming", ["Less", 0, "k"], ["Map", "PiecewiseExpand", entries]];
+  expect(echoesInput(mapped as never, entries as never)).toBe(true);
+  // The value check is skipped for an echo, so it can't vouch for a rewrite ours never made; one ours did make is checked.
+  const sum = ["Add", ["Divide", 1, "x"], ["Divide", 1, "y"]];
+  const together = ["Together", sum];
+  expect(symbolicAgreementSource("wolfram", together as never, sum as never, ["x", "y"])).toBeUndefined();
+  const combined = ["Divide", ["Add", "x", "y"], ["Multiply", "x", "y"]];
+  expect(symbolicAgreementSource("wolfram", together as never, combined as never, ["x", "y"])).toBeDefined();
+  // A rewritten form is not an echo, nor is a head that is no transformer.
+  expect(echoesInput(["Factor", form] as never, ["Power", ["Add", "x", 1], 2] as never)).toBe(false);
+  expect(echoesInput(["Assuming", ["Greater", "x", 0], ["Sin", form]] as never, form as never)).toBe(false);
+  expect(echoesInput(["Map", "Sin", entries] as never, entries as never)).toBe(false);
+});
+
 test("a series' expansion variable stays the call's own, sampled only in the polynomial it gives", () => {
   const series = ["Series", ["Sin", "x"], "x", "x0", 3];
   expect([...seriesVariables(series as never)]).toEqual(["x"]);
