@@ -67,6 +67,35 @@ cells carry an `Exponent`, $+1$ for $σ_i$ and $-1$ for $σ_i^{-1}$, which `IsOv
 </Show>
 </Story>
 
+`BraidClosure` draws the closing arcs: each out slot joins the in slot below it, round the
+right side. A strand that comes back at a different slot is still part of the same component,
+so `SameStrand(Selected)` follows a component through the closure. $σ_1^3$ closes to the
+trefoil, one component whichever strand you click.
+
+<Story title="The trefoil, closed">
+<template #description>Click a strand: the whole knot lights, since σ₁³ sends slot 1 to slot 2 and back.</template>
+<Show Variables="[_s -> Variable(Automatic, [])]" Selection="_s" ImageSize="[Automatic, 360]">
+  <StrandDiagram
+    ColorRules='[Selected -> White, True -> Opacity(0.5, Gray)]'
+    BoundaryStyle='[SameStrand(Selected) -> Directive(Gold, AbsoluteThickness(4)), True -> Directive(Teal, AbsoluteThickness(1.8))]'
+  ><BraidClosure><Braid>2 <List>1 1 1</List></Braid></BraidClosure></StrandDiagram>
+</Show>
+</Story>
+
+The braid may be named rather than written out: `TorusBraid(3, 3)` is $(σ_1σ_2)^3$, which
+returns every strand to its own slot, so its closure is the three-component link $T(3,3)$.
+Clicking lights one component at a time.
+
+<Story title="A torus braid, closed">
+<template #description>StrandDiagram takes any braid-valued head. T(3,3) is three linked circles: SameStrand(Selected) lights one.</template>
+<Show Variables="[_s -> Variable(Automatic, [])]" Selection="_s" ImageSize="[Automatic, 420]">
+  <StrandDiagram
+    ColorRules='[Selected -> White, True -> Opacity(0.5, Gray)]'
+    BoundaryStyle='[SameStrand(Selected) -> Directive(Gold, AbsoluteThickness(4)), Crosses(Selected) -> Directive(Red, AbsoluteThickness(2.5)), True -> Directive(Teal, AbsoluteThickness(1.8))]'
+  ><BraidClosure><TorusBraid>3 3</TorusBraid></BraidClosure></StrandDiagram>
+</Show>
+</Story>
+
 A `Braid` value shows the same way anywhere it is the result, without the rules.
 
 <Story title="The same braid, as a value">

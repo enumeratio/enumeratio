@@ -3,7 +3,7 @@ import { fmt, lint } from "@enumeratio/config";
 
 export default defineConfig({
   pack: {
-    entry: { index: "src/index.ts", notation: "src/notation.ts" },
+    entry: { index: "src/index.ts", notation: "src/notation.ts", words: "src/words.ts" },
     deps: { resolveDepSubpath: true },
     dts: { generator: "tsgo", tsconfig: "tsconfig.dts.json" },
   },
