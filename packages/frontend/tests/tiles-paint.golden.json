@@ -1,0 +1,58 @@
+{
+  "strands": {
+    "calls": 31,
+    "hash": "599d7570506de380c5c192e6a8c2d4ddc445bcb0947a33a7ba82957734211e04"
+  },
+  "strands-selected": {
+    "calls": 43,
+    "hash": "039b664479e24de6c818d619cc521828f51aa790c3e809616592919ff5977e18"
+  },
+  "tree": {
+    "calls": 31,
+    "hash": "4bc16884ff75cf931cc168172a06e5881171d5f560b741537e74c6213bd16751"
+  },
+  "tree-selected": {
+    "calls": 68,
+    "hash": "e6fdf6fcc0b2e5443b0b7b3a6ed9b202a7566b912655a6ae1ab7c511976b1a92"
+  },
+  "dyck": {
+    "calls": 46,
+    "hash": "3e75c0c685c57d112281c9160999310809e0f92ab5190a0cce59289c699427ba"
+  },
+  "dyck-selected": {
+    "calls": 46,
+    "hash": "3e75c0c685c57d112281c9160999310809e0f92ab5190a0cce59289c699427ba"
+  },
+  "partition": {
+    "calls": 21,
+    "hash": "e77ab30df17ec01c69bfcd1ef1022ac26dd5afb50936f0597d437532f5341a1b"
+  },
+  "partition-selected": {
+    "calls": 35,
+    "hash": "08cb1d3d661d7e1bc4714c17b2a8566ab2d8f3001342cf062abb3b8a297d85ea"
+  },
+  "tableau": {
+    "calls": 37,
+    "hash": "4e4c4ed070c80782d24b5e4e1ba8f086c20e9d6101db1600e9ea9787fb9f4daf"
+  },
+  "tableau-selected": {
+    "calls": 51,
+    "hash": "02306a6aae9772cd06f0aaf32bc999475007b7ec2bce78e34997eec968a6aadb"
+  },
+  "polytope": {
+    "calls": 415,
+    "hash": "b46d4b47bbeeed514a2cca9c8721ec648441a0574c688d00ca2a5cbcf38fed7a"
+  },
+  "lattice": {
+    "calls": 11,
+    "hash": "1c5b34fca132c65d6ac2d7e361c1c73aa85382ac127e902dca69a208f62dbb0e"
+  },
+  "lattice-selected": {
+    "calls": 11,
+    "hash": "6d789f89ca9c67231db4ce809b5aadb6b527e96db410c675368461a07a38c780"
+  },
+  "lattice-tiny": {
+    "calls": 6,
+    "hash": "9f2f6e0684472e33d46313740f7d01443e6435f66a36b9a7ff9f4edb2ecc0153"
+  }
+}

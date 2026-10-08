@@ -128,6 +128,14 @@ function writeNode(box: BoxNode): string {
       );
     case "ErrorBox":
       return element("merror", write(box[1]));
+    case "GraphicsBox":
+    case "GraphicsComplexBox":
+    case "DiskBox":
+    case "LineBox":
+    case "PolygonBox":
+    case "PolyhedronBox":
+    case "InsetBox":
+      return element("mtext", "-Graphics-");
     case "ButtonBox":
     case "TextCell":
       return write(box[1]);

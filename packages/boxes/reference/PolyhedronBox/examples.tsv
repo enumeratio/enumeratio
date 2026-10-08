@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[PolyhedronBox, [Tuple, Faces, [List]]]	[PolyhedronBox, [Tuple, Faces, [List]]]	a box is inert: it evaluates to itself

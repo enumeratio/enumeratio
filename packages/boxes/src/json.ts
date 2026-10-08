@@ -36,7 +36,9 @@ export function toMathJson(box: Box): Json {
     if (head === "RowBox" || head === "TextData") return list((arg as Box[]).map(toMathJson));
     if (head === "GridBox") return list((arg as Box[][]).map((r) => list(r.map(toMathJson))));
     if (head === "TextBox" || head === "TemplateSlot" || head === "TemplateExpression") return { str: arg as string };
-    if ((head === "TagBox" || head === "FormBox") && i === 1) return arg as string;
+    // A tag that is no symbol's name (an address, "1,0") is a string.
+    if ((head === "TagBox" || head === "FormBox") && i === 1)
+      return /^[A-Za-z][A-Za-z0-9]*$/.test(arg as string) ? (arg as string) : { str: arg as string };
     if (head === "TextCell" && i === 1) return { str: arg as string };
     if (head === "InterpretationBox" && i === 1) return arg as Json;
     return toMathJson(arg as Box);

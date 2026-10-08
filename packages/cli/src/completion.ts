@@ -7,7 +7,7 @@ import { FORMS, SYNTAXES } from "./engine.ts";
 export const SHELLS = ["bash", "zsh", "fish"] as const;
 export type Shell = (typeof SHELLS)[number];
 
-export const SUBCOMMANDS = ["eval", "convert", "forms", "formats", "serve", "completion"] as const;
+export const SUBCOMMANDS = ["eval", "convert", "show", "forms", "formats", "serve", "completion"] as const;
 
 export const FLAGS = [
   "-f",
