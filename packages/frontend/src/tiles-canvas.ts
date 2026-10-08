@@ -27,13 +27,16 @@ export type GraphicsPrimitive =
   | { readonly head: "Disk"; readonly radius: number; readonly center?: FramePoint }
   | { readonly head: "Line"; readonly points: readonly FramePoint[] }
   | { readonly head: "Polygon"; readonly points: readonly FramePoint[] }
+  /** A solid shown as its boundary: the rings of its faces. */
+  | { readonly head: "Polyhedron"; readonly faces: readonly (readonly FramePoint[])[] }
   | { readonly head: "Text"; readonly text: string; readonly size: number; readonly at?: FramePoint };
 
 /**
  * How a frame is looked at: `plane` pans and zooms over a lattice; `fixed` is fitted to its layer
- * whole, with no pan or zoom beyond the fit.
+ * whole, with no pan or zoom beyond the fit; `camera` looks at a 3-D layer through `Show`'s
+ * `ViewPoint` and its kin (`camera-frame.ts`), orbited by drag and zoomed by wheel or pinch.
  */
-export type ViewKind = "plane" | "fixed";
+export type ViewKind = "plane" | "fixed" | "camera";
 
 /** Text over a mark: `size` in frame units, `opacity` of the ink, `at` where it sits if not at the mark's place. */
 export interface FigureLabel {
@@ -62,8 +65,13 @@ export interface TileLayer {
    * diagram, the nodes of a tree). Absent: every address in `bounds`.
    */
   addresses?(): readonly Address[];
-  /** A caption for address (i, j), drawn in the frame's ink over its mark. */
-  label?(i: number, j: number): FigureLabel | undefined;
+  /**
+   * A camera frame's default map from the places' space to 3-D, as a 3 × d matrix: what
+   * `ProjectionMatrix -> Automatic` means at address (i, j). Absent: the places' first three coordinates.
+   */
+  projection?(i: number, j: number): readonly (readonly number[])[];
+  /** A caption for address (i, j), drawn in the frame's ink over its mark; `selected` when it is picked. */
+  label?(i: number, j: number, selected?: boolean): FigureLabel | undefined;
   /**
    * The links of the figure, each a tuple of the addresses it joins (Wolfram's `Graph` edges, a
    * `GraphicsComplex`'s lines), drawn after the marks and styled by `BoundaryStyle` through their
@@ -105,6 +113,9 @@ export interface TileDrawOptions {
 
 /** Points every frame classifies whatever the budget says, so a slow classifier still gets on. */
 const MIN_PREPARED = 64;
+
+/** The width, in CSS pixels, a line mark is stroked at in its color. */
+const LINE_WIDTH = 1.25;
 
 /** Tiles narrower than this many device pixels are drawn as squares, with no edges. */
 const TINY_TILE = 3;
@@ -279,6 +290,7 @@ function extentOf(p: GraphicsPrimitive, place: Vec2): Vec2[] {
       [x + p.radius, y + p.radius],
     ];
   }
+  if (p.head === "Polyhedron") return p.faces.flatMap((ring) => ring.map(xy));
   return p.head === "Line" || p.head === "Polygon" ? p.points.map(xy) : [place];
 }
 
@@ -324,24 +336,58 @@ function segmentDistance(p: Vec2, a: Vec2, b: Vec2): number {
   return Math.hypot(p[0] - (a[0] + t * dx), p[1] - (a[1] + t * dy));
 }
 
+/** The distance from `p` to a polyline. */
+const polylineDistance = (p: Vec2, points: readonly Vec2[]): number =>
+  points.length === 1
+    ? Math.hypot(p[0] - points[0]![0], p[1] - points[0]![1])
+    : Math.min(...points.slice(1).map((q, k) => segmentDistance(p, points[k]!, q)));
+
 /**
  * What a point of a figure's frame hits, within `reach` of it: the nearest address, else the
- * members of the nearest link; none when nothing is near.
+ * members of the nearest link; none when nothing is near. Where marks overlap, as a camera
+ * frame's do, right on a point beats a line beats the face under the pointer (the last drawn,
+ * which is the nearest), and a near miss of a point or line beats only a body: the order a reader picks in.
  */
 export function hitAt(layer: TileLayer, at: Vec2, reach: number): Address[] {
-  let best: Address | undefined;
-  let nearest = reach;
+  const nearest = { point: reach, line: reach, body: reach };
+  let point: Address | undefined;
+  let line: Address | undefined;
+  let face: Address | undefined;
+  let body: Address | undefined;
   for (const [i, j] of addressesOf(layer)) {
-    // A polygon mark is hit anywhere inside it, not only near its place.
     const mark = layer.mark?.(i, j);
-    if (mark?.head === "Polygon" && inside(at, mark.points.map(xy))) return [[i, j]];
+    // A polygon mark is hit anywhere inside it, not only near its place.
+    if (mark?.head === "Polygon") {
+      if (inside(at, mark.points.map(xy))) {
+        if (layer.view !== "camera") return [[i, j]];
+        face = [i, j];
+      }
+      // A camera frame's face is hit inside it only; a flat one is also hit near its place.
+      if (layer.view === "camera") continue;
+    }
+    if (mark?.head === "Line") {
+      const d = polylineDistance(at, mark.points.map(xy));
+      if (d <= nearest.line) [line, nearest.line] = [[i, j], d];
+      continue;
+    }
     const p = placeOf(layer, i, j);
     const d = Math.hypot(p[0] - at[0], p[1] - at[1]);
-    if (d <= nearest) [best, nearest] = [[i, j], d];
+    if (mark?.head === "Polyhedron") {
+      if (d <= nearest.body) [body, nearest.body] = [[i, j], d];
+    } else if (d <= nearest.point) [point, nearest.point] = [[i, j], d];
   }
-  if (best) return [best];
+  // Right on a point or line it wins; else the face under the pointer; else the near miss.
+  const close = reach / 3;
+  const found =
+    (nearest.point <= close ? point : undefined) ??
+    (nearest.line <= close ? line : undefined) ??
+    face ??
+    point ??
+    line ??
+    body;
+  if (found) return [found];
   let link: readonly Address[] = [];
-  nearest = reach;
+  let nearestLink = reach;
   for (const members of layer.links?.() ?? []) {
     const prim = linkPrimitive(layer, members);
     if (prim.head !== "Line" && prim.head !== "Polygon") continue;
@@ -349,7 +395,7 @@ export function hitAt(layer: TileLayer, at: Vec2, reach: number): Address[] {
     const closed = prim.head === "Polygon";
     for (let k = 0; k < (closed ? pts.length : pts.length - 1); k++) {
       const d = segmentDistance(at, pts[k]!, pts[(k + 1) % pts.length]!);
-      if (d <= nearest) [link, nearest] = [members, d];
+      if (d <= nearestLink) [link, nearestLink] = [members, d];
     }
   }
   return [...link];
@@ -376,6 +422,15 @@ function addPrimitive(
       else path.lineTo(x, y);
     });
     if (p.head === "Polygon") path.closePath();
+  } else if (p.head === "Polyhedron") {
+    for (const ring of p.faces) {
+      ring.forEach((q, k) => {
+        const [x, y] = toScreen(xy(q));
+        if (k === 0) path.moveTo(x, y);
+        else path.lineTo(x, y);
+      });
+      path.closePath();
+    }
   }
 }
 
@@ -420,18 +475,38 @@ function drawMarks(
   const labels: { at: Vec2; text: string; size: number; color: string }[] = [];
   const captions: { at: Vec2; text: string; size: number; opacity: number }[] = [];
 
+  // A camera frame's marks overlap, so each is painted in the order the layer lists them (far to
+  // near); the rest are batched by color.
+  const ordered = layer.view === "camera";
+  // Classifying is the budget's alone, as in `drawTiles`: an address not yet known is skipped
+  // for this frame once the budget is spent, and the caller draws again.
+  let spent = 0;
+  let prepared = 0;
+  let complete = true;
+
   for (const [i, j] of addressesOf(layer)) {
+    if (!layer.known(i, j)) {
+      if (spent > options.budgetMs && prepared >= MIN_PREPARED) {
+        complete = false;
+        continue;
+      }
+      const start = performance.now();
+      layer.prepare(i, j);
+      spent += performance.now() - start;
+      prepared++;
+    }
+    const facts = factsOf([[i, j]]);
     const style = styleElement(
       options.colorRules,
       options.boundaryRules,
       options.colorMixing,
-      factsOf([[i, j]]),
+      facts,
       (json) => readerFor(json)?.((name) => layer.value(i, j, name)),
       options.phase,
     );
     const at = placeOf(layer, i, j);
     const mark: GraphicsPrimitive = layer.mark?.(i, j) ?? { head: "Disk", radius: 0.12 };
-    const caption = layer.label?.(i, j);
+    const caption = layer.label?.(i, j, facts.selected);
     if (caption)
       captions.push({
         at: xy(caption.at ?? at),
@@ -443,13 +518,21 @@ function drawMarks(
       if (style.color) labels.push({ at: xy(mark.at ?? at), text: mark.text, size: mark.size, color: style.color });
       continue;
     }
-    if (style.color) addPrimitive(pathIn(fills, style.color), mark, at, toScreen, pixels);
+    // A line has no inside: its color strokes it.
+    if (style.color && mark.head === "Line")
+      addPrimitive(pathIn(edges, `${style.color}|${LINE_WIDTH * dpr}|1|`), mark, at, toScreen, pixels);
+    else if (style.color) addPrimitive(pathIn(fills, style.color), mark, at, toScreen, pixels);
     let inset = 0;
     for (const e of style.edges) {
       const w = e.width * dpr;
       const key = `${e.color}|${w}|${e.opacity}|${e.dashing.join(",")}`;
       addPrimitive(pathIn(edges, key), mark, at, toScreen, pixels, inset + w / 2);
       inset += w;
+    }
+    if (ordered) {
+      paintBatches(ctx, fills, edges);
+      fills.clear();
+      edges.clear();
     }
   }
   paintBatches(ctx, fills, edges);
@@ -494,7 +577,7 @@ function drawMarks(
     }
   }
   ctx.restore();
-  return true;
+  return complete;
 }
 
 export interface LineStyle {

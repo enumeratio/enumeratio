@@ -8,12 +8,15 @@ A figure is shorthand for a `Show` of a **frame layer**, whose parts are address
 rules color and a click picks, so every kind takes `ColorRules`, `BoundaryStyle` and
 `Selection` once written as a `Show`:
 
-| kinds                                           | layer           | address                  | properties                                                          | values                                                            | relations to the pick                                      |
-| ----------------------------------------------- | --------------- | ------------------------ | ------------------------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------- |
-| `permutation`, `set-partition`, `diagram`       | `StrandDiagram` | (slot, level)            | `In`, `Out`, `Through`, `Cap`, `Cup`, `Loop`, `Crossing`            | `Slot`, `Level`, `Block`, `Image`                                 | `SameBlock`, `Crosses`, `Adjacent`                         |
-| `partition`, `tableau`, `composition`, `subset` | `CellDiagram`   | (row, column)            | `Filled`, `Corner`, `InFirstRow`, `InFirstColumn`, `Entry`          | `Row`, `Column`, `Content`, `Hook`, `Arm`, `Leg`, `Entry`, `Part` | `SameRow`, `SameColumn`, `SameContent`, `Hook`, `Adjacent` |
-| `tree`, `binary-tree`                           | `TreeDiagram`   | (depth, order)           | `Leaf`, `Root`, `Internal`                                          | `Depth`, `Order`, `Children`, `SubtreeSize`                       | `Ancestor`, `Descendant`, `Subtree`, `Sibling`, `Adjacent` |
-| `dyck`, `lattice`                               | `PathDiagram`   | (step, height) or (x, y) | `Peak`, `Valley`, `Return`, `Up`, `Down`; `East`, `North`, `Corner` | `Step`, `Height`, `X`, `Area`                                     | `SameHeight`, `SameColumn`, `Adjacent`, `Tunnel`           |
+| kinds                                           | layer           | address                  | properties                                                          | values                                                            | relations to the pick                                        |
+| ----------------------------------------------- | --------------- | ------------------------ | ------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------ |
+| `permutation`, `set-partition`, `diagram`       | `StrandDiagram` | (slot, level)            | `In`, `Out`, `Through`, `Cap`, `Cup`, `Loop`, `Crossing`            | `Slot`, `Level`, `Block`, `Image`                                 | `SameBlock`, `Crosses`, `Adjacent`                           |
+| `partition`, `tableau`, `composition`, `subset` | `CellDiagram`   | (row, column)            | `Filled`, `Corner`, `InFirstRow`, `InFirstColumn`, `Entry`          | `Row`, `Column`, `Content`, `Hook`, `Arm`, `Leg`, `Entry`, `Part` | `SameRow`, `SameColumn`, `SameContent`, `Hook`, `Adjacent`   |
+| `tree`, `binary-tree`                           | `TreeDiagram`   | (depth, order)           | `Leaf`, `Root`, `Internal`                                          | `Depth`, `Order`, `Children`, `SubtreeSize`                       | `Ancestor`, `Descendant`, `Subtree`, `Sibling`, `Adjacent`   |
+| `dyck`, `lattice`                               | `PathDiagram`   | (step, height) or (x, y) | `Peak`, `Valley`, `Return`, `Up`, `Down`; `East`, `North`, `Corner` | `Step`, `Height`, `X`, `Area`                                     | `SameHeight`, `SameColumn`, `Adjacent`, `Tunnel`             |
+| [polytopes](../../polytope/docs/polytope.md)    | `PolytopeFaces` | (dimension, index)       | `Vertex`, `Edge`, `Ridge`, `Facet`, `Interior`, `Top`               | `Dimension`, `VertexCount`, `Valence`, `Index`, `Depth`           | `FaceOf`, `Cofaces`, `Incident`, `Adjacent`, `SameDimension` |
+
+A polytope is no glyph, but the same kind of frame: its layer sits under a camera instead of a fixed view.
 
 A figure's default look themes from `--notatio-accent` / `--notatio-border` /
 `--notatio-fg`; the `svg` attribute still draws any SVG verbatim.

@@ -475,6 +475,22 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       style: `display:block;min-height:${showHeight(ops)}px`,
     }),
   },
+  // A polytope displays as its faces under a camera, as Wolfram's `Polyhedron` displays as
+  // `Graphics3D`: `Permutahedron(4)` is `Show(PolytopeFaces(Permutahedron(4)))`.
+  ...["Permutahedron", "Simplex", "CrossPolytope", "Hypercube", "Associahedron"].map((head): VisualSymbol => ({
+    head,
+    tag: "notatio-show",
+    attributes: (ops) => ({
+      value: epsil([
+        "Show",
+        ["PolytopeFaces", [head, ...ops]],
+        ["KeyValuePair", "Selection", ["List"]],
+        ["KeyValuePair", "SphericalRegion", "True"],
+        ["KeyValuePair", "ImageSize", ["List", "Automatic", 320]],
+      ] as Json),
+      style: "display:block;min-height:320px",
+    }),
+  })),
   {
     head: "ComplexPlot",
     tag: "notatio-complex-plot",

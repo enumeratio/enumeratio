@@ -5,10 +5,13 @@
 //   partition, tableau, composition, subset   Show(CellDiagram(…))     cell-frame.ts
 //   tree, binary-tree                         Show(TreeDiagram(…))     tree-frame.ts
 //   dyck, lattice                             Show(PathDiagram(…))     path-frame.ts
+//
+// A polytope is no glyph: `PolytopeFaces` (polytope-frame.ts) is a `Show` layer of its own.
 
 import { cellLayer, cellModelOf } from "./cell-frame.ts";
 import type { FigureLayer, Json } from "./frame-json.ts";
 import { pathLayer, pathModelOf } from "./path-frame.ts";
+import { polytopeLayer, polytopeModelOf } from "./polytope-frame.ts";
 import {
   lowerStrandFigure,
   STRAND_DEFAULT_BOUNDARY_STYLE,
@@ -20,11 +23,18 @@ import { frameBounds } from "./tiles-canvas.ts";
 import { treeLayer, treeModelOf } from "./tree-frame.ts";
 
 /** The layer heads `Show` reads that are figure frames. */
-export const FIGURE_HEADS = ["StrandDiagram", "CellDiagram", "TreeDiagram", "PathDiagram"] as const;
+export const FIGURE_HEADS = ["StrandDiagram", "CellDiagram", "TreeDiagram", "PathDiagram", "PolytopeFaces"] as const;
 export type FigureHead = (typeof FIGURE_HEADS)[number];
 
-/** The layer a frame head and its data make, or why it can't. */
+/**
+ * The layer a frame head and its data make, or why it can't. `PolytopeFaces` takes the list of
+ * its layers' expressions, `["List", PolytopeFaces(…), …]`: those of a `Show` share one frame.
+ */
 export function figureLayerOf(head: FigureHead, data: Json): FigureLayer | string {
+  if (head === "PolytopeFaces") {
+    const model = polytopeModelOf(Array.isArray(data) && data[0] === "List" ? data.slice(1) : [data]);
+    return typeof model === "string" ? model : polytopeLayer(model);
+  }
   const model =
     head === "StrandDiagram"
       ? strandModelOf(data)
@@ -48,9 +58,32 @@ const edge = (color: string, width: number, ...more: Json[]): Json => [
   ["AbsoluteThickness", width],
   ...more,
 ];
+const rule = (test: Json, style: Json): Json => ["Rule", test, style];
+
+/** The ink of a polytope's lines and points, light enough for the dark ground. */
+const POLYTOPE_INK = "#c4c4d0";
+
+const picked = (test: Json): Json => ["And", "Selected", test];
+
+/**
+ * What a `PolytopeFaces` draws when the author gives no rules: lines and points in ink, 2-faces
+ * washed, a pick in the accent (a solid's boundary only when picked).
+ */
+const POLYTOPE_DEFAULTS = {
+  colors: [
+    "List",
+    rule(picked("Dimension2"), ["Opacity", 0.35, ACCENT]),
+    rule(picked("Interior"), ["Opacity", 0.12, ACCENT]),
+    rule(picked(["Not", "Interior"]), ACCENT),
+    rule("Dimension2", ["Opacity", 0.1, POLYTOPE_INK]),
+    rule(["Not", "Interior"], POLYTOPE_INK),
+  ] as Json,
+  edges: ["List", rule(picked(["Not", "Interior"]), edge(ACCENT, 2))] as Json,
+};
 
 /** What a frame draws when the author gives no rules: the look of the glyph it stands in for. */
 export const FIGURE_DEFAULTS: Readonly<Record<FigureHead, { readonly colors: Json; readonly edges: Json }>> = {
+  PolytopeFaces: POLYTOPE_DEFAULTS,
   StrandDiagram: { colors: STRAND_DEFAULT_COLOR_RULES, edges: STRAND_DEFAULT_BOUNDARY_STYLE },
   CellDiagram: {
     colors: [

@@ -73,17 +73,6 @@ notatio-bar-chart-3d { display: block; line-height: 0; }
 notatio-bar-chart-3d .notatio-bar-chart-3d-box { display: inline-block; max-width: 100%; }
 notatio-bar-chart-3d svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
 
-/* A polytope's face poset. Every mark is a face and every face is clickable, so the marks
-   need a pointer; the hover tint is the only feedback before a click lands. */
-notatio-polytope { display: block; line-height: 0; }
-notatio-polytope .notatio-polytope-box { display: inline-block; max-width: 100%; }
-notatio-polytope svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
-notatio-polytope .notatio-polytope-box { cursor: grab; touch-action: none; user-select: none; }
-notatio-polytope .notatio-polytope-box:active { cursor: grabbing; }
-notatio-polytope polygon[data-face]:hover { fill-opacity: 0.25; }
-notatio-polytope line[data-face]:hover { stroke-width: 2.5; }
-notatio-polytope circle[data-face]:hover { r: 3.5; }
-
 /* Graph & hierarchical layouts (TreePlot, GraphPlot, LayeredGraphPlot, Dendrogram). */
 notatio-graph-plot { display: block; line-height: 0; }
 notatio-graph-plot .notatio-graph-plot-box { display: inline-block; max-width: 100%; }
@@ -1392,7 +1381,6 @@ notatio-worksheet {
 
 /* --- Engaged plots: focused, the wheel zooms them (gestures.ts); the ring says so -------- */
 .notatio-plot-box:focus,
-.notatio-polytope-box:focus,
 .notatio-complex-plot-stage canvas:focus {
   outline: 2px solid color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
   outline-offset: -2px;
@@ -1523,6 +1511,8 @@ notatio-show {
 .notatio-show-layers canvas:last-child:active { cursor: grabbing; }
 /* A fixed frame is fitted, not panned: the page scrolls over it. */
 .notatio-show-layers.is-fixed canvas:last-child { touch-action: auto; cursor: pointer; }
+/* A camera frame is orbited: the drag is the plot's. */
+.notatio-show-layers.is-camera canvas:last-child { touch-action: none; cursor: grab; }
 .notatio-show-layers canvas:last-child:focus {
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
 }
