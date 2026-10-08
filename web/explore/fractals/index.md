@@ -33,7 +33,7 @@ Three settings cells and one drawable — the plot falls out of the last cell al
 </Story>
 
 The first two cells are framing, in the settings namespace — the set lives around
-$-0.5$, not the origin. Drag the plot to pan and scroll to zoom; sweep $n$ to watch the
+$-0.5$, not the origin. Drag the plot to pan and ⌘/Ctrl + scroll to zoom; sweep $n$ to watch the
 boundary resolve. At low
 $n$ the set looks fat and smooth — few points have had time to escape. Each doubling
 etches the filaments a little further out.

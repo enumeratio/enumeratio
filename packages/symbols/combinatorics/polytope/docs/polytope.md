@@ -31,7 +31,7 @@ every face of a polytope is convex.
 Faces are set <em>compositions</em>, not set partitions: block order is kept, so
 the counts are the Fubini numbers and the 24 vertices are the 24 orderings. The
 6 squares and 8 hexagons fall out of vertex incidence — nothing tells the
-renderer this is a truncated octahedron. Drag to orbit; scroll (after a click) or pinch to zoom.
+renderer this is a truncated octahedron. Drag to orbit; ⌘/Ctrl + scroll or pinch to zoom.
 </template>
 <notatio-show value='Show(PolytopeFaces(Permutahedron(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
