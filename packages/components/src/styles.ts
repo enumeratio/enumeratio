@@ -17,14 +17,10 @@ notatio-out[display] {
   overflow-y: hidden;
 }
 
-/* Glyphs are inline, sized to the line; the SVG carries a viewBox, no width. */
-notatio-figure { display: inline-block; vertical-align: middle; line-height: 0; }
-notatio-figure svg { height: 2.5em; width: auto; max-width: 100%; overflow: visible; }
-notatio-figure[kind="diagram"] svg { height: 3.6em; }
-/* A kind lowered to a frame is a Show, sized by its element and drawn without the card. */
-notatio-figure > notatio-show { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; }
-notatio-figure .notatio-show { margin: 0; border: 0; background: none; }
-notatio-figure .notatio-show-layers { background: none !important; }
+/* A picture inline in prose: a Show drawn without its card, sized to the line. */
+notatio-show.inline-figure { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; margin: 0; border: 0; background: none; }
+notatio-show.inline-figure .notatio-show { margin: 0; border: 0; background: none; }
+notatio-show.inline-figure .notatio-show-layers { background: none !important; }
 
 /* Plots are block figures sized to a max width; the viewBox drives the ratio. */
 notatio-plot, notatio-plot-3d { display: block; line-height: 0; }

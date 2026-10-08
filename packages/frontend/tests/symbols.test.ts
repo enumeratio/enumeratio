@@ -139,7 +139,7 @@ const FAMILY_TAGS = [
   "notatio-density-plot",
   "notatio-polar-plot",
   "notatio-plot", // ParametricPlot: Wolfram's own separate head, same component as Plot
-  "notatio-show", // Permutahedron(4) and kin display as Show(PolytopeFaces(…))
+  "notatio-show", // Permutahedron(4) and kin display as Show(PolytopeFaces(…)); values as Show(frame(…))
 ];
 
 test("every visual symbol's tag is its name, kebab-cased, or its family's", () => {
@@ -163,6 +163,13 @@ test("a polytope displays as its faces in a Show, as a Polyhedron does as Graphi
   const rendering = renderingOf(parseExpression("Permutahedron(4)").json);
   expect(rendering?.tag).toBe("notatio-show");
   expect(rendering?.attributes.value).toMatch(/^Show\(\s*PolytopeFaces\(Permutahedron\(4\)\)/);
+});
+
+test("a combinatorial value displays as its frame's Show, and only when its frame reads it", () => {
+  const rendering = renderingOf(parseExpression("Permutation([3, 1, 2])").json);
+  expect(rendering?.tag).toBe("notatio-show");
+  expect(rendering?.attributes.value).toMatch(/^Show\(\s*StrandDiagram\(Permutation\(\[3, 1, 2\]\)\)/);
+  expect(renderingOf(parseExpression("Subset(A, B)").json)).toBeUndefined();
 });
 
 test("the controls' variables are collected, and only where they are declared", () => {

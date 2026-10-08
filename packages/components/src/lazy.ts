@@ -17,7 +17,6 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-torus-square": () => import("./notatio-torus-square.ts"),
   "notatio-notebook": () => import("./notatio-notebook.ts"),
   "notatio-worksheet": () => import("./notatio-worksheet.ts"),
-  "notatio-figure": () => import("./notatio-figure.ts"),
   "notatio-plot": () => import("./notatio-plot.ts"),
   "notatio-plot-3d": () => import("./notatio-plot-3d.ts"),
   "notatio-curve-3d": () => import("./notatio-curve-3d.ts"),

@@ -104,7 +104,7 @@ collection is never built — <code>At</code> unranks.
 <notatio-dynamic-module>
 Permutation <notatio-dynamic value="_k" /> of 24:
 <notatio-knob name="k" value="1" min="1" max="24">
-<notatio-figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
 </notatio-knob>
 </notatio-dynamic-module>
 </Story>

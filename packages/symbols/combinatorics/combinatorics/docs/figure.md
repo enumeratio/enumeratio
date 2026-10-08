@@ -1,31 +1,29 @@
 # Glyphs
 
-Pictorial representations of combinatorial elements, rendered by
-`<notatio-figure>`. Each is requested explicitly by `kind` + a MathJSON integer
-`value` (the shape a collection head yields at a given index).
+Pictorial representations of combinatorial values. A value draws as the `Show` of its
+**frame layer** by default: `Permutation([3, 1, 2])` is `Show(StrandDiagram(Permutation([3, 1, 2])))`.
+The examples below write those `Show`s out, sized to the line.
 
-A figure is shorthand for a `Show` of a **frame layer**, whose parts are addresses that
-rules color and a click picks, so every kind takes `ColorRules`, `BoundaryStyle` and
-`Selection` once written as a `Show`:
+A frame's parts are addresses that rules color and a click picks, so every layer takes
+`ColorRules`, `BoundaryStyle` and `Selection`:
 
-| kinds                                           | layer           | address                  | properties                                                          | values                                                            | relations to the pick                                        |
-| ----------------------------------------------- | --------------- | ------------------------ | ------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------ |
-| `permutation`, `set-partition`, `diagram`       | `StrandDiagram` | (slot, level)            | `In`, `Out`, `Through`, `Cap`, `Cup`, `Loop`, `Crossing`            | `Slot`, `Level`, `Block`, `Image`                                 | `SameBlock`, `Crosses`, `Adjacent`                           |
-| `partition`, `tableau`, `composition`, `subset` | `CellDiagram`   | (row, column)            | `Filled`, `Corner`, `InFirstRow`, `InFirstColumn`, `Entry`          | `Row`, `Column`, `Content`, `Hook`, `Arm`, `Leg`, `Entry`, `Part` | `SameRow`, `SameColumn`, `SameContent`, `Hook`, `Adjacent`   |
-| `tree`, `binary-tree`                           | `TreeDiagram`   | (depth, order)           | `Leaf`, `Root`, `Internal`                                          | `Depth`, `Order`, `Children`, `SubtreeSize`                       | `Ancestor`, `Descendant`, `Subtree`, `Sibling`, `Adjacent`   |
-| `dyck`, `lattice`                               | `PathDiagram`   | (step, height) or (x, y) | `Peak`, `Valley`, `Return`, `Up`, `Down`; `East`, `North`, `Corner` | `Step`, `Height`, `X`, `Area`                                     | `SameHeight`, `SameColumn`, `Adjacent`, `Tunnel`             |
-| [polytopes](../../polytope/docs/polytope.md)    | `PolytopeFaces` | (dimension, index)       | `Vertex`, `Edge`, `Ridge`, `Facet`, `Interior`, `Top`               | `Dimension`, `VertexCount`, `Valence`, `Index`, `Depth`           | `FaceOf`, `Cofaces`, `Incident`, `Adjacent`, `SameDimension` |
+| values                                                         | layer           | address                  | properties                                                          | parts                                                             | relations to the pick                                        |
+| -------------------------------------------------------------- | --------------- | ------------------------ | ------------------------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------ |
+| `Permutation`, `SetPartition`, `Diagram`                       | `StrandDiagram` | (slot, level)            | `In`, `Out`, `Through`, `Cap`, `Cup`, `Loop`, `Crossing`            | `Slot`, `Level`, `Block`, `Image`                                 | `SameBlock`, `Crosses`, `Adjacent`                           |
+| `IntegerPartition`, `StandardTableau`, `Composition`, `Subset` | `CellDiagram`   | (row, column)            | `Filled`, `Corner`, `InFirstRow`, `InFirstColumn`, `Entry`          | `Row`, `Column`, `Content`, `Hook`, `Arm`, `Leg`, `Entry`, `Part` | `SameRow`, `SameColumn`, `SameContent`, `Hook`, `Adjacent`   |
+| `PlaneTree`, `BinaryTree`                                      | `TreeDiagram`   | (depth, order)           | `Leaf`, `Root`, `Internal`                                          | `Depth`, `Order`, `Children`, `SubtreeSize`                       | `Ancestor`, `Descendant`, `Subtree`, `Sibling`, `Adjacent`   |
+| `DyckPath`, `LatticePath`                                      | `PathDiagram`   | (step, height) or (x, y) | `Peak`, `Valley`, `Return`, `Up`, `Down`; `East`, `North`, `Corner` | `Step`, `Height`, `X`, `Area`                                     | `SameHeight`, `SameColumn`, `Adjacent`, `Tunnel`             |
+| [polytopes](../../polytope/docs/polytope.md)                   | `PolytopeFaces` | (dimension, index)       | `Vertex`, `Edge`, `Ridge`, `Facet`, `Interior`, `Top`               | `Dimension`, `VertexCount`, `Valence`, `Index`, `Depth`           | `FaceOf`, `Cofaces`, `Incident`, `Adjacent`, `SameDimension` |
 
 A polytope is no glyph, but the same kind of frame: its layer sits under a camera instead of a fixed view.
 
-A figure's default look themes from `--notatio-accent` / `--notatio-border` /
-`--notatio-fg`; the `svg` attribute still draws any SVG verbatim.
+A picture's default look themes from `--notatio-accent` / `--notatio-border` / `--notatio-fg`.
 
 ## The vocabulary
 
 <GlyphGallery />
 
-## Explicit request + options
+## Values as pictures
 
 <Story
   title="Permutation strand diagram">
@@ -35,7 +33,7 @@ row — the one-line word <code>3&nbsp;1&nbsp;2</code>. It is a <code>Show</code
 <code>StrandDiagram</code>; the true bracketed matrix is <code>MatrixForm</code>,
 a TeX representation still to come.
 </template>
-<notatio-figure kind="permutation" value="[3,1,2]" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation([3, 1, 2])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:77px" />
 </Story>
 
 <Story
@@ -45,7 +43,7 @@ a TeX representation still to come.
 the rest are cells too. Without it, <code>n</code> defaults to the largest member. A
 <code>CellDiagram</code> of <code>Subset([1, 3], 6)</code>.
 </template>
-<notatio-figure kind="subset" value="[1,3]" n="6" />
+<notatio-show class="inline-figure" value='Show(CellDiagram(Subset([1, 3], 6)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" style="width:156px" />
 </Story>
 
 <Story
@@ -56,9 +54,9 @@ reading order — the superstandard filling, always a valid standard Young
 tableau (rows increase rightward, columns downward). A <code>CellDiagram</code> of
 <code>StandardTableau</code>; each cell's <code>Entry</code> is its number.
 </template>
-<notatio-figure kind="tableau" value="[3,2,1]" />
-<notatio-figure kind="tableau" value="[4,2]" />
-<notatio-figure kind="tableau" value="[2,2,2]" />
+<notatio-show class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2, 3], [4, 5], [6]])), ImageSize -> [Automatic, 82], GestureHandling -> "none")' legend-at="none" style="width:82px" />
+<notatio-show class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2, 3, 4], [5, 6]])), ImageSize -> [Automatic, 62], GestureHandling -> "none")' legend-at="none" style="width:102px" />
+<notatio-show class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2], [3, 4], [5, 6]])), ImageSize -> [Automatic, 82], GestureHandling -> "none")' legend-at="none" style="width:62px" />
 </Story>
 
 <Story
@@ -68,7 +66,7 @@ tableau (rows increase rightward, columns downward). A <code>CellDiagram</code> 
 string). Each block draws as a pill (a chain of joined slots) over its elements —
 <code>[0,0,1,0,2]</code> is <code>{1,2,4} {3} {5}</code>.
 </template>
-<notatio-figure kind="set-partition" value="[0,0,1,0,2]" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(SetPartition([[1, 2, 4], [3], [5]])), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" style="width:125px" />
 </Story>
 
 <Story
@@ -79,8 +77,8 @@ A monotone staircase of unit steps east (<code>0</code>) and north
 <code>PathDiagram</code> of <code>LatticePath</code>: its points are the addresses
 <code>(x, y)</code>, its steps the links.
 </template>
-<notatio-figure kind="lattice" value="[0,1,1,0,1,0]" />
-<notatio-figure kind="lattice" value="[1,0,1,0,0,1]" />
+<notatio-show class="inline-figure" value='Show(PathDiagram(LatticePath([0, 1, 1, 0, 1, 0])), GridLines -> [1, 1], GridLinesStyle -> Directive(Gray, AbsoluteThickness(1), Opacity(0.35)), ImageSize -> [Automatic, 88], GestureHandling -> "none")' legend-at="none" style="width:88px" />
+<notatio-show class="inline-figure" value='Show(PathDiagram(LatticePath([1, 0, 1, 0, 0, 1])), GridLines -> [1, 1], GridLinesStyle -> Directive(Gray, AbsoluteThickness(1), Opacity(0.35)), ImageSize -> [Automatic, 88], GestureHandling -> "none")' legend-at="none" style="width:88px" />
 </Story>
 
 <Story
@@ -91,11 +89,11 @@ listed in preorder. A <code>TreeDiagram</code> of its tidy layout: leaves take
 sequential x, each internal node sits over the mean of its children, and a node's
 address is its (depth, order). The five shapes of size 3 (Catalan again):
 </template>
-<notatio-figure kind="binary-tree" value="[1,1,0,0,1,0,0]" />
-<notatio-figure kind="binary-tree" value="[1,1,1,0,0,0,0]" />
-<notatio-figure kind="binary-tree" value="[1,1,0,1,0,0,0]" />
-<notatio-figure kind="binary-tree" value="[1,0,1,1,0,0,0]" />
-<notatio-figure kind="binary-tree" value="[1,0,1,0,1,0,0]" />
+<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 0, 0, 2, 0, 0])), ImageSize -> [Automatic, 74], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 2, 0, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 0, 2, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 0, 2, 2, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 0, 2, 0, 2, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
 </Story>
 
 <Story
@@ -105,7 +103,7 @@ address is its (depth, order). The five shapes of size 3 (Catalan again):
 rooted ordered tree draws: here a root with three children, the middle one a
 cherry, the last a chain.
 </template>
-<notatio-figure kind="tree" value="[3,0,2,0,0,1,0]" />
+<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([3, 0, 2, 0, 0, 1, 0])), ImageSize -> [Automatic, 74], GestureHandling -> "none")' legend-at="none" style="width:94px" />
 </Story>
 
 ## Click a figure
@@ -143,13 +141,4 @@ no rules they draw the look of the figure they stand for. Their data is an `Inte
     ColorRules='[Selected -> White, Tunnel(Selected) -> Red, SameHeight(Selected) -> Orange, Peak -> Gold, Valley -> Teal, True -> Gray]'
   ><DyckPath><List>1 1 0 1 1 0 0 1 0 0</List></DyckPath></PathDiagram>
 </Show>
-</Story>
-
-<Story
-  title="Raw SVG passthrough">
-<template #description>
-The generic escape hatch: hand it a ready-made SVG string and it renders it
-verbatim (for representations authored elsewhere).
-</template>
-<notatio-figure svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-label="star"><polygon points="20,2 25,15 39,15 28,24 32,38 20,30 8,38 12,24 1,15 15,15" fill="var(--notatio-accent,#d97706)"/></svg>' />
 </Story>

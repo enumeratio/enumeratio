@@ -60,7 +60,7 @@ Press ▶ and watch the order: the last element climbs slowest. That is
 <strong>colex</strong> — subsets are ordered by their largest element first.
 </template>
 <notatio-manipulate v-pre params="{ {r, 1}, 1, 56, 1}">
-<notatio-figure kind="subset" value="At(KSubsets(8,3), _r)" n="8" />
+<notatio-show class="inline-figure" value='Show(CellDiagram(At(KSubsets(8, 3), _r)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
 </notatio-manipulate>
 </Story>
 
@@ -76,8 +76,8 @@ wrap around while the permutations are still going. Wrapping is the point: an in
 taken modulo the count.
 </template>
 <notatio-manipulate v-pre params="{ {r, 1}, 1, 24, 1}">
-<notatio-figure kind="permutation" value="At(SymmetricGroup(4), _r)" />
-<notatio-figure kind="dyck" value="At(DyckPaths(4), _r)" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(At(SymmetricGroup(4), _r)), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
+<notatio-show class="inline-figure" value='Show(PathDiagram(At(DyckPaths(4), _r)), ImageSize -> [Automatic, 86], GestureHandling -> "none")' legend-at="none" />
 </notatio-manipulate>
 </Story>
 
@@ -115,6 +115,5 @@ of the $n$-th permutation, and the combinatorial number system's digits _are_ th
 $n$-th k-subset. [Numeral systems](../../../arithmetic/numerals/docs/numeral-systems.md) makes that identification properly.
 
 Every family here is catalogued, with its order and its counting sequence, in the
-[symbol reference](https://enumeratio.dev/reference/symbol/). The glyphs are
-[`<Figure>`](https://enumeratio.dev/reference/component/Figure) and the slider is
+[symbol reference](https://enumeratio.dev/reference/symbol/). The pictures are [`Show`s of their frame layers](figure.md) and the slider is
 [`<Manipulate>`](https://enumeratio.dev/reference/component/Manipulate).

@@ -17,6 +17,7 @@
 
 import type { Vec2 } from "./lattice.ts";
 import type { Address, FramePoint, GraphicsPrimitive, TileLayer } from "./tiles-canvas.ts";
+import { unwrapped } from "./frame-json.ts";
 import { fitView } from "./tiles-canvas.ts";
 
 type Json = unknown;
@@ -179,7 +180,8 @@ export function compose(a: StrandModel, b: StrandModel): StrandModel | string {
 }
 
 /** The model an expression names: `Permutation`, `SetPartition`, `Diagram`, or a `Compose` of them. */
-export function strandModelOf(json: Json): StrandModel | string {
+export function strandModelOf(node: Json): StrandModel | string {
+  const json = unwrapped(node);
   const head = headOf(json);
   const [arg] = argsOf(json);
   if (head === "Permutation") {
@@ -546,7 +548,7 @@ const blocksOf = (rgs: readonly number[]): number[][] => {
 };
 
 /**
- * `Figure(kind, value)` for the strand kinds, as the `Show` it stands for: `value` is the glyph's
+ * The strand glyph kinds (`permutation`, `set-partition`, `diagram`) as the `Show` they draw as: `value` is the glyph's
  * integer list (a permutation's one-line image, a restricted-growth string for a set partition, or
  * one over 2n points for a diagram), and the box is sized to the figure. Undefined for any other kind.
  */

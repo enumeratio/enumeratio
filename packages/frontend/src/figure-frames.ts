@@ -1,10 +1,6 @@
-// `Figure`, lowered: each glyph kind that has a frame becomes the `Show` it stands for, and each
-// frame head has the rules that make a bare layer look like the glyph it replaces.
-//
-//   permutation, set-partition, diagram       Show(StrandDiagram(…))   strand-frame.ts
-//   partition, tableau, composition, subset   Show(CellDiagram(…))     cell-frame.ts
-//   tree, binary-tree                         Show(TreeDiagram(…))     tree-frame.ts
-//   dyck, lattice                             Show(PathDiagram(…))     path-frame.ts
+// A combinatorial value draws as the `Show` of its frame layer, with the frame's default rules.
+// Each value head reads its layer in its frame's model (strand-frame.ts, cell-frame.ts,
+// tree-frame.ts, path-frame.ts); the glyph kinds of glyphs.ts lower to the same `Show`s.
 //
 // A polytope is no glyph: `PolytopeFaces` (polytope-frame.ts) is a `Show` layer of its own.
 
@@ -25,6 +21,29 @@ import { treeLayer, treeModelOf } from "./tree-frame.ts";
 /** The layer heads `Show` reads that are figure frames. */
 export const FIGURE_HEADS = ["StrandDiagram", "CellDiagram", "TreeDiagram", "PathDiagram", "PolytopeFaces"] as const;
 export type FigureHead = (typeof FIGURE_HEADS)[number];
+
+/** The frame each combinatorial value draws in: `Show(frame(value))` is its default picture. */
+export const VALUE_FRAMES = {
+  Permutation: "StrandDiagram",
+  SetPartition: "StrandDiagram",
+  Diagram: "StrandDiagram",
+  IntegerPartition: "CellDiagram",
+  StandardTableau: "CellDiagram",
+  Composition: "CellDiagram",
+  Subset: "CellDiagram",
+  PlaneTree: "TreeDiagram",
+  BinaryTree: "TreeDiagram",
+  DyckPath: "PathDiagram",
+  LatticePath: "PathDiagram",
+} as const satisfies Readonly<Record<string, FigureHead>>;
+
+/** The `ImageSize` height, in px, of a value's default picture, by its frame. */
+export const FRAME_HEIGHT: Readonly<Record<Exclude<FigureHead, "PolytopeFaces">, number>> = {
+  StrandDiagram: 140,
+  CellDiagram: 160,
+  TreeDiagram: 200,
+  PathDiagram: 160,
+};
 
 /**
  * The layer a frame head and its data make, or why it can't. `PolytopeFaces` takes the list of
@@ -150,26 +169,26 @@ function expressionOf(
 ): { head: FigureHead; layer: Json; options?: string } | undefined {
   switch (kind) {
     case "partition":
-      return { head: "CellDiagram", layer: ["IntegerPartition", list(value)] };
+      return { head: VALUE_FRAMES.IntegerPartition, layer: ["IntegerPartition", list(value)] };
     case "tableau": {
       // The superstandard filling: 1 … n in reading order.
       let next = 1;
       const rows = value.map((p) => list(Array.from({ length: p }, () => next++)));
-      return { head: "CellDiagram", layer: ["StandardTableau", list(rows)] };
+      return { head: VALUE_FRAMES.StandardTableau, layer: ["StandardTableau", list(rows)] };
     }
     case "composition":
-      return { head: "CellDiagram", layer: ["Composition", list(value)] };
+      return { head: VALUE_FRAMES.Composition, layer: ["Composition", list(value)] };
     case "subset":
-      return { head: "CellDiagram", layer: ["Subset", list(value), n ?? Math.max(1, ...value)] };
+      return { head: VALUE_FRAMES.Subset, layer: ["Subset", list(value), n ?? Math.max(1, ...value)] };
     case "tree":
-      return { head: "TreeDiagram", layer: ["PlaneTree", list(value)] };
+      return { head: VALUE_FRAMES.PlaneTree, layer: ["PlaneTree", list(value)] };
     case "binary-tree":
-      return { head: "TreeDiagram", layer: ["PlaneTree", list(value.map((b) => (b ? 2 : 0)))] };
+      return { head: VALUE_FRAMES.PlaneTree, layer: ["PlaneTree", list(value.map((b) => (b ? 2 : 0)))] };
     case "dyck":
-      return { head: "PathDiagram", layer: ["DyckPath", list(value)] };
+      return { head: VALUE_FRAMES.DyckPath, layer: ["DyckPath", list(value)] };
     case "lattice":
       return {
-        head: "PathDiagram",
+        head: VALUE_FRAMES.LatticePath,
         layer: ["LatticePath", list(value)],
         options: "GridLines -> [1, 1], GridLinesStyle -> Directive(Gray, AbsoluteThickness(1), Opacity(0.35))",
       };
@@ -184,7 +203,7 @@ function print(json: Json): string {
   return head === "List" ? `[${args.map(print).join(", ")}]` : `${head}(${args.map(print).join(", ")})`;
 }
 
-/** What `Figure(kind, value)` stands for: its `Show`, and the box that fits it. Undefined where the SVG draws it. */
+/** A glyph kind's picture as the `Show` of its value, and the box that fits it. Undefined where the SVG draws it. */
 export function lowerFigure(
   kind: string,
   value: readonly number[],
