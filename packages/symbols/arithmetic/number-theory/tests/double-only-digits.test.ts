@@ -24,7 +24,7 @@ const onePlusI = ["Complex", 1, 1];
 // Gamma, complex Cos): the result is the machine double it is, never padded to engine
 // precision, and an explicit digit count past a double declines.
 const doubleOnly: [string, unknown][] = [
-  ["Subfactorial of a real", ["Subfactorial", 2.5]],
+  ["Subfactorial of a complex", ["Subfactorial", onePlusI]],
   ["CatalanNumber of a complex", ["CatalanNumber", onePlusI]],
   ["Pochhammer of a complex", ["Pochhammer", 2.5, i]],
   ["Binomial of a complex", ["Binomial", onePlusI, 2.5]],

@@ -20,3 +20,4 @@ names:
 - $\operatorname{ns}(u,m) = 1/\operatorname{sn}(u,m)$ — [[JacobiSN]] shares this head's numeric kernel and exact-value coverage (m outside [0,1] via the reciprocal- and imaginary-modulus transformations, complex u, a genuinely complex m declined).
 - ns has a pole at u = 0 (sn(0,m) = 0, for any m).
 - Numeric only — a symbolic argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly.
+- `N(x, d)` past a double's digits runs the same AGM in BigDecimal for real $u$ and $0 < m < 1$; complex $u$ and other $m$ stay unevaluated there rather than print a double's digits as more.

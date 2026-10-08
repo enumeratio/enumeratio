@@ -35,6 +35,13 @@ import { dividedByT, fractionFactors } from "./transforms.ts";
 // (the first two by the scaling rule from the k = 1 pair; the third is the Laplace transform of J_0
 // integrated over the decay rate, ∫_0^m da/sqrt(a^2+s^2); the last is ∂/∂a of it, 2a K_0(as) integrated.)
 //
+// Two more order-0 pairs, sin and cos over r (G&R 6.671.7 and 6.671.2, ν = 0), each piecewise in
+// s because the integral is conditionally convergent and jumps where s crosses a (k = |a|):
+//   sin(a*r)/r             -> sgn(a)/sqrt(a^2-s^2) for s < |a|,  0 for s > |a|
+//   cos(a*r)/r             -> 0 for s < |a|,  1/sqrt(s^2-a^2) for s > |a|
+// A symbolic s leaves a Piecewise that settles once s is known; s = |a| diverges (Indeterminate).
+// Wolfram answers a MeijerG in s^-2 that equals these on each side, and holds the call at s = |a|.
+//
 // Declined: any other function, any other stated order (Wolfram's own closed forms for
 // e^(-a*r)/e^(-a*r^2) at a general order `n` involve `Hypergeometric2F1Regularized` /
 // `Hypergeometric1F1Regularized` — not elementary, not chased), and an unknown-sign `a`.
@@ -249,6 +256,47 @@ function logOnePlusRatio(ce: ComputeEngine, expr: BoxedExpression, r: string): B
   return free[0]!.base;
 }
 
+/** `sin(a r)/r` or `cos(a r)/r` for a real, nonzero `a`: a `Piecewise` in `s`, on either side of `|a|`. */
+function trigOverR(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  r: string,
+  s: BoxedExpression,
+): BoxedExpression | undefined {
+  const g = dividedByT(ce, expr, r);
+  if (g === undefined || (g.operator !== "Sin" && g.operator !== "Cos")) return undefined;
+  const a = linearCoeffSigned(ce, opAt(g, 0), r);
+  if (a === undefined || (a.isPositive !== true && a.isNegative !== true)) return undefined;
+  const k = a.isPositive === true ? a : ce.function("Negate", [a]).evaluate();
+  const kSquared = ce.function("Power", [k, 2]);
+  const sSquared = ce.function("Power", [s, 2]);
+  const below = ce.function("Less", [s, k]);
+  const above = ce.function("Greater", [s, k]);
+  const root = (radicand: BoxedExpression) => ce.function("Power", [radicand, ce.number([-1, 2])]);
+  const signed = (value: BoxedExpression) => (a.isPositive === true ? value : ce.function("Negate", [value]));
+  const clauses =
+    g.operator === "Sin"
+      ? [
+          [signed(root(ce.function("Subtract", [kSquared, sSquared]))), below],
+          [ce.Zero, above],
+        ]
+      : [
+          [ce.Zero, below],
+          [root(ce.function("Subtract", [sSquared, kSquared])), above],
+        ];
+  const value = ce
+    .function("Piecewise", [
+      ce.function(
+        "List",
+        clauses.map(([value, condition]) => ce.function("List", [value!, condition!])),
+      ),
+      ce.symbol("Indeterminate"),
+    ])
+    .evaluate();
+  // s = |a| diverges; hold the call there, as Wolfram does, rather than answer Indeterminate.
+  return value.operator === "Indeterminate" ? undefined : value;
+}
+
 function hankelPairs(
   ce: ComputeEngine,
   expr: BoxedExpression,
@@ -290,7 +338,12 @@ export function matchHankel(
   const rName = symbolNameOf(r);
   if (rName === undefined || !hasVar(expr, rName)) return undefined;
   if (order === undefined || (order.re === 0 && order.im === 0)) {
-    return atomicHankelOrder0(ce, expr, rName, s) ?? hankelOverR(ce, expr, rName, s) ?? hankelPairs(ce, expr, rName, s);
+    return (
+      atomicHankelOrder0(ce, expr, rName, s) ??
+      hankelOverR(ce, expr, rName, s) ??
+      trigOverR(ce, expr, rName, s) ??
+      hankelPairs(ce, expr, rName, s)
+    );
   }
   if (order.re === 1 && order.im === 0) return atomicHankelOrder1(ce, expr, rName, s);
   // Any other order: only the n-independent `1/r -> 1/s` identity is elementary

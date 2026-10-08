@@ -276,10 +276,6 @@ function argumentTooFarForDouble(ce: ComputeEngine, u: BoxedExpression, m: Boxed
   return false;
 }
 
-/** The `pq` heads with a bignum path so far; the rest still decline past a double, until their
- * reference rows are settled to match (`more-digits-than-a-double-holds-declines` on JacobiND). */
-const BIGNUM_HEADS: ReadonlySet<string> = new Set(["JacobiCN", "JacobiDN", "JacobiNC"]);
-
 /** Declare one Jacobi `pq` head — its exact table (`exactSCDN`, works even without
  * `N()`/a float operand) first, then the numeric AGM kernel (`sncndn`) once a number is
  * actually wanted. */
@@ -302,7 +298,7 @@ function declarePQ(ce: ComputeEngine, head: string, p: PQLetter, q: PQLetter): v
       // m in (0, 1) have a bignum kernel; everything else declines.
       if (exceedsDoublePrecision(ce, options.numericApproximation)) {
         const [bu, bm] = [bigRealOperand(ce, u), bigRealOperand(ce, m)];
-        if (!BIGNUM_HEADS.has(head) || bu === undefined || bm === undefined) return undefined;
+        if (bu === undefined || bm === undefined) return undefined;
         const value = jacobiQuotientBig(bu, bm, p, q, ce.precision);
         return value === undefined ? undefined : bigResult(ce, value);
       }
