@@ -49,6 +49,10 @@ const FLING = 40;
 const FLING_SETTLE_MS = 120;
 const LIVE_MS = 400;
 const DEFAULT_PAGE = 20;
+/** The index track's bounds, and the least the element column shrinks to. */
+const INDEX_MIN_EM = 3.5;
+const INDEX_MAX_EM = 9;
+const ELEMENT_MIN_EM = 6;
 
 interface Block {
   /** The rows of the block asked for, over the display columns `cols`; short at the source's end. */
@@ -293,12 +297,13 @@ export class TableViewBox extends HTMLElement {
     const labels = this.#columns.length > 0 ? this.#columns.map((c) => c.label) : this.#headers;
     const flexible = Math.max(0, labels.indexOf("element"));
     const tracks = [
-      "var(--tvb-idx, 5.5em)",
-      ...widths.map((w, i) => (i === flexible ? `minmax(${w}em, 1fr)` : `${w}em`)),
+      `var(--tvb-idx, ${INDEX_MIN_EM}em)`,
+      ...widths.map((w, i) => (i === flexible ? `minmax(${ELEMENT_MIN_EM}em, 1fr)` : `${w}em`)),
     ];
     this.style.setProperty("--tvb-tracks", tracks.join(" "));
-    const total = 5.5 + widths.reduce((a, b) => a + b, 0);
-    this.style.setProperty("--tvb-width", `${total}em`);
+    // The element column gives way first: the area is only as wide as the others and its minimum.
+    const rest = widths.reduce((sum, w, i) => sum + (i === flexible ? ELEMENT_MIN_EM : w), 0);
+    this.style.setProperty("--tvb-width", `calc(var(--tvb-idx, ${INDEX_MIN_EM}em) + ${rest}em)`);
     this.setAttribute("aria-colcount", String(widths.length + 1));
   }
 
@@ -486,7 +491,7 @@ export class TableViewBox extends HTMLElement {
   #colWindow(): [number, number] {
     const n = this.#columns.length;
     if (n <= WIDE) return [0, n];
-    const left = this.#viewport.scrollLeft / this.#fontPx - 5.5;
+    const left = this.#viewport.scrollLeft / this.#fontPx - INDEX_MIN_EM;
     const right = left + this.#viewport.clientWidth / this.#fontPx;
     let x = 0;
     let first = n;
@@ -544,7 +549,7 @@ export class TableViewBox extends HTMLElement {
       this.#rowsEl.replaceChildren(...ordered);
     }
     this.#marks();
-    this.#drawFoot(view);
+    this.#drawFoot();
 
     const keep = new Set<bigint>([blockOf(this.#active.index)]);
     for (const b of farOff(this.#blocks.keys(), view, visible, keep)) this.#blocks.delete(b);
@@ -567,6 +572,7 @@ export class TableViewBox extends HTMLElement {
     fresh.dataset.stamp = stamp;
     if (state === "loading") fresh.setAttribute("aria-busy", "true");
     const idx = text("div", "tvb-cell tvb-idx", index.toLocaleString("en-US"));
+    idx.title = index.toLocaleString("en-US");
     idx.setAttribute("role", "rowheader");
     idx.setAttribute("aria-colindex", "1");
     fresh.append(idx);
@@ -602,7 +608,7 @@ export class TableViewBox extends HTMLElement {
     return this.#rowEls.get(index)?.querySelector<HTMLElement>(`[data-col="${col}"]`) ?? undefined;
   }
 
-  #drawFoot(view: IndexRange): void {
+  #drawFoot(): void {
     const count = this.#count;
     const total = describeCount(count);
     const shown = this.#top + BigInt(this.#visible) - 1n;
@@ -610,9 +616,10 @@ export class TableViewBox extends HTMLElement {
     const last = end !== undefined && shown >= end ? end - 1n : shown;
     const settled = count.kind === "exact";
     this.#status.textContent = statusText(this.#top, last < this.#top ? this.#top : last, total);
-    // The index column is as wide as the largest index it may show, which for a big count is many digits.
-    const digits = String((end ?? view[1] + BigInt(this.#visible)).toString().length);
-    this.style.setProperty("--tvb-idx", `${Math.max(5.5, Number(digits) * 0.62 + 1.4)}em`);
+    // The index column fits the rows shown, not the count: a long index is cut short, never the other columns.
+    const digits = (last > this.#top ? last : this.#top).toString().length;
+    const idx = Math.min(INDEX_MAX_EM, Math.max(INDEX_MIN_EM, digits * 0.6 + 1.4));
+    this.style.setProperty("--tvb-idx", `${idx}em`);
     this.setAttribute("aria-rowcount", settled ? String(count.n + 1n) : "-1");
     this.dataset.count = count.kind;
     const message = this.#error || this.#warning;

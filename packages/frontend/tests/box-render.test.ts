@@ -3,6 +3,7 @@
 import { grid, pane, row, tableView, text } from "@enumeratio/boxes";
 import { expect, test } from "vite-plus/test";
 import { renderBox } from "../src/box-render.ts";
+import { renderingOf } from "../src/symbols.ts";
 import { rowSourceExpression } from "../src/row-spec.ts";
 
 test("layout boxes are drawn as their own tags", () => {
@@ -31,4 +32,9 @@ test("a TableViewBox is its element: the source as written, the headers known, t
     pagination: "",
     style: "width: 480px; height: 320px",
   });
+});
+
+test("a collection table's collection keeps the name it is declared under, so a reader can retype it", () => {
+  const drawn = renderingOf(["CollectionTable", "NonNegativeIntegers"] as never);
+  expect(drawn?.attributes.expr).toBe("NonNegativeIntegers");
 });

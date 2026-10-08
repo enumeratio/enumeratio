@@ -15,11 +15,10 @@ const log = debug("collection-table");
 
 /**
  * `<CollectionTable expr="Subsets(4)">` -- the chrome around a `<table-view-box>`: the editors
- * for the collection, its columns and a filter, and the table they drive. The rows are the box's
- * (the wiki's Speculative-Lazy-Grid): a row source over the collection, registered with the
- * page's kernel, which answers only the rows in view, so `SymmetricGroup(25)` scrolls as cheaply
- * as `Subsets(4)` and `NonNegativeIntegers` scrolls without end. The `#` column is the index
- * that reproduces each row, `At(expr, #)`.
+ * for the collection, its columns and a filter, and the table they drive. The table asks the
+ * page's kernel only for the rows in view, so `SymmetricGroup(25)` scrolls as cheaply as
+ * `Subsets(4)` and `NonNegativeIntegers` scrolls without end. The `#` column is the index that
+ * reproduces each row, `At(expr, #)`.
  *
  * `columns` names statistics to apply to every row -- a head (`Descents`) or any expression
  * over the row `_` (`Max(_) - Min(_)`), comma-separated, addable and removable live. `filter`
@@ -308,7 +307,7 @@ function ensureTableStyles(): void {
 }
 
 const CSS = `
-notatio-collection-table { display: block; margin: 0.75rem 0; }
+notatio-collection-table { display: block; margin: 0.75rem 0; width: 100%; }
 .nct {
   border: 1px solid var(--notatio-border, var(--vp-c-divider, #d4d4d8));
   border-radius: 10px;

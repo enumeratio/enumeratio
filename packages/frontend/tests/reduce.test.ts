@@ -47,7 +47,7 @@ const CORPUS = [
   "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
   // A table that cannot scroll is its first page: the options pin it, and a host draws the rest as a Skeleton.
   'CollectionTable(SymmetricGroup(6), Columns -> "Descents")',
-  "CollectionTable(NonNegativeIntegers, MaxItems -> 5)",
+  "CollectionTable(Subsets(6), MaxItems -> 5)",
 ];
 
 const ENVS: readonly Environment[] = [WEB, PRINT, TTY, PIPE, COMPACT];

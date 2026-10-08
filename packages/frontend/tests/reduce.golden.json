@@ -493,24 +493,24 @@
     "epsil": "CollectionTable(SymmetricGroup(6), Columns -> \"Descents\")",
     "markup": "<notatio-collection-table expr=\"SymmetricGroup(6)\" columns=\"Descents\"></notatio-collection-table>"
   },
-  "web: CollectionTable(NonNegativeIntegers, MaxItems -> 5)": {
-    "epsil": "CollectionTable(nonNegativeIntegers, MaxItems -> 5)",
-    "markup": "<notatio-collection-table expr=\"nonNegativeIntegers\" max-items=\"5\"></notatio-collection-table>"
+  "web: CollectionTable(Subsets(6), MaxItems -> 5)": {
+    "epsil": "CollectionTable(Subsets(6), MaxItems -> 5)",
+    "markup": "<notatio-collection-table expr=\"Subsets(6)\" max-items=\"5\"></notatio-collection-table>"
   },
-  "print: CollectionTable(NonNegativeIntegers, MaxItems -> 5)": {
-    "epsil": "CollectionTable(nonNegativeIntegers, ScrollPosition -> 1, MaxItems -> 5)",
-    "markup": "<notatio-collection-table expr=\"nonNegativeIntegers\" scroll-position=\"1\" max-items=\"5\"></notatio-collection-table>"
+  "print: CollectionTable(Subsets(6), MaxItems -> 5)": {
+    "epsil": "CollectionTable(Subsets(6), ScrollPosition -> 1, MaxItems -> 5)",
+    "markup": "<notatio-collection-table expr=\"Subsets(6)\" scroll-position=\"1\" max-items=\"5\"></notatio-collection-table>"
   },
-  "tty: CollectionTable(NonNegativeIntegers, MaxItems -> 5)": {
-    "epsil": "CollectionTable(nonNegativeIntegers, MaxItems -> 5)",
-    "markup": "<notatio-collection-table expr=\"nonNegativeIntegers\" max-items=\"5\"></notatio-collection-table>"
+  "tty: CollectionTable(Subsets(6), MaxItems -> 5)": {
+    "epsil": "CollectionTable(Subsets(6), MaxItems -> 5)",
+    "markup": "<notatio-collection-table expr=\"Subsets(6)\" max-items=\"5\"></notatio-collection-table>"
   },
-  "pipe: CollectionTable(NonNegativeIntegers, MaxItems -> 5)": {
-    "epsil": "CollectionTable(nonNegativeIntegers, ScrollPosition -> 1, MaxItems -> 5)",
-    "markup": "<notatio-collection-table expr=\"nonNegativeIntegers\" scroll-position=\"1\" max-items=\"5\"></notatio-collection-table>"
+  "pipe: CollectionTable(Subsets(6), MaxItems -> 5)": {
+    "epsil": "CollectionTable(Subsets(6), ScrollPosition -> 1, MaxItems -> 5)",
+    "markup": "<notatio-collection-table expr=\"Subsets(6)\" scroll-position=\"1\" max-items=\"5\"></notatio-collection-table>"
   },
-  "compact: CollectionTable(NonNegativeIntegers, MaxItems -> 5)": {
-    "epsil": "CollectionTable(nonNegativeIntegers, MaxItems -> 5)",
-    "markup": "<notatio-collection-table expr=\"nonNegativeIntegers\" max-items=\"5\"></notatio-collection-table>"
+  "compact: CollectionTable(Subsets(6), MaxItems -> 5)": {
+    "epsil": "CollectionTable(Subsets(6), MaxItems -> 5)",
+    "markup": "<notatio-collection-table expr=\"Subsets(6)\" max-items=\"5\"></notatio-collection-table>"
   }
 }
