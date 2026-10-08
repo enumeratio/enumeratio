@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
+import { withAssumed } from "./piecewise-assumptions.ts";
 
 // Assuming(cond, expr) and Refine(expr, cond?) — thin wrappers over compute-engine's own
 // assumption system (`ce.assume`/`ce.pushScope`/`ce.popScope`), which already makes several
@@ -36,7 +37,7 @@ function withAssumptions<T>(ce: ComputeEngine, conds: readonly BoxedExpression[]
   ce.pushScope();
   try {
     for (const c of conds) ce.assume(c);
-    return body();
+    return withAssumed(ce, conds, body);
   } finally {
     ce.popScope();
   }

@@ -1,195 +1,77 @@
-import { bigRationalAt, box, type Engine, type Expr, isSymbol, type Json, operandsOf } from "@enumeratio/engine";
+import { box, type Engine, type Expr, isSymbol, type Json, operandsOf } from "@enumeratio/engine";
+import {
+  addTo,
+  affine,
+  and,
+  compareLinear,
+  compact,
+  hasPiecewise,
+  isNonReal,
+  type Linear,
+  linear,
+  or,
+  piecewise,
+  q,
+  type Q,
+  qAdd,
+  qDiv,
+  qIsZero,
+  qJson,
+  qMul,
+  qNeg,
+  qNum,
+  rationalAt,
+  relation,
+  scaled,
+  sortedByWolfram,
+  togetherJson,
+  constantValue,
+} from "./piecewise-linear.ts";
+import {
+  cmpNum,
+  type Interval,
+  intervalOf,
+  type Knowledge,
+  narrowPiecewise,
+  num,
+  type Num,
+  numQ,
+  ratioInterval,
+} from "./piecewise-assumptions.ts";
 
 // The PiecewiseExpand rewrites for the step-like heads, in Wolfram's own form: the same
 // branch conditions (`a - b >= 0`, `x <= 2`), the same branch order, and the same default.
 //
 //   - Min, Max, UnitStep, Clip, UnitBox, UnitTriangle expand over any argument, with no
-//     assumption: unlike Abs and Sign, nothing about them needs a real argument.
+//     assumption: unlike Abs and Sign, nothing about them needs a real argument. What the
+//     assumptions decide of their conditions is dropped (`UnitBox(x)` on `0 < x < 2` is `x <= 1/2`).
 //   - Floor, Ceil, Round, IntegerPart, FractionalPart, Mod, Quotient, SawtoothWave,
-//     SquareWave, TriangleWave expand over a symbol bounded on both sides, as Wolfram does
-//     from `Assuming`'s or the second argument's `0 < x < 3`. A span of 100 or more is left
-//     alone, as Wolfram leaves it.
+//     SquareWave, TriangleWave expand over a bounded argument, as Wolfram does from
+//     `Assuming`'s or the second argument's `0 < x < 3`. A span of 100 cells or more is left alone,
+//     as Wolfram leaves it. The argument is a symbol, or linear in one (`Floor(2 x)`), or a power
+//     (`Floor(x^2)`) or square root of one over an interval where it is monotone; a modulus is a
+//     number, a constant such as Pi, or a symbol (`Mod(k, m)` with `0 <= k <= 3 m` reads off `k/m`).
 //
 // A branch whose value is 0 is the Piecewise default (0 when omitted); with none, the last
 // branch in value order is the default and carries no condition.
 
-// Exact small rationals: breakpoints are integers, halves and quarters.
-type Q = readonly [number, number];
-const gcd = (a: number, b: number): number => (b === 0 ? Math.abs(a) : gcd(b, a % b));
-const q = (n: number, d = 1): Q => {
-  const sign = d < 0 ? -1 : 1;
-  const g = gcd(n, d) || 1;
-  return [(sign * n) / g, (sign * d) / g];
-};
-const qAdd = (a: Q, b: Q): Q => q(a[0] * b[1] + b[0] * a[1], a[1] * b[1]);
-const qMul = (a: Q, b: Q): Q => q(a[0] * b[0], a[1] * b[1]);
-const qNeg = (a: Q): Q => [-a[0], a[1]];
-const qDiv = (a: Q, b: Q): Q => q(a[0] * b[1], a[1] * b[0]);
-const qNum = (a: Q): number => a[0] / a[1];
-const qJson = (a: Q): Json => (a[1] === 1 ? a[0] : (["Rational", a[0], a[1]] as Json));
-const qIsZero = (a: Q): boolean => a[0] === 0;
-
-const rationalAt = (e: Expr): Q | undefined => {
-  const r = bigRationalAt(e);
-  if (r === undefined) return undefined;
-  const [n, d] = r;
-  return Number.isSafeInteger(Number(n)) && Number.isSafeInteger(Number(d)) ? q(Number(n), Number(d)) : undefined;
-};
-
-// -- Linear forms: `a - b >= 0` is written with its constant moved across ---------------------
-
-interface Atom {
-  readonly atom: Json;
-  readonly constant: boolean;
-  coeff: Q;
-}
-
-interface Linear {
-  readonly atoms: Map<string, Atom>;
-  constant: Q;
-}
-
-/** A number written with no unknown in it (`Pi`, `Sqrt(2)`): a constant, though not a rational one. */
-const isConstant = (e: Expr): boolean => e.unknowns.length === 0;
-
-const addTo = (into: Linear, from: Linear, scale: Q): void => {
-  into.constant = qAdd(into.constant, qMul(from.constant, scale));
-  for (const [key, { atom, coeff, constant }] of from.atoms) {
-    const have = into.atoms.get(key);
-    if (have) have.coeff = qAdd(have.coeff, qMul(coeff, scale));
-    else into.atoms.set(key, { atom, constant, coeff: qMul(coeff, scale) });
-  }
-};
-
-function linear(e: Expr): Linear {
-  const out: Linear = { atoms: new Map(), constant: q(0) };
-  const value = rationalAt(e);
-  if (value !== undefined) {
-    out.constant = value;
-    return out;
-  }
-  const ops = operandsOf(e);
-  if (e.operator === "Add") for (const o of ops) addTo(out, linear(o), q(1));
-  else if (e.operator === "Subtract" && ops.length === 2) {
-    addTo(out, linear(ops[0]), q(1));
-    addTo(out, linear(ops[1]), q(-1));
-  } else if (e.operator === "Negate" && ops.length === 1) addTo(out, linear(ops[0]), q(-1));
-  else if (
-    e.operator === "Divide" &&
-    ops.length === 2 &&
-    rationalAt(ops[1]) !== undefined &&
-    !qIsZero(rationalAt(ops[1])!)
-  )
-    addTo(out, linear(ops[0]), qDiv(q(1), rationalAt(ops[1])!));
-  else if (e.operator === "Multiply") {
-    const scale = ops.map(rationalAt).filter((c): c is Q => c !== undefined);
-    const rest = ops.filter((o) => rationalAt(o) === undefined);
-    const factor = scale.reduce(qMul, q(1));
-    if (rest.length === 1) addTo(out, linear(rest[0]), factor);
-    else if (rest.length > 1 && scale.length > 0) {
-      const product = ["Multiply", ...rest.map((r) => r.json)] as Json;
-      out.atoms.set(JSON.stringify(product), { atom: product, constant: rest.every(isConstant), coeff: factor });
-    } else out.atoms.set(JSON.stringify(e.json), { atom: e.json, constant: isConstant(e), coeff: q(1) });
-  } else out.atoms.set(JSON.stringify(e.json), { atom: e.json, constant: isConstant(e), coeff: q(1) });
-  return out;
-}
-
-const compact = (l: Linear): Atom[] => [...l.atoms.values()].filter((a) => !qIsZero(a.coeff));
-
-type Relation = "Less" | "LessEqual" | "Greater" | "GreaterEqual";
-const FLIP: Record<Relation, Relation> = {
-  Less: "Greater",
-  LessEqual: "GreaterEqual",
-  Greater: "Less",
-  GreaterEqual: "LessEqual",
-};
-
-const termJson = (coeff: Q, atom: Json): Json =>
-  qNum(coeff) === 1
-    ? atom
-    : qNum(coeff) === -1
-      ? (["Negate", atom] as Json)
-      : (["Multiply", qJson(coeff), atom] as Json);
-
-/** `a op b` as Wolfram writes it: one unknown against a constant (`x <= 2`, `x <= Pi`), else the difference against 0 (`x - y >= 0`). */
-function relation(op: Relation, a: Expr, b: Expr): Json | undefined {
-  const diff = linear(a);
-  addTo(diff, linear(b), q(-1));
-  const atoms = compact(diff);
-  if (atoms.length === 0) return undefined;
-  const unknowns = atoms.filter((t) => !t.constant);
-  const constants = atoms.filter((t) => t.constant);
-  if (unknowns.length === 1 && constants.length === 0) {
-    const { atom, coeff } = unknowns[0];
-    return [qNum(coeff) < 0 ? FLIP[op] : op, atom, qJson(qDiv(qNeg(diff.constant), coeff))] as Json;
-  }
-  if (unknowns.length === 1 && Math.abs(qNum(unknowns[0].coeff)) === 1) {
-    // x * k + C op 0 with k = +-1 reads x op' -C / k
-    const { atom, coeff } = unknowns[0];
-    const rest = linearJson({ atoms: new Map(constants.map((t, i) => [String(i), t])), constant: diff.constant });
-    return [qNum(coeff) < 0 ? FLIP[op] : op, atom, qNum(coeff) > 0 ? negated(rest) : rest] as Json;
-  }
-  return [op, ["Add", ...atoms.map(({ atom, coeff }) => termJson(coeff, atom))], qJson(qNeg(diff.constant))] as Json;
-}
-
-const negated = (j: Json): Json => (typeof j === "number" ? -j : (["Negate", j] as Json));
-
-const and = (conds: readonly Json[]): Json => (conds.length === 1 ? conds[0] : (["And", ...conds] as Json));
-const clause = ([value, cond]: readonly [Json, Json]): Json => ["List", value, cond] as Json;
-const piecewise = (branches: readonly (readonly [Json, Json])[], fallback: Json): Json =>
-  branches.length === 0 ? fallback : (["Piecewise", ["List", ...branches.map(clause)] as Json, fallback] as Json);
-
-// -- Wolfram's canonical order, as far as these rewrites need it ------------------------------
-
-/** Wolfram sorts names without regard to case, lowercase first on a tie. */
-const nameOrder = (a: string, b: string): number =>
-  a.toLowerCase() < b.toLowerCase() ? -1 : a.toLowerCase() > b.toLowerCase() ? 1 : a === b ? 0 : a > b ? -1 : 1;
-
-const firstSymbol = (e: Expr): string | undefined => {
-  if (isSymbol(e)) return e.symbol;
-  for (const o of operandsOf(e)) {
-    const s = firstSymbol(o);
-    if (s !== undefined) return s;
-  }
-  return undefined;
-};
-
-const leaves = (e: Expr): number => {
-  const ops = operandsOf(e);
-  return ops.length === 0 ? 1 : ops.reduce((n, o) => n + leaves(o), 0);
-};
-
-/** The value of a number or a constant such as `Pi`, or `undefined` for anything with an unknown in it. */
-const constantValue = (e: Expr): number | undefined => {
-  const r = rationalAt(e);
-  if (r !== undefined) return qNum(r);
-  if (!isConstant(e)) return undefined;
-  const value = e.N();
-  return value.im === 0 && Number.isFinite(value.re) ? value.re : undefined;
-};
-
-/** Numbers first, then by the leading symbol (`x` before `Abs(y)`, `Sqrt(x)` before `y`), then the simpler expression. */
-function sortedByWolfram<T>(items: readonly T[], of: (t: T) => Expr): T[] {
-  const keyed = items.map((item, index) => ({ item, index, e: of(item), number: constantValue(of(item)) }));
-  keyed.sort((a, b) => {
-    if (a.number !== undefined && b.number !== undefined) return a.number - b.number;
-    if (a.number !== undefined) return -1;
-    if (b.number !== undefined) return 1;
-    const bySymbol = nameOrder(firstSymbol(a.e) ?? "", firstSymbol(b.e) ?? "");
-    return bySymbol || leaves(a.e) - leaves(b.e) || a.index - b.index;
-  });
-  return keyed.map((k) => k.item);
-}
-
-const hasPiecewise = (e: Expr): boolean => e.operator === "Piecewise" || operandsOf(e).some(hasPiecewise);
-const isNonReal = (e: Expr): boolean => Number.isFinite(e.im) && e.im !== 0;
-
 // -- Min, Max -----------------------------------------------------------------------------------
 
-function minMax(kind: "Max" | "Min", given: readonly Expr[]): Json | undefined {
+/** Every argument of a Max or Min with the condition under which it is the value: exclusive, a tie going to the later one. */
+export function minMaxPieces(kind: "Max" | "Min", given: readonly Expr[]): { value: Expr; cond: Json }[] | undefined {
   const args = given.length === 1 && given[0].operator === "List" ? operandsOf(given[0]) : given;
   if (args.length < 2 || !args.every((a) => !hasPiecewise(a) && !isNonReal(a))) return undefined;
-  const a = sortedByWolfram(args, (e) => e);
+  const sorted = sortedByWolfram(args, (e) => e);
+  // An argument that differs from another by a constant never wins (Max) or always loses (Min) to it.
+  const beaten = (i: number, j: number): boolean => {
+    const d = linear(sorted[i]);
+    addTo(d, linear(sorted[j]), q(-1));
+    if (compact(d).length > 0) return false;
+    const c = qNum(d.constant);
+    return kind === "Max" ? c < 0 || (c === 0 && i < j) : c > 0 || (c === 0 && i < j);
+  };
+  const a = sorted.filter((_, i) => !sorted.some((_, j) => j !== i && beaten(i, j)));
+  if (a.length === 1) return [{ value: a[0], cond: "True" as Json }];
   const pieces: { value: Expr; cond: Json }[] = [];
   for (let i = 0; i < a.length; i++) {
     // Wins over an earlier argument strictly, over a later one on a tie.
@@ -205,7 +87,12 @@ function minMax(kind: "Max" | "Min", given: readonly Expr[]): Json | undefined {
     }
     pieces.push({ value: a[i], cond: and(conds) });
   }
-  return assemble(pieces);
+  return pieces;
+}
+
+function minMax(kind: "Max" | "Min", given: readonly Expr[]): Json | undefined {
+  const pieces = minMaxPieces(kind, given);
+  return pieces && assemble(pieces);
 }
 
 // -- UnitStep, UnitBox, UnitTriangle ------------------------------------------------------------
@@ -219,14 +106,7 @@ function unitStep(ce: Engine, args: readonly Expr[]): Json | undefined {
   return conds.every((c) => c !== undefined) ? piecewise([[1, and(conds)]], 0) : undefined;
 }
 
-/** `u` as `scale * atom + shift`, when it is linear in one atom. */
-function affine(u: Expr): { atom: Json; scale: Q; shift: Q } | undefined {
-  const l = linear(u);
-  const atoms = compact(l);
-  return atoms.length === 1 ? { atom: atoms[0].atom, scale: atoms[0].coeff, shift: l.constant } : undefined;
-}
-
-function chain(lo: Json, loClosed: boolean, x: Json, hi: Json, hiClosed: boolean): Json {
+export function chain(lo: Json, loClosed: boolean, x: Json, hi: Json, hiClosed: boolean): Json {
   if (loClosed === hiClosed) return [loClosed ? "LessEqual" : "Less", lo, x, hi] as Json;
   return ["And", [loClosed ? "LessEqual" : "Less", lo, x], [hiClosed ? "LessEqual" : "Less", x, hi]] as Json;
 }
@@ -246,28 +126,21 @@ function unitBox(args: readonly Expr[]): Json | undefined {
   return piecewise([[1, and(args.map((u) => between(u, q(-1, 2), q(1, 2), true, true)))]], 0);
 }
 
-const scaled = (l: Linear, factor: Q, shift: Q): Linear => {
-  const out: Linear = { atoms: new Map(), constant: shift };
-  addTo(out, l, factor);
-  return out;
-};
-
-function linearJson(l: Linear): Json {
-  const terms = compact(l).map(({ atom, coeff }) => termJson(coeff, atom));
-  if (!qIsZero(l.constant)) terms.push(qJson(l.constant));
-  return terms.length === 0 ? 0 : terms.length === 1 ? terms[0] : (["Add", ...terms] as Json);
-}
-
-/** 1 - u on 0 <= u <= 1, 1 + u on -1 <= u < 0, 0 elsewhere; the branch whose value falls with x first. */
+/**
+ * 1 - u on 0 <= u <= 1, 1 + u on -1 <= u <= 0, 0 elsewhere; the branch whose value falls with x first. The peak, where
+ * both give 1, goes to the branch right of it when it is at or left of 0 and to the one left of it when it is right of 0.
+ */
 function unitTriangle(args: readonly Expr[]): Json | undefined {
   if (args.length !== 1 || !plain(args[0])) return undefined;
   const [u] = args;
   const f = affine(u);
   if (f === undefined) return undefined;
   const l = linear(u);
-  const falling = [linearJson(scaled(l, q(-1), q(1))), between(u, q(0), q(1), true, true)] as const;
-  const rising = [linearJson(scaled(l, q(1), q(1))), between(u, q(-1), q(0), true, false)] as const;
-  return piecewise(qNum(f.scale) > 0 ? [falling, rising] : [rising, falling], 0);
+  const peak = qDiv(qNeg(f.shift), f.scale);
+  const downGetsPeak = qNum(peak) <= 0 === qNum(f.scale) > 0;
+  const down = [togetherJson(scaled(l, q(-1), q(1))), between(u, q(0), q(1), downGetsPeak, true)] as const;
+  const up = [togetherJson(scaled(l, q(1), q(1))), between(u, q(-1), q(0), true, !downGetsPeak)] as const;
+  return piecewise(qNum(f.scale) > 0 ? [down, up] : [up, down], 0);
 }
 
 // -- Clip ---------------------------------------------------------------------------------------
@@ -315,13 +188,8 @@ function clip(ce: Engine, args: readonly Expr[]): Json | undefined {
 
 // -- Bounded staircases -------------------------------------------------------------------------
 
-/** What assumptions say about a symbol: `lo (<|<=) x (<|<=) hi`, finite on both sides. */
-interface Domain {
-  readonly lo: number;
-  readonly hi: number;
-  readonly loOpen: boolean;
-  readonly hiOpen: boolean;
-}
+/** Wolfram leaves a staircase alone from a span of 100. */
+const MAX_SPAN = 100;
 
 interface NumericType {
   readonly kind?: string;
@@ -332,82 +200,128 @@ interface NumericType {
   readonly upperOpen?: boolean;
 }
 
-/** Wolfram leaves a staircase alone from a span of 100. */
-const MAX_SPAN = 100;
+/** A double as the small rational it is, when it is one. */
+function snap(v: number): Num {
+  for (const d of [1, 2, 3, 4, 5, 6, 8, 10, 12, 16]) {
+    const n = Math.round(v * d);
+    if (Math.abs(v * d - n) < 1e-12) return numQ(q(n, d));
+  }
+  return num(v);
+}
 
-function domainOf(x: Expr): Domain | undefined {
+/** The bounds compute-engine inferred for a symbol: what an assumption made through the engine directly leaves. */
+function typedInterval(x: Expr): Interval | undefined {
   const t = x.type.type as NumericType | string;
   if (typeof t !== "object" || t.kind !== "numeric" || (t.type !== "real" && t.type !== "finite_real"))
     return undefined;
   const { lower, upper } = t;
   if (lower === undefined || upper === undefined || !Number.isFinite(lower) || !Number.isFinite(upper))
     return undefined;
-  if (upper < lower || upper - lower >= MAX_SPAN) return undefined;
-  return { lo: lower, hi: upper, loOpen: t.lowerOpen === true, hiOpen: t.upperOpen === true };
+  if (upper < lower) return undefined;
+  return { lo: snap(lower), hi: snap(upper), loOpen: t.lowerOpen === true, hiOpen: t.upperOpen === true };
 }
 
-/** One stretch of x where the function is one expression. */
+/** One stretch of the unit coordinate where the function is one expression. */
 interface Region {
   readonly lo: Q;
   readonly hi: Q;
   readonly loClosed: boolean;
   readonly hiClosed: boolean;
   readonly value: Json;
-  /** Branches go in ascending `order`. */
+  /** Branches go in ascending `order` unless every value is a number or a linear form. */
   readonly order: number;
+  readonly linear?: Linear;
 }
 
 /** Every region of period `k`: a family lists the cells of one period, and the loop covers the domain. */
 type Family = (k: number) => readonly Region[];
 
+/** Where the conditions live: the variable they compare, and how the unit coordinate the cells are laid out in maps onto it. */
+interface Axis {
+  readonly variable: Json;
+  /** The unit coordinate falls as the variable rises. */
+  readonly falling: boolean;
+  /** The variable where the unit coordinate is `e`. */
+  readonly at: (e: Q) => Json;
+  /** The range of the unit coordinate. */
+  readonly domain: Interval;
+}
+
 /** The region cut to the domain, and which of its ends the domain does not already say. */
-function cut(r: Region, d: Domain): { lower: boolean; upper: boolean } | undefined {
-  const [rlo, rhi] = [qNum(r.lo), qNum(r.hi)];
-  const lo = rlo > d.lo ? rlo : d.lo;
-  const hi = rhi < d.hi ? rhi : d.hi;
-  const loIn = rlo > d.lo ? r.loClosed : rlo < d.lo ? !d.loOpen : r.loClosed && !d.loOpen;
-  const hiIn = rhi < d.hi ? r.hiClosed : rhi > d.hi ? !d.hiOpen : r.hiClosed && !d.hiOpen;
-  if (lo > hi || (lo === hi && !(loIn && hiIn))) return undefined;
+function cut(r: Region, d: Interval): { lower: boolean; upper: boolean } | undefined {
+  const [rlo, rhi] = [numQ(r.lo), numQ(r.hi)];
+  const lo = cmpNum(rlo, d.lo);
+  const hi = cmpNum(rhi, d.hi);
+  const loIn = lo > 0 ? r.loClosed : lo < 0 ? !d.loOpen : r.loClosed && !d.loOpen;
+  const hiIn = hi < 0 ? r.hiClosed : hi > 0 ? !d.hiOpen : r.hiClosed && !d.hiOpen;
+  const span = cmpNum(lo > 0 ? rlo : d.lo, hi < 0 ? rhi : d.hi);
+  if (span > 0 || (span === 0 && !(loIn && hiIn))) return undefined;
   return {
-    lower: !(rlo < d.lo || (rlo === d.lo && (r.loClosed || d.loOpen))),
-    upper: !(rhi > d.hi || (rhi === d.hi && (r.hiClosed || d.hiOpen))),
+    lower: !(lo < 0 || (lo === 0 && (r.loClosed || d.loOpen))),
+    upper: !(hi > 0 || (hi === 0 && (r.hiClosed || d.hiOpen))),
   };
 }
 
-function staircase(x: Json, d: Domain, step: Q, family: Family): Json | undefined {
-  const first = Math.floor(d.lo / qNum(step)) - 1;
-  const last = Math.ceil(d.hi / qNum(step)) + 1;
-  const groups = new Map<string, { value: Json; order: number; conds: Json[] }>();
-  for (let k = first; k <= last; k++) {
+/** The region's condition on the axis's variable, from the ends of it the domain does not already say. */
+function conditionOf(axis: Axis, r: Region, edges: { lower: boolean; upper: boolean }): Json {
+  const { variable: x, falling } = axis;
+  // The unit coordinate's low edge is the variable's high end when it falls.
+  const low = falling
+    ? { edge: r.hi, closed: r.hiClosed, explicit: edges.upper }
+    : { edge: r.lo, closed: r.loClosed, explicit: edges.lower };
+  const high = falling
+    ? { edge: r.lo, closed: r.loClosed, explicit: edges.lower }
+    : { edge: r.hi, closed: r.hiClosed, explicit: edges.upper };
+  if (low.explicit && high.explicit) return chain(axis.at(low.edge), low.closed, x, axis.at(high.edge), high.closed);
+  if (low.explicit) return [low.closed ? "GreaterEqual" : "Greater", x, axis.at(low.edge)] as Json;
+  if (high.explicit) return [high.closed ? "LessEqual" : "Less", x, axis.at(high.edge)] as Json;
+  return "True";
+}
+
+interface Group {
+  readonly value: Json;
+  readonly order: number;
+  readonly linear?: Linear;
+  readonly conds: Json[];
+}
+
+function staircase(axis: Axis, family: Family): Json | undefined {
+  const d = axis.domain;
+  if (!Number.isFinite(d.lo.v) || !Number.isFinite(d.hi.v) || d.hi.v - d.lo.v >= MAX_SPAN) return undefined;
+  const groups = new Map<string, Group>();
+  for (let k = Math.floor(d.lo.v) - 1; k <= Math.ceil(d.hi.v) + 1; k++) {
     for (const r of family(k)) {
       const edges = cut(r, d);
       if (!edges) continue;
-      const cond: Json =
-        edges.lower && edges.upper
-          ? chain(qJson(r.lo), r.loClosed, x, qJson(r.hi), r.hiClosed)
-          : edges.lower
-            ? ([r.loClosed ? "GreaterEqual" : "Greater", x, qJson(r.lo)] as Json)
-            : ([r.hiClosed ? "LessEqual" : "Less", x, qJson(r.hi)] as Json);
+      const cond = conditionOf(axis, r, edges);
       const key = JSON.stringify(r.value);
       const group = groups.get(key);
       if (group) group.conds.push(cond);
-      else groups.set(key, { value: r.value, order: r.order, conds: [cond] });
+      else groups.set(key, { value: r.value, order: r.order, linear: r.linear, conds: [cond] });
     }
   }
-  const ordered = [...groups.values()].toSorted((a, b) => a.order - b.order);
-  if (ordered.length === 0) return undefined;
+  const all = [...groups.values()];
+  if (all.length === 0) return undefined;
+  const ordered = all.every((g) => typeof g.value === "number")
+    ? all.toSorted((a, b) => (a.value as number) - (b.value as number))
+    : all.every((g) => g.linear !== undefined)
+      ? all.toSorted((a, b) => compareLinear(a.linear!, b.linear!))
+      : all.toSorted((a, b) => a.order - b.order);
   const zero = ordered.findIndex((g) => g.value === 0);
   const fallback = zero >= 0 ? zero : ordered.length - 1;
   return piecewise(
     ordered
       .filter((_, i) => i !== fallback)
-      .map((g) => [g.value, g.conds.length === 1 ? g.conds[0] : (["Or", ...g.conds] as Json)] as const),
+      .map((g) => {
+        // Ascending in the variable, whichever way the unit coordinate runs.
+        const conds = axis.falling ? g.conds.toReversed() : g.conds;
+        return [g.value, or(conds)] as const;
+      }),
     ordered[fallback].value,
   );
 }
 
 const half = q(1, 2);
-const shifted = (x: Json, by: Q): Json => (qIsZero(by) ? x : (["Add", x, qJson(by)] as Json));
 const cell = (lo: Q, hi: Q, closed: readonly [boolean, boolean], value: Json, order: number): Region => ({
   lo,
   hi,
@@ -432,97 +346,268 @@ const integerPartCell: Family = (k) => [
       : cell(q(k - 1), q(k), [false, true], k, k),
 ];
 
-const fractionalPartCell =
-  (x: Json): Family =>
-  (k) =>
-    integerPartCell(k).map((r) => ({ ...r, value: shifted(x, q(-k)), order: -k }));
+const constantLinear = (c: Q): Linear => ({ atoms: new Map(), constant: c });
+const withLinear = (r: Region, l: Linear): Region => ({ ...r, value: togetherJson(l), linear: l });
 
-/** Width-`p` floor cells: `Mod(x, p)`, `Quotient(x, p)` and the sawtooth. */
+/** `g - k` over the cell of `trunc`: `FractionalPart(g)`. */
+const fractionalPartCell =
+  (g: Linear): Family =>
+  (k) =>
+    integerPartCell(k).map((r) => withLinear({ ...r, order: -k }, valueOf(g, constantLinear(q(1)), k)));
+
+/** `g - k p` over the unit cell `[k, k + 1)`: `Mod(g, p)`, and the sawtooth with `p = 1`. */
 const floorCells =
-  (p: Q, value: (k: number) => Json, order: (k: number) => number): Family =>
-  (k) => [cell(qMul(q(k), p), qMul(q(k + 1), p), [true, false], value(k), order(k))];
+  (g: Linear, p: Linear): Family =>
+  (k) => [withLinear(cell(q(k), q(k + 1), [true, false], 0, -k), valueOf(g, p, k))];
+
+function valueOf(g: Linear, p: Linear, k: number): Linear {
+  const out = scaled(g, q(1), q(0));
+  addTo(out, p, q(-k));
+  return out;
+}
 
 const squareCells: Family = (k) => [
   cell(q(k), qAdd(q(k), half), [true, false], 1, 1),
   cell(qAdd(q(k), half), q(k + 1), [true, false], -1, -1),
 ];
 
-/** Rising 4 (x - k) on [k - 1/4, k + 1/4), falling -2 (2 x - 2 k - 1) on [k + 1/4, k + 3/4); rising first, each from the top down. */
+/** Rising 4 (g - k) on [k - 1/4, k + 1/4), falling 2 - 4 (g - k) on [k + 1/4, k + 3/4). */
 const triangleCells =
-  (x: Json): Family =>
+  (g: Linear): Family =>
   (k) => [
-    cell(q(4 * k - 1, 4), q(4 * k + 1, 4), [true, false], ["Multiply", 4, shifted(x, q(-k))] as Json, -k),
-    cell(
-      q(4 * k + 1, 4),
-      q(4 * k + 3, 4),
-      [true, false],
-      ["Multiply", -2, shifted(["Multiply", 2, x] as Json, q(-(2 * k + 1)))] as Json,
-      1000 - k,
-    ),
+    withLinear(cell(q(4 * k - 1, 4), q(4 * k + 1, 4), [true, false], 0, 0), scaled(g, q(4), q(-4 * k))),
+    withLinear(cell(q(4 * k + 1, 4), q(4 * k + 3, 4), [true, false], 0, 0), scaled(g, q(-4), q(4 * k + 2))),
   ];
 
-function bounded(op: string, args: readonly Expr[]): Json | undefined {
-  const [x, second] = args;
-  if (!x || !isSymbol(x)) return undefined;
-  const domain = domainOf(x);
-  if (domain === undefined) return undefined;
-  const s = x.json;
-  const one = q(1);
-  if (op === "Mod" || op === "Quotient") {
-    const p = second && args.length === 2 ? rationalAt(second) : undefined;
-    // Integer moduli only: Wolfram orders a fractional modulus's branches by an unrelated rule.
-    if (p === undefined || p[1] !== 1 || p[0] <= 0) return undefined;
-    return staircase(
-      s,
-      domain,
-      p,
-      op === "Mod"
-        ? floorCells(
-            p,
-            (k) => shifted(s, qNeg(qMul(q(k), p))),
-            (k) => -qNum(qMul(q(k), p)),
-          )
-        : floorCells(
-            p,
-            (k) => k,
-            (k) => k,
-          ),
-    );
-  }
-  if (args.length !== 1) return undefined;
-  switch (op) {
-    case "Floor":
-      return staircase(s, domain, one, floorCell);
-    case "Ceil":
-    case "Ceiling":
-      return staircase(s, domain, one, ceilCell);
-    case "Round":
-      return staircase(s, domain, one, roundCell);
-    case "IntegerPart":
-      return staircase(s, domain, one, integerPartCell);
-    case "FractionalPart":
-      return staircase(s, domain, one, fractionalPartCell(s));
-    case "SawtoothWave":
-      return staircase(
-        s,
-        domain,
-        one,
-        floorCells(
-          one,
-          (k) => shifted(s, q(-k)),
-          (k) => -k,
-        ),
-      );
-    case "SquareWave":
-      return staircase(s, domain, one, squareCells);
-    case "TriangleWave":
-      return staircase(s, domain, one, triangleCells(s));
-    default:
-      return undefined;
-  }
+// -- The argument and the modulus -----------------------------------------------------------------------
+
+/** What a staircase's argument is a function of: a symbol, linearly (`2 x - 1`, or bare), or a power or root of one. */
+type Argument =
+  | { kind: "affine"; symbol: string; a: Q; b: Q; lin: Linear }
+  | { kind: "power"; symbol: string; n: number }
+  | { kind: "sqrt"; symbol: string };
+
+function argumentOf(g: Expr): Argument | undefined {
+  const l = linear(g);
+  const atoms = compact(l);
+  if (atoms.length === 1 && typeof atoms[0].atom === "string" && !atoms[0].constant)
+    return { kind: "affine", symbol: atoms[0].atom, a: atoms[0].coeff, b: l.constant, lin: l };
+  const ops = operandsOf(g);
+  const base = ops[0] && isSymbol(ops[0]) ? ops[0].symbol : undefined;
+  if (base === undefined || base === "Pi") return undefined;
+  if (g.operator === "Sqrt" && ops.length === 1) return { kind: "sqrt", symbol: base };
+  const n = ops[1]?.re;
+  if (g.operator === "Power" && ops.length === 2 && ops[1].im === 0 && Number.isInteger(n) && (n as number) >= 2)
+    return { kind: "power", symbol: base, n: n as number };
+  return undefined;
 }
 
-/** The step heads: Piecewise-expanded without a real-argument gate (Min .. UnitTriangle), or over a bounded symbol. */
+type Modulus =
+  | { kind: "number"; p: Q }
+  | { kind: "constant"; atom: Json; rho: Q; value: number; lin: Linear }
+  | { kind: "symbol"; atom: string; rho: Q; lin: Linear };
+
+/** A positive number, a positive multiple of a constant such as Pi, or of a symbol. */
+function modulusOf(ce: Engine, e: Expr | undefined): Modulus | undefined {
+  if (!e) return { kind: "number", p: q(1) };
+  const l = linear(e);
+  const atoms = compact(l);
+  if (atoms.length === 0) return qNum(l.constant) > 0 ? { kind: "number", p: l.constant } : undefined;
+  if (atoms.length !== 1 || !qIsZero(l.constant) || qNum(atoms[0].coeff) <= 0) return undefined;
+  const [{ atom, coeff, constant }] = atoms;
+  if (constant) {
+    const value = constantValue(box(ce, atom));
+    return value !== undefined && value > 0
+      ? { kind: "constant", atom, rho: coeff, value: value * qNum(coeff), lin: l }
+      : undefined;
+  }
+  return typeof atom === "string" ? { kind: "symbol", atom, rho: coeff, lin: l } : undefined;
+}
+
+/** `r` times an atom: `Pi`, `3 Pi`, `3/2 Pi`. */
+const multiple = (r: Q, atom: Json): Json =>
+  qIsZero(r) ? 0 : qNum(r) === 1 ? atom : (["Multiply", qJson(r), atom] as Json);
+
+const qPow = (r: Q, n: number): Q => (n === 0 ? q(1) : qMul(r, qPow(r, n - 1)));
+
+/** The `n`th root of a non-negative rational, exactly when it has one in the rationals. */
+function exactRoot(e: Q, n: number): Q | undefined {
+  const root = (x: number): number | undefined => {
+    const r = Math.round(Math.pow(x, 1 / n));
+    return r ** n === x ? r : undefined;
+  };
+  const [top, bottom] = [root(e[0]), root(e[1])];
+  return top !== undefined && bottom !== undefined ? q(top, bottom) : undefined;
+}
+
+const rootJson = (e: Q, n: number): Json => {
+  const exact = exactRoot(e, n);
+  if (exact !== undefined) return qJson(exact);
+  // Wolfram writes the root of 1/2 as 1/Sqrt[2], and keeps Sqrt[3/2] as it is.
+  if (n === 2 && e[0] === 1) return ["Divide", 1, ["Sqrt", e[1]]] as Json;
+  return n === 2 ? (["Sqrt", qJson(e)] as Json) : (["Root", qJson(e), n] as Json);
+};
+
+function rootNum(x: Num, n: number): Num {
+  const exact = x.q && qNum(x.q) >= 0 ? exactRoot(x.q, n) : undefined;
+  return exact ? numQ(exact) : num(Math.pow(x.v, 1 / n));
+}
+
+const powNum = (x: Num, n: number): Num => (x.q ? numQ(qPow(x.q, n)) : num(x.v ** n));
+
+/** The unit coordinate of `(a s + b) / p` over an interval for `s`: affine, so its ends map to ends. */
+function affineAxis(i: Interval, a: Q, b: Q, p: Q, variable: Json): Axis {
+  const slope = qDiv(a, p);
+  const toUnit = (end: Num): Num => ({
+    v: end.v * qNum(slope) + qNum(qDiv(b, p)),
+    ...(end.q ? { q: qAdd(qMul(end.q, slope), qDiv(b, p)) } : {}),
+  });
+  const [lo, hi] = [toUnit(i.lo), toUnit(i.hi)];
+  const falling = qNum(slope) < 0;
+  return {
+    variable,
+    falling,
+    at: (e) => qJson(qDiv(qAdd(qMul(e, p), qNeg(b)), a)),
+    domain: falling
+      ? { lo: hi, hi: lo, loOpen: i.hiOpen, hiOpen: i.loOpen }
+      : { lo, hi, loOpen: i.loOpen, hiOpen: i.hiOpen },
+  };
+}
+
+/** `s / (rho C)` for a constant `C`: the ends are numbers, snapped to the multiples of `C` they are. */
+function constantAxis(i: Interval, m: { atom: Json; rho: Q; value: number }, variable: Json): Axis {
+  const scale = (end: Num): Num => (end.q && qIsZero(end.q) ? numQ(q(0)) : snap(end.v / m.value));
+  return {
+    variable,
+    falling: false,
+    at: (e) => multiple(qMul(e, m.rho), m.atom),
+    domain: { lo: scale(i.lo), hi: scale(i.hi), loOpen: i.loOpen, hiOpen: i.hiOpen },
+  };
+}
+
+/** `k / (rho m)`: the conditions compare `k / m`, and the cells are `rho` wide in it. */
+function ratioAxis(r: Interval, rho: Q, k: Json, m: Json): Axis {
+  const inv = qDiv(q(1), rho);
+  const scale = (n: Num): Num => ({ v: n.v * qNum(inv), ...(n.q ? { q: qMul(n.q, inv) } : {}) });
+  return {
+    variable: ["Divide", k, m] as Json,
+    falling: false,
+    at: (e) => qJson(qMul(e, rho)),
+    domain: { lo: scale(r.lo), hi: scale(r.hi), loOpen: r.loOpen, hiOpen: r.hiOpen },
+  };
+}
+
+/** `s^n` where it is monotone over `s`: a power past 0 on one side, or an odd one anywhere. */
+function powerAxis(i: Interval, n: number, s: Json): Axis | undefined {
+  // Wolfram writes the root of a cube or higher power as a `Root` object, which is not rewritten here.
+  if (n !== 2) return undefined;
+  const rising = n % 2 === 1 || i.lo.v >= 0;
+  const falling = !rising && i.hi.v <= 0;
+  if (!rising && !falling) return undefined;
+  const [lo, hi] = [powNum(falling ? i.hi : i.lo, n), powNum(falling ? i.lo : i.hi, n)];
+  return {
+    variable: s,
+    falling,
+    at: (e) => {
+      // x is the root of e: negative below zero for an odd power, and on the falling side of an even one.
+      const negative = n % 2 === 1 ? qNum(e) < 0 : falling;
+      const root = rootJson(n % 2 === 1 && negative ? qNeg(e) : e, n);
+      return negative ? (["Negate", root] as Json) : root;
+    },
+    domain: { lo, hi, loOpen: falling ? i.hiOpen : i.loOpen, hiOpen: falling ? i.loOpen : i.hiOpen },
+  };
+}
+
+/** `Sqrt(s)` over `s >= 0`: the conditions compare it as it stands. */
+function sqrtAxis(i: Interval, variable: Json): Axis | undefined {
+  if (i.lo.v < 0) return undefined;
+  return {
+    variable,
+    falling: false,
+    at: (e) => qJson(e),
+    domain: { lo: rootNum(i.lo, 2), hi: rootNum(i.hi, 2), loOpen: i.loOpen, hiOpen: i.hiOpen },
+  };
+}
+
+/** The heads whose second argument is a multiple to round to. */
+const STEPS_TO_MULTIPLE = new Set(["Floor", "Ceil", "Ceiling", "Round"]);
+
+/** Heads that are one integer on each unit cell, whatever the argument's form. */
+const INTEGER_VALUED = new Set(["Floor", "Ceil", "Ceiling", "Round", "IntegerPart"]);
+
+/** `Floor(g, p)`: the multiple of `p` at or below `g`, on the cells of `g / p`. */
+const multiples =
+  (family: Family, p: Linear): Family =>
+  (k) =>
+    family(k).map((r) => withLinear(r, scaled(p, q(r.value as number), q(0))));
+
+function bounded(ce: Engine, kn: Knowledge, op: string, args: readonly Expr[]): Json | undefined {
+  // `Floor(g, p)` and its kin are `p * Floor(g / p)`; `Mod` and `Quotient` always have a modulus.
+  const toMultiple = STEPS_TO_MULTIPLE.has(op) && args.length === 2;
+  const modular = op === "Mod" || op === "Quotient" || toMultiple;
+  const [g, second] = args;
+  if (!g || args.length !== (modular ? 2 : 1)) return undefined;
+  const m = modulusOf(ce, modular ? second : undefined);
+  const arg = argumentOf(g);
+  if (!m || !arg) return undefined;
+  const interval = (symbol: string): Interval | undefined => intervalOf(kn, symbol) ?? typedInterval(box(ce, symbol));
+  const symbolJson: Json = arg.symbol;
+
+  let axis: Axis | undefined;
+  let family: Family | undefined;
+  if (arg.kind === "affine") {
+    const bare = qNum(arg.a) === 1 && qIsZero(arg.b);
+    const i = interval(arg.symbol);
+    if (m.kind === "number") axis = i && affineAxis(i, arg.a, arg.b, m.p, symbolJson);
+    else if (bare && m.kind === "constant") axis = i && constantAxis(i, m, symbolJson);
+    else if (bare && m.kind === "symbol") {
+      const r = ratioInterval(kn, JSON.stringify(arg.symbol), JSON.stringify(m.atom));
+      axis = r && ratioAxis(r, m.rho, symbolJson, m.atom as Json);
+    }
+    const pLin = m.kind === "number" ? constantLinear(m.p) : m.lin;
+    switch (op) {
+      case "Floor":
+      case "Quotient":
+        family = floorCell;
+        break;
+      case "Ceil":
+      case "Ceiling":
+        family = ceilCell;
+        break;
+      case "Round":
+        family = roundCell;
+        break;
+      case "IntegerPart":
+        family = integerPartCell;
+        break;
+      case "FractionalPart":
+        family = fractionalPartCell(arg.lin);
+        break;
+      case "Mod":
+        family = floorCells(arg.lin, pLin);
+        break;
+      case "SawtoothWave":
+        family = floorCells(arg.lin, constantLinear(q(1)));
+        break;
+      case "SquareWave":
+        family = squareCells;
+        break;
+      case "TriangleWave":
+        family = triangleCells(arg.lin);
+        break;
+    }
+    if (toMultiple && family) family = multiples(family, pLin);
+  } else if (INTEGER_VALUED.has(op) && m.kind === "number") {
+    const i = interval(arg.symbol);
+    if (arg.kind === "power") axis = i && powerAxis(i, arg.n, symbolJson);
+    else axis = i && sqrtAxis(i, g.json);
+    family =
+      op === "Floor" ? floorCell : op === "Round" ? roundCell : op === "IntegerPart" ? integerPartCell : ceilCell;
+  }
+  return axis && family ? staircase(axis, family) : undefined;
+}
+
+/** The step heads: Piecewise-expanded without a real-argument gate (Min .. UnitTriangle), or over a bounded argument. */
 export const STEP_HEADS: ReadonlySet<string> = new Set([
   "Max",
   "Min",
@@ -545,31 +630,35 @@ export const STEP_HEADS: ReadonlySet<string> = new Set([
 ]);
 
 /** `e` as a Piecewise, or `undefined` when it is not a step head or not in a shape that expands. */
-export function expandStep(ce: Engine, e: Expr): Expr | undefined {
+export function expandStep(ce: Engine, e: Expr, kn: Knowledge): Expr | undefined {
   const args = operandsOf(e);
   let json: Json | undefined;
+  // What the assumptions decide of a branch's condition is not written.
+  const narrow = (j: Json | undefined): Json | undefined => (j === undefined ? undefined : narrowPiecewise(ce, kn, j));
   switch (e.operator) {
     case "Max":
     case "Min":
-      json = minMax(e.operator, args);
+      json = narrow(minMax(e.operator, args));
       break;
     case "UnitStep":
-      json = unitStep(ce, args);
+      json = narrow(unitStep(ce, args));
       break;
     case "Clip":
-      json = clip(ce, args);
+      json = narrow(clip(ce, args));
       break;
     case "Clamp":
-      json = args.length === 3 ? clip(ce, [args[0], box(ce, ["List", args[1].json, args[2].json] as Json)]) : undefined;
+      json = narrow(
+        args.length === 3 ? clip(ce, [args[0], box(ce, ["List", args[1].json, args[2].json] as Json)]) : undefined,
+      );
       break;
     case "UnitBox":
-      json = unitBox(args);
+      json = narrow(unitBox(args));
       break;
     case "UnitTriangle":
-      json = unitTriangle(args);
+      json = narrow(unitTriangle(args));
       break;
     default:
-      json = bounded(e.operator, args);
+      json = bounded(ce, kn, e.operator, args);
   }
   // Evaluated, so a branch the current assumptions decide (`UnitStep(x)` with `x > 0`) is settled.
   return json === undefined ? undefined : box(ce, json).evaluate();
