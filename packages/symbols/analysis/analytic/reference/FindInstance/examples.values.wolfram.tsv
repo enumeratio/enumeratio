@@ -7,6 +7,6 @@ no-real-root-is-a-proven-empty-result	FindInstance[(Power[x, 2] == -1), x, Reals
 a-non-integer-root-is-also-proven-empty	FindInstance[(Power[x, 2] == 2), x, Integers]	{}	\text{FindInstance}\left[x^2=2,x,\mathbb{Z}\right]	\{\}	
 a-bounded-integer-search	FindInstance[And[Greater[x, 0], Less[x, 10]], x, Integers, 3]	{{x -> 2}, {x -> 4}, {x -> 9}}	\text{FindInstance}[x>0\land x<10,x,\mathbb{Z},3]	\{\{x\to 2\},\{x\to 4\},\{x\to 9\}\}	disagree
 a-multivariate-bounded-integer-search	FindInstance[And[(Plus[x, y] == 5), Greater[x, 0], Less[x, 10], Greater[y, 0], Less[y, 10]], List[x, y], Integers, 3]	{{x -> 4, y -> 1}, {x -> 3, y -> 2}, {x -> 1, y -> 4}}	\text{FindInstance}[x+y=5\land x>0\land x<10\land y>0\land y<10,\{x,y\},\mathbb{Z},3]	\{\{x\to 4,y\to 1\},\{x\to 3,y\to 2\},\{x\to 1,y\to 4\}\}	disagree
-findinstance-x-pow-5-minus-2x-plus-1-eq-0-x	FindInstance[(Plus[Power[x, 5], Times[-1, Times[2, x]], 1] == 0), x, Reals]	{{x -> 1}}	\text{FindInstance}\left[x^5-2 x+1=0,x,\mathbb{R}\right]	\{\{x\to 1\}\}	
+findinstance-x-pow-5-minus-2x-plus-1-eq-0-x	FindInstance[(Plus[Power[x, 5], Times[-1, Times[2, x]], 1] == 0), x, Reals]	{{x -> 1}}	\text{FindInstance}\left[x^5-2 x+1=0,x,\mathbb{R}\right]	\{\{x\to 1\}\}	disagree
 declines-without-an-explicit-domain	FindInstance[Greater[x, 0], x]	{{x -> 27}}	\text{FindInstance}[x>0,x]	\{\{x\to 27\}\}	disagree
 declines-on-a-pure-inequality-over-reals	FindInstance[Greater[x, 0], x, Reals]	{{x -> 27}}	\text{FindInstance}[x>0,x,\mathbb{R}]	\{\{x\to 27\}\}	disagree
