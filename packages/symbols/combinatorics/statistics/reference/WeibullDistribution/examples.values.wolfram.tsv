@@ -1,4 +1,6 @@
-id	in
-weibull-pdf-exact	PDF[WeibullDistribution[2, 5], 4]
-weibull-cdf-exact	CDF[WeibullDistribution[2, 5], 4]
-weibull-mean-exact	Mean[WeibullDistribution[2, 5]]
+id	in	out	shown	tex.in	tex.out	verdict
+weibull-pdf-exact	PDF[WeibullDistribution[2, 5], 4]					
+weibull-cdf-exact	CDF[WeibullDistribution[2, 5], 4]					
+weibull-mean-exact	Mean[WeibullDistribution[2, 5]]					
+cdf-weibulldistribution-2-5-n-4-25	CDF[WeibullDistribution[2, 5], N[4, 25]]	0.47270757595695144275630539143368551751`24.845331061449546	0.4727075759569514427563054	\text{CDF}[\text{WeibullDistribution}[2,5],N[4,25]]	0.4727075759569514427563054	disagree
+pdf-weibulldistribution-2-5-n-4-25	PDF[WeibullDistribution[2, 5], N[4, 25]]	0.1687335756937755383179822747412206344`24.137158649715836	0.168733575693775538317982	\text{PDF}[\text{WeibullDistribution}[2,5],N[4,25]]	0.168733575693775538317982	disagree
