@@ -51,8 +51,9 @@ import {
 } from "@enumeratio/oracle";
 import { isSettled, orderImplementations, type SystemImplementation } from "@enumeratio/entry";
 import { updateHead } from "@enumeratio/entry/node";
-import { referenceData, referenceEntries } from "../src/node.ts";
+import { ownEngineEntries, ownEngineOf, referenceData, referenceEntries } from "../src/node.ts";
 import { libraryRecords } from "./library-records.ts";
+import { evaluateOwn } from "./own-engines.ts";
 import { asksForDigits, show } from "./oracle-verdict.ts";
 import { cappedVerdicts } from "./oracle-verdict-capped.ts";
 
@@ -112,7 +113,13 @@ const newOnly = args.includes("--new-only");
 const accept = args.includes("--accept");
 const wired = library === undefined ? wiredSystems() : wiredSystems().filter((s) => library.targets.includes(s));
 const systems = (digestOnly ? [] : requested.length > 0 ? requested : wired) as System[];
-const scannedEntries = library === undefined ? referenceEntries(data) : library.heads.map((h) => h.entry);
+// `--ids` also reaches OWN_ENGINE heads, which a full scan leaves out (their `expected` is evaluated in `cases`).
+const scannedEntries =
+  library !== undefined
+    ? library.heads.map((h) => h.entry)
+    : idFilter === undefined
+      ? referenceEntries(data)
+      : [...referenceEntries(data), ...ownEngineEntries(data)];
 
 // Every settled example (not aspirational, not in triage), UNFILTERED — the authority for "does
 // this example still exist" (the write-out loop's deletion guard, below), so a partial
@@ -147,10 +154,17 @@ const named: Case[] = scannedEntries.flatMap((entry) =>
       expected: example.expected as MathJSON,
     })),
 );
-const cases: Case[] = [...allCases, ...named].filter(
-  (item) =>
-    (headFilter === undefined || headFilter.has(item.head)) && (idFilter === undefined || idFilter.has(item.id)),
-);
+const cases: Case[] = [...allCases, ...named]
+  .filter(
+    (item) =>
+      (headFilter === undefined || headFilter.has(item.head)) && (idFilter === undefined || idFilter.has(item.id)),
+  )
+  // Our side of an OWN_ENGINE head is its value in that package's engine, so a pinned form that needs
+  // the package to evaluate compares as its value.
+  .map((item) => {
+    const pkg = ownEngineOf(item.head, data);
+    return pkg === undefined ? item : { ...item, expected: evaluateOwn(pkg, item.expected) };
+  });
 
 type Outcome = {
   readonly id: string;

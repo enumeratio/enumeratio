@@ -1,7 +1,7 @@
-id	in	out	shown	tex.in	tex.out	verdict
-negativebinomial-pdf-exact	PDF[NegativeBinomialDistribution[5, Rational[1, 3]], 2]					
-negativebinomial-cdf-exact	CDF[NegativeBinomialDistribution[5, Rational[1, 3]], 2]					
-negativebinomial-mean-exact	Mean[NegativeBinomialDistribution[5, Rational[1, 3]]]					
-negativebinomial-variance-exact	Variance[NegativeBinomialDistribution[5, Rational[1, 3]]]					
-cdf-negativebinomialdistribution-20-n-1-over-3	CDF[NegativeBinomialDistribution[20, N[Rational[1, 3], 30]], 5]	2.2686614437831808268816828784858766876535616403263913`30.*^-6	0.00000226866144378318082688168287849	\text{CDF}\left[\text{NegativeBinomialDistribution}\left[20,N\left[\frac{1}{3},30\right]\right],5\right]	\text{2.2686614437831808268816828784858766876535616403263913$\grave{ }$30.*${}^{\wedge}$-6}	disagree
-pdf-negativebinomialdistribution-20-n-1-over-3	PDF[NegativeBinomialDistribution[20, N[Rational[1, 3], 30]], 5]	1.6052711966635973739120885116926489794461009945022704`28.647817481888637*^-6	0.0000016052711966635973739120885117	\text{PDF}\left[\text{NegativeBinomialDistribution}\left[20,N\left[\frac{1}{3},30\right]\right],5\right]	\text{1.6052711966635973739120885116926489794461009945022704$\grave{ }$28.647817481888637*${}^{\wedge}$-6}	disagree
+id	in	out	shown	tex.in	tex.out
+negativebinomial-pdf-exact	PDF[NegativeBinomialDistribution[5, Rational[1, 3]], 2]				
+negativebinomial-cdf-exact	CDF[NegativeBinomialDistribution[5, Rational[1, 3]], 2]				
+negativebinomial-mean-exact	Mean[NegativeBinomialDistribution[5, Rational[1, 3]]]				
+negativebinomial-variance-exact	Variance[NegativeBinomialDistribution[5, Rational[1, 3]]]				
+cdf-negativebinomialdistribution-20-n-1-over-3	CDF[NegativeBinomialDistribution[20, N[Rational[1, 3], 30]], 5]	2.2686614437831808268816828784858766876535616403263913`30.*^-6	0.00000226866144378318082688168287849	\text{CDF}\left[\text{NegativeBinomialDistribution}\left[20,N\left[\frac{1}{3},30\right]\right],5\right]	\text{2.2686614437831808268816828784858766876535616403263913$\grave{ }$30.*${}^{\wedge}$-6}
+pdf-negativebinomialdistribution-20-n-1-over-3	PDF[NegativeBinomialDistribution[20, N[Rational[1, 3], 30]], 5]	1.6052711966635973739120885116926489794461009945022704`28.647817481888637*^-6	0.0000016052711966635973739120885117	\text{PDF}\left[\text{NegativeBinomialDistribution}\left[20,N\left[\frac{1}{3},30\right]\right],5\right]	\text{1.6052711966635973739120885116926489794461009945022704$\grave{ }$28.647817481888637*${}^{\wedge}$-6}
