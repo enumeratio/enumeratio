@@ -2,6 +2,7 @@
 import { ComputeEngine } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/declare.ts";
+import { qSeries } from "../src/series-q-binomial.ts";
 
 // Series of QBinomial/QFactorial at q = 0 for a non-integer rational argument is a series in
 // q^(1/d). Truncation and coefficients are Wolfram's (checked against wolframscript).
@@ -69,11 +70,65 @@ test("an exponent below 1 on a numerator factor sets the remainder", () => {
   ]);
 });
 
-test("a vanishing factor gives 0; shapes outside the product are held, not answered with Derivative terms", () => {
+test("a vanishing factor gives 0; shapes outside the products are held, not answered with Derivative terms", () => {
   expect(series(qbinomial(half, ["Rational", 3, 2]), 2).json).toBe(0);
-  for (const f of [qbinomial(["Rational", -1, 2], 1), qbinomial(half, 2), ["QFactorial", -2, "q"]]) {
-    expect(series(f, 2).operator, JSON.stringify(f)).toBe("Series");
+  const held = [
+    qbinomial(-1, half), // a pole: (q^0;q)∞ in the denominator
+    ["QFactorial", -2, "q"],
+    ["QFactorial", ["Rational", -5, 2], "q"], // two reflected factors
+    qbinomial(["Rational", -7, 6], ["Rational", -1, 3]), // only the denominator reflects
+  ];
+  for (const f of held) expect(series(f, 2).operator, JSON.stringify(f)).toBe("Series");
+});
+
+// [n, k, order, nmin, nmax, den, coefficients]: Wolfram's SeriesData[q, 0, coefficients, nmin, nmax, den].
+const wolfram: [string, string | undefined, number, number, number, number, string][] = [
+  ["0", "3/2", 3, -1, 5, 2, "-1,2,-3,5,-9,15"],
+  ["0", "3/2", 0, -1, 1, 2, "-1,2"],
+  ["1/2", "2", 3, -1, 5, 2, "-1,2,-2,2,-3,4"],
+  ["0", "5/2", 2, -4, 0, 2, "1,-2,3,-6"],
+  ["-1/2", "1", 2, -1, 3, 2, "-1,1,-1,1"],
+  ["0", "4/3", 2, -1, 5, 3, "-1,1,1,-3,2,3"],
+  ["-1/3", "2", 2, -5, 1, 3, "1,-1,0,1,-2,1"],
+  ["-3/2", undefined, 3, 1, 7, 2, "-1,-2,-1/2,0,-3/8,3/4"],
+  ["-11/6", undefined, 2, 5, 17, 6, "-1,-1,-1,-1,-1,-2,5/6,-1/6,-1/6,-1/6,-7/6,5/3"],
+];
+const fraction = (s: string): [bigint, bigint] => {
+  const [a, b = "1"] = s.split("/");
+  return [BigInt(a!), BigInt(b)];
+};
+
+test("negative exponents: the Laurent–Puiseux series has Wolfram's terms and remainder", () => {
+  for (const [n, k, order, nmin, nmax, den, coefficients] of wolfram) {
+    const label = `n=${n} k=${k} o=${order}`;
+    const result = qSeries(fraction(n), k === undefined ? undefined : fraction(k), order);
+    if (result === undefined || result === "zero") throw new Error(`${label}: ${String(result)}`);
+    const { unit, terms, bound } = result;
+    const expected = coefficients
+      .split(",")
+      .map((c, i) => [i, fraction(c)] as const)
+      .filter(([, [num]]) => num !== 0n);
+    expect(terms.length, label).toBe(expected.length);
+    terms.forEach(([exponent, [num, d]], i) => {
+      const [m, [en, ed]] = expected[i]!;
+      expect(exponent * BigInt(den), label).toBe(BigInt(nmin + m) * unit);
+      expect(num * ed, label).toBe(en * d);
+    });
+    expect(bound * BigInt(den), label).toBe(BigInt(nmax) * unit);
   }
+});
+
+test("the Laurent series agrees with the infinite product", () => {
+  // QBinomial(0, 3/2, q) = (q^(5/2);q)∞ (q^(-1/2);q)∞ / (q;q)∞².
+  const pochhammer = (a: number, q: number) => {
+    let product = 1;
+    for (let j = 0; j < 4000; j++) product *= 1 - q ** (a + j);
+    return product;
+  };
+  const q = 1e-4;
+  const exact = (pochhammer(2.5, q) * pochhammer(-0.5, q)) / pochhammer(1, q) ** 2;
+  const normal = ce.box(["Normal", ["Series", qbinomial(0, ["Rational", 3, 2]), "q", 0, 3]] as never).evaluate();
+  expect(normal.subs({ q: ce.number(q) }).N().re / exact).toBeCloseTo(1, 6);
 });
 
 test("QFactorial at a non-integer n carries rational coefficients", () => {

@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
+import { expandExpIntegralE } from "./exp-integral-e-expand.ts";
 
 // FunctionExpand(expr) — rewrite special functions in terms of more elementary or
 // better-known ones. Most of the work here is a handful of named identities the backlog's
@@ -17,7 +18,14 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // solver — that needs a minimal-polynomial/nested-radical algorithm this does not implement.
 // They are pinned lookups at exactly the arguments the examples use.
 
+/** `e` with every special function in it rewritten, innermost first. */
 export function functionExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
+  const inner = operandsOf(e);
+  const expanded = inner.map((operand) => functionExpand(ce, operand));
+  return expandHead(ce, expanded.some((x, i) => x !== inner[i]) ? ce.function(e.operator, expanded) : e);
+}
+
+function expandHead(ce: ComputeEngine, e: BoxedExpression): BoxedExpression {
   const op = e.operator;
   const ops = operandsOf(e);
 
@@ -56,6 +64,8 @@ export function functionExpand(ce: ComputeEngine, e: BoxedExpression): BoxedExpr
   if (op === "Cos" && ops[0]?.isSame(ce.function("Divide", [ce.Pi, 24]).evaluate())) {
     return ce.box(["Divide", ["Sqrt", ["Add", 2, ["Divide", ["Add", ["Sqrt", 2], ["Sqrt", 6]], 2]]], 2] as never);
   }
+  // E_n(z): Exp-polynomial, Erfc, ExpIntegralE(1, z) or Gamma forms by order.
+  if (op === "ExpIntegralE" && ops.length === 2) return expandExpIntegralE(ce, ops[0]!, ops[1]!) ?? e;
   return e; // no identity known: leave the input alone (see the head's `details`)
 }
 

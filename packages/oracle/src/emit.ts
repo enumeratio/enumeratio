@@ -129,7 +129,14 @@ const magnitude = (exponent: MathJSON): MathJSON | undefined => {
  * center: BigO(x^n) is `O[x]^n`, BigO((x - a)^n) is `O[x, a]^n`, BigO(x^-n) is `O[x, Infinity]^n`.
  * `O[x^n]` and `O[x - a]` are rejected there (SeriesData::sdatv).
  */
-function bigO(operand: MathJSON, walk: (node: MathJSON) => string): string {
+function bigO(given: MathJSON, walk: (node: MathJSON) => string): string {
+  // Canonical x^(1/2) and x^(1/n) are `Sqrt(x)` and `Root(x, n)`.
+  const operand: MathJSON =
+    isCall(given) && given[0] === "Sqrt" && given.length === 2
+      ? ["Power", given[1]!, ["Rational", 1, 2]]
+      : isCall(given) && given[0] === "Root" && given.length === 3
+        ? ["Power", given[1]!, ["Rational", 1, given[2]!]]
+        : given;
   const power = isCall(operand) && operand[0] === "Power" && operand.length === 3;
   const base = power ? operand[1]! : operand;
   const exponent = power ? operand[2]! : undefined;

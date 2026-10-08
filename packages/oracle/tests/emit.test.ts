@@ -531,6 +531,15 @@ test("BigO emits to Wolfram with the exponent outside O, and the center in it", 
     ok: true,
     source: "Power[O[x, Minus[Pi]], 3]",
   });
+  // The canonical forms of x^(1/2) and x^(1/3).
+  expect(emit(["BigO", ["Sqrt", "x"]], "wolfram")).toMatchObject({
+    ok: true,
+    source: "Power[O[x], Rational[1, 2]]",
+  });
+  expect(emit(["BigO", ["Root", "x", 3]], "wolfram")).toMatchObject({
+    ok: true,
+    source: "Power[O[x], Rational[1, 3]]",
+  });
   // At infinity, BigO(x^-n) is O[x, Infinity]^n.
   expect(emit(["BigO", ["Power", "x", -7]], "wolfram")).toMatchObject({
     ok: true,
