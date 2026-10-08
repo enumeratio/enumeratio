@@ -247,27 +247,8 @@ function declareEllipticPrecision(ce: ComputeEngine): void {
   );
 }
 
-/**
- * Native `EllipticPi` answers `ComplexInfinity` for a finite complex operand
- * (`EllipticPi(2, π/2 + 1e-6 i)`, whose value Wolfram and mpmath give as a finite number), where
- * it used to decline. A pole needs a real operand, so the call stays unevaluated instead.
- */
-function declareEllipticPiComplexPole(ce: ComputeEngine): void {
-  wrapOperator(
-    ce,
-    ["EllipticPi", 0.5, 0.3],
-    (ops) =>
-      (ops.length === 2 || ops.length === 3) && ops.every((op) => isFiniteNum(op)) && ops.some((op) => op.im !== 0),
-    (native) => (ops, options) => {
-      const answer = native?.(ops, options);
-      return answer?.json === "ComplexInfinity" ? undefined : answer;
-    },
-  );
-}
-
 export function declareElliptic(ce: ComputeEngine): void {
   declareEllipticPrecision(ce);
-  declareEllipticPiComplexPole(ce);
   declareIncompleteF(ce);
   declareIncompleteE(ce);
   declareIncompleteEllipticPi(ce);

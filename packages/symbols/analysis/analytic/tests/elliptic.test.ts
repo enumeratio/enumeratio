@@ -74,12 +74,9 @@ test("IncompleteEllipticPi stays symbolic under plain evaluate; a float argument
   expect(ce.box(["IncompleteEllipticPi", 0.5, 0.4, 0.3]).evaluate().re).toBeCloseTo(0.4141517368244767, 12);
 });
 
-test("IncompleteEllipticPi computes complex φ directly via Carlson, where native EllipticPi returns NaN", () => {
+test("IncompleteEllipticPi computes complex φ directly via Carlson", () => {
   // n = 0.2, φ = 1.2 + 0.5i, m = 0.3 is well inside Re(φ) ∈ [-π/2, π/2] (Fungrim 8f4e31's
-  // own validity region), yet compute-engine's native three-argument EllipticPi returns
-  // NaN there — a native bug, not a domain limit. Pinned against mpmath's ellippi.
-  const native = ce.box(["EllipticPi", 0.2, ["Complex", 1.2, 0.5], 0.3]).N();
-  expect(Number.isNaN(native.re)).toBe(true);
+  // own validity region). Pinned against mpmath's ellippi.
   const v = ce.box(["IncompleteEllipticPi", 0.2, ["Complex", 1.2, 0.5], 0.3]).N();
   expect(v.re).toBeCloseTo(1.321415376117118, 9);
   expect(v.im).toBeCloseTo(0.7186657188751805, 9);

@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { isExactExpression } from "./interval-bounds.ts";
 
 // FindInstance(expr, vars, [domain], [n]) — Wolfram finds `n` instances of `vars` that
 // make `expr` true, over `domain` (default Complexes). We scope down hard, to a core
@@ -198,7 +199,10 @@ function solveRealCandidates(ce: ComputeEngine, equation: BoxedExpression, x: st
   const solved = ce
     .function("Solve", [equation, ce.function("Element", [ce.symbol(x), ce.symbol("RealNumbers")])])
     .evaluate();
-  return solved.operator === "List" ? operandsOf(solved).filter((v) => v.N().im === 0) : [];
+  if (solved.operator !== "List") return [];
+  const reals = operandsOf(solved).filter((v) => v.N().im === 0);
+  // Solve lists float roots first: x^5 - 2x + 1 = 0 would answer -1.29…, not the exact root 1.
+  return [...reals.filter(isExactExpression), ...reals.filter((v) => !isExactExpression(v))];
 }
 
 function tryUnivariateAlgebraic(

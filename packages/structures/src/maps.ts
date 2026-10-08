@@ -98,7 +98,8 @@ function materialise(ce: ComputeEngine, value: BoxedExpression): BoxedExpression
   // List, which is exactly wrong for a composite carrier like `standard_tableau_pair`.
   const concrete = value.operator === "List" || value.operator === "Tuple";
   let items: readonly BoxedExpression[];
-  if (concrete) items = operandsOf(value);
+  // A list literal can keep a lazy element's body unreduced (CE 0.151); evaluating each item again reduces it.
+  if (concrete) items = operandsOf(value).map((item) => item.evaluate());
   else {
     const size = ce.function("Count", [value]).evaluate().re;
     if (!Number.isFinite(size)) return value;
@@ -108,7 +109,7 @@ function materialise(ce: ComputeEngine, value: BoxedExpression): BoxedExpression
   const forced = items.map((item) =>
     item.operator !== "List" && item.isCollection === true ? materialise(ce, item) : item,
   );
-  if (concrete && forced.every((item, index) => item === items[index])) return value;
+  if (concrete && forced.every((item, index) => item === operandsOf(value)[index])) return value;
   return ce.function(concrete ? value.operator : "List", forced).evaluate();
 }
 
