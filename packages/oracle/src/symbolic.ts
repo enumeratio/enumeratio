@@ -451,16 +451,45 @@ export function leavesCall(expr: MathJSON, expected: MathJSON): boolean {
   return visit(expected) || holdsAppliedCall(call, expected) || holdsKernelCall(call, expected);
 }
 
-/** Heads whose job is to rewrite their argument's form. */
-const FORM_TRANSFORMS = new Set(["FunctionExpand", "Simplify", "ComplexExpand", "PiecewiseExpand"]);
+/** Heads whose job is to rewrite their first argument's form, and may hand it back as it came. */
+const FORM_TRANSFORMS = new Set([
+  "FunctionExpand",
+  "Simplify",
+  "FullSimplify",
+  "ComplexExpand",
+  "PiecewiseExpand",
+  "Refine",
+  "Expand",
+  "ExpandAll",
+  "ExpandNumerator",
+  "ExpandDenominator",
+  "PowerExpand",
+  "ExpToTrig",
+  "TrigToExp",
+  "TrigExpand",
+  "TrigReduce",
+  "TrigFactor",
+  "LogicalExpand",
+  "Together",
+  "Apart",
+  "Cancel",
+  "Collect",
+  "Factor",
+  "FactorTerms",
+]);
 
 const listEntries = (e: MathJSON): readonly MathJSON[] | undefined =>
   Array.isArray(e) && e[0] === "List" ? (e.slice(1) as MathJSON[]) : undefined;
 
 /** The form `expr` asks to be rewritten, as the pieces a rewrite may leave alone: the whole, and a list's entries. */
 const rewriteTargets = (expr: MathJSON): MathJSON[] | undefined => {
-  if (!Array.isArray(expr) || !FORM_TRANSFORMS.has(expr[0] as string) || expr.length < 2) return undefined;
-  const form = expr[1] as MathJSON;
+  if (!Array.isArray(expr)) return undefined;
+  // `Assuming(condition, call)` asks `call`; a transformer mapped over a list asks each entry.
+  if (expr[0] === "Assuming" && expr.length === 3) return rewriteTargets(expr[2] as MathJSON);
+  const mapped = expr[0] === "Map" && expr.length === 3 && FORM_TRANSFORMS.has(expr[1] as string);
+  if (!mapped && !FORM_TRANSFORMS.has(expr[0] as string)) return undefined;
+  const form = expr[mapped ? 2 : 1] as MathJSON | undefined;
+  if (form === undefined) return undefined;
   // An atom has nothing to rewrite.
   return [form, ...(listEntries(form) ?? [])].filter(Array.isArray);
 };
