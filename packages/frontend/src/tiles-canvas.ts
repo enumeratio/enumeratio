@@ -25,7 +25,8 @@ export type FramePoint = readonly number[];
  */
 export type GraphicsPrimitive =
   | { readonly head: "Disk"; readonly radius: number; readonly center?: FramePoint }
-  | { readonly head: "Line"; readonly points: readonly FramePoint[] }
+  /** `breaks` are indices into `points` where the pen lifts: the segment ending there is not drawn. */
+  | { readonly head: "Line"; readonly points: readonly FramePoint[]; readonly breaks?: readonly number[] }
   | { readonly head: "Polygon"; readonly points: readonly FramePoint[] }
   /** A solid shown as its boundary: the rings of its faces. */
   | { readonly head: "Polyhedron"; readonly faces: readonly (readonly FramePoint[])[] }
@@ -336,11 +337,13 @@ function segmentDistance(p: Vec2, a: Vec2, b: Vec2): number {
   return Math.hypot(p[0] - (a[0] + t * dx), p[1] - (a[1] + t * dy));
 }
 
-/** The distance from `p` to a polyline. */
-const polylineDistance = (p: Vec2, points: readonly Vec2[]): number =>
+/** The distance from `p` to a polyline, whose segments ending at a break are not there. */
+const polylineDistance = (p: Vec2, points: readonly Vec2[], breaks: readonly number[] = []): number =>
   points.length === 1
     ? Math.hypot(p[0] - points[0]![0], p[1] - points[0]![1])
-    : Math.min(...points.slice(1).map((q, k) => segmentDistance(p, points[k]!, q)));
+    : Math.min(
+        ...points.slice(1).map((q, k) => (breaks.includes(k + 1) ? Infinity : segmentDistance(p, points[k]!, q))),
+      );
 
 /**
  * What a point of a figure's frame hits, within `reach` of it: the nearest address, else the
@@ -366,7 +369,7 @@ export function hitAt(layer: TileLayer, at: Vec2, reach: number): Address[] {
       if (layer.view === "camera") continue;
     }
     if (mark?.head === "Line") {
-      const d = polylineDistance(at, mark.points.map(xy));
+      const d = polylineDistance(at, mark.points.map(xy), mark.breaks);
       if (d <= nearest.line) [line, nearest.line] = [[i, j], d];
       continue;
     }
@@ -394,6 +397,7 @@ export function hitAt(layer: TileLayer, at: Vec2, reach: number): Address[] {
     const pts = prim.points.map(xy);
     const closed = prim.head === "Polygon";
     for (let k = 0; k < (closed ? pts.length : pts.length - 1); k++) {
+      if (prim.head === "Line" && prim.breaks?.includes(k + 1)) continue;
       const d = segmentDistance(at, pts[k]!, pts[(k + 1) % pts.length]!);
       if (d <= nearestLink) [link, nearestLink] = [members, d];
     }
@@ -416,9 +420,10 @@ function addPrimitive(
     path.moveTo(x + r, y);
     path.arc(x, y, r, 0, 2 * Math.PI);
   } else if (p.head === "Line" || p.head === "Polygon") {
+    const breaks = p.head === "Line" ? p.breaks : undefined;
     p.points.forEach((q, k) => {
       const [x, y] = toScreen(xy(q));
-      if (k === 0) path.moveTo(x, y);
+      if (k === 0 || breaks?.includes(k)) path.moveTo(x, y);
       else path.lineTo(x, y);
     });
     if (p.head === "Polygon") path.closePath();

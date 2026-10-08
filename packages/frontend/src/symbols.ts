@@ -491,6 +491,25 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       style: "display:block;min-height:320px",
     }),
   })),
+  // A braid displays as its strand diagram, a level per generator: `Braid(3, [1, -2])` is
+  // `Show(StrandDiagram(Braid(3, [1, -2])))`, its strands picked by a click.
+  {
+    head: "Braid",
+    tag: "notatio-show",
+    attributes: (ops) => {
+      const generators = headOf(ops[1]) === "List" ? opsOf(ops[1]).length : 0;
+      const height = Math.min(480, Math.max(160, 60 + 32 * generators));
+      return {
+        value: epsil([
+          "Show",
+          ["StrandDiagram", ["Braid", ...ops]],
+          ["KeyValuePair", "Selection", ["List"]],
+          ["KeyValuePair", "ImageSize", ["List", "Automatic", height]],
+        ] as Json),
+        style: `display:block;min-height:${height}px`,
+      };
+    },
+  },
   {
     head: "ComplexPlot",
     tag: "notatio-complex-plot",

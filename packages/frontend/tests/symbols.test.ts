@@ -170,3 +170,9 @@ test("the controls' variables are collected, and only where they are declared", 
   expect([...controlNames(json)].toSorted()).toEqual(["k", "on"]);
   expect(controlNames(parseExpression("Sin(k)").json).size).toBe(0);
 });
+
+test("a braid displays as its strand diagram in a Show", () => {
+  const rendering = renderingOf(parseExpression("Braid(3, [1, -2, 1])").json);
+  expect(rendering?.tag).toBe("notatio-show");
+  expect(rendering?.attributes.value).toMatch(/^Show\(\s*StrandDiagram\(Braid\(3, \[1, -2, 1\]\)\)/);
+});
