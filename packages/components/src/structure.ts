@@ -12,7 +12,7 @@
 import { isClaimed } from "./lazy.ts";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { withOptions } from "@enumeratio/formats";
-import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
+import { parseExpression } from "@enumeratio/formats/expression";
 import { tokenize } from "@enumeratio/formats/markup";
 import {
   CONTROL_HEADS,
@@ -87,77 +87,6 @@ function optionsOn(el: Element, symbol: VisualSymbol): Record<string, MathJsonEx
 
 const SCOPES = "notatio-dynamic-module, notatio-manipulate";
 
-/** The heads whose arguments are their children on the page, not attributes. */
-const LAYOUT_HEADS = new Set(["Row", "Column", "Grid", "Panel", "Labeled"]);
-
-/** A generic element's argument children: the ones its hidden holder keeps. */
-const heldArguments = (el: Element): Element[] => {
-  const holder = el.querySelector(":scope > .notatio-generic-args");
-  return Array.from((holder ?? el).children);
-};
-
-/**
- * A layout written structurally -- `<notatio-row><notatio-list>…</notatio-list></notatio-row>`
- * -- lays out the list's entries, so they come up to be the layout's own children; a
- * grid's rows come up two levels. A string among them is a run of text, as
- * `renderingOf` reads it; a label is an attribute, so it goes into the holder. An
- * expression that reads a control's variable is a readout of it, as `renderingOf` makes
- * one: `Sin(Pi * t)` beside `Animator(t, …)` follows the animator.
- */
-function unwrapLayout(el: Element, head: string, names: ReadonlySet<string>): void {
-  const entries: Element[] = [];
-  const spread = (child: Element, depth: number): void => {
-    if (child.localName === "notatio-list" && depth > 0) {
-      const holder = child.querySelector(":scope > .notatio-generic-args") ?? child;
-      leavesForText(holder);
-      for (const inner of heldArguments(child)) spread(inner, depth - 1);
-      child.remove();
-      return;
-    }
-    entries.push(child);
-  };
-  const expressive = Array.from(el.children).filter((c) => !c.hasAttribute("slot") && isExpressive(c));
-  const asText = (entry: Element): void => {
-    if (entry.localName !== "notatio-string") return;
-    const text = document.createElement("span");
-    // The property, when a framework set it that way; the attribute otherwise.
-    text.textContent = (entry as { value?: string }).value || entry.getAttribute("value") || "";
-    entry.replaceWith(text);
-  };
-  const asReadout = (entry: Element): void => {
-    const generic = entry.hasAttribute("data-notatio-generic") && isExpressive(entry);
-    const expr = generic ? entry.expression : undefined;
-    if (expr === undefined || names.size === 0) return;
-    const slotted = slottedExceptDeclarations(expr as never, names);
-    if (JSON.stringify(slotted) === JSON.stringify(expr)) return;
-    const readout = document.createElement("notatio-dynamic");
-    readout.setAttribute("value", serializeExpression(slotted as never));
-    entry.replaceWith(readout);
-  };
-  if (head === "Labeled") {
-    // `Labeled(body, label, position)`: everything past the body is an attribute already.
-    const [body, ...rest] = expressive;
-    if (rest.length > 0) {
-      const holder = document.createElement("span");
-      holder.className = "notatio-structure-args";
-      holder.hidden = true;
-      holder.append(...rest);
-      el.prepend(holder);
-    }
-    if (body !== undefined) {
-      asText(body);
-      asReadout(body);
-    }
-    return;
-  }
-  for (const child of expressive) spread(child, head === "Grid" ? 2 : 1);
-  for (const entry of entries) {
-    if (entry.parentElement !== el) el.append(entry);
-    asText(entry);
-    asReadout(entry);
-  }
-}
-
 /**
  * The names the controls in `el`'s scope declare -- what a readout beside them reads
  * as wildcards. A control's own name is on it once it is adopted, which is why the
@@ -225,19 +154,12 @@ export function adoptStructure(el: Element): void {
   // rewritten: it came from the element's own `plot-range="(-1, 1)"`, in Wolfram's
   // spelling, and the component wants its own.
   if (args.length > 0) {
-    // A layout's shape IS its children (a grid's `columns` is the rows' width), and the
-    // element has already reflected its default, so there the arguments win.
-    const layout = LAYOUT_HEADS.has(symbol.head);
     for (const [attr, value] of Object.entries(symbol.attributes(args))) {
-      if (layout || !el.getAttribute(attr)) el.setAttribute(attr, value);
+      if (!el.getAttribute(attr)) el.setAttribute(attr, value);
     }
   }
   for (const [attr, value] of Object.entries(lowerOptions(symbol, options).attributes)) {
     if (el.getAttribute(attr) !== value) el.setAttribute(attr, value);
-  }
-  if (LAYOUT_HEADS.has(symbol.head)) {
-    unwrapLayout(el, symbol.head, scopeNames(el));
-    return;
   }
   if (args.length > 0) {
     const holder = document.createElement("span");

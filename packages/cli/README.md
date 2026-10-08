@@ -136,6 +136,29 @@ $ notatio show 'StandardTableau([[1, 2, 4], [3]])'
 └───┘
 ```
 
+Layouts draw the same way. `Row`, `Column`, `Grid`, `Panel` and `Labeled` are boxes laid out on
+cells: a `Grid` is aligned (ruled with `Frame -> True` or `Dividers -> All`), a `Panel` framed, a
+fraction stacked and a script raised, and an entry that is a figure sits in the layout as it
+would in a page.
+
+```text
+$ notatio show 'Labeled(Permutation([3, 1, 2]), "σ")'
+$ notatio show 'Grid([[1, 2], [3, 4]], Frame -> True, Dividers -> All)'
+┌───┬───┐
+│ 1 │ 2 │
+├───┼───┤
+│ 3 │ 4 │
+└───┴───┘
+$ notatio show 'Panel(Row([x, y]))'
+┌─────┐
+│ x y │
+└─────┘
+$ notatio show 'Row([1/2, x, "and", x^2])'
+ 1
+─── x and x²
+ 2
+```
+
 ## Environments
 
 A result can carry controls — a `Slider`, a `Toggler`, a whole `Manipulate`. What

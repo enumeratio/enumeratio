@@ -26,6 +26,11 @@ const CASES: Record<string, string> = {
   partition: "IntegerPartition([4, 2, 1])",
   tableau: "StandardTableau([[1, 2, 4], [3]])",
   show: "Show(TreeDiagram(PlaneTree([2, 0, 0])))",
+  labeled: 'Labeled(Permutation([3, 1, 2]), "σ")',
+  grid: "Grid([[1, 2], [3, 4]])",
+  ruled: "Grid([[1, 2], [3, 4]], Frame -> True, Dividers -> All)",
+  panel: "Panel(Row([x, y]))",
+  fraction: 'Row([1/2, x, "and", x^2])',
 };
 
 for (const [name, input] of Object.entries(CASES)) {

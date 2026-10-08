@@ -6,6 +6,7 @@
 import { fileFormat, isImageFormat, isImageValue, readFormat, writeFormat } from "@enumeratio/formats/node";
 import { type CommandHandler, type Graphic, type LineOutput, Repl } from "./core.ts";
 import type { SessionDefaults } from "./engine.ts";
+import { notationOf } from "@enumeratio/boxes";
 import { figureText } from "./figure.ts";
 import { graphicLabel, graphicToSvg, inlineImage, writeSvg } from "./node-graphics.ts";
 import { samplePlot } from "./textual.ts";
@@ -62,7 +63,7 @@ export class NodeHost {
     if (out.exit || out.clear) return undefined;
     const last = this.repl.session.history.at(-1);
     if (!last || !out.text.includes(`Out[${last.n}]`)) return undefined;
-    return figureText(last.expr.json as never, { color: this.repl.color });
+    return figureText(last.expr.json as never, { color: this.repl.color, notation: notationOf(this.repl.session.ce) });
   }
 
   private commands(): Record<string, CommandHandler> {

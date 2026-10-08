@@ -32,8 +32,8 @@ import "@enumeratio/components";
   `<notatio-list-picker>`, `<notatio-locator>`, `<notatio-input-field>` — every one
   keeping the control contract from [`frontend`](../frontend/README.md) (`controls.ts`): a `name`, a
   MathJSON `binding`, a `notatio-control-change` event.
-- **Layout** — `<notatio-row>`, `<notatio-column>`, `<notatio-grid>`, `<notatio-panel>`,
-  `<notatio-labeled>`.
+- **Layout** — `Row`, `Column`, `Grid`, `Panel` and `Labeled` are boxes drawn as plain DOM by
+  [`frontend`](../frontend/README.md)'s box renderer, not elements.
 - **Reactive scopes** — `<notatio-manipulate>`, `<notatio-dynamic>`,
   `<notatio-dynamic-module>`: bind a body's controls to its own expression and re-render
   on change.

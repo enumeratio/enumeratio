@@ -3,6 +3,7 @@
 // The Node host prefers an inline image where the terminal has one; this is what
 // stands in where it does not, and what the control strip draws under itself.
 
+import { notationOf } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
 import { headOf, numOf, opsOf, strOf, symOf, tupleOf } from "@enumeratio/frontend";
 import { textPlot } from "@enumeratio/frontend";
@@ -56,7 +57,7 @@ export function textOf(session: Session, json: Json, width = 60, height = 12): s
   }
   const points = samplePlot(session, json);
   if (points !== undefined) return textPlot(points, { width, height, marks: plotOf(json)?.marks });
-  const figure = figureText(json, { width });
+  const figure = figureText(json, { width, notation: notationOf(session.ce) });
   if (figure !== undefined) return figure;
   return session.render(session.ce.box(json as never).evaluate());
 }

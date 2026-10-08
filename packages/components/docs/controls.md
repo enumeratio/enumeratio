@@ -234,26 +234,16 @@ arguments by name too: `<notatio-binomial n="5" k="2">`.
 The same trees, written structurally: every head a tag, every argument a child (a run of
 atoms as text, `k 1`), every option an attribute — `structuralOf` in the base package, and
 what an expression's component form is. The elements do the rest, lowering their own
-children.
+children; a layout (`Row`, `Grid`, …) is boxes, drawn as plain DOM around its entries.
 
 <Story
   title="The realized tree">
 <notatio-dynamic-module>
-<notatio-row>
+<div data-box="RowBox" data-head="Row">
 <notatio-slider name="k" min="0" max="5" step="0.5" value="2" readout></notatio-slider>
 <notatio-dynamic value="_k ^ 2"></notatio-dynamic>
-</notatio-row>
+</div>
 </notatio-dynamic-module>
-</Story>
-
-<Story
-  title="An expression, as a vdom">
-<template #description>
-<code>Row([Slider((k, 1), (0, 5, 0.5)), "squared is", Dynamic(k^2)])</code>, structurally: a
-<code>notatio-row</code> holding a <code>notatio-list</code> of a <code>notatio-slider</code>,
-a string (a token, as text) and a <code>notatio-dynamic</code>.
-</template>
-<notatio-row><notatio-list><notatio-slider><notatio-tuple>k 1</notatio-tuple><notatio-tuple>0 5 0.5</notatio-tuple></notatio-slider> "squared is" <notatio-dynamic><notatio-power>k 2</notatio-power></notatio-dynamic></notatio-list></notatio-row>
 </Story>
 
 <Story

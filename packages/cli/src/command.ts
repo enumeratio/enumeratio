@@ -10,6 +10,7 @@ import { can, type Environment, ENVIRONMENTS, environmentNamed, PIPE } from "@en
 import { evaluateReadouts, reduce } from "@enumeratio/frontend";
 import { completionScript, type Shell, SHELLS, SUBCOMMANDS } from "./completion.ts";
 import { formatsTable } from "./core.ts";
+import { notationOf } from "@enumeratio/boxes";
 import { figureText } from "./figure.ts";
 import {
   type Form,
@@ -181,8 +182,9 @@ export interface HostOptions {
 /** The result of `input` drawn as a figure, if it is one; an input that fails is left to eval to report. */
 function figureOf(input: string, defaults: SessionDefaults, host: HostOptions): string | undefined {
   try {
-    const { expr } = new Session(defaults).evaluate(input);
-    return figureText(expr.json as never, { color: host.color });
+    const session = new Session(defaults);
+    const { expr } = session.evaluate(input);
+    return figureText(expr.json as never, { color: host.color, notation: notationOf(session.ce) });
   } catch {
     return undefined;
   }

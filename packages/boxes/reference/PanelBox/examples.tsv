@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[PanelBox, "'x'", [Tuple, Background, "'#f4f4f4'"]]	[PanelBox, "'x'", [Tuple, Background, "'#f4f4f4'"]]	a box is inert: it evaluates to itself

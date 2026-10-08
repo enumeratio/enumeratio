@@ -276,8 +276,8 @@ function drawBraille(marks: readonly Mark[], width: number, height: number): Cel
 const RULE_COLS = 4;
 const RULE_ROWS = 2;
 
-const [UP, DOWN, LEFT, RIGHT] = [1, 2, 4, 8];
-const JOINT: Readonly<Record<number, string>> = {
+export const [UP, DOWN, LEFT, RIGHT] = [1, 2, 4, 8];
+export const JOINT: Readonly<Record<number, string>> = {
   [UP]: "│",
   [DOWN]: "│",
   [UP | DOWN]: "│",
