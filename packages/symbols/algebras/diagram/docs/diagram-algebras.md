@@ -8,9 +8,9 @@ rows of dots with each block joined up:
 
 <Story title="A diagram is a picture">
 <template #description>Three strands. The block {1, 2, −1, −2} joins both rows; {3, −3} runs straight down.</template>
-<notatio-figure kind="diagram" value="[0,0,1,0,0,1]" />
-<notatio-figure kind="diagram" value="[0,1,2,0,1,2]" />
-<notatio-figure kind="diagram" value="[0,1,2,1,0,2]" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Diagram([[1, 2, -1, -2], [3, -3]])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:77px" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Diagram([[1, -1], [2, -2], [3, -3]])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:77px" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Diagram([[1, -2], [2, -1], [3, -3]])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:77px" />
 </Story>
 
 Multiplication is geometric, and it is the whole subject: **stack $a$ above $b$, glue
@@ -68,7 +68,7 @@ $e_1^2 = δ e_1$, the defining relation of the Temperley–Lieb algebra.
 
 <Story title="e₁² = δe₁">
 <template #description>The cup-cap squared: one closed loop, so one factor of δ.</template>
-<notatio-figure kind="diagram" value="[0,0,1,1]" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Diagram([[1, 2], [-1, -2]])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:53px" />
 <notatio-cell value="CircleTimes(Diagram([[1, 2], [-1, -2]]), Diagram([[1, 2], [-1, -2]]))" />
 </Story>
 
@@ -95,7 +95,7 @@ answer — and it is how the inclusions become checkable. The crossing $s_1$ is 
 diagram and a permutation, but not planar, so it is not Temperley–Lieb.
 
 <Story title="Which algebra is this diagram in?">
-<notatio-figure kind="diagram" value="[0,1,2,1,0,2]" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Diagram([[1, -2], [2, -1], [3, -3]])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:77px" />
 <notatio-cell value="Diagram([[1, -2], [2, -1], [3, -3]]) in BrauerAlgebra(3)" />
 <notatio-cell value="Diagram([[1, -2], [2, -1], [3, -3]]) in TemperleyLiebAlgebra(3)" />
 <notatio-cell value="Diagram([[1, 2], [-1, -2], [3, -3]]) in TemperleyLiebAlgebra(3)" />
@@ -121,7 +121,7 @@ A block of three points is a partition diagram and nothing smaller — Brauer an
 admit only blocks of size two.
 
 <Story title="Bigger blocks leave the matchings behind">
-<notatio-figure kind="diagram" value="[0,0,1,0,2,1]" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Diagram([[1, 2, -1], [3, -3], [-2]])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:77px" />
 <notatio-cell value="Diagram([[1, 2, -1], [3, -3], [-2]]) in PartitionAlgebra(3)" />
 <notatio-cell value="Diagram([[1, 2, -1], [3, -3], [-2]]) in BrauerAlgebra(3)" />
 </Story>

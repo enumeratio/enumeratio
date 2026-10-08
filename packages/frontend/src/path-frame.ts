@@ -8,7 +8,7 @@
 // Relations to the selection: SameHeight, SameColumn, Adjacent, and for a Dyck path Tunnel (the
 // ends of the matching up and down steps of the step arriving at the selected point).
 
-import { argsOf, type FigureLayer, headOf, intsOf, type Json, normal, UNIT_BASIS } from "./frame-json.ts";
+import { argsOf, type FigureLayer, headOf, intsOf, type Json, normal, UNIT_BASIS, unwrapped } from "./frame-json.ts";
 import type { Address, GraphicsPrimitive } from "./tiles-canvas.ts";
 
 export interface PathModel {
@@ -18,7 +18,8 @@ export interface PathModel {
 }
 
 /** The model an expression names: `DyckPath(steps)` or `LatticePath(steps)`. */
-export function pathModelOf(json: Json): PathModel | string {
+export function pathModelOf(node: Json): PathModel | string {
+  const json = unwrapped(node);
   const head = headOf(json);
   const steps = intsOf(argsOf(json)[0]);
   const kind = head === "DyckPath" ? "dyck" : head === "LatticePath" ? "lattice" : undefined;

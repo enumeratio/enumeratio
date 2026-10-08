@@ -1,7 +1,9 @@
 <script setup lang="ts">
-// The full combinatorial-glyph vocabulary, one family per row -- a visual index
-// of the `<notatio-figure>` representations. Each item is the element itself, so
-// this doubles as an integration check of the glyph renderers in the browser.
+// The full combinatorial-glyph vocabulary, one family per row -- a visual index of the
+// pictures each kind lowers to. Each item is the `<notatio-show>` it stands for, so this
+// doubles as an integration check of the frames in the browser.
+import { lowerFigure } from "@enumeratio/frontend/core";
+
 const families: Array<{
   kind: string;
   title: string;
@@ -90,16 +92,27 @@ const families: Array<{
     ].map((t) => ({ value: t, cap: t.join("") })),
   },
 ];
+
+const pictured = families.map((fam) => ({
+  ...fam,
+  items: fam.items.map((it) => ({ ...it, picture: lowerFigure(fam.kind, it.value, { n: it.n }) })),
+}));
 </script>
 
 <template>
   <ClientOnly>
     <div class="gallery">
-      <section v-for="fam in families" :key="fam.kind">
+      <section v-for="fam in pictured" :key="fam.kind">
         <h4>{{ fam.title }}</h4>
         <div class="strip">
           <figure v-for="(it, i) in fam.items" :key="i">
-            <notatio-figure :kind="fam.kind" :value="JSON.stringify(it.value)" :n="it.n" />
+            <notatio-show
+              v-if="it.picture"
+              class="inline-figure"
+              :value="it.picture.show"
+              legend-at="none"
+              :style="{ width: `${it.picture.width}px` }"
+            />
             <figcaption>{{ it.cap }}</figcaption>
           </figure>
         </div>

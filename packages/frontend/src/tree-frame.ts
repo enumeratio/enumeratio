@@ -8,7 +8,7 @@
 // SubtreeSize. Relations to the selection: Ancestor, Descendant (both strict), Subtree (the
 // selected node and its descendants), Sibling, Adjacent (a parent or a child).
 
-import { argsOf, type FigureLayer, headOf, intsOf, type Json, normal, UNIT_BASIS } from "./frame-json.ts";
+import { argsOf, type FigureLayer, headOf, intsOf, type Json, normal, UNIT_BASIS, unwrapped } from "./frame-json.ts";
 import { treeLayout } from "./glyphs.ts";
 import type { Address, GraphicsPrimitive } from "./tiles-canvas.ts";
 
@@ -37,7 +37,8 @@ function binaryCounts(json: Json, out: number[] = []): number[] | undefined {
 }
 
 /** The model an expression names: `PlaneTree(counts)` or `BinaryTree(nested)`. */
-export function treeModelOf(json: Json): TreeModel | string {
+export function treeModelOf(node: Json): TreeModel | string {
+  const json = unwrapped(node);
   const [arg] = argsOf(json);
   const counts =
     headOf(json) === "PlaneTree" ? intsOf(arg) : headOf(json) === "BinaryTree" ? binaryCounts(arg) : undefined;

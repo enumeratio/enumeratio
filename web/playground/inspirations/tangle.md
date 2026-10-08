@@ -197,7 +197,7 @@ knows the other exists.
 </template>
 <notatio-dynamic-module>
 Ground set of <notatio-knob name="n" value="5" min="1" max="9" step="1" /> elements:
-<notatio-figure kind="subset" value="[1,3]" n="_n" />
+<notatio-show class="inline-figure" value='Show(CellDiagram(Subset([1, 3], _n)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
 — which is one of <notatio-dynamic value="2^_n" /> subsets.
 </notatio-dynamic-module>
 </Story>
@@ -212,7 +212,7 @@ the collection's own order, and the glyph draws whichever one it lands on. No
 </template>
 <notatio-dynamic-module>
 Permutation <notatio-knob name="k" value="1" min="1" max="24" /> of 4:
-<notatio-figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
 </notatio-dynamic-module>
 </Story>
 
@@ -235,7 +235,7 @@ hover is the whole affordance.
 </template>
 <notatio-dynamic-module>
 <notatio-knob name="k" value="1" min="1" max="24">
-<notatio-figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
+<notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
 </notatio-knob>
 </notatio-dynamic-module>
 </Story>
@@ -250,7 +250,7 @@ like.
 <notatio-dynamic-module>
 <p>
 <notatio-knob name="n" value="4" min="1" max="8">
-<notatio-figure kind="partition" value="At(IntegerPartitions(_n), 1)" />
+<notatio-show class="inline-figure" value='Show(CellDiagram(At(IntegerPartitions(_n), 1)), ImageSize -> [Automatic, 38], GestureHandling -> "none")' legend-at="none" />
 </notatio-knob>
 is the first of <notatio-dynamic value="Count(IntegerPartitions(_n))" /> partitions of
 <notatio-dynamic value="_n" />.
