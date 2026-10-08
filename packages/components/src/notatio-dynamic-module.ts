@@ -1,13 +1,9 @@
-import {
-  openSession,
-  type BrowserSession,
-  type SharedWorkerFactory,
-  type WorkerFactory,
-} from "@enumeratio/evaluation/browser";
+import type { BrowserSession, SharedWorkerFactory, WorkerFactory } from "@enumeratio/evaluation/browser";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   closePageSession,
   notebookSession,
+  openHostSession,
   type RemoteAnswer,
   type RemoteRequest,
   WorkerUnavailableError,
@@ -188,11 +184,7 @@ export class NotatioDynamicModule extends LitElement {
     // Not `name`d: each module instance gets its own private session rather than
     // joining a page-wide `SharedWorker` -- two `Evaluator -> "Worker"` modules on
     // one page are unrelated scopes, same as two plain transcripts are.
-    return openSession({
-      setup,
-      createWorker: factories?.createWorker,
-      createSharedWorker: factories?.createSharedWorker,
-    });
+    return openHostSession(setup, factories);
   }
 
   /**
@@ -211,7 +203,16 @@ export class NotatioDynamicModule extends LitElement {
    * `TimeConstraint` deadline's own hard kill.
    */
   evaluateRemote(request: RemoteRequest, options: { signal?: AbortSignal } = {}): Promise<RemoteAnswer> {
-    const session = (this.#session ??= this.#openSession());
+    let session = this.#session;
+    if (session === undefined) {
+      try {
+        session = this.#session = this.#openSession();
+      } catch {
+        // The dedicated worker could not be constructed either: this module evaluates locally.
+        this.#onWorkerUnavailable();
+        throw new WorkerUnavailableError();
+      }
+    }
     // Wolfram's own unit (`TimeConstraint`, `VerificationTest`) is seconds; evaluation's
     // session API wants ms.
     const timeMs = this.timeConstraint > 0 ? this.timeConstraint * 1000 : undefined;

@@ -73,10 +73,18 @@ type WorkerFactoriesGate = {
 export function openKernelSession(setup?: string): BrowserSession | undefined {
   const factories = (globalThis as WorkerFactoriesGate).__notatioWorkerFactories;
   if (factories === undefined) return undefined;
+  return openHostSession(setup ?? (globalThis as WorkerSetupGate).__notatioWorkerSetup, factories);
+}
+
+/** A session on the host's worker factories. Without a `SharedWorker` constructor (Chrome for
+ *  Android) the shared factory is skipped, so the dedicated worker from the same entry opens. */
+export function openHostSession(
+  setup: string | undefined,
+  factories: { readonly createWorker?: WorkerFactory; readonly createSharedWorker?: SharedWorkerFactory } = {},
+): BrowserSession {
   return openSession({
-    setup: setup ?? (globalThis as WorkerSetupGate).__notatioWorkerSetup,
+    setup,
     createWorker: factories.createWorker,
-    // Chrome for Android has no SharedWorker: the dedicated worker from the same entry instead.
     createSharedWorker: typeof SharedWorker === "undefined" ? undefined : factories.createSharedWorker,
   });
 }

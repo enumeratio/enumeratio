@@ -1,6 +1,7 @@
 // The page kernel without a SharedWorker (Chrome for Android) or with a throwing factory:
 // fake workers stand in, and fake timers show nothing waits on a spawn timeout.
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
+import type { WorkerLike } from "@enumeratio/evaluation/browser";
 
 interface FakeWorker {
   onmessage: ((event: { data: unknown }) => void) | null;
@@ -71,5 +72,40 @@ test("a throwing worker factory means no kernel at once, so cells run on the pag
   const { pageKernel } = await import("../src/kernel-client.ts");
   expect(pageKernel()).toBeUndefined();
   expect(pageKernel()).toBeUndefined();
+  expect(vi.getTimerCount()).toBe(0);
+});
+
+test("a module's session (openHostSession) skips the shared factory without a SharedWorker", async () => {
+  vi.stubGlobal("SharedWorker", undefined);
+  const createSharedWorker = vi.fn((): never => {
+    throw new Error("a shared worker must not be attempted");
+  });
+  const workers: FakeWorker[] = [];
+  const { openHostSession } = await import("../src/kernel-client.ts");
+  const session = openHostSession(undefined, {
+    createSharedWorker,
+    createWorker: () => {
+      const worker = answeringWorker();
+      workers.push(worker);
+      return worker as unknown as WorkerLike;
+    },
+  });
+
+  await expect(session.evaluate(["Add", 1, 1])).resolves.toMatchObject({ value: "done", reset: false });
+  expect(createSharedWorker).not.toHaveBeenCalled();
+  expect(workers).toHaveLength(1);
+  session.close();
+});
+
+test("a module's session whose dedicated worker cannot be built throws at once, for the module to fall back on", async () => {
+  vi.stubGlobal("SharedWorker", undefined);
+  const { openHostSession } = await import("../src/kernel-client.ts");
+  expect(() =>
+    openHostSession(undefined, {
+      createWorker: () => {
+        throw new ReferenceError("Worker is not defined");
+      },
+    }),
+  ).toThrow(ReferenceError);
   expect(vi.getTimerCount()).toBe(0);
 });
