@@ -64,6 +64,9 @@ so a page reads the same on GitHub and on the site.
   JSX, framework-free (the wiki's
   [Speculative-Vdom-Markup](https://github.com/enumeratio/enumeratio/wiki/Speculative-Vdom-Markup)).
   There are no Vue or React wrappers; the elements are the component form.
+- On the web every box primitive is its own tag, the box head in kebab case (`RowBox` -> `row-box`,
+  `Graphics3DBox` -> `graphics-3d-box`); `packages/frontend/src/box-tags.ts` is the one map. `notatio-`
+  stays for the notebook and app shell. A tag someone else defined is logged and left; CSS keys on the tags.
 - Package names have not all caught up; do not rename them in passing — see the wiki's
   [Component-Naming](https://github.com/enumeratio/enumeratio/wiki/Component-Naming) for how renames wait.
 

@@ -51,10 +51,16 @@ export interface EvaluateRequest {
   readonly write?: string;
   readonly compile?: unknown;
   readonly close?: boolean;
+  /** With a kernel that has a `rows` hook: a row source's call, answered outside the queue. */
+  readonly rows?: unknown;
   /** The host's `timeMs`, tried cooperatively here first — see ./cooperative-evaluate.ts.
    * A call that stops this way keeps every port's bindings, including a SharedWorker's
    * other tabs'; only an uncooperative loop needs the host's own hard kill. */
   readonly timeMs?: number;
+}
+/** Stops the call with this id: a scroll that moved on from the rows it asked for. */
+export interface AbortRequest {
+  readonly abort: number;
 }
 export interface EvaluateResponse {
   readonly id: number;
@@ -94,7 +100,7 @@ export interface KernelWorkerOptions extends KernelOptions {
  * `Worker`, which doubles as its own port) this needs. */
 export interface PortLike {
   postMessage(message: EvaluateResponse | { readonly kind: "connected" }): void;
-  onmessage: ((event: { data: HandshakeRequest | EvaluateRequest }) => void) | null;
+  onmessage: ((event: { data: HandshakeRequest | EvaluateRequest | AbortRequest }) => void) | null;
   start?(): void;
 }
 
@@ -131,9 +137,37 @@ export function startSessionWorker(configure?: ConfigureFn, options?: KernelWork
   let engine: Promise<ComputeEngine> | undefined;
   let kernel: Kernel | undefined;
 
+  /** The rows calls in flight, by id, which an abort stops. */
+  const aborts = new Map<number, AbortController>();
+
   function attachEvaluateHandler(port: PortLike): void {
     port.onmessage = (event) => {
+      if ("abort" in event.data) {
+        aborts.get(event.data.abort)?.abort();
+        return;
+      }
       const request = event.data as EvaluateRequest;
+      if (request.rows !== undefined && options?.rows !== undefined) {
+        const controller = new AbortController();
+        aborts.set(request.id, controller);
+        const rows = options.rows;
+        void (engine as Promise<ComputeEngine>)
+          .then(async (ce) => {
+            const k = (kernel ??= createKernel(ce, catalogue ?? [], options));
+            const answer = await rows(ce, request.rows, controller.signal, (source) => k.read(source));
+            port.postMessage({ id: request.id, kind: "result", ok: true, json: answer });
+          })
+          .catch((error: unknown) => {
+            port.postMessage({
+              id: request.id,
+              kind: "result",
+              ok: false,
+              error: error instanceof Error ? error.message : String(error),
+            });
+          })
+          .finally(() => aborts.delete(request.id));
+        return;
+      }
       void (engine as Promise<ComputeEngine>).then(
         async (ce) => {
           const { id, json, timeMs, source, session, evaluate, raw, write, compile, close } = request;

@@ -178,7 +178,14 @@ export function parseExpression(src: string, options?: ParseExpressionOptions): 
   return { json, wildcards: collectWildcards(json), errors: found.map((d) => d.message), diagnostics: found };
 }
 
-/** Serialize MathJSON back to Epsil text. */
-export function serializeExpression(json: MathJsonExpression): string {
-  return serializeEpsil(json);
+/**
+ * Serialize MathJSON back to Epsil text. `libraryNames: "mathjson"` keeps a library name as it is
+ * declared (`NonNegativeIntegers`), for text a reader will see and retype; the default is Epsil's
+ * lowercase spelling (`nonNegativeIntegers`), which reads back the same with an engine.
+ */
+export function serializeExpression(
+  json: MathJsonExpression,
+  options?: { libraryNames?: "epsil" | "mathjson" },
+): string {
+  return serializeEpsil(json, options);
 }

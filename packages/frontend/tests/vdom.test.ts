@@ -43,7 +43,7 @@ test("the realized tree lowers a component's arguments into props, and typesets 
   const scoped = vdomOf(parseExpression("Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])").json);
   expect(scoped.tag).toBe("notatio-dynamic-module");
   const row = scoped.children?.[0];
-  expect(row?.tag).toBe("div");
+  expect(row?.tag).toBe("row-box");
   expect(row?.attributes["data-head"]).toBe("Row");
   expect(row?.children?.map((c) => [c.tag, c.attributes])).toEqual([
     ["notatio-slider", { name: "k", value: "2", min: "0", max: "5" }],

@@ -239,10 +239,10 @@ children; a layout (`Row`, `Grid`, …) is boxes, drawn as plain DOM around its 
 <Story
   title="The realized tree">
 <notatio-dynamic-module>
-<div data-box="RowBox" data-head="Row">
+<row-box data-head="Row">
 <notatio-slider name="k" min="0" max="5" step="0.5" value="2" readout></notatio-slider>
 <notatio-dynamic value="_k ^ 2"></notatio-dynamic>
-</div>
+</row-box>
 </notatio-dynamic-module>
 </Story>
 

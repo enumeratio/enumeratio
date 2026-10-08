@@ -140,6 +140,8 @@ function writeNode(box: BoxNode): string {
     case "PolyhedronBox":
     case "InsetBox":
       return element("mtext", "-Graphics-");
+    case "TableViewBox":
+      return element("mtext", "-TableView-");
     case "ButtonBox":
     case "TextCell":
       return write(box[1]);

@@ -11,6 +11,7 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
+    "./box-tags": "./dist/box-tags.mjs",
     "./conventional-latex": "./dist/conventional-latex.mjs",
     "./core": "./dist/core.mjs",
     "./declare-carriers": "./dist/declare-carriers.mjs",
@@ -19,13 +20,14 @@
     "./plot-compile": "./dist/plot-compile.mjs",
     "./prerender": "./dist/prerender.mjs",
     "./reflect": "./dist/reflect.mjs",
+    "./row-source": "./dist/row-source.mjs",
     "./symbols": "./dist/symbols.mjs",
     "./vdom": "./dist/vdom.mjs",
     "./package.json": "./package.json",
     "./declares.json": "./dist/declares.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/core.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts src/display.ts src/kernel-host.ts src/plot-compile.ts src/prerender.ts && node scripts/build-forms.ts && enumeratio-collect-declares .",
+    "build": "vp pack src/index.ts src/core.ts src/symbols.ts src/vdom.ts src/reflect.ts src/conventional-latex.ts src/declare-carriers.ts src/display.ts src/kernel-host.ts src/plot-compile.ts src/prerender.ts src/box-tags.ts src/row-source.ts && node scripts/build-forms.ts && enumeratio-collect-declares .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

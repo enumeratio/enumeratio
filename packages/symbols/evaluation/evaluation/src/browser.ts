@@ -425,6 +425,8 @@ export interface BrowserEvaluateSessionOptions {
   readonly compile?: unknown;
   /** With `session`: the kernel forgets that session. */
   readonly close?: boolean;
+  /** For a kernel worker with a `rows` hook: a row source's call, answered beside the queue. */
+  readonly rows?: unknown;
 }
 
 export interface BrowserSessionEvaluateResult {
@@ -568,6 +570,8 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         if (settled) return;
         settled = true;
         cleanup();
+        // A row call stops in the worker too, where its scan would otherwise run on.
+        if (callOptions.rows !== undefined) currentPort.postMessage({ abort: id });
         reject(new DOMException("The evaluate() call was aborted.", "AbortError"));
       };
       const kill = (): void => {
@@ -649,8 +653,8 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
       // hanging forever against a session that never actually started.
       spawnTimer = setTimeout(notStarted, spawnTimeoutMs);
 
-      const { source, session, evaluate, raw, write, compile, close } = callOptions;
-      currentPort.postMessage({ id, json, timeMs, source, session, evaluate, raw, write, compile, close });
+      const { source, session, evaluate, raw, write, compile, close, rows } = callOptions;
+      currentPort.postMessage({ id, json, timeMs, source, session, evaluate, raw, write, compile, close, rows });
     });
   }
 

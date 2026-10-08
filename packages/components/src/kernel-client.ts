@@ -35,6 +35,8 @@ export interface RemoteRequest {
   readonly write?: string;
   /** Only compile (`@enumeratio/frontend/plot-compile`'s `PlotCompileSpec`). */
   readonly compile?: unknown;
+  /** A row source's call (`@enumeratio/frontend/row-source`'s `RowsRequest`), answered beside the queue. */
+  readonly rows?: unknown;
 }
 
 export interface RemoteAnswer {

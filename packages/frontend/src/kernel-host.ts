@@ -13,6 +13,7 @@ import { type CodeForm, codeForms } from "./code-forms.ts";
 import { type DisplayBoxes, displayBoxes } from "./display.ts";
 import { compilePlot, type PlotCompileSpec } from "./plot-compile.ts";
 import { boundName } from "./reactive.ts";
+import { createRowsHost, type RowsRequest } from "./row-source.ts";
 import { renderingOf } from "./symbols.ts";
 import { Transcript } from "./transcript.ts";
 
@@ -100,8 +101,15 @@ export function display(ce: ComputeEngine, json: unknown): Display {
   return { boxes: displayBoxes(ce, json), text, draws };
 }
 
+const rowsHosts = new WeakMap<ComputeEngine, ReturnType<typeof createRowsHost>>();
+
 /** `createKernel`'s options for notatio's cells. */
 export const NOTEBOOK_KERNEL: KernelOptions = {
+  rows: (ce, request, signal, read) => {
+    let host = rowsHosts.get(ce);
+    if (host === undefined) rowsHosts.set(ce, (host = createRowsHost(ce, read)));
+    return host(request as RowsRequest, signal);
+  },
   parse: readSource,
   write: writeSource,
   session: transcriptSession,

@@ -319,3 +319,16 @@ test("openSession passes its name through to createSharedWorker", () => {
   });
   expect(seenName).toBe("shared-notebook");
 });
+
+test("a rows call carries its request, and aborting it tells the worker to stop", async () => {
+  const fake = fakeWorker();
+  const session = openSession({ createWorker: () => fake.worker });
+  const controller = new AbortController();
+  const call = session.evaluate(undefined, { rows: { op: "range", handle: "h" }, signal: controller.signal });
+  const sent = fake.posted.find((m) => (m as { rows?: unknown }).rows !== undefined) as { id: number; rows: unknown };
+  expect(sent.rows).toEqual({ op: "range", handle: "h" });
+  controller.abort();
+  await expect(call).rejects.toMatchObject({ name: "AbortError" });
+  expect(fake.posted.at(-1)).toEqual({ abort: sent.id });
+  session.close();
+});

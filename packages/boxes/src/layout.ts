@@ -374,6 +374,7 @@ class Layout {
       case "PolygonBox":
       case "PolyhedronBox":
       case "InsetBox":
+      case "TableViewBox":
         return this.slot(box);
       default:
         return this.math(box, style);

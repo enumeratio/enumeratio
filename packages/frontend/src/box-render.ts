@@ -1,22 +1,24 @@
 // The web's renderer of layout boxes (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, §2):
-// `RowBox`, `GridBox`, `PanelBox`, `PaneBox` and `FrameBox` as plain DOM, no custom element. The head the
-// author wrote rides on the node (a `Row` is a tagged `RowBox`), and the stylesheet lays the
-// DOM out with flex and grid, so the page keeps selection, find-in-page and the rest. Pure: boxes
-// in, a `Rendering` out, which any host turns into markup or a framework's vnodes.
+// `RowBox`, `GridBox`, `PanelBox`, `PaneBox` and `FrameBox` as their own tags (`row-box`), with no
+// behavior of their own. The head the author wrote rides on the node (a `Row` is a tagged
+// `RowBox`), and the stylesheet lays the DOM out with flex and grid, so the page keeps
+// selection, find-in-page and the rest. `TableViewBox` is the one that behaves: it windows its
+// rows. Pure: boxes in, a `Rendering` out, which any host turns into markup or a framework's vnodes.
 //
 // A hole (`TemplateSlot`) is where the environment draws a leaf itself: a control, a plot, a readout.
 
 import { type Box, type BoxNode, gridCells, isNode, optionsOfBox, type OptionValue, rowsOf } from "@enumeratio/boxes";
 import { toText } from "@enumeratio/boxes/render";
+import { boxTag } from "./box-tags.ts";
 import type { Rendering } from "./symbols.ts";
 
 /** What fills each hole, by the name the `TemplateSlot` carries. */
 export type Holes = Readonly<Record<string, Rendering>>;
 
 /**
- * The one place a box becomes an element: which tag draws `box`, and how the box head and the
- * author's head ride on it (`data-box`, `data-head`, which the stylesheet keys on). Changing
- * how boxes are named in the DOM is an edit here and to those selectors.
+ * The one place a box becomes an element: its head's tag (`row-box`), with the head the author
+ * wrote riding on it as `data-head`. Changing how boxes are named in the DOM is an edit here, in
+ * `boxTag` and in the stylesheet, which keys on the tags.
  */
 function element(
   box: string,
@@ -24,16 +26,7 @@ function element(
   attributes: Readonly<Record<string, string>>,
   content: Pick<Rendering, "children" | "text">,
 ): Rendering {
-  const block = box === "RowBox" ? head !== undefined : box !== "StyleBox" && box !== "TextBox" && box !== "TextData";
-  return {
-    tag: block ? "div" : "span",
-    attributes: {
-      ...(box === "TextBox" ? {} : { "data-box": box }),
-      ...(head && { "data-head": head }),
-      ...attributes,
-    },
-    ...content,
-  };
+  return { tag: boxTag(box), attributes: { ...(head && { "data-head": head }), ...attributes }, ...content };
 }
 
 /** A run of text, which is no box worth naming in the DOM. */
@@ -90,6 +83,8 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
         children([box[1]]),
       );
     }
+    case "TableViewBox":
+      return tableView(box);
     case "StyleBox": {
       const options = box[2];
       const inner = renderBox(box[1], holes);
@@ -173,5 +168,37 @@ function grid(
       }),
     },
     { children: cells },
+  );
+}
+
+const TABLE_ATTRIBUTES: Readonly<Record<string, string>> = {
+  ScrollPosition: "scroll-position",
+  MaxItems: "max-items",
+};
+
+/**
+ * A `TableViewBox` as its element. The source rides as its expression (the element registers it
+ * with the kernel and asks for rows by range); the headers are known before any row is, so the
+ * viewport is the same size from the first paint.
+ */
+function tableView(box: Extract<BoxNode, readonly ["TableViewBox", ...unknown[]]>): Rendering {
+  const options = optionsOfBox(box);
+  const size = options.ImageSize;
+  const [w, h] = Array.isArray(size) ? [number(size[0]), number(size[1])] : [number(size), undefined];
+  const headers = options.TableViewBoxHeaders;
+  const pinned = Object.entries(TABLE_ATTRIBUTES).flatMap(([name, attribute]) =>
+    number(options[name]) === undefined ? [] : [[attribute, String(options[name])] as const],
+  );
+  return element(
+    "TableViewBox",
+    undefined,
+    {
+      source: JSON.stringify(box[1]),
+      ...(Array.isArray(headers) && { headers: JSON.stringify(headers) }),
+      ...(options.Pagination === true && { pagination: "" }),
+      ...Object.fromEntries(pinned),
+      ...css({ width: px(w), height: px(h) }),
+    },
+    {},
   );
 }

@@ -395,6 +395,9 @@ function staticControls(expr: Json, env: Environment): Json {
   return captions.length === 0 ? body : (["Labeled", body, string(captions.join("; ")), "Bottom"] as unknown as Json);
 }
 
+/** Rows of a table's first page in an environment that cannot scroll. */
+const PINNED_ROWS = 20;
+
 const GPU_HEADS = new Set(["ComplexPlot", "ComplexPlot3D"]);
 
 /** The environment's other rules, applied top-down: surfaces and layout. */
@@ -406,6 +409,12 @@ function surfaces(node: Json, env: Environment): Json {
     return ["Rasterize", [head, ...ops]] as unknown as Json;
   }
   if (head === "Row" && env.layout === "compact") return ["Column", ...ops] as unknown as Json;
+  // A table that cannot scroll is its first page: `ScrollPosition` and `MaxItems` pin it, and a
+  // host with an engine draws that page as a plain grid with a `Skeleton` row for the rest.
+  if (head === "CollectionTable" && !can.drive(env)) {
+    const { ops: positional, options } = optionsOf([head, ...ops] as unknown as Json);
+    return withOptions(head, positional, { ScrollPosition: 1, MaxItems: PINNED_ROWS, ...options });
+  }
   return [head, ...ops] as unknown as Json;
 }
 

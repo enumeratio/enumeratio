@@ -231,3 +231,12 @@ test("a call rejected for its arguments stays unevaluated, with a message saying
   expect(answer.json).toEqual(["Double", ["Rational", 1, 2], "x"]);
   expect(answer.messages).toMatchObject([{ head: "Double", code: "argx" }]);
 });
+
+test("a kernel reads text as MathJSON with the libraries it names declared, evaluating nothing", async () => {
+  const log: string[] = [];
+  const kernel = createKernel(new ComputeEngine(), catalogue(log), {
+    parse: (_ce, { text }) => JSON.parse(text),
+  });
+  expect(await kernel.read({ text: '["Double", 4]', format: "mathjson" })).toEqual(["Double", 4]);
+  expect(log).toEqual(["doubling"]);
+});

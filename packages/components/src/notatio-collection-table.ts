@@ -1,103 +1,32 @@
-import type { BoxedExpression, BoxedType } from "@cortex-js/compute-engine";
-import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
-import { parseExpression } from "@enumeratio/formats/expression";
-import { normalizeInputForm } from "@enumeratio/formats/inputform";
-import { allCarrierParams, carrierTypeForName } from "@enumeratio/structures";
-import { html, LitElement, nothing, type PropertyValues } from "lit";
-import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import { type loadBareEngine, parseFor } from "./mathlive.ts";
-import { ensureStyles } from "./styles.ts";
+import { describeCount } from "@enumeratio/boxes";
 import {
-  blockLists,
-  blocksToRgs,
-  type CellValue,
+  collectionText,
   columnLabel,
-  columnSource,
-  carrierBody,
-  compareCells,
   debug,
-  flatInts,
-  formatCount,
-  type GlyphKind,
-  MAX_INDEX,
-  pageCount,
-  renderGlyph,
+  rowSourceExpression,
   splitColumns,
-  substituteRow,
-  substituteRowPerHead,
-  wantsCarrier,
+  type RowSourceSpec,
 } from "@enumeratio/frontend/core";
-
-/** A row on one line: a long permutation must not wrap into a bracket layout. */
-const oneLine = (json: MathJsonExpression): string =>
-  serializeEpsil(normalizeInputForm(json), { margin: Number.POSITIVE_INFINITY, softMargin: Number.POSITIVE_INFINITY });
+import { html, LitElement, nothing } from "lit";
+import { ensureStyles } from "./styles.ts";
+import type { TableStatus } from "./table-view-box.ts";
 
 const log = debug("collection-table");
 
-type Engine = Awaited<ReturnType<typeof loadBareEngine>>;
-type BoxInput = Parameters<Engine["box"]>[0];
-
-interface Column {
-  /** As authored: `Descents`, or `Max(_) - Min(_)`. */
-  readonly source: string;
-  readonly label: string;
-  /** The expression over `_`, or undefined when it did not parse. */
-  readonly json: MathJsonExpression | undefined;
-  readonly error: string;
-}
-
-interface Row {
-  /** The 1-based index in the SOURCE collection — `At(expr, index)` is this row. */
-  readonly index: number;
-  readonly text: string;
-  readonly glyph: string;
-  readonly cells: readonly CellValue[];
-}
-
-const PAGE_SIZES = [10, 20, 50, 100];
-const SORT_LIMITS = [500, 2000, 10000];
-const SCAN_STEP = 20000;
-/** How long one scan slice may hold the main thread before yielding. */
-const SLICE_MS = 12;
-
-const GLYPH_KINDS = new Set<GlyphKind>([
-  "permutation",
-  "partition",
-  "tableau",
-  "composition",
-  "subset",
-  "dyck",
-  "tree",
-  "binary-tree",
-  "set-partition",
-  "lattice",
-  "diagram",
-]);
-
 /**
- * `<CollectionTable expr="Subsets(4)">` -- a paged table over a lazy indexed
- * collection. Rows are produced by unranking (`At(expr, i)`), one page at a time, so a
- * collection is never materialised: `SymmetricGroup(20)` pages as cheaply as
- * `Subsets(4)`, and the `#` column is the index that reproduces each row.
+ * `<CollectionTable expr="Subsets(4)">` -- the chrome around a `<table-view-box>`: the editors
+ * for the collection, its columns and a filter, and the table they drive. The table asks the
+ * page's kernel only for the rows in view, so `SymmetricGroup(25)` scrolls as cheaply as
+ * `Subsets(4)` and `NonNegativeIntegers` scrolls without end. The `#` column is the index that
+ * reproduces each row, `At(expr, #)`.
  *
- * `columns` names statistics to apply to every row — a head (`Descents`) or any
- * expression over the row `_` (`Max(_) - Min(_)`), comma-separated, addable and
- * removable live. `filter` is a predicate over `_`; it is answered like `Filter`, by
- * scanning the source in the background, bounded by `scan-limit` and extendable from
- * the UI, and the match count is exact once the scan has covered the whole source.
- * Sorting by a column has to materialise that column, so it is bounded by `sort-limit`
- * and the table says when the order covers only a prefix of the rows.
- *
- * The three operations cost differently, and the table is honest about each: paging is
- * `At` — closed-form unranking, constant per row, any page of any collection. Filtering
- * is `Filter` — a scan of the source, linear in how far it has to look, reading "k
- * matches in the first N of M" until the scan has covered the whole source, then "k of M
- * match". Sorting by a statistic needs the statistic for every candidate row, which is
- * the one thing a lazy collection cannot give for free. The compute-engine's own
- * `Filter` has the same linear cost, plus an iteration cap (`ce.iterationLimit`, 1024 by
- * default) past which `Count(Filter(...))` stays symbolic and `At(Filter(...), i)`
- * answers `Missing` — so the table drives the scan itself, by index, which is also what
- * lets it resume where it stopped.
+ * `columns` names statistics to apply to every row -- a head (`Descents`) or any expression
+ * over the row `_` (`Max(_) - Min(_)`), comma-separated, addable and removable live. `filter`
+ * is a predicate over `_`; it is answered like `Filter`, by a scan the kernel runs in slices,
+ * so the count is a lower bound until the scan covers the source, and a slice that finds
+ * nothing says how far it looked and offers to go on. Sorting by a column is a scan too, for a
+ * finite source: the best rows are kept and labeled until it completes; an infinite source
+ * declines. `page` and `page-size` open the table on the row where that page would start.
  */
 export class NotatioCollectionTable extends LitElement {
   static properties = {
@@ -114,42 +43,31 @@ export class NotatioCollectionTable extends LitElement {
     sort: { type: String, reflect: true },
     /** Sort descending rather than ascending. */
     descending: { type: Boolean, reflect: true },
-    /** Rows per page. */
+    /** With `page`: the table opens on the first row of that page. */
     pageSize: { type: Number, attribute: "page-size" },
-    /** The current page, 1-based. */
+    /** The page (1-based, of `page-size` rows) the table opens on. */
     page: { type: Number, reflect: true },
     /**
      * The carrier its rows inhabit -- the constructor head from `@enumeratio/combinatorics`,
-     * e.g. `Permutation`. Auto-derived from the first row's own operator: every carrier-bearing
-     * family yields values of its carrier directly (`SymmetricGroup`'s elements are already
-     * `Permutation(...)`), so this attribute is an OVERRIDE, needed only when a story wants a
-     * different reading than the collection's own. Whichever carrier is in play, each column and
-     * the filter address the row in it only where the statistic actually declares that carrier
-     * as its argument type -- never a blanket wrap, since a bare-list function (`Length`, `Max`,
-     * a `Descents`-style word statistic) answers a different, wrong question over the carrier
-     * than over the row itself.
+     * e.g. `Permutation`. Auto-derived from the first row's own operator, so this is an OVERRIDE,
+     * needed only when a story wants a different reading than the collection's own.
      */
     carrier: { type: String },
     /** Draw each row as a glyph too: `permutation`, `subset`, `partition`, `dyck`, … */
     glyph: { type: String },
     /** Ground-set size for the `subset` glyph; taken from the collection's first argument when 0. */
     n: { type: Number },
-    /** How many source rows a filter scan covers before it pauses and offers to go on. */
+    /** How many source rows a filter or sort scan covers before it pauses and offers to go on. */
     scanLimit: { type: Number, attribute: "scan-limit" },
-    /** How many rows a sort materialises; past this the order covers only a prefix. */
-    sortLimit: { type: Number, attribute: "sort-limit" },
-    /** Hide the editors (expression, columns, filter) and show only the table and pager. */
+    /** Hide the editors (expression, columns, filter) and show only the table. */
     readonly: { type: Boolean },
-    _total: { state: true },
-    _error: { state: true },
-    _loading: { state: true },
-    _cols: { state: true },
-    _predicate: { state: true },
-    _matches: { state: true },
-    _scanned: { state: true },
-    _scanning: { state: true },
-    _order: { state: true },
-    _rows: { state: true },
+    /** Pages in place of a scroll. */
+    pagination: { type: Boolean },
+    /** The first row in view (`ScrollPosition`): digits, so a row past 2^53 stays exact. */
+    scrollPosition: { type: String, attribute: "scroll-position" },
+    /** Rows of a pinned page (`MaxItems`). */
+    maxItems: { type: Number, attribute: "max-items" },
+    _status: { state: true },
   };
 
   declare expr: string;
@@ -163,41 +81,11 @@ export class NotatioCollectionTable extends LitElement {
   declare glyph: string;
   declare n: number;
   declare scanLimit: number;
-  declare sortLimit: number;
   declare readonly: boolean;
-  /** `Count(expr)` — a double, so only exact below 2^53. */
-  declare _total: number;
-  declare _error: string;
-  /** True from a new `expr` until its collection is counted (or fails). */
-  declare _loading: boolean;
-  declare _cols: readonly Column[];
-  declare _predicate: { json?: MathJsonExpression; error: string };
-  /** Source indices that pass the filter, in index order, as far as the scan has gone. */
-  declare _matches: number[] | null;
-  declare _scanned: number;
-  declare _scanning: boolean;
-  /** Source indices in sorted order, over the bounded candidate set; null when unsorted. */
-  declare _order: number[] | null;
-  declare _rows: readonly Row[];
-
-  #engine: Engine | undefined;
-  #coll: BoxedExpression | undefined;
-  /** Bumps on every reload / refilter so a stale scan slice stops itself. */
-  #generation = 0;
-  #elements = new Map<number, BoxedExpression>();
-  #cells = new Map<string, CellValue>();
-  /** The carrier in play: `carrier` if set, else auto-derived from the collection's head. */
-  #carrierName: string | undefined;
-  /** How many leading slots of the carrier's packed operand are params (`Finset`'s `n`). */
-  #carrierParams = 0;
-  /** The bare list's and the carrier's own types, each boxed once from the first row seen --
-   *  every row of one collection shares a shape (already a carrier value, or not), so one
-   *  probe of each stands for all of them. */
-  #bareType: BoxedType | undefined;
-  #carrierType: BoxedType | undefined;
-  /** Per (head, argument index): does that argument want the row wrapped in the carrier?
-   *  Read once from the head's signature, then reused for every row -- see `wantsCarrier`. */
-  #wrapCache = new Map<string, boolean>();
+  declare pagination: boolean;
+  declare scrollPosition: string;
+  declare maxItems: number;
+  declare _status: TableStatus | undefined;
 
   constructor() {
     super();
@@ -211,19 +99,12 @@ export class NotatioCollectionTable extends LitElement {
     this.carrier = "";
     this.glyph = "";
     this.n = 0;
-    this.scanLimit = SCAN_STEP;
-    this.sortLimit = 2000;
+    this.scanLimit = 0;
     this.readonly = false;
-    this._total = 0;
-    this._loading = false;
-    this._error = "";
-    this._cols = [];
-    this._predicate = { error: "" };
-    this._matches = null;
-    this._scanned = 0;
-    this._scanning = false;
-    this._order = null;
-    this._rows = [];
+    this.pagination = false;
+    this.scrollPosition = "";
+    this.maxItems = 0;
+    this._status = undefined;
     ensureStyles();
     ensureTableStyles();
   }
@@ -233,391 +114,43 @@ export class NotatioCollectionTable extends LitElement {
     return this;
   }
 
-  override disconnectedCallback(): void {
-    this.#generation++;
-    super.disconnectedCallback();
-  }
+  // ---- the source ------------------------------------------------------------------------
 
-  protected override willUpdate(changed: PropertyValues): void {
-    if (changed.has("expr")) {
-      void this.#load();
-      return;
-    }
-    if (!this.#coll) return;
-    if (changed.has("carrier")) this.#resolveCarrier();
-    if (changed.has("columns")) this.#parseColumns();
-    if (changed.has("filter")) this.#restartScan();
-    if (changed.has("scanLimit") && this._matches && !this._scanning) this.#resumeScan();
-    if (
-      changed.has("carrier") ||
-      changed.has("columns") ||
-      changed.has("filter") ||
-      changed.has("sort") ||
-      changed.has("descending") ||
-      changed.has("sortLimit") ||
-      changed.has("pageSize") ||
-      changed.has("page") ||
-      changed.has("glyph") ||
-      changed.has("n")
-    ) {
-      this.#refresh();
-    }
-  }
-
-  // ---- the collection --------------------------------------------------------------
-
-  async #load(): Promise<void> {
-    const generation = ++this.#generation;
-    this.#coll = undefined;
-    this.#elements.clear();
-    this.#cells.clear();
-    this._matches = null;
-    this._scanned = 0;
-    this._scanning = false;
-    this._order = null;
-    this._rows = [];
-    this._error = "";
-    const src = this.expr?.trim() ?? "";
-    if (!src) return;
-    this._loading = true;
-    try {
-      const { engine, parsed } = await parseFor((ce) =>
-        parseExpression(src, { ce, parseLatex: (tex) => ce.parse(tex).json }),
-      );
-      if (generation !== this.#generation) return;
-      this.#engine = engine;
-      const { json, errors } = parsed;
-      if (errors.length > 0) throw new Error(errors.join("; "));
-      const coll = engine.box(json as BoxInput);
-      if (!coll.isCollection || coll.isFiniteCollection === false) {
-        throw new Error(`${src} is not a finite collection`);
-      }
-      const total = coll.count ?? engine.box(["Count", json] as BoxInput).evaluate().re;
-      if (typeof total !== "number" || !Number.isFinite(total)) {
-        throw new Error(`Count(${src}) is not known`);
-      }
-      this.#coll = coll;
-      this._total = total;
-      this._loading = false;
-      this.#resolveCarrier();
-      this.#parseColumns();
-      this.#restartScan();
-      this.#refresh();
-    } catch (err) {
-      if (generation === this.#generation) this._loading = false;
-      this._error = err instanceof Error ? err.message : String(err);
-      log("load failed", src, err);
-    }
-  }
-
-  /** The row at a source index, by unranking; cached for the current collection. */
-  #element(index: number): BoxedExpression | undefined {
-    const coll = this.#coll;
-    const engine = this.#engine;
-    if (!coll || !engine) return undefined;
-    let elt = this.#elements.get(index);
-    if (elt) return elt;
-    elt = coll.at(index) ?? engine.box(["At", coll.json, index] as BoxInput).evaluate();
-    if (elt.json === "Missing" || elt.operator === "Error") return undefined;
-    this.#elements.set(index, elt);
-    return elt;
-  }
-
-  #parse(source: string): { json?: MathJsonExpression; error: string } {
-    const engine = this.#engine;
-    if (!engine) return { error: "engine not ready" };
-    const { json, errors } = parseExpression(source, {
-      ce: engine,
-      parseLatex: (tex) => engine.parse(tex).json,
-    });
-    return errors.length > 0 ? { error: errors.join("; ") } : { json, error: "" };
-  }
-
-  // ---- columns ---------------------------------------------------------------------
-
-  #parseColumns(): void {
-    this._cols = splitColumns(this.columns ?? "").map((text) => {
-      const parsed = this.#parse(columnSource(text));
-      return { source: text, label: columnLabel(text), json: parsed.json, error: parsed.error };
-    });
-  }
-
-  /**
-   * The carrier in play for this collection: the `carrier` attribute if set, else read off the
-   * first row's own operator, when it names a registered carrier (`@enumeratio/structures`'
-   * `carrierTypeForName`) -- every carrier-bearing family yields carrier values directly, so
-   * this is a probe of the value itself, not a lookup from the collection's head. Resets the
-   * per-(head, argument) wrap decisions and the probed types, both of which are stale once the
-   * carrier changes.
-   */
-  #resolveCarrier(): void {
-    const engine = this.#engine;
-    const first = engine ? this.#element(1) : undefined;
-    const op = first?.operator;
-    const derived = engine && op !== undefined && carrierTypeForName(engine, op) !== undefined ? op : undefined;
-    this.#carrierName = this.carrier || derived || undefined;
-    this.#carrierParams = (engine && this.#carrierName && allCarrierParams(engine).get(this.#carrierName)) || 0;
-    this.#bareType = undefined;
-    this.#carrierType = undefined;
-    this.#wrapCache.clear();
-    this.#cells.clear();
-  }
-
-  /**
-   * `elt` as the columns and the filter see it, two ways: the bare list, and the row wrapped
-   * in its carrier. A family on a carrier yields carrier VALUES directly (`SymmetricGroup`'s
-   * elements are `Permutation(...)`), so the bare form is always that carrier's own single
-   * argument, unwrapped -- never a wrap fabricated here. When `elt` isn't already a value of
-   * `#carrierName` (no carrier in play, or a `carrier` override that doesn't match what the
-   * source actually yields), both readings fall back to the row as-is.
-   */
-  #representations(elt: BoxedExpression): { bare: MathJsonExpression; wrapped: MathJsonExpression } {
-    const name = this.#carrierName;
-    const json = elt.json;
-    if (!name || elt.operator !== name || !Array.isArray(json) || json.length !== 2) {
-      return { bare: json, wrapped: json };
-    }
-    return { bare: carrierBody(json[1] as MathJsonExpression, this.#carrierParams), wrapped: json };
-  }
-
-  /** The bare list's and the carrier's own boxed types, each probed once from the first row
-   *  seen (every row of a collection shares its shape) and reused after. Both fall back to
-   *  `elt.type` when there is no carrier, or probing fails. */
-  #typesFor(
-    elt: BoxedExpression,
-    bare: MathJsonExpression,
-    wrapped: MathJsonExpression,
-  ): {
-    bareType: BoxedType;
-    carrierType: BoxedType | undefined;
-  } {
-    if (!this.#carrierName) return { bareType: elt.type, carrierType: undefined };
-    if (!this.#bareType) {
-      try {
-        this.#bareType = bare === elt.json ? elt.type : this.#engine!.box(bare as BoxInput).type;
-      } catch (err) {
-        log("bare type probe failed", err);
-      }
-    }
-    if (!this.#carrierType) {
-      try {
-        this.#carrierType = wrapped === elt.json ? elt.type : this.#engine!.box(wrapped as BoxInput).type;
-      } catch (err) {
-        log("carrier type probe failed", this.#carrierName, err);
-      }
-    }
-    return { bareType: this.#bareType ?? elt.type, carrierType: this.#carrierType };
-  }
-
-  /** Whether `head`'s declared argument `argIndex` wants the row wrapped in the carrier --
-   *  read once from the signature per (head, argIndex), reused for every later row. Never
-   *  retried: a head this can't read stays bare, same as one with no carrier at all. */
-  #decide(head: string, argIndex: number, bareType: BoxedType, carrierType: BoxedType | undefined): boolean {
-    const key = `${head}\0${argIndex}`;
-    const cached = this.#wrapCache.get(key);
-    if (cached !== undefined) return cached;
-    const decision = wantsCarrier(this.#engine!, head, argIndex, bareType, carrierType);
-    this.#wrapCache.set(key, decision);
-    return decision;
-  }
-
-  /** `json` with `_` replaced by `elt`: bare where no carrier is in play, else per-argument,
-   *  by what each occurrence's enclosing head actually declares (BL-1) -- never a blanket wrap,
-   *  and never a double wrap when `elt` is already a carrier value. */
-  #substitute(json: MathJsonExpression, elt: BoxedExpression): MathJsonExpression {
-    if (!this.#carrierName) return substituteRow(json, elt.json);
-    const { bare, wrapped } = this.#representations(elt);
-    const { bareType, carrierType } = this.#typesFor(elt, bare, wrapped);
-    return substituteRowPerHead(json, bare, wrapped, (head, i) => this.#decide(head, i, bareType, carrierType));
-  }
-
-  /** Evaluate a column at a row; memoised per (column, index) for the collection. */
-  #cell(col: Column, index: number, elt: BoxedExpression): CellValue {
-    const key = `${col.source}\0${index}`;
-    const hit = this.#cells.get(key);
-    if (hit) return hit;
-    let value: CellValue;
-    if (!col.json) {
-      value = { text: "⚠" };
-    } else {
-      try {
-        const result = this.#engine!.box(this.#substitute(col.json, elt) as BoxInput).evaluate();
-        if (result.operator === "Error") {
-          value = { text: "⚠" };
-        } else if (Number.isFinite(result.re) && result.im === 0) {
-          value = { num: result.re, text: String(result.re) };
-        } else {
-          value = { text: oneLine(result.json) };
-        }
-      } catch (err) {
-        log("cell failed", col.source, index, err);
-        value = { text: "⚠" };
-      }
-    }
-    this.#cells.set(key, value);
-    return value;
-  }
-
-  // ---- filter: a background scan of the source ---------------------------------------
-
-  #restartScan(): void {
-    this.#generation++;
-    this._scanning = false;
-    const text = this.filter?.trim() ?? "";
-    if (!text) {
-      this._predicate = { error: "" };
-      this._matches = null;
-      this._scanned = 0;
-      return;
-    }
-    this._predicate = this.#parse(text);
-    // A predicate that does not parse filters nothing: the view stays the whole source.
-    this._matches = this._predicate.json ? [] : null;
-    this._scanned = 0;
-    if (this._predicate.json) this.#resumeScan();
-  }
-
-  /** Continue scanning from where the last pass stopped, up to the current limit. */
-  #resumeScan(): void {
-    if (!this.#coll || !this._matches || !this._predicate.json) return;
-    if (this._scanned >= this.#scanEnd()) return;
-    const generation = this.#generation;
-    this._scanning = true;
-    const slice = (): void => {
-      if (generation !== this.#generation) return;
-      const pred = this._predicate.json!;
-      const matches = this._matches!;
-      const end = this.#scanEnd();
-      const started = performance.now();
-      let i = this._scanned;
-      while (i < end && performance.now() - started < SLICE_MS) {
-        i++;
-        const elt = this.#element(i);
-        if (elt && this.#holds(pred, elt)) matches.push(i);
-      }
-      this._scanned = i;
-      // Unranked rows are cheap to redo; keeping every scanned one is not.
-      if (this.#elements.size > 4 * this.pageSize + 1000) this.#elements.clear();
-      const done = i >= end;
-      this._scanning = !done;
-      this.#refresh();
-      if (!done) setTimeout(slice, 0);
+  /** The source this table shows: the collection as the kernel reads it, and what to do to each row. */
+  #spec(): RowSourceSpec {
+    return {
+      collection: collectionText(this.expr.trim()),
+      columns: splitColumns(this.columns ?? ""),
+      ...(this.filter.trim() && { filter: this.filter.trim() }),
+      ...(this.sort.trim() && { sort: this.sort.trim() }),
+      ...(this.descending && { descending: true }),
+      ...(this.carrier && { carrier: this.carrier }),
+      ...(this.glyph && { glyph: this.glyph }),
+      ...(this.n > 0 && { n: this.n }),
+      ...(this.scanLimit > 0 && { scanBudget: this.scanLimit }),
     };
-    setTimeout(slice, 0);
   }
 
-  #scanEnd(): number {
-    return Math.min(this._total, Math.max(0, this.scanLimit), MAX_INDEX);
+  /** The headings drawn before any row is known, so the viewport is its size from the first paint. */
+  #headers(): string[] {
+    return [...(this.glyph ? [""] : []), "element", ...splitColumns(this.columns ?? "").map(columnLabel)];
   }
 
-  #holds(pred: MathJsonExpression, elt: BoxedExpression): boolean {
-    try {
-      const r = this.#engine!.box(this.#substitute(pred, elt) as BoxInput).evaluate();
-      return r.json === "True";
-    } catch {
-      return false;
-    }
+  /** The display column the sort is on (past the glyph and element columns), if any. */
+  #sortedDisplayColumn(): number | undefined {
+    const key = this.sort.trim();
+    const index = key === "" ? -1 : splitColumns(this.columns ?? "").indexOf(key);
+    return index < 0 ? undefined : index + (this.glyph ? 1 : 0) + 1;
   }
 
-  #scanMore(): void {
-    this.scanLimit = Math.min(this._total, this.scanLimit + SCAN_STEP);
-  }
+  // ---- interaction -----------------------------------------------------------------------
 
-  // ---- the view: sort, then page -------------------------------------------------------
-
-  /** The rows the view ranges over: the matches so far, or the whole source (null). */
-  #candidates(): number[] | null {
-    return this._matches;
-  }
-
-  #viewCount(): number {
-    const c = this.#candidates();
-    return c ? c.length : Math.min(this._total, MAX_INDEX);
-  }
-
-  #sortColumn(): Column | undefined {
-    const key = this.sort?.trim();
-    return key ? this._cols.find((c) => c.source === key) : undefined;
-  }
-
-  /** How many rows the current sort actually ordered (0 when unsorted). */
-  #sortedCount(): number {
-    return this._order ? this._order.length : 0;
-  }
-
-  #refresh(): void {
-    if (!this.#coll) return;
-    const col = this.#sortColumn();
-    if (col) {
-      const candidates = this.#candidates();
-      const limit = Math.max(1, this.sortLimit);
-      const pool = candidates
-        ? candidates.slice(0, limit)
-        : Array.from({ length: Math.min(this._total, limit) }, (_, i) => i + 1);
-      const keyed = pool.map((index) => {
-        const elt = this.#element(index);
-        return { index, value: elt ? this.#cell(col, index, elt) : { text: "" } };
-      });
-      keyed.sort((a, b) => compareCells(a.value, b.value) || a.index - b.index);
-      if (this.descending) keyed.reverse();
-      this._order = keyed.map((k) => k.index);
-    } else {
-      this._order = null;
-    }
-    const pages = pageCount(this.#viewCount(), this.pageSize);
-    const page = Math.min(Math.max(1, Math.floor(this.page) || 1), pages);
-    if (page !== this.page) this.page = page;
-    this._rows = this.#pageRows(page);
-  }
-
-  #pageRows(page: number): Row[] {
-    const start = (page - 1) * this.pageSize;
-    const view = this._order ?? this.#candidates();
-    const count = view ? view.length : this.#viewCount();
-    const rows: Row[] = [];
-    for (let k = start; k < Math.min(start + this.pageSize, count); k++) {
-      const index = view ? view[k] : k + 1;
-      const elt = this.#element(index);
-      if (!elt) continue;
-      rows.push({
-        index,
-        text: oneLine(elt.json),
-        glyph: this.#glyph(elt.json),
-        cells: this._cols.map((col) => this.#cell(col, index, elt)),
-      });
-    }
-    return rows;
-  }
-
-  #glyph(json: MathJsonExpression): string {
-    const kind = this.glyph as GlyphKind;
-    if (!GLYPH_KINDS.has(kind)) return "";
-    let ints = flatInts(json);
-    if (!ints && (kind === "set-partition" || kind === "diagram")) {
-      const blocks = blockLists(json);
-      if (blocks) ints = blocksToRgs(blocks);
-    }
-    if (!ints) return "";
-    try {
-      return renderGlyph(kind, ints, { n: kind === "subset" ? this.#groundSize() : undefined });
-    } catch {
-      return "";
-    }
-  }
-
-  /** `n` for the subset glyph: the attribute, else the collection's first integer argument. */
-  #groundSize(): number | undefined {
-    if (this.n > 0) return this.n;
-    const json = this.#coll?.json;
-    const first: unknown = Array.isArray(json) ? json[1] : undefined;
-    return typeof first === "number" && Number.isInteger(first) ? first : undefined;
-  }
-
-  // ---- interaction -----------------------------------------------------------------
-
-  #toggleSort(col: Column): void {
-    if (this.sort !== col.source) {
-      this.sort = col.source;
+  #onSort(event: CustomEvent<{ column: number }>): void {
+    const stat = event.detail.column - (this.glyph ? 1 : 0) - 1;
+    const key = splitColumns(this.columns ?? "")[stat];
+    if (key === undefined) return;
+    if (this.sort !== key) {
+      this.sort = key;
       this.descending = false;
     } else if (!this.descending) {
       this.descending = true;
@@ -625,7 +158,6 @@ export class NotatioCollectionTable extends LitElement {
       this.sort = "";
       this.descending = false;
     }
-    this.page = 1;
   }
 
   #addColumn(text: string): void {
@@ -636,11 +168,11 @@ export class NotatioCollectionTable extends LitElement {
     this.columns = [...existing, t].join(", ");
   }
 
-  #removeColumn(col: Column): void {
+  #removeColumn(source: string): void {
     this.columns = splitColumns(this.columns ?? "")
-      .filter((c) => c !== col.source)
+      .filter((c) => c !== source)
       .join(", ");
-    if (this.sort === col.source) this.sort = "";
+    if (this.sort === source) this.sort = "";
   }
 
   #onEnter(apply: (value: string) => void) {
@@ -652,73 +184,26 @@ export class NotatioCollectionTable extends LitElement {
     };
   }
 
-  #goto(page: number): void {
-    const pages = pageCount(this.#viewCount(), this.pageSize);
-    this.page = Math.min(Math.max(1, page), pages);
-  }
-
-  // ---- render ----------------------------------------------------------------------
+  // ---- render ----------------------------------------------------------------------------
 
   #summary(): unknown {
-    const total = formatCount(this._total);
-    if (this._loading) return html`<span class="nct-count">loading…</span>`;
-    if (!this._matches) {
-      // Rows past 2^53 cannot be addressed exactly, so the pager stops short of the count.
-      const reach =
-        this._total > MAX_INDEX
-          ? html`<span class="nct-note">pages reach row ${formatCount(MAX_INDEX)}</span>`
-          : nothing;
-      return html`<span class="nct-count">${total} rows</span>${reach}${
-          this._predicate.error ? html`<span class="nct-error">filter: ${this._predicate.error}</span>` : nothing
-        }`;
-    }
-    const matched = formatCount(this._matches.length);
-    const complete = this._scanned >= Math.min(this._total, MAX_INDEX);
-    if (complete) {
-      return html`<span class="nct-count">${matched} of ${total} match</span>`;
-    }
-    return html`<span class="nct-count"
-        >${matched} match${this._matches.length === 1 ? "" : "es"} in the first ${formatCount(this._scanned)} of
-        ${total}</span
-      >${
-        this._scanning
-          ? html`<span class="nct-note">scanning…</span>`
-          : html`<button type="button" class="nct-btn" @click=${() => this.#scanMore()}>
-              scan ${formatCount(Math.min(SCAN_STEP, this._total - this._scanned))} more
-            </button>`
+    const status = this._status;
+    if (status?.error) return html`<span class="nct-error">${status.error}</span>`;
+    if (status === undefined) return html`<span class="nct-count">loading…</span>`;
+    const count = describeCount(status.count);
+    const noun = this.filter.trim()
+      ? status.count.kind === "exact" && status.count.n === 1n
+        ? "match"
+        : "matches"
+      : "rows";
+    return html`<span class="nct-count">${count} ${noun}</span>${
+        status.warning ? html`<span class="nct-error">${status.warning}</span>` : nothing
       }`;
-  }
-
-  #sortNote(): unknown {
-    const col = this.#sortColumn();
-    if (!col) return nothing;
-    const ordered = this.#sortedCount();
-    const view = this.#viewCount();
-    const bounded = ordered < view;
-    return html`<div class="nct-sortnote">
-      sorted by <code>${col.label}</code>${this.descending ? " ↓" : " ↑"}
-      ${
-        bounded
-          ? html`over the first ${formatCount(ordered)} of ${formatCount(view)} rows — sorting materialises the column,
-            so it is bounded:`
-          : html`over all ${formatCount(ordered)} rows ·`
-      }
-      <select
-        class="nct-select"
-        .value=${String(this.sortLimit)}
-        @change=${(e: Event) => {
-          this.sortLimit = Number((e.target as HTMLSelectElement).value);
-        }}
-      >
-        ${SORT_LIMITS.map(
-          (n) => html`<option value=${n} ?selected=${n === this.sortLimit}>up to ${formatCount(n)}</option>`,
-        )}
-      </select>
-    </div>`;
   }
 
   #editors(): unknown {
     if (this.readonly) return nothing;
+    const cols = splitColumns(this.columns ?? "");
     return html`<div class="nct-editors">
       <label class="nct-field">
         <span>collection</span>
@@ -741,21 +226,19 @@ export class NotatioCollectionTable extends LitElement {
           .value=${this.filter}
           @keydown=${this.#onEnter((v) => {
             this.filter = v.trim();
-            this.page = 1;
           })}
         />
-        ${this._predicate.error ? html`<span class="nct-error">${this._predicate.error}</span>` : nothing}
       </label>
       <label class="nct-field">
         <span>columns</span>
         <span class="nct-chips">
-          ${this._cols.map(
-            (col) =>
-              html`<span class="nct-chip ${col.error ? "is-error" : ""}" title=${col.error}
-                >${col.label}<button
+          ${cols.map(
+            (source) =>
+              html`<span class="nct-chip"
+                >${columnLabel(source)}<button
                   type="button"
-                  aria-label="remove ${col.label}"
-                  @click=${() => this.#removeColumn(col)}
+                  aria-label="remove ${columnLabel(source)}"
+                  @click=${() => this.#removeColumn(source)}
                 >
                   ×
                 </button></span
@@ -773,95 +256,39 @@ export class NotatioCollectionTable extends LitElement {
     </div>`;
   }
 
-  #table(): unknown {
-    const sortCol = this.#sortColumn();
-    return html`<div class="nct-scroll">
-      <table class="nct-table">
-        <thead>
-          <tr>
-            <th class="nct-index" title="index in the source collection: At(expr, #)">#</th>
-            ${this.glyph ? html`<th class="nct-glyph"></th>` : nothing}
-            <th class="nct-elt">element</th>
-            ${this._cols.map(
-              (col) =>
-                html`<th
-                  class="nct-stat ${sortCol === col ? "is-sorted" : ""} ${col.error ? "is-error" : ""}"
-                  title=${col.error || `sort by ${col.label}`}
-                >
-                  <button type="button" @click=${() => this.#toggleSort(col)}>
-                    ${col.label}${sortCol === col ? (this.descending ? " ↓" : " ↑") : ""}
-                  </button>
-                </th>`,
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          ${this._rows.map(
-            (row) => html`<tr>
-              <td class="nct-index">${row.index.toLocaleString("en-US")}</td>
-              ${this.glyph ? html`<td class="nct-glyph">${unsafeHTML(row.glyph)}</td>` : nothing}
-              <td class="nct-elt"><code>${row.text}</code></td>
-              ${row.cells.map((cell) => html`<td class="nct-stat">${cell.text}</td>`)}
-            </tr>`,
-          )}
-          ${
-            this._rows.length === 0
-              ? html`<tr>
-                  <td class="nct-empty" colspan=${2 + (this.glyph ? 1 : 0) + this._cols.length}>
-                    ${this._loading ? "loading…" : this._scanning ? "scanning…" : "no rows"}
-                  </td>
-                </tr>`
-              : nothing
-          }
-        </tbody>
-      </table>
-    </div>`;
-  }
-
-  #pager(): unknown {
-    const pages = pageCount(this.#viewCount(), this.pageSize);
-    return html`<div class="nct-pager">
-      <button type="button" class="nct-btn" ?disabled=${this.page <= 1} @click=${() => this.#goto(1)}>«</button>
-      <button type="button" class="nct-btn" ?disabled=${this.page <= 1} @click=${() => this.#goto(this.page - 1)}>
-        ‹
-      </button>
-      <span class="nct-pageno"
-        >page
-        <input
-          class="nct-input nct-page"
-          type="number"
-          min="1"
-          max=${pages}
-          .value=${String(this.page)}
-          @keydown=${this.#onEnter((v) => this.#goto(Number(v)))}
-          @change=${(e: Event) => this.#goto(Number((e.target as HTMLInputElement).value))}
-        />
-        of ${formatCount(pages)}</span
-      >
-      <button type="button" class="nct-btn" ?disabled=${this.page >= pages} @click=${() => this.#goto(this.page + 1)}>
-        ›
-      </button>
-      <button type="button" class="nct-btn" ?disabled=${this.page >= pages} @click=${() => this.#goto(pages)}>»</button>
-      <select
-        class="nct-select"
-        aria-label="rows per page"
-        @change=${(e: Event) => {
-          this.pageSize = Number((e.target as HTMLSelectElement).value);
-          this.page = 1;
-        }}
-      >
-        ${PAGE_SIZES.map((n) => html`<option value=${n} ?selected=${n === this.pageSize}>${n} / page</option>`)}
-      </select>
-    </div>`;
-  }
-
   protected override render(): unknown {
+    const source = this.expr.trim();
+    const start =
+      this.scrollPosition !== ""
+        ? this.scrollPosition
+        : this.page > 1
+          ? String((this.page - 1) * Math.max(1, this.pageSize) + 1)
+          : "";
+    if (source !== "") log("render", source);
     return html`<div class="nct">
       <div class="nct-head">
         <code class="nct-title">${this.expr}</code>
-        ${this._error ? html`<span class="nct-error">${this._error}</span>` : this.#summary()}
+        ${this.#summary()}
       </div>
-      ${this.#editors()} ${this._error ? nothing : html`${this.#sortNote()}${this.#table()}${this.#pager()}`}
+      ${this.#editors()}
+      ${
+        source === ""
+          ? nothing
+          : html`<table-view-box
+              source=${JSON.stringify(rowSourceExpression(this.#spec()))}
+              headers=${JSON.stringify(this.#headers())}
+              sortable
+              sort-column=${this.#sortedDisplayColumn() ?? nothing}
+              ?sort-descending=${this.descending}
+              scroll-position=${start === "" ? nothing : start}
+              max-items=${this.maxItems > 0 ? String(this.maxItems) : this.pagination ? String(this.pageSize) : nothing}
+              ?pagination=${this.pagination}
+              @table-status=${(e: CustomEvent<TableStatus>) => {
+                this._status = e.detail;
+              }}
+              @table-sort=${(e: CustomEvent<{ column: number }>) => this.#onSort(e)}
+            ></table-view-box>`
+      }
     </div>`;
   }
 }
@@ -880,7 +307,7 @@ function ensureTableStyles(): void {
 }
 
 const CSS = `
-notatio-collection-table { display: block; margin: 0.75rem 0; }
+notatio-collection-table { display: block; margin: 0.75rem 0; width: 100%; }
 .nct {
   border: 1px solid var(--notatio-border, var(--vp-c-divider, #d4d4d8));
   border-radius: 10px;
@@ -888,6 +315,7 @@ notatio-collection-table { display: block; margin: 0.75rem 0; }
   font-size: 0.85rem;
   overflow: hidden;
 }
+.nct table-view-box { margin: 0; border: 0; border-radius: 0; }
 .nct-head {
   display: flex;
   align-items: baseline;
@@ -898,7 +326,6 @@ notatio-collection-table { display: block; margin: 0.75rem 0; }
 }
 .nct-title { font-size: 0.9rem; font-weight: 600; color: var(--vp-c-brand-1, #3451b2); }
 .nct-count { color: var(--vp-c-text-2, #555); font-variant-numeric: tabular-nums; }
-.nct-note { color: var(--vp-c-text-3, #888); font-style: italic; }
 .nct-error { color: var(--vp-c-danger-1, #c0392b); font-family: var(--notatio-mono, ui-monospace, monospace); font-size: 0.78rem; }
 .nct-editors {
   display: grid;
@@ -938,7 +365,6 @@ notatio-collection-table { display: block; margin: 0.75rem 0; }
   font-family: var(--notatio-mono, ui-monospace, monospace);
   font-size: 0.78rem;
 }
-.nct-chip.is-error { border-color: var(--vp-c-danger-1, #c0392b); color: var(--vp-c-danger-1, #c0392b); }
 .nct-chip button {
   border: 0;
   background: none;
@@ -950,90 +376,6 @@ notatio-collection-table { display: block; margin: 0.75rem 0; }
 }
 .nct-chip button:hover { color: var(--vp-c-danger-1, #c0392b); }
 .nct-add { flex: 1 1 14rem; }
-.nct-sortnote {
-  padding: 0.35rem 0.8rem;
-  color: var(--vp-c-text-2, #555);
-  font-size: 0.78rem;
-  border-bottom: 1px solid var(--vp-c-divider, #e5e5e5);
-}
-.nct-scroll { overflow-x: auto; }
-.nct-table { width: 100%; border-collapse: collapse; margin: 0; }
-.nct-table th, .nct-table td {
-  padding: 0.3rem 0.6rem;
-  border-bottom: 1px solid var(--vp-c-divider, #eee);
-  text-align: left;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-.nct-table thead th {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--vp-c-text-3, #888);
-  background: var(--vp-c-bg, #fff);
-  user-select: none;
-}
-.nct-table th button {
-  border: 0;
-  background: none;
-  padding: 0;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  text-decoration: underline dotted var(--vp-c-divider, #bbb);
-  text-underline-offset: 3px;
-}
-.nct-table th button:hover, .nct-table th.is-sorted button { color: var(--vp-c-brand-1, #3451b2); }
-.nct-table th.is-error button { color: var(--vp-c-danger-1, #c0392b); }
-.nct-table tbody tr:hover { background: var(--vp-c-bg-soft, #f6f6f7); }
-.nct-index {
-  color: var(--vp-c-text-3, #888);
-  font-family: var(--notatio-mono, ui-monospace, monospace);
-  font-size: 0.75rem;
-  font-variant-numeric: tabular-nums;
-  text-align: right !important;
-}
-.nct-elt code {
-  font-family: var(--notatio-mono, ui-monospace, monospace);
-  font-size: 0.82rem;
-  background: none;
-  padding: 0;
-  color: var(--vp-c-text-1, inherit);
-}
-.nct-stat { font-variant-numeric: tabular-nums; text-align: right !important; }
-.nct-glyph { line-height: 0; width: 1px; }
-.nct-glyph svg { height: 1.6em; width: auto; display: inline-block; vertical-align: middle; }
-.nct-empty { color: var(--vp-c-text-3, #888); font-style: italic; text-align: center !important; }
-.nct-pager {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.45rem 0.8rem;
-  color: var(--vp-c-text-2, #555);
-  font-size: 0.78rem;
-}
-.nct-pageno { display: inline-flex; align-items: center; gap: 0.35rem; margin: 0 0.35rem; }
-.nct-page { flex: 0 0 auto; width: 5.5rem; padding: 0.15rem 0.4rem; text-align: right; }
-.nct-btn {
-  border: 1px solid var(--vp-c-divider, #d4d4d8);
-  border-radius: 6px;
-  background: var(--vp-c-bg, #fff);
-  color: var(--vp-c-text-2, #555);
-  font-size: 0.78rem;
-  padding: 0.15rem 0.5rem;
-  cursor: pointer;
-}
-.nct-btn:hover:not([disabled]) { color: var(--vp-c-brand-1, #3451b2); border-color: currentColor; }
-.nct-btn[disabled] { opacity: 0.4; cursor: default; }
-.nct-select {
-  margin-left: auto;
-  border: 1px solid var(--vp-c-divider, #d4d4d8);
-  border-radius: 6px;
-  background: var(--vp-c-bg, #fff);
-  color: var(--vp-c-text-2, #555);
-  font-size: 0.78rem;
-  padding: 0.15rem 0.35rem;
-}
-.nct-sortnote .nct-select { margin-left: 0.35rem; }
 `;
 
 if (!customElements.get("notatio-collection-table")) {

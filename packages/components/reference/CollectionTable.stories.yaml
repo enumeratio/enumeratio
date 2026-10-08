@@ -23,9 +23,9 @@
       [Tuple, Filter, "'FixedPoints(_) == 0'"],
     ]
 - id: symmetric-group-12-paging
-  caption: SymmetricGroup(12) -- paging without materialising
+  caption: SymmetricGroup(12) -- scrolling without materialising
   category: Basic
-  notes: 479,001,600 permutations. The pager opens on page one million -- `At` unranks the ten rows there directly. Type a page number, or jump to the last page. Sorting here orders only the first two thousand rows (the bound is adjustable) and says so; a filter scans twenty thousand rows at a time and offers to continue.
+  notes: 479,001,600 permutations. The table opens on page one million (`page` and `page-size` give its first row) -- `At` unranks the rows in view directly, and only those. Scroll, or type a row number into the jump field. Sorting a collection this large keeps the best rows over a scan and says how far it has looked; a filter scans twenty thousand rows at a time and offers to continue.
   expr:
     [
       CollectionTable,
@@ -38,7 +38,7 @@
 - id: symmetric-group-20-beyond-2-53
   caption: SymmetricGroup(20)
   category: Beyond 2⁵³
-  notes: 2,432,902,008,176,640,000 rows -- past Number.MAX_SAFE_INTEGER, so the count shows as approximate and the pager stops at the last exactly-indexable page. The kernel counts and unranks in doubles; indexing past 2⁵³ would silently round, so the table refuses rather than guess. `readonly` hides the editors.
+  notes: 2,432,902,008,176,640,000 rows -- past Number.MAX_SAFE_INTEGER, so the count is shown as the approximation it is, and the rows are still exact. Row numbers are bigints; type 2432902008176640000 into the jump field for the last permutation. `readonly` hides the editors.
   expr:
     [
       CollectionTable,
@@ -47,6 +47,23 @@
       [Tuple, PageSize, 10],
       [Tuple, Readonly, True],
     ]
+- id: symmetric-group-25-last-row
+  caption: SymmetricGroup(25), jumped to its last row
+  category: Beyond 2⁵³
+  notes: 15,511,210,043,330,985,984,000,000 permutations. `scroll-position` is the exact row number, past anything a double holds, so the table opens on the last permutation and the scrollbar is scaled -- wheel and arrow keys move by row.
+  expr:
+    [
+      CollectionTable,
+      [SymmetricGroup, 25],
+      [Tuple, Columns, "'Descents, CycleCount'"],
+      [Tuple, ScrollPosition, "'15511210043330985984000000'"],
+      [Tuple, Readonly, True],
+    ]
+- id: non-negative-integers-endless
+  caption: NonNegativeIntegers, scrolling without end
+  category: Beyond 2⁵³
+  notes: An infinite set with no `At`, so the table walks it and keeps the window it has walked. The count is infinite, the scrollbar grows a runway as you reach the end, and a far jump walks forward within a budget rather than freeze. A filter over it, `Mod(_, 1000) == 7`, is a lower bound that grows as the scan goes; sorting it declines, and says why.
+  expr: [CollectionTable, NonNegativeIntegers, [Tuple, Columns, "'Sqrt, Mod(_, 7)'"], [Tuple, Readonly, True]]
 - id: integer-partitions-8-ferrers
   caption: IntegerPartitions(8) as Ferrers diagrams
   category: Other carriers

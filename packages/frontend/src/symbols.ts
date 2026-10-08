@@ -591,7 +591,9 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   {
     head: "CollectionTable",
     tag: "notatio-collection-table",
-    attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { expr: epsil(ops[0]) }),
+    // The collection as a reader will see and retype it: `NonNegativeIntegers`, not Epsil's lowercase spelling.
+    attributes: (ops): Record<string, string> =>
+      ops[0] === undefined ? {} : { expr: serializeExpression(ops[0], { libraryNames: "mathjson" }) },
   },
   {
     // `Manipulate(body, (a, 0, 5), …)`: the controls become `params`, and the body is a

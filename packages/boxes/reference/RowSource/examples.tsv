@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+held			[RowSource, [Range, 1, 5]]	[RowSource, [Range, 1, 5]]	held: the source is a handle, not its rows
