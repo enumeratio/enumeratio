@@ -2,7 +2,6 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { applyPatch, applyPatches, symbols as symbolsOf } from "./patch.ts";
 import { integratePolynomialPowers } from "./patches/integrate-polynomial-powers.ts";
 import { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
-import { rangeBigBounds } from "./patches/range-big-bounds.ts";
 import { shapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 import { solveDeclines } from "./patches/solve-declines.ts";
 import { solveDomains } from "./patches/solve-domains.ts";
@@ -80,7 +79,6 @@ export { solveDeclines, evaluateSolveDeclines } from "./patches/solve-declines.t
 export { solveDomains, evaluateSolveDomains } from "./patches/solve-domains.ts";
 export { integratePolynomialPowers, integrateExpandsPolynomials } from "./patches/integrate-polynomial-powers.ts";
 export { iteratorUpperBound } from "./patches/iterator-upper-bound.ts";
-export { rangeBigBounds, evaluateRangeBigBounds } from "./patches/range-big-bounds.ts";
 export { shapeOfUnknownElements, evaluateShapeOfUnknownElements } from "./patches/shape-of-unknown-elements.ts";
 export { dictionaryOf, entriesOf } from "./compute-engine/library/core.ts";
 export { valuesAtZero } from "./patches/values-at-zero.ts";
@@ -185,14 +183,13 @@ export function symbols(): readonly string[] {
   return symbolsOf(PATCHES);
 }
 
-/** Fixes to compute-engine's own heads (Take, Drop, Solve, Range, iterators, shape, integrals) that
+/** Fixes to compute-engine's own heads (Take, Drop, Solve, iterators, shape, integrals) that
  *  every engine needs, whichever libraries it declares; applying them again is a no-op. */
 export function applyNativeHeadPatches(ce: ComputeEngine): void {
   for (const patch of [
     solveDeclines,
     solveDomains,
     iteratorUpperBound,
-    rangeBigBounds,
     shapeOfUnknownElements,
     integratePolynomialPowers,
   ])

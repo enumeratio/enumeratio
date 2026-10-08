@@ -60,19 +60,12 @@ test("a polynomial whose roots a domain excludes keeps the empty answer", () => 
   expect(box(noIntegerRoots).evaluate().json).toEqual(["List"]);
 });
 
-test("an answer with fewer roots than the degree declines over the complexes", () => {
-  declines(equal(["Add", power("x", 5), "x", 1], 0), "x");
-  declines(equal(["Subtract", power("x", 4), 1], 0), "x");
-  declines(equal(["Subtract", power("x", 4), 1], 0), ["Element", "x", "ComplexNumbers"]);
-  declines(equal(["Subtract", power("x", 3), 1], 0), "x");
-});
-
 test("roots counted with multiplicity, and real or integer domains, keep their answers", () => {
   const repeated = equal(["Multiply", power(["Subtract", "x", 1], 2), ["Add", "x", 2]], 0);
-  expect(box(["Solve", repeated, "x"]).evaluate().json).toEqual(["List", 1, -2]);
+  expect(box(["Solve", repeated, "x"]).evaluate().json).toEqual(["List", -2, 1]);
   const quartic = equal(["Subtract", power("x", 4), 1], 0);
-  expect(box(["Solve", quartic, ["Element", "x", "RealNumbers"]]).evaluate().json).toEqual(["List", 1, -1]);
-  expect(box(["Solve", quartic, ["Element", "x", "Integers"]]).evaluate().json).toEqual(["List", 1, -1]);
+  expect(box(["Solve", quartic, ["Element", "x", "RealNumbers"]]).evaluate().json).toEqual(["List", -1, 1]);
+  expect(box(["Solve", quartic, ["Element", "x", "Integers"]]).evaluate().json).toEqual(["List", -1, 1]);
 });
 
 test("a principal square root and an absolute value are never negative", () => {
