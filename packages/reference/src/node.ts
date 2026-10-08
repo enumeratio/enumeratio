@@ -297,7 +297,7 @@ export function oracleAgreementsOf(
  * carrier-typed argument (`Permutation(...)`, `SetPartition(...)`, …) -- a bare engine doesn't
  * understand the constructor, so the comparison never runs and a genuine override reads as
  * unclassified. Each such package's own entries test runs its examples directly instead. */
-const OWN_ENGINE = new Set(["statistics"]);
+export const OWN_ENGINE = new Set(["statistics"]);
 
 /** The combinatorics area's maps (originally `@enumeratio/domains`, before it merged into
  * `@enumeratio/combinatorics` wholesale, and before ITS domains area was retired: https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible's
@@ -356,6 +356,17 @@ const MAP_HEADS = new Set([
  * `MAP_HEADS`. */
 export function referenceEntries(data: ReferenceData = referenceData()): readonly ReferenceEntry[] {
   return data.entries.filter((entry) => !OWN_ENGINE.has(data.packageOf.get(entry.name)!) && !MAP_HEADS.has(entry.name));
+}
+
+/** The package whose own engine evaluates `head` (`OWN_ENGINE`), or `undefined` for the reference engine. */
+export function ownEngineOf(head: string, data: ReferenceData = referenceData()): string | undefined {
+  const pkg = data.packageOf.get(head);
+  return pkg !== undefined && OWN_ENGINE.has(pkg) ? pkg : undefined;
+}
+
+/** The entries `ownEngineOf` names: scanned only when asked for by id, against their own engine. */
+export function ownEngineEntries(data: ReferenceData = referenceData()): readonly ReferenceEntry[] {
+  return data.entries.filter((entry) => ownEngineOf(entry.name, data) !== undefined);
 }
 
 /** One package's own entries (by directory name), as that package's tests run them. */

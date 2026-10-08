@@ -21,9 +21,12 @@ import {
 } from "@enumeratio/manifest";
 import { declareHistogram } from "@enumeratio/formats";
 import { declareCompose, declareRestricted } from "@enumeratio/structures";
+import { OWN_ENGINE } from "../src/node.ts";
 
 // The libraries are the ones this package depends on (it can import each, so each specifier
-// resolves from here); what each declares, and in what order, is the manifest's to say.
+// resolves from here); what each declares, and in what order, is the manifest's to say. Not an
+// OWN_ENGINE package (src/node.ts): its heads override compute-engine's own, and the scan evaluates
+// them in their own engine (own-engines.ts) instead.
 const importer: Importer = (specifier, options) =>
   options?.json
     ? import(/* @vite-ignore */ specifier, { with: { type: "json" } }).then((m: { default: unknown }) => m.default)
@@ -33,7 +36,10 @@ const own = JSON.parse(readFileSync(new URL("../package.json", import.meta.url),
   typeof dependedLibraries
 >[0];
 /** Every library this package depends on, with `@enumeratio/evaluation`: what the engines are built from. */
-export const AVAILABLE = await loadLibraries<ComputeEngine>(dependedLibraries(own), importer);
+export const AVAILABLE = await loadLibraries<ComputeEngine>(
+  dependedLibraries(own).filter((name) => !OWN_ENGINE.has(name)),
+  importer,
+);
 const NAMES = AVAILABLE.map((library) => library.name);
 
 // Note: GlyphKind (frontend's own carrier) is deliberately NOT declared in this engine --

@@ -980,6 +980,9 @@ importers:
       '@enumeratio/residues':
         specifier: workspace:*
         version: link:../symbols/arithmetic/residues
+      '@enumeratio/statistics':
+        specifier: workspace:*
+        version: link:../symbols/combinatorics/statistics
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../structures

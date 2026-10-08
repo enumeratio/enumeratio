@@ -1,6 +1,6 @@
-id	section	role	expr	expected	caption	triage	wolfram.note
-weibull-pdf-exact			[PDF, [WeibullDistribution, 2, 5], 4]	[Divide, 8, [Multiply, 25, [Power, ExponentialE, [Rational, 16, 25]]]]	Cross-checked against wolframscript's N[PDF[WeibullDistribution[2, 5], 4]]		
-weibull-cdf-exact			[CDF, [WeibullDistribution, 2, 5], 4]	[Add, 1, [Negate, [Power, ExponentialE, [Rational, -16, 25]]]]	Cross-checked against wolframscript's N[CDF[WeibullDistribution[2, 5], 4]]		
-weibull-mean-exact			[Mean, [WeibullDistribution, 2, 5]]	[Multiply, 5, [Gamma, [Rational, 3, 2]]]			
-cdf-weibulldistribution-2-5-n-4-25	Scope	triage	[CDF, [WeibullDistribution, 2, 5], [N, 4, 25]]	[Add, 1, [Negate, [Power, ExponentialE, [Rational, -16, 25]]]]		gap	Evaluates under statistics to the exact 1 - e^(-16/25) (N(4, 25) stays exact); Wolfram's 25-digit answer is 0.47270757595695144275630539. The oracle scan can't reach statistics heads yet (OWN_ENGINE), so the stored Wolfram verdict predates this evaluation.
-pdf-weibulldistribution-2-5-n-4-25	Scope	triage	[PDF, [WeibullDistribution, 2, 5], [N, 4, 25]]	[Divide, 8, [Multiply, 25, [Power, ExponentialE, [Rational, 16, 25]]]]		gap	Evaluates under statistics to the exact 8/(25 e^(16/25)); Wolfram's 25-digit answer is 0.16873357569377553831798227. The oracle scan can't reach statistics heads yet (OWN_ENGINE), so the stored Wolfram verdict predates this evaluation.
+id	section	role	expr	expected	caption	wolfram.note
+weibull-pdf-exact			[PDF, [WeibullDistribution, 2, 5], 4]	[Divide, 8, [Multiply, 25, [Power, ExponentialE, [Rational, 16, 25]]]]	Cross-checked against wolframscript's N[PDF[WeibullDistribution[2, 5], 4]]	
+weibull-cdf-exact			[CDF, [WeibullDistribution, 2, 5], 4]	[Add, 1, [Negate, [Power, ExponentialE, [Rational, -16, 25]]]]	Cross-checked against wolframscript's N[CDF[WeibullDistribution[2, 5], 4]]	
+weibull-mean-exact			[Mean, [WeibullDistribution, 2, 5]]	[Multiply, 5, [Gamma, [Rational, 3, 2]]]		
+cdf-weibulldistribution-2-5-n-4-25	Scope		[CDF, [WeibullDistribution, 2, 5], [N, 4, 25]]	[Add, 1, [Negate, [Power, ExponentialE, [Rational, -16, 25]]]]		Evaluates under statistics to the exact 1 - e^(-16/25) (N(4, 25) stays exact); Wolfram's 25-digit answer is 0.47270757595695144275630539.
+pdf-weibulldistribution-2-5-n-4-25	Scope		[PDF, [WeibullDistribution, 2, 5], [N, 4, 25]]	[Divide, 8, [Multiply, 25, [Power, ExponentialE, [Rational, 16, 25]]]]		Evaluates under statistics to the exact 8/(25 e^(16/25)); Wolfram's 25-digit answer is 0.16873357569377553831798227.
