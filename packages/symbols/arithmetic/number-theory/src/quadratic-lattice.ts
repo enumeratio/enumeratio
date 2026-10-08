@@ -546,10 +546,6 @@ function logarithmic(lattice: QuadraticLattice, s: number, r: number): Quadratic
       const n = Math.abs(i * i + s * i * j - r * j * j);
       if (n !== 0 && n <= LOG_NORMS) addresses.push([i, j]);
     }
-  // A figure's marks are drawn all at once, not dripped in: each is classified when first asked.
-  const ready = (i: number, j: number): void => {
-    if (!lattice.known(i, j)) lattice.prepare(i, j);
-  };
   return {
     ...lattice,
     title: `${lattice.title}, logarithmically`,
@@ -558,15 +554,6 @@ function logarithmic(lattice: QuadraticLattice, s: number, r: number): Quadratic
       [1, 0],
       [0, 1],
     ],
-    known: () => true,
-    has(i, j, property) {
-      ready(i, j);
-      return lattice.has(i, j, property);
-    },
-    value(i, j, name) {
-      ready(i, j);
-      return lattice.value(i, j, name);
-    },
     place,
     addresses: () => addresses,
     mark: () => ({ head: "Disk", radius: LOG_MARK }),
