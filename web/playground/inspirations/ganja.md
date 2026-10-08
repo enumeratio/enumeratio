@@ -206,7 +206,7 @@ or a label, we already emit SVG for plots, and the projection code in
 renderer, it is the operator list above. This is the milestone to aim at.
 
 **A real project.** 3-D PGA and conformal 3-D, which ganja does in WebGL. We
-have GPU evaluation (`gpu-eval.ts`) and a 3-D pipeline (`polytope3d.ts`,
+have GPU evaluation (`gpu-eval.ts`) and a 3-D pipeline (`camera-frame.ts`,
 `project3d.ts`), so the pieces exist, but rounding up a scene of spheres, circles
 and motors is a package's worth of work, not an afternoon's.
 

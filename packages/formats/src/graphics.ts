@@ -182,6 +182,14 @@ export const GRAPHICS_OPTIONS: Readonly<Record<string, readonly string[]>> = {
     "Selection",
     "GestureHandling",
     "ImageSize",
+    // Read only by a camera frame (`PolytopeFaces`).
+    "ViewPoint",
+    "ViewVertical",
+    "ViewAngle",
+    "ViewCenter",
+    "SphericalRegion",
+    "ProjectionMatrix",
+    "Magnification",
   ],
   LatticeTiles: ["ColorRules", "ColorMixing", "BoundaryStyle", "Embedding"],
   ArrayPlot: ["ColorRules", "ColorMixing", "BoundaryStyle"],
@@ -189,6 +197,7 @@ export const GRAPHICS_OPTIONS: Readonly<Record<string, readonly string[]>> = {
   CellDiagram: ["ColorRules", "ColorMixing", "BoundaryStyle"],
   TreeDiagram: ["ColorRules", "ColorMixing", "BoundaryStyle"],
   PathDiagram: ["ColorRules", "ColorMixing", "BoundaryStyle"],
+  PolytopeFaces: ["ColorRules", "ColorMixing", "BoundaryStyle", "MeshCellLabel", "PlotLabel"],
   Locator: ["LocatorAutoCreate", "Appearance"],
 };
 

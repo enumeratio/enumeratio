@@ -153,6 +153,44 @@ describe("a figure layer", () => {
   });
 });
 
+describe("a lazy figure layer", () => {
+  // Classifies on prepare, as a ring's layer does: before it, an address has no properties.
+  const lazy = (count: number) => {
+    const prepared = new Set<number>();
+    const layer: TileLayer = {
+      ...toy,
+      bounds: { i: [0, count - 1], j: [0, 0] },
+      place: (i) => [i, 0],
+      links: () => [],
+      known: (i) => prepared.has(i),
+      prepare: (i) => void prepared.add(i),
+      has: (i, _j, name) => (prepared.has(i) && name === "IsPrime" ? true : undefined),
+    };
+    return { layer, prepared };
+  };
+  const rules = [rule(["Rule", "IsPrime", "Teal"])];
+  const view = { center: [100, 0] as const, extent: 100 };
+
+  it("is classified within the frame's budget, a floor of addresses at least, before it is colored", () => {
+    const { layer, prepared } = lazy(200);
+    const { ctx, filled } = recorder();
+    const complete = drawTiles(ctx, 100, 100, layer, view, options({ colorRules: rules, budgetMs: 0 }));
+    expect(complete).toBe(false);
+    expect(prepared.size).toBeGreaterThan(0);
+    expect(prepared.size).toBeLessThan(200);
+    expect(filled).toHaveLength(1);
+  });
+
+  it("is drawn again until every address is classified", () => {
+    const { layer, prepared } = lazy(200);
+    let frames = 0;
+    while (!drawTiles(recorder().ctx, 100, 100, layer, view, options({ colorRules: rules, budgetMs: 0 })))
+      if (++frames > 20) throw new Error("never completes");
+    expect(prepared.size).toBe(200);
+    expect(frames).toBeGreaterThan(0);
+  });
+});
+
 describe("a lattice layer", () => {
   const lattice: TileLayer = {
     basis: [
