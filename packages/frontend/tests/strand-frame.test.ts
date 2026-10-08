@@ -253,3 +253,96 @@ describe("a braid", () => {
     expect(strandModelOf(["Braid", 0, list()])).toMatch(/strands/);
   });
 });
+
+describe("a braid named by a call", () => {
+  it("expands TorusBraid and the braid constructors to their word", () => {
+    // (σ₁σ₂)² on three strands.
+    expect(layerOf(["TorusBraid", 3, 2]).describe(1, 0).title).toBe("σ₁ σ₂ σ₁ σ₂");
+    expect(layerOf(["BraidInverse", ["Braid", 3, list(1, -2)]]).describe(1, 0).title).toBe("σ₂ σ₁⁻¹");
+    expect(layerOf(["BraidPower", ["Braid", 2, list(1)], 3]).describe(1, 0).title).toBe("σ₁ σ₁ σ₁");
+    expect(layerOf(["BraidProduct", ["Braid", 3, list(1)], ["TorusBraid", 3, 1]]).describe(1, 0).title).toBe(
+      "σ₁ σ₁ σ₂",
+    );
+  });
+
+  it("declines what is no braid", () => {
+    expect(strandModelOf(["TorusBraid", 1, 2])).toMatch(/does not name a braid/);
+    expect(strandModelOf(["BraidInverse", 3])).toMatch(/needs a braid/);
+    expect(strandModelOf(["BraidPower", ["Braid", 2, list(1)], 1e9])).toMatch(/does not name a braid/);
+  });
+});
+
+describe("a composition of braids", () => {
+  // Composing stacks a above b, so b's letters are the lower levels.
+  const stack = layerOf(["Compose", ["Braid", 3, list(1)], ["Braid", 3, list(-2)]]);
+
+  it("keeps the word, with its over and under and exponents", () => {
+    expect(stack.describe(1, 0).title).toBe("σ₂⁻¹ σ₁");
+    expect([1, 2, 3].map((s) => stack.value(s, 0, "Exponent"))).toEqual([undefined, -1, -1]);
+    expect([1, 2, 3].map((s) => stack.value(s, 1, "Exponent"))).toEqual([1, 1, undefined]);
+    expect([1, 2, 3].map((s) => stack.has(s, 1, "IsOver"))).toEqual([true, false, false]);
+  });
+
+  it("aligns levels past an identity", () => {
+    const withIdentity = layerOf(["Compose", ["Braid", 2, list(1)], ["Braid", 2]]);
+    expect(withIdentity.describe(1, 0).title).toBe("σ₁");
+    expect(withIdentity.has(1, 0, "IsOver")).toBe(false);
+    expect(withIdentity.has(1, 1, "IsOver")).toBe(true);
+    expect(withIdentity.value(1, 1, "Exponent")).toBe(1);
+  });
+
+  it("has no word once a diagram is among the parts", () => {
+    const mixed = layerOf(["Compose", ["Braid", 2, list(1)], ["Permutation", list(2, 1)]]);
+    expect(mixed.has(1, 0, "IsOver")).toBeUndefined();
+  });
+});
+
+describe("a braid's closure", () => {
+  const trefoil = layerOf(["BraidClosure", ["Braid", 2, list(1, 1, 1)]]);
+  const hopf = layerOf(["BraidClosure", ["Braid", 2, list(1, 1)]]);
+  const cells = (layer: ReturnType<typeof layerOf>, from: [number, number]) =>
+    [0, 1, 2, 3].flatMap((l) => [1, 2].filter((s) => layer.relatedTo("SameStrand", from, s, l)).map((s) => [s, l]));
+
+  it("makes a knot one component, however the strands return", () => {
+    // σ₁³ sends slot 1 to slot 2 and back: both strands are one component.
+    expect(cells(trefoil, [1, 0])).toHaveLength(8);
+    expect(trefoil.value(1, 0, "Block")).toBe(trefoil.value(2, 0, "Block"));
+    expect(trefoil.summary()).toContainEqual(["components", "1"]);
+    expect(trefoil.describe(1, 0).rows).toContainEqual(["component", "1 of 1"]);
+  });
+
+  it("keeps the components of a link apart", () => {
+    expect(hopf.summary()).toContainEqual(["components", "2"]);
+    expect(cells(hopf, [1, 0])).toHaveLength(3);
+    expect(hopf.relatedTo("SameStrand", [1, 0], 2, 0)).toBe(false);
+    expect(hopf.relatedTo("Crosses", [1, 0], 2, 0)).toBe(true);
+  });
+
+  it("closes a composition of braids, and a torus braid", () => {
+    const composed = layerOf(["BraidClosure", ["Compose", ["Braid", 2, list(1)], ["Braid", 2, list(1, 1)]]]);
+    expect(composed.summary()).toContainEqual(["components", "1"]);
+    expect(layerOf(["BraidClosure", ["TorusBraid", 2, 3]]).summary()).toContainEqual(["components", "1"]);
+    expect(layerOf(["BraidClosure", ["TorusBraid", 3, 3]]).summary()).toContainEqual(["components", "3"]);
+  });
+
+  it("draws each arc round the right side, nested, from the out cell to the in cell", () => {
+    const arc = (s: number) => {
+      const link = trefoil.links!().find((m) => m.every(([a]) => a === s) && m[0]![1] === 3 && m[1]![1] === 0)!;
+      const mark = trefoil.linkMark!(link);
+      if (mark.head !== "Line") throw new Error("not a line");
+      return mark.points as [number, number][];
+    };
+    const [one, two] = [arc(1), arc(2)];
+    expect(one[0]).toEqual([1, 3 * 1.6]);
+    expect(one.at(-1)).toEqual([1, 0]);
+    expect(Math.max(...one.map((p) => p[0]))).toBeGreaterThan(Math.max(...two.map((p) => p[0])));
+    expect(Math.max(...two.map((p) => p[0]))).toBeGreaterThan(2);
+  });
+
+  it("declines what is no braid, and a composition of closures", () => {
+    expect(strandModelOf(["BraidClosure", ["Permutation", list(2, 1)]])).toMatch(/needs a braid/);
+    expect(strandModelOf(["Compose", ["BraidClosure", ["Braid", 2, list(1)]], ["Braid", 2, list(1)]])).toMatch(
+      /closure is of a composition/,
+    );
+  });
+});

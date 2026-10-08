@@ -29,8 +29,12 @@ export function carrierOf(json: Json): { readonly n: number; readonly members: J
   return size === undefined ? undefined : { n: size, members };
 }
 
-/** An integer, written as a number or a numeric string. */
+/** An integer, written as a number, a numeric string or `Negate(n)`. */
 export function intOf(json: Json): number | undefined {
+  if (headOf(json) === "Negate") {
+    const v = intOf(argsOf(json)[0]);
+    return v === undefined ? undefined : -v;
+  }
   const n =
     typeof json === "number" ? json : typeof json === "string" && json.trim() !== "" ? Number(json) : Number.NaN;
   return Number.isInteger(n) ? n : undefined;
