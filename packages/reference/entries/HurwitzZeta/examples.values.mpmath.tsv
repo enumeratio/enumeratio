@@ -174,6 +174,7 @@ n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	(zeta(mpc(-0.5, 1), mpc(2, -0.5)))	(
 n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	(zeta(mpc(-0.5, 1), -0.5))	(-10.3541255703876195123811711928 + 12.6883763809252597090705000207j)	
 n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	(zeta(mpc(-0.5, 1), -1.5))	(0.825049555351030160086372374979 + 38.7318693646863540979116822452j)	
 normal-series-hurwitzzeta-2-x-x-positiveinfinity			
+n-hurwitzzeta-neg-27-2-over-5-1-digit	(zeta(-27, (mpf(2)/5)))	-788740.454876388864340981606357	disagree
 a-positive-integer-a-peels-off-the-first-terms	zeta(7, 5)	0.0000184948548452090985995617382284	
 complex-a	(zeta(2.3, mpc(8, 1)))	(0.0544700827321306866228092072147 - 0.00944851533647025008110366459698j)	
 listable-threads-over-a-list-of-orders	zeta([2, 3, 4], 0.5)	TypeError: cannot create mpf from [2, 3, 4]	error

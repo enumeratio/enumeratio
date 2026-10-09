@@ -1,5 +1,6 @@
 id	in	out	verdict
 4-eq-4	enumeratio_equal(4, 4)		
+n-pi-1-eq-pi	enumeratio_equal(N(pi, 30), pi)	True	disagree
 n-pi-20-eq-pi	enumeratio_equal(N(pi, 30), pi)		
 sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	enumeratio_equal((sqrt(2) + sqrt(3)), sqrt((5 + (2 * sqrt(6)))))		
 x-eq-x	enumeratio_equal(Symbol("x"), Symbol("x"))		

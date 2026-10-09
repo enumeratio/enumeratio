@@ -51,6 +51,8 @@ n-polygamma-neg2-stays-unevaluated	N(polygamma(-2, 2), 30)	-1.248754477033784262
 n-polygamma-8-cancellation-region	N(polygamma(8, (-48.445348956457586 + 7.047151294800014*I)), 30)		
 n-polygamma-8-cancellation-region-nearby-im	N(polygamma(8, (-48.445348956457586 + 10*I)), 30)		
 n-polygamma-5-cancellation-region	N(polygamma(5, (-48.987654321098766 + 9.5*I)), 30)		
+polygamma-neg1-neg-1-over-2-exact	polygamma(-1, Rational(-1, 2))	-log(2*pi)/2 + loggamma(-1/2)	disagree
+n-polygamma-neg1-4p403	N(polygamma(-1, 4.403), 30)	1.40125716204233656251584100328	disagree
 threads-over-a-list-each-element-exact-so-each	polygamma(1, [1, 2])	AttributeError: 'list' object has no attribute 'is_Integer'	error
 one-argument-digamma-at-a-machine-precision			
 one-argument-digamma-at-a-complex-point			

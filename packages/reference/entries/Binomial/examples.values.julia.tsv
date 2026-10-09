@@ -9,6 +9,7 @@ symbolic-n-binom-n-0-1-for-any-n
 symbolic-n-binom-n-1-n			
 binom-n-n-1-n-for-symbolic-n			
 binom-m-m-1-m-for-symbolic-m			
+n-binomial-7-over-3-1-over-5-1-digit	(binomial(ZZ((7 // 3)), ZZ((1 // 5))))		
 threads-element-wise-over-a-list-as-wolfram-s	[binomial(ZZ(2), ZZ(3)), binomial(ZZ(3), ZZ(3)), binomial(ZZ(5), ZZ(3)), binomial(ZZ(7), ZZ(3)), binomial(ZZ(11), ZZ(3))]	[0, 1, 10, 35, 165]	
 half-integer-arguments-evaluate-exactly-through	binomial(ZZ((9 // 2)), ZZ((7 // 2)))	AssertionError: denominator(x) == 1	error
 real-arguments-evaluate-through-the-gamma	binomial(ZZ(8.5), ZZ(-4.2))	InexactError: convert(ZZRingElem, 8.5)	error

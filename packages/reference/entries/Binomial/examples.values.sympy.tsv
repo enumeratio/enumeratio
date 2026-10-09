@@ -9,6 +9,7 @@ symbolic-n-binom-n-0-1-for-any-n	binomial(Symbol("n"), 0)	1
 symbolic-n-binom-n-1-n	binomial(Symbol("n"), 1)	True	
 binom-n-n-1-n-for-symbolic-n	binomial(Symbol("n"), (Symbol("n") - 1))	True	
 binom-m-m-1-m-for-symbolic-m	binomial(Symbol("m"), (Symbol("m") + -1))	True	
+n-binomial-7-over-3-1-over-5-1-digit	N(binomial(Rational(7, 3), Rational(1, 5)), 30)	1.33312542446502865223592287085	disagree
 threads-element-wise-over-a-list-as-wolfram-s	[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]	[0, 1, 10, 35, 165]	
 half-integer-arguments-evaluate-exactly-through	binomial(Rational(9, 2), Rational(7, 2))	9/2	
 real-arguments-evaluate-through-the-gamma	binomial(8.5, -4.2)	6.04992484022837e-5	

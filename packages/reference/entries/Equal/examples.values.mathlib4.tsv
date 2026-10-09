@@ -1,5 +1,6 @@
 id	in
 4-eq-4	(decide (4 = 4))
+n-pi-1-eq-pi	
 n-pi-20-eq-pi	
 sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	
 x-eq-x	
