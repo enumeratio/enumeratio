@@ -1749,7 +1749,7 @@ knob-box[axis="y"] .knob-box-ladder {
    Every control is inline (a slider in a strip, a bar in a sentence) and shares the
    brand colour for what is set, the divider colour for what is not. */
 slider-box, animator-box, slider-2d-box,
-setter-bar-box, setter-box, radio-button-bar-box, toggler-bar-box, popup-menu-box,
+setter-bar-box, setter-box, radio-button-bar-box, radio-button-box, toggler-bar-box, popup-menu-box,
 checkbox-box, interval-slider-box, color-setter-box, input-field-box {
   display: inline-block;
   vertical-align: middle;

@@ -6,6 +6,9 @@
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import {
+  type Bar,
+  type BarKind,
+  barOf,
   type Box,
   CONTROL_INTENT,
   type ControlBoxHead,
@@ -144,9 +147,7 @@ const ATTRIBUTES: Readonly<Record<ControlBoxHead, Attributes>> = {
   ListPickerBox: listedAttributes,
   LocatorBox: locatorAttributes,
   ColorSetterBox: simpleAttributes,
-  SetterBarBox: listedAttributes,
-  RadioButtonBarBox: listedAttributes,
-  TogglerBarBox: listedAttributes,
+  RadioButtonBox: listedAttributes,
   Slider2DBox: planarAttributes,
   SetterBox: listedAttributes,
   TogglerBox: listedAttributes,
@@ -163,14 +164,12 @@ function optionText(value: OptionValue): string | undefined {
   return String(value);
 }
 
-/** A control box as its element: the tag, and the attributes its binding, domain and options become. */
-export function controlElement(box: Extract<Box, readonly [ControlBoxHead, ...unknown[]]>): {
-  tag: string;
-  attributes: Record<string, string>;
-} {
-  const head = box[0];
-  const attributes = ATTRIBUTES[head](controlOperands(box[1], box[2]));
-  for (const [name, value] of Object.entries(optionsOfBox(box))) {
+/** A control's options as attributes, added to the ones its operands gave. */
+function withOptionAttributes(
+  attributes: Record<string, string>,
+  options: Readonly<Record<string, OptionValue>>,
+): Record<string, string> {
+  for (const [name, value] of Object.entries(options)) {
     // `VerticalSlider` is a `SliderBox` standing up.
     if (name === "Appearance" && value === "Vertical") {
       attributes.axis = "y";
@@ -179,12 +178,37 @@ export function controlElement(box: Extract<Box, readonly [ControlBoxHead, ...un
     const text = optionText(value);
     if (text !== undefined) attributes[optionAttribute(name)] = text;
   }
-  return { tag: boxTag(head), attributes };
+  return attributes;
 }
+
+/** A bar's element: `setter-bar-box`, `toggler-bar-box` or `radio-button-bar-box`, over all its entries. */
+function barElement(bar: Bar): { tag: string; attributes: Record<string, string> } {
+  const operands = [bar.variable, ["List", ...bar.entries]] as unknown as Json[];
+  return { tag: boxTag(`${bar.kind}Box`), attributes: withOptionAttributes(listedAttributes(operands), bar.options) };
+}
+
+/**
+ * A control box as its element: the tag, and the attributes its binding, domain and options become.
+ * A bar (a row of single-entry boxes sharing a binding) is one element over all its entries.
+ */
+export function controlElement(box: Box): { tag: string; attributes: Record<string, string> } {
+  const bar = barOf(box);
+  if (bar !== undefined) return barElement(bar);
+  if (typeof box === "string" || !isControlBoxHead(box[0])) throw new Error("not a control box");
+  const control = box as Extract<Box, readonly [ControlBoxHead, ...unknown[]]>;
+  const attributes = ATTRIBUTES[control[0]](controlOperands(control[1], control[2]));
+  return { tag: boxTag(control[0]), attributes: withOptionAttributes(attributes, optionsOfBox(control)) };
+}
+
+/** Whether a box is drawn as a control element: a control box, or a bar of single-entry ones. */
+export const isControlElement = (box: Box): boolean =>
+  typeof box !== "string" && (isControlBoxHead(box[0]) || barOf(box) !== undefined);
 
 /** What a control box binds, as a declaration the keyboard driver and `reduce` read. */
 export interface BoxControl {
   readonly head: ControlBoxHead;
+  /** The bar a row of single-entry boxes (or a lone toggle) makes, grouped by its shared binding. */
+  readonly bar?: BarKind;
   readonly intent: (typeof CONTROL_INTENT)[ControlBoxHead];
   /** The variable's name. */
   readonly name: string;
@@ -201,6 +225,24 @@ export interface BoxControl {
 /** The controls in a box tree, in reading order. */
 export function boxControls(box: Box, into: BoxControl[] = []): BoxControl[] {
   if (typeof box === "string") return into;
+  const bar = barOf(box);
+  if (bar !== undefined) {
+    const { name, init } = variable(bar.variable);
+    const reading = bar.options.Static;
+    if (name !== undefined) {
+      into.push({
+        head: bar.head,
+        bar: bar.kind,
+        intent: CONTROL_INTENT[bar.head],
+        name,
+        ...(init === undefined ? {} : { init }),
+        domain: ["List", ...bar.entries] as unknown as Json,
+        ...(reading === undefined ? {} : { reading }),
+        options: bar.options,
+      });
+    }
+    return into;
+  }
   if (isControlBoxHead(box[0])) {
     const control = box as Extract<Box, readonly [ControlBoxHead, ...unknown[]]>;
     const [binding, ...rest] = controlOperands(control[1], control[2]);

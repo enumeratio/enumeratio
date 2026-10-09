@@ -17,6 +17,7 @@ import {
   type OptionValue,
   optionsOfBox,
 } from "./box.ts";
+import { barOf } from "./control-group.ts";
 
 export interface Font {
   /** In the metrics' own units (points, pixels); ignored by a cell metric. */
@@ -357,7 +358,8 @@ class Layout {
       case "TagBox":
         return this.tagged(box, style);
       case "GridBox":
-        return this.grid(box, style, "");
+        // A bar is one control, drawn whole by the environment.
+        return barOf(box) === undefined ? this.grid(box, style, "") : this.slot(box);
       case "PanelBox":
         return this.framed(box[1], style, this.rhythm.panelX, this.rhythm.panelY, true);
       case "FrameBox":

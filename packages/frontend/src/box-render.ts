@@ -7,19 +7,10 @@
 //
 // A hole (`TemplateSlot`) is where the environment draws a leaf itself: a control, a plot, a readout.
 
-import {
-  type Box,
-  type BoxNode,
-  gridCells,
-  isControlBoxHead,
-  isNode,
-  optionsOfBox,
-  type OptionValue,
-  rowsOf,
-} from "@enumeratio/boxes";
+import { type Box, type BoxNode, gridCells, isNode, optionsOfBox, type OptionValue, rowsOf } from "@enumeratio/boxes";
 import { toText } from "@enumeratio/boxes/render";
 import { boxTag } from "./box-tags.ts";
-import { controlElement } from "./control-box.ts";
+import { controlElement, isControlElement } from "./control-box.ts";
 import { epsil } from "./mathjson.ts";
 import type { Rendering } from "./symbols.ts";
 
@@ -69,8 +60,12 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
       return element("RowBox", undefined, {}, children(box[1]));
     case "TagBox":
       return tagged(box, holes);
-    case "GridBox":
-      return grid(box, holes, undefined);
+    case "GridBox": {
+      // A bar is one control: its row of single-entry boxes is drawn as the one element.
+      if (!isControlElement(box)) return grid(box, holes, undefined);
+      const { tag, attributes } = controlElement(box);
+      return element(tag, undefined, attributes, {});
+    }
     case "PanelBox": {
       const options = optionsOfBox(box);
       return element(
@@ -127,9 +122,9 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
     case "FormBox":
       return renderBox(box[1], holes);
     default: {
-      if (isControlBoxHead(box[0])) {
-        const { attributes } = controlElement(box as Parameters<typeof controlElement>[0]);
-        return element(box[0], undefined, attributes, {});
+      if (isControlElement(box)) {
+        const { tag, attributes } = controlElement(box);
+        return element(tag, undefined, attributes, {});
       }
       // A math run is the typesetter's; until a leaf draws it, its text.
       return element(box[0], undefined, {}, { text: toText(box) });

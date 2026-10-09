@@ -68,7 +68,7 @@ export function controlLine(control: BoxControl, value: Json | undefined): strin
       const entries = tupleOf(control.domain);
       if (entries === undefined || value === undefined) return `${name} = ${shown}`;
       // A toggler bar holds a list: each entry in it is down.
-      const down = control.head === "TogglerBarBox" ? tupleOf(value) : undefined;
+      const down = control.bar === "TogglerBar" ? tupleOf(value) : undefined;
       if (down !== undefined) {
         const on = new Set(down.map(show));
         return `${name} ${entries.map((e) => (on.has(show(e)) ? `[${show(e)}]` : show(e))).join("  ")}`;

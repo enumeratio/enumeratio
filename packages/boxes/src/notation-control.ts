@@ -1,6 +1,7 @@
 // The interface heads as `makeBoxes` rules, as in Wolfram: `Slider` is a `SliderBox` over a
 // `DynamicBox` of its variable, `Dynamic` a `DynamicBox`, `DynamicModule` a `DynamicModuleBox`.
-// A control's domain (its range, entries or corners) rides as written; a host reads it back.
+// A control's domain (its range, entries or corners) rides as written; a host reads it back. The
+// bars lower to rows of single-entry boxes (`control-group.ts`), which a host groups by binding.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import {
@@ -12,6 +13,7 @@ import {
   type Options,
   type OptionValue,
 } from "./box.ts";
+import { type BarKind, bindingVariable, entriesOf, lowerBar } from "./control-group.ts";
 import { headOf, opsOf, optionOf } from "./notation-layout.ts";
 import type { Notation, NotationRule } from "./notation.ts";
 
@@ -48,7 +50,7 @@ const domainOf = (rest: readonly Json[]): Json =>
 
 /** The operands a control was written with: its variable, then what its domain holds. */
 export function controlOperands(binding: Box, domain: Json): Json[] {
-  const variable = Array.isArray(binding) && binding[0] === "DynamicBox" ? (binding[1] as Json) : undefined;
+  const variable = bindingVariable(binding);
   const rest = headOf(domain) === "Sequence" ? opsOf(domain) : domain === "Automatic" ? [] : [domain];
   return variable === undefined ? rest : [variable, ...rest];
 }
@@ -60,6 +62,29 @@ const controlRule =
     return ops.length === 0
       ? undefined
       : control(head, dynamic(ops[0]!), domain ?? domainOf(ops.slice(1)), { ...fixed, ...options });
+  };
+
+/**
+ * A bar as Wolfram boxes it: a row of single-entry boxes, one per entry. Entries that are not
+ * written out as a list cannot be split, so a setter or radio bar keeps them as one box's domain
+ * (which a reader takes as the whole list), and a toggler bar is left unboxed.
+ */
+const barRule =
+  (kind: BarKind): NotationRule =>
+  (args, write) => {
+    const { ops, options } = split(args);
+    if (ops.length === 0) return undefined;
+    const entries = ops.length === 2 ? entriesOf(ops[1]!) : undefined;
+    if (entries !== undefined && entries.length > 0) {
+      return lowerBar(kind, ops[0]!, entries, options, (label) => write.box(label));
+    }
+    if (kind === "TogglerBar") return undefined;
+    return control(
+      kind === "SetterBar" ? "SetterBox" : "RadioButtonBox",
+      dynamic(ops[0]!),
+      domainOf(ops.slice(1)),
+      options,
+    );
   };
 
 const Dynamic: NotationRule = (args) => {
@@ -80,9 +105,9 @@ export const CONTROL_NOTATION: Notation = {
   Checkbox: controlRule("CheckboxBox"),
   PopupMenu: controlRule("PopupMenuBox"),
   InputField: controlRule("InputFieldBox"),
-  SetterBar: controlRule("SetterBarBox"),
-  RadioButtonBar: controlRule("RadioButtonBarBox"),
-  TogglerBar: controlRule("TogglerBarBox"),
+  SetterBar: barRule("SetterBar"),
+  RadioButtonBar: barRule("RadioButtonBar"),
+  TogglerBar: barRule("TogglerBar"),
   Knob: controlRule("KnobBox"),
   IntervalSlider: controlRule("IntervalSliderBox"),
   ListPicker: controlRule("ListPickerBox"),
@@ -117,7 +142,5 @@ export const CONTROL_INTENT: Readonly<Record<ControlBoxHead, ControlIntent>> = {
   ListPickerBox: "choice",
   LocatorBox: "planar",
   ColorSetterBox: "color",
-  SetterBarBox: "choice",
-  RadioButtonBarBox: "choice",
-  TogglerBarBox: "choice",
+  RadioButtonBox: "choice",
 };

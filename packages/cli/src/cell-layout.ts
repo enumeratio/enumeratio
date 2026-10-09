@@ -7,7 +7,7 @@ import {
   type Box,
   DEFAULT_STYLE,
   type DisplayList,
-  isControlBoxHead,
+  isControlLeaf,
   isNode,
   type Item,
   layout,
@@ -36,7 +36,7 @@ const isDrawing = (box: Box): boolean => isNode(box) && box[0] === "GraphicsBox"
  */
 function leafLines(box: Box, options: LayoutOptions, values: ReadonlyMap<string, Json>): string[] {
   if (isDrawing(box)) return drawGraphicsBox(box, options).split("\n");
-  if (isNode(box) && isControlBoxHead(box[0])) {
+  if (isControlLeaf(box)) {
     const [control] = boxControls(box);
     return control === undefined ? ["?"] : [controlLine(control, values.get(control.name))];
   }

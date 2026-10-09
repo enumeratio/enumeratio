@@ -1,2 +1,0 @@
-id	section	role	expr	expected	caption
-inert	Basic		[RadioButtonBarBox, [DynamicBox, c], [List, a, b, c]]	[RadioButtonBarBox, [DynamicBox, c], [List, a, b, c]]	a box is inert: it evaluates to itself

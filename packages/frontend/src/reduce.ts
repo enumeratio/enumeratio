@@ -118,9 +118,7 @@ const KIND_OF_BOX: Readonly<Record<ControlBoxHead, ControlKind>> = {
   ListPickerBox: "listed",
   LocatorBox: "locator",
   ColorSetterBox: "simple",
-  SetterBarBox: "listed",
-  RadioButtonBarBox: "listed",
-  TogglerBarBox: "listed",
+  RadioButtonBox: "listed",
   Slider2DBox: "planar",
   SetterBox: "listed",
   TogglerBox: "listed",
@@ -132,12 +130,12 @@ const KIND_OF_BOX: Readonly<Record<ControlBoxHead, ControlKind>> = {
 /** The head a control was written with, where it is not the box's name less `Box` (Wolfram boxes a `ColorSlider` as a `ColorSetterBox`). */
 const WRITTEN_AS: Partial<Record<ControlBoxHead, string>> = { ColorSetterBox: "ColorSlider" };
 
-/** What a control box declares, as `declarations` reads a control written out: `SliderBox` is a `Slider`. */
+/** What a control box declares, as `declarations` reads a control written out: `SliderBox` is a `Slider`, and a row of `SetterBox`es sharing a binding one `SetterBar`. */
 export function declarationOfControl(control: BoxControl): Declaration {
   const reading = readingOf(control.reading as Json | undefined);
   return {
     name: control.name,
-    head: WRITTEN_AS[control.head] ?? control.head.slice(0, -"Box".length),
+    head: control.bar ?? WRITTEN_AS[control.head] ?? control.head.slice(0, -"Box".length),
     kind: KIND_OF_BOX[control.head],
     ...(control.init === undefined ? {} : { init: control.init }),
     ...(control.domain === undefined ? {} : { spec: control.domain }),

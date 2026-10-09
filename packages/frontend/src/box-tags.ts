@@ -2,7 +2,7 @@
 // the head in kebab case, `RowBox` -> `row-box`, so web markup is the box tree itself and the
 // suffix meets the custom-element hyphen rule without a brand.
 
-import { BOX_HEADS } from "@enumeratio/boxes";
+import { BAR_KINDS, BOX_HEADS } from "@enumeratio/boxes";
 
 /**
  * `head` in kebab case, broken before each capital that follows a lowercase letter and before each
@@ -21,5 +21,11 @@ export const BOX_TAG_HEADS: readonly string[] = BOX_HEADS.filter((h) => h.endsWi
 /** Every box tag the web registers. */
 export const BOX_TAGS: readonly string[] = BOX_TAG_HEADS.map(boxTag);
 
-/** Whether `tag` is a box's. */
-export const isBoxTag = (tag: string): boolean => BOX_TAGS.includes(tag);
+/**
+ * The tags of the bars: a row of single-entry boxes sharing a binding is drawn as one element
+ * (`setter-bar-box`), though no box head is named for it.
+ */
+export const BAR_TAGS: readonly string[] = BAR_KINDS.map((kind) => boxTag(`${kind}Box`));
+
+/** Whether `tag` is a box's, or a bar's. */
+export const isBoxTag = (tag: string): boolean => BOX_TAGS.includes(tag) || BAR_TAGS.includes(tag);

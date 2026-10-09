@@ -1,2 +1,0 @@
-id	section	role	expr	expected	caption
-inert	Basic		[TogglerBarBox, [DynamicBox, s], [List, 2, 3, 5]]	[TogglerBarBox, [DynamicBox, s], [List, 2, 3, 5]]	a box is inert: it evaluates to itself
