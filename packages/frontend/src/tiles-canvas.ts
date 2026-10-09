@@ -128,6 +128,8 @@ type ValueReader = (base: (name: string) => number | undefined) => number | unde
 
 /** A tile of a lattice layer: where it is, in the frame's space, and what its rules make of it. */
 export interface TileItem {
+  /** Its index in the layer: `(i, j)` for a lattice, `(n, 0)` for a layer of points. */
+  readonly address: Address;
   readonly at: Vec2;
   readonly style: ElementStyle;
 }
@@ -244,7 +246,7 @@ export function displayListOf(
       (json) => readerFor(json)?.((name) => layer.value(i, j, name)),
       options.phase,
     );
-    tiles.push({ at: p, style });
+    tiles.push({ address: [i, j], at: p, style });
   };
 
   const points = layer.points?.();
@@ -390,9 +392,30 @@ export function frameBounds(layer: TileLayer): readonly [number, number, number,
   return [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
 }
 
+/** The box a finite list fills, marks and links included: [x0, x1, y0, y1]. */
+export function listBounds(
+  list: Extract<DisplayList, { kind: "marks" }>,
+): readonly [number, number, number, number] | undefined {
+  const points: Vec2[] = [];
+  for (const m of list.marks) points.push(...extentOf(m.mark, m.at));
+  for (const l of list.links) points.push(...extentOf(l.mark, [0, 0]));
+  if (points.length === 0) return undefined;
+  const xs = points.map((p) => p[0]);
+  const ys = points.map((p) => p[1]);
+  return [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+}
+
 /** The view that fits a figure layer whole, with a margin, for a canvas of the given aspect (w / h). */
 export function fitView(layer: TileLayer, aspect: number, margin = 0.6): LatticeView {
-  const box = frameBounds(layer);
+  return fitBox(frameBounds(layer), aspect, margin);
+}
+
+/** The view that fits a box [x0, x1, y0, y1] with a margin, for a canvas of the given aspect (w / h). */
+export function fitBox(
+  box: readonly [number, number, number, number] | undefined,
+  aspect: number,
+  margin = 0.6,
+): LatticeView {
   if (!box) return { center: [0, 0], extent: 1 };
   const [x0, x1, y0, y1] = box;
   return {

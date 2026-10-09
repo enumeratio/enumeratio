@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import { makeBoxes } from "@enumeratio/boxes";
 import { afterAll, expect, it } from "vite-plus/test";
 import { FIGURE_DEFAULTS, type FigureHead, figureLayerOf } from "../src/figure-frames.ts";
-import { FIGURE_NOTATION } from "../src/graphics-box.ts";
+import { FIGURE_NOTATION } from "../src/show-box.ts";
 import { boundaryRuleOf, colorRuleOf, rulesOf } from "../src/graphics-rules.ts";
 import { svg } from "../src/svg-draw.ts";
 import { displayListOf, fitView, type TileDrawOptions, type TileLayer } from "../src/tiles-canvas.ts";

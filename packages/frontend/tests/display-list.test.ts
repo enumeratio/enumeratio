@@ -1,6 +1,6 @@
 import { fromMathJson, isBox, toMathJson } from "@enumeratio/boxes";
 import { expect, it } from "vite-plus/test";
-import { figureGraphicsBox } from "../src/graphics-box.ts";
+import { figureGraphicsBox } from "../src/show-box.ts";
 import { displayListOf, type DisplayList, type TileDrawOptions, type TileLayer } from "../src/tiles-canvas.ts";
 import { boundaryRuleOf, colorRuleOf, rulesOf } from "../src/graphics-rules.ts";
 import { FIGURE_DEFAULTS, figureLayerOf } from "../src/figure-frames.ts";

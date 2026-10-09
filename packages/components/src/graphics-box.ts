@@ -3,51 +3,59 @@ import {
   BAND_MODES,
   type BandMode,
   type BoundaryRule,
-  boundaryRuleOf,
+  bind,
   CANVAS_BLEND,
   type CameraState,
   cameraSpecOf,
-  type ColorMixing,
   type ColorRule,
-  colorMixingOf,
-  colorRuleOf,
-  clampLatticeView,
+  clampView,
+  declared,
   drawAxisLabels,
   drawLatticeLines,
-  drawTiles,
+  evaluatedShow,
+  FIGURE_NOTATION,
   type GestureHandling,
-  edgeOf,
-  FIGURE_DEFAULTS,
-  FIGURE_HEADS,
-  type FigureHead,
-  figureLayerOf,
-  fitView,
+  GRID_STEP,
   GRADIENTS,
   gestureHandlingOf,
   gradientCss,
   gradientNamed,
   hitAt,
+  homeView,
   latticeCoordinates,
   type LatticeView,
-  loadEngineFor,
-  type LineStyle,
+  loadLatticeModules,
+  MAX_POINTS,
   maxExtentFor,
   nearestLatticePoint,
   orbited,
   paddingName,
+  paint,
   plainJson,
+  type Producer,
+  producerOf,
+  radixSettingsOf,
+  RADIX_OPTIONS,
+  RADIX_SYSTEMS,
+  prefetchLayers,
   resolvePalette,
   reverseGradient,
-  rulesOf,
   type SchemeColor,
+  type ShowLayer,
+  type ShowSpec,
+  showBox,
+  specOf,
   splitOptions,
+  stringOf,
   throughCamera,
-  type TileLayer,
+  TILE_FILL,
+  tuple,
   type Vec2,
   wheelZooms,
+  wildcardOf,
   zoomed,
 } from "@enumeratio/frontend/core";
-import { GRAPHICS_OPTIONS } from "@enumeratio/formats";
+import { isNode, makeBoxes } from "@enumeratio/boxes";
 import { emitControl } from "./define.ts";
 import { scopeOf } from "./scope.ts";
 import { type FramePlacement, figureFrame, isVertical, placementOf } from "./figure-frame.ts";
@@ -55,22 +63,6 @@ import { ensureStyles } from "./styles.ts";
 
 type Json = unknown;
 
-/** A layer of tiles as Show draws it: the tiles, plus its frame and how to label it. */
-interface ShowLayer extends TileLayer {
-  /** The grid `GridLines -> Automatic` draws, when the layer has one of its own. */
-  readonly autoGrid?: readonly [number, number];
-  /** Where its grid lines are anchored, in lattice coordinates: between a table's cells. */
-  readonly gridOffset?: Vec2;
-  readonly title: string;
-  readonly grid: readonly [Vec2, Vec2];
-  gridLabel(axis: 0 | 1, k: number): string;
-  home?(): LatticeView;
-  summary(): readonly (readonly [string, string])[];
-  describe(i: number, j: number): { title: string; rows: readonly (readonly [string, string])[] };
-}
-
-/** Points a view may hold before zooming out stops. */
-const MAX_POINTS = 120_000;
 /** Milliseconds a frame spends classifying new points before it draws what it has. */
 const FRAME_BUDGET = 12;
 /** Colors of an indexed scheme the legend shows: the first few values, enough to read it by. */
@@ -96,70 +88,6 @@ async function readStructure(text: string): Promise<Json> {
 }
 
 const argsOf = (json: Json): Json[] => (Array.isArray(json) ? json.slice(1) : []);
-/** The options `head` declares, as a set. */
-const declared = (head: string): ReadonlySet<string> => new Set(GRAPHICS_OPTIONS[head] ?? []);
-const stringOf = (json: Json): string | undefined =>
-  typeof json === "string" ? json.replace(/^'([\s\S]*)'$/, "$1") : (json as { str?: string } | undefined)?.str;
-const numberOf = (json: Json, fallback: number): number => {
-  if (headOf(json) === "Negate") return -numberOf(argsOf(json)[0], -fallback);
-  const n = typeof json === "number" ? json : Number(stringOf(json));
-  return Number.isFinite(n) ? n : fallback;
-};
-
-/** `json` with each parameter's wildcard (`_d`) replaced by its value, wherever it stands. */
-function bind(json: Json, params: ReadonlyMap<string, Json>): Json {
-  if (typeof json === "string" && json.startsWith("_") && params.has(json.slice(1))) return params.get(json.slice(1));
-  return Array.isArray(json) ? json.map((node) => bind(node, params)) : json;
-}
-
-/** What a `Show` says, read once its parameters are bound. */
-interface ShowSpec {
-  /** Draggable points, Wolfram's `Locator`: each one a variable's point, or its list of points. */
-  readonly locators: readonly LocatorSpec[];
-  /** The tiled layer: `LatticeTiles(ring)`, `ArrayPlot(table)` or a figure frame (`StrandDiagram`, `CellDiagram`, …), its data. */
-  readonly tiles?: {
-    readonly head: "LatticeTiles" | "ArrayPlot" | FigureHead;
-    readonly data: Json;
-    /** `PolytopeFaces` layers share a frame: all of them, whole, in order. */
-    readonly layers?: readonly Json[];
-    /** `Embedding -> "Logarithmic"`: a real field's elements at (log|σ₁|, log|σ₂|). */
-    readonly embedding?: string;
-  };
-  readonly colorRules: readonly ColorRule[];
-  readonly boundaryRules: readonly BoundaryRule[];
-  readonly colorMixing: ColorMixing;
-  /** Rules whose test or style didn't read. */
-  readonly unread: number;
-  /** The layer's own rules stand in for ones the author left out; the legend doesn't list them. */
-  readonly defaulted: { readonly colors: boolean; readonly edges: boolean };
-  /** `auto`: `GridLines -> Automatic`, whose step is the layer's own grid when it has one. */
-  readonly grid?: { readonly step: readonly [number, number]; readonly auto: boolean; readonly style: LineStyle };
-  readonly axes?: { readonly style: LineStyle; readonly ticks: boolean };
-  readonly aspect: "Uniform" | "True";
-}
-
-/** A `Locator(_v)`: the points it puts where `_v` says, and how they move. */
-interface LocatorSpec {
-  readonly points: readonly Vec2[];
-  /** The variable holds a list of points, not one. */
-  readonly list: boolean;
-  /** Wolfram's `LocatorAutoCreate`: ⌥-click adds a point, or takes one away. */
-  readonly autoCreate: boolean;
-  readonly label: string;
-}
-
-/** A point `(a, b)` in the frame's coordinates. */
-const pointOf = (json: Json): Vec2 | undefined =>
-  headOf(json) === "Tuple" && argsOf(json).length === 2
-    ? [numberOf(argsOf(json)[0], Number.NaN), numberOf(argsOf(json)[1], Number.NaN)]
-    : undefined;
-const pointsOf = (json: Json): Vec2[] =>
-  (headOf(json) === "List" ? argsOf(json) : [json]).flatMap((p) => {
-    const v = pointOf(p);
-    return v && v.every(Number.isFinite) ? [v] : [];
-  });
-const tuple = ([a, b]: Vec2): Json => ["Tuple", a, b];
-
 /** The variables a Show writes: each Locator's, and a `RadixExpansions`' arguments and example. */
 interface Writes {
   readonly locators: readonly (string | undefined)[];
@@ -172,10 +100,6 @@ interface Writes {
     readonly onLattice?: string;
   };
 }
-
-/** A wildcard's variable name: `_b` names `b`. */
-const wildcardOf = (json: Json): string | undefined =>
-  typeof json === "string" && /^_[A-Za-z]\w*$/.test(json) ? json.slice(1) : undefined;
 
 /** What a Show's expression, unbound, writes back to its variables. */
 function writesOf(json: Json): Writes {
@@ -199,115 +123,6 @@ function writesOf(json: Json): Writes {
     }
   }
   return { locators, ...(radix ? { radix } : {}) };
-}
-
-/** `RadixExpansions`' options: the example it follows, and whether it keeps to the lattice. */
-const RADIX_OPTIONS: ReadonlySet<string> = new Set(["Example", "OnLattice"]);
-
-/** Rings `RadixExpansions` draws on, and their systems. */
-const RADIX_SYSTEMS: Readonly<Record<string, "i" | "ω">> = { GaussianIntegers: "i", EisensteinIntegers: "ω" };
-
-/** `RadixExpansions(ring, base, digits, places)`, bound, as the layer's settings. */
-function radixSettingsOf(data: Json) {
-  const { positional, options } = splitOptions(data, RADIX_OPTIONS);
-  const [ring, base, digits, places] = positional;
-  const system = typeof ring === "string" ? RADIX_SYSTEMS[ring] : undefined;
-  const b = pointOf(base);
-  if (!system || !b) return undefined;
-  const onLattice = options.get("OnLattice") !== "False";
-  return { system, base: b, digits: pointsOf(digits), places: numberOf(places, 8), onLattice };
-}
-
-/** Grid lines every this many units of the frame, for `GridLines -> Automatic`. */
-const GRID_STEP = 10;
-
-/** A line style from an edge directive (`Directive(White, AbsoluteThickness(1), Opacity(0.2))`). */
-const lineStyleOf = (json: Json, fallback: LineStyle): LineStyle => {
-  const edge = json === undefined ? undefined : edgeOf(json);
-  return edge ? { color: edge.color, width: edge.width, opacity: edge.opacity } : fallback;
-};
-
-function specOf(json: Json): ShowSpec {
-  const { positional, options } = splitOptions(json, declared("Show"));
-  let tiles: ShowSpec["tiles"];
-  let colorRules: ColorRule[] = [];
-  let boundaryRules: BoundaryRule[] = [];
-  let colorMixing: ColorMixing = "First";
-  let unread = 0;
-  let defaulted = { colors: false, edges: false };
-  const locators: LocatorSpec[] = [];
-  for (const layer of positional) {
-    const head = headOf(layer);
-    if (head === "Locator") {
-      const {
-        positional: [at],
-        options: o,
-      } = splitOptions(layer, declared("Locator"));
-      locators.push({
-        points: pointsOf(at),
-        list: headOf(at) === "List",
-        autoCreate: o.get("LocatorAutoCreate") === "True",
-        label: stringOf(o.get("Appearance")) ?? "",
-      });
-      continue;
-    }
-    const figure = FIGURE_HEADS.find((h) => h === head);
-    if (head === undefined || (head !== "LatticeTiles" && head !== "ArrayPlot" && !figure)) continue;
-    const split = splitOptions(layer, declared(head));
-    const embedding = stringOf(split.options.get("Embedding"));
-    const sharing = figure === "PolytopeFaces" && tiles?.head === "PolytopeFaces";
-    const layers = figure === "PolytopeFaces" ? [...(tiles?.layers ?? []), layer] : undefined;
-    tiles = {
-      head: head as NonNullable<ShowSpec["tiles"]>["head"],
-      data: split.positional[0],
-      ...(layers ? { layers } : {}),
-      ...(embedding ? { embedding } : {}),
-    };
-    // Layers sharing a frame share its rules: the first to give any.
-    if (sharing && !split.options.has("ColorRules") && !split.options.has("BoundaryStyle")) continue;
-    // A figure frame has no look without rules: its own stand in for any the author leaves out.
-    const own = figure ? FIGURE_DEFAULTS[figure] : undefined;
-    const [colorsGiven, edgesGiven] = [split.options.has("ColorRules"), split.options.has("BoundaryStyle")];
-    defaulted = { colors: !!own && !colorsGiven, edges: !!own && !edgesGiven };
-    const colors = rulesOf(own && !colorsGiven ? own.colors : split.options.get("ColorRules"), colorRuleOf);
-    const edges = rulesOf(own && !edgesGiven ? own.edges : split.options.get("BoundaryStyle"), boundaryRuleOf);
-    colorRules = colors.rules;
-    boundaryRules = edges.rules;
-    colorMixing = colorMixingOf(split.options.get("ColorMixing"));
-    unread = colors.unread + edges.unread;
-  }
-  // `GridLines -> [x, y]`: a line every x units along the frame's first axis and every y along
-  // its second (a lattice frame's are 1 and ω), `None` or 0 for none; `Automatic` every GRID_STEP.
-  const gridLines = options.get("GridLines");
-  const specs =
-    headOf(gridLines) === "List" ? argsOf(gridLines) : gridLines === "Automatic" ? [gridLines, gridLines] : [];
-  const step = specs.slice(0, 2).map((g) => (g === "Automatic" ? GRID_STEP : numberOf(g, 0))) as [number, number];
-  const grid = step.some((k) => k > 0)
-    ? {
-        step,
-        auto: gridLines === "Automatic",
-        style: lineStyleOf(options.get("GridLinesStyle"), { color: "#ffffff", width: 1, opacity: 0.16 }),
-      }
-    : undefined;
-  const axes =
-    options.get("Axes") === "True"
-      ? {
-          style: lineStyleOf(options.get("AxesStyle"), { color: "", width: 1.5, opacity: 0.55 }),
-          ticks: options.get("Ticks") !== "None",
-        }
-      : undefined;
-  return {
-    locators,
-    ...(tiles ? { tiles } : {}),
-    colorRules,
-    boundaryRules,
-    colorMixing,
-    unread,
-    defaulted,
-    ...(grid ? { grid } : {}),
-    ...(axes ? { axes } : {}),
-    aspect: options.get("AspectRatio") === "Automatic" ? "True" : "Uniform",
-  };
 }
 
 /** A reader's change to one color rule, made from the legend. */
@@ -362,6 +177,8 @@ export class GraphicsBoxElement extends LitElement {
     gestureHandling: { type: String, attribute: "gesture-handling" },
     /** Where the legend goes: `below`, `right`, a corner to overlay, `none`. */
     legendAt: { type: String, attribute: "legend-at", reflect: true },
+    /** Where the info strip (what is under the pointer, or the layer as a whole) goes: `below`, a side, `none`. */
+    captionAt: { type: String, attribute: "caption-at", reflect: true },
     /** The values of the variables its wildcards name, by wildcard (`_d`), set by its scope. */
     bindings: { attribute: false },
     _spec: { state: true },
@@ -382,6 +199,7 @@ export class GraphicsBoxElement extends LitElement {
   declare aspectRatio: string;
   declare gestureHandling: string;
   declare legendAt: string;
+  declare captionAt: string;
   declare bindings: Readonly<Record<string, Json>> | undefined;
   declare _spec: ShowSpec | undefined;
   declare _params: ReadonlyMap<string, Json>;
@@ -398,6 +216,8 @@ export class GraphicsBoxElement extends LitElement {
   /** The options: those written in `value`, then those given as attributes. */
   #showOptions = new Map<string, Json>();
   #layer: ShowLayer | undefined;
+  /** What the lowered box holds to ask for the marks in a view. */
+  #producer: Producer | undefined;
   #writes: Writes = { locators: [] };
   /** The example the radix layer last followed, so a new one is told from an edit. */
   #example: string | undefined;
@@ -433,6 +253,7 @@ export class GraphicsBoxElement extends LitElement {
     this.aspectRatio = "";
     this.gestureHandling = "";
     this.legendAt = "right";
+    this.captionAt = "below";
     this.bindings = undefined;
     this._spec = undefined;
     this._params = new Map();
@@ -563,17 +384,28 @@ export class GraphicsBoxElement extends LitElement {
       return;
     }
     const rebuild = ++this.#rebuilds;
-    const spec = await evaluatedFigure(specOf(this.#source), specOf(bound));
+    const shown = await evaluatedShow(this.#source, bound);
+    const spec = specOf(shown);
+    await loadLatticeModules(spec.tiles);
     // A later binding started its own rebuild while this one evaluated: that one draws.
     if (rebuild !== this.#rebuilds) return;
     if (await this.#followExample(spec)) return;
+    // The one lowering: what a terminal or an SVG draws is what this draws.
+    const box = makeBoxes(shown as never, FIGURE_NOTATION);
+    if (!isNode(box) || box[0] !== "GraphicsBox") {
+      const why = showBox(shown);
+      this._status = typeof why === "string" ? why : "Not a Show(…) expression.";
+      return;
+    }
     const key = JSON.stringify([spec.tiles, spec.aspect]);
     if (key !== this.#layerKey) {
-      const layer = await layerFor(spec.tiles, spec.aspect);
-      if (typeof layer === "string") {
-        this._status = layer;
+      const producer = producerOf(box);
+      if (typeof producer === "string") {
+        this._status = producer;
         return;
       }
+      const layer = producer.layer;
+      this.#producer = producer;
       this.#layer = layer;
       this.#layerKey = key;
       // A new layer's points are other points: start from what the variable holds, if anything.
@@ -673,22 +505,7 @@ export class GraphicsBoxElement extends LitElement {
 
   #clamp(): void {
     if (!this.#layer || this.#fixed) return;
-    const { bounds } = this.#layer;
-    // Points anywhere: no lattice range to keep to, only a sane zoom.
-    if (this.#layer.points || this.#layer.place) {
-      this.#view = { center: this.#view.center, extent: Math.min(Math.max(this.#view.extent, 0.5), 1e6) };
-      return;
-    }
-    if (bounds) {
-      this.#view = clampToBounds(this.#layer.basis, bounds, this.#view, this.#w / this.#h);
-      return;
-    }
-    this.#view = clampLatticeView(
-      { basis: this.#layer.basis, maxIndex: this.#layer.maxIndex },
-      this.#view,
-      this.#w / this.#h,
-      MAX_POINTS,
-    );
+    this.#view = clampView(this.#layer, this.#view, this.#w / this.#h);
   }
 
   /** The camera frame's state, from its options until the reader moves it. */
@@ -793,20 +610,31 @@ export class GraphicsBoxElement extends LitElement {
     this.#queued = false;
     const layer = this.#shown ?? this.#layer;
     const spec = this._spec;
+    const producer = this.#producer;
     const [tiles, lines, axes] = this.#canvases.map((c) => c.getContext("2d"));
-    if (!layer || !spec || !tiles || !lines || !axes) return;
+    if (!layer || !spec || !producer || !tiles || !lines || !axes) return;
     for (const ctx of [tiles, lines, axes]) ctx.clearRect(0, 0, this.#w, this.#h);
     tiles.canvas.style.mixBlendMode = CANVAS_BLEND[spec.colorMixing];
-    const complete = drawTiles(tiles, this.#w, this.#h, layer, this.#view, {
-      colorRules: this.#colorRules,
-      boundaryRules: this.#boundaryRules,
-      colorMixing: spec.colorMixing,
-      selection: this._selection,
-      ink: resolvePalette({ palette: this.ground }).foreground,
-      fill: 0.86,
-      phase: 0,
-      budgetMs: FRAME_BUDGET,
-    });
+    const ink = resolvePalette({ palette: this.ground }).foreground;
+    // The producer answers with the marks in this view, as many as the frame's budget classifies.
+    const list = producer.list(
+      this.#view,
+      this.#w,
+      this.#h,
+      {
+        colorRules: this.#colorRules,
+        boundaryRules: this.#boundaryRules,
+        colorMixing: spec.colorMixing,
+        selection: this._selection,
+        ink,
+        fill: TILE_FILL,
+        phase: 0,
+        budgetMs: FRAME_BUDGET,
+      },
+      layer,
+    );
+    paint(tiles, this.#w, this.#h, list, this.#view, { fill: TILE_FILL, ink });
+    const complete = list.complete;
     const gridStep = spec.grid?.auto ? (layer.autoGrid ?? spec.grid.step) : spec.grid?.step;
     // A camera frame has no lattice to ruled lines or axes over.
     const flat = layer.view !== "camera";
@@ -1133,24 +961,13 @@ export class GraphicsBoxElement extends LitElement {
     e.preventDefault();
   };
 
-  /** Back to the frame the layer chose. */
   /** Where a layer starts: a finite one fitted whole to the canvas, else the layer's own home. */
   #home(layer: ShowLayer): LatticeView {
     if (layer.view === "camera") {
       this.#aim();
       return this.#view;
     }
-    if (layer.view === "fixed" || layer.place) return fitView(layer, this.#w / this.#h);
-    if (!layer.bounds) return layer.home?.() ?? { center: [0, 0], extent: 20 };
-    const { i, j } = layer.bounds;
-    const [b0, b1] = layer.basis;
-    const xs = [i[0], i[1]].flatMap((a) => [j[0], j[1]].map((b) => a * b0[0] + b * b1[0]));
-    const ys = [i[0], i[1]].flatMap((a) => [j[0], j[1]].map((b) => a * b0[1] + b * b1[1]));
-    const [w, h] = [Math.max(...xs) - Math.min(...xs) + 1, Math.max(...ys) - Math.min(...ys) + 1];
-    return {
-      center: [(Math.max(...xs) + Math.min(...xs)) / 2, (Math.max(...ys) + Math.min(...ys)) / 2],
-      extent: (Math.max(h, w / (this.#w / this.#h)) / 2) * 1.02,
-    };
+    return homeView(layer, this.#w / this.#h);
   }
 
   resetView = (): void => {
@@ -1318,160 +1135,11 @@ export class GraphicsBoxElement extends LitElement {
         stageStyle: `min-height:${this.#height}px`,
         legend: this.#legendTemplate(isVertical(legendAt)),
         caption: this.#infoTemplate(),
-        captionAt: "below",
+        captionAt: placementOf(this.captionAt, "below"),
         legendAt,
       })}
     </div>`;
   }
-}
-
-/**
- * Keep a view on a finite layer: no wider than the whole layer with a margin (nor than the point
- * budget), its center within the layer's rectangle.
- */
-function clampToBounds(
-  basis: readonly [Vec2, Vec2],
-  bounds: { readonly i: Vec2; readonly j: Vec2 },
-  view: LatticeView,
-  aspect: number,
-): LatticeView {
-  const corners = [bounds.i[0], bounds.i[1]].flatMap((i) =>
-    [bounds.j[0], bounds.j[1]].map((j) => [i * basis[0][0] + j * basis[1][0], i * basis[0][1] + j * basis[1][1]]),
-  );
-  const [xs, ys] = [corners.map((c) => c[0]!), corners.map((c) => c[1]!)];
-  const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
-  const whole = Math.max((y1 - y0) / 2, (x1 - x0) / (2 * aspect)) * 1.1 + 1;
-  const unit = Math.sqrt(Math.abs(basis[0][0] * basis[1][1] - basis[0][1] * basis[1][0]));
-  const extent = Math.min(Math.max(view.extent, 1.5 * unit), whole, maxExtentFor(basis, aspect, MAX_POINTS));
-  const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
-  return { center: [clamp(view.center[0], x0, x1), clamp(view.center[1], y0, y1)], extent };
-}
-
-/** The modulus of `QuotientRing(Integers, n)` (or its old spelling `IntegerModRing(n)`). */
-function modulusOf(ring: Json): number {
-  if (headOf(ring) === "QuotientRing" && argsOf(ring)[0] === "Integers") return numberOf(argsOf(ring)[1], Number.NaN);
-  if (headOf(ring) === "IntegerModRing") return numberOf(argsOf(ring)[0], Number.NaN);
-  return Number.NaN;
-}
-
-/**
- * Start loading the modules `json`'s layers draw with, before its scope has bound them: the
- * scope waits on the engine, and the layer's module is a chain of imports of its own.
- */
-function prefetchLayers(json: Json): void {
-  for (const layer of argsOf(json)) {
-    const head = headOf(layer);
-    const data = argsOf(layer)[0];
-    if (head === "ArrayPlot") void import("@enumeratio/residues/table");
-    else if (head === "LatticeTiles" && headOf(data) === "RadixExpansions")
-      void import("@enumeratio/complex-numerals/lattice");
-    else if (head === "LatticeTiles") void import("@enumeratio/number-theory/lattice");
-  }
-}
-
-const wildcarded = (json: Json): boolean => JSON.stringify(json ?? null).includes('"_');
-
-/**
- * `bound`, with a figure layer's data evaluated where its source was written over the scope's
- * variables. A value the frame draws keeps its head and has its arguments evaluated:
- * `Subset([1, 3], _n)` is a subset, though compute-engine reads it as a predicate and evaluates
- * it to `False`. Data the frame can't draw that way is evaluated whole: `At(Permutations(4), _k)`
- * is the k-th permutation. Data written whole stays as written, and needs no engine.
- */
-async function evaluatedFigure(source: ShowSpec, bound: ShowSpec): Promise<ShowSpec> {
-  const tiles = bound.tiles;
-  if (!tiles || tiles.head === "LatticeTiles" || tiles.head === "ArrayPlot") return bound;
-  const head = tiles.head;
-  const written = source.tiles;
-  const evaluate = async (json: Json): Promise<Json> => {
-    const ce = await loadEngineFor(json);
-    return plainJson(ce.box(json as never).evaluate().json);
-  };
-  /** `value` (bound from `writtenValue`), drawn as `draws` reads it. */
-  const evaluated = async (value: Json, writtenValue: Json, draws: (json: Json) => boolean): Promise<Json> => {
-    if (!wildcarded(writtenValue)) return value;
-    const valueHead = headOf(value);
-    if (valueHead !== undefined && !valueHead.startsWith("_")) {
-      const writtenArgs = argsOf(writtenValue);
-      const args = await Promise.all(argsOf(value).map((arg, k) => (wildcarded(writtenArgs[k]) ? evaluate(arg) : arg)));
-      const kept: Json = [valueHead, ...args];
-      if (draws(kept)) return kept;
-    }
-    return evaluate(value);
-  };
-  const drawn = (json: Json): boolean => typeof figureLayerOf(head, json) !== "string";
-  if (tiles.layers) {
-    const layers = await Promise.all(
-      tiles.layers.map((layer, k) => evaluated(layer, written?.layers?.[k], (json) => drawn(["List", json]))),
-    );
-    return { ...bound, tiles: { ...tiles, layers } };
-  }
-  return { ...bound, tiles: { ...tiles, data: await evaluated(tiles.data, written?.data, drawn) } };
-}
-
-/**
- * `AlgebraicIntegers(Sqrt(n))` and `AlgebraicOrder(Sqrt(n))` as the quadratic rings they are:
- * `QuadraticIntegers(n)` and ℤ[√n], `QuadraticOrder(4n)`. Read here, unevaluated, since a Show's
- * layers are held.
- */
-function quadraticRingOf(ring: Json): Json {
-  const [root] = argsOf(ring);
-  if (headOf(root) !== "Sqrt") return ring;
-  const n = numberOf(argsOf(root)[0], Number.NaN);
-  if (headOf(ring) === "AlgebraicIntegers") return ["QuadraticIntegers", n];
-  if (headOf(ring) === "AlgebraicOrder") return ["QuadraticOrder", 4 * n];
-  return ring;
-}
-
-/**
- * A tiled layer's tiles, loaded on first use: `LatticeTiles` of `QuadraticIntegers(d)`,
- * `GaussianIntegers` or `EisensteinIntegers`; `ArrayPlot` of `MultiplicationTable(QuotientRing(Integers, n))`.
- */
-async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): Promise<ShowLayer | string> {
-  if (tiles === undefined)
-    return "Show needs a layer: LatticeTiles(ring, …), ArrayPlot(table, …), StrandDiagram(diagram, …), CellDiagram(cells, …), TreeDiagram(tree, …), PathDiagram(path, …) or PolytopeFaces(polytope, …).";
-  if (tiles.head !== "LatticeTiles" && tiles.head !== "ArrayPlot")
-    return figureLayerOf(tiles.head, tiles.layers ? ["List", ...tiles.layers] : tiles.data);
-  if (tiles.head === "ArrayPlot") {
-    // `MultiplicationTable(ring, ElementOrder -> ChineseRemainder)`: how rows and columns list the ring.
-    const table = splitOptions(tiles.data, new Set(["ElementOrder"]));
-    const n = headOf(tiles.data) === "MultiplicationTable" ? modulusOf(table.positional[0]) : Number.NaN;
-    if (!Number.isInteger(n)) return "ArrayPlot needs a table: MultiplicationTable(QuotientRing(Integers, n)).";
-    const order = stringOf(table.options.get("ElementOrder")) === "ChineseRemainder" ? "ChineseRemainder" : "Natural";
-    const { multiplicationTable } = await import("@enumeratio/residues/table");
-    return multiplicationTable(n, order) ?? `ℤ/${n} is too large to tabulate, or not a ring with a table.`;
-  }
-  if (headOf(tiles.data) === "RadixExpansions") {
-    const settings = radixSettingsOf(tiles.data);
-    if (!settings) return "RadixExpansions needs a ring (GaussianIntegers or EisensteinIntegers) and a base.";
-    const { radixExpansions } = await import("@enumeratio/complex-numerals/lattice");
-    return radixExpansions(settings);
-  }
-  const ring = quadraticRingOf(tiles.data);
-  // QuadraticOrder(D) by its discriminant; the rest by d.
-  const order = headOf(ring) === "QuadraticOrder" ? numberOf(argsOf(ring)[0], Number.NaN) : undefined;
-  const d =
-    ring === "GaussianIntegers"
-      ? -1
-      : ring === "EisensteinIntegers"
-        ? -3
-        : headOf(ring) === "QuadraticIntegers"
-          ? numberOf(argsOf(ring)[0], Number.NaN)
-          : (order ?? Number.NaN);
-  if (!Number.isInteger(d))
-    return "LatticeTiles needs a ring: QuadraticIntegers(d), QuadraticOrder(D), GaussianIntegers or EisensteinIntegers.";
-  const logarithmic = tiles.embedding === "Logarithmic";
-  const { quadraticLattice } = await import("@enumeratio/number-theory/lattice");
-  const layer = quadraticLattice(d, {
-    scale: aspect === "True" ? "geometric" : "uniform",
-    ...(order === undefined ? {} : { discriminant: order }),
-    ...(logarithmic ? { embedding: "logarithmic" as const } : {}),
-  });
-  if (layer) return layer;
-  if (logarithmic && d < 0) return "The logarithmic embedding is a real field's: an imaginary one has a single |σ|.";
-  return order === undefined
-    ? `ℚ(√${d}) is not a quadratic field: ${d} is a square.`
-    : `${d} is no quadratic discriminant: one is 0 or 1 mod 4, and not a square.`;
 }
 
 if (!customElements.get("graphics-box")) customElements.define("graphics-box", GraphicsBoxElement);
