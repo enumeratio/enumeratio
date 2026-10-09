@@ -7,7 +7,7 @@ arcsec-2-2-pi-3	Scope		[Arcsec, -2]	[Multiply, [Rational, 2, 3], Pi]			$\operato
 inside-1-1-the-value-is-purely-imaginary	Scope		[Arcsec, 0.5]	[Complex, 0, 1.3169578969248166]			Inside $(-1, 1)$ the value is purely imaginary		
 arcsec-positiveinfinity	Scope		[Arcsec, PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]					
 a-pole-arcsec-0-is-complex-infinity	Scope		[Arcsec, 0]	ComplexInfinity			A pole: $\operatorname{arcsec} 0$ is complex infinity		
-derivative-for-real-x-1	Scope		[D, [Arcsec, x], x]	[Divide, 1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]			Derivative, for real $|x| > 1$		Wolfram's symbolic check of the two derivative forms comes back Indeterminate; the forms differ by a Sqrt/Abs rearrangement valid for real x
+derivative-for-real-x-1	Scope		[D, [Arcsec, x], x]	[Divide, 1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]			Derivative, for real $|x| > 1$		
 n-arcsec-5-50	Scope		[N, [Arcsec, 5], 50]	{num: "1.3694384060045658277761961394221280318585466182853"}			Fifty digits of an inverse secant		
 arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	Scope		[Arcsec, [List, [List, [Sqrt, 2], [Negate, [Sqrt, 2]]], [List, 0, [Negate, [Sqrt, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 4], Pi], [Multiply, [Rational, 3, 4], Pi]], [List, ComplexInfinity, [Multiply, [Rational, 3, 4], Pi]]]			Threads over a matrix; zero gives complex infinity		
 arcsec-2-over-3-times-sqrt-3	Scope		[Arcsec, [Multiply, [Rational, 2, 3], [Sqrt, 3]]]	[Multiply, [Rational, 1, 6], Pi]			$\sec(\pi/6) = \frac{2}{\sqrt3}$		
