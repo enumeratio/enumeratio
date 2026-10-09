@@ -41,18 +41,34 @@ it("ends a page that ran out of rows without a Skeleton line", async () => {
   expect(text.split("\n").at(-1)).toContain("│");
 });
 
-it("reaches the last row of SymmetricGroup(25) with G, on the real source", async () => {
+async function lastPage(input: string): Promise<{ text: string; wrote: string }> {
   let wrote = "";
-  const table = opened("CollectionTable(SymmetricGroup(25))");
+  const table = opened(input);
   const d = pager(table.source, { write: (t) => (wrote += t), color: false, columns: () => 200, height: () => 11 });
   d.draw();
   await d.idle();
   for (const k of keysOf("G")) d.key(k);
   await d.idle();
-  expect(d.text()).toContain("15511210043330985984000000 │ Permutation([25, 24, 23");
-  expect(d.text()).toContain("of ≈ 1.55 × 10²⁵");
+  return { text: d.text(), wrote };
+}
+
+it("reaches the last row with G, on the real source", async () => {
+  const { text, wrote } = await lastPage("CollectionTable(SymmetricGroup(8))");
+  expect(text).toContain("40320 │ Permutation([8, 7, 6, 5, 4, 3, 2, 1])");
+  expect(text).toContain("of 40,320");
   expect(wrote).toContain("q quit");
 });
+
+// Past 2^53 the index is a bigint end to end; seconds on a CI runner, so nightly only.
+it.runIf(process.env.DEEP_TESTS === "1")(
+  "reaches the last row of SymmetricGroup(25) with G",
+  async () => {
+    const { text } = await lastPage("CollectionTable(SymmetricGroup(25))");
+    expect(text).toContain("15511210043330985984000000 │ Permutation([25, 24, 23");
+    expect(text).toContain("of ≈ 1.55 × 10²⁵");
+  },
+  60_000,
+);
 
 it("hands a table to a host that draws tables, and prints plain text elsewhere", () => {
   expect(runCommand(["show", CASES.infinite!], undefined, {}, { tables: true }).table).toBeDefined();
