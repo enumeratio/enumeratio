@@ -320,6 +320,9 @@ const includeWhole = () => ({
 const config = defineConfig({
   vite: {
     resolve: { alias: srcAliases },
+    // A production hydration mismatch names its node instead of only "contains mismatches"
+    // (/explore/zeta and the braid guide log one with no detail otherwise). About 1 KB.
+    define: { __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "true" },
     // Module workers: a session kernel imports each library as its own chunk, which the
     // default (IIFE) worker bundle can't split.
     // The worker reads every package's notation through `virtual:notation-entries`.

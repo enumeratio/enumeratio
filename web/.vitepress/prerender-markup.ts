@@ -92,7 +92,9 @@ export function prerenderMarkup(md: MarkdownItLike): void {
         const placeholder = inside
           ? `<span class="notatio-prerendered" data-prerender="${at}"></span>`
           : `<NotatioPrerendered :at="${at}" />`;
-        const opened = `<${tag}${attrs}>${placeholder}`;
+        // The element renders its own light DOM beside the placeholder (a cell's rows), and it can
+        // upgrade before Vue hydrates; without this Vue logs "more child nodes than client vdom".
+        const opened = `<${tag}${attrs} data-allow-mismatch="children">${placeholder}`;
         return self ? `${opened}</${tag}>` : opened;
       });
     for (const token of state.tokens) {
