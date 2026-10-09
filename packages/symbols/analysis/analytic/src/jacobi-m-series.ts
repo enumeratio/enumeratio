@@ -361,7 +361,16 @@ export function jacobiMCoefficients(
     }
     A.push(next);
   }
-  return A.map((byPower) =>
-    add(...[...byPower].map(([j, ring]): Json => div(toExpression(ring, u, at), j === 1 ? lead : ["Power", lead, j]))),
-  );
+  // One fraction per coefficient, over lead^J, so like terms merge and the result stays cheap to simplify.
+  const base = bottom === "c" ? COS : SIN;
+  return A.map((byPower) => {
+    const top = Math.max(...byPower.keys());
+    let numerator: Ring = new Map();
+    for (const [j, ring] of byPower) {
+      let factor = ring;
+      for (let i = j; i < top; i++) factor = times(factor, base);
+      numerator = plus(numerator, factor);
+    }
+    return div(toExpression(numerator, u, at), top === 1 ? lead : ["Power", lead, top]);
+  });
 }
