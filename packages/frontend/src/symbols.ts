@@ -2,7 +2,7 @@ import { PLOT_HEADS } from "./plot-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CONTROL_NOTATION_HEADS, LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
-import { serializeExpression } from "@enumeratio/formats/expression";
+import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { FRAME_HEIGHT, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
 import { renderBox } from "./box-render.ts";
 import { plainJson } from "./graphics-rules.ts";
@@ -21,6 +21,7 @@ import {
 import { epsil, headOf, numOf, opsOf, optionAttribute, strOf, symOf, tupleOf } from "./mathjson.ts";
 
 export { headOf, numOf, opsOf, optionAttribute, strOf, symOf, tupleOf, variable };
+export { expandDictionaries } from "./latex.ts";
 
 // A symbol and its component are the same thing seen from two ends
 // (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols). This is the map between them: for every head that
@@ -125,10 +126,22 @@ function complexOf(node: Json | undefined): [number, number] | undefined {
   return undefined;
 }
 
-/** A MathJSON dictionary literal (`{dict: {…}}`, compute-engine's own associative form). */
+/**
+ * A MathJSON dictionary: the literal (`{dict: {…}}`, compute-engine's own associative form), or
+ * `Dictionary(KeyValuePair(key, value), …)`, which is what parsing `{"key" -> value}` leaves.
+ */
 const dictOf = (node: unknown): Readonly<Record<string, Json>> | undefined => {
   const dict = (node as { dict?: unknown })?.dict;
-  return dict !== null && typeof dict === "object" ? (dict as Record<string, Json>) : undefined;
+  if (dict !== null && typeof dict === "object") return dict as Record<string, Json>;
+  if (headOf(node) !== "Dictionary") return undefined;
+  const entries: [string, Json][] = [];
+  for (const pair of opsOf(node)) {
+    const [key, value] = opsOf(pair);
+    const name = strOf(key) ?? symOf(key);
+    if (headOf(pair) !== "KeyValuePair" || name === undefined || value === undefined) return undefined;
+    entries.push([name, value]);
+  }
+  return Object.fromEntries(entries);
 };
 
 /**
@@ -443,6 +456,18 @@ export function plotSettingsOf(expr: Json): Record<string, string> | undefined {
   if (symbol === undefined) return undefined;
   const { ops, options } = optionsOf(expr);
   return { ...symbol.fixed, ...symbol.attributes(ops), ...lowerOptions(symbol, options).attributes };
+}
+
+/**
+ * What a plot element (`<graphics-box value>`) makes of its text: the expression as plain MathJSON
+ * and its settings, or undefined when the text does not parse or is no plot head.
+ */
+export function plotOfText(text: string): { json: Json; settings: Record<string, string> } | undefined {
+  const { json, errors } = parseExpression(text);
+  if (errors.length > 0) return undefined;
+  const plain = plainJson(json as never) as Json;
+  const settings = plotSettingsOf(plain);
+  return settings && { json: plain, settings };
 }
 
 /** A plot head as a visual symbol: the whole expression, options and all, in the element's `value`. */

@@ -57,6 +57,8 @@ export function expandDictionaries(node: unknown): unknown {
     ];
   }
   if (Array.isArray(node)) return node.map(expandDictionaries);
+  const fn = (node as { fn?: unknown })?.fn;
+  if (Array.isArray(fn)) return { ...(node as object), fn: fn.map(expandDictionaries) };
   return node;
 }
 

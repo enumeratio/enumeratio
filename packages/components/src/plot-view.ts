@@ -15,7 +15,6 @@ import {
   diagramBoxOf,
   followsClock,
   pageClock,
-  plainJson,
   type PlotFrame,
   plotBoxOfSamples,
   plotDataSeries,
@@ -111,13 +110,11 @@ export class PlotView {
   async recompute(): Promise<void> {
     const generation = ++this.#generation;
     const text = this.host.value.trim();
-    const { parseExpression } = await import("@enumeratio/formats/expression");
-    const { json, errors } = parseExpression(text);
-    const { plotSettingsOf } = await import("@enumeratio/frontend/symbols");
-    const plain = plainJson(json as never) as unknown;
-    const settings = errors.length > 0 ? undefined : plotSettingsOf(plain as never);
+    const { plotOfText } = await import("@enumeratio/frontend/symbols");
+    const plot = plotOfText(text);
     if (generation !== this.#generation) return;
-    if (settings === undefined) return this.#clear();
+    if (plot === undefined) return this.#clear();
+    const { json: plain, settings } = plot;
     this.#settings = settings;
     if (settings["layout"] !== undefined) return this.#diagramize(settings);
     this.#stop();

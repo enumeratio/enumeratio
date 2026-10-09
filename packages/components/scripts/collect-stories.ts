@@ -26,7 +26,7 @@ import { fileURLToPath } from "node:url";
 import { COMPONENT_STORIES_SCHEMA, validateSchema } from "@enumeratio/entry/schema";
 import { readStories, STORIES_SUFFIX, writeFormatted } from "@enumeratio/entry/node";
 import { toInputForm } from "@enumeratio/formats";
-import { markupOf, renderingOf } from "@enumeratio/frontend/symbols";
+import { expandDictionaries, markupOf, renderingOf } from "@enumeratio/frontend/symbols";
 import { markupOf as vdomMarkupOf } from "@enumeratio/formats/markup";
 import { vdomOf } from "@enumeratio/frontend/vdom";
 import type { ComponentStory } from "@enumeratio/entry";
@@ -64,7 +64,7 @@ function formsOf(expr: ComponentStory["expr"]): StoryForm[] {
       id: "epsil",
       label: "Epsil",
       caption: "notebook cells, the CLI",
-      text: toInputForm(json),
+      text: toInputForm(expandDictionaries(json) as never),
     },
     {
       id: "html",
