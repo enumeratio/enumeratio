@@ -126,6 +126,14 @@ export const INTEGER_TESTS: Readonly<Record<string, (n: number) => boolean>> = {
     for (let k = 2; k * k <= n; k++) if (n % k === 0) return false;
     return true;
   },
+  IsPrimePower: (n) => {
+    if (n < 2) return false;
+    let p = 2;
+    while (n % p !== 0) p++;
+    let m = n;
+    while (m % p === 0) m /= p;
+    return m === 1;
+  },
   IsOdd: (n) => Math.abs(n % 2) === 1,
   IsEven: (n) => n % 2 === 0,
   IsPositive: (n) => n > 0,

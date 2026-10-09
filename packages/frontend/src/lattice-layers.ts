@@ -87,7 +87,7 @@ const MISSING = "Its library is not loaded.";
 
 /**
  * A tiled layer's tiles: `LatticeTiles` of `QuadraticIntegers(d)`, `QuadraticOrder(D)`,
- * `GaussianIntegers` or `EisensteinIntegers`; `ArrayPlot` of `MultiplicationTable(QuotientRing(Integers, n))`.
+ * `GaussianIntegers` or `EisensteinIntegers`; `ArrayPlot` of `AdditionTable` or `MultiplicationTable(QuotientRing(Integers, n))`.
  * The libraries are those `loadLatticeModules` loaded.
  */
 export function latticeLayerOf(
@@ -95,15 +95,20 @@ export function latticeLayerOf(
   aspect: "Uniform" | "True",
 ): ShowLayer | string {
   if (tiles.head === "ArrayPlot") {
-    // `MultiplicationTable(ring, ElementOrder -> ChineseRemainder)`: how rows and columns list the ring.
+    // `AdditionTable(ring, ElementOrder -> Adic)`, or `MultiplicationTable`: how rows and columns list the ring.
     const table = splitOptions(tiles.data, new Set(["ElementOrder"]));
-    const n = headOf(tiles.data) === "MultiplicationTable" ? modulusOf(table.positional[0]) : Number.NaN;
-    if (!Number.isInteger(n)) return "ArrayPlot needs a table: MultiplicationTable(QuotientRing(Integers, n)).";
-    const order = stringOf(table.options.get("ElementOrder")) === "ChineseRemainder" ? "ChineseRemainder" : "Natural";
+    const head = headOf(tiles.data);
+    const n = head === "MultiplicationTable" || head === "AdditionTable" ? modulusOf(table.positional[0]) : Number.NaN;
+    if (!Number.isInteger(n))
+      return "ArrayPlot needs a table: AdditionTable(QuotientRing(Integers, n)) or MultiplicationTable(QuotientRing(Integers, n)).";
+    const listed = stringOf(table.options.get("ElementOrder"));
+    const order = listed === "ChineseRemainder" || listed === "Adic" ? listed : "Natural";
     if (!modules.residues) return MISSING;
-    return (
-      modules.residues.multiplicationTable(n, order) ?? `ℤ/${n} is too large to tabulate, or not a ring with a table.`
-    );
+    const made =
+      head === "AdditionTable"
+        ? modules.residues.additionTable(n, order)
+        : modules.residues.multiplicationTable(n, order);
+    return made ?? `ℤ/${n} is too large to tabulate, or not a ring with a table.`;
   }
   if (headOf(tiles.data) === "RadixExpansions") {
     const settings = radixSettingsOf(tiles.data);

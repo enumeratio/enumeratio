@@ -276,6 +276,8 @@ function exploreSidebar(): SidebarItem[] {
         { text: "Quadratic primes", link: "/explore/quadratic-primes/" },
         { text: "Complex bases", link: "/explore/complex-bases/" },
         { text: "Multiplication mod n", link: "/explore/multiplication-mod-n/" },
+        { text: "Addition mod n", link: "/explore/addition-mod-n/" },
+        { text: "Lifts mod pᵏ", link: "/explore/lifts-mod-pk/" },
       ],
     },
   ];

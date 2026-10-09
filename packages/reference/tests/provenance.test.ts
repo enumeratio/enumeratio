@@ -441,6 +441,8 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * normalization). KeiperLiLambda has no known equivalent anywhere.
  */
 const NOVEL = [
+  "AdditionTable",
+  "MultiplicationTable",
   "IntervalSliderBox",
   "KnobBox",
   "RadioButtonBarBox",
