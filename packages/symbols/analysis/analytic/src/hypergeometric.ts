@@ -61,10 +61,13 @@ const SETTLED_RUN = 3;
 const EPS = Number.EPSILON;
 /**
  * The most rounding error, relative to the sum, that a double series may keep: `peak / |sum| · EPS`
- * past this declines. Alternating series grow before they shrink: 1F1(1/2; 3/2; −40) has terms far
- * above its sum 0.14 and 0F1(; 1; −200) terms far above its sum, so their sums are noise to most
- * digits while `TOL` still sees the last terms shrink. 1e-13 is a thousand times `TOL`, which
- * keeps the mildly alternating arguments (1F1(1; 2; −5) loses about one digit) answering.
+ * past this declines. Alternating series grow before they shrink, so their sums can be noise while
+ * `TOL` still sees the last terms shrink: 1F1(1/2; 3/2; −40) has that figure at 0.28, 0F1(; 1; −200)
+ * at 4.5e-5. Measured against mpmath 1.3.0 (0F1(; 1), 0F1(; 5/2) at z = −1/2…−200; 1F1 at five (a; b)
+ * pairs, z = −1/2…−80), the actual relative error is within 1.5× of the figure wherever it is under
+ * 1e-3: 1e-13 answers to about 13 digits (0F1(; 1; −8): figure 8e-14, error 9e-15) and declines past
+ * it (1F1(1; 2; −10): 6e-13, error 1.4e-13). The sweep is `hypergeometric-cancellation.test.ts`
+ * under `DEEP_TESTS=1`.
  */
 const CANCELLATION_TOL = 1e-13;
 
