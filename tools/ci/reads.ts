@@ -49,19 +49,30 @@ export function reads(pkgs: Map<string, Pkg>): Read[] {
   return out;
 }
 
-/** Calls that walk every package's records (`@enumeratio/entry/node`, `@enumeratio/reference/node`). */
-const WHOLE_REPO = /@enumeratio\/reference\/node|\b(?:loadReferenceData|referenceData|recordDirs|packageDirs)\b/;
+/** `@enumeratio/reference/node` reads every package's records; `@enumeratio/entry/node` does only
+ *  through `recordDirs` and `packageDirs` (its other calls read or write one directory). */
+const REFERENCE_NODE = /@enumeratio\/reference\/node/;
+const ENTRY_NODE = /@enumeratio\/entry\/node/;
+const WALKERS = /\b(?:recordDirs|packageDirs)\b/;
+/** Comments can name a walker without calling it. */
+const COMMENT = /\/\*[\s\S]*?\*\/|(?<![:"'`])\/\/.*$/gm;
+const walksRecords = (source: string): boolean => {
+  const text = source.replace(COMMENT, "");
+  return REFERENCE_NODE.test(text) || (ENTRY_NODE.test(text) && WALKERS.test(text));
+};
+/** A package's build scripts and tests, at any depth, plus its config (which may run either). */
+const BUILD_OR_TEST = /^(?:(?:scripts|tests)\/.*|[^/]*config[^/]*)\.[cm]?[jt]s$/;
 /** A build script running another package's script, which may walk the records itself. */
 const SIBLING_SCRIPT = /(?:\.\.\/)+reference\/scripts\//;
 
-/** Packages whose build scripts walk every package's records, and where. */
+/** Packages whose build scripts or tests walk every package's records, and the first file that does. */
 export function scanners(pkgs: Map<string, Pkg>): Map<string, string> {
   const out = new Map<string, string>();
   for (const file of git("ls-files", "-z").split("\0")) {
     const home = owner(pkgs, file);
     if (home === undefined || out.has(home.name)) continue;
     const rel = relative(home.dir, file);
-    const script = /^scripts\/[^/]+\.m?ts$/.test(rel) && WHOLE_REPO.test(readFileSync(join(root, file), "utf8"));
+    const script = BUILD_OR_TEST.test(rel) && walksRecords(readFileSync(join(root, file), "utf8"));
     const build = rel === "package.json" && SIBLING_SCRIPT.test(home.buildScript ?? "");
     if (script || build) out.set(home.name, file);
   }
