@@ -6,9 +6,10 @@
 // Run with: pnpm --filter @enumeratio/web run test:stories
 
 import { fileURLToPath } from "node:url";
+import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import type { Locator } from "@playwright/test";
 import { STORIES_DATA } from "@enumeratio/components/stories-data";
-import { DRAWING_SYMBOLS } from "@enumeratio/frontend/symbols";
+import { DRAWING_SYMBOLS, renderingOf } from "@enumeratio/frontend/symbols";
 import { collectComponents, headOfTag } from "@enumeratio/frontend/reflect";
 import { expect, test } from "@playwright/test";
 
@@ -99,6 +100,10 @@ for (const [name, stories] of Object.entries(STORIES_DATA)) {
     for (const story of stories) {
       test(story.caption, async ({ page }) => {
         test.skip(tag === undefined, `no component tag maps to wrapper name "${name}"`);
+        // A story's expression may draw as another element than its page's (`ListPlot` on the
+        // `Chart` page is a `<graphics-box>`). A `Manipulate` wraps its page's own element.
+        const manipulated = Array.isArray(story.expr) && story.expr[0] === "Manipulate";
+        const drawnBy = (!manipulated && renderingOf(story.expr as MathJsonExpression)?.tag) || tag!;
 
         const consoleErrors: string[] = [];
         page.on("console", (msg) => {
@@ -116,11 +121,11 @@ for (const [name, stories] of Object.entries(STORIES_DATA)) {
 
         // The custom element itself upgraded (Lit's constructor replaces the HTMLElement
         // fallback), not just present as an unresolved tag in the DOM.
-        const el = card.locator(tag!).first();
+        const el = card.locator(drawnBy).first();
         await expect(el).toBeVisible();
-        await expect.poll(() => el.evaluate((node, t) => node instanceof customElements.get(t)!, tag)).toBe(true);
+        await expect.poll(() => el.evaluate((node, t) => node instanceof customElements.get(t)!, drawnBy)).toBe(true);
 
-        await assertDrew(el, tag!);
+        await assertDrew(el, drawnBy);
 
         expect(consoleErrors, consoleErrors.join("\n")).toEqual([]);
       });
