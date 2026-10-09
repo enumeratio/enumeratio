@@ -125,9 +125,9 @@ A <code>Locator</code> is a point <em>on</em> the picture: drag it, and the bind
 where it is in the plot's own coordinates.
 </template>
 <dynamic-module-box>
-<notatio-plot value="Sin(x)" domain="-6.283,6.283" grid>
+<graphics-box value="Plot(Sin(x), (x, -6.283, 6.283), GridLines -> True)">
 <locator-box name="p" value="1,0.5" />
-</notatio-plot>
+</graphics-box>
 The dot is at <dynamic-box value="_p" digits="3" />.
 </dynamic-module-box>
 </Story>
@@ -155,7 +155,7 @@ long one a popup menu — unless a trailing symbol names one, Wolfram's
 <code>ControlType</code>.
 </template>
 <notatio-manipulate v-pre params="{ {k, 2}, 1, 5, 1, Knob}; {a, {0.5, 1, 2}}; {m, {1, 2, 3, 4, 5, 6, 7}, PopupMenu}">
-<notatio-plot value="_a * Sin(_k * x) + _m" domain="-6.283,6.283" />
+<graphics-box value="Plot(_a * Sin(_k * x) + _m, (x, -6.283, 6.283))" />
 </notatio-manipulate>
 </Story>
 
@@ -190,19 +190,19 @@ symbols the engine knows.
 ## Options
 
 Options are Wolfram's: rules after the positional arguments, `PlotRange -> (-1, 1)`,
-singly or in lists, the leftmost setting of a name winning. On an element they are
-attributes — `plot-range`, or the name a component already has (`PlotLabel` is the
-plot's `label`) — and one whose value is something to draw, like `Epilog`, is
-carried the same way, as the Epsil it was.
+singly or in lists, the leftmost setting of a name winning. A plot is a `<graphics-box>`
+holding its expression, options and all; on a component that takes them as attributes they
+are `plot-range`, or the name the component already has, and one whose value is something to
+draw, like `Epilog`, is carried the same way, as the Epsil it was.
 
 <Story
   title="Options as rules, and as attributes">
 <template #description>
-The expression and the element say the same thing; <code>Epilog</code> marks the
+The expression and the element hold the same thing; <code>Epilog</code> marks the
 plot with a graphics primitive.
 </template>
 <notatio-out format="epsil" value='Plot(Sin(x), (x, 0, 10), PlotRange -> (-1.5, 1.5), PlotLabel -> "sine", Epilog -> [Point((1.5, 1)), Line([(0, 0), (10, 0)])])' />
-<notatio-plot value="Sin(x)" var="x" domain="0,10" plot-range="-1.5,1.5" label="sine" epilog="[Point((1.5, 1)), Line([(0, 0), (10, 0)])]" />
+<graphics-box value='Plot(Sin(x), (x, 0, 10), PlotRange -> (-1.5, 1.5), PlotLabel -> "sine", Epilog -> [Point((1.5, 1)), Line([(0, 0), (10, 0)])])' />
 </Story>
 
 ## Structure, not attributes

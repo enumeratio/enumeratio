@@ -1,23 +1,23 @@
 {
   "web: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Manipulate(Plot(sin(a * x), (x, 0, 10)), (a, 1, 5))",
-    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><graphics-box value=\"Plot(sin(_a * x), (x, 0, 10))\"></graphics-box></notatio-manipulate>"
   },
   "print: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Grid([[\n        Labeled(Plot(sin(1x), (x, 0, 10)), \"a = 1\", Bottom),\n        Labeled(Plot(sin(1.8x), (x, 0, 10)), \"a = 1.8\", Bottom),\n        Labeled(Plot(sin(2.6x), (x, 0, 10)), \"a = 2.6\", Bottom),\n      ], [\n          Labeled(Plot(sin(3.4x), (x, 0, 10)), \"a = 3.4\", Bottom),\n          Labeled(Plot(sin(4.2x), (x, 0, 10)), \"a = 4.2\", Bottom),\n          Labeled(Plot(sin(5x), (x, 0, 10)), \"a = 5\", Bottom),\n        ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1.8x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 1.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(2.6x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 2.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(3.4x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 3.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(4.2x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 4.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(5x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 5</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(1x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">a = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(1.8x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">a = 1.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(2.6x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">a = 2.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(3.4x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">a = 3.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(4.2x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">a = 4.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(5x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">a = 5</span></grid-box></grid-box>"
   },
   "tty: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Manipulate(Plot(sin(a * x), (x, 0, 10)), (a, 1, 5))",
-    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><graphics-box value=\"Plot(sin(_a * x), (x, 0, 10))\"></graphics-box></notatio-manipulate>"
   },
   "pipe: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Labeled(Plot(sin(1x), (x, 0, 10)), \"a = 1 (1 ≤ a ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 1 (1 ≤ a ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(1x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">a = 1 (1 ≤ a ≤ 5)</span></grid-box>"
   },
   "compact: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Manipulate(Plot(sin(a * x), (x, 0, 10)), (a, 1, 5))",
-    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><graphics-box value=\"Plot(sin(_a * x), (x, 0, 10))\"></graphics-box></notatio-manipulate>"
   },
   "web: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
     "epsil": "Manipulate(sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
@@ -221,23 +221,23 @@
   },
   "web: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Row([Plot(sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
-    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><notatio-plot value=\"sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><slider-box name=\"k\" value=\"1\" min=\"1\" max=\"5\"></slider-box></row-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><graphics-box value=\"Plot(sin(_k * x), (x, 0, 10))\"></graphics-box><slider-box name=\"k\" value=\"1\" min=\"1\" max=\"5\"></slider-box></row-box></dynamic-module-box>"
   },
   "print: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Grid([[\n        Labeled(Plot(sin(1x), (x, 0, 10)), \"k = 1\", Bottom),\n        Labeled(Plot(sin(1.8x), (x, 0, 10)), \"k = 1.8\", Bottom),\n        Labeled(Plot(sin(2.6x), (x, 0, 10)), \"k = 2.6\", Bottom),\n      ], [\n          Labeled(Plot(sin(3.4x), (x, 0, 10)), \"k = 3.4\", Bottom),\n          Labeled(Plot(sin(4.2x), (x, 0, 10)), \"k = 4.2\", Bottom),\n          Labeled(Plot(sin(5x), (x, 0, 10)), \"k = 5\", Bottom),\n        ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1.8x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 1.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(2.6x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 2.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(3.4x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 3.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(4.2x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 4.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(5x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 5</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(1x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(1.8x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">k = 1.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(2.6x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">k = 2.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(3.4x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">k = 3.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(4.2x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">k = 4.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(5x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">k = 5</span></grid-box></grid-box>"
   },
   "tty: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Row([Plot(sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
-    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><notatio-plot value=\"sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><slider-box name=\"k\" value=\"1\" min=\"1\" max=\"5\"></slider-box></row-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><graphics-box value=\"Plot(sin(_k * x), (x, 0, 10))\"></graphics-box><slider-box name=\"k\" value=\"1\" min=\"1\" max=\"5\"></slider-box></row-box></dynamic-module-box>"
   },
   "pipe: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Labeled(Plot(sin(1x), (x, 0, 10)), \"k = 1 (1 ≤ k ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 1 (1 ≤ k ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(1x), (x, 0, 10))\"></graphics-box><span class=\"style-box-label\">k = 1 (1 ≤ k ≤ 5)</span></grid-box>"
   },
   "compact: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Column([Plot(sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
-    "markup": "<dynamic-module-box><grid-box data-head=\"Column\"><notatio-plot value=\"sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><slider-box name=\"k\" value=\"1\" min=\"1\" max=\"5\"></slider-box></grid-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><grid-box data-head=\"Column\"><graphics-box value=\"Plot(sin(_k * x), (x, 0, 10))\"></graphics-box><slider-box name=\"k\" value=\"1\" min=\"1\" max=\"5\"></slider-box></grid-box></dynamic-module-box>"
   },
   "web: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "epsil": "Toggler(size, [\"a few\", \"several\", \"many\"])",
@@ -381,23 +381,23 @@
   },
   "web: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Row([Plot(sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
-    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><locator-box name=\"p\" value=\"1,0.5\"></locator-box></row-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><graphics-box value=\"Plot(sin(x), (x, 0, 10), Epilog -> Point((2, 0)))\"></graphics-box><locator-box name=\"p\" value=\"1,0.5\"></locator-box></row-box></dynamic-module-box>"
   },
   "print: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Labeled(\n         Plot(sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot><span class=\"style-box-label\">p = (1, 0.5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))])\"></graphics-box><span class=\"style-box-label\">p = (1, 0.5)</span></grid-box>"
   },
   "tty: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Row([Plot(sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
-    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><locator-box name=\"p\" value=\"1,0.5\"></locator-box></row-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><graphics-box value=\"Plot(sin(x), (x, 0, 10), Epilog -> Point((2, 0)))\"></graphics-box><locator-box name=\"p\" value=\"1,0.5\"></locator-box></row-box></dynamic-module-box>"
   },
   "pipe: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Labeled(\n         Plot(sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot><span class=\"style-box-label\">p = (1, 0.5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><graphics-box value=\"Plot(sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))])\"></graphics-box><span class=\"style-box-label\">p = (1, 0.5)</span></grid-box>"
   },
   "compact: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Column([\n         Plot(sin(x), (x, 0, 10), Epilog -> Point((2, 0))),\n         Locator((p, (1, 0.5))),\n       ])",
-    "markup": "<dynamic-module-box><grid-box data-head=\"Column\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><locator-box name=\"p\" value=\"1,0.5\"></locator-box></grid-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><grid-box data-head=\"Column\"><graphics-box value=\"Plot(sin(x), (x, 0, 10), Epilog -> Point((2, 0)))\"></graphics-box><locator-box name=\"p\" value=\"1,0.5\"></locator-box></grid-box></dynamic-module-box>"
   },
   "web: ComplexPlot(Zeta(z), z)": {
     "epsil": "ComplexPlot(zeta(z), z)",
@@ -420,23 +420,23 @@
   },
   "web: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
     "epsil": "Row([ComplexPlot3D(gamma(z), z), Plot(sin(x), (x, 0, 10))])",
-    "markup": "<row-box data-head=\"Row\"><notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></row-box>"
+    "markup": "<row-box data-head=\"Row\"><notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d><graphics-box value=\"Plot(sin(x), (x, 0, 10))\"></graphics-box></row-box>"
   },
   "print: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
     "epsil": "Row([Rasterize(ComplexPlot3D(gamma(z), z)), Plot(sin(x), (x, 0, 10))])",
-    "markup": "<row-box data-head=\"Row\"><dynamic-box value=\"Rasterize(ComplexPlot3D(gamma(z), z))\"></dynamic-box><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></row-box>"
+    "markup": "<row-box data-head=\"Row\"><dynamic-box value=\"Rasterize(ComplexPlot3D(gamma(z), z))\"></dynamic-box><graphics-box value=\"Plot(sin(x), (x, 0, 10))\"></graphics-box></row-box>"
   },
   "tty: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
     "epsil": "Row([ComplexPlot3D(gamma(z), z), Plot(sin(x), (x, 0, 10))])",
-    "markup": "<row-box data-head=\"Row\"><notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></row-box>"
+    "markup": "<row-box data-head=\"Row\"><notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d><graphics-box value=\"Plot(sin(x), (x, 0, 10))\"></graphics-box></row-box>"
   },
   "pipe: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
     "epsil": "Row([ComplexPlot3D(gamma(z), z), Plot(sin(x), (x, 0, 10))])",
-    "markup": "<row-box data-head=\"Row\"><notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></row-box>"
+    "markup": "<row-box data-head=\"Row\"><notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d><graphics-box value=\"Plot(sin(x), (x, 0, 10))\"></graphics-box></row-box>"
   },
   "compact: Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])": {
     "epsil": "Column([ComplexPlot3D(gamma(z), z), Plot(sin(x), (x, 0, 10))])",
-    "markup": "<grid-box data-head=\"Column\"><notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot></grid-box>"
+    "markup": "<grid-box data-head=\"Column\"><notatio-complex-plot-3d value=\"gamma(z)\" var=\"z\"></notatio-complex-plot-3d><graphics-box value=\"Plot(sin(x), (x, 0, 10))\"></graphics-box></grid-box>"
   },
   "web: Sin(x) + 1": {
     "epsil": "sin(x) + 1"
@@ -455,23 +455,23 @@
   },
   "web: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
     "epsil": "Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))\"></graphics-box>"
   },
   "print: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
     "epsil": "Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))\"></graphics-box>"
   },
   "tty: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
     "epsil": "Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))\"></graphics-box>"
   },
   "pipe: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
     "epsil": "Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))\"></graphics-box>"
   },
   "compact: Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1))": {
     "epsil": "Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))",
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1))\"></graphics-box>"
   },
   "web: CollectionTable(SymmetricGroup(6), Columns -> \"Descents\")": {
     "epsil": "CollectionTable(SymmetricGroup(6), Columns -> \"Descents\")",

@@ -4,7 +4,7 @@ import { repeat } from "lit/directives/repeat.js";
 import "./notatio-cell.ts";
 import "./dynamic-module-box.ts";
 import "./notatio-complex-plot.ts";
-import "./notatio-plot.ts";
+import "./graphics-box.ts";
 import "./notatio-plot-3d.ts";
 import { imageUri } from "@enumeratio/formats";
 import { toInputForm } from "@enumeratio/formats/inputform";
@@ -963,7 +963,7 @@ function paneFor(d: Drawable, view: SpaceView | undefined): unknown {
     ></notatio-curve-3d>`;
   }
   if (d.kind === "curve") {
-    return html`<notatio-plot .value=${d.source} domain=${`${x[0]},${x[1]}`}></notatio-plot>`;
+    return html`<graphics-box .value=${`Plot(${d.source}, (x, ${x[0]}, ${x[1]}))`}></graphics-box>`;
   }
   return html`<notatio-plot-3d
     .value=${d.source}

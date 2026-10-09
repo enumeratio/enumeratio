@@ -8,7 +8,9 @@ import { readFileSync } from "node:fs";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import { createKernel, type Kernel } from "@enumeratio/evaluation";
-import { linePlot, parseControls, plotSeries } from "@enumeratio/frontend/core";
+import { parseExpression } from "@enumeratio/formats/expression";
+import { plotSettingsOf } from "@enumeratio/frontend/symbols";
+import { parseControls, plainJson, plotBoxOfSamples, plotSeries, renderPlot, spanOf } from "@enumeratio/frontend/core";
 import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import type { CompiledPlot } from "@enumeratio/frontend/plot-compile";
 import { prerender } from "@enumeratio/frontend/prerender";
@@ -56,14 +58,20 @@ const systemHelpers = (ce: ComputeEngine): unknown =>
 
 async function plotPreview(spec: MarkupSpec): Promise<string | undefined> {
   const a = spec.attributes;
-  const text = a["value"];
-  if (text === undefined || Object.keys(a).some((name) => name.startsWith(":") || name.startsWith("v-")))
+  const written = a["value"];
+  if (written === undefined || Object.keys(a).some((name) => name.startsWith(":") || name.startsWith("v-")))
     return undefined;
+  // The expression's settings, as the element reads them; what the build can't draw it leaves live.
+  const { json, errors } = parseExpression(written);
+  const settings = errors.length > 0 ? undefined : plotSettingsOf(plainJson(json as never) as never);
+  const text = settings?.["value"];
+  if (settings === undefined || text === undefined || settings["type"] !== undefined) return undefined;
+  if (settings["epilog"] || settings["prolog"]) return undefined;
   const k = await pageKernel();
   const answer = await k.evaluate({ source: { text, format: "epsil" }, compile: { target: "javascript", each: true } });
   const plot = answer.compiled as CompiledPlot | undefined;
   if (!answer.ok || plot === undefined || plot.items.some((item) => item.code === undefined)) return undefined;
-  // The wildcards start where their controls do: the plot's own, then a Manipulate's around it.
+  // The wildcards start where a Manipulate's controls around it do.
   const scope: Record<string, unknown> = {};
   if (plot.items.some((item) => item.code!.includes("_.__"))) {
     const m = await import("@enumeratio/analytic");
@@ -74,14 +82,13 @@ async function plotPreview(spec: MarkupSpec): Promise<string | undefined> {
       __pl: m.polyLogReal,
     });
   }
-  for (const params of [...spec.manipulate, a["params"] ?? ""])
-    for (const c of parseControls(params)) scope[`_${c.name}`] = c.value;
+  for (const params of spec.manipulate) for (const c of parseControls(params)) scope[`_${c.name}`] = c.value;
   const sys = systemHelpers(k.ce);
   type Compiled = (s: unknown, v: unknown) => unknown;
   // oxlint-disable-next-line no-implied-eval -- the kernel's compiled output
   const compiled = (code: string): Compiled => new Function("_SYS", "_", `return (${code});`) as Compiled;
   const fns = plot.items.map((item) => compiled(item.code!));
-  const variable = a["var"] || plot.unknowns.find((u) => !u.startsWith("_")) || "x";
+  const variable = settings["var"] || plot.unknowns.find((u) => !u.startsWith("_")) || "x";
   const at =
     (i: number) =>
     (t: number): number => {
@@ -89,30 +96,15 @@ async function plotPreview(spec: MarkupSpec): Promise<string | undefined> {
       const v = fns[i]!(sys, scope);
       return typeof v === "number" ? v : Number.NaN;
     };
-  const [lo, hi] = (a["domain"] ?? "").split(",").map((s) => Number(s.trim()));
   const series = plotSeries(plot.items, at, {
-    domain: Number.isFinite(lo) && Number.isFinite(hi) ? [lo!, hi!] : [-6.283185, 6.283185],
-    samples: Number(a["samples"]) || 200,
-    mode: a["mode"],
-    adaptive: a["adaptive"] !== "false",
-    parametric: a["parametric"] !== undefined && a["parametric"] !== "false",
+    domain: spanOf(settings["domain"]) ?? [-6.283185, 6.283185],
+    samples: Number(settings["samples"]) || 200,
+    mode: settings["mode"],
+    adaptive: settings["adaptive"] !== "false",
+    parametric: settings["parametric"] !== undefined && settings["parametric"] !== "false",
   });
-  const on = (v: string | undefined): boolean => v !== undefined && v !== "false";
-  const { svg } = linePlot(series, {
-    axes: a["axes"] !== "false",
-    xScale: a["x-scale"],
-    yScale: a["y-scale"],
-    gridLines: on(a["grid"]),
-    fill: on(a["fill"]),
-    legend: on(a["legend"]),
-    xLabel: a["x-label"] || undefined,
-    yLabel: a["y-label"] || undefined,
-    title: a["label"] || undefined,
-    gradient: a["gradient"],
-    discrete: a["discrete"],
-    reverse: on(a["reverse"]),
-  });
-  return `<span class="notatio-plot-box">${svg}</span>`;
+  const { svg } = renderPlot(plotBoxOfSamples(settings, series) as never);
+  return `<span class="graphics-box-plot">${svg}</span>`;
 }
 
 /** `html` with each of `page`'s marked elements rendered into its placeholder. */

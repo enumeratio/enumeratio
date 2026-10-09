@@ -1,3 +1,4 @@
+import { PLOT_HEADS } from "./plot-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CONTROL_NOTATION_HEADS, LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
@@ -190,7 +191,7 @@ const dataOnly = (ops: readonly Json[]): Record<string, string> => (ops[0] === u
 /** A family member: the family tag with the member's attribute fixed. */
 const chart = (head: string, type: string, options?: VisualSymbol["options"]): VisualSymbol => ({
   head,
-  tag: "notatio-chart",
+  tag: head === "ListPlot" || head === "ListLinePlot" ? "graphics-box" : "notatio-chart",
   fixed: { type },
   attributes: dataOnly,
   ...(options && { options }),
@@ -306,10 +307,15 @@ function scalingFunctionsOption(value: Json): Record<string, string> {
   return out;
 }
 
-export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
+/**
+ * The 2-D plots that lower to `<graphics-box>`: the element reads the expression it holds (`value`,
+ * as `Show` does) and takes these rows' attributes from it, so each option keeps the name its
+ * sampling code was written in. They are settings, not tags: the tag is `graphics-box`.
+ */
+export const PLOT_SETTINGS: readonly VisualSymbol[] = [
   {
     head: "Plot",
-    tag: "notatio-plot",
+    tag: "graphics-box",
     attributes: (ops) => oneVariable(ops, { value: "value", variable: "var", range: "domain" }),
     options: {
       PlotLabel: "label",
@@ -345,11 +351,48 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     // parametric curve -- reuses `Plot`'s tag with `parametric` fixed on, the same way
     // `StreamPlot` reuses `VectorPlot`'s tag below.
     head: "ParametricPlot",
-    tag: "notatio-plot",
+    tag: "graphics-box",
     fixed: { parametric: "true" },
     attributes: (ops) => oneVariable(ops, { value: "value", variable: "var", range: "domain" }),
     options: { PlotPoints: "samples" },
   },
+  {
+    head: "PolarPlot",
+    tag: "graphics-box",
+    attributes: (ops) => oneVariable(ops, { value: "expr", variable: "tvar", range: "trange" }),
+  },
+  {
+    // `ListPolarPlot(points)`: explicit `(theta, r)` pairs, or bare radii spread evenly --
+    // see `ListContourPlot`.
+    head: "ListPolarPlot",
+    tag: "graphics-box",
+    attributes: dataOnly,
+  },
+  chart("ListPlot", "list"),
+  chart("ListLinePlot", "listline"),
+];
+
+const SETTINGS_BY_HEAD = new Map(PLOT_SETTINGS.map((p) => [p.head, p]));
+
+/** A plot head's settings: the attributes its sampling reads, from the expression as written. */
+export function plotSettingsOf(expr: Json): Record<string, string> | undefined {
+  const head = headOf(expr);
+  const symbol = head === undefined ? undefined : SETTINGS_BY_HEAD.get(head);
+  if (symbol === undefined) return undefined;
+  const { ops, options } = optionsOf(expr);
+  return { ...symbol.fixed, ...symbol.attributes(ops), ...lowerOptions(symbol, options).attributes };
+}
+
+/** A plot head as a visual symbol: the whole expression, options and all, in the element's `value`. */
+const plotSymbol = (head: string): VisualSymbol => ({
+  head,
+  tag: "graphics-box",
+  holdsOptions: true,
+  attributes: (ops) => ({ value: epsil([head, ...ops] as Json) }),
+});
+
+export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
+  ...PLOT_HEADS.map(plotSymbol),
   {
     head: "Plot3D",
     tag: "notatio-plot-3d",
@@ -405,18 +448,6 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-density-plot",
     attributes: dataOnly,
     options: { ColorFunction: colorFunction },
-  },
-  {
-    head: "PolarPlot",
-    tag: "notatio-polar-plot",
-    attributes: (ops) => oneVariable(ops, { value: "expr", variable: "tvar", range: "trange" }),
-  },
-  {
-    // `ListPolarPlot(points)`: explicit `(theta, r)` pairs, or bare radii spread evenly --
-    // see `ListContourPlot`.
-    head: "ListPolarPlot",
-    tag: "notatio-polar-plot",
-    attributes: dataOnly,
   },
   {
     head: "VectorPlot",
@@ -523,8 +554,6 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     },
     options: { ColorFunction: colorFunction },
   },
-  chart("ListPlot", "list"),
-  chart("ListLinePlot", "listline"),
   chart("BarChart", "bar"),
   chart("Histogram", "histogram"),
   chart("PieChart", "pie"),

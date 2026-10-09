@@ -9,24 +9,30 @@ const sample = (f: (x: number) => number, lo: number, hi: number, n = 40): PlotP
 
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
 
+// A curve is a width-2 stroke; a pole's gap is a second subpath of the same path.
+const curves = (s: string): string[] => [...s.matchAll(/<path d="([^"]*)"[^>]*stroke-width="2"/g)].map((m) => m[1]!);
+const segments = (s: string): number => curves(s).reduce((n, d) => n + (d.match(/M/g)?.length ?? 0), 0);
+// Axes and grid lines are the page's border color; the hover guide is one, dashed.
+const rules = (s: string): number => count(s.replaceAll('stroke="var(--notatio-border', "<rule"), "rule");
+
 test("line plot draws a single continuous curve for a smooth function", () => {
   const s = linePlotSvg(sample(Math.sin, -Math.PI, Math.PI));
   expect(s).toContain('viewBox="0 0 340 200"');
-  expect(count(s, "polyline")).toBe(1); // no gaps
-  expect(count(s, "line")).toBe(2); // the two zero-axes
+  expect(segments(s)).toBe(1); // no gaps
+  expect(rules(s)).toBe(2); // the two zero-axes
 });
 
 test("non-finite y splits the curve into segments (a pole)", () => {
   // 1/x over a domain straddling 0: the sample at/near 0 is non-finite.
   const pts = sample((x) => 1 / x, -2, 2, 41); // 41 => x = 0 is sampled exactly
   const s = linePlotSvg(pts);
-  expect(count(s, "polyline")).toBe(2); // one segment each side of the pole
+  expect(segments(s)).toBe(2); // one segment each side of the pole
 });
 
 test("empty / all-non-finite input yields a frame, no curve", () => {
-  expect(count(linePlotSvg([]), "polyline")).toBe(0);
+  expect(segments(linePlotSvg([]))).toBe(0);
   const nan = linePlotSvg([{ x: 0, y: Number.NaN }]);
-  expect(count(nan, "polyline")).toBe(0);
+  expect(segments(nan)).toBe(0);
 });
 
 test("axis labels report the sampled range", () => {
@@ -37,8 +43,8 @@ test("axis labels report the sampled range", () => {
 
 test("axes:false drops the axes and labels, keeps the curve", () => {
   const s = linePlotSvg(sample(Math.sin, -Math.PI, Math.PI), { axes: false });
-  expect(count(s, "polyline")).toBe(1); // curve still drawn
-  expect(count(s, "line")).toBe(0); // no axes
+  expect(segments(s)).toBe(1); // curve still drawn
+  expect(rules(s)).toBe(0); // no axes
   expect(count(s, "text")).toBe(0); // no labels
 });
 
@@ -57,12 +63,12 @@ test("log scale gaps out non-positive samples", () => {
     sample((x) => x, -2, 2, 41),
     { yScale: "log" },
   );
-  expect(count(s, "polyline")).toBe(1); // one segment, the positive part
+  expect(segments(s)).toBe(1); // one segment, the positive part
 });
 
 test("several series overlay, each in its own color", () => {
   const s = linePlotSvg([{ points: sample(Math.sin, -3, 3) }, { points: sample(Math.cos, -3, 3) }]);
-  expect(count(s, "polyline")).toBe(2);
+  expect(curves(s)).toHaveLength(2);
   expect(s).toContain('stroke="#4e79a7"'); // series 1: tableau10's first color
   expect(s).toContain('stroke="#f28e2c"'); // series 2: its second
 });
@@ -70,8 +76,8 @@ test("several series overlay, each in its own color", () => {
 test("points style draws a dot per finite sample instead of a line", () => {
   const pts = sample((x) => x * x, 0, 4, 9);
   const s = linePlotSvg([{ points: pts, style: "points" }]);
-  expect(count(s, "polyline")).toBe(0);
-  expect(count(s, "circle")).toBe(9);
+  expect(curves(s)).toHaveLength(0);
+  expect(count(s, "path")).toBe(9 + rules(s)); // a dot each, besides the axes
 });
 
 test("a parametric curve (points not x-sorted) stays one segment", () => {
@@ -80,7 +86,7 @@ test("a parametric curve (points not x-sorted) stays one segment", () => {
     return { x: Math.cos(t), y: Math.sin(t) };
   });
   const s = linePlotSvg(circle);
-  expect(count(s, "polyline")).toBe(1);
+  expect(segments(s)).toBe(1);
   expect(s).toContain(">-1<"); // x range is the data range
 });
 
@@ -89,10 +95,10 @@ test("hover marks the nearest sample of each series and lists coordinates", () =
     [{ points: sample((x) => x, 0, 10, 11), label: "f" }, { points: sample((x) => 2 * x, 0, 10, 11) }],
     { hover: 3.2 },
   );
-  expect(count(svg, "circle")).toBe(2); // one marker per series
+  expect(svg.match(/<path d="M[^"]*A/g)).toHaveLength(4); // a face and a ring per series
   expect(svg).toContain("f: (3, 3)"); // labelled series snaps to x = 3
   expect(svg).toContain("(3, 6)");
-  expect(count(svg, "line")).toBe(3); // two axes + the guide line
+  expect(rules(svg)).toBe(3); // two axes + the guide line
   // The pixel→data map inverts the x axis: left margin is xmin, right edge xmax.
   expect(xAt(38)).toBeCloseTo(0);
   expect(xAt(330)).toBeCloseTo(10);
@@ -100,7 +106,7 @@ test("hover marks the nearest sample of each series and lists coordinates", () =
 
 test("without hover there is no readout", () => {
   const s = linePlotSvg(sample(Math.sin, -3, 3));
-  expect(count(s, "circle")).toBe(0);
+  expect(s).not.toContain("A"); // no marker arcs
   expect(s).not.toContain("stroke-dasharray");
 });
 
@@ -153,14 +159,13 @@ test("gridLines add faint lines but no extra labels; off by default", () => {
     sample((x) => x, 0, 10),
     { gridLines: true },
   );
-  expect(count(grid, "line")).toBeGreaterThan(count(base, "line"));
-  expect(count(base, "line")).toBe(2); // default: just the two axes
+  expect(rules(grid)).toBeGreaterThan(rules(base));
+  expect(rules(base)).toBe(2); // default: just the two axes
 });
 
 test("fill draws a filled area under each line series", () => {
   const s = linePlotSvg(sample(Math.sin, -3, 3), { fill: true });
-  expect(count(s, "polygon")).toBeGreaterThanOrEqual(1);
-  expect(s).toContain("fill-opacity");
+  expect(s).toContain('fill-opacity="0.12"'); // the area under the curve
 });
 
 test("legend lists the labelled series", () => {
@@ -211,15 +216,15 @@ test("colorBy draws per-segment colored strokes along a ramp", () => {
   const plain = linePlotSvg(pts);
   const ramped = linePlotSvg(pts, { colorBy: "y" });
   // Plain: one polyline. Ramped: one short polyline per adjacent pair.
-  expect(count(plain, "polyline")).toBe(1);
-  expect(count(ramped, "polyline")).toBe(19); // n-1 segments
+  expect(curves(plain)).toHaveLength(1);
+  expect(curves(ramped)).toHaveLength(19); // n-1 segments
   // Segments differ in color along the gradient; the plain curve is one series color.
-  expect(new Set(ramped.match(/<polyline[^>]*stroke="(#[0-9a-f]{6})"/g)).size).toBeGreaterThan(5);
+  expect(new Set(ramped.match(/stroke="#[0-9a-f]{6}" stroke-width="2"/g)).size).toBeGreaterThan(5);
 });
 
 test("colorBy tints points mode too", () => {
   const s = linePlotSvg([{ points: sample((x) => x, 0, 4, 5), style: "points" }], { colorBy: "x" });
-  expect(count(s, "circle")).toBe(5);
+  expect(count(s, "path")).toBe(5 + rules(s));
   expect(s).toContain('fill="#440154"'); // the gradient's first stop, at the lowest x
   expect(s).toContain('fill="#fde725"'); // and its last, at the highest
 });

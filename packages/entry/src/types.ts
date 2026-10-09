@@ -161,7 +161,7 @@ export interface ReferenceSignature {
  * only mean anything in a particular environment, and a reader deserves to know which.
  *
  * - `engine`   plain compute-engine evaluation; works anywhere the engine does
- * - `browser`  needs the DOM, and usually a custom element (`<notatio-plot>` et al.)
+ * - `browser`  needs the DOM, and usually a custom element (`<graphics-box>` et al.)
  * - `gpu`      compiled to WGSL/GLSL and evaluated on the GPU (`gpu-eval.ts`)
  * - `node`     server-side only (filesystem, a spawned kernel)
  * - `external` another system's kernel entirely — Wolfram, SymPy, Sage
@@ -188,7 +188,7 @@ export type BindingOrigin = "reference" | "native" | "compiled" | "component" | 
 /** One of the several things a head is "made of". */
 export interface ReferenceBinding {
   readonly origin: BindingOrigin;
-  /** Target or language: "notatio", "typescript", "wgsl", "numpy", "<notatio-plot>", … */
+  /** Target or language: "notatio", "typescript", "wgsl", "numpy", "<graphics-box>", … */
   readonly form: string;
   readonly environment?: Environment;
   /**

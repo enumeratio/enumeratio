@@ -1,22 +1,32 @@
-// Pure polar-plot geometry: (θ, r) samples in, an SVG string out. The element
-// layer evaluates r(θ) with the compute engine and hands this module plain
-// numbers, exactly as contour.ts takes an already-sampled grid. Equal aspect
-// (a circle stays a circle) and no randomness, so the output is deterministic.
+// A polar plot as a `GraphicsBox`: (θ, r) samples lower to a curve in Cartesian coordinates (a
+// `LineBox`, a `PolygonBox` when filled, a `PointBox` for a list's markers), with the outer radius
+// as `PlotRange` and the grid as `PolarAxes`. Equal aspect (a circle stays a circle) and no
+// randomness, so the output is deterministic. The element layer evaluates r(θ) with the compute
+// engine and hands this module plain numbers, exactly as contour.ts takes a sampled grid.
+
+import {
+  type Box,
+  type BoxNode,
+  graphics,
+  isNode,
+  line,
+  type Options,
+  type OptionValue,
+  optionsOfBox,
+  point,
+  polygon,
+  row,
+  style,
+  tag,
+} from "@enumeratio/boxes";
+import type { Edge } from "./graphics-rules.ts";
+import { label } from "./plot-box.ts";
+import { svg } from "./svg-draw.ts";
+import type { DisplayList, GraphicsPrimitive, MarkItem } from "./tiles-canvas.ts";
 
 const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
 const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
-
-const n2 = (x: number): string => String(Math.round(x * 100) / 100);
-
-const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-function label(x: number): string {
-  if (!Number.isFinite(x)) return "";
-  if (x === 0) return "0";
-  const abs = Math.abs(x);
-  return abs >= 1000 || abs < 0.01 ? x.toExponential(1) : String(Math.round(x * 100) / 100);
-}
 
 export interface PolarPoint {
   theta: number;
@@ -63,14 +73,10 @@ export interface PolarPlotOptions {
   title?: string;
 }
 
-const frame = (w: number, h: number, body: string): string =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" role="img" aria-label="polar plot">${body}</svg>`;
-
-function titleSvg(w: number, title: string | undefined): string {
-  return title
-    ? `<text x="${n2(w / 2)}" y="14" text-anchor="middle" font-size="12" font-family="ui-sans-serif, system-ui, sans-serif" fill="${FG}">${esc(title)}</text>`
-    : "";
-}
+const SIZE = 260;
+const PAD = 14;
+const CURVE_WIDTH = 1.6;
+const DOT_RADIUS = 2.2;
 
 /** A "nice" ring radius: 1, 2 or 5 × a power of ten, at most `max`. */
 function ringStep(max: number): number {
@@ -81,50 +87,32 @@ function ringStep(max: number): number {
   return (norm >= 5 ? 5 : norm >= 2 ? 2 : 1) * mag;
 }
 
+const edge = (color: string, width: number, opacity = 1): OptionValue => [[color, width, opacity, []]];
+const isFinitePoint = (p: PolarPoint): boolean => Number.isFinite(p.r) && Number.isFinite(p.theta);
+
 /**
- * Render polar `points` as a curve on a polar grid (Wolfram's `PolarPlot`, or
- * `ListPolarPlot` with `markers`). The plot area is square and centred, so
- * angles aren't sheared; non-finite radii break the path into subpaths.
+ * Polar `points` as a `GraphicsBox` (Wolfram's `PolarPlot`, or `ListPolarPlot` with `markers`).
+ * Non-finite radii break the path into subpaths.
  */
-export function polarPlotSvg(points: readonly PolarPoint[], opts: PolarPlotOptions = {}): string {
-  const W = opts.width ?? 260;
-  const H = opts.height ?? 260;
-  const pad = 14;
-  const top = opts.title ? 26 : pad;
-
-  const finite = points.filter((p) => Number.isFinite(p.r) && Number.isFinite(p.theta));
+export function polarPlotBox(points: readonly PolarPoint[], opts: PolarPlotOptions = {}): Box {
+  const finite = points.filter(isFinitePoint);
   const rMax = opts.max && opts.max > 0 ? opts.max : finite.reduce((m, p) => Math.max(m, Math.abs(p.r)), 0) || 1;
-
-  const cx = W / 2;
-  const cy = top + (H - top - pad) / 2;
-  const R = Math.min(W / 2 - pad, (H - top - pad) / 2);
-  if (finite.length === 0 || R <= 0) return frame(W, H, titleSvg(W, opts.title));
-
-  const px = (theta: number, r: number): [number, number] => {
-    const c = polarToCartesian(theta, r);
-    // Screen y grows downward, so the mathematical +y axis points up.
-    return [cx + (c.x / rMax) * R, cy - (c.y / rMax) * R];
+  const options: Record<string, OptionValue> = {
+    ImageSize: [opts.width ?? SIZE, opts.height ?? SIZE],
+    ViewKind: "fixed",
+    PolarAxes: opts.axes !== false,
+    ...(opts.title && { PlotLabel: opts.title }),
   };
+  if (finite.length === 0) return graphics(row([]), options);
+  options["PlotRange"] = [
+    [-rMax, rMax],
+    [-rMax, rMax],
+  ];
 
-  let grid = "";
-  if (opts.axes !== false) {
-    const step = ringStep(rMax);
-    for (let r = step; r <= rMax + step * 1e-9; r += step) {
-      grid += `<circle cx="${n2(cx)}" cy="${n2(cy)}" r="${n2((r / rMax) * R)}" fill="none" stroke="${AXIS}" stroke-width="1" opacity="0.35"/>`;
-    }
-    for (let k = 0; k < 12; k++) {
-      const a = (k * Math.PI) / 6;
-      const [ex, ey] = px(a, rMax);
-      grid += `<line x1="${n2(cx)}" y1="${n2(cy)}" x2="${n2(ex)}" y2="${n2(ey)}" stroke="${AXIS}" stroke-width="1" opacity="0.2"/>`;
-    }
-    grid += `<text x="${n2(cx + R)}" y="${n2(cy - 4)}" text-anchor="end" font-size="10" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.6">${label(rMax)}</text>`;
-  }
-
-  // Subpaths break wherever a sample is non-finite (a pole of r(θ)).
   const runs: PolarPoint[][] = [];
   let run: PolarPoint[] = [];
   for (const p of points) {
-    if (Number.isFinite(p.r) && Number.isFinite(p.theta)) run.push(p);
+    if (isFinitePoint(p)) run.push(p);
     else if (run.length > 0) {
       runs.push(run);
       run = [];
@@ -132,29 +120,116 @@ export function polarPlotSvg(points: readonly PolarPoint[], opts: PolarPlotOptio
   }
   if (run.length > 0) runs.push(run);
 
-  const d = runs
-    .map((seg) =>
-      seg
-        .map((p, i) => {
-          const [x, y] = px(p.theta, p.r);
-          return `${i === 0 ? "M" : "L"}${n2(x)},${n2(y)}`;
-        })
-        .join(" "),
-    )
-    .join(" ");
+  const xy = (p: PolarPoint): number[] => {
+    const c = polarToCartesian(p.theta, p.r);
+    return [c.x, c.y];
+  };
+  const items: Box[] = [];
+  if (opts.filled)
+    for (const seg of runs)
+      items.push(style(tag(polygon({ Points: seg.map(xy) }), "Fill"), { FaceForm: ACCENT, Opacity: 0.18 }));
+  const breaks: number[] = [];
+  const closing = opts.closed || opts.filled;
+  const drawn = runs.map((seg, k) => (closing && k === runs.length - 1 ? [...seg, seg[0]!] : seg));
+  drawn.reduce((at, seg) => {
+    if (at > 0) breaks.push(at);
+    return at + seg.length;
+  }, 0);
+  items.push(
+    style(tag(line({ Points: drawn.flat().map(xy), ...(breaks.length > 0 && { Breaks: breaks }) }), "Series"), {
+      EdgeForm: edge(ACCENT, CURVE_WIDTH),
+    }),
+  );
+  if (opts.markers) items.push(style(tag(point({ Points: finite.map(xy) }), "Series"), { FaceForm: ACCENT }));
+  return graphics(row(items), options);
+}
 
-  let curve = "";
-  if (d) {
-    const closing = opts.closed || opts.filled ? " Z" : "";
-    if (opts.filled) curve += `<path d="${d}${closing}" fill="${ACCENT}" opacity="0.18" stroke="none"/>`;
-    curve += `<path d="${d}${closing}" fill="none" stroke="${ACCENT}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`;
-  }
-  if (opts.markers) {
-    for (const p of finite) {
-      const [x, y] = px(p.theta, p.r);
-      curve += `<circle cx="${n2(x)}" cy="${n2(y)}" r="2.2" fill="${ACCENT}"/>`;
+/** Whether `box` is a polar plot's `GraphicsBox`. */
+export const isPolarBox = (box: Box): box is BoxNode =>
+  isNode(box) && box[0] === "GraphicsBox" && optionsOfBox(box).PolarAxes !== undefined;
+
+const numbers = (value: unknown): number[] | undefined =>
+  Array.isArray(value) && value.every((v) => typeof v === "number") ? (value as number[]) : undefined;
+
+const solid = (color: string, width: number, opacity: number): Edge => ({ color, width, opacity, dashing: [] });
+
+/** A polar plot box drawn as SVG: the grid, then the curve, then its title. */
+export function polarPlotBoxSvg(box: BoxNode): string {
+  const o = optionsOfBox(box);
+  const [W, H] = (numbers(o.ImageSize) ?? [SIZE, SIZE]) as [number, number];
+  const top = typeof o.PlotLabel === "string" ? 26 : PAD;
+  const cx = W / 2;
+  const cy = top + (H - top - PAD) / 2;
+  const R = Math.min(W / 2 - PAD, (H - top - PAD) / 2);
+  const marks: MarkItem[] = [];
+  const at = (x: number, y: number): [number, number] => [x, H - y];
+  const push = (mark: GraphicsPrimitive, look: MarkItem["style"]): void => {
+    marks.push({ address: [0, 0], at: [0, 0], mark, style: look, selected: false });
+  };
+  const range = Array.isArray(o.PlotRange) ? (o.PlotRange as number[][]) : undefined;
+  if (range && R > 0) {
+    const rMax = range[0]![1]!;
+    const px = (p: readonly number[]): [number, number] => at(cx + (p[0]! / rMax) * R, cy - (p[1]! / rMax) * R);
+    if (o.PolarAxes !== false) {
+      const step = ringStep(rMax);
+      for (let r = step; r <= rMax + step * 1e-9; r += step)
+        push({ head: "Disk", radius: (r / rMax) * R, center: at(cx, cy) }, { edges: [solid(AXIS, 1, 0.35)] });
+      for (let k = 0; k < 12; k++) {
+        const a = (k * Math.PI) / 6;
+        push(
+          { head: "Line", points: [at(cx, cy), px([rMax * Math.cos(a), rMax * Math.sin(a)])] },
+          { edges: [solid(AXIS, 1, 0.2)] },
+        );
+      }
+      push(
+        {
+          head: "Text",
+          text: label(rMax),
+          size: 10,
+          at: at(cx + R, cy - 4),
+          look: { anchor: "end", mono: true, opacity: 0.6 },
+        },
+        { color: FG, edges: [] },
+      );
+    }
+    const content = box[1] as Box;
+    const items = isNode(content) && content[0] === "RowBox" ? (content[1] as readonly Box[]) : [];
+    for (const it of items) {
+      if (!isNode(it) || it[0] !== "StyleBox") continue;
+      const look = it[2] as Options;
+      const tagged = it[1] as Box;
+      if (!isNode(tagged) || tagged[0] !== "TagBox" || !isNode(tagged[1])) continue;
+      const prim = tagged[1] as BoxNode;
+      const p = optionsOfBox(prim);
+      const pts = Array.isArray(p.Points) ? p.Points.flatMap((q) => (numbers(q) ? [numbers(q)!] : [])) : [];
+      const color = typeof look.FaceForm === "string" ? look.FaceForm : undefined;
+      if (prim[0] === "PolygonBox")
+        push(
+          { head: "Polygon", points: pts.map(px) },
+          { ...(color && { color }), opacity: Number(look.Opacity ?? 1), edges: [] },
+        );
+      else if (prim[0] === "LineBox") {
+        const breaks = numbers(p.Breaks);
+        const e = Array.isArray(look.EdgeForm) ? look.EdgeForm[0] : undefined;
+        push(
+          { head: "Line", points: pts.map(px), ...(breaks && { breaks }) },
+          { edges: [solid(Array.isArray(e) ? String(e[0]) : ACCENT, CURVE_WIDTH, 1)] },
+        );
+      } else if (prim[0] === "PointBox")
+        for (const q of pts)
+          push({ head: "Disk", radius: DOT_RADIUS, center: px(q) }, { ...(color && { color }), edges: [] });
     }
   }
+  if (typeof o.PlotLabel === "string")
+    push(
+      { head: "Text", text: o.PlotLabel, size: 12, at: at(W / 2, 14), look: { anchor: "middle" } },
+      { color: FG, edges: [] },
+    );
+  const list: DisplayList = { kind: "marks", view: "fixed", marks, links: [], complete: true };
+  return svg(list, W, H, { center: [W / 2, H / 2], extent: H / 2 }, { rounded: true, label: "polar plot" });
+}
 
-  return frame(W, H, grid + curve + titleSvg(W, opts.title));
+/** Render polar `points` as a curve on a polar grid: `polarPlotBox` drawn. */
+export function polarPlotSvg(points: readonly PolarPoint[], opts: PolarPlotOptions = {}): string {
+  return polarPlotBoxSvg(polarPlotBox(points, opts) as BoxNode);
 }

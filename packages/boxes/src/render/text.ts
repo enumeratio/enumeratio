@@ -144,6 +144,8 @@ class Writer {
       case "GraphicsComplexBox":
       case "DiskBox":
       case "LineBox":
+      case "PointBox":
+      case "ArrowBox":
       case "PolygonBox":
       case "PolyhedronBox":
       case "InsetBox":

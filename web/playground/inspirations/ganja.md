@@ -196,7 +196,7 @@ set, hue over the quaternions, automatic differentiation through dual numbers â€
 are plots of a function over a two-real-dimensional algebra. That is exactly what
 `<notatio-complex-plot>` and the GPU phase portrait already do; what is missing
 is only that they take `z` rather than an arbitrary algebra's element.
-The 1-D and 2-D _function_ graphs ganja offers are `<notatio-plot>` and
+The 1-D and 2-D _function_ graphs ganja offers are `Plot` (a `<graphics-box>`) and
 `<notatio-density-plot>`.
 
 **A near thing.** 2-D PGA in SVG â€” points, lines, join and meet, distances and

@@ -23,10 +23,11 @@ graphics-box.inline-figure .graphics-box-figure { margin: 0; border: 0; backgrou
 graphics-box.inline-figure .graphics-box-layers { background: none !important; }
 
 /* Plots are block figures sized to a max width; the viewBox drives the ratio. */
-notatio-plot, notatio-plot-3d { display: block; line-height: 0; }
-notatio-plot .notatio-plot-box,
+notatio-plot-3d { display: block; line-height: 0; }
 notatio-plot-3d .notatio-plot-box { display: inline-block; max-width: 100%; }
-notatio-plot svg { width: 340px; max-width: 100%; height: auto; overflow: hidden; }
+graphics-box[data-plot] { display: block; flex: 0 1 auto; width: auto; line-height: 0; position: relative; }
+graphics-box[data-plot] .graphics-box-plot { display: inline-block; max-width: 100%; }
+graphics-box[data-plot] svg { width: 340px; max-width: 100%; height: auto; overflow: hidden; }
 notatio-plot-3d svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
 
 /* ComplexPlot3D is a Plot3D with a hue per face; same frame. */
@@ -55,9 +56,7 @@ notatio-density-plot { display: block; line-height: 0; }
 notatio-density-plot .notatio-density-plot-box { display: inline-block; max-width: 100%; }
 notatio-density-plot svg { width: 340px; max-width: 100%; height: auto; overflow: hidden; }
 
-notatio-polar-plot { display: block; line-height: 0; }
-notatio-polar-plot .notatio-polar-plot-box { display: inline-block; max-width: 100%; }
-notatio-polar-plot svg { width: 260px; max-width: 100%; height: auto; overflow: hidden; }
+graphics-box[data-plot] svg[aria-label="polar plot"] { width: 260px; }
 
 /* 3-D list plots & bar charts share Plot3D's sizing -- a projected figure whose
    axis labels can sit just outside the viewBox. */
@@ -1109,6 +1108,7 @@ notatio-worksheet {
    gesture. Only the layers above the first, though -- making every layer inert took the drag
    away from figures that are a lone layer, which is most of them. */
 .ws-layer:not(:first-child) .notatio-plot-box,
+.ws-layer:not(:first-child) .graphics-box-plot,
 .ws-layer:not(:first-child) svg {
   pointer-events: none;
 }
@@ -1377,6 +1377,7 @@ notatio-worksheet {
 
 /* --- Focused plots: a ring marks the focus, which the wheel no longer depends on -------- */
 .notatio-plot-box:focus,
+.graphics-box-plot:focus,
 .notatio-complex-plot-stage canvas:focus {
   outline: 2px solid color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
   outline-offset: -2px;
@@ -1804,8 +1805,7 @@ list-picker-box { display: inline-block; vertical-align: top; }
 }
 .slider-2d-box[data-dragging] .slider-2d-box-pad-dot { transform: scale(1.25); }
 
-/* A locator lives on a plot, so the plot is its frame of reference. */
-notatio-plot { position: relative; }
+/* A locator lives on a plot, so the plot is its frame of reference (graphics-box[data-plot] is positioned). */
 locator-box { display: contents; }
 .locator-box-dot {
   pointer-events: auto;

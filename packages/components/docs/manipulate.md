@@ -45,14 +45,14 @@ The slider fills the wildcard <code>_a</code> in the plot's <code>value</code> a
 re-samples. Press ▶ to sweep it.
 </template>
 <notatio-manipulate v-pre params="{a, 1, 5}">
-<notatio-plot value="Sin(_a * x)" domain="-6.283,6.283" />
+<graphics-box value="Plot(Sin(_a * x), (x, -6.283, 6.283))" />
 </notatio-manipulate>
 </Story>
 
 <Story
   title="Amplitude · frequency · phase">
 <notatio-manipulate v-pre params="{ {A, 1}, 0, 2}; { {w, 2}, 0.5, 6}; {p, 0, 6.283}">
-<notatio-plot value="_A * Sin(_w * x + _p)" domain="-6.283,6.283" plot-range="-2,2" />
+<graphics-box value="Plot(_A * Sin(_w * x + _p), (x, -6.283, 6.283), PlotRange -> (-2, 2))" />
 </notatio-manipulate>
 </Story>
 
@@ -78,7 +78,7 @@ One slider feeds two children at once — the plot's frequency and a glyph marki
 <code>k</code> in <code>{1..6}</code>.
 </template>
 <notatio-manipulate v-pre params="{ {k, 3}, 1, 6, 1}">
-<notatio-plot value="Sin(_k * x)" domain="-6.283,6.283" grid />
+<graphics-box value="Plot(Sin(_k * x), (x, -6.283, 6.283), GridLines -> True)" />
 <graphics-box class="inline-figure" value='Show(CellDiagram(Subset([_k], 6)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
 </notatio-manipulate>
 </Story>
@@ -88,15 +88,14 @@ One slider feeds two children at once — the plot's frequency and a glyph marki
 <Story
   title="A travelling wave (press ▶)">
 <notatio-manipulate v-pre params="{t, 0, 6.283}">
-<notatio-plot value="Sin(x - _t)" domain="-6.283,6.283" />
+<graphics-box value="Plot(Sin(x - _t), (x, -6.283, 6.283))" />
 </notatio-manipulate>
 </Story>
 
 `loop` on the wrapper says what playback does at the ends — `cycle` (the
 default, Manipulate's own), `reflect` or `none` — and holding ▶ (or
 right-clicking it) opens a panel for that and for the speed, per slider. The
-same attribute and panel serve a plot's own `params` sliders and a worksheet's
-bindings.
+same attribute and panel serve a worksheet's bindings.
 
 ## Drive a surface
 
@@ -112,7 +111,7 @@ bindings.
 <Story
   title="A setter over a list">
 <notatio-manipulate v-pre params="{k, {1, 2, 3, 5}}">
-<notatio-plot value="Sin(_k * x)" domain="-6.283,6.283" grid />
+<graphics-box value="Plot(Sin(_k * x), (x, -6.283, 6.283), GridLines -> True)" />
 </notatio-manipulate>
 </Story>
 
@@ -137,7 +136,7 @@ Manipulate target — nothing in the sentence knows the plot exists.
 <notatio-manipulate v-pre
   params="{ {k, 3}, 1, 8, 1}; { {a, 1}, 0.2, 2, 0.1}"
   prose="The curve $a\sin(kx)$ with frequency {k} and amplitude {a | play} crosses zero {2 * _k + 1} times on $[-\pi, \pi]$ and reaches {N(_a) | digits=2} at its peaks.">
-<notatio-plot value="_a * Sin(_k * x)" domain="-3.1416,3.1416" grid />
+<graphics-box value="Plot(_a * Sin(_k * x), (x, -3.1416, 3.1416), GridLines -> True)" />
 </notatio-manipulate>
 </Story>
 

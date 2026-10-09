@@ -21,24 +21,24 @@ test("a cell gets a placeholder, and a plot in a v-pre Manipulate a plain one, w
     [
       '<notatio-cell value="BellNumber(6)" />',
       '<notatio-manipulate v-pre params="{a, 1, 5}">',
-      '<notatio-plot value="Sin(_a * x)" domain="-3,3" />',
+      '<graphics-box value="Plot(Sin(_a * x), (x, -3, 3))" />',
       "</notatio-manipulate>",
       '<notatio-cell value="x" prerender="false" />',
     ].join("\n"),
   );
   expect(html).toContain('<notatio-cell value="BellNumber(6)"><NotatioPrerendered :at="0" /></notatio-cell>');
   expect(html).toContain(
-    '<notatio-plot value="Sin(_a * x)" domain="-3,3"><span class="notatio-prerendered" data-prerender="1"></span></notatio-plot>',
+    '<graphics-box value="Plot(Sin(_a * x), (x, -3, 3))"><span class="notatio-prerendered" data-prerender="1"></span></graphics-box>',
   );
   expect(html).toContain('<notatio-cell value="x" prerender="false" />');
   expect(specs.map((s) => [s.tag, s.attributes["value"], s.manipulate])).toEqual([
     ["notatio-cell", "BellNumber(6)", []],
-    ["notatio-plot", "Sin(_a * x)", ["{a, 1, 5}"]],
+    ["graphics-box", "Plot(Sin(_a * x), (x, -3, 3))", ["{a, 1, 5}"]],
   ]);
 });
 
 test("a page preloads the chunks its prerendered tags load", () => {
   const tags = new Set(["notatio-cell"]);
   expect(preloads("/assets/chunks/notatio-out.AbC12.js", tags)).toBe(true);
-  expect(preloads("/assets/chunks/notatio-plot.AbC12.js", tags)).toBe(false);
+  expect(preloads("/assets/chunks/plot-view.AbC12.js", tags)).toBe(false);
 });

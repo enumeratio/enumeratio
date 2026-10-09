@@ -56,7 +56,7 @@ animation.
 <Story
   title="Wolfram's control tuples, parsed as written">
 <notatio-manipulate v-pre params="{ {A, 1}, 0, 2}; { {w, 2}, 0.5, 6}">
-<notatio-plot value="_A * Sin(_w * x)" domain="-6.283,6.283" plot-range="-2,2" />
+<graphics-box value="Plot(_A * Sin(_w * x), (x, -6.283, 6.283), PlotRange -> (-2, 2))" />
 </notatio-manipulate>
 </Story>
 

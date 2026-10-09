@@ -12,6 +12,7 @@ import { completionScript, type Shell, SHELLS, SUBCOMMANDS } from "./completion.
 import { formatsTable } from "./core.ts";
 import { notationOf } from "@enumeratio/boxes";
 import { figureText } from "./figure.ts";
+import { sampledPlot } from "./textual.ts";
 import { isTable } from "./table.ts";
 import {
   type Form,
@@ -202,6 +203,7 @@ function figureOf(input: string, defaults: SessionDefaults, host: HostOptions): 
       color: host.color,
       notation: notationOf(session.ce),
       evaluate: (json) => session.render(session.ce.box(json as never).evaluate()),
+      plot: (json) => sampledPlot(session, json),
     });
   } catch {
     return undefined;

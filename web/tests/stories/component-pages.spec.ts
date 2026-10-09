@@ -8,6 +8,7 @@
 import { fileURLToPath } from "node:url";
 import type { Locator } from "@playwright/test";
 import { STORIES_DATA } from "@enumeratio/components/stories-data";
+import { DRAWING_SYMBOLS } from "@enumeratio/frontend/symbols";
 import { collectComponents, headOfTag } from "@enumeratio/frontend/reflect";
 import { expect, test } from "@playwright/test";
 
@@ -17,7 +18,11 @@ const srcDir = fileURLToPath(new URL("./src/", import.meta.resolve("@enumeratio/
 // STORIES_DATA is keyed by the Vue/React wrapper name (`BarChart3D`); the page route is the
 // custom-element tag (`notatio-bar-chart-3d`) -- the same rule ComponentPage.vue's `wrapper`
 // computed applies the other way.
-const tagByName = new Map(collectComponents(srcDir).map((c) => [headOfTag(c.tag), c.tag]));
+// A head with stories and no element of its own (`Plot`) is drawn by the tag its symbol names.
+const tagByName = new Map([
+  ...DRAWING_SYMBOLS.map((s): [string, string] => [s.head, s.tag]),
+  ...collectComponents(srcDir).map((c): [string, string] => [headOfTag(c.tag), c.tag]),
+]);
 
 // What "drew something" means, per tag -- most of these elements paint plain SVG into light
 // DOM (`createRenderRoot` returns `this`); `notatio-collection-table` draws a `<table-view-box>`
