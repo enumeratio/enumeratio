@@ -17,6 +17,7 @@ import { declareResidueClass, residueClassOf } from "./residue-class-declare.ts"
 import { declareModExactConstant } from "./mod-exact-constant.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
 import { powerModList } from "./roots.ts";
+import { declareTables } from "./table-declare.ts";
 
 // Wiring ℤ/m to compute-engine. Every head answers over bigints and stays unevaluated —
 // never approximate — when it cannot answer: no such residue, an unfactorable modulus, or
@@ -63,6 +64,7 @@ export function declareResidues(ce: Engine): void {
   // This package's own carrier — moved from combinatorics' domains/LEFTOVER_DOMAINS. Types,
   // constructor, plural type-space name and `Element` membership, all in one call.
   declareCarriers(ce, RESIDUES_CARRIERS);
+  declareTables(ce);
 
   const list = (xs: readonly bigint[]): Expr =>
     ce.function(

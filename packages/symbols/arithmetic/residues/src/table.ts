@@ -1,11 +1,14 @@
-// ℤ/n's multiplication table as a layer to draw: cell (i, j) holds aᵢ·aⱼ mod n, row i going down
-// and column j across, the elements aᵢ in natural order or by their Chinese remainders, and answers what a `Show`'s rules ask of it — properties of its value
-// (`IsUnit`, `IsIdempotent`, `IsSquare`), values (`Value`, `Row`, `Column`, `Difference`, `Order`)
-// and relations to a selected cell (`SameValue`, `SquareRoots`, `Associates`, `Multiples`).
+// ℤ/n's addition and multiplication tables as layers to draw: cell (i, j) holds aᵢ + aⱼ or aᵢ·aⱼ
+// mod n, row i going down and column j across, the elements aᵢ listed in natural order, by their
+// Chinese remainders, or by their p-adic digits. Each answers what a `Show`'s rules ask of it —
+// properties of its value (`IsUnit`, `IsIdempotent`, `IsSquare`), values (`Value`, `Row`,
+// `Column`, `Difference`, `Order`, `Valuation`, `Digit(k)`) and relations to a selected cell
+// (`SameValue`, `SquareRoots`, `Associates`, `Multiples`, `Lifts`, `SameResidue`, `Congruent(m)`).
 //
 // Plenty shows at a glance: the units form a Latin square, the idempotents line up with the
 // factors of n (the Chinese remainder theorem), and a 1 at (x, x − k) says x(x − k) = 1: x is a
 // root of x² − kx − 1, a "metallic mean" of ℤ/n, read off the diagonal where Difference ≡ −k.
+// Listed by digits, ℤ/pᵏ's table is p × p blocks of ℤ/pᵏ⁻¹'s, each block the lifts of one cell.
 
 type Vec2 = readonly [number, number];
 
@@ -42,7 +45,16 @@ export const TABLE_PROPERTIES = [
   "IsInvolution",
   "IsDiagonal",
 ] as const;
-export const TABLE_VALUES = ["Value", "Row", "Column", "Difference", "Order", "Modulus"] as const;
+export const TABLE_VALUES = [
+  "Value",
+  "Row",
+  "Column",
+  "Difference",
+  "Order",
+  "Modulus",
+  "Valuation",
+  "Digit(k)",
+] as const;
 export const TABLE_RELATIONS = [
   "SameValue",
   "SquareRoots",
@@ -50,18 +62,28 @@ export const TABLE_RELATIONS = [
   "SameColumn",
   "Associates",
   "Multiples",
+  "Lifts",
+  "SameResidue",
+  "Congruent(m)",
 ] as const;
 
-/**
- * How a table lists ℤ/n's elements along its rows and columns: `Natural` (0, 1, …, n − 1), or
- * `ChineseRemainder`, by their residues modulo each prime power of n, smallest first, so the
- * table falls into blocks: ℤ/15's is ℤ/3's table with ℤ/5's in each cell.
- */
-export type ElementOrder = "Natural" | "ChineseRemainder";
+/** The ring operation a table tabulates. */
+export type TableOperation = "Add" | "Multiply";
 
-/** n's prime powers, smallest prime first. */
-function primePowers(n: number): number[] {
-  const out: number[] = [];
+/**
+ * How a table lists ℤ/n's elements along its rows and columns:
+ * - `Natural`: 0, 1, …, n − 1.
+ * - `ChineseRemainder`: by their residues modulo each prime power of n, smallest first, so
+ *   ℤ/15's table is ℤ/3's with ℤ/5's in each cell.
+ * - `Adic`: as `ChineseRemainder`, each prime power's residue read by its base-p digits, the
+ *   lowest first. ℤ/pᵏ's elements then go by their residue mod p, then mod p², …, so its table
+ *   is p × p blocks of ℤ/pᵏ⁻¹'s, each block the lifts of one of its cells.
+ */
+export type ElementOrder = "Natural" | "ChineseRemainder" | "Adic";
+
+/** n's prime powers, smallest prime first, each with its prime. */
+function primePowers(n: number): { p: number; q: number }[] {
+  const out: { p: number; q: number }[] = [];
   let m = n;
   for (let p = 2; p * p <= m; p++) {
     if (m % p !== 0) continue;
@@ -70,10 +92,46 @@ function primePowers(n: number): number[] {
       m /= p;
       q *= p;
     }
-    out.push(q);
+    out.push({ p, q });
   }
-  if (m > 1) out.push(m);
+  if (m > 1) out.push({ p: m, q: m });
   return out;
+}
+
+/** ℤ/n's elements, 0 … n − 1, in the order `listing` lists them. */
+export function tableElements(n: number, listing: ElementOrder = "Natural"): number[] {
+  const powers = primePowers(n);
+  const elements = [...Array(n).keys()];
+  if (listing === "Natural") return elements;
+  // Each residue a mod q as its sort key: itself, or its base-p digits, the lowest first.
+  const key = (a: number, { p, q }: { p: number; q: number }): number[] => {
+    if (listing === "ChineseRemainder") return [a % q];
+    const digits: number[] = [];
+    for (let x = a % q, w = 1; w < q; w *= p, x = Math.floor(x / p)) digits.push(x % p);
+    return digits;
+  };
+  const keys = new Map(elements.map((a) => [a, powers.flatMap((pq) => key(a, pq))] as const));
+  return elements.toSorted((a, b) => {
+    const [ka, kb] = [keys.get(a)!, keys.get(b)!];
+    for (let k = 0; k < ka.length; k++) if (ka[k] !== kb[k]) return ka[k]! - kb[k]!;
+    return 0;
+  });
+}
+
+/** a ∘ b mod n, for the table's operation. */
+export const combine = (operation: TableOperation, a: number, b: number, n: number): number =>
+  operation === "Add" ? (a + b) % n : (a * b) % n;
+
+/** The exponent of p in v as an element of ℤ/n: for 0, the exponent of p in n. */
+function valuation(v: number, p: number, n: number): number {
+  if (v === 0) {
+    let k = 0;
+    for (let q = 1; q < n && n % (q * p) === 0; q *= p) k++;
+    return k;
+  }
+  let k = 0;
+  for (let x = v; x % p === 0; x /= p) k++;
+  return k;
 }
 
 export interface ResidueTable {
@@ -100,18 +158,29 @@ export interface ResidueTable {
 }
 
 /** ℤ/n's multiplication table; undefined for a modulus below 2 or past `MAX_MODULUS`. */
-export function multiplicationTable(n: number, listing: ElementOrder = "Natural"): ResidueTable | undefined {
+export const multiplicationTable = (n: number, listing: ElementOrder = "Natural"): ResidueTable | undefined =>
+  residueTable(n, "Multiply", listing);
+
+/** ℤ/n's addition table; undefined for a modulus below 2 or past `MAX_MODULUS`. */
+export const additionTable = (n: number, listing: ElementOrder = "Natural"): ResidueTable | undefined =>
+  residueTable(n, "Add", listing);
+
+/** `Congruent(m)`'s modulus, or `Digit(k)`'s place. */
+const argumentOf = (name: string, head: string): number | undefined => {
+  const match = new RegExp(`^${head}\\((\\d+)\\)$`).exec(name);
+  return match ? Number(match[1]) : undefined;
+};
+
+function residueTable(n: number, operation: TableOperation, listing: ElementOrder): ResidueTable | undefined {
   if (!Number.isInteger(n) || n < 2 || n > MAX_MODULUS) return undefined;
   const rad = radical(n);
   const powers = primePowers(n);
-  const elements = [...Array(n).keys()];
-  if (listing === "ChineseRemainder")
-    elements.sort((a, b) => {
-      for (const q of powers) if (a % q !== b % q) return (a % q) - (b % q);
-      return 0;
-    });
+  // `Valuation` and `Digit(k)` read the smallest prime of n: all of it for ℤ/pᵏ.
+  const p = powers[0]!.p;
+  const elements = tableElements(n, listing);
   const inside = (i: number, j: number): boolean => i >= 0 && j >= 0 && i < n && j < n;
-  const valueAt = (i: number, j: number): number => (elements[i]! * elements[j]!) % n;
+  const valueAt = (i: number, j: number): number => combine(operation, elements[i]!, elements[j]!, n);
+  const symbol = operation === "Add" ? "+" : "·";
 
   // Facts about each residue, computed once a residue is first asked about.
   const squares = new Uint8Array(n);
@@ -124,8 +193,12 @@ export function multiplicationTable(n: number, listing: ElementOrder = "Natural"
     return squares[v] === 1;
   };
   const orders = new Map<number, number>();
-  /** The multiplicative order of a unit; 0 for a non-unit. Capped by n, as an order divides φ(n) < n. */
+  /**
+   * In the addition table, v's additive order, n / gcd(v, n). In the multiplication table, a
+   * unit's multiplicative order, 0 for a non-unit; capped by n, as an order divides φ(n) < n.
+   */
   const order = (v: number): number => {
+    if (operation === "Add") return n / gcd(v, n);
     if (gcd(v, n) !== 1) return 0;
     let k = orders.get(v);
     if (k === undefined) {
@@ -165,8 +238,13 @@ export function multiplicationTable(n: number, listing: ElementOrder = "Natural"
     return undefined;
   };
 
+  // The blocks `GridLines -> Automatic` draws round: the first key's, one per residue mod the
+  // smallest prime power (or prime, by digits).
+  const block =
+    listing === "Adic" && n > p ? n / p : listing === "ChineseRemainder" && powers.length > 1 ? n / powers[0]!.q : 0;
+
   return {
-    title: `ℤ/${n} × ℤ/${n}`,
+    title: `(ℤ/${n}, ${operation === "Add" ? "+" : "×"})`,
     modulus: n,
     // Row i goes down the page, column j across: (i, j) sits at x = j, y = −i.
     basis: [
@@ -179,9 +257,7 @@ export function multiplicationTable(n: number, listing: ElementOrder = "Natural"
       [1, 0],
       [0, 1],
     ],
-    ...(listing === "ChineseRemainder" && powers.length > 1
-      ? { autoGrid: [n / powers[0]!, n / powers[0]!] as const }
-      : {}),
+    ...(block > 0 ? { autoGrid: [block, block] as const } : {}),
     gridOffset: [-0.5, -0.5],
     gridLabel: (_axis, k) => (k >= 0 && k < n ? String(elements[k]) : ""),
     home: () => ({ center: [(n - 1) / 2, -(n - 1) / 2], extent: (n / 2) * 1.04 }),
@@ -203,8 +279,12 @@ export function multiplicationTable(n: number, listing: ElementOrder = "Natural"
           return order(valueAt(i, j));
         case "Modulus":
           return n;
+        case "Valuation":
+          return valuation(valueAt(i, j), p, n);
       }
-      return undefined;
+      // `Digit(k)`: the value's k-th base-p digit, k = 1 the lowest.
+      const place = argumentOf(name, "Digit");
+      return place === undefined || place < 1 ? undefined : Math.floor(valueAt(i, j) / p ** (place - 1)) % p;
     },
     relatedTo: (relation, [si, sj], i, j) => {
       if (!inside(i, j) || !inside(si, sj)) return false;
@@ -224,18 +304,26 @@ export function multiplicationTable(n: number, listing: ElementOrder = "Natural"
         // v ∈ (s) exactly when gcd(s, n) divides v.
         case "Multiples":
           return v % gcd(s, n) === 0;
+        // v ≡ s (mod n/p): in ℤ/pᵏ, the p lifts of s's residue mod pᵏ⁻¹.
+        case "Lifts":
+          return (v - s) % (n / p) === 0;
+        // v ≡ s (mod p): every lift, at every level, of s's residue mod p.
+        case "SameResidue":
+          return (v - s) % p === 0;
       }
-      return false;
+      // `Congruent(m)`: v ≡ s (mod m), m | n; with m = n/p in ℤ/pᵏ, the p lifts of s mod pᵏ⁻¹.
+      const m = argumentOf(relation, "Congruent");
+      return m !== undefined && m >= 1 && (v - s) % m === 0;
     },
     summary: () => [
       ["modulus", String(n)],
       ["units", String([...Array(n).keys()].filter((v) => gcd(v, n) === 1).length)],
     ],
     describe: (i, j) => ({
-      title: `${elements[i]} · ${elements[j]} ≡ ${valueAt(i, j)} (mod ${n})`,
+      title: `${elements[i]} ${symbol} ${elements[j]} ≡ ${valueAt(i, j)} (mod ${n})`,
       rows: [
         ["unit", String(gcd(valueAt(i, j), n) === 1)],
-        ["order", String(order(valueAt(i, j)) || "—")],
+        [operation === "Add" ? "additive order" : "order", String(order(valueAt(i, j)) || "—")],
       ],
     }),
   };
