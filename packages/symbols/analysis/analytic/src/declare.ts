@@ -69,6 +69,7 @@ import { declareSpecialFunctionsRemaining } from "./special-functions-remaining.
 import { declareRefineAssuming } from "./refine-assuming.ts";
 import { declarePiecewise, declarePiecewiseExpand } from "./piecewise.ts";
 import { declareSeriesCoefficient } from "./series-coefficient.ts";
+import { declareSeriesJacobi } from "./series-jacobi.ts";
 import { declareSeriesQBinomial } from "./series-q-binomial.ts";
 import { declareSeriesZetaStieltjes } from "./series-zeta-stieltjes.ts";
 import { declareFunctionProperties } from "./function-properties.ts";
@@ -229,6 +230,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareSeriesCoefficient(ce);
   declareSeriesZetaStieltjes(ce);
   declareSeriesQBinomial(ce);
+  declareSeriesJacobi(ce);
   declareFunctionProperties(ce);
   declareTransforms(ce);
   declareMeijerG(ce);

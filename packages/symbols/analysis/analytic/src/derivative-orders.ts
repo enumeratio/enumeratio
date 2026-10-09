@@ -1,4 +1,5 @@
 import type { Json } from "@enumeratio/ce-patches";
+import { jacobiPartialBody } from "./jacobi-derivatives.ts";
 
 // Derivatives of every order for heads whose first derivative closes on a small set of
 // functions: compute-engine's `Series` asks `Derivative(f, n)` at the expansion point, so a
@@ -54,57 +55,28 @@ function toJson(poly: Poly, basis: readonly Json[], mName: string | undefined): 
   return terms.length === 0 ? 0 : terms.length === 1 ? terms[0]! : ["Add", ...terms];
 }
 
-// --- Jacobi: sn′ = cn·dn, cn′ = −sn·dn, dn′ = −m·sn·cn (DLMF 22.13.4–6) -------------------
+// --- Jacobi: ∂ᵃ_u∂ᵇ_m of the twelve pq heads, JacobiAmplitude and JacobiZN (jacobi-derivatives.ts) ---
 
-/** Exponent vectors over [sn, cn, dn] for the heads whose z-derivatives we close. */
-const JACOBI_MONOMIALS: Readonly<Record<string, readonly [number, number, number]>> = {
-  JacobiCN: [0, 1, 0],
-  JacobiDN: [0, 0, 1],
-  JacobiNC: [0, -1, 0],
-  JacobiND: [0, 0, -1],
-};
+const JACOBI_HEADS = [
+  "JacobiSN",
+  "JacobiCN",
+  "JacobiDN",
+  "JacobiNS",
+  "JacobiNC",
+  "JacobiND",
+  "JacobiSC",
+  "JacobiSD",
+  "JacobiCS",
+  "JacobiCD",
+  "JacobiDS",
+  "JacobiDC",
+  "JacobiAmplitude",
+  "JacobiZN",
+] as const;
 
-/** d/du of s^a c^b d^c, using the three rules above. */
-function jacobiStep({ exps: [a, b, c], mDeg, coef }: { exps: number[]; mDeg: number; coef: number }, out: Poly): void {
-  addTerm(out, [a - 1, b + 1, c + 1], mDeg, a * coef); // sn′ = cn·dn
-  addTerm(out, [a + 1, b - 1, c + 1], mDeg, -b * coef); // cn′ = −sn·dn
-  addTerm(out, [a + 1, b + 1, c - 1], mDeg + 1, -c * coef); // dn′ = −m·sn·cn
-}
-
-const jacobiBasis = (z: string, m: string): Json[] => [
-  ["JacobiSN", z, m],
-  ["JacobiCN", z, m],
-  ["JacobiDN", z, m],
-];
-
-/**
- * ∂ⁿ/∂uⁿ of `JacobiCN`/`JacobiDN`/`JacobiNC`/`JacobiND`(u, m), and of `JacobiZN`, whose first
- * derivative is dn² − E(m)/K(m) (DLMF 22.16.31); the parameter derivatives have no such closed
- * form and stay inert.
- */
 function jacobiPartial(head: string, orders: readonly number[]): OrderPartial | undefined {
-  const [n, mOrder] = orders;
-  if (orders.length !== 2 || mOrder !== 0 || n === undefined || !Number.isInteger(n) || n < 1) return undefined;
-  const params = ["u", "m"] as const;
-  const basis = jacobiBasis("u", "m");
-  if (head === "JacobiZN") {
-    if (n === 1) {
-      const body: Json = [
-        "Subtract",
-        ["Power", ["JacobiDN", "u", "m"], 2],
-        ["Divide", ["EllipticE", "m"], ["EllipticK", "m"]],
-      ];
-      return { params, body };
-    }
-    const start: Poly = new Map();
-    addTerm(start, [0, 0, 2], 0, 1);
-    return { params, body: toJson(iterate(start, n - 1, jacobiStep), basis, "m") };
-  }
-  const monomial = JACOBI_MONOMIALS[head];
-  if (monomial === undefined) return undefined;
-  const start: Poly = new Map();
-  addTerm(start, [...monomial], 0, 1);
-  return { params, body: toJson(iterate(start, n, jacobiStep), basis, "m") };
+  const body = jacobiPartialBody(head, orders);
+  return body === undefined ? undefined : { params: ["u", "m"], body };
 }
 
 // --- ErfInv: y′ = (√π/2)·e^(y²) -------------------------------------------------------------
@@ -199,11 +171,7 @@ type Resolver = (orders: readonly number[]) => OrderPartial | undefined;
 
 /** Heads whose partials of any order come from a rule rather than a stored table row. */
 export const ORDER_RESOLVERS: Readonly<Record<string, Resolver>> = {
-  JacobiCN: (o) => jacobiPartial("JacobiCN", o),
-  JacobiDN: (o) => jacobiPartial("JacobiDN", o),
-  JacobiNC: (o) => jacobiPartial("JacobiNC", o),
-  JacobiND: (o) => jacobiPartial("JacobiND", o),
-  JacobiZN: (o) => jacobiPartial("JacobiZN", o),
+  ...Object.fromEntries(JACOBI_HEADS.map((head) => [head, (o: readonly number[]) => jacobiPartial(head, o)])),
   ErfInv: erfInvPartial,
   Hypergeometric0F1: hypergeometric0F1Partial,
   EllipticE: ellipticEPartial,
