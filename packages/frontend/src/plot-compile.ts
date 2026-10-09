@@ -5,6 +5,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { zetaWGSL } from "@enumeratio/analytic/shader";
+import { syncLibraryHandlers } from "@enumeratio/engine";
 
 /** What to compile a plot's expression to. */
 export interface PlotCompileSpec {
@@ -54,6 +55,7 @@ const numeric = (e: BoxedExpression): number | undefined => {
 
 /** A bivariate expression as a WGSL `plotFn`; `zetaWGSL` comes first so the zeta heads resolve. */
 export function toWgslFn(expr: BoxedExpression, vx: string, vy: string): string | undefined {
+  syncLibraryHandlers(expr.engine);
   try {
     const r = new WGSLTarget().compile(expr) as { success?: boolean; code?: string };
     if (!r?.success || !r.code) return undefined;
@@ -90,6 +92,7 @@ function compileItem(e: BoxedExpression, spec: PlotCompileSpec, unknowns: readon
 
 /** `json` compiled as `spec` asks, on `ce`. */
 export function compilePlot(ce: ComputeEngine, json: unknown, spec: PlotCompileSpec): CompiledPlot {
+  syncLibraryHandlers(ce);
   const boxed = ce.box(json as never);
   const bound = Object.entries(spec.bindings ?? {});
   const expr = bound.length > 0 ? boxed.subs(Object.fromEntries(bound.map(([k, v]) => [k, ce.number(v)]))) : boxed;
