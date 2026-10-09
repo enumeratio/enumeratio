@@ -8,12 +8,13 @@
 
 import { type Box, type BoxNode, graphics, interpretation, row } from "@enumeratio/boxes";
 import { isNumber } from "./chart.ts";
+import { DIAGRAM_HEADS } from "./diagram-lowering.ts";
 import { type PlotOptions, type PlotPoint, type PlotSeries, plotBox } from "./plot-box.ts";
 import type { Primitive } from "./primitives.ts";
 import type { PolarPoint } from "./polarplot.ts";
 import type { VectorPlotOptions } from "./vectorplot.ts";
 
-/** The heads whose plots are `GraphicsBox`es, drawn by `<graphics-box>`. */
+/** The heads whose plots and diagrams are `GraphicsBox`es, drawn by `<graphics-box>`. */
 export const PLOT_HEADS: readonly string[] = [
   "Plot",
   "ParametricPlot",
@@ -23,6 +24,7 @@ export const PLOT_HEADS: readonly string[] = [
   "ListLinePlot",
   "VectorPlot",
   "StreamPlot",
+  ...DIAGRAM_HEADS,
 ];
 
 /** Plot settings, the attributes an expression's options lower to (`plotSettingsOf`). */

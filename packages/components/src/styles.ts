@@ -65,10 +65,11 @@ notatio-bar-chart-3d { display: block; line-height: 0; }
 notatio-bar-chart-3d .notatio-bar-chart-3d-box { display: inline-block; max-width: 100%; }
 notatio-bar-chart-3d svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
 
-/* Graph & hierarchical layouts (TreePlot, GraphPlot, LayeredGraphPlot, Dendrogram). */
-notatio-graph-plot { display: block; line-height: 0; }
-notatio-graph-plot .notatio-graph-plot-box { display: inline-block; max-width: 100%; }
-notatio-graph-plot svg { width: 340px; max-width: 100%; height: auto; overflow: visible; }
+/* Diagrams (GraphPlot, TreeGraph, LayeredGraphPlot, Dendrogram and TorusSquare): block figures at a fixed width. */
+graphics-box[data-diagram] { display: block; flex: 0 1 auto; width: auto; line-height: 0; position: relative; }
+graphics-box[data-diagram] .graphics-box-plot { display: inline-block; max-width: 100%; }
+graphics-box[data-diagram] svg { width: 340px; max-width: 100%; height: auto; overflow: visible; }
+graphics-box[data-diagram="torus"] svg { width: 360px; }
 
 notatio-in math-field {
   width: 100%;
@@ -717,11 +718,6 @@ notatio-curve-3d {
   color: var(--vp-c-text-3, #999);
   padding-top: 0.2rem;
 }
-
-/* The torus's fundamental square. */
-notatio-torus-square { display: block; line-height: 0; }
-notatio-torus-square .notatio-torus-square-box { display: inline-block; max-width: 100%; }
-notatio-torus-square svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
 
 /* The shared-clock control: a play button, a scrubber and a readout on one line. */
 notatio-clock {

@@ -88,7 +88,7 @@ winds three times round the tube. The two dials count those windings as they hap
 </template>
 <p><notatio-clock label="one clock for the page" /></p>
 <div class="torus-pair">
-<notatio-torus-square p="2" q="3" />
+<graphics-box value="TorusSquare(2, 3)" />
 <notatio-curve-3d value="KnotCurve(TorusKnot(2, 3))" torus="2,1" azimuth="35" elevation="30" clock label="T(2,3) — the trefoil" />
 </div>
 </Story>
@@ -108,7 +108,7 @@ often. <code>T(3,7)</code> goes three times round the hole for every seven times
 the tube, and the slope $7/3$ <em>is</em> that sentence.
 </template>
 <div class="torus-pair">
-<notatio-torus-square p="3" q="7" />
+<graphics-box value="TorusSquare(3, 7)" />
 <notatio-curve-3d value="KnotCurve(TorusKnot(3, 7))" torus="2,1" azimuth="20" elevation="35" clock label="T(3,7)" />
 </div>
 </Story>
@@ -117,12 +117,12 @@ the tube, and the slope $7/3$ <em>is</em> that sentence.
 <Story
   title="Slope, held still">
 <template #description>
-<code>at</code> pins the point to a phase and the figure stops watching the clock, which
-is what a figure in a written argument wants. <code>dials="false"</code> drops the two
+<code>Phase -> 0.32</code> pins the point to a phase and the figure stops watching the clock, which
+is what a figure in a written argument wants. <code>Dials -> False</code> drops the two
 circles and leaves the line.
 </template>
-<notatio-torus-square p="2" q="3" at="0.32" dials="false" />
-<notatio-torus-square p="3" q="2" at="0.32" dials="false" />
+<graphics-box value="TorusSquare(2, 3, Phase -> 0.32, Dials -> False)" />
+<graphics-box value="TorusSquare(3, 2, Phase -> 0.32, Dials -> False)" />
 </Story>
 
 Those two are the same knot seen the two ways round — $T(2,3)$ and $T(3,2)$ — and on the

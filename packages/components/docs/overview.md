@@ -30,7 +30,7 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [List Plot 3D](/reference/component/ListPlot3D) — 3-D scatters and height-grid surfaces, orthographically projected; stories moved to its component reference page
 - [Bar Chart 3D](/reference/component/BarChart3D) — a matrix of heights as depth-sorted 3-D bars; stories moved to its component reference page
 - [Chart](/reference/component/Chart) — data-driven 2-D charts (bar, histogram, pie, box-whisker, array, discrete, list); stories moved to its component reference page
-- [GraphPlot](/reference/component/GraphPlot) — graph & hierarchical layouts (tree, graph, layered graph, dendrogram); stories moved to its component reference page
+- [GraphPlot](/reference/component/GraphPlot) — graph & hierarchical layouts (tree, graph, layered graph, dendrogram), drawn by `<graphics-box>`; stories on its component reference page
 - [Complex Plot](/reference/component/ComplexPlot) — domain-colouring of a complex expression, one WebGPU invocation per pixel; stories moved to its component reference page
 - [Complex Plot 3D](/reference/component/ComplexPlot3D) — |f(z)| as a surface over the plane, faces coloured by arg f(z); stories moved to its component reference page
 - [Collection table](/reference/component/CollectionTable) — a scrolling table over a lazy collection (massive, unknown-sized or infinite), with statistics as columns; stories moved to its component reference page

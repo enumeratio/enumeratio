@@ -5,7 +5,7 @@
 // text out. Selection and hover are the web's; the marks' own colors are kept where the terminal has color.
 
 import { type Box, type BoxNode, isNode, optionsOfBox, type Options } from "@enumeratio/boxes";
-import { complexOf, isPlotBox, pinnedBox, plotItems } from "@enumeratio/frontend";
+import { arrowhead, complexOf, isDiagramBox, isPlotBox, pinnedBox, plotItems } from "@enumeratio/frontend";
 
 type Point = readonly number[];
 
@@ -442,9 +442,66 @@ export function drawPlotBox(box: BoxNode, options: CellOptions = {}): string {
   return lines.join("\n");
 }
 
+/** Sides of the polygon a ring (a disk with no fill) is drawn as. */
+const RING_SIDES = 24;
+
+/** What the boxes of a diagram hold: its disks, lines, arrows and text as shapes with their colors. */
+function diagramMarks(box: BoxNode): Mark[] {
+  const out: Mark[] = [];
+  for (const { prim, look } of plotItems(box)) {
+    const o = optionsOfBox(prim);
+    const first = Array.isArray(look.EdgeForm) ? look.EdgeForm[0] : undefined;
+    const edge = Array.isArray(first) && typeof first[0] === "string" ? first[0] : undefined;
+    const face = typeof look.FaceForm === "string" ? look.FaceForm : undefined;
+    const base = { ...(face && { face }), ...(edge && { edge }) };
+    const center = pointOf(o.Center);
+    switch (prim[0]) {
+      case "DiskBox":
+        if (!center) break;
+        if (face) out.push({ ...base, shape: { head: "Disk", center } });
+        else {
+          const r = Number(o.Radius);
+          const ring = Array.from({ length: RING_SIDES }, (_, k): Point => {
+            const a = (2 * Math.PI * k) / RING_SIDES;
+            return [center[0]! + r * Math.cos(a), center[1]! + r * Math.sin(a)];
+          });
+          out.push({ ...base, shape: { head: "Polygon", points: ring } });
+        }
+        break;
+      case "LineBox":
+      case "ArrowBox": {
+        const points = pointsOf(o.Points);
+        out.push({ ...base, shape: { head: "Line", points, breaks: [] } });
+        const head = prim[0] === "ArrowBox" ? arrowhead(points) : undefined;
+        if (head) out.push({ ...base, shape: { head: "Line", points: [head[1]!, head[0]!, head[2]!], breaks: [] } });
+        break;
+      }
+      case "PolygonBox":
+        out.push({ ...base, shape: { head: "Polygon", points: pointsOf(o.Points) } });
+        break;
+      case "InsetBox":
+        // Cells cannot turn text, so a label set along a direction is left to the picture.
+        if (center && o.Direction === undefined && typeof prim[1] === "string")
+          out.push({ ...base, shape: { head: "Text", text: prim[1], center } });
+        break;
+      default:
+    }
+  }
+  return out;
+}
+
+/** A diagram's `GraphicsBox` on character cells, under its title. */
+export function drawDiagramBox(box: BoxNode, options: CellOptions = {}): string {
+  const cells = drawBraille(diagramMarks(box), options.width ?? 60, options.height ?? 14);
+  const body = cells.width === 0 ? "(nothing to draw)" : cells.toString(options.color ?? false);
+  const title = optionsOfBox(box).PlotLabel;
+  return typeof title === "string" ? `${title}\n${body}` : body;
+}
+
 /** A figure's `GraphicsBox` on character cells; the reason it can't be drawn, as text, otherwise. */
 export function drawGraphicsBox(box: Box, options: CellOptions = {}): string {
   if (isPlotBox(box)) return drawPlotBox(box, options);
+  if (isDiagramBox(box)) return drawDiagramBox(box, options);
   const [width, height] = [options.width ?? 60, options.height ?? 14];
   // A lattice holds a producer: pin it to the view the cells can resolve (a cell is 2 by 4 dots).
   const pinned = pinnedBox(box, { width: width * 2, height: height * 4, maxCells: PINNED_TILES });

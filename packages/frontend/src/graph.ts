@@ -1,37 +1,26 @@
-// Pure SVG renderers for graph & hierarchical layouts, mirroring chart.ts's
-// shape: typed data in, a themeable SVG string out, no DOM dependency so every
-// layout is unit-testable. Covers Wolfram's Data Visualization guide --
-// TreePlot, GraphPlot, LayeredGraphPlot, Dendrogram.
+// Graph & hierarchical layouts as `GraphicsBox`es (the wiki's Speculative-Box-Primitives, §6
+// slice 4): TreePlot, GraphPlot, LayeredGraphPlot and Dendrogram from Wolfram's Data Visualization
+// guide. Vertices are `DiskBox`es, edges `LineBox`es (`ArrowBox`es when directed), labels
+// `InsetBox`es; `diagram.ts` draws the box.
 //
-// Every layout here is a pure, deterministic function of its input: no
-// Math.random, no Date, no DOM measurement. These render server-side (VitePress
-// SSR) and are asserted on exact coordinates, so the same input must always
-// produce byte-identical SVG.
+// Every layout here is a pure, deterministic function of its input: no Math.random, no Date, no
+// DOM measurement. These render server-side (VitePress SSR) and are asserted on exact
+// coordinates, so the same input must always produce the same box.
 
-const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
-const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
-const FG = "var(--notatio-fg, currentColor)";
-const BG = "var(--notatio-bg, var(--vp-c-bg, #ffffff))";
+import type { Box } from "@enumeratio/boxes";
+import { ACCENT, GROUND, INK, RULE, Sketch, type Look, type TextStyle } from "./diagram.ts";
 
-const n2 = (x: number): string => String(Math.round(x * 100) / 100);
+const EDGE: Look = { stroke: { color: RULE, width: 1.5 } };
+const ARROW: Look = { fill: ACCENT, stroke: { color: RULE, width: 1.5 } };
+const VERTEX: Look = { fill: GROUND, stroke: { color: ACCENT, width: 1.5 } };
+const NAME: TextStyle = { size: 9, color: INK, anchor: "middle", mono: true, opacity: 0.75 };
 
-const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+/** A minimal empty frame for missing/invalid input. */
+const emptyFrame = (label: string): Box => new Sketch(80, 40, { label }).box();
 
-const frame = (w: number, h: number, body: string, ariaLabel: string): string =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n2(w)} ${n2(h)}" role="img" aria-label="${ariaLabel}">${body}</svg>`;
-
-/** A minimal empty frame for missing/invalid input, mirroring chart.ts's empty-data frames. */
-const emptyFrame = (ariaLabel: string): string => frame(80, 40, "", ariaLabel);
-
-const titleSvg = (w: number, title: string | undefined): string =>
-  title
-    ? `<text x="${n2(w / 2)}" y="14" text-anchor="middle" font-size="12" font-family="ui-sans-serif, system-ui, sans-serif" fill="${FG}">${esc(title)}</text>`
-    : "";
-
-const nodeLabel = (x: number, y: number, text: string): string =>
-  text
-    ? `<text x="${n2(x)}" y="${n2(y)}" text-anchor="middle" font-size="9" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.75">${esc(text)}</text>`
-    : "";
+const vertexLabel = (sketch: Sketch, x: number, y: number, text: string): void => {
+  sketch.text([x, y], text, NAME);
+};
 
 // ---------------------------------------------------------------------------
 // Shared node/edge shapes
@@ -69,8 +58,6 @@ function collectNodes(data: GraphData): string[] {
       }
   return out;
 }
-
-const ARROW_MARKER = `<defs><marker id="notatio-graph-plot-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="${ACCENT}"/></marker></defs>`;
 
 /** A line trimmed at both ends by `r` (node radius) so it meets the node's boundary, not its center. */
 function trimmedLine(
@@ -125,7 +112,7 @@ function maxDepthOf(node: TreePlaced): number {
 }
 
 /** A rooted tree laid out tidily by depth: nodes as circles, parent -> child edges as lines. */
-export function treePlotSvg(root: TreeNode | undefined, opts: TreePlotOptions = {}): string {
+export function treePlotBox(root: TreeNode | undefined, opts: TreePlotOptions = {}): Box {
   if (!root) return emptyFrame("tree plot");
 
   const placed = layoutTree(root, 0, { n: 0 });
@@ -139,22 +126,30 @@ export function treePlotSvg(root: TreeNode | undefined, opts: TreePlotOptions = 
   const cx = (x: number): number => mL + x * TREE_UNIT_X + TREE_R;
   const cy = (d: number): number => mT + d * TREE_UNIT_Y + TREE_R;
 
-  let edges = "";
-  let nodes = "";
+  const w = mL + Math.max(0, leaves - 1) * TREE_UNIT_X + 2 * TREE_R + mR;
+  const h = mT + depth * TREE_UNIT_Y + 2 * TREE_R + mB;
+  const sketch = new Sketch(w, h, { label: "tree plot", title: opts.title });
+
+  const nodes: TreePlaced[] = [];
   const walk = (p: TreePlaced): void => {
-    nodes += `<circle cx="${n2(cx(p.x))}" cy="${n2(cy(p.depth))}" r="${TREE_R}" fill="${BG}" stroke="${ACCENT}" stroke-width="1.5"/>`;
-    nodes += nodeLabel(cx(p.x), cy(p.depth) + TREE_R + 11, p.label);
+    nodes.push(p);
     for (const k of p.children) {
-      edges += `<line x1="${n2(cx(p.x))}" y1="${n2(cy(p.depth))}" x2="${n2(cx(k.x))}" y2="${n2(cy(k.depth))}" stroke="${AXIS}" stroke-width="1.5"/>`;
+      sketch.line(
+        [
+          [cx(p.x), cy(p.depth)],
+          [cx(k.x), cy(k.depth)],
+        ],
+        EDGE,
+      );
       walk(k);
     }
   };
   walk(placed);
-
-  const w = mL + Math.max(0, leaves - 1) * TREE_UNIT_X + 2 * TREE_R + mR;
-  const h = mT + depth * TREE_UNIT_Y + 2 * TREE_R + mB;
-
-  return frame(w, h, titleSvg(w, opts.title) + edges + nodes, "tree plot");
+  for (const p of nodes) {
+    sketch.disk([cx(p.x), cy(p.depth)], TREE_R, VERTEX);
+    vertexLabel(sketch, cx(p.x), cy(p.depth) + TREE_R + 11, p.label);
+  }
+  return sketch.box();
 }
 
 function countLeaves(p: TreePlaced): number {
@@ -194,7 +189,7 @@ function circularPositions(
 }
 
 /** Undirected (or directed) graph: nodes on a deterministic circle, edges as lines. */
-export function graphPlotSvg(data: GraphData | undefined, opts: GraphPlotOptions = {}): string {
+export function graphPlotBox(data: GraphData | undefined, opts: GraphPlotOptions = {}): Box {
   const edges = data?.edges ?? [];
   const ids = data ? collectNodes(data) : [];
   if (ids.length === 0) return emptyFrame("graph plot");
@@ -207,40 +202,32 @@ export function graphPlotSvg(data: GraphData | undefined, opts: GraphPlotOptions
   const cy = mT + size / 2;
 
   const pos = circularPositions(ids, R, cx, cy);
+  const hasSelfLoop = edges.some(([a, b]) => a === b && pos.has(a));
+  const sketch = new Sketch(size, mT + size + (hasSelfLoop ? 4 : 0), { label: "graph plot", title: opts.title });
 
-  let edgesSvg = "";
-  let hasSelfLoop = false;
   for (const [a, b] of edges) {
     const pa = pos.get(a);
     const pb = pos.get(b);
     if (!pa || !pb) continue;
     if (a === b) {
-      hasSelfLoop = true;
-      const lx = pa.x;
-      const ly = pa.y - GRAPH_R - 8;
-      edgesSvg += `<circle cx="${n2(lx)}" cy="${n2(ly)}" r="8" fill="none" stroke="${AXIS}" stroke-width="1.5"/>`;
+      sketch.disk([pa.x, pa.y - GRAPH_R - 8], 8, EDGE);
       continue;
     }
-    const trimmed = trimmedLine(pa.x, pa.y, pb.x, pb.y, GRAPH_R);
-    const marker = opts.directed ? ` marker-end="url(#notatio-graph-plot-arrow)"` : "";
-    edgesSvg += `<line x1="${n2(trimmed.x1)}" y1="${n2(trimmed.y1)}" x2="${n2(trimmed.x2)}" y2="${n2(trimmed.y2)}" stroke="${AXIS}" stroke-width="1.5"${marker}/>`;
+    const t = trimmedLine(pa.x, pa.y, pb.x, pb.y, GRAPH_R);
+    const ends: [[number, number], [number, number]] = [
+      [t.x1, t.y1],
+      [t.x2, t.y2],
+    ];
+    if (opts.directed) sketch.arrow(ends, ARROW);
+    else sketch.line(ends, EDGE);
   }
-
-  const nodesSvg = ids
-    .map((id) => {
-      const p = pos.get(id);
-      if (!p) return "";
-      return (
-        `<circle cx="${n2(p.x)}" cy="${n2(p.y)}" r="${GRAPH_R}" fill="${BG}" stroke="${ACCENT}" stroke-width="1.5"/>` +
-        nodeLabel(p.x, p.y + 3, id)
-      );
-    })
-    .join("");
-
-  const defs = opts.directed && edges.length > 0 ? ARROW_MARKER : "";
-  const h = mT + size + (hasSelfLoop ? 4 : 0);
-
-  return frame(size, h, defs + titleSvg(size, opts.title) + edgesSvg + nodesSvg, "graph plot");
+  for (const id of ids) {
+    const p = pos.get(id);
+    if (!p) continue;
+    sketch.disk([p.x, p.y], GRAPH_R, VERTEX);
+    vertexLabel(sketch, p.x, p.y + 3, id);
+  }
+  return sketch.box();
 }
 
 // ---------------------------------------------------------------------------
@@ -286,7 +273,7 @@ export interface LayeredGraphPlotOptions {
 }
 
 /** A DAG laid out top-to-bottom by longest-path layer, nodes ordered deterministically within each layer. */
-export function layeredGraphPlotSvg(data: GraphData | undefined, opts: LayeredGraphPlotOptions = {}): string {
+export function layeredGraphPlotBox(data: GraphData | undefined, opts: LayeredGraphPlotOptions = {}): Box {
   const edges = data?.edges ?? [];
   const ids = data ? collectNodes(data) : [];
   if (ids.length === 0) return emptyFrame("layered graph plot");
@@ -312,31 +299,29 @@ export function layeredGraphPlotSvg(data: GraphData | undefined, opts: LayeredGr
     });
   });
 
-  let edgesSvg = "";
+  const h = mT + maxLayer * LAYER_UNIT_Y + 2 * GRAPH_R + mB;
+  const sketch = new Sketch(plotW, h, { label: "layered graph plot", title: opts.title });
+
   for (const [a, b] of edges) {
     const pa = pos.get(a);
     const pb = pos.get(b);
     if (!pa || !pb || a === b) continue;
-    const trimmed = trimmedLine(pa.x, pa.y, pb.x, pb.y, GRAPH_R);
-    edgesSvg += `<line x1="${n2(trimmed.x1)}" y1="${n2(trimmed.y1)}" x2="${n2(trimmed.x2)}" y2="${n2(trimmed.y2)}" stroke="${AXIS}" stroke-width="1.5" marker-end="url(#notatio-graph-plot-arrow)"/>`;
+    const t = trimmedLine(pa.x, pa.y, pb.x, pb.y, GRAPH_R);
+    sketch.arrow(
+      [
+        [t.x1, t.y1],
+        [t.x2, t.y2],
+      ],
+      ARROW,
+    );
   }
-
-  const nodesSvg = ids
-    .map((id) => {
-      const p = pos.get(id);
-      if (!p) return "";
-      return (
-        `<circle cx="${n2(p.x)}" cy="${n2(p.y)}" r="${GRAPH_R}" fill="${BG}" stroke="${ACCENT}" stroke-width="1.5"/>` +
-        nodeLabel(p.x, p.y + 3, id)
-      );
-    })
-    .join("");
-
-  const w = plotW;
-  const h = mT + maxLayer * LAYER_UNIT_Y + 2 * GRAPH_R + mB;
-  const defs = edges.length > 0 ? ARROW_MARKER : "";
-
-  return frame(w, h, defs + titleSvg(w, opts.title) + edgesSvg + nodesSvg, "layered graph plot");
+  for (const id of ids) {
+    const p = pos.get(id);
+    if (!p) continue;
+    sketch.disk([p.x, p.y], GRAPH_R, VERTEX);
+    vertexLabel(sketch, p.x, p.y + 3, id);
+  }
+  return sketch.box();
 }
 
 // ---------------------------------------------------------------------------
@@ -379,7 +364,7 @@ function layoutDendrogram(node: TreeNode, leafCounter: { n: number }): DendroPla
 }
 
 /** A hierarchical-clustering merge tree: U-shaped brackets joined at merge heights, leaves along the x axis. */
-export function dendrogramSvg(root: TreeNode | undefined, opts: DendrogramOptions = {}): string {
+export function dendrogramBox(root: TreeNode | undefined, opts: DendrogramOptions = {}): Box {
   if (!root) return emptyFrame("dendrogram");
 
   const placed = layoutDendrogram(root, { n: 0 });
@@ -395,28 +380,78 @@ export function dendrogramSvg(root: TreeNode | undefined, opts: DendrogramOption
   const yAt = (height: number): number =>
     maxHeight === 0 ? mT + plotH : mT + ((maxHeight - height) / maxHeight) * plotH;
 
-  let body = "";
+  const w = mL + Math.max(0, leaves - 1) * DENDRO_UNIT_X + mR;
+  const sketch = new Sketch(w, mT + plotH + mB, { label: "dendrogram", title: opts.title });
   const walk = (p: DendroPlaced): void => {
     if (p.children.length === 0) {
-      body += `<circle cx="${n2(xAt(p.x))}" cy="${n2(yAt(0))}" r="${DENDRO_R}" fill="${BG}" stroke="${ACCENT}" stroke-width="1.5"/>`;
-      body += nodeLabel(xAt(p.x), yAt(0) + DENDRO_R + 11, p.label);
+      sketch.disk([xAt(p.x), yAt(0)], DENDRO_R, VERTEX);
+      vertexLabel(sketch, xAt(p.x), yAt(0) + DENDRO_R + 11, p.label);
       return;
     }
     const y = yAt(p.height);
     const childXs = p.children.map((c) => xAt(c.x));
     for (const c of p.children)
-      body += `<line x1="${n2(xAt(c.x))}" y1="${n2(yAt(c.height))}" x2="${n2(xAt(c.x))}" y2="${n2(y)}" stroke="${AXIS}" stroke-width="1.5"/>`;
-    body += `<line x1="${n2(Math.min(...childXs))}" y1="${n2(y)}" x2="${n2(Math.max(...childXs))}" y2="${n2(y)}" stroke="${AXIS}" stroke-width="1.5"/>`;
+      sketch.line(
+        [
+          [xAt(c.x), yAt(c.height)],
+          [xAt(c.x), y],
+        ],
+        EDGE,
+      );
+    sketch.line(
+      [
+        [Math.min(...childXs), y],
+        [Math.max(...childXs), y],
+      ],
+      EDGE,
+    );
     for (const c of p.children) walk(c);
   };
   walk(placed);
-
-  const w = mL + Math.max(0, leaves - 1) * DENDRO_UNIT_X + mR;
-  const h = mT + plotH + mB;
-
-  return frame(w, h, titleSvg(w, opts.title) + body, "dendrogram");
+  return sketch.box();
 }
 
 function countLeavesD(p: DendroPlaced): number {
   return p.children.length === 0 ? 1 : p.children.reduce((s, k) => s + countLeavesD(k), 0);
+}
+
+// ---------------------------------------------------------------------------
+// Reading the data
+// ---------------------------------------------------------------------------
+
+const isId = (v: unknown): v is string | number => typeof v === "string" || typeof v === "number";
+
+/**
+ * Coerce raw JSON into a `TreeNode`: `{ label?, height?, children? }`, recursively. A non-object
+ * (or an object whose `children` isn't a list) still reads as a valid (possibly childless) node
+ * rather than throwing.
+ */
+export function treeOf(data: unknown): TreeNode | undefined {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return undefined;
+  const obj = data as Record<string, unknown>;
+  const node: TreeNode = {};
+  if (typeof obj.label === "string") node.label = obj.label;
+  if (typeof obj.height === "number" && Number.isFinite(obj.height)) node.height = obj.height;
+  if (Array.isArray(obj.children)) {
+    const kids = obj.children.map(treeOf).filter((k): k is TreeNode => k !== undefined);
+    if (kids.length > 0) node.children = kids;
+  }
+  return node;
+}
+
+/**
+ * Coerce raw JSON into `GraphData`: `{ nodes?: [...], edges: [[a,b], ...] }`. Node ids (numbers
+ * or strings) are normalized to strings; malformed edges are dropped rather than throwing.
+ */
+export function graphOf(data: unknown): GraphData | undefined {
+  if (!data || typeof data !== "object" || Array.isArray(data)) return undefined;
+  const obj = data as Record<string, unknown>;
+  const nodes = Array.isArray(obj.nodes) ? obj.nodes.filter(isId).map(String) : undefined;
+  const rawEdges = Array.isArray(obj.edges) ? obj.edges : [];
+  const edges = rawEdges
+    .filter(
+      (e): e is [string | number, string | number] => Array.isArray(e) && e.length === 2 && isId(e[0]) && isId(e[1]),
+    )
+    .map(([a, b]): [string, string] => [String(a), String(b)]);
+  return { nodes, edges };
 }

@@ -132,6 +132,16 @@ const dictOf = (node: unknown): Readonly<Record<string, Json>> | undefined => {
 };
 
 /**
+ * A dictionary entry's value. A dictionary typed as `{"edges" -> [["a", "b"]]}` holds its lists
+ * bare, without a `List` head, so a bare array there is a list of its entries.
+ */
+function dictValueOf(node: Json): unknown {
+  return Array.isArray(node) && node[0] !== "List" && node[0] !== "Tuple"
+    ? node.map((entry) => dictValueOf(entry as Json))
+    : toJsonData(node);
+}
+
+/**
  * MathJSON data -- lists, tuples, dictionaries, numbers, strings -- as the plain JSON a
  * `data` attribute takes. A dictionary becomes a plain object, recursively, for a component
  * that takes a tree or a `{nodes?, edges}` shape rather than a flat/nested list
@@ -144,7 +154,7 @@ export function toJsonData(node: Json): unknown {
   if (s !== undefined) return s;
   if (headOf(node) === "List" || headOf(node) === "Tuple") return opsOf(node).map(toJsonData);
   const dict = dictOf(node);
-  if (dict !== undefined) return Object.fromEntries(Object.entries(dict).map(([k, v]) => [k, toJsonData(v)]));
+  if (dict !== undefined) return Object.fromEntries(Object.entries(dict).map(([k, v]) => [k, dictValueOf(v)]));
   const sym = symOf(node);
   if (sym === "True") return true;
   if (sym === "False") return false;
@@ -203,12 +213,23 @@ const chart = (head: string, type: string, options?: VisualSymbol["options"]): V
   ...(options && { options }),
 });
 
-const graph = (head: string, type: string): VisualSymbol => ({
+/** A graph or tree plot: its structure in `data`, drawn as a diagram by `<graphics-box>`. */
+const graph = (head: string, layout: string): VisualSymbol => ({
   head,
-  tag: "notatio-graph-plot",
-  fixed: { type },
+  tag: "graphics-box",
+  fixed: { layout },
   attributes: dataOnly,
+  options: { PlotLabel: "label" },
 });
+
+/** Whether an option value says no: `False`, or the text `"false"` a story writes. */
+const isOff = (value: Json): boolean => symOf(value) === "False" || strOf(value)?.toLowerCase() === "false";
+
+/** `ColorFunction -> "set1"`: the discrete scheme whose first colors mark a figure's categories. */
+const discreteScheme = (value: Json): Record<string, string> => {
+  const name = strOf(value) ?? symOf(value);
+  return name === undefined ? {} : { discrete: name.toLowerCase() };
+};
 
 /** `name` -> `_name` throughout, so a Manipulate body reads its parameters as slots. */
 function slotted(node: Json, names: ReadonlySet<string>): Json {
@@ -388,6 +409,28 @@ export const PLOT_SETTINGS: readonly VisualSymbol[] = [
     fixed: { type: "stream" },
     attributes: (ops) => vectorField(ops),
     options: FIELD_OPTIONS,
+  },
+  graph("GraphPlot", "graph"),
+  graph("TreeGraph", "tree"),
+  graph("LayeredGraphPlot", "layered"),
+  graph("Dendrogram", "dendrogram"),
+  {
+    // `TorusSquare(p, q)`: the glued square with the knot T(p, q) on it as a straight line. `Phase`
+    // pins the travelling point; otherwise it follows the page's clock (`Clock -> False` stops it).
+    head: "TorusSquare",
+    tag: "graphics-box",
+    fixed: { layout: "torus" },
+    attributes: (ops) => ({
+      ...(ops[0] !== undefined && { p: epsil(ops[0]) }),
+      ...(ops[1] !== undefined && { q: epsil(ops[1]) }),
+    }),
+    options: {
+      PlotLabel: "label",
+      ColorFunction: discreteScheme,
+      // A `False` option lowers to no attribute, and these default to on: they say `false`.
+      Dials: (value) => ({ dials: isOff(value) ? "false" : "true" }),
+      Clock: (value) => ({ clock: isOff(value) ? "false" : "true" }),
+    },
   },
 ];
 
@@ -581,10 +624,6 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   },
   { head: "ListPlot3D", tag: "notatio-list-plot-3d", attributes: dataOnly, options: { ColorFunction: colorFunction } },
   { head: "BarChart3D", tag: "notatio-bar-chart-3d", attributes: dataOnly, options: { ColorFunction: colorFunction } },
-  graph("GraphPlot", "graph"),
-  graph("TreeGraph", "tree"),
-  graph("LayeredGraphPlot", "layered"),
-  graph("Dendrogram", "dendrogram"),
   {
     head: "CollectionTable",
     tag: "notatio-collection-table",

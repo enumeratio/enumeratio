@@ -5,6 +5,7 @@
 // (`plotBoxOfSamples`). Not in `/core`: reading an expression's options needs the engine's parser.
 
 import type { Notation, NotationRule } from "@enumeratio/boxes";
+import { diagramBoxOf } from "./diagram-lowering.ts";
 import { plainJson } from "./graphics-rules.ts";
 import { plotBox } from "./plot-box.ts";
 import { PLOT_HEADS, plotDataSeries, plotOptionsOf, polarPointsOf, spanOf, unsampledBox } from "./plot-lowering.ts";
@@ -17,6 +18,8 @@ const plotRule =
     const expr = plainJson([head, ...args] as never);
     const settings = plotSettingsOf(expr as never);
     if (settings === undefined) return undefined;
+    const diagram = diagramBoxOf(settings);
+    if (diagram !== undefined) return diagram;
     if (head === "ListPolarPlot") {
       const [t0, t1] = spanOf(settings["trange"]) ?? [0, 2 * Math.PI];
       let data: unknown;

@@ -16,6 +16,8 @@ export * from "./debug.ts";
 export * from "./densityplot.ts";
 export * from "./glyphs.ts";
 export * from "./graph.ts";
+export { arrowhead, type DiagramDrawing, drawDiagram, isDiagramBox, renderDiagram } from "./diagram.ts";
+export * from "./diagram-lowering.ts";
 export * from "./ipynb.ts";
 export * from "./heads.ts";
 export * from "./highlight.ts";

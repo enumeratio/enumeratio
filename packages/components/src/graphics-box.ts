@@ -165,6 +165,10 @@ interface Override {
  *
  * Drag to pan; Esc clears the selection; `0` resets the view.
  *
+ * A graph or tree (`GraphPlot`, `TreeGraph`, `LayeredGraphPlot`, `Dendrogram`) and `TorusSquare(2, 3)`
+ * are diagram boxes: `DiskBox` vertices, `LineBox` or `ArrowBox` edges and `InsetBox` labels in a frame
+ * of their own. The torus square's point follows the page's clock unless `Phase -> 0.32` pins it.
+ *
  * A 2-D plot is a `GraphicsBox` too: `<graphics-box value="Plot(Sin(x), (x, 0, 2*Pi), GridLines -> True)">`,
  * and `ParametricPlot`, `PolarPlot`, `ListPlot`, `ListLinePlot` and `ListPolarPlot` likewise, with
  * their Wolfram options (`PlotRange`, `PlotLabel`, `Filling`, `ColorFunction`, `Epilog`, …). The page's kernel
@@ -281,10 +285,17 @@ export class GraphicsBoxElement extends LitElement {
     return this;
   }
 
+  override connectedCallback(): void {
+    super.connectedCallback();
+    // A diagram that follows the page's clock lets go of it when removed; back on the page, it resumes.
+    if (this.#plot) void this.#plot.recompute();
+  }
+
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#ro?.disconnect();
     this.#ro = undefined;
+    this.#plot?.dispose();
   }
 
   #plot: PlotView | undefined;

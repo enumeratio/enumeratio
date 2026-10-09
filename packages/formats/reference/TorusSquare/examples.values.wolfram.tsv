@@ -1,0 +1,3 @@
+id	in
+trefoil	TorusSquare[2, 3]
+pinned	TorusSquare[3, 2, List[Phase, 0.32], List[Dials, "false"]]

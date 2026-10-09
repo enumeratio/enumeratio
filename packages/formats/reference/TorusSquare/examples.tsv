@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption
+trefoil	Basic		[TorusSquare, 2, 3]	[TorusSquare, 2, 3]	held inert: it evaluates to itself, and is drawn as a diagram of boxes
+pinned	Options		[TorusSquare, 3, 2, [Tuple, Phase, 0.32], [Tuple, Dials, "'false'"]]	[TorusSquare, 3, 2, [Tuple, Phase, 0.32], [Tuple, Dials, "'false'"]]	the point pinned to a phase, the dials dropped
