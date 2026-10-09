@@ -2014,9 +2014,8 @@ notatio-out.notatio-generic-out > * { display: inline; }
    label's cell where it goes, so no ordering is needed here. */
 row-box { display: contents; }
 grid-box { display: inline-grid; gap: 0.4em 0.8em; align-items: center; vertical-align: top; }
-/* A math run no leaf typesets yet: its text, on a line of its own. */
-superscript-box, subscript-box, subsuperscript-box, overscript-box, underscript-box,
-underoverscript-box, fraction-box, sqrt-box, radical-box, graphics-box, graphics-complex-box { display: block; }
+/* A math run is one form-box leaf, inline like the formula it holds; a grid's cell is the leaf. */
+graphics-box, graphics-complex-box { display: block; }
 [data-head="Row"] { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.6em; vertical-align: middle; }
 [data-head="Column"] { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 0.5em; vertical-align: top; }
 [data-head="Column"], [data-head="Labeled"] { grid-template-columns: none; }

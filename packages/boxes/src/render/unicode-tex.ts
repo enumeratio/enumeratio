@@ -126,9 +126,12 @@ export function commandTeX(latex: string): string {
 }
 
 /** KaTeX's `strict` option: its default (`warn`) for everything but the listed characters it
- *  renders though it flags them. `otherwise` is `"error"` where a flag must fail (tests). */
+ *  renders though it flags them, and `\htmlData`, which an interpretation writes on purpose
+ *  (the typesetter trusts only that command). `otherwise` is `"error"` where a flag must fail (tests). */
 export function katexStrict(otherwise: "warn" | "error" = "warn") {
   const allowed = new Set(UNICODE_TEX.filter((s) => s.katexUnknown).map((s) => s.char));
   return (code: string, _message: string, token?: { text?: string }): "ignore" | "warn" | "error" =>
-    code === "unknownSymbol" && token?.text !== undefined && allowed.has(token.text) ? "ignore" : otherwise;
+    code === "htmlExtension" || (code === "unknownSymbol" && token?.text !== undefined && allowed.has(token.text))
+      ? "ignore"
+      : otherwise;
 }

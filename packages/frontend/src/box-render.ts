@@ -6,9 +6,12 @@
 // rows. Pure: boxes in, a `Rendering` out, which any host turns into markup or a framework's vnodes.
 //
 // A hole (`TemplateSlot`) is where the environment draws a leaf itself: a control, a plot, a readout.
+// A math run is a leaf too: one `form-box` holding its TeX (`Rendering.tex`), which the host
+// typesets (`box-leaf.ts`); everything around a run is drawn here.
 
 import { type Box, type BoxNode, gridCells, isNode, optionsOfBox, type OptionValue, rowsOf } from "@enumeratio/boxes";
 import { toText } from "@enumeratio/boxes/render";
+import { typesetLeaf } from "./box-leaf.ts";
 import { boxTag } from "./box-tags.ts";
 import { controlElement, isControlElement } from "./control-box.ts";
 import { epsil } from "./mathjson.ts";
@@ -31,6 +34,40 @@ function element(
   return { tag: boxTag(box), attributes: { ...(head && { "data-head": head }), ...attributes }, ...content };
 }
 
+const LAYOUT_TAGS: ReadonlySet<string> = new Set(["Row", "Grid", "Column", "Labeled"]);
+
+/**
+ * Whether `box` is mathematics, to be typeset whole: a token, a script, a fraction, a row of
+ * them, a fenced matrix. Layout and interface boxes are not.
+ */
+function isMath(box: Box): boolean {
+  if (typeof box === "string") return true;
+  switch (box[0]) {
+    case "RowBox":
+      return box[1].every(isMath);
+    case "TextBox":
+    case "SuperscriptBox":
+    case "SubscriptBox":
+    case "SubsuperscriptBox":
+    case "OverscriptBox":
+    case "UnderscriptBox":
+    case "UnderoverscriptBox":
+    case "FractionBox":
+    case "SqrtBox":
+    case "RadicalBox":
+      return true;
+    case "TagBox":
+      return !LAYOUT_TAGS.has(box[2]) && isMath(box[1]);
+    case "InterpretationBox":
+      return isMath(box[1]);
+    case "GridBox":
+      // (A lazy grid's rows are a producer, not an array.)
+      return !isControlElement(box) && Array.isArray(box[1]) && box[1].every((r) => r.every(isMath));
+    default:
+      return false;
+  }
+}
+
 /** A run of text, which is no box worth naming in the DOM. */
 const run = (text: string): Rendering => ({ tag: "span", attributes: {}, text });
 
@@ -49,7 +86,7 @@ const css = (declarations: Readonly<Record<string, string | undefined>>): Record
 
 /** A box as a rendering; `holes` fill the leaves the environment draws. */
 export function renderBox(box: Box, holes: Holes = {}): Rendering {
-  if (typeof box === "string") return run(box);
+  if (typeof box === "string") return typesetLeaf(box, "TraditionalForm");
   const children = (boxes: readonly Box[]): Pick<Rendering, "children"> => ({
     children: boxes.map((b) => renderBox(b, holes)),
   });
@@ -57,7 +94,7 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
     case "TextBox":
       return run(box[1]);
     case "RowBox":
-      return element("RowBox", undefined, {}, children(box[1]));
+      return isMath(box) ? typesetLeaf(box, "TraditionalForm") : element("RowBox", undefined, {}, children(box[1]));
     case "TagBox":
       return tagged(box, holes);
     case "GridBox": {
@@ -116,18 +153,20 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
     case "TextData":
       return { tag: "span", attributes: {}, ...children(box[1]) };
     case "InterpretationBox":
+      return isMath(box) ? typesetLeaf(box, "TraditionalForm") : renderBox(box[1], holes);
+    case "FormBox":
+      if (box[2] === "TeXForm") return typesetLeaf(box, "TeXForm");
+      return isMath(box[1]) ? typesetLeaf(box[1], box[2]) : renderBox(box[1], holes);
     case "ErrorBox":
     case "ButtonBox":
     case "TextCell":
-    case "FormBox":
       return renderBox(box[1], holes);
     default: {
       if (isControlElement(box)) {
         const { tag, attributes } = controlElement(box);
         return element(tag, undefined, attributes, {});
       }
-      // A math run is the typesetter's; until a leaf draws it, its text.
-      return element(box[0], undefined, {}, { text: toText(box) });
+      return isMath(box) ? typesetLeaf(box, "TraditionalForm") : element(box[0], undefined, {}, { text: toText(box) });
     }
   }
 }

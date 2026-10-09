@@ -1,7 +1,8 @@
 // The web's boxes are their own tags (`row-box`), and a TableViewBox is the one that behaves.
 
-import { grid, pane, row, tableView, text } from "@enumeratio/boxes";
+import { form, fraction, grid, interpretation, pane, row, superscript, tableView, tag, text } from "@enumeratio/boxes";
 import { expect, test } from "vite-plus/test";
+import { markupOf } from "../src/box-leaf.ts";
 import { renderBox } from "../src/box-render.ts";
 import { renderingOf } from "../src/symbols.ts";
 import { rowSourceExpression } from "../src/row-spec.ts";
@@ -32,6 +33,59 @@ test("a TableViewBox is its element: the source as written, the headers known, t
     pagination: "",
     style: "width: 480px; height: 320px",
   });
+});
+
+test("a math run is one leaf: its TeX for the host to typeset, its text until then", () => {
+  const drawn = renderBox(row(["x", "+", fraction("1", "2")]));
+  expect(drawn).toMatchObject({
+    tag: "form-box",
+    attributes: { "data-form": "TraditionalForm" },
+    tex: "x+\\frac{1}{2}",
+  });
+  expect(markupOf(drawn, (tex) => `<span>${tex}</span>`)).toBe(
+    '<form-box data-form="TraditionalForm"><span>x+\\frac{1}{2}</span></form-box>',
+  );
+  expect(markupOf(drawn)).toMatch(/^<form-box data-form="TraditionalForm">.+<\/form-box>$/);
+});
+
+test("a TeX form is a leaf holding its TeX as written", () => {
+  expect(renderBox(form("\\frac{a}{b}", "TeXForm"))).toMatchObject({
+    tag: "form-box",
+    attributes: { "data-form": "TeXForm" },
+    tex: "\\frac{a}{b}",
+  });
+});
+
+test("a grid of formulas is a grid-box of leaves, not one array", () => {
+  const drawn = renderBox(
+    tag(
+      grid([
+        [fraction("1", "2"), "3"],
+        [superscript("x", "2"), text("note")],
+      ]),
+      "Grid",
+    ),
+  );
+  expect(drawn.tag).toBe("grid-box");
+  expect(drawn.children?.map((c) => c.tag)).toEqual(["form-box", "form-box", "form-box", "span"]);
+  expect(drawn.children?.map((c) => c.tex)).toEqual(["\\frac{1}{2}", "3", "x^2", undefined]);
+});
+
+test("a fenced matrix in a row stays one leaf", () => {
+  const matrix = row([
+    "(",
+    grid([
+      ["1", "0"],
+      ["0", "1"],
+    ]),
+    ")",
+  ]);
+  expect(renderBox(matrix)).toMatchObject({ tag: "form-box", tex: "\\begin{pmatrix}1&0\\\\0&1\\end{pmatrix}" });
+});
+
+test("an interpretation keeps its expression on the leaf", () => {
+  const drawn = renderBox(interpretation(row(["a", "+", "b"]), ["Add", "a", "b"] as never));
+  expect(drawn.tex).toMatch(/^\\htmlData\{expr=[\w-]+\}\{a\+b\}$/);
 });
 
 test("a collection table's collection keeps the name it is declared under, so a reader can retype it", () => {

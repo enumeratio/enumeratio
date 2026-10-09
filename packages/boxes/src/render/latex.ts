@@ -254,8 +254,9 @@ function writeNode(box: BoxNode): string {
     case "PaneBox":
       return write(box[1]);
     case "TagBox":
-    case "InterpretationBox":
       return write(box[1]);
+    case "InterpretationBox":
+      return withData(write(box[1]), data ? dataOf(box[2]) : undefined);
     case "ErrorBox":
       return `\\textcolor{red}{${write(box[1])}}`;
     // A drawing has no TeX; it reads as Wolfram prints it.
@@ -310,5 +311,74 @@ function writeNode(box: BoxNode): string {
 
 const rows = (grid: readonly (readonly Box[])[]): string => grid.map((r) => r.map(write).join("&")).join("\\\\");
 
-/** Boxes as LaTeX. */
-export const toLatex = (box: Box): string => write(box);
+/** Whether an `InterpretationBox` writes its expression as `\htmlData`, as set by `toLatex`. */
+let data = false;
+
+/** An expression too big to be worth carrying on a typeset node is left off it. */
+const MAX_DATA_BYTES = 8192;
+
+/**
+ * An expression as a `\htmlData` value, or `undefined` when it is too big: KaTeX splits on `,`
+ * and `=` and TeX reads `%` as a comment, so base64url.
+ */
+function dataOf(expr: unknown): string | undefined {
+  const bytes = new TextEncoder().encode(JSON.stringify(expr));
+  if (bytes.length > MAX_DATA_BYTES) return undefined;
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replaceAll("=", "");
+}
+
+const withData = (tex: string, value: string | undefined): string =>
+  value === undefined ? tex : `\\htmlData{expr=${value}}{${tex}}`;
+
+const BASE64URL = /^[A-Za-z0-9_-]+$/;
+
+/**
+ * KaTeX's `trust` for what a typeset node may carry: `\htmlData` with exactly one attribute, the
+ * `data-expr` of `toLatex`'s `data`. Any other command, or any other attribute, is refused.
+ */
+export function trustExpression(context: {
+  readonly command: string;
+  readonly attributes?: Readonly<Record<string, string>>;
+}): boolean {
+  const keys = Object.keys(context.attributes ?? {});
+  return (
+    context.command === "\\htmlData" &&
+    keys.length === 1 &&
+    keys[0] === "data-expr" &&
+    BASE64URL.test(context.attributes!["data-expr"]!)
+  );
+}
+
+/**
+ * The expression a `data-expr` holds, or `undefined` if it is malformed. The value is data from
+ * the page, so it is only ever parsed, never evaluated or trusted.
+ */
+export function exprOfData(value: string): unknown {
+  if (!BASE64URL.test(value)) return undefined;
+  try {
+    const padded = value
+      .replaceAll("-", "+")
+      .replaceAll("_", "/")
+      .padEnd(Math.ceil(value.length / 4) * 4, "=");
+    return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(padded), (c) => c.charCodeAt(0))));
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Boxes as LaTeX. `data` keeps what an `InterpretationBox` interprets on the typeset node
+ * (`\htmlData{expr=…}`, read back with `exprOfData`), for a consumer that wants the expression
+ * behind a piece of typeset math. The typesetter must trust it (`trustExpression`).
+ */
+export function toLatex(box: Box, options: { readonly data?: boolean } = {}): string {
+  const outer = data;
+  data = options.data === true;
+  try {
+    return write(box);
+  } finally {
+    data = outer;
+  }
+}

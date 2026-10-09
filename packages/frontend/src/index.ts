@@ -12,6 +12,7 @@ export * from "./conventional-latex.ts";
 export * from "./source.ts";
 export * from "./plot-notation.ts";
 export * from "./symbols.ts";
+export { renderBox } from "./box-render.ts";
 export * from "./tracked-symbols.ts";
 export * from "./vdom.ts";
 export * from "./head-names.ts";

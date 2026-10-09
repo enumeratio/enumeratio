@@ -219,7 +219,7 @@ export function adoptStructure(el: Element): void {
   // markup path does -- its parameters read as wildcards -- while the structure stays held.
   if (symbol.children !== undefined && args.length > 0) {
     const shown = renderingOf(withOptions(symbol.head, args, options), true)?.children ?? [];
-    el.insertAdjacentHTML("beforeend", shown.map(markupOf).join(""));
+    el.insertAdjacentHTML("beforeend", shown.map((r) => markupOf(r)).join(""));
   }
 }
 

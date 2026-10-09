@@ -132,7 +132,7 @@ afterAll(() => {
 
 // Tags a family shares: a member picked by an argument shape (`ListContourPlot`'s data grid
 // vs `ContourPlot`'s expression + iterators) needs no `fixed` attribute of its own, unlike a
-// member picked by a fixed `type` (`TreeGraph` on `notatio-graph-plot`) -- so membership is titled
+// member picked by a fixed `type` (`TreeGraph` on `graphics-box`) -- so membership is titled
 // on the shared tag, not on whether `fixed` is set.
 const FAMILY_TAGS = [
   "notatio-contour-plot",

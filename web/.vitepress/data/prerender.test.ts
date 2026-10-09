@@ -26,6 +26,6 @@ test("each example is answered from its record, typeset into the page, and kept 
   const page = '<span data-prerender="0:out" data-v-1></span><span data-prerender="1:out"></span>';
   const filled = fillPrerendered(page, entry.name);
   expect(filled).toMatch(
-    /^<span data-prerender="0:out" data-v-1><span class="katex">.*<\/span><span data-prerender="1:out"><\/span>$/,
+    /^<span data-prerender="0:out" data-v-1><form-box data-form="TeXForm"><span class="katex">.*<\/span><\/form-box><\/span><span data-prerender="1:out"><\/span>$/,
   );
 });
