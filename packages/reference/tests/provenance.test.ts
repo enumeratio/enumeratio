@@ -345,6 +345,9 @@ const OVERRIDDEN = [
   "ReplaceAll",
   "Root",
   "Round",
+  // Not itself overridden -- it compares the values of Derivative(UnitBox, 2) and Derivative(UnitBox, 3),
+  // which a bare engine leaves as inert derivatives, so the two differ there.
+  "Same",
   "Sec",
   // Not itself overridden -- the Series of ExpIntegralE(1, x) at 0 stays held (E1(0) is infinite
   // here), where a bare engine builds a Taylor expansion around an unevaluated E1(0).
@@ -1034,6 +1037,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "HeavisidePi",
     "HeavisideTheta",
     "HermiteDecomposition",
+    "HermiteH",
     "HilbertMatrix",
     "HypercubeGraph",
     "Hyperfactorial",

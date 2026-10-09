@@ -62,6 +62,21 @@ export const DEFINITIONS: Readonly<Record<string, Json>> = {
   // so an `If` here would need a second N() to produce a number.
   ClausenCl: ["Which", ["IsEven", "_n"], ["Im", polyLogOnCircle], "True", ["Re", polyLogOnCircle]],
 
+  /** H_n(x) = n! Σ_{m=0}^{⌊n/2⌋} (−1)^m (2x)^{n−2m} / (m! (n−2m)!), for an integer n ≥ 0. */
+  HermiteH: [
+    "Multiply",
+    ["Factorial", "_n"],
+    [
+      "Sum",
+      [
+        "Divide",
+        ["Multiply", ["Power", -1, "m"], ["Power", ["Multiply", 2, "_x"], ["Subtract", "_n", ["Multiply", 2, "m"]]]],
+        ["Multiply", ["Factorial", "m"], ["Factorial", ["Subtract", "_n", ["Multiply", 2, "m"]]]],
+      ],
+      ["Triple", "m", 0, ["Floor", ["Divide", "_n", 2]]],
+    ],
+  ],
+
   /** The continuation fixed by lnΓ(1) = 0 and (lnΓ)' = ψ — not `Ln(Gamma(z))`, whose branch differs. */
   LogGamma: ["Integrate", ["PolyGamma", 0, "t"], ["Triple", "t", 1, "_z"]],
 

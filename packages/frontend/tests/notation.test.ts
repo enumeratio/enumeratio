@@ -30,6 +30,7 @@ const CALLS: unknown[] = [
   ["NthPrime", 10],
   ["StieltjesGamma", 0],
   ["HarmonicNumber", "n", 2],
+  ["HermiteH", "n", "x"],
   ["MoebiusMu", "n"],
   ["Totient", 12],
   ["PrimePi", "x"],

@@ -46,7 +46,7 @@ function coeffs(n: number, kind: "T" | "U"): bigint[] {
 }
 
 /** The coefficient vector as a MathJSON polynomial in `x`. */
-function coeffsExpr(cs: readonly bigint[], x: Json): Json {
+export function coeffsExpr(cs: readonly bigint[], x: Json): Json {
   const terms: Json[] = [];
   cs.forEach((c, k) => {
     if (c === 0n) return;

@@ -1,0 +1,16 @@
+id	section	role	expr	expected	caption
+the-quadratic			[HermiteH, 2, x]	[Add, [Multiply, 4, [Power, x, 2]], -2]	$H_2(x) = 4x^2 - 2$
+the-cubic			[HermiteH, 3, x]	[Add, [Multiply, 8, [Power, x, 3]], [Multiply, -12, x]]	$H_3(x) = 8x^3 - 12x$
+at-an-integer			[HermiteH, 4, 2]	76	At an integer the value is exact: $16 \cdot 16 - 48 \cdot 4 + 12$
+at-a-real			[HermiteH, 5, 0.7]	34.49824	At a floating-point $x$
+the-derivative			[D, [HermiteH, n, x], x]	[Multiply, 2, n, [HermiteH, [Add, n, -1], x]]	$H_n'(x) = 2n\,H_{n-1}(x)$
+at-t5-0-7		test	[N, [HermiteH, 5, 0.7]]	34.49824	
+at-t10-1-3		test	[N, [HermiteH, 10, 1.3]]	-66123.4130330624	
+at-t4-2-3i		test	[N, [HermiteH, 4, [Complex, 2, 3]]]	[Complex, {num: "-1652.0"}, {num: "-2496.0"}]	
+at-a-rational	Scope		[HermiteH, 5, [Rational, 1, 3]]	[Rational, 8312, 243]	At a rational $x$ the value is an exact rational
+at-a-complex-argument	Scope		[HermiteH, 4, [Complex, 2, 3]]	[Complex, -1652, -2496]	At a Gaussian integer
+a-symbolic-order-stays-unevaluated	Scope		[HermiteH, n, x]	[HermiteH, n, x]	A symbolic order stays unevaluated
+hermiteh-10-x	Scope		[HermiteH, 10, x]	[Add, [Multiply, 1024, [Power, x, 10]], [Multiply, -23040, [Power, x, 8]], [Multiply, 161280, [Power, x, 6]], [Multiply, -403200, [Power, x, 4]], [Multiply, 302400, [Power, x, 2]], -30240]	The degree-10 polynomial in $x$
+at-zero	Properties		[HermiteH, 6, 0]	-120	$H_{2k}(0) = (-1)^k (2k)!/k!$
+parity	Properties		[Equal, [HermiteH, 5, [Rational, -1, 3]], [Negate, [HermiteH, 5, [Rational, 1, 3]]]]	True	Odd degree, odd function: $H_n(-x) = (-1)^n H_n(x)$
+recurrence	Properties		[Subtract, [HermiteH, 5, 3], [Subtract, [Multiply, 6, [HermiteH, 4, 3]], [Multiply, 8, [HermiteH, 3, 3]]]]	0	$H_{n+1} = 2x\,H_n - 2n\,H_{n-1}$, here at $n = 4$, $x = 3$

@@ -89,6 +89,11 @@ const DERIVATIVES: Readonly<Record<string, Readonly<Record<Orders, Partial>>>> =
     "0,1": { params: ["s", "z"], body: ["Divide", ["PolyLog", ["Subtract", "s", 1], "z"], "z"] },
   },
 
+  // H_n′(x) = 2n H_{n−1}(x); the head is defined for integer n ≥ 0 only, so there is no ∂ₙ.
+  HermiteH: {
+    "0,1": { params: ["n", "x"], body: ["Multiply", 2, "n", ["HermiteH", ["Subtract", "n", 1], "x"]] },
+  },
+
   // gd′(x) = sech(x): the Gudermannian's defining property.
   Gudermannian: { "1": { params: ["x"], body: ["Sech", "x"] } },
 

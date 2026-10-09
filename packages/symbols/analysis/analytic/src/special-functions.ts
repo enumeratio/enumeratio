@@ -4,6 +4,7 @@ import { compileChebyshevT, compileChebyshevU, evaluateChebyshevT, evaluateCheby
 import { evaluateCsgn } from "./csgn.ts";
 import { evaluateCongruentMod } from "./congruent-mod.ts";
 import { evaluateHarmonicNumber } from "./harmonic.ts";
+import { compileHermiteH, evaluateHermiteH } from "./hermite.ts";
 import { evaluateLegendreP } from "./legendre.ts";
 import { evaluateRisingFactorial } from "./rising-factorial.ts";
 import { evaluateFallingFactorial } from "./falling-factorial.ts";
@@ -11,7 +12,7 @@ import { evaluateXGCD } from "./xgcd.ts";
 import { GLAISHER_VALUE } from "./const-glaisher.ts";
 
 // The heads for what's still ours beyond the zeta family — HarmonicNumber, ChebyshevT,
-// ChebyshevU, LegendrePolynomial, RisingFactorial, BernoulliPolynomial, FallingFactorial,
+// ChebyshevU, HermiteH, LegendrePolynomial, RisingFactorial, BernoulliPolynomial, FallingFactorial,
 // XGCD, Csgn, ConstGlaisher, CongruentMod. BarnesG, LogBarnesG, LogGamma, ClausenCl, the Dirichlet family
 // and StieltjesGamma moved to ce-patches's patches;
 // see barnes-g/, log-gamma/, clausen/, dirichlet/ and stieltjes/ there. Same shape as
@@ -44,6 +45,15 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
         ? undefined
         : evaluateChebyshevU(ce, ops[0], ops[1], wants(ops, options)),
     compile: compileChebyshevU,
+  });
+
+  ce.declare("HermiteH", {
+    signature: "(number, number) -> number",
+    evaluate: (ops, options) =>
+      ops[0] === undefined || ops[1] === undefined
+        ? undefined
+        : evaluateHermiteH(ce, ops[0], ops[1], wants(ops, options)),
+    compile: compileHermiteH,
   });
 
   ce.declare("LegendrePolynomial", {

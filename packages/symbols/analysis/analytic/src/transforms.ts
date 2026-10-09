@@ -302,6 +302,39 @@ function cosineOfSqrtOverSqrt(
 }
 
 /**
+ * L{t^{-1/2} (1+t)^n T_n((1−t)/(1+t))} = √π s^{−n−1/2} H_{2n}(√s) / 4^n, the same n on the power
+ * and the order (checked against a numerical integral and wolframscript); `factors` are the
+ * three factors, in any order.
+ */
+function chebyshevOverSqrt(
+  ce: ComputeEngine,
+  factors: readonly BoxedExpression[],
+  s: BoxedExpression,
+  tName: string,
+): BoxedExpression | undefined {
+  if (factors.length !== 3) return undefined;
+  const cheb = factors.find((f) => f.operator === "ChebyshevT");
+  if (cheb === undefined) return undefined;
+  const [n, arg] = operandsOf(cheb) as [BoxedExpression, BoxedExpression];
+  const t = ce.symbol(tName);
+  const onePlusT = ce.function("Add", [ce.One, t]);
+  const mobius = ce.function("Divide", [ce.function("Subtract", [ce.One, t]), onePlusT]).evaluate();
+  if (hasVar(n, tName) || !arg.isSame(mobius)) return undefined;
+  const others = factors.filter((f) => f !== cheb).map((f) => powerParts(ce, f));
+  const power = others.find((p) => p.base.isSame(onePlusT) && p.exp.isSame(n));
+  const root = others.find((p) => isSym(p.base, tName) && realOf(p.exp) === -0.5);
+  if (power === undefined || root === undefined) return undefined;
+  return ce
+    .function("Multiply", [
+      ce.function("Sqrt", [ce.Pi]),
+      ce.function("Power", [s, ce.function("Negate", [ce.function("Add", [n, ce.number([1, 2])])])]),
+      ce.function("HermiteH", [ce.function("Multiply", [2, n]), ce.function("Sqrt", [s])]),
+      ce.function("Power", [4, ce.function("Negate", [n])]),
+    ])
+    .evaluate();
+}
+
+/**
  * L{C(c√t)} =√a·√(ρ+s)/(2sρ) and L{S(c√t)} = √a·√(ρ-s)/(2sρ), a = πc²/2, ρ = √(a²+s²): from
  * C' = c·cos(at)/(2√t) (a = πc²/2) and L{e^{iat}/√t} = √π (s-ia)^{-1/2}, taking the real and
  * imaginary parts; C(0) = S(0) = 0, so the transform of the derivative divides by s.
@@ -575,6 +608,7 @@ export function matchLaplace(
         ? (atomicLaplace(ce, rest[0], s, tName) ?? shiftFactor(ce, rest, s, tName, "laplace", recur))
         : (laplaceLog(ce, rest, s, tName) ??
           cosineOfSqrtOverSqrt(ce, rest, s, tName) ??
+          chebyshevOverSqrt(ce, rest, s, tName) ??
           shiftFactor(ce, rest, s, tName, "laplace", recur));
     if (core === undefined) return undefined;
     return consts.length === 0 ? core : ce.function("Multiply", [...consts, core]).evaluate();

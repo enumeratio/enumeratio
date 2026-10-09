@@ -69,6 +69,7 @@ export { declareFractals, iterateQuadratic, julia, juliaReal, mandelbrot, mandel
 export { declareDifferenceRoot } from "./difference-root.ts";
 export { declareDifferentialRoot } from "./differential-root.ts";
 export { evaluateHarmonicNumber } from "./harmonic.ts";
+export { evaluateHermiteH } from "./hermite.ts";
 export { digammaFunctionZero } from "./digamma-zero.ts";
 export { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 export { hypergeometricUStar } from "./hypergeometric-ustar.ts";

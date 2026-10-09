@@ -8,6 +8,7 @@
   "[\"NthPrime\",10]": "p_{10}",
   "[\"StieltjesGamma\",0]": "γ_0",
   "[\"HarmonicNumber\",\"n\",2]": "{H_n}^{(2)}",
+  "[\"HermiteH\",\"n\",\"x\"]": "H_n(x)",
   "[\"MoebiusMu\",\"n\"]": "μ(n)",
   "[\"Totient\",12]": "\\varphi(12)",
   "[\"PrimePi\",\"x\"]": "π(x)",
