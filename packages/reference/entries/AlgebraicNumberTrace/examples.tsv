@@ -1,3 +1,7 @@
 id	section	role	expr	expected	caption
 one-plus-sqrt-2			[AlgebraicNumberTrace, [Add, 1, [Sqrt, 2]]]	2	$(1 + \sqrt 2) + (1 - \sqrt 2)$
 cube-root-of-2-has-trace-0			[AlgebraicNumberTrace, [Root, 2, 3]]	0	the cube roots of 2 sum to 0
+algebraicnumbertrace-5-plus-sqrt-2			[AlgebraicNumberTrace, [Add, 5, [Sqrt, 2]]]	10	
+algebraicnumbertrace-2	Scope		[AlgebraicNumberTrace, 2]	2	
+algebraicnumbertrace-neg-2-over-3	Scope		[AlgebraicNumberTrace, [Rational, -2, 3]]	[Rational, -2, 3]	
+algebraicnumbertrace-1-over-2-times-1-plus-sqrt	Properties		[AlgebraicNumberTrace, [Multiply, [Rational, 1, 2], [Add, 1, [Sqrt, 2]]]]	1	

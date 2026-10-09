@@ -1,2 +1,7 @@
-id	section	role	expr	expected	caption
-trace-of-a-matrix	Basic		[Trace, [List, [List, 1, 2], [List, 3, 4]]]	5	The sum of the diagonal
+id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
+trace-of-a-matrix	Basic		[Trace, [List, [List, 1, 2], [List, 3, 4]]]	5	The sum of the diagonal			
+trace-list-list-1-2-3-list-4-5-6-list-7-8-9			[Trace, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]	15				
+trace-list-list-a-b-list-c-d	Scope		[Trace, [List, [List, a, b], [List, c, d]]]	[Add, a, d]				
+trace-array-a-list-4-3-2	Scope		[Trace, [Array, a, [List, 4, 3, 2]]]	[Trace, [List, [List, [List, [a, 1, 1, 1], [a, 1, 1, 2]], [List, [a, 1, 2, 1], [a, 1, 2, 2]], [List, [a, 1, 3, 1], [a, 1, 3, 2]]], [List, [List, [a, 2, 1, 1], [a, 2, 1, 2]], [List, [a, 2, 2, 1], [a, 2, 2, 2]], [List, [a, 2, 3, 1], [a, 2, 3, 2]]], [List, [List, [a, 3, 1, 1], [a, 3, 1, 2]], [List, [a, 3, 2, 1], [a, 3, 2, 2]], [List, [a, 3, 3, 1], [a, 3, 3, 2]]], [List, [List, [a, 4, 1, 1], [a, 4, 1, 2]], [List, [a, 4, 2, 1], [a, 4, 2, 2]], [List, [a, 4, 3, 1], [a, 4, 3, 2]]]]]				
+trace-list-list-1-2-3-list-4-5-6-list-7-8-9-f	Scope	triage	[Trace, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], f]	15		ours?	unclassified	""
+trace-array-a-list-4-3-2-f-2	Scope		[Trace, [Array, a, [List, 4, 3, 2]], f, 2]	[Trace, [List, [List, [List, [a, 1, 1, 1], [a, 1, 1, 2]], [List, [a, 1, 2, 1], [a, 1, 2, 2]], [List, [a, 1, 3, 1], [a, 1, 3, 2]]], [List, [List, [a, 2, 1, 1], [a, 2, 1, 2]], [List, [a, 2, 2, 1], [a, 2, 2, 2]], [List, [a, 2, 3, 1], [a, 2, 3, 2]]], [List, [List, [a, 3, 1, 1], [a, 3, 1, 2]], [List, [a, 3, 2, 1], [a, 3, 2, 2]], [List, [a, 3, 3, 1], [a, 3, 3, 2]]], [List, [List, [a, 4, 1, 1], [a, 4, 1, 2]], [List, [a, 4, 2, 1], [a, 4, 2, 2]], [List, [a, 4, 3, 1], [a, 4, 3, 2]]]], f, 2]				

@@ -1,2 +1,4 @@
-id	in
-besseli-0-1	N[BesselI[0, 1]]
+id	in	out	shown	tex.in	tex.out	verdict
+besseli-0-1	N[BesselI[0, 1]]					
+normal-series-besseli-0-x-x-positiveinfinity-2	Normal[Series[BesselI[0, x], List[x, Infinity, 2]]]	Indeterminate		\text{Indeterminate}	\text{Indeterminate}	inconclusive
+n-besseli-0-1-50	N[BesselI[0, 1], 50]	1.26606587775200833559824462521471753760767031135496220676312084581981678703738`50.	1.2660658777520083355982446252147175376076703113550	N[I_0(1),50]	1.2660658777520083355982446252147175376076703113550	

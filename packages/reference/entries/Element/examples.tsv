@@ -1,3 +1,8 @@
-id	section	role	expr	expected
-three-is-an-integer	Basic		[Element, 3, Integers]	True
-one-half-is-not-an-integer	Basic		[Element, [Rational, 1, 2], Integers]	False
+id	section	role	expr	expected	triage	wolfram.kind	wolfram.note
+three-is-an-integer	Basic		[Element, 3, Integers]	True			
+one-half-is-not-an-integer	Basic		[Element, [Rational, 1, 2], Integers]	False			
+pi-in-realnumbers			[Element, Pi, RealNumbers]	True			
+refine-sin-pi-times-x-x-in-integers	Scope		[Refine, [Sin, [Multiply, Pi, x]], [Element, x, Integers]]	0			
+refine-sqrt-x-plus-y-minus-2-pow-2-list-x-y-in	Scope		[Refine, [Sqrt, [Power, [Add, x, y, -2], 2]], [Element, [List, x, y], [Disk]]]	[Abs, [Add, x, y, -2]]			
+refine-x-pow-y-plus-ln-x-plus-y-in-realnumbers-x	Scope	triage	[Refine, [Element, [Add, [Power, x, y], [Ln, [Add, x, y]]], RealNumbers], [And, [Greater, x, 0], [Greater, y, 0]]]	[Element, [Add, [Ln, [Add, x, y]], [Power, x, y]], RealNumbers]	ours?	unclassified	""
+refine-list-x-y-in-rectangle-list-neg-1-neg-1	Scope	triage	[Refine, [Element, [List, x, y], [Rectangle, [List, -1, -1], [List, 1, 1]]], [LessEqual, [Add, [Power, x, 2], [Power, y, 2]], 1]]	[Element, [List, x, y], [Rectangle, [List, -1, -1], [List, 1, 1]]]	ours?	unclassified	""

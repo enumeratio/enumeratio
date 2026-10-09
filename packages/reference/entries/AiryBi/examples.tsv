@@ -1,2 +1,10 @@
-id	section	role	expr	expected	known	tolerance	source	caption
-bi-0	Basic		[N, [AiryBi, 0]]	0.6149266274460007	{num: "0.6149266274460007351509224"}	1e-13	mpmath 1.3.0 airybi	$\mathrm{Bi}(0) = \sqrt{3}\,\mathrm{Ai}(0)$ numerically
+id	section	role	expr	expected	known	tolerance	source	caption	triage	wolfram.kind	wolfram.note
+bi-0	Basic		[N, [AiryBi, 0]]	0.6149266274460007	{num: "0.6149266274460007351509224"}	1e-13	mpmath 1.3.0 airybi	$\mathrm{Bi}(0) = \sqrt{3}\,\mathrm{Ai}(0)$ numerically			
+series-airybi-x-x-0-4		triage	[Series, [AiryBi, x], x, 0, 4]	[Add, [Multiply, [Rational, 1, 12], [AiryBiPrime, 0], [Power, x, 4]], [Multiply, [Rational, 1, 6], [AiryBi, 0], [Power, x, 3]], [Multiply, x, [AiryBiPrime, 0]], [BigO, [Power, x, 6]], [AiryBi, 0]]					ours?	unclassified	""
+normal-series-airybi-x-x-positiveinfinity-2		triage	[Normal, [Series, [AiryBi, x], x, PositiveInfinity, 2]]	[Series, [AiryBi, x], x, PositiveInfinity, 2]					wolfram?	unclassified	""
+n-airybi-2-50	Scope	triage	[N, [AiryBi, 2], 50]	3.2980949999782148					compare	unclassified	""
+n-functionrange-airybi-x-x-y	Scope	triage	[N, [FunctionRange, [AiryBi, x], x, y]]	[FunctionRange, [AiryBi, x], x, y]					ours?	unclassified	""
+d-airybi-x-x	Scope		[D, [AiryBi, x], x]	[AiryBiPrime, x]							
+series-airybi-x-x-0-7	Scope	triage	[Series, [AiryBi, x], x, 0, 7]	[Add, [Multiply, [Rational, 1, 504], [AiryBiPrime, 0], [Power, x, 7]], [Multiply, [Rational, 1, 180], [AiryBi, 0], [Power, x, 6]], [Multiply, [Rational, 1, 12], [AiryBiPrime, 0], [Power, x, 4]], [Multiply, [Rational, 1, 6], [AiryBi, 0], [Power, x, 3]], [Multiply, x, [AiryBiPrime, 0]], [BigO, [Power, x, 9]], [AiryBi, 0]]					ours?	unclassified	""
+normal-series-airybi-x-x-directedinfinity-z-1	Scope	triage	[Normal, [Series, [AiryBi, x], x, [DirectedInfinity, z], 1]]	[Add, [Multiply, [Add, x, [Negate, [DirectedInfinity, z]]], [AiryBiPrime, [DirectedInfinity, z]]], [AiryBi, [DirectedInfinity, z]]]					ours?	unclassified	""
+simplify-functionexpand-airybi-z-times	Scope	triage	[Simplify, [FunctionExpand, [AiryBi, [Multiply, z, [Power, ExponentialE, [Multiply, 2, Pi, ImaginaryUnit, [Power, 3, -1]]]]]]]	[AiryBi, [Multiply, z, [Add, [Rational, -1, 2], [Complex, 0, [Divide, [Sqrt, 3], 2]]]]]					ours?	unclassified	""
