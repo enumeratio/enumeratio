@@ -115,3 +115,52 @@ test("a pole of Γ(a) at a nonpositive integer a gives 0 for a complex order (Wo
   const r = ce.box(["RisingFactorial", -2, ["Complex", 1, 1]]).N();
   expect(r.json).toEqual(0);
 });
+
+// --- HermiteH ------------------------------------------------------------------------
+
+test("low-degree HermiteH, exactly, at a symbol", () => {
+  sameExact(["HermiteH", 0, "x"], 1);
+  sameExact(["HermiteH", 1, "x"], ["Multiply", 2, "x"]);
+  sameExact(["HermiteH", 2, "x"], ["Subtract", ["Multiply", 4, ["Power", "x", 2]], 2]);
+  sameExact(["HermiteH", 3, "x"], ["Subtract", ["Multiply", 8, ["Power", "x", 3]], ["Multiply", 12, "x"]]);
+  sameExact(
+    ["HermiteH", 4, "x"],
+    ["Add", ["Multiply", 16, ["Power", "x", 4]], ["Multiply", -48, ["Power", "x", 2]], 12],
+  );
+});
+
+test("H_n(0) = (-1)^{n/2} n!/(n/2)! for even n and 0 for odd n", () => {
+  exactJson(["HermiteH", 6, 0], -120);
+  exactJson(["HermiteH", 7, 0], 0);
+});
+
+test("the recurrence H_{n+1} = 2x H_n - 2n H_{n-1} holds at an exact rational", () => {
+  const x = ["Rational", 3, 7] as unknown as Expr;
+  for (let n = 1; n <= 8; n++)
+    sameExact(
+      ["HermiteH", n + 1, x],
+      ["Subtract", ["Multiply", 2, x, ["HermiteH", n, x]], ["Multiply", 2 * n, ["HermiteH", n - 1, x]]],
+    );
+});
+
+test("HermiteH stays unevaluated for a symbolic, negative or non-integer order", () => {
+  exactJson(["HermiteH", "n", "x"], ["HermiteH", "n", "x"]);
+  exactJson(["HermiteH", -1, "x"], ["HermiteH", -1, "x"]);
+  exactJson(["HermiteH", ["Rational", 1, 2], "x"], ["HermiteH", ["Rational", 1, 2], "x"]);
+});
+
+test("HermiteH declines past the double range rather than answering Infinity", () => {
+  expect(ce.box(["N", ["HermiteH", 400, 3.5]]).evaluate().operator).toBe("HermiteH");
+});
+
+test("compiled HermiteH agrees with .N(), and is NaN for an order it doesn't evaluate", () => {
+  const f = compile(ce.box(["Function", ["HermiteH", "n", "x"], "n", "x"])) as unknown as {
+    success: boolean;
+    run: (n: number, x: number) => number;
+  };
+  expect(f.success).toBe(true);
+  for (const n of [0, 1, 2, 5, 9])
+    for (const x of [-1.5, -0.3, 0, 0.7, 2]) expect(f.run(n, x)).toBeCloseTo(ce.box(["HermiteH", n, x]).N().re, 10);
+  expect(f.run(-1, 0.5)).toBeNaN();
+  expect(f.run(1.5, 0.5)).toBeNaN();
+});

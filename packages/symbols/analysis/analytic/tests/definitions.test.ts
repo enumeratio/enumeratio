@@ -73,6 +73,8 @@ const AGREEMENT: readonly [string, readonly Expr[], number][] = [
   ["DirichletL", [5, 2, 3], 1e-9],
   ["HarmonicNumber", [2.5], 1e-11],
   ["HarmonicNumber", [3], 1e-11], // exact at the integers too: ψ(n+1) + γ = H_n
+  ["HermiteH", [5, 0.7], 1e-10],
+  ["HermiteH", [6, ["Rational", 3, 7]], 1e-10],
 ];
 
 for (const [head, args, tolerance] of AGREEMENT) {
@@ -120,6 +122,7 @@ const DERIVATIVES: readonly [string, Expr, string, (x: number) => Expr, number][
   ["ClausenCl in theta", ["ClausenCl", 2, "t"], "t", (x) => ["ClausenCl", 2, x], 1],
   ["ClausenCl odd order", ["ClausenCl", 3, "t"], "t", (x) => ["ClausenCl", 3, x], 1],
   ["HarmonicNumber", ["HarmonicNumber", "z"], "z", (x) => ["HarmonicNumber", x], 2.5],
+  ["HermiteH", ["HermiteH", 4, "x"], "x", (x) => ["HermiteH", 4, x], 0.7],
 ];
 
 for (const [label, expr, variable, at, point] of DERIVATIVES) {
@@ -133,6 +136,12 @@ for (const [label, expr, variable, at, point] of DERIVATIVES) {
 
 test("LogGamma' is the digamma function, exactly", () => {
   expect(box(["D", ["LogGamma", "z"], "z"]).evaluate().json).toEqual(box(["PolyGamma", 0, "z"]).evaluate().json);
+});
+
+test("H_n' = 2n H_{n-1} at a symbolic order", () => {
+  expect(box(["D", ["HermiteH", "n", "x"], "x"]).evaluate().json).toEqual(
+    box(["Multiply", 2, "n", ["HermiteH", ["Subtract", "n", 1], "x"]]).evaluate().json,
+  );
 });
 
 test("a partial with no closed form stays an inert Derivative", () => {

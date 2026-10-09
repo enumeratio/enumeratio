@@ -321,6 +321,29 @@ test("InverseMellin: the Mellin transform of J_ν is 2^(s-1) Γ((ν+s)/2)/Γ(1+(
   );
 });
 
+test("Laplace: t^(-1/2) (1+t)^n T_n((1-t)/(1+t)) is a Hermite polynomial, against the polynomial's termwise transform", () => {
+  const mobius = ["Divide", ["Subtract", 1, "t"], ["Add", 1, "t"]];
+  const f = [
+    "Multiply",
+    ["Power", "t", ["Rational", -1, 2]],
+    ["Power", ["Add", 1, "t"], "n"],
+    ["ChebyshevT", "n", mobius],
+  ];
+  const s = 2.5;
+  const root = Math.sqrt(Math.PI);
+  // (1+t)^n T_n = 1 - 6t + t^2 (n = 2) and 1 - 15t + 15t^2 - t^3 (n = 3), and L{t^(k-1/2)} = Γ(k+1/2) s^(-k-1/2)
+  closeTo(at(L(f), { s, n: 2 }), root * (s ** -0.5 - 3 * s ** -1.5 + 0.75 * s ** -2.5));
+  closeTo(at(L(f), { s, n: 3 }), root * (s ** -0.5 - 7.5 * s ** -1.5 + 11.25 * s ** -2.5 - 1.875 * s ** -3.5));
+});
+
+test("Laplace: the Chebyshev/Hermite pair declines when the power's exponent differs from the order", () => {
+  const mobius = ["Divide", ["Subtract", 1, "t"], ["Add", 1, "t"]];
+  held(
+    L(["Multiply", ["Power", "t", ["Rational", -1, 2]], ["Power", ["Add", 1, "t"], "m"], ["ChebyshevT", "n", mobius]]),
+    "LaplaceTransform",
+  );
+});
+
 const factorial = (n: number): number => (n <= 1 ? 1 : n * factorial(n - 1));
 /** The rising factorial (x)ₙ. */
 const rising = (x: number, n: number): number => (n === 0 ? 1 : (x + n - 1) * rising(x, n - 1));

@@ -749,10 +749,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 9,
   },
   {
-    head: "HermiteH",
-    uses: 9,
-  },
-  {
     head: "Interpolation",
     uses: 9,
   },

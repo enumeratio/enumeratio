@@ -75,6 +75,7 @@ regularized `1F1`/`2F1`/`3F2` forms,
 [`LambertW`](https://enumeratio.dev/reference/symbol/LambertW),
 [`ChebyshevT`](https://enumeratio.dev/reference/symbol/ChebyshevT) /
 [`ChebyshevU`](https://enumeratio.dev/reference/symbol/ChebyshevU),
+[`HermiteH`](https://enumeratio.dev/reference/symbol/HermiteH),
 [`LegendrePolynomial`](https://enumeratio.dev/reference/symbol/LegendrePolynomial),
 [`ExpIntegralE`](https://enumeratio.dev/reference/symbol/ExpIntegralE),
 [`BesselJZero`](https://enumeratio.dev/reference/symbol/BesselJZero).
