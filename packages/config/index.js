@@ -3,7 +3,11 @@
 // without a build step.
 
 /** Oxfmt options; the record writer in @enumeratio/entry holds the same width (a test keeps them equal). */
-export const fmt = { printWidth: 120 };
+export const fmt = {
+  printWidth: 120,
+  // A record's index.md is written by that writer; formatting would rewrite its body.
+  ignorePatterns: ["reference/*/index.md"],
+};
 
 /** Oxlint options; the root adds its path-scoped `overrides`. */
 export const lint = {

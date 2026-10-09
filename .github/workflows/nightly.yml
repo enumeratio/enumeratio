@@ -320,6 +320,84 @@ jobs:
           job: wolfram-weekly
           token: ${{ github.token }}
 
+  # Does each package in tools/split-check/packages.json build, check and test from its dependencies' tarballs alone?
+  # One job per package; `split-check-issue` files the failures. (split-check.yml runs the same check on a PR label
+  # or by hand.)
+  split-check-list:
+    name: split check list
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.list.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: list
+        run: echo "packages=$(jq -c '[.[].name]' tools/split-check/packages.json)" >> "$GITHUB_OUTPUT"
+
+  split-check:
+    name: split check ${{ matrix.package }}
+    needs: split-check-list
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJSON(needs.split-check-list.outputs.packages) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+        with:
+          packages: "@enumeratio/${{ matrix.package }}"
+      - run: node tools/split-check/ci.ts ${{ matrix.package }} --out "$RUNNER_TEMP/split-report"
+      - if: ${{ !cancelled() }}
+        run: cat "$RUNNER_TEMP/split-report/report.md" >> "$GITHUB_STEP_SUMMARY"
+        continue-on-error: true
+
+  # One rolling issue (labelled `nightly-fixup`) for every red package: opened or reopened with a comment per failing
+  # night, closed when the whole list is green again.
+  split-check-issue:
+    name: split check issue
+    needs: [split-check-list, split-check]
+    if: ${{ !cancelled() && needs.split-check-list.result != 'skipped' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@v7
+        env:
+          RESULT: ${{ needs.split-check-list.result == 'success' && needs.split-check.result || 'failure' }}
+        with:
+          script: |
+            const TITLE = 'split check regression'
+            const LABELS = ['nightly-fixup']
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            const listed = await github.rest.issues.listForRepo({ ...context.repo, labels: LABELS.join(','), state: 'all', per_page: 100 })
+            const matches = listed.data.filter(i => !i.pull_request && i.title === TITLE)
+            const existing = matches.find(i => i.state === 'open') ?? matches[0]
+            if (process.env.RESULT === 'success') {
+              if (existing && existing.state === 'open') {
+                await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body: `Green again: every package passes the split check. ${runUrl}` })
+                await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'closed' })
+              }
+              return
+            }
+            const body = [
+              `The split check failed for at least one package (run result: ${process.env.RESULT}). Trigger: ${context.eventName}.`,
+              ``,
+              `Run: ${runUrl}`,
+              ``,
+              `Each failing \`split check <package>\` job's summary holds its report. Reproduce with \`node tools/split-check/run.ts <package> --build\`.`,
+            ].join('\n')
+            try {
+              await github.rest.issues.createLabel({ ...context.repo, name: 'nightly-fixup', color: 'fbca04', description: 'swept nightly by the fixup routine' })
+            } catch (e) { /* exists */ }
+            if (existing) {
+              if (existing.state === 'closed') await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'open' })
+              await github.rest.issues.addLabels({ ...context.repo, issue_number: existing.number, labels: LABELS })
+              await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body })
+            } else {
+              await github.rest.issues.create({ ...context.repo, title: TITLE, body, labels: LABELS })
+            }
+
   # Follow every crosswalk link (Wikipedia, MathWorld, DLMF, Fungrim …) and report the ones that no longer answer.
   crosswalk-links:
     name: crosswalk links resolve
