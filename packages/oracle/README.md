@@ -21,8 +21,9 @@ emitter reuses.
 - **`runBounded`/`runKernel`** — re-exported from `@enumeratio/utils/bounded`, where the memory watchdog lives so libraries' golden scripts can use it without an edge to oracle.
 - **`julia/`, `oscar/`, `lean/`, `python/`, `rust/`** — each wired system's project files
   (`Project.toml`/`Manifest.toml`, `lakefile.toml`, `requirements.txt`, `Cargo.toml`) and, for
-  Rust, the batch-runner source. `kernels.json` pins the exact external version a scan ran
-  against, for a report's provenance.
+  Rust, the batch-runner source. `kernels.json` pins the release (version and build date) a scan
+  ran against, for a report's provenance. A pin compares the release only: `kernel-pin.ts`
+  splits a kernel's version into that release and the platform, which is printed, not compared.
 
 ## Commands
 

@@ -38,10 +38,12 @@ import {
   interpretSymbolicAgreement,
   isSymbolicSystem,
   ITEM_SECONDS,
+  kernelVersion,
   type MathJSON,
   notNumeric,
   runIn,
   runKernel,
+  sameRelease,
   SYMBOLIC_SECONDS,
   symbolicAgreementSource,
   SYSTEMS,
@@ -355,7 +357,16 @@ if (systems.includes("sage")) {
 
 const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
 const kernels: Record<string, string> = { ...data.kernels };
-for (const [system, version] of Object.entries(kernelOf)) kernels[system] = version as string;
+// A pin names a release (version and date). The same release on another platform keeps its pin: the
+// platform is printed for the record, never written, so a scan on Linux doesn't rewrite a Mac's pin.
+for (const [system, running] of Object.entries(kernelOf)) {
+  const version = running as string;
+  const { release, platform } = kernelVersion(version);
+  process.stderr.write(`${system}: running ${release}${platform === undefined ? "" : ` on ${platform}`}\n`);
+  const pinned = data.kernels[system];
+  if (pinned !== undefined && sameRelease(pinned, version)) continue;
+  kernels[system] = version;
+}
 
 const headsThisRun = new Set(cases.map((c) => c.head));
 // `id (system): from -> to`, one per row whose verdict moved from its committed value — the
