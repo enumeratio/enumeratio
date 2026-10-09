@@ -207,3 +207,9 @@ test("a knot's curve comes from the knot, not from a head per family", () => {
   // A knot named as a braid has no embedding here; it says so rather than guessing.
   expect(ce.box(["KnotCurve", B(2, 1, 1, 1)]).evaluate().operator).toBe("KnotCurve");
 });
+
+test("BraidClosure is a link: inert, and the invariant heads read the braid it closes", () => {
+  same(["BraidClosure", ["TorusBraid", 3, 2]], ["BraidClosure", B(3, 1, 2, 1, 2)]);
+  same(["JonesPolynomial", ["BraidClosure", B(2, 1, 1, 1)]], ["JonesPolynomial", B(2, 1, 1, 1)]);
+  same(["AlexanderPolynomial", ["BraidClosure", ["TorusBraid", 2, 3]]], ["AlexanderPolynomial", T(2, 3)]);
+});

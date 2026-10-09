@@ -7,7 +7,7 @@ signatures:
   - call: KnotCurve(knot, samples?)
     description: the sampled points of $T(p,q)$'s torus embedding
     library: enumeratio-braid
-    type: (expression<Braid> | expression<FigureEightKnot> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string, integer?) -> list<list<real>>
+    type: (expression<Braid> | expression<FigureEightKnot> | expression<Link> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string, integer?) -> list<list<real>>
 seeAlso:
   - ParametricCurve
   - TorusKnot

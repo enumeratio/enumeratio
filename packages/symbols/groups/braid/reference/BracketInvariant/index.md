@@ -7,7 +7,7 @@ signatures:
   - call: BracketInvariant(knot)
     description: $(-A^3)^{-w}\langle L\rangle$, already an invariant
     library: enumeratio-braid
-    type: (expression<Braid> | expression<FigureEightKnot> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string) -> expression
+    type: (expression<Braid> | expression<FigureEightKnot> | expression<Link> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string) -> expression
 seeAlso:
   - KauffmanBracket
   - JonesPolynomial

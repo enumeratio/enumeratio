@@ -84,7 +84,8 @@ function knotOf(expr: Expr | undefined): Knot | undefined {
   }
   // n = 1: one full twist past the clasp is two half-twists, which is the figure-eight.
   if (expr?.operator === "FigureEightKnot") return twistKnot(1);
-  const b = braidOf(expr);
+  // A closure is the link its braid closes to, so it carries that braid.
+  const b = braidOf(expr?.operator === "BraidClosure" ? operandsOf(expr)[0] : expr);
   return b === undefined ? undefined : { braid: b };
 }
 
@@ -135,7 +136,7 @@ export function declareBraid(ce: Engine): void {
    * is), or an LR word.
    */
   const knotLike =
-    "expression<TorusKnot> | expression<TwistKnot> | expression<PretzelKnot> | expression<FigureEightKnot> | expression<Braid> | string";
+    "expression<TorusKnot> | expression<TwistKnot> | expression<PretzelKnot> | expression<FigureEightKnot> | expression<Braid> | expression<Link> | string";
 
   /** A head taking a braid and returning a value. */
   const aboutBraid = (head: string, signature: string, answer: (b: Braid) => Expr | undefined): void => {
@@ -280,6 +281,11 @@ export function declareBraid(ce: Engine): void {
   ce.declare("PretzelKnot", { signature: "(integer, integer, integer) -> expression<PretzelKnot>" });
   /** The figure-eight knot — `TwistKnot(1)` under its own name. */
   ce.declare("FigureEightKnot", { signature: "() -> expression<FigureEightKnot>" });
+  /**
+   * The link a braid closes to — inert, like `Braid`, because it is a value. The invariant heads
+   * take it as the link it names; a cell that evaluates it draws the closed braid.
+   */
+  ce.declare("BraidClosure", { signature: `(${braidLike}) -> expression<Link>` });
   /** The unique positive braid realising a permutation, with no pair crossing twice. */
   ce.declare("PositivePermutationBraid", {
     signature: "(list<integer>) -> expression<Braid>",

@@ -7,7 +7,7 @@ signatures:
   - call: AlexanderPolynomial(knot)
     description: $\Delta(t)$, normalised to start at $t^0$
     library: enumeratio-braid
-    type: (expression<Braid> | expression<FigureEightKnot> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string) -> expression
+    type: (expression<Braid> | expression<FigureEightKnot> | expression<Link> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string) -> expression
   - call: TorusKnot(p, q)
     description: $T(p,q)$ as a knot — the closed form, with no braid involved
     library: enumeratio-braid

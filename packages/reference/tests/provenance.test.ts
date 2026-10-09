@@ -506,6 +506,7 @@ const NOVEL = [
   "BoxedPlanePartitions",
   "BracketInvariant",
   "Braid",
+  "BraidClosure",
   "BraidComponents",
   "BraidCrossings",
   "BraidInverse",

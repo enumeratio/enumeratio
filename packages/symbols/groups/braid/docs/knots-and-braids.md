@@ -103,6 +103,14 @@ A `Braid` value shows the same way anywhere it is the result, without the rules.
 <notatio-cell value="BraidInverse(Braid(3, [1, -2]))" />
 </Story>
 
+`BraidClosure(braid)` is a head of its own, a link, and as a result it draws the closed braid
+with no `StrandDiagram` around it. The knot-polynomial heads take it too.
+
+<Story title="A closure, as a value">
+<notatio-cell value="BraidClosure(TorusBraid(3, 2))" />
+<notatio-cell value="AlexanderPolynomial(BraidClosure(TorusBraid(2, 3)))" />
+</Story>
+
 For a **positive** braid — no negative letters — Bennequin's theorem says Seifert's
 algorithm on the diagram is already optimal, so the genus of the closure is
 $g = (c - s + 1)/2$ for $c$ crossings on $s$ strands. Positivity is doing real work there;
