@@ -144,9 +144,12 @@ export function declareHypercomplex(ce: Engine): void {
     return combine(parts);
   };
 
+  // Every row and wrapper here needs a generator symbol (i_1, e_2, ...), which compiled numeric code never
+  // holds as one: they keep the built-in lowering.
   defineOverload(ce, "Add", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: "builtin",
     when: reachesAnyGenerator,
     evaluate: (ops) => linear(ops, (parts) => toExpression(ce, addMultivectors(ce, parts))),
   });
@@ -158,6 +161,7 @@ export function declareHypercomplex(ce: Engine): void {
   defineOverload(ce, "Multiply", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: "builtin",
     when: reachesAnyGenerator,
     evaluate: (ops) =>
       productIsOrderable(ops)
@@ -173,6 +177,7 @@ export function declareHypercomplex(ce: Engine): void {
   defineOverload(ce, "Negate", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: "builtin",
     arity: 1,
     when: hasGenerator,
     evaluate: (ops) =>
@@ -182,6 +187,7 @@ export function declareHypercomplex(ce: Engine): void {
   defineOverload(ce, "Power", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: "builtin",
     arity: 2,
     when: hasGenerator,
     evaluate: (ops) => {
@@ -200,6 +206,7 @@ export function declareHypercomplex(ce: Engine): void {
   defineOverload(ce, "Divide", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: "builtin",
     arity: 2,
     when: hasGenerator,
     evaluate: (ops) =>
@@ -215,7 +222,7 @@ export function declareHypercomplex(ce: Engine): void {
     hasGenerator,
     () => (ops) =>
       linear(ops, ([mv]) => (mv === undefined ? undefined : toExpression(ce, conjugateMultivector(ce, mv)))),
-    1,
+    { arity: 1, compile: "builtin" },
   );
 
   // Expanding a hypercomplex element IS putting it in blade normal form, which is what
@@ -235,7 +242,7 @@ export function declareHypercomplex(ce: Engine): void {
     ["Norm", "x"],
     hasGenerator,
     () => (ops) => linear(ops, ([mv]) => (mv === undefined ? undefined : normMultivector(ce, mv))),
-    1,
+    { arity: 1, compile: "builtin" },
   );
 
   // `\overline{z}` parses to OverBar, which has no definition of its own — give it

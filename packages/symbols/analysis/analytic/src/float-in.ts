@@ -23,6 +23,10 @@ const FLOAT_IN_HEADS = [
   "JacobiZN",
 ] as const;
 
+// A float operand's answer rounded to a double (compiled code already works in doubles), a NaN left unevaluated
+// (no number either way) and complex zeta (compiled code never passes a complex operand).
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareFloatInDoubleOut(ce: Engine): void {
   for (const head of FLOAT_IN_HEADS) {
     wrapOperator(
@@ -30,6 +34,7 @@ export function declareFloatInDoubleOut(ce: Engine): void {
       [head],
       () => true,
       (native) => (ops, options) => doublesForFloats(ce, ops, options, () => native?.(ops, options)),
+      BUILTIN,
     );
   }
 }
@@ -56,7 +61,7 @@ export function declineHurwitzIndeterminate(ce: Engine): void {
       );
     },
     () => () => undefined,
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 }
 
@@ -78,7 +83,7 @@ export function declareComplexZeta(ce: Engine): void {
       !wantsNumber(ops, options) || exceedsDoublePrecision(ce, options.numericApproximation)
         ? native?.(ops, options)
         : (evaluateHurwitz(ce, [ops[0], ce.One], true) ?? native?.(ops, options)),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
   wrapOperator(
     ce,
@@ -88,6 +93,6 @@ export function declareComplexZeta(ce: Engine): void {
       !wantsNumber(ops, options) || exceedsDoublePrecision(ce, options.numericApproximation)
         ? native?.(ops, options)
         : (evaluateHurwitz(ce, ops, true) ?? native?.(ops, options)),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 }

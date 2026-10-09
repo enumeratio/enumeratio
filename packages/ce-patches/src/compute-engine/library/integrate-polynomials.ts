@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { declareCompile, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 type Evaluate = (ops: readonly BoxedExpression[], options: { numericApproximation?: boolean }) => unknown;
 
@@ -40,4 +40,5 @@ export function integrateExpandsPolynomials(ce: ComputeEngine): void {
     const retried = native(retryOps, options) as BoxedExpression | undefined;
     return retried !== undefined && retried.operator !== "Integrate" ? retried : result;
   }) as never;
+  declareCompile(ce, "Integrate", "builtin"); // the same integral, expanded first
 }

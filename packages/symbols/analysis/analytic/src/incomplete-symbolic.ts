@@ -12,6 +12,10 @@ import { declined, type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
+// Identities valid for any operand, and a rewrite tried only after the native evaluator declined:
+// the built-in lowering gives the same value.
+const BUILTIN = { compile: "builtin" } as const;
+
 /**
  * Γ(2, z) = (1 + z)e^{−z} and Γ(1/2, z) = √π·erfc(√z): the two-argument incomplete gamma
  * closed forms Wolfram's `FunctionExpand[Gamma[2, z]]` / `FunctionExpand[Gamma[1/2, z]]`
@@ -51,7 +55,7 @@ function declareIncompleteGammaClosedForms(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 }
 
@@ -79,7 +83,7 @@ function declareHurwitzHalfIdentity(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 }
 
@@ -103,7 +107,7 @@ function declareLerchToPolyLogIdentity(ce: ComputeEngine): void {
       const expr = ce.function("Divide", [ce.function("PolyLog", [s, z]), z]);
       return finish(expr, options);
     },
-    3,
+    { ...BUILTIN, arity: 3 },
   );
 }
 

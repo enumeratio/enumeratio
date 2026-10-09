@@ -33,6 +33,10 @@ const hasImaginaryFactor = (op: BoxedExpression): boolean =>
 const realPartOf = (ce: ComputeEngine, op: BoxedExpression): BoxedExpression =>
   ce.function("Divide", [op, "ImaginaryUnit"]).evaluate();
 
+// Imaginary arguments, poles at i*k*pi, Ln(i) and exact special values: complex or exact operands that
+// compiled real code never sees, or folds the built-in lowering agrees with.
+const BUILTIN = { compile: "builtin" } as const;
+
 /**
  * Sinh(i*t) = i*sin(t), Cosh(i*t) = cos(t), Tanh(i*t) = i*tan(t), and their reciprocals
  * Csch(i*t) = -i*csc(t), Sech(i*t) = sec(t), Coth(i*t) = -i*cot(t).
@@ -52,7 +56,7 @@ function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
       [head, 1],
       (ops) => ops[0] !== undefined && hasImaginaryFactor(ops[0]),
       () => (ops, options) => finish(rewrite(realPartOf(ce, ops[0]!)), options),
-      1,
+      { ...BUILTIN, arity: 1 },
     );
   }
 }
@@ -74,7 +78,7 @@ function declareHyperbolicPoles(ce: ComputeEngine): void {
         return ce.function("Divide", [realPartOf(ce, arg), "Pi"]).evaluate().isInteger === true;
       },
       () => () => ce.symbol("ComplexInfinity"),
-      1,
+      { ...BUILTIN, arity: 1 },
     );
   }
 }
@@ -87,7 +91,7 @@ function declareLnImaginaryUnit(ce: ComputeEngine): void {
     (ops) => ops[0] !== undefined && ops[0].operator === "Complex" && ops[0].re === 0 && ops[0].im === 1,
     () => (_ops, options) =>
       finish(ce.function("Multiply", [ce.function("Complex", [0, ce.number([1, 2])]), "Pi"]), options),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 }
 
@@ -116,7 +120,7 @@ function declareArccotTable(ce: ComputeEngine): void {
       if (arctanValue.operator === "Arctan") return nativeResult; // Arctan didn't fold either
       return finish(ce.function("Subtract", [ce.function("Divide", ["Pi", 2]), arctanValue]), options);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 }
 
@@ -130,7 +134,7 @@ function declareReciprocalInversePoles(ce: ComputeEngine): void {
       [head, 1],
       (ops) => ops[0]?.is(0) === true,
       () => () => ce.symbol("ComplexInfinity"),
-      1,
+      { ...BUILTIN, arity: 1 },
     );
   }
 }

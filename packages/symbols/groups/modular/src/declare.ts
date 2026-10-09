@@ -105,6 +105,9 @@ function wordOf(expr: Expr | undefined): string | undefined {
   return m === undefined ? undefined : positiveWord(m);
 }
 
+// These fire only on a modular matrix or word, which compiled numeric code never holds.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareModular(ce: Engine): void {
   registerNotation(ce, MODULAR_NOTATION);
   const matrixExpression = (m: Matrix): Expr =>
@@ -166,7 +169,7 @@ export function declareModular(ce: Engine): void {
       const [m, n] = ops.map(matrixOf) as [Matrix, Matrix];
       return matrixExpression(multiply(m, n));
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   widenSignature(
@@ -185,7 +188,7 @@ export function declareModular(ce: Engine): void {
       const result = power(m, k);
       return result === undefined ? undefined : matrixExpression(result);
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // A row in Inverse's table, beside combinatorics' permutation one, whoever declares first.
@@ -193,6 +196,7 @@ export function declareModular(ce: Engine): void {
     package: "modular",
     signature: "(matrix | expression<ModularMatrix> | string) -> matrix | expression<ModularMatrix>",
     arity: 1,
+    compile: "builtin", // only a modular matrix, which compiled numeric code never holds
     when: (ops) => isModularOperand(ops[0]!) && matrixOf(ops[0]) !== undefined,
     native: (op) => op.type.matches(matrixType),
     evaluate: (ops) => {

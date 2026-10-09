@@ -11,6 +11,9 @@ import { bigRationalAt, symbolNameOf, wrapOperator, type Engine } from "@enumera
 // exact IRRATIONAL (a Sqrt-built radical like √28), which is guarded on that expression's
 // own `isExact` flag -- a flag a bare `Symbol` node like `Pi` never carries, so the two
 // wrappers never compete for the same call regardless of which attaches first.
+// A bare constant symbol (Pi) against a numeric modulus: the exact remainder equals the value the built-in lowering gives.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareModExactConstant(ce: Engine): void {
   wrapOperator(
     ce,
@@ -33,5 +36,6 @@ export function declareModExactConstant(ce: Engine): void {
       const expr = ce.function("Subtract", [x, ce.function("Multiply", [ce.number(k), m])]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
+    BUILTIN,
   );
 }

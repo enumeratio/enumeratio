@@ -5,6 +5,12 @@ import { type Engine, type Expr, widenSignature, wrapOperator } from "@enumerati
 // Kept apart from list-heads.ts, which packages/symbols/combinatorics/collections' other #113 lane (list items)
 // is editing at the same time.
 
+// Chop's tolerance and Clamp's replacement values are operands past the native call: a call with them fails
+// to compile. Min() with no operands is +Infinity, as the built-in lowering gives.
+const BUILTIN = { compile: "builtin" } as const;
+const UP_TO_1 = { compile: { upTo: 1 } } as const;
+const UP_TO_3 = { compile: { upTo: 3 } } as const;
+
 /** Declare the rounding/clamping widenings on `ce`. */
 export function declareRoundingHeads(ce: Engine): void {
   // Chop(x, tolerance): the same near-zero cleanup as the 1-argument form, but with the
@@ -31,7 +37,7 @@ export function declareRoundingHeads(ce: Engine): void {
       }
       return chopPart(x);
     },
-    2,
+    { ...UP_TO_1, arity: 2 },
   );
 
   // Clamp(x, lower, upper, vLower, vUpper): Wolfram's Clip[x, {lower, upper}, {vLower,
@@ -47,7 +53,7 @@ export function declareRoundingHeads(ce: Engine): void {
       if (x.isGreater(upper) === true) return vUpper;
       return x;
     },
-    5,
+    { ...UP_TO_3, arity: 5 },
   );
 
   // Min() -> +∞, the identity element for Min under the pool it flattens; Max already
@@ -60,6 +66,6 @@ export function declareRoundingHeads(ce: Engine): void {
     ["Min"],
     () => true,
     () => () => ce.symbol("PositiveInfinity"),
-    0,
+    { ...BUILTIN, arity: 0 },
   );
 }

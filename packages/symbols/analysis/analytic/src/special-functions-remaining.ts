@@ -22,6 +22,9 @@ const isImaginaryUnit = (x: BoxedExpression): boolean => x.re === 0 && x.im === 
 const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
+// Limits at +oo, exact closed forms and symbolic identities, at the native call shape: the built-in lowering gives the same value.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // --- Limits at +oo: every one of these heads is monotonically unbounded (or, for
   // DirichletEta/DirichletBeta, tends to 1 as the Dirichlet series' leading n=0 term
@@ -34,7 +37,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       [head, 1],
       (ops) => isPositiveInfinity(ops[0]),
       () => (_ops, options) => finish(ce.symbol("PositiveInfinity"), options),
-      1,
+      { ...BUILTIN, arity: 1 },
     );
   }
   for (const head of ["DirichletEta", "DirichletBeta"] as const) {
@@ -43,7 +46,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       [head, 1],
       (ops) => isPositiveInfinity(ops[0]),
       () => (_ops, options) => finish(ce.number(1), options),
-      1,
+      { ...BUILTIN, arity: 1 },
     );
   }
   // H_oo^(r) = zeta(r) for r > 1 (the Basel-sum generalisation); r <= 1 diverges and is
@@ -57,7 +60,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       return Number.isFinite(r) && r > 1;
     },
     () => (ops, options) => finish(ce.function("Zeta", [ops[1]]), options),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // --- zeta(s, 1/2) = (2^s - 1) zeta(s), reached through the *Zeta* head with a second
@@ -82,7 +85,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // --- LerchPhi(z, 1, 1) at z = 1/2: Phi(z,1,1) = -Ln(1-z)/z generally (sum z^n/(n+1) =
@@ -99,7 +102,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       );
     },
     () => (_ops, options) => finish(ce.function("Multiply", [2, ce.function("Ln", [2])]), options),
-    3,
+    { ...BUILTIN, arity: 3 },
   );
 
   // --- LerchPhi(-1, s, 1/2) = 2^s * DirichletBeta(s): at a = 1/2, (n+1/2)^-s = 2^s
@@ -120,7 +123,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ce.function("Multiply", [ce.function("Power", [2, ops[1]]), ce.function("DirichletBeta", [ops[1]])]),
         options,
       ),
-    3,
+    { ...BUILTIN, arity: 3 },
   );
 
   // --- PolyLog(n, -1) = (2^(1-n) - 1) zeta(n) for a symbolic order n: Li_n(-1) =
@@ -141,7 +144,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         options,
       );
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // --- PolyLog(-2, z) = z(1+z)/(1-z)^3: the standard negative-integer-order closed
@@ -160,7 +163,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         options,
       );
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // --- Erf(i) = i * Erfi(1): the standard erf/erfi rotation erf(iy) = i*erfi(y),
@@ -171,7 +174,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     ["Erf", 1],
     (ops) => isImaginaryUnit(ops[0]),
     () => (_ops, options) => finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Erfi", [1])]), options),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // --- Erfc(-x) = 2 - Erfc(x): erfc is odd about erfc(0) = 1 (erfc(-x) = 1 + erf(x) =
@@ -185,7 +188,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       const x = operandsOf(ops[0])[0];
       return finish(ce.function("Subtract", [2, ce.function("Erfc", [x])]), options);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // --- BetaRegularized(x, a, b) at a = 1 or b = 1: the standard finite-arity closed
@@ -201,14 +204,14 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     ["BetaRegularized", 3],
     (ops) => plainX(ops[0]) && bigIntegerAt(ops[1]) === 1n && bigIntegerAt(ops[2]) === 1n,
     () => (ops, options) => finish(ops[0], options),
-    3,
+    { ...BUILTIN, arity: 3 },
   );
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
     (ops) => plainX(ops[0]) && bigIntegerAt(ops[2]) === 1n && bigIntegerAt(ops[1]) !== 1n,
     () => (ops, options) => finish(ce.function("Power", [ops[0], ops[1]]), options),
-    3,
+    { ...BUILTIN, arity: 3 },
   );
   wrapOperator(
     ce,
@@ -219,7 +222,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ce.function("Subtract", [1, ce.function("Power", [ce.function("Subtract", [1, ops[0]]), ops[2]])]),
         options,
       ),
-    3,
+    { ...BUILTIN, arity: 3 },
   );
 
   // --- Digamma / trigamma at 1/2, the last case of Gauss's digamma theorem this
@@ -246,7 +249,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
   wrapOperator(
     ce,
@@ -257,7 +260,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     },
     () => (_ops, options) =>
       finish(ce.function("Multiply", [ce.function("Rational", [1, 2]), ce.function("Power", ["Pi", 2])]), options),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // --- PolyGamma(m, n) at a positive integer order m and integer argument n:
@@ -290,6 +293,6 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       const bracket = terms.length === 1 ? terms[0] : ce.function("Add", terms);
       return finish(ce.function("Multiply", [sign, mFactorial, bracket]), options);
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 }

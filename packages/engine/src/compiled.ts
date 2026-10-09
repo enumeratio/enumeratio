@@ -5,7 +5,6 @@
 
 import { type BoxedExpression, type ComputeEngine, version } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import { syncLibraryHandlers } from "./extend.ts";
 
 export type MathJSON = number | string | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 export type Js = number | boolean | readonly Js[];
@@ -85,7 +84,6 @@ export function compileTyped(
   expression: unknown,
   types: Readonly<Record<string, string>>,
 ): Compilation | undefined {
-  syncLibraryHandlers(ce);
   ce.pushScope();
   try {
     for (const [name, type] of Object.entries(types)) ce.declare(name, type);
@@ -108,7 +106,6 @@ export function compileTyped(
  *  has no lowering for something in it. For a hot loop that would otherwise `subs` and `N` per
  *  point; the caller keeps the symbolic route as its fallback. */
 export function compileExpression(expr: BoxedExpression): CompiledRun | undefined {
-  syncLibraryHandlers(expr.engine);
   try {
     const result = new JavaScriptTarget().compile(expr.canonical) as { success?: boolean; run?: CompiledRun };
     return result.success === true && typeof result.run === "function" ? result.run : undefined;

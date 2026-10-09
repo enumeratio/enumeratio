@@ -8,6 +8,9 @@ import { isFiniteNum, numberResult, wantsNumber, add, cexp, sub, logGamma, digam
 
 const isComplexValue = (op: BoxedExpression | undefined): boolean => op !== undefined && isFiniteNum(op) && op.im !== 0;
 
+// Complex operands only: compiled code is real-valued and never passes one.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareComplexArguments(ce: ComputeEngine): void {
   wrapOperator(
     ce,
@@ -17,7 +20,7 @@ export function declareComplexArguments(ce: ComputeEngine): void {
       wantsNumber(ops, options)
         ? numberResult(ce, digamma({ re: ops[0]!.re, im: ops[0]!.im }))
         : native?.(ops, options),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   wrapOperator(
@@ -33,6 +36,6 @@ export function declareComplexArguments(ce: ComputeEngine): void {
       ];
       return numberResult(ce, cexp(sub(add(logGamma(x), logGamma(y)), logGamma(add(x, y)))));
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 }

@@ -36,6 +36,9 @@ import { ellipticPiBig, incompleteEllipticEBig, incompleteEllipticFBig } from ".
 // duplicated here) -- the elliptic-e-complex patch that used to apply it here was
 // retired.
 
+// Digits past a double's, for real operands: compiled code works in doubles, as the native handler does.
+const BUILTIN = { compile: "builtin" } as const;
+
 /**
  * Declare `IncompleteEllipticF(φ, m)` — Fungrim's name for the incomplete Legendre
  * elliptic integral of the first kind, same (amplitude, parameter) argument order and
@@ -214,6 +217,7 @@ function declareEllipticPrecision(ce: ComputeEngine): void {
       const value = phi === undefined || m === undefined ? undefined : incompleteEllipticEBig(phi, m, ce.precision);
       return value === undefined ? native?.(ops, options) : bigResult(ce, value);
     },
+    BUILTIN,
   );
   wrapOperator(
     ce,
@@ -229,6 +233,7 @@ function declareEllipticPrecision(ce: ComputeEngine): void {
         ? bigResult(ce, value.re)
         : ce.function("Complex", [bigResult(ce, value.re), bigResult(ce, value.im)]);
     },
+    BUILTIN,
   );
   wrapOperator(
     ce,
@@ -244,6 +249,7 @@ function declareEllipticPrecision(ce: ComputeEngine): void {
       const value = ellipticPiBig(n, phi, m!, ce.precision);
       return value === undefined ? native?.(ops, options) : bigResult(ce, value);
     },
+    BUILTIN,
   );
 }
 

@@ -34,6 +34,9 @@ export function besselBig(kind: "I" | "J", order: number, x: BigDecimal, digits:
   });
 }
 
+// Digits past a double's: compiled code works in doubles.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareBesselBig(ce: ComputeEngine): void {
   for (const [head, kind] of [
     ["BesselI", "I"],
@@ -51,10 +54,11 @@ export function declareBesselBig(ce: ComputeEngine): void {
         const value = arg === undefined ? undefined : besselBig(kind, order.re, arg, ce.precision);
         return value === undefined ? undefined : bigResult(ce, value);
       },
-      2,
+      { ...BUILTIN, arity: 2 },
     );
     // A non-integer real order, for x > 0: the same series through the regularized 0F1, which
-    // carries the digits asked for. Native declines these.
+    // carries the digits asked for. Native declines these, so no compile stance: the built-in
+    // lowering would not give this value.
     wrapOperator(
       ce,
       [head, 1, 1],

@@ -120,6 +120,10 @@ export function gammaExactValue(ce: ComputeEngine, x: Rational): BoxedExpression
     .evaluate();
 }
 
+// Exact folds and identities, and exact operands native rejects (half-integers, negative odd): compiled code holds
+// doubles, which the built-in lowering computes as before.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareWidened(ce: ComputeEngine): void {
   // Native Conjugate is typed `number`, so `Conjugate(Transpose(m))` for a symbolic m boxed to
   // an incompatible-type error; Wolfram holds it. Only what may be a number reaches the native handler.
@@ -135,7 +139,7 @@ export function declareWidened(ce: ComputeEngine): void {
         const [up, down] = ratio(halfIntegerCall(ops)!);
         return gammaRatio(ce, up, down);
       },
-      GAMMA_ARITY[head],
+      { ...BUILTIN, arity: GAMMA_ARITY[head] },
     );
   }
 
@@ -166,7 +170,7 @@ export function declareWidened(ce: ComputeEngine): void {
       const n = bigIntegerAt(ops[0]!)!;
       return n === -1n ? ce.number(-1) : ce.Zero;
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // (−2k − 1)!! = (−1)ᵏ / (2k − 1)!!, running the recurrence n!! = n·(n − 2)!! downwards.
@@ -183,7 +187,7 @@ export function declareWidened(ce: ComputeEngine): void {
       for (let j = 2n * k - 1n; j > 1n; j -= 2n) den *= j;
       return ce.number([k % 2n === 0n ? 1n : -1n, den]);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // Wolfram's BernoulliB[n, x] is the Bernoulli polynomial, which is BernoulliPolynomial here.
@@ -193,7 +197,7 @@ export function declareWidened(ce: ComputeEngine): void {
     ["BernoulliB", 1],
     () => true,
     () => (ops) => ce.function("BernoulliPolynomial", [...ops]).evaluate(),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // ψ(n) = H_{n−1} − γ, the standard digamma identity, exact at every positive integer n.
@@ -215,7 +219,7 @@ export function declareWidened(ce: ComputeEngine): void {
       ]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // Ln(−q) = Ln(q) + iπ for a positive rational q — the principal branch past the cut,
@@ -236,7 +240,7 @@ export function declareWidened(ce: ComputeEngine): void {
       ]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 }
 
@@ -287,7 +291,7 @@ export function declareInverseOutsideDomain(ce: ComputeEngine): void {
         return x !== undefined && applies(x);
       },
       () => (ops, options) => finish(build(rational(ops)!), options.numericApproximation),
-      1,
+      { ...BUILTIN, arity: 1 },
     );
 
   const principalArcsin = (x: Rational): BoxedExpression =>

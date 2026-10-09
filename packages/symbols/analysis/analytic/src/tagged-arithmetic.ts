@@ -63,6 +63,8 @@ export function registerTaggedHead(
     defineOverload(ce, head, {
       package: "analytic",
       unless: [...TAGS],
+      // e^a·e^b = e^(a+b), an identity: the built-in lowering gives the same value.
+      compile: "builtin",
       ...(gateSymbols !== undefined ? { symbols: gateSymbols } : {}),
       gate: (ops) => extraGates.some((gate) => gate(ops)),
       evaluate,

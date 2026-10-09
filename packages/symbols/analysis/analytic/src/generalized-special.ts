@@ -67,6 +67,19 @@ const stillMentions = (r: BoxedExpression, head: string): boolean => JSON.string
 const isNaNValue = (r: BoxedExpression | undefined): boolean =>
   r !== undefined && (r as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true && Number.isNaN(r.re);
 
+// These wrappers add operands past the native call (a widened signature), or identities and exact folds on
+// it: up to the native count the built-in lowering gives the same value, and a wider call fails to compile.
+const UP_TO_1 = { compile: { upTo: 1 } } as const;
+const UP_TO_2 = { compile: { upTo: 2 } } as const;
+const UP_TO_3 = { compile: { upTo: 3 } } as const;
+// PolyGamma(z) is Digamma(z): the built-in lowering takes two operands, so a call with one fails to compile.
+const TWO_OPERANDS = {
+  compile: (args: readonly unknown[]) => {
+    if (args.length < 2) throw new Error("PolyGamma(z) has no built-in lowering");
+    return undefined;
+  },
+};
+
 // --- Beta: complete (a, b), incomplete (z, a, b) and generalized incomplete (z0, z1, a, b) ---
 
 /**
@@ -142,6 +155,7 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
       }
       return undefined;
     },
+    UP_TO_2,
   );
 }
 
@@ -164,7 +178,7 @@ export function declareGeneralizedBetaRegularized(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
-    4,
+    { ...UP_TO_3, arity: 4 },
   );
 }
 
@@ -204,6 +218,7 @@ export function declareGeneralizedErf(ce: ComputeEngine): void {
       if (x.operator === "ErfInv") return operandsOf(x)[0];
       return nativeErf?.(ops, options);
     },
+    UP_TO_1,
   );
 }
 
@@ -234,6 +249,7 @@ export function declareGeneralizedErfInv(ce: ComputeEngine): void {
       }
       return nativeErfInv?.(ops, options);
     },
+    UP_TO_1,
   );
 }
 
@@ -260,7 +276,7 @@ export function declareOneArgumentPolyGamma(ce: ComputeEngine): void {
       if (viaDigamma.operator !== "Digamma") return viaDigamma;
       return native?.([ce.Zero, z], options);
     },
-    1,
+    { ...TWO_OPERANDS, arity: 1 },
   );
 }
 
@@ -360,7 +376,7 @@ export function declareNielsenPolyLog(ce: ComputeEngine): void {
       if (z.im !== 0 || !Number.isFinite(z.re) || z.re > 1) return undefined;
       return ce.number(nielsenNumeric(n.re, p.re, z.re));
     },
-    3,
+    { ...UP_TO_2, arity: 3 },
   );
 }
 

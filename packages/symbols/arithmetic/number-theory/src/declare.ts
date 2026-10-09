@@ -327,6 +327,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     () => () => ce.One,
   );
 
+  // No compile stance: native rejects an inexact or complex operand, so the built-in lowering would not give this value.
   wrapOperator(
     ce,
     ["Binomial", ["Complex", 1, 1], 5],
@@ -417,6 +418,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
   );
 
   // Factorial2's analytic continuation: 2^{(1+2x-cos πx)/4} π^{(cos πx - 1)/4} Γ(1 + x/2).
+  // No compile stance: native rejects an inexact real, so the built-in lowering would not give this value.
   wrapOperator(
     ce,
     ["Factorial2", 2.5],
@@ -471,6 +473,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
   // their tables (defineOverload), beside adeles' profinite one, so which package declared
   // first doesn't matter. The native integer recurrence only ever sees the one integer it took.
   const integerOnly = (op: Expr): boolean => integerAt(op) !== undefined;
+  // No compile stance: a real index gives a number the built-in lowering does not.
   const sequence = (head: string, row: Pick<Overload, "arity" | "when" | "evaluate">): void => {
     defineOverload(ce, head, {
       package: "number-theory",

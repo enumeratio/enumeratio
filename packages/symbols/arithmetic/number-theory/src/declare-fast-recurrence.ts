@@ -31,6 +31,7 @@ export function declareFastRecurrence(ce: Engine): void {
     defineOverload(ce, head, {
       package: "number-theory",
       arity: 1,
+      compile: "builtin", // the same integer value, faster
       when: (ops) => fitsFastRange(ops[0]!) !== undefined,
       evaluate: (ops) => ce.number(kernel(fitsFastRange(ops[0]!)!)),
     });

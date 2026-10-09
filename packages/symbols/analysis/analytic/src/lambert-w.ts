@@ -81,6 +81,8 @@ function exactLambertW(ce: ComputeEngine, zExpr: BoxedExpression): BoxedExpressi
 }
 
 export function declareLambertW(ce: ComputeEngine): void {
+  // One operand: native first, then exact folds. The other branches k (a second operand) give numbers where the
+  // built-in lowering has none, so a call with k fails to compile.
   wrapOperator(
     ce,
     ["LambertW", 1],
@@ -109,6 +111,6 @@ export function declareLambertW(ce: ComputeEngine): void {
       if (exact !== undefined) return options.numericApproximation ? exact.N() : exact;
       return r;
     },
-    { min: 1, max: 2 },
+    { arity: { min: 1, max: 2 }, compile: { upTo: 1 } },
   );
 }

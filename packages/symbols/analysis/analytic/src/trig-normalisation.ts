@@ -121,13 +121,17 @@ function looksNormalisable(op: BoxedExpression): boolean {
   }
 }
 
+// Parity, shifts by a multiple of pi, an imaginary argument and inverse compositions are identities:
+// the built-in lowering gives the same value on the reals it is compiled for.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareTrigNormalisation(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Sin", 1],
     (ops) => ops[0] !== undefined && looksNormalisable(ops[0]),
     () => (ops, options) => evaluateSin(ce, ops[0]!, options),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // Arcsin(Sin(y)), for a real number literal y already in (-pi, pi]: Wolfram's
@@ -149,6 +153,6 @@ export function declareTrigNormalisation(ce: ComputeEngine): void {
       if (value > pi / 2) return finish(ce.function("Subtract", ["Pi", y]), options);
       return finish(ce.function("Subtract", [ce.function("Negate", ["Pi"]), y]), options);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 }

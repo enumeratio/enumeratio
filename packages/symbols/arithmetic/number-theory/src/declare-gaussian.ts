@@ -121,6 +121,9 @@ const floorDiv = (a: bigint, b: bigint): bigint => {
   return r !== 0n && r < 0n !== b < 0n ? q - 1n : q;
 };
 
+// A genuinely complex Gaussian integer or rational operand, which compiled real-number code never holds.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareGaussian(ce: Engine): void {
   const list = (items: readonly Expr[]): Expr => ce.function("List", items);
   const g = (z: Gaussian | undefined): Expr | undefined => (z === undefined ? undefined : gaussianExpression(ce, z));
@@ -134,7 +137,7 @@ export function declareGaussian(ce: Engine): void {
       const [z, m] = gaussianCall(ops)!;
       return g(mod(z!, m!));
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // Wolfram's Quotient: ⌊m/n⌋ for integers — rational and real m, n included — with an
@@ -187,6 +190,7 @@ export function declareGaussian(ce: Engine): void {
       [head, 1, 1],
       (ops) => gaussianCall(ops) !== undefined,
       () => (ops) => g(gaussianCall(ops)!.reduce((acc, z) => fold(acc, z))),
+      BUILTIN,
     );
   }
 
@@ -205,7 +209,7 @@ export function declareGaussian(ce: Engine): void {
         extendedGcd(a!, b!).map((z) => gaussianExpression(ce, z)),
       );
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // The negative-modulus sign convention (ModularInverse(3, -7) = -2, cortex-js/compute-
@@ -224,7 +228,7 @@ export function declareGaussian(ce: Engine): void {
       const [a, m] = ops.map(gaussianAt) as [Gaussian, Gaussian];
       return g(inverseMod(a, m));
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // The option heads. A complex argument is read in ℤ[i] as it stands; a rational integer
@@ -488,7 +492,7 @@ export function declareIntegerExponentGaussian(ce: Engine): void {
       const k = integerExponentGaussian(z!, b!);
       return k === undefined ? undefined : ce.number(k);
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 }
 
@@ -540,21 +544,33 @@ function declareGaussianRationalGcdLcm(ce: Engine): void {
     return parsed.some((r) => r!.d !== 1n); // otherwise the plain Gaussian-integer path answers it
   };
 
-  wrapOperator(ce, ["GCD", 1, 1], applies, () => (ops) => {
-    const rs = ops.map(parse) as GaussianRational[];
-    const n = rs.map((r) => r.n).reduce((a, b) => gcd(a, b));
-    const d = rs.map((r) => r.d).reduce((a, b) => (a * b) / bigGcd(a, b)); // lcm of denominators
-    const scaled = divideExact(n, [d, 0n]);
-    return scaled !== undefined ? gaussianExpression(ce, scaled) : rationalGaussianExpr(ce, n, d);
-  });
+  wrapOperator(
+    ce,
+    ["GCD", 1, 1],
+    applies,
+    () => (ops) => {
+      const rs = ops.map(parse) as GaussianRational[];
+      const n = rs.map((r) => r.n).reduce((a, b) => gcd(a, b));
+      const d = rs.map((r) => r.d).reduce((a, b) => (a * b) / bigGcd(a, b)); // lcm of denominators
+      const scaled = divideExact(n, [d, 0n]);
+      return scaled !== undefined ? gaussianExpression(ce, scaled) : rationalGaussianExpr(ce, n, d);
+    },
+    BUILTIN,
+  );
 
-  wrapOperator(ce, ["LCM", 1, 1], applies, () => (ops) => {
-    const rs = ops.map(parse) as GaussianRational[];
-    const n = rs.map((r) => r.n).reduce((a, b) => lcm(a, b));
-    const d = rs.map((r) => r.d).reduce((a, b) => bigGcd(a, b)); // gcd of denominators
-    const scaled = divideExact(n, [d, 0n]);
-    return scaled !== undefined ? gaussianExpression(ce, scaled) : rationalGaussianExpr(ce, n, d);
-  });
+  wrapOperator(
+    ce,
+    ["LCM", 1, 1],
+    applies,
+    () => (ops) => {
+      const rs = ops.map(parse) as GaussianRational[];
+      const n = rs.map((r) => r.n).reduce((a, b) => lcm(a, b));
+      const d = rs.map((r) => r.d).reduce((a, b) => bigGcd(a, b)); // gcd of denominators
+      const scaled = divideExact(n, [d, 0n]);
+      return scaled !== undefined ? gaussianExpression(ce, scaled) : rationalGaussianExpr(ce, n, d);
+    },
+    BUILTIN,
+  );
 }
 
 /** `n/d` as a `Complex(Rational, Rational)`, for when `d` doesn't divide `n` evenly in ℤ[i]. */

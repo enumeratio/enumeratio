@@ -30,6 +30,12 @@ const properRationals = (ops: Ops): (readonly [bigint, bigint])[] | undefined =>
   return rationals.some(([, den]) => den !== 1n) ? rationals : undefined;
 };
 
+// Each case is an exact integer or rational operand native does not answer, or a list it threads over: compiled code
+// holds doubles, and a call native answers keeps its value.
+const BUILTIN = { compile: "builtin" } as const;
+// Mod's offset is a third operand past the native two: a call with it fails to compile.
+const UP_TO_2 = { compile: { upTo: 2 } } as const;
+
 export function declareWidened(ce: Engine): void {
   // Wolfram's EulerPhi[0] is 0, and EulerPhi[-n] = EulerPhi[n]; compute-engine asks for a
   // positive integer, so both a zero and a negative n need widening past it.
@@ -46,7 +52,7 @@ export function declareWidened(ce: Engine): void {
       if (n === 0n) return ce.Zero;
       return ce.function("Totient", [ce.number(-n)]).evaluate();
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // σₖ(n) for k < 0 is σ₋ₖ(n) / n⁻ᵏ — the sum of 1/dᵏ over the divisors d of n.
@@ -63,7 +69,7 @@ export function declareWidened(ce: Engine): void {
         .function("Divide", [ce.function("DivisorSigma", [k!.neg(), n!]), ce.function("Power", [n!, k!.neg()])])
         .evaluate();
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // Wolfram counts a negative prime: NextPrime(n) for n < -2 is -p, the negation of the
@@ -82,7 +88,7 @@ export function declareWidened(ce: Engine): void {
       for (let p = -n - 1n; p >= 2n; p--) if (isPrime(p)) return ce.number(-p);
       return ce.number(2);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // NextPrime of a non-integer real or rational n: the smallest prime past ⌈n⌉ — a strictly
@@ -108,7 +114,7 @@ export function declareWidened(ce: Engine): void {
       }
       for (let p = ceil < 2n ? 2n : ceil; ; p++) if (isPrime(p)) return ce.number(p);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // DivisorSigma with a symbolic k: the symbolic sum of dᵏ over the divisors of n — n must
@@ -130,7 +136,7 @@ export function declareWidened(ce: Engine): void {
         )
         .evaluate();
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // DivisorSigma with a non-integer rational k: the exact sum Σ dᵏ over the divisors of n
@@ -155,6 +161,7 @@ export function declareWidened(ce: Engine): void {
         )
         .evaluate();
     },
+    BUILTIN,
   );
 
   // Over the rationals: gcd(p/q, …) = gcd(p, …)/lcm(q, …), and lcm(p/q, …) = lcm(p, …)/gcd(q, …) —
@@ -174,6 +181,7 @@ export function declareWidened(ce: Engine): void {
         const den = rationals.map(([, q]) => q).reduce(onDenominators);
         return ce.number([num, den]);
       },
+      BUILTIN,
     );
   }
 
@@ -190,7 +198,7 @@ export function declareWidened(ce: Engine): void {
       [head, 1, 1],
       (ops) => ops.every((op) => bigIntegerAt(op) !== undefined),
       () => (ops) => ce.number(ops.map((op) => bigIntegerAt(op)!).reduce(fold)),
-      { min: 1 },
+      { ...BUILTIN, arity: { min: 1 } },
     );
   }
 
@@ -216,7 +224,7 @@ export function declareWidened(ce: Engine): void {
       if (numSquareFree === undefined || denSquareFree === undefined) return undefined; // decline
       return ce.symbol(numSquareFree && denSquareFree ? "True" : "False");
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // IsSquareFree of a plain integer: compute-engine's own native handler answers False —
@@ -233,7 +241,7 @@ export function declareWidened(ce: Engine): void {
       const squareFree = isSquareFreeInteger(bigIntegerAt(ops[0])!);
       return squareFree === undefined ? undefined : ce.symbol(squareFree ? "True" : "False");
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // IsSquareFree of a polynomial: gcd(f, ∂f/∂x) = 1 for every variable x present -- a
@@ -267,6 +275,7 @@ export function declareWidened(ce: Engine): void {
       }
       return ce.True;
     },
+    BUILTIN,
   );
 
   // FactorInteger of a rational p/q: the prime factors of p, and of q with their exponents
@@ -293,7 +302,7 @@ export function declareWidened(ce: Engine): void {
         merged.map(([p, e]) => ce.function("Tuple", [ce.number(p), ce.number(e)])),
       );
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // Wolfram's Listable GCD/LCM threads: list arguments of one length run element-wise with the
@@ -323,7 +332,7 @@ export function declareWidened(ce: Engine): void {
           ),
         );
       },
-      { min: 1 },
+      { ...BUILTIN, arity: { min: 1 } },
     );
   }
 
@@ -340,7 +349,7 @@ export function declareWidened(ce: Engine): void {
       const r = (m - d) % n;
       return ce.number(d + (r !== 0n && r < 0n !== n < 0n ? r + n : r));
     },
-    3,
+    { ...UP_TO_2, arity: 3 },
   );
 
   // compute-engine already has CarmichaelLambda and IsPerfect, undocumented here — the gaps
@@ -358,7 +367,7 @@ export function declareWidened(ce: Engine): void {
       if (n === 0n) return ce.number(0);
       return native?.([ce.number(-n)], options);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
   wrapOperator(
     ce,
@@ -368,7 +377,7 @@ export function declareWidened(ce: Engine): void {
       return n !== undefined && n < 0n;
     },
     () => () => ce.symbol("False"),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // Wolfram's ExtendedGCD accepts any number of arguments: {g, {x₁, …, xₙ}} with
@@ -404,6 +413,6 @@ export function declareWidened(ce: Engine): void {
         [g, ...coefficients].map((n) => ce.number(n)),
       );
     },
-    { min: 1 },
+    { ...BUILTIN, arity: { min: 1 } },
   );
 }

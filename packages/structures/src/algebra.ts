@@ -63,7 +63,7 @@ export function ensureAlgebraHeads(ce: ComputeEngine): void {
       const name = verdict === undefined ? undefined : symbolNameOf(verdict);
       return name === "True" || name === "False" ? verdict : native?.(ops, options);
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 }
 
@@ -84,6 +84,9 @@ export interface AlgebraFamily {
   /** The ordered product of this family's elements. */
   product?: Product;
 }
+
+// Answers Element only for an algebra, which compiled numeric code never holds.
+const BUILTIN = { compile: "builtin" } as const;
 
 /** Make `family.type` a `FiniteDimensionalAlgebra` and register its product. */
 export function declareAlgebra(ce: ComputeEngine, family: AlgebraFamily): void {

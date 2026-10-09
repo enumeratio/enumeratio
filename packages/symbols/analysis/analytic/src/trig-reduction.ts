@@ -156,6 +156,10 @@ function evaluateHugeTrig(ce: ComputeEngine, head: Circular, expr: BoxedExpressi
   }
 }
 
+// Reduces a huge argument in arbitrary precision, for digits beyond a double's: at double precision the
+// built-in lowering's own reduction gives the same value.
+const BUILTIN = { compile: "builtin" } as const;
+
 /**
  * Wrap Sin, Cos, Tan, Sec, Csc and Cot so a huge real argument -- an exact integer or rational
  * (any magnitude), or a bignum decimal literal beyond `HUGE_THRESHOLD` -- gets reduced mod 2*pi in
@@ -182,7 +186,7 @@ export function declareTrigReduction(ce: ComputeEngine): void {
         const result = evaluateHugeTrig(ce, head, rawOp ?? ops[0]!);
         return result ?? native?.(ops, options);
       },
-      1,
+      { ...BUILTIN, arity: 1 },
     );
   }
 }

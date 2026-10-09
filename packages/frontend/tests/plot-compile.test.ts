@@ -4,6 +4,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
+import { declareAnalytic } from "@enumeratio/analytic";
 import { compilePlot } from "../src/plot-compile.ts";
 
 const ce = new ComputeEngine();
@@ -39,4 +40,11 @@ test("a surface compiles to a WGSL plotFn over its two variables, its wildcards 
   const plot = compilePlot(ce, ["Multiply", "_k", "x", "y"], { target: "wgsl", vars: ["x", "y"], bindings: { _k: 2 } });
   expect(plot.unknowns).toEqual(["x", "y"]);
   expect(plot.items[0]!.code).toMatch(/fn plotFn\(x: f32, y: f32\) -> f32 \{ return .*2.*; \}/);
+});
+
+test("a plot of Sin(x) compiles to Math.sin on an engine with analytic declared", () => {
+  const withAnalytic = new ComputeEngine();
+  declareAnalytic(withAnalytic);
+  const plot = compilePlot(withAnalytic, ["Sin", "x"], { target: "javascript" });
+  expect(plot.items[0]?.code).toBe("Math.sin(_.x)");
 });

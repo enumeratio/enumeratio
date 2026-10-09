@@ -18,6 +18,10 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // elementary-special-values.ts, and the two files' predicates never overlap (each only claims
 // the argument shape it was written for).
 
+// Each case is an identity, an exact fold or a ComplexInfinity case: the built-in lowering gives the
+// same value on the reals it is compiled for, so these heads keep it.
+const BUILTIN = { compile: "builtin" } as const;
+
 /** Build then finish an expression the way the caller asked: N() for N(...), else evaluate(). */
 const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
@@ -61,6 +65,7 @@ function declareParity(ce: ComputeEngine): void {
       [head, 1],
       (ops) => ops.length === 1 && ops[0]?.operator === "Negate",
       () => (ops, options) => finish(neg(ce, ce.function(head, [operandsOf(ops[0]!)[0]!])), options),
+      BUILTIN,
     );
   }
   for (const head of even) {
@@ -69,6 +74,7 @@ function declareParity(ce: ComputeEngine): void {
       [head, 1],
       (ops) => ops.length === 1 && ops[0]?.operator === "Negate",
       () => (ops, options) => finish(ce.function(head, [operandsOf(ops[0]!)[0]!]), options),
+      BUILTIN,
     );
   }
   wrapOperator(
@@ -79,6 +85,7 @@ function declareParity(ce: ComputeEngine): void {
       const x = operandsOf(ops[0]!)[0]!;
       return finish(ce.function("Subtract", ["Pi", ce.function("Arccos", [x])]), options);
     },
+    BUILTIN,
   );
 }
 
@@ -98,6 +105,7 @@ function declareInverseComposition(ce: ComputeEngine): void {
       [outer, 1],
       (ops) => ops.length === 1 && ops[0]?.operator === inner,
       () => (ops, options) => finish(operandsOf(ops[0]!)[0]!, options),
+      BUILTIN,
     );
   }
 }
@@ -111,6 +119,7 @@ function declareCrossComposition(ce: ComputeEngine): void {
     ["Cos", 1],
     (ops) => ops.length === 1 && ops[0]?.operator === "Arcsin",
     () => (ops, options) => finish(sqrt(ce, oneMinusSquare(ce, operandsOf(ops[0]!)[0]!)), options),
+    BUILTIN,
   );
   wrapOperator(
     ce,
@@ -118,6 +127,7 @@ function declareCrossComposition(ce: ComputeEngine): void {
     (ops) => ops.length === 1 && ops[0]?.operator === "Arctan",
     () => (ops, options) =>
       finish(ce.function("Divide", [1, sqrt(ce, onePlusSquare(ce, operandsOf(ops[0]!)[0]!))]), options),
+    BUILTIN,
   );
   wrapOperator(
     ce,
@@ -127,6 +137,7 @@ function declareCrossComposition(ce: ComputeEngine): void {
       const x = operandsOf(ops[0]!)[0]!;
       return finish(ce.function("Divide", [x, sqrt(ce, onePlusSquare(ce, x))]), options);
     },
+    BUILTIN,
   );
   wrapOperator(
     ce,
@@ -136,6 +147,7 @@ function declareCrossComposition(ce: ComputeEngine): void {
       const x = operandsOf(ops[0]!)[0]!;
       return finish(ce.function("Divide", [x, sqrt(ce, oneMinusSquare(ce, x))]), options);
     },
+    BUILTIN,
   );
 }
 
@@ -147,6 +159,7 @@ function declareImaginaryArgument(ce: ComputeEngine): void {
     ["Cos", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && hasImaginaryFactor(ops[0]),
     () => (ops, options) => finish(ce.function("Cosh", [imaginaryFactor(ce, ops[0]!)]), options),
+    BUILTIN,
   );
   wrapOperator(
     ce,
@@ -154,6 +167,7 @@ function declareImaginaryArgument(ce: ComputeEngine): void {
     (ops) => ops.length === 1 && ops[0] !== undefined && hasImaginaryFactor(ops[0]),
     () => (ops, options) =>
       finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Tanh", [imaginaryFactor(ce, ops[0]!)])]), options),
+    BUILTIN,
   );
 }
 
@@ -183,6 +197,7 @@ function declareArccosCosReduction(ce: ComputeEngine): void {
       // value in [-pi, 0): cos(y) = cos(-y), and -y is in (0, pi].
       return finish(ce.function("Negate", [y]), options);
     },
+    BUILTIN,
   );
 }
 
@@ -240,6 +255,7 @@ function declareTrigToExpInverses(ce: ComputeEngine): void {
       const rewrite = rewrites[arg.operator!]!;
       return finish(rewrite(operandsOf(arg)[0]!), options);
     },
+    BUILTIN,
   );
 }
 
@@ -254,6 +270,7 @@ function declareTanhComplexInfinity(ce: ComputeEngine): void {
     ["Tanh", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && isComplexInfinity(ops[0]),
     () => () => ce.symbol("NaN"),
+    BUILTIN,
   );
 }
 
@@ -268,6 +285,7 @@ function declareArsech(ce: ComputeEngine): void {
     ["Arsech", 1],
     (ops) => ops.length === 1 && ops[0]?.is(1) === true,
     () => (_ops, options) => finish(ce.Zero, options),
+    BUILTIN,
   );
   wrapOperator(
     ce,
@@ -284,6 +302,7 @@ function declareArsech(ce: ComputeEngine): void {
         ]),
         options,
       ),
+    BUILTIN,
   );
 }
 
@@ -299,6 +318,7 @@ function declareLnComplexInfinity(ce: ComputeEngine): void {
     ["Ln", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && isComplexInfinity(ops[0]),
     () => () => ce.symbol("PositiveInfinity"),
+    BUILTIN,
   );
 }
 
@@ -316,6 +336,7 @@ function declareLnUnitFraction(ce: ComputeEngine): void {
       const [, den] = bigRationalAt(ops[0]!)!;
       return finish(neg(ce, ce.function("Ln", [ce.number(den)])), options);
     },
+    BUILTIN,
   );
 }
 
@@ -368,12 +389,14 @@ function declareLogComplexInfinityAndReciprocalPower(ce: ComputeEngine): void {
     ["Log", 1],
     (ops) => (ops.length === 1 || ops.length === 2) && ops[0] !== undefined && isComplexInfinity(ops[0]),
     () => () => ce.symbol("PositiveInfinity"),
+    BUILTIN,
   );
   wrapOperator(
     ce,
     ["Log", 1],
     (ops) => (ops.length === 1 || ops.length === 2) && reciprocalExponent(ops) !== undefined,
     () => (ops, options) => finish(ce.number(-reciprocalExponent(ops)!), options),
+    BUILTIN,
   );
 }
 

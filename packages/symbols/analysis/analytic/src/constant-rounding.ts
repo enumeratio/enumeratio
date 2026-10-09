@@ -81,6 +81,9 @@ function roundExactly(ce: ComputeEngine, name: Rounding, x: BoxedExpression): bi
   return floor.toBigInt() + (up ? 1n : 0n);
 }
 
+// Idempotence and folds of exact constants (Floor(Pi), Max(Pi, Pi)): the built-in lowering gives the same value.
+const BUILTIN = { compile: "builtin" } as const;
+
 function declareRoundingHead(ce: ComputeEngine, name: Rounding): void {
   // Idempotent: Floor(Floor(x)) = Floor(x), for whatever x -- the inner value is
   // already an integer (or stays symbolic, in which case nothing changes either way).
@@ -89,7 +92,7 @@ function declareRoundingHead(ce: ComputeEngine, name: Rounding): void {
     [name, 1],
     (ops) => ops[0]?.operator === name,
     () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
   // An exact constant expression: compute-engine's own answer where it has one (Pi^40,
   // exactly), else the value at enough digits, rounded. A non-real or non-finite value is
@@ -104,7 +107,7 @@ function declareRoundingHead(ce: ComputeEngine, name: Rounding): void {
       const rounded = roundExactly(ce, name, ops[0]!);
       return rounded === undefined ? answer : ce.number(rounded);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 }
 
@@ -122,7 +125,7 @@ function declareExtremum(ce: ComputeEngine, name: "Max" | "Min", better: (a: num
     [name, 2],
     (ops) => ops.every((op) => op === ops[0] || op.isSame(ops[0])),
     () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
-    { min: 2 },
+    { ...BUILTIN, arity: { min: 2 } },
   );
   // A pool of exact constants (Pi, E, ...): compare numerically, keep the exact form.
   wrapOperator(
@@ -143,7 +146,7 @@ function declareExtremum(ce: ComputeEngine, name: "Max" | "Min", better: (a: num
       if (best === undefined) return native?.(ops, options);
       return options.numericApproximation ? best.op.N() : best.op;
     },
-    { min: 1 },
+    { ...BUILTIN, arity: { min: 1 } },
   );
 }
 
@@ -164,6 +167,6 @@ export function declareConstantRounding(ce: ComputeEngine): void {
       if (n.im !== 0 || !Number.isFinite(n.re) || Number.isInteger(n.re)) return undefined;
       return ce.False;
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 }

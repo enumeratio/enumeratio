@@ -16,6 +16,9 @@ import { factorial } from "./fast-factorial.ts";
  *  Gamma-function extension) still answers past here, just slower. */
 const FAST_FACTORIAL_LIMIT = 200_000n;
 
+// An exact integer operand's exact value: where a double can hold the factorial, the built-in lowering gives the same value.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareFastFactorial(ce: Engine): void {
   const fitsFastRange = (op: Expr): bigint | undefined => {
     const n = bigIntegerAt(op);
@@ -27,6 +30,6 @@ export function declareFastFactorial(ce: Engine): void {
     ["Factorial", 100000],
     (ops) => fitsFastRange(ops[0]) !== undefined,
     () => (ops) => ce.number(factorial(fitsFastRange(ops[0])!)),
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 }

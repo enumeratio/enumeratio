@@ -42,6 +42,9 @@ const intNode = (ce: ComputeEngine, v: bigint): BoxedExpression => ce.number(v);
 /** An exact [numerator, denominator] bigint pair as a boxed rational (or integer, at d = 1). */
 const ratNode = (ce: ComputeEngine, [n, d]: Rational): BoxedExpression => (d === 1n ? ce.number(n) : ce.number([n, d]));
 
+// Exact closed forms for exact operands: an inexact operand reaches the numeric kernel the built-in lowering shares.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareClosedForms113(ce: ComputeEngine): void {
   // ψ⁽ⁿ⁾(m) = (−1)ⁿ⁺¹ n! (ζ(n+1) − Σ_{k<m} k^(−n−1)) at a positive integer m and order
   // n ≥ 1 (DLMF 5.15.2, 5.15.1): ψ'(1) = π²/6 and ψ'(2) = π²/6 − 1 as in Wolfram. Capped
@@ -69,7 +72,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const sign = n % 2n === 0n ? -1n : 1n;
       return finish(ce.function("Multiply", [ce.number(sign * factorial(n)), bracket]), options);
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // GammaLn(n) = ln((n−1)!) at a positive integer n, matching Wolfram's bare
@@ -89,7 +92,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const n = bigIntegerAt(ops[0])!;
       return finish(ce.function("Ln", [ce.function("Factorial", [intNode(ce, n - 1n)])]), options);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // ζ(s, ½) = (2ˢ − 1)ζ(s), true for every s (split the Dirichlet series into even
@@ -117,7 +120,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
   wrapOperator(
     ce,
@@ -131,7 +134,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ce.function("Add", [ce.function("Power", ["Pi", 2]), ce.function("Multiply", [8, "CatalanConstant"])]),
         options,
       ),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // Li₃(½) = (7/8)ζ(3) − (π²ln2)/12 + (ln³2)/6 and Li₂(2) = π²/4 − iπln2 — both
@@ -157,7 +160,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
   wrapOperator(
     ce,
@@ -171,7 +174,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // Gauss's digamma theorem at the two required denominators. ψ(1/4) and ψ(1/3) are
@@ -205,7 +208,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const sign = p === 1n ? -1 : 1;
       return finish(ce.function("Add", [base, ce.function("Multiply", [sign, cotTerm])]), options);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // ψ'(1/4) = π² + 8G and ψ'(3/4) = π² − 8G (Catalan's constant G), from the trigamma
@@ -227,7 +230,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // PolyGamma(0, z) IS Digamma(z) — the same function under compute-engine's own
@@ -254,7 +257,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       if (declined(reduced, "Digamma")) return native?.(ops, options);
       return finish(reduced, options);
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // γₙ(1) = γₙ (Wolfram: StieltjesGamma[3,1] prints as StieltjesGamma[3]) — the
@@ -264,7 +267,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
     ["StieltjesGamma", 2],
     (ops) => bigIntegerAt(ops[1]) === 1n,
     () => (ops, options) => finish(ce.function("StieltjesGamma", [ops[0]]), options),
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // I_x(a, b) = Σ_{j=a}^{a+b−1} C(a+b−1, j) xʲ(1−x)^{a+b−1−j} at a rational x and
@@ -307,7 +310,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const g = gcd(numSum, denom) || 1n;
       return finish(ratNode(ce, [numSum / g, denom / g]), options);
     },
-    3,
+    { ...BUILTIN, arity: 3 },
   );
 
   // Γ(n, x) = (n−1)! e⁻ˣ Σ_{k<n} xᵏ/k! and its regularized form Q(n, x) = e⁻ˣ Σ_{k<n} xᵏ/k!,
@@ -350,7 +353,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
           options,
         );
       },
-      2,
+      { ...BUILTIN, arity: 2 },
     );
   }
 
@@ -378,7 +381,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // H_{1/2} = 2 − 2ln2 and H_{1/4} = 4 − π/2 − 3ln2, from H_z = ψ(z+1) + γ combined
@@ -406,7 +409,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // FromContinuedFraction of plain symbols: [a; b, c] = a + 1/(b + 1/c), the nested
@@ -435,7 +438,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       }
       return finish(acc, options);
     },
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 
   // Mod(x, m) for an exact irrational x (an algebraic number like √28, not a float)
@@ -467,7 +470,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const expr = ce.function("Subtract", [x, ce.function("Multiply", [intNode(ce, BigInt(k)), m])]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
-    2,
+    { ...BUILTIN, arity: 2 },
   );
 
   // L(1, χ) for a REAL (quadratic) odd primitive character mod k: derived from the
@@ -530,6 +533,6 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       if (Math.abs(exact.N().re - numeric.re) > 1e-9) return undefined;
       return options.numericApproximation ? exact.N() : exact;
     },
-    3,
+    { ...BUILTIN, arity: 3 },
   );
 }

@@ -10,6 +10,7 @@ import { isFiniteNum, isRealInt, wantsNumber, logGammaReal } from "@enumeratio/c
 const B_MAX = 30;
 
 export function declareBetaContinuation(ce: ComputeEngine): void {
+  // No compile stance: for a real x > 1 this gives a number where the built-in lowering gives NaN.
   wrapOperator(
     ce,
     ["BetaRegularized", 0.5, 2, 3],

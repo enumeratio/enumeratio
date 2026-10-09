@@ -10,6 +10,9 @@ import { type EvalOptions, isFiniteNum, wantsNumber } from "@enumeratio/ce-patch
 // exact (rational/bignum) up to the moment ErfInv needs a float, so InverseErfc(1e-10) keeps
 // every digit ErfInv(1 − 1e-10) would otherwise drop.
 
+// Erfc(InverseErfc(x)) = x is an identity: the built-in lowering gives the same value.
+const BUILTIN = { compile: "builtin" } as const;
+
 export function declareInverseErfc(ce: ComputeEngine): void {
   ce.declare("InverseErfc", {
     signature: "(number) -> number",
@@ -41,6 +44,6 @@ export function declareInverseErfc(ce: ComputeEngine): void {
     ["Erfc", 1],
     (ops) => ops[0]?.operator === "InverseErfc",
     () => (ops) => operandsOf(ops[0])[0],
-    1,
+    { ...BUILTIN, arity: 1 },
   );
 }
