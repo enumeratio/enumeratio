@@ -68,7 +68,10 @@
   },
   "enumeratio": {
     "layer": "tooling",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "@records"
+    ]
   },
   "generated": [
     "src/head-map-audit-data.ts"

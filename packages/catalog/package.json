@@ -45,7 +45,10 @@
   },
   "enumeratio": {
     "layer": "tooling",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "@records"
+    ]
   },
   "generated": [
     "src/catalog-records-data.ts"

@@ -14,7 +14,16 @@ export interface Pkg {
   readonly deps: ReadonlySet<string>;
   /** Just the names its `package.json` declares (any field), which never form a cycle on their own. */
   readonly declared: ReadonlySet<string>;
+  /**
+   * Other packages' files its build or tests read without importing them: its `enumeratio.reads`,
+   * repo-relative (a file or a directory), or `RECORDS` for every package's `reference/` folders
+   * and manifests.
+   */
+  readonly reads: readonly string[];
 }
+
+/** In `enumeratio.reads`: every package's records and manifests, for the scanners. */
+export const RECORDS = "@records";
 
 export const root = resolve(import.meta.dirname, "../..");
 
@@ -56,6 +65,7 @@ function expand(glob: string): string[] {
 
 interface Manifest {
   name: string;
+  enumeratio?: { reads?: string[] };
   scripts?: Record<string, string>;
   dependencies?: Record<string, string>;
   devDependencies?: Record<string, string>;
@@ -91,15 +101,24 @@ export function loadWorkspace(): Map<string, Pkg> {
       if (hit !== undefined) deps.add(hit);
     }
     deps.delete(manifest.name);
-    pkgs.set(manifest.name, { name: manifest.name, dir, buildScript: build, deps, declared });
+    const reads = (manifest.enumeratio?.reads ?? []).map((r) =>
+      r === RECORDS ? r : relative(root, resolve(root, dir, r)).replaceAll("\\", "/"),
+    );
+    pkgs.set(manifest.name, { name: manifest.name, dir, buildScript: build, deps, declared, reads });
   }
   return pkgs;
 }
 
-/** Reverse edges: who depends on each package. */
+/** Reverse edges: who depends on each package, or reads files it holds. */
 export function dependents(pkgs: Map<string, Pkg>): Map<string, Set<string>> {
   const out = new Map<string, Set<string>>([...pkgs.keys()].map((n) => [n, new Set()]));
-  for (const p of pkgs.values()) for (const d of p.deps) out.get(d)?.add(p.name);
+  for (const p of pkgs.values()) {
+    for (const d of p.deps) out.get(d)?.add(p.name);
+    for (const r of p.reads) {
+      const holder = r === RECORDS ? undefined : owner(pkgs, `${r}/`);
+      if (holder !== undefined && holder.name !== p.name) out.get(holder.name)?.add(p.name);
+    }
+  }
   return out;
 }
 

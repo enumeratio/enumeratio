@@ -77,7 +77,10 @@
   },
   "enumeratio": {
     "layer": "tooling",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "@records"
+    ]
   },
   "generated": [
     "src/crosswalk/catalog-references-data.ts",

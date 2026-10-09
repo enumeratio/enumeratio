@@ -72,6 +72,9 @@
       "structures"
     ],
     "late": "./declare-carriers#declareFrontendCarriers",
+    "reads": [
+      "@records"
+    ],
     "declares": "./declares.json"
   },
   "generated": [
