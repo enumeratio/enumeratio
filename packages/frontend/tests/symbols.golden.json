@@ -542,7 +542,7 @@
       "attributes": {},
       "children": [
         {
-          "tag": "notatio-knob",
+          "tag": "knob-box",
           "attributes": {
             "name": "n",
             "min": "1",
@@ -552,7 +552,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><notatio-knob name=\"n\" min=\"1\" max=\"8\" step=\"1\"></notatio-knob></dynamic-module-box>"
+    "markup": "<dynamic-module-box><knob-box name=\"n\" min=\"1\" max=\"8\" step=\"1\"></knob-box></dynamic-module-box>"
   },
   "IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
     "rendering": {
@@ -560,7 +560,7 @@
       "attributes": {},
       "children": [
         {
-          "tag": "notatio-interval-slider",
+          "tag": "interval-slider-box",
           "attributes": {
             "name": "r",
             "value": "1,3",
@@ -571,7 +571,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><notatio-interval-slider name=\"r\" value=\"1,3\" min=\"0\" max=\"5\" step=\"0.5\"></notatio-interval-slider></dynamic-module-box>"
+    "markup": "<dynamic-module-box><interval-slider-box name=\"r\" value=\"1,3\" min=\"0\" max=\"5\" step=\"0.5\"></interval-slider-box></dynamic-module-box>"
   },
   "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
     "rendering": {
@@ -598,7 +598,7 @@
       "attributes": {},
       "children": [
         {
-          "tag": "setter-box",
+          "tag": "setter-bar-box",
           "attributes": {
             "name": "k",
             "values": "2|3|5|7"
@@ -606,7 +606,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><setter-box name=\"k\" values=\"2|3|5|7\"></setter-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><setter-bar-box name=\"k\" values=\"2|3|5|7\"></setter-bar-box></dynamic-module-box>"
   },
   "RadioButtonBar((q, 2), [Labeled(1, \"one\"), Labeled(2, \"two\")])": {
     "rendering": {
@@ -614,7 +614,7 @@
       "attributes": {},
       "children": [
         {
-          "tag": "notatio-radio-button-bar",
+          "tag": "radio-button-bar-box",
           "attributes": {
             "name": "q",
             "value": "2",
@@ -623,7 +623,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><notatio-radio-button-bar name=\"q\" value=\"2\" values=\"1 -> one|2 -> two\"></notatio-radio-button-bar></dynamic-module-box>"
+    "markup": "<dynamic-module-box><radio-button-bar-box name=\"q\" value=\"2\" values=\"1 -> one|2 -> two\"></radio-button-bar-box></dynamic-module-box>"
   },
   "TogglerBar((s, [1, 3]), [1, 2, 3, 4, 5])": {
     "rendering": {
@@ -631,7 +631,7 @@
       "attributes": {},
       "children": [
         {
-          "tag": "notatio-toggler-bar",
+          "tag": "toggler-bar-box",
           "attributes": {
             "name": "s",
             "value": "1|3",
@@ -640,7 +640,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><notatio-toggler-bar name=\"s\" value=\"1|3\" values=\"1|2|3|4|5\"></notatio-toggler-bar></dynamic-module-box>"
+    "markup": "<dynamic-module-box><toggler-bar-box name=\"s\" value=\"1|3\" values=\"1|2|3|4|5\"></toggler-bar-box></dynamic-module-box>"
   },
   "Toggler(on)": {
     "rendering": {
@@ -695,7 +695,7 @@
       "attributes": {},
       "children": [
         {
-          "tag": "notatio-list-picker",
+          "tag": "list-picker-box",
           "attributes": {
             "name": "L",
             "values": "2|3|5|7|11"
@@ -703,7 +703,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><notatio-list-picker name=\"L\" values=\"2|3|5|7|11\"></notatio-list-picker></dynamic-module-box>"
+    "markup": "<dynamic-module-box><list-picker-box name=\"L\" values=\"2|3|5|7|11\"></list-picker-box></dynamic-module-box>"
   },
   "Checkbox((c, True))": {
     "rendering": {
@@ -727,7 +727,7 @@
       "attributes": {},
       "children": [
         {
-          "tag": "notatio-color-slider",
+          "tag": "color-setter-box",
           "attributes": {
             "name": "c",
             "value": "#3451b2"
@@ -735,7 +735,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><notatio-color-slider name=\"c\" value=\"#3451b2\"></notatio-color-slider></dynamic-module-box>"
+    "markup": "<dynamic-module-box><color-setter-box name=\"c\" value=\"#3451b2\"></color-setter-box></dynamic-module-box>"
   },
   "InputField((f, Sin(x)))": {
     "rendering": {
@@ -759,7 +759,7 @@
       "attributes": {},
       "children": [
         {
-          "tag": "notatio-locator",
+          "tag": "locator-box",
           "attributes": {
             "name": "p",
             "value": "1,0.5"
@@ -767,7 +767,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></dynamic-module-box>"
+    "markup": "<dynamic-module-box><locator-box name=\"p\" value=\"1,0.5\"></locator-box></dynamic-module-box>"
   },
   "Dynamic(k^2)": {
     "rendering": {

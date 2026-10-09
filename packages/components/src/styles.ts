@@ -1545,7 +1545,7 @@ notatio-show {
 .notatio-show-indexed span { display: inline-flex; align-items: center; gap: 0.25rem; }
 .notatio-show-indexed i { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; }
 .notatio-show-ends button,
-.notatio-stepper button {
+.stepper-box button {
   border: none;
   background: transparent;
   color: var(--vp-c-brand-1, #3451b2);
@@ -1555,14 +1555,14 @@ notatio-show {
 }
 
 /* --- Stepper: an integer in a sentence, stepped in place ------------------------------- */
-.notatio-stepper {
+.stepper-box {
   display: inline-flex;
   align-items: baseline;
   gap: 0.05rem;
   border-bottom: 1px dashed var(--vp-c-brand-1, #3451b2);
   outline: none;
 }
-.notatio-stepper:focus-visible { box-shadow: 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 40%, transparent); border-radius: 3px; }
+.stepper-box:focus-visible { box-shadow: 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 40%, transparent); border-radius: 3px; }
 .notatio-stepper-value { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--vp-c-brand-1, #3451b2); }
 
 /* --- Reactive prose, after Tangle ------------------------------------------------
@@ -1578,7 +1578,7 @@ notatio-when { display: contents; }
 notatio-when[hidden] { display: none; }
 dynamic-box { display: inline; }
 dynamic-box[display] { display: block; text-align: center; margin: 1.1rem 0; }
-notatio-knob, toggler-box { display: inline; }
+knob-box, toggler-box { display: inline; }
 
 .notatio-knob-grip,
 .notatio-toggler-grip {
@@ -1600,8 +1600,8 @@ notatio-knob, toggler-box { display: inline; }
   font-variant-numeric: tabular-nums;
 }
 .notatio-knob-grip { cursor: ew-resize; }
-notatio-knob[axis="y"] .notatio-knob-grip,
-notatio-knob[axis="y"].notatio-knob-grip { cursor: ns-resize; }
+knob-box[axis="y"] .notatio-knob-grip,
+knob-box[axis="y"].notatio-knob-grip { cursor: ns-resize; }
 /* The gear shows in the rule under the value: heavier in coarse, hairline in fine. */
 .notatio-knob-grip[data-gear="coarse"][data-dragging] { border-bottom-width: 3px; margin-bottom: -2px; }
 .notatio-knob-grip[data-gear="fine"][data-dragging] { border-bottom-style: dotted; }
@@ -1620,7 +1620,7 @@ notatio-knob[axis="y"].notatio-knob-grip { cursor: ns-resize; }
   outline: 2px solid transparent;
   outline-offset: 0;
 }
-notatio-knob[data-slotted] { display: inline-block; }
+knob-box[data-slotted] { display: inline-block; }
 .notatio-knob-grip[data-slotted]:hover,
 .notatio-knob-grip[data-slotted][data-dragging] {
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 8%, transparent);
@@ -1665,16 +1665,16 @@ notatio-knob[data-slotted] { display: inline-block; }
 .notatio-knob-grip::after { content: "\\25B8"; right: 0; }
 
 /* A vertical knob points where it is dragged: above the value and below it. */
-notatio-knob[axis="y"] .notatio-knob-grip::before,
-notatio-knob[axis="y"].notatio-knob-grip::before {
+knob-box[axis="y"] .notatio-knob-grip::before,
+knob-box[axis="y"].notatio-knob-grip::before {
   content: "\\25B4";
   top: auto;
   bottom: 100%;
   left: 50%;
   transform: translate(-50%, 55%);
 }
-notatio-knob[axis="y"] .notatio-knob-grip::after,
-notatio-knob[axis="y"].notatio-knob-grip::after {
+knob-box[axis="y"] .notatio-knob-grip::after,
+knob-box[axis="y"].notatio-knob-grip::after {
   content: "\\25BE";
   right: auto;
   left: 50%;
@@ -1698,8 +1698,8 @@ body:has(.notatio-knob-grip[data-dragging]) {
   user-select: none;
   cursor: ew-resize;
 }
-body:has(notatio-knob[axis="y"] .notatio-knob-grip[data-dragging]),
-body:has(notatio-knob[axis="y"].notatio-knob-grip[data-dragging]) { cursor: ns-resize; }
+body:has(knob-box[axis="y"] .notatio-knob-grip[data-dragging]),
+body:has(knob-box[axis="y"].notatio-knob-grip[data-dragging]) { cursor: ns-resize; }
 body:has(.notatio-knob-grip[data-complex][data-dragging]) { cursor: move; }
 
 /* The gear ladder beside a dragged knob: the three increments stacked coarse over
@@ -1724,7 +1724,7 @@ body:has(.notatio-knob-grip[data-complex][data-dragging]) { cursor: move; }
   white-space: nowrap;
   z-index: 2;
 }
-notatio-knob[axis="y"] .notatio-knob-ladder {
+knob-box[axis="y"] .notatio-knob-ladder {
   left: 50%;
   top: 100%;
   transform: translateX(-50%);
@@ -1748,12 +1748,12 @@ notatio-knob[axis="y"] .notatio-knob-ladder {
    Every control is inline (a slider in a strip, a bar in a sentence) and shares the
    brand colour for what is set, the divider colour for what is not. */
 slider-box, animator-box, slider-2d-box,
-setter-box, notatio-radio-button-bar, notatio-toggler-bar, popup-menu-box,
-checkbox-box, notatio-interval-slider, notatio-color-slider, input-field-box {
+setter-bar-box, setter-box, radio-button-bar-box, toggler-bar-box, popup-menu-box,
+checkbox-box, interval-slider-box, color-setter-box, input-field-box {
   display: inline-block;
   vertical-align: middle;
 }
-notatio-list-picker { display: inline-block; vertical-align: top; }
+list-picker-box { display: inline-block; vertical-align: top; }
 
 .slider-box { display: inline-flex; align-items: center; gap: 0.4em; }
 .notatio-slider-track {
@@ -1806,7 +1806,7 @@ notatio-list-picker { display: inline-block; vertical-align: top; }
 
 /* A locator lives on a plot, so the plot is its frame of reference. */
 notatio-plot { position: relative; }
-notatio-locator { display: contents; }
+locator-box { display: contents; }
 .notatio-locator-dot {
   pointer-events: auto;
   cursor: grab;
@@ -1875,7 +1875,7 @@ notatio-locator { display: contents; }
 .notatio-popup-caret::after { content: "\\25BE"; font-size: 0.8em; opacity: 0.7; }
 
 /* A list picker: the entries in view, selected ones filled. */
-.notatio-list-picker {
+.list-picker-box {
   display: inline-block;
   min-width: 8rem;
   overflow-y: auto;
@@ -1884,7 +1884,7 @@ notatio-locator { display: contents; }
   background: var(--vp-c-bg, #fff);
   padding: 2px;
 }
-.notatio-list-picker:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 1px; }
+.list-picker-box:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 1px; }
 .notatio-list-option {
   padding: 0.15em 0.6em;
   border-radius: 4px;
@@ -1896,7 +1896,7 @@ notatio-locator { display: contents; }
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 14%, transparent);
   color: var(--vp-c-brand-1, #3451b2);
 }
-.notatio-list-picker:focus-visible .notatio-list-option[data-active] {
+.list-picker-box:focus-visible .notatio-list-option[data-active] {
   outline: 1px solid var(--vp-c-brand-1, #3451b2);
 }
 
@@ -1904,7 +1904,7 @@ notatio-locator { display: contents; }
 .checkbox-box input { accent-color: var(--vp-c-brand-1, #3451b2); margin: 0; }
 
 /* An interval slider: two native ranges on one track, thumbs only catching the pointer. */
-.notatio-interval-slider { display: inline-flex; align-items: center; gap: 0.4em; }
+.interval-slider-box { display: inline-flex; align-items: center; gap: 0.4em; }
 .notatio-interval-track {
   position: relative;
   display: inline-block;
@@ -1959,7 +1959,7 @@ notatio-locator { display: contents; }
 .notatio-interval-thumb:focus-visible { outline: none; }
 .notatio-interval-thumb:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 35%, transparent); }
 
-.notatio-color-slider {
+.color-setter-box {
   width: 2.2em;
   height: 1.6em;
   padding: 0;

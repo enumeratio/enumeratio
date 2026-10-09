@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[ColorSetterBox, [DynamicBox, c], SwatchSpectrum]	[ColorSetterBox, [DynamicBox, c], SwatchSpectrum]	a box is inert: it evaluates to itself

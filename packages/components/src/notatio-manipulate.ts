@@ -6,7 +6,7 @@ import { applyTemplates, captureTemplates, type Template, takesBindings, whenTem
 import { controlsTemplate } from "./manipulate-ui.ts";
 import { ensureFor, loadBareEngine, loadMarkup } from "./mathlive.ts";
 import "./dynamic-box.ts";
-import "./notatio-knob.ts";
+import "./knob-box.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { ensureStyles } from "./styles.ts";
@@ -272,7 +272,7 @@ export class NotatioManipulate extends LitElement {
         const o = part.options;
         // The knob's own attributes are plain numbers, so nothing here reads as a
         // template; the control's live value is pushed in as a property.
-        return html`<notatio-knob
+        return html`<knob-box
           name=${c.name}
           .value=${String(c.value)}
           min=${ifDefined(c.kind === "slider" ? c.min : undefined)}
@@ -286,7 +286,7 @@ export class NotatioManipulate extends LitElement {
           loop=${ifDefined(o.loop)}
           ?play=${"play" in o}
           ?autoplay=${"autoplay" in o}
-        ></notatio-knob>`;
+        ></knob-box>`;
       }
       default:
         return nothing;

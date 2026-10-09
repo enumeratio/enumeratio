@@ -103,9 +103,9 @@ collection is never built — <code>At</code> unranks.
 </template>
 <dynamic-module-box>
 Permutation <dynamic-box value="_k" /> of 24:
-<notatio-knob name="k" value="1" min="1" max="24">
+<knob-box name="k" value="1" min="1" max="24">
 <notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
-</notatio-knob>
+</knob-box>
 </dynamic-module-box>
 </Story>
 

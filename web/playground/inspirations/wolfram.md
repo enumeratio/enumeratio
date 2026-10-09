@@ -18,7 +18,7 @@ The rule this repository actually follows:
 > A head or a component that represents a symbol is named for that symbol. One
 > that represents no symbol gets a descriptive name, and we say so out loud.
 
-The second half is doing real work. `<notatio-knob>` is not a Wolfram symbol —
+The second half is doing real work. `<knob-box>` is not a Wolfram symbol —
 Wolfram has `Manipulator`, but that is a slider with chrome, not a number you drag
 inside a sentence — so it is named for what it is. `Reversion` and
 `GradeInvolution` have no symbol either. Saying which is which, in the source, is

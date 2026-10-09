@@ -8,11 +8,11 @@
 import { html, type TemplateResult } from "lit";
 import "./animator-box.ts";
 import "./input-field-box.ts";
-import "./notatio-knob.ts";
-import "./notatio-list-picker.ts";
+import "./knob-box.ts";
+import "./list-picker-box.ts";
 import "./popup-menu-box.ts";
-import "./notatio-radio-button-bar.ts";
-import "./setter-box.ts";
+import "./radio-button-bar-box.ts";
+import "./setter-bar-box.ts";
 import "./slider-box.ts";
 import "./toggler-box.ts";
 import type { LongPress } from "./popover.ts";
@@ -41,23 +41,23 @@ export function tagFor(c: Control): string {
     case "Animator":
       return "animator-box";
     case "Knob":
-      return "notatio-knob";
+      return "knob-box";
     case "SetterBar":
-      return "setter-box";
+      return "setter-bar-box";
     case "RadioButtonBar":
-      return "notatio-radio-button-bar";
+      return "radio-button-bar-box";
     case "PopupMenu":
       return "popup-menu-box";
     case "Toggler":
       return "toggler-box";
     case "ListPicker":
-      return "notatio-list-picker";
+      return "list-picker-box";
     case "InputField":
       return "input-field-box";
     case "Slider":
       return "slider-box";
     default:
-      return c.kind === "slider" ? "slider-box" : c.choices.length <= BAR_LIMIT ? "setter-box" : "popup-menu-box";
+      return c.kind === "slider" ? "slider-box" : c.choices.length <= BAR_LIMIT ? "setter-bar-box" : "popup-menu-box";
   }
 }
 
@@ -113,14 +113,8 @@ export function controlsTemplate(
 function sliderControl(c: Extract<Control, { kind: "slider" }>): TemplateResult {
   const value = String(c.value);
   switch (tagFor(c)) {
-    case "notatio-knob":
-      return html`<notatio-knob
-        name=${c.name}
-        .value=${value}
-        min=${c.min}
-        max=${c.max}
-        step=${c.step}
-      ></notatio-knob>`;
+    case "knob-box":
+      return html`<knob-box name=${c.name} .value=${value} min=${c.min} max=${c.max} step=${c.step}></knob-box>`;
     case "input-field-box":
       return html`<input-field-box name=${c.name} .value=${value} type="number"></input-field-box>`;
     case "animator-box":
@@ -149,19 +143,15 @@ function choiceControl(c: Extract<Control, { kind: "choice" }>): TemplateResult 
   const values = c.choices.join("|");
   const value = String(c.value);
   switch (tagFor(c)) {
-    case "notatio-radio-button-bar":
-      return html`<notatio-radio-button-bar
-        name=${c.name}
-        values=${values}
-        .value=${value}
-      ></notatio-radio-button-bar>`;
+    case "radio-button-bar-box":
+      return html`<radio-button-bar-box name=${c.name} values=${values} .value=${value}></radio-button-bar-box>`;
     case "popup-menu-box":
       return html`<popup-menu-box name=${c.name} values=${values} .value=${value}></popup-menu-box>`;
     case "toggler-box":
       return html`<toggler-box name=${c.name} values=${values} .value=${value}></toggler-box>`;
-    case "notatio-list-picker":
-      return html`<notatio-list-picker name=${c.name} values=${values} .value=${value} single></notatio-list-picker>`;
+    case "list-picker-box":
+      return html`<list-picker-box name=${c.name} values=${values} .value=${value} single></list-picker-box>`;
     default:
-      return html`<setter-box name=${c.name} values=${values} .value=${value}></setter-box>`;
+      return html`<setter-bar-box name=${c.name} values=${values} .value=${value}></setter-bar-box>`;
   }
 }

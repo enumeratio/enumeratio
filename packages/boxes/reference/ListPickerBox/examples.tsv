@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[ListPickerBox, [DynamicBox, c], [List, a, b, c]]	[ListPickerBox, [DynamicBox, c], [List, a, b, c]]	a box is inert: it evaluates to itself

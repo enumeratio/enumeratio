@@ -18,7 +18,7 @@ Five components come out of that, and they are all inline:
 | Component              | What it is                                   | After                |
 | ---------------------- | -------------------------------------------- | -------------------- |
 | `<dynamic-module-box>` | the scope; renders nothing of its own        | Tangle's `Tangle`    |
-| `<notatio-knob>`       | a number you drag inside the prose           | `TKAdjustableNumber` |
+| `<knob-box>`           | a number you drag inside the prose           | `TKAdjustableNumber` |
 | `<toggler-box>`        | a word that cycles when clicked              | Wolfram's `Toggler`  |
 | `<dynamic-box>`        | a derived readout                            | Wolfram's `Dynamic`  |
 | `<notatio-when>`       | a phrase that appears only under a condition | Tangle's `TKIf`      |
@@ -39,7 +39,7 @@ lowers it. Nothing else on the page is a control.
 </template>
 <dynamic-module-box>
 <p>
-You eat <notatio-knob name="n" value="3" min="0" max="12" step="1" /> cookies,
+You eat <knob-box name="n" value="3" min="0" max="12" step="1" /> cookies,
 which is <dynamic-box value="_n * 50" /> calories.
 </p>
 </dynamic-module-box>
@@ -63,8 +63,8 @@ without it the engine would hand back an exact power of a fraction.
 </template>
 <dynamic-module-box>
 <p>
-A rate of <notatio-knob name="r" value="0.05" min="0" max="0.25" step="0.005" sensitivity="4" />
-compounded over <notatio-knob name="y" value="10" min="1" max="40" step="1" /> years
+A rate of <knob-box name="r" value="0.05" min="0" max="0.25" step="0.005" sensitivity="4" />
+compounded over <knob-box name="y" value="10" min="1" max="40" step="1" /> years
 multiplies a stake by <dynamic-box value="N((1 + _r)^_y)" />.
 </p>
 </dynamic-module-box>
@@ -97,9 +97,9 @@ land on a quarter point.
 </template>
 <dynamic-module-box>
 <p>
-A loan of <notatio-knob name="p" value="25000" min="1000" max="500000" step="1000" /> at
-<notatio-knob name="r" value="0.06" min="0.01" max="0.2" step="0.001" /> over
-<notatio-knob name="y" value="30" min="1" max="40" step="1" /> years costs
+A loan of <knob-box name="p" value="25000" min="1000" max="500000" step="1000" /> at
+<knob-box name="r" value="0.06" min="0.01" max="0.2" step="0.001" /> over
+<knob-box name="y" value="30" min="1" max="40" step="1" /> years costs
 <dynamic-box value="N(12 * _y * _p * (_r/12) / (1 - (1 + _r/12)^(-12 * _y)))" digits="7" /> in all.
 </p>
 </dynamic-module-box>
@@ -150,7 +150,7 @@ entries every second and a half. Hold either ▶ for the speed and loop panel.
 </template>
 <dynamic-module-box>
 <p>
-At <notatio-knob name="t" value="0" min="0" max="6.28" step="0.04" play loop="cycle" /> the wave has
+At <knob-box name="t" value="0" min="0" max="6.28" step="0.04" play loop="cycle" /> the wave has
 reached <dynamic-box value="N(Sin(_t))" digits="3" />, and it is
 <toggler-box name="mood" values="rising|falling|rising again" play interval="1500" />.
 </p>
@@ -173,7 +173,7 @@ gesture that moves a real knob along the line moves this one around the plane.
 </template>
 <dynamic-module-box>
 <p>
-The number <notatio-knob name="z" value="3+2i" complex step="0.25" /> has modulus
+The number <knob-box name="z" value="3+2i" complex step="0.25" /> has modulus
 <dynamic-box value="N(Abs(_z))" /> and argument
 <dynamic-box value="N(Arg(_z))" /> radians. Its square is
 <dynamic-box value="_z^2" />.
@@ -191,7 +191,7 @@ ends rather than wrapped.
   title="Scrubbing a list">
 <dynamic-module-box>
 <p>
-The <notatio-knob name="p" value="7" choices="2|3|5|7|11|13|17|19" /> is a prime you
+The <knob-box name="p" value="7" choices="2|3|5|7|11|13|17|19" /> is a prime you
 cannot arrive at by adding — so the knob walks the list rather than a range.
 </p>
 </dynamic-module-box>
@@ -209,7 +209,7 @@ knows the other exists.
 </template>
 <dynamic-module-box>
 <p>
-Ground set of <notatio-knob name="n" value="5" min="1" max="9" step="1" /> elements:
+Ground set of <knob-box name="n" value="5" min="1" max="9" step="1" /> elements:
 <notatio-show class="inline-figure" value='Show(CellDiagram(Subset([1, 3], _n)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
 — which is one of <dynamic-box value="2^_n" /> subsets.
 </p>
@@ -226,7 +226,7 @@ the collection's own order, and the glyph draws whichever one it lands on. No
 </template>
 <dynamic-module-box>
 <p>
-Permutation <notatio-knob name="k" value="1" min="1" max="24" /> of 4:
+Permutation <knob-box name="k" value="1" min="1" max="24" /> of 4:
 <notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
 </p>
 </dynamic-module-box>
@@ -250,9 +250,9 @@ Drag across the matrix. The knob is still an index into the 24 permutations of
 hover is the whole affordance.
 </template>
 <dynamic-module-box>
-<notatio-knob name="k" value="1" min="1" max="24">
+<knob-box name="k" value="1" min="1" max="24">
 <notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
-</notatio-knob>
+</knob-box>
 </dynamic-module-box>
 </Story>
 
@@ -265,9 +265,9 @@ like.
 </template>
 <dynamic-module-box>
 <p>
-<notatio-knob name="n" value="4" min="1" max="8">
+<knob-box name="n" value="4" min="1" max="8">
 <notatio-show class="inline-figure" value='Show(CellDiagram(At(IntegerPartitions(_n), 1)), ImageSize -> [Automatic, 38], GestureHandling -> "none")' legend-at="none" />
-</notatio-knob>
+</knob-box>
 is the first of <dynamic-box value="Count(IntegerPartitions(_n))" /> partitions of
 <dynamic-box value="_n" />.
 </p>
@@ -315,7 +315,7 @@ prose with its own markup in it.
 </template>
 <dynamic-module-box>
 <p>
-A graph on <notatio-knob name="v" value="4" min="2" max="10" step="1" /> vertices has
+A graph on <knob-box name="v" value="4" min="2" max="10" step="1" /> vertices has
 <dynamic-box value="Binomial(_v, 2)" /> possible edges, which is
 <notatio-when test="_v > 5">more than you want to draw by hand</notatio-when><notatio-when test="_v > 5" invert>still a picture you can draw</notatio-when>.
 </p>
@@ -334,7 +334,7 @@ title="A sentence and a curve, one knob">
 <dynamic-module-box>
 <p>
 The curve <notatio-out inline format="latex" value="\sin(kx)" /> with
-<notatio-knob name="k" value="3" min="1" max="8" step="1" /> crosses zero
+<knob-box name="k" value="3" min="1" max="8" step="1" /> crosses zero
 <dynamic-box value="2 * _k + 1" /> times on <notatio-out inline format="latex" value="[-\pi,\pi]" />.
 </p>
 <notatio-plot value="Sin(_k * x)" domain="-3.1416,3.1416" grid />
@@ -350,7 +350,7 @@ the drag. This is the case a panel of sliders handles badly: the quantity is a
 </template>
 <dynamic-module-box>
 <p>
-Moving the pole <notatio-knob name="a" value="0.5+0.5i" complex step="0.1" min="-2" max="2" />
+Moving the pole <knob-box name="a" value="0.5+0.5i" complex step="0.1" min="-2" max="2" />
 drags the singularity of <notatio-out inline format="latex" value="1/(z-a)" /> around the plane.
 </p>
 <notatio-complex-plot value="1 / (z - (_a))" domain="-2,2,-2,2" />

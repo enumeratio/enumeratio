@@ -6,7 +6,7 @@ order: 9
 
 Wolfram's [`Control`](https://reference.wolfram.com/language/ref/Control.html) family,
 one component per kind: a control is the element of its box, `<slider-box>` for
-`Slider` and `VerticalSlider`, `<setter-box>` for `SetterBar`. Every
+`Slider` and `VerticalSlider`, `<setter-bar-box>` for `SetterBar`. Every
 control has a `name`, publishes a value, and fires `notatio-control-change` when it
 moves — so a `<dynamic-module-box>` or a `<notatio-manipulate>` binds any of them the same
 way, and a template that mentions `_name` follows. The controls that iterate a span
@@ -60,7 +60,7 @@ same thing.
 Two thumbs that cannot cross; the binding is <code>[lo, hi]</code>.
 </template>
 <dynamic-module-box>
-<notatio-interval-slider name="r" value="1,3" min="0" max="5" step="0.5" readout />
+<interval-slider-box name="r" value="1,3" min="0" max="5" step="0.5" readout />
 width <dynamic-box value="At(_r, 2) - At(_r, 1)" />
 </dynamic-module-box>
 </Story>
@@ -74,8 +74,8 @@ One entry down. Entries are <code>|</code>-separated and may be
 <code>value -> label</code>; a value that looks like mathematics is typeset.
 </template>
 <dynamic-module-box>
-<setter-box name="p" values="2|3|5|7" /> is prime;
-<notatio-radio-button-bar name="q" values="1 -> one|2 -> two|3 -> three" value="2" />
+<setter-bar-box name="p" values="2|3|5|7" /> is prime;
+<radio-button-bar-box name="q" values="1 -> one|2 -> two|3 -> three" value="2" />
 and their product is <dynamic-box value="_p * _q" />.
 </dynamic-module-box>
 </Story>
@@ -87,9 +87,9 @@ Any number down; the binding is the <code>List</code> of selected values.
 <code>ListPicker</code> shows the entries as a list, <code>single</code> allows one.
 </template>
 <dynamic-module-box>
-<notatio-toggler-bar name="s" values="1|2|3|4|5" value="1|3" />
+<toggler-bar-box name="s" values="1|2|3|4|5" value="1|3" />
 sums to <dynamic-box value="Sum(_s)" />;
-<notatio-list-picker name="L" values="2|3|5|7|11|13" value="3|5" rows="4" />
+<list-picker-box name="L" values="2|3|5|7|11|13" value="3|5" rows="4" />
 has <dynamic-box value="Length(_L)" /> picked.
 </dynamic-module-box>
 </Story>
@@ -126,7 +126,7 @@ where it is in the plot's own coordinates.
 </template>
 <dynamic-module-box>
 <notatio-plot value="Sin(x)" domain="-6.283,6.283" grid>
-<notatio-locator name="p" value="1,0.5" />
+<locator-box name="p" value="1,0.5" />
 </notatio-plot>
 The dot is at <dynamic-box value="_p" digits="3" />.
 </dynamic-module-box>
@@ -141,7 +141,7 @@ An <code>InputField</code> binds whatever Epsil you type, on Enter; a
 <dynamic-module-box>
 <input-field-box name="f" value="Sin(x)" size="12" /> squared is
 <dynamic-box value="Expand((_f)^2)" />;
-<notatio-color-slider name="c" value="#3451b2" /> is <dynamic-box value="_c" digits="2" />.
+<color-setter-box name="c" value="#3451b2" /> is <dynamic-box value="_c" digits="2" />.
 </dynamic-module-box>
 </Story>
 

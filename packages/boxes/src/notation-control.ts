@@ -54,12 +54,12 @@ export function controlOperands(binding: Box, domain: Json): Json[] {
 }
 
 const controlRule =
-  (head: ControlBoxHead, fixed: Options = {}): NotationRule =>
+  (head: ControlBoxHead, fixed: Options = {}, domain?: Json): NotationRule =>
   (args) => {
     const { ops, options } = split(args);
     return ops.length === 0
       ? undefined
-      : control(head, dynamic(ops[0]!), domainOf(ops.slice(1)), { ...fixed, ...options });
+      : control(head, dynamic(ops[0]!), domain ?? domainOf(ops.slice(1)), { ...fixed, ...options });
   };
 
 const Dynamic: NotationRule = (args) => {
@@ -80,7 +80,15 @@ export const CONTROL_NOTATION: Notation = {
   Checkbox: controlRule("CheckboxBox"),
   PopupMenu: controlRule("PopupMenuBox"),
   InputField: controlRule("InputFieldBox"),
-  SetterBar: controlRule("SetterBox"),
+  SetterBar: controlRule("SetterBarBox"),
+  RadioButtonBar: controlRule("RadioButtonBarBox"),
+  TogglerBar: controlRule("TogglerBarBox"),
+  Knob: controlRule("KnobBox"),
+  IntervalSlider: controlRule("IntervalSliderBox"),
+  ListPicker: controlRule("ListPickerBox"),
+  Locator: controlRule("LocatorBox"),
+  // Wolfram boxes a `ColorSlider` as a `ColorSetterBox` showing the spectrum.
+  ColorSlider: controlRule("ColorSetterBox", {}, "SwatchSpectrum"),
   Toggler: controlRule("TogglerBox"),
   Animator: controlRule("AnimatorBox"),
   Dynamic,
@@ -91,9 +99,9 @@ export const CONTROL_NOTATION: Notation = {
 export const CONTROL_NOTATION_HEADS: ReadonlySet<string> = new Set(Object.keys(CONTROL_NOTATION));
 
 /** What a control box is for, which a host without the web's widgets reads to draw its own. */
-export type ControlIntent = "continuous" | "planar" | "choice" | "toggle" | "text" | "playback";
+export type ControlIntent = "continuous" | "interval" | "color" | "planar" | "choice" | "toggle" | "text" | "playback";
 
-/** Each control box's intent: a number along a track, a point in a square, one of several entries, an either/or, free text, or a value that moves by itself. */
+/** Each control box's intent: a number along a track, an interval within a range, a point in a square, a color, one or several of the entries, an either/or, free text, or a value that moves by itself. */
 export const CONTROL_INTENT: Readonly<Record<ControlBoxHead, ControlIntent>> = {
   SliderBox: "continuous",
   Slider2DBox: "planar",
@@ -103,4 +111,13 @@ export const CONTROL_INTENT: Readonly<Record<ControlBoxHead, ControlIntent>> = {
   SetterBox: "choice",
   InputFieldBox: "text",
   AnimatorBox: "playback",
+  KnobBox: "continuous",
+  StepperBox: "continuous",
+  IntervalSliderBox: "interval",
+  ListPickerBox: "choice",
+  LocatorBox: "planar",
+  ColorSetterBox: "color",
+  SetterBarBox: "choice",
+  RadioButtonBarBox: "choice",
+  TogglerBarBox: "choice",
 };

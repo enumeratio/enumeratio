@@ -45,9 +45,9 @@ one shown — is 2-D projective geometric algebra, whose degenerate generator is
 <code>θ</code> family wearing a different hat.
 </template>
 <dynamic-module-box>
-<notatio-knob name="p" value="2" min="0" max="4" step="1" /> positive,
-<notatio-knob name="q" value="0" min="0" max="4" step="1" /> negative and
-<notatio-knob name="r" value="1" min="0" max="2" step="1" /> degenerate generators span
+<knob-box name="p" value="2" min="0" max="4" step="1" /> positive,
+<knob-box name="q" value="0" min="0" max="4" step="1" /> negative and
+<knob-box name="r" value="1" min="0" max="2" step="1" /> degenerate generators span
 <dynamic-box value="Basis(CliffordAlgebra(_p, _q, _r))" />, of dimension
 <dynamic-box value="AlgebraDimension(CliffordAlgebra(_p, _q, _r))" />.
 </dynamic-module-box>
@@ -150,7 +150,7 @@ than guessing from the generators it can see. The identity underneath is
 <code>Wedge(b, Dual(b)) = Pseudoscalar</code>, and it is what fixes the sign.
 </template>
 <dynamic-module-box>
-In dimension <notatio-knob name="n" value="3" min="2" max="5" step="1" />, the
+In dimension <knob-box name="n" value="3" min="2" max="5" step="1" />, the
 pseudoscalar is <dynamic-box value="Pseudoscalar(CliffordAlgebra(_n))" />,
 the dual of <notatio-out inline format="latex" value="e_1" /> is
 <dynamic-box value="Dual(e_1, CliffordAlgebra(_n))" />, and wedging the two
@@ -179,7 +179,7 @@ Scrub the grade. The element is a scalar plus a vector plus a bivector; each
 involution is nothing but a sign that depends on which of those a term is.
 </template>
 <dynamic-module-box>
-Grade <notatio-knob name="k" value="1" min="0" max="3" step="1" /> of
+Grade <knob-box name="k" value="1" min="0" max="3" step="1" /> of
 <notatio-out inline format="latex" value="1 + 2e_1 + 3e_1e_2" /> is
 <dynamic-box value="GradePart(1 + 2*e_1 + 3*e_1*e_2, _k)" />. Its reversion is
 <dynamic-box value="Reversion(1 + 2*e_1 + 3*e_1*e_2)" />, its grade involution

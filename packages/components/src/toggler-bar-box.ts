@@ -32,4 +32,4 @@ export class NotatioTogglerBar extends ChoiceControl {
   }
 }
 
-defineControl("notatio-toggler-bar", NotatioTogglerBar);
+defineControl("toggler-bar-box", NotatioTogglerBar);

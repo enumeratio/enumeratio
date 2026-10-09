@@ -134,7 +134,7 @@ export class NotatioIntervalSlider extends LitElement {
         @keydown=${(e: KeyboardEvent) => this.#onKey(which, e)}
         @keyup=${() => (this.#repeats = 0)}
       />`;
-    return html`<span class="notatio-interval-slider">
+    return html`<span class="interval-slider-box">
       <span class="notatio-interval-track">
         <span class="notatio-interval-fill" style=${`left:${pct(this._lo)}%;right:${100 - pct(this._hi)}%`}></span>
         ${thumb("lo", this._lo)}${thumb("hi", this._hi)} </span
@@ -149,4 +149,4 @@ export class NotatioIntervalSlider extends LitElement {
   }
 }
 
-defineControl("notatio-interval-slider", NotatioIntervalSlider);
+defineControl("interval-slider-box", NotatioIntervalSlider);

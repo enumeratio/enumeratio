@@ -267,7 +267,7 @@ export class NotatioKnob extends LitElement {
    * so the check has to run against the light DOM it shares with its own output.
    */
   #detectSlotted(): void {
-    const authored = [...this.children].some((el) => !el.matches("[data-notatio-knob]"));
+    const authored = [...this.children].some((el) => !el.matches("[data-knob-box]"));
     if (authored === this._slotted) return;
     this._slotted = authored;
     if (authored) this.#adoptHost();
@@ -741,7 +741,7 @@ export class NotatioKnob extends LitElement {
       if (gear === "fine" && step === base) return `${step} slow`;
       return String(step);
     };
-    return html`<span class="notatio-knob-ladder" data-notatio-knob aria-hidden="true"
+    return html`<span class="notatio-knob-ladder" data-knob-box aria-hidden="true"
       >${(["coarse", "normal", "fine"] as const).map(
         (gear) => html`<span data-gear=${gear} ?data-live=${gear === this._gear}>${label(gear)}</span>`,
       )}</span
@@ -757,7 +757,7 @@ export class NotatioKnob extends LitElement {
     const typed = this.#typed;
     return html`<input
       class="notatio-knob-field"
-      data-notatio-knob
+      data-knob-box
       type="text"
       inputmode=${this.discrete ? "text" : "decimal"}
       autocomplete="off"
@@ -777,7 +777,7 @@ export class NotatioKnob extends LitElement {
     const aria = this.#aria;
     return html`<span
         class="notatio-knob-grip"
-        data-notatio-knob
+        data-knob-box
         role="slider"
         tabindex="0"
         aria-label=${aria["aria-label"]}
@@ -801,4 +801,4 @@ export class NotatioKnob extends LitElement {
   }
 }
 
-defineControl("notatio-knob", NotatioKnob);
+defineControl("knob-box", NotatioKnob);

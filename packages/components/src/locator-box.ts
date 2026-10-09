@@ -237,4 +237,4 @@ export class NotatioLocator extends LitElement {
   }
 }
 
-defineControl("notatio-locator", NotatioLocator);
+defineControl("locator-box", NotatioLocator);

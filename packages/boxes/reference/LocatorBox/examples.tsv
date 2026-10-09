@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[LocatorBox, [DynamicBox, p], Automatic]	[LocatorBox, [DynamicBox, p], Automatic]	a box is inert: it evaluates to itself

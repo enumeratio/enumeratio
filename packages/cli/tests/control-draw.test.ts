@@ -14,3 +14,10 @@ test("each kind of control draws by its intent", () => {
   );
   expect(column).toBe("c a  [b]\non [x]\np ⌖ (1, 1)");
 });
+
+test("the bars, an interval and a color draw by their intents", () => {
+  const column = draw(
+    'Column([TogglerBar((s, [2, 5]), [2, 3, 5]), IntervalSlider((r, (1, 3)), (0, 4)), ColorSlider((c, "red"))])',
+  );
+  expect(column).toBe("s [2]  3  [5]\nr ━━━●━━━━●━━━ (1, 3)\nc ■ red");
+});

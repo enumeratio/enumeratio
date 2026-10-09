@@ -162,6 +162,15 @@ class Writer {
       case "SetterBox":
       case "TogglerBox":
       case "AnimatorBox":
+      case "KnobBox":
+      case "StepperBox":
+      case "IntervalSliderBox":
+      case "ListPickerBox":
+      case "LocatorBox":
+      case "ColorSetterBox":
+      case "SetterBarBox":
+      case "RadioButtonBarBox":
+      case "TogglerBarBox":
         return `-${box[0].slice(0, -3)}-`;
       default:
         throw new Error("unreachable: BoxNode's tags are exhaustive above");

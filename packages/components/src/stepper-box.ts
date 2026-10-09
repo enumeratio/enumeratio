@@ -6,7 +6,7 @@ import { ensureStyles } from "./styles.ts";
 type Integers = Extract<Domain, { kind: "integers" }>;
 
 /**
- * `<notatio-stepper name="d" value="-5" min="-400" max="400" random>` -- an integer in a
+ * `<stepper-box name="d" value="-5" min="-400" max="400" random>` -- an integer in a
  * sentence, with ◀ ▶ to step to the next value its domain admits and, with `random`, a die for
  * a random one. A tangle-style control: it reads as the number, and binds `_d` like any other.
  * A `StringTemplate` hole sets `domain` from the variable's declaration, `Where` included.
@@ -78,7 +78,7 @@ export class NotatioStepper extends LitElement {
     const v = Number(this.value);
     const { min, max } = this.#domain;
     return html`<span
-      class="notatio-stepper"
+      class="stepper-box"
       role="spinbutton"
       aria-valuenow=${v}
       aria-label=${this.name}
@@ -105,4 +105,4 @@ export class NotatioStepper extends LitElement {
   }
 }
 
-defineControl("notatio-stepper", NotatioStepper);
+defineControl("stepper-box", NotatioStepper);

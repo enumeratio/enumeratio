@@ -201,7 +201,7 @@ export interface PlotOptions extends ColorOptions {
 
 /**
  * The plot area's geometry, so something drawn OVER the picture -- a hover readout, a
- * `<notatio-locator>` -- can go between data and viewBox coordinates both ways.
+ * `<locator-box>` -- can go between data and viewBox coordinates both ways.
  */
 export interface PlotFrame {
   /** The plot area in viewBox units: left, top, right, bottom. */

@@ -116,10 +116,37 @@ export const simpleAttributes: Attributes = (ops) => {
   return out;
 };
 
+/** An interval slider: the start is an interval, `(r, (1, 3))`, which the component takes as `1,3`. */
+export const intervalAttributes: Attributes = (ops) => {
+  const out = rangedAttributes(ops);
+  const pair = tupleOf(variable(ops[0]).init);
+  if (pair !== undefined && pair.length === 2) out.value = pair.map(clean).join(",");
+  return out;
+};
+
+/** A locator: name and start `(x, y)`; it has no corners of its own, it takes the plot's. */
+export const locatorAttributes: Attributes = (ops) => {
+  const out: Record<string, string> = {};
+  const { name, init } = variable(ops[0]);
+  if (name) out.name = name;
+  const point = tupleOf(init);
+  if (point !== undefined && point.length === 2) out.value = point.map(clean).join(",");
+  return out;
+};
+
 /** Each control box's arguments as attributes, by what it is for. */
 const ATTRIBUTES: Readonly<Record<ControlBoxHead, Attributes>> = {
   SliderBox: rangedAttributes,
   AnimatorBox: rangedAttributes,
+  KnobBox: rangedAttributes,
+  StepperBox: rangedAttributes,
+  IntervalSliderBox: intervalAttributes,
+  ListPickerBox: listedAttributes,
+  LocatorBox: locatorAttributes,
+  ColorSetterBox: simpleAttributes,
+  SetterBarBox: listedAttributes,
+  RadioButtonBarBox: listedAttributes,
+  TogglerBarBox: listedAttributes,
   Slider2DBox: planarAttributes,
   SetterBox: listedAttributes,
   TogglerBox: listedAttributes,

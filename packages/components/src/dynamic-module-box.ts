@@ -14,7 +14,7 @@ import { CONTROL_EVENT, Transcript } from "@enumeratio/frontend/core";
 import type { TrackedSymbols } from "@enumeratio/frontend";
 import { LitElement, nothing } from "lit";
 import "./dynamic-box.ts";
-import "./notatio-knob.ts";
+import "./knob-box.ts";
 import "./toggler-box.ts";
 import "./notatio-when.ts";
 import { ReactiveModule } from "./reactive-module.ts";

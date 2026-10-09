@@ -1,4 +1,4 @@
-import { NotatioSetterBar } from "./setter-box.ts";
+import { NotatioSetterBar } from "./setter-bar-box.ts";
 import { defineControl } from "./define.ts";
 
 /**
@@ -12,4 +12,4 @@ export class NotatioRadioButtonBar extends NotatioSetterBar {
   }
 }
 
-defineControl("notatio-radio-button-bar", NotatioRadioButtonBar);
+defineControl("radio-button-bar-box", NotatioRadioButtonBar);

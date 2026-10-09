@@ -141,7 +141,7 @@ const FAMILY_TAGS = [
   "notatio-polar-plot",
   "notatio-plot", // ParametricPlot: Wolfram's own separate head, same component as Plot
   "slider-box", // VerticalSlider: a SliderBox standing up
-  "setter-box", // SetterBar
+  "color-setter-box", // ColorSlider: Wolfram boxes it as a ColorSetterBox
   "notatio-show", // Permutahedron(4) and kin display as Show(PolytopeFaces(…)); values as Show(frame(…))
 ];
 

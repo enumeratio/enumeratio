@@ -65,7 +65,7 @@ export class NotatioListPicker extends ChoiceControl {
 
   protected override render(): unknown {
     return html`<div
-      class="notatio-list-picker"
+      class="list-picker-box"
       role="listbox"
       aria-label=${this.name || "choices"}
       aria-multiselectable=${String(this.multiple)}
@@ -92,4 +92,4 @@ export class NotatioListPicker extends ChoiceControl {
   }
 }
 
-defineControl("notatio-list-picker", NotatioListPicker);
+defineControl("list-picker-box", NotatioListPicker);

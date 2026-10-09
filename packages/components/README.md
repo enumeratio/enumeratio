@@ -26,10 +26,10 @@ import "@enumeratio/components";
   `<notatio-density-plot>`, `<notatio-vector-plot>`, `<notatio-polar-plot>`,
   `<notatio-complex-plot>` (and `-3d`), `<notatio-chart>` (the family head for
   Histogram/BarChart/PieChart-style symbols), `<notatio-graph-plot>`.
-- **Controls** — `<slider-box>` (`axis="y"` stands it up; and `<slider-2d-box>`, `<notatio-interval-slider>`,
-  `<notatio-color-slider>`), `<notatio-knob>`, `<toggler-box>` (and `<notatio-toggler-bar>`),
-  `<notatio-radio-button-bar>`, `<setter-box>`, `<checkbox-box>`,
-  `<notatio-list-picker>`, `<notatio-locator>`, `<input-field-box>` — every one
+- **Controls** — `<slider-box>` (`axis="y"` stands it up; and `<slider-2d-box>`, `<interval-slider-box>`,
+  `<color-setter-box>`), `<knob-box>`, `<toggler-box>` (and `<toggler-bar-box>`),
+  `<radio-button-bar-box>`, `<setter-bar-box>`, `<checkbox-box>`,
+  `<list-picker-box>`, `<locator-box>`, `<input-field-box>` — every one
   keeping the control contract from [`frontend`](../frontend/README.md) (`controls.ts`): a `name`, a
   MathJSON `binding`, a `notatio-control-change` event.
 - **Layout** — `Row`, `Column`, `Grid`, `Panel` and `Labeled` are boxes drawn as plain DOM by
