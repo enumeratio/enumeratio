@@ -30,7 +30,7 @@ import {
   nearestLatticePoint,
   orbited,
   paddingName,
-  PLOT_HEADS,
+  holdsPlot,
   paint,
   plainJson,
   type Producer,
@@ -76,8 +76,6 @@ const HIT_REACH = 12;
 /** Pointer travel (CSS px) below which a press is a click, not a drag. */
 const SLOP = 4;
 const DEFAULT_GROUND = "dusk";
-/** A value that is a 2-D plot (`Plot(…)`, `ListPlot(…)`): drawn by the plot view, not as a figure. */
-const PLOT_VALUE = new RegExp(`^\\s*(?:${PLOT_HEADS.join("|")})\\s*\\(`);
 
 const headOf = (json: Json): string | undefined =>
   Array.isArray(json) && typeof json[0] === "string" ? json[0] : undefined;
@@ -175,6 +173,14 @@ interface Override {
  * samples the expression, the samples lower to a curve (`LineBox`), dots (`PointBox`) or a filled
  * region (`PolygonBox`) in data coordinates, and hovering reads out the nearest sample of each
  * series. Inside a `Manipulate`, its wildcards (`_a`) follow the controls.
+ *
+ * So is a chart of data: `<graphics-box value="BarChart([3, 1, 4], Labels -> ["a", "b", "c"])">`, and
+ * `Histogram`, `PieChart`, `BoxWhiskerChart`, `ArrayPlot` of a matrix and `DiscretePlot` likewise. A bar
+ * or a cell is a `RectangleBox`, a pie's wedge a `DiskBox` sector, a stem a `LineBox` and its dot a
+ * `PointBox`. `Chart(data)` chooses the member from the data's shape (`Chart(data, "pie")` names it).
+ * An option is the attribute its name kebab-cases to: `Labels`, `Label` (the title), `Bins`, `Discrete`
+ * (the scheme that colors categories, default `tableau10`), `Gradient` (what an array plot's cells take
+ * by value, default `viridis`) and `Reverse`.
  */
 export class GraphicsBoxElement extends LitElement {
   static properties = {
@@ -302,7 +308,7 @@ export class GraphicsBoxElement extends LitElement {
 
   /** Whether `value` is a 2-D plot, which lowers to a box of data coordinates rather than a figure frame. */
   get #isPlot(): boolean {
-    return PLOT_VALUE.test(this.value);
+    return holdsPlot(this.value);
   }
 
   /** A plot's area, for an overlay such as a locator: its geometry in px and both ways to data. */

@@ -132,15 +132,14 @@ afterAll(() => {
 
 // Tags a family shares: a member picked by an argument shape (`ListContourPlot`'s data grid
 // vs `ContourPlot`'s expression + iterators) needs no `fixed` attribute of its own, unlike a
-// member picked by a fixed `type` (`Histogram` on `notatio-chart`) -- so membership is titled
+// member picked by a fixed `type` (`TreeGraph` on `notatio-graph-plot`) -- so membership is titled
 // on the shared tag, not on whether `fixed` is set.
 const FAMILY_TAGS = [
-  "notatio-chart",
   "notatio-contour-plot",
   "notatio-density-plot",
   "slider-box", // VerticalSlider: a SliderBox standing up
   "color-setter-box", // ColorSlider: Wolfram boxes it as a ColorSetterBox
-  "graphics-box", // Plot and kin lower to their data; Permutahedron(4) and kin display as Show(PolytopeFaces(…)); values as Show(frame(…))
+  "graphics-box", // Plot, BarChart and kin lower to their data; Permutahedron(4) and kin display as Show(PolytopeFaces(…)); values as Show(frame(…))
 ];
 
 test("every visual symbol's tag is its name, kebab-cased, or its family's", () => {

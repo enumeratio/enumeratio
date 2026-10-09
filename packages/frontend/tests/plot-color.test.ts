@@ -1,6 +1,6 @@
 import { expect, test } from "vite-plus/test";
 import { barChart3dSvg } from "../src/barchart3d.ts";
-import { arrayPlotSvg, barChartSvg, boxWhiskerChartSvg, pieChartSvg } from "../src/chart.ts";
+import { chartSvg } from "../src/chart.ts";
 import { complexSurfaceSvg, hueColor, hueOf, type ComplexSurface } from "../src/complex-plot-3d.ts";
 import { gradientUniform, MAX_STOPS, portraitShader } from "../src/complex-plot.ts";
 import { contourSvg } from "../src/contour.ts";
@@ -36,7 +36,7 @@ test("names are read without regard to case, and fall back to the defaults", () 
 const continuous: Record<string, (o: { gradient?: string; reverse?: boolean }) => string> = {
   // A plot clips to a random id per call.
   plot: (o) => linePlotSvg(line, { colorBy: "y", ...o }).replace(/nplot-\w+/g, ""),
-  array: (o) => arrayPlotSvg(ramp, o),
+  array: (o) => chartSvg("array", ramp, o),
   density: (o) => densitySvg(ramp, xs, xs, o),
   contourFilled: (o) => contourSvg(ramp, xs, xs, { filled: true, ...o }),
   contourLines: (o) => contourSvg(ramp, xs, xs, o),
@@ -81,10 +81,11 @@ test("series take the discrete scheme, one color each", () => {
   expect(linePlotSvg(two)).toContain('stroke="#4e79a7"');
   expect(linePlotSvg(two, { discrete: "set1" })).toContain('stroke="#e41a1c"');
   expect(linePlotSvg(two, { discrete: "set1" })).toContain('stroke="#377eb8"');
-  expect(barChartSvg([1, 2, 3], { discrete: "set1" })).toContain('fill="#e41a1c"');
-  expect(pieChartSvg([1, 2, 3], { discrete: "set1" })).toContain("#4daf4a");
+  expect(chartSvg("bar", [1, 2, 3], { discrete: "set1" })).toContain('fill="#e41a1c"');
+  expect(chartSvg("pie", [1, 2, 3], { discrete: "set1" })).toContain("#4daf4a");
   expect(
-    boxWhiskerChartSvg(
+    chartSvg(
+      "box",
       [
         [1, 2, 3],
         [2, 3, 4],

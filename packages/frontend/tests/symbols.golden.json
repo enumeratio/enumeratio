@@ -165,82 +165,75 @@
   },
   "BarChart([3, 1, 4, 1, 5])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "bar",
-        "data": "[3,1,4,1,5]"
+        "value": "BarChart([3, 1, 4, 1, 5])"
       }
     },
-    "markup": "<notatio-chart type=\"bar\" data=\"[3,1,4,1,5]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"BarChart([3, 1, 4, 1, 5])\"></graphics-box>"
   },
   "Histogram([1, 2, 2, 3, 3, 3])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "histogram",
-        "data": "[1,2,2,3,3,3]"
+        "value": "histogram([1, 2, 2, 3, 3, 3])"
       }
     },
-    "markup": "<notatio-chart type=\"histogram\" data=\"[1,2,2,3,3,3]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"histogram([1, 2, 2, 3, 3, 3])\"></graphics-box>"
   },
   "PieChart([1, 2, 3])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "pie",
-        "data": "[1,2,3]"
+        "value": "PieChart([1, 2, 3])"
       }
     },
-    "markup": "<notatio-chart type=\"pie\" data=\"[1,2,3]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"PieChart([1, 2, 3])\"></graphics-box>"
   },
   "BoxWhiskerChart([[1, 2, 3, 4, 5], [2, 4, 6, 8]])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "box",
-        "data": "[[1,2,3,4,5],[2,4,6,8]]"
+        "value": "BoxWhiskerChart([[1, 2, 3, 4, 5], [2, 4, 6, 8]])"
       }
     },
-    "markup": "<notatio-chart type=\"box\" data=\"[[1,2,3,4,5],[2,4,6,8]]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"BoxWhiskerChart([[1, 2, 3, 4, 5], [2, 4, 6, 8]])\"></graphics-box>"
   },
   "ArrayPlot([[1, 0], [0, 1]])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "array",
-        "data": "[[1,0],[0,1]]"
+        "value": "ArrayPlot([[1, 0], [0, 1]])"
       }
     },
-    "markup": "<notatio-chart type=\"array\" data=\"[[1,0],[0,1]]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"ArrayPlot([[1, 0], [0, 1]])\"></graphics-box>"
   },
   "DiscretePlot([1, 2, 4, 8])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "discrete",
-        "data": "[1,2,4,8]"
+        "value": "DiscretePlot([1, 2, 4, 8])"
       }
     },
-    "markup": "<notatio-chart type=\"discrete\" data=\"[1,2,4,8]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"DiscretePlot([1, 2, 4, 8])\"></graphics-box>"
   },
   "Chart([3, 1, 4, 1, 5])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "data": "[3,1,4,1,5]"
+        "value": "Chart([3, 1, 4, 1, 5])"
       }
     },
-    "markup": "<notatio-chart data=\"[3,1,4,1,5]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"Chart([3, 1, 4, 1, 5])\"></graphics-box>"
   },
   "Chart([1, 2, 3], \"pie\")": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "data": "[1,2,3]",
-        "type": "pie"
+        "value": "Chart([1, 2, 3], \"pie\")"
       }
     },
-    "markup": "<notatio-chart data=\"[1,2,3]\" type=\"pie\"></notatio-chart>"
+    "markup": "<graphics-box value=\"Chart([1, 2, 3], &quot;pie&quot;)\"></graphics-box>"
   },
   "ListPlot3D([[1, 2], [3, 4]])": {
     "rendering": {
@@ -1031,14 +1024,12 @@
   },
   "ArrayPlot([[1, 0], [0, 2]], ColorFunction -> \"cividis\")": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "array",
-        "data": "[[1,0],[0,2]]",
-        "gradient": "cividis"
+        "value": "ArrayPlot([[1, 0], [0, 2]], ColorFunction -> \"cividis\")"
       }
     },
-    "markup": "<notatio-chart type=\"array\" data=\"[[1,0],[0,2]]\" gradient=\"cividis\"></notatio-chart>"
+    "markup": "<graphics-box value=\"ArrayPlot([[1, 0], [0, 2]], ColorFunction -> &quot;cividis&quot;)\"></graphics-box>"
   },
   "Slider(k, (0, 5), Appearance -> \"Labeled\")": {
     "rendering": {

@@ -143,6 +143,7 @@ function writeNode(box: BoxNode): string {
     case "LineBox":
     case "PointBox":
     case "ArrowBox":
+    case "RectangleBox":
     case "PolygonBox":
     case "PolyhedronBox":
     case "InsetBox":

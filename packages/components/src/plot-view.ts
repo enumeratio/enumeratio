@@ -3,13 +3,15 @@
 // `GraphicsBox` (`plotBox`, or `vectorPlotBox` for a field) that `svg()` draws. What the page adds is the pointer's hover readout
 // and, for a plot in a Manipulate, the wildcards (`_a`) the controls fill. A plot's `Locator`
 // reads its geometry through `frame`. A diagram (`GraphPlot(…)`, `TorusSquare(2, 3)`) needs no
-// sampling: its box is lowered whole, and a torus square's point follows the page's clock.
+// sampling: its box is lowered whole, and a torus square's point follows the page's clock. So does a
+// chart (`BarChart([3, 1, 4])`), which holds its data (`chartBox`).
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Box, BoxNode } from "@enumeratio/boxes";
 import {
+  chartBoxOfSettings,
   debug,
   type Field2d,
   diagramBoxOf,
@@ -26,6 +28,7 @@ import {
   polarPointsOf,
   primitivesOf,
   type Primitive,
+  renderChart,
   renderDiagram,
   renderPlot,
   samplePolar,
@@ -92,6 +95,7 @@ export class PlotView {
   #box: BoxNode | undefined;
   /** Whether the box is a vector field, which has no curve for a hover to read. */
   #field = false;
+  #charted = false;
   #svg = "";
   #hover: number | undefined;
   #xAt: (px: number) => number = () => Number.NaN;
@@ -116,9 +120,11 @@ export class PlotView {
     if (plot === undefined) return this.#clear();
     const { json: plain, settings } = plot;
     this.#settings = settings;
+    this.#reset();
     if (settings["layout"] !== undefined) return this.#diagramize(settings);
-    this.#stop();
     const head = Array.isArray(plain) ? plain[0] : undefined;
+    const chart = chartBoxOfSettings(settings);
+    if (chart !== undefined) return this.#chart(chart as BoxNode);
     try {
       if (typeof head === "string" && POLAR.has(head)) await this.#polarize(head, settings, generation);
       else if (typeof head === "string" && FIELD.has(head)) await this.#vectorize(settings, generation);
@@ -129,12 +135,31 @@ export class PlotView {
     }
   }
 
+  /** A chart of data: lowered whole, so nothing is sampled and the pointer reads nothing out. */
+  #chart(box: BoxNode): void {
+    this.#charted = true;
+    this.#series = [];
+    this.#box = box;
+    this.#frame = undefined;
+    this.#xAt = () => Number.NaN;
+    this.#svg = renderChart(box);
+    this.#finish();
+  }
+
   #clear(): void {
-    this.#stop();
+    this.#reset();
     this.#series = [];
     this.#polar = this.#box = undefined;
     this.#svg = "";
     this.host.requestUpdate();
+  }
+
+  /** Forget the last plot's mode, so a plot of another kind starts clean. */
+  #reset(): void {
+    this.#stop();
+    this.#charted = false;
+    this.#field = false;
+    this.#polar = undefined;
   }
 
   /** Stop following the clock, and forget a diagram. */
@@ -153,10 +178,8 @@ export class PlotView {
 
   /** Draw a diagram, and with it a torus square's point as the page's clock moves it. */
   #diagramize(settings: Readonly<Record<string, string>>): void {
-    this.#stop();
     this.#series = [];
-    this.#polar = this.#box = undefined;
-    this.#field = false;
+    this.#box = undefined;
     this.#frame = undefined;
     this.host.setAttribute("data-diagram", settings["layout"]!);
     const draw = (phase?: number, first = false): void => {
@@ -336,7 +359,7 @@ export class PlotView {
   }
 
   #onPointerMove = (e: PointerEvent): void => {
-    if (this.#polar || this.#field || this.#diagram) return;
+    if (this.#polar || this.#field || this.#diagram || this.#charted) return;
     const svg = this.host.querySelector("svg");
     if (!svg) return;
     // Map the pointer into viewBox units; the SVG scales to fit its box.

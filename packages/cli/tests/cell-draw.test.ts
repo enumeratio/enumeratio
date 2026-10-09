@@ -42,6 +42,10 @@ const CASES: Record<string, string> = {
   streams: "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))",
   graph: 'GraphPlot({"edges" -> [["a", "b"], ["b", "c"], ["c", "a"]]}, Directed -> True)',
   torus: "TorusSquare(2, 3, Phase -> 0.32, Dials -> False)",
+  bars: "BarChart([3, 1, 4, 1, 5])",
+  pie: "PieChart([1, 2, 3])",
+  cells: "ArrayPlot([[1, 0, 1], [0, 1, 0]])",
+  table: "ArrayPlot(MultiplicationTable(QuotientRing(Integers, 5)))",
 };
 
 for (const [name, input] of Object.entries(CASES)) {

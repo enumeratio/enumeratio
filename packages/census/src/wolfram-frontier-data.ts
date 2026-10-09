@@ -449,10 +449,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 18,
   },
   {
-    head: "RectangleBox",
-    uses: 18,
-  },
-  {
     head: "RegionPlot3D",
     uses: 18,
   },

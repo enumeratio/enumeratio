@@ -7,7 +7,7 @@
 // can sample asks for the marks (`plotBoxOfSamples`). Sampling stays with that environment.
 
 import { type Box, type BoxNode, graphics, interpretation, row } from "@enumeratio/boxes";
-import { isNumber } from "./chart.ts";
+import { chartBox, type ChartBoxOptions, isChartKind, isNumber } from "./chart.ts";
 import { DIAGRAM_HEADS } from "./diagram-lowering.ts";
 import { type PlotOptions, type PlotPoint, type PlotSeries, plotBox } from "./plot-box.ts";
 import type { Primitive } from "./primitives.ts";
@@ -27,8 +27,68 @@ export const PLOT_HEADS: readonly string[] = [
   ...DIAGRAM_HEADS,
 ];
 
+/**
+ * The heads whose charts are `GraphicsBox`es, drawn by `<graphics-box>`. `Chart` is the family's
+ * head: its member is chosen from the data unless it is named.
+ */
+export const CHART_HEADS: readonly string[] = [
+  "BarChart",
+  "Histogram",
+  "PieChart",
+  "BoxWhiskerChart",
+  "ArrayPlot",
+  "DiscretePlot",
+  "Chart",
+];
+
+// A head is written as Epsil spells it: a library name with its first letter lowercase (`histogram(…)`)
+// or as declared (`Histogram(…)`).
+const spellings = (heads: readonly string[]): string =>
+  heads.flatMap((h) => [h, h.charAt(0).toLowerCase() + h.slice(1)]).join("|");
+
+// An `ArrayPlot` of a table (`MultiplicationTable(…)`) is a `Show`'s tiled layer, not a chart of a
+// matrix, so it counts only when its data is a list written out.
+const valueOf = (heads: readonly string[]): RegExp =>
+  new RegExp(
+    `^\\s*(?:(?:${spellings([...heads, ...CHART_HEADS.filter((h) => h !== "ArrayPlot")])})\\s*\\(|(?:${spellings(["ArrayPlot"])})\\s*\\(\\s*\\[)`,
+  );
+const PLOT_VALUE = valueOf(PLOT_HEADS);
+const SAMPLED_VALUE = valueOf(PLOT_HEADS.filter((head) => !DIAGRAM_HEADS.includes(head)));
+
+/** Whether `value` is a plot, a chart or a diagram (`Plot(…)`, `BarChart([…])`), which `<graphics-box>` draws as one. */
+export const holdsPlot = (value: string | undefined): boolean => PLOT_VALUE.test(value ?? "");
+
+/** Whether `value` is a plot or a chart the build can draw: a diagram, like a `Show`, is drawn live. */
+export const holdsPrerenderedPlot = (value: string | undefined): boolean => SAMPLED_VALUE.test(value ?? "");
+
 /** Plot settings, the attributes an expression's options lower to (`plotSettingsOf`). */
 export type PlotSettings = Readonly<Record<string, string>>;
+
+const jsonOf = (text: string | undefined): unknown => {
+  try {
+    return text?.trim() ? JSON.parse(text) : undefined;
+  } catch {
+    return undefined;
+  }
+};
+
+/** The chart a chart head's settings describe; undefined for a plot, or a list that is no matrix of an `ArrayPlot`. */
+export function chartBoxOfSettings(settings: PlotSettings): Box | undefined {
+  const kind = settings["type"];
+  if (!isChartKind(kind)) return undefined;
+  const data = jsonOf(settings["data"]);
+  if (kind === "array" && !(Array.isArray(data) && data.every(Array.isArray))) return undefined;
+  const labels = jsonOf(settings["labels"]);
+  const options: ChartBoxOptions = {
+    labels: Array.isArray(labels) ? labels.map(String) : undefined,
+    title: settings["label"] || undefined,
+    bins: settings["bins"] ? Number(settings["bins"]) : undefined,
+    gradient: settings["gradient"],
+    discrete: settings["discrete"],
+    reverse: on(settings["reverse"]),
+  };
+  return chartBox(kind, data, options);
+}
 
 /** `data` (a number list: index against value; pairs; or `{x, y}`) as points. */
 export function pointsOfData(data: unknown): PlotPoint[] {

@@ -16,7 +16,7 @@ const component = computed(() => components.find((c) => c.name === props.name));
 const paragraphs = computed(() => split(component.value?.summary ?? ""));
 const stories = computed(() => storiesFor(props.name));
 
-// Every head this tag draws -- a family tag (`notatio-chart`) draws several (`Histogram`,
+// Every head this tag draws -- a family tag (`graphics-box`) draws several (`Plot`, `Histogram`,
 // `PieChart`, …), each with its own symbol page; a direct element draws just its own.
 const heads = computed(() => {
   const tag = component.value?.tag;

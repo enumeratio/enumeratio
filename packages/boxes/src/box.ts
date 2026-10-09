@@ -67,6 +67,7 @@ export type BoxNode =
   | readonly ["LineBox", Options?]
   | readonly ["PointBox", Options?]
   | readonly ["ArrowBox", Options?]
+  | readonly ["RectangleBox", Options?]
   | readonly ["PolygonBox", Options?]
   | readonly ["PolyhedronBox", Options?]
   | readonly ["InsetBox", Box, Options?]
@@ -117,6 +118,7 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   LineBox: 0,
   PointBox: 0,
   ArrowBox: 0,
+  RectangleBox: 0,
   PolygonBox: 0,
   PolyhedronBox: 0,
   InsetBox: 1,
@@ -200,6 +202,7 @@ export const disk = (options?: Options): Box => ["DiskBox", ...withOptions([] as
 export const line = (options?: Options): Box => ["LineBox", ...withOptions([] as const, options)] as Box;
 export const point = (options?: Options): Box => ["PointBox", ...withOptions([] as const, options)] as Box;
 export const arrow = (options?: Options): Box => ["ArrowBox", ...withOptions([] as const, options)] as Box;
+export const rectangle = (options?: Options): Box => ["RectangleBox", ...withOptions([] as const, options)] as Box;
 export const polygon = (options?: Options): Box => ["PolygonBox", ...withOptions([] as const, options)] as Box;
 export const polyhedron = (options?: Options): Box => ["PolyhedronBox", ...withOptions([] as const, options)] as Box;
 export const inset = (content: Box, options?: Options): Box =>

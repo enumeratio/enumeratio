@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[RectangleBox, [Tuple, Min, [List, 0, 0]], [Tuple, Max, [List, 1, 2]]]	[RectangleBox, [Tuple, Min, [List, 0, 0]], [Tuple, Max, [List, 1, 2]]]	a box is inert: it evaluates to itself

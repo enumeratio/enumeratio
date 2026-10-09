@@ -1205,6 +1205,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "RealDigits",
     "RealSign",
     "Reap",
+    "RectangleBox",
     "RecurrenceTable",
     "Refine",
     "Replace",

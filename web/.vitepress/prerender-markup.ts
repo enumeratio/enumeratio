@@ -8,7 +8,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { DIAGRAM_HEADS, PLOT_HEADS } from "@enumeratio/frontend/core";
+import { holdsPrerenderedPlot } from "@enumeratio/frontend/core";
 
 /** One element a page asks the build to render. */
 export interface MarkupSpec {
@@ -23,10 +23,7 @@ export interface MarkupSpec {
 
 const PRERENDERED = new Set(["notatio-cell", "graphics-box"]);
 
-/** Whether a `graphics-box` holds a sampled plot, which the build draws; a `Show` or a diagram is drawn live. */
-const holdsPlot = (value: string | undefined): boolean =>
-  value !== undefined &&
-  new RegExp(`^\\s*(?:${PLOT_HEADS.filter((head) => !DIAGRAM_HEADS.includes(head)).join("|")})\\s*\\(`).test(value);
+// A `graphics-box` is prerendered when it holds a sampled plot or a chart; a `Show` or a diagram is drawn live.
 const SPECS_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "cache/prerender-pages");
 
 /** Where a page's specs are kept, by its source path. */
@@ -85,7 +82,7 @@ export function prerenderMarkup(md: MarkdownItLike): void {
         if (close || !PRERENDERED.has(tag)) return whole;
         const attributes = attributesOf(attrs);
         if (attributes["prerender"] === "false") return whole;
-        if (tag === "graphics-box" && !holdsPlot(attributes["value"])) return whole;
+        if (tag === "graphics-box" && !holdsPrerenderedPlot(attributes["value"])) return whole;
         const at = specs.length;
         specs.push({ at, tag, attributes, manipulate: [...manipulate], inSession: sessions > 0 });
         const inside = verbatim.at(-1) === true;

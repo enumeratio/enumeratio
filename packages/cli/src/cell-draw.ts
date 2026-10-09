@@ -5,7 +5,7 @@
 // text out. Selection and hover are the web's; the marks' own colors are kept where the terminal has color.
 
 import { type Box, type BoxNode, isNode, optionsOfBox, type Options } from "@enumeratio/boxes";
-import { arrowhead, complexOf, isDiagramBox, isPlotBox, pinnedBox, plotItems } from "@enumeratio/frontend";
+import { arrowhead, complexOf, isChartBox, isDiagramBox, isPlotBox, pinnedBox, plotItems } from "@enumeratio/frontend";
 
 type Point = readonly number[];
 
@@ -490,6 +490,57 @@ function diagramMarks(box: BoxNode): Mark[] {
   return out;
 }
 
+/** Points round a sector's rim per full turn: enough that its outline reads as round on braille. */
+const RIM_STEPS = 48;
+
+/** A chart's marks in its data coordinates: bars and cells as outlines, a wedge as its rim, stems as lines. */
+function chartMarks(box: BoxNode): Mark[] {
+  const out: Mark[] = [];
+  for (const { prim, look } of plotItems(box)) {
+    const o = optionsOfBox(prim);
+    const edges = Array.isArray(look.EdgeForm) ? look.EdgeForm : [];
+    const first = edges[0];
+    const edge = Array.isArray(first) && typeof first[0] === "string" ? first[0] : undefined;
+    const face = typeof look.FaceForm === "string" ? look.FaceForm : undefined;
+    const base = { ...(face && { face }), ...(edge && { edge }) };
+    switch (prim[0]) {
+      case "RectangleBox": {
+        const [lo, hi] = [pointOf(o.Min), pointOf(o.Max)];
+        if (lo && hi)
+          out.push({
+            ...base,
+            shape: { head: "Polygon", points: [lo, [hi[0]!, lo[1]!], hi, [lo[0]!, hi[1]!]] },
+          });
+        break;
+      }
+      case "DiskBox": {
+        const [center, angles] = [pointOf(o.Center), pointOf(o.Angles)];
+        const radius = o.Radius;
+        if (!center || typeof radius !== "number") break;
+        const [a, b] = angles ?? [0, 2 * Math.PI];
+        const steps = Math.max(2, Math.ceil(((b! - a!) / (2 * Math.PI)) * RIM_STEPS));
+        const rim = Array.from({ length: steps + 1 }, (_, k): Point => {
+          const t = a! + ((b! - a!) * k) / steps;
+          return [center[0]! + radius * Math.cos(t), center[1]! + radius * Math.sin(t)];
+        });
+        out.push({ ...base, shape: { head: "Polygon", points: angles ? [center, ...rim] : rim } });
+        break;
+      }
+      case "LineBox":
+        out.push({ ...base, shape: { head: "Line", points: pointsOf(o.Points), breaks: [] } });
+        break;
+      case "PointBox":
+        for (const center of pointsOf(o.Points)) out.push({ ...base, shape: { head: "Disk", center } });
+        break;
+      case "PolygonBox":
+        out.push({ ...base, shape: { head: "Polygon", points: pointsOf(o.Points) } });
+        break;
+      default:
+    }
+  }
+  return out;
+}
+
 /** A diagram's `GraphicsBox` on character cells, under its title. */
 export function drawDiagramBox(box: BoxNode, options: CellOptions = {}): string {
   const cells = drawBraille(diagramMarks(box), options.width ?? 60, options.height ?? 14);
@@ -498,10 +549,36 @@ export function drawDiagramBox(box: BoxNode, options: CellOptions = {}): string 
   return typeof title === "string" ? `${title}\n${body}` : body;
 }
 
+/** A chart's `GraphicsBox` on character cells: its marks on braille in data coordinates, under its title. */
+export function drawChartBox(box: BoxNode, options: CellOptions = {}): string {
+  const marks = chartMarks(box);
+  const o = optionsOfBox(box);
+  const range = Array.isArray(o.PlotRange) ? (o.PlotRange as number[][]) : undefined;
+  const origin = pointOf(o.AxesOrigin);
+  // The axis the bars stand on, across the plot's width.
+  if (range && origin && o.Axes !== undefined)
+    marks.push({
+      shape: {
+        head: "Line",
+        points: [
+          [range[0]![0]!, origin[1]!],
+          [range[0]![1]!, origin[1]!],
+        ],
+        breaks: [],
+      },
+      edge: "#808080",
+    });
+  if (marks.length === 0) return "(nothing to draw)";
+  const title = typeof o.PlotLabel === "string" ? `${o.PlotLabel}\n` : "";
+  const cells = drawBraille(marks, options.width ?? 60, options.height ?? 14);
+  return title + cells.toString(options.color ?? false);
+}
+
 /** A figure's `GraphicsBox` on character cells; the reason it can't be drawn, as text, otherwise. */
 export function drawGraphicsBox(box: Box, options: CellOptions = {}): string {
   if (isPlotBox(box)) return drawPlotBox(box, options);
   if (isDiagramBox(box)) return drawDiagramBox(box, options);
+  if (isChartBox(box)) return drawChartBox(box, options);
   const [width, height] = [options.width ?? 60, options.height ?? 14];
   // A lattice holds a producer: pin it to the view the cells can resolve (a cell is 2 by 4 dots).
   const pinned = pinnedBox(box, { width: width * 2, height: height * 4, maxCells: PINNED_TILES });

@@ -10,7 +10,16 @@ import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import { createKernel, type Kernel } from "@enumeratio/evaluation";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { plotSettingsOf } from "@enumeratio/frontend/symbols";
-import { parseControls, plainJson, plotBoxOfSamples, plotSeries, renderPlot, spanOf } from "@enumeratio/frontend/core";
+import {
+  chartBoxOfSettings,
+  parseControls,
+  plainJson,
+  plotBoxOfSamples,
+  plotSeries,
+  renderChart,
+  renderPlot,
+  spanOf,
+} from "@enumeratio/frontend/core";
 import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import type { CompiledPlot } from "@enumeratio/frontend/plot-compile";
 import { prerender } from "@enumeratio/frontend/prerender";
@@ -64,6 +73,9 @@ async function plotPreview(spec: MarkupSpec): Promise<string | undefined> {
   // The expression's settings, as the element reads them; what the build can't draw it leaves live.
   const { json, errors } = parseExpression(written);
   const settings = errors.length > 0 ? undefined : plotSettingsOf(plainJson(json as never) as never);
+  // A chart of data needs no kernel; one in a Manipulate may hold wildcards, so it stays live.
+  const chart = settings === undefined || spec.manipulate.length > 0 ? undefined : chartBoxOfSettings(settings);
+  if (chart !== undefined) return `<span class="graphics-box-plot">${renderChart(chart as never)}</span>`;
   const text = settings?.["value"];
   if (settings === undefined || text === undefined || settings["type"] !== undefined) return undefined;
   if (settings["epilog"] || settings["prolog"]) return undefined;
