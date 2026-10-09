@@ -42,6 +42,8 @@ function series(
     let previous: BigDecimal | undefined;
     let run = 0; // consecutive shrinking terms
     let worstRatio = big(0);
+    const risingRatio = upper.length === lower.length + 1; // p = q + 1: the ratio tends to z
+    const zSize = z.abs();
     for (let k = 0; k < MAX_TERMS; k++) {
       const term = invGammas.reduce((t, g) => t.mul(g), core);
       sum = sum.add(term).toPrecision(working);
@@ -53,8 +55,13 @@ function series(
           run += 1;
           const ratio = size.div(previous);
           if (run === 1 || ratio.gt(worstRatio)) worstRatio = ratio;
-          const tail = size.mul(worstRatio).div(big(1).sub(worstRatio));
-          if (run >= SETTLED_RUN && tail.lte(tol.mul(sum.abs()))) return { sum, peak };
+          // A p = q + 1 series' ratio rises toward |z| (DLMF 16.2), so the run's largest ratio alone
+          // understates the tail.
+          const bound = risingRatio && zSize.gt(worstRatio) ? zSize : worstRatio;
+          if (run >= SETTLED_RUN && bound.lt(1)) {
+            const tail = size.mul(bound).div(big(1).sub(bound));
+            if (tail.lte(tol.mul(sum.abs()))) return { sum, peak };
+          }
         } else {
           run = 0;
         }

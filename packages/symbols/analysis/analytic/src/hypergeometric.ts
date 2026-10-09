@@ -119,8 +119,8 @@ export function pfqSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx
  * pole (`poleBound`, below).
  *
  * The sum settles only after `SETTLED_RUN` consecutive shrinking terms whose geometric tail bound,
- * |term|·r/(1 − r) at the run's largest ratio r, is under `TOL` relative to the sum. One small term
- * is not enough: a term can dip near a zero factor and grow again.
+ * |term|·r/(1 − r) at the run's largest ratio r (at least |z| when p = q + 1), is under `TOL`
+ * relative to the sum. One small term is not enough: a term can dip near a zero factor and grow again.
  */
 function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx | undefined {
   const poleBound = lower.reduce((m, b) => (isNonPositiveInt(b) ? Math.max(m, -b.re) : m), -1);
@@ -134,6 +134,8 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
   let previous: number | undefined;
   let run = 0;
   let worstRatio = 0;
+  const risingRatio = upper.length === lower.length + 1; // p = q + 1: the ratio tends to z
+  const zSize = mag(z);
   for (let k = 0; k < MAX_TERMS; k++) {
     if (k > 0) {
       lower.forEach((b, i) => {
@@ -153,7 +155,10 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
       if (ratio < 1) {
         run += 1;
         worstRatio = run === 1 ? ratio : Math.max(worstRatio, ratio);
-        if (run >= SETTLED_RUN && (size * worstRatio) / (1 - worstRatio) <= TOL * mag(sum)) return sum;
+        // A p = q + 1 series' ratio rises toward |z| (DLMF 16.2), so the run's largest ratio alone
+        // understates the tail: 2F1(1, 1; 2; z) has ratio (k + 1)z/(k + 2), still climbing at k.
+        const bound = risingRatio ? Math.max(worstRatio, zSize) : worstRatio;
+        if (run >= SETTLED_RUN && bound < 1 && (size * bound) / (1 - bound) <= TOL * mag(sum)) return sum;
       } else {
         run = 0;
       }
