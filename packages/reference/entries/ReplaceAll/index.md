@@ -6,7 +6,14 @@ summary: "ReplaceAll(expr, rules): apply one or more replacement rules to `expr`
 signatures:
   - call: ReplaceAll(any, any+) -> any
     description: as compute-engine declares it
+  - call: ReplaceAll(any, any+) -> any
+    description: a rule with a compound left side applies wherever it matches, top-down, the first matching rule winning at each part.
+    library: enumeratio-combinatorics
+    type: (any, any+) -> any
+    overrides: compute-engine
 stub: engine
+attributes:
+  - HoldAll
 names:
   wolframIdentity: true
 ---

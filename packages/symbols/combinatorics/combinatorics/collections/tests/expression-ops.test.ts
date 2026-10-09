@@ -95,6 +95,35 @@ test("Replace differs from ReplaceAll exactly on that subexpression case", () =>
   expect(viaReplaceAll).toEqual(["List", 100, 99]);
   expect(viaReplace).not.toEqual(viaReplaceAll);
 });
+test("ReplaceAll replaces a compound part wherever it sits, top-down", () => {
+  const x2 = ["Power", "x", 2];
+  expect(run(["ReplaceAll", ["List", "x", x2, ["Power", "x", 3], "a"], ["Rule", x2, "y"]])).toEqual([
+    "List",
+    "x",
+    "y",
+    ["Power", "x", 3],
+    "a",
+  ]);
+  expect(run(["ReplaceAll", ["Sin", ["Add", "x", 1]], ["Rule", ["Add", "x", 1], "y"]])).toEqual(["Sin", "y"]);
+  // The first matching rule wins at a part, and what it produces isn't rewritten again.
+  expect(run(["ReplaceAll", ["List", "x", x2], ["List", ["Rule", x2, "a"], ["Rule", "x", ["Power", "x", 2]]]])).toEqual(
+    ["List", ["Power", "x", 2], "a"],
+  );
+});
+test("Same compares values, not the expressions as written", () => {
+  expect(run(["Same", ["Reverse", ["List", 1, 2]], ["List", 2, 1]])).toEqual("True");
+  expect(run(["Same", ["Sort", ["List", 3, 1]], ["List", 1, 3], ["List", 1, 3]])).toEqual("True");
+  expect(run(["Same", ["List", 1, 2], ["List", 1, 3]])).toEqual("False");
+  expect(run(["Same", "x", "y"])).toEqual("False");
+});
+test("Expand evaluates a finite Product or Sum before expanding it", () => {
+  expect(run(["Expand", ["Product", ["Add", "x", "i"], ["Tuple", "i", 1, 3]]])).toEqual(
+    run(["Add", ["Power", "x", 3], ["Multiply", 6, ["Power", "x", 2]], ["Multiply", 11, "x"], 6]),
+  );
+  expect(run(["Expand", ["Sum", ["Power", ["Add", "x", 1], "i"], ["Tuple", "i", 1, 2]]])).toEqual(
+    run(["Add", ["Power", "x", 2], ["Multiply", 3, "x"], 2]),
+  );
+});
 test("Replace tries a list of rules in order", () => {
   expect(run(["Replace", "b", ["List", ["Rule", "a", 1], ["Rule", "b", 2]]])).toEqual(2);
 });

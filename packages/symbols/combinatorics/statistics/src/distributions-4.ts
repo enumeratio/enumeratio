@@ -395,6 +395,34 @@ const transformedInfo = (ce: Engine, dist: Expr, options: EvaluateOptions): Tran
   return { kind: "affine", a, aNum, b: finish(coeffs.b, options), inner };
 };
 
+/** `Norm({x1, ..., xk})` of `k >= 2` independent standard normals, which is
+ *  `Sqrt(|x1|^2 + ... + |xk|^2)` once canonical: the chi distribution with `k` degrees of freedom
+ *  (`Rayleigh(1)` for two). Only the standard normal, over the variables in the binding. */
+const normOfNormals = (ce: Engine, expr: Expr, distributed: Expr): Expr | undefined => {
+  if (distributed.operator !== "Distributed" || expr.operator !== "Sqrt") return undefined;
+  const [vars, product] = operandsOf(distributed);
+  if (vars?.operator !== "List" || product?.operator !== "ProductDistribution") return undefined;
+  const names = operandsOf(vars).map(symbolNameOf);
+  const k = names.length;
+  if (k < 2 || new Set(names).size !== k || names.includes(undefined)) return undefined;
+  if (operandsOf(product).length !== k || !operandsOf(product).every((d) => isStandardNormal(ce, d))) return undefined;
+  // One term `v^2` or `|v|^2` per variable.
+  const termName = (term: Expr): string | undefined => {
+    const [base, exponent] = term.operator === "Power" ? operandsOf(term) : [];
+    if (base === undefined || integerAt(exponent) !== 2) return undefined;
+    return symbolNameOf(base.operator === "Abs" ? operandsOf(base)[0] : base);
+  };
+  const sum = operandsOf(expr)[0];
+  const used = sum?.operator === "Add" ? operandsOf(sum).map(termName) : [];
+  if (
+    used.length !== k ||
+    new Set(used).size !== k ||
+    !used.every((name) => name !== undefined && names.includes(name))
+  )
+    return undefined;
+  return k === 2 ? ce.function("RayleighDistribution", [ce.One]) : ce.function("ChiDistribution", [ce.number(k)]);
+};
+
 const transformedPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const info = transformedInfo(ce, dist, options);
   if (info === undefined) return undefined;
@@ -521,7 +549,10 @@ function declareConstructors4(ce: Engine): void {
     signature: "((distribution*) -> distribution) & ((list<any>) -> distribution)",
   });
   extendHead(ce, "ProductDistribution", { canonical: (ops: readonly Expr[]) => productCanonical(ce, ops) });
-  ce.declare("TransformedDistribution", { signature: "(any, expression<Distributed>) -> distribution" });
+  ce.declare("TransformedDistribution", {
+    signature: "(any, expression<Distributed>) -> distribution",
+    evaluate: (ops: readonly Expr[]) => (ops.length === 2 ? normOfNormals(ce, ops[0], ops[1]) : undefined),
+  });
   ce.declare("MarginalDistribution", {
     signature: "(expression<ProductDistribution>, integer | list<integer>) -> distribution",
     evaluate: (ops: readonly Expr[], options: EvaluateOptions) =>

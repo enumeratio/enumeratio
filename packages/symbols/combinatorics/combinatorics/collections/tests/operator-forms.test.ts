@@ -21,6 +21,12 @@ test("Filter(pred)(xs) takes the list first, as Select[crit][xs] does", () => {
   expect(run(["Apply", ["Filter", "IsEven"], ["List", 1, 2, 4, 7, 6, 2]])).toEqual(["List", 2, 4, 6, 2]);
 });
 
+test("calling a Function literal renames a parameter the argument would be captured by", () => {
+  const curried = ["Function", ["Function", ["Power", "y", "x"], "x"], "y"];
+  expect(run(["Apply", ["Apply", curried, "x"], "y"])).toEqual(["Power", "x", "y"]);
+  expect(run(["Apply", ["Function", ["Add", "_1", 1]], 2])).toBe(3);
+});
+
 test("a bound slot in head position is called", () => {
   expect(run(["FoldList", ["Function", ["Block", ["_2", "_1"]], "_1", "_2"], "x", ["List", "a", "b"]])).toEqual([
     "List",

@@ -214,6 +214,31 @@ describe("TransformedDistribution: affine change of variable", () => {
   });
 });
 
+describe("TransformedDistribution: the norm of independent standard normals", () => {
+  const normOf = (names: string[], bound = names, d: unknown = ["NormalDistribution"]) => [
+    "TransformedDistribution",
+    ["Norm", ["List", ...names]],
+    ["Distributed", ["List", ...bound], ["ProductDistribution", ["List", d, bound.length]]],
+  ];
+
+  test("is chi with k degrees of freedom, Rayleigh(1) for k = 2", () => {
+    expect(evalOf(normOf(["x", "y", "w", "z"])).json).toEqual(["ChiDistribution", 4]);
+    expect(evalOf(normOf(["x", "y"])).json).toEqual(["RayleighDistribution", 1]);
+  });
+
+  test("has the mean E|Z| = sqrt(2) Gamma((k+1)/2) / Gamma(k/2) of a norm of normals", () => {
+    expect(N(["Mean", normOf(["x", "y"])])).toBeCloseTo(Math.sqrt(Math.PI / 2), 12);
+    expect(N(["Mean", normOf(["x", "y", "z"])])).toBeCloseTo(2 * Math.sqrt(2 / Math.PI), 12);
+  });
+
+  test("stays a transform for anything else", () => {
+    expect(evalOf(normOf(["x", "y"], ["x", "y"], ["NormalDistribution", 0, 2])).operator).toBe(
+      "TransformedDistribution",
+    );
+    expect(evalOf(normOf(["x", "z"], ["x", "y"])).operator).toBe("TransformedDistribution");
+  });
+});
+
 describe("DirichletDistribution: Mean components sum to at most 1, Variance is nonnegative", () => {
   const cases: readonly (readonly number[])[] = [
     [1, 4, 5],

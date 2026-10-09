@@ -2,7 +2,9 @@ import {
   applyFunction,
   type Engine,
   type Expr,
+  extendHead,
   integerAt,
+  nativeEvaluate,
   operandsOf,
   stringAt,
   symbolNameOf,
@@ -158,6 +160,16 @@ function replaceAtPath(ce: Engine, expr: Expr, path: readonly number[], value: E
   return ce.box([expr.operator, ...nextOps] as never);
 }
 
+/** The `[lhs, rhs]` pairs of rules given as `Rule`s or lists of `Rule`s, or `undefined` for
+ *  anything else (a nested rule set, a blank this grammar can't read). */
+function rulesOf(specs: readonly Expr[]): [Expr, Expr][] | undefined {
+  const rules = specs.flatMap((spec) => (spec.operator === "List" ? operandsOf(spec) : [spec]));
+  if (rules.length === 0 || rules.some((rule) => rule.operator !== "Rule" || operandsOf(rule).length !== 2))
+    return undefined;
+  const pairs = rules.map((rule) => operandsOf(rule) as [Expr, Expr]);
+  return pairs.some(([lhs]) => hasUnsupportedBlank(lhs)) ? undefined : pairs;
+}
+
 /** Declare the Wolfram-frontier expression, pattern and string heads new to this backlog
  *  wave. See the module doc for what each diverges on. */
 export function declareExpressionOps(ce: Engine): void {
@@ -170,6 +182,58 @@ export function declareExpressionOps(ce: Engine): void {
     () => () => undefined,
     1,
   );
+
+  // ReplaceAll(expr, rules) with a compound left side: compute-engine's own replaces a symbol or
+  // the whole expression, so `{x, x^2} /. x^2 -> y` comes back as it was. Rules apply top-down,
+  // the first that matches a part wins, and its result isn't searched again.
+  wrapOperator(
+    ce,
+    ["ReplaceAll"],
+    ([, ...specs]) => {
+      const rules = rulesOf(specs);
+      return rules !== undefined && rules.some(([lhs]) => operandsOf(lhs!).length > 0);
+    },
+    () =>
+      ([expr, ...specs]) => {
+        const rules = rulesOf(specs)!;
+        const visit = (part: Expr): Expr => {
+          for (const [lhs, rhs] of rules) {
+            const subst = part.match(lhs!);
+            if (subst !== null) return rhs!.subs(subst, { canonical: true });
+          }
+          const operands = operandsOf(part);
+          return operands.length === 0 ? part : ce.function(part.operator, operands.map(visit));
+        };
+        return visit(expr as Expr).evaluate();
+      },
+  );
+
+  // Same(a, b, ...) compares the operands' values, as SameQ does: compute-engine's own compares
+  // them as written, so `Reverse({1, 2}) === {2, 1}` is False.
+  wrapOperator(
+    ce,
+    ["Same"],
+    () => true,
+    (native) => (values, options) =>
+      native?.(
+        values.map((value) => value.evaluate({ materialization: true })),
+        options,
+      ),
+  );
+
+  // Expand holds its operand, so a finite Product or Sum stays folded, where Wolfram evaluates the
+  // operand first and expands the polynomial it comes to.
+  const expand = nativeEvaluate(ce, "Expand");
+  extendHead(ce, "Expand", {
+    evaluate: (ops, options) => {
+      const [operand] = ops;
+      if (ops.length === 1 && (operand!.operator === "Product" || operand!.operator === "Sum")) {
+        const value = operand!.evaluate();
+        if (value.operator !== operand!.operator) return expand?.([value], options);
+      }
+      return expand?.(ops, options);
+    },
+  });
 
   // ToString(expr): Epsil, not Wolfram InputForm — see module doc.
   ce.declare("ToString", {

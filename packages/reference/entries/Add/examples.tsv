@@ -1,13 +1,13 @@
-id	section	role	expr	expected	caption	triage	epsil.back	wolfram.kind	wolfram.note
-list-10-20-30-plus-list-1-2-3			[Add, [List, 10, 20, 30], [List, 1, 2, 3]]	[List, 11, 22, 33]	Lists add element by element				
-x-plus-list-1-2-3			[Add, x, [List, 1, 2, 3]]	[List, [Add, x, 1], [Add, x, 2], [Add, x, 3]]					
-list-a-b-plus-list-c-d	Scope		[Add, [List, a, b], [List, c, d]]	[List, [Add, a, c], [Add, b, d]]	Symbolic lists add element-wise too				
-x-plus-list-a-b-c	Scope		[Add, x, [List, a, b, c]]	[List, [Add, a, x], [Add, b, x], [Add, c, x]]	A scalar is added to every element				
-x-plus-list-list-a-b-list-c-d	Scope		[Add, x, [List, [List, a, b], [List, c, d]]]	[List, [List, [Add, a, x], [Add, b, x]], [List, [Add, c, x], [Add, d, x]]]	The scalar reaches every entry of a nested list				
-interval-0-1-plus-interval-neg-1-1	Scope		[Add, [Interval, 0, 1], [Interval, -1, 1]]	[Interval, -1, 2]	Interval endpoints add: $[0,1]+[-1,1]=[-1,2]$				
-list-list-a-b-list-c-d-plus-list-list-1-2-list-3	Scope		[Add, [List, [List, a, b], [List, c, d]], [List, [List, 1, 2], [List, 3, 4]]]	[List, [List, [Add, a, 1], [Add, b, 2]], [List, [Add, c, 3], [Add, d, 4]]]					
-length-a-plus-b-plus-c-plus-d	Properties		[Length, [Add, a, b, c, d]]	4	A sum is flat: four terms, one Add of length 4				
-foldlist-add-0-list-a-b-c	Properties		[FoldList, Add, 0, [List, a, b, c]]	[List, 0, a, [Add, a, b], [Add, a, b, c]]	Folding Add gives the running partial sums				
-replaceall-a-plus-b-plus-c-plus-d-rule-a-plus-d	Properties		[ReplaceAll, [Add, a, b, c, d], [Rule, [Add, a, d], x]]	[Add, a, b, c, d]			[ReplaceAll, [Add, [Add, [Add, a, b], c], d], [Rule, [Add, a, d], x]]		
-apply-f-plus-g-x	Properties	triage	[Apply, [Add, f, g], x]	[Function, [Block, [Add, _1, x]], _1]		gap		unclassified	Wolfram keeps (f + g)[x] held, a sum is not a function; ours reads the call as the pure function x + #1 &.
-through-apply-f-plus-g-x	Properties		[Through, [Apply, [Add, f, g], x]]	[Add, [g, x], [f, x]]					
+id	section	role	expr	expected	caption	epsil.back
+list-10-20-30-plus-list-1-2-3			[Add, [List, 10, 20, 30], [List, 1, 2, 3]]	[List, 11, 22, 33]	Lists add element by element	
+x-plus-list-1-2-3			[Add, x, [List, 1, 2, 3]]	[List, [Add, x, 1], [Add, x, 2], [Add, x, 3]]		
+list-a-b-plus-list-c-d	Scope		[Add, [List, a, b], [List, c, d]]	[List, [Add, a, c], [Add, b, d]]	Symbolic lists add element-wise too	
+x-plus-list-a-b-c	Scope		[Add, x, [List, a, b, c]]	[List, [Add, a, x], [Add, b, x], [Add, c, x]]	A scalar is added to every element	
+x-plus-list-list-a-b-list-c-d	Scope		[Add, x, [List, [List, a, b], [List, c, d]]]	[List, [List, [Add, a, x], [Add, b, x]], [List, [Add, c, x], [Add, d, x]]]	The scalar reaches every entry of a nested list	
+interval-0-1-plus-interval-neg-1-1	Scope		[Add, [Interval, 0, 1], [Interval, -1, 1]]	[Interval, -1, 2]	Interval endpoints add: $[0,1]+[-1,1]=[-1,2]$	
+list-list-a-b-list-c-d-plus-list-list-1-2-list-3	Scope		[Add, [List, [List, a, b], [List, c, d]], [List, [List, 1, 2], [List, 3, 4]]]	[List, [List, [Add, a, 1], [Add, b, 2]], [List, [Add, c, 3], [Add, d, 4]]]		
+length-a-plus-b-plus-c-plus-d	Properties		[Length, [Add, a, b, c, d]]	4	A sum is flat: four terms, one Add of length 4	
+foldlist-add-0-list-a-b-c	Properties		[FoldList, Add, 0, [List, a, b, c]]	[List, 0, a, [Add, a, b], [Add, a, b, c]]	Folding Add gives the running partial sums	
+replaceall-a-plus-b-plus-c-plus-d-rule-a-plus-d	Properties		[ReplaceAll, [Add, a, b, c, d], [Rule, [Add, a, d], x]]	[Add, a, b, c, d]		[ReplaceAll, [Add, [Add, [Add, a, b], c], d], [Rule, [Add, a, d], x]]
+apply-f-plus-g-x	Properties		[Apply, [Add, f, g], x]	[Apply, [Add, f, g], x]		
+through-apply-f-plus-g-x	Properties		[Through, [Apply, [Add, f, g], x]]	[Add, [g, x], [f, x]]		

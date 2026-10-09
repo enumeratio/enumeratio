@@ -42,6 +42,20 @@ const seededPath = (seed: number, proc: unknown, spec: unknown): number[][] => {
 };
 
 describe("SliceDistribution", () => {
+  test("proc(t) reads as the slice, as in Wolfram", () => {
+    expect(evalOf(["Apply", ["PoissonProcess", 3], 4]).json).toEqual(["PoissonDistribution", 12]);
+    expect(evalOf(["Apply", ["WienerProcess"], 4]).json).toEqual(["NormalDistribution", 0, 2]);
+    expect(evalOf(["CDF", ["Apply", ["WienerProcess"], 2], 0]).json).toEqual(["Rational", 1, 2]);
+    expect(evalOf(["Apply", ["WienerProcess", 1, 1], "t"]).json).toEqual(
+      evalOf(["SliceDistribution", ["WienerProcess", 1, 1], "t"]).json,
+    );
+  });
+
+  test("Apply of anything else is left to compute-engine", () => {
+    expect(evalOf(["Apply", "f", "t"]).json).toEqual(["f", "t"]);
+    expect(evalOf(["Apply", ["Function", ["Add", "_1", 1]], 2]).json).toBe(3);
+  });
+
   test("WienerProcess slice is Normal(mu*t, sigma*sqrt(t))", () => {
     const dist = evalOf(["SliceDistribution", ["WienerProcess", 2, 3], 4]);
     expect(dist.operator).toBe("NormalDistribution");

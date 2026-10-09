@@ -191,8 +191,8 @@ const OVERRIDDEN = [
   "Add",
   "All",
   "Any",
-  // Not itself overridden -- `Apply(Derivative(UnitBox, n), x)` is the Derivative rule's own
-  // value, with Apply as the corpus expression's outer head.
+  // Also overridden itself (operator forms, a Function literal that would capture, a process
+  // called at a time); `Apply(Derivative(UnitBox, n), x)` is the Derivative rule's own value.
   "Apply",
   "Arccos",
   "Arccsc",
@@ -342,6 +342,7 @@ const OVERRIDDEN = [
   // Not itself overridden -- compute-engine's fold over our Permute and Partition, which a bare
   // engine leaves unevaluated.
   "Reduce",
+  "ReplaceAll",
   "Root",
   "Round",
   "Sec",

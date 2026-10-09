@@ -20,6 +20,6 @@ names:
   wolframIdentity: true
 ---
 
-- Wolfram writes a process's value at time $t$ as `proc[t]` — direct function application. Our engine has no general mechanism for calling an arbitrary declared symbol-headed expression as a function, so [[SliceDistribution]](proc, t) is the bridge instead: a real Wolfram head, used here for the same purpose.
+- Wolfram writes a process's value at time $t$ as `proc[t]`, a call, which reads as [[SliceDistribution]](proc, t).
 - $SliceDistribution(WienerProcess(\mu,\sigma), t) = NormalDistribution(\mu t, \sigma\sqrt{t})$ — exact, since a Wiener process's marginal at any fixed $t$ is Gaussian by definition.
 - [[RandomFunction]](WienerProcess(mu, sigma), {tmin, tmax, dt}) draws one seeded sample path by Euler–Maruyama over the requested grid, starting from $X(tmin) = 0$ — exact in distribution for this process, since its increments are themselves exactly Gaussian.

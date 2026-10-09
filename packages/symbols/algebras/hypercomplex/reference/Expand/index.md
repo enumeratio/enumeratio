@@ -8,6 +8,11 @@ signatures:
     description: expand out products and positive integer powers.
     type: (value) -> value
   - call: Expand(x)
+    description: evaluates a finite Product or Sum first, then expands what it comes to.
+    library: enumeratio-combinatorics
+    type: (value) -> value
+    overrides: enumeratio-hypercomplex
+  - call: Expand(x)
     description: $x$ in blade normal form
     library: enumeratio-hypercomplex
     type: (value) -> value

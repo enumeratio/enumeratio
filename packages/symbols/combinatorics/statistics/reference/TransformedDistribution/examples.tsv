@@ -3,3 +3,5 @@ transformed-affine-mean			[Mean, [TransformedDistribution, [Add, [Multiply, 2, x
 transformed-affine-variance			[Variance, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]	4
 transformed-negative-affine-cdf			[CDF, [TransformedDistribution, [Negate, x], [Distributed, x, [NormalDistribution, 0, 1]]], 0]	[Rational, 1, 2]
 transformed-chisquare-mean			[Mean, [TransformedDistribution, [Power, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]]	1
+transformeddistribution-norm-list-x-y-w-z	Properties		[TransformedDistribution, [Norm, [List, x, y, w, z]], [Distributed, [List, x, y, w, z], [ProductDistribution, [List, [NormalDistribution], 4]]]]	[ChiDistribution, 4]
+transformeddistribution-norm-list-x-y	Properties		[TransformedDistribution, [Norm, [List, x, y]], [Distributed, [List, x, y], [ProductDistribution, [List, [NormalDistribution], 2]]]]	[RayleighDistribution, 1]
