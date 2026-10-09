@@ -634,13 +634,10 @@ function declareSignalDerivatives(ce: ComputeEngine): void {
   derivative.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
     const f = ops[0];
     const table = f !== undefined && isSymbol(f) ? SIGNAL_DERIVATIVES[f.symbol] : undefined;
-    const partial =
-      table?.[
-        ops
-          .slice(1)
-          .map((order) => order.re)
-          .join()
-      ];
+    const orders = ops.slice(1).map((order) => order.re);
+    // UnitBox is locally constant, so every order past the first is the same function (as in Wolfram).
+    const higher = f !== undefined && isSymbol(f) && f.symbol === "UnitBox" && orders.length === 1 && orders[0]! >= 1;
+    const partial = table?.[higher && Number.isInteger(orders[0]) ? "1" : orders.join()];
     if (partial !== undefined) {
       return ce.box(["Function", partial.body, ...partial.params] as unknown as BoxInput);
     }

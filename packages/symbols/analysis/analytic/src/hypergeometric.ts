@@ -16,6 +16,7 @@ import {
   bigResult,
   exceedsDoublePrecision,
 } from "@enumeratio/ce-patches";
+import { bigRationalAt } from "@enumeratio/engine";
 import {
   hypergeometric2F1RegularizedBig,
   hypergeometric3F2RegularizedBig,
@@ -187,6 +188,52 @@ function operandsOf(ops: readonly BoxedExpression[]): Cx[] | undefined {
   return ops.map(toCx);
 }
 
+/**
+ * Wolfram's Bessel closed forms at exact arguments, for an exact z > 0:
+ *   ₀F₁(;b;z)/Γ(b) = z^((1-b)/2) I_(b-1)(2√z) for a half-integer b, and
+ *   ₁F₁(a;2a;z)/Γ(2a) = e^(z/2) Γ(a+1/2)/Γ(2a) (z/4)^(1/2-a) I_(a-1/2)(z/2) for a positive non-integer a.
+ * Other shapes are left to the numeric series.
+ */
+function regularizedBessel(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  const [z, b] = [ops.at(-1), ops.at(-2)];
+  if (z === undefined || b === undefined || !(z.re > 0) || z.im !== 0 || z.unknowns.length > 0) return undefined;
+  const lower = bigRationalAt(b);
+  if (lower === undefined) return undefined;
+  const half = ["Rational", 1, 2];
+  if (ops.length === 2) {
+    if (lower[1] !== 2n) return undefined;
+    return ce
+      .box([
+        "Multiply",
+        ["Power", z.json, ["Divide", ["Subtract", 1, b.json], 2]],
+        ["BesselI", ["Subtract", b.json, 1], ["Multiply", 2, ["Sqrt", z.json]]],
+      ] as never)
+      .evaluate();
+  }
+  const a = ops[0]!;
+  const upper = bigRationalAt(a);
+  if (
+    upper === undefined ||
+    upper[1] === 1n ||
+    upper[0] <= 0n ||
+    !ce
+      .function("Subtract", [b, ce.function("Multiply", [2, a])])
+      .evaluate()
+      .is(0)
+  ) {
+    return undefined;
+  }
+  return ce
+    .box([
+      "Multiply",
+      ["Exp", ["Divide", z.json, 2]],
+      ["Divide", ["Gamma", ["Add", a.json, half]], ["Gamma", b.json]],
+      ["Power", ["Divide", z.json, 4], ["Subtract", half, a.json]],
+      ["BesselI", ["Subtract", a.json, half], ["Divide", z.json, 2]],
+    ] as never)
+    .evaluate();
+}
+
 export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric0F1(b, z) = 0F1(b; z), entire in z; pole at b a non-positive integer.
   ce.declare("Hypergeometric0F1", {
@@ -214,6 +261,7 @@ export function declareHypergeometric(ce: ComputeEngine): void {
     signature: "(number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
+      if (cs !== undefined && !wantsNumber(ops, options)) return regularizedBessel(ce, ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [b, z] = cs;
       // Past a double's digits only the bignum series answers; it declines rather than pad.
@@ -229,6 +277,7 @@ export function declareHypergeometric(ce: ComputeEngine): void {
     signature: "(number, number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
+      if (cs !== undefined && !wantsNumber(ops, options)) return regularizedBessel(ce, ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a, b, z] = cs;
       if (exceedsDoublePrecision(ce, options.numericApproximation))

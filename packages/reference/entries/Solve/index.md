@@ -15,7 +15,7 @@ signatures:
     description: as above, but an equation that is an IDENTITY (true for every value of the unknown, e.g. `x == x`) answers one unconstrained solution -- `List(List())` -- not none.
     library: enumeratio-analytic
     type: (any, any*) -> list
-    overrides: compute-engine
+    overrides: enumeratio-evaluation
   - call: Solve(equation, unknown?)
     description: The list of solutions of an equation, or a system of equations, for its unknown(s).
     library: enumeratio-evaluation

@@ -1,6 +1,6 @@
 import { isNumber, isSymbol, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/engine";
-import { type Knowledge, knowledgeOf, withAssumed } from "./piecewise-assumptions.ts";
+import { type Knowledge, knowledgeOf, narrowPiecewise, withAssumed } from "./piecewise-assumptions.ts";
 import { compose } from "./piecewise-compose.ts";
 import { expandStep, STEP_HEADS } from "./piecewise-rewrites.ts";
 
@@ -82,6 +82,32 @@ function expandOne(
   }
   if (op === "Argument" && ops.length === 1 && (allReal || isKnownReal(ce, ops[0]))) {
     return ce.box(["Piecewise", ["List", ["List", "Pi", ["Less", ops[0].json, 0]]], 0] as never);
+  }
+  // Wolfram's If, Boole and the deltas are conditional values already: no argument need be real.
+  const clause = (value: unknown, cond: unknown) => ["List", value, cond];
+  if (op === "If" && (ops.length === 2 || ops.length === 3)) {
+    return ce.box(["Piecewise", ["List", clause(ops[1].json, ops[0].json)], ops[2]?.json ?? 0] as never);
+  }
+  if (op === "Boole" && ops.length === 1) {
+    return ce.box(["Piecewise", ["List", clause(1, ops[0].json)], 0] as never);
+  }
+  if (op === "KroneckerDelta" && (ops.length === 1 || ops.length === 2)) {
+    const diff = ops.length === 1 ? ops[0].json : ["Subtract", ops[0].json, ops[1].json];
+    return ce.box(["Piecewise", ["List", clause(1, ["Equal", diff, 0])], 0] as never);
+  }
+  if (op === "DiscreteDelta" && ops.length > 0) {
+    const zero = ops.map((o) => ["Equal", o.json, 0]);
+    return ce.box(["Piecewise", ["List", clause(1, zero.length === 1 ? zero[0] : ["And", ...zero])], 0] as never);
+  }
+  // The real cube root, which is negative below zero: Wolfram's `Piecewise[{{-(-x)^(1/3), x < 0}}, x^(1/3)]`.
+  if (op === "Root" && ops.length === 2 && ops[1].is(3)) {
+    const [u, third] = [ops[0].json, ["Rational", 1, 3]];
+    const pw = [
+      "Piecewise",
+      ["List", clause(["Negate", ["Power", ["Negate", u], third]], ["Less", u, 0])],
+      ["Power", u, third],
+    ];
+    return ce.box(narrowPiecewise(ce, kn, pw as never) as never);
   }
   return STEP_HEADS.has(op) ? expandStep(ce, e, kn) : undefined;
 }

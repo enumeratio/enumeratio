@@ -346,6 +346,34 @@ const integerPartCell: Family = (k) => [
       : cell(q(k - 1), q(k), [false, true], k, k),
 ];
 
+/** The primes up to `limit`, ascending, with 0 before the first. */
+function primesUpTo(limit: number): number[] {
+  const composite = new Uint8Array(limit + 1);
+  const primes: number[] = [];
+  for (let n = 2; n <= limit; n++) {
+    if (composite[n]) continue;
+    primes.push(n);
+    for (let m = n * n; m <= limit; m += n) composite[m] = 1;
+  }
+  return primes;
+}
+
+/** The sieve is only built this far; past it the staircase is left alone. */
+const MAX_PRIME_BOUND = 1_000_000;
+
+/** `PrimePi` is its count `i` on `[p_i, p_(i+1))`, and 0 below 2. */
+function primeCells(top: number): Family | undefined {
+  if (!(top <= MAX_PRIME_BOUND)) return undefined;
+  // A prime gap below a million is under 120, so this reaches the first prime past `top`.
+  const primes = primesUpTo(Math.ceil(top) + 200);
+  const at = new Map(primes.map((p, i) => [p, i] as const));
+  return (k) => {
+    const i = at.get(k);
+    if (i === undefined) return k <= 1 ? [cell(q(k), q(k + 1), [true, false], 0, 0)] : [];
+    return [cell(q(k), q(primes[i + 1]!), [true, false], i + 1, i + 1)];
+  };
+}
+
 const constantLinear = (c: Q): Linear => ({ atoms: new Map(), constant: c });
 const withLinear = (r: Region, l: Linear): Region => ({ ...r, value: togetherJson(l), linear: l });
 
@@ -385,7 +413,8 @@ const triangleCells =
 type Argument =
   | { kind: "affine"; symbol: string; a: Q; b: Q; lin: Linear }
   | { kind: "power"; symbol: string; n: number }
-  | { kind: "sqrt"; symbol: string };
+  | { kind: "sqrt"; symbol: string }
+  | { kind: "cuberoot"; symbol: string };
 
 function argumentOf(g: Expr): Argument | undefined {
   const l = linear(g);
@@ -396,6 +425,8 @@ function argumentOf(g: Expr): Argument | undefined {
   const base = ops[0] && isSymbol(ops[0]) ? ops[0].symbol : undefined;
   if (base === undefined || base === "Pi") return undefined;
   if (g.operator === "Sqrt" && ops.length === 1) return { kind: "sqrt", symbol: base };
+  if (g.operator === "CubeRoot" && ops.length === 1) return { kind: "cuberoot", symbol: base };
+  if (g.operator === "Root" && ops.length === 2 && ops[1].is(3)) return { kind: "cuberoot", symbol: base };
   const n = ops[1]?.re;
   if (g.operator === "Power" && ops.length === 2 && ops[1].im === 0 && Number.isInteger(n) && (n as number) >= 2)
     return { kind: "power", symbol: base, n: n as number };
@@ -518,14 +549,14 @@ function powerAxis(i: Interval, n: number, s: Json): Axis | undefined {
   };
 }
 
-/** `Sqrt(s)` over `s >= 0`: the conditions compare it as it stands. */
-function sqrtAxis(i: Interval, variable: Json): Axis | undefined {
+/** The `n`th root of `s` over `s >= 0`: the conditions compare it as it stands. */
+function rootAxis(i: Interval, n: number, variable: Json): Axis | undefined {
   if (i.lo.v < 0) return undefined;
   return {
     variable,
     falling: false,
     at: (e) => qJson(e),
-    domain: { lo: rootNum(i.lo, 2), hi: rootNum(i.hi, 2), loOpen: i.loOpen, hiOpen: i.hiOpen },
+    domain: { lo: rootNum(i.lo, n), hi: rootNum(i.hi, n), loOpen: i.loOpen, hiOpen: i.hiOpen },
   };
 }
 
@@ -592,6 +623,9 @@ function bounded(ce: Engine, kn: Knowledge, op: string, args: readonly Expr[]): 
       case "SquareWave":
         family = squareCells;
         break;
+      case "PrimePi":
+        family = axis && primeCells(axis.domain.hi.v);
+        break;
       case "TriangleWave":
         family = triangleCells(arg.lin);
         break;
@@ -600,7 +634,8 @@ function bounded(ce: Engine, kn: Knowledge, op: string, args: readonly Expr[]): 
   } else if (INTEGER_VALUED.has(op) && m.kind === "number") {
     const i = interval(arg.symbol);
     if (arg.kind === "power") axis = i && powerAxis(i, arg.n, symbolJson);
-    else axis = i && sqrtAxis(i, g.json);
+    else if (arg.kind === "cuberoot") axis = i && rootAxis(i, 3, ["Power", symbolJson, ["Rational", 1, 3]] as Json);
+    else axis = i && rootAxis(i, 2, g.json);
     family =
       op === "Floor" ? floorCell : op === "Round" ? roundCell : op === "IntegerPart" ? integerPartCell : ceilCell;
   }
@@ -627,6 +662,7 @@ export const STEP_HEADS: ReadonlySet<string> = new Set([
   "SawtoothWave",
   "SquareWave",
   "TriangleWave",
+  "PrimePi",
 ]);
 
 /** `e` as a Piecewise, or `undefined` when it is not a step head or not in a shape that expands. */

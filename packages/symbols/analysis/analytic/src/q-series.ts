@@ -7,8 +7,13 @@ import {
   DOUBLE_DIGITS,
   exceedsDoublePrecision,
   abs,
+  add,
+  type Cx,
+  cexp,
   cx,
+  div,
   mul,
+  scale,
   sub,
   type EvalOptions,
   isFiniteNum,
@@ -37,6 +42,9 @@ import { qFactorialBig } from "./q-factorial-big.ts";
 // Only the infinite q-Pochhammer product (n = PositiveInfinity) forces a numeric
 // limit — it has no exact closed form in general, so it's numeric-only and requires
 // |q| < 1 for convergence.
+
+/** The longest finite product `N(QBinomial)` multiplies out. */
+const MAX_PRODUCT = 2000;
 
 /** [k]_q = 1 + q + ... + q^(k-1), k ≥ 1. */
 function qInteger(ce: ComputeEngine, k: number, q: BoxedExpression): BoxedExpression {
@@ -97,6 +105,53 @@ function qPochhammerInfinite(
     if (abs(qk) < 1e-17) break;
   }
   return r;
+}
+
+/** q^z for a real q > 0. */
+const qPower = (q: number, z: Cx) => cexp(scale(z, Math.log(q)));
+
+/**
+ * The q-binomial at a complex (n, k) and a real 0 < q < 1, as the ratio of infinite products
+ * (q^(k+1);q)(q^(n-k+1);q) / ((q;q)(q^(n+1);q)); a real q > 1 reflects to 1/q, where
+ * [n k]_q = q^(k(n-k)) [n k]_(1/q).
+ */
+function qBinomialContinued(n: Cx, k: Cx, q: number): Cx {
+  if (q > 1) {
+    const inverse = qBinomialContinued(n, k, 1 / q);
+    return mul(qPower(q, mul(k, sub(n, k))), inverse);
+  }
+  const base = cx(q);
+  const one = cx(1);
+  const product = (z: Cx) => qPochhammerInfinite(qPower(q, z), base);
+  const top = mul(product(add(k, one)), product(add(sub(n, k), one)));
+  const bottom = mul(qPochhammerInfinite(base, base), product(add(n, one)));
+  return div(top, bottom);
+}
+
+/**
+ * ∏_{j<k} (1 - q^(n-j)) / (1 - q^(j+1)) for a non-negative integer k, in boxed arithmetic so an
+ * exact operand stays exact until `N`; q = 1 is the limit ∏ (n-j)/(j+1). `undefined` at a zero
+ * denominator (q a root of unity).
+ */
+function qBinomialProduct(
+  ce: ComputeEngine,
+  n: BoxedExpression,
+  k: number,
+  q: BoxedExpression,
+): BoxedExpression | undefined {
+  const unit = q.re === 1 && q.im === 0;
+  let result: BoxedExpression = ce.One;
+  for (let j = 0; j < k; j++) {
+    const top = unit
+      ? ce.function("Subtract", [n, ce.number(j)])
+      : ce.function("Subtract", [ce.One, ce.function("Power", [q, ce.function("Subtract", [n, ce.number(j)])])]);
+    const bottom = unit
+      ? ce.number(j + 1)
+      : ce.function("Subtract", [ce.One, ce.function("Power", [q, ce.number(j + 1)])]).evaluate();
+    if (bottom.is(0)) return undefined;
+    result = ce.function("Multiply", [result, ce.function("Divide", [top, bottom])]).evaluate();
+  }
+  return result;
 }
 
 export function declareQSeries(ce: ComputeEngine): void {
@@ -172,6 +227,23 @@ export function declareQSeries(ce: ComputeEngine): void {
       if (isRealInt(n) && n.re >= 0 && isRealInt(k)) return qBinomialExpr(ce, n.re, k.re, q);
       // Held but canonical for any other (n, k): symbolic, non-integer or negative.
       return ce._fn("QBinomial", [n.canonical, k.canonical, q.canonical]);
+    },
+  });
+  // N(QBinomial(n, k, q)) away from integer (n, k): a non-negative integer k is a finite product, any
+  // other k the q-Gamma ratio, at a real q > 0 and a double's digits.
+  extendHead(ce, "QBinomial", {
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+      const [n, k, q] = ops;
+      if (n === undefined || k === undefined || q === undefined || !wantsNumber(ops, options)) return undefined;
+      if (![n, k, q].every(isFiniteNum)) return undefined;
+      if (isRealInt(k) && k.re >= 0) {
+        return k.re <= MAX_PRODUCT ? qBinomialProduct(ce, n, k.re, q)?.N() : undefined;
+      }
+      if (q.im !== 0 || !(q.re > 0) || q.re === 1 || exceedsDoublePrecision(ce, options.numericApproximation)) {
+        return undefined;
+      }
+      const value = qBinomialContinued({ re: n.re, im: n.im }, { re: k.re, im: k.im }, q.re);
+      return Number.isFinite(value.re) && Number.isFinite(value.im) ? numberResult(ce, value) : undefined;
     },
   });
 }
