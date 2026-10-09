@@ -135,7 +135,6 @@ afterAll(() => {
 const FAMILY_TAGS = [
   "notatio-chart",
   "notatio-graph-plot",
-  "notatio-vector-plot",
   "notatio-contour-plot",
   "notatio-density-plot",
   "slider-box", // VerticalSlider: a SliderBox standing up

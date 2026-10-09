@@ -5,7 +5,7 @@
 // A layout (`Row`, `Column`, `Grid`, `Panel`, `Labeled`) is boxes laid out on cells, with each
 // entry that is a figure a leaf the figure drawer fills.
 
-import { type BoxNode, LAYOUT_HEADS, makeBoxes, type Notation } from "@enumeratio/boxes";
+import { type Box, type BoxNode, LAYOUT_HEADS, makeBoxes, type Notation } from "@enumeratio/boxes";
 import {
   FIGURE_NOTATION,
   headOf,
@@ -34,6 +34,8 @@ export interface Sampled {
 export interface FigureOptions extends LayoutOptions {
   /** Samples a plot, which needs the session's engine; a plot is no figure without it. */
   readonly plot?: (json: Json) => Sampled | undefined;
+  /** Samples a vector or stream plot, which needs the session's engine too; its `GraphicsBox`. */
+  readonly field?: (json: Json) => Box | undefined;
   /** The notation the session's packages bring, so a layout's math is written as the page writes it. */
   readonly notation?: Notation;
 }
@@ -56,6 +58,9 @@ export function figureText(json: Json, options: FigureOptions = {}): string | un
   const sampled = options.plot?.(json);
   if (sampled !== undefined)
     return plotText(sampled, { width: options.width, height: options.height, color: options.color });
+  const field = options.field?.(json);
+  if (field !== undefined)
+    return drawPlotBox(field as BoxNode, { width: options.width, height: options.height, color: options.color });
   const head = headOf(plainJson(json));
   const notation = { ...options.notation, ...FIGURE_NOTATION, ...PLOT_NOTATION };
   if (head !== undefined && LAYOUT_HEADS.has(head)) {

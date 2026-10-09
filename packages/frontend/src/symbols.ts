@@ -30,7 +30,7 @@ export { headOf, numOf, opsOf, optionAttribute, strOf, symOf, tupleOf, variable 
 // expression and wants a picture.
 //
 // The tag is the naming rule run backwards: kebab-case the symbol, put `notatio-` in
-// front. A family component (`notatio-chart`, `notatio-graph-plot`, `notatio-vector-plot`)
+// front. A family component (`notatio-chart`, `notatio-graph-plot`)
 // draws several symbols, distinguished by an attribute; the family head (`Chart`) leaves
 // that attribute unset and lets the component choose.
 
@@ -348,8 +348,7 @@ export const PLOT_SETTINGS: readonly VisualSymbol[] = [
   },
   {
     // `ParametricPlot({fx, fy}, (t, tmin, tmax))`: Wolfram's own separate head for a
-    // parametric curve -- reuses `Plot`'s tag with `parametric` fixed on, the same way
-    // `StreamPlot` reuses `VectorPlot`'s tag below.
+    // parametric curve -- reuses `Plot`'s tag with `parametric` fixed on.
     head: "ParametricPlot",
     tag: "graphics-box",
     fixed: { parametric: "true" },
@@ -370,6 +369,20 @@ export const PLOT_SETTINGS: readonly VisualSymbol[] = [
   },
   chart("ListPlot", "list"),
   chart("ListLinePlot", "listline"),
+  {
+    head: "VectorPlot",
+    tag: "graphics-box",
+    attributes: (ops) => vectorField(ops),
+    options: FIELD_OPTIONS,
+  },
+  {
+    // `StreamPlot` reuses `VectorPlot`'s field and options, with streamlines for arrows.
+    head: "StreamPlot",
+    tag: "graphics-box",
+    fixed: { type: "stream" },
+    attributes: (ops) => vectorField(ops),
+    options: FIELD_OPTIONS,
+  },
 ];
 
 const SETTINGS_BY_HEAD = new Map(PLOT_SETTINGS.map((p) => [p.head, p]));
@@ -448,19 +461,6 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-density-plot",
     attributes: dataOnly,
     options: { ColorFunction: colorFunction },
-  },
-  {
-    head: "VectorPlot",
-    tag: "notatio-vector-plot",
-    attributes: (ops) => vectorField(ops),
-    options: FIELD_OPTIONS,
-  },
-  {
-    head: "StreamPlot",
-    tag: "notatio-vector-plot",
-    fixed: { type: "stream" },
-    attributes: (ops) => vectorField(ops),
-    options: FIELD_OPTIONS,
   },
   {
     // `Show(layer, …, options)`: the layers stay one expression, which the element reads; its

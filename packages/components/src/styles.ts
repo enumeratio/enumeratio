@@ -47,10 +47,7 @@ notatio-contour-plot { display: block; line-height: 0; }
 notatio-contour-plot .notatio-contour-plot-box { display: inline-block; max-width: 100%; }
 notatio-contour-plot svg { width: 340px; max-width: 100%; height: auto; overflow: hidden; }
 
-/* Field & density visualisations (VectorPlot, StreamPlot, PolarPlot, DensityPlot). */
-notatio-vector-plot { display: block; line-height: 0; }
-notatio-vector-plot .notatio-vector-plot-box { display: inline-block; max-width: 100%; }
-notatio-vector-plot svg { width: 340px; max-width: 100%; height: auto; overflow: hidden; }
+/* Field visualisations (DensityPlot). */
 
 notatio-density-plot { display: block; line-height: 0; }
 notatio-density-plot .notatio-density-plot-box { display: inline-block; max-width: 100%; }

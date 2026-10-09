@@ -5,7 +5,7 @@ import { stripAnsi } from "../src/ansi.ts";
 import { runCommand } from "../src/command.ts";
 import { Session } from "../src/engine.ts";
 import { figureText, plotText } from "../src/figure.ts";
-import { sampledPlot } from "../src/textual.ts";
+import { sampledField, sampledPlot } from "../src/textual.ts";
 
 // Not a head's value, so a golden of the drawing. Regenerate with `UPDATE_CELLS=1 vp test`.
 const GOLDEN = fileURLToPath(new URL("./cell-draw.golden.json", import.meta.url));
@@ -18,6 +18,7 @@ const drawn = (input: string, color = false): string => {
   const text = figureText(session.evaluate(input).expr.json as never, {
     color,
     plot: (json) => sampledPlot(session, json),
+    field: (json) => sampledField(session, json),
   });
   if (text === undefined) throw new Error(`no figure for ${input}`);
   return text;
@@ -37,6 +38,8 @@ const CASES: Record<string, string> = {
   fraction: 'Row([1/2, x, "and", x^2])',
   plot: "Plot(Sin(x), (x, 0, 2 * Pi))",
   marked: "Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0)))",
+  vectors: "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2))",
+  streams: "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))",
 };
 
 for (const [name, input] of Object.entries(CASES)) {

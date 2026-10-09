@@ -10,8 +10,9 @@ import { GRADIENTS, gradientNamed, rgbToOklab, hexToRgb, sampleGradient } from "
 import { curve3dSvg, surfacesSvg } from "../src/plot3d.ts";
 import { discreteName, gradientName, plotPalette } from "../src/plot-color.ts";
 import { linePlotSvg } from "../src/plot.ts";
+import { renderPlot } from "../src/plot-box.ts";
 import { torusSquareSvg } from "../src/torussquare.ts";
-import { vectorPlotSvg } from "../src/vectorplot.ts";
+import { vectorPlotBox } from "../src/vectorplot.ts";
 
 const grid = (n: number, f: (x: number, y: number) => number): number[][] =>
   Array.from({ length: n }, (_, j) => Array.from({ length: n }, (_, i) => f(i / (n - 1), j / (n - 1))));
@@ -38,7 +39,7 @@ const continuous: Record<string, (o: { gradient?: string; reverse?: boolean }) =
   density: (o) => densitySvg(ramp, xs, xs, o),
   contourFilled: (o) => contourSvg(ramp, xs, xs, { filled: true, ...o }),
   contourLines: (o) => contourSvg(ramp, xs, xs, o),
-  vector: (o) => vectorPlotSvg((x, y) => [-y, x], -1, 1, -1, 1, o),
+  vector: (o) => renderPlot(vectorPlotBox((x, y) => [-y, x], -1, 1, -1, 1, o) as never).svg,
   surface: (o) => surfacesSvg([ramp], { axes: false, xs, ys: xs, ...o }),
   barChart3d: (o) => barChart3dSvg(ramp, o),
   mesh: (o) => mesh3dSvg(ramp, o),

@@ -22,7 +22,6 @@ test.each([
   "notatio-plot-3d",
   "notatio-contour-plot",
   "notatio-density-plot",
-  "notatio-vector-plot",
   "notatio-curve-3d",
   "notatio-complex-plot",
   "notatio-complex-plot-3d",

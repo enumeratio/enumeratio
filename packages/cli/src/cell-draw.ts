@@ -361,6 +361,9 @@ const PINNED_TILES = 120;
 /** Columns held for the y labels, fixed so a redraw cannot shift the frame. */
 const GUTTER = 7;
 const MARK = "●";
+/** An arrow's head: each barb is this many dots long and opens this far (radians) from the shaft. */
+const ARROW_HEAD = 3;
+const ARROW_SPREAD = 0.5;
 
 /** A y label that fits `width` columns: three significant figures, exponential when it must. */
 function gutterLabel(v: number, width: number): string {
@@ -375,7 +378,7 @@ function gutterLabel(v: number, width: number): string {
 }
 
 /**
- * A plot's `GraphicsBox` on character cells: its curves on braille (2 × 4 dots a cell), its
+ * A plot's `GraphicsBox` on character cells: its curves and arrows on braille (2 × 4 dots a cell), its
  * `Epilog` points as `●`, the y extremes in a gutter and the x extremes under the axis.
  */
 export function drawPlotBox(box: BoxNode, options: CellOptions = {}): string {
@@ -406,6 +409,20 @@ export function drawPlotBox(box: BoxNode, options: CellOptions = {}): string {
         if ((k === 0 || breaks.includes(k)) && (k === points.length - 1 || breaks.includes(k + 1)))
           cells.dot(...toDot(p), color);
       });
+    } else if (prim[0] === "ArrowBox") {
+      const dots = points.map(toDot);
+      for (let k = 1; k < dots.length; k++) cells.segment(dots[k - 1]!, dots[k]!, color);
+      if (dots.length >= 2) {
+        const [a, b] = [dots.at(-2)!, dots.at(-1)!];
+        const angle = Math.atan2(b[1] - a[1], b[0] - a[0]);
+        const head = Math.min(ARROW_HEAD, 0.45 * Math.hypot(b[0] - a[0], b[1] - a[1]));
+        for (const turn of [ARROW_SPREAD, -ARROW_SPREAD])
+          cells.segment(
+            b,
+            [Math.round(b[0] - head * Math.cos(angle + turn)), Math.round(b[1] - head * Math.sin(angle + turn))],
+            color,
+          );
+      }
     } else if (prim[0] === "PointBox") {
       for (const p of points) {
         const [x, y] = toDot(p);
