@@ -9,6 +9,7 @@ import { runCommand } from "./command.ts";
 import { loadConfig } from "./config.ts";
 import type { SessionDefaults } from "./engine.ts";
 import { runRepl } from "./repl.ts";
+import { showTable } from "./table-node.ts";
 import { DEFAULT_PORT, runServe } from "./serve.ts";
 
 export function main(argv: readonly string[] = process.argv.slice(2)): void {
@@ -46,7 +47,14 @@ export function main(argv: readonly string[] = process.argv.slice(2)): void {
     }
   }
   const color = Boolean(process.stdout.isTTY) && !process.env.NO_COLOR;
-  const { stdout, stderr, code } = runCommand(argv, stdin, defaults, { color });
+  const { stdout, stderr, code, table } = runCommand(argv, stdin, defaults, { color, tables: true });
+  if (table !== undefined) {
+    // Rows arrive by range, so the table is the one result that is drawn asynchronously.
+    void showTable(table, { color, interactive: Boolean(process.stdout.isTTY && process.stdin.isTTY) }).then((shown) =>
+      process.exit(shown),
+    );
+    return;
+  }
   if (stdout) process.stdout.write(stdout);
   if (stderr) process.stderr.write(stderr);
   process.exit(code);

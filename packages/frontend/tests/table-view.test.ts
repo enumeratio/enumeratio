@@ -10,6 +10,7 @@ import {
   blockRange,
   blocksIn,
   clampIndex,
+  compactIndex,
   extentRows,
   farOff,
   MAX_SCROLL_PX,
@@ -122,4 +123,11 @@ test("an index typed into a jump field takes separators and stays exact past 2^5
 test("the status line reads the window and how sure the count is", () => {
   expect(statusText(1201n, 1220n, "≥ 4,096")).toBe("rows 1,201–1,220 of ≥ 4,096");
   expect(statusText(1n, 20n, "∞")).toBe("rows 1–20 of ∞");
+});
+
+test("a compact status line writes a long index in scientific form and leaves a short one alone", () => {
+  const n = 15511210043330985984000000n;
+  expect(statusText(n - 19n, n, "≈ 1.55 × 10²⁵", true)).toBe("rows 1.55 × 10²⁵–1.55 × 10²⁵ of ≈ 1.55 × 10²⁵");
+  expect(statusText(1201n, 1220n, "∞", true)).toBe("rows 1,201–1,220 of ∞");
+  expect(compactIndex(999_999_999_999n)).toBe("999,999,999,999");
 });

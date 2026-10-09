@@ -8,9 +8,11 @@ import { join } from "node:path";
 import { createInterface } from "node:readline";
 import { dim } from "./ansi.ts";
 import { drivable } from "./drive.ts";
-import { drive } from "./drive-node.ts";
+import { drive, run, screenOf } from "./drive-node.ts";
 import type { SessionDefaults } from "./engine.ts";
 import { NodeHost } from "./node-host.ts";
+import { pager } from "./pager.ts";
+import { isTable, openTable } from "./table.ts";
 import { textOf } from "./textual.ts";
 
 const HISTORY_FILE = join(homedir(), ".notatio_history");
@@ -43,8 +45,18 @@ export function runRepl(defaults: SessionDefaults = {}): void {
         if (out.clear) console.clear();
         if (out.inline) process.stdout.write(`${out.inline}\n`);
         const last = session.history.at(-1);
+        const table =
+          color && session.history.length > before && last && isTable(last.expr.json as never)
+            ? openTable(session.ce, last.expr.json as never)
+            : undefined;
+        // A table is paged at the keyboard, then left on the screen as the page it stopped at.
+        if (table !== undefined && "table" in table) {
+          const d = pager(table.table.source, screenOf({ color, stdin: process.stdin, stdout: process.stdout }));
+          await run(d, { stdin: process.stdin });
+          console.log(`${host.repl.formatOut(last!.n, d.text())}\n`);
+        } else if (table !== undefined) console.log(`${host.repl.formatOut(last!.n, table.error)}\n`);
         // A result with controls in it is driven at the keyboard, then printed where it was left.
-        if (color && session.history.length > before && last && drivable(last.expr.json)) {
+        else if (color && session.history.length > before && last && drivable(last.expr.json)) {
           const left = await drive(last.expr.json, {
             color,
             stdin: process.stdin,

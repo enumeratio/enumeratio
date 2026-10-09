@@ -14,6 +14,7 @@ export * from "./tracked-symbols.ts";
 export * from "./vdom.ts";
 export * from "./head-names.ts";
 export * from "./reduce.ts";
+export { splitColumns } from "./collection-table.ts";
 export { createRowsHost, openRowSource, rowSourceSpec, staticTable } from "./row-source.ts";
 export type { RowsReply, RowsRequest } from "./row-source.ts";
 export * from "./plot-compile.ts";

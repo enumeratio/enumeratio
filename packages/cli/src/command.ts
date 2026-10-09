@@ -12,6 +12,7 @@ import { completionScript, type Shell, SHELLS, SUBCOMMANDS } from "./completion.
 import { formatsTable } from "./core.ts";
 import { notationOf } from "@enumeratio/boxes";
 import { figureText } from "./figure.ts";
+import { isTable } from "./table.ts";
 import {
   type Form,
   FORM_LABEL,
@@ -177,6 +178,19 @@ export function formatsJson(): Record<string, unknown>[] {
 /** What only the host knows: whether its terminal takes color. */
 export interface HostOptions {
   color?: boolean;
+  /** The host can page or draw a table over its rows (async), so the result carries it instead of text. */
+  tables?: boolean;
+}
+
+/** The session and result of `input`, if it evaluates to a table. */
+function tableOf(input: string, defaults: SessionDefaults): CommandResult["table"] {
+  try {
+    const session = new Session(defaults);
+    const json = session.evaluate(input).expr.json as Parameters<typeof isTable>[0];
+    return isTable(json) ? { session, json } : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 /** The result of `input` drawn as a figure, if it is one; an input that fails is left to eval to report. */
@@ -194,6 +208,8 @@ export interface CommandResult {
   stdout: string;
   stderr: string;
   code: number;
+  /** The result is a table for the host to page or draw (`HostOptions.tables`). */
+  table?: { session: Session; json: Parameters<typeof isTable>[0] };
 }
 
 /** Split a command line into argv, respecting single/double quotes. */
@@ -328,6 +344,16 @@ function evaluate(
     precision = Number(p.precision);
     if (!Number.isInteger(precision) || precision < 1)
       return usageError(`--precision expects a positive integer, got ${p.precision}`);
+  }
+
+  // A table is rows by range, which only an async host can fetch: hand it over to draw.
+  if (host.tables === true && !p.json && forms.length === 0 && p.subcommand !== "convert") {
+    const held = tableOf(expr, {
+      ...defaults,
+      syntax: syntax ?? defaults.syntax,
+      precision: precision ?? defaults.precision,
+    });
+    if (held !== undefined) return { stdout: "", stderr: "", code: 0, table: held };
   }
 
   if (p.subcommand === "show") {

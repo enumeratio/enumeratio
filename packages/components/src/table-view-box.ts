@@ -615,7 +615,10 @@ export class TableViewBox extends HTMLElement {
     const end = endOf(count);
     const last = end !== undefined && shown >= end ? end - 1n : shown;
     const settled = count.kind === "exact";
-    this.#status.textContent = statusText(this.#top, last < this.#top ? this.#top : last, total);
+    const to = last < this.#top ? this.#top : last;
+    // A long index is written in scientific form so the line fits; the full text is the title.
+    this.#status.textContent = statusText(this.#top, to, total, true);
+    this.#status.title = statusText(this.#top, to, total);
     // The index column fits the rows shown, not the count: a long index is cut short, never the other columns.
     const digits = (last > this.#top ? last : this.#top).toString().length;
     const idx = Math.min(INDEX_MAX_EM, Math.max(INDEX_MIN_EM, digits * 0.6 + 1.4));
@@ -640,7 +643,7 @@ export class TableViewBox extends HTMLElement {
     if (this.#paged) this.#drawPager(count);
     clearTimeout(this.#liveTimer);
     this.#liveTimer = setTimeout(() => {
-      this.#live.textContent = this.#status.textContent ?? "";
+      this.#live.textContent = this.#status.title;
     }, LIVE_MS);
     this.classList.toggle("tvb-busy", this.#inflight !== undefined);
   }
@@ -917,7 +920,7 @@ table-view-box {
   font-size: 0.78rem;
   white-space: nowrap;
 }
-.tvb-status { font-variant-numeric: tabular-nums; }
+.tvb-status { font-variant-numeric: tabular-nums; flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .tvb-note { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; color: var(--vp-c-text-3, #888); font-style: italic; }
 .tvb-error { color: var(--vp-c-danger-1, #c0392b); font-style: normal; }
 .tvb-jump { display: inline-flex; align-items: center; gap: 0.35rem; margin-left: auto; }
