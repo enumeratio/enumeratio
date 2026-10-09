@@ -1,9 +1,9 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-transformed-affine-mean			[Mean, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]	3				
-transformed-affine-variance			[Variance, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]	4				
-transformed-negative-affine-cdf			[CDF, [TransformedDistribution, [Negate, x], [Distributed, x, [NormalDistribution, 0, 1]]], 0]	[Rational, 1, 2]				
-transformed-chisquare-mean			[Mean, [TransformedDistribution, [Power, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]]	1				
-transformeddistribution-norm-list-x-y-w-z	Properties		[TransformedDistribution, [Norm, [List, x, y, w, z]], [Distributed, [List, x, y, w, z], [ProductDistribution, [List, [NormalDistribution], 4]]]]	[ChiDistribution, 4]				
-transformeddistribution-norm-list-x-y	Properties		[TransformedDistribution, [Norm, [List, x, y]], [Distributed, [List, x, y], [ProductDistribution, [List, [NormalDistribution], 2]]]]	[RayleighDistribution, 1]				
-transformeddistribution-norm-list-x	Properties		[TransformedDistribution, [Norm, [List, x]], [Distributed, [List, x], [ProductDistribution, [List, [NormalDistribution], 1]]]]	[HalfNormalDistribution, [Sqrt, [Multiply, [Rational, 1, 2], Pi]]]				
-transformeddistribution-u-times-1-over-v	Properties	triage	[TransformedDistribution, [Multiply, u, [Divide, 1, v]], [Distributed, [List, u, v], [ProductDistribution, [List, [NormalDistribution], 2]]]]	[TransformedDistribution, [Divide, u, v], [Distributed, [List, u, v], [ProductDistribution, [NormalDistribution], [NormalDistribution]]]]	The ratio of two independent variables is a transformed distribution, simplified to $u/v$	gap	unevaluated	Ours leaves the call unevaluated; Wolfram answers CauchyDistribution[0, 1].
+id	section	role	expr	expected	caption
+transformed-affine-mean			[Mean, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]	3	
+transformed-affine-variance			[Variance, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]	4	
+transformed-negative-affine-cdf			[CDF, [TransformedDistribution, [Negate, x], [Distributed, x, [NormalDistribution, 0, 1]]], 0]	[Rational, 1, 2]	
+transformed-chisquare-mean			[Mean, [TransformedDistribution, [Power, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]]	1	
+transformeddistribution-norm-list-x-y-w-z	Properties		[TransformedDistribution, [Norm, [List, x, y, w, z]], [Distributed, [List, x, y, w, z], [ProductDistribution, [List, [NormalDistribution], 4]]]]	[ChiDistribution, 4]	
+transformeddistribution-norm-list-x-y	Properties		[TransformedDistribution, [Norm, [List, x, y]], [Distributed, [List, x, y], [ProductDistribution, [List, [NormalDistribution], 2]]]]	[RayleighDistribution, 1]	
+transformeddistribution-norm-list-x	Properties		[TransformedDistribution, [Norm, [List, x]], [Distributed, [List, x], [ProductDistribution, [List, [NormalDistribution], 1]]]]	[HalfNormalDistribution, [Sqrt, [Multiply, [Rational, 1, 2], Pi]]]	
+transformeddistribution-u-times-1-over-v	Properties		[TransformedDistribution, [Multiply, u, [Divide, 1, v]], [Distributed, [List, u, v], [ProductDistribution, [List, [NormalDistribution], 2]]]]	[CauchyDistribution, 0, 1]	The ratio of two independent variables is a transformed distribution, simplified to $u/v$

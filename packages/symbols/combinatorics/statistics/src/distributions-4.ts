@@ -426,6 +426,47 @@ const normOfNormals = (ce: Engine, expr: Expr, distributed: Expr): Expr | undefi
   return k === 2 ? ce.function("RayleighDistribution", [ce.One]) : ce.function("ChiDistribution", [ce.number(k)]);
 };
 
+/** The `[numerator, denominator]` names of `u / v`, however canonicalization wrote it: `Divide`,
+ *  or a `Multiply` with one factor `v^(-1)` or `1/v`. */
+const ratioParts = (expr: Expr): [string | undefined, string | undefined] | undefined => {
+  const ops = operandsOf(expr);
+  if (expr.operator === "Divide" && ops.length === 2) return [symbolNameOf(ops[0]), symbolNameOf(ops[1])];
+  if (expr.operator !== "Multiply" || ops.length !== 2) return undefined;
+  const reciprocalName = (e: Expr): string | undefined => {
+    const parts = operandsOf(e);
+    if (e.operator === "Power" && parts.length === 2 && integerAt(parts[1]) === -1) return symbolNameOf(parts[0]);
+    if (e.operator === "Divide" && parts.length === 2 && numAt(parts[0]) === 1) return symbolNameOf(parts[1]);
+    return undefined;
+  };
+  for (const [top, bottom] of [
+    [ops[0], ops[1]],
+    [ops[1], ops[0]],
+  ]) {
+    const den = reciprocalName(bottom);
+    if (den !== undefined) return [symbolNameOf(top), den];
+  }
+  return undefined;
+};
+
+/** `u / v` for two independent standard normals bound as `Distributed([u, v], ...)` is
+ *  `CauchyDistribution(0, 1)`. The transform must divide one bound variable by the other, in
+ *  either order (the pair is iid, so `v / u` is the same Cauchy). */
+const ratioOfNormals = (ce: Engine, expr: Expr, distributed: Expr): Expr | undefined => {
+  if (distributed.operator !== "Distributed") return undefined;
+  const [vars, product] = operandsOf(distributed);
+  if (vars?.operator !== "List" || product?.operator !== "ProductDistribution") return undefined;
+  const names = operandsOf(vars).map(symbolNameOf);
+  if (names.length !== 2 || names[0] === undefined || names[0] === names[1]) return undefined;
+  const factors = operandsOf(product);
+  if (factors.length !== 2 || !factors.every((d) => isStandardNormal(ce, d))) return undefined;
+  const parts = ratioParts(expr);
+  if (parts === undefined) return undefined;
+  const [num, den] = parts;
+  if (num === undefined || den === undefined || num === den) return undefined;
+  if (!names.includes(num) || !names.includes(den)) return undefined;
+  return ce.function("CauchyDistribution", [ce.Zero, ce.One]);
+};
+
 const transformedPdf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   const info = transformedInfo(ce, dist, options);
   if (info === undefined) return undefined;
@@ -554,7 +595,8 @@ function declareConstructors4(ce: Engine): void {
   extendHead(ce, "ProductDistribution", { canonical: (ops: readonly Expr[]) => productCanonical(ce, ops) });
   ce.declare("TransformedDistribution", {
     signature: "(any, expression<Distributed>) -> distribution",
-    evaluate: (ops: readonly Expr[]) => (ops.length === 2 ? normOfNormals(ce, ops[0], ops[1]) : undefined),
+    evaluate: (ops: readonly Expr[]) =>
+      ops.length === 2 ? (normOfNormals(ce, ops[0], ops[1]) ?? ratioOfNormals(ce, ops[0], ops[1])) : undefined,
   });
   ce.declare("MarginalDistribution", {
     signature: "(expression<ProductDistribution>, integer | list<integer>) -> distribution",

@@ -244,6 +244,27 @@ describe("TransformedDistribution: the norm of independent standard normals", ()
   });
 });
 
+describe("TransformedDistribution: the ratio of two independent standard normals", () => {
+  const ratioOf = (expr: unknown, bound: unknown = ["NormalDistribution"]) => [
+    "TransformedDistribution",
+    expr,
+    ["Distributed", ["List", "u", "v"], ["ProductDistribution", ["List", bound, 2]]],
+  ];
+
+  test("u / v is Cauchy(0, 1), in any canonical form and either order", () => {
+    expect(evalOf(ratioOf(["Divide", "u", "v"])).json).toEqual(["CauchyDistribution", 0, 1]);
+    expect(evalOf(ratioOf(["Multiply", "u", ["Divide", 1, "v"]])).json).toEqual(["CauchyDistribution", 0, 1]);
+    expect(evalOf(ratioOf(["Divide", "v", "u"])).json).toEqual(["CauchyDistribution", 0, 1]);
+  });
+
+  test("stays a transform for non-standard normals, or a ratio of other names", () => {
+    expect(evalOf(ratioOf(["Divide", "u", "v"], ["NormalDistribution", 1, 2])).operator).toBe(
+      "TransformedDistribution",
+    );
+    expect(evalOf(ratioOf(["Divide", "u", "w"])).operator).toBe("TransformedDistribution");
+  });
+});
+
 describe("DirichletDistribution: Mean components sum to at most 1, Variance is nonnegative", () => {
   const cases: readonly (readonly number[])[] = [
     [1, 4, 5],
