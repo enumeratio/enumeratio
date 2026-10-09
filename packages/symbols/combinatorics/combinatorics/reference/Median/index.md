@@ -11,6 +11,11 @@ signatures:
     library: enumeratio-combinatorics
     type: ((collection<any> | number)+) -> nan | real | signed_infinity
     overrides: compute-engine
+  - call: Median(dist)
+    description: the exact quantile at 1/2 of a distribution, where one exists; otherwise unevaluated.
+    library: enumeratio-statistics
+    type: ((collection<any> | distribution | number)+) -> number
+    overrides: enumeratio-combinatorics
 seeAlso:
   - Mean
   - Mode

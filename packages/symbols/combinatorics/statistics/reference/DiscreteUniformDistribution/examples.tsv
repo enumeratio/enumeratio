@@ -1,5 +1,6 @@
-id	section	role	expr	expected
-discreteuniform-pdf-exact			[PDF, [DiscreteUniformDistribution, [List, 1, 6]], 3]	[Rational, 1, 6]
-discreteuniform-cdf-exact			[CDF, [DiscreteUniformDistribution, [List, 1, 6]], 3]	[Rational, 1, 2]
-discreteuniform-mean-exact			[Mean, [DiscreteUniformDistribution, [List, 1, 6]]]	[Rational, 7, 2]
-discreteuniform-variance-exact			[Variance, [DiscreteUniformDistribution, [List, 1, 6]]]	[Rational, 35, 12]
+id	section	role	expr	expected	caption
+discreteuniform-pdf-exact			[PDF, [DiscreteUniformDistribution, [List, 1, 6]], 3]	[Rational, 1, 6]	
+discreteuniform-cdf-exact			[CDF, [DiscreteUniformDistribution, [List, 1, 6]], 3]	[Rational, 1, 2]	
+discreteuniform-mean-exact			[Mean, [DiscreteUniformDistribution, [List, 1, 6]]]	[Rational, 7, 2]	
+discreteuniform-variance-exact			[Variance, [DiscreteUniformDistribution, [List, 1, 6]]]	[Rational, 35, 12]	
+discreteuniform-median-exact			[Median, [DiscreteUniformDistribution, [List, 1, 10]]]	5	A discrete median is the least $k$ with $CDF(k) \ge 1/2$, not the midpoint $11/2$

@@ -1,2 +1,4 @@
-id	in
-inversecdf-normal-median	InverseCDF[NormalDistribution[0, 1], Rational[1, 2]]
+id	in	out	tex.in	tex.out
+inversecdf-normal-median	InverseCDF[NormalDistribution[0, 1], Rational[1, 2]]			
+median-poissondistribution-12	Median[PoissonDistribution[12]]	12	\text{Median}[\text{PoissonDistribution}[12]]	12
+median-binomialdistribution-25-1-over-7	Median[BinomialDistribution[25, Rational[1, 7]]]	3	\text{Median}\left[\text{BinomialDistribution}\left[25,\frac{1}{7}\right]\right]	3

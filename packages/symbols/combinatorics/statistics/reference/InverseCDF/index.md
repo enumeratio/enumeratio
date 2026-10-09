@@ -11,8 +11,10 @@ signatures:
 seeAlso:
   - CDF
   - SurvivalFunction
+  - Median
 names:
   wolframIdentity: true
 ---
 
 - Generic over every distribution this package's [[CDF]] can evaluate numerically, old or new — including compute-engine's own natives.
+- `Median(dist)` is the exact quantile at $1/2$ where one exists: a closed form for the common continuous laws, and for a discrete law with rational parameters the least $k$ whose CDF reaches $1/2$, decided in exact arithmetic. Other laws stay unevaluated; `InverseCDF(dist, 1/2)` gives the numeric value.

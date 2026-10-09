@@ -1,4 +1,5 @@
-id	in
-nprobability-normal-outside-one-sigma-ish	NProbability[Greater[Power[x, 2], 1], Distributed[x, NormalDistribution[0, 1]]]
-nprobability-poisson-is-even	NProbability[(Mod[x, 2] == 0), Distributed[x, PoissonDistribution[4]]]
-nprobability-agrees-with-exact-cdf	NProbability[LessEqual[x, 5], Distributed[x, PoissonDistribution[3]]]
+id	in	out	tex.in	tex.out
+nprobability-normal-outside-one-sigma-ish	NProbability[Greater[Power[x, 2], 1], Distributed[x, NormalDistribution[0, 1]]]			
+nprobability-poisson-is-even	NProbability[(Mod[x, 2] == 0), Distributed[x, PoissonDistribution[4]]]			
+nprobability-agrees-with-exact-cdf	NProbability[LessEqual[x, 5], Distributed[x, PoissonDistribution[3]]]			
+nprobability-n-lt-eq-15-distributed-n	NProbability[LessEqual[n, 15], Distributed[n, PoissonDistribution[Times[10368000, Power[10, -6]]]]]	0.937281035306784	\text{NProbability}\left[n\leq 15,n\unicode{f3d2}\text{PoissonDistribution}\left[\frac{10368000}{10^6}\right]\right]	0.937281

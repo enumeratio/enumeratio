@@ -30,7 +30,7 @@ the named laws (`BinomialDistribution`, `GammaDistribution`, `HypergeometricDist
 
 **Functions of a distribution.** [`Expectation`](https://enumeratio.dev/reference/symbol/Expectation),
 [`Probability`](https://enumeratio.dev/reference/symbol/Probability),
-[`Moment`](https://enumeratio.dev/reference/symbol/Moment), `Cumulant`,
+[`Moment`](https://enumeratio.dev/reference/symbol/Moment), `Cumulant`, `Median`,
 `CharacteristicFunction`, `MomentGeneratingFunction`,
 [`RandomVariate`](https://enumeratio.dev/reference/symbol/RandomVariate).
 

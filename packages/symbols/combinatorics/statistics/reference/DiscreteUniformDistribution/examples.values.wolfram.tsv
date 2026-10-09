@@ -1,5 +1,6 @@
-id	in
-discreteuniform-pdf-exact	PDF[DiscreteUniformDistribution[List[1, 6]], 3]
-discreteuniform-cdf-exact	CDF[DiscreteUniformDistribution[List[1, 6]], 3]
-discreteuniform-mean-exact	Mean[DiscreteUniformDistribution[List[1, 6]]]
-discreteuniform-variance-exact	Variance[DiscreteUniformDistribution[List[1, 6]]]
+id	in	out	tex.in	tex.out
+discreteuniform-pdf-exact	PDF[DiscreteUniformDistribution[List[1, 6]], 3]			
+discreteuniform-cdf-exact	CDF[DiscreteUniformDistribution[List[1, 6]], 3]			
+discreteuniform-mean-exact	Mean[DiscreteUniformDistribution[List[1, 6]]]			
+discreteuniform-variance-exact	Variance[DiscreteUniformDistribution[List[1, 6]]]			
+discreteuniform-median-exact	Median[DiscreteUniformDistribution[List[1, 10]]]	5	\text{Median}[\text{DiscreteUniformDistribution}[\{1,10\}]]	5
