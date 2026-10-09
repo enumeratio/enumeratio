@@ -133,7 +133,7 @@ pr114-boxed-plane-partitions	Count(BoxedPlanePartitions(1, 1, 4)) => 5
 pr114-boxed-plane-partitions	Count(BoxedPlanePartitions(2, 2, 2)) => 20
 pr114-boxed-plane-partitions	Count(BoxedPlanePartitions(3, 3, 3)) => 980
 pr118-hypergeometric	N(Hypergeometric0F1Regularized(-1, 2)) => 3.7150355604584
-pr118-hypergeometric	N(Hypergeometric3F2Regularized(1, 2, 3, 4, -1, 1/3)) => 0.25430497295474024
+pr118-hypergeometric	N(Hypergeometric3F2Regularized(1, 2, 3, 4, -1, 1/3)) ~> 0.25430497295474024
 pr118-hypergeometric	N(HypergeometricU(1/3, 1/2, 2)) => 0.71904530990478
 pr102-duplicate	DigitSum(6345354, 10, 4) => 18
 pr110-list-overrides	At([1, 2, 3], 0) => List

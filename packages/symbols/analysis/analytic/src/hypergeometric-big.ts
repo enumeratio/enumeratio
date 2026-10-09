@@ -9,6 +9,8 @@ import { atDigits, bernoulliRational, bigCx } from "@enumeratio/ce-patches";
 
 const MAX_TERMS = 20_000;
 const GUARD = 15;
+/** Consecutive shrinking terms, with a geometric tail bound under the tolerance, before a sum settles. */
+const SETTLED_RUN = 3;
 /** Past this many digits lost to cancellation the answer is not worth carrying. */
 const MAX_LOST_DIGITS = 400;
 
@@ -38,14 +40,26 @@ function series(
     let sum = big(0);
     let peak = big(0);
     let previous: BigDecimal | undefined;
+    let run = 0; // consecutive shrinking terms
+    let worstRatio = big(0);
     for (let k = 0; k < MAX_TERMS; k++) {
       const term = invGammas.reduce((t, g) => t.mul(g), core);
       sum = sum.add(term).toPrecision(working);
       if (term.abs().gt(peak)) peak = term.abs();
       if (core.isZero()) return { sum, peak }; // terminated (a polynomial case)
-      if (k >= first && previous !== undefined && term.abs().lt(previous) && term.abs().lt(tol.mul(sum.abs())))
-        return { sum, peak };
-      if (k >= first) previous = term.abs();
+      if (k >= first) {
+        const size = term.abs();
+        if (previous !== undefined && size.lt(previous)) {
+          run += 1;
+          const ratio = size.div(previous);
+          if (run === 1 || ratio.gt(worstRatio)) worstRatio = ratio;
+          const tail = size.mul(worstRatio).div(big(1).sub(worstRatio));
+          if (run >= SETTLED_RUN && tail.lte(tol.mul(sum.abs()))) return { sum, peak };
+        } else {
+          run = 0;
+        }
+        previous = size;
+      }
       let next = z;
       for (const a of upper) next = next.mul(a.add(k));
       core = core

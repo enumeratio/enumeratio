@@ -53,6 +53,10 @@ import {
 
 const MAX_TERMS = 500;
 const TOL = 1e-16;
+/** Digits the bignum series carries before rounding to a double: 17 for the double, plus a guard. */
+const DOUBLE_GUARD_DIGITS = 25;
+/** Consecutive shrinking terms, with a tail bound under `TOL`, before a sum counts as settled. */
+const SETTLED_RUN = 3;
 
 /** Is z a non-positive integer — a pole of Γ, and so a zero of 1/Γ? */
 const isNonPositiveInt = (z: Cx): boolean => z.im === 0 && z.re <= 0 && Number.isInteger(z.re);
@@ -113,6 +117,10 @@ export function pfqSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx
  * Testing `|term| < tol` there would stop the sum right in that dead zone and miss every
  * non-zero term after it, so convergence is only checked once `k` has cleared the last such
  * pole (`poleBound`, below).
+ *
+ * The sum settles only after `SETTLED_RUN` consecutive shrinking terms whose geometric tail bound,
+ * |term|·r/(1 − r) at the run's largest ratio r, is under `TOL` relative to the sum. One small term
+ * is not enough: a term can dip near a zero factor and grow again.
  */
 function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx | undefined {
   const poleBound = lower.reduce((m, b) => (isNonPositiveInt(b) ? Math.max(m, -b.re) : m), -1);
@@ -123,6 +131,9 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
   // ulps) into every term: Hypergeometric2F1Regularized(1, 2, −1, ½) came out 24 − 1.4e-14.
   const integerLower = lower.map((b) => b.im === 0 && Number.isInteger(b.re));
   const exactInvGamma = lower.map((b, i) => (integerLower[i] ? exactInvGammaAt(b.re) : cx(1)));
+  let previous: number | undefined;
+  let run = 0;
+  let worstRatio = 0;
   for (let k = 0; k < MAX_TERMS; k++) {
     if (k > 0) {
       lower.forEach((b, i) => {
@@ -136,7 +147,18 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
     const term = mul(core, invG);
     sum = add(sum, term);
     if (core.re === 0 && core.im === 0) return sum; // terminated (a polynomial case)
-    if (k > poleBound && mag(term) < TOL * (1 + mag(sum))) return sum;
+    if (k > poleBound) {
+      const size = mag(term);
+      const ratio = previous === undefined ? 1 : size / previous;
+      if (ratio < 1) {
+        run += 1;
+        worstRatio = run === 1 ? ratio : Math.max(worstRatio, ratio);
+        if (run >= SETTLED_RUN && (size * worstRatio) / (1 - worstRatio) <= TOL * mag(sum)) return sum;
+      } else {
+        run = 0;
+      }
+      previous = size;
+    }
     let num = z;
     for (const a of upper) num = mul(num, add(a, cx(k)));
     core = div(mul(core, num), cx(k + 1));
@@ -327,6 +349,19 @@ export function declareHypergeometric(ce: ComputeEngine): void {
       // Past a double's digits only the bignum series answers (real operands, |z| < 1).
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return regularized3F2PastDouble(ce, ops);
       if (mag(z) >= 1) return undefined;
+      // Real operands: the terms carry factorial-sized factors whose rounding costs a double more
+      // than its last bit (1, 2, 3; 4, −1; 1/3 came out 2 ulp off), so the bignum series answers at
+      // `DOUBLE_GUARD_DIGITS` and rounds once; if it can't settle, neither can the double one.
+      const real = ops.map((op) => bigRealOperand(ce, op));
+      if (real.every((x) => x !== undefined)) {
+        const v = hypergeometric3F2RegularizedBig(
+          real.slice(0, 3) as [BigDecimal, BigDecimal, BigDecimal],
+          real.slice(3, 5) as [BigDecimal, BigDecimal],
+          real[5]!,
+          DOUBLE_GUARD_DIGITS,
+        );
+        return v === undefined ? undefined : numberResult(ce, cx(v.toNumber(), 0));
+      }
       const r = pfqRegularizedSeries([a1, a2, a3], [b1, b2], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
