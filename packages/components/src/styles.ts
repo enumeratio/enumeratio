@@ -18,9 +18,9 @@ notatio-out[display] {
 }
 
 /* A picture inline in prose: a Show drawn without its card, sized to the line. */
-notatio-show.inline-figure { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; margin: 0; border: 0; background: none; }
-notatio-show.inline-figure .notatio-show { margin: 0; border: 0; background: none; }
-notatio-show.inline-figure .notatio-show-layers { background: none !important; }
+graphics-box.inline-figure { display: inline-flex; flex: none; width: auto; vertical-align: middle; line-height: normal; margin: 0; border: 0; background: none; }
+graphics-box.inline-figure .graphics-box-figure { margin: 0; border: 0; background: none; }
+graphics-box.inline-figure .graphics-box-layers { background: none !important; }
 
 /* Plots are block figures sized to a max width; the viewBox drives the ratio. */
 notatio-plot, notatio-plot-3d { display: block; line-height: 0; }
@@ -1279,7 +1279,7 @@ notatio-worksheet {
 }
 
 /* --- Legends --------------------------------------------------------------------------- */
-.notatio-legend {
+.graphics-box-legend {
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem 1rem;
@@ -1288,18 +1288,18 @@ notatio-worksheet {
   list-style: none;
   color: var(--vp-c-text-2, #555);
 }
-.notatio-legend.is-vertical {
+.graphics-box-legend.is-vertical {
   flex-direction: column;
   flex-wrap: nowrap;
 }
-.notatio-legend li {
+.graphics-box-legend li {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   margin: 0;
 }
-.notatio-legend li > i,
-.notatio-show-swatch > i {
+.graphics-box-legend li > i,
+.graphics-box-swatch > i {
   display: inline-block;
   width: 1.1em;
   height: 1.1em;
@@ -1307,19 +1307,19 @@ notatio-worksheet {
   box-sizing: border-box;
   flex: none;
 }
-.notatio-legend-gradient {
+.graphics-box-legend-gradient {
   display: grid !important;
   grid-template-columns: auto 8rem;
   grid-template-areas: "label bar" ". ticks";
   gap: 0.1rem 0.5rem;
 }
-.notatio-legend.is-vertical .notatio-legend-gradient {
+.graphics-box-legend.is-vertical .graphics-box-legend-gradient {
   grid-template-columns: 1fr;
   grid-template-areas: "label" "bar" "ticks";
 }
-.notatio-legend-gradient .notatio-legend-label { grid-area: label; }
-.notatio-legend-bar { grid-area: bar; height: 0.8em; border-radius: 3px; align-self: center; }
-.notatio-legend-ticks {
+.graphics-box-legend-gradient .graphics-box-legend-label { grid-area: label; }
+.graphics-box-legend-bar { grid-area: bar; height: 0.8em; border-radius: 3px; align-self: center; }
+.graphics-box-legend-ticks {
   grid-area: ticks;
   display: flex;
   justify-content: space-between;
@@ -1449,18 +1449,18 @@ notatio-worksheet {
 /* --- Figure: layers in one frame, each a canvas, blended with screen ------------------ */
 /* A plot takes its container's width, in a flex row (a story's canvas) as in a block, and so
    does the output element a page's markup wraps it in. */
-notatio-out:has(> notatio-show, > [data-head="Labeled"] > notatio-show) {
+notatio-out:has(> graphics-box, > [data-head="Labeled"] > graphics-box) {
   flex: 1 1 100%;
   min-width: 0;
 }
-notatio-show {
+graphics-box {
   display: flex;
   flex-direction: column;
   flex: 1 1 100%;
   min-width: 0;
   width: 100%;
 }
-.notatio-show {
+.graphics-box-figure {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -1471,12 +1471,12 @@ notatio-show {
   background: var(--vp-c-bg-soft, #f6f6f7);
   font-size: 0.85rem;
 }
-.notatio-show-layers {
+.graphics-box-layers {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
-.notatio-show-layers canvas {
+.graphics-box-layers canvas {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1485,11 +1485,11 @@ notatio-show {
   outline: none;
 }
 /* Layers over the first add light: unknown (transparent) is the identity. */
-.notatio-show-layers canvas + canvas { mix-blend-mode: screen; }
-.notatio-show-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: #cbd5e1; }
+.graphics-box-layers canvas + canvas { mix-blend-mode: screen; }
+.graphics-box-status { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: #cbd5e1; }
 /* What the layer says of the tile under the pointer, the selection or the whole: one strip under
    the plot, two lines tall so the page doesn't jump as it changes. */
-.notatio-show-info {
+.graphics-box-info {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -1501,20 +1501,20 @@ notatio-show {
   color: var(--vp-c-text-2, #555);
   font-variant-numeric: tabular-nums;
 }
-.notatio-show-info strong { color: var(--vp-c-text-1, inherit); font-weight: 600; }
-.notatio-show-info-key { color: var(--vp-c-text-3, #888); }
-.notatio-show-layers canvas:last-child { touch-action: none; cursor: grab; }
-.notatio-show-layers canvas:last-child:active { cursor: grabbing; }
+.graphics-box-info strong { color: var(--vp-c-text-1, inherit); font-weight: 600; }
+.graphics-box-info-key { color: var(--vp-c-text-3, #888); }
+.graphics-box-layers canvas:last-child { touch-action: none; cursor: grab; }
+.graphics-box-layers canvas:last-child:active { cursor: grabbing; }
 /* A fixed frame is fitted, not panned: the page scrolls over it. */
-.notatio-show-layers.is-fixed canvas:last-child { touch-action: auto; cursor: pointer; }
+.graphics-box-layers.is-fixed canvas:last-child { touch-action: auto; cursor: pointer; }
 /* A camera frame is orbited: the drag is the plot's. */
-.notatio-show-layers.is-camera canvas:last-child { touch-action: none; cursor: grab; }
-.notatio-show-layers canvas:last-child:focus {
+.graphics-box-layers.is-camera canvas:last-child { touch-action: none; cursor: grab; }
+.graphics-box-layers canvas:last-child:focus {
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 70%, transparent);
 }
-.notatio-show-caption { margin: 0; line-height: 1.7; }
-.notatio-show-legend .notatio-show-swatch { position: relative; display: inline-flex; cursor: pointer; }
-.notatio-show-legend .notatio-show-swatch input[type="color"] {
+.graphics-box-caption { margin: 0; line-height: 1.7; }
+.graphics-box-legend .graphics-box-swatch { position: relative; display: inline-flex; cursor: pointer; }
+.graphics-box-legend .graphics-box-swatch input[type="color"] {
   position: absolute;
   inset: 0;
   opacity: 0;
@@ -1522,12 +1522,12 @@ notatio-show {
 }
 /* The legend stays out of the way: small, every rule one square swatch, a scheme's gradient across
    its square; a scheme's padding and reverse show on hover or focus. */
-.notatio-show-legend { font-size: 0.8rem; gap: 0.2rem 0.8rem; }
-.notatio-show-legend .notatio-show-swatch > i { width: 0.95em; height: 0.95em; }
-.notatio-show-legend .notatio-show-swatch select { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-.notatio-show-ends { display: inline-flex; gap: 0.1rem; opacity: 0; transition: opacity 0.15s; }
-.notatio-show-scheme:hover .notatio-show-ends,
-.notatio-show-scheme:focus-within .notatio-show-ends { opacity: 1; }
+.graphics-box-legend { font-size: 0.8rem; gap: 0.2rem 0.8rem; }
+.graphics-box-legend .graphics-box-swatch > i { width: 0.95em; height: 0.95em; }
+.graphics-box-legend .graphics-box-swatch select { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.graphics-box-ends { display: inline-flex; gap: 0.1rem; opacity: 0; transition: opacity 0.15s; }
+.graphics-box-scheme:hover .graphics-box-ends,
+.graphics-box-scheme:focus-within .graphics-box-ends { opacity: 1; }
 .notatio-die { border: none; background: transparent; padding: 0 0.15rem; color: var(--vp-c-brand-1, #3451b2); font: inherit; cursor: pointer; }
 .notatio-settings { display: flex; gap: 0.3rem; margin-top: 0.35rem; }
 .notatio-settings input {
@@ -1541,10 +1541,10 @@ notatio-show {
   color: inherit;
 }
 .notatio-settings button { border: none; background: transparent; color: var(--vp-c-brand-1, #3451b2); cursor: pointer; }
-.notatio-show-indexed { display: flex; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
-.notatio-show-indexed span { display: inline-flex; align-items: center; gap: 0.25rem; }
-.notatio-show-indexed i { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; }
-.notatio-show-ends button,
+.graphics-box-indexed { display: flex; flex-wrap: wrap; gap: 0.15rem 0.5rem; }
+.graphics-box-indexed span { display: inline-flex; align-items: center; gap: 0.25rem; }
+.graphics-box-indexed i { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; }
+.graphics-box-ends button,
 .stepper-box button {
   border: none;
   background: transparent;
@@ -2052,9 +2052,9 @@ pane-box[data-scrollbars] { overflow: auto; }
 [data-head="Labeled"] { display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; }
 [data-head="Labeled"][data-rows="2"] { flex-direction: column; align-items: flex-start; gap: 0.15em; }
 /* A plot with a caption: the plot takes the width, the caption reads as a paragraph under it. */
-[data-head="Labeled"]:has(> notatio-show) { display: flex; gap: 0.5rem; text-align: start; }
-[data-head="Labeled"] > notatio-show { align-self: stretch; }
-[data-head="Labeled"]:has(> notatio-show) > notatio-string-template { display: block; line-height: 1.7; }
+[data-head="Labeled"]:has(> graphics-box) { display: flex; gap: 0.5rem; text-align: start; }
+[data-head="Labeled"] > graphics-box { align-self: stretch; }
+[data-head="Labeled"]:has(> graphics-box) > notatio-string-template { display: block; line-height: 1.7; }
 .style-box-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }
 
 /* A prose control panel: a paragraph like the ones around it, set off only by

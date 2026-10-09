@@ -319,7 +319,7 @@ interface Override {
 }
 
 /**
- * `<notatio-show value="Show(LatticeTiles(QuadraticIntegers(_d), ColorRules -> […]), …)">` —
+ * `<graphics-box value="Show(LatticeTiles(QuadraticIntegers(_d), ColorRules -> […]), …)">` —
  * Wolfram's `Show`: layers in one coordinate frame, sharing one view, each on its own canvas.
  * `LatticeTiles(ring, …)` draws a lattice's faces: `ColorRules -> [test -> color, …]` colors them
  * (a color, `Opacity(a, color)`, or `ColorData(scheme, value, Band -> w)`), `ColorMixing`
@@ -346,7 +346,7 @@ interface Override {
  *
  * Drag to pan; Esc clears the selection; `0` resets the view.
  */
-export class NotatioShow extends LitElement {
+export class GraphicsBoxElement extends LitElement {
   static properties = {
     /** The `Show(…)` expression, in Epsil. */
     value: { type: String },
@@ -464,7 +464,7 @@ export class NotatioShow extends LitElement {
   }
 
   #adoptCanvases(): void {
-    const canvases = [...this.querySelectorAll<HTMLCanvasElement>(".notatio-show-layers canvas")];
+    const canvases = [...this.querySelectorAll<HTMLCanvasElement>(".graphics-box-layers canvas")];
     if (canvases.length === this.#canvases.length && canvases.every((c, k) => c === this.#canvases[k])) return;
     this.#canvases = canvases;
     this.#ro?.disconnect();
@@ -992,7 +992,7 @@ export class NotatioShow extends LitElement {
     const points = ["List", ...this._selection.map(([i, j]) => ["Tuple", i, j])];
     if (name) emitControl(this, { name, value: points as never });
     this.dispatchEvent(
-      new CustomEvent("notatio-show-select", { detail: { points: this._selection }, bubbles: true, composed: true }),
+      new CustomEvent("graphics-box-select", { detail: { points: this._selection }, bubbles: true, composed: true }),
     );
   }
 
@@ -1172,7 +1172,7 @@ export class NotatioShow extends LitElement {
     const colors = this._spec?.defaulted.colors ? [] : this.#colorRules;
     const edges = this._spec?.defaulted.edges ? [] : this.#boundaryRules;
     if (colors.length + edges.length === 0) return undefined;
-    return html`<ul class=${`notatio-legend notatio-show-legend ${vertical ? "is-vertical" : ""}`}>
+    return html`<ul class=${`graphics-box-legend graphics-box-legend ${vertical ? "is-vertical" : ""}`}>
       ${colors.map((rule, k) => (typeof rule.paint === "string" ? this.#swatch(rule, rule.paint, k) : this.#scheme(rule, rule.paint, k)))}
       ${edges.map((rule, k) => this.#edge(rule, k))}
     </ul>`;
@@ -1181,7 +1181,7 @@ export class NotatioShow extends LitElement {
   /** A color rule's swatch, which opens a color picker. */
   #swatch(rule: ColorRule, color: string, k: number): unknown {
     return html`<li>
-      <label class="notatio-show-swatch" data-tip="Choose the color">
+      <label class="graphics-box-swatch" data-tip="Choose the color">
         <i style=${`background:${color}; opacity:${rule.opacity}`}></i>
         <input
           type="color"
@@ -1190,14 +1190,14 @@ export class NotatioShow extends LitElement {
           @input=${(e: Event) => this.#setOverride(k, { color: (e.target as HTMLInputElement).value })}
         />
       </label>
-      <span class="notatio-legend-label">${rule.label}</span>
+      <span class="graphics-box-legend-label">${rule.label}</span>
     </li>`;
   }
 
   /** An edge rule's swatch, its outline the edge's color, which opens a color picker. */
   #edge(rule: BoundaryRule, k: number): unknown {
     return html`<li>
-      <label class="notatio-show-swatch" data-tip="Choose the edge color">
+      <label class="graphics-box-swatch" data-tip="Choose the edge color">
         <i style=${`box-shadow: inset 0 0 0 ${Math.max(1.5, rule.width)}px ${rule.color}; opacity:${rule.opacity}`}></i>
         <input
           type="color"
@@ -1209,14 +1209,14 @@ export class NotatioShow extends LitElement {
           }}
         />
       </label>
-      <span class="notatio-legend-label">${rule.label}</span>
+      <span class="graphics-box-legend-label">${rule.label}</span>
     </li>`;
   }
 
   /** An indexed scheme's first colors, numbered: what value k paints. */
   #indexed(rule: ColorRule, colors: readonly string[]): unknown {
-    return html`<li class="notatio-show-indexed">
-      <span class="notatio-legend-label">${rule.label}</span>
+    return html`<li class="graphics-box-indexed">
+      <span class="graphics-box-legend-label">${rule.label}</span>
       ${colors.slice(0, INDEXED_SHOWN).map((c, n) => html`<span><i style=${`background:${c}`}></i>${n}</span>`)}
     </li>`;
   }
@@ -1236,8 +1236,8 @@ export class NotatioShow extends LitElement {
           ? `from ${at(0)}, again every ${at(1)}`
           : `${at(0)} and below to ${at(1)} and past`;
     const next = BAND_MODES[(BAND_MODES.indexOf(mode) + 1) % BAND_MODES.length]!;
-    return html`<li class="notatio-show-scheme">
-      <label class="notatio-show-swatch" data-tip=${`${scheme.gradient.label}: ${ends}`}>
+    return html`<li class="graphics-box-scheme">
+      <label class="graphics-box-swatch" data-tip=${`${scheme.gradient.label}: ${ends}`}>
         <i style=${`background:${gradientCss(scheme.gradient, "135deg")}`}></i>
         <select
           aria-label=${`${rule.label} color scheme`}
@@ -1246,8 +1246,8 @@ export class NotatioShow extends LitElement {
           ${GRADIENTS.map((g) => html`<option value=${g.name} ?selected=${g.name === scheme.gradient.name}>${g.label}</option>`)}
         </select>
       </label>
-      <span class="notatio-legend-label">${rule.label}</span>
-      <span class="notatio-show-ends">
+      <span class="graphics-box-legend-label">${rule.label}</span>
+      <span class="graphics-box-ends">
         <button
           type="button"
           data-tip=${`Padding: ${paddingName(mode)} (click for ${paddingName(next)})`}
@@ -1276,9 +1276,9 @@ export class NotatioShow extends LitElement {
     const [only] = this._selection.length === 1 ? this._selection : [];
     const info =
       this._info ?? (only ? layer.describe(only[0], only[1]) : { title: layer.title, rows: layer.summary() });
-    return html`<p class="notatio-show-info" aria-live="polite">
+    return html`<p class="graphics-box-info" aria-live="polite">
       <strong>${info.title}</strong>
-      ${info.rows.map(([k, v]) => html`<span><span class="notatio-show-info-key">${k}</span> ${v}</span>`)}
+      ${info.rows.map(([k, v]) => html`<span><span class="graphics-box-info-key">${k}</span> ${v}</span>`)}
     </p>`;
   }
 
@@ -1294,13 +1294,13 @@ export class NotatioShow extends LitElement {
     const ground = resolvePalette({ palette: this.ground });
     const legendAt: FramePlacement = placementOf(this.legendAt, "right");
     const stage = html`<div
-        class=${`notatio-show-layers${this.#fixed ? " is-fixed" : ""}${this.#isCamera ? " is-camera" : ""}`}
+        class=${`graphics-box-layers${this.#fixed ? " is-fixed" : ""}${this.#isCamera ? " is-camera" : ""}`}
         style=${`background:${ground.background}`}
       >
         ${["tiles", "lines", "axes"].map(
           (name) =>
             html`<canvas
-              class=${`notatio-show-${name}`}
+              class=${`graphics-box-${name}`}
               tabindex=${name === "axes" ? "0" : "-1"}
               aria-label=${name === "axes" ? `Plot: ${this.#layer?.title ?? ""}` : nothing}
               @pointerdown=${name === "axes" ? this.#onPointerDown : nothing}
@@ -1311,8 +1311,8 @@ export class NotatioShow extends LitElement {
             ></canvas>`,
         )}
       </div>
-      ${this._status ? html`<p class="notatio-show-status">${this._status}</p>` : nothing}`;
-    return html`<div class="notatio-show">
+      ${this._status ? html`<p class="graphics-box-status">${this._status}</p>` : nothing}`;
+    return html`<div class="graphics-box-figure">
       ${figureFrame({
         stage,
         stageStyle: `min-height:${this.#height}px`,
@@ -1474,4 +1474,4 @@ async function layerFor(tiles: ShowSpec["tiles"], aspect: "Uniform" | "True"): P
     : `${d} is no quadratic discriminant: one is 0 or 1 mod 4, and not a square.`;
 }
 
-if (!customElements.get("notatio-show")) customElements.define("notatio-show", NotatioShow);
+if (!customElements.get("graphics-box")) customElements.define("graphics-box", GraphicsBoxElement);
