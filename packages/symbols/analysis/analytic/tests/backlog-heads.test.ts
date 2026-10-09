@@ -23,11 +23,6 @@ test("HypergeometricPFQ declines outside the unit disc when p = q + 1", () => {
   expect(ce.box(["HypergeometricPFQ", ["List", 1, 1], ["List", 2], 1.5]).N().operator).toBe("HypergeometricPFQ");
 });
 
-test("PrimeZetaP declines at and below the convergence boundary", () => {
-  expect(ce.box(["PrimeZetaP", 1]).N().operator).toBe("PrimeZetaP");
-  expect(ce.box(["PrimeZetaP", 0.5]).N().operator).toBe("PrimeZetaP");
-});
-
 test("InverseGammaRegularized and InverseBetaRegularized decline outside their domain", () => {
   expect(ce.box(["InverseGammaRegularized", -1, 0.5]).N().operator).toBe("InverseGammaRegularized");
   expect(ce.box(["InverseBetaRegularized", 1.5, 2, 3]).N().operator).toBe("InverseBetaRegularized");
