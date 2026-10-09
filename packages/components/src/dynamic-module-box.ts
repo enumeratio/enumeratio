@@ -14,7 +14,7 @@ import { CONTROL_EVENT, Transcript } from "@enumeratio/frontend/core";
 import type { TrackedSymbols } from "@enumeratio/frontend";
 import { LitElement, nothing } from "lit";
 import "./dynamic-box.ts";
-import "./notatio-knob.ts";
+import "./knob-box.ts";
 import "./toggler-box.ts";
 import "./notatio-when.ts";
 import { ReactiveModule } from "./reactive-module.ts";
@@ -294,9 +294,9 @@ export class NotatioDynamicModule extends LitElement {
   #onWorkerUnavailable(): void {
     this.#workerUnavailable = true;
     this.#clearSessionResetNotice();
-    if (this.querySelector(":scope > .notatio-worker-unavailable")) return;
+    if (this.querySelector(":scope > .dynamic-module-box-worker-unavailable")) return;
     const banner = document.createElement("div");
-    banner.className = "notatio-worker-reset notatio-worker-unavailable";
+    banner.className = "dynamic-module-box-worker-reset dynamic-module-box-worker-unavailable";
     banner.setAttribute("role", "status");
     banner.textContent = "Worker unavailable — evaluating locally instead.";
     this.prepend(banner);
@@ -311,16 +311,16 @@ export class NotatioDynamicModule extends LitElement {
    * nothing else here renders anything of its own (this class's own doc comment).
    */
   #onSessionReset(): void {
-    if (this.querySelector(":scope > .notatio-worker-reset")) return;
+    if (this.querySelector(":scope > .dynamic-module-box-worker-reset")) return;
     const banner = document.createElement("div");
-    banner.className = "notatio-worker-reset";
+    banner.className = "dynamic-module-box-worker-reset";
     banner.setAttribute("role", "status");
     banner.textContent = "Worker session restarted — earlier bindings lost; re-run cells.";
     this.prepend(banner);
   }
 
   #clearSessionResetNotice(): void {
-    this.querySelector(":scope > .notatio-worker-reset")?.remove();
+    this.querySelector(":scope > .dynamic-module-box-worker-reset")?.remove();
   }
 
   // Nothing of ours belongs in the document: the prose and its inline controls are the

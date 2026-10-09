@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[KnobBox, [DynamicBox, k], [Tuple, 0, 5]]	[KnobBox, [DynamicBox, k], [Tuple, 0, 5]]	a box is inert: it evaluates to itself

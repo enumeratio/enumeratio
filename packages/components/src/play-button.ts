@@ -9,8 +9,8 @@ export function playButton(sweep: Sweep, extra: { class?: string; own?: boolean 
   const press = sweep.press;
   return html`<button
     type="button"
-    class="notatio-knob-play ${extra.class ?? ""}"
-    ?data-notatio-knob=${extra.own ?? false}
+    class="control-play ${extra.class ?? ""}"
+    ?data-knob-box=${extra.own ?? false}
     title="play; hold for speed and loop"
     aria-label=${sweep.playing ? "pause" : "play"}
     aria-pressed=${sweep.playing ? "true" : "false"}

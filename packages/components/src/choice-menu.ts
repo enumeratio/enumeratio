@@ -44,13 +44,13 @@ export async function entryMarkup(source: string): Promise<string> {
 export function openChoiceMenu(options: ChoiceMenuOptions): () => void {
   const { anchor, items, selected, label, onPick, onClose } = options;
   const menu = document.createElement("div");
-  menu.className = "notatio-choice-menu";
+  menu.className = "control-choice-menu";
   menu.setAttribute("role", "listbox");
   menu.setAttribute("aria-label", label);
 
   const entries = items.map((markup, index) => {
     const el = document.createElement("div");
-    el.className = "notatio-choice-option";
+    el.className = "control-choice-option";
     el.setAttribute("role", "option");
     el.setAttribute("aria-selected", String(index === selected));
     el.tabIndex = -1;
@@ -67,7 +67,7 @@ export function openChoiceMenu(options: ChoiceMenuOptions): () => void {
   };
 
   menu.addEventListener("click", (event) => {
-    const option = (event.target as HTMLElement).closest<HTMLElement>(".notatio-choice-option");
+    const option = (event.target as HTMLElement).closest<HTMLElement>(".control-choice-option");
     if (option?.dataset.index !== undefined) pick(Number(option.dataset.index));
   });
   menu.addEventListener("keydown", (event) => {

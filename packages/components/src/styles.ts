@@ -136,7 +136,7 @@ notatio-in math-field::part(virtual-keyboard-toggle),
 notatio-in math-field::part(menu-toggle) { display: none; }
 
 .notatio-row { display: flex; align-items: baseline; gap: 0.5rem; margin: 0.25rem 0; }
-.notatio-label {
+.style-box-label {
   font-family: var(--notatio-mono, ui-monospace, monospace);
   font-size: 0.75rem;
   color: var(--vp-c-text-3, #888);
@@ -475,7 +475,7 @@ notatio-out[busy] .notatio-render { opacity: 0.5; transition-delay: 0.15s; }
    deadline an evaluation never cooperated with) -- dynamic-module-box.ts's own
    #onSessionReset prepends this notice; nothing else in the module renders its own
    markup (it is a scope, not a control panel), so this is the one exception. */
-.notatio-worker-reset {
+.dynamic-module-box-worker-reset {
   margin-bottom: 0.5rem;
   padding: 0.4rem 0.6rem;
   border: 1px solid var(--vp-c-warning-1, #e0af68);
@@ -1545,7 +1545,7 @@ notatio-show {
 .notatio-show-indexed span { display: inline-flex; align-items: center; gap: 0.25rem; }
 .notatio-show-indexed i { display: inline-block; width: 0.9em; height: 0.9em; border-radius: 3px; }
 .notatio-show-ends button,
-.notatio-stepper button {
+.stepper-box button {
   border: none;
   background: transparent;
   color: var(--vp-c-brand-1, #3451b2);
@@ -1555,15 +1555,15 @@ notatio-show {
 }
 
 /* --- Stepper: an integer in a sentence, stepped in place ------------------------------- */
-.notatio-stepper {
+.stepper-box {
   display: inline-flex;
   align-items: baseline;
   gap: 0.05rem;
   border-bottom: 1px dashed var(--vp-c-brand-1, #3451b2);
   outline: none;
 }
-.notatio-stepper:focus-visible { box-shadow: 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 40%, transparent); border-radius: 3px; }
-.notatio-stepper-value { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--vp-c-brand-1, #3451b2); }
+.stepper-box:focus-visible { box-shadow: 0 0 0 2px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 40%, transparent); border-radius: 3px; }
+.stepper-box-value { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--vp-c-brand-1, #3451b2); }
 
 /* --- Reactive prose, after Tangle ------------------------------------------------
    The controls sit INSIDE a sentence, so everything here is inline and must not
@@ -1578,10 +1578,10 @@ notatio-when { display: contents; }
 notatio-when[hidden] { display: none; }
 dynamic-box { display: inline; }
 dynamic-box[display] { display: block; text-align: center; margin: 1.1rem 0; }
-notatio-knob, toggler-box { display: inline; }
+knob-box, toggler-box { display: inline; }
 
-.notatio-knob-grip,
-.notatio-toggler-grip {
+.knob-box-grip,
+.toggler-box-grip {
   position: relative;
   display: inline-block;
   border: 0;
@@ -1599,18 +1599,18 @@ notatio-knob, toggler-box { display: inline; }
   /* Digits of equal width, so a value being dragged does not jitter the sentence. */
   font-variant-numeric: tabular-nums;
 }
-.notatio-knob-grip { cursor: ew-resize; }
-notatio-knob[axis="y"] .notatio-knob-grip,
-notatio-knob[axis="y"].notatio-knob-grip { cursor: ns-resize; }
+.knob-box-grip { cursor: ew-resize; }
+knob-box[axis="y"] .knob-box-grip,
+knob-box[axis="y"].knob-box-grip { cursor: ns-resize; }
 /* The gear shows in the rule under the value: heavier in coarse, hairline in fine. */
-.notatio-knob-grip[data-gear="coarse"][data-dragging] { border-bottom-width: 3px; margin-bottom: -2px; }
-.notatio-knob-grip[data-gear="fine"][data-dragging] { border-bottom-style: dotted; }
+.knob-box-grip[data-gear="coarse"][data-dragging] { border-bottom-width: 3px; margin-bottom: -2px; }
+.knob-box-grip[data-gear="fine"][data-dragging] { border-bottom-style: dotted; }
 
 /* A knob wrapping its own content: the content IS the grip, so none of the text
    affordances apply — a dashed rule under a glyph reads as part of the drawing. It
    gets a ring instead, and only on hover, so the figure is unmarked at rest. */
 /* Class-scoped so it ties with the text-grip rules above and wins by order. */
-.notatio-knob-grip[data-slotted] {
+.knob-box-grip[data-slotted] {
   display: inline-block;
   border-bottom: 0 none;
   border-radius: 6px;
@@ -1620,27 +1620,27 @@ notatio-knob[axis="y"].notatio-knob-grip { cursor: ns-resize; }
   outline: 2px solid transparent;
   outline-offset: 0;
 }
-notatio-knob[data-slotted] { display: inline-block; }
-.notatio-knob-grip[data-slotted]:hover,
-.notatio-knob-grip[data-slotted][data-dragging] {
+knob-box[data-slotted] { display: inline-block; }
+.knob-box-grip[data-slotted]:hover,
+.knob-box-grip[data-slotted][data-dragging] {
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 8%, transparent);
   outline-color: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 45%, transparent);
 }
 /* Two axes, so the cursor has to promise both. */
-.notatio-knob-grip[data-complex] { cursor: move; }
+.knob-box-grip[data-complex] { cursor: move; }
 /* A toggler has no axis to drag along, so it is a pointer and not a resize. */
-.notatio-toggler-grip { cursor: pointer; border-bottom-style: dotted; }
+.toggler-box-grip { cursor: pointer; border-bottom-style: dotted; }
 
-.notatio-knob-grip:focus-visible,
-.notatio-toggler-grip:focus-visible {
+.knob-box-grip:focus-visible,
+.toggler-box-grip:focus-visible {
   outline: 2px solid var(--vp-c-brand-1, #3451b2);
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-.notatio-knob-grip:hover,
-.notatio-knob-grip[data-dragging],
-.notatio-toggler-grip:hover {
+.knob-box-grip:hover,
+.knob-box-grip[data-dragging],
+.toggler-box-grip:hover {
   border-bottom-style: solid;
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 10%, transparent);
 }
@@ -1651,8 +1651,8 @@ notatio-knob[data-slotted] { display: inline-block; }
    dashed rule (or above and below it, for a vertical axis), the space belongs to the
    grip. Out of flow either way, so the line never reflows -- and they hang off
    pseudo-elements, since the value's markup is MathLive's and not ours to annotate. */
-.notatio-knob-grip::before,
-.notatio-knob-grip::after {
+.knob-box-grip::before,
+.knob-box-grip::after {
   position: absolute;
   top: 100%;
   opacity: 0;
@@ -1661,20 +1661,20 @@ notatio-knob[data-slotted] { display: inline-block; }
   line-height: 1;
   pointer-events: none;
 }
-.notatio-knob-grip::before { content: "\\25C2"; left: 0; }
-.notatio-knob-grip::after { content: "\\25B8"; right: 0; }
+.knob-box-grip::before { content: "\\25C2"; left: 0; }
+.knob-box-grip::after { content: "\\25B8"; right: 0; }
 
 /* A vertical knob points where it is dragged: above the value and below it. */
-notatio-knob[axis="y"] .notatio-knob-grip::before,
-notatio-knob[axis="y"].notatio-knob-grip::before {
+knob-box[axis="y"] .knob-box-grip::before,
+knob-box[axis="y"].knob-box-grip::before {
   content: "\\25B4";
   top: auto;
   bottom: 100%;
   left: 50%;
   transform: translate(-50%, 55%);
 }
-notatio-knob[axis="y"] .notatio-knob-grip::after,
-notatio-knob[axis="y"].notatio-knob-grip::after {
+knob-box[axis="y"] .knob-box-grip::after,
+knob-box[axis="y"].knob-box-grip::after {
   content: "\\25BE";
   right: auto;
   left: 50%;
@@ -1682,29 +1682,29 @@ notatio-knob[axis="y"].notatio-knob-grip::after {
 }
 
 /* Two axes, so all four arrows, split between the two bottom corners. */
-.notatio-knob-grip[data-complex]::before { content: "\\25C2\\25B4"; }
-.notatio-knob-grip[data-complex]::after { content: "\\25BE\\25B8"; }
+.knob-box-grip[data-complex]::before { content: "\\25C2\\25B4"; }
+.knob-box-grip[data-complex]::after { content: "\\25BE\\25B8"; }
 
-.notatio-knob-grip:hover::before,
-.notatio-knob-grip:hover::after,
-.notatio-knob-grip[data-dragging]::before,
-.notatio-knob-grip[data-dragging]::after {
+.knob-box-grip:hover::before,
+.knob-box-grip:hover::after,
+.knob-box-grip[data-dragging]::before,
+.knob-box-grip[data-dragging]::after {
   opacity: 0.75;
 }
 
 /* While a knob is being dragged the pointer leaves the element, so the whole document
    has to stop selecting -- the grip's own user-select alone is not enough. */
-body:has(.notatio-knob-grip[data-dragging]) {
+body:has(.knob-box-grip[data-dragging]) {
   user-select: none;
   cursor: ew-resize;
 }
-body:has(notatio-knob[axis="y"] .notatio-knob-grip[data-dragging]),
-body:has(notatio-knob[axis="y"].notatio-knob-grip[data-dragging]) { cursor: ns-resize; }
-body:has(.notatio-knob-grip[data-complex][data-dragging]) { cursor: move; }
+body:has(knob-box[axis="y"] .knob-box-grip[data-dragging]),
+body:has(knob-box[axis="y"].knob-box-grip[data-dragging]) { cursor: ns-resize; }
+body:has(.knob-box-grip[data-complex][data-dragging]) { cursor: move; }
 
 /* The gear ladder beside a dragged knob: the three increments stacked coarse over
    fine, the live one filled. Out of flow, past the hover arrow, and not a target. */
-.notatio-knob-ladder {
+.knob-box-ladder {
   position: absolute;
   left: 100%;
   top: 50%;
@@ -1724,21 +1724,21 @@ body:has(.notatio-knob-grip[data-complex][data-dragging]) { cursor: move; }
   white-space: nowrap;
   z-index: 2;
 }
-notatio-knob[axis="y"] .notatio-knob-ladder {
+knob-box[axis="y"] .knob-box-ladder {
   left: 50%;
   top: 100%;
   transform: translateX(-50%);
   margin: 0.4em 0 0;
   flex-direction: row-reverse;
 }
-.notatio-knob-ladder > span {
+.knob-box-ladder > span {
   padding: 0 0.4em;
   border-radius: 3px;
   text-align: center;
   color: var(--vp-c-text-2, #666);
   background: var(--vp-c-bg-soft, #f6f6f7);
 }
-.notatio-knob-ladder > span[data-live] {
+.knob-box-ladder > span[data-live] {
   color: var(--vp-c-bg, #fff);
   background: var(--vp-c-brand-1, #3451b2);
   border-color: var(--vp-c-brand-1, #3451b2);
@@ -1748,26 +1748,26 @@ notatio-knob[axis="y"] .notatio-knob-ladder {
    Every control is inline (a slider in a strip, a bar in a sentence) and shares the
    brand colour for what is set, the divider colour for what is not. */
 slider-box, animator-box, slider-2d-box,
-setter-box, notatio-radio-button-bar, notatio-toggler-bar, popup-menu-box,
-checkbox-box, notatio-interval-slider, notatio-color-slider, input-field-box {
+setter-bar-box, setter-box, radio-button-bar-box, toggler-bar-box, popup-menu-box,
+checkbox-box, interval-slider-box, color-setter-box, input-field-box {
   display: inline-block;
   vertical-align: middle;
 }
-notatio-list-picker { display: inline-block; vertical-align: top; }
+list-picker-box { display: inline-block; vertical-align: top; }
 
 .slider-box { display: inline-flex; align-items: center; gap: 0.4em; }
-.notatio-slider-track {
+.slider-box-track {
   min-width: 8rem;
   accent-color: var(--vp-c-brand-1, #3451b2);
 }
 .slider-box[data-vertical] { flex-direction: column; }
-.slider-box[data-vertical] .notatio-slider-track {
+.slider-box[data-vertical] .slider-box-track {
   min-width: 0;
   writing-mode: vertical-lr;
   direction: rtl;
   height: 8rem;
 }
-.notatio-slider-readout {
+.control-readout {
   font-variant-numeric: tabular-nums;
   font-size: 0.85em;
   color: var(--vp-c-text-2, #666);
@@ -1776,7 +1776,7 @@ notatio-list-picker { display: inline-block; vertical-align: top; }
 
 /* The pad of a Slider2D: a square with a dot, y up. */
 .slider-2d-box { display: inline-flex; align-items: flex-end; gap: 0.5em; }
-.notatio-pad {
+.slider-2d-box-pad {
   position: relative;
   display: inline-block;
   border: 1px solid var(--vp-c-divider, #e2e2e3);
@@ -1790,9 +1790,9 @@ notatio-list-picker { display: inline-block; vertical-align: top; }
   user-select: none;
   -webkit-user-select: none;
 }
-.notatio-pad:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
-.notatio-pad-dot,
-.notatio-locator-dot {
+.slider-2d-box-pad:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
+.slider-2d-box-pad-dot,
+.locator-box-dot {
   position: absolute;
   width: 12px;
   height: 12px;
@@ -1802,29 +1802,29 @@ notatio-list-picker { display: inline-block; vertical-align: top; }
   box-shadow: 0 0 0 2px var(--vp-c-bg, #fff);
   pointer-events: none;
 }
-.slider-2d-box[data-dragging] .notatio-pad-dot { transform: scale(1.25); }
+.slider-2d-box[data-dragging] .slider-2d-box-pad-dot { transform: scale(1.25); }
 
 /* A locator lives on a plot, so the plot is its frame of reference. */
 notatio-plot { position: relative; }
-notatio-locator { display: contents; }
-.notatio-locator-dot {
+locator-box { display: contents; }
+.locator-box-dot {
   pointer-events: auto;
   cursor: grab;
   touch-action: none;
   z-index: 1;
 }
-.notatio-locator-dot[data-dragging] { cursor: grabbing; transform: scale(1.25); }
-.notatio-locator-dot:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
+.locator-box-dot[data-dragging] { cursor: grabbing; transform: scale(1.25); }
+.locator-box-dot:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
 
 /* Bars: setter, radio, toggler -- a row of joined buttons. */
-.notatio-bar {
+.control-bar {
   display: inline-flex;
   border: 1px solid var(--vp-c-divider, #e2e2e3);
   border-radius: 6px;
   overflow: hidden;
   vertical-align: middle;
 }
-.notatio-bar-option {
+.control-bar-option {
   font: inherit;
   font-size: 0.9em;
   padding: 0.15em 0.6em;
@@ -1837,28 +1837,28 @@ notatio-locator { display: contents; }
   align-items: center;
   gap: 0.35em;
 }
-.notatio-bar-option:last-child { border-right: 0; }
-.notatio-bar-option:hover { background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 8%, transparent); }
-.notatio-bar-option[aria-pressed="true"],
-.notatio-bar-option[aria-checked="true"] {
+.control-bar-option:last-child { border-right: 0; }
+.control-bar-option:hover { background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 8%, transparent); }
+.control-bar-option[aria-pressed="true"],
+.control-bar-option[aria-checked="true"] {
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 14%, transparent);
   color: var(--vp-c-brand-1, #3451b2);
 }
-.notatio-bar-option:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: -2px; }
-.notatio-radio-dot {
+.control-bar-option:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: -2px; }
+.control-bar-radio {
   width: 0.7em;
   height: 0.7em;
   border-radius: 50%;
   border: 1px solid currentColor;
   box-sizing: border-box;
 }
-.notatio-bar-option[aria-checked="true"] .notatio-radio-dot {
+.control-bar-option[aria-checked="true"] .control-bar-radio {
   background: currentColor;
   box-shadow: inset 0 0 0 2px var(--vp-c-bg, #fff);
 }
 
 /* A popup menu: the current entry and a caret; the list is the shared choice menu. */
-.notatio-popup-btn {
+.popup-menu-box-btn {
   font: inherit;
   display: inline-flex;
   align-items: center;
@@ -1870,12 +1870,12 @@ notatio-locator { display: contents; }
   color: var(--vp-c-text-1, inherit);
   cursor: pointer;
 }
-.notatio-popup-btn:hover { border-color: var(--vp-c-brand-1, #3451b2); }
-.notatio-popup-btn:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
-.notatio-popup-caret::after { content: "\\25BE"; font-size: 0.8em; opacity: 0.7; }
+.popup-menu-box-btn:hover { border-color: var(--vp-c-brand-1, #3451b2); }
+.popup-menu-box-btn:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
+.popup-menu-box-caret::after { content: "\\25BE"; font-size: 0.8em; opacity: 0.7; }
 
 /* A list picker: the entries in view, selected ones filled. */
-.notatio-list-picker {
+.list-picker-box {
   display: inline-block;
   min-width: 8rem;
   overflow-y: auto;
@@ -1884,19 +1884,19 @@ notatio-locator { display: contents; }
   background: var(--vp-c-bg, #fff);
   padding: 2px;
 }
-.notatio-list-picker:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 1px; }
-.notatio-list-option {
+.list-picker-box:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 1px; }
+.list-picker-box-option {
   padding: 0.15em 0.6em;
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap;
 }
-.notatio-list-option:hover { background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 8%, transparent); }
-.notatio-list-option[aria-selected="true"] {
+.list-picker-box-option:hover { background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 8%, transparent); }
+.list-picker-box-option[aria-selected="true"] {
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 14%, transparent);
   color: var(--vp-c-brand-1, #3451b2);
 }
-.notatio-list-picker:focus-visible .notatio-list-option[data-active] {
+.list-picker-box:focus-visible .list-picker-box-option[data-active] {
   outline: 1px solid var(--vp-c-brand-1, #3451b2);
 }
 
@@ -1904,14 +1904,14 @@ notatio-locator { display: contents; }
 .checkbox-box input { accent-color: var(--vp-c-brand-1, #3451b2); margin: 0; }
 
 /* An interval slider: two native ranges on one track, thumbs only catching the pointer. */
-.notatio-interval-slider { display: inline-flex; align-items: center; gap: 0.4em; }
-.notatio-interval-track {
+.interval-slider-box { display: inline-flex; align-items: center; gap: 0.4em; }
+.interval-slider-box-track {
   position: relative;
   display: inline-block;
   width: 10rem;
   height: 1.4em;
 }
-.notatio-interval-fill {
+.interval-slider-box-fill {
   position: absolute;
   top: 50%;
   height: 4px;
@@ -1920,7 +1920,7 @@ notatio-locator { display: contents; }
   border-radius: 2px;
   pointer-events: none;
 }
-.notatio-interval-thumb {
+.interval-slider-box-thumb {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1931,12 +1931,12 @@ notatio-locator { display: contents; }
   -webkit-appearance: none;
   appearance: none;
 }
-.notatio-interval-thumb[data-thumb="lo"] { z-index: 1; }
-.notatio-interval-thumb::-webkit-slider-runnable-track { height: 4px; background: var(--vp-c-divider, #e2e2e3); border-radius: 2px; }
-.notatio-interval-thumb[data-thumb="hi"]::-webkit-slider-runnable-track { background: transparent; }
-.notatio-interval-thumb::-moz-range-track { height: 4px; background: var(--vp-c-divider, #e2e2e3); border-radius: 2px; }
-.notatio-interval-thumb[data-thumb="hi"]::-moz-range-track { background: transparent; }
-.notatio-interval-thumb::-webkit-slider-thumb {
+.interval-slider-box-thumb[data-thumb="lo"] { z-index: 1; }
+.interval-slider-box-thumb::-webkit-slider-runnable-track { height: 4px; background: var(--vp-c-divider, #e2e2e3); border-radius: 2px; }
+.interval-slider-box-thumb[data-thumb="hi"]::-webkit-slider-runnable-track { background: transparent; }
+.interval-slider-box-thumb::-moz-range-track { height: 4px; background: var(--vp-c-divider, #e2e2e3); border-radius: 2px; }
+.interval-slider-box-thumb[data-thumb="hi"]::-moz-range-track { background: transparent; }
+.interval-slider-box-thumb::-webkit-slider-thumb {
   -webkit-appearance: none;
   pointer-events: auto;
   width: 14px;
@@ -1947,7 +1947,7 @@ notatio-locator { display: contents; }
   border: 2px solid var(--vp-c-bg, #fff);
   cursor: ew-resize;
 }
-.notatio-interval-thumb::-moz-range-thumb {
+.interval-slider-box-thumb::-moz-range-thumb {
   pointer-events: auto;
   width: 10px;
   height: 10px;
@@ -1956,10 +1956,10 @@ notatio-locator { display: contents; }
   border: 2px solid var(--vp-c-bg, #fff);
   cursor: ew-resize;
 }
-.notatio-interval-thumb:focus-visible { outline: none; }
-.notatio-interval-thumb:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 35%, transparent); }
+.interval-slider-box-thumb:focus-visible { outline: none; }
+.interval-slider-box-thumb:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 35%, transparent); }
 
-.notatio-color-slider {
+.color-setter-box {
   width: 2.2em;
   height: 1.6em;
   padding: 0;
@@ -1983,12 +1983,12 @@ notatio-locator { display: contents; }
 .input-field-box[aria-invalid="true"] { border-color: #c0392b; }
 
 /* A toggler with no entries is a switch: a pill with a knob at one end or the other. */
-.notatio-toggler-grip[data-switch] {
+.toggler-box-grip[data-switch] {
   border-bottom: 0;
   padding: 0;
   vertical-align: middle;
 }
-.notatio-switch-track {
+.toggler-box-track {
   display: inline-block;
   width: 1.9em;
   height: 1.05em;
@@ -1998,8 +1998,8 @@ notatio-locator { display: contents; }
   transition: background 0.15s;
   vertical-align: -0.2em;
 }
-.notatio-toggler-grip[data-on] .notatio-switch-track { background: var(--vp-c-brand-1, #3451b2); }
-.notatio-switch-thumb {
+.toggler-box-grip[data-on] .toggler-box-track { background: var(--vp-c-brand-1, #3451b2); }
+.toggler-box-thumb {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -2009,7 +2009,7 @@ notatio-locator { display: contents; }
   background: var(--vp-c-bg, #fff);
   transition: left 0.15s;
 }
-.notatio-toggler-grip[data-on] .notatio-switch-thumb { left: calc(100% - 1.05em + 2px); }
+.toggler-box-grip[data-on] .toggler-box-thumb { left: calc(100% - 1.05em + 2px); }
 
 /* A generic symbol element: inline, and only the outermost draws -- through an
    out that is inline too, since it sits in a sentence. */
@@ -2055,7 +2055,7 @@ pane-box[data-scrollbars] { overflow: auto; }
 [data-head="Labeled"]:has(> notatio-show) { display: flex; gap: 0.5rem; text-align: start; }
 [data-head="Labeled"] > notatio-show { align-self: stretch; }
 [data-head="Labeled"]:has(> notatio-show) > notatio-string-template { display: block; line-height: 1.7; }
-.notatio-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }
+.style-box-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }
 
 /* A prose control panel: a paragraph like the ones around it, set off only by
    its knobs. */
@@ -2063,7 +2063,7 @@ pane-box[data-scrollbars] { overflow: auto; }
 
 /* The play/pause button beside a knob or toggler that asked for one: small, faint
    until hovered, and never part of the drag. */
-.notatio-knob-play {
+.control-play {
   display: inline-block;
   border: 0;
   padding: 0 0.15em;
@@ -2079,19 +2079,19 @@ pane-box[data-scrollbars] { overflow: auto; }
   user-select: none;
   -webkit-user-select: none;
 }
-.notatio-knob-play:hover,
-.notatio-knob-play[aria-pressed="true"] { opacity: 1; }
-.notatio-knob-play:focus-visible {
+.control-play:hover,
+.control-play[aria-pressed="true"] { opacity: 1; }
+.control-play:focus-visible {
   outline: 2px solid var(--vp-c-brand-1, #3451b2);
   outline-offset: 2px;
   border-radius: 2px;
 }
 /* A value in motion is marked the way a dragged one is. */
-.notatio-knob-grip[data-playing],
-.notatio-toggler-grip[data-playing] { border-bottom-style: solid; }
+.knob-box-grip[data-playing],
+.toggler-box-grip[data-playing] { border-bottom-style: solid; }
 
 /* The field a knob turns into on Enter or a double tap: the same glyphs, editable. */
-.notatio-knob-field {
+.knob-box-field {
   font: inherit;
   color: inherit;
   background: none;
@@ -2102,11 +2102,11 @@ pane-box[data-scrollbars] { overflow: auto; }
   font-variant-numeric: tabular-nums;
   text-align: center;
 }
-.notatio-knob-grip[data-editing] { cursor: text; border-bottom-style: solid; }
+.knob-box-grip[data-editing] { cursor: text; border-bottom-style: solid; }
 
 /* The options menu of a toggler or a choices knob. On the body, in the top layer when
    the browser has one, so nothing about the sentence changes when it opens. */
-.notatio-choice-menu {
+.control-choice-menu {
   position: fixed;
   inset: auto;
   margin: 0;
@@ -2122,10 +2122,10 @@ pane-box[data-scrollbars] { overflow: auto; }
   font-size: 0.95em;
   z-index: 100;
 }
-.notatio-choice-menu:not([popover]) { display: block; }
+.control-choice-menu:not([popover]) { display: block; }
 
 /* The speed-and-cycle panel a held play button opens: two rows of radio buttons. */
-.notatio-playback-menu {
+.control-playback-menu {
   position: fixed;
   inset: auto;
   margin: 0;
@@ -2138,19 +2138,19 @@ pane-box[data-scrollbars] { overflow: auto; }
   font-size: 0.8em;
   z-index: 100;
 }
-.notatio-playback-menu:not([popover]) { display: block; }
-.notatio-playback-row {
+.control-playback-menu:not([popover]) { display: block; }
+.control-playback-row {
   display: flex;
   align-items: center;
   gap: 3px;
 }
-.notatio-playback-row + .notatio-playback-row { margin-top: 4px; }
-.notatio-playback-label {
+.control-playback-row + .control-playback-row { margin-top: 4px; }
+.control-playback-label {
   width: 3.2em;
   color: var(--vp-c-text-2, #666);
   font-variant: small-caps;
 }
-.notatio-playback-choice {
+.control-playback-choice {
   font: inherit;
   font-variant-numeric: tabular-nums;
   padding: 0.1em 0.5em;
@@ -2160,28 +2160,28 @@ pane-box[data-scrollbars] { overflow: auto; }
   color: inherit;
   cursor: pointer;
 }
-.notatio-playback-choice:hover { background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 10%, transparent); }
-.notatio-playback-choice[aria-checked="true"] {
+.control-playback-choice:hover { background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 10%, transparent); }
+.control-playback-choice[aria-checked="true"] {
   color: var(--vp-c-brand-1, #3451b2);
   border-color: var(--vp-c-brand-1, #3451b2);
   font-weight: 600;
 }
-.notatio-playback-choice:focus-visible {
+.control-playback-choice:focus-visible {
   outline: 2px solid var(--vp-c-brand-1, #3451b2);
   outline-offset: 1px;
 }
-.notatio-choice-option {
+.control-choice-option {
   padding: 0.2em 0.7em;
   border-radius: 4px;
   cursor: pointer;
   white-space: nowrap;
 }
-.notatio-choice-option:hover,
-.notatio-choice-option:focus-visible {
+.control-choice-option:hover,
+.control-choice-option:focus-visible {
   outline: none;
   background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 12%, transparent);
 }
-.notatio-choice-option[aria-selected="true"] {
+.control-choice-option[aria-selected="true"] {
   color: var(--vp-c-brand-1, #3451b2);
   font-weight: 600;
 }

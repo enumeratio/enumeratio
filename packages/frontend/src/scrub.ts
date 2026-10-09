@@ -4,7 +4,7 @@
 // Everything here is pure, so the interesting decisions -- how far a pixel moves a
 // value, what a value looks like once it stops being editable text -- are testable
 // without a browser. The DOM, the pointer capture and the typesetting live in
-// `notatio-knob.ts`.
+// `knob-box.ts`.
 
 import { clamp, formatValue } from "./manipulate.ts";
 

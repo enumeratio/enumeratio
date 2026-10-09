@@ -267,7 +267,7 @@ export class NotatioKnob extends LitElement {
    * so the check has to run against the light DOM it shares with its own output.
    */
   #detectSlotted(): void {
-    const authored = [...this.children].some((el) => !el.matches("[data-notatio-knob]"));
+    const authored = [...this.children].some((el) => !el.matches("[data-knob-box]"));
     if (authored === this._slotted) return;
     this._slotted = authored;
     if (authored) this.#adoptHost();
@@ -279,7 +279,7 @@ export class NotatioKnob extends LitElement {
    * out — so the host takes the handlers, the cursor and the slider role directly.
    */
   #adoptHost(): void {
-    this.classList.add("notatio-knob-grip");
+    this.classList.add("knob-box-grip");
     this.dataset.slotted = "";
     this.tabIndex = 0;
     this.setAttribute("role", "slider");
@@ -531,7 +531,7 @@ export class NotatioKnob extends LitElement {
 
   /** The element the gestures hang off: the host when slotted, otherwise our own span. */
   get #grip(): HTMLElement {
-    return this._slotted ? this : (this.querySelector(".notatio-knob-grip") ?? this);
+    return this._slotted ? this : (this.querySelector(".knob-box-grip") ?? this);
   }
 
   // --- keyboard ------------------------------------------------------------------
@@ -628,7 +628,7 @@ export class NotatioKnob extends LitElement {
 
   #endEdit(commit: boolean): void {
     if (!this._editing) return;
-    const field = this.querySelector<HTMLInputElement>(".notatio-knob-field");
+    const field = this.querySelector<HTMLInputElement>(".knob-box-field");
     this._editing = false;
     if (commit && field) this.#adoptTyped(field.value);
     this.#grip.focus({ preventScroll: true });
@@ -715,7 +715,7 @@ export class NotatioKnob extends LitElement {
 
   protected override updated(changed: PropertyValues): void {
     if (changed.has("_editing") && this._editing) {
-      const field = this.querySelector<HTMLInputElement>(".notatio-knob-field");
+      const field = this.querySelector<HTMLInputElement>(".knob-box-field");
       field?.focus();
       field?.select();
     }
@@ -741,7 +741,7 @@ export class NotatioKnob extends LitElement {
       if (gear === "fine" && step === base) return `${step} slow`;
       return String(step);
     };
-    return html`<span class="notatio-knob-ladder" data-notatio-knob aria-hidden="true"
+    return html`<span class="knob-box-ladder" data-knob-box aria-hidden="true"
       >${(["coarse", "normal", "fine"] as const).map(
         (gear) => html`<span data-gear=${gear} ?data-live=${gear === this._gear}>${label(gear)}</span>`,
       )}</span
@@ -756,8 +756,8 @@ export class NotatioKnob extends LitElement {
   #field(): unknown {
     const typed = this.#typed;
     return html`<input
-      class="notatio-knob-field"
-      data-notatio-knob
+      class="knob-box-field"
+      data-knob-box
       type="text"
       inputmode=${this.discrete ? "text" : "decimal"}
       autocomplete="off"
@@ -776,8 +776,8 @@ export class NotatioKnob extends LitElement {
     if (this._slotted) return html`${this.#ladder()}${this.#playButton()}`;
     const aria = this.#aria;
     return html`<span
-        class="notatio-knob-grip"
-        data-notatio-knob
+        class="knob-box-grip"
+        data-knob-box
         role="slider"
         tabindex="0"
         aria-label=${aria["aria-label"]}
@@ -801,4 +801,4 @@ export class NotatioKnob extends LitElement {
   }
 }
 
-defineControl("notatio-knob", NotatioKnob);
+defineControl("knob-box", NotatioKnob);

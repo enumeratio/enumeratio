@@ -300,7 +300,7 @@ export class NotatioToggler extends LitElement {
   }
 
   get #grip(): HTMLElement | null {
-    return this.querySelector<HTMLElement>(".notatio-toggler-grip");
+    return this.querySelector<HTMLElement>(".toggler-box-grip");
   }
 
   // --- keyboard ------------------------------------------------------------------
@@ -351,7 +351,7 @@ export class NotatioToggler extends LitElement {
     const on = this.switch && this._index === 1;
     return html`<button
         type="button"
-        class="notatio-toggler-grip"
+        class="toggler-box-grip"
         role=${this.switch ? "switch" : nothing}
         aria-checked=${this.switch ? String(on) : nothing}
         aria-label=${this.name || "choice"}
@@ -367,7 +367,7 @@ export class NotatioToggler extends LitElement {
         @keydown=${this.#onKeyDown}
         @keyup=${this.#onKeyUp}
       >
-        ${this.switch ? html`<span class="notatio-switch-track"><span class="notatio-switch-thumb"></span></span>` : unsafeHTML(this._markup)}</button
+        ${this.switch ? html`<span class="toggler-box-track"><span class="toggler-box-thumb"></span></span>` : unsafeHTML(this._markup)}</button
       >${this.play ? playButton(this.#sweep) : nothing}`;
   }
 }

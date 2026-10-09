@@ -224,7 +224,7 @@ export class NotatioSlider extends LitElement {
     return html`<span class="slider-box" ?data-vertical=${this.axis === "y"}>
       <input
         type="range"
-        class="notatio-slider-track"
+        class="slider-box-track"
         orient=${this.axis === "y" ? "vertical" : nothing}
         min=${min}
         max=${max}
@@ -236,7 +236,7 @@ export class NotatioSlider extends LitElement {
         @keydown=${this.#onKeyDown}
         @keyup=${this.#onKeyUp}
       />${
-        this.readout ? html`<span class="notatio-slider-readout">${numberLatex(this._value, step)}</span>` : nothing
+        this.readout ? html`<span class="control-readout">${numberLatex(this._value, step)}</span>` : nothing
       }${this.play ? playButton(this.#sweep) : nothing}
     </span>`;
   }

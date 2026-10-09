@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[StepperBox, [DynamicBox, d], [Tuple, -5, 5]]	[StepperBox, [DynamicBox, d], [Tuple, -5, 5]]	a box is inert: it evaluates to itself

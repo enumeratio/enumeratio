@@ -69,7 +69,7 @@ approximation is a request — which is the property that lets a coefficient sta
 π all the way through a product.
 </template>
 <dynamic-module-box>
-The square root of <notatio-knob name="n" value="12" min="1" max="40" /> is
+The square root of <knob-box name="n" value="12" min="1" max="40" /> is
 <dynamic-box value="Sqrt(_n)" digits="0" />, or
 <dynamic-box value="N(Sqrt(_n))" digits="12" /> if you insist.
 </dynamic-module-box>

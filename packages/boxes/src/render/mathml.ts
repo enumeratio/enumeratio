@@ -154,6 +154,15 @@ function writeNode(box: BoxNode): string {
     case "SetterBox":
     case "TogglerBox":
     case "AnimatorBox":
+    case "KnobBox":
+    case "StepperBox":
+    case "IntervalSliderBox":
+    case "ListPickerBox":
+    case "LocatorBox":
+    case "ColorSetterBox":
+    case "SetterBarBox":
+    case "RadioButtonBarBox":
+    case "TogglerBarBox":
       return element("mtext", `-${box[0].slice(0, -3)}-`);
     case "ButtonBox":
     case "TextCell":

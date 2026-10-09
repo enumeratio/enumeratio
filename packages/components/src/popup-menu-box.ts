@@ -23,7 +23,7 @@ export class NotatioPopupMenu extends ChoiceControl {
 
   #open(): void {
     if (this.#close) return;
-    const anchor = this.querySelector<HTMLElement>(".notatio-popup-btn");
+    const anchor = this.querySelector<HTMLElement>(".popup-menu-box-btn");
     if (!anchor) return;
     this.#close = openChoiceMenu({
       anchor,
@@ -47,14 +47,14 @@ export class NotatioPopupMenu extends ChoiceControl {
   protected override render(): unknown {
     return html`<button
       type="button"
-      class="notatio-popup-btn"
+      class="popup-menu-box-btn"
       aria-haspopup="listbox"
       aria-label=${this.name || "choice"}
       @click=${() => this.#open()}
       @keydown=${this.#onKeyDown}
     >
-      <span class="notatio-popup-current">${unsafeHTML(this._markup[this.index] ?? "")}</span
-      ><span class="notatio-popup-caret" aria-hidden="true"></span>
+      <span class="popup-menu-box-current">${unsafeHTML(this._markup[this.index] ?? "")}</span
+      ><span class="popup-menu-box-caret" aria-hidden="true"></span>
     </button>`;
   }
 }

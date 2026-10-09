@@ -219,7 +219,7 @@ export class NotatioLocator extends LitElement {
   protected override render(): unknown {
     const text = `${numberLatex(this._x, 0.01)}, ${numberLatex(this._y, 0.01)}`;
     return html`<span
-      class="notatio-locator-dot"
+      class="locator-box-dot"
       role="slider"
       tabindex="0"
       aria-label=${this.name || "point"}
@@ -237,4 +237,4 @@ export class NotatioLocator extends LitElement {
   }
 }
 
-defineControl("notatio-locator", NotatioLocator);
+defineControl("locator-box", NotatioLocator);

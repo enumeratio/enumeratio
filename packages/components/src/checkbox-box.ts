@@ -66,7 +66,7 @@ export class NotatioCheckbox extends LitElement {
         .checked=${this._on}
         aria-label=${this.label || this.name || "checkbox"}
         @change=${(e: Event) => this.#set((e.target as HTMLInputElement).checked)}
-      />${this.label ? html`<span class="notatio-checkbox-label">${this.label}</span>` : ""}
+      />${this.label ? html`<span class="checkbox-box-label">${this.label}</span>` : ""}
     </label>`;
   }
 }

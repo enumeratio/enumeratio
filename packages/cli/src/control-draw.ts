@@ -23,6 +23,19 @@ function track(value: number, min: number, max: number): string {
 const choices = (entries: readonly Json[], value: Json): string =>
   entries.map((e) => (show(e) === show(value) ? `[${show(e)}]` : show(e))).join("  ");
 
+/** `━━●━━●━━━━━━` with a marker at each end of the interval. */
+function span(lo: number, hi: number, min: number, max: number): string {
+  const at = (v: number) => Math.round(Math.min(1, Math.max(0, (v - min) / (max - min || 1))) * (TRACK - 1));
+  const [a, b] = [at(lo), at(hi)];
+  return (
+    "━".repeat(a) +
+    "●" +
+    "━".repeat(Math.max(0, b - a - 1)) +
+    (b > a ? "●" : "") +
+    "━".repeat(TRACK - 1 - Math.max(a, b))
+  );
+}
+
 /** One control as a line of text: `k ━━●━━━━━━━━━ 2`. */
 export function controlLine(control: BoxControl, value: Json | undefined): string {
   const name = control.name;
@@ -36,8 +49,16 @@ export function controlLine(control: BoxControl, value: Json | undefined): strin
       const prefix = control.intent === "playback" ? "▶ " : "";
       return `${prefix}${name} ${track(v, min, max)} ${shown}`;
     }
+    case "interval": {
+      const [min, max] = tupleOf(control.domain)?.map(numOf) ?? [];
+      const [lo, hi] = tupleOf(value)?.map(numOf) ?? [];
+      if (min === undefined || max === undefined || lo === undefined || hi === undefined) return `${name} = ${shown}`;
+      return `${name} ${span(lo, hi, min, max)} ${shown}`;
+    }
     case "planar":
       return `${name} ⌖ ${shown}`;
+    case "color":
+      return `${name} ■ ${shown}`;
     case "toggle": {
       const entries = control.head === "TogglerBox" ? tupleOf(control.domain) : undefined;
       if (entries !== undefined && value !== undefined) return `${name} ⇄ ${choices(entries, value)}`;
@@ -45,7 +66,14 @@ export function controlLine(control: BoxControl, value: Json | undefined): strin
     }
     case "choice": {
       const entries = tupleOf(control.domain);
-      return entries === undefined || value === undefined ? `${name} = ${shown}` : `${name} ${choices(entries, value)}`;
+      if (entries === undefined || value === undefined) return `${name} = ${shown}`;
+      // A toggler bar holds a list: each entry in it is down.
+      const down = control.head === "TogglerBarBox" ? tupleOf(value) : undefined;
+      if (down !== undefined) {
+        const on = new Set(down.map(show));
+        return `${name} ${entries.map((e) => (on.has(show(e)) ? `[${show(e)}]` : show(e))).join("  ")}`;
+      }
+      return `${name} ${choices(entries, value)}`;
     }
     default:
       return `${name} [${shown}]`;

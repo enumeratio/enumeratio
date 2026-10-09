@@ -10,8 +10,8 @@ import {
 import katex from "katex";
 import { html, LitElement, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import "./notatio-knob.ts";
-import "./notatio-stepper.ts";
+import "./knob-box.ts";
+import "./stepper-box.ts";
 import "./toggler-box.ts";
 import { type Scope, scopeOf } from "./scope.ts";
 import { ensureStyles } from "./styles.ts";
@@ -177,20 +177,20 @@ export class NotatioStringTemplate extends LitElement {
               : undefined;
     switch (kind) {
       case "stepper":
-        return html`<notatio-stepper
+        return html`<stepper-box
           name=${name}
           .value=${Number(value ?? 0)}
           .domain=${domain?.kind === "integers" ? domain : undefined}
           ?random=${"random" in options || domain?.kind === "integers"}
-        ></notatio-stepper>`;
+        ></stepper-box>`;
       case "knob":
-        return html`<notatio-knob
+        return html`<knob-box
           name=${name}
           .value=${typeof value === "number" ? String(value) : "0"}
           min=${domain?.kind === "reals" ? domain.min : 0}
           max=${domain?.kind === "reals" ? domain.max : 1}
           step=${domain?.kind === "reals" ? domain.step : 0.01}
-        ></notatio-knob>`;
+        ></knob-box>`;
       case "toggler": {
         const values =
           domain?.kind === "choices" ? domain.values.map((v, k) => entryOf(v, domain.labels[k]!)).join("|") : undefined;

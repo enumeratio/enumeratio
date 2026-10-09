@@ -9,7 +9,9 @@ import { GRADIENTS } from "./palettes.ts";
 import type { ScaleName } from "./scales.ts";
 import {
   clean,
+  intervalAttributes,
   listedAttributes,
+  locatorAttributes,
   planarAttributes,
   rangedAttributes,
   simpleAttributes,
@@ -663,42 +665,19 @@ export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
   ranged("Slider", "slider-box"),
   ranged("VerticalSlider", "slider-box", { axis: "y" }),
   ranged("Animator", "animator-box"),
-  ranged("Knob", "notatio-knob"),
-  {
-    ...ranged("IntervalSlider", "notatio-interval-slider"),
-    control: "interval",
-    // The start is an interval, `(r, (1, 3))`, which the component takes as `1,3`.
-    attributes: (ops) => {
-      const out = ranged("IntervalSlider", "notatio-interval-slider").attributes(ops);
-      const { init } = variable(ops[0]);
-      const pair = tupleOf(init);
-      if (pair !== undefined && pair.length === 2) out.value = pair.map(clean).join(",");
-      return out;
-    },
-  },
+  ranged("Knob", "knob-box"),
+  { ...ranged("IntervalSlider", "interval-slider-box"), control: "interval", attributes: intervalAttributes },
   planar("Slider2D", "slider-2d-box"),
-  listed("SetterBar", "setter-box"),
-  listed("RadioButtonBar", "notatio-radio-button-bar"),
-  listed("TogglerBar", "notatio-toggler-bar"),
+  listed("SetterBar", "setter-bar-box"),
+  listed("RadioButtonBar", "radio-button-bar-box"),
+  listed("TogglerBar", "toggler-bar-box"),
   listed("Toggler", "toggler-box"),
   listed("PopupMenu", "popup-menu-box"),
-  listed("ListPicker", "notatio-list-picker"),
+  listed("ListPicker", "list-picker-box"),
   simple("Checkbox", "checkbox-box"),
-  simple("ColorSlider", "notatio-color-slider"),
+  simple("ColorSlider", "color-setter-box"),
   simple("InputField", "input-field-box"),
-  {
-    ...planar("Locator", "notatio-locator"),
-    control: "locator",
-    // A locator has no corners of its own: it takes the plot's.
-    attributes: (ops) => {
-      const out: Record<string, string> = {};
-      const { name, init } = variable(ops[0]);
-      if (name) out.name = name;
-      const point = tupleOf(init);
-      if (point !== undefined && point.length === 2) out.value = point.map(clean).join(",");
-      return out;
-    },
-  },
+  { ...planar("Locator", "locator-box"), control: "locator", attributes: locatorAttributes },
   {
     head: "Dynamic",
     tag: "dynamic-box",

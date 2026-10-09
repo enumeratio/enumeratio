@@ -441,6 +441,12 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * normalization). KeiperLiLambda has no known equivalent anywhere.
  */
 const NOVEL = [
+  "IntervalSliderBox",
+  "KnobBox",
+  "RadioButtonBarBox",
+  "SetterBarBox",
+  "StepperBox",
+  "TogglerBarBox",
   "AlgebraicIntegers",
   "AlgebraicOrder",
   "PolynomialRoot",
@@ -912,6 +918,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "CirculantGraph",
     "CliffordAlgebra",
     "ClosenessCentrality",
+    "ColorSetterBox",
     "Commonest",
     "CompleteGraph",
     "CompleteKaryTree",
@@ -1098,6 +1105,8 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "LineGraph",
     "LinearRecurrence",
     "LiouvilleLambda",
+    "ListPickerBox",
+    "LocatorBox",
     "LogicalExpand",
     "MakeBoxes",
     "MangoldtLambda",

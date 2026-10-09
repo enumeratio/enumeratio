@@ -72,7 +72,7 @@ export class NotatioColorSlider extends LitElement {
   protected override render(): unknown {
     return html`<input
       type="color"
-      class="notatio-color-slider"
+      class="color-setter-box"
       .value=${this.hex}
       aria-label=${this.name || "colour"}
       @input=${this.#onInput}
@@ -80,4 +80,4 @@ export class NotatioColorSlider extends LitElement {
   }
 }
 
-defineControl("notatio-color-slider", NotatioColorSlider);
+defineControl("color-setter-box", NotatioColorSlider);

@@ -118,7 +118,7 @@ export class NotatioIntervalSlider extends LitElement {
     const thumb = (which: "lo" | "hi", v: number): unknown =>
       html`<input
         type="range"
-        class="notatio-interval-thumb"
+        class="interval-slider-box-thumb"
         data-thumb=${which}
         min=${min}
         max=${max}
@@ -134,19 +134,17 @@ export class NotatioIntervalSlider extends LitElement {
         @keydown=${(e: KeyboardEvent) => this.#onKey(which, e)}
         @keyup=${() => (this.#repeats = 0)}
       />`;
-    return html`<span class="notatio-interval-slider">
-      <span class="notatio-interval-track">
-        <span class="notatio-interval-fill" style=${`left:${pct(this._lo)}%;right:${100 - pct(this._hi)}%`}></span>
+    return html`<span class="interval-slider-box">
+      <span class="interval-slider-box-track">
+        <span class="interval-slider-box-fill" style=${`left:${pct(this._lo)}%;right:${100 - pct(this._hi)}%`}></span>
         ${thumb("lo", this._lo)}${thumb("hi", this._hi)} </span
       >${
         this.readout
-          ? html`<span class="notatio-slider-readout"
-              >[${numberLatex(this._lo, step)}, ${numberLatex(this._hi, step)}]</span
-            >`
+          ? html`<span class="control-readout">[${numberLatex(this._lo, step)}, ${numberLatex(this._hi, step)}]</span>`
           : nothing
       }
     </span>`;
   }
 }
 
-defineControl("notatio-interval-slider", NotatioIntervalSlider);
+defineControl("interval-slider-box", NotatioIntervalSlider);

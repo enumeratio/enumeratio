@@ -55,6 +55,19 @@ test("a control's operands read back from its box", () => {
   ]);
 });
 
+test("the remaining controls lower to their boxes", () => {
+  const lowered = (head: string, ...args: unknown[]) => (makeBoxes(json([head, ...args])) as readonly unknown[])[0];
+  expect(lowered("Knob", "k", ["Tuple", 0, 1])).toBe("KnobBox");
+  expect(lowered("IntervalSlider", "r", ["Tuple", 0, 5])).toBe("IntervalSliderBox");
+  expect(lowered("ListPicker", "c", ["List", "a", "b"])).toBe("ListPickerBox");
+  expect(lowered("RadioButtonBar", "c", ["List", "a", "b"])).toBe("RadioButtonBarBox");
+  expect(lowered("TogglerBar", "s", ["List", "a", "b"])).toBe("TogglerBarBox");
+  expect(lowered("SetterBar", "c", ["List", "a", "b"])).toBe("SetterBarBox");
+  expect(lowered("Locator", ["Tuple", "p", ["Tuple", 1, 1]])).toBe("LocatorBox");
+  // Wolfram boxes a ColorSlider as a ColorSetterBox showing the spectrum.
+  expect(makeBoxes(json(["ColorSlider", "c"]))).toEqual(["ColorSetterBox", ["DynamicBox", "c"], "SwatchSpectrum"]);
+});
+
 test("every control box has an intent, and boxes round-trip through MathJSON", () => {
   expect(Object.keys(CONTROL_INTENT).toSorted()).toEqual([...CONTROL_BOX_HEADS].toSorted());
   const box = makeBoxes(json(["Checkbox", "on"]));
