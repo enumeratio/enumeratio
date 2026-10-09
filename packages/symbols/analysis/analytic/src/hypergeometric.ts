@@ -85,6 +85,19 @@ const invGamma = (z: Cx): Cx => (isNonPositiveInt(z) ? cx(0) : cexp(scale(logGam
 
 const mag = (z: Cx): number => Math.hypot(z.re, z.im);
 
+/** 1F1(a; a−1; z)/Γ(a−1) = e^z (1 + z/(a−1))/Γ(a−1), as (a)ₖ/(a−1)ₖ = 1 + k/(a−1) (DLMF 13.6). */
+const regularizedMinusOne = (a: Cx, z: Cx): Cx => {
+  const shift = add(a, cx(-1));
+  return mul(cexp(z), mul(add(cx(1), div(z, shift)), invGamma(shift)));
+};
+
+/** Is b = a − 1 on the reals, to the float's rounding? */
+const isMinusOneShift = (a: Cx, b: Cx): boolean =>
+  a.im === 0 &&
+  b.im === 0 &&
+  !isNonPositiveInt(add(a, cx(-1))) &&
+  Math.abs(b.re - a.re + 1) <= EPS * Math.max(1, Math.abs(a.re), Math.abs(b.re));
+
 /** 1/Γ(n) for an integer n: 0 at the poles n ≤ 0, else 1/(n − 1)! (infinite factorials flush to 0). */
 function exactInvGammaAt(n: number): Cx {
   if (n <= 0) return cx(0);
@@ -286,6 +299,24 @@ function regularizedBessel(ce: ComputeEngine, ops: readonly BoxedExpression[]): 
     .evaluate();
 }
 
+/** `regularizedMinusOne` on exact operands: b = a − 1 exactly, and a − 1 off the poles. */
+function regularizedMinusOneExact(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  const [a, b, z] = ops;
+  if (a === undefined || b === undefined || z === undefined) return undefined;
+  const shift = ce.function("Subtract", [a, 1]).evaluate();
+  const shiftExact = bigRationalAt(shift);
+  if (shiftExact === undefined || (shiftExact[1] === 1n && shiftExact[0] <= 0n)) return undefined;
+  if (!ce.function("Subtract", [b, shift]).evaluate().is(0)) return undefined;
+  return ce
+    .box([
+      "Multiply",
+      ["Exp", z.json],
+      ["Add", 1, ["Divide", z.json, shift.json]],
+      ["Divide", 1, ["Gamma", shift.json]],
+    ] as never)
+    .evaluate();
+}
+
 export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric0F1(b, z) = 0F1(b; z), entire in z; pole at b a non-positive integer.
   ce.declare("Hypergeometric0F1", {
@@ -329,11 +360,13 @@ export function declareHypergeometric(ce: ComputeEngine): void {
     signature: "(number, number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
-      if (cs !== undefined && !wantsNumber(ops, options)) return regularizedBessel(ce, ops);
+      if (cs !== undefined && !wantsNumber(ops, options))
+        return regularizedMinusOneExact(ce, ops) ?? regularizedBessel(ce, ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a, b, z] = cs;
       if (exceedsDoublePrecision(ce, options.numericApproximation))
         return regularizedPastDouble(ce, [ops[0]], ops[1], ops[2]);
+      if (isMinusOneShift(a, b)) return numberResult(ce, regularizedMinusOne(a, z));
       const r = pfqRegularizedSeries([a], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
