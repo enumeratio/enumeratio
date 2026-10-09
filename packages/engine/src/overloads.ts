@@ -4,7 +4,7 @@
 // the head's signature is computed from them, never assigned.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { declareCompile, extendHead } from "./extend.ts";
+import { type CompileStance, declareCompile, extendHead } from "./extend.ts";
 import { widenedSignature } from "./widen.ts";
 import type { EvaluateOptions } from "./index.ts";
 
@@ -48,10 +48,10 @@ export interface Overload {
   /** What the head's own handler accepts, when this row's signature lets more through: the
    *  handler only sees calls every row's `native` gate passes. */
   readonly native?: (op: BoxedExpression) => boolean;
-  /** `"builtin"`: the head compiles as the target's built-in lowering would (see `CompileStance`).
+  /** How the head compiles with this row (see `CompileStance`).
    *  A carrier row (`on`, `types`) fires only on operands compiled numeric code never sees, so it
    *  needs none; any other row states it, or closes the head. */
-  readonly compile?: "builtin";
+  readonly compile?: CompileStance;
   /** The answer, or `undefined` to let the next row (or the head's own handler) try. */
   readonly evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => BoxedExpression | undefined;
 }
@@ -91,10 +91,6 @@ interface Table {
 const tables = new WeakMap<ComputeEngine, Map<string, Table>>();
 
 const isCarrierRow = (row: Overload): boolean => row.on !== undefined || row.types !== undefined;
-
-/** How the head compiles with all its rows: the built-in lowering only if every row allows it. */
-const rowsStance = (table: Table): "builtin" | undefined =>
-  table.rows.every((row) => isCarrierRow(row) || row.compile === "builtin") ? "builtin" : undefined;
 
 function tableOf(ce: ComputeEngine, head: string): Table | undefined {
   const known = tables.get(ce)?.get(head);
@@ -247,10 +243,10 @@ function install(ce: ComputeEngine, head: string, table: Table, widened: boolean
     table.native = operator.evaluate;
     table.dispatch = dispatcherOf(table, operator.lazy === true, head);
     patch.evaluate = table.dispatch;
-    patch.compile = rowsStance(table);
+    patch.compile = "builtin"; // the rows state their own, below
   }
   extendHead(ce, head, patch);
-  if (needsDispatch && patch.compile === undefined) declareCompile(ce, head, rowsStance(table));
+  for (const row of table.rows) if (!isCarrierRow(row)) declareCompile(ce, head, row.compile);
   table.computed = String(visibleOperator(ce, head)?.signature);
 }
 

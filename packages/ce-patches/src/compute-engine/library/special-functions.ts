@@ -348,13 +348,11 @@ export const setZetaKernel = (kernel: ZetaKernel): void => {
   zetaKernel = kernel;
 };
 
-// Both change only the two-operand Zeta(s, a); the one-operand Zeta(s) keeps the built-in lowering.
-const ONE_OPERAND = { compile: { upTo: 1 } } as const;
-
 /** Zeta(0, a) = 1/2 − a for every a (DLMF 25.11.13): at s = 0 the (n+a)=0 term is 0⁰ = 1, kept.
  * Native Zeta drops it, so Zeta(0, 0) = −1/2 and Zeta(0, −1) = 1/2 where the formula gives
  * 1/2 and 3/2. Every other s still drops the 0^(−s) term. */
 export function evaluateZetaAtZero(ce: ComputeEngine): void {
+  // compile builtin up to 1 operand: this changes only the two-operand Zeta(s, a); Zeta(s) keeps the lowering.
   wrapOperator(
     ce,
     ["Zeta"],
@@ -363,12 +361,13 @@ export function evaluateZetaAtZero(ce: ComputeEngine): void {
       const value = ce.box(["Subtract", ["Rational", 1, 2], ops[1]!.json as never]);
       return options.numericApproximation ? value.N() : value.evaluate();
     },
-    { ...ONE_OPERAND, arity: 2 },
+    { arity: 2, compile: { upTo: 1 } },
   );
 }
 
 /** Exact Zeta(s, −n) (`zetaAtNonpositiveShift`), which native leaves unevaluated; a numeric request still reaches the native kernel. */
 export function evaluateZetaAtNonpositiveShift(ce: ComputeEngine): void {
+  // compile builtin up to 1 operand: this changes only the two-operand Zeta(s, a); Zeta(s) keeps the lowering.
   wrapOperator(
     ce,
     ["Zeta"],
@@ -376,6 +375,6 @@ export function evaluateZetaAtNonpositiveShift(ce: ComputeEngine): void {
     (native) => (ops, options) =>
       (!options.numericApproximation ? zetaAtNonpositiveShift(ce, ops[0]!, ops[1]!) : undefined) ??
       native?.(ops, options),
-    { ...ONE_OPERAND, arity: 2 },
+    { arity: 2, compile: { upTo: 1 } },
   );
 }

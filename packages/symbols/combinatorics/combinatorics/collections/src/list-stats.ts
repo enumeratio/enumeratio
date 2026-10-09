@@ -1,4 +1,5 @@
 import {
+  declareCompile,
   applyFunction,
   type Engine,
   type Expr,
@@ -205,6 +206,8 @@ export function declareListStats(ce: Engine): void {
         }
         return nativeCanonical?.call(nativeOperator, ops, options);
       };
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "Fold", "builtin");
     }
   }
 
@@ -252,6 +255,8 @@ export function declareListStats(ce: Engine): void {
         }
         return nativeCanonical?.call(nativeOperator, ops, options);
       };
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "Tabulate", "builtin");
     }
   }
 

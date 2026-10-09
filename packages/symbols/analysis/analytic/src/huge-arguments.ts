@@ -40,11 +40,9 @@ const SERIES: Readonly<Record<string, (x: Json) => Json>> = {
   LogBarnesG: logBarnesGSeries,
 };
 
-// Only an argument past a double's range, which compiled code (all doubles) never holds.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareHugeArguments(ce: ComputeEngine): void {
   for (const [head, series] of Object.entries(SERIES)) {
+    // compile builtin: an argument past a double's range, which compiled code cannot hold
     wrapOperator(
       ce,
       [head, 1],
@@ -54,7 +52,7 @@ export function declareHugeArguments(ce: ComputeEngine): void {
         const expr = ce.box(series(ops[0]!.json as unknown as Json) as unknown as BoxInput);
         return withGuardDigits(ce, () => expr.N());
       },
-      { ...BUILTIN, arity: 1 },
+      { arity: 1, compile: "builtin" },
     );
   }
 }

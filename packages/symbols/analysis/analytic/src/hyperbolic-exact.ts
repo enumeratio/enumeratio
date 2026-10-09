@@ -46,12 +46,9 @@ const SPECIAL: Readonly<Record<string, readonly [number, (ce: ComputeEngine) => 
   Arcosh: [1, (ce) => ce.Zero],
 };
 
-// Exact values and identities at exact arguments (Arcosh(1), hyperbolics of ln q):
-// the built-in lowering gives the same number.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareHyperbolicExact(ce: ComputeEngine): void {
   for (const [head, [at, value]] of Object.entries(SPECIAL)) {
+    // compile builtin: exact values and identities at exact arguments
     wrapOperator(
       ce,
       [head, 1],
@@ -61,12 +58,13 @@ export function declareHyperbolicExact(ce: ComputeEngine): void {
         return exact && q !== undefined && q[1] === 1n && q[0] === BigInt(at);
       },
       () => () => value(ce),
-      { ...BUILTIN, arity: 1 },
+      { arity: 1, compile: "builtin" },
     );
   }
 
   for (const [head, rule] of Object.entries(RULES)) {
     const apply = rule(ce);
+    // compile builtin: exact values and identities at exact arguments
     wrapOperator(
       ce,
       [head, 1],
@@ -75,7 +73,7 @@ export function declareHyperbolicExact(ce: ComputeEngine): void {
         const [n, d] = logArgument(ops[0])!;
         return finish(apply(ce.number([n, d]), ce.number([d, n])), options);
       },
-      { ...BUILTIN, arity: 1 },
+      { arity: 1, compile: "builtin" },
     );
   }
 }

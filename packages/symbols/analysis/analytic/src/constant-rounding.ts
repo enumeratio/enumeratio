@@ -81,22 +81,21 @@ function roundExactly(ce: ComputeEngine, name: Rounding, x: BoxedExpression): bi
   return floor.toBigInt() + (up ? 1n : 0n);
 }
 
-// Idempotence and folds of exact constants (Floor(Pi), Max(Pi, Pi)): the built-in lowering gives the same value.
-const BUILTIN = { compile: "builtin" } as const;
-
 function declareRoundingHead(ce: ComputeEngine, name: Rounding): void {
   // Idempotent: Floor(Floor(x)) = Floor(x), for whatever x -- the inner value is
   // already an integer (or stays symbolic, in which case nothing changes either way).
+  // compile builtin: idempotence, and exact constants that compute-engine folds before compiling
   wrapOperator(
     ce,
     [name, 1],
     (ops) => ops[0]?.operator === name,
     () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
   // An exact constant expression: compute-engine's own answer where it has one (Pi^40,
   // exactly), else the value at enough digits, rounded. A non-real or non-finite value is
   // another package's (complex Floor), not ours to end.
+  // compile builtin: idempotence, and exact constants that compute-engine folds before compiling
   wrapOperator(
     ce,
     [name, 1],
@@ -107,7 +106,7 @@ function declareRoundingHead(ce: ComputeEngine, name: Rounding): void {
       const rounded = roundExactly(ce, name, ops[0]!);
       return rounded === undefined ? answer : ce.number(rounded);
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 }
 
@@ -120,14 +119,16 @@ function declareExtremum(ce: ComputeEngine, name: "Max" | "Min", better: (a: num
   // Idempotent: repeated identical arguments collapse to one, e.g. Max(x, x) = x.
   // `isSame` is a structural (non-evaluating) compare, cheap on the common case of
   // two distinct numbers or symbols.
+  // compile builtin: idempotence, and exact constants that compute-engine folds before compiling
   wrapOperator(
     ce,
     [name, 2],
     (ops) => ops.every((op) => op === ops[0] || op.isSame(ops[0])),
     () => (ops, options) => (options.numericApproximation ? ops[0]!.N() : ops[0]),
-    { ...BUILTIN, arity: { min: 2 } },
+    { arity: { min: 2 }, compile: "builtin" },
   );
   // A pool of exact constants (Pi, E, ...): compare numerically, keep the exact form.
+  // compile builtin: idempotence, and exact constants that compute-engine folds before compiling
   wrapOperator(
     ce,
     [name, 1],
@@ -146,7 +147,7 @@ function declareExtremum(ce: ComputeEngine, name: "Max" | "Min", better: (a: num
       if (best === undefined) return native?.(ops, options);
       return options.numericApproximation ? best.op.N() : best.op;
     },
-    { ...BUILTIN, arity: { min: 1 } },
+    { arity: { min: 1 }, compile: "builtin" },
   );
 }
 
@@ -158,6 +159,7 @@ export function declareConstantRounding(ce: ComputeEngine): void {
   declareExtremum(ce, "Min", (a, b) => a < b);
 
   // IsOdd(Pi) etc: a non-integer exact constant is never odd.
+  // compile builtin: idempotence, and exact constants that compute-engine folds before compiling
   wrapOperator(
     ce,
     ["IsOdd", 1],
@@ -167,6 +169,6 @@ export function declareConstantRounding(ce: ComputeEngine): void {
       if (n.im !== 0 || !Number.isFinite(n.re) || Number.isInteger(n.re)) return undefined;
       return ce.False;
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 }

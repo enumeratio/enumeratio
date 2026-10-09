@@ -50,12 +50,9 @@ function evaluate(head: Hyperbolic, x: number, k: number): C | undefined {
   return Number.isFinite(value[0]) && Number.isFinite(value[1]) ? value : undefined;
 }
 
-// Snaps a complex argument within ulps of x + i*k*pi/2 to the exact table: the built-in lowering gives
-// the same value up to a stray 1e-17 part.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareHyperbolicHalfPeriod(ce: Engine): void {
   for (const head of HYPERBOLIC) {
+    // compile builtin: snaps a complex argument within ulps of x + i*k*pi/2: same value up to a stray 1e-17 part
     wrapOperator(
       ce,
       [head, 1],
@@ -68,7 +65,7 @@ export function declareHyperbolicHalfPeriod(ce: Engine): void {
         const [re, im] = r;
         return im === 0 ? ce.number(re) : asDouble(ce, ce.number(ce.complex(re, im)));
       },
-      { ...BUILTIN, arity: 1 },
+      { arity: 1, compile: "builtin" },
     );
   }
 }

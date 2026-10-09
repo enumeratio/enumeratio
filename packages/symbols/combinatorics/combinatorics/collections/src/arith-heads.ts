@@ -49,9 +49,6 @@ function exactRationalOfDouble(x: number): [bigint, bigint] {
   return [negative ? -numerator : numerator, denominator];
 }
 
-// An exact expression's certified sign: the built-in lowering gives the same value, except where a double cannot tell.
-const BUILTIN = { compile: "builtin" } as const;
-
 function declareExactRationalize(ce: Engine): void {
   wrapOperator(
     ce,
@@ -113,6 +110,7 @@ function certifiedSign(ce: Engine, x: Expr): -1 | 0 | 1 | undefined {
 }
 
 function declareExactSign(ce: Engine): void {
+  // compile builtin: an exact expression's certified sign: compute-engine folds exact constants before compiling
   wrapOperator(
     ce,
     ["Sign", 1],
@@ -134,7 +132,7 @@ function declareExactSign(ce: Engine): void {
       const result = ce.number(sign);
       return options.numericApproximation ? result.N() : result;
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 

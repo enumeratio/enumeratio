@@ -121,14 +121,12 @@ const floorDiv = (a: bigint, b: bigint): bigint => {
   return r !== 0n && r < 0n !== b < 0n ? q - 1n : q;
 };
 
-// A genuinely complex Gaussian integer or rational operand, which compiled real-number code never holds.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareGaussian(ce: Engine): void {
   const list = (items: readonly Expr[]): Expr => ce.function("List", items);
   const g = (z: Gaussian | undefined): Expr | undefined => (z === undefined ? undefined : gaussianExpression(ce, z));
 
   widenSignature(ce, "Mod", "(number, number) -> number");
+  // compile builtin: a Gaussian integer or rational operand: the built-in lowering handles complex operands
   wrapOperator(
     ce,
     ["Mod", 1, 1],
@@ -137,7 +135,7 @@ export function declareGaussian(ce: Engine): void {
       const [z, m] = gaussianCall(ops)!;
       return g(mod(z!, m!));
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // Wolfram's Quotient: ⌊m/n⌋ for integers — rational and real m, n included — with an
@@ -185,16 +183,18 @@ export function declareGaussian(ce: Engine): void {
     ["GCD", gcd],
     ["LCM", lcm],
   ] as const) {
+    // compile builtin: a Gaussian integer or rational operand: the built-in lowering handles complex operands
     wrapOperator(
       ce,
       [head, 1, 1],
       (ops) => gaussianCall(ops) !== undefined,
       () => (ops) => g(gaussianCall(ops)!.reduce((acc, z) => fold(acc, z))),
-      BUILTIN,
+      { compile: "builtin" },
     );
   }
 
   widenSignature(ce, "ExtendedGCD", "(number, number) -> tuple<number, number, number>", mayBeInteger);
+  // compile builtin: a Gaussian integer or rational operand: the built-in lowering handles complex operands
   wrapOperator(
     ce,
     ["ExtendedGCD", 1, 1],
@@ -209,7 +209,7 @@ export function declareGaussian(ce: Engine): void {
         extendedGcd(a!, b!).map((z) => gaussianExpression(ce, z)),
       );
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // The negative-modulus sign convention (ModularInverse(3, -7) = -2, cortex-js/compute-
@@ -217,6 +217,7 @@ export function declareGaussian(ce: Engine): void {
   // patch that used to apply it here was retired. Only the genuinely Gaussian case (a or m
   // off the real line) is still ours: ℤ[i] is beyond Wolfram, not part of that issue.
   widenSignature(ce, "ModularInverse", "(number, number) -> number", mayBeInteger);
+  // compile builtin: a Gaussian integer or rational operand: the built-in lowering handles complex operands
   wrapOperator(
     ce,
     ["ModularInverse", 1, 1],
@@ -228,7 +229,7 @@ export function declareGaussian(ce: Engine): void {
       const [a, m] = ops.map(gaussianAt) as [Gaussian, Gaussian];
       return g(inverseMod(a, m));
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // The option heads. A complex argument is read in ℤ[i] as it stands; a rational integer
@@ -483,6 +484,7 @@ export function declareGaussian(ce: Engine): void {
  * module, since the head is ours rather than compute-engine's native one.
  */
 export function declareIntegerExponentGaussian(ce: Engine): void {
+  // compile builtin: a Gaussian integer or rational operand: the built-in lowering handles complex operands
   wrapOperator(
     ce,
     ["IntegerExponent", 1, 1],
@@ -492,7 +494,7 @@ export function declareIntegerExponentGaussian(ce: Engine): void {
       const k = integerExponentGaussian(z!, b!);
       return k === undefined ? undefined : ce.number(k);
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 }
 
@@ -544,6 +546,7 @@ function declareGaussianRationalGcdLcm(ce: Engine): void {
     return parsed.some((r) => r!.d !== 1n); // otherwise the plain Gaussian-integer path answers it
   };
 
+  // compile builtin: a Gaussian integer or rational operand: the built-in lowering handles complex operands
   wrapOperator(
     ce,
     ["GCD", 1, 1],
@@ -555,9 +558,10 @@ function declareGaussianRationalGcdLcm(ce: Engine): void {
       const scaled = divideExact(n, [d, 0n]);
       return scaled !== undefined ? gaussianExpression(ce, scaled) : rationalGaussianExpr(ce, n, d);
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 
+  // compile builtin: a Gaussian integer or rational operand: the built-in lowering handles complex operands
   wrapOperator(
     ce,
     ["LCM", 1, 1],
@@ -569,7 +573,7 @@ function declareGaussianRationalGcdLcm(ce: Engine): void {
       const scaled = divideExact(n, [d, 0n]);
       return scaled !== undefined ? gaussianExpression(ce, scaled) : rationalGaussianExpr(ce, n, d);
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 

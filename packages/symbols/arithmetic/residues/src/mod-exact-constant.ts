@@ -1,20 +1,7 @@
 import { bigRationalAt, symbolNameOf, wrapOperator, type Engine } from "@enumeratio/engine";
 
-// Mod(x, m) for a bare symbolic numeric constant (Pi, ExponentialE, …) against a positive
-// numeric modulus: compute-engine's native Mod leaves this unevaluated, but the answer is
-// exact and easy — floor the double approximation to find which residue class x falls in
-// (`Mod(Pi, 2)` is in [0, 2), so k = 1), then build the EXACT symbolic remainder x − k·m,
-// where the subtraction stays exact even though k was found numerically. Guarded to a wide
-// margin from either boundary so a double-precision floor is never in doubt.
-//
-// Disjoint from packages/symbols/analysis/analytic/src/closed-forms-113.ts' own Mod(x, m) wrapper for an
-// exact IRRATIONAL (a Sqrt-built radical like √28), which is guarded on that expression's
-// own `isExact` flag -- a flag a bare `Symbol` node like `Pi` never carries, so the two
-// wrappers never compete for the same call regardless of which attaches first.
-// A bare constant symbol (Pi) against a numeric modulus: the exact remainder equals the value the built-in lowering gives.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareModExactConstant(ce: Engine): void {
+  // compile builtin: a bare constant symbol (Pi) against a numeric modulus: the exact remainder equals the lowering's value
   wrapOperator(
     ce,
     ["Mod", 2],
@@ -36,6 +23,6 @@ export function declareModExactConstant(ce: Engine): void {
       const expr = ce.function("Subtract", [x, ce.function("Multiply", [ce.number(k), m])]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 }

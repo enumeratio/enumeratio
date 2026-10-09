@@ -1,7 +1,7 @@
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
-import { wrapOperator } from "@enumeratio/engine";
+import { declareCompile, wrapOperator } from "@enumeratio/engine";
 import { ORDER_RESOLVERS } from "./derivative-orders.ts";
 
 // Symbolic derivatives for the analytic heads.
@@ -140,6 +140,7 @@ export function declareDerivatives(ce: ComputeEngine): void {
     const orders = ops.slice(1).map((order) => order.re);
     return DERIVATIVES[f.symbol]?.[orders.join()] ?? ORDER_RESOLVERS[f.symbol]?.(orders);
   };
+  // compile builtin: a partial derivative table gives the function itself, and compute-engine's own lowering is kept
   wrapOperator(
     ce,
     ["Derivative"],
@@ -148,6 +149,7 @@ export function declareDerivatives(ce: ComputeEngine): void {
       const { body, params } = partialOf(ops)!;
       return ce.box(["Function", body, ...params] as unknown as BoxInput);
     },
+    { compile: "builtin" },
   );
 
   const d = operatorOf(ce, "D");
@@ -167,5 +169,7 @@ export function declareDerivatives(ce: ComputeEngine): void {
         iterating = false;
       }
     };
+    // compile builtin: re-evaluates the derivative to a fixpoint: same value
+    declareCompile(ce, "D", "builtin");
   }
 }

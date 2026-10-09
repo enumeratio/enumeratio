@@ -95,10 +95,6 @@ import { declareOptimize } from "./optimize.ts";
 import { declareNMinMax } from "./nminmax.ts";
 import { declareNSum } from "./nsum.ts";
 
-// Answers a third operand, or a complex or exact one native declines: a real call of up to two is the native
-// handler's, so the built-in lowering gives the same value.
-const BUILTIN = { compile: { upTo: 2 } } as const;
-
 /**
  * Declare the analytic special-function heads on `ce`, numerically aligned with Wolfram.
  *
@@ -161,12 +157,13 @@ export function declareAnalytic(ce: ComputeEngine): void {
     const z = "complex | infinity";
     widenSignature(ce, head, `(${z}, (${z})${secondRequired ? "" : "?"}, (${z})?) -> number`);
     threadOverLists(ce, [head]);
+    // compile builtin up to 2 operands: a third operand, or a complex or exact one native declines: a real call of up to two is native's
     wrapOperator(
       ce,
       [head, 2, 1],
       () => true,
       (native) => (ops, options) => evaluateIncompleteGamma(ce, head, native, ops, options),
-      BUILTIN,
+      { compile: { upTo: 2 } },
     );
   }
 

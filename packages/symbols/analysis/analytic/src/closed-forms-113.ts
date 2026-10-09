@@ -42,13 +42,11 @@ const intNode = (ce: ComputeEngine, v: bigint): BoxedExpression => ce.number(v);
 /** An exact [numerator, denominator] bigint pair as a boxed rational (or integer, at d = 1). */
 const ratNode = (ce: ComputeEngine, [n, d]: Rational): BoxedExpression => (d === 1n ? ce.number(n) : ce.number([n, d]));
 
-// Exact closed forms for exact operands: an inexact operand reaches the numeric kernel the built-in lowering shares.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareClosedForms113(ce: ComputeEngine): void {
   // ψ⁽ⁿ⁾(m) = (−1)ⁿ⁺¹ n! (ζ(n+1) − Σ_{k<m} k^(−n−1)) at a positive integer m and order
   // n ≥ 1 (DLMF 5.15.2, 5.15.1): ψ'(1) = π²/6 and ψ'(2) = π²/6 − 1 as in Wolfram. Capped
   // at `POLYGAMMA_MAX_ORDER` and `POLYGAMMA_MAX_SHIFT` so the sum stays short.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["PolyGamma", 1, 1],
@@ -72,7 +70,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const sign = n % 2n === 0n ? -1n : 1n;
       return finish(ce.function("Multiply", [ce.number(sign * factorial(n)), bracket]), options);
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // GammaLn(n) = ln((n−1)!) at a positive integer n, matching Wolfram's bare
@@ -80,6 +78,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   // principal log, no branch ambiguity for a positive real. Threading (broadcastable,
   // set in threading-113.ts) calls this same scalar handler once per list element, so
   // GammaLn({1,2,3}) closes for free alongside the bare-integer call.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["GammaLn", 1],
@@ -92,7 +91,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const n = bigIntegerAt(ops[0])!;
       return finish(ce.function("Ln", [ce.function("Factorial", [intNode(ce, n - 1n)])]), options);
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 
   // ζ(s, ½) = (2ˢ − 1)ζ(s), true for every s (split the Dirichlet series into even
@@ -100,6 +99,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   // (a different lane's item) is untouched. ζ(2, ¼) = π² + 8G has no such general
   // form in ¼ (the Catalan constant is special to s = 2), so that one is pinned
   // to s = 2 exactly.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
@@ -120,8 +120,9 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
@@ -134,13 +135,14 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ce.function("Add", [ce.function("Power", ["Pi", 2]), ce.function("Multiply", [8, "CatalanConstant"])]),
         options,
       ),
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // Li₃(½) = (7/8)ζ(3) − (π²ln2)/12 + (ln³2)/6 and Li₂(2) = π²/4 − iπln2 — both
   // standard dilogarithm/trilogarithm special values (FunctionExpand[PolyLog[3,1/2]]
   // and N[PolyLog[2,2]] agree, wolframscript-checked); Wolfram's bare kernel leaves
   // both unevaluated, same as every other exact-argument closed form in this file.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["PolyLog", 2],
@@ -160,8 +162,9 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["PolyLog", 2],
@@ -174,13 +177,14 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // Gauss's digamma theorem at the two required denominators. ψ(1/4) and ψ(1/3) are
   // this lane's items; ψ(3/4) and ψ(2/3) come along for free from the same reflection
   // formula ψ(1−x) = ψ(x) + π·cot(πx), and closing the pair rather than only the odd
   // half avoids leaving an inconsistent asymmetric gap in the same head.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["Digamma", 1],
@@ -208,13 +212,14 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const sign = p === 1n ? -1 : 1;
       return finish(ce.function("Add", [base, ce.function("Multiply", [sign, cotTerm])]), options);
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 
   // ψ'(1/4) = π² + 8G and ψ'(3/4) = π² − 8G (Catalan's constant G), from the trigamma
   // reflection ψ'(x) + ψ'(1−x) = π²/sin²(πx) = 2π² at x = 1/4, combined with the
   // known ψ'(1/4) − ψ'(3/4) = 8G. Only this lane's denominator; every other
   // PolyGamma(1, ·) case is left to the numeric kernel or another lane.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["PolyGamma", 2],
@@ -230,7 +235,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // PolyGamma(0, z) IS Digamma(z) — the same function under compute-engine's own
@@ -248,6 +253,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   // which calls PolyGamma(0, ·) internally at a complex argument. `declined` gates this
   // to cases Digamma actually improves on and falls back to PolyGamma's own native
   // handler (not just `undefined`) for everything else, so no existing capability is lost.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["PolyGamma", 2],
@@ -257,22 +263,24 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       if (declined(reduced, "Digamma")) return native?.(ops, options);
       return finish(reduced, options);
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // γₙ(1) = γₙ (Wolfram: StieltjesGamma[3,1] prints as StieltjesGamma[3]) — the
   // two-argument form at a = 1 is just the classical constant.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["StieltjesGamma", 2],
     (ops) => bigIntegerAt(ops[1]) === 1n,
     () => (ops, options) => finish(ce.function("StieltjesGamma", [ops[0]]), options),
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // I_x(a, b) = Σ_{j=a}^{a+b−1} C(a+b−1, j) xʲ(1−x)^{a+b−1−j} at a rational x and
   // positive integer a, b — the standard finite closed form for the regularized
   // incomplete beta function (wolframscript-checked at (1/2, 2, 3) = 11/16).
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
@@ -310,7 +318,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const g = gcd(numSum, denom) || 1n;
       return finish(ratNode(ce, [numSum / g, denom / g]), options);
     },
-    { ...BUILTIN, arity: 3 },
+    { arity: 3, compile: "builtin" },
   );
 
   // Γ(n, x) = (n−1)! e⁻ˣ Σ_{k<n} xᵏ/k! and its regularized form Q(n, x) = e⁻ˣ Σ_{k<n} xᵏ/k!,
@@ -323,6 +331,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
     ["Gamma", false],
     ["GammaRegularized", true],
   ] as const) {
+    // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
     wrapOperator(
       ce,
       [head, 2],
@@ -353,7 +362,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
           options,
         );
       },
-      { ...BUILTIN, arity: 2 },
+      { arity: 2, compile: "builtin" },
     );
   }
 
@@ -363,6 +372,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   // −iπ once for each pole the continuation passes crossing down to it (ceil(−x) of
   // them for x = p/2, p < 0 odd) — wolframscript-checked at ±3/2, and the same
   // formula reproduces mpmath's loggamma(−1/2) = ln(2√π) − iπ as a sanity check.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["LogGamma", 1],
@@ -381,7 +391,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 
   // H_{1/2} = 2 − 2ln2 and H_{1/4} = 4 − π/2 − 3ln2, from H_z = ψ(z+1) + γ combined
@@ -390,6 +400,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   // known — wolframscript's bare kernel leaves HarmonicNumber(1/2) itself
   // unevaluated, so this is the eager-reduction pattern used throughout this file,
   // not a Wolfram bare-kernel match).
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["HarmonicNumber", 1],
@@ -409,7 +420,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 
   // FromContinuedFraction of plain symbols: [a; b, c] = a + 1/(b + 1/c), the nested
@@ -419,6 +430,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   // write down term by term). Only a flat list of integers/symbols with at least one
   // symbol qualifies — a periodic tail is a nested List, a different (backlog) head's
   // item, and is left alone.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["FromContinuedFraction", 1],
@@ -438,7 +450,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       }
       return finish(acc, options);
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 
   // Mod(x, m) for an exact irrational x (an algebraic number like √28, not a float)
@@ -447,6 +459,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   // subtraction is exact even though the quotient was found numerically. Wolfram:
   // Mod[Sqrt[28], 3] = 2√7 − 3, wolframscript-checked. Guarded to a wide margin from
   // either boundary so a double-precision floor is never in doubt.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["Mod", 2],
@@ -470,7 +483,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const expr = ce.function("Subtract", [x, ce.function("Multiply", [intNode(ce, BigInt(k)), m])]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // L(1, χ) for a REAL (quadratic) odd primitive character mod k: derived from the
@@ -481,6 +494,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   // DirichletL[3,2,1]) and cross-checked numerically below against the existing
   // Euler–Maclaurin kernel before ever returning the exact form, since an imprimitive
   // character would silently break the τ(χ) = i√k step.
+  // compile builtin: exact closed forms at exact operands; an inexact one reaches the numeric kernel the lowering shares
   wrapOperator(
     ce,
     ["DirichletL", 3],
@@ -533,6 +547,6 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       if (Math.abs(exact.N().re - numeric.re) > 1e-9) return undefined;
       return options.numericApproximation ? exact.N() : exact;
     },
-    { ...BUILTIN, arity: 3 },
+    { arity: 3, compile: "builtin" },
   );
 }

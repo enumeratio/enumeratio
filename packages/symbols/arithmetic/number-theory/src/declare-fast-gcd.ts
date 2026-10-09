@@ -19,9 +19,6 @@ function hybridGcd(a: bigint, b: bigint): bigint {
   return Math.max(bits(a), bits(b)) >= LEHMER_THRESHOLD_BITS ? lehmerGcd(a, b) : gcd(a, b);
 }
 
-// The same gcd, computed faster for big integers: the built-in lowering gives the same value.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareFastGcd(ce: Engine): void {
   /** Every operand a plain real bigint (so genuinely-Gaussian calls fall through to
    *  declare-gaussian.ts's wrapper, attached ahead of this one). */
@@ -35,6 +32,7 @@ export function declareFastGcd(ce: Engine): void {
     return values;
   };
 
+  // compile builtin: the same gcd, computed faster for big integers
   wrapOperator(
     ce,
     ["GCD", 100000, 100000],
@@ -42,6 +40,6 @@ export function declareFastGcd(ce: Engine): void {
     // Folds from 0n (gcd(0, x) = |x|), so a single operand or an empty call both take the
     // same path as two-or-more, rather than needing a special case for either.
     () => (ops) => ce.number(allRealIntegers(ops)!.reduce((a, b) => hybridGcd(a, b), 0n)),
-    BUILTIN,
+    { compile: "builtin" },
   );
 }

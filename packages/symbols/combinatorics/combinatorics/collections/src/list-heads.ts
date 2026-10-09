@@ -1,10 +1,12 @@
 import {
+  declareCompile,
   applyFunction,
   type Engine,
   type Expr,
   integerAt,
   isNumber,
   operandsOf,
+  refusing,
   stringAt,
   symbolNameOf,
   widenSignature,
@@ -325,7 +327,8 @@ export function declareListHeads(ce: Engine): void {
     ["Clamp", 1],
     () => true,
     (native) => (ops, options) => native?.([ops[0], ce.number(-1), ce.number(1)], options),
-    1,
+    // The one-operand form has no counterpart in the built-in lowering: it fails to compile.
+    { arity: 1, compile: refusing((ops) => ops.length < 3, "Clamp(x) defaults to [-1, 1]") },
   );
 
   // Sort(strings): compute-engine's Sort only orders numbers, leaving a list of strings
@@ -485,6 +488,8 @@ export function declareListHeads(ce: Engine): void {
           options,
         );
       };
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "At", "builtin");
     }
   }
 
@@ -516,6 +521,8 @@ export function declareListHeads(ce: Engine): void {
           options,
         );
       };
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "At", "builtin");
     }
   }
 
@@ -656,6 +663,8 @@ export function declareListHeads(ce: Engine): void {
           ? joinAtLevel(ce, join.lists, join.level)
           : nativeCanonical?.call(nativeOperator, ops, options);
       };
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "Join", "builtin");
     }
   }
 
@@ -772,6 +781,8 @@ export function declareListHeads(ce: Engine): void {
         }
         return nativeCanonical?.call(operator, ops, options);
       };
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "Append", "builtin");
     }
   }
 
@@ -806,6 +817,8 @@ export function declareListHeads(ce: Engine): void {
     if (operator !== undefined) {
       const nativeCanonical = operator.canonical;
       operator.canonical = (ops, options) => nativeCanonical?.call(operator, ops.map(asSet), options);
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "SetMinus", "builtin");
     }
   }
 }

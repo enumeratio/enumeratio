@@ -12,10 +12,6 @@ import { declined, type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
 
-// Identities valid for any operand, and a rewrite tried only after the native evaluator declined:
-// the built-in lowering gives the same value.
-const BUILTIN = { compile: "builtin" } as const;
-
 /**
  * Γ(2, z) = (1 + z)e^{−z} and Γ(1/2, z) = √π·erfc(√z): the two-argument incomplete gamma
  * closed forms Wolfram's `FunctionExpand[Gamma[2, z]]` / `FunctionExpand[Gamma[1/2, z]]`
@@ -36,6 +32,7 @@ function declareIncompleteGammaClosedForms(ce: ComputeEngine): void {
     const q = bigRationalAt(x);
     return q !== undefined && q[0] === 1n && q[1] === 2n;
   };
+  // compile builtin: identities valid for any operand, or a rewrite tried after the native evaluator declined
   wrapOperator(
     ce,
     ["Gamma", 2, 1],
@@ -55,7 +52,7 @@ function declareIncompleteGammaClosedForms(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 }
 
@@ -68,6 +65,7 @@ function declareIncompleteGammaClosedForms(ce: ComputeEngine): void {
  * different `a`, not this identity) is untouched.
  */
 function declareHurwitzHalfIdentity(ce: ComputeEngine): void {
+  // compile builtin: identities valid for any operand, or a rewrite tried after the native evaluator declined
   wrapOperator(
     ce,
     ["HurwitzZeta", "s", 1],
@@ -83,7 +81,7 @@ function declareHurwitzHalfIdentity(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 }
 
@@ -96,6 +94,7 @@ function declareHurwitzHalfIdentity(ce: ComputeEngine): void {
  * the symbolic gap, exactly as `incomplete-gamma.ts`'s three-argument rewrite does.
  */
 function declareLerchToPolyLogIdentity(ce: ComputeEngine): void {
+  // compile builtin: identities valid for any operand, or a rewrite tried after the native evaluator declined
   wrapOperator(
     ce,
     ["LerchPhi", "z", "s", 1],
@@ -107,7 +106,7 @@ function declareLerchToPolyLogIdentity(ce: ComputeEngine): void {
       const expr = ce.function("Divide", [ce.function("PolyLog", [s, z]), z]);
       return finish(expr, options);
     },
-    { ...BUILTIN, arity: 3 },
+    { arity: 3, compile: "builtin" },
   );
 }
 

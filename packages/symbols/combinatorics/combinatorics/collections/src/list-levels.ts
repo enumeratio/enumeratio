@@ -1,4 +1,5 @@
 import {
+  declareCompile,
   applyFunction,
   collectionElements,
   type Engine,
@@ -384,6 +385,8 @@ export function declareListLevelHeads(ce: Engine): void {
           ? ce.number(countMatches(ce, elementsAtLevelSpec(ops[0], spec), ops[1]))
           : nativeCanonical?.call(nativeOperator, ops, options);
       };
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "Count", "builtin");
     }
   }
 
@@ -417,6 +420,8 @@ export function declareListLevelHeads(ce: Engine): void {
       const elements = elementsAtExactLevel(ops[0], level);
       return ce.function(head, [ce.function("List", elements), ops[1]]).evaluate();
     };
+    // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+    declareCompile(ce, head, "builtin");
   }
 
   // At(expr, index): parts of any expression, not just a collection's — the second term of
@@ -465,6 +470,8 @@ export function declareListLevelHeads(ce: Engine): void {
         const index = resolveIndex1Based(integerAt(ops[1])!, items.length);
         return index === undefined ? ce.symbol("NaN") : items[index];
       };
+      // compile builtin: rewrites operands at canonicalization, before compile sees the expression
+      declareCompile(ce, "At", "builtin");
     }
   }
 

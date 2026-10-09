@@ -18,10 +18,6 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 // elementary-special-values.ts, and the two files' predicates never overlap (each only claims
 // the argument shape it was written for).
 
-// Each case is an identity, an exact fold or a ComplexInfinity case: the built-in lowering gives the
-// same value on the reals it is compiled for, so these heads keep it.
-const BUILTIN = { compile: "builtin" } as const;
-
 /** Build then finish an expression the way the caller asked: N() for N(...), else evaluate(). */
 const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
   options.numericApproximation ? expr.N() : expr.evaluate();
@@ -60,23 +56,26 @@ function declareParity(ce: ComputeEngine): void {
   const odd = ["Tan", "Cot", "Csc", "Arcsin", "Arctan", "Sinh", "Tanh", "Arcoth", "Arcsch"];
   const even = ["Cos", "Sec", "Cosh"];
   for (const head of odd) {
+    // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
     wrapOperator(
       ce,
       [head, 1],
       (ops) => ops.length === 1 && ops[0]?.operator === "Negate",
       () => (ops, options) => finish(neg(ce, ce.function(head, [operandsOf(ops[0]!)[0]!])), options),
-      BUILTIN,
+      { compile: "builtin" },
     );
   }
   for (const head of even) {
+    // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
     wrapOperator(
       ce,
       [head, 1],
       (ops) => ops.length === 1 && ops[0]?.operator === "Negate",
       () => (ops, options) => finish(ce.function(head, [operandsOf(ops[0]!)[0]!]), options),
-      BUILTIN,
+      { compile: "builtin" },
     );
   }
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Arccos", 1],
@@ -85,7 +84,7 @@ function declareParity(ce: ComputeEngine): void {
       const x = operandsOf(ops[0]!)[0]!;
       return finish(ce.function("Subtract", ["Pi", ce.function("Arccos", [x])]), options);
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
@@ -100,12 +99,13 @@ function declareInverseComposition(ce: ComputeEngine): void {
     ["Sinh", "Arsinh"],
   ];
   for (const [outer, inner] of pairs) {
+    // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
     wrapOperator(
       ce,
       [outer, 1],
       (ops) => ops.length === 1 && ops[0]?.operator === inner,
       () => (ops, options) => finish(operandsOf(ops[0]!)[0]!, options),
-      BUILTIN,
+      { compile: "builtin" },
     );
   }
 }
@@ -114,21 +114,24 @@ function declareInverseComposition(ce: ComputeEngine): void {
  * Pythagorean-identity shapes. `Sin(Arccos(x)) = sqrt(1 - x^2)` already lives in
  * trig-normalisation.ts; these are its remaining siblings. */
 function declareCrossComposition(ce: ComputeEngine): void {
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Cos", 1],
     (ops) => ops.length === 1 && ops[0]?.operator === "Arcsin",
     () => (ops, options) => finish(sqrt(ce, oneMinusSquare(ce, operandsOf(ops[0]!)[0]!)), options),
-    BUILTIN,
+    { compile: "builtin" },
   );
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Cos", 1],
     (ops) => ops.length === 1 && ops[0]?.operator === "Arctan",
     () => (ops, options) =>
       finish(ce.function("Divide", [1, sqrt(ce, onePlusSquare(ce, operandsOf(ops[0]!)[0]!))]), options),
-    BUILTIN,
+    { compile: "builtin" },
   );
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Sin", 1],
@@ -137,8 +140,9 @@ function declareCrossComposition(ce: ComputeEngine): void {
       const x = operandsOf(ops[0]!)[0]!;
       return finish(ce.function("Divide", [x, sqrt(ce, onePlusSquare(ce, x))]), options);
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Tan", 1],
@@ -147,27 +151,29 @@ function declareCrossComposition(ce: ComputeEngine): void {
       const x = operandsOf(ops[0]!)[0]!;
       return finish(ce.function("Divide", [x, sqrt(ce, oneMinusSquare(ce, x))]), options);
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
 /** Cos(i*t) = cosh(t), Tan(i*t) = i*tanh(t) -- mirrors Sin(i*t) = i*sinh(t) in
  * trig-normalisation.ts and Sinh/Cosh/Tanh(i*t) in elementary-special-values.ts. */
 function declareImaginaryArgument(ce: ComputeEngine): void {
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Cos", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && hasImaginaryFactor(ops[0]),
     () => (ops, options) => finish(ce.function("Cosh", [imaginaryFactor(ce, ops[0]!)]), options),
-    BUILTIN,
+    { compile: "builtin" },
   );
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Tan", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && hasImaginaryFactor(ops[0]),
     () => (ops, options) =>
       finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Tanh", [imaginaryFactor(ce, ops[0]!)])]), options),
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
@@ -179,6 +185,7 @@ function declareImaginaryArgument(ce: ComputeEngine): void {
  * caution as the existing Arcsin(Sin(y)) rule.
  */
 function declareArccosCosReduction(ce: ComputeEngine): void {
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Arccos", 1],
@@ -197,7 +204,7 @@ function declareArccosCosReduction(ce: ComputeEngine): void {
       // value in [-pi, 0): cos(y) = cos(-y), and -y is in (0, pi].
       return finish(ce.function("Negate", [y]), options);
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
@@ -246,6 +253,7 @@ function declareTrigToExpInverses(ce: ComputeEngine): void {
         ]),
       ]),
   };
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["TrigToExp", 1],
@@ -255,7 +263,7 @@ function declareTrigToExpInverses(ce: ComputeEngine): void {
       const rewrite = rewrites[arg.operator!]!;
       return finish(rewrite(operandsOf(arg)[0]!), options);
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
@@ -265,12 +273,13 @@ function declareTrigToExpInverses(ce: ComputeEngine): void {
  * it so this can answer NaN explicitly instead of erroring at the boxing stage. */
 function declareTanhComplexInfinity(ce: ComputeEngine): void {
   widenSignature(ce, "Tanh", "(complex | infinity) -> number", (op) => !isComplexInfinity(op));
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Tanh", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && isComplexInfinity(ops[0]),
     () => () => ce.symbol("NaN"),
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
@@ -280,13 +289,15 @@ function declareTanhComplexInfinity(ce: ComputeEngine): void {
  * real number already inside [0, 1), so Arccos(1/x) is the ordinary real-valued arccosine
  * (e.g. Arccos(1/2) = pi/3), not a further complex branch. */
 function declareArsech(ce: ComputeEngine): void {
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Arsech", 1],
     (ops) => ops.length === 1 && ops[0]?.is(1) === true,
     () => (_ops, options) => finish(ce.Zero, options),
-    BUILTIN,
+    { compile: "builtin" },
   );
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Arsech", 1],
@@ -302,7 +313,7 @@ function declareArsech(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
@@ -313,18 +324,20 @@ function declareArsech(ce: ComputeEngine): void {
  * ComplexInfinity case is covered by `declareLogComplexInfinityAndReciprocalPower` below --
  * there is no separate `Log2`/`Log10`/`Lb` operator left by the time `evaluate` runs. */
 function declareLnComplexInfinity(ce: ComputeEngine): void {
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Ln", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && isComplexInfinity(ops[0]),
     () => () => ce.symbol("PositiveInfinity"),
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
 /** Ln(1/n) = -Ln(n), for an exact positive-integer n > 1: compute-engine's own integer-power
  * pull-out (Ln(1000) = 3*Ln(10)) already reduces an integer argument; this is its reciprocal. */
 function declareLnUnitFraction(ce: ComputeEngine): void {
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Ln", 1],
@@ -336,7 +349,7 @@ function declareLnUnitFraction(ce: ComputeEngine): void {
       const [, den] = bigRationalAt(ops[0]!)!;
       return finish(neg(ce, ce.function("Ln", [ce.number(den)])), options);
     },
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 
@@ -384,19 +397,21 @@ function declareLogComplexInfinityAndReciprocalPower(ce: ComputeEngine): void {
     if (r === undefined || r[0] !== 1n || r[1] <= 1n) return undefined;
     return exactLogInteger(base, r[1]);
   };
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Log", 1],
     (ops) => (ops.length === 1 || ops.length === 2) && ops[0] !== undefined && isComplexInfinity(ops[0]),
     () => () => ce.symbol("PositiveInfinity"),
-    BUILTIN,
+    { compile: "builtin" },
   );
+  // compile builtin: identities, exact folds and ComplexInfinity: the built-in lowering gives the same value
   wrapOperator(
     ce,
     ["Log", 1],
     (ops) => (ops.length === 1 || ops.length === 2) && reciprocalExponent(ops) !== undefined,
     () => (ops, options) => finish(ce.number(-reciprocalExponent(ops)!), options),
-    BUILTIN,
+    { compile: "builtin" },
   );
 }
 

@@ -1,5 +1,5 @@
 import { type BoxedExpression, type ComputeEngine, isNumber, isSymbol } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { declareCompile, operandsOf } from "@enumeratio/engine";
 import type { EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 
 // DifferentialRootReduce(f(x), x) / DifferentialRoot(...)[x]: Wolfram's holonomic (D-finite)
@@ -523,4 +523,6 @@ function attachDifferentialRootApply(ce: ComputeEngine): void {
     }
     return native?.(ops, options);
   };
+  // compile builtin: answers only a DifferentialRoot applied to a number
+  declareCompile(ce, "Apply", "builtin");
 }

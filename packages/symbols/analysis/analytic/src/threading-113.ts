@@ -48,10 +48,6 @@ function rationalizeDeep(
   return ce.function(expr.operator, rebuilt).evaluate();
 }
 
-// Only asks for a number from a float operand that evaluate() would leave unevaluated: compiled code always
-// computes the number.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareThreading113(ce: ComputeEngine): void {
   // Native heads that reject a list or a matrix with a type error, where Wolfram's
   // Listable heads thread over it: HurwitzZeta([2,3,4], 1/2); StieltjesGamma([1,2,3], a)
@@ -67,6 +63,7 @@ export function declareThreading113(ce: ComputeEngine): void {
   // hits it on every element. Forcing the request here, ahead of HurwitzZeta's own
   // evaluate, is additive -- it only fires when a plain (non-numeric) evaluate() would
   // otherwise leave a float-argument call unevaluated.
+  // compile builtin: only asks for a number from a float operand evaluate() would leave unevaluated
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
@@ -74,7 +71,7 @@ export function declareThreading113(ce: ComputeEngine): void {
       !ops.some((o) => o === undefined) && ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false),
     (native) => (ops, options) =>
       options.numericApproximation ? native?.(ops, options) : native?.(ops, { ...options, numericApproximation: true }),
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // Rationalize(list) and Rationalize(expression-with-floats-inside): compute-engine's

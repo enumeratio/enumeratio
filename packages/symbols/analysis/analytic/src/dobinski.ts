@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { declareCompile, bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 
 // Dobinski's formula: Σ_{k≥0} kⁿ/k! = e·Bₙ, the n-th Bell number times e (Wolfram sums it
@@ -48,4 +48,6 @@ export function declareDobinski(ce: ComputeEngine): void {
     }
     return native(ops, options);
   }) as typeof operator.evaluate;
+  // compile builtin: Dobinski's formula for an exact sum; compile ignores Sum's own evaluate
+  declareCompile(ce, "Sum", "builtin");
 }

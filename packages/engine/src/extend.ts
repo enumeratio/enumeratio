@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type Operator, shadowsLibrary } from "./ce-internals.ts";
 import type { CompileHandler } from "./facade.ts";
 import { addHeadOverload } from "./overloads.ts";
 
@@ -13,15 +14,15 @@ type OperatorDefinition = NonNullable<BoxedExpression["operatorDefinition"]>;
  * lowering doesn't, so compile fails closed. A package says what it means instead:
  *
  * - `"builtin"`: compile as the target's built-in lowering would. Only where every case the
- *   package adds is an identity, or fires on operands compiled real-number code never holds
- *   (symbolic, exact, complex, past a double).
+ *   package adds is an identity, or fires on operands the built-in lowering computes the same way.
  * - `{ upTo: n }`: the same for calls of at most `n` operands; a wider call (a signature the
  *   package widened) fails to compile.
- * - a handler: a lowering of our own semantics (`undefined` from it falls back to the built-in).
+ * - a handler: a lowering of our own, or a guard that throws for the operands it can't vouch for
+ *   (`undefined` from it falls back to the built-in).
  *
- * A replacement that states nothing keeps compute-engine's default: an extension shadows, and
- * fails to compile. One unstated replacement closes the head for good, whatever else states
- * `"builtin"`.
+ * A replacement that states nothing closes the head: it fails to compile, whether or not
+ * compute-engine would have shadowed it. One unstated replacement closes the head for good,
+ * whatever else states `"builtin"`.
  */
 export type CompileStance = "builtin" | { readonly upTo: number } | CompileHandler;
 
@@ -39,11 +40,14 @@ export interface HeadPatch {
 
 /** What every package's stance for one head on one engine adds up to. */
 interface Stance {
-  /** Some replacement stated nothing. */
+  /** Some replacement stated nothing: the head never compiles. */
   closed: boolean;
   /** The most operands a call may have and still compile. */
   upTo: number;
-  handler?: CompileHandler;
+  /** Lowerings of our own, tried in turn; each may throw or decline to the next. */
+  readonly handlers: Set<CompileHandler>;
+  /** compute-engine's own `compile` for the head, where it has one. */
+  inherited?: CompileHandler;
   /** The one handler installed on the head, reading this record. */
   readonly compile: CompileHandler;
 }
@@ -55,14 +59,26 @@ function stanceOf(ce: ComputeEngine, name: string): Stance {
   if (byHead === undefined) stances.set(ce, (byHead = new Map()));
   let stance = byHead.get(name);
   if (stance === undefined) {
+    const own = (ce.lookupDefinition(name) as { operator?: Operator } | undefined)?.operator?.compile;
     const record: Stance = {
       closed: false,
       upTo: Infinity,
+      handlers: new Set(),
+      inherited: own,
       compile: (args, compile, context) => {
-        if (args.length > record.upTo) {
-          throw new Error(`${name} has no ${context.language} lowering for what a package changed about it`);
+        if (record.closed) {
+          throw new Error(
+            `${name} has no ${context.language} lowering: a package replaced what it computes without saying how it compiles`,
+          );
         }
-        return record.handler?.(args, compile, context);
+        if (args.length > record.upTo) {
+          throw new Error(`${name} has no ${context.language} lowering for ${args.length} operands`);
+        }
+        for (const handler of record.handlers) {
+          const lowered = handler(args, compile, context);
+          if (lowered !== undefined && lowered !== "") return lowered;
+        }
+        return record.inherited?.(args, compile, context);
       },
     };
     byHead.set(name, (stance = record));
@@ -70,25 +86,10 @@ function stanceOf(ce: ComputeEngine, name: string): Stance {
   return stance;
 }
 
-/** The parts of a definition that make an extension "a user definition" to compute-engine's compiler. */
-const KEPT = ["evaluate", "canonical", "derivative", "lazy", "broadcastable", "evaluateAsync"] as const;
-type Operator = { compile?: CompileHandler } & { [K in (typeof KEPT)[number]]?: unknown };
-
-/** The operator the standard library declared `name` with: the one in the outermost scope. */
-function libraryOperator(ce: ComputeEngine, name: string): Operator | undefined {
-  type Scope = { parent?: Scope; bindings: { get(name: string): unknown } };
-  let scope = (ce as unknown as { context: { lexicalScope: Scope } }).context.lexicalScope;
-  while (scope.parent !== undefined) scope = scope.parent;
-  const definition = scope.bindings.get(name);
-  return typeof definition === "object" && definition !== null && "operator" in definition
-    ? (definition.operator as Operator)
-    : undefined;
-}
-
 /**
- * Put the head's stance on its visible definition: its handler, or none when the head is closed.
- * A plain "builtin" goes on only where compute-engine would otherwise shadow the library head, so a head
- * that still holds the library's handlers keeps compiling without a handler of ours in the way
+ * Put the head's stance on its visible definition. A closed head always gets it (it throws); a plain
+ * "builtin" goes on only where compute-engine would otherwise shadow the library head, so a head that
+ * still holds the library's handlers keeps compiling without a handler of ours in the way
  * (compute-engine cannot share a subexpression under a handler it did not install). A restriction
  * (an operand limit, a lowering of our own) always goes on.
  */
@@ -96,14 +97,8 @@ function install(ce: ComputeEngine, name: string, stance: Stance): void {
   const definition = ce.lookupDefinition(name);
   if (definition === undefined || !("operator" in definition)) return;
   const operator = definition.operator as Operator;
-  if (stance.closed) {
-    if (operator.compile === stance.compile) delete operator.compile;
-    return;
-  }
-  const library = libraryOperator(ce, name);
-  const shadows = library !== undefined && operator !== library && KEPT.some((key) => operator[key] !== library[key]);
-  const restricts = stance.upTo !== Infinity || stance.handler !== undefined;
-  if (restricts || shadows) operator.compile = stance.compile;
+  const restricts = stance.closed || stance.upTo !== Infinity || stance.handlers.size > 0;
+  if (restricts || shadowsLibrary(ce, name, operator)) operator.compile = stance.compile;
 }
 
 /**
@@ -115,10 +110,7 @@ export function declareCompile(ce: ComputeEngine, name: string, stated: CompileS
   const stance = stanceOf(ce, name);
   if (stated === undefined) stance.closed = true;
   else if (typeof stated === "object") stance.upTo = Math.min(stance.upTo, stated.upTo);
-  else if (stated !== "builtin") {
-    const before = stance.handler;
-    stance.handler = before === undefined ? stated : (a, c, x) => stated(a, c, x) ?? before(a, c, x);
-  }
+  else if (stated !== "builtin") stance.handlers.add(stated);
   install(ce, name, stance);
 }
 

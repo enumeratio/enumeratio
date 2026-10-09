@@ -1,6 +1,6 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@enumeratio/engine/unstable";
-import { wrapOperator } from "@enumeratio/engine";
+import { onlyForIntegers, wrapOperator } from "@enumeratio/engine";
 import {
   atDigits,
   bigRealOperand,
@@ -34,14 +34,12 @@ export function besselBig(kind: "I" | "J", order: number, x: BigDecimal, digits:
   });
 }
 
-// Digits past a double's: compiled code works in doubles.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareBesselBig(ce: ComputeEngine): void {
   for (const [head, kind] of [
     ["BesselI", "I"],
     ["BesselJ", "J"],
   ] as const) {
+    // compile builtin: digits past a double's, where compiled code has none
     wrapOperator(
       ce,
       [head, 1, 1],
@@ -54,11 +52,11 @@ export function declareBesselBig(ce: ComputeEngine): void {
         const value = arg === undefined ? undefined : besselBig(kind, order.re, arg, ce.precision);
         return value === undefined ? undefined : bigResult(ce, value);
       },
-      { ...BUILTIN, arity: 2 },
+      { arity: 2, compile: "builtin" },
     );
     // A non-integer real order, for x > 0: the same series through the regularized 0F1, which
-    // carries the digits asked for. Native declines these, so no compile stance: the built-in
-    // lowering would not give this value.
+    // carries the digits asked for. Native declines these, so it compiles only for an integer order: the
+    // built-in lowering would not give this value.
     wrapOperator(
       ce,
       [head, 1, 1],
@@ -80,7 +78,7 @@ export function declareBesselBig(ce: ComputeEngine): void {
         const scale = ce.function("Power", [ce.function("Divide", [x, ce.number(2)]), order]);
         return ce.function("Multiply", [scale, series]).N();
       },
-      2,
+      { arity: 2, compile: onlyForIntegers("a non-integer Bessel order has no built-in lowering", 0) },
     );
   }
 }

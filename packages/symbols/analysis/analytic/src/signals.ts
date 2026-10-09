@@ -1,6 +1,6 @@
 // unstable: BigDecimal, the class compute-engine's boxed numbers hold; no /numerics subpath yet
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
-import { bigRationalAt, operandsOf } from "@enumeratio/engine";
+import { declareCompile, bigRationalAt, operandsOf } from "@enumeratio/engine";
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
 import { bigRealOperand, bigResult, exceedsDoublePrecision, isFiniteNum } from "@enumeratio/ce-patches";
@@ -643,6 +643,8 @@ function declareSignalDerivatives(ce: ComputeEngine): void {
     }
     return native?.(ops, options);
   };
+  // compile builtin: adds symbolic derivatives of signal heads: same values
+  declareCompile(ce, "Derivative", "builtin");
 }
 
 // ---------------------------------------------------------------------------------------------

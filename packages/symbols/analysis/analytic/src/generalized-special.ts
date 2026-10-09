@@ -1,5 +1,5 @@
 import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
-import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/engine";
+import { bigRationalAt, operandsOf, refusing, widenSignature, wrapOperator } from "@enumeratio/engine";
 import { declined, type EvalOptions, isRealInt } from "@enumeratio/ce-patches";
 
 type Q = readonly [bigint, bigint];
@@ -67,19 +67,6 @@ const stillMentions = (r: BoxedExpression, head: string): boolean => JSON.string
 const isNaNValue = (r: BoxedExpression | undefined): boolean =>
   r !== undefined && (r as unknown as { isNumberLiteral?: boolean }).isNumberLiteral === true && Number.isNaN(r.re);
 
-// These wrappers add operands past the native call (a widened signature), or identities and exact folds on
-// it: up to the native count the built-in lowering gives the same value, and a wider call fails to compile.
-const UP_TO_1 = { compile: { upTo: 1 } } as const;
-const UP_TO_2 = { compile: { upTo: 2 } } as const;
-const UP_TO_3 = { compile: { upTo: 3 } } as const;
-// PolyGamma(z) is Digamma(z): the built-in lowering takes two operands, so a call with one fails to compile.
-const TWO_OPERANDS = {
-  compile: (args: readonly unknown[]) => {
-    if (args.length < 2) throw new Error("PolyGamma(z) has no built-in lowering");
-    return undefined;
-  },
-};
-
 // --- Beta: complete (a, b), incomplete (z, a, b) and generalized incomplete (z0, z1, a, b) ---
 
 /**
@@ -92,6 +79,7 @@ const TWO_OPERANDS = {
  */
 export function declareGeneralizedBeta(ce: ComputeEngine): void {
   widenSignature(ce, "Beta", "(number, number, number?, number?) -> number");
+  // compile builtin up to 2 operands: adds operands past the native call, or identities and exact folds on it
   wrapOperator(
     ce,
     ["Beta", 2, 3],
@@ -155,7 +143,7 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
       }
       return undefined;
     },
-    UP_TO_2,
+    { compile: { upTo: 2 } },
   );
 }
 
@@ -166,6 +154,7 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
  */
 export function declareGeneralizedBetaRegularized(ce: ComputeEngine): void {
   widenSignature(ce, "BetaRegularized", "(number, number, number, number?) -> number");
+  // compile builtin up to 3 operands: adds operands past the native call, or identities and exact folds on it
   wrapOperator(
     ce,
     ["BetaRegularized", 0.2, 0.5, 2, 3],
@@ -178,7 +167,7 @@ export function declareGeneralizedBetaRegularized(ce: ComputeEngine): void {
       ]);
       return finish(expr, options);
     },
-    { ...UP_TO_3, arity: 4 },
+    { arity: 4, compile: { upTo: 3 } },
   );
 }
 
@@ -192,6 +181,7 @@ export function declareGeneralizedBetaRegularized(ce: ComputeEngine): void {
  */
 export function declareGeneralizedErf(ce: ComputeEngine): void {
   widenSignature(ce, "Erf", "(number, number?) -> number");
+  // compile builtin up to 1 operand: adds operands past the native call, or identities and exact folds on it
   wrapOperator(
     ce,
     ["Erf", 1],
@@ -218,7 +208,7 @@ export function declareGeneralizedErf(ce: ComputeEngine): void {
       if (x.operator === "ErfInv") return operandsOf(x)[0];
       return nativeErf?.(ops, options);
     },
-    UP_TO_1,
+    { compile: { upTo: 1 } },
   );
 }
 
@@ -229,6 +219,7 @@ export function declareGeneralizedErf(ce: ComputeEngine): void {
  */
 export function declareGeneralizedErfInv(ce: ComputeEngine): void {
   widenSignature(ce, "ErfInv", "(number, number?) -> number");
+  // compile builtin up to 1 operand: adds operands past the native call, or identities and exact folds on it
   wrapOperator(
     ce,
     ["ErfInv", 0.5],
@@ -249,7 +240,7 @@ export function declareGeneralizedErfInv(ce: ComputeEngine): void {
       }
       return nativeErfInv?.(ops, options);
     },
-    UP_TO_1,
+    { compile: { upTo: 1 } },
   );
 }
 
@@ -276,7 +267,11 @@ export function declareOneArgumentPolyGamma(ce: ComputeEngine): void {
       if (viaDigamma.operator !== "Digamma") return viaDigamma;
       return native?.([ce.Zero, z], options);
     },
-    { ...TWO_OPERANDS, arity: 1 },
+    // PolyGamma(z) is Digamma(z): the built-in lowering takes two operands, so a call with one fails to compile.
+    {
+      arity: 1,
+      compile: refusing((ops) => ops.length < 2, "PolyGamma(z) has no form in the built-in lowering"),
+    },
   );
 }
 
@@ -352,6 +347,7 @@ function nielsenNumeric(n: number, p: number, z: number): number {
 
 export function declareNielsenPolyLog(ce: ComputeEngine): void {
   widenSignature(ce, "PolyLog", "(number, number, number?) -> number");
+  // compile builtin up to 2 operands: adds operands past the native call, or identities and exact folds on it
   wrapOperator(
     ce,
     ["PolyLog", 1, 2, 1],
@@ -376,7 +372,7 @@ export function declareNielsenPolyLog(ce: ComputeEngine): void {
       if (z.im !== 0 || !Number.isFinite(z.re) || z.re > 1) return undefined;
       return ce.number(nielsenNumeric(n.re, p.re, z.re));
     },
-    { ...UP_TO_2, arity: 3 },
+    { arity: 3, compile: { upTo: 2 } },
   );
 }
 

@@ -120,10 +120,6 @@ export function gammaExactValue(ce: ComputeEngine, x: Rational): BoxedExpression
     .evaluate();
 }
 
-// Exact folds and identities, and exact operands native rejects (half-integers, negative odd): compiled code holds
-// doubles, which the built-in lowering computes as before.
-const BUILTIN = { compile: "builtin" } as const;
-
 export function declareWidened(ce: ComputeEngine): void {
   // Native Conjugate is typed `number`, so `Conjugate(Transpose(m))` for a symbolic m boxed to
   // an incompatible-type error; Wolfram holds it. Only what may be a number reaches the native handler.
@@ -131,6 +127,7 @@ export function declareWidened(ce: ComputeEngine): void {
   // CatalanNumber is natively typed `integer`; its half-integers have to get past boxing.
   widenSignature(ce, "CatalanNumber", "(number) -> number", mayBeInteger);
   for (const [head, ratio] of Object.entries(GAMMA_RATIOS)) {
+    // compile builtin: exact folds and identities, and exact operands native rejects (half-integers, negative odd)
     wrapOperator(
       ce,
       [head, 1, 1],
@@ -139,7 +136,7 @@ export function declareWidened(ce: ComputeEngine): void {
         const [up, down] = ratio(halfIntegerCall(ops)!);
         return gammaRatio(ce, up, down);
       },
-      { ...BUILTIN, arity: GAMMA_ARITY[head] },
+      { arity: GAMMA_ARITY[head], compile: "builtin" },
     );
   }
 
@@ -159,6 +156,7 @@ export function declareWidened(ce: ComputeEngine): void {
   // negative, so both terms are 0 and C_n = 0. This package follows the verified Wolfram
   // kernel output (−1), not the Gamma-limit's −1/2 -- flagged for a second Wolfram check.
   // Additive either way: native compute-engine leaves this whole domain unevaluated.
+  // compile builtin: exact folds and identities, and exact operands native rejects (half-integers, negative odd)
   wrapOperator(
     ce,
     ["CatalanNumber", 1],
@@ -170,10 +168,11 @@ export function declareWidened(ce: ComputeEngine): void {
       const n = bigIntegerAt(ops[0]!)!;
       return n === -1n ? ce.number(-1) : ce.Zero;
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 
   // (−2k − 1)!! = (−1)ᵏ / (2k − 1)!!, running the recurrence n!! = n·(n − 2)!! downwards.
+  // compile builtin: exact folds and identities, and exact operands native rejects (half-integers, negative odd)
   wrapOperator(
     ce,
     ["Factorial2", 1],
@@ -187,23 +186,25 @@ export function declareWidened(ce: ComputeEngine): void {
       for (let j = 2n * k - 1n; j > 1n; j -= 2n) den *= j;
       return ce.number([k % 2n === 0n ? 1n : -1n, den]);
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 
   // Wolfram's BernoulliB[n, x] is the Bernoulli polynomial, which is BernoulliPolynomial here.
   widenSignature(ce, "BernoulliB", "(integer, number?) -> number");
+  // compile builtin: exact folds and identities, and exact operands native rejects (half-integers, negative odd)
   wrapOperator(
     ce,
     ["BernoulliB", 1],
     () => true,
     () => (ops) => ce.function("BernoulliPolynomial", [...ops]).evaluate(),
-    { ...BUILTIN, arity: 2 },
+    { arity: 2, compile: "builtin" },
   );
 
   // ψ(n) = H_{n−1} − γ, the standard digamma identity, exact at every positive integer n.
   // Digamma already threads over a list natively; wrapping the scalar case is enough.
   // `finish` follows the caller: N() wants a decimal (EulerGamma has no exact value to stop
   // at), plain evaluate() keeps the exact symbolic form.
+  // compile builtin: exact folds and identities, and exact operands native rejects (half-integers, negative odd)
   wrapOperator(
     ce,
     ["Digamma", 1],
@@ -219,12 +220,13 @@ export function declareWidened(ce: ComputeEngine): void {
       ]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 
   // Ln(−q) = Ln(q) + iπ for a positive rational q — the principal branch past the cut,
   // which is Wolfram's convention and matches what N(Ln(−q)) already gives; plain
   // evaluate() otherwise leaves a negative-real Ln symbolic.
+  // compile builtin: exact folds and identities, and exact operands native rejects (half-integers, negative odd)
   wrapOperator(
     ce,
     ["Ln", 1],
@@ -240,7 +242,7 @@ export function declareWidened(ce: ComputeEngine): void {
       ]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
-    { ...BUILTIN, arity: 1 },
+    { arity: 1, compile: "builtin" },
   );
 }
 
@@ -283,6 +285,7 @@ export function declareInverseOutsideDomain(ce: ComputeEngine): void {
   const inside = (x: Rational): boolean => x[0] !== 0n && abs(x)[0] < x[1]; // 0 < |x| < 1
 
   const wrap = (head: string, applies: (x: Rational) => boolean, build: (x: Rational) => BoxedExpression): void =>
+    // compile builtin: exact folds and identities, and exact operands native rejects (half-integers, negative odd)
     wrapOperator(
       ce,
       [head, 1],
@@ -291,7 +294,7 @@ export function declareInverseOutsideDomain(ce: ComputeEngine): void {
         return x !== undefined && applies(x);
       },
       () => (ops, options) => finish(build(rational(ops)!), options.numericApproximation),
-      { ...BUILTIN, arity: 1 },
+      { arity: 1, compile: "builtin" },
     );
 
   const principalArcsin = (x: Rational): BoxedExpression =>
