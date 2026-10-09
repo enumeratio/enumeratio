@@ -29,15 +29,8 @@ test("PermutationCycles with a custom head keeps fixed points as singletons", ()
     ["PermutationCycles", L(2, 5, 3, 6, 1, 8, 7, 9, 4, 10), "head"],
     ["head", L(L(1, 2, 5), L(3), L(4, 6, 8, 9), L(7), L(10))],
   );
-  // Identity(x) evaluates straight through to x, so check the fully-simplified result
-  // (a second `.evaluate()`, since our handler hands back `Identity(...)` unevaluated)
-  // rather than compare against an un-evaluated Identity(...) wrapper.
-  expect(
-    ce
-      .box(["PermutationCycles", L(1, 2, 3, 4, 5), "Identity"])
-      .evaluate()
-      .evaluate().json,
-  ).toEqual(ce.box(L(L(1), L(2), L(3), L(4), L(5))).evaluate().json);
+  // Identity(x) evaluates straight through to x: the wrapped cycles come back as a plain list.
+  same(["PermutationCycles", L(1, 2, 3, 4, 5), "Identity"], L(L(1), L(2), L(3), L(4), L(5)));
 });
 
 test("PermutationCycles on an already-Cycles value is the identity", () => {

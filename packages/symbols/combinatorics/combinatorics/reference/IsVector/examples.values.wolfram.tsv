@@ -9,6 +9,6 @@ a-test-function-must-hold-of-every-element	VectorQ[List[2, 4, 6], EvenQ]	True	\t
 a-test-function-failing-on-one-element	VectorQ[List[2, 3, 6], EvenQ]	False	\text{VectorQ}[\{2,3,6\},\text{EvenQ}]	\text{False}	
 isvector-range-1-10-ismachinenumber	VectorQ[Range[1, 10], MachineNumberQ]	False	\text{VectorQ}[\text{Range}[1,10],\text{MachineNumberQ}]	\text{False}	
 isvector-range-1-10-isinteger	VectorQ[Range[1, 10], IntegerQ]	True	\text{VectorQ}[\text{Range}[1,10],\text{IntegerQ}]	\text{True}	
-isvector-n-range-1-10-ismachinenumber	VectorQ[N[Range[1, 10]], MachineNumberQ]	True			disagree
+isvector-n-range-1-10-ismachinenumber	VectorQ[N[Range[1, 10]], MachineNumberQ]	True	\text{VectorQ}[N[\text{Range}[1,10]],\text{MachineNumberQ}]	\text{True}	disagree
 isvector-list-1-pi-sin-1-sqrt-2-function	VectorQ[List[1, Pi, Sin[1], Sqrt[2]], Function[And[NumericQ[Slot[1]], (Im[Slot[1]] == 0)]]]	True	\text{VectorQ}\left[\left\{1,\pi ,\sin (1),\sqrt{2}\right\},\text{NumericQ}[\text{$\#$1}]\land \Im(\text{$\#$1})=0\&\right]	\text{True}	
 list-isvector-vec-isvector-expr	List[VectorQ[vec], VectorQ[expr]]	{False, False}	\{\text{VectorQ}[\text{vec}],\text{VectorQ}[\text{expr}]\}	\{\text{False},\text{False}\}	

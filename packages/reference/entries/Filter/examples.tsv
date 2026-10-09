@@ -1,9 +1,9 @@
-id	section	role	expr	expected	caption	triage	epsil.back	wolfram.kind	wolfram.note
-filter-list-1-2-4-7-6-2-iseven			[Filter, [List, 1, 2, 4, 7, 6, 2], IsEven]	[List, 2, 4, 6, 2]	Keeps the elements that satisfy the predicate				
-filter-list-1-2-4-7-6-2-isodd			[Filter, [List, 1, 2, 4, 7, 6, 2], IsOdd]	[List, 1, 7]	The complementary predicate keeps the rest				
-apply-filter-iseven-list-1-2-4-7-6-2		triage	[Apply, [Filter, IsEven], [List, 1, 2, 4, 7, 6, 2]]	[Filter, IsEven]		gap		unclassified	The operator form Select[f][list] is not curried here.
-filter-list-list-1-y-list-2-x-list-3-x-list-4-z	Scope		[Filter, [List, [List, 1, y], [List, 2, x], [List, 3, x], [List, 4, z], [List, 5, x], [List, 6, y]], [Function, [Block, [Contains, _1, x]], _1]]	[List, [List, 2, x], [List, 3, x], [List, 5, x]]	Keeps the pairs that mention x		Unreadable		
-filter-list-list-1-y-list-2-x-list-3-x-list-4-2	Scope		[Filter, [List, [List, 1, y], [List, 2, x], [List, 3, x], [List, 4, z], [List, 5, x], [List, 6, y]], [Function, [Block, [Contains, _1, z]], _1]]	[List, [List, 4, z]]	A different test selects a single pair		Unreadable		
-filter-list-1-2-4-7-6-2-function-2-lt-1-1	Scope		[Filter, [List, 1, 2, 4, 7, 6, 2], [Function, [Block, [Less, 2, _1]], _1]]	[List, 4, 7, 6]	An anonymous test keeps elements greater than 2; duplicates and order preserved		Unreadable		
-filter-range-1-100-function-1-mod-3-eq-1-1-mod-5	Applications		[Filter, [Range, 1, 100], [Function, [Block, [And, [Equal, [Mod, _1, 3], 1], [Equal, [Mod, _1, 5], 1]]], _1]]	[List, 1, 16, 31, 46, 61, 76, 91]	Numbers that are 1 mod both 3 and 5 are those 1 mod 15		Unreadable		
-filter-range-1-10-iseven	Properties		[Filter, [Range, 1, 10], IsEven]	[List, 2, 4, 6, 8, 10]	Evens in a range				
+id	section	role	expr	expected	caption	epsil.back	wolfram.kind	wolfram.note
+filter-list-1-2-4-7-6-2-iseven			[Filter, [List, 1, 2, 4, 7, 6, 2], IsEven]	[List, 2, 4, 6, 2]	Keeps the elements that satisfy the predicate			
+filter-list-1-2-4-7-6-2-isodd			[Filter, [List, 1, 2, 4, 7, 6, 2], IsOdd]	[List, 1, 7]	The complementary predicate keeps the rest			
+apply-filter-iseven-list-1-2-4-7-6-2			[Apply, [Filter, IsEven], [List, 1, 2, 4, 7, 6, 2]]	[Filter, IsEven]			unevaluated	Operator form Filter[f][list] is not curried here: Apply holds Filter(IsEven), Wolfram filters the list.
+filter-list-list-1-y-list-2-x-list-3-x-list-4-z	Scope		[Filter, [List, [List, 1, y], [List, 2, x], [List, 3, x], [List, 4, z], [List, 5, x], [List, 6, y]], [Function, [Block, [Contains, _1, x]], _1]]	[List, [List, 2, x], [List, 3, x], [List, 5, x]]	Keeps the pairs that mention x	Unreadable		
+filter-list-list-1-y-list-2-x-list-3-x-list-4-2	Scope		[Filter, [List, [List, 1, y], [List, 2, x], [List, 3, x], [List, 4, z], [List, 5, x], [List, 6, y]], [Function, [Block, [Contains, _1, z]], _1]]	[List, [List, 4, z]]	A different test selects a single pair	Unreadable		
+filter-list-1-2-4-7-6-2-function-2-lt-1-1	Scope		[Filter, [List, 1, 2, 4, 7, 6, 2], [Function, [Block, [Less, 2, _1]], _1]]	[List, 4, 7, 6]	An anonymous test keeps elements greater than 2; duplicates and order preserved	Unreadable		
+filter-range-1-100-function-1-mod-3-eq-1-1-mod-5	Applications		[Filter, [Range, 1, 100], [Function, [Block, [And, [Equal, [Mod, _1, 3], 1], [Equal, [Mod, _1, 5], 1]]], _1]]	[List, 1, 16, 31, 46, 61, 76, 91]	Numbers that are 1 mod both 3 and 5 are those 1 mod 15	Unreadable		
+filter-range-1-10-iseven	Properties		[Filter, [Range, 1, 10], IsEven]	[List, 2, 4, 6, 8, 10]	Evens in a range			
