@@ -19,6 +19,14 @@ zeta-3-neg-1-adds-one-to-zeta-3	zeta(3, -1)	ZeroDivisionError: 	error
 zeta-3-neg-2-sums-shifted-terms	zeta(3, -2)	ZeroDivisionError: 	error
 zeta-4-neg-3-sums-shifted-terms	zeta(4, -3)	ZeroDivisionError: 	error
 n-zeta-3-neg-3-matches-the-exact-sum	(zeta(3, -3))	ZeroDivisionError: 	error
+zeta-neg-1-neg-1-adds-one-to-zeta-neg-1	zeta(-1, -1)	-1.08333333333333333333333333333	disagree
+zeta-neg-3-neg-2-sums-shifted-terms	zeta(-3, -2)	-8.99166666666666666666666666667	disagree
+zeta-0-neg-1-keeps-the-zero-term	zeta(0, -1)	1.5	
+zeta-5-2-neg-1-is-one-plus-zeta	zeta((mpf(5)/2), -1)	ZeroDivisionError: 	error
+zeta-5-2-neg-2-stays-symbolic	zeta((mpf(5)/2), -2)	ZeroDivisionError: 	error
+n-zeta-1-2-neg-1-converges-by-continuation	(zeta((mpf(1)/2), -1))	ZeroDivisionError: 	error
+n-zeta-neg-3-2-neg-1-matches-wolfram	(zeta((mpf(-3)/2), -1))	(-0.0254852018898330359495429869107 - 1.0j)	inconclusive
+n-zeta-i-neg-2-complex-s	(zeta(mpc(0, 1), -2))	ComplexResult: logarithm of a negative number	error
 fullsimplify-normal-series-zeta-x-x-0-2			
 normal-series-zeta-x-x-positiveinfinity-6			
 normal-series-zeta-x-x-1-2			

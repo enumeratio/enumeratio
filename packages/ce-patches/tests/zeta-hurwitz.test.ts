@@ -289,3 +289,29 @@ test("Zeta(s, −n) = ζ(s) + Σ j^(−s) exactly, and every route agrees with i
   // Past the cap it stays symbolic.
   expect(ce.box(["Zeta", 2, -1000]).evaluate().json).toEqual(["Zeta", 2, -1000]);
 });
+
+// Values below are Wolfram's (wolframscript), which agrees with ζ(s) + Σ j^(−s) for every s ≠ 0.
+test("Zeta(s, −n) at any s: Wolfram's values on evaluate, N and the compiled kernel", () => {
+  const json = (input: Expr) => ce.box(input).evaluate().json;
+  expect(json(["Zeta", -1, -1])).toEqual(["Rational", 11, 12]);
+  expect(json(["Zeta", -3, -2])).toEqual(["Rational", 1081, 120]);
+  expect(json(["Zeta", 0, -1])).toEqual(["Rational", 3, 2]); // s = 0 is the jump: 1/2 − a
+  // n = 1 is 1 + ζ(s) for any exact s; a longer sum with a non-closed ζ(s) stays symbolic.
+  expect(
+    ce
+      .box(["Zeta", ["Rational", 5, 2], -1])
+      .evaluate()
+      .isSame(ce.box(["Add", 1, ["Zeta", ["Rational", 5, 2]]])),
+  ).toBe(true);
+  expect(json(["Zeta", ["Rational", 5, 2], -2])).toEqual(["Zeta", ["Rational", 5, 2], -2]);
+  expect(json(["Zeta", "s", -1])).toEqual(["Zeta", "s", -1]);
+  for (const [s, n, want] of [
+    [0.5, 1, -0.4603545088095868],
+    [-1.5, 1, 0.974514798110167],
+    [0.5, 2, 0.24675227237696],
+    [-1.5, 3, 8.999094345562989],
+  ] as const) {
+    expect(Math.abs(num(["Zeta", s, -n]) - want)).toBeLessThan(1e-12);
+    expect(Math.abs(zetaGeneralizedReal(s, -n) - want)).toBeLessThan(1e-12);
+  }
+});

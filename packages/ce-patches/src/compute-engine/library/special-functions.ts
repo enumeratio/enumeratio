@@ -181,19 +181,27 @@ export function evaluateHurwitz(
 const MAX_EXACT_SHIFT = 64;
 
 /**
- * Zeta(s, −n) = ζ(s) + Σ_{j=1}^n j^(−s) for an integer s ≥ 2 and n ≥ 1: the (k+a)=0 slot is
- * dropped and the terms before it are |k+a|^(−s), so Zeta(2, −1) = 1 + π²/6 as in Wolfram
- * (which leaves ζ(3, −2) unevaluated, though N gives the same sum). Undefined past the cap, so
- * a long sum stays symbolic.
+ * Zeta(s, −n) = ζ(s) + Σ_{j=1}^n j^(−s): the (k+a)=0 slot is dropped and the terms before it are
+ * |k+a|^(−s) (Wolfram's Zeta[s, a], the ((k+a)²)^(−s/2) form; DLMF 25.11.1 excludes a ≤ 0). Wolfram
+ * agrees for every s ≠ 0 (s = 0 is the jump `evaluateZetaAtZero` keeps), checked against its kernel.
+ * Exact where it can say more than a ζ(s) call: an integer s ≥ 2 (Zeta(2, −1) = 1 + π²/6), up to a
+ * cap, and any other concrete exact s at n = 1 (1 + ζ(s)), which is where Wolfram stops too; a
+ * longer sum with a non-closed ζ(s) stays symbolic. Elsewhere undefined, so it stays symbolic.
  */
 export function zetaAtNonpositiveShift(
   ce: ComputeEngine,
   s: BoxedExpression,
   a: BoxedExpression,
 ): BoxedExpression | undefined {
-  if (!isRealInt(s) || s.re < 2 || a.im !== 0 || !Number.isInteger(a.re) || a.re >= 0 || -a.re > MAX_EXACT_SHIFT)
+  if (a.im !== 0 || !Number.isInteger(a.re) || a.re >= 0 || -a.re > MAX_EXACT_SHIFT || !isFiniteNum(s))
     return undefined;
   const sJson = s.json as unknown as Json;
+  if (!isRealInt(s)) {
+    // 1 + ζ(s) for an exact non-integer s; a float s is a numeric request and goes native.
+    if (a.re !== -1 || (s as Partial<{ isExact: boolean }>).isExact === false) return undefined;
+    return ce.box(["Add", 1, ["Zeta", sJson]] as never).evaluate();
+  }
+  if (s.re < 2) return undefined;
   const terms: Json[] = [["Zeta", sJson]];
   for (let j = 1; j <= -a.re; j++) terms.push(["Power", j, ["Negate", sJson]]);
   return ce.box(["Add", ...terms] as never).evaluate();
@@ -356,8 +364,7 @@ export function evaluateZetaAtZero(ce: ComputeEngine): void {
   );
 }
 
-/** Exact Zeta(s, −n) for an integer s ≥ 2 (`zetaAtNonpositiveShift`), which native leaves
- * unevaluated; a numeric request still reaches the native kernel. */
+/** Exact Zeta(s, −n) (`zetaAtNonpositiveShift`), which native leaves unevaluated; a numeric request still reaches the native kernel. */
 export function evaluateZetaAtNonpositiveShift(ce: ComputeEngine): void {
   wrapOperator(
     ce,
