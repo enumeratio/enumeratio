@@ -19,6 +19,14 @@ zeta-3-neg-1-adds-one-to-zeta-3	hurwitz_zeta(3, -1)
 zeta-3-neg-2-sums-shifted-terms	hurwitz_zeta(3, -2)		
 zeta-4-neg-3-sums-shifted-terms	hurwitz_zeta(4, -3)		
 n-zeta-3-neg-3-matches-the-exact-sum	N(hurwitz_zeta(3, -3))		
+zeta-neg-1-neg-1-adds-one-to-zeta-neg-1	hurwitz_zeta(-1, -1)		
+zeta-neg-3-neg-2-sums-shifted-terms	hurwitz_zeta(-3, -2)		
+zeta-0-neg-1-keeps-the-zero-term	hurwitz_zeta(0, -1)		
+zeta-5-2-neg-1-is-one-plus-zeta	hurwitz_zeta((5/2), -1)		
+zeta-5-2-neg-2-stays-symbolic	hurwitz_zeta((5/2), -2)		
+n-zeta-1-2-neg-1-converges-by-continuation	N(hurwitz_zeta((1/2), -1))		
+n-zeta-neg-3-2-neg-1-matches-wolfram	N(hurwitz_zeta((-3/2), -1))		
+n-zeta-i-neg-2-complex-s	N(hurwitz_zeta((0 + 1*I), -2))		
 fullsimplify-normal-series-zeta-x-x-0-2			
 normal-series-zeta-x-x-positiveinfinity-6			
 normal-series-zeta-x-x-1-2			
