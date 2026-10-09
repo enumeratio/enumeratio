@@ -26,9 +26,11 @@ test("a cell gets a placeholder, and a plot in a v-pre Manipulate a plain one, w
       '<notatio-cell value="x" prerender="false" />',
     ].join("\n"),
   );
-  expect(html).toContain('<notatio-cell value="BellNumber(6)"><NotatioPrerendered :at="0" /></notatio-cell>');
   expect(html).toContain(
-    '<graphics-box value="Plot(Sin(_a * x), (x, -3, 3))"><span class="notatio-prerendered" data-prerender="1"></span></graphics-box>',
+    '<notatio-cell value="BellNumber(6)" data-allow-mismatch="children"><NotatioPrerendered :at="0" /></notatio-cell>',
+  );
+  expect(html).toContain(
+    '<graphics-box value="Plot(Sin(_a * x), (x, -3, 3))" data-allow-mismatch="children"><span class="notatio-prerendered" data-prerender="1"></span></graphics-box>',
   );
   expect(html).toContain('<notatio-cell value="x" prerender="false" />');
   expect(specs.map((s) => [s.tag, s.attributes["value"], s.manipulate])).toEqual([
