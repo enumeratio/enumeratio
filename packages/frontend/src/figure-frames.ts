@@ -27,6 +27,7 @@ export const VALUE_FRAMES = {
   Permutation: "StrandDiagram",
   SetPartition: "StrandDiagram",
   Diagram: "StrandDiagram",
+  BraidClosure: "StrandDiagram",
   IntegerPartition: "CellDiagram",
   StandardTableau: "CellDiagram",
   Composition: "CellDiagram",

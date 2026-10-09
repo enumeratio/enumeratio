@@ -7,7 +7,7 @@ signatures:
   - call: JonesPolynomial(knot)
     description: $V(t)$, for a knot however it is named
     library: enumeratio-braid
-    type: (expression<Braid> | expression<FigureEightKnot> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string) -> expression
+    type: (expression<Braid> | expression<FigureEightKnot> | expression<Link> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string) -> expression
   - call: TorusKnot(p, q)
     description: $T(p,q)$ as a knot — no braid, no bracket, no diagrams
     library: enumeratio-braid

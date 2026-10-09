@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+trefoil-alexander-polynomial	Basic		[AlexanderPolynomial, [BraidClosure, [TorusBraid, 2, 3]]]	[Add, [Power, t, 2], [Negate, t], 1]	The closure of $\sigma_1^3$ is the trefoil

@@ -148,3 +148,11 @@ it("lowers a bare layer as the Show of it", async () => {
   const box = makeBoxes(["LatticeTiles", "EisensteinIntegers"] as never, FIGURE_NOTATION);
   expect(isNode(box) && box[0]).toBe("GraphicsBox");
 });
+
+it("draws BraidClosure as the closed braid, without a Show", () => {
+  const open = displayListOfBox(lower(["Show", ["StrandDiagram", ["TorusBraid", 3, 2]]]));
+  const closed = displayListOfBox(makeBoxes(["BraidClosure", ["TorusBraid", 3, 2]] as never, FIGURE_NOTATION));
+  expect(closed?.marks.length).toBeGreaterThan(0);
+  // The closing arcs are extra marks and links beside the braid's own.
+  expect(closed!.marks.length + closed!.links.length).toBeGreaterThan(open!.marks.length + open!.links.length);
+});

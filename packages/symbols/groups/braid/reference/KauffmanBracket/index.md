@@ -7,7 +7,7 @@ signatures:
   - call: KauffmanBracket(knot)
     description: $\langle L\rangle$ in $A$
     library: enumeratio-braid
-    type: (expression<Braid> | expression<FigureEightKnot> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string) -> expression
+    type: (expression<Braid> | expression<FigureEightKnot> | expression<Link> | expression<PretzelKnot> | expression<TorusKnot> | expression<TwistKnot> | string) -> expression
 seeAlso:
   - BracketInvariant
   - JonesPolynomial
