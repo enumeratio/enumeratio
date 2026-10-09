@@ -24,6 +24,18 @@ test("the regularized heads stay finite at non-positive-integer lower parameters
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, -1, 0.3]).N().re).toBeCloseTo(0.5247813411078718, 8);
 });
 
+test("1F1Regularized(a; a − 1; z) is its closed form e^z (1 + z/(a − 1))/Γ(a − 1) (DLMF 13.6)", () => {
+  // a = 1/2, b = −1/2, z = 1/2: the bracket is 1 − 1 = 0, so the value is exactly 0 on both routes.
+  const exact = ["Hypergeometric1F1Regularized", ["Rational", 1, 2], ["Rational", -1, 2], ["Rational", 1, 2]] as never;
+  expect(ce.box(exact).evaluate().json).toEqual(0);
+  expect(ce.box(exact).N().re).toBe(0);
+  const closed = (Math.exp(0.3) * (1 + 0.3 / 1.5)) / (Math.sqrt(Math.PI) / 2);
+  const numeric = ce.box(["Hypergeometric1F1Regularized", 2.5, 1.5, 0.3]).N().re as number;
+  expect(Math.abs(numeric - closed)).toBeLessThan(1e-14);
+  // not contiguous (b − a = −2): the series answers as before
+  expect(ce.box(["Hypergeometric1F1Regularized", 1, 2, 0.5]).N().re).toBeCloseTo(1.2974425414002555, 13);
+});
+
 test("Hypergeometric2F1Regularized and Hypergeometric3F2Regularized decline |z| >= 1", () => {
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, 1.5]).N().operator).toBe("Hypergeometric2F1Regularized");
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, ["Complex", 1, 0.5]]).N().operator).toBe(

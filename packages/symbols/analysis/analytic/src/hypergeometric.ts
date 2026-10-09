@@ -57,6 +57,25 @@ const TOL = 1e-16;
 const DOUBLE_GUARD_DIGITS = 25;
 /** Consecutive shrinking terms, with a tail bound under `TOL`, before a sum counts as settled. */
 const SETTLED_RUN = 3;
+/** The double's unit roundoff scale: each term carries a relative rounding error of about this much. */
+const EPS = Number.EPSILON;
+/**
+ * The most rounding error, relative to the sum, that a double series may keep: `peak / |sum| · EPS`
+ * past this declines. Alternating series grow before they shrink, so their sums can be noise while
+ * `TOL` still sees the last terms shrink: 1F1(1/2; 3/2; −40) has that figure at 0.28, 0F1(; 1; −200)
+ * at 4.5e-5. Measured against mpmath 1.3.0 (0F1(; 1), 0F1(; 5/2) at z = −1/2…−200; 1F1 at five (a; b)
+ * pairs, z = −1/2…−80), the actual relative error is within 1.5× of the figure wherever it is under
+ * 1e-3: 1e-13 answers to about 13 digits (0F1(; 1; −8): figure 8e-14, error 9e-15) and declines past
+ * it (1F1(1; 2; −10): 6e-13, error 1.4e-13). The sweep is `hypergeometric-cancellation.test.ts`
+ * under `DEEP_TESTS=1`.
+ */
+const CANCELLATION_TOL = 1e-13;
+
+/** Did the sum lose so many digits to cancellation (largest term `peak` against `|sum|`) that it is noise? */
+const cancelled = (peak: number, sum: Cx): boolean => {
+  const size = Math.hypot(sum.re, sum.im);
+  return !(size > 0) || (peak / size) * EPS > CANCELLATION_TOL;
+};
 
 /** Is z a non-positive integer — a pole of Γ, and so a zero of 1/Γ? */
 const isNonPositiveInt = (z: Cx): boolean => z.im === 0 && z.re <= 0 && Number.isInteger(z.re);
@@ -65,6 +84,19 @@ const isNonPositiveInt = (z: Cx): boolean => z.im === 0 && z.re <= 0 && Number.i
 const invGamma = (z: Cx): Cx => (isNonPositiveInt(z) ? cx(0) : cexp(scale(logGamma(z), -1)));
 
 const mag = (z: Cx): number => Math.hypot(z.re, z.im);
+
+/** 1F1(a; a−1; z)/Γ(a−1) = e^z (1 + z/(a−1))/Γ(a−1), as (a)ₖ/(a−1)ₖ = 1 + k/(a−1) (DLMF 13.6). */
+const regularizedMinusOne = (a: Cx, z: Cx): Cx => {
+  const shift = add(a, cx(-1));
+  return mul(cexp(z), mul(add(cx(1), div(z, shift)), invGamma(shift)));
+};
+
+/** Is b = a − 1 on the reals, to the float's rounding? */
+const isMinusOneShift = (a: Cx, b: Cx): boolean =>
+  a.im === 0 &&
+  b.im === 0 &&
+  !isNonPositiveInt(add(a, cx(-1))) &&
+  Math.abs(b.re - a.re + 1) <= EPS * Math.max(1, Math.abs(a.re), Math.abs(b.re));
 
 /** 1/Γ(n) for an integer n: 0 at the poles n ≤ 0, else 1/(n − 1)! (infinite factorials flush to 0). */
 function exactInvGammaAt(n: number): Cx {
@@ -83,8 +115,10 @@ function exactInvGammaAt(n: number): Cx {
 export function pfqSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx | undefined {
   let term = cx(1, 0);
   let sum = cx(1, 0);
+  let peak = 1; // the largest term seen, which sets the digits cancellation costs
+  const vouch = (): Cx | undefined => (cancelled(peak, sum) ? undefined : sum);
   for (let k = 0; k < MAX_TERMS; k++) {
-    if (term.re === 0 && term.im === 0) return sum; // terminated (a polynomial case)
+    if (term.re === 0 && term.im === 0) return vouch(); // terminated (a polynomial case)
     let num = z;
     for (const a of upper) num = mul(num, add(a, cx(k)));
     let den = cx(k + 1);
@@ -98,12 +132,13 @@ export function pfqSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx
       den = mul(den, bk);
     }
     if (denPole) {
-      if (num.re === 0 && num.im === 0) return sum; // numerator already vanished too: 0/0 is 0
+      if (num.re === 0 && num.im === 0) return vouch(); // numerator already vanished too: 0/0 is 0
       return undefined; // a genuine pole
     }
     term = div(mul(term, num), den);
     sum = add(sum, term);
-    if (mag(term) < TOL * (1 + mag(sum))) return sum;
+    peak = Math.max(peak, mag(term));
+    if (mag(term) < TOL * (1 + mag(sum))) return vouch();
   }
   return undefined; // did not converge inside the term budget
 }
@@ -126,6 +161,8 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
   const poleBound = lower.reduce((m, b) => (isNonPositiveInt(b) ? Math.max(m, -b.re) : m), -1);
   let core = cx(1, 0); // ∏(ai)_k · zᵏ/k!, the part regularizing doesn't change
   let sum = cx(0, 0);
+  let peak = 0; // the largest term seen, which sets the digits cancellation costs
+  const vouch = (): Cx | undefined => (peak === 0 || !cancelled(peak, sum) ? sum : undefined);
   // A real-integer lower b has 1/Γ(b + k) exactly: 0 at the poles, 1/(n − 1)! after, stepped by
   // 1/Γ(x + 1) = (1/Γ(x))/x. A fresh exp(−lnΓ) per term would put its rounding (lnΓ is good to a few
   // ulps) into every term: Hypergeometric2F1Regularized(1, 2, −1, ½) came out 24 − 1.4e-14.
@@ -148,7 +185,8 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
     });
     const term = mul(core, invG);
     sum = add(sum, term);
-    if (core.re === 0 && core.im === 0) return sum; // terminated (a polynomial case)
+    peak = Math.max(peak, mag(term));
+    if (core.re === 0 && core.im === 0) return vouch(); // terminated (a polynomial case)
     if (k > poleBound) {
       const size = mag(term);
       const ratio = previous === undefined ? 1 : size / previous;
@@ -158,7 +196,7 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
         // A p = q + 1 series' ratio rises toward |z| (DLMF 16.2), so the run's largest ratio alone
         // understates the tail: 2F1(1, 1; 2; z) has ratio (k + 1)z/(k + 2), still climbing at k.
         const bound = risingRatio ? Math.max(worstRatio, zSize) : worstRatio;
-        if (run >= SETTLED_RUN && bound < 1 && (size * bound) / (1 - bound) <= TOL * mag(sum)) return sum;
+        if (run >= SETTLED_RUN && bound < 1 && (size * bound) / (1 - bound) <= TOL * mag(sum)) return vouch();
       } else {
         run = 0;
       }
@@ -261,6 +299,24 @@ function regularizedBessel(ce: ComputeEngine, ops: readonly BoxedExpression[]): 
     .evaluate();
 }
 
+/** `regularizedMinusOne` on exact operands: b = a − 1 exactly, and a − 1 off the poles. */
+function regularizedMinusOneExact(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  const [a, b, z] = ops;
+  if (a === undefined || b === undefined || z === undefined) return undefined;
+  const shift = ce.function("Subtract", [a, 1]).evaluate();
+  const shiftExact = bigRationalAt(shift);
+  if (shiftExact === undefined || (shiftExact[1] === 1n && shiftExact[0] <= 0n)) return undefined;
+  if (!ce.function("Subtract", [b, shift]).evaluate().is(0)) return undefined;
+  return ce
+    .box([
+      "Multiply",
+      ["Exp", z.json],
+      ["Add", 1, ["Divide", z.json, shift.json]],
+      ["Divide", 1, ["Gamma", shift.json]],
+    ] as never)
+    .evaluate();
+}
+
 export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric0F1(b, z) = 0F1(b; z), entire in z; pole at b a non-positive integer.
   ce.declare("Hypergeometric0F1", {
@@ -304,11 +360,13 @@ export function declareHypergeometric(ce: ComputeEngine): void {
     signature: "(number, number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
-      if (cs !== undefined && !wantsNumber(ops, options)) return regularizedBessel(ce, ops);
+      if (cs !== undefined && !wantsNumber(ops, options))
+        return regularizedMinusOneExact(ce, ops) ?? regularizedBessel(ce, ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a, b, z] = cs;
       if (exceedsDoublePrecision(ce, options.numericApproximation))
         return regularizedPastDouble(ce, [ops[0]], ops[1], ops[2]);
+      if (isMinusOneShift(a, b)) return numberResult(ce, regularizedMinusOne(a, z));
       const r = pfqRegularizedSeries([a], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },
