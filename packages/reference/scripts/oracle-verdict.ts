@@ -19,6 +19,7 @@ import {
   lookThroughConditions,
   type MathJSON,
   reduce,
+  rootsAsPowers,
   scaled,
   solutionSet,
   symbolic,
@@ -235,9 +236,12 @@ export function verdictOf(
     // exact form is compared as text — an unevaluated form we pinned too — and its
     // numbers are Wolfram's own `N`, of which only numeric values are read as numbers.
     // `ConditionalExpression[value, condition]` is its value: the condition is where it holds.
+    // A root is a power: `Root(1/2, 4)` and Wolfram's `Power(2, -1/4)` are one number, spelled alike.
     const prepareOurs = (expr: MathJSON): MathJSON =>
-      iteratorsAsLimits(
-        lookThroughConditions(Array.isArray(call) && call[0] === "Solve" ? solutionSet(expr, call) : expr),
+      rootsAsPowers(
+        iteratorsAsLimits(
+          lookThroughConditions(Array.isArray(call) && call[0] === "Solve" ? solutionSet(expr, call) : expr),
+        ),
       );
     // A pure function Wolfram writes with slots (`f[#1] &`) is ours with a named parameter, alpha-equivalent.
     const preparedExpected = prepareOurs(expected);

@@ -11,6 +11,7 @@ import {
   lookThroughConditions,
   notNumeric,
   positiveVariables,
+  rootsAsPowers,
   seriesVariables,
   stepVariables,
   SYMBOLIC_SECONDS,
@@ -504,4 +505,22 @@ test("an indefinite integral's answer is differentiated before it is compared, s
     "FullSimplify[D[(ReplaceAll[Integrate[Sin[x], x], ConditionalExpression[e_, _] :> e]) - (Minus[Cos[x]]), x]]",
   );
   expect(source).toContain("/. {x -> Rational[7, 3]}, 30], 10^-12]");
+});
+
+test("rootsAsPowers: a root is its power, and a reciprocal base moves to its positive one", () => {
+  expect(rootsAsPowers(["Root", 2, 3] as never)).toEqual(["Power", 2, ["Rational", 1, 3]]);
+  // (1/2)^(1/4) is 2^(-1/4): the spelling Wolfram gives the same number.
+  const half = rootsAsPowers(["Root", ["Rational", 1, 2], 4] as never);
+  expect(half).toEqual(["Power", 2, ["Rational", -1, 4]]);
+  expect(rootsAsPowers(["Power", ["Rational", 1, 2], ["Rational", 1, 4]] as never)).toEqual(half);
+  expect(rootsAsPowers(["Power", 2, ["Rational", -1, 4]] as never)).toEqual(half);
+  // Inside a product, as the Wolfram row's answer spells it.
+  const bessel = ["BesselI", ["Rational", -1, 2], ["Sqrt", 2]];
+  expect(rootsAsPowers(["Multiply", bessel, ["Root", ["Rational", 1, 2], 4]] as never)).toEqual([
+    "Multiply",
+    bessel,
+    half,
+  ]);
+  // 2^(1/4) and 2^(1/3) are different numbers and stay unequal.
+  expect(rootsAsPowers(["Root", 2, 4] as never)).not.toEqual(rootsAsPowers(["Power", 2, ["Rational", 1, 3]] as never));
 });
