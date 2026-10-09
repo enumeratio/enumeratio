@@ -36,16 +36,51 @@ for (const s of DRAWING_SYMBOLS) if (!BY_TAG.has(s.tag)) BY_TAG.set(s.tag, s);
 const ADOPTED = new WeakSet<Element>();
 const log = debug("structure");
 
+/** A `$…$` island: the one way loose text in a body is an expression. */
+const ISLAND = /\$[^$]+\$/g;
+
 /**
- * The author's text runs among `el`'s children as the leaf elements of their atoms
- * (`<notatio-plot>x <notatio-tuple>…` holds the symbol `x`), so what follows reads every
- * argument as an element. Only the text before the first comment: Lit renders a light-DOM
- * component's own output after its marker.
+ * A body's loose text apart into prose and `$…$` islands, whitespace-only text dropped. An
+ * expression in a body is an element or an island; a bare word between controls ("Choose a
+ * value:") is prose, as it is on a page where only markup is read as an expression.
  */
-function leavesForText(el: Element): void {
+export function proseRuns(text: string): { island: boolean; text: string }[] {
+  if (!text.trim()) return [];
+  const runs: { island: boolean; text: string }[] = [];
+  let at = 0;
+  for (const m of text.matchAll(ISLAND)) {
+    if (m.index > at) runs.push({ island: false, text: text.slice(at, m.index) });
+    runs.push({ island: true, text: m[0] });
+    at = m.index + m[0].length;
+  }
+  if (at < text.length) runs.push({ island: false, text: text.slice(at) });
+  return runs;
+}
+
+/**
+ * The author's text runs among `el`'s children. A head with a body (a module, a Manipulate)
+ * keeps its prose and lowers each `$…$` island to the `<dynamic-box>` that shows its value.
+ * Any other head's text is its atoms as leaf elements (`<notatio-plot>x <notatio-tuple>…`
+ * holds the symbol `x`), so what follows reads every argument as an element. Only the text
+ * before the first comment: Lit renders a light-DOM component's own output after its marker.
+ */
+function leavesForText(el: Element, body: boolean): void {
   for (const node of Array.from(el.childNodes)) {
     if (node.nodeType === Node.COMMENT_NODE) return;
     if (node.nodeType !== Node.TEXT_NODE || !node.textContent?.trim()) continue;
+    if (body) {
+      const runs = proseRuns(node.textContent);
+      if (!runs.some((r) => r.island)) continue;
+      node.replaceWith(
+        ...runs.map((r) => {
+          if (!r.island) return document.createTextNode(r.text);
+          const box = document.createElement("dynamic-box");
+          box.setAttribute("value", r.text);
+          return box;
+        }),
+      );
+      continue;
+    }
     const errors: string[] = [];
     const atoms = tokenize(node.textContent, errors);
     if (errors.length) log("text isn't atoms (Epsil goes in value):", node.textContent, errors);
@@ -114,7 +149,7 @@ function scopeNames(el: Element): Set<string> {
 export function adoptStructure(el: Element): void {
   const symbol = BY_TAG.get(el.localName);
   if (symbol === undefined || ADOPTED.has(el)) return;
-  leavesForText(el);
+  leavesForText(el, symbol.children !== undefined);
   // A hand-written element in it whose module is still loading (`lazy.ts`) is waited for:
   // its class reads the arguments.
   const pending = [el, ...el.querySelectorAll("*")]
