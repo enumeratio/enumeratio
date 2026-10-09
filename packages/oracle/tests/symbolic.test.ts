@@ -5,6 +5,7 @@ import {
   derivativeVariables,
   echoesInput,
   discreteVariables,
+  indefiniteVariables,
   interpretSymbolicAgreement,
   leavesCall,
   lookThroughConditions,
@@ -459,4 +460,48 @@ test("the simplifier's time cap is an option, ten seconds by default", () => {
     75,
   );
   expect(solved).toContain("FullSimplify[v - w], 75, $Aborted");
+});
+
+test("wolfram keeps a derivative's variable in the call, and samples the difference the kernel evaluates", () => {
+  // Our closed form of d/dx x^3 against Wolfram's own D: D is read at symbolic x, never at 7/3.
+  const source = symbolicAgreementSource(
+    "wolfram",
+    ["D", ["Power", "x", 3], "x"] as never,
+    ["Multiply", 3, ["Power", "x", 2]] as never,
+    ["x"],
+  ) as string;
+  expect(source).toContain(
+    "FullSimplify[(ReplaceAll[D[Power[x, 3], x], ConditionalExpression[e_, _] :> e]) - (Times[3, Power[x, 2]])]",
+  );
+  expect(source).not.toContain("Power[Rational");
+  expect(source).toContain("/. {x -> Rational[7, 3]}, 30], 10^-12]");
+  expect(source).toContain("/. {x -> Rational[-11, 5]}, 30], 10^-12]");
+  // A list spec names the variable too, and so does a second derivative (`D[f, x, x]`).
+  expect([...derivativeVariables(["D", ["Power", "x", 3], ["List", "x", 2]] as never)]).toEqual(["x"]);
+  expect([...derivativeVariables(["D", ["Power", "x", 3], "x", "x"] as never)]).toEqual(["x"]);
+  // Ours is wrong by a term: still a symbolic query, decided by the kernel's simplifier, not by the trials.
+  const wrong = symbolicAgreementSource("wolfram", ["D", ["Power", "x", 3], "x"] as never, ["Power", "x", 2] as never, [
+    "x",
+  ]) as string;
+  expect(wrong).toContain(
+    "FullSimplify[(ReplaceAll[D[Power[x, 3], x], ConditionalExpression[e_, _] :> e]) - (Power[x, 2])]",
+  );
+  expect(wrong).toContain("/. {x -> Rational[13, 4]}, 30], 10^-12]");
+});
+
+test("an indefinite integral's answer is differentiated before it is compared, so a constant between them agrees", () => {
+  expect([...indefiniteVariables(["Integrate", ["Sin", "x"], "x"] as never)]).toEqual(["x"]);
+  // A definite integral's variable is bound by its limits, not a point to hold.
+  expect(indefiniteVariables(["Integrate", "f", ["Limits", "x", 0, 1]] as never).size).toBe(0);
+  // Wolfram's antiderivative and ours differ by a constant: their difference is differentiated in x, which is zero.
+  const source = symbolicAgreementSource(
+    "wolfram",
+    ["Integrate", ["Sin", "x"], "x"] as never,
+    ["Negate", ["Cos", "x"]] as never,
+    ["x"],
+  ) as string;
+  expect(source).toContain(
+    "FullSimplify[D[(ReplaceAll[Integrate[Sin[x], x], ConditionalExpression[e_, _] :> e]) - (Minus[Cos[x]]), x]]",
+  );
+  expect(source).toContain("/. {x -> Rational[7, 3]}, 30], 10^-12]");
 });

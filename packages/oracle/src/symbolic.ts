@@ -202,6 +202,19 @@ export function derivativeVariables(expr: MathJSON, found: Set<string> = new Set
   return found;
 }
 
+/** The variables an indefinite integral is taken in (`Integrate(f, x)`, not `Integrate(f, {x, a, b})`):
+ * its answer is an antiderivative, up to a constant, so the variable stays the call's own. */
+export function indefiniteVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  if (head === "Integrate" && operands.length === 2) {
+    const name = bareName(operands[1]);
+    if (name !== undefined) found.add(name);
+  }
+  for (const operand of operands) indefiniteVariables(operand, found);
+  return found;
+}
+
 /** The expansion variables of `Series(f, x, x0, n)` (or `Series(f, [x, x0, n])`): bound inside the
  * call, so never a point to sample there (`Series[f, {7/3, x0, n}]` is Series::ivar). */
 export function seriesVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
@@ -258,6 +271,11 @@ function trialSubstitution(
   );
 }
 
+/** `theirs - ours` as Wolfram is asked it. An indefinite integral's two answers may differ by a constant,
+ * so the difference is differentiated in each of its variables (`antiderivatives`, emitted) first. */
+const differenceOf = (theirs: string, ours: string, antiderivatives: readonly string[]): string =>
+  antiderivatives.reduce((inner, name) => `D[${inner}, ${name}]`, `(${theirs}) - (${ours})`);
+
 /** `expr` with the `Simplify`/`FullSimplify` calls around it taken off. */
 function withoutSimplifiers(expr: MathJSON): MathJSON {
   return Array.isArray(expr) && (expr[0] === "Simplify" || expr[0] === "FullSimplify") && expr.length === 2
@@ -292,7 +310,13 @@ function trialSources(
   // Only Wolfram maps `Series`; a variable it expands in stays the call's own, as a step variable does.
   const series =
     system === "wolfram" ? new Set([...seriesVariables(expr), ...seriesVariables(expected)]) : new Set<string>();
-  const held = new Set([...steps, ...series]);
+  // Likewise a derivative's variable and an indefinite integral's: the kernel differentiates or integrates
+  // at it, so only what it evaluates to is sampled (`after`). A number there is no `D` or `Integrate` at all.
+  const varied =
+    system === "wolfram"
+      ? new Set([...derivativeVariables(expr), ...derivativeVariables(expected), ...indefiniteVariables(expr)])
+      : new Set<string>();
+  const held = new Set([...steps, ...series, ...varied]);
   const bound = new Set([
     ...boundVariables(expr),
     ...boundVariables(expected),
@@ -645,7 +669,16 @@ function sameValue(a: MathJSON, b: MathJSON): boolean {
 /** Whether `a` and `b` take the same value at each of a few fixed rational points: for an
  * argument whose two writings the simplifier won't reduce to one. */
 function agreeAtPoints(a: MathJSON, b: MathJSON): boolean {
-  const bound = new Set([...boundVariables(a), ...boundVariables(b), ...seriesVariables(a), ...seriesVariables(b)]);
+  const bound = new Set([
+    ...boundVariables(a),
+    ...boundVariables(b),
+    ...seriesVariables(a),
+    ...seriesVariables(b),
+    ...derivativeVariables(a),
+    ...derivativeVariables(b),
+    ...indefiniteVariables(a),
+    ...indefiniteVariables(b),
+  ]);
   const names = [...new Set([...ce.box(a as never).unknowns, ...ce.box(b as never).unknowns])].filter(
     (name) => !bound.has(name),
   );
@@ -805,16 +838,20 @@ export function symbolicAgreementSource(
       : `Module[{v = Quiet[Check[TimeConstrained[{${theirsSource}, ${ours.source}}, ${symbolicSeconds}, $Aborted], $Failed]]}, ` +
         `If[v === $Failed || !FreeQ[v, _Function | _Rule | _RuleDelayed | _Unevaluated], ${NOT_NUMERIC}, Indeterminate]]`;
   if (system === "wolfram") {
+    const integrated = [...indefiniteVariables(expr)].map((name) => emit(name, system));
+    if (integrated.some((name) => !name.ok)) return undefined;
+    const antiderivatives = integrated.map((name) => (name as { source: string }).source);
     const points = trials.map((t) => {
       if (t === undefined) return "Indeterminate";
-      const difference = `(${t.theirs}) - (${t.ours})`;
+      const difference = differenceOf(t.theirs, t.ours, antiderivatives);
       // A step call is read by its definition at a point; the cancellation in a difference of
       // near-equal values (a q-function, `BetaRegularized` at a negative argument) needs more than a double.
       // A series is read as its polynomial (`Normal`) so its variable can be sampled, which a
       // `SeriesData` would not survive; a truncation is not a difference, so the O-term goes.
       const read = t.stepped ? `((${difference}) //. ${STEP_DEFINITIONS})` : `(${difference})`;
       if (t.series) return `Chop[N[Normal[${read}] /. ${t.after}, 30], 10^-12]`;
-      if (t.stepped) return `Chop[N[${read} /. ${t.after}, 30], 10^-12]`;
+      // A variable held symbolic (a step's, a derivative's, an antiderivative's) is sampled in what the kernel evaluates.
+      if (t.after !== "{}") return `Chop[N[${read} /. ${t.after}, 30], 10^-12]`;
       return `Chop[N[${difference}]]`;
     });
     // FullSimplify can run away on an identity it won't reduce; TimeConstrained caps it at
@@ -832,7 +869,7 @@ export function symbolicAgreementSource(
     // Two truncated series that agree below their order differ by a pure O-term (`O[x]^5`), which is
     // zero at that order: it counts when it is no coarser than the series Wolfram answered.
     return (
-      `Module[{d = Quiet[TimeConstrained[FullSimplify[(${theirsSource}) - (${ours.source})], ${symbolicSeconds}, $Aborted]], pureO, bound}, ` +
+      `Module[{d = Quiet[TimeConstrained[FullSimplify[${differenceOf(theirsSource, ours.source, antiderivatives)}], ${symbolicSeconds}, $Aborted]], pureO, bound}, ` +
       `pureO = MatchQ[#, SeriesData[_, _, {}, _, _, _]] &; ` +
       `If[AllTrue[Flatten[{d}], # === 0 &] || (AnyTrue[Flatten[{d}], pureO] && ` +
       `(bound = Min[Append[Map[Function[t, t[[5]]/t[[6]]], ` +

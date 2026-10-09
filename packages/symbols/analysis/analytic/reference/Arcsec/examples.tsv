@@ -1,30 +1,30 @@
-id	section	role	expr	expected	known	source	caption	epsil.back	wolfram.kind	wolfram.note
-arcsec-1			[Arcsec, 1]	0						
-arcsec-2			[Arcsec, 2]	[Multiply, [Rational, 1, 3], Pi]						
-arcsec-sqrt-2-pi-4	Scope		[Arcsec, [Sqrt, 2]]	[Multiply, [Rational, 1, 4], Pi]			$\operatorname{arcsec}\sqrt2 = \pi/4$			
-arcsec-neg-1	Scope		[Arcsec, -1]	Pi						
-arcsec-2-2-pi-3	Scope		[Arcsec, -2]	[Multiply, [Rational, 2, 3], Pi]			$\operatorname{arcsec}(-2) = 2\pi/3$			
-inside-1-1-the-value-is-purely-imaginary	Scope		[Arcsec, 0.5]	[Complex, 0, 1.3169578969248166]			Inside $(-1, 1)$ the value is purely imaginary			
-arcsec-positiveinfinity	Scope		[Arcsec, PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]						
-a-pole-arcsec-0-is-complex-infinity	Scope		[Arcsec, 0]	ComplexInfinity			A pole: $\operatorname{arcsec} 0$ is complex infinity			
-derivative-for-real-x-1	Scope		[D, [Arcsec, x], x]	[Divide, 1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]			Derivative, for real $|x| > 1$		shape	Wolfram's symbolic check of the two derivative forms comes back Indeterminate; the forms differ by a Sqrt/Abs rearrangement valid for real x
-n-arcsec-5-50	Scope		[N, [Arcsec, 5], 50]	{num: "1.3694384060045658277761961394221280318585466182853"}			Fifty digits of an inverse secant			
-arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	Scope		[Arcsec, [List, [List, [Sqrt, 2], [Negate, [Sqrt, 2]]], [List, 0, [Negate, [Sqrt, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 4], Pi], [Multiply, [Rational, 3, 4], Pi]], [List, ComplexInfinity, [Multiply, [Rational, 3, 4], Pi]]]			Threads over a matrix; zero gives complex infinity			
-arcsec-2-over-3-times-sqrt-3	Scope		[Arcsec, [Multiply, [Rational, 2, 3], [Sqrt, 3]]]	[Multiply, [Rational, 1, 6], Pi]			$\sec(\pi/6) = \frac{2}{\sqrt3}$			
-arcsec-complexinfinity	Scope		[Arcsec, ComplexInfinity]	[Multiply, [Rational, 1, 2], Pi]			At complex infinity $1/z \to 0$, so the value is $\pi/2$			
-matrixfunction-function-arcsec-1-1-list-list	Scope		[MatrixFunction, [Function, [Block, [Arcsec, _1]], _1], [List, [List, [Sqrt, 2], [Negate, [Sqrt, 2]]], [List, 0, [Negate, [Sqrt, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 4], Pi], [Multiply, [Rational, 1, 4], Pi]], [List, 0, [Multiply, [Rational, 3, 4], Pi]]]			As a matrix function the zero entry becomes 0, unlike entrywise	Unreadable		
-arcsec-1-over-2	Scope		[Arcsec, [Rational, 1, 2]]	[Multiply, [Complex, 0, 1], [Ln, [Add, 2, [Sqrt, 3]]]]			For $0<|x|<1$ the value is $\arccos(1/x)$: $\operatorname{arcsec}(1/2) = i\ln(2+\sqrt3)$			Wolfram leaves the exact call unevaluated; its N[...] gives the same principal value (and so does mpmath).
-arcsec-neg-1-over-2	Scope		[Arcsec, [Rational, -1, 2]]	[Add, Pi, [Multiply, [Complex, 0, -1], [Ln, [Add, 2, [Sqrt, 3]]]]]			And $\operatorname{arcsec}(-1/2) = \pi - i\ln(2+\sqrt3)$			Same as above: Wolfram leaves it unevaluated, N[...] agrees.
-undoes-sec-sec-arcsec-x-x	Properties		[Equal, [Sec, [Arcsec, 2]], 2]	True			Undoes [[Sec]]: $\sec(\text{arcsec}(x)) = x$			
-arcsec-neg-sqrt-2-plus-sqrt-6	Properties		[Arcsec, [Add, [Negate, [Sqrt, 2]], [Sqrt, 6]]]	[Multiply, [Rational, 1, 12], Pi]	[Multiply, [Rational, 1, 12], Pi]	Wolfram MathematicalFunctionData, ArcSec	A difference of radicals giving $\pi/12$			
-arcsec-neg-sqrt-6-plus-sqrt-2	Properties		[Arcsec, [Add, [Negate, [Sqrt, 6]], [Sqrt, 2]]]	[Multiply, [Rational, 11, 12], Pi]	[Multiply, [Rational, 11, 12], Pi]	Wolfram MathematicalFunctionData, ArcSec	Swapping the terms gives $11\pi/12$			
-arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	Properties		[Arcsec, [Multiply, 2, [Sqrt, [Divide, 1, [Add, 2, [Sqrt, 2]]]]]]	[Arcsec, [Divide, 2, [Sqrt, [Add, 2, [Sqrt, 2]]]]]	[Multiply, [Rational, 1, 8], Pi]	Wolfram MathematicalFunctionData, ArcSec	Stays unevaluated; the radical is not matched to a multiple of $\pi$			
-arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	Properties		[Arcsec, [Multiply, -2, [Sqrt, [Divide, 1, [Add, 2, [Sqrt, 2]]]]]]	[Arcsec, [Divide, -2, [Sqrt, [Add, 2, [Sqrt, 2]]]]]	[Multiply, [Rational, 7, 8], Pi]	Wolfram MathematicalFunctionData, ArcSec	The negated argument stays unevaluated too			
-arcsec-neg-2-over-3-times-sqrt-3	Properties		[Arcsec, [Multiply, [Rational, -2, 3], [Sqrt, 3]]]	[Multiply, [Rational, 5, 6], Pi]	[Multiply, [Rational, 5, 6], Pi]	Wolfram MathematicalFunctionData, ArcSec	Negative argument lands in $(\pi/2, \pi]$, giving $5\pi/6$			
-arcsec-neg-1-plus-sqrt-5	Properties		[Arcsec, [Add, -1, [Sqrt, 5]]]	[Multiply, [Rational, 1, 5], Pi]	[Multiply, [Rational, 1, 5], Pi]	Wolfram MathematicalFunctionData, ArcSec	$\sec(\pi/5) = -1 + \sqrt5$			
-arcsec-1-minus-sqrt-5	Properties		[Arcsec, [Add, 1, [Negate, [Sqrt, 5]]]]	[Multiply, [Rational, 4, 5], Pi]	[Multiply, [Rational, 4, 5], Pi]	Wolfram MathematicalFunctionData, ArcSec	The negative counterpart gives $4\pi/5$			
-arcsec-neg-sqrt-2	Properties		[Arcsec, [Negate, [Sqrt, 2]]]	[Multiply, [Rational, 3, 4], Pi]	[Multiply, [Rational, 3, 4], Pi]	Wolfram MathematicalFunctionData, ArcSec	$\sec(3\pi/4) = -\sqrt2$			
-arcsec-sqrt-2-plus-neg-2-over-5-times-sqrt-5	Properties		[Arcsec, [Sqrt, [Add, 2, [Multiply, [Rational, -2, 5], [Sqrt, 5]]]]]	[Multiply, [Rational, 1, 10], Pi]	[Multiply, [Rational, 1, 10], Pi]	Wolfram MathematicalFunctionData, ArcSec				
-arcsec-neg-sqrt-2-plus-neg-2-over-5-times-sqrt-5	Properties		[Arcsec, [Negate, [Sqrt, [Add, 2, [Multiply, [Rational, -2, 5], [Sqrt, 5]]]]]]	[Multiply, [Rational, 9, 10], Pi]	[Multiply, [Rational, 9, 10], Pi]	Wolfram MathematicalFunctionData, ArcSec				
-arcsec-sqrt-2-plus-2-over-5-times-sqrt-5	Properties		[Arcsec, [Sqrt, [Add, 2, [Multiply, [Rational, 2, 5], [Sqrt, 5]]]]]	[Multiply, [Rational, 3, 10], Pi]	[Multiply, [Rational, 3, 10], Pi]	Wolfram MathematicalFunctionData, ArcSec				
-arcsec-neg-sqrt-2-plus-2-over-5-times-sqrt-5	Properties		[Arcsec, [Negate, [Sqrt, [Add, 2, [Multiply, [Rational, 2, 5], [Sqrt, 5]]]]]]	[Multiply, [Rational, 7, 10], Pi]	[Multiply, [Rational, 7, 10], Pi]	Wolfram MathematicalFunctionData, ArcSec				
+id	section	role	expr	expected	known	source	caption	epsil.back	wolfram.note
+arcsec-1			[Arcsec, 1]	0					
+arcsec-2			[Arcsec, 2]	[Multiply, [Rational, 1, 3], Pi]					
+arcsec-sqrt-2-pi-4	Scope		[Arcsec, [Sqrt, 2]]	[Multiply, [Rational, 1, 4], Pi]			$\operatorname{arcsec}\sqrt2 = \pi/4$		
+arcsec-neg-1	Scope		[Arcsec, -1]	Pi					
+arcsec-2-2-pi-3	Scope		[Arcsec, -2]	[Multiply, [Rational, 2, 3], Pi]			$\operatorname{arcsec}(-2) = 2\pi/3$		
+inside-1-1-the-value-is-purely-imaginary	Scope		[Arcsec, 0.5]	[Complex, 0, 1.3169578969248166]			Inside $(-1, 1)$ the value is purely imaginary		
+arcsec-positiveinfinity	Scope		[Arcsec, PositiveInfinity]	[Multiply, [Rational, 1, 2], Pi]					
+a-pole-arcsec-0-is-complex-infinity	Scope		[Arcsec, 0]	ComplexInfinity			A pole: $\operatorname{arcsec} 0$ is complex infinity		
+derivative-for-real-x-1	Scope		[D, [Arcsec, x], x]	[Divide, 1, [Multiply, [Abs, x], [Sqrt, [Add, [Power, x, 2], -1]]]]			Derivative, for real $|x| > 1$		
+n-arcsec-5-50	Scope		[N, [Arcsec, 5], 50]	{num: "1.3694384060045658277761961394221280318585466182853"}			Fifty digits of an inverse secant		
+arcsec-list-list-sqrt-2-neg-sqrt-2-list-0-neg	Scope		[Arcsec, [List, [List, [Sqrt, 2], [Negate, [Sqrt, 2]]], [List, 0, [Negate, [Sqrt, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 4], Pi], [Multiply, [Rational, 3, 4], Pi]], [List, ComplexInfinity, [Multiply, [Rational, 3, 4], Pi]]]			Threads over a matrix; zero gives complex infinity		
+arcsec-2-over-3-times-sqrt-3	Scope		[Arcsec, [Multiply, [Rational, 2, 3], [Sqrt, 3]]]	[Multiply, [Rational, 1, 6], Pi]			$\sec(\pi/6) = \frac{2}{\sqrt3}$		
+arcsec-complexinfinity	Scope		[Arcsec, ComplexInfinity]	[Multiply, [Rational, 1, 2], Pi]			At complex infinity $1/z \to 0$, so the value is $\pi/2$		
+matrixfunction-function-arcsec-1-1-list-list	Scope		[MatrixFunction, [Function, [Block, [Arcsec, _1]], _1], [List, [List, [Sqrt, 2], [Negate, [Sqrt, 2]]], [List, 0, [Negate, [Sqrt, 2]]]]]	[List, [List, [Multiply, [Rational, 1, 4], Pi], [Multiply, [Rational, 1, 4], Pi]], [List, 0, [Multiply, [Rational, 3, 4], Pi]]]			As a matrix function the zero entry becomes 0, unlike entrywise	Unreadable	
+arcsec-1-over-2	Scope		[Arcsec, [Rational, 1, 2]]	[Multiply, [Complex, 0, 1], [Ln, [Add, 2, [Sqrt, 3]]]]			For $0<|x|<1$ the value is $\arccos(1/x)$: $\operatorname{arcsec}(1/2) = i\ln(2+\sqrt3)$		Wolfram leaves the exact call unevaluated; its N[...] gives the same principal value (and so does mpmath).
+arcsec-neg-1-over-2	Scope		[Arcsec, [Rational, -1, 2]]	[Add, Pi, [Multiply, [Complex, 0, -1], [Ln, [Add, 2, [Sqrt, 3]]]]]			And $\operatorname{arcsec}(-1/2) = \pi - i\ln(2+\sqrt3)$		Same as above: Wolfram leaves it unevaluated, N[...] agrees.
+undoes-sec-sec-arcsec-x-x	Properties		[Equal, [Sec, [Arcsec, 2]], 2]	True			Undoes [[Sec]]: $\sec(\text{arcsec}(x)) = x$		
+arcsec-neg-sqrt-2-plus-sqrt-6	Properties		[Arcsec, [Add, [Negate, [Sqrt, 2]], [Sqrt, 6]]]	[Multiply, [Rational, 1, 12], Pi]	[Multiply, [Rational, 1, 12], Pi]	Wolfram MathematicalFunctionData, ArcSec	A difference of radicals giving $\pi/12$		
+arcsec-neg-sqrt-6-plus-sqrt-2	Properties		[Arcsec, [Add, [Negate, [Sqrt, 6]], [Sqrt, 2]]]	[Multiply, [Rational, 11, 12], Pi]	[Multiply, [Rational, 11, 12], Pi]	Wolfram MathematicalFunctionData, ArcSec	Swapping the terms gives $11\pi/12$		
+arcsec-2-times-sqrt-1-over-2-plus-sqrt-2	Properties		[Arcsec, [Multiply, 2, [Sqrt, [Divide, 1, [Add, 2, [Sqrt, 2]]]]]]	[Arcsec, [Divide, 2, [Sqrt, [Add, 2, [Sqrt, 2]]]]]	[Multiply, [Rational, 1, 8], Pi]	Wolfram MathematicalFunctionData, ArcSec	Stays unevaluated; the radical is not matched to a multiple of $\pi$		
+arcsec-neg-2-times-sqrt-1-over-2-plus-sqrt-2	Properties		[Arcsec, [Multiply, -2, [Sqrt, [Divide, 1, [Add, 2, [Sqrt, 2]]]]]]	[Arcsec, [Divide, -2, [Sqrt, [Add, 2, [Sqrt, 2]]]]]	[Multiply, [Rational, 7, 8], Pi]	Wolfram MathematicalFunctionData, ArcSec	The negated argument stays unevaluated too		
+arcsec-neg-2-over-3-times-sqrt-3	Properties		[Arcsec, [Multiply, [Rational, -2, 3], [Sqrt, 3]]]	[Multiply, [Rational, 5, 6], Pi]	[Multiply, [Rational, 5, 6], Pi]	Wolfram MathematicalFunctionData, ArcSec	Negative argument lands in $(\pi/2, \pi]$, giving $5\pi/6$		
+arcsec-neg-1-plus-sqrt-5	Properties		[Arcsec, [Add, -1, [Sqrt, 5]]]	[Multiply, [Rational, 1, 5], Pi]	[Multiply, [Rational, 1, 5], Pi]	Wolfram MathematicalFunctionData, ArcSec	$\sec(\pi/5) = -1 + \sqrt5$		
+arcsec-1-minus-sqrt-5	Properties		[Arcsec, [Add, 1, [Negate, [Sqrt, 5]]]]	[Multiply, [Rational, 4, 5], Pi]	[Multiply, [Rational, 4, 5], Pi]	Wolfram MathematicalFunctionData, ArcSec	The negative counterpart gives $4\pi/5$		
+arcsec-neg-sqrt-2	Properties		[Arcsec, [Negate, [Sqrt, 2]]]	[Multiply, [Rational, 3, 4], Pi]	[Multiply, [Rational, 3, 4], Pi]	Wolfram MathematicalFunctionData, ArcSec	$\sec(3\pi/4) = -\sqrt2$		
+arcsec-sqrt-2-plus-neg-2-over-5-times-sqrt-5	Properties		[Arcsec, [Sqrt, [Add, 2, [Multiply, [Rational, -2, 5], [Sqrt, 5]]]]]	[Multiply, [Rational, 1, 10], Pi]	[Multiply, [Rational, 1, 10], Pi]	Wolfram MathematicalFunctionData, ArcSec			
+arcsec-neg-sqrt-2-plus-neg-2-over-5-times-sqrt-5	Properties		[Arcsec, [Negate, [Sqrt, [Add, 2, [Multiply, [Rational, -2, 5], [Sqrt, 5]]]]]]	[Multiply, [Rational, 9, 10], Pi]	[Multiply, [Rational, 9, 10], Pi]	Wolfram MathematicalFunctionData, ArcSec			
+arcsec-sqrt-2-plus-2-over-5-times-sqrt-5	Properties		[Arcsec, [Sqrt, [Add, 2, [Multiply, [Rational, 2, 5], [Sqrt, 5]]]]]	[Multiply, [Rational, 3, 10], Pi]	[Multiply, [Rational, 3, 10], Pi]	Wolfram MathematicalFunctionData, ArcSec			
+arcsec-neg-sqrt-2-plus-2-over-5-times-sqrt-5	Properties		[Arcsec, [Negate, [Sqrt, [Add, 2, [Multiply, [Rational, 2, 5], [Sqrt, 5]]]]]]	[Multiply, [Rational, 7, 10], Pi]	[Multiply, [Rational, 7, 10], Pi]	Wolfram MathematicalFunctionData, ArcSec			
