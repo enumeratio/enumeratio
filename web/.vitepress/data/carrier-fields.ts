@@ -5,7 +5,14 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { ALL_STATISTICS, CARRIERS, MAPS, UNDEFINED_MAPS } from "@enumeratio/combinatorics";
+import {
+  ALL_STATISTICS,
+  CARRIERS,
+  type FindStatAgreement,
+  findstatMaps,
+  MAPS,
+  UNDEFINED_MAPS,
+} from "@enumeratio/combinatorics";
 import { allFamilies } from "@enumeratio/combinatorics/collections";
 import { crosswalkForMap, crosswalkForStatistic } from "@enumeratio/reference";
 import { repoRoot } from "./repo-docs.ts";
@@ -67,7 +74,16 @@ export interface FindStatRef {
   readonly description?: string;
   readonly properties?: readonly string[];
   readonly sample?: readonly [string, string | number][];
+  /** Set when the map is matched to this FindStat map by value (`find-findstat-maps.ts`). */
+  readonly agreement?: FindStatAgreement;
+  readonly valueNote?: string;
 }
+
+/** FindStat maps matched by value whose name or code would suggest another map: the page says so. */
+const VALUE_NOTES: Readonly<Record<string, string>> = {
+  Mp00087:
+    "FindStat's title says inverse first fundamental transformation, while its code is the forward fundamental_transformation(); the match is by value.",
+};
 
 export interface Field {
   readonly kind: "statistic" | "map";
@@ -133,6 +149,24 @@ const statisticFields: Field[] = ALL_STATISTICS.map((d) => ({
   href: statisticHref(d.on, d.head),
 }));
 
+/** A map's FindStat refs: the crosswalk's, and those matched by value (`find-findstat-maps.ts`). */
+function mapRefs(name: string, from: string): FindStatRef[] {
+  const matched = findstatMaps.find((m) => m.name === name && m.from === from)?.findstat ?? [];
+  const agreementOf = (id: string): FindStatAgreement | undefined => matched.find((a) => a.id === id);
+  const withValue = (ref: FindStatRef): FindStatRef => {
+    const agreement = agreementOf(ref.id);
+    return agreement ? { ...ref, agreement, valueNote: VALUE_NOTES[ref.id] } : ref;
+  };
+  const refs = idsOf(crosswalkForMap(name, from)).map(withValue);
+  const have = new Set(refs.map((r) => r.id));
+  return [
+    ...refs,
+    ...matched
+      .filter((a) => !have.has(a.id))
+      .map((a) => withValue(findStatRef(a.id, `https://www.findstat.org/${a.id}`))),
+  ];
+}
+
 const mapFields: Field[] = [
   ...MAPS.map((m): Field => ({
     kind: "map",
@@ -142,7 +176,7 @@ const mapFields: Field[] = [
     summary: m.summary,
     note: m.note,
     laws: (m.laws ?? []).map((law) => (typeof law === "string" ? law : Object.keys(law)[0]!)),
-    findstat: idsOf(crosswalkForMap(m.name, carrierName(m.from))),
+    findstat: mapRefs(m.name, carrierName(m.from)),
     href: mapHref(carrierName(m.from), m.name),
   })),
   ...UNDEFINED_MAPS.map((m): Field => ({
@@ -152,7 +186,7 @@ const mapFields: Field[] = [
     to: carrierName(m.to),
     summary: m.why,
     laws: [],
-    findstat: idsOf(crosswalkForMap(m.name, carrierName(m.from))),
+    findstat: mapRefs(m.name, carrierName(m.from)),
     frontier: true,
     href: mapHref(carrierName(m.from), m.name),
   })),

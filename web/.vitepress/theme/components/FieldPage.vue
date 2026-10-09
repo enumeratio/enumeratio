@@ -67,6 +67,11 @@ const inline = (text?: string): string => renderInline(text ?? "");
         FindStat <a :href="ref.url">{{ ref.id }}</a>
       </h2>
       <p v-if="ref.title" class="field-title" v-html="inline(ref.title)"></p>
+      <p v-if="ref.agreement" class="field-note">
+        Matched by value: our map agrees with FindStat's image on each of the {{ ref.agreement.compared }} rows of size
+        at most 6 we can read ({{ ref.agreement.skipped }} unread; its table has {{ ref.agreement.rows }} rows).
+        <span v-if="ref.valueNote">{{ ref.valueNote }}</span>
+      </p>
       <p v-if="ref.properties?.length">
         <span v-for="p in ref.properties" :key="p" class="field-chip">{{ p }}</span>
         <span class="field-note">as FindStat records them, checked by FindStat's contributors.</span>
