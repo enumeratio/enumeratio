@@ -14,6 +14,9 @@ use num_rational::BigRational;
 use num_traits::{Signed, ToPrimitive, Zero};
 use std::ops::{Add, Div, Mul, Neg, Sub};
 use std::panic::{catch_unwind, UnwindSafe};
+use std::sync::mpsc;
+use std::thread;
+use std::time::Duration;
 
 #[derive(Clone, Debug)]
 pub enum V {
@@ -343,18 +346,35 @@ impl Show for V {
     }
 }
 
-/// Run one item, printing `<<i>>value`, or `<<i>>!!message` when it panics.
-pub fn item<F: FnOnce() -> V + UnwindSafe>(i: usize, f: F) {
+/// Seconds one item may run, as `ITEM_SECONDS` in `src/run.ts`.
+const ITEM_SECONDS: u64 = 30;
+
+/// Run one item, printing `<<i>>value`, or `<<i>>!!message` when it panics or runs over
+/// `ITEM_SECONDS`. A runaway item can't be stopped, so the process ends after reporting it and
+/// the scan resumes with the next item.
+pub fn item<F: FnOnce() -> V + UnwindSafe + Send + 'static>(i: usize, f: F) {
     std::panic::set_hook(Box::new(|_| {})); // the message is reported below, not on stderr
-    match catch_unwind(f) {
-        Ok(v) => println!("<<{i}>>{}", v.show()),
-        Err(e) => {
+    let (tx, rx) = mpsc::channel();
+    // Deep recursion in a kernel needs more than a spawned thread's default stack.
+    thread::Builder::new()
+        .stack_size(256 << 20)
+        .spawn(move || {
+            let _ = tx.send(catch_unwind(f));
+        })
+        .expect("a thread for the item");
+    match rx.recv_timeout(Duration::from_secs(ITEM_SECONDS)) {
+        Ok(Ok(v)) => println!("<<{i}>>{}", v.show()),
+        Ok(Err(e)) => {
             let msg = e
                 .downcast_ref::<String>()
                 .cloned()
                 .or_else(|| e.downcast_ref::<&str>().map(|s| s.to_string()))
                 .unwrap_or_default();
             println!("<<{i}>>!!panic: {}", msg.replace('\n', " "));
+        }
+        Err(_) => {
+            println!("<<{i}>>!!TimeoutError: over {ITEM_SECONDS} s");
+            std::process::exit(0);
         }
     }
 }
