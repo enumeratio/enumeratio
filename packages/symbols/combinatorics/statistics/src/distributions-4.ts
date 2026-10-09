@@ -395,16 +395,17 @@ const transformedInfo = (ce: Engine, dist: Expr, options: EvaluateOptions): Tran
   return { kind: "affine", a, aNum, b: finish(coeffs.b, options), inner };
 };
 
-/** `Norm({x1, ..., xk})` of `k >= 2` independent standard normals, which is
+/** `Norm({x1, ..., xk})` of `k >= 1` independent standard normals, which is
  *  `Sqrt(|x1|^2 + ... + |xk|^2)` once canonical: the chi distribution with `k` degrees of freedom
- *  (`Rayleigh(1)` for two). Only the standard normal, over the variables in the binding. */
+ *  (`Rayleigh(1)` for two, `HalfNormal(Sqrt(Pi/2))` for one). Only the standard normal, over the
+ *  variables in the binding. */
 const normOfNormals = (ce: Engine, expr: Expr, distributed: Expr): Expr | undefined => {
   if (distributed.operator !== "Distributed" || expr.operator !== "Sqrt") return undefined;
   const [vars, product] = operandsOf(distributed);
   if (vars?.operator !== "List" || product?.operator !== "ProductDistribution") return undefined;
   const names = operandsOf(vars).map(symbolNameOf);
   const k = names.length;
-  if (k < 2 || new Set(names).size !== k || names.includes(undefined)) return undefined;
+  if (k < 1 || new Set(names).size !== k || names.includes(undefined)) return undefined;
   if (operandsOf(product).length !== k || !operandsOf(product).every((d) => isStandardNormal(ce, d))) return undefined;
   // One term `v^2` or `|v|^2` per variable.
   const termName = (term: Expr): string | undefined => {
@@ -413,13 +414,15 @@ const normOfNormals = (ce: Engine, expr: Expr, distributed: Expr): Expr | undefi
     return symbolNameOf(base.operator === "Abs" ? operandsOf(base)[0] : base);
   };
   const sum = operandsOf(expr)[0];
-  const used = sum?.operator === "Add" ? operandsOf(sum).map(termName) : [];
+  const used = sum === undefined ? [] : sum.operator === "Add" ? operandsOf(sum).map(termName) : [termName(sum)];
   if (
     used.length !== k ||
     new Set(used).size !== k ||
     !used.every((name) => name !== undefined && names.includes(name))
   )
     return undefined;
+  if (k === 1)
+    return ce.function("HalfNormalDistribution", [ce.function("Sqrt", [div(ce, ce.symbol("Pi"), ce.number(2))])]);
   return k === 2 ? ce.function("RayleighDistribution", [ce.One]) : ce.function("ChiDistribution", [ce.number(k)]);
 };
 

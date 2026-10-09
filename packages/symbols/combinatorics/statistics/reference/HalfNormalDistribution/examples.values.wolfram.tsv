@@ -1,5 +1,7 @@
-id	in
-halfnormal-pdf-exact	PDF[HalfNormalDistribution[1], 1]
-halfnormal-cdf-exact	CDF[HalfNormalDistribution[1], 1]
-halfnormal-mean-exact	Mean[HalfNormalDistribution[1]]
-halfnormal-variance-exact	Variance[HalfNormalDistribution[1]]
+id	in	out	tex.in	tex.out
+halfnormal-pdf-exact	PDF[HalfNormalDistribution[1], 1]	2/(E^Pi^(-1)*Pi)	\text{PDF}[\text{HalfNormalDistribution}[1],1]	\frac{2 e^{-1/\pi }}{\pi }
+halfnormal-cdf-exact	CDF[HalfNormalDistribution[1], 1]	Erf[1/Sqrt[Pi]]	\text{CDF}[\text{HalfNormalDistribution}[1],1]	\text{erf}\left(\frac{1}{\sqrt{\pi }}\right)
+halfnormal-mean-exact	Mean[HalfNormalDistribution[1]]	1	\text{Mean}[\text{HalfNormalDistribution}[1]]	1
+halfnormal-variance-exact	Variance[HalfNormalDistribution[1]]	(-2 + Pi)/2	\text{Variance}[\text{HalfNormalDistribution}[1]]	\frac{1}{2} (\pi -2)
+halfnormal-mean-theta-2	Mean[HalfNormalDistribution[2]]	1/2	\text{Mean}[\text{HalfNormalDistribution}[2]]	\frac{1}{2}
+halfnormal-variance-theta-2	Variance[HalfNormalDistribution[2]]	(-2 + Pi)/8	\text{Variance}[\text{HalfNormalDistribution}[2]]	\frac{1}{8} (\pi -2)

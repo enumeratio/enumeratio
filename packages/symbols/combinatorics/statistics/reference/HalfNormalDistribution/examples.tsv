@@ -1,5 +1,7 @@
 id	section	role	expr	expected
-halfnormal-pdf-exact			[PDF, [HalfNormalDistribution, 1], 1]	[Divide, [Sqrt, 2], [Sqrt, [Multiply, ExponentialE, Pi]]]
-halfnormal-cdf-exact			[CDF, [HalfNormalDistribution, 1], 1]	[Erf, [Divide, [Sqrt, 2], 2]]
-halfnormal-mean-exact			[Mean, [HalfNormalDistribution, 1]]	[Sqrt, [Divide, 2, Pi]]
-halfnormal-variance-exact			[Variance, [HalfNormalDistribution, 1]]	[Divide, [Add, -2, Pi], Pi]
+halfnormal-pdf-exact			[PDF, [HalfNormalDistribution, 1], 1]	[Divide, [Multiply, 2, [Power, ExponentialE, [Divide, -1, Pi]]], Pi]
+halfnormal-cdf-exact			[CDF, [HalfNormalDistribution, 1], 1]	[Erf, [Sqrt, [Divide, 1, Pi]]]
+halfnormal-mean-exact			[Mean, [HalfNormalDistribution, 1]]	1
+halfnormal-variance-exact			[Variance, [HalfNormalDistribution, 1]]	[Multiply, [Rational, 1, 2], [Add, -2, Pi]]
+halfnormal-mean-theta-2			[Mean, [HalfNormalDistribution, 2]]	[Rational, 1, 2]
+halfnormal-variance-theta-2			[Variance, [HalfNormalDistribution, 2]]	[Multiply, [Rational, 1, 8], [Add, -2, Pi]]

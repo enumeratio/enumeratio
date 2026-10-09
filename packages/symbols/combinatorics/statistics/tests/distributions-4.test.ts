@@ -221,12 +221,17 @@ describe("TransformedDistribution: the norm of independent standard normals", ()
     ["Distributed", ["List", ...bound], ["ProductDistribution", ["List", d, bound.length]]],
   ];
 
-  test("is chi with k degrees of freedom, Rayleigh(1) for k = 2", () => {
+  test("is chi with k degrees of freedom, Rayleigh(1) for k = 2, half-normal for k = 1", () => {
     expect(evalOf(normOf(["x", "y", "w", "z"])).json).toEqual(["ChiDistribution", 4]);
     expect(evalOf(normOf(["x", "y"])).json).toEqual(["RayleighDistribution", 1]);
+    expect(evalOf(normOf(["x"])).json).toEqual([
+      "HalfNormalDistribution",
+      ["Sqrt", ["Multiply", ["Rational", 1, 2], "Pi"]],
+    ]);
   });
 
   test("has the mean E|Z| = sqrt(2) Gamma((k+1)/2) / Gamma(k/2) of a norm of normals", () => {
+    expect(N(["Mean", normOf(["x"])])).toBeCloseTo(Math.sqrt(2 / Math.PI), 12);
     expect(N(["Mean", normOf(["x", "y"])])).toBeCloseTo(Math.sqrt(Math.PI / 2), 12);
     expect(N(["Mean", normOf(["x", "y", "z"])])).toBeCloseTo(2 * Math.sqrt(2 / Math.PI), 12);
   });

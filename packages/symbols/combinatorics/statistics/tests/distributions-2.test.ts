@@ -29,6 +29,7 @@ const CONTINUOUS_DISTS: readonly unknown[] = [
   ["ErlangDistribution", 3, 2],
   ["ChiDistribution", 3],
   ["HalfNormalDistribution", 1],
+  ["HalfNormalDistribution", 2],
   ["MaxwellDistribution", 1],
 ];
 
