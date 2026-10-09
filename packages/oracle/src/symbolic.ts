@@ -786,6 +786,38 @@ export function lookThroughConditions(expr: MathJSON): MathJSON {
   return [expr[0], ...expr.slice(1).map((operand) => lookThroughConditions(operand as MathJSON))];
 }
 
+/**
+ * `Root(a, n)` as `Power(a, 1/n)`, and `(1/m)^(p/q)` as `m^(-p/q)`, so one number has one spelling
+ * (`Root(1/2, 4)` is `Power(2, -1/4)`). The reciprocal rule holds for a positive base `m`.
+ */
+export function rootsAsPowers(expr: MathJSON): MathJSON {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return expr;
+  const [head, ...rest] = expr as [string, ...MathJSON[]];
+  const operands = rest.map(rootsAsPowers);
+  const [base, index] = operands;
+  const power: [string, ...MathJSON[]] =
+    head === "Root" && operands.length === 2 && typeof index === "number" && Number.isInteger(index) && index >= 2
+      ? ["Power", base as MathJSON, ["Rational", 1, index]]
+      : [head, ...operands];
+  const [, reciprocal, exponent] = power;
+  if (
+    power[0] === "Power" &&
+    power.length === 3 &&
+    Array.isArray(reciprocal) &&
+    reciprocal[0] === "Rational" &&
+    reciprocal[1] === 1 &&
+    typeof reciprocal[2] === "number" &&
+    reciprocal[2] >= 2 &&
+    Array.isArray(exponent) &&
+    exponent[0] === "Rational" &&
+    typeof exponent[1] === "number" &&
+    typeof exponent[2] === "number"
+  ) {
+    return ["Power", reciprocal[2], ["Rational", -exponent[1], exponent[2]]];
+  }
+  return power as MathJSON;
+}
+
 /** Wolfram source for `source` with every `ConditionalExpression[value, condition]` replaced by its value. */
 const withoutConditions = (source: string): string => `ReplaceAll[${source}, ConditionalExpression[e_, _] :> e]`;
 

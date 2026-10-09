@@ -29,6 +29,7 @@ export {
   leavesCall,
   lookThroughConditions,
   notNumeric,
+  rootsAsPowers,
   SYMBOLIC_SECONDS,
   symbolicAgreementSource,
 } from "./symbolic.ts";
