@@ -34,6 +34,7 @@ import { epsilEntries, kCyclePermutations } from "../src/families/core.ts";
 import { permutationsAsCycles } from "../src/families/cycles.ts";
 import { PermutationsAsCyclesFamily } from "../src/families/permutations.ts";
 import {
+  adjacentTranspositionInvolutions,
   alternatingPermutations,
   cograssmannianPermutations,
   connectedPermutations,
@@ -41,6 +42,7 @@ import {
   kDescentPermutations,
   kInversionPermutations,
   nonCrossingCycleSupportPermutations,
+  nonCrossingPermutations,
   permutationsAvoiding3,
   separablePermutations,
   vexillaryPermutations,
@@ -94,6 +96,20 @@ function contains(x: readonly number[], pattern: string): boolean {
       for (let i = 0; i < j; i++)
         if (agrees(x[i], x[j], a, b) && agrees(x[j], x[k], b, c) && agrees(x[i], x[k], a, c)) return true;
   return false;
+}
+
+/** Whether each cycle of `x` rises from its least member and drops back only to close. */
+function risingCycles(x: readonly number[]): boolean {
+  const seen = new Set<number>();
+  for (let s = 1; s <= x.length; s++) {
+    if (seen.has(s)) continue;
+    seen.add(s);
+    for (let v = x[s - 1], prev = s; v !== s; prev = v, v = x[v - 1]) {
+      if (v < prev) return false;
+      seen.add(v);
+    }
+  }
+  return true;
 }
 
 /** Whether two of `x`'s cycles cross: a < b < c < d with a, c in one and b, d in another. */
@@ -243,6 +259,13 @@ const READINGS: Record<string, Reading> = {
     ],
     (x, [n, k]) => IsPermutationOf(x, n) && Inversions(x) === k,
   ),
+  // Every inversion is of adjacent entries. Seconds to filter 6! permutations: nightly.
+  AdjacentTranspositionInvolutions: {
+    ...lexRestriction([[0], [1], [2], [3], [4], [5], ...(process.env.DEEP_TESTS ? [[6]] : [])], (x) =>
+      x.every((v, i) => x.every((w, j) => j <= i + 1 || v < w)),
+    ),
+    interpretAt: [3],
+  },
   GrassmannianPermutations: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => turns(x, (a, b) => a > b) <= 1),
   CograssmannianPermutations: lexRestriction(
     [[0], [1], [2], [3], [4], [5], [6]],
@@ -273,6 +296,14 @@ const READINGS: Record<string, Reading> = {
     ...lexRestriction(process.env.DEEP_TESTS ? [[0], [1], [2], [3], [4], [5], [6]] : [[3]], (x) => !crossing(x)),
     interpretAt: process.env.DEEP_TESTS ? [5] : [3],
   },
+  // Cycles that rise (each member to the next greater, the greatest to the least) and don't cross.
+  NonCrossingPermutations: {
+    ...lexRestriction(
+      process.env.DEEP_TESTS ? [[0], [1], [2], [3], [4], [5], [6]] : [[0], [1], [2], [3], [4], [5]],
+      (x) => !crossing(x) && risingCycles(x),
+    ),
+    interpretAt: [3],
+  },
   VexillaryPermutations: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !contains4(x, "2143")),
   SeparablePermutations: {
     ...lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => !separates(x)),
@@ -300,6 +331,8 @@ const READINGS: Record<string, Reading> = {
 const byHead = new Map(
   [
     ...epsilEntries,
+    adjacentTranspositionInvolutions,
+    nonCrossingPermutations,
     permutationsAsCycles,
     kCyclePermutations,
     alternatingPermutations,

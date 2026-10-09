@@ -1,12 +1,17 @@
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/partitions.ts";
+import { kernelsOn } from "../../collections/src/families/epsil.ts";
+import { entries as families } from "../src/families/partitions.ts";
 import {
   PartitionsInBoxCount,
   PartitionsInBoxUnrank,
   PartitionsMaxPartCount,
   PartitionsMaxPartUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
-import { entries as coreEntries } from "../src/families/core.ts";
+import { entries as coreFamilies } from "../src/families/core.ts";
+
+const entries = kernelsOn(bareEngine(), families);
+const coreEntries = kernelsOn(bareEngine(), coreFamilies);
 
 // Certify every partition family: rank(unrank(p, r), p) === r across the whole family,
 // unranked elements are valid members, and count matches the enumeration — same recipe as
@@ -22,8 +27,8 @@ const PARAMS: Record<string, number[][]> = {
 for (const entry of entries) {
   for (const p of PARAMS[entry.head] ?? [[6]]) {
     test(`${entry.head}(${p.join(", ")}) round-trips`, () => {
-      const total = entry.count(p);
-      for (let r = 0; r < total; r++) {
+      const total = entry.count(p) as bigint;
+      for (let r = 0n; r < total; r++) {
         const element = entry.unrank(p, r);
         expect(entry.valid(element, p)).toBe(true);
         expect(entry.rank(element, p)).toBe(r);
@@ -80,8 +85,8 @@ for (let n = 0; n <= 20; n++) {
   for (const [head, pred] of Object.entries(PREDICATES)) {
     test(`${head}(${n}) matches an independent brute-force predicate`, () => {
       const entry = byHead[head];
-      const total = entry.count([n]);
-      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
+      const total = Number(entry.count([n]));
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], BigInt(r)) as number[]);
       expect(asSet(kernelElements)).toEqual(asSet(all.filter(pred)));
       expect(kernelElements.length).toBe(total); // no duplicates snuck in
     });
@@ -89,8 +94,8 @@ for (let n = 0; n <= 20; n++) {
   for (let m = 1; m <= Math.max(n, 1); m++) {
     test(`LargestPartPartitions(${n}, ${m}) matches an independent brute-force predicate`, () => {
       const entry = byHead.LargestPartPartitions;
-      const total = entry.count([n, m]);
-      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, m], r) as number[]);
+      const total = Number(entry.count([n, m]));
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, m], BigInt(r)) as number[]);
       const expected = all.filter((p) => p.length > 0 && p[0] === m);
       expect(asSet(kernelElements)).toEqual(asSet(expected));
       expect(kernelElements.length).toBe(total);
@@ -133,7 +138,7 @@ for (let a = 0; a <= 5; a++) {
 }
 
 // ─── OEIS counts, independent of the round-trip above ───────────────────────────────────────────
-const countsOf = (head: string, ps: number[][]) => ps.map((p) => byHead[head].count(p));
+const countsOf = (head: string, ps: number[][]) => ps.map((p) => Number(byHead[head].count(p)));
 const range = (n: number) => Array.from({ length: n }, (_, i) => [i]);
 
 test("OddPartitions count = A000009, and equals DistinctPartitions (Euler)", () => {
@@ -141,7 +146,7 @@ test("OddPartitions count = A000009, and equals DistinctPartitions (Euler)", () 
   expect(oddCounts).toEqual([1, 1, 1, 2, 2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 22, 27, 32, 38, 46, 54, 64]);
   const distinctPartitions = coreEntries.find((e) => e.head === "DistinctPartitions");
   expect(distinctPartitions).toBeDefined();
-  expect(oddCounts).toEqual(range(21).map((p) => distinctPartitions?.count(p)));
+  expect(oddCounts).toEqual(range(21).map((p) => Number(distinctPartitions?.count(p))));
 });
 test("PrimePartitions count = A000607", () => {
   expect(countsOf("PrimePartitions", range(21))).toEqual([
@@ -157,4 +162,22 @@ test("TriangularPartitions count = A007294", () => {
   expect(countsOf("TriangularPartitions", range(21))).toEqual([
     1, 1, 1, 2, 2, 2, 4, 4, 4, 6, 7, 7, 10, 11, 11, 15, 17, 17, 22, 24, 25,
   ]);
+});
+
+// Past 2^53 the count is unknown, as it was for the plain-number kernels; a small rank, a rank a
+// double holds and membership are not.
+test("past 2^53 a partition family answers membership, a small rank and its rank", () => {
+  const kernel = kernelsOn(bareEngine(), coreFamilies).find((k) => k.head === "PartitionsMaxPart")!;
+  const p = [400, 400];
+  expect(() => kernel.count(p)).toThrow(/past 2\^53/);
+  expect(
+    kernel.valid(
+      Array.from({ length: 400 }, () => 1),
+      p,
+    ),
+  ).toBe(true);
+  expect(kernel.valid([1, 399], p)).toBe(false);
+  expect(kernel.unrank(p, 0n)).toEqual([400]);
+  expect(kernel.unrank(p, 1n)).toEqual([399, 1]);
+  expect(kernel.rank([399, 1], p)).toBe(1n);
 });

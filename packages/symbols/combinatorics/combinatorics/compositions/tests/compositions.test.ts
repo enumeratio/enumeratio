@@ -1,5 +1,9 @@
+import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/families/compositions.ts";
+import { kernelsOn } from "../../collections/src/families/epsil.ts";
+import { entries as families } from "../src/families/compositions.ts";
+
+const entries = kernelsOn(bareEngine(), families);
 
 // Certify every composition family: rank(unrank(p, r), p) === r across the whole family,
 // unranked elements are valid members, and count matches the enumeration — same recipe as
@@ -14,7 +18,7 @@ const PARAMS: Record<string, number[][]> = {
   TriangularCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   PrimeCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   CarlitzCompositions: Array.from({ length: 11 }, (_, n) => [n]),
-  PalindromicCompositions: Array.from({ length: 11 }, (_, n) => [n]),
+  PalindromicCompositions: Array.from({ length: 13 }, (_, n) => [n]),
   ZigzagCompositions: Array.from({ length: 11 }, (_, n) => [n]),
   PartSizeBoundedCompositions: [1, 2, 3, 4].flatMap((k) => Array.from({ length: 9 }, (_, n) => [n, k])),
   PartCountBoundedCompositions: [1, 2, 3, 4].flatMap((k) => Array.from({ length: 9 }, (_, n) => [n, k])),
@@ -23,8 +27,8 @@ const PARAMS: Record<string, number[][]> = {
 for (const entry of entries) {
   for (const p of PARAMS[entry.head] ?? [[3]]) {
     test(`${entry.head}(${p.join(", ")}) round-trips`, () => {
-      const total = entry.count(p);
-      for (let r = 0; r < total; r++) {
+      const total = entry.count(p) as bigint;
+      for (let r = 0n; r < total; r++) {
         const element = entry.unrank(p, r);
         expect(entry.valid(element, p)).toBe(true);
         expect(entry.rank(element, p)).toBe(r);
@@ -95,8 +99,8 @@ for (let n = 0; n <= 12; n++) {
   for (const [head, pred] of Object.entries(PREDICATES)) {
     test(`${head}(${n}) matches an independent brute-force predicate`, () => {
       const entry = byHead[head];
-      const total = entry.count([n]);
-      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
+      const total = Number(entry.count([n]));
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], BigInt(r)) as number[]);
       expect(asSet(kernelElements)).toEqual(asSet(all.filter(pred)));
       expect(kernelElements.length).toBe(total); // no duplicates snuck in
     });
@@ -104,15 +108,15 @@ for (let n = 0; n <= 12; n++) {
   for (const k of [1, 2, 3, 4]) {
     test(`PartSizeBoundedCompositions(${n}, ${k}) matches an independent brute-force predicate`, () => {
       const entry = byHead.PartSizeBoundedCompositions;
-      const total = entry.count([n, k]);
-      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, k], r) as number[]);
+      const total = Number(entry.count([n, k]));
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, k], BigInt(r)) as number[]);
       expect(asSet(kernelElements)).toEqual(asSet(all.filter((p) => p.every((x) => x <= k))));
       expect(kernelElements.length).toBe(total);
     });
     test(`PartCountBoundedCompositions(${n}, ${k}) matches an independent brute-force predicate`, () => {
       const entry = byHead.PartCountBoundedCompositions;
-      const total = entry.count([n, k]);
-      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, k], r) as number[]);
+      const total = Number(entry.count([n, k]));
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, k], BigInt(r)) as number[]);
       expect(asSet(kernelElements)).toEqual(asSet(all.filter((p) => p.length <= k)));
       expect(kernelElements.length).toBe(total);
     });
@@ -120,7 +124,7 @@ for (let n = 0; n <= 12; n++) {
 }
 
 // ─── OEIS counts, independent of the round-trip above ───────────────────────────────────────────
-const countsOf = (head: string, ps: number[][]) => ps.map((p) => byHead[head].count(p));
+const countsOf = (head: string, ps: number[][]) => ps.map((p) => Number(byHead[head].count(p)));
 const range = (n: number) => Array.from({ length: n }, (_, i) => [i]);
 
 test("OddCompositions count = A000045 (Fibonacci)", () => {
@@ -189,6 +193,6 @@ test("PartSizeBoundedCompositions row k = generalized k-nacci", () => {
 
 test("PartCountBoundedCompositions is cumulative C(n - 1, j - 1) over j <= k", () => {
   // n = 6: at most 1, 2, 3 parts = 1, 6, 16 (Sage max_length), and every part count is the whole at k = n.
-  expect([1, 2, 3].map((k) => byHead.PartCountBoundedCompositions.count([6, k]))).toEqual([1, 6, 16]);
-  expect(byHead.PartCountBoundedCompositions.count([6, 6])).toBe(32);
+  expect([1, 2, 3].map((k) => byHead.PartCountBoundedCompositions.count([6, k]))).toEqual([1n, 6n, 16n]);
+  expect(byHead.PartCountBoundedCompositions.count([6, 6])).toBe(32n);
 });

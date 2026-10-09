@@ -64,10 +64,16 @@ import {
 const allFamilies: readonly FamilyKernel[] = [
   ...kernelsOn(bareEngine(), permutationsCoreFamilies),
   ...kernelsOn(bareEngine(), [...permutationsEntries, ...permutationClassesEntries].map(liftFamily)),
-  ...kernelsOn(bareEngine(), partitionsCoreEpsilFamilies),
-  ...[...partitionsCoreEntries, ...partitionsEntries, ...partitionsTableauxPlaneEntries].map(numberKernel),
-  ...kernelsOn(bareEngine(), compositionsCoreFamilies),
-  ...compositionsEntries.map(numberKernel),
+  ...kernelsOn(
+    bareEngine(),
+    [
+      ...partitionsCoreEpsilFamilies,
+      ...partitionsCoreEntries,
+      ...partitionsEntries,
+      ...partitionsTableauxPlaneEntries,
+    ].map(liftFamily),
+  ),
+  ...kernelsOn(bareEngine(), [...compositionsCoreFamilies, ...compositionsEntries.map(liftFamily)]),
   ...kernelsOn(
     bareEngine(),
     [...wordsCoreEntries, ...wordsEntries, ...wordsBinaryWordFamiliesEntries, ...wordsTableauxTreesEntries].map(

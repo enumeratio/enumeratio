@@ -18,6 +18,7 @@ import {
   WeakCompositionRank,
   WeakCompositionUnrank,
 } from "../../collections/src/families/kernels-extra.ts";
+import { entries as restricted } from "../src/families/compositions.ts";
 import { epsilEntries } from "../src/families/core.ts";
 
 const ce = bareEngine();
@@ -107,9 +108,74 @@ const READINGS: Record<string, Reading> = {
   },
 };
 
-const byHead = new Map(epsilEntries.map((family) => [family.head, family]));
+// The restrictions of IntegerCompositions: read by filtering every composition of n, lex on the
+// parts, and the candidates for membership are every composition of n (the ones the restriction
+// rejects among them) and a step from each member.
+const memo = <V>(make: (p: number[]) => V): ((p: number[]) => V) => {
+  const seen = new Map<string, V>();
+  return (p) => {
+    const key = p.join();
+    if (!seen.has(key)) seen.set(key, make(p));
+    return seen.get(key)!;
+  };
+};
 
-for (const [head, reading] of Object.entries(READINGS)) {
+/** Compositions a step from `member`: a part moved either way, one dropped or added, swapped, reversed. */
+function neighbours(member: number[]): number[][] {
+  const moved = member.flatMap((_, i) => [1, -1].map((d) => member.map((v, j) => (i === j ? v + d : v))));
+  const swapped = member.length > 1 ? [[member[1], member[0], ...member.slice(2)]] : [];
+  return [...moved, ...swapped, member.slice(0, -1), [...member, 1], member.toReversed()];
+}
+
+function restriction(params: number[][], member: (x: number[], p: number[]) => boolean): Reading {
+  const members = memo((p) => lexCompositions(p[0]).filter((x) => member(x, p)));
+  const keys = memo((p) => new Set(members(p).map((x) => x.join())));
+  return {
+    params,
+    count: (p) => members(p).length,
+    unrank: (p, r) => members(p)[r],
+    rank: (x: number[], p) => members(p).findIndex((m) => m.join() === x.join()),
+    valid: (x: number[], p) => keys(p).has(x.join()),
+    near: (p) => [...lexCompositions(p[0]), ...members(p).flatMap(neighbours)],
+  };
+}
+
+const sizes = (to: number): number[][] => Array.from({ length: to + 1 }, (_, n) => [n]);
+const pairs = (...ps: number[][]): number[][] => ps;
+const isPrime = (s: number): boolean =>
+  s >= 2 && Array.from({ length: s - 2 }, (_, i) => i + 2).every((d) => s % d !== 0);
+const parts = (x: number[], allowed: (s: number) => boolean): boolean => x.every(allowed);
+
+const DEEP = process.env.DEEP_TESTS === "1";
+const upTo = DEEP ? 10 : 7;
+const RESTRICTIONS: Record<string, Reading> = {
+  OddCompositions: restriction(sizes(upTo), (x) => parts(x, (s) => s % 2 === 1)),
+  ProperCompositions: restriction(sizes(upTo), (x) => parts(x, (s) => s >= 2)),
+  DyadicCompositions: restriction(sizes(upTo), (x) => parts(x, (s) => (s & (s - 1)) === 0)),
+  FibonacciCompositions: restriction(sizes(upTo), (x) => parts(x, (s) => s <= 2)),
+  TriCompositions: restriction(sizes(upTo), (x) => parts(x, (s) => s <= 3)),
+  TetraCompositions: restriction(sizes(upTo), (x) => parts(x, (s) => s <= 4)),
+  TriangularCompositions: restriction(sizes(upTo), (x) => parts(x, (s) => [1, 3, 6, 10].includes(s))),
+  PrimeCompositions: restriction(sizes(upTo), (x) => parts(x, isPrime)),
+  PartSizeBoundedCompositions: restriction(
+    pairs([0, 0], [3, 0], [3, 1], [4, 2], [5, 3], [6, 2], [5, 9], [7, 4]),
+    (x, [, k]) => parts(x, (s) => s <= k),
+  ),
+  PartCountBoundedCompositions: restriction(
+    pairs([0, 0], [3, 0], [3, 1], [4, 2], [5, 3], [6, 2], [5, 9], [7, 4]),
+    (x, [, k]) => x.length <= k,
+  ),
+  CarlitzCompositions: restriction(sizes(upTo), (x) => x.every((v, i) => i === 0 || x[i - 1] !== v)),
+  PalindromicCompositions: restriction(sizes(upTo), (x) => x.every((v, i) => v === x[x.length - 1 - i])),
+  ZigzagCompositions: restriction(sizes(upTo), (x) => {
+    const steps = x.slice(1).map((v, i) => Math.sign(v - x[i]));
+    return steps.every((d, i) => d !== 0 && (i === 0 || d === -steps[i - 1]));
+  }),
+};
+
+const byHead = new Map([...epsilEntries, ...restricted].map((family) => [family.head, family]));
+
+for (const [head, reading] of Object.entries({ ...READINGS, ...RESTRICTIONS })) {
   const family = byHead.get(head)!;
   const kernel = epsilKernelOn(ce, family);
   for (const p of reading.params) {
@@ -166,3 +232,33 @@ test("past 2^53 IntegerCompositions answers in exact integers", () => {
   const middle = kernel.unrank([n], total / 3n);
   expect(kernel.rank(middle, [n])).toBe(total / 3n);
 });
+
+// The restrictions through the interpreter alone, at the smallest params with a couple of members.
+for (const [head, reading] of Object.entries(RESTRICTIONS)) {
+  test(`${head}: the interpreter agrees with compiled code`, () => {
+    const family = byHead.get(head)!;
+    const p = reading.params.filter((q) => reading.count(q) >= 2).at(DEEP ? -2 : 0)!;
+    const bind = Object.fromEntries(family.params.map((name, i) => [name, p[i]]));
+    const total = reading.count(p);
+    expect(interpreted(family, "count", bind)).toBe(total);
+    for (const r of new Set([0, Math.floor(total / 2), total - 1])) {
+      const element = reading.unrank(p, r);
+      expect(interpreted(family, "unrank", { ...bind, _r: r })).toEqual(list(element as unknown[]));
+      expect(interpreted(family, "rank", { ...bind, _x: list(element as unknown[]) })).toBe(r);
+      expect(interpreted(family, "valid", { ...bind, _x: list(element as unknown[]) })).toBe("True");
+    }
+  });
+}
+
+// Past 2^53 these tables are out of the interpreter's reach, so every operation declines (unknown).
+for (const [head, p] of [
+  ["CarlitzCompositions", [120]],
+  ["ZigzagCompositions", [100]],
+  ["PartCountBoundedCompositions", [120, 120]],
+] as const) {
+  test(`past 2^53 ${head} declines`, () => {
+    const kernel = epsilKernelOn(ce, byHead.get(head)!);
+    expect(() => kernel.count([...p])).toThrow(/past 2\^53/);
+    expect(() => kernel.unrank([...p], 0n)).toThrow(/past 2\^53/);
+  });
+}

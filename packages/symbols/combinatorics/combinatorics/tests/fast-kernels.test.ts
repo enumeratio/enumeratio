@@ -237,7 +237,10 @@ const QUICK_PAST_LIMIT = new Set([
   "GrayCodes",
   "BinaryTreeParentArrays",
 ]);
-for (const family of fastFamilies.filter((f) => DEEP || QUICK_PAST_LIMIT.has(f.head))) {
+// A family whose count declines past 2^53 has no answer there to compare.
+for (const family of fastFamilies.filter(
+  (f) => f.declinePastDoubles !== "count" && (DEEP || QUICK_PAST_LIMIT.has(f.head)),
+)) {
   test(`${family.head}: a fiber past 2^53 is answered by Epsil`, () => {
     const above = paramGrid(family).above;
     // Some families (a fixed small axis) never reach 2^53 within the scan.
