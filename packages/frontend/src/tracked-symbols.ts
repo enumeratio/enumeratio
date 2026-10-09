@@ -24,7 +24,7 @@ function assignedName(json: MathJsonExpression): string | undefined {
 // This file is the pure, DOM-free half: given each cell's static bindings (what it
 // assigns, what free symbols it reads -- found by boxing, never by evaluating), it
 // builds the dependency graph, the evaluation order, and the errors a reactive module
-// rejects a graph for. The element (`notatio-dynamic-module`) owns the DOM and the
+// rejects a graph for. The element (`dynamic-module-box`) owns the DOM and the
 // commit signal; this module only ever sees plain data.
 
 /**

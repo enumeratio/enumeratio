@@ -60,7 +60,7 @@ export class NotatioCheckbox extends LitElement {
   }
 
   protected override render(): unknown {
-    return html`<label class="notatio-checkbox">
+    return html`<label class="checkbox-box">
       <input
         type="checkbox"
         .checked=${this._on}
@@ -71,4 +71,4 @@ export class NotatioCheckbox extends LitElement {
   }
 }
 
-defineControl("notatio-checkbox", NotatioCheckbox);
+defineControl("checkbox-box", NotatioCheckbox);

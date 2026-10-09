@@ -24,7 +24,7 @@
 // Vite bundles the two together into one self-contained chunk -- see that file's own
 // comment.
 //
-// `notatio-dynamic-module.ts` can't write any of this itself: it doesn't know (and
+// `dynamic-module-box.ts` can't write any of this itself: it doesn't know (and
 // shouldn't hardcode) this site's own directory layout, and the literal-path
 // requirement means the `new URL(...)` has to live in a file whose OWN `import.meta.url`
 // sits next to the target. So this site-owned module writes it once, for both worker
@@ -50,7 +50,7 @@ export const createSessionWorker: WorkerFactory = () =>
 // static literal, not just the URL -- `{ name: options.name, type: "module" }` fails
 // the same way a computed URL does ("Vite is unable to parse the worker options as the
 // value is not static"). This drops `name` (multi-tab session sharing) rather than
-// working around it: `notatio-dynamic-module.ts` never passes one today (each module
+// working around it: `dynamic-module-box.ts` never passes one today (each module
 // gets its own private session, per its own comment), so there is nothing to preserve.
 export const createSessionSharedWorker: SharedWorkerFactory = () =>
   new SharedWorker(new URL("./session-worker-entry.ts", import.meta.url), {

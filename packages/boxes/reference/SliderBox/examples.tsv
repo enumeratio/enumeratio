@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[SliderBox, [DynamicBox, k], [Tuple, 0, 5]]	[SliderBox, [DynamicBox, k], [Tuple, 0, 5]]	a box is inert: it evaluates to itself

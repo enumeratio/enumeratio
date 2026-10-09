@@ -128,7 +128,7 @@ function substitute(expr: unknown, bindings: ReadonlyMap<string, unknown>): unkn
 export interface TranscriptHost extends Element {
   transcriptFor(engine: ComputeEngine): Transcript;
   /**
-   * `Evaluator` (https://github.com/enumeratio/enumeratio/wiki/Computation, `notatio-dynamic-module.ts`): `"Local"`
+   * `Evaluator` (https://github.com/enumeratio/enumeratio/wiki/Computation, `dynamic-module-box.ts`): `"Local"`
    * (default, or absent) evaluates in-page as today; `"Worker"` routes a cell's
    * evaluation to the module's `evaluation` session instead (`evaluateRemote`,
    * below). Optional so a plain `TranscriptHost` (no `Evaluator` support at all)
@@ -156,7 +156,7 @@ export interface TranscriptHost extends Element {
  * until the editor commits, rather than on every keystroke.
  */
 export function transcriptHostOf(el: Element): TranscriptHost | undefined {
-  const host = el.closest("notatio-dynamic-module");
+  const host = el.closest("dynamic-module-box");
   return host && typeof (host as Partial<TranscriptHost>).transcriptFor === "function"
     ? (host as TranscriptHost)
     : undefined;
@@ -642,7 +642,7 @@ export class NotatioOut extends LitElement {
    * (`BrowserSession.evaluate`'s own contract, `@enumeratio/evaluation/browser`): the
    * worker may keep running in the background rather than actually halting -- a
    * module `time-constraint` is what turns an uncooperative loop into a hard-killed,
-   * reset session (`notatio-dynamic-module.ts`'s own comment).
+   * reset session (`dynamic-module-box.ts`'s own comment).
    */
   stop(): void {
     this.#abort?.abort();

@@ -2,6 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { afterAll, expect, test } from "vite-plus/test";
+import { boxTag } from "../src/box-tags.ts";
 import { controlNames, DRAWING_SYMBOLS, markupOf, renderingOf, visualSymbol } from "../src/symbols.ts";
 
 // A head that draws, and the component that draws it. The corpus is one expression per
@@ -139,6 +140,8 @@ const FAMILY_TAGS = [
   "notatio-density-plot",
   "notatio-polar-plot",
   "notatio-plot", // ParametricPlot: Wolfram's own separate head, same component as Plot
+  "slider-box", // VerticalSlider: a SliderBox standing up
+  "setter-box", // SetterBar
   "notatio-show", // Permutahedron(4) and kin display as Show(PolytopeFaces(…)); values as Show(frame(…))
 ];
 
@@ -149,10 +152,10 @@ test("every visual symbol's tag is its name, kebab-cased, or its family's", () =
     // whose body is a `List` of `Cell`s -- so it deliberately shares `DynamicModule`'s
     // tag rather than getting a `notatio-notebook` of its own.
     if (s.head === "Notebook") {
-      expect(s.tag).toBe("notatio-dynamic-module");
+      expect(s.tag).toBe("dynamic-module-box");
       continue;
     }
-    if (s.tag === kebab(s.head)) continue;
+    if (s.tag === kebab(s.head) || s.tag === boxTag(`${s.head}Box`)) continue;
     expect(FAMILY_TAGS, s.head).toContain(s.tag);
   }
   expect(visualSymbol("Sin")).toBeUndefined();

@@ -85,7 +85,7 @@ function optionsOn(el: Element, symbol: VisualSymbol): Record<string, MathJsonEx
   return options;
 }
 
-const SCOPES = "notatio-dynamic-module, notatio-manipulate";
+const SCOPES = "dynamic-module-box, notatio-manipulate";
 
 /**
  * The names the controls in `el`'s scope declare -- what a readout beside them reads

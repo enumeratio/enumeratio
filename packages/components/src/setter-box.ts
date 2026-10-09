@@ -59,4 +59,4 @@ export class NotatioSetterBar extends ChoiceControl {
   }
 }
 
-defineControl("notatio-setter-bar", NotatioSetterBar);
+defineControl("setter-box", NotatioSetterBar);

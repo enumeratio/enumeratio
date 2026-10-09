@@ -63,7 +63,12 @@ export class NodeHost {
     if (out.exit || out.clear) return undefined;
     const last = this.repl.session.history.at(-1);
     if (!last || !out.text.includes(`Out[${last.n}]`)) return undefined;
-    return figureText(last.expr.json as never, { color: this.repl.color, notation: notationOf(this.repl.session.ce) });
+    const { session } = this.repl;
+    return figureText(last.expr.json as never, {
+      color: this.repl.color,
+      notation: notationOf(session.ce),
+      evaluate: (json) => session.render(session.ce.box(json as never).evaluate()),
+    });
   }
 
   private commands(): Record<string, CommandHandler> {

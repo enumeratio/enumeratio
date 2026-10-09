@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[CheckboxBox, [DynamicBox, on], Automatic]	[CheckboxBox, [DynamicBox, on], Automatic]	a box is inert: it evaluates to itself

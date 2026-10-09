@@ -4,6 +4,7 @@
 // the control contract, and the pure renderers that turn data into SVG. The components
 // (`@enumeratio/components`) and the framework mirrors are built on this.
 export * from "./box-tags.ts";
+export { type BoxControl, boxControls, controlElement } from "./control-box.ts";
 export * from "./core.ts";
 export * from "./declare-carriers.ts";
 export * from "./complex-eval.ts";

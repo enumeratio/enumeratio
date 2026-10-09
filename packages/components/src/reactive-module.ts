@@ -46,7 +46,7 @@ interface ValueElement extends Element {
  */
 const valueOf = (el: Element): string => (el as ValueElement).value ?? el.getAttribute("value") ?? "";
 
-/** The `Evaluator` half of `notatio-dynamic-module.ts`'s host -- read off `register`'s
+/** The `Evaluator` half of `dynamic-module-box.ts`'s host -- read off `register`'s
  * own `root` (which IS the module element; see `register`'s own comment) by duck
  * typing rather than widening `register`'s parameter type, so its signature -- one of
  * the hooks a reordered notebook/worksheet is built on -- stays exactly as it was. */
@@ -57,7 +57,7 @@ interface WorkerHost {
 
 /**
  * The DOM-facing half of `TrackedSymbols` (`@enumeratio/frontend`'s `tracked-symbols.ts`
- * has the pure graph): one `CellBindings` per `<notatio-cell>` a `<notatio-dynamic-module>`
+ * has the pure graph): one `CellBindings` per `<notatio-cell>` a `<dynamic-module-box>`
  * has seen, kept current as each cell commits, and `schedule`'s diagnostics turned into
  * `data-reactive-error` on the cells they cite -- a duplicate definition or a cycle shown
  * on every cell it names, an ordinal reference rejected outright, the way

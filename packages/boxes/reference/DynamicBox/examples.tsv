@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[DynamicBox, [Power, k, 2]]	[DynamicBox, [Power, k, 2]]	a box is inert: it evaluates to itself

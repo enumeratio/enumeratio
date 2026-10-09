@@ -13,7 +13,7 @@ import "@enumeratio/components";
 ```
 
 ```html
-<notatio-slider name="k" from="0" to="5"></notatio-slider> <notatio-dynamic expr="k^2"></notatio-dynamic>
+<slider-box name="k" from="0" to="5"></slider-box> <dynamic-box expr="k^2"></dynamic-box>
 ```
 
 ## What's here
@@ -21,21 +21,21 @@ import "@enumeratio/components";
 - **Editable cells** — `<notatio-in>` (a MathLive field reading Epsil), `<notatio-out>`
   (renders an evaluated expression, or the raw encoding a `format` prop names),
   `<notatio-cell>` (the unified In/Out pair), `<notatio-notebook>` and
-  `<notatio-worksheet>` (a reactive sheet of cells built on `<notatio-dynamic-module>`).
+  `<notatio-worksheet>` (a reactive sheet of cells built on `<dynamic-module-box>`).
 - **Plots and charts** — `<notatio-plot>`, `<notatio-plot-3d>`, `<notatio-contour-plot>`,
   `<notatio-density-plot>`, `<notatio-vector-plot>`, `<notatio-polar-plot>`,
   `<notatio-complex-plot>` (and `-3d`), `<notatio-chart>` (the family head for
   Histogram/BarChart/PieChart-style symbols), `<notatio-graph-plot>`.
-- **Controls** — `<notatio-slider>` (and `-2d`, `-vertical`, `-interval`,
-  `-color`), `<notatio-knob>`, `<notatio-toggler>` (and `-bar`),
-  `<notatio-radio-button-bar>`, `<notatio-setter-bar>`, `<notatio-checkbox>`,
-  `<notatio-list-picker>`, `<notatio-locator>`, `<notatio-input-field>` — every one
+- **Controls** — `<slider-box>` (`axis="y"` stands it up; and `<slider-2d-box>`, `<notatio-interval-slider>`,
+  `<notatio-color-slider>`), `<notatio-knob>`, `<toggler-box>` (and `<notatio-toggler-bar>`),
+  `<notatio-radio-button-bar>`, `<setter-box>`, `<checkbox-box>`,
+  `<notatio-list-picker>`, `<notatio-locator>`, `<input-field-box>` — every one
   keeping the control contract from [`frontend`](../frontend/README.md) (`controls.ts`): a `name`, a
   MathJSON `binding`, a `notatio-control-change` event.
 - **Layout** — `Row`, `Column`, `Grid`, `Panel` and `Labeled` are boxes drawn as plain DOM by
   [`frontend`](../frontend/README.md)'s box renderer, not elements.
-- **Reactive scopes** — `<notatio-manipulate>`, `<notatio-dynamic>`,
-  `<notatio-dynamic-module>`: bind a body's controls to its own expression and re-render
+- **Reactive scopes** — `<notatio-manipulate>`, `<dynamic-box>`,
+  `<dynamic-module-box>`: bind a body's controls to its own expression and re-render
   on change.
 - **Other** — `<notatio-code>`, `<notatio-terminal>` (a real terminal emulator running
   `@enumeratio/cli`'s logic), `<notatio-collection-table>`, `<notatio-clock>`,

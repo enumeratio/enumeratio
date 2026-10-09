@@ -9,6 +9,24 @@ export type Options = Readonly<Record<string, OptionValue>>;
 
 export type Box = string | BoxNode;
 
+/**
+ * The interface boxes that take input, one per kind as in Wolfram. Each holds a binding (a
+ * `DynamicBox` over the variable, which may be `(x, start)`), a domain (the range, the entries or
+ * the corners, as written, `Automatic` when there is none) and options.
+ */
+export const CONTROL_BOX_HEADS = [
+  "SliderBox",
+  "Slider2DBox",
+  "CheckboxBox",
+  "PopupMenuBox",
+  "InputFieldBox",
+  "SetterBox",
+  "TogglerBox",
+  "AnimatorBox",
+] as const;
+
+export type ControlBoxHead = (typeof CONTROL_BOX_HEADS)[number];
+
 export type BoxNode =
   | readonly ["RowBox", readonly Box[]]
   | readonly ["TextBox", string, Options?]
@@ -46,6 +64,12 @@ export type BoxNode =
   | readonly ["TextCell", Box, string, Options?]
   | readonly ["TextData", readonly Box[]]
   | readonly ["ButtonBox", Box, Options?]
+  // Interface boxes (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, slice 3). A `DynamicBox`
+  // holds an expression the environment re-evaluates when what it reads moves; a `DynamicModuleBox`
+  // owns the scope its controls bind in; a control box binds one variable.
+  | readonly ["DynamicBox", MathJsonExpression, Options?]
+  | readonly ["DynamicModuleBox", Box, Options?]
+  | readonly [ControlBoxHead, Box, MathJsonExpression, Options?]
   // `form` is how the box reads: `TeXForm` holds TeX as written (its leaves are TeX, never
   // parsed); `TraditionalForm`/`StandardForm` hold formula boxes.
   | readonly ["FormBox", Box, string]
@@ -87,12 +111,25 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   TextCell: 2,
   TextData: 1,
   ButtonBox: 1,
+  DynamicBox: 1,
+  DynamicModuleBox: 1,
+  SliderBox: 2,
+  Slider2DBox: 2,
+  CheckboxBox: 2,
+  PopupMenuBox: 2,
+  InputFieldBox: 2,
+  SetterBox: 2,
+  TogglerBox: 2,
+  AnimatorBox: 2,
   FormBox: 2,
   TemplateSlot: 1,
   TemplateExpression: 1,
 };
 
 export const BOX_HEADS = Object.keys(ARITY) as readonly BoxHead[];
+
+export const isControlBoxHead = (head: unknown): head is ControlBoxHead =>
+  (CONTROL_BOX_HEADS as readonly unknown[]).includes(head);
 
 /** A node rather than a leaf. */
 export const isNode = (box: Box | undefined): box is BoxNode => box !== undefined && typeof box !== "string";
@@ -151,6 +188,12 @@ export const textCell = (content: Box, cellStyle: string, options?: Options): Bo
 export const textData = (items: readonly Box[]): Box => ["TextData", items];
 export const button = (label: Box, options?: Options): Box =>
   ["ButtonBox", ...withOptions([label] as const, options)] as Box;
+export const dynamic = (expr: MathJsonExpression, options?: Options): Box =>
+  ["DynamicBox", ...withOptions([expr] as const, options)] as Box;
+export const dynamicModule = (body: Box, options?: Options): Box =>
+  ["DynamicModuleBox", ...withOptions([body] as const, options)] as Box;
+export const control = (head: ControlBoxHead, binding: Box, domain: MathJsonExpression, options?: Options): Box =>
+  [head, ...withOptions([binding, domain] as const, options)] as Box;
 export const form = (box: Box, name: string): Box => ["FormBox", box, name];
 export const slot = (name: string, options?: Options): Box =>
   ["TemplateSlot", ...withOptions([name] as const, options)] as Box;
@@ -207,8 +250,10 @@ export function isBox(value: unknown): value is Box {
     case "InterpretationBox":
       return isBox(args[0]) && args[1] !== undefined;
     case "TableViewBox":
+    case "DynamicBox":
       return args[0] !== undefined;
     default:
+      if (isControlBoxHead(head)) return isBox(args[0]) && args[1] !== undefined;
       return args.every(isBox);
   }
 }

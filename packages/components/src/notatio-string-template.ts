@@ -12,7 +12,7 @@ import { html, LitElement, nothing } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./notatio-knob.ts";
 import "./notatio-stepper.ts";
-import "./notatio-toggler.ts";
+import "./toggler-box.ts";
 import { type Scope, scopeOf } from "./scope.ts";
 import { ensureStyles } from "./styles.ts";
 
@@ -194,11 +194,11 @@ export class NotatioStringTemplate extends LitElement {
       case "toggler": {
         const values =
           domain?.kind === "choices" ? domain.values.map((v, k) => entryOf(v, domain.labels[k]!)).join("|") : undefined;
-        return html`<notatio-toggler
+        return html`<toggler-box
           name=${name}
           values=${values ?? nothing}
           .value=${wordsOf(spec, value)}
-        ></notatio-toggler>`;
+        ></toggler-box>`;
       }
     }
     return wordsOf(spec, value, this.#ringOf);
@@ -282,7 +282,7 @@ export class NotatioStringTemplate extends LitElement {
             >${label}</a
           >`;
         }
-        return html`<notatio-dynamic value=${part.value}></notatio-dynamic>`;
+        return html`<dynamic-box value=${part.value}></dynamic-box>`;
       }
     }
     return nothing;

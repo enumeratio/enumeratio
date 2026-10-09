@@ -119,9 +119,9 @@ export default {
         .requestIdleCallback;
       if (idle) idle(define, { timeout: 2000 });
       else setTimeout(define, 0);
-      // Points an `Evaluator -> "Worker"` `<notatio-dynamic-module>` at the module
+      // Points an `Evaluator -> "Worker"` `<dynamic-module-box>` at the module
       // whose `configure(ce)` declares this page's own libraries into its
-      // `@enumeratio/evaluation/browser` session -- `notatio-dynamic-module.ts`'s own
+      // `@enumeratio/evaluation/browser` session -- `dynamic-module-box.ts`'s own
       // `#openSession` reads this the same way `loadEngine` reads
       // `__notatioEngineSetup` above. A `URL` (not a bare specifier) so the worker's
       // own `import(setup)` -- running in a different module graph -- can resolve it.

@@ -190,7 +190,7 @@ export class NotatioSlider2D extends LitElement {
     const fx = (this._x - min[0]) / (max[0] - min[0]);
     const fy = (this._y - min[1]) / (max[1] - min[1]);
     const text = `${numberLatex(this._x, step[0])}, ${numberLatex(this._y, step[1])}`;
-    return html`<span class="notatio-slider-2d" ?data-dragging=${this._dragging}>
+    return html`<span class="slider-2d-box" ?data-dragging=${this._dragging}>
       <span
         class="notatio-pad"
         role="slider"
@@ -211,4 +211,4 @@ export class NotatioSlider2D extends LitElement {
   }
 }
 
-defineControl("notatio-slider-2d", NotatioSlider2D);
+defineControl("slider-2d-box", NotatioSlider2D);

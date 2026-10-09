@@ -7,12 +7,12 @@
 
 import { type Box, LAYOUT_HEADS, makeBoxes, type Notation } from "@enumeratio/boxes";
 import { figureGraphicsBox, headOf, isFlatFrame, opsOf, plainJson, VALUE_FRAMES } from "@enumeratio/frontend";
-import { type CellOptions, drawGraphicsBox } from "./cell-draw.ts";
-import { drawBoxes } from "./cell-layout.ts";
+import { drawGraphicsBox } from "./cell-draw.ts";
+import { drawBoxes, type LayoutOptions } from "./cell-layout.ts";
 
 type Json = Parameters<typeof plainJson>[0];
 
-export interface FigureOptions extends CellOptions {
+export interface FigureOptions extends LayoutOptions {
   /** The notation the session's packages bring, so a layout's math is written as the page writes it. */
   readonly notation?: Notation;
 }

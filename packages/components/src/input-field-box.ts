@@ -103,7 +103,7 @@ export class NotatioInputField extends LitElement {
   protected override render(): unknown {
     return html`<input
       type="text"
-      class="notatio-input-field"
+      class="input-field-box"
       inputmode=${this.type === "number" ? "decimal" : "text"}
       size=${this.size}
       .value=${this._text}
@@ -119,4 +119,4 @@ export class NotatioInputField extends LitElement {
   }
 }
 
-defineControl("notatio-input-field", NotatioInputField);
+defineControl("input-field-box", NotatioInputField);

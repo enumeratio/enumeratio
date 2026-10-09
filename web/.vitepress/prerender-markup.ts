@@ -27,7 +27,8 @@ const SPECS_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "cache/preren
 export const specsFile = (relativePath: string): string =>
   resolve(SPECS_DIR, `${encodeURIComponent(relativePath)}.json`);
 
-const TAG = /<(\/?)(notatio-[a-z0-9-]+)((?:\s+[^\s=/>]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+))?)*)\s*(\/?)>/g;
+const TAG =
+  /<(\/?)(notatio-[a-z0-9-]+|dynamic-module-box)((?:\s+[^\s=/>]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+))?)*)\s*(\/?)>/g;
 const ATTRIBUTE = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
 
 const attributesOf = (source: string): Record<string, string> => {
@@ -70,7 +71,7 @@ export function prerenderMarkup(md: MarkdownItLike): void {
           else if (!self) manipulate.push(attributesOf(attrs)["params"] ?? "");
           return whole;
         }
-        if (tag === "notatio-notebook" || tag === "notatio-dynamic-module") {
+        if (tag === "notatio-notebook" || tag === "dynamic-module-box") {
           if (close) sessions--;
           else if (!self) sessions++;
           return whole;

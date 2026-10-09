@@ -11,7 +11,7 @@ type Scope = ReturnType<ComputeEngine["createScope"]>;
 // higher line number rather than overwriting its old one.
 //
 // This is the base-package half: pure engine bookkeeping, no DOM. The element side
-// (`notatio-dynamic-module`) owns one `Transcript` per instance and hands it to whichever
+// (`dynamic-module-box`) owns one `Transcript` per instance and hands it to whichever
 // `notatio-out` inside it asks (see that package for how a cell finds its transcript, the
 // way a Cell already finds a forced `env`).
 //

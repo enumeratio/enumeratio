@@ -75,4 +75,5 @@ test("headOfTag is tagOf run backwards", () => {
   expect(headOfTag("notatio-bar-chart-3d")).toBe("BarChart3D");
   expect(headOfTag("notatio-plot-3d")).toBe("Plot3D");
   expect(headOfTag("notatio-collection-table")).toBe("CollectionTable");
+  expect(headOfTag("slider-2d-box")).toBe("Slider2D");
 });

@@ -1,4 +1,4 @@
-import { NotatioSetterBar } from "./notatio-setter-bar.ts";
+import { NotatioSetterBar } from "./setter-box.ts";
 import { defineControl } from "./define.ts";
 
 /**

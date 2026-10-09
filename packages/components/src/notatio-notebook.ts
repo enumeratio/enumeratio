@@ -2,7 +2,7 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { keyed } from "lit/directives/keyed.js";
 import { repeat } from "lit/directives/repeat.js";
 import "./notatio-cell.ts";
-import "./notatio-dynamic-module.ts";
+import "./dynamic-module-box.ts";
 import { referencesOrdinal, toIpynb } from "@enumeratio/frontend/core";
 import {
   browserStore,
@@ -327,7 +327,7 @@ export class NotatioNotebook extends LitElement {
       </span>
       ${keyed(
         this._generation,
-        html`<notatio-dynamic-module tracked-symbols="all">
+        html`<dynamic-module-box tracked-symbols="all">
           ${repeat(
             this._cells,
             (cell) => cell.id,
@@ -374,7 +374,7 @@ export class NotatioNotebook extends LitElement {
               </div>`;
             },
           )}
-        </notatio-dynamic-module>`,
+        </dynamic-module-box>`,
       )}
     </div>`;
   }

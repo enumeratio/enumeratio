@@ -9,7 +9,7 @@
 
 import { serializeExpression } from "@enumeratio/formats/expression";
 import { iterate } from "@enumeratio/frontend";
-import { type Declaration, declarations, pinValue, pin, sampleValues } from "@enumeratio/frontend";
+import { boxDeclarations, type Declaration, pinValue, pin, sampleValues } from "@enumeratio/frontend";
 import { numOf, strOf, tupleOf } from "@enumeratio/frontend";
 import { bold, cyan, dim, stripAnsi } from "./ansi.ts";
 
@@ -218,12 +218,12 @@ export interface Driver {
   stop(): void;
 }
 
-/** Whether an expression has anything to drive. */
-export const drivable = (expr: Json): boolean => declarations(expr).length > 0;
+/** Whether an expression has anything to drive: a control box in it (or a `Manipulate` parameter). */
+export const drivable = (expr: Json): boolean => boxDeclarations(expr).length > 0;
 
 /** The driver for `expr`'s controls, or `undefined` when it has none to move. */
 export function driver(expr: Json, screen: DriveScreen): Driver | undefined {
-  const controls = declarations(expr)
+  const controls = boxDeclarations(expr)
     .map(driven)
     .filter((d): d is Driven => d !== undefined);
   if (controls.length === 0) return undefined;

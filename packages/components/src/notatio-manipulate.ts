@@ -5,7 +5,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { applyTemplates, captureTemplates, type Template, takesBindings, whenTemplatesDefined } from "./bindings.ts";
 import { controlsTemplate } from "./manipulate-ui.ts";
 import { ensureFor, loadBareEngine, loadMarkup } from "./mathlive.ts";
-import "./notatio-dynamic.ts";
+import "./dynamic-box.ts";
 import "./notatio-knob.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
@@ -265,7 +265,7 @@ export class NotatioManipulate extends LitElement {
         return markup === undefined ? part.latex : unsafeHTML(markup);
       }
       case "dynamic":
-        return html`<notatio-dynamic value=${part.value} digits=${ifDefined(part.options.digits)}></notatio-dynamic>`;
+        return html`<dynamic-box value=${part.value} digits=${ifDefined(part.options.digits)}></dynamic-box>`;
       case "knob": {
         const c = this._controls.find((k) => k.name === part.name);
         if (c === undefined) return nothing;

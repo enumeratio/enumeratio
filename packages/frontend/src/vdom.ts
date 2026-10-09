@@ -11,7 +11,8 @@ import { optionsOf } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
 import { stripMetadata, tokenOf } from "@enumeratio/formats/markup";
 import { LAYOUT_HEADS } from "@enumeratio/boxes";
-import { layoutRendering, optionAttribute, type Rendering, renderingOf } from "./symbols.ts";
+import { isBoxTag } from "./box-tags.ts";
+import { layoutRendering, optionAttribute, type Rendering, renderingOf, visualSymbol } from "./symbols.ts";
 
 type Json = MathJsonExpression;
 
@@ -27,8 +28,13 @@ export interface StructuralNode extends Omit<Rendering, "children"> {
   readonly children?: readonly (StructuralNode | string)[];
 }
 
-/** `Plot3D` -> `notatio-plot-3d`: the naming rule, kebab-cased with digits kept together. */
+/**
+ * `Plot3D` -> `notatio-plot-3d`: the naming rule, kebab-cased with digits kept together; a head
+ * a box draws as is that box's tag (`Slider2D` -> `slider-2d-box`).
+ */
 export function tagOf(head: string): string {
+  const drawn = visualSymbol(head)?.tag;
+  if (drawn !== undefined && isBoxTag(drawn)) return drawn;
   // A digit run stays with its letter: `Plot3D` is `plot-3d`, as the symbols test pins.
   return `notatio-${head.replace(/([a-z])([A-Z0-9])/g, "$1-$2").toLowerCase()}`;
 }

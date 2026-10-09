@@ -131,7 +131,7 @@ and Space to play.
 <template #description>
 Drag the <strong>3</strong> and the <strong>1.0</strong>; press ▶ (or focus a
 knob and hit Space) to sweep. The readouts are ordinary
-<code>&lt;notatio-dynamic&gt;</code> templates and the plot is an ordinary
+<code>&lt;dynamic-box&gt;</code> templates and the plot is an ordinary
 Manipulate target — nothing in the sentence knows the plot exists.
 </template>
 <notatio-manipulate v-pre

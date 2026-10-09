@@ -8,12 +8,12 @@ import type { Notation, NotationRule, Writer } from "./notation.ts";
 
 type Json = MathJsonExpression;
 
-const headOf = (node: unknown): string | undefined => {
+export const headOf = (node: unknown): string | undefined => {
   const fn = Array.isArray(node) ? node : (node as { fn?: unknown[] })?.fn;
   return Array.isArray(fn) && typeof fn[0] === "string" ? fn[0] : undefined;
 };
 
-const opsOf = (node: unknown): Json[] => {
+export const opsOf = (node: unknown): Json[] => {
   const fn = Array.isArray(node) ? node : (node as { fn?: unknown[] })?.fn;
   return Array.isArray(fn) ? (fn.slice(1) as Json[]) : [];
 };
@@ -62,7 +62,7 @@ function split(args: readonly Json[]): { ops: Json[]; options: Record<string, Js
 }
 
 /** A rule's value as an option: a name, a string, a number, or a list of them. */
-function optionOf(json: Json): OptionValue | undefined {
+export function optionOf(json: Json): OptionValue | undefined {
   const items = listOf(json);
   if (items !== undefined) {
     const values = items.map(optionOf);

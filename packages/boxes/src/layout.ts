@@ -8,7 +8,15 @@
 // cells it also writes a small math (stacked fractions, raised scripts); elsewhere a math run is
 // a slot for the environment's typesetter.
 
-import { type Box, type BoxNode, isNode, type Options, type OptionValue, optionsOfBox } from "./box.ts";
+import {
+  type Box,
+  type BoxNode,
+  isControlBoxHead,
+  isNode,
+  type Options,
+  type OptionValue,
+  optionsOfBox,
+} from "./box.ts";
 
 export interface Font {
   /** In the metrics' own units (points, pixels); ignored by a cell metric. */
@@ -375,9 +383,13 @@ class Layout {
       case "PolyhedronBox":
       case "InsetBox":
       case "TableViewBox":
+      case "DynamicBox":
         return this.slot(box);
+      case "DynamicModuleBox":
+        return this.lay(box[1], style);
       default:
-        return this.math(box, style);
+        // A control is a leaf the environment draws and the reader moves.
+        return isControlBoxHead(box[0]) ? this.slot(box) : this.math(box, style);
     }
   }
 

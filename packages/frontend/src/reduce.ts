@@ -9,9 +9,11 @@
 // See https://github.com/enumeratio/enumeratio/wiki/Rendering-Environments.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { LAYOUT_HEADS } from "@enumeratio/boxes";
+import { type ControlBoxHead, LAYOUT_HEADS, makeBoxes } from "@enumeratio/boxes";
 import { optionsOf, withOptions } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
+import { type BoxControl, boxControls } from "./control-box.ts";
+import { plainJson } from "./graphics-rules.ts";
 import { can, ENVIRONMENTS, type Environment, type Reading } from "./environment.ts";
 import {
   CONTROL_HEADS,
@@ -105,6 +107,41 @@ export function declarations(expr: Json, into: Declaration[] = []): Declaration[
   }
   for (const op of opsOf(expr)) declarations(op, into);
   return into;
+}
+
+const KIND_OF_BOX: Readonly<Record<ControlBoxHead, ControlKind>> = {
+  SliderBox: "ranged",
+  AnimatorBox: "ranged",
+  Slider2DBox: "planar",
+  SetterBox: "listed",
+  TogglerBox: "listed",
+  PopupMenuBox: "listed",
+  CheckboxBox: "simple",
+  InputFieldBox: "simple",
+};
+
+/** What a control box declares, as `declarations` reads a control written out: `SliderBox` is a `Slider`. */
+export function declarationOfControl(control: BoxControl): Declaration {
+  const reading = readingOf(control.reading as Json | undefined);
+  return {
+    name: control.name,
+    head: control.head.slice(0, -"Box".length),
+    kind: KIND_OF_BOX[control.head],
+    ...(control.init === undefined ? {} : { init: control.init }),
+    ...(control.domain === undefined ? {} : { spec: control.domain }),
+    ...(reading === undefined ? {} : { reading }),
+  };
+}
+
+/**
+ * The declarations a reader drives, read off the expression's boxes: each control box is one. A
+ * `Manipulate`'s parameters and the controls with no box of their own (a `Knob`, a `Locator`)
+ * are still read as written.
+ */
+export function boxDeclarations(expr: Json): Declaration[] {
+  const boxed = boxControls(makeBoxes(plainJson(expr) as Json)).map(declarationOfControl);
+  const written = declarations(expr).filter((d) => d.head === "Manipulate" || !boxed.some((b) => b.name === d.name));
+  return [...boxed, ...written];
 }
 
 // --- values -----------------------------------------------------------------------

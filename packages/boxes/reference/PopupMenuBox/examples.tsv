@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[PopupMenuBox, [DynamicBox, c], [List, a, b, c]]	[PopupMenuBox, [DynamicBox, c], [List, a, b, c]]	a box is inert: it evaluates to itself
