@@ -3,13 +3,11 @@ name: Split check
 # Does each pilot package build and test from its dependencies' tarballs alone (tools/split-check)? ADVISORY,
 # never a required check: a red package is a finding for the nightly-fixup routine to triage. Known failures
 # are `expectFail` entries in tools/split-check/packages.json and keep the run green until they pass.
-#   nightly  — every package in the list.
+#   nightly  — nightly.yml's split-check jobs, which also file the rolling issue.
 #   PR       — add the `split-check` label.
 #   dispatch — `gh workflow run split-check.yml --ref <branch>`, optionally with `package`.
 
 on:
-  schedule:
-    - cron: "23 4 * * *" # 04:23 UTC, after nightly.yml
   pull_request:
     types: [labeled, synchronize]
   workflow_dispatch:
