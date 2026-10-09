@@ -101,6 +101,6 @@ export class NotatioDynamic extends LitElement {
   }
 }
 
-if (!customElements.get("notatio-dynamic")) {
-  customElements.define("notatio-dynamic", NotatioDynamic);
+if (!customElements.get("dynamic-box")) {
+  customElements.define("dynamic-box", NotatioDynamic);
 }

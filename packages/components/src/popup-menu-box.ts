@@ -59,4 +59,4 @@ export class NotatioPopupMenu extends ChoiceControl {
   }
 }
 
-defineControl("notatio-popup-menu", NotatioPopupMenu);
+defineControl("popup-menu-box", NotatioPopupMenu);

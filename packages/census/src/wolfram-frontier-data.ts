@@ -1193,10 +1193,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 5,
   },
   {
-    head: "DynamicBox",
-    uses: 5,
-  },
-  {
     head: "FindMaximum",
     uses: 5,
   },
@@ -1802,10 +1798,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Dt",
-    uses: 3,
-  },
-  {
-    head: "DynamicModuleBox",
     uses: 3,
   },
   {

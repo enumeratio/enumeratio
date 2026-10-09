@@ -264,6 +264,20 @@ function writeNode(box: BoxNode): string {
       return "\\text{-Graphics-}";
     case "TableViewBox":
       return "\\text{-TableView-}";
+    // An interface box has no TeX; it reads as Wolfram prints it, `-Slider-`.
+    case "DynamicBox":
+      return "\\text{-Dynamic-}";
+    case "DynamicModuleBox":
+      return write(box[1]);
+    case "SliderBox":
+    case "Slider2DBox":
+    case "CheckboxBox":
+    case "PopupMenuBox":
+    case "InputFieldBox":
+    case "SetterBox":
+    case "TogglerBox":
+    case "AnimatorBox":
+      return `\\text{-${box[0].slice(0, -3)}-}`;
     case "ButtonBox":
     case "TextCell":
       return write(box[1]);

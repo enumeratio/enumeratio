@@ -178,16 +178,20 @@ function parse(srcDir: string, file: string, table: Map<string, ClassDoc>): Comp
 export function collectComponents(srcDir: string): ComponentDoc[] {
   const table = classTable(srcDir);
   return readdirSync(srcDir)
-    .filter((f) => f.startsWith("notatio-") && f.endsWith(".ts"))
+    .filter((f) => (f.startsWith("notatio-") || f.endsWith("-box.ts")) && f.endsWith(".ts"))
     .map((f) => parse(srcDir, f, table))
     .filter((c): c is ComponentDoc => c !== undefined)
     .toSorted((a, b) => a.tag.localeCompare(b.tag));
 }
 
-/** `notatio-plot-3d` -> `Plot3D`, `notatio-collection-table` -> `CollectionTable`: `tagOf` backwards. */
+/**
+ * `notatio-plot-3d` -> `Plot3D`, `notatio-collection-table` -> `CollectionTable`: `tagOf` backwards.
+ * A box's tag names the head it draws, so `slider-2d-box` is `Slider2D`, the page `Slider2D`.
+ */
 export function headOfTag(tag: string): string {
   return tag
     .replace(/^notatio-/, "")
+    .replace(/-box$/, "")
     .split("-")
     .map((part) => (/^\d/.test(part) ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
     .join("");

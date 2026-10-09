@@ -6,16 +6,15 @@
 // animation timer and passes handlers in.
 
 import { html, type TemplateResult } from "lit";
-import "./notatio-animator.ts";
-import "./notatio-input-field.ts";
+import "./animator-box.ts";
+import "./input-field-box.ts";
 import "./notatio-knob.ts";
 import "./notatio-list-picker.ts";
-import "./notatio-popup-menu.ts";
+import "./popup-menu-box.ts";
 import "./notatio-radio-button-bar.ts";
-import "./notatio-setter-bar.ts";
-import "./notatio-slider.ts";
-import "./notatio-toggler.ts";
-import "./notatio-vertical-slider.ts";
+import "./setter-box.ts";
+import "./slider-box.ts";
+import "./toggler-box.ts";
 import type { LongPress } from "./popover.ts";
 import { type Control, type ControlChange, formatValue } from "@enumeratio/frontend/core";
 
@@ -38,31 +37,27 @@ const BAR_LIMIT = 5;
 export function tagFor(c: Control): string {
   switch (c.control) {
     case "VerticalSlider":
-      return "notatio-vertical-slider";
+      return "slider-box";
     case "Animator":
-      return "notatio-animator";
+      return "animator-box";
     case "Knob":
       return "notatio-knob";
     case "SetterBar":
-      return "notatio-setter-bar";
+      return "setter-box";
     case "RadioButtonBar":
       return "notatio-radio-button-bar";
     case "PopupMenu":
-      return "notatio-popup-menu";
+      return "popup-menu-box";
     case "Toggler":
-      return "notatio-toggler";
+      return "toggler-box";
     case "ListPicker":
       return "notatio-list-picker";
     case "InputField":
-      return "notatio-input-field";
+      return "input-field-box";
     case "Slider":
-      return "notatio-slider";
+      return "slider-box";
     default:
-      return c.kind === "slider"
-        ? "notatio-slider"
-        : c.choices.length <= BAR_LIMIT
-          ? "notatio-setter-bar"
-          : "notatio-popup-menu";
+      return c.kind === "slider" ? "slider-box" : c.choices.length <= BAR_LIMIT ? "setter-box" : "popup-menu-box";
   }
 }
 
@@ -126,33 +121,26 @@ function sliderControl(c: Extract<Control, { kind: "slider" }>): TemplateResult 
         max=${c.max}
         step=${c.step}
       ></notatio-knob>`;
-    case "notatio-input-field":
-      return html`<notatio-input-field name=${c.name} .value=${value} type="number"></notatio-input-field>`;
-    case "notatio-vertical-slider":
-      return html`<notatio-vertical-slider
-        name=${c.name}
-        .value=${value}
-        min=${c.min}
-        max=${c.max}
-        step=${c.step}
-      ></notatio-vertical-slider>`;
-    case "notatio-animator":
-      return html`<notatio-animator
+    case "input-field-box":
+      return html`<input-field-box name=${c.name} .value=${value} type="number"></input-field-box>`;
+    case "animator-box":
+      return html`<animator-box
         name=${c.name}
         .value=${value}
         min=${c.min}
         max=${c.max}
         step=${c.step}
         .readout=${false}
-      ></notatio-animator>`;
+      ></animator-box>`;
     default:
-      return html`<notatio-slider
+      return html`<slider-box
         name=${c.name}
+        axis=${c.control === "VerticalSlider" ? "y" : "x"}
         .value=${value}
         min=${c.min}
         max=${c.max}
         step=${c.step}
-      ></notatio-slider>`;
+      ></slider-box>`;
   }
 }
 
@@ -167,13 +155,13 @@ function choiceControl(c: Extract<Control, { kind: "choice" }>): TemplateResult 
         values=${values}
         .value=${value}
       ></notatio-radio-button-bar>`;
-    case "notatio-popup-menu":
-      return html`<notatio-popup-menu name=${c.name} values=${values} .value=${value}></notatio-popup-menu>`;
-    case "notatio-toggler":
-      return html`<notatio-toggler name=${c.name} values=${values} .value=${value}></notatio-toggler>`;
+    case "popup-menu-box":
+      return html`<popup-menu-box name=${c.name} values=${values} .value=${value}></popup-menu-box>`;
+    case "toggler-box":
+      return html`<toggler-box name=${c.name} values=${values} .value=${value}></toggler-box>`;
     case "notatio-list-picker":
       return html`<notatio-list-picker name=${c.name} values=${values} .value=${value} single></notatio-list-picker>`;
     default:
-      return html`<notatio-setter-bar name=${c.name} values=${values} .value=${value}></notatio-setter-bar>`;
+      return html`<setter-box name=${c.name} values=${values} .value=${value}></setter-box>`;
   }
 }

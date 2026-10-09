@@ -7,9 +7,20 @@
 //
 // A hole (`TemplateSlot`) is where the environment draws a leaf itself: a control, a plot, a readout.
 
-import { type Box, type BoxNode, gridCells, isNode, optionsOfBox, type OptionValue, rowsOf } from "@enumeratio/boxes";
+import {
+  type Box,
+  type BoxNode,
+  gridCells,
+  isControlBoxHead,
+  isNode,
+  optionsOfBox,
+  type OptionValue,
+  rowsOf,
+} from "@enumeratio/boxes";
 import { toText } from "@enumeratio/boxes/render";
 import { boxTag } from "./box-tags.ts";
+import { controlElement } from "./control-box.ts";
+import { epsil } from "./mathjson.ts";
 import type { Rendering } from "./symbols.ts";
 
 /** What fills each hole, by the name the `TemplateSlot` carries. */
@@ -101,6 +112,10 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
         ? { ...inner, attributes }
         : { tag: "span", attributes, children: [inner] };
     }
+    case "DynamicBox":
+      return element("DynamicBox", undefined, { value: epsil(box[1]) }, {});
+    case "DynamicModuleBox":
+      return element("DynamicModuleBox", undefined, scopeAttributes(optionsOfBox(box)), children([box[1]]));
     case "TemplateSlot":
       return holes[box[1]] ?? run("");
     case "TextData":
@@ -111,10 +126,29 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
     case "TextCell":
     case "FormBox":
       return renderBox(box[1], holes);
-    default:
+    default: {
+      if (isControlBoxHead(box[0])) {
+        const { attributes } = controlElement(box as Parameters<typeof controlElement>[0]);
+        return element(box[0], undefined, attributes, {});
+      }
       // A math run is the typesetter's; until a leaf draws it, its text.
       return element(box[0], undefined, {}, { text: toText(box) });
+    }
   }
+}
+
+/**
+ * A scope's options as attributes: `TrackedSymbols -> All | Automatic | True | {a, b}` makes it
+ * reactive (`tracked-symbols`), `Evaluator -> "Worker"` evaluates in a worker.
+ */
+function scopeAttributes(options: Readonly<Record<string, OptionValue>>): Record<string, string> {
+  const tracked = options.TrackedSymbols;
+  const names = Array.isArray(tracked) ? tracked.filter((n): n is string => typeof n === "string") : [];
+  return {
+    ...((tracked === true || tracked === "All" || tracked === "Automatic") && { "tracked-symbols": "all" }),
+    ...(names.length > 0 && { "tracked-symbols": names.join(",") }),
+    ...(options.Evaluator === "Worker" && { evaluator: "worker" }),
+  };
 }
 
 /** A `TagBox` that names a layout formatter: its box with that head on it. */

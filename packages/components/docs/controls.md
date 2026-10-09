@@ -5,9 +5,10 @@ order: 9
 # Controls
 
 Wolfram's [`Control`](https://reference.wolfram.com/language/ref/Control.html) family,
-one component per symbol: a tag is `notatio-` plus the symbol, kebab-cased. Every
+one component per kind: a control is the element of its box, `<slider-box>` for
+`Slider` and `VerticalSlider`, `<setter-box>` for `SetterBar`. Every
 control has a `name`, publishes a value, and fires `notatio-control-change` when it
-moves — so a `<notatio-dynamic-module>` or a `<notatio-manipulate>` binds any of them the same
+moves — so a `<dynamic-module-box>` or a `<notatio-manipulate>` binds any of them the same
 way, and a template that mentions `_name` follows. The controls that iterate a span
 (sliders, togglers, an animator) share the knob's gears, keyboard, `play` and `loop`.
 
@@ -20,10 +21,10 @@ way, and a template that mentions `_name` follows. The controls that iterate a s
 fine, held arrows accelerate. <code>readout</code> shows the value. Space on the
 focused thumb sweeps it; <code>play</code> adds the button.
 </template>
-<notatio-dynamic-module>
-<notatio-slider name="k" value="2" min="0" max="10" step="0.5" readout play /> so
-<notatio-dynamic value="_k^2" /> is its square.
-</notatio-dynamic-module>
+<dynamic-module-box>
+<slider-box name="k" value="2" min="0" max="10" step="0.5" readout play /> so
+<dynamic-box value="_k^2" /> is its square.
+</dynamic-module-box>
 </Story>
 
 <Story
@@ -32,11 +33,11 @@ focused thumb sweeps it; <code>play</code> adds the button.
 An <code>Animator</code> is a slider that plays by default and cycles; a
 <code>VerticalSlider</code> stands up and takes up/down.
 </template>
-<notatio-dynamic-module>
-<notatio-animator name="t" value="0" min="0" max="6.28" step="0.05" interval="40" />
-<notatio-vertical-slider name="h" value="3" min="0" max="10" step="1" readout />
-sin t = <notatio-dynamic value="N(Sin(_t))" digits="3" />, h = <notatio-dynamic value="_h" />
-</notatio-dynamic-module>
+<dynamic-module-box>
+<animator-box name="t" value="0" min="0" max="6.28" step="0.05" interval="40" />
+<slider-box axis="y" name="h" value="3" min="0" max="10" step="1" readout />
+sin t = <dynamic-box value="N(Sin(_t))" digits="3" />, h = <dynamic-box value="_h" />
+</dynamic-module-box>
 </Story>
 
 <Story
@@ -46,11 +47,11 @@ sin t = <notatio-dynamic value="N(Sin(_t))" digits="3" />, h = <notatio-dynamic 
 — or a complex number with <code>complex</code>, so a knob's two axes and a pad's are the
 same thing.
 </template>
-<notatio-dynamic-module>
-<notatio-slider-2d name="p" value="0.3,0.6" min="0,0" max="1,1" step="0.01" readout />
-<notatio-slider-2d name="z" value="1+1i" min="-2,-2" max="2,2" step="0.1" complex readout />
-|z| = <notatio-dynamic value="N(Abs(_z))" digits="3" />, p = <notatio-dynamic value="_p" digits="2" />
-</notatio-dynamic-module>
+<dynamic-module-box>
+<slider-2d-box name="p" value="0.3,0.6" min="0,0" max="1,1" step="0.01" readout />
+<slider-2d-box name="z" value="1+1i" min="-2,-2" max="2,2" step="0.1" complex readout />
+|z| = <dynamic-box value="N(Abs(_z))" digits="3" />, p = <dynamic-box value="_p" digits="2" />
+</dynamic-module-box>
 </Story>
 
 <Story
@@ -58,10 +59,10 @@ same thing.
 <template #description>
 Two thumbs that cannot cross; the binding is <code>[lo, hi]</code>.
 </template>
-<notatio-dynamic-module>
+<dynamic-module-box>
 <notatio-interval-slider name="r" value="1,3" min="0" max="5" step="0.5" readout />
-width <notatio-dynamic value="At(_r, 2) - At(_r, 1)" />
-</notatio-dynamic-module>
+width <dynamic-box value="At(_r, 2) - At(_r, 1)" />
+</dynamic-module-box>
 </Story>
 
 ## Choices
@@ -72,11 +73,11 @@ width <notatio-dynamic value="At(_r, 2) - At(_r, 1)" />
 One entry down. Entries are <code>|</code>-separated and may be
 <code>value -> label</code>; a value that looks like mathematics is typeset.
 </template>
-<notatio-dynamic-module>
-<notatio-setter-bar name="p" values="2|3|5|7" /> is prime;
+<dynamic-module-box>
+<setter-box name="p" values="2|3|5|7" /> is prime;
 <notatio-radio-button-bar name="q" values="1 -> one|2 -> two|3 -> three" value="2" />
-and their product is <notatio-dynamic value="_p * _q" />.
-</notatio-dynamic-module>
+and their product is <dynamic-box value="_p * _q" />.
+</dynamic-module-box>
 </Story>
 
 <Story
@@ -85,20 +86,20 @@ and their product is <notatio-dynamic value="_p * _q" />.
 Any number down; the binding is the <code>List</code> of selected values.
 <code>ListPicker</code> shows the entries as a list, <code>single</code> allows one.
 </template>
-<notatio-dynamic-module>
+<dynamic-module-box>
 <notatio-toggler-bar name="s" values="1|2|3|4|5" value="1|3" />
-sums to <notatio-dynamic value="Sum(_s)" />;
+sums to <dynamic-box value="Sum(_s)" />;
 <notatio-list-picker name="L" values="2|3|5|7|11|13" value="3|5" rows="4" />
-has <notatio-dynamic value="Length(_L)" /> picked.
-</notatio-dynamic-module>
+has <dynamic-box value="Length(_L)" /> picked.
+</dynamic-module-box>
 </Story>
 
 <Story
   title="PopupMenu">
-<notatio-dynamic-module>
-<notatio-popup-menu name="n" values="4 -> square|5 -> pentagon|6 -> hexagon|8 -> octagon" value="6" />
-has interior angles of <notatio-dynamic value="180 - 360/_n" /> degrees.
-</notatio-dynamic-module>
+<dynamic-module-box>
+<popup-menu-box name="n" values="4 -> square|5 -> pentagon|6 -> hexagon|8 -> octagon" value="6" />
+has interior angles of <dynamic-box value="180 - 360/_n" /> degrees.
+</dynamic-module-box>
 </Story>
 
 <Story
@@ -108,11 +109,11 @@ A <code>Toggler</code> with no entries is a switch between <code>False</code> an
 <code>True</code>; with entries it cycles them on click and opens them on a long press.
 A <code>Checkbox</code> binds <code>True</code>/<code>False</code> too.
 </template>
-<notatio-dynamic-module>
-<notatio-toggler name="on" /> <notatio-checkbox name="c" value="True" label="checked" />
-<notatio-toggler name="size" values="a few|several|many" />
-— on: <notatio-dynamic value="_on" />, c: <notatio-dynamic value="_c" />, size: <notatio-dynamic value="_size" />
-</notatio-dynamic-module>
+<dynamic-module-box>
+<toggler-box name="on" /> <checkbox-box name="c" value="True" label="checked" />
+<toggler-box name="size" values="a few|several|many" />
+— on: <dynamic-box value="_on" />, c: <dynamic-box value="_c" />, size: <dynamic-box value="_size" />
+</dynamic-module-box>
 </Story>
 
 ## Others
@@ -123,12 +124,12 @@ A <code>Checkbox</code> binds <code>True</code>/<code>False</code> too.
 A <code>Locator</code> is a point <em>on</em> the picture: drag it, and the binding is
 where it is in the plot's own coordinates.
 </template>
-<notatio-dynamic-module>
+<dynamic-module-box>
 <notatio-plot value="Sin(x)" domain="-6.283,6.283" grid>
 <notatio-locator name="p" value="1,0.5" />
 </notatio-plot>
-The dot is at <notatio-dynamic value="_p" digits="3" />.
-</notatio-dynamic-module>
+The dot is at <dynamic-box value="_p" digits="3" />.
+</dynamic-module-box>
 </Story>
 
 <Story
@@ -137,11 +138,11 @@ The dot is at <notatio-dynamic value="_p" digits="3" />.
 An <code>InputField</code> binds whatever Epsil you type, on Enter; a
 <code>ColorSlider</code> binds <code>RGBColor(r, g, b)</code>.
 </template>
-<notatio-dynamic-module>
-<notatio-input-field name="f" value="Sin(x)" size="12" /> squared is
-<notatio-dynamic value="Expand((_f)^2)" />;
-<notatio-color-slider name="c" value="#3451b2" /> is <notatio-dynamic value="_c" digits="2" />.
-</notatio-dynamic-module>
+<dynamic-module-box>
+<input-field-box name="f" value="Sin(x)" size="12" /> squared is
+<dynamic-box value="Expand((_f)^2)" />;
+<notatio-color-slider name="c" value="#3451b2" /> is <dynamic-box value="_c" digits="2" />.
+</dynamic-module-box>
 </Story>
 
 ## In a Manipulate
@@ -238,12 +239,12 @@ children; a layout (`Row`, `Grid`, …) is boxes, drawn as plain DOM around its 
 
 <Story
   title="The realized tree">
-<notatio-dynamic-module>
+<dynamic-module-box>
 <row-box data-head="Row">
-<notatio-slider name="k" min="0" max="5" step="0.5" value="2" readout></notatio-slider>
-<notatio-dynamic value="_k ^ 2"></notatio-dynamic>
+<slider-box name="k" min="0" max="5" step="0.5" value="2" readout></slider-box>
+<dynamic-box value="_k ^ 2"></dynamic-box>
 </row-box>
-</notatio-dynamic-module>
+</dynamic-module-box>
 </Story>
 
 <Story
@@ -279,7 +280,7 @@ Every head the engine knows is an element, `notatio-` plus its name: the ones th
 draw or control have components of their own, and the rest are **generic** — a
 `<notatio-binomial>` typesets `Binomial(…)`, its arguments its children (or its
 `value`, the text the symbol's constructor takes). And the page is itself a scope: a
-control and a readout with no `<notatio-dynamic-module>` around them still find each other;
+control and a readout with no `<dynamic-module-box>` around them still find each other;
 the wrapper is for isolation, when two examples reuse a name.
 
 <Story
@@ -302,8 +303,8 @@ No tangle: the slider is named <code>m</code> nowhere else on this page, so the 
 scope binds it to the readout and to the generic element beside it.
 </template>
 <p>
-<notatio-slider name="m" value="4" min="0" max="10" step="1" readout /> choose 2 is
+<slider-box name="m" value="4" min="0" max="10" step="1" readout /> choose 2 is
 <notatio-binomial evaluate>_m 2</notatio-binomial>, and squared it is
-<notatio-dynamic value="_m^2" />.
+<dynamic-box value="_m^2" />.
 </p>
 </Story>

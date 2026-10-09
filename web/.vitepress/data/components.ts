@@ -46,8 +46,8 @@ function demoPages(): Map<string, string> {
   for (const { pkg, d } of found) {
     const text = readFileSync(join(repoRoot, d.file), "utf8");
     const leaf = d.page.slice(d.page.lastIndexOf("/") + 1);
-    for (const m of text.matchAll(/<(notatio-[a-z0-9-]+)[\s/>]/g)) {
-      const named = m[1] === `notatio-${leaf}`;
+    for (const m of text.matchAll(/<(notatio-[a-z0-9-]+|[a-z0-9]+(?:-[a-z0-9]+)*-box)[\s/>]/g)) {
+      const named = m[1].replace(/^notatio-|-box$/g, "") === leaf;
       if (named || !pages.has(m[1])) pages.set(m[1], docRoute(pkg.slug, d.page));
     }
   }

@@ -27,7 +27,7 @@ test.each([
   "notatio-curve-3d",
   "notatio-complex-plot",
   "notatio-complex-plot-3d",
-  "notatio-slider",
+  "slider-box",
 ])("%s loads no engine", (name) => {
   expect(pathsInto(source(`../src/${name}.ts`), ENGINE)).toEqual([]);
 });
@@ -37,14 +37,14 @@ test("the front end's /core entry loads no engine", () => {
 });
 
 // A tag lazy.ts doesn't claim is defined as a generic element, so an element another one
-// renders (a template's `<notatio-dynamic>`) would never be itself on a page with no kernel.
+// renders (a template's `<dynamic-box>`) would never be itself on a page with no kernel.
 test("lazy.ts loads every element the package defines, by its own module", () => {
   const src = source("../src/");
   const defined = readdirSync(src)
     .filter((f) => f.endsWith(".ts"))
     .flatMap((f) => [
       ...readFileSync(`${src}/${f}`, "utf8").matchAll(
-        /(?:customElements\.define|defineControl)\(\s*"((?:notatio-[a-z0-9-]+)|table-view-box)"/g,
+        /(?:customElements\.define|defineControl)\(\s*"((?:notatio-[a-z0-9-]+)|(?:[a-z0-9]+(?:-[a-z0-9]+)*-box))"/g,
       ),
     ])
     .map((m) => m[1]);

@@ -142,6 +142,19 @@ function writeNode(box: BoxNode): string {
       return element("mtext", "-Graphics-");
     case "TableViewBox":
       return element("mtext", "-TableView-");
+    case "DynamicBox":
+      return element("mtext", "-Dynamic-");
+    case "DynamicModuleBox":
+      return write(box[1]);
+    case "SliderBox":
+    case "Slider2DBox":
+    case "CheckboxBox":
+    case "PopupMenuBox":
+    case "InputFieldBox":
+    case "SetterBox":
+    case "TogglerBox":
+    case "AnimatorBox":
+      return element("mtext", `-${box[0].slice(0, -3)}-`);
     case "ButtonBox":
     case "TextCell":
       return write(box[1]);

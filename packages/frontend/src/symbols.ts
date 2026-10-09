@@ -1,5 +1,5 @@
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
+import { CONTROL_NOTATION_HEADS, LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
 import { serializeExpression } from "@enumeratio/formats/expression";
 import { FRAME_HEIGHT, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
@@ -7,6 +7,17 @@ import { renderBox } from "./box-render.ts";
 import { plainJson } from "./graphics-rules.ts";
 import { GRADIENTS } from "./palettes.ts";
 import type { ScaleName } from "./scales.ts";
+import {
+  clean,
+  listedAttributes,
+  planarAttributes,
+  rangedAttributes,
+  simpleAttributes,
+  variable,
+} from "./control-box.ts";
+import { epsil, headOf, numOf, opsOf, optionAttribute, strOf, symOf, tupleOf } from "./mathjson.ts";
+
+export { headOf, numOf, opsOf, optionAttribute, strOf, symOf, tupleOf, variable };
 
 // A symbol and its component are the same thing seen from two ends
 // (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols). This is the map between them: for every head that
@@ -67,39 +78,6 @@ export type ControlKind = "ranged" | "listed" | "planar" | "interval" | "locator
 
 type Json = MathJsonExpression;
 
-export const headOf = (node: unknown): string | undefined => {
-  const fn = Array.isArray(node) ? node : (node as { fn?: unknown[] })?.fn;
-  return Array.isArray(fn) && typeof fn[0] === "string" ? fn[0] : undefined;
-};
-
-export const opsOf = (node: unknown): Json[] => {
-  const fn = Array.isArray(node) ? node : (node as { fn?: unknown[] })?.fn;
-  return Array.isArray(fn) ? (fn.slice(1) as Json[]) : [];
-};
-
-export const symOf = (node: unknown): string | undefined => {
-  if (typeof node === "string") return node;
-  const sym = (node as { sym?: unknown })?.sym;
-  return typeof sym === "string" ? sym : undefined;
-};
-
-export const numOf = (node: unknown): number | undefined => {
-  if (typeof node === "number") return node;
-  const num = (node as { num?: unknown })?.num;
-  if (typeof num === "string") return Number(num);
-  if (typeof num === "number") return num;
-  return undefined;
-};
-
-export const strOf = (node: unknown): string | undefined => {
-  // A string is `{str}`, or -- the engine's own spelling of a literal -- `'…'`.
-  if (typeof node === "string" && node.length >= 2 && node.startsWith("'") && node.endsWith("'")) {
-    return node.slice(1, -1);
-  }
-  const str = (node as { str?: unknown })?.str;
-  return typeof str === "string" ? str : undefined;
-};
-
 /**
  * A complex literal as `[re, im]`: a number, `Complex(a, b)`, or the `a + b i` /
  * `b i` a parse leaves before the engine folds it -- or undefined.
@@ -138,9 +116,6 @@ function complexOf(node: Json | undefined): [number, number] | undefined {
   return undefined;
 }
 
-/** Epsil for an operand, as an attribute value. */
-const epsil = (node: Json): string => serializeExpression(node);
-
 /** A MathJSON dictionary literal (`{dict: {…}}`, compute-engine's own associative form). */
 const dictOf = (node: unknown): Readonly<Record<string, Json>> | undefined => {
   const dict = (node as { dict?: unknown })?.dict;
@@ -168,21 +143,6 @@ export function toJsonData(node: Json): unknown {
 }
 
 const json = (node: Json): string => JSON.stringify(toJsonData(node));
-
-/**
- * The elements of a tuple -- `Tuple` or `List`, or the `Delimiter(Sequence(…))` a LaTeX
- * parse leaves for `(x, 0, 10)` before canonicalisation -- or undefined.
- */
-export function tupleOf(node: Json | undefined): Json[] | undefined {
-  const head = headOf(node);
-  if (head === "Tuple" || head === "List") return opsOf(node);
-  if (head === "Delimiter") {
-    const inner = opsOf(node)[0];
-    if (headOf(inner) === "Sequence") return opsOf(inner);
-    return inner === undefined ? undefined : [inner];
-  }
-  return undefined;
-}
 
 /** A Wolfram iterator `(x, a, b)`: the variable and its range, or undefined. */
 function iterator(node: Json | undefined): { variable?: string; range?: string } {
@@ -665,63 +625,13 @@ function vectorField(ops: readonly Json[]): Record<string, string> {
 // carries its starting value too, `Slider((k, 2), (0, 5))`, the way a Manipulate
 // parameter does. The rest are the control's own: a range tuple, a list of entries.
 
-/**
- * A number as an attribute: cleaned of the binary noise the Epsil parser leaves on a
- * decimal (`0.3` arrives as 0.30000000000000004), which a control would otherwise
- * carry into its readout. Anything else is Epsil.
- */
-const clean = (node: Json): string => {
-  const v = numOf(node);
-  return v === undefined ? epsil(node) : String(Number(v.toPrecision(12)));
-};
-
-/** `k` or `(k, init)`: the variable and, if given, where it starts. */
-export function variable(node: Json | undefined): { name?: string; init?: Json } {
-  const parts = tupleOf(node);
-  if (parts !== undefined) return { name: symOf(parts[0]), init: parts[1] };
-  return { name: symOf(node) };
-}
-
-/** `(min, max)` / `(min, max, step)` as attributes. */
-function rangeAttributes(node: Json | undefined): Record<string, string> {
-  const parts = tupleOf(node);
-  const out: Record<string, string> = {};
-  if (parts === undefined) return out;
-  if (parts[0] !== undefined) out.min = clean(parts[0]);
-  if (parts[1] !== undefined) out.max = clean(parts[1]);
-  if (parts[2] !== undefined) out.step = clean(parts[2]);
-  return out;
-}
-
-/** An entry of a choice list: `Labeled(value, "label")` shows one thing and binds another. */
-function entryOf(node: Json): string {
-  if (headOf(node) === "Labeled") {
-    const [value, label] = opsOf(node);
-    const text = label === undefined ? undefined : (strOf(label) ?? epsil(label));
-    return value === undefined ? "" : text === undefined ? epsil(value) : `${epsil(value)} -> ${text}`;
-  }
-  // A string binds as the string it is, and shows as its words.
-  const text = strOf(node);
-  return text === undefined ? epsil(node) : `${epsil(node)} -> ${text}`;
-}
-
-/** A list of entries as the `|`-separated `values` attribute. */
-const entries = (node: Json | undefined): string | undefined => tupleOf(node)?.map(entryOf).join("|");
-
 /** A control over a range: name, start, and `(min, max, step)`. */
 const ranged = (head: string, tag: string, extra: Record<string, string> = {}): VisualSymbol => ({
   head,
   tag,
   fixed: extra,
   control: "ranged",
-  attributes: (ops) => {
-    const out: Record<string, string> = {};
-    const { name, init } = variable(ops[0]);
-    if (name) out.name = name;
-    if (init !== undefined) out.value = clean(init);
-    Object.assign(out, rangeAttributes(ops[1]));
-    return out;
-  },
+  attributes: rangedAttributes,
 });
 
 /** A control over a list of entries: name, start, and the entries. */
@@ -730,20 +640,7 @@ const listed = (head: string, tag: string, extra: Record<string, string> = {}): 
   tag,
   fixed: extra,
   control: "listed",
-  attributes: (ops) => {
-    const out: Record<string, string> = {};
-    const { name, init } = variable(ops[0]);
-    if (name) out.name = name;
-    if (init !== undefined) {
-      // A starting selection is one entry, or a list of them for a multiple choice.
-      const many = tupleOf(init);
-      out.value =
-        many === undefined ? entryOf(init).split(" -> ")[0] : many.map((v) => entryOf(v).split(" -> ")[0]).join("|");
-    }
-    const values = entries(ops[1]);
-    if (values !== undefined) out.values = values;
-    return out;
-  },
+  attributes: listedAttributes,
 });
 
 /** A control over a point: name, start `(x, y)`, and the corners `((x0, y0), (x1, y1))`. */
@@ -751,21 +648,7 @@ const planar = (head: string, tag: string): VisualSymbol => ({
   head,
   tag,
   control: "planar",
-  attributes: (ops) => {
-    const out: Record<string, string> = {};
-    const { name, init } = variable(ops[0]);
-    if (name) out.name = name;
-    const point = tupleOf(init);
-    if (point !== undefined && point.length === 2) out.value = point.map(clean).join(",");
-    const corners = tupleOf(ops[1]);
-    const lo = tupleOf(corners?.[0]);
-    const hi = tupleOf(corners?.[1]);
-    if (lo !== undefined && lo.length === 2) out.min = lo.map(clean).join(",");
-    if (hi !== undefined && hi.length === 2) out.max = hi.map(clean).join(",");
-    const step = ops[2] === undefined ? undefined : (tupleOf(ops[2]) ?? [ops[2]]);
-    if (step !== undefined) out.step = step.map(clean).join(",");
-    return out;
-  },
+  attributes: planarAttributes,
 });
 
 /** A control that binds a value with no range to speak of: a checkbox, a color, a field. */
@@ -773,19 +656,13 @@ const simple = (head: string, tag: string): VisualSymbol => ({
   head,
   tag,
   control: "simple",
-  attributes: (ops) => {
-    const out: Record<string, string> = {};
-    const { name, init } = variable(ops[0]);
-    if (name) out.name = name;
-    if (init !== undefined) out.value = strOf(init) ?? epsil(init);
-    return out;
-  },
+  attributes: simpleAttributes,
 });
 
 export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
-  ranged("Slider", "notatio-slider"),
-  ranged("VerticalSlider", "notatio-vertical-slider"),
-  ranged("Animator", "notatio-animator"),
+  ranged("Slider", "slider-box"),
+  ranged("VerticalSlider", "slider-box", { axis: "y" }),
+  ranged("Animator", "animator-box"),
   ranged("Knob", "notatio-knob"),
   {
     ...ranged("IntervalSlider", "notatio-interval-slider"),
@@ -799,16 +676,16 @@ export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
       return out;
     },
   },
-  planar("Slider2D", "notatio-slider-2d"),
-  listed("SetterBar", "notatio-setter-bar"),
+  planar("Slider2D", "slider-2d-box"),
+  listed("SetterBar", "setter-box"),
   listed("RadioButtonBar", "notatio-radio-button-bar"),
   listed("TogglerBar", "notatio-toggler-bar"),
-  listed("Toggler", "notatio-toggler"),
-  listed("PopupMenu", "notatio-popup-menu"),
+  listed("Toggler", "toggler-box"),
+  listed("PopupMenu", "popup-menu-box"),
   listed("ListPicker", "notatio-list-picker"),
-  simple("Checkbox", "notatio-checkbox"),
+  simple("Checkbox", "checkbox-box"),
   simple("ColorSlider", "notatio-color-slider"),
-  simple("InputField", "notatio-input-field"),
+  simple("InputField", "input-field-box"),
   {
     ...planar("Locator", "notatio-locator"),
     control: "locator",
@@ -824,7 +701,7 @@ export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
   },
   {
     head: "Dynamic",
-    tag: "notatio-dynamic",
+    tag: "dynamic-box",
     attributes: (ops): Record<string, string> => (ops[0] === undefined ? {} : { value: epsil(ops[0]) }),
   },
 ];
@@ -855,7 +732,7 @@ const formId = (value: Json): string | undefined => {
 
 // `DynamicModule(body)`'s children: a plain body renders as the module's one child; a
 // `List` of `Cell`s -- the transcript configuration -- renders each cell as its own
-// child, in document order, so `<notatio-dynamic-module>` sees the same light-DOM shape
+// child, in document order, so `<dynamic-module-box>` sees the same light-DOM shape
 // whether it was authored as markup or lowered from this expression.
 const dynamicModuleChildren = (ops: readonly Json[]): Json[] =>
   ops[0] === undefined ? [] : (tupleOf(ops[0]) ?? [ops[0]]);
@@ -886,7 +763,7 @@ const trackedSymbolsOption = (value: Json): Record<string, string> => {
  * against. `"Local"` (the default, and anything not recognised as `"Worker"`) leaves
  * the attribute unset -- today's in-page evaluation; `"Worker"` sets it, routing
  * evaluation to the module's own `@enumeratio/evaluation/browser` session instead
- * (`notatio-dynamic-module.ts`'s `evaluateRemote`).
+ * (`dynamic-module-box.ts`'s `evaluateRemote`).
  */
 const evaluatorOption = (value: Json): Record<string, string> => {
   const sym = symOf(value);
@@ -899,7 +776,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     // the controls inside it, so it takes no arguments of its own; `TrackedSymbols` and
     // `Evaluator` are its options.
     head: "DynamicModule",
-    tag: "notatio-dynamic-module",
+    tag: "dynamic-module-box",
     attributes: () => ({}),
     children: dynamicModuleChildren,
     options: { TrackedSymbols: trackedSymbolsOption, Evaluator: evaluatorOption },
@@ -912,7 +789,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     // (`notatio-cell` children) and whether `tracked-symbols` is set, not by which
     // head named it.
     head: "Notebook",
-    tag: "notatio-dynamic-module",
+    tag: "dynamic-module-box",
     attributes: () => ({}),
     children: dynamicModuleChildren,
     options: { TrackedSymbols: trackedSymbolsOption, Evaluator: evaluatorOption },
@@ -947,9 +824,6 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   },
 ];
 
-/** `PlotRange` -> `plot-range`: an option's attribute when the symbol says nothing. */
-export const optionAttribute = (name: string): string => name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
-
 /** An option's value as attribute text: a string bare, `True` as `true`, the rest Epsil. */
 function optionText(value: Json): string | undefined {
   const sym = symOf(value);
@@ -978,7 +852,7 @@ export function lowerOptions(
     }
     const attr = rule ?? optionAttribute(name);
     const drawn = renderingOf(value);
-    if (drawn !== undefined && drawn.tag !== "notatio-dynamic-module") {
+    if (drawn !== undefined && drawn.tag !== "dynamic-module-box") {
       children.push({ ...drawn, attributes: { ...drawn.attributes, slot: attr } });
       continue;
     }
@@ -1054,7 +928,7 @@ export const DRAWING_SYMBOLS: readonly VisualSymbol[] = ALL_SYMBOLS;
  * or `undefined` when the expression is mathematics to typeset rather than a picture.
  *
  * An `Image` is a picture too, drawn by `<img>`; and inside a `Manipulate` a body that is
- * not itself visual is a `<notatio-dynamic>` -- a readout of the expression over the
+ * not itself visual is a `<dynamic-box>` -- a readout of the expression over the
  * controls.
  */
 export function renderingOf(expr: Json, inManipulate = false): Rendering | undefined {
@@ -1064,11 +938,19 @@ export function renderingOf(expr: Json, inManipulate = false): Rendering | undef
     const names = controlNames(expr);
     if (names.size > 0) {
       const inner = render(slottedExceptDeclarations(expr, names), true);
-      return inner === undefined ? undefined : { tag: "notatio-dynamic-module", attributes: {}, children: [inner] };
+      return inner === undefined ? undefined : { tag: "dynamic-module-box", attributes: {}, children: [inner] };
     }
   }
   return render(expr, inManipulate);
 }
+
+/**
+ * Heads that are boxes end to end -- `makeBoxes` writes them and the box renderer draws them: the
+ * controls and `Dynamic`. (`DynamicModule` can hold a transcript of cells, so its element still
+ * comes from the symbol map; the box is what other environments read.)
+ */
+const BOXED_HEADS: ReadonlySet<string> = new Set([...CONTROL_NOTATION_HEADS].filter((h) => h !== "DynamicModule"));
+const isBoxed = (head: string, expr: Json): boolean => BOXED_HEADS.has(head) && optionsOf(expr).ops.length > 0;
 
 function render(expr: Json, inScope: boolean): Rendering | undefined {
   const head = headOf(expr);
@@ -1079,15 +961,15 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   // A string in a layout is a run of text, not a thing to typeset.
   const text = strOf(expr);
   if (text !== undefined && inScope) return { tag: "span", attributes: {}, text };
-  if (head !== undefined && LAYOUT_HEADS.has(head))
+  if (head !== undefined && (LAYOUT_HEADS.has(head) || isBoxed(head, expr)))
     return layoutRendering(
       expr,
-      (node) => render(node, true) ?? { tag: "notatio-dynamic", attributes: { value: epsil(node) } },
+      (node) => render(node, true) ?? { tag: "dynamic-box", attributes: { value: epsil(node) } },
     );
   const found = head === undefined ? undefined : BY_HEAD.get(head);
   const symbol = found?.when?.(opsOf(expr)) === false ? undefined : found;
   if (symbol === undefined) {
-    return inScope ? { tag: "notatio-dynamic", attributes: { value: epsil(expr) } } : undefined;
+    return inScope ? { tag: "dynamic-box", attributes: { value: epsil(expr) } } : undefined;
   }
   // The trailing rules are options, Wolfram's way; the rest are the positional operands.
   const { ops, options } = optionsOf(expr);
@@ -1105,7 +987,7 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
     ...(symbol.children?.(ops).map(
       (c) =>
         render(c, true) ?? {
-          tag: "notatio-dynamic",
+          tag: "dynamic-box",
           attributes: { value: epsil(c) },
         },
     ) ?? []),
@@ -1127,7 +1009,7 @@ export function layoutRendering(expr: Json, fill: (entry: Json) => Rendering): R
     {
       leaf: (node) => {
         const head = headOf(node);
-        if (head !== undefined && LAYOUT_HEADS.has(head)) return undefined;
+        if (head !== undefined && (LAYOUT_HEADS.has(head) || isBoxed(head, node as Json))) return undefined;
         const name = String(Object.keys(holes).length);
         holes[name] = fill(node);
         return slot(name);
@@ -1135,8 +1017,12 @@ export function layoutRendering(expr: Json, fill: (entry: Json) => Rendering): R
     },
   );
   // An option the boxes don't take (`Variables`, which declares a scope) is the root's attribute, as for any head.
+  // A control's own options are in its box.
+  const head = headOf(expr);
   const rest = Object.fromEntries(
-    Object.entries(optionsOf(expr).options).filter(([name]) => !LAYOUT_OPTIONS.has(name)),
+    Object.entries(optionsOf(expr).options).filter(
+      ([name]) => !LAYOUT_OPTIONS.has(name) && !(head !== undefined && BOXED_HEADS.has(head)),
+    ),
   );
   const drawn = renderBox(box, holes);
   if (Object.keys(rest).length === 0) return drawn;

@@ -1,21 +1,27 @@
 // Every box primitive is its own tag (https://github.com/enumeratio/enumeratio/wiki/Speculative-Box-Primitives, decision 2), so
 // the markup is the box tree and `:defined` holds for all of them. A box with no behavior of its
 // own is an empty element the stylesheet lays out; one that takes input or has a lifecycle
-// (`table-view-box`) is its own module, loaded when a page uses it (`./lazy.ts`).
+// (`table-view-box`, a control) is its own module, loaded when a page uses it (`./lazy.ts`).
 //
 // A tag someone else already defined is theirs: we log it once and leave it, and the stylesheet,
 // keyed on the tag, keeps drawing. A host that wants other names registers these in a scoped
 // registry (`defineBoxElements(registry)`).
 
-import { BOX_TAGS } from "@enumeratio/frontend/box-tags";
+import { CONTROL_BOX_HEADS } from "@enumeratio/boxes";
+import { BOX_TAGS, boxTag } from "@enumeratio/frontend/box-tags";
 import { debug } from "@enumeratio/frontend/core";
 
 const log = debug("box-elements");
 
 type Registry = Pick<CustomElementRegistry, "define" | "get">;
 
-/** The box tags with a module of their own. */
-export const INTERACTIVE_BOX_TAGS: ReadonlySet<string> = new Set(["table-view-box"]);
+/** The box tags with a module of their own: the ones that take input, own a scope or a timer, or window their rows. */
+export const INTERACTIVE_BOX_TAGS: ReadonlySet<string> = new Set([
+  "table-view-box",
+  "dynamic-box",
+  "dynamic-module-box",
+  ...CONTROL_BOX_HEADS.map(boxTag),
+]);
 
 /** The tags `defineBoxElements` leaves to their own modules. */
 export const PLAIN_BOX_TAGS: readonly string[] = BOX_TAGS.filter((tag) => !INTERACTIVE_BOX_TAGS.has(tag));

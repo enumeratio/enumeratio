@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[AnimatorBox, [DynamicBox, t], [Tuple, 0, 6]]	[AnimatorBox, [DynamicBox, t], [Tuple, 0, 6]]	a box is inert: it evaluates to itself

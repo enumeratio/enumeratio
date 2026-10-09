@@ -9,10 +9,10 @@ const h = (tag: string, props: Readonly<Record<string, string>>, children: reado
   children,
 });
 
-test("the tag is the naming rule: notatio- plus the head, kebab-cased", () => {
+test("the tag is the naming rule: notatio- plus the head, kebab-cased, or the head's box", () => {
   expect(tagOf("Plot")).toBe("notatio-plot");
   expect(tagOf("Plot3D")).toBe("notatio-plot-3d");
-  expect(tagOf("Slider2D")).toBe("notatio-slider-2d");
+  expect(tagOf("Slider2D")).toBe("slider-2d-box");
   expect(tagOf("CollectionTable")).toBe("notatio-collection-table");
 });
 
@@ -41,13 +41,13 @@ test("the realized tree lowers a component's arguments into props, and typesets 
   expect(plot.children).toBeUndefined();
 
   const scoped = vdomOf(parseExpression("Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])").json);
-  expect(scoped.tag).toBe("notatio-dynamic-module");
+  expect(scoped.tag).toBe("dynamic-module-box");
   const row = scoped.children?.[0];
   expect(row?.tag).toBe("row-box");
   expect(row?.attributes["data-head"]).toBe("Row");
   expect(row?.children?.map((c) => [c.tag, c.attributes])).toEqual([
-    ["notatio-slider", { name: "k", value: "2", min: "0", max: "5" }],
-    ["notatio-dynamic", { value: "_k ^ 2" }],
+    ["slider-box", { name: "k", value: "2", min: "0", max: "5" }],
+    ["dynamic-box", { value: "_k ^ 2" }],
   ]);
 
   const plain = vdomOf(parseExpression("Binomial(n, 2)").json);

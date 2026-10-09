@@ -2,7 +2,7 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { html, LitElement, type PropertyValues } from "lit";
 import { repeat } from "lit/directives/repeat.js";
 import "./notatio-cell.ts";
-import "./notatio-dynamic-module.ts";
+import "./dynamic-module-box.ts";
 import "./notatio-complex-plot.ts";
 import "./notatio-plot.ts";
 import "./notatio-plot-3d.ts";
@@ -818,7 +818,7 @@ export class NotatioWorksheet extends LitElement {
                 </div>`
               : ""
           }
-          <notatio-dynamic-module tracked-symbols="all" @notatio-result=${this.#onResult}>
+          <dynamic-module-box tracked-symbols="all" @notatio-result=${this.#onResult}>
             ${repeat(
               this._cells,
               (cell) => cell.id,
@@ -871,7 +871,7 @@ export class NotatioWorksheet extends LitElement {
                 </div>`;
               },
             )}
-          </notatio-dynamic-module>
+          </dynamic-module-box>
         </div>
         ${this.#screen()}
       </div>

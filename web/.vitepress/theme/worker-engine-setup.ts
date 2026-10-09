@@ -1,5 +1,5 @@
-// `configure(ce)` for an `Evaluator -> "Worker"` `<notatio-dynamic-module>`'s
-// `@enumeratio/evaluation/browser` session (`notatio-dynamic-module.ts`'s
+// `configure(ce)` for an `Evaluator -> "Worker"` `<dynamic-module-box>`'s
+// `@enumeratio/evaluation/browser` session (`dynamic-module-box.ts`'s
 // `evaluateRemote`): declares the same libraries `./index.mts`'s `startEngine`
 // declares into the PAGE's own engine, minus `@enumeratio/evaluation` itself -- the
 // session's engine already has it (`browser-session-worker.ts` calls

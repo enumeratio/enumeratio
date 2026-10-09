@@ -221,7 +221,7 @@ export class NotatioSlider extends LitElement {
 
   protected override render(): unknown {
     const { min, max, step } = this.range;
-    return html`<span class="notatio-slider" ?data-vertical=${this.axis === "y"}>
+    return html`<span class="slider-box" ?data-vertical=${this.axis === "y"}>
       <input
         type="range"
         class="notatio-slider-track"
@@ -242,4 +242,4 @@ export class NotatioSlider extends LitElement {
   }
 }
 
-defineControl("notatio-slider", NotatioSlider);
+defineControl("slider-box", NotatioSlider);

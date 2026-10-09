@@ -57,7 +57,11 @@ export function textOf(session: Session, json: Json, width = 60, height = 12): s
   }
   const points = samplePlot(session, json);
   if (points !== undefined) return textPlot(points, { width, height, marks: plotOf(json)?.marks });
-  const figure = figureText(json, { width, notation: notationOf(session.ce) });
+  const figure = figureText(json, {
+    width,
+    notation: notationOf(session.ce),
+    evaluate: (pinned) => session.render(session.ce.box(pinned as never).evaluate()),
+  });
   if (figure !== undefined) return figure;
   return session.render(session.ce.box(json as never).evaluate());
 }

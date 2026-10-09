@@ -13,9 +13,9 @@ export { WorkerUnavailableError };
 import { CONTROL_EVENT, Transcript } from "@enumeratio/frontend/core";
 import type { TrackedSymbols } from "@enumeratio/frontend";
 import { LitElement, nothing } from "lit";
-import "./notatio-dynamic.ts";
+import "./dynamic-box.ts";
 import "./notatio-knob.ts";
-import "./notatio-toggler.ts";
+import "./toggler-box.ts";
 import "./notatio-when.ts";
 import { ReactiveModule } from "./reactive-module.ts";
 import { registerScope, Scope } from "./scope.ts";
@@ -400,6 +400,6 @@ export class NotatioDynamicModule extends LitElement {
   }
 }
 
-if (!customElements.get("notatio-dynamic-module")) {
-  customElements.define("notatio-dynamic-module", NotatioDynamicModule);
+if (!customElements.get("dynamic-module-box")) {
+  customElements.define("dynamic-module-box", NotatioDynamicModule);
 }

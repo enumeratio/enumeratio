@@ -150,6 +150,19 @@ class Writer {
         return "-Graphics-";
       case "TableViewBox":
         return "-TableView-";
+      case "DynamicBox":
+        return "-Dynamic-";
+      case "DynamicModuleBox":
+        return this.write(box[1]);
+      case "SliderBox":
+      case "Slider2DBox":
+      case "CheckboxBox":
+      case "PopupMenuBox":
+      case "InputFieldBox":
+      case "SetterBox":
+      case "TogglerBox":
+      case "AnimatorBox":
+        return `-${box[0].slice(0, -3)}-`;
       default:
         throw new Error("unreachable: BoxNode's tags are exhaustive above");
     }

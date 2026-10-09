@@ -472,7 +472,7 @@ notatio-out[busy] .notatio-render { opacity: 0.5; transition-delay: 0.15s; }
 .notatio-stop:hover { color: var(--vp-c-danger-1, #b7373d); border-color: currentColor; }
 
 /* A module's evaluation session was hard-killed and restarted (a time-constraint
-   deadline an evaluation never cooperated with) -- notatio-dynamic-module.ts's own
+   deadline an evaluation never cooperated with) -- dynamic-module-box.ts's own
    #onSessionReset prepends this notice; nothing else in the module renders its own
    markup (it is a scope, not a control panel), so this is the one exception. */
 .notatio-worker-reset {
@@ -1573,12 +1573,12 @@ notatio-show {
 /* A dynamic module wraps prose -- paragraphs, figures, whole sections -- so it is a block.
    A conditional is a PHRASE inside a sentence and must contribute no box at all;
    display:contents is what keeps it in the line it was written in. */
-notatio-dynamic-module { display: block; }
+dynamic-module-box { display: block; }
 notatio-when { display: contents; }
 notatio-when[hidden] { display: none; }
-notatio-dynamic { display: inline; }
-notatio-dynamic[display] { display: block; text-align: center; margin: 1.1rem 0; }
-notatio-knob, notatio-toggler { display: inline; }
+dynamic-box { display: inline; }
+dynamic-box[display] { display: block; text-align: center; margin: 1.1rem 0; }
+notatio-knob, toggler-box { display: inline; }
 
 .notatio-knob-grip,
 .notatio-toggler-grip {
@@ -1747,21 +1747,21 @@ notatio-knob[axis="y"] .notatio-knob-ladder {
 /* --- the controls: Wolfram's Control family as inline pieces ------------------------
    Every control is inline (a slider in a strip, a bar in a sentence) and shares the
    brand colour for what is set, the divider colour for what is not. */
-notatio-slider, notatio-vertical-slider, notatio-animator, notatio-slider-2d,
-notatio-setter-bar, notatio-radio-button-bar, notatio-toggler-bar, notatio-popup-menu,
-notatio-checkbox, notatio-interval-slider, notatio-color-slider, notatio-input-field {
+slider-box, animator-box, slider-2d-box,
+setter-box, notatio-radio-button-bar, notatio-toggler-bar, popup-menu-box,
+checkbox-box, notatio-interval-slider, notatio-color-slider, input-field-box {
   display: inline-block;
   vertical-align: middle;
 }
 notatio-list-picker { display: inline-block; vertical-align: top; }
 
-.notatio-slider { display: inline-flex; align-items: center; gap: 0.4em; }
+.slider-box { display: inline-flex; align-items: center; gap: 0.4em; }
 .notatio-slider-track {
   min-width: 8rem;
   accent-color: var(--vp-c-brand-1, #3451b2);
 }
-.notatio-slider[data-vertical] { flex-direction: column; }
-.notatio-slider[data-vertical] .notatio-slider-track {
+.slider-box[data-vertical] { flex-direction: column; }
+.slider-box[data-vertical] .notatio-slider-track {
   min-width: 0;
   writing-mode: vertical-lr;
   direction: rtl;
@@ -1775,7 +1775,7 @@ notatio-list-picker { display: inline-block; vertical-align: top; }
 }
 
 /* The pad of a Slider2D: a square with a dot, y up. */
-.notatio-slider-2d { display: inline-flex; align-items: flex-end; gap: 0.5em; }
+.slider-2d-box { display: inline-flex; align-items: flex-end; gap: 0.5em; }
 .notatio-pad {
   position: relative;
   display: inline-block;
@@ -1802,7 +1802,7 @@ notatio-list-picker { display: inline-block; vertical-align: top; }
   box-shadow: 0 0 0 2px var(--vp-c-bg, #fff);
   pointer-events: none;
 }
-.notatio-slider-2d[data-dragging] .notatio-pad-dot { transform: scale(1.25); }
+.slider-2d-box[data-dragging] .notatio-pad-dot { transform: scale(1.25); }
 
 /* A locator lives on a plot, so the plot is its frame of reference. */
 notatio-plot { position: relative; }
@@ -1900,8 +1900,8 @@ notatio-locator { display: contents; }
   outline: 1px solid var(--vp-c-brand-1, #3451b2);
 }
 
-.notatio-checkbox { display: inline-flex; align-items: center; gap: 0.35em; cursor: pointer; }
-.notatio-checkbox input { accent-color: var(--vp-c-brand-1, #3451b2); margin: 0; }
+.checkbox-box { display: inline-flex; align-items: center; gap: 0.35em; cursor: pointer; }
+.checkbox-box input { accent-color: var(--vp-c-brand-1, #3451b2); margin: 0; }
 
 /* An interval slider: two native ranges on one track, thumbs only catching the pointer. */
 .notatio-interval-slider { display: inline-flex; align-items: center; gap: 0.4em; }
@@ -1970,7 +1970,7 @@ notatio-locator { display: contents; }
   vertical-align: middle;
 }
 
-.notatio-input-field {
+.input-field-box {
   font: inherit;
   font-variant-numeric: tabular-nums;
   padding: 0.1em 0.4em;
@@ -1979,8 +1979,8 @@ notatio-locator { display: contents; }
   background: var(--vp-c-bg, #fff);
   color: inherit;
 }
-.notatio-input-field:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 1px; }
-.notatio-input-field[aria-invalid="true"] { border-color: #c0392b; }
+.input-field-box:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 1px; }
+.input-field-box[aria-invalid="true"] { border-color: #c0392b; }
 
 /* A toggler with no entries is a switch: a pill with a knob at one end or the other. */
 .notatio-toggler-grip[data-switch] {

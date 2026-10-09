@@ -7,30 +7,57 @@ import {
   type Box,
   DEFAULT_STYLE,
   type DisplayList,
+  isControlBoxHead,
   isNode,
   type Item,
   layout,
+  makeBoxes,
   type Metrics,
   type Size,
 } from "@enumeratio/boxes";
+import { toText } from "@enumeratio/boxes/render";
+import { boxControls, declarationOfControl, pin, pinValue } from "@enumeratio/frontend";
 import { stripAnsi } from "./ansi.ts";
 import { type CellOptions, DOWN, drawGraphicsBox, JOINT, LEFT, RIGHT, UP } from "./cell-draw.ts";
+import { controlLine } from "./control-draw.ts";
+
+type Json = Parameters<typeof pin>[0];
+
+export interface LayoutOptions extends CellOptions {
+  /** A `Dynamic`'s expression, pinned at its controls' values, as the session would show its value; absent, written as math. */
+  readonly evaluate?: (json: Json) => string;
+}
 
 const isDrawing = (box: Box): boolean => isNode(box) && box[0] === "GraphicsBox";
 
-/** A leaf's rows: a figure drawn, else a placeholder. */
-function leafLines(box: Box, options: CellOptions): string[] {
-  return isDrawing(box) ? drawGraphicsBox(box, options).split("\n") : ["?"];
+/**
+ * A leaf's rows: a figure drawn, a control as its line (at the value its controls start from), a
+ * `Dynamic` as what it reads there, else a placeholder.
+ */
+function leafLines(box: Box, options: LayoutOptions, values: ReadonlyMap<string, Json>): string[] {
+  if (isDrawing(box)) return drawGraphicsBox(box, options).split("\n");
+  if (isNode(box) && isControlBoxHead(box[0])) {
+    const [control] = boxControls(box);
+    return control === undefined ? ["?"] : [controlLine(control, values.get(control.name))];
+  }
+  if (isNode(box) && box[0] === "DynamicBox") {
+    const pinned = pin(box[1] as Json, values);
+    return (options.evaluate?.(pinned) ?? toText(makeBoxes(pinned))).split("\n");
+  }
+  return ["?"];
 }
 
 const visibleWidth = (line: string): number => Array.from(stripAnsi(line).replace(/\p{M}/gu, "")).length;
 
 /** Integer character cells; a figure takes the room its drawing does. */
-function cellMetrics(options: CellOptions): { metrics: Metrics; lines: (box: Box) => string[] } {
+function cellMetrics(
+  options: LayoutOptions,
+  values: ReadonlyMap<string, Json>,
+): { metrics: Metrics; lines: (box: Box) => string[] } {
   const drawn = new Map<Box, string[]>();
   const lines = (box: Box): string[] => {
     let rows = drawn.get(box);
-    if (rows === undefined) drawn.set(box, (rows = leafLines(box, options)));
+    if (rows === undefined) drawn.set(box, (rows = leafLines(box, options, values)));
     return rows;
   };
   const metrics: Metrics = {
@@ -170,7 +197,13 @@ function render(list: DisplayList, lines: (box: Box) => string[]): string {
 }
 
 /** Boxes laid out on character cells and drawn: a grid ruled, a panel framed, a fraction stacked. */
-export function drawBoxes(box: Box, options: CellOptions = {}): string {
-  const { metrics, lines } = cellMetrics(options);
+export function drawBoxes(box: Box, options: LayoutOptions = {}): string {
+  // A static reading: each control stands where it starts, and the readouts are read there.
+  const values = new Map<string, Json>();
+  for (const control of boxControls(box)) {
+    const value = pinValue(declarationOfControl(control));
+    if (value !== undefined) values.set(control.name, value);
+  }
+  const { metrics, lines } = cellMetrics(options, values);
   return render(layout(box, DEFAULT_STYLE, metrics), lines);
 }

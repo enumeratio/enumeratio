@@ -184,7 +184,11 @@ function figureOf(input: string, defaults: SessionDefaults, host: HostOptions): 
   try {
     const session = new Session(defaults);
     const { expr } = session.evaluate(input);
-    return figureText(expr.json as never, { color: host.color, notation: notationOf(session.ce) });
+    return figureText(expr.json as never, {
+      color: host.color,
+      notation: notationOf(session.ce),
+      evaluate: (json) => session.render(session.ce.box(json as never).evaluate()),
+    });
   } catch {
     return undefined;
   }

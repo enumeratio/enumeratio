@@ -1,4 +1,4 @@
-import { NotatioSlider } from "./notatio-slider.ts";
+import { NotatioSlider } from "./slider-box.ts";
 import { defineControl } from "./define.ts";
 
 /**
@@ -16,4 +16,4 @@ export class NotatioAnimator extends NotatioSlider {
   }
 }
 
-defineControl("notatio-animator", NotatioAnimator);
+defineControl("animator-box", NotatioAnimator);

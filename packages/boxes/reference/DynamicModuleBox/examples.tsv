@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[DynamicModuleBox, [DynamicBox, k]]	[DynamicModuleBox, [DynamicBox, k]]	a box is inert: it evaluates to itself

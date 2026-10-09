@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[InputFieldBox, [DynamicBox, x], Automatic]	[InputFieldBox, [DynamicBox, x], Automatic]	a box is inert: it evaluates to itself

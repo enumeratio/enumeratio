@@ -1,6 +1,6 @@
 // A scope: the controls in a stretch of the page and the templates that read them. A
-// `<notatio-dynamic-module>` is an explicit one over its subtree; the PAGE is the implicit one,
-// so a `<notatio-slider name="k">` and a `<notatio-dynamic value="_k^2">` written
+// `<dynamic-module-box>` is an explicit one over its subtree; the PAGE is the implicit one,
+// so a `<slider-box name="k">` and a `<dynamic-box value="_k^2">` written
 // anywhere on a page, with no wrapper, still find each other -- the wrapper is only
 // for isolation, when two examples reuse a name (https://github.com/enumeratio/enumeratio/wiki/Vdom).
 
@@ -39,7 +39,7 @@ const idOf = (el: Element): number => {
  * that declares `variables` (a `Variables` option, lowered) is one: declaring is what starts a
  * scope, with or without a `DynamicModule` around it.
  */
-export const OWNERS = "notatio-dynamic-module, notatio-manipulate, [variables]";
+export const OWNERS = "dynamic-module-box, notatio-manipulate, [variables]";
 
 /** A number where the value is one (`-5` arrives as `Negate(5)`), else the value as read. */
 const seedOf = (json: unknown): MathJsonExpression => {
@@ -230,7 +230,7 @@ const bringsBindings = (records: readonly MutationRecord[]): boolean =>
       const el = node as Element;
       return (
         el.localName.startsWith("notatio-") ||
-        el.querySelector(`${controlSelector()}, notatio-dynamic, notatio-when, [value*="_"], [variables]`) !== null
+        el.querySelector(`${controlSelector()}, dynamic-box, notatio-when, [value*="_"], [variables]`) !== null
       );
     }),
   );
@@ -255,7 +255,7 @@ export function pageScope(): Scope {
   return page;
 }
 
-/** Scopes a module element keeps itself (`<notatio-dynamic-module>`), by owner. */
+/** Scopes a module element keeps itself (`<dynamic-module-box>`), by owner. */
 const registered = new WeakMap<Element, Scope>();
 /** Scopes started by an element declaring `variables`, by that element. */
 const declared = new WeakMap<Element, Scope>();

@@ -38,7 +38,7 @@ These are demos of the parts. To use the whole thing, open a [worksheet](/worksh
 - [Manipulate](/docs/components/manipulate) — `<notatio-manipulate>`, Wolfram-style controls bound to named wildcards in any slotted content
 - [Terminal](/docs/components/terminal) — `<notatio-terminal>`, the real CLI eval core in a browser terminal, as a session or one `notatio <expr>` at a time
 - [Polytope](/docs/polytope/polytope) — `PolytopeFaces`, a polytope's face poset in a `Show`, where every mark is a clickable face under an orbiting camera
-- [Tangle](/playground/inspirations/tangle) — `<notatio-dynamic-module>` and the inline controls (`<notatio-knob>`, `<notatio-toggler>`, `<notatio-dynamic>`, `<notatio-when>`): reactive prose
+- [Tangle](/playground/inspirations/tangle) — `<dynamic-module-box>` and the inline controls (`<notatio-knob>`, `<toggler-box>`, `<dynamic-box>`, `<notatio-when>`): reactive prose
 
 ## Inspirations
 

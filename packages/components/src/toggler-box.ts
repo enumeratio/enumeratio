@@ -372,4 +372,4 @@ export class NotatioToggler extends LitElement {
   }
 }
 
-defineControl("notatio-toggler", NotatioToggler);
+defineControl("toggler-box", NotatioToggler);

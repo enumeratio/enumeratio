@@ -4,7 +4,7 @@ import { strOf } from "../src/symbols.ts";
 import { Transcript } from "../src/transcript.ts";
 
 // A transcript's own evaluate, outside any element: parse `latex` inside the transcript's scope, evaluate, and record it as the next
-// `In[n]`/`Out[n]` -- what `notatio-out` does for a cell inside a `<notatio-dynamic-module>`
+// `In[n]`/`Out[n]` -- what `notatio-out` does for a cell inside a `<dynamic-module-box>`
 // whose `value` is LaTeX (the fast path a `<notatio-cell>` uses before it has parsed).
 function evaluate(t: Transcript, engine: ComputeEngine, latex: string) {
   return t.run(() => {

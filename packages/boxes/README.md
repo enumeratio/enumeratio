@@ -25,6 +25,9 @@ inline math in prose.
 - `RowSource`, `RowCount`, `RowBatch`, `pinnedPage` — what a `TableViewBox` asks of its rows: a count
   that is exact, a lower bound or infinite, rows by range as boxes, and the first page a static
   environment draws with a `Skeleton` row for the rest.
+- `SliderBox`, `CheckboxBox`, … `DynamicBox`, `DynamicModuleBox` — the interface boxes: `Slider`, `Dynamic` and the other
+  controls lower to them (`CONTROL_NOTATION`), each control box with a binding, a domain and options, and
+  `CONTROL_INTENT` says what each is for (continuous, choice, toggle, …) so a host without widgets can draw its own.
 - `declareBoxes` — declares the box heads (`RowBox`, `FractionBox`, `SuperscriptBox`, …)
   as compute-engine heads, typed and described from this package's own
   `reference/<Head>/` records; an evaluated box is itself.

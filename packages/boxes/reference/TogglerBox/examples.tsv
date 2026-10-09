@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[TogglerBox, [DynamicBox, s], [List, off, on]]	[TogglerBox, [DynamicBox, s], [List, off, on]]	a box is inert: it evaluates to itself
