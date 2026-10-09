@@ -51,6 +51,8 @@ n-polygamma-neg2-stays-unevaluated	N[PolyGamma[-2, 2]]	0.8378770664093467		N[\ps
 n-polygamma-8-cancellation-region	N[PolyGamma[8, Complex[-48.445348956457586, 7.047151294800014]]]	-5.8027099826028917*^-11 - 1.2898930277153822*^-10*I		N[\psi ^{(8)}(-48.4453+7.04715 i)]	-\text{5.8027099826028917$\grave{ }$*${}^{\wedge}$-11}-\text{1.2898930277153822$\grave{ }$*${}^{\wedge}$-10} i	
 n-polygamma-8-cancellation-region-nearby-im	N[PolyGamma[8, Complex[-48.445348956457586, 10]]]	5.3221571369366076*^-12 - 1.2967382759551937*^-10*I		N[\psi ^{(8)}(-48.4453+10 i)]	\text{5.3221571369366076$\grave{ }$*${}^{\wedge}$-12}-\text{1.2967382759551937$\grave{ }$*${}^{\wedge}$-10} i	
 n-polygamma-5-cancellation-region	N[PolyGamma[5, Complex[-48.987654321098766, 9.5]]]	-4.305910102405088*^-8 - 5.997407236454173*^-8*I		N[\psi ^{(5)}(-48.9877+9.5 i)]	-\text{4.305910102405088$\grave{ }$*${}^{\wedge}$-8}-\text{5.997407236454173$\grave{ }$*${}^{\wedge}$-8} i	
+polygamma-neg1-neg-1-over-2-exact	PolyGamma[-1, Rational[-1, 2]]					
+n-polygamma-neg1-4p403	N[PolyGamma[-1, 4.403]]					
 threads-over-a-list-each-element-exact-so-each	PolyGamma[1, List[1, 2]]	{Pi^2/6, -1 + Pi^2/6}		\psi ^{(1)}(\{1,2\})	\left\{\frac{\pi ^2}{6},\frac{\pi ^2}{6}-1\right\}	
 one-argument-digamma-at-a-machine-precision	PolyGamma[100.5]	4.605174352581845		\psi (100.5)	4.60517	
 one-argument-digamma-at-a-complex-point	PolyGamma[Complex[2.5, 3]]	1.2812739190662308 + 0.9798053153445597*I		\psi (2.5\, +3 i)	1.28127\, +0.979805 i	

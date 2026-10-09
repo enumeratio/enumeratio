@@ -1,5 +1,6 @@
 id	in	out	tex.in	tex.out	verdict
 4-eq-4	(4 == 4)	True	4=4	\text{True}	
+n-pi-1-eq-pi	(N[Pi, 1] == Pi)				
 n-pi-20-eq-pi	(N[Pi, 20] == Pi)	True	N[\pi ,20]=\pi	\text{True}	
 sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	(Plus[Sqrt[2], Sqrt[3]] == Sqrt[Plus[5, Times[2, Sqrt[6]]]])	True	\sqrt{2}+\sqrt{3}=\sqrt{5+2 \sqrt{6}}	\text{True}	
 x-eq-x	(x == x)	True	x=x	\text{True}	

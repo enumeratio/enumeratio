@@ -9,6 +9,7 @@ symbolic-n-binom-n-0-1-for-any-n	binomial(SR.var("n"), 0)	1
 symbolic-n-binom-n-1-n	binomial(SR.var("n"), 1)	True	
 binom-n-n-1-n-for-symbolic-n	binomial(SR.var("n"), (SR.var("n") - 1))	True	
 binom-m-m-1-m-for-symbolic-m	binomial(SR.var("m"), (SR.var("m") + -1))	True	
+n-binomial-7-over-3-1-over-5-1-digit	N(binomial((7/3), (1/5)))		
 threads-element-wise-over-a-list-as-wolfram-s	[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]	[0, 1, 10, 35, 165]	
 half-integer-arguments-evaluate-exactly-through	binomial((9/2), (7/2))	9/2	
 real-arguments-evaluate-through-the-gamma	binomial(8.5, -4.2)	TypeError: either m or x-m must be an integer	error

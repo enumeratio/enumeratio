@@ -373,6 +373,7 @@ lerch-continuation-declines-neg1p939-0p5i	N(lerchphi((-1.939 + 0.5*I), 2.976, 3.
 lerch-continuation-declines-z-neg3-s3p118-a2p864	N(lerchphi(-3, 3.118, 2.864), 30)		
 lerch-continuation-declines-complex-s-z-neg4-1i	N(lerchphi((-4 + 1*I), (3 + 1*I), 2), 30)		
 lerch-continuation-declines-z-neg6-s2-a0p5	N(lerchphi(-6, 2, 0.5), 30)		
+n-lerchphi-tiny-z-s-neg-12-5-over-2	N(lerchphi(-1e-12, -12, Rational(5, 2)), 30)	59605.825003210406944730402271 + 2.02291237315300883748921436298*I	inconclusive
 past-the-unit-disk-by-the-integral	N(lerchphi((1 + 2*I), (3 + -1*I), (4 + 2*I)), 30)	0.00202500995700990860053946871764 + 0.00332789753681355880743808908022*I	
 inexact-arguments-should-evaluate-numerically	lerchphi(0.5, 2, 3.5)	lerchphi(0.5, 2, 3.5)	
 s-0-far-outside-the-unit-disk-1-1-49-5	lerchphi(49.5, 0, 2)	lerchphi(49.5, 0, 2)	

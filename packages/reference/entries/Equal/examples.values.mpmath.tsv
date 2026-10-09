@@ -1,5 +1,6 @@
 id	in	out	verdict
 4-eq-4	almosteq(4, 4, 1e-20)		
+n-pi-1-eq-pi	almosteq((pi), pi, 1e-20)	True	disagree
 n-pi-20-eq-pi	almosteq((pi), pi, 1e-20)		
 sqrt-2-plus-sqrt-3-eq-sqrt-5-plus-2-times-sqrt-6	almosteq((sqrt(2) + sqrt(3)), sqrt((5 + (2 * sqrt(6)))), 1e-20)		
 x-eq-x			

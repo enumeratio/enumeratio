@@ -174,6 +174,7 @@ n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5	N(zeta((-0.5 + 1*I), (2 + -0.5*I)), 
 n-hurwitzzeta-neg-0p5-plus-i-neg-0p5	N(zeta((-0.5 + 1*I), -0.5), 30)	-10.3541255703876196037072077161 + 12.6883763809252592125176306581*I	
 n-hurwitzzeta-neg-0p5-plus-i-neg-1p5	N(zeta((-0.5 + 1*I), -1.5), 30)	0.825049555351030194927375305269 + 38.7318693646863536628188739996*I	
 normal-series-hurwitzzeta-2-x-x-positiveinfinity			
+n-hurwitzzeta-neg-27-2-over-5-1-digit	N(zeta(-27, Rational(2, 5)), 30)	-788740.454876388864340981606357	disagree
 a-positive-integer-a-peels-off-the-first-terms	zeta(7, 5)	-36130315/35831808 + zeta(7)	
 complex-a	N(zeta(2.3, (8 + 1*I)), 30)	0.0544700827321306866228092072147 - 0.00944851533647025008110366459698*I	
 listable-threads-over-a-list-of-orders	zeta([2, 3, 4], 0.5)	AttributeError: 'list' object has no attribute 'is_Integer'	error

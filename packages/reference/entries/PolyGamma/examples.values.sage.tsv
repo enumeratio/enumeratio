@@ -51,6 +51,8 @@ n-polygamma-neg2-stays-unevaluated	N(psi(-2, 2))	ValueError: gamma function pole
 n-polygamma-8-cancellation-region	N(psi(8, (-48.445348956457586 + 7.047151294800014*I)))		
 n-polygamma-8-cancellation-region-nearby-im	N(psi(8, (-48.445348956457586 + 10*I)))		
 n-polygamma-5-cancellation-region	N(psi(5, (-48.987654321098766 + 9.5*I)))		
+polygamma-neg1-neg-1-over-2-exact	psi(-1, (-1/2))		
+n-polygamma-neg1-4p403	N(psi(-1, 4.403))		
 threads-over-a-list-each-element-exact-so-each	psi(1, [1, 2])	TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring	error
 one-argument-digamma-at-a-machine-precision			
 one-argument-digamma-at-a-complex-point			

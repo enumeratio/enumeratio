@@ -9,6 +9,7 @@ symbolic-n-binom-n-0-1-for-any-n
 symbolic-n-binom-n-1-n			
 binom-n-n-1-n-for-symbolic-n			
 binom-m-m-1-m-for-symbolic-m			
+n-binomial-7-over-3-1-over-5-1-digit			
 threads-element-wise-over-a-list-as-wolfram-s	(Nat.choose [2, 3, 5, 7, 11] 3)	Application type mismatch: The argument	error
 half-integer-arguments-evaluate-exactly-through	(Nat.choose ((9 : ℚ) / 2) ((7 : ℚ) / 2))	Type mismatch	error
 real-arguments-evaluate-through-the-gamma	(Nat.choose 8.5 (-4.2))	failed to synthesize instance of type class	error

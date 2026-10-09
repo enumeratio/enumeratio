@@ -9,6 +9,7 @@ symbolic-n-binom-n-0-1-for-any-n
 symbolic-n-binom-n-1-n			
 binom-n-n-1-n-for-symbolic-n			
 binom-m-m-1-m-for-symbolic-m			
+n-binomial-7-over-3-1-over-5-1-digit	nf(binomial(rational(n(7), n(3)), rational(n(1), n(5))))	panic: an integer, not 7/3	error
 threads-element-wise-over-a-list-as-wolfram-s	binomial(list(vec![n(2), n(3), n(5), n(7), n(11)]), n(3))	panic: threading: a list where the crate takes a scalar	error
 half-integer-arguments-evaluate-exactly-through	binomial(rational(n(9), n(2)), rational(n(7), n(2)))	panic: an integer, not 9/2	error
 real-arguments-evaluate-through-the-gamma	binomial(x(8.5), x(-4.2))	panic: an integer, not 8.5	error
