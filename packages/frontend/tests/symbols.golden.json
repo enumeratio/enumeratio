@@ -918,7 +918,7 @@
                 {
                   "tag": "span",
                   "attributes": {
-                    "class": "notatio-label"
+                    "class": "style-box-label"
                   },
                   "text": "on?"
                 }
@@ -928,7 +928,7 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"notatio-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"style-box-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
   },
   "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "rendering": {

@@ -24,7 +24,7 @@ export function openPlaybackMenu(options: PlaybackMenuOptions): () => void {
   const { anchor, onChange, onClose } = options;
   let settings = { ...options.settings };
   const panel = document.createElement("div");
-  panel.className = "notatio-playback-menu";
+  panel.className = "control-playback-menu";
   panel.setAttribute("role", "group");
   panel.setAttribute("aria-label", "playback");
 
@@ -36,17 +36,17 @@ export function openPlaybackMenu(options: PlaybackMenuOptions): () => void {
     set: (v: T) => void,
   ): HTMLButtonElement[] => {
     const line = document.createElement("div");
-    line.className = "notatio-playback-row";
+    line.className = "control-playback-row";
     line.setAttribute("role", "radiogroup");
     line.setAttribute("aria-label", label);
     const caption = document.createElement("span");
-    caption.className = "notatio-playback-label";
+    caption.className = "control-playback-label";
     caption.textContent = label;
     line.append(caption);
     const buttons = values.map((v) => {
       const b = document.createElement("button");
       b.type = "button";
-      b.className = "notatio-playback-choice";
+      b.className = "control-playback-choice";
       b.setAttribute("role", "radio");
       b.textContent = text(v);
       b.addEventListener("click", () => {
@@ -82,7 +82,7 @@ export function openPlaybackMenu(options: PlaybackMenuOptions): () => void {
   const mounted = mountPopover(anchor, panel, onClose);
   // Arrow keys move within the panel: left/right along a row, up/down between them.
   panel.addEventListener("keydown", (event) => {
-    const rows = [...panel.querySelectorAll<HTMLElement>(".notatio-playback-row")].map((r) => [
+    const rows = [...panel.querySelectorAll<HTMLElement>(".control-playback-row")].map((r) => [
       ...r.querySelectorAll<HTMLButtonElement>("button"),
     ]);
     const active = document.activeElement as HTMLButtonElement;

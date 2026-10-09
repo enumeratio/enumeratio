@@ -87,7 +87,7 @@ export class NotatioStepper extends LitElement {
     >
       <button type="button" tabindex="-1" aria-label="Previous" data-tip="Previous" @click=${() => this.step(-1)}>
         ◀</button
-      ><span class="notatio-stepper-value">${v < 0 ? `−${-v}` : v}</span
+      ><span class="stepper-box-value">${v < 0 ? `−${-v}` : v}</span
       ><button type="button" tabindex="-1" aria-label="Next" data-tip="Next" @click=${() => this.step(1)}>▶</button>${
         this.random
           ? html`<button

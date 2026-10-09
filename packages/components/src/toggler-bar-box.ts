@@ -16,12 +16,12 @@ export class NotatioTogglerBar extends ChoiceControl {
   }
 
   protected override render(): unknown {
-    return html`<span class="notatio-bar" role="group" aria-label=${this.name || "choices"}
+    return html`<span class="control-bar" role="group" aria-label=${this.name || "choices"}
       >${this.choices.map(
         (_, i) =>
           html`<button
             type="button"
-            class="notatio-bar-option"
+            class="control-bar-option"
             aria-pressed=${String(this.isSelected(i))}
             @click=${() => this.choose(i)}
           >

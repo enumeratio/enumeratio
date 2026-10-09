@@ -100,7 +100,7 @@ export function renderBox(box: Box, holes: Holes = {}): Rendering {
       const options = box[2];
       const inner = renderBox(box[1], holes);
       const attributes: Record<string, string> = {
-        ...(options.BaseStyle === "Label" && { class: "notatio-label" }),
+        ...(options.BaseStyle === "Label" && { class: "style-box-label" }),
         ...css({
           "font-weight": options.FontWeight === "Bold" ? "bold" : undefined,
           "font-style": options.FontSlant === "Italic" ? "italic" : undefined,

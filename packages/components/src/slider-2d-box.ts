@@ -192,7 +192,7 @@ export class NotatioSlider2D extends LitElement {
     const text = `${numberLatex(this._x, step[0])}, ${numberLatex(this._y, step[1])}`;
     return html`<span class="slider-2d-box" ?data-dragging=${this._dragging}>
       <span
-        class="notatio-pad"
+        class="slider-2d-box-pad"
         role="slider"
         tabindex="0"
         aria-label=${this.name || "point"}
@@ -205,8 +205,8 @@ export class NotatioSlider2D extends LitElement {
         @keydown=${this.#onKeyDown}
         @keyup=${this.#onKeyUp}
       >
-        <span class="notatio-pad-dot" style=${`left:${fx * 100}%;top:${(1 - fy) * 100}%`}></span> </span
-      >${this.readout ? html`<span class="notatio-slider-readout">${text}</span>` : nothing}
+        <span class="slider-2d-box-pad-dot" style=${`left:${fx * 100}%;top:${(1 - fy) * 100}%`}></span> </span
+      >${this.readout ? html`<span class="control-readout">${text}</span>` : nothing}
     </span>`;
   }
 }

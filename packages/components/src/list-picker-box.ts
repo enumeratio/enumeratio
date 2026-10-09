@@ -76,7 +76,7 @@ export class NotatioListPicker extends ChoiceControl {
       ${this.choices.map(
         (_, i) =>
           html`<div
-            class="notatio-list-option"
+            class="list-picker-box-option"
             role="option"
             aria-selected=${String(this.isSelected(i))}
             ?data-active=${i === this._active}

@@ -29,13 +29,13 @@ export class NotatioSetterBar extends ChoiceControl {
     else if (event.key === "End") this.step(this.choices.length);
     else return;
     event.preventDefault();
-    this.querySelectorAll<HTMLElement>(".notatio-bar-option")[this.index]?.focus();
+    this.querySelectorAll<HTMLElement>(".control-bar-option")[this.index]?.focus();
   };
 
   protected override render(): unknown {
     const radio = this.look === "radio";
     return html`<span
-      class="notatio-bar"
+      class="control-bar"
       role=${radio ? "radiogroup" : "group"}
       aria-label=${this.name || "choice"}
       @keydown=${this.#onKeyDown}
@@ -43,14 +43,14 @@ export class NotatioSetterBar extends ChoiceControl {
         (_, i) =>
           html`<button
             type="button"
-            class="notatio-bar-option"
+            class="control-bar-option"
             role=${radio ? "radio" : nothing}
             aria-checked=${radio ? String(this.isSelected(i)) : nothing}
             aria-pressed=${radio ? nothing : String(this.isSelected(i))}
             tabindex=${this.isSelected(i) || (this.index < 0 && i === 0) ? 0 : -1}
             @click=${() => this.choose(i)}
           >
-            ${radio ? html`<span class="notatio-radio-dot" aria-hidden="true"></span>` : nothing}${unsafeHTML(
+            ${radio ? html`<span class="control-bar-radio" aria-hidden="true"></span>` : nothing}${unsafeHTML(
               this._markup[i] ?? "",
             )}
           </button>`,

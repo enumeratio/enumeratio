@@ -5,7 +5,7 @@
   },
   "print: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Grid([[\n        Labeled(Plot(sin(1x), (x, 0, 10)), \"a = 1\", Bottom),\n        Labeled(Plot(sin(1.8x), (x, 0, 10)), \"a = 1.8\", Bottom),\n        Labeled(Plot(sin(2.6x), (x, 0, 10)), \"a = 2.6\", Bottom),\n      ], [\n          Labeled(Plot(sin(3.4x), (x, 0, 10)), \"a = 3.4\", Bottom),\n          Labeled(Plot(sin(4.2x), (x, 0, 10)), \"a = 4.2\", Bottom),\n          Labeled(Plot(sin(5x), (x, 0, 10)), \"a = 5\", Bottom),\n        ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">a = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1.8x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">a = 1.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(2.6x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">a = 2.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(3.4x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">a = 3.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(4.2x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">a = 4.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(5x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">a = 5</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1.8x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 1.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(2.6x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 2.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(3.4x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 3.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(4.2x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 4.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(5x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 5</span></grid-box></grid-box>"
   },
   "tty: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Manipulate(Plot(sin(a * x), (x, 0, 10)), (a, 1, 5))",
@@ -13,7 +13,7 @@
   },
   "pipe: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Labeled(Plot(sin(1x), (x, 0, 10)), \"a = 1 (1 ≤ a ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">a = 1 (1 ≤ a ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">a = 1 (1 ≤ a ≤ 5)</span></grid-box>"
   },
   "compact: Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
     "epsil": "Manipulate(Plot(sin(a * x), (x, 0, 10)), (a, 1, 5))",
@@ -25,7 +25,7 @@
   },
   "print: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
     "epsil": "Labeled(Grid([[\n                Labeled(sin(0) + 2, \"a = 0\", Bottom),\n                Labeled(sin(1) + 2, \"a = 1\", Bottom),\n                Labeled(sin(2) + 2, \"a = 2\", Bottom),\n              ], [\n                  Labeled(sin(3) + 2, \"a = 3\", Bottom),\n                  Labeled(sin(4) + 2, \"a = 4\", Bottom),\n                  Labeled(sin(5) + 2, \"a = 5\", Bottom),\n                ]]), \"b = 2 (0 ≤ b ≤ 3)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0) + 2\"></dynamic-box><span class=\"notatio-label\">a = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(1) + 2\"></dynamic-box><span class=\"notatio-label\">a = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(2) + 2\"></dynamic-box><span class=\"notatio-label\">a = 2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(3) + 2\"></dynamic-box><span class=\"notatio-label\">a = 3</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(4) + 2\"></dynamic-box><span class=\"notatio-label\">a = 4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(5) + 2\"></dynamic-box><span class=\"notatio-label\">a = 5</span></grid-box></grid-box><span class=\"notatio-label\">b = 2 (0 ≤ b ≤ 3)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0) + 2\"></dynamic-box><span class=\"style-box-label\">a = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(1) + 2\"></dynamic-box><span class=\"style-box-label\">a = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(2) + 2\"></dynamic-box><span class=\"style-box-label\">a = 2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(3) + 2\"></dynamic-box><span class=\"style-box-label\">a = 3</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(4) + 2\"></dynamic-box><span class=\"style-box-label\">a = 4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(5) + 2\"></dynamic-box><span class=\"style-box-label\">a = 5</span></grid-box></grid-box><span class=\"style-box-label\">b = 2 (0 ≤ b ≤ 3)</span></grid-box>"
   },
   "tty: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
     "epsil": "Manipulate(sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
@@ -33,7 +33,7 @@
   },
   "pipe: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
     "epsil": "Labeled(sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0) + 2\"></dynamic-box><span class=\"notatio-label\">a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0) + 2\"></dynamic-box><span class=\"style-box-label\">a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)</span></grid-box>"
   },
   "compact: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
     "epsil": "Manipulate(sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
@@ -45,7 +45,7 @@
   },
   "print: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
     "epsil": "Labeled(sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0) + 2\"></dynamic-box><span class=\"notatio-label\">a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0) + 2\"></dynamic-box><span class=\"style-box-label\">a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)</span></grid-box>"
   },
   "tty: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
     "epsil": "Manipulate(sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")",
@@ -53,7 +53,7 @@
   },
   "pipe: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
     "epsil": "Labeled(sin(0) + 2, \"a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0) + 2\"></dynamic-box><span class=\"notatio-label\">a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0) + 2\"></dynamic-box><span class=\"style-box-label\">a = 0 (0 ≤ a ≤ 5); b = 2 (0 ≤ b ≤ 3)</span></grid-box>"
   },
   "compact: Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")": {
     "epsil": "Manipulate(sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3), Static -> \"Pin\")",
@@ -65,7 +65,7 @@
   },
   "print: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
     "epsil": "Grid([[\n        Labeled(0 ^ 2, \"a = 0\", Bottom),\n        Labeled(0.5 ^ 2, \"a = 0.5\", Bottom),\n        Labeled(1 ^ 2, \"a = 1\", Bottom),\n      ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0 ^ 2\"></dynamic-box><span class=\"notatio-label\">a = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.5 ^ 2\"></dynamic-box><span class=\"notatio-label\">a = 0.5</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1 ^ 2\"></dynamic-box><span class=\"notatio-label\">a = 1</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0 ^ 2\"></dynamic-box><span class=\"style-box-label\">a = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.5 ^ 2\"></dynamic-box><span class=\"style-box-label\">a = 0.5</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1 ^ 2\"></dynamic-box><span class=\"style-box-label\">a = 1</span></grid-box></grid-box>"
   },
   "tty: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
     "epsil": "Manipulate(a ^ 2, (a, 0, 1), Static -> 3)",
@@ -73,7 +73,7 @@
   },
   "pipe: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
     "epsil": "Grid([[\n        Labeled(0 ^ 2, \"a = 0\", Bottom),\n        Labeled(0.5 ^ 2, \"a = 0.5\", Bottom),\n        Labeled(1 ^ 2, \"a = 1\", Bottom),\n      ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0 ^ 2\"></dynamic-box><span class=\"notatio-label\">a = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.5 ^ 2\"></dynamic-box><span class=\"notatio-label\">a = 0.5</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1 ^ 2\"></dynamic-box><span class=\"notatio-label\">a = 1</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0 ^ 2\"></dynamic-box><span class=\"style-box-label\">a = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.5 ^ 2\"></dynamic-box><span class=\"style-box-label\">a = 0.5</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1 ^ 2\"></dynamic-box><span class=\"style-box-label\">a = 1</span></grid-box></grid-box>"
   },
   "compact: Manipulate(a^2, (a, 0, 1), Static -> 3)": {
     "epsil": "Manipulate(a ^ 2, (a, 0, 1), Static -> 3)",
@@ -85,7 +85,7 @@
   },
   "print: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
     "epsil": "Grid([[\n        Labeled(1x, \"k = 1\", Bottom),\n        Labeled(2x, \"k = 2\", Bottom),\n        Labeled(3x, \"k = 3\", Bottom),\n      ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1x\"></dynamic-box><span class=\"notatio-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"2x\"></dynamic-box><span class=\"notatio-label\">k = 2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"3x\"></dynamic-box><span class=\"notatio-label\">k = 3</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1x\"></dynamic-box><span class=\"style-box-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"2x\"></dynamic-box><span class=\"style-box-label\">k = 2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"3x\"></dynamic-box><span class=\"style-box-label\">k = 3</span></grid-box></grid-box>"
   },
   "tty: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
     "epsil": "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
@@ -93,7 +93,7 @@
   },
   "pipe: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
     "epsil": "Labeled(1x, \"k = 1 (1 | 2 | 3)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1x\"></dynamic-box><span class=\"notatio-label\">k = 1 (1 | 2 | 3)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1x\"></dynamic-box><span class=\"style-box-label\">k = 1 (1 | 2 | 3)</span></grid-box>"
   },
   "compact: Manipulate(k * x, (k, [1, 2, 3], PopupMenu))": {
     "epsil": "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
@@ -105,7 +105,7 @@
   },
   "print: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
     "epsil": "Grid([[\n        Labeled(Dynamic(0 ^ 2), \"k = 0\", Bottom),\n        Labeled(Dynamic(1 ^ 2), \"k = 1\", Bottom),\n        Labeled(Dynamic(2 ^ 2), \"k = 2\", Bottom),\n      ], [\n          Labeled(Dynamic(3 ^ 2), \"k = 3\", Bottom),\n          Labeled(Dynamic(4 ^ 2), \"k = 4\", Bottom),\n          Labeled(Dynamic(5 ^ 2), \"k = 5\", Bottom),\n        ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0 ^ 2\"></dynamic-box><span class=\"notatio-label\">k = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1 ^ 2\"></dynamic-box><span class=\"notatio-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"2 ^ 2\"></dynamic-box><span class=\"notatio-label\">k = 2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"3 ^ 2\"></dynamic-box><span class=\"notatio-label\">k = 3</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"4 ^ 2\"></dynamic-box><span class=\"notatio-label\">k = 4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"5 ^ 2\"></dynamic-box><span class=\"notatio-label\">k = 5</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0 ^ 2\"></dynamic-box><span class=\"style-box-label\">k = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1 ^ 2\"></dynamic-box><span class=\"style-box-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"2 ^ 2\"></dynamic-box><span class=\"style-box-label\">k = 2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"3 ^ 2\"></dynamic-box><span class=\"style-box-label\">k = 3</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"4 ^ 2\"></dynamic-box><span class=\"style-box-label\">k = 4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"5 ^ 2\"></dynamic-box><span class=\"style-box-label\">k = 5</span></grid-box></grid-box>"
   },
   "tty: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
     "epsil": "Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
@@ -113,7 +113,7 @@
   },
   "pipe: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
     "epsil": "Labeled(Dynamic(2 ^ 2), \"k = 2 (0 ≤ k ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"2 ^ 2\"></dynamic-box><span class=\"notatio-label\">k = 2 (0 ≤ k ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"2 ^ 2\"></dynamic-box><span class=\"style-box-label\">k = 2 (0 ≤ k ≤ 5)</span></grid-box>"
   },
   "compact: Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
     "epsil": "Column([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
@@ -125,7 +125,7 @@
   },
   "print: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
     "epsil": "Grid([[\n        Labeled(Cell(binomial(10, 3)), \"k = 0\", Bottom),\n        Labeled(Cell(binomial(10, 3)), \"k = 1\", Bottom),\n        Labeled(Cell(binomial(10, 3)), \"k = 2\", Bottom),\n      ], [\n          Labeled(Cell(binomial(10, 3)), \"k = 3\", Bottom),\n          Labeled(Cell(binomial(10, 3)), \"k = 4\", Bottom),\n          Labeled(Cell(binomial(10, 3)), \"k = 5\", Bottom),\n        ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"notatio-label\">k = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"notatio-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"notatio-label\">k = 2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"notatio-label\">k = 3</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"notatio-label\">k = 4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"notatio-label\">k = 5</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"style-box-label\">k = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"style-box-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"style-box-label\">k = 2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"style-box-label\">k = 3</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"style-box-label\">k = 4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"style-box-label\">k = 5</span></grid-box></grid-box>"
   },
   "tty: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
     "epsil": "Column([Cell(binomial(10, 3)), Slider((k, 2), (0, 5))])",
@@ -133,7 +133,7 @@
   },
   "pipe: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
     "epsil": "Labeled(Cell(binomial(10, 3)), \"k = 2 (0 ≤ k ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"notatio-label\">k = 2 (0 ≤ k ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-cell value=\"binomial(10, 3)\"></notatio-cell><span class=\"style-box-label\">k = 2 (0 ≤ k ≤ 5)</span></grid-box>"
   },
   "compact: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
     "epsil": "Column([Cell(binomial(10, 3)), Slider((k, 2), (0, 5))])",
@@ -165,7 +165,7 @@
   },
   "print: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
     "epsil": "Labeled(Column([\"so\", 0 ^ 2]), \"k = 0 (0 ≤ k ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Column\"><span>so</span><dynamic-box value=\"0 ^ 2\"></dynamic-box></grid-box><span class=\"notatio-label\">k = 0 (0 ≤ k ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Column\"><span>so</span><dynamic-box value=\"0 ^ 2\"></dynamic-box></grid-box><span class=\"style-box-label\">k = 0 (0 ≤ k ≤ 5)</span></grid-box>"
   },
   "tty: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
     "epsil": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
@@ -173,7 +173,7 @@
   },
   "pipe: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
     "epsil": "Labeled(Column([\"so\", 0 ^ 2]), \"k = 0 (0 ≤ k ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Column\"><span>so</span><dynamic-box value=\"0 ^ 2\"></dynamic-box></grid-box><span class=\"notatio-label\">k = 0 (0 ≤ k ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Column\"><span>so</span><dynamic-box value=\"0 ^ 2\"></dynamic-box></grid-box><span class=\"style-box-label\">k = 0 (0 ≤ k ≤ 5)</span></grid-box>"
   },
   "compact: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
     "epsil": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
@@ -185,7 +185,7 @@
   },
   "print: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
     "epsil": "Labeled(Grid([[\n                Labeled(Grid([[0 + 0, 0 * 0]]), \"a = 0\", Bottom),\n                Labeled(Grid([[0.2 + 0, 0.2 * 0]]), \"a = 0.2\", Bottom),\n                Labeled(Grid([[0.4 + 0, 0.4 * 0]]), \"a = 0.4\", Bottom),\n              ], [\n                  Labeled(Grid([[0.6 + 0, 0.6 * 0]]), \"a = 0.6\", Bottom),\n                  Labeled(Grid([[0.8 + 0, 0.8 * 0]]), \"a = 0.8\", Bottom),\n                  Labeled(Grid([[1 + 0, 1 * 0]]), \"a = 1\", Bottom),\n                ]]), \"b = 0 (0 ≤ b ≤ 1)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0 + 0\"></dynamic-box><dynamic-box value=\"0 * 0\"></dynamic-box></grid-box><span class=\"notatio-label\">a = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0.2 + 0\"></dynamic-box><dynamic-box value=\"0.2 * 0\"></dynamic-box></grid-box><span class=\"notatio-label\">a = 0.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0.4 + 0\"></dynamic-box><dynamic-box value=\"0.4 * 0\"></dynamic-box></grid-box><span class=\"notatio-label\">a = 0.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0.6 + 0\"></dynamic-box><dynamic-box value=\"0.6 * 0\"></dynamic-box></grid-box><span class=\"notatio-label\">a = 0.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0.8 + 0\"></dynamic-box><dynamic-box value=\"0.8 * 0\"></dynamic-box></grid-box><span class=\"notatio-label\">a = 0.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"1 + 0\"></dynamic-box><dynamic-box value=\"1 * 0\"></dynamic-box></grid-box><span class=\"notatio-label\">a = 1</span></grid-box></grid-box><span class=\"notatio-label\">b = 0 (0 ≤ b ≤ 1)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0 + 0\"></dynamic-box><dynamic-box value=\"0 * 0\"></dynamic-box></grid-box><span class=\"style-box-label\">a = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0.2 + 0\"></dynamic-box><dynamic-box value=\"0.2 * 0\"></dynamic-box></grid-box><span class=\"style-box-label\">a = 0.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0.4 + 0\"></dynamic-box><dynamic-box value=\"0.4 * 0\"></dynamic-box></grid-box><span class=\"style-box-label\">a = 0.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0.6 + 0\"></dynamic-box><dynamic-box value=\"0.6 * 0\"></dynamic-box></grid-box><span class=\"style-box-label\">a = 0.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0.8 + 0\"></dynamic-box><dynamic-box value=\"0.8 * 0\"></dynamic-box></grid-box><span class=\"style-box-label\">a = 0.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"1 + 0\"></dynamic-box><dynamic-box value=\"1 * 0\"></dynamic-box></grid-box><span class=\"style-box-label\">a = 1</span></grid-box></grid-box><span class=\"style-box-label\">b = 0 (0 ≤ b ≤ 1)</span></grid-box>"
   },
   "tty: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
     "epsil": "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
@@ -193,7 +193,7 @@
   },
   "pipe: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
     "epsil": "Labeled(Grid([[0 + 0, 0 * 0]]), \"a = 0 (0 ≤ a ≤ 1); b = 0 (0 ≤ b ≤ 1)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0 + 0\"></dynamic-box><dynamic-box value=\"0 * 0\"></dynamic-box></grid-box><span class=\"notatio-label\">a = 0 (0 ≤ a ≤ 1); b = 0 (0 ≤ b ≤ 1)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><dynamic-box value=\"0 + 0\"></dynamic-box><dynamic-box value=\"0 * 0\"></dynamic-box></grid-box><span class=\"style-box-label\">a = 0 (0 ≤ a ≤ 1); b = 0 (0 ≤ b ≤ 1)</span></grid-box>"
   },
   "compact: Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
     "epsil": "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
@@ -201,23 +201,23 @@
   },
   "web: Panel(Labeled(Checkbox(on), \"on?\"))": {
     "epsil": "Panel(Labeled(Checkbox(on), \"on?\"))",
-    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"notatio-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"style-box-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
   },
   "print: Panel(Labeled(Checkbox(on), \"on?\"))": {
     "epsil": "Grid([[Labeled(False, \"on = False\", Bottom), Labeled(True, \"on = True\", Bottom)]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"False\"></dynamic-box><span class=\"notatio-label\">on = False</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"True\"></dynamic-box><span class=\"notatio-label\">on = True</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(2, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"False\"></dynamic-box><span class=\"style-box-label\">on = False</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"True\"></dynamic-box><span class=\"style-box-label\">on = True</span></grid-box></grid-box>"
   },
   "tty: Panel(Labeled(Checkbox(on), \"on?\"))": {
     "epsil": "Panel(Labeled(Checkbox(on), \"on?\"))",
-    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"notatio-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"style-box-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
   },
   "pipe: Panel(Labeled(Checkbox(on), \"on?\"))": {
     "epsil": "Panel(Labeled(Checkbox(on), \"on?\"))",
-    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"notatio-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"style-box-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
   },
   "compact: Panel(Labeled(Checkbox(on), \"on?\"))": {
     "epsil": "Panel(Labeled(Checkbox(on), \"on?\"))",
-    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"notatio-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><panel-box data-head=\"Panel\"><grid-box data-head=\"Labeled\"><checkbox-box name=\"on\"></checkbox-box><span class=\"style-box-label\">on?</span></grid-box></panel-box></dynamic-module-box>"
   },
   "web: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Row([Plot(sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
@@ -225,7 +225,7 @@
   },
   "print: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Grid([[\n        Labeled(Plot(sin(1x), (x, 0, 10)), \"k = 1\", Bottom),\n        Labeled(Plot(sin(1.8x), (x, 0, 10)), \"k = 1.8\", Bottom),\n        Labeled(Plot(sin(2.6x), (x, 0, 10)), \"k = 2.6\", Bottom),\n      ], [\n          Labeled(Plot(sin(3.4x), (x, 0, 10)), \"k = 3.4\", Bottom),\n          Labeled(Plot(sin(4.2x), (x, 0, 10)), \"k = 4.2\", Bottom),\n          Labeled(Plot(sin(5x), (x, 0, 10)), \"k = 5\", Bottom),\n        ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1.8x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">k = 1.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(2.6x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">k = 2.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(3.4x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">k = 3.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(4.2x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">k = 4.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(5x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">k = 5</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 1</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1.8x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 1.8</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(2.6x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 2.6</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(3.4x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 3.4</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(4.2x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 4.2</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(5x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 5</span></grid-box></grid-box>"
   },
   "tty: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Row([Plot(sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
@@ -233,7 +233,7 @@
   },
   "pipe: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Labeled(Plot(sin(1x), (x, 0, 10)), \"k = 1 (1 ≤ k ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"notatio-label\">k = 1 (1 ≤ k ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(1x)\" var=\"x\" domain=\"0,10\"></notatio-plot><span class=\"style-box-label\">k = 1 (1 ≤ k ≤ 5)</span></grid-box>"
   },
   "compact: Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "epsil": "Column([Plot(sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
@@ -245,7 +245,7 @@
   },
   "print: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "epsil": "Grid([[\n        Labeled(\"a few\", \"size = a few\", Bottom),\n        Labeled(\"several\", \"size = several\", Bottom),\n        Labeled(\"many\", \"size = many\", Bottom),\n      ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>a few</span><span class=\"notatio-label\">size = a few</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>several</span><span class=\"notatio-label\">size = several</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>many</span><span class=\"notatio-label\">size = many</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>a few</span><span class=\"style-box-label\">size = a few</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>several</span><span class=\"style-box-label\">size = several</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>many</span><span class=\"style-box-label\">size = many</span></grid-box></grid-box>"
   },
   "tty: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "epsil": "Toggler(size, [\"a few\", \"several\", \"many\"])",
@@ -253,7 +253,7 @@
   },
   "pipe: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "epsil": "Labeled(\"a few\", \"size = a few (a few | several | many)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><span>a few</span><span class=\"notatio-label\">size = a few (a few | several | many)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><span>a few</span><span class=\"style-box-label\">size = a few (a few | several | many)</span></grid-box>"
   },
   "compact: Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "epsil": "Toggler(size, [\"a few\", \"several\", \"many\"])",
@@ -265,7 +265,7 @@
   },
   "print: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "epsil": "Grid([[\n        Labeled(\"a few\", \"size = a few\", Bottom),\n        Labeled(\"several\", \"size = several\", Bottom),\n        Labeled(\"many\", \"size = many\", Bottom),\n      ]])",
-    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>a few</span><span class=\"notatio-label\">size = a few</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>several</span><span class=\"notatio-label\">size = several</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>many</span><span class=\"notatio-label\">size = many</span></grid-box></grid-box>"
+    "markup": "<grid-box data-head=\"Grid\" style=\"grid-template-columns: repeat(3, auto)\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>a few</span><span class=\"style-box-label\">size = a few</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>several</span><span class=\"style-box-label\">size = several</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><span>many</span><span class=\"style-box-label\">size = many</span></grid-box></grid-box>"
   },
   "tty: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "epsil": "Row([\n      Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]),\n      size,\n    ])",
@@ -273,7 +273,7 @@
   },
   "pipe: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "epsil": "Labeled(\"several\", \"size = several (a few | some | many)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><span>several</span><span class=\"notatio-label\">size = several (a few | some | many)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><span>several</span><span class=\"style-box-label\">size = several (a few | some | many)</span></grid-box>"
   },
   "compact: Row([Toggler((size, \"several\"), [\"a few\", Labeled(\"several\", \"some\"), \"many\"]), size])": {
     "epsil": "Column([Toggler(\n                 (size, \"several\"),\n                 [\"a few\", Labeled(\"several\", \"some\"), \"many\"],\n               ), size])",
@@ -285,7 +285,7 @@
   },
   "print: Animator(t, (0, 1, 0.25))": {
     "epsil": "Row([\n      Labeled(0, \"t = 0\", Bottom),\n      Labeled(0.25, \"t = 0.25\", Bottom),\n      Labeled(0.5, \"t = 0.5\", Bottom),\n      Labeled(0.75, \"t = 0.75\", Bottom),\n      Labeled(1, \"t = 1\", Bottom),\n    ])",
-    "markup": "<row-box data-head=\"Row\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0\"></dynamic-box><span class=\"notatio-label\">t = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.25\"></dynamic-box><span class=\"notatio-label\">t = 0.25</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.5\"></dynamic-box><span class=\"notatio-label\">t = 0.5</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.75\"></dynamic-box><span class=\"notatio-label\">t = 0.75</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1\"></dynamic-box><span class=\"notatio-label\">t = 1</span></grid-box></row-box>"
+    "markup": "<row-box data-head=\"Row\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0\"></dynamic-box><span class=\"style-box-label\">t = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.25\"></dynamic-box><span class=\"style-box-label\">t = 0.25</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.5\"></dynamic-box><span class=\"style-box-label\">t = 0.5</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0.75\"></dynamic-box><span class=\"style-box-label\">t = 0.75</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"1\"></dynamic-box><span class=\"style-box-label\">t = 1</span></grid-box></row-box>"
   },
   "tty: Animator(t, (0, 1, 0.25))": {
     "epsil": "Animator(t, (0, 1, 0.25))",
@@ -293,7 +293,7 @@
   },
   "pipe: Animator(t, (0, 1, 0.25))": {
     "epsil": "Labeled(0, \"t = 0 (0 ≤ t ≤ 1)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0\"></dynamic-box><span class=\"notatio-label\">t = 0 (0 ≤ t ≤ 1)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"0\"></dynamic-box><span class=\"style-box-label\">t = 0 (0 ≤ t ≤ 1)</span></grid-box>"
   },
   "compact: Animator(t, (0, 1, 0.25))": {
     "epsil": "Animator(t, (0, 1, 0.25))",
@@ -305,7 +305,7 @@
   },
   "print: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
     "epsil": "Row([\n      Labeled(sin(0), \"t = 0\", Bottom),\n      Labeled(sin(0.25), \"t = 0.25\", Bottom),\n      Labeled(sin(0.5), \"t = 0.5\", Bottom),\n      Labeled(sin(0.75), \"t = 0.75\", Bottom),\n      Labeled(sin(1), \"t = 1\", Bottom),\n    ])",
-    "markup": "<row-box data-head=\"Row\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0)\"></dynamic-box><span class=\"notatio-label\">t = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0.25)\"></dynamic-box><span class=\"notatio-label\">t = 0.25</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0.5)\"></dynamic-box><span class=\"notatio-label\">t = 0.5</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0.75)\"></dynamic-box><span class=\"notatio-label\">t = 0.75</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(1)\"></dynamic-box><span class=\"notatio-label\">t = 1</span></grid-box></row-box>"
+    "markup": "<row-box data-head=\"Row\"><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0)\"></dynamic-box><span class=\"style-box-label\">t = 0</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0.25)\"></dynamic-box><span class=\"style-box-label\">t = 0.25</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0.5)\"></dynamic-box><span class=\"style-box-label\">t = 0.5</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0.75)\"></dynamic-box><span class=\"style-box-label\">t = 0.75</span></grid-box><grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(1)\"></dynamic-box><span class=\"style-box-label\">t = 1</span></grid-box></row-box>"
   },
   "tty: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
     "epsil": "Row([Animator(t, (0, 1, 0.25)), sin(t)])",
@@ -313,7 +313,7 @@
   },
   "pipe: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
     "epsil": "Labeled(sin(0), \"t = 0 (0 ≤ t ≤ 1)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0)\"></dynamic-box><span class=\"notatio-label\">t = 0 (0 ≤ t ≤ 1)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"sin(0)\"></dynamic-box><span class=\"style-box-label\">t = 0 (0 ≤ t ≤ 1)</span></grid-box>"
   },
   "compact: Row([Animator(t, (0, 1, 0.25)), Sin(t)])": {
     "epsil": "Column([Animator(t, (0, 1, 0.25)), sin(t)])",
@@ -325,7 +325,7 @@
   },
   "print: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
     "epsil": "Labeled((0.3, 0.6), \"p = (0.3, 0.6)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(0.3, 0.6)\"></dynamic-box><span class=\"notatio-label\">p = (0.3, 0.6)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(0.3, 0.6)\"></dynamic-box><span class=\"style-box-label\">p = (0.3, 0.6)</span></grid-box>"
   },
   "tty: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
     "epsil": "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
@@ -333,7 +333,7 @@
   },
   "pipe: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
     "epsil": "Labeled((0.3, 0.6), \"p = (0.3, 0.6)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(0.3, 0.6)\"></dynamic-box><span class=\"notatio-label\">p = (0.3, 0.6)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(0.3, 0.6)\"></dynamic-box><span class=\"style-box-label\">p = (0.3, 0.6)</span></grid-box>"
   },
   "compact: Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
     "epsil": "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
@@ -345,7 +345,7 @@
   },
   "print: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
     "epsil": "Labeled((1, 3), \"r = (1, 3) (0 ≤ r ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(1, 3)\"></dynamic-box><span class=\"notatio-label\">r = (1, 3) (0 ≤ r ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(1, 3)\"></dynamic-box><span class=\"style-box-label\">r = (1, 3) (0 ≤ r ≤ 5)</span></grid-box>"
   },
   "tty: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
     "epsil": "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
@@ -353,7 +353,7 @@
   },
   "pipe: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
     "epsil": "Labeled((1, 3), \"r = (1, 3) (0 ≤ r ≤ 5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(1, 3)\"></dynamic-box><span class=\"notatio-label\">r = (1, 3) (0 ≤ r ≤ 5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(1, 3)\"></dynamic-box><span class=\"style-box-label\">r = (1, 3) (0 ≤ r ≤ 5)</span></grid-box>"
   },
   "compact: IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
     "epsil": "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
@@ -365,7 +365,7 @@
   },
   "print: Locator((p, (1, 0.5)))": {
     "epsil": "Labeled((1, 0.5), \"p = (1, 0.5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(1, 0.5)\"></dynamic-box><span class=\"notatio-label\">p = (1, 0.5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(1, 0.5)\"></dynamic-box><span class=\"style-box-label\">p = (1, 0.5)</span></grid-box>"
   },
   "tty: Locator((p, (1, 0.5)))": {
     "epsil": "Locator((p, (1, 0.5)))",
@@ -373,7 +373,7 @@
   },
   "pipe: Locator((p, (1, 0.5)))": {
     "epsil": "Labeled((1, 0.5), \"p = (1, 0.5)\", Bottom)",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(1, 0.5)\"></dynamic-box><span class=\"notatio-label\">p = (1, 0.5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><dynamic-box value=\"(1, 0.5)\"></dynamic-box><span class=\"style-box-label\">p = (1, 0.5)</span></grid-box>"
   },
   "compact: Locator((p, (1, 0.5)))": {
     "epsil": "Locator((p, (1, 0.5)))",
@@ -385,7 +385,7 @@
   },
   "print: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Labeled(\n         Plot(sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot><span class=\"notatio-label\">p = (1, 0.5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot><span class=\"style-box-label\">p = (1, 0.5)</span></grid-box>"
   },
   "tty: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Row([Plot(sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
@@ -393,7 +393,7 @@
   },
   "pipe: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Labeled(\n         Plot(sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
-    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot><span class=\"notatio-label\">p = (1, 0.5)</span></grid-box>"
+    "markup": "<grid-box data-head=\"Labeled\" data-rows=\"2\"><notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot><span class=\"style-box-label\">p = (1, 0.5)</span></grid-box>"
   },
   "compact: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
     "epsil": "Column([\n         Plot(sin(x), (x, 0, 10), Epilog -> Point((2, 0))),\n         Locator((p, (1, 0.5))),\n       ])",
