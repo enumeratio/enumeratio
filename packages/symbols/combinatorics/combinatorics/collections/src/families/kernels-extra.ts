@@ -634,12 +634,14 @@ export function IsMotzkinPath(path: number[], n: number): boolean {
 }
 
 // ─── FibonacciWords(n): 0/1 strings of length n with no two consecutive 1s. Count Fibonacci(n+2). ────────
-// h(m,last) = #valid suffixes of length m given previous bit `last`.
+// fibComp(m, last) = #valid suffixes of length m given previous bit `last`: the Fibonacci
+// numbers 1, 2, 3, 5, … after a 0, and the one before after a 1 (which allows only a 0 next).
+const fibFree: number[] = [1, 2];
 function fibComp(m: number, last: number): number {
   if (m === 0) return 1;
-  return last === 1 ? fibComp(m - 1, 0) : fibComp(m - 1, 0) + fibComp(m - 1, 1);
+  while (fibFree.length <= m) fibFree.push(fibFree[fibFree.length - 1] + fibFree[fibFree.length - 2]);
+  return last === 1 ? fibFree[m - 1] : fibFree[m];
 }
-// Uncached and exponential in n (fibComp recurses without a table).
 export function FibonacciWordCount(n: number): number {
   return fibComp(n, 0);
 }

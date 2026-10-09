@@ -26,6 +26,7 @@ import {
   alternatingPermutations,
   connectedPermutations,
   kDescentPermutations,
+  kInversionPermutations,
   permutationsAvoiding3,
 } from "./restrictions.ts";
 
@@ -181,6 +182,22 @@ function kInversionRank(perm: number[], n: number): number {
   return rank;
 }
 
+// The table the TS kernel builds is whole polynomials per size, so a large n is left to Epsil.
+const MAHONIAN_FAST_MAX_N = 200;
+const withinMahonianTable = (n: number): number => {
+  if (n > MAHONIAN_FAST_MAX_N) throw new RangeError(`KInversionPermutations(${n}): too large for the TS table`);
+  return n;
+};
+const kInversionPermutationsFast: EpsilFamily = {
+  ...kInversionPermutations,
+  fast: {
+    count: ([n, k]) => mahonianCount(withinMahonianTable(n), k),
+    unrank: ([n, k], r) => kInversionUnrank(withinMahonianTable(n), k, r),
+    rank: (x, [n]) => kInversionRank(x as number[], withinMahonianTable(n)),
+    valid: (x, [n, k]) => IsPermutationOf(x as number[], n) && Inversions(x as number[]) === k,
+  },
+};
+
 // ─── PermutationsAsCycles(n): every permutation of n in cycle notation, fixed points kept. ─────
 // A cycle decomposition is canonical: each cycle starts at its least point, cycles in order of
 // those points. Listed by cycle type in IntegerPartitions' order (the n-cycles first, the
@@ -304,16 +321,6 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
   connectedPermutations,
   kCyclePermutations,
   kDescentPermutations,
-  {
-    ...ints(
-      "KInversionPermutations",
-      2,
-      ([n, k]) => mahonianCount(n, k),
-      ([n, k], r) => kInversionUnrank(n, k, r),
-      (a, [n, k]) => IsPermutationOf(a, n) && Inversions(a) === k,
-      (a, [n]) => kInversionRank(a, n),
-    ),
-    carrier: "Permutation",
-  },
+  kInversionPermutationsFast,
   ...permutationsAvoiding3,
 ];

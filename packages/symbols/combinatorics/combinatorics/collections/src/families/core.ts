@@ -14,8 +14,12 @@ import {
 import type { EpsilFamily } from "./epsil.ts";
 import type { NumberKernel } from "./types.ts";
 import {
+  FibonacciWordCount,
+  FibonacciWordRank,
+  FibonacciWordUnrank,
   GrayCodeSubsetRank,
   GrayCodeSubsetUnrank,
+  IsFibonacciWord,
   IsLatticePathOf,
   IsMultisetOf,
   IsSubsetOf,
@@ -133,9 +137,16 @@ export const entriesBeforeDyckPaths: (NumberKernel | EpsilFamily)[] = [
 // A-90): both now carry "MotzkinPath"/"SchroederPath". FibonacciWords declares no carrier and
 // stays here per step 5 rule 4.
 export const entriesBeforeSetPartitions: EpsilFamily[] = [
-  // The TS kernel (kernels-extra.ts) is no fast path: it recounts completions without a table,
-  // exponential in n.
-  fibonacciWords({ head: "FibonacciWords", params: ["_n"] }),
+  fibonacciWords({
+    head: "FibonacciWords",
+    params: ["_n"],
+    fast: {
+      count: ([n]) => FibonacciWordCount(n),
+      unrank: ([n], r) => FibonacciWordUnrank(n, r),
+      rank: (x) => FibonacciWordRank(x as number[]),
+      valid: (x, [n]) => IsFibonacciWord(x as number[], n),
+    },
+  }),
 ];
 
 // SetPartitions/SetPartitionsIntoKBlocks/SetCompositions/PerfectMatchings moved to
