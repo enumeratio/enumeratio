@@ -13,4 +13,5 @@ names:
 ---
 
 - Exact for the ordinary-point Taylor case: $n$ nonnegative integer, $f$ with no pole or branch point at $x_0$. Computed as $D^n(f)$ evaluated at $x_0$, divided by $n!$ — no series expansion is built, just repeated differentiation.
+- Also: $c\,x^m I_\nu(kx)$ and $c\,x^m J_\nu(kx)$ about $0$ ($\nu$ a nonnegative integer) at any index, symbolic $n$ included, read off the power series: a Piecewise that is zero unless $n-m-\nu$ is a nonnegative even number.
 - Declined on purpose: $n$ negative or non-integer (a Laurent or Puiseux coefficient — the derivative formula doesn't apply past an ordinary point) and $f$ singular exactly at $x_0$ even where the singularity is removable (e.g. $\sin(x)/x$ at $0$) — the result is checked for a leftover free occurrence of the expansion variable or a non-finite value, and declined rather than trusted, whenever either shows up.

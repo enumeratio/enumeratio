@@ -5,6 +5,7 @@ import { applyNativeHeadPatches, applyPatch, lerchPhiPatch, valuesAtZero } from 
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { ANALYTIC_NOTATION } from "./notation.ts";
 import { declareInverseOutsideDomain, declareWidened } from "./widened.ts";
+import { declareBesselBig } from "./bessel-big.ts";
 import { declareBetaContinuation } from "./beta-continuation.ts";
 import { declareComplexArguments } from "./complex-arguments.ts";
 import { declareDobinski } from "./dobinski.ts";
@@ -238,6 +239,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareHyperbolicExact(ce);
   declareComplexArguments(ce);
   declareBetaContinuation(ce);
+  declareBesselBig(ce);
   declareSimplifyIdentities(ce);
   declareDobinski(ce);
   declareTrigPowerIntegrals(ce);

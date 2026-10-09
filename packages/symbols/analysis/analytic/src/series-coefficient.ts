@@ -1,6 +1,7 @@
 import { isNumber, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 import { isRealInt } from "@enumeratio/ce-patches";
+import { fractionFactors } from "./transforms.ts";
 
 // SeriesCoefficient(f, {x, x0, n}) — the coefficient of (x − x0)^n in the Taylor series of
 // f about x0, via the classical formula coeff = D^n(f)(x0) / n!. This is exact and correct
@@ -56,6 +57,87 @@ function seriesCoefficient(
   return coeff;
 }
 
+/**
+ * The coefficient of x^n (n symbolic, an integer) in c·x^m·I_ν(kx) or c·x^m·J_ν(kx) about 0, ν a
+ * nonnegative integer, from the power series I_ν(z) = Σ_j (z/2)^{2j+ν}/(j!(j+ν)!) (J_ν: (-1)^j too):
+ * x^n needs j = (n-m-ν)/2 to be a nonnegative integer, so the answer is a Piecewise, 0 elsewhere.
+ */
+function besselCoefficient(
+  ce: ComputeEngine,
+  f: BoxedExpression,
+  xName: string,
+  x0: BoxedExpression,
+  n: BoxedExpression,
+): BoxedExpression | undefined {
+  if (!(x0.re === 0 && x0.im === 0)) return undefined;
+  const consts: BoxedExpression[] = [];
+  let m = 0;
+  let bessel: BoxedExpression | undefined;
+  const { numer, denom } = fractionFactors(f);
+  for (const [factors, sign] of [
+    [numer, 1],
+    [denom, -1],
+  ] as const) {
+    for (const { base, power } of factors) {
+      if (!base.has(xName)) consts.push(ce.function("Power", [base, sign * power]));
+      else if (symbolNameOf(base) === xName) m += sign * power;
+      else if (
+        sign === 1 &&
+        power === 1 &&
+        bessel === undefined &&
+        (base.operator === "BesselI" || base.operator === "BesselJ")
+      )
+        bessel = base;
+      else return undefined;
+    }
+  }
+  if (bessel === undefined) return undefined;
+  const [nu, arg] = operandsOf(bessel);
+  if (nu === undefined || arg === undefined || !isRealInt(nu) || nu.re < 0) return undefined;
+  const k = linearInX(ce, arg, xName);
+  if (k === undefined) return undefined;
+  const j = ce.function("Divide", [ce.function("Subtract", [n, m + nu.re]), 2]);
+  const terms = [
+    ...consts,
+    ce.function("Power", [ce.function("Divide", [k, 2]), ce.function("Subtract", [n, m])]),
+    ce.function("Power", [
+      ce.function("Multiply", [
+        ce.function("Gamma", [ce.function("Add", [j, 1])]),
+        ce.function("Gamma", [ce.function("Add", [j, nu.re + 1])]),
+      ]),
+      -1,
+    ]),
+  ];
+  if (bessel.operator === "BesselJ") terms.push(ce.function("Power", [-1, j]));
+  const parity = (((m + nu.re) % 2) + 2) % 2;
+  const condition = ce.function("And", [
+    ce.function("Equal", [ce.function("Mod", [n, 2]), parity]),
+    ce.function("GreaterEqual", [n, m + nu.re]),
+  ]);
+  return ce
+    .box(["Piecewise", ["List", ["List", ce.function("Multiply", terms).evaluate().json, condition.json]], 0] as never)
+    .evaluate();
+}
+
+/** `arg` as `k·x` with `k` free of x (bare `x` gives 1). */
+function linearInX(ce: ComputeEngine, arg: BoxedExpression, xName: string): BoxedExpression | undefined {
+  if (symbolNameOf(arg) === xName) return ce.One;
+  const { numer, denom } = fractionFactors(arg);
+  const k: BoxedExpression[] = [];
+  let seen = false;
+  for (const [factors, sign] of [
+    [numer, 1],
+    [denom, -1],
+  ] as const) {
+    for (const { base, power } of factors) {
+      if (!base.has(xName)) k.push(ce.function("Power", [base, sign * power]));
+      else if (symbolNameOf(base) === xName && sign === 1 && power === 1 && !seen) seen = true;
+      else return undefined;
+    }
+  }
+  return seen ? ce.function("Multiply", k).evaluate() : undefined;
+}
+
 export function declareSeriesCoefficient(ce: ComputeEngine): void {
   ce.declare("SeriesCoefficient", {
     signature: "(expression, list<any^3>) -> number",
@@ -65,7 +147,8 @@ export function declareSeriesCoefficient(ce: ComputeEngine): void {
       const [xSym, x0, nExpr] = operandsOf(triple);
       const xName = xSym && symbolNameOf(xSym);
       if (!xName || !x0 || !nExpr) return undefined;
-      if (!isRealInt(nExpr)) return undefined;
+      const bessel = besselCoefficient(ce, f, xName, x0, nExpr);
+      if (bessel !== undefined || !isRealInt(nExpr)) return bessel;
       return seriesCoefficient(ce, f, xName, x0, nExpr.re);
     },
   });

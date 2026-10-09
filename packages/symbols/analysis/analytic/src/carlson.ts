@@ -350,18 +350,37 @@ function evaluate3(
 }
 
 /**
+ * All arguments one positive constant `x`: the integral is a power of it (DLMF 19.20.1-19.20.3,
+ * 19.20.6), `x^exponent`. Wolfram folds these for a constant and leaves a bare symbol alone, so
+ * do we. Only for exact input in a symbolic evaluate; a float or `N` takes the numeric kernel.
+ */
+function equalArguments(
+  ce: ComputeEngine,
+  ops: readonly BoxedExpression[],
+  options: EvalOptions,
+  exponent: readonly [number, number],
+): BoxedExpression | undefined {
+  const x = ops[0];
+  if (x === undefined || wantsNumber(ops, options)) return undefined;
+  if (!x.isConstant || x.isPositive !== true || !ops.every((op) => op.isSame(x))) return undefined;
+  return ce.function("Power", [x, ce.number([exponent[0], exponent[1]])]).evaluate();
+}
+
+/**
  * Declare `CarlsonRF`, `CarlsonRC`, `CarlsonRD`, `CarlsonRJ`, `CarlsonRG` — Wolfram's own
- * names for these (`CarlsonRF[x,y,z]` etc.), same argument order. Numeric only: these
- * have no widely useful closed forms to reduce to symbolically (RF(t,t,t) = 1/√t and
- * friends are the exception, not something worth special-casing here), so plain
- * `evaluate()` leaves them symbolic and only a float argument or `N()` computes.
+ * names for these (`CarlsonRF[x,y,z]` etc.), same argument order. Numeric only, apart from
+ * equal positive constant arguments (a power, see `equalArguments`): these have no widely
+ * useful closed forms to reduce to symbolically, so plain `evaluate()` leaves them symbolic
+ * and only a float argument or `N()` computes.
  */
 export function declareCarlson(ce: ComputeEngine): void {
   if (ce.lookupDefinition("CarlsonRF") !== undefined) return; // never redeclare a native head
 
   ce.declare("CarlsonRF", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRF, options, ([x, y, z], d) => carlsonRFBig(x!, y!, z!, d)),
+    evaluate: (ops, options) =>
+      equalArguments(ce, ops, options, [-1, 2]) ??
+      evaluate3(ce, ops, carlsonRF, options, ([x, y, z], d) => carlsonRFBig(x!, y!, z!, d)),
   });
 
   ce.declare("CarlsonRC", {
@@ -369,6 +388,8 @@ export function declareCarlson(ce: ComputeEngine): void {
     evaluate: (ops, options) => {
       const [x, y] = ops;
       if (x === undefined || y === undefined) return undefined;
+      const folded = equalArguments(ce, ops, options, [-1, 2]);
+      if (folded !== undefined) return folded;
       if (!wantsNumber(ops, options) || !isFiniteNum(x) || !isFiniteNum(y)) return undefined;
       const past = pastDouble(ce, ops, options, ([a, b], d) => carlsonRCBig(a!, b!, d));
       if (past !== undefined) return past.value;
@@ -378,7 +399,9 @@ export function declareCarlson(ce: ComputeEngine): void {
 
   ce.declare("CarlsonRD", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRD, options, ([x, y, z], d) => carlsonRDBig(x!, y!, z!, d)),
+    evaluate: (ops, options) =>
+      equalArguments(ce, ops, options, [-3, 2]) ??
+      evaluate3(ce, ops, carlsonRD, options, ([x, y, z], d) => carlsonRDBig(x!, y!, z!, d)),
   });
 
   ce.declare("CarlsonRJ", {
@@ -386,6 +409,8 @@ export function declareCarlson(ce: ComputeEngine): void {
     evaluate: (ops, options) => {
       const [x, y, z, p] = ops;
       if (x === undefined || y === undefined || z === undefined || p === undefined) return undefined;
+      const folded = equalArguments(ce, ops, options, [-3, 2]);
+      if (folded !== undefined) return folded;
       if (!wantsNumber(ops, options) || !isFiniteNum(x) || !isFiniteNum(y) || !isFiniteNum(z) || !isFiniteNum(p)) {
         return undefined;
       }
@@ -399,6 +424,8 @@ export function declareCarlson(ce: ComputeEngine): void {
 
   ce.declare("CarlsonRG", {
     signature: "(number, number, number) -> number",
-    evaluate: (ops, options) => evaluate3(ce, ops, carlsonRG, options, ([x, y, z], d) => carlsonRGBig(x!, y!, z!, d)),
+    evaluate: (ops, options) =>
+      equalArguments(ce, ops, options, [1, 2]) ??
+      evaluate3(ce, ops, carlsonRG, options, ([x, y, z], d) => carlsonRGBig(x!, y!, z!, d)),
   });
 }

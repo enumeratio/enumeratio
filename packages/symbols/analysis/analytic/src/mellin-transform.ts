@@ -423,15 +423,101 @@ function atomicInverseMellin(
   return undefined;
 }
 
-/** `arg` as `α·s + β` with rational-valued α, β: its value at s = 0 and at s = 1. */
+/** `arg` as `α·s + β` with rational-valued α, β: its value at s = 0 and at s = 1 (a third point rules out a curve). */
 function affineInS(
   expr: BoxedExpression,
   sName: string,
 ): { readonly alpha: number; readonly beta: number } | undefined {
   const at = (v: number) => expr.subs({ [sName]: v }).evaluate();
-  const [b0, b1] = [at(0), at(1)];
-  if (b0.im !== 0 || b1.im !== 0 || !Number.isFinite(b0.re) || !Number.isFinite(b1.re)) return undefined;
+  const [b0, b1, b2] = [at(0), at(1), at(2)];
+  if ([b0, b1, b2].some((b) => b.im !== 0 || !Number.isFinite(b.re))) return undefined;
+  if (Math.abs(b2.re - (2 * b1.re - b0.re)) > 1e-12) return undefined;
   return { alpha: b1.re - b0.re, beta: b0.re };
+}
+
+/** `expr` as constants times Gamma factors over Gamma factors and linear denominators, none of the rest. */
+function gammaQuotient(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  sName: string,
+):
+  | { consts: BoxedExpression[]; up: BoxedExpression[]; down: BoxedExpression[]; linear: BoxedExpression[] }
+  | undefined {
+  const { numer, denom } = fractionFactors(expr);
+  const out = {
+    consts: [] as BoxedExpression[],
+    up: [] as BoxedExpression[],
+    down: [] as BoxedExpression[],
+    linear: [] as BoxedExpression[],
+  };
+  for (const [factors, inverted] of [
+    [numer, false],
+    [denom, true],
+  ] as const) {
+    for (const { base, power } of factors) {
+      if (!hasVar(base, sName)) out.consts.push(ce.function("Power", [base, inverted ? -power : power]));
+      else if (power === 1 && base.operator === "Gamma") (inverted ? out.down : out.up).push(opAt(base, 0));
+      else if (power === 1 && inverted) out.linear.push(base);
+      else return undefined;
+    }
+  }
+  return out;
+}
+
+/**
+ * M⁻¹{Γ((s+c+1)/2) / (√π (s+c))} = x^c erfc(x), c rational: M{erfc x} = Γ((s+1)/2)/(√π s)
+ * (∫_0^∞ erfc(x) x^{s-1} dx, integrating by parts against erfc' = -2e^{-x²}/√π), shifted by the
+ * power-shift rule. A multiple of the denominator and constant factors carry through.
+ */
+function inverseErfc(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  sName: string,
+  x: BoxedExpression,
+): BoxedExpression | undefined {
+  const parts = gammaQuotient(ce, expr, sName);
+  if (parts?.up.length !== 1 || parts.down.length !== 0 || parts.linear.length !== 1) return undefined;
+  const [g, l] = [affineInS(parts.up[0]!, sName), affineInS(parts.linear[0]!, sName)];
+  if (g?.alpha !== 0.5 || l === undefined || l.alpha === 0) return undefined;
+  const c = 2 * g.beta - 1;
+  if (!Number.isInteger(2 * c) || Math.abs(l.beta / l.alpha - c) > 1e-12) return undefined;
+  return ce
+    .function("Multiply", [
+      ...parts.consts,
+      ce.function("Divide", [ce.function("Sqrt", [ce.Pi]), l.alpha]),
+      ce.function("Power", [x, c]),
+      ce.function("Erfc", [x]),
+    ])
+    .evaluate();
+}
+
+/**
+ * M⁻¹{Γ(κs) Γ(1-2κs) / Γ(1-κs)} = m (1+4x^m)^{-1/2}, m = 1/κ a whole number: the duplication
+ * formula Γ(1-2u) = 4^{-u} Γ(½-u) Γ(1-u)/√π makes G(u) = Γ(u)Γ(1-2u)/Γ(1-u) = 4^{-u} Γ(u)Γ(½-u)/√π,
+ * the transform of (1+4x)^{-1/2} (the (1+x)^{-A} pair at A = ½, scaled by 4); F(κs) ↦ (1/κ) f(x^{1/κ}).
+ */
+function inverseDuplicatedBeta(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  sName: string,
+  x: BoxedExpression,
+): BoxedExpression | undefined {
+  const parts = gammaQuotient(ce, expr, sName);
+  if (parts?.up.length !== 2 || parts.down.length !== 1 || parts.linear.length !== 0) return undefined;
+  const [a, b] = parts.up.map((u) => affineInS(u, sName));
+  const d = affineInS(parts.down[0]!, sName);
+  const [first, second] = a !== undefined && a.beta === 0 ? [a, b] : [b, a];
+  if (first === undefined || second === undefined || d === undefined) return undefined;
+  const kappa = first.alpha;
+  const fits =
+    first.beta === 0 && second.alpha === -2 * kappa && second.beta === 1 && d.alpha === -kappa && d.beta === 1;
+  const m = 1 / kappa; // whole, so the answer stays exact
+  if (!(kappa > 0) || !fits || !Number.isInteger(m)) return undefined;
+  const inner = ce.function("Power", [
+    ce.function("Add", [1, ce.function("Multiply", [4, ce.function("Power", [x, m])])]),
+    ce.number([-1, 2]),
+  ]);
+  return ce.function("Multiply", [...parts.consts, m, inner]).evaluate();
 }
 
 /**
@@ -479,8 +565,9 @@ export function matchInverseMellin(
 ): BoxedExpression | undefined {
   const sName = symbolNameOf(s);
   if (sName === undefined || !hasVar(expr, sName)) return undefined;
-  const bessel = inverseBesselJ(ce, expr, sName, x);
-  if (bessel !== undefined) return bessel;
+  const gammaPair =
+    inverseBesselJ(ce, expr, sName, x) ?? inverseErfc(ce, expr, sName, x) ?? inverseDuplicatedBeta(ce, expr, sName, x);
+  if (gammaPair !== undefined) return gammaPair;
   const { b, rest } = stripScale(ce, expr, sName);
   const f0 = atomicInverseMellin(ce, rest, sName, x);
   if (f0 === undefined) return undefined;
