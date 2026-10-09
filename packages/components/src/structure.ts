@@ -11,6 +11,7 @@
 
 import { isClaimed } from "./lazy.ts";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import { closeDollar } from "@enumeratio/boxes/render";
 import { withOptions } from "@enumeratio/formats";
 import { parseExpression } from "@enumeratio/formats/expression";
 import { tokenize } from "@enumeratio/formats/markup";
@@ -36,39 +37,47 @@ for (const s of DRAWING_SYMBOLS) if (!BY_TAG.has(s.tag)) BY_TAG.set(s.tag, s);
 const ADOPTED = new WeakSet<Element>();
 const log = debug("structure");
 
-/** A `$…$` island: the one way loose text in a body is an expression. */
-const ISLAND = /\$[^$]+\$/g;
-
 /**
  * A body's loose text apart into prose and `$…$` islands, whitespace-only text dropped. An
  * expression in a body is an element or an island; a bare word between controls ("Choose a
- * value:") is prose, as it is on a page where only markup is read as an expression.
+ * value:") is prose, as it is on a page where only markup is read as an expression. An island
+ * is what record prose and the site's markdown read (`closeDollar`): no space just inside
+ * either `$`, no digit after the closer, and `\$` a dollar sign, so "costs $5 and $10" is prose.
  */
 export function proseRuns(text: string): { island: boolean; text: string }[] {
   if (!text.trim()) return [];
   const runs: { island: boolean; text: string }[] = [];
   let at = 0;
-  for (const m of text.matchAll(ISLAND)) {
-    if (m.index > at) runs.push({ island: false, text: text.slice(at, m.index) });
-    runs.push({ island: true, text: m[0] });
-    at = m.index + m[0].length;
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] === "\\") {
+      i++;
+      continue;
+    }
+    if (text[i] !== "$") continue;
+    const end = closeDollar(text, i);
+    if (end < 0) continue;
+    if (i > at) runs.push({ island: false, text: text.slice(at, i) });
+    runs.push({ island: true, text: text.slice(i, end + 1) });
+    at = end + 1;
+    i = end;
   }
   if (at < text.length) runs.push({ island: false, text: text.slice(at) });
   return runs;
 }
 
 /**
- * The author's text runs among `el`'s children. A head with a body (a module, a Manipulate)
- * keeps its prose and lowers each `$…$` island to the `<dynamic-box>` that shows its value.
- * Any other head's text is its atoms as leaf elements (`<notatio-plot>x <notatio-tuple>…`
- * holds the symbol `x`), so what follows reads every argument as an element. Only the text
- * before the first comment: Lit renders a light-DOM component's own output after its marker.
+ * The author's text runs among `el`'s children. A head whose body is prose (`prose` on its
+ * symbol: a dynamic module, a Manipulate) keeps its prose and lowers each `$…$` island to the
+ * `<dynamic-box>` that shows its value. Any other head's text is its atoms as leaf elements
+ * (`<notatio-plot>x <notatio-tuple>…` holds the symbol `x`), so what follows reads every
+ * argument as an element. Only the text before the first comment: Lit renders a light-DOM
+ * component's own output after its marker.
  */
-function leavesForText(el: Element, body: boolean): void {
+function leavesForText(el: Element, prose: boolean): void {
   for (const node of Array.from(el.childNodes)) {
     if (node.nodeType === Node.COMMENT_NODE) return;
     if (node.nodeType !== Node.TEXT_NODE || !node.textContent?.trim()) continue;
-    if (body) {
+    if (prose) {
       const runs = proseRuns(node.textContent);
       if (!runs.some((r) => r.island)) continue;
       node.replaceWith(
@@ -149,7 +158,7 @@ function scopeNames(el: Element): Set<string> {
 export function adoptStructure(el: Element): void {
   const symbol = BY_TAG.get(el.localName);
   if (symbol === undefined || ADOPTED.has(el)) return;
-  leavesForText(el, symbol.children !== undefined);
+  leavesForText(el, symbol.prose === true);
   // A hand-written element in it whose module is still loading (`lazy.ts`) is waited for:
   // its class reads the arguments.
   const pending = [el, ...el.querySelectorAll("*")]

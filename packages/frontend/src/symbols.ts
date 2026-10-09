@@ -56,6 +56,12 @@ export interface VisualSymbol {
   /** Operands that render as children rather than attributes (a `Manipulate` body). */
   readonly children?: (ops: readonly MathJsonExpression[]) => MathJsonExpression[];
   /**
+   * The element's loose text is prose around its controls, with `$…$` islands as the only
+   * expressions in it (a `DynamicModule`, a `Manipulate`); otherwise bare atoms in it are
+   * argument leaves.
+   */
+  readonly prose?: true;
+  /**
    * Where a Wolfram option lands when it is not simply the kebab-cased attribute:
    * `PlotLabel` is the plot's `label`, `AxesLabel` is two attributes. A string names
    * the attribute; a function returns the attributes.
@@ -592,6 +598,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     // a slot (see `captureTemplates`).
     head: "Manipulate",
     tag: "notatio-manipulate",
+    prose: true,
     attributes: (ops): Record<string, string> => {
       const params = ops
         .slice(1)
@@ -785,6 +792,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     // `Evaluator` are its options.
     head: "DynamicModule",
     tag: "dynamic-module-box",
+    prose: true,
     attributes: () => ({}),
     children: dynamicModuleChildren,
     options: { TrackedSymbols: trackedSymbolsOption, Evaluator: evaluatorOption },
@@ -798,6 +806,7 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     // head named it.
     head: "Notebook",
     tag: "dynamic-module-box",
+    prose: true,
     attributes: () => ({}),
     children: dynamicModuleChildren,
     options: { TrackedSymbols: trackedSymbolsOption, Evaluator: evaluatorOption },
