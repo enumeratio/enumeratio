@@ -9,6 +9,8 @@
   "[\"StieltjesGamma\",0]": "γ_0",
   "[\"HarmonicNumber\",\"n\",2]": "{H_n}^{(2)}",
   "[\"HermiteH\",\"n\",\"x\"]": "H_n(x)",
+  "[\"LaguerreL\",\"n\",\"x\"]": "L_n(x)",
+  "[\"LaguerreL\",\"n\",\"a\",\"x\"]": "{L_n}^{(a)}(x)",
   "[\"MoebiusMu\",\"n\"]": "μ(n)",
   "[\"Totient\",12]": "\\varphi(12)",
   "[\"PrimePi\",\"x\"]": "π(x)",

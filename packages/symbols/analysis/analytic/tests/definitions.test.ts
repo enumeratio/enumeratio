@@ -75,6 +75,8 @@ const AGREEMENT: readonly [string, readonly Expr[], number][] = [
   ["HarmonicNumber", [3], 1e-11], // exact at the integers too: ψ(n+1) + γ = H_n
   ["HermiteH", [5, 0.7], 1e-10],
   ["HermiteH", [6, ["Rational", 3, 7]], 1e-10],
+  ["LaguerreL", [5, 0.3, 0.7], 1e-10],
+  ["LaguerreL", [4, 0, 0.7], 1e-10], // a = 0 is the two-argument L_n(x)
 ];
 
 for (const [head, args, tolerance] of AGREEMENT) {
@@ -123,6 +125,8 @@ const DERIVATIVES: readonly [string, Expr, string, (x: number) => Expr, number][
   ["ClausenCl odd order", ["ClausenCl", 3, "t"], "t", (x) => ["ClausenCl", 3, x], 1],
   ["HarmonicNumber", ["HarmonicNumber", "z"], "z", (x) => ["HarmonicNumber", x], 2.5],
   ["HermiteH", ["HermiteH", 4, "x"], "x", (x) => ["HermiteH", 4, x], 0.7],
+  ["LaguerreL", ["LaguerreL", 4, "x"], "x", (x) => ["LaguerreL", 4, x], 0.7],
+  ["LaguerreL generalized", ["LaguerreL", 3, 0.5, "x"], "x", (x) => ["LaguerreL", 3, 0.5, x], 0.7],
 ];
 
 for (const [label, expr, variable, at, point] of DERIVATIVES) {
@@ -141,6 +145,15 @@ test("LogGamma' is the digamma function, exactly", () => {
 test("H_n' = 2n H_{n-1} at a symbolic order", () => {
   expect(box(["D", ["HermiteH", "n", "x"], "x"]).evaluate().json).toEqual(
     box(["Multiply", 2, "n", ["HermiteH", ["Subtract", "n", 1], "x"]]).evaluate().json,
+  );
+});
+
+test("L_n' = -L_{n-1}^(1) at a symbolic order, and -L_{n-1}^(a+1) generalized", () => {
+  expect(box(["D", ["LaguerreL", "n", "x"], "x"]).evaluate().json).toEqual(
+    box(["Negate", ["LaguerreL", ["Subtract", "n", 1], 1, "x"]]).evaluate().json,
+  );
+  expect(box(["D", ["LaguerreL", "n", "a", "x"], "x"]).evaluate().json).toEqual(
+    box(["Negate", ["LaguerreL", ["Subtract", "n", 1], ["Add", "a", 1], "x"]]).evaluate().json,
   );
 });
 

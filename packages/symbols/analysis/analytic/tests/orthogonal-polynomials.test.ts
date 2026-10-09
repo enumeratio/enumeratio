@@ -164,3 +164,83 @@ test("compiled HermiteH agrees with .N(), and is NaN for an order it doesn't eva
   expect(f.run(-1, 0.5)).toBeNaN();
   expect(f.run(1.5, 0.5)).toBeNaN();
 });
+
+// --- LaguerreL -----------------------------------------------------------------------
+
+test("low-degree LaguerreL, exactly, at a symbol", () => {
+  sameExact(["LaguerreL", 0, "x"], 1);
+  sameExact(["LaguerreL", 1, "x"], ["Subtract", 1, "x"]);
+  sameExact(["LaguerreL", 2, "x"], ["Add", 1, ["Multiply", -2, "x"], ["Divide", ["Power", "x", 2], 2]]);
+  sameExact(
+    ["LaguerreL", 3, "x"],
+    [
+      "Add",
+      1,
+      ["Multiply", -3, "x"],
+      ["Divide", ["Multiply", 3, ["Power", "x", 2]], 2],
+      ["Divide", ["Power", "x", 3], -6],
+    ],
+  );
+});
+
+test("the generalized L_1^(a)(x) = 1 + a - x, and L_2^(a)(x) at a symbol a", () => {
+  sameExact(["LaguerreL", 1, "a", "x"], ["Subtract", ["Add", 1, "a"], "x"]);
+  sameExact(
+    ["LaguerreL", 2, "a", "x"],
+    [
+      "Add",
+      ["Divide", ["Multiply", ["Add", "a", 1], ["Add", "a", 2]], 2],
+      ["Multiply", -1, ["Add", "a", 2], "x"],
+      ["Divide", ["Power", "x", 2], 2],
+    ],
+  );
+});
+
+test("L_n(0) = 1, and L_3^(a)(0) = C(a+3, 3)", () => {
+  exactJson(["LaguerreL", 5, 0], 1);
+  sameExact(["LaguerreL", 3, "a", 0], ["Divide", ["Multiply", ["Add", "a", 3], ["Add", "a", 2], ["Add", "a", 1]], 6]);
+});
+
+test("the recurrence (k+1) L_{k+1} = (2k+1+a-x) L_k - (k+a) L_{k-1} holds at an exact rational a and x", () => {
+  const x = ["Rational", 3, 7] as unknown as Expr;
+  const a = ["Rational", 1, 2] as unknown as Expr;
+  for (let k = 1; k <= 6; k++)
+    sameExact(
+      ["Multiply", k + 1, ["LaguerreL", k + 1, a, x]],
+      [
+        "Subtract",
+        ["Multiply", ["Subtract", ["Add", 2 * k + 1, a], x], ["LaguerreL", k, a, x]],
+        ["Multiply", ["Add", k, a], ["LaguerreL", k - 1, a, x]],
+      ],
+    );
+});
+
+test("LaguerreL stays unevaluated for a symbolic, negative or non-integer order", () => {
+  exactJson(["LaguerreL", "n", "x"], ["LaguerreL", "n", "x"]);
+  exactJson(["LaguerreL", -1, "x"], ["LaguerreL", -1, "x"]);
+  exactJson(["LaguerreL", ["Rational", 1, 2], "x"], ["LaguerreL", ["Rational", 1, 2], "x"]);
+});
+
+test("LaguerreL declines past the double range rather than answering Infinity", () => {
+  expect(ce.box(["N", ["LaguerreL", 400, -10000.5]]).evaluate().operator).toBe("LaguerreL");
+});
+
+test("compiled LaguerreL agrees with .N(), for both forms, and is NaN for an order it doesn't evaluate", () => {
+  const two = compile(ce.box(["Function", ["LaguerreL", "n", "x"], "n", "x"])) as unknown as {
+    success: boolean;
+    run: (n: number, x: number) => number;
+  };
+  const three = compile(ce.box(["Function", ["LaguerreL", "n", "a", "x"], "n", "a", "x"])) as unknown as {
+    success: boolean;
+    run: (n: number, a: number, x: number) => number;
+  };
+  expect(two.success).toBe(true);
+  expect(three.success).toBe(true);
+  for (const n of [0, 1, 2, 5, 9])
+    for (const x of [-1.5, -0.3, 0, 0.7, 2]) {
+      expect(two.run(n, x)).toBeCloseTo(ce.box(["LaguerreL", n, x]).N().re, 10);
+      expect(three.run(n, 0.5, x)).toBeCloseTo(ce.box(["LaguerreL", n, 0.5, x]).N().re, 10);
+    }
+  expect(two.run(-1, 0.5)).toBeNaN();
+  expect(two.run(1.5, 0.5)).toBeNaN();
+});

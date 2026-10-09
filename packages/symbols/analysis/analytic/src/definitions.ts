@@ -77,6 +77,19 @@ export const DEFINITIONS: Readonly<Record<string, Json>> = {
     ],
   ],
 
+  /** L_n^(a)(x) = Σ_{k=0}^{n} (−1)^k C(n+a, n−k) x^k / k!, for an integer n ≥ 0; L_n(x) is a = 0. */
+  LaguerreL: [
+    "Sum",
+    [
+      "Multiply",
+      ["Power", -1, "k"],
+      ["Binomial", ["Add", "_n", "_a"], ["Subtract", "_n", "k"]],
+      ["Power", "_x", "k"],
+      ["Power", ["Factorial", "k"], -1],
+    ],
+    ["Triple", "k", 0, "_n"],
+  ],
+
   /** The continuation fixed by lnΓ(1) = 0 and (lnΓ)' = ψ — not `Ln(Gamma(z))`, whose branch differs. */
   LogGamma: ["Integrate", ["PolyGamma", 0, "t"], ["Triple", "t", 1, "_z"]],
 

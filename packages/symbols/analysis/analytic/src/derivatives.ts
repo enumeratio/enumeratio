@@ -94,6 +94,12 @@ const DERIVATIVES: Readonly<Record<string, Readonly<Record<Orders, Partial>>>> =
     "0,1": { params: ["n", "x"], body: ["Multiply", 2, "n", ["HermiteH", ["Subtract", "n", 1], "x"]] },
   },
 
+  // L_n^(a)′(x) = −L_{n−1}^(a+1)(x); the two-argument form is a = 0.
+  LaguerreL: {
+    "0,1": { params: ["n", "x"], body: ["Negate", ["LaguerreL", ["Subtract", "n", 1], 1, "x"]] },
+    "0,0,1": { params: ["n", "a", "x"], body: ["Negate", ["LaguerreL", ["Subtract", "n", 1], ["Add", "a", 1], "x"]] },
+  },
+
   // gd′(x) = sech(x): the Gudermannian's defining property.
   Gudermannian: { "1": { params: ["x"], body: ["Sech", "x"] } },
 
