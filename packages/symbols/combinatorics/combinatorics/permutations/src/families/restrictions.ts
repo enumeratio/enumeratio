@@ -275,6 +275,40 @@ const kDescentPermutations: EpsilFamily = permutationRestriction({
   ),
 });
 
+// Exactly k inversions. A prefix's inversions are its Lehmer digits (the free values below each
+// entry), and the m values left take M(m, c) arrangements with c inversions, the Mahonian
+// numbers: M(m, c) = Σ_{d < m} M(m − 1, c − d). Only columns 0..k are read, so the table stops
+// there. The prefix state is [inversions so far, then per value 1 while it is free].
+const inversionWidth = add(["Min", "_k", quotient(mul(n, sub(n, 1)), 2)], 1);
+const mahonian = cell("mahonian", inversionWidth);
+const mahonianTable = rowTable(
+  "mh",
+  add(n, 1),
+  inversionWidth,
+  (c) => iff(equal(c, 0), 1, 0),
+  (prev, s, c) => sum((d) => prev(sub(s, 1), sub(c, d)), "mh_d", 0, ["Min", c, sub(s, 1)]),
+);
+
+/** The permutations of n with exactly k inversions (Mahonian numbers), in lex order. */
+export const kInversionPermutations: EpsilFamily = permutationRestriction({
+  head: "KInversionPermutations",
+  carrier: "Permutation",
+  paramCount: 2,
+  params: [n, "_k"],
+  tables: ["mahonian", mahonianTable],
+  state: {
+    init: ["Join", ["List", 0], map(1, "ki_z", upTo(1, n))],
+    step: lets(
+      [["ki_below", sum((u) => at("pstate", add(u, 1)), "ki_u", 1, sub("value", 1)), "integer"]],
+      ["ReplaceAt", ["ReplaceAt", "pstate", 1, add(at("pstate", 1), "ki_below")], add("value", 1), 0],
+    ),
+  },
+  completions: lets(
+    [["ki_left", sub("_k", at("pstate", 1)), "integer"]],
+    iff(["Or", less("ki_left", 0), ["GreaterEqual", "ki_left", inversionWidth]], 0, mahonian(open, "ki_left")),
+  ),
+});
+
 // Avoiding a pattern of length 3. Every prefix the operations ask about extends one that has
 // completions, so it avoids the pattern itself; what's left is how the free values may follow it.
 // An occurrence with two entries in the prefix rules out free values in some range (none may be

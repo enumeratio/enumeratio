@@ -7,7 +7,12 @@ import { bareEngine } from "@enumeratio/engine/testing";
 import { evaluateEpsil } from "@enumeratio/structures";
 import { expect, test } from "vite-plus/test";
 import { type EpsilFamily, epsilKernelOn } from "../../collections/src/families/epsil.ts";
-import { IsPermutationOf, PermutationRank, PermutationUnrank } from "../../collections/src/families/kernels.ts";
+import {
+  Inversions,
+  IsPermutationOf,
+  PermutationRank,
+  PermutationUnrank,
+} from "../../collections/src/families/kernels.ts";
 import {
   ColoredPermutationCount,
   ColoredPermutationRank,
@@ -34,6 +39,7 @@ import {
   connectedPermutations,
   grassmannianPermutations,
   kDescentPermutations,
+  kInversionPermutations,
   nonCrossingCycleSupportPermutations,
   permutationsAvoiding3,
   separablePermutations,
@@ -223,6 +229,20 @@ const READINGS: Record<string, Reading> = {
     ],
     (x, [, k]) => turns(x, (a, b) => a > b) === k,
   ),
+  KInversionPermutations: lexRestriction(
+    [
+      [0, 0],
+      [3, 0],
+      [3, 2],
+      [4, 3],
+      [5, 10],
+      [5, 4],
+      [2, 3],
+      // Seconds to filter 6! permutations: nightly.
+      ...(process.env.DEEP_TESTS ? [[6, 7]] : []),
+    ],
+    (x, [n, k]) => IsPermutationOf(x, n) && Inversions(x) === k,
+  ),
   GrassmannianPermutations: lexRestriction([[0], [1], [2], [3], [4], [5], [6]], (x) => turns(x, (a, b) => a > b) <= 1),
   CograssmannianPermutations: lexRestriction(
     [[0], [1], [2], [3], [4], [5], [6]],
@@ -285,6 +305,7 @@ const byHead = new Map(
     alternatingPermutations,
     connectedPermutations,
     kDescentPermutations,
+    kInversionPermutations,
     ...permutationsAvoiding3,
     separablePermutations,
     nonCrossingCycleSupportPermutations,

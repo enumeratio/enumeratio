@@ -24,6 +24,7 @@ import {
   FibonacciWordUnrank,
   FibonacciWordRank,
   IsBinaryString,
+  IsFibonacciWord,
   IsTupleOf,
   TupleCount,
   TupleRank,
@@ -445,15 +446,33 @@ const binaryWordsByWeightFast: EpsilFamily = {
   },
 };
 
-// No `fast` for FibStrings and LucasStrings: the TS Fibonacci kernel is uncached and exponential,
-// so Epsil's completion table is ~100x faster at n = 20.
+const fibStringsFast: EpsilFamily = {
+  ...fibStrings,
+  fast: {
+    count: ([n]) => FibonacciWordCount(n),
+    unrank: ([n], r) => FibonacciWordUnrank(n, r),
+    rank: (x) => FibonacciWordRank(x as number[]),
+    valid: (x, [n]) => IsFibonacciWord(x as number[], n),
+  },
+};
+
+const lucasStringsFast: EpsilFamily = {
+  ...lucasStrings,
+  fast: {
+    count: ([n]) => lucasCount(n),
+    unrank: ([n], r) => lucasStringsUnrank(n, r),
+    rank: (x, [n]) => lucasStringsRank(x as number[], n),
+    valid: (x, [n]) => lucasStringsValid(x, n),
+  },
+};
+
 export const entries: (NumberKernel | EpsilFamily)[] = [
   binaryWords,
   binaryWordsByWeightFast,
   wordsFamily,
   // Same words as FibonacciWords, under the catalogued name.
-  fibStrings,
-  lucasStrings,
+  fibStringsFast,
+  lucasStringsFast,
   grayCodesFamily,
   binaryPalindromesFamily,
   // BinaryNecklaces(n): binary words up to rotation (lex-least reps) — KNecklaces(n, 2), remapped
