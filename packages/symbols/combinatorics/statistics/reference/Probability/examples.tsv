@@ -1,6 +1,9 @@
-id	section	role	expr	expected	caption
-probability-equal-is-pdf-for-discrete			[Probability, [Equal, x, 2], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 9, [Multiply, 2, [Power, ExponentialE, 3]]]	
-probability-equal-is-zero-for-continuous			[Probability, [Equal, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]	0	
-probability-lessequal-is-cdf			[Probability, [LessEqual, x, 5], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 92, [Multiply, 5, [Power, ExponentialE, 3]]]	$\approx 0.9160820579686966$, cross-checked against wolframscript's `N[CDF[PoissonDistribution[3],5]]`
-probability-of-a-chained-range	Scope		[Probability, [And, [LessEqual, 1, x], [LessEqual, x, 5]], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 87, [Multiply, 5, [Power, ExponentialE, 3]]]	$\approx 0.8662949896008326$, cross-checked against wolframscript's `N[Probability[1<=x<=5, x \[Distributed] PoissonDistribution[3]]]`
-probability-greater-is-canonicalized-first	Scope		[N, [Probability, [Greater, x, 0], [Distributed, x, [NormalDistribution, 0, 1]]]]	0.5	compute-engine rewrites `x > 0` to `Less(0, x)` before this evaluator sees it
+id	section	role	expr	expected	caption	epsil.back
+probability-equal-is-pdf-for-discrete			[Probability, [Equal, x, 2], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 9, [Multiply, 2, [Power, ExponentialE, 3]]]		
+probability-equal-is-zero-for-continuous			[Probability, [Equal, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]	0		
+probability-lessequal-is-cdf			[Probability, [LessEqual, x, 5], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 92, [Multiply, 5, [Power, ExponentialE, 3]]]	$\approx 0.9160820579686966$, cross-checked against wolframscript's `N[CDF[PoissonDistribution[3],5]]`	
+probability-of-a-chained-range	Scope		[Probability, [And, [LessEqual, 1, x], [LessEqual, x, 5]], [Distributed, x, [PoissonDistribution, 3]]]	[Divide, 87, [Multiply, 5, [Power, ExponentialE, 3]]]	$\approx 0.8662949896008326$, cross-checked against wolframscript's `N[Probability[1<=x<=5, x \[Distributed] PoissonDistribution[3]]]`	
+probability-greater-is-canonicalized-first	Scope		[N, [Probability, [Greater, x, 0], [Distributed, x, [NormalDistribution, 0, 1]]]]	0.5	compute-engine rewrites `x > 0` to `Less(0, x)` before this evaluator sees it	
+apply-function-simplify-1-n-gt-0-1-probability-1	Applications		[Apply, [Function, [Block, [Simplify, _1, [Greater, n, 0]]], _1], [Probability, [LessEqual, 1, x], [Distributed, x, [BinomialDistribution, n, [Power, 10, -4]]]]]	[Add, [Negate, [Power, [Rational, 9999, 10000], n]], 1]	The chance of at least one hit, $1-(1-p)^n$ at $p=10^{-4}$	Unreadable
+n-probability-x-eq-0-distributed-x	Applications		[N, [Probability, [Equal, x, 0], [Distributed, x, [PoissonDistribution, [Rational, 16, 25]]]]]	{num: "0.527292424043048557244"}	$P(X=0)=e^{-0.64}$, as a number	
+probability-n-eq-0-distributed-n	Applications		[Probability, [Equal, n, 0], [Distributed, n, [PoissonDistribution, [Multiply, 10000, [Power, 10, -3]]]]]	[Power, ExponentialE, -10]	The rate simplifies to 10, and $P(N=0)=e^{-10}$	

@@ -8,6 +8,7 @@ import {
   wrapOperator,
 } from "@enumeratio/engine";
 import { finish, gammaSample, list2, normal01, numAt, uniform01 } from "./distributions.ts";
+import { declareMedian } from "./median.ts";
 
 // The second wave of Wolfram-frontier probability heads: nineteen univariate distributions
 // (GeometricDistribution .. MaxwellDistribution) plus the property functions that read ANY
@@ -1187,10 +1188,11 @@ function declarePropertyFunctions(ce: Engine): void {
 /** Declare the second-wave distribution frontier heads on `ce`: nineteen univariate
  *  distributions (GeometricDistribution .. MaxwellDistribution) and the property functions
  *  that read any distribution (SurvivalFunction, HazardFunction, Moment, CentralMoment,
- *  FactorialMoment, Cumulant, InverseCDF). Call AFTER `declareDistributions` —
+ *  FactorialMoment, Cumulant, InverseCDF) and `Median` of a distribution. Call AFTER `declareDistributions` —
  *  `extendStats2` composes onto whatever PDF/CDF/Mean/Variance/RandomVariate already are. */
 export function declareDistributions2(ce: Engine): void {
   declareConstructors2(ce);
   extendStats2(ce);
   declarePropertyFunctions(ce);
+  declareMedian(ce);
 }

@@ -78,9 +78,16 @@ const isDistribution = (expr: Expr | undefined): boolean =>
   ].includes(expr.operator);
 
 // Only the kinds this file itself adds go through the `wrapOperator` branches below — Normal/
-// Uniform/Poisson/Binomial are answered by compute-engine's own native handlers (after
-// `extendUniformDistribution` below fixes its call-shape gap).
-const OWN_KINDS = new Set(["BetaDistribution", "GammaDistribution", "BinormalDistribution", "EmpiricalDistribution"]);
+// Uniform/Poisson are answered by compute-engine's own native handlers (after
+// `extendUniformDistribution` below fixes its call-shape gap); Binomial's CDF at an integer
+// point is the one case this file answers itself, ahead of the native handler.
+const OWN_KINDS = new Set([
+  "BetaDistribution",
+  "GammaDistribution",
+  "BinormalDistribution",
+  "EmpiricalDistribution",
+  "BinomialDistribution",
+]);
 
 // --- parameter extraction ---------------------------------------------------------------------
 
@@ -235,6 +242,9 @@ const pdfOf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr 
 
 // --- CDF -----------------------------------------------------------------------------------
 
+/** The largest integer point at which a binomial CDF is expanded into its finite sum. */
+const BINOMIAL_SUM_LIMIT = 32;
+
 const cdfOf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr | undefined => {
   switch (dist.operator) {
     case "BetaDistribution": {
@@ -274,6 +284,26 @@ const cdfOf = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions): Expr 
       if (data === undefined) return undefined;
       const count = data.filter((d) => d.isLessEqual(x) === true).length;
       return ce.number([count, data.length]);
+    }
+    case "BinomialDistribution": {
+      // At a small integer point the CDF is the finite sum of the PDF; the native answer is the
+      // equivalent BetaRegularized, which nothing downstream reduces (1 - P(X = 0) stays a beta).
+      const ops = operandsOf(dist);
+      const k = integerAt(x);
+      if (ops.length !== 2 || k === undefined || k > BINOMIAL_SUM_LIMIT) return undefined;
+      if (k < 0) return ce.Zero;
+      const [n, p] = ops;
+      const count = integerAt(n);
+      if (count !== undefined && count <= k) return ce.One;
+      const q = ce.function("Subtract", [ce.One, p]);
+      const terms = Array.from({ length: k + 1 }, (_, j) =>
+        ce.function("Multiply", [
+          ce.function("Binomial", [n, ce.number(j)]),
+          ce.function("Power", [p, ce.number(j)]),
+          ce.function("Power", [q, ce.function("Subtract", [n, ce.number(j)])]),
+        ]),
+      );
+      return finish(ce.function("Add", terms), options);
     }
     // BinormalDistribution's CDF has no elementary closed form (Owen's T / a 2D integral) —
     // left unevaluated, per the "stays unevaluated" policy.

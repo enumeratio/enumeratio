@@ -1,5 +1,2 @@
-id	in	out	tex.in	tex.out	verdict
-standarddeviation-poissondistribution-100	StandardDeviation[PoissonDistribution[100]]	10	\text{StandardDeviation}[\text{PoissonDistribution}[100]]	10	
-n-probability-x-eq-0-distributed-x	N[Probability[(x == 0), Distributed[x, PoissonDistribution[Rational[16, 25]]]]]	0.5272924240430485	N\left[\text{Probability}\left[x=0,x\unicode{f3d2}\text{PoissonDistribution}\left[\frac{16}{25}\right]\right]\right]	0.527292	disagree
-probability-n-eq-0-distributed-n	Probability[(n == 0), Distributed[n, PoissonDistribution[Times[10000, Power[10, -3]]]]]	E^(-10)	\text{Probability}\left[n=0,n\unicode{f3d2}\text{PoissonDistribution}\left[\frac{10000}{10^3}\right]\right]	\frac{1}{e^{10}}	disagree
-nprobability-n-lt-eq-15-distributed-n	NProbability[LessEqual[n, 15], Distributed[n, PoissonDistribution[Times[10368000, Power[10, -6]]]]]	0.937281035306784	\text{NProbability}\left[n\leq 15,n\unicode{f3d2}\text{PoissonDistribution}\left[\frac{10368000}{10^6}\right]\right]	0.937281	disagree
+id	in	out	tex.in	tex.out
+standarddeviation-poissondistribution-100	StandardDeviation[PoissonDistribution[100]]	10	\text{StandardDeviation}[\text{PoissonDistribution}[100]]	10

@@ -2,5 +2,6 @@ id	section	role	expr	expected	caption	wolfram.note
 weibull-pdf-exact			[PDF, [WeibullDistribution, 2, 5], 4]	[Divide, 8, [Multiply, 25, [Power, ExponentialE, [Rational, 16, 25]]]]	Cross-checked against wolframscript's N[PDF[WeibullDistribution[2, 5], 4]]	
 weibull-cdf-exact			[CDF, [WeibullDistribution, 2, 5], 4]	[Add, 1, [Negate, [Power, ExponentialE, [Rational, -16, 25]]]]	Cross-checked against wolframscript's N[CDF[WeibullDistribution[2, 5], 4]]	
 weibull-mean-exact			[Mean, [WeibullDistribution, 2, 5]]	[Multiply, 5, [Gamma, [Rational, 3, 2]]]		
+weibull-median-exact			[Median, [WeibullDistribution, 2, 5]]	[Multiply, 5, [Sqrt, [Ln, 2]]]	The quantile at 1/2: $\beta \ln(2)^{1/\alpha}$	
 cdf-weibulldistribution-2-5-n-4-25	Scope		[CDF, [WeibullDistribution, 2, 5], [N, 4, 25]]	[Add, 1, [Negate, [Power, ExponentialE, [Rational, -16, 25]]]]		Evaluates under statistics to the exact 1 - e^(-16/25) (N(4, 25) stays exact); Wolfram's 25-digit answer is 0.47270757595695144275630539.
 pdf-weibulldistribution-2-5-n-4-25	Scope		[PDF, [WeibullDistribution, 2, 5], [N, 4, 25]]	[Divide, 8, [Multiply, 25, [Power, ExponentialE, [Rational, 16, 25]]]]		Evaluates under statistics to the exact 8/(25 e^(16/25)); Wolfram's 25-digit answer is 0.16873357569377553831798227.

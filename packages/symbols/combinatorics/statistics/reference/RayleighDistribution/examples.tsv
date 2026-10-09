@@ -3,3 +3,4 @@ rayleigh-pdf-exact			[PDF, [RayleighDistribution, 3], 3]	[Divide, 1, [Multiply, 
 rayleigh-cdf-exact			[CDF, [RayleighDistribution, 3], 3]	[Add, 1, [Negate, [Sqrt, [Divide, 1, ExponentialE]]]]
 rayleigh-mean-exact			[Mean, [RayleighDistribution, 3]]	[Multiply, [Rational, 3, 2], [Sqrt, 2], [Sqrt, Pi]]
 rayleigh-variance-exact			[Variance, [RayleighDistribution, 3]]	[Multiply, [Rational, 9, 2], [Add, 4, [Negate, Pi]]]
+rayleigh-median-exact			[Median, [RayleighDistribution, 3]]	[Multiply, 3, [Sqrt, 2], [Sqrt, [Ln, 2]]]

@@ -1,5 +1,6 @@
-id	in
-rayleigh-pdf-exact	PDF[RayleighDistribution[3], 3]
-rayleigh-cdf-exact	CDF[RayleighDistribution[3], 3]
-rayleigh-mean-exact	Mean[RayleighDistribution[3]]
-rayleigh-variance-exact	Variance[RayleighDistribution[3]]
+id	in	out	tex.in	tex.out
+rayleigh-pdf-exact	PDF[RayleighDistribution[3], 3]			
+rayleigh-cdf-exact	CDF[RayleighDistribution[3], 3]			
+rayleigh-mean-exact	Mean[RayleighDistribution[3]]			
+rayleigh-variance-exact	Variance[RayleighDistribution[3]]			
+rayleigh-median-exact	Median[RayleighDistribution[3]]	3*Sqrt[Log[4]]	\text{Median}[\text{RayleighDistribution}[3]]	3 \sqrt{\log (4)}

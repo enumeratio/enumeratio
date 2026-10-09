@@ -2,3 +2,4 @@ id	section	role	expr	expected	caption
 poisson-process-slice-mean			[Mean, [SliceDistribution, [PoissonProcess, 3], 5]]	15	$Mean(PoissonProcess(\lambda)[t]) = \lambda t$
 poisson-process-slice-distribution			[SliceDistribution, [PoissonProcess, 2], 3]	[PoissonDistribution, 6]	
 poisson-process-slice-variance	Scope		[Variance, [SliceDistribution, [PoissonProcess, 2], 3]]	6	$Variance(PoissonProcess(\lambda)[t]) = \lambda t$, same as its Mean — a property of the Poisson distribution.
+median-apply-poissonprocess-3-4	Scope		[Median, [Apply, [PoissonProcess, 3], 4]]	12	The slice at 4 is $Poisson(12)$, whose median is 12

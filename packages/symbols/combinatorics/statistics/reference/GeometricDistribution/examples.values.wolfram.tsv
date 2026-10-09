@@ -1,5 +1,6 @@
-id	in
-geometric-pdf-exact	PDF[GeometricDistribution[Rational[1, 4]], 2]
-geometric-cdf-exact	CDF[GeometricDistribution[Rational[1, 4]], 2]
-geometric-mean-exact	Mean[GeometricDistribution[Rational[1, 4]]]
-geometric-variance-exact	Variance[GeometricDistribution[Rational[1, 4]]]
+id	in	out	tex.in	tex.out
+geometric-pdf-exact	PDF[GeometricDistribution[Rational[1, 4]], 2]			
+geometric-cdf-exact	CDF[GeometricDistribution[Rational[1, 4]], 2]			
+geometric-mean-exact	Mean[GeometricDistribution[Rational[1, 4]]]			
+geometric-variance-exact	Variance[GeometricDistribution[Rational[1, 4]]]			
+geometric-median-exact	Median[GeometricDistribution[Rational[1, 10]]]	6	\text{Median}\left[\text{GeometricDistribution}\left[\frac{1}{10}\right]\right]	6
