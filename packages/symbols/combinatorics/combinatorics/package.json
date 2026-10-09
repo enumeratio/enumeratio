@@ -81,6 +81,9 @@
       "Tally"
     ],
     "late": "declareLate",
+    "reads": [
+      "../statistics/reference"
+    ],
     "declares": "./declares.json"
   },
   "generated": [

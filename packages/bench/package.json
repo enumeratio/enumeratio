@@ -41,6 +41,9 @@
   },
   "enumeratio": {
     "layer": "tooling",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "../reference/scripts/engines.ts"
+    ]
   }
 }

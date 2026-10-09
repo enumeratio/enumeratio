@@ -8,7 +8,10 @@
 // A unit is a package, or a set of packages that depend on each other in a cycle (built together,
 // one member at a time in declared-dependency order; units run in parallel, up to $BUILD_JOBS).
 // Its key hashes the files of its packages (tracked, plus untracked and not ignored: never the
-// gitignored build outputs), the keys of the units it reads, and the inputs every build shares.
+// gitignored build outputs), the files its packages' `enumeratio.reads` name (other packages' files
+// they read without importing, or every record, for the scanners), the keys of the units it reads,
+// and the inputs every build shares. A read that is none of these fails manifest's
+// tests/reads.test.ts.
 // What it saves is every gitignored file under its packages' directories, so generated data
 // (anything a build writes and git ignores) is picked up without being listed.
 //
@@ -31,20 +34,17 @@ import {
 } from "node:fs";
 import { availableParallelism } from "node:os";
 import { isAbsolute, join, resolve } from "node:path";
-import { closure, git, loadWorkspace, resolveNames, root, type Pkg } from "./workspace.ts";
+import { RECORD_PATH } from "./reads.ts";
+import { closure, git, loadWorkspace, RECORDS, resolveNames, root, type Pkg } from "./workspace.ts";
 
 /** Bump when what the key covers or what is saved changes. */
-const KEY_VERSION = 1;
+const KEY_VERSION = 2;
 const WEB = "@enumeratio/web";
 const MAX_AGE_DAYS = 14;
 const MAX_BYTES = 3 * 1024 ** 3;
 
 /** Files every package build may read. */
 const SHARED = ["pnpm-lock.yaml", "package.json", "pnpm-workspace.yaml", "tsconfig.json", "vite.config.ts"];
-
-/** Records and manifests that the generators read across packages (manifest, reference). */
-const SCANNED = /(?:^|\/)(?:reference\/|package\.json$)/;
-const SCANNERS = ["@enumeratio/manifest", "@enumeratio/reference"];
 
 function cacheDir(): string {
   const set = process.env.DIST_CACHE_DIR;
@@ -156,7 +156,7 @@ function computeKeys(all: Map<string, Pkg>, unitMap: Map<string, Unit>): Map<str
   const perPkg = new Map<string, string[]>();
   const dirs = [...all.values()].toSorted((a, b) => b.dir.length - a.dir.length);
   for (const [path, hash] of [...files].toSorted(([a], [b]) => (a < b ? -1 : 1))) {
-    if (SCANNED.test(path)) scanned.update(`${path} ${hash}\n`);
+    if (RECORD_PATH.test(path)) scanned.update(`${path} ${hash}\n`);
     const pkg = dirs.find((p) => path.startsWith(`${p.dir}/`));
     if (pkg === undefined) continue;
     let list = perPkg.get(pkg.name);
@@ -164,26 +164,36 @@ function computeKeys(all: Map<string, Pkg>, unitMap: Map<string, Unit>): Map<str
     list.push(`${path} ${hash}`);
   }
   const scanHash = scanned.digest("hex");
-  // Whoever reads the whole repo's records: the scanners, and every package built on them.
-  const readsRecords = closure(SCANNERS, (n) => [...all.values()].filter((p) => p.deps.has(n)).map((p) => p.name));
+  /** What a declared read covers: every record, or the files under one path. */
+  const readHash = (read: string): string => {
+    if (read === RECORDS) return scanHash;
+    const under = [...files]
+      .filter(([path]) => path === read || path.startsWith(`${read}/`))
+      .toSorted(([a], [b]) => (a < b ? -1 : 1))
+      .map(([path, hash]) => `${path} ${hash}`);
+    return createHash("sha1").update(under.join("\n")).digest("hex");
+  };
 
-  const keys = new Map<string, string>();
-  const keyOf = (id: string): string => {
-    const known = keys.get(id);
+  // A unit's key covers the records it reads itself (`RECORDS`), but a dependent's covers only
+  // the dependency's code: the manifest's dist embeds every record, yet a library's build runs
+  // only its bins, so a record change elsewhere must not rebuild every library through it.
+  const memo = new Map<string, string>();
+  const keyOf = (id: string, records: boolean): string => {
+    const at = `${records} ${id}`;
+    const known = memo.get(at);
     if (known !== undefined) return known;
     const unit = unitMap.get(id)!;
     const h = createHash("sha256").update(shared.copy().digest("hex"));
     for (const m of unit.members) {
       h.update(`\n[${m.name}]\n${(perPkg.get(m.name) ?? []).join("\n")}`);
-      if (readsRecords.has(m.name)) h.update(`\nscan ${scanHash}`);
+      for (const read of m.reads) if (records || read !== RECORDS) h.update(`\nreads ${read} ${readHash(read)}`);
     }
-    for (const d of [...unit.deps].toSorted()) h.update(`\ndep ${d} ${keyOf(d)}`);
+    for (const d of [...unit.deps].toSorted()) h.update(`\ndep ${d} ${keyOf(d, false)}`);
     const key = h.digest("hex").slice(0, 32);
-    keys.set(id, key);
+    memo.set(at, key);
     return key;
   };
-  for (const id of unitMap.keys()) keyOf(id);
-  return keys;
+  return new Map([...unitMap.keys()].map((id) => [id, keyOf(id, true)]));
 }
 
 /** Gitignored files under a unit's package dirs, as repo-relative paths (ignored directories whole). */

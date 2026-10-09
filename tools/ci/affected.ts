@@ -8,13 +8,14 @@
 // root config, CI, the engine and its patches) selects all of them.
 
 import { appendFileSync } from "node:fs";
-import { closure, dependents, git, loadWorkspace, owner } from "./workspace.ts";
+import { RECORD_PATH } from "./reads.ts";
+import { closure, dependents, git, loadWorkspace, owner, RECORDS } from "./workspace.ts";
 
 const WEB = "@enumeratio/web";
 
-/** Suites that read other packages' files (every package.json, every record, every source), so a
- *  change anywhere can move them. */
-const SCANNERS = ["@enumeratio/utils", "@enumeratio/manifest"];
+/** Suites that scan every package's sources, which no declaration lists, so a change anywhere can
+ *  move them. Suites that scan the records declare `RECORDS` instead. */
+const SOURCE_SCANNERS = ["@enumeratio/utils", "@enumeratio/manifest"];
 
 /** Packages whose change can move every other package. */
 const EVERYTHING = ["@enumeratio/engine", "@enumeratio/ce-patches"];
@@ -27,9 +28,6 @@ export const SHARDS: Record<string, string[]> = {
 
 /** Root-level files no package reads. */
 const INERT = /^(?:[^/]+\.md|LICENSE|\.vscode\/|\.vite-hooks\/|\.claude\/|\.scratch\/)/;
-
-/** Records and manifests any package's tests or the reference's collectors may scan. */
-const SCANNED = /(?:^|\/)(?:reference\/|package\.json$)/;
 
 export interface Selection {
   full: boolean;
@@ -62,7 +60,8 @@ export function select(base: string, forceFull = false): Selection {
   const seeds = new Set<string>();
   let site = false;
   /** Packages whose own tests read what changed, but whose dependents don't. */
-  const scanning = new Set<string>(SCANNERS);
+  const scanning = new Set<string>(SOURCE_SCANNERS);
+  const recordReaders = [...pkgs.values()].filter((p) => p.reads.includes(RECORDS)).map((p) => p.name);
   for (const { path, deleted } of changes(base)) {
     const pkg = owner(pkgs, path);
     if (pkg === undefined) {
@@ -72,9 +71,10 @@ export function select(base: string, forceFull = false): Selection {
     if (EVERYTHING.includes(pkg.name)) return everything;
     seeds.add(pkg.name);
     // Records and manifests are read by the site's reference pages whichever package holds them.
-    if (SCANNED.test(path)) site = true;
-    // Records and manifests are read repo-wide; a vanished file may be one a record points at.
-    if (SCANNED.test(path) || deleted) scanning.add("@enumeratio/reference");
+    if (RECORD_PATH.test(path)) site = true;
+    // Records and manifests are read repo-wide, by every package that declares `RECORDS`; a
+    // vanished file may be one a record points at.
+    if (RECORD_PATH.test(path) || deleted) for (const n of recordReaders) scanning.add(n);
   }
   const siteReads = closure([WEB], (n) => pkgs.get(n)?.deps ?? []);
   site ||= [...seeds].some((n) => siteReads.has(n));

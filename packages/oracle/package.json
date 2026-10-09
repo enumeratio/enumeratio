@@ -67,7 +67,10 @@
   },
   "enumeratio": {
     "layer": "tooling",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "@records"
+    ]
   },
   "generated": [
     "src/mappings-data.ts",

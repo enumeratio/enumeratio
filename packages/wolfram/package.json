@@ -29,7 +29,10 @@
   },
   "enumeratio": {
     "layer": "presentation",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "@records"
+    ]
   },
   "generated": [
     "src/wolfram-names-data.ts"

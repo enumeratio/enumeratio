@@ -71,3 +71,7 @@ Statistics over these carriers (`MajorIndex`, `Descents`, distributions, …) li
 [@enumeratio/statistics](../statistics/README.md). Carrier and protocol machinery
 (`registerCarrier`, `conform`) lives in
 [@enumeratio/structures](../../../structures/README.md).
+
+Its `enumeratio.reads` names `../statistics/reference` rather than depending on statistics: the
+build reads those records, and statistics sits above combinatorics, which may import only down the
+hierarchy. The dist-cache key hashes the records instead.

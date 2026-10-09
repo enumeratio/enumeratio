@@ -41,7 +41,10 @@
   },
   "enumeratio": {
     "layer": "infra",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "../reference/golden/upstream"
+    ]
   },
   "generated": [
     "src/patches/registry-data.ts"
