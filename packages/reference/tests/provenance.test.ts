@@ -191,6 +191,9 @@ const OVERRIDDEN = [
   "Add",
   "All",
   "Any",
+  // Not itself overridden -- `Apply(Derivative(UnitBox, n), x)` is the Derivative rule's own
+  // value, with Apply as the corpus expression's outer head.
+  "Apply",
   "Arccos",
   "Arccsc",
   "Arcosh",

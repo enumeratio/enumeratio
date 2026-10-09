@@ -15,13 +15,14 @@ import type { EvalOptions } from "@enumeratio/ce-patches";
 //  - `Sin`, `Cos`, `Sinh` and `Cosh` of `a+bi` by the angle-addition formulas,
 //    `Exp(a+bi) = e^a cos(b) + i·e^a sin(b)` (`Exp` canonicalizes to `Power(E, ·)`, so that's
 //    what's actually matched), `z^w = e^(w·Ln z)` for a concrete complex or negative `z`, and
-//    `Abs(a+bi) = sqrt(a²+b²)`; `Real`/`Imaginary` of a split are its halves, a `List` splits
+//    `Abs(a+bi) = sqrt(a²+b²)`, `Ln(a+bi)` by modulus and `Arctan2`;
+//    `Real`/`Imaginary` of a split are its halves, a `List` splits
 //    entry by entry;
 //  - anything else is assumed real (`{re: expr, im: 0}`) — the same default Wolfram's own
 //    `ComplexExpand` takes for a symbol with no declared domain.
 //
 // Only these heads are covered; the other elementary functions of a complex argument (`Tan`,
-// `Tanh`, `Ln`, …) have no rule here and fall through to "assumed real", which is wrong for them
+// `Tanh`, …) have no rule here and fall through to "assumed real", which is wrong for them
 // specifically.
 
 interface RealImaginary {
@@ -133,6 +134,16 @@ function splitRI(ce: ComputeEngine, e: BoxedExpression): RealImaginary {
   if ((e.operator === "Real" || e.operator === "Imaginary") && ops.length === 1) {
     const part = splitRI(ce, ops[0]);
     return { re: e.operator === "Real" ? part.re : part.im, im: ce.Zero };
+  }
+  // Ln(a+bi) = ½ Ln(a²+b²) + i·Arg(a+bi); a real argument stays `Ln(a)`, as Wolfram leaves it.
+  if ((e.operator === "Ln" || e.operator === "Log") && ops.length === 1) {
+    const { re: a, im: b } = splitRI(ce, ops[0]);
+    if (b.isSame(0)) return { re: e, im: ce.Zero };
+    const modulus = ce.function("Ln", [add(ce, mul(ce, a, a), mul(ce, b, b))]).evaluate();
+    return {
+      re: ce.function("Divide", [modulus, ce.number(2)]).evaluate(),
+      im: ce.function("Arctan2", [b, a]).evaluate(),
+    };
   }
   if (e.operator === "Abs" && ops.length > 0) {
     const { re: a, im: b } = splitRI(ce, ops[0]);

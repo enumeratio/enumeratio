@@ -53,5 +53,30 @@ export function declareBesselBig(ce: ComputeEngine): void {
       },
       2,
     );
+    // A non-integer real order, for x > 0: the same series through the regularized 0F1, which
+    // carries the digits asked for. Native declines these.
+    wrapOperator(
+      ce,
+      [head, 1, 1],
+      (ops) =>
+        ops.length === 2 &&
+        ops.every(isFiniteNum) &&
+        ops[0]!.im === 0 &&
+        !Number.isInteger(ops[0]!.re) &&
+        ops[1]!.im === 0 &&
+        ops[1]!.re > 0,
+      (native) => (ops, options) => {
+        if (!wantsNumber(ops, options)) return native?.(ops, options);
+        const [order, x] = ops as [BoxedExpression, BoxedExpression];
+        const quarter = ce.function("Divide", [ce.function("Multiply", [x, x]), ce.number(4)]);
+        const series = ce.function("Hypergeometric0F1Regularized", [
+          ce.function("Add", [order, ce.One]),
+          kind === "I" ? quarter : ce.function("Negate", [quarter]),
+        ]);
+        const scale = ce.function("Power", [ce.function("Divide", [x, ce.number(2)]), order]);
+        return ce.function("Multiply", [scale, series]).N();
+      },
+      2,
+    );
   }
 }

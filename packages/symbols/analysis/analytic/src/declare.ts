@@ -46,6 +46,7 @@ import { declareFunctionExpand } from "./function-expand.ts";
 import { declareFullSimplify } from "./full-simplify.ts";
 import { declareMatrixFunction } from "./matrix-function.ts";
 import { declareCubeRoot } from "./cube-root.ts";
+import { declareSolveInverseHeads } from "./solve-inverse-heads.ts";
 import { declareIntegerFractionalPart } from "./integer-fractional-part.ts";
 import { declareRealAbsSign } from "./real-abs-sign.ts";
 import { declareUnitStep } from "./unit-step.ts";
@@ -204,6 +205,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareHypergeometricPFQ(ce);
   declareBellY(ce);
   declareCubeRoot(ce);
+  declareSolveInverseHeads(ce);
   declareIntegerFractionalPart(ce);
   declareRealAbsSign(ce);
   declareUnitStep(ce);

@@ -10,7 +10,7 @@ the-primes-below-a-million	Scope		[PrimePi, 1000000]	78498			The primes below a 
 listable-threads-over-a-list	Scope		[PrimePi, [List, 3, 5, 17, 25]]	[List, 2, 3, 7, 9]			Listable: threads over a list						threading	compute-engine's PrimePi is Listable and threads over the list; the Rust crates take scalars only.
 primepi-10-11	Scope		[PrimePi, 100000000000]	4118054813			Exact at $10^{11}$							
 primepi-10-12	Scope	test	[PrimePi, 1000000000000]	37607912018			Exact at $10^{12}$, the last size answered							
-primepi-1-plus-10-pow-17	Scope	triage	[PrimePi, [Add, 1, [Power, 10, 17]]]	[PrimePi, {num: "100000000000000001"}]				gap	unclassified	PrimePi past 10^15 is not computed here.				
+primepi-1-plus-10-pow-17	Scope	triage	[PrimePi, [Add, 1, [Power, 10, 17]]]	[PrimePi, {num: "100000000000000001"}]				gap	unevaluated	Ours counts exactly up to 10^12 (Lucy_Hedgehog, O(x^(3/4))) and leaves PrimePi past it symbolic; 10^17 + 1 needs a Lagarias-Miller-Odlyzko or Deleglise-Rivat count. Wolfram answers 2623557157654233.				
 nthprime-range-1-primepi-100	Applications		[NthPrime, [Range, 1, [PrimePi, 100]]]	[List, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]			The 25 primes below 100, via the count							
 primepi-5-000	Applications		[PrimePi, 5000]	669			669 primes up to 5000							
 same-inverse-relation-viewed-from-primepi-s-side	Properties		[Equal, [PrimePi, [NthPrime, 50]], 50]	True			Same inverse relation viewed from PrimePi's side. See [[NthPrime]]							
