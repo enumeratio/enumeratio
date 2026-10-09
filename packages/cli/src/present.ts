@@ -7,6 +7,8 @@ import { can, type Environment } from "@enumeratio/frontend";
 import { dim, red } from "./ansi.ts";
 import { Repl } from "./core.ts";
 import { type DriveScreen, type Driver, drivable, driver } from "./drive.ts";
+import { pager } from "./pager.ts";
+import { isTable, openTable } from "./table.ts";
 import { textOf } from "./textual.ts";
 
 type Json = Parameters<typeof driver>[0];
@@ -43,6 +45,15 @@ export function present(
     repl.formatOut(last?.n ?? 1, text(session.ce.box(pinned as never).evaluate().json as Json));
   if (last === undefined) return { echo, out: out.text || red("  no result", color), settle };
   const json = last.expr.json as Json;
+  // A table pages over its row source; a pipe gets the pinned first page from `reduce` below.
+  if (can.drive(env) && isTable(json)) {
+    const opened = openTable(session.ce, json);
+    if ("table" in opened) {
+      const d = pager(opened.table.source, { ...screen, color }, json);
+      return { echo, out: "", driver: d, settle: () => repl.formatOut(last.n, d.text()) };
+    }
+    return { echo, out: repl.formatOut(last.n, red(`  error: ${opened.error}`, color)), settle };
+  }
   if (can.drive(env) && drivable(json)) {
     const d = driver(json, { ...screen, color, show: text });
     if (d !== undefined) return { echo, out: "", driver: d, settle };

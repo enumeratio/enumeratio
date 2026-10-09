@@ -3,7 +3,7 @@
 // scroll position maps to a row when the content is taller than a browser will scroll. Pure, so
 // the web element and the terminal pager share it and a test needs no document.
 
-import type { IndexRange, RowCount } from "@enumeratio/boxes";
+import { describeBig, type IndexRange, type RowCount } from "@enumeratio/boxes";
 
 /** Rows per cache block: aligned, so overlapping requests share. */
 export const BLOCK_ROWS = 64n;
@@ -126,9 +126,20 @@ export function scrollTopFor(
   return (Number(top - 1n) / Math.max(1, rows - visible)) * travel;
 }
 
-/** `rows 1,201–1,220 of ≥ 4,096` for the status line and the live region. */
-export function statusText(first: bigint, last: bigint, total: string): string {
-  const n = (x: bigint): string => x.toLocaleString("en-US");
+/** A row index for a line with little room: separators while it is short, else `1.55 × 10²⁵`. */
+export function compactIndex(x: bigint): string {
+  return x.toString().length <= COMPACT_DIGITS ? x.toLocaleString("en-US") : describeBig(x).replace(/^≈ /, "");
+}
+
+/** Digits a row index may have before the status line writes it in scientific form. */
+const COMPACT_DIGITS = 12;
+
+/**
+ * `rows 1,201–1,220 of ≥ 4,096` for the status line and the live region; `compact` writes a
+ * long index in scientific form so the line fits (the full text belongs in a `title`).
+ */
+export function statusText(first: bigint, last: bigint, total: string, compact = false): string {
+  const n = compact ? compactIndex : (x: bigint): string => x.toLocaleString("en-US");
   return `rows ${n(first)}–${n(last)} of ${total}`;
 }
 

@@ -2,7 +2,7 @@
 // mouse reports, and the prompt's own keypress listeners are held while the strip runs.
 
 import { emitKeypressEvents } from "node:readline";
-import { type Key, driver } from "./drive.ts";
+import { type DriveScreen, type Driver, type Key, driver } from "./drive.ts";
 
 type Json = Parameters<typeof driver>[0];
 
@@ -14,22 +14,31 @@ export interface DriveHost {
   stdout: NodeJS.WriteStream;
 }
 
-/**
- * Drive the controls of `expr` until the reader is done; resolves with the pinned
- * expression they left it at. Takes over the keypress stream while it runs.
- */
-export function drive(expr: Json, host: DriveHost): Promise<Json> {
+/** The terminal a driver draws on: this host's stdout. */
+export function screenOf(host: Pick<DriveHost, "color" | "stdin" | "stdout">): Omit<DriveScreen, "show"> {
   const { stdin, stdout } = host;
-  const d = driver(expr, {
-    show: (e) => host.show(e),
+  return {
     color: host.color,
     mouse: stdin.isTTY === true,
     write: (text) => stdout.write(text),
     cursorRow: () => stdout.rows ?? 24,
     columns: () => stdout.columns ?? 80,
-  });
-  if (d === undefined) return Promise.resolve(expr);
+    height: () => stdout.rows ?? 24,
+  };
+}
 
+/**
+ * Drive the controls of `expr` until the reader is done; resolves with the pinned
+ * expression they left it at. Takes over the keypress stream while it runs.
+ */
+export function drive(expr: Json, host: DriveHost): Promise<Json> {
+  const d = driver(expr, { ...screenOf(host), show: (e) => host.show(e) });
+  return d === undefined ? Promise.resolve(expr) : run(d, host);
+}
+
+/** Feed `d` the keys of `host`'s terminal until it is done; resolves with the expression it pinned. */
+export function run(d: Driver, host: Pick<DriveHost, "stdin">): Promise<Json> {
+  const { stdin } = host;
   return new Promise((resolve) => {
     emitKeypressEvents(stdin);
     // readline owns the keypress stream; hold its listeners while the strip does.

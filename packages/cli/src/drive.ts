@@ -203,6 +203,8 @@ export interface DriveScreen {
   cursorRow(): number;
   /** The terminal's width, so a line that wraps is counted as the rows it takes. */
   columns(): number;
+  /** The terminal's height in rows, for a driver that fills it (the table pager). */
+  height?(): number;
 }
 
 /** A keyboard loop over the controls of one expression, fed by whichever host has the keys. */
@@ -367,6 +369,12 @@ const SEQUENCES: Record<string, Key> = {
   [`${ESC}[1;2C`]: { name: "right", shift: true },
   [`${ESC}[1;2D`]: { name: "left", shift: true },
   [`${ESC}[Z`]: { name: "tab", shift: true },
+  [`${ESC}[5~`]: { name: "pageup" },
+  [`${ESC}[6~`]: { name: "pagedown" },
+  [`${ESC}[H`]: { name: "home" },
+  [`${ESC}[F`]: { name: "end" },
+  "\x7f": { name: "backspace" },
+  "\b": { name: "backspace" },
   "\t": { name: "tab" },
   "\r": { name: "return" },
   " ": { name: "space" },

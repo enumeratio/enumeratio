@@ -267,6 +267,7 @@ export class NotatioTerminal extends LitElement {
         mouse: true,
         cursorRow: () => term.buffer.active.cursorY + 1,
         columns: () => term.cols,
+        height: () => term.rows,
       },
       NotatioTerminal.SHOW_PLOT_ROWS,
     );

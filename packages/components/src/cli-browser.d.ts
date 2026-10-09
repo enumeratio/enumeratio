@@ -72,6 +72,7 @@ declare module "@enumeratio/cli/browser" {
     mouse: boolean;
     cursorRow(): number;
     columns(): number;
+    height?(): number;
   }
   export interface Driver {
     draw(): void;
