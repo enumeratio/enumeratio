@@ -1108,6 +1108,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "Key",
     "KleinInvariantJ",
     "KroneckerSymbol",
+    "LaguerreL",
     "LaplaceTransform",
     "LegendrePolynomial",
     "LetterNumber",

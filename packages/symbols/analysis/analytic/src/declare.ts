@@ -112,7 +112,7 @@ import { declareNSum } from "./nsum.ts";
  * two-argument behaviour. This one stays ours (no compute-engine issue yet).
  *
  * Also declares the heads in special-functions.ts still ours: `HarmonicNumber`,
- * `ChebyshevT`, `ChebyshevU`, `HermiteH`, `LegendrePolynomial`, `RisingFactorial`, `BernoulliPolynomial`,
+ * `ChebyshevT`, `ChebyshevU`, `HermiteH`, `LaguerreL`, `LegendrePolynomial`, `RisingFactorial`, `BernoulliPolynomial`,
  * `FallingFactorial`, `XGCD`, `Csgn`, `CongruentMod`, and the `ConstGlaisher`
  * constant — the Carlson symmetric elliptic integrals in carlson.ts: `CarlsonRF`,
  * `CarlsonRC`, `CarlsonRD`, `CarlsonRJ`, `CarlsonRG` — and, in elliptic.ts,

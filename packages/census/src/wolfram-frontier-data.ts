@@ -1229,10 +1229,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 5,
   },
   {
-    head: "LaguerreL",
-    uses: 5,
-  },
-  {
     head: "LegendreQ",
     uses: 5,
   },
