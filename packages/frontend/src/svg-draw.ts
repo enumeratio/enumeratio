@@ -100,7 +100,8 @@ export function svg(
       const halo = look.halo
         ? ` paint-order="stroke" stroke="${escape(look.halo)}" stroke-width="3" stroke-linejoin="round"`
         : "";
-      return `<text x="${n(x)}" y="${n(y)}" font-size="${n(size * pixels)}" fill="${escape(color)}" fill-opacity="${n(look.opacity ?? opacity)}" text-anchor="${look.anchor ?? "middle"}"${look.anchor ? "" : ' dominant-baseline="central"'}${look.italic ? ' font-style="italic"' : ""}${halo} font-family="${family}">${escape(label)}</text>`;
+      const turn = look.angle ? ` transform="rotate(${n(-look.angle)} ${n(x)} ${n(y)})"` : "";
+      return `<text x="${n(x)}" y="${n(y)}"${turn} font-size="${n(size * pixels)}" fill="${escape(color)}" fill-opacity="${n(look.opacity ?? opacity)}" text-anchor="${look.anchor ?? "middle"}"${look.anchor ? "" : ' dominant-baseline="central"'}${look.italic ? ' font-style="italic"' : ""}${halo} font-family="${family}">${escape(label)}</text>`;
     };
     const texts: string[] = [];
     const round = options.rounded ? ' stroke-linejoin="round" stroke-linecap="round"' : "";

@@ -262,23 +262,39 @@
   },
   "GraphPlot([[1, 2], [2, 3]])": {
     "rendering": {
-      "tag": "notatio-graph-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "graph",
-        "data": "[[1,2],[2,3]]"
+        "value": "GraphPlot([[1, 2], [2, 3]])"
       }
     },
-    "markup": "<notatio-graph-plot type=\"graph\" data=\"[[1,2],[2,3]]\"></notatio-graph-plot>"
+    "markup": "<graphics-box value=\"GraphPlot([[1, 2], [2, 3]])\"></graphics-box>"
   },
   "TreeGraph([[1, 2], [1, 3]])": {
     "rendering": {
-      "tag": "notatio-graph-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "tree",
-        "data": "[[1,2],[1,3]]"
+        "value": "TreeGraph([[1, 2], [1, 3]])"
       }
     },
-    "markup": "<notatio-graph-plot type=\"tree\" data=\"[[1,2],[1,3]]\"></notatio-graph-plot>"
+    "markup": "<graphics-box value=\"TreeGraph([[1, 2], [1, 3]])\"></graphics-box>"
+  },
+  "LayeredGraphPlot([[1, 2], [2, 3]], PlotLabel -> \"layers\")": {
+    "rendering": {
+      "tag": "graphics-box",
+      "attributes": {
+        "value": "LayeredGraphPlot([[1, 2], [2, 3]], PlotLabel -> \"layers\")"
+      }
+    },
+    "markup": "<graphics-box value=\"LayeredGraphPlot([[1, 2], [2, 3]], PlotLabel -> &quot;layers&quot;)\"></graphics-box>"
+  },
+  "TorusSquare(2, 3, Phase -> 0.32, Dials -> False)": {
+    "rendering": {
+      "tag": "graphics-box",
+      "attributes": {
+        "value": "TorusSquare(2, 3, Phase -> 0.32, Dials -> False)"
+      }
+    },
+    "markup": "<graphics-box value=\"TorusSquare(2, 3, Phase -> 0.32, Dials -> False)\"></graphics-box>"
   },
   "CollectionTable(Subsets(4))": {
     "rendering": {

@@ -120,6 +120,7 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "TreeGraph",
   "LayeredGraphPlot",
   "Dendrogram",
+  "TorusSquare",
   "CollectionTable",
   "Manipulate",
   // A scope over a stretch of document: the controls inside it and the readouts that

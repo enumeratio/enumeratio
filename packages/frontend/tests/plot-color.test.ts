@@ -10,8 +10,9 @@ import { GRADIENTS, gradientNamed, rgbToOklab, hexToRgb, sampleGradient } from "
 import { curve3dSvg, surfacesSvg } from "../src/plot3d.ts";
 import { discreteName, gradientName, plotPalette } from "../src/plot-color.ts";
 import { linePlotSvg } from "../src/plot.ts";
+import { renderDiagram } from "../src/diagram.ts";
 import { renderPlot } from "../src/plot-box.ts";
-import { torusSquareSvg } from "../src/torussquare.ts";
+import { torusSquareBox } from "../src/torussquare.ts";
 import { vectorPlotBox } from "../src/vectorplot.ts";
 
 const grid = (n: number, f: (x: number, y: number) => number): number[][] =>
@@ -91,8 +92,8 @@ test("series take the discrete scheme, one color each", () => {
       { discrete: "set1" },
     ),
   ).toContain("#377eb8");
-  expect(torusSquareSvg(2, 3, { discrete: "set1" })).toContain("#377eb8");
-  expect(torusSquareSvg(2, 3)).toContain("#f28e2c");
+  expect(renderDiagram(torusSquareBox(2, 3, { discrete: "set1" }) as never)).toContain("#377eb8");
+  expect(renderDiagram(torusSquareBox(2, 3) as never)).toContain("#f28e2c");
   const surfaces = surfacesSvg([ramp, ramp.map((r) => r.map((v) => 6 - v))], { axes: false, discrete: "set1" });
   expect(surfaces).toContain("#e41a1c");
   expect(surfaces).toContain("#377eb8");

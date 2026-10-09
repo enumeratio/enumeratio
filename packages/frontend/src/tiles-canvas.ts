@@ -50,6 +50,8 @@ export interface TextLook {
   readonly opacity?: number;
   /** A color stroked behind the glyphs, so the label reads over a curve. */
   readonly halo?: string;
+  /** Degrees counterclockwise from the horizontal, about the label's own position. */
+  readonly angle?: number;
 }
 
 /**

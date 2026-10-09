@@ -1,5 +1,9 @@
 import { expect, test } from "vite-plus/test";
-import { atPhase, strands, torusSquareSvg } from "../src/torussquare.ts";
+import { type Box, type BoxNode, optionsOfBox } from "@enumeratio/boxes";
+import { renderDiagram } from "../src/diagram.ts";
+import { diagramBoxOf, followsClock } from "../src/diagram-lowering.ts";
+import { plotItems } from "../src/plot-box.ts";
+import { atPhase, strands, torusSquareBox } from "../src/torussquare.ts";
 
 /** Distance from a point to the segment it should be sitting on. */
 const offLine = (
@@ -87,12 +91,36 @@ test("nonsense winds draw nothing rather than throwing", () => {
   expect(strands(-1, 3)).toEqual([]);
 });
 
+const rolesOf = (box: Box): string[] => plotItems(box as BoxNode).map((i) => i.role);
+
 test("the figure draws the line, the point and the two circles", () => {
-  const svg = torusSquareSvg(2, 3, { phase: 0.25 });
-  expect(svg).toContain("notatio-square-marker");
+  const box = torusSquareBox(2, 3, { phase: 0.25 });
+  const svg = renderDiagram(box as BoxNode);
   expect(svg).toContain("round the hole ×2");
   expect(svg).toContain("round the tube ×3");
+  expect(rolesOf(box).filter((r) => r === "Strand")).toHaveLength(strands(2, 3).length);
+  expect(rolesOf(box).filter((r) => r === "Dial")).toHaveLength(6); // a ring, a spoke and a dot, twice
+  expect(rolesOf(box)).toContain("Marker");
+  // The tube's caption reads upward along the square's left edge.
+  const tube = plotItems(box as BoxNode).find((i) => i.prim[1] === "round the tube ×3")!;
+  expect(optionsOfBox(tube.prim).Direction).toEqual([expect.closeTo(0, 9), 1]);
+  expect(svg).toContain("rotate(-90");
   // Without a phase there is no point on it — a figure for a printed argument.
-  expect(torusSquareSvg(2, 3)).not.toContain("notatio-square-marker");
-  expect(torusSquareSvg(2, 3, { phase: 0.25, dials: false })).toContain("notatio-square-marker");
+  expect(rolesOf(torusSquareBox(2, 3))).not.toContain("Marker");
+  expect(rolesOf(torusSquareBox(2, 3, { phase: 0.25, dials: false }))).toContain("Marker");
+  expect(rolesOf(torusSquareBox(2, 3, { phase: 0.25, dials: false }))).not.toContain("Dial");
+});
+
+test("TorusSquare lowers to a diagram box, its point pinned by At or following the clock", () => {
+  const pinned = diagramBoxOf({ layout: "torus", p: "2", q: "3", phase: "0.32" })!;
+  expect(rolesOf(pinned)).toContain("Marker");
+  expect(followsClock({ layout: "torus", phase: "0.32" })).toBe(false);
+  expect(followsClock({ layout: "torus", clock: "False" })).toBe(false);
+  expect(followsClock({ layout: "torus" })).toBe(true);
+  expect(rolesOf(diagramBoxOf({ layout: "torus", p: "2", q: "3", clock: "False" })!)).not.toContain("Marker");
+  // The clock's phase moves the point.
+  const at = (phase: number): unknown =>
+    plotItems(diagramBoxOf({ layout: "torus", p: "2", q: "3" }, phase) as BoxNode).find((i) => i.role === "Marker")!
+      .prim;
+  expect(at(0.1)).not.toEqual(at(0.2));
 });

@@ -855,6 +855,7 @@ const NOVEL = [
   "ThreeCycleCount",
   "TorusBraid",
   "TorusKnot",
+  "TorusSquare",
   "TouchPointCount",
   "Tournaments",
   "TriCompositions",

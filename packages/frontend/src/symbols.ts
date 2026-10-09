@@ -2,7 +2,7 @@ import { PLOT_HEADS } from "./plot-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CONTROL_NOTATION_HEADS, LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
-import { serializeExpression } from "@enumeratio/formats/expression";
+import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { FRAME_HEIGHT, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
 import { renderBox } from "./box-render.ts";
 import { plainJson } from "./graphics-rules.ts";
@@ -21,6 +21,7 @@ import {
 import { epsil, headOf, numOf, opsOf, optionAttribute, strOf, symOf, tupleOf } from "./mathjson.ts";
 
 export { headOf, numOf, opsOf, optionAttribute, strOf, symOf, tupleOf, variable };
+export { expandDictionaries } from "./latex.ts";
 
 // A symbol and its component are the same thing seen from two ends
 // (https://github.com/enumeratio/enumeratio/wiki/Components-and-Symbols). This is the map between them: for every head that
@@ -125,11 +126,33 @@ function complexOf(node: Json | undefined): [number, number] | undefined {
   return undefined;
 }
 
-/** A MathJSON dictionary literal (`{dict: {…}}`, compute-engine's own associative form). */
+/**
+ * A MathJSON dictionary: the literal (`{dict: {…}}`, compute-engine's own associative form), or
+ * `Dictionary(KeyValuePair(key, value), …)`, which is what parsing `{"key" -> value}` leaves.
+ */
 const dictOf = (node: unknown): Readonly<Record<string, Json>> | undefined => {
   const dict = (node as { dict?: unknown })?.dict;
-  return dict !== null && typeof dict === "object" ? (dict as Record<string, Json>) : undefined;
+  if (dict !== null && typeof dict === "object") return dict as Record<string, Json>;
+  if (headOf(node) !== "Dictionary") return undefined;
+  const entries: [string, Json][] = [];
+  for (const pair of opsOf(node)) {
+    const [key, value] = opsOf(pair);
+    const name = strOf(key) ?? symOf(key);
+    if (headOf(pair) !== "KeyValuePair" || name === undefined || value === undefined) return undefined;
+    entries.push([name, value]);
+  }
+  return Object.fromEntries(entries);
 };
+
+/**
+ * A dictionary entry's value. A dictionary typed as `{"edges" -> [["a", "b"]]}` holds its lists
+ * bare, without a `List` head, so a bare array there is a list of its entries.
+ */
+function dictValueOf(node: Json): unknown {
+  return Array.isArray(node) && node[0] !== "List" && node[0] !== "Tuple"
+    ? node.map((entry) => dictValueOf(entry as Json))
+    : toJsonData(node);
+}
 
 /**
  * MathJSON data -- lists, tuples, dictionaries, numbers, strings -- as the plain JSON a
@@ -144,7 +167,7 @@ export function toJsonData(node: Json): unknown {
   if (s !== undefined) return s;
   if (headOf(node) === "List" || headOf(node) === "Tuple") return opsOf(node).map(toJsonData);
   const dict = dictOf(node);
-  if (dict !== undefined) return Object.fromEntries(Object.entries(dict).map(([k, v]) => [k, toJsonData(v)]));
+  if (dict !== undefined) return Object.fromEntries(Object.entries(dict).map(([k, v]) => [k, dictValueOf(v)]));
   const sym = symOf(node);
   if (sym === "True") return true;
   if (sym === "False") return false;
@@ -203,12 +226,23 @@ const chart = (head: string, type: string, options?: VisualSymbol["options"]): V
   ...(options && { options }),
 });
 
-const graph = (head: string, type: string): VisualSymbol => ({
+/** A graph or tree plot: its structure in `data`, drawn as a diagram by `<graphics-box>`. */
+const graph = (head: string, layout: string): VisualSymbol => ({
   head,
-  tag: "notatio-graph-plot",
-  fixed: { type },
+  tag: "graphics-box",
+  fixed: { layout },
   attributes: dataOnly,
+  options: { PlotLabel: "label" },
 });
+
+/** Whether an option value says no: `False`, or the text `"false"` a story writes. */
+const isOff = (value: Json): boolean => symOf(value) === "False" || strOf(value)?.toLowerCase() === "false";
+
+/** `ColorFunction -> "set1"`: the discrete scheme whose first colors mark a figure's categories. */
+const discreteScheme = (value: Json): Record<string, string> => {
+  const name = strOf(value) ?? symOf(value);
+  return name === undefined ? {} : { discrete: name.toLowerCase() };
+};
 
 /** `name` -> `_name` throughout, so a Manipulate body reads its parameters as slots. */
 function slotted(node: Json, names: ReadonlySet<string>): Json {
@@ -389,6 +423,28 @@ export const PLOT_SETTINGS: readonly VisualSymbol[] = [
     attributes: (ops) => vectorField(ops),
     options: FIELD_OPTIONS,
   },
+  graph("GraphPlot", "graph"),
+  graph("TreeGraph", "tree"),
+  graph("LayeredGraphPlot", "layered"),
+  graph("Dendrogram", "dendrogram"),
+  {
+    // `TorusSquare(p, q)`: the glued square with the knot T(p, q) on it as a straight line. `Phase`
+    // pins the travelling point; otherwise it follows the page's clock (`Clock -> False` stops it).
+    head: "TorusSquare",
+    tag: "graphics-box",
+    fixed: { layout: "torus" },
+    attributes: (ops) => ({
+      ...(ops[0] !== undefined && { p: epsil(ops[0]) }),
+      ...(ops[1] !== undefined && { q: epsil(ops[1]) }),
+    }),
+    options: {
+      PlotLabel: "label",
+      ColorFunction: discreteScheme,
+      // A `False` option lowers to no attribute, and these default to on: they say `false`.
+      Dials: (value) => ({ dials: isOff(value) ? "false" : "true" }),
+      Clock: (value) => ({ clock: isOff(value) ? "false" : "true" }),
+    },
+  },
 ];
 
 const SETTINGS_BY_HEAD = new Map(PLOT_SETTINGS.map((p) => [p.head, p]));
@@ -400,6 +456,18 @@ export function plotSettingsOf(expr: Json): Record<string, string> | undefined {
   if (symbol === undefined) return undefined;
   const { ops, options } = optionsOf(expr);
   return { ...symbol.fixed, ...symbol.attributes(ops), ...lowerOptions(symbol, options).attributes };
+}
+
+/**
+ * What a plot element (`<graphics-box value>`) makes of its text: the expression as plain MathJSON
+ * and its settings, or undefined when the text does not parse or is no plot head.
+ */
+export function plotOfText(text: string): { json: Json; settings: Record<string, string> } | undefined {
+  const { json, errors } = parseExpression(text);
+  if (errors.length > 0) return undefined;
+  const plain = plainJson(json as never) as Json;
+  const settings = plotSettingsOf(plain);
+  return settings && { json: plain, settings };
 }
 
 /** A plot head as a visual symbol: the whole expression, options and all, in the element's `value`. */
@@ -581,10 +649,6 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   },
   { head: "ListPlot3D", tag: "notatio-list-plot-3d", attributes: dataOnly, options: { ColorFunction: colorFunction } },
   { head: "BarChart3D", tag: "notatio-bar-chart-3d", attributes: dataOnly, options: { ColorFunction: colorFunction } },
-  graph("GraphPlot", "graph"),
-  graph("TreeGraph", "tree"),
-  graph("LayeredGraphPlot", "layered"),
-  graph("Dendrogram", "dendrogram"),
   {
     head: "CollectionTable",
     tag: "notatio-collection-table",

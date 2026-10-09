@@ -8,7 +8,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { PLOT_HEADS } from "@enumeratio/frontend/core";
+import { DIAGRAM_HEADS, PLOT_HEADS } from "@enumeratio/frontend/core";
 
 /** One element a page asks the build to render. */
 export interface MarkupSpec {
@@ -23,9 +23,10 @@ export interface MarkupSpec {
 
 const PRERENDERED = new Set(["notatio-cell", "graphics-box"]);
 
-/** Whether a `graphics-box` holds a plot, which the build draws; a `Show` is drawn live. */
+/** Whether a `graphics-box` holds a sampled plot, which the build draws; a `Show` or a diagram is drawn live. */
 const holdsPlot = (value: string | undefined): boolean =>
-  value !== undefined && new RegExp(`^\\s*(?:${PLOT_HEADS.join("|")})\\s*\\(`).test(value);
+  value !== undefined &&
+  new RegExp(`^\\s*(?:${PLOT_HEADS.filter((head) => !DIAGRAM_HEADS.includes(head)).join("|")})\\s*\\(`).test(value);
 const SPECS_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "cache/prerender-pages");
 
 /** Where a page's specs are kept, by its source path. */

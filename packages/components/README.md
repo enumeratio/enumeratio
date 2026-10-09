@@ -26,7 +26,7 @@ import "@enumeratio/components";
   `<notatio-plot-3d>`, `<notatio-contour-plot>`,
   `<notatio-density-plot>`,
   `<notatio-complex-plot>` (and `-3d`), `<notatio-chart>` (the family head for
-  Histogram/BarChart/PieChart-style symbols), `<notatio-graph-plot>`.
+  Histogram/BarChart/PieChart-style symbols); graphs, trees and the torus square are `<graphics-box>` too.
 - **Controls** — `<slider-box>` (`axis="y"` stands it up; and `<slider-2d-box>`, `<interval-slider-box>`,
   `<color-setter-box>`), `<knob-box>`, `<toggler-box>` (and `<toggler-bar-box>`),
   `<radio-button-bar-box>`, `<setter-bar-box>`, `<checkbox-box>`,
@@ -40,7 +40,7 @@ import "@enumeratio/components";
   on change.
 - **Other** — `<notatio-code>`, `<notatio-terminal>` (a real terminal emulator running
   `@enumeratio/cli`'s logic), `<notatio-collection-table>`, `<notatio-clock>`,
-  `<notatio-torus-square>`, `<notatio-curve-3d>`.
+  `<notatio-curve-3d>`.
 
 `./define.ts`'s `defineControl` is how a new control registers its tag and joins
 `CONTROL_TAGS`, the set a scope's `querySelectorAll` reads.

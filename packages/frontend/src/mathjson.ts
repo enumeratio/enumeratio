@@ -3,6 +3,7 @@
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { serializeExpression } from "@enumeratio/formats/expression";
+import { expandDictionaries } from "./latex.ts";
 
 type Json = MathJsonExpression;
 
@@ -39,8 +40,12 @@ export const strOf = (node: unknown): string | undefined => {
   return typeof str === "string" ? str : undefined;
 };
 
-/** Epsil for an operand, as an attribute value. */
-export const epsil = (node: Json): string => serializeExpression(node);
+/**
+ * Epsil for an operand, as an attribute value. A `{dict}` literal is spelled `Dictionary(…)` first:
+ * the printer would write its values as bare data (a `[List, …]` value as a list holding the text
+ * "List"), which parses back as something else.
+ */
+export const epsil = (node: Json): string => serializeExpression(expandDictionaries(node) as Json);
 
 /**
  * The elements of a tuple -- `Tuple` or `List`, or the `Delimiter(Sequence(…))` a LaTeX

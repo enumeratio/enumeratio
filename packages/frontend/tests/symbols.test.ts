@@ -40,6 +40,8 @@ const CORPUS = [
   "BarChart3D([[1, 2], [3, 4]])",
   "GraphPlot([[1, 2], [2, 3]])",
   "TreeGraph([[1, 2], [1, 3]])",
+  'LayeredGraphPlot([[1, 2], [2, 3]], PlotLabel -> "layers")',
+  "TorusSquare(2, 3, Phase -> 0.32, Dials -> False)",
   "CollectionTable(Subsets(4))",
   "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
   "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
@@ -134,7 +136,6 @@ afterAll(() => {
 // on the shared tag, not on whether `fixed` is set.
 const FAMILY_TAGS = [
   "notatio-chart",
-  "notatio-graph-plot",
   "notatio-contour-plot",
   "notatio-density-plot",
   "slider-box", // VerticalSlider: a SliderBox standing up

@@ -11,15 +11,11 @@
 // and the two circles themselves, each with the same travelling point shown as an angle. Watch
 // the point and the two windings come apart — one dial turns p times while the other turns q.
 
+import { ACCENT, GROUND, INK, Sketch } from "./diagram.ts";
+import type { Box } from "@enumeratio/boxes";
 import { categoryColors, type ColorOptions, plotPalette } from "./plot-color.ts";
 
-const n2 = (v: number): string => (Math.round(v * 100) / 100).toString();
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-
-const INK = "var(--notatio-fg, currentColor)";
 const FAINT = "var(--vp-c-divider, #ddd)";
-const ACCENT = "var(--notatio-accent, #b8860b)";
 
 /** A segment of the line, in square coordinates — both ends within `[0, 1]`. */
 export interface Strand {
@@ -78,38 +74,44 @@ export interface TorusSquareOptions extends Pick<ColorOptions, "discrete"> {
   readonly title?: string;
 }
 
+type Point = [number, number];
+
 /** One circle factor, with the travelling point shown as an angle on it. */
 function dial(
-  cx: number,
-  cy: number,
+  sketch: Sketch,
+  [cx, cy]: Point,
   r: number,
   turns: number,
   phase: number | undefined,
   color: string,
   caption: string,
-): string {
-  const parts = [
-    `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="1.5" stroke-opacity="0.55"/>`,
-  ];
+): void {
+  sketch.disk([cx, cy], r, { stroke: { color, width: 1.5, opacity: 0.55 } }, "Dial");
   if (phase !== undefined) {
-    // `turns` full revolutions over one cycle — this is where the winding number becomes
+    // `turns` full revolutions over one cycle -- this is where the winding number becomes
     // something you can watch rather than something you are told.
     const angle = 2 * Math.PI * turns * phase - Math.PI / 2;
-    const x = cx + r * Math.cos(angle);
-    const y = cy + r * Math.sin(angle);
-    parts.push(
-      `<line x1="${cx}" y1="${cy}" x2="${n2(x)}" y2="${n2(y)}" stroke="${color}" stroke-width="1.2" stroke-opacity="0.5"/>`,
-      `<circle cx="${n2(x)}" cy="${n2(y)}" r="4" fill="${color}"/>`,
-    );
+    const at: Point = [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+    sketch.line([[cx, cy], at], { stroke: { color, width: 1.2, opacity: 0.5 } }, "Dial");
+    sketch.disk(at, 4, { fill: color }, "Dial");
   }
-  parts.push(
-    `<text x="${cx}" y="${cy + r + 14}" text-anchor="middle" font-size="9" fill="${color}">${esc(caption)}</text>`,
-  );
-  return parts.join("");
+  sketch.text([cx, cy + r + 14], caption, { size: 9, color, anchor: "middle" });
 }
 
-/** The square picture for T(p, q). */
-export function torusSquareSvg(p: number, q: number, options: TorusSquareOptions = {}): string {
+/** The gluing's arrowhead on an edge: a chevron opening back from `at`, `turn` degrees about it. */
+function chevron(sketch: Sketch, [x, y]: Point, turn: number, color: string, twice: boolean): void {
+  const t = (turn * Math.PI) / 180;
+  const about = ([px, py]: Point): Point => [
+    x + px * Math.cos(t) - py * Math.sin(t),
+    y + px * Math.sin(t) + py * Math.cos(t),
+  ];
+  const look = { stroke: { color, width: 1.6 } };
+  sketch.line([about([-4, -4]), about([0, 0]), about([-4, 4])], look, "Gluing");
+  if (twice) sketch.line([about([-9, -4]), about([-5, 0]), about([-9, 4])], look, "Gluing");
+}
+
+/** The square picture for T(p, q), as a `GraphicsBox`. */
+export function torusSquareBox(p: number, q: number, options: TorusSquareOptions = {}): Box {
   const W = options.width ?? 360;
   const H = options.height ?? 260;
   const showDials = options.dials !== false;
@@ -124,60 +126,69 @@ export function torusSquareSvg(p: number, q: number, options: TorusSquareOptions
   const sx = (u: number): number => left + u * side;
   const sy = (v: number): number => top + (1 - v) * side;
 
-  const parts: string[] = [
-    `<rect x="${left}" y="${top}" width="${side}" height="${side}" fill="none" stroke="${FAINT}" stroke-width="1"/>`,
-  ];
+  const title = options.title ?? `T(${p}, ${q}) on the glued square`;
+  const sketch = new Sketch(W, H, { label: "torus square", title });
+  sketch.polygon(
+    [
+      [left, top],
+      [left + side, top],
+      [left + side, top + side],
+      [left, top + side],
+    ],
+    { stroke: { color: FAINT, width: 1 } },
+  );
 
   // The gluing, as arrowheads on the edges: a single chevron on the pair that is identified one
   // way and a double one on the other, which is how this square is drawn everywhere.
-  const chevron = (x: number, y: number, rotate: number, color: string, twice: boolean): string =>
-    `<g transform="translate(${n2(x)} ${n2(y)}) rotate(${rotate})" stroke="${color}" stroke-width="1.6" fill="none" stroke-linecap="round">` +
-    `<path d="M-4 -4L0 0L-4 4"/>${twice ? `<path d="M-9 -4L-5 0L-9 4"/>` : ""}</g>`;
   const mid = left + side / 2;
   const middleY = top + side / 2;
-  parts.push(
-    chevron(mid, top, 0, hole, false),
-    chevron(mid, top + side, 0, hole, false),
-    chevron(left, middleY, 90, tube, true),
-    chevron(left + side, middleY, 90, tube, true),
-  );
+  chevron(sketch, [mid, top], 0, hole, false);
+  chevron(sketch, [mid, top + side], 0, hole, false);
+  chevron(sketch, [left, middleY], 90, tube, true);
+  chevron(sketch, [left + side, middleY], 90, tube, true);
 
   for (const strand of strands(p, q))
-    parts.push(
-      `<line x1="${n2(sx(strand.from[0]))}" y1="${n2(sy(strand.from[1]))}" x2="${n2(
-        sx(strand.to[0]),
-      )}" y2="${n2(sy(strand.to[1]))}" stroke="${INK}" stroke-width="1.8" stroke-opacity="0.75" stroke-linecap="round"/>`,
+    sketch.line(
+      [
+        [sx(strand.from[0]), sy(strand.from[1])],
+        [sx(strand.to[0]), sy(strand.to[1])],
+      ],
+      { stroke: { color: INK, width: 1.8, opacity: 0.75 } },
+      "Strand",
     );
 
   if (options.phase !== undefined) {
     const [u, v] = atPhase(p, q, options.phase);
     // Guide lines down to the axes: they are what ties the point on the square to the two
     // angles beside it.
-    parts.push(
-      `<line x1="${n2(sx(u))}" y1="${n2(sy(v))}" x2="${n2(sx(u))}" y2="${n2(sy(0))}" stroke="${hole}" stroke-width="1" stroke-dasharray="2 2" stroke-opacity="0.7"/>`,
-      `<line x1="${n2(sx(u))}" y1="${n2(sy(v))}" x2="${n2(sx(0))}" y2="${n2(sy(v))}" stroke="${tube}" stroke-width="1" stroke-dasharray="2 2" stroke-opacity="0.7"/>`,
-      `<circle cx="${n2(sx(u))}" cy="${n2(sy(v))}" r="5.5" fill="var(--notatio-bg, #fff)"/>`,
-      `<circle class="notatio-square-marker" cx="${n2(sx(u))}" cy="${n2(sy(v))}" r="4" fill="${ACCENT}"/>`,
+    sketch.line(
+      [
+        [sx(u), sy(v)],
+        [sx(u), sy(0)],
+      ],
+      { stroke: { color: hole, width: 1, opacity: 0.7, dashing: [2, 2] } },
+      "Guide",
     );
+    sketch.line(
+      [
+        [sx(u), sy(v)],
+        [sx(0), sy(v)],
+      ],
+      { stroke: { color: tube, width: 1, opacity: 0.7, dashing: [2, 2] } },
+      "Guide",
+    );
+    sketch.disk([sx(u), sy(v)], 5.5, { fill: GROUND }, "Marker");
+    sketch.disk([sx(u), sy(v)], 4, { fill: ACCENT }, "Marker");
   }
 
-  parts.push(
-    `<text x="${mid}" y="${top + side + 20}" text-anchor="middle" font-size="9" fill="${hole}">round the hole ×${p}</text>`,
-    `<text x="${left - 8}" y="${middleY}" text-anchor="middle" font-size="9" fill="${tube}" transform="rotate(-90 ${left - 8} ${middleY})">round the tube ×${q}</text>`,
-  );
+  sketch.text([mid, top + side + 20], `round the hole ×${p}`, { size: 9, color: hole, anchor: "middle" });
+  // Read upward, along the left edge.
+  sketch.text([left - 8, middleY], `round the tube ×${q}`, { size: 9, color: tube, anchor: "middle", angle: 90 });
 
   if (showDials) {
     const cx = W - 56;
-    parts.push(
-      dial(cx, top + 34, 28, p, options.phase, hole, `×${p}`),
-      dial(cx, top + 120, 28, q, options.phase, tube, `×${q}`),
-    );
+    dial(sketch, [cx, top + 34], 28, p, options.phase, hole, `×${p}`);
+    dial(sketch, [cx, top + 120], 28, q, options.phase, tube, `×${q}`);
   }
-
-  const title = options.title ?? `T(${p}, ${q}) on the glued square`;
-  return (
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}">` +
-    `<text x="${W / 2}" y="16" text-anchor="middle" font-size="12" fill="${INK}">${esc(title)}</text>` +
-    `${parts.join("")}</svg>`
-  );
+  return sketch.box();
 }

@@ -251,6 +251,7 @@ function referenceSidebar(): SidebarItem[] {
         { text: "Bar Chart 3D", link: "/reference/component/BarChart3D" },
         { text: "Chart", link: "/reference/component/Chart" },
         { text: "GraphPlot", link: "/reference/component/GraphPlot" },
+        { text: "Torus Square", link: "/reference/component/TorusSquare" },
         { text: "Complex Plot", link: "/reference/component/ComplexPlot" },
         { text: "Complex Plot 3D", link: "/reference/component/ComplexPlot3D" },
         { text: "Collection table", link: "/reference/component/CollectionTable" },

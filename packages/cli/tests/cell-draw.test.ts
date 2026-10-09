@@ -40,6 +40,8 @@ const CASES: Record<string, string> = {
   marked: "Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0)))",
   vectors: "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2))",
   streams: "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))",
+  graph: 'GraphPlot({"edges" -> [["a", "b"], ["b", "c"], ["c", "a"]]}, Directed -> True)',
+  torus: "TorusSquare(2, 3, Phase -> 0.32, Dials -> False)",
 };
 
 for (const [name, input] of Object.entries(CASES)) {

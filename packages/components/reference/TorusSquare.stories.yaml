@@ -1,0 +1,15 @@
+- id: trefoil-on-the-square
+  caption: The trefoil T(2, 3) on the glued square
+  category: Torus knots
+  notes: The knot is a straight line of slope q/p. The point travels it on the page's clock, and the two dials count the windings round the hole and the tube.
+  expr: [TorusSquare, 2, 3]
+- id: slope-held-still
+  caption: The point pinned to a phase
+  category: Torus knots
+  notes: "`Phase` pins the point and the figure stops watching the clock; `Dials -> False` leaves the line alone."
+  expr: [TorusSquare, 3, 2, [Tuple, Phase, 0.32], [Tuple, Dials, "'false'"]]
+- id: winding-faster-one-way
+  caption: T(3, 7), winding faster one way than the other
+  category: Torus knots
+  notes: "`ColorFunction` names the discrete scheme whose first two colors tell the two circles apart."
+  expr: [TorusSquare, 3, 7, [Tuple, ColorFunction, "'set1'"]]
