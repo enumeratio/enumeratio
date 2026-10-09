@@ -11,6 +11,7 @@ import { isNumber } from "./chart.ts";
 import { type PlotOptions, type PlotPoint, type PlotSeries, plotBox } from "./plot-box.ts";
 import type { Primitive } from "./primitives.ts";
 import type { PolarPoint } from "./polarplot.ts";
+import type { VectorPlotOptions } from "./vectorplot.ts";
 
 /** The heads whose plots are `GraphicsBox`es, drawn by `<graphics-box>`. */
 export const PLOT_HEADS: readonly string[] = [
@@ -20,6 +21,8 @@ export const PLOT_HEADS: readonly string[] = [
   "ListPolarPlot",
   "ListPlot",
   "ListLinePlot",
+  "VectorPlot",
+  "StreamPlot",
 ];
 
 /** Plot settings, the attributes an expression's options lower to (`plotSettingsOf`). */
@@ -65,6 +68,29 @@ export function plotOptionsOf(
     discrete: settings["discrete"],
     reverse: on(settings["reverse"]),
     ...extra,
+  };
+}
+
+/** A vector or stream plot's settings: the ranges it samples over and how it is drawn. */
+export function vectorOptionsOf(settings: PlotSettings): {
+  x: [number, number];
+  y: [number, number];
+  options: VectorPlotOptions;
+} {
+  return {
+    x: spanOf(settings["xrange"]) ?? [-2, 2],
+    y: spanOf(settings["yrange"]) ?? [-2, 2],
+    options: {
+      type: settings["type"] === "stream" ? "stream" : "vector",
+      n: Number(settings["n"]) > 0 ? Number(settings["n"]) : undefined,
+      steps: Number(settings["steps"]) || undefined,
+      axes: settings["axes"] !== "false",
+      xLabel: settings["x-label"] || undefined,
+      yLabel: settings["y-label"] || undefined,
+      title: settings["label"] || undefined,
+      gradient: settings["gradient"],
+      reverse: on(settings["reverse"]),
+    },
   };
 }
 

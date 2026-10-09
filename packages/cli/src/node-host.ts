@@ -9,7 +9,7 @@ import type { SessionDefaults } from "./engine.ts";
 import { notationOf } from "@enumeratio/boxes";
 import { figureText, plotText } from "./figure.ts";
 import { graphicLabel, graphicToSvg, inlineImage, writeSvg } from "./node-graphics.ts";
-import { sampledPlot, samplePlot } from "./textual.ts";
+import { sampledField, sampledPlot, samplePlot } from "./textual.ts";
 
 export interface HostOutput {
   text: string;
@@ -68,6 +68,7 @@ export class NodeHost {
       notation: notationOf(session.ce),
       evaluate: (json) => session.render(session.ce.box(json as never).evaluate()),
       plot: (json) => sampledPlot(session, json),
+      field: (json) => sampledField(session, json),
     });
   }
 

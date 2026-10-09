@@ -16,3 +16,4 @@ names:
 ---
 
 - A Wolfram `Arrow` primitive in a drawing; the head sits on the last point.
+- `Arrowheads` is the head's length in pixels (8 when absent); a vector field's short arrows take a smaller one.

@@ -22,9 +22,9 @@ import "@enumeratio/components";
   (renders an evaluated expression, or the raw encoding a `format` prop names),
   `<notatio-cell>` (the unified In/Out pair), `<notatio-notebook>` and
   `<notatio-worksheet>` (a reactive sheet of cells built on `<dynamic-module-box>`).
-- **Plots and charts** — `<graphics-box>` (a `Show`, and the 2-D function and list plots),
+- **Plots and charts** — `<graphics-box>` (a `Show`, and the 2-D function, list and vector-field plots),
   `<notatio-plot-3d>`, `<notatio-contour-plot>`,
-  `<notatio-density-plot>`, `<notatio-vector-plot>`,
+  `<notatio-density-plot>`,
   `<notatio-complex-plot>` (and `-3d`), `<notatio-chart>` (the family head for
   Histogram/BarChart/PieChart-style symbols), `<notatio-graph-plot>`.
 - **Controls** — `<slider-box>` (`axis="y"` stands it up; and `<slider-2d-box>`, `<interval-slider-box>`,

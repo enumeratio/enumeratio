@@ -98,34 +98,21 @@
   },
   "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2), XLabel -> \"x\", YLabel -> \"y\")": {
     "rendering": {
-      "tag": "notatio-vector-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "u": "-y",
-        "v": "x",
-        "xvar": "x",
-        "xrange": "-2,2",
-        "yvar": "y",
-        "yrange": "-2,2",
-        "x-label": "x",
-        "y-label": "y"
+        "value": "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2), XLabel -> \"x\", YLabel -> \"y\")"
       }
     },
-    "markup": "<notatio-vector-plot u=\"-y\" v=\"x\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\" x-label=\"x\" y-label=\"y\"></notatio-vector-plot>"
+    "markup": "<graphics-box value=\"VectorPlot((-y, x), (x, -2, 2), (y, -2, 2), XLabel -> &quot;x&quot;, YLabel -> &quot;y&quot;)\"></graphics-box>"
   },
   "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))": {
     "rendering": {
-      "tag": "notatio-vector-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "stream",
-        "u": "-y",
-        "v": "x",
-        "xvar": "x",
-        "xrange": "-2,2",
-        "yvar": "y",
-        "yrange": "-2,2"
+        "value": "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))"
       }
     },
-    "markup": "<notatio-vector-plot type=\"stream\" u=\"-y\" v=\"x\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\"></notatio-vector-plot>"
+    "markup": "<graphics-box value=\"StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))\"></graphics-box>"
   },
   "ComplexPlot(Zeta(z), z)": {
     "rendering": {

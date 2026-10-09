@@ -24,7 +24,6 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-curve-3d": () => import("./notatio-curve-3d.ts"),
   "notatio-contour-plot": () => import("./notatio-contour-plot.ts"),
   "notatio-density-plot": () => import("./notatio-density-plot.ts"),
-  "notatio-vector-plot": () => import("./notatio-vector-plot.ts"),
   "notatio-list-plot-3d": () => import("./notatio-list-plot-3d.ts"),
   "notatio-bar-chart-3d": () => import("./notatio-bar-chart-3d.ts"),
   "notatio-chart": () => import("./notatio-chart.ts"),

@@ -111,9 +111,17 @@ const CURVE_WIDTH = 2;
 const DOT_RADIUS = 2.5;
 const MARK_RADIUS = 3;
 const FILL_OPACITY = 0.12;
+/** An arrow's head length in px unless the box gives `Arrowheads`. */
+const HEAD = 8;
 /** Margins around the plot area, in px. */
 const [M_LEFT, M_RIGHT, M_BOTTOM] = [38, 10, 22];
 const marginTop = (titled: boolean): number => (titled ? 26 : 12);
+
+/** The plot area's size in px inside an `ImageSize` of `width` × `height`. */
+export const plotArea = (width: number, height: number, titled: boolean): { plotW: number; plotH: number } => ({
+  plotW: width - M_LEFT - M_RIGHT,
+  plotH: height - marginTop(titled) - M_BOTTOM,
+});
 
 const isSeriesList = (input: readonly PlotPoint[] | readonly PlotSeries[]): input is readonly PlotSeries[] =>
   input.length > 0 && "points" in input[0]!;
@@ -559,9 +567,10 @@ export function drawPlot(box: BoxNode, hover?: number): PlotDrawing {
         if (points.length >= 2) {
           const [b, a] = [points.at(-1)!, points.at(-2)!];
           const angle = Math.atan2(b[1]! - a[1]!, b[0]! - a[0]!);
+          const head = typeof p.Arrowheads === "number" ? p.Arrowheads : HEAD;
           const wing = (turn: number): [number, number] => [
-            b[0]! - 8 * Math.cos(angle + turn),
-            b[1]! - 8 * Math.sin(angle + turn),
+            b[0]! - head * Math.cos(angle + turn),
+            b[1]! - head * Math.sin(angle + turn),
           ];
           push(
             { head: "Polygon", points: [b, wing(0.4), wing(-0.4)] },
