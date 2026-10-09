@@ -16,7 +16,7 @@ import {
   tokenClass,
   toMathJson,
 } from "../src/index.ts";
-import { MathMLSyntaxError, parseMathML, toLatex, toMathML, toAscii, toText } from "../src/render/index.ts";
+import { exprOfData, MathMLSyntaxError, parseMathML, toLatex, toMathML, toAscii, toText } from "../src/render/index.ts";
 import { CORPUS } from "./corpus.ts";
 
 // Goldens are committed JSON compared with `toEqual`, never snapshots. Regenerate with
@@ -108,6 +108,23 @@ test("reads foreign MathML: whitespace, inferred rows, namespaces, references", 
 test("malformed MathML throws MathMLSyntaxError", () => {
   expect(() => parseMathML("<mrow><mi>x</mrow>")).toThrow(MathMLSyntaxError);
   expect(() => parseMathML("<msup><mi>x</mi></msup>")).toThrow(MathMLSyntaxError);
+});
+
+test("an interpretation keeps its expression on the typeset node when asked, base64url so TeX and KaTeX leave it be", () => {
+  const expr = ["Plus", { str: "a, b = %" }, 1];
+  const box = interpretation(row(["x", "+", "1"]), expr as never);
+  expect(toLatex(box)).toBe("x+1");
+  const written = toLatex(box, { data: true });
+  const value = /^\\htmlData\{expr=([A-Za-z0-9_-]+)\}\{x\+1\}$/.exec(written)?.[1];
+  expect(value).toBeDefined();
+  expect(exprOfData(value!)).toEqual(expr);
+});
+
+test("a huge interpretation is left off the typeset node, and malformed data decodes to nothing", () => {
+  const big = interpretation(row(["x"]), ["List", ...Array.from({ length: 20000 }, (_, i) => i)] as never);
+  expect(toLatex(big, { data: true })).toBe("x");
+  expect(exprOfData("not base64!")).toBeUndefined();
+  expect(exprOfData("AAAA")).toBeUndefined();
 });
 
 afterAll(() => {

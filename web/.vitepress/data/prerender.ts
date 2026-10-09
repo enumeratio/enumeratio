@@ -9,8 +9,9 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
-import { katexStrict } from "@enumeratio/boxes/render";
+import { katexStrict, trustExpression } from "@enumeratio/boxes/render";
 import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
+import { markupOf, typesetLeaf } from "@enumeratio/frontend/core";
 import { displayLatexSyntax } from "@enumeratio/frontend/display";
 import { type Prerendered, prerender } from "@enumeratio/frontend/prerender";
 import { createResolver, NOTATIONS } from "@enumeratio/manifest";
@@ -43,7 +44,12 @@ export function fillPrerendered(html: string, page: string): string {
 
 /** TeX as the page's `<notatio-out>` typesets it (`@enumeratio/components`' `loadMarkup`). */
 export const typeset = (latex: string): string =>
-  katex.renderToString(portableTeX(latex), { throwOnError: false, output: "htmlAndMathml", strict: katexStrict() });
+  katex.renderToString(portableTeX(latex), {
+    throwOnError: false,
+    output: "htmlAndMathml",
+    strict: katexStrict(),
+    trust: trustExpression,
+  });
 
 /** An engine as the site's worker kernel makes one: its dictionary and every package's notation. */
 export async function makeEngine(): Promise<ComputeEngine> {
@@ -87,7 +93,10 @@ export async function prerenderExamples(entry: ReferenceEntry): Promise<(Prerend
   answers.forEach((a, i) => {
     if (a?.html === undefined) return;
     parts[`${i}:in`] = a.html.input;
-    parts[`${i}:out`] = a.html.output;
+    // The Out's standard form is a typeset leaf (`<notatio-out>`), so the seed is the same markup.
+    const output = a.html.output;
+    parts[`${i}:out`] =
+      a.latex === "" ? output : markupOf(typesetLeaf(["FormBox", a.latex, "TeXForm"], "TeXForm"), () => output);
   });
   mkdirSync(HTML_DIR, { recursive: true });
   writeFileSync(htmlFile(entry.name), JSON.stringify(parts));

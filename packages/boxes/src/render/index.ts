@@ -2,7 +2,7 @@
 // text, and MathML and Markdown read back. Presentation; the main entry is the base the
 // symbol packages build their notation on.
 
-export { escapeTeXText, setMathSymbols, toLatex } from "./latex.ts";
+export { escapeTeXText, exprOfData, setMathSymbols, toLatex, trustExpression } from "./latex.ts";
 export {
   commandTeX,
   isUnicodeTeX,

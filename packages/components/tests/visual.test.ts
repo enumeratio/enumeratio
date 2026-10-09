@@ -33,6 +33,40 @@ for (const src of OUTS) {
   }
 }
 
+// An evaluated layout of closed math is drawn from boxes: its cells are the host's typeset leaves.
+// A cell that could follow the page (a free symbol, or an answer nothing evaluated) stays a readout.
+const web = ENVIRONMENTS.find((env) => env.name === "web")!;
+const leaves = { typeset: (tex: string) => `{${tex}}`, evaluated: true };
+
+test("an evaluated Grid of closed formulas is a grid-box of typeset leaves", () => {
+  const { json } = parseExpression('Grid([[1 / 2, Sqrt(2)], [Pi, "note"]])');
+  expect(visualMarkup(json, web, leaves)).toBe(
+    '<grid-box data-head="Grid" style="grid-template-columns: repeat(2, auto)">' +
+      '<form-box data-form="TraditionalForm">{\\frac{1}{2}}</form-box>' +
+      '<form-box data-form="TraditionalForm">{\\sqrt{2}}</form-box>' +
+      '<form-box data-form="TraditionalForm">{π}</form-box>' +
+      "<span>note</span></grid-box>",
+  );
+});
+
+test("a cell with a free symbol stays a readout that follows the page", () => {
+  const { json } = parseExpression("Grid([[k, k^2], [1, 2]])");
+  expect(visualMarkup(json, web, leaves)).toBe(visualMarkup(json, web));
+  expect(visualMarkup(json, web, leaves)).toContain('<dynamic-box value="k"></dynamic-box>');
+});
+
+test("an answer nothing evaluated stays readouts, even when closed", () => {
+  const { json } = parseExpression("Grid([[1 / 2, Sqrt(2)]])");
+  const markup = visualMarkup(json, web, { ...leaves, evaluated: false });
+  expect(markup).toBe(visualMarkup(json, web));
+  expect(markup).toContain("<dynamic-box");
+});
+
+test("a layout with a control, a plot or a readout keeps its elements", () => {
+  const { json } = parseExpression("Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])");
+  expect(visualMarkup(json, web, leaves)).toBe(visualMarkup(json, web));
+});
+
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, JSON.stringify(fresh, null, 2) + "\n");
 });

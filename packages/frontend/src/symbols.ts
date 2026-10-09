@@ -1,7 +1,7 @@
 import { chooseChartType } from "./chart.ts";
 import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { CONTROL_NOTATION_HEADS, LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
+import { type Box, CONTROL_NOTATION_HEADS, LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
 import { parseExpression, serializeExpression } from "@enumeratio/formats/expression";
 import { FRAME_HEIGHT, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
@@ -32,9 +32,8 @@ export { expandDictionaries } from "./latex.ts";
 // expression and wants a picture.
 //
 // The tag is the naming rule run backwards: kebab-case the symbol, put `notatio-` in
-// front. A family component (`notatio-graph-plot`)
-// draws several symbols, distinguished by an attribute; the family head (`Chart`) leaves
-// that attribute unset and lets the component choose.
+// front. A family component (`graphics-box`) draws several symbols, distinguished by an
+// attribute; the family head (`Chart`) leaves that attribute unset and lets the component choose.
 
 /**
  * What to render: a tag, its attributes, and any children (a `Manipulate` body, a
@@ -45,6 +44,8 @@ export interface Rendering {
   readonly attributes: Readonly<Record<string, string>>;
   readonly children?: readonly Rendering[];
   readonly text?: string;
+  /** A math run: the TeX the host typesets into this element (`text` is what it reads as until then). */
+  readonly tex?: string;
 }
 
 /** One visual symbol: the tag it renders as, and the attributes its arguments become. */
@@ -1133,6 +1134,61 @@ export function layoutRendering(expr: Json, fill: (entry: Json) => Rendering): R
   };
 }
 
+/** The symbols no page binds: what a closed cell may name. */
+const CONSTANTS: ReadonlySet<string> = new Set([
+  "Pi",
+  "ExponentialE",
+  "ImaginaryUnit",
+  "CatalanConstant",
+  "EulerGamma",
+  "GoldenRatio",
+  "True",
+  "False",
+  "Nothing",
+  "ComplexInfinity",
+  "PositiveInfinity",
+  "NegativeInfinity",
+  "NaN",
+]);
+
+const NUMERAL = /^[+-]?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?$/i;
+
+/** Whether `node` names no symbol a page could bind: numbers, strings, constants, and heads over them. */
+function isClosed(node: Json): boolean {
+  if (typeof node === "object" && node !== null && !Array.isArray(node) && "dict" in node) return false;
+  const sym = symOf(node);
+  if (sym !== undefined) return strOf(node) !== undefined || CONSTANTS.has(sym) || NUMERAL.test(sym);
+  return headOf(node) === undefined || opsOf(node).every(isClosed);
+}
+
+/**
+ * A layout of mathematics alone as boxes, to draw its cells as typeset leaves rather than as
+ * readouts the page evaluates (a `dynamic-box` follows the page's variables; a leaf does not). So
+ * only when every cell is final: the Out has `evaluated` its value, and no cell names a symbol the
+ * page could bind, draws, or is a control. `written` is the same expression's boxes where the
+ * caller already has them (a kernel's, with its packages' notation); otherwise they are made
+ * here. `undefined` for any other expression.
+ */
+export function staticLayoutBoxes(expr: Json, evaluated: boolean, written?: Box): Box | undefined {
+  const head = headOf(expr);
+  if (!evaluated || head === undefined || !LAYOUT_HEADS.has(head) || controlNames(expr).size > 0) return undefined;
+  let live = false;
+  const box = makeBoxes(
+    expr as never,
+    {},
+    {
+      leaf: (node) => {
+        const h = headOf(node);
+        if (h !== undefined && LAYOUT_HEADS.has(h)) return undefined;
+        const draws = h !== undefined && (isBoxed(h, node as Json) || render(node as Json, false) !== undefined);
+        if (draws || !isClosed(node as Json)) live = true;
+        return undefined;
+      },
+    },
+  );
+  return live ? undefined : (written ?? box);
+}
+
 /** `ImageSize -> [w, h]`'s h among `Show`'s held options, else the element's default height. */
 function showHeight(ops: readonly Json[]): number {
   const size = ops.find((op) => headOf(op) === "KeyValuePair" && symOf(opsOf(op)[0]) === "ImageSize");
@@ -1143,18 +1199,4 @@ function showHeight(ops: readonly Json[]): number {
 /** `<graphics-box>`'s height when `ImageSize` doesn't give one. */
 const SHOW_HEIGHT = 480;
 
-/** Escape a value for a double-quoted HTML attribute. */
-const attr = (value: string): string => value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
-
-/** A rendering as markup, for a host that can only take HTML. */
-export function markupOf(rendering: Rendering): string {
-  const attributes = Object.entries(rendering.attributes)
-    .map(([k, v]) => ` ${k}="${attr(v)}"`)
-    .join("");
-  if (rendering.tag === "img") return `<img${attributes}>`;
-  const inner =
-    rendering.text !== undefined
-      ? rendering.text.replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      : (rendering.children?.map(markupOf).join("") ?? "");
-  return `<${rendering.tag}${attributes}>${inner}</${rendering.tag}>`;
-}
+export { markupOf } from "./box-leaf.ts";

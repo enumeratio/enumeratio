@@ -7,7 +7,7 @@
 // This module owns the whole MathLive integration (fonts, CSS) so hosts depend on
 // @enumeratio/components alone, not on mathlive.
 
-import { katexStrict } from "@enumeratio/boxes/render";
+import { katexStrict, trustExpression } from "@enumeratio/boxes/render";
 import { portableTeX, registerTeXMacros, texMacros } from "@enumeratio/formats/tex";
 
 // The engine itself lives in the base (`@enumeratio/frontend`); re-exported here so
@@ -66,7 +66,12 @@ export function loadMarkup(): Promise<(latex: string) => string> {
   markupPromise ??= Promise.all([import("katex"), import("katex/dist/katex.min.css"), macrosPromise]).then(([m]) => {
     const katex = m.default;
     return (latex: string): string =>
-      katex.renderToString(portableTeX(latex), { throwOnError: false, output: "htmlAndMathml", strict: katexStrict() });
+      katex.renderToString(portableTeX(latex), {
+        throwOnError: false,
+        output: "htmlAndMathml",
+        strict: katexStrict(),
+        trust: trustExpression,
+      });
   });
   return markupPromise;
 }

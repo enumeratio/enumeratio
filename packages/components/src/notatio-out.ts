@@ -1,6 +1,6 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { makeBoxes, notationOf } from "@enumeratio/boxes";
+import { type Box, makeBoxes, notationOf } from "@enumeratio/boxes";
 import { toAscii, toLatex } from "@enumeratio/boxes/render";
 import type { Display } from "@enumeratio/frontend/kernel-host";
 import type { Prerendered } from "@enumeratio/frontend/prerender";
@@ -28,8 +28,10 @@ import {
   type Environment,
   environmentNamed,
   highlightCode,
+  markupOf,
   pageEnvironment,
   type Transcript,
+  typesetLeaf,
   watchPageEnvironment,
 } from "@enumeratio/frontend/core";
 
@@ -677,12 +679,20 @@ export class NotatioOut extends LitElement {
       this._folded = new Map();
       this._latex = latex;
       this._json = json === undefined ? "" : JSON.stringify(json);
-      this._markup = latex ? cachedMarkup(convert, latex) : "";
+      const typeset = (tex: string): string => cachedMarkup(convert, tex);
+      // The standard form is one typeset leaf, as the box renderer draws a TeX form.
+      this._markup = latex ? markupOf(typesetLeaf(["FormBox", latex, "TeXForm"], "TeXForm"), typeset) : "";
+      const plain = latex ? typeset(latex) : "";
+      // A kernel's boxes carry the packages' notation; a page's own are made once its engine is here.
+      this.#written = display?.boxes.TraditionalForm;
       this.#name = name;
       this.#plot = plot;
       this.#value = json as MathJsonExpression | undefined;
       // A kernel says whether the value draws; a value from this page's engine is checked.
       this.#draws = display === undefined || display.draws;
+      // Without a kernel's display the page's engine writes the boxes (below); drawing waits for
+      // them, so a layout's math doesn't flash in without the packages' notation first.
+      this.#awaitingBoxes = display === undefined && json !== undefined;
       this.#visualize();
       this._wolfram = "";
       this._mathml = "";
@@ -690,9 +700,9 @@ export class NotatioOut extends LitElement {
       // InputForm: the same expression as Epsil you could type back in.
       this._input = json === undefined ? "" : (display?.text.inputform ?? "");
       if (json === undefined) {
-        this._traditional = this._markup;
+        this._traditional = plain;
         this._tex = portableTeX(latex);
-        this._matrix = this._markup;
+        this._matrix = plain;
         this._canMatrix = false;
       } else if (display !== undefined) {
         // A kernel's answer: every form comes with it, so no engine loads here.
@@ -701,7 +711,7 @@ export class NotatioOut extends LitElement {
         this._tex = portableTeX(traditional);
         this._canMatrix = Array.isArray(json) && json[0] === "List";
         const matrix = display.boxes.MatrixForm;
-        this._matrix = matrix === undefined ? this._markup : convert(toLatex(matrix));
+        this._matrix = matrix === undefined ? plain : convert(toLatex(matrix));
         this._ascii = display.text.asciimath ?? "";
         const { asciimath: _, inputform: __, ...code } = display.text;
         this._code = code;
@@ -709,8 +719,12 @@ export class NotatioOut extends LitElement {
         const [engine, here] = await Promise.all([loadEngine(), import("./out-engine.ts")]);
         if (run !== this.#runs) return;
         this._input = here.inputFormOf(json as MathJsonExpression);
-        const traditional = toLatex(makeBoxes(json as MathJsonExpression, notationOf(engine)));
+        const boxes = makeBoxes(json as MathJsonExpression, notationOf(engine));
+        const traditional = toLatex(boxes);
         this._traditional = convert(traditional);
+        this.#written = boxes;
+        this.#awaitingBoxes = false;
+        this.#visualize();
         // TeXForm is the TeX of TraditionalForm, as in Wolfram.
         this._tex = portableTeX(traditional);
         // MatrixForm: lay a List value out as a matrix via compute-engine's
@@ -718,9 +732,9 @@ export class NotatioOut extends LitElement {
         // Only a List has a matrix form; anything else falls back to standard.
         this._canMatrix = Array.isArray(json) && json[0] === "List";
         const matrixExpr = ["Matrix", json] as unknown as Parameters<typeof engine.box>[0];
-        this._matrix = this._canMatrix ? convert(engine.box(matrixExpr).latex) : this._markup;
+        this._matrix = this._canMatrix ? convert(engine.box(matrixExpr).latex) : plain;
         // AsciiMathForm: the traditional boxes, as AsciiMath spells them.
-        this._ascii = toAscii(makeBoxes(json as MathJsonExpression, notationOf(engine)));
+        this._ascii = toAscii(boxes);
         this._code = await here.codeSources(engine, json);
       }
       if (json === undefined) {
@@ -740,6 +754,7 @@ export class NotatioOut extends LitElement {
       this._detail = err instanceof Error ? err.message : String(err);
       this.#name = undefined;
       this.#plot = undefined;
+      this.#awaitingBoxes = false;
     }
     // An Out that has no value yet (its cell still reading the input) answers nothing.
     if (this.value !== "") this._answered = true;
@@ -856,6 +871,9 @@ export class NotatioOut extends LitElement {
   // The value the picture is drawn from, kept so a change of environment redraws it
   // without evaluating again.
   #value: MathJsonExpression | undefined;
+  // The value's traditional boxes, when something has written them with the packages' notation.
+  #written: Box | undefined;
+  #awaitingBoxes = false;
   #page: Environment = pageEnvironment();
   #unwatch = (): void => {};
 
@@ -865,16 +883,30 @@ export class NotatioOut extends LitElement {
       this._visual = "";
       return;
     }
+    if (this.#awaitingBoxes) return;
     // Own attribute, then the nearest ancestor that forces one, then the page.
     const env =
       environmentNamed(this.env) ??
       environmentNamed(this.parentElement?.closest("[env]")?.getAttribute("env") ?? undefined) ??
       this.#page;
     // The renderer writes attributes as Epsil, so it loads with the engine's writer; the
-    // picture's elements are defined with it.
-    void Promise.all([import("./visual.ts"), defineEverything()]).then(([{ visualMarkup }]) => {
-      if (this.#value === value) this._visual = visualMarkup(value, env);
-    });
+    // picture's elements are defined with it. Its math is typeset by the page's typesetter.
+    const written = this.#written;
+    const evaluated = this.evaluate;
+    Promise.all([import("./visual.ts"), defineEverything(), loadMarkup()])
+      .then(([{ visualMarkup }, , convert]) => {
+        if (this.#value !== value) return;
+        this._visual = visualMarkup(value, env, {
+          typeset: (tex) => cachedMarkup(convert, tex),
+          evaluated,
+          written,
+        });
+      })
+      .catch((err: unknown) => {
+        // The typeset answer stands in for a picture that could not be drawn.
+        log("visualize failed", err);
+        if (this.#value === value) this._visual = "";
+      });
   }
 
   override connectedCallback(): void {
