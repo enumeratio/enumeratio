@@ -1,3 +1,9 @@
-id	section	role	expr	expected	known	tolerance	source	caption
-ai-0	Basic		[N, [AiryAi, 0]]	0.3550280538878172	{num: "0.3550280538878172392600632"}	1e-13	mpmath 1.3.0 airyai	$\mathrm{Ai}(0) = 3^{-2/3}/\Gamma(2/3)$ numerically
-ai-1	Basic		[N, [AiryAi, 1]]	0.13529241631288141	{num: "0.1352924163128814155241474"}	1e-13	mpmath 1.3.0 airyai	
+id	section	role	expr	expected	known	tolerance	source	caption	triage	wolfram.kind	wolfram.note
+ai-0	Basic		[N, [AiryAi, 0]]	0.3550280538878172	{num: "0.3550280538878172392600632"}	1e-13	mpmath 1.3.0 airyai	$\mathrm{Ai}(0) = 3^{-2/3}/\Gamma(2/3)$ numerically			
+ai-1	Basic		[N, [AiryAi, 1]]	0.13529241631288141	{num: "0.1352924163128814155241474"}	1e-13	mpmath 1.3.0 airyai				
+series-airyai-x-x-0-4		triage	[Series, [AiryAi, x], x, 0, 4]	[Add, [Multiply, [Rational, 1, 12], [AiryAiPrime, 0], [Power, x, 4]], [Multiply, [Rational, 1, 6], [AiryAi, 0], [Power, x, 3]], [Multiply, x, [AiryAiPrime, 0]], [BigO, [Power, x, 6]], [AiryAi, 0]]					ours?	unclassified	""
+normal-series-airyai-x-x-positiveinfinity-2		triage	[Normal, [Series, [AiryAi, x], x, PositiveInfinity, 2]]	[Series, [AiryAi, x], x, PositiveInfinity, 2]					wolfram?	unclassified	""
+n-airyai-2-50	Scope	triage	[N, [AiryAi, 2], 50]	0.03492413042327438					compare	unclassified	""
+n-functionrange-airyai-x-x-y	Scope	triage	[N, [FunctionRange, [AiryAi, x], x, y]]	[FunctionRange, [AiryAi, x], x, y]					ours?	unclassified	""
+d-airyai-x-x	Scope		[D, [AiryAi, x], x]	[AiryAiPrime, x]							
+series-airyai-x-x-0-7	Scope	triage	[Series, [AiryAi, x], x, 0, 7]	[Add, [Multiply, [Rational, 1, 504], [AiryAiPrime, 0], [Power, x, 7]], [Multiply, [Rational, 1, 180], [AiryAi, 0], [Power, x, 6]], [Multiply, [Rational, 1, 12], [AiryAiPrime, 0], [Power, x, 4]], [Multiply, [Rational, 1, 6], [AiryAi, 0], [Power, x, 3]], [Multiply, x, [AiryAiPrime, 0]], [BigO, [Power, x, 9]], [AiryAi, 0]]					ours?	unclassified	""

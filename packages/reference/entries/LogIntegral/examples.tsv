@@ -1,3 +1,8 @@
-id	section	role	expr	expected	known	tolerance	source
-li-at-0	Basic		[LogIntegral, 0]	0			
-li-2	Basic		[N, [LogIntegral, 2]]	1.0451637801174927	{num: "1.045163780117492784844589"}	1e-13	mpmath 1.3.0 li
+id	section	role	expr	expected	known	tolerance	source	triage	wolfram.kind	wolfram.note
+li-at-0	Basic		[LogIntegral, 0]	0						
+li-2	Basic		[N, [LogIntegral, 2]]	1.0451637801174927	{num: "1.045163780117492784844589"}	1e-13	mpmath 1.3.0 li			
+n-logintegral-2-50	Scope	triage	[N, [LogIntegral, 2], 50]	1.0451637801174927				compare	unclassified	""
+logintegral-1	Scope		[LogIntegral, 1]	NegativeInfinity						
+logintegral-positiveinfinity	Scope		[LogIntegral, PositiveInfinity]	PositiveInfinity						
+d-logintegral-x-x	Scope		[D, [LogIntegral, x], x]	[Divide, 1, [Ln, x]]						
+series-logintegral-x-x-2-3	Scope		[Series, [LogIntegral, x], x, 2, 3]	[Add, [Multiply, [Divide, [Add, [Multiply, 2, [Ln, 2]], [Power, [Ln, 2], 2]], [Multiply, 24, [Power, [Ln, 2], 4]]], [Power, [Add, x, -2], 3]], [Multiply, [Divide, -1, [Multiply, 4, [Power, [Ln, 2], 2]]], [Power, [Add, x, -2], 2]], [Multiply, [Divide, 1, [Ln, 2]], [Add, x, -2]], [BigO, [Power, [Add, x, -2], 4]], [LogIntegral, 2]]						

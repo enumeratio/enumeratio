@@ -1,3 +1,13 @@
 id	in
 numerator-3-4	((3/4)).numerator()
 numerator-of-an-integer	(5).numerator()
+numerator-2-over-3	((2/3)).numerator()
+numerator-x-minus-2-times-x-minus-1-times-x	(((SR.var("x") + -2) * (SR.var("x") + -1) * (((SR.var("x") + -3))^-2))).numerator()
+numerator-sin-x-minus-2-pow-neg-b-times-sin-x	
+numerator-3-over-7	((3/7)).numerator()
+numerator-3-over-7-plus-1-over-11-times-i	
+numerator-1-over-x-minus-3-times-x-minus-2-times	(((1 / ((SR.var("x") + -3) * (SR.var("x") + -2))) * (((SR.var("x") + -1))^2))).numerator()
+numerator-1-over-x-times-a-pow-neg-b	
+numerator-2-times-b-pow-2-times-x-pow-y	((2 * ((SR.var("b"))^2) * ((SR.var("x"))^SR.var("y")))).numerator()
+numerator-24-times-x-pow-y-times-3b-pow-neg-3	
+numerator-1-over-3-over-5-times-x-plus-neg-1	

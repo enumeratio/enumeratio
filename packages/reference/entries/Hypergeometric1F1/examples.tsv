@@ -1,3 +1,8 @@
-id	section	role	expr	expected	known	tolerance	source	caption
-1f1-at-0	Basic		[Hypergeometric1F1, 1, 1, 0]	1				The series is $1$ at the origin
-1f1-1-2-1	Basic		[N, [Hypergeometric1F1, 1, 2, 1], 20]	{num: "1.7182818284590452354"}	{num: "1.718281828459045235360287"}	1e-18	mpmath 1.3.0 hyp1f1	${}_1F_1(1; 2; 1) = e - 1$
+id	section	role	expr	expected	known	tolerance	source	caption	triage	wolfram.kind	wolfram.note
+1f1-at-0	Basic		[Hypergeometric1F1, 1, 1, 0]	1				The series is $1$ at the origin			
+1f1-1-2-1	Basic		[N, [Hypergeometric1F1, 1, 2, 1], 20]	{num: "1.7182818284590452354"}	{num: "1.718281828459045235360287"}	1e-18	mpmath 1.3.0 hyp1f1	${}_1F_1(1; 2; 1) = e - 1$			
+series-hypergeometric1f1-a-b-x-x-0-3			[Series, [Hypergeometric1F1, a, b, x], x, 0, 3]	[Add, [Multiply, [Rational, 1, 6], [Apply, [Derivative, Hypergeometric1F1, 0, 0, 3], a, b, 0], [Power, x, 3]], [Multiply, [Rational, 1, 2], [Apply, [Derivative, Hypergeometric1F1, 0, 0, 2], a, b, 0], [Power, x, 2]], [Multiply, x, [Apply, [Derivative, Hypergeometric1F1, 0, 0, 1], a, b, 0]], [BigO, [Power, x, 4]], 1]							
+fullsimplify-normal-series-hypergeometric1f1-a-b		triage	[FullSimplify, [Normal, [Series, [Hypergeometric1F1, a, b, x], x, PositiveInfinity, 2]]]	[Series, [Hypergeometric1F1, a, b, x], x, PositiveInfinity, 2]					wolfram?	unclassified	""
+n-hypergeometric1f1-10-1-over-3-neg-1-50	Scope		[N, [Hypergeometric1F1, 10, [Rational, 1, 3], -1], 50]	{num: "1.0856469662771144181060999200053894821341819655655"}							
+hypergeometric1f1-1-1-list-list-1-0-list-0-1	Scope		[Hypergeometric1F1, 1, 1, [List, [List, 1, 0], [List, 0, 1]]]	[List, [List, [Hypergeometric1F1, 1, 1, 1], 1], [List, 1, [Hypergeometric1F1, 1, 1, 1]]]							
+matrixfunction-function-hypergeometric1f1-1-1-1	Scope	triage	[MatrixFunction, [Function, [Block, [Hypergeometric1F1, 1, 1, _1]], _1], [List, [List, 1, 0], [List, 0, 1]]]	[List, [List, [Hypergeometric1F1, 1, 1, 1], 0], [List, 0, [Hypergeometric1F1, 1, 1, 1]]]					ours?	unclassified	""

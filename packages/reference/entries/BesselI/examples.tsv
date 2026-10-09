@@ -1,2 +1,4 @@
-id	section	role	expr	expected	known	tolerance	source
-besseli-0-1	Basic		[N, [BesselI, 0, 1]]	1.2660658777520084	{num: "1.266065877752008335598245"}	1e-13	mpmath 1.3.0 besseli
+id	section	role	expr	expected	known	tolerance	source	triage	wolfram.kind	wolfram.note
+besseli-0-1	Basic		[N, [BesselI, 0, 1]]	1.2660658777520084	{num: "1.266065877752008335598245"}	1e-13	mpmath 1.3.0 besseli			
+normal-series-besseli-0-x-x-positiveinfinity-2		triage	[Normal, [Series, [BesselI, 0, x], x, PositiveInfinity, 2]]	[Series, [BesselI, 0, x], x, PositiveInfinity, 2]				wolfram?	unclassified	""
+n-besseli-0-1-50	Scope		[N, [BesselI, 0, 1], 50]	{num: "1.266065877752008335598244625214717537607670311355"}						

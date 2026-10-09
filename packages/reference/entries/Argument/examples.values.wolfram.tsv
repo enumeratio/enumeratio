@@ -1,3 +1,13 @@
-id	in
-argument-i	Arg[Complex[0, 1]]
-argument-1-plus-i	Arg[Complex[1, 1]]
+id	in	out	shown	tex.in	tex.out	verdict
+argument-i	Arg[Complex[0, 1]]					
+argument-1-plus-i	Arg[Complex[1, 1]]					
+argument-neg-1	Arg[-1]	Pi		\arg (-1)	\pi	
+n-argument-exponentiale-plus-i-times-pi-20	N[Arg[Plus[E, Times[Complex[0, 1], Pi]]], 20]	0.85751178635584626500686775093289753184`20.	0.85751178635584626501	N[\arg (e+i \pi ),20]	0.85751178635584626501	disagree
+argument-neg-123	Arg[-123]	Pi		\arg (-123)	\pi	
+argument-123-minus-456i	Arg[Complex[123, -456]]	-ArcTan[152/41]		\arg (123-456 i)	-\tan ^{-1}\left(\frac{152}{41}\right)	
+argument-list-list-1-over-2-neg-1-list-neg-5	Arg[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]	{{0, Pi}, {Pi, 0}}		\arg \left(\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  -\frac{5}{3} & \frac{1}{2} \\ \end{array} \right)\right)	\left( \begin{array}{cc}  0 & \pi  \\  \pi  & 0 \\ \end{array} \right)	
+fullsimplify-matrixfunction-argument-list-list-1	FullSimplify[MatrixFunction[Arg, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]]	{{Pi/2, (Sqrt[3/5]*Pi)/2}, {(Sqrt[5/3]*Pi)/2, Pi/2}}		\text{FullSimplify}\left[\text{MatrixFunction}\left[\text{Arg},\left( \begin{array}{cc}  \frac{1}{2} & -1 \\  -\frac{5}{3} & \frac{1}{2} \\ \end{array} \right)\right]\right]	\left( \begin{array}{cc}  \frac{\pi }{2} & \frac{1}{2} \sqrt{\frac{3}{5}} \pi  \\  \frac{1}{2} \sqrt{\frac{5}{3}} \pi  & \frac{\pi }{2} \\ \end{array} \right)	
+argument-0	Arg[0]	0		\arg (0)	0	
+argument-positiveinfinity	Arg[Infinity]	0		\arg (\infty )	0	
+argument-negativeinfinity	Arg[-Infinity]	Pi		\arg (-\infty )	\pi	
+argument-positiveinfinity-times-i	Arg[Times[Infinity, Complex[0, 1]]]	Pi/2		\arg (\infty  i)	\frac{\pi }{2}	disagree
