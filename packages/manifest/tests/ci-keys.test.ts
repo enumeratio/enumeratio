@@ -3,7 +3,7 @@
 // `@records`. Each case is a few git calls on a temp repository, well under the standard budget.
 
 import { execFileSync } from "node:child_process";
-import { cpSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { afterAll, beforeAll, expect, test } from "vite-plus/test";
@@ -76,4 +76,65 @@ test("a record change selects every package that declares the records", () => {
   expect(picked.test).toEqual(expect.arrayContaining(["@enumeratio/census", "@enumeratio/catalog"]));
   expect(picked.test).not.toContain(COMBINATORICS);
   git("checkout", "--", ".");
+});
+
+// With a warm cache, building one package restores its closure and builds neither a dependent
+// (combinatorics depends on boxes) nor an unrelated sibling.
+test("a no-op rebuild of one package restores from the cache and builds nothing else", () => {
+  const sub = mkdtempSync(join(tmpdir(), "ci-build-"));
+  const sh = (cmd: string, ...args: string[]): string =>
+    execFileSync(cmd, args, {
+      cwd: sub,
+      encoding: "utf8",
+      env: { ...process.env, DIST_CACHE_DIR: join(sub, "cache") },
+    });
+  const write = (file: string, text: string): void => {
+    mkdirSync(dirname(join(sub, file)), { recursive: true });
+    writeFileSync(join(sub, file), text);
+  };
+  try {
+    cpSync(join(root, "tools/ci"), join(sub, "tools/ci"), { recursive: true });
+    write("pnpm-workspace.yaml", "packages:\n  - packages/*\n");
+    write("package.json", '{"name":"root"}\n');
+    write("pnpm-lock.yaml", "lockfileVersion: 9\n");
+    write(".gitignore", "dist\nnode_modules\nbuilt.log\ncache\n");
+    write(
+      "fake-build.cjs",
+      [
+        'const fs = require("fs"), path = require("path");',
+        "const name = path.basename(process.cwd());",
+        'fs.mkdirSync("dist", { recursive: true });',
+        'fs.writeFileSync("dist/out", name);',
+        'fs.appendFileSync(path.join(__dirname, "built.log"), name + "\\n");',
+      ].join("\n"),
+    );
+    const make = (name: string, deps: string[]): void => {
+      write(
+        `packages/${name}/package.json`,
+        JSON.stringify({
+          name: `@enumeratio/${name}`,
+          dependencies: Object.fromEntries(deps.map((d) => [`@enumeratio/${d}`, "workspace:*"])),
+          scripts: { build: "node ../../fake-build.cjs" },
+        }),
+      );
+      write(`packages/${name}/src/index.ts`, `export const ${name} = 1;\n`);
+    };
+    make("config", []);
+    make("boxes", ["config"]);
+    make("combinatorics", ["boxes"]);
+    make("other", ["config"]);
+    sh("pnpm", "install", "--lockfile-only", "--offline"); // pnpm rewrites a stub lockfile on first use
+    sh("git", "init", "-q");
+    sh("git", "add", "-A");
+    sh("git", "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "base");
+
+    expect(sh("node", "tools/ci/dist-cache.ts", "build", "boxes")).toContain("0 restored, 2 built");
+    rmSync(join(sub, "built.log"), { force: true });
+    const again = sh("node", "tools/ci/dist-cache.ts", "build", "boxes");
+    expect(again).toContain("2 restored, 0 built");
+    expect(again).not.toMatch(/combinatorics|other/);
+    expect(existsSync(join(sub, "built.log"))).toBe(false);
+  } finally {
+    rmSync(sub, { recursive: true, force: true });
+  }
 });
