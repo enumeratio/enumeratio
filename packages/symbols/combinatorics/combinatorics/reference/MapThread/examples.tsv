@@ -1,12 +1,12 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-applies-f-across-corresponding-elements			[MapThread, f, [List, [List, a, b], [List, c, d]]]	[List, [f, a, c], [f, b, d]]				
-mapthread-f-list-list-a-b-c-list-x-y-z			[MapThread, f, [List, [List, a, b, c], [List, x, y, z]]]	[List, [f, a, x], [f, b, y], [f, c, z]]	Pairs up corresponding elements of the lists			
-add-rows-agrees-with-add-computed-pairwise	Scope		[MapThread, Add, [List, [List, 1, 2, 3], [List, 10, 20, 30]]]	[List, 11, 22, 33]	sums two rows elementwise			
-mapthread-f-list-list-list-a-b-list-c-d-list	Scope		[MapThread, f, [List, [List, [List, a, b], [List, c, d]], [List, [List, u, v], [List, w, x]]]]	[List, [f, [List, a, b], [List, u, v]], [f, [List, c, d], [List, w, x]]]	Corresponding elements here are whole pairs, taken at the top level only			
-mapthread-f-list-list-1-2-3-list-4-5-6-list-7-8	Scope		[MapThread, f, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9], [List, 10, 11, 12]]]	[List, [f, 1, 4, 7, 10], [f, 2, 5, 8, 11], [f, 3, 6, 9, 12]]	Any number of lists, so $f$ takes four arguments			
-mapthread-function-1-2-1-2-list-list-f-g-h-list	Applications	triage	[MapThread, [Function, [Block, [_1, _2]], _1, _2], [List, [List, f, g, h], [List, x, y, z]]]	[List, [_1, x], [_1, y], [_1, z]]		gap	unclassified	Wolfram binds #1 to each of f, g, h, {f[x], g[y], h[z]}; ours leaves the slot _1 unbound in every entry.
-mapthread-add-list-list-a-b-c-list-u-v-w-list-x	Properties		[MapThread, Add, [List, [List, a, b, c], [List, u, v, w], [List, x, y, z]]]	[List, [Add, a, u, x], [Add, b, v, y], [Add, c, w, z]]	With Add, columnwise sums of the rows			
-mapthread-list-list-list-a-b-c-list-u-v-w-list-x	Properties		[MapThread, List, [List, [List, a, b, c], [List, u, v, w], [List, x, y, z]]]	[List, [List, a, u, x], [List, b, v, y], [List, c, w, z]]	With List this transposes a rectangular array			
-mapthread-d-list-list-x-x-times-y-x-times-z-list	Properties		[MapThread, D, [List, [List, x, [Multiply, x, y], [Multiply, x, z]], [List, x, y, z]]]	[List, 1, x, x]	Pairs up functions with variables: $\partial_x x = 1$, $\partial_y xy = x$, $\partial_z xz = x$			
-mapthread-f-list-list-a-b-c	Properties		[MapThread, f, [List, [List, a, b, c]]]	[List, [f, a], [f, b], [f, c]]	A single list reduces to ordinary mapping			
-rejects-ragged-rows	Possible issues		[MapThread, f, [List, [List, 1, 2], [List, 3]]]	[MapThread, f, [List, [List, 1, 2], [List, 3]]]	rows of different lengths are left unevaluated			
+id	section	role	expr	expected	caption	epsil.back
+applies-f-across-corresponding-elements			[MapThread, f, [List, [List, a, b], [List, c, d]]]	[List, [f, a, c], [f, b, d]]		
+mapthread-f-list-list-a-b-c-list-x-y-z			[MapThread, f, [List, [List, a, b, c], [List, x, y, z]]]	[List, [f, a, x], [f, b, y], [f, c, z]]	Pairs up corresponding elements of the lists	
+add-rows-agrees-with-add-computed-pairwise	Scope		[MapThread, Add, [List, [List, 1, 2, 3], [List, 10, 20, 30]]]	[List, 11, 22, 33]	sums two rows elementwise	
+mapthread-f-list-list-list-a-b-list-c-d-list	Scope		[MapThread, f, [List, [List, [List, a, b], [List, c, d]], [List, [List, u, v], [List, w, x]]]]	[List, [f, [List, a, b], [List, u, v]], [f, [List, c, d], [List, w, x]]]	Corresponding elements here are whole pairs, taken at the top level only	
+mapthread-f-list-list-1-2-3-list-4-5-6-list-7-8	Scope		[MapThread, f, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9], [List, 10, 11, 12]]]	[List, [f, 1, 4, 7, 10], [f, 2, 5, 8, 11], [f, 3, 6, 9, 12]]	Any number of lists, so $f$ takes four arguments	
+mapthread-function-1-2-1-2-list-list-f-g-h-list	Applications		[MapThread, [Function, [Block, [_1, _2]], _1, _2], [List, [List, f, g, h], [List, x, y, z]]]	[List, [f, x], [g, y], [h, z]]		Unreadable
+mapthread-add-list-list-a-b-c-list-u-v-w-list-x	Properties		[MapThread, Add, [List, [List, a, b, c], [List, u, v, w], [List, x, y, z]]]	[List, [Add, a, u, x], [Add, b, v, y], [Add, c, w, z]]	With Add, columnwise sums of the rows	
+mapthread-list-list-list-a-b-c-list-u-v-w-list-x	Properties		[MapThread, List, [List, [List, a, b, c], [List, u, v, w], [List, x, y, z]]]	[List, [List, a, u, x], [List, b, v, y], [List, c, w, z]]	With List this transposes a rectangular array	
+mapthread-d-list-list-x-x-times-y-x-times-z-list	Properties		[MapThread, D, [List, [List, x, [Multiply, x, y], [Multiply, x, z]], [List, x, y, z]]]	[List, 1, x, x]	Pairs up functions with variables: $\partial_x x = 1$, $\partial_y xy = x$, $\partial_z xz = x$	
+mapthread-f-list-list-a-b-c	Properties		[MapThread, f, [List, [List, a, b, c]]]	[List, [f, a], [f, b], [f, c]]	A single list reduces to ordinary mapping	
+rejects-ragged-rows	Possible issues		[MapThread, f, [List, [List, 1, 2], [List, 3]]]	[MapThread, f, [List, [List, 1, 2], [List, 3]]]	rows of different lengths are left unevaluated	

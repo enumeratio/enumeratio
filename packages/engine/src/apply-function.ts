@@ -23,12 +23,12 @@ function substitute(ce: Engine, expr: Expr, bound: Readonly<Record<string, Expr>
   const name = symbolNameOf(expr);
   if (name !== undefined) return bound[name] ?? expr;
   const operands = operandsOf(expr);
-  if (operands.length === 0) return expr;
+  // A bound name in head position (`#2[#1]&`) is called, not just renamed.
+  const callee = Object.hasOwn(bound, expr.operator) ? bound[expr.operator] : undefined;
+  if (operands.length === 0 && callee === undefined) return expr;
   if (expr.operator !== "Function") {
-    return ce.function(
-      expr.operator,
-      operands.map((operand) => substitute(ce, operand, bound)),
-    );
+    const args = operands.map((operand) => substitute(ce, operand, bound));
+    return callee === undefined ? ce.function(expr.operator, args) : ce.box([callee, ...args] as never);
   }
   const [body, ...params] = operands as [Expr, ...Expr[]];
   const own = params.length > 0 ? params.map(paramName) : [...slotsIn(body)];

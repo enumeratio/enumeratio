@@ -299,35 +299,39 @@ function declareCatch(ce: Engine): void {
 
 /** `Do`'s iterator spec: a bare count, `{n}` (both "repeat n times", no loop variable), or
  *  `{i, n}` / `{i, a, b}` / `{i, a, b, step}` (a named loop variable). Integer bounds only --
- *  Wolfram allows real/step-fractional iterators; not supported here. */
+ *  Wolfram allows real/step-fractional iterators; not supported here. `Do` holds its spec, so
+ *  each bound is evaluated here (`{k, 10^10, 10^10 + 1000}`). */
 function readDoSpec(
   spec: Expr,
 ):
   | { readonly name: string | undefined; readonly start: number; readonly end: number; readonly step: number }
   | undefined {
-  const bare = integerAt(spec);
-  if (bare !== undefined) return { name: undefined, start: 1, end: bare, step: 1 };
-  if (spec.operator !== "List") return undefined;
+  const bound = (expr: Expr | undefined): number | undefined =>
+    expr === undefined ? undefined : integerAt(expr.evaluate());
+  if (spec.operator !== "List") {
+    const bare = bound(spec);
+    return bare === undefined ? undefined : { name: undefined, start: 1, end: bare, step: 1 };
+  }
   const parts = operandsOf(spec);
   if (parts.length === 1) {
-    const n = integerAt(parts[0]);
+    const n = bound(parts[0]);
     return n === undefined ? undefined : { name: undefined, start: 1, end: n, step: 1 };
   }
   const name = symbolNameOf(parts[0]!);
   if (name === undefined) return undefined;
   if (parts.length === 2) {
-    const n = integerAt(parts[1]);
+    const n = bound(parts[1]);
     return n === undefined ? undefined : { name, start: 1, end: n, step: 1 };
   }
   if (parts.length === 3) {
-    const a = integerAt(parts[1]);
-    const b = integerAt(parts[2]);
+    const a = bound(parts[1]);
+    const b = bound(parts[2]);
     return a === undefined || b === undefined ? undefined : { name, start: a, end: b, step: 1 };
   }
   if (parts.length === 4) {
-    const a = integerAt(parts[1]);
-    const b = integerAt(parts[2]);
-    const step = integerAt(parts[3]);
+    const a = bound(parts[1]);
+    const b = bound(parts[2]);
+    const step = bound(parts[3]);
     return a === undefined || b === undefined || step === undefined || step === 0
       ? undefined
       : { name, start: a, end: b, step };

@@ -24,6 +24,10 @@ test("slot-only bodies bind by slot number", () => {
   expectCall(["Function", ["g", "_2", "_1"]], [1, 2], ["g", 2, 1]);
 });
 
+test("a bound slot in head position is called", () => {
+  expectCall(["Function", ["_2", "_1"]], ["x", "a"], ["a", "x"]);
+});
+
 test("a nested Function keeps its own parameter", () => {
   const inner: Json = ["Function", ["h", "_1", "y"], "_1"];
   expectCall(["Function", ["m", inner, "_1"], "_1"], [["List", 1]], ["m", inner, ["List", 1]]);

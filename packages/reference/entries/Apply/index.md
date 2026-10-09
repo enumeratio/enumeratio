@@ -9,6 +9,11 @@ signatures:
     library: enumeratio-analytic
     type: "(name: any, arguments: any*) -> unknown"
     overrides: compute-engine
+  - call: Apply(f, args*)
+    description: the operator forms of Map, Fold and Filter, so Map(f)(xs) is Map(f, xs).
+    library: enumeratio-combinatorics
+    type: "(name: any, arguments: any*) -> unknown"
+    overrides: enumeratio-analytic
 seeAlso:
   - DifferenceRoot
 ---

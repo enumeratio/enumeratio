@@ -1,9 +1,9 @@
-id	in	out	tex.in	tex.out	verdict
-filter-list-1-2-4-7-6-2-iseven	Select[List[1, 2, 4, 7, 6, 2], EvenQ]	{2, 4, 6, 2}	\text{Select}[\{1,2,4,7,6,2\},\text{EvenQ}]	\{2,4,6,2\}	
-filter-list-1-2-4-7-6-2-isodd	Select[List[1, 2, 4, 7, 6, 2], OddQ]	{1, 7}	\text{Select}[\{1,2,4,7,6,2\},\text{OddQ}]	\{1,7\}	
-apply-filter-iseven-list-1-2-4-7-6-2	Select[EvenQ][List[1, 2, 4, 7, 6, 2]]	{2, 4, 6, 2}	\text{Select}[\text{EvenQ}][\{1,2,4,7,6,2\}]	\{2,4,6,2\}	disagree
-filter-list-list-1-y-list-2-x-list-3-x-list-4-z	Select[List[List[1, y], List[2, x], List[3, x], List[4, z], List[5, x], List[6, y]], Function[MemberQ[Slot[1], x]]]	{{2, x}, {3, x}, {5, x}}	\text{Select}\left[\left( \begin{array}{cc}  1 & y \\  2 & x \\  3 & x \\  4 & z \\  5 & x \\  6 & y \\ \end{array} \right),\text{MemberQ}[\text{$\#$1},x]\&\right]	\left( \begin{array}{cc}  2 & x \\  3 & x \\  5 & x \\ \end{array} \right)	
-filter-list-list-1-y-list-2-x-list-3-x-list-4-2	Select[List[List[1, y], List[2, x], List[3, x], List[4, z], List[5, x], List[6, y]], Function[MemberQ[Slot[1], z]]]	{{4, z}}	\text{Select}\left[\left( \begin{array}{cc}  1 & y \\  2 & x \\  3 & x \\  4 & z \\  5 & x \\  6 & y \\ \end{array} \right),\text{MemberQ}[\text{$\#$1},z]\&\right]	\left( \begin{array}{cc}  4 & z \\ \end{array} \right)	
-filter-list-1-2-4-7-6-2-function-2-lt-1-1	Select[List[1, 2, 4, 7, 6, 2], Function[Less[2, Slot[1]]]]	{4, 7, 6}	\text{Select}[\{1,2,4,7,6,2\},2<\text{$\#$1}\&]	\{4,7,6\}	
-filter-range-1-100-function-1-mod-3-eq-1-1-mod-5	Select[Range[1, 100], Function[And[(Mod[Slot[1], 3] == 1), (Mod[Slot[1], 5] == 1)]]]	{1, 16, 31, 46, 61, 76, 91}	\text{Select}[\text{Range}[1,100],(\text{$\#$1} \bmod 3)=1\land (\text{$\#$1} \bmod 5)=1\&]	\{1,16,31,46,61,76,91\}	
-filter-range-1-10-iseven	Select[Range[1, 10], EvenQ]	{2, 4, 6, 8, 10}	\text{Select}[\text{Range}[1,10],\text{EvenQ}]	\{2,4,6,8,10\}	
+id	in	out	tex.in	tex.out
+filter-list-1-2-4-7-6-2-iseven	Select[List[1, 2, 4, 7, 6, 2], EvenQ]	{2, 4, 6, 2}	\text{Select}[\{1,2,4,7,6,2\},\text{EvenQ}]	\{2,4,6,2\}
+filter-list-1-2-4-7-6-2-isodd	Select[List[1, 2, 4, 7, 6, 2], OddQ]	{1, 7}	\text{Select}[\{1,2,4,7,6,2\},\text{OddQ}]	\{1,7\}
+apply-filter-iseven-list-1-2-4-7-6-2	Select[EvenQ][List[1, 2, 4, 7, 6, 2]]	{2, 4, 6, 2}	\text{Select}[\text{EvenQ}][\{1,2,4,7,6,2\}]	\{2,4,6,2\}
+filter-list-list-1-y-list-2-x-list-3-x-list-4-z	Select[List[List[1, y], List[2, x], List[3, x], List[4, z], List[5, x], List[6, y]], Function[MemberQ[Slot[1], x]]]	{{2, x}, {3, x}, {5, x}}	\text{Select}\left[\left( \begin{array}{cc}  1 & y \\  2 & x \\  3 & x \\  4 & z \\  5 & x \\  6 & y \\ \end{array} \right),\text{MemberQ}[\text{$\#$1},x]\&\right]	\left( \begin{array}{cc}  2 & x \\  3 & x \\  5 & x \\ \end{array} \right)
+filter-list-list-1-y-list-2-x-list-3-x-list-4-2	Select[List[List[1, y], List[2, x], List[3, x], List[4, z], List[5, x], List[6, y]], Function[MemberQ[Slot[1], z]]]	{{4, z}}	\text{Select}\left[\left( \begin{array}{cc}  1 & y \\  2 & x \\  3 & x \\  4 & z \\  5 & x \\  6 & y \\ \end{array} \right),\text{MemberQ}[\text{$\#$1},z]\&\right]	\left( \begin{array}{cc}  4 & z \\ \end{array} \right)
+filter-list-1-2-4-7-6-2-function-2-lt-1-1	Select[List[1, 2, 4, 7, 6, 2], Function[Less[2, Slot[1]]]]	{4, 7, 6}	\text{Select}[\{1,2,4,7,6,2\},2<\text{$\#$1}\&]	\{4,7,6\}
+filter-range-1-100-function-1-mod-3-eq-1-1-mod-5	Select[Range[1, 100], Function[And[(Mod[Slot[1], 3] == 1), (Mod[Slot[1], 5] == 1)]]]	{1, 16, 31, 46, 61, 76, 91}	\text{Select}[\text{Range}[1,100],(\text{$\#$1} \bmod 3)=1\land (\text{$\#$1} \bmod 5)=1\&]	\{1,16,31,46,61,76,91\}
+filter-range-1-10-iseven	Select[Range[1, 10], EvenQ]	{2, 4, 6, 8, 10}	\text{Select}[\text{Range}[1,10],\text{EvenQ}]	\{2,4,6,8,10\}

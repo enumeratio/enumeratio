@@ -7,6 +7,7 @@ import {
   stringAt,
   symbolNameOf,
   toInputForm,
+  wrapOperator,
 } from "@enumeratio/engine";
 
 // The Wolfram-frontier expression/pattern/string heads: ToString, MapThread, MatchQ,
@@ -160,6 +161,16 @@ function replaceAtPath(ce: Engine, expr: Expr, path: readonly number[], value: E
 /** Declare the Wolfram-frontier expression, pattern and string heads new to this backlog
  *  wave. See the module doc for what each diverges on. */
 export function declareExpressionOps(ce: Engine): void {
+  // Symbol(x) takes a name: given anything else (a symbol, a number) Wolfram keeps the call
+  // (`Symbol::strse`), where compute-engine reads a symbol as its own name.
+  wrapOperator(
+    ce,
+    ["Symbol"],
+    ([name]) => name !== undefined && typeof (name as { string?: unknown }).string !== "string",
+    () => () => undefined,
+    1,
+  );
+
   // ToString(expr): Epsil, not Wolfram InputForm — see module doc.
   ce.declare("ToString", {
     signature: "(any) -> string",

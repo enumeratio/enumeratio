@@ -30,7 +30,9 @@ function declareThread(ce: Engine): void {
     signature: "(any, symbol?) -> any",
     lazy: true,
     evaluate: (ops: readonly Expr[]): Expr | undefined => {
-      const expr = ops[0];
+      // Thread is lazy already, so `Unevaluated(f(…))` is just `f(…)`.
+      const given = ops[0];
+      const expr = given?.operator === "Unevaluated" ? operandsOf(given)[0] : given;
       if (expr === undefined) return undefined;
       const headName = ops[1] !== undefined ? symbolNameOf(ops[1]) : "List";
       if (headName === undefined) return undefined;
