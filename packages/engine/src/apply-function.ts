@@ -16,6 +16,26 @@ function slotsIn(expr: Expr, found: Set<string> = new Set()): Set<string> {
   return found;
 }
 
+/** The symbol names `expr` leaves free: not parameters of a `Function` inside it. */
+function freeSymbols(expr: Expr, bound: ReadonlySet<string> = new Set(), found: Set<string> = new Set()): Set<string> {
+  const name = symbolNameOf(expr);
+  if (name !== undefined && !bound.has(name)) found.add(name);
+  if (expr.operator === "Function") {
+    const [body, ...params] = operandsOf(expr) as [Expr, ...Expr[]];
+    const own = params.map(paramName).filter((param) => param !== undefined);
+    freeSymbols(body, new Set([...bound, ...own]), found);
+  } else for (const operand of operandsOf(expr)) freeSymbols(operand, bound, found);
+  return found;
+}
+
+/** Every symbol name in `expr`, bound or not. */
+const symbolsIn = (expr: Expr, found: Set<string> = new Set()): Set<string> => {
+  const name = symbolNameOf(expr);
+  if (name !== undefined) found.add(name);
+  for (const operand of operandsOf(expr)) symbolsIn(operand, found);
+  return found;
+};
+
 /** `expr` with `bound`'s symbols replaced, except under a nested `Function` that rebinds them
  *  (as parameters, or slot-only as its own slots). compute-engine's `subs` reaches in there and
  *  replaces the parameter itself. */
@@ -33,7 +53,25 @@ function substitute(ce: Engine, expr: Expr, bound: Readonly<Record<string, Expr>
   const [body, ...params] = operands as [Expr, ...Expr[]];
   const own = params.length > 0 ? params.map(paramName) : [...slotsIn(body)];
   const visible = Object.fromEntries(Object.entries(bound).filter(([key]) => !own.includes(key)));
-  return Object.keys(visible).length === 0 ? expr : ce.function("Function", [substitute(ce, body, visible), ...params]);
+  if (Object.keys(visible).length === 0) return expr;
+  // A parameter that a substituted value mentions would capture it (`Function(y, Function(x, y^x))`
+  // called on `x`): rename it, as Wolfram does (`x` to `x$`; `$` isn't a symbol character here).
+  const mentioned = new Set(Object.values(visible).flatMap((value) => [...freeSymbols(value)]));
+  const taken = new Set([...mentioned, ...symbolsIn(body), ...own.filter((name) => name !== undefined)]);
+  const renames: Record<string, Expr> = {};
+  const renamed = params.map((param) => {
+    const name = paramName(param);
+    if (name === undefined || SLOT.test(name) || !mentioned.has(name)) return param;
+    let count = 1;
+    while (taken.has(`${name}${count}`)) count += 1;
+    const fresh = `${name}${count}`;
+    taken.add(fresh);
+    renames[name] = ce.symbol(fresh);
+    return param.operator === "Typed"
+      ? ce.function("Typed", [renames[name], ...operandsOf(param).slice(1)])
+      : renames[name];
+  });
+  return ce.function("Function", [substitute(ce, body, { ...visible, ...renames }), ...renamed]);
 }
 
 /** The argument each parameter of a `Function` literal binds, or `undefined` when the
@@ -49,6 +87,24 @@ function bindings(body: Expr, params: readonly Expr[], args: readonly Expr[]): R
       : undefined;
   }
   return names.length === args.length ? Object.fromEntries(names.map((name, i) => [name!, args[i]!])) : undefined;
+}
+
+/** Whether calling the `Function` literal `f` on `args` would let a `Function` inside it capture a
+ *  symbol `args` leave free (`Function(y, Function(x, y^x))` called on `x`), which `applyFunction`
+ *  renames around. */
+export function capturesArguments(f: Expr, args: readonly Expr[]): boolean {
+  const [body, ...params] = f.operator === "Function" ? operandsOf(f) : [];
+  if (body === undefined || bindings(body, params, args) === undefined) return false;
+  const free = new Set(args.flatMap((arg) => [...freeSymbols(arg)]));
+  const captures = (expr: Expr): boolean => {
+    if (expr.operator === "Function") {
+      const [inner, ...own] = operandsOf(expr) as [Expr, ...Expr[]];
+      if (own.some((param) => free.has(paramName(param) ?? ""))) return true;
+      return captures(inner);
+    }
+    return operandsOf(expr).some(captures);
+  };
+  return captures(body);
 }
 
 /**

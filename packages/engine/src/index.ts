@@ -194,7 +194,7 @@ export {
   type Json,
   type Type,
 } from "./facade.ts";
-export { applyFunction } from "./apply-function.ts";
+export { applyFunction, capturesArguments } from "./apply-function.ts";
 export { latexEntries, type LatexReader, type LatexRule, type LatexWriter } from "./latex.ts";
 export { type HeadPatch, isExtension } from "./extend.ts";
 export { isNativeHead, nativeCanonical, nativeEvaluate, withAssumptions } from "./probe.ts";

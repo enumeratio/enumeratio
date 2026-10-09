@@ -19,6 +19,6 @@ names:
   wolframIdentity: true
 ---
 
-- Stands in for Wolfram's own `proc[t]` — direct function application on a process. This engine has no general mechanism for calling an arbitrary declared symbol-headed expression as a function, so `SliceDistribution` (a real Wolfram head, used here for the same purpose) is the bridge instead.
+- `proc(t)`, Wolfram's `proc[t]`, is `SliceDistribution(proc, t)`: the call reads as the slice.
 - $SliceDistribution(WienerProcess(\mu,\sigma), t) = NormalDistribution(\mu t, \sigma\sqrt{t})$; $SliceDistribution(PoissonProcess(\lambda), t) = PoissonDistribution(\lambda t)$.
 - Unevaluated for any process kind other than WienerProcess/PoissonProcess — no other process is declared yet.

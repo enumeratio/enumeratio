@@ -38,3 +38,11 @@ test("a nested Function keeps its own parameter", () => {
     ["m", ["Function", ["h", list, "y"], "y"], list],
   );
 });
+
+test("a nested Function renames a parameter that the argument would be captured by", () => {
+  const curried: Json = ["Function", ["Function", ["Power", "y", "x"], "x"], "y"];
+  expectCall(curried, ["x"], ["Function", ["Power", "x", "x1"], "x1"]);
+  const ce = bareEngine();
+  const inner = applyFunction(ce, box(ce, curried), [box(ce, "x")]);
+  expect(applyFunction(ce, inner, [box(ce, "y")]).json).toEqual(box(ce, ["Power", "x", "y"]).json);
+});

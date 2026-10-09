@@ -1,4 +1,4 @@
-id	section	role	expr	expected	triage	wolfram.kind	wolfram.note
-replaceall-list-x-x-pow-2-a-b-rule-x-3			[ReplaceAll, [List, x, [Power, x, 2], a, b], [Rule, x, 3]]	[List, 3, 9, a, b]			
-replaceall-list-x-x-pow-2-x-pow-3-a-b-rule-x-pow	Scope	triage	[ReplaceAll, [List, x, [Power, x, 2], [Power, x, 3], a, b], [Rule, [Power, x, 2], y]]	[List, x, [Power, x, 2], [Power, x, 3], a, b]	gap	unclassified	ReplaceAll does not match x^2 inside the list.
-replaceall-x-rule-x-y-neg-gt-z	Properties		[ReplaceAll, x, [Rule, x, [KeyValuePair, y, z]]]	[Tuple, y, z]			
+id	section	role	expr	expected
+replaceall-list-x-x-pow-2-a-b-rule-x-3			[ReplaceAll, [List, x, [Power, x, 2], a, b], [Rule, x, 3]]	[List, 3, 9, a, b]
+replaceall-list-x-x-pow-2-x-pow-3-a-b-rule-x-pow	Scope		[ReplaceAll, [List, x, [Power, x, 2], [Power, x, 3], a, b], [Rule, [Power, x, 2], y]]	[List, x, y, [Power, x, 3], a, b]
+replaceall-x-rule-x-y-neg-gt-z	Properties		[ReplaceAll, x, [Rule, x, [KeyValuePair, y, z]]]	[Tuple, y, z]

@@ -1,20 +1,14 @@
-import { type Engine, type Expr, extendHead, operandsOf } from "@enumeratio/engine";
+import { type Engine, type Expr, extendHead, operandsOf, wrapOperator } from "@enumeratio/engine";
 import { normal01, numAt, poissonSample } from "./distributions.ts";
 
 // The Wolfram-frontier random-process heads: `WienerProcess`/`PoissonProcess` (inert process
 // objects, same carrier-constructor idiom `distributions.ts` uses for a distribution), a
 // process's slice distribution, and `RandomFunction`, which draws a seeded sample path.
 //
-// Wolfram writes a process's slice as `proc[t]` — direct function application, since a
-// WienerProcess IS (semantically) a function from time to a distribution. Our engine has no
-// general mechanism for calling an arbitrary declared symbol-headed expression as a function
-// (that's `Apply`'s job, and only for heads that already declare a `function` type) — teaching
-// `WienerProcess(...)` to respond to `(t)` application would mean deeper engine surgery than
-// this batch's scope. Wolfram itself separately provides `SliceDistribution[proc, t]` for exactly
-// this (searchable in its docs), so this file uses that real head as the bridge rather than
-// inventing a new one: `SliceDistribution(proc, t)` evaluates DIRECTLY to the ordinary
-// distribution answering that slice (`NormalDistribution`/`PoissonDistribution`), so PDF/CDF/
-// Mean/Variance need no changes at all here — they see a distribution they already know.
+// Wolfram writes a process's slice as `proc[t]`, a direct call: `Apply(proc, t)` here. It reads as
+// `SliceDistribution(proc, t)`, the real Wolfram head for the same slice, which evaluates DIRECTLY to
+// the ordinary distribution answering it (`NormalDistribution`/`PoissonDistribution`), so PDF/CDF/
+// Mean/Variance need no changes at all here: they see a distribution they already know.
 //
 // `RandomFunction(proc, {tmin, tmax})` / `(proc, {tmin, tmax, dt})` draws one seeded sample path
 // and returns a PLAIN LIST of `{t, x}` pairs — `List(List(t0, x0), List(t1, x1), ...)` — not
@@ -86,6 +80,17 @@ function sliceDistributionOf(ce: Engine, proc: Expr, t: Expr): Expr | undefined 
 }
 
 function declareSliceDistribution(ce: Engine): void {
+  // `proc(t)`. compute-engine's `Apply` would read the compound callee as a lambda over its free
+  // symbols (cortex-js/compute-engine#426) and drop the `t`.
+  wrapOperator(
+    ce,
+    ["Apply"],
+    ([proc, ...args]) => args.length === 1 && sliceDistributionOf(ce, proc!, args[0]!) !== undefined,
+    () =>
+      ([proc, t]) =>
+        sliceDistributionOf(ce, proc!, t!)!.evaluate(),
+  );
+
   ce.declare("SliceDistribution", {
     // `proc` stays `any`, not `expression<WienerProcess> | expression<PoissonProcess>`: a
     // process kind this file doesn't know (any other distribution, say) has to stay

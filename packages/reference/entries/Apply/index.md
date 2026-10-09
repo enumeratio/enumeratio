@@ -10,10 +10,15 @@ signatures:
     type: "(name: any, arguments: any*) -> unknown"
     overrides: compute-engine
   - call: Apply(f, args*)
-    description: the operator forms of Map, Fold and Filter, so Map(f)(xs) is Map(f, xs).
+    description: the operator forms of Map, Fold and Filter, so Map(f)(xs) is Map(f, xs). A Function literal binds its arguments by renaming, so one can't capture them, and a sum, product or power called on an argument stays a call, as in Wolfram.
     library: enumeratio-combinatorics
     type: "(name: any, arguments: any*) -> unknown"
     overrides: enumeratio-analytic
+  - call: Apply(process, t)
+    description: a random process called at a time is its slice distribution, so WienerProcess()(t) is NormalDistribution(0, Sqrt(t)).
+    library: enumeratio-statistics
+    type: "(name: any, arguments: any*) -> unknown"
+    overrides: enumeratio-combinatorics
 seeAlso:
   - DifferenceRoot
 ---

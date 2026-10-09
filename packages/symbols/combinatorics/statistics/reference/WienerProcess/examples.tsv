@@ -1,7 +1,7 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-wiener-slice-mean			[Mean, [SliceDistribution, [WienerProcess, 2, 3], 5]]	10	$Mean(WienerProcess(\mu,\sigma)[t]) = \mu t$			
-wiener-slice-variance			[Variance, [SliceDistribution, [WienerProcess, 0, 3], 4]]	36	$Variance(WienerProcess(\mu,\sigma)[t]) = \sigma^2 t$			
-wiener-default-slice	Scope		[SliceDistribution, [WienerProcess], 4]	[NormalDistribution, 0, 2]	Standard Wiener process — $NormalDistribution(0, \sqrt{4}) = NormalDistribution(0, 2)$			
-cdf-apply-wienerprocess-2-x	Scope	triage	[CDF, [Apply, [WienerProcess], 2], x]	[CDF, [WienerProcess], x]		gap	unclassified	Apply[WienerProcess, t] isn't rewritten by statistics, so it stays unevaluated. The SliceDistribution spelling gives (1+erf(x/2))/2, which equals Wolfram's Erfc[-x/2]/2. The oracle scan can't reach statistics heads yet (OWN_ENGINE), so the stored Wolfram verdict predates this evaluation.
-pdf-apply-wienerprocess-2-x	Scope	triage	[PDF, [Apply, [WienerProcess], 2], x]	[PDF, [WienerProcess], x]		gap	unclassified	Apply[WienerProcess, t] isn't rewritten by statistics, so it stays unevaluated. The SliceDistribution spelling gives e^(-x^2/4)/(2 sqrt(pi)), which equals Wolfram's answer. The oracle scan can't reach statistics heads yet (OWN_ENGINE), so the stored Wolfram verdict predates this evaluation.
-pdf-apply-wienerprocess-1-1-t-x	Scope	triage	[PDF, [Apply, [WienerProcess, 1, 1], t], x]	[PDF, [WienerProcess, 1, 1], x]		gap	unclassified	Apply[WienerProcess, t] isn't rewritten by statistics, so it stays unevaluated. The SliceDistribution spelling gives sqrt(2) e^(-(x-t)^2/(2t)) / (2 sqrt(pi t)), which Wolfram doesn't reduce (it answers Indeterminate). The oracle scan can't reach statistics heads yet (OWN_ENGINE), so the stored Wolfram verdict predates this evaluation.
+id	section	role	expr	expected	caption
+wiener-slice-mean			[Mean, [SliceDistribution, [WienerProcess, 2, 3], 5]]	10	$Mean(WienerProcess(\mu,\sigma)[t]) = \mu t$
+wiener-slice-variance			[Variance, [SliceDistribution, [WienerProcess, 0, 3], 4]]	36	$Variance(WienerProcess(\mu,\sigma)[t]) = \sigma^2 t$
+wiener-default-slice	Scope		[SliceDistribution, [WienerProcess], 4]	[NormalDistribution, 0, 2]	Standard Wiener process — $NormalDistribution(0, \sqrt{4}) = NormalDistribution(0, 2)$
+cdf-apply-wienerprocess-2-x	Scope		[CDF, [Apply, [WienerProcess], 2], x]	[Multiply, [Rational, 1, 2], [Add, [Erf, [Multiply, [Rational, 1, 2], x]], 1]]	
+pdf-apply-wienerprocess-2-x	Scope		[PDF, [Apply, [WienerProcess], 2], x]	[Divide, [Power, ExponentialE, [Multiply, [Rational, -1, 4], [Power, x, 2]]], [Multiply, 2, [Sqrt, Pi]]]	
+pdf-apply-wienerprocess-1-1-t-x	Scope		[PDF, [Apply, [WienerProcess, 1, 1], t], x]	[Divide, [Multiply, [Sqrt, 2], [Power, ExponentialE, [Divide, [Negate, [Power, [Add, [Negate, t], x], 2]], [Multiply, 2, t]]]], [Multiply, 2, [Sqrt, Pi], [Sqrt, t]]]	
