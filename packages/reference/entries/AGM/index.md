@@ -15,5 +15,10 @@ references:
     identity: "19.8"
 names:
   dlmf: arithmetic-geometric mean
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: ArithmeticGeometricMean[$1, $2]
+    arity: 2
 stub: engine
 ---

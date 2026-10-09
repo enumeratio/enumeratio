@@ -12,6 +12,11 @@ seeAlso:
   - IntegerCeil
   - Floor
   - LowerTick
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Floor[$1]
+    arity: 1
 ---
 
 - The `FloorRing` protocol's member (Mathlib's `Int.floor`), and what `Floor` answers for such a type.

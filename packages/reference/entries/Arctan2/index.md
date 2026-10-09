@@ -9,5 +9,10 @@ signatures:
 names:
   fungrim: Atan2
   wikidataConfirmed: true
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: ArcTan[$2, $1]
+    arity: 2
 stub: engine
 ---

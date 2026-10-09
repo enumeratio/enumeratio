@@ -12,6 +12,11 @@ seeAlso:
   - IntegerFloor
   - Ceil
   - UpperTick
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: Ceiling[$1]
+    arity: 1
 ---
 
 - The `FloorRing` protocol's member (Mathlib's `Int.ceil`), and what `Ceil` answers for such a type.
