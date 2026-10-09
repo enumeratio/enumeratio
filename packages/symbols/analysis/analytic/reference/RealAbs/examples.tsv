@@ -1,16 +1,16 @@
-id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
-the-absolute-value-of-a-real-number			[RealAbs, -2.5]	2.5	The absolute value of a real number		
-realabs-neg-7-over-2			[RealAbs, [Rational, -7, 2]]	[Rational, 7, 2]			
-realabs-2			[RealAbs, 2]	2	A positive number is unchanged		
-d-realabs-x-x			[D, [RealAbs, x], x]	[Sign, x]		shape	Sign[x] (ours) and x/RealAbs[x] (Wolfram) are the same value for real x != 0, just differently factored -- x/|x| is the definition of sign(x).
-threads-element-wise-over-a-list	Scope		[RealAbs, [List, -1, 2, -3]]	[List, 1, 2, 3]	Threads element-wise over a list		
-exact-numeric-arguments	Scope		[RealAbs, [Negate, Pi]]	Pi	Exact numeric arguments		
-n-realabs-pi-minus-catalan-50	Scope		[N, [RealAbs, [Add, Pi, [Negate, CatalanConstant]]], 50]	{num: "2.2256270594125742234080398683471187734230200250934"}	A 50-digit value of $|\pi - G|$, with $G$ Catalan's constant		
-realabs-list-list-1-over-2-neg-1-list-0-neg-1	Scope		[RealAbs, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, [Rational, 1, 2], 1], [List, 0, [Rational, 1, 2]]]	Applied entrywise to a matrix		
-matrixfunction-realabs-list-list-1-over-2-neg-1	Scope		[MatrixFunction, RealAbs, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, [Rational, 1, 2], 0], [List, 0, [Rational, 1, 2]]]	As a matrix function it acts on eigenvalues, not entries, so the off-diagonal becomes 0		
-realabs-interval-neg-5-3	Scope		[RealAbs, [Interval, -5, 3]]	[Interval, 0, 5]	Interval arithmetic gives $[0,5]$ from $[-5,3]$		
-realabs-0	Scope		[RealAbs, 0]	0	Zero stays zero		
-realabs-positiveinfinity	Scope		[RealAbs, PositiveInfinity]	PositiveInfinity	Infinity maps to infinity		
-realabs-negativeinfinity	Scope		[RealAbs, NegativeInfinity]	PositiveInfinity	Negative infinity also gives positive infinity		
-piecewiseexpand-realabs-x	Scope		[PiecewiseExpand, [RealAbs, x]]	[Abs, x]	Rewrites to the ordinary absolute value		
-agrees-with-abs-on-the-reals	Properties		[Equal, [RealAbs, -5], [Abs, -5]]	True	Agrees with [[Abs]] on the reals		
+id	section	role	expr	expected	caption	wolfram.note
+the-absolute-value-of-a-real-number			[RealAbs, -2.5]	2.5	The absolute value of a real number	
+realabs-neg-7-over-2			[RealAbs, [Rational, -7, 2]]	[Rational, 7, 2]		
+realabs-2			[RealAbs, 2]	2	A positive number is unchanged	
+d-realabs-x-x			[D, [RealAbs, x], x]	[Sign, x]		Sign[x] (ours) and x/RealAbs[x] (Wolfram) are the same value for real x != 0, just differently factored -- x/|x| is the definition of sign(x).
+threads-element-wise-over-a-list	Scope		[RealAbs, [List, -1, 2, -3]]	[List, 1, 2, 3]	Threads element-wise over a list	
+exact-numeric-arguments	Scope		[RealAbs, [Negate, Pi]]	Pi	Exact numeric arguments	
+n-realabs-pi-minus-catalan-50	Scope		[N, [RealAbs, [Add, Pi, [Negate, CatalanConstant]]], 50]	{num: "2.2256270594125742234080398683471187734230200250934"}	A 50-digit value of $|\pi - G|$, with $G$ Catalan's constant	
+realabs-list-list-1-over-2-neg-1-list-0-neg-1	Scope		[RealAbs, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, [Rational, 1, 2], 1], [List, 0, [Rational, 1, 2]]]	Applied entrywise to a matrix	
+matrixfunction-realabs-list-list-1-over-2-neg-1	Scope		[MatrixFunction, RealAbs, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, -1, 2]]]]	[List, [List, [Rational, 1, 2], 0], [List, 0, [Rational, 1, 2]]]	As a matrix function it acts on eigenvalues, not entries, so the off-diagonal becomes 0	
+realabs-interval-neg-5-3	Scope		[RealAbs, [Interval, -5, 3]]	[Interval, 0, 5]	Interval arithmetic gives $[0,5]$ from $[-5,3]$	
+realabs-0	Scope		[RealAbs, 0]	0	Zero stays zero	
+realabs-positiveinfinity	Scope		[RealAbs, PositiveInfinity]	PositiveInfinity	Infinity maps to infinity	
+realabs-negativeinfinity	Scope		[RealAbs, NegativeInfinity]	PositiveInfinity	Negative infinity also gives positive infinity	
+piecewiseexpand-realabs-x	Scope		[PiecewiseExpand, [RealAbs, x]]	[Abs, x]	Rewrites to the ordinary absolute value	
+agrees-with-abs-on-the-reals	Properties		[Equal, [RealAbs, -5], [Abs, -5]]	True	Agrees with [[Abs]] on the reals	
