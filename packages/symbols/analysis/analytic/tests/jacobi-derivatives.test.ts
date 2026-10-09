@@ -1,3 +1,4 @@
+// unstable: a bare ComputeEngine with only the analytic declarations, to pin derivative values
 import { operandsOf } from "@enumeratio/engine";
 import { ComputeEngine } from "@enumeratio/engine/unstable";
 import { expect, test } from "vite-plus/test";
