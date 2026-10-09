@@ -4,6 +4,21 @@
 export * from "./box.ts";
 export * from "./layout.ts";
 export * from "./rows.ts";
+export {
+  type Bar,
+  type BarCellHead,
+  BAR_KINDS,
+  type BarKind,
+  barOf,
+  bindingVariable,
+  entriesOf,
+  entryLabel,
+  entryValue,
+  isControlLeaf,
+  isToggleBinding,
+  lowerBar,
+  toggleBinding,
+} from "./control-group.ts";
 export { BOXES_TYPE, declareBoxes } from "./declare.ts";
 export { BoxFormError, fromMathJson, toMathJson } from "./json.ts";
 export { APPLY_FUNCTION, INVISIBLE_TIMES, type MakeOptions, makeBoxes } from "./make.ts";

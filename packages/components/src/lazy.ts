@@ -6,6 +6,7 @@
 // `tests/lazy.test.ts` holds this table to every tag the package defines, and the modules a page
 // of cells or plots loads to no engine.
 
+import { BAR_TAGS } from "@enumeratio/frontend/box-tags";
 import { defineBoxElements, INTERACTIVE_BOX_TAGS } from "./box-elements.ts";
 
 export { configureMacros } from "./mathlive.ts";
@@ -45,6 +46,7 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "setter-bar-box": () => import("./setter-bar-box.ts"),
   "setter-box": () => import("./setter-box.ts"),
   "radio-button-bar-box": () => import("./radio-button-bar-box.ts"),
+  "radio-button-box": () => import("./radio-button-box.ts"),
   "toggler-bar-box": () => import("./toggler-bar-box.ts"),
   "toggler-box": () => import("./toggler-box.ts"),
   "knob-box": () => import("./knob-box.ts"),
@@ -81,7 +83,11 @@ let generics: Promise<typeof import("./generic.ts")> | undefined;
 /** Load what `el` needs, when it's an element not defined yet. */
 function define(el: Element): void {
   const tag = el.localName;
-  if (!(tag.startsWith("notatio-") || INTERACTIVE_BOX_TAGS.has(tag)) || customElements.get(tag) !== undefined) return;
+  if (
+    !(tag.startsWith("notatio-") || INTERACTIVE_BOX_TAGS.has(tag) || BAR_TAGS.includes(tag)) ||
+    customElements.get(tag) !== undefined
+  )
+    return;
   if (!CELL.has(tag) && !scoped) {
     scoped = true;
     void import("./scope.ts").then((m) => m.pageScope());

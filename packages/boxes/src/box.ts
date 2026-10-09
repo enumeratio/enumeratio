@@ -12,7 +12,8 @@ export type Box = string | BoxNode;
 /**
  * The interface boxes that take input, one per kind as in Wolfram. Each holds a binding (a
  * `DynamicBox` over the variable, which may be `(x, start)`), a domain (the range, the entries or
- * the corners, as written, `Automatic` when there is none) and options.
+ * the corners, as written, `Automatic` when there is none) and options. A `SetterBox` and a
+ * `RadioButtonBox` hold one entry; the bars are rows of them (`barOf`).
  */
 export const CONTROL_BOX_HEADS = [
   "SliderBox",
@@ -29,9 +30,7 @@ export const CONTROL_BOX_HEADS = [
   "ListPickerBox",
   "LocatorBox",
   "ColorSetterBox",
-  "SetterBarBox",
-  "RadioButtonBarBox",
-  "TogglerBarBox",
+  "RadioButtonBox",
 ] as const;
 
 export type ControlBoxHead = (typeof CONTROL_BOX_HEADS)[number];
@@ -140,9 +139,7 @@ export const ARITY: Readonly<Record<BoxHead, number>> = {
   ListPickerBox: 2,
   LocatorBox: 2,
   ColorSetterBox: 2,
-  SetterBarBox: 2,
-  RadioButtonBarBox: 2,
-  TogglerBarBox: 2,
+  RadioButtonBox: 2,
   FormBox: 2,
   TemplateSlot: 1,
   TemplateExpression: 1,

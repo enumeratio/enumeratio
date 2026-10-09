@@ -60,9 +60,10 @@ test("the remaining controls lower to their boxes", () => {
   expect(lowered("Knob", "k", ["Tuple", 0, 1])).toBe("KnobBox");
   expect(lowered("IntervalSlider", "r", ["Tuple", 0, 5])).toBe("IntervalSliderBox");
   expect(lowered("ListPicker", "c", ["List", "a", "b"])).toBe("ListPickerBox");
-  expect(lowered("RadioButtonBar", "c", ["List", "a", "b"])).toBe("RadioButtonBarBox");
-  expect(lowered("TogglerBar", "s", ["List", "a", "b"])).toBe("TogglerBarBox");
-  expect(lowered("SetterBar", "c", ["List", "a", "b"])).toBe("SetterBarBox");
+  // The bars are rows of single-entry boxes (bars.test.ts).
+  expect(lowered("RadioButtonBar", "c", ["List", "a", "b"])).toBe("GridBox");
+  expect(lowered("TogglerBar", "s", ["List", "a", "b"])).toBe("GridBox");
+  expect(lowered("SetterBar", "c", ["List", "a", "b"])).toBe("GridBox");
   expect(lowered("Locator", ["Tuple", "p", ["Tuple", 1, 1]])).toBe("LocatorBox");
   // Wolfram boxes a ColorSlider as a ColorSetterBox showing the spectrum.
   expect(makeBoxes(json(["ColorSlider", "c"]))).toEqual(["ColorSetterBox", ["DynamicBox", "c"], "SwatchSpectrum"]);

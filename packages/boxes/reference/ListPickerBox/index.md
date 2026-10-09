@@ -10,7 +10,7 @@ signatures:
     type: (boxes, expression, expression*) -> boxes
 seeAlso:
   - PopupMenuBox
-  - SetterBarBox
+  - SetterBox
   - DynamicBox
 names:
   wolframIdentity: true

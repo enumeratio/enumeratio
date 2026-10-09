@@ -5,6 +5,7 @@
 // AsciiMath does (linear.ts).
 
 import { type Box, type BoxNode, isNode, optionsOfBox } from "../box.ts";
+import { barOf } from "../control-group.ts";
 import { type Alphabet, joinSpelled, scriptChars, spell } from "./linear.ts";
 import { texToAlphabet } from "./tex-text.ts";
 
@@ -120,8 +121,12 @@ class Writer {
         return this.alphabet === "unicode"
           ? `${this.unit(box[1])}^(1/${this.write(box[2])})`
           : `root(${this.write(box[2])})(${this.write(box[1])})`;
-      case "GridBox":
+      case "GridBox": {
+        // A bar is one control, written as its kind.
+        const bar = barOf(box);
+        if (bar !== undefined) return `-${bar.kind}-`;
         return `{${box[1].map((r) => `{${r.map((b) => this.write(b)).join(", ")}}`).join(", ")}}`;
+      }
       case "StyleBox":
       case "FrameBox":
       case "PanelBox":
@@ -170,9 +175,7 @@ class Writer {
       case "ListPickerBox":
       case "LocatorBox":
       case "ColorSetterBox":
-      case "SetterBarBox":
-      case "RadioButtonBarBox":
-      case "TogglerBarBox":
+      case "RadioButtonBox":
         return `-${box[0].slice(0, -3)}-`;
       default:
         throw new Error("unreachable: BoxNode's tags are exhaustive above");

@@ -30,6 +30,7 @@ import {
   underoverscript,
   underscript,
 } from "../box.ts";
+import { barOf } from "../control-group.ts";
 import { texSource } from "./markdown.ts";
 
 export interface MathMLOptions {
@@ -111,11 +112,15 @@ function writeNode(box: BoxNode): string {
       return element("msqrt", write(box[1]));
     case "RadicalBox":
       return element("mroot", write(box[1]) + write(box[2]));
-    case "GridBox":
+    case "GridBox": {
+      // A bar is one control, written as its kind.
+      const bar = barOf(box);
+      if (bar !== undefined) return element("mtext", `-${bar.kind}-`);
       return element(
         "mtable",
         box[1].map((r) => element("mtr", r.map((cell) => element("mtd", write(cell))).join(""))).join(""),
       );
+    }
     case "StyleBox":
       return element("mstyle", write(box[1]), styleAttrs(box[2]));
     case "FrameBox":
@@ -162,9 +167,7 @@ function writeNode(box: BoxNode): string {
     case "ListPickerBox":
     case "LocatorBox":
     case "ColorSetterBox":
-    case "SetterBarBox":
-    case "RadioButtonBarBox":
-    case "TogglerBarBox":
+    case "RadioButtonBox":
       return element("mtext", `-${box[0].slice(0, -3)}-`);
     case "ButtonBox":
     case "TextCell":
