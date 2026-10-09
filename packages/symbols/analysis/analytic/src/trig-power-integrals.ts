@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { bigIntegerAt, declareCompile, operandsOf, symbolNameOf } from "@enumeratio/engine";
 import type { EvalOptions } from "@enumeratio/ce-patches";
 import { atEnginePrecision } from "@enumeratio/ce-patches";
 
@@ -121,4 +121,6 @@ export function declareTrigPowerIntegrals(ce: ComputeEngine): void {
     const value = result.N();
     return atEnginePrecision(ce, value) ?? value;
   }) as typeof operator.evaluate;
+  // An exact antiderivative: the built-in quadrature gives the same value.
+  declareCompile(ce, "Integrate", "builtin");
 }

@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { hyperbolicPythagoras } from "./full-simplify.ts";
+import { declareCompile } from "@enumeratio/engine";
 
 // Simplify's missing identities, where Wolfram's Simplify has them: a quotient of the
 // sine and cosine of the same argument is its tangent (cotangent, and the hyperbolic
@@ -44,4 +45,6 @@ export function declareSimplifyIdentities(ce: ComputeEngine): void {
     const rewritten = JSON.stringify(folded) === JSON.stringify(json) ? simplified : ce.box(folded as never).evaluate();
     return hyperbolicPythagoras(rewritten, ce);
   }) as typeof operator.evaluate;
+  // compile builtin: identities: simplification keeps the value
+  declareCompile(ce, "Simplify", "builtin");
 }

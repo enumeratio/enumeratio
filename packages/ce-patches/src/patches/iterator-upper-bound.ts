@@ -1,5 +1,6 @@
 import { type BoxedExpression, type ComputeEngine, isFunction, isSymbol } from "@cortex-js/compute-engine";
 import type { Patch } from "../patch.ts";
+import { declareCompile } from "@enumeratio/engine";
 
 // Wolfram's `Sum[f, {k, n}]` and `Product[f, {k, n}]` run k from 1 to n. compute-engine 0.146
 // reads `(k, n)` as `Limits(k, Nothing, n)`, one bound, and leaves the sum unevaluated (the
@@ -35,6 +36,8 @@ export const iteratorUpperBound: Patch = {
           ops.map((op, i) => (i === 0 ? op : withLowerBound(ce, op))),
           context,
         );
+      // compile builtin: reads an iterator at canonicalization, before compile sees the expression
+      declareCompile(ce, head, "builtin");
       holdUnbounded(operator as Operator, "evaluate");
       holdUnbounded(operator as Operator, "evaluateAsync");
     }

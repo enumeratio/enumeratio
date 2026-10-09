@@ -32,6 +32,7 @@ export function declareFastGcd(ce: Engine): void {
     return values;
   };
 
+  // compile builtin: the same gcd, computed faster for big integers
   wrapOperator(
     ce,
     ["GCD", 100000, 100000],
@@ -39,5 +40,6 @@ export function declareFastGcd(ce: Engine): void {
     // Folds from 0n (gcd(0, x) = |x|), so a single operand or an empty call both take the
     // same path as two-or-more, rather than needing a special case for either.
     () => (ops) => ce.number(allRealIntegers(ops)!.reduce((a, b) => hybridGcd(a, b), 0n)),
+    { compile: "builtin" },
   );
 }

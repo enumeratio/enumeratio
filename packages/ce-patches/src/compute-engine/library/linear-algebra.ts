@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { declareCompile, operandsOf } from "@enumeratio/engine";
 
 // cortex-js/compute-engine: `Shape` reads `xs.shape`, which is the `dimensions` of the operand's
 // TYPE, and a list's type only carries dimensions when its elements' type is known. A nested
@@ -40,4 +40,6 @@ export function evaluateShapeOfUnknownElements(ce: ComputeEngine): void {
     const shape = structuralShape(xs);
     return shape.length === 0 ? native(ops, options) : ce.tuple(...shape);
   };
+  // compile builtin: the structure of a list whose type carries no dimensions: the same shape
+  declareCompile(ce, "Shape", "builtin");
 }

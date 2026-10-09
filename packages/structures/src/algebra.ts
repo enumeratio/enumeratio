@@ -53,6 +53,7 @@ export function ensureAlgebraHeads(ce: ComputeEngine): void {
   }
 
   // `Element(x, A)` for an algebra `A`: its `HasElement`. Everything else stays native.
+  // compile builtin: answers Element only for an algebra, which compiled numeric code never holds
   wrapOperator(
     ce,
     ["Element", "x", "Integers"],
@@ -63,7 +64,7 @@ export function ensureAlgebraHeads(ce: ComputeEngine): void {
       const name = verdict === undefined ? undefined : symbolNameOf(verdict);
       return name === "True" || name === "False" ? verdict : native?.(ops, options);
     },
-    2,
+    { arity: 2, compile: "builtin" },
   );
 }
 

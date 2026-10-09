@@ -1,6 +1,7 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { lower, upper, DOUBLE_DIGITS } from "@enumeratio/ce-patches";
 import { enclosure } from "./certified.ts";
+import { declareCompile } from "@enumeratio/engine";
 
 // `N(x, d)`: `x` to `d` significant digits, every one of them right -- the last included.
 //
@@ -194,4 +195,6 @@ export function declareCorrectlyRoundedN(ce: ComputeEngine): void {
       ce.precision = precision;
     }
   };
+  // compile builtin: only the digits of N(x, d), which compiled doubles do not reach
+  declareCompile(ce, "N", "builtin");
 }

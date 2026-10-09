@@ -20,6 +20,7 @@ export const lerchPhiPatch: Patch = {
       .N()
       .is(0) && ce.box(["LerchPhi", -1, -1, 0.5]).N().is(0),
 
+  // No compile stance: at those zeros this gives 0 where the built-in lowering gives its own limit.
   apply: (ce) =>
     wrapOperator(
       ce,

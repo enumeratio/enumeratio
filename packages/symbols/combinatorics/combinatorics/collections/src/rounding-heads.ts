@@ -10,6 +10,7 @@ export function declareRoundingHeads(ce: Engine): void {
   // Chop(x, tolerance): the same near-zero cleanup as the 1-argument form, but with the
   // threshold as an argument instead of the fixed ~1e-10.
   widenSignature(ce, "Chop", "(any, number?) -> any");
+  // compile builtin up to 1 operand: the tolerance is an operand past the native call
   wrapOperator(
     ce,
     ["Chop", 0.001, 0.01],
@@ -31,12 +32,13 @@ export function declareRoundingHeads(ce: Engine): void {
       }
       return chopPart(x);
     },
-    2,
+    { arity: 2, compile: { upTo: 1 } },
   );
 
   // Clamp(x, lower, upper, vLower, vUpper): Wolfram's Clip[x, {lower, upper}, {vLower,
   // vUpper}] -- replacement values outside the range, rather than the nearer bound.
   widenSignature(ce, "Clamp", "(any, any?, any?, any?, any?) -> any");
+  // compile builtin up to 3 operands: the replacement values are operands past the native call
   wrapOperator(
     ce,
     ["Clamp", 5, 0, 3, -1, 10],
@@ -47,7 +49,7 @@ export function declareRoundingHeads(ce: Engine): void {
       if (x.isGreater(upper) === true) return vUpper;
       return x;
     },
-    5,
+    { arity: 5, compile: { upTo: 3 } },
   );
 
   // Min() -> +∞, the identity element for Min under the pool it flattens; Max already
@@ -55,11 +57,12 @@ export function declareRoundingHeads(ce: Engine): void {
   // The native signature requires at least one argument, so it has to widen to admit a
   // bare `Min()` at boxing at all.
   widenSignature(ce, "Min", "(any*) -> any");
+  // compile builtin: Min() is +Infinity, as the built-in lowering gives
   wrapOperator(
     ce,
     ["Min"],
     () => true,
     () => () => ce.symbol("PositiveInfinity"),
-    0,
+    { arity: 0, compile: "builtin" },
   );
 }

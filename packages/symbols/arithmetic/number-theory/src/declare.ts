@@ -12,7 +12,9 @@ import {
   defineOverload,
   integerAt,
   mayBeInteger,
+  onlyForIntegers,
   operandsOf,
+  refusing,
   threadOverLists,
   widenSignature,
   wrapOperator,
@@ -266,7 +268,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     ["Binomial", "n", ["Subtract", "n", 1]],
     (ops) => integerAt(ops[0]) === undefined && sub(ops[0], ops[1]).evaluate().isSame(ce.number(1)),
     () => (ops) => ops[0],
-    2,
+    { arity: 2, compile: "builtin" }, // an identity at symbolic n
   );
 
   // Binomial(n, n) -> 1 for symbolic n: choosing every one of n items is always 1 way,
@@ -277,6 +279,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     ["Binomial", "n", "n"],
     (ops) => ops.length === 2 && integerAt(ops[0]) === undefined && sub(ops[0], ops[1]).evaluate().isSame(ce.Zero),
     () => () => ce.One,
+    { compile: "builtin" }, // an identity at symbolic n
   );
 
   // Binomial, CatalanNumber, Pochhammer, Multinomial, Factorial2 and Subfactorial through
@@ -327,6 +330,8 @@ function declareCombinatoricsGamma113(ce: Engine): void {
     () => () => ce.One,
   );
 
+  // Compiles only for integer operands: native rejects an inexact or complex one, so the built-in lowering
+  // would not give this value.
   wrapOperator(
     ce,
     ["Binomial", ["Complex", 1, 1], 5],
@@ -343,7 +348,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
         div(gamma(add(n, 1)), mul(gamma(add(k, 1)), gamma(add(sub(n, k), 1)))).N(),
       );
     },
-    2,
+    { arity: 2, compile: onlyForIntegers("Binomial of an inexact or complex operand has no built-in lowering") },
   );
 
   wrapOperator(
@@ -417,6 +422,8 @@ function declareCombinatoricsGamma113(ce: Engine): void {
   );
 
   // Factorial2's analytic continuation: 2^{(1+2x-cos πx)/4} π^{(cos πx - 1)/4} Γ(1 + x/2).
+  // Compiles only for an integer operand: native rejects an inexact real, so the built-in lowering would not
+  // give this value.
   wrapOperator(
     ce,
     ["Factorial2", 2.5],
@@ -429,7 +436,7 @@ function declareCombinatoricsGamma113(ce: Engine): void {
       const piPower = ce.function("Power", [pi, div(sub(cosTerm, 1), 4)]);
       return mul(twoPower, piPower, gamma(add(1, div(x, 2)))).N();
     },
-    1,
+    { arity: 1, compile: onlyForIntegers("Factorial2 of an inexact real has no built-in lowering") },
   );
 
   // Subfactorial's Gamma form: D_n = Γ(n+1, -1) / e, the incomplete Gamma at -1.
@@ -471,12 +478,18 @@ function declareCombinatoricsGamma113(ce: Engine): void {
   // their tables (defineOverload), beside adeles' profinite one, so which package declared
   // first doesn't matter. The native integer recurrence only ever sees the one integer it took.
   const integerOnly = (op: Expr): boolean => integerAt(op) !== undefined;
+  // Compiles only for a plain integer index: a real index or a polynomial argument gives what the built-in
+  // lowering does not.
   const sequence = (head: string, row: Pick<Overload, "arity" | "when" | "evaluate">): void => {
     defineOverload(ce, head, {
       package: "number-theory",
       signature: "(number, any?) -> any",
       unless: ["ProfiniteNumber"],
       native: integerOnly,
+      compile: refusing(
+        (ops) => ops.length > 1 || ops[0]?.isInteger !== true,
+        "a real index or a polynomial argument has no built-in lowering",
+      ),
       ...row,
     });
   };

@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { extendHead } from "./extend.ts";
+import { type CompileStance, extendHead } from "./extend.ts";
 import { addHeadSignature, EVALUATES_OPERANDS } from "./overloads.ts";
 
 // Reading values back out of compute-engine expressions.
@@ -132,8 +132,17 @@ export type EvaluateHandler = (
  */
 export type Arity = number | { readonly min: number; readonly max?: number };
 
+/** What else a `wrapOperator` call states: the operand count, and how the head compiles. */
+export interface WrapOptions {
+  readonly arity?: Arity;
+  readonly compile?: CompileStance;
+}
+
 const fitsArity = (arity: Arity | undefined, n: number): boolean =>
   arity === undefined || (typeof arity === "number" ? n === arity : n >= arity.min && n <= (arity.max ?? Infinity));
+
+const isWrapOptions = (stated: Arity | WrapOptions | undefined): stated is WrapOptions =>
+  typeof stated === "object" && !("min" in stated);
 
 /**
  * Attach to an operator the engine already defines so that `handler` answers whenever
@@ -159,14 +168,20 @@ const fitsArity = (arity: Arity | undefined, n: number): boolean =>
  *
  * Layering is by capture: each attach takes whatever `evaluate` is current as its
  * fallback, so libraries chain in declaration order.
+ *
+ * `compile` says how the head compiles now that its `evaluate` is ours (`CompileStance`): a
+ * call that states nothing leaves an extended head failing to compile, as compute-engine
+ * does for any replaced `evaluate`. The fifth argument is the `arity` alone, or an options
+ * object when a call states `compile` too.
  */
 export function wrapOperator(
   ce: ComputeEngine,
   probe: readonly [string, ...unknown[]],
   applies: (ops: readonly BoxedExpression[]) => boolean,
   build: (native: NativeEvaluate) => EvaluateHandler,
-  arity?: Arity,
+  stated?: Arity | WrapOptions,
 ): void {
+  const { arity, compile } = isWrapOptions(stated) ? stated : { arity: stated, compile: undefined };
   const definition = ce.lookupDefinition(probe[0]);
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
@@ -175,6 +190,7 @@ export function wrapOperator(
   const lazy = operator.lazy === true;
   const foldsOperands = lazy && EVALUATES_OPERANDS.has(probe[0]);
   extendHead(ce, probe[0], {
+    compile,
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
       if (!fitsArity(arity, ops.length)) return native?.(ops, options);
       const values = lazy ? ops.map((op) => op.evaluate()) : ops;
@@ -196,7 +212,8 @@ export {
 } from "./facade.ts";
 export { applyFunction, capturesArguments } from "./apply-function.ts";
 export { latexEntries, type LatexReader, type LatexRule, type LatexWriter } from "./latex.ts";
-export { type HeadPatch, isExtension } from "./extend.ts";
+export { onlyForIntegers, refusing } from "./compile-guards.ts";
+export { type CompileStance, declareCompile, type HeadPatch, isExtension } from "./extend.ts";
 export { isNativeHead, nativeCanonical, nativeEvaluate, withAssumptions } from "./probe.ts";
 export { extendHead };
 

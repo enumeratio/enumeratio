@@ -7,7 +7,7 @@
 import { definitionHash, isCacheableDefinition, type MathJSON, pureResult } from "@enumeratio/engine/compiled";
 import { compiledStatistic } from "./compiled.ts";
 import { bareEngine } from "@enumeratio/engine/testing";
-import { type Engine, type Expr, isNativeHead, operandsOf } from "@enumeratio/engine";
+import { declareCompile, type Engine, type Expr, isNativeHead, operandsOf } from "@enumeratio/engine";
 import { symbolInfo } from "@enumeratio/manifest";
 import {
   allCarrierNames,
@@ -153,6 +153,8 @@ function extendEngineHead(ce: Engine, definition: Definition, type: string | und
     if (subject?.operator === definition.on) return applyDefinition(ce, definition, operandsOf(subject)[0] ?? subject);
     return nativeEvaluate?.(ops, options);
   };
+  // compile builtin: answers only for the carrier it is declared on
+  declareCompile(ce, definition.head, "builtin");
 }
 
 let bare: Engine | undefined;

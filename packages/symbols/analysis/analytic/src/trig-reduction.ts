@@ -166,6 +166,7 @@ function evaluateHugeTrig(ce: ComputeEngine, head: Circular, expr: BoxedExpressi
  */
 export function declareTrigReduction(ce: ComputeEngine): void {
   for (const head of ["Sin", "Cos", "Tan", "Sec", "Csc", "Cot"] as const) {
+    // compile builtin: reduces a huge argument in arbitrary precision; at double precision the lowering agrees
     wrapOperator(
       ce,
       [head, 1],
@@ -182,7 +183,7 @@ export function declareTrigReduction(ce: ComputeEngine): void {
         const result = evaluateHugeTrig(ce, head, rawOp ?? ops[0]!);
         return result ?? native?.(ops, options);
       },
-      1,
+      { arity: 1, compile: "builtin" },
     );
   }
 }

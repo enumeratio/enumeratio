@@ -63,6 +63,7 @@ export function declareThreading113(ce: ComputeEngine): void {
   // hits it on every element. Forcing the request here, ahead of HurwitzZeta's own
   // evaluate, is additive -- it only fires when a plain (non-numeric) evaluate() would
   // otherwise leave a float-argument call unevaluated.
+  // compile builtin: only asks for a number from a float operand evaluate() would leave unevaluated
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
@@ -70,7 +71,7 @@ export function declareThreading113(ce: ComputeEngine): void {
       !ops.some((o) => o === undefined) && ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false),
     (native) => (ops, options) =>
       options.numericApproximation ? native?.(ops, options) : native?.(ops, { ...options, numericApproximation: true }),
-    2,
+    { arity: 2, compile: "builtin" },
   );
 
   // Rationalize(list) and Rationalize(expression-with-floats-inside): compute-engine's

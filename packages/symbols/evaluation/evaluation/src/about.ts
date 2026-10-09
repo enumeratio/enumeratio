@@ -8,6 +8,7 @@
 import { type BoxedExpression, type ComputeEngine, isFunction, isString, isSymbol } from "@cortex-js/compute-engine";
 import { dictionaryOf, entriesOf } from "@enumeratio/ce-patches";
 import { describe, describeNow } from "@enumeratio/manifest";
+import { declareCompile } from "@enumeratio/engine";
 
 /** `describe`'s keys `About` doesn't carry: the example count (compute-engine's `examples` are
  *  the definition's own, a list) and the kind, which compute-engine settles for a declared name. */
@@ -124,6 +125,8 @@ export function declareAbout(ce: ComputeEngine): void {
     const name = ops.length === 1 ? nameGiven(ops[0]) : undefined;
     return result === undefined || name === undefined ? result : aboutDictionary(ce, name, result);
   };
+  // compile builtin: adds a dictionary of properties to the answer; not a number
+  declareCompile(ce, "About", "builtin");
   // Asynchronously, a summary not yet imported is imported first.
   operator.evaluateAsync = async (ops, options) => {
     const result = native(ops, options);

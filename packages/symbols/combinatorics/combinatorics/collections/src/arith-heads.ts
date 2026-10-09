@@ -110,6 +110,7 @@ function certifiedSign(ce: Engine, x: Expr): -1 | 0 | 1 | undefined {
 }
 
 function declareExactSign(ce: Engine): void {
+  // compile builtin: an exact expression's certified sign: compute-engine folds exact constants before compiling
   wrapOperator(
     ce,
     ["Sign", 1],
@@ -131,6 +132,7 @@ function declareExactSign(ce: Engine): void {
       const result = ce.number(sign);
       return options.numericApproximation ? result.N() : result;
     },
+    { compile: "builtin" },
   );
 }
 

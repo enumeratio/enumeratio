@@ -158,6 +158,7 @@ export function declareModular(ce: Engine): void {
     "(matrix | tuple | vector | expression<ModularMatrix> | string, matrix | tuple | vector | expression<ModularMatrix> | string) -> matrix | vector | number | expression<ModularMatrix>",
     (op) => op.type.matches(ce.type("matrix | tuple | vector")),
   );
+  // compile builtin: fires only on a modular matrix or word, which compiled numeric code never holds
   wrapOperator(
     ce,
     ["Dot", 1, 1],
@@ -166,7 +167,7 @@ export function declareModular(ce: Engine): void {
       const [m, n] = ops.map(matrixOf) as [Matrix, Matrix];
       return matrixExpression(multiply(m, n));
     },
-    2,
+    { arity: 2, compile: "builtin" },
   );
 
   widenSignature(
@@ -175,6 +176,7 @@ export function declareModular(ce: Engine): void {
     "(matrix | real | expression<ModularMatrix> | string, real) -> matrix | real | expression<ModularMatrix>",
     (op) => op.type.matches(matrixType) || op.type.matches(ce.type("real")),
   );
+  // compile builtin: fires only on a modular matrix or word, which compiled numeric code never holds
   wrapOperator(
     ce,
     ["MatrixPower", 1, 1],
@@ -185,7 +187,7 @@ export function declareModular(ce: Engine): void {
       const result = power(m, k);
       return result === undefined ? undefined : matrixExpression(result);
     },
-    2,
+    { arity: 2, compile: "builtin" },
   );
 
   // A row in Inverse's table, beside combinatorics' permutation one, whoever declares first.
@@ -193,6 +195,7 @@ export function declareModular(ce: Engine): void {
     package: "modular",
     signature: "(matrix | expression<ModularMatrix> | string) -> matrix | expression<ModularMatrix>",
     arity: 1,
+    compile: "builtin", // only a modular matrix, which compiled numeric code never holds
     when: (ops) => isModularOperand(ops[0]!) && matrixOf(ops[0]) !== undefined,
     native: (op) => op.type.matches(matrixType),
     evaluate: (ops) => {

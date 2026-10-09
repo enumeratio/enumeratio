@@ -29,25 +29,28 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // page states. None of these have a `Limit` machinery behind them; each is a single
   // pinned value at the single symbol PositiveInfinity, not a general limit-taking. ---
   for (const head of ["BarnesG", "LogBarnesG", "LogGamma", "HarmonicNumber"] as const) {
+    // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
     wrapOperator(
       ce,
       [head, 1],
       (ops) => isPositiveInfinity(ops[0]),
       () => (_ops, options) => finish(ce.symbol("PositiveInfinity"), options),
-      1,
+      { arity: 1, compile: "builtin" },
     );
   }
   for (const head of ["DirichletEta", "DirichletBeta"] as const) {
+    // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
     wrapOperator(
       ce,
       [head, 1],
       (ops) => isPositiveInfinity(ops[0]),
       () => (_ops, options) => finish(ce.number(1), options),
-      1,
+      { arity: 1, compile: "builtin" },
     );
   }
   // H_oo^(r) = zeta(r) for r > 1 (the Basel-sum generalisation); r <= 1 diverges and is
   // left alone (H_oo^(1) is the plain harmonic series above, already oo).
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["HarmonicNumber", 2],
@@ -57,7 +60,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       return Number.isFinite(r) && r > 1;
     },
     () => (ops, options) => finish(ce.function("Zeta", [ops[1]]), options),
-    2,
+    { arity: 2, compile: "builtin" },
   );
 
   // --- zeta(s, 1/2) = (2^s - 1) zeta(s), reached through the *Zeta* head with a second
@@ -67,6 +70,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // through HurwitzZeta's own (wrapped) operator, so that wrapper never sees a `Zeta`
   // call and this needs its own attachment on the `Zeta` operator. Gated on a concrete
   // numeric s (not a bare symbol) so the separate symbolic-s identity is untouched. ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["Zeta", 2],
@@ -82,13 +86,14 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    2,
+    { arity: 2, compile: "builtin" },
   );
 
   // --- LerchPhi(z, 1, 1) at z = 1/2: Phi(z,1,1) = -Ln(1-z)/z generally (sum z^n/(n+1) =
   // -ln(1-z)/z), pinned here at the one rational value the reference asks for since
   // compute-engine does not simplify Ln(1/2) into -Ln(2) on its own (the general formula
   // would answer -2*Ln(1/2), true but not the form Wolfram's FunctionExpand gives). ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["LerchPhi", 3],
@@ -99,7 +104,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       );
     },
     () => (_ops, options) => finish(ce.function("Multiply", [2, ce.function("Ln", [2])]), options),
-    3,
+    { arity: 3, compile: "builtin" },
   );
 
   // --- LerchPhi(-1, s, 1/2) = 2^s * DirichletBeta(s): at a = 1/2, (n+1/2)^-s = 2^s
@@ -107,6 +112,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // (DirichletBeta's own defining series). General in s; at s=2 DirichletBeta(2) is
   // already Catalan's constant (dirichlet.ts), so this closes to 4*CatalanConstant without any
   // extra step. ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["LerchPhi", 3],
@@ -120,13 +126,14 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ce.function("Multiply", [ce.function("Power", [2, ops[1]]), ce.function("DirichletBeta", [ops[1]])]),
         options,
       ),
-    3,
+    { arity: 3, compile: "builtin" },
   );
 
   // --- PolyLog(n, -1) = (2^(1-n) - 1) zeta(n) for a symbolic order n: Li_n(-1) =
   // -DirichletEta(n) = -(1 - 2^(1-n)) zeta(n), the standard identity behind
   // DirichletEta's own FunctionExpand — valid for any n, so no restriction beyond n
   // being a free symbol (a concrete numeric n already has its own reductions). ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["PolyLog", 2],
@@ -141,11 +148,12 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         options,
       );
     },
-    2,
+    { arity: 2, compile: "builtin" },
   );
 
   // --- PolyLog(-2, z) = z(1+z)/(1-z)^3: the standard negative-integer-order closed
   // form (only orders -1, 0, 1 reduce natively today). Valid for any z != 1. ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["PolyLog", 2],
@@ -160,23 +168,25 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         options,
       );
     },
-    2,
+    { arity: 2, compile: "builtin" },
   );
 
   // --- Erf(i) = i * Erfi(1): the standard erf/erfi rotation erf(iy) = i*erfi(y),
   // pinned at y = 1 (the only value the reference needs; a general symbolic-argument
   // rotation is a broader change than this lane's scope). ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["Erf", 1],
     (ops) => isImaginaryUnit(ops[0]),
     () => (_ops, options) => finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Erfi", [1])]), options),
-    1,
+    { arity: 1, compile: "builtin" },
   );
 
   // --- Erfc(-x) = 2 - Erfc(x): erfc is odd about erfc(0) = 1 (erfc(-x) = 1 + erf(x) =
   // 2 - erfc(x)), applied symbolically. Gated on a structural Negate (a symbolic -x),
   // not a negative numeric literal, which the native numeric kernel already handles. ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["Erfc", 1],
@@ -185,7 +195,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       const x = operandsOf(ops[0])[0];
       return finish(ce.function("Subtract", [2, ce.function("Erfc", [x])]), options);
     },
-    1,
+    { arity: 1, compile: "builtin" },
   );
 
   // --- BetaRegularized(x, a, b) at a = 1 or b = 1: the standard finite-arity closed
@@ -196,20 +206,23 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // one and read as an (accidental, wrong-owner) interval-arithmetic result. ---
   const plainX = (x: BoxedExpression): boolean =>
     x.operator !== "Interval" && x.operator !== "CenteredInterval" && x.operator !== "Around";
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
     (ops) => plainX(ops[0]) && bigIntegerAt(ops[1]) === 1n && bigIntegerAt(ops[2]) === 1n,
     () => (ops, options) => finish(ops[0], options),
-    3,
+    { arity: 3, compile: "builtin" },
   );
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
     (ops) => plainX(ops[0]) && bigIntegerAt(ops[2]) === 1n && bigIntegerAt(ops[1]) !== 1n,
     () => (ops, options) => finish(ce.function("Power", [ops[0], ops[1]]), options),
-    3,
+    { arity: 3, compile: "builtin" },
   );
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
@@ -219,7 +232,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ce.function("Subtract", [1, ce.function("Power", [ce.function("Subtract", [1, ops[0]]), ops[2]])]),
         options,
       ),
-    3,
+    { arity: 3, compile: "builtin" },
   );
 
   // --- Digamma / trigamma at 1/2, the last case of Gauss's digamma theorem this
@@ -231,6 +244,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // already sends PolyGamma(0, z) through Digamma(z) (closed-forms-113.ts), so
   // PolyGamma(0, 1/2) and StieltjesGamma(0, 1/2) (which reduces to -PolyGamma(0, a))
   // close for free once Digamma(1/2) itself does. ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["Digamma", 1],
@@ -246,8 +260,9 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
         ]),
         options,
       ),
-    1,
+    { arity: 1, compile: "builtin" },
   );
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["PolyGamma", 2],
@@ -257,7 +272,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     },
     () => (_ops, options) =>
       finish(ce.function("Multiply", [ce.function("Rational", [1, 2]), ce.function("Power", ["Pi", 2])]), options),
-    2,
+    { arity: 2, compile: "builtin" },
   );
 
   // --- PolyGamma(m, n) at a positive integer order m and integer argument n:
@@ -270,6 +285,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
   // Wolfram's own bare kernel (wolframscript-checked: PolyGamma[1,1] there IS Pi^2/6)
   // -- a documented CE/Wolfram divergence this lane doesn't touch. Gated to n > 2 so
   // this only closes larger cases like PolyGamma(3, 5), leaving that divergence intact. ---
+  // compile builtin: limits at +oo, exact closed forms and symbolic identities at the native call shape
   wrapOperator(
     ce,
     ["PolyGamma", 2],
@@ -290,6 +306,6 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       const bracket = terms.length === 1 ? terms[0] : ce.function("Add", terms);
       return finish(ce.function("Multiply", [sign, mFactorial, bracket]), options);
     },
-    2,
+    { arity: 2, compile: "builtin" },
   );
 }

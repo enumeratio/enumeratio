@@ -122,6 +122,8 @@ function restoreMaterialization(ce: ComputeEngine, head: string): void {
     options: EvaluateOptions,
   ) => BoxedExpression | undefined;
   extendHead(ce, head, {
+    // Only answers `evaluate({ materialization })`, which compiled code never asks for.
+    compile: "builtin",
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
       const result = dispatched(ops, options);
       if (result !== undefined) return result;

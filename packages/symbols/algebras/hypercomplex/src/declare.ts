@@ -1,5 +1,6 @@
 import { registerNotation } from "@enumeratio/boxes";
 import {
+  declareCompile,
   defineOverload,
   type Engine,
   type EvalOptions,
@@ -7,6 +8,7 @@ import {
   extendHead,
   type NativeEvaluate,
   nativeEvaluate,
+  refusing,
   wrapOperator,
 } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
@@ -104,6 +106,8 @@ function declareOrderedJuxtaposition(ce: Engine): void {
     if (productIsOrderable(ops) || productIsInBladeOrder(ops)) return canonical;
     return ce.function("NonCommutativeMultiply", ops);
   };
+  // compile builtin: an ordered juxtaposition is rewritten at canonicalization, before compile sees it
+  declareCompile(ce, "InvisibleOperator", "builtin");
 }
 
 /**
@@ -125,6 +129,11 @@ function declareOrderedJuxtaposition(ce: Engine): void {
  */
 const hasGenerator = (ops: readonly Expr[]): boolean => ops.some(containsGenerator);
 
+const GENERATORS = refusing(
+  hasGenerator,
+  "a hypercomplex generator is a unit of the algebra, which compiled code would read as a number",
+);
+
 /** `hasGenerator` for Add and Multiply, which run on every sum and product: a generator
  * under a non-arithmetic head can't be read as a multivector anyway, so don't look. */
 const reachesAnyGenerator = (ops: readonly Expr[]): boolean => ops.some(reachesGenerator);
@@ -144,9 +153,12 @@ export function declareHypercomplex(ce: Engine): void {
     return combine(parts);
   };
 
+  // Every row and wrapper here needs a generator symbol (i_1, e_2, ...). Compiled code would read one as a
+  // plain number (`i_1 * i_1` is 1, not -1), so a call with a generator operand fails to compile.
   defineOverload(ce, "Add", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: GENERATORS,
     when: reachesAnyGenerator,
     evaluate: (ops) => linear(ops, (parts) => toExpression(ce, addMultivectors(ce, parts))),
   });
@@ -158,6 +170,7 @@ export function declareHypercomplex(ce: Engine): void {
   defineOverload(ce, "Multiply", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: GENERATORS,
     when: reachesAnyGenerator,
     evaluate: (ops) =>
       productIsOrderable(ops)
@@ -173,6 +186,7 @@ export function declareHypercomplex(ce: Engine): void {
   defineOverload(ce, "Negate", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: GENERATORS,
     arity: 1,
     when: hasGenerator,
     evaluate: (ops) =>
@@ -182,6 +196,7 @@ export function declareHypercomplex(ce: Engine): void {
   defineOverload(ce, "Power", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: GENERATORS,
     arity: 2,
     when: hasGenerator,
     evaluate: (ops) => {
@@ -200,6 +215,7 @@ export function declareHypercomplex(ce: Engine): void {
   defineOverload(ce, "Divide", {
     package: "hypercomplex",
     symbols: GENERATOR_SYMBOLS,
+    compile: GENERATORS,
     arity: 2,
     when: hasGenerator,
     evaluate: (ops) =>
@@ -215,7 +231,7 @@ export function declareHypercomplex(ce: Engine): void {
     hasGenerator,
     () => (ops) =>
       linear(ops, ([mv]) => (mv === undefined ? undefined : toExpression(ce, conjugateMultivector(ce, mv)))),
-    1,
+    { arity: 1, compile: GENERATORS },
   );
 
   // Expanding a hypercomplex element IS putting it in blade normal form, which is what
@@ -235,7 +251,7 @@ export function declareHypercomplex(ce: Engine): void {
     ["Norm", "x"],
     hasGenerator,
     () => (ops) => linear(ops, ([mv]) => (mv === undefined ? undefined : normMultivector(ce, mv))),
-    1,
+    { arity: 1, compile: GENERATORS },
   );
 
   // `\overline{z}` parses to OverBar, which has no definition of its own — give it

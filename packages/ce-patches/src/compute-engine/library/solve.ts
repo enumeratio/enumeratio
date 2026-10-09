@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
+import { declareCompile, integerAt, operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // cortex-js/compute-engine: `Solve`'s single-unknown path calls `equation.solve(unknown)`, which
 // answers a list that can be wrong by omission:
@@ -27,6 +27,8 @@ export function evaluateSolveDeclines(ce: ComputeEngine): void {
     }
     return provesNoSolution(ce, ops, true) ? result : undefined;
   };
+  // compile builtin: adds solution filtering and no-solution answers: same values, and Solve has no numeric lowering
+  declareCompile(ce, "Solve", "builtin");
 }
 
 /** Is `expr` `Solve`'s native "no solutions" answer -- `List()`, zero operands? */
@@ -207,4 +209,6 @@ export function evaluateSolveDomains(ce: ComputeEngine): void {
     }
     return ce.function("List", kept);
   };
+  // compile builtin: adds solution filtering and no-solution answers: same values, and Solve has no numeric lowering
+  declareCompile(ce, "Solve", "builtin");
 }

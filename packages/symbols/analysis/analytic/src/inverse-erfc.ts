@@ -36,11 +36,12 @@ export function declareInverseErfc(ce: ComputeEngine): void {
   // too), so this extends Erfc in place with the one structural cancellation Wolfram's page
   // documents. Evaluating InverseErfc(x) first would just decline for symbolic x and never
   // reach the identity, so this matches the AST directly instead.
+  // compile builtin: Erfc(InverseErfc(x)) = x is an identity
   wrapOperator(
     ce,
     ["Erfc", 1],
     (ops) => ops[0]?.operator === "InverseErfc",
     () => (ops) => operandsOf(ops[0])[0],
-    1,
+    { arity: 1, compile: "builtin" },
   );
 }

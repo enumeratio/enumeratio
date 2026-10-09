@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { declareCompile, operandsOf } from "@enumeratio/engine";
 
 // Sin(Arcsin z) = z, Cosh(Arcosh z) = z and Tanh(Artanh z) = z hold for every complex z --
 // Wolfram folds all three, unconditionally. Cos/Arccos, Tan/Arctan and Sinh/Arsinh already
@@ -55,6 +55,8 @@ function foldInverseComposition(ce: ComputeEngine, head: string, inverse: string
     if (inner.length === 1) return inner[0]!.canonical;
     return native ? native(ops, options) : null;
   };
+  // The fold happens at canonicalization: compile sees `z`, never the composition.
+  declareCompile(ce, head, "builtin");
 }
 
 export function declareInverseCompositions(ce: ComputeEngine): void {

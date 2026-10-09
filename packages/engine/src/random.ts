@@ -5,6 +5,7 @@
 // `RandomVariate`, …) rewrite to `Random` over the right domain.
 
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { declareCompile } from "./extend.ts";
 import { operandsOf } from "./index.ts";
 
 const DEFAULT_SEED = 42;
@@ -137,4 +138,6 @@ export function ensureRandom(ce: ComputeEngine): void {
     };
     return build(0);
   };
+  // compile builtin: compiled code draws from the same seeded stream (tests/random-seed.test.ts)
+  declareCompile(ce, "Random", "builtin");
 }

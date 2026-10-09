@@ -48,6 +48,7 @@ const SPECIAL: Readonly<Record<string, readonly [number, (ce: ComputeEngine) => 
 
 export function declareHyperbolicExact(ce: ComputeEngine): void {
   for (const [head, [at, value]] of Object.entries(SPECIAL)) {
+    // compile builtin: exact values and identities at exact arguments
     wrapOperator(
       ce,
       [head, 1],
@@ -57,12 +58,13 @@ export function declareHyperbolicExact(ce: ComputeEngine): void {
         return exact && q !== undefined && q[1] === 1n && q[0] === BigInt(at);
       },
       () => () => value(ce),
-      1,
+      { arity: 1, compile: "builtin" },
     );
   }
 
   for (const [head, rule] of Object.entries(RULES)) {
     const apply = rule(ce);
+    // compile builtin: exact values and identities at exact arguments
     wrapOperator(
       ce,
       [head, 1],
@@ -71,7 +73,7 @@ export function declareHyperbolicExact(ce: ComputeEngine): void {
         const [n, d] = logArgument(ops[0])!;
         return finish(apply(ce.number([n, d]), ce.number([d, n])), options);
       },
-      1,
+      { arity: 1, compile: "builtin" },
     );
   }
 }

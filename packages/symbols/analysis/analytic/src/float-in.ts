@@ -25,11 +25,13 @@ const FLOAT_IN_HEADS = [
 
 export function declareFloatInDoubleOut(ce: Engine): void {
   for (const head of FLOAT_IN_HEADS) {
+    // compile builtin: rounds a float operand's answer to a double, and leaves a NaN unevaluated: no number differs
     wrapOperator(
       ce,
       [head],
       () => true,
       (native) => (ops, options) => doublesForFloats(ce, ops, options, () => native?.(ops, options)),
+      { compile: "builtin" },
     );
   }
 }
@@ -40,6 +42,7 @@ export function declareFloatInDoubleOut(ce: Engine): void {
  * compute-engine answers NaN; no numeric answer stands for that, so the call stays unevaluated.
  */
 export function declineHurwitzIndeterminate(ce: Engine): void {
+  // compile builtin: rounds a float operand's answer to a double, and leaves a NaN unevaluated: no number differs
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
@@ -56,7 +59,7 @@ export function declineHurwitzIndeterminate(ce: Engine): void {
       );
     },
     () => () => undefined,
-    2,
+    { arity: 2, compile: "builtin" },
   );
 }
 
@@ -70,6 +73,7 @@ export function declineHurwitzIndeterminate(ce: Engine): void {
 export function declareComplexZeta(ce: Engine): void {
   const complex = (x: Expr | undefined): boolean =>
     x !== undefined && Number.isFinite(x.re) && Number.isFinite(x.im) && x.im !== 0;
+  // compile builtin: rounds a float operand's answer to a double, and leaves a NaN unevaluated: no number differs
   wrapOperator(
     ce,
     ["Zeta", 1],
@@ -78,8 +82,9 @@ export function declareComplexZeta(ce: Engine): void {
       !wantsNumber(ops, options) || exceedsDoublePrecision(ce, options.numericApproximation)
         ? native?.(ops, options)
         : (evaluateHurwitz(ce, [ops[0], ce.One], true) ?? native?.(ops, options)),
-    1,
+    { arity: 1, compile: "builtin" },
   );
+  // compile builtin: rounds a float operand's answer to a double, and leaves a NaN unevaluated: no number differs
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
@@ -88,6 +93,6 @@ export function declareComplexZeta(ce: Engine): void {
       !wantsNumber(ops, options) || exceedsDoublePrecision(ce, options.numericApproximation)
         ? native?.(ops, options)
         : (evaluateHurwitz(ce, ops, true) ?? native?.(ops, options)),
-    2,
+    { arity: 2, compile: "builtin" },
   );
 }

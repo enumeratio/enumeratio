@@ -1,6 +1,7 @@
 import {
   bigIntegerAt,
   bigRationalAt,
+  declareCompile,
   extendHead,
   operandsOf,
   threadOverLists,
@@ -48,6 +49,8 @@ function extend(
   // signature doesn't reach; let the signature do it, with the operands evaluated up front.
   const operator = (ce.lookupDefinition(head) as { operator?: Record<string, unknown> } | undefined)?.operator;
   if (operator?.lazy === true) Object.assign(operator, { lazy: false, canonical: undefined });
+  // No compile stance: ours answers where native declines, so the head is closed.
+  declareCompile(ce, head, undefined);
   wrapOperator(
     ce,
     [head],

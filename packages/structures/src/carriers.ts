@@ -10,7 +10,7 @@
 // reject a bare list — and, more usefully, reject a SetPartition.
 
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
-import { operandsOf } from "@enumeratio/engine";
+import { declareCompile, operandsOf } from "@enumeratio/engine";
 import { carrierNameForType, registerCarrier, registerCollectionCarrier } from "./operations.ts";
 
 /** The structural shape a carrier's values have, as a compute-engine type expression. */
@@ -137,6 +137,7 @@ function declareConstructor(ce: ComputeEngine, carrier: Carrier): void {
   const existingSignature = operator.signature;
   (operator as { signature: unknown }).signature = ce.type(`(${clause}) & ${String(existingSignature)}`);
   operator.evaluate = (ops: readonly BoxedExpression[], options) => existingEvaluate?.(ops, options);
+  declareCompile(ce, carrier.name, "builtin"); // a pass-through
 }
 
 /** The value inside a constructed carrier — what a statistic reaches for. */
@@ -213,6 +214,7 @@ export function declareCarrierElement(ce: ComputeEngine, carriers: readonly Carr
 
   const existingEvaluate = operator.evaluate;
   operator.evaluate = (ops: readonly BoxedExpression[], options) => membership(ops) ?? existingEvaluate?.(ops, options);
+  declareCompile(ce, "Element", "builtin"); // answers only for a carrier or an algebra
 }
 
 /**
@@ -252,6 +254,7 @@ export function attachConversion(
     ops.length === 1 + extra.length && ops[0]?.operator === sourceConstructor
       ? handle(ops[0], ...ops.slice(1))
       : existingEvaluate?.(ops, options);
+  declareCompile(ce, target, "builtin"); // converts only a value of the source carrier
 }
 
 export { carrierNameForType };

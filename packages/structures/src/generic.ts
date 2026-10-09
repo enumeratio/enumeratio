@@ -124,16 +124,18 @@ export function declareGenericHeads(ce: ComputeEngine): void {
     ["Min", -1],
     ["Max", 1],
   ] as const) {
+    // compile builtin: fires only on a structured (non-number) operand, which compiled numeric code never holds
     wrapOperator(
       ce,
       [head, "'b'", "'a'"],
       (ops) => pool(ops).some(isStructured),
       (native) => (ops, options) => extremum(ce, pool(ops), side) ?? native?.(ops, options),
-      { min: 1 },
+      { arity: { min: 1 }, compile: "builtin" },
     );
   }
 
   // Clamp(x, lo, hi) = Max(lo, Min(x, hi)), in any lattice.
+  // compile builtin up to 3 operands: fires only on a structured (non-number) operand, which compiled numeric code never holds
   wrapOperator(
     ce,
     ["Clamp", "'m'", "'c'", "'k'"],
@@ -143,22 +145,25 @@ export function declareGenericHeads(ce: ComputeEngine): void {
       const below = extremum(ce, [x, hi], -1);
       return (below === undefined ? undefined : extremum(ce, [lo, below], 1)) ?? native?.(ops, options);
     },
-    3,
+    { arity: 3, compile: { upTo: 3 } },
   );
 
+  // compile builtin up to 2 operands: fires only on a structured (non-number) operand, which compiled numeric code never holds;
+  // the native call takes the operand and its digits.
   for (const head of ["Floor", "Ceil"] as const)
     wrapOperator(
       ce,
       [head, ["Complex", 2.5, 3.7]],
       (ops) => isStructured(ops[0]!),
       (native) => (ops, options) => floorOrCeil(ce, ops[0]!, head) ?? native?.(ops, options),
-      1,
+      { arity: 1, compile: { upTo: 2 } },
     );
+  // compile builtin up to 2 operands: as Floor and Ceil above.
   wrapOperator(
     ce,
     ["Round", ["Complex", 2.5, 3.7]],
     (ops) => isStructured(ops[0]!),
     (native) => (ops, options) => round(ce, ops[0]!) ?? native?.(ops, options),
-    1,
+    { arity: 1, compile: { upTo: 2 } },
   );
 }

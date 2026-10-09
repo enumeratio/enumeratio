@@ -20,7 +20,7 @@ import { type MarkupSpec, specsFile } from "../prerender-markup.ts";
 import { makeEngine, typeset } from "./prerender.ts";
 
 let kernel: Promise<Kernel> | undefined;
-const pageKernel = (): Promise<Kernel> =>
+export const pageKernel = (): Promise<Kernel> =>
   (kernel ??= makeEngine().then((ce) =>
     createKernel(ce, CATALOGUE, {
       ...NOTEBOOK_KERNEL,

@@ -22,11 +22,12 @@ export function declareFastFactorial(ce: Engine): void {
     return n !== undefined && n >= 0n && n <= FAST_FACTORIAL_LIMIT ? n : undefined;
   };
 
+  // compile builtin: an exact integer's exact value: where a double can hold it the lowering gives the same
   wrapOperator(
     ce,
     ["Factorial", 100000],
     (ops) => fitsFastRange(ops[0]) !== undefined,
     () => (ops) => ce.number(factorial(fitsFastRange(ops[0])!)),
-    1,
+    { arity: 1, compile: "builtin" },
   );
 }

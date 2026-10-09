@@ -47,12 +47,13 @@ function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
     Coth: (t) => ce.function("Negate", [ce.function("Multiply", ["ImaginaryUnit", ce.function("Cot", [t])])]),
   };
   for (const [head, rewrite] of Object.entries(rewrites)) {
+    // compile builtin: imaginary arguments, poles at i*k*pi and exact special values: the lowering is complex-aware
     wrapOperator(
       ce,
       [head, 1],
       (ops) => ops[0] !== undefined && hasImaginaryFactor(ops[0]),
       () => (ops, options) => finish(rewrite(realPartOf(ce, ops[0]!)), options),
-      1,
+      { arity: 1, compile: "builtin" },
     );
   }
 }
@@ -65,6 +66,7 @@ function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
  */
 function declareHyperbolicPoles(ce: ComputeEngine): void {
   for (const head of ["Coth", "Csch"] as const) {
+    // compile builtin: imaginary arguments, poles at i*k*pi and exact special values: the lowering is complex-aware
     wrapOperator(
       ce,
       [head, 1],
@@ -74,20 +76,21 @@ function declareHyperbolicPoles(ce: ComputeEngine): void {
         return ce.function("Divide", [realPartOf(ce, arg), "Pi"]).evaluate().isInteger === true;
       },
       () => () => ce.symbol("ComplexInfinity"),
-      1,
+      { arity: 1, compile: "builtin" },
     );
   }
 }
 
 /** Ln(i) = i*pi/2, the principal value. */
 function declareLnImaginaryUnit(ce: ComputeEngine): void {
+  // compile builtin: imaginary arguments, poles at i*k*pi and exact special values: the lowering is complex-aware
   wrapOperator(
     ce,
     ["Ln", 1],
     (ops) => ops[0] !== undefined && ops[0].operator === "Complex" && ops[0].re === 0 && ops[0].im === 1,
     () => (_ops, options) =>
       finish(ce.function("Multiply", [ce.function("Complex", [0, ce.number([1, 2])]), "Pi"]), options),
-    1,
+    { arity: 1, compile: "builtin" },
   );
 }
 
@@ -105,6 +108,7 @@ function declareLnImaginaryUnit(ce: ComputeEngine): void {
  * gives an exact fold -- otherwise this declines exactly as native does.
  */
 function declareArccotTable(ce: ComputeEngine): void {
+  // compile builtin: imaginary arguments, poles at i*k*pi and exact special values: the lowering is complex-aware
   wrapOperator(
     ce,
     ["Arccot", 1],
@@ -116,7 +120,7 @@ function declareArccotTable(ce: ComputeEngine): void {
       if (arctanValue.operator === "Arctan") return nativeResult; // Arctan didn't fold either
       return finish(ce.function("Subtract", [ce.function("Divide", ["Pi", 2]), arctanValue]), options);
     },
-    1,
+    { arity: 1, compile: "builtin" },
   );
 }
 
@@ -125,12 +129,13 @@ function declareArccotTable(ce: ComputeEngine): void {
  * has no separate decimal form, so N() and evaluate() agree without branching. */
 function declareReciprocalInversePoles(ce: ComputeEngine): void {
   for (const head of ["Arccsc", "Arcsec"] as const) {
+    // compile builtin: imaginary arguments, poles at i*k*pi and exact special values: the lowering is complex-aware
     wrapOperator(
       ce,
       [head, 1],
       (ops) => ops[0]?.is(0) === true,
       () => () => ce.symbol("ComplexInfinity"),
-      1,
+      { arity: 1, compile: "builtin" },
     );
   }
 }
