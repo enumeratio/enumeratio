@@ -111,7 +111,7 @@ const CURVE_WIDTH = 2;
 const DOT_RADIUS = 2.5;
 const MARK_RADIUS = 3;
 const FILL_OPACITY = 0.12;
-/** An arrow's head length in px unless the box gives `Arrowheads`. */
+/** An arrow's head length in px when the box gives no `Arrowheads`. */
 const HEAD = 8;
 /** Margins around the plot area, in px. */
 const [M_LEFT, M_RIGHT, M_BOTTOM] = [38, 10, 22];
@@ -567,14 +567,16 @@ export function drawPlot(box: BoxNode, hover?: number): PlotDrawing {
         if (points.length >= 2) {
           const [b, a] = [points.at(-1)!, points.at(-2)!];
           const angle = Math.atan2(b[1]! - a[1]!, b[0]! - a[0]!);
-          const head = typeof p.Arrowheads === "number" ? p.Arrowheads : HEAD;
+          // Wolfram's `Arrowheads` size is a fraction of the plot width.
+          const head = typeof p.Arrowheads === "number" ? p.Arrowheads * plotW : HEAD;
           const wing = (turn: number): [number, number] => [
             b[0]! - head * Math.cos(angle + turn),
             b[1]! - head * Math.sin(angle + turn),
           ];
           push(
             { head: "Polygon", points: [b, wing(0.4), wing(-0.4)] },
-            { ...(color && { color }), edges: [] },
+            // The head takes the shaft's stroke too, so a short head keeps the weight of a drawn barb.
+            { ...(color && { color }), edges },
             clipped,
           );
         }

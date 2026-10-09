@@ -163,7 +163,7 @@ const STREAM_WIDTH = 1.1;
 const STREAM_OPACITY = 0.8;
 /** The shortest arrow drawn, in px: a shorter one is a smear, not a direction. */
 const MIN_ARROW = 0.4;
-/** An arrow's head is at most this many px, and at most this fraction of its length. */
+/** An arrow's head is at most this many px (stored as a fraction of the plot width), and at most this fraction of its length. */
 const HEAD_PX = 4;
 const HEAD_FRACTION = 0.45;
 
@@ -230,7 +230,7 @@ export function vectorPlotBox(
                 [s.x - hx, s.y - hy],
                 [s.x + hx, s.y + hy],
               ],
-              Arrowheads: Math.min(HEAD_PX, len * HEAD_FRACTION),
+              Arrowheads: Math.min(HEAD_PX, len * HEAD_FRACTION) / plotW,
             }),
             "Series",
           ),
@@ -264,7 +264,7 @@ export function vectorPlotBox(
                   [a.x, a.y],
                   [b.x, b.y],
                 ],
-                Arrowheads: HEAD_PX,
+                Arrowheads: HEAD_PX / plotW,
               }),
               "Series",
             ),

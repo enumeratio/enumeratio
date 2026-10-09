@@ -246,3 +246,18 @@ test("a field plot is a producer: its box holds the expression for an environmen
   expect(optionsOfBox(box as BoxNode).Producer).toBe("VectorPlot");
   expect(unsampledPlot(box)).toBeDefined();
 });
+
+test("arrowheads are a fraction of the plot width, drawn filled and stroked", () => {
+  for (const type of ["vector", "stream"] as const) {
+    const b = plot(rotation, -2, 2, -2, 2, { type });
+    const sizes = plotItems(b)
+      .filter((i) => i.prim[0] === "ArrowBox")
+      .map((i) => Number(optionsOfBox(i.prim).Arrowheads));
+    expect(sizes.length).toBeGreaterThan(0);
+    // 292 px of plot width: a 4 px head is 4/292.
+    expect(Math.max(...sizes)).toBeCloseTo(4 / 292, 6);
+    const heads = [...svgOf(b).matchAll(/<path d="M[^"]*Z"[^>]*>/g)].map((m) => m[0]);
+    expect(heads.some((h) => /fill="#/.test(h))).toBe(true);
+    expect(heads.some((h) => h.includes("stroke-width"))).toBe(true);
+  }
+});
