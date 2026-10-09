@@ -13,9 +13,11 @@ import {
 } from "../../../collections/src/families/kernels-extra.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import {
+  adjacentTranspositionInvolutions,
   cograssmannianPermutations,
   grassmannianPermutations,
   nonCrossingCycleSupportPermutations,
+  nonCrossingPermutations,
   separablePermutations,
   vexillaryPermutations,
 } from "./restrictions.ts";
@@ -191,32 +193,8 @@ function booleanTennerCount(n: number): number {
 }
 const booleanTennerClass = makeBruteForceClass((p) => isBooleanPermutationOfTenner(p), booleanTennerCount);
 
-// ─── NonCrossingPermutations(n): the permutations below the long cycle c = (1 2 … n) in absolute order
-// (Biane, Kreweras): ℓ_T(π) + ℓ_T(π⁻¹c) = ℓ_T(c) = n − 1, with ℓ_T = n − cycles. Each is a non-crossing
-// partition with every block an increasing cycle; Catalan(n). Filtered from all n! permutations.
-function cycleCountOf(perm: readonly number[]): number {
-  const seen = new Array<boolean>(perm.length).fill(false);
-  let cycles = 0;
-  for (let i = 0; i < perm.length; i++) {
-    if (seen[i]) continue;
-    cycles++;
-    for (let j = i; !seen[j]; j = perm[j] - 1) seen[j] = true;
-  }
-  return cycles;
-}
-function isBelowLongCycle(perm: readonly number[]): boolean {
-  const n = perm.length;
-  if (n === 0) return true;
-  const inverse = new Array<number>(n);
-  for (let i = 0; i < n; i++) inverse[perm[i] - 1] = i + 1;
-  // π⁻¹c: i ↦ π⁻¹(i + 1 mod n)
-  const rest = Array.from({ length: n }, (_, i) => inverse[(i + 1) % n]);
-  return cycleCountOf(perm) + cycleCountOf(rest) === n + 1;
-}
-const nonCrossingClass = makeBruteForceClass(isBelowLongCycle, (n) => catalanNumber(n));
-function catalanNumber(n: number): number {
-  return Math.round(binomial(2 * n, n) / (n + 1));
-}
+// ─── NonCrossingPermutations(n): the permutations below the long cycle, by completion counts
+// (./restrictions.ts).
 
 // ─── length-4 vincular-free (classical) pattern helpers shared by Separable/Smooth/Vexillary. ────────
 function patternOf4(a: number, b: number, c: number, d: number): string {
@@ -285,18 +263,7 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     declared: booleanTennerClass.declared,
     carrier: "Permutation",
   },
-  {
-    ...ints(
-      "NonCrossingPermutations",
-      1,
-      ([n]) => nonCrossingClass.count(n),
-      ([n], r) => nonCrossingClass.unrank(n, r),
-      (a, [n]) => nonCrossingClass.valid(a, n),
-      (a) => nonCrossingClass.rank(a),
-    ),
-    declared: nonCrossingClass.declared,
-    carrier: "Permutation",
-  },
+  nonCrossingPermutations,
   {
     ...ints(
       "BaxterPermutations",
@@ -310,15 +277,13 @@ export const entries: (NumberKernel | EpsilFamily)[] = [
     carrier: "Permutation",
   },
   {
-    ...ints(
-      "AdjacentTranspositionInvolutions",
-      1,
-      ([n]) => booleanCount(n),
-      ([n], r) => booleanUnrank(n, r),
-      (a, [n]) => IsPermutationOf(a, n) && isBooleanPermutation(a),
-      (a) => booleanRank(a),
-    ),
-    carrier: "Permutation",
+    ...adjacentTranspositionInvolutions,
+    fast: {
+      count: ([n]) => booleanCount(n),
+      unrank: ([n], r) => booleanUnrank(n, r),
+      rank: (x) => booleanRank(x as number[]),
+      valid: (x, [n]) => IsPermutationOf(x as number[], n) && isBooleanPermutation(x as number[]),
+    },
   },
   grassmannianPermutations,
   cograssmannianPermutations,

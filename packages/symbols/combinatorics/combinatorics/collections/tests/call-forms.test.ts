@@ -307,3 +307,39 @@ test("Count holds where a plain-number kernel would round", () => {
   const held = ce.box(["Count", ["SetPartitions", 30]] as never).evaluate();
   expect(held.operator).toBe("Count");
 });
+
+// A partition is its parts, never increasing: every way of asking, an unsorted list is not one.
+test("Element of an unsorted list is False for every partition form", () => {
+  const list = (...xs: number[]) => ["List", ...xs];
+  const element = (x: unknown, family: unknown) => ce.box(["Element", x, family] as never).evaluate().json;
+  for (const [x, family] of [
+    [list(1, 2), ["IntegerPartitions", 3]],
+    [list(1, 2), ["IntegerPartitions", 3, 2]],
+    [list(1, 2), ["IntegerPartitions", 3, list(2)]],
+    [list(1, 2), ["IntegerPartitions", 3, list(1, 2)]],
+    [list(1, 2), ["IntegerPartitions", 3, "All", list(1, 2)]],
+    [list(1, 2), ["PartitionsIntoKParts", 3, 2]],
+    [list(1, 2), ["DistinctPartitions", 3]],
+    [list(1, 3), ["OddPartitions", 4]],
+    [list(1, 2), ["PartitionsMaxPart", 3, 2]],
+  ] as const) {
+    expect(element(x, family), JSON.stringify(family)).toBe("False");
+    expect(element(list(...(x.slice(1) as number[]).toReversed()), family), JSON.stringify(family)).toBe("True");
+  }
+});
+
+// Past 2^53 a count is unknown, but membership and a small rank are not.
+test("a family that declines past 2^53 still answers membership and small ranks", () => {
+  const list = (...xs: number[]) => ["List", ...xs];
+  const ones = list(...Array.from({ length: 400 }, () => 1));
+  const run = (e: unknown) => ce.box(e as never).evaluate();
+  // p(400) is past 2^53: no count, but membership, and the first element, answer.
+  expect(run(["Count", ["PartitionsMaxPart", 400, 400]]).operator).toBe("Count");
+  expect(run(["Element", ones, ["PartitionsMaxPart", 400, 400]]).json).toBe("True");
+  expect(run(["Element", list(1, 399), ["PartitionsMaxPart", 400, 400]]).json).toBe("False");
+  expect(() => run(["At", ["PartitionsMaxPart", 400, 400], 1])).not.toThrow();
+  // q(400) is under it: the whole family answers.
+  expect(countOf(["DistinctPartitions", 400])).toBe(11962163400706);
+  expect(stripLists(run(["At", ["DistinctPartitions", 400], 1]).json)).toEqual([400]);
+  expect(run(["Element", list(400), ["DistinctPartitions", 400]]).json).toBe("True");
+});

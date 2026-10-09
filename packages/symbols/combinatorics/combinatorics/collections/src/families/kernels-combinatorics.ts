@@ -356,9 +356,10 @@ export function IsCompositionOf(parts: number[], n: number): boolean {
   return s === n && (n > 0 || parts.length === 0);
 }
 
-/** A partition of n (multiset of positive parts summing to n); k, if given, pins the number of parts. */
+/** A partition of n as a list: positive parts summing to n, never increasing; k, if given, pins the
+ *  number of parts. */
 export function IsPartitionOf(parts: number[], n: number, k?: number): boolean {
-  if (!IsCompositionOf(parts, n)) return false;
+  if (!IsCompositionOf(parts, n) || parts.some((part, i) => i > 0 && parts[i - 1] < part)) return false;
   return k === undefined || parts.length === k;
 }
 

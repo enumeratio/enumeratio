@@ -4,7 +4,7 @@
 import type { Engine } from "@enumeratio/engine";
 import { declareCarriers } from "@enumeratio/structures";
 import { declareFamilies } from "../../collections/src/families/declare.ts";
-import { numberKernel } from "../../collections/src/families/types.ts";
+import { liftFamily } from "../../collections/src/families/epsil.ts";
 import { declareStatistics } from "../../src/statistics/declare.ts";
 import { PARTITIONS_CARRIERS } from "./carrier-data.ts";
 import { coreEntries, coreEpsilFamilies, partitionsEntries, tableauxPlaneEntries } from "./families/index.ts";
@@ -17,9 +17,9 @@ export function declarePartitions(ce: Engine): void {
   // coreEntries then coreEpsilFamilies (not the other way) keeps core.ts's catalogue order:
   // PartitionsInBox is Epsil now but was always the last of core.ts's five.
   declareFamilies(ce, [
-    ...coreEntries.map(numberKernel),
+    ...coreEntries.map(liftFamily),
     ...coreEpsilFamilies,
-    ...[...partitionsEntries, ...tableauxPlaneEntries].map(numberKernel),
+    ...[...partitionsEntries, ...tableauxPlaneEntries].map(liftFamily),
   ]);
   // Its statistics, after its own carriers and families (step 6b).
   declareStatistics(ce, PARTITION_STATISTICS);

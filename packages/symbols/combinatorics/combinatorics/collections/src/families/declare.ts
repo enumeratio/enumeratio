@@ -191,7 +191,14 @@ function handlersOf(ce: Engine, family: FamilyKernel, carrier?: string): Collect
       const i = ordinal < 0n ? total + ordinal + 1n : ordinal;
       return i < 1n || i > total ? undefined : element(p, i - 1n);
     },
-    contains: (c, target) => family.valid(decode(asBoxed(target)), params(c)),
+    contains: (c, target) => {
+      try {
+        return family.valid(decode(asBoxed(target)), params(c));
+      } catch (error) {
+        if (needsBigint(error)) return undefined;
+        throw error;
+      }
+    },
   };
 }
 

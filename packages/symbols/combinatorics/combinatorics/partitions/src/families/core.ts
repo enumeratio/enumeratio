@@ -4,23 +4,18 @@
 // carrier. The generic kernel math they call stays in collections/src/families/kernels*.ts —
 // reused across areas, not partitions-specific machinery.
 //
-// Four of the five stay TS kernels (BL-30's documented exception): IntegerPartitions,
-// PartitionsIntoKParts and DistinctPartitions unrank/rank through Euler's pentagonal-number
-// recurrence or a distinct-parts DP (PartitionsP/KPartPartitionCount/PartitionsQ in
-// kernels-combinatorics.ts / kernels-extra.ts) — a table over a shrinking (remaining sum, part
-// cap) budget, not a closed expression. PartitionsMaxPart is the same shape (partsLeq). Unlike a
-// composition, a partition's parts aren't independent digits of a fixed-radix or combinatorial
-// number system: how many partitions of m remain with parts ≤ cap has no closed form in cap, so
-// there's no fold to write in its place.
+// All five are defined in Epsil. Four are walks over a table of completions (./walks.ts), largest
+// part first; their TS kernels (Euler's pentagonal-number recurrence, a distinct-parts DP,
+// partsLeq) are `fast` paths in the same order. A partition's parts are in that order, never
+// increasing, which `IsPartitionOf` and `IsDistinctPartitionOf` check (they once took any order).
 //
-// PartitionsInBox(a,b) is the exception to the exception: "≤ a parts, each ≤ b" has no such
-// dependency — kernels-extra.ts's own PartitionsInBoxUnrank/Rank already reduce it to a lattice
+// PartitionsInBox(a,b) is a lattice path instead, with no sum to walk:
+// kernels-extra.ts's own PartitionsInBoxUnrank/Rank already reduce it to a lattice
 // path (Binomial(a+b,a) of them) via the same colex combinatorial-number-system digit search as
 // KSubsetRank/KSubsetUnrank, the compositions pilot's CompositionsIntoKParts/WeakCompositions
 // (compositions/src/families/core.ts). See `partitionsInBox` below for the bijection this Epsil
 // form follows.
-import type { NumberKernel } from "../../../collections/src/families/types.ts";
-import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
+import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import { cell, colexDigits, lets, pascalTable } from "../../../collections/src/families/tables.ts";
 import {
   PartitionsP,
@@ -45,71 +40,38 @@ import {
   PartitionsInBoxRank,
   PartitionsInBoxUnrank,
 } from "../../../collections/src/families/kernels-extra.ts";
+import { distinctPartitions, integerPartitions, partitionsIntoKParts, partitionsMaxPart } from "./walks.ts";
 
-// helper to cut boilerplate for the flat (number[]) shape; mirrors collections/core.ts's private `ints`.
-const ints = (
-  head: string,
-  paramCount: 1 | 2,
-  count: (p: number[]) => number,
-  unrank: (p: number[], r: number) => number[],
-  valid: (e: number[], p: number[]) => boolean,
-  rank: (e: number[], p: number[]) => number,
-): NumberKernel => ({
-  head,
-  paramCount,
-  kind: "ints",
-  count,
-  unrank,
-  valid: (e, p) => valid(e as number[], p),
-  rank: (e, p) => rank(e as number[], p),
-});
+const integerPartitionsFast: FastKernel = {
+  count: ([n]) => PartitionsP(n),
+  unrank: ([n], r) => IntegerPartitionUnrank(n, r),
+  rank: (x, [n]) => IntegerPartitionRank(x as number[], n),
+  valid: (x, [n]) => IsPartitionOf(x as number[], n),
+};
+const partitionsIntoKPartsFast: FastKernel = {
+  count: ([n, k]) => KPartPartitionCount(n, k),
+  unrank: ([n, k], r) => IntegerPartitionKUnrank(n, k, r),
+  rank: (x, [n]) => IntegerPartitionKRank(x as number[], n),
+  valid: (x, [n, k]) => IsPartitionOf(x as number[], n, k),
+};
+const distinctPartitionsFast: FastKernel = {
+  count: ([n]) => PartitionsQ(n),
+  unrank: ([n], r) => DistinctPartitionUnrank(n, r),
+  rank: (x, [n]) => DistinctPartitionRank(x as number[], n),
+  valid: (x, [n]) => IsDistinctPartitionOf(x as number[], n),
+};
+const partitionsMaxPartFast: FastKernel = {
+  count: ([n, m]) => PartitionsMaxPartCount(n, m),
+  unrank: ([n, m], r) => PartitionsMaxPartUnrank(n, m, r),
+  rank: (x, [, m]) => PartitionsMaxPartRank(x as number[], m),
+  valid: (x, [n, m]) => IsPartitionMaxPart(x as number[], n, m),
+};
 
-export const entries: NumberKernel[] = [
-  // ── partitions (DP over a shrinking budget — see the file comment) ──
-  {
-    ...ints(
-      "IntegerPartitions",
-      1,
-      ([n]) => PartitionsP(n),
-      ([n], r) => IntegerPartitionUnrank(n, r),
-      (a, [n]) => IsPartitionOf(a, n),
-      (a, [n]) => IntegerPartitionRank(a, n),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "PartitionsIntoKParts",
-      2,
-      ([n, k]) => KPartPartitionCount(n, k),
-      ([n, k], r) => IntegerPartitionKUnrank(n, k, r),
-      (a, [n, k]) => IsPartitionOf(a, n, k),
-      (a, [n]) => IntegerPartitionKRank(a, n),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "DistinctPartitions",
-      1,
-      ([n]) => PartitionsQ(n),
-      ([n], r) => DistinctPartitionUnrank(n, r),
-      (a, [n]) => IsDistinctPartitionOf(a, n),
-      (a, [n]) => DistinctPartitionRank(a, n),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "PartitionsMaxPart",
-      2,
-      ([n, m]) => PartitionsMaxPartCount(n, m),
-      ([n, m], r) => PartitionsMaxPartUnrank(n, m, r),
-      (a, [n, m]) => IsPartitionMaxPart(a, n, m),
-      (a, [, m]) => PartitionsMaxPartRank(a, m),
-    ),
-    carrier: "IntegerPartition",
-  },
+export const entries: EpsilFamily[] = [
+  { ...integerPartitions, fast: integerPartitionsFast },
+  { ...partitionsIntoKParts, fast: partitionsIntoKPartsFast },
+  { ...distinctPartitions, fast: distinctPartitionsFast },
+  { ...partitionsMaxPart, fast: partitionsMaxPartFast },
 ];
 
 // ─── PartitionsInBox(a,b): partitions with ≤ a parts, each ≤ b — a lattice path, closed form ───

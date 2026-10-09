@@ -47,8 +47,10 @@ export interface EpsilFamily extends FamilyShape {
   readonly elementType?: string;
   /** Past 2^53, where compiled code can't answer, unrank and rank decline (unknown) rather
    *  than interpret: for definitions the interpreter takes minutes over at that size. The count
-   *  stays exact. */
-  readonly declinePastDoubles?: true;
+   *  stays exact, unless this is "count": the table the count reads is out of the interpreter's
+   *  reach there too, so it declines as well, and the fast path alone answers unrank (a small
+   *  rank) and rank (a rank a double holds) there. Membership never reads the count. */
+  readonly declinePastDoubles?: true | "count";
   readonly epsil: FamilyEpsil;
   /** A verified fast path: used while the fiber's count is a safe integer, ahead of Epsil.
    *  The definitions stay the meaning; this is not part of `familyHash`. */
@@ -313,6 +315,17 @@ export function kernelOn(
     }
   };
 
+  // The fast count is a double past 2^53: for a family that declines there, no need to run its table.
+  const pastDoubles = (p: number[]): boolean => {
+    if (quick === undefined || !wellParamed(p)) return false;
+    try {
+      const total = quick.count(p);
+      return typeof total === "number" && Number.isFinite(total) && !Number.isSafeInteger(total);
+    } catch {
+      return false;
+    }
+  };
+
   const counts = new Map<string, Count>();
   // Calls come in runs at the same params, so the last fiber is found without building a key.
   let lastParams: readonly number[] = [];
@@ -327,8 +340,10 @@ export function kernelOn(
     const key = p.join(",");
     let total = counts.get(key);
     if (total === undefined) {
+      if (declinePastDoubles === "count" && pastDoubles(p)) return decline(p);
       const fast = quickCount(p) ?? run("count", p, {});
       if (isInteger(fast)) total = BigInt(fast);
+      else if (declinePastDoubles === "count") return decline(p);
       else {
         const json = interpret("count", p, {});
         total = json === "PositiveInfinity" ? Number.POSITIVE_INFINITY : (integerOf(json) ?? Number.NaN);
@@ -338,6 +353,15 @@ export function kernelOn(
     lastParams = [...p];
     lastTotal = total;
     return total;
+  };
+  /** The count, or undefined where a family that declines past 2^53 has no count to give. */
+  const knownCount = (p: number[]): Count | undefined => {
+    try {
+      return count(p);
+    } catch (error) {
+      if (declinePastDoubles === "count" && error instanceof RangeError) return undefined;
+      throw error;
+    }
   };
   // Compiled code runs in doubles, so it answers only for a fiber a double counts exactly.
   const exact = (p: number[]): boolean => {
@@ -352,7 +376,7 @@ export function kernelOn(
 
   const valid = (element: unknown, p: number[]): boolean => {
     if (!wellFormed(family.kind, element)) return false;
-    if (quick !== undefined && fits(p)) {
+    if (quick !== undefined && (declinePastDoubles === "count" ? wellParamed(p) : fits(p))) {
       try {
         const answer = quick.valid(element, p);
         if (typeof answer === "boolean") return answer;
@@ -369,7 +393,17 @@ export function kernelOn(
     count,
     valid,
     unrank: (p, r) => {
-      const total = count(p);
+      const total = knownCount(p);
+      if (total === undefined) {
+        // Past 2^53 in a family that declines there: a small rank is still the fast path's to answer.
+        if (quick !== undefined && wellParamed(p) && r >= 0n && r <= MAX_SAFE) {
+          try {
+            const element = quick.unrank(p, Number(r));
+            if (element !== undefined) return element;
+          } catch {}
+        }
+        return decline(p);
+      }
       if (typeof total === "bigint" && total <= MAX_SAFE) {
         if (quick !== undefined && r >= 0n && r < total && total <= FAST_LIMIT && wellParamed(p)) {
           try {
@@ -385,6 +419,16 @@ export function kernelOn(
     },
     rank: (element, p) => {
       if (!valid(element, p)) return -1n;
+      if (knownCount(p) === undefined) {
+        // Past 2^53, as above: the fast rank answers where a double holds it.
+        if (quick !== undefined && wellParamed(p)) {
+          try {
+            const place = quick.rank(element, p);
+            if (isInteger(place)) return BigInt(place);
+          } catch {}
+        }
+        return decline(p);
+      }
       if (exact(p)) {
         if (quick !== undefined && fits(p)) {
           try {

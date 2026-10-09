@@ -5,37 +5,29 @@
 // per family. Plus LargestPartPartitions, built on collections' kernels-extra.ts's PartitionsMaxPart (a
 // partition of n−m with parts ≤ m, prefixed by m).
 //
+// Each is defined in Epsil (./walks.ts); the builders and kernels below are its `fast` path, in
+// the same order, and the reading tests/fast-kernels.test.ts holds the definitions to.
+//
 // n = 0 always has exactly one (empty) partition, matching IntegerPartitions(0) in ./core.ts.
 //
 // KPartPartitions, BoundedPartPartitions and BoxConfinedPartitions are catalogued names for
 // families ALREADY declared under other kernel heads (PartitionsIntoKParts / PartitionsMaxPart /
 // PartitionsInBox, all in ./core.ts) — each one's own record says so ("Catalogued as an alias
 // of ..." in its summary). No kernel here.
-import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import {
   PartitionsMaxPartCount,
   PartitionsMaxPartUnrank,
   PartitionsMaxPartRank,
   IsPartitionMaxPart,
 } from "../../../collections/src/families/kernels-extra.ts";
-
-// helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's / compositions.ts's `ints`.
-const ints = (
-  head: string,
-  paramCount: 1 | 2,
-  count: (p: number[]) => number,
-  unrank: (p: number[], r: number) => number[],
-  valid: (e: number[], p: number[]) => boolean,
-  rank: (e: number[], p: number[]) => number,
-): NumberKernel => ({
-  head,
-  paramCount,
-  kind: "ints",
-  count,
-  unrank,
-  valid: (e, p) => valid(e as number[], p),
-  rank: (e, p) => rank(e as number[], p),
-});
+import {
+  largestPartPartitions,
+  oddPartitions,
+  primePartitions,
+  squarePartitions,
+  triangularPartitions,
+} from "./walks.ts";
 
 const sum = (parts: readonly number[]): number => parts.reduce((a, b) => a + b, 0);
 const isPositiveIntArray = (e: unknown): e is number[] =>
@@ -141,60 +133,27 @@ function isLargestPart(parts: unknown, n: number, m: number): boolean {
   return sum(parts) === n && IsPartitionMaxPart(parts.slice(1), n - m, m);
 }
 
-export const entries: NumberKernel[] = [
-  {
-    ...ints(
-      "OddPartitions",
-      1,
-      ([n]) => oddPart.count(n),
-      ([n], r) => oddPart.unrank(n, r),
-      (a, [n]) => oddPart.valid(a, n),
-      (a) => oddPart.rank(a),
-    ),
-    carrier: "IntegerPartition",
+const restricted = (family: EpsilFamily, builder: ReturnType<typeof partsInSet>): EpsilFamily => ({
+  ...family,
+  fast: {
+    count: ([n]) => builder.count(n),
+    unrank: ([n], r) => builder.unrank(n, r),
+    rank: (x) => builder.rank(x as number[]),
+    valid: (x, [n]) => builder.valid(x, n),
   },
-  {
-    ...ints(
-      "PrimePartitions",
-      1,
-      ([n]) => primePart.count(n),
-      ([n], r) => primePart.unrank(n, r),
-      (a, [n]) => primePart.valid(a, n),
-      (a) => primePart.rank(a),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "SquarePartitions",
-      1,
-      ([n]) => squarePart.count(n),
-      ([n], r) => squarePart.unrank(n, r),
-      (a, [n]) => squarePart.valid(a, n),
-      (a) => squarePart.rank(a),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "TriangularPartitions",
-      1,
-      ([n]) => triangularPart.count(n),
-      ([n], r) => triangularPart.unrank(n, r),
-      (a, [n]) => triangularPart.valid(a, n),
-      (a) => triangularPart.rank(a),
-    ),
-    carrier: "IntegerPartition",
-  },
-  {
-    ...ints(
-      "LargestPartPartitions",
-      2,
-      ([n, m]) => largestPartCount(n, m),
-      ([n, m], r) => largestPartUnrank(n, m, r),
-      (a, [n, m]) => isLargestPart(a, n, m),
-      (a, [, m]) => largestPartRank(a, m),
-    ),
-    carrier: "IntegerPartition",
-  },
+});
+
+const largestPartFast: FastKernel = {
+  count: ([n, m]) => largestPartCount(n, m),
+  unrank: ([n, m], r) => largestPartUnrank(n, m, r),
+  rank: (x, [, m]) => largestPartRank(x as number[], m),
+  valid: (x, [n, m]) => isLargestPart(x, n, m),
+};
+
+export const entries: EpsilFamily[] = [
+  restricted(oddPartitions, oddPart),
+  restricted(primePartitions, primePart),
+  restricted(squarePartitions, squarePart),
+  restricted(triangularPartitions, triangularPart),
+  { ...largestPartPartitions, fast: largestPartFast },
 ];

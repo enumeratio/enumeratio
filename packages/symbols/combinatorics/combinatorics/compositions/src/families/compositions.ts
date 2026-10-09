@@ -1,40 +1,31 @@
 // Composition-carrier families that were catalogued (packages/reference/entries/) but
 // never wired to a kernel. Two shapes here: (1) "parts drawn from an allowed set S" — one generic
 // DP builder (count by subset-sum recurrence, unrank/rank by lexicographic block-counting),
-// instantiated per family; (2) three families whose constraint isn't a per-part membership test
-// (Carlitz: adjacent parts differ; Palindromic: a reversal symmetry; Zigzag: alternating parts),
-// each with its own small DP or bijection.
+// instantiated per family; (2) families whose constraint isn't a per-part membership test
+// (Carlitz: adjacent parts differ; Zigzag: alternating parts), each with its own small DP.
+//
+// Each is defined in Epsil (./walks.ts); the builders and kernels below are its `fast` path, in
+// the same order, and the reading tests/fast-kernels.test.ts holds the definitions to.
+// PalindromicCompositions has none: its TS kernel sorts a list of about 2^(n/2) palindromes
+// per n, where the definition walks the halves directly.
 //
 // n = 0 always has exactly one (empty) composition, matching IntegerCompositions(0) in ./core.ts.
-import type { Declared, NumberKernel } from "../../../collections/src/families/types.ts";
-
-// helper to cut boilerplate for the flat (number[]) shape; mirrors core.ts's private `ints`.
-const ints = (
-  head: string,
-  paramCount: 1 | 2,
-  count: (p: number[]) => number,
-  unrank: (p: number[], r: number) => number[],
-  valid: (e: number[], p: number[]) => boolean,
-  rank: (e: number[], p: number[]) => number,
-): NumberKernel => ({
-  head,
-  paramCount,
-  kind: "ints",
-  count,
-  unrank,
-  valid: (e, p) => valid(e as number[], p),
-  rank: (e, p) => rank(e as number[], p),
-});
-
-/** What Plausible reads: counting and indexing run a DP table, polynomial in n and k. */
-const boundedDeclared: Declared = {
-  carrier: "Composition",
-  params: [
-    { name: "size", role: "axis", min: 0 },
-    { name: "k", role: "param", min: 0 },
-  ],
-  cost: { count: "polynomial", unrank: "polynomial", rank: "polynomial", valid: "polynomial" },
-};
+import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
+import {
+  carlitzCompositions,
+  dyadicCompositions,
+  fibonacciCompositions,
+  oddCompositions,
+  palindromicCompositions,
+  partCountBoundedCompositions,
+  partSizeBoundedCompositions,
+  primeCompositions,
+  properCompositions,
+  tetraCompositions,
+  triCompositions,
+  triangularCompositions,
+  zigzagCompositions,
+} from "./walks.ts";
 
 const sum = (parts: readonly number[]): number => parts.reduce((a, b) => a + b, 0);
 const isPositiveIntArray = (e: unknown): e is number[] =>
@@ -103,7 +94,6 @@ const triComp = partsInSet((s) => s >= 1 && s <= 3);
 const tetraComp = partsInSet((s) => s >= 1 && s <= 4);
 const triangularComp = partsInSet(isTriangular);
 const primeComp = partsInSet(isPrimeSmall);
-const anyComp = partsInSet(() => true); // the unrestricted family; only used as the palindrome bijection's half
 
 const partSizeBoundedCache = new Map<number, ReturnType<typeof partsInSet>>();
 function partSizeBounded(k: number) {
@@ -192,66 +182,6 @@ function isCarlitz(parts: unknown, n: number): boolean {
   if (!isPositiveIntArray(parts)) return false;
   if (sum(parts) !== n) return false;
   for (let i = 0; i + 1 < parts.length; i++) if (parts[i] === parts[i + 1]) return false;
-  return true;
-}
-
-// ─── PalindromicCompositions(n): bijects with (an optional middle part, an arbitrary "half" ────
-// composition) — the half is mirrored to build the other side. Odd length: middle m plus a half
-// of h = (n−m)/2 (h = 0 gives the length-1 composition [m]). Even length: no middle, a half of
-// h = n/2 (h ≥ 1, since h = 0 would mean n = 0, which is its own — already covered — empty case).
-// Blocks are ordered by increasing middle value m = 1..n, then (if n is even) the no-middle block.
-function palindromicCount(n: number): number {
-  if (n === 0) return 1;
-  let total = 0;
-  for (let m = 1; m <= n; m++) if ((n - m) % 2 === 0) total += anyComp.count((n - m) / 2);
-  if (n % 2 === 0) total += anyComp.count(n / 2);
-  return total;
-}
-function palindromicUnrank(n: number, r: number): number[] {
-  if (n === 0) return [];
-  let rr = r;
-  for (let m = 1; m <= n; m++) {
-    if ((n - m) % 2 !== 0) continue;
-    const h = (n - m) / 2;
-    const c = anyComp.count(h);
-    if (rr < c) {
-      const left = anyComp.unrank(h, rr);
-      const leftRev = left.slice();
-      leftRev.reverse();
-      return [...left, m, ...leftRev];
-    }
-    rr -= c;
-  }
-  if (n % 2 === 0) {
-    const h = n / 2;
-    const c = anyComp.count(h);
-    if (rr < c) {
-      const left = anyComp.unrank(h, rr);
-      const leftRev = left.slice();
-      leftRev.reverse();
-      return [...left, ...leftRev];
-    }
-  }
-  throw new Error("PalindromicCompositions: rank out of range");
-}
-/** The palindromic compositions of n, lex on the parts: the composition order they come with
- *  as a restriction of IntegerCompositions. There are about 2^(n/2) of them; built once per n. */
-const palindromes = new Map<number, number[][]>();
-function palindromesInLex(n: number): number[][] {
-  let list = palindromes.get(n);
-  if (list === undefined) {
-    list = Array.from({ length: palindromicCount(n) }, (_, r) => palindromicUnrank(n, r)).toSorted((a, b) => {
-      for (let i = 0; i < Math.min(a.length, b.length); i++) if (a[i] !== b[i]) return a[i] - b[i];
-      return a.length - b.length;
-    });
-    palindromes.set(n, list);
-  }
-  return list;
-}
-function isPalindromic(parts: unknown, n: number): boolean {
-  if (!isPositiveIntArray(parts)) return false;
-  if (sum(parts) !== n) return false;
-  for (let i = 0, j = parts.length - 1; i < j; i++, j--) if (parts[i] !== parts[j]) return false;
   return true;
 }
 
@@ -362,125 +292,56 @@ function isZigzag(parts: unknown, n: number): boolean {
   return true;
 }
 
-// Every restricted family here shares IntegerCompositions' shape (core.ts): a list of parts
-// summing to n, typed by the same carrier.
-const restricted: NumberKernel[] = [
+const inSet = (family: EpsilFamily, builder: ReturnType<typeof partsInSet>): EpsilFamily => ({
+  ...family,
+  fast: {
+    count: ([n]) => builder.count(n),
+    unrank: ([n], r) => builder.unrank(n, r),
+    rank: (x) => builder.rank(x as number[]),
+    valid: (x, [n]) => builder.valid(x, n),
+  },
+});
+
+const partSizeBoundedFast: FastKernel = {
+  count: ([n, k]) => partSizeBounded(k).count(n),
+  unrank: ([n, k], r) => partSizeBounded(k).unrank(n, r),
+  rank: (x, [, k]) => partSizeBounded(k).rank(x as number[]),
+  valid: (x, [n, k]) => partSizeBounded(k).valid(x, n),
+};
+const partCountBoundedFast: FastKernel = {
+  count: ([n, k]) => partCountCount(n, k),
+  unrank: ([n, k], r) => partCountUnrank(n, k, r),
+  rank: (x, [, k]) => partCountRank(x as number[], k),
+  valid: (x, [n, k]) => isPositiveIntArray(x) && sum(x) === n && x.length <= k,
+};
+const carlitzFast: FastKernel = {
+  count: ([n]) => carlitzCount(n, 0),
+  unrank: ([n], r) => carlitzUnrank(n, 0, r),
+  rank: (x) => carlitzRank(x as number[]),
+  valid: (x, [n]) => isCarlitz(x, n),
+};
+const zigzagFast: FastKernel = {
+  count: ([n]) => zigzagCount(n),
+  unrank: ([n], r) => zigzagUnrank(n, r),
+  rank: (x) => zigzagRank(x as number[]),
+  valid: (x, [n]) => isZigzag(x, n),
+};
+
+export const entries: EpsilFamily[] = [
   // ── parts drawn from an allowed set S ──
-  ints(
-    "OddCompositions",
-    1,
-    ([n]) => oddComp.count(n),
-    ([n], r) => oddComp.unrank(n, r),
-    (a, [n]) => oddComp.valid(a, n),
-    (a) => oddComp.rank(a),
-  ),
-  ints(
-    "ProperCompositions",
-    1,
-    ([n]) => properComp.count(n),
-    ([n], r) => properComp.unrank(n, r),
-    (a, [n]) => properComp.valid(a, n),
-    (a) => properComp.rank(a),
-  ),
-  ints(
-    "DyadicCompositions",
-    1,
-    ([n]) => dyadicComp.count(n),
-    ([n], r) => dyadicComp.unrank(n, r),
-    (a, [n]) => dyadicComp.valid(a, n),
-    (a) => dyadicComp.rank(a),
-  ),
-  ints(
-    "FibonacciCompositions",
-    1,
-    ([n]) => fibComp.count(n),
-    ([n], r) => fibComp.unrank(n, r),
-    (a, [n]) => fibComp.valid(a, n),
-    (a) => fibComp.rank(a),
-  ),
-  ints(
-    "TriCompositions",
-    1,
-    ([n]) => triComp.count(n),
-    ([n], r) => triComp.unrank(n, r),
-    (a, [n]) => triComp.valid(a, n),
-    (a) => triComp.rank(a),
-  ),
-  ints(
-    "TetraCompositions",
-    1,
-    ([n]) => tetraComp.count(n),
-    ([n], r) => tetraComp.unrank(n, r),
-    (a, [n]) => tetraComp.valid(a, n),
-    (a) => tetraComp.rank(a),
-  ),
-  ints(
-    "TriangularCompositions",
-    1,
-    ([n]) => triangularComp.count(n),
-    ([n], r) => triangularComp.unrank(n, r),
-    (a, [n]) => triangularComp.valid(a, n),
-    (a) => triangularComp.rank(a),
-  ),
-  ints(
-    "PrimeCompositions",
-    1,
-    ([n]) => primeComp.count(n),
-    ([n], r) => primeComp.unrank(n, r),
-    (a, [n]) => primeComp.valid(a, n),
-    (a) => primeComp.rank(a),
-  ),
-  {
-    ...ints(
-      "PartSizeBoundedCompositions",
-      2,
-      ([n, k]) => partSizeBounded(k).count(n),
-      ([n, k], r) => partSizeBounded(k).unrank(n, r),
-      (a, [n, k]) => partSizeBounded(k).valid(a, n),
-      (a, [, k]) => partSizeBounded(k).rank(a),
-    ),
-    declared: boundedDeclared,
-  },
-  {
-    ...ints(
-      "PartCountBoundedCompositions",
-      2,
-      ([n, k]) => partCountCount(n, k),
-      ([n, k], r) => partCountUnrank(n, k, r),
-      (a, [n, k]) => isPositiveIntArray(a) && sum(a) === n && a.length <= k,
-      (a, [, k]) => partCountRank(a, k),
-    ),
-    declared: boundedDeclared,
-  },
+  inSet(oddCompositions, oddComp),
+  inSet(properCompositions, properComp),
+  inSet(dyadicCompositions, dyadicComp),
+  inSet(fibonacciCompositions, fibComp),
+  inSet(triCompositions, triComp),
+  inSet(tetraCompositions, tetraComp),
+  inSet(triangularCompositions, triangularComp),
+  inSet(primeCompositions, primeComp),
+  { ...partSizeBoundedCompositions, fast: partSizeBoundedFast },
+  { ...partCountBoundedCompositions, fast: partCountBoundedFast },
 
   // ── constraints beyond per-part membership ──
-  ints(
-    "CarlitzCompositions",
-    1,
-    ([n]) => carlitzCount(n, 0),
-    ([n], r) => carlitzUnrank(n, 0, r),
-    (a, [n]) => isCarlitz(a, n),
-    (a) => carlitzRank(a),
-  ),
-  ints(
-    "PalindromicCompositions",
-    1,
-    ([n]) => palindromicCount(n),
-    ([n], r) => palindromesInLex(n)[r],
-    (a, [n]) => isPalindromic(a, n),
-    (a, [n]) => {
-      const key = a.join();
-      return palindromesInLex(n).findIndex((p) => p.join() === key);
-    },
-  ),
-  ints(
-    "ZigzagCompositions",
-    1,
-    ([n]) => zigzagCount(n),
-    ([n], r) => zigzagUnrank(n, r),
-    (a, [n]) => isZigzag(a, n),
-    (a) => zigzagRank(a),
-  ),
+  { ...carlitzCompositions, fast: carlitzFast },
+  palindromicCompositions,
+  { ...zigzagCompositions, fast: zigzagFast },
 ];
-
-export const entries: NumberKernel[] = restricted.map((k) => ({ ...k, carrier: "Composition" }));

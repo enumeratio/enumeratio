@@ -9,6 +9,7 @@ import type { Declared } from "../../../collections/src/families/types.ts";
 import { permutationRestriction } from "../../../collections/src/families/lex-restriction.ts";
 import {
   add,
+  all,
   and,
   at,
   cell,
@@ -309,6 +310,144 @@ export const kInversionPermutations: EpsilFamily = permutationRestriction({
   ),
 });
 
+// Permutations whose every inversion is of adjacent entries: the identity with some disjoint
+// adjacent pairs swapped. S(r) of them on r slots, 1, 1, 2, 3, 5, …, one table. At slot j, a
+// pair is open when the entry before it is j (it started a swap with j − 1 still to come); the
+// next entry is then j − 1 (closing it), else j (no swap) or j + 1 (opening one, which forces
+// slot j + 1).
+const swapsTable = fold(
+  ["Join", "sw_t", ["List", add(at("sw_t", "sw_k"), at("sw_t", sub("sw_k", 1)))]],
+  "sw_t",
+  "sw_k",
+  ["List", 1, 1],
+  upTo(2, n),
+);
+const swaps = (slots: MathJSON): MathJSON => at("swaps", add(slots, 1));
+const adjacentTranspositionInvolutions: EpsilFamily = permutationRestriction({
+  head: "AdjacentTranspositionInvolutions",
+  carrier: "Permutation",
+  paramCount: 1,
+  params: [n],
+  tables: ["swaps", swapsTable],
+  // Each entry stays put or swaps with its neighbour; completions only checks the entry just placed.
+  predicate: all(
+    (j) =>
+      iff(
+        equal(at("_x", j), j),
+        "True",
+        iff(
+          equal(at("_x", j), add(j, 1)),
+          equal(at("_x", add(j, 1)), j),
+          iff(equal(at("_x", j), sub(j, 1)), equal(at("_x", sub(j, 1)), j), "False"),
+        ),
+      ),
+    upTo(1, n),
+    "sw_j",
+  ),
+  completions: iff(
+    equal("filled", 0),
+    swaps(n),
+    iff(
+      iff(["Greater", "filled", 1], equal(pre(sub("filled", 1)), "filled"), "False"),
+      iff(equal(last, sub("filled", 1)), swaps(open), 0),
+      iff(equal(last, "filled"), swaps(open), iff(equal(last, add("filled", 1)), swaps(sub(open, 1)), 0)),
+    ),
+  ),
+});
+
+const catalan = (r: MathJSON): MathJSON => quotient(["Binomial", mul(2, r), r], add(r, 1));
+
+// The permutations below the long cycle: cycles that rise (each member goes to the next greater
+// one, the greatest to the least) with supports that don't cross. Left to right, an entry above
+// its slot is the next member of a cycle and reserves that position (a pending target);
+// non-crossing makes the pending targets nest, so the entry at a slot j is
+//   - j itself (no cycle), or above j and below every pending target (a new cycle), or
+//   - at a pending target (the least), the least member of its cycle, which is the greatest
+//     value below j still free, or above j and below the other pending targets.
+// The positions between j and the least pending target form a non-crossing permutation of their
+// own, as does each stretch from one pending target up to the next: Catalan(distance) of each.
+// `held(w)` is the slot that holds value w, 0 if free.
+const ncTransition = (j: MathJSON, v: MathJSON, held: (w: MathJSON) => MathJSON): MathJSON =>
+  lets(
+    [["nc_wt", iff(and(["Greater", held(j), 0], less(held(j), j)), 1, 0), "integer"]],
+    [
+      "Or",
+      and(
+        ["Greater", v, j],
+        [
+          "Not",
+          fold(
+            ["Or", "nc_b", and(["Greater", held("nc_w"), 0], less(held("nc_w"), j))],
+            "nc_b",
+            "nc_w",
+            "False",
+            upTo(add(j, 1), sub(v, 1)),
+          ),
+        ],
+      ),
+      and(
+        equal("nc_wt", 1),
+        less(v, j),
+        all((u) => ["NotEqual", held(u), 0], upTo(add(v, 1), sub(j, 1)), "nc_u"),
+      ),
+      and(equal("nc_wt", 0), equal(v, j)),
+    ],
+  );
+/** The completions after slot j: Catalan of the distance between pending targets, from j + 1 on. */
+const ncCompletions = (j: MathJSON, held: (w: MathJSON) => MathJSON): MathJSON =>
+  lets(
+    [
+      [
+        "nc_s",
+        fold(
+          iff(
+            and(["GreaterEqual", held("nc_t"), 1], ["LessEqual", held("nc_t"), j]),
+            ["List", mul(at("nc_a", 1), catalan(sub("nc_t", at("nc_a", 2)))), "nc_t"],
+            "nc_a",
+          ),
+          "nc_a",
+          "nc_t",
+          ["List", 1, add(j, 1)],
+          upTo(add(j, 1), n),
+        ),
+        "list<integer>",
+      ],
+    ],
+    mul(at("nc_s", 1), catalan(sub(add(n, 1), at("nc_s", 2)))),
+  );
+const nonCrossingPermutations: EpsilFamily = permutationRestriction({
+  head: "NonCrossingPermutations",
+  carrier: "Permutation",
+  paramCount: 1,
+  params: [n],
+  declared: polynomial(),
+  taken: true,
+  completions: iff(
+    equal("filled", 0),
+    catalan(n),
+    iff(
+      ncTransition("filled", last, (w) => at("taken", w)),
+      ncCompletions("filled", (w) => at("taken", w)),
+      0,
+    ),
+  ),
+  // Completions only checks the entry just placed, so replay every slot against the slots up to it.
+  predicate: lets(
+    [
+      [
+        "nc_where",
+        fold(["ReplaceAt", "nc_at", at("_x", "nc_p"), "nc_p"], "nc_at", "nc_p", map(0, "nc_z", upTo(1, n)), upTo(1, n)),
+        "list<integer>",
+      ],
+    ],
+    all(
+      (j) => ncTransition(j, at("_x", j), (w) => iff(["LessEqual", at("nc_where", w), j], at("nc_where", w), 0)),
+      upTo(1, n),
+      "nc_j",
+    ),
+  ),
+});
+
 // Avoiding a pattern of length 3. Every prefix the operations ask about extends one that has
 // completions, so it avoids the pattern itself; what's left is how the free values may follow it.
 // An occurrence with two entries in the prefix rules out free values in some range (none may be
@@ -319,7 +458,6 @@ export const kInversionPermutations: EpsilFamily = permutationRestriction({
 // run by run (a run lies between consecutive prefix values), each run avoiding it alone: a product
 // of Catalan numbers.
 const between = (lo: MathJSON, hi: MathJSON): MathJSON => sub(at("fr", hi), at("fr", add(lo, 1)));
-const catalan = (r: MathJSON): MathJSON => quotient(["Binomial", mul(2, r), r], add(r, 1));
 const ballot = (m: MathJSON, k: MathJSON): MathJSON =>
   quotient(mul(add(k, 1), ["Binomial", sub(mul(2, m), k), m]), add(m, 1));
 const prefixMin = fold(["Min", "pmn", pre("pmi")], "pmn", "pmi", add(n, 1), upTo(1, "filled"));
@@ -1119,6 +1257,8 @@ const vexillaryPermutations: EpsilFamily = permutationRestriction({
 export const grassmannianPermutations = atMostOneTurn("GrassmannianPermutations", false);
 export const cograssmannianPermutations = atMostOneTurn("CograssmannianPermutations", true);
 export {
+  adjacentTranspositionInvolutions,
+  nonCrossingPermutations,
   alternatingPermutations,
   connectedPermutations,
   kDescentPermutations,

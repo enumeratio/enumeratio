@@ -940,12 +940,11 @@ export function DistinctPartitionRank(p: number[], n: number): number {
 }
 export function IsDistinctPartitionOf(p: number[], n: number): boolean {
   if (!Array.isArray(p)) return false;
-  const seen = new Set<number>();
   let s = 0;
-  for (const x of p) {
-    if (!Number.isInteger(x) || x < 1 || seen.has(x)) return false;
-    seen.add(x);
-    s += x;
+  for (let i = 0; i < p.length; i++) {
+    // Parts strictly decreasing, so none repeats.
+    if (!Number.isInteger(p[i]) || p[i] < 1 || (i > 0 && p[i - 1] <= p[i])) return false;
+    s += p[i];
   }
   return s === n;
 }
