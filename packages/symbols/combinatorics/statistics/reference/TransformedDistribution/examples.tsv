@@ -5,3 +5,4 @@ transformed-negative-affine-cdf			[CDF, [TransformedDistribution, [Negate, x], [
 transformed-chisquare-mean			[Mean, [TransformedDistribution, [Power, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]]	1
 transformeddistribution-norm-list-x-y-w-z	Properties		[TransformedDistribution, [Norm, [List, x, y, w, z]], [Distributed, [List, x, y, w, z], [ProductDistribution, [List, [NormalDistribution], 4]]]]	[ChiDistribution, 4]
 transformeddistribution-norm-list-x-y	Properties		[TransformedDistribution, [Norm, [List, x, y]], [Distributed, [List, x, y], [ProductDistribution, [List, [NormalDistribution], 2]]]]	[RayleighDistribution, 1]
+transformeddistribution-norm-list-x	Properties		[TransformedDistribution, [Norm, [List, x]], [Distributed, [List, x], [ProductDistribution, [List, [NormalDistribution], 1]]]]	[HalfNormalDistribution, [Sqrt, [Multiply, [Rational, 1, 2], Pi]]]

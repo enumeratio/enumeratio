@@ -19,4 +19,5 @@ names:
 
 - $expr = a\,x + b$ ($a \ne 0$): change of variables — $PDF(y) = PDF(dist,(y-b)/a)/|a|$; $CDF(y) = CDF(dist,(y-b)/a)$ for $a>0$, or $1 - CDF(dist,(y-b)/a)$ (plus $PDF(dist,(y-b)/a)$ when $dist$ is discrete, since the inequality flips through an equality) for $a<0$; $Mean = a\,Mean(dist)+b$; $Variance = a^2\,Variance(dist)$ exactly.
 - $expr = x^2$, $dist = $ [[NormalDistribution]]$(0,1)$: `ChiSquareDistribution(1)` by definition — [[PDF]]/[[CDF]]/[[Mean]]/[[Variance]]/[[RandomVariate]] all forward to it.
+- $expr = Norm(\{x_1,\dots,x_k\})$ over $k$ independent standard normals: [[ChiDistribution]]$(k)$, which is [[RayleighDistribution]]$(1)$ for $k=2$ and [[HalfNormalDistribution]]$(\sqrt{\pi/2})$ for $k=1$.
 - Any other shape of $expr$, or a non-affine one with a non-standard-normal $x^2$ base, stays unevaluated — no numeric approximation.

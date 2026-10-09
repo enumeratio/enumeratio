@@ -291,11 +291,13 @@ export const pdfOf2 = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions
       const params = one(dist);
       if (params === undefined) return undefined;
       const [theta] = params;
+      // Wolfram's theta is the inverse of the scale sqrt(pi/2), so the mean is 1/theta.
       const expr = mul(
         ce,
-        ce.function("Sqrt", [div(ce, ce.number(2), ce.symbol("Pi"))]),
+        ce.number(2),
         theta,
-        exp(ce, neg(ce, div(ce, mul(ce, pow(ce, x, ce.number(2)), pow(ce, theta, ce.number(2))), ce.number(2)))),
+        div(ce, ce.One, ce.symbol("Pi")),
+        exp(ce, neg(ce, div(ce, mul(ce, pow(ce, x, ce.number(2)), pow(ce, theta, ce.number(2))), ce.symbol("Pi")))),
       );
       return finish(expr, options);
     }
@@ -453,7 +455,7 @@ export const cdfOf2 = (ce: Engine, dist: Expr, x: Expr, options: EvaluateOptions
       const params = one(dist);
       if (params === undefined) return undefined;
       const [theta] = params;
-      const inRange = ce.function("Erf", [div(ce, mul(ce, x, theta), ce.function("Sqrt", [ce.number(2)]))]);
+      const inRange = ce.function("Erf", [div(ce, mul(ce, x, theta), ce.function("Sqrt", [ce.symbol("Pi")]))]);
       return clampBelow(ce, x, ce.Zero, inRange, options);
     }
     case "MaxwellDistribution": {
@@ -590,7 +592,7 @@ export const meanOf2 = (ce: Engine, dist: Expr, options: EvaluateOptions | undef
       const params = one(dist);
       if (params === undefined) return undefined;
       const [theta] = params;
-      return finish(div(ce, ce.function("Sqrt", [div(ce, ce.number(2), ce.symbol("Pi"))]), theta), options);
+      return finish(div(ce, ce.One, theta), options);
     }
     case "MaxwellDistribution": {
       const params = one(dist);
@@ -735,11 +737,7 @@ export const varianceOf2 = (ce: Engine, dist: Expr, options: EvaluateOptions | u
       const params = one(dist);
       if (params === undefined) return undefined;
       const [theta] = params;
-      const expr = div(
-        ce,
-        sub(ce, ce.symbol("Pi"), ce.number(2)),
-        mul(ce, ce.symbol("Pi"), pow(ce, theta, ce.number(2))),
-      );
+      const expr = div(ce, sub(ce, ce.symbol("Pi"), ce.number(2)), mul(ce, ce.number(2), pow(ce, theta, ce.number(2))));
       return finish(expr, options);
     }
     case "MaxwellDistribution": {
@@ -916,7 +914,7 @@ const drawOne2 = (ce: Engine, dist: Expr): Expr | undefined => {
       const params = one(dist);
       if (params === undefined) return undefined;
       const theta = numAt(params[0]);
-      return ce.number(Math.abs(normal01(ce)) / theta);
+      return ce.number((Math.abs(normal01(ce)) * Math.sqrt(Math.PI / 2)) / theta);
     }
     case "MaxwellDistribution": {
       const params = one(dist);
