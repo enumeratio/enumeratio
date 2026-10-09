@@ -1,14 +1,14 @@
-id	section	role	expr	expected	caption	triage	epsil.back	wolfram.note
-a-flat-list-is-a-vector			[IsVector, [List, 1, 2, 3]]	True				
-isvector-list-a-b-c			[IsVector, [List, a, b, c]]	True	A flat list is a vector, whatever its entries			
-isvector-list-list-1-list-2			[IsVector, [List, [List, 1], [List, 2]]]	False	A column of one-element lists is a matrix, not a vector			
-isvector-vector			[IsVector, vector]	False	An undefined symbol is not known to be a vector		[IsVector, Vector]	
-a-list-of-lists-is-not-a-vector	Scope		[IsVector, [List, [List, 1, 2], [List, 3, 4]]]	False				
-a-non-list-is-not-a-vector	Scope		[IsVector, 3]	False				
-a-test-function-must-hold-of-every-element	Scope		[IsVector, [List, 2, 4, 6], IsEven]	True				
-a-test-function-failing-on-one-element	Scope		[IsVector, [List, 2, 3, 6], IsEven]	False				
-isvector-range-1-10-ismachinenumber	Scope		[IsVector, [Range, 1, 10], IsMachineNumber]	False	The optional test must hold for every entry; exact integers fail it			
-isvector-range-1-10-isinteger	Scope		[IsVector, [Range, 1, 10], IsInteger]	True				
-isvector-n-range-1-10-ismachinenumber	Scope	triage	[IsVector, [N, [Range, 1, 10]], IsMachineNumber]	False		gap		N leaves a lazy Range(1, 10) unchanged, so its elements stay exact integers, which IsMachineNumber rejects; Wolfram's N[Range[1, 10]] is a list of machine reals.
-isvector-list-1-pi-sin-1-sqrt-2-function	Scope		[IsVector, [List, 1, Pi, [Sin, 1], [Sqrt, 2]], [Function, [Block, [And, [IsNumeric, _1], [Equal, [Imaginary, _1], 0]]], _1]]	True			Unreadable	
-list-isvector-vec-isvector-expr	Properties		[List, [IsVector, vec], [IsVector, expr]]	[List, False, False]	Undefined symbols are not known to be vectors			
+id	section	role	expr	expected	caption	triage	epsil.back	wolfram.kind	wolfram.note
+a-flat-list-is-a-vector			[IsVector, [List, 1, 2, 3]]	True					
+isvector-list-a-b-c			[IsVector, [List, a, b, c]]	True	A flat list is a vector, whatever its entries				
+isvector-list-list-1-list-2			[IsVector, [List, [List, 1], [List, 2]]]	False	A column of one-element lists is a matrix, not a vector				
+isvector-vector			[IsVector, vector]	False	An undefined symbol is not known to be a vector		[IsVector, Vector]		
+a-list-of-lists-is-not-a-vector	Scope		[IsVector, [List, [List, 1, 2], [List, 3, 4]]]	False					
+a-non-list-is-not-a-vector	Scope		[IsVector, 3]	False					
+a-test-function-must-hold-of-every-element	Scope		[IsVector, [List, 2, 4, 6], IsEven]	True					
+a-test-function-failing-on-one-element	Scope		[IsVector, [List, 2, 3, 6], IsEven]	False					
+isvector-range-1-10-ismachinenumber	Scope		[IsVector, [Range, 1, 10], IsMachineNumber]	False	The optional test must hold for every entry; exact integers fail it				
+isvector-range-1-10-isinteger	Scope		[IsVector, [Range, 1, 10], IsInteger]	True					
+isvector-n-range-1-10-ismachinenumber	Scope	triage	[IsVector, [N, [Range, 1, 10]], IsMachineNumber]	False		gap		unclassified	N leaves a lazy Range(1, 10) unchanged, so its elements stay exact integers, which IsMachineNumber rejects; Wolfram's N[Range[1, 10]] is a list of machine reals.
+isvector-list-1-pi-sin-1-sqrt-2-function	Scope		[IsVector, [List, 1, Pi, [Sin, 1], [Sqrt, 2]], [Function, [Block, [And, [IsNumeric, _1], [Equal, [Imaginary, _1], 0]]], _1]]	True			Unreadable		
+list-isvector-vec-isvector-expr	Properties		[List, [IsVector, vec], [IsVector, expr]]	[List, False, False]	Undefined symbols are not known to be vectors				

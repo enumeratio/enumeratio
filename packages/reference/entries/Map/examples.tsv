@@ -6,7 +6,7 @@ map-function-x-pow-2-x-list-1-2-3-4			[Map, [Function, [Block, [Power, x, 2]], x
 map-f-list-a-b-c-d-k			[Map, f, [List, a, b, c, d, k]]	[List, [f, a], [f, b], [f, c], [f, d], [f, k]]					
 map-f-list-list-a-b-list-c-d-k			[Map, f, [List, [List, a, b], [List, c, d, k]]]	[List, [f, [List, a, b]], [f, [List, c, d, k]]]					
 map-f-list-list-a-b-list-c-d-k-list-2			[Map, f, [List, [List, a, b], [List, c, d, k]], [List, 2]]	[List, [f, [List, a, b], 2]]				convention	Map over several collections zips them to the shortest, so a third argument is a collection, not Wolfram's level spec; the MapThread we emit for the zip rejects unequal lengths, so Wolfram answers Indeterminate.
-apply-map-f-list-a-b-c-d		triage	[Apply, [Map, f], [List, a, b, c, d]]	[Map, [List, a, b, c, d]]		gap		unclassified	Wolfram reads the operator form Map[f][list] as Map[f, list], {f[a], f[b], f[c], f[d]}; ours drops f and holds Map(list).
+apply-map-f-list-a-b-c-d		triage	[Apply, [Map, f], [List, a, b, c, d]]	[Map, [List, a, b, c, d]]		ours?		unclassified	The operator form Map[f][list] drops f here: ours holds Map(list), while Wolfram maps f over the list.
 map-f-list-list-list-list-list-a	Scope		[Map, f, [List, [List, [List, [List, [List, a]]]]]]	[List, [f, [List, [List, [List, [List, a]]]]]]	Maps only the first level, so deeper nesting is left intact				
 map-f-list-a-b-c	Scope		[Map, f, [List, a, b, c]]	[List, [f, a], [f, b], [f, c]]	A symbolic head wraps each element				
 map-f-list-list-list-list-list-a-list-2	Scope		[Map, f, [List, [List, [List, [List, [List, a]]]]], [List, 2]]	[List, [f, [List, [List, [List, [List, a]]]], 2]]	Extra lists supply further arguments, giving $f(x, 2)$ on the single element				

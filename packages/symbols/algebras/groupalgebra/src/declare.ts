@@ -406,17 +406,20 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
     const perm = permutationOf(input);
     if (perm === undefined) return undefined;
     const cycles = permutationToCycles(perm, true);
-    return ce.function(headName, [
-      ce.function(
-        "List",
-        cycles.map((cycle) =>
-          ce.function(
-            "List",
-            cycle.map((x) => ce.number(x)),
+    // Evaluated here: a handler's result isn't re-evaluated, so `Identity` would stay wrapped.
+    return ce
+      .function(headName, [
+        ce.function(
+          "List",
+          cycles.map((cycle) =>
+            ce.function(
+              "List",
+              cycle.map((x) => ce.number(x)),
+            ),
           ),
         ),
-      ),
-    ]);
+      ])
+      .evaluate();
   };
   /** Either notation `permutationOf` reads, on its own or paired with a wrapping head. */
   const permutationLike = "expression<Cycles> | list<integer>";
