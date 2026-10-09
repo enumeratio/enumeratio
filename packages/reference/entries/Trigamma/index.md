@@ -15,5 +15,10 @@ references:
     identity: "5.15"
 names:
   dlmf: polygamma functions
+bindings:
+  - origin: mapped
+    form: wolfram
+    template: PolyGamma[1, $1]
+    arity: 1
 stub: engine
 ---

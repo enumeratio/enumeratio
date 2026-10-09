@@ -1,0 +1,3 @@
+id	in	out	tex.in	tex.out
+arctan2-1-1	ArcTan[1, 1]	Pi/4	\tan ^{-1}(1,1)	\frac{\pi }{4}
+arctan2-0-minus-1	ArcTan[-1, 0]	Pi	\tan ^{-1}(-1,0)	\pi
