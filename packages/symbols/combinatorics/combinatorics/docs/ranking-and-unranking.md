@@ -60,7 +60,7 @@ Press ▶ and watch the order: the last element climbs slowest. That is
 <strong>colex</strong> — subsets are ordered by their largest element first.
 </template>
 <notatio-manipulate v-pre params="{ {r, 1}, 1, 56, 1}">
-<notatio-show class="inline-figure" value='Show(CellDiagram(At(KSubsets(8, 3), _r)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
+<graphics-box class="inline-figure" value='Show(CellDiagram(At(KSubsets(8, 3), _r)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
 </notatio-manipulate>
 </Story>
 
@@ -76,8 +76,8 @@ wrap around while the permutations are still going. Wrapping is the point: an in
 taken modulo the count.
 </template>
 <notatio-manipulate v-pre params="{ {r, 1}, 1, 24, 1}">
-<notatio-show class="inline-figure" value='Show(StrandDiagram(At(SymmetricGroup(4), _r)), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
-<notatio-show class="inline-figure" value='Show(PathDiagram(At(DyckPaths(4), _r)), ImageSize -> [Automatic, 86], GestureHandling -> "none")' legend-at="none" />
+<graphics-box class="inline-figure" value='Show(StrandDiagram(At(SymmetricGroup(4), _r)), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
+<graphics-box class="inline-figure" value='Show(PathDiagram(At(DyckPaths(4), _r)), ImageSize -> [Automatic, 86], GestureHandling -> "none")' legend-at="none" />
 </notatio-manipulate>
 </Story>
 

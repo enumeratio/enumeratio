@@ -33,7 +33,7 @@ row — the one-line word <code>3&nbsp;1&nbsp;2</code>. It is a <code>Show</code
 <code>StrandDiagram</code>; the true bracketed matrix is <code>MatrixForm</code>,
 a TeX representation still to come.
 </template>
-<notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation([3, 1, 2])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:77px" />
+<graphics-box class="inline-figure" value='Show(StrandDiagram(Permutation([3, 1, 2])), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" style="width:77px" />
 </Story>
 
 <Story
@@ -43,7 +43,7 @@ a TeX representation still to come.
 the rest are cells too. Without it, <code>n</code> defaults to the largest member. A
 <code>CellDiagram</code> of <code>Subset([1, 3], 6)</code>.
 </template>
-<notatio-show class="inline-figure" value='Show(CellDiagram(Subset([1, 3], 6)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" style="width:156px" />
+<graphics-box class="inline-figure" value='Show(CellDiagram(Subset([1, 3], 6)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" style="width:156px" />
 </Story>
 
 <Story
@@ -54,9 +54,9 @@ reading order — the superstandard filling, always a valid standard Young
 tableau (rows increase rightward, columns downward). A <code>CellDiagram</code> of
 <code>StandardTableau</code>; each cell's <code>Entry</code> is its number.
 </template>
-<notatio-show class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2, 3], [4, 5], [6]])), ImageSize -> [Automatic, 82], GestureHandling -> "none")' legend-at="none" style="width:82px" />
-<notatio-show class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2, 3, 4], [5, 6]])), ImageSize -> [Automatic, 62], GestureHandling -> "none")' legend-at="none" style="width:102px" />
-<notatio-show class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2], [3, 4], [5, 6]])), ImageSize -> [Automatic, 82], GestureHandling -> "none")' legend-at="none" style="width:62px" />
+<graphics-box class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2, 3], [4, 5], [6]])), ImageSize -> [Automatic, 82], GestureHandling -> "none")' legend-at="none" style="width:82px" />
+<graphics-box class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2, 3, 4], [5, 6]])), ImageSize -> [Automatic, 62], GestureHandling -> "none")' legend-at="none" style="width:102px" />
+<graphics-box class="inline-figure" value='Show(CellDiagram(StandardTableau([[1, 2], [3, 4], [5, 6]])), ImageSize -> [Automatic, 82], GestureHandling -> "none")' legend-at="none" style="width:62px" />
 </Story>
 
 <Story
@@ -66,7 +66,7 @@ tableau (rows increase rightward, columns downward). A <code>CellDiagram</code> 
 string). Each block draws as a pill (a chain of joined slots) over its elements —
 <code>[0,0,1,0,2]</code> is <code>{1,2,4} {3} {5}</code>.
 </template>
-<notatio-show class="inline-figure" value='Show(StrandDiagram(SetPartition([[1, 2, 4], [3], [5]])), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" style="width:125px" />
+<graphics-box class="inline-figure" value='Show(StrandDiagram(SetPartition([[1, 2, 4], [3], [5]])), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" style="width:125px" />
 </Story>
 
 <Story
@@ -77,8 +77,8 @@ A monotone staircase of unit steps east (<code>0</code>) and north
 <code>PathDiagram</code> of <code>LatticePath</code>: its points are the addresses
 <code>(x, y)</code>, its steps the links.
 </template>
-<notatio-show class="inline-figure" value='Show(PathDiagram(LatticePath([0, 1, 1, 0, 1, 0])), GridLines -> [1, 1], GridLinesStyle -> Directive(Gray, AbsoluteThickness(1), Opacity(0.35)), ImageSize -> [Automatic, 88], GestureHandling -> "none")' legend-at="none" style="width:88px" />
-<notatio-show class="inline-figure" value='Show(PathDiagram(LatticePath([1, 0, 1, 0, 0, 1])), GridLines -> [1, 1], GridLinesStyle -> Directive(Gray, AbsoluteThickness(1), Opacity(0.35)), ImageSize -> [Automatic, 88], GestureHandling -> "none")' legend-at="none" style="width:88px" />
+<graphics-box class="inline-figure" value='Show(PathDiagram(LatticePath([0, 1, 1, 0, 1, 0])), GridLines -> [1, 1], GridLinesStyle -> Directive(Gray, AbsoluteThickness(1), Opacity(0.35)), ImageSize -> [Automatic, 88], GestureHandling -> "none")' legend-at="none" style="width:88px" />
+<graphics-box class="inline-figure" value='Show(PathDiagram(LatticePath([1, 0, 1, 0, 0, 1])), GridLines -> [1, 1], GridLinesStyle -> Directive(Gray, AbsoluteThickness(1), Opacity(0.35)), ImageSize -> [Automatic, 88], GestureHandling -> "none")' legend-at="none" style="width:88px" />
 </Story>
 
 <Story
@@ -89,11 +89,11 @@ listed in preorder. A <code>TreeDiagram</code> of its tidy layout: leaves take
 sequential x, each internal node sits over the mean of its children, and a node's
 address is its (depth, order). The five shapes of size 3 (Catalan again):
 </template>
-<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 0, 0, 2, 0, 0])), ImageSize -> [Automatic, 74], GestureHandling -> "none")' legend-at="none" style="width:94px" />
-<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 2, 0, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
-<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 0, 2, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
-<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 0, 2, 2, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
-<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 0, 2, 0, 2, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<graphics-box class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 0, 0, 2, 0, 0])), ImageSize -> [Automatic, 74], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<graphics-box class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 2, 0, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<graphics-box class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 2, 0, 2, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<graphics-box class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 0, 2, 2, 0, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<graphics-box class="inline-figure" value='Show(TreeDiagram(PlaneTree([2, 0, 2, 0, 2, 0, 0])), ImageSize -> [Automatic, 94], GestureHandling -> "none")' legend-at="none" style="width:94px" />
 </Story>
 
 <Story
@@ -103,7 +103,7 @@ address is its (depth, order). The five shapes of size 3 (Catalan again):
 rooted ordered tree draws: here a root with three children, the middle one a
 cherry, the last a chain.
 </template>
-<notatio-show class="inline-figure" value='Show(TreeDiagram(PlaneTree([3, 0, 2, 0, 0, 1, 0])), ImageSize -> [Automatic, 74], GestureHandling -> "none")' legend-at="none" style="width:94px" />
+<graphics-box class="inline-figure" value='Show(TreeDiagram(PlaneTree([3, 0, 2, 0, 0, 1, 0])), ImageSize -> [Automatic, 74], GestureHandling -> "none")' legend-at="none" style="width:94px" />
 </Story>
 
 ## Click a figure

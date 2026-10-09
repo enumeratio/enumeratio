@@ -18,6 +18,7 @@ type Registry = Pick<CustomElementRegistry, "define" | "get">;
 /** The box tags with a module of their own: the ones that take input, own a scope or a timer, or window their rows. */
 export const INTERACTIVE_BOX_TAGS: ReadonlySet<string> = new Set([
   "table-view-box",
+  "graphics-box",
   "dynamic-box",
   "dynamic-module-box",
   ...CONTROL_BOX_HEADS.map(boxTag),

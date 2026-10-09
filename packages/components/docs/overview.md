@@ -91,7 +91,7 @@ localStorage["notatio:debug"] = "plot3d"; // or "plot*", or "*"
 A single expression can be shown many ways. Following Wolfram's `*Form` symbols,
 each way is a named **representation** you can request explicitly. The textual
 forms ship on `<notatio-out>` (the In/Out menu); the visual forms live in
-`<notatio-show>` (a value's frame layer, and the plots) and the plot components.
+`<graphics-box>` (a value's frame layer, and the plots) and the plot components.
 
 | Representation           | Kind       | Status  | Wolfram analogue                                                                                                                |
 | ------------------------ | ---------- | ------- | ------------------------------------------------------------------------------------------------------------------------------- |

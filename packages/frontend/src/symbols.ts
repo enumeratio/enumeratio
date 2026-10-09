@@ -435,7 +435,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     // `Show(layer, …, options)`: the layers stay one expression, which the element reads; its
     // options lower to attributes (`Caption` to `caption`) like any plot's.
     head: "Show",
-    tag: "notatio-show",
+    tag: "graphics-box",
     holdsOptions: true,
     // The height it will take, so the page lays out before the element is defined.
     attributes: (ops) => ({
@@ -447,7 +447,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   // `Graphics3D`: `Permutahedron(4)` is `Show(PolytopeFaces(Permutahedron(4)))`.
   ...["Permutahedron", "Simplex", "CrossPolytope", "Hypercube", "Associahedron"].map((head): VisualSymbol => ({
     head,
-    tag: "notatio-show",
+    tag: "graphics-box",
     attributes: (ops) => ({
       value: epsil([
         "Show",
@@ -463,7 +463,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   // `Show(StrandDiagram(Braid(3, [1, -2])))`, its strands picked by a click.
   {
     head: "Braid",
-    tag: "notatio-show",
+    tag: "graphics-box",
     attributes: (ops) => {
       const generators = headOf(ops[1]) === "List" ? opsOf(ops[1]).length : 0;
       const height = Math.min(480, Math.max(160, 60 + 32 * generators));
@@ -482,7 +482,7 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
   // `Permutation([3, 1, 2])` is `Show(StrandDiagram(Permutation([3, 1, 2])))`.
   ...Object.entries(VALUE_FRAMES).map(([head, frame]): VisualSymbol => ({
     head,
-    tag: "notatio-show",
+    tag: "graphics-box",
     when: (ops) => typeof figureLayerOf(frame, plainJson([head, ...ops])) !== "string",
     attributes: (ops) => ({
       value: epsil([
@@ -1020,7 +1020,7 @@ function showHeight(ops: readonly Json[]): number {
   return h !== undefined && h > 0 ? h : SHOW_HEIGHT;
 }
 
-/** `<notatio-show>`'s height when `ImageSize` doesn't give one. */
+/** `<graphics-box>`'s height when `ImageSize` doesn't give one. */
 const SHOW_HEIGHT = 480;
 
 /** Escape a value for a double-quoted HTML attribute. */

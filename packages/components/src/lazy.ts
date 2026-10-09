@@ -32,7 +32,7 @@ const ELEMENTS: Readonly<Record<string, () => Promise<unknown>>> = {
   "notatio-graph-plot": () => import("./notatio-graph-plot.ts"),
   "notatio-complex-plot": () => import("./notatio-complex-plot.ts"),
   "notatio-complex-plot-3d": () => import("./notatio-complex-plot-3d.ts"),
-  "notatio-show": () => import("./notatio-show.ts"),
+  "graphics-box": () => import("./graphics-box.ts"),
   "stepper-box": () => import("./stepper-box.ts"),
   "notatio-string-template": () => import("./notatio-string-template.ts"),
   "notatio-gradient": () => import("./notatio-gradient.ts"),

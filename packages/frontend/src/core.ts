@@ -26,6 +26,7 @@ export * from "./gestures.ts";
 export * from "./graphics-rules.ts";
 export * from "./tiles-canvas.ts";
 export * from "./graphics-box.ts";
+export * from "./svg-draw.ts";
 export * from "./strand-frame.ts";
 export * from "./cell-frame.ts";
 export * from "./tree-frame.ts";

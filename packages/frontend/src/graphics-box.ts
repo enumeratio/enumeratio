@@ -10,6 +10,8 @@ import {
   graphicsComplex,
   inset,
   line,
+  type Notation,
+  type NotationRule,
   type Options,
   type OptionValue,
   polygon,
@@ -18,8 +20,8 @@ import {
   style,
   tag,
 } from "@enumeratio/boxes";
-import { type FigureHead, FIGURE_DEFAULTS, figureLayerOf } from "./figure-frames.ts";
-import type { Json } from "./frame-json.ts";
+import { type FigureHead, FIGURE_DEFAULTS, figureLayerOf, VALUE_FRAMES } from "./figure-frames.ts";
+import { argsOf, headOf, type Json } from "./frame-json.ts";
 import { boundaryRuleOf, type ColorMixing, colorRuleOf, type Edge, plainJson, rulesOf } from "./graphics-rules.ts";
 import {
   type Address,
@@ -148,3 +150,33 @@ export function figureGraphicsBox(
     }) ?? "not a finite figure"
   );
 }
+
+/** The frame and data a `Show` of a flat frame, or a value of a `VALUE_FRAMES` head, draws as. */
+function figureOf(json: Json): { frame: Exclude<FigureHead, "PolytopeFaces">; data: Json } | undefined {
+  const head = headOf(json);
+  if (head === "Show") {
+    const layer = argsOf(json)[0];
+    const frame = headOf(layer);
+    return frame !== undefined && isFlatFrame(frame) ? { frame, data: argsOf(layer)[0] } : undefined;
+  }
+  if (head === undefined || !Object.hasOwn(VALUE_FRAMES, head)) return undefined;
+  const frame = VALUE_FRAMES[head as keyof typeof VALUE_FRAMES];
+  return isFlatFrame(frame) ? { frame, data: json } : undefined;
+}
+
+const figureRule =
+  (head: string): NotationRule =>
+  (args) => {
+    const figure = figureOf(plainJson([head, ...args] as Json));
+    const box = figure && figureGraphicsBox(figure.frame, figure.data);
+    return typeof box === "string" ? undefined : box;
+  };
+
+/**
+ * `Show` and each value's default picture as `makeBoxes` rules: `Permutation([3, 1, 2])` is
+ * `Show(StrandDiagram(…))`, which lowers to a `GraphicsBox`. The web element draws the same
+ * `Show` itself (it also holds lattices and cameras); a host with boxes alone draws these.
+ */
+export const FIGURE_NOTATION: Notation = Object.fromEntries(
+  ["Show", ...Object.keys(VALUE_FRAMES)].map((head) => [head, figureRule(head)]),
+);

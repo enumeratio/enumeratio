@@ -33,7 +33,7 @@ the counts are the Fubini numbers and the 24 vertices are the 24 orderings. The
 6 squares and 8 hexagons fall out of vertex incidence — nothing tells the
 renderer this is a truncated octahedron. Drag to orbit; ⌘/Ctrl + scroll or pinch to zoom.
 </template>
-<notatio-show value='Show(PolytopeFaces(Permutahedron(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
 
 <Story
@@ -43,7 +43,7 @@ The ways to bracket a product. Vertices are the 14 triangulations of a hexagon,
 placed by Loday's coordinates; the 9 facets come out as three squares and six
 pentagons, which is the check that those coordinates are right.
 </template>
-<notatio-show value='Show(PolytopeFaces(Associahedron(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Associahedron(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
 
 <Story
@@ -54,8 +54,8 @@ so the sharpest check on the machinery. The cross-polytope is also the one that
 does <em>not</em> lie in a hyperplane, which is why the projection reads a
 polytope's span off its vertices rather than assuming one.
 </template>
-<notatio-show value='Show(PolytopeFaces(Simplex(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
-<notatio-show value='Show(PolytopeFaces(CrossPolytope(3)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Simplex(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(CrossPolytope(3)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
 </Story>
 
 <Story
@@ -66,7 +66,7 @@ axes to ±1 and leaves the rest free, so dim = <em>n</em> − |fixed axes| and
 containment runs the other way. Order 3 is an ordinary cube — 8 vertices, 12
 edges, 6 square facets.
 </template>
-<notatio-show value='Show(PolytopeFaces(Hypercube(3)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Hypercube(3)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
 </Story>
 
 ## Click a facet: its closure and its star
@@ -87,8 +87,8 @@ and six edges. Pick a vertex on the right: orange is everything that contains it
 its three faces and the body. The tooltip strip below each lists the pick's vertices and the
 faces incident to it.
 </template>
-<notatio-show value='Show(PolytopeFaces(Permutahedron(4), ColorRules -> [Selected -> Opacity(0.7, Gold), FaceOf(Selected) -> Orange, Dimension2 -> Opacity(0.1, Gray), Not(Interior) -> Opacity(0.55, Gray)]), Selection -> [], ViewPoint -> [1.3, -2.4, 2], ViewAngle -> 40, ImageSize -> [Automatic, 320])' legend-at="none" />
-<notatio-show value='Show(PolytopeFaces(Permutahedron(4), ColorRules -> [Selected -> White, Cofaces(Selected) -> Orange, Dimension2 -> Opacity(0.1, Gray), Not(Interior) -> Opacity(0.55, Gray)]), Selection -> [Tuple(0, 0)], ViewPoint -> [1.3, -2.4, 2], ViewAngle -> 40, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(4), ColorRules -> [Selected -> Opacity(0.7, Gold), FaceOf(Selected) -> Orange, Dimension2 -> Opacity(0.1, Gray), Not(Interior) -> Opacity(0.55, Gray)]), Selection -> [], ViewPoint -> [1.3, -2.4, 2], ViewAngle -> 40, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(4), ColorRules -> [Selected -> White, Cofaces(Selected) -> Orange, Dimension2 -> Opacity(0.1, Gray), Not(Interior) -> Opacity(0.55, Gray)]), Selection -> [Tuple(0, 0)], ViewPoint -> [1.3, -2.4, 2], ViewAngle -> 40, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
 
 ## Several polytopes in one frame
@@ -102,7 +102,7 @@ dimension. A relation never crosses from one polytope to another.
 <template #description>
 Both at order 4, one camera. Orbit the pair.
 </template>
-<notatio-show value='Show(PolytopeFaces(Permutahedron(4)), PolytopeFaces(Associahedron(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(4)), PolytopeFaces(Associahedron(4)), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
 
 ## Labels
@@ -122,7 +122,7 @@ the label anyone wants is the one for the face they just clicked.
 The default. Click any mark and it says what it is: a set composition for the
 permutahedron, so <code>1,1,2,2</code> is the square where {1,2} precedes {3,4}.
 </template>
-<notatio-show value='Show(PolytopeFaces(Permutahedron(4)), Selection -> [Tuple(2, 2)], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(4)), Selection -> [Tuple(2, 2)], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
 
 <Story
@@ -132,8 +132,8 @@ permutahedron, so <code>1,1,2,2</code> is the square where {1,2} precedes {3,4}.
 triangulations, numbered rather than spelled, since a dissection's data is a long
 word. <code>All -> "Data"</code> is only readable on a small figure.
 </template>
-<notatio-show value='Show(PolytopeFaces(Associahedron(4), MeshCellLabel -> [0 -> "Index"]), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
-<notatio-show value='Show(PolytopeFaces(Permutahedron(3), MeshCellLabel -> [All -> "Data"]), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Associahedron(4), MeshCellLabel -> [0 -> "Index"]), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(3), MeshCellLabel -> [All -> "Data"]), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 280])' legend-at="none" />
 </Story>
 
 <Story
@@ -142,7 +142,7 @@ word. <code>All -> "Data"</code> is only readable on a small figure.
 <code>2 -> "Vertices"</code> writes how many vertices each 2-face has — and
 that is the truncated octahedron reading itself out: six 4s and eight 6s.
 </template>
-<notatio-show value='Show(PolytopeFaces(Permutahedron(4), MeshCellLabel -> [2 -> "Vertices"]), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(4), MeshCellLabel -> [2 -> "Vertices"]), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
 
 ## One stratum at a time
@@ -155,7 +155,7 @@ else drops back.
 <template #description>
 The edges at full strength, the rest a quarter of it.
 </template>
-<notatio-show value='Show(PolytopeFaces(Permutahedron(4), ColorRules -> [Selected -> Gold, Edge -> "#c4c4d0", True -> Opacity(0.12, Gray)]), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(4), ColorRules -> [Selected -> Gold, Edge -> "#c4c4d0", True -> Opacity(0.12, Gray)]), Selection -> [], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
 
 ## Aiming the camera
@@ -170,7 +170,7 @@ To settle on a face, look at its middle from the way it faces.
 The chosen hexagon is looked at head on: <code>ViewCenter</code> is its middle and
 <code>ViewPoint</code> its outward normal.
 </template>
-<notatio-show value='Show(PolytopeFaces(Permutahedron(4)), Selection -> [Tuple(2, 0)], ViewCenter -> [0.6, -0.467, -0.149], ViewPoint -> [2.324, -1.807, -0.577], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
+<graphics-box value='Show(PolytopeFaces(Permutahedron(4)), Selection -> [Tuple(2, 0)], ViewCenter -> [0.6, -0.467, -0.149], ViewPoint -> [2.324, -1.807, -0.577], SphericalRegion -> True, ImageSize -> [Automatic, 320])' legend-at="none" />
 </Story>
 
 ## Reference

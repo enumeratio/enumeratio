@@ -210,7 +210,7 @@ knows the other exists.
 <dynamic-module-box>
 <p>
 Ground set of <knob-box name="n" value="5" min="1" max="9" step="1" /> elements:
-<notatio-show class="inline-figure" value='Show(CellDiagram(Subset([1, 3], _n)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
+<graphics-box class="inline-figure" value='Show(CellDiagram(Subset([1, 3], _n)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
 — which is one of <dynamic-box value="2^_n" /> subsets.
 </p>
 </dynamic-module-box>
@@ -227,7 +227,7 @@ the collection's own order, and the glyph draws whichever one it lands on. No
 <dynamic-module-box>
 <p>
 Permutation <knob-box name="k" value="1" min="1" max="24" /> of 4:
-<notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
+<graphics-box class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
 </p>
 </dynamic-module-box>
 </Story>
@@ -251,7 +251,7 @@ hover is the whole affordance.
 </template>
 <dynamic-module-box>
 <knob-box name="k" value="1" min="1" max="24">
-<notatio-show class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
+<graphics-box class="inline-figure" value='Show(StrandDiagram(Permutation(At(Permutations(Range(1, 4)), _k))), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
 </knob-box>
 </dynamic-module-box>
 </Story>
@@ -266,7 +266,7 @@ like.
 <dynamic-module-box>
 <p>
 <knob-box name="n" value="4" min="1" max="8">
-<notatio-show class="inline-figure" value='Show(CellDiagram(At(IntegerPartitions(_n), 1)), ImageSize -> [Automatic, 38], GestureHandling -> "none")' legend-at="none" />
+<graphics-box class="inline-figure" value='Show(CellDiagram(At(IntegerPartitions(_n), 1)), ImageSize -> [Automatic, 38], GestureHandling -> "none")' legend-at="none" />
 </knob-box>
 is the first of <dynamic-box value="Count(IntegerPartitions(_n))" /> partitions of
 <dynamic-box value="_n" />.

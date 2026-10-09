@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // The full combinatorial-glyph vocabulary, one family per row -- a visual index of the
-// pictures each kind lowers to. Each item is the `<notatio-show>` it stands for, so this
+// pictures each kind lowers to. Each item is the `<graphics-box>` it stands for, so this
 // doubles as an integration check of the frames in the browser.
 import { lowerFigure } from "@enumeratio/frontend/core";
 
@@ -106,7 +106,7 @@ const pictured = families.map((fam) => ({
         <h4>{{ fam.title }}</h4>
         <div class="strip">
           <figure v-for="(it, i) in fam.items" :key="i">
-            <notatio-show
+            <graphics-box
               v-if="it.picture"
               class="inline-figure"
               :value="it.picture.show"
