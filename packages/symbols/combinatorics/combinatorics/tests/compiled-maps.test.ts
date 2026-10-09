@@ -27,30 +27,38 @@ test("the build compiled maps", () => {
   expect(Object.keys(COMPILED_MAPS).length).toBeGreaterThan(0);
 });
 
+// A map's subjects run in chunks of one test each, so the file's total grows with the sample
+// but no test comes near `testTimeout`.
+const CHUNK = 40;
+
 // Every map compiled ahead of time, run from its generated code, against the interpreter. A map
 // the generator left interpreted (its compiled code disagreed) has no code to run.
 for (const map of MAPS.filter((m) => COMPILED_MAPS[`${m.name}@${m.from}`]?.run !== undefined)) {
   const from = carrierByType.get(map.from)!;
   const to = carrierByType.get(map.to)!;
-  test(`${map.name} from ${map.from}: compiled agrees with interpreted`, () => {
-    let fallbacks = 0;
-    const run = fastDefinition({
-      ce,
-      body: map.body,
-      guard: map.guard,
-      from: from.shape,
-      to: to.shape,
-      cache: false,
-      generated: COMPILED_MAPS[`${map.name}@${map.from}`],
-      interpret: (contents) => {
-        fallbacks++;
-        return evaluateDefinition(ce, map, contents);
-      },
+  let fallbacks = 0;
+  const run = fastDefinition({
+    ce,
+    body: map.body,
+    guard: map.guard,
+    from: from.shape,
+    to: to.shape,
+    cache: false,
+    generated: COMPILED_MAPS[`${map.name}@${map.from}`],
+    interpret: (contents) => {
+      fallbacks++;
+      return evaluateDefinition(ce, map, contents);
+    },
+  });
+  const subjects = subjectsOf(from.name);
+  const title = `${map.name} from ${map.from}: compiled agrees with interpreted`;
+  for (let start = 0; start < subjects.length; start += CHUNK) {
+    test(subjects.length > CHUNK ? `${title} (${start / CHUNK + 1})` : title, () => {
+      for (const contents of subjects.slice(start, start + CHUNK))
+        expect(run(contents), JSON.stringify(contents)).toEqual(evaluateDefinition(ce, map, contents));
     });
-    const subjects = subjectsOf(from.name);
-    for (const contents of subjects)
-      expect(run(contents), JSON.stringify(contents)).toEqual(evaluateDefinition(ce, map, contents));
-    // The generated code answered, not the interpreter.
+  }
+  test(`${map.name} from ${map.from}: the generated code answers`, () => {
     expect(fallbacks).toBeLessThan(subjects.length);
   });
 }
