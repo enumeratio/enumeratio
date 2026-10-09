@@ -1,42 +1,63 @@
 import { expect, test } from "vite-plus/test";
+import { type Box, type BoxNode, makeBoxes, optionsOfBox } from "@enumeratio/boxes";
+import { parseExpression } from "@enumeratio/formats/expression";
 import {
-  arrayPlotSvg,
-  barChartSvg,
+  arrayPlotBox,
+  barChartBox,
+  boxWhiskerChartBox,
+  chartSvg,
   chooseChartType,
-  boxWhiskerChartSvg,
-  discretePlotSvg,
+  discretePlotBox,
+  drawChart,
   fiveNumberSummary,
-  histogramSvg,
-  pieChartSvg,
+  histogramBox,
+  isChartBox,
+  pieChartBox,
+  renderChart,
   sturgesBins,
 } from "../src/chart.ts";
+import { plainJson } from "../src/graphics-rules.ts";
+import { loadLatticeModules } from "../src/lattice-layers.ts";
+import { plotItems } from "../src/plot-box.ts";
+import { holdsPlot } from "../src/plot-lowering.ts";
+import { PLOT_NOTATION } from "../src/plot-notation.ts";
 
-const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
+const node = (box: Box): BoxNode => box as BoxNode;
+/** The primitives a chart's box holds, by head. */
+const count = (box: Box, head: string): number => plotItems(node(box)).filter((i) => i.prim[0] === head).length;
+const svgOf = (box: Box): string => renderChart(node(box));
+const size = (box: Box): number[] => optionsOfBox(node(box)).ImageSize as number[];
 
 // ---------------------------------------------------------------------------
 // BarChart
 // ---------------------------------------------------------------------------
 
-test("bar chart draws one rect per value", () => {
-  const s = barChartSvg([3, 1, 4, 1, 5]);
-  expect(s).toContain('viewBox="0 0 340 200"');
-  expect(count(s, "rect")).toBe(5);
+test("bar chart draws one rectangle per value", () => {
+  const box = barChartBox([3, 1, 4, 1, 5]);
+  expect(isChartBox(box)).toBe(true);
+  expect(size(box)).toEqual([340, 200]);
+  expect(count(box, "RectangleBox")).toBe(5);
+  expect(svgOf(box)).toContain('viewBox="0 0 340 200"');
 });
 
 test("bar chart labels render text under each bar", () => {
-  const s = barChartSvg([1, 2, 3], { labels: ["a", "b", "c"] });
+  const s = svgOf(barChartBox([1, 2, 3], { labels: ["a", "b", "c"] }));
   expect(s).toContain(">a<");
   expect(s).toContain(">b<");
   expect(s).toContain(">c<");
 });
 
 test("negative values dip below the zero baseline", () => {
-  const s = barChartSvg([3, -2, 1]);
-  expect(count(s, "rect")).toBe(3);
+  const box = barChartBox([3, -2, 1]);
+  expect(count(box, "RectangleBox")).toBe(3);
+  const dipped = plotItems(node(box))[1]!;
+  expect(optionsOfBox(dipped.prim).Min).toEqual([1.1, -2]);
+  expect(optionsOfBox(dipped.prim).Max).toEqual([1.9, 0]);
 });
 
 test("empty data yields a frame, no bars", () => {
-  expect(count(barChartSvg([]), "rect")).toBe(0);
+  expect(count(barChartBox([]), "RectangleBox")).toBe(0);
+  expect(svgOf(barChartBox([], { title: "none" }))).toContain(">none<");
 });
 
 // ---------------------------------------------------------------------------
@@ -44,14 +65,15 @@ test("empty data yields a frame, no bars", () => {
 // ---------------------------------------------------------------------------
 
 test("histogram bins samples into the requested bar count", () => {
-  const s = histogramSvg([1, 2, 2, 3, 3, 3, 4, 4, 5], { bins: 5 });
-  expect(count(s, "rect")).toBe(5);
+  const box = histogramBox([1, 2, 2, 3, 3, 3, 4, 4, 5], { bins: 5 });
+  expect(count(box, "RectangleBox")).toBe(5);
+  const heights = plotItems(node(box)).map((i) => (optionsOfBox(i.prim).Max as number[])[1]);
+  expect(heights).toEqual([1, 2, 3, 2, 1]);
 });
 
 test("histogram falls back to Sturges' rule when bins is omitted", () => {
   const values = Array.from({ length: 16 }, (_, i) => i);
-  const s = histogramSvg(values);
-  expect(count(s, "rect")).toBe(sturgesBins(16));
+  expect(count(histogramBox(values), "RectangleBox")).toBe(sturgesBins(16));
 });
 
 test("sturgesBins grows logarithmically with sample count", () => {
@@ -60,7 +82,7 @@ test("sturgesBins grows logarithmically with sample count", () => {
 });
 
 test("histogram range labels report the sampled min/max", () => {
-  const s = histogramSvg([0, 5, 10]);
+  const s = svgOf(histogramBox([0, 5, 10]));
   expect(s).toContain(">0<");
   expect(s).toContain(">10<");
 });
@@ -69,31 +91,49 @@ test("histogram range labels report the sampled min/max", () => {
 // PieChart
 // ---------------------------------------------------------------------------
 
-test("pie chart draws one wedge path per positive value", () => {
-  const s = pieChartSvg([1, 2, 3]);
-  expect(count(s, "path")).toBe(3);
+const wedges = (box: Box): number[][] => plotItems(node(box)).map((i) => optionsOfBox(i.prim).Angles as number[]);
+
+test("pie chart draws one sector per positive value, in turns of the whole", () => {
+  const box = pieChartBox([1, 2, 3]);
+  expect(count(box, "DiskBox")).toBe(3);
+  const angles = wedges(box);
+  // Clockwise from twelve o'clock: the first wedge is a sixth of a turn, ending at its start.
+  expect(angles[0]![1]).toBeCloseTo(Math.PI / 2);
+  expect(angles[0]![1]! - angles[0]![0]!).toBeCloseTo(Math.PI / 3);
+  expect(angles[2]![0]).toBeCloseTo(Math.PI / 2 - 2 * Math.PI);
+  // A sector in SVG is a path out to the rim and round it.
+  expect(svgOf(box).match(/d="M[^"]*L[^"]*A[^"]*Z" fill="#/g)).toHaveLength(3);
 });
 
 test("pie chart drops non-positive and non-finite entries", () => {
-  const s = pieChartSvg([2, 0, -1, Number.NaN, 3]);
-  expect(count(s, "path")).toBe(2);
+  expect(count(pieChartBox([2, 0, -1, Number.NaN, 3]), "DiskBox")).toBe(2);
 });
 
-test("a single entry draws a full circle, not a degenerate arc", () => {
-  const s = pieChartSvg([5]);
-  expect(count(s, "circle")).toBe(1);
-  expect(count(s, "path")).toBe(0);
+test("a single entry is a whole turn, drawn as a circle, not a degenerate arc", () => {
+  const box = pieChartBox([5]);
+  const [a, b] = wedges(box)[0]!;
+  expect(b! - a!).toBeCloseTo(2 * Math.PI);
+  expect(svgOf(box)).not.toMatch(/d="M[^"]*L[^"]*A/);
 });
 
 test("pie chart legend lists labels when provided", () => {
-  const s = pieChartSvg([1, 2], { labels: ["x", "y"] });
+  const s = svgOf(pieChartBox([1, 2], { labels: ["x", "y"] }));
   expect(s).toContain(">x<");
   expect(s).toContain(">y<");
 });
 
 test("all-zero/empty data yields a frame, no wedges", () => {
-  expect(count(pieChartSvg([]), "path")).toBe(0);
-  expect(count(pieChartSvg([0, 0]), "path")).toBe(0);
+  expect(count(pieChartBox([]), "DiskBox")).toBe(0);
+  expect(count(pieChartBox([0, 0]), "DiskBox")).toBe(0);
+});
+
+test("a wedge is a circle on the page: both axes take the same pixels to the unit", () => {
+  const d = drawChart(node(pieChartBox([1, 1])));
+  const disks = d.list.kind === "marks" ? d.list.marks.filter((m) => m.mark.head === "Disk") : [];
+  expect(disks).toHaveLength(2);
+  const [wedge] = disks;
+  // Radius 1 on a 340 by 200 frame: r = min(0.38 * 340 - 10, (200 - 12) / 2 - 10, 160).
+  expect(wedge!.mark.head === "Disk" && wedge!.mark.radius).toBeCloseTo(84);
 });
 
 // ---------------------------------------------------------------------------
@@ -116,78 +156,75 @@ test("fiveNumberSummary is undefined for empty input", () => {
 });
 
 test("box-whisker chart draws one box per series", () => {
-  const s = boxWhiskerChartSvg([
+  const box = boxWhiskerChartBox([
     [1, 2, 3, 4, 5],
     [2, 4, 6, 8, 10],
   ]);
-  expect(count(s, "rect")).toBe(2);
+  expect(count(box, "RectangleBox")).toBe(2);
+  // A whisker, two caps and a median line each.
+  expect(count(box, "LineBox")).toBe(8);
 });
 
 test("box-whisker chart labels render under each box", () => {
-  const s = boxWhiskerChartSvg([[1, 2, 3]], { labels: ["A"] });
-  expect(s).toContain(">A<");
+  expect(svgOf(boxWhiskerChartBox([[1, 2, 3]], { labels: ["A"] }))).toContain(">A<");
 });
 
 // ---------------------------------------------------------------------------
 // ArrayPlot
 // ---------------------------------------------------------------------------
 
-// Filled rects only: the frame border is `fill="none"`.
-const cells = (s: string): number => (s.match(/<rect [^>]*fill="(?!none)/g) ?? []).length;
-const viewBox = (s: string): number[] =>
-  s
-    .match(/viewBox="([^"]+)"/)![1]!
-    .split(" ")
-    .map(Number);
-
 test("array plot draws one cell per matrix entry", () => {
-  const s = arrayPlotSvg([
+  const box = arrayPlotBox([
     [1, 2],
     [3, 4],
   ]);
-  expect(cells(s)).toBe(4);
+  expect(count(box, "RectangleBox")).toBe(4);
+  // The first row is the top: cell (0, 0) spans y from 1 to 2.
+  expect(optionsOfBox(plotItems(node(box))[0]!.prim).Min).toEqual([0, 1]);
 });
 
 test("array plot handles ragged rows without throwing", () => {
-  const s = arrayPlotSvg([[1, 2, 3], [4]]);
-  expect(cells(s)).toBe(4);
+  expect(count(arrayPlotBox([[1, 2, 3], [4]]), "RectangleBox")).toBe(4);
 });
 
 test("empty matrix yields a frame, no cells", () => {
-  expect(count(arrayPlotSvg([]), "rect")).toBe(0);
+  expect(count(arrayPlotBox([]), "RectangleBox")).toBe(0);
 });
 
 test("array plot cells are square: height follows rows/cols", () => {
-  const wide = arrayPlotSvg([[2, 3, 4, 5]]);
-  expect(viewBox(wide)).toEqual([0, 0, 340, 6 + 82 + 6]);
-  const sq = arrayPlotSvg([
-    [2, 3],
-    [4, 5],
-  ]);
-  expect(viewBox(sq)).toEqual([0, 0, 340, 340]);
+  expect(size(arrayPlotBox([[2, 3, 4, 5]]))).toEqual([340, 6 + 82 + 6]);
+  expect(
+    size(
+      arrayPlotBox([
+        [2, 3],
+        [4, 5],
+      ]),
+    ),
+  ).toEqual([340, 340]);
 });
 
 test("a tall array plot caps at a square frame and narrows", () => {
-  const s = arrayPlotSvg(Array.from({ length: 8 }, () => [2, 3]));
-  expect(viewBox(s)).toEqual([0, 0, 340, 340]);
-  const w = s.match(/width="([\d.]+)" height="([\d.]+)" fill="none"/)!;
-  expect(Number(w[1]) / Number(w[2])).toBeCloseTo(2 / 8);
+  const box = arrayPlotBox(Array.from({ length: 8 }, () => [2, 3]));
+  expect(size(box)).toEqual([340, 340]);
+  const [[left, right], [bottom, top]] = optionsOfBox(node(box)).ImagePadding as number[][];
+  expect((340 - left! - right!) / (340 - bottom! - top!)).toBeCloseTo(2 / 8);
 });
 
 test("an explicit height stretches cells to fill", () => {
-  expect(viewBox(arrayPlotSvg([[2, 3, 4, 5]], { height: 200 }))).toEqual([0, 0, 340, 200]);
+  expect(size(arrayPlotBox([[2, 3, 4, 5]], { height: 200 }))).toEqual([340, 200]);
 });
 
 test("a 0/1 array plot is two-tone: background for 0, foreground for 1", () => {
-  const s = arrayPlotSvg([
+  const box = arrayPlotBox([
     [0, 1],
     [1, 0],
   ]);
-  expect(s).not.toContain("color-mix");
-  expect(s.split("var(--notatio-fg").length - 1).toBe(2);
-  expect(s.split("var(--notatio-bg").length - 1).toBe(2);
+  const faces = plotItems(node(box)).map((i) => i.look.FaceForm as string);
+  expect(faces.filter((f) => f.startsWith("var(--notatio-fg"))).toHaveLength(2);
+  expect(faces.filter((f) => f.startsWith("var(--notatio-bg"))).toHaveLength(2);
+  expect(svgOf(box)).not.toContain("color-mix");
   // Anything else takes the gradient: viridis's first and last colors at the extremes.
-  const ramped = arrayPlotSvg([[0, 2]]);
+  const ramped = svgOf(arrayPlotBox([[0, 2]]));
   expect(ramped).toContain("#440154");
   expect(ramped).toContain("#fde725");
 });
@@ -197,18 +234,21 @@ test("a 0/1 array plot is two-tone: background for 0, foreground for 1", () => {
 // ---------------------------------------------------------------------------
 
 test("discrete plot draws a stem and a dot per value", () => {
-  const s = discretePlotSvg([1, 4, 2, 3]);
-  expect(count(s, "line")).toBe(1 + 4); // zero axis + one stem per value
-  expect(count(s, "circle")).toBe(4);
+  const box = discretePlotBox([1, 4, 2, 3]);
+  expect(count(box, "LineBox")).toBe(4);
+  expect(optionsOfBox(plotItems(node(box)).at(-1)!.prim).Points).toHaveLength(4);
+  // The stems and the dots are marks; the zero axis rides on the box.
+  expect(optionsOfBox(node(box)).AxesOrigin).toEqual([0, 0]);
 });
 
 test("discrete plot handles negative values below the baseline", () => {
-  const s = discretePlotSvg([-2, 1, -3]);
-  expect(count(s, "circle")).toBe(3);
+  const box = discretePlotBox([-2, 1, -3]);
+  expect(count(box, "LineBox")).toBe(3);
 });
 
 test("empty data yields a frame, no stems", () => {
-  expect(count(discretePlotSvg([]), "circle")).toBe(0);
+  expect(count(discretePlotBox([]), "LineBox")).toBe(0);
+  expect(count(discretePlotBox([]), "PointBox")).toBe(0);
 });
 
 // ---------------------------------------------------------------------------
@@ -216,8 +256,70 @@ test("empty data yields a frame, no stems", () => {
 // ---------------------------------------------------------------------------
 
 test("a title renders centred above the frame", () => {
-  const s = barChartSvg([1, 2, 3], { title: "Widgets" });
-  expect(s).toContain(">Widgets<");
+  expect(svgOf(barChartBox([1, 2, 3], { title: "Widgets" }))).toContain(">Widgets<");
+});
+
+test("chartSvg draws the member the kind names", () => {
+  expect(chartSvg("pie", [1, 2])).toContain('aria-label="pie chart"');
+  expect(chartSvg("array", [[1, 2]])).toContain('aria-label="array plot"');
+});
+
+// ---------------------------------------------------------------------------
+// The head's rule
+// ---------------------------------------------------------------------------
+
+const boxOf = (source: string): Box =>
+  makeBoxes(plainJson(parseExpression(source).json as never) as never, PLOT_NOTATION);
+
+test("the chart heads lower to a GraphicsBox", () => {
+  for (const [source, head] of [
+    ["BarChart([3, 1, 4])", "RectangleBox"],
+    ["Histogram([1, 2, 2, 3, 3, 3])", "RectangleBox"],
+    ["PieChart([1, 2, 3])", "DiskBox"],
+    ["BoxWhiskerChart([[1, 2, 3, 4], [2, 4, 6]])", "RectangleBox"],
+    ["ArrayPlot([[1, 0], [0, 1]])", "RectangleBox"],
+    ["DiscretePlot([1, 2, 4, 8])", "LineBox"],
+    ['Chart([3, 1, 4], "pie")', "DiskBox"],
+    ["Chart([3, 1, 4])", "RectangleBox"],
+  ] as const) {
+    const box = boxOf(source);
+    expect(isChartBox(box), source).toBe(true);
+    expect(count(box, head), source).toBeGreaterThan(0);
+  }
+});
+
+test("a Chart of pairs is a plot of points, as its data's shape says", () => {
+  const box = boxOf("Chart([[0, 1], [1, 3], [2, 2]])");
+  expect(isChartBox(box)).toBe(false);
+  expect(box[0]).toBe("GraphicsBox");
+  expect(count(box, "PointBox")).toBe(1);
+});
+
+test("an ArrayPlot of a table is a Show's layer, lowered as before", async () => {
+  await loadLatticeModules({ head: "ArrayPlot", data: [] });
+  const box = boxOf("ArrayPlot(MultiplicationTable(QuotientRing(Integers, 5)))");
+  expect(box[0]).toBe("GraphicsBox");
+  expect(isChartBox(box)).toBe(false);
+  // The table's producer, held as the Show it came from, not the cells of a matrix.
+  expect(optionsOfBox(node(box)).Producer).toBe("ArrayPlot");
+});
+
+test("an element holds a plot or a chart in either spelling of its head, and an ArrayPlot only of a matrix", () => {
+  for (const value of [
+    "Plot(Sin(x), (x, 0, 1))",
+    "histogram([1, 2])",
+    "Histogram([1, 2])",
+    " BarChart([1])",
+    "ArrayPlot([[1]])",
+  ])
+    expect(holdsPlot(value), value).toBe(true);
+  for (const value of [
+    "ArrayPlot(MultiplicationTable(QuotientRing(Integers, 5)))",
+    "Show(ArrayPlot([[1]]))",
+    "plot2(x)",
+    "",
+  ])
+    expect(holdsPlot(value), value).toBe(false);
 });
 
 // The family head's rule: which member the data's shape asks for.

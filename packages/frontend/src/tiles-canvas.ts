@@ -27,7 +27,13 @@ export type FramePoint = readonly number[];
  * address's `place` unless it names a `center`; a `Text` likewise at `at`.
  */
 export type GraphicsPrimitive =
-  | { readonly head: "Disk"; readonly radius: number; readonly center?: FramePoint }
+  /** `angles` cut a sector: radians counterclockwise from the positive x axis, as `Disk[c, r, {a, b}]`. */
+  | {
+      readonly head: "Disk";
+      readonly radius: number;
+      readonly center?: FramePoint;
+      readonly angles?: readonly [number, number];
+    }
   /** `breaks` are indices into `points` where the pen lifts: the segment ending there is not drawn. */
   | { readonly head: "Line"; readonly points: readonly FramePoint[]; readonly breaks?: readonly number[] }
   | { readonly head: "Polygon"; readonly points: readonly FramePoint[] }
@@ -544,8 +550,15 @@ function addPrimitive(
   if (p.head === "Disk") {
     const [x, y] = toScreen(p.center ? xy(p.center) : place);
     const r = Math.max(0.5, p.radius * pixels - inset);
-    path.moveTo(x + r, y);
-    path.arc(x, y, r, 0, 2 * Math.PI);
+    if (p.angles && p.angles[1] - p.angles[0] < 2 * Math.PI - 1e-9) {
+      // The y axis points down on the canvas, so a counterclockwise sweep a..b is -b..-a clockwise.
+      path.moveTo(x, y);
+      path.arc(x, y, r, -p.angles[1], -p.angles[0]);
+      path.closePath();
+    } else {
+      path.moveTo(x + r, y);
+      path.arc(x, y, r, 0, 2 * Math.PI);
+    }
   } else if (p.head === "Line" || p.head === "Polygon") {
     const breaks = p.head === "Line" ? p.breaks : undefined;
     p.points.forEach((q, k) => {

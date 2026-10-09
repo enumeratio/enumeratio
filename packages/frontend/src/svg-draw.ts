@@ -30,6 +30,12 @@ function pathData(p: GraphicsPrimitive, place: Vec2, toScreen: (v: Vec2) => Vec2
   if (p.head === "Disk") {
     const [x, y] = toScreen(p.center ? xy(p.center) : place);
     const r = Math.max(0.5, p.radius * pixels - inset);
+    if (p.angles && p.angles[1] - p.angles[0] < 2 * Math.PI - 1e-9) {
+      // A sector: centre, out to the first ray, round the rim counterclockwise (sweep 0 on a y-down screen).
+      const [a, b] = p.angles;
+      const rim = (t: number): string => `${n(x + r * Math.cos(t))} ${n(y - r * Math.sin(t))}`;
+      return `M${n(x)} ${n(y)}L${rim(a)}A${n(r)} ${n(r)} 0 ${b - a > Math.PI ? 1 : 0} 0 ${rim(b)}Z`;
+    }
     return `M${n(x + r)} ${n(y)}A${n(r)} ${n(r)} 0 1 1 ${n(x - r)} ${n(y)}A${n(r)} ${n(r)} 0 1 1 ${n(x + r)} ${n(y)}`;
   }
   if (p.head === "Line" || p.head === "Polygon") {

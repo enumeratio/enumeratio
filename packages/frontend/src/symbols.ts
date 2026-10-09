@@ -1,4 +1,5 @@
-import { PLOT_HEADS } from "./plot-lowering.ts";
+import { chooseChartType } from "./chart.ts";
+import { CHART_HEADS, PLOT_HEADS } from "./plot-lowering.ts";
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { CONTROL_NOTATION_HEADS, LAYOUT_HEADS, LAYOUT_OPTIONS, makeBoxes, slot } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
@@ -31,7 +32,7 @@ export { expandDictionaries } from "./latex.ts";
 // expression and wants a picture.
 //
 // The tag is the naming rule run backwards: kebab-case the symbol, put `notatio-` in
-// front. A family component (`notatio-chart`, `notatio-graph-plot`)
+// front. A family component (`notatio-graph-plot`)
 // draws several symbols, distinguished by an attribute; the family head (`Chart`) leaves
 // that attribute unset and lets the component choose.
 
@@ -217,10 +218,10 @@ function twoVariables(
 
 const dataOnly = (ops: readonly Json[]): Record<string, string> => (ops[0] === undefined ? {} : { data: json(ops[0]) });
 
-/** A family member: the family tag with the member's attribute fixed. */
+/** A data plot or chart: `<graphics-box>` with the member's `type` fixed. */
 const chart = (head: string, type: string, options?: VisualSymbol["options"]): VisualSymbol => ({
   head,
-  tag: head === "ListPlot" || head === "ListLinePlot" ? "graphics-box" : "notatio-chart",
+  tag: "graphics-box",
   fixed: { type },
   attributes: dataOnly,
   ...(options && { options }),
@@ -445,17 +446,53 @@ export const PLOT_SETTINGS: readonly VisualSymbol[] = [
       Clock: (value) => ({ clock: isOff(value) ? "false" : "true" }),
     },
   },
+  chart("BarChart", "bar"),
+  chart("Histogram", "histogram"),
+  chart("PieChart", "pie"),
+  chart("BoxWhiskerChart", "box"),
+  chart("ArrayPlot", "array", { ColorFunction: colorFunction }),
+  chart("DiscretePlot", "discrete"),
+  {
+    // The family head: no `type`, so the chart is chosen from the data -- unless a second
+    // argument names the member (`Chart(data, "pie")`).
+    head: "Chart",
+    tag: "graphics-box",
+    attributes: (ops) => {
+      const out = dataOnly(ops);
+      const type = strOf(ops[1]) ?? symOf(ops[1]);
+      if (type) out.type = type;
+      return out;
+    },
+    options: { ColorFunction: colorFunction },
+  },
 ];
 
 const SETTINGS_BY_HEAD = new Map(PLOT_SETTINGS.map((p) => [p.head, p]));
 
-/** A plot head's settings: the attributes its sampling reads, from the expression as written. */
+/** `Chart`'s member for settings that name none (or `auto`): the data's shape picks it. */
+function chosenType(settings: Record<string, string>): Record<string, string> {
+  if (settings["type"] && settings["type"] !== "auto") return settings;
+  let data: unknown;
+  try {
+    data = JSON.parse(settings["data"] ?? "null");
+  } catch {
+    data = undefined;
+  }
+  return { ...settings, type: chooseChartType(data, { labels: settings["labels"] !== undefined }) };
+}
+
+/**
+ * A plot or chart head's settings: the attributes its sampling or its data reads, from the
+ * expression as written. A `Chart` names its member (`type`), chosen from the data if the
+ * expression does not.
+ */
 export function plotSettingsOf(expr: Json): Record<string, string> | undefined {
   const head = headOf(expr);
   const symbol = head === undefined ? undefined : SETTINGS_BY_HEAD.get(head);
   if (symbol === undefined) return undefined;
   const { ops, options } = optionsOf(expr);
-  return { ...symbol.fixed, ...symbol.attributes(ops), ...lowerOptions(symbol, options).attributes };
+  const settings = { ...symbol.fixed, ...symbol.attributes(ops), ...lowerOptions(symbol, options).attributes };
+  return head === "Chart" ? chosenType(settings) : settings;
 }
 
 /**
@@ -479,7 +516,7 @@ const plotSymbol = (head: string): VisualSymbol => ({
 });
 
 export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
-  ...PLOT_HEADS.map(plotSymbol),
+  ...[...PLOT_HEADS, ...CHART_HEADS].map(plotSymbol),
   {
     head: "Plot3D",
     tag: "notatio-plot-3d",
@@ -624,25 +661,6 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       const lo = complexOf(parts?.[1]);
       const hi = complexOf(parts?.[2]);
       if (lo && hi) out.domain = `${lo[0]},${hi[0]},${lo[1]},${hi[1]}`;
-      return out;
-    },
-    options: { ColorFunction: colorFunction },
-  },
-  chart("BarChart", "bar"),
-  chart("Histogram", "histogram"),
-  chart("PieChart", "pie"),
-  chart("BoxWhiskerChart", "box"),
-  chart("ArrayPlot", "array", { ColorFunction: colorFunction }),
-  chart("DiscretePlot", "discrete"),
-  {
-    // The family head: no `type`, so the component chooses from the data -- unless a
-    // second argument names the member (`Chart(data, "pie")`).
-    head: "Chart",
-    tag: "notatio-chart",
-    attributes: (ops) => {
-      const out = dataOnly(ops);
-      const type = strOf(ops[1]) ?? symOf(ops[1]);
-      if (type) out.type = type;
       return out;
     },
     options: { ColorFunction: colorFunction },

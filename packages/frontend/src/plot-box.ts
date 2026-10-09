@@ -680,3 +680,6 @@ export function linePlot(input: readonly PlotPoint[] | readonly PlotSeries[], op
 export function linePlotSvg(input: readonly PlotPoint[] | readonly PlotSeries[], opts: PlotOptions = {}): string {
   return linePlot(input, opts).svg;
 }
+
+// What a chart's drawer reads from its boxes the same way.
+export { edgesOf as optionEdges, numbers as optionNumbers, pointList as optionPoints, solid as solidEdge };

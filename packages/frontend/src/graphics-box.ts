@@ -49,7 +49,11 @@ function optionOf(json: Json): OptionValue {
 function primitiveBox(p: GraphicsPrimitive): Box {
   switch (p.head) {
     case "Disk":
-      return disk({ Radius: p.radius, ...(p.center && { Center: point(p.center) }) });
+      return disk({
+        Radius: p.radius,
+        ...(p.center && { Center: point(p.center) }),
+        ...(p.angles && { Angles: [...p.angles] }),
+      });
     case "Line":
       return line({ Points: p.points.map(point), ...(p.breaks && { Breaks: [...p.breaks] }) });
     case "Polygon":
