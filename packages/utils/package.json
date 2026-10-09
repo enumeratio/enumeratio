@@ -41,6 +41,10 @@
   },
   "enumeratio": {
     "layer": "tooling",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "@sources",
+      "../entry"
+    ]
   }
 }

@@ -47,6 +47,8 @@ beforeAll(() => {
   pkg("combinatorics", { reads: ["../statistics/reference"] });
   pkg("census", { reads: ["@records"] });
   pkg("catalog", { reads: ["@records"] });
+  pkg("bystander");
+  pkg("walker", { reads: ["@sources"] });
   put("packages/statistics/reference/Mean/index.md", "mean\n");
   put("packages/elsewhere/reference/Other/index.md", "other\n");
   git("init", "-q");
@@ -75,6 +77,14 @@ test("a record change selects every package that declares the records", () => {
   const picked = JSON.parse(node("affected.ts", "--base", "HEAD", "--json")) as { test: string[] };
   expect(picked.test).toEqual(expect.arrayContaining(["@enumeratio/census", "@enumeratio/catalog"]));
   expect(picked.test).not.toContain(COMBINATORICS);
+  git("checkout", "--", ".");
+});
+
+// A package declaring the sources is selected by a change anywhere; a plain one only through what it reads.
+test("a change in an unrelated package selects a package that declares the sources, and not a bystander", () => {
+  put("packages/elsewhere/src/index.ts", "export const elsewhere = 2;\n");
+  const picked = JSON.parse(node("affected.ts", "--base", "HEAD", "--json")) as { test: string[] };
+  expect(picked.test).toEqual(["@enumeratio/elsewhere", "@enumeratio/walker"]);
   git("checkout", "--", ".");
 });
 
@@ -137,4 +147,11 @@ test("a no-op rebuild of one package restores from the cache and builds nothing 
   } finally {
     rmSync(sub, { recursive: true, force: true });
   }
+});
+
+test("a record change doesn't select a package that declares no reads", () => {
+  put("packages/statistics/reference/Mean/index.md", "mean, changed\n");
+  const picked = JSON.parse(node("affected.ts", "--base", "HEAD", "--json")) as { test: string[] };
+  expect(picked.test).not.toContain("@enumeratio/bystander");
+  git("checkout", "--", ".");
 });

@@ -58,7 +58,10 @@
   },
   "enumeratio": {
     "layer": "presentation",
-    "extends": []
+    "extends": [],
+    "reads": [
+      "@sources"
+    ]
   },
   "generated": [
     "src/stories-data.ts"

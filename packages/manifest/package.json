@@ -53,7 +53,9 @@
     "layer": "infra",
     "extends": [],
     "reads": [
-      "@records"
+      "@records",
+      "@sources",
+      "../boxes/src/index.ts"
     ]
   }
 }

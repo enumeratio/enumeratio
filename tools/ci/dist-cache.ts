@@ -35,7 +35,7 @@ import {
 import { availableParallelism } from "node:os";
 import { isAbsolute, join, resolve } from "node:path";
 import { RECORD_PATH } from "./reads.ts";
-import { closure, git, loadWorkspace, RECORDS, resolveNames, root, type Pkg } from "./workspace.ts";
+import { closure, git, loadWorkspace, RECORDS, resolveNames, root, SOURCES, type Pkg } from "./workspace.ts";
 
 /** Bump when what the key covers or what is saved changes. */
 const KEY_VERSION = 2;
@@ -186,7 +186,9 @@ function computeKeys(all: Map<string, Pkg>, unitMap: Map<string, Unit>): Map<str
     const h = createHash("sha256").update(shared.copy().digest("hex"));
     for (const m of unit.members) {
       h.update(`\n[${m.name}]\n${(perPkg.get(m.name) ?? []).join("\n")}`);
-      for (const read of m.reads) if (records || read !== RECORDS) h.update(`\nreads ${read} ${readHash(read)}`);
+      // `SOURCES` is a test's walk, which no build output depends on, so it isn't in the key.
+      for (const read of m.reads)
+        if (read !== SOURCES && (records || read !== RECORDS)) h.update(`\nreads ${read} ${readHash(read)}`);
     }
     for (const d of [...unit.deps].toSorted()) h.update(`\ndep ${d} ${keyOf(d, false)}`);
     const key = h.digest("hex").slice(0, 32);

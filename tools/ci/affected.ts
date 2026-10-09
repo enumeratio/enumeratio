@@ -9,13 +9,9 @@
 
 import { appendFileSync } from "node:fs";
 import { RECORD_PATH } from "./reads.ts";
-import { closure, dependents, git, loadWorkspace, owner, RECORDS } from "./workspace.ts";
+import { closure, dependents, git, loadWorkspace, owner, RECORDS, SOURCES } from "./workspace.ts";
 
 const WEB = "@enumeratio/web";
-
-/** Suites that scan every package's sources, which no declaration lists, so a change anywhere can
- *  move them. Suites that scan the records declare `RECORDS` instead. */
-const SOURCE_SCANNERS = ["@enumeratio/utils", "@enumeratio/manifest"];
 
 /** Packages whose change can move every other package. */
 const EVERYTHING = ["@enumeratio/engine", "@enumeratio/ce-patches"];
@@ -59,8 +55,9 @@ export function select(base: string, forceFull = false): Selection {
 
   const seeds = new Set<string>();
   let site = false;
-  /** Packages whose own tests read what changed, but whose dependents don't. */
-  const scanning = new Set<string>(SOURCE_SCANNERS);
+  /** Packages whose own tests read what changed, but whose dependents don't. Suites that walk every
+   *  package's sources declare `SOURCES`, and a change anywhere can move them. */
+  const scanning = new Set<string>([...pkgs.values()].filter((p) => p.reads.includes(SOURCES)).map((p) => p.name));
   const recordReaders = [...pkgs.values()].filter((p) => p.reads.includes(RECORDS)).map((p) => p.name);
   for (const { path, deleted } of changes(base)) {
     const pkg = owner(pkgs, path);

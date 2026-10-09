@@ -17,13 +17,17 @@ export interface Pkg {
   /**
    * Other packages' files its build or tests read without importing them: its `enumeratio.reads`,
    * repo-relative (a file or a directory), or `RECORDS` for every package's `reference/` folders
-   * and manifests.
+   * and manifests, or `SOURCES` for every package's sources.
    */
   readonly reads: readonly string[];
 }
 
 /** In `enumeratio.reads`: every package's records and manifests, for the scanners. */
 export const RECORDS = "@records";
+
+/** In `enumeratio.reads`: every package's sources, for the tests that walk them. Tests only: a build's
+ *  outputs don't depend on a test's walk, so the dist-cache key leaves it out. */
+export const SOURCES = "@sources";
 
 export const root = resolve(import.meta.dirname, "../..");
 
@@ -102,7 +106,7 @@ export function loadWorkspace(): Map<string, Pkg> {
     }
     deps.delete(manifest.name);
     const reads = (manifest.enumeratio?.reads ?? []).map((r) =>
-      r === RECORDS ? r : relative(root, resolve(root, dir, r)).replaceAll("\\", "/"),
+      r === RECORDS || r === SOURCES ? r : relative(root, resolve(root, dir, r)).replaceAll("\\", "/"),
     );
     pkgs.set(manifest.name, { name: manifest.name, dir, buildScript: build, deps, declared, reads });
   }
@@ -115,7 +119,7 @@ export function dependents(pkgs: Map<string, Pkg>): Map<string, Set<string>> {
   for (const p of pkgs.values()) {
     for (const d of p.deps) out.get(d)?.add(p.name);
     for (const r of p.reads) {
-      const holder = r === RECORDS ? undefined : owner(pkgs, `${r}/`);
+      const holder = r === RECORDS || r === SOURCES ? undefined : owner(pkgs, `${r}/`);
       if (holder !== undefined && holder.name !== p.name) out.get(holder.name)?.add(p.name);
     }
   }
