@@ -57,6 +57,22 @@ const TOL = 1e-16;
 const DOUBLE_GUARD_DIGITS = 25;
 /** Consecutive shrinking terms, with a tail bound under `TOL`, before a sum counts as settled. */
 const SETTLED_RUN = 3;
+/** The double's unit roundoff scale: each term carries a relative rounding error of about this much. */
+const EPS = Number.EPSILON;
+/**
+ * The most rounding error, relative to the sum, that a double series may keep: `peak / |sum| · EPS`
+ * past this declines. Alternating series grow before they shrink: 1F1(1/2; 3/2; −40) has terms far
+ * above its sum 0.14 and 0F1(; 1; −200) terms far above its sum, so their sums are noise to most
+ * digits while `TOL` still sees the last terms shrink. 1e-13 is a thousand times `TOL`, which
+ * keeps the mildly alternating arguments (1F1(1; 2; −5) loses about one digit) answering.
+ */
+const CANCELLATION_TOL = 1e-13;
+
+/** Did the sum lose so many digits to cancellation (largest term `peak` against `|sum|`) that it is noise? */
+const cancelled = (peak: number, sum: Cx): boolean => {
+  const size = Math.hypot(sum.re, sum.im);
+  return !(size > 0) || (peak / size) * EPS > CANCELLATION_TOL;
+};
 
 /** Is z a non-positive integer — a pole of Γ, and so a zero of 1/Γ? */
 const isNonPositiveInt = (z: Cx): boolean => z.im === 0 && z.re <= 0 && Number.isInteger(z.re);
@@ -83,8 +99,10 @@ function exactInvGammaAt(n: number): Cx {
 export function pfqSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx | undefined {
   let term = cx(1, 0);
   let sum = cx(1, 0);
+  let peak = 1; // the largest term seen, which sets the digits cancellation costs
+  const vouch = (): Cx | undefined => (cancelled(peak, sum) ? undefined : sum);
   for (let k = 0; k < MAX_TERMS; k++) {
-    if (term.re === 0 && term.im === 0) return sum; // terminated (a polynomial case)
+    if (term.re === 0 && term.im === 0) return vouch(); // terminated (a polynomial case)
     let num = z;
     for (const a of upper) num = mul(num, add(a, cx(k)));
     let den = cx(k + 1);
@@ -98,12 +116,13 @@ export function pfqSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx
       den = mul(den, bk);
     }
     if (denPole) {
-      if (num.re === 0 && num.im === 0) return sum; // numerator already vanished too: 0/0 is 0
+      if (num.re === 0 && num.im === 0) return vouch(); // numerator already vanished too: 0/0 is 0
       return undefined; // a genuine pole
     }
     term = div(mul(term, num), den);
     sum = add(sum, term);
-    if (mag(term) < TOL * (1 + mag(sum))) return sum;
+    peak = Math.max(peak, mag(term));
+    if (mag(term) < TOL * (1 + mag(sum))) return vouch();
   }
   return undefined; // did not converge inside the term budget
 }
@@ -126,6 +145,8 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
   const poleBound = lower.reduce((m, b) => (isNonPositiveInt(b) ? Math.max(m, -b.re) : m), -1);
   let core = cx(1, 0); // ∏(ai)_k · zᵏ/k!, the part regularizing doesn't change
   let sum = cx(0, 0);
+  let peak = 0; // the largest term seen, which sets the digits cancellation costs
+  const vouch = (): Cx | undefined => (peak === 0 || !cancelled(peak, sum) ? sum : undefined);
   // A real-integer lower b has 1/Γ(b + k) exactly: 0 at the poles, 1/(n − 1)! after, stepped by
   // 1/Γ(x + 1) = (1/Γ(x))/x. A fresh exp(−lnΓ) per term would put its rounding (lnΓ is good to a few
   // ulps) into every term: Hypergeometric2F1Regularized(1, 2, −1, ½) came out 24 − 1.4e-14.
@@ -148,7 +169,8 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
     });
     const term = mul(core, invG);
     sum = add(sum, term);
-    if (core.re === 0 && core.im === 0) return sum; // terminated (a polynomial case)
+    peak = Math.max(peak, mag(term));
+    if (core.re === 0 && core.im === 0) return vouch(); // terminated (a polynomial case)
     if (k > poleBound) {
       const size = mag(term);
       const ratio = previous === undefined ? 1 : size / previous;
@@ -158,7 +180,7 @@ function pfqRegularizedSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx)
         // A p = q + 1 series' ratio rises toward |z| (DLMF 16.2), so the run's largest ratio alone
         // understates the tail: 2F1(1, 1; 2; z) has ratio (k + 1)z/(k + 2), still climbing at k.
         const bound = risingRatio ? Math.max(worstRatio, zSize) : worstRatio;
-        if (run >= SETTLED_RUN && bound < 1 && (size * bound) / (1 - bound) <= TOL * mag(sum)) return sum;
+        if (run >= SETTLED_RUN && bound < 1 && (size * bound) / (1 - bound) <= TOL * mag(sum)) return vouch();
       } else {
         run = 0;
       }
