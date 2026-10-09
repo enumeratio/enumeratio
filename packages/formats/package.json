@@ -38,6 +38,10 @@
       "types": "./dist/expression.d.mts",
       "import": "./dist/expression.mjs"
     },
+    "./graphics-options": {
+      "types": "./dist/graphics-options.d.mts",
+      "import": "./dist/graphics-options.mjs"
+    },
     "./fullform": {
       "types": "./dist/fullform.d.mts",
       "import": "./dist/fullform.mjs"
@@ -50,7 +54,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/asciimath.ts src/mathml.ts src/tex.ts src/markup.ts src/fullform.ts && enumeratio-collect-declares .",
+    "build": "vp pack src/index.ts src/node.ts src/expression.ts src/inputform.ts src/asciimath.ts src/mathml.ts src/tex.ts src/markup.ts src/fullform.ts src/graphics-options.ts && enumeratio-collect-declares .",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"

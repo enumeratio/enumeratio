@@ -111,6 +111,7 @@ const pictured = families.map((fam) => ({
               class="inline-figure"
               :value="it.picture.show"
               legend-at="none"
+              caption-at="none"
               :style="{ width: `${it.picture.width}px` }"
             />
             <figcaption>{{ it.cap }}</figcaption>

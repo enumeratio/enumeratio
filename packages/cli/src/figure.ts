@@ -6,9 +6,14 @@
 // entry that is a figure a leaf the figure drawer fills.
 
 import { LAYOUT_HEADS, makeBoxes, type Notation } from "@enumeratio/boxes";
-import { FIGURE_NOTATION, headOf, plainJson } from "@enumeratio/frontend";
+import { FIGURE_NOTATION, headOf, plainJson, registerLatticeModules } from "@enumeratio/frontend";
+import * as numberTheory from "@enumeratio/number-theory/lattice";
+import * as residues from "@enumeratio/residues/table";
 import { drawGraphicsBox } from "./cell-draw.ts";
 import { drawBoxes, type LayoutOptions } from "./cell-layout.ts";
+
+// The lattices the terminal can draw: quadratic rings and multiplication tables.
+registerLatticeModules({ numberTheory, residues });
 
 type Json = Parameters<typeof plainJson>[0];
 

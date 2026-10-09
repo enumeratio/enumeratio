@@ -5,6 +5,7 @@
 // text out. Selection and hover are the web's; the marks' own colors are kept where the terminal has color.
 
 import { type Box, isNode, optionsOfBox, type Options } from "@enumeratio/boxes";
+import { complexOf, pinnedBox } from "@enumeratio/frontend";
 
 type Point = readonly number[];
 
@@ -38,9 +39,8 @@ const pointsOf = (value: unknown): Point[] =>
 
 /** What the boxes of a `GraphicsBox` hold: its marks, captions and links as shapes with their colors. */
 function marksOf(box: Box): Mark[] | undefined {
-  if (!isNode(box) || box[0] !== "GraphicsBox") return undefined;
-  const complex = box[1];
-  if (!isNode(complex) || complex[0] !== "GraphicsComplexBox") return undefined;
+  const complex = complexOf(box);
+  if (!complex) return undefined;
   const { Addresses, Places } = optionsOfBox(complex);
   const places = new Map<string, Point>();
   if (Array.isArray(Addresses) && Array.isArray(Places))
@@ -347,11 +347,16 @@ function drawRuled(marks: readonly Mark[]): Cells {
   return cells;
 }
 
+/** Tiles of a pinned lattice: few enough that each outline keeps a few dots. */
+const PINNED_TILES = 120;
+
 /** A figure's `GraphicsBox` on character cells; the reason it can't be drawn, as text, otherwise. */
 export function drawGraphicsBox(box: Box, options: CellOptions = {}): string {
-  const marks = marksOf(box);
-  if (marks === undefined) return "(not a drawing)";
   const [width, height] = [options.width ?? 60, options.height ?? 14];
+  // A lattice holds a producer: pin it to the view the cells can resolve (a cell is 2 by 4 dots).
+  const pinned = pinnedBox(box, { width: width * 2, height: height * 4, maxCells: PINNED_TILES });
+  const marks = typeof pinned === "string" ? undefined : marksOf(pinned);
+  if (marks === undefined) return typeof pinned === "string" ? pinned : "(not a drawing)";
   const shapes = marks.filter((m) => m.shape.head !== "Text");
   const ruled =
     shapes.length > 0 && shapes.every((m) => m.shape.head === "Polygon" && rectangleOf(m.shape.points) !== undefined);

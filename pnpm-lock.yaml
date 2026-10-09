@@ -654,6 +654,9 @@ importers:
       '@enumeratio/ce-patches':
         specifier: workspace:*
         version: link:../ce-patches
+      '@enumeratio/complex-numerals':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/complex-numerals
       '@enumeratio/engine':
         specifier: workspace:*
         version: link:../engine
@@ -666,9 +669,15 @@ importers:
       '@enumeratio/manifest':
         specifier: workspace:*
         version: link:../manifest
+      '@enumeratio/number-theory':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/number-theory
       '@enumeratio/polytope':
         specifier: workspace:*
         version: link:../symbols/combinatorics/polytope
+      '@enumeratio/residues':
+        specifier: workspace:*
+        version: link:../symbols/arithmetic/residues
       '@enumeratio/structures':
         specifier: workspace:*
         version: link:../structures
