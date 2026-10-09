@@ -11,8 +11,8 @@
 //     a scope fills; an atom's (`Integer`, `Real`, `String`, `Symbol`) is its literal;
 //   - or, for a head of fixed arity whose parameters the reference names, the arguments
 //     are ATTRIBUTES: `<notatio-binomial n="5" k="2">`;
-//   - every other attribute is an OPTION, Wolfram's way: `<notatio-plot plot-range="All">`
-//     is `Plot(…, PlotRange -> All)`, the name un-kebab-cased.
+//   - every other attribute is an OPTION, Wolfram's way: `<notatio-plot-3d plot-range="All">`
+//     is `Plot3D(…, PlotRange -> All)`, the name un-kebab-cased.
 //
 // Only the OUTERMOST generic element typesets, through `<notatio-out>`; the ones inside
 // it are structure -- they exist so the tree is addressable, not so each draws. Inside

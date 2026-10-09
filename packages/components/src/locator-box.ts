@@ -82,13 +82,13 @@ export class NotatioLocator extends LitElement {
 
   /** The plot this locator sits on. */
   get plot(): Framed | null {
-    return this.closest<Framed>("notatio-plot");
+    return this.closest<Framed>("graphics-box");
   }
 
   override connectedCallback(): void {
     super.connectedCallback();
     const plot = this.plot;
-    plot?.addEventListener("notatio-plot-render", this.#placeSoon);
+    plot?.addEventListener("graphics-box-render", this.#placeSoon);
     if (typeof ResizeObserver !== "undefined" && plot) {
       this.#resize = new ResizeObserver(this.#place);
       this.#resize.observe(plot);
@@ -96,7 +96,7 @@ export class NotatioLocator extends LitElement {
   }
 
   override disconnectedCallback(): void {
-    this.plot?.removeEventListener("notatio-plot-render", this.#placeSoon);
+    this.plot?.removeEventListener("graphics-box-render", this.#placeSoon);
     this.#resize?.disconnect();
     this.#resize = undefined;
     super.disconnectedCallback();

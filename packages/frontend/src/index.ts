@@ -10,6 +10,7 @@ export * from "./declare-carriers.ts";
 export * from "./complex-eval.ts";
 export * from "./conventional-latex.ts";
 export * from "./source.ts";
+export * from "./plot-notation.ts";
 export * from "./symbols.ts";
 export * from "./tracked-symbols.ts";
 export * from "./vdom.ts";

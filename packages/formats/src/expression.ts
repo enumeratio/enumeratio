@@ -1,5 +1,5 @@
 // An expression written in Epsil, compute-engine's own surface syntax, read into MathJSON.
-// Web-component attributes (`<notatio-plot value>`, `<notatio-manipulate>` slots, …) and
+// Web-component attributes (`<graphics-box value>`, `<notatio-manipulate>` slots, …) and
 // cells each take one: no statements or effects (assignment, declarations, control flow,
 // pragmas, sequences), which `parseExpression` reports rather than evaluates. Parsing and
 // serialization are compute-engine's own (`parseEpsil` / `serializeEpsil`); this module adds

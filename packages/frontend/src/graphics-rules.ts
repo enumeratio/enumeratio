@@ -497,6 +497,8 @@ export function mixColors(layers: readonly Layer[], mixing: ColorMixing): string
 /** What an element's matching rules make of it: one face color (mixed) and its edges, in order. */
 export interface ElementStyle {
   readonly color?: string;
+  /** The face's opacity, when it is not 1. */
+  readonly opacity?: number;
   readonly edges: readonly Edge[];
 }
 

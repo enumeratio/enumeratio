@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+inert	Basic		[PointBox, [Tuple, Points, [List, [List, 0, 0], [List, 1, 1]]]]	[PointBox, [Tuple, Points, [List, [List, 0, 0], [List, 1, 1]]]]	a box is inert: it evaluates to itself

@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import { type ComponentDoc as Reflected, collectComponents as reflect, headOfTag } from "@enumeratio/frontend/reflect";
+import { STORIES_DATA } from "@enumeratio/components/stories-data";
 import { DRAWING_SYMBOLS } from "@enumeratio/frontend/symbols";
 import { docRoute, repoRoot, workspacePackages } from "./repo-docs.ts";
 
@@ -54,13 +55,26 @@ function demoPages(): Map<string, string> {
   return pages;
 }
 
-/** Re-read every element module. Called per build (and per change, in dev). */
+/**
+ * Re-read every element module. Called per build (and per change, in dev). A head that has
+ * stories but no element of its own (`Plot` is drawn by `<graphics-box>`) gets its page too,
+ * the element's props under the head's stories.
+ */
 export function collectComponents(): ComponentDoc[] {
   const playgrounds = demoPages();
-  return reflect(srcDir).map((c) => ({
+  const docs: ComponentDoc[] = reflect(srcDir).map((c) => ({
     ...c,
     name: headOfTag(c.tag),
     heads: DRAWING_SYMBOLS.filter((s) => s.tag === c.tag).map((s) => s.head),
     playground: playgrounds.get(c.tag),
   }));
+  const named = new Set(docs.map((d) => d.name));
+  const drawn = Object.keys(STORIES_DATA)
+    .filter((head) => !named.has(head))
+    .flatMap((head): ComponentDoc[] => {
+      const tag = DRAWING_SYMBOLS.find((s) => s.head === head)?.tag;
+      const doc = docs.find((d) => d.tag === tag);
+      return doc === undefined ? [] : [{ ...doc, name: head, heads: [head] }];
+    });
+  return [...docs, ...drawn];
 }

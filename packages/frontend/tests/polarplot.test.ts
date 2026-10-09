@@ -3,6 +3,11 @@ import { polarPlotSvg, polarToCartesian, samplePolar } from "../src/polarplot.ts
 
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
 
+// The curve is the one width-1.6 stroke; rings are circles of the border color, spokes its lines.
+const curves = (s: string): number => count(s.replaceAll('stroke-width="1.6"', "<curve"), "curve");
+const rings = (s: string): number => (s.match(/stroke-opacity="0.35"/g) ?? []).length;
+const spokes = (s: string): number => (s.match(/stroke-opacity="0.2"/g) ?? []).length;
+
 // ---------------------------------------------------------------------------
 // polarToCartesian
 // ---------------------------------------------------------------------------
@@ -60,25 +65,25 @@ const circle = (n: number) => samplePolar(() => 1, 0, 2 * Math.PI, n);
 test("a circle draws one curve path on a square viewBox", () => {
   const s = polarPlotSvg(circle(64));
   expect(s).toContain('viewBox="0 0 260 260"');
-  expect(count(s, "path")).toBe(1);
+  expect(curves(s)).toBe(1);
 });
 
 test("r = 1 lands exactly on the outer radius at theta = 0", () => {
   // Default 260x260, pad 14 -> R = 116, centre (130, 130).
   const s = polarPlotSvg(circle(5), { axes: false });
-  expect(s).toContain("M246,130");
+  expect(s).toContain("M246 130");
 });
 
 test("the polar grid draws rings and twelve spokes", () => {
   const s = polarPlotSvg(circle(16));
-  expect(count(s, "circle")).toBeGreaterThan(0);
-  expect(count(s, "line")).toBe(12);
+  expect(rings(s)).toBeGreaterThan(0);
+  expect(spokes(s)).toBe(12);
 });
 
 test("axes:false drops the grid entirely", () => {
   const s = polarPlotSvg(circle(16), { axes: false });
-  expect(count(s, "circle")).toBe(0);
-  expect(count(s, "line")).toBe(0);
+  expect(rings(s)).toBe(0);
+  expect(spokes(s)).toBe(0);
   expect(count(s, "text")).toBe(0);
 });
 
@@ -96,21 +101,21 @@ test("a pole (non-finite r) breaks the curve into subpaths", () => {
 
 test("markers draw a dot per finite sample", () => {
   const s = polarPlotSvg(circle(8), { axes: false, markers: true });
-  expect(count(s, "circle")).toBe(8);
+  expect(count(s, "path")).toBe(8 + 1); // a dot each, besides the curve
 });
 
 test("filled adds a translucent region under the stroked curve", () => {
   const plain = polarPlotSvg(circle(32), { axes: false });
   const filled = polarPlotSvg(circle(32), { axes: false, filled: true });
   expect(count(plain, "path")).toBe(1);
-  expect(count(filled, "path")).toBe(2);
+  expect(count(filled, "path")).toBe(2); // the fill, and the curve closed on itself
   expect(filled).toContain("Z");
 });
 
 test("max pins the outer radius, shrinking the drawn curve", () => {
   const s = polarPlotSvg(circle(5), { axes: false, max: 2 });
   // r = 1 at half the pinned radius: 130 + 116/2 = 188.
-  expect(s).toContain("M188,130");
+  expect(s).toContain("M188 130");
 });
 
 test("no finite samples yields a bare frame", () => {

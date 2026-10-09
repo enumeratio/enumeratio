@@ -6,9 +6,8 @@
 import { notationOf } from "@enumeratio/boxes";
 import { optionsOf } from "@enumeratio/formats";
 import { headOf, numOf, opsOf, strOf, symOf, tupleOf } from "@enumeratio/frontend";
-import { textPlot } from "@enumeratio/frontend";
 import type { PlotPoint, Session } from "./engine.ts";
-import { figureText } from "./figure.ts";
+import { figureText, plotText, type Sampled } from "./figure.ts";
 
 type Json = Parameters<typeof headOf>[0];
 
@@ -37,6 +36,13 @@ export function plotOf(
   return { body, variable, from, to, marks: pointsOf(options.Epilog) };
 }
 
+/** A `Plot` result sampled with the session, with its `Epilog` marks, if it is one. */
+export function sampledPlot(session: Session, json: Json): Sampled | undefined {
+  const plot = plotOf(json);
+  const points = samplePlot(session, json);
+  return plot === undefined || points === undefined ? undefined : { points, marks: plot.marks };
+}
+
 /** Sample a `Plot` result with the session, if it is one. */
 export function samplePlot(session: Session, json: Json): PlotPoint[] | undefined {
   const plot = plotOf(json);
@@ -55,8 +61,8 @@ export function textOf(session: Session, json: Json, width = 60, height = 12): s
     if (body !== undefined && caption !== undefined && plotOf(body) !== undefined)
       return `${textOf(session, body, width, height)}\n  ${caption}`;
   }
-  const points = samplePlot(session, json);
-  if (points !== undefined) return textPlot(points, { width, height, marks: plotOf(json)?.marks });
+  const sampled = sampledPlot(session, json);
+  if (sampled !== undefined) return plotText(sampled, { width, height });
   const figure = figureText(json, {
     width,
     notation: notationOf(session.ce),

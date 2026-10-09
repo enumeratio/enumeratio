@@ -138,11 +138,9 @@ const FAMILY_TAGS = [
   "notatio-vector-plot",
   "notatio-contour-plot",
   "notatio-density-plot",
-  "notatio-polar-plot",
-  "notatio-plot", // ParametricPlot: Wolfram's own separate head, same component as Plot
   "slider-box", // VerticalSlider: a SliderBox standing up
   "color-setter-box", // ColorSlider: Wolfram boxes it as a ColorSetterBox
-  "graphics-box", // Permutahedron(4) and kin display as Show(PolytopeFaces(…)); values as Show(frame(…))
+  "graphics-box", // Plot and kin lower to their data; Permutahedron(4) and kin display as Show(PolytopeFaces(…)); values as Show(frame(…))
 ];
 
 test("every visual symbol's tag is its name, kebab-cased, or its family's", () => {
@@ -159,7 +157,7 @@ test("every visual symbol's tag is its name, kebab-cased, or its family's", () =
     expect(FAMILY_TAGS, s.head).toContain(s.tag);
   }
   expect(visualSymbol("Sin")).toBeUndefined();
-  expect(visualSymbol("Plot")?.tag).toBe("notatio-plot");
+  expect(visualSymbol("Plot")?.tag).toBe("graphics-box");
 });
 
 test("a polytope displays as its faces in a Show, as a Polyhedron does as Graphics3D", () => {

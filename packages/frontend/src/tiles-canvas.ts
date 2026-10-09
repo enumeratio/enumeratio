@@ -33,7 +33,24 @@ export type GraphicsPrimitive =
   | { readonly head: "Polygon"; readonly points: readonly FramePoint[] }
   /** A solid shown as its boundary: the rings of its faces. */
   | { readonly head: "Polyhedron"; readonly faces: readonly (readonly FramePoint[])[] }
-  | { readonly head: "Text"; readonly text: string; readonly size: number; readonly at?: FramePoint };
+  | {
+      readonly head: "Text";
+      readonly text: string;
+      readonly size: number;
+      readonly at?: FramePoint;
+      /** How a plot sets its labels; a figure's are centered, plain, in the frame's ink. */
+      readonly look?: TextLook;
+    };
+
+/** A label's setting where a drawer is asked for more than centered ink: plots' tick and axis text. */
+export interface TextLook {
+  readonly anchor?: "start" | "middle" | "end";
+  readonly mono?: boolean;
+  readonly italic?: boolean;
+  readonly opacity?: number;
+  /** A color stroked behind the glyphs, so the label reads over a curve. */
+  readonly halo?: string;
+}
 
 /**
  * How a frame is looked at: `plane` pans and zooms over a lattice; `fixed` is fitted to its layer
@@ -141,6 +158,8 @@ export interface MarkItem {
   readonly mark: GraphicsPrimitive;
   readonly style: ElementStyle;
   readonly selected: boolean;
+  /** Drawn inside the drawing's clip rectangle (a plot's curves), if it has one. */
+  readonly clipped?: boolean;
   /** The caption the layer gives this address, drawn over the mark. */
   readonly caption?: { readonly at: Vec2; readonly text: string; readonly size: number; readonly opacity: number };
 }

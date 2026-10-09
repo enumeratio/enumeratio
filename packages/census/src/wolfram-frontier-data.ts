@@ -229,10 +229,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 33,
   },
   {
-    head: "ArrowBox",
-    uses: 32,
-  },
-  {
     head: "OrderDistribution",
     uses: 32,
   },

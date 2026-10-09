@@ -1,5 +1,5 @@
 // The build as a kernel, for a page's own markup (https://github.com/enumeratio/enumeratio/wiki/Speculative-Kernels-and-Front-Ends §9):
-// each `<notatio-cell>` and `<notatio-plot>` a page writes gets a placeholder,
+// each `<notatio-cell>` and plot (`<graphics-box value="Plot(…)">`) a page writes gets a placeholder,
 // `<NotatioPrerendered>`, and what it asks for (its attributes, and the starting values of a
 // Manipulate around it) is recorded for the page. `data/prerender-markup.ts` answers it and
 // writes the result into the page's HTML; the placeholder reads it back before hydrating, and
@@ -8,6 +8,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { PLOT_HEADS } from "@enumeratio/frontend/core";
 
 /** One element a page asks the build to render. */
 export interface MarkupSpec {
@@ -20,7 +21,11 @@ export interface MarkupSpec {
   readonly inSession: boolean;
 }
 
-const PRERENDERED = new Set(["notatio-cell", "notatio-plot"]);
+const PRERENDERED = new Set(["notatio-cell", "graphics-box"]);
+
+/** Whether a `graphics-box` holds a plot, which the build draws; a `Show` is drawn live. */
+const holdsPlot = (value: string | undefined): boolean =>
+  value !== undefined && new RegExp(`^\\s*(?:${PLOT_HEADS.join("|")})\\s*\\(`).test(value);
 const SPECS_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "cache/prerender-pages");
 
 /** Where a page's specs are kept, by its source path. */
@@ -28,7 +33,7 @@ export const specsFile = (relativePath: string): string =>
   resolve(SPECS_DIR, `${encodeURIComponent(relativePath)}.json`);
 
 const TAG =
-  /<(\/?)(notatio-[a-z0-9-]+|dynamic-module-box)((?:\s+[^\s=/>]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+))?)*)\s*(\/?)>/g;
+  /<(\/?)(notatio-[a-z0-9-]+|dynamic-module-box|graphics-box)((?:\s+[^\s=/>]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+))?)*)\s*(\/?)>/g;
 const ATTRIBUTE = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g;
 
 const attributesOf = (source: string): Record<string, string> => {
@@ -79,6 +84,7 @@ export function prerenderMarkup(md: MarkdownItLike): void {
         if (close || !PRERENDERED.has(tag)) return whole;
         const attributes = attributesOf(attrs);
         if (attributes["prerender"] === "false") return whole;
+        if (tag === "graphics-box" && !holdsPlot(attributes["value"])) return whole;
         const at = specs.length;
         specs.push({ at, tag, attributes, manipulate: [...manipulate], inSession: sessions > 0 });
         const inside = verbatim.at(-1) === true;
@@ -102,7 +108,7 @@ export function prerenderMarkup(md: MarkdownItLike): void {
 // its answers or code with.
 const CHUNKS: Readonly<Record<string, readonly string[]>> = {
   "notatio-cell": ["lazy", "notatio-cell", "notatio-in", "notatio-out", "notatio-code", "kernel-client", "katex"],
-  "notatio-plot": ["lazy", "notatio-plot", "plot-kernel", "kernel-client"],
+  "graphics-box": ["lazy", "graphics-box", "plot-view", "plot-kernel", "kernel-client"],
 };
 
 /** The prerendered tags `relativePath` uses: a reference page's examples are cells. */

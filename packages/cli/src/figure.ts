@@ -5,11 +5,19 @@
 // A layout (`Row`, `Column`, `Grid`, `Panel`, `Labeled`) is boxes laid out on cells, with each
 // entry that is a figure a leaf the figure drawer fills.
 
-import { LAYOUT_HEADS, makeBoxes, type Notation } from "@enumeratio/boxes";
-import { FIGURE_NOTATION, headOf, plainJson, registerLatticeModules } from "@enumeratio/frontend";
+import { type BoxNode, LAYOUT_HEADS, makeBoxes, type Notation } from "@enumeratio/boxes";
+import {
+  FIGURE_NOTATION,
+  headOf,
+  PLOT_NOTATION,
+  type PlotPoint,
+  plainJson,
+  plotBox,
+  registerLatticeModules,
+} from "@enumeratio/frontend";
 import * as numberTheory from "@enumeratio/number-theory/lattice";
 import * as residues from "@enumeratio/residues/table";
-import { drawGraphicsBox } from "./cell-draw.ts";
+import { drawGraphicsBox, drawPlotBox } from "./cell-draw.ts";
 import { drawBoxes, type LayoutOptions } from "./cell-layout.ts";
 
 // The lattices the terminal can draw: quadratic rings and multiplication tables.
@@ -17,15 +25,39 @@ registerLatticeModules({ numberTheory, residues });
 
 type Json = Parameters<typeof plainJson>[0];
 
+/** A `Plot` result sampled by the session: its curve and the points an `Epilog` marks. */
+export interface Sampled {
+  readonly points: readonly PlotPoint[];
+  readonly marks?: readonly PlotPoint[];
+}
+
 export interface FigureOptions extends LayoutOptions {
+  /** Samples a plot, which needs the session's engine; a plot is no figure without it. */
+  readonly plot?: (json: Json) => Sampled | undefined;
   /** The notation the session's packages bring, so a layout's math is written as the page writes it. */
   readonly notation?: Notation;
 }
 
+/**
+ * A sampled curve as a plot box drawn on cells: the window is the data's own extent (the y extremes
+ * in a gutter, the x extremes under the axis), and each mark one `●`.
+ */
+export function plotText(sampled: Sampled, options: { width?: number; height?: number; color?: boolean } = {}): string {
+  const marks = sampled.marks ?? [];
+  const box = plotBox([{ points: [...sampled.points] }], {
+    tight: true,
+    epilog: marks.length > 0 ? [{ kind: "point", points: marks.map((m) => [m.x, m.y] as const) }] : [],
+  }) as BoxNode;
+  return drawPlotBox(box, options);
+}
+
 /** The result drawn on character cells, or undefined when it is no figure or layout (or none can be made of it). */
 export function figureText(json: Json, options: FigureOptions = {}): string | undefined {
+  const sampled = options.plot?.(json);
+  if (sampled !== undefined)
+    return plotText(sampled, { width: options.width, height: options.height, color: options.color });
   const head = headOf(plainJson(json));
-  const notation = { ...options.notation, ...FIGURE_NOTATION };
+  const notation = { ...options.notation, ...FIGURE_NOTATION, ...PLOT_NOTATION };
   if (head !== undefined && LAYOUT_HEADS.has(head)) {
     // Each entry that is a figure is a `GraphicsBox` by the figure rules; the rest is written as math.
     return drawBoxes(makeBoxes(plainJson(json) as never, notation), options);

@@ -7,10 +7,9 @@ import { fileFormat, isImageFormat, isImageValue, readFormat, writeFormat } from
 import { type CommandHandler, type Graphic, type LineOutput, Repl } from "./core.ts";
 import type { SessionDefaults } from "./engine.ts";
 import { notationOf } from "@enumeratio/boxes";
-import { figureText } from "./figure.ts";
+import { figureText, plotText } from "./figure.ts";
 import { graphicLabel, graphicToSvg, inlineImage, writeSvg } from "./node-graphics.ts";
-import { samplePlot } from "./textual.ts";
-import { textPlot } from "@enumeratio/frontend";
+import { sampledPlot, samplePlot } from "./textual.ts";
 
 export interface HostOutput {
   text: string;
@@ -44,7 +43,7 @@ export class NodeHost {
     // No image protocol: the plot on braille cells, which any terminal or pipe can show.
     const text =
       inline === undefined && graphic.kind === "plot"
-        ? `${out.text}\n${textPlot(graphic.points, { width: 60, height: 12 })}`
+        ? `${out.text}\n${plotText({ points: graphic.points }, { width: 60, height: 12 })}`
         : `${out.text} -> file://${file}`;
     return { text, inline, exit: out.exit, clear: out.clear };
   }
@@ -68,6 +67,7 @@ export class NodeHost {
       color: this.repl.color,
       notation: notationOf(session.ce),
       evaluate: (json) => session.render(session.ce.box(json as never).evaluate()),
+      plot: (json) => sampledPlot(session, json),
     });
   }
 

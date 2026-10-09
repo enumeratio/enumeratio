@@ -154,7 +154,7 @@ At <knob-box name="t" value="0" min="0" max="6.28" step="0.04" play loop="cycle"
 reached <dynamic-box value="N(Sin(_t))" digits="3" />, and it is
 <toggler-box name="mood" values="rising|falling|rising again" play interval="1500" />.
 </p>
-<notatio-plot value="Sin(x - _t)" domain="-6.283,6.283" />
+<graphics-box value="Plot(Sin(x - _t), (x, -6.283, 6.283))" />
 </dynamic-module-box>
 </Story>
 
@@ -337,7 +337,7 @@ The curve <notatio-out inline format="latex" value="\sin(kx)" /> with
 <knob-box name="k" value="3" min="1" max="8" step="1" /> crosses zero
 <dynamic-box value="2 * _k + 1" /> times on <notatio-out inline format="latex" value="[-\pi,\pi]" />.
 </p>
-<notatio-plot value="Sin(_k * x)" domain="-3.1416,3.1416" grid />
+<graphics-box value="Plot(Sin(_k * x), (x, -3.1416, 3.1416), GridLines -> True)" />
 </dynamic-module-box>
 </Story>
 

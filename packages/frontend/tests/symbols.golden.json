@@ -1,23 +1,21 @@
 {
   "Plot(Sin(x), (x, 0, 10))": {
     "rendering": {
-      "tag": "notatio-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "value": "sin(x)",
-        "var": "x",
-        "domain": "0,10"
+        "value": "Plot(sin(x), (x, 0, 10))"
       }
     },
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10))\"></graphics-box>"
   },
   "Plot(Sin(x))": {
     "rendering": {
-      "tag": "notatio-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "value": "sin(x)"
+        "value": "Plot(sin(x))"
       }
     },
-    "markup": "<notatio-plot value=\"sin(x)\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x))\"></graphics-box>"
   },
   "Plot3D(x * y, (x, -1, 1), (y, -1, 1))": {
     "rendering": {
@@ -82,23 +80,21 @@
   },
   "PolarPlot(1 + Cos(t), (t, 0, 2 * Pi))": {
     "rendering": {
-      "tag": "notatio-polar-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "expr": "1 + cos(t)",
-        "tvar": "t",
-        "trange": "0,2Pi"
+        "value": "PolarPlot(1 + cos(t), (t, 0, 2Pi))"
       }
     },
-    "markup": "<notatio-polar-plot expr=\"1 + cos(t)\" tvar=\"t\" trange=\"0,2Pi\"></notatio-polar-plot>"
+    "markup": "<graphics-box value=\"PolarPlot(1 + cos(t), (t, 0, 2Pi))\"></graphics-box>"
   },
   "ListPolarPlot([[0, 1], [1.57, 2]])": {
     "rendering": {
-      "tag": "notatio-polar-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "data": "[[0,1],[1.57,2]]"
+        "value": "ListPolarPlot([[0, 1], [1.57, 2]])"
       }
     },
-    "markup": "<notatio-polar-plot data=\"[[0,1],[1.57,2]]\"></notatio-polar-plot>"
+    "markup": "<graphics-box value=\"ListPolarPlot([[0, 1], [1.57, 2]])\"></graphics-box>"
   },
   "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2), XLabel -> \"x\", YLabel -> \"y\")": {
     "rendering": {
@@ -164,23 +160,21 @@
   },
   "ListPlot([1, 4, 9, 16])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "list",
-        "data": "[1,4,9,16]"
+        "value": "ListPlot([1, 4, 9, 16])"
       }
     },
-    "markup": "<notatio-chart type=\"list\" data=\"[1,4,9,16]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"ListPlot([1, 4, 9, 16])\"></graphics-box>"
   },
   "ListLinePlot([[0, 1], [1, 3], [2, 2]])": {
     "rendering": {
-      "tag": "notatio-chart",
+      "tag": "graphics-box",
       "attributes": {
-        "type": "listline",
-        "data": "[[0,1],[1,3],[2,2]]"
+        "value": "ListLinePlot([[0, 1], [1, 3], [2, 2]])"
       }
     },
-    "markup": "<notatio-chart type=\"listline\" data=\"[[0,1],[1,3],[2,2]]\"></notatio-chart>"
+    "markup": "<graphics-box value=\"ListLinePlot([[0, 1], [1, 3], [2, 2]])\"></graphics-box>"
   },
   "BarChart([3, 1, 4, 1, 5])": {
     "rendering": {
@@ -316,16 +310,14 @@
       },
       "children": [
         {
-          "tag": "notatio-plot",
+          "tag": "graphics-box",
           "attributes": {
-            "value": "sin(_a * x)",
-            "var": "x",
-            "domain": "0,10"
+            "value": "Plot(sin(_a * x), (x, 0, 10))"
           }
         }
       ]
     },
-    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
+    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><graphics-box value=\"Plot(sin(_a * x), (x, 0, 10))\"></graphics-box></notatio-manipulate>"
   },
   "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
     "rendering": {
@@ -942,11 +934,9 @@
           },
           "children": [
             {
-              "tag": "notatio-plot",
+              "tag": "graphics-box",
               "attributes": {
-                "value": "sin(_k * x)",
-                "var": "x",
-                "domain": "0,10"
+                "value": "Plot(sin(_k * x), (x, 0, 10))"
               }
             },
             {
@@ -962,71 +952,52 @@
         }
       ]
     },
-    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><notatio-plot value=\"sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><slider-box name=\"k\" value=\"1\" min=\"1\" max=\"5\"></slider-box></row-box></dynamic-module-box>"
+    "markup": "<dynamic-module-box><row-box data-head=\"Row\"><graphics-box value=\"Plot(sin(_k * x), (x, 0, 10))\"></graphics-box><slider-box name=\"k\" value=\"1\" min=\"1\" max=\"5\"></slider-box></row-box></dynamic-module-box>"
   },
   "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))": {
     "rendering": {
-      "tag": "notatio-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "value": "sin(x)",
-        "var": "x",
-        "domain": "0,10",
-        "plot-range": "-1,1",
-        "epilog": "Point((1, 0.5))"
+        "value": "Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))"
       }
     },
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\" epilog=\"Point((1, 0.5))\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))\"></graphics-box>"
   },
   "Plot(Sin(x), (x, 0, 10), [PlotLabel -> \"sine\", GridLines -> True], PlotLabel -> \"no\")": {
     "rendering": {
-      "tag": "notatio-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "value": "sin(x)",
-        "var": "x",
-        "domain": "0,10",
-        "label": "sine",
-        "grid": "true"
+        "value": "Plot(sin(x), (x, 0, 10), PlotLabel -> \"sine\", GridLines -> True)"
       }
     },
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" label=\"sine\" grid=\"true\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), PlotLabel -> &quot;sine&quot;, GridLines -> True)\"></graphics-box>"
   },
   "Plot(Sin(x), (x, 0, 10), ColorFunction -> \"y\")": {
     "rendering": {
-      "tag": "notatio-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "value": "sin(x)",
-        "var": "x",
-        "domain": "0,10",
-        "color-by": "y"
+        "value": "Plot(sin(x), (x, 0, 10), ColorFunction -> \"y\")"
       }
     },
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" color-by=\"y\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), ColorFunction -> &quot;y&quot;)\"></graphics-box>"
   },
   "Plot(Sin(x), (x, 0, 10), ColorFunction -> \"Magma\", Reverse -> True)": {
     "rendering": {
-      "tag": "notatio-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "value": "sin(x)",
-        "var": "x",
-        "domain": "0,10",
-        "color-by": "x",
-        "gradient": "magma",
-        "reverse": "true"
+        "value": "Plot(sin(x), (x, 0, 10), ColorFunction -> \"Magma\", reverse -> True)"
       }
     },
-    "markup": "<notatio-plot value=\"sin(x)\" var=\"x\" domain=\"0,10\" color-by=\"x\" gradient=\"magma\" reverse=\"true\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot(sin(x), (x, 0, 10), ColorFunction -> &quot;Magma&quot;, reverse -> True)\"></graphics-box>"
   },
   "Plot([Sin(x), Cos(x)], (x, 0, 10), Discrete -> \"set1\")": {
     "rendering": {
-      "tag": "notatio-plot",
+      "tag": "graphics-box",
       "attributes": {
-        "value": "[sin(x), cos(x)]",
-        "var": "x",
-        "domain": "0,10",
-        "discrete": "set1"
+        "value": "Plot([sin(x), cos(x)], (x, 0, 10), Discrete -> \"set1\")"
       }
     },
-    "markup": "<notatio-plot value=\"[sin(x), cos(x)]\" var=\"x\" domain=\"0,10\" discrete=\"set1\"></notatio-plot>"
+    "markup": "<graphics-box value=\"Plot([sin(x), cos(x)], (x, 0, 10), Discrete -> &quot;set1&quot;)\"></graphics-box>"
   },
   "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6), ColorFunction -> ColorData(\"Turbo\"))": {
     "rendering": {

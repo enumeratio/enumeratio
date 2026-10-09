@@ -3,10 +3,10 @@
 .notatio-prerendered {
   display: contents;
 }
-:is(notatio-cell, notatio-plot)[data-rendered] > .notatio-prerendered {
+:is(notatio-cell, graphics-box)[data-rendered] > .notatio-prerendered {
   display: none;
 }
-:is(notatio-cell, notatio-plot):not([data-rendered]):has(> .notatio-prerendered:not(:empty))
+:is(notatio-cell, graphics-box):not([data-rendered]):has(> .notatio-prerendered:not(:empty))
   > :not(.notatio-prerendered, [slot]) {
   display: none;
 }

@@ -4,8 +4,8 @@
 // rectangles (a Young diagram) is ruled with box-drawing characters instead. Pure: boxes in,
 // text out. Selection and hover are the web's; the marks' own colors are kept where the terminal has color.
 
-import { type Box, isNode, optionsOfBox, type Options } from "@enumeratio/boxes";
-import { complexOf, pinnedBox } from "@enumeratio/frontend";
+import { type Box, type BoxNode, isNode, optionsOfBox, type Options } from "@enumeratio/boxes";
+import { complexOf, isPlotBox, pinnedBox, plotItems } from "@enumeratio/frontend";
 
 type Point = readonly number[];
 
@@ -182,6 +182,12 @@ class Cells {
   }
   /** The rows as text, trailing blanks trimmed, with ANSI where `color`. */
   toString(color: boolean): string {
+    return this.rows(color)
+      .join("\n")
+      .replace(/^\n+|\n+$/g, "");
+  }
+  /** Every row as text, trailing blanks trimmed, with ANSI where `color`. */
+  rows(color: boolean): string[] {
     const rows: string[] = [];
     for (let r = 0; r < this.height; r++) {
       let row = "";
@@ -200,7 +206,7 @@ class Cells {
       if (open !== undefined) row += "\x1b[0m";
       rows.push(row.replace(/\s+$/, ""));
     }
-    return rows.join("\n").replace(/^\n+|\n+$/g, "");
+    return rows;
   }
 }
 
@@ -350,8 +356,78 @@ function drawRuled(marks: readonly Mark[]): Cells {
 /** Tiles of a pinned lattice: few enough that each outline keeps a few dots. */
 const PINNED_TILES = 120;
 
+// ── A plot: the curve on braille cells in a frame ────────────────────────────────────────
+
+/** Columns held for the y labels, fixed so a redraw cannot shift the frame. */
+const GUTTER = 7;
+const MARK = "●";
+
+/** A y label that fits `width` columns: three significant figures, exponential when it must. */
+function gutterLabel(v: number, width: number): string {
+  const s = Number(v.toPrecision(3));
+  const plain = Math.abs(s) >= 1e5 || (Math.abs(s) < 1e-3 && s !== 0) ? s.toExponential(1) : String(s);
+  if (plain.length <= width) return plain;
+  for (let digits = 2; digits >= 0; digits--) {
+    const short = s.toExponential(digits);
+    if (short.length <= width) return short;
+  }
+  return s.toExponential(0);
+}
+
+/**
+ * A plot's `GraphicsBox` on character cells: its curves on braille (2 × 4 dots a cell), its
+ * `Epilog` points as `●`, the y extremes in a gutter and the x extremes under the axis.
+ */
+export function drawPlotBox(box: BoxNode, options: CellOptions = {}): string {
+  // The gutter and the axis come out of the width the drawing may take.
+  const [width, height] = [Math.max(4, (options.width ?? 60) - GUTTER - 2), Math.max(2, options.height ?? 12)];
+  const range = optionsOfBox(box).PlotRange;
+  if (!Array.isArray(range)) return "(nothing to plot)";
+  const [[x0, x1], [y0, y1]] = range as [[number, number], [number, number]];
+  const cells = new Cells(width, height);
+  const [cols, rows] = [width * 2, height * 4];
+  const toDot = (p: Point): [number, number] => [
+    Math.round(((p[0]! - x0) / (x1 - x0 || 1)) * (cols - 1)),
+    Math.round(((y1 - p[1]!) / (y1 - y0 || 1)) * (rows - 1)),
+  ];
+  for (const { role, prim, look } of plotItems(box)) {
+    const o = optionsOfBox(prim);
+    const points = pointsOf(o.Points);
+    const edge = Array.isArray(look.EdgeForm) && Array.isArray(look.EdgeForm[0]) ? look.EdgeForm[0][0] : undefined;
+    const color = rgbOf(
+      typeof look.FaceForm === "string" ? look.FaceForm : typeof edge === "string" ? edge : undefined,
+    );
+    if (prim[0] === "LineBox") {
+      const breaks = Array.isArray(o.Breaks) ? (o.Breaks as number[]) : [];
+      for (let k = 1; k < points.length; k++)
+        if (!breaks.includes(k)) cells.segment(toDot(points[k - 1]!), toDot(points[k]!), color);
+      // A sample alone between gaps has no segment to carry it, so it is a dot.
+      points.forEach((p, k) => {
+        if ((k === 0 || breaks.includes(k)) && (k === points.length - 1 || breaks.includes(k + 1)))
+          cells.dot(...toDot(p), color);
+      });
+    } else if (prim[0] === "PointBox") {
+      for (const p of points) {
+        const [x, y] = toDot(p);
+        if (role === "Epilog") cells.put(Math.floor(x / 2), Math.floor(y / 4), MARK, color);
+        else cells.dot(x, y, color);
+      }
+    }
+  }
+  const body = cells.rows(options.color ?? false);
+  const lines = body.map((row, r) => {
+    const tag = r === 0 ? gutterLabel(y1, GUTTER) : r === height - 1 ? gutterLabel(y0, GUTTER) : "";
+    return `${tag.padStart(GUTTER)} │${row}`;
+  });
+  lines.push(`${" ".repeat(GUTTER)} └${"─".repeat(width)}`);
+  const [lo, hi] = [gutterLabel(x0, GUTTER), gutterLabel(x1, GUTTER)];
+  lines.push(`${" ".repeat(GUTTER)}  ${lo}${" ".repeat(Math.max(1, width - lo.length - hi.length))}${hi}`);
+  return lines.join("\n");
+}
+
 /** A figure's `GraphicsBox` on character cells; the reason it can't be drawn, as text, otherwise. */
 export function drawGraphicsBox(box: Box, options: CellOptions = {}): string {
+  if (isPlotBox(box)) return drawPlotBox(box, options);
   const [width, height] = [options.width ?? 60, options.height ?? 14];
   // A lattice holds a producer: pin it to the view the cells can resolve (a cell is 2 by 4 dots).
   const pinned = pinnedBox(box, { width: width * 2, height: height * 4, maxCells: PINNED_TILES });

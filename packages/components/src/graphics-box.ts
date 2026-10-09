@@ -30,6 +30,7 @@ import {
   nearestLatticePoint,
   orbited,
   paddingName,
+  PLOT_HEADS,
   paint,
   plainJson,
   type Producer,
@@ -60,6 +61,7 @@ import { emitControl } from "./define.ts";
 import { scopeOf } from "./scope.ts";
 import { type FramePlacement, figureFrame, isVertical, placementOf } from "./figure-frame.ts";
 import { ensureStyles } from "./styles.ts";
+import type { PlotView } from "./plot-view.ts";
 
 type Json = unknown;
 
@@ -74,6 +76,8 @@ const HIT_REACH = 12;
 /** Pointer travel (CSS px) below which a press is a click, not a drag. */
 const SLOP = 4;
 const DEFAULT_GROUND = "dusk";
+/** A value that is a 2-D plot (`Plot(…)`, `ListPlot(…)`): drawn by the plot view, not as a figure. */
+const PLOT_VALUE = new RegExp(`^\\s*(?:${PLOT_HEADS.join("|")})\\s*\\(`);
 
 const headOf = (json: Json): string | undefined =>
   Array.isArray(json) && typeof json[0] === "string" ? json[0] : undefined;
@@ -160,6 +164,13 @@ interface Override {
  *   figure.
  *
  * Drag to pan; Esc clears the selection; `0` resets the view.
+ *
+ * A 2-D plot is a `GraphicsBox` too: `<graphics-box value="Plot(Sin(x), (x, 0, 2*Pi), GridLines -> True)">`,
+ * and `ParametricPlot`, `PolarPlot`, `ListPlot`, `ListLinePlot` and `ListPolarPlot` likewise, with
+ * their Wolfram options (`PlotRange`, `PlotLabel`, `Filling`, `ColorFunction`, `Epilog`, …). The page's kernel
+ * samples the expression, the samples lower to a curve (`LineBox`), dots (`PointBox`) or a filled
+ * region (`PolygonBox`) in data coordinates, and hovering reads out the nearest sample of each
+ * series. Inside a `Manipulate`, its wildcards (`_a`) follow the controls.
  */
 export class GraphicsBoxElement extends LitElement {
   static properties = {
@@ -276,7 +287,28 @@ export class GraphicsBoxElement extends LitElement {
     this.#ro = undefined;
   }
 
+  #plot: PlotView | undefined;
+
+  /** Whether `value` is a 2-D plot, which lowers to a box of data coordinates rather than a figure frame. */
+  get #isPlot(): boolean {
+    return PLOT_VALUE.test(this.value);
+  }
+
+  /** A plot's area, for an overlay such as a locator: its geometry in px and both ways to data. */
+  get frame(): PlotView["frame"] {
+    return this.#plot?.frame;
+  }
+
   protected override async updated(changed: PropertyValues): Promise<void> {
+    if (this.#isPlot) {
+      this.toggleAttribute("data-plot", true);
+      if (changed.has("value") || changed.has("bindings") || this.#plot === undefined) {
+        this.#plot ??= new (await import("./plot-view.ts")).PlotView(this);
+        await this.#plot.recompute();
+      }
+      return;
+    }
+    this.toggleAttribute("data-plot", false);
     this.#adoptCanvases();
     const options = ["value", "selection", "aspectRatio", "gestureHandling"];
     if (options.some((k) => changed.has(k))) await this.#read();
@@ -1108,6 +1140,7 @@ export class GraphicsBoxElement extends LitElement {
   }
 
   protected override render(): unknown {
+    if (this.#isPlot) return this.#plot?.render() ?? nothing;
     const ground = resolvePalette({ palette: this.ground });
     const legendAt: FramePlacement = placementOf(this.legendAt, "right");
     const stage = html`<div
