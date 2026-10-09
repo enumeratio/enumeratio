@@ -20,6 +20,7 @@ import { declareProducts } from "./products.ts";
 import { declareListStats } from "./list-stats.ts";
 import { declareLogicFrontier } from "./logic-frontier.ts";
 import { declareMiscFrontier } from "./misc-frontier.ts";
+import { declareOperatorForms } from "./operator-forms.ts";
 import { declareRoundingHeads } from "./rounding-heads.ts";
 
 /**
@@ -57,6 +58,7 @@ export function declareCollections(ce: Engine): void {
   declareRoundingHeads(ce);
   declareArithHeads(ce);
   declareExpressionOps(ce);
+  declareOperatorForms(ce);
   declareGeneratingFunctions(ce);
   declareGraphs(ce);
   declareGraphs2(ce);
