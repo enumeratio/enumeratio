@@ -606,6 +606,8 @@ test.skipIf(!hasSympy)("held alike: kernel holds the call, agrees; kernel evalua
   expect(
     sympyHeldAlike('enumeratio_held_alike(Symbol("x") + Symbol("y"), "(Symbol(\\"x\\") + Symbol(\\"y\\"))")'),
   ).toBe("True");
+  // SymPy prints a held remainder as Mod(x, 2).
+  expect(sympyHeldAlike('enumeratio_held_alike(Mod(Symbol("x"), 2), "(Symbol(\\"x\\") % 2)")')).toBe("True");
   expect(sympyHeldAlike('enumeratio_held_alike(expand(Symbol("x") * (Symbol("y") + 1)), "x*(y+1)")')).toBe(
     "NotNumeric",
   );

@@ -434,9 +434,17 @@ def enumeratio_held_alike(a, held):
         text = re.sub(r'(?:Symbol|SR\\.var)\\("([A-Za-z_0-9]+)"\\)', r'\\1', text)
         text = text.replace("enumeratio_", "")
         try:
-            return ast.dump(ast.parse(text.strip(), mode="eval"))
+            tree = ast.parse(text.strip(), mode="eval")
         except SyntaxError:
             return "".join(text.split())
+        # SymPy prints x % 2 held as Mod(x, 2).
+        class Mod(ast.NodeTransformer):
+            def visit_BinOp(self, node):
+                self.generic_visit(node)
+                if isinstance(node.op, ast.Mod):
+                    return ast.Call(func=ast.Name(id="Mod", ctx=ast.Load()), args=[node.left, node.right], keywords=[])
+                return node
+        return ast.dump(Mod().visit(tree))
     return True if parsed(str(a)) == parsed(held) else "NotNumeric"
 `;
 
