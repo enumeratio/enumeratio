@@ -7,7 +7,12 @@ signatures:
   - call: PermutationProduct(p, q, ...)
     description: the permutation that applies `p`, then `q`, and so on
     library: enumeratio-groupalgebra
-    type: ((expression<Cycles> | list<integer> | permutation)*) -> expression<Cycles> | list<integer>
+    type: ((expression<Cycles> | list<integer>)*) -> expression<Cycles> | list<integer>
+  - call: PermutationProduct(p, q, ...)
+    description: The product of permutations, applying the left factor first. $(p\,q)(i) = q(p(i))$.
+    library: enumeratio-combinatorics
+    type: ((expression<Cycles> | list<integer> | permutation)*) -> expression<Cycles> | list<integer> | permutation
+    overrides: enumeratio-groupalgebra
 seeAlso:
   - PermutationPower
   - InversePermutation

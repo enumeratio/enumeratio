@@ -7,7 +7,12 @@ signatures:
   - call: PermutationPower(p, n)
     description: $p^n$, in the same notation as `p`
     library: enumeratio-groupalgebra
-    type: (expression<Cycles> | list<integer> | permutation, integer) -> expression<Cycles> | list<integer>
+    type: (expression<Cycles> | list<integer>, integer) -> expression<Cycles> | list<integer>
+  - call: PermutationPower(p, n)
+    description: The $n$th power of a permutation under composition; a negative $n$ powers the inverse.
+    library: enumeratio-combinatorics
+    type: (expression<Cycles> | list<integer> | permutation, integer) -> expression<Cycles> | list<integer> | permutation
+    overrides: enumeratio-groupalgebra
 seeAlso:
   - PermutationProduct
   - InversePermutation
