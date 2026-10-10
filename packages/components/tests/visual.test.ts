@@ -1,7 +1,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parseExpression } from "@enumeratio/formats/expression";
-import { ENVIRONMENTS } from "@enumeratio/frontend";
+import { ComputeEngine } from "@cortex-js/compute-engine";
+import { ENVIRONMENTS, plainJson } from "@enumeratio/frontend";
+import { prerender } from "@enumeratio/frontend/prerender";
 import { afterAll, expect, test } from "vite-plus/test";
 import { visualMarkup } from "../src/visual.ts";
 
@@ -65,6 +67,15 @@ test("an answer nothing evaluated stays readouts, even when closed", () => {
 test("a layout with a control, a plot or a readout keeps its elements", () => {
   const { json } = parseExpression("Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])");
   expect(visualMarkup(json, web, leaves)).toBe(visualMarkup(json, web));
+});
+
+// A build writes a closed layout into the page ahead of the Out; it is the markup the Out draws.
+test("the build's layout is the markup the Out draws", () => {
+  // As a kernel answers: plain MathJSON.
+  const json = plainJson(parseExpression("Grid([[1 / 2, Sqrt(2)], [Pi, 2^10]])").json as never) as never;
+  const pre = prerender(new ComputeEngine(), { text: "", format: "epsil" }, json, json, true, leaves.typeset);
+  expect(pre.visual).toBeDefined();
+  expect(pre.visual).toBe(visualMarkup(json, web, { ...leaves, written: pre.display.boxes.TraditionalForm }));
 });
 
 afterAll(() => {

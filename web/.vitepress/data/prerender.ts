@@ -11,9 +11,8 @@ import { ComputeEngine, LATEX_DICTIONARY } from "@cortex-js/compute-engine";
 import { combineNotation, type PackageNotation, registerNotation } from "@enumeratio/boxes";
 import { katexStrict, trustExpression } from "@enumeratio/boxes/render";
 import { portableTeX, registerTeXMacros } from "@enumeratio/formats/tex";
-import { markupOf, typesetLeaf } from "@enumeratio/frontend/core";
 import { displayLatexSyntax } from "@enumeratio/frontend/display";
-import { type Prerendered, prerender } from "@enumeratio/frontend/prerender";
+import { outMarkup, type Prerendered, prerender } from "@enumeratio/frontend/prerender";
 import { createResolver, NOTATIONS } from "@enumeratio/manifest";
 import type { ReferenceEntry } from "@enumeratio/reference";
 import katex from "katex";
@@ -93,10 +92,8 @@ export async function prerenderExamples(entry: ReferenceEntry): Promise<(Prerend
   answers.forEach((a, i) => {
     if (a?.html === undefined) return;
     parts[`${i}:in`] = a.html.input;
-    // The Out's standard form is a typeset leaf (`<notatio-out>`), so the seed is the same markup.
-    const output = a.html.output;
-    parts[`${i}:out`] =
-      a.latex === "" ? output : markupOf(typesetLeaf(["FormBox", a.latex, "TeXForm"], "TeXForm"), () => output);
+    // The seed is the markup `<notatio-out>` draws: a closed layout's grid, else the standard form's leaf.
+    parts[`${i}:out`] = outMarkup({ ...a, html: a.html });
   });
   mkdirSync(HTML_DIR, { recursive: true });
   writeFileSync(htmlFile(entry.name), JSON.stringify(parts));
@@ -124,7 +121,9 @@ async function answer(entry: ReferenceEntry): Promise<(Prerendered | undefined)[
     }
     try {
       await ensure(["List", ex.expr, value]);
-      out.push(prerender(ce, { text: JSON.stringify(ex.expr), format: "mathjson" }, ex.expr, value, typeset));
+      out.push(
+        prerender(ce, { text: JSON.stringify(ex.expr), format: "mathjson" }, ex.expr, value, evaluates, typeset),
+      );
     } catch {
       out.push(undefined);
     }

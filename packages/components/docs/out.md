@@ -32,10 +32,12 @@ loads only when MathJSON or Epsil, evaluation, or an assertion is requested.
 An evaluated <code>Grid</code> (or <code>Row</code>, <code>Column</code>) of closed formulas is
 drawn by the box renderer: the grid is CSS, each cell one typeset formula, so it wraps, scrolls
 and selects like a table rather than typesetting as one LaTeX array. A cell that names a symbol
-the page could bind (<code>k</code>, below) stays a readout that follows it.
+the page could bind (<code>k</code>, below) stays a readout that follows it. A cell's Grid is
+drawn by the build, so it is in the page before any script runs.
 </template>
 <notatio-out value="Grid([[1/2, Sqrt(2), Pi^2/6], [Sin(Pi/6), 2^10, Binomial(5, 2)]])" format="epsil" evaluate />
 <notatio-out value="Grid([[k, k^2], [1, 2]])" format="epsil" evaluate />
+<notatio-cell value="Grid([[1/2, Sqrt(2)], [Pi, 2^10]])" />
 </Story>
 
 <Story

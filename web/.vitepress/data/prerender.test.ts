@@ -29,3 +29,21 @@ test("each example is answered from its record, typeset into the page, and kept 
     /^<span data-prerender="0:out" data-v-1><form-box data-form="TeXForm"><span class="katex">.*<\/span><\/form-box><\/span><span data-prerender="1:out"><\/span>$/,
   );
 });
+
+test("a closed Grid is written as the grid of leaves the Out draws, and a live one as the standard leaf", async () => {
+  const closed = ["Grid", ["List", ["List", ["Rational", 1, 2], ["Sqrt", 2]], ["List", "Pi", ["Power", 2, 10]]]];
+  const live = ["Grid", ["List", ["List", "k", ["Power", "k", 2]]]];
+  const grid = {
+    name: "PrerenderGridHead",
+    examples: [
+      { id: "closed", expr: closed, expected: closed },
+      { id: "live", expr: live, expected: live },
+    ],
+  } as unknown as ReferenceEntry;
+  await prerenderExamples(grid);
+  const filled = fillPrerendered('<span data-prerender="0:out"></span><span data-prerender="1:out"></span>', grid.name);
+  const [first, second] = filled.split("</span><span data-prerender");
+  expect(first).toMatch(/^<span data-prerender="0:out"><grid-box data-head="Grid"/);
+  expect(first?.match(/<form-box data-form="TraditionalForm"><span class="katex">/g)).toHaveLength(4);
+  expect(second).toMatch(/^="1:out"><form-box data-form="TeXForm">/);
+});

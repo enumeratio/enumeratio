@@ -4,8 +4,11 @@
 // own (`kernel-host.ts`'s `display`); the HTML is the host's typesetter's.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { toLatex } from "@enumeratio/boxes/render";
+import { markupOf, typesetLeaf } from "./box-leaf.ts";
 import { display, type Display, writeSource } from "./kernel-host.ts";
+import { layoutMarkupEverywhere } from "./layout-markup.ts";
 
 /** A cell's input, as written: kept with its answer, for debugging among other reasons. */
 export interface CellInput {
@@ -27,17 +30,32 @@ export interface Prerendered {
   readonly latex: string;
   /** Both rows typeset, when the host has a typesetter. */
   readonly html?: { readonly input: string; readonly output: string };
+  /**
+   * The Out as the browser draws it when that is a closed layout (a grid of leaves) in every
+   * environment: kept with the data, so the Out adopts it, not just the page.
+   */
+  readonly visual?: string;
+}
+
+/** The Out row's markup as `<notatio-out>` first draws it: a layout where the answer is one, else the standard form's leaf. */
+export function outMarkup(pre: Prerendered & { readonly html: NonNullable<Prerendered["html"]> }): string {
+  if (pre.visual !== undefined) return pre.visual;
+  const { output } = pre.html;
+  return pre.latex === "" ? output : markupOf(typesetLeaf(["FormBox", pre.latex, "TeXForm"], "TeXForm"), () => output);
 }
 
 /**
  * `input` (MathJSON) with `value` as its answer: one known ahead of time (a reference example's
- * recorded value), so nothing is evaluated here. `typeset` turns TeX into HTML.
+ * recorded value), so nothing is evaluated here. `evaluated` is whether `value` is the answer to
+ * `input` (not `input` itself), which decides whether a layout of closed cells is final. `typeset`
+ * turns TeX into HTML.
  */
 export function prerender(
   ce: ComputeEngine,
   input: CellInput,
   json: unknown,
   value: unknown,
+  evaluated: boolean,
   typeset?: (latex: string) => string,
 ): Prerendered {
   const inputLatex = writeSource(ce, json, "latex");
@@ -53,6 +71,11 @@ export function prerender(
   };
   const standard = shown.boxes.StandardForm;
   const latex = standard === undefined ? "" : toLatex(standard);
+  // As the Out draws it in the browser (`visual.ts`), so the page's first paint is its last.
+  const visual =
+    typeset === undefined
+      ? undefined
+      : layoutMarkupEverywhere(value as MathJsonExpression, { typeset, evaluated, written: boxes.TraditionalForm });
   return {
     input,
     json,
@@ -60,6 +83,7 @@ export function prerender(
     value,
     display: shown,
     latex,
+    ...(visual === undefined ? {} : { visual }),
     ...(typeset === undefined ? {} : { html: { input: typeset(inputLatex), output: typeset(latex) } }),
   };
 }

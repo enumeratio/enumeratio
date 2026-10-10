@@ -22,7 +22,7 @@ import {
 } from "@enumeratio/frontend/core";
 import { NOTEBOOK_KERNEL } from "@enumeratio/frontend/kernel-host";
 import type { CompiledPlot } from "@enumeratio/frontend/plot-compile";
-import { prerender } from "@enumeratio/frontend/prerender";
+import { outMarkup, prerender } from "@enumeratio/frontend/prerender";
 import { libraryRegistry, registerLibraryNotation } from "../theme/libraries.ts";
 import { CATALOGUE } from "../theme/worker-catalogue.ts";
 import { type MarkupSpec, specsFile } from "../prerender-markup.ts";
@@ -51,12 +51,13 @@ async function cellPreview(spec: MarkupSpec, session: string): Promise<string | 
     return undefined;
   const format = a["format"] ?? "epsil";
   const k = await pageKernel();
-  const answer = await k.evaluate({ source: { text, format }, session, evaluate: a["evaluate"] !== "false" });
+  const evaluate = a["evaluate"] !== "false";
+  const answer = await k.evaluate({ source: { text, format }, session, evaluate });
   if (!answer.ok || answer.input === undefined) return undefined;
-  const { html, ...data } = prerender(k.ce, { text, format }, answer.input, answer.json, typeset);
+  const { html, ...data } = prerender(k.ce, { text, format }, answer.input, answer.json, evaluate, typeset);
   return (
     `<span class="notatio-preview"><span class="notatio-preview-label">In</span><span>${html!.input}</span>` +
-    `<span class="notatio-preview-label">Out</span><span>${html!.output}</span></span>` +
+    `<span class="notatio-preview-label">Out</span><span>${outMarkup({ ...data, html: html! })}</span></span>` +
     `<script type="application/json" class="notatio-answer">${escapeScript(JSON.stringify(data))}</script>`
   );
 }

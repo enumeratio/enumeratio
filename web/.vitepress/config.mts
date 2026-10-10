@@ -10,6 +10,7 @@ import { notatioSymbols } from "./notatio-symbols.ts";
 import { notationEntriesPlugin } from "./notation-entries.ts";
 import { docRoute, docsSidebar, workspacePackages } from "./data/repo-docs.ts";
 import { loaderWatchPlugin } from "./loader-watch.ts";
+import { BOX_LAYOUT_CSS } from "@enumeratio/frontend/core";
 import { fillPrerendered } from "./data/prerender.ts";
 import { fillMarkup } from "./data/prerender-markup.ts";
 import { chunksIn, pageTags, preloads, prerenderMarkup } from "./prerender-markup.ts";
@@ -381,10 +382,15 @@ const config = defineConfig({
     if (tags.size === 0) return [];
     // A cell typesets with KaTeX, a vendor file, not a chunk.
     const katex = tags.has("notatio-cell") ? vendorHref("katex") : undefined;
-    return [
+    const preloaded = [
       ...chunksIn(ctx.siteConfig.outDir).filter((asset) => preloads(asset, tags)),
       ...(katex === undefined ? [] : [katex]),
     ].map((href) => ["link", { rel: "modulepreload", href }] as [string, Record<string, string>]);
+    // Any prerendered cell's Out can be a grid of boxes, laid out by the elements' stylesheet, which
+    // scripts inject; so every page with a cell carries it, whether or not a cell turns out to hold one.
+    return tags.has("notatio-cell")
+      ? [...preloaded, ["style", { id: "box-layout" }, BOX_LAYOUT_CSS] as [string, Record<string, string>, string]]
+      : preloaded;
   },
 
   // `$latex$` / `$$latex$$` typeset by KaTeX at build (notatio-math.ts), as cells are at runtime;
