@@ -52,6 +52,6 @@ with-no-arguments-compute-engine-returns-0-the
 signs-are-discarded-before-computing-the-gcd			
 equal-length-lists-thread-element-wise	enumeratio_broadcast(lambda _a0, _a1: enumeratio_gcd(_a0, _a1), [2, 4], [6, 8])	[2, 4]	
 gcd-0-0-0-by-convention	enumeratio_gcd(0, 0)	0	
-symbolic-arguments-stay-unevaluated	enumeratio_gcd(SR.var("x"), SR.var("y"))	True	
+symbolic-arguments-stay-unevaluated	enumeratio_gcd(SR.var("x"), SR.var("y"))	1	inconclusive
 gcd-neg-3-9	enumeratio_gcd(-3, 9)		
 gcd-with-an-infinite-argument-stays-unevaluated	enumeratio_gcd(oo, 6)		

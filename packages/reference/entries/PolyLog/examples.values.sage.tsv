@@ -9,7 +9,7 @@ n-polylog-2-0p5	enumeratio_n(polylog(2, 0.5))	0.582240526465012
 n-polylog-2-neg-0p5	enumeratio_n(polylog(2, -0.5))	-0.448414206923646	
 n-polylog-2-0p25	enumeratio_n(polylog(2, 0.25))	0.267652639082733	
 n-polylog-2-0p9	enumeratio_n(polylog(2, 0.9))	1.29971472300496	
-n-polylog-2-1-over-3	enumeratio_n(polylog(2, (1/3)))	0.366213229977063	
+n-polylog-2-1-over-3	enumeratio_n(polylog(2, (1/3)))	0.366213229977064	
 n-polylog-2-0p4-plus-0p3i	enumeratio_n(polylog(2, (0.4 + 0.3*I)))	0.407770499295097 + 0.374503158223905*I	
 n-polylog-3-0p5	enumeratio_n(polylog(3, 0.5))	0.537213193608040	
 n-polylog-3-neg-0p5	enumeratio_n(polylog(3, -0.5))	-0.472597844658897	
@@ -108,7 +108,7 @@ fullsimplify-series-polylog-n-x-x-x0-2
 li-1-2-1-zeta-1-2-a-non-integer-order-from	polylog(0.5, 1)	NaN + NaN*I	inconclusive
 li-1-2-1-2-0-80612672-via-the-lerch-series	polylog(0.5, 0.5)	0.806126723042852	
 li-5-2-1-2-0-46229778-the-alternating-side-euler	polylog(2.5, -0.5)	-0.462297782190063	
-certified-digits-li-2-1-3	enumeratio_n(polylog(2, (1/3)), 40)	0.366213229977063	
+certified-digits-li-2-1-3	enumeratio_n(polylog(2, (1/3)), 40)	0.366213229977064	
 certified-digits-li-5-2-minus-1-2	enumeratio_n(polylog((5/2), (-1/2)), 40)	-0.462297782190063	
 li-1-z-ln-1-z-symbolically	polylog(1, SR.var("z"))	True	
 li-1-z-z-1-z-2-negative-orders-are-rational	polylog(-1, SR.var("z"))	True	

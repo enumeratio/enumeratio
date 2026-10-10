@@ -82,7 +82,7 @@ neg-pi-mod-2	enumeratio_mod((-pi), 2)
 division-by-a-0-modulus-yields-nan-rather-than	enumeratio_mod(5, 0)	ZeroDivisionError: Integer modulo by zero	error
 periodicity-with-a-zero-modulus-on-one-side	enumeratio_equal(enumeratio_mod(35, 13), enumeratio_mod((17 + (3 * 5)), 0))	ZeroDivisionError: Integer modulo by zero	error
 rounding-ties-to-even-means-1-and-1-both-appear	[enumeratio_mod((1 + 2*I), 2), enumeratio_mod((3 + 2*I), 2)]	[1, -1]	
-a-free-symbol-is-untouched	enumeratio_mod(SR.var("x"), 2)	True	
+a-free-symbol-is-untouched	enumeratio_mod(SR.var("x"), 2)	x - 2*floor(1/2*x)	disagree
 an-infinite-dividend-has-no-remainder	enumeratio_mod(oo, 3)		
 an-infinite-modulus-leaves-the-dividend-whole	enumeratio_mod(5, oo)		
 mod-with-complexinfinity-stays-unevaluated	enumeratio_mod(unsigned_infinity, 3)		

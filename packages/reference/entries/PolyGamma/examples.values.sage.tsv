@@ -5,7 +5,7 @@ an-inexact-argument-evaluates-to-a-decimal-psi-1	psi(1, 0.5)	psi(1, 0.5000000000
 a-pole-of-gamma-still-a-pole-after	psi(1, 0)	ValueError: psi2_eval(): pole	error
 one-argument-is-the-digamma-psi-5-h-4-gamma-frac			
 psi-3-5-pi-4-15-22369-3456	psi(3, 5)	1/15*pi^4 - 22369/3456	
-numerically	enumeratio_n(psi(3, 5))	0.0214278281927536	
+numerically	enumeratio_n(psi(3, 5))	0.0214278281927551	
 psi-1-2-14-zeta-3	psi(2, 0.5)	psi(2, 0.500000000000000)	
 n-polygamma-1-1	enumeratio_n(psi(1, 1))	1.64493406684823	
 n-polygamma-1-2	enumeratio_n(psi(1, 2))	0.644934066848226	
@@ -16,7 +16,7 @@ n-polygamma-1-1-plus-i	enumeratio_n(psi(1, (1 + 1*I)))	0.463000096622764 - 0.794
 n-polygamma-1-0p5-plus-0p3i	enumeratio_n(psi(1, (0.5 + 0.3*I)))	2.25903407590533 - 2.82899678611570*I	
 n-polygamma-1-2-plus-neg-0p5-times-i	enumeratio_n(psi(1, (2 + -0.5*I)))	0.588197890950061 + 0.185041972433791*I	
 n-polygamma-2-1	enumeratio_n(psi(2, 1))	-2.40411380631919	
-n-polygamma-2-2	enumeratio_n(psi(2, 2))	-0.404113806319188	
+n-polygamma-2-2	enumeratio_n(psi(2, 2))	-0.404113806319189	
 n-polygamma-2-0p5	enumeratio_n(psi(2, 0.5))	-16.8287966442343	
 n-polygamma-2-1p3	enumeratio_n(psi(2, 1.3))	-1.19846251465196	
 n-polygamma-2-7-over-3	enumeratio_n(psi(2, (7/3)))	-0.278372399401608	
@@ -24,7 +24,7 @@ n-polygamma-2-1-plus-i	enumeratio_n(psi(2, (1 + 1*I)))	0.368552931587935 + 0.766
 n-polygamma-2-0p5-plus-0p3i	enumeratio_n(psi(2, (0.5 + 0.3*I)))	-0.177259899890067 + 10.4518222059434*I	
 n-polygamma-2-2-plus-neg-0p5-times-i	enumeratio_n(psi(2, (2 + -0.5*I)))	-0.307387267460617 - 0.208452694827465*I	
 n-polygamma-3-1	enumeratio_n(psi(3, 1))	6.49393940226683	
-n-polygamma-3-2	enumeratio_n(psi(3, 2))	0.493939402266828	
+n-polygamma-3-2	enumeratio_n(psi(3, 2))	0.493939402266829	
 n-polygamma-3-0p5	enumeratio_n(psi(3, 0.5))	97.4090910340024	
 n-polygamma-3-1p3	enumeratio_n(psi(3, 1.3))	2.40102391430893	
 n-polygamma-3-7-over-3	enumeratio_n(psi(3, (7/3)))	0.285379043814242	
@@ -32,10 +32,10 @@ n-polygamma-3-1-plus-i	enumeratio_n(psi(3, (1 + 1*I)))	-1.52287444895350 - 0.317
 n-polygamma-3-0p5-plus-0p3i	enumeratio_n(psi(3, (0.5 + 0.3*I)))	-27.9442711578469 - 43.9694088398145*I	
 n-polygamma-3-2-plus-neg-0p5-times-i	enumeratio_n(psi(3, (2 + -0.5*I)))	0.280334830853448 + 0.336488835908065*I	
 n-polygamma-5-1	enumeratio_n(psi(5, 1))	122.081167438134	
-n-polygamma-5-2	enumeratio_n(psi(5, 2))	2.08116743813387	
+n-polygamma-5-2	enumeratio_n(psi(5, 2))	2.08116743813390	
 n-polygamma-5-0p5	enumeratio_n(psi(5, 0.5))	7691.11354860244	
-n-polygamma-5-1p3	enumeratio_n(psi(5, 1.3))	25.7926012806130	
-n-polygamma-5-7-over-3	enumeratio_n(psi(5, (7/3)))	0.857814321602379	
+n-polygamma-5-1p3	enumeratio_n(psi(5, 1.3))	25.7926012806131	
+n-polygamma-5-7-over-3	enumeratio_n(psi(5, (7/3)))	0.857814321602380	
 n-polygamma-5-1-plus-i	enumeratio_n(psi(5, (1 + 1*I)))	-0.933084836284869 + 14.5158522919041*I	
 n-polygamma-5-0p5-plus-0p3i	enumeratio_n(psi(5, (0.5 + 0.3*I)))	-3033.62795029873 + 298.588513636671*I	
 n-polygamma-5-2-plus-neg-0p5-times-i	enumeratio_n(psi(5, (2 + -0.5*I)))	0.271324699533159 + 1.70719640928470*I	
@@ -61,7 +61,7 @@ between-poles-psi-1-2-pi-2-2-4	psi(1, -0.5)	psi(1, -0.500000000000000)
 psi-infty-0	psi(1, oo)		
 interval-arithmetic-the-trigamma-is-decreasing			
 to-30-significant-digits-every-one-correctly	enumeratio_n(psi(1, (1/3)), 30)	10.0955971254271	
-to-25-significant-digits-not-yet-only-the-first	enumeratio_n(psi(3, 5), 25)	0.0214278281927536	
+to-25-significant-digits-not-yet-only-the-first	enumeratio_n(psi(3, 5), 25)	0.0214278281927551	
 trigamma-at-1-is-pi-squared-over-6	psi(1, 1)		
 trigamma-at-2-is-pi-squared-over-6-minus-1	psi(1, 2)		
 digamma-of-0-7			

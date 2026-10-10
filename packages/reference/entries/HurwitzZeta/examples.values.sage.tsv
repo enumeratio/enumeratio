@@ -43,7 +43,7 @@ n-hurwitzzeta-2-neg-0p5	enumeratio_n(hurwitz_zeta(2, -0.5))	8.93480220054468
 n-hurwitzzeta-2-neg-1p5	enumeratio_n(hurwitz_zeta(2, -1.5))	9.37924664498912	
 n-hurwitzzeta-3-1	enumeratio_n(hurwitz_zeta(3, 1))	1.20205690315959	
 n-hurwitzzeta-3-2	enumeratio_n(hurwitz_zeta(3, 2))	0.202056903159594	
-n-hurwitzzeta-3-3	enumeratio_n(hurwitz_zeta(3, 3))	0.0770569031595942	
+n-hurwitzzeta-3-3	enumeratio_n(hurwitz_zeta(3, 3))	0.0770569031595943	
 n-hurwitzzeta-3-0p5	enumeratio_n(hurwitz_zeta(3, 0.5))	8.41439832211716	
 n-hurwitzzeta-3-0p25	enumeratio_n(hurwitz_zeta(3, 0.25))	64.6638699687685	
 n-hurwitzzeta-3-1p3	enumeratio_n(hurwitz_zeta(3, 1.3))	0.599231257325978	
@@ -53,8 +53,8 @@ n-hurwitzzeta-3-2-plus-neg-0p5-times-i	enumeratio_n(hurwitz_zeta(3, (2 + -0.5*I)
 n-hurwitzzeta-3-neg-0p5	enumeratio_n(hurwitz_zeta(3, -0.5))	0.414398322117160	
 n-hurwitzzeta-3-neg-1p5	enumeratio_n(hurwitz_zeta(3, -1.5))	0.118102025820864	
 n-hurwitzzeta-5-1	enumeratio_n(hurwitz_zeta(5, 1))	1.03692775514337	
-n-hurwitzzeta-5-2	enumeratio_n(hurwitz_zeta(5, 2))	0.0369277551433700	
-n-hurwitzzeta-5-3	enumeratio_n(hurwitz_zeta(5, 3))	0.00567775514336999	
+n-hurwitzzeta-5-2	enumeratio_n(hurwitz_zeta(5, 2))	0.0369277551433699	
+n-hurwitzzeta-5-3	enumeratio_n(hurwitz_zeta(5, 3))	0.00567775514336993	
 n-hurwitzzeta-5-0p5	enumeratio_n(hurwitz_zeta(5, 0.5))	32.1447604094445	
 n-hurwitzzeta-5-0p25	enumeratio_n(hurwitz_zeta(5, 0.25))	1024.34897452658	
 n-hurwitzzeta-5-1p3	enumeratio_n(hurwitz_zeta(5, 1.3))	0.288556067518527	
@@ -185,7 +185,7 @@ to-30-significant-digits-not-yet-the-last-digit	enumeratio_n(hurwitz_zeta(3, (1/
 far-left-of-the-strip-all-40-digits-agree-with	enumeratio_n(hurwitz_zeta((-41/2), (3/10)), 40)	136.361935791831	
 left-of-the-strip-at-a-non-integer-a	enumeratio_n(hurwitz_zeta(-20, 0.7))	-80.0909738762536	
 left-of-the-strip-at-a-non-integer-a-and-s	enumeratio_n(hurwitz_zeta(-40.5, 0.4))	7.72499748409159e15	
-a-negative-a-frac-12-5-is-real-and-so-is-the	enumeratio_n(hurwitz_zeta(5, (-1/2)))	0.144760409444473	
+a-negative-a-frac-12-5-is-real-and-so-is-the	enumeratio_n(hurwitz_zeta(5, (-1/2)))	0.144760409444468	
 n-hurwitzzeta-1-over-3-8-over-7-50	enumeratio_n(hurwitz_zeta((1/3), (8/7)), 50)		
 hurwitzzeta-neg-1-list-list-1-over-2-1-list-1-1	[[hurwitz_zeta(-1, (1/2)), hurwitz_zeta(-1, 1)], [hurwitz_zeta(-1, 1), hurwitz_zeta(-1, (1/2))]]		
 functionexpand-hurwitzzeta-neg-2-a			

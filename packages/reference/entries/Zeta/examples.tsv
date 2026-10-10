@@ -37,7 +37,7 @@ zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so	Scope		[Zeta, 2, 0]	[Multiply, [Rat
 arbitrary-real-arguments	Scope		[Zeta, 5.211111111111111]	{num: "1.03139179693438499839"}			Arbitrary real arguments									
 left-of-the-critical-strip-via-the-functional	Scope		[Zeta, -4.5]	{num: "-0.00309166924721583384482"}			Left of the critical strip, via the functional equation									
 complex-s-under-n	Scope		[N, [Zeta, [Complex, 2, -5]]]	[Complex, 0.8509629436242628, -0.09899694613483125]			Complex $s$ under N()									
-zeta-infty-1-only-the-n-1-term-survives	Scope		[Zeta, PositiveInfinity]	1			$\zeta(\infty) = 1$: only the $n = 1$ term survives				unevaluated	Ours answers 1; Sage leaves zeta(+Infinity) held.				
+zeta-infty-1-only-the-n-1-term-survives	Scope		[Zeta, PositiveInfinity]	1			$\zeta(\infty) = 1$: only the $n = 1$ term survives				domain	Ours answers 1; Sage leaves zeta(+Infinity) held.				
 two-arguments-at-a-nonpositive-integer-s-zeta-1	Scope		[Zeta, -1, 5]	[Rational, -121, 12]			Two arguments at a nonpositive integer $s$: $\zeta(-1, 5) = -B_2(5)/2 = -121/12$									
 two-arguments-inexact	Scope		[Zeta, -1.5, 5]	{num: "-17.0500647493426550141295"}			Two arguments, inexact									
 two-complex-arguments-under-n-to-ten-digits	Scope		[N, [Zeta, [Complex, -1.5, 1], [Complex, 2.5, -1]], 10]	[Complex, 0.01848680919, 1.675533784]			Two complex arguments under N(), to ten digits									
