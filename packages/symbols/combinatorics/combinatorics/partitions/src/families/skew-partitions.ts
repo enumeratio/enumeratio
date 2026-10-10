@@ -412,8 +412,6 @@ export const skewPartitions: EpsilFamily = {
   // 2^53 the count declines, before any table is built.
   declinePastDoubles: "count",
   early: { pastDoubles: ([size]) => size >= PAST_DOUBLES },
-  undecidedValid: true,
-  strictRanks: true,
   epsil: {
     tables: table,
     count: iff(

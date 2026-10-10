@@ -437,8 +437,6 @@ export const boxedPlanePartitions: EpsilFamily = {
   kind: "blocks",
   params: ["_a", "_b", "_c"],
   declinePastDoubles: true,
-  undecidedValid: true,
-  strictRanks: true,
   epsil: {
     tables,
     // The factors (i + j + c − 1)/(i + j − 1) group by s = i + j: s has min(a, s − 1) − max(1, s − b) + 1 pairs.

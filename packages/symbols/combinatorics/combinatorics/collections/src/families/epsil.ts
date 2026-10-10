@@ -64,12 +64,6 @@ export interface EpsilFamily extends FamilyShape {
      *  where the question is too big to try, undefined to go on to the definition. */
     readonly member?: (element: unknown, p: readonly number[]) => false | "decline" | undefined;
   };
-  /** A compiled `valid` that answers with anything but a boolean can't tell: the kernel declines,
-   *  rather than interpreting the definition (and its table) to find out. */
-  readonly undecidedValid?: true;
-  /** `unrank` of a rank outside 0..count − 1 throws a RangeError (the definition reads such a
-   *  rank as garbage). Every call is of a rank the fiber has, or it declines. */
-  readonly strictRanks?: true;
   readonly epsil: FamilyEpsil;
   /** A verified fast path: used while the fiber's count is a safe integer, ahead of Epsil.
    *  The definitions stay the meaning; this is not part of `familyHash`. */
@@ -236,18 +230,7 @@ export function kernelOn(
   options: KernelOptions = {},
 ): FamilyKernel {
   if (!isEpsilFamily(family)) return family;
-  const {
-    params,
-    epsil,
-    elementType: _,
-    declinePastDoubles,
-    settle,
-    early,
-    undecidedValid,
-    strictRanks,
-    fast: fastKernel,
-    ...shape
-  } = family;
+  const { params, epsil, elementType: _, declinePastDoubles, settle, early, fast: fastKernel, ...shape } = family;
   const maybeSettled = (json: unknown): unknown => (settle === true ? settled(ce, json) : json);
   const quick = options.fast === false ? undefined : fastKernel;
   const ahead = generated[family.head];
@@ -432,7 +415,9 @@ export function kernelOn(
     }
     const fast = run("valid", p, { _x: element });
     if (typeof fast === "boolean") return fast;
-    if (undecidedValid === true && fast !== undefined) return decline(p);
+    // A compiled answer that isn't a boolean can't tell: decline rather than interpret the definition
+    // (and its table) to find out. Only a compiled run that threw or never compiled reaches the interpreter.
+    if (fast !== undefined) return decline(p);
     // An interpreter that fails declines, as past 2^53, rather than raising out of `Element`; so does
     // an answer that is neither True nor False, which is no reading of the element as a non-member.
     let answer: unknown;
@@ -451,7 +436,8 @@ export function kernelOn(
     valid,
     unrank: (p, r) => {
       const total = knownCount(p);
-      if (strictRanks === true && typeof total === "bigint" && (r < 0n || r >= total))
+      // The definitions read a rank outside the fiber as garbage.
+      if (typeof total === "bigint" && (r < 0n || r >= total))
         throw new RangeError(`${family.head}(${p.join(", ")}): rank ${r} is outside the fiber of ${total}`);
       if (total === undefined) {
         // Past 2^53 in a family that declines there: a small rank is still the fast path's to answer.

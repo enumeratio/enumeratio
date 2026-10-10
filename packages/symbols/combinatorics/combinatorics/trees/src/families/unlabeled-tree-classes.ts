@@ -452,8 +452,6 @@ export const rootedUnlabeledTrees: EpsilFamily = {
   // Only a count a double holds is answered, from compiled code: the table is minutes of interpreting past it.
   declinePastDoubles: "count",
   early: { pastDoubles: ([m]) => !(m < ROOTED_PAST), member: shapedMember },
-  undecidedValid: true,
-  strictRanks: true,
   declared: declaredFor("RootedUnlabeledTree"),
   epsil: {
     count: iff(less(n, 1), 0, T(n)),
@@ -484,8 +482,6 @@ export const unlabeledFreeTrees: EpsilFamily = {
   params: [n],
   declinePastDoubles: "count",
   early: { pastDoubles: ([m]) => !(m < FREE_PAST), member: shapedMember },
-  undecidedValid: true,
-  strictRanks: true,
   declared: declaredFor("UnlabeledFreeTree"),
   epsil: {
     count: iff(less(n, 1), 0, iff(odd, G(sub(n, 1), half), add(G(sub(n, 1), sub(half, 1)), pairs(half)))),
