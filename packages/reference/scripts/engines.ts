@@ -70,8 +70,7 @@ const late = (
 export const EXTRAS = [
   late("restricted", declareRestricted, ["combinatorics"]),
   late("compose", declareCompose, ["restricted"]),
-  // `Point` stays undeclared: structures' `Midpoint` of two points reads the type an undeclared head has.
-  late("graphics", (ce) => declareGraphics(ce, { except: ["Point"] }), []),
+  late("graphics", declareGraphics, []),
   // The catalog resolves what the engine declared before it (`Resource("Subsets", 3)` is `Subsets(3)`).
   late("catalog", (ce) => void declareCatalog(ce, { bless: [ENUMERATIO] }), ["compose"]),
 ];

@@ -85,7 +85,9 @@ test("a graphics head holds, arguments and all", () => {
     ["Tuple", "a", 1, 5],
   ]);
   expect(held("Chart([1, 2, 3])")).toEqual(["Chart", ["List", 1, 2, 3]]);
-  for (const head of GRAPHICS_HEADS) expect(ce.lookupDefinition(head), head).toBeDefined();
+  // `Point` stays undeclared (see `declareGraphics`).
+  for (const head of GRAPHICS_HEADS.filter((head) => head !== "Point"))
+    expect(ce.lookupDefinition(head), head).toBeDefined();
 });
 
 test("Histogram draws at one argument and still computes at two", () => {
