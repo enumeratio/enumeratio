@@ -73,3 +73,33 @@ test("a bigint kernel's count past 2^53 is exact, and its first 2^53 elements in
   expect(word.length).toBe(21);
   expect(symmetricGroup.rank(word.slice(1), [20])).toBe(BigInt(Number.MAX_SAFE_INTEGER - 1));
 });
+
+test("a walking family answers a call far past what its fiber could be enumerated, but is not iterated whole", () => {
+  // GelfandTsetlin(8, 8) and AlternatingSignMatrices(9) have far more members than the limit, and a call
+  // walks a few thousand rows or subsets: At answers, Take and RandomChoice leave the family unevaluated.
+  expect((run(["At", ["GelfandTsetlin", 8, 8], 5]).json as unknown as unknown[]).length).toBe(9);
+  expect((run(["At", ["AlternatingSignMatrices", 9], 1000]).json as unknown as unknown[]).length).toBe(10);
+  for (const family of [
+    ["GelfandTsetlin", 8, 8],
+    ["AlternatingSignMatrices", 9],
+    ["GelfandTsetlin", 10, 10],
+  ]) {
+    expect(run(["Take", family, 2]).json).toEqual(["Take", family, 2]);
+    expect(run(["RandomChoice", family, 1]).json).toEqual(["RandomChoice", family, 1]);
+  }
+  // A call that walks too far says so, in steps.
+  expect(run(["At", ["AlternatingSignMatrices", 11], 5]).texts.join(" ")).toContain(
+    "AlternatingSignMatrices(11) would take about 4,194,304 steps",
+  );
+});
+
+test("a fiber past 2^53 whose elements a kernel declines is unknown to iteration, not empty", () => {
+  // StandardTableaux(28) and StandardTableauPairs(19) count past 2^53 and decline every element.
+  for (const family of [
+    ["StandardTableaux", 28],
+    ["StandardTableauPairs", 19],
+  ]) {
+    expect(run(["Take", family, 2]).json).toEqual(["Take", family, 2]);
+    expect(run(["Count", family]).json).not.toBe(0);
+  }
+});

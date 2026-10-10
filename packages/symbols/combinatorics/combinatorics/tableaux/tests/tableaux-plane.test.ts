@@ -1,4 +1,5 @@
 import { expect, test } from "vite-plus/test";
+import { asNumbers } from "../../collections/tests/number-kernels.ts";
 import {
   entriesBeforeSkewStandardTableaux,
   skewStandardTableauxEntries,
@@ -17,7 +18,7 @@ const byHead = new Map(
     ...skewStandardTableauxEntries,
     ...shiftedStandardTableauxEntries,
     ...planePartitionsEntries,
-  ].map((e) => [e.head, e]),
+  ].map((e) => [e.head, asNumbers(e)]),
 );
 
 // ─── round-trip certification: rank(unrank(p,r),p) === r, and every unranked element is valid ──────────

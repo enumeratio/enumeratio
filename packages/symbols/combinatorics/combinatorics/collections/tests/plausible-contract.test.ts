@@ -84,9 +84,13 @@ for (const family of allEntries.filter((f) => f.declared !== undefined)) {
           ).toBe(true);
       } else if (enumerative) {
         const work = (declared.work as (p: number[]) => bigint)(p);
-        // The bound has to cover what's enumerated; check it wherever the count is cheap.
-        if (work > CHEAP) continue;
-        expect(work >= count, `work(${p.join(", ")}) = ${work} < count ${count}`).toBe(true);
+        // The bound has to cover what's enumerated; check it wherever the count is cheap. A walking
+        // family (`declared.walks`) enumerates rows or a table, not the fiber: its bound is on the
+        // walk, and the test below holds it to that.
+        if (declared.walks !== true) {
+          if (work > CHEAP) continue;
+          expect(work >= count, `work(${p.join(", ")}) = ${work} < count ${count}`).toBe(true);
+        }
       }
       // Sage's an_element: the first element of the smallest nonempty fiber is a member and
       // round-trips.
@@ -98,5 +102,29 @@ for (const family of allEntries.filter((f) => f.declared !== undefined)) {
       }
     }
     expect(element, "no nonempty fiber near the minimum params").toBe(true);
+  });
+}
+
+// A walking family's work is the steps of its unrank and rank, which a fiber can far outsize: at
+// params where the walk is cheap and the fiber is larger than it, the first, middle and last
+// members round-trip, so the bound is a bound on the walk and not a stand-in for the count.
+for (const family of allEntries.filter((f) => f.declared?.walks === true)) {
+  const declared = family.declared as NonNullable<FamilyKernel["declared"]>;
+  test(`${family.head}: unrank and rank walk, in fewer steps than the fiber has members`, () => {
+    const mins = declared.params.map((x) => x.min);
+    let outsized = 0;
+    for (let step = 0; step < 10; step++) {
+      const p = mins.map((m) => m + step);
+      const work = (declared.work as (p: number[]) => bigint)(p);
+      const count = countOf(family, p);
+      if (work > CHEAP || typeof count !== "bigint" || count <= work) continue;
+      outsized++;
+      for (const r of [0n, count / 2n, count - 1n]) {
+        const element = family.unrank(p, r);
+        expect(family.valid(element, p)).toBe(true);
+        expect(family.rank(element, p)).toBe(r);
+      }
+    }
+    expect(outsized, "no params where the fiber outsizes the walk").toBeGreaterThan(0);
   });
 }

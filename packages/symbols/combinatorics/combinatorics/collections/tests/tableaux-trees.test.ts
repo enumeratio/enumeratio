@@ -1,5 +1,6 @@
 import { expect, test } from "vite-plus/test";
-import { entriesAfterNonDecreasingParkingFunctions } from "../src/families/tableaux-trees.ts";
+import { entriesAfterStandardTableaux, entriesBeforeStandardTableaux } from "../src/families/tableaux-trees.ts";
+import { standardTableauxEntries } from "../../tableaux/src/families/standard-tableaux.ts";
 import { InvolutionCount } from "../src/families/kernels-extra.ts";
 import { asNumbers } from "./number-kernels.ts";
 
@@ -19,7 +20,12 @@ const PARAMS: Record<string, number[][]> = {
   SytTwoColumn: [[1], [5], [6]],
 };
 
-const byHead = new Map(entriesAfterNonDecreasingParkingFunctions.map((e) => [e.head, asNumbers(e)]));
+const byHead = new Map(
+  [...entriesBeforeStandardTableaux, ...standardTableauxEntries, ...entriesAfterStandardTableaux].map((e) => [
+    e.head,
+    asNumbers(e),
+  ]),
+);
 
 for (const [head, paramSets] of Object.entries(PARAMS)) {
   const entry = byHead.get(head);

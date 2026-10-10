@@ -52,6 +52,10 @@ export interface Declared {
    *  helper that enumerates supplies it: count(p) for enumerate-and-index, n! for filtering
    *  the permutations of n, k^n for words. */
   readonly work?: (p: number[]) => bigint;
+  /** `work` counts the steps unrank and rank walk, not the elements they generate: they search
+   *  a table or the rows under a row, so an element costs far less than the fiber. A call is
+   *  bounded by `work`; iterating the fiber, by its count. */
+  readonly walks?: true;
   /** A scan's largest cheap rank at this size (default: the size itself). */
   readonly sized?: (p: number[], size: number) => bigint;
   /** A sequence whose terms can repeat (Fibonacci's 1, 1): `rank` finds the first place a

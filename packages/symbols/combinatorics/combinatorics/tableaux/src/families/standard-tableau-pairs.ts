@@ -7,14 +7,15 @@
 // the kernel already has them (StandardTableau's shape is `list<list<integer>>`, matching
 // src/maps.ts's Rsk/RskInsertion/RskRecording) -- the same idea as `carrierParams` (#437-style
 // packs raw params instead), applied to a sub-element rather than a param.
-import type { NumberKernel } from "../../../collections/src/families/types.ts";
+import type { EpsilFamily, FastKernel } from "../../../collections/src/families/epsil.ts";
 import { Factorial, PermutationRank, PermutationUnrank } from "../../../collections/src/families/kernels.ts";
 import { IsStandardTableauOf } from "../../../collections/src/families/tableaux-trees.ts";
+import { standardTableauPairs } from "./rsk-pairs.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
-// Stays TS: the element is nested (no compiled type, so Epsil would only be interpreted), and RSK is
-// insertion with bumping over lists of lists.
+// Defined in Epsil (./rsk-pairs.ts), interpreted since the element is nested: the kernel below is its
+// fast path, in the same order.
 // ═══ StandardTableauPairs(size) — the RSK codomain: pairs (P,Q) of same-shape SYT, n cells ═══
 // RSK is a bijection permutations(n) ↔ {(P,Q)}, so count = n! (exact, closed-form) and unrank/rank ride
 // straight on PermutationUnrank/Rank (kernels.ts) through forward/inverse RSK insertion. Element: `[P, Q]`
@@ -96,16 +97,11 @@ export function IsStandardTableauPairOf(e: unknown, n: number): boolean {
   return shapeOf(P) === shapeOf(Q);
 }
 
-export const entries: NumberKernel[] = [
-  {
-    head: "StandardTableauPairs",
-    paramCount: 1,
-    kind: "nested",
-    carrier: "StandardTableauPair",
-    carrierElements: ["StandardTableau", "StandardTableau"],
-    count: ([n]) => Factorial(n),
-    unrank: ([n], r) => StandardTableauPairsUnrank(n, r),
-    valid: (e, [n]) => IsStandardTableauPairOf(e, n),
-    rank: (e, [n]) => StandardTableauPairsRank(e as [number[][], number[][]], n),
-  },
-];
+export const standardTableauPairsFast: FastKernel = {
+  count: ([n]) => Factorial(n),
+  unrank: ([n], r) => StandardTableauPairsUnrank(n, r),
+  rank: (e, [n]) => StandardTableauPairsRank(e as [number[][], number[][]], n),
+  valid: (e, [n]) => IsStandardTableauPairOf(e, n),
+};
+
+export const entries: EpsilFamily[] = [{ ...standardTableauPairs, fast: standardTableauPairsFast }];

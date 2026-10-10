@@ -7,7 +7,10 @@ import {
 } from "./core.ts";
 import { entries as subsets } from "./subsets.ts";
 import { entriesBeforeDyckPathsByHeight as pathsPartitionsBeforeDyckPathsByHeight } from "./paths-partitions.ts";
-import { entriesAfterNonDecreasingParkingFunctions as tableauxTreesAfterNonDecreasingParkingFunctions } from "./tableaux-trees.ts";
+import {
+  entriesAfterStandardTableaux as tableauxTreesAfterStandardTableaux,
+  entriesBeforeStandardTableaux as tableauxTreesBeforeStandardTableaux,
+} from "./tableaux-trees.ts";
 import {
   coreFamilies as permutationsCoreFamilies,
   permutationsEntries,
@@ -54,6 +57,7 @@ import {
   tableauxPlaneShiftedStandardTableauxEntries,
   tableauxPlanePlanePartitionsEntries,
   standardTableauPairsEntries,
+  standardTableauxEntries,
 } from "../../../tableaux/src/families/index.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
 import { entries as numericSets } from "./numeric-sets.ts";
@@ -94,7 +98,9 @@ const numberEntries = [
   ...treesPruferSequencesEntries,
   ...wordsTableauxTreesEntries,
   ...graphsCoreEntries,
-  ...tableauxTreesAfterNonDecreasingParkingFunctions,
+  ...tableauxTreesBeforeStandardTableaux,
+  ...standardTableauxEntries,
+  ...tableauxTreesAfterStandardTableaux,
   ...tableauxPlaneBeforeSkewStandardTableauxEntries,
   ...partitionsTableauxPlaneEntries,
   ...tableauxPlaneSkewStandardTableauxEntries,
@@ -141,7 +147,8 @@ export const collectionsEntries: readonly AnyFamily[] = [
   ...core,
   ...subsets,
   ...pathsPartitionsBeforeDyckPathsByHeight,
-  ...tableauxTreesAfterNonDecreasingParkingFunctions,
+  ...tableauxTreesBeforeStandardTableaux,
+  ...tableauxTreesAfterStandardTableaux,
   ...binaryWordFamilies,
   ...numericSets,
   ...numericClosedForm,
