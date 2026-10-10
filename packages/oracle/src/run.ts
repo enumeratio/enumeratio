@@ -817,7 +817,11 @@ def _enumeratio_equal(a, b):
             return True
     except (TypeError, ValueError):
         pass
-    d = a - b
+    # Without a difference (an idele) == was the whole test.
+    try:
+        d = a - b
+    except TypeError:
+        return False
     if hasattr(d, "simplify_full") and d.simplify_full() == 0:
         return True
     approximate = any(isinstance(v, (float, complex)) or hasattr(v, "prec") for v in (a, b))
@@ -834,6 +838,11 @@ def _enumeratio_equal(a, b):
                 agreed.append(abs(ComplexField(300)(N(value, prec=300))) <= 2 ** -150)
         except (ArithmeticError, ValueError):
             continue
+        except TypeError:
+            # A difference with no variable and no numeric value (a profinite number): == was the whole test.
+            if names:
+                raise
+            return False
     if not agreed:
         raise ValueError("no sample point could be evaluated")
     return all(agreed)
