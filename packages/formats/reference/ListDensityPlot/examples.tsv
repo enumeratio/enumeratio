@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+grid	Basic		[ListDensityPlot, [List, [List, 0, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4]]]	[ListDensityPlot, [List, [List, 0, 1, 2], [List, 1, 2, 3], [List, 2, 3, 4]]]	A density plot of a grid of values

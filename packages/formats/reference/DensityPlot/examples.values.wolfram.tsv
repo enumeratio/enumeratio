@@ -1,0 +1,2 @@
+id	in
+trig-field	DensityPlot[Times[Sin[x], Cos[y]], List[x, -3.14, 3.14], List[y, -3.14, 3.14]]

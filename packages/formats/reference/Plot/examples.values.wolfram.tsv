@@ -1,0 +1,6 @@
+id	in
+sine-one-period	Plot[Sin[x], List[x, -6.283, 6.283]]
+several-series	Plot[List[Sin[x], Cos[x], Times[Sin[x], Cos[x]]], List[x, -6.283, 6.283]]
+log-y-scale	Plot[Exp[x], List[x, 0, 5], List[ScalingFunctions, "Log"]]
+grid-fill-legend-labels	Plot[List[Sin[x], Cos[x]], List[x, -6.283, 6.283], List[GridLines, True], List[Filling, True], List[PlotLegends, True], List[AxesLabel, "x"], List[PlotRange, List[-1.2, 1.2]], List[PlotLabel, "sin & cos"]]
+axes-off	Plot[Sin[x], List[x, -6.283, 6.283], List[Axes, "false"]]

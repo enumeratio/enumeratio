@@ -5,7 +5,6 @@ signature: Dynamic(...)
 summary: Wolfram's own Dynamic, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: Dynamic(...)
     description: Wolfram's own Dynamic, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

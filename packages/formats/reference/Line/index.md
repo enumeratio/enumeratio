@@ -5,7 +5,6 @@ signature: Line(...)
 summary: Wolfram's own Line, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: Line(...)
     description: Wolfram's own Line, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

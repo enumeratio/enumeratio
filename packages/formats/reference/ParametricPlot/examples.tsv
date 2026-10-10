@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+lissajous	Basic		[ParametricPlot, [Tuple, [Sin, [Multiply, 3, t]], [Sin, [Multiply, 4, t]]], [Tuple, t, 0, 6.283], [Tuple, PlotPoints, 400]]	[ParametricPlot, [Tuple, [Sin, [Multiply, 3, t]], [Sin, [Multiply, 4, t]]], [Tuple, t, 0, 6.283], [Tuple, PlotPoints, 400]]	A Lissajous figure, traced as (x(t), y(t))	{head: GraphicsBox, marks: {LineBox: 1}, roles: {Series: 1}, options: {Axes: true, ScalingFunctions: [linear, linear]}}

@@ -1,0 +1,2 @@
+id	in
+slider-and-readout	DynamicModule[Column[List[Slider[k, List[0, 5]], Dynamic[k]]]]

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+input-and-output	Basic		[Cell, [Add, 1, 1]]	[Cell, [Add, 1, 1]]	A cell holds its input, not just its result

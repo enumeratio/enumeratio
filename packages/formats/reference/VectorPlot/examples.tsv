@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+rotation	Basic		[VectorPlot, [Tuple, [Negate, y], x], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]	[VectorPlot, [Tuple, [Negate, y], x], [Tuple, x, -2, 2], [Tuple, y, -2, 2]]	The rotation field (−y, x) on its default grid	{head: GraphicsBox, marks: {ArrowBox: 196}, roles: {Series: 196}, options: {PlotRange: [[-2, 2], [-2, 2]]}}

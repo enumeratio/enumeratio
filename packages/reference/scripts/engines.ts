@@ -19,7 +19,8 @@ import {
   NOTATIONS,
   type StagedLibrary,
 } from "@enumeratio/manifest";
-import { declareHistogram } from "@enumeratio/formats";
+import { declareCatalog, ENUMERATIO } from "@enumeratio/catalog";
+import { declareGraphics } from "@enumeratio/formats";
 import { declareCompose, declareRestricted } from "@enumeratio/structures";
 import { OWN_ENGINE } from "../src/node.ts";
 
@@ -51,7 +52,10 @@ const NAMES = AVAILABLE.map((library) => library.name);
 
 // `Restricted` and `Compose` are structures' over combinatorics' maps, so they follow combinatorics
 // (as in census's engine), and their examples run here. `formats` is a presentation library, so
-// not in the plan by default; its `Histogram` widening of compute-engine's head joins alone.
+// not in the plan by default; its graphics heads (`Plot`, `Slider`, … held inert, and the
+// `Histogram` widening of compute-engine's head) join alone, last, as in every host. Lowering a
+// drawn value to boxes needs `@enumeratio/frontend`, which sits above this package: its
+// `tests/example-boxes.test.ts` does that for the examples that carry a `boxes` shape.
 const late = (
   name: string,
   declare: (ce: ComputeEngine) => void,
@@ -66,7 +70,10 @@ const late = (
 export const EXTRAS = [
   late("restricted", declareRestricted, ["combinatorics"]),
   late("compose", declareCompose, ["restricted"]),
-  late("histogram", declareHistogram, []),
+  // `Point` stays undeclared: structures' `Midpoint` of two points reads the type an undeclared head has.
+  late("graphics", (ce) => declareGraphics(ce, { except: ["Point"] }), []),
+  // The catalog resolves what the engine declared before it (`Resource("Subsets", 3)` is `Subsets(3)`).
+  late("catalog", (ce) => void declareCatalog(ce, { bless: [ENUMERATIO] }), ["compose"]),
 ];
 
 /** The engine's plan: every library this package depends on, the base, and what each requires. */
@@ -89,8 +96,20 @@ export const packageNotations = (): Promise<PackageNotation[]> =>
     ),
   );
 
-export const declaredEngine = (): ComputeEngine =>
-  buildEngine({ libraries: NAMES, available: AVAILABLE, include: EXTRAS, engine: () => new ComputeEngine() }).engine;
+/**
+ * The engine with every library declared. Without `graphics`, it is the one whose definitions
+ * decide what the oracle takes for a free symbol (`collect-defined-names.ts`): the oracle sends
+ * the heads formats holds inert as written, Wolfram's own (`Plot`) by name and the rest
+ * (`Chart`, `Knob`, `CollectionTable`) as free functions. Counting them defined would leave the
+ * latter unmapped, and a scan would drop the answers recorded for them.
+ */
+export const declaredEngine = ({ graphics = true }: { readonly graphics?: boolean } = {}): ComputeEngine =>
+  buildEngine({
+    libraries: NAMES,
+    available: AVAILABLE,
+    include: graphics ? EXTRAS : EXTRAS.filter((extra) => extra.name !== "graphics"),
+    engine: () => new ComputeEngine(),
+  }).engine;
 
 /**
  * `configure(ce)` for `@enumeratio/evaluation/node`'s isolated evaluator (`evaluateIsolated`,

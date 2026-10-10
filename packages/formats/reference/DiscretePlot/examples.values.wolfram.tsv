@@ -1,0 +1,2 @@
+id	in
+sine-of-n	DiscretePlot[Sin[n], List[n, 0, 10]]

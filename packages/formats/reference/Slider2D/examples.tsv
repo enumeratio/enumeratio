@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+corners	Basic		[Slider2D, p, [Tuple, [Tuple, 0, 0], [Tuple, 1, 1]]]	[Slider2D, p, [Tuple, [Tuple, 0, 0], [Tuple, 1, 1]]]	A point in a rectangle, between two corners	{head: Slider2DBox, operands: [[DynamicBox, p], [Tuple, [Tuple, 0, 0], [Tuple, 1, 1]]]}

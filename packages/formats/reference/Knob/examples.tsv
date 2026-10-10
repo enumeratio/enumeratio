@@ -1,2 +1,3 @@
-id	section	role	expr	expected	caption
-range	Basic		[Knob, x, [Tuple, 0, 10]]	[Knob, x, [Tuple, 0, 10]]	held inert: it evaluates to itself, and is drawn by the element
+id	section	role	expr	expected	caption	boxes
+range	Basic		[Knob, x, [Tuple, 0, 10]]	[Knob, x, [Tuple, 0, 10]]	held inert: it evaluates to itself, and is drawn by the element	
+box	Basic		[Knob, k, [Tuple, 0, 5]]	[Knob, k, [Tuple, 0, 5]]	A knob over a range	{head: KnobBox, operands: [[DynamicBox, k], [Tuple, 0, 5]]}

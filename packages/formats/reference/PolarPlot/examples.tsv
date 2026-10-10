@@ -1,0 +1,3 @@
+id	section	role	expr	expected	caption	boxes
+cardioid	Basic		[PolarPlot, [Add, [Cos, theta], 1]]	[PolarPlot, [Add, [Cos, theta], 1]]	A cardioid, r = 1 + cos θ	{head: GraphicsBox, marks: {LineBox: 1}, roles: {Series: 1}, options: {PolarAxes: true, PlotRange: [[-2, 2], [-2, 2]]}}
+four-petal-rose	Options		[PolarPlot, [Cos, [Multiply, 2, theta]], [Tuple, Filled, True], [Tuple, Label, "'r = cos 2θ'"]]	[PolarPlot, [Cos, [Multiply, 2, theta]], [Tuple, Filled, True], [Tuple, Label, "'r = cos 2θ'"]]	A filled four-petal rose, with a title	{head: GraphicsBox, marks: {LineBox: 1, PolygonBox: 1}, roles: {Series: 1, Fill: 1}, options: {PlotLabel: r = cos 2θ}}

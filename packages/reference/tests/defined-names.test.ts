@@ -23,7 +23,7 @@ test("the built defined-names-data.ts matches the records", () => {
       symbolsIn(example.expected as MathJSON, names);
     }
   }
-  const ce = declaredEngine();
+  const ce = declaredEngine({ graphics: false });
   const defined = [...names].filter((name) => isDefinedName(ce, name)).toSorted();
   expect(defined, "rebuild: pnpm --filter @enumeratio/oracle run build").toEqual([...DEFINED_NAMES].toSorted());
 }, 60_000); // walks every reference example and boxes every symbol through the full engine

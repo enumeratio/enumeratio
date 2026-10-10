@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+table	Basic		[Grid, [List, [List, 1, 2], [List, 3, 4]]]	[Grid, [List, [List, 1, 2], [List, 3, 4]]]	A table of items

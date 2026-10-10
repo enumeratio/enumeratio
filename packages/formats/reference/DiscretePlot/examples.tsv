@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+sine-of-n	Basic		[DiscretePlot, [Sin, n], [Tuple, n, 0, 10]]	[DiscretePlot, [Sin, n], [Tuple, n, 0, 10]]	A function sampled at integers

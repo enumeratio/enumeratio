@@ -5,7 +5,6 @@ signature: Disk(...)
 summary: Wolfram's own Disk, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: Disk(...)
     description: Wolfram's own Disk, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

@@ -56,6 +56,7 @@ const EXAMPLE_COLUMNS: readonly (readonly [column: string, field: string, cell: 
   ["caption", "caption", "text"],
   ["triage", "triage", "text"],
   ["volatile", "volatile", "flow"],
+  ["boxes", "boxes", "flow"],
 ];
 
 /** A system's fields written by hand -- the classification of a verdict -- which live in

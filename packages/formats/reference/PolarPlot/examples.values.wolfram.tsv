@@ -1,0 +1,3 @@
+id	in
+cardioid	PolarPlot[Plus[Cos[theta], 1]]
+four-petal-rose	PolarPlot[Cos[Times[2, theta]], List[Filled, True], List[enumeratio`Label, "r = cos 2θ"]]

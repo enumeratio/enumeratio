@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+text	Basic		[InputField, s]	[InputField, s]	A field for typing a value	{head: InputFieldBox, operands: [[DynamicBox, s], Automatic]}

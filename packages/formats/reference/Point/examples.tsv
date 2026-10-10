@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+coordinates	Basic		[Point, [Tuple, 1, 2]]	[Point, [Tuple, 1, 2]]	A point at coordinates

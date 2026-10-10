@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+range	Basic		[IntervalSlider, r, [Tuple, 0, 5]]	[IntervalSlider, r, [Tuple, 0, 5]]	A sub-range of a range	{head: IntervalSliderBox, operands: [[DynamicBox, r], [Tuple, 0, 5]]}

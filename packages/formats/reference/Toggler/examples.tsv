@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+flag	Basic		[Toggler, on]	[Toggler, on]	A toggler bound to a variable	{head: TogglerBox, operands: [[DynamicBox, on], Automatic]}

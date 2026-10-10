@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+rational-function	Basic		[ComplexPlot3D, [Divide, 1, [Add, [Power, z, 2], 1]]]	[ComplexPlot3D, [Divide, 1, [Add, [Power, z, 2], 1]]]	A rational function as a surface

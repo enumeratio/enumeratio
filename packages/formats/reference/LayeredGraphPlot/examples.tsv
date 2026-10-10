@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+dag	Basic		[LayeredGraphPlot, {dict: {edges: [List, [List, "'a'", "'b'"], [List, "'a'", "'c'"], [List, "'b'", "'d'"]]}}]	[LayeredGraphPlot, {dict: {edges: [List, [List, "'a'", "'b'"], [List, "'a'", "'c'"], [List, "'b'", "'d'"]]}}]	A DAG laid out top to bottom by longest-path layer	{head: GraphicsBox, marks: {ArrowBox: 3, DiskBox: 4, InsetBox: 4}, roles: {Edge: 3, Vertex: 4, Label: 4}}

@@ -1,0 +1,2 @@
+id	in
+lissajous	ParametricPlot[List[Sin[Times[3, t]], Sin[Times[4, t]]], List[t, 0, 6.283], List[PlotPoints, 400]]

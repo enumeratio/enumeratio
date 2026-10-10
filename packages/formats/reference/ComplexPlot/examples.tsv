@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+essential-singularity	Basic		[ComplexPlot, [Exp, [Divide, 1, z]], [Tuple, Extent, 1.2], [Tuple, Height, 380]]	[ComplexPlot, [Power, ExponentialE, [Divide, 1, z]], [Tuple, Extent, 1.2], [Tuple, Height, 380]]	An essential singularity, colored by phase

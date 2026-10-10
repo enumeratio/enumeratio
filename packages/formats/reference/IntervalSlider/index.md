@@ -5,7 +5,6 @@ signature: IntervalSlider(...)
 summary: Wolfram's own IntervalSlider, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: IntervalSlider(...)
     description: Wolfram's own IntervalSlider, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

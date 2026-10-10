@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+saddle	Basic		[ContourPlot, [Subtract, [Power, x, 2], [Power, y, 2]], [Tuple, x, -3, 3], [Tuple, y, -3, 3]]	[ContourPlot, [Add, [Power, x, 2], [Negate, [Power, y, 2]]], [Tuple, x, -3, 3], [Tuple, y, -3, 3]]	Contours of a saddle

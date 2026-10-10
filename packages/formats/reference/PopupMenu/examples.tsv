@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+entries	Basic		[PopupMenu, c, [List, a, b, c]]	[PopupMenu, c, [List, a, b, c]]	A menu of entries	{head: PopupMenuBox, operands: [[DynamicBox, c], [List, a, b, c]]}

@@ -5,7 +5,6 @@ signature: ArrayPlot(...)
 summary: Wolfram's own ArrayPlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: ArrayPlot(...)
     description: Wolfram's own ArrayPlot, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).

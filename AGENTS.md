@@ -105,6 +105,11 @@ so a page reads the same on GitHub and on the site.
   leading `"`, the empty string) is a JSON string.
 - An example with `known` (and its `source`) is held to it by `tests/known.test.ts`: never
   "fix" a failing known check by rewriting `expected`.
+- An example whose value draws (`Plot`, `BarChart`, a control) may state a `boxes` shape: the head
+  of the box it lowers to and, for a drawing, its marks and roles by count and key options
+  (`BoxShape`, `@enumeratio/entry`). `packages/frontend/tests/example-boxes.test.ts` lowers it in
+  Node (sampling a plot as the page does) and holds it to the shape, never to pixels; `expected`
+  is still pinned by reference's own test.
 - After adding or changing an example (or a printer or transpiler), run
   `UPDATE_FORMS=1 node packages/frontend/scripts/collect-forms.ts`: it writes each system's
   `in` and refreshes the pins. Kernel answers come from

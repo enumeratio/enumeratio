@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+point	Basic		[Locator, p]	[Locator, p]	A draggable point bound to a variable	{head: LocatorBox, operands: [[DynamicBox, p], Automatic]}

@@ -1,2 +1,3 @@
-id	section	role	expr	expected	epsil.back
-row-list-x-pow-2-minus-1-factor-x-pow-2-minus-1	Applications		[Row, [List, [Add, [Power, x, 2], -1], [Factor, [Add, [Power, x, 2], -1]]], "' = '"]	[Row, [List, [Add, [Power, x, 2], -1], [Multiply, [Add, x, -1], [Add, x, 1]]], "' = '"]	[Row, [List, [Subtract, [Power, x, 2], 1], [Factor, [Subtract, [Power, x, 2], 1]]], "' = '"]
+id	section	role	expr	expected	caption	epsil.back
+items	Basic		[Row, [List, 1, 2, 3]]	[Row, [List, 1, 2, 3]]	Items side by side	
+row-list-x-pow-2-minus-1-factor-x-pow-2-minus-1	Applications		[Row, [List, [Add, [Power, x, 2], -1], [Factor, [Add, [Power, x, 2], -1]]], "' = '"]	[Row, [List, [Add, [Power, x, 2], -1], [Multiply, [Add, x, -1], [Add, x, 1]]], "' = '"]		[Row, [List, [Subtract, [Power, x, 2], 1], [Factor, [Subtract, [Power, x, 2], 1]]], "' = '"]

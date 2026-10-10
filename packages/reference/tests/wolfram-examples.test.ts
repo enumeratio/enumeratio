@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { adaptInput, assignedNames, bucketOf, judge, mentions } from "../scripts/wolfram-examples.ts";
+import { adaptInput, assignedNames, bucketOf, judge, mentions, showsPicture } from "../scripts/wolfram-examples.ts";
 
 test("a documentation input whose names are all ours reads as our MathJSON", () => {
   expect(adaptInput("HoldComplete[Zeta[2]]")).toEqual({ ok: true, expr: ["Zeta", 2] });
@@ -84,6 +84,12 @@ test("bucketOf makes a first guess at where a mismatch comes from", () => {
   expect(bucketOf({ ...row, wolfram: "1.6449340668482264" })).toBe("compare");
   expect(bucketOf({ ...row, wolfram: "Indeterminate" })).toBe("wolfram?");
   expect(bucketOf({ ...row, wolfram: "Pi^2/7" })).toBe("ours?");
+});
+
+test("a picture or a control is not asked of Wolfram, a value that merely mentions one is", () => {
+  expect(showsPicture("Plot", ["Plot", ["Sin", "x"], ["Tuple", "x", 0, 1]])).toBe(true);
+  expect(showsPicture("Zeta", ["Slider", "k", ["Tuple", 0, 5]])).toBe(true);
+  expect(showsPicture("Element", ["Element", "x", ["Disk", ["Tuple", 0, 0], 1]])).toBe(false);
 });
 
 test("assignedNames finds what a documentation input defines", () => {

@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption	boxes
+entries	Basic		[ListPicker, c, [List, a, b, c]]	[ListPicker, c, [List, a, b, c]]	A list to pick from	{head: ListPickerBox, operands: [[DynamicBox, c], [List, a, b, c]]}

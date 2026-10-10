@@ -1,0 +1,2 @@
+id	section	role	expr	expected	caption
+readout	Basic		[Dynamic, [Power, k, 2]]	[Dynamic, [Power, k, 2]]	An expression that follows the variables it reads

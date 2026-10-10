@@ -5,7 +5,6 @@ signature: Toggler(...)
 summary: Wolfram's own Toggler, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
 names:
   wolframIdentity: true
-stub: carrier
 signatures:
   - call: Toggler(...)
     description: Wolfram's own Toggler, held inert -- the expression is what a worksheet or REPL draws, not something this library computes (see @enumeratio/formats/src/graphics.ts).
