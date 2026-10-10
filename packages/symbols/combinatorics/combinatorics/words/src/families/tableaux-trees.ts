@@ -8,6 +8,7 @@
 // used for "SetPartition". PruferSequences/Tournaments/LabeledGraphs/... have since moved to
 // their own areas, each now carrying its own carrier (§4 step 5).
 import { nonDecreasingParkingFunctions } from "./epsil.ts";
+import { parkingFunctions } from "./parking-functions.ts";
 import type { EpsilFamily } from "../../../collections/src/families/epsil.ts";
 import type { NumberKernel } from "../../../collections/src/families/types.ts";
 
@@ -143,19 +144,11 @@ export function IsNonDecreasingParkingFunctionOf(e: unknown, n: number): boolean
   return true;
 }
 
-// ParkingFunctions keeps its TS kernel: its completions depend on the whole vector of how many
-// entries are at most k, so there is no table of them to define it by.
 export const entries: (NumberKernel | EpsilFamily)[] = [
-  {
-    head: "ParkingFunctions",
-    carrier: "ParkingFunction",
-    paramCount: 1,
-    kind: "ints",
-    count: ([n]) => ParkingFunctionCount(n),
-    unrank: ([n], r) => ParkingFunctionUnrank(n, r),
-    valid: (e, [n]) => IsParkingFunctionOf(e, n),
-    rank: (e, [n]) => ParkingFunctionRank(e as number[], n),
-  },
-  // No `fast`: the TS kernel rebuilds its memo per call, so Epsil's table is 3-10x faster.
+  // No `fast` for either: the TS kernels rebuild a memo per call, and stay as the tests' oracle.
+  // ParkingFunctions' is keyed by the prefix's whole histogram: an unrank takes 12 ms at n = 8,
+  // 230 ms at 10 and 5 s at 12, where Epsil's compiled completions take a few ms at any n to 14;
+  // NonDecreasing's is 3-10x slower than Epsil's table.
+  parkingFunctions,
   nonDecreasingParkingFunctions,
 ];

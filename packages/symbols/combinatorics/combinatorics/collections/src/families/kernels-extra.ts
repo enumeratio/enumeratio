@@ -1202,7 +1202,7 @@ export function KAryTreeRank(t: KTree, k: number): number {
 }
 export function IsKAryTree(t: unknown, n: number, k: number): boolean {
   const ok = (x: unknown): boolean => x === 0 || (Array.isArray(x) && x.length === k && x.every(ok));
-  return ok(t) && kSize(t as KTree) === n;
+  return k >= 1 && ok(t) && kSize(t as KTree) === n;
 }
 
 // ─── Surjections(n,k): surjective functions [n] ↠ [k] (every value 1..k hit). Count k!·S(n,k). ──────────
