@@ -8,9 +8,11 @@ import { join } from "node:path";
 import {
   ALL_STATISTICS,
   CARRIERS,
+  COLLECTION_CARRIER,
   type FindStatAgreement,
   findstatMaps,
   MAPS,
+  readObject,
   UNDEFINED_MAPS,
 } from "@enumeratio/combinatorics";
 import { allFamilies } from "@enumeratio/combinatorics/collections";
@@ -41,30 +43,6 @@ export interface FindStatMap {
 const read = <T>(file: string): Snapshot<T> => JSON.parse(readFileSync(join(DATA, file), "utf8")) as Snapshot<T>;
 const statistics = read<FindStatStatistic>("statistics.json").items;
 const maps = read<FindStatMap>("maps.json").items;
-
-/** FindStat's collections that are one of our carriers. */
-const COLLECTION_CARRIER: Readonly<Record<string, string>> = {
-  Permutations: "Permutation",
-  "Signed permutations": "SignedPermutation",
-  "Decorated permutations": "DecoratedPermutation",
-  "Dyck paths": "DyckPath",
-  "Integer partitions": "IntegerPartition",
-  "Skew partitions": "SkewPartition",
-  Cores: "CorePartition",
-  "Set partitions": "SetPartition",
-  "Ordered set partitions": "SetComposition",
-  "Integer compositions": "Composition",
-  "Binary words": "BinaryWord",
-  "Binary trees": "BinaryTree",
-  "Ordered trees": "OrderedTree",
-  "Perfect matchings": "PerfectMatching",
-  "Parking functions": "ParkingFunction",
-  "Alternating sign matrices": "AlternatingSignMatrix",
-  "Standard tableaux": "StandardTableau",
-  "Semistandard tableaux": "SemistandardTableau",
-  "Plane partitions": "PlanePartition",
-  "Gelfand-Tsetlin patterns": "GelfandTsetlinPattern",
-};
 
 /** A FindStat id on a row, with what FindStat says of it. */
 export interface FindStatRef {
@@ -250,29 +228,16 @@ export const siblingsOf = (field: Field): Field[] =>
     (f) => f.name === field.name && f.carrier !== field.carrier,
   );
 
-// FindStat writes an object as text; the carrier value we read it as, for the carriers whose
-// text we have checked against our own.
-const listOf = (text: string): unknown => ["List", ...(JSON.parse(text) as number[])];
-const READERS: Readonly<Record<string, (text: string) => unknown>> = {
-  Permutation: (text) => ["Permutation", listOf(text)],
-  IntegerPartition: (text) => ["IntegerPartition", listOf(text)],
-  DyckPath: (text) => ["DyckPath", listOf(text)],
-  SetPartition: (text) => [
-    "SetPartition",
-    ["List", ...(JSON.parse(text.replace(/\{/g, "[").replace(/\}/g, "]")) as number[][]).map((b) => ["List", ...b])],
-  ],
-};
-
 /** `CombinatorialStat(object, "Name")` (or the map's) for FindStat's first sample, when we can read its text. */
 export function liveExpression(field: Field): unknown {
   // The first object big enough to show something: not the empty one, nor a single point.
   const samples = field.findstat.flatMap((f) => f.sample ?? []);
   const sample =
-    samples.find(([object]) => object.length >= 5) ?? samples.find(([object]) => !/^(\[\]|\{\})$/.test(object));
-  const read = READERS[field.carrier];
-  if (!sample || !read) return undefined;
+    samples.find(([object]) => object.length >= 5) ?? samples.find(([object]) => !/^(\[\]|\{\}|\.|)$/.test(object));
+  if (!sample) return undefined;
   try {
-    return [field.kind === "statistic" ? "CombinatorialStat" : "CombinatorialMap", read(sample[0]), `'${field.name}'`];
+    const object = readObject(field.carrier, sample[0]);
+    return object && [field.kind === "statistic" ? "CombinatorialStat" : "CombinatorialMap", object, `'${field.name}'`];
   } catch {
     return undefined;
   }
