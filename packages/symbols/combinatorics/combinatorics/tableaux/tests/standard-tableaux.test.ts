@@ -190,3 +190,8 @@ test("the shapes' tables are built once per n, not per call", () => {
   }
   expect(built.length).toBeLessThanOrEqual(1);
 });
+
+test("membership at a huge n is settled by the element, not sized by n", () => {
+  // A table sized by n took seconds at 10^8 and aborted the process at 10^9.
+  for (const n of [1e8, 1e9, 3e9]) expect(standardTableauxFast.valid([[1, 2], [3]], [n])).toBe(false);
+});
