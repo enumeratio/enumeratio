@@ -9,7 +9,7 @@ signatures:
   - call: PermutationSupport(p)
     description: The points $p$ moves, in increasing order.
     library: enumeratio-combinatorics
-    type: (permutation) -> number
+    type: (permutation) -> list<integer>
 names:
   wolframIdentity: true
 ---

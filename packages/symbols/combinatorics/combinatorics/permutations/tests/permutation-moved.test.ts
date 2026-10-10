@@ -3,7 +3,7 @@ import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
 import { ce, checkAgainstEngine, index } from "./permutation-helpers.ts";
 
-checkAgainstEngine(["PermutationLength", "PermutationMax", "PermutationMin"]);
+checkAgainstEngine(["PermutationLength", "PermutationSupport", "PermutationMax", "PermutationMin"]);
 
 test("PermutationSupport lists the moved points ascending", () => {
   const support = (p: number[]) =>

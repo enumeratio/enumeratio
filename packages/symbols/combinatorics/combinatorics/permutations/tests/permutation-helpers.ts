@@ -1,6 +1,7 @@
 // Shared universe, independent readings, and evaluation machinery for the sharded
 // `permutation-*.test.ts` files. Not itself a test file.
 
+import { operandsOf } from "@enumeratio/engine";
 import { bareEngine } from "@enumeratio/engine/testing";
 import { expect, test } from "vite-plus/test";
 import { applyDefinition } from "../../src/statistics/declare.ts";
@@ -37,6 +38,14 @@ export const evaluate = (head: string, p: number[]): number => {
   const definition = index.get(`${head}@Permutation`);
   if (!definition) throw new Error(`no definition for ${head}`);
   return applyDefinition(ce, definition, ce.box(["List", ...p])).re;
+};
+
+/** `evaluate`, but a list answer comes back as an array. */
+export const evaluateAny = (head: string, p: number[]): number | number[] => {
+  const definition = index.get(`${head}@Permutation`);
+  if (!definition) throw new Error(`no definition for ${head}`);
+  const answer = applyDefinition(ce, definition, ce.box(["List", ...p]));
+  return answer.operator === "List" ? operandsOf(answer).map((item) => item.re) : answer.re;
 };
 
 // Independent readings. Deliberately written as plain loops in a different style from the
@@ -116,7 +125,7 @@ export function triples(p: number[], holds: (a: number, b: number, c: number) =>
   return c;
 }
 
-export const EXPECTED: Record<string, (p: number[]) => number> = {
+export const EXPECTED: Record<string, (p: number[]) => number | number[]> = {
   Descents: (p) => pairs(p, (i) => p[i - 1] > p[i]).length,
   Ascents: (p) => pairs(p, (i) => p[i - 1] < p[i]).length,
   MajorIndex: (p) => pairs(p, (i) => p[i - 1] > p[i]).reduce((a, b) => a + b, 0),
@@ -126,7 +135,7 @@ export const EXPECTED: Record<string, (p: number[]) => number> = {
     for (let i = 0; i < p.length; i++) for (let j = i + 1; j < p.length; j++) if (p[i] > p[j]) c++;
     return c;
   },
-  Sign: (p) => (EXPECTED.Inversions(p) % 2 === 0 ? 1 : -1),
+  Sign: (p) => ((EXPECTED.Inversions(p) as number) % 2 === 0 ? 1 : -1),
   FixedPoints: (p) => positionsWhere(p, (i) => p[i - 1] === i).length,
   Excedances: (p) => positionsWhere(p, (i) => p[i - 1] > i).length,
   WeakExceedances: (p) => positionsWhere(p, (i) => p[i - 1] >= i).length,
@@ -154,6 +163,7 @@ export const EXPECTED: Record<string, (p: number[]) => number> = {
   TwoCycleCount: (p) => cycleLengths(p).filter((l) => l === 2).length,
   ThreeCycleCount: (p) => cycleLengths(p).filter((l) => l === 3).length,
   PermutationOrder: (p) => cycleLengths(p).reduce((a, b) => (a * b) / gcd(a, b), 1),
+  PermutationSupport: (p) => positionsWhere(p, (i) => p[i - 1] !== i),
   PermutationLength: (p) => positionsWhere(p, (i) => p[i - 1] !== i).length,
   PermutationMax: (p) => Math.max(0, ...positionsWhere(p, (i) => p[i - 1] !== i)),
   PermutationMin: (p) => Math.min(Infinity, ...positionsWhere(p, (i) => p[i - 1] !== i)),
@@ -176,7 +186,7 @@ export function checkAgainstEngine(heads: readonly string[]): void {
     test(`${head} agrees over every permutation of 1..${upTo}`, () => {
       const expected = EXPECTED[head];
       if (!expected) throw new Error(`no expected reading for ${head}`);
-      for (const p of universe) expect(evaluate(head, p), `[${p.join(", ")}]`).toBe(expected(p));
+      for (const p of universe) expect(evaluateAny(head, p), `[${p.join(", ")}]`).toEqual(expected(p));
     });
   }
 }

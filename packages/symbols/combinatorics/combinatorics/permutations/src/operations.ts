@@ -2,7 +2,15 @@
 // groupalgebra can't see the `Permutation` carrier, so combinatorics widens them to it. A
 // `Permutation` is read as its word and the call goes to groupalgebra's own head, so the order
 // (left factor first) and the padding with fixed points are defined once, there.
-import { type Engine, type Expr, isNativeHead, operandsOf, widenSignature, wrapOperator } from "@enumeratio/engine";
+import {
+  type Engine,
+  type Expr,
+  isNativeHead,
+  operandsOf,
+  refusing,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/engine";
 
 const isPermutation = (op: Expr): boolean => op.operator === "Permutation";
 
@@ -25,6 +33,7 @@ export function declarePermutationOperations(ce: Engine): void {
     ["PermutationProduct"],
     (ops) => ops.some(isPermutation),
     (native) => (ops, options) => viaWords(ce, "PermutationProduct", ops) ?? native?.(ops, options),
+    { compile: refusing(() => true, "no compiled lowering") },
   );
   widenSignature(ce, "PermutationPower", `(${any}, integer) -> ${any}`);
   wrapOperator(
@@ -32,5 +41,6 @@ export function declarePermutationOperations(ce: Engine): void {
     ["PermutationPower"],
     (ops) => ops.length > 0 && isPermutation(ops[0]!),
     (native) => (ops, options) => viaWords(ce, "PermutationPower", ops) ?? native?.(ops, options),
+    { compile: refusing(() => true, "no compiled lowering") },
   );
 }

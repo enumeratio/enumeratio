@@ -45,12 +45,13 @@ import {
 
 const on = "Permutation";
 const INFINITY: MathJSON = { num: "+Infinity" };
-const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
+const stat = (head: string, summary: string, expr: Definition["expr"], note?: string, result?: string): Definition => ({
   head,
   on,
   summary,
   expr,
   ...(note ? { note } : {}),
+  ...(result ? { result } : {}),
 });
 
 /**
@@ -364,7 +365,7 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     // Max/Min/Mod, which is the naming incoherence upstreaming.md §3.5 is about.
     // It also takes arguments rather than a list, so the lcm of a computed list is a fold.
     nonEmpty(fold(cycleLengths, 1, ["LCM", "a", "b"]), 1),
-    "Wolfram's PermutationOrder. The bare `Order` is Wolfram's canonical-ordering comparison `Order[a, b]`, so it survives only as a data alias.",
+    "Wolfram's PermutationOrder. The bare `Order` is Wolfram's canonical-ordering comparison `Order[a, b]`, so this head replaces it. The old name is recorded in `formerly` but does not resolve: `Order(p)` is now Wolfram's `Order`.",
   ),
 
   // The moved points, as Wolfram reads them: positions where p(i) differs from i.
@@ -380,6 +381,8 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
       fold(positions, ["List"], ["If", greater(distance(at("b"), "b"), 0), ["Join", "a", ["List", visiting]], "a"]),
       ["List"],
     ),
+    undefined,
+    "list<integer>",
   ),
   stat(
     "PermutationMax",

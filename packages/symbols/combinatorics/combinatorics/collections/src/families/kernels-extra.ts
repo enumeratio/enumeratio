@@ -48,11 +48,11 @@ export function IsSubsetOf(s: number[], n: number): boolean {
   return true;
 }
 
-// ─── KSubsets(n,k): k-subsets of [n] in colex order (the combinatorial number system). ──────────────────
+// ─── k-subsets of [n] in colex order (the combinatorial number system). Not KSubsets, which is lexicographic. ───────────────────
 export function KSubsetCount(n: number, k: number): number {
   return Binomial(n, k);
 }
-/** rank-th k-subset of [n], colex order: r = Σ_i C(c_i, i) with c_k > … > c_1 (0-based indices). Ascending 1-based out. */
+/** rank-th k-subset of [n] in colex order: r = Σ_i C(c_i, i) with c_k > … > c_1 (0-based indices). Ascending 1-based out. */
 export function KSubsetUnrank(n: number, k: number, rank: number): number[] {
   const total = KSubsetCount(n, k);
   if (total <= 0) return [];
