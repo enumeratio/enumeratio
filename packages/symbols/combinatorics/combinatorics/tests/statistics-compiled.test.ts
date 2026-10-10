@@ -88,10 +88,19 @@ for (const definition of ALL_STATISTICS.filter((d) => COMPILED_SIGNATURES.has(si
   test(`${signatureOf(definition)}: compiled agrees with interpreted`, () => {
     const run = compiledStatistic(ce, definition);
     expect(run).toBeDefined();
+    let compared = 0;
     for (const contents of SUBJECTS[definition.on] ?? []) {
       const interpreted = interpretDefinition(ce, definition, ce.box(contents as never)).json;
-      expect(run!(contents), JSON.stringify(contents)).toEqual(interpreted);
+      const answer = run!(contents);
+      // Compiled code may decline only an infinite answer, which MathJSON can't carry as a number.
+      if (answer === undefined) {
+        expect(interpreted, JSON.stringify(contents)).toBe("PositiveInfinity");
+        continue;
+      }
+      compared++;
+      expect(answer, JSON.stringify(contents)).toEqual(interpreted);
     }
+    expect(compared, "no compiled answer was compared").toBeGreaterThan(0);
   });
 }
 

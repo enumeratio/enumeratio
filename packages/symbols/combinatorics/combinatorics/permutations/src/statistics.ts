@@ -44,12 +44,14 @@ import {
 } from "../../src/statistics/vocabulary.ts";
 
 const on = "Permutation";
-const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
+const INFINITY: MathJSON = { num: "+Infinity" };
+const stat = (head: string, summary: string, expr: Definition["expr"], note?: string, result?: string): Definition => ({
   head,
   on,
   summary,
   expr,
   ...(note ? { note } : {}),
+  ...(result ? { result } : {}),
 });
 
 /**
@@ -357,12 +359,41 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
   stat("TwoCycleCount", "Cycles of size exactly two.", nonEmpty(cyclesOfLength(2))),
   stat("ThreeCycleCount", "Cycles of size exactly three.", nonEmpty(cyclesOfLength(3))),
   stat(
-    "Order",
+    "PermutationOrder",
     "The order of p in the symmetric group — the lcm of its cycle lengths.",
     // Spelled LCM, not Lcm — compute-engine uses all-caps for this one and TitleCase for
     // Max/Min/Mod, which is the naming incoherence upstreaming.md §3.5 is about.
     // It also takes arguments rather than a list, so the lcm of a computed list is a fold.
     nonEmpty(fold(cycleLengths, 1, ["LCM", "a", "b"]), 1),
+    "Wolfram's PermutationOrder. The bare `Order` is Wolfram's canonical-ordering comparison `Order[a, b]`, so this head replaces it. The old name is recorded in `formerly` but does not resolve: `Order(p)` is now Wolfram's `Order`.",
+  ),
+
+  // The moved points, as Wolfram reads them: positions where p(i) differs from i.
+  stat(
+    "PermutationLength",
+    "The number of points p moves.",
+    nonEmpty(count(positions, greater(distance(here, "i"), 0))),
+  ),
+  stat(
+    "PermutationSupport",
+    "The points p moves, in increasing order.",
+    nonEmpty(
+      fold(positions, ["List"], ["If", greater(distance(at("b"), "b"), 0), ["Join", "a", ["List", visiting]], "a"]),
+      ["List"],
+    ),
+    undefined,
+    "list<integer>",
+  ),
+  stat(
+    "PermutationMax",
+    "The largest point p moves; 0 for the identity.",
+    nonEmpty(max(forEach(positions, ["If", greater(distance(here, "i"), 0), "i", 0]))),
+  ),
+  stat(
+    "PermutationMin",
+    "The smallest point p moves; infinity for the identity.",
+    // A numeric infinity: the compiled code has no symbol for it.
+    nonEmpty(min(forEach(positions, ["If", greater(distance(here, "i"), 0), "i", INFINITY])), INFINITY),
   ),
 
   word(

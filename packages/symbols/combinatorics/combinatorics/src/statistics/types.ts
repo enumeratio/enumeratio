@@ -35,6 +35,8 @@ export interface Definition {
    * bijection and takes the carrier alone.
    */
   readonly alsoOnList?: boolean;
+  /** The type of the answer when it is not a number, e.g. `list<integer>`. */
+  readonly result?: string;
 }
 
 /** `head` at `carrier`, the key a signature-addressed lookup uses. */

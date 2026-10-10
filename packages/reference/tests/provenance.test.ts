@@ -729,7 +729,6 @@ const NOVEL = [
   "OddPartitions",
   "OddParts",
   "OddSubsets",
-  "Order",
   "Ostrowski",
   "OstrowskiNumerals",
   "PalindromicCompositions",
@@ -901,6 +900,13 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
   expect(known.map((record) => record.name).toSorted()).toEqual(
     [
       ...FORMATS_KNOWN,
+      "PermutationLength",
+      "PermutationMax",
+      "PermutationMin",
+      "PermutationOrder",
+      "PermutationPower",
+      "PermutationProduct",
+      "PermutationSupport",
       "AbsoluteTiming",
       "Accumulate",
       "AdjacencyGraph",

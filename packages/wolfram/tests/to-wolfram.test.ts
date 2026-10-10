@@ -155,9 +155,13 @@ test("Reduce at another arity is not Wolfram's Reduce", () => {
 
 // A-126 head survey, #495: `Sign` is overloaded over `complex | permutation` — a `Permutation`
 // argument is our permutation-parity statistic (Wolfram's `Signature`), not Wolfram's own
-// numeric `Sign`. `Order` is the identical trap (found in the same survey) but has no clean
-// single-arity Wolfram rename, so it stays isolated via `FOREIGN` (`enumeratio\`Order[...]`)
-// rather than remapped here.
+// numeric `Sign`.
+// Wolfram's `Order[a, b]` is no longer shadowed: our permutation head is `PermutationOrder`.
+test("Order is Wolfram's comparison and PermutationOrder its own head", () => {
+  expect(toWolfram(["Order", "a", "b"])).toBe("Order[a, b]");
+  expect(toWolfram(["PermutationOrder", ["List", 2, 3, 1]])).toBe("PermutationOrder[List[2, 3, 1]]");
+});
+
 test("Sign(Permutation(...)) — permutation parity, not Wolfram's numeric Sign — maps to Signature", () => {
   expect(toWolfram(["Sign", ["Permutation", ["List", 2, 3, 1]]])).toBe("Signature[List[2, 3, 1]]");
 });

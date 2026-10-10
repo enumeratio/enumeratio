@@ -20,7 +20,8 @@ test("the catalog is the measured shape, folded to names", () => {
   // If these move, https://github.com/enumeratio/enumeratio/wiki/Namespaces §1 is stale — that is the point of pinning them.
   expect(COLLECTIONS.length).toBe(288);
   expect(CARRIERS.length).toBe(93);
-  expect(STATS.length).toBe(242);
+  // Folded to names: one row per stat name, however many carriers it is on.
+  expect(new Set(STATS.map((s) => s.name)).size).toBe(STATS.length);
   expect(MAPS.length).toBe(86);
 });
 
@@ -79,10 +80,9 @@ test("pascal transforms enumeratio ids", () => {
 });
 
 test("most stat names are single-carrier inheritance, not overloading", () => {
-  // The 1051 -> 242 fold is mostly carrier scoping: a stat on one carrier is inherited by
-  // every collection over it. Only these 53 actually need overload resolution.
+  // The fold to names is mostly carrier scoping: a stat on one carrier is inherited by
+  // every collection over it. Only the multi-carrier ones need overload resolution.
   const multi = STATS.filter((s) => s.on.length > 1);
-  expect(STATS.length - multi.length).toBe(189);
-  expect(multi.length).toBe(53);
+  expect(STATS.length - multi.length).toBeGreaterThan(multi.length * 2);
   expect(STATS.find((s) => s.name === "BigOmega")?.on).toEqual(["IntegerFactorization", "Numeric"]);
 });

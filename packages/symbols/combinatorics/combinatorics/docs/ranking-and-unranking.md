@@ -56,8 +56,8 @@ which is the fastest way to learn what the order _is_.
 <Story
   title="The 56 three-subsets of an eight-set">
 <template #description>
-Press ▶ and watch the order: the last element climbs slowest. That is
-<strong>colex</strong> — subsets are ordered by their largest element first.
+Press ▶ and watch the order: the last element climbs fastest. That is
+<strong>lexicographic</strong> order — subsets are compared by their smallest element first.
 </template>
 <notatio-manipulate v-pre params="{ {r, 1}, 1, 56, 1}">
 <graphics-box class="inline-figure" value='Show(CellDiagram(At(KSubsets(8, 3), _r)), ImageSize -> [Automatic, 46], GestureHandling -> "none")' legend-at="none" />
@@ -98,11 +98,11 @@ you can just ask.
 ## The order is part of the contract
 
 A family and an order are not separable: change the order and `At` answers differently,
-so the order has to be stated. `KSubsets` is **colexicographic** — the 4th 3-subset of
-`{1..5}` is `{2,3,4}`, not `{1,2,5}`, because colex orders by the largest element first.
+so the order has to be stated. `KSubsets` is **lexicographic** — the 4th 3-subset of
+`{1..5}` is `{1,3,4}`, not `{1,2,5}`, because lex compares the smallest element first.
 
-<Story title="Colex, from both ends">
-<template #description>First and last. Colex is what makes the rank formula a sum of binomials — which is exactly the combinatorial number system.</template>
+<Story title="Lex, from both ends">
+<template #description>First and last.</template>
 <notatio-cell value="KSubsets(5, 3)[1]" />
 <notatio-cell value="KSubsets(5, 3)[10]" />
 </Story>

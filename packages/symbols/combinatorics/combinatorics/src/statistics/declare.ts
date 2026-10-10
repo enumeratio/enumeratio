@@ -218,7 +218,7 @@ export function declareStatistics(
     }
 
     ce.declare(definition.head, {
-      signature: `(${subjectType(ce, definition, options)}) -> number`,
+      signature: `(${subjectType(ce, definition, options)}) -> ${definition.result ?? "number"}`,
       evaluate: (ops: readonly Expr[]): Expr | undefined => {
         const subject = ops[0];
         if (subject === undefined) return undefined;
