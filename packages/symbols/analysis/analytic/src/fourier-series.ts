@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { Json } from "@enumeratio/ce-patches";
 import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 
 // FourierSeries(f, x, n) / FourierCoefficient(f, x, n): the order-n complex exponential
@@ -23,6 +24,7 @@ import { operandsOf, symbolNameOf } from "@enumeratio/engine";
 //   - x, x^2, Abs(x): the standard closed forms for the sawtooth, the parabola, and the
 //     triangle wave.
 //   - Exp(a x) for a nonzero real constant a.
+//   - CubeRoot(x) / Root(x, odd m), the real root (odd on [-pi, pi]): Gamma and ExpIntegralE.
 // Everything else declines (undefined) rather than guess: a general Piecewise formula
 // for symbolic n, higher powers of x, a period other than 2pi, mixed polynomial-times-
 // trig products (x * Cos(x)), and any function outside this list.
@@ -107,6 +109,35 @@ function trigPowers(factors: readonly BoxedExpression[], xName: string): { P: nu
   return { P, Q };
 }
 
+/**
+ * The coefficient of the real m-th root (m odd), an odd function on [-pi, pi], so `c_-k = -c_k`
+ * and, with a = 1/m, `c_k = (F(ik) - F(-ik)) / 2pi` for `F(s) = Integrate(x^a Exp(-s x), {x, 0, pi})
+ * = s^-(a+1) Gamma(a+1) - pi^(a+1) ExpIntegralE(-a, s pi)`. For k > 0 that is
+ * `(-2i cos(pi a/2) Gamma(a+1) k^-(a+1) - pi^(a+1) (E(i k pi) - E(-i k pi))) / 2pi`, checked
+ * against Wolfram's `FourierCoefficient(CubeRoot(x), x, k)` and numerical quadrature.
+ */
+function oddRootCoefficient(ce: ComputeEngine, m: number, k: number): BoxedExpression {
+  if (k === 0) return ce.Zero;
+  const K = Math.abs(k);
+  const a1: Json = ["Rational", m + 1, m];
+  const E = (z: Json): Json => ["ExpIntegralE", ["Rational", -1, m], ["Multiply", z, "Pi"]];
+  const jump: Json = [
+    "Multiply",
+    -2,
+    "ImaginaryUnit",
+    ["Cos", ["Divide", "Pi", 2 * m]],
+    ["Gamma", a1],
+    ["Power", K, ["Negate", a1]],
+  ];
+  const tail: Json = [
+    "Multiply",
+    ["Power", "Pi", a1],
+    ["Subtract", E(["Multiply", "ImaginaryUnit", K]), E(["Multiply", "ImaginaryUnit", -K])],
+  ];
+  const positive: Json = ["Divide", ["Subtract", jump, tail], ["Multiply", 2, "Pi"]];
+  return ce.box((k > 0 ? positive : ["Negate", positive]) as never).evaluate();
+}
+
 /** The atoms this file knows a closed form for: `factors` is a Multiply's x-dependent
  * operands (a single element for everything but a trig monomial). */
 function atomCoefficient(
@@ -148,6 +179,10 @@ function atomCoefficient(
         ce.function("Multiply", [ce.Pi, ce.function("Power", [ce.number(k), 2])]),
       ])
       .evaluate();
+  }
+  const root = f.operator === "CubeRoot" ? 3 : f.operator === "Root" ? opAt(f, 1).re : undefined;
+  if (root !== undefined && Number.isInteger(root) && root >= 3 && root % 2 === 1 && isSym(opAt(f, 0), xName)) {
+    return oddRootCoefficient(ce, root, k);
   }
   if (f.operator === "Cos" || f.operator === "Sin") {
     // A non-unit frequency: Cos(mx)/Sin(mx) for a nonzero integer m (a Cos(x)/Sin(x)

@@ -1,8 +1,9 @@
 import { type BoxedExpression, type ComputeEngine, isSymbol } from "@cortex-js/compute-engine";
 import type { Json } from "@enumeratio/ce-patches";
 import type { BoxInput, EvalOptions, NativeEval } from "@enumeratio/ce-patches";
-import { declareCompile, wrapOperator } from "@enumeratio/engine";
+import { declareCompile, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/engine";
 import { ORDER_RESOLVERS } from "./derivative-orders.ts";
+import { powerOrderDerivative } from "./power-orders.ts";
 
 // Symbolic derivatives for the analytic heads.
 //
@@ -159,6 +160,14 @@ export function declareDerivatives(ce: ComputeEngine): void {
     // `Derivative`, which would re-evaluate without end: only the outermost call iterates.
     let iterating = false;
     d.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
+      const spec = ops[1];
+      const [variable, order] = spec?.operator === "List" && ops.length === 2 ? operandsOf(spec) : [];
+      const name = variable === undefined ? undefined : symbolNameOf(variable);
+      const closed =
+        name === undefined || order === undefined || ops[0] === undefined
+          ? undefined
+          : powerOrderDerivative(ce, ops[0], name, order);
+      if (closed !== undefined) return closed;
       const result = native?.(ops, options);
       if (result === undefined || iterating) return result;
       iterating = true;

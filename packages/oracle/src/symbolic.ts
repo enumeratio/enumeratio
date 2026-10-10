@@ -93,6 +93,9 @@ const RATIONALS: readonly (readonly [number, number])[] = [
 /** Where a variable over the integers is sampled: distinct, none of 0, 1 or -1. */
 const INTEGERS: readonly number[] = [3, 5, 4, 7, 6, 8];
 
+/** Orders and indices, from 0: the cases a formula usually breaks on are 0, 1 and 2. */
+const ORDERS: readonly number[] = [0, 1, 2, 3, 4, 5];
+
 const NUMBER_OF_TRIALS = 3;
 
 /** What the check prints when its samples are not numbers because an answer is no value to sample (a
@@ -202,6 +205,35 @@ export function derivativeVariables(expr: MathJSON, found: Set<string> = new Set
   return found;
 }
 
+/** How many times the bare symbol `name` occurs in `expr`. */
+const occurrences = (expr: MathJSON, name: string): number =>
+  bareName(expr) === name
+    ? 1
+    : Array.isArray(expr)
+      ? expr.slice(1).reduce<number>((sum, operand) => sum + occurrences(operand as MathJSON, name), 0)
+      : 0;
+
+/**
+ * The symbol in the order slot of `D(f, [x, n])` or the index slot of `SeriesCoefficient(f, [x, x0, n])`,
+ * when it occurs nowhere else in `whole` (the substitution is by name, so a `k` that is also in `f` is
+ * no order). An integer is what such an order means; at a fractional one the closed forms go complex.
+ */
+export function orderVariables(expr: MathJSON, whole: MathJSON = expr, found: Set<string> = new Set()): Set<string> {
+  if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
+  const [head, ...operands] = expr as [string, ...MathJSON[]];
+  const spec = operands[1];
+  if (
+    (head === "D" || head === "SeriesCoefficient") &&
+    Array.isArray(spec) &&
+    ["List", "Tuple"].includes(spec[0] as string)
+  ) {
+    const name = bareName(spec[head === "D" ? 2 : 3] as MathJSON | undefined);
+    if (name !== undefined && occurrences(whole, name) === 1) found.add(name);
+  }
+  for (const operand of operands) orderVariables(operand, whole, found);
+  return found;
+}
+
 /** The variables an indefinite integral is taken in (`Integrate(f, x)`, not `Integrate(f, {x, a, b})`):
  * its answer is an antiderivative, up to a constant, so the variable stays the call's own. */
 export function indefiniteVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
@@ -215,8 +247,8 @@ export function indefiniteVariables(expr: MathJSON, found: Set<string> = new Set
   return found;
 }
 
-/** The expansion variables of `Series(f, x, x0, n)` (or `Series(f, [x, x0, n])`): bound inside the
- * call, so never a point to sample there (`Series[f, {7/3, x0, n}]` is Series::ivar). */
+/** The expansion variables of `Series(f, x, x0, n)` (or `Series(f, [x, x0, n])`) and of
+ * `SeriesCoefficient(f, [x, x0, n])`: bound inside the call, so never a point to sample there (`Series[f, {7/3, x0, n}]` is Series::ivar). */
 export function seriesVariables(expr: MathJSON, found: Set<string> = new Set()): Set<string> {
   if (!Array.isArray(expr) || typeof expr[0] !== "string") return found;
   const [head, ...operands] = expr as [string, ...MathJSON[]];
@@ -228,6 +260,11 @@ export function seriesVariables(expr: MathJSON, found: Set<string> = new Set()):
       // The bare form names only its first operand; the rest are center and order.
       if (!Array.isArray(spec)) break;
     }
+  }
+  if (head === "SeriesCoefficient") {
+    const spec = operands[1];
+    const name = bareName(Array.isArray(spec) && (spec[0] === "List" || spec[0] === "Tuple") ? spec[1] : undefined);
+    if (name !== undefined) found.add(name);
   }
   for (const operand of operands) seriesVariables(operand, found);
   return found;
@@ -258,11 +295,15 @@ function trialSubstitution(
   trial: number,
   discrete: ReadonlySet<string> = new Set(),
   positive: ReadonlySet<string> = new Set(),
+  orders: ReadonlySet<string> = new Set(),
 ): ReadonlyMap<string, MathJSON> {
+  const ordered = freeSymbols.filter((name) => orders.has(name));
   return new Map(
     freeSymbols.map((name, i) => {
       const at = (i + trial * freeSymbols.length) % RATIONALS.length;
       const [n, d] = RATIONALS[at] as readonly [number, number];
+      // Distinct orders in one trial are 3 apart, and each walks 0, 1, 2, … across trials.
+      if (orders.has(name)) return [name, ORDERS[(trial + 3 * ordered.indexOf(name)) % ORDERS.length] as number];
       return [
         name,
         discrete.has(name) ? (INTEGERS[at] as number) : rationalLiteral([positive.has(name) ? Math.abs(n) : n, d]),
@@ -305,7 +346,7 @@ function trialSources(
     }
   | undefined {
   const positive = new Set([...positiveVariables(expr), ...positiveVariables(expected)]);
-  const all = trialSubstitution(freeSymbols, trial, discreteVariables(expr), positive);
+  const all = trialSubstitution(freeSymbols, trial, discreteVariables(expr), positive, orderVariables(expr));
   const steps = system === "wolfram" ? stepVariables(expr) : new Set<string>();
   // Only Wolfram maps `Series`; a variable it expands in stays the call's own, as a step variable does.
   const series =
