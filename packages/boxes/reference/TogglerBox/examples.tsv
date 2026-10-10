@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-inert	Basic	triage	[TogglerBox, [DynamicBox, s], [List, off, on]]	[TogglerBox, [DynamicBox, s], [List, off, on]]	a box is inert: it evaluates to itself	ours?	shape	Wolfram's ToBoxes shape is TogglerBox[Dynamic[s], {off -> "off", on -> "on"}, DynamicBox[...]]; ours takes a bare list. BL-213 aligns the control boxes with Wolfram, so this row is re-scanned then.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+inert	Basic		[TogglerBox, [DynamicBox, s], [List, off, on]]	[TogglerBox, [DynamicBox, s], [List, off, on]]	a box is inert: it evaluates to itself	shape	Wolfram's ToBoxes shape is TogglerBox[Dynamic[s], {off -> "off", on -> "on"}, DynamicBox[...]]; ours takes a bare list. BL-213 aligns the control boxes with Wolfram, so this row is re-scanned then.

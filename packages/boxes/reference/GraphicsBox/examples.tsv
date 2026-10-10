@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption	triage	wolfram.kind	wolfram.note
-inert	Basic	triage	[GraphicsBox, [RowBox, [List]]]	[GraphicsBox, [RowBox, [List]]]	a box is inert: it evaluates to itself	ours?	shape	Wolfram's ToBoxes shape is GraphicsBox[{}]; ours carries RowBox[{}] inside it. BL-213 aligns the control boxes with Wolfram, so this row is re-scanned then.
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+inert	Basic		[GraphicsBox, [RowBox, [List]]]	[GraphicsBox, [RowBox, [List]]]	a box is inert: it evaluates to itself	shape	Wolfram's ToBoxes shape is GraphicsBox[{}]; ours carries RowBox[{}] inside it. BL-213 aligns the control boxes with Wolfram, so this row is re-scanned then.
