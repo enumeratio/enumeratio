@@ -425,13 +425,14 @@ export function collectWolfram(output: string, count: number): Result[] {
 
 // Whether the kernel's value `a` is the call ours holds, `held` being ours' source text (never
 // evaluated, or a kernel that computes where ours holds would agree with itself). Equal as Python
-// expressions, so spacing, redundant parentheses and a symbol's constructor don't matter; else the
+// expressions, so spacing, redundant parentheses, a symbol's constructor and a helper's prefix don't matter; else the
 // marker that sends the row to the plain comparison.
 const HELD_ALIKE = `
 def enumeratio_held_alike(a, held):
     import ast, re
     def parsed(text):
         text = re.sub(r'(?:Symbol|SR\\.var)\\("([A-Za-z_0-9]+)"\\)', r'\\1', text)
+        text = text.replace("enumeratio_", "")
         try:
             return ast.dump(ast.parse(text.strip(), mode="eval"))
         except SyntaxError:

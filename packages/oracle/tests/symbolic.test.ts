@@ -1,4 +1,6 @@
+import { spawnSync } from "node:child_process";
 import { expect, test } from "vite-plus/test";
+import { SYMPY_PREAMBLE } from "../src/run.ts";
 import {
   alignFunctions,
   boundVariables,
@@ -569,4 +571,42 @@ test("rootsAsPowers: a root is its power, and a reciprocal base moves to its pos
   ]);
   // 2^(1/4) and 2^(1/3) are different numbers and stay unequal.
   expect(rootsAsPowers(["Root", 2, 4] as never)).not.toEqual(rootsAsPowers(["Power", 2, ["Rational", 1, 3]] as never));
+});
+
+// A kernel that holds the call ours holds prints it as ours is written; one that computes where ours
+// holds must not agree with its own second evaluation of the same call.
+const sympyHeldAlike = (source: string): string | undefined => {
+  const run = spawnSync("python3", ["-c", `from sympy import *\n${SYMPY_PREAMBLE}\nprint(${source})`], {
+    encoding: "utf8",
+  });
+  return run.status === 0 ? run.stdout.trim() : undefined;
+};
+const hasSympy = spawnSync("python3", ["-c", "import sympy"]).status === 0;
+
+test("a Python-family kernel's answer is compared with the held call as text, not evaluated again", () => {
+  const held = symbolicAgreementSource("sympy", ["Floor", "x"], ["Floor", "x"], ["x"]);
+  expect(held).toBe('enumeratio_held_alike(floor(Symbol("x")), "floor(Symbol(\\"x\\"))")');
+  expect(symbolicAgreementSource("sage", ["GCD", "x", "y"], ["GCD", "x", "y"], ["x", "y"])).toMatch(
+    /^enumeratio_held_alike\(enumeratio_gcd\(.*\), ".*enumeratio_gcd\(.*\)"\)$/,
+  );
+});
+
+test.skipIf(!hasSympy)("held alike: kernel holds the call, agrees; kernel evaluates where ours holds, does not", () => {
+  const verdict = (expr: never, ours: never, free: string[]): string | undefined =>
+    sympyHeldAlike(symbolicAgreementSource("sympy", expr, ours, free) as string);
+  // Held on both sides: the same call.
+  expect(verdict(["Floor", "x"] as never, ["Floor", "x"] as never, ["x"])).toBe("True");
+  // SymPy computes gcd(x, y) = 1 where ours holds GCD(x, y).
+  expect(verdict(["GCD", "x", "y"] as never, ["GCD", "x", "y"] as never, ["x", "y"])).toBe("NotNumeric");
+  // SymPy pulls the constant out of Abs where ours holds Abs(-3x).
+  expect(verdict(["Abs", ["Multiply", -3, "x"]] as never, ["Abs", ["Multiply", -3, "x"]] as never, ["x"])).toBe(
+    "NotNumeric",
+  );
+  // A rewrite ours handed back unchanged: held only if the kernel left the form alone too.
+  expect(
+    sympyHeldAlike('enumeratio_held_alike(Symbol("x") + Symbol("y"), "(Symbol(\\"x\\") + Symbol(\\"y\\"))")'),
+  ).toBe("True");
+  expect(sympyHeldAlike('enumeratio_held_alike(expand(Symbol("x") * (Symbol("y") + 1)), "x*(y+1)")')).toBe(
+    "NotNumeric",
+  );
 });
