@@ -11,6 +11,7 @@ import { declareStatistics } from "../../src/statistics/declare.ts";
 import { PERMUTATIONS_CARRIERS } from "./carrier-data.ts";
 import { coreFamilies, permutationClassesEntries, permutationsEntries } from "./families/index.ts";
 import { PERMUTATION_STATISTICS } from "./statistics.ts";
+import { declarePermutationOperations } from "./operations.ts";
 
 export function declarePermutations(ce: Engine): void {
   declareCarriers(ce, PERMUTATIONS_CARRIERS, { plurals: false });
@@ -23,4 +24,5 @@ export function declarePermutations(ce: Engine): void {
   // Its statistics, after its own carriers and families — `domainTypes` reads back from the
   // registry the carriers call above just populated (#458).
   declareStatistics(ce, PERMUTATION_STATISTICS);
+  declarePermutationOperations(ce);
 }

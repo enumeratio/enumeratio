@@ -5,4 +5,7 @@ three-factors	PermutationProduct[Cycles[List[List[1, 2, 3]]], Cycles[List[List[1
 one-line-words	PermutationProduct[List[2, 3, 1], List[2, 1, 3]]	{1, 3, 2}	\{2,3,1\}\unicode{f3de}\{2,1,3\}	\{1,3,2\}
 different-lengths	PermutationProduct[List[2, 1], List[1, 3, 2]]	{3, 1, 2}	\{2,1\}\unicode{f3de}\{1,3,2\}	\{3,1,2\}
 mixed-notation	PermutationProduct[Cycles[List[List[1, 2]]], List[2, 3, 1]]	Cycles[{{1, 3}}]	\text{Cycles}\left[\left( \begin{array}{cc}  1 & 2 \\ \end{array} \right)\right]\unicode{f3de}\{2,3,1\}	\text{Cycles}\left[\left( \begin{array}{cc}  1 & 3 \\ \end{array} \right)\right]
+permutation-values	PermutationProduct[List[2, 3, 1], List[2, 1, 3]]	{1, 3, 2}	\{2,3,1\}\unicode{f3de}\{2,1,3\}	\{1,3,2\}
+permutation-values-padded	PermutationProduct[List[2, 1], List[1, 3, 2]]	{3, 1, 2}	\{2,1\}\unicode{f3de}\{1,3,2\}	\{3,1,2\}
+permutation-and-cycles	PermutationProduct[List[2, 3, 1], Cycles[List[List[1, 2]]]]	Cycles[{{2, 3}}]	\{2,3,1\}\unicode{f3de}\text{Cycles}\left[\left( \begin{array}{cc}  1 & 2 \\ \end{array} \right)\right]	\text{Cycles}\left[\left( \begin{array}{cc}  2 & 3 \\ \end{array} \right)\right]
 no-factors	PermutationProduct[]	Cycles[{}]	\text{PermutationProduct}[]	\text{Cycles}[\{\}]

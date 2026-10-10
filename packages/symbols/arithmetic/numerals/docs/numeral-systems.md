@@ -66,12 +66,12 @@ _same computation_. Pad to one digit per position and the two line up exactly:
 
 **The combinatorial number system is k-subset unranking.** Its digits _are_ the subset:
 n = C(c_k,k) + … + C(c_1,1), and the c's — shifted from 0-based to 1-based — are exactly
-the n-th k-subset in colexicographic order.
+the n-th k-subset in colexicographic order. (`KSubsets` is lexicographic, so its n-th
+subset differs.)
 
-<Story title="Combinatorial system = KSubsets">
-<template #description>Digits [3,2,1] are the 0-based subset; add one to each and you get {2,3,4}, which is the 4th 3-subset.</template>
+<Story title="The combinatorial number system">
+<template #description>Digits [3,2,1] are the 0-based subset; add one to each and you get {2,3,4}, the 4th 3-subset in colexicographic order.</template>
 <notatio-cell value="IntegerDigits(3, CombinatorialNumerals(3))" />
-<notatio-cell value="KSubsets(5, 3)[4]" />
 </Story>
 
 So "write this number in that system" and "give me the n-th object of that kind" are one

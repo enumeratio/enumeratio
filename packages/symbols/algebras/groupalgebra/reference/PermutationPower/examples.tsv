@@ -3,5 +3,6 @@ a-square			[PermutationPower, [Cycles, [List, [List, 1, 2, 3]]], 2]	[Cycles, [Li
 a-negative-power	Scope		[PermutationPower, [Cycles, [List, [List, 1, 2, 3]]], -1]	[Cycles, [List, [List, 1, 3, 2]]]	[Cycles, [List, [List, 1, 3, 2]]]	wolframscript 15.0	the inverse
 a-negative-square	Scope		[PermutationPower, [Cycles, [List, [List, 1, 2, 3]]], -2]	[Cycles, [List, [List, 1, 2, 3]]]	[Cycles, [List, [List, 1, 2, 3]]]	wolframscript 15.0	
 a-one-line-word	Scope		[PermutationPower, [List, 2, 3, 1], 2]	[List, 3, 1, 2]	[List, 3, 1, 2]	wolframscript 15.0	
+a-permutation-value	Scope		[PermutationPower, [Permutation, [List, 2, 3, 1]], 2]	[Permutation, [List, 3, 1, 2]]	[Permutation, [List, 3, 1, 2]]	wolframscript 15.0, on the one-line word	a Permutation gives a Permutation
 zeroth-power	Properties		[PermutationPower, [Cycles, [List, [List, 1, 2, 3]]], 0]	[Cycles, [List]]	[Cycles, [List]]	wolframscript 15.0	the identity
 past-the-order	Properties		[PermutationPower, [Cycles, [List, [List, 1, 2, 3, 4]]], 7]	[Cycles, [List, [List, 1, 4, 3, 2]]]	[Cycles, [List, [List, 1, 4, 3, 2]]]	wolframscript 15.0	$7 \equiv 3 \pmod 4$, and the 4-cycle has order 4
