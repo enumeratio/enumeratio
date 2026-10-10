@@ -3,6 +3,7 @@
 
 import { readFileSync } from "node:fs";
 import { expect, test } from "vite-plus/test";
+import { HYDRATED_ATTRIBUTE, PENDING_SELECTOR } from "./theme/hydration.ts";
 import { type MarkupSpec, preloads, prerenderMarkup, specsFile } from "./prerender-markup.ts";
 
 type Rule = (state: { tokens: { type: string; content: string }[]; env: Record<string, unknown> }) => void;
@@ -29,8 +30,11 @@ test("a cell gets a placeholder, and a plot in a v-pre Manipulate a plain one, w
   expect(html).toContain(
     '<notatio-cell value="BellNumber(6)" data-allow-mismatch="children"><NotatioPrerendered :at="0" /></notatio-cell>',
   );
+  // The verbatim placeholder is born hydrated, under the name the theme's gate waits on.
+  expect(HYDRATED_ATTRIBUTE).toBe("data-hydrated");
+  expect(PENDING_SELECTOR).toBe("span.notatio-prerendered:not([data-hydrated])");
   expect(html).toContain(
-    '<graphics-box value="Plot(Sin(_a * x), (x, -3, 3))" data-allow-mismatch="children"><span class="notatio-prerendered" data-prerender="1"></span></graphics-box>',
+    `<graphics-box value="Plot(Sin(_a * x), (x, -3, 3))" data-allow-mismatch="children"><span class="notatio-prerendered" data-prerender="1" ${HYDRATED_ATTRIBUTE}></span></graphics-box>`,
   );
   expect(html).toContain('<notatio-cell value="x" prerender="false" />');
   expect(specs.map((s) => [s.tag, s.attributes["value"], s.manipulate])).toEqual([

@@ -85,7 +85,8 @@ jobs:
     name: component stories (Playwright) ${{ matrix.shard }}/3
     if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # Shard 1 also builds the site for the hydration check below.
+    timeout-minutes: ${{ matrix.shard == 1 && 35 || 20 }}
     # A page load per story on the dev server: one runner no longer fits them in the budget.
     strategy:
       fail-fast: false
@@ -98,6 +99,13 @@ jobs:
         continue-on-error: true
       - run: pnpm --filter @enumeratio/web run test:stories --shard=${{ matrix.shard }}/3
         continue-on-error: true
+      # The hydration race needs the built site (the prerendered placeholders): one shard does it.
+      # Not advisory like the stories: a regression goes red, for the fixup routine to file.
+      - if: matrix.shard == 1
+        run: pnpm --filter @enumeratio/web run build
+        continue-on-error: true
+      - if: matrix.shard == 1
+        run: pnpm --filter @enumeratio/web run test:hydration
 
   # The Python ecosystem: every example with an mpmath or SymPy mapping, rescanned against the committed
   # records, including the special-function grid kept as hidden examples in its heads' YAML. Each
