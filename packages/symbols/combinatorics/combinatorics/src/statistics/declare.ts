@@ -131,12 +131,14 @@ const findstatIds = (definition: Definition): string[] => [
 ];
 
 /**
- * Give compute-engine's own head a statistic's carrier as one more argument: `Sign` of a
- * permutation is its ±1, the same map onto the signs that a number's `Sign` is (Dean,
- * 2026-09-28), so it generalises the head rather than overloading it. Every arm the head had
- * is kept; only a value of the carrier reaches the definition.
+ * Give a head a statistic's carrier as one more argument, so the bare head dispatches on its
+ * argument's carrier the way `CombinatorialStat` does. Every arm the head had is kept; only a
+ * value of the carrier reaches the definition. Used for a head another carrier already
+ * declared (`Peaks` on permutations, then on Dyck paths) and for compute-engine's own: `Sign`
+ * of a permutation is its ±1, the same map onto the signs that a number's `Sign` is (Dean,
+ * 2026-09-28), so it generalises the head rather than overloading it.
  */
-function extendEngineHead(ce: Engine, definition: Definition, type: string | undefined): void {
+function extendHead(ce: Engine, definition: Definition, type: string | undefined): void {
   const found = ce.lookupDefinition(definition.head);
   const operator = found !== undefined && "operator" in found ? found.operator : undefined;
   if (operator === undefined || type === undefined) return;
@@ -144,8 +146,9 @@ function extendEngineHead(ce: Engine, definition: Definition, type: string | und
   // would turn away what the native arm took (`Sign(NaN)` stops matching either arm).
   const native = String(operator.signature);
   const single = /^\(([^,&]+)\) -> ([^&]+)$/.exec(native);
+  const results = single === null ? [] : [...new Set([...single[2]!.split(" | "), "number"])];
   (operator as { signature: unknown }).signature = ce.type(
-    single === null ? `((${type}) -> number) & ${native}` : `(${type} | ${single[1]}) -> ${single[2]} | number`,
+    single === null ? `((${type}) -> number) & ${native}` : `(${type} | ${single[1]}) -> ${results.join(" | ")}`,
   );
   const nativeEvaluate = operator.evaluate;
   operator.evaluate = (ops, options) => {
@@ -172,8 +175,9 @@ const isEngineHead = (head: string): boolean => isNativeHead((bare ??= bareEngin
  * which calls this separately per area since step 6b, so the shadow can span calls, not just
  * one `definitions` array). Anything else is a `StatisticCollisionError`, listing every one.
  *
- * Definitions for one head on several carriers share the head, the first declaring it; every
- * one of them is in its carrier's table.
+ * Definitions for one head on several carriers share the head, the first declaring it; each
+ * later carrier widens it (`extendHead`), so the bare head dispatches on its argument's
+ * carrier. Every one of them is in its carrier's table.
  */
 export function declareStatistics(
   ce: Engine,
@@ -181,7 +185,6 @@ export function declareStatistics(
   options: DeclareOptions = {},
 ): Map<string, Definition> {
   const index = bySignature(definitions);
-  const claimed = new Set<string>();
   const collisions: string[] = [];
 
   for (const definition of definitions) {
@@ -199,20 +202,17 @@ export function declareStatistics(
         ),
     });
 
-    if (claimed.has(definition.head)) continue;
-    claimed.add(definition.head);
     if (isNativeHead(ce, definition.head)) {
       const kernel = operationOf(ce, "CombinatorialStat", definition.on, definition.head)?.kernel;
       if (kernel !== undefined) continue;
       // Another carrier already has an entry under this exact head — a call for THAT carrier
       // already ran (this area's own, earlier in `definitions`, or another area's declare
-      // entirely) and won the name; this one is the shadowed footnote, not a collision.
+      // entirely) and won the name; this carrier widens that head rather than colliding.
       const shadowedByAnotherCarrier = allCarrierNames(ce).some(
         (carrier) =>
           carrier !== definition.on && operationOf(ce, "CombinatorialStat", carrier, definition.head) !== undefined,
       );
-      if (shadowedByAnotherCarrier) continue;
-      if (isEngineHead(definition.head)) extendEngineHead(ce, definition, type);
+      if (shadowedByAnotherCarrier || isEngineHead(definition.head)) extendHead(ce, definition, type);
       else collisions.push(signatureOf(definition));
       continue;
     }

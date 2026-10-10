@@ -33,7 +33,7 @@ test("a head not declared yet: every overload, and the signature it will have", 
   expect(major).toMatchObject({
     name: "MajorIndex",
     kind: "function",
-    signature: "(list | permutation) -> integer",
+    signature: "(dyck_path | list | permutation) -> integer | number",
     documented: ["combinatorics"],
     description: expect.any(String),
   });
