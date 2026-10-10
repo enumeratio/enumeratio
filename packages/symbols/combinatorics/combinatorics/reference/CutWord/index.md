@@ -3,6 +3,8 @@ name: CutWord
 domain: Combinatorial maps
 signature: CutWord(Composition)
 summary: A composition of n as the binary word of length n - 1 marking where it is cut.
+mapOn:
+  - Composition
 signatures:
   - call: CutWord(Composition)
     description: A composition of n as the binary word of length n - 1 marking where it is cut.
