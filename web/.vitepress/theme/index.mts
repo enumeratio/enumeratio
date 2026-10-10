@@ -8,6 +8,7 @@ import type { PackageNotation } from "@enumeratio/boxes";
 import type { Resolver } from "@enumeratio/manifest";
 import Layout from "./Layout.vue";
 import NotatioPrerendered from "./components/NotatioPrerendered.vue";
+import { hydrated } from "./hydration.ts";
 import { createSessionSharedWorker, createSessionWorker } from "./worker-factories.ts";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
@@ -110,8 +111,10 @@ export default {
       // The elements load at idle, so the page paints first, and only those the page uses: a
       // page of cells loads no engine.
       // The packages' macros go first: a page with no engine still typesets their commands.
+      // Held until the prerendered placeholders have hydrated (NotatioPrerendered): an element that
+      // upgrades first has its rendered children removed by Vue's hydration and stays blank.
       const define = (): void =>
-        void import("@enumeratio/components/lazy").then((m) => {
+        void Promise.all([import("@enumeratio/components/lazy"), hydrated()]).then(([m]) => {
           m.configureMacros(notation().then((n) => n.macros));
           m.defineOnUse();
         });

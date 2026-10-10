@@ -9,6 +9,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { holdsPrerenderedPlot } from "@enumeratio/frontend/core";
+import { HYDRATED_ATTRIBUTE } from "./theme/hydration.ts";
 
 /** One element a page asks the build to render. */
 export interface MarkupSpec {
@@ -87,10 +88,11 @@ export function prerenderMarkup(md: MarkdownItLike): void {
         specs.push({ at, tag, attributes, manipulate: [...manipulate], inSession: sessions > 0 });
         const inside = verbatim.at(-1) === true;
         const placeholder = inside
-          ? `<span class="notatio-prerendered" data-prerender="${at}"></span>`
+          ? `<span class="notatio-prerendered" data-prerender="${at}" ${HYDRATED_ATTRIBUTE}></span>`
           : `<NotatioPrerendered :at="${at}" />`;
-        // The element renders its own light DOM beside the placeholder (a cell's rows), and it can
-        // upgrade before Vue hydrates; without this Vue logs "more child nodes than client vdom".
+        // The element renders its own light DOM beside the placeholder (a cell's rows). It is defined
+        // only after the placeholders hydrate (theme/hydration.ts): an earlier upgrade has its
+        // children removed by Vue, and this attribute only silences the warning.
         const opened = `<${tag}${attrs} data-allow-mismatch="children">${placeholder}`;
         return self ? `${opened}</${tag}>` : opened;
       });
