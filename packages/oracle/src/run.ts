@@ -772,7 +772,13 @@ def _enumeratio_n(x, digits=None):
     start = 53 if digits is None or digits <= 15 else int(digits * 3.33) + 20
     previous = None
     for prec in (start, start * 8, start * 64):
-        v = N(x, prec=prec)
+        try:
+            v = N(x, prec=prec)
+        except TypeError:
+            # An approximate argument (polylog(2, 0.5)) holds no more bits than it has.
+            if previous is None:
+                raise
+            break
         if previous is not None and abs(v - previous) <= abs(v) * 2 ** -40:
             break
         previous = v
