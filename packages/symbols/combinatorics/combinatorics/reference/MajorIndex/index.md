@@ -30,7 +30,7 @@ signatures:
   - call: MajorIndex(p)
     description: the major index of a one-line permutation $p$
     library: enumeratio-combinatorics
-    type: (list | permutation) -> integer
+    type: (dyck_path | list | permutation) -> integer | number
 seeAlso:
   - Inversions
   - Descents

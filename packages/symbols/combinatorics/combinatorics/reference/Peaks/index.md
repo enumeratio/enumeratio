@@ -7,7 +7,7 @@ signatures:
   - call: Peaks(p)
     description: the peak count of a one-line permutation $p$
     library: enumeratio-combinatorics
-    type: (list | permutation) -> integer
+    type: (dyck_path | list | permutation) -> integer | number
 seeAlso:
   - Valleys
   - Descents

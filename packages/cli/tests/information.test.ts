@@ -9,7 +9,7 @@ test("?Name: the kind, summary, signature and page", async () => {
   const { text } = repl.eval("?MajorIndex");
   expect(text).toContain("MajorIndex  function");
   expect(text).toContain("The major index of");
-  expect(text).toContain("(list | permutation) -> integer");
+  expect(text).toContain("(dyck_path | list | permutation) -> integer | number");
   expect(text).toContain("https://enumeratio.dev/reference/symbol/MajorIndex");
   expect(text).not.toContain("overloads");
 });
