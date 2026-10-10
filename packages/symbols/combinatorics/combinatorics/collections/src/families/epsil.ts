@@ -54,6 +54,22 @@ export interface EpsilFamily extends FamilyShape {
   /** The interpreter's answers are reduced once more before they are read (`settled`): for a
    *  definition whose last fold step compute-engine leaves unreduced, which would read as no answer. */
   readonly settle?: true;
+  /** Answers settled before any table is built, for calls that would otherwise build one only to
+   *  decline or to say no. Each is a necessary condition, written in plain JS. */
+  readonly early?: {
+    /** True where the count is certainly past 2^53: with `declinePastDoubles: "count"`, the count
+     *  then declines at once. */
+    readonly pastDoubles?: (p: readonly number[]) => boolean;
+    /** Membership of a well-formed `element`: false where it is certainly no member, "decline"
+     *  where the question is too big to try, undefined to go on to the definition. */
+    readonly member?: (element: unknown, p: readonly number[]) => false | "decline" | undefined;
+  };
+  /** A compiled `valid` that answers with anything but a boolean can't tell: the kernel declines,
+   *  rather than interpreting the definition (and its table) to find out. */
+  readonly undecidedValid?: true;
+  /** `unrank` of a rank outside 0..count − 1 throws a RangeError (the definition reads such a
+   *  rank as garbage). Every call is of a rank the fiber has, or it declines. */
+  readonly strictRanks?: true;
   readonly epsil: FamilyEpsil;
   /** A verified fast path: used while the fiber's count is a safe integer, ahead of Epsil.
    *  The definitions stay the meaning; this is not part of `familyHash`. */
@@ -220,7 +236,18 @@ export function kernelOn(
   options: KernelOptions = {},
 ): FamilyKernel {
   if (!isEpsilFamily(family)) return family;
-  const { params, epsil, elementType: _, declinePastDoubles, settle, fast: fastKernel, ...shape } = family;
+  const {
+    params,
+    epsil,
+    elementType: _,
+    declinePastDoubles,
+    settle,
+    early,
+    undecidedValid,
+    strictRanks,
+    fast: fastKernel,
+    ...shape
+  } = family;
   const maybeSettled = (json: unknown): unknown => (settle === true ? settled(ce, json) : json);
   const quick = options.fast === false ? undefined : fastKernel;
   const ahead = generated[family.head];
@@ -357,7 +384,7 @@ export function kernelOn(
     const key = p.join(",");
     let total = counts.get(key);
     if (total === undefined) {
-      if (declinePastDoubles === "count" && pastDoubles(p)) return decline(p);
+      if (declinePastDoubles === "count" && (pastDoubles(p) || early?.pastDoubles?.(p) === true)) return decline(p);
       const fast = quickCount(p) ?? run("count", p, {});
       if (isInteger(fast)) total = BigInt(fast);
       else if (declinePastDoubles === "count") return decline(p);
@@ -393,6 +420,9 @@ export function kernelOn(
 
   const valid = (element: unknown, p: number[]): boolean => {
     if (!wellFormed(family.kind, element)) return false;
+    const settledEarly = early?.member?.(element, p);
+    if (settledEarly === false) return false;
+    if (settledEarly === "decline") return decline(p);
     // Membership never reads the count: the fast path answers at any params it reads as written.
     if (quick !== undefined && wellParamed(p)) {
       try {
@@ -402,6 +432,7 @@ export function kernelOn(
     }
     const fast = run("valid", p, { _x: element });
     if (typeof fast === "boolean") return fast;
+    if (undecidedValid === true && fast !== undefined) return decline(p);
     // An interpreter that fails declines, as past 2^53, rather than raising out of `Element`; so does
     // an answer that is neither True nor False, which is no reading of the element as a non-member.
     let answer: unknown;
@@ -420,6 +451,8 @@ export function kernelOn(
     valid,
     unrank: (p, r) => {
       const total = knownCount(p);
+      if (strictRanks === true && typeof total === "bigint" && (r < 0n || r >= total))
+        throw new RangeError(`${family.head}(${p.join(", ")}): rank ${r} is outside the fiber of ${total}`);
       if (total === undefined) {
         // Past 2^53 in a family that declines there: a small rank is still the fast path's to answer.
         if (quick !== undefined && wellParamed(p) && r >= 0n && r <= MAX_SAFE) {
