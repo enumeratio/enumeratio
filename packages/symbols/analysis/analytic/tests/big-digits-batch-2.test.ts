@@ -105,8 +105,10 @@ test("RiemannSiegelZ: real t, a complex argument, and the zeros", () => {
   );
   agrees(riemannZetaZeroBig(14.134725141734695, 50), "14.1347251417346937904572519835624702707842571156992431756856");
   agrees(riemannZetaZeroBig(21.02203963877156, 50), "21.0220396387715549926284795938969027773343405249027817546295");
-  // Beyond what the Euler–Maclaurin sum is worth, and no zero near a seed that is between two.
-  expect(riemannSiegelZBig(d("1e7"), 20)).toBeUndefined();
+  // Past the Euler–Maclaurin sum's reach it is the Riemann–Siegel formula (riemann-siegel-asymptotic.test.ts);
+  // past that, and for no zero near a seed that is between two, it declines.
+  agrees(riemannSiegelZBig(d("1e7"), 25), "14.35255035622201359669284");
+  expect(riemannSiegelZBig(d("1e11"), 20)).toBeUndefined();
   expect(riemannZetaZeroBig(17.5, 20)).toBeUndefined();
 });
 
@@ -136,8 +138,10 @@ test("where a kernel declines, N(…, d) stays symbolic rather than printing a d
   );
   expect(n(["Hypergeometric2F1Regularized", 1, 1, 2, 1.5], 30).operator).toBe("Hypergeometric2F1Regularized");
   expect(n(["QFactorial", ["Rational", 1, 3], -2], 30).operator).toBe("QFactorial");
-  expect(n(["RiemannSiegelZ", ["Power", 10, 6]], 20).operator).toBe("RiemannSiegelZ");
-  expect(riemannSiegelZComplexBig(d(30000), d("-1e-30"), 20)).toBeUndefined();
+  expect(n(["RiemannSiegelZ", ["Power", 10, 11]], 20).operator).toBe("RiemannSiegelZ");
+  // The Riemann–Siegel series is asymptotic in t, so it has only so many digits there, and the
+  // Euler–Maclaurin sum is not run for a complex argument this large.
+  expect(riemannSiegelZComplexBig(d(30000), d("-1e-30"), 90)).toBeUndefined();
 });
 
 test("QFactorial at a fractional n answers at a double's digits too, and stays held when exact", () => {
