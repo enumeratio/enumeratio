@@ -112,7 +112,7 @@ certified-digits-li-2-1-3	enumeratio_n(polylog(2, (1/3)), 40)	0.366213229977064
 certified-digits-li-5-2-minus-1-2	enumeratio_n(polylog((5/2), (-1/2)), 40)	-0.462297782190063	
 li-1-z-ln-1-z-symbolically	polylog(1, SR.var("z"))	True	
 li-1-z-z-1-z-2-negative-orders-are-rational	polylog(-1, SR.var("z"))	True	
-li-2-1-2-pi-2-12-ln-2-2-2	enumeratio_equal((polylog(2, 0.5) + (0.5 * ((log(2))^2))), (((pi)^2) / 12))	False	disagree
+li-2-1-2-pi-2-12-ln-2-2-2	enumeratio_equal((polylog(2, 0.5) + (0.5 * ((log(2))^2))), (((pi)^2) / 12))	True	
 li-s-1-zeta-s-for-symbolic-s	polylog(SR.var("s"), 1)	True	
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative	diff(polylog(SR.var("n"), SR.var("x")), SR.var("x"))		
 polylog-3-exponentiale-pow-1-over-3-times-i	polylog(3, ((e)^((0 + (1/3)*I) * pi)))		

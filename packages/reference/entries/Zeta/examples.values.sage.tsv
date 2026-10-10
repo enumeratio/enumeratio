@@ -40,7 +40,7 @@ complex-s-under-n	enumeratio_n(zeta((2 + -5*I)))	0.850962943624263 - 0.098996946
 zeta-infty-1-only-the-n-1-term-survives	zeta(oo)	
 two-arguments-at-a-nonpositive-integer-s-zeta-1	enumeratio_zeta_pair(-1, 5)	-121/12
 two-arguments-inexact	enumeratio_zeta_pair(-1.5, 5)	-17.0500647493427
-two-complex-arguments-under-n-to-ten-digits	enumeratio_n(enumeratio_zeta_pair((-1.5 + 1*I), (2.5 + -1*I)), 10)	0.0184868091900000 + 1.67553378400000*I
+two-complex-arguments-under-n-to-ten-digits	enumeratio_n(enumeratio_zeta_pair((-1.5 + 1*I), (2.5 + -1*I)), 10)	0.0184868091938106 + 1.67553378430177*I
 which-with-inexact-complex-arguments-should	enumeratio_zeta_pair((-1.5 + 1*I), (2.5 + -1*I))	0.0184868091938106 + 1.67553378430177*I
 zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of	enumeratio_zeta_pair(20, (1/2))	221930581/1856156927625*pi^20
 zeta-2-1-2-3-zeta-2-pi-2-2	enumeratio_zeta_pair(2, (1/2))	1/2*pi^2

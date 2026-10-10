@@ -34,7 +34,7 @@ n-polygamma-3-2-plus-neg-0p5-times-i	enumeratio_n(psi(3, (2 + -0.5*I)))	0.280334
 n-polygamma-5-1	enumeratio_n(psi(5, 1))	122.081167438134	
 n-polygamma-5-2	enumeratio_n(psi(5, 2))	2.08116743813390	
 n-polygamma-5-0p5	enumeratio_n(psi(5, 0.5))	7691.11354860244	
-n-polygamma-5-1p3	enumeratio_n(psi(5, 1.3))	25.7926012806131	
+n-polygamma-5-1p3	enumeratio_n(psi(5, 1.3))	25.7926012806130	
 n-polygamma-5-7-over-3	enumeratio_n(psi(5, (7/3)))	0.857814321602380	
 n-polygamma-5-1-plus-i	enumeratio_n(psi(5, (1 + 1*I)))	-0.933084836284869 + 14.5158522919041*I	
 n-polygamma-5-0p5-plus-0p3i	enumeratio_n(psi(5, (0.5 + 0.3*I)))	-3033.62795029873 + 298.588513636671*I	
