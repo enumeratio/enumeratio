@@ -54,7 +54,7 @@ generatingfunction-n-mod-4-n-x
 list-a-b-c-list-1-plus-neg-1-plus-range-1-10-mod			
 periodicity-a-bmod-n-a-kn-bmod-n-for-any-integer	(mod(17, 5) == mod((17 + (3 * 5)), 5))	true	
 a-negative-modulus-gives-a-result-in-n-0	mod(-5, -3)	-2	
-the-remainder-of-quotient			
+the-remainder-of-quotient	(mod(complex(7, 5), complex(2, 1)) == (complex(7, 5) - (complex(2, 1) * fld(ZZ(complex(7, 5)), ZZ(complex(2, 1))))))		
 5-mod-3-eq-2-mod-3	(mod(5, 3) == mod(2, 3))		
 2-mod-3-eq-8-mod-3	(mod(2, 3) == mod(8, 3))		
 0-mod-1	mod(0, 1)		

@@ -4,40 +4,40 @@ extendedgcd-12-18	collect(gcdx(ZZ(12), ZZ(18)))	[6, -1, 1]
 extendedgcd-3-5	collect(gcdx(ZZ(3), ZZ(5)))	[1, 2, -1]
 extendedgcd-6-4	collect(gcdx(ZZ(6), ZZ(4)))	[2, 1, -1]
 any-number-of-arguments-folding-pairwise-6-times		
-gaussian-integers-by-euclid-with-the-rounded		
+gaussian-integers-by-euclid-with-the-rounded	collect(gcdx(ZZ(complex(7, 2)), ZZ(complex(3, -5))))	
 negative-arguments-12-18-6	collect(gcdx(ZZ(-12), ZZ(18)))	[6, 1, 1]
 big-integers-the-coefficients-stay-minimal-x-b	collect(gcdx(ZZ((big(2)^100)), ZZ((big(3)^50))))	[1, 208475958620489751737959, -368122879029235364752383564167]
 three-arguments-4-cdot-4-6-cdot-4-9-1		
-listable-threads-over-a-list		
-gaussian-integer-and-a-plain-integer		
-one-argument-a-unit-the-identity-bezout-pair		
-one-argument-i-a-unit		
-a-zero-first-argument		
-a-zero-second-argument		
-two-coprime-gaussian-primes-above-5		
-a-gaussian-prime-and-a-real-prime-3-mod-4		
-an-associate-pair-by-i		
-an-associate-pair-by-1		
-two-unrelated-composites-of-norm-25		
-with-a-negative-real-prime		
-two-large-norm-gaussians		
-past-2-53-in-both-parts		
-a-real-split-prime-and-its-gaussian-factor		
+listable-threads-over-a-list	collect(gcdx(ZZ(3), ZZ([5, 15])))	
+gaussian-integer-and-a-plain-integer	collect(gcdx(ZZ(complex(3, 1)), ZZ(5)))	
+one-argument-a-unit-the-identity-bezout-pair	collect(gcdx(ZZ(complex(3, 4)), ZZ(1)))	
+one-argument-i-a-unit	collect(gcdx(ZZ(complex(3, 4)), ZZ(complex(0, 1))))	
+a-zero-first-argument	collect(gcdx(ZZ(0), ZZ(complex(-4, 3))))	
+a-zero-second-argument	collect(gcdx(ZZ(complex(-4, 3)), ZZ(0)))	
+two-coprime-gaussian-primes-above-5	collect(gcdx(ZZ(complex(2, 1)), ZZ(complex(2, -1))))	
+a-gaussian-prime-and-a-real-prime-3-mod-4	collect(gcdx(ZZ(complex(2, 1)), ZZ(3)))	
+an-associate-pair-by-i	collect(gcdx(ZZ(complex(3, 4)), ZZ(complex(-4, 3))))	
+an-associate-pair-by-1	collect(gcdx(ZZ(complex(3, 4)), ZZ(complex(-3, -4))))	
+two-unrelated-composites-of-norm-25	collect(gcdx(ZZ(complex(3, 4)), ZZ(complex(4, 3))))	
+with-a-negative-real-prime	collect(gcdx(ZZ(complex(3, 4)), ZZ(-7)))	
+two-large-norm-gaussians	collect(gcdx(ZZ(complex(123, 456)), ZZ(complex(1000, 1))))	
+past-2-53-in-both-parts	collect(gcdx(ZZ(complex(100000000000000000001, 9007199254740993)), ZZ(complex(4, 1))))	
+a-real-split-prime-and-its-gaussian-factor	collect(gcdx(ZZ(5), ZZ(complex(2, 1))))	
 two-real-composites-plain-integer-case	collect(gcdx(ZZ(4), ZZ(9)))	[1, -2, 1]
-with-a-negative-real-composite		
-the-larger-norm-argument-given-first		
-with-an-associate-times-1		
-with-an-associate-times-i		
-two-coprime-primes-above-13		
-recovering-a-shared-prime-above-13		
-with-a-real-prime-s-associate-by-the-unit-i		
-with-a-real-composite-5-squared		
-with-a-negative-associate		
-a-large-norm-gaussian-and-a-real-prime-19		
+with-a-negative-real-composite	collect(gcdx(ZZ(-15), ZZ(complex(5, 5))))	
+the-larger-norm-argument-given-first	collect(gcdx(ZZ(complex(2, 1)), ZZ(complex(123, 456))))	
+with-an-associate-times-1	collect(gcdx(ZZ(complex(8, 2)), ZZ(complex(-3, -4))))	
+with-an-associate-times-i	collect(gcdx(ZZ(complex(8, 2)), ZZ(complex(4, -3))))	
+two-coprime-primes-above-13	collect(gcdx(ZZ(complex(3, 2)), ZZ(complex(2, 3))))	
+recovering-a-shared-prime-above-13	collect(gcdx(ZZ(complex(6, 8)), ZZ(complex(3, 2))))	
+with-a-real-prime-s-associate-by-the-unit-i	collect(gcdx(ZZ(complex(3, 4)), ZZ(complex(0, 7))))	
+with-a-real-composite-5-squared	collect(gcdx(ZZ(complex(3, 4)), ZZ(25)))	
+with-a-negative-associate	collect(gcdx(ZZ(complex(6, 8)), ZZ(complex(-2, -3))))	
+a-large-norm-gaussian-and-a-real-prime-19	collect(gcdx(ZZ(complex(123, 456)), ZZ(19)))	
 the-modular-inverse-of-3-mod-11-is-4-since-3	collect(gcdx(ZZ(3), ZZ(11)))	[1, 4, -1]
 confirms-the-coefficients-above-satisfy-2x-3y	((2 * -1) + (3 * 1))	1
 extendedgcd-6-21	collect(gcdx(ZZ(6), ZZ(21)))	[3, -3, 1]
 bezout-coefficients-when-a-0-0-times-0-5-times-1	collect(gcdx(ZZ(0), ZZ(5)))	[5, 0, 1]
-a-real-two-argument-case-stays-unevaluated		
+a-real-two-argument-case-stays-unevaluated	collect(gcdx(ZZ(2.5), ZZ(3)))	
 a-gaussian-third-argument-past-two-declines		
 a-real-argument-past-two-also-declines		

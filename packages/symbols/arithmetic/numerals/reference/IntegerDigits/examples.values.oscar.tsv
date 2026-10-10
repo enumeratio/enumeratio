@@ -10,9 +10,9 @@ digits-past-9-are-plain-integers-58127-e30f-16	reverse(digits(BigInt(58127), bas
 a-mixed-radix-spelled-mixedradix-102-341-seconds		
 the-leading-digit-is-unbounded-137-3-cdot-3-2		
 a-width-longer-than-the-numeral-pads-with		
-listable-in-the-base-one-digit-list-per-base		
+listable-in-the-base-one-digit-list-per-base	reverse(digits(BigInt(7), base=[2, 3, 4]))	
 listable-threads-over-a-range-of-integers		
-threads-element-wise-over-a-list-as-wolfram-s		
+threads-element-wise-over-a-list-as-wolfram-s	reverse(digits(BigInt([6, 7, 2]), base=2))	
 ordinary-base-2-as-a-system-value-same-digits-as		
 the-same-20-13-5-2-over-a-continued-fraction-s		
 a-negative-integer-with-no-sign		
@@ -39,9 +39,9 @@ the-lehmer-code-of-the-6th-permutation-of-four
 an-integer-base-is-still-the-native-handler	reverse(digits(BigInt(255), base=16))	[15, 15]
 integerdigits-98-534-mixedradixnumerals-list-24		
 unlike-integerstring-there-s-always-at-least-one	reverse(digits(BigInt(0)))	[0]
-the-sign-is-discarded		
+the-sign-is-discarded	reverse(digits(BigInt(-3134)))	
 no-numeral-for-a-negative-in-a-system-that		
-fixed-base-2-drops-the-sign-of-minus-5		
+fixed-base-2-drops-the-sign-of-minus-5	reverse(digits(BigInt(-5), base=2))	
 positionalnumerals-declines-a-negative		
 an-even-balanced-base-declines		
 an-unrecognized-system-symbol-leaves-the-call		

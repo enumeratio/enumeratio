@@ -4,10 +4,10 @@ abs-5	abs(5)	5
 0-is-the-only-value-with-x-0	abs(0)	0
 abs-neg-7-over-2	abs((-7 // 2))	3.5
 the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4	abs(complex(3, 4))	5.0
-threads-element-wise-over-a-list		
+threads-element-wise-over-a-list	abs([-1, 2, -3])	
 abs-neg-2p5	abs(-2.5)	2.5
 the-modulus-of-a-complex-number-with-approximate	abs(complex(1.4, 2.3))	2.692582403567252
-threads-over-a-matrix-entry-by-entry		
+threads-over-a-matrix-entry-by-entry	abs([[(1 // 2), -1], [(-5 // 3), (1 // 2)]])	
 exact-numeric-constants		
 an-exact-complex-number-gives-an-exact-radical	abs(complex(1, 1))	1.4142135623730951
 abs-imaginaryunit		
@@ -31,7 +31,7 @@ the-distance-between-the-points-1-i-and-4-5i-of	abs((complex(1, 1) - complex(4, 
 even-function-x-x	(abs(-8) == abs(8))	true
 triangle-inequality-a-b-le-a-b		
 z-2-z-bar-z		
-multiplicative-ab-a-b		
+multiplicative-ab-a-b	(abs((complex(1, 2) * complex(3, -1))) == (abs(complex(1, 2)) * abs(complex(3, -1))))	
 abs-1	abs(1)	1
 abs-neg-1	abs(-1)	1
 abs-neg-i	abs(complex(0, -1))	1.0

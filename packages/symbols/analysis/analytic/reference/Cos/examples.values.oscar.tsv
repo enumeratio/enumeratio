@@ -8,9 +8,9 @@ cos-pi
 cos-30-circ-exactly		
 a-machine-precision-argument-evaluates	cos(1.2)	0.3623577544766736
 a-huge-24-40-argument	(cos((big(24)^40)))	0.91647884367824463046141232096677428809380434160322162966114084238113070637529
-a-huge-3-200-argument		
+a-huge-3-200-argument	(cos((big(3)^200)))	
 a-huge-neg-7-60-argument	(cos((-((big(7)^60)))))	-0.9309598363622474747028740555482155638273794575636691475318932276433213640150929
-a-huge-10-80-plus-1-over-3-argument		
+a-huge-10-80-plus-1-over-3-argument	(cos((((big(10)^80) + 1) // 3)))	
 cos-2-5	cos(2.5)	-0.8011436155469337
 series-cos-x-x-0-10		
 n-of-an-exact-argument-gives-an-arbitrary	(cos((6 // 5)))	0.3623577544766736
@@ -35,7 +35,7 @@ derivative-sin-x
 antiderivative		
 taylor-series-about-0-only-even-powers-appear		
 to-30-significant-digits-every-one-correctly	(cos(1))	0.5403023058681398
-to-1-significant-digit		
+to-1-significant-digit	(cos(1))	
 a-huge-10-100-argument-reduces-exactly-mod-2-pi	(cos((big(10)^100)))	-0.9280819050746553434561946437769559281831820764390503933251142095425212220307955
 n-cos-6-over-5-50	(cos((6 // 5)))	0.3623577544766736
 functiondomain-cos-x-x		

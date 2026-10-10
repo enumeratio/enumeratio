@@ -3,20 +3,20 @@ divisors-1-729	sort(divisors(ZZ(1729)))	[1, 7, 13, 19, 91, 133, 247, 1729]
 divisors-20	sort(divisors(ZZ(20)))	[1, 2, 4, 5, 10, 20]
 a-prime-s-only-divisors-are-1-and-itself	sort(divisors(ZZ(13)))	[1, 13]
 divisors-6	sort(divisors(ZZ(6)))	[1, 2, 3, 6]
-threads-element-wise-over-a-list-as-wolfram-s		
-divisors-3-plus-4i		
+threads-element-wise-over-a-list-as-wolfram-s	sort(divisors(ZZ([4, 6])))	
+divisors-3-plus-4i	sort(divisors(ZZ(complex(3, 4))))	
 13-2-3i-3-2i-splits-so-it-gains-two-divisors		
-6-4i-i-1-i-2-3-2i		
-listable-threads-over-a-list		
+6-4i-i-1-i-2-3-2i	sort(divisors(ZZ(complex(6, 4))))	
+listable-threads-over-a-list	sort(divisors(ZZ([605, 871, 824])))	
 5-in-the-gaussian-integers		
-a-unit-s-only-divisor-is-1-its-own-normalisation		
-a-gaussian-prime-s-only-divisors-are-1-and		
-a-prime-above-5		
-a-composite-of-norm-25-2-i-2		
-a-composite-with-a-real-and-a-gaussian-factor		
-a-prime-above-13		
-an-associate-has-the-same-divisors-up-to-that		
-a-real-prime-s-associate-by-the-unit-i		
+a-unit-s-only-divisor-is-1-its-own-normalisation	sort(divisors(ZZ(complex(0, 1))))	
+a-gaussian-prime-s-only-divisors-are-1-and	sort(divisors(ZZ(complex(1, 1))))	
+a-prime-above-5	sort(divisors(ZZ(complex(2, 1))))	
+a-composite-of-norm-25-2-i-2	sort(divisors(ZZ(complex(3, 4))))	
+a-composite-with-a-real-and-a-gaussian-factor	sort(divisors(ZZ(complex(6, 8))))	
+a-prime-above-13	sort(divisors(ZZ(complex(3, 2))))	
+an-associate-has-the-same-divisors-up-to-that	sort(divisors(ZZ(complex(-3, -4))))	
+a-real-prime-s-associate-by-the-unit-i	sort(divisors(ZZ(complex(0, 7))))	
 a-negative-real-prime-complex-argument-form	sort(divisors(ZZ(-7)))	[1, 7]
 7-3-mod-4-has-the-same-divisors-as-in-z		
 13-1-mod-4-gains-gaussian-divisors		
@@ -45,6 +45,6 @@ divisors-18	sort(divisors(ZZ(18)))	[1, 2, 3, 6, 9, 18]
 1-has-exactly-one-divisor-itself	sort(divisors(ZZ(1)))	[1]
 only-positive-divisors-even-for-negative-n	sort(divisors(ZZ(-6)))	[1, 2, 3, 6]
 divisors-neg-12	sort(divisors(ZZ(-12)))	[1, 2, 3, 4, 6, 12]
-divisors-0-stays-unevaluated		
-a-non-integer-stays-unevaluated		
+divisors-0-stays-unevaluated	sort(divisors(ZZ(0)))	
+a-non-integer-stays-unevaluated	sort(divisors(ZZ((5 // 2))))	
 720-is-highly-composite-30-divisors-more-than	sort(divisors(ZZ(720)))	[1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720]

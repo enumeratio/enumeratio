@@ -8,9 +8,9 @@ sin-pi
 degrees-d-converts-to-radians-so-sin-60-circ-is		
 a-machine-precision-argument-evaluates	sin(1.2)	0.9320390859672263
 a-huge-10-100-argument	(sin((big(10)^100)))	-0.3723761236612766882620866955531642957196678835674347023644153882967192240437568
-a-huge-3-200-argument		
+a-huge-3-200-argument	(sin((big(3)^200)))	
 a-huge-neg-7-60-argument	(sin((-((big(7)^60)))))	0.3651216004023555500760338739624819731766810208268850293051250191410445114412084
-a-huge-10-80-plus-1-over-3-argument		
+a-huge-10-80-plus-1-over-3-argument	(sin((((big(10)^80) + 1) // 3)))	
 sin-1-under-n	(sin(1))	0.8414709848078965
 n-of-an-exact-argument-gives-an-arbitrary	(sin((6 // 5)))	0.9320390859672263
 evaluates-at-a-complex-argument	sin(complex(2.5, 1))	(0.9234907760431731-0.9415049332708672j)

@@ -41,13 +41,13 @@ both-at-negative-grid-edge	kronecker_symbol(ZZ(-10), ZZ(-10))	0
 mixed-sign-edge	kronecker_symbol(ZZ(10), ZZ(-10))	0
 composite-a-prime-n	kronecker_symbol(ZZ(10), ZZ(7))	-1
 negative-a-odd-square-n-9	kronecker_symbol(ZZ(-10), ZZ(9))	1
-threads-element-wise-over-a-list-as-wolfram-s		
+threads-element-wise-over-a-list-as-wolfram-s	kronecker_symbol(ZZ([2, 3, 5, 7, 11]), ZZ(6))	
 larger-arguments-10-11-1-against-the-2000th		
 even-n-where-jacobisymbol-is-undefined-7-2-7-3-1	kronecker_symbol(ZZ(7), ZZ(6))	1
 generatingfunction-kroneckersymbol-n-7-n-x		
 the-character-mod-4-4-p-1-for-primes-p-equiv-3	kronecker_symbol(ZZ(-4), ZZ(7))	-1
 kroneckersymbol-2-7-eq-kroneckersymbol-23-7	(kronecker_symbol(ZZ(2), ZZ(7)) == kronecker_symbol(ZZ(23), ZZ(7)))	true
-kroneckersymbol-neg-4-list-1-5-7-11		
+kroneckersymbol-neg-4-list-1-5-7-11	kronecker_symbol(ZZ(-4), ZZ([1, 5, 7, 11]))	
 completely-multiplicative-in-n	(kronecker_symbol(ZZ(7), ZZ((3 * 5))) == (kronecker_symbol(ZZ(7), ZZ(3)) * kronecker_symbol(ZZ(7), ZZ(5))))	true
 kroneckersymbol-9-12	kronecker_symbol(ZZ(9), ZZ(12))	0
 kroneckersymbol-12-7-eq-kroneckersymbol-3-7	(kronecker_symbol(ZZ(12), ZZ(7)) == (kronecker_symbol(ZZ(3), ZZ(7)) * kronecker_symbol(ZZ(4), ZZ(7))))	true

@@ -4,12 +4,12 @@ sign-3	sign(3)	1
 zero-is-its-own-sign	sign(0)	0
 sign-neg-1-over-2	sign((-1 // 2))	-1.0
 the-unit-complex-number-pointing-the-same	sign(complex(3, 4))	(0.6+0.8j)
-threads-element-wise-over-a-list		
+threads-element-wise-over-a-list	sign([-3, 0, 7])	
 sign-neg-2p5	sign(-2.5)	-1.0
 sign-3p14	sign(3.14)	1.0
 a-complex-number-with-approximate-parts	sign(complex(1.4, 2.3))	(0.5199469468957452+0.8541985556144386j)
 an-exact-complex-argument-comes-back-exact-sign	sign(complex(1, 1))	(0.7071067811865475+0.7071067811865475j)
-threads-over-a-matrix-entry-by-entry		
+threads-over-a-matrix-entry-by-entry	sign([[(1 // 2), -1], [(-5 // 3), (1 // 2)]])	
 exact-numeric-constants		
 sign-neg-exponentiale		
 sign-imaginaryunit		
@@ -26,7 +26,7 @@ d-sign-x-x
 sign-positiveinfinity-times-i		
 n-sign-exponentiale-plus-i-times-pi-20		
 tells-you-the-temperature-dropped-but-not-by-how	sign((70 - 95))	-1
-sign-z-z-z-see-abs		
+sign-z-z-z-see-abs	(sign(complex(3, 4)) == (complex(3, 4) // abs(complex(3, 4))))	
 x-cdot-sign-x-x-here-at-x-5	((-5 * sign(-5)) == abs(-5))	true
 the-sign-of-a-nonzero-complex-number-lies-on-the	(abs(sign(complex(3, 4))) == 1)	true
 sign-1	sign(1)	1
