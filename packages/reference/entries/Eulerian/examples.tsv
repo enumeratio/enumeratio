@@ -1,0 +1,9 @@
+id	section	role	expr	expected	known	source	caption	epsil.back
+row-4-of-the-triangle			[Map, [Function, [Eulerian, 4, k], k], [Range, 0, 3, 1]]	[List, 1, 11, 11, 1]	[List, 1, 11, 11, 1]	OEIS A008292	row $4$: $1, 11, 11, 1$	Unreadable
+row-5-of-the-triangle			[Map, [Function, [Eulerian, 5, k], k], [Range, 0, 4, 1]]	[List, 1, 26, 66, 26, 1]	[List, 1, 26, 66, 26, 1]	wolframscript 15.0.0, Combinatorica Eulerian[n, k]	row $5$: $1, 26, 66, 26, 1$	Unreadable
+11-permutations-of-4-have-1-descent			[Eulerian, 4, 1]	11	11	wolframscript 15.0.0, Combinatorica Eulerian[n, k]	the $11$ permutations of $4$ with one descent	
+the-empty-permutation			[Eulerian, 0, 0]	1	1	wolframscript 15.0.0, Combinatorica Eulerian[n, k]	the empty permutation has no descents	
+too-many-descents			[Eulerian, 3, 3]	0	0	wolframscript 15.0.0, Combinatorica Eulerian[n, k]	a permutation of $3$ has at most $2$ descents	
+a-bigint-row-entry		test	[Eulerian, 30, 10]	{num: "1269070526794311849099687878550"}	{num: "1269070526794311849099687878550"}	wolframscript 15.0.0, Combinatorica Eulerian[n, k]		
+the-symmetry-of-the-rows		test	[Equal, [Eulerian, 12, 5], [Eulerian, 12, 6]]	True			$A(n, k) = A(n, n - 1 - k)$	
+agrees-with-the-count-of-the-collection			[Equal, [Eulerian, 6, 2], [Count, [KDescentPermutations, 6, 2]]]	True			$A(6, 2) = 302$ both ways	

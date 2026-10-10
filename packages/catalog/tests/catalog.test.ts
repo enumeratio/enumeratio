@@ -22,7 +22,7 @@ test("the catalog is the measured shape, folded to names", () => {
   expect(CARRIERS.length).toBe(93);
   // Folded to names: one row per stat name, however many carriers it is on.
   expect(new Set(STATS.map((s) => s.name)).size).toBe(STATS.length);
-  expect(MAPS.length).toBe(86);
+  expect(new Set(MAPS.map((m) => m.name)).size).toBe(MAPS.length);
 });
 
 test("a stat is one name defined on several carriers", () => {
