@@ -1,9 +1,8 @@
 import type { Json, LatexRule } from "@enumeratio/engine";
 import { INTEGER_MOD, QUOTIENT_RING, RESIDUE_CLASS } from "./names.ts";
 
-// Notation for ℤ/m, both ways. Not declared with the heads: compute-engine takes its LaTeX
-// dictionary only at construction, so a host loads
-// these from the package's notation entry (`./notation`) before it builds an engine.
+// Notation for ℤ/m, both ways. Not declared with the heads: a host loads these from the
+// package's notation entry (`./notation`) and gives them to the engine's LaTeX syntax.
 //
 //   a \pmod{n}             ResidueClass(a, n); written back as compute-engine writes it,
 //                          \overline{a}_{n}

@@ -64,8 +64,8 @@ export function registerNotation(owner: object, notation: Notation): void {
 export const notationOf = (owner: object): Notation => registered.get(owner) ?? {};
 
 /** A package's notation, as its `./notation` entry exports it (`notation`): what a host loads
- *  for every catalogued package before it builds an engine, whose LaTeX dictionary is fixed
- *  at construction. Light: no definitions, nothing beyond boxes and compute-engine types. */
+ *  for every catalogued package: its LaTeX entries go to the engine at construction or
+ *  `addEntries`. Light: no definitions, nothing beyond boxes and compute-engine types. */
 export interface PackageNotation {
   /** TraditionalForm: box rules for `makeBoxes`. */
   readonly traditional?: Notation;

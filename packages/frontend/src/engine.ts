@@ -14,16 +14,17 @@ const configurators: ((ce: ComputeEngine) => void)[] = [];
 const latexEntries: Partial<LatexDictionaryEntry>[] = [];
 
 /**
- * Contribute LaTeX dictionary entries -- a library's notation, parsed and serialised --
- * to the shared engine. compute-engine only takes a dictionary at construction
- *, so these must land before the engine exists: register
- * them where the libraries are declared, behind `__notatioEngineReady`. Appended to the
- * default dictionary, so an entry with an existing trigger takes precedence, and one with
- * an existing name replaces it.
+ * Contribute LaTeX dictionary entries -- a library's notation, parsed and serialised -- to the
+ * shared engine: added to the running engine at once, or when it is built. Appended to the
+ * default dictionary, so an entry with an existing trigger takes precedence, and one with an
+ * existing name replaces it.
  */
 export function configureLatex(entries: readonly Partial<LatexDictionaryEntry>[]): void {
-  if (engine) throw new Error("configureLatex: the engine exists; its dictionary is fixed");
   latexEntries.push(...entries);
+  if (engine === undefined) return;
+  const syntax = engine.latexSyntax;
+  if (syntax?.addEntries === undefined) throw new Error("configureLatex: the engine's LaTeX syntax takes no entries");
+  syntax.addEntries(entries as never);
 }
 
 /** `base` then `extra`, a named entry replacing any earlier one by that name -- in `base`
