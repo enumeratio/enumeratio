@@ -18,7 +18,7 @@ bindings:
   - origin: mapped
     form: wolfram
     counterpart: false
-    note: Wolfram has no TableViewBox (its TableView is a front-end construct with no box head); this box is ours.
+    note: Wolfram's TableViewBox takes a list of rows of boxes; this one takes a held row source, so it is ours.
     checked:
       version: 15.0.0
       on: 2026-10-10
