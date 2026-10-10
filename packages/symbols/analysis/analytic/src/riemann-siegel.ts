@@ -20,7 +20,13 @@ import {
   zetaGeneralized,
   inexactComplex,
 } from "@enumeratio/ce-patches";
-import { riemannSiegelZBig, riemannSiegelZComplexBig, riemannZetaZeroBig } from "./riemann-siegel-big.ts";
+import { LARGEST_ARGUMENT } from "./riemann-siegel-asymptotic.ts";
+import {
+  riemannSiegelZBig,
+  riemannSiegelZComplexBig,
+  riemannSiegelZLarge,
+  riemannZetaZeroBig,
+} from "./riemann-siegel-big.ts";
 
 // RiemannSiegelTheta(t), RiemannSiegelZ(t), and RiemannZetaZero(k) — reusing the
 // existing log-gamma continuation (loggamma.ts) and generalized zeta kernel
@@ -35,6 +41,10 @@ import { riemannSiegelZBig, riemannSiegelZComplexBig, riemannZetaZeroBig } from 
 // ζ(½ + it) is HurwitzZeta/Zeta's own generalized kernel at a = 1, which reduces to
 // the Riemann zeta; every value here is already covered by hurwitz-zeta.ts's own
 // Euler–Maclaurin tests, so this file adds no new zeta evaluation of its own.
+//
+// That sum is t terms in doubles, whose phases t ln n lose ~log₁₀(t ln t) digits, and the complex ϑ
+// above overflows from |Re t| ≈ 450. From |Re t| ≈ 100 (a real t from 2000) the Riemann–Siegel formula
+// takes over (riemann-siegel-asymptotic.ts): √t terms, and its phases are carried in BigDecimal.
 
 /** ϑ(t) for real t. */
 function theta(t: number): number {
@@ -48,6 +58,9 @@ function riemannSiegelZ(t: number): number {
   const z = zetaGeneralized({ re: 0.5, im: t }, { re: 1, im: 0 });
   return Math.cos(th) * z.re - Math.sin(th) * z.im;
 }
+
+/** |Re z| from which `logGamma(¼ ∓ …)` reflects through a sine that overflows (|Im| > ~226). */
+const COMPLEX_KERNEL_LIMIT = 440;
 
 /** Z(z) for complex z: e^{iϑ(z)} ζ(½ + iz), with ϑ continued as above. */
 function riemannSiegelZComplex(z: Cx): Cx {
@@ -190,7 +203,17 @@ export function declareRiemannSiegel(ce: ComputeEngine): void {
       // Past what a double carries only the bignum kernel answers; it declines rather than dress
       // ~17 correct digits as the d asked for.
       if (exceedsDoublePrecision(ce, options.numericApproximation)) return riemannSiegelZPastDouble(ce, t);
-      if (t.im !== 0) return numberResult(ce, riemannSiegelZComplex(cx(t.re, t.im)));
+      if (Math.abs(t.re) > LARGEST_ARGUMENT) return undefined;
+      // The zeta sum's phases lose digits as t grows; the Riemann–Siegel formula doesn't.
+      const large = riemannSiegelZLarge(t.re, t.im);
+      if (large !== undefined) return t.im === 0 ? ce.number(large[0]) : numberResult(ce, cx(large[0], large[1]));
+      // The log-gamma behind a complex ϑ overflows from |Re t| ≈ 450: where the formula above
+      // doesn't take it (|Im t| past ½√|Re t|), decline rather than answer from that.
+      if (t.im !== 0) {
+        return Math.abs(t.re) < COMPLEX_KERNEL_LIMIT
+          ? numberResult(ce, riemannSiegelZComplex(cx(t.re, t.im)))
+          : undefined;
+      }
       return ce.number(riemannSiegelZ(t.re));
     },
   });

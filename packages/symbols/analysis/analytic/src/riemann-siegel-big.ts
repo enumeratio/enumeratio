@@ -13,6 +13,7 @@ import {
   hurwitzZetaBig,
   type BigCx,
 } from "@enumeratio/ce-patches";
+import { reaches, riemannSiegelZAsymptotic } from "./riemann-siegel-asymptotic.ts";
 
 // The BigDecimal twin of `riemannSiegelZ` (riemann-siegel.ts): Z(z) = e^{iϑ(z)} ζ(½ + iz) with
 //   ϑ(z) = (ln Γ(¼ + iz/2) − ln Γ(¼ − iz/2)) / 2i − (z/2) ln π,
@@ -134,9 +135,47 @@ function resolved(
   return undefined;
 }
 
+/**
+ * Z(x + iy) from the Riemann–Siegel formula, each part to `digits` significant digits (the real
+ * part alone when y is 0), or undefined when the series can't reach them: it is asymptotic, so
+ * small t, a part near a zero, and a large y all fall outside it. A part's own size sets the
+ * truncation it needs, so the terms are re-chosen when a part came out small, unless `strict` is
+ * off, which settles for `digits` absolute.
+ */
+export function asymptoticParts(x: BigDecimal, y: BigDecimal, digits: number, strict = true): BigDecimal[] | undefined {
+  const real = y.isZero();
+  // The imaginary part is ~y·Z′, and so is its truncation error, in proportion.
+  const scale = [1, Math.min(1, Math.abs(y.toNumber()))];
+  let accuracy = strict ? digits + SPARE : digits;
+  for (let pass = 0; pass < 3; pass++) {
+    const values = resolved(
+      () => {
+        const z = riemannSiegelZAsymptotic(x, y, accuracy);
+        if (z === undefined) return undefined;
+        return real ? [z.value.re] : [z.value.re, z.value.im];
+      },
+      digits,
+      phaseDigits(x, y),
+    );
+    if (values === undefined) return undefined;
+    if (!strict) return values; // truncation is absolute: a part near a zero keeps fewer digits
+    let wanted = accuracy;
+    values.forEach((v, i) => {
+      wanted = Math.max(wanted, v.isZero() ? Infinity : Math.ceil(digits + SPARE - log10(v) + Math.log10(scale[i]!)));
+    });
+    if (wanted === accuracy) return values;
+    if (!Number.isFinite(wanted)) return undefined;
+    accuracy = wanted;
+  }
+  return undefined;
+}
+
 /** Z(t) for real t, to `digits` significant digits, or undefined when the zeta kernel declines. */
 export function riemannSiegelZBig(t: BigDecimal, digits: number): BigDecimal | undefined {
-  if (!t.isFinite() || t.abs().gt(MAX_ARGUMENT)) return undefined;
+  if (!t.isFinite()) return undefined;
+  const asymptotic = asymptoticParts(t, BigDecimal.ZERO, digits);
+  if (asymptotic !== undefined) return asymptotic[0];
+  if (t.abs().gt(MAX_ARGUMENT)) return undefined;
   const values = resolved(
     (working) => {
       const z = realZ(t, working);
@@ -150,8 +189,10 @@ export function riemannSiegelZBig(t: BigDecimal, digits: number): BigDecimal | u
 
 /** Z(x + iy) to `digits` significant digits in each part; a part that is exactly zero stays so. */
 export function riemannSiegelZComplexBig(x: BigDecimal, y: BigDecimal, digits: number): BigCx | undefined {
-  if (!x.isFinite() || !y.isFinite() || x.abs().gt(MAX_COMPLEX_ARGUMENT) || y.abs().gt(MAX_COMPLEX_ARGUMENT))
-    return undefined;
+  if (!x.isFinite() || !y.isFinite()) return undefined;
+  const asymptotic = asymptoticParts(x, y, digits);
+  if (asymptotic !== undefined) return { re: asymptotic[0]!, im: asymptotic[1]! };
+  if (x.abs().gt(MAX_COMPLEX_ARGUMENT) || y.abs().gt(MAX_COMPLEX_ARGUMENT)) return undefined;
   const values = resolved(
     (working) => {
       const z = complexZ(x, y, working);
@@ -161,6 +202,45 @@ export function riemannSiegelZComplexBig(x: BigDecimal, y: BigDecimal, digits: n
     phaseDigits(x, y),
   );
   return values === undefined ? undefined : { re: values[0]!, im: values[1]! };
+}
+
+/** A double as the exact decimal it is (BigDecimal's own reading takes the shortest one that round-trips). */
+function exactDouble(x: number): BigDecimal {
+  if (Number.isInteger(x)) return new BigDecimal(BigInt(x));
+  const view = new DataView(new ArrayBuffer(8));
+  view.setFloat64(0, x);
+  const bits = view.getBigUint64(0);
+  const biased = Number((bits >> 52n) & 0x7ffn);
+  const fraction = bits & ((1n << 52n) - 1n);
+  const mantissa = biased === 0 ? fraction : fraction | (1n << 52n);
+  const shift = (biased === 0 ? 1 : biased) - 1075; // x = ±mantissa · 2^shift, and shift < 0 here
+  const exact = atDigits(Math.ceil(-shift * 0.31) + 20, () =>
+    new BigDecimal(mantissa).div(new BigDecimal(1n << BigInt(-shift))),
+  );
+  return x < 0 ? exact.neg() : exact;
+}
+
+/** Digits of Z a double result is held to. */
+const DOUBLE_ACCURACY = 17;
+
+/**
+ * Real t from here on go through the Riemann–Siegel formula too: the zeta sum's double phases lose
+ * ~log₁₀(t ln t) digits (a relative 10⁻¹¹ by t = 10⁴, 10⁻⁸ by 10⁶), but it is ~30× the work of the
+ * sum below this, which is good to ~10⁻¹² and what a plot over the first zeros wants.
+ */
+const REAL_SWITCH = 2000;
+
+/**
+ * Z(x + iy) as doubles, from the Riemann–Siegel formula, for the large |x| where it reaches a
+ * double's digits. Undefined elsewhere. The doubles are taken as the exact numbers they are.
+ */
+export function riemannSiegelZLarge(x: number, y: number): readonly [number, number] | undefined {
+  if (!Number.isFinite(x) || !Number.isFinite(y)) return undefined;
+  if ((y === 0 && Math.abs(x) < REAL_SWITCH) || !reaches(Math.abs(x), DOUBLE_ACCURACY)) return undefined;
+  const parts = asymptoticParts(exactDouble(x), exactDouble(y), DOUBLE_ACCURACY, false);
+  if (parts === undefined) return undefined;
+  const [re, im] = [parts[0]!.toNumber(), parts[1]?.toNumber() ?? 0]; // |Z| grows like e^{|y| ln t / 2}
+  return Number.isFinite(re) && Number.isFinite(im) ? [re, im] : undefined;
 }
 
 const MAX_NEWTON = 8;
