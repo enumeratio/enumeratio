@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-inert	Basic		[SetterBox, [DynamicBox, c], [List, a, b, c]]	[SetterBox, [DynamicBox, c], [List, a, b, c]]	a box is inert: it evaluates to itself
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+inert	Basic		[SetterBox, [DynamicBox, c], [List, a, b, c]]	[SetterBox, [DynamicBox, c], [List, a, b, c]]	a box is inert: it evaluates to itself	shape	Wolfram's ToBoxes shape is SetterBox[Dynamic[c], {{a, b, c}}, RowBox[...]]; ours takes a bare list. BL-213 aligns the control boxes with Wolfram, so this row is re-scanned then.

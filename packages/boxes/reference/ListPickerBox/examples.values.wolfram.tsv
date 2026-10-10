@@ -1,2 +1,2 @@
-id	in
-inert	ListPickerBox[DynamicBox[c], List[a, b, c]]
+id	in	out	tex.in	tex.out	verdict
+inert	ListPickerBox[DynamicBox[c], List[a, b, c]]	ListPickerBox[DynamicBox[c], {a, b, c}]	\text{ListPickerBox}[\text{DynamicBox}[c],\{a,b,c\}]	\text{ListPickerBox}[\text{DynamicBox}[c],\{a,b,c\}]	disagree
