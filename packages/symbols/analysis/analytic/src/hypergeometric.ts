@@ -18,6 +18,7 @@ import {
 } from "@enumeratio/ce-patches";
 import { bigRationalAt } from "@enumeratio/engine";
 import {
+  hypergeometric1F1RegularizedBig,
   hypergeometric2F1RegularizedBig,
   hypergeometric3F2RegularizedBig,
   pfqBig,
@@ -97,6 +98,12 @@ const isMinusOneShift = (a: Cx, b: Cx): boolean =>
   b.im === 0 &&
   !isNonPositiveInt(add(a, cx(-1))) &&
   Math.abs(b.re - a.re + 1) <= EPS * Math.max(1, Math.abs(a.re), Math.abs(b.re));
+
+/** 1F1(a; a; z)/Γ(a) = e^z/Γ(a): (a)ₖ/Γ(a+k) = 1/Γ(a) termwise, so the regularized series sums to e^z/Γ(a). */
+const regularizedDiagonal = (a: Cx, z: Cx): Cx => mul(cexp(z), invGamma(a));
+
+/** Is b = a on the reals? */
+const isDiagonal = (a: Cx, b: Cx): boolean => a.im === 0 && b.im === 0 && a.re === b.re;
 
 /** 1/Γ(n) for an integer n: 0 at the poles n ≤ 0, else 1/(n − 1)! (infinite factorials flush to 0). */
 function exactInvGammaAt(n: number): Cx {
@@ -230,6 +237,14 @@ function regularizedPastDouble(
   return value === undefined ? undefined : bigResult(ce, value);
 }
 
+/** 1F1(a; b; z)/Γ(b) at the engine's precision for real operands, past a double's digits. */
+function regularized1F1PastDouble(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  const [a, b, z] = ops.map((op) => bigRealOperand(ce, op));
+  if (a === undefined || b === undefined || z === undefined) return undefined;
+  const value = hypergeometric1F1RegularizedBig(a, b, z, ce.precision);
+  return value === undefined ? undefined : bigResult(ce, value);
+}
+
 /** 2F1(a, b; c; z)/Γ(c) at the engine's precision for real operands and z < 1, past a double's digits. */
 function regularized2F1PastDouble(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   const [a, b, c, z] = ops.map((op) => bigRealOperand(ce, op));
@@ -317,6 +332,16 @@ function regularizedMinusOneExact(ce: ComputeEngine, ops: readonly BoxedExpressi
     .evaluate();
 }
 
+/** `regularizedDiagonal` on exact operands: b = a exactly, and a off the poles. */
+function regularizedDiagonalExact(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
+  const [a, b, z] = ops;
+  if (a === undefined || b === undefined || z === undefined) return undefined;
+  const aExact = bigRationalAt(a);
+  if (aExact === undefined || (aExact[1] === 1n && aExact[0] <= 0n)) return undefined;
+  if (!ce.function("Subtract", [a, b]).evaluate().is(0)) return undefined;
+  return ce.box(["Multiply", ["Exp", z.json], ["Divide", 1, ["Gamma", a.json]]] as never).evaluate();
+}
+
 export function declareHypergeometric(ce: ComputeEngine): void {
   // Hypergeometric0F1(b, z) = 0F1(b; z), entire in z; pole at b a non-positive integer.
   ce.declare("Hypergeometric0F1", {
@@ -361,12 +386,12 @@ export function declareHypergeometric(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
       const cs = operandsOf(ops);
       if (cs !== undefined && !wantsNumber(ops, options))
-        return regularizedMinusOneExact(ce, ops) ?? regularizedBessel(ce, ops);
+        return regularizedMinusOneExact(ce, ops) ?? regularizedDiagonalExact(ce, ops) ?? regularizedBessel(ce, ops);
       if (cs === undefined || !wantsNumber(ops, options)) return undefined;
       const [a, b, z] = cs;
-      if (exceedsDoublePrecision(ce, options.numericApproximation))
-        return regularizedPastDouble(ce, [ops[0]], ops[1], ops[2]);
+      if (exceedsDoublePrecision(ce, options.numericApproximation)) return regularized1F1PastDouble(ce, ops);
       if (isMinusOneShift(a, b)) return numberResult(ce, regularizedMinusOne(a, z));
+      if (isDiagonal(a, b)) return numberResult(ce, regularizedDiagonal(a, z));
       const r = pfqRegularizedSeries([a], [b], z);
       return r === undefined ? undefined : numberResult(ce, r);
     },

@@ -36,6 +36,23 @@ test("1F1Regularized(a; a − 1; z) is its closed form e^z (1 + z/(a − 1))/Γ(
   expect(ce.box(["Hypergeometric1F1Regularized", 1, 2, 0.5]).N().re).toBeCloseTo(1.2974425414002555, 13);
 });
 
+test("1F1Regularized(a; a; z) is e^z/Γ(a), so the contiguous sum cancels exactly", () => {
+  const half = (n: number) => ["Rational", n, 2];
+  expect(ce.box(["Hypergeometric1F1Regularized", 1.5, 1.5, 0.3]).N().re).toBeCloseTo(
+    Math.exp(0.3) / (Math.sqrt(Math.PI) / 2),
+    14,
+  );
+  // −½·M(3/2; ½; ½) + M(½; −½; ½) + M(½; ½; ½) = −√e/√π + 0 + √e/√π
+  const row = [
+    "Add",
+    ["Multiply", half(-1), ["Hypergeometric1F1Regularized", half(3), half(1), half(1)]],
+    ["Hypergeometric1F1Regularized", half(1), half(-1), half(1)],
+    ["Hypergeometric1F1Regularized", half(1), half(1), half(1)],
+  ];
+  expect(ce.box(row as never).evaluate().json).toEqual(0);
+  expect(ce.box(["N", row] as never).evaluate().re).toBe(0);
+});
+
 test("Hypergeometric2F1Regularized and Hypergeometric3F2Regularized decline |z| >= 1", () => {
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, 1.5]).N().operator).toBe("Hypergeometric2F1Regularized");
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, ["Complex", 1, 0.5]]).N().operator).toBe(

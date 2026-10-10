@@ -153,6 +153,41 @@ export function pfqBig(
   return atDigits(working, () => regularized.div(inverseGamma(b, working)).toPrecision(digits));
 }
 
+/** Are x and y equal to `digits` digits, relative to 1 + |x| + |y|? */
+const agrees = (x: BigDecimal, y: BigDecimal, digits: number): boolean =>
+  x
+    .sub(y)
+    .abs()
+    .lte(big(1).add(x.abs()).add(y.abs()).mul(big(10).pow(-digits)));
+
+/**
+ * 1F1(a; b; z)/Γ(b) to `digits` digits. At b = a − 1 and b = a the closed forms e^z(1 + z/(a−1))/Γ(a−1)
+ * and e^z/Γ(a) answer where the series can't: a sum that cancels to 0 never settles its tail.
+ */
+export function hypergeometric1F1RegularizedBig(
+  a: BigDecimal,
+  b: BigDecimal,
+  z: BigDecimal,
+  digits: number,
+): BigDecimal | undefined {
+  const working = digits + GUARD;
+  const shift = a.sub(1);
+  const shiftIsPole = shift.isInteger() && shift.lte(0);
+  if (!shiftIsPole && agrees(b, shift, working)) {
+    return atDigits(working, () =>
+      z
+        .exp()
+        .mul(big(1).add(z.div(shift)))
+        .mul(inverseGamma(shift, working))
+        .toPrecision(digits),
+    );
+  }
+  if (!(a.isInteger() && a.lte(0)) && agrees(b, a, working)) {
+    return atDigits(working, () => z.exp().mul(inverseGamma(a, working)).toPrecision(digits));
+  }
+  return pfqRegularizedBig([a], [b], z, digits);
+}
+
 /** Below this z the Pfaff map z/(z−1) lands nearer 0 than z does by enough to be worth taking. */
 const PFAFF_BELOW = -0.5;
 
