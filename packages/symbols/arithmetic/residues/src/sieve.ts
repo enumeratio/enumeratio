@@ -52,7 +52,8 @@ function sieveBlock(low: number, high: number, basePrimes: readonly number[], on
 export const PRIME_SIEVE_LIMIT = 200_000_000;
 
 /**
- * Past this, PrimePi/NthPrime decline exactly (stay symbolic) rather than grow the
+ * Past this, NthPrime declines exactly (stay symbolic; PrimePi goes on with prime-count.ts)
+ * rather than grow the
  * Lucy_Hedgehog method's O(√x) working set past what's worth keeping resident for an
  * interactive answer — at 10^12 that's two Float64Arrays of about 8MB apiece, comfortably
  * under a gigabyte with room to spare for whatever else is running.

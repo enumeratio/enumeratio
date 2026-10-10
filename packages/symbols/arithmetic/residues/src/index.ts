@@ -3,6 +3,7 @@ export { RESIDUES_CARRIERS } from "./carrier-data.ts";
 export { crt, crtSolve, extendedGcd, gcd, invMod, isqrt, lehmerGcd, mod, powMod, valuation } from "./arith.ts";
 export { factorInteger, isPrime, RHO_BUDGET, totientOf } from "./primes.ts";
 export { nthPrime, PRIME_PI_LIMIT, PRIME_SIEVE_LIMIT, primeCountUpTo } from "./sieve.ts";
+export { PRIME_COUNT_LIMIT, PRIME_COUNT_MAX, primeCount, primeCountDR } from "./prime-count.ts";
 export { MAX_ROOTS, powerModList, powerModRoots, unitsMod } from "./roots.ts";
 export { BSGS_LIMIT, type Group, rootsInCyclicGroup } from "./cyclic.ts";
 export {

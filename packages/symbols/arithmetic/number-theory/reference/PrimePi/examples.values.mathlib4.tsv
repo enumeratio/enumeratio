@@ -10,6 +10,7 @@ the-primes-below-a-million	(Nat.primeCounting 1000000)
 listable-threads-over-a-list	(Nat.primeCounting [3, 5, 17, 25])	
 primepi-10-11	(Nat.primeCounting 100000000000)	
 primepi-10-12	(Nat.primeCounting 1000000000000)	
+primepi-10-13	(Nat.primeCounting 10000000000000)	
 primepi-1-plus-10-pow-17		
 nthprime-range-1-primepi-100		
 primepi-5-000	(Nat.primeCounting 5000)	
@@ -32,4 +33,4 @@ primepi-16	(Nat.primeCounting 16)
 primepi-17	(Nat.primeCounting 17)	
 primepi-18	(Nat.primeCounting 18)	
 no-primes-are-a-negative-number	(Nat.primeCounting (-1))	
-past-10-12-the-call-stays-symbolic	(Nat.primeCounting 10000000000000)	
+past-10-15-the-call-stays-symbolic	(Nat.primeCounting 10000000000000000)	

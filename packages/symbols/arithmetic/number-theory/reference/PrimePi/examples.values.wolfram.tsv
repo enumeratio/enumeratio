@@ -10,6 +10,7 @@ the-primes-below-a-million	PrimePi[1000000]	78498	\pi (1000000)	78498
 listable-threads-over-a-list	PrimePi[List[3, 5, 17, 25]]	{2, 3, 7, 9}	\pi (\{3,5,17,25\})	\{2,3,7,9\}	
 primepi-10-11	PrimePi[100000000000]	4118054813	\pi (100000000000)	4118054813	
 primepi-10-12	PrimePi[1000000000000]	37607912018	\pi (1000000000000)	37607912018	
+primepi-10-13	PrimePi[10000000000000]	346065536839	\pi (10000000000000)	346065536839	
 primepi-1-plus-10-pow-17	PrimePi[Plus[1, Power[10, 17]]]	2623557157654233	\pi \left(1+10^{17}\right)	2623557157654233	disagree
 nthprime-range-1-primepi-100	Prime[Range[1, PrimePi[100]]]	{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97}	p_{\text{Range}[1,\pi (100)]}	\{2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97\}	
 primepi-5-000	PrimePi[5000]	669	\pi (5000)	669	
@@ -32,4 +33,4 @@ primepi-16	PrimePi[16]	6	\pi (16)	6
 primepi-17	PrimePi[17]	7	\pi (17)	7	
 primepi-18	PrimePi[18]	7	\pi (18)	7	
 no-primes-are-a-negative-number	PrimePi[-1]	0	\pi (-1)	0	
-past-10-12-the-call-stays-symbolic	PrimePi[10000000000000]	346065536839	\pi (10000000000000)	346065536839	disagree
+past-10-15-the-call-stays-symbolic	PrimePi[10000000000000000]	279238341033925	\pi (10000000000000000)	279238341033925	disagree

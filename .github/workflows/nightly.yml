@@ -61,6 +61,8 @@ jobs:
       - run: pnpm --filter @enumeratio/census exec vp test run tests/declaration-order.test.ts
       - run: pnpm --filter @enumeratio/ce-patches exec vp test run tests/algebraic-numbers.test.ts
       - run: pnpm --filter @enumeratio/cli exec vp test run tests/table.test.ts
+      # π(x) by the combinatorial count against Lucy_Hedgehog, then 10^14 … 10^17 (minutes at the top).
+      - run: pnpm --filter @enumeratio/residues exec vp test run tests/prime-count.test.ts
 
   # The review backlog's machine-checkable claims (`expect:` bullets exported to
   # packages/reference/review-claims.tsv), evaluated against the current engine. A claim that stops
