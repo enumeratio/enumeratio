@@ -12,6 +12,14 @@ seeAlso:
   - SliderBox
   - StepperBox
   - DynamicBox
+bindings:
+  - origin: mapped
+    form: wolfram
+    counterpart: false
+    note: Wolfram has no knob box; this one is ours.
+    checked:
+      version: 15.0.0
+      on: 2026-10-10
 ---
 
 - Wolfram has no knob; this box is ours, with the same shape as `SliderBox`: the binding, then `(min, max)` or `(min, max, step)`.

@@ -108,6 +108,8 @@ for (const family of allEntries.filter((f) => f.declared !== undefined)) {
 // A walking family's work is the steps of its unrank and rank, which a fiber can far outsize: at
 // params where the walk is cheap and the fiber is larger than it, the first, middle and last
 // members round-trip, so the bound is a bound on the walk and not a stand-in for the count.
+// A walk of this many steps takes a few milliseconds: more than CHEAP's count of elements to enumerate.
+const CHEAP_WALK = 200_000n;
 for (const family of allEntries.filter((f) => f.declared?.walks === true)) {
   const declared = family.declared as NonNullable<FamilyKernel["declared"]>;
   test(`${family.head}: unrank and rank walk, in fewer steps than the fiber has members`, () => {
@@ -117,7 +119,7 @@ for (const family of allEntries.filter((f) => f.declared?.walks === true)) {
       const p = mins.map((m) => m + step);
       const work = (declared.work as (p: number[]) => bigint)(p);
       const count = countOf(family, p);
-      if (work > CHEAP || typeof count !== "bigint" || count <= work) continue;
+      if (work > CHEAP_WALK || typeof count !== "bigint" || count <= work) continue;
       outsized++;
       for (const r of [0n, count / 2n, count - 1n]) {
         const element = family.unrank(p, r);

@@ -113,6 +113,8 @@ export const FOREIGN: Record<string, string> = {
   // Ours is literal text inside boxes (https://github.com/enumeratio/enumeratio/wiki/Boxes); Wolfram writes that as a quoted
   // string, and its own TextBox is undocumented.
   TextBox: "an undocumented front-end box whose meaning Wolfram does not publish",
+  // Ours is a scrolling grid over a held row source; Wolfram's takes a list of rows of boxes.
+  TableViewBox: "a front-end table whose rows are a list of lists of boxes",
   // Ours holds a hole's Epsil as written, for the environment to parse; Wolfram's holds the
   // expression itself.
   TemplateExpression: "a template hole holding an expression, evaluated when the template is applied",

@@ -355,7 +355,7 @@ async function runRust(sources: readonly string[]): Promise<Result[]> {
     if (build.killed !== undefined) return failAll(sources.length, `cargo: killed (${build.killed})`);
     if (build.code !== 0) {
       const rejected = new Map<number, string>();
-      for (const match of build.stderr.matchAll(/src\/main\.rs:(\d+):\d+: error(?:\[\w+\])?: (.*)/g)) {
+      for (const match of build.stderr.matchAll(/src\/bin\/batch\.rs:(\d+):\d+: error(?:\[\w+\])?: (.*)/g)) {
         const at = order[Number(match[1]) - header.length - 1];
         if (at !== undefined && !rejected.has(at)) rejected.set(at, `compile: ${(match[2] as string).slice(0, 90)}`);
       }

@@ -1,2 +1,2 @@
-id	section	role	expr	expected	caption
-inert	Basic		[Slider2DBox, [DynamicBox, p], [Tuple, [Tuple, 0, 0], [Tuple, 1, 1]]]	[Slider2DBox, [DynamicBox, p], [Tuple, [Tuple, 0, 0], [Tuple, 1, 1]]]	a box is inert: it evaluates to itself
+id	section	role	expr	expected	caption	wolfram.kind	wolfram.note
+inert	Basic		[Slider2DBox, [DynamicBox, p], [Tuple, [Tuple, 0, 0], [Tuple, 1, 1]]]	[Slider2DBox, [DynamicBox, p], [Tuple, [Tuple, 0, 0], [Tuple, 1, 1]]]	a box is inert: it evaluates to itself	shape	Wolfram's ToBoxes shape is Slider2DBox[Dynamic[p], {{0, 0}, {1, 1}}]; ours binds with DynamicBox[p]. BL-213 aligns the control boxes with Wolfram, so this row is re-scanned then.

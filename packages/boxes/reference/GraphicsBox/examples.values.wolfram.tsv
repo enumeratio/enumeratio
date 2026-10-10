@@ -1,2 +1,2 @@
-id	in
-inert	GraphicsBox[RowBox[List[]]]
+id	in	out	tex.in	tex.out	verdict
+inert	GraphicsBox[RowBox[List[]]]	GraphicsBox[RowBox[{}]]	\text{GraphicsBox}[\text{RowBox}[\{\}]]	\text{GraphicsBox}[\text{RowBox}[\{\}]]	disagree

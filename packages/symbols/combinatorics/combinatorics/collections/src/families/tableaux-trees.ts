@@ -104,15 +104,15 @@ export function IncreasingBinaryTreeRank(t: LabTree): number {
   return PermutationRank(flattenLabTree(t));
 }
 export function IsIncreasingBinaryTree(t: unknown, n: number): boolean {
-  const seen = new Array(n + 1).fill(false);
+  const seen = new Set<number>(); // not sized by n, which a caller may make huge
   let count = 0;
   const rec = (x: unknown, parentLabel: number): boolean => {
     if (x === 0) return true;
     if (!Array.isArray(x) || x.length !== 3) return false;
     const [v, l, r] = x as [number, unknown, unknown];
-    if (!Number.isInteger(v) || v < 1 || v > n || seen[v]) return false;
+    if (!Number.isInteger(v) || v < 1 || v > n || seen.has(v)) return false;
     if (parentLabel >= 0 && v <= parentLabel) return false;
-    seen[v] = true;
+    seen.add(v);
     count++;
     return rec(l, v) && rec(r, v);
   };
@@ -187,7 +187,11 @@ function sytRankShape(rows: number[][]): number {
 function isStandardTableauOf(e: unknown, n: number): boolean {
   if (!Array.isArray(e)) return false;
   const rows = e as number[][];
-  const seen = new Array(n + 1).fill(false);
+  // The cell count settles most non-members before `seen` is sized by n, which a caller may make huge.
+  let cells = 0;
+  for (const row of rows) cells += Array.isArray(row) ? row.length : 0;
+  if (cells !== n) return false;
+  const seen = new Uint8Array(n + 1);
   let total = 0;
   for (let r = 0; r < rows.length; r++) {
     const row = rows[r];
@@ -196,7 +200,7 @@ function isStandardTableauOf(e: unknown, n: number): boolean {
     for (let c = 0; c < row.length; c++) {
       const v = row[c];
       if (!Number.isInteger(v) || v < 1 || v > n || seen[v]) return false;
-      seen[v] = true;
+      seen[v] = 1;
       total++;
       if (c > 0 && row[c - 1] >= v) return false;
       if (r > 0 && rows[r - 1][c] !== undefined && rows[r - 1][c] >= v) return false;

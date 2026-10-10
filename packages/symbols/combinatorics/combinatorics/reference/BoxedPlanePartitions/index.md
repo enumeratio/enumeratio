@@ -31,4 +31,4 @@ carrier: PlanePartition
 
 - A lazy indexed collection, exact and closed-form by MacMahon's box formula: $Count(BoxedPlanePartitions(a,b,c)) = \prod_{i=1}^{a} \prod_{j=1}^{b} \prod_{k=1}^{c} \frac{i+j+k-1}{i+j+k-2}$ — $Count(BoxedPlanePartitions(2,2,2)) = 20$.
 - Each element is the array's rows, [[PlanePartitions]]'s ragged carrier: entries weakly decrease along every row and down every column, with trailing zeros trimmed rather than stored.
-- Unranked in shape-then-entries order, same as [[PlanePartitions]]; rank/unrank enumerate the box and index into it, so stick to small boxes.
+- Unranked in shape-then-entries order, same as [[PlanePartitions]]. A rank is found by walking a table over the rows a box allows (counting what each row starts), so `At` answers in boxes whose whole list is far too long to build, up to about $(5, 5, 5)$ (267,227,532 partitions); past that a call is refused as too long, and past $2^{53}$ partitions only the count answers.

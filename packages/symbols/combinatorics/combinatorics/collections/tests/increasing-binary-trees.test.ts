@@ -72,6 +72,10 @@ test("a label out of heap order, repeated or out of range is not a tree", () => 
   }
 });
 
+test("membership at a huge n is settled by the tree, not sized by n", () => {
+  for (const n of [1e8, 1e9, 3e9]) expect(fast.valid([1, [2, 0, 0], 0], [n])).toBe(false);
+});
+
 test("past 2^53 the count is exact and the walks decline", () => {
   expect(kernel.count([20])).toBe(2432902008176640000n);
   expect(() => kernel.unrank([20], 0n)).toThrow(RangeError);

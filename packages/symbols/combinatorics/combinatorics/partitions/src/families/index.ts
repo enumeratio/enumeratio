@@ -9,4 +9,5 @@
 // permutations/src/families/index.ts for the full explanation.
 export { entries as coreEntries, epsilEntries as coreEpsilFamilies } from "./core.ts";
 export { entries as partitionsEntries } from "./partitions.ts";
-export { entries as tableauxPlaneEntries, IsSkewPartitionOf, skewPart } from "./tableaux-plane.ts";
+export { entries as tableauxPlaneEntries } from "./skew-partitions.ts";
+export { IsSkewPartitionOf, skewShapeCount, skewShapeUnrank } from "./skew-shapes.ts";

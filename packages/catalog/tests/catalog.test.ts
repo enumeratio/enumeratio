@@ -26,10 +26,12 @@ test("the catalog is the measured shape, folded to names", () => {
 });
 
 test("every map combinatorics declares is catalogued", () => {
-  // Conversions (convert: true) are carrier constructor overloads; only some have a catalog record.
   const catalogued = new Set(MAPS.map((m) => m.name));
   const maps = DECLARED_MAPS.filter((m) => m.convert !== true);
   expect(maps.map((m) => m.name).filter((name) => !catalogued.has(name))).toEqual([]);
+  // Conversions (convert: true) are carrier constructor overloads, not maps.
+  const conversions = DECLARED_MAPS.filter((m) => m.convert === true).map((m) => m.name);
+  expect(MAPS.map((m) => m.name).filter((name) => conversions.includes(name))).toEqual([]);
 });
 
 test("a stat is one name defined on several carriers", () => {

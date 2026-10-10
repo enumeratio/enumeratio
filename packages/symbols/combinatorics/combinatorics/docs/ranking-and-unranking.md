@@ -20,8 +20,9 @@ enumeration.
 <notatio-cell value="Subsets(20)[700000]" />
 </Story>
 
-`At` is **1-based**: `At(F, 1)` is the first object and `At(F, Count(F))` the last. An
-index outside that range wraps, so a slider can run past the end without erroring.
+`At` is **1-based**: `At(F, 1)` is the first object and `At(F, Count(F))` the last, and a
+negative index counts from the end. Past the count `At` is `Missing` rather than an error, so a
+slider can run past the end of a family without breaking anything.
 
 ## Count is the combinatorics you already know
 
@@ -69,15 +70,15 @@ draws whatever came back. Nothing about that is specific to subsets — point it
 different family and the same rig walks that one.
 
 <Story
-  title="The same dial, three families">
+  title="The same dial, two families">
 <template #description>
-24 permutations of four things against 14 Dyck paths of semilength four — so the paths
-wrap around while the permutations are still going. Wrapping is the point: an index is
-taken modulo the count.
+24 permutations of four things against 14 Dyck paths of semilength four. <code>At</code> does not
+wrap, so the paths take the index modulo their count themselves, <code>Mod(_r - 1, 14) + 1</code>, and
+start over while the permutations are still going.
 </template>
 <notatio-manipulate v-pre params="{ {r, 1}, 1, 24, 1}">
 <graphics-box class="inline-figure" value='Show(StrandDiagram(At(SymmetricGroup(4), _r)), ImageSize -> [Automatic, 72], GestureHandling -> "none")' legend-at="none" />
-<graphics-box class="inline-figure" value='Show(PathDiagram(At(DyckPaths(4), _r)), ImageSize -> [Automatic, 86], GestureHandling -> "none")' legend-at="none" />
+<graphics-box class="inline-figure" value='Show(PathDiagram(At(DyckPaths(4), Mod(_r - 1, 14) + 1)), ImageSize -> [Automatic, 86], GestureHandling -> "none")' legend-at="none" />
 </notatio-manipulate>
 </Story>
 
