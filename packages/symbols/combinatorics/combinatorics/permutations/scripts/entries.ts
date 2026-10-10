@@ -26,8 +26,12 @@ const SAMPLES: readonly Sample[] = [
   { list: [2, 4, 1, 3], caption: "the one-line word $2413$" },
 ];
 
-/** The 11 heads already hand-written in `../../reference/` before this generator moved there. */
+/** The heads with a hand-written record in `../../reference/`. */
 const CURATED_HEADS = [
+  "PermutationLength",
+  "PermutationMax",
+  "PermutationMin",
+  "PermutationSupport",
   "Antiexcedances",
   "Ascents",
   "CycleCount",

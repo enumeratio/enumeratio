@@ -1,16 +1,20 @@
 ---
-name: Order
+name: PermutationSupport
 domain: Permutation statistics
-signature: Order(p)
-summary: The order of p in the symmetric group — the lcm of its cycle lengths.
+signature: PermutationSupport(p)
+summary: The points $p$ moves, in increasing order.
 statOn:
   - Permutation
 signatures:
-  - call: Order(p)
-    description: The order of p in the symmetric group — the lcm of its cycle lengths.
+  - call: PermutationSupport(p)
+    description: The points $p$ moves, in increasing order.
     library: enumeratio-combinatorics
     type: (permutation) -> number
+names:
+  wolframIdentity: true
 ---
 
 - Defined over `Permutation` as an expression in `_x`, evaluated by compute-engine — the definition IS the implementation.
+- Wolfram's `Cycles` input is not read here: wrap a one-line word in `Permutation`, or turn `Cycles` into one with [[PermutationList]] first
+- The identity has an empty support; the support's size is [[PermutationLength]]
 - Takes a `Permutation` and nothing else — it reads values against their positions, or walks the orbits, so it needs the bijection. Applying it to a bare list is a type error, not a wrong answer.

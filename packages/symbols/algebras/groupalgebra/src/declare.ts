@@ -19,6 +19,7 @@ import {
 import {
   alternatingGenerators,
   applyPermutation,
+  composePermutations,
   type Cycle,
   cyclesAreValid,
   cyclesToPermutation,
@@ -470,6 +471,52 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
             "List",
             invertPermutation(perm).map((x) => ce.number(x)),
           );
+    },
+  });
+
+  /** Wolfram's rule for a result's notation: `Cycles` when any operand is `Cycles` (or none
+   *  is given), else a list. */
+  const inNotationOf = (operands: readonly BoxedExpression[], sigma: readonly number[]): BoxedExpression =>
+    operands.length === 0 || operands.some((op) => op.operator === "Cycles")
+      ? cyclesExpression(ce, permutationToCycles(sigma))
+      : ce.function(
+          "List",
+          sigma.map((x) => ce.number(x)),
+        );
+
+  /** `PermutationProduct(p, q, …)` applies the LEFT factor first (Wolfram's order). */
+  ce.declare("PermutationProduct", {
+    signature: `(${permutationLike}*) -> ${permutationLike}`,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const degree = Math.max(
+        0,
+        ...ops.map((op) => (op.operator === "Cycles" ? maxSupport(cyclesOf(op) ?? []) : (oneLineOf(op)?.length ?? 0))),
+      );
+      const factors = ops.map((op) => permutationOf(op, degree));
+      if (!factors.every((f): f is number[] => f !== undefined)) return undefined;
+      return inNotationOf(
+        ops,
+        factors.reduce((product, factor) => composePermutations(product, factor), identityPermutation(degree)),
+      );
+    },
+  });
+
+  /** `PermutationPower(p, n)`, `n` any integer; a negative `n` powers the inverse. */
+  ce.declare("PermutationPower", {
+    signature: `(${permutationLike}, integer) -> ${permutationLike}`,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const base = ops[0];
+      const exponent = ops[1] === undefined ? undefined : integerAt(ops[1]);
+      const sigma = base === undefined ? undefined : permutationOf(base);
+      if (base === undefined || sigma === undefined || exponent === undefined) return undefined;
+      // Square-and-multiply: the exponent can be far larger than the permutation's order.
+      let square = exponent < 0 ? invertPermutation(sigma) : sigma;
+      let result = identityPermutation(sigma.length);
+      for (let n = Math.abs(exponent); n > 0; n = Math.floor(n / 2)) {
+        if (n % 2 === 1) result = composePermutations(result, square);
+        square = composePermutations(square, square);
+      }
+      return inNotationOf([base], result);
     },
   });
 

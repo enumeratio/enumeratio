@@ -2,7 +2,7 @@
 name: KSubsets
 domain: Combinatorial collections
 signature: KSubsets(n, k)
-summary: The k-element subsets of $\{1, \dots, n\}$ in COLEXICOGRAPHIC order (the combinations) — the order the combinatorial number system ranks them in.
+summary: The k-element subsets of $\{1, \dots, n\}$ in lexicographic order (the combinations).
 signatures:
   - call: KSubsets(n, k)
     description: the $\binom{n}{k}$ subsets of size $k$
@@ -54,6 +54,6 @@ carrier: Finset
 ---
 
 - Count is the binomial coefficient $\binom{n}{k}$
-- Elements are the k-combinations in COLEXICOGRAPHIC order: compare the largest element first, so $\{2,3\}$ precedes $\{1,4\}$
-- That is the order [[IntegerDigits]] with `CombinatorialNumerals(k)` unranks in — the two are the same map
+- Elements are the k-combinations in lexicographic order: compare the smallest element first, so $\{1,4\}$ precedes $\{2,3\}$
+- [[IntegerDigits]] with `CombinatorialNumerals(k)` unranks in colexicographic order, which is not this one
 - $k = 0$ gives the single empty subset; $k > n$ gives an empty family

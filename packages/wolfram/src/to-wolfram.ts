@@ -119,7 +119,6 @@ export const FOREIGN: Record<string, string> = {
   Area: "the area of a geometric region",
   Perimeter: "the perimeter of a geometric region",
   Depth: "the number of indices needed to reach any part of an expression",
-  Order: "the canonical-order comparison Order[a, b]",
   Composition: "a composition of functions, Composition[f, g]",
   Word: "the token specification used by Read and Find",
   Restricted: "an Interpreter form narrowed by a condition",
@@ -199,8 +198,7 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // but a `Permutation` argument is our permutation-parity statistic ("+1 when the inversion
   // count is even, -1 when odd"), which Wolfram calls Signature[perm], NOT Sign[perm] (a
   // name collision `isWolframHead` would otherwise pass straight through as Wolfram's own,
-  // unrelated, numeric-only Sign -- see Order's identical trap, handled via FOREIGN since it
-  // has no single-arity Wolfram equivalent to rename to, unlike this one).
+  // unrelated, numeric-only Sign).
   Sign: (a) => {
     if (a.length !== 1 || !Array.isArray(a[0]) || a[0][0] !== "Permutation" || a[0].length !== 2)
       return call("Sign", a);

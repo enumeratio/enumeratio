@@ -168,7 +168,7 @@ export const findstat: readonly FindStatMatch[] = [
     values: 153,
   },
   {
-    head: "Order",
+    head: "PermutationOrder",
     on: "Permutation",
     findstat: ["St000058"],
     values: 153,

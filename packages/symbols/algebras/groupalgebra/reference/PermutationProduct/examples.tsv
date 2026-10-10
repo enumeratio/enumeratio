@@ -1,0 +1,8 @@
+id	section	role	expr	expected	known	source	caption
+left-factor-first			[PermutationProduct, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2]]]]	[Cycles, [List, [List, 2, 3]]]	[Cycles, [List, [List, 2, 3]]]	wolframscript 15.0	$1 \to 2 \to 1$, $2 \to 3 \to 3$, $3 \to 1 \to 2$
+the-other-order	Scope		[PermutationProduct, [Cycles, [List, [List, 1, 2]]], [Cycles, [List, [List, 1, 2, 3]]]]	[Cycles, [List, [List, 1, 3]]]	[Cycles, [List, [List, 1, 3]]]	wolframscript 15.0	swapping the factors gives a different permutation
+three-factors	Scope		[PermutationProduct, [Cycles, [List, [List, 1, 2, 3]]], [Cycles, [List, [List, 1, 2]]], [Cycles, [List, [List, 1, 2, 3]]]]	[Cycles, [List, [List, 1, 2]]]	[Cycles, [List, [List, 1, 2]]]	wolframscript 15.0	
+one-line-words	Scope		[PermutationProduct, [List, 2, 3, 1], [List, 2, 1, 3]]	[List, 1, 3, 2]	[List, 1, 3, 2]	wolframscript 15.0	two one-line words give a one-line word
+different-lengths	Scope		[PermutationProduct, [List, 2, 1], [List, 1, 3, 2]]	[List, 3, 1, 2]	[List, 3, 1, 2]	wolframscript 15.0	the shorter word is padded with fixed points
+mixed-notation	Scope		[PermutationProduct, [Cycles, [List, [List, 1, 2]]], [List, 2, 3, 1]]	[Cycles, [List, [List, 1, 3]]]	[Cycles, [List, [List, 1, 3]]]	wolframscript 15.0	any Cycles argument makes the result Cycles
+no-factors	Properties		[PermutationProduct]	[Cycles, [List]]	[Cycles, [List]]	wolframscript 15.0	the empty product is the identity

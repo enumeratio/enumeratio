@@ -1,0 +1,6 @@
+id	section	role	expr	expected	known	source	caption
+trailing-fixed-points			[PermutationMax, [Permutation, [List, 2, 1, 3, 4]]]	2	2	wolframscript 15.0	3 and 4 are fixed, so the largest moved point is 2
+the-one-line-word-312			[PermutationMax, [Permutation, [List, 3, 1, 2]]]	3			the one-line word $312$
+the-one-line-word-2413			[PermutationMax, [Permutation, [List, 2, 4, 1, 3]]]	4			the one-line word $2413$
+two-cycles	Scope		[PermutationMax, [Permutation, [List, 5, 3, 4, 2, 1]]]	5	5	wolframscript 15.0	$(1\,5)(2\,3\,4)$
+the-identity	Properties		[PermutationMax, [Permutation, [List, 1, 2, 3]]]	0	0	wolframscript 15.0	the identity moves nothing, as Wolfram has it
