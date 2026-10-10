@@ -21,7 +21,7 @@ export interface PackageField {
   /** Entry points placed apart from the package, by subpath (`./render`). */
   readonly entries?: Readonly<Record<string, { readonly layer: Layer; readonly extends: readonly string[] }>>;
   /** Its notation entry, an export subpath (`./notation`): what a host loads for every package
-   *  before it builds an engine, since a LaTeX dictionary is fixed at construction. */
+   *  and gives the engine, at construction or by `addEntries`. */
   readonly notation?: string;
   /** The group the docs site files the package under (`arithmetic`, `groups`, …). */
   readonly group?: string;
