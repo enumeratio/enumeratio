@@ -70,19 +70,28 @@ function bignum(expr: MathJSON): Approximate | undefined {
 }
 
 /** Our side of a TEXT comparison (the Python-family systems): the number, else the JSON. */
-export const show = (expr: MathJSON): string => {
+export const show = (expr: MathJSON, residueClasses = false): string => {
   // A carrier constructor call prints as its contents — the Python-family systems' own
   // encoding is the bare structure, no head wrapper (structural.ts's `reduce` does the same
   // unwrap for the Wolfram path; see https://github.com/enumeratio/enumeratio/wiki/Speculative-Combinatorics-Layering-and-Plausible §4 step 5).
   if (Array.isArray(expr) && typeof expr[0] === "string" && CARRIER_NAMES.has(expr[0]) && expr.length === 2) {
-    return show(expr[1] as MathJSON);
+    return show(expr[1] as MathJSON, residueClasses);
   }
-  // A residue class keeps its modulus, as Sage's value printer writes it.
-  if (Array.isArray(expr) && (expr[0] === "ResidueClass" || expr[0] === "IntegerMod") && expr.length === 3) {
-    return `ResidueClass(${show(expr[1] as MathJSON)}, ${show(expr[2] as MathJSON)})`;
+  // A residue class keeps its modulus where the system's value printer writes it so (Sage's does).
+  if (
+    residueClasses &&
+    Array.isArray(expr) &&
+    (expr[0] === "ResidueClass" || expr[0] === "IntegerMod") &&
+    expr.length === 3
+  ) {
+    return `ResidueClass(${show(expr[1] as MathJSON, true)}, ${show(expr[2] as MathJSON, true)})`;
   }
   // A list prints as the systems print one, element by element.
-  if (Array.isArray(expr) && expr[0] === "List") return `[${expr.slice(1).map(show).join(", ")}]`;
+  if (Array.isArray(expr) && expr[0] === "List")
+    return `[${expr
+      .slice(1)
+      .map((entry) => show(entry as MathJSON, residueClasses))
+      .join(", ")}]`;
   // A bignum keeps its digits: as a double, 5.57e+373 would print as Infinity.
   if (
     typeof expr === "object" &&
@@ -284,7 +293,7 @@ export function verdictOf(
   } else if (theirs.startsWith("combinations:")) {
     verdict = compareCombinations(expected, theirs);
   } else {
-    verdict = compare(show(expected), theirs, tolerance);
+    verdict = compare(show(expected, system === "sage"), theirs, tolerance);
     // A text comparison that disagrees or can't decide (a complex against a real, say)
     // gets a second, structural look.
     if (verdict !== "agree") {
