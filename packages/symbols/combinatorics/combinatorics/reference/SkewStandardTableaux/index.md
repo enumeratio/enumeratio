@@ -23,3 +23,4 @@ carrier: SkewTableau
 - A lazy indexed collection with no known closed form; the count is the cached enumeration's length, summed over every reduced skew shape from [[SkewPartitions]].
 - Each element packs `[λ, μ, rowWord]`, where `rowWord[i]` is the 0-based row entry $i{+}1$ was placed in, in placement order; $\mu = 0$ (every row) recovers a plain standard Young tableau.
 - Unranked by shape ([[SkewPartitions]]'s $\lambda$-then-$\mu$ order), then by row-word within a shape.
+- Stays TS: a shape's fillings are counted only over its order ideals, as many as $2^n$, so a definition in Epsil would reach $n = 9$ where the enumeration reaches $n = 5$; the shapes themselves are walked, not enumerated.

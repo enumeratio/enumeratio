@@ -28,6 +28,7 @@ grades:
 carrier: PlanePartition
 ---
 
-- A lazy indexed collection with no known simple closed form, unlike ordinary partitions' generating function; the count is the cached enumeration's length — $Count(PlanePartitions(6)) = 48$.
+- A lazy indexed collection with no known simple closed form, unlike ordinary partitions' generating function; the count comes from MacMahon's product $\prod_k (1 - x^k)^{-k}$ — $Count(PlanePartitions(6)) = 48$.
 - Each element is the array's rows; entries weakly decrease along every row and down every column, and the whole array sums to $n$.
 - Unranked in shape-then-entries order: by row-length shape first, then the flattened array.
+- Stays TS: it enumerates the partitions and indexes into them, so stick to small $n$. A table over rows and sums would be far larger than the list ([[BoxedPlanePartitions]] has one, since a box bounds the rows).
