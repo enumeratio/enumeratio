@@ -184,17 +184,19 @@ export function declareHistogram(ce: ComputeEngine): void {
 /** Graphics heads whose arguments are held as written, not canonicalised: see `declareGraphics`. */
 const HELD_GRAPHICS: ReadonlySet<string> = new Set(["Show", "Variable"]);
 
-/** `except`: heads to leave undeclared, for a host whose own definitions read what an undeclared head is. */
-export function declareGraphics(
-  ce: ComputeEngine,
-  { except = [] }: { readonly except?: readonly string[] } = {},
-): void {
+/**
+ * Left undeclared: structures' `Midpoint` of two points reads the type an undeclared `Point`
+ * has (its coordinates' list), and a declared `(any*) -> any` head hides it.
+ */
+const UNDECLARED: ReadonlySet<string> = new Set(["Point"]);
+
+export function declareGraphics(ce: ComputeEngine): void {
   // Inert: no `evaluate`, so the expression stays what it says, while its arguments
   // are canonicalised as usual -- an iterator typed as `(x, 0, 10)` in LaTeX arrives as a
   // `Tuple`, not a `Delimiter`, and a free parameter stays a free symbol. A head the
   // engine already knows (its own `Histogram`) is handled below rather than redeclared.
   for (const head of GRAPHICS_HEADS) {
-    if (ce.lookupDefinition(head) || HELD_GRAPHICS.has(head) || except.includes(head)) continue;
+    if (ce.lookupDefinition(head) || HELD_GRAPHICS.has(head) || UNDECLARED.has(head)) continue;
     ce.declare(head, { signature: "(any*) -> any" });
   }
 
